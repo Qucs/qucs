@@ -1252,11 +1252,30 @@ void Schematic::createSubNetlistPlain(QTextStream *stream, QTextEdit *ErrText,
       (*tstream) << VHDL_LIBRARIES;
       (*tstream) << "entity Sub_" << Type << " is\n"
 		 << "  port ("
-		 << SubcircuitPortNames.join(";\n        ") << ");\n"
-		 << "end entity;\n"
+		 << SubcircuitPortNames.join(";\n        ") << ");\n";
+
+      for(pi = SymbolPaints.first(); pi != 0; pi = SymbolPaints.next())
+	if(pi->Name == ".ID ") {
+	  SubParameter *pp;
+	  ID_Text *pid = (ID_Text*)pi;
+	  if(pid->Parameter.first()) {
+	    (*tstream) << "  generic (";
+	    for(pp = pid->Parameter.first(); pp != 0;) {
+	      s = pp->Name;
+	      (*tstream) << s.replace("=", " : real := ");
+	      pp = pid->Parameter.next();
+	      if(pp) (*tstream) << ";\n           ";
+	    }
+	    (*tstream) << ");\n";
+	  }
+	  break;
+	}
+
+      (*tstream) << "end entity;\n"
 		 << "use work.all;\n"
 		 << "architecture Arch_Sub_" << Type << " of Sub_" << Type
 		 << " is\n";
+
       if(!Signals.isEmpty()) {
 	QValueList<DigSignal> values = Signals.values();
 	QValueList<DigSignal>::iterator it;

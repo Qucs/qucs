@@ -1,968 +1,989 @@
 <!DOCTYPE TS><TS>
+<defaultcodec></defaultcodec>
 <context>
     <name>ArrowDialog</name>
     <message>
         <source>Edit Arrow Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>تحرير السهم للعقارات</translation>
     </message>
     <message>
         <source>Head Length: </source>
-        <translation type="unfinished"></translation>
+        <translation>رئيس الطول :</translation>
     </message>
     <message>
         <source>      Head Width: </source>
-        <translation type="unfinished"></translation>
+        <translation>رئيس العرض :</translation>
     </message>
     <message>
         <source>Line color: </source>
-        <translation type="unfinished"></translation>
+        <translation>لون الخط :</translation>
     </message>
     <message>
         <source>      Line Width: </source>
-        <translation type="unfinished"></translation>
+        <translation>خط العرض :</translation>
     </message>
     <message>
         <source>Line style: </source>
-        <translation type="unfinished"></translation>
+        <translation>نمط الخط :</translation>
     </message>
     <message>
         <source>solid line</source>
-        <translation type="unfinished"></translation>
+        <translation>خط الصلبة</translation>
     </message>
     <message>
         <source>dash line</source>
-        <translation type="unfinished"></translation>
+        <translation>اندفاعة خط</translation>
     </message>
     <message>
         <source>dot line</source>
-        <translation type="unfinished"></translation>
+        <translation>خط نقطة</translation>
     </message>
     <message>
         <source>dash dot line</source>
-        <translation type="unfinished"></translation>
+        <translation>اندفاعة خط نقطة</translation>
     </message>
     <message>
         <source>dash dot dot line</source>
-        <translation type="unfinished"></translation>
+        <translation>اندفاعة نقطة نقطة خط</translation>
     </message>
     <message>
         <source>Arrow head: </source>
-        <translation type="unfinished"></translation>
+        <translation>رأس السهم :</translation>
     </message>
     <message>
         <source>two lines</source>
-        <translation type="unfinished"></translation>
+        <translation>سطرين</translation>
     </message>
     <message>
         <source>filled</source>
-        <translation type="unfinished"></translation>
+        <translation>شغل</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>موافق</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>إلغاء</translation>
     </message>
 </context>
 <context>
     <name>ChangeDialog</name>
     <message>
         <source>Change Component Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>تغيير خصائص عنصر</translation>
     </message>
     <message>
         <source>Components:</source>
-        <translation type="unfinished"></translation>
+        <translation>عناصر :</translation>
     </message>
     <message>
         <source>all components</source>
-        <translation type="unfinished"></translation>
+        <translation>جميع مكونات</translation>
     </message>
     <message>
         <source>resistors</source>
-        <translation type="unfinished"></translation>
+        <translation>المقاومة</translation>
     </message>
     <message>
         <source>capacitors</source>
-        <translation type="unfinished"></translation>
+        <translation>المكثفات</translation>
     </message>
     <message>
         <source>inductors</source>
-        <translation type="unfinished"></translation>
+        <translation>أدواة الحث</translation>
     </message>
     <message>
         <source>transistors</source>
-        <translation type="unfinished"></translation>
+        <translation>الترنزستورات</translation>
     </message>
     <message>
         <source>Component Names:</source>
-        <translation type="unfinished"></translation>
+        <translation>:العنصر الأسماء</translation>
     </message>
     <message>
         <source>Property Name:</source>
-        <translation type="unfinished"></translation>
+        <translation>ملكية الاسم :</translation>
     </message>
     <message>
         <source>New Value:</source>
-        <translation type="unfinished"></translation>
+        <translation>القيمة الجديدة :</translation>
     </message>
     <message>
         <source>Replace</source>
-        <translation type="unfinished"></translation>
+        <translation>استبدال</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>إلغاء</translation>
     </message>
     <message>
         <source>Found Components</source>
-        <translation type="unfinished"></translation>
+        <translation>العثور على مكونات</translation>
     </message>
     <message>
         <source>Change properties of
 </source>
-        <translation type="unfinished"></translation>
+        <translation>تغيير خصائص </translation>
     </message>
     <message>
         <source>these components ?</source>
-        <translation type="unfinished"></translation>
+        <translation>هذه العناصر؟</translation>
     </message>
     <message>
         <source>Yes</source>
-        <translation type="unfinished"></translation>
+        <translation>نعم</translation>
     </message>
     <message>
         <source>No match found!</source>
-        <translation type="unfinished"></translation>
+        <translation>العثور على أي مباراة!</translation>
     </message>
 </context>
 <context>
     <name>ComponentDialog</name>
     <message>
         <source>Edit Component Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>تحرير خصائص العنصر</translation>
     </message>
     <message>
         <source>Sweep</source>
-        <translation type="unfinished"></translation>
+        <translation>الاجتياح</translation>
     </message>
     <message>
         <source>display in schematic</source>
-        <translation type="unfinished"></translation>
+        <translation>العرض التخطيطي</translation>
     </message>
     <message>
         <source>Simulation:</source>
-        <translation type="unfinished"></translation>
+        <translation>المحاكاة :</translation>
     </message>
     <message>
         <source>Sweep Parameter:</source>
-        <translation type="unfinished"></translation>
+        <translation>الاجتياح المعلم :</translation>
     </message>
     <message>
         <source>Type:</source>
-        <translation type="unfinished"></translation>
+        <translation>النوع :</translation>
     </message>
     <message>
         <source>linear</source>
-        <translation type="unfinished"></translation>
+        <translation>خطية</translation>
     </message>
     <message>
         <source>logarithmic</source>
-        <translation type="unfinished"></translation>
+        <translation>لوغاريتمي</translation>
     </message>
     <message>
         <source>list</source>
-        <translation type="unfinished"></translation>
+        <translation>قائمة</translation>
     </message>
     <message>
         <source>constant</source>
-        <translation type="unfinished"></translation>
+        <translation>ثابت</translation>
     </message>
     <message>
         <source>Values:</source>
-        <translation type="unfinished"></translation>
+        <translation>القيم :</translation>
     </message>
     <message>
         <source>Start:</source>
-        <translation type="unfinished"></translation>
+        <translation>بداية :</translation>
     </message>
     <message>
         <source>Stop:</source>
-        <translation type="unfinished"></translation>
+        <translation>التوقف :</translation>
     </message>
     <message>
         <source>Step:</source>
-        <translation type="unfinished"></translation>
+        <translation>خطوة :</translation>
     </message>
     <message>
         <source>Number:</source>
-        <translation type="unfinished"></translation>
+        <translation>العدد :</translation>
     </message>
     <message>
         <source>Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>الخصائص :</translation>
     </message>
     <message>
         <source>Name:</source>
-        <translation type="unfinished"></translation>
+        <translation>الاسم :</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation>الاسم </translation>
     </message>
     <message>
         <source>Value</source>
-        <translation type="unfinished"></translation>
+        <translation>القيمة </translation>
     </message>
     <message>
         <source>display</source>
-        <translation type="unfinished"></translation>
+        <translation>يعرض</translation>
     </message>
     <message>
         <source>Description</source>
-        <translation type="unfinished"></translation>
+        <translation>وصف</translation>
     </message>
     <message>
         <source>Edit</source>
-        <translation type="unfinished"></translation>
+        <translation>تحرير</translation>
     </message>
     <message>
         <source>Browse</source>
-        <translation type="unfinished"></translation>
+        <translation>تصفح</translation>
     </message>
     <message>
         <source>Add</source>
-        <translation type="unfinished"></translation>
+        <translation>إضافة</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>يزيل</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>موافق</translation>
     </message>
     <message>
         <source>Apply</source>
-        <translation type="unfinished"></translation>
+        <translation>ينطبق</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>إلغاء</translation>
     </message>
     <message>
         <source>yes</source>
-        <translation type="unfinished"></translation>
+        <translation>نعم</translation>
     </message>
     <message>
         <source>no</source>
-        <translation type="unfinished"></translation>
+        <translation>لا</translation>
     </message>
     <message>
         <source>All Files</source>
-        <translation type="unfinished"></translation>
+        <translation>جميع الملفات</translation>
     </message>
     <message>
         <source>Touchstone files</source>
-        <translation type="unfinished"></translation>
+        <translation>المحك ملفات</translation>
     </message>
     <message>
         <source>CSV files</source>
-        <translation type="unfinished"></translation>
+        <translation>ملفات CSV</translation>
     </message>
     <message>
         <source>SPICE files</source>
-        <translation type="unfinished"></translation>
+        <translation>ملفات SPICE</translation>
     </message>
     <message>
         <source>VHDL files</source>
-        <translation type="unfinished"></translation>
+        <translation>ملفات VHDL</translation>
     </message>
     <message>
         <source>Verilog files</source>
-        <translation type="unfinished"></translation>
+        <translation>فيريلوج ملفات</translation>
     </message>
     <message>
         <source>Select a file</source>
-        <translation type="unfinished"></translation>
+        <translation>تحديد ملف</translation>
     </message>
     <message>
         <source>Points per decade:</source>
-        <translation type="unfinished"></translation>
+        <translation>نقطة لكل عقد من الزمن :</translation>
     </message>
 </context>
 <context>
     <name>DiagramDialog</name>
     <message>
         <source>Edit Diagram Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>تعديل خصائص الشكل البياني</translation>
     </message>
     <message>
         <source>left Axis</source>
-        <translation type="unfinished"></translation>
+        <translation>محور اليسار</translation>
     </message>
     <message>
         <source>right Axis</source>
-        <translation type="unfinished"></translation>
+        <translation>الحق في محور</translation>
     </message>
     <message>
         <source>y-Axis</source>
-        <translation type="unfinished"></translation>
+        <translation>العمودي</translation>
     </message>
     <message>
         <source>smith Axis</source>
-        <translation type="unfinished"></translation>
+        <translation>محور سميث</translation>
     </message>
     <message>
         <source>polar Axis</source>
-        <translation type="unfinished"></translation>
+        <translation>المحور القطبي</translation>
     </message>
     <message>
         <source>z-Axis</source>
-        <translation type="unfinished"></translation>
+        <translation>ض آكسيس</translation>
     </message>
     <message>
         <source>Graph Input</source>
-        <translation type="unfinished"></translation>
+        <translation>الرسم البياني المدخلات</translation>
     </message>
     <message>
         <source>Number Notation: </source>
-        <translation type="unfinished"></translation>
+        <translation>عدد التأشير :</translation>
     </message>
     <message>
         <source>real/imaginary</source>
-        <translation type="unfinished"></translation>
+        <translation>حقيقية / خيالية</translation>
     </message>
     <message>
         <source>magnitude/angle (degree)</source>
-        <translation type="unfinished"></translation>
+        <translation>حجم / زاوية - درجة</translation>
     </message>
     <message>
         <source>magnitude/angle (radian)</source>
-        <translation type="unfinished"></translation>
+        <translation>حجم / زاوية (نصف قطر ية</translation>
     </message>
     <message>
         <source>Precision:</source>
-        <translation type="unfinished"></translation>
+        <translation>الدقة :</translation>
     </message>
     <message>
         <source>Color:</source>
-        <translation type="unfinished"></translation>
+        <translation>اللون :</translation>
     </message>
     <message>
         <source>Style:</source>
-        <translation type="unfinished"></translation>
+        <translation>النمط :</translation>
     </message>
     <message>
         <source>solid line</source>
-        <translation type="unfinished"></translation>
+        <translation>خط الصلبة</translation>
     </message>
     <message>
         <source>dash line</source>
-        <translation type="unfinished"></translation>
+        <translation>اندفاعة خط</translation>
     </message>
     <message>
         <source>dot line</source>
-        <translation type="unfinished"></translation>
+        <translation>خط نقطة</translation>
     </message>
     <message>
         <source>long dash line</source>
-        <translation type="unfinished"></translation>
+        <translation>اندفاعة خط</translation>
     </message>
     <message>
         <source>stars</source>
-        <translation type="unfinished"></translation>
+        <translation>بداية </translation>
     </message>
     <message>
         <source>circles</source>
-        <translation type="unfinished"></translation>
+        <translation>الدوائر</translation>
     </message>
     <message>
         <source>arrows</source>
-        <translation type="unfinished"></translation>
+        <translation>سهام</translation>
     </message>
     <message>
         <source>Thickness:</source>
-        <translation type="unfinished"></translation>
+        <translation>السمك :</translation>
     </message>
     <message>
         <source>y-Axis:</source>
-        <translation type="unfinished"></translation>
+        <translation>العمودي :</translation>
     </message>
     <message>
         <source>Dataset</source>
-        <translation type="unfinished"></translation>
+        <translation>بيانات</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation>الاسم </translation>
     </message>
     <message>
         <source>Type</source>
-        <translation type="unfinished"></translation>
+        <translation>النوع </translation>
     </message>
     <message>
         <source>Size</source>
-        <translation type="unfinished"></translation>
+        <translation>حجم</translation>
     </message>
     <message>
         <source>Graph</source>
-        <translation type="unfinished"></translation>
+        <translation>الرسم البياني</translation>
     </message>
     <message>
         <source>New Graph</source>
-        <translation type="unfinished"></translation>
+        <translation>الرسم الجديد</translation>
     </message>
     <message>
         <source>Delete Graph</source>
-        <translation type="unfinished"></translation>
+        <translation>حذف الرسم البياني</translation>
     </message>
     <message>
         <source>Data</source>
-        <translation type="unfinished"></translation>
+        <translation>بيانات</translation>
     </message>
     <message>
         <source>x-Axis Label:</source>
-        <translation type="unfinished"></translation>
+        <translation>المحور السيني العلامة :</translation>
     </message>
     <message>
         <source>Label:</source>
-        <translation type="unfinished"></translation>
+        <translation>العلامة :</translation>
     </message>
     <message>
         <source>&lt;b&gt;Label text&lt;/b&gt;: Use LaTeX style for special characters, e.g. \tau</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Label text&lt;/b&gt;: Use LaTeX style for special characters, e.g. \tau</translation>
     </message>
     <message>
         <source>show Grid</source>
-        <translation type="unfinished"></translation>
+        <translation>وتظهر الشبكة</translation>
     </message>
     <message>
         <source>Grid Color:</source>
-        <translation type="unfinished"></translation>
+        <translation>لون الشبكة :</translation>
     </message>
     <message>
         <source>Grid Style: </source>
-        <translation type="unfinished"></translation>
+        <translation>على غرار الشبكة :</translation>
     </message>
     <message>
         <source>dash dot line</source>
-        <translation type="unfinished"></translation>
+        <translation>اندفاعة خط نقطة</translation>
     </message>
     <message>
         <source>dash dot dot line</source>
-        <translation type="unfinished"></translation>
+        <translation>اندفاعة نقطة نقطة خط</translation>
     </message>
     <message>
         <source>logarithmical X Axis Grid</source>
-        <translation type="unfinished"></translation>
+        <translation>المحور العاشر وغاريثمية الشبكة</translation>
     </message>
     <message>
         <source>logarithmical</source>
-        <translation type="unfinished"></translation>
+        <translation>لوغاريتمي</translation>
     </message>
     <message>
         <source>Grid</source>
-        <translation type="unfinished"></translation>
+        <translation>الشبكة</translation>
     </message>
     <message>
         <source>hide invisible lines</source>
-        <translation type="unfinished"></translation>
+        <translation>إخفاء خطوط غير مرئية</translation>
     </message>
     <message>
         <source>Rotation around x-Axis:</source>
-        <translation type="unfinished"></translation>
+        <translation>استدارة حول المحور السيني :</translation>
     </message>
     <message>
         <source>Rotation around y-Axis:</source>
-        <translation type="unfinished"></translation>
+        <translation>استدارة حول العمودي :</translation>
     </message>
     <message>
         <source>Rotation around z-Axis:</source>
-        <translation type="unfinished"></translation>
+        <translation>استدارة حول محور - ض :</translation>
     </message>
     <message>
         <source>2D-projection:</source>
-        <translation type="unfinished"></translation>
+        <translation>2D - الإسقاط :</translation>
     </message>
     <message>
         <source>Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>الخصائص </translation>
     </message>
     <message>
         <source>x-Axis</source>
-        <translation type="unfinished"></translation>
+        <translation>المحور السيني</translation>
     </message>
     <message>
         <source>manual</source>
-        <translation type="unfinished"></translation>
+        <translation>دليل</translation>
     </message>
     <message>
         <source>start</source>
-        <translation type="unfinished"></translation>
+        <translation>بداية </translation>
     </message>
     <message>
         <source>step</source>
-        <translation type="unfinished"></translation>
+        <translation>خطوة </translation>
     </message>
     <message>
         <source>stop</source>
-        <translation type="unfinished"></translation>
+        <translation>التوقف </translation>
     </message>
     <message>
         <source>number</source>
-        <translation type="unfinished"></translation>
+        <translation>العدد </translation>
     </message>
     <message>
         <source>Limits</source>
-        <translation type="unfinished"></translation>
+        <translation>حدود</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>موافق</translation>
     </message>
     <message>
         <source>Apply</source>
-        <translation type="unfinished"></translation>
+        <translation>ينطبق</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>إلغاء</translation>
     </message>
 </context>
 <context>
     <name>DigiSettingsDialog</name>
     <message>
         <source>Document Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>ضبط وثائق</translation>
     </message>
     <message>
         <source>Digital Simulation Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>المحاكاة الرقمية إعدادات</translation>
     </message>
     <message>
         <source>Simulation</source>
-        <translation type="unfinished"></translation>
+        <translation>المحاكاة </translation>
     </message>
     <message>
         <source>Duration of Simulation:</source>
-        <translation type="unfinished"></translation>
+        <translation>مدة المحاكاة :</translation>
     </message>
     <message>
         <source>Precompile Module</source>
-        <translation type="unfinished"></translation>
+        <translation>Precompile نميطة</translation>
     </message>
     <message>
         <source>Library Name:</source>
-        <translation type="unfinished"></translation>
+        <translation>مكتبة الاسم :</translation>
     </message>
     <message>
         <source>Libraries:</source>
-        <translation type="unfinished"></translation>
+        <translation>مكتبات :</translation>
     </message>
     <message>
         <source>Ok</source>
-        <translation type="unfinished"></translation>
+        <translation>موافق</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>إلغاء</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>خطأ</translation>
     </message>
 </context>
 <context>
     <name>DisplayDialog</name>
     <message>
         <source>Analogue</source>
-        <translation type="unfinished"></translation>
+        <translation>التناظرية</translation>
     </message>
     <message>
         <source>VHDL</source>
-        <translation type="unfinished"></translation>
+        <translation>VHDL</translation>
     </message>
     <message>
         <source>Verilog</source>
-        <translation type="unfinished"></translation>
+        <translation>فيريلوج </translation>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>غلق</translation>
     </message>
 </context>
 <context>
     <name>FillDialog</name>
     <message>
         <source>Line Width: </source>
-        <translation type="unfinished"></translation>
+        <translation>خط العرض :</translation>
     </message>
     <message>
         <source>Line Color: </source>
-        <translation type="unfinished"></translation>
+        <translation>لون الخط :</translation>
     </message>
     <message>
         <source>Line Style: </source>
-        <translation type="unfinished"></translation>
+        <translation>نمط الخط :</translation>
     </message>
     <message>
         <source>solid line</source>
-        <translation type="unfinished"></translation>
+        <translation>خط الصلبة</translation>
     </message>
     <message>
         <source>dash line</source>
-        <translation type="unfinished"></translation>
+        <translation>اندفاعة خط</translation>
     </message>
     <message>
         <source>dot line</source>
-        <translation type="unfinished"></translation>
+        <translation>خط نقطة</translation>
     </message>
     <message>
         <source>dash dot line</source>
-        <translation type="unfinished"></translation>
+        <translation>اندفاعة خط نقطة</translation>
     </message>
     <message>
         <source>dash dot dot line</source>
-        <translation type="unfinished"></translation>
+        <translation>اندفاعة نقطة نقطة خط</translation>
     </message>
     <message>
         <source>Line Style</source>
-        <translation type="unfinished"></translation>
+        <translation>نمط الخط </translation>
     </message>
     <message>
         <source>enable filling</source>
-        <translation type="unfinished"></translation>
+        <translation>يمكن ملء</translation>
     </message>
     <message>
         <source>Fill Color: </source>
-        <translation type="unfinished"></translation>
+        <translation>ملء اللون :</translation>
     </message>
     <message>
         <source>Fill Style: </source>
-        <translation type="unfinished"></translation>
+        <translation>ملء نمط :</translation>
     </message>
     <message>
         <source>no filling</source>
-        <translation type="unfinished"></translation>
+        <translation>لا سد</translation>
     </message>
     <message>
         <source>solid</source>
-        <translation type="unfinished"></translation>
+        <translation>الصلبة</translation>
     </message>
     <message>
         <source>dense 1 (densest)</source>
-        <translation type="unfinished"></translation>
+        <translation>الكثيفة 1 (كثافة</translation>
     </message>
     <message>
         <source>dense 2</source>
-        <translation type="unfinished"></translation>
+        <translation>الكثيفة 2</translation>
     </message>
     <message>
         <source>dense 3</source>
-        <translation type="unfinished"></translation>
+        <translation>الكثيفة 3</translation>
     </message>
     <message>
         <source>dense 4</source>
-        <translation type="unfinished"></translation>
+        <translation>الكثيفة 4</translation>
     </message>
     <message>
         <source>dense 5</source>
-        <translation type="unfinished"></translation>
+        <translation>الكثيفة 5</translation>
     </message>
     <message>
         <source>dense 6</source>
-        <translation type="unfinished"></translation>
+        <translation>الكثيفة 6</translation>
     </message>
     <message>
         <source>dense 7 (least dense)</source>
-        <translation type="unfinished"></translation>
+        <translation>الكثيفة 7 (أقل كثافة</translation>
     </message>
     <message>
         <source>horizontal line</source>
-        <translation type="unfinished"></translation>
+        <translation>خط أفقي</translation>
     </message>
     <message>
         <source>vertical line</source>
-        <translation type="unfinished"></translation>
+        <translation>خط عمودي</translation>
     </message>
     <message>
         <source>crossed lines</source>
-        <translation type="unfinished"></translation>
+        <translation>عبرت خط</translation>
     </message>
     <message>
         <source>hatched backwards</source>
-        <translation type="unfinished"></translation>
+        <translation>دبرت الوراء</translation>
     </message>
     <message>
         <source>hatched forwards</source>
-        <translation type="unfinished"></translation>
+        <translation>دبرت الأمام</translation>
     </message>
     <message>
         <source>diagonal crossed</source>
-        <translation type="unfinished"></translation>
+        <translation>عبرت قطري</translation>
     </message>
     <message>
         <source>Filling Style</source>
-        <translation type="unfinished"></translation>
+        <translation>أسلوب سد</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>موافق</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>إلغاء</translation>
     </message>
 </context>
 <context>
     <name>GraphicTextDialog</name>
     <message>
         <source>Edit Text Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>تعديل نص عقارات</translation>
     </message>
     <message>
         <source>Use LaTeX style for special characters, e.g. \tau</source>
-        <translation type="unfinished"></translation>
+        <translation>Use LaTeX style for special characters, e.g. \tau</translation>
     </message>
     <message>
         <source>Use _{..} and ^{..} for sub- and super-positions.</source>
-        <translation type="unfinished"></translation>
+        <translation>Use _{..} and ^{..} for sub- and super-positions.</translation>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation type="unfinished"></translation>
+        <translation>موافق</translation>
     </message>
     <message>
         <source>&amp;Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>إلغاء</translation>
     </message>
     <message>
         <source>Text color: </source>
-        <translation type="unfinished"></translation>
+        <translation>لون الخط :</translation>
     </message>
     <message>
         <source>Text size: </source>
-        <translation type="unfinished"></translation>
+        <translation>حجم:</translation>
     </message>
     <message>
         <source>Rotation angle: </source>
-        <translation type="unfinished"></translation>
+        <translation>عدد التأشير :</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>خطأ</translation>
     </message>
     <message>
         <source>The text must not be empty!</source>
-        <translation type="unfinished"></translation>
+        <translation>النص يجب ألا تكون فارغة!</translation>
     </message>
 </context>
 <context>
     <name>HelpDialog</name>
     <message>
         <source>QucsFilter is a filter synthesis program. To create a filter, simply enter all parameters and press the big button at the bottom of the main window. Immediatly, the schematic of the filter is calculated and put into the clipboard. Now go to Qucs, open an empty schematic and press CTRL-V (paste from clipboard). The filter schematic can now be inserted and  simulated. Have lots of fun!</source>
-        <translation type="unfinished"></translation>
+        <translation>QucsFilter is a filter synthesis program. To create a filter, simply enter all parameters and press the big button at the bottom of the main window. Immediatly, the schematic of the filter is calculated and put into the clipboard. Now go to Qucs, open an empty schematic and press CTRL-V (paste from clipboard). The filter schematic can now be inserted and  simulated. Have lots of fun!</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>غلق</translation>
     </message>
     <message>
         <source>Help</source>
-        <translation type="unfinished"></translation>
+        <translation>مساعدة</translation>
     </message>
     <message>
         <source>QucsTranscalc is an analysis and synthesis tool for calculating the electrical and physical properties of different kinds of RF and microwave transmission lines.</source>
-        <translation type="unfinished"></translation>
+        <translation>QucsTranscalc is an analysis and synthesis tool for calculating the electrical and physical properties of different kinds of RF and microwave transmission lines.</translation>
     </message>
     <message>
         <source>For each type of transmission line, using dialog boxes, you can enter values for the various parameters, and either calculate its electrical properties, or use the given electrical requirements to synthesize physical parameters of the required transmission line.</source>
-        <translation type="unfinished"></translation>
+        <translation>For each type of transmission line, using dialog boxes, you can enter values for the various parameters, and either calculate its electrical properties, or use the given electrical requirements to synthesize physical parameters of the required transmission line.</translation>
     </message>
     <message>
         <source>Dismiss</source>
-        <translation type="unfinished"></translation>
+        <translation>فصل</translation>
     </message>
     <message>
         <source>Qucs Attenuator Help</source>
-        <translation type="unfinished"></translation>
+        <translation>مساعدة Qucs المخفف</translation>
     </message>
     <message>
         <source>QucsAttenuator is an attenuator synthesis program. To create a attenuator, simply enter all the input parameters and press the calculation button. Immediatly, the schematic of the attenuator is calculated and put into the clipboard. Now go to Qucs, open an schematic and press CTRL-V (paste from clipboard). The attenuator schematic can now be inserted. Have lots of fun!</source>
-        <translation type="unfinished"></translation>
+        <translation>QucsAttenuator is an attenuator synthesis program. To create a attenuator, simply enter all the input parameters and press the calculation button. Immediatly, the schematic of the attenuator is calculated and put into the clipboard. Now go to Qucs, open an schematic and press CTRL-V (paste from clipboard). The attenuator schematic can now be inserted. Have lots of fun!</translation>
     </message>
 </context>
 <context>
     <name>ID_Dialog</name>
     <message>
         <source>Edit Subcircuit Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>تحرير Subcircuit للعقارات</translation>
     </message>
     <message>
         <source>Prefix:</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Parameters</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>display</source>
-        <translation type="unfinished"></translation>
+        <translation>يعرض</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation>الاسم </translation>
     </message>
     <message>
         <source>Default</source>
-        <translation type="unfinished"></translation>
+        <translation>افتراضي</translation>
     </message>
     <message>
         <source>Description</source>
-        <translation type="unfinished"></translation>
+        <translation>وصف</translation>
     </message>
     <message>
         <source>yes</source>
-        <translation type="unfinished"></translation>
+        <translation>نعم</translation>
     </message>
     <message>
         <source>no</source>
-        <translation type="unfinished"></translation>
+        <translation>لا</translation>
     </message>
     <message>
         <source>display in schematic</source>
-        <translation type="unfinished"></translation>
+        <translation>العرض التخطيطي</translation>
     </message>
     <message>
         <source>Name:</source>
-        <translation type="unfinished"></translation>
+        <translation>الاسم :</translation>
     </message>
     <message>
         <source>Default Value:</source>
-        <translation type="unfinished"></translation>
+        <translation>القيمة الافتراضية :</translation>
     </message>
     <message>
         <source>Description:</source>
-        <translation type="unfinished"></translation>
+        <translation>وصف:</translation>
     </message>
     <message>
         <source>Add</source>
-        <translation type="unfinished"></translation>
+        <translation>إضافة</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>يزيل</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>موافق</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>إلغاء</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>خطأ</translation>
     </message>
     <message>
         <source>Parameter must not be named &quot;File&quot;!</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Parameter &quot;%1&quot; already in list!</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
     <name>ImportDialog</name>
     <message>
+        <source>Import Data File...</source>
+        <translation type="obsolete">استيراد ملف بيانات...</translation>
+    </message>
+    <message>
+        <source>Import File:</source>
+        <translation type="obsolete">استيراد ملف:</translation>
+    </message>
+    <message>
         <source>Browse</source>
-        <translation type="unfinished"></translation>
+        <translation>تصفح</translation>
     </message>
     <message>
         <source>Output File:</source>
-        <translation type="unfinished"></translation>
+        <translation>الناتج الملف :</translation>
     </message>
     <message>
         <source>Messages</source>
-        <translation type="unfinished"></translation>
+        <translation>رسائل</translation>
+    </message>
+    <message>
+        <source>Import</source>
+        <translation type="obsolete">استيراد</translation>
     </message>
     <message>
         <source>Abort</source>
-        <translation type="unfinished"></translation>
+        <translation>إحباط</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>غلق</translation>
     </message>
     <message>
         <source>All known</source>
-        <translation type="unfinished"></translation>
+        <translation>يعرف جميع</translation>
     </message>
     <message>
         <source>Touchstone files</source>
-        <translation type="unfinished"></translation>
+        <translation>المحك ملفات</translation>
     </message>
     <message>
         <source>CSV files</source>
-        <translation type="unfinished"></translation>
+        <translation>ملفات CSV</translation>
     </message>
     <message>
         <source>CITI files</source>
-        <translation type="unfinished"></translation>
+        <translation>CITI ملفات</translation>
     </message>
     <message>
         <source>ZVR ASCII files</source>
-        <translation type="unfinished"></translation>
+        <translation>ZVR ASCII ملفات</translation>
     </message>
     <message>
         <source>IC-CAP model files</source>
-        <translation type="unfinished"></translation>
+        <translation>IC-CAP موديل ملفات</translation>
     </message>
     <message>
         <source>VCD files</source>
-        <translation type="unfinished"></translation>
+        <translation>VCD ملفات</translation>
+    </message>
+    <message>
+        <source>Any File</source>
+        <translation type="obsolete">أية ملفات</translation>
     </message>
     <message>
         <source>Enter a Data File Name</source>
-        <translation type="unfinished"></translation>
+        <translation>إدخال البيانات اسم الملف</translation>
     </message>
     <message>
         <source>Info</source>
-        <translation type="unfinished"></translation>
+        <translation>معلومات</translation>
     </message>
     <message>
         <source>Output file already exists!</source>
-        <translation type="unfinished"></translation>
+        <translation>الناتج الملف موجود بالفعل!</translation>
     </message>
     <message>
         <source>Overwrite it?</source>
-        <translation type="unfinished"></translation>
+        <translation>فوق ذلك؟</translation>
     </message>
     <message>
         <source>&amp;Yes</source>
-        <translation type="unfinished"></translation>
+        <translation>نعم</translation>
     </message>
     <message>
         <source>&amp;No</source>
-        <translation type="unfinished"></translation>
+        <translation>موافق</translation>
     </message>
     <message>
         <source>ERROR: Unknown file format! Please check file name extension!</source>
-        <translation type="unfinished"></translation>
+        <translation>...خطأ : تنسيق ملف غير معروف! يرجى التحقق من اسم الملف تمديد!</translation>
     </message>
     <message>
         <source>ERROR: Cannot start converter!</source>
-        <translation type="unfinished"></translation>
+        <translation>خطأ : لا يمكن بدء المحول!</translation>
+    </message>
+    <message>
+        <source>Successfully imported file!</source>
+        <translation type="obsolete">استيراد الملف بنجاح!</translation>
     </message>
     <message>
         <source>Converter ended with errors!</source>
-        <translation type="unfinished"></translation>
+        <translation>المحول انتهت الأخطاء!</translation>
     </message>
     <message>
         <source>Convert Data File...</source>
@@ -997,6 +1018,10 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Qucs netlist</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Convert</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1006,7 +1031,7 @@
     </message>
     <message>
         <source>SPICE files</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">ملفات SPICE</translation>
     </message>
     <message>
         <source>Any file</source>
@@ -1014,10 +1039,6 @@
     </message>
     <message>
         <source>Running command line:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Qucs netlist</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1029,3943 +1050,3985 @@
     <name>LabelDialog</name>
     <message>
         <source>Insert Nodename</source>
-        <translation type="unfinished"></translation>
+        <translation>تضاف Nodename</translation>
     </message>
     <message>
         <source>Enter the label:</source>
-        <translation type="unfinished"></translation>
+        <translation>دخول العلامة :</translation>
     </message>
     <message>
         <source>Initial node voltage:</source>
-        <translation type="unfinished"></translation>
+        <translation>العقدة الجهد الأولي :</translation>
     </message>
     <message>
         <source>Less...</source>
-        <translation type="unfinished"></translation>
+        <translation>أقل...</translation>
     </message>
     <message>
         <source>Ok</source>
-        <translation type="unfinished"></translation>
+        <translation>موافق</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>إلغاء</translation>
     </message>
     <message>
         <source>More...</source>
-        <translation type="unfinished"></translation>
+        <translation>المزيد...</translation>
     </message>
 </context>
 <context>
     <name>LibraryDialog</name>
     <message>
         <source>Create Library</source>
-        <translation type="unfinished"></translation>
+        <translation>إنشاء مكتبة</translation>
     </message>
     <message>
         <source>Library Name:</source>
-        <translation type="unfinished"></translation>
+        <translation>مكتبة الاسم :</translation>
     </message>
     <message>
         <source>Choose subcircuits:</source>
-        <translation type="unfinished"></translation>
+        <translation>اختيار subcircuits :</translation>
     </message>
     <message>
         <source>Select All</source>
-        <translation type="unfinished"></translation>
+        <translation>اختيار الكل</translation>
     </message>
     <message>
         <source>Deselect All</source>
-        <translation type="unfinished"></translation>
+        <translation>إلغاء جميع</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>إلغاء</translation>
     </message>
     <message>
         <source>Next &gt;&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>التالي&gt;&gt;</translation>
     </message>
     <message>
         <source>No subcircuits!</source>
-        <translation type="unfinished"></translation>
+        <translation>لا SUBCIRCUITS!</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>خطأ</translation>
     </message>
     <message>
         <source>Please insert a library name!</source>
-        <translation type="unfinished"></translation>
+        <translation>الرجاء إدخال اسم المكتبة!</translation>
     </message>
     <message>
         <source>Please choose at least one subcircuit!</source>
-        <translation type="unfinished"></translation>
+        <translation>الرجاء اختيار واحدة على الأقل subcircuit!</translation>
     </message>
     <message>
         <source>Warning</source>
-        <translation type="unfinished"></translation>
+        <translation>تحذير</translation>
     </message>
     <message>
         <source>Cannot create user library directory !</source>
-        <translation type="unfinished"></translation>
+        <translation>لا يمكن إنشاء مكتبة دليل المستخدم!</translation>
     </message>
     <message>
         <source>A system library with this name already exists!</source>
-        <translation type="unfinished"></translation>
+        <translation>نظام المكتبة بهذا الاسم موجود بالفعل!</translation>
     </message>
     <message>
         <source>A library with this name already exists!</source>
-        <translation type="unfinished"></translation>
+        <translation>وهناك مكتبة بهذا الاسم موجود بالفعل!</translation>
     </message>
     <message>
         <source>Enter description for &quot;%1&quot;:</source>
-        <translation type="unfinished"></translation>
+        <translation>وصفا لدخول &quot;٪ 1&quot; :</translation>
     </message>
     <message>
         <source>Create</source>
-        <translation type="unfinished"></translation>
+        <translation>إنشاء</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>غلق</translation>
     </message>
     <message>
         <source>Error: Cannot create library!</source>
-        <translation type="unfinished"></translation>
+        <translation>خطأ : لا يمكن إنشاء مكتبة!</translation>
     </message>
     <message>
         <source>Error: Cannot load subcircuit &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>خطأ : لا يمكن تحميل subcircuit &quot;٪ 1&quot;.</translation>
     </message>
     <message>
         <source>Successfully created library.</source>
-        <translation type="unfinished"></translation>
+        <translation>نجحت في انشاء مكتبة.</translation>
     </message>
     <message>
         <source>Manage User Libraries</source>
-        <translation type="unfinished"></translation>
+        <translation>إدارة المكتبات المستخدم</translation>
     </message>
     <message>
         <source>Choose library:</source>
-        <translation type="unfinished"></translation>
+        <translation>اختيار المكتبة :</translation>
     </message>
     <message>
         <source>New Name:</source>
-        <translation type="unfinished"></translation>
+        <translation>اسم جديد :</translation>
     </message>
     <message>
         <source>Delete</source>
-        <translation type="unfinished"></translation>
+        <translation>حذف </translation>
     </message>
     <message>
         <source>Rename</source>
-        <translation type="unfinished"></translation>
+        <translation>إعادة تسمية</translation>
     </message>
     <message>
         <source>No user library!</source>
-        <translation type="unfinished"></translation>
+        <translation>أي مستخدم للمكتبة!</translation>
     </message>
     <message>
         <source>Please insert a new library name!</source>
-        <translation type="unfinished"></translation>
+        <translation>الرجاء إدخال اسم جديد للمكتبة!</translation>
     </message>
     <message>
         <source>Please choose a library!</source>
-        <translation type="unfinished"></translation>
+        <translation>الرجاء اختيار مكتبة!</translation>
     </message>
     <message>
         <source>Cannot rename library subdirectory!</source>
-        <translation type="unfinished"></translation>
+        <translation>لا يمكن تغيير اسم مكتبة دليل فرعي!</translation>
     </message>
     <message>
         <source>Cannot open library!</source>
-        <translation type="unfinished"></translation>
+        <translation>لا نستطيع فتح المكتبة!</translation>
     </message>
     <message>
         <source>No permission to modify library!</source>
-        <translation type="unfinished"></translation>
+        <translation>أي إذن لتعديل مكتبة!</translation>
     </message>
     <message>
         <source>Writing new library not successful!</source>
-        <translation type="unfinished"></translation>
+        <translation>مكتبة كتابة جديدة لم تنجح!</translation>
     </message>
     <message>
         <source>Cannot delete old library.</source>
-        <translation type="unfinished"></translation>
+        <translation>لا يمكن حذف المكتبة القديمة.</translation>
     </message>
     <message>
         <source>Library file is corrupt!</source>
-        <translation type="unfinished"></translation>
+        <translation>ملف مكتبة فاسدة!</translation>
     </message>
     <message>
         <source>No permission to delete library &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>أي إذن حذف مكتبة &quot;٪ 1&quot;.</translation>
     </message>
     <message>
         <source>No permission to delete library subdirectory &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>إذن لا دليل فرعي المكتبة حذف &quot;٪ 1&quot;.</translation>
     </message>
 </context>
 <context>
     <name>MarkerDialog</name>
     <message>
         <source>Edit Marker Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>تعديل خصائص ماركر</translation>
     </message>
     <message>
         <source>Precision: </source>
-        <translation type="unfinished"></translation>
+        <translation>الدقة :</translation>
     </message>
     <message>
         <source>Number Notation: </source>
-        <translation type="unfinished"></translation>
+        <translation>عدد التأشير :</translation>
     </message>
     <message>
         <source>real/imaginary</source>
-        <translation type="unfinished"></translation>
+        <translation>حقيقية / خيالية</translation>
     </message>
     <message>
         <source>magnitude/angle (degree)</source>
-        <translation type="unfinished"></translation>
+        <translation>حجم / زاوية - درجة</translation>
     </message>
     <message>
         <source>magnitude/angle (radian)</source>
-        <translation type="unfinished"></translation>
+        <translation>حجم / زاوية (نصف قطر ية</translation>
     </message>
     <message>
         <source>transparent</source>
-        <translation type="unfinished"></translation>
+        <translation>شفافية</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>موافق</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>إلغاء</translation>
     </message>
 </context>
 <context>
     <name>MatchDialog</name>
     <message>
         <source>Create Matching Circuit</source>
-        <translation type="unfinished"></translation>
+        <translation>إنشاء دائرة مطابقة</translation>
     </message>
     <message>
         <source>calculate two-port matching</source>
-        <translation type="unfinished"></translation>
+        <translation>حساب اثنين الميناء مطابقة</translation>
     </message>
     <message>
         <source>Reference Impedance</source>
-        <translation type="unfinished"></translation>
+        <translation>إشارة المعاوقة الكهربائية</translation>
     </message>
     <message>
         <source>Port 1</source>
-        <translation type="unfinished"></translation>
+        <translation>الميناء 1</translation>
     </message>
     <message>
         <source>ohms</source>
-        <translation type="unfinished"></translation>
+        <translation>ohms</translation>
     </message>
     <message>
         <source>Port 2</source>
-        <translation type="unfinished"></translation>
+        <translation>الميناء 2</translation>
     </message>
     <message>
         <source>S Parameter</source>
-        <translation type="unfinished"></translation>
+        <translation>S معلمة</translation>
     </message>
     <message>
         <source>Input format</source>
-        <translation type="unfinished"></translation>
+        <translation>شكل مدخلات</translation>
     </message>
     <message>
         <source>real/imag</source>
-        <translation type="unfinished"></translation>
+        <translation>صورة / الحقيقية </translation>
     </message>
     <message>
         <source>mag/deg</source>
-        <translation type="unfinished"></translation>
+        <translation>mag/deg</translation>
     </message>
     <message>
         <source>S11</source>
-        <translation type="unfinished"></translation>
+        <translation>س11</translation>
     </message>
     <message>
         <source>S21</source>
-        <translation type="unfinished"></translation>
+        <translation>س21</translation>
     </message>
     <message>
         <source>S12</source>
-        <translation type="unfinished"></translation>
+        <translation>س12</translation>
     </message>
     <message>
         <source>S22</source>
-        <translation type="unfinished"></translation>
+        <translation>س22</translation>
     </message>
     <message>
         <source>Frequency:</source>
-        <translation type="unfinished"></translation>
+        <translation>تردد:</translation>
     </message>
     <message>
         <source>Create</source>
-        <translation type="unfinished"></translation>
+        <translation>إنشاء</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>إلغاء</translation>
     </message>
     <message>
         <source>Reflexion Coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>منعكس المعامل</translation>
     </message>
     <message>
         <source>Impedance (ohms)</source>
-        <translation type="unfinished"></translation>
+        <translation>مقاومة -اوم</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>خطأ</translation>
     </message>
     <message>
         <source>Real part of impedance must be greater zero,
 but is %1 !</source>
-        <translation type="unfinished"></translation>
+        <translation>جزء من مقاومة حقيقية يجب أن تكون أكبر من الصفر ,ولكن ٪ 1!</translation>
     </message>
 </context>
 <context>
     <name>NewProjDialog</name>
     <message>
         <source>Create new project</source>
-        <translation type="unfinished"></translation>
+        <translation>إنشاء مشروع جديد</translation>
     </message>
     <message>
         <source>Project name:</source>
-        <translation type="unfinished"></translation>
+        <translation>اسم المشروع :</translation>
     </message>
     <message>
         <source>open new project</source>
-        <translation type="unfinished"></translation>
+        <translation>افتتاح مشروع جديد</translation>
     </message>
     <message>
         <source>Create</source>
-        <translation type="unfinished"></translation>
+        <translation>إنشاء</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>إلغاء</translation>
     </message>
 </context>
 <context>
     <name>OptimizeDialog</name>
     <message>
         <source>Edit Optimization Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>تحرير التحسين للخصائص</translation>
     </message>
     <message>
         <source>Name:</source>
-        <translation type="unfinished"></translation>
+        <translation>الاسم :</translation>
     </message>
     <message>
         <source>Simulation:</source>
-        <translation type="unfinished"></translation>
+        <translation>المحاكاة :</translation>
     </message>
     <message>
         <source>General</source>
-        <translation type="unfinished"></translation>
+        <translation>العامة</translation>
     </message>
     <message>
         <source>Method:</source>
-        <translation type="unfinished"></translation>
+        <translation>الطريقة:</translation>
     </message>
     <message>
         <source>Maximum number of iterations:</source>
-        <translation type="unfinished"></translation>
+        <translation>الحد الأقصى لعدد المتكررة :</translation>
     </message>
     <message>
         <source>Output refresh cycle:</source>
-        <translation type="unfinished"></translation>
+        <translation>دورة تجديد الانتاج :</translation>
     </message>
     <message>
         <source>Number of parents:</source>
-        <translation type="unfinished"></translation>
+        <translation>عدد من الآباء والأمهات :</translation>
     </message>
     <message>
         <source>Constant F:</source>
-        <translation type="unfinished"></translation>
+        <translation>ثابت ف :</translation>
     </message>
     <message>
         <source>Crossing over factor:</source>
-        <translation type="unfinished"></translation>
+        <translation>عبور أكثر من عامل :</translation>
     </message>
     <message>
         <source>Pseudo random number seed:</source>
-        <translation type="unfinished"></translation>
+        <translation>عدد البذور الزائفة عشوائية :</translation>
     </message>
     <message>
         <source>Minimum cost variance:</source>
-        <translation type="unfinished"></translation>
+        <translation>الحد الأدنى لتكاليف الفرق :</translation>
     </message>
     <message>
         <source>Cost objectives:</source>
-        <translation type="unfinished"></translation>
+        <translation>تكلفة الأهداف :</translation>
     </message>
     <message>
         <source>Cost constraints:</source>
-        <translation type="unfinished"></translation>
+        <translation>التكاليف والقيود :</translation>
     </message>
     <message>
         <source>Algorithm</source>
-        <translation type="unfinished"></translation>
+        <translation>خوارزمية</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation>الاسم </translation>
     </message>
     <message>
         <source>active</source>
-        <translation type="unfinished"></translation>
+        <translation>نشطة</translation>
     </message>
     <message>
         <source>initial</source>
-        <translation type="unfinished"></translation>
+        <translation>الأولي</translation>
     </message>
     <message>
         <source>min</source>
-        <translation type="unfinished"></translation>
+        <translation>الصغرى</translation>
     </message>
     <message>
         <source>max</source>
-        <translation type="unfinished"></translation>
+        <translation>الكبرى</translation>
     </message>
     <message>
         <source>Type</source>
-        <translation type="unfinished"></translation>
+        <translation>النوع </translation>
     </message>
     <message>
         <source>initial:</source>
-        <translation type="unfinished"></translation>
+        <translation>الأولي:</translation>
     </message>
     <message>
         <source>min:</source>
-        <translation type="unfinished"></translation>
+        <translation>الصغرى:</translation>
     </message>
     <message>
         <source>max:</source>
-        <translation type="unfinished"></translation>
+        <translation>الكبرى:</translation>
     </message>
     <message>
         <source>Type:</source>
-        <translation type="unfinished"></translation>
+        <translation>النوع :</translation>
     </message>
     <message>
         <source>linear double</source>
-        <translation type="unfinished"></translation>
+        <translation>خطية مزدوجة</translation>
     </message>
     <message>
         <source>logarithmic double</source>
-        <translation type="unfinished"></translation>
+        <translation>المزدوج لوغاريتمي</translation>
     </message>
     <message>
         <source>linear integer</source>
-        <translation type="unfinished"></translation>
+        <translation>الخطي العددي</translation>
     </message>
     <message>
         <source>logarithmic integer</source>
-        <translation type="unfinished"></translation>
+        <translation>لوغاريتمي العددي</translation>
     </message>
     <message>
         <source>Add</source>
-        <translation type="unfinished"></translation>
+        <translation>إضافة</translation>
     </message>
     <message>
         <source>Delete</source>
-        <translation type="unfinished"></translation>
+        <translation>حذف </translation>
     </message>
     <message>
         <source>Variables</source>
-        <translation type="unfinished"></translation>
+        <translation>المتغيرات</translation>
     </message>
     <message>
         <source>Value</source>
-        <translation type="unfinished"></translation>
+        <translation>القيمة </translation>
     </message>
     <message>
         <source>Value:</source>
-        <translation type="unfinished"></translation>
+        <translation>القيمة :</translation>
     </message>
     <message>
         <source>minimize</source>
-        <translation type="unfinished"></translation>
+        <translation>الحد الأدنى</translation>
     </message>
     <message>
         <source>maximize</source>
-        <translation type="unfinished"></translation>
+        <translation>الحد الأقصى</translation>
     </message>
     <message>
         <source>less</source>
-        <translation type="unfinished"></translation>
+        <translation>أقل</translation>
     </message>
     <message>
         <source>greater</source>
-        <translation type="unfinished"></translation>
+        <translation>أكبر</translation>
     </message>
     <message>
         <source>equal</source>
-        <translation type="unfinished"></translation>
+        <translation>تساوي</translation>
     </message>
     <message>
         <source>monitor</source>
-        <translation type="unfinished"></translation>
+        <translation>رصد</translation>
     </message>
     <message>
         <source>Goals</source>
-        <translation type="unfinished"></translation>
+        <translation>الأهداف</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>موافق</translation>
     </message>
     <message>
         <source>Apply</source>
-        <translation type="unfinished"></translation>
+        <translation>ينطبق</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>إلغاء</translation>
     </message>
     <message>
         <source>yes</source>
-        <translation type="unfinished"></translation>
+        <translation>نعم</translation>
     </message>
     <message>
         <source>no</source>
-        <translation type="unfinished"></translation>
+        <translation>لا</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>خطأ</translation>
     </message>
     <message>
         <source>Every text field must be non-empty!</source>
-        <translation type="unfinished"></translation>
+        <translation>كل حقل النص يجب أن يكون شغله !</translation>
     </message>
     <message>
         <source>Variable &quot;%1&quot; already in list!</source>
-        <translation type="unfinished"></translation>
+        <translation>المتغير &quot;٪ 1&quot; في قائمة بالفعل !</translation>
     </message>
     <message>
         <source>Goal &quot;%1&quot; already in list!</source>
-        <translation type="unfinished"></translation>
+        <translation>الهدف &quot;٪ 1&quot; في قائمة  !</translation>
     </message>
 </context>
 <context>
     <name>OptionsDialog</name>
     <message>
         <source>Options</source>
-        <translation type="unfinished"></translation>
+        <translation>خيارات</translation>
     </message>
     <message>
         <source>Units</source>
-        <translation type="unfinished"></translation>
+        <translation>الوحدات</translation>
     </message>
     <message>
         <source>Frequency</source>
-        <translation type="unfinished"></translation>
+        <translation>تردد</translation>
     </message>
     <message>
         <source>Length</source>
-        <translation type="unfinished"></translation>
+        <translation>طول</translation>
     </message>
     <message>
         <source>Resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>المقاومة</translation>
     </message>
     <message>
         <source>Angle</source>
-        <translation type="unfinished"></translation>
+        <translation>الزاوية</translation>
     </message>
     <message>
         <source>Save as Default</source>
-        <translation type="unfinished"></translation>
+        <translation>وباستثناء ما الافتراضي</translation>
     </message>
     <message>
         <source>Dismiss</source>
-        <translation type="unfinished"></translation>
+        <translation>فصل</translation>
     </message>
 </context>
 <context>
     <name>PackageDialog</name>
     <message>
         <source>Create Project Package</source>
-        <translation type="unfinished"></translation>
+        <translation>إنشاء المجلد</translation>
     </message>
     <message>
         <source>Package:</source>
-        <translation type="unfinished"></translation>
+        <translation>المجلد:</translation>
     </message>
     <message>
         <source>Browse</source>
-        <translation type="unfinished"></translation>
+        <translation>تصفح</translation>
     </message>
     <message>
         <source>include user libraries</source>
-        <translation type="unfinished"></translation>
+        <translation>تشمل المستخدم والمكتبات</translation>
     </message>
     <message>
         <source>Choose projects:</source>
-        <translation type="unfinished"></translation>
+        <translation>اختيار المشاريع :</translation>
     </message>
     <message>
         <source>Create</source>
-        <translation type="unfinished"></translation>
+        <translation>إنشاء</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>إلغاء</translation>
     </message>
     <message>
         <source>No projects!</source>
-        <translation type="unfinished"></translation>
+        <translation>لا مشاريع!</translation>
     </message>
     <message>
         <source>Extract Project Package</source>
-        <translation type="unfinished"></translation>
+        <translation>استخراج مجلد</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>غلق</translation>
     </message>
     <message>
         <source>Qucs Packages</source>
-        <translation type="unfinished"></translation>
+        <translation>مجلد Qucs</translation>
     </message>
     <message>
         <source>Any File</source>
-        <translation type="unfinished"></translation>
+        <translation>أية ملفات</translation>
     </message>
     <message>
         <source>Enter a Package File Name</source>
-        <translation type="unfinished"></translation>
+        <translation>أدخل اسم المجلد</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>خطأ</translation>
     </message>
     <message>
         <source>Cannot open &quot;%1&quot;!</source>
-        <translation type="unfinished"></translation>
+        <translation>لا نستطيع فتح &quot;%1!</translation>
     </message>
     <message>
         <source>Please insert a package name!</source>
-        <translation type="unfinished"></translation>
+        <translation>أدخل اسم المجلد!</translation>
     </message>
     <message>
         <source>Please choose at least one project!</source>
-        <translation type="unfinished"></translation>
+        <translation>اختيار مشروع واحد على الأقل !</translation>
     </message>
     <message>
         <source>Info</source>
-        <translation type="unfinished"></translation>
+        <translation>معلومات</translation>
     </message>
     <message>
         <source>Output file already exists!</source>
-        <translation type="unfinished"></translation>
+        <translation>الناتج الملف موجود بالفعل!</translation>
     </message>
     <message>
         <source>Overwrite it?</source>
-        <translation type="unfinished"></translation>
+        <translation>فوق ذلك؟</translation>
     </message>
     <message>
         <source>&amp;Yes</source>
-        <translation type="unfinished"></translation>
+        <translation>‏&amp;نعم</translation>
     </message>
     <message>
         <source>&amp;No</source>
-        <translation type="unfinished"></translation>
+        <translation>‏&amp;موافق</translation>
     </message>
     <message>
         <source>Cannot create package!</source>
-        <translation type="unfinished"></translation>
+        <translation>غير قادر على إنشاء المجلد!</translation>
     </message>
     <message>
         <source>Successfully created Qucs package!</source>
-        <translation type="unfinished"></translation>
+        <translation>نجحت في انشاء المجلد!</translation>
     </message>
     <message>
         <source>ERROR: Cannot open package!</source>
-        <translation type="unfinished"></translation>
+        <translation>خطأ : لا يمكن فتح المجلد!</translation>
     </message>
     <message>
         <source>ERROR: File contains wrong header!</source>
-        <translation type="unfinished"></translation>
+        <translation>خطأ : ملف يحتوي على خطأ في البداية!</translation>
     </message>
     <message>
         <source>ERROR: Wrong version number!</source>
-        <translation type="unfinished"></translation>
+        <translation>خطأ : رقم الإصدار غير صحيح!</translation>
     </message>
     <message>
         <source>ERROR: Checksum mismatch!</source>
-        <translation type="unfinished"></translation>
+        <translation>خطأ : تأكد من المبلغ!</translation>
     </message>
     <message>
         <source>Leave directory &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>خروج الدليل &quot;%&quot;1&quot;</translation>
     </message>
     <message>
         <source>ERROR: Package is corrupt!</source>
-        <translation type="unfinished"></translation>
+        <translation>خطأ : المجلد معطل!</translation>
     </message>
     <message>
         <source>Successfully extracted package!</source>
-        <translation type="unfinished"></translation>
+        <translation>انتزعت المجموعة بنجاح!</translation>
     </message>
     <message>
         <source>ERROR: Project directory &quot;%1&quot; already exists!</source>
-        <translation type="unfinished"></translation>
+        <translation>خطأ : مشروع الدليل &quot;٪ 1&quot; موجود من قبل!</translation>
     </message>
     <message>
         <source>ERROR: Cannot create directory &quot;%1&quot;!</source>
-        <translation type="unfinished"></translation>
+        <translation>خطأ : تعذر إنشاء الدليل &quot;٪ 1&quot; ا!</translation>
     </message>
     <message>
         <source>Create and enter directory &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>خلق وفتح الدليل &quot;٪ 1&quot;</translation>
     </message>
     <message>
         <source>ERROR: Cannot create file &quot;%1&quot;!</source>
-        <translation type="unfinished"></translation>
+        <translation>خطأ : لا يمكن إنشاء الملف &quot;٪ 1&quot;!</translation>
     </message>
     <message>
         <source>Create file &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>يخلق الملف &quot;٪ 1&quot;</translation>
     </message>
     <message>
         <source>ERROR: User library &quot;%1&quot; already exists!</source>
-        <translation type="unfinished"></translation>
+        <translation>خطأ : مكتبة المستخدم &quot;٪ 1&quot; موجود بالفعل!</translation>
     </message>
     <message>
         <source>ERROR: Cannot create library &quot;%1&quot;!</source>
-        <translation type="unfinished"></translation>
+        <translation>خطأ : تعذر إنشاء مكتبة &quot;٪ 1&quot;!</translation>
     </message>
     <message>
         <source>Create library &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>إنشاء مكتبة &quot;٪ 1&quot;</translation>
     </message>
 </context>
 <context>
     <name>QObject</name>
     <message>
         <source>Warning</source>
-        <translation type="unfinished"></translation>
+        <translation>تحذير</translation>
     </message>
     <message>
         <source>Cannot save settings !</source>
-        <translation type="unfinished"></translation>
+        <translation>لا يمكن حفظ الإعدادات!</translation>
     </message>
     <message>
         <source>Error: Wrong time format in &quot;%1&quot;. Use positive number with units</source>
-        <translation type="unfinished"></translation>
+        <translation>خطأ : الوقت غير ملائم في شكل&quot;%1&quot;. استخدامالإجابي لعدد الوحدات</translation>
     </message>
     <message>
         <source>Edit Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>تعديل خصائص</translation>
     </message>
     <message>
         <source>power matching</source>
-        <translation type="unfinished"></translation>
+        <translation>مطابقة الإشعال</translation>
     </message>
     <message>
         <source>noise matching</source>
-        <translation type="unfinished"></translation>
+        <translation>مطابقة الضوضاء </translation>
     </message>
     <message>
         <source>2-port matching</source>
-        <translation type="unfinished"></translation>
+        <translation> مطابقة2-port  </translation>
     </message>
     <message>
         <source>Info</source>
-        <translation type="unfinished"></translation>
+        <translation>معلومات</translation>
     </message>
     <message>
         <source>The ground potential cannot be labeled!</source>
-        <translation type="unfinished"></translation>
+        <translation>المحتملة في الميدان لا يمكن أن توصف!</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>خطأ</translation>
     </message>
     <message>
         <source>Cannot create output file!</source>
-        <translation type="unfinished"></translation>
+        <translation>لا يمكن إنشاء ملف الانتاج!</translation>
     </message>
     <message>
         <source>untitled</source>
-        <translation type="unfinished"></translation>
+        <translation>بدون عنوان</translation>
     </message>
     <message>
         <source>Format Error:
 &apos;Painting&apos; field is not closed!</source>
-        <translation type="unfinished"></translation>
+        <translation>خطأ في الشكل :
+الطلاء الميدانية ليست مغلقة!</translation>
     </message>
     <message>
         <source>Wrong document version: </source>
-        <translation type="unfinished"></translation>
+        <translation>  الخطأ في إصدار الوثيقة :</translation>
     </message>
     <message>
         <source>Clipboard Format Error:
 Unknown field!</source>
-        <translation type="unfinished"></translation>
+        <translation> خطأ  في شكل الحافظة:
+ميدان مجهول!</translation>
     </message>
     <message>
         <source>Cannot save document!</source>
-        <translation type="unfinished"></translation>
+        <translation>لا يمكن حفظ الوثيقة!</translation>
     </message>
     <message>
         <source>Format Error:
 Wrong property field limiter!</source>
-        <translation type="unfinished"></translation>
+        <translation>خطأ في الشكل :
+خطأ مجال الملكية المحدد!</translation>
     </message>
     <message>
         <source>Format Error:
 Unknown property: </source>
-        <translation type="unfinished"></translation>
+        <translation>خطأ في الشكل :
+خصائص غير معروف :</translation>
     </message>
     <message>
         <source>Format Error:
 Number expected in property field!</source>
-        <translation type="unfinished"></translation>
+        <translation>خطأ في الشكل :
+العدد المتوقع في مجال الملكية!</translation>
     </message>
     <message>
         <source>Format Error:
 &apos;Property&apos; field is not closed!</source>
-        <translation type="unfinished"></translation>
+        <translation>خطأ في الشكل :
+الخصائص الميدانية ليست مغلقة!</translation>
     </message>
     <message>
         <source>Format Error:
 &apos;Component&apos; field is not closed!</source>
-        <translation type="unfinished"></translation>
+        <translation>خطأ في الشكل :
+الطلاء الميدانية ليست مغلقة!</translation>
     </message>
     <message>
         <source>Format Error:
 Wrong &apos;wire&apos; line format!</source>
-        <translation type="unfinished"></translation>
+        <translation>خطأ في الشكل :
+خطأ شكل الخط &apos;سلك&apos; !</translation>
     </message>
     <message>
         <source>Format Error:
 &apos;Wire&apos; field is not closed!</source>
-        <translation type="unfinished"></translation>
+        <translation>خطأ في الشكل :
+ الحقل&apos;&apos;سلك الميدانية ليس مغلق!</translation>
     </message>
     <message>
         <source>Format Error:
 Unknown diagram!</source>
-        <translation type="unfinished"></translation>
+        <translation>خطأ في الشكل :
+رسم بياني غير معروفة!</translation>
     </message>
     <message>
         <source>Format Error:
 Wrong &apos;diagram&apos; line format!</source>
-        <translation type="unfinished"></translation>
+        <translation>خطأ في الشكل :
+خطأ  في شكل خط &apos;الرسم البياني&apos;  !</translation>
     </message>
     <message>
         <source>Format Error:
 &apos;Diagram&apos; field is not closed!</source>
-        <translation type="unfinished"></translation>
+        <translation>خطأ في الشكل :
+ حقل &apos;الرسم البياني&apos; ليس مغلق!</translation>
     </message>
     <message>
         <source>Format Error:
 Wrong &apos;painting&apos; line delimiter!</source>
-        <translation type="unfinished"></translation>
+        <translation>خطأ في الشكل :
+خطأ &apos;لوحة&apos; خط محدد!</translation>
     </message>
     <message>
         <source>Format Error:
 Unknown painting!</source>
-        <translation type="unfinished"></translation>
+        <translation>خطأ في الشكل :
+لوحة غير معروفة!</translation>
     </message>
     <message>
         <source>Format Error:
 Wrong &apos;painting&apos; line format!</source>
-        <translation type="unfinished"></translation>
+        <translation>خطأ في الشكل :
+خطأ &apos;لوحة&apos; خط محدد!</translation>
     </message>
     <message>
         <source>Cannot load document: </source>
-        <translation type="unfinished"></translation>
+        <translation>لا يمكن تحميل الوثيقة :</translation>
     </message>
     <message>
         <source>Wrong document type: </source>
-        <translation type="unfinished"></translation>
+        <translation>خطأ نوع الوثيقة :</translation>
     </message>
     <message>
         <source>File Format Error:
 Unknown field!</source>
-        <translation type="unfinished"></translation>
+        <translation>خطأ في تنسيق ملف :حقل مجهول!</translation>
     </message>
     <message>
         <source>ERROR: Component &quot;%1&quot; has no analog model.</source>
-        <translation type="unfinished"></translation>
+        <translation>خطأ : العنصر &quot;٪ 1&quot; ليس لديها نموذج التناظرية.</translation>
     </message>
     <message>
         <source>ERROR: Component &quot;%1&quot; has no digital model.</source>
-        <translation type="unfinished"></translation>
+        <translation>خطأ : العنصر &quot;٪ 1&quot; ليس لديها نموذج رقمي.</translation>
     </message>
     <message>
         <source>ERROR: Cannot load subcircuit &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>خطأ : لا يمكن تحميل subcircuit &quot;٪ 1&quot;.</translation>
     </message>
     <message>
         <source>WARNING: Skipping library component &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>تحذير : مكتبة تخطي عنصر &quot;٪ 1&quot;.</translation>
     </message>
     <message>
         <source>ERROR: Cannot load library component &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>خطأ : لا يمكن تحميل مكتبة عنصر &quot;٪ 1&quot;.</translation>
     </message>
     <message>
         <source>ERROR: No file name in SPICE component &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>خطأ : لا يوجد اسم الملف في عنصر SPICE  في &quot;٪ 1&quot;.</translation>
     </message>
     <message>
         <source>ERROR: No file name in %1 component &quot;%2&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>خطأ : لايوجد اسم الملف من %1  العنصر &quot;٪ 2&quot;.</translation>
     </message>
     <message>
         <source>WARNING: Ignore simulation component in subcircuit &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>تحذير : تجاهل عنصر المحاكاة في subcircuit &quot;٪ 1&quot;.</translation>
     </message>
     <message>
         <source>ERROR: Only one digital simulation allowed.</source>
-        <translation type="unfinished"></translation>
+        <translation>خطأ : واحد فقط يسمح المحاكاة الرقمية.</translation>
     </message>
     <message>
         <source>ERROR: Analog and digital simulations cannot be mixed.</source>
-        <translation type="unfinished"></translation>
+        <translation>خطأ : النظير والمحاكاة الرقمية لا يمكن أن تكون مختلطة.</translation>
     </message>
     <message>
         <source>ERROR: Digital simulation needs at least one digital source.</source>
-        <translation type="unfinished"></translation>
+        <translation>خطأ : المحاكاة الرقمية للاحتياجات واحد على الأقل الرقمية المصدر.</translation>
     </message>
     <message>
         <source>Arrow</source>
-        <translation type="unfinished"></translation>
+        <translation>السهم</translation>
     </message>
     <message>
         <source>Elliptic Arc</source>
-        <translation type="unfinished"></translation>
+        <translation>Elliptic Arc</translation>
     </message>
     <message>
         <source>Edit Arc Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>تعديل خصائص القوس</translation>
     </message>
     <message>
         <source>Ellipse</source>
-        <translation type="unfinished"></translation>
+        <translation>القطع الناقص</translation>
     </message>
     <message>
         <source>filled Ellipse</source>
-        <translation type="unfinished"></translation>
+        <translation>شغل القطع الناقص</translation>
     </message>
     <message>
         <source>Edit Ellipse Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>تعديل خصائص القطع الناقص</translation>
     </message>
     <message>
         <source>Line</source>
-        <translation type="unfinished"></translation>
+        <translation>الخط</translation>
     </message>
     <message>
         <source>Edit Line Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>تعديل خصائص الخط</translation>
     </message>
     <message>
         <source>Text</source>
-        <translation type="unfinished"></translation>
+        <translation>النص</translation>
     </message>
     <message>
         <source>Rectangle</source>
-        <translation type="unfinished"></translation>
+        <translation>المستطيل</translation>
     </message>
     <message>
         <source>filled Rectangle</source>
-        <translation type="unfinished"></translation>
+        <translation>شغل مستطيل</translation>
     </message>
     <message>
         <source>Edit Rectangle Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>تعديل خصائص مستطيل</translation>
     </message>
     <message>
         <source>Locus Curve</source>
-        <translation type="unfinished"></translation>
+        <translation>المكان المنحن</translation>
     </message>
     <message>
         <source>invalid</source>
-        <translation type="unfinished"></translation>
+        <translation>غير صحيح</translation>
     </message>
     <message>
         <source>Polar</source>
-        <translation type="unfinished"></translation>
+        <translation>القطبي</translation>
     </message>
     <message>
         <source>Polar-Smith Combi</source>
-        <translation type="unfinished"></translation>
+        <translation>Polar-Smith Combi</translation>
     </message>
     <message>
         <source>Smith-Polar Combi</source>
-        <translation type="unfinished"></translation>
+        <translation>Smith-Polar Combi</translation>
     </message>
     <message>
         <source>3D-Cartesian</source>
-        <translation type="unfinished"></translation>
+        <translation>3D - ديكارت</translation>
     </message>
     <message>
         <source>Cartesian</source>
-        <translation type="unfinished"></translation>
+        <translation>ديكارت</translation>
     </message>
     <message>
         <source>Smith Chart</source>
-        <translation type="unfinished"></translation>
+        <translation>سميث الرسم البياني</translation>
     </message>
     <message>
         <source>Admittance Smith</source>
-        <translation type="unfinished"></translation>
+        <translation>القبول سميث</translation>
     </message>
     <message>
         <source>no variables</source>
-        <translation type="unfinished"></translation>
+        <translation>لا متغيرات</translation>
     </message>
     <message>
         <source>wrong dependency</source>
-        <translation type="unfinished"></translation>
+        <translation>من الخطأ الاعتماد</translation>
     </message>
     <message>
         <source>no data</source>
-        <translation type="unfinished"></translation>
+        <translation>لا توجد بيانات</translation>
     </message>
     <message>
         <source>Tabular</source>
-        <translation type="unfinished"></translation>
+        <translation>مجدول</translation>
     </message>
     <message>
         <source>Timing Diagram</source>
-        <translation type="unfinished"></translation>
+        <translation>توقيت الشكل البياني</translation>
     </message>
     <message>
         <source>Truth Table</source>
-        <translation type="unfinished"></translation>
+        <translation>الجدول الحقيقة </translation>
     </message>
     <message>
         <source>ac simulation</source>
-        <translation type="unfinished"></translation>
+        <translation>تمثيل خاص بالمنحنى</translation>
     </message>
     <message>
         <source>sweep type</source>
-        <translation type="unfinished"></translation>
+        <translation>حملة من النوع</translation>
     </message>
     <message>
         <source>start frequency in Hertz</source>
-        <translation type="unfinished"></translation>
+        <translation>بداية تردد   هيرتز</translation>
     </message>
     <message>
         <source>stop frequency in Hertz</source>
-        <translation type="unfinished"></translation>
+        <translation>بهاية تردد   هيرتز</translation>
     </message>
     <message>
         <source>number of simulation steps</source>
-        <translation type="unfinished"></translation>
+        <translation>عدد مرات التمثيل</translation>
     </message>
     <message>
         <source>calculate noise voltages</source>
-        <translation type="unfinished"></translation>
+        <translation>حساب ضوضاء الفولتية </translation>
     </message>
     <message>
         <source>ac voltage source with amplitude modulator</source>
-        <translation type="unfinished"></translation>
+        <translation>مصدر السعة المغير في الموجة الكهرومغناطيسية</translation>
     </message>
     <message>
         <source>AM</source>
-        <translation type="unfinished"></translation>
+        <translation>AM</translation>
     </message>
     <message>
         <source>peak voltage in Volts</source>
-        <translation type="unfinished"></translation>
+        <translation>ذروة الجهد فولت</translation>
     </message>
     <message>
         <source>frequency in Hertz</source>
-        <translation type="unfinished"></translation>
+        <translation>تردد في هيرتز</translation>
     </message>
     <message>
         <source>initial phase in degrees</source>
-        <translation type="unfinished"></translation>
+        <translation>المرحلة الأولى في درجات</translation>
     </message>
     <message>
         <source>modulation level</source>
-        <translation type="unfinished"></translation>
+        <translation>تعديل المستوى</translation>
     </message>
     <message>
         <source>AM modulated Source</source>
-        <translation type="unfinished"></translation>
+        <translation>المصدر AM التضمي</translation>
     </message>
     <message>
         <source>ideal ac current source</source>
-        <translation type="unfinished"></translation>
+        <translation>مصدر  المنحنى المثالي الحالي</translation>
     </message>
     <message>
         <source>peak current in Ampere</source>
-        <translation type="unfinished"></translation>
+        <translation>ذروة الحالية لأمبير</translation>
     </message>
     <message>
         <source>damping factor (transient simulation only)</source>
-        <translation type="unfinished"></translation>
+        <translation>التخميد عامل (المحاكاة عابرة فقط) ق</translation>
     </message>
     <message>
         <source>ac Current Source</source>
-        <translation type="unfinished"></translation>
+        <translation>مصدر المنحنى الحالي</translation>
     </message>
     <message>
         <source>ideal dc current source</source>
-        <translation type="unfinished"></translation>
+        <translation> دس  المثالي المصدر الحالية</translation>
     </message>
     <message>
         <source>current in Ampere</source>
-        <translation type="unfinished"></translation>
+        <translation>الحالي في أمبير</translation>
     </message>
     <message>
         <source>dc Current Source</source>
-        <translation type="unfinished"></translation>
+        <translation>مصدر دس  الحالي</translation>
     </message>
     <message>
         <source>noise current source</source>
-        <translation type="unfinished"></translation>
+        <translation>مصدر الضجيج الحال</translation>
     </message>
     <message>
         <source>current power spectral density in A^2/Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>السلطة الحالية في الكثافة في  A^2/Hz</translation>
     </message>
     <message>
         <source>frequency exponent</source>
-        <translation type="unfinished"></translation>
+        <translation>تردد الأس</translation>
     </message>
     <message>
         <source>frequency coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>معامل التردد </translation>
     </message>
     <message>
         <source>additive frequency term</source>
-        <translation type="unfinished"></translation>
+        <translation>تردد مصطلح المضافة</translation>
     </message>
     <message>
         <source>Noise Current Source</source>
-        <translation type="unfinished"></translation>
+        <translation>مصدر الضجيج الحال</translation>
     </message>
     <message>
         <source>ideal amplifier</source>
-        <translation type="unfinished"></translation>
+        <translation>مثالية مكبر للصوت</translation>
     </message>
     <message>
         <source>voltage gain</source>
-        <translation type="unfinished"></translation>
+        <translation> كسب الفولت</translation>
     </message>
     <message>
         <source>reference impedance of input port</source>
-        <translation type="unfinished"></translation>
+        <translation>إشارة المقاومة لمنفذ المدخلات</translation>
     </message>
     <message>
         <source>reference impedance of output port</source>
-        <translation type="unfinished"></translation>
+        <translation>إشارة المقاومة لمنفذ النتائج</translation>
     </message>
     <message>
         <source>noise figure</source>
-        <translation type="unfinished"></translation>
+        <translation> شكل التشويش</translation>
     </message>
     <message>
         <source>Amplifier</source>
-        <translation type="unfinished"></translation>
+        <translation>المكبر</translation>
     </message>
     <message>
         <source>attenuator</source>
-        <translation type="unfinished"></translation>
+        <translation>المخفف</translation>
     </message>
     <message>
         <source>power attenuation</source>
-        <translation type="unfinished"></translation>
+        <translation>شدة التخفيف</translation>
     </message>
     <message>
         <source>reference impedance</source>
-        <translation type="unfinished"></translation>
+        <translation>إشارة المعاوقة الكهربائية</translation>
     </message>
     <message>
         <source>simulation temperature in degree Celsius</source>
-        <translation type="unfinished"></translation>
+        <translation>محاكاة درجات الحرارة في درجة مئوية تحت الصفر</translation>
     </message>
     <message>
         <source>Attenuator</source>
-        <translation type="unfinished"></translation>
+        <translation>المخفف</translation>
     </message>
     <message>
         <source>bias t</source>
-        <translation type="unfinished"></translation>
+        <translation>إنحياز  ت</translation>
     </message>
     <message>
         <source>for transient simulation: inductance in Henry</source>
-        <translation type="unfinished"></translation>
+        <translation>للمحاكات الزائلة: تأثير هنرى </translation>
     </message>
     <message>
         <source>for transient simulation: capacitance in Farad</source>
-        <translation type="unfinished"></translation>
+        <translation>للمحاكات الزائلة: سعة المكثف فاراد </translation>
     </message>
     <message>
         <source>Bias T</source>
-        <translation type="unfinished"></translation>
+        <translation>إنحياز  ت</translation>
     </message>
     <message>
         <source>bipolar junction transistor</source>
-        <translation type="unfinished"></translation>
+        <translation>القطب تقاطع ترانزستور </translation>
     </message>
     <message>
         <source>npn transistor</source>
-        <translation type="unfinished"></translation>
+        <translation>npn ترانزستور </translation>
     </message>
     <message>
         <source>pnp transistor</source>
-        <translation type="unfinished"></translation>
+        <translation>pnp ترانزستور </translation>
     </message>
     <message>
         <source>polarity</source>
-        <translation type="unfinished"></translation>
+        <translation>قطبية </translation>
     </message>
     <message>
         <source>saturation current</source>
-        <translation type="unfinished"></translation>
+        <translation>التشبع  الحالي</translation>
     </message>
     <message>
         <source>forward emission coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>تقدم معامل إرتباط </translation>
     </message>
     <message>
         <source>reverse emission coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>إنعكاس معامل إرتباط</translation>
     </message>
     <message>
         <source>high current corner for forward beta</source>
-        <translation type="unfinished"></translation>
+        <translation>الركن الحالي مرتفع  إلى الأمام &quot;بيتا&quot;</translation>
     </message>
     <message>
         <source>high current corner for reverse beta</source>
-        <translation type="unfinished"></translation>
+        <translation>الركن الحالي مرتفع  إلى العكس &quot;بيتا&quot;</translation>
     </message>
     <message>
         <source>forward early voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>تقدم أولي للتيار الكهربائي</translation>
     </message>
     <message>
         <source>reverse early voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>إنعكاس للتيار الكهربائي</translation>
     </message>
     <message>
         <source>base-emitter leakage saturation current</source>
-        <translation type="unfinished"></translation>
+        <translation>الأساس مصدر للانبعاثات تشبع التسرب الحالي</translation>
     </message>
     <message>
         <source>base-emitter leakage emission coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>الأساس مصدر للانبعاثات تسرب الانبعاثات المعامل</translation>
     </message>
     <message>
         <source>base-collector leakage saturation current</source>
-        <translation type="unfinished"></translation>
+        <translation>الأساس المجمع تشبع التسرب الحالي</translation>
     </message>
     <message>
         <source>base-collector leakage emission coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>الأساس المجمع تسرب الانبعاثات المعامل</translation>
     </message>
     <message>
         <source>forward beta</source>
-        <translation type="unfinished"></translation>
+        <translation>إلى الأمام بيتا</translation>
     </message>
     <message>
         <source>reverse beta</source>
-        <translation type="unfinished"></translation>
+        <translation>إلى الخلف بيتا</translation>
     </message>
     <message>
         <source>minimum base resistance for high currents</source>
-        <translation type="unfinished"></translation>
+        <translation>قاعدة الحد الأدنى لمقاومة التيارات عالية</translation>
     </message>
     <message>
         <source>current for base resistance midpoint</source>
-        <translation type="unfinished"></translation>
+        <translation>الحالية للقاعدة المقاومة نقطة الوسط</translation>
     </message>
     <message>
         <source>collector ohmic resistance</source>
-        <translation type="unfinished"></translation>
+        <translation> مجمع المقاومةohmic </translation>
     </message>
     <message>
         <source>emitter ohmic resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>مصدر للانبعاثات ohmic المقاومة</translation>
     </message>
     <message>
         <source>zero-bias base resistance (may be high-current dependent)</source>
-        <translation type="unfinished"></translation>
+        <translation> التحيز معدوم كقاعدة للمقاومة (قد تكون عالية الحالية التي تعتمد)</translation>
     </message>
     <message>
         <source>base-emitter zero-bias depletion capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>باعث الأساس الصفري التحيز استنزاف مواسعة</translation>
     </message>
     <message>
         <source>base-emitter junction built-in potential</source>
-        <translation type="unfinished"></translation>
+        <translation>باعث تقاطع الأساس في البناء المحتملة</translation>
     </message>
     <message>
         <source>base-emitter junction exponential factor</source>
-        <translation type="unfinished"></translation>
+        <translation>الأساس عامل باعث تقاطع الأسي</translation>
     </message>
     <message>
         <source>base-collector zero-bias depletion capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>قاعدة الجمع بين الصفر التحيز استنزاف مواسعة</translation>
     </message>
     <message>
         <source>base-collector junction built-in potential</source>
-        <translation type="unfinished"></translation>
+        <translation>قاعدة الجمع بين مفرق مدمجة  المحتملة</translation>
     </message>
     <message>
         <source>base-collector junction exponential factor</source>
-        <translation type="unfinished"></translation>
+        <translation>قاعدة الجمع بين مفرق عامل الأسي </translation>
     </message>
     <message>
         <source>fraction of Cjc that goes to internal base pin</source>
-        <translation type="unfinished"></translation>
+        <translation>جزء من س ج س الداخلي الذي يذهب الى قاعدة دبوس </translation>
     </message>
     <message>
         <source>zero-bias collector-substrate capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>التحيز صفر بين الجمع  الركازة مواسعة</translation>
     </message>
     <message>
         <source>substrate junction built-in potential</source>
-        <translation type="unfinished"></translation>
+        <translation>الركازة تقاطع المدمج في المحتملة</translation>
     </message>
     <message>
         <source>substrate junction exponential factor</source>
-        <translation type="unfinished"></translation>
+        <translation>الركازة عامل مفرق الأسي</translation>
     </message>
     <message>
         <source>forward-bias depletion capacitance coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>إلى الأمام التحيز معامل استنفاد مواسعة</translation>
     </message>
     <message>
         <source>ideal forward transit time</source>
-        <translation type="unfinished"></translation>
+        <translation>وقت عبور مثالية للمضي قدما</translation>
     </message>
     <message>
         <source>coefficient of bias-dependence for Tf</source>
-        <translation type="unfinished"></translation>
+        <translation>معامل التحيز الاعتماد لTf</translation>
     </message>
     <message>
         <source>voltage dependence of Tf on base-collector voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>Tf من الجهد والاعتماد على قاعدة الجمع بين الجهد</translation>
     </message>
     <message>
         <source>high-current effect on Tf</source>
-        <translation type="unfinished"></translation>
+        <translation>العالية الحالية تأثير على Tf</translation>
     </message>
     <message>
         <source>ideal reverse transit time</source>
-        <translation type="unfinished"></translation>
+        <translation>عكس المثل وقت العبور</translation>
     </message>
     <message>
         <source>flicker noise coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>خفق  معامل التشويش</translation>
     </message>
     <message>
         <source>flicker noise exponent</source>
-        <translation type="unfinished"></translation>
+        <translation>خفق  معامل الأسي</translation>
     </message>
     <message>
         <source>flicker noise frequency exponent</source>
-        <translation type="unfinished"></translation>
+        <translation>خفق  معامل التردد الأسي</translation>
     </message>
     <message>
         <source>burst noise coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>تفريق  معامل التشويش</translation>
     </message>
     <message>
         <source>burst noise exponent</source>
-        <translation type="unfinished"></translation>
+        <translation>تفريق  تشويش الأسي</translation>
     </message>
     <message>
         <source>burst noise corner frequency in Hertz</source>
-        <translation type="unfinished"></translation>
+        <translation>تفريق  تشويش التردد في الزاوية هيرتز</translation>
     </message>
     <message>
         <source>excess phase in degrees</source>
-        <translation type="unfinished"></translation>
+        <translation>المرحلة التي تتجاوز درجات</translation>
     </message>
     <message>
         <source>temperature exponent for forward- and reverse beta</source>
-        <translation type="unfinished"></translation>
+        <translation>الأس لدرجة الحرارة الى الامام وعكس بيتا</translation>
     </message>
     <message>
         <source>saturation current temperature exponent</source>
-        <translation type="unfinished"></translation>
+        <translation>التشبع درجة الحرارة الحالية الأس</translation>
     </message>
     <message>
         <source>energy bandgap in eV</source>
-        <translation type="unfinished"></translation>
+        <translation>فرق في الطاقة eV</translation>
     </message>
     <message>
         <source>temperature at which parameters were extracted</source>
-        <translation type="unfinished"></translation>
+        <translation>درجة الحرارة التي قد انتزعت البارامترات</translation>
     </message>
     <message>
         <source>default area for bipolar transistor</source>
-        <translation type="unfinished"></translation>
+        <translation>الافتراضي لمنطقة القطبين الترانزستور</translation>
     </message>
     <message>
         <source>bipolar junction transistor with substrate</source>
-        <translation type="unfinished"></translation>
+        <translation>الترانزستور الثنائي القطب تقاطع مع الركازة</translation>
     </message>
     <message>
         <source>bond wire</source>
-        <translation type="unfinished"></translation>
+        <translation>وصلة السلك</translation>
     </message>
     <message>
         <source>length of the wire</source>
-        <translation type="unfinished"></translation>
+        <translation>طول السلك</translation>
     </message>
     <message>
         <source>diameter of the wire</source>
-        <translation type="unfinished"></translation>
+        <translation>قطر السلك</translation>
     </message>
     <message>
         <source>height above ground plane</source>
-        <translation type="unfinished"></translation>
+        <translation>ارتفاع  فوق سطح الأرض</translation>
     </message>
     <message>
         <source>specific resistance of the metal</source>
-        <translation type="unfinished"></translation>
+        <translation>المقاومة المحددة للمعدن</translation>
     </message>
     <message>
         <source>relative permeability of the metal</source>
-        <translation type="unfinished"></translation>
+        <translation>النفاذية النسبية للمعدن</translation>
     </message>
     <message>
         <source>bond wire model</source>
-        <translation type="unfinished"></translation>
+        <translation>نموذج وصلة السلك</translation>
     </message>
     <message>
         <source>substrate</source>
-        <translation type="unfinished"></translation>
+        <translation>مادة </translation>
     </message>
     <message>
         <source>Bond Wire</source>
-        <translation type="unfinished"></translation>
+        <translation>وصلة السلك</translation>
     </message>
     <message>
         <source>capacitor</source>
-        <translation type="unfinished"></translation>
+        <translation>مكثف </translation>
     </message>
     <message>
         <source>capacitance in Farad</source>
-        <translation type="unfinished"></translation>
+        <translation>مواسعة في الفاراد</translation>
     </message>
     <message>
         <source>initial voltage for transient simulation</source>
-        <translation type="unfinished"></translation>
+        <translation>لجهد الأولي لمحاكاة عابرة</translation>
     </message>
     <message>
         <source>schematic symbol</source>
-        <translation type="unfinished"></translation>
+        <translation>الرمز التخطيطي</translation>
     </message>
     <message>
         <source>Capacitor</source>
-        <translation type="unfinished"></translation>
+        <translation>مكثف </translation>
     </message>
     <message>
         <source>current controlled current source</source>
-        <translation type="unfinished"></translation>
+        <translation> تسيطر  المنبع الحالي</translation>
     </message>
     <message>
         <source>forward transfer factor</source>
-        <translation type="unfinished"></translation>
+        <translation>نقل العامل الى الامام</translation>
     </message>
     <message>
         <source>delay time</source>
-        <translation type="unfinished"></translation>
+        <translation>تأخر الوقت</translation>
     </message>
     <message>
         <source>Current Controlled Current Source</source>
-        <translation type="unfinished"></translation>
+        <translation> تسيطر  المنبع الحالي</translation>
     </message>
     <message>
         <source>current controlled voltage source</source>
-        <translation type="unfinished"></translation>
+        <translation>تسيطر  منبع الفولتاج</translation>
     </message>
     <message>
         <source>Current Controlled Voltage Source</source>
-        <translation type="unfinished"></translation>
+        <translation>تسيطر  منبع الفولتاج</translation>
     </message>
     <message>
         <source>circulator</source>
-        <translation type="unfinished"></translation>
+        <translation>شكل دائري</translation>
     </message>
     <message>
         <source>reference impedance of port 1</source>
-        <translation type="unfinished"></translation>
+        <translation>إشارة المقاومة لمنفذ 1</translation>
     </message>
     <message>
         <source>reference impedance of port 2</source>
-        <translation type="unfinished"></translation>
+        <translation>إشارة المقاومة لمنفذ 2</translation>
     </message>
     <message>
         <source>reference impedance of port 3</source>
-        <translation type="unfinished"></translation>
+        <translation>إشارة المقاومة لمنفذ 3</translation>
     </message>
     <message>
         <source>Circulator</source>
-        <translation type="unfinished"></translation>
+        <translation>شكل دائري</translation>
     </message>
     <message>
         <source>coaxial transmission line</source>
-        <translation type="unfinished"></translation>
+        <translation>خط الإرسال كواكسيال</translation>
     </message>
     <message>
         <source>relative permittivity of dielectric</source>
-        <translation type="unfinished"></translation>
+        <translation>النفاذية النسبية للعازل كهربائي </translation>
     </message>
     <message>
         <source>specific resistance of conductor</source>
-        <translation type="unfinished"></translation>
+        <translation>المقاومة المحددة للموصل </translation>
     </message>
     <message>
         <source>relative permeability of conductor</source>
-        <translation type="unfinished"></translation>
+        <translation>النفاذية النسبية للموصل </translation>
     </message>
     <message>
         <source>inner diameter of shield</source>
-        <translation type="unfinished"></translation>
+        <translation>القطر الداخلي للواقي </translation>
     </message>
     <message>
         <source>diameter of inner conductor</source>
-        <translation type="unfinished"></translation>
+        <translation>  قطر الموصل الداخلي</translation>
     </message>
     <message>
         <source>mechanical length of the line</source>
-        <translation type="unfinished"></translation>
+        <translation>الطول المكانيكي للخط</translation>
     </message>
     <message>
         <source>loss tangent</source>
-        <translation type="unfinished"></translation>
+        <translation>فقدان الظل</translation>
     </message>
     <message>
         <source>Coaxial Line</source>
-        <translation type="unfinished"></translation>
+        <translation>متحد المحور الخط</translation>
     </message>
     <message>
         <source>number of input ports</source>
-        <translation type="unfinished"></translation>
+        <translation>عدد منافذ الدخول</translation>
     </message>
     <message>
         <source>voltage of high level</source>
-        <translation type="unfinished"></translation>
+        <translation>المستوى العالي للفولتاج</translation>
     </message>
     <message>
         <source>Format Error:
 Wrong line start!</source>
-        <translation type="unfinished"></translation>
+        <translation>خطأ في الشكل :
+خطأ في خط البداية&apos; !</translation>
     </message>
     <message>
         <source>Format Error:
 Unknown component!</source>
-        <translation type="unfinished"></translation>
+        <translation>خطأ في الشكل :
+عنصر غير معروف !</translation>
     </message>
     <message>
         <source>Format Error:
 Wrong &apos;component&apos; line format!</source>
-        <translation type="unfinished"></translation>
+        <translation>خطأ في الشكل :
+خطأ في العنصر شكل الخط!</translation>
     </message>
     <message>
         <source>coplanar line</source>
-        <translation type="unfinished"></translation>
+        <translation>خط متحد المستوى</translation>
     </message>
     <message>
         <source>name of substrate definition</source>
-        <translation type="unfinished"></translation>
+        <translation>تعريف اسم  المادة</translation>
     </message>
     <message>
         <source>width of the line</source>
-        <translation type="unfinished"></translation>
+        <translation>عرض الخط</translation>
     </message>
     <message>
         <source>width of a gap</source>
-        <translation type="unfinished"></translation>
+        <translation>عرض الفجوة</translation>
     </message>
     <message>
         <source>length of the line</source>
-        <translation type="unfinished"></translation>
+        <translation>طول الخط</translation>
     </message>
     <message>
         <source>material at the backside of the substrate</source>
-        <translation type="unfinished"></translation>
+        <translation>لوازم في تأخر المادة</translation>
     </message>
     <message>
         <source>use approximation instead of precise equation</source>
-        <translation type="unfinished"></translation>
+        <translation>استخدام التقريب بدلا من المعادلة الدقيقة</translation>
     </message>
     <message>
         <source>Coplanar Line</source>
-        <translation type="unfinished"></translation>
+        <translation>خط متحد المستوى</translation>
     </message>
     <message>
         <source>ideal coupler</source>
-        <translation type="unfinished"></translation>
+        <translation>الرابط المثالي</translation>
     </message>
     <message>
         <source>coupling factor</source>
-        <translation type="unfinished"></translation>
+        <translation>عامل الربط</translation>
     </message>
     <message>
         <source>phase shift of coupling path in degree</source>
-        <translation type="unfinished"></translation>
+        <translation>مرحلة تحول في مسار درجة اقتران</translation>
     </message>
     <message>
         <source>Coupler</source>
-        <translation type="unfinished"></translation>
+        <translation>الرابط</translation>
     </message>
     <message>
         <source>coplanar gap</source>
-        <translation type="unfinished"></translation>
+        <translation>متحد المستوى الفجوة</translation>
     </message>
     <message>
         <source>width of gap between the two lines</source>
-        <translation type="unfinished"></translation>
+        <translation>عرض الفجوة بين خطين</translation>
     </message>
     <message>
         <source>Coplanar Gap</source>
-        <translation type="unfinished"></translation>
+        <translation>متحد المستوى الفجوة</translation>
     </message>
     <message>
         <source>coplanar open</source>
-        <translation type="unfinished"></translation>
+        <translation>متحد المستوى المفتوح</translation>
     </message>
     <message>
         <source>width of gap at end of line</source>
-        <translation type="unfinished"></translation>
+        <translation>عرض الفجوةفي نهاية الخط</translation>
     </message>
     <message>
         <source>Coplanar Open</source>
-        <translation type="unfinished"></translation>
+        <translation>متحد المستوى المفتوح</translation>
     </message>
     <message>
         <source>coplanar short</source>
-        <translation type="unfinished"></translation>
+        <translation> متحد المستوى صغير</translation>
     </message>
     <message>
         <source>Coplanar Short</source>
-        <translation type="unfinished"></translation>
+        <translation>متحد المستوى صغير</translation>
     </message>
     <message>
         <source>coplanar step</source>
-        <translation type="unfinished"></translation>
+        <translation>خطوة متحد المستوى </translation>
     </message>
     <message>
         <source>width of line 1</source>
-        <translation type="unfinished"></translation>
+        <translation>عرض الخط 1</translation>
     </message>
     <message>
         <source>width of line 2</source>
-        <translation type="unfinished"></translation>
+        <translation>عرض الخط 2</translation>
     </message>
     <message>
         <source>distance between ground planes</source>
-        <translation type="unfinished"></translation>
+        <translation>المسافة بين سطح المستويات</translation>
     </message>
     <message>
         <source>Coplanar Step</source>
-        <translation type="unfinished"></translation>
+        <translation>خطوة متحد المستوى </translation>
     </message>
     <message>
         <source>dc block</source>
-        <translation type="unfinished"></translation>
+        <translation>فك</translation>
     </message>
     <message>
         <source>dc Block</source>
-        <translation type="unfinished"></translation>
+        <translation>فك</translation>
     </message>
     <message>
         <source>dc feed</source>
-        <translation type="unfinished"></translation>
+        <translation>وصول مستمر</translation>
     </message>
     <message>
         <source>dc Feed</source>
-        <translation type="unfinished"></translation>
+        <translation>وصول مستمر</translation>
     </message>
     <message>
         <source>dc simulation</source>
-        <translation type="unfinished"></translation>
+        <translation>محاكاة نقطة التشغيل </translation>
     </message>
     <message>
         <source>relative tolerance for convergence</source>
-        <translation type="unfinished"></translation>
+        <translation>التسامح النسبي للتلاقي</translation>
     </message>
     <message>
         <source>absolute tolerance for currents</source>
-        <translation type="unfinished"></translation>
+        <translation>التسامح المطلق لتيارات</translation>
     </message>
     <message>
         <source>absolute tolerance for voltages</source>
-        <translation type="unfinished"></translation>
+        <translation>التسامح المطلق لالفولتية</translation>
     </message>
     <message>
         <source>put operating points into dataset</source>
-        <translation type="unfinished"></translation>
+        <translation>وضع التشغيل إلى نقاط البيانات</translation>
     </message>
     <message>
         <source>maximum number of iterations until error</source>
-        <translation type="unfinished"></translation>
+        <translation>الحد الأقصى لعدد التكرار حتى الخطأ </translation>
     </message>
     <message>
         <source>save subcircuit nodes into dataset</source>
-        <translation type="unfinished"></translation>
+        <translation>حفظ عقد سوب سركوي    في البيانات</translation>
     </message>
     <message>
         <source>preferred convergence algorithm</source>
-        <translation type="unfinished"></translation>
+        <translation>خوارزمية التقارب المفضلة</translation>
     </message>
     <message>
         <source>method for solving the circuit matrix</source>
-        <translation type="unfinished"></translation>
+        <translation>الطريقة حل مصفوفة  الدارة </translation>
     </message>
     <message>
         <source>D flip flop with asynchron reset</source>
-        <translation type="unfinished"></translation>
+        <translation>D flip flop with asynchron reset</translation>
     </message>
     <message>
         <source>D-FlipFlop</source>
-        <translation type="unfinished"></translation>
+        <translation>D-FlipFlop</translation>
     </message>
     <message>
         <source>diac (bidirectional trigger diode)</source>
-        <translation type="unfinished"></translation>
+        <translation>diac (bidirectional trigger diode)</translation>
     </message>
     <message>
         <source>(bidirectional) breakover voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>(ثنائي الاتجاه) جهد breakover</translation>
     </message>
     <message>
         <source>(bidirectional) breakover current</source>
-        <translation type="unfinished"></translation>
+        <translation>(ثنائي الاتجاه) breakover الحالي</translation>
     </message>
     <message>
         <source>parasitic capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>سعة المكثف تشويش</translation>
     </message>
     <message>
         <source>emission coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>معامل الانبعاث</translation>
     </message>
     <message>
         <source>intrinsic junction resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>مفرق المقاومة الجوهرية </translation>
     </message>
     <message>
         <source>simulation temperature</source>
-        <translation type="unfinished"></translation>
+        <translation>محاكاة الحرارة</translation>
     </message>
     <message>
         <source>Diac</source>
-        <translation type="unfinished"></translation>
+        <translation>Diac</translation>
     </message>
     <message>
         <source>digital simulation</source>
-        <translation type="unfinished"></translation>
+        <translation>المحاكاة الرقمية </translation>
     </message>
     <message>
         <source>type of simulation</source>
-        <translation type="unfinished"></translation>
+        <translation>نوع المحاكات</translation>
     </message>
     <message>
         <source>duration of TimeList simulation</source>
-        <translation type="unfinished"></translation>
+        <translation> TimeList مدة المحاكاة</translation>
     </message>
     <message>
         <source>netlist format</source>
-        <translation type="unfinished"></translation>
+        <translation> شكل netlist</translation>
     </message>
     <message>
         <source>digital source</source>
-        <translation type="unfinished"></translation>
+        <translation>مصدر الرقمية</translation>
     </message>
     <message>
         <source>number of the port</source>
-        <translation type="unfinished"></translation>
+        <translation>عدد المنفذ </translation>
     </message>
     <message>
         <source>initial output value</source>
-        <translation type="unfinished"></translation>
+        <translation>قيمة الانتاج الأولي</translation>
     </message>
     <message>
         <source>list of times for changing output value</source>
-        <translation type="unfinished"></translation>
+        <translation>قائمة مرات لتغيير قيمة الانتاج</translation>
     </message>
     <message>
         <source>diode</source>
-        <translation type="unfinished"></translation>
+        <translation>صمام ثنائي </translation>
     </message>
     <message>
         <source>zero-bias junction capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>قدرة ملتقى التحيز عند مستوى الصفر</translation>
     </message>
     <message>
         <source>grading coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>درجات المعامل</translation>
     </message>
     <message>
         <source>junction potential</source>
-        <translation type="unfinished"></translation>
+        <translation>تقاطع الجهد</translation>
     </message>
     <message>
         <source>linear capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>سعة المكثف الخطي</translation>
     </message>
     <message>
         <source>recombination current parameter</source>
-        <translation type="unfinished"></translation>
+        <translation>إعادة  الخاصية الحالية</translation>
     </message>
     <message>
         <source>emission coefficient for Isr</source>
-        <translation type="unfinished"></translation>
+        <translation>معامل الانبعاث لIsr</translation>
     </message>
     <message>
         <source>ohmic series resistance</source>
-        <translation type="unfinished"></translation>
+        <translation> ohmicسلسلة المقاومة</translation>
     </message>
     <message>
         <source>transit time</source>
-        <translation type="unfinished"></translation>
+        <translation>زمن العبور</translation>
     </message>
     <message>
         <source>high-injection knee current (0=infinity)</source>
-        <translation type="unfinished"></translation>
+        <translation>high-injection knee current (0=infinity)</translation>
     </message>
     <message>
         <source>reverse breakdown voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>عكس انهيار الجهد</translation>
     </message>
     <message>
         <source>current at reverse breakdown voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>عكس اتجاه الانهيار الحالي في الجهد</translation>
     </message>
     <message>
         <source>Bv linear temperature coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>  Bvالمعامل الخطي لدرجة الحرارة</translation>
     </message>
     <message>
         <source>Rs linear temperature coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>  Rs المعامل الخطي لدرجة الحرارة</translation>
     </message>
     <message>
         <source>Tt linear temperature coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation> Tt المعامل الخطي لدرجة الحرارة</translation>
     </message>
     <message>
         <source>Tt quadratic temperature coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>التربيعية معامل لدرجة الحرارة Tt</translation>
     </message>
     <message>
         <source>M linear temperature coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation> M المعامل الخطي لدرجة الحرارة</translation>
     </message>
     <message>
         <source>M quadratic temperature coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>لتربيعية معامل لدرجة الحرارة M</translation>
     </message>
     <message>
         <source>default area for diode</source>
-        <translation type="unfinished"></translation>
+        <translation> المنطقة الافتراضية للصمام الثنائي</translation>
     </message>
     <message>
         <source>Diode</source>
-        <translation type="unfinished"></translation>
+        <translation>صمام ثنائي </translation>
     </message>
     <message>
         <source>EPFL-EKV MOS 2.6 verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation>أجهزة فيريلوج EPFL-EKV MOS 2.6</translation>
     </message>
     <message>
         <source>long = 1, short = 2</source>
-        <translation type="unfinished"></translation>
+        <translation>long = 1, short = 2</translation>
     </message>
     <message>
         <source>length parameter</source>
-        <translation type="unfinished"></translation>
+        <translation>طول المعلم</translation>
     </message>
     <message>
         <source>m</source>
-        <translation type="unfinished"></translation>
+        <translation>m</translation>
     </message>
     <message>
         <source>Width parameter</source>
-        <translation type="unfinished"></translation>
+        <translation>عرض المعلم</translation>
     </message>
     <message>
         <source>parallel multiple device number</source>
-        <translation type="unfinished"></translation>
+        <translation>عدد الأجهزة الموازية المتعددة</translation>
     </message>
     <message>
         <source>series multiple device number</source>
-        <translation type="unfinished"></translation>
+        <translation>سلسلة رقم الجهاز متعددة</translation>
     </message>
     <message>
         <source>gate oxide capacitance per unit area</source>
-        <translation type="unfinished"></translation>
+        <translation>بوابة أكسيد سعة المكثف  في وحدة المساحة</translation>
     </message>
     <message>
         <source>F/m**2</source>
-        <translation type="unfinished"></translation>
+        <translation>F/m**2</translation>
     </message>
     <message>
         <source>metallurgical junction depth</source>
-        <translation type="unfinished"></translation>
+        <translation>تقاطع عمق المعدنية</translation>
     </message>
     <message>
         <source>channel width correction</source>
-        <translation type="unfinished"></translation>
+        <translation> عرض قناة التصحيح</translation>
     </message>
     <message>
         <source>channel length correction</source>
-        <translation type="unfinished"></translation>
+        <translation>طول قناة التصحيح</translation>
     </message>
     <message>
         <source>long channel threshold voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>طول قناة  عتبة الجهد</translation>
     </message>
     <message>
         <source>V</source>
-        <translation type="unfinished"></translation>
+        <translation>V</translation>
     </message>
     <message>
         <source>body effect parameter</source>
-        <translation type="unfinished"></translation>
+        <translation>هيئة أثر المعلم</translation>
     </message>
     <message>
         <source>V**(1/2)</source>
-        <translation type="unfinished"></translation>
+        <translation>V**(1/2)</translation>
     </message>
     <message>
         <source>bulk Fermi potential</source>
-        <translation type="unfinished"></translation>
+        <translation>الجزء الأكبر المحتملة فيرمي</translation>
     </message>
     <message>
         <source>transconductance parameter</source>
-        <translation type="unfinished"></translation>
+        <translation>transconductance معلم </translation>
     </message>
     <message>
         <source>A/V**2</source>
-        <translation type="unfinished"></translation>
+        <translation>A/V**2</translation>
     </message>
     <message>
         <source>mobility reduction coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation> التحرك معامل  للحد</translation>
     </message>
     <message>
         <source>1/V</source>
-        <translation type="unfinished"></translation>
+        <translation>التحرك</translation>
     </message>
     <message>
         <source>mobility coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation> معامل الإنتشار </translation>
     </message>
     <message>
         <source>V/m</source>
-        <translation type="unfinished"></translation>
+        <translation>V/m</translation>
     </message>
     <message>
         <source>longitudinal critical field</source>
-        <translation type="unfinished"></translation>
+        <translation>طول الحقل الرئيسي</translation>
     </message>
     <message>
         <source>depletion length coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>نفاد طول المعامل</translation>
     </message>
     <message>
         <source>narrow-channel effect coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>معامل تأثير القنوات الضيقة </translation>
     </message>
     <message>
         <source>reverse short channel charge density</source>
-        <translation type="unfinished"></translation>
+        <translation>كثافة تهمة القناة قصيرة عكسية</translation>
     </message>
     <message>
         <source>A*s/m**2</source>
-        <translation type="unfinished"></translation>
+        <translation>كثافة تهمة القناة قصيرة عكسية</translation>
     </message>
     <message>
         <source>characteristic length</source>
-        <translation type="unfinished"></translation>
+        <translation>خصائص الطول</translation>
     </message>
     <message>
         <source>threshold voltage temperature coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>معامل درجة حرارة عتبة الجهد </translation>
     </message>
     <message>
         <source>V/K</source>
-        <translation type="unfinished"></translation>
+        <translation>V/K</translation>
     </message>
     <message>
         <source>mobility temperature coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation> معامل إنتشار  الحرارة</translation>
     </message>
     <message>
         <source>Longitudinal critical field temperature exponent</source>
-        <translation type="unfinished"></translation>
+        <translation>درجة الحرارة الحرجة طولية مجال الأس</translation>
     </message>
     <message>
         <source>Ibb temperature coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation> معامل درجة الحرارةIbb</translation>
     </message>
     <message>
         <source>1/K</source>
-        <translation type="unfinished"></translation>
+        <translation>1/K</translation>
     </message>
     <message>
         <source>heavily doped diffusion length</source>
-        <translation type="unfinished"></translation>
+        <translation> قوة مخدر  طول النشر </translation>
     </message>
     <message>
         <source>drain/source diffusion sheet resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>استنزاف / المصدر  نشر ورقة المقاومة</translation>
     </message>
     <message>
         <source>Ohm/square</source>
-        <translation type="unfinished"></translation>
+        <translation>الأوم / مربع</translation>
     </message>
     <message>
         <source>source contact resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>مصدر الاتصال المقاومة</translation>
     </message>
     <message>
         <source>Ohm</source>
-        <translation type="unfinished"></translation>
+        <translation>Ω</translation>
     </message>
     <message>
         <source>drain contact resistance</source>
-        <translation type="unfinished"></translation>
+        <translation> استنزاف مقاومة الاتصال</translation>
     </message>
     <message>
         <source>gate to source overlap capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>بوابة لمصدر التداخل لسعة المكيف</translation>
     </message>
     <message>
         <source>F/m</source>
-        <translation type="unfinished"></translation>
+        <translation>F/m</translation>
     </message>
     <message>
         <source>gate to drain overlap capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>بوابة لمصدر التداخل لسعة المكثف</translation>
     </message>
     <message>
         <source>gate to bulk overlap capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>بوابة لمعظم التداخل لسعة المكثف </translation>
     </message>
     <message>
         <source>first impact ionization coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>أول أثر معامل التأين</translation>
     </message>
     <message>
         <source>1/m</source>
-        <translation type="unfinished"></translation>
+        <translation>1/m</translation>
     </message>
     <message>
         <source>second impact ionization coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>الأثر الثاني لمعامل التأين</translation>
     </message>
     <message>
         <source>saturation voltage factor for impact ionization</source>
-        <translation type="unfinished"></translation>
+        <translation>عامل الشبع الجهد على  تأثير التأين</translation>
     </message>
     <message>
         <source>area related theshold voltage mismatch parameter</source>
-        <translation type="unfinished"></translation>
+        <translation>منطقة ذات الصلة  بعتبة عدم التوافق معلم الفولتاج</translation>
     </message>
     <message>
         <source>V*m</source>
-        <translation type="unfinished"></translation>
+        <translation>V*m</translation>
     </message>
     <message>
         <source>area related gain mismatch parameter</source>
-        <translation type="unfinished"></translation>
+        <translation>منطقة ذات الصلة الحصول على معلم عدم التوافق</translation>
     </message>
     <message>
         <source>area related body effect mismatch parameter</source>
-        <translation type="unfinished"></translation>
+        <translation>منطقة ذات الصلة تأثير عدم التوافق  المعلم</translation>
     </message>
     <message>
         <source>sqrt(V)*m</source>
-        <translation type="unfinished"></translation>
+        <translation>sqrt(V)*m</translation>
     </message>
     <message>
         <source>A</source>
-        <translation type="unfinished"></translation>
+        <translation>A</translation>
     </message>
     <message>
         <source>F</source>
-        <translation type="unfinished"></translation>
+        <translation>F</translation>
     </message>
     <message>
         <source>diode relative area</source>
-        <translation type="unfinished"></translation>
+        <translation>منطقة الصمام الثنائي النسبية</translation>
+    </message>
+    <message>
+        <source>forward-bias depletion capcitance coefficient</source>
+        <translation type="obsolete"> تحيز معامل السعة </translation>
     </message>
     <message>
         <source>s</source>
-        <translation type="unfinished"></translation>
+        <translation>s</translation>
     </message>
     <message>
         <source>charge partition parameter</source>
-        <translation type="unfinished"></translation>
+        <translation>شحن  معلم التقسيم</translation>
     </message>
     <message>
         <source>parameter measurement temperature</source>
-        <translation type="unfinished"></translation>
+        <translation>وسيط لقياس درجة الحرارة</translation>
     </message>
     <message>
         <source>Celsius</source>
-        <translation type="unfinished"></translation>
+        <translation>مئوية</translation>
     </message>
     <message>
         <source>EPFL-EKV NMOS 2.6</source>
-        <translation type="unfinished"></translation>
+        <translation>EPFL-EKV NMOS 2.6</translation>
     </message>
     <message>
         <source>EPFL-EKV PMOS 2.6</source>
-        <translation type="unfinished"></translation>
+        <translation>EPFL-EKV PMOS 2.6</translation>
     </message>
     <message>
         <source>equation defined device</source>
-        <translation type="unfinished"></translation>
+        <translation> جهاز تحديد المعادلة</translation>
     </message>
     <message>
         <source>type of equations</source>
-        <translation type="unfinished"></translation>
+        <translation>نوع المعادلة</translation>
     </message>
     <message>
         <source>number of branches</source>
-        <translation type="unfinished"></translation>
+        <translation>عدد الفروع</translation>
     </message>
     <message>
         <source>current equation</source>
-        <translation type="unfinished"></translation>
+        <translation>المعادلة الحالية</translation>
     </message>
     <message>
         <source>charge equation</source>
-        <translation type="unfinished"></translation>
+        <translation>شحن المعادلة</translation>
     </message>
     <message>
         <source>Equation Defined Device</source>
-        <translation type="unfinished"></translation>
+        <translation>جهاز تحديد المعادلة</translation>
     </message>
     <message>
         <source>equation</source>
-        <translation type="unfinished"></translation>
+        <translation>المعادلة</translation>
     </message>
     <message>
         <source>Equation</source>
-        <translation type="unfinished"></translation>
+        <translation>المعادلة</translation>
     </message>
     <message>
         <source>put result into dataset</source>
-        <translation type="unfinished"></translation>
+        <translation> وضع  نتيجة في جدول  البيانات </translation>
     </message>
     <message>
         <source>ground (reference potential)</source>
-        <translation type="unfinished"></translation>
+        <translation>السطح (إشارة مختلفة)ـ</translation>
     </message>
     <message>
         <source>Ground</source>
-        <translation type="unfinished"></translation>
+        <translation>السطح</translation>
     </message>
     <message>
         <source>gyrator (impedance inverter)</source>
-        <translation type="unfinished"></translation>
+        <translation>مَلْفُوف(مقاومة العاكس)ـ</translation>
     </message>
     <message>
         <source>gyrator ratio</source>
-        <translation type="unfinished"></translation>
+        <translation>نسبة الملفوف</translation>
     </message>
     <message>
         <source>Gyrator</source>
-        <translation type="unfinished"></translation>
+        <translation>الملفوف</translation>
     </message>
     <message>
         <source>Harmonic balance simulation</source>
-        <translation type="unfinished"></translation>
+        <translation>محاكاة توازن المتناسق </translation>
     </message>
     <message>
         <source>number of harmonics</source>
-        <translation type="unfinished"></translation>
+        <translation>عدد التوافقيات</translation>
     </message>
     <message>
         <source>Harmonic balance</source>
-        <translation type="unfinished"></translation>
+        <translation>توازن متناسق</translation>
     </message>
     <message>
         <source>HBT model by Ferdinand-Braun-Institut (FBH), Berlin</source>
-        <translation type="unfinished"></translation>
+        <translation>HBT model by Ferdinand-Braun-Institut (FBH), Berlin</translation>
     </message>
     <message>
         <source>Ignored</source>
-        <translation type="unfinished"></translation>
+        <translation>تَجَاهَلَ </translation>
     </message>
     <message>
         <source>Device operating temperature, Celsius</source>
-        <translation type="unfinished"></translation>
+        <translation>جهاز التشغيل في درجات الحرارة ، درجة مئوية</translation>
     </message>
     <message>
         <source>Thermal resistance, K/W</source>
-        <translation type="unfinished"></translation>
+        <translation> K/W , المقاومة الحرارية </translation>
     </message>
     <message>
         <source>Thermal capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>سعة حرارية</translation>
     </message>
     <message>
         <source>Scaling factor, number of emitter fingers</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Length of emitter finger, m</source>
-        <translation type="unfinished"></translation>
+        <translation> ,mطول اصبع الباعث</translation>
     </message>
     <message>
         <source>Width of emitter finger, m</source>
-        <translation type="unfinished"></translation>
+        <translation> ,mعرض اصبع الباعث</translation>
     </message>
     <message>
         <source>Forward saturation current density, A/um^2</source>
-        <translation type="unfinished"></translation>
+        <translation>,A/um^2تشبع أمامي للكثافة الحالية </translation>
     </message>
     <message>
         <source>Forward current emission coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation> تقدم معامل الانبعاثات الحالي</translation>
     </message>
     <message>
         <source>Forward thermal activation energy, V, (0 == disables temperature dependence)</source>
-        <translation type="unfinished"></translation>
+        <translation>الطاقة الحرارية بصورة مباشرة النشاط  ,V,(0== عَطَّلَ الإعتماد درجة حرارة)</translation>
     </message>
     <message>
         <source>B-E leakage saturation current density, A/um^2</source>
-        <translation type="unfinished"></translation>
+        <translation>التشبع عتبة كثافة التسرب الحاليB-E (A.µm⁻²)</translation>
     </message>
     <message>
         <source>B-E leakage emission coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>معامل تسرب الانبعاثات B-E  </translation>
     </message>
     <message>
         <source>Limiting resistor of B-E leakage diode, Ohm</source>
-        <translation type="unfinished"></translation>
+        <translation>   حد  المقاومة من التسربB-E  الصمام الثنائي ، الأوم</translation>
     </message>
     <message>
         <source>B-E leakage thermal activation energy, V, (0 == disables temperature dependence)</source>
-        <translation type="unfinished"></translation>
+        <translation> B-E نفعيل تسرب الطاقة الحرارية ل,V,(0== عَطَّلَ الإعتماد درجة حرارة)</translation>
     </message>
     <message>
         <source>2nd B-E leakage saturation current density, A/um^2</source>
-        <translation type="unfinished"></translation>
+        <translation>التشبع الثاني عتبة كثافة التسرب الحاليB-E (A.µm⁻²)</translation>
     </message>
     <message>
         <source>2nd B-E leakage emission coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>معامل الثاني لتسرب الانبعاثات B-E  </translation>
     </message>
     <message>
         <source>2nd Limiting resistor of B-E leakage diode, Ohm</source>
-        <translation type="unfinished"></translation>
+        <translation>   حد  المقاومة الثاني من التسربB-E  الصمام الثنائي ، الأوم</translation>
     </message>
     <message>
         <source>2nd B-E leakage thermal activation energy, V, (0 == disables temperature dependence)</source>
-        <translation type="unfinished"></translation>
+        <translation> B-E النفعيل الثاني تسرب الطاقة الحرارية ,V,(0== عَطَّلَ الإعتماد درجة حرارة)</translation>
     </message>
     <message>
         <source>Reverse saturation current density, A/um^2</source>
-        <translation type="unfinished"></translation>
+        <translation>,A/um^2إنعكاس للكثافة الحالية </translation>
     </message>
     <message>
         <source>Reverse current emission coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation> إنعكاس معامل الانبعاثات الحالي</translation>
     </message>
     <message>
         <source>Reverse thermal activation energy, V, (0 == disables temperature dependence)</source>
-        <translation type="unfinished"></translation>
+        <translation>إنعكاس تفعيل الطاقة الحرارية   ,V,(0== عَطَّلَ الإعتماد درجة حرارة)</translation>
     </message>
     <message>
         <source>Fraction of Cjc that goes to internal base node</source>
-        <translation type="unfinished"></translation>
+        <translation>جزء من س ج س الداخلي الذي يذهب الى قاعدة العقدة </translation>
     </message>
     <message>
         <source>B-C leakage saturation current density, A/um^2 (0. switches off diode)</source>
-        <translation type="unfinished"></translation>
+        <translation>التشبع عتبة كثافة التسرب الحاليB-C ,A/µm⁻² (0.تطفئ الصمام الثنائي)</translation>
     </message>
     <message>
         <source>B-C leakage emission coefficient (0. switches off diode)</source>
-        <translation type="unfinished"></translation>
+        <translation>معامل تسرب الانبعاثات B-E   (0.تطفئ الصمام الثنائي)</translation>
     </message>
     <message>
         <source>Limiting resistor of B-C leakage diode, Ohm</source>
-        <translation type="unfinished"></translation>
+        <translation>   حد  المقاومة من التسربB-C  الصمام الثنائي ، الأوم</translation>
     </message>
     <message>
         <source>B-C leakage thermal activation energy, V, (0 == disables temperature dependence)</source>
-        <translation type="unfinished"></translation>
+        <translation> B-C نفعيل تسرب الطاقة الحرارية ل,V,(0== عَطَّلَ الإعتماد درجة حرارة)</translation>
     </message>
     <message>
         <source>Ideal forward beta</source>
-        <translation type="unfinished"></translation>
+        <translation>بيتا مثاليا للمضي قدما</translation>
     </message>
     <message>
         <source>Temperature coefficient of forward current gain, -1/K,  (0 == disables temperature dependence)</source>
-        <translation type="unfinished"></translation>
+        <translation>,K-/1,معامل درجة الحرارة للربح الحالي  (0== عَطَّلَ الإعتماد درجة حرارة)</translation>
     </message>
     <message>
         <source>Ideal reverse beta</source>
-        <translation type="unfinished"></translation>
+        <translation>بيتا عكس المثل </translation>
     </message>
     <message>
         <source>Forward Early voltage, V,  (0 == disables Early Effect)</source>
-        <translation type="unfinished"></translation>
+        <translation>تقدم مبكر للفولتاج , V,(0== عطل مبكر للأثر)</translation>
     </message>
     <message>
         <source>Reverse Early voltage, V, (0 == disables Early Effect)</source>
-        <translation type="unfinished"></translation>
+        <translation>تأخر مبكر للفولتاج , V,(0== عطل مبكر للأثر)</translation>
     </message>
     <message>
         <source>Forward high-injection knee current, A, (0 == disables Webster Effect)</source>
-        <translation type="unfinished"></translation>
+        <translation>,أ, (0==لايوجد أثر ل وابستر)  العتبة الحالية قوية الحقن المباشر</translation>
     </message>
     <message>
         <source>Reverse high-injection knee current, A, (0 == disables Webster Effect)</source>
-        <translation type="unfinished"></translation>
+        <translation> العتبة الحالية حقن عكسية قويةأ, (0==لايوجد أثر ل وابستر) </translation>
     </message>
     <message>
         <source>C-E breakdown exponent, (0 == disables collector break-down)</source>
-        <translation type="unfinished"></translation>
+        <translation>C-E breakdown exponent, (0 == disables collector break-down)</translation>
     </message>
     <message>
         <source>C-E breakdown voltage, V, (0 == disables collector break-down)</source>
-        <translation type="unfinished"></translation>
+        <translation>C-E breakdown voltage, V, (0 == disables collector break-down)</translation>
     </message>
     <message>
         <source>C-E breakdown factor, (0 == disables collector break-down)</source>
-        <translation type="unfinished"></translation>
+        <translation>C-E breakdown factor, (0 == disables collector break-down)</translation>
     </message>
     <message>
         <source>B-E breakdown voltage, V, (0 == disables emitter break-down)</source>
-        <translation type="unfinished"></translation>
+        <translation>B-E breakdown voltage, V, (0 == disables emitter break-down)</translation>
     </message>
     <message>
         <source>Ideal reverse transit time, s</source>
-        <translation type="unfinished"></translation>
+        <translation>,س الإنعكاس المثالي لوقت العبور</translation>
     </message>
     <message>
         <source>Extrinsic BC diffusion capacitance, F</source>
-        <translation type="unfinished"></translation>
+        <translation>القوة الخارجية للنشرBC </translation>
     </message>
     <message>
         <source>Ideal forward transit time, s</source>
-        <translation type="unfinished"></translation>
+        <translation>,س التقدم المثالي لوقت العبور</translation>
     </message>
     <message>
         <source>Temperature coefficient of forward transit time</source>
-        <translation type="unfinished"></translation>
+        <translation>درجة الحرارة معامل وقت عبور إلى الأمام</translation>
     </message>
     <message>
         <source>Excess transit time coefficient at base push-out</source>
-        <translation type="unfinished"></translation>
+        <translation>فائض في وقت العبور معامل قاعدة دفع بها</translation>
     </message>
     <message>
         <source>Smoothing parameter for Thcs</source>
-        <translation type="unfinished"></translation>
+        <translation>تمهيد لمعلمة Thcs</translation>
     </message>
     <message>
         <source>B-E zero-bias depletion capacitance, F/um^2</source>
-        <translation type="unfinished"></translation>
+        <translation>B-E zero-bias depletion capacitance, F/um^2</translation>
     </message>
     <message>
         <source>B-E junction exponential factor</source>
-        <translation type="unfinished"></translation>
+        <translation>B-Eتقاطع العامل الأسي </translation>
     </message>
     <message>
         <source>B-E junction built-in potential, V</source>
-        <translation type="unfinished"></translation>
+        <translation>B-Eتقاطع المحتملة في البناءl, V</translation>
     </message>
     <message>
         <source>B-C zero-bias depletion capacitance, F/um^2</source>
-        <translation type="unfinished"></translation>
+        <translation>B-C zero-bias depletion capacitance, F/um^2</translation>
     </message>
     <message>
         <source>B-C junction exponential factor</source>
-        <translation type="unfinished"></translation>
+        <translation>B-C عامل مفرق الأسي</translation>
     </message>
     <message>
         <source>B-C junction built-in potential, V</source>
-        <translation type="unfinished"></translation>
+        <translation>B-Cتقاطع المحتملة في البناءl, V</translation>
     </message>
     <message>
         <source>not used</source>
-        <translation type="unfinished"></translation>
+        <translation>لا تستخدم</translation>
     </message>
     <message>
         <source>Minimum B-C depletion capacitance (Vbc dependence), F/um^2</source>
-        <translation type="unfinished"></translation>
+        <translation>Minimum B-C depletion capacitance (Vbc dependence), F/um^2</translation>
     </message>
     <message>
         <source>Collector current where Cbc reaches Cmin, A/um^2 (0 == disables Cbc reduction)</source>
-        <translation type="unfinished"></translation>
+        <translation>Collector current where Cbc reaches Cmin, A/um^2 (0 == disables Cbc reduction)</translation>
     </message>
     <message>
         <source>Fraction of Cmin, lower limit of BC capacitance (Ic dependence)</source>
-        <translation type="unfinished"></translation>
+        <translation>Fraction of Cmin, lower limit of BC capacitance (Ic dependence)</translation>
     </message>
     <message>
         <source>Onset of base push-out at low voltages, Ohm*um^2 (0 == disables base push-out)</source>
-        <translation type="unfinished"></translation>
+        <translation>Onset of base push-out at low voltages, Ohm*um^2 (0 == disables base push-out)</translation>
     </message>
     <message>
         <source>Onset of base push-out at high voltages, A/um^2, (0 == disables base push-out)</source>
-        <translation type="unfinished"></translation>
+        <translation>Onset of base push-out at high voltages, A/um^2, (0 == disables base push-out)</translation>
     </message>
     <message>
         <source>Slope of Jk at high currents , Ohm*um^2</source>
-        <translation type="unfinished"></translation>
+        <translation>Slope of Jk at high currents , Ohm*um^2</translation>
     </message>
     <message>
         <source>Voltage shift of base push-out onset, V</source>
-        <translation type="unfinished"></translation>
+        <translation>Voltage shift of base push-out onset, V</translation>
     </message>
     <message>
         <source>Collector resistance, Ohm/finger</source>
-        <translation type="unfinished"></translation>
+        <translation>جمع المقاومة الأوم / المؤشر</translation>
     </message>
     <message>
         <source>Emitter resistance, Ohm/finger</source>
-        <translation type="unfinished"></translation>
+        <translation>باعث المقاومة الأوم / المؤشر</translation>
     </message>
     <message>
         <source>Extrinsic base resistance, Ohm/finger</source>
-        <translation type="unfinished"></translation>
+        <translation>قاعدة المقاومة خارجي ، الأوم /  المؤشر</translation>
     </message>
     <message>
         <source>Inner Base ohmic resistance, Ohm/finger</source>
-        <translation type="unfinished"></translation>
+        <translation>قاعدة أوم المقاومة الداخلية ، الأوم / المؤشر</translation>
     </message>
     <message>
         <source>Collector inductance, H</source>
-        <translation type="unfinished"></translation>
+        <translation>H, محاثة المجمع</translation>
     </message>
     <message>
         <source>Emitter inductance, H</source>
-        <translation type="unfinished"></translation>
+        <translation>H,محاثة المرسل</translation>
     </message>
     <message>
         <source>Base inductance, H</source>
-        <translation type="unfinished"></translation>
+        <translation>H, قاعدة المحاثة</translation>
     </message>
     <message>
         <source>Extrinsic B-C capacitance, F</source>
-        <translation type="unfinished"></translation>
+        <translation>القوة الخارجية B-C </translation>
     </message>
     <message>
         <source>Extrinsic base capacitance, F</source>
-        <translation type="unfinished"></translation>
+        <translation>القوة القاعدية  الخارجية , ف</translation>
     </message>
     <message>
         <source>Extrinsic collector capacitance, F</source>
-        <translation type="unfinished"></translation>
+        <translation>القوة الجمع  الخارجية , ف</translation>
     </message>
     <message>
         <source>Flicker-noise coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>خفق  معامل التشويش</translation>
     </message>
     <message>
         <source>Flicker-noise exponent</source>
-        <translation type="unfinished"></translation>
+        <translation>خفق  التشويش الأسي</translation>
     </message>
     <message>
         <source>Flicker-noise frequency exponent</source>
-        <translation type="unfinished"></translation>
+        <translation>خفق  معامل التردد الأسي</translation>
     </message>
     <message>
         <source>Burst noise coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>تفريق  معامل التشويش</translation>
     </message>
     <message>
         <source>Burst noise exponent</source>
-        <translation type="unfinished"></translation>
+        <translation>الدليل تفريق  تشويش  </translation>
     </message>
     <message>
         <source>Burst noise corner frequency, Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>تفريق  تشويش التردد في الزاوية هيرتز</translation>
     </message>
     <message>
         <source>Ambient temperature at which the parameters were determined</source>
-        <translation type="unfinished"></translation>
+        <translation>درجة الحرارة المحيطة التي تتحدد معالم</translation>
     </message>
     <message>
         <source>FBH HBT</source>
-        <translation type="unfinished"></translation>
+        <translation>FBH HBT</translation>
     </message>
     <message>
         <source>HICUM Level 0 v1.12 verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation>أجهزة فيريلوج HICUM 0 v1.12</translation>
     </message>
     <message>
         <source>(Modified) saturation current</source>
-        <translation type="unfinished"></translation>
+        <translation>-التشبع  الحالي -معدلة</translation>
     </message>
     <message>
         <source>Non-ideality coefficient of forward collector current</source>
-        <translation type="unfinished"></translation>
+        <translation>Non-ideality معامل التجميع الحالي إلى الأمام</translation>
     </message>
     <message>
         <source>Non-ideality coefficient of reverse collector current</source>
-        <translation type="unfinished"></translation>
+        <translation>Non-ideality  معامل عكس جمع الحالية</translation>
     </message>
     <message>
         <source>forward Early voltage (normalization volt.)</source>
-        <translation type="unfinished"></translation>
+        <translation>تقدم أولي للتيار الكهربائي</translation>
+    </message>
+    <message>
+        <source>forward d.c. high-injection toll-off current</source>
+        <translation type="obsolete">forward d.c. high-injection toll-off current</translation>
     </message>
     <message>
         <source>inverse d.c. high-injection roll-off current</source>
-        <translation type="unfinished"></translation>
+        <translation>inverse d.c. high-injection roll-off current</translation>
     </message>
     <message>
         <source>high-injection correction current</source>
-        <translation type="unfinished"></translation>
+        <translation>الحقن العالي التصحيح الحالي </translation>
     </message>
     <message>
         <source>high-injection correction factor</source>
-        <translation type="unfinished"></translation>
+        <translation>الحقن العالي التصحيح العامل </translation>
     </message>
     <message>
         <source>BE saturation current</source>
-        <translation type="unfinished"></translation>
+        <translation>BEالتشبع  الحالي</translation>
     </message>
     <message>
         <source>BE non-ideality factor</source>
-        <translation type="unfinished"></translation>
+        <translation>BE non-ideality factor</translation>
     </message>
     <message>
         <source>BE recombination saturation current</source>
-        <translation type="unfinished"></translation>
+        <translation>BEإعادة تشبع الحالي</translation>
     </message>
     <message>
         <source>BE recombination non-ideality factor</source>
-        <translation type="unfinished"></translation>
+        <translation>BE recombination non-ideality factor</translation>
     </message>
     <message>
         <source>BC saturation current</source>
-        <translation type="unfinished"></translation>
+        <translation>BCالتشبع  الحالي</translation>
     </message>
     <message>
         <source>BC non-ideality factor</source>
-        <translation type="unfinished"></translation>
+        <translation>BC non-ideality factor</translation>
     </message>
     <message>
         <source>Zero-bias BE depletion capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>Zero-bias BE depletion capacitance</translation>
     </message>
     <message>
         <source>BE built-in voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>  BE  مدمجة في الجهد</translation>
     </message>
     <message>
         <source>BE exponent factor</source>
-        <translation type="unfinished"></translation>
+        <translation>BE الدليل عامل  </translation>
     </message>
     <message>
         <source>Ratio of maximum to zero-bias value</source>
-        <translation type="unfinished"></translation>
+        <translation>الحد الأقصى لنسبة الصفر قيمة الانحياز</translation>
     </message>
     <message>
         <source>low current transit time at Vbici=0</source>
-        <translation type="unfinished"></translation>
+        <translation>منخفضة في الوقت الحالي لعبور Vbici = 0</translation>
     </message>
     <message>
         <source>Base width modulation contribution</source>
-        <translation type="unfinished"></translation>
+        <translation>تعديل عرض قاعدة مساهمة</translation>
     </message>
     <message>
         <source>SCR width modulation contribution</source>
-        <translation type="unfinished"></translation>
+        <translation>عرض تعديل المساهمة SCR</translation>
     </message>
     <message>
         <source>Storage time in neutral emitter</source>
-        <translation type="unfinished"></translation>
+        <translation>باعث تخزينها في الوقت محايدة </translation>
+    </message>
+    <message>
+        <source>Exponent factor for emmiter transit time</source>
+        <translation type="obsolete">  دليل عامل  لباعث الزمن</translation>
     </message>
     <message>
         <source>Saturation time at high current densities</source>
-        <translation type="unfinished"></translation>
+        <translation>التشبع في الوقت الحالي عالية الكثافة</translation>
+    </message>
+    <message>
+        <source>Smoothing facor for current dependence</source>
+        <translation type="obsolete">تمهيد من عوامل الاعتماد الحالي</translation>
     </message>
     <message>
         <source>Storage time at inverse operation</source>
-        <translation type="unfinished"></translation>
+        <translation>التخزين في وقت العملية العكسية</translation>
     </message>
     <message>
         <source>Low-field collector resistance under emitter</source>
-        <translation type="unfinished"></translation>
+        <translation>منخفضة ميدان المقاومة في ظل وجمع باعث</translation>
     </message>
     <message>
         <source>Voltage dividing ohmic and satur.region</source>
-        <translation type="unfinished"></translation>
+        <translation>ohmic تقسيم الجهد وsatur.region</translation>
     </message>
     <message>
         <source>Punch-through voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>نخس من خلال الفولت</translation>
     </message>
     <message>
         <source>Saturation voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>التشبع الجهد</translation>
     </message>
     <message>
         <source>Total zero-bias BC depletion capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>Total zero-bias BC depletion capacitance</translation>
     </message>
     <message>
         <source>BC built-in voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>  BC  مدمجة في الجهد</translation>
     </message>
     <message>
         <source>BC exponent factor</source>
-        <translation type="unfinished"></translation>
+        <translation>BC دليل عامل   </translation>
     </message>
     <message>
         <source>Punch-through voltage of BC junction</source>
-        <translation type="unfinished"></translation>
+        <translation>Punch-through voltage of BC junction</translation>
     </message>
     <message>
         <source>Zero-bias external BC depletion capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>Zero-bias external BC depletion capacitance</translation>
     </message>
     <message>
         <source>External BC built-in voltage</source>
-        <translation type="unfinished"></translation>
+        <translation> الخارجي  في  الفولت BC   </translation>
     </message>
     <message>
         <source>External BC exponent factor</source>
-        <translation type="unfinished"></translation>
+        <translation>BC الخارجي لعامل العنصر</translation>
     </message>
     <message>
         <source>Split factor = Cjci0/Cjc0</source>
-        <translation type="unfinished"></translation>
+        <translation>Split factor = Cjci0/Cjc0</translation>
     </message>
     <message>
         <source>Internal base resistance at zero-bias</source>
-        <translation type="unfinished"></translation>
+        <translation>  القاعدة الداخلية للمقاومة معدومة</translation>
     </message>
     <message>
         <source>Geometry factor</source>
-        <translation type="unfinished"></translation>
+        <translation>العامل الهندسي </translation>
     </message>
     <message>
         <source>External base series resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>القاعدة الخارجية لسلسلة المقاومة</translation>
     </message>
     <message>
         <source>Emitter series resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>باعث لسلسلة المقاومة</translation>
     </message>
     <message>
         <source>External collector series resistance</source>
-        <translation type="unfinished"></translation>
+        <translation> جمع سلسلة المقاومة الخارجية</translation>
     </message>
     <message>
         <source>Substrate transistor transfer saturation current</source>
-        <translation type="unfinished"></translation>
+        <translation>الركازة الترانزستور الحالي نقل التشبع</translation>
     </message>
     <message>
         <source>Substrate transistor transfer current non-ideality factor</source>
-        <translation type="unfinished"></translation>
+        <translation>لنقل  الترانزستور الحالي   non-idealityعامل </translation>
     </message>
     <message>
         <source>SC saturation current</source>
-        <translation type="unfinished"></translation>
+        <translation>SCالتشبع  الحالي</translation>
     </message>
     <message>
         <source>SC non-ideality factor</source>
-        <translation type="unfinished"></translation>
+        <translation>SC non-ideality factor</translation>
     </message>
     <message>
         <source>Zero-bias SC depletion capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>SCتفخيض السعة كهربائية إلى الصفر</translation>
     </message>
     <message>
         <source>SC built-in voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>  SC  مدمجة في الفولت</translation>
     </message>
     <message>
         <source>External SC exponent factor</source>
-        <translation type="unfinished"></translation>
+        <translation>SC الخارجي لعامل العنصر</translation>
     </message>
     <message>
         <source>SC punch-through voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>نخس من خلال الفولت SC</translation>
     </message>
     <message>
         <source>Collector-base isolation (overlap) capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>جمع قاعدة العزلة (تداخل) مواسعة</translation>
     </message>
     <message>
         <source>Emitter-base oxide capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>انبعاثات أكسيد قاعدة مواسعة</translation>
     </message>
     <message>
         <source>Exponent factor</source>
-        <translation type="unfinished"></translation>
+        <translation>عامل الأس  </translation>
     </message>
     <message>
         <source>Prefactor</source>
-        <translation type="unfinished"></translation>
+        <translation>Prefactor</translation>
     </message>
     <message>
         <source>M^(1-AF)</source>
-        <translation type="unfinished"></translation>
+        <translation>M^(1-AF)</translation>
     </message>
     <message>
         <source>flicker noise exponent factor</source>
-        <translation type="unfinished"></translation>
+        <translation>خفق  التشويش الأسي</translation>
     </message>
     <message>
         <source>Bandgap-voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>فرق الفولت</translation>
     </message>
     <message>
         <source>Effective emitter bandgap-voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>المصدر الحقيقي فرق الفولت</translation>
     </message>
     <message>
         <source>Effective collector bandgap-voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>المجمع  الحقيقي فرق الفولت</translation>
     </message>
     <message>
         <source>Effective substrate bandgap-voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>الركازة الحقيقي فرق الفولت</translation>
     </message>
     <message>
         <source>Coefficient K1 in T-dependent bandgap equation</source>
-        <translation type="unfinished"></translation>
+        <translation>Coefficient K1 in T-dependent bandgap equation</translation>
     </message>
     <message>
         <source>Coefficient K2 in T-dependent bandgap equation</source>
-        <translation type="unfinished"></translation>
+        <translation>Coefficient K2 in T-dependent bandgap equation</translation>
     </message>
     <message>
         <source>Frist-order TC of tf0</source>
-        <translation type="unfinished"></translation>
+        <translation>Frist-order TC of tf0</translation>
     </message>
     <message>
         <source>Second-order TC of tf0</source>
-        <translation type="unfinished"></translation>
+        <translation>Second-order TC of tf0</translation>
     </message>
     <message>
         <source>1/K^2</source>
-        <translation type="unfinished"></translation>
+        <translation>1/K^2</translation>
     </message>
     <message>
         <source>Exponent coefficient in transfer current temperature dependence</source>
-        <translation type="unfinished"></translation>
+        <translation>معامل الأس  في نقل درجة الحرارة  الاعتماد الحالية</translation>
     </message>
     <message>
         <source>Exponent coefficient in BE junction current temperature dependence</source>
-        <translation type="unfinished"></translation>
+        <translation> BEمعامل الأس  في  وصلة درجة الحرارة  الاعتماد الحالية</translation>
     </message>
     <message>
         <source>TC of epi-collector diffusivity</source>
-        <translation type="unfinished"></translation>
+        <translation>TC of epi-collector diffusivity</translation>
     </message>
     <message>
         <source>Relative TC of satur.drift velocity</source>
-        <translation type="unfinished"></translation>
+        <translation>Relative TC of satur.drift velocity</translation>
     </message>
     <message>
         <source>Relative TC of vces</source>
-        <translation type="unfinished"></translation>
+        <translation>Relative TC of vces</translation>
     </message>
     <message>
         <source>TC of internal base resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>TC قاعدة المقاومة الداخلية </translation>
     </message>
     <message>
         <source>TC of external base resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>TC قاعدة المقاومة الخارجية </translation>
     </message>
     <message>
         <source>TC of external collector resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>TC مجمع  المقاومة الخارجية </translation>
     </message>
     <message>
         <source>TC of emitter resistances</source>
-        <translation type="unfinished"></translation>
+        <translation>TC باعث  المقاومة  </translation>
     </message>
     <message>
         <source>TC of avalanche prefactor</source>
-        <translation type="unfinished"></translation>
+        <translation>TC of avalanche prefactor</translation>
     </message>
     <message>
         <source>TC of avalanche exponential factor</source>
-        <translation type="unfinished"></translation>
+        <translation>TC of avalanche exponential factor</translation>
     </message>
     <message>
         <source>Flag for self-heating calculation</source>
-        <translation type="unfinished"></translation>
+        <translation>راية لحساب التسخين الذاتي</translation>
     </message>
     <message>
         <source>Thermal resistance</source>
-        <translation type="unfinished"></translation>
+        <translation> المقاومة الحرارية </translation>
     </message>
     <message>
         <source>K/W</source>
-        <translation type="unfinished"></translation>
+        <translation>K/W</translation>
     </message>
     <message>
         <source>Ws/K</source>
-        <translation type="unfinished"></translation>
+        <translation>Ws/K</translation>
     </message>
     <message>
         <source>Temperature for which parameters are valid</source>
-        <translation type="unfinished"></translation>
+        <translation>درجة الحرارة التي البارامترات صالحة</translation>
     </message>
     <message>
         <source>C</source>
-        <translation type="unfinished"></translation>
+        <translation>C</translation>
     </message>
     <message>
         <source>Temperature change for particular transistor</source>
-        <translation type="unfinished"></translation>
+        <translation>لتغير درجات حرارة  الترانزستور الخاصة </translation>
     </message>
     <message>
         <source>K</source>
-        <translation type="unfinished"></translation>
+        <translation>K</translation>
     </message>
     <message>
         <source>npn HICUM L0 v1.12</source>
-        <translation type="unfinished"></translation>
+        <translation>npn HICUM L0 v1.12</translation>
     </message>
     <message>
         <source>pnp HICUM L0 v1.12</source>
-        <translation type="unfinished"></translation>
+        <translation>pnp HICUM L0 v1.12</translation>
     </message>
     <message>
         <source>HICUM Level 2 v2.22 verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation>أجهزة فيريلوج HICUM 2 v2.22</translation>
     </message>
     <message>
         <source>GICCR constant</source>
-        <translation type="unfinished"></translation>
+        <translation>ثابت GICCR </translation>
     </message>
     <message>
         <source>A^2s</source>
-        <translation type="unfinished"></translation>
+        <translation>A^2s</translation>
     </message>
     <message>
         <source>Zero-bias hole charge</source>
-        <translation type="unfinished"></translation>
+        <translation>الشحنة  عند مستوى الصفر</translation>
     </message>
     <message>
         <source>Coul</source>
-        <translation type="unfinished"></translation>
+        <translation>Coul</translation>
     </message>
     <message>
         <source>High-current correction for 2D and 3D effects</source>
-        <translation type="unfinished"></translation>
+        <translation>التصحيح الحالي العالي لأثار 2D و 3D</translation>
     </message>
     <message>
         <source>Emitter minority charge weighting factor in HBTs</source>
-        <translation type="unfinished"></translation>
+        <translation>HBTs باعث الأقلية تهمة عامل الترج</translation>
     </message>
     <message>
         <source>Collector minority charge weighting factor in HBTs</source>
-        <translation type="unfinished"></translation>
+        <translation>HBTs مجمع الأقلية تهمة عامل الترج</translation>
     </message>
     <message>
         <source>B-E depletion charge weighting factor in HBTs</source>
-        <translation type="unfinished"></translation>
+        <translation>HBTs  عامل تفخيض شحنة الترجيح لقاعدة الإرسال في</translation>
     </message>
     <message>
         <source>B-C depletion charge weighting factor in HBTs</source>
-        <translation type="unfinished"></translation>
+        <translation>HBTs  عامل تفخيض شحنة الترجيح فيB-E</translation>
     </message>
     <message>
         <source>Internal B-E saturation current</source>
-        <translation type="unfinished"></translation>
+        <translation>التشبع التيار الداخلي لقاعدة الإرسال</translation>
     </message>
     <message>
         <source>Internal B-E current ideality factor</source>
-        <translation type="unfinished"></translation>
+        <translation>عامل المثاليةللتيار الداخلي لقاعدة الإرسال</translation>
     </message>
     <message>
         <source>Internal B-E recombination saturation current</source>
-        <translation type="unfinished"></translation>
+        <translation>إعادة تشبع التيار الداخلي لقاعدة الإرسال</translation>
     </message>
     <message>
         <source>Internal B-E recombination current ideality factor</source>
-        <translation type="unfinished"></translation>
+        <translation> معامل المثالي لإعادة تشبع التيار الداخلي لقاعدة الإرسال</translation>
     </message>
     <message>
         <source>Peripheral B-E saturation current</source>
-        <translation type="unfinished"></translation>
+        <translation> التشبع التيار الخارجي لقاعدة الإرسال</translation>
     </message>
     <message>
         <source>Peripheral B-E current ideality factor</source>
-        <translation type="unfinished"></translation>
+        <translation> معامل التيار المثالي  الخارجي لقاعدة الإرسال</translation>
     </message>
     <message>
         <source>Peripheral B-E recombination saturation current</source>
-        <translation type="unfinished"></translation>
+        <translation>إعادة تشبع التيار الخارجي لقاعدة الإرسال</translation>
     </message>
     <message>
         <source>Peripheral B-E recombination current ideality factor</source>
-        <translation type="unfinished"></translation>
+        <translation> معامل المثالي لإعادة تشبع التيار الخارجي لقاعدة الإرسال</translation>
     </message>
     <message>
         <source>Non-ideality factor for III-V HBTs</source>
-        <translation type="unfinished"></translation>
+        <translation>III-V HBTs ل Non-idealityمعامل </translation>
     </message>
     <message>
         <source>Base current recombination time constant at B-C barrier for high forward injection</source>
-        <translation type="unfinished"></translation>
+        <translation>لأجل الحقن العالي  B-C الوقت الثابت لإعادة قاعدة التيار  عند سقف</translation>
     </message>
     <message>
         <source>Internal B-C saturation current</source>
-        <translation type="unfinished"></translation>
+        <translation>التشبع التيار الداخلي B-C</translation>
     </message>
     <message>
         <source>Internal B-C current ideality factor</source>
-        <translation type="unfinished"></translation>
+        <translation>عامل المثاليةللتيار الداخلي لقاعدة الإرسالB-C</translation>
     </message>
     <message>
         <source>External B-C saturation current</source>
-        <translation type="unfinished"></translation>
+        <translation> التشبع التيار الخارجيB-C</translation>
     </message>
     <message>
         <source>External B-C current ideality factor</source>
-        <translation type="unfinished"></translation>
+        <translation> معامل التيار المثالي  الخارجي B-C</translation>
     </message>
     <message>
         <source>B-E tunneling saturation current</source>
-        <translation type="unfinished"></translation>
+        <translation>نفق التشبع التيار  لقاعدة الإرسال</translation>
     </message>
     <message>
         <source>Exponent factor for tunneling current</source>
-        <translation type="unfinished"></translation>
+        <translation>معامل الأسلنفق التيار</translation>
     </message>
     <message>
         <source>Specifies the base node connection for the tunneling current</source>
-        <translation type="unfinished"></translation>
+        <translation>تحديد قاعدة عقدة الإتصال لنفق التيار</translation>
     </message>
     <message>
         <source>Avalanche current factor</source>
-        <translation type="unfinished"></translation>
+        <translation>معامل انهيار التيار</translation>
     </message>
     <message>
         <source>Exponent factor for avalanche current</source>
-        <translation type="unfinished"></translation>
+        <translation>معامل الأس لانهيار التيار</translation>
     </message>
     <message>
         <source>Relative TC for FAVL</source>
-        <translation type="unfinished"></translation>
+        <translation>FAVL نسبي لأجل  TC </translation>
     </message>
     <message>
         <source>Relative TC for QAVL</source>
-        <translation type="unfinished"></translation>
+        <translation>QAVL نسبي لأجل  TC </translation>
     </message>
     <message>
         <source>Zero bias internal base resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>  القاعدة الداخلية للمقاومة معدومة</translation>
     </message>
     <message>
         <source>Factor for geometry dependence of emitter current crowding</source>
-        <translation type="unfinished"></translation>
+        <translation>معامل الإرتباط الهندسي لإرسال تيار مزدحم</translation>
     </message>
     <message>
         <source>Correction factor for modulation by B-E and B-C space charge layer</source>
-        <translation type="unfinished"></translation>
+        <translation> مساحة طبقة التشحين B-Cعامل التصحيح للمعدل عن طريق قاعدة الإرسال و </translation>
     </message>
     <message>
         <source>Ratio of HF shunt to total internal capacitance (lateral NQS effect)</source>
-        <translation type="unfinished"></translation>
+        <translation>لجمع السيعة الداخلية (آثار  الجانبية)ا HFنسبة تحويل </translation>
     </message>
     <message>
         <source>Ration of internal to total minority charge</source>
-        <translation type="unfinished"></translation>
+        <translation>نسبة لمجموع الشحن الأقلية الداخلية</translation>
     </message>
     <message>
         <source>Forward ideality factor of substrate transfer current</source>
-        <translation type="unfinished"></translation>
+        <translation>معامل تقدم المثالي لقوام تحويل التيار</translation>
     </message>
     <message>
         <source>C-S diode saturation current</source>
-        <translation type="unfinished"></translation>
+        <translation>تشبع التيار في الصمام الثنائي C-S</translation>
     </message>
     <message>
         <source>Ideality factor of C-S diode current</source>
-        <translation type="unfinished"></translation>
+        <translation> التيار في الصمام الثنائي C-Sمعامل المثالي ل </translation>
     </message>
     <message>
         <source>Transit time for forward operation of substrate transistor</source>
-        <translation type="unfinished"></translation>
+        <translation>وقت مرورللعملية المباشرة لقوام الترانزستور </translation>
     </message>
     <message>
         <source>Substrate series resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>قوام تسلسل المقاومة</translation>
     </message>
     <message>
         <source>Substrate shunt capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>قوام إصال السعة</translation>
     </message>
     <message>
         <source>Internal B-E zero-bias depletion capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>قاعدة الإرسال الداخلية لتخفيض السعة معدومة</translation>
     </message>
     <message>
         <source>Internal B-E built-in potential</source>
-        <translation type="unfinished"></translation>
+        <translation>قاعدة الإرسال الداخلية لبناء طاقة قصوى </translation>
     </message>
     <message>
         <source>Internal B-E grading coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>  معامل درجات قاعدة الإرسال الداخلية</translation>
     </message>
     <message>
         <source>Ratio of maximum to zero-bias value of internal B-E capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>النسبة القصوى لسعة قاعدة الإرسال معدومة</translation>
     </message>
     <message>
         <source>Peripheral B-E zero-bias depletion capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>تفخيض السعة  الخارجية لقاعدة الإرسال إلى الصفر</translation>
     </message>
     <message>
         <source>Peripheral B-E built-in potential</source>
-        <translation type="unfinished"></translation>
+        <translation>إدماج التيار العالي  لقاعدة الإرسال الخارجية </translation>
     </message>
     <message>
         <source>Peripheral B-E grading coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>معامل الدرجات لقاعدة الإرسال الخارجية </translation>
     </message>
     <message>
         <source>Ratio of maximum to zero-bias value of peripheral B-E capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>النسبة العالية  لسعة  قاعدة الإرسال الخارجية  معدومة</translation>
     </message>
     <message>
         <source>Internal B-C zero-bias depletion capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation> الداخلية لتخفيض السعة معدومةB-C</translation>
     </message>
     <message>
         <source>Internal B-C built-in potential</source>
-        <translation type="unfinished"></translation>
+        <translation>الخارجية B-Cإدماج التيار العالي  ل </translation>
     </message>
     <message>
         <source>Internal B-C grading coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>الداخلية  B-C الداخليةمعامل درجات قاعدة الإرسال ل</translation>
     </message>
     <message>
         <source>Internal B-C punch-through voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>الداخلي punch-through B-C ضغط </translation>
     </message>
     <message>
         <source>External B-C zero-bias depletion capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation> الخاجية الى الصفرB-C تخفيض السعة</translation>
     </message>
     <message>
         <source>External B-C built-in potential</source>
-        <translation type="unfinished"></translation>
+        <translation>الخارجية B-Cإدماج التيار العالي  ل </translation>
     </message>
     <message>
         <source>External B-C grading coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>الخارجية  B-C الداخليةمعامل درجات قاعدة الإرسال ل</translation>
     </message>
     <message>
         <source>External B-C punch-through voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>الخارجي punch-through B-C ضغط </translation>
     </message>
     <message>
         <source>Partitioning factor of parasitic B-C cap</source>
-        <translation type="unfinished"></translation>
+        <translation> B-Cمعامل التقسيم  لسقف التشويش</translation>
     </message>
     <message>
         <source>Partitioning factor of parasitic B-E cap</source>
-        <translation type="unfinished"></translation>
+        <translation> B-Cمعامل التقسيم  لسقف التشويش</translation>
     </message>
     <message>
         <source>C-S zero-bias depletion capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation> إلى الصفر C-S  تخفيض سعة</translation>
     </message>
     <message>
         <source>C-S built-in potential</source>
-        <translation type="unfinished"></translation>
+        <translation> C-S  إدماج التيار العالي ل</translation>
     </message>
     <message>
         <source>C-S grading coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>C-S معامل الدرجات </translation>
     </message>
     <message>
         <source>C-S punch-through voltage</source>
-        <translation type="unfinished"></translation>
+        <translation> punch-through C-S ضغط </translation>
     </message>
     <message>
         <source>Low current forward transit time at VBC=0V</source>
-        <translation type="unfinished"></translation>
+        <translation> VBC=0Vإنخفاض وقت عبور  التيار المباشر عند </translation>
     </message>
     <message>
         <source>Time constant for base and B-C space charge layer width modulation</source>
-        <translation type="unfinished"></translation>
+        <translation> مع التعديل  B-C قاعدة الوقت الثابت و شحن طبقة السطح</translation>
     </message>
     <message>
         <source>Time constant for modelling carrier jam at low VCE</source>
-        <translation type="unfinished"></translation>
+        <translation>منخفض VCE الوقت الثابت لتصميم إنسداد الناقل عند</translation>
     </message>
     <message>
         <source>Neutral emitter storage time</source>
-        <translation type="unfinished"></translation>
+        <translation>وقت تخزين المرسل المحايذ</translation>
     </message>
     <message>
         <source>Exponent factor for current dependence of neutral emitter storage time</source>
-        <translation type="unfinished"></translation>
+        <translation>معامل الدليل للتيار المستقل من وقت تخزين المرسل المحايذ</translation>
     </message>
     <message>
         <source>Saturation time constant at high current densities</source>
-        <translation type="unfinished"></translation>
+        <translation>ثابت وقت التشبع عند كثافة التيار العالي</translation>
     </message>
     <message>
         <source>Smoothing factor for current dependence of base and collector transit time</source>
-        <translation type="unfinished"></translation>
+        <translation>معامل التمهيد للتيار المستقل من القاعدة و مجمع وقت العبور</translation>
     </message>
     <message>
         <source>Partitioning factor for base and collector portion</source>
-        <translation type="unfinished"></translation>
+        <translation>معامل التقسيم للقاعدة وجزء من المجمع</translation>
     </message>
     <message>
         <source>Internal collector resistance at low electric field</source>
-        <translation type="unfinished"></translation>
+        <translation>مجمع المقاومة الداخلي عند حقل الكهربائي المنخفض</translation>
     </message>
     <message>
         <source>Voltage separating ohmic and saturation velocity regime</source>
-        <translation type="unfinished"></translation>
+        <translation>ضغط التبديل بين  نظام السرعة الأومي و التشبع</translation>
     </message>
     <message>
         <source>Internal C-E saturation voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>الداخلي C-E ضغط التشبع </translation>
     </message>
     <message>
         <source>Collector punch-through voltage</source>
-        <translation type="unfinished"></translation>
+        <translation> punch-through ضغط المجمع </translation>
     </message>
     <message>
         <source>Storage time for inverse operation</source>
-        <translation type="unfinished"></translation>
+        <translation>وقت التخزين للعملية العكسية</translation>
     </message>
     <message>
         <source>Total parasitic B-E capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>B-E مجموع التشويش في سعة </translation>
     </message>
     <message>
         <source>Total parasitic B-C capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>B-C مجموع التشويش في سعة </translation>
     </message>
     <message>
         <source>Factor for additional delay time of minority charge</source>
-        <translation type="unfinished"></translation>
+        <translation>معامل وقت الإنتضار للشحنة الأقلية</translation>
     </message>
     <message>
         <source>Factor for additional delay time of transfer current</source>
-        <translation type="unfinished"></translation>
+        <translation>معامل وقت الإنتضار لتيار التحويل</translation>
     </message>
     <message>
         <source>Flag for turning on and off of vertical NQS effect</source>
-        <translation type="unfinished"></translation>
+        <translation>العمودي NQS راية لتشغيل و توقيف لآثار </translation>
     </message>
     <message>
         <source>Flicker noise coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>معامل ومضة التشويش</translation>
     </message>
     <message>
         <source>Flicker noise exponent factor</source>
-        <translation type="unfinished"></translation>
+        <translation>عامل دليل ومضة التشويش</translation>
     </message>
     <message>
         <source>Flag for determining where to tag the flicker noise source</source>
-        <translation type="unfinished"></translation>
+        <translation>راية لتحديد مصدر ومضة التشويش</translation>
     </message>
     <message>
         <source>Scaling factor for collector minority charge in direction of emitter width</source>
-        <translation type="unfinished"></translation>
+        <translation>معامل سلم المجمع الشحنة الأقلية في إتجاه عرض المرسل</translation>
     </message>
     <message>
         <source>Scaling factor for collector minority charge in direction of emitter length</source>
-        <translation type="unfinished"></translation>
+        <translation>معامل سلم المجمع الشحنة الأقلية في إتجاه طول المرسل</translation>
     </message>
     <message>
         <source>Bandgap voltage extrapolated to 0 K</source>
-        <translation type="unfinished"></translation>
+        <translation>Kاستقراء فرق الضغط عند 0  </translation>
     </message>
     <message>
         <source>First order relative TC of parameter T0</source>
-        <translation type="unfinished"></translation>
+        <translation>T0الاعتماد الحرارية من الدرجة الأولى ب</translation>
     </message>
     <message>
         <source>Second order relative TC of parameter T0</source>
-        <translation type="unfinished"></translation>
+        <translation>T0الاعتماد الحرارية من الدرجة الثانية ب</translation>
     </message>
     <message>
         <source>Temperature exponent for RCI0</source>
-        <translation type="unfinished"></translation>
+        <translation> RCI0دليل الدرجة الحرارية ل</translation>
     </message>
     <message>
         <source>Relative TC of saturation drift velocity</source>
-        <translation type="unfinished"></translation>
+        <translation>الاعتماد الحراري  على سرعة الانحراف التشبع</translation>
     </message>
     <message>
         <source>Relative TC of VCES</source>
-        <translation type="unfinished"></translation>
+        <translation>VCESالاعتماد الحراري  على</translation>
     </message>
     <message>
         <source>Temperature exponent of internal base resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>دليل الحرارة لقاعدة المقاومة الداخلي</translation>
     </message>
     <message>
         <source>Temperature exponent of external base resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>دليل الحرارة لقاعدة المقاومة الخارجي</translation>
     </message>
     <message>
         <source>Temperature exponent of external collector resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>دليل الحرارة لقاعدة المجمع  الخارجي</translation>
     </message>
     <message>
         <source>Temperature exponent of emitter resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>دليل الحرارة لمرسل المقاومة </translation>
     </message>
     <message>
         <source>Temperature exponent of mobility in substrate transistor transit time</source>
-        <translation type="unfinished"></translation>
+        <translation>دليل الحرارة لتحرك في وقت عبور قوام الترنزستور </translation>
     </message>
     <message>
         <source>Effective emitter bandgap voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>المرسل الحقيقي لفرق الضغط</translation>
     </message>
     <message>
         <source>Effective collector bandgap voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>المجمع الحقيقي لفرق الضغط</translation>
     </message>
     <message>
         <source>Effective substrate bandgap voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>القوام الحقيقي لفرق الضغط</translation>
     </message>
     <message>
         <source>Coefficient K1 in T-dependent band-gap equation</source>
-        <translation type="unfinished"></translation>
+        <translation>Coefficient K1 in T-dependent band-gap equation</translation>
     </message>
     <message>
         <source>Coefficient K2 in T-dependent band-gap equation</source>
-        <translation type="unfinished"></translation>
+        <translation>Coefficient K2 in T-dependent band-gap equation</translation>
     </message>
     <message>
         <source>Exponent coefficient in B-E junction current temperature dependence</source>
-        <translation type="unfinished"></translation>
+        <translation>دليل معامل في قاعدة الإرسال وصلة إعتماد الحراري للتيار</translation>
     </message>
     <message>
         <source>Relative TC of forward current gain for V2.1 model</source>
-        <translation type="unfinished"></translation>
+        <translation>V2.1الاعتماد الحراري  على ربح التيار المباشر لنوع </translation>
     </message>
     <message>
         <source>Flag for turning on and off self-heating effect</source>
-        <translation type="unfinished"></translation>
+        <translation>راية لتشغيل أو توقيف آثار التسخين الذاتية </translation>
     </message>
     <message>
         <source>J/W</source>
-        <translation type="unfinished"></translation>
+        <translation>J/W</translation>
     </message>
     <message>
         <source>Flag for compatibility with v2.1 model (0=v2.1)</source>
-        <translation type="unfinished"></translation>
+        <translation>(0=v2.1) v2.1 راية التوافق مع نوع </translation>
     </message>
     <message>
         <source>Temperature at which parameters are specified</source>
-        <translation type="unfinished"></translation>
+        <translation>درجة الحرارة عند أي متغير  محدد</translation>
     </message>
     <message>
         <source>Temperature change w.r.t. chip temperature for particular transistor</source>
-        <translation type="unfinished"></translation>
+        <translation>الانحراف الحراري للترانزستور بسبب التسخين الكلي للرقائق</translation>
     </message>
     <message>
         <source>HICUM L2 v2.22</source>
-        <translation type="unfinished"></translation>
+        <translation>HICUM L2 v2.22</translation>
     </message>
     <message>
         <source>HICUM Level 0 v1.2 verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>reverse Early voltage (normalization volt.)</source>
-        <translation type="unfinished"></translation>
+        <translation>ضغط الإنعكاس فقط (تسوية فولت)ـ</translation>
     </message>
     <message>
         <source>flag for turning on base related critical current</source>
-        <translation type="unfinished"></translation>
+        <translation>راية لتشغيل  قاعدة الإتصال الكهربائي</translation>
     </message>
     <message>
         <source>Smoothing factor for the d.c. injection width</source>
-        <translation type="unfinished"></translation>
+        <translation>d.c. عوامل تمهيد من عرض حقن </translation>
     </message>
     <message>
         <source>BE charge built-in voltage for d.c. transfer current</source>
-        <translation type="unfinished"></translation>
+        <translation>d.c. ضغط بناء شحنة  قاعدة الإرسال لتيار التحويل </translation>
     </message>
     <message>
         <source>charge BE exponent factor for d.c. transfer current</source>
-        <translation type="unfinished"></translation>
+        <translation>d.c. معامل دليل شحن  قاعدة الإرسال لتيار التحويل</translation>
+    </message>
+    <message>
+        <source>BE capacitance ratio Ratio maximum to zero-bias value for d.c. transfer current</source>
+        <translation type="obsolete">d.c. نسبة سعة قاعدة الإرسال النسبة القصوى معدومة القيمة لتيار التحويل </translation>
     </message>
     <message>
         <source>TC of iqf</source>
-        <translation type="unfinished"></translation>
+        <translation>TC of iqf</translation>
     </message>
     <message>
         <source>Exponent factor for temperature dependent thermal resistance</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>npn HICUM L0 v1.2</source>
-        <translation type="unfinished"></translation>
+        <translation>npn HICUM L0 v1.2</translation>
     </message>
     <message>
         <source>pnp HICUM L0 v1.2</source>
-        <translation type="unfinished"></translation>
+        <translation>pnp HICUM L0 v1.2</translation>
     </message>
     <message>
         <source>HICUM Level 2 v2.1 verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation>أجهزة فيريلوج  v2.21 2 HICUM </translation>
     </message>
     <message>
         <source>Partitioning factor of parasitic B-C capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>B-C  معامل تقسيم سعة تشويش في </translation>
     </message>
     <message>
         <source>Noise factor for internal base resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>معامل التشويش لقاعدة المقاومة الداخلية</translation>
     </message>
     <message>
         <source>HICUM L2 v2.1</source>
-        <translation type="unfinished"></translation>
+        <translation>HICUM L2 v2.1</translation>
     </message>
     <message>
         <source>HICUM Level 2 v2.23 verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation>أجهزة فيريلوج  v2.23 2 HICUM </translation>
     </message>
     <message>
         <source>HICUM L2 v2.23</source>
-        <translation type="unfinished"></translation>
+        <translation>HICUM L2 v2.23</translation>
     </message>
     <message>
         <source>exponential current source</source>
-        <translation type="unfinished"></translation>
+        <translation> المصدر الأسي الحالي</translation>
     </message>
     <message>
         <source>current before rising edge</source>
-        <translation type="unfinished"></translation>
+        <translation>قبل أن يرتفع الحد الحالي</translation>
     </message>
     <message>
         <source>maximum current of the pulse</source>
-        <translation type="unfinished"></translation>
+        <translation>الحد الأقصى للنبض التيار  </translation>
     </message>
     <message>
         <source>start time of the exponentially rising edge</source>
-        <translation type="unfinished"></translation>
+        <translation>بدأ تضاعف إرتفاع الحد </translation>
     </message>
     <message>
         <source>start of exponential decay</source>
-        <translation type="unfinished"></translation>
+        <translation> بدأ تضاعف التدهور</translation>
     </message>
     <message>
         <source>time constant of the rising edge</source>
-        <translation type="unfinished"></translation>
+        <translation>الوقت الثابت لرتفاع الحد</translation>
     </message>
     <message>
         <source>time constant of the falling edge</source>
-        <translation type="unfinished"></translation>
+        <translation>الوقت الثابت لإنخفاض الحد</translation>
     </message>
     <message>
         <source>Exponential Current Pulse</source>
-        <translation type="unfinished"></translation>
+        <translation>تضاعف نبض التيار </translation>
     </message>
     <message>
         <source>file based current source</source>
-        <translation type="unfinished"></translation>
+        <translation>ملف مصدر التيار</translation>
     </message>
     <message>
         <source>name of the sample file</source>
-        <translation type="unfinished"></translation>
+        <translation>اسم الملف العينة</translation>
     </message>
     <message>
         <source>interpolation type</source>
-        <translation type="unfinished"></translation>
+        <translation>نوع التوليد</translation>
     </message>
     <message>
         <source>repeat waveform</source>
-        <translation type="unfinished"></translation>
+        <translation>تكرار الموجي</translation>
     </message>
     <message>
         <source>current gain</source>
-        <translation type="unfinished"></translation>
+        <translation>الربح الحالي</translation>
     </message>
     <message>
         <source>File Based Current Source</source>
-        <translation type="unfinished"></translation>
+        <translation>ملف مصدر التيار</translation>
     </message>
     <message>
         <source>inductor</source>
-        <translation type="unfinished"></translation>
+        <translation> أداة الحث</translation>
     </message>
     <message>
         <source>inductance in Henry</source>
-        <translation type="unfinished"></translation>
+        <translation>محاثة في هنري  </translation>
     </message>
     <message>
         <source>initial current for transient simulation</source>
-        <translation type="unfinished"></translation>
+        <translation> التيار الأولي عابرة للمحاكاة</translation>
     </message>
     <message>
         <source>Inductor</source>
-        <translation type="unfinished"></translation>
+        <translation> أداة الحث</translation>
     </message>
     <message>
         <source>current probe</source>
-        <translation type="unfinished"></translation>
+        <translation>مسار التيار</translation>
     </message>
     <message>
         <source>Current Probe</source>
-        <translation type="unfinished"></translation>
+        <translation>مسار التيار</translation>
     </message>
     <message>
         <source>ideal current pulse source</source>
-        <translation type="unfinished"></translation>
+        <translation>المصدر المثالي لذبذبة التيار </translation>
     </message>
     <message>
         <source>current before and after the pulse</source>
-        <translation type="unfinished"></translation>
+        <translation>التيار قبل و بعد الذبذبة</translation>
     </message>
     <message>
         <source>current of the pulse</source>
-        <translation type="unfinished"></translation>
+        <translation>ذبذبة التيار</translation>
     </message>
     <message>
         <source>start time of the pulse</source>
-        <translation type="unfinished"></translation>
+        <translation>بداية الذبذبة</translation>
     </message>
     <message>
         <source>ending time of the pulse</source>
-        <translation type="unfinished"></translation>
+        <translation>نهاية الذبذبة</translation>
     </message>
     <message>
         <source>rise time of the leading edge</source>
-        <translation type="unfinished"></translation>
+        <translation>  ارتفاع وقت الحد الأمامي</translation>
     </message>
     <message>
         <source>fall time of the trailing edge</source>
-        <translation type="unfinished"></translation>
+        <translation>إنتهاء الوقت لمتابعة الحد</translation>
     </message>
     <message>
         <source>Current Pulse</source>
-        <translation type="unfinished"></translation>
+        <translation>ذبذبة التيار</translation>
     </message>
     <message>
         <source>ideal rectangle current source</source>
-        <translation type="unfinished"></translation>
+        <translation>المصدر المثالي لذبذبة التيار </translation>
     </message>
     <message>
         <source>current at high pulse</source>
-        <translation type="unfinished"></translation>
+        <translation> التيار على ذبذبة عالية</translation>
     </message>
     <message>
         <source>duration of high pulses</source>
-        <translation type="unfinished"></translation>
+        <translation>مدة الذبذابات العاليات</translation>
     </message>
     <message>
         <source>duration of low pulses</source>
-        <translation type="unfinished"></translation>
+        <translation>مدة الذبذابات المنخفضات</translation>
     </message>
     <message>
         <source>initial delay time</source>
-        <translation type="unfinished"></translation>
+        <translation>بداية وقت  التأخير</translation>
     </message>
     <message>
         <source>Rectangle Current</source>
-        <translation type="unfinished"></translation>
+        <translation>التيار المستطيل</translation>
     </message>
     <message>
         <source>isolator</source>
-        <translation type="unfinished"></translation>
+        <translation>عازل</translation>
     </message>
     <message>
         <source>Isolator</source>
-        <translation type="unfinished"></translation>
+        <translation>العازل</translation>
     </message>
     <message>
         <source>junction field-effect transistor</source>
-        <translation type="unfinished"></translation>
+        <translation>تقاطع  آثار مجال الترانزستور</translation>
     </message>
     <message>
         <source>threshold voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>عتبة الفولت</translation>
     </message>
     <message>
         <source>channel-length modulation parameter</source>
-        <translation type="unfinished"></translation>
+        <translation>تعديل متغير  طول القناة  </translation>
     </message>
     <message>
         <source>parasitic drain resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>تفريغ التشويش من المقاومة</translation>
     </message>
     <message>
         <source>parasitic source resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>مصدر التشويش في المقاومة</translation>
     </message>
     <message>
         <source>gate-junction saturation current</source>
-        <translation type="unfinished"></translation>
+        <translation>بوابة تقاطع بين تشبع التيار</translation>
     </message>
     <message>
         <source>gate-junction emission coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>بوابة تقاطع معامل الانبعاث</translation>
     </message>
     <message>
         <source>gate-junction recombination current parameter</source>
-        <translation type="unfinished"></translation>
+        <translation>بوابة تقاطع متغير إعادة التيار</translation>
     </message>
     <message>
         <source>Isr emission coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>Isrمعامل الانبعاث ل</translation>
     </message>
     <message>
         <source>zero-bias gate-source junction capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>مصدر بوابة تقاطع  السعة كهربائية معدومة</translation>
     </message>
     <message>
         <source>zero-bias gate-drain junction capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>مصرف بوابة تقاطع  السعة كهربائية معدومة</translation>
     </message>
     <message>
         <source>gate-junction potential</source>
-        <translation type="unfinished"></translation>
+        <translation>بوابة تقاطع القوة</translation>
     </message>
     <message>
         <source>forward-bias junction capacitance coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>الانحياز المباشر لمعامل تقاطع السعة</translation>
     </message>
     <message>
         <source>gate P-N grading coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>P-N معامل بوابة</translation>
     </message>
     <message>
         <source>Vt0 temperature coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>Vt0 معامل الحرارة </translation>
     </message>
     <message>
         <source>Beta exponential temperature coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>βمعامل دليل الحرارة </translation>
     </message>
     <message>
         <source>default area for JFET</source>
-        <translation type="unfinished"></translation>
+        <translation>JFETالسطح الإفتراضي ل </translation>
     </message>
     <message>
         <source>n-JFET</source>
-        <translation type="unfinished"></translation>
+        <translation>n-JFET</translation>
     </message>
     <message>
         <source>p-JFET</source>
-        <translation type="unfinished"></translation>
+        <translation>p-JFET</translation>
     </message>
     <message>
         <source>JK flip flop with asynchron set and reset</source>
-        <translation type="unfinished"></translation>
+        <translation>JK flip flop with asynchron set and reset</translation>
     </message>
     <message>
         <source>JK-FlipFlop</source>
-        <translation type="unfinished"></translation>
+        <translation>JK-FlipFlop</translation>
     </message>
     <message>
         <source>Component taken from Qucs library</source>
-        <translation type="unfinished"></translation>
+        <translation> Qucs العنصر مأخوذ من مكتبة </translation>
     </message>
     <message>
         <source>name of qucs library file</source>
-        <translation type="unfinished"></translation>
+        <translation> Qucs إسم ملف لمكتبة </translation>
     </message>
     <message>
         <source>name of component in library</source>
-        <translation type="unfinished"></translation>
+        <translation>إسم العنصر في المكتبة</translation>
     </message>
     <message>
         <source>Logarithmic Amplifier verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation>جهاز فيريلوج للوغاريتم التكبير</translation>
     </message>
     <message>
         <source>scale factor</source>
-        <translation type="unfinished"></translation>
+        <translation>عامل المقياس </translation>
     </message>
     <message>
         <source>scale factor error</source>
-        <translation type="unfinished"></translation>
+        <translation>خطأ في عامل المقياس </translation>
     </message>
     <message>
         <source>%</source>
-        <translation type="unfinished"></translation>
+        <translation>%</translation>
     </message>
     <message>
         <source>input I1 bias current</source>
-        <translation type="unfinished"></translation>
+        <translation> I1 تيار الدخول </translation>
     </message>
     <message>
         <source>input reference bias current</source>
-        <translation type="unfinished"></translation>
+        <translation>مرجع تيار الدخول </translation>
     </message>
     <message>
         <source>number of decades</source>
-        <translation type="unfinished"></translation>
+        <translation>عدد العقود</translation>
     </message>
     <message>
         <source>conformity error</source>
-        <translation type="unfinished"></translation>
+        <translation>مطابق للخطأ</translation>
     </message>
     <message>
         <source>output offset error</source>
-        <translation type="unfinished"></translation>
+        <translation> خطأ في الإخراج </translation>
     </message>
     <message>
         <source>amplifier input resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>مدخل مكبر المقاومة </translation>
     </message>
     <message>
         <source>amplifier 3dB frequency</source>
-        <translation type="unfinished"></translation>
+        <translation>3dB تردد مكبر </translation>
     </message>
     <message>
         <source>Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>هرتز</translation>
     </message>
     <message>
         <source>amplifier output resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>منفذ مكبر المقاومة </translation>
     </message>
     <message>
         <source>conformity error temperature coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>معامل الحرارة المطابق للخطأ</translation>
     </message>
     <message>
         <source>%/Celsius</source>
-        <translation type="unfinished"></translation>
+        <translation>%مئوية</translation>
     </message>
     <message>
         <source>offset temperature coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>تغير معامل الحرارة</translation>
     </message>
     <message>
         <source>V/Celsius</source>
-        <translation type="unfinished"></translation>
+        <translation>V/مئوية</translation>
     </message>
     <message>
         <source>scale factor error temperature coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>خطأ في معامل مقياس درجة الحرارة</translation>
     </message>
     <message>
         <source>input I1 bias current temperature coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>  I1 معامل درجة حرارة تيار الدخول </translation>
     </message>
     <message>
         <source>A/Celsius</source>
-        <translation type="unfinished"></translation>
+        <translation>A/مئوية</translation>
     </message>
     <message>
         <source>input reference bias current temperature coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>معامل درجة الحرارة التيار للمرجع الدخول</translation>
     </message>
     <message>
         <source>Logarithmic Amplifier</source>
-        <translation type="unfinished"></translation>
+        <translation>مكبر الصوت لوغاريتمي</translation>
     </message>
     <message>
         <source>I</source>
-        <translation type="unfinished"></translation>
+        <translation>I</translation>
     </message>
     <message>
         <source>R</source>
-        <translation type="unfinished"></translation>
+        <translation>R</translation>
     </message>
     <message>
         <source>logical AND</source>
-        <translation type="unfinished"></translation>
+        <translation> المنطقي AND </translation>
     </message>
     <message>
         <source>n-port AND</source>
-        <translation type="unfinished"></translation>
+        <translation> n منفذ AND</translation>
     </message>
     <message>
         <source>logical buffer</source>
-        <translation type="unfinished"></translation>
+        <translation>حافظ المنطقي</translation>
     </message>
     <message>
         <source>Buffer</source>
-        <translation type="unfinished"></translation>
+        <translation>الحافظ</translation>
     </message>
     <message>
         <source>logical inverter</source>
-        <translation type="unfinished"></translation>
+        <translation>العاكس المنطقي</translation>
     </message>
     <message>
         <source>Inverter</source>
-        <translation type="unfinished"></translation>
+        <translation>العاكس</translation>
     </message>
     <message>
         <source>logical NAND</source>
-        <translation type="unfinished"></translation>
+        <translation>المنطقي NAND </translation>
     </message>
     <message>
         <source>n-port NAND</source>
-        <translation type="unfinished"></translation>
+        <translation> n منفذ NAND</translation>
     </message>
     <message>
         <source>logical NOR</source>
-        <translation type="unfinished"></translation>
+        <translation>المنطقي NOR </translation>
     </message>
     <message>
         <source>n-port NOR</source>
-        <translation type="unfinished"></translation>
+        <translation> n منفذ NOR</translation>
     </message>
     <message>
         <source>logical OR</source>
-        <translation type="unfinished"></translation>
+        <translation>المنطقي OR </translation>
     </message>
     <message>
         <source>n-port OR</source>
-        <translation type="unfinished"></translation>
+        <translation> n منفذ OR</translation>
     </message>
     <message>
         <source>logical XNOR</source>
-        <translation type="unfinished"></translation>
+        <translation>المنطقي XNOR </translation>
     </message>
     <message>
         <source>n-port XNOR</source>
-        <translation type="unfinished"></translation>
+        <translation> n منفذ XNOR</translation>
     </message>
     <message>
         <source>logical XOR</source>
-        <translation type="unfinished"></translation>
+        <translation>المنطقي XOR </translation>
     </message>
     <message>
         <source>n-port XOR</source>
-        <translation type="unfinished"></translation>
+        <translation> n منفذ XOR</translation>
     </message>
     <message>
         <source>MESFET verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation> أجهزة فيريلوج MESFET</translation>
     </message>
     <message>
         <source>model selector</source>
-        <translation type="unfinished"></translation>
+        <translation>النموذج المنتق</translation>
     </message>
     <message>
         <source>pinch-off voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>pinch-off voltage</translation>
     </message>
     <message>
         <source>A/(V*V)</source>
-        <translation type="unfinished"></translation>
+        <translation>A/(V*V)</translation>
     </message>
     <message>
         <source>saturation voltage parameter</source>
-        <translation type="unfinished"></translation>
+        <translation>متغير  التشبع فولت</translation>
     </message>
     <message>
         <source>channel length modulation parameter</source>
-        <translation type="unfinished"></translation>
+        <translation>متغير طول قناة  التعديل </translation>
     </message>
     <message>
         <source>doping profile parameter</source>
-        <translation type="unfinished"></translation>
+        <translation> متغير مظهرالمخدير</translation>
     </message>
     <message>
         <source>power law exponent parameter</source>
-        <translation type="unfinished"></translation>
+        <translation>متغير دليل قانون القوة</translation>
     </message>
     <message>
         <source>power feedback parameter</source>
-        <translation type="unfinished"></translation>
+        <translation>متغير نتائج القوة</translation>
     </message>
     <message>
         <source>1/W</source>
-        <translation type="unfinished"></translation>
+        <translation>1/W</translation>
     </message>
     <message>
         <source>maximum junction voltage limit before capacitance limiting</source>
-        <translation type="unfinished"></translation>
+        <translation>حد الأقصى لضغط الوصلة قبل حد السعة</translation>
     </message>
     <message>
         <source>capacitance saturation transition voltage</source>
-        <translation type="unfinished"></translation>
+        <translation> تشبع السعة لتيار التحويل</translation>
     </message>
     <message>
         <source>capacitance threshold transition voltage</source>
-        <translation type="unfinished"></translation>
+        <translation> عتبة سعة تيار التحويل</translation>
     </message>
     <message>
         <source>dc drain pull coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>معامل  جذب الكفاءات  dc </translation>
     </message>
     <message>
         <source>subthreshold conductance parameter</source>
-        <translation type="unfinished"></translation>
+        <translation>متغير  تحت عتبة المواصلة</translation>
     </message>
     <message>
         <source>diode saturation current</source>
-        <translation type="unfinished"></translation>
+        <translation> تيار تشبع  الصمام الثنائي</translation>
     </message>
     <message>
         <source>diode emission coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>تيار إنبعاث  الصمام الثنائي</translation>
     </message>
     <message>
         <source>built-in gate potential</source>
-        <translation type="unfinished"></translation>
+        <translation> إدماج بوابة  التيار العال</translation>
     </message>
     <message>
         <source>gate-drain junction reverse bias breakdown voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>  إستنزاف  بوابة إنعكاس تقاطع نحو انهيار الجهد</translation>
     </message>
     <message>
         <source>diode saturation current temperature coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>معامل حرارة تشبع تيار  الصمام الثنائي</translation>
     </message>
     <message>
         <source>transit time under gate</source>
-        <translation type="unfinished"></translation>
+        <translation>وقت عبور تحت البوابة</translation>
     </message>
     <message>
         <source>channel resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>قناة المقاومة</translation>
     </message>
     <message>
         <source>area factor</source>
-        <translation type="unfinished"></translation>
+        <translation>عامل السطح</translation>
     </message>
     <message>
         <source>energy gap</source>
-        <translation type="unfinished"></translation>
+        <translation>طاقة الفجوة</translation>
     </message>
     <message>
         <source>eV</source>
-        <translation type="unfinished"></translation>
+        <translation>eV</translation>
     </message>
     <message>
         <source>zero bias gate-drain junction capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>مصرف بوابة تقاطع  السعة كهربائية معدومة</translation>
     </message>
     <message>
         <source>zero bias gate-source junction capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>مصدر بوابة تقاطع  السعة كهربائية معدومة</translation>
     </message>
     <message>
         <source>zero bias drain-source junction capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>مصدر بوابة تقاطع  السعة كهربائية معدومة</translation>
     </message>
     <message>
         <source>Beta temperature coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>معامل درجة الحرارة بيتا</translation>
     </message>
     <message>
         <source>Alpha temperature coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>معامل درجة الحرارة ألفا</translation>
     </message>
     <message>
         <source>Gamma temperature coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>معامل درجة الحرارة قاما</translation>
     </message>
     <message>
         <source>Subthreshold slope gate parameter</source>
-        <translation type="unfinished"></translation>
+        <translation>متغير  تحت عتبة منحدر البوابة</translation>
     </message>
     <message>
         <source>subthreshold drain pull parameter</source>
-        <translation type="unfinished"></translation>
+        <translation>متغير  تحت عتبة منحدر البوابة</translation>
     </message>
     <message>
         <source>gate-source current equation selector</source>
-        <translation type="unfinished"></translation>
+        <translation>مصدر بوابة إختيار معادلة التيار</translation>
     </message>
     <message>
         <source>gate-drain current equation selector</source>
-        <translation type="unfinished"></translation>
+        <translation>بوابة استنزاف  معادلة التيار المختارة</translation>
     </message>
     <message>
         <source>gate-source charge equation selector</source>
-        <translation type="unfinished"></translation>
+        <translation>مصدر بوابة معادلة الشحنة المختارة</translation>
     </message>
     <message>
         <source>gate-drain charge equation selector</source>
-        <translation type="unfinished"></translation>
+        <translation>بوابة استنزاف  معادلة الشحنة المختارة</translation>
     </message>
     <message>
         <source>drain-source charge equation selector</source>
-        <translation type="unfinished"></translation>
+        <translation>مصدر استنزاف  معادلة الشحنة المختارة</translation>
+    </message>
+    <message>
+        <source>Vto temperature  coefficient</source>
+        <translation type="obsolete">Vto معامل درجة الحرارة </translation>
     </message>
     <message>
         <source>gate resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>بوابة المقاومة</translation>
     </message>
     <message>
         <source>Ohms</source>
-        <translation type="unfinished"></translation>
+        <translation>Ω</translation>
     </message>
     <message>
         <source>drain resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>استنزف المقاومة</translation>
     </message>
     <message>
         <source>source resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>مصدر المقاومة</translation>
     </message>
     <message>
         <source>gate resistance temperature coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>معامل الحرارة لبوابة المقاومة</translation>
     </message>
     <message>
         <source>1/Celsius</source>
-        <translation type="unfinished"></translation>
+        <translation>1/مئوية</translation>
     </message>
     <message>
         <source>drain resistance temperature coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>معامل إستنزاف درجة حرارة المقاومة</translation>
     </message>
     <message>
         <source>source resistance temperature coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>معامل مصدر درجة حرارة المقاومة</translation>
     </message>
     <message>
         <source>gate reverse breakdown currrent</source>
-        <translation type="unfinished"></translation>
+        <translation>بوابة عكس انهيار التيار</translation>
     </message>
     <message>
         <source>forward bias slope resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>الانحياز المباشر لمنحدر المقاومة</translation>
     </message>
     <message>
         <source>breakdown slope resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>انهيار  منحدر المقاومة</translation>
     </message>
     <message>
         <source>shot noise coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>معامل جرعة من التشويش</translation>
     </message>
     <message>
         <source>MESFET</source>
-        <translation type="unfinished"></translation>
+        <translation>MESFET</translation>
     </message>
     <message>
         <source>Modular Operational Amplifier verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation>وحدات مكبر التنفيذي لجهاز  فيريلوج </translation>
     </message>
     <message>
         <source>Gain bandwidth product (Hz)</source>
-        <translation type="unfinished"></translation>
+        <translation>كسب باندوتز المنتج (هرتز)ـ</translation>
     </message>
     <message>
         <source>Open-loop differential gain at DC (dB)</source>
@@ -4973,27 +5036,27 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>Second pole frequency (Hz)</source>
-        <translation type="unfinished"></translation>
+        <translation>(تردد قطب الثنائي (هرتز</translation>
     </message>
     <message>
         <source>Output resistance (Ohm)</source>
-        <translation type="unfinished"></translation>
+        <translation>(Ω) الناتج المقاومة </translation>
     </message>
     <message>
         <source>Differential input capacitance (F)</source>
-        <translation type="unfinished"></translation>
+        <translation>  -الفارق مدخلات مواسعة -ف</translation>
     </message>
     <message>
         <source>Differential input resistance (Ohm)</source>
-        <translation type="unfinished"></translation>
+        <translation>(Ω) الفارق مدخلات المقاومة </translation>
     </message>
     <message>
         <source>Input offset current (A)</source>
-        <translation type="unfinished"></translation>
+        <translation>مدخل التيار المتكافئ (أ)ـ</translation>
     </message>
     <message>
         <source>Input bias current (A)</source>
-        <translation type="unfinished"></translation>
+        <translation>إنحياز التيار الداخل(أ)ـ</translation>
     </message>
     <message>
         <source>Input offset voltage (V)</source>
@@ -5041,23 +5104,23 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>n-MOSFET</source>
-        <translation type="unfinished"></translation>
+        <translation>n-MOSFET</translation>
     </message>
     <message>
         <source>p-MOSFET</source>
-        <translation type="unfinished"></translation>
+        <translation>p-MOSFET</translation>
     </message>
     <message>
         <source>depletion MOSFET</source>
-        <translation type="unfinished"></translation>
+        <translation>depletion MOSFET</translation>
     </message>
     <message>
         <source>zero-bias threshold voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>عتبة الفولت معدومة</translation>
     </message>
     <message>
         <source>transconductance coefficient in A/V^2</source>
-        <translation type="unfinished"></translation>
+        <translation>transconductance coefficient in A/V^2</translation>
     </message>
     <message>
         <source>bulk threshold in sqrt(V)</source>
@@ -5077,7 +5140,7 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>source ohmic resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>مصدر المقاومة الأومي</translation>
     </message>
     <message>
         <source>gate ohmic resistance</source>
@@ -5093,11 +5156,11 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>channel width</source>
-        <translation type="unfinished"></translation>
+        <translation>عرض القناة</translation>
     </message>
     <message>
         <source>channel length</source>
-        <translation type="unfinished"></translation>
+        <translation>طول القناة</translation>
     </message>
     <message>
         <source>lateral diffusion length</source>
@@ -5105,7 +5168,7 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>oxide thickness</source>
-        <translation type="unfinished"></translation>
+        <translation>سمك الأكسيد </translation>
     </message>
     <message>
         <source>gate-source overlap capacitance per meter of channel width in F/m</source>
@@ -5209,307 +5272,307 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>microstrip corner</source>
-        <translation type="unfinished"></translation>
+        <translation> Microstrip ركن </translation>
     </message>
     <message>
         <source>width of line</source>
-        <translation type="unfinished"></translation>
+        <translation>عرض الخط</translation>
     </message>
     <message>
         <source>Microstrip Corner</source>
-        <translation type="unfinished"></translation>
+        <translation> Microstripركن </translation>
     </message>
     <message>
         <source>coupled microstrip line</source>
-        <translation type="unfinished"></translation>
+        <translation>  microstripمقرون خط </translation>
     </message>
     <message>
         <source>spacing between the lines</source>
-        <translation type="unfinished"></translation>
+        <translation>المباعدة بين السطور</translation>
     </message>
     <message>
         <source>microstrip model</source>
-        <translation type="unfinished"></translation>
+        <translation> Microstrip نوع</translation>
     </message>
     <message>
         <source>microstrip dispersion model</source>
-        <translation type="unfinished"></translation>
+        <translation>microstrip نوع  تشتت </translation>
     </message>
     <message>
         <source>Coupled Microstrip Line</source>
-        <translation type="unfinished"></translation>
+        <translation>  microstripمقرون خط </translation>
     </message>
     <message>
         <source>microstrip cross</source>
-        <translation type="unfinished"></translation>
+        <translation>microstrip تقاطع</translation>
     </message>
     <message>
         <source>width of line 3</source>
-        <translation type="unfinished"></translation>
+        <translation>عرض الخط 3</translation>
     </message>
     <message>
         <source>width of line 4</source>
-        <translation type="unfinished"></translation>
+        <translation>عرض الخط 4</translation>
     </message>
     <message>
         <source>quasi-static microstrip model</source>
-        <translation type="unfinished"></translation>
+        <translation>شبه جامد microstrip نوع  </translation>
     </message>
     <message>
         <source>show port numbers in symbol or not</source>
-        <translation type="unfinished"></translation>
+        <translation>إضهار رقم المنفذ في الرمز أو لا</translation>
     </message>
     <message>
         <source>Microstrip Cross</source>
-        <translation type="unfinished"></translation>
+        <translation>microstrip تقاطع</translation>
     </message>
     <message>
         <source>microstrip gap</source>
-        <translation type="unfinished"></translation>
+        <translation>microstrip فجوة</translation>
     </message>
     <message>
         <source>width of the line 1</source>
-        <translation type="unfinished"></translation>
+        <translation>عرض الخط 1</translation>
     </message>
     <message>
         <source>width of the line 2</source>
-        <translation type="unfinished"></translation>
+        <translation>عرض الخط 2</translation>
     </message>
     <message>
         <source>spacing between the microstrip ends</source>
-        <translation type="unfinished"></translation>
+        <translation>microstrip المباعدة بين نهاية  </translation>
     </message>
     <message>
         <source>Microstrip Gap</source>
-        <translation type="unfinished"></translation>
+        <translation>microstrip فجوة</translation>
     </message>
     <message>
         <source>microstrip line</source>
-        <translation type="unfinished"></translation>
+        <translation>Microstrip خط </translation>
     </message>
     <message>
         <source>Microstrip Line</source>
-        <translation type="unfinished"></translation>
+        <translation>Microstrip خط </translation>
     </message>
     <message>
         <source>microstrip mitered bend</source>
-        <translation type="unfinished"></translation>
+        <translation>متوج منحنى microstrip</translation>
     </message>
     <message>
         <source>Microstrip Mitered Bend</source>
-        <translation type="unfinished"></translation>
+        <translation>متوج منحنى microstrip</translation>
     </message>
     <message>
         <source>microstrip open</source>
-        <translation type="unfinished"></translation>
+        <translation>الشريط الصغير مفتوح</translation>
     </message>
     <message>
         <source>microstrip open end model</source>
-        <translation type="unfinished"></translation>
+        <translation>الشريط الصغير مفتوح نهاية النموذج</translation>
     </message>
     <message>
         <source>Microstrip Open</source>
-        <translation type="unfinished"></translation>
+        <translation>الشريط الصغير مفتوح</translation>
     </message>
     <message>
         <source>microstrip impedance step</source>
-        <translation type="unfinished"></translation>
+        <translation> مرحلة مقاومة الشريط الصغير</translation>
     </message>
     <message>
         <source>width 1 of the line</source>
-        <translation type="unfinished"></translation>
+        <translation>عرض1 للخط </translation>
     </message>
     <message>
         <source>width 2 of the line</source>
-        <translation type="unfinished"></translation>
+        <translation>عرض2 للخط </translation>
     </message>
     <message>
         <source>Microstrip Step</source>
-        <translation type="unfinished"></translation>
+        <translation>Microstrip خطوة</translation>
     </message>
     <message>
         <source>microstrip tee</source>
-        <translation type="unfinished"></translation>
+        <translation>microstrip كوم </translation>
     </message>
     <message>
         <source>temperature in degree Celsius</source>
-        <translation type="unfinished"></translation>
+        <translation>  الحرارة عند الدرجة المئوية</translation>
     </message>
     <message>
         <source>Microstrip Tee</source>
-        <translation type="unfinished"></translation>
+        <translation>microstrip كوم </translation>
     </message>
     <message>
         <source>microstrip via</source>
-        <translation type="unfinished"></translation>
+        <translation>microstrip بواسطة</translation>
     </message>
     <message>
         <source>diameter of round via conductor</source>
-        <translation type="unfinished"></translation>
+        <translation>قطر الدائرة للموصل</translation>
     </message>
     <message>
         <source>Microstrip Via</source>
-        <translation type="unfinished"></translation>
+        <translation>microstrip بواسطة</translation>
     </message>
     <message>
         <source>three mutual inductors</source>
-        <translation type="unfinished"></translation>
+        <translation>ثلاثة أدواة الحث المتبادل</translation>
     </message>
     <message>
         <source>inductance of coil 1</source>
-        <translation type="unfinished"></translation>
+        <translation>محاثة من اللفة 1</translation>
     </message>
     <message>
         <source>inductance of coil 2</source>
-        <translation type="unfinished"></translation>
+        <translation>محاثة من اللفة 2</translation>
     </message>
     <message>
         <source>inductance of coil 3</source>
-        <translation type="unfinished"></translation>
+        <translation>محاثة من اللفة 3</translation>
     </message>
     <message>
         <source>coupling factor between coil 1 and 2</source>
-        <translation type="unfinished"></translation>
+        <translation>عامل الاقتران بين اللفة 1 و 2</translation>
     </message>
     <message>
         <source>coupling factor between coil 1 and 3</source>
-        <translation type="unfinished"></translation>
+        <translation>عامل الاقتران بين اللفة 1 و 3</translation>
     </message>
     <message>
         <source>coupling factor between coil 2 and 3</source>
-        <translation type="unfinished"></translation>
+        <translation>عامل الاقتران بين اللفة 2 و 3</translation>
     </message>
     <message>
         <source>3 Mutual Inductors</source>
-        <translation type="unfinished"></translation>
+        <translation>أدواة الحث المتبادل3  </translation>
     </message>
     <message>
         <source>two mutual inductors</source>
-        <translation type="unfinished"></translation>
+        <translation>أدواة الحث المتبادل2</translation>
     </message>
     <message>
         <source>Mutual Inductors</source>
-        <translation type="unfinished"></translation>
+        <translation>أدواة الحث المتبادل</translation>
     </message>
     <message>
         <source>correlated current sources</source>
-        <translation type="unfinished"></translation>
+        <translation>مصادر الارتباط الحالي</translation>
     </message>
     <message>
         <source>current power spectral density of source 1</source>
-        <translation type="unfinished"></translation>
+        <translation>كثافة قوة التيار الطيفي  للمصدر 1</translation>
     </message>
     <message>
         <source>current power spectral density of source 2</source>
-        <translation type="unfinished"></translation>
+        <translation>كثافة قوة التيار الطيفي  للمصدر 2</translation>
     </message>
     <message>
         <source>normalized correlation coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>تطبيع معامل الارتباط</translation>
     </message>
     <message>
         <source>Correlated Noise Sources</source>
-        <translation type="unfinished"></translation>
+        <translation>ارتباط مصادر التشويش</translation>
     </message>
     <message>
         <source>voltage power spectral density of source 2</source>
-        <translation type="unfinished"></translation>
+        <translation>كثافة التيار الطاقة الطيفية من  مصدر 2</translation>
     </message>
     <message>
         <source>voltage power spectral density of source 1</source>
-        <translation type="unfinished"></translation>
+        <translation>كثافة التيار الطاقة الطيفية من  مصدر 1</translation>
     </message>
     <message>
         <source>operational amplifier</source>
-        <translation type="unfinished"></translation>
+        <translation>مضخم التنفيذي</translation>
     </message>
     <message>
         <source>absolute value of maximum and minimum output voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>القيمة المطلقة للحد الأقصى  و للحد الأدنى</translation>
     </message>
     <message>
         <source>OpAmp</source>
-        <translation type="unfinished"></translation>
+        <translation>OpAmp</translation>
     </message>
     <message>
         <source>Optimization</source>
-        <translation type="unfinished"></translation>
+        <translation>التحسين</translation>
     </message>
     <message>
         <source>optimization</source>
-        <translation type="unfinished"></translation>
+        <translation>التحسين</translation>
     </message>
     <message>
         <source>Parameter sweep</source>
-        <translation type="unfinished"></translation>
+        <translation>متغير الاجتياح</translation>
     </message>
     <message>
         <source>simulation to perform parameter sweep on</source>
-        <translation type="unfinished"></translation>
+        <translation>المحاكاة التي تطبق على تغيير المتغير</translation>
     </message>
     <message>
         <source>parameter to sweep</source>
-        <translation type="unfinished"></translation>
+        <translation>متغير الاجتياح</translation>
     </message>
     <message>
         <source>start value for sweep</source>
-        <translation type="unfinished"></translation>
+        <translation>بدء قيمة الإجتياح</translation>
     </message>
     <message>
         <source>stop value for sweep</source>
-        <translation type="unfinished"></translation>
+        <translation>توقف قيمة الإجتياح</translation>
     </message>
     <message>
         <source>phase shifter</source>
-        <translation type="unfinished"></translation>
+        <translation>مرحلة شيفتر</translation>
     </message>
     <message>
         <source>phase shift in degree</source>
-        <translation type="unfinished"></translation>
+        <translation>مرحلة تحول بالدرجة</translation>
     </message>
     <message>
         <source>Phase Shifter</source>
-        <translation type="unfinished"></translation>
+        <translation>المرحلة شيفتر</translation>
     </message>
     <message>
         <source>Photodiode verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation>جهاز فيريلوج لصمام الثنائي الضوئي</translation>
     </message>
     <message>
         <source>photodiode emission coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>معامل إنبعاث الصمام الثنائي الضوئي</translation>
     </message>
     <message>
         <source>series lead resistance</source>
-        <translation type="unfinished"></translation>
+        <translation> مقاومة سلسلة سلك التوصيل   </translation>
     </message>
     <message>
         <source>diode dark current</source>
-        <translation type="unfinished"></translation>
+        <translation> تيار مظلم الصمام الثنائي</translation>
     </message>
     <message>
         <source>responsivity</source>
-        <translation type="unfinished"></translation>
+        <translation>responsivity</translation>
     </message>
     <message>
         <source>A/W</source>
-        <translation type="unfinished"></translation>
+        <translation>A/W</translation>
     </message>
     <message>
         <source>shunt resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>ناور المقاومة</translation>
     </message>
     <message>
         <source>quantum efficiency</source>
-        <translation type="unfinished"></translation>
+        <translation>مقدار الكفاءة</translation>
     </message>
     <message>
         <source>light wavelength</source>
-        <translation type="unfinished"></translation>
+        <translation>طول الموجة الخفيفة</translation>
     </message>
     <message>
         <source>nm</source>
-        <translation type="unfinished"></translation>
+        <translation>nm</translation>
     </message>
     <message>
         <source>responsivity calculator selector</source>
@@ -5517,7 +5580,7 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>Photodiode</source>
-        <translation type="unfinished"></translation>
+        <translation>Photodiode</translation>
     </message>
     <message>
         <source>ac voltage source with phase modulator</source>
@@ -5525,11 +5588,11 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>PM</source>
-        <translation type="unfinished"></translation>
+        <translation>PM</translation>
     </message>
     <message>
         <source>modulation index</source>
-        <translation type="unfinished"></translation>
+        <translation>تعديل المؤشر</translation>
     </message>
     <message>
         <source>PM modulated Source</source>
@@ -5549,7 +5612,7 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>degrees</source>
-        <translation type="unfinished"></translation>
+        <translation>درجات</translation>
     </message>
     <message>
         <source>resistive law taper coefficient</source>
@@ -5557,7 +5620,7 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>device type selector</source>
-        <translation type="unfinished"></translation>
+        <translation>نوع جهاز المنتق</translation>
     </message>
     <message>
         <source>maximum shaft/wiper rotation</source>
@@ -5565,7 +5628,7 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>linearity error</source>
-        <translation type="unfinished"></translation>
+        <translation>خطأ خطي</translation>
     </message>
     <message>
         <source>wiper arm contact resistance</source>
@@ -5573,35 +5636,35 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>resistance temperature coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>معامل درجة حرارة المقاومة</translation>
     </message>
     <message>
         <source>PPM/Celsius</source>
-        <translation type="unfinished"></translation>
+        <translation>PPM/Celsius</translation>
     </message>
     <message>
         <source>Potentiometer</source>
-        <translation type="unfinished"></translation>
+        <translation>مقياس الجهد</translation>
     </message>
     <message>
         <source>B</source>
-        <translation type="unfinished"></translation>
+        <translation>B</translation>
     </message>
     <message>
         <source>T</source>
-        <translation type="unfinished"></translation>
+        <translation>T</translation>
     </message>
     <message>
         <source>Rectangular Waveguide</source>
-        <translation type="unfinished"></translation>
+        <translation>الدليل الموجي المستطيل</translation>
     </message>
     <message>
         <source>widest side</source>
-        <translation type="unfinished"></translation>
+        <translation> أوسع نطاق في الجانب</translation>
     </message>
     <message>
         <source>shortest side</source>
-        <translation type="unfinished"></translation>
+        <translation>أقصر جانب</translation>
     </message>
     <message>
         <source>material parameter for temperature model</source>
@@ -5609,7 +5672,7 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>relay</source>
-        <translation type="unfinished"></translation>
+        <translation>التتابع</translation>
     </message>
     <message>
         <source>threshold voltage in Volts</source>
@@ -5629,151 +5692,151 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>Relay</source>
-        <translation type="unfinished"></translation>
+        <translation>تكرار</translation>
     </message>
     <message>
         <source>resistor</source>
-        <translation type="unfinished"></translation>
+        <translation>المقاومة</translation>
     </message>
     <message>
         <source>ohmic resistance in Ohms</source>
-        <translation type="unfinished"></translation>
+        <translation>المقاومة بالأوم ohmic</translation>
     </message>
     <message>
         <source>first order temperature coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation> معامل لدرجة الحرارة الدرجة الأولى</translation>
     </message>
     <message>
         <source>second order temperature coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>معامل لدرجة الحرارة الدرجة الثانية</translation>
     </message>
     <message>
         <source>Resistor</source>
-        <translation type="unfinished"></translation>
+        <translation>المقاومة</translation>
     </message>
     <message>
         <source>Resistor US</source>
-        <translation type="unfinished"></translation>
+        <translation>US المقاومة</translation>
     </message>
     <message>
         <source>equation defined 2-port RF device</source>
-        <translation type="unfinished"></translation>
+        <translation> RF تحديد معادلة منفذ-2 لجهاز</translation>
     </message>
     <message>
         <source>type of parameters</source>
-        <translation type="unfinished"></translation>
+        <translation>نوع المتغيرات</translation>
     </message>
     <message>
         <source>representation during DC analysis</source>
-        <translation type="unfinished"></translation>
+        <translation>التمثيل عند حساب نقطة التشغيل </translation>
     </message>
     <message>
         <source>parameter equation</source>
-        <translation type="unfinished"></translation>
+        <translation>متغير المعادلة</translation>
     </message>
     <message>
         <source>Equation Defined 2-port RF Device</source>
-        <translation type="unfinished"></translation>
+        <translation> RF تحديد معادلة منفذ-2 لجهاز</translation>
     </message>
     <message>
         <source>equation defined RF device</source>
-        <translation type="unfinished"></translation>
+        <translation> RF تحديد معادلة لجهاز</translation>
     </message>
     <message>
         <source>number of ports</source>
-        <translation type="unfinished"></translation>
+        <translation>عدد المنافذ </translation>
     </message>
     <message>
         <source>Equation Defined RF Device</source>
-        <translation type="unfinished"></translation>
+        <translation> RF تحديد معادلة لجهاز</translation>
     </message>
     <message>
         <source>RF</source>
-        <translation type="unfinished"></translation>
+        <translation>RF</translation>
     </message>
     <message>
         <source>RS flip flop</source>
-        <translation type="unfinished"></translation>
+        <translation>RS إرجوحة  </translation>
     </message>
     <message>
         <source>RS-FlipFlop</source>
-        <translation type="unfinished"></translation>
+        <translation>RS-إرجوحة  </translation>
     </message>
     <message>
         <source>ac power source</source>
-        <translation type="unfinished"></translation>
+        <translation>مصدر متناوب</translation>
     </message>
     <message>
         <source>port impedance</source>
-        <translation type="unfinished"></translation>
+        <translation>منفذ المقاومة</translation>
     </message>
     <message>
         <source>(available) ac power in Watts</source>
-        <translation type="unfinished"></translation>
+        <translation>متاحة) القوة  المتناوبة بالوات)</translation>
     </message>
     <message>
         <source>Power Source</source>
-        <translation type="unfinished"></translation>
+        <translation>مصدر التشغيل</translation>
     </message>
     <message>
         <source>S parameter file</source>
-        <translation type="unfinished"></translation>
+        <translation>S ملف المتغير </translation>
     </message>
     <message>
         <source>name of the s parameter file</source>
-        <translation type="unfinished"></translation>
+        <translation>S إسم ملف المتغير </translation>
     </message>
     <message>
         <source>data type</source>
-        <translation type="unfinished"></translation>
+        <translation>نوع البيانات</translation>
     </message>
     <message>
         <source>n-port S parameter file</source>
-        <translation type="unfinished"></translation>
+        <translation>S ملف المتغير n-منفذ</translation>
     </message>
     <message>
         <source>1-port S parameter file</source>
-        <translation type="unfinished"></translation>
+        <translation>S  منفذ-1 ملف المتغير</translation>
     </message>
     <message>
         <source>2-port S parameter file</source>
-        <translation type="unfinished"></translation>
+        <translation>S  منفذ-2 ملف المتغير</translation>
     </message>
     <message>
         <source>file</source>
-        <translation type="unfinished"></translation>
+        <translation>الملف</translation>
     </message>
     <message>
         <source>SPICE netlist file</source>
-        <translation type="unfinished"></translation>
+        <translation>SPICE ملف وثيقة</translation>
     </message>
     <message>
         <source>SPICE netlist</source>
-        <translation type="unfinished"></translation>
+        <translation>SPICE وثيقة </translation>
     </message>
     <message>
         <source>sim</source>
-        <translation type="unfinished"></translation>
+        <translation>sim</translation>
     </message>
     <message>
         <source>spice</source>
-        <translation type="unfinished"></translation>
+        <translation>spice</translation>
     </message>
     <message>
         <source>ERROR: Cannot open SPICE file &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>.خطأ : لا يمكن فتح  ملف سبيس&quot;%1&quot;ء</translation>
     </message>
     <message>
         <source>ERROR: Cannot save converted SPICE file &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>.خطأ : لا يمكن حفظ ملف سبيس&quot;%1&quot;ء</translation>
     </message>
     <message>
         <source>ERROR: Cannot open converted SPICE file &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>.خطأ : لا يمكن فتح  ملف سبيس&quot;%1&quot;ء</translation>
     </message>
     <message>
         <source>Preprocessing SPICE file &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">تجهيز ملف  SPICE &quot;&quot;%1 .</translation>
     </message>
     <message>
         <source>ERROR: Cannot save preprocessed SPICE file &quot;%1&quot;.</source>
@@ -5781,558 +5844,532 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>ERROR: Cannot execute &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>&quot;خطأ : لا يمكن تنفيذ &quot;1٪ـ</translation>
     </message>
     <message>
         <source>ERROR: Cannot start QucsConv!</source>
-        <translation type="unfinished"></translation>
+        <translation>! QucsConv خطأ : لايمكن بدأ </translation>
     </message>
     <message>
         <source>Converting SPICE file &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>.&quot;%1&quot; SPICE تحويل ملف  </translation>
     </message>
     <message>
         <source>S parameter simulation</source>
-        <translation type="unfinished"></translation>
+        <translation>متغير المحاكاة S </translation>
     </message>
     <message>
         <source>calculate noise parameters</source>
-        <translation type="unfinished"></translation>
+        <translation>حساب متغيرات التشويش</translation>
     </message>
     <message>
         <source>input port for noise figure</source>
-        <translation type="unfinished"></translation>
+        <translation>منفذ الدخول لمظهر التشويش</translation>
     </message>
     <message>
         <source>output port for noise figure</source>
-        <translation type="unfinished"></translation>
+        <translation>منفذ الخروج لمظهر التشويش</translation>
     </message>
     <message>
         <source>put characteristic values into dataset</source>
-        <translation type="unfinished"></translation>
+        <translation>ضع خصائص القيم في نقاط البيانات</translation>
     </message>
     <message>
         <source>save subcircuit characteristic values into dataset</source>
-        <translation type="unfinished"></translation>
+        <translation>إحفظ خصائص القيم  للدارة الفرعية في نقاط البيانات</translation>
     </message>
     <message>
         <source>S-parameter simulation</source>
-        <translation type="unfinished"></translation>
+        <translation>متغير المحاكاة-S </translation>
     </message>
     <message>
         <source>subcircuit</source>
-        <translation type="unfinished"></translation>
+        <translation>فرع الدائرة الكهربائية</translation>
     </message>
     <message>
         <source>name of qucs schematic file</source>
-        <translation type="unfinished"></translation>
+        <translation> اسم الملف في المخطط</translation>
     </message>
     <message>
         <source>Subcircuit</source>
-        <translation type="unfinished"></translation>
+        <translation>فرع الدائرة الكهربائية</translation>
     </message>
     <message>
         <source>port of a subcircuit</source>
-        <translation type="unfinished"></translation>
+        <translation> منفذ لفرع الدائرة كهربائية</translation>
     </message>
     <message>
         <source>number of the port within the subcircuit</source>
-        <translation type="unfinished"></translation>
+        <translation>عدد المنافذ في فرع الدائرة الكهربائية</translation>
     </message>
     <message>
         <source>type of the port (for digital simulation only)</source>
-        <translation type="unfinished"></translation>
+        <translation> (نوع المنفذ (للمحاكاة الرقمية فقط</translation>
     </message>
     <message>
         <source>Subcircuit Port</source>
-        <translation type="unfinished"></translation>
+        <translation>منفذ فرع الدائرة الكهربائية</translation>
     </message>
     <message>
         <source>substrate definition</source>
-        <translation type="unfinished"></translation>
+        <translation>تعريف المادة </translation>
     </message>
     <message>
         <source>relative permittivity</source>
-        <translation type="unfinished"></translation>
+        <translation>النسبية Permittivity</translation>
     </message>
     <message>
         <source>thickness in meters</source>
-        <translation type="unfinished"></translation>
+        <translation>سمك بلمتر</translation>
     </message>
     <message>
         <source>thickness of metalization</source>
-        <translation type="unfinished"></translation>
+        <translation>سمك المعدن</translation>
     </message>
     <message>
         <source>specific resistance of metal</source>
-        <translation type="unfinished"></translation>
+        <translation>خصوصية مقاومة المعدن</translation>
     </message>
     <message>
         <source>rms substrate roughness</source>
-        <translation type="unfinished"></translation>
+        <translation> خشونة القوامrms</translation>
     </message>
     <message>
         <source>Substrate</source>
-        <translation type="unfinished"></translation>
+        <translation>المادة </translation>
     </message>
     <message>
         <source>switch (time controlled)</source>
-        <translation type="unfinished"></translation>
+        <translation>التحول (الوقت التسيطر)ا</translation>
     </message>
     <message>
         <source>initial state</source>
-        <translation type="unfinished"></translation>
+        <translation>المرحلة الأولية</translation>
     </message>
     <message>
         <source>time when state changes (semicolon separated list possible)</source>
-        <translation type="unfinished"></translation>
+        <translation>(الوقت أين تتغير المراحل(علامة وقف لفصل القائمة ممكنة</translation>
     </message>
     <message>
         <source>resistance of &quot;on&quot; state in ohms</source>
-        <translation type="unfinished"></translation>
+        <translation>المقاومة لمرحلة التشغيل بلأوم</translation>
     </message>
     <message>
         <source>resistance of &quot;off&quot; state in ohms</source>
-        <translation type="unfinished"></translation>
+        <translation>المقاومة لمرحلة التوقيف بلأوم</translation>
     </message>
     <message>
         <source>Switch</source>
-        <translation type="unfinished"></translation>
+        <translation>مفتاح كهربائي</translation>
     </message>
     <message>
         <source>ideal symmetrical transformer</source>
-        <translation type="unfinished"></translation>
+        <translation>التحول المثالي التناضري</translation>
     </message>
     <message>
         <source>voltage transformation ratio of coil 1</source>
-        <translation type="unfinished"></translation>
+        <translation>نسبة تحول الفولت  للفة 1</translation>
     </message>
     <message>
         <source>voltage transformation ratio of coil 2</source>
-        <translation type="unfinished"></translation>
+        <translation>نسبة تحول الفولت  للفة 2</translation>
     </message>
     <message>
         <source>symmetric Transformer</source>
-        <translation type="unfinished"></translation>
+        <translation>التحول  التناضري</translation>
     </message>
     <message>
         <source>silicon controlled rectifier (SCR)</source>
-        <translation type="unfinished"></translation>
+        <translation>(SCR)معدل تحكم السيليكون  </translation>
     </message>
     <message>
         <source>breakover voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>فولتاج التعطيل</translation>
     </message>
     <message>
         <source>gate trigger current</source>
-        <translation type="unfinished"></translation>
+        <translation>إطلاق ممر  التيار</translation>
     </message>
     <message>
         <source>Thyristor</source>
-        <translation type="unfinished"></translation>
+        <translation>الثايرستور</translation>
     </message>
     <message>
         <source>ideal 4-terminal transmission line</source>
-        <translation type="unfinished"></translation>
+        <translation>محطات-4  خط نقل مثالي</translation>
     </message>
     <message>
         <source>characteristic impedance</source>
-        <translation type="unfinished"></translation>
+        <translation>خصائص المقاومة</translation>
     </message>
     <message>
         <source>electrical length of the line</source>
-        <translation type="unfinished"></translation>
+        <translation>الطول الكهربائى للخط</translation>
     </message>
     <message>
         <source>attenuation factor per length in 1/m</source>
-        <translation type="unfinished"></translation>
+        <translation>عامل التخفيف وفقا للطول في 1 / م</translation>
     </message>
     <message>
         <source>4-Terminal Transmission Line</source>
-        <translation type="unfinished"></translation>
+        <translation>محطات-4  خط نقل</translation>
     </message>
     <message>
         <source>ideal transmission line</source>
-        <translation type="unfinished"></translation>
+        <translation>خط الإنتقال المثالي </translation>
     </message>
     <message>
         <source>Transmission Line</source>
-        <translation type="unfinished"></translation>
+        <translation> خط الانتقال</translation>
     </message>
     <message>
         <source>ideal transformer</source>
-        <translation type="unfinished"></translation>
+        <translation>التحول المثالي</translation>
     </message>
     <message>
         <source>voltage transformation ratio</source>
-        <translation type="unfinished"></translation>
+        <translation>نسبة تحول الفولت</translation>
     </message>
     <message>
         <source>Transformer</source>
-        <translation type="unfinished"></translation>
+        <translation>محول التيار</translation>
     </message>
     <message>
         <source>triac (bidirectional thyristor)</source>
-        <translation type="unfinished"></translation>
+        <translation>(  الثايرستور ثنائي الاتجاه) Triac </translation>
     </message>
     <message>
         <source>(bidirectional) gate trigger current</source>
-        <translation type="unfinished"></translation>
+        <translation>ثنائي الاتجاه) بوابة إندلاع التيار )</translation>
     </message>
     <message>
         <source>Triac</source>
-        <translation type="unfinished"></translation>
+        <translation>صمام تحكم كهربائي</translation>
     </message>
     <message>
         <source>transient simulation</source>
-        <translation type="unfinished"></translation>
+        <translation>المحاكاة الوقتي</translation>
     </message>
     <message>
         <source>start time in seconds</source>
-        <translation type="unfinished"></translation>
+        <translation>بداية الوقت بالثواني</translation>
     </message>
     <message>
         <source>stop time in seconds</source>
-        <translation type="unfinished"></translation>
+        <translation>نهاية  الوقت بالثواني</translation>
     </message>
     <message>
         <source>number of simulation time steps</source>
-        <translation type="unfinished"></translation>
+        <translation>عدد مرات المحاكاة</translation>
     </message>
     <message>
         <source>integration method</source>
-        <translation type="unfinished"></translation>
+        <translation>الطريقة الإندماجية</translation>
     </message>
     <message>
         <source>order of integration method</source>
-        <translation type="unfinished"></translation>
+        <translation>ترتيب الطريقة الإندماجية</translation>
     </message>
     <message>
         <source>initial step size in seconds</source>
-        <translation type="unfinished"></translation>
+        <translation>حجم الخطوة أولية بالثواني</translation>
     </message>
     <message>
         <source>minimum step size in seconds</source>
-        <translation type="unfinished"></translation>
+        <translation>حجم الخطوة الأدنى بالثواني</translation>
     </message>
     <message>
         <source>relative tolerance of local truncation error</source>
-        <translation type="unfinished"></translation>
+        <translation>خطأ قي التسامح النسبي للبتر المحلي  </translation>
     </message>
     <message>
         <source>absolute tolerance of local truncation error</source>
-        <translation type="unfinished"></translation>
+        <translation>خطأ قي التسامح المطلق للبتر المحلي  </translation>
     </message>
     <message>
         <source>overestimation of local truncation error</source>
-        <translation type="unfinished"></translation>
+        <translation> خطأ قي التسامح المبالغ للبتر المحلي  </translation>
     </message>
     <message>
         <source>relax time step raster</source>
-        <translation type="unfinished"></translation>
+        <translation>مرحلة إسترخاء خطوط المسح</translation>
     </message>
     <message>
         <source>perform an initial DC analysis</source>
-        <translation type="unfinished"></translation>
+        <translation>تؤدي الحساب الأولي لمرحلة التشغيل</translation>
     </message>
     <message>
         <source>maximum step size in seconds</source>
-        <translation type="unfinished"></translation>
+        <translation>حجم الخطوة  بثواني</translation>
     </message>
     <message>
         <source>Transient simulation</source>
-        <translation type="unfinished"></translation>
+        <translation>المحاكاة الوقتي</translation>
     </message>
     <message>
         <source>twisted pair transmission line</source>
-        <translation type="unfinished"></translation>
+        <translation>خط الإتصال للزوج الملتوي</translation>
     </message>
     <message>
         <source>diameter of conductor</source>
-        <translation type="unfinished"></translation>
+        <translation>قطر الناقل</translation>
     </message>
     <message>
         <source>diameter of wire (conductor and insulator)</source>
-        <translation type="unfinished"></translation>
+        <translation>قطر السلك(الناقل و العازل)ـ</translation>
     </message>
     <message>
         <source>physical length of the line</source>
-        <translation type="unfinished"></translation>
+        <translation>طول الفيزيائى للخيط</translation>
     </message>
     <message>
         <source>twists per length in 1/m</source>
-        <translation type="unfinished"></translation>
+        <translation>طول اللفة ب 1/م</translation>
     </message>
     <message>
         <source>dielectric constant of insulator</source>
-        <translation type="unfinished"></translation>
+        <translation>ثابت العازل الكهربائي من العازل</translation>
     </message>
     <message>
         <source>Twisted-Pair</source>
-        <translation type="unfinished"></translation>
+        <translation>زوج الملتوي</translation>
     </message>
     <message>
         <source>voltage controlled current source</source>
-        <translation type="unfinished"></translation>
+        <translation>مصدر التيار مسيطر الفولت  </translation>
     </message>
     <message>
         <source>forward transconductance</source>
-        <translation type="unfinished"></translation>
+        <translation> transconductance أرسل </translation>
     </message>
     <message>
         <source>Voltage Controlled Current Source</source>
-        <translation type="unfinished"></translation>
+        <translation>مصدر التيار مسيطر الفولت  </translation>
     </message>
     <message>
         <source>voltage controlled voltage source</source>
-        <translation type="unfinished"></translation>
+        <translation>مصدر الفولت مسيطر الفولت  </translation>
     </message>
     <message>
         <source>Voltage Controlled Voltage Source</source>
-        <translation type="unfinished"></translation>
+        <translation>مصدر الفولت مسيطر الفولت  </translation>
     </message>
     <message>
         <source>Verilog file</source>
-        <translation type="unfinished"></translation>
+        <translation>ملف فيريلوج </translation>
     </message>
     <message>
         <source>Name of Verilog file</source>
-        <translation type="unfinished"></translation>
+        <translation> إسم ملف فيريلوج </translation>
     </message>
     <message>
         <source>verilog</source>
-        <translation type="unfinished"></translation>
+        <translation>فيريلوج </translation>
     </message>
     <message>
         <source>ERROR: Cannot open %1 file &quot;%2&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>.خطأ : لا يمكن إنشاء ٪ 1 الملف &quot;%2&quot;ـ</translation>
     </message>
     <message>
         <source>exponential voltage source</source>
-        <translation type="unfinished"></translation>
+        <translation>تضاعف مصدر الفولت </translation>
     </message>
     <message>
         <source>voltage before rising edge</source>
-        <translation type="unfinished"></translation>
+        <translation>قبل أن يرتفع الحد الحالي للفولت</translation>
     </message>
     <message>
         <source>maximum voltage of the pulse</source>
-        <translation type="unfinished"></translation>
+        <translation>الحد الأقصى للنبض الفولت  </translation>
     </message>
     <message>
         <source>rise time of the rising edge</source>
-        <translation type="unfinished"></translation>
+        <translation>  ارتفاع وقت الحد الأمامي</translation>
     </message>
     <message>
         <source>fall time of the falling edge</source>
-        <translation type="unfinished"></translation>
+        <translation>إنتهاء الوقت لمتابعة الحد</translation>
     </message>
     <message>
         <source>Exponential Voltage Pulse</source>
-        <translation type="unfinished"></translation>
+        <translation>تضاعف نبض الفولت </translation>
     </message>
     <message>
         <source>file based voltage source</source>
-        <translation type="unfinished"></translation>
+        <translation>ملف مصدر الفولت</translation>
     </message>
     <message>
         <source>File Based Voltage Source</source>
-        <translation type="unfinished"></translation>
+        <translation>ملف مصدر الفولت</translation>
     </message>
     <message>
         <source>VHDL file</source>
-        <translation type="unfinished"></translation>
+        <translation>VHDLملف </translation>
     </message>
     <message>
         <source>Name of VHDL file</source>
-        <translation type="unfinished"></translation>
+        <translation>VHDLإسم ملف </translation>
     </message>
     <message>
         <source>vhdl</source>
-        <translation type="unfinished"></translation>
+        <translation>vhdl</translation>
     </message>
     <message>
         <source>ideal ac voltage source</source>
-        <translation type="unfinished"></translation>
+        <translation>مصدر خاص بالمنحنى المثالي</translation>
     </message>
     <message>
         <source>ac Voltage Source</source>
-        <translation type="unfinished"></translation>
+        <translation>مصدر خاص بالمنحنى </translation>
     </message>
     <message>
         <source>ideal dc voltage source</source>
-        <translation type="unfinished"></translation>
+        <translation>مصدر التيار المستمر المثالي</translation>
     </message>
     <message>
         <source>voltage in Volts</source>
-        <translation type="unfinished"></translation>
+        <translation>الفولتاج بالفولت</translation>
     </message>
     <message>
         <source>dc Voltage Source</source>
-        <translation type="unfinished"></translation>
+        <translation>مصدر الفولتاج لتيار المستمر</translation>
     </message>
     <message>
         <source>noise voltage source</source>
-        <translation type="unfinished"></translation>
+        <translation>مصدر  التشويش في الفولت  </translation>
     </message>
     <message>
         <source>voltage power spectral density in V^2/Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>V^2/Hz الكثافة الطيفية قوة الفولتاج  في  </translation>
     </message>
     <message>
         <source>Noise Voltage Source</source>
-        <translation type="unfinished"></translation>
+        <translation>مصدر  التشويش في الفولت  </translation>
     </message>
     <message>
         <source>voltage probe</source>
-        <translation type="unfinished"></translation>
+        <translation>تحقيق الضغط</translation>
     </message>
     <message>
         <source>Voltage Probe</source>
-        <translation type="unfinished"></translation>
+        <translation>تحقيق الضغط</translation>
     </message>
     <message>
         <source>ideal voltage pulse source</source>
-        <translation type="unfinished"></translation>
+        <translation>مصدر ذبذبات الضغط المثالي</translation>
     </message>
     <message>
         <source>voltage before and after the pulse</source>
-        <translation type="unfinished"></translation>
+        <translation>الفولتاج قبل و بعد الذبذبة</translation>
     </message>
     <message>
         <source>voltage of the pulse</source>
-        <translation type="unfinished"></translation>
+        <translation>الفولتاج لذبذبة</translation>
     </message>
     <message>
         <source>Voltage Pulse</source>
-        <translation type="unfinished"></translation>
+        <translation>ذبذبة الفولتاج</translation>
     </message>
     <message>
         <source>ideal rectangle voltage source</source>
-        <translation type="unfinished"></translation>
+        <translation>المصدر المثالي لذبذبة التيار </translation>
     </message>
     <message>
         <source>voltage of high signal</source>
-        <translation type="unfinished"></translation>
+        <translation>فولتاج للإشارة العالية</translation>
     </message>
     <message>
         <source>Rectangle Voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>فولتاج المستطيل</translation>
     </message>
     <message>
         <source>ERROR: Cannot open file &quot;%1&quot;.
 </source>
-        <translation type="unfinished"></translation>
+        <translation>&quot;خطأ : لا يمكن إنشاء الملف &quot;٪ 1.
+‏</translation>
     </message>
     <message>
         <source>ERROR: Cannot create user library subdirectory !
 </source>
-        <translation type="unfinished"></translation>
+        <translation> خطأ : لا يمكن إنشاء دليل فرعي لمستخدم المكتبة !</translation>
     </message>
     <message>
         <source>ERROR: Cannot create file &quot;%1&quot;.
 </source>
-        <translation type="unfinished"></translation>
+        <translation>&quot;خطأ : لا يمكن إنشاء الملف &quot;٪ 1.
+</translation>
     </message>
     <message>
         <source>Qucs Editor Version </source>
-        <translation type="unfinished"></translation>
+        <translation>Qucs محرر النسخة </translation>
     </message>
     <message>
         <source>
 Very simple text editor for Qucs
 </source>
-        <translation type="unfinished"></translation>
+        <translation>
+Qucsمحرر نصوص بسيط جدا ل</translation>
     </message>
     <message>
         <source>Copyright (C) 2004, 2005 by Michael Margraf
 </source>
-        <translation type="unfinished"></translation>
+        <translation>حقوق الطبع محفوظة (جيم) 2004 ، و 2005 من قبل مايكل مرغراف
+</translation>
     </message>
     <message>
         <source>
 Usage:  qucsedit [-r] file
 </source>
-        <translation type="unfinished"></translation>
+        <translation>
+qucsedit [-r] file :إستعمال 
+</translation>
     </message>
     <message>
         <source>    -h  display this help and exit
 </source>
-        <translation type="unfinished"></translation>
+        <translation>إضهار هذه المساعدة و الخروج h-
+</translation>
     </message>
     <message>
         <source>    -r  open file read-only
 </source>
-        <translation type="unfinished"></translation>
+        <translation>فتح الملف للقراءة فقط r- 
+</translation>
     </message>
     <message>
         <source>Too long command line argument!
 
 </source>
-        <translation type="unfinished"></translation>
+        <translation>كذلك طول متغير السطر!
+
+ </translation>
     </message>
     <message>
         <source>Wrong command line argument!
 
 </source>
-        <translation type="unfinished"></translation>
+        <translation>خطأ في معامل  الأمِر!
+
+</translation>
     </message>
     <message>
         <source>Only one filename allowed!
 
 </source>
+        <translation> اسم الملف واحد فقط سمحت!
+
+</translation>
+    </message>
+    <message>
+        <source>4x2 andor verilog device</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Exponent factor for emitter transit time</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Smoothing factor for current dependence</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Vto temperature coefficient</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>BE capacitance ratio (maximum to zero-bias value) for d.c. transfer current</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>forward d.c. high-injection roll-off current</source>
+        <source>transfer function high scaling factor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>output delay</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>cross coupled gate delay</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>voltage level</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>time delay</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>logic 0 voltage level</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>logic 1 voltage level</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>pad output value</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>4x2 andor verilog device</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -6357,6 +6394,10 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>4bit binary to grey converter verilog device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>transfer function scaling factor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -6392,11 +6433,31 @@ Usage:  qucsedit [-r] file
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>cross coupled gate transfer function high scaling factor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>cross coupled gate transfer function low scaling factor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>cross coupled gate delay</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>D-FlipFlop w/ SR</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>data voltage level shifter (digital to analogue) verilog device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>voltage level</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>time delay</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -6476,6 +6537,22 @@ Usage:  qucsedit [-r] file
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>forward d.c. high-injection roll-off current</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Exponent factor for emitter transit time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Smoothing factor for current dependence</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>BE capacitance ratio (maximum to zero-bias value) for d.c. transfer current</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>4bit highest priority encoder (binary form) verilog device</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6496,6 +6573,10 @@ Usage:  qucsedit [-r] file
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>logic 0 voltage level</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Logic 0</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6504,7 +6585,35 @@ Usage:  qucsedit [-r] file
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>logic 1 voltage level</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Logic 1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Vto temperature coefficient</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>microstrip radial stub</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>inner radius</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>outer radius</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>stub angle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Microstrip Radial Stub</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -6536,6 +6645,10 @@ Usage:  qucsedit [-r] file
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>pad output value</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>2Bit Pattern</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6553,50 +6666,6 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>4Bit Pattern</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>T flip flop with set and reset verilog device</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>T-FlipFlop w/ SR</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>transfer function high scaling factor</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>transfer function scaling factor</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>cross coupled gate transfer function high scaling factor</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>cross coupled gate transfer function low scaling factor</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>microstrip radial stub</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>inner radius</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>outer radius</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>stub angle</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Microstrip Radial Stub</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -6671,920 +6740,980 @@ Usage:  qucsedit [-r] file
         <source>RLCG Transmission Line</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>T flip flop with set and reset verilog device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>T-FlipFlop w/ SR</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsApp</name>
     <message>
         <source>Info</source>
-        <translation type="unfinished"></translation>
+        <translation>معلومات</translation>
     </message>
     <message>
         <source>At least two elements must be selected !</source>
-        <translation type="unfinished"></translation>
+        <translation>يجب إختيار إثنين علي الأقل !</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>خطأ</translation>
     </message>
     <message>
         <source>Cannot start text editor!</source>
-        <translation type="unfinished"></translation>
+        <translation>لا يمكن بدء محرر نصوص !</translation>
     </message>
     <message>
         <source>Cannot start filter synthesis program!</source>
-        <translation type="unfinished"></translation>
+        <translation>لا يمكن بدء برنامج فلتر للتوليف!</translation>
     </message>
     <message>
         <source>Cannot start line calculation program!</source>
-        <translation type="unfinished"></translation>
+        <translation>لا يمكن بدء برنامج حساب الخط!</translation>
     </message>
     <message>
         <source>Cannot start library program!</source>
-        <translation type="unfinished"></translation>
+        <translation>لا يمكن أن يبدأ برنامج المكتبة!</translation>
     </message>
     <message>
         <source>Cannot start attenuator calculation program!</source>
-        <translation type="unfinished"></translation>
+        <translation>لا يمكن أن يبدأ برنامج  الحساب المخفف!</translation>
     </message>
     <message>
         <source>Cannot start qucshelp!</source>
-        <translation type="unfinished"></translation>
+        <translation>لا يمكن أن يبدأ qucshelp!</translation>
     </message>
     <message>
         <source>No project open!</source>
-        <translation type="unfinished"></translation>
+        <translation>لا يوجد مشروع مفتوح !</translation>
     </message>
     <message>
         <source>Select files to copy</source>
-        <translation type="unfinished"></translation>
+        <translation>اختر  الملفات لنسخ</translation>
     </message>
     <message>
         <source>No files copied.</source>
-        <translation type="unfinished"></translation>
+        <translation>لم تنسخ الملفات.</translation>
     </message>
     <message>
         <source>Cannot open &quot;%1&quot; !</source>
-        <translation type="unfinished"></translation>
+        <translation>‏لا يمكن فتح &quot; 1٪&quot;!‏</translation>
     </message>
     <message>
         <source>Overwrite</source>
-        <translation type="unfinished"></translation>
+        <translation>فوق</translation>
     </message>
     <message>
         <source>File &quot;%1&quot; already exists.
 Overwrite ?</source>
-        <translation type="unfinished"></translation>
+        <translation>الملف &quot;٪ 1&quot; موجود بالفعل ?
+</translation>
     </message>
     <message>
         <source>Cannot create &quot;%1&quot; !</source>
-        <translation type="unfinished"></translation>
+        <translation>لا نستطيع تنفيذ  &quot;%1!</translation>
     </message>
     <message>
         <source>Cannot read &quot;%1&quot; !</source>
-        <translation type="unfinished"></translation>
+        <translation>لا يمكن قراءة &quot;٪ 1&quot;!</translation>
     </message>
     <message>
         <source>Cannot write &quot;%1&quot; !</source>
-        <translation type="unfinished"></translation>
+        <translation>لا تستطيع كتابة &quot;٪ 1&quot;!</translation>
     </message>
     <message>
         <source>Ready.</source>
-        <translation type="unfinished"></translation>
+        <translation>جاهز.</translation>
     </message>
     <message>
         <source>Please open project with subcircuits!</source>
-        <translation type="unfinished"></translation>
+        <translation>!يرجى فتح المشروع الدارة الفرعية </translation>
     </message>
     <message>
         <source>Please open project first!</source>
-        <translation type="unfinished"></translation>
+        <translation>افتح أولا مشروع من فضلك!</translation>
     </message>
     <message>
         <source>Please select a diagram graph!</source>
-        <translation type="unfinished"></translation>
+        <translation>الرجاء اختيار الرسم  البياني!</translation>
     </message>
     <message>
         <source>CSV file</source>
-        <translation type="unfinished"></translation>
+        <translation>ملفات CSV</translation>
     </message>
     <message>
         <source>Any File</source>
-        <translation type="unfinished"></translation>
+        <translation>أية ملفات</translation>
     </message>
     <message>
         <source>Enter an Output File Name</source>
-        <translation type="unfinished"></translation>
+        <translation>إدخال اسم الملف</translation>
     </message>
     <message>
         <source>Output file already exists!</source>
-        <translation type="unfinished"></translation>
+        <translation>الناتج الملف موجود بالفعل!</translation>
     </message>
     <message>
         <source>Overwrite it?</source>
-        <translation type="unfinished"></translation>
+        <translation>فوق ذلك؟</translation>
     </message>
     <message>
         <source>&amp;Yes</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;نعم</translation>
     </message>
     <message>
         <source>&amp;No</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;موافق</translation>
     </message>
     <message>
         <source>Schematic</source>
-        <translation type="unfinished"></translation>
+        <translation>تخطيطي</translation>
     </message>
     <message>
         <source>Data Display</source>
-        <translation type="unfinished"></translation>
+        <translation>عرض البيانات </translation>
     </message>
     <message>
         <source>Qucs Documents</source>
-        <translation type="unfinished"></translation>
+        <translation>وثائق Qucs</translation>
     </message>
     <message>
         <source>VHDL Sources</source>
-        <translation type="unfinished"></translation>
+        <translation>مصادر VHDL</translation>
     </message>
     <message>
         <source>Verilog Sources</source>
-        <translation type="unfinished"></translation>
+        <translation>مصادر verilog</translation>
     </message>
     <message>
         <source>Others</source>
-        <translation type="unfinished"></translation>
+        <translation>الآخرين</translation>
     </message>
     <message>
         <source>Datasets</source>
-        <translation type="unfinished"></translation>
+        <translation>بيانات</translation>
     </message>
     <message>
         <source>Data Displays</source>
-        <translation type="unfinished"></translation>
+        <translation>عرض البيانات </translation>
     </message>
     <message>
         <source>Verilog</source>
-        <translation type="unfinished"></translation>
+        <translation>فيريلوج </translation>
     </message>
     <message>
         <source>VHDL</source>
-        <translation type="unfinished"></translation>
+        <translation>VHDL</translation>
     </message>
     <message>
         <source>Schematics</source>
-        <translation type="unfinished"></translation>
+        <translation>الخطط</translation>
     </message>
     <message>
         <source>New</source>
-        <translation type="unfinished"></translation>
+        <translation>جديد</translation>
     </message>
     <message>
         <source>Open</source>
-        <translation type="unfinished"></translation>
+        <translation>‏يفتح</translation>
     </message>
     <message>
         <source>Delete</source>
-        <translation type="unfinished"></translation>
+        <translation>حذف </translation>
     </message>
     <message>
         <source>Projects</source>
-        <translation type="unfinished"></translation>
+        <translation> مشاريع</translation>
     </message>
     <message>
         <source>content of project directory</source>
-        <translation type="unfinished"></translation>
+        <translation>مضمون مشروع الدليل</translation>
     </message>
     <message>
         <source>Content of</source>
-        <translation type="unfinished"></translation>
+        <translation>محتوى</translation>
     </message>
     <message>
         <source>Note</source>
-        <translation type="unfinished"></translation>
+        <translation>علما</translation>
     </message>
     <message>
         <source>Content</source>
-        <translation type="unfinished"></translation>
+        <translation>محتوى</translation>
     </message>
     <message>
         <source>content of current project</source>
-        <translation type="unfinished"></translation>
+        <translation>مضمون المشروع الحالي</translation>
     </message>
     <message>
         <source>Components</source>
-        <translation type="unfinished"></translation>
+        <translation>عناصر </translation>
     </message>
     <message>
         <source>components and diagrams</source>
-        <translation type="unfinished"></translation>
+        <translation>المكونات ورسوم بيانية</translation>
     </message>
     <message>
         <source>lumped components</source>
-        <translation type="unfinished"></translation>
+        <translation>صنف العناصر</translation>
     </message>
     <message>
         <source>sources</source>
-        <translation type="unfinished"></translation>
+        <translation>المصادر</translation>
     </message>
     <message>
         <source>probes</source>
-        <translation type="unfinished"></translation>
+        <translation>تحقيقات</translation>
     </message>
     <message>
         <source>transmission lines</source>
-        <translation type="unfinished"></translation>
+        <translation>انتقال الخط</translation>
     </message>
     <message>
         <source>nonlinear components</source>
-        <translation type="unfinished"></translation>
+        <translation>العناصر غير الخطية</translation>
     </message>
     <message>
         <source>verilog-a devices</source>
-        <translation type="unfinished"></translation>
+        <translation>أجهزة فيريلوج</translation>
     </message>
     <message>
         <source>digital components</source>
-        <translation type="unfinished"></translation>
+        <translation>عناصر الرقمية</translation>
     </message>
     <message>
         <source>file components</source>
-        <translation type="unfinished"></translation>
+        <translation>عناصر الملفات</translation>
     </message>
     <message>
         <source>simulations</source>
-        <translation type="unfinished"></translation>
+        <translation>المحاكاة </translation>
     </message>
     <message>
         <source>diagrams</source>
-        <translation type="unfinished"></translation>
+        <translation>رسوم بيانية</translation>
     </message>
     <message>
         <source>paintings</source>
-        <translation type="unfinished"></translation>
+        <translation>لوحات</translation>
     </message>
     <message>
         <source>Rename</source>
-        <translation type="unfinished"></translation>
+        <translation>إعادة تسمية</translation>
     </message>
     <message>
         <source>Delete Group</source>
-        <translation type="unfinished"></translation>
+        <translation>حذف المجموعة</translation>
     </message>
     <message>
         <source>Cannot rename an open file!</source>
-        <translation type="unfinished"></translation>
+        <translation>لا يمكن إعادة تسمية الملف المفتوح!</translation>
     </message>
     <message>
         <source>Rename file</source>
-        <translation type="unfinished"></translation>
+        <translation>إعادة تسمية الملف</translation>
     </message>
     <message>
         <source>Enter new name:</source>
-        <translation type="unfinished"></translation>
+        <translation>أدخل الاسم الجديد :</translation>
     </message>
     <message>
         <source>Cannot rename file: </source>
-        <translation type="unfinished"></translation>
+        <translation>لا يمكن إعادة تسمية الملف :</translation>
     </message>
     <message>
         <source>Cannot delete an open file!</source>
-        <translation type="unfinished"></translation>
+        <translation>لا يمكن حذف ملف مفتوح!</translation>
     </message>
     <message>
         <source>Warning</source>
-        <translation type="unfinished"></translation>
+        <translation>تحذير</translation>
     </message>
     <message>
         <source>This will delete the file permanently! Continue ?</source>
-        <translation type="unfinished"></translation>
+        <translation>حذف هذا الملف نهائيا! الاستمرار؟</translation>
     </message>
     <message>
         <source>No</source>
-        <translation type="unfinished"></translation>
+        <translation>لا</translation>
     </message>
     <message>
         <source>Yes</source>
-        <translation type="unfinished"></translation>
+        <translation>نعم</translation>
     </message>
     <message>
         <source>Cannot delete schematic: </source>
-        <translation type="unfinished"></translation>
+        <translation>لا يمكن حذف التخطيطي :</translation>
     </message>
     <message>
         <source>Cannot delete the open file: </source>
-        <translation type="unfinished"></translation>
+        <translation>لا يمكن حذف ملف مفتوح:</translation>
     </message>
     <message>
         <source>This will delete the files
 </source>
-        <translation type="unfinished"></translation>
+        <translation>هذا من شأنه حذف الملفات
+</translation>
     </message>
     <message>
         <source>permanently! Continue ?</source>
-        <translation type="unfinished"></translation>
+        <translation>بشكل دائم! الاستمرار؟</translation>
     </message>
     <message>
         <source>Cannot delete data display: </source>
-        <translation type="unfinished"></translation>
+        <translation>لا يمكن حذف بيانات العرض :</translation>
     </message>
     <message>
         <source>Cannot delete data file: </source>
-        <translation type="unfinished"></translation>
+        <translation>لا يمكن حذف ملف بيانات :</translation>
     </message>
     <message>
         <source>Cannot delete VHDL source: </source>
-        <translation type="unfinished"></translation>
+        <translation>لا يمكن حذف مصدر VHDL  :</translation>
     </message>
     <message>
         <source>Cannot delete Verilog source: </source>
-        <translation type="unfinished"></translation>
+        <translation>لا يمكن حذف مصدر فيريلوج  :</translation>
     </message>
     <message>
         <source>Cannot create work directory !</source>
-        <translation type="unfinished"></translation>
+        <translation>لا يمكن إنشاء دليل عمل!</translation>
     </message>
     <message>
         <source>Cannot create project directory !</source>
-        <translation type="unfinished"></translation>
+        <translation>لا يمكن إنشاء دليل للمشروع!</translation>
     </message>
     <message>
         <source>-port</source>
-        <translation type="unfinished"></translation>
+        <translation>-الميناء </translation>
     </message>
     <message>
         <source>Cannot access project directory: </source>
-        <translation type="unfinished"></translation>
+        <translation>لا يمكن الوصول إلى مشروع الدليل :</translation>
     </message>
     <message>
         <source>Content of &apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>محتوى &apos;</translation>
     </message>
     <message>
         <source>&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>&apos;</translation>
     </message>
     <message>
         <source> - Project: </source>
-        <translation type="unfinished"></translation>
+        <translation>-المشروع :</translation>
     </message>
     <message>
         <source>Choose Project Directory for Opening</source>
-        <translation type="unfinished"></translation>
+        <translation>اختيار مشروع دليل لافتتاح</translation>
     </message>
     <message>
         <source>No project is selected !</source>
-        <translation type="unfinished"></translation>
+        <translation>لم يتم اختيار المشروع!</translation>
     </message>
     <message>
         <source>Cannot delete file: </source>
-        <translation type="unfinished"></translation>
+        <translation>لا يمكن حذف الملف :</translation>
     </message>
     <message>
         <source>Cannot remove directory: </source>
-        <translation type="unfinished"></translation>
+        <translation>لا يمكن إزالة الدليل :</translation>
     </message>
     <message>
         <source>Cannot delete an open project !</source>
-        <translation type="unfinished"></translation>
+        <translation>لا يمكن حذف هذا المشروع مفتوح!</translation>
     </message>
     <message>
         <source>This will destroy all the project files permanently ! Continue ?</source>
-        <translation type="unfinished"></translation>
+        <translation>وهذا من شأنه تدمير كل ملفات المشاريع بشكل دائم! الاستمرار؟</translation>
     </message>
     <message>
         <source>Cannot remove project directory !</source>
-        <translation type="unfinished"></translation>
+        <translation>لا يمكن إزالة هذا المشروع دليل!</translation>
     </message>
     <message>
         <source>Choose Project Directory for Deleting</source>
-        <translation type="unfinished"></translation>
+        <translation>دليل اختيار المشروع للحذف</translation>
     </message>
     <message>
         <source>Creating new schematic...</source>
-        <translation type="unfinished"></translation>
+        <translation>تخطيطية جديدة...</translation>
     </message>
     <message>
         <source>Creating new text editor...</source>
-        <translation type="unfinished"></translation>
+        <translation>محرر نصوص جديدة...</translation>
     </message>
     <message>
         <source>Opening file...</source>
-        <translation type="unfinished"></translation>
+        <translation>فتح الملف...</translation>
     </message>
     <message>
         <source>Enter a Schematic Name</source>
-        <translation type="unfinished"></translation>
+        <translation>أدخل اسم تخطيطي</translation>
     </message>
     <message>
         <source>Opening aborted</source>
-        <translation type="unfinished"></translation>
+        <translation>أجهض الفتح </translation>
     </message>
     <message>
         <source>Saving file...</source>
-        <translation type="unfinished"></translation>
+        <translation>حفظ الملف...</translation>
     </message>
     <message>
         <source>Saving aborted</source>
-        <translation type="unfinished"></translation>
+        <translation>إجهاض الحفظ</translation>
     </message>
     <message>
         <source>Enter a Document Name</source>
-        <translation type="unfinished"></translation>
+        <translation>إدخال الاسم وثيقة</translation>
     </message>
     <message>
         <source>The file &apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>الملف &apos;</translation>
     </message>
     <message>
         <source>&apos; already exists!
 </source>
-        <translation type="unfinished"></translation>
+        <translation>&apos;موجود بالفعل!
+</translation>
     </message>
     <message>
         <source>Saving will overwrite the old one! Continue?</source>
-        <translation type="unfinished"></translation>
+        <translation>إنقاذ الإرادة فوق القديم! الاستمرار؟</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>إلغاء</translation>
     </message>
     <message>
         <source>Cannot overwrite an open document</source>
-        <translation type="unfinished"></translation>
+        <translation>لا يمكن الكتابة فوق مفتوحة وثيقة</translation>
     </message>
     <message>
         <source>Saving file under new filename...</source>
-        <translation type="unfinished"></translation>
+        <translation>إنقاذ ملف جديد تحت اسم الملف...</translation>
     </message>
     <message>
         <source>Saving all files...</source>
-        <translation type="unfinished"></translation>
+        <translation>حفظ الملف...</translation>
     </message>
     <message>
         <source>Closing file...</source>
-        <translation type="unfinished"></translation>
+        <translation>إغلاق ملف...</translation>
     </message>
     <message>
         <source>Closing Qucs document</source>
-        <translation type="unfinished"></translation>
+        <translation>الوثيقة الختامية Qucs</translation>
     </message>
     <message>
         <source>The document contains unsaved changes!
 </source>
-        <translation type="unfinished"></translation>
+        <translation>وتتضمن هذه الوثيقة التغييرات غير المحفوظة!
+</translation>
     </message>
     <message>
         <source>Do you want to save the changes before closing?</source>
-        <translation type="unfinished"></translation>
+        <translation>هل تريد حفظ التغييرات قبل اقفال؟</translation>
     </message>
     <message>
         <source>&amp;Save</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp; حفظ</translation>
     </message>
     <message>
         <source>&amp;Discard</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp; تجاهل</translation>
     </message>
     <message>
         <source>Printing...</source>
-        <translation type="unfinished"></translation>
+        <translation>الطباعة...</translation>
     </message>
     <message>
         <source>Printer Error.</source>
-        <translation type="unfinished"></translation>
+        <translation>خطأ في الطباعة.</translation>
     </message>
     <message>
         <source>Exiting application...</source>
-        <translation type="unfinished"></translation>
+        <translation>تغادرها تطبيق...</translation>
     </message>
     <message>
         <source>Quit...</source>
-        <translation type="unfinished"></translation>
+        <translation>استقال...</translation>
     </message>
     <message>
         <source>Do you really want to quit?</source>
-        <translation type="unfinished"></translation>
+        <translation>هل تريد حقا الانسحاب؟</translation>
     </message>
     <message>
         <source>Cutting selection...</source>
-        <translation type="unfinished"></translation>
+        <translation>قطع اختيار...</translation>
     </message>
     <message>
         <source>Copying selection to clipboard...</source>
-        <translation type="unfinished"></translation>
+        <translation>نسخ إلى الحافظة اختيار...</translation>
     </message>
     <message>
         <source>The document was modified by another program !</source>
-        <translation type="unfinished"></translation>
+        <translation>الوثيقة التي تم تعديلها من خلال برنامج آخر!</translation>
     </message>
     <message>
         <source>Do you want to reload or keep this version ?</source>
-        <translation type="unfinished"></translation>
+        <translation>هل تريد إعادة تحميل أو الإبقاء على هذه الصيغة؟</translation>
     </message>
     <message>
         <source>Reload</source>
-        <translation type="unfinished"></translation>
+        <translation>إعادة تحميل</translation>
     </message>
     <message>
         <source>Keep it</source>
-        <translation type="unfinished"></translation>
+        <translation>يبقيها</translation>
     </message>
     <message>
         <source>Cannot create </source>
-        <translation type="unfinished"></translation>
+        <translation>لا نستطيع تنفيذ</translation>
     </message>
     <message>
         <source>No page set !</source>
-        <translation type="unfinished"></translation>
+        <translation>اي صفحة!</translation>
     </message>
     <message>
         <source>Cannot start &quot;%1&quot;!</source>
-        <translation type="unfinished"></translation>
+        <translation>لا يمكن ان تبدأ &quot;٪ 1&quot;!</translation>
     </message>
     <message>
         <source>Edit Circuit Symbol</source>
-        <translation type="unfinished"></translation>
+        <translation>تحرير دائرة الرمز</translation>
     </message>
     <message>
         <source>Edits the symbol for this schematic</source>
-        <translation type="unfinished"></translation>
+        <translation>تعديلات لهذا الرمز التخطيطي</translation>
     </message>
     <message>
         <source>Edit Circuit Symbol
 
 Edits the symbol for this schematic</source>
-        <translation type="unfinished"></translation>
+        <translation>تحرير دائرة الرمز ذ
+
+تعديلات لهذا الرمز التخطيطي</translation>
     </message>
     <message>
         <source>Edit Schematic</source>
-        <translation type="unfinished"></translation>
+        <translation>تحرير تخطيطي</translation>
     </message>
     <message>
         <source>Edits the schematic</source>
-        <translation type="unfinished"></translation>
+        <translation>تعديلات التخطيطي</translation>
     </message>
     <message>
         <source>Edit Schematic
 
 Edits the schematic</source>
-        <translation type="unfinished"></translation>
+        <translation>تحرير تخطيطي 
+
+تعديلات التخطيطي</translation>
     </message>
     <message>
         <source>Could not load S[1,1].</source>
-        <translation type="unfinished"></translation>
+        <translation>لا يمكن تحميل S[1,1].</translation>
     </message>
     <message>
         <source>Could not load S[1,2].</source>
-        <translation type="unfinished"></translation>
+        <translation>لا يمكن تحميل S[1,2].</translation>
     </message>
     <message>
         <source>Could not load S[2,1].</source>
-        <translation type="unfinished"></translation>
+        <translation>لا يمكن تحميل S[2,1].</translation>
     </message>
     <message>
         <source>Could not load S[2,2].</source>
-        <translation type="unfinished"></translation>
+        <translation>لا يمكن تحميل S[2,2].</translation>
     </message>
     <message>
         <source>Wrong dependency!</source>
-        <translation type="unfinished"></translation>
+        <translation>من الخطأ الاعتماد!</translation>
     </message>
     <message>
         <source>&amp;New</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;عرض</translation>
     </message>
     <message>
         <source>Creates a new document</source>
-        <translation type="unfinished"></translation>
+        <translation>يخلق وثيقة جديدة</translation>
     </message>
     <message>
         <source>New
 
 Creates a new schematic or data display document</source>
-        <translation type="unfinished"></translation>
+        <translation>جديد 
+
+يخلق جديد التخطيطي عرض وثيقة من وثائق أو بيانات</translation>
     </message>
     <message>
         <source>New Text</source>
-        <translation type="unfinished"></translation>
+        <translation>النص الجديد</translation>
     </message>
     <message>
         <source>New &amp;Text</source>
-        <translation type="unfinished"></translation>
+        <translation>النص &amp;الجديد</translation>
     </message>
     <message>
         <source>Creates a new text document</source>
-        <translation type="unfinished"></translation>
+        <translation>يوجد نص وثيقة جديدة</translation>
     </message>
     <message>
         <source>New Text
 
 Creates a new text document</source>
-        <translation type="unfinished"></translation>
+        <translation>النص الجديد 
+
+يوجد نص وثيقة جديدة</translation>
     </message>
     <message>
         <source>&amp;Open...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;فتح...</translation>
     </message>
     <message>
         <source>Opens an existing document</source>
-        <translation type="unfinished"></translation>
+        <translation>يفتح وجود وثيقة من وثائق</translation>
     </message>
     <message>
         <source>Open File
 
 Opens an existing document</source>
-        <translation type="unfinished"></translation>
+        <translation>فتح الملف 
+
+يفتح وجود وثيقة من وثائق</translation>
     </message>
     <message>
         <source>Save</source>
-        <translation type="unfinished"></translation>
+        <translation> ‏حفظ</translation>
     </message>
     <message>
         <source>Saves the current document</source>
-        <translation type="unfinished"></translation>
+        <translation>يوفر الوثيقة الحالية</translation>
     </message>
     <message>
         <source>Save File
 
 Saves the current document</source>
-        <translation type="unfinished"></translation>
+        <translation>حفظ الملف 
+
+يوفر الوثيقة الحالية</translation>
     </message>
     <message>
         <source>Save as...</source>
-        <translation type="unfinished"></translation>
+        <translation>‏حفظ في...</translation>
     </message>
     <message>
         <source>Saves the current document under a new filename</source>
-        <translation type="unfinished"></translation>
+        <translation>تحفظ هذه الوثيقة تحت اسم ملف جديد</translation>
     </message>
     <message>
         <source>Save As
 
 Saves the current document under a new filename</source>
-        <translation type="unfinished"></translation>
+        <translation>حفظ باسم 
+
+تحفظ هذه الوثيقة تحت اسم ملف جديد</translation>
     </message>
     <message>
         <source>Save All</source>
-        <translation type="unfinished"></translation>
+        <translation>حفظ كل</translation>
     </message>
     <message>
         <source>Save &amp;All</source>
-        <translation type="unfinished"></translation>
+        <translation>حفظ &amp;كل</translation>
     </message>
     <message>
         <source>Saves all open documents</source>
-        <translation type="unfinished"></translation>
+        <translation>حفظ جميع الوثائق المفتوحة</translation>
     </message>
     <message>
         <source>Save All Files
 
 Saves all open documents</source>
-        <translation type="unfinished"></translation>
+        <translation>حفظ كل الملفات
+
+حفظ جميع الوثائق المفتوحة</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>غلق</translation>
     </message>
     <message>
         <source>&amp;Close</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;غلق</translation>
     </message>
     <message>
         <source>Closes the current document</source>
-        <translation type="unfinished"></translation>
+        <translation>يغلق الوثيقة الحالية</translation>
     </message>
     <message>
         <source>Close File
 
 Closes the current document</source>
-        <translation type="unfinished"></translation>
+        <translation>إغلاق الملف 
+
+يغلق الوثيقة الحالية</translation>
     </message>
     <message>
         <source>&amp;Edit Circuit Symbol</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;تحرير  رمز الدائرة‏‏</translation>
     </message>
     <message>
         <source>&amp;Document Settings...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;ضبط وثائق...</translation>
     </message>
     <message>
         <source>Document Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>ضبط وثائق</translation>
     </message>
     <message>
         <source>Settings
 
 Sets properties of the file</source>
-        <translation type="unfinished"></translation>
+        <translation>إعدادات 
+
+يحدد خصائص الملف</translation>
     </message>
     <message>
         <source>Print...</source>
-        <translation type="unfinished"></translation>
+        <translation>طباعة...</translation>
     </message>
     <message>
         <source>&amp;Print...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;الطباعة...</translation>
     </message>
     <message>
         <source>Prints the current document</source>
-        <translation type="unfinished"></translation>
+        <translation>طباعة الوثيقة الحالية</translation>
     </message>
     <message>
         <source>Print File
 
 Prints the current document</source>
-        <translation type="unfinished"></translation>
+        <translation>طباعة الملف 
+
+طباعة الوثيقة الحالية</translation>
     </message>
     <message>
         <source>Print Fit to Page...</source>
-        <translation type="unfinished"></translation>
+        <translation>صالح لطباعة الصفحة...</translation>
     </message>
     <message>
         <source>Print Fit to Page</source>
-        <translation type="unfinished"></translation>
+        <translation>صالح لطباعة الصفحة</translation>
     </message>
     <message>
         <source>Print Fit to Page
 
 Print and fit content to the page size</source>
-        <translation type="unfinished"></translation>
+        <translation>صالح لطباعة الصفحة
+
+طباعة ومحتوى مناسبا لحجم الصفحة</translation>
     </message>
     <message>
         <source>E&amp;xit</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;خروج</translation>
     </message>
     <message>
         <source>Quits the application</source>
-        <translation type="unfinished"></translation>
+        <translation>برنامج Quits</translation>
     </message>
     <message>
         <source>Exit
 
 Quits the application</source>
-        <translation type="unfinished"></translation>
+        <translation>خروج 
+
+برنامج Quits</translation>
     </message>
     <message>
         <source>Application Settings...</source>
-        <translation type="unfinished"></translation>
+        <translation>تطبيق الإعدادات...</translation>
     </message>
     <message>
         <source>Application Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>تطبيق الإعدادات</translation>
     </message>
     <message>
         <source>Qucs Settings
 
 Sets properties of the application</source>
-        <translation type="unfinished"></translation>
+        <translation>إعدادات Qucs
+
+تحدد خصائص الطلب</translation>
     </message>
     <message>
         <source>Align top</source>
-        <translation type="unfinished"></translation>
+        <translation>محاذاة أعلى</translation>
     </message>
     <message>
         <source>Align top selected elements</source>
-        <translation type="unfinished"></translation>
+        <translation>محاذاة أعلى العناصر المختارة</translation>
     </message>
     <message>
         <source>Align top
 
 Align selected elements to their upper edge</source>
-        <translation type="unfinished"></translation>
+        <translation>محاذاة أعلى
+
+التوفيق بين العناصر المختارة إلى الحافة العليا‏</translation>
     </message>
     <message>
         <source>Align bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>محاذاة  أسفل</translation>
     </message>
     <message>
         <source>Align bottom selected elements</source>
-        <translation type="unfinished"></translation>
+        <translation>محاذاة أسفل العناصر المختارة</translation>
     </message>
     <message>
         <source>Align bottom
 
 Align selected elements to their lower edge</source>
-        <translation type="unfinished"></translation>
+        <translation>محاذاة  أسفل
+
+تؤيد اختيار العناصر الحافة السفلى</translation>
     </message>
     <message>
         <source>Align left</source>
-        <translation type="unfinished"></translation>
+        <translation>محاذاة إلى اليسار</translation>
     </message>
     <message>
         <source>Align left selected elements</source>
-        <translation type="unfinished"></translation>
+        <translation>محاذاة إلى اليسار  العناصر المختارة</translation>
     </message>
     <message>
         <source>Align left
 
 Align selected elements to their left edge</source>
-        <translation type="unfinished"></translation>
+        <translation>محاذاة إلى اليسار
+
+التوفيق بين العناصر المختارة إلى الحافة اليسرى</translation>
     </message>
     <message>
         <source>Align right</source>
-        <translation type="unfinished"></translation>
+        <translation>محاذاة إلى اليمين</translation>
     </message>
     <message>
         <source>Align right selected elements</source>
-        <translation type="unfinished"></translation>
+        <translation>محاذاة إلى اليمين العناصر المختارة</translation>
     </message>
     <message>
         <source>Align right
 
 Align selected elements to their right edge</source>
-        <translation type="unfinished"></translation>
+        <translation>محاذاة إلى اليمين
+
+التوفيق بين العناصر المختارة إلى الحافة اليمنة</translation>
     </message>
     <message>
         <source>Distribute horizontally</source>
-        <translation type="unfinished"></translation>
+        <translation>توزيع أفقي</translation>
     </message>
     <message>
         <source>Distribute equally horizontally</source>
-        <translation type="unfinished"></translation>
+        <translation>توزع بالتساوي أفقيا</translation>
     </message>
     <message>
         <source>Distribute horizontally
 
 Distribute horizontally selected elements</source>
-        <translation type="unfinished"></translation>
+        <translation>توزيع أفقي
+
+ توزيع العناصر المختارة أفقيا</translation>
     </message>
     <message>
         <source>Distribute vertically</source>
-        <translation type="unfinished"></translation>
+        <translation>توزيع عمودي</translation>
     </message>
     <message>
         <source>Distribute equally vertically</source>
-        <translation type="unfinished"></translation>
+        <translation>توزع بالتساوي  عمودي</translation>
     </message>
     <message>
         <source>Distribute vertically
 
 Distribute vertically selected elements</source>
-        <translation type="unfinished"></translation>
+        <translation>توزيع عمودي
+
+توزيع العناصر المختارة عموديا</translation>
     </message>
     <message>
         <source>Center horizontally</source>
-        <translation type="unfinished"></translation>
+        <translation>وَسَط أفقي</translation>
     </message>
     <message>
         <source>Center horizontally selected elements</source>
-        <translation type="unfinished"></translation>
+        <translation>وَسَط أفقي للعناصر المختارة</translation>
     </message>
     <message>
         <source>Center horizontally
 
 Center horizontally selected elements</source>
-        <translation type="unfinished"></translation>
+        <translation>وَسَط أفقي
+
+وَسَط أفقي للعناصر المختارة</translation>
     </message>
     <message>
         <source>Center vertically</source>
-        <translation type="unfinished"></translation>
+        <translation>وَسَط عمودي</translation>
     </message>
     <message>
         <source>Center vertically selected elements</source>
-        <translation type="unfinished"></translation>
+        <translation>وَسَط عمودي  العناصر المختارة</translation>
     </message>
     <message>
         <source>Center vertically
 
 Center vertically selected elements</source>
-        <translation type="unfinished"></translation>
+        <translation>وَسَط عمودي
+
+وَسَط عمودي  العناصر المختارة</translation>
     </message>
     <message>
         <source>Set on Grid</source>
-        <translation type="unfinished"></translation>
+        <translation>حدد على الشبكة</translation>
     </message>
     <message>
         <source>Sets selected elements on grid</source>
-        <translation type="unfinished"></translation>
+        <translation>مجموعات مختارة من عناصر الشبكة</translation>
     </message>
     <message>
         <source>Set on Grid
 
 Sets selected elements on grid</source>
-        <translation type="unfinished"></translation>
+        <translation>حدد على الشبكة
+
+مجموعات مختارة من عناصر الشبكة</translation>
     </message>
     <message>
         <source>Move Component Text</source>
-        <translation type="unfinished"></translation>
+        <translation>تحريك خاصية العنصر </translation>
     </message>
     <message>
         <source>Moves the property text of components</source>
-        <translation type="unfinished"></translation>
+        <translation>تحريك رمز العنصر </translation>
     </message>
     <message>
         <source>Move Component Text
 
 Moves the property text of components</source>
-        <translation type="unfinished"></translation>
+        <translation>تحريك خاصية العنصر 
+
+تحريك رمز العنصر </translation>
     </message>
     <message>
         <source>Replace...</source>
-        <translation type="unfinished"></translation>
+        <translation>استبدال...</translation>
     </message>
     <message>
         <source>Replace component properties or VHDL code</source>
-        <translation type="unfinished"></translation>
+        <translation>استبدال خاصية العنصر أوVHDL</translation>
     </message>
     <message>
         <source>Replace
@@ -7592,949 +7721,1077 @@ Moves the property text of components</source>
 Change component properties
 or
 text in VHDL code</source>
-        <translation type="unfinished"></translation>
+        <translation>استبدال 
+
+تغيير خصائص عنصر
+أو
+ VHDLالنص في </translation>
     </message>
     <message>
         <source>Cut</source>
-        <translation type="unfinished"></translation>
+        <translation>قص</translation>
     </message>
     <message>
         <source>Cu&amp;t</source>
-        <translation type="unfinished"></translation>
+        <translation>ق&amp;ص</translation>
     </message>
     <message>
         <source>Cuts out the selection and puts it into the clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>قص الإختيار و ضعها في الحافظة</translation>
     </message>
     <message>
         <source>Cut
 
 Cuts out the selection and puts it into the clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>قص
+
+قص الإختيار و ضعها في الحافظة</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation type="unfinished"></translation>
+        <translation>نسخة</translation>
     </message>
     <message>
         <source>&amp;Copy</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;نسخة</translation>
     </message>
     <message>
         <source>Copies the selection into the clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>إنسخ الإختيار  في الحافظة</translation>
     </message>
     <message>
         <source>Copy
 
 Copies the selection into the clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>نسخة
+
+إنسخ الإختيار  في الحافظة</translation>
     </message>
     <message>
         <source>Paste</source>
-        <translation type="unfinished"></translation>
+        <translation>لصق</translation>
     </message>
     <message>
         <source>&amp;Paste</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;لصق</translation>
     </message>
     <message>
         <source>Pastes the clipboard contents to the cursor position</source>
-        <translation type="unfinished"></translation>
+        <translation>لصق محتوى الحافظة في موضع المؤشر </translation>
     </message>
     <message>
         <source>Paste
 
 Pastes the clipboard contents to the cursor position</source>
-        <translation type="unfinished"></translation>
+        <translation>لصق
+
+لصق محتوى الحافظة في موضع المؤشر </translation>
     </message>
     <message>
         <source>&amp;Delete</source>
-        <translation type="unfinished"></translation>
+        <translation>حذف&amp;</translation>
     </message>
     <message>
         <source>Deletes the selected components</source>
-        <translation type="unfinished"></translation>
+        <translation>حذف العناصر المختارة</translation>
     </message>
     <message>
         <source>Delete
 
 Deletes the selected components</source>
-        <translation type="unfinished"></translation>
+        <translation>
+
+حذف العناصر المختارة</translation>
     </message>
     <message>
         <source>Find...</source>
-        <translation type="unfinished"></translation>
+        <translation>العثور على...</translation>
     </message>
     <message>
         <source>Find a piece of text</source>
-        <translation type="unfinished"></translation>
+        <translation>االعثور على قطعة من النص</translation>
     </message>
     <message>
         <source>Find
 
 Searches for a piece of text</source>
-        <translation type="unfinished"></translation>
+        <translation>العثور على
+
+ابحث عن قطعة من النص</translation>
     </message>
     <message>
         <source>Find Again</source>
-        <translation type="unfinished"></translation>
+        <translation> أجد مرة أخرى</translation>
     </message>
     <message>
         <source>Find same text again</source>
-        <translation type="unfinished"></translation>
+        <translation>العثور على النص نفسه من جديد</translation>
     </message>
     <message>
         <source>Find
 
 Searches for the same piece of text again</source>
-        <translation type="unfinished"></translation>
+        <translation>العثور على
+
+ابحث عن قطعة من النص من جديد</translation>
     </message>
     <message>
         <source>Undo</source>
-        <translation type="unfinished"></translation>
+        <translation>تراجع</translation>
     </message>
     <message>
         <source>&amp;Undo</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;تراجع</translation>
     </message>
     <message>
         <source>Undoes the last command</source>
-        <translation type="unfinished"></translation>
+        <translation>إبطال آخر تعليمة</translation>
     </message>
     <message>
         <source>Undo
 
 Makes the last action undone</source>
-        <translation type="unfinished"></translation>
+        <translation>تراجع
+
+يجعل التراجع عن آخر إجراء</translation>
     </message>
     <message>
         <source>Redo</source>
-        <translation type="unfinished"></translation>
+        <translation>الإعادة</translation>
     </message>
     <message>
         <source>&amp;Redo</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;الإعادة</translation>
     </message>
     <message>
         <source>Redoes the last command</source>
-        <translation type="unfinished"></translation>
+        <translation> إعادة آخر تعليمة</translation>
     </message>
     <message>
         <source>Redo
 
 Repeats the last action once more</source>
-        <translation type="unfinished"></translation>
+        <translation>الإعادة
+
+يكرر آخر عمل مرة أخرى</translation>
     </message>
     <message>
         <source>&amp;New Project...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;مشروع جديد...</translation>
     </message>
     <message>
         <source>Creates a new project</source>
-        <translation type="unfinished"></translation>
+        <translation>إنشاء مشروع جديد</translation>
     </message>
     <message>
         <source>New Project
 
 Creates a new project</source>
-        <translation type="unfinished"></translation>
+        <translation>مشروع جديد
+
+إنشاء مشروع جديد</translation>
     </message>
     <message>
         <source>&amp;Open Project...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;افتح مشروع جديد...</translation>
     </message>
     <message>
         <source>Opens an existing project</source>
-        <translation type="unfinished"></translation>
+        <translation>إفتح مشروع موجودة</translation>
     </message>
     <message>
         <source>Open Project
 
 Opens an existing project</source>
-        <translation type="unfinished"></translation>
+        <translation>افتح مشروع
+
+إفتح مشروع موجودة</translation>
     </message>
     <message>
         <source>&amp;Delete Project...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;حذف المشروع...</translation>
     </message>
     <message>
         <source>Deletes an existing project</source>
-        <translation type="unfinished"></translation>
+        <translation>حذف مشروع موجودة</translation>
     </message>
     <message>
         <source>Delete Project
 
 Deletes an existing project</source>
-        <translation type="unfinished"></translation>
+        <translation>حذف المشروع
+
+حذف مشروع موجودة</translation>
     </message>
     <message>
         <source>&amp;Close Project</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;إغلق المشروع </translation>
     </message>
     <message>
         <source>Closes the current project</source>
-        <translation type="unfinished"></translation>
+        <translation>إغلق المشروع  الحالي</translation>
     </message>
     <message>
         <source>Close Project
 
 Closes the current project</source>
-        <translation type="unfinished"></translation>
+        <translation>إغلق المشروع 
+
+إغلق المشروع  الحالي</translation>
     </message>
     <message>
         <source>&amp;Add Files to Project...</source>
-        <translation type="unfinished"></translation>
+        <translation>أضف  ملفات إلى المشروع...</translation>
     </message>
     <message>
         <source>Copies files to project directory</source>
-        <translation type="unfinished"></translation>
+        <translation>نسخ الملفات إلى دليل المشروع</translation>
     </message>
     <message>
         <source>Add Files to Project
 
 Copies files to project directory</source>
-        <translation type="unfinished"></translation>
+        <translation>أضف  ملفات إلى المشروع
+
+نسخ الملفات إلى دليل المشروع</translation>
     </message>
     <message>
         <source>Create &amp;Library...</source>
-        <translation type="unfinished"></translation>
+        <translation>إنشاء &amp;المكتبة...</translation>
     </message>
     <message>
         <source>Create Library from Subcircuits</source>
-        <translation type="unfinished"></translation>
+        <translation>إنشاء مكتبة من Subcircuits</translation>
     </message>
     <message>
         <source>Create Library
 
 Create Library from Subcircuits</source>
-        <translation type="unfinished"></translation>
+        <translation>
+
+إنشاء مكتبة من Subcircuits</translation>
     </message>
     <message>
         <source>Create &amp;Package...</source>
-        <translation type="unfinished"></translation>
+        <translation>إنشاء &amp;المجلد...</translation>
     </message>
     <message>
         <source>Create compressed Package from Projects</source>
-        <translation type="unfinished"></translation>
+        <translation>إنشاء مجلد  مضغوط من المشاريع</translation>
     </message>
     <message>
         <source>Create Package
 
 Create compressed Package from complete Projects</source>
-        <translation type="unfinished"></translation>
+        <translation>إنشاء المجلد
+
+‏إنشاء مجلد  مضغوط من المشاريع</translation>
     </message>
     <message>
         <source>E&amp;xtract Package...</source>
-        <translation type="unfinished"></translation>
+        <translation>اس&amp;تخراج المجلد...</translation>
     </message>
     <message>
         <source>Install Content of a Package</source>
-        <translation type="unfinished"></translation>
+        <translation>تثبيت محتوى المجلد  </translation>
     </message>
     <message>
         <source>Extract Package
 
 Install Content of a Package</source>
-        <translation type="unfinished"></translation>
+        <translation>استخراج  المجلد
+
+تثبيت محتوى المجلد  </translation>
+    </message>
+    <message>
+        <source>&amp;Import Data...</source>
+        <translation type="obsolete">&amp;استيراد  بيانات...</translation>
+    </message>
+    <message>
+        <source>Convert file to Qucs data file</source>
+        <translation type="obsolete">تحويل الملف إلى ملف بيانات Qucs</translation>
+    </message>
+    <message>
+        <source>Import Data
+
+Convert data file to Qucs data file</source>
+        <translation type="obsolete">استيراد  بيانات
+
+تحويل الملف إلى ملف بيانات Qucs</translation>
     </message>
     <message>
         <source>Export to &amp;CSV...</source>
-        <translation type="unfinished"></translation>
+        <translation>تصدير إلى &amp;CSV...</translation>
     </message>
     <message>
         <source>Convert graph data to CSV file</source>
-        <translation type="unfinished"></translation>
+        <translation>تحويل الرسم البياني  إلى ملف CSV</translation>
     </message>
     <message>
         <source>Export to CSV
 
 Convert graph data to CSV file</source>
-        <translation type="unfinished"></translation>
+        <translation>تصدير إلى CSV
+
+تحويل الرسم البياني  إلى ملف CSV</translation>
     </message>
     <message>
         <source>View All</source>
-        <translation type="unfinished"></translation>
+        <translation>عرض الكل</translation>
     </message>
     <message>
         <source>Show the whole page</source>
-        <translation type="unfinished"></translation>
+        <translation>إظهار صفحة كاملة</translation>
     </message>
     <message>
         <source>View All
 
 Shows the whole page content</source>
-        <translation type="unfinished"></translation>
+        <translation>عرض الكل
+
+إظهار صفحة كاملة</translation>
     </message>
     <message>
         <source>View 1:1</source>
-        <translation type="unfinished"></translation>
+        <translation>عرض 1:1</translation>
     </message>
     <message>
         <source>Views without magnification</source>
-        <translation type="unfinished"></translation>
+        <translation>عرض بدون تفخيم</translation>
     </message>
     <message>
         <source>View 1:1
 
 Shows the page content without magnification</source>
-        <translation type="unfinished"></translation>
+        <translation>عرض 1:1
+
+عرض محتوى الصفحة بدون تفخيم</translation>
     </message>
     <message>
         <source>Zoom in</source>
-        <translation type="unfinished"></translation>
+        <translation>تكبير</translation>
     </message>
     <message>
         <source>Zooms into the current view</source>
-        <translation type="unfinished"></translation>
+        <translation>تكبير في العرض الحالي</translation>
     </message>
     <message>
         <source>Zoom in
 
 Zooms the current view</source>
-        <translation type="unfinished"></translation>
+        <translation>تكبير
+
+تكبير في العرض الحالي</translation>
     </message>
     <message>
         <source>Zoom out</source>
-        <translation type="unfinished"></translation>
+        <translation>تصغير</translation>
     </message>
     <message>
         <source>Zooms out the current view</source>
-        <translation type="unfinished"></translation>
+        <translation>تصغير في العرض الحالي</translation>
     </message>
     <message>
         <source>Zoom out
 
 Zooms out the current view</source>
-        <translation type="unfinished"></translation>
+        <translation>تصغير
+
+تصغير في العرض الحالي</translation>
     </message>
     <message>
         <source>Select</source>
-        <translation type="unfinished"></translation>
+        <translation>اختيار </translation>
     </message>
     <message>
         <source>Activate select mode</source>
-        <translation type="unfinished"></translation>
+        <translation>اختيار طريقة تفعيل</translation>
     </message>
     <message>
         <source>Select
 
 Activates select mode</source>
-        <translation type="unfinished"></translation>
+        <translation>
+
+اختيار طريقة تفعيل</translation>
     </message>
     <message>
         <source>Select All</source>
-        <translation type="unfinished"></translation>
+        <translation>اختيار الكل</translation>
     </message>
     <message>
         <source>Selects all elements</source>
-        <translation type="unfinished"></translation>
+        <translation>اختيار كل  العناصر</translation>
     </message>
     <message>
         <source>Select All
 
 Selects all elements of the document</source>
-        <translation type="unfinished"></translation>
+        <translation>اختيار الكل
+
+اختيار كل عناصر الوثيقة</translation>
     </message>
     <message>
         <source>Select Markers</source>
-        <translation type="unfinished"></translation>
+        <translation>اختيار علامات</translation>
     </message>
     <message>
         <source>Selects all markers</source>
-        <translation type="unfinished"></translation>
+        <translation>اختيار  كل العلامات</translation>
     </message>
     <message>
         <source>Select Markers
 
 Selects all diagram markers of the document</source>
-        <translation type="unfinished"></translation>
+        <translation>
+
+اختيار  كل العلامات</translation>
     </message>
     <message>
         <source>Rotate</source>
-        <translation type="unfinished"></translation>
+        <translation>الدوران</translation>
     </message>
     <message>
         <source>Rotates the selected component by 90&#xb0;</source>
-        <translation type="unfinished"></translation>
+        <translation>دوران العنصر المختار ب° 90</translation>
     </message>
     <message>
         <source>Rotate
 
 Rotates the selected component by 90&#xb0; counter-clockwise</source>
-        <translation type="unfinished"></translation>
+        <translation>
+
+دوران العنصر المختار ب° 90</translation>
     </message>
     <message>
         <source>Mirror about X Axis</source>
-        <translation type="unfinished"></translation>
+        <translation>مرآة المحور ْX </translation>
     </message>
     <message>
         <source>Mirrors the selected item about X Axis</source>
-        <translation type="unfinished"></translation>
+        <translation>X  اختيار هذا البند يعكس المحور  </translation>
     </message>
     <message>
         <source>Mirror about X Axis
 
 Mirrors the selected item about X Axis</source>
-        <translation type="unfinished"></translation>
+        <translation>مرآة المحور ْX 
+
+X  اختيار هذا البند يعكس المحور  </translation>
     </message>
     <message>
         <source>Mirror about Y Axis</source>
-        <translation type="unfinished"></translation>
+        <translation>مرآة المحور ْY </translation>
     </message>
     <message>
         <source>Mirrors the selected item about Y Axis</source>
-        <translation type="unfinished"></translation>
+        <translation>Y  اختيار هذا البند يعكس المحور  </translation>
     </message>
     <message>
         <source>Mirror about Y Axis
 
 Mirrors the selected item about Y Axis</source>
-        <translation type="unfinished"></translation>
+        <translation>
+
+Y  اختيار هذا البند يعكس المحور  </translation>
     </message>
     <message>
         <source>Go into Subcircuit</source>
-        <translation type="unfinished"></translation>
+        <translation>إذهب إلى  Subcircuit</translation>
     </message>
     <message>
         <source>Goes inside the selected subcircuit</source>
-        <translation type="unfinished"></translation>
+        <translation>إداخل اختيار subcircuit</translation>
     </message>
     <message>
         <source>Go into Subcircuit
 
 Goes inside the selected subcircuit</source>
-        <translation type="unfinished"></translation>
+        <translation>إذهب إلى  Subcircuit
+
+إداخل اختيار subcircuit</translation>
     </message>
     <message>
         <source>Pop out</source>
-        <translation type="unfinished"></translation>
+        <translation>جحظ</translation>
     </message>
     <message>
         <source>Pop outside subcircuit</source>
-        <translation type="unfinished"></translation>
+        <translation>البوب خارج subcircuit</translation>
     </message>
     <message>
         <source>Pop out
 
 Goes up one hierarchy level, i.e. leaves subcircuit</source>
-        <translation type="unfinished"></translation>
+        <translation>جحظ
+
+تسلسل هرمي يصل مستوى واحد ، أي أن يترك subcircuit</translation>
     </message>
     <message>
         <source>Deactivate/Activate</source>
-        <translation type="unfinished"></translation>
+        <translation>تعطيل / تفعيل</translation>
     </message>
     <message>
         <source>Deactivate/Activate selected components</source>
-        <translation type="unfinished"></translation>
+        <translation>تعطيل / تفعيل العنصر المختار</translation>
     </message>
     <message>
         <source>Deactivate/Activate
 
 Deactivate/Activate the selected components</source>
-        <translation type="unfinished"></translation>
+        <translation>تعطيل / تفعيل
+
+تعطيل / تفعيل العنصر المختار</translation>
     </message>
     <message>
         <source>Insert Equation</source>
-        <translation type="unfinished"></translation>
+        <translation>إضافة المعادلة</translation>
     </message>
     <message>
         <source>Inserts an equation</source>
-        <translation type="unfinished"></translation>
+        <translation>إضافات في المعادلة</translation>
     </message>
     <message>
         <source>Insert Equation
 
 Inserts a user defined equation</source>
-        <translation type="unfinished"></translation>
+        <translation>إضافة المعادلة
+
+إدراجات المعادلة المعرفة من قبل  المستخدم  </translation>
     </message>
     <message>
         <source>Insert Ground</source>
-        <translation type="unfinished"></translation>
+        <translation>إضافة  السطح</translation>
     </message>
     <message>
         <source>Inserts a ground symbol</source>
-        <translation type="unfinished"></translation>
+        <translation>إضافة رمز السطح</translation>
     </message>
     <message>
         <source>Insert Ground
 
 Inserts a ground symbol</source>
-        <translation type="unfinished"></translation>
+        <translation>
+
+إضافة رمز السطح</translation>
     </message>
     <message>
         <source>Insert Port</source>
-        <translation type="unfinished"></translation>
+        <translation> إضافة الميناء </translation>
     </message>
     <message>
         <source>Inserts a port symbol</source>
-        <translation type="unfinished"></translation>
+        <translation> إضافة  رمز الميناء </translation>
     </message>
     <message>
         <source>Insert Port
 
 Inserts a port symbol</source>
-        <translation type="unfinished"></translation>
+        <translation>إضافة الميناء 
+
+ إضافة  رمز الميناء </translation>
     </message>
     <message>
         <source>Wire</source>
-        <translation type="unfinished"></translation>
+        <translation>سلك</translation>
     </message>
     <message>
         <source>Inserts a wire</source>
-        <translation type="unfinished"></translation>
+        <translation>إضافة  السلك</translation>
     </message>
     <message>
         <source>Wire
 
 Inserts a wire</source>
-        <translation type="unfinished"></translation>
+        <translation>سلك
+
+إضافة  السلك</translation>
     </message>
     <message>
         <source>Wire Label</source>
-        <translation type="unfinished"></translation>
+        <translation>علامة السلك</translation>
     </message>
     <message>
         <source>Inserts a wire or pin label</source>
-        <translation type="unfinished"></translation>
+        <translation>إضافة  السلك أو  علامة الدبوس</translation>
     </message>
     <message>
         <source>Wire Label
 
 Inserts a wire or pin label</source>
-        <translation type="unfinished"></translation>
+        <translation>علامة السلك
+
+إضافة  السلك أو  علامة الدبوس</translation>
     </message>
     <message>
         <source>VHDL entity</source>
-        <translation type="unfinished"></translation>
+        <translation>قيمة VHDL </translation>
     </message>
     <message>
         <source>Inserts skeleton of VHDL entity</source>
-        <translation type="unfinished"></translation>
+        <translation>إضافة هيكل قيمة VHDL    </translation>
     </message>
     <message>
         <source>VHDL entity
 
 Inserts the skeleton of a VHDL entity</source>
-        <translation type="unfinished"></translation>
+        <translation>قيمة VHDL 
+
+إضافة هيكل قيمة VHDL</translation>
     </message>
     <message>
         <source>Text Editor</source>
-        <translation type="unfinished"></translation>
+        <translation>محرر نصوص </translation>
     </message>
     <message>
         <source>Starts the Qucs text editor</source>
-        <translation type="unfinished"></translation>
+        <translation>بدأ محرر نصوص Qucs</translation>
     </message>
     <message>
         <source>Text editor
 
 Starts the Qucs text editor</source>
-        <translation type="unfinished"></translation>
+        <translation>
+
+بدأ محرر نصوص Qucs</translation>
     </message>
     <message>
         <source>Filter synthesis</source>
-        <translation type="unfinished"></translation>
+        <translation> فلتر التوليف </translation>
     </message>
     <message>
         <source>Starts QucsFilter</source>
-        <translation type="unfinished"></translation>
+        <translation>بدأ QucsFilter</translation>
     </message>
     <message>
         <source>Filter synthesis
 
 Starts QucsFilter</source>
-        <translation type="unfinished"></translation>
+        <translation>
+
+بدأ QucsFilter</translation>
     </message>
     <message>
         <source>Line calculation</source>
-        <translation type="unfinished"></translation>
+        <translation>حساب الخط</translation>
     </message>
     <message>
         <source>Starts QucsTrans</source>
-        <translation type="unfinished"></translation>
+        <translation>بدء QucsTrans</translation>
     </message>
     <message>
         <source>Line calculation
 
 Starts transmission line calculator</source>
-        <translation type="unfinished"></translation>
+        <translation>حساب الخط
+
+بدأ نقل خط  الحساب</translation>
     </message>
     <message>
         <source>Component Library</source>
-        <translation type="unfinished"></translation>
+        <translation>مكتبة العنصر</translation>
     </message>
     <message>
         <source>Starts QucsLib</source>
-        <translation type="unfinished"></translation>
+        <translation>بدء QucsLib</translation>
     </message>
     <message>
         <source>Component Library
 
 Starts component library program</source>
-        <translation type="unfinished"></translation>
+        <translation>مكتبة العنصر
+
+بدأ  برنامج مكتبة العنصر</translation>
     </message>
     <message>
         <source>Matching Circuit</source>
-        <translation type="unfinished"></translation>
+        <translation>الدائرة مطابقة</translation>
     </message>
     <message>
         <source>Creates Matching Circuit</source>
-        <translation type="unfinished"></translation>
+        <translation>إنشاء دائرة مطابقة</translation>
     </message>
     <message>
         <source>Matching Circuit
 
 Dialog for Creating Matching Circuit</source>
-        <translation type="unfinished"></translation>
+        <translation>الدائرة مطابقة
+
+إنشاء دائرة مطابقة</translation>
     </message>
     <message>
         <source>Attenuator synthesis</source>
-        <translation type="unfinished"></translation>
+        <translation>مخفف التوليف</translation>
     </message>
     <message>
         <source>Starts QucsAttenuator</source>
-        <translation type="unfinished"></translation>
+        <translation>بدأ QucsAttenuator</translation>
     </message>
     <message>
         <source>Attenuator synthesis
 
 Starts attenuator calculation program</source>
-        <translation type="unfinished"></translation>
+        <translation>مخفف التوليف
+
+بدأ حساب البرنامج المخفف</translation>
     </message>
     <message>
         <source>Simulate</source>
-        <translation type="unfinished"></translation>
+        <translation>محاكاة</translation>
     </message>
     <message>
         <source>Simulates the current schematic</source>
-        <translation type="unfinished"></translation>
+        <translation>تمثيل  التخطيط الحالي</translation>
     </message>
     <message>
         <source>Simulate
 
 Simulates the current schematic</source>
-        <translation type="unfinished"></translation>
+        <translation>محاكاة
+
+تمثيل  التخطيط الحالي</translation>
     </message>
     <message>
         <source>View Data Display/Schematic</source>
-        <translation type="unfinished"></translation>
+        <translation>نظرا لعرض البيانات / تخطيطي</translation>
     </message>
     <message>
         <source>Changes to data display or schematic page</source>
-        <translation type="unfinished"></translation>
+        <translation>تغييرات في البيانات أو العرض التخطيطي الصفحة</translation>
     </message>
     <message>
         <source>View Data Display/Schematic
 
 </source>
-        <translation type="unfinished"></translation>
+        <translation>نظرا لعرض البيانات / تخطيطي
+
+</translation>
     </message>
     <message>
         <source>Calculate DC bias</source>
-        <translation type="unfinished"></translation>
+        <translation>حساب DC bias</translation>
     </message>
     <message>
         <source>Calculates DC bias and shows it</source>
-        <translation type="unfinished"></translation>
+        <translation>حسابات DC bias و إظهاره</translation>
     </message>
     <message>
         <source>Calculate DC bias
 
 Calculates DC bias and shows it</source>
-        <translation type="unfinished"></translation>
+        <translation>حساب DC bias
+
+حسابات DC bias و إظهاره</translation>
     </message>
     <message>
         <source>Set Marker on Graph</source>
-        <translation type="unfinished"></translation>
+        <translation>مجموعة ماركر على الرسم البياني</translation>
     </message>
     <message>
         <source>Sets a marker on a diagram&apos;s graph</source>
-        <translation type="unfinished"></translation>
+        <translation>وضع علامة على الرسم البياني</translation>
     </message>
     <message>
         <source>Set Marker
 
 Sets a marker on a diagram&apos;s graph</source>
-        <translation type="unfinished"></translation>
+        <translation>
+
+وضع علامة على الرسم البياني</translation>
     </message>
     <message>
         <source>Show Last Messages</source>
-        <translation type="unfinished"></translation>
+        <translation>إظهار آخر الرسائل</translation>
     </message>
     <message>
         <source>Shows last simulation messages</source>
-        <translation type="unfinished"></translation>
+        <translation>إظهار آخر رسائل التمثيل</translation>
     </message>
     <message>
         <source>Show Last Messages
 
 Shows the messages of the last simulation</source>
-        <translation type="unfinished"></translation>
+        <translation>
+
+إظهار رسائل التمثيل</translation>
     </message>
     <message>
         <source>Show Last Netlist</source>
-        <translation type="unfinished"></translation>
+        <translation>إظهار آخر Netlist</translation>
     </message>
     <message>
         <source>Shows last simulation netlist</source>
-        <translation type="unfinished"></translation>
+        <translation>إظهار آخر رسائل التمثيل</translation>
     </message>
     <message>
         <source>Show Last Netlist
 
 Shows the netlist of the last simulation</source>
-        <translation type="unfinished"></translation>
+        <translation>
+
+إظهار آخر رسائل التمثيل</translation>
     </message>
     <message>
         <source>Tool&amp;bar</source>
-        <translation type="unfinished"></translation>
+        <translation>شريط &amp;الأدوات</translation>
     </message>
     <message>
         <source>Enables/disables the toolbar</source>
-        <translation type="unfinished"></translation>
+        <translation>ويتيح / لتعطيل شريط الأدوات</translation>
     </message>
     <message>
         <source>Toolbar
 
 Enables/disables the toolbar</source>
-        <translation type="unfinished"></translation>
+        <translation>
+
+ويتيح / لتعطيل شريط الأدوات</translation>
     </message>
     <message>
         <source>&amp;Statusbar</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;شريط الحالة</translation>
     </message>
     <message>
         <source>Enables/disables the statusbar</source>
-        <translation type="unfinished"></translation>
+        <translation>ويتيح / لتعطيل شريط الحالة</translation>
     </message>
     <message>
         <source>Statusbar
 
 Enables/disables the statusbar</source>
-        <translation type="unfinished"></translation>
+        <translation>شريط الحالة
+
+ويتيح / لتعطيل شريط الحالة</translation>
     </message>
     <message>
         <source>&amp;Dock Window</source>
-        <translation type="unfinished"></translation>
+        <translation>‏&amp;‏قفص النافذة </translation>
     </message>
     <message>
         <source>Enables/disables the browse dock window</source>
-        <translation type="unfinished"></translation>
+        <translation>ويتيح / لتعطيل قفص النافذة</translation>
     </message>
     <message>
         <source>Browse Window
 
 Enables/disables the browse dock window</source>
-        <translation type="unfinished"></translation>
+        <translation>نافذة تصفح
+
+ويتيح / لتعطيل قفص النافذة</translation>
     </message>
     <message>
         <source>Help Index...</source>
-        <translation type="unfinished"></translation>
+        <translation>مؤشر المساعدة ...</translation>
     </message>
     <message>
         <source>Index of Qucs Help</source>
-        <translation type="unfinished"></translation>
+        <translation> مؤشر Qucs Help</translation>
     </message>
     <message>
         <source>Help Index
 
 Index of intern Qucs help</source>
-        <translation type="unfinished"></translation>
+        <translation>مؤشر المساعدة
+
+مؤشر يساعد المتدرب Qucs</translation>
     </message>
     <message>
         <source>Getting Started...</source>
-        <translation type="unfinished"></translation>
+        <translation>الابتداء...</translation>
     </message>
     <message>
         <source>Getting Started with Qucs</source>
-        <translation type="unfinished"></translation>
+        <translation>الابتداء مع Qucs</translation>
     </message>
     <message>
         <source>Getting Started
 
 Short introduction into Qucs</source>
-        <translation type="unfinished"></translation>
+        <translation>
+
+الابتداء مع Qucs</translation>
     </message>
     <message>
         <source>&amp;About Qucs...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp; حول Qucs...</translation>
     </message>
     <message>
         <source>About the application</source>
-        <translation type="unfinished"></translation>
+        <translation>عن طلبا</translation>
     </message>
     <message>
         <source>About
 
 About the application</source>
-        <translation type="unfinished"></translation>
+        <translation>عن طلبا</translation>
     </message>
     <message>
         <source>About Qt...</source>
-        <translation type="unfinished"></translation>
+        <translation>عن كيو تي...</translation>
     </message>
     <message>
         <source>About Qt</source>
-        <translation type="unfinished"></translation>
+        <translation>عن كيو تي</translation>
     </message>
     <message>
         <source>About Qt
 
 About Qt by Trolltech</source>
-        <translation type="unfinished"></translation>
+        <translation>عن كيو تي
+
+عن كيو تي من Trolltech</translation>
     </message>
     <message>
         <source>&amp;File</source>
-        <translation type="unfinished"></translation>
+        <translation>‏‏&amp;ملف</translation>
     </message>
     <message>
         <source>&amp;Edit</source>
-        <translation type="unfinished"></translation>
+        <translation>‏&amp;تحرير</translation>
     </message>
     <message>
         <source>P&amp;ositioning</source>
-        <translation type="unfinished"></translation>
+        <translation>ال&amp;‏مواقع</translation>
     </message>
     <message>
         <source>&amp;Insert</source>
-        <translation type="unfinished"></translation>
+        <translation>‏&amp;إضافة ‏</translation>
     </message>
     <message>
         <source>&amp;Project</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;مشروع</translation>
     </message>
     <message>
         <source>&amp;Tools</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;أدوات</translation>
     </message>
     <message>
         <source>&amp;Simulation</source>
-        <translation type="unfinished"></translation>
+        <translation>‏&amp;‏المحاكاة </translation>
     </message>
     <message>
         <source>&amp;View</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;عرض</translation>
     </message>
     <message>
         <source>&amp;Help</source>
-        <translation type="unfinished"></translation>
+        <translation>‏&amp;‏مساعدة‏</translation>
     </message>
     <message>
         <source>no warnings</source>
-        <translation type="unfinished"></translation>
+        <translation>لاتوجد تحذيرات  </translation>
     </message>
     <message>
         <source>Warnings in last simulation! Press F5</source>
-        <translation type="unfinished"></translation>
+        <translation>تحذيرات في التمثيل السابق! اضغط على F5</translation>
     </message>
     <message>
         <source>About...</source>
-        <translation type="unfinished"></translation>
+        <translation>حول...</translation>
     </message>
     <message>
         <source>Qucs Version</source>
-        <translation type="unfinished"></translation>
+        <translation>qucsالنسخة  ‏</translation>
     </message>
     <message>
         <source>Quite Universal Circuit Simulator</source>
-        <translation type="unfinished"></translation>
+        <translation>Quite Universal Circuit Simulator</translation>
     </message>
     <message>
         <source>Copyright (C)</source>
-        <translation type="unfinished"></translation>
+        <translation>حقوق الطبع محفوظة </translation>
     </message>
     <message>
         <source>by Michael Margraf</source>
-        <translation type="unfinished"></translation>
+        <translation> من قبل مايكل مرغراف</translation>
     </message>
     <message>
         <source>Simulator by Stefan Jahn</source>
-        <translation type="unfinished"></translation>
+        <translation>التمثيل من قبل ستيفان جون</translation>
     </message>
     <message>
         <source>VHDL simulator &apos;FreeHDL&apos; by Edwin Naroska and Marius Vollmer</source>
-        <translation type="unfinished"></translation>
+        <translation>من قبل VHDL  ل FreeHDL&apos;  تمثيل  Edwin Naroska and Marius Vollmer</translation>
     </message>
     <message>
         <source>Special thanks to Jens Flucke and Raimund Jacob</source>
-        <translation type="unfinished"></translation>
+        <translation>شكر خاص ل  Jens Flucke and Raimund Jacob</translation>
     </message>
     <message>
         <source>Many thanks to Mike Brinson for correcting the VHDL output</source>
-        <translation type="unfinished"></translation>
+        <translation>شكرا جزيلا لMike Brinson لتصحيح  إظهار VHDL</translation>
     </message>
     <message>
         <source>GUI improvements by Gopala Krishna A</source>
-        <translation type="unfinished"></translation>
+        <translation>إدخال تحسينات على واجهة المستخدم من قبل  Gopala Krishna A</translation>
     </message>
     <message>
         <source>Verilog-AMS interface by Helene Parruitte</source>
-        <translation type="unfinished"></translation>
+        <translation>واجهة المستخدم ل Verilog-AMS من قبل</translation>
     </message>
     <message>
         <source>Translations:</source>
-        <translation type="unfinished"></translation>
+        <translation>ترجمات :</translation>
     </message>
     <message>
         <source>German by Stefan Jahn</source>
-        <translation type="unfinished"></translation>
+        <translation>من جانب الألماني ستيفان جون</translation>
     </message>
     <message>
         <source>Polish by Dariusz Pienkowski</source>
-        <translation type="unfinished"></translation>
+        <translation>البولندي من قبل داريوس  Pienkowski</translation>
     </message>
     <message>
         <source>Romanian by Radu Circa</source>
-        <translation type="unfinished"></translation>
+        <translation>الرومانية من قبل رادو  سركا</translation>
     </message>
     <message>
         <source>French by Vincent Habchi, F5RCS</source>
-        <translation type="unfinished"></translation>
+        <translation>الفرنسية من قبل فانسان Habchi ، F5RCS</translation>
     </message>
     <message>
         <source>Portuguese by Luciano Franca</source>
-        <translation type="unfinished"></translation>
+        <translation>البرتغالية من قبل لوتشيانو فرانكا</translation>
     </message>
     <message>
         <source>Spanish by Jose L. Redrejo Rodriguez</source>
-        <translation type="unfinished"></translation>
+        <translation>الاسبانية من قبل خوسيه رودريغيز ل  Redrejo</translation>
     </message>
     <message>
         <source>Japanese by Toyoyuki Ishikawa</source>
-        <translation type="unfinished"></translation>
+        <translation>اليابانية من قبل Toyoyuki إيشيكاوا</translation>
     </message>
     <message>
         <source>Italian by Giorgio Luparia and Claudio Girardi</source>
-        <translation type="unfinished"></translation>
+        <translation>الايطالية  من قبل جورجيو Luparia وكلاوديو Girardi</translation>
     </message>
     <message>
         <source>Hebrew by Dotan Nahum</source>
-        <translation type="unfinished"></translation>
+        <translation> العبرية من قبل  ناحوم دوتان</translation>
     </message>
     <message>
         <source>Swedish by Peter Landgren</source>
-        <translation type="unfinished"></translation>
+        <translation>السويدية من قبل  بيتر Landgren</translation>
     </message>
     <message>
         <source>Turkish by Onur and Ozgur Cobanoglu</source>
-        <translation type="unfinished"></translation>
+        <translation>التركية من قبل  وأوزغور Cobanoglu</translation>
     </message>
     <message>
         <source>Hungarian by Jozsef Bus</source>
-        <translation type="unfinished"></translation>
+        <translation>الهنغارية من قبل Jozsef Bus </translation>
     </message>
     <message>
         <source>Russian by Igor Gorbounov</source>
-        <translation type="unfinished"></translation>
+        <translation>الروسية من قبل ايغور Gorbounov</translation>
     </message>
     <message>
         <source>Czech by Marek Straka</source>
-        <translation type="unfinished"></translation>
+        <translation>التشيكية من قبل ماريك بها Straka</translation>
     </message>
     <message>
         <source>Catalan by Antoni Subirats</source>
-        <translation type="unfinished"></translation>
+        <translation>الكاتالوينية من قبل انتوني سوبيراتز</translation>
     </message>
     <message>
         <source>&amp;Import/Export Data...</source>
@@ -8555,711 +8812,719 @@ Convert data file to various file formats</source>
     <name>QucsAttenuator</name>
     <message>
         <source>E&amp;xit</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;خروج</translation>
     </message>
     <message>
         <source>Help...</source>
-        <translation type="unfinished"></translation>
+        <translation>مساعدة...</translation>
     </message>
     <message>
         <source>&amp;About QucsAttenuator...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp; حول QucsAttenuator...</translation>
     </message>
     <message>
         <source>About Qt...</source>
-        <translation type="unfinished"></translation>
+        <translation>عن كيو تي...</translation>
     </message>
     <message>
         <source>&amp;File</source>
-        <translation type="unfinished"></translation>
+        <translation>‏‏&amp;ملف</translation>
     </message>
     <message>
         <source>&amp;Help</source>
-        <translation type="unfinished"></translation>
+        <translation>مساعدة‏&amp;‏</translation>
     </message>
     <message>
         <source>Topology</source>
-        <translation type="unfinished"></translation>
+        <translation>طوبولوجيا</translation>
     </message>
     <message>
         <source>Input</source>
-        <translation type="unfinished"></translation>
+        <translation>مدخلات</translation>
     </message>
     <message>
         <source>Attenuation:</source>
-        <translation type="unfinished"></translation>
+        <translation>تخفيف :</translation>
     </message>
     <message>
         <source>1</source>
-        <translation type="unfinished"></translation>
+        <translation>1</translation>
     </message>
     <message>
         <source>dB</source>
-        <translation type="unfinished"></translation>
+        <translation>dB</translation>
     </message>
     <message>
         <source>Zin:</source>
-        <translation type="unfinished"></translation>
+        <translation>Zin:</translation>
     </message>
     <message>
         <source>50</source>
-        <translation type="unfinished"></translation>
+        <translation>50</translation>
     </message>
     <message>
         <source>Ohm</source>
-        <translation type="unfinished"></translation>
+        <translation>Ω</translation>
     </message>
     <message>
         <source>Zout:</source>
-        <translation type="unfinished"></translation>
+        <translation>Zout:</translation>
     </message>
     <message>
         <source>Calculate and put into Clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>حساب و وضعه في  الحافظة</translation>
     </message>
     <message>
         <source>Output</source>
-        <translation type="unfinished"></translation>
+        <translation>يحرر</translation>
     </message>
     <message>
         <source>R1:</source>
-        <translation type="unfinished"></translation>
+        <translation>R1 :</translation>
     </message>
     <message>
         <source>--</source>
-        <translation type="unfinished"></translation>
+        <translation>--</translation>
     </message>
     <message>
         <source>R2:</source>
-        <translation type="unfinished"></translation>
+        <translation>R2 :</translation>
     </message>
     <message>
         <source>R3:</source>
-        <translation type="unfinished"></translation>
+        <translation>R3:</translation>
     </message>
     <message>
         <source>Result:</source>
-        <translation type="unfinished"></translation>
+        <translation>النتيجة :</translation>
     </message>
     <message>
         <source>About Qt</source>
-        <translation type="unfinished"></translation>
+        <translation>عن كيو تي</translation>
     </message>
     <message>
         <source>About...</source>
-        <translation type="unfinished"></translation>
+        <translation>حول...</translation>
     </message>
     <message>
         <source>
 Attenuator synthesis program
 </source>
-        <translation type="unfinished"></translation>
+        <translation>
+توليف البرنامج المخفف
+</translation>
     </message>
     <message>
         <source>Copyright (C) 2006 by</source>
-        <translation type="unfinished"></translation>
+        <translation>حقوق الطبع محفوظة 2006  من قبل </translation>
     </message>
     <message>
         <source>Success!</source>
-        <translation type="unfinished"></translation>
+        <translation> العملية تمت بنجاح!</translation>
     </message>
     <message>
         <source>Error: Set Attenuation more than %1 dB</source>
-        <translation type="unfinished"></translation>
+        <translation>‏خطأ : مجموعة تخفيف أكثر من %1 ديسيبل‏</translation>
     </message>
 </context>
 <context>
     <name>QucsEdit</name>
     <message>
         <source>File: </source>
-        <translation type="unfinished"></translation>
+        <translation>‏‏ملف‏:</translation>
     </message>
     <message>
         <source>Line: %1  -  Column: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>‏‏خط  ٪1 - عمود : ‏2٪ ‏</translation>
     </message>
     <message>
         <source>About</source>
-        <translation type="unfinished"></translation>
+        <translation>حول</translation>
     </message>
     <message>
         <source>Quit</source>
-        <translation type="unfinished"></translation>
+        <translation>استقال</translation>
     </message>
     <message>
         <source>About...</source>
-        <translation type="unfinished"></translation>
+        <translation>حول...</translation>
     </message>
     <message>
         <source>
 Very simple text editor for Qucs
 </source>
-        <translation type="unfinished"></translation>
+        <translation>محرر نصوص بسيط جدا لQucs</translation>
     </message>
     <message>
         <source>Copyright (C) 2004, 2005 by Michael Margraf
 </source>
-        <translation type="unfinished"></translation>
+        <translation>حقوق الطبع محفوظة (جيم) 2004 ، و 2005 من قبل مايكل مرغراف</translation>
     </message>
     <message>
         <source>Enter a Filename</source>
-        <translation type="unfinished"></translation>
+        <translation>أدخل اسم الملف</translation>
     </message>
     <message>
         <source>Enter a Document Name</source>
-        <translation type="unfinished"></translation>
+        <translation>إدخال الاسم وثيقة</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>خطأ</translation>
     </message>
     <message>
         <source>Cannot write file: </source>
-        <translation type="unfinished"></translation>
+        <translation>لا يمكن كتابة ملف :</translation>
     </message>
     <message>
         <source>Cannot read file: </source>
-        <translation type="unfinished"></translation>
+        <translation>لا يمكن قراءة الملف :</translation>
     </message>
     <message>
         <source>Closing document</source>
-        <translation type="unfinished"></translation>
+        <translation>الوثيقة الختامية</translation>
     </message>
     <message>
         <source>The text contains unsaved changes!
 </source>
-        <translation type="unfinished"></translation>
+        <translation>ويتضمن النص التغييرات غير المحفوظة!
+</translation>
     </message>
     <message>
         <source>Do you want to save the changes?</source>
-        <translation type="unfinished"></translation>
+        <translation>هل تريد حفظ التغييرات؟</translation>
     </message>
     <message>
         <source>&amp;Save</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp; حفظ</translation>
     </message>
     <message>
         <source>&amp;Discard</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp; تجاهل</translation>
     </message>
     <message>
         <source>&amp;Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;إلغاء‏</translation>
     </message>
 </context>
 <context>
     <name>QucsFilter</name>
     <message>
         <source>E&amp;xit</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;خروج</translation>
     </message>
     <message>
         <source>Help...</source>
-        <translation type="unfinished"></translation>
+        <translation>مساعدة...</translation>
     </message>
     <message>
         <source>&amp;About QucsFilter...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp; حول QucsFilter...</translation>
     </message>
     <message>
         <source>About Qt...</source>
-        <translation type="unfinished"></translation>
+        <translation>كيو تي حول...</translation>
     </message>
     <message>
         <source>&amp;File</source>
-        <translation type="unfinished"></translation>
+        <translation>‏‏&amp;ملف</translation>
     </message>
     <message>
         <source>&amp;Help</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;‏مساعدة</translation>
     </message>
     <message>
         <source>Filter type:</source>
-        <translation type="unfinished"></translation>
+        <translation>مرشح من نوع :</translation>
     </message>
     <message>
         <source>Filter class:</source>
-        <translation type="unfinished"></translation>
+        <translation>فلتر الطبقة :</translation>
     </message>
     <message>
         <source>Low pass</source>
-        <translation type="unfinished"></translation>
+        <translation>المنخفضة</translation>
     </message>
     <message>
         <source>High pass</source>
-        <translation type="unfinished"></translation>
+        <translation>ارتفاع المرور</translation>
     </message>
     <message>
         <source>Band pass</source>
-        <translation type="unfinished"></translation>
+        <translation>شريط تمرير</translation>
     </message>
     <message>
         <source>Band stop</source>
-        <translation type="unfinished"></translation>
+        <translation>الفرقة وقف</translation>
     </message>
     <message>
         <source>Order:</source>
-        <translation type="unfinished"></translation>
+        <translation>من أجل :</translation>
     </message>
     <message>
         <source>Corner frequency:</source>
-        <translation type="unfinished"></translation>
+        <translation>ركن تردد :</translation>
     </message>
     <message>
         <source>Stop frequency:</source>
-        <translation type="unfinished"></translation>
+        <translation>وقف تردد :</translation>
     </message>
     <message>
         <source>Stop band frequency:</source>
-        <translation type="unfinished"></translation>
+        <translation>توقف الفرقة تردد :</translation>
     </message>
     <message>
         <source>Pass band ripple:</source>
-        <translation type="unfinished"></translation>
+        <translation>شريط تمرير متتالية :</translation>
     </message>
     <message>
         <source>Stop band attenuation:</source>
-        <translation type="unfinished"></translation>
+        <translation>وقف تخفيف الفرقة :</translation>
     </message>
     <message>
         <source>Impedance:</source>
-        <translation type="unfinished"></translation>
+        <translation>مقاومة :</translation>
     </message>
     <message>
         <source>Calculate and put into Clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>حساب و وضعه في  الحافظة</translation>
     </message>
     <message>
         <source>About...</source>
-        <translation type="unfinished"></translation>
+        <translation>حول...</translation>
     </message>
     <message>
         <source>
 Filter synthesis program
 </source>
-        <translation type="unfinished"></translation>
+        <translation>
+توليف برنامج فلتر
+</translation>
     </message>
     <message>
         <source>Copyright (C) 2005, 2006 by</source>
-        <translation type="unfinished"></translation>
+        <translation>حقوق الطبع محفوظة (جيم) 2004 ،  2005 من قبل </translation>
     </message>
     <message>
         <source>About Qt</source>
-        <translation type="unfinished"></translation>
+        <translation>عن كيو تي</translation>
     </message>
     <message>
         <source>Result:</source>
-        <translation type="unfinished"></translation>
+        <translation>النتيجة :</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>خطأ</translation>
     </message>
     <message>
         <source>Stop frequency must be greater than start frequency.</source>
-        <translation type="unfinished"></translation>
+        <translation>ولا بد من وقف تردد أكبر منتردد البدء.</translation>
     </message>
     <message>
         <source>Filter order must not be less than two.</source>
-        <translation type="unfinished"></translation>
+        <translation>ترتيب فلتر  يجب أن يكون اثنين على الأقل.</translation>
     </message>
     <message>
         <source>Bessel filter order must not be greater than 19.</source>
-        <translation type="unfinished"></translation>
+        <translation>بسل فلتر يجب ألا يزيد عن 19.</translation>
     </message>
     <message>
         <source>Successful</source>
-        <translation type="unfinished"></translation>
+        <translation>ناجح</translation>
     </message>
     <message>
         <source>Result: --</source>
-        <translation type="unfinished"></translation>
+        <translation>النتيجة :--</translation>
     </message>
     <message>
         <source>Start frequency:</source>
-        <translation type="unfinished"></translation>
+        <translation>بدء تردد :</translation>
     </message>
     <message>
         <source>Pass band frequency:</source>
-        <translation type="unfinished"></translation>
+        <translation>تمرير النطاق الترددي :</translation>
     </message>
     <message>
         <source>Pass band attenuation:</source>
-        <translation type="unfinished"></translation>
+        <translation>تمر تخفيف الفرقة :</translation>
     </message>
 </context>
 <context>
     <name>QucsHelp</name>
     <message>
         <source>Qucs Help System</source>
-        <translation type="unfinished"></translation>
+        <translation>مساعدة نظام Qucs</translation>
     </message>
     <message>
         <source>&amp;Quit</source>
-        <translation type="unfinished"></translation>
+        <translation>‏&amp;استقال</translation>
     </message>
     <message>
         <source>&amp;Back</source>
-        <translation type="unfinished"></translation>
+        <translation>‏&amp;خلف</translation>
     </message>
     <message>
         <source>&amp;Forward</source>
-        <translation type="unfinished"></translation>
+        <translation>‏&amp;للأمام</translation>
     </message>
     <message>
         <source>&amp;Home</source>
-        <translation type="unfinished"></translation>
+        <translation>‏&amp;منزل</translation>
     </message>
     <message>
         <source>&amp;Previous</source>
-        <translation type="unfinished"></translation>
+        <translation>‏&amp;السابق</translation>
     </message>
     <message>
         <source>&amp;Next</source>
-        <translation type="unfinished"></translation>
+        <translation>‏&amp;التالي</translation>
     </message>
     <message>
         <source>&amp;Table of Contents</source>
-        <translation type="unfinished"></translation>
+        <translation>‏&amp;قائمة المحتويات</translation>
     </message>
     <message>
         <source>Enables/disables the table of contents</source>
-        <translation type="unfinished"></translation>
+        <translation>ويتيح / لتعطيل جدول المحتويات</translation>
     </message>
     <message>
         <source>Table of Contents
 
 Enables/disables the table of contents</source>
-        <translation type="unfinished"></translation>
+        <translation>قائمة المحتوياتويتيح / لتعطيل جدول المحتويات</translation>
     </message>
     <message>
         <source>&amp;About Qt</source>
-        <translation type="unfinished"></translation>
+        <translation>‏&amp;عن كيو تي</translation>
     </message>
     <message>
         <source>&amp;File</source>
-        <translation type="unfinished"></translation>
+        <translation>‏‏&amp;ملف</translation>
     </message>
     <message>
         <source>&amp;View</source>
-        <translation type="unfinished"></translation>
+        <translation>‏&amp;عرض</translation>
     </message>
     <message>
         <source>&amp;Help</source>
-        <translation type="unfinished"></translation>
+        <translation>‏&amp;مساعدة</translation>
     </message>
     <message>
         <source>Contents</source>
-        <translation type="unfinished"></translation>
+        <translation>محتويات</translation>
     </message>
     <message>
         <source>Home</source>
-        <translation type="unfinished"></translation>
+        <translation>منزل</translation>
     </message>
 </context>
 <context>
     <name>QucsLib</name>
     <message>
         <source>Manage User &amp;Libraries...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">...‏إدارة &amp;‏المكتبات المستخدم</translation>
     </message>
     <message>
         <source>&amp;Quit</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;نهاية</translation>
     </message>
     <message>
         <source>Help</source>
-        <translation type="unfinished"></translation>
+        <translation>مساعدة</translation>
     </message>
     <message>
         <source>&amp;Help</source>
-        <translation type="unfinished"></translation>
+        <translation>‏&amp;مساعدة</translation>
     </message>
     <message>
         <source>About</source>
-        <translation type="unfinished"></translation>
+        <translation>حول</translation>
     </message>
     <message>
         <source>&amp;File</source>
-        <translation type="unfinished"></translation>
+        <translation>‏‏&amp;ملف</translation>
     </message>
     <message>
         <source>Component Selection</source>
-        <translation type="unfinished"></translation>
+        <translation>اختيار العنصر</translation>
     </message>
     <message>
         <source>Search...</source>
-        <translation type="unfinished"></translation>
+        <translation>البحث عن...</translation>
     </message>
     <message>
         <source>Component</source>
-        <translation type="unfinished"></translation>
+        <translation>العنصر</translation>
     </message>
     <message>
         <source>Copy to clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>نسخة إلى الحافظة</translation>
     </message>
     <message>
         <source>Show Model</source>
-        <translation type="unfinished"></translation>
+        <translation>إظهر نموذج</translation>
     </message>
     <message>
         <source>About...</source>
-        <translation type="unfinished"></translation>
+        <translation>حول...</translation>
     </message>
     <message>
         <source>Library Manager for Qucs
 </source>
-        <translation type="unfinished"></translation>
+        <translation>مكتبة Qucs
+</translation>
     </message>
     <message>
         <source>Copyright (C) 2005 by Michael Margraf
 </source>
-        <translation type="unfinished"></translation>
+        <translation>حقوق الطبع محفوظة  2005 من قبل مايكل مرغراف
+</translation>
     </message>
     <message>
         <source>QucsLib Help</source>
-        <translation type="unfinished"></translation>
+        <translation>مساعدة QucsLib</translation>
     </message>
     <message>
         <source>QucsLib is a program to manage Qucs component libraries. On the left side of the application window the available libraries can be browsed to find the wanted component. By clicking on the component name its description can be seen on the right side. The selected component is transported to the Qucs application by clicking on the button &quot;Copy to Clipboard&quot;. Being back in the schematic window the component can be inserted by pressing CTRL-V  (paste from clipboard).</source>
-        <translation type="unfinished"></translation>
+        <translation>‎‫QucsLib هو برنامج وتحتفظ مكتبة المكونات. على الجهة اليسرى من النافذة المتاحة يمكن تصفحها والمكتبات بحثا عن العناصر المكونة. اضغط على عرض عناصر وصفها (اليمين). مرة واحدة في العنصر المختار، ومن نسخ إلى الحافظة من خلال زر &quot;نسخ إلى الحافظة&quot;. في نافذة البرنامج ، ببساطة صقها بكتابة السيطرة الخامس (نسخة).</translation>
     </message>
     <message>
         <source>A more comfortable way: The component can also be placed onto the schematic by using Drag n&apos;Drop.</source>
-        <translation type="unfinished"></translation>
+        <translation>وهناك طريقة أكثر راحة : العنصر ويمكن أيضا تقديم الطلبات على التخطيطي باستخدام اسحب n&apos;Drop.</translation>
     </message>
     <message>
         <source>Model</source>
-        <translation type="unfinished"></translation>
+        <translation>النموذج</translation>
     </message>
     <message>
         <source>Search result</source>
-        <translation type="unfinished"></translation>
+        <translation>نتيجة البحث</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>خطأ</translation>
     </message>
     <message>
         <source>Cannot open &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>لا نستطيع فتح &quot;%1.</translation>
     </message>
     <message>
         <source>Library is corrupt.</source>
-        <translation type="unfinished"></translation>
+        <translation>المكتبة فاسدة.</translation>
     </message>
     <message>
         <source>Search Library Component</source>
-        <translation type="unfinished"></translation>
+        <translation>البحث في مكتبة العنصر</translation>
     </message>
     <message>
         <source>Result</source>
-        <translation type="unfinished"></translation>
+        <translation>النتيجة </translation>
     </message>
     <message>
         <source>No appropriate component found.</source>
-        <translation type="unfinished"></translation>
+        <translation>العثور على أي عنصر مناسب.</translation>
     </message>
 </context>
 <context>
     <name>QucsSettingsDialog</name>
     <message>
         <source>Edit Qucs Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>تحرير خصائص كوكس</translation>
     </message>
     <message>
         <source>Font (set after reload):</source>
-        <translation type="unfinished"></translation>
+        <translation>فونت (بعد إعادة تحميل ) :</translation>
     </message>
     <message>
         <source>Document Background Color:</source>
-        <translation type="unfinished"></translation>
+        <translation>لون الخلفي للوثيقة :</translation>
     </message>
     <message>
         <source>Language (set after reload):</source>
-        <translation type="unfinished"></translation>
+        <translation>اللغة (بعد إعادة تحميل ) :</translation>
     </message>
     <message>
         <source>system language</source>
-        <translation type="unfinished"></translation>
+        <translation>لغة النظام</translation>
     </message>
     <message>
         <source>English</source>
-        <translation type="unfinished"></translation>
+        <translation>إنجليزي</translation>
     </message>
     <message>
         <source>German</source>
-        <translation type="unfinished"></translation>
+        <translation>الألمانية</translation>
     </message>
     <message>
         <source>French</source>
-        <translation type="unfinished"></translation>
+        <translation>فرنسي</translation>
     </message>
     <message>
         <source>Spanish</source>
-        <translation type="unfinished"></translation>
+        <translation>الأسبانية</translation>
     </message>
     <message>
         <source>Italian</source>
-        <translation type="unfinished"></translation>
+        <translation>الايطالية</translation>
     </message>
     <message>
         <source>Polish</source>
-        <translation type="unfinished"></translation>
+        <translation>البولندية</translation>
     </message>
     <message>
         <source>Romanian</source>
-        <translation type="unfinished"></translation>
+        <translation>الرومانية</translation>
     </message>
     <message>
         <source>Japanese</source>
-        <translation type="unfinished"></translation>
+        <translation>اليابانية</translation>
     </message>
     <message>
         <source>Swedish</source>
-        <translation type="unfinished"></translation>
+        <translation>السويدية</translation>
     </message>
     <message>
         <source>Hungarian</source>
-        <translation type="unfinished"></translation>
+        <translation>الهنغارية</translation>
     </message>
     <message>
         <source>Hebrew</source>
-        <translation type="unfinished"></translation>
+        <translation>العبرية</translation>
     </message>
     <message>
         <source>Portuguese</source>
-        <translation type="unfinished"></translation>
+        <translation>البرتغالية</translation>
     </message>
     <message>
         <source>Turkish</source>
-        <translation type="unfinished"></translation>
+        <translation>التركية</translation>
     </message>
     <message>
         <source>Ukrainian</source>
-        <translation type="unfinished"></translation>
+        <translation>الأوكرانية</translation>
     </message>
     <message>
         <source>Russian</source>
-        <translation type="unfinished"></translation>
+        <translation>الروسية</translation>
     </message>
     <message>
         <source>Czech</source>
-        <translation type="unfinished"></translation>
+        <translation>التشيكية</translation>
     </message>
     <message>
         <source>Catalan</source>
-        <translation type="unfinished"></translation>
+        <translation>الكاتالوينية</translation>
     </message>
     <message>
         <source>maximum undo operations:</source>
-        <translation type="unfinished"></translation>
+        <translation>أقصى قدر من التراجع عن العمليات :</translation>
     </message>
     <message>
         <source>text editor:</source>
-        <translation type="unfinished"></translation>
+        <translation>محرر نصوص :</translation>
     </message>
     <message>
         <source>start wiring when clicking open node:</source>
-        <translation type="unfinished"></translation>
+        <translation>عند النقر على بدء الأسلاك مفتوحة العقدة :</translation>
     </message>
     <message>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>إعدادات</translation>
     </message>
     <message>
         <source>Colors for Syntax Highlighting:</source>
-        <translation type="unfinished"></translation>
+        <translation>ألوان لتسليط الضوء على النحو :</translation>
     </message>
     <message>
         <source>Comment</source>
-        <translation type="unfinished"></translation>
+        <translation>التعليق</translation>
     </message>
     <message>
         <source>String</source>
-        <translation type="unfinished"></translation>
+        <translation>سلسلة</translation>
     </message>
     <message>
         <source>Integer Number</source>
-        <translation type="unfinished"></translation>
+        <translation>Integer Number</translation>
     </message>
     <message>
         <source>Real Number</source>
-        <translation type="unfinished"></translation>
+        <translation>Real Number</translation>
     </message>
     <message>
         <source>Character</source>
-        <translation type="unfinished"></translation>
+        <translation>Character</translation>
     </message>
     <message>
         <source>Data Type</source>
-        <translation type="unfinished"></translation>
+        <translation>نوع البيانات</translation>
     </message>
     <message>
         <source>Attribute</source>
-        <translation type="unfinished"></translation>
+        <translation> خاصِّيَّة</translation>
     </message>
     <message>
         <source>VHDL Editor</source>
-        <translation type="unfinished"></translation>
+        <translation>ملفات VHDL</translation>
     </message>
     <message>
         <source>Register filename extensions here in order to
 open files with an appropriate program.</source>
-        <translation type="unfinished"></translation>
+        <translation>تسجيل اسم الملف تمديد هنا ل 
+فتح ملفات برنامج مناسب.</translation>
     </message>
     <message>
         <source>Suffix</source>
-        <translation type="unfinished"></translation>
+        <translation>لاحقة</translation>
     </message>
     <message>
         <source>Program</source>
-        <translation type="unfinished"></translation>
+        <translation>البرنامج</translation>
     </message>
     <message>
         <source>Suffix:</source>
-        <translation type="unfinished"></translation>
+        <translation>لاحقة :</translation>
     </message>
     <message>
         <source>Program:</source>
-        <translation type="unfinished"></translation>
+        <translation>البرنامج :</translation>
     </message>
     <message>
         <source>Set</source>
-        <translation type="unfinished"></translation>
+        <translation>يعين</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>يزيل</translation>
     </message>
     <message>
         <source>File Types</source>
-        <translation type="unfinished"></translation>
+        <translation>نوع الملف</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>موافق</translation>
     </message>
     <message>
         <source>Apply</source>
-        <translation type="unfinished"></translation>
+        <translation>طبق</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>إلغاء</translation>
     </message>
     <message>
         <source>Default Values</source>
-        <translation type="unfinished"></translation>
+        <translation>القيمة الافتراضية </translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>خطأ</translation>
     </message>
     <message>
         <source>This suffix is already registered!</source>
-        <translation type="unfinished"></translation>
+        <translation>هذه الاحقة سجلت من قبل!</translation>
     </message>
     <message>
         <source>Arabic</source>
@@ -9270,831 +9535,838 @@ open files with an appropriate program.</source>
     <name>QucsTranscalc</name>
     <message>
         <source>Load</source>
-        <translation type="unfinished"></translation>
+        <translation>حمل</translation>
     </message>
     <message>
         <source>&amp;Load</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;حمل</translation>
     </message>
     <message>
         <source>Save</source>
-        <translation type="unfinished"></translation>
+        <translation> حفظ</translation>
     </message>
     <message>
         <source>&amp;Save</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp; حفظ</translation>
     </message>
     <message>
         <source>Options</source>
-        <translation type="unfinished"></translation>
+        <translation>خيارات</translation>
     </message>
     <message>
         <source>&amp;Options</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;خيارات</translation>
     </message>
     <message>
         <source>Quit</source>
-        <translation type="unfinished"></translation>
+        <translation>خروج</translation>
     </message>
     <message>
         <source>&amp;Quit</source>
-        <translation type="unfinished"></translation>
+        <translation>خروج&amp;</translation>
     </message>
     <message>
         <source>Copy to Clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>نسخة إلى الحافظة</translation>
     </message>
     <message>
         <source>&amp;Copy to Clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>نسخة إلى الحافظة&amp;</translation>
     </message>
     <message>
         <source>Analyze</source>
-        <translation type="unfinished"></translation>
+        <translation>تحليل</translation>
     </message>
     <message>
         <source>&amp;Analyze</source>
-        <translation type="unfinished"></translation>
+        <translation>تحليل&amp;</translation>
     </message>
     <message>
         <source>Synthesize</source>
-        <translation type="unfinished"></translation>
+        <translation>توليف</translation>
     </message>
     <message>
         <source>&amp;Synthesize</source>
-        <translation type="unfinished"></translation>
+        <translation>توليف&amp;</translation>
     </message>
     <message>
         <source>Help</source>
-        <translation type="unfinished"></translation>
+        <translation>مساعدة</translation>
     </message>
     <message>
         <source>&amp;Help</source>
-        <translation type="unfinished"></translation>
+        <translation>مساعدة&amp;</translation>
     </message>
     <message>
         <source>About</source>
-        <translation type="unfinished"></translation>
+        <translation>حول</translation>
     </message>
     <message>
         <source>&amp;File</source>
-        <translation type="unfinished"></translation>
+        <translation>‏‏&amp;ملف</translation>
     </message>
     <message>
         <source>&amp;Execute</source>
-        <translation type="unfinished"></translation>
+        <translation>تنفيذ&amp;</translation>
     </message>
     <message>
         <source>Transmission Line Type</source>
-        <translation type="unfinished"></translation>
+        <translation>انتقال نوع الخط</translation>
     </message>
     <message>
         <source>Microstrip Line</source>
-        <translation type="unfinished"></translation>
+        <translation>خط Microstrip</translation>
     </message>
     <message>
         <source>Coplanar Waveguide</source>
-        <translation type="unfinished"></translation>
+        <translation>متحد المستوى الدليل الموجي</translation>
     </message>
     <message>
         <source>Grounded Coplanar</source>
-        <translation type="unfinished"></translation>
+        <translation>أسس متحد المستوى</translation>
     </message>
     <message>
         <source>Rectangular Waveguide</source>
-        <translation type="unfinished"></translation>
+        <translation>الدليل الموجي مستطيلة</translation>
     </message>
     <message>
         <source>Coaxial Line</source>
-        <translation type="unfinished"></translation>
+        <translation>متحد المحور الخط</translation>
     </message>
     <message>
         <source>Coupled Microstrip</source>
-        <translation type="unfinished"></translation>
+        <translation>إلى جانب Microstrip</translation>
     </message>
     <message>
         <source>Substrate Parameters</source>
-        <translation type="unfinished"></translation>
+        <translation>الركازة المعلمات</translation>
     </message>
     <message>
         <source>Component Parameters</source>
-        <translation type="unfinished"></translation>
+        <translation> خصائص العنصر</translation>
     </message>
     <message>
         <source>Physical Parameters</source>
-        <translation type="unfinished"></translation>
+        <translation>خصائص الفزيائية</translation>
     </message>
     <message>
         <source>Derive Electrical Parameters</source>
-        <translation type="unfinished"></translation>
+        <translation>خصائص مَمَرّ الكهربائية </translation>
     </message>
     <message>
         <source>Compute Physical Parameters</source>
-        <translation type="unfinished"></translation>
+        <translation>خصائص الحسابات الفيزائية</translation>
     </message>
     <message>
         <source>Electrical Parameters</source>
-        <translation type="unfinished"></translation>
+        <translation>خصائص الكهربائية</translation>
     </message>
     <message>
         <source>Calculated Results</source>
-        <translation type="unfinished"></translation>
+        <translation>حساب النتائج</translation>
     </message>
     <message>
         <source>Ready.</source>
-        <translation type="unfinished"></translation>
+        <translation>جاهز.</translation>
     </message>
     <message>
         <source>ErEff</source>
-        <translation type="unfinished"></translation>
+        <translation>ErEff</translation>
     </message>
     <message>
         <source>Conductor Losses</source>
-        <translation type="unfinished"></translation>
+        <translation>خسائر الموصل </translation>
     </message>
     <message>
         <source>Dielectric Losses</source>
-        <translation type="unfinished"></translation>
+        <translation>خسائر العازلة</translation>
     </message>
     <message>
         <source>Skin Depth</source>
-        <translation type="unfinished"></translation>
+        <translation> عمق السَطِيحَة</translation>
     </message>
     <message>
         <source>TE-Modes</source>
-        <translation type="unfinished"></translation>
+        <translation>TE-Modes</translation>
     </message>
     <message>
         <source>TM-Modes</source>
-        <translation type="unfinished"></translation>
+        <translation>TM-Modes</translation>
     </message>
     <message>
         <source>ErEff Even</source>
-        <translation type="unfinished"></translation>
+        <translation>ErEff Even</translation>
     </message>
     <message>
         <source>ErEff Odd</source>
-        <translation type="unfinished"></translation>
+        <translation>ErEff Odd</translation>
     </message>
     <message>
         <source>Conductor Losses Even</source>
-        <translation type="unfinished"></translation>
+        <translation>حدث خسائر الموصل </translation>
     </message>
     <message>
         <source>Conductor Losses Odd</source>
-        <translation type="unfinished"></translation>
+        <translation>خسائر الموصل شاذ</translation>
     </message>
     <message>
         <source>Dielectric Losses Even</source>
-        <translation type="unfinished"></translation>
+        <translation>حدث خسائر العازلة </translation>
     </message>
     <message>
         <source>Dielectric Losses Odd</source>
-        <translation type="unfinished"></translation>
+        <translation>خسائر العازلة شاذ </translation>
     </message>
     <message>
         <source>Relative Permittivity</source>
-        <translation type="unfinished"></translation>
+        <translation>النسبية Permittivity</translation>
     </message>
     <message>
         <source>Relative Permeability</source>
-        <translation type="unfinished"></translation>
+        <translation>النفاذية النسبية</translation>
     </message>
     <message>
         <source>Height of Substrate</source>
-        <translation type="unfinished"></translation>
+        <translation>ذروة الركيزة</translation>
     </message>
     <message>
         <source>Height of Box Top</source>
-        <translation type="unfinished"></translation>
+        <translation>ذروة أعلى مربع</translation>
     </message>
     <message>
         <source>Strip Thickness</source>
-        <translation type="unfinished"></translation>
+        <translation>سمك الشريط </translation>
     </message>
     <message>
         <source>Strip Conductivity</source>
-        <translation type="unfinished"></translation>
+        <translation>سمك الموصل </translation>
     </message>
     <message>
         <source>Dielectric Loss Tangent</source>
-        <translation type="unfinished"></translation>
+        <translation>خسائر العازلة المتلامس</translation>
     </message>
     <message>
         <source>Conductor Roughness</source>
-        <translation type="unfinished"></translation>
+        <translation>خشونة الموصل </translation>
     </message>
     <message>
         <source>Frequency</source>
-        <translation type="unfinished"></translation>
+        <translation>تردد</translation>
     </message>
     <message>
         <source>Line Width</source>
-        <translation type="unfinished"></translation>
+        <translation>خط العرض </translation>
     </message>
     <message>
         <source>Line Length</source>
-        <translation type="unfinished"></translation>
+        <translation>طول الخط </translation>
     </message>
     <message>
         <source>Characteristic Impedance</source>
-        <translation type="unfinished"></translation>
+        <translation>خصائص المقاومة</translation>
     </message>
     <message>
         <source>Electrical Length</source>
-        <translation type="unfinished"></translation>
+        <translation>طول الكهربائي</translation>
     </message>
     <message>
         <source>Gap Width</source>
-        <translation type="unfinished"></translation>
+        <translation>عرض الفجوة </translation>
     </message>
     <message>
         <source>Conductivity of Metal</source>
-        <translation type="unfinished"></translation>
+        <translation>التوصيل للمعادن</translation>
     </message>
     <message>
         <source>Magnetic Loss Tangent</source>
-        <translation type="unfinished"></translation>
+        <translation>فقدان المغناطيسية الظل</translation>
     </message>
     <message>
         <source>Width of Waveguide</source>
-        <translation type="unfinished"></translation>
+        <translation>عرض الدليل الموجي</translation>
     </message>
     <message>
         <source>Height of Waveguide</source>
-        <translation type="unfinished"></translation>
+        <translation>ذروة الدليل الموجي</translation>
     </message>
     <message>
         <source>Waveguide Length</source>
-        <translation type="unfinished"></translation>
+        <translation>طول الدليل الموجي </translation>
     </message>
     <message>
         <source>Inner Diameter</source>
-        <translation type="unfinished"></translation>
+        <translation>القطر الداخلي</translation>
     </message>
     <message>
         <source>Outer Diameter</source>
-        <translation type="unfinished"></translation>
+        <translation>القطر الخارجي</translation>
     </message>
     <message>
         <source>Length</source>
-        <translation type="unfinished"></translation>
+        <translation>الطول</translation>
     </message>
     <message>
         <source>Even-Mode Impedance</source>
-        <translation type="unfinished"></translation>
+        <translation> حدث المقاومة</translation>
     </message>
     <message>
         <source>Odd-Mode Impedance</source>
-        <translation type="unfinished"></translation>
+        <translation>الأسلوب الفردي للمقاومة</translation>
     </message>
     <message>
         <source>Selected for Calculation</source>
-        <translation type="unfinished"></translation>
+        <translation>اختيرت للحساب</translation>
     </message>
     <message>
         <source>Check item for Calculation</source>
-        <translation type="unfinished"></translation>
+        <translation>مراجعة لحساب هذا البند</translation>
     </message>
     <message>
         <source>About...</source>
-        <translation type="unfinished"></translation>
+        <translation>حول...</translation>
     </message>
     <message>
         <source>Transmission Line Calculator for Qucs
 </source>
-        <translation type="unfinished"></translation>
+        <translation>نقل الخط حاسبة لQucs
+</translation>
     </message>
     <message>
         <source>Copyright (C) 2001 by Gopal Narayanan
 </source>
-        <translation type="unfinished"></translation>
+        <translation>حقوق الطبع محفوظة 2001 من قبل قوبال نارايانان 
+</translation>
     </message>
     <message>
         <source>Copyright (C) 2002 by Claudio Girardi
 </source>
-        <translation type="unfinished"></translation>
+        <translation>حقوق الطبع محفوظة 2006  من قبل كلوديو جراردي
+</translation>
     </message>
     <message>
         <source>Copyright (C) 2005 by Stefan Jahn
 </source>
-        <translation type="unfinished"></translation>
+        <translation>حقوق الطبع محفوظة  2005 من قبل ستيفان جاهن 
+</translation>
     </message>
     <message>
         <source>Copyright (C) 2008 by Michael Margraf
 </source>
-        <translation type="unfinished"></translation>
+        <translation>حقوق الطبع محفوظة  2008 من قبل مايكل مرغراف
+</translation>
     </message>
     <message>
         <source>Values are consistent.</source>
-        <translation type="unfinished"></translation>
+        <translation>قيم ثابتة.</translation>
     </message>
     <message>
         <source>Values are inconsistent.</source>
-        <translation type="unfinished"></translation>
+        <translation>قيم  غير ثابتة.</translation>
     </message>
     <message>
         <source>Loading file...</source>
-        <translation type="unfinished"></translation>
+        <translation>تحميل الملف ...</translation>
     </message>
     <message>
         <source>Transcalc File</source>
-        <translation type="unfinished"></translation>
+        <translation>ملف Transcalc</translation>
     </message>
     <message>
         <source>Enter a Filename</source>
-        <translation type="unfinished"></translation>
+        <translation>أدخل اسم الملف</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>خطأ</translation>
     </message>
     <message>
         <source>Cannot load file:</source>
-        <translation type="unfinished"></translation>
+        <translation>لا يمكن تحميل الملف :</translation>
     </message>
     <message>
         <source>Loading aborted.</source>
-        <translation type="unfinished"></translation>
+        <translation>إجهاض التحميل.</translation>
     </message>
     <message>
         <source>Saving file...</source>
-        <translation type="unfinished"></translation>
+        <translation>حفظ الملف...</translation>
     </message>
     <message>
         <source>Cannot save file:</source>
-        <translation type="unfinished"></translation>
+        <translation>لا يمكن حفظ الملف... :</translation>
     </message>
     <message>
         <source>Saving aborted.</source>
-        <translation type="unfinished"></translation>
+        <translation>إجهاض الحفظ.</translation>
     </message>
     <message>
         <source>Schematic copied into clipboard.</source>
-        <translation type="unfinished"></translation>
+        <translation>نسخة إلى الحافظة تخطيطي.</translation>
     </message>
     <message>
         <source>Transmission line type not available.</source>
-        <translation type="unfinished"></translation>
+        <translation>خط نقل من نوع غير متوفرة.</translation>
     </message>
 </context>
 <context>
     <name>SaveDialog</name>
     <message>
         <source>Modified Files</source>
-        <translation type="unfinished"></translation>
+        <translation>تعديل ملفات</translation>
     </message>
     <message>
         <source>Untitled</source>
-        <translation type="unfinished"></translation>
+        <translation>بدون عنوان</translation>
     </message>
     <message>
         <source>Save the modified files</source>
-        <translation type="unfinished"></translation>
+        <translation>انقاذ تعديل الملفات</translation>
     </message>
     <message>
         <source>Select files to be saved</source>
-        <translation type="unfinished"></translation>
+        <translation>اختر صورة لإنقاذ</translation>
     </message>
     <message>
         <source>Abort Closing</source>
-        <translation type="unfinished"></translation>
+        <translation>إحباط الختامي</translation>
     </message>
     <message>
         <source>Don&apos;t Save</source>
-        <translation type="unfinished"></translation>
+        <translation>لا لإنقاذ</translation>
     </message>
     <message>
         <source>Save Selected</source>
-        <translation type="unfinished"></translation>
+        <translation>إنقاذ مختارة</translation>
     </message>
 </context>
 <context>
     <name>Schematic</name>
     <message>
         <source>Title</source>
-        <translation type="unfinished"></translation>
+        <translation>العنوان</translation>
     </message>
     <message>
         <source>Drawn By:</source>
-        <translation type="unfinished"></translation>
+        <translation>تعادل :</translation>
     </message>
     <message>
         <source>Date:</source>
-        <translation type="unfinished"></translation>
+        <translation>التاريخ :</translation>
     </message>
     <message>
         <source>Revision:</source>
-        <translation type="unfinished"></translation>
+        <translation>مراجعة :</translation>
     </message>
     <message>
         <source>ERROR: Cannot create library file &quot;%s&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>ERROR: Cannot create library file &quot;%s&quot;.</translation>
     </message>
 </context>
 <context>
     <name>SearchDialog</name>
     <message>
         <source>Text to search for</source>
-        <translation type="unfinished"></translation>
+        <translation>للبحث عن نص</translation>
     </message>
     <message>
         <source>Text to replace with</source>
-        <translation type="unfinished"></translation>
+        <translation>ليحل محل النص مع</translation>
     </message>
     <message>
         <source>Ask before replacing</source>
-        <translation type="unfinished"></translation>
+        <translation>نسأل قبل ان يحل محل</translation>
     </message>
     <message>
         <source>From cursor position</source>
-        <translation type="unfinished"></translation>
+        <translation>من موضع المؤشر</translation>
     </message>
     <message>
         <source>Case sensitive</source>
-        <translation type="unfinished"></translation>
+        <translation>القضية الحساسة</translation>
     </message>
     <message>
         <source>Whole words only</source>
-        <translation type="unfinished"></translation>
+        <translation>كلمات فقط لكامل</translation>
     </message>
     <message>
         <source>Search backwards</source>
-        <translation type="unfinished"></translation>
+        <translation>البحث الوراء</translation>
     </message>
     <message>
         <source>Search</source>
-        <translation type="unfinished"></translation>
+        <translation>البحث</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>إلغاء</translation>
     </message>
     <message>
         <source>Replace Text</source>
-        <translation type="unfinished"></translation>
+        <translation>استبدال النص</translation>
     </message>
     <message>
         <source>Search Text</source>
-        <translation type="unfinished"></translation>
+        <translation>البحث عن النص</translation>
     </message>
     <message>
         <source>Replace...</source>
-        <translation type="unfinished"></translation>
+        <translation>استبدال...</translation>
     </message>
     <message>
         <source>Replace occurrence ?</source>
-        <translation type="unfinished"></translation>
+        <translation> استبدال الموجود? </translation>
     </message>
     <message>
         <source>Search...</source>
-        <translation type="unfinished"></translation>
+        <translation>البحث عن...</translation>
     </message>
     <message>
         <source>Search string not found!</source>
-        <translation type="unfinished"></translation>
+        <translation>بحث سلسلة غير موجود!</translation>
     </message>
     <message>
         <source>Replaced %1 occurrences!</source>
-        <translation type="unfinished"></translation>
+        <translation> استبدال %1  الموجود!</translation>
     </message>
     <message>
         <source>The search result contains all components whose
 name contains the search string. All libraries
 are included in the search.</source>
-        <translation type="unfinished"></translation>
+        <translation>نتيجة البحث تعطي جميع مكونات 
+اسم يتضمن النص المطلوب. البحث 
+ليشمل جميع المكتبات.</translation>
     </message>
     <message>
         <source>Search string:</source>
-        <translation type="unfinished"></translation>
+        <translation>كلمة البحث :</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>غلق</translation>
     </message>
     <message>
         <source>Search result</source>
-        <translation type="unfinished"></translation>
+        <translation>نتيجة البحث</translation>
     </message>
 </context>
 <context>
     <name>SettingsDialog</name>
     <message>
         <source>Edit File Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>تعديل خصائص الملف</translation>
     </message>
     <message>
         <source>Data Display:</source>
-        <translation type="unfinished"></translation>
+        <translation>عرض البيانات :</translation>
     </message>
     <message>
         <source>Data Set:</source>
-        <translation type="unfinished"></translation>
+        <translation>مجموعة من البيانات :</translation>
     </message>
     <message>
         <source>open data display after simulation</source>
-        <translation type="unfinished"></translation>
+        <translation>عرض البيانات المفتوحة بعد المحاكاة</translation>
     </message>
     <message>
         <source>Simulation</source>
-        <translation type="unfinished"></translation>
+        <translation>المحاكاة </translation>
     </message>
     <message>
         <source>show Grid</source>
-        <translation type="unfinished"></translation>
+        <translation>إظهر الشبكة</translation>
     </message>
     <message>
         <source>horizontal Grid:</source>
-        <translation type="unfinished"></translation>
+        <translation>  الشبكة أفقية :</translation>
     </message>
     <message>
         <source>vertical Grid:</source>
-        <translation type="unfinished"></translation>
+        <translation>شبكة العمودية :</translation>
     </message>
     <message>
         <source>Grid</source>
-        <translation type="unfinished"></translation>
+        <translation>الشبكة</translation>
     </message>
     <message>
         <source>no Frame</source>
-        <translation type="unfinished"></translation>
+        <translation>الإطار غير موجود</translation>
     </message>
     <message>
         <source>DIN A5 landscape</source>
-        <translation type="unfinished"></translation>
+        <translation>DIN A5 landscape</translation>
     </message>
     <message>
         <source>DIN A5 portrait</source>
-        <translation type="unfinished"></translation>
+        <translation>DIN A5 portrait</translation>
     </message>
     <message>
         <source>DIN A4 landscape</source>
-        <translation type="unfinished"></translation>
+        <translation>DIN A4 landscape</translation>
     </message>
     <message>
         <source>DIN A4 portrait</source>
-        <translation type="unfinished"></translation>
+        <translation>DIN A4 portrait</translation>
     </message>
     <message>
         <source>DIN A3 landscape</source>
-        <translation type="unfinished"></translation>
+        <translation>DIN A3 landscape</translation>
     </message>
     <message>
         <source>DIN A3 portrait</source>
-        <translation type="unfinished"></translation>
+        <translation>DIN A3 portrait</translation>
     </message>
     <message>
         <source>Letter landscape</source>
-        <translation type="unfinished"></translation>
+        <translation>Letter landscape</translation>
     </message>
     <message>
         <source>Letter portrait</source>
-        <translation type="unfinished"></translation>
+        <translation>Letter portrait</translation>
     </message>
     <message>
         <source>Frame</source>
-        <translation type="unfinished"></translation>
+        <translation>الإطار</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>موافق</translation>
     </message>
     <message>
         <source>Apply</source>
-        <translation type="unfinished"></translation>
+        <translation>طبق</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>إلغاء</translation>
     </message>
 </context>
 <context>
     <name>SimMessage</name>
     <message>
         <source>Qucs Simulation Messages</source>
-        <translation type="unfinished"></translation>
+        <translation>محاكاة Qucs رسائل</translation>
     </message>
     <message>
         <source>Progress:</source>
-        <translation type="unfinished"></translation>
+        <translation>تقدم :</translation>
     </message>
     <message>
         <source>Errors and Warnings:</source>
-        <translation type="unfinished"></translation>
+        <translation>الاخطاء والانذارات :</translation>
     </message>
     <message>
         <source>Goto display page</source>
-        <translation type="unfinished"></translation>
+        <translation>عرض صفحة</translation>
     </message>
     <message>
         <source>Abort simulation</source>
-        <translation type="unfinished"></translation>
+        <translation>إحباط المحاكاة</translation>
     </message>
     <message>
         <source>Starting new simulation on %1 at %2</source>
-        <translation type="unfinished"></translation>
+        <translation>المحاكاة الجديدة ابتداء من 1 في المئة عن 2 ٪</translation>
     </message>
     <message>
         <source>ERROR: Simulator is still running!</source>
-        <translation type="unfinished"></translation>
+        <translation>خطأ : لا يزال يركض المحاكاة!</translation>
     </message>
     <message>
         <source>creating netlist... </source>
-        <translation type="unfinished"></translation>
+        <translation>إنشاء netlist...</translation>
     </message>
     <message>
         <source>ERROR: Cannot write netlist file!</source>
-        <translation type="unfinished"></translation>
+        <translation>خطأ : لا يمكن الكتابة netlist الملف!</translation>
     </message>
     <message>
         <source>ERROR: Cannot open SPICE file &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>خطأ : لا يمكن فتح التوابل الملف &quot;٪ 1&quot;.</translation>
     </message>
     <message>
         <source>ERROR: Cannot start QucsConv!</source>
-        <translation type="unfinished"></translation>
+        <translation>! QucsConv خطأ : لايمكن بدأ </translation>
     </message>
     <message>
         <source>done.</source>
-        <translation type="unfinished"></translation>
+        <translation>فعل.</translation>
     </message>
     <message>
         <source>ERROR: Cannot start simulator!</source>
-        <translation type="unfinished"></translation>
+        <translation>خطأ : لا يمكن البدء في محاكاة!</translation>
     </message>
     <message>
         <source>Close window</source>
-        <translation type="unfinished"></translation>
+        <translation>إغلاق النافذة</translation>
     </message>
     <message>
         <source>Simulation ended on %1 at %2</source>
-        <translation type="unfinished"></translation>
+        <translation>المحاكاة وانتهت في 1 ٪ 2 ٪</translation>
     </message>
     <message>
         <source>Ready.</source>
-        <translation type="unfinished"></translation>
+        <translation>جاهز.</translation>
     </message>
     <message>
         <source>Errors occurred during simulation on %1 at %2</source>
-        <translation type="unfinished"></translation>
+        <translation>الأخطاء التي وقعت خلال المحاكاة على ٪ 1 في ٪ 2</translation>
     </message>
     <message>
         <source>Aborted.</source>
-        <translation type="unfinished"></translation>
+        <translation>أجهضت.</translation>
     </message>
     <message>
         <source>Output:
 -------</source>
-        <translation type="unfinished"></translation>
+        <translation>يحرر:------</translation>
     </message>
     <message>
         <source>Errors:
 -------</source>
-        <translation type="unfinished"></translation>
+        <translation>خطأ:-------</translation>
     </message>
 </context>
 <context>
     <name>SpiceDialog</name>
     <message>
         <source>Edit SPICE Component Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>تغيير خصائص عنصر من  Spice</translation>
     </message>
     <message>
         <source>Name:</source>
-        <translation type="unfinished"></translation>
+        <translation>الاسم :</translation>
     </message>
     <message>
         <source>File:</source>
-        <translation type="unfinished"></translation>
+        <translation>ملف:</translation>
     </message>
     <message>
         <source>Browse</source>
-        <translation type="unfinished"></translation>
+        <translation>تصفح</translation>
     </message>
     <message>
         <source>Edit</source>
-        <translation type="unfinished"></translation>
+        <translation>تحرير</translation>
     </message>
     <message>
         <source>show file name in schematic</source>
-        <translation type="unfinished"></translation>
+        <translation>عرض اسم الملف في المخطط</translation>
     </message>
     <message>
         <source>include SPICE simulations</source>
-        <translation type="unfinished"></translation>
+        <translation>تشمل عمليات Spice</translation>
     </message>
     <message>
         <source>preprocessor</source>
-        <translation type="unfinished"></translation>
+        <translation>معد</translation>
     </message>
     <message>
         <source>SPICE net nodes:</source>
-        <translation type="unfinished"></translation>
+        <translation>Spice عقدة  :</translation>
     </message>
     <message>
         <source>Add &gt;&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>إضافة&gt;&gt;</translation>
     </message>
     <message>
         <source>&lt;&lt; Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;&lt;إزالة</translation>
     </message>
     <message>
         <source>Component ports:</source>
-        <translation type="unfinished"></translation>
+        <translation>العنصر الموانئ :</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>موافق</translation>
     </message>
     <message>
         <source>Apply</source>
-        <translation type="unfinished"></translation>
+        <translation>طبق</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>إلغاء</translation>
     </message>
     <message>
         <source>SPICE netlist</source>
-        <translation type="unfinished"></translation>
+        <translation>SPICE netlist</translation>
     </message>
     <message>
         <source>All Files</source>
-        <translation type="unfinished"></translation>
+        <translation>جميع الملفات</translation>
     </message>
     <message>
         <source>Select a file</source>
-        <translation type="unfinished"></translation>
+        <translation>إختر ملف</translation>
     </message>
     <message>
         <source>Info</source>
-        <translation type="unfinished"></translation>
+        <translation>معلومات</translation>
     </message>
     <message>
         <source>Preprocessing SPICE file &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>تجهيز ملف  SPICE &quot;&quot;%1 .</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>خطأ</translation>
     </message>
     <message>
         <source>Cannot save preprocessed SPICE file &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>تجهيز ملف  SPICE &quot;&quot;%1 .</translation>
     </message>
     <message>
         <source>Cannot execute &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>لا نستطيع تنفيذ  &quot;%1.</translation>
     </message>
     <message>
         <source>SPICE Preprocessor Error</source>
-        <translation type="unfinished"></translation>
+        <translation>SPICE Preprocessor Error</translation>
     </message>
     <message>
         <source>Converting SPICE file &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>تحويل ملف  SPICE &quot;1%&quot;.</translation>
     </message>
     <message>
         <source>QucsConv Error</source>
-        <translation type="unfinished"></translation>
+        <translation>خطأ QucsConv</translation>
     </message>
 </context>
 <context>
     <name>SweepDialog</name>
     <message>
         <source>Bias Points</source>
-        <translation type="unfinished"></translation>
+        <translation>التحيز نقطة</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>غلق</translation>
     </message>
 </context>
 <context>
     <name>SymbolWidget</name>
     <message>
         <source>Symbol:</source>
-        <translation type="unfinished"></translation>
+        <translation>رمز :</translation>
     </message>
     <message>
         <source>! Drag n&apos;Drop me !</source>
-        <translation type="unfinished"></translation>
+        <translation>! Drag n&apos;Drop me !</translation>
     </message>
 </context>
 <context>
     <name>TextDoc</name>
     <message>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>خطأ</translation>
     </message>
     <message>
         <source>There is no selection!</source>
-        <translation type="unfinished"></translation>
+        <translation>ليس هناك اختيار!</translation>
     </message>
     <message>
         <source>Page %1 of %2</source>
-        <translation type="unfinished"></translation>
+        <translation>صفحة ٪ 1 من 2 ٪</translation>
     </message>
 </context>
 </TS>

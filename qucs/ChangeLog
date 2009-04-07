@@ -1,3 +1,13 @@
+2009-04-07  Stefan Jahn  <stefan@lkcc.org>
+
+	* textdoc.cpp (createPopupMenu): Added "Document properties" to
+	the right click popup menu in text editor files.
+
+	* schematic_file.cpp (createSubNetlistPlain): Using generic()
+	definitions for subcircuit parameters in VHDL.
+
+	* qucs_ar.ts: Updated arabic translations.  Thanks to Chabane!
+
 2009-03-30  Stefan Jahn  <stefan@lkcc.org>
 
 	* diagrams/tabdiagram.cpp (calcDiagram): Fixed a segfault bug
