@@ -32,6 +32,7 @@
 #include <qmessagebox.h>
 #include <qpaintdevicemetrics.h>
 #include <qfont.h>
+#include <qpopupmenu.h>
 
 
 TextDoc::TextDoc(QucsApp *App_, const QString& Name_) : QucsDoc(App_, Name_)
@@ -190,6 +191,14 @@ void TextDoc::slotSetChanged()
 
   App->undo->setEnabled(isUndoAvailable());
   App->redo->setEnabled(isRedoAvailable());
+}
+
+// ---------------------------------------------------
+QPopupMenu *TextDoc::createPopupMenu( const QPoint &pos )
+{
+   QPopupMenu *popup = QTextEdit::createPopupMenu( pos );
+   App->fileSettings->addTo(popup);
+   return popup;
 }
 
 // ---------------------------------------------------
