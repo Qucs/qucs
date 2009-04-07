@@ -9067,7 +9067,7 @@ O bibliotece QT firmy Trolltech</translation>
     </message>
     <message>
         <source>Portuguese by Luciano Franca</source>
-        <translation>portugalskie Luciano Franca</translation>
+        <translation type="obsolete">portugalskie Luciano Franca</translation>
     </message>
     <message>
         <source>Spanish by Jose L. Redrejo Rodriguez</source>
@@ -9578,6 +9578,14 @@ wyśrodkowuje w pionie wybrane elementy</translation>
         <source>Import/Export Data
 
 Convert data file to various file formats</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Portuguese by Luciano Franca and Helio de Sousa</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Arabic by Chabane Noureddine</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
