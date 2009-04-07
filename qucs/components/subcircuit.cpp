@@ -220,9 +220,20 @@ QString Subcircuit::netlist()
 QString Subcircuit::vhdlCode(int)
 {
   QString f = properFileName(Props.first()->Value);
-  QString s = "  " + Name + ": entity Sub_" + properName(f) + " port map (";
+  QString s = "  " + Name + ": entity Sub_" + properName(f);
+
+  // output all user defined properties
+  Property *pr = Props.next();
+  if (pr) {
+    s += " generic map (";
+    s += pr->Value;
+    for(pr = Props.next(); pr != 0; pr = Props.next())
+      s += ", " + pr->Value;
+    s += ")";
+  }
 
   // output all node names
+  s += " port map (";
   Port *pp = Ports.first();
   if(pp)  s += pp->Connection->Name;
   for(pp = Ports.next(); pp != 0; pp = Ports.next())

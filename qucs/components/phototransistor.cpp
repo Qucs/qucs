@@ -116,7 +116,7 @@ Element * phototransistor::info(QString& Name, char * &BitmapFile, bool getNewOn
 
 void phototransistor::createSymbol()
 {
-  Arcs.append(new Arc(-25,-20, 40, 40,  0,20*360,QPen(QPen::red,2)));
+  Arcs.append(new Arc(-25,-20, 40, 40,  0,16*360,QPen(QPen::red,2)));
   Lines.append(new Line(-10,-15,-10, 15,QPen(QPen::darkBlue,3)));
   Lines.append(new Line(-30,  0,-10,  0,QPen(QPen::darkBlue,2)));
   Lines.append(new Line(-10, -5,  0,-15,QPen(QPen::darkBlue,2)));
