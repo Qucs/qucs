@@ -1,3 +1,10 @@
+2009-04-07  Stefan Jahn  <stefan@lkcc.org>
+
+	* subcircuit.cpp (vhdlCode): Added subcircuit parameters in VHDL
+	using the generic map() feature.
+
+	* phototransistor.cpp (createSymbol): Fixed symbol painting.
+
 2009-04-01  Stefan Jahn  <stefan@lkcc.org>
 
 	* rlcg.cpp (RLCG): Added new transmission line defined by RLCG

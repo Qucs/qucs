@@ -56,6 +56,8 @@ public:
   bool loadSettings(void);
   bool saveSettings(void);
 
+  QPopupMenu *createPopupMenu( const QPoint & );
+
 public slots:
   void slotCursorPosChanged(int, int);
   void slotSetChanged();
