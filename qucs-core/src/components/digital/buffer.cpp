@@ -1,7 +1,7 @@
 /*
  * buffer.cpp - logical buffer class implementation
  *
- * Copyright (C) 2008 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2008, 2009 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: buffer.cpp,v 1.1 2008-11-08 20:05:54 ela Exp $
+ * $Id: buffer.cpp,v 1.2 2009-04-07 19:48:31 ela Exp $
  *
  */
 
@@ -48,6 +48,8 @@ void buffer::calcDerivatives (void) {
 PROP_REQ [] = {
   { "V", PROP_REAL, { 1, PROP_NO_STR }, PROP_POS_RANGE }, PROP_NO_PROP };
 PROP_OPT [] = {
-  { "t", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE }, PROP_NO_PROP };
+  { "t", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+  { "TR", PROP_REAL, { 10, PROP_NO_STR }, PROP_RNGII (1, 100) },
+  PROP_NO_PROP };
 struct define_t buffer::cirdef =
   { "Buf", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_NONLINEAR, PROP_DEF };

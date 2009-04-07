@@ -1,7 +1,7 @@
 /*
  * nor.cpp - logical nor class implementation
  *
- * Copyright (C) 2005, 2008 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2005, 2008, 2009 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: nor.cpp,v 1.7 2008-10-07 20:15:33 ela Exp $
+ * $Id: nor.cpp,v 1.8 2009-04-07 19:48:31 ela Exp $
  *
  */
 
@@ -61,7 +61,9 @@ void logicnor::calcDerivatives (void) {
 PROP_REQ [] = {
   { "V", PROP_REAL, { 1, PROP_NO_STR }, PROP_POS_RANGE }, PROP_NO_PROP };
 PROP_OPT [] = {
-  { "t", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE }, PROP_NO_PROP };
+  { "t", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+  { "TR", PROP_REAL, { 10, PROP_NO_STR }, PROP_RNGII (1, 100) },
+  PROP_NO_PROP };
 struct define_t logicnor::cirdef =
   { "NOR",
     PROP_NODES, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_NONLINEAR, PROP_DEF };
