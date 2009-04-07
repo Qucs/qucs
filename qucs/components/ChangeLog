@@ -1,5 +1,8 @@
 2009-04-07  Stefan Jahn  <stefan@lkcc.org>
 
+	* component.cpp: Added transfer function scaling factor property
+	to digital models.
+
 	* subcircuit.cpp (vhdlCode): Added subcircuit parameters in VHDL
 	using the generic map() feature.
 
