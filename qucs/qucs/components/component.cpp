@@ -790,8 +790,8 @@ bool Component::load(const QString& _s)
       if(p1->Description.isEmpty())
         Props.remove();    // remove if allocated in vain
 
-      if(counts < 58)     // backward compatible
-        if(Model == "Diode") {
+      if(Model == "Diode") {
+	if(counts < 58) {  // backward compatible
           counts >>= 1;
           p1 = Props.at(counts-1);
           for(; p1 != 0; p1 = Props.current()) {
@@ -806,6 +806,34 @@ bool Component::load(const QString& _s)
           p1->Value = Props.at(11)->Value;
           Props.current()->Value = "0";
         }
+      }
+      else if(Model == "AND" || Model == "NAND" || Model == "NOR" ||
+	      Model == "OR" ||  Model == "XNOR"|| Model == "XOR") {
+	if(counts < 10) {   // backward compatible
+          counts >>= 1;
+          p1 = Props.at(counts);
+          for(; p1 != 0; p1 = Props.current()) {
+            if(counts-- < 4)
+              break;
+            n = Props.prev()->Value;
+            p1->Value = n;
+          }
+          Props.current()->Value = "10";
+	}
+      }
+      else if(Model == "Buf" || Model == "Inv") {
+	if(counts < 8) {   // backward compatible
+          counts >>= 1;
+          p1 = Props.at(counts);
+          for(; p1 != 0; p1 = Props.current()) {
+            if(counts-- < 3)
+              break;
+            n = Props.prev()->Value;
+            p1->Value = n;
+          }
+          Props.current()->Value = "10";
+	}
+      }
 
       return true;
     }
@@ -1221,6 +1249,8 @@ GateComponent::GateComponent()
 		QObject::tr("voltage of high level")));
   Props.append(new Property("t", "0", false,
 		QObject::tr("delay time")));
+  Props.append(new Property("TR", "10", false,
+		QObject::tr("transfer function scaling factor")));
 
   // this must be the last property in the list !!!
   Props.append(new Property("Symbol", "old", false,
@@ -1238,6 +1268,8 @@ QString GateComponent::netlist()
 
   // output all properties
   Property *p = Props.at(1);
+  s += " " + p->Name + "=\"" + p->Value + "\"";
+  p = Props.next();
   s += " " + p->Name + "=\"" + p->Value + "\"";
   p = Props.next();
   s += " " + p->Name + "=\"" + p->Value + "\"\n";
