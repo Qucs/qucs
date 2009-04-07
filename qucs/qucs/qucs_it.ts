@@ -9441,7 +9441,7 @@ Informazioni su Qt di Trolltech</translation>
     </message>
     <message>
         <source>Portuguese by Luciano Franca</source>
-        <translation>Portoghese di Luciano Franca</translation>
+        <translation type="obsolete">Portoghese di Luciano Franca</translation>
     </message>
     <message>
         <source>Spanish by Jose L. Redrejo Rodriguez</source>
@@ -9949,6 +9949,14 @@ Centra verticalmente gli elementi selezionati</translation>
         <source>Import/Export Data
 
 Convert data file to various file formats</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Portuguese by Luciano Franca and Helio de Sousa</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Arabic by Chabane Noureddine</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

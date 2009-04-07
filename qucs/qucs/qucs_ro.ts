@@ -8877,10 +8877,6 @@ Despre Qt la Trolltech</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Portuguese by Luciano Franca</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Spanish by Jose L. Redrejo Rodriguez</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9334,6 +9330,14 @@ Center vertically selected elements</source>
         <source>Import/Export Data
 
 Convert data file to various file formats</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Portuguese by Luciano Franca and Helio de Sousa</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Arabic by Chabane Noureddine</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

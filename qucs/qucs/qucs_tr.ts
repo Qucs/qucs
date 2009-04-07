@@ -8761,7 +8761,7 @@ Trolltech tarafından Qt hakkında</translation>
     </message>
     <message>
         <source>Portuguese by Luciano Franca</source>
-        <translation>Portekizce, Luciano Franca tarafından</translation>
+        <translation type="obsolete">Portekizce, Luciano Franca tarafından</translation>
     </message>
     <message>
         <source>Spanish by Jose L. Redrejo Rodriguez</source>
@@ -9280,6 +9280,14 @@ Seçili bileşenleri dikey olarak ortala</translation>
         <source>Import/Export Data
 
 Convert data file to various file formats</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Portuguese by Luciano Franca and Helio de Sousa</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Arabic by Chabane Noureddine</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
