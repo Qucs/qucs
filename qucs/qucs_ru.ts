@@ -644,23 +644,23 @@
     </message>
     <message>
         <source>Digital Simulation Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Настройки цифрового моделирования</translation>
     </message>
     <message>
         <source>Simulation</source>
-        <translation type="unfinished">Моделирование</translation>
+        <translation>Моделирование</translation>
     </message>
     <message>
         <source>Precompile Module</source>
-        <translation type="unfinished"></translation>
+        <translation>Предкомпиляция модуля</translation>
     </message>
     <message>
         <source>Libraries:</source>
-        <translation type="unfinished"></translation>
+        <translation>Библиотеки:</translation>
     </message>
     <message>
         <source>Library Name:</source>
-        <translation type="unfinished">Имя библиотеки:</translation>
+        <translation>Имя библиотеки:</translation>
     </message>
 </context>
 <context>
@@ -1149,63 +1149,63 @@
     </message>
     <message>
         <source>Convert Data File...</source>
-        <translation type="unfinished"></translation>
+        <translation>Преобразовать файл данных...</translation>
     </message>
     <message>
         <source>File specification</source>
-        <translation type="unfinished"></translation>
+        <translation>Спецификация файла</translation>
     </message>
     <message>
         <source>Input File:</source>
-        <translation type="unfinished"></translation>
+        <translation>Входной файл:</translation>
     </message>
     <message>
         <source>Output Data:</source>
-        <translation type="unfinished"></translation>
+        <translation>Выходные данные:</translation>
     </message>
     <message>
         <source>Qucs dataset</source>
-        <translation type="unfinished"></translation>
+        <translation>Набор данных Qucs</translation>
     </message>
     <message>
         <source>Touchstone</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>CSV</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Qucs library</source>
-        <translation type="unfinished"></translation>
+        <translation>Библиотека Qucs</translation>
     </message>
     <message>
         <source>Convert</source>
-        <translation type="unfinished"></translation>
+        <translation>Преобразовать</translation>
     </message>
     <message>
         <source>Qucs dataset files</source>
-        <translation type="unfinished"></translation>
+        <translation>Файлы с набором данных Qucs</translation>
     </message>
     <message>
         <source>SPICE files</source>
-        <translation type="unfinished">файлы SPICE</translation>
+        <translation>Файлы SPICE</translation>
     </message>
     <message>
         <source>Any file</source>
-        <translation type="unfinished"></translation>
+        <translation>Любой файл</translation>
     </message>
     <message>
         <source>Running command line:</source>
-        <translation type="unfinished"></translation>
+        <translation>Запуск командной строки:</translation>
     </message>
     <message>
         <source>Qucs netlist</source>
-        <translation type="unfinished"></translation>
+        <translation>Схема Qucs</translation>
     </message>
     <message>
         <source>Successfully converted file!</source>
-        <translation type="unfinished"></translation>
+        <translation>Успешно преобразован файл!</translation>
     </message>
 </context>
 <context>
@@ -6343,923 +6343,923 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>MESFET verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation>Verilog-устройство МеП полевой транзистор</translation>
     </message>
     <message>
         <source>model selector</source>
-        <translation type="unfinished"></translation>
+        <translation>выбор модели</translation>
     </message>
     <message>
         <source>pinch-off voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>напряжение отсечки</translation>
     </message>
     <message>
         <source>A/(V*V)</source>
-        <translation type="unfinished"></translation>
+        <translation>А/(В*В)</translation>
     </message>
     <message>
         <source>saturation voltage parameter</source>
-        <translation type="unfinished"></translation>
+        <translation>напряжение насыщения</translation>
     </message>
     <message>
         <source>channel length modulation parameter</source>
-        <translation type="unfinished"></translation>
+        <translation>параметр модуляции длины канала</translation>
     </message>
     <message>
         <source>doping profile parameter</source>
-        <translation type="unfinished"></translation>
+        <translation>параметр распределения легирующей примеси</translation>
     </message>
     <message>
         <source>power law exponent parameter</source>
-        <translation type="unfinished"></translation>
+        <translation>параметр степенной зависимости</translation>
     </message>
     <message>
         <source>power feedback parameter</source>
-        <translation type="unfinished"></translation>
+        <translation>параметр обратной связи по мощности</translation>
     </message>
     <message>
         <source>1/W</source>
-        <translation type="unfinished"></translation>
+        <translation>1/Вт</translation>
     </message>
     <message>
         <source>maximum junction voltage limit before capacitance limiting</source>
-        <translation type="unfinished"></translation>
+        <translation>максимальное напряжение на переходе перед емкостным ограничением</translation>
     </message>
     <message>
         <source>capacitance saturation transition voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>напряжение перехода при емкостном насыщении</translation>
     </message>
     <message>
         <source>capacitance threshold transition voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>напряжение перехода при емкостном пороге</translation>
     </message>
     <message>
         <source>dc drain pull coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>коэффициент нагрузки стока по постоянному току</translation>
     </message>
     <message>
         <source>subthreshold conductance parameter</source>
-        <translation type="unfinished"></translation>
+        <translation>параметр подпороговой проводимости</translation>
     </message>
     <message>
         <source>diode saturation current</source>
-        <translation type="unfinished"></translation>
+        <translation>ток насыщения диода</translation>
     </message>
     <message>
         <source>diode emission coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>коэффициент эмиссии диода</translation>
     </message>
     <message>
         <source>built-in gate potential</source>
-        <translation type="unfinished"></translation>
+        <translation>Потенциал поля затвора</translation>
     </message>
     <message>
         <source>gate-drain junction reverse bias breakdown voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>обратное напряжение пробоя перехода затвор-сток</translation>
     </message>
     <message>
         <source>diode saturation current temperature coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>температурный коэффициент тока насыщения диода</translation>
     </message>
     <message>
         <source>transit time under gate</source>
-        <translation type="unfinished"></translation>
+        <translation>время переноса заряда под затвором</translation>
     </message>
     <message>
         <source>channel resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>сопротивление канала</translation>
     </message>
     <message>
         <source>area factor</source>
-        <translation type="unfinished"></translation>
+        <translation>фактор поверхности</translation>
     </message>
     <message>
         <source>energy gap</source>
-        <translation type="unfinished"></translation>
+        <translation>ширина запрещенной зоны</translation>
     </message>
     <message>
         <source>eV</source>
-        <translation type="unfinished"></translation>
+        <translation>эВ</translation>
     </message>
     <message>
         <source>zero bias gate-drain junction capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>емкость затвор-сток при нулевом смещении</translation>
     </message>
     <message>
         <source>zero bias gate-source junction capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>емкость затвор-исток при нулевом смещении</translation>
     </message>
     <message>
         <source>zero bias drain-source junction capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>емкость сток-исток при нулевом смещении</translation>
     </message>
     <message>
         <source>Beta temperature coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>Температурный коээфициент Beta</translation>
     </message>
     <message>
         <source>Alpha temperature coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>температурный коэффициент Alpha</translation>
     </message>
     <message>
         <source>Gamma temperature coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>температурный коэффициент Gamma</translation>
     </message>
     <message>
         <source>Subthreshold slope gate parameter</source>
-        <translation type="unfinished"></translation>
+        <translation>Подпороговый наклон характеристики затвора</translation>
     </message>
     <message>
         <source>subthreshold drain pull parameter</source>
-        <translation type="unfinished"></translation>
+        <translation>подпороговый параметр нагрузки стока</translation>
     </message>
     <message>
         <source>gate-source current equation selector</source>
-        <translation type="unfinished"></translation>
+        <translation>выбор уравнения для тока затвор-исток</translation>
     </message>
     <message>
         <source>gate-drain current equation selector</source>
-        <translation type="unfinished"></translation>
+        <translation>выбор уравнения для тока затвор-сток</translation>
     </message>
     <message>
         <source>gate-source charge equation selector</source>
-        <translation type="unfinished"></translation>
+        <translation>выбор уравнения для заряда на переходе затвор-исток</translation>
     </message>
     <message>
         <source>gate-drain charge equation selector</source>
-        <translation type="unfinished"></translation>
+        <translation>выбор уравнения для заряда на переходе затвор-сток</translation>
     </message>
     <message>
         <source>drain-source charge equation selector</source>
-        <translation type="unfinished"></translation>
+        <translation>выбор уравнения для заряда на переходе сток-исток</translation>
     </message>
     <message>
         <source>Ohms</source>
-        <translation type="unfinished"></translation>
+        <translation>Ом</translation>
     </message>
     <message>
         <source>drain resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>сопротивление стока</translation>
     </message>
     <message>
         <source>source resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>сопротивление истока</translation>
     </message>
     <message>
         <source>gate resistance temperature coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>температурный коэффициент сопротивления затвора</translation>
     </message>
     <message>
         <source>1/Celsius</source>
-        <translation type="unfinished"></translation>
+        <translation>1/°C</translation>
     </message>
     <message>
         <source>drain resistance temperature coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>температурный коэффициент сопротивления стока</translation>
     </message>
     <message>
         <source>source resistance temperature coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>температурный коэффициент сопротивления истока</translation>
     </message>
     <message>
         <source>gate reverse breakdown currrent</source>
-        <translation type="unfinished"></translation>
+        <translation>обратный ток пробоя затвора</translation>
     </message>
     <message>
         <source>forward bias slope resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>динамическое сопротивление в прямом направлении</translation>
     </message>
     <message>
         <source>breakdown slope resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>динамическое сопротивление при пробое</translation>
     </message>
     <message>
         <source>shot noise coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>коэффициент дробового шума</translation>
     </message>
     <message>
         <source>MESFET</source>
-        <translation type="unfinished"></translation>
+        <translation>МеП</translation>
     </message>
     <message>
         <source>long = 1, short = 2</source>
-        <translation type="unfinished"></translation>
+        <translation>длинный = 1, короткий = 2</translation>
     </message>
     <message>
         <source>length parameter</source>
-        <translation type="unfinished"></translation>
+        <translation>Длина</translation>
     </message>
     <message>
         <source>m</source>
-        <translation type="unfinished"></translation>
+        <translation>м</translation>
     </message>
     <message>
         <source>Width parameter</source>
-        <translation type="unfinished"></translation>
+        <translation>Ширина</translation>
     </message>
     <message>
         <source>parallel multiple device number</source>
-        <translation type="unfinished"></translation>
+        <translation>число параллельных устройств</translation>
     </message>
     <message>
         <source>series multiple device number</source>
-        <translation type="unfinished"></translation>
+        <translation>число последовательных устройств</translation>
     </message>
     <message>
         <source>gate oxide capacitance per unit area</source>
-        <translation type="unfinished"></translation>
+        <translation>емкость затвор-окисел на единицу площади</translation>
     </message>
     <message>
         <source>F/m**2</source>
-        <translation type="unfinished"></translation>
+        <translation>Ф/м**2</translation>
     </message>
     <message>
         <source>metallurgical junction depth</source>
-        <translation type="unfinished"></translation>
+        <translation>глубина технологического перехода</translation>
     </message>
     <message>
         <source>channel width correction</source>
-        <translation type="unfinished"></translation>
+        <translation>коррекция ширины канала</translation>
     </message>
     <message>
         <source>channel length correction</source>
-        <translation type="unfinished"></translation>
+        <translation>коррекция длины канала</translation>
     </message>
     <message>
         <source>long channel threshold voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>пороговое напряжение длинного канала</translation>
     </message>
     <message>
         <source>body effect parameter</source>
-        <translation type="unfinished"></translation>
+        <translation>параметр влияния подложки</translation>
     </message>
     <message>
         <source>V**(1/2)</source>
-        <translation type="unfinished"></translation>
+        <translation>В**(1/2)</translation>
     </message>
     <message>
         <source>bulk Fermi potential</source>
-        <translation type="unfinished"></translation>
+        <translation>объемный потенциал Ферми</translation>
     </message>
     <message>
         <source>A/V**2</source>
-        <translation type="unfinished"></translation>
+        <translation>А/В**2</translation>
     </message>
     <message>
         <source>mobility reduction coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>коэффициент снижения подвижности</translation>
     </message>
     <message>
         <source>mobility coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>коэффициент подвижности</translation>
     </message>
     <message>
         <source>V/m</source>
-        <translation type="unfinished"></translation>
+        <translation>В/м</translation>
     </message>
     <message>
         <source>longitudinal critical field</source>
-        <translation type="unfinished"></translation>
+        <translation>продольное критическое поле</translation>
     </message>
     <message>
         <source>depletion length coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>коэффициент длины обеднения</translation>
     </message>
     <message>
         <source>narrow-channel effect coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>коэффициент влияния узкого канала</translation>
     </message>
     <message>
         <source>reverse short channel charge density</source>
-        <translation type="unfinished"></translation>
+        <translation>обратная плотность заряда короткого канала</translation>
     </message>
     <message>
         <source>A*s/m**2</source>
-        <translation type="unfinished"></translation>
+        <translation>А*с/м**2</translation>
     </message>
     <message>
         <source>characteristic length</source>
-        <translation type="unfinished"></translation>
+        <translation>характеристическая длина</translation>
     </message>
     <message>
         <source>threshold voltage temperature coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>температурный коэффициент порогового напряжения</translation>
     </message>
     <message>
         <source>mobility temperature coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>температурный коэффициент подвижности</translation>
     </message>
     <message>
         <source>Longitudinal critical field temperature exponent</source>
-        <translation type="unfinished"></translation>
+        <translation>Температурный показатель продольного критического поля</translation>
     </message>
     <message>
         <source>Ibb temperature coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>температурный коэффициент Ibb</translation>
     </message>
     <message>
         <source>heavily doped diffusion length</source>
-        <translation type="unfinished"></translation>
+        <translation>длина диффузии при сильном легировании</translation>
     </message>
     <message>
         <source>drain/source diffusion sheet resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>сопротивление диффузионного слоя сток/исток</translation>
     </message>
     <message>
         <source>Ohm/square</source>
-        <translation type="unfinished"></translation>
+        <translation>Ом/квадрат</translation>
     </message>
     <message>
         <source>source contact resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>контактное сопротивление истока</translation>
     </message>
     <message>
         <source>drain contact resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>контактное сопротивление стока</translation>
     </message>
     <message>
         <source>gate to source overlap capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>емкость перекрытия затвора и истока</translation>
     </message>
     <message>
         <source>F/m</source>
-        <translation type="unfinished"></translation>
+        <translation>Ф/м</translation>
     </message>
     <message>
         <source>gate to drain overlap capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>емкость перекрытия затвора и стока</translation>
     </message>
     <message>
         <source>gate to bulk overlap capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>емкость перекрытия затвора и подложки</translation>
     </message>
     <message>
         <source>first impact ionization coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>первый коэффициент ударной ионизации</translation>
     </message>
     <message>
         <source>1/m</source>
-        <translation type="unfinished"></translation>
+        <translation>1/м</translation>
     </message>
     <message>
         <source>second impact ionization coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>второй коэффициент ударной ионизации</translation>
     </message>
     <message>
         <source>saturation voltage factor for impact ionization</source>
-        <translation type="unfinished"></translation>
+        <translation>фактор напряжения насыщения для ударной ионизации</translation>
     </message>
     <message>
         <source>area related theshold voltage mismatch parameter</source>
-        <translation type="unfinished"></translation>
+        <translation>параметр несоответствия порогового напряжения, связанный с поверхностью</translation>
     </message>
     <message>
         <source>V*m</source>
-        <translation type="unfinished"></translation>
+        <translation>В*м</translation>
     </message>
     <message>
         <source>area related gain mismatch parameter</source>
-        <translation type="unfinished"></translation>
+        <translation>параметр несоответствия усиления, связанный с поверхностью</translation>
     </message>
     <message>
         <source>area related body effect mismatch parameter</source>
-        <translation type="unfinished"></translation>
+        <translation>параметр несоответствия эффекта подложки, связанный с поверхностью</translation>
     </message>
     <message>
         <source>sqrt(V)*m</source>
-        <translation type="unfinished"></translation>
+        <translation>sqrt(В)*м</translation>
     </message>
     <message>
         <source>diode relative area</source>
-        <translation type="unfinished"></translation>
+        <translation>относительная площадь диода</translation>
     </message>
     <message>
         <source>EPFL-EKV NMOS 2.6</source>
-        <translation type="unfinished"></translation>
+        <translation>nМОП EPFL-EKV 2.6</translation>
     </message>
     <message>
         <source>EPFL-EKV PMOS 2.6</source>
-        <translation type="unfinished"></translation>
+        <translation>pМОП EPFL-EKV 2.6</translation>
     </message>
     <message>
         <source>noise figure</source>
-        <translation type="unfinished"></translation>
+        <translation>фактор шума</translation>
     </message>
     <message>
         <source>widest side</source>
-        <translation type="unfinished"></translation>
+        <translation>самая широкая сторона</translation>
     </message>
     <message>
         <source>shortest side</source>
-        <translation type="unfinished"></translation>
+        <translation>самая короткая сторона</translation>
     </message>
     <message>
         <source>Rectangular Waveguide</source>
-        <translation type="unfinished">Прямоугольный волновод</translation>
+        <translation>Прямоугольный волновод</translation>
     </message>
     <message>
         <source>HICUM Level 0 v1.2 verilog device</source>
-        <translation type="unfinished">HICUM Level 0 v1.2 Verilog-модель</translation>
+        <translation>HICUM Level 0 v1.2 Verilog-модель</translation>
     </message>
     <message>
         <source>reverse Early voltage (normalization volt.)</source>
-        <translation type="unfinished"></translation>
+        <translation>напряжение Эрли в обратном направлении (напр. нормализации)</translation>
     </message>
     <message>
         <source>npn HICUM L0 v1.2</source>
-        <translation type="unfinished">npn HICUM L0 v1.2</translation>
+        <translation>npn HICUM L0 v1.2</translation>
     </message>
     <message>
         <source>pnp HICUM L0 v1.2</source>
-        <translation type="unfinished"></translation>
+        <translation>pnp HICUM L0 v1.2</translation>
     </message>
     <message>
         <source>charge partition parameter</source>
-        <translation type="unfinished"></translation>
+        <translation>параметр разделения заряда</translation>
     </message>
     <message>
         <source>HICUM Level 2 v2.23 verilog device</source>
-        <translation type="unfinished">HICUM Level 2 v2.23 Verilog-модель</translation>
+        <translation>HICUM Level 2 v2.23 Verilog-модель</translation>
     </message>
     <message>
         <source>HICUM L2 v2.23</source>
-        <translation type="unfinished">HICUM L2 v2.23</translation>
+        <translation>HICUM L2 v2.23</translation>
     </message>
     <message>
         <source>Photodiode verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation>Verilog-модель фотодиода</translation>
     </message>
     <message>
         <source>photodiode emission coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>коэффициент эмиссии фотодиода</translation>
     </message>
     <message>
         <source>series lead resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>последовательное сопротивление выводов</translation>
     </message>
     <message>
         <source>diode dark current</source>
-        <translation type="unfinished"></translation>
+        <translation>темновой ток диода</translation>
     </message>
     <message>
         <source>responsivity</source>
-        <translation type="unfinished"></translation>
+        <translation>чувствительность</translation>
     </message>
     <message>
         <source>A/W</source>
-        <translation type="unfinished"></translation>
+        <translation>А/Вт</translation>
     </message>
     <message>
         <source>shunt resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>шунтирующее сопротивление</translation>
     </message>
     <message>
         <source>quantum efficiency</source>
-        <translation type="unfinished"></translation>
+        <translation>квантовая эффективность</translation>
     </message>
     <message>
         <source>light wavelength</source>
-        <translation type="unfinished"></translation>
+        <translation>длина волны света</translation>
     </message>
     <message>
         <source>nm</source>
-        <translation type="unfinished"></translation>
+        <translation>нм</translation>
     </message>
     <message>
         <source>responsivity calculator selector</source>
-        <translation type="unfinished"></translation>
+        <translation>настройка калькулятора чувствительности</translation>
     </message>
     <message>
         <source>Photodiode</source>
-        <translation type="unfinished"></translation>
+        <translation>Фотодиод</translation>
     </message>
     <message>
         <source>material parameter for temperature model</source>
-        <translation type="unfinished"></translation>
+        <translation>параметр материала для температурной модели</translation>
     </message>
     <message>
         <source>EPFL-EKV MOS 2.6 verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation>Verilog-модель EPFL-EKV МОП 2.6</translation>
     </message>
     <message>
         <source>logical buffer</source>
-        <translation type="unfinished"></translation>
+        <translation>логический буфер</translation>
     </message>
     <message>
         <source>Buffer</source>
-        <translation type="unfinished"></translation>
+        <translation>Буфер</translation>
     </message>
     <message>
         <source>flag for turning on base related critical current</source>
-        <translation type="unfinished"></translation>
+        <translation>флаг для включения критического тока для базы</translation>
     </message>
     <message>
         <source>Smoothing factor for the d.c. injection width</source>
-        <translation type="unfinished"></translation>
+        <translation>Коэффициент сглаживания для ширины инжекции при постоянном токе</translation>
     </message>
     <message>
         <source>BE charge built-in voltage for d.c. transfer current</source>
-        <translation type="unfinished"></translation>
+        <translation>Потенциал заряда перехода БЗ для постояного тока переноса заряда</translation>
     </message>
     <message>
         <source>charge BE exponent factor for d.c. transfer current</source>
-        <translation type="unfinished"></translation>
+        <translation>показатель степени БЭ-заряда для постояного тока переноса заряда</translation>
     </message>
     <message>
         <source>TC of iqf</source>
-        <translation type="unfinished"></translation>
+        <translation>Температурный коэффициент iqf</translation>
     </message>
     <message>
         <source>Exponent factor for temperature dependent thermal resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>Множитель в показателе степени для зависимости теплового сопротивления от температуры</translation>
     </message>
     <message>
         <source>Exponent factor for emitter transit time</source>
-        <translation type="unfinished"></translation>
+        <translation>Показатель степени для времени переноса заряда эмиттера</translation>
     </message>
     <message>
         <source>Smoothing factor for current dependence</source>
-        <translation type="unfinished"></translation>
+        <translation>Коэффициент сглаживания для токовой зависимости</translation>
     </message>
     <message>
         <source>Vto temperature coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>Температурный коэффициент Vt0</translation>
     </message>
     <message>
         <source>BE capacitance ratio (maximum to zero-bias value) for d.c. transfer current</source>
-        <translation type="unfinished"></translation>
+        <translation>Отношение емкости БЭ (максимальной к значению при нулевом смещении) для постоянного тока переноса заряда</translation>
     </message>
     <message>
         <source>forward d.c. high-injection roll-off current</source>
-        <translation type="unfinished"></translation>
+        <translation>прямой постоянный ток спада при сильной инжекции</translation>
     </message>
     <message>
         <source>output delay</source>
-        <translation type="unfinished"></translation>
+        <translation>задержка на выходе</translation>
     </message>
     <message>
         <source>cross coupled gate delay</source>
-        <translation type="unfinished"></translation>
+        <translation>задержка затвора с перекрестными связями</translation>
     </message>
     <message>
         <source>voltage level</source>
-        <translation type="unfinished"></translation>
+        <translation>уровень напряжения</translation>
     </message>
     <message>
         <source>time delay</source>
-        <translation type="unfinished"></translation>
+        <translation>временная задержка</translation>
     </message>
     <message>
         <source>logic 0 voltage level</source>
-        <translation type="unfinished"></translation>
+        <translation>уровень напряжения логического 0</translation>
     </message>
     <message>
         <source>logic 1 voltage level</source>
-        <translation type="unfinished"></translation>
+        <translation>уровень напряжения логического 1</translation>
     </message>
     <message>
         <source>pad output value</source>
-        <translation type="unfinished"></translation>
+        <translation>выходное значение генератора испытательных сигналов</translation>
     </message>
     <message>
         <source>4x2 andor verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation>verilog-модель 4x2 и-или</translation>
     </message>
     <message>
         <source>4x2 AndOr</source>
-        <translation type="unfinished"></translation>
+        <translation>4x2 И-Или</translation>
     </message>
     <message>
         <source>4x3 andor verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation>verilog-модель 4x3 и-или</translation>
     </message>
     <message>
         <source>4x3 AndOr</source>
-        <translation type="unfinished"></translation>
+        <translation>4x3 И-Или</translation>
     </message>
     <message>
         <source>4x4 andor verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation>verilog-модель 4x4 и-или</translation>
     </message>
     <message>
         <source>4x4 AndOr</source>
-        <translation type="unfinished"></translation>
+        <translation>4x4 И-Или</translation>
     </message>
     <message>
         <source>4bit binary to grey converter verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation>verilog-модель преобразователя 4-битного двоичного кода в код Грея</translation>
     </message>
     <message>
         <source>4Bit Bin2Grey</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>1bit comparator verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation>verilog-модель 1-битного компаратора</translation>
     </message>
     <message>
         <source>1Bit Comparator</source>
-        <translation type="unfinished"></translation>
+        <translation>1-битный компаратор</translation>
     </message>
     <message>
         <source>2bit comparator verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation>verilog-модель 2-битного компаратора</translation>
     </message>
     <message>
         <source>2Bit Comparator</source>
-        <translation type="unfinished"></translation>
+        <translation>2-битный компаратор</translation>
     </message>
     <message>
         <source>4bit comparator verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation>verilog-модель 4-битного компаратора</translation>
     </message>
     <message>
         <source>4Bit Comparator</source>
-        <translation type="unfinished"></translation>
+        <translation>4-битный компаратор</translation>
     </message>
     <message>
         <source>D flip flop with set and reset verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation>verilog-модель D-триггера с установкой и сбросом</translation>
     </message>
     <message>
         <source>D-FlipFlop w/ SR</source>
-        <translation type="unfinished"></translation>
+        <translation>D-триггер с SR</translation>
     </message>
     <message>
         <source>data voltage level shifter (digital to analogue) verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation>verilog-модель схемы сдвига уровня (цифрового в аналоговый)</translation>
     </message>
     <message>
         <source>D2A Level Shifter</source>
-        <translation type="unfinished"></translation>
+        <translation>Схема сдвига уровня Ц-А</translation>
     </message>
     <message>
         <source>data voltage level shifter (analogue to digital) verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation>verilog-модель схемы сдвига уровня (аналогового в цифровой)</translation>
     </message>
     <message>
         <source>A2D Level Shifter</source>
-        <translation type="unfinished"></translation>
+        <translation>Схема сдвига уровня А-Ц</translation>
     </message>
     <message>
         <source>2to4 demultiplexer verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation>verilog-модель демультиплексора 2на4</translation>
     </message>
     <message>
         <source>2to4 Demux</source>
-        <translation type="unfinished"></translation>
+        <translation>Демультиплексор 2на4</translation>
     </message>
     <message>
         <source>3to8 demultiplexer verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation>verilog-модель демультиплексора 3на8</translation>
     </message>
     <message>
         <source>3to8 Demux</source>
-        <translation type="unfinished"></translation>
+        <translation>Демультиплексор 3на8</translation>
     </message>
     <message>
         <source>4to16 demultiplexer verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation>verilog-модель демультиплексора 4на16</translation>
     </message>
     <message>
         <source>4to16 Demux</source>
-        <translation type="unfinished"></translation>
+        <translation>Демультиплексор 4на16</translation>
     </message>
     <message>
         <source>1bit full adder verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation>verilog-модель 1-битного полного сумматора</translation>
     </message>
     <message>
         <source>1Bit FullAdder</source>
-        <translation type="unfinished"></translation>
+        <translation>1-битный полный сумматор</translation>
     </message>
     <message>
         <source>2bit full adder verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation>verilog-модель 2-битного полного сумматора</translation>
     </message>
     <message>
         <source>2Bit FullAdder</source>
-        <translation type="unfinished"></translation>
+        <translation>2-битный полный сумматор</translation>
     </message>
     <message>
         <source>gated D latch verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation>verilog-модель управляемой D-защелки</translation>
     </message>
     <message>
         <source>Gated D-Latch</source>
-        <translation type="unfinished"></translation>
+        <translation>Управляемая D-защелка</translation>
     </message>
     <message>
         <source>4bit grey to binary converter verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation>verilog-модель преобразователя 4-битного кода Грея в двоичный</translation>
     </message>
     <message>
         <source>4Bit Grey2Bin</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>1bit half adder verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation>verilog-модель 1-битного полусумматора</translation>
     </message>
     <message>
         <source>1Bit HalfAdder</source>
-        <translation type="unfinished"></translation>
+        <translation>1-битный полусумматор</translation>
     </message>
     <message>
         <source>4bit highest priority encoder (binary form) verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation>verilog-модель 4-битного шифратора по наивысшему приоритету (двоичная форма)</translation>
     </message>
     <message>
         <source>4Bit HPRI-Bin</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>jk flip flop with set and reset verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation>verilog-модель JK триггера с установкой и сбросом </translation>
     </message>
     <message>
         <source>JK-FlipFlop w/ SR</source>
-        <translation type="unfinished"></translation>
+        <translation>JK триггер с SR</translation>
     </message>
     <message>
         <source>logic 0 verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation>verilog-модель логического 0</translation>
     </message>
     <message>
         <source>Logic 0</source>
-        <translation type="unfinished"></translation>
+        <translation>Логический 0</translation>
     </message>
     <message>
         <source>logic 1 verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation>verilog-модель логической 1</translation>
     </message>
     <message>
         <source>Logic 1</source>
-        <translation type="unfinished"></translation>
+        <translation>Логическая 1</translation>
     </message>
     <message>
         <source>2to1 multiplexer verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation>verilog-модель мультиплексора 2в1</translation>
     </message>
     <message>
         <source>2to1 Mux</source>
-        <translation type="unfinished"></translation>
+        <translation>Мультиплексор 2в1</translation>
     </message>
     <message>
         <source>4to1 multiplexer verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation>verilog-модель мультиплексора 4в1</translation>
     </message>
     <message>
         <source>4to1 Mux</source>
-        <translation type="unfinished"></translation>
+        <translation>Мультиплексор 4в1</translation>
     </message>
     <message>
         <source>8to1 multiplexer verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation>verilog-модель мультиплексора 8в1</translation>
     </message>
     <message>
         <source>8to1 Mux</source>
-        <translation type="unfinished"></translation>
+        <translation>Мультиплексор 8в1</translation>
     </message>
     <message>
         <source>2bit pattern generator verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation>verilog-модель 2-битного генератора кодов</translation>
     </message>
     <message>
         <source>2Bit Pattern</source>
-        <translation type="unfinished"></translation>
+        <translation>2-битный генератор кодов</translation>
     </message>
     <message>
         <source>3bit pattern generator verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation>verilog-модель 3-битного генератора кодов</translation>
     </message>
     <message>
         <source>3Bit Pattern</source>
-        <translation type="unfinished"></translation>
+        <translation>3-битный генератор кодов</translation>
     </message>
     <message>
         <source>4bit pattern generator verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation>verilog-модель 4-битного генератора кодов</translation>
     </message>
     <message>
         <source>4Bit Pattern</source>
-        <translation type="unfinished"></translation>
+        <translation>4-битный генератор кодов</translation>
     </message>
     <message>
         <source>T flip flop with set and reset verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation>verilog-модель T-триггера с установкой и сбросом</translation>
     </message>
     <message>
         <source>T-FlipFlop w/ SR</source>
-        <translation type="unfinished"></translation>
+        <translation>T-триггер с SR</translation>
     </message>
     <message>
         <source>transfer function high scaling factor</source>
-        <translation type="unfinished"></translation>
+        <translation>крупномасштабный коэффициент передаточной функции</translation>
     </message>
     <message>
         <source>transfer function scaling factor</source>
-        <translation type="unfinished"></translation>
+        <translation>масштабный коэффициент передаточной функции</translation>
     </message>
     <message>
         <source>cross coupled gate transfer function high scaling factor</source>
-        <translation type="unfinished"></translation>
+        <translation>верхний масштабный коэффициент передаточной функции затвора с перекрестными связями</translation>
     </message>
     <message>
         <source>cross coupled gate transfer function low scaling factor</source>
-        <translation type="unfinished"></translation>
+        <translation>нижний масштабный коэффициент передаточной функции затвора с перекрестными связями</translation>
     </message>
     <message>
         <source>microstrip radial stub</source>
-        <translation type="unfinished"></translation>
+        <translation>микрополосковый радиальный шлейф</translation>
     </message>
     <message>
         <source>inner radius</source>
-        <translation type="unfinished"></translation>
+        <translation>внутренний радиус</translation>
     </message>
     <message>
         <source>outer radius</source>
-        <translation type="unfinished"></translation>
+        <translation>внешний радиус</translation>
     </message>
     <message>
         <source>stub angle</source>
-        <translation type="unfinished"></translation>
+        <translation>угол наклона шлейфа</translation>
     </message>
     <message>
         <source>Microstrip Radial Stub</source>
-        <translation type="unfinished"></translation>
+        <translation>Микрополосковый радиальный шлейф</translation>
     </message>
     <message>
         <source>Phototransistor verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation>Verilog-модель фототранзистора</translation>
     </message>
     <message>
         <source>dark current</source>
-        <translation type="unfinished"></translation>
+        <translation>темновой ток</translation>
     </message>
     <message>
         <source>collector series resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>последовательное сопротивление коллектора</translation>
     </message>
     <message>
         <source>emitter series resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>последовательное сопротивление эмиттера</translation>
     </message>
     <message>
         <source>base series resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>последовательное сопротивление базы</translation>
     </message>
     <message>
         <source>responsivity at relative selectivity=100%</source>
-        <translation type="unfinished"></translation>
+        <translation>чувствительность при относительной избирательности=100%</translation>
     </message>
     <message>
         <source>relative selectivity polynomial coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>коэффициент полинома относительной избирательности</translation>
     </message>
     <message>
         <source>Phototransistor</source>
-        <translation type="unfinished"></translation>
+        <translation>Фототранзистор</translation>
     </message>
     <message>
         <source>RLCG transmission line</source>
-        <translation type="unfinished"></translation>
+        <translation>Линия передачи RLCG</translation>
     </message>
     <message>
         <source>RLCG</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>resistive load</source>
-        <translation type="unfinished"></translation>
+        <translation>резистивная нагрузка</translation>
     </message>
     <message>
         <source>Ohm/m</source>
-        <translation type="unfinished"></translation>
+        <translation>Ом/м</translation>
     </message>
     <message>
         <source>inductive load</source>
-        <translation type="unfinished"></translation>
+        <translation>индуктивная нагрузка</translation>
     </message>
     <message>
         <source>H/m</source>
-        <translation type="unfinished"></translation>
+        <translation>Гн/м</translation>
     </message>
     <message>
         <source>capacitive load</source>
-        <translation type="unfinished"></translation>
+        <translation>емкостная нагрузка</translation>
     </message>
     <message>
         <source>conductive load</source>
-        <translation type="unfinished"></translation>
+        <translation>кондуктивная нагрузка</translation>
     </message>
     <message>
         <source>S/m</source>
-        <translation type="unfinished"></translation>
+        <translation>См/м</translation>
     </message>
     <message>
         <source>RLCG Transmission Line</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -9929,17 +9929,19 @@ Center vertically selected elements</source>
     </message>
     <message>
         <source>&amp;Import/Export Data...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Импорт/Экспорт данных...</translation>
     </message>
     <message>
         <source>Convert data file</source>
-        <translation type="unfinished"></translation>
+        <translation>Преобразовать файл данных</translation>
     </message>
     <message>
         <source>Import/Export Data
 
 Convert data file to various file formats</source>
-        <translation type="unfinished"></translation>
+        <translation>Импорт/Экспорт данных
+
+Преобразование файла данных в различные форматы</translation>
     </message>
     <message>
         <source>Portuguese by Luciano Franca and Helio de Sousa</source>
@@ -13680,7 +13682,7 @@ open files with an appropriate program.</source>
     </message>
     <message>
         <source>Arabic</source>
-        <translation type="unfinished"></translation>
+        <translation>Арабский</translation>
     </message>
 </context>
 <context>
@@ -14355,11 +14357,11 @@ are included in the search.</source>
     </message>
     <message>
         <source>Letter landscape</source>
-        <translation type="unfinished"></translation>
+        <translation>Letter ландшафт</translation>
     </message>
     <message>
         <source>Letter portrait</source>
-        <translation type="unfinished"></translation>
+        <translation>Letter портрет</translation>
     </message>
 </context>
 <context>

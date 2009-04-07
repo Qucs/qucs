@@ -1,5 +1,7 @@
 2009-04-07  Stefan Jahn  <stefan@lkcc.org>
 
+	* qucs_ru.ts: Updated Russian translations.
+
 	* textdoc.cpp (createPopupMenu): Added "Document properties" to
 	the right click popup menu in text editor files.
 
