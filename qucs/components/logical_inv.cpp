@@ -33,6 +33,8 @@ Logical_Inv::Logical_Inv()
 		QObject::tr("voltage of high level")));
   Props.append(new Property("t", "0", false,
 		QObject::tr("delay time")));
+  Props.append(new Property("TR", "10", false,
+		QObject::tr("transfer function scaling factor")));
 
   // this must be the last property in the list !!!
   Props.append(new Property("Symbol", "old", false,
