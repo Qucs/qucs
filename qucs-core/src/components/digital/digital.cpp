@@ -1,7 +1,7 @@
 /*
  * digital.cpp - digital base class implementation
  *
- * Copyright (C) 2005, 2006 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2005, 2006, 2009 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: digital.cpp,v 1.7 2006/03/20 08:59:10 raimi Exp $
+ * $Id: digital.cpp,v 1.8 2009/04/07 19:48:31 ela Exp $
  *
  */
 
@@ -80,7 +80,8 @@ nr_double_t digital::getVin (int input) {
 // Computes the transfer function for the given input node.
 nr_double_t digital::calcTransferX (int input) {
   nr_double_t v = getPropertyDouble ("V");
-  return tanh (10 * (getVin (input) / v - 0.5));
+  nr_double_t t = getPropertyDouble ("TR");
+  return tanh (t * (getVin (input) / v - 0.5));
 }
 
 // Computes a slightly modified transfer function.
@@ -91,8 +92,9 @@ nr_double_t digital::calcTransfer (int input) {
 // Computes the transfer functions derivative for the given input node.
 nr_double_t digital::calcDerivativeX (int input) {
   nr_double_t v = getPropertyDouble ("V");
-  nr_double_t x = tanh (10 * (getVin (input) / v - 0.5));
-  return 10 * (1 - x * x);
+  nr_double_t t = getPropertyDouble ("TR");
+  nr_double_t x = tanh (t * (getVin (input) / v - 0.5));
+  return t * (1 - x * x);
 }
 
 // Computes  a slightly modified transfer functions derivative.
