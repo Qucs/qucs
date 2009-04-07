@@ -931,7 +931,7 @@ void QucsApp::slotHelpAbout()
     tr("Polish by Dariusz Pienkowski")+"\n"+
     tr("Romanian by Radu Circa")+"\n"+
     tr("French by Vincent Habchi, F5RCS")+"\n"+
-    tr("Portuguese by Luciano Franca")+"\n"+
+    tr("Portuguese by Luciano Franca and Helio de Sousa")+"\n"+
     tr("Spanish by Jose L. Redrejo Rodriguez")+"\n"+
     tr("Japanese by Toyoyuki Ishikawa")+"\n"+
     tr("Italian by Giorgio Luparia and Claudio Girardi")+"\n"+
@@ -941,7 +941,8 @@ void QucsApp::slotHelpAbout()
     tr("Hungarian by Jozsef Bus")+"\n"+
     tr("Russian by Igor Gorbounov")+"\n"+
     tr("Czech by Marek Straka")+"\n"+
-    tr("Catalan by Antoni Subirats"));
+    tr("Catalan by Antoni Subirats")+"\n"+
+    tr("Arabic by Chabane Noureddine"));
 }
 
 // ----------------------------------------------------------

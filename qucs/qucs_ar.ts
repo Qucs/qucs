@@ -8751,7 +8751,7 @@ About Qt by Trolltech</source>
     </message>
     <message>
         <source>Portuguese by Luciano Franca</source>
-        <translation>البرتغالية من قبل لوتشيانو فرانكا</translation>
+        <translation type="obsolete">البرتغالية من قبل لوتشيانو فرانكا</translation>
     </message>
     <message>
         <source>Spanish by Jose L. Redrejo Rodriguez</source>
@@ -8805,6 +8805,14 @@ About Qt by Trolltech</source>
         <source>Import/Export Data
 
 Convert data file to various file formats</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Portuguese by Luciano Franca and Helio de Sousa</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Arabic by Chabane Noureddine</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

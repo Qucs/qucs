@@ -26,6 +26,7 @@ files.
 Version 0.0.15
 --------------
 
+ * translation into Arabic
  * import dialog replaced by complete import/export frontend for the
    Qucs-Converter command line tool
  * allowing VHDL files on schematic with arbitrary in/out signals
