@@ -9432,7 +9432,7 @@ About Qt by Trolltech</source>
     </message>
     <message>
         <source>Portuguese by Luciano Franca</source>
-        <translation>Portugiesisch von Luciano Franca</translation>
+        <translation type="obsolete">Portugiesisch von Luciano Franca</translation>
     </message>
     <message>
         <source>Spanish by Jose L. Redrejo Rodriguez</source>
@@ -9961,6 +9961,14 @@ Convert data file to various file formats</source>
         <translation>Daten Import/Export
 
 Konvertiert Datendatei in verschiedene Datenformate</translation>
+    </message>
+    <message>
+        <source>Portuguese by Luciano Franca and Helio de Sousa</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Arabic by Chabane Noureddine</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

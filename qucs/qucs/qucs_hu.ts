@@ -9064,7 +9064,7 @@ Qt a Trolltech-től</translation>
     </message>
     <message>
         <source>Portuguese by Luciano Franca</source>
-        <translation>Luciano Franca - Portugál</translation>
+        <translation type="obsolete">Luciano Franca - Portugál</translation>
     </message>
     <message>
         <source>Spanish by Jose L. Redrejo Rodriguez</source>
@@ -9581,6 +9581,14 @@ A kiválasztott elemeket vízszintesen egyvonalba mozgatja</translation>
         <source>Import/Export Data
 
 Convert data file to various file formats</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Portuguese by Luciano Franca and Helio de Sousa</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Arabic by Chabane Noureddine</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -1,3 +1,8 @@
+2009-04-07  Stefan Jahn  <stefan@lkcc.org>
+
+	* docs/pt/index.html: Added Portuguese translation of internal
+	help system.  Thanks a lot to Helio!
+
 2009-03-29  Stefan Jahn  <stefan@lkcc.org>
 
 	* docs/de/mathfunc.html, docs/en/mathfunc.html: Documented new
