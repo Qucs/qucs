@@ -69,13 +69,23 @@ QString VHDL_File::vhdlCode(int)
   QString s;
   Port *pp = Ports.first();
   if(pp) {
-    s = "  " + Name + ": entity " + EntityName + " port map (";
+    s = "  " + Name + ": entity " + EntityName;
+
+    // output all generic properties
+    Property *pr = Props.at(1);
+    if (pr) {
+      s += " generic map (";
+      s += pr->Value;
+      for(pr = Props.next(); pr != 0; pr = Props.next())
+	s += ", " + pr->Value;
+      s += ")";
+    }
 
     // output all node names
+    s += " port map (";
     if(pp)  s += pp->Connection->Name;
     for(pp = Ports.next(); pp != 0; pp = Ports.next())
       s += ", "+pp->Connection->Name;   // node names
-
     s += ");\n";
   }
   return s;
@@ -99,7 +109,7 @@ QString VHDL_File::loadFile()
   File = stream.read();   // QString is better for "find" function
   f.close();
 
-  int i=0, p, j, l, k=0;
+  int i=0, j, k=0;
   while((i=File.find("--", i)) >= 0) { // remove all VHDL comments
     j = File.find('\n', i+2);          // (This also finds "--" within a ...
     if(j < 0)                          //  string, but as no strings are ...
@@ -145,6 +155,19 @@ QString VHDL_File::loadFile()
       return QString("");
   }
 
+  // parse ports, i.e. network connections; and generics, i.e. parameters
+  GenNames=parseGenerics(s,j);
+  s = parsePorts(s,j);
+  return s;
+}
+
+// -------------------------------------------------------
+QString VHDL_File::parsePorts(QString s, int j)
+{
+  QRegExp Expr;
+  Expr.setCaseSensitive(false);
+  int i, p, l, k;
+
   Expr.setPattern("\\bport\\b");  // start of interface definition
   i = s.find(Expr, j+1);
   if(i < 0)
@@ -162,6 +185,7 @@ QString VHDL_File::loadFile()
     if(j < 0)
       return QString("");
     p = s.find('(', p+1);
+    if(p >= 0 && p > j) p = -1;
   } while (p >= 0);
 
   s = s.mid(i, j-i);
@@ -201,6 +225,89 @@ QString VHDL_File::loadFile()
 }
 
 // -------------------------------------------------------
+QString VHDL_File::parseGenerics(QString s, int j)
+{
+  QRegExp Expr;
+  Expr.setCaseSensitive(false);
+  int i, p, l, k, n;
+
+  Expr.setPattern("\\bgeneric\\b");
+  i = s.find(Expr, j+1);
+  if(i < 0)
+    return QString("");
+  // find opening (
+  i = s.find('(', i+4) + 1;
+  if(i <= 0)
+    return QString("");
+
+  // find closing (
+  p = i;
+  j = i-1;
+  do {
+    j = s.find(')', j+1);
+    if(j < 0)
+      return QString("");
+    p = s.find('(', p+1);
+    if(p >= 0 && p > j) p = -1;
+  } while (p >= 0);
+
+  s = s.mid(i, j-i);
+  s.remove('\n');
+  s.remove('\t');
+
+  // find generic names, types and defaults in parameter specification
+  l = i = 0;
+  QString types = "", t, defs = "", d;
+  while((i=s.find(':', i)) >= 0) {
+    j = s.find(';', i+2);
+    n = s.find(":=", i+2);
+    d = "";
+    if(n >= 0 && (n < j || j < 0) ) {
+      j = s.find(';', n+2);
+      if(j < 0) {
+	d = s.mid(n+2);
+	d = d.simplifyWhiteSpace();
+	s = s.left(n);
+      } else {
+	d = s.mid(n+2, j-n-1);
+	d.remove(';');
+	d = d.simplifyWhiteSpace();
+	s.remove(n, j-n);
+      }
+      j = s.find(';', n);
+    }
+    if(j < 0) {
+      t = s.mid(i+1);
+      t.remove(';');
+      t = t.simplifyWhiteSpace();
+      s = s.left(i);
+    } else {
+      t = s.mid(i+1, j-i);
+      t.remove(';');
+      t = t.simplifyWhiteSpace();
+      s.remove(i, j-i);
+    }
+    if ((k = t.find(' ')) >= 0)
+      t = t.mid(k+1);
+    t = t.simplifyWhiteSpace();
+    k = s.find(';',l+2);
+    k = s.mid(l,k-l).contains(',') + 1;
+    while (k-->0) {
+      types = types + t + ",";
+      defs = defs + d + ",";
+    }
+    i--;
+    l = i;
+  }
+
+  s.remove(' ');
+  s.replace(';', ',');
+  GenTypes=types=types.left(types.length()-1);
+  GenDefs=defs=defs.left(defs.length()-1);
+  return s;
+}
+
+// -------------------------------------------------------
 void VHDL_File::createSymbol()
 {
   QFontMetrics  metrics(QucsSettings.font);   // get size of text
@@ -222,7 +329,6 @@ void VHDL_File::createSymbol()
   tmp = QObject::tr("vhdl");
   int w = metrics.width(tmp);
   Texts.append(new Text(w/-2, fHeight/-2, tmp));
-
 
   int y = 15-h, i = 0;
   Port *pp;
@@ -251,6 +357,32 @@ void VHDL_File::createSymbol()
   x2 =  30; y2 =  h+2;
   tx = x1+4;
   ty = y2+4;
+
+  // now create/modify properties
+  if(!GenNames.isEmpty())
+    No = GenNames.contains(',') + 1;
+  Property * pr = Props.at(1);
+  for(i=0; i<No; i++) {
+    if (!pr) {
+      pr = new Property(GenNames.section(',', i, i),
+			GenDefs.section(',', i, i), true,
+			QObject::tr("generic variable")+
+			" "+QString::number(i+1));
+      Props.append(pr);
+      pr = 0;
+    }
+    else {
+      pr->Description =
+	QObject::tr("generic variable")+" "+QString::number(i+1);
+      pr->Name = GenNames.section(',', i, i);
+      pr = Props.next();
+    }
+  }
+  // remove remaining properties if necessary
+  y=Props.count()-1;
+  for(i=No; i<y; i++) {
+    Props.removeLast();
+  }
 }
 
 // -------------------------------------------------------
