@@ -774,6 +774,8 @@ bool Component::load(const QString& _s)
     tmp = 5;
   else if(Model == "RFEDD")
     tmp = 8;
+  else if(Model == "VHDL")
+    tmp = 2;
   else tmp = counts + 1;    // "+1" because "counts" could be zero
 
   for(; tmp<=(int)counts/2; tmp++)

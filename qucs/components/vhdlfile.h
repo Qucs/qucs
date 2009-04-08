@@ -36,10 +36,15 @@ protected:
   QString vhdlCode(int);
   void createSymbol();
   QString loadFile();
+  QString parsePorts(QString, int);
+  QString parseGenerics(QString, int);
 
   QString EntityName;
   QString ErrText;
   QString TypeNames;
+  QString GenTypes;
+  QString GenNames;
+  QString GenDefs;
 };
 
 #endif
