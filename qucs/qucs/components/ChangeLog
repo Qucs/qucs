@@ -1,3 +1,8 @@
+2009-04-08  Stefan Jahn  <stefan@lkcc.org>
+
+	* vhdlfile.cpp (parseGenerics): Parsing additionally the generic
+	map and make it available as properties.
+
 2009-04-07  Stefan Jahn  <stefan@lkcc.org>
 
 	* component.cpp: Added transfer function scaling factor property
