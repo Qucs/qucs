@@ -1,3 +1,10 @@
+2009-04-09  Stefan Jahn  <stefan@lkcc.org>
+
+	* component.cpp (load): Start backward compatibility code when
+	loading diodes for one less property.  Necessary to allow
+	converted diodes from qucsconv (-of qucslib) to be correctly
+	inserted into schematic.
+
 2009-04-08  Stefan Jahn  <stefan@lkcc.org>
 
 	* vhdlfile.cpp (parseGenerics): Parsing additionally the generic
