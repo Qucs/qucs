@@ -1,7 +1,7 @@
 /*
  * qucs_producer.cpp - the Qucs netlist producer
  *
- * Copyright (C) 2004, 2005, 2006, 2007, 2008 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004-2009 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: qucs_producer.cpp,v 1.31 2008/12/11 18:09:05 ela Exp $
+ * $Id: qucs_producer.cpp,v 1.32 2009/04/09 18:56:43 ela Exp $
  *
  */
 
@@ -111,6 +111,14 @@ static void netlist_list_value (struct value_t * value) {
   }
 }
 
+/* Returns a static string for an instance identifier usable in
+   netlists based upon the given identifier. */
+static char * netlist_instance (const char * instance) {
+  static char ret[256];
+  sprintf (ret, "%s%s", isdigit (instance[0]) ? "X" : "", instance);
+  return ret;
+}
+
 /* Prints a single definition on a single line. */
 static void netlist_list_def (struct definition_t * def, const char * prefix) {
   struct node_t * node;
@@ -124,8 +132,8 @@ static void netlist_list_def (struct definition_t * def, const char * prefix) {
       // skip specific actions if required
       if (def->action && strcmp (def->type, "Def")) return;
     }
-    fprintf (qucs_out, "%s%s%s:%s%s", prefix, def->action ? "." : "",
-	     def->type, isdigit (def->instance[0]) ? "X" : "", def->instance);
+    fprintf (qucs_out, "%s%s%s:%s", prefix, def->action ? "." : "",
+	     def->type, netlist_instance (def->instance));
     for (node = def->nodes; node != NULL; node = node->next)
       fprintf (qucs_out, " %s", node->node);
     for (pair = def->pairs; pair != NULL; pair = pair->next) {
@@ -217,8 +225,7 @@ static void netlist_list (void) {
   }
   netlist_lister (definition_root, "");
   for (def = subcircuit_root; def != NULL; def = def->next) {
-    fprintf (qucs_out, ".Def:%s%s\n", isdigit (def->instance[0]) ? "X" : "",
-	     def->instance);
+    fprintf (qucs_out, ".Def:%s\n", netlist_instance (def->instance));
     netlist_lister (def->sub, "  ");
     fprintf (qucs_out, ".Def:End\n");
   }
@@ -226,10 +233,10 @@ static void netlist_list (void) {
   if (definition_root != NULL && subcircuit_root == NULL &&
       (def = netlist_get_single_subcircuit (definition_root)) != NULL) {
     fprintf (qucs_out, "\n# no instance of subcircuit \"%s\" found, "
-	     "creating it\n", def->instance);
+	     "creating it\n", netlist_instance (def->instance));
     fprintf (qucs_out, "Sub:X1");
     for (n = def->nodes; n; n = n->next) fprintf (qucs_out, " %s", n->node);
-    fprintf (qucs_out, " Type=\"%s\"\n", def->instance);
+    fprintf (qucs_out, " Type=\"%s\"\n", netlist_instance (def->instance));
   }
   /* Print overall (toplevel only) node list. */
   qucs_collect_nodes (definition_root);
@@ -440,7 +447,8 @@ static void qucslib_list_device (struct definition_t * def) {
   fprintf (qucs_out, "  <Description>\n");
   fprintf (qucs_out, "  </Description>\n");
   fprintf (qucs_out, "  <Model>\n");
-  fprintf (qucs_out, "    <%s %s_ %s", dev->ltype, def->instance, dev->coords);
+  fprintf (qucs_out, "    <%s %s_ %s", dev->ltype,
+	   netlist_instance (def->instance), dev->coords);
   for (int i = 0; dev->props[i]; i++) {
     if ((pair = qucslib_find_prop (def, dev->props[i])) != NULL) {
       fprintf (qucs_out, " \"");

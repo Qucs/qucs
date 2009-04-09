@@ -21,7 +21,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: parse_spice.y,v 1.23 2009/04/03 19:05:20 ela Exp $
+ * $Id: parse_spice.y,v 1.24 2009/04/09 18:56:43 ela Exp $
  *
  */
 
@@ -160,7 +160,7 @@ static struct value_t * spice_append_val_values (struct value_t * values,
 %type <value> IC_Condition_4 SWITCH_State NodeValueList TC_Value_1 TC_Value_2
 %type <value> VSourceList
 
-%type <ident> Identifier Nodes Function Value Floats Digits Node
+%type <ident> Identifier Nodes Function Value Floats Digits Node FH_Node
 %type <ident> RLC_Device K_Device L_Device IV_Source GE_Source FH_Source
 %type <ident> V_Source MODEL_Spec Diode_Device Bipolar_Device JFET_Device
 %type <ident> MOSFET_Device MESFET_Device TRAN_Action PLOT_Action MODEL_Action
@@ -321,7 +321,7 @@ DefinitionLine:
     spice_append_str_value ($$, $5, HINT_NODE);
     spice_append_val_value ($$, $6, HINT_NUMBER);
   }
-  | FH_Source Node Node Behave Digits VSourceList NodeValueList Eol {
+  | FH_Source FH_Node FH_Node Behave Digits VSourceList NodeValueList Eol {
     /* current controlled source POLY */
     if (!strcasecmp ($4, "POLY")) {
       $$ = spice_create_device ($1);
@@ -337,12 +337,12 @@ DefinitionLine:
       $$ = NULL;
     }
   }
-  | FH_Source Node Node Behave Eol {
+  | FH_Source FH_Node FH_Node Behave Eol {
     /* current controlled sources OTHER behavioural */
     fprintf (stderr, "spice notice, behavioural %s source ignored\n", $1);
     $$ = NULL;
   }
-  | FH_Source Node Node V_Source Value Eol {
+  | FH_Source FH_Node FH_Node V_Source Value Eol {
     /* current controlled sources */
     $$ = spice_create_device ($1);
     spice_append_str_value ($$, $2, HINT_NODE);
@@ -658,13 +658,13 @@ Output_Range:
 ;
 
 VOLTAGE_Output:
-  Node {
+  Node { // TODO: 2 reduce/reduce, 2 shift/reduce
     /* print/plot specification of node voltage */
     $$ = NULL;
     $$ = spice_append_str_values ($$, strdup ("V"), HINT_NAME | HINT_MSTART);
     $$ = spice_append_str_values ($$, $1, HINT_NODE | HINT_MSTOP);
   }
-  | VoltFunc Node {
+  | VoltFunc Node { // TODO: 2 reduce/reduce
     /* print/plot specification of node voltage */
     $$ = NULL;
     $$ = spice_append_str_values ($$, $1, HINT_NAME | HINT_MSTART);
@@ -848,6 +848,8 @@ DC_List:
 Value: Digits | Floats;
 
 Node: Digits | Nodes | Identifier;
+
+FH_Node: Node | V_Source;
 
 PairList: /* nothing */ { $$ = NULL; }
   | Identifier Value PairList {

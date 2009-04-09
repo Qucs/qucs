@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_spice.cpp,v 1.54 2009/04/03 19:05:20 ela Exp $
+ * $Id: check_spice.cpp,v 1.55 2009/04/09 18:56:43 ela Exp $
  *
  */
 
@@ -2214,14 +2214,15 @@ static void spice2g6_nxtpwr (int * seq, int nd) {
 static double spice_get_value (struct value_t * val) {
   const char * str;
   char * end;
-  double v, value = strtod (val->ident, &end);
+  double v;
+  val->value = strtod (val->ident, &end);
   if (*end) {
     str = spice_evaluate_scale (end, &end, &v);
-    value *= v;
+    val->value *= v;
     val->scale = str ? strdup (str) : NULL;
     if (*end) val->unit = strdup (end);
   }
-  return spice_evaluate_value (val);
+  return val->value;
 }
 
 /* Creates a 'nd' dimensional polynomial expression extracted from the

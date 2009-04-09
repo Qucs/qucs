@@ -1,3 +1,15 @@
+2009-04-09  Stefan Jahn  <stefan@lkcc.org>
+
+	* parse_spice.y: Allowing nodes names like 'VPSL' (i.e. could
+	refer to voltage sources) in the node list of F and H controlled
+	sources.
+
+	* scan_spice.l: Explicitely scanning suffixes and unit for (real)
+	values in oder to allow e.g. '11x' node names.
+
+	* qucs_producer.cpp: Fixed bug while referencing subcircuits
+	(missing 'X' when it starts with a digit).
+
 2009-04-03  Stefan Jahn  <stefan@lkcc.org>
 
 	* check_spice.cpp: Allowing translation of polynomial Ls and Cs as

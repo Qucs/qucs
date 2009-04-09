@@ -21,7 +21,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: scan_spice.l,v 1.29 2009/04/03 19:05:20 ela Exp $
+ * $Id: scan_spice.l,v 1.30 2009/04/09 18:56:43 ela Exp $
  *
  */
 
@@ -64,7 +64,7 @@ WS       [ \t\n\r]
 TITLE    [* \t0-9A-Za-z][A-Za-z0-9\- \t;#:=()/\.,*\\]*\r*\n
 SPACE    [ \t]
 NAME     [A-Z][A-Z0-9]*
-IDENT    [A-Za-z][A-Za-z0-9_\-/]*
+IDENT    [A-Za-z_][A-Za-z0-9_\-/]*
 IDENT2   [A-Za-z0-9_][A-Za-z0-9_\-/]*
 FILE     [/A-Za-z0-9_][/\\:A-Za-z0-9_\.]*
 DIGIT    [0-9]
@@ -73,9 +73,10 @@ INT      [+-]?{DIGIT}+
 FLOAT1   [+-]?{DIGIT}+{EXPONENT}
 FLOAT2   [+-]?{DIGIT}*"."{DIGIT}+({EXPONENT})?
 FLOAT3   [+-]?{DIGIT}+"."
-NUMBER   ({INT}|{FLOAT1}|{FLOAT2}|{FLOAT3}){SFX}?[A-Za-z]*
-SFX      ("T"|"G"|"M"|"K"|"m"|"u"|"n"|"p"|"f"|"mil"|"g"|"k")
-NODE     [A-Za-z0-9_#]+
+NUMBER   ({INT}|{FLOAT1}|{FLOAT2}|{FLOAT3}){SFX}?{UNIT}?
+SFX      ([tT]|[gG]|[mM]|[kK]|[uU]|[nN]|[pP]|[fF]|[mM][iI][lL]|[mM][eE][gG])
+UNIT     ([sS]|[vV]|[aA]|[oO][hH][mM]|[mM][hH][oO]|[fF]|[hH])
+NODE     ([A-Za-z0-9_#\+-]+|[\+]|[-])
 EOL      \r*\n
 CSFX     [A-Za-z0-9_]*
 
