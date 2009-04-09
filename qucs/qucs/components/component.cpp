@@ -793,7 +793,7 @@ bool Component::load(const QString& _s)
         Props.remove();    // remove if allocated in vain
 
       if(Model == "Diode") {
-	if(counts < 58) {  // backward compatible
+	if(counts < 56) {  // backward compatible
           counts >>= 1;
           p1 = Props.at(counts-1);
           for(; p1 != 0; p1 = Props.current()) {
