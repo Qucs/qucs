@@ -5956,7 +5956,7 @@ Verwendung:  qucsedit [-r] Datei
     </message>
     <message>
         <source>inverse d.c. high-injection roll-off current</source>
-        <translation type="unfinished"></translation>
+        <translation>Rückwärts-DC-Grenzstrom für die Hochstrominjektion</translation>
     </message>
     <message>
         <source>high-injection correction current</source>
@@ -6012,7 +6012,7 @@ Verwendung:  qucsedit [-r] Datei
     </message>
     <message>
         <source>SCR width modulation contribution</source>
-        <translation type="unfinished"></translation>
+        <translation>Beitrag zur RLZ-Weitenmodulation</translation>
     </message>
     <message>
         <source>Storage time in neutral emitter</source>
@@ -6872,11 +6872,11 @@ Verwendung:  qucsedit [-r] Datei
     </message>
     <message>
         <source>BE charge built-in voltage for d.c. transfer current</source>
-        <translation type="unfinished"></translation>
+        <translation>Diffusionsspannung der BE-Ladung für den DC-Transferstrom</translation>
     </message>
     <message>
         <source>charge BE exponent factor for d.c. transfer current</source>
-        <translation type="unfinished"></translation>
+        <translation>Exponent der BE-Ladung für den DC-Transferstrom</translation>
     </message>
     <message>
         <source>TC of iqf</source>
@@ -6896,11 +6896,11 @@ Verwendung:  qucsedit [-r] Datei
     </message>
     <message>
         <source>BE capacitance ratio (maximum to zero-bias value) for d.c. transfer current</source>
-        <translation type="unfinished"></translation>
+        <translation>Verhältnis zwischen maximalem und Null-Wert der BE Kapazität für den DC-Transferstrom</translation>
     </message>
     <message>
         <source>forward d.c. high-injection roll-off current</source>
-        <translation type="unfinished"></translation>
+        <translation>Vorwärts-DC-Grenzstrom für die Hochstrominjektion</translation>
     </message>
     <message>
         <source>output delay</source>
@@ -7164,7 +7164,7 @@ Verwendung:  qucsedit [-r] Datei
     </message>
     <message>
         <source>transfer function high scaling factor</source>
-        <translation type="unfinished"></translation>
+        <translation>Skalierungsfaktor für die Transferfunktion des oberen Signalpfads</translation>
     </message>
     <message>
         <source>transfer function scaling factor</source>
@@ -7172,11 +7172,11 @@ Verwendung:  qucsedit [-r] Datei
     </message>
     <message>
         <source>cross coupled gate transfer function high scaling factor</source>
-        <translation type="unfinished"></translation>
+        <translation>Skalierungsfaktor des kreuzgekoppelten Gatters für die Transferfunktion des oberen Signalpfads</translation>
     </message>
     <message>
         <source>cross coupled gate transfer function low scaling factor</source>
-        <translation type="unfinished"></translation>
+        <translation>Skalierungsfaktor des kreuzgekoppelten Gatters für die Transferfunktion des unteren Signalpfads</translation>
     </message>
     <message>
         <source>microstrip radial stub</source>
@@ -7272,7 +7272,7 @@ Verwendung:  qucsedit [-r] Datei
     </message>
     <message>
         <source>generic variable</source>
-        <translation type="unfinished"></translation>
+        <translation>generische Variable</translation>
     </message>
 </context>
 <context>
@@ -9968,11 +9968,11 @@ Konvertiert Datendatei in verschiedene Datenformate</translation>
     </message>
     <message>
         <source>Portuguese by Luciano Franca and Helio de Sousa</source>
-        <translation type="unfinished"></translation>
+        <translation>Portugiesisch von Luciano Franca und Helio de Sousa</translation>
     </message>
     <message>
         <source>Arabic by Chabane Noureddine</source>
-        <translation type="unfinished"></translation>
+        <translation>Arabisch von Chabane Noureddine</translation>
     </message>
 </context>
 <context>
