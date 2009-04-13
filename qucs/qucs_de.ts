@@ -7270,6 +7270,10 @@ Verwendung:  qucsedit [-r] Datei
         <source>RLCG Transmission Line</source>
         <translation>RLCG Leitung</translation>
     </message>
+    <message>
+        <source>generic variable</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>

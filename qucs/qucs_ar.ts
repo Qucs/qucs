@@ -6748,6 +6748,10 @@ qucsedit [-r] file :إستعمال
         <source>T-FlipFlop w/ SR</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>generic variable</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsApp</name>
