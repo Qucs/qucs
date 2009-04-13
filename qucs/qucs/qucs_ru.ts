@@ -7261,6 +7261,10 @@ Usage:  qucsedit [-r] file
         <source>RLCG Transmission Line</source>
         <translation></translation>
     </message>
+    <message>
+        <source>generic variable</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>

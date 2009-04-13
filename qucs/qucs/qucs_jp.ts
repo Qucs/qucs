@@ -640,23 +640,23 @@
     </message>
     <message>
         <source>Digital Simulation Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>ディジタルシミュレーション設定</translation>
     </message>
     <message>
         <source>Simulation</source>
-        <translation type="unfinished">シミュレーション</translation>
+        <translation>シミュレーション</translation>
     </message>
     <message>
         <source>Precompile Module</source>
-        <translation type="unfinished"></translation>
+        <translation>モジュールをプリコンパイル</translation>
     </message>
     <message>
         <source>Libraries:</source>
-        <translation type="unfinished"></translation>
+        <translation>ライブラリ:</translation>
     </message>
     <message>
         <source>Library Name:</source>
-        <translation type="unfinished">ライブラリ名:</translation>
+        <translation>ライブラリ名:</translation>
     </message>
 </context>
 <context>
@@ -1090,63 +1090,63 @@
     </message>
     <message>
         <source>Convert Data File...</source>
-        <translation type="unfinished"></translation>
+        <translation>変換するデータファイル...</translation>
     </message>
     <message>
         <source>File specification</source>
-        <translation type="unfinished"></translation>
+        <translation>ファイル詳細</translation>
     </message>
     <message>
         <source>Input File:</source>
-        <translation type="unfinished"></translation>
+        <translation>入力ファイル:</translation>
     </message>
     <message>
         <source>Output Data:</source>
-        <translation type="unfinished"></translation>
+        <translation>出力ファイル:</translation>
     </message>
     <message>
         <source>Qucs dataset</source>
-        <translation type="unfinished"></translation>
+        <translation>Qucsデータセット</translation>
     </message>
     <message>
         <source>Touchstone</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>CSV</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Qucs library</source>
-        <translation type="unfinished"></translation>
+        <translation>Qucsライブラリ</translation>
     </message>
     <message>
         <source>Convert</source>
-        <translation type="unfinished"></translation>
+        <translation>変換</translation>
     </message>
     <message>
         <source>Qucs dataset files</source>
-        <translation type="unfinished"></translation>
+        <translation>Qucsデータセットファイル</translation>
     </message>
     <message>
         <source>SPICE files</source>
-        <translation type="unfinished">SPICEファイル</translation>
+        <translation>SPICEファイル</translation>
     </message>
     <message>
         <source>Any file</source>
-        <translation type="unfinished"></translation>
+        <translation>その他ファイル</translation>
     </message>
     <message>
         <source>Running command line:</source>
-        <translation type="unfinished"></translation>
+        <translation>コマンドライン実行中:</translation>
     </message>
     <message>
         <source>Qucs netlist</source>
-        <translation type="unfinished"></translation>
+        <translation>Qucsネットリスト</translation>
     </message>
     <message>
         <source>Successfully converted file!</source>
-        <translation type="unfinished"></translation>
+        <translation>ファイル変換成功!</translation>
     </message>
 </context>
 <context>
@@ -1657,7 +1657,7 @@ but is %1 !</source>
     </message>
     <message>
         <source>Constant F:</source>
-        <translation type="unfinished">定数F:</translation>
+        <translation>定数F:</translation>
     </message>
     <message>
         <source>Crossing over factor:</source>
@@ -1693,15 +1693,15 @@ but is %1 !</source>
     </message>
     <message>
         <source>logarithmic double</source>
-        <translation type="unfinished"></translation>
+        <translation>対数 Double</translation>
     </message>
     <message>
         <source>linear integer</source>
-        <translation type="unfinished"></translation>
+        <translation>リニア整数</translation>
     </message>
     <message>
         <source>logarithmic integer</source>
-        <translation type="unfinished"></translation>
+        <translation>ログ整数</translation>
     </message>
     <message>
         <source>monitor</source>
@@ -1867,7 +1867,7 @@ but is %1 !</source>
     </message>
     <message>
         <source>Leave directory &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>¨%1¨ディレクトリを閉じます。</translation>
     </message>
     <message>
         <source>ERROR: Package is corrupt!</source>
@@ -2142,7 +2142,7 @@ Unknown field!</source>
     </message>
     <message>
         <source>current power spectral density in A^2/Hz</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>frequency exponent</source>
@@ -2390,7 +2390,7 @@ Unknown field!</source>
     </message>
     <message>
         <source>forward transfer factor</source>
-        <translation></translation>
+        <translation type="unfinished">順方向 伝送要因</translation>
     </message>
     <message>
         <source>delay time</source>
@@ -2540,11 +2540,11 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>recombination current parameter</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>emission coefficient for Isr</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>ohmic series resistance</source>
@@ -2704,7 +2704,7 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>channel-length modulation parameter</source>
-        <translation></translation>
+        <translation type="unfinished">チャネル長　変調パラメータ</translation>
     </message>
     <message>
         <source>parasitic drain resistance</source>
@@ -3228,11 +3228,11 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>voltage transformation ratio of coil 1</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>voltage transformation ratio of coil 2</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>symmetric Transformer</source>
@@ -3272,11 +3272,11 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>integration method</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>order of integration method</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>initial step size in seconds</source>
@@ -3376,7 +3376,7 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>voltage before and after the pulse</source>
-        <translation></translation>
+        <translation type="unfinished">パルス前後の電圧</translation>
     </message>
     <message>
         <source>voltage of the pulse</source>
@@ -3426,23 +3426,23 @@ Wrong &apos;component&apos; line format!</source>
         <source>
 Very simple text editor for Qucs
 </source>
-        <translation></translation>
+        <translation>とてもシンプルなQucsの為のテキストエディタ</translation>
     </message>
     <message>
         <source>
 Usage:  qucsedit [-r] file
 </source>
-        <translation></translation>
+        <translation>使い方:qucsedit [-r] file</translation>
     </message>
     <message>
         <source>    -h  display this help and exit
 </source>
-        <translation></translation>
+        <translation>-h このヘルプを表示して終了します</translation>
     </message>
     <message>
         <source>    -r  open file read-only
 </source>
-        <translation></translation>
+        <translation type="unfinished">-r 読み込み専用として開きます</translation>
     </message>
     <message>
         <source>Too long command line argument!
@@ -4133,7 +4133,7 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>PM</source>
-        <translation>PM</translation>
+        <translation type="unfinished">PM（位相変調）</translation>
     </message>
     <message>
         <source>modulation index</source>
@@ -4405,11 +4405,11 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>Zero bias internal base resistance</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">ゼロバイアス初期ベース抵抗</translation>
     </message>
     <message>
         <source>External base series resistance</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">外部ベース直列抵抗</translation>
     </message>
     <message>
         <source>Factor for geometry dependence of emitter current crowding</source>
@@ -4429,11 +4429,11 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>Emitter series resistance</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">エミッタ直列抵抗</translation>
     </message>
     <message>
         <source>External collector series resistance</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">外部コレクタ直列抵抗</translation>
     </message>
     <message>
         <source>Substrate transistor transfer saturation current</source>
@@ -4457,7 +4457,7 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>Substrate series resistance</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">基材直列抵抗</translation>
     </message>
     <message>
         <source>Substrate shunt capacitance</source>
@@ -4613,11 +4613,11 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>Flicker noise coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">フリッカノイズ係数</translation>
     </message>
     <message>
         <source>Flicker noise exponent factor</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">フリッカーノイズ指数要因</translation>
     </message>
     <message>
         <source>Scaling factor for collector minority charge in direction of emitter width</source>
@@ -4677,15 +4677,15 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>Thermal resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>熱抵抗</translation>
     </message>
     <message>
         <source>Thermal capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>熱容量</translation>
     </message>
     <message>
         <source>Temperature at which parameters are specified</source>
-        <translation type="unfinished"></translation>
+        <translation>パラメータ設定時の温度</translation>
     </message>
     <message>
         <source>Temperature change w.r.t. chip temperature for particular transistor</source>
@@ -4693,7 +4693,7 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>simulation temperature</source>
-        <translation type="unfinished"></translation>
+        <translation>シミュレータ時の温度</translation>
     </message>
     <message>
         <source>FBH HBT</source>
@@ -4701,15 +4701,15 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>Ignored</source>
-        <translation type="unfinished"></translation>
+        <translation>無視</translation>
     </message>
     <message>
         <source>Device operating temperature, Celsius</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">デバイス動作時の温度[℃]</translation>
     </message>
     <message>
         <source>Thermal resistance, K/W</source>
-        <translation type="unfinished"></translation>
+        <translation>熱抵抗[K/W]</translation>
     </message>
     <message>
         <source>Scaling factor, number of emitter fingers</source>
@@ -4729,7 +4729,7 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>Forward current emission coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">順電流放射係数</translation>
     </message>
     <message>
         <source>Forward thermal activation energy, V, (0 == disables temperature dependence)</source>
@@ -4773,7 +4773,7 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>Reverse current emission coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">逆電流放射係数</translation>
     </message>
     <message>
         <source>Reverse thermal activation energy, V, (0 == disables temperature dependence)</source>
@@ -4845,15 +4845,15 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>Ideal reverse transit time, s</source>
-        <translation type="unfinished"></translation>
+        <translation>理想逆通過時間[s]</translation>
     </message>
     <message>
         <source>Ideal forward transit time, s</source>
-        <translation type="unfinished"></translation>
+        <translation>理想的な順通過時間[s]</translation>
     </message>
     <message>
         <source>Temperature coefficient of forward transit time</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">順通過時間の温度</translation>
     </message>
     <message>
         <source>Excess transit time coefficient at base push-out</source>
@@ -4889,7 +4889,7 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>not used</source>
-        <translation type="unfinished"></translation>
+        <translation>使用しない</translation>
     </message>
     <message>
         <source>Minimum B-C depletion capacitance (Vbc dependence), F/um^2</source>
@@ -4937,15 +4937,15 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>Collector inductance, H</source>
-        <translation type="unfinished"></translation>
+        <translation>コレクタインダクタンス[H]</translation>
     </message>
     <message>
         <source>Emitter inductance, H</source>
-        <translation type="unfinished"></translation>
+        <translation>エミッタインダクタンス[H]</translation>
     </message>
     <message>
         <source>Base inductance, H</source>
-        <translation type="unfinished"></translation>
+        <translation>ベースインダクタンス[H]</translation>
     </message>
     <message>
         <source>Extrinsic B-C capacitance, F</source>
@@ -4961,95 +4961,95 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>Flicker-noise coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">フリッカーノイズ係数</translation>
     </message>
     <message>
         <source>Flicker-noise exponent</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">フリッカーノイズ指数</translation>
     </message>
     <message>
         <source>Flicker-noise frequency exponent</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">フリッカーノイズ周波数指数</translation>
     </message>
     <message>
         <source>Burst noise coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">バーストノイズ係数</translation>
     </message>
     <message>
         <source>Burst noise exponent</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">バーストノイズ指数</translation>
     </message>
     <message>
         <source>Burst noise corner frequency, Hz</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">バーストノイズコーナー周波数</translation>
     </message>
     <message>
         <source>Ambient temperature at which the parameters were determined</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">パラメータを測定（決定）したときの周囲温度</translation>
     </message>
     <message>
         <source>bond wire</source>
-        <translation type="unfinished"></translation>
+        <translation>ボンドワイア</translation>
     </message>
     <message>
         <source>length of the wire</source>
-        <translation type="unfinished"></translation>
+        <translation>ワイア長</translation>
     </message>
     <message>
         <source>diameter of the wire</source>
-        <translation type="unfinished"></translation>
+        <translation>ワイア径</translation>
     </message>
     <message>
         <source>height above ground plane</source>
-        <translation type="unfinished"></translation>
+        <translation>グラウンドプレーンからの高さ</translation>
     </message>
     <message>
         <source>specific resistance of the metal</source>
-        <translation type="unfinished"></translation>
+        <translation>導体抵抗</translation>
     </message>
     <message>
         <source>relative permeability of the metal</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">導体相関透磁率</translation>
     </message>
     <message>
         <source>bond wire model</source>
-        <translation type="unfinished"></translation>
+        <translation>ボンドワイアモデル</translation>
     </message>
     <message>
         <source>Bond Wire</source>
-        <translation type="unfinished"></translation>
+        <translation>ボンドワイア</translation>
     </message>
     <message>
         <source>twisted pair transmission line</source>
-        <translation type="unfinished"></translation>
+        <translation>ツイストペア伝送線路</translation>
     </message>
     <message>
         <source>diameter of conductor</source>
-        <translation type="unfinished"></translation>
+        <translation>導体径</translation>
     </message>
     <message>
         <source>diameter of wire (conductor and insulator)</source>
-        <translation type="unfinished"></translation>
+        <translation>ワイア径（導体及び絶縁体を含む）</translation>
     </message>
     <message>
         <source>dielectric constant of insulator</source>
-        <translation type="unfinished"></translation>
+        <translation>絶縁体の誘電率</translation>
     </message>
     <message>
         <source>twists per length in 1/m</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">撚り線間隔[1/m]</translation>
     </message>
     <message>
         <source>Twisted-Pair</source>
-        <translation type="unfinished"></translation>
+        <translation>ツイストペア</translation>
     </message>
     <message>
         <source>physical length of the line</source>
-        <translation type="unfinished"></translation>
+        <translation>線の物理長</translation>
     </message>
     <message>
         <source>(available) ac power in Watts</source>
-        <translation type="unfinished"></translation>
+        <translation>(有効)交流電力[W]</translation>
     </message>
     <message>
         <source>MOS field-effect transistor with substrate</source>
@@ -5061,7 +5061,7 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>4-Terminal Transmission Line</source>
-        <translation type="unfinished"></translation>
+        <translation>4端子トランスミッションライン</translation>
     </message>
     <message>
         <source>HBT model by Ferdinand-Braun-Institut (FBH), Berlin</source>
@@ -5081,27 +5081,27 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>netlist format</source>
-        <translation type="unfinished"></translation>
+        <translation>ネットリストファイル</translation>
     </message>
     <message>
         <source>Verilog file</source>
-        <translation type="unfinished"></translation>
+        <translation>Verilogファイル</translation>
     </message>
     <message>
         <source>Name of Verilog file</source>
-        <translation type="unfinished"></translation>
+        <translation>Verilogファイル名</translation>
     </message>
     <message>
         <source>verilog</source>
-        <translation type="unfinished"></translation>
+        <translation>verilog</translation>
     </message>
     <message>
         <source>ERROR: No file name in %1 component &quot;%2&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>エラー:%1に部品¨%2¨というファイル名がありません.</translation>
     </message>
     <message>
         <source>ERROR: Cannot open %1 file &quot;%2&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>エラー:ファイル&quot;%2&quot;の%1を開けません.</translation>
     </message>
     <message>
         <source>C-E breakdown voltage, V, (0 == disables collector break-down)</source>
@@ -5113,11 +5113,11 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>current before rising edge</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">立ち上がりエッジ前の電流</translation>
     </message>
     <message>
         <source>maximum current of the pulse</source>
-        <translation type="unfinished"></translation>
+        <translation>パルスの最大電流</translation>
     </message>
     <message>
         <source>start time of the exponentially rising edge</source>
@@ -5129,11 +5129,11 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>time constant of the rising edge</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">立上りエッジの時定数</translation>
     </message>
     <message>
         <source>time constant of the falling edge</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">立下がりエッジの時定数</translation>
     </message>
     <message>
         <source>Exponential Current Pulse</source>
@@ -5145,19 +5145,19 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>voltage before rising edge</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">立下がりエッジ前の電圧</translation>
     </message>
     <message>
         <source>maximum voltage of the pulse</source>
-        <translation type="unfinished"></translation>
+        <translation>パルスの最大電圧</translation>
     </message>
     <message>
         <source>rise time of the rising edge</source>
-        <translation type="unfinished"></translation>
+        <translation>立ち下がりエッジの降下時間</translation>
     </message>
     <message>
         <source>fall time of the falling edge</source>
-        <translation type="unfinished"></translation>
+        <translation>立上りエッジの上昇時間</translation>
     </message>
     <message>
         <source>Exponential Voltage Pulse</source>
@@ -5169,15 +5169,15 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>Noise factor for internal base resistance</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">内部ベース抵抗のノイズファクター</translation>
     </message>
     <message>
         <source>equation defined device</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">デバイスの方程式</translation>
     </message>
     <message>
         <source>type of equations</source>
-        <translation type="unfinished"></translation>
+        <translation>方程式の種類</translation>
     </message>
     <message>
         <source>number of branches</source>
@@ -5185,7 +5185,7 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>current equation</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">電流方程式</translation>
     </message>
     <message>
         <source>charge equation</source>
@@ -5193,7 +5193,7 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>Equation Defined Device</source>
-        <translation type="unfinished"></translation>
+        <translation>方程式定義済デバイス</translation>
     </message>
     <message>
         <source>ERROR: Cannot open SPICE file &quot;%1&quot;.</source>
@@ -5332,7 +5332,7 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>Positive slew rate (V/s)</source>
-        <translation type="unfinished">ポジティブスルーレート(V/s)</translation>
+        <translation>ポジティブスルーレート(V/s)</translation>
     </message>
     <message>
         <source>Negative slew rate (V/s)</source>
@@ -5432,55 +5432,55 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>Coul</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>A</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>s</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>1/V</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>1/K</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Ohm</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>F</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>V</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>K/W</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>J/W</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>C</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>K</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>diac (bidirectional trigger diode)</source>
-        <translation type="unfinished"></translation>
+        <translation>ダイアック(双方向トリガダイオード)</translation>
     </message>
     <message>
         <source>(bidirectional) breakover voltage</source>
@@ -5496,11 +5496,11 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>Diac</source>
-        <translation type="unfinished"></translation>
+        <translation>ダイアック</translation>
     </message>
     <message>
         <source>silicon controlled rectifier (SCR)</source>
-        <translation type="unfinished"></translation>
+        <translation>サイリスタ(SCR)</translation>
     </message>
     <message>
         <source>breakover voltage</source>
@@ -5508,19 +5508,19 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>gate trigger current</source>
-        <translation type="unfinished"></translation>
+        <translation>ゲートトリガ電流</translation>
     </message>
     <message>
         <source>Thyristor</source>
-        <translation type="unfinished"></translation>
+        <translation>サイリスタ</translation>
     </message>
     <message>
         <source>triac (bidirectional thyristor)</source>
-        <translation type="unfinished"></translation>
+        <translation>トライアック(双方向サイリスタ)</translation>
     </message>
     <message>
         <source>(bidirectional) gate trigger current</source>
-        <translation type="unfinished"></translation>
+        <translation>(双方向)ゲートトリガ電流</translation>
     </message>
     <message>
         <source>Triac</source>
@@ -5528,7 +5528,7 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>intrinsic junction resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>固有ジャンクション抵抗</translation>
     </message>
     <message>
         <source>Logarithmic Amplifier verilog device</source>
@@ -5544,7 +5544,7 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>%</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>input I1 bias current</source>
@@ -5560,19 +5560,19 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>conformity error</source>
-        <translation type="unfinished"></translation>
+        <translation>不一致エラー</translation>
     </message>
     <message>
         <source>output offset error</source>
-        <translation type="unfinished"></translation>
+        <translation>出力オフセットエラー</translation>
     </message>
     <message>
         <source>amplifier input resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>増幅器入力抵抗</translation>
     </message>
     <message>
         <source>amplifier 3dB frequency</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">増幅3dBコーナー周波数</translation>
     </message>
     <message>
         <source>Hz</source>
@@ -5580,11 +5580,11 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>amplifier output resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>増幅器出力抵抗</translation>
     </message>
     <message>
         <source>conformity error temperature coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>温度係数不一致エラー</translation>
     </message>
     <message>
         <source>%/Celsius</source>
@@ -5592,7 +5592,7 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>offset temperature coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">オフセット温度係数</translation>
     </message>
     <message>
         <source>V/Celsius</source>
@@ -5640,11 +5640,11 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>Non-ideality coefficient of forward collector current</source>
-        <translation type="unfinished"></translation>
+        <translation>順コレクタ電流の非理想係数</translation>
     </message>
     <message>
         <source>Non-ideality coefficient of reverse collector current</source>
-        <translation type="unfinished"></translation>
+        <translation>逆コレクタ電流の非理想係数</translation>
     </message>
     <message>
         <source>forward Early voltage (normalization volt.)</source>
@@ -5736,7 +5736,7 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>Saturation voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>飽和電圧</translation>
     </message>
     <message>
         <source>Total zero-bias BC depletion capacitance</source>
@@ -5828,11 +5828,11 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>flicker noise exponent factor</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">フリッカーノイズ要因</translation>
     </message>
     <message>
         <source>Bandgap-voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>バンドギャップ電圧</translation>
     </message>
     <message>
         <source>Effective emitter bandgap-voltage</source>
@@ -5852,7 +5852,7 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>V/K</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Coefficient K2 in T-dependent bandgap equation</source>
@@ -5868,7 +5868,7 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>1/K^2</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Exponent coefficient in BE junction current temperature dependence</source>
@@ -5940,19 +5940,19 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>gate resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>ゲート抵抗</translation>
     </message>
     <message>
         <source>Potentiometer verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation>ポテンショメータVerilogデバイス</translation>
     </message>
     <message>
         <source>nominal device resistance</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">デバイス抵抗値</translation>
     </message>
     <message>
         <source>shaft/wiper arm rotation</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">シャフト/ワイパ軸回転</translation>
     </message>
     <message>
         <source>degrees</source>
@@ -5964,11 +5964,11 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>device type selector</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">デバイス種類セレクタ</translation>
     </message>
     <message>
         <source>maximum shaft/wiper rotation</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">最大シャフト/ワイパ回転</translation>
     </message>
     <message>
         <source>linearity error</source>
@@ -5976,7 +5976,7 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>wiper arm contact resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>ワイパアームコンタクト抵抗</translation>
     </message>
     <message>
         <source>resistance temperature coefficient</source>
@@ -5984,7 +5984,7 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>PPM/Celsius</source>
-        <translation type="unfinished"></translation>
+        <translation>PPM/℃</translation>
     </message>
     <message>
         <source>Potentiometer</source>
@@ -6028,27 +6028,27 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>MESFET verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation>MESFET verilogデバイス</translation>
     </message>
     <message>
         <source>model selector</source>
-        <translation type="unfinished"></translation>
+        <translation>モデルセレクタ</translation>
     </message>
     <message>
         <source>pinch-off voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>ピンチオフ電圧</translation>
     </message>
     <message>
         <source>A/(V*V)</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>saturation voltage parameter</source>
-        <translation type="unfinished"></translation>
+        <translation>飽和電圧パラメータ</translation>
     </message>
     <message>
         <source>channel length modulation parameter</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">チャネル長変調パラメータ</translation>
     </message>
     <message>
         <source>doping profile parameter</source>
@@ -6064,7 +6064,7 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>1/W</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>maximum junction voltage limit before capacitance limiting</source>
@@ -6088,11 +6088,11 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>diode saturation current</source>
-        <translation type="unfinished"></translation>
+        <translation>ダイオード飽和電流</translation>
     </message>
     <message>
         <source>diode emission coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">ダイオード放射係数</translation>
     </message>
     <message>
         <source>built-in gate potential</source>
@@ -6108,11 +6108,11 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>transit time under gate</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">ゲート通過時間</translation>
     </message>
     <message>
         <source>channel resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>チャネル抵抗</translation>
     </message>
     <message>
         <source>area factor</source>
@@ -6120,35 +6120,35 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>energy gap</source>
-        <translation type="unfinished"></translation>
+        <translation>エネルギーギャップ</translation>
     </message>
     <message>
         <source>eV</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>zero bias gate-drain junction capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>ゼロバイアス　ゲートドレイン間ジャンクション容量</translation>
     </message>
     <message>
         <source>zero bias gate-source junction capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>ゼロバイアス　ゲートソース間ジャンクション容量</translation>
     </message>
     <message>
         <source>zero bias drain-source junction capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>ゼロバイアス　ドレインソース間ジャンクション容量</translation>
     </message>
     <message>
         <source>Beta temperature coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>ベータ温度係数</translation>
     </message>
     <message>
         <source>Alpha temperature coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>アルファ温度係数</translation>
     </message>
     <message>
         <source>Gamma temperature coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>ガンマ温度係数</translation>
     </message>
     <message>
         <source>Subthreshold slope gate parameter</source>
@@ -6180,31 +6180,31 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>Ohms</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>drain resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>ドレイン抵抗</translation>
     </message>
     <message>
         <source>source resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>ソース抵抗</translation>
     </message>
     <message>
         <source>gate resistance temperature coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>ゲート抵抗温度係数</translation>
     </message>
     <message>
         <source>1/Celsius</source>
-        <translation type="unfinished"></translation>
+        <translation>1/℃</translation>
     </message>
     <message>
         <source>drain resistance temperature coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>ドレイン抵抗温度係数</translation>
     </message>
     <message>
         <source>source resistance temperature coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>ソース抵抗温度係数</translation>
     </message>
     <message>
         <source>gate reverse breakdown currrent</source>
@@ -6220,11 +6220,11 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>shot noise coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>ショットノイズ係数</translation>
     </message>
     <message>
         <source>MESFET</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>long = 1, short = 2</source>
@@ -6232,23 +6232,23 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>length parameter</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">長さパラメータ</translation>
     </message>
     <message>
         <source>m</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Width parameter</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">幅パラメータ</translation>
     </message>
     <message>
         <source>parallel multiple device number</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">並列デバイス数</translation>
     </message>
     <message>
         <source>series multiple device number</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">直列デバイス数</translation>
     </message>
     <message>
         <source>gate oxide capacitance per unit area</source>
@@ -6256,7 +6256,7 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>F/m**2</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>metallurgical junction depth</source>
@@ -6264,11 +6264,11 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>channel width correction</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">チャネル幅補正</translation>
     </message>
     <message>
         <source>channel length correction</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">チャネル長補正</translation>
     </message>
     <message>
         <source>long channel threshold voltage</source>
@@ -6280,7 +6280,7 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>V**(1/2)</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>bulk Fermi potential</source>
@@ -6288,7 +6288,7 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>A/V**2</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>mobility reduction coefficient</source>
@@ -6300,7 +6300,7 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>V/m</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>longitudinal critical field</source>
@@ -6320,15 +6320,15 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>A*s/m**2</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>characteristic length</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">特有長</translation>
     </message>
     <message>
         <source>threshold voltage temperature coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>しきい値電圧温度係数</translation>
     </message>
     <message>
         <source>mobility temperature coefficient</source>
@@ -6352,15 +6352,15 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>Ohm/square</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>source contact resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>ソース接触抵抗</translation>
     </message>
     <message>
         <source>drain contact resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>ドレイン接触抵抗</translation>
     </message>
     <message>
         <source>gate to source overlap capacitance</source>
@@ -6368,7 +6368,7 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>F/m</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>gate to drain overlap capacitance</source>
@@ -6384,7 +6384,7 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>1/m</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>second impact ionization coefficient</source>
@@ -6400,7 +6400,7 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>V*m</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>area related gain mismatch parameter</source>
@@ -6412,7 +6412,7 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>sqrt(V)*m</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>diode relative area</source>
@@ -6428,19 +6428,19 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>noise figure</source>
-        <translation type="unfinished"></translation>
+        <translation>ノイズフィギュア</translation>
     </message>
     <message>
         <source>widest side</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">最大幅側</translation>
     </message>
     <message>
         <source>shortest side</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">最小幅側</translation>
     </message>
     <message>
         <source>Rectangular Waveguide</source>
-        <translation type="unfinished">角ウェーブガイド</translation>
+        <translation>角ウェーブガイド</translation>
     </message>
     <message>
         <source>HICUM Level 0 v1.2 verilog device</source>
@@ -6472,15 +6472,15 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>Photodiode verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation>フォトダイオードverilogデバイス</translation>
     </message>
     <message>
         <source>photodiode emission coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">フォトダイオード放射係数</translation>
     </message>
     <message>
         <source>series lead resistance</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">直列リード抵抗</translation>
     </message>
     <message>
         <source>diode dark current</source>
@@ -6488,35 +6488,35 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>responsivity</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">感度</translation>
     </message>
     <message>
         <source>A/W</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>shunt resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>シャント抵抗</translation>
     </message>
     <message>
         <source>quantum efficiency</source>
-        <translation type="unfinished"></translation>
+        <translation>量子効率</translation>
     </message>
     <message>
         <source>light wavelength</source>
-        <translation type="unfinished"></translation>
+        <translation>光波長</translation>
     </message>
     <message>
         <source>nm</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>responsivity calculator selector</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">感度計算機セレクタ</translation>
     </message>
     <message>
         <source>Photodiode</source>
-        <translation type="unfinished"></translation>
+        <translation>フォトダイオード</translation>
     </message>
     <message>
         <source>material parameter for temperature model</source>
@@ -6528,11 +6528,11 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>logical buffer</source>
-        <translation type="unfinished"></translation>
+        <translation>論理バッファ</translation>
     </message>
     <message>
         <source>Buffer</source>
-        <translation type="unfinished"></translation>
+        <translation>バッファ</translation>
     </message>
     <message>
         <source>flag for turning on base related critical current</source>
@@ -6580,7 +6580,7 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>output delay</source>
-        <translation type="unfinished"></translation>
+        <translation>出力遅延</translation>
     </message>
     <message>
         <source>cross coupled gate delay</source>
@@ -6588,255 +6588,255 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>voltage level</source>
-        <translation type="unfinished"></translation>
+        <translation>電圧レベル</translation>
     </message>
     <message>
         <source>time delay</source>
-        <translation type="unfinished"></translation>
+        <translation>遅延時間</translation>
     </message>
     <message>
         <source>logic 0 voltage level</source>
-        <translation type="unfinished"></translation>
+        <translation>ロジック0電圧レベル</translation>
     </message>
     <message>
         <source>logic 1 voltage level</source>
-        <translation type="unfinished"></translation>
+        <translation>ロジック1電圧レベル</translation>
     </message>
     <message>
         <source>pad output value</source>
-        <translation type="unfinished"></translation>
+        <translation>パッド出力値</translation>
     </message>
     <message>
         <source>4x2 andor verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation>4x2 andor verilogデバイス</translation>
     </message>
     <message>
         <source>4x2 AndOr</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>4x3 andor verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation>4x3 andor verilogデバイス</translation>
     </message>
     <message>
         <source>4x3 AndOr</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>4x4 andor verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation>4x4 andor verilogデバイス</translation>
     </message>
     <message>
         <source>4x4 AndOr</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>4bit binary to grey converter verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation>4bit binary to grey 変換 verilogデバイス</translation>
     </message>
     <message>
         <source>4Bit Bin2Grey</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>1bit comparator verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation>1bit コンパレータ verilogデバイス</translation>
     </message>
     <message>
         <source>1Bit Comparator</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>2bit comparator verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation>2bit コンパレータ verilogデバイス</translation>
     </message>
     <message>
         <source>2Bit Comparator</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>4bit comparator verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation>4bit コンパレータ verilogデバイス</translation>
     </message>
     <message>
         <source>4Bit Comparator</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>D flip flop with set and reset verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation>セットリセット有りDフリップフロップ verilogデバイス</translation>
     </message>
     <message>
         <source>D-FlipFlop w/ SR</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>data voltage level shifter (digital to analogue) verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation>データ電圧レベルシフタ（デジタルからアナログ）verilogデバイス</translation>
     </message>
     <message>
         <source>D2A Level Shifter</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>data voltage level shifter (analogue to digital) verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation>データ電圧レベルシフタ（アナログからデジタル）verilogデバイス</translation>
     </message>
     <message>
         <source>A2D Level Shifter</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>2to4 demultiplexer verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation>2to4 デマルチプレクサ verilogデバイス</translation>
     </message>
     <message>
         <source>2to4 Demux</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>3to8 demultiplexer verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation>3to8 デマルチプレクサ verilogデバイス</translation>
     </message>
     <message>
         <source>3to8 Demux</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>4to16 demultiplexer verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation>4to16 デマルチプレクサ verilogデバイス</translation>
     </message>
     <message>
         <source>4to16 Demux</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>1bit full adder verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation>1bit フルアダー verilogデバイス</translation>
     </message>
     <message>
         <source>1Bit FullAdder</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>2bit full adder verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation>2bit フルアダー verilogデバイス</translation>
     </message>
     <message>
         <source>2Bit FullAdder</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>gated D latch verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation>ゲーテッドDラッチ verilogデバイス</translation>
     </message>
     <message>
         <source>Gated D-Latch</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>4bit grey to binary converter verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation>4bit grey to binary変換 verilogデバイス</translation>
     </message>
     <message>
         <source>4Bit Grey2Bin</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>1bit half adder verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation>1bit ハーフアダー verilogデバイス</translation>
     </message>
     <message>
         <source>1Bit HalfAdder</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>4bit highest priority encoder (binary form) verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation>4bit highest プライオリティエンコーダ (binary form) verilogデバイス</translation>
     </message>
     <message>
         <source>4Bit HPRI-Bin</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>jk flip flop with set and reset verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation>セットリセット有りJKフリップフロップ verilogデバイス</translation>
     </message>
     <message>
         <source>JK-FlipFlop w/ SR</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>logic 0 verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation>ロジック0 verilogデバイス</translation>
     </message>
     <message>
         <source>Logic 0</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>logic 1 verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation>ロジック1 verilogデバイス</translation>
     </message>
     <message>
         <source>Logic 1</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>2to1 multiplexer verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation>2to1 マルチプレクサ verilogデバイス</translation>
     </message>
     <message>
         <source>2to1 Mux</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>4to1 multiplexer verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation>4to1 マルチプレクサ verilogデバイス</translation>
     </message>
     <message>
         <source>4to1 Mux</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>8to1 multiplexer verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation>8to1 マルチプレクサ verilogデバイス</translation>
     </message>
     <message>
         <source>8to1 Mux</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>2bit pattern generator verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation>2bit パターンジェネレータ verilogデバイス</translation>
     </message>
     <message>
         <source>2Bit Pattern</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>3bit pattern generator verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation>3bit パターンジェネレータ verilogデバイス</translation>
     </message>
     <message>
         <source>3Bit Pattern</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>4bit pattern generator verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation>4bit パターンジェネレータ verilogデバイス</translation>
     </message>
     <message>
         <source>4Bit Pattern</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>T flip flop with set and reset verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation>セットリセット有りTフリップフロップ verilogデバイス</translation>
     </message>
     <message>
         <source>T-FlipFlop w/ SR</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>transfer function high scaling factor</source>
@@ -6856,27 +6856,27 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>microstrip radial stub</source>
-        <translation type="unfinished"></translation>
+        <translation>マイクロストリップ ラジアルスタブ</translation>
     </message>
     <message>
         <source>inner radius</source>
-        <translation type="unfinished"></translation>
+        <translation>内部半径</translation>
     </message>
     <message>
         <source>outer radius</source>
-        <translation type="unfinished"></translation>
+        <translation>外部半径</translation>
     </message>
     <message>
         <source>stub angle</source>
-        <translation type="unfinished"></translation>
+        <translation>スタブ角度</translation>
     </message>
     <message>
         <source>Microstrip Radial Stub</source>
-        <translation type="unfinished"></translation>
+        <translation>マイクロストリップ ラジアルスタブ</translation>
     </message>
     <message>
         <source>Phototransistor verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation>フォトトランジスタ verilogデバイス</translation>
     </message>
     <message>
         <source>dark current</source>
@@ -6884,15 +6884,15 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>collector series resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>コレクタ直列抵抗</translation>
     </message>
     <message>
         <source>emitter series resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>エミッタ直列抵抗</translation>
     </message>
     <message>
         <source>base series resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>ベース直列抵抗</translation>
     </message>
     <message>
         <source>responsivity at relative selectivity=100%</source>
@@ -6904,46 +6904,50 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>Phototransistor</source>
-        <translation type="unfinished"></translation>
+        <translation>フォトトランジスタ</translation>
     </message>
     <message>
         <source>RLCG transmission line</source>
-        <translation type="unfinished"></translation>
+        <translation>RLCGトランスミッションライン</translation>
     </message>
     <message>
         <source>RLCG</source>
-        <translation type="unfinished"></translation>
+        <translation>RLCG</translation>
     </message>
     <message>
         <source>resistive load</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">抵抗性負荷</translation>
     </message>
     <message>
         <source>Ohm/m</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>inductive load</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">誘導性負荷</translation>
     </message>
     <message>
         <source>H/m</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>capacitive load</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">容量性負荷</translation>
     </message>
     <message>
         <source>conductive load</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">導体負荷</translation>
     </message>
     <message>
         <source>S/m</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>RLCG Transmission Line</source>
+        <translation>RLCGトランスミッションライン</translation>
+    </message>
+    <message>
+        <source>generic variable</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -9418,17 +9422,19 @@ Center vertically selected elements</source>
     </message>
     <message>
         <source>&amp;Import/Export Data...</source>
-        <translation type="unfinished"></translation>
+        <translation>データインポート/エクスポート(&amp;I)</translation>
     </message>
     <message>
         <source>Convert data file</source>
-        <translation type="unfinished"></translation>
+        <translation>データファイル変換</translation>
     </message>
     <message>
         <source>Import/Export Data
 
 Convert data file to various file formats</source>
-        <translation type="unfinished"></translation>
+        <translation>データインポート/エクスポート
+
+データファイルをいろいろなファイルにインポート/エクスポート</translation>
     </message>
     <message>
         <source>Portuguese by Luciano Franca and Helio de Sousa</source>
@@ -11425,7 +11431,7 @@ open files with an appropriate program.</source>
     </message>
     <message>
         <source>Arabic</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -11780,11 +11786,11 @@ open files with an appropriate program.</source>
     </message>
     <message>
         <source>ErEff Even</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>ErEff Odd</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Microstrip Line</source>
@@ -11796,12 +11802,12 @@ open files with an appropriate program.</source>
     </message>
     <message>
         <source>Grounded Coplanar</source>
-        <translation type="unfinished">グラウンデッドコプレーナ</translation>
+        <translation>グラウンデッドコプレーナ</translation>
     </message>
     <message>
         <source>Copyright (C) 2008 by Michael Margraf
 </source>
-        <translation type="unfinished">Copyright (C) 2008 by Michael Margraf</translation>
+        <translation>Copyright (C) 2008 by Michael Margraf</translation>
     </message>
 </context>
 <context>
@@ -12082,11 +12088,11 @@ are included in the search.</source>
     </message>
     <message>
         <source>Letter landscape</source>
-        <translation type="unfinished"></translation>
+        <translation>Letter 横</translation>
     </message>
     <message>
         <source>Letter portrait</source>
-        <translation type="unfinished"></translation>
+        <translation>Letter 縦</translation>
     </message>
 </context>
 <context>
