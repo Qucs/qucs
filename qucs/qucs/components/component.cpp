@@ -196,9 +196,10 @@ void Component::paint(ViewPainter *p)
 
     p->Painter->setPen(QPen(QPen::darkBlue,2));
     a = b = 0;
-    QRect r;
+    QRect r, t;
     for(pt = Texts.first(); pt != 0; pt = Texts.next()) {
-      p->Painter->drawText(x, y+b, 0, 0, Qt::DontClip, pt->s, -1, &r);
+      t.setRect(x, y+b, 0, 0);
+      p->Painter->drawText(t, Qt::AlignLeft|Qt::DontClip, pt->s, -1, &r);
       b += r.height();
       if(a < r.width())  a = r.width();
     }
@@ -260,7 +261,7 @@ void Component::paint(ViewPainter *p)
       newFont.setUnderline(pt->under);
       p->Painter->setFont(newFont);
       p->Painter->setPen(pt->Color);
-      p->Painter->drawText(0, 0, 0, 0, Qt::DontClip, pt->s);
+      p->Painter->drawText(0, 0, 0, 0, Qt::AlignLeft|Qt::DontClip, pt->s);
     }
     p->Painter->setWorldMatrix(wm);
     p->Painter->setWorldXForm(false);
