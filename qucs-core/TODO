@@ -29,7 +29,7 @@ unfixed) have a look at the file BUGS.
 - MESFET translation from SPICE to qucs in the converter.
 - Four-terminal versions of two-port RFEDD's.
 	- Implementation of ddx() operator, especially for EDD.
-- Introduce global nodes (e.g. subst!) in the simulator. 
+	- Introduce global nodes (e.g. subst!) in the simulator. 
 - Allow variable references in property value lists.
 - Translation of B-sources in SPICE converter using EDD.
 	- Translation of polynomial C's and L's in SPICE converter using EDD.

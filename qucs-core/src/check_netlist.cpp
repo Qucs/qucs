@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_netlist.cpp,v 1.130 2009/03/07 19:20:14 ela Exp $
+ * $Id: check_netlist.cpp,v 1.131 2009/04/16 15:14:55 ela Exp $
  *
  */
 
@@ -1135,6 +1135,9 @@ checker_copy_subcircuit_nodes (struct definition_t * type,
     else if (!strcmp (n->node, "gnd")) { // ground node
       ncopy->node = strdup (n->node);
     }
+    else if (n->node[strlen (n->node) - 1] == '!') { // global node
+      ncopy->node = strdup (n->node);
+    }
     else { // internal subcircuit element node
       ncopy->node = checker_subcircuit_node (type->instance, instances,
 					     inst->instance, n->node);
@@ -1198,6 +1201,9 @@ checker_copy_circuit_nodes (struct definition_t * type,
 	  ncopy->node = NULL; // keep blank
       }
       else if (!strcmp (n->node, "gnd")) { // global ground node
+	ncopy->node = strdup (n->node);
+      }
+      else if (n->node[strlen (n->node) - 1] == '!') { // other global node
 	ncopy->node = strdup (n->node);
       }
       else { // internal subcircuit element node
