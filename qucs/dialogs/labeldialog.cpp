@@ -35,7 +35,7 @@ LabelDialog::LabelDialog(WireLabel *pl, QWidget *parent)
 
   // valid expression for LineEdit: alpha-numeric, but must start with
   // letter and never two "_" together
-  Expr1.setPattern("[a-zA-Z]([0-9a-zA-Z]|_(?!_))+");
+  Expr1.setPattern("[a-zA-Z]([0-9a-zA-Z]|_(?!_))+\\!{0,1}");
   Validator1 = new QRegExpValidator(Expr1, this);
 
   QLabel *Label1 = new QLabel(tr("Enter the label:"),this);
@@ -46,7 +46,7 @@ LabelDialog::LabelDialog(WireLabel *pl, QWidget *parent)
   NodeName->setValidator(Validator1);
   gbox->addMultiCellWidget(NodeName,1,1,0,3);
 
-  Expr2.setPattern("[^\"=]+");  // valid expression for LineEdit
+  Expr2.setPattern("[^\"=]+");    // valid expression for LineEdit
   Validator2 = new QRegExpValidator(Expr2, this);
 
   Label2 = new QLabel(tr("Initial node voltage:"),this);
