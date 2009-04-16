@@ -4,7 +4,7 @@
 /*
  * scan_netlist.l - scanner for the Qucs netlist
  *
- * Copyright (C) 2003, 2004, 2005, 2006, 2007 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003-2009 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: scan_netlist.l,v 1.24 2008-02-16 19:05:37 ela Exp $
+ * $Id: scan_netlist.l,v 1.25 2009-04-16 15:14:55 ela Exp $
  *
  */
 
@@ -105,6 +105,7 @@ WS       [ \t\n\r]
 SIMPLEID [a-zA-Z_][a-zA-Z0-9_]*
 POSTID   "."[a-zA-Z0-9_]+
 ID       {SIMPLEID}{POSTID}*
+NODE     {SIMPLEID}\!?
 FILE     "{"[^\t\n\r\}]+"}"
 CHR      "'"[^\n\r\']{1}"'"
 STR      "'"[^\n\r\']*"'"
@@ -160,6 +161,10 @@ UCOMPLEX {UCREAL}{UCIMAG}
     return EndSub;
   }
 <INITIAL,STR>{ID} { /* identify identifier */
+    netlist_lval.ident = strdup (netlist_text);
+    return Identifier;
+  }
+<INITIAL>{NODE} { /* identify node identifier */
     netlist_lval.ident = strdup (netlist_text);
     return Identifier;
   }
