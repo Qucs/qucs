@@ -64,7 +64,7 @@ void ID_Text::paint(ViewPainter *p)
     p->Painter->drawRoundRect(x-4, y-4, x2+8, y2+8);
   }
 
-  x2 = int(float(x2)  / p->Scale);
+  x2 = int(float(x2) / p->Scale);
   y2 = int(float(y2) / p->Scale);
 }
 
@@ -113,7 +113,9 @@ bool ID_Text::load(const QString& s)
 
     Parameter.append(new SubParameter(
        (n.at(0) == '0') ? false : true,
-       n.section('=', 1,2), n.section('=', 3,3)));
+       n.section('=', 1,2),
+       n.section('=', 3,3),
+       n.section('=', 4,4)));
 
     i += 2;
   }
@@ -131,7 +133,7 @@ QString ID_Text::save()
   for(pp = Parameter.first(); pp != 0; pp = Parameter.next()) {
     if(pp->display)  s += " \"1=";
     else  s += " \"0=";
-    s += pp->Name + "=" + pp->Description + "\"";
+    s += pp->Name + "=" + pp->Description + "=" + pp->Type + "\"";
   }
 
   return s;

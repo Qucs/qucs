@@ -914,6 +914,14 @@
         <source>Parameter &quot;%1&quot; already in list!</source>
         <translation>&quot;%1&quot; değişkeni dizgede zaten var!</translation>
     </message>
+    <message>
+        <source>Type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Type:</source>
+        <translation type="unfinished">Çeşit:</translation>
+    </message>
 </context>
 <context>
     <name>ImportDialog</name>

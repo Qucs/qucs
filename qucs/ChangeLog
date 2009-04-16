@@ -1,3 +1,12 @@
+2009-04-16  Stefan Jahn  <stefan@lkcc.org>
+
+	* paintings/id_dialog.cpp (ID_Dialog): Added new 'Type' property
+	for subcircuit parameters.
+
+	* schematic_file.cpp (createSubNetlistPlain): Using new 'Type'
+	property for subcircuit parameters for passing them to generic
+	VHDL parameters.
+
 2009-04-13  Stefan Jahn  <stefan@lkcc.org>
 
 	* qucs_jp.ts: Updated Japanese translation.  Thanks to Ishikawa!

@@ -878,6 +878,14 @@
         <source>Parameter &quot;%1&quot; already in list!</source>
         <translation></translation>
     </message>
+    <message>
+        <source>Type</source>
+        <translation type="unfinished">النوع </translation>
+    </message>
+    <message>
+        <source>Type:</source>
+        <translation type="unfinished">النوع :</translation>
+    </message>
 </context>
 <context>
     <name>ImportDialog</name>

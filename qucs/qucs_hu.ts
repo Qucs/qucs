@@ -975,6 +975,14 @@ fizikai tulajdonságait számítja ki.</translation>
         <source>Parameter &quot;%1&quot; already in list!</source>
         <translation>A &quot;%1&quot; paraméter már szerepel a listában!</translation>
     </message>
+    <message>
+        <source>Type</source>
+        <translation type="unfinished">Típus</translation>
+    </message>
+    <message>
+        <source>Type:</source>
+        <translation type="unfinished">Típus:</translation>
+    </message>
 </context>
 <context>
     <name>ImportDialog</name>

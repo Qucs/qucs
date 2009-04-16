@@ -82,6 +82,7 @@ QString properName(const QString&);
 QString properAbsFileName(const QString&);
 QString properFileName(const QString&);
 bool    VHDL_Time(QString&, const QString&);
+bool    VHDL_Delay(QString&, const QString&);
 bool    Verilog_Time(QString&, const QString&);
 bool    checkVersion(QString&);
 

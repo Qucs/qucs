@@ -973,6 +973,14 @@
         <source>Parameter &quot;%1&quot; already in list!</source>
         <translation>&quot;%1&quot;パラメータはすでにリストにあります!</translation>
     </message>
+    <message>
+        <source>Type</source>
+        <translation type="unfinished">タイプ</translation>
+    </message>
+    <message>
+        <source>Type:</source>
+        <translation type="unfinished">タイプ:</translation>
+    </message>
 </context>
 <context>
     <name>ImportDialog</name>
