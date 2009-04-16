@@ -1262,7 +1262,8 @@ void Schematic::createSubNetlistPlain(QTextStream *stream, QTextEdit *ErrText,
 	    (*tstream) << "  generic (";
 	    for(pp = pid->Parameter.first(); pp != 0;) {
 	      s = pp->Name;
-	      (*tstream) << s.replace("=", " : real := ");
+	      QString t = pp->Type.isEmpty() ? "real" : pp->Type;
+	      (*tstream) << s.replace("=", " : "+t+" := ");
 	      pp = pid->Parameter.next();
 	      if(pp) (*tstream) << ";\n           ";
 	    }
@@ -1292,8 +1293,13 @@ void Schematic::createSubNetlistPlain(QTextStream *stream, QTextEdit *ErrText,
 	(*tstream) << "  gnd <= '0';\n";  // should appear only once
 
       // write all components into netlist file
-      for(pc = DocComps.first(); pc != 0; pc = DocComps.next())
-	(*tstream) << pc->get_VHDL_Code(NumPorts);
+      for(pc = DocComps.first(); pc != 0; pc = DocComps.next()) {
+	s = pc->get_VHDL_Code(NumPorts);
+	if(s.at(0) == '§') {
+	  ErrText->insert(s.mid(1));
+	}
+	else (*tstream) << s;
+      }
 
       (*tstream) << "end architecture;\n";
     }

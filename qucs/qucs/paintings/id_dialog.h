@@ -45,10 +45,10 @@ private:
 
   QListView *ParamList;
   QCheckBox *showCheck;
-  QLineEdit *ParamNameEdit, *ValueEdit, *DescriptionEdit;
+  QLineEdit *ParamNameEdit, *ValueEdit, *DescriptionEdit, *TypeEdit;
 
   QRegExp Expr;
-  QRegExpValidator *SubVal, *NameVal, *ValueVal, *DescrVal;
+  QRegExpValidator *SubVal, *NameVal, *ValueVal, *DescrVal, *TypeVal;
 
 private slots:
   void slotOk();
@@ -59,6 +59,7 @@ private slots:
   void slotNameChanged(const QString&);
   void slotValueChanged(const QString&);
   void slotDescrChanged(const QString&);
+  void slotTypeChanged(const QString&);
 };
 
 #endif
