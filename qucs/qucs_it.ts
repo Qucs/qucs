@@ -1036,6 +1036,14 @@
         <source>Parameter &quot;%1&quot; already in list!</source>
         <translation>Parametro &quot;%1&quot; già nella lista!</translation>
     </message>
+    <message>
+        <source>Type</source>
+        <translation type="unfinished">Tipo</translation>
+    </message>
+    <message>
+        <source>Type:</source>
+        <translation type="unfinished">Tipo:</translation>
+    </message>
 </context>
 <context>
     <name>ImportDialog</name>

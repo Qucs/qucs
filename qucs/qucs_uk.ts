@@ -906,6 +906,14 @@
         <source>Parameter &quot;%1&quot; already in list!</source>
         <translation>Параметр &quot;%1&quot; вже є у списку!</translation>
     </message>
+    <message>
+        <source>Type</source>
+        <translation type="unfinished">Тип</translation>
+    </message>
+    <message>
+        <source>Type:</source>
+        <translation type="unfinished">Тип:</translation>
+    </message>
 </context>
 <context>
     <name>ImportDialog</name>
