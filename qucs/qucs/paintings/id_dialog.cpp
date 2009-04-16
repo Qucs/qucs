@@ -59,13 +59,14 @@ ID_Dialog::ID_Dialog(ID_Text *idText_)
   ParamList->addColumn(tr("Name"));
   ParamList->addColumn(tr("Default"));
   ParamList->addColumn(tr("Description"));
+  ParamList->addColumn(tr("Type"));
   ParamList->setSorting(-1);   // no sorting
 
   SubParameter *pp;
   for(pp = idText->Parameter.last(); pp!=0; pp = idText->Parameter.prev())
     new QListViewItem(ParamList,
       pp->display ? tr("yes") : tr("no"), pp->Name.section('=', 0,0),
-      pp->Name.section('=', 1,1), pp->Description);
+      pp->Name.section('=', 1,1), pp->Description, pp->Type);
 
   connect(ParamList, SIGNAL(selectionChanged(QListViewItem*)),
                      SLOT(slotEditParameter(QListViewItem*)));
@@ -79,6 +80,7 @@ ID_Dialog::ID_Dialog(ID_Text *idText_)
   new QLabel(tr("Name:"), v1);
   new QLabel(tr("Default Value:"), v1);
   new QLabel(tr("Description:"), v1);
+  new QLabel(tr("Type:"), v1);
 
   QVBox *v2 = new QVBox(h1);
 
@@ -102,6 +104,13 @@ ID_Dialog::ID_Dialog(ID_Text *idText_)
   DescriptionEdit->setValidator(DescrVal);
   connect(DescriptionEdit, SIGNAL(textChanged(const QString&)),
           SLOT(slotDescrChanged(const QString&)));
+
+  Expr.setPattern("[\\w_]+");
+  TypeVal = new QRegExpValidator(Expr, this);
+  TypeEdit = new QLineEdit(v2);
+  TypeEdit->setValidator(TypeVal);
+  connect(TypeEdit, SIGNAL(textChanged(const QString&)),
+          SLOT(slotTypeChanged(const QString&)));
 
   QHBox *h2 = new QHBox(ParamBox);
   h2->setStretchFactor(new QWidget(h2), 10);
@@ -129,6 +138,7 @@ ID_Dialog::~ID_Dialog()
   delete NameVal;
   delete ValueVal;
   delete DescrVal;
+  delete TypeVal;
 }
 
 // -----------------------------------------------------------
@@ -140,6 +150,7 @@ void ID_Dialog::slotEditParameter(QListViewItem *Item)
     showCheck->setChecked(true);
     ValueEdit->clear();
     DescriptionEdit->clear();
+    TypeEdit->clear();
     return;
   }
 
@@ -147,6 +158,7 @@ void ID_Dialog::slotEditParameter(QListViewItem *Item)
   ParamNameEdit->setText(Item->text(1));
   ValueEdit->setText(Item->text(2));
   DescriptionEdit->setText(Item->text(3));
+  TypeEdit->setText(Item->text(4));
 }
 
 // -----------------------------------------------------------
@@ -174,7 +186,7 @@ void ID_Dialog::slotAddParameter()
 
   new QListViewItem(ParamList, lastItem,
       showCheck->isChecked() ? tr("yes") : tr("no"), ParamNameEdit->text(),
-      ValueEdit->text(), DescriptionEdit->text());
+      ValueEdit->text(), DescriptionEdit->text(), TypeEdit->text());
 
   slotEditParameter(0);   // clear entry fields
   ParamList->clearSelection();
@@ -233,6 +245,15 @@ void ID_Dialog::slotDescrChanged(const QString& text)
 }
 
 // -----------------------------------------------------------
+void ID_Dialog::slotTypeChanged(const QString& text)
+{
+  QListViewItem *Item = ParamList->selectedItem();
+  if(Item == 0) return;
+
+  Item->setText(4, text);
+}
+
+// -----------------------------------------------------------
 void ID_Dialog::slotOk()
 {
   bool changed = false;
@@ -262,10 +283,15 @@ void ID_Dialog::slotOk()
         pp->Description = item->text(3);
         changed = true;
       }
+      if(pp->Type != item->text(4)) {
+        pp->Type = item->text(4);
+        changed = true;
+      }
     }
     else {
       idText->Parameter.append(new SubParameter(
-         (item->text(0) == tr("yes")) ? true : false, s, item->text(3)));
+         (item->text(0) == tr("yes")) ? true : false, s, item->text(3),
+	 item->text(4)));
       changed = true;
     }
 

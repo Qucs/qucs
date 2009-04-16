@@ -20,6 +20,7 @@
 #endif
 
 #include <stdlib.h>
+#include <ctype.h>
 #include <math.h>
 #include <locale.h>
 
@@ -389,6 +390,26 @@ QString properName(const QString& Name)
   if(s.at(0) == '_')
     s = 'n' + s;
   return s;
+}
+
+// #########################################################################
+// Creates and returns delay time for VHDL entities.
+bool VHDL_Delay(QString& td, const QString& Name)
+{
+  if(strtod(td.latin1(), 0) != 0.0) {  // delay time property
+    if(!VHDL_Time(td, Name))
+      return false;    // time has not VHDL format
+    td = " after " + td;
+    return true;
+  }
+  else if(isalpha(td.latin1()[0])) {
+    td = " after " + td;
+    return true;
+  }
+  else {
+    td = "";
+    return true;
+  }
 }
 
 // #########################################################################

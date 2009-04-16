@@ -53,14 +53,12 @@ QString Logical_Inv::vhdlCode(int NumPorts)
   QString s = "  " + Ports.getFirst()->Connection->Name + " <= not " +
               Ports.getLast()->Connection->Name;
 
-  if(NumPorts <= 0)  // no truth table simulation ?
-    if(strtod(Props.at(1)->Value.latin1(), 0) != 0.0) {  // delay time
-      QString t = Props.current()->Value;
-      if(!VHDL_Time(t, Name))
-        return t;    // time has not VHDL format
-
-      s += " after " + t;
-    }
+  if(NumPorts <= 0) { // no truth table simulation ?
+    QString td = Props.at(1)->Value;
+    if(!VHDL_Delay(td, Name))
+      return td;
+    s += td;
+  }
 
   s += ";\n";
   return s;
