@@ -1,5 +1,8 @@
 2009-04-16  Stefan Jahn  <stefan@lkcc.org>
 
+	* dialogs/labeldialog.cpp (LabelDialog): Allow input of global
+	nodes such as "subst!".
+
 	* paintings/id_dialog.cpp (ID_Dialog): Added new 'Type' property
 	for subcircuit parameters.
 
