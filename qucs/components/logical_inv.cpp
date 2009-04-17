@@ -72,15 +72,14 @@ QString Logical_Inv::verilogCode(int NumPorts)
   QString s ("");
 
   if (synthesize) {
-    s = "  assign ";
+    s = "  assign";
 
-    if(NumPorts <= 0)  // no truth table simulation ?
-      if(strtod(Props.at(1)->Value.latin1(), 0) != 0.0) {  // delay time
-	QString t = Props.current()->Value;
-	if(!Verilog_Time(t, Name))
-	  return t;    // time has not VHDL format
-	s += "#" + t + " ";
-      }
+    if(NumPorts <= 0) { // no truth table simulation ?
+      QString td = Props.at(1)->Value;
+      if(!Verilog_Delay(td, Name))
+	return td;    // time has not VHDL format
+      s += td + " ";
+    }
     s += pp->Connection->Name + " = ";  // output port
     pp = Ports.next();
     s += "~" + pp->Connection->Name;   // input port
@@ -89,13 +88,12 @@ QString Logical_Inv::verilogCode(int NumPorts)
   else {
     s = "  not";
 
-    if(NumPorts <= 0)  // no truth table simulation ?
-      if(strtod(Props.at(1)->Value.latin1(), 0) != 0.0) {  // delay time
-	QString t = Props.current()->Value;
-	if(!Verilog_Time(t, Name))
-	  return t;    // time has not VHDL format
-	s += " #" + t;
-      }
+    if(NumPorts <= 0) { // no truth table simulation ?
+      QString td = Props.at(1)->Value;
+      if(!Verilog_Delay(td, Name))
+	return td;    // time has not VHDL format
+      s += td;
+    }
     s += " " + Name + " (" + pp->Connection->Name;  // output port
     pp = Ports.next();
     s += ", " + pp->Connection->Name; // first input port

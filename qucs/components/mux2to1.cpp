@@ -124,14 +124,10 @@ QString mux2to1::vhdlCode( int )
 
 QString mux2to1::verilogCode( int )
 {
-  QString td = " ";
-
-  if(strtod(Props.at(1)->Value.latin1(), 0) != 0.0) { // delay time
-    td = Props.at(1)->Value;
-    if(!Verilog_Time(td, Name))
-      return td;    // time has not VHDL format.
-    td = " #" + td;
-  }
+  QString td = Props.at(1)->Value;
+  if(!VHDL_Delay(td, Name))
+    return td;      // Time does not have VHDL format.
+  td += " ";
   
   QString l = "";
 
@@ -148,7 +144,7 @@ QString mux2to1::verilogCode( int )
       "  reg     " + v + " = 0;\n" +
       "  always @ (" + En + " or " + A + " or "
                      + D0 + " or " + D1 +  ")\n" +
-      "    " + v + " <=" + td + " (" + D1 + " && " + A + ")" + " || " +
+      "    " + v + " <=" + td + "(" + D1 + " && " + A + ")" + " || " +
                "(" + D0 + " && (~" + A + "));\n" ;
 
   return l;
