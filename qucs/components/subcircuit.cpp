@@ -247,9 +247,20 @@ QString Subcircuit::vhdlCode(int)
 QString Subcircuit::verilogCode(int)
 {
   QString f = properFileName(Props.first()->Value);
-  QString s = "  Sub_" + properName(f) + " " + Name + " (";
+  QString s = "  Sub_" + properName(f);
+
+  // output all user defined properties
+  Property *pr = Props.next();
+  if (pr) {
+    s += " #(";
+    s += Verilog_Param(pr->Value);
+    for(pr = Props.next(); pr != 0; pr = Props.next())
+      s += ", " + Verilog_Param(pr->Value);
+    s += ")";
+  }
 
   // output all node names
+  s +=  " " + Name + " (";
   Port *pp = Ports.first();
   if(pp)  s += pp->Connection->Name;
   for(pp = Ports.next(); pp != 0; pp = Ports.next())

@@ -1,3 +1,8 @@
+2009-04-17  Stefan Jahn  <stefan@lkcc.org>
+
+	* schematic_file.cpp (createSubNetlistPlain): Create parameter
+	lists in Verilog-HDL subcircuits.
+
 2009-04-16  Stefan Jahn  <stefan@lkcc.org>
 
 	* dialogs/labeldialog.cpp (LabelDialog): Allow input of global

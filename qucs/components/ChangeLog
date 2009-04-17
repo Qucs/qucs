@@ -1,3 +1,8 @@
+2009-04-17  Stefan Jahn  <stefan@lkcc.org>
+
+	* subcircuit.cpp (verilogCode): Passing subcircuit parameters to
+	Verilog-HDL subcircuits.
+
 2009-04-13  Stefan Jahn  <stefan@lkcc.org>
 
 	* component.cpp (paint): Made simulation boxes and component texts
