@@ -440,6 +440,41 @@ bool VHDL_Time(QString& t, const QString& Name)
 }
 
 // #########################################################################
+// Returns parameters for Verilog modules.
+QString Verilog_Param(const QString Value)
+{
+  if(strtod(Value.latin1(), 0) != 0.0) {
+    QString td = Value;
+    if(!Verilog_Time(td, "parameter"))
+      return Value;
+    else
+      return td;
+  }
+  else
+    return Value;
+}
+
+// #########################################################################
+// Creates and returns delay time for Verilog modules.
+bool Verilog_Delay(QString& td, const QString& Name)
+{
+  if(strtod(td.latin1(), 0) != 0.0) {  // delay time property
+    if(!Verilog_Time(td, Name))
+      return false;    // time has not Verilog format
+    td = " #" + td;
+    return true;
+  }
+  else if(isalpha(td.latin1()[0])) {
+    td = " #" + td;
+    return true;
+  }
+  else {
+    td = "";
+    return true;
+  }
+}
+
+// #########################################################################
 // Checks and corrects a time (number & unit) according Verilog standard.
 bool Verilog_Time(QString& t, const QString& Name)
 {
@@ -463,7 +498,7 @@ bool Verilog_Time(QString& t, const QString& Name)
     return false;
   }
 
-  t = QString::number(Time*factor);  // the space is mandatory !
+  t = QString::number(Time*factor);
   return true;
 }
 

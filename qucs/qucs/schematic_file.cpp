@@ -1239,12 +1239,33 @@ void Schematic::createSubNetlistPlain(QTextStream *stream, QTextEdit *ErrText,
       }
       (*tstream) << "\n";
 
+      for(pi = SymbolPaints.first(); pi != 0; pi = SymbolPaints.next())
+	if(pi->Name == ".ID ") {
+	  SubParameter *pp;
+	  ID_Text *pid = (ID_Text*)pi;
+	  if(pid->Parameter.first()) {
+	    for(pp = pid->Parameter.first(); pp != 0;) {
+	      s = pp->Name.section('=', 0,0);
+	      QString v = Verilog_Param(pp->Name.section('=', 1,1));
+	      (*tstream) << "  parameter " << s << " = " << v << ";\n";
+	      pp = pid->Parameter.next();
+	    }
+	    (*tstream) << "\n";
+	  }
+	  break;
+	}
+
       if(Signals.find("gnd") != Signals.end())
 	(*tstream) << "  assign gnd = 0;\n";  // should appear only once
 
       // write all components into netlist file
-      for(pc = DocComps.first(); pc != 0; pc = DocComps.next())
-	(*tstream) << pc->get_Verilog_Code(NumPorts);
+      for(pc = DocComps.first(); pc != 0; pc = DocComps.next()) {
+	s = pc->get_Verilog_Code(NumPorts);
+	if(s.at(0) == '§') {
+	  ErrText->insert(s.mid(1));
+	}
+	else (*tstream) << s;
+      }
 
       (*tstream) << "endmodule\n";
     } else {
