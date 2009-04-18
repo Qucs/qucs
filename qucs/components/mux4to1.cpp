@@ -16,8 +16,6 @@
  * 
  */
 
-#include <stdlib.h>
-
 #include "mux4to1.h"
 #include "node.h"
 #include "main.h"
@@ -110,14 +108,10 @@ void mux4to1::createSymbol()
 QString mux4to1::vhdlCode( int )
 {
   QString s="";
-  QString td=";\n";
 
-  if(strtod(Props.at(1)->Value.latin1(), 0) != 0.0) { // delay time
-    td = Props.at(1)->Value;
-    if(!VHDL_Time(td, Name))
-      return td;    // Time does not have VHDL format.
-    td = " after " + td + ";\n";
-  }
+  QString td = Props.at(1)->Value;     // delay time
+  if(!VHDL_Delay(td, Name)) return td; // time has not VHDL format
+  td += ";\n";
 
   QString En = Ports.at(0)->Connection->Name;
   QString A  = Ports.at(1)->Connection->Name;
@@ -141,14 +135,8 @@ QString mux4to1::vhdlCode( int )
 
 QString mux4to1::verilogCode( int )
 {
-  QString td = " ";
-
-  if(strtod(Props.at(1)->Value.latin1(), 0) != 0.0) { // delay time
-    td = Props.at(1)->Value;
-    if(!Verilog_Time(td, Name))
-      return td;    // time has not VHDL format.
-    td = " #" + td ;
-  }
+  QString td = Props.at(1)->Value;        // delay time
+  if(!Verilog_Delay(td, Name)) return td; // time does not have VHDL format
   
   QString l = "";
 

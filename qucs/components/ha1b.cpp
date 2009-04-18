@@ -16,8 +16,6 @@
  * 
  */
 
-#include <stdlib.h>
-
 #include "ha1b.h"
 #include "node.h"
 #include "main.h"
@@ -88,14 +86,10 @@ void ha1b::createSymbol()
 QString ha1b::vhdlCode( int )
 {
   QString s="";
-  QString td=";\n";
 
-  if(strtod(Props.at(1)->Value.latin1(), 0) != 0.0) { // delay time
-    td = Props.at(1)->Value;
-    if(!VHDL_Time(td, Name))
-      return s;    // Time does not have VHDL format.
-    td = " after " + td + ";\n";
-  }
+  QString td = Props.at(1)->Value;     // delay time
+  if(!VHDL_Delay(td, Name)) return td; // time has not VHDL format
+  td += ";\n";
 
   QString A  = Ports.at(0)->Connection->Name;
   QString B  = Ports.at(1)->Connection->Name;
@@ -112,13 +106,8 @@ QString ha1b::vhdlCode( int )
 
 QString ha1b::verilogCode( int )
 {
-  QString td = "";
-  if(strtod(Props.at(1)->Value.latin1(), 0) != 0.0) { // delay time
-    td = Props.at(1)->Value;
-    if(!Verilog_Time(td, Name))
-      return td;    // time has not VHDL format.
-    td = " #" + td ;
-  }
+  QString td = Props.at(1)->Value;        // delay time
+  if(!Verilog_Delay(td, Name)) return td; // time does not have VHDL format
   
   QString l = "";
 

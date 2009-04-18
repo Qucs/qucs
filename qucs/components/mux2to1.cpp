@@ -16,8 +16,6 @@
  * 
  */
 
-#include <stdlib.h>
-
 #include "mux2to1.h"
 #include "node.h"
 #include "main.h"
@@ -117,7 +115,7 @@ QString mux2to1::vhdlCode( int )
   s = "\n  " + Name + ":process (" + En + ", " +  A + ", " + D0 + ", " +  D1 + ")\n" +
      "  begin\n" +
      "    " + y + " <= " +  "(not " + En + ") and ((" + D1 + " and " + A + ") or " + 
-                  "(" + D0 + " and " + "(not " + A + ")))" + td  +
+                  "(" + D0 + " and " + "(not " + A + ")))" + td +
      "  end process;\n";
   return s;
 }

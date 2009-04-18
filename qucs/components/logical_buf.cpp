@@ -15,8 +15,6 @@
  *                                                                         *
  ***************************************************************************/
 
-#include <stdlib.h>
-
 #include "main.h"
 #include "logical_buf.h"
 #include "schematic.h"
@@ -53,14 +51,11 @@ QString Logical_Buf::vhdlCode(int NumPorts)
   QString s = "  " + Ports.getFirst()->Connection->Name + " <= " +
               Ports.getLast()->Connection->Name;
 
-  if(NumPorts <= 0)  // no truth table simulation ?
-    if(strtod(Props.at(1)->Value.latin1(), 0) != 0.0) {  // delay time
-      QString t = Props.current()->Value;
-      if(!VHDL_Time(t, Name))
-        return t;    // time has not VHDL format
-
-      s += " after " + t;
-    }
+  if(NumPorts <= 0) { // no truth table simulation ?
+    QString td = Props.at(1)->Value;
+    if(!VHDL_Delay(td, Name)) return td;
+    s += td;
+  }
 
   s += ";\n";
   return s;
@@ -74,15 +69,14 @@ QString Logical_Buf::verilogCode(int NumPorts)
   QString s ("");
 
   if (synthesize) {
-    s = "  assign ";
+    s = "  assign";
 
-    if(NumPorts <= 0)  // no truth table simulation ?
-      if(strtod(Props.at(1)->Value.latin1(), 0) != 0.0) {  // delay time
-	QString t = Props.current()->Value;
-	if(!Verilog_Time(t, Name))
-	  return t;    // time has not VHDL format
-	s += "#" + t + " ";
-      }
+    if(NumPorts <= 0) { // no truth table simulation ?
+      QString td = Props.at(1)->Value;
+      if(!Verilog_Delay(td, Name)) return td;
+      s += td;
+    }
+    s += " ";
     s += pp->Connection->Name + " = ";  // output port
     pp = Ports.next();
     s += pp->Connection->Name;          // input port

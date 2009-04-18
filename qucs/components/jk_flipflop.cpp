@@ -70,14 +70,13 @@ JK_FlipFlop::JK_FlipFlop()
 // -------------------------------------------------------
 QString JK_FlipFlop::vhdlCode(int NumPorts)
 {
-  QString s = ";\n";
-  if(NumPorts <= 0)  // no truth table simulation ?
-    if(strtod(Props.getFirst()->Value.latin1(), 0) != 0.0) { // delay time
-      s = Props.getFirst()->Value;
-      if(!VHDL_Time(s, Name))
-        return s;    // time has not VHDL format
-      s = " after " + s + ";\n";
-    }
+  QString s = "";
+  if(NumPorts <= 0) { // no truth table simulation ?
+    QString td = Props.at(0)->Value;     // delay time
+    if(!VHDL_Delay(td, Name)) return td; // time has not VHDL format
+    s += td;
+  }
+  s += ";\n";
 
   s = "  " + Name + " : process (" +
       Ports.at(5)->Connection->Name + ", " +
@@ -104,14 +103,12 @@ QString JK_FlipFlop::vhdlCode(int NumPorts)
 QString JK_FlipFlop::verilogCode(int NumPorts)
 {
   QString t = "";
-  if(NumPorts <= 0)  // no truth table simulation ?
-    if(strtod(Props.getFirst()->Value.latin1(), 0) != 0.0) { // delay time
-      t = Props.getFirst()->Value;
-      if(!Verilog_Time(t, Name))
-        return t;    // time has not VHDL format
-      t = "    #" + t + ";\n";
-    }
-  
+  if(NumPorts <= 0) { // no truth table simulation ?
+    QString td = Props.at(0)->Value;        // delay time
+    if(!Verilog_Delay(td, Name)) return td; // time has not VHDL format
+    t = "   " + t + ";\n";
+  }
+
   QString l = "";
 
   QString s = Ports.at(5)->Connection->Name;

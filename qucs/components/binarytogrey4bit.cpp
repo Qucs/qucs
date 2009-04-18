@@ -16,8 +16,6 @@
  * 
  */
 
-#include <stdlib.h>
-
 #include "binarytogrey4bit.h"
 #include "node.h"
 #include "main.h"
@@ -105,14 +103,10 @@ void binarytogrey4bit::createSymbol()
 QString binarytogrey4bit::vhdlCode( int )
 {
   QString s="";
-  QString td=";\n";
 
-  if(strtod(Props.at(1)->Value.latin1(), 0) != 0.0) { // delay time
-    td = Props.at(1)->Value;
-    if(!VHDL_Time(td, Name))
-      return td;    // Time does not have VHDL format.
-    td = " after " + td + ";\n";
-  }
+  QString td = Props.at(1)->Value;     // delay time
+  if(!VHDL_Delay(td, Name)) return td; // time has not VHDL format
+  td += ";\n";
 
   QString B0 = Ports.at(0)->Connection->Name;
   QString B1 = Ports.at(1)->Connection->Name;
@@ -136,14 +130,8 @@ QString binarytogrey4bit::vhdlCode( int )
 
 QString binarytogrey4bit::verilogCode( int )
 {
-  QString td = "";
-
-  if(strtod(Props.at(1)->Value.latin1(), 0) != 0.0) { // delay time
-    td = Props.at(1)->Value;
-    if(!Verilog_Time(td, Name))
-      return td;    // Time does not have VHDL format
-    td = " #" + td ;
-  }
+  QString td = Props.at(1)->Value;        // delay time
+  if(!Verilog_Delay(td, Name)) return td; // time does not have VHDL format
   
   QString B0 = Ports.at(0)->Connection->Name;
   QString B1 = Ports.at(1)->Connection->Name;

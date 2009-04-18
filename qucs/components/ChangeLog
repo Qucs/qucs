@@ -1,3 +1,9 @@
+2009-04-18  Stefan Jahn  <stefan@lkcc.org>
+
+	* logical_buf.cpp (vhdlCode, verilogCode): Using new
+	Verilog_Delay() and VHDL_Delay() functions producing delay time
+	identifiers.
+
 2009-04-17  Stefan Jahn  <stefan@lkcc.org>
 
 	* subcircuit.cpp (verilogCode): Passing subcircuit parameters to
