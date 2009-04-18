@@ -16,8 +16,6 @@
  * 
  */
 
-#include <stdlib.h>
-
 #include "comp_1bit.h"
 #include "node.h"
 #include "main.h"
@@ -90,15 +88,11 @@ void comp_1bit::createSymbol()
 
 QString comp_1bit::vhdlCode( int )
 {
-   QString s="";
-   QString td=";\n";
+  QString s="";
 
-   if(strtod(Props.at(1)->Value.latin1(), 0) != 0.0) { // delay time
-     td = Props.at(1)->Value;
-     if(!VHDL_Time(td, Name))
-       return td;    // Time does not have VHDL format.
-     td = " after " + td + ";\n";
-   }
+  QString td = Props.at(1)->Value;     // delay time
+  if(!VHDL_Delay(td, Name)) return td; // time has not VHDL format
+  td += ";\n";
  
   QString X    = Ports.at(0)->Connection->Name;
   QString Y    = Ports.at(1)->Connection->Name;
@@ -118,14 +112,9 @@ QString comp_1bit::vhdlCode( int )
 QString comp_1bit::verilogCode( int )
 {
   QString l="";
-  QString td = "";
 
-  if(strtod(Props.at(1)->Value.latin1(), 0) != 0.0) { // delay time
-    td = Props.at(1)->Value;
-    if(!Verilog_Time(td, Name))
-      return td;    // time has not VHDL format.
-    td = " #" + td;
-  }
+  QString td = Props.at(1)->Value;        // delay time
+  if(!Verilog_Delay(td, Name)) return td; // time does not have VHDL format
 
   QString X    = Ports.at(0)->Connection->Name;
   QString Y    = Ports.at(1)->Connection->Name;

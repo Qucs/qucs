@@ -16,8 +16,6 @@
  * 
  */
 
-#include <stdlib.h>
-
 #include "hpribin4bit.h"
 #include "node.h"
 #include "main.h"
@@ -97,15 +95,11 @@ void hpribin4bit::createSymbol()
 
 QString hpribin4bit::vhdlCode( int )
 {
-  QString s="";
-  QString td=";\n";
+  QString s;
 
-  if(strtod(Props.at(1)->Value.latin1(), 0) != 0.0) { // delay time
-    td = Props.at(1)->Value;
-    if(!VHDL_Time(td, Name))
-      return td;    // Time does not have VHDL format.
-    td = " after " + td + ";\n";
-  }
+  QString td = Props.at(1)->Value;     // delay time
+  if(!VHDL_Delay(td, Name)) return td; // time has not VHDL format
+  td += ";\n";
 
   QString A    = Ports.at(0)->Connection->Name;
   QString B    = Ports.at(1)->Connection->Name;
@@ -126,14 +120,8 @@ QString hpribin4bit::vhdlCode( int )
 
 QString hpribin4bit::verilogCode( int )
 {
-  QString t = "";
-
-  if(strtod(Props.at(1)->Value.latin1(), 0) != 0.0) { // delay time
-    t = Props.at(1)->Value;
-    if(!Verilog_Time(t, Name))
-      return t;    // Time does not have VHDL format.
-    t = " #" + t ;
-  }
+  QString td = Props.at(1)->Value;        // delay time
+  if(!Verilog_Delay(td, Name)) return td; // time does not have VHDL format
   
   QString l = "";
 
@@ -158,9 +146,9 @@ QString hpribin4bit::verilogCode( int )
       "  reg     "+XR+" = 0;\n"+
       "  always @ ("+A+" or "+B+" or "+C+" or "+D+")\n"+
       "  begin\n" +
-      "    " +XR+" <="+t+" "+D+" || "+C+";\n"+
-      "    " +YR+" <="+t+" "+D+" || ((~"+C+") && "+B+");\n" +
-      "    " +VR+" <="+t+" "+D+" || "+C+" || "+B+" || "+A+";\n"+     
+      "    " +XR+" <="+td+" "+D+" || "+C+";\n"+
+      "    " +YR+" <="+td+" "+D+" || ((~"+C+") && "+B+");\n" +
+      "    " +VR+" <="+td+" "+D+" || "+C+" || "+B+" || "+A+";\n"+     
       "  end\n";
 
   return l;

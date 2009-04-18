@@ -15,8 +15,6 @@
  *                                                                         *
  ***************************************************************************/
 
-#include <stdlib.h>
-
 #include "rs_flipflop.h"
 #include "node.h"
 #include "main.h"
@@ -60,14 +58,13 @@ RS_FlipFlop::RS_FlipFlop()
 // -------------------------------------------------------
 QString RS_FlipFlop::vhdlCode(int NumPorts)
 {
-  QString s = ";\n";
-  if(NumPorts <= 0)  // no truth table simulation ?
-    if(strtod(Props.getFirst()->Value.latin1(), 0) != 0.0) { // delay time
-      s = Props.getFirst()->Value;
-      if(!VHDL_Time(s, Name))
-        return s;    // time has not VHDL format
-      s = " after " + s + ";\n";
-    }
+  QString s = "";
+  if(NumPorts <= 0) { // no truth table simulation ?
+    QString td = Props.at(0)->Value;     // delay time
+    if(!VHDL_Delay(td, Name)) return td; // time has not VHDL format
+    s = td;
+  }
+  s += ";\n";
 
   s = "  " +
     Ports.at(2)->Connection->Name + " <= " +
@@ -83,13 +80,12 @@ QString RS_FlipFlop::vhdlCode(int NumPorts)
 QString RS_FlipFlop::verilogCode(int NumPorts)
 {
   QString t = "";
-  if(NumPorts <= 0)  // no truth table simulation ?
-    if(strtod(Props.getFirst()->Value.latin1(), 0) != 0.0) { // delay time
-      t = Props.getFirst()->Value;
-      if(!Verilog_Time(t, Name))
-        return t;    // time has not VHDL format
-      t = "#" + t + " ";
-    }
+  if(NumPorts <= 0) { // no truth table simulation ?
+    QString td = Props.at(0)->Value;        // delay time
+    if(!Verilog_Delay(td, Name)) return td; // time has not VHDL format
+    t = td;
+  }
+  t += " ";
   
   QString l = "";
 
@@ -99,8 +95,8 @@ QString RS_FlipFlop::verilogCode(int NumPorts)
   QString b = Ports.at(3)->Connection->Name;
   
   l = "\n  // " + Name + " RS-flipflop\n" +
-    "  assign " + t + q + " = ~(" + r + " | " + b + ");\n" +
-    "  assign " + t + b + " = ~(" + s + " | " + q + ");\n\n";
+    "  assign" + t + q + " = ~(" + r + " | " + b + ");\n" +
+    "  assign" + t + b + " = ~(" + s + " | " + q + ");\n\n";
   return l;
 }
 
