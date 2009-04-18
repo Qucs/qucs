@@ -1300,14 +1300,11 @@ QString GateComponent::vhdlCode(int NumPorts)
   if(Model.at(0) == 'N')
     s += ')';
 
-  if(NumPorts <= 0)  // no truth table simulation ?
-    if(strtod(Props.at(2)->Value.latin1(), 0) != 0.0) {  // delay time
-      QString t = Props.current()->Value;
-      if(!VHDL_Time(t, Name))
-        return t;    // time has not VHDL format
-
-      s += " after " + t;
-    }
+  if(NumPorts <= 0) { // no truth table simulation ?
+    QString td = Props.at(2)->Value;        // delay time
+    if(!VHDL_Delay(td, Name)) return td;
+    s += td;
+  }
 
   s += ";\n";
   return s;
@@ -1331,16 +1328,14 @@ QString GateComponent::verilogCode(int NumPorts)
     else if (op == "xnor")
       op = "^~";
 
-    s = "  assign ";
+    s = "  assign";
 
-    if(NumPorts <= 0)  // no truth table simulation ?
-      if(strtod(Props.at(2)->Value.latin1(), 0) != 0.0) {  // delay time
-	QString t = Props.current()->Value;
-	if(!Verilog_Time(t, Name))
-	  return t;    // time has not VHDL format
-	s += "#" + t + " ";
-      }
-    s += pp->Connection->Name + " = ";  // output port
+    if(NumPorts <= 0) { // no truth table simulation ?
+      QString td = Props.at(2)->Value;        // delay time
+      if(!Verilog_Delay(td, Name)) return td;
+      s += td;
+    }
+    s += " " + pp->Connection->Name + " = ";  // output port
     if(Model.at(0) == 'N') s += "~(";
 
     pp = Ports.next();
@@ -1356,13 +1351,11 @@ QString GateComponent::verilogCode(int NumPorts)
   else {
     s = "  " + Model.lower();
  
-    if(NumPorts <= 0)  // no truth table simulation ?
-      if(strtod(Props.at(2)->Value.latin1(), 0) != 0.0) {  // delay time
-	QString t = Props.current()->Value;
-	if(!Verilog_Time(t, Name))
-	  return t;    // time has not VHDL format
-	s += " #" + t;
-      }
+    if(NumPorts <= 0) { // no truth table simulation ?
+      QString td = Props.at(2)->Value;        // delay time
+      if(!Verilog_Delay(td, Name)) return td;
+      s += td;
+    }
     s += " " + Name + " (" + pp->Connection->Name;  // output port
 
     pp = Ports.next();

@@ -15,8 +15,6 @@
  *                                                                         *
  ***************************************************************************/
 
-#include <stdlib.h>
-
 #include "d_flipflop.h"
 #include "node.h"
 #include "main.h"
@@ -60,14 +58,13 @@ D_FlipFlop::D_FlipFlop()
 // -------------------------------------------------------
 QString D_FlipFlop::vhdlCode(int NumPorts)
 {
-  QString s = ";\n";
-  if(NumPorts <= 0)  // no truth table simulation ?
-    if(strtod(Props.getFirst()->Value.latin1(), 0) != 0.0) { // delay time
-      s = Props.getFirst()->Value;
-      if(!VHDL_Time(s, Name))
-        return s;    // time has not VHDL format
-      s = " after " + s + ";\n";
-    }
+  QString s = "";
+  if(NumPorts <= 0) { // no truth table simulation ?
+    QString td = Props.at(0)->Value;     // delay time
+    if(!VHDL_Delay(td, Name)) return td; // time has not VHDL format
+    s += td;
+  }
+  s += ";\n";
 
   s = "  " + Name + " : process (" +
       Ports.at(0)->Connection->Name + ", " +
@@ -85,13 +82,11 @@ QString D_FlipFlop::vhdlCode(int NumPorts)
 QString D_FlipFlop::verilogCode(int NumPorts)
 {
   QString t = "";
-  if(NumPorts <= 0)  // no truth table simulation ?
-    if(strtod(Props.getFirst()->Value.latin1(), 0) != 0.0) { // delay time
-      t = Props.getFirst()->Value;
-      if(!Verilog_Time(t, Name))
-        return t;    // time has not VHDL format
-      t = "    #" + t + ";\n";
-    }
+  if(NumPorts <= 0) { // no truth table simulation ?
+    QString td = Props.at(0)->Value;        // delay time
+    if(!Verilog_Delay(td, Name)) return td; // time has not VHDL format
+    t = "   " + td  + ";\n";
+  }
   
   QString s = "";
   QString q = Ports.at(2)->Connection->Name;
