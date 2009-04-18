@@ -16,8 +16,6 @@
  * 
  */
 
-#include <stdlib.h>
-
 #include "jkff_SR.h"
 #include "node.h"
 #include "main.h"
@@ -106,14 +104,10 @@ void jkff_SR::createSymbol()
 QString jkff_SR::vhdlCode( int )
 {
   QString s="";
-  QString td=";\n";
 
-  if(strtod(Props.at(2)->Value.latin1(), 0) != 0.0) { // delay time
-    td = Props.at(2)->Value;
-    if(!VHDL_Time(td, Name))
-      return td;    // Time does not have VHDL format.
-    td = " after " + td + ";\n";
-  }
+  QString td = Props.at(2)->Value;     // delay time
+  if(!VHDL_Delay(td, Name)) return td; // time has not VHDL format
+  td += ";\n";
 
   QString S     = Ports.at(0)->Connection->Name;
   QString J     = Ports.at(1)->Connection->Name;
@@ -142,14 +136,8 @@ QString jkff_SR::vhdlCode( int )
 
 QString jkff_SR::verilogCode( int )
 {
-  QString td = "";
-
-  if(strtod(Props.at(2)->Value.latin1(), 0) != 0.0) { // delay time
-    td = Props.at(2)->Value;
-    if(!Verilog_Time(td, Name))
-      return td;    // Time does not have VHDL format.
-    td = " #" + td ;
-  }
+  QString td = Props.at(2)->Value;        // delay time
+  if(!Verilog_Delay(td, Name)) return td; // time does not have VHDL format
 
   QString l = "";
 
