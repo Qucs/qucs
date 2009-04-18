@@ -75,10 +75,13 @@ QString pad2bit::vhdlCode( int )
   v = Props.at(0)->Value; 
 
   s1 = "\n  "+Name+":process\n"+"  begin\n";
-  if (v == "0") s2 = "    "+A+" <= '0'; "+B+" <= '0';\n" ;
-  if (v == "1") s2 = "    "+A+" <= '0'; "+B+" <= '1';\n" ;
-  if (v == "2") s2 = "    "+A+" <= '1'; "+B+" <= '0';\n" ;
-  if (v == "3") s2 = "    "+A+" <= '1'; "+B+" <= '1';\n" ;
+  s2 = "    case " + v + " is\n" +
+       "      when 0 => "+A+" <= '0'; "+B+" <= '0';\n" +
+       "      when 1 => "+A+" <= '0'; "+B+" <= '1';\n" +
+       "      when 2 => "+A+" <= '1'; "+B+" <= '0';\n" +
+       "      when 3 => "+A+" <= '1'; "+B+" <= '1';\n" +
+       "      when others => "+A+" <= '0'; "+B+" <= '0';\n" +
+       "    end case;\n";
   s3 = "  end process;\n";
   s = s1+s2+s3;
   return s;
