@@ -30,7 +30,9 @@ unfixed) have a look at the file BUGS.
 - Four-terminal versions of two-port RFEDD's.
 	- Implementation of ddx() operator, especially for EDD.
 	- Introduce global nodes (e.g. subst!) in the simulator. 
-- Allow variable references in property value lists.
+	- Allow variable references in property value lists (reference
+	  can be introduced by creating vectors, and referencing to the
+	  vector).
 - Translation of B-sources in SPICE converter using EDD.
 	- Translation of polynomial C's and L's in SPICE converter using EDD.
 - Noise equations in EDD.
