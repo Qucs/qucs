@@ -1,3 +1,9 @@
+2009-04-19  Stefan Jahn  <stefan@lkcc.org>
+
+	* pad2bit.cpp (vhdlCode, verilogCode): Reformulation of C code
+	into VHDL and Verilog.  Thus, both immediate as well as subcircuit
+	parameters, can be interpreted.
+
 2009-04-18  Stefan Jahn  <stefan@lkcc.org>
 
 	* logical_buf.cpp (vhdlCode, verilogCode): Using new

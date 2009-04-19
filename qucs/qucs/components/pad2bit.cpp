@@ -74,13 +74,15 @@ QString pad2bit::vhdlCode( int )
 
   v = Props.at(0)->Value; 
 
-  s1 = "\n  "+Name+":process\n"+"  begin\n";
-  s2 = "    case " + v + " is\n" +
+  s1 = "\n  "+Name+":process\n"+
+       "  variable n_" + Name + " : integer := " + v + ";\n" +
+       "  begin\n";
+  s2 = "    case n_" + Name + " is\n" +
        "      when 0 => "+A+" <= '0'; "+B+" <= '0';\n" +
        "      when 1 => "+A+" <= '0'; "+B+" <= '1';\n" +
        "      when 2 => "+A+" <= '1'; "+B+" <= '0';\n" +
        "      when 3 => "+A+" <= '1'; "+B+" <= '1';\n" +
-       "      when others => "+A+" <= '0'; "+B+" <= '0';\n" +
+       "      when others => null;\n" +
        "    end case;\n";
   s3 = "  end process;\n";
   s = s1+s2+s3;
@@ -89,8 +91,7 @@ QString pad2bit::vhdlCode( int )
 
 QString pad2bit::verilogCode( int )
 {
-  QString v = "";
-  v = Props.at(0)->Value;
+  QString v = Props.at(0)->Value;
 
   QString l = "";
   QString l1, l2, l3, s ="";
@@ -103,17 +104,19 @@ QString pad2bit::verilogCode( int )
   
 
   l1 = "\n  // "+Name+" 2bit pattern generator\n"+
-      "  assign  "+A+" = "+AR+";\n"+
-      "  reg     "+AR+" = 0;\n"+
-      "  assign  "+B+" = "+BR+";\n"+
-      "  reg     "+BR+" = 0;\n"+
-      "  initial\n";
-  if (v == "0" ) l2 = "  begin\n    "+AR+" = 0; "+BR+" = 0;\n";
-  if (v == "1" ) l2 = "  begin\n    "+AR+" = 0; "+BR+" = 1;\n";
-  if (v == "2" ) l2 = "  begin\n    "+AR+" = 1; "+BR+" = 0;\n";
-  if (v == "3" ) l2 = "  begin\n    "+AR+" = 1; "+BR+" = 1;\n";
-
+       "  assign  "+A+" = "+AR+";\n"+
+       "  reg     "+AR+" = 0;\n"+
+       "  assign  "+B+" = "+BR+";\n"+
+       "  reg     "+BR+" = 0;\n"+
+       "  initial\n";
+  l2 = "  begin\n"
+       "    case ("+v+")\n"+
+       "      0 : begin "+AR+" = 0; "+BR+" = 0; end\n"+
+       "      1 : begin "+AR+" = 0; "+BR+" = 1; end\n"+
+       "      2 : begin "+AR+" = 1; "+BR+" = 0; end\n"+
+       "      3 : begin "+AR+" = 1; "+BR+" = 1; end\n"+
+       "    endcase\n";
   l3 = "  end\n";
-  l = l1+l2+l3 ;
+  l = l1+l2+l3;
   return l;
 }
