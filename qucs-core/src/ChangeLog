@@ -1,3 +1,9 @@
+2009-04-19  Stefan Jahn  <stefan@lkcc.org>
+
+	* matrix.cpp: Implemented matrix power operation with integral
+	positive and negative powers.  Made it available in the equation
+	solver.
+
 2009-04-16  Stefan Jahn  <stefan@lkcc.org>
 
 	* scan_netlist.l: Accept global node notation.

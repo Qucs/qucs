@@ -1,7 +1,7 @@
 /*
  * matvec.cpp - matrix vector class implementation
  *
- * Copyright (C) 2004, 2005, 2006, 2007 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004-2009 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: matvec.cpp,v 1.26 2008/01/13 10:50:21 ela Exp $
+ * $Id: matvec.cpp,v 1.27 2009/04/19 11:15:25 ela Exp $
  *
  */
 
@@ -419,6 +419,22 @@ vector det (matvec a) {
 matvec inverse (matvec a) {
   matvec res (a.getSize (), a.getRows (), a.getCols ());
   for (int i = 0; i < a.getSize (); i++) res.set (inverse (a.get (i)), i);
+  return res;
+}
+
+// Compute n-th power of the given matrix vector.
+matvec pow (matvec a, int n) {
+  matvec res (a.getSize (), a.getRows (), a.getCols ());
+  for (int i = 0; i < a.getSize (); i++) res.set (pow (a.get (i), n), i);
+  return res;
+}
+
+// Compute n-th powers in the vector of the given matrix vector.
+matvec pow (matvec a, vector v) {
+  assert (a.getSize () == v.getSize ());
+  matvec res (a.getSize (), a.getRows (), a.getCols ());
+  for (int i = 0; i < a.getSize (); i++)
+    res.set (pow (a.get (i), (int) real (v.get (i))), i);
   return res;
 }
 

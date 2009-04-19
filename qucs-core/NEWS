@@ -26,6 +26,7 @@ files.
 Version 0.0.15
 --------------
 
+ * matrix power operation in equation solver
  * introduced global nodes (e.g. subst!) in the analogue simulator 
  * translation of polynomial C's and L's in spice converter
  * translation of F, H, E and G polynomial spice sources
