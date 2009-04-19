@@ -1,7 +1,7 @@
 /*
  * matrix.cpp - matrix class implementation
  *
- * Copyright (C) 2003, 2004, 2005, 2006, 2007 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003-2009 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: matrix.cpp,v 1.35 2008-01-13 10:50:16 ela Exp $
+ * $Id: matrix.cpp,v 1.36 2009-04-19 11:15:24 ela Exp $
  *
  */
 /*!\file matrix.cpp
@@ -616,6 +616,20 @@ matrix diagonal (vector diag) {
   int size = diag.getSize ();
   matrix res (size);
   for (int i = 0; i < size; i++) res (i, i) = diag (i);
+  return res;
+}
+
+// Compute n-th power of the given matrix.
+matrix pow (matrix a, int n) {
+  matrix res;
+  if (n == 0) {
+    res = eye (a.getRows (), a.getCols ());
+  }
+  else {
+    res = a = n < 0 ? inverse (a) : a;
+    for (int i = 1; i < abs (n); i++)
+      res = res * a;
+  }
   return res;
 }
 

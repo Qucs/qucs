@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: evaluate.cpp,v 1.82 2009-03-29 18:11:27 ela Exp $
+ * $Id: evaluate.cpp,v 1.83 2009-04-19 11:15:24 ela Exp $
  *
  */
 
@@ -1031,6 +1031,27 @@ constant * evaluate::power_v_v (constant * args) {
   _ARV1 (v2);
   _DEFV ();
   _RETV (pow (*v1, *v2));
+}
+
+constant * evaluate::power_m_d (constant * args) {
+  _ARM0 (m1);
+  _ARI1 (i2);
+  _DEFM ();
+  _RETM (pow (*m1, i2));
+}
+
+constant * evaluate::power_m_c (constant * args) {
+  _ARM0 (m1);
+  _ARC1 (c2);
+  _DEFM ();
+  _RETM (pow (*m1, (int) real (*c2)));
+}
+
+constant * evaluate::power_mv_v (constant * args) {
+  _ARMV0 (m1);
+  _ARV1  (v2);
+  _DEFMV ();
+  _RETMV (pow (*m1, *v2));
 }
 
 // ****************** hypotenuse *************************
