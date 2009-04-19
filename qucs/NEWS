@@ -26,6 +26,7 @@ files.
 Version 0.0.15
 --------------
 
+ * passing parameters to Verilog-HDL subcircuits allowed
  * VHDL files and subcircuits can handle typed generic parameters
  * translation into Arabic
  * import dialog replaced by complete import/export frontend for the
