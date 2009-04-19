@@ -69,61 +69,67 @@ void pad3bit::createSymbol()
 
 QString pad3bit::vhdlCode( int )
 {
-  QString v = "";
+  QString v = Props.at(0)->Value;
   QString s1, s2, s3, s ="";
 
   QString A    = Ports.at(0)->Connection->Name;
   QString B    = Ports.at(1)->Connection->Name;
   QString C    = Ports.at(2)->Connection->Name;
 
-  v = Props.at(0)->Value; 
-  s1 = "\n  "+Name+":process\n"+"  begin\n" ;
-  if (v == "0") s2 = "    "+A+" <= '0'; "+B+" <= '0'; "+C+" <= '0';\n";
-  if (v == "1") s2 = "    "+A+" <= '0'; "+B+" <= '0'; "+C+" <= '1';\n";
-  if (v == "2") s2 = "    "+A+" <= '0'; "+B+" <= '1'; "+C+" <= '0';\n";
-  if (v == "3") s2 = "    "+A+" <= '0'; "+B+" <= '1'; "+C+" <= '1';\n";
-  if (v == "4") s2 = "    "+A+" <= '1'; "+B+" <= '0'; "+C+" <= '0';\n";
-  if (v == "5") s2 = "    "+A+" <= '1'; "+B+" <= '0'; "+C+" <= '1';\n";
-  if (v == "6") s2 = "    "+A+" <= '1'; "+B+" <= '1'; "+C+" <= '0';\n";
-  if (v == "7") s2 = "    "+A+" <= '1'; "+B+" <= '1'; "+C+" <= '1';\n";
-  s3 =     "  end process;\n";
-  s = s1+s2+s3 ;
+  s1 = "\n  "+Name+":process\n"+
+       "  variable n_" + Name + " : integer := " + v + ";\n" +
+       "  begin\n";
+  s2 = "    case n_" + Name + " is\n" +
+       "      when 0 => "+A+" <= '0'; "+B+" <= '0'; "+C+" <= '0';\n"+
+       "      when 1 => "+A+" <= '0'; "+B+" <= '0'; "+C+" <= '1';\n"+
+       "      when 2 => "+A+" <= '0'; "+B+" <= '1'; "+C+" <= '0';\n"+
+       "      when 3 => "+A+" <= '0'; "+B+" <= '1'; "+C+" <= '1';\n"+
+       "      when 4 => "+A+" <= '1'; "+B+" <= '0'; "+C+" <= '0';\n"+
+       "      when 5 => "+A+" <= '1'; "+B+" <= '0'; "+C+" <= '1';\n"+
+       "      when 6 => "+A+" <= '1'; "+B+" <= '1'; "+C+" <= '0';\n"+
+       "      when 7 => "+A+" <= '1'; "+B+" <= '1'; "+C+" <= '1';\n"+
+       "      when others => null;\n" +
+       "    end case;\n";
+  s3 = "  end process;\n";
+  s = s1+s2+s3;
   return s;
 }
 
 QString pad3bit::verilogCode( int )
 {
-  QString v = "";
-  v = Props.at(0)->Value;
+  QString v = Props.at(0)->Value;
 
   QString l = "";
-  QString l1, l2, l3, s ="";
+  QString l1, l2, l3;
 
-  QString A    = Ports.at(0)->Connection->Name;
-  QString B    = Ports.at(1)->Connection->Name;
-  QString C    = Ports.at(2)->Connection->Name;
+  QString A   = Ports.at(0)->Connection->Name;
+  QString B   = Ports.at(1)->Connection->Name;
+  QString C   = Ports.at(2)->Connection->Name;
 
   QString AR  = "A_reg"  + Name + A;
   QString BR  = "Y_reg"  + Name + B;
   QString CR  = "Y_reg"  + Name + C;
   
   l1 = "\n  // "+Name+" 3bit pattern generator\n"+
-      "  assign  "+A+" = "+AR+";\n"+
-      "  reg     "+AR+" = 0;\n"+
-      "  assign  "+B+" = "+BR+";\n"+
-      "  reg     "+BR+" = 0;\n"+
-      "  assign  "+C+" = "+CR+";\n"+
-      "  reg     "+CR+" = 0;\n"+
-      "  initial\n" ;
-  if (v == "0" ) l2 = "  begin\n    "+AR+" = 0; "+BR+" = 0; "+CR+" = 0;\n";
-  if (v == "1" ) l2 = "  begin\n    "+AR+" = 0; "+BR+" = 0; "+CR+" = 1;\n";
-  if (v == "2" ) l2 = "  begin\n    "+AR+" = 0; "+BR+" = 1; "+CR+" = 0;\n";
-  if (v == "3" ) l2 = "  begin\n    "+AR+" = 0; "+BR+" = 1; "+CR+" = 1;\n";
-  if (v == "4" ) l2 = "  begin\n    "+AR+" = 1; "+BR+" = 0; "+CR+" = 0;\n";
-  if (v == "5" ) l2 = "  begin\n    "+AR+" = 1; "+BR+" = 0; "+CR+" = 1;\n";
-  if (v == "6" ) l2 = "  begin\n    "+AR+" = 1; "+BR+" = 1; "+CR+" = 0;\n";
-  if (v == "7" ) l2 = "  begin\n    "+AR+" = 1; "+BR+" = 1; "+CR+" = 1;\n";
-  l3 =      "  end\n";
-  l = l1+l2+l3 ;
+       "  assign  "+A+" = "+AR+";\n"+
+       "  reg     "+AR+" = 0;\n"+
+       "  assign  "+B+" = "+BR+";\n"+
+       "  reg     "+BR+" = 0;\n"+
+       "  assign  "+C+" = "+CR+";\n"+
+       "  reg     "+CR+" = 0;\n"+
+       "  initial\n" ;
+  l2 = "  begin\n"
+       "    case ("+v+")\n"+
+       "      0 : begin "+AR+" = 0; "+BR+" = 0; "+CR+" = 0; end\n"+
+       "      1 : begin "+AR+" = 0; "+BR+" = 0; "+CR+" = 1; end\n"+
+       "      2 : begin "+AR+" = 0; "+BR+" = 1; "+CR+" = 0; end\n"+
+       "      3 : begin "+AR+" = 0; "+BR+" = 1; "+CR+" = 1; end\n"+
+       "      4 : begin "+AR+" = 1; "+BR+" = 0; "+CR+" = 0; end\n"+
+       "      5 : begin "+AR+" = 1; "+BR+" = 0; "+CR+" = 1; end\n"+
+       "      6 : begin "+AR+" = 1; "+BR+" = 1; "+CR+" = 0; end\n"+
+       "      7 : begin "+AR+" = 1; "+BR+" = 1; "+CR+" = 1; end\n"+
+       "    endcase\n";
+  l3 = "  end\n";
+  l = l1+l2+l3;
   return l;
 }
