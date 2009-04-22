@@ -21,7 +21,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: parse_spice.y,v 1.24 2009-04-09 18:56:43 ela Exp $
+ * $Id: parse_spice.y,v 1.25 2009-04-22 16:33:22 ela Exp $
  *
  */
 
@@ -46,7 +46,9 @@
 
 // Converts the given string into upper case.
 static char * spice_toupper (char * str) {
-  for (unsigned int i = 0; i < strlen (str); i++) str[i] = toupper (str[i]);
+  for (unsigned int i = 0; i < strlen (str); i++) {
+    if (str[i] >= 'a' && str[i] <= 'z') str[i] = toupper (str[i]);
+  }
   return str;
 }
 

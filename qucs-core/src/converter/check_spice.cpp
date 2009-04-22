@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_spice.cpp,v 1.55 2009-04-09 18:56:43 ela Exp $
+ * $Id: check_spice.cpp,v 1.56 2009-04-22 16:33:22 ela Exp $
  *
  */
 
@@ -268,7 +268,11 @@ static struct node_t * spice_translate_node (char * node) {
     // strip off invalid characters
     for (unsigned int i = 0; i < strlen (n->node); i++) {
       if (!isalpha (n->node[i]) && !isdigit (n->node[i])) {
-	n->node[i] = '_';
+	switch (n->node[i]) {
+	case '+': n->node[i] = 'P'; break;
+	case '-': n->node[i] = 'N'; break;
+	default : n->node[i] = '_'; break;
+	}
       }
     }
   }
@@ -1117,18 +1121,18 @@ static void spice_append_node (struct definition_t * def, char * node) {
   def->nodes = netlist_append_nodes (def->nodes, n);
 }
 
+// Converts the given string into upper case.
+static char * spice_toupper (char * str) {
+  for (unsigned int i = 0; i < strlen (str); i++) {
+    if (str[i] >= 'a' && str[i] <= 'z') str[i] = toupper (str[i]);
+  }
+  return str;
+}
+
 /* The function adjusts the instance name of the given component
    definition. */
 static void spice_adjust_instance (struct definition_t * def) {
-  for (unsigned int i = 0; i < strlen (def->instance); i++) {
-    def->instance[i] = toupper (def->instance[i]);
-  }
-}
-
-// Converts the given string into upper case.
-static char * spice_toupper (char * str) {
-  for (unsigned int i = 0; i < strlen (str); i++) str[i] = toupper (str[i]);
-  return str;
+  spice_toupper (def->instance);
 }
 
 /* This function is used by the overall netlist translator in order to
