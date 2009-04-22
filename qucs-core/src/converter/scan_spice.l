@@ -21,7 +21,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: scan_spice.l,v 1.30 2009/04/09 18:56:43 ela Exp $
+ * $Id: scan_spice.l,v 1.31 2009/04/22 16:33:22 ela Exp $
  *
  */
 
@@ -54,8 +54,11 @@
 static void spice_fix_identifier (char * ident) {
   char * p;
   for (p = ident; *p != '\0'; p++)
-    if (*p == '-' || *p == '/')
-      *p = '_';
+    switch (*p) {
+    case '+': *p = 'P'; break;
+    case '-': *p = 'N'; break;
+    case '/': *p = '_'; break;
+    }
 }
 
 %}
