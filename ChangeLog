@@ -1,3 +1,8 @@
+2009-04-25  Stefan Jahn  <stefan@lkcc.org>
+
+	* configure.ac: Released version 0.0.15 and bumped up to version
+	0.0.16.
+
 2009-03-29  Stefan Jahn  <stefan@lkcc.org>
 
 	* configure.ac (paths): Added yet another path to look for Qt3
