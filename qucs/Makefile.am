@@ -4,7 +4,7 @@
 #
 # Automake input file.
 #
-# Copyright (C) 2004, 2005, 2006, 2008 Stefan Jahn <stefan@lkcc.org>
+# Copyright (C) 2004, 2005, 2006, 2008, 2009 Stefan Jahn <stefan@lkcc.org>
 #
 # This is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@
 #
 
 SUBDIRS = qucs qucs-edit qucs-help qucs-transcalc qucs-filter qucs-lib \
-	qucs-attenuator contrib $(RELEASEDIRS)
+	qucs-attenuator qucs-filter-v2 contrib $(RELEASEDIRS)
 
 EXTRA_DIST = autogen.sh depcomp PLATFORMS RELEASE Info.plist
 
