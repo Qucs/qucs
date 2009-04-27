@@ -1,0 +1,7 @@
+Makefile
+Makefile.in
+.deps
+*.moc.cpp
+qucsfilter
+*.ui.h
+*.ui.cpp

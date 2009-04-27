@@ -1,0 +1,90 @@
+## Process this file with automake to produce Makefile.in
+#
+# qucs-filter-v2/Makefile.am
+#
+# Automake input file.
+#
+# Copyright (C) 2009 Stefan Jahn <stefan@lkcc.org>
+#
+# This is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2, or (at your option)
+# any later version.
+#
+# This software is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this package; see the file COPYING.  If not, write to
+# the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
+# Boston, MA 02110-1301, USA.
+#
+
+noinst_PROGRAMS = qucsfilter
+
+UICFILES = qf_dialog.ui
+UICHEADERS = $(UICFILES:.ui=.ui.h)
+UICSOURCES = $(UICFILES:.ui=.ui.cpp)
+MOCHEADERS = $(UICHEADERS) qf_box.h
+MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
+
+qucsfilter_SOURCES = qf_api.cpp\
+       qf_bessel.cpp\
+       qf_blinch.cpp\
+       qf_butcheb.cpp\
+       qf_cauer.cpp\
+       qf_common.cpp\
+       qf_comp.cpp\
+       qf_filter.cpp\
+       qf_icheb.cpp\
+       qf_legendre.cpp\
+       qf_matrix.cpp\
+       qf_optimize.cpp\
+       qf_poly.cpp\
+       qf_qr.cpp\
+       qf_tform.cpp\
+       qf_zigzag.cpp\
+       qf_main.cpp\
+       qf_settings.cpp\
+       qf_dialog.cpp
+
+nodist_qucsfilter_SOURCES = $(UICSOURCES) $(MOCFILES)
+
+INCLUDES = $(X11_INCLUDES) $(QT_INCLUDES)
+qucsfilter_LDFLAGS = $(X11_LDFLAGS) $(QT_LDFLAGS)
+qucsfilter_LDADD = $(X11_LIBS) $(QT_LIBS)
+
+noinst_HEADERS = $(MOCHEADERS) $(UICHEADERS)\
+       qf_api.h\
+       qf_bessel.h\
+       qf_blinch.h\
+       qf_butcheb.h\
+       qf_capacity.h\
+       qf_cauer.h\
+       qf_common.h\
+       qf_comp.h\
+       qf_filter.h\
+       qf_icheb.h\
+       qf_legendre.h\
+       qf_matrix.h\
+       qf_poly.h\
+       qf_qr.h\
+       qf_tform.h\
+       qf_transform.h\
+       qf_settings.h\
+       qf_zigzag.h
+
+qf_box.h: qf_dialog.ui.cpp
+
+%.moc.cpp: %.h
+	$(MOC) -o $@ $<
+
+%.ui.cpp: %.ui
+	$(UIC) $< -o $*.ui.h
+	$(UIC) -impl $*.ui.h $< -o $@
+
+CLEANFILES = *~
+MAINTAINERCLEANFILES = Makefile.in *.moc.cpp *.ui.h *.ui.cpp
+DISTCLEANFILES = *.moc.cpp *.ui.h *.ui.cpp
