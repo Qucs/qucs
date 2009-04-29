@@ -359,6 +359,7 @@ void VHDL_File::createSymbol()
   ty = y2+4;
 
   // now create/modify properties
+  No = 0;
   if(!GenNames.isEmpty())
     No = GenNames.contains(',') + 1;
   Property * pr = Props.at(1);
