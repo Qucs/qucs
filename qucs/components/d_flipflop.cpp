@@ -85,7 +85,7 @@ QString D_FlipFlop::verilogCode(int NumPorts)
   if(NumPorts <= 0) { // no truth table simulation ?
     QString td = Props.at(0)->Value;        // delay time
     if(!Verilog_Delay(td, Name)) return td; // time has not VHDL format
-    t = "   " + td  + ";\n";
+    if(!td.isEmpty()) t = "   " + td  + ";\n";
   }
   
   QString s = "";

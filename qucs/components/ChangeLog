@@ -1,3 +1,11 @@
+2009-04-29  Stefan Jahn  <stefan@lkcc.org>
+
+	* jk_flipflop.cpp, d_flipflop.cpp (verilogCode): Fixed malformed
+	statement without or zero delay time specified.
+
+	* vhdlfile.cpp (createSymbol): Fixed bug in VHDL generic parser
+	which led to unnamed properties.
+
 2009-04-19  Stefan Jahn  <stefan@lkcc.org>
 
 	* pad2bit.cpp (vhdlCode, verilogCode): Reformulation of C code
