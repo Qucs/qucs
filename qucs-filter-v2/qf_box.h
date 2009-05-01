@@ -3,7 +3,7 @@
 #include <qobject.h>
 #include <qapplication.h>
 #include "qf_common.h"
-#include "qf_dialog.ui.h"
+#include "qf_dialog.h"
 
 class	qf_box : public FilterDialog {
 
