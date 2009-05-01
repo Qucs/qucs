@@ -9,6 +9,7 @@
 #include <qtextedit.h>
 #include <qdir.h>
 #include <qtextcodec.h>
+#include <qclipboard.h>
 
 #include "qf_common.h"
 #include "qf_poly.h"
@@ -87,6 +88,10 @@ int main (int argc, char * argv []) {
     s. device () -> flush ();
 
     res. insert (buf);
+
+    QClipboard *cb = QApplication::clipboard();
+    cb->setText(buf);
+
   }
 
   saveApplSettings (&Filterbox);
