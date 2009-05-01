@@ -118,51 +118,66 @@ bool  bandpassvalid  (qf_spec* Tspec) {
 
 void qf_nonetf::dump (QTextStream& out) {
 
+  lcmp.dump_all (out);
+#if 0
   out << "# " << qf_filter_apis [Tspec -> filter] -> name;
   out << " of order " << Tspec -> ord << Tspec -> subord << endl;
   out << "Zin " << Tspec -> r1 << endl;
   lcmp. dump_all (out);
   out << "Zout " << Tspec -> r2 << endl;
+#endif
 }
 
 void qf_lowpass::dump (QTextStream& out) {
 
+  lcmp.dump_all (out);
+#if 0
   out << "# Lowpass ";
   out << qf_filter_apis [Tspec -> filter] -> name;
   out << " of order " << Tspec -> ord << Tspec -> subord << endl;
   out << "Zin " << Tspec -> r1 << endl;
   lcmp. dump_all (out);
   out << "Zout " << Tspec -> r2 << endl;
+#endif
 }
 
 void qf_highpass::dump (QTextStream& out) {
 
+  lcmp.dump_all (out);
+#if 0
   out << "Highpass ";
   out << qf_filter_apis [Tspec -> filter] -> name;
   out << " of order " << Tspec -> ord << Tspec -> subord << endl;
   out << "Zin " << Tspec -> r1 << endl;
   lcmp. dump_all (out);
   out << "Zout " << Tspec -> r2 << endl;
+#endif
 }
 
 void qf_bandpass::dump (QTextStream& out) {
 
+  lcmp.dump_all (out);
+#if 0
   out << "Bandpass ";
   out << qf_filter_apis [Tspec -> filter] -> name;
   out << " of order " << Tspec -> ord << Tspec -> subord << endl;
   out << "Zin " << Tspec -> r1 << endl;
   lcmp. dump_all (out);
   out << "Zout " << Tspec -> r2 << endl;
+#endif
 }
 
 void qf_bandstop::dump (QTextStream& out) {
 
+  lcmp.dump_all (out);
+#if 0
   out << "Bandstop ";
   out << qf_filter_apis [Tspec -> filter] -> name;
   out << " of order " << Tspec -> ord << Tspec -> subord << endl;
   out << "Zin " << Tspec -> r1 << endl;
   lcmp. dump_all (out);
   out << "Zout " << Tspec -> r2 << endl;
+#endif
 }
 
 // Denormalization functions
