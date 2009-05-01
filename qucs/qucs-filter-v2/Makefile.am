@@ -24,10 +24,7 @@
 
 noinst_PROGRAMS = qucsfilter
 
-UICFILES = qf_dialog.ui
-UICHEADERS = $(UICFILES:.ui=.ui.h)
-UICSOURCES = $(UICFILES:.ui=.ui.cpp)
-MOCHEADERS = $(UICHEADERS) qf_box.h
+MOCHEADERS = qf_dialog.h qf_box.h
 MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
 
 qucsfilter_SOURCES = qf_api.cpp\
@@ -48,15 +45,16 @@ qucsfilter_SOURCES = qf_api.cpp\
        qf_zigzag.cpp\
        qf_main.cpp\
        qf_settings.cpp\
-       qf_dialog.cpp
+       qf_dialog.cpp\
+       qf_box.cpp
 
-nodist_qucsfilter_SOURCES = $(UICSOURCES) $(MOCFILES)
+nodist_qucsfilter_SOURCES = $(MOCFILES)
 
 INCLUDES = $(X11_INCLUDES) $(QT_INCLUDES)
 qucsfilter_LDFLAGS = $(X11_LDFLAGS) $(QT_LDFLAGS)
 qucsfilter_LDADD = $(X11_LIBS) $(QT_LIBS)
 
-noinst_HEADERS = $(MOCHEADERS) $(UICHEADERS)\
+noinst_HEADERS = $(MOCHEADERS) \
        qf_api.h\
        qf_bessel.h\
        qf_blinch.h\
@@ -76,15 +74,9 @@ noinst_HEADERS = $(MOCHEADERS) $(UICHEADERS)\
        qf_settings.h\
        qf_zigzag.h
 
-qf_box.h: qf_dialog.ui.cpp
-
 %.moc.cpp: %.h
 	$(MOC) -o $@ $<
 
-%.ui.cpp: %.ui
-	$(UIC) $< -o $*.ui.h
-	$(UIC) -impl $*.ui.h $< -o $@
-
 CLEANFILES = *~
-MAINTAINERCLEANFILES = Makefile.in *.moc.cpp *.ui.h *.ui.cpp
-DISTCLEANFILES = *.moc.cpp *.ui.h *.ui.cpp
+MAINTAINERCLEANFILES = Makefile.in *.moc.cpp
+DISTCLEANFILES = *.moc.cpp

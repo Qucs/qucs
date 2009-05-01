@@ -63,14 +63,6 @@ int main (int argc, char * argv []) {
   tor.load( QString("qucs_") + lang, QucsSettings.LangDir);
   app.installTranslator( &tor );
 
-  QTextEdit res;
-  res. setReadOnly (true);
-  res. setTextFormat (Qt::PlainText);
-  res. setAlignment (Qt::AlignLeft);
-  res. setFont (QucsSettings.font);
-  res. setTabStopWidth (12 * 4);
-  res. show ();
-
   qf_box	    Filterbox;
   Filterbox. setFont (QucsSettings.font);
   Filterbox. move (QucsSettings.x, QucsSettings.y);
@@ -86,8 +78,6 @@ int main (int argc, char * argv []) {
 
     compute_lumped (spec_p, s);
     s. device () -> flush ();
-
-    res. insert (buf);
 
     QClipboard *cb = QApplication::clipboard();
     cb->setText(buf);
