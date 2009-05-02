@@ -54,7 +54,8 @@ class qf_lcmp {
 
  public:
   int x, y;
-  qf_double_t r1, r2;
+  qf_double_t r1, r2, fc;
+  QString tx;
 
   public:
   inline void	  insert    (qf_cmp* c) {lst. push_back (c);}
