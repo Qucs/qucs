@@ -288,8 +288,6 @@ void qf_lcmp::dump_all (QTextStream& out) {
   QTextStream com (buf1, IO_ReadWrite);
   QTextStream wir (buf2, IO_ReadWrite);
 
-  r1 = 50.0;
-  r2 = 50.0;
   x = 0;
   y = 0;
 
@@ -319,6 +317,16 @@ void qf_lcmp::dump_all (QTextStream& out) {
       << r2 << " Ohm\" 1 \"0 dBm\" 0 \"1 GHz\" 0>\n"
       << "<GND * 1 " << x << " " << y+30 << " 0 0 0 0>\n";
 
+  x = 0;
+
+  // S-parameter simulation box and equation
+  com << "<.SP SP1 1 " << x << " " << y-280 << " 0 50 0 0 \"log\" 1 \""
+      << valstr(fc/50) << "Hz\" 1 \"" << valstr(fc*50)
+      << "Hz\" 1 \"200\" 1 \"no\" 0 \"1\" 0 \"2\" 0>\n";
+  com << "<Eqn Eqn1 1 " << x+200 << " " << y-270
+      << " -28 15 0 0 \"dBS21=dB(S[2,1])\" 1 "
+      << "\"dBS11=dB(S[1,1])\" 1 \"yes\" 0>\n";
+
   // components
   out << "<Components>\n";
   out << QString(buf1);
@@ -327,6 +335,14 @@ void qf_lcmp::dump_all (QTextStream& out) {
   out << "<Wires>\n";
   out << QString(buf2);
   out << "</Wires>\n";
+  // paintings
+  out << "<Paintings>\n";
+  out << "<Text " << x+310 << " " << y-280 << " 12 #000000 0 \""
+      << tx << "\\n"
+      << valstr(fc) << "Hz cutoff/center frequency\\n"
+      << "impedance matching Z_{IN}=" << valstr(r1) << "\\Omega, Z_{OUT}="
+      << valstr(r2) << "\\Omega\">\n";
+  out << "</Paintings>\n";
 }
 
 // Access to the list of components
