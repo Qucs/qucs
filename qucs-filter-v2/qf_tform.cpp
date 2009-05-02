@@ -27,7 +27,7 @@ bool  bandpassvalid  (qf_spec* Tspec) {
 
 // Constructors (they are all the same) except qf_nonetf
 
-  qf_nonetf::qf_nonetf (qf_spec * Tspec): qf_tform (Tspec) {
+qf_nonetf::qf_nonetf (qf_spec * Tspec): qf_tform (Tspec) {
 
   Tspec -> is_zigzag = false;
   // The constructor is supposed to do all the synthesis
@@ -42,7 +42,7 @@ bool  bandpassvalid  (qf_spec* Tspec) {
   }
 }
 
-  qf_lowpass::qf_lowpass (qf_spec* Tspec):   qf_tform (Tspec) {
+qf_lowpass::qf_lowpass (qf_spec* Tspec):   qf_tform (Tspec) {
 
   Tspec -> th = th ();
   Tspec -> is_zigzag = false;
@@ -60,7 +60,7 @@ bool  bandpassvalid  (qf_spec* Tspec) {
   }
 }
 
-  qf_highpass::qf_highpass (qf_spec* Tspec):   qf_tform (Tspec) {
+qf_highpass::qf_highpass (qf_spec* Tspec):   qf_tform (Tspec) {
 
   Tspec -> th = th ();
   Tspec -> is_zigzag = false;
@@ -78,7 +78,7 @@ bool  bandpassvalid  (qf_spec* Tspec) {
   }
 }
 
-  qf_bandpass::qf_bandpass (qf_spec* Tspec):   qf_tform (Tspec) {
+qf_bandpass::qf_bandpass (qf_spec* Tspec):   qf_tform (Tspec) {
 
   Tspec -> th = th ();
   Tspec -> is_zigzag = false;
@@ -96,7 +96,7 @@ bool  bandpassvalid  (qf_spec* Tspec) {
   }
 }
 
-  qf_bandstop::qf_bandstop (qf_spec* Tspec):   qf_tform (Tspec) {
+qf_bandstop::qf_bandstop (qf_spec* Tspec):   qf_tform (Tspec) {
 
   Tspec -> th = th ();
   Tspec -> is_zigzag = false;
@@ -118,66 +118,52 @@ bool  bandpassvalid  (qf_spec* Tspec) {
 
 void qf_nonetf::dump (QTextStream& out) {
 
+  lcmp.tx = qf_filter_apis [Tspec -> filter] -> name +
+    " of order " + QString::number(Tspec -> ord) + Tspec -> subord;
+  lcmp.r1 = Tspec -> r1;
+  lcmp.r2 = Tspec -> r2;
+  lcmp.fc = Tspec -> fc;
   lcmp.dump_all (out);
-#if 0
-  out << "# " << qf_filter_apis [Tspec -> filter] -> name;
-  out << " of order " << Tspec -> ord << Tspec -> subord << endl;
-  out << "Zin " << Tspec -> r1 << endl;
-  lcmp. dump_all (out);
-  out << "Zout " << Tspec -> r2 << endl;
-#endif
 }
 
 void qf_lowpass::dump (QTextStream& out) {
 
+  lcmp.tx = qf_filter_apis [Tspec -> filter] -> name + " low-pass filter" + 
+    " of order " + QString::number(Tspec -> ord) + Tspec -> subord;
+  lcmp.r1 = Tspec -> r1;
+  lcmp.r2 = Tspec -> r2;
+  lcmp.fc = Tspec -> fc;
   lcmp.dump_all (out);
-#if 0
-  out << "# Lowpass ";
-  out << qf_filter_apis [Tspec -> filter] -> name;
-  out << " of order " << Tspec -> ord << Tspec -> subord << endl;
-  out << "Zin " << Tspec -> r1 << endl;
-  lcmp. dump_all (out);
-  out << "Zout " << Tspec -> r2 << endl;
-#endif
 }
 
 void qf_highpass::dump (QTextStream& out) {
 
+  lcmp.tx = qf_filter_apis [Tspec -> filter] -> name + " high-pass filter" + 
+    " of order " + QString::number(Tspec -> ord) + Tspec -> subord;
+  lcmp.r1 = Tspec -> r1;
+  lcmp.r2 = Tspec -> r2;
+  lcmp.fc = Tspec -> fc;
   lcmp.dump_all (out);
-#if 0
-  out << "Highpass ";
-  out << qf_filter_apis [Tspec -> filter] -> name;
-  out << " of order " << Tspec -> ord << Tspec -> subord << endl;
-  out << "Zin " << Tspec -> r1 << endl;
-  lcmp. dump_all (out);
-  out << "Zout " << Tspec -> r2 << endl;
-#endif
 }
 
 void qf_bandpass::dump (QTextStream& out) {
 
+  lcmp.tx = qf_filter_apis [Tspec -> filter] -> name + " band-pass filter" + 
+    " of order " + QString::number(Tspec -> ord) + Tspec -> subord;
+  lcmp.r1 = Tspec -> r1;
+  lcmp.r2 = Tspec -> r2;
+  lcmp.fc = Tspec -> fc;
   lcmp.dump_all (out);
-#if 0
-  out << "Bandpass ";
-  out << qf_filter_apis [Tspec -> filter] -> name;
-  out << " of order " << Tspec -> ord << Tspec -> subord << endl;
-  out << "Zin " << Tspec -> r1 << endl;
-  lcmp. dump_all (out);
-  out << "Zout " << Tspec -> r2 << endl;
-#endif
 }
 
 void qf_bandstop::dump (QTextStream& out) {
 
+  lcmp.tx = qf_filter_apis [Tspec -> filter] -> name + " band-stop filter" + 
+    " of order " + QString::number(Tspec -> ord) + Tspec -> subord;
+  lcmp.r1 = Tspec -> r1;
+  lcmp.r2 = Tspec -> r2;
+  lcmp.fc = Tspec -> fc;
   lcmp.dump_all (out);
-#if 0
-  out << "Bandstop ";
-  out << qf_filter_apis [Tspec -> filter] -> name;
-  out << " of order " << Tspec -> ord << Tspec -> subord << endl;
-  out << "Zin " << Tspec -> r1 << endl;
-  lcmp. dump_all (out);
-  out << "Zout " << Tspec -> r2 << endl;
-#endif
 }
 
 // Denormalization functions
