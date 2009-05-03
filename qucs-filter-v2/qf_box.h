@@ -23,12 +23,15 @@ class	qf_box : public FilterDialog {
     void    updateDialog			(void);
     void    populateOrderCombo			(void);
 
+  public slots:
+
+    void    on_FilterName_activated		(int);
+    void    on_TformName_activated		(int);
+
   private slots:
 
     bool    semanticCheck			(void);
 
-    void    on_FilterName_activated		(int);
-    void    on_TformName_activated		(int);
     void    on_OrderBox_stateChanged		(int);
     void    on_OrderCombo_activated		(int);
     void    on_SubOrderCombo_activated		(int);

@@ -344,8 +344,10 @@ void qf_zigzag::synth_zz (qf_cauer* F) {
 
 void qf_zigzag::dump (QTextStream& out) {
 
-  out << "Zigzag filter of order " << Tspec -> ord << endl;
-  out << "Zin " << Tspec -> r1 << endl;
-  lcmp. dump_all (out);
-  out << "Zout " << Tspec -> r2 << endl;
+  lcmp.tx = qf_filter_apis [Tspec -> filter] -> name + " zigzag filter" + 
+    " of order " + QString::number(Tspec -> ord);
+  lcmp.r1 = Tspec -> r1;
+  lcmp.r2 = Tspec -> r2;
+  lcmp.fc = Tspec -> fc;
+  lcmp.dump_all (out);
 }

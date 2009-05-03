@@ -14,6 +14,10 @@
 #include <qfile.h>
 #include <qdir.h>
 #include <qmessagebox.h>
+#include <qcheckbox.h>
+#include <qcombobox.h>
+#include <qlineedit.h>
+#include <qdom.h>
 
 #include "qf_box.h"
 #include "qf_settings.h"
@@ -22,7 +26,7 @@ struct tQucsSettings QucsSettings;
 
 // #########################################################################
 // Loads the settings file and stores the settings.
-bool loadSettings()
+bool loadSettings (void)
 {
   bool result = true;
 
@@ -34,6 +38,11 @@ bool loadSettings()
     QString Line, Setting;
     while(!stream.atEnd()) {
       Line = stream.readLine();
+      if (Line.left(9) == "<!DOCTYPE") {
+	file.close ();
+	result = loadXmlSettings ();
+	break;
+      }
       Setting = Line.section('=',0,0);
       Line = Line.section('=',1,1);
       if(Setting == "FilterWindow") {
@@ -43,7 +52,7 @@ bool loadSettings()
       }
     }
     file.close();
-  }
+  }  
 
   file.setName(QDir::homeDirPath()+QDir::convertSeparators ("/.qucs/qucsrc"));
   if(!file.open(IO_ReadOnly))
@@ -67,7 +76,7 @@ bool loadSettings()
 
 // #########################################################################
 // Saves the settings in the settings file.
-bool saveApplSettings(qf_box *qucs)
+bool saveSettings(qf_box *qucs)
 {
   if(qucs->x() == QucsSettings.x)
     if(qucs->y() == QucsSettings.y)
@@ -89,4 +98,171 @@ bool saveApplSettings(qf_box *qucs)
 
   file.close();
   return true;
+}
+
+// #########################################################################
+// Saves the application settings in the XML settings file.
+bool saveXmlSettings (qf_box * qucs)
+{
+  QDomDocument doc ("QucsFilter");
+  QDomElement el, gr, rt;
+
+  rt = doc.createElement ("Settings");
+  doc.appendChild (rt);
+
+  el = doc.createElement ("Version");
+  el.setAttribute ("value", PACKAGE_VERSION);
+  rt.appendChild (el);
+
+  el = doc.createElement ("Window");
+  el.setAttribute ("x", qucs->x());
+  el.setAttribute ("y", qucs->y());
+  rt.appendChild (el);
+
+  gr = doc.createElement ("LC");
+  el = doc.createElement ("Type");
+  el.setAttribute ("Type", qucs->FilterName->currentItem ());
+  el.setAttribute ("Class", qucs->TformName->currentItem ());
+  el.setAttribute ("SpecifyOrder", qucs->OrderBox->isChecked ());
+  el.setAttribute ("Order", qucs->OrderCombo->currentItem ());
+  el.setAttribute ("SubOrder", qucs->SubOrderCombo->currentItem ());  
+  gr.appendChild (el);
+  el = doc.createElement ("Cutoff");
+  el.setAttribute ("Value", qucs->EnterCutoff->text ());
+  el.setAttribute ("Unit", qucs->CutoffCombo->currentItem ());
+  gr.appendChild (el);
+  el = doc.createElement ("Bandwidth");
+  el.setAttribute ("Value", qucs->EnterBandwidth->text ());
+  el.setAttribute ("Unit", qucs->BandwidthCombo->currentItem ());
+  gr.appendChild (el);
+  el = doc.createElement ("Stopband");
+  el.setAttribute ("Value", qucs->EnterStopband->text ());
+  el.setAttribute ("Unit", qucs->StopbandCombo->currentItem ());
+  gr.appendChild (el);
+  el = doc.createElement ("Ripple");
+  el.setAttribute ("Value", qucs->EnterRipple->text ());
+  gr.appendChild (el);
+  el = doc.createElement ("Angle");
+  el.setAttribute ("Value", qucs->EnterAngle->text ());
+  gr.appendChild (el);
+  el = doc.createElement ("Attenuation");
+  el.setAttribute ("Value", qucs->EnterAttenuation->text ());
+  gr.appendChild (el);
+  el = doc.createElement ("Impedance");
+  el.setAttribute ("Zin", qucs->EnterZin->text ());
+  el.setAttribute ("Zout", qucs->EnterZout->text ());
+  gr.appendChild (el);
+  rt.appendChild (gr);
+
+  QFile file (QDir::homeDirPath()+QDir::convertSeparators ("/.qucs/filterrc"));
+  if (!file.open (IO_WriteOnly)) {
+    QMessageBox::warning (0,
+			  QObject::tr("Warning"),
+			  QObject::tr("Cannot save settings file !"));
+    return false;
+  }
+
+  QTextStream str (&file);
+  str << doc.toString ();
+  file.close ();
+  return true;
+}
+
+// #########################################################################
+// Helper function to find XML nodes and attributes
+static QString getXml (QDomDocument * doc, const QString type,
+		       const QString attr, const QString group = "")
+{
+  QDomElement docElem = doc->documentElement ();
+
+  QDomNode n = docElem.firstChild ();
+  while (!n.isNull()) {
+    QDomElement e = n.toElement ();
+    if (!e.isNull()) {
+      if (group.isEmpty ()) {
+	if (e.tagName () == type) {
+	  return e.attribute (attr, "");
+	}
+      }
+      else {
+	if (e.tagName () == group) {
+	  QDomNode ng = e.firstChild ();
+	  while (!ng.isNull()) {
+	    QDomElement eg = ng.toElement ();
+	    if (!eg.isNull()) {
+	      if (eg.tagName () == type) {
+		return eg.attribute (attr, "");
+	      }
+	    }
+	    ng = ng.nextSibling();
+	  }
+	}
+      }
+    }
+    n = n.nextSibling();
+  }
+  return "";
+}
+
+static int getInteger (QDomDocument * doc, const QString type,
+		       const QString attr, const QString group = "")
+{
+  return getXml (doc, type, attr, group).toInt ();
+}
+
+static double getDouble (QDomDocument * doc, const QString type,
+			 const QString attr, const QString group = "")
+{
+  return getXml (doc, type, attr, group).toDouble ();
+}
+
+static QString getString (QDomDocument * doc, const QString type,
+			  const QString attr, const QString group = "")
+{
+  return getXml (doc, type, attr, group);
+}
+
+// #########################################################################
+// Loads the XML settings file and stores the settings.
+bool loadXmlSettings (void)
+{
+  bool result = true;
+
+  QFile file (QDir::homeDirPath()+QDir::convertSeparators ("/.qucs/filterrc"));
+  if (!file.open(IO_ReadOnly))
+    result = false; // settings file doesn't exist
+  else {
+    QDomDocument doc;
+    QString errmsg;
+    int line, col;
+    if (!doc.setContent(&file, true, &errmsg, &line, &col)) {
+      cerr << file.name () << ":" << line << ":" << col
+	   << ": " << errmsg << endl;
+      cerr << doc.toCString ();
+      file.close();
+      return false;
+    }
+
+    QucsSettings.x = getInteger (&doc, "Window", "x");
+    QucsSettings.y = getInteger (&doc, "Window", "y");
+
+    QucsSettings.type = getInteger (&doc, "Type", "Type", "LC");
+    QucsSettings.form = getInteger (&doc, "Type", "Class", "LC");
+    QucsSettings.specify = getInteger (&doc, "Type", "SpecifyOrder", "LC");
+    QucsSettings.ord = getInteger (&doc, "Type", "Order", "LC");
+    QucsSettings.subord = getInteger (&doc, "Type", "SubOrder", "LC");
+
+    QucsSettings.cutoff = getDouble (&doc, "Cutoff", "Value", "LC");
+    QucsSettings.cutoff_unit = getInteger (&doc, "Cutoff", "Unit", "LC");
+    QucsSettings.zin = getDouble (&doc, "Impedance", "Zin", "LC");
+    QucsSettings.zout = getDouble (&doc, "Impedance", "Zout", "LC");
+    QucsSettings.bw = getDouble (&doc, "Bandwidth", "Value", "LC");
+    QucsSettings.bw_unit = getInteger (&doc, "Bandwidth", "Unit", "LC");
+    QucsSettings.sb = getDouble (&doc, "Stopband", "Value", "LC");
+    QucsSettings.sb_unit = getInteger (&doc, "Stopband", "Unit", "LC");
+    QucsSettings.ripple = getDouble (&doc, "Ripple", "Value", "LC");
+    QucsSettings.angle = getDouble (&doc, "Angle", "Value", "LC");
+    QucsSettings.atten = getDouble (&doc, "Attenuation", "Value", "LC");
+  }
+  return result;
 }
