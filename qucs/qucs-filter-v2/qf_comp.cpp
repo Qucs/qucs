@@ -29,7 +29,7 @@ static QString valstr (qf_double_t num) {
 
   num = fabs (num);
 
-  if ((num > 1e-18) && (num < 1e6)) {
+  if ((num > 1e-18) && (num < 1e12)) {
     qf_double_t cal = floor (log10 (num) / 3);
     int		expo = static_cast <int> (cal);
 
@@ -42,6 +42,9 @@ static QString valstr (qf_double_t num) {
       case -1: c = 'm'; break;
       case  0: break;
       case  1: c = 'k'; break;
+      case  2: c = 'M'; break;
+      case  3: c = 'G'; break;
+      case  4: c = 'T'; break;
       }
 
     if (c != 0) num /= pow (10.0, 3 * cal);
@@ -321,7 +324,7 @@ void qf_lcmp::dump_all (QTextStream& out) {
 
   // S-parameter simulation box and equation
   com << "<.SP SP1 1 " << x << " " << y-280 << " 0 50 0 0 \"log\" 1 \""
-      << valstr(fc/50) << "Hz\" 1 \"" << valstr(fc*50)
+      << valstr(fc/2/M_PI/10) << "Hz\" 1 \"" << valstr(fc/2/M_PI*10)
       << "Hz\" 1 \"200\" 1 \"no\" 0 \"1\" 0 \"2\" 0>\n";
   com << "<Eqn Eqn1 1 " << x+200 << " " << y-270
       << " -28 15 0 0 \"dBS21=dB(S[2,1])\" 1 "
@@ -339,7 +342,7 @@ void qf_lcmp::dump_all (QTextStream& out) {
   out << "<Paintings>\n";
   out << "<Text " << x+310 << " " << y-280 << " 12 #000000 0 \""
       << tx << "\\n"
-      << valstr(fc) << "Hz cutoff/center frequency\\n"
+      << valstr(fc/2/M_PI) << "Hz cutoff/center frequency\\n"
       << "impedance matching Z_{IN}=" << valstr(r1) << "\\Omega, Z_{OUT}="
       << valstr(r2) << "\\Omega\">\n";
   out << "</Paintings>\n";

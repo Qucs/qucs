@@ -8,7 +8,22 @@
  ***************************************************************************/
 
 struct tQucsSettings {
-  int x, y;      // position of main window
+  int x, y;         // position of main window
+  double cutoff;    // cutoff frequency
+  int cutoff_unit;  // cutoff frequency unit
+  double zin, zout; // in/output impedances
+  int type;
+  int form;
+  int ord;
+  int specify;
+  int subord;
+  double bw;
+  int bw_unit;
+  double sb;
+  int sb_unit;
+  double ripple;
+  double angle;
+  double atten;
   QFont font;
   QString LangDir;
   QString BitmapDir;
@@ -17,6 +32,8 @@ struct tQucsSettings {
 
 extern struct tQucsSettings QucsSettings;
 
-bool loadSettings();
-bool saveApplSettings(qf_box *);
+bool loadSettings (void);
+bool saveSettings (qf_box *);
+bool loadXmlSettings (void);
+bool saveXmlSettings (qf_box *);
 
