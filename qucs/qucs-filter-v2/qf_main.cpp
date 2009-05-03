@@ -10,6 +10,9 @@
 #include <qdir.h>
 #include <qtextcodec.h>
 #include <qclipboard.h>
+#include <qlineedit.h>
+#include <qcombobox.h>
+#include <qcheckbox.h>
 
 #include "qf_common.h"
 #include "qf_poly.h"
@@ -63,10 +66,30 @@ int main (int argc, char * argv []) {
   tor.load( QString("qucs_") + lang, QucsSettings.LangDir);
   app.installTranslator( &tor );
 
-  qf_box	    Filterbox;
-  Filterbox. setFont (QucsSettings.font);
-  Filterbox. move (QucsSettings.x, QucsSettings.y);
-  Filterbox. show ();
+  qf_box Filterbox;
+  Filterbox.setFont (QucsSettings.font);
+  Filterbox.move (QucsSettings.x, QucsSettings.y);
+  Filterbox.show ();
+
+  Filterbox.FilterName->setCurrentItem (QucsSettings.type);
+  Filterbox.on_FilterName_activated (QucsSettings.form);
+  Filterbox.TformName->setCurrentItem (QucsSettings.form);
+  Filterbox.on_TformName_activated (QucsSettings.type);
+
+  Filterbox.EnterCutoff->setText (QString::number (QucsSettings.cutoff));
+  Filterbox.CutoffCombo->setCurrentItem (QucsSettings.cutoff_unit);
+  Filterbox.EnterZin->setText (QString::number (QucsSettings.zin));
+  Filterbox.EnterZout->setText (QString::number (QucsSettings.zout));
+  Filterbox.OrderBox->setChecked (QucsSettings.specify);
+  Filterbox.OrderCombo->setCurrentItem (QucsSettings.ord);
+  Filterbox.SubOrderCombo->setCurrentItem (QucsSettings.subord);
+  Filterbox.EnterBandwidth->setText (QString::number (QucsSettings.bw));
+  Filterbox.BandwidthCombo->setCurrentItem (QucsSettings.bw_unit);
+  Filterbox.EnterStopband->setText (QString::number (QucsSettings.sb));
+  Filterbox.StopbandCombo->setCurrentItem (QucsSettings.sb_unit);
+  Filterbox.EnterRipple->setText (QString::number (QucsSettings.ripple));
+  Filterbox.EnterAngle->setText (QString::number (QucsSettings.angle));
+  Filterbox.EnterAttenuation->setText (QString::number (QucsSettings.atten));
 
   while (true) {
     if (Filterbox. exec () != QDialog::Accepted) break;
@@ -84,6 +107,7 @@ int main (int argc, char * argv []) {
 
   }
 
-  saveApplSettings (&Filterbox);
+  saveSettings (&Filterbox);
+  saveXmlSettings (&Filterbox);
   return result;
 }
