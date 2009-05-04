@@ -26,6 +26,8 @@ files.
 Version 0.0.16
 --------------
 
+ * allow equations in Verilog-HDL and VHDL subcircuits
+
 Version 0.0.15
 --------------
 
