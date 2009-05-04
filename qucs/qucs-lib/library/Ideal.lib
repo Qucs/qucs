@@ -15,8 +15,8 @@ VCVS:SRC2 _net3 _net2 gnd gnd G="1" T="0"
     <Line -10 0 20 0 #000080 1 1>
     <Line 0 -10 0 20 #000080 1 1>
     <Line 0 30 0 -10 #000080 2 1>
-    <.PortSym 0 30 3 0>
-    <.PortSym 30 0 5 180>
+    <.PortSym 0 30 2 0>
+    <.PortSym 30 0 3 180>
     <Line 20 0 10 0 #000080 2 1>
     <.ID 10 14 VADD>
     <Line 0 -20 0 -10 #000080 2 1>
@@ -347,7 +347,7 @@ R:R1 gnd _net1 R="R1" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
     <.PortSym -30 0 1 0>
     <Line -30 0 10 0 #000080 2 1>
     <Line 20 0 10 0 #000080 2 1>
-    <.PortSym 30 0 3 180>
+    <.PortSym 30 0 2 180>
     <.ID -19 21 LP1F "1=fc=1E3=3dB cut-off frequency (Hz)" "0=V0=0=Initial DC voltage (V)">
   </Symbol>
 </Component>
