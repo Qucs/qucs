@@ -22,7 +22,7 @@ class qf_matrix {
 
     // There is no way to copy a matrix
 
-    qf_matrix&	   operator = (const qf_matrix& M) {return (*this);}
+    qf_matrix&	   operator = (const qf_matrix&) {return (*this);}
     qf_matrix		      (const qf_matrix& M) : n (M.n), H (M.H) {}
 
   public:

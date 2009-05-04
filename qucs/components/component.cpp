@@ -31,8 +31,7 @@
 #include <qpainter.h>
 #include <qtabwidget.h>
 #include <qmessagebox.h>
-
-
+#include <qdom.h>
 
 // ***********************************************************************
 // **********                                                   **********
@@ -680,6 +679,25 @@ QString Component::get_VHDL_Code(int NumPorts)
 // -------------------------------------------------------
 QString Component::save()
 {
+#if XML
+  QDomDocument doc;
+  QDomElement el = doc.createElement (Model);
+  doc.appendChild (el);
+  el.setTagName (Model);
+  el.setAttribute ("inst", Name.isEmpty() ? "*" : Name);
+  el.setAttribute ("display", isActive | (showName ? 4 : 0));
+  el.setAttribute ("cx", cx);
+  el.setAttribute ("cy", cy);
+  el.setAttribute ("tx", tx);
+  el.setAttribute ("ty", ty);
+  el.setAttribute ("mirror", mirroredX);
+  el.setAttribute ("rotate", rotated);
+
+  for (Property *pr = Props.first(); pr != 0; pr = Props.next()) {
+    el.setAttribute (pr->Name, (pr->display ? "1@" : "0@") + pr->Value);
+  }
+  qDebug (doc.toString());
+#endif
   QString s = "<" + Model;
 
   if(Name.isEmpty()) s += " * ";

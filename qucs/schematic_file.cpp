@@ -1224,12 +1224,16 @@ void Schematic::createSubNetlistPlain(QTextStream *stream, QTextEdit *ErrText,
       // ..... digital subcircuit ...................................
       (*tstream) << "\nmodule Sub_" << Type << " ("
 		 << SubcircuitPortNames.join(", ") << ");\n";
+
+      // subcircuit in/out connections
       if(!InPorts.isEmpty())
 	(*tstream) << "  input " << InPorts.join(", ") << ";\n";
       if(!OutPorts.isEmpty())
 	(*tstream) << "  output " << OutPorts.join(", ") << ";\n";
       if(!InOutPorts.isEmpty())
 	(*tstream) << "  inout " << InOutPorts.join(", ") << ";\n";
+
+      // subcircuit connections
       if(!Signals.isEmpty()) {
 	QValueList<DigSignal> values = Signals.values();
 	QValueList<DigSignal>::iterator it;
@@ -1239,6 +1243,7 @@ void Schematic::createSubNetlistPlain(QTextStream *stream, QTextEdit *ErrText,
       }
       (*tstream) << "\n";
 
+      // subcircuit parameters
       for(pi = SymbolPaints.first(); pi != 0; pi = SymbolPaints.next())
 	if(pi->Name == ".ID ") {
 	  SubParameter *pp;
@@ -1255,16 +1260,25 @@ void Schematic::createSubNetlistPlain(QTextStream *stream, QTextEdit *ErrText,
 	  break;
 	}
 
+      // write all equations into netlist file
+      for(pc = DocComps.first(); pc != 0; pc = DocComps.next()) {
+	if(pc->Model == "Eqn") {
+	  (*tstream) << pc->get_Verilog_Code(NumPorts);
+	}
+      }
+
       if(Signals.find("gnd") != Signals.end())
 	(*tstream) << "  assign gnd = 0;\n";  // should appear only once
 
       // write all components into netlist file
       for(pc = DocComps.first(); pc != 0; pc = DocComps.next()) {
-	s = pc->get_Verilog_Code(NumPorts);
-	if(s.at(0) == '§') {
-	  ErrText->insert(s.mid(1));
+	if(pc->Model != "Eqn") {
+	  s = pc->get_Verilog_Code(NumPorts);
+	  if(s.at(0) == '§') {
+	    ErrText->insert(s.mid(1));
+	  }
+	  else (*tstream) << s;
 	}
-	else (*tstream) << s;
       }
 
       (*tstream) << "endmodule\n";
@@ -1308,6 +1322,16 @@ void Schematic::createSubNetlistPlain(QTextStream *stream, QTextEdit *ErrText,
 	}
       }
 
+      // write all equations into netlist file
+      for(pc = DocComps.first(); pc != 0; pc = DocComps.next()) {
+	if(pc->Model == "Eqn") {
+	  ErrText->insert(
+            QObject::tr("WARNING: Equations in \"%1\" are 'time' typed.").
+	    arg(pc->Name));
+	  (*tstream) << pc->get_VHDL_Code(NumPorts);
+	}
+      }
+
       (*tstream) << "begin\n";
 
       if(Signals.find("gnd") != Signals.end())
@@ -1315,11 +1339,13 @@ void Schematic::createSubNetlistPlain(QTextStream *stream, QTextEdit *ErrText,
 
       // write all components into netlist file
       for(pc = DocComps.first(); pc != 0; pc = DocComps.next()) {
-	s = pc->get_VHDL_Code(NumPorts);
-	if(s.at(0) == '§') {
-	  ErrText->insert(s.mid(1));
+	if(pc->Model != "Eqn") {
+	  s = pc->get_VHDL_Code(NumPorts);
+	  if(s.at(0) == '§') {
+	    ErrText->insert(s.mid(1));
+	  }
+	  else (*tstream) << s;
 	}
-	else (*tstream) << s;
       }
 
       (*tstream) << "end architecture;\n";

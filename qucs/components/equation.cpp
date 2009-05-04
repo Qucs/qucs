@@ -21,6 +21,7 @@
 
 Equation::Equation()
 {
+  Type = isComponent; // Analogue and digital component.
   Description = QObject::tr("equation");
 
   QFont f = QucsSettings.font;
@@ -51,6 +52,28 @@ Equation::Equation()
 
 Equation::~Equation()
 {
+}
+
+// -------------------------------------------------------
+QString Equation::verilogCode(int)
+{
+  QString s;
+  // output all equations
+  for(Property *pr = Props.first(); pr != 0; pr = Props.next())
+    if(pr->Name != "Export")
+      s += "  real "+pr->Name+"; initial "+pr->Name+" = "+pr->Value+";\n";
+  return s;
+}
+
+// -------------------------------------------------------
+QString Equation::vhdlCode(int)
+{
+  QString s;
+  // output all equations
+  for(Property *pr = Props.first(); pr != 0; pr = Props.next())
+    if(pr->Name != "Export")
+      s += "  constant "+pr->Name+" : time := "+pr->Value+";\n";
+  return s;
 }
 
 Component* Equation::newOne()
