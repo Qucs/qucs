@@ -1,3 +1,7 @@
+2009-05-04  Stefan Jahn  <stefan@lkcc.org>
+
+	* library/Ideal.lib: Fixed symbols of LP1 and VSum.
+
 2009-03-25  Stefan Jahn  <stefan@lkcc.org>
 
 	* library/Transistors.lib: Added yet another transistor provided
