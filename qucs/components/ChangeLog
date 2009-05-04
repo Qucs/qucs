@@ -1,3 +1,7 @@
+2009-05-04  Stefan Jahn  <stefan@lkcc.org>
+
+	* equation.cpp (verilogCode, vhdlCode): Added code for equations.
+
 2009-04-29  Stefan Jahn  <stefan@lkcc.org>
 
 	* jk_flipflop.cpp, d_flipflop.cpp (verilogCode): Fixed malformed

@@ -6760,6 +6760,10 @@ qucsedit [-r] file :إستعمال
         <source>generic variable</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>WARNING: Equations in &quot;%1&quot; are &apos;time&apos; typed.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsApp</name>
