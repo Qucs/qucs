@@ -7282,6 +7282,10 @@ Verwendung:  qucsedit [-r] Datei
         <source>generic variable</source>
         <translation>generische Variable</translation>
     </message>
+    <message>
+        <source>WARNING: Equations in &quot;%1&quot; are &apos;time&apos; typed.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
