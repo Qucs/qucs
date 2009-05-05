@@ -245,7 +245,8 @@ void  qf_pslc::dump (unsigned n1, unsigned n2,
 int qf_lcmp::dump_node (int& p, list <qf_cmp*>::iterator& i,
 			  QTextStream& com, QTextStream& wir) {
 
-  int	    n = p + 1;
+  int n = p + 1;
+  int g = 0;
 
   if ((*i) -> name == "END") return -n;		  // End of structure
   while (i != lst. end ()) {
@@ -254,15 +255,23 @@ int qf_lcmp::dump_node (int& p, list <qf_cmp*>::iterator& i,
     if ((*i) -> name == "END") return -n;	  // End of structure
 
     if ((*i) -> gnd) {
+      if (g) {
+	// connecting wire for consecutive branches to ground
+	wir << "<" << x << " " << y-80 << " " << x+110 << " " << y-80
+	    << " \"\" 0 0 0>\n";
+	x += 110;
+      }
       (*i) -> x = x;
       (*i) -> y = y;
       (*i) -> dump (p, 0, com, wir);
       x = (*i) -> x;
       y = (*i) -> y;
+      g = 1;
       i ++;
       continue;
     }
 
+    g = 0;
     (*i) -> x = x;
     (*i) -> y = y;
     (*i) -> dump (p, n, com, wir);
