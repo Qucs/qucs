@@ -39,7 +39,7 @@ Rarray	operator * (Rarray& V, qf_matrix& M) {
 
 gslice	qf_matrix::submx (unsigned r, unsigned k, unsigned c, unsigned l) {
 
-  valarray <unsigned>  len (2), stride (2);
+  valarray <size_t>  len (2), stride (2);
 
   r --; c--;
   k -= r;
