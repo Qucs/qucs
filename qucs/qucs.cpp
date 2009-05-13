@@ -403,6 +403,7 @@ pInfoFunc *ComponentGroups[] =
 // only put the paintings in it, because of "symbol painting mode".
 void QucsApp::fillComboBox(bool setAll)
 {
+  CompChoose->setSizeLimit(11); //Increase this if you add items below.
   CompChoose->clear();
   if(setAll) {
     CompChoose->insertItem(tr("lumped components"));
