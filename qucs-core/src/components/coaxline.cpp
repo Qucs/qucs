@@ -1,7 +1,7 @@
 /*
  * coaxline.cpp - coaxial cable class implementation
  *
- * Copyright (C) 2006, 2008 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2006, 2008, 2009 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: coaxline.cpp,v 1.5 2008-10-07 20:15:32 ela Exp $
+ * $Id: coaxline.cpp,v 1.6 2009-05-14 18:04:41 ela Exp $
  *
  */
 
@@ -71,16 +71,20 @@ void coaxline::calcNoiseSP (nr_double_t) {
 }
 
 void coaxline::initCheck (void) {
-  nr_double_t d = getPropertyDouble ("d");
-  nr_double_t D = getPropertyDouble ("D");
+  nr_double_t d   = getPropertyDouble ("d");
+  nr_double_t D   = getPropertyDouble ("D");
+  nr_double_t er  = getPropertyDouble ("er");
+  nr_double_t mur = getPropertyDouble ("mur");
+
   // check validity
   if (d >= D) {
     logprint (LOG_ERROR,
 	      "ERROR: Inner diameter larger than outer diameter.\n");
   }
-  nr_double_t f1, f2;
-  f1 = C0 / (M_PI * (D + d)); // TE
-  f2 = C0 / (2 * (D - d));    // TM
+  nr_double_t f1, f2, cl;
+  cl = C0 / sqrt (mur * er);
+  f1 = cl / (M_PI_2 * (D + d)); // TE_11
+  f2 = cl / (1 * (D - d));      // TM_N1
   fc = MIN (f1, f2);
 }
 

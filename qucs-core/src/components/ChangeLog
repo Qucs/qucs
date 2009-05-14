@@ -1,3 +1,7 @@
+2009-05-14  Stefan Jahn  <stefan@lkcc.org>
+
+	* coaxline.cpp: Fixed computation of cut-off frequencies.
+
 2009-04-07  Stefan Jahn  <stefan@lkcc.org>
 
 	* digital/digital.cpp: Added transfer function scaling factor
