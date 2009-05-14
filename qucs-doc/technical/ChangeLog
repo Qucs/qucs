@@ -1,3 +1,8 @@
+2009-05-14  Stefan Jahn  <stefan@lkcc.org>
+
+	* transline.tex (subsection{Cutoff frequencies}): Fixed
+	computation of cut-off frequencies
+
 2008-02-22  Stefan Jahn  <stefan@lkcc.org>
 
 	* lineardevices.tex (subsection{T-parameters}): Added MNA matrix
