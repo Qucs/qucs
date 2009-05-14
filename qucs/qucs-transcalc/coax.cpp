@@ -3,7 +3,7 @@
  * 
  * Copyright (C) 2001 Gopal Narayanan <gopal@astro.umass.edu>
  * Copyright (C) 2002 Claudio Girardi <claudio.girardi@ieee.org>
- * Copyright (C) 2005, 2006 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2005, 2006, 2009 Stefan Jahn <stefan@lkcc.org>
  * 
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -188,25 +188,25 @@ void coax::show_results()
   setResult (1, atten_dielectric, "dB");
       
   n = 1;
-  fc = C0 / (M_PI * (dout + din)/(double) n);
+  fc = C0 / sqrt (er * mur) / (M_PI_2 * (dout + din)/(double) n);
   setResult (2, "none");
   if (fc <= f) {
     char text[256], txt[256];
     strcpy (text, "TE(1,1) ");
     m = 2;
-    fc = C0 / (2 * (dout - din)/(double) (m-1));
+    fc = C0 / sqrt (er * mur) / (M_PI_2 * (dout + din)/(double) m);
     while ((fc <= f) && (m<10)) {
       sprintf(txt, "TE(n,%d) ",m);
       strcat(text,txt);
       m++;
-      fc = C0 / (2 * (dout - din)/(double) (m-1));
+      fc = C0 / sqrt (er * mur) / (M_PI_2 * (dout + din)/(double) m);
     }
     setResult (2, text);
   }
 
   setResult (3, "none");
   m = 1;
-  fc = C0 / (2 * (dout - din)/(float) m);
+  fc = C0 / sqrt (er * mur) / ((dout - din)/(float) m);
   if (fc <= f) {
     char text[256], txt[256];
     strcpy (text, "");
@@ -214,7 +214,7 @@ void coax::show_results()
       sprintf(txt, "TM(n,%d) ",m);
       strcat(text,txt);
       m++;
-      fc = C0 / (2 * (dout - din)/(double) m);
+      fc = C0 / sqrt (er * mur) / ((dout - din)/(double) m);
     }
     setResult (3, text);
   }
