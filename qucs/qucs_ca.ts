@@ -9525,6 +9525,10 @@ Convert data file to various file formats</source>
         <source>Arabic by Chabane Noureddine</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Kazakh by Erbol Keshubaev</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsAttenuator</name>
@@ -11597,6 +11601,10 @@ abrir els fitxers amb el programa apropiado.</translation>
     </message>
     <message>
         <source>Arabic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Kazakh</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

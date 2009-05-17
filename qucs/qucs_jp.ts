@@ -9456,6 +9456,10 @@ Convert data file to various file formats</source>
         <source>Arabic by Chabane Noureddine</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Kazakh by Erbol Keshubaev</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsAttenuator</name>
@@ -11444,6 +11448,10 @@ open files with an appropriate program.</source>
     <message>
         <source>Arabic</source>
         <translation></translation>
+    </message>
+    <message>
+        <source>Kazakh</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
