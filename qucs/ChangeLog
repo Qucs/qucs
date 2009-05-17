@@ -1,3 +1,7 @@
+2009-05-17  Stefan Jahn  <stefan@lkcc.org>
+
+	* Makefile.am (TRANSLATIONS): Added Kazakh translations.
+
 2009-05-13  Stefan Jahn  <stefan@lkcc.org>
 
 	* qucs.cpp (fillComboBox): Applied a patch making it easier to

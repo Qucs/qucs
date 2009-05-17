@@ -9975,6 +9975,10 @@ Convert data file to various file formats</source>
         <source>Arabic by Chabane Noureddine</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Kazakh by Erbol Keshubaev</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsAttenuator</name>
@@ -12185,6 +12189,10 @@ fine di aprirli utilizzando il programma appropriato.</translation>
     </message>
     <message>
         <source>Arabic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Kazakh</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

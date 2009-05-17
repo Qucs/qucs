@@ -9986,6 +9986,10 @@ Konvertiert Datendatei in verschiedene Datenformate</translation>
         <source>Arabic by Chabane Noureddine</source>
         <translation>Arabisch von Chabane Noureddine</translation>
     </message>
+    <message>
+        <source>Kazakh by Erbol Keshubaev</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsAttenuator</name>
@@ -13726,6 +13730,10 @@ mit einem entsprechendem Programm zu assoziieren.</translation>
     <message>
         <source>Arabic</source>
         <translation>Arabisch</translation>
+    </message>
+    <message>
+        <source>Kazakh</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

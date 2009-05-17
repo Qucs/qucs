@@ -942,7 +942,8 @@ void QucsApp::slotHelpAbout()
     tr("Russian by Igor Gorbounov")+"\n"+
     tr("Czech by Marek Straka")+"\n"+
     tr("Catalan by Antoni Subirats")+"\n"+
-    tr("Arabic by Chabane Noureddine"));
+    tr("Arabic by Chabane Noureddine")+"\n"+
+    tr("Kazakh by Erbol Keshubaev"));
 }
 
 // ----------------------------------------------------------
