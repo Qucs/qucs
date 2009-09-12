@@ -1757,6 +1757,21 @@
   </Model>
 </Component>
 
+<Component BD139>
+  <Description>
+   BD139 NPN EPITAXIAL SILICON TRANSISTOR
+   MEDIUM POWER LINEAR AND SWITCHING APPLICATIONS 
+   BVcbo: 80V
+   BVceo: 80V
+   BVebo: 5V
+   Complement to BD140
+   added by Frans Schreuder <f.p.schreuder@rug.nl>
+  </Description>
+  <Model>
+    <_BJT BD139_ 1 0 0 8 -26 0 0 "npn" 0 "1e-9" 0 "0.85" 0 "1.33751" 0 "0.166126" 0 "1.66126" 0 "36.4079" 0 "142.931" 0 "5.03418e-09" 0 "1.45313 " 0 "5.02557e-09" 0 "3.10227" 0 "222.664" 0 "1.35467" 0 "0.1" 0 "0.1" 0 "1.04109" 0 "0.000472454" 0 "26.9143" 0 "1e-11" 0 "0.75" 0 "0.33" 0 "1e-11" 0 "0.75" 0 "0.33" 0 "0.9" 0 "0" 0 "0.75" 0 "0.5" 0 "0.5" 0 "1e-09" 0 "1" 0 "10" 0 "0.01" 0 "1e-07" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0 "0.727762" 0 "1.04311" 0 "1.05" 0 "26.85" 0 "1" 0>
+  </Model>
+</Component>
+
 <Component BF720>
   <Description>
     Si npn 1.5W  300V 100mA  60MHz pkg:SOT-223 2,1,3
