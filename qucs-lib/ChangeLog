@@ -1,3 +1,8 @@
+2009-09-12  Stefan Jahn  <stefan@lkcc.org>
+
+	* library/Transistors.lib: Added BD139 transistor provided by
+	Frans Schreuder.  Thanks!
+
 2009-05-04  Stefan Jahn  <stefan@lkcc.org>
 
 	* library/Ideal.lib: Fixed symbols of LP1 and VSum.
