@@ -338,11 +338,11 @@ void Schematic::simpleInsertComponent(Component *c)
     // check if new node lies upon existing node
     for(pn = DocNodes.first(); pn != 0; pn = DocNodes.next())
       if(pn->cx == x) if(pn->cy == y) {
-	if (!pn->Type.isEmpty()) {
-	  pp->Type = pn->Type;
+	if (!pn->DType.isEmpty()) {
+	  pp->Type = pn->DType;
 	}
 	if (!pp->Type.isEmpty()) {
-	  pn->Type = pp->Type;
+	  pn->DType = pp->Type;
 	}
 	break;
       }
@@ -353,7 +353,7 @@ void Schematic::simpleInsertComponent(Component *c)
     }
     pn->Connections.append(c);  // connect schematic node to component node
     if (!pp->Type.isEmpty()) {
-      pn->Type = pp->Type;
+      pn->DType = pp->Type;
     }
 
     pp->Connection = pn;  // connect component node to schematic node
@@ -787,9 +787,9 @@ void Schematic::collectDigitalSignals(void)
   for(pn = DocNodes.first(); pn != 0; pn = DocNodes.next()) {
     DigMap::Iterator it = Signals.find(pn->Name);
     if(it == Signals.end()) { // avoid redeclaration of signal
-      Signals.insert(pn->Name, DigSignal(pn->Name, pn->Type));
-    } else if (!pn->Type.isEmpty()) {
-      it.data().Type = pn->Type;
+      Signals.insert(pn->Name, DigSignal(pn->Name, pn->DType));
+    } else if (!pn->DType.isEmpty()) {
+      it.data().Type = pn->DType;
     }
   }
 }
@@ -882,7 +882,7 @@ bool Schematic::throughAllComps(QTextStream *stream, int& countInit,
 	  // apply in/out signal types of subcircuit
 	  for(Port *pp = pc->Ports.first(); pp; pp = pc->Ports.next(), i++) {
 	    pp->Type = it.data().PortTypes[i];
-	    pp->Connection->Type = pp->Type;
+	    pp->Connection->DType = pp->Type;
 	  }
 	}
         continue;   // insert each subcircuit just one time
@@ -908,7 +908,7 @@ bool Schematic::throughAllComps(QTextStream *stream, int& countInit,
 	// save in/out signal types of subcircuit
 	for(Port *pp = pc->Ports.first(); pp; pp = pc->Ports.next(), i++) {
 	  pp->Type = d->PortTypes[i];
-	  pp->Connection->Type = pp->Type;
+	  pp->Connection->DType = pp->Type;
 	}
 	sub.PortTypes = d->PortTypes;
 	FileList.replace(f, sub);
@@ -1142,7 +1142,7 @@ void Schematic::createSubNetlistPlain(QTextStream *stream, QTextEdit *ErrText,
       DigMap::Iterator it = Signals.find(*it_name);
       (*it_type) = it.data().Type;
       // propagate type to port symbol
-      pc->Ports.getFirst()->Connection->Type = *it_type;
+      pc->Ports.getFirst()->Connection->DType = *it_type;
 
       if(!isAnalog) {
 	if (isVerilog) {
