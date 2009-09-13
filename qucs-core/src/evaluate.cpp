@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: evaluate.cpp,v 1.84 2009/04/19 12:01:33 ela Exp $
+ * $Id: evaluate.cpp,v 1.85 2009/09/13 10:03:16 ela Exp $
  *
  */
 
@@ -2083,8 +2083,20 @@ void evaluate::extract_vector (constant * args, int idx, int &skip, int &size,
     else {
       // independent vectors
       range * r = RNG (_ARES (idx));
-      int n, k;
+      int i, n, k;
       int len = v->getSize ();
+      i = (int) r->lo ();
+      if (i < 0 || i >= len) {
+	char txt[256];
+	sprintf (txt, "vector index %d out of bounds [%d,%d]", i, 0, len - 1);
+	THROW_MATH_EXCEPTION (txt);
+      }
+      i = (int) r->hi ();
+      if (i < 0 || i >= len) {
+	char txt[256];
+	sprintf (txt, "vector index %d out of bounds [%d,%d]", i, 0, len - 1);
+	THROW_MATH_EXCEPTION (txt);
+      }
       size = 0;
       for (n = 0; n < len; n++) if (r->inside (n)) size++;
       vres = new vector (size);
@@ -2225,10 +2237,12 @@ constant * evaluate:: QUCS_CONCAT2 (efunc,_v_v) (constant * args) { \
   *val = isign > 0 ? *val / k : *val * k;			    \
   res->v = val;							    \
   int n = t->getSize ();					    \
+  if (k != n) {                                                     \
+    THROW_MATH_EXCEPTION ("nonconformant vector lengths");          \
+    return res; }                                                   \
   nr_double_t last  = real (t->get (n - 1));			    \
   nr_double_t first = real (t->get (0));			    \
   nr_double_t delta = (last - first) / (n - 1);			    \
-  n = val->getSize ();						    \
   constant * arg = new constant (TAG_VECTOR);			    \
   arg->v = new vector (::linspace (0, 1.0 / delta, n));		    \
   arg->solvee = args->getResult(0)->solvee;			    \

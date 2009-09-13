@@ -31,7 +31,7 @@ abs(b); real(b); imag(b); arg(b); conj(b); return 0;]])],
  AC_LANG_POP
 ])
 if test "$ac_cv_cxx_have_complex" = yes; then
-  AC_DEFINE(HAVE_COMPLEX,,[define if the compiler has complex<T>])
+  AC_DEFINE(HAVE_COMPLEX,[1],[Define if the compiler has complex<T>.])
 fi
 ])
 
@@ -49,7 +49,8 @@ abs(b); real(b); imag(b); arg(b); return 0;]])],
  AC_LANG_POP
 ])
 if test "$ac_cv_cxx_have_tr1_complex" = yes; then
-  AC_DEFINE(HAVE_TR1_COMPLEX,,[define if the compiler has complex<T>])
+  AC_DEFINE(HAVE_TR1_COMPLEX,[1],
+	    [Define if the compiler has TR1 compliant complex<T>.])
 fi
 ])
 
@@ -92,11 +93,10 @@ m4_define([_AH_CHECK_CXX_COMPLEX_FUNCS],
 dnl equivalent of AC_CHECK_FUNCS
 AC_DEFUN([AC_CHECK_CXX_COMPLEX_FUNCS],
 [_AH_CHECK_CXX_COMPLEX_FUNCS([$1])dnl
-for ac_func in $1
-do
+for ac_func in $1; do
 AC_CHECK_CXX_COMPLEX_FUNC($ac_func,
               [AC_DEFINE_UNQUOTED(AS_TR_CPP([HAVE_CXX_COMPLEX_$ac_func])) $2],
-              [$3])dnl
+              [$3]);dnl
 done
 ])
 
