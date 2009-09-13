@@ -81,7 +81,7 @@ AC_DEFUN([AC_CHECK_CXX_COMPLEX_FUNC],
 		   $1(a); return 0;]])],
                 [AS_VAR_SET([ac_var], [yes])],
                 [AS_VAR_SET([ac_var], [no])])])
-AS_IF([test AS_VAR_GET([ac_var]) = yes], [$2], [$3])dnl
+AS_VAR_IF([ac_var], [yes], [$2], [$3])dnl
 AS_VAR_POPDEF([ac_var])dnl
 ])
 
