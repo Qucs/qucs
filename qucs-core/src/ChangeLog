@@ -1,3 +1,9 @@
+2009-09-13  Stefan Jahn  <stefan@lkcc.org>
+
+	* evaluate.cpp (FOURIER_HELPER_1): Checking vector lengths given
+	to Time2Freq() and Freq2Time() as well as indices into vectors
+	given in ranges.
+
 2009-04-19  Stefan Jahn  <stefan@lkcc.org>
 
 	* matrix.cpp: Implemented matrix power operation with integral
