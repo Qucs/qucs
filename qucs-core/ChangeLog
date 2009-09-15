@@ -1,3 +1,8 @@
+2009-09-15  Stefan Jahn  <stefan@lkcc.org>
+
+	* m4/complexcxx.m4: Using AS_VAR_IF() macro to work with Autoconf
+	2.64 version.
+
 2009-04-25  Stefan Jahn  <stefan@lkcc.org>
 
 	* configure.ac: Released version 0.0.15 and bumped up to version

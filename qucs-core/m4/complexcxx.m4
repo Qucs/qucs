@@ -126,7 +126,7 @@ AC_DEFUN([AC_CHECK_CXX_COMPLEX_POW],
 		         return 0;]])],
                     [AS_VAR_SET([ac_var], [yes])],
 		    [AS_VAR_SET([ac_var], [no])])])
-AS_IF([test AS_VAR_GET([ac_var]) = yes], 
+AS_VAR_IF([ac_var], [yes],
      [AC_DEFINE(HAVE_CXX_COMPLEX_POW, 1, 
                 [Define to 1 if you have the complex pow function.])], 
      [])dnl
@@ -159,7 +159,7 @@ AC_DEFUN([AC_CHECK_CXX_COMPLEX_ATAN2],
 		         return 0;]])],
                     [AS_VAR_SET([ac_var], [yes])],
 		    [AS_VAR_SET([ac_var], [no])])])
-AS_IF([test AS_VAR_GET([ac_var]) = yes], 
+AS_VAR_IF([ac_var], [yes],
      [AC_DEFINE(HAVE_CXX_COMPLEX_ATAN2, 1, 
                 [Define to 1 if you have the complex atan2 function.])], 
      [])dnl
@@ -192,7 +192,7 @@ AC_DEFUN([AC_CHECK_CXX_COMPLEX_FMOD],
 		         return 0;]])],
                     [AS_VAR_SET([ac_var], [yes])],
 		    [AS_VAR_SET([ac_var], [no])])])
-AS_IF([test AS_VAR_GET([ac_var]) = yes], 
+AS_VAR_IF([ac_var], [yes],
      [AC_DEFINE(HAVE_CXX_COMPLEX_FMOD, 1, 
                 [Define to 1 if you have the complex fmod function.])], 
      [])dnl
@@ -227,7 +227,7 @@ AC_DEFUN([AC_CHECK_CXX_COMPLEX_POLAR],
 		         return 0;]])],
                     [AS_VAR_SET([ac_var], [yes])],
 		    [AS_VAR_SET([ac_var], [no])])])
-AS_IF([test AS_VAR_GET([ac_var]) = yes], 
+AS_VAR_IF([ac_var], [yes],
      [AC_DEFINE(HAVE_CXX_COMPLEX_POLAR, 1, 
                 [Define to 1 if you have the complex polar (double, double) function.])], 
      [])dnl
@@ -264,7 +264,7 @@ AC_DEFUN([AC_CHECK_CXX_COMPLEX_POLAR_COMPLEX],
 		         return 0;]])],
                     [AS_VAR_SET([ac_var], [yes])],
 		    [AS_VAR_SET([ac_var], [no])])])
-AS_IF([test AS_VAR_GET([ac_var]) = yes], 
+AS_VAR_IF([ac_var], [yes],
      [AC_DEFINE(HAVE_CXX_COMPLEX_POLAR_COMPLEX, 1, 
                 [Define to 1 if you have the complex polar (complex, complex) function.])], 
      [])dnl
