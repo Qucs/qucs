@@ -6863,6 +6863,98 @@ Usage:  qucsedit [-r] file
         <source>WARNING: Equations in &quot;%1&quot; are &apos;time&apos; typed.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>NIGBT verilog device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>gate-drain overlap area</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>m**2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>area of the device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MOS transconductance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ambipolar recombination lifetime</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>metallurgical base width</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>gate-source capacitance per unit area</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>F/cm**2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>gate-drain oxide capacitance per unit area</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A/cm**2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>triode region factor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>electron mobility</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>cm**2/Vs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>hole mobility</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>base doping</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>1/cm**3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>transverse field factor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>NIGBT</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>avalanche uniformity factor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>avalanche multiplication exponent</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>emitter saturation current density</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>gate-drain overlap depletion threshold</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
