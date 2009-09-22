@@ -147,6 +147,7 @@
 #include "hicumL2V2p23.h"
 #include "photodiode.h"
 #include "phototransistor.h"
+#include "nigbt.h"
 
 #include "dff_SR.h"
 #include "tff_SR.h"
