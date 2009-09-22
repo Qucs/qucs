@@ -1,3 +1,10 @@
+2009-09-22  Stefan Jahn  <stefan@lkcc.org>
+
+	* nigbt.va: Added new IGBT model based upon Hefner's publications.
+	Still not working...
+
+	* qucsVersion.xml: Added atanh() functionality.
+
 2009-03-31  Stefan Jahn  <stefan@lkcc.org>
 
 	* EKV26MOS.va: Fixed range of 'Vto' property to include both
