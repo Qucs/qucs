@@ -1627,6 +1627,8 @@ Component* getComponentFromName(QString& Line)
   case 'N' : if(cstr == "OR") c = new Logical_NOR();
         else if(cstr == "AND") c = new Logical_NAND();
         break;
+  case 'n' : if(cstr == "igbt") c = new nigbt();
+        break;
   case '.' : if(cstr == "DC") c = new DC_Sim();
         else if(cstr == "AC") c = new AC_Sim();
         else if(cstr == "TR") c = new TR_Sim();
