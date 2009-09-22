@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: components.h,v 1.10 2009/04/01 18:54:54 ela Exp $
+ * $Id: components.h,v 1.11 2009/09/22 15:48:34 ela Exp $
  *
  */
 
@@ -148,6 +148,7 @@
 #include "verilog/hicumL2V2p23.core.h"
 #include "verilog/photodiode.core.h"
 #include "verilog/phototransistor.core.h"
+#include "verilog/nigbt.core.h"
 
 #include "verilog/dff_SR.core.h"
 #include "verilog/tff_SR.core.h"

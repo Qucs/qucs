@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: component_id.h,v 1.65 2009/04/01 18:54:54 ela Exp $
+ * $Id: component_id.h,v 1.66 2009/09/22 15:48:34 ela Exp $
  *
  */
 
@@ -152,6 +152,7 @@ enum circuit_type {
   CIR_hicumL2V2p23,
   CIR_photodiode,
   CIR_phototransistor,
+  CIR_nigbt,
 
   // digital verilog devices
   CIR_dff_SR,

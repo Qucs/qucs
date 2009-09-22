@@ -3,7 +3,7 @@
   Copyright (C) 2006 Laurent Lemaitre <r29173@users.sourceforge.net>
   Copyright (C) 2006 Helene Parruitte <parruit@enseirb.fr>
   Copyright (C) 2006 Bertrand Ardouin <ardouin@xmodtech.com>
-  Copyright (C) 2006, 2007 Stefan Jahn <stefan@lkcc.org>
+  Copyright (C) 2006, 2007, 2009 Stefan Jahn <stefan@lkcc.org>
 
   This is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -43,6 +43,8 @@ inline double _asin(double arg)            { return  asin(arg); }
 inline double _d0_asin(double arg)         { return (+1.0/sqrt(1-arg*arg)); }
 inline double _atan(double arg)            { return  atan(arg); }
 inline double _d0_atan(double arg)         { return (+1.0/(1+arg*arg)); }
+inline double _atanh(double arg)           { return  atanh(arg); }
+inline double _d0_atanh(double arg)        { return (+1.0/(1-arg*arg)); }
 inline double _logE(double arg)            { return  log(arg); }
 inline double _d0_logE(double arg)         { return (1.0/arg); }
 inline double _log10(double arg)           { return  log10(arg); }
@@ -571,7 +573,7 @@ inline double _d0_vt(double)               { return 1.3806503e-23/1.602176462e-1
       </admst:for-each>
       <admst:choose>
         <admst:when test="[ name='cos' or name='sin' or name='tan' or name='cosh' or name='sinh' or name='tanh' or name='acos' or name='asin'
-                            or name='atan' or name='ln' or name='log' or name='exp' or name='sqrt' or name='abs' or name='limexp'
+                            or name='atan' or name='atanh' or name='ln' or name='log' or name='exp' or name='sqrt' or name='abs' or name='limexp'
                             or name='div' or name='pow' or name='hypot' or name='min' or name='max' or name='\$vt' ]">
           <admst:return name="x" value="_$function($args)"/>
           <admst:for-each select="$globalanalogfunction/variable[input='yes']">

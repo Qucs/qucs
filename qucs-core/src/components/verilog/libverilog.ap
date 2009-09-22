@@ -37,6 +37,7 @@ SOURCES = HBT_X.analogfunction.cpp HBT_X.core.cpp \
         hicumL2V2p23.analogfunction.cpp hicumL2V2p23.core.cpp \
         photodiode.analogfunction.cpp photodiode.core.cpp \
 	phototransistor.analogfunction.cpp phototransistor.core.cpp \
+	nigbt.analogfunction.cpp nigbt.core.cpp \
 	dff_SR.analogfunction.cpp dff_SR.core.cpp \
 	tff_SR.analogfunction.cpp tff_SR.core.cpp \
 	jkff_SR.analogfunction.cpp jkff_SR.core.cpp \
