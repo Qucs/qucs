@@ -1,3 +1,8 @@
+2009-10-02  Stefan Jahn  <stefan@lkcc.org>
+
+	* nigbt.va: Reformulated equations for implicit system variables.
+	Also ensured no more "nan" values in computations.
+
 2009-09-22  Stefan Jahn  <stefan@lkcc.org>
 
 	* nigbt.va: Added new IGBT model based upon Hefner's publications.
