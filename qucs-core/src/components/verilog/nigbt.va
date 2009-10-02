@@ -221,7 +221,7 @@ else
 
 Munc = 1/(1/Mun+Mucinv);
 Mupc = 1/(1/Mup+Mucinv);
-if (Ql != 0)
+if (Ql > 0)
   Mueff = Munc+Mupc*Ql/(Ql + Qb);
 else
   Mueff = Munc;
