@@ -27,6 +27,10 @@
 // dielectric permittivity of silicon
 `define EPSSI           1.03594e-10
 
+// tiny conductance
+`define GMIN           1e-12
+`define TINY           1e-20
+
 // module implementation
 module nigbt (C, G, E);
 
@@ -77,7 +81,7 @@ module nigbt (C, G, E);
     `attr(info="threshold voltage" unit="V");
   parameter real Vtd = 1.0e-3 from [0 :inf]
     `attr(info="gate-drain overlap depletion threshold" unit="V");
-  parameter real Tnom = 26.85 from [-273 : inf]
+  parameter real Tnom = 26.85 from [-`P_CELSIUS0 : inf]
   `attr(info="parameter measurement temperature" unit="Celsius");
 
   // local variables
@@ -104,7 +108,7 @@ analog begin
 begin
 
   Tj = $temperature;
-  To = Tnom+273.15;
+  To = Tnom+`P_CELSIUS0;
   A = Area;
   Ads = A-Agd;
   B = Mun/Mup;   // ambipolar mobility ratio
@@ -156,28 +160,28 @@ Mucinv = V(var_Mucinv);
 dVecdt = V(var_dVecdt);
 
 // collector-base space charge concentration
-Nscl = Nl + Nsat;
+Nscl = max(Nl + Nsat, `TINY);
 
 // gate-drain overlap depletion width
 if (Vdg > -Vtd)
-  Wgdj = min(sqrt(2*`EPSSI*(Vdg+Vtd)/`P_Q/Nscl),Wb);
+  Wgdj = min(sqrt(2*`EPSSI*(Vdg+Vtd)/`P_Q/Nscl),Wl);
 else
   Wgdj = 0;
 
 // drain-source depletion width
 if (Vds > -0.6)
-  Wdsj = min(sqrt(2*`EPSSI*(Vds+0.6)/`P_Q/Nscl),Wb);
+  Wdsj = min(sqrt(2*`EPSSI*(Vds+0.6)/`P_Q/Nscl),Wl);
 else
   Wdsj = 0;
 
 // base-collector depletion width
 if (Vbc > -0.6)
-  Wbcj = min(sqrt(2*`EPSSI*(Vbc+0.6)/`P_Q/Nscl),Wb);
+  Wbcj = min(sqrt(2*`EPSSI*(Vbc+0.6)/`P_Q/Nscl),Wl);
 else
   Wbcj = 0;
 
 // quasi-neutral base width
-W = Wb - Wbcj;
+W = Wl - Wbcj;
 
 // gate-source capacitor charge
 Qgs = Cgs * Vgs;
@@ -195,19 +199,19 @@ Qb = `P_Q*A*W*Nscl;
 Qbi = A*sqrt(2*`EPSSI*`P_Q*Nl*0.6);
 
 // base-collector depletion capacitance
-Cbcj = A*`EPSSI/Wbcj;
+Cbcj = A*`EPSSI/(Wbcj+`TINY);
 
 // collector-emitter redistribution capacitance
-if (Qb > 0)
-  Ccer = Ql*Cbcj/3/Qb;
-else
-  Ccer = 0;
+//if (Qb > 0)
+  Ccer = Ql*Cbcj/3/(Qb+`TINY);
+//else
+//  Ccer = 0;
 
 // drain-source depletion capacitance
-Cdsj = Ads*`EPSSI/Wdsj;
+Cdsj = Ads*`EPSSI/(Wdsj+`TINY);
 
 // gate-drain overlap depletion capacitance
-Cgdj = Agd*`EPSSI/Wgdj;
+Cgdj = Agd*`EPSSI/(Wgdj+`TINY);
 
 // gate-drain capacitance
 if (Vds < Vgs - Vtd)
@@ -217,7 +221,10 @@ else
 
 Munc = 1/(1/Mun+Mucinv);
 Mupc = 1/(1/Mup+Mucinv);
-Mueff = Munc+Mupc*Ql/(Ql + Qb);
+if (Ql != 0)
+  Mueff = Munc+Mupc*Ql/(Ql + Qb);
+else
+  Mueff = Munc;
 
 // carrier-carrier scattering diffusivity
 Dc = 2*$vt(Tj)*Munc*Mupc/(Munc+Mupc);
@@ -242,6 +249,7 @@ if (WL > 0)
 else
   Deltap = 0;
 
+if (WL > 0)
 begin
   real Nl2, Plo2, Con2, Con3, Con4;
 
@@ -254,6 +262,8 @@ begin
   // effective base doping concentration
   Neff = WL2*sqrt(Nl2+Con3) / atanh(Con4);
 end
+else
+  Neff = 0;
 
 // conductivity-modulated base resistance
 if (Ql < 0)
@@ -275,7 +285,7 @@ else if (Ql >= Qbi)
 else
   Vebq = min(Vebj,Vebd);
 
-Veb = Vebq + Rb;
+//Veb = Vebq + Rb;
 
 // collector-base junction breakdown voltage
 BVcbo = BVf*5.34e13/pow(Nscl,0.75);
@@ -292,7 +302,7 @@ else
 
 // steady-state collector current
 if (Veb > 0)
-  Icss = (1/(1+B))*It + (B/(1+B)) * (4*Dp/W*W)*Ql;
+  Icss = (1/(1+B))*It + (B/(1+B)) * (4*Dp/(W*W+`TINY))*Ql;
 else
   Icss = 0;
 
@@ -319,7 +329,10 @@ else
   Imos = Kf*KpT*(Vth*Vds - Kf*Vds*Vds/2) / (1+Theta*Vth);
 
 // collector-base thermally generated current
-Igen = `P_Q*Ni*A*sqrt(2*`EPSSI*Vbc/`P_Q/Nscl)/Tau;
+if (Vbc > 0)
+  Igen = `P_Q*Ni*A*sqrt(2*`EPSSI*Vbc/`P_Q/Nscl)/Tau;
+else
+  Igen = 0;
 
 // avalanche multiplication current
 Imult = (M-1)*(Imos+Ic) + M*Igen;
@@ -344,25 +357,28 @@ iNsat = Ic/(`P_Q*A*Vpsat)-Imos/(`P_Q*A*Vnsat);
 // current contributions
 //
 
+I(G, E) <+ Vgs*`GMIN;
 I(G, E) <+ ddt(Qgs);
+I(b, G) <+ Vdg*`GMIN;
 I(b, G) <+ ddt(Qgd);
-I(b, E) <+ Imos + Imult;
+I(b, E) <+ Imos + Imult + Vds*`GMIN;
 I(b, E) <+ ddt(Qds);
 I(b, E)	<+ ddt(Qmult);
-I(e, E) <+ Icss;
+I(e, E) <+ Icss + Vec*`GMIN;
 I(e, E) <+ ddt(Qcer);
-I(e, b) <+ Ibss;
-I(e, b) <+ ddt(Ql);
+I(e, b) <+ Ibss + Veb*`GMIN;
+I(e, b) <+ ddt(iQl);
 I(C, e) <+ It;
 
 //
 // system variables
 //
 
-I(var_Ql)	<+ iQl;
-I(var_Mucinv)	<+ iMucinv;
-I(var_Nsat)	<+ iNsat;
-I(var_dVecdt)	<+ ddt(Vec);
+I(var_Ql)	<+ Ql - iQl;
+I(var_Mucinv)	<+ Mucinv - iMucinv;
+I(var_Nsat)	<+ Nsat - iNsat;
+I(var_dVecdt)	<+ dVecdt;
+I(var_dVecdt)	<+ -ddt(Vec);
 
 end
 endmodule
