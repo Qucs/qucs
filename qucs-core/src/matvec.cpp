@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: matvec.cpp,v 1.27 2009/04/19 11:15:25 ela Exp $
+ * $Id: matvec.cpp,v 1.28 2009/10/04 20:44:47 ela Exp $
  *
  */
 
@@ -162,6 +162,64 @@ char * matvec::isMatrixVector (char * n, int& r, int& c) {
 	}
       }
     }
+  }
+  return NULL;
+}
+
+/* This function looks through the vector list given in `data' to find
+   matrix entries specified by `name' and returns the matrix vector
+   dimensions. */
+void matvec::getMatrixVectorSize (vector * data, char * name,
+				  int& rs, int& cs, int& ss) {
+  vector * v;
+  char * vn, * n;
+  int r, c, s;
+  rs = cs = ss = -1;
+  // go through vector list
+  for (v = data; v != NULL; v = (vector *) v->getNext ()) {
+    vn = v->getName ();
+    // requested matrix name found?
+    if (strstr (vn, name) == vn) {
+      if ((n = matvec::isMatrixVector (vn, r, c)) != NULL) {
+        if (rs < r) rs = r;
+        if (cs < c) cs = c;
+        s = v->getSize ();
+	if (ss < s) ss = s;
+        free (n);
+      }
+    }
+  }
+}
+
+/* This function looks through the vector list given in `data' to find
+   matrix entries specified by `name' and returns a matrix vector
+   object.  If there are no such matrices the function returns
+   NULL. */
+matvec * matvec::getMatrixVector (vector * data, char * name) {
+
+  // obtain matrix vector dimensions
+  int rs, cs, ss;
+  getMatrixVectorSize (data, name, rs, cs, ss);
+
+  vector * v;
+  char * vn, * n;
+  int r, c;
+  // valid matrix entries found
+  if (rs >= 0 && cs >= 0 && ss > 0) {
+    // create matrix vector
+    matvec * mv = new matvec (ss, rs + 1, cs + 1);
+    mv->setName (name);
+    // go through vector list again and fill in matrix vectors
+    for (v = data; v; v = (vector *) v->getNext ()) {
+      vn = v->getName ();
+      if (strstr (vn, name) == vn) {
+        if ((n = matvec::isMatrixVector (vn, r, c)) != NULL) {
+          mv->set (*v, r, c);
+          free (n);
+        }
+      }
+    }
+    return mv;
   }
   return NULL;
 }

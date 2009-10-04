@@ -1,7 +1,7 @@
 /*
  * matvec.h - matrix vector class definitions
  *
- * Copyright (C) 2004, 2005, 2006, 2007 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005, 2006, 2007, 2009 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: matvec.h,v 1.20 2009/04/19 11:15:25 ela Exp $
+ * $Id: matvec.h,v 1.21 2009/10/04 20:44:47 ela Exp $
  *
  */
 
@@ -46,6 +46,8 @@ class matvec
   static char * createMatrixString (const char *, int, int);
   static char * createMatrixString (char, int, int);
   static char * isMatrixVector (char *, int&, int&);
+  static matvec * getMatrixVector (vector *, char *);
+  static void getMatrixVectorSize (vector *, char *, int&, int&, int&);
 
   // operator functions
   friend matvec operator + (matvec, matvec);
