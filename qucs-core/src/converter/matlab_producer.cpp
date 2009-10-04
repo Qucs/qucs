@@ -1,0 +1,180 @@
+/*
+ * matlab_producer.cpp - the Matlab data file producer
+ *
+ * Copyright (C) 2009 Stefan Jahn <stefan@lkcc.org>
+ *
+ * This is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2, or (at your option)
+ * any later version.
+ * 
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this package; see the file COPYING.  If not, write to
+ * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
+ * Boston, MA 02110-1301, USA.  
+ *
+ * $Id: matlab_producer.cpp,v 1.1 2009-10-04 20:44:47 ela Exp $
+ *
+ */
+
+#if HAVE_CONFIG_H
+# include <config.h>
+#endif
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <ctype.h>
+#include <string.h>
+
+#include "matlab_producer.h"
+#include "matrix.h"
+#include "matvec.h"
+#include "constants.h"
+
+/* Global variables. */
+FILE * matlab_out = NULL; // output file stream
+int matlab_symbols = 1;   // convert data names to have valid Matlab identifier
+
+// Writes a Matlab v4 header.
+static void matlab_header (nr_int32_t rows, nr_int32_t cols, char * name) {
+
+  // MOPT
+  char mopt[4];
+#if WORDS_BIGENDIAN
+  mopt[0] = 1; // big endian
+#else
+  mopt[0] = 0; // little endian
+#endif
+  mopt[1] = 0; // always zero
+  switch (sizeof (nr_double_t) * 8) {
+    case 32: mopt[2] = 1; break;
+    case 64: mopt[2] = 0; break;
+  }
+  mopt[3] = 0; // numeric full matrix
+  fwrite (mopt, sizeof (mopt), 1, matlab_out);
+
+  // dimension
+  fwrite (&rows, sizeof (nr_int32_t), 1, matlab_out);
+  fwrite (&cols, sizeof (nr_int32_t), 1, matlab_out);
+
+  // imaginary flag
+  nr_int32_t imag = 1;
+  fwrite (&imag, sizeof (nr_int32_t), 1, matlab_out);
+
+  // data name length
+  nr_int32_t len = strlen (name) + 1;
+  fwrite (&len, sizeof (nr_int32_t), 1, matlab_out);
+
+  // data name
+  if (matlab_symbols) {
+    char * p = name;
+    // convert to valid Matlab identifiers
+    for (unsigned int i = 0; i < strlen (name); i++, p++) {
+      if (!isalnum (*p) && *p != '_')
+	*p = '_';
+    }
+  }
+  fwrite (name, 1, len, matlab_out);
+}
+
+// Writes a Matlab v4 vector.
+static void matlab_vector (vector * v) {
+  int n;
+
+  // real part
+  for (n = 0; n < v->getSize (); n++) {
+    nr_double_t r = real (v->get (n));
+    fwrite (&r, sizeof (nr_double_t), 1, matlab_out);
+  }
+  // imaginary part
+  for (n = 0; n < v->getSize (); n++) {
+    nr_double_t i = imag (v->get (n));
+    fwrite (&i, sizeof (nr_double_t), 1, matlab_out);
+  }
+}
+
+// Writes a Matlab v4 matrix.
+static void matlab_matrix (matrix * m) {
+  int r, c;
+
+  // real part
+  for (c = 0; c < m->getCols (); c++) {
+    for (r = 0; r < m->getRows (); r++) {
+      nr_double_t re = real (m->get (r, c));
+      fwrite (&re, sizeof (nr_double_t), 1, matlab_out);
+    }
+  }
+  // imaginary part
+  for (c = 0; c < m->getCols (); c++) {
+    for (r = 0; r < m->getRows (); r++) {
+      nr_double_t im = imag (m->get (r, c));
+      fwrite (&im, sizeof (nr_double_t), 1, matlab_out);
+    }
+  }
+}
+
+// Saves a dataset vector into a Matlab file.
+static void matlab_save (vector * v) {
+  int r, c;
+  char * n, * sn;
+  char * vn = v->getName ();
+  matvec * mv = NULL;
+  matrix m;
+
+  // is vector matrix entry
+  if ((n = matvec::isMatrixVector (vn, r, c)) != NULL) {
+    // valid matrix vector and simple matrix
+    if ((mv = matvec::getMatrixVector (v, n)) != NULL && mv->getSize () == 1) {
+      // only save at first matrix entry [1,1]
+      if (r == 0 && c == 0) {
+	// save matrix
+	matlab_header (mv->getRows (), mv->getCols (), n);
+	m = mv->get (0);
+	matlab_matrix (&m);
+      }
+    }
+    else {
+      // save vector
+      sn = (char *) malloc (strlen (n) + 8);
+      if (matlab_symbols) {
+	// convert indices to valid Matlab identifiers
+	sprintf (sn, "%s_%d_%d", n, r + 1, c + 1);
+      } else {
+	sprintf (sn, "%s", vn);
+      }	
+      matlab_header (v->getSize (), 1, sn);
+      matlab_vector (v);
+      free (sn);
+    }
+    free (n);
+    if (mv) delete mv;
+  }
+  else {
+    // save vector
+    matlab_header (v->getSize (), 1, vn);
+    matlab_vector (v);
+  }
+}
+
+/* This is the overall Matlab producer. */
+void matlab_producer (void) {
+
+  dataset * data = qucs_data;
+  vector * v;
+
+  // independent vectors and matrices
+  for (v = data->getDependencies (); v != NULL; v = (vector *) v->getNext ()) {
+    matlab_save (v);
+  }
+
+  // dependent vectors and matrices
+  for (v = data->getVariables (); v != NULL; v = (vector *) v->getNext ()) {
+    matlab_save (v);
+  }
+}

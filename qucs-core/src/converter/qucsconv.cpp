@@ -1,7 +1,7 @@
 /*
  * qucsconv.cpp - main converter program implementation
  *
- * Copyright (C) 2004, 2005, 2006, 2007 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005, 2006, 2007, 2009 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.
  *
- * $Id: qucsconv.cpp,v 1.27 2007-09-16 16:49:41 ela Exp $
+ * $Id: qucsconv.cpp,v 1.28 2009-10-04 20:44:47 ela Exp $
  *
  */
 
@@ -44,6 +44,7 @@
 #include "qucs_producer.h"
 #include "csv_producer.h"
 #include "touchstone_producer.h"
+#include "matlab_producer.h"
 
 /* structure defining a conversion */
 struct actionset_t {
@@ -67,6 +68,7 @@ int touch2qucs (struct actionset_t *, char *, char *);
 int csv2qucs   (struct actionset_t *, char *, char *);
 int zvr2qucs   (struct actionset_t *, char *, char *);
 int mdl2qucs   (struct actionset_t *, char *, char *);
+int qucs2mat   (struct actionset_t *, char *, char *);
 
 /* conversion definitions */
 struct actionset_t actionset[] = {
@@ -80,6 +82,7 @@ struct actionset_t actionset[] = {
   { "csv",        "qucsdata",   csv2qucs   },
   { "zvr",        "qucsdata",   zvr2qucs   },
   { "mdl",        "qucsdata",   mdl2qucs   },
+  { "qucsdata",   "matlab",     qucs2mat   },
   { NULL, NULL, NULL}
 };
 
@@ -312,6 +315,38 @@ int qucs2touch (struct actionset_t * action, char * infile, char * outfile) {
   if (!strcmp (action->out, "touchstone")) {
     touchstone_producer (data_var);
     fclose (touchstone_out);
+    return ret;
+  }
+  return -1;
+}
+
+// Qucs dataset to Matlab conversion.
+int qucs2mat (struct actionset_t * action, char * infile, char * outfile) {
+  int ret = 0;
+  if ((dataset_in = open_file (infile, "r")) == NULL) {
+    ret = -1;
+  } else if (dataset_parse () != 0) {
+    ret = -1;
+  } else if (dataset_result == NULL) {
+    ret = -1;
+  } else if (dataset_check (dataset_result) != 0) {
+    delete dataset_result;
+    dataset_result = NULL;
+    ret = -1;
+  }
+  qucs_data = dataset_result;
+  dataset_result = NULL;
+  dataset_lex_destroy ();
+  if (dataset_in)
+    fclose (dataset_in);
+  if (ret)
+    return -1;
+
+  if ((matlab_out = open_file (outfile, "wb")) == NULL)
+    return -1;
+  if (!strcmp (action->out, "matlab")) {
+    matlab_producer ();
+    fclose (matlab_out);
     return ret;
   }
   return -1;

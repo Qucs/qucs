@@ -26,6 +26,7 @@ files.
 Version 0.0.16
 --------------
 
+ * support for Matlab v4 as an export file format in qucsconv
  * new Verilog-A device model: NIGBT
 
 Version 0.0.15

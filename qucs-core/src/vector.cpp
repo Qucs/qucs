@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: vector.cpp,v 1.41 2008-03-27 17:34:31 ela Exp $
+ * $Id: vector.cpp,v 1.42 2009-10-04 20:44:47 ela Exp $
  *
  */
 
@@ -886,7 +886,8 @@ vector operator%(vector v1, vector v2) {
 
 /* This function reverses the order of the data list. */
 void vector::reverse (void) {
-  nr_complex_t * buffer = (nr_complex_t *) malloc (sizeof (nr_complex_t) * size);
+  nr_complex_t * buffer = (nr_complex_t *)
+    malloc (sizeof (nr_complex_t) * size);
   for (int i = 0; i < size; i++) buffer[i] = data[size - 1 - i];
   free (data);
   data = buffer;

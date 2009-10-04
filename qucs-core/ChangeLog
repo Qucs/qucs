@@ -1,3 +1,8 @@
+2009-10-04  Stefan Jahn  <stefan@lkcc.org>
+
+	* configure.ac: Checking for endianness of compiler.  Also
+	checking for a 32-bit type integers.
+
 2009-09-15  Stefan Jahn  <stefan@lkcc.org>
 
 	* m4/complexcxx.m4: Using AS_VAR_IF() macro to work with Autoconf
