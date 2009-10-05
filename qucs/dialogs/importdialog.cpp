@@ -63,6 +63,7 @@ ImportDialog::ImportDialog(QWidget *parent)
   OutType->insertItem(tr("CSV"));
   OutType->insertItem(tr("Qucs library"));
   OutType->insertItem(tr("Qucs netlist"));
+  OutType->insertItem(tr("Matlab"));
   connect(OutType, SIGNAL(activated(int)), SLOT(slotType(int)));
   file->addWidget(OutType, 2, 2);
   
@@ -134,6 +135,9 @@ void ImportDialog::slotBrowse()
 	break;
       case 4:
 	OutputEdit->setText(Info.baseName()+".txt");
+	break;
+      case 5:
+	OutputEdit->setText(Info.baseName()+".mat");
 	break;
       default:
 	OutputEdit->setText(Info.baseName()+".dat");
@@ -217,6 +221,9 @@ void ImportDialog::slotImport()
   case 4:
     CommandLine << "qucs";
     break;
+  case 5:
+    CommandLine << "matlab";
+    break;
   default:
     CommandLine << "qucsdata";
     break;
@@ -248,6 +255,7 @@ void ImportDialog::slotType(int index)
   case 0:
   case 3:
   case 4:
+  case 5:
     OutputData->setEnabled(false);
     OutputLabel->setEnabled(false);
     break;
