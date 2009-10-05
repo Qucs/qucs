@@ -133,7 +133,6 @@ AC_CHECK_HEADERS([stddef.h stdlib.h string.h unistd.h ieeefp.h])
 dnl Checks for typedefs, structures, and compiler characteristics.
 AC_C_CONST
 AC_TYPE_SIZE_T
-AC_C_BIGENDIAN
 
 dnl Check for type sizes.
 AC_CHECK_SIZEOF([short])
@@ -149,6 +148,16 @@ elif test $ac_cv_sizeof_long -eq 4; then
 fi
 AC_DEFINE_UNQUOTED(nr_int32_t, $type32, [C-type for 32-bit integers.])
 unset type32
+type16="short"
+if test $ac_cv_sizeof_short -eq 2; then
+  type16=short
+elif test $ac_cv_sizeof_int -eq 2; then
+  type16=int
+elif test $ac_cv_sizeof_long -eq 2; then
+  type16=long
+fi
+AC_DEFINE_UNQUOTED(nr_int16_t, $type16, [C-type for 16-bit integers.])
+unset type16
 
 dnl Check for double type.
 AC_ARG_ENABLE([double],

@@ -1,3 +1,8 @@
+2009-10-05  Stefan Jahn  <stefan@lkcc.org>
+
+	* matlab_producer.cpp: Checking for endianness at runtime.
+	Improves portability for e.g. MacOS universal binaries.
+
 2009-10-04  Stefan Jahn  <stefan@lkcc.org>
 
 	* qucsconv.cpp: Using new matlab producer for file conversions.
