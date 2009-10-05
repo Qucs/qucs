@@ -1,3 +1,7 @@
+2009-10-05  Stefan Jahn  <stefan@lkcc.org>
+
+	* configure.ac: Added check for nr_int16_t types.
+
 2009-10-04  Stefan Jahn  <stefan@lkcc.org>
 
 	* configure.ac: Checking for endianness of compiler.  Also

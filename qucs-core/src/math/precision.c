@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: precision.c,v 1.1 2008-01-15 19:14:01 ela Exp $
+ * $Id: precision.c,v 1.2 2009-10-05 16:10:58 ela Exp $
  *
  */
 
@@ -34,6 +34,7 @@ nr_double_t nr_inf; /* the core's idea of infinity */
 nr_double_t nr_nan; /* the core's idea of NaN */
 
 void precinit (void) {
+  /* Inf */
 #ifdef INFINITY
   nr_inf = INFINITY;
 #elif NR_INF_TESTED
@@ -47,5 +48,7 @@ void precinit (void) {
     t = nr_inf;
   }
 #endif
+
+  /* NaN */
   nr_nan = -log (-1.0);
 }
