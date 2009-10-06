@@ -35,6 +35,7 @@
 #include "textdoc.h"
 #include "schematic.h"
 #include "components/opt_sim.h"
+#include "components/vhdlfile.h"
 
 
 SimMessage::SimMessage(QWidget *w, QWidget *parent)
@@ -288,32 +289,83 @@ void SimMessage::startSimulator()
   QStringList CommandLine;
   QString SimPath = QDir::convertSeparators (QucsHomeDir.absPath());
 #ifdef __MINGW32__
+  QString QucsDigiLib = "qucsdigilib.bat";
   QString QucsDigi = "qucsdigi.bat";
   QString QucsVeri = "qucsveri.bat";
 #else
+  QString QucsDigiLib = "qucsdigilib";
   QString QucsDigi = "qucsdigi";
   QString QucsVeri = "qucsveri";
 #endif
   SimOpt = NULL;
   bool isVerilog = false;
 
+  // Simulate text window.
   if(DocWidget->inherits("QTextEdit")) {
+
+    TextDoc * Doc = (TextDoc*)DocWidget;
+
     // Take VHDL file in memory as it could contain unsaved changes.
-    Stream << ((TextDoc*)DocWidget)->text();
+    Stream << Doc->text();
     NetlistFile.close();
     ProgText->insert(tr("done.")+"\n");  // of "creating netlist... 
 
-    SimTime = ((TextDoc*)DocWidget)->SimTime;
+    // Simulation.
+    if (Doc->simulation) {
+      SimTime = Doc->SimTime;
 #ifdef __MINGW32__
-    CommandLine << getShortPathName(QucsSettings.BinDir + QucsDigi)
-		<< "netlist.txt" << DataSet
-		<< SimTime << getShortPathName(SimPath)
-		<< getShortPathName(QucsSettings.BinDir);
+      CommandLine << getShortPathName(QucsSettings.BinDir + QucsDigi)
+		  << "netlist.txt" << DataSet
+		  << SimTime << getShortPathName(SimPath)
+		  << getShortPathName(QucsSettings.BinDir);
 #else
-    CommandLine << QucsSettings.BinDir + QucsDigi << "netlist.txt" << DataSet
-       << SimTime << SimPath << QucsSettings.BinDir;
+      CommandLine << QucsSettings.BinDir + QucsDigi << "netlist.txt" << DataSet
+		  << SimTime << SimPath << QucsSettings.BinDir;
 #endif
+    }
+    // Module.
+    else {
+      QString text = Doc->text();
+      VHDL_File_Info VInfo (text);
+      QString entity = VInfo.EntityName.lower();
+      QString lib = Doc->Library.lower();
+      if (lib.isEmpty()) lib = "work";
+      QString dir = QDir::convertSeparators (QucsHomeDir.path());
+      QDir vhdlDir(dir);
+      if(!vhdlDir.exists("vhdl"))
+	if(!vhdlDir.mkdir("vhdl")) {
+	  ErrText->insert(tr("ERROR: Cannot create VHDL directory \"%1\"!")
+			  .arg(vhdlDir.path()+"/vhdl"));
+	  return;
+	}
+      vhdlDir.setPath(vhdlDir.path()+"/vhdl");
+      if(!vhdlDir.exists(lib))
+	if(!vhdlDir.mkdir(lib)) {
+	  ErrText->insert(tr("ERROR: Cannot create VHDL directory \"%1\"!")
+			  .arg(vhdlDir.path()+"/"+lib));
+	  return;
+	}
+      vhdlDir.setPath(vhdlDir.path()+"/"+lib);
+      QFile destFile;
+      destFile.setName(vhdlDir.filePath(entity+".vhdl"));
+      if(!destFile.open(IO_WriteOnly)) {
+	ErrText->insert(tr("ERROR: Cannot create \"%1\"!")
+			.arg(destFile.name()));
+	return;
+      }
+      destFile.writeBlock(text.ascii(), text.length());
+      destFile.close();
+      QString Module = vhdlDir.filePath(entity+".o");
+#ifdef __MINGW32__
+      CommandLine << getShortPathName(QucsSettings.BinDir + QucsDigiLib)
+		  << "netlist.txt" << Module << getShortPathName(SimPath);
+#else
+      CommandLine << QucsSettings.BinDir + QucsDigiLib << "netlist.txt"
+		  << Module << SimPath;
+#endif
+    }
   }
+  // Simulate schematic window.
   else {
     // output NodeSets, SPICE simulations etc.
     for(QStringList::Iterator it = Collect.begin();

@@ -88,12 +88,19 @@ DigiSettingsDialog::DigiSettingsDialog(TextDoc *Doc_)
   connect(ButtonCancel, SIGNAL(clicked()), SLOT(reject()));
 
   simRadio->setChecked(Doc->simulation);
+  Doc->SimOpenDpl = Doc->simulation ? true : false;
   comRadio->setChecked(!Doc->simulation);
   slotChangeMode(!Doc->simulation);
 
   ButtonOk->setDefault(true);
-  setFocusProxy(TimeEdit);
-  TimeEdit->setFocus();
+  if(Doc->simulation) {
+    setFocusProxy(TimeEdit);
+    TimeEdit->setFocus();
+  }
+  else {
+    setFocusProxy(NameEdit);
+    NameEdit->setFocus();
+  }
 }
 
 DigiSettingsDialog::~DigiSettingsDialog()
@@ -105,14 +112,16 @@ void DigiSettingsDialog::slotOk()
 {
   bool changed = false;
   if(SimTime != TimeEdit->text()) {
-    QString s = TimeEdit->text();
-    if(!VHDL_Time(s, tr("Document Settings"))) {
-      QMessageBox::critical(this, tr("Error"), s.mid(1));
-      reject();
-      return;
-    } else {
-      Doc->SimTime = s;
-      changed = true;
+    if(simRadio->isChecked()) {
+      QString s = TimeEdit->text();
+      if(!VHDL_Time(s, tr("Document Settings"))) {
+	QMessageBox::critical(this, tr("Error"), s.mid(1));
+	reject();
+	return;
+      } else {
+	Doc->SimTime = s;
+	changed = true;
+      }
     }
   }
   if(Doc->Libraries != LibEdit->text()) {
@@ -122,6 +131,7 @@ void DigiSettingsDialog::slotOk()
   }
   if(Doc->simulation != simRadio->isChecked()) {
     Doc->simulation = simRadio->isChecked();
+    Doc->SimOpenDpl = Doc->simulation ? true : false;
     changed = true;
   }
   if(Doc->Libraries != NameEdit->text()) {

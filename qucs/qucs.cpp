@@ -1756,7 +1756,7 @@ void QucsApp::slotSimulate()
   QWidget *w = DocumentTab->currentPage();
   if(w->inherits("QTextEdit")) {
     Doc = (QucsDoc*)((TextDoc*)w);
-    if(Doc->SimTime.isEmpty()) {
+    if(Doc->SimTime.isEmpty() && ((TextDoc*)Doc)->simulation) {
       DigiSettingsDialog *d = new DigiSettingsDialog((TextDoc*)Doc);
       if(d->exec() == QDialog::Rejected)
         return;
