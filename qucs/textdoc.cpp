@@ -216,6 +216,7 @@ bool TextDoc::load()
   lastSaved = QDateTime::currentDateTime();
 
   loadSettings();
+  SimOpenDpl = simulation ? true : false;
   return true;
 }
 
