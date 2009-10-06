@@ -1,3 +1,8 @@
+2009-10-06  Stefan Jahn  <stefan@lkcc.org>
+
+	* docs/qucsdigilib.1: Added man page for new qucsdigilib wrapper
+	script.
+
 2009-04-07  Stefan Jahn  <stefan@lkcc.org>
 
 	* docs/ru/mathfunc.html: Updated Russian translations.
