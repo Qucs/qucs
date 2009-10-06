@@ -96,7 +96,7 @@ QString VHDL_File::vhdlCode(int)
 // entity in this file.
 QString VHDL_File::loadFile()
 {
-  QString s, File(Props.getFirst()->Value);
+  QString File(Props.getFirst()->Value);
   QFileInfo Info(File);
   if(Info.isRelative())
     File = QucsWorkDir.filePath(File);
@@ -109,202 +109,14 @@ QString VHDL_File::loadFile()
   File = stream.read();   // QString is better for "find" function
   f.close();
 
-  int i=0, j, k=0;
-  while((i=File.find("--", i)) >= 0) { // remove all VHDL comments
-    j = File.find('\n', i+2);          // (This also finds "--" within a ...
-    if(j < 0)                          //  string, but as no strings are ...
-      File = File.left(i);             //  allowed in entity headers, it ...
-    else                               //  does not matter.)
-      File.remove(i, j-i);
-  }
-
-  QRegExp Expr;
-  Expr.setCaseSensitive(false);
-  for(;;) {
-    k--;
-    Expr.setPattern("\\bentity\\b");  // start of last entity
-    k = File.findRev(Expr, k);
-    if(k < 0)
-      return QString("");
-
-    Expr.setPattern("\\bend\\b");    // end of last entity
-    i = File.find(Expr, k+7);
-    if(i < 0)
-      return QString("");
-    s = File.mid(k+7, i-k-7);  // cut out entity declaration
-
-    Expr.setPattern("\\b");
-    i = s.find(Expr);
-    if(i < 0)
-      return QString("");
-    j = s.find(Expr, i+1);
-    if(j < 0)
-      return QString("");
-    EntityName = s.mid(i, j-i);  // save entity name
-
-    i = s.find(Expr, j+1);
-    if(i < 0)
-      return QString("");
-    j = s.find(Expr, i+1);
-    if(j < 0)
-      return QString("");
-    if(s.mid(i, j-i).lower() == "is")   // really found start of entity ?
-      break;
-
-    if(k < 1)    // already searched the whole text
-      return QString("");
-  }
-
   // parse ports, i.e. network connections; and generics, i.e. parameters
-  GenNames=parseGenerics(s,j);
-  s = parsePorts(s,j);
-  return s;
-}
-
-// -------------------------------------------------------
-QString VHDL_File::parsePorts(QString s, int j)
-{
-  QRegExp Expr;
-  Expr.setCaseSensitive(false);
-  int i, p, l, k;
-
-  Expr.setPattern("\\bport\\b");  // start of interface definition
-  i = s.find(Expr, j+1);
-  if(i < 0)
-    return QString("");
-  // find opening (
-  i = s.find('(', i+4) + 1;
-  if(i <= 0)
-    return QString("");
-
-  // find closing (
-  p = i;
-  j = i-1;
-  do {
-    j = s.find(')', j+1);
-    if(j < 0)
-      return QString("");
-    p = s.find('(', p+1);
-    if(p >= 0 && p > j) p = -1;
-  } while (p >= 0);
-
-  s = s.mid(i, j-i);
-  s.remove('\n');
-  s.remove('\t');
-
-  // find port names and types in parameter specification
-  l = i = 0;    // remove all VHDL identifiers (e.g. ": out bit;")
-  QString types = "", t;
-  while((i=s.find(':', i)) >= 0) {
-    j = s.find(';', i+2);
-    if(j < 0) {
-      t = s.mid(i+1);
-      t.remove(';');
-      t = t.simplifyWhiteSpace();
-      s = s.left(i);
-    } else {
-      t = s.mid(i+1, j-i);
-      t.remove(';');
-      t = t.simplifyWhiteSpace();
-      s.remove(i, j-i);
-    }
-    if ((k = t.find(' ')) >= 0)
-      t = t.mid(k+1);
-    t = t.simplifyWhiteSpace();
-    k = s.find(';',l+2);
-    k = s.mid(l,k-l).contains(',') + 1;
-    while (k-->0) types = types + t + ",";
-    i--;
-    l = i;
-  }
-
-  s.remove(' ');
-  s.replace(';', ',');
-  TypeNames=types=types.left(types.length()-1);
-  return s;
-}
-
-// -------------------------------------------------------
-QString VHDL_File::parseGenerics(QString s, int j)
-{
-  QRegExp Expr;
-  Expr.setCaseSensitive(false);
-  int i, p, l, k, n;
-
-  Expr.setPattern("\\bgeneric\\b");
-  i = s.find(Expr, j+1);
-  if(i < 0)
-    return QString("");
-  // find opening (
-  i = s.find('(', i+4) + 1;
-  if(i <= 0)
-    return QString("");
-
-  // find closing (
-  p = i;
-  j = i-1;
-  do {
-    j = s.find(')', j+1);
-    if(j < 0)
-      return QString("");
-    p = s.find('(', p+1);
-    if(p >= 0 && p > j) p = -1;
-  } while (p >= 0);
-
-  s = s.mid(i, j-i);
-  s.remove('\n');
-  s.remove('\t');
-
-  // find generic names, types and defaults in parameter specification
-  l = i = 0;
-  QString types = "", t, defs = "", d;
-  while((i=s.find(':', i)) >= 0) {
-    j = s.find(';', i+2);
-    n = s.find(":=", i+2);
-    d = "";
-    if(n >= 0 && (n < j || j < 0) ) {
-      j = s.find(';', n+2);
-      if(j < 0) {
-	d = s.mid(n+2);
-	d = d.simplifyWhiteSpace();
-	s = s.left(n);
-      } else {
-	d = s.mid(n+2, j-n-1);
-	d.remove(';');
-	d = d.simplifyWhiteSpace();
-	s.remove(n, j-n);
-      }
-      j = s.find(';', n);
-    }
-    if(j < 0) {
-      t = s.mid(i+1);
-      t.remove(';');
-      t = t.simplifyWhiteSpace();
-      s = s.left(i);
-    } else {
-      t = s.mid(i+1, j-i);
-      t.remove(';');
-      t = t.simplifyWhiteSpace();
-      s.remove(i, j-i);
-    }
-    if ((k = t.find(' ')) >= 0)
-      t = t.mid(k+1);
-    t = t.simplifyWhiteSpace();
-    k = s.find(';',l+2);
-    k = s.mid(l,k-l).contains(',') + 1;
-    while (k-->0) {
-      types = types + t + ",";
-      defs = defs + d + ",";
-    }
-    i--;
-    l = i;
-  }
-
-  s.remove(' ');
-  s.replace(';', ',');
-  GenTypes=types=types.left(types.length()-1);
-  GenDefs=defs=defs.left(defs.length()-1);
-  return s;
+  VHDL_File_Info VInfo(File);
+  GenNames = VInfo.GenNames;
+  EntityName = VInfo.EntityName;
+  TypeNames = VInfo.TypeNames;
+  GenTypes = VInfo.GenTypes;
+  GenDefs = VInfo.GenDefs;
+  return VInfo.PortNames;
 }
 
 // -------------------------------------------------------
@@ -425,4 +237,206 @@ bool VHDL_File::createSubNetlist(QTextStream *stream)
   stream->writeRawBytes(FileContent.data(), FileContent.size());
   (*stream) << '\n';
   return true;
+}
+
+// -------------------------------------------------------
+VHDL_File_Info::VHDL_File_Info(QString File)
+{
+  QString s;
+  PortNames = "";
+  int i=0, j, k=0;
+  while((i=File.find("--", i)) >= 0) { // remove all VHDL comments
+    j = File.find('\n', i+2);          // This also finds "--" within a ...
+    if(j < 0)                          // string, but as no strings are ...
+      File = File.left(i);             // allowed in entity headers, it ...
+    else                               // does not matter.
+      File.remove(i, j-i);
+  }
+
+  QRegExp Expr;
+  Expr.setCaseSensitive(false);
+  for(;;) {
+    k--;
+    Expr.setPattern("\\bentity\\b");  // start of last entity
+    k = File.findRev(Expr, k);
+    if(k < 0)
+      return;
+
+    Expr.setPattern("\\bend\\b");    // end of last entity
+    i = File.find(Expr, k+7);
+    if(i < 0)
+      return;
+    s = File.mid(k+7, i-k-7);  // cut out entity declaration
+
+    Expr.setPattern("\\b");
+    i = s.find(Expr);
+    if(i < 0)
+      return;
+    j = s.find(Expr, i+1);
+    if(j < 0)
+      return;
+    EntityName = s.mid(i, j-i);  // save entity name
+
+    i = s.find(Expr, j+1);
+    if(i < 0)
+      return;
+    j = s.find(Expr, i+1);
+    if(j < 0)
+      return;
+    if(s.mid(i, j-i).lower() == "is")   // really found start of entity ?
+      break;
+
+    if(k < 1)    // already searched the whole text
+      return;
+  }
+
+  // parse ports, i.e. network connections; and generics, i.e. parameters
+  GenNames = parseGenerics(s,j);
+  PortNames = parsePorts(s,j);
+}
+
+// -------------------------------------------------------
+QString VHDL_File_Info::parsePorts(QString s, int j)
+{
+  QRegExp Expr;
+  Expr.setCaseSensitive(false);
+  int i, p, l, k;
+
+  Expr.setPattern("\\bport\\b");  // start of interface definition
+  i = s.find(Expr, j+1);
+  if(i < 0)
+    return QString("");
+  // find opening (
+  i = s.find('(', i+4) + 1;
+  if(i <= 0)
+    return QString("");
+
+  // find closing (
+  p = i;
+  j = i-1;
+  do {
+    j = s.find(')', j+1);
+    if(j < 0)
+      return QString("");
+    p = s.find('(', p+1);
+    if(p >= 0 && p > j) p = -1;
+  } while (p >= 0);
+
+  s = s.mid(i, j-i);
+  s.remove('\n');
+  s.remove('\t');
+
+  // find port names and types in parameter specification
+  l = i = 0;    // remove all VHDL identifiers (e.g. ": out bit;")
+  QString types = "", t;
+  while((i=s.find(':', i)) >= 0) {
+    j = s.find(';', i+2);
+    if(j < 0) {
+      t = s.mid(i+1);
+      t.remove(';');
+      t = t.simplifyWhiteSpace();
+      s = s.left(i);
+    } else {
+      t = s.mid(i+1, j-i);
+      t.remove(';');
+      t = t.simplifyWhiteSpace();
+      s.remove(i, j-i);
+    }
+    if ((k = t.find(' ')) >= 0)
+      t = t.mid(k+1);
+    t = t.simplifyWhiteSpace();
+    k = s.find(';',l+2);
+    k = s.mid(l,k-l).contains(',') + 1;
+    while (k-->0) types = types + t + ",";
+    i--;
+    l = i;
+  }
+
+  s.remove(' ');
+  s.replace(';', ',');
+  TypeNames=types=types.left(types.length()-1);
+  return s;
+}
+
+// -------------------------------------------------------
+QString VHDL_File_Info::parseGenerics(QString s, int j)
+{
+  QRegExp Expr;
+  Expr.setCaseSensitive(false);
+  int i, p, l, k, n;
+
+  Expr.setPattern("\\bgeneric\\b");
+  i = s.find(Expr, j+1);
+  if(i < 0)
+    return QString("");
+  // find opening (
+  i = s.find('(', i+4) + 1;
+  if(i <= 0)
+    return QString("");
+
+  // find closing (
+  p = i;
+  j = i-1;
+  do {
+    j = s.find(')', j+1);
+    if(j < 0)
+      return QString("");
+    p = s.find('(', p+1);
+    if(p >= 0 && p > j) p = -1;
+  } while (p >= 0);
+
+  s = s.mid(i, j-i);
+  s.remove('\n');
+  s.remove('\t');
+
+  // find generic names, types and defaults in parameter specification
+  l = i = 0;
+  QString types = "", t, defs = "", d;
+  while((i=s.find(':', i)) >= 0) {
+    j = s.find(';', i+2);
+    n = s.find(":=", i+2);
+    d = "";
+    if(n >= 0 && (n < j || j < 0) ) {
+      j = s.find(';', n+2);
+      if(j < 0) {
+	d = s.mid(n+2);
+	d = d.simplifyWhiteSpace();
+	s = s.left(n);
+      } else {
+	d = s.mid(n+2, j-n-1);
+	d.remove(';');
+	d = d.simplifyWhiteSpace();
+	s.remove(n, j-n);
+      }
+      j = s.find(';', n);
+    }
+    if(j < 0) {
+      t = s.mid(i+1);
+      t.remove(';');
+      t = t.simplifyWhiteSpace();
+      s = s.left(i);
+    } else {
+      t = s.mid(i+1, j-i);
+      t.remove(';');
+      t = t.simplifyWhiteSpace();
+      s.remove(i, j-i);
+    }
+    if ((k = t.find(' ')) >= 0)
+      t = t.mid(k+1);
+    t = t.simplifyWhiteSpace();
+    k = s.find(';',l+2);
+    k = s.mid(l,k-l).contains(',') + 1;
+    while (k-->0) {
+      types = types + t + ",";
+      defs = defs + d + ",";
+    }
+    i--;
+    l = i;
+  }
+
+  s.remove(' ');
+  s.replace(';', ',');
+  GenTypes=types=types.left(types.length()-1);
+  GenDefs=defs=defs.left(defs.length()-1);
+  return s;
 }

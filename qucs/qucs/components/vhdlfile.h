@@ -36,11 +36,25 @@ protected:
   QString vhdlCode(int);
   void createSymbol();
   QString loadFile();
-  QString parsePorts(QString, int);
-  QString parseGenerics(QString, int);
 
   QString EntityName;
   QString ErrText;
+  QString TypeNames;
+  QString GenTypes;
+  QString GenNames;
+  QString GenDefs;
+};
+
+class VHDL_File_Info {
+public:
+  VHDL_File_Info(QString);
+ ~VHDL_File_Info() {};
+  QString parsePorts(QString, int);
+  QString parseGenerics(QString, int);
+
+public:
+  QString EntityName;
+  QString PortNames;
   QString TypeNames;
   QString GenTypes;
   QString GenNames;
