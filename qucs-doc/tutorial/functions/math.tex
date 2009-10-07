@@ -697,6 +697,49 @@ matrix.
 
 
 \newpage
+\subsection*{\hypertarget{length}{}{\Large length\index{length}()}}
+
+
+\paragraph{\textmd{\label{par:Vector-length}}Length of a vector.}
+
+\begin{description}
+\item [Syntax]~
+\end{description}
+y=length(v)
+
+\begin{description}
+\item [Arguments]~
+\end{description}
+\begin{tabular}{|c|c|c|c|}
+\hline 
+Name&
+Type&
+Def. Range&
+Required\tabularnewline
+\hline
+\hline 
+v&
+$\mathbb{R}$, $\mathbb{C}$, $\mathbb{R}^{n}$, $\mathbb{C}^{n}$
+$\left]-\infty,+\infty\right[$&
+$\surd$\tabularnewline
+\hline
+\end{tabular}
+
+\begin{description}
+\item [Description]~
+\end{description}
+This function returns the length of vector \textit{v}.
+
+\begin{description}
+\item [Example]~
+\end{description}
+\texttt{length(linspace(1,2,3))} returns 3. 
+\begin{description}
+\item [See~also]~
+\end{description}
+
+
+\newpage
 \tutsubsection{\label{sec:Elementary-Mathematical-Functions}Elementary Mathematical
 Functions}
 
@@ -766,7 +809,7 @@ are applied to the components of \textit{x}.
 \textcolor{blue}{\hyperlink{mag}{mag()}}, \textcolor{blue}{\hyperlink{norm}{norm()}},
 \textcolor{blue}{\hyperlink{real}{real()}}, \textcolor{blue}{\hyperlink{imag}{imag()}},
 \textcolor{blue}{\hyperlink{conj}{conj()}}, \textcolor{blue}{\hyperlink{phase}{phase()}},
-\textcolor{blue}{\hyperlink{arg}{arg()}}
+\textcolor{blue}{\hyperlink{arg}{arg()}}, \textcolor{blue}{\hyperlink{hypot}{hypot()}}
 
 
 \newpage
@@ -1010,6 +1053,65 @@ applied to the components of \textit{x}.
 
 
 \newpage
+\subsubsection*{\hypertarget{hypot}{}{\Large hypot\index{hypot}()}}
+
+\paragraph{\label{par:hypot}Euclidean distance function.}
+
+\begin{description}
+\item [Syntax]~
+\end{description}
+z=hypot(x,y)
+
+\begin{description}
+\item [Arguments]~
+\end{description}
+\begin{tabular}{|c|c|c|c|}
+\hline 
+Name&
+Type&
+Def. Range&
+Required\tabularnewline
+\hline
+\hline 
+x&
+$\mathbb{R}$, $\mathbb{C}$, $\mathbb{R}^{n}$, $\mathbb{C}^{n}$&
+$\left]-\infty,+\infty\right[$&
+$\surd$\tabularnewline
+\hline
+y&
+$\mathbb{R}$, $\mathbb{C}$, $\mathbb{R}^{n}$, $\mathbb{C}^{n}$&
+$\left]-\infty,+\infty\right[$&
+$\surd$\tabularnewline
+\hline
+\end{tabular}
+
+\begin{description}
+\item [Description]~
+\end{description}
+This function calculates the Euclidean distance \textit{z} between two real or complex numbers or vectors.
+For two numbers $x,y\in\mathbb{C}$, this is
+
+\medskip{}
+$z=\sqrt{|x|^{2}+|y|^{2}}$
+\medskip{}
+
+For \textit{x}, \textit{y} being vectors (of same size) the equation above
+is applied componentwise.
+
+\begin{description}
+\item [Examples]~
+\end{description}
+\begin{lyxlist}{00.00.0000}
+\item [\texttt{z=hypot(3,4)}]returns 5,
+\item [\texttt{z=hypot(1+2{*}i,1-2{*}i)}]returns 3.16.
+\end{lyxlist}
+\begin{description}
+\item [See~also]~
+\end{description}
+\textcolor{blue}{\hyperlink{abs}{abs()}}
+
+
+\newpage
 \subsubsection*{\hypertarget{imag}{}{\Large imag\index{imag}()}}
 
 
@@ -1070,7 +1172,6 @@ are applied to the components of \textit{x}.
 \textcolor{blue}{\hyperlink{norm}{norm()}}, \textcolor{blue}{\hyperlink{real}{real()}},
 \textcolor{blue}{\hyperlink{conj}{conj()}}, \textcolor{blue}{\hyperlink{phase}{phase()}},
 \textcolor{blue}{\hyperlink{arg}{arg()}}
-
 
 \newpage
 \subsubsection*{\hypertarget{mag}{}{\Large mag\index{mag}()}}
@@ -1411,7 +1512,7 @@ applied to the components of \textit{x}.
 \item [Example]~
 \end{description}
 \begin{lyxlist}{00.00.0000}
-\item [\texttt{y=deg2rad(0.785)}]returns 45.
+\item [\texttt{y=rad2deg(45)}]returns 0.785.
 \end{lyxlist}
 \begin{description}
 \item [See~also]~
@@ -1852,6 +1953,72 @@ applied to the components of \textit{x}.
 \begin{description}
 \item [See~also]~
 \end{description}
+\textcolor{blue}{\hyperlink{limexp}{limexp()}}\textcolor{black}{,}
+\textcolor{blue}{\hyperlink{ln}{ln()}}\textcolor{black}{,} \textcolor{blue}{\hyperlink{log10}{log10()}}\textcolor{black}{,}
+\textcolor{blue}{\hyperlink{log2}{log2()}}\textcolor{black}{,} \textcolor{blue}{\hyperlink{cos}{cos()}}\textcolor{black}{,}
+\textcolor{blue}{\hyperlink{sin}{sin()}}
+
+
+\newpage
+\subsubsection*{\hypertarget{limexp}{}{\Large limexp\index{limexp}()}}
+
+
+\paragraph{\label{par:Limited-Exponential-function}Limited exponential function.}
+
+\begin{description}
+\item [Syntax]~
+\end{description}
+y=limexp(x)
+
+\begin{description}
+\item [Arguments]~
+\end{description}
+\begin{tabular}{|c|c|c|c|}
+\hline 
+Name&
+Type&
+Def. Range&
+Required\tabularnewline
+\hline
+\hline 
+x&
+$\mathbb{R}$, $\mathbb{C}$, $\mathbb{R}^{n}$, $\mathbb{C}^{n}$&
+$\left]-\infty,+\infty\right[$&
+$\surd$\tabularnewline
+\hline
+\end{tabular}
+
+\begin{description}
+\item [Description]~
+\end{description}
+This function is equivalent to the exponential function $\exp(x)$, as long as
+$x<=80$. For larger arguments x, it limits the result to
+$y=\exp(80)\cdot(1+x-80)$.
+The argument can be a real or complex number or vector.
+
+\medskip{}
+For $x\in\mathbb{R}$: $y=e^{x}$ for $x\leq 80$, $y=e^{80}\cdot\left(1+x-80\right)$ else. 
+\medskip{}
+
+For $\mathbb{\mathbb{C}}\ni x\,:=a+i\, b\,\wedge\, a,b\in\mathbb{R}$:
+$y=\textrm{limexp}\left(x\right)=\textrm{limexp}\left({a+i\, b}\right)=\textrm{limexp}\left(a\right)\,\left(\cos b+i\,\sin b\right)$
+\medskip{}
+
+For \textit{x} being a vector the two equations above are
+applied to the components of \textit{x}.
+
+\begin{description}
+\item [Examples]~
+\end{description}
+\begin{lyxlist}{00.00.0000}
+\item [\texttt{y=limexp(81)}]returns 1.11e+35, whereas \texttt{y=exp(81)} returns 1.51e+35,
+which shows the limiting effect of the \textrm{limexp}() function.
+\item [\texttt{y=limexp(3+4{*}i)}]returns -13.1-j15.2.
+\end{lyxlist}
+\begin{description}
+\item [See~also]~
+\end{description}
+\textcolor{blue}{\hyperlink{exp}{exp()}}\textcolor{black}{,} 
 \textcolor{blue}{\hyperlink{ln}{ln()}}\textcolor{black}{,} \textcolor{blue}{\hyperlink{log10}{log10()}}\textcolor{black}{,}
 \textcolor{blue}{\hyperlink{log2}{log2()}}\textcolor{black}{,} \textcolor{blue}{\hyperlink{cos}{cos()}}\textcolor{black}{,}
 \textcolor{blue}{\hyperlink{sin}{sin()}}
@@ -2453,6 +2620,62 @@ applied to the components of \textit{x}.
 \textcolor{blue}{\hyperlink{arctan}{arctan()}}\textcolor{black}{,}
 \textcolor{blue}{\hyperlink{arccot}{arccot()}}
 
+\subsubsection*{\hypertarget{arccosec}{}{\Large arccosec\index{arccosec}()}}
+
+
+\paragraph{\label{par:Arc-cosec}Arc cosecant (also known as {}``inverse cosecant'').}
+
+\begin{description}
+\item [Syntax]~
+\end{description}
+y=arccosec(x)
+
+\begin{description}
+\item [Arguments]~
+\end{description}
+\begin{tabular}{|c|c|c|c|}
+\hline 
+Name&
+Type&
+Def. Range&
+Required\tabularnewline
+\hline
+\hline 
+x&
+$\mathbb{R}$, $\mathbb{C}$, $\mathbb{R}^{n}$, $\mathbb{C}^{n}$&
+$\mathbb{C}\backslash \left\lbrace 0\right\rbrace $&
+$\surd$\tabularnewline
+\hline
+\end{tabular}
+
+\begin{description}
+\item [Description]~
+\end{description}
+This function calculates the principal value of the the arc cosecant of
+a real or complex number or vector.
+
+\medskip{}
+For $x\in\mathbb{R}$: $y=\textrm{arccosec}\left( x\right) $ with $y\in\left[ -\frac{\pi}{2},\,\frac{\pi}{2}\right] $
+
+\medskip{}
+For $x\in\mathbb{C}$: $y=-i\,\ln\left[\sqrt{1-\frac{1}{x^{2}}}+\frac{i}{x}\right]$
+\medskip{}
+
+For \textit{x} being a vector the two equations above are
+applied to the components of \textit{x}.
+
+\begin{description}
+\item [Examples]~
+\end{description}
+\begin{lyxlist}{00.00.0000}
+\item [\texttt{y=arccosec(-1)}]returns -1.57,
+\item [\texttt{y=arccosec(3+4{*}i)}]returns 0.119-j0.16.
+\end{lyxlist}
+\begin{description}
+\item [See~also]~
+\end{description}
+\textcolor{blue}{\hyperlink{cosec}{cosec()}}\textcolor{black}{,} \textcolor{blue}{\hyperlink{arcsec}{arcsec()}}
+
 
 \newpage
 \subsubsection*{\hypertarget{arccot}{}{\Large arccot\index{arccot}()}}
@@ -2514,6 +2737,62 @@ applied to the components of \textit{x}.
 \textcolor{blue}{\hyperlink{arcsin}{arcsin()}}\textcolor{black}{,}
 \textcolor{blue}{\hyperlink{arctan}{arctan()}}
 
+\newpage
+\subsubsection*{\hypertarget{arcsec}{}{\Large arcsec\index{arcsec}()}}
+
+
+\paragraph{\label{par:Arc-sec}Arc secant (also known as {}``inverse secant'').}
+
+\begin{description}
+\item [Syntax]~
+\end{description}
+y=arcsec(x)
+
+\begin{description}
+\item [Arguments]~
+\end{description}
+\begin{tabular}{|c|c|c|c|}
+\hline 
+Name&
+Type&
+Def. Range&
+Required\tabularnewline
+\hline
+\hline 
+x&
+$\mathbb{R}$, $\mathbb{C}$, $\mathbb{R}^{n}$, $\mathbb{C}^{n}$&
+$\mathbb{C}\backslash \left\lbrace 0\right\rbrace $&
+$\surd$\tabularnewline
+\hline
+\end{tabular}
+
+\begin{description}
+\item [Description]~
+\end{description}
+This function calculates the principal value of the arc secant of a
+real or complex number or vector.
+
+\medskip{}
+For $x\in\mathbb{R}$: $y=\textrm{arcsec}\left( x\right) $ with $y\in\left[ 0,\,\pi\right] $
+
+\medskip{}
+For $x\in\mathbb{C}$: $y=\frac{\pi}{2}+i\,\ln\left[\sqrt{1-\frac{1}{x^{2}}}+\frac{i}{x}\right]$
+\medskip{}
+
+For \textit{x} being a vector the two equations above are
+applied to the components of \textit{x}.
+
+\begin{description}
+\item [Examples]~
+\end{description}
+\begin{lyxlist}{00.00.0000}
+\item [\texttt{y=arcsec(-1)}]returns 3.14,
+\item [\texttt{y=arcsec(3+4{*}i)}]returns 1.45+j0.16.
+\end{lyxlist}
+\begin{description}
+\item [See~also]~
+\end{description}
+\textcolor{blue}{\hyperlink{sec}{sec()}}\textcolor{black}{,} \textcolor{blue}{\hyperlink{arccosec}{arccosec()}}
 
 \newpage
 \subsubsection*{\hypertarget{arcsin}{}{\Large arcsin\index{arcsin}()}}
@@ -3068,6 +3347,63 @@ to the components of \textit{x}.
 
 
 \newpage
+\subsubsection*{\hypertarget{arcosech}{}{\Large arcosech\index{arcosech}()}}
+
+
+\paragraph{\label{par:Hyperbolic-area-cosec}Hyperbolic area cosecant.}
+
+\begin{description}
+\item [Syntax]~
+\end{description}
+y=arcosech(x)
+
+\begin{description}
+\item [Arguments]~
+\end{description}
+\begin{tabular}{|c|c|c|c|}
+\hline 
+Name&
+Type&
+Def. Range&
+Required\tabularnewline
+\hline
+\hline 
+x&
+$\mathbb{R}$, $\mathbb{C}$, $\mathbb{R}^{n}$, $\mathbb{C}^{n}$&
+$\mathbb{C}\backslash \left\lbrace 0\right\rbrace $&
+$\surd$\tabularnewline
+\hline
+\end{tabular}
+
+\begin{description}
+\item [Description]~
+\end{description}
+This function calculates the hyperbolic area cosecant of a real or complex
+number or vector, which is the inverse function to the {}``cosech''
+function.
+
+\medskip{}
+For $x\in\mathbb{C}\backslash \left\lbrace 0\right\rbrace $: $y=\ln\left(\sqrt{1+\frac{1}{x^2}}+\frac{1}{x}\right)$
+\medskip{}
+
+For \textit{x} being a vector the equation above is applied
+to the components of \textit{x}.
+
+\begin{description}
+\item [Examples]~
+\end{description}
+\begin{lyxlist}{00.00.0000}
+\item [\texttt{y=arcosech(1)}]returns 0.881,
+\item [\texttt{y=arcosech(i)}]returns -i1.57.
+\end{lyxlist}
+\begin{description}
+\item [See~also]~
+\end{description}
+\textcolor{blue}{\hyperlink{cosech}{cosech()}}\textcolor{black}{,} \textcolor{blue}{\hyperlink{arsech}{arsech()}}\textcolor{black}{,} 
+\textcolor{blue}{\hyperlink{ln}{ln()}}\textcolor{black}{,} \textcolor{blue}{\hyperlink{sqrt}{sqrt()}}
+
+
+\newpage
 \subsubsection*{\hypertarget{arcoth}{}{\Large arcoth\index{arcoth}()}}
 
 
@@ -3123,6 +3459,63 @@ to the components of \textit{x}.
 \textcolor{blue}{\hyperlink{arsinh}{arsinh()}}\textcolor{black}{,}
 \textcolor{blue}{\hyperlink{arcosh}{arcosh()}}\textcolor{black}{,}
 \textcolor{blue}{\hyperlink{tanh}{tanh()}}\textcolor{black}{,} \textcolor{blue}{\hyperlink{arctan}{arctan()}}\textcolor{black}{,}
+\textcolor{blue}{\hyperlink{ln}{ln()}}\textcolor{black}{,} \textcolor{blue}{\hyperlink{sqrt}{sqrt()}}
+
+
+\newpage
+\subsubsection*{\hypertarget{arsech}{}{\Large arsech\index{arsech}()}}
+
+
+\paragraph{\label{par:Hyperbolic-area-sec}Hyperbolic area secant.}
+
+\begin{description}
+\item [Syntax]~
+\end{description}
+y=arsech(x)
+
+\begin{description}
+\item [Arguments]~
+\end{description}
+\begin{tabular}{|c|c|c|c|}
+\hline 
+Name&
+Type&
+Def. Range&
+Required\tabularnewline
+\hline
+\hline 
+x&
+$\mathbb{R}$, $\mathbb{C}$, $\mathbb{R}^{n}$, $\mathbb{C}^{n}$&
+$\mathbb{C}\backslash \left\lbrace 0\right\rbrace $&
+$\surd$\tabularnewline
+\hline
+\end{tabular}
+
+\begin{description}
+\item [Description]~
+\end{description}
+This function calculates the hyperbolic area secant of a real or complex
+number or vector, which is the inverse function to the {}``sech''
+function.
+
+\medskip{}
+For $x\in\mathbb{C}\backslash \left\lbrace 0\right\rbrace $: $y=\ln\left(\sqrt{\frac{1}{x}-1}\sqrt{\frac{1}{x}+1}+\frac{1}{x}\right)$
+\medskip{}
+
+For \textit{x} being a vector the equation above is applied
+to the components of \textit{x}.
+
+\begin{description}
+\item [Examples]~
+\end{description}
+\begin{lyxlist}{00.00.0000}
+\item [\texttt{y=arsech(1)}]returns 0,
+\item [\texttt{y=arsech(3+4{*}i)}]returns 0.16-j1.45.
+\end{lyxlist}
+\begin{description}
+\item [See~also]~
+\end{description}
+\textcolor{blue}{\hyperlink{sech}{sech()}}\textcolor{black}{,} \textcolor{blue}{\hyperlink{arcosech}{arcosech()}}\textcolor{black}{,} 
 \textcolor{blue}{\hyperlink{ln}{ln()}}\textcolor{black}{,} \textcolor{blue}{\hyperlink{sqrt}{sqrt()}}
 
 
@@ -4541,6 +4934,85 @@ For \textit{x} being a real or complex number, 0 is returned.
 \textcolor{blue}{\hyperlink{avg}{avg()}}\textcolor{black}{,} \textcolor{blue}{\hyperlink{max}{max()}}\textcolor{black}{,}
 \textcolor{blue}{\hyperlink{min}{min()}}
 
+\newpage
+\subsubsection*{\hypertarget{random}{}{\Large random\index{random}()}}
+
+
+\paragraph{\label{par:random}Random number between 0.0 and 1.0.}
+
+\begin{description}
+\item [Syntax]~
+\end{description}
+y=random()
+
+\begin{description}
+\item [Arguments]~
+\end{description}
+None.
+
+\begin{description}
+\item [Description]~
+\end{description}
+This function returns a pseudo-random real number between 0.0 (including) and 1.0 (excluding).
+The starting point of the random number generator can be set by \textcolor{blue}{\hyperlink{srandom}{srandom()}}.
+
+\begin{description}
+\item [Example]~
+\end{description}
+\begin{lyxlist}{00.00.0000}
+\item [\texttt{y=random()}]
+\end{lyxlist}
+\begin{description}
+\item [See~also]~
+\end{description}
+\textcolor{blue}{\hyperlink{srandom}{srandom()}}
+
+\newpage
+\subsubsection*{\hypertarget{srandom}{}{\Large srandom\index{srandom}()}}
+
+
+\paragraph{\label{par:srandom}Set seed for a new series of pseudo-random numbers.}
+
+\begin{description}
+\item [Syntax]~
+\end{description}
+y=srandom(x)
+
+\begin{description}
+\item [Arguments]~
+\end{description}
+\begin{tabular}{|c|c|c|c|}
+\hline 
+Name&
+Type&
+Def. Range&
+Required\tabularnewline
+\hline
+\hline 
+x&
+$\mathbb{R}$ &
+$\left]-\infty,+\infty\right[$&
+$\surd$\tabularnewline
+\hline
+\end{tabular}
+
+\begin{description}
+\item [Description]~
+\end{description}
+This function establishes \textit{x} as the seed for a new series of pseudo-random numbers.
+Please note that only integer values for \textit{x} are considered, so for example $x=1.1$ will give the same seed as $x=1$.
+
+\begin{description}
+\item [Example]~
+\end{description}
+\begin{lyxlist}{00.00.0000}
+\item [\texttt{y=srandom(100)}]
+\end{lyxlist}
+\begin{description}
+\item [See~also]~
+\end{description}
+\textcolor{blue}{\hyperlink{random}{random()}}
+
 
 \newpage
 \tutsubsubsection{\label{sub:Basic-Operation}Basic Operation}
@@ -4966,7 +5438,69 @@ is located nearest to the x-value \textit{xval}; therefore the vector
 \newpage
 \tutsubsubsection{\label{sub:Differentiation-and-Integration}Differentiation and Integration}
 
+\subsubsection*{\hypertarget{ddx}{}{\Large ddx\index{ddx}()}}
 
+
+\paragraph{\label{par:Differentiate-Symbolicly}Differentiate mathematical expression with respect to a given variable.}
+
+\begin{description}
+\item [Syntax]~
+\end{description}
+y=ddx(f(x),x)
+
+\begin{description}
+\item [Arguments]~
+\end{description}
+\begin{tabular}{|c|c|c|c|c|}
+\hline 
+Name&
+Type&
+Def. Range&
+Required&
+Default\tabularnewline
+\hline
+\hline 
+f(x)&
+&
+&
+$\surd$&
+\tabularnewline
+\hline 
+x&
+$\mathbb{R}$, $\mathbb{C}$, $\mathbb{R}^{m}$, $\mathbb{C}^{m}$&
+$\left]-\infty,+\infty\right[$&
+$\surd$&
+\tabularnewline
+\hline 
+\end{tabular}
+
+\begin{description}
+\item [Description]~
+\end{description}
+This function executes a symbolic differentiation on a function \textit{f(x)} with respect to a variable \textit{x}.
+The result is evaluated at the contents $x_0$ of \textit{x}.
+
+\medskip{}
+${\displaystyle y=\frac{df}{dx} \Bigg|_{x_0}}$
+\medskip{}
+
+If \textit{x} is a vector, the differential quotient is evaluated for all components of \textit{x}, giving a result vector \textit{y}.
+
+\begin{description}
+\item [Example]~
+\end{description}
+Create a vector \textit{x} by setting \texttt{x=linspace(0,2,3)}, thus $x=\left[0,1,2\right]^T$. Entering
+\begin{lyxlist}{00.00.0000}
+\item [\texttt{y=ddx(sin(x),x}]returns 1, 0.54, -0.416.
+\end{lyxlist}
+Why? ${\displaystyle \frac{df}{dx}=\frac{d \sin(x)}{dx}=\cos(x)}$, and $\cos(x)$ evaluated at $x=\left[0,1,2\right]^T$
+gives the result above.
+\begin{description}
+\item [See~also]~
+\end{description}
+\textcolor{blue}{\hyperlink{diff}{diff()}}
+
+\newpage
 \subsubsection*{\hypertarget{diff}{}{\Large diff\index{diff}()}}
 
 
@@ -5082,7 +5616,7 @@ $\surd$\tabularnewline
 \end{description}
 This function numerically integrates a vector \textit{x} with respect
 to a differential \textit{h}. The integration method is according
-to the trapez rule:
+to the trapezoidal rule:
 
 \medskip{}
 $\int f\left(t\right)dt\approx h\,\left({\displaystyle \frac{y_{0}}{2}}+y_{1}+y_{2}+\ldots+y_{n-1}+{\displaystyle \frac{y_{n}}{2}}\right)$
@@ -5184,8 +5718,6 @@ errors where {}``0'' would be the correct value.
 \textcolor{blue}{\hyperlink{Time2Freq}{Time2Freq()}}
 
 
-
-
 \newpage
 \subsubsection*{\hypertarget{fft}{}{\Large fft\index{fft}()}}
 
@@ -5249,7 +5781,8 @@ $\vdots$\tabularnewline
 \textcolor{blue}{\hyperlink{ifft}{ifft()}}\textcolor{black}{,} \textcolor{blue}{\hyperlink{dft}{dft()}}\textcolor{black}{,}
 \textcolor{blue}{\hyperlink{idft}{idft()}}\textcolor{black}{,}
 \textcolor{blue}{\hyperlink{Freq2Time}{Freq2Time()}}\textcolor{black}{,}
-\textcolor{blue}{\hyperlink{Time2Freq}{Time2Freq()}}
+\textcolor{blue}{\hyperlink{Time2Freq}{Time2Freq()}}\textcolor{black}{,}
+\textcolor{blue}{\hyperlink{fftshift}{fftshift()}}
 
 
 \newpage
@@ -5324,7 +5857,8 @@ also the rounding errors where {}``0'' would be the correct value.
 \textcolor{blue}{\hyperlink{dft}{dft()}}\textcolor{black}{,} \textcolor{blue}{\hyperlink{ifft}{ifft()}}\textcolor{black}{,}
 \textcolor{blue}{\hyperlink{fft}{fft()}}\textcolor{black}{,}
 \textcolor{blue}{\hyperlink{Freq2Time}{Freq2Time()}}\textcolor{black}{,}
-\textcolor{blue}{\hyperlink{Time2Freq}{Time2Freq()}}
+\textcolor{blue}{\hyperlink{Time2Freq}{Time2Freq()}}\textcolor{black}{,}
+\textcolor{blue}{\hyperlink{fftshift}{fftshift()}}
 
 
 \newpage
@@ -5390,7 +5924,104 @@ $\vdots$\tabularnewline
 \textcolor{blue}{\hyperlink{fft}{fft()}}\textcolor{black}{,} \textcolor{blue}{\hyperlink{dft}{dft()}}\textcolor{black}{,}
 \textcolor{blue}{\hyperlink{idft}{idft()}}\textcolor{black}{,}
 \textcolor{blue}{\hyperlink{Freq2Time}{Freq2Time()}}\textcolor{black}{,}
-\textcolor{blue}{\hyperlink{Time2Freq}{Time2Freq()}}
+\textcolor{blue}{\hyperlink{Time2Freq}{Time2Freq()}}\textcolor{black}{,}
+\textcolor{blue}{\hyperlink{fftshift}{fftshift()}}
+
+
+
+\newpage
+\subsubsection*{\hypertarget{fftshift}{}{\Large fftshift\index{fftshift}()}}
+
+
+\paragraph{\label{par:fftshift}Move the frequency 0 to the center of the FFT vector.}
+
+\begin{description}
+\item [Syntax]~
+\end{description}
+y=fftshift(v)
+
+\begin{description}
+\item [Arguments]~
+\end{description}
+\begin{tabular}{|c|c|c|c|}
+\hline 
+Name&
+Type&
+Def. Range&
+Required\tabularnewline
+\hline
+\hline 
+v&
+$\mathbb{R}^{n}$, $\mathbb{C}^{n}$&
+$\left]-\infty,+\infty\right[$&
+$\surd$\tabularnewline
+\hline 
+\end{tabular}
+
+\begin{description}
+\item [Description]~
+\end{description}
+This function shuffles the FFT values of vector \textit{v} in order to move the frequency 0 to the center of the vector.
+Below of it the components with negative frequencies are located, above those with positive frequencies.
+Herewith the "classical" look of a spectrum as gained by a spectrum analyzer is obtained.
+
+\begin{description}
+\item [Example]~
+\end{description}
+Suppose $x$ to be the result of a FFT of 8 elements, e.g.\begin{tabular}{|c|}
+\hline 
+x\tabularnewline
+\hline
+\hline 
+1\tabularnewline
+\hline 
+2\tabularnewline
+\hline 
+$\vdots$\tabularnewline
+\hline 
+8\tabularnewline
+\hline
+\end{tabular}
+
+The result of the FFT is sorted in such a way that the component with frequency zero is the first element (1) of the vector.
+The components with positive frequency follow (2,3,4).
+After that, the components with negative frequency (5,6,7,8) are arranged, starting from the most negative value.
+This pattern can be exemplarily generated in Qucs by writing \texttt{x=linspace(1,8,8)}. Then
+
+\begin{lyxlist}{00.00.0000}
+\item [\texttt{y=fftshift(x)}]returns \begin{tabular}{|c|}
+\hline 
+y\tabularnewline
+\hline
+\hline 
+5\tabularnewline
+\hline 
+6\tabularnewline
+\hline 
+7\tabularnewline
+\hline
+8\tabularnewline
+\hline
+1\tabularnewline
+\hline
+2\tabularnewline
+\hline
+3\tabularnewline
+\hline
+4\tabularnewline
+\hline
+\end{tabular}
+\end{lyxlist}
+As you can see, the component with frequency 0 (element 1) is moved to the middle of the spectrum vector.
+Beneath of it the components with negative frequencies appear (5,6,7,8), above those with positive frequencies (2,3,4).
+
+\begin{description}
+\item [See~also]~
+\end{description}
+\textcolor{blue}{\hyperlink{fft}{fft()}}\textcolor{black}{,}
+\textcolor{blue}{\hyperlink{ifft}{ifft()}}\textcolor{black}{,} \textcolor{blue}{\hyperlink{dft}{dft()}}\textcolor{black}{,}
+\textcolor{blue}{\hyperlink{idft}{idft()}}
+
 
 \newpage
 \subsubsection*{\hypertarget{Time2Freq}{}{\Large Time2Freq\index{Time2Freq}()}}
