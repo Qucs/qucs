@@ -1,3 +1,15 @@
+2009-10-07  Stefan Jahn  <stefan@lkcc.org>
+
+	* functions/functions.tex: Added description of arccosec(),
+	arcosech(), arcsec(), arsech(), ddx(), fftshift(), hypot(),
+	length(), limexp(), random(), srandom(), StabFactor(),
+	StabMeasure(), vt().  Added table of number suffixes and
+	description under "Syntax of Measurement Expressions" / "Numbers".
+	Added description for entering vectors and matrices under "Syntax
+	of Measurement Expressions" / "Vectors and Matrices". Added table
+	"Logical Operator Priorities" under "Operators" / "Operator
+	Precedence".  Corrected a few small cosmetic defects
+
 2007-06-03  Stefan Jahn  <stefan@lkcc.org>
 
 	* equations/content.tex: Fixed charge equations for the diode

@@ -1880,3 +1880,138 @@ also refer to {}``Qucs - Technical Papers'', chapter 1.5).
 \textcolor{blue}{\hyperlink{StabCircleL}{StabCircleL()}}\textcolor{black}{,}
 \textcolor{blue}{\hyperlink{Rollet}{Rollet()}}\textcolor{black}{,}
 \textcolor{blue}{\hyperlink{Mu}{Mu()}}\textcolor{black}{,} \textcolor{blue}{\hyperlink{Mu2}{Mu2()}}
+
+\newpage
+\subsubsection*{\hypertarget{StabFactor}{}{\Large StabFactor\index{StabFactor}()}}
+
+
+\paragraph{\label{par:StabFactor}Stability factor of a two-port S-parameter matrix. Synonym for Rollet()
+}
+
+\begin{description}
+\item [Syntax]~
+\end{description}
+y=StabFactor(S)
+
+\begin{description}
+\item [See~also]~
+\end{description}
+\textcolor{blue}{\hyperlink{Rollet}{Rollet()}}
+
+\newpage
+\subsubsection*{\hypertarget{StabMeasure}{}{\Large StabMeasure\index{StabMeasure}()}}
+
+
+\paragraph{\label{par:StabMeasure}Stability measure B1 of a two-port S-parameter matrix.}
+
+\begin{description}
+\item [Syntax]~
+\end{description}
+y=StabMeasure(S)
+
+\begin{description}
+\item [Arguments]~
+\end{description}
+\begin{tabular}{|c|c|c|c|}
+\hline 
+Name&
+Type&
+Def. Range&
+Required\tabularnewline
+\hline
+\hline 
+S&
+$\mathbb{R}^{2\times2\times p}$, $\mathbb{C}^{2\times2\times p},$$\mathbb{R}^{2\times2}$,
+$\mathbb{C}^{2\times2}$&
+$\left]-\infty,+\infty\right[$&
+$\surd$\tabularnewline
+\hline
+\end{tabular}
+
+\begin{description}
+\item [Description]~
+\end{description}
+This function returns the stability measure \textit{B1} of a two-port S-parameter matrix \textit{S}: 
+
+\medskip{}
+\noindent $B1={\displaystyle {1+\left|S_{11}\right|^{2}-\left|S_{22}\right|^{2}-\left|\Delta\right|^{2}}}$
+\medskip{}
+
+$\Delta$ denotes determinant of $S$.
+
+\noindent The amplifier is unconditionally stable if $B1>0$ and the Rollet factor $K>1$.
+
+\noindent For \textit{S} being a vector of matrices the equation above
+is applied to the sub-matrices of \textit{S}.
+
+\begin{description}
+\item [Example]~
+\end{description}
+\begin{lyxlist}{00.00.0000}
+\item [\texttt{B1=StabMeasure(S)}]~
+\end{lyxlist}
+\begin{description}
+\item [See~also]~
+\end{description}
+\textcolor{blue}{\hyperlink{Rollet}{Rollet()}}\textcolor{black}{,}
+\textcolor{blue}{\hyperlink{Mu}{Mu()}}\textcolor{black}{,} \textcolor{blue}{\hyperlink{Mu2}{Mu2()}}\textcolor{black}{,}
+\textcolor{blue}{\hyperlink{StabCircleS}{StabCircleS()}}\textcolor{black}{,}
+\textcolor{blue}{\hyperlink{StabCircleL}{StabCircleL()}}
+
+
+\newpage
+\subsubsection*{\hypertarget{vt}{}{\Large vt\index{vt}()}}
+
+
+\paragraph{\label{par:vt}Thermal voltage for a given temperature in Kelvin.}
+
+\begin{description}
+\item [Syntax]~
+\end{description}
+y=vt(t)
+
+\begin{description}
+\item [Arguments]~
+\end{description}
+\begin{tabular}{|c|c|c|c|c|}
+\hline 
+Name&
+Type&
+Def. Range&
+Required&
+Default\tabularnewline
+\hline
+\hline 
+t&
+$\mathbb{R}$&
+$\left[0,+\infty\right[$&
+$\surd$&
+\tabularnewline
+\hline 
+\end{tabular}
+
+\begin{description}
+\item [Description]~
+\end{description}
+This function returns the corresponding thermal voltage ${V_t}$ in Volt of a real absolute temperature
+ (vector) \textit{T} in Kelvin according to
+
+\medskip{}
+${V_t}=\displaystyle \frac{kT}{e}$
+\medskip{}
+
+\noindent where \textit{k} is the Boltzmann constant and \textit{e} denotes the electrical charge on the electron.
+For \textit{t} being a vector the equation above is applied
+to the components of \textit{k}.
+
+\noindent Please note that \textit{t} is always larger than or equal to zero.
+
+\begin{description}
+\item [Example]~
+\end{description}
+\begin{lyxlist}{00.00.0000}
+\item [\texttt{y=vt(300)}]returns 0.0259.
+\end{lyxlist}
+
+
+
