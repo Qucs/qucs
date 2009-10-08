@@ -1,3 +1,8 @@
+2009-10-08  Stefan Jahn  <stefan@lkcc.org>
+
+	* docs/cs/index.html: Updated Czech translations of internal help
+	system.  Thanks to Martin!
+
 2009-10-06  Stefan Jahn  <stefan@lkcc.org>
 
 	* docs/qucsdigilib.1: Added man page for new qucsdigilib wrapper
