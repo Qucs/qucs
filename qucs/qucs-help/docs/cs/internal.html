@@ -1,9 +1,9 @@
 <html>
 
 <head>
-<meta http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-<meta name="Author" content="Michael Margraf">
-<title>Qucs - Schematic File Format</title>
+<meta http-equiv=Content-Type content="text/html; charset=utf-8">
+<meta name="Author" content="Martin Stejskal">
+<title>Qucs - Popis k formátu souborů</title>
 </head>
 
 
@@ -16,13 +16,12 @@
 Quite Universal Circuit Simulator<br>
 </h3>
 <h1>
-Schematic File Format<br><br>
+Popis k formátu souborů<br><br>
 </h1></center>
-
-This document describes the schematic file format of Qucs.
-This format is used for schematics (usually with suffix ".sch")
-and for data displays (usually with suffix ".dpl").
-The following text shows a short example of a schematic file.
+Tento dokument popisuje formát souborů.
+Tento formát je používán pro schémata (obvykle s příponou ".sch")
+a pro soubory, které zobrazují výstupní data (obvykle s příponou ".dpl").
+Následující text názorně ukazuje příklad souboru se sechématem.
 <br><br>
 
 <tt><small>
@@ -52,123 +51,163 @@ The following text shows a short example of a schematic file.
 &#060;/Paintings&#062; <br>
 </small></tt>
 <br><br>
-
-The file contains several section. Each of it is explained below.
-Every line consists of not more than one information block that
-starts with a less-sign "&#060;" and ends with a greater-sign
-"&#062;".
+Každý řádek obsahuje mnoho sekcí. Každá je vysvětlena níže.
+Každá řádka neobsahuje více jak jeden blok informací které
+začínají znakem "&#060;" a končí znakem "&#062;".
 
 <br>
-<h3>Properties</h3>
-The first section starts with "&#060;Properties&#062;" and ends with
-"&#060;/Properties&#062;". It contains the document properties of the
-file. Each line is optional. The following properties are supported:
+<h3>Vlastnosti (Properties)</h3>
+
+První část začíná s "&#060;Properties&#062;"  a končí
+"&#060;/Properties&#062;". Tento blok obsahuje vlastnosti souboru dokumentu.
+Každá řádka je volitelná (neí třeba vše definovat). Následující vlastnosti jsou podoprovány:
+
 <br>
 <ul>
-<li><em>&#060;View=x1,y1,x2,y2,scale,xpos,ypos&#062;</em> contains
-pixel position of the schematic window in the first four numbers,
-its current scale and the current position of the upper left corner
-(last two numbers).</li>
-<li><em>&#060;Grid=x,y,on&#062;</em> contains the distance of the
-grid in pixel (first two numbers) and whether grid is on (last number
-1) or off (last number 0).</li>
-<li><em>&#060;DataSet=name.dat&#062;</em> contains the file name of
-the data set associated with this schematic.</li>
-<li><em>&#060;DataDisplay=name.dpl&#062;</em> contains the file name of
-the data display page associated with this schematic (or the file name
-of the schematic if this document is a data display).</li>
-<li><em>&#060;OpenDisplay=yes&#062;</em> contains 1 if the data display
-page opens automatically after simulation, otherwise contains 0.</li>
+<li><em>&#060;View=x1,y1,x2,y2,scale,xpos,ypos&#062;</em>
+první čtyři čísla udávají pozici okna se shématem. Je to současná
+velikost tohoto okna a pozice levého horního rohu (poslední dvě čísla).
+</li>
+<li><em>&#060;Grid=x,y,on&#062;</em>
+udává rozestup v mřížce v pixelech (první dvě čísla) a jestli je zapnut (poslední číslo je 1), nebo vypnut (poslední číslo je 0).
+</li>
+<li><em>&#060;DataSet=name.dat&#062;</em> 
+
+Do tohoto souboru se ukládají výsledky ze simulace.</li>
+<li><em>&#060;DataDisplay=name.dpl&#062;</em> Do tohoto souboru se ukládají další informace o simulaci.</li>
+<li><em>&#060;OpenDisplay=yes&#062;</em>
+obsahuje 1 pokud se stránka "DataDisplay" má automaticky otevří po simulaci.
+V opačném případě obsahuje 0.
+</li>
 </ul>
 
 <br>
 <h3>Symbol</h3>
-This section starts with "&#060;Symbol&#062;" and ends with
-"&#060;/Symbol&#062;". It contains painting elements creating a
-schematic symbol for the file. This is usually only used for
-schematic files that meant to be a subcircuit.
+Začíná znaky "&#060;Symbol&#062;" a končí
+"&#060;/Symbol&#062;". Obsahuje grafické součásti, které tvoří
+schématický symbor pro soubor. Toto je často používáno pro
+soubory schémat, které bývají později použity jako vnořené obvody.
+
 
 <br>
-<h3>Components</h3>
-This section starts with "&#060;Components&#062;" and ends with
-"&#060;/Components&#062;". It contains the circuit components of the
-schematic. The line format is as follows:
+<h3>Components (Komponenty)</h3>
+Začíná znaky "&#060;Components&#062;" a končí
+"&#060;/Components&#062;". Obsahuje komponenty obvodů ve
+schématech. Formát je následující:
+
 <br>
 <em>&#060;type name active x y xtext ytext mirrorX rotate "Value1" visible "Value2" visible ...&#062;</em>
 <br>
 <ul>
-<li>The type identifies the component, e.g. "R" for a resistor, "C" for
-a capacitor.</li>
-<li>The name is the unique component identifier of the schematic, e.g. "R1"
-for the first resistor.</li>
-<li>A "1" in the active field shows that the component is active, i.e
-it is used in the simulation. A "0" shows it is inactive.</li>
-<li>The next two numbers are the x and y coordinates of the component
-center.</li>
-<li>The next two numbers are the x and y coordinates of the upper left
-corner of the component text. They are relative to the component center.</li>
-<li>The next two numbers indicate the mirroring about the x axis ("1" for
-mirrored, "0" for not mirrored) and the counter-clockwise rotation
-(multiple of 90 degree, i.e. 0...3).</li>
-<li>The next entries are the values of the component properties (in
-quotation marks) followed by an 1 if the property is visible on the
-schematic (otherwise 0).</li>
+<li>
+"type" - identifikuje komponenty. Např.: "R" jako rezistor, "C" jako
+kapacitu.
+</li>
+<li>
+"name" - toto je zcela jedinečný identifikátor ve schématu. Např.: "R1"
+pro první rezistor.
+</li>
+<li>
+"active" - pokud je zde "1", znamená to, že komponenta je aktivní.
+Například je použita v simulaci. Pokud je zde "0", je neaktivní.
+</li>
+<li>
+"x y" - Tyto dvě čísla určují, polohu komponenty
+(resp. kde se bude nacházet její střed).
+</li>
+<li>
+"xtext ytext" - Tato čísla určují polohu textu, který slouží jako
+popisek pro určitou komponentu (resp. určuje, kde se bude nacházet
+horní levý roh popisku). Tyto údaje udávají vzdálenost od středu komponenty.
+</li>
+<li>
+"mirrorX rotate" - Následující dvě čísla definují zrcadlení podle osy x
+ ("1" pro zrcadlení, "0" nezrcadlí se) a rotaci ve stupních (proti směru
+hodinových ručiček).
+</li>
+<li>
+""Value1" visible" - Zde se udává hodnota komponenty (v uvozovkách)
+. Pokud je za ní "1", pak bude ve schématu zobrazena.
+Pokud bude hodnota "0", pak nebude ve schématu zobrazena. 
+</li>
 </ul>
 
 <br>
-<h3>Wires</h3>
-This section starts with "&#060;Wires&#062;" and ends with
-"&#060;/Wires&#062;". It contains the wires (electrical connection
-between circuit components) and their labels and node sets. The
-line format is as follows:
+<h3>Vedení</h3>
+Začíná "&#060;Wires&#062;" a končí "&#060;/Wires&#062;".
+Obsahuje informace o vedení, které spojuje jednotlivé komponenty
+(co spojuje, název, atd.). Formát je následující:
 <br>
 <em>&#060;x1 y1 x2 y2 "label" xlabel ylabel dlabel "node set"&#062;</em>
 <br>
 <ul>
-<li>The first four numbers are the coordinates of the wire in pixels:
-x coordinate of starting point, y coordinate of starting point,
-x coordinate of end point and y coordinate of end point. All wires
-must be either horizontal (both x coordinates equal) or vertical
-(both y coordinates equal).</li>
-<li>The first string in quotation marks is the label name. It is
-empty if the user has not set a label on this wire.</li>
-<li>The next two numbers are the x and y coordinates of the label
-or zero if no label exists.</li>
-<li>The next number is the distance between the wire starting point
-and and the point where the label is set on the wire.</li>
-<li>The last string in quotation marks is the node set of the wire,
-i.e. the initial voltage at this node used by the simulation
-engine to find the solution. This is empty if the user has not set
-a node set for this wire.</li>
+<li>
+"x1 y1 x2 y2" - Tyto čtyři čísla určují počátek (x1, y1) a konec (x2, x2) vodiče.
+Veškeré vodiče musí být ve vodorovné, nebo horizontální poloze
+(tzn. že budou obě xové, nebo obě ypsylonové souřadnice stejné).
+</li>
+<li>
+""label"" - Tato proměnná nastavuje popisek. Pokud je prázdná,
+znamená to, že vodiči nedal uživatel žádný název.
+</li>
+<li>
+"xlabel ylabel" - Další dvě čísla jsou xové a ypsylonové souřadnice popisku.
+Pokud jsou zde nuly, znamená to, že popisek neexistuje.
+</li>
+<li>
+"dlabel" - Číslo určuje vzdálenost mezi počátečním bodem vodiče
+a popiskou vodiče.
+</li>
+<li>
+""node set"" - Text v uvozovkách udává jméno uzlu vodiče.
+Např.: počáteční napětí na tomto uzlu je právě jméno uzlu tohoto vodiče,
+pak se engine pokusí najít řešení. Pokud je tato položka prázdná,
+znamená to, že uživatel nenastavil jméno uzlu pro daný vodič.
+</li>
 </ul>
 
 <br>
-<h3>Diagrams</h3>
-This section starts with "&#060;Diagrams&#062;" and ends with
-"&#060;/Diagrams&#062;". It contains the diagrams with their graphs
-and their markers.
+<h3>Diagramy</h3>
+
+Začíná "&#060;Diagrams&#062;" a končí
+"&#060;/Diagrams&#062;". Obsahuje diagramy s jejich grafy
+a značkami.
+
 <br>
 <em>&#060;x y width height grid gridcolor gridstyle log xAutoscale xmin xstep xmax
           yAutoscale ymin ystep ymax zAutoscale zmin zstep zmax xrotate yrotate zrotate
 	  "xlabel" "ylabel" "zlabel"&#062;</em>
 <br>
 <ul>
-<li>The first two numbers are x and y coordinate of lower left corner.</li>
-<li>The next two numbers are width and height of diagram boundings.</li>
-<li>The fifth number is 1 if grid is on and 0 if grid is off.</li>
-<li>The next is grid color in 24 bit hexadecimal RGB value, e.g.
-#FF0000 is red.</li>
-<li>The next number determines the style of the grid.</li>
-<li>The next number determines which axes have logarithmical scale.</li>
+<li>
+"x y" - Tyto čísla určují pozici spodního levého rohu.
+</li>
+<li>
+"width height" - Následující čísla udávají šířku a výšku diagramu.
+</li>
+<li>
+"grid" - Pokud je zde 1, pak bude zobrazena mřížka. Pokud zde bude 0, pak mřížka nebude zobrazena.
+</li>
+<li>
+"gridcolor" - Zde je udána 24. bitová barva v hexadecimální RGB hodnotě. Např.:
+#FF0000 je červená.
+</li>
+<li>
+"gridstyle" - Určuje styl mřížky.
+</li>
+<li>
+Zbylá čísla určují jak "osekáme" logaritmickou stupnici.
+</li>
 <li></li>
 </ul>
 
 <br>
-<h3>Paintings</h3>
-This section starts with "&#060;Paintings&#062;" and ends with
-"&#060;/Paintings&#062;". It contains the paintings that are
-within the schematic.
+<h3>Obrazce</h3>
 
-<br><br><a href="#top">back to the top</a><br>
+Začíná znaky "&#060;Paintings&#062;" a končí
+"&#060;/Paintings&#062;". Obsahuje obrazce, které jsou
+ve schématu.
+
+<br><br><a href="#top">Nahoru</a><br>
 </body>
 </html>
