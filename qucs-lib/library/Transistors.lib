@@ -1772,6 +1772,748 @@
   </Model>
 </Component>
 
+<Component BD675>
+  <Description>
+BD675 Darlington
+4.0 AMPERES POWER TRANSISTORS NPN SILICON
+45 VOLTS
+40 WATTS
+Added by Frans Schreuder <fransschreuder@users.sourceforge.net>
+  </Description>
+  <Model>
+	.Def:Transistors_BD675 _net1 _net2 _net3
+	  BJT:Q1 _net2 _net1 _net4 gnd Type="npn" Is="6.82736e-17" Bf="43.4441" Nf="0.85" Vaf="30" Ikf="1.14362" Ise="9.48937e-15" Ne="2.04295" Br="0.665831" Nr="1.5" Var="64.8234" Ikr="0.0980345" Isc="9.48937e-15" Nc="1" Rb="20.4512" Irb="0.277791" Rbm="16.9143" Re="0.574152" Rc="6.88011" Xtb="0.401039" Xti="2.96301" Eg="1.05" Cje="1e-11" Vje="0.75" Mje="0.33" Tf="1e-09" Xtf="1" Vtf="10" Itf="0.01" Cjc="1e-11" Vjc="0.75" Mjc="0.33" Xcjc="0.9" Fc="0.5" Tr="1e-07" Ptf="0" Kf="0" Af="1" Cjs="0" Vjs="0.75" Mjs="0"
+	  BJT:Q2 _net4 _net1 _net3 gnd Type="npn" Area="5.21716" Is="6.82736e-17" Bf="43.4441" Nf="0.85" Vaf="30" Ikf="1.14362" Ise="9.48937e-15" Ne="2.04295" Br="0.665831" Nr="1.5" Var="64.8234" Ikr="0.0980345" Isc="9.48937e-15" Nc="1" Rb="20.4512" Irb="0.277791" Rbm="16.9143" Re="0.574152" Rc="6.88011" Xtb="0.401039" Xti="2.96301" Eg="1.05" Cje="1e-11" Vje="0.75" Mje="0.33" Tf="1e-09" Xtf="1" Vtf="10" Itf="0.01" Cjc="0" Vjc="0.75" Mjc="0.33" Xcjc="0.9" Fc="0.5" Tr="1e-07" Ptf="0" Kf="0" Af="1" Cjs="0" Vjs="0.75" Mjs="0"
+	  Diode:D1 _net1 _net3 Is="1e-12" Rs="9.53186" N="0.964987" Xti="2.96499" Cj0="0" Vj="0.75" M="0.33" Fc="0.5"
+	  R:R1 _net2 _net4 R="8000"
+	  R:R2 _net4 _net3 R="120"
+	  # .MODEL:DMODEL  D (IS=1E-12 RS=9.53186 N=0.964987 XTI=2.96499 CJO=0 VJ=0.75 M=0.33 FC=0.5) 
+	  # .MODEL:QMODEL  NPN (IS=6.82736E-17 BF=43.4441 NF=0.85 VAF=30 IKF=1.14362 ISE=9.48937E-15 NE=2.04295 BR=0.665831 NR=1.5 VAR=64.8234 IKR=0.0980345 ISC=9.48937E-15 NC=1 RB=20.4512 IRB=0.277791 RBM=16.9143 RE=0.574152 RC=6.88011 XTB=0.401039 XTI=2.96301 EG=1.05 CJE=1E-11 VJE=0.75 MJE=0.33 TF=1E-09 XTF=1 VTF=10 ITF=0.01 CJC=1E-11 VJC=0.75 MJC=0.33 XCJC=0.9 FC=0.5 TR=1E-07 PTF=0 KF=0 AF=1) 
+	  # .MODEL:Q1MODEL  NPN (IS=6.82736E-17 BF=43.4441 NF=0.85 VAF=30 IKF=1.14362 ISE=9.48937E-15 NE=2.04295 BR=0.665831 NR=1.5 VAR=64.8234 IKR=0.0980345 ISC=9.48937E-15 NC=1 RB=20.4512 IRB=0.277791 RBM=16.9143 RE=0.574152 RC=6.88011 XTB=0.401039 XTI=2.96301 EG=1.05 CJE=1E-11 VJE=0.75 MJE=0.33 TF=1E-09 XTF=1 VTF=10 ITF=0.01 CJC=0 VJC=0.75 MJC=0.33 XCJC=0.9 FC=0.5 TR=1E-07 PTF=0 KF=0 AF=1) 
+	.Def:End
+  </Model>
+  <Symbol>
+	<.ID 120 60 T>
+	<Line 20 40 20 0 #000080 2 1>
+	<Line 40 20 0 40 #000080 2 1>
+	<Line 40 40 20 -20 #000080 2 1>
+	<Line 40 40 20 20 #000080 2 1>
+	<Line 56 52 4 8 #000080 2 1>
+	<Line 52 56 8 4 #000080 2 1>
+	<Line 60 60 20 0 #000080 2 1>
+	<Line 80 40 0 40 #000080 2 1>
+	<Line 80 60 20 -20 #000080 2 1>
+	<Line 80 60 20 20 #000080 2 1>
+	<Line 96 72 4 8 #000080 2 1>
+	<Line 92 76 8 4 #000080 2 1>
+	<Line 60 20 40 0 #000080 2 1>
+	<Line 100 40 0 -20 #000080 2 1>
+	<Line 108 40 -8 0 #000080 2 1>
+	<Line 108 64 0 16 #000080 2 1>
+	<Line 100 80 8 0 #000080 2 1>
+	<Line 104 56 8 0 #000080 2 1>
+	<Line 108 56 -4 8 #000080 2 1>
+	<Line 104 64 8 0 #000080 2 1>
+	<Line 108 56 4 8 #000080 2 1>
+	<Line 108 56 0 -16 #000080 2 1>
+	<Line 100 80 0 10 #000080 2 1>
+	<Line 100 90 0 10 #000080 2 1>
+	<Line 100 20 0 -20 #000080 2 1>
+	<.PortSym 20 40 2 0>
+	<.PortSym 100 0 1 0>
+	<.PortSym 100 100 3 0>
+  </Symbol>
+</Component>
+
+<Component BD675A>
+  <Description>
+BD675A Darlington
+4.0 AMPERES POWER TRANSISTORS NPN SILICON
+45 VOLTS
+40 WATTS
+Added by Frans Schreuder <fransschreuder@users.sourceforge.net>
+  </Description>
+  <Model>
+	.Def:Transistors_BD675A _net1 _net2 _net3
+	  BJT:Q1 _net2 _net1 _net4 gnd Type="npn" Is="6.82736e-17" Bf="43.4441" Nf="0.85" Vaf="30" Ikf="1.14362" Ise="9.48937e-15" Ne="2.04295" Br="0.665831" Nr="1.5" Var="64.8234" Ikr="0.0980345" Isc="9.48937e-15" Nc="1" Rb="20.4512" Irb="0.277791" Rbm="16.9143" Re="0.574152" Rc="6.88011" Xtb="0.401039" Xti="2.96301" Eg="1.05" Cje="1e-11" Vje="0.75" Mje="0.33" Tf="1e-09" Xtf="1" Vtf="10" Itf="0.01" Cjc="1e-11" Vjc="0.75" Mjc="0.33" Xcjc="0.9" Fc="0.5" Tr="1e-07" Ptf="0" Kf="0" Af="1" Cjs="0" Vjs="0.75" Mjs="0"
+	  BJT:Q2 _net4 _net1 _net3 gnd Type="npn" Area="5.21716" Is="6.82736e-17" Bf="43.4441" Nf="0.85" Vaf="30" Ikf="1.14362" Ise="9.48937e-15" Ne="2.04295" Br="0.665831" Nr="1.5" Var="64.8234" Ikr="0.0980345" Isc="9.48937e-15" Nc="1" Rb="20.4512" Irb="0.277791" Rbm="16.9143" Re="0.574152" Rc="6.88011" Xtb="0.401039" Xti="2.96301" Eg="1.05" Cje="1e-11" Vje="0.75" Mje="0.33" Tf="1e-09" Xtf="1" Vtf="10" Itf="0.01" Cjc="0" Vjc="0.75" Mjc="0.33" Xcjc="0.9" Fc="0.5" Tr="1e-07" Ptf="0" Kf="0" Af="1" Cjs="0" Vjs="0.75" Mjs="0"
+	  Diode:D1 _net1 _net3 Is="1e-12" Rs="9.53186" N="0.964987" Xti="2.96499" Cj0="0" Vj="0.75" M="0.33" Fc="0.5"
+	  R:R1 _net2 _net4 R="8000"
+	  R:R2 _net4 _net3 R="120"
+	  # .MODEL:DMODEL  D (IS=1E-12 RS=9.53186 N=0.964987 XTI=2.96499 CJO=0 VJ=0.75 M=0.33 FC=0.5) 
+	  # .MODEL:QMODEL  NPN (IS=6.82736E-17 BF=43.4441 NF=0.85 VAF=30 IKF=1.14362 ISE=9.48937E-15 NE=2.04295 BR=0.665831 NR=1.5 VAR=64.8234 IKR=0.0980345 ISC=9.48937E-15 NC=1 RB=20.4512 IRB=0.277791 RBM=16.9143 RE=0.574152 RC=6.88011 XTB=0.401039 XTI=2.96301 EG=1.05 CJE=1E-11 VJE=0.75 MJE=0.33 TF=1E-09 XTF=1 VTF=10 ITF=0.01 CJC=1E-11 VJC=0.75 MJC=0.33 XCJC=0.9 FC=0.5 TR=1E-07 PTF=0 KF=0 AF=1) 
+	  # .MODEL:Q1MODEL  NPN (IS=6.82736E-17 BF=43.4441 NF=0.85 VAF=30 IKF=1.14362 ISE=9.48937E-15 NE=2.04295 BR=0.665831 NR=1.5 VAR=64.8234 IKR=0.0980345 ISC=9.48937E-15 NC=1 RB=20.4512 IRB=0.277791 RBM=16.9143 RE=0.574152 RC=6.88011 XTB=0.401039 XTI=2.96301 EG=1.05 CJE=1E-11 VJE=0.75 MJE=0.33 TF=1E-09 XTF=1 VTF=10 ITF=0.01 CJC=0 VJC=0.75 MJC=0.33 XCJC=0.9 FC=0.5 TR=1E-07 PTF=0 KF=0 AF=1) 
+	.Def:End
+  </Model>
+  <Symbol>
+	<.ID 120 60 T>
+	<Line 20 40 20 0 #000080 2 1>
+	<Line 40 20 0 40 #000080 2 1>
+	<Line 40 40 20 -20 #000080 2 1>
+	<Line 40 40 20 20 #000080 2 1>
+	<Line 56 52 4 8 #000080 2 1>
+	<Line 52 56 8 4 #000080 2 1>
+	<Line 60 60 20 0 #000080 2 1>
+	<Line 80 40 0 40 #000080 2 1>
+	<Line 80 60 20 -20 #000080 2 1>
+	<Line 80 60 20 20 #000080 2 1>
+	<Line 96 72 4 8 #000080 2 1>
+	<Line 92 76 8 4 #000080 2 1>
+	<Line 60 20 40 0 #000080 2 1>
+	<Line 100 40 0 -20 #000080 2 1>
+	<Line 108 40 -8 0 #000080 2 1>
+	<Line 108 64 0 16 #000080 2 1>
+	<Line 100 80 8 0 #000080 2 1>
+	<Line 104 56 8 0 #000080 2 1>
+	<Line 108 56 -4 8 #000080 2 1>
+	<Line 104 64 8 0 #000080 2 1>
+	<Line 108 56 4 8 #000080 2 1>
+	<Line 108 56 0 -16 #000080 2 1>
+	<Line 100 80 0 10 #000080 2 1>
+	<Line 100 90 0 10 #000080 2 1>
+	<Line 100 20 0 -20 #000080 2 1>
+	<.PortSym 20 40 2 0>
+	<.PortSym 100 0 1 0>
+	<.PortSym 100 100 3 0>
+  </Symbol>
+</Component>
+
+<Component BD676>
+  <Description>
+BD676 Darlington
+4.0 AMPERES POWER TRANSISTORS PNP SILICON
+45 VOLTS
+40 WATTS
+Added by Frans Schreuder <fransschreuder@users.sourceforge.net>
+  </Description>
+  <Model>
+	.Def:Transistors_BD676 _net1 _net2 _net3
+	  BJT:Q1 _net2 _net1 _net4 gnd Type="pnp" Is="2.23835e-12" Bf="149.682" Nf="1.2" Vaf="59.0895" Ikf="0.118079" Ise="9.09119e-14" Ne="1.42175" Br="0.587475" Nr="0.75" Var="100.388" Ikr="0.0934405" Isc="9.09118e-14" Nc="2" Rb="15.5445" Irb="0.450416" Rbm="12.8364" Re="0.0939759" Rc="2.76027" Xtb="0.497353" Xti="2.9942" Eg="1.05" Cje="1e-11" Vje="0.75" Mje="0.33" Tf="1e-09" Xtf="1" Vtf="10" Itf="0.01" Cjc="1e-11" Vjc="0.75" Mjc="0.33" Xcjc="0.9" Fc="0.5" Tr="1e-07" Ptf="0" Kf="0" Af="1" Cjs="0" Vjs="0.75" Mjs="0"
+	  BJT:Q2 _net4 _net1 _net3 gnd Type="pnp" Area="2.46191" Is="2.23835e-12" Bf="149.682" Nf="1.2" Vaf="59.0895" Ikf="0.118079" Ise="9.09119e-14" Ne="1.42175" Br="0.587475" Nr="0.75" Var="100.388" Ikr="0.0934405" Isc="9.09118e-14" Nc="2" Rb="15.5445" Irb="0.450416" Rbm="12.8364" Re="0.0939759" Rc="2.76027" Xtb="0.497353" Xti="2.9942" Eg="1.05" Cje="1e-11" Vje="0.75" Mje="0.33" Tf="1e-09" Xtf="1" Vtf="10" Itf="0.01" Cjc="0" Vjc="0.75" Mjc="0.33" Xcjc="0.9" Fc="0.5" Tr="1e-07" Ptf="0" Kf="0" Af="1" Cjs="0" Vjs="0.75" Mjs="0"
+	  Diode:D1 _net3 _net1 Is="1e-12" Rs="10" N="1" Xti="3" Cj0="0" Vj="0.75" M="0.33" Fc="0.5"
+	  R:R1 _net2 _net4 R="8000"
+	  R:R2 _net4 _net3 R="120"
+	  # .MODEL:DMODEL  D (IS=1E-12 RS=10 N=1 XTI=3 CJO=0 VJ=0.75 M=0.33 FC=0.5) 
+	  # .MODEL:QMODEL  PNP (IS=2.23835E-12 BF=149.682 NF=1.2 VAF=59.0895 IKF=0.118079 ISE=9.09119E-14 NE=1.42175 BR=0.587475 NR=0.75 VAR=100.388 IKR=0.0934405 ISC=9.09118E-14 NC=2 RB=15.5445 IRB=0.450416 RBM=12.8364 RE=0.0939759 RC=2.76027 XTB=0.497353 XTI=2.9942 EG=1.05 CJE=1E-11 VJE=0.75 MJE=0.33 TF=1E-09 XTF=1 VTF=10 ITF=0.01 CJC=1E-11 VJC=0.75 MJC=0.33 XCJC=0.9 FC=0.5 TR=1E-07 PTF=0 KF=0 AF=1) 
+	  # .MODEL:Q1MODEL  PNP (IS=2.23835E-12 BF=149.682 NF=1.2 VAF=59.0895 IKF=0.118079 ISE=9.09119E-14 NE=1.42175 BR=0.587475 NR=0.75 VAR=100.388 IKR=0.0934405 ISC=9.09118E-14 NC=2 RB=15.5445 IRB=0.450416 RBM=12.8364 RE=0.0939759 RC=2.76027 XTB=0.497353 XTI=2.9942 EG=1.05 CJE=1E-11 VJE=0.75 MJE=0.33 TF=1E-09 XTF=1 VTF=10 ITF=0.01 CJC=0 VJC=0.75 MJC=0.33 XCJC=0.9 FC=0.5 TR=1E-07 PTF=0 KF=0 AF=1) 
+	.Def:End
+  </Model>
+  <Symbol>
+	<.ID 120 60 T>  
+	<Line 20 40 20 0 #000080 2 1>
+	<Line 40 20 0 40 #000080 2 1>
+	<Line 40 40 20 -20 #000080 2 1>
+	<Line 80 40 0 40 #000080 2 1>
+	<Line 80 60 20 -20 #000080 2 1>
+	<Line 60 20 40 0 #000080 2 1>
+	<Line 100 40 0 -20 #000080 2 1>
+	<Line 108 40 -8 0 #000080 2 1>
+	<Line 108 64 0 16 #000080 2 1>
+	<Line 100 80 8 0 #000080 2 1>
+	<Line 108 56 0 -16 #000080 2 1>
+	<Line 100 80 0 10 #000080 2 1>
+	<Line 100 90 0 10 #000080 2 1>
+	<Line 100 20 0 -20 #000080 2 1>
+	<Line 60 60 20 0 #000080 2 1>
+	<Line 60 55 -10 -5 #000080 2 1>
+	<Line 50 50 5 10 #000080 2 1>
+	<Line 40 40 20 20 #000080 2 1>
+	<Line 80 60 20 20 #000080 2 1>
+	<Line 90 70 5 10 #000080 2 1>
+	<Line 100 75 -10 -5 #000080 2 1>
+	<Line 112 56 -8 0 #000080 2 1>
+	<Line 108 64 -4 -8 #000080 2 1>
+	<Line 112 64 -8 0 #000080 2 1>
+	<Line 108 64 4 -8 #000080 2 1>
+	<.PortSym 20 40 2 0>
+	<.PortSym 100 0 1 0>
+	<.PortSym 100 100 3 0>
+  </Symbol>
+</Component>
+
+<Component BD676A>
+  <Description>
+BD676A Darlington
+4.0 AMPERES POWER TRANSISTORS PNP SILICON
+45 VOLTS
+40 WATTS
+Added by Frans Schreuder <fransschreuder@users.sourceforge.net>
+  </Description>
+  <Model>
+	.Def:Transistors_BD676A _net1 _net2 _net3
+  BJT:Q1 _net2 _net1 _net4 gnd Type="pnp" Is="2.23835e-12" Bf="149.682" Nf="1.2" Vaf="59.0895" Ikf="0.118079" Ise="9.09119e-14" Ne="1.42175" Br="0.587475" Nr="0.75" Var="100.388" Ikr="0.0934405" Isc="9.09118e-14" Nc="2" Rb="15.5445" Irb="0.450416" Rbm="12.8364" Re="0.0939759" Rc="2.76027" Xtb="0.497353" Xti="2.9942" Eg="1.05" Cje="1e-11" Vje="0.75" Mje="0.33" Tf="1e-09" Xtf="1" Vtf="10" Itf="0.01" Cjc="1e-11" Vjc="0.75" Mjc="0.33" Xcjc="0.9" Fc="0.5" Tr="1e-07" Ptf="0" Kf="0" Af="1" Cjs="0" Vjs="0.75" Mjs="0"
+  BJT:Q2 _net4 _net1 _net3 gnd Type="pnp" Area="2.46191" Is="2.23835e-12" Bf="149.682" Nf="1.2" Vaf="59.0895" Ikf="0.118079" Ise="9.09119e-14" Ne="1.42175" Br="0.587475" Nr="0.75" Var="100.388" Ikr="0.0934405" Isc="9.09118e-14" Nc="2" Rb="15.5445" Irb="0.450416" Rbm="12.8364" Re="0.0939759" Rc="2.76027" Xtb="0.497353" Xti="2.9942" Eg="1.05" Cje="1e-11" Vje="0.75" Mje="0.33" Tf="1e-09" Xtf="1" Vtf="10" Itf="0.01" Cjc="0" Vjc="0.75" Mjc="0.33" Xcjc="0.9" Fc="0.5" Tr="1e-07" Ptf="0" Kf="0" Af="1" Cjs="0" Vjs="0.75" Mjs="0"
+  Diode:D1 _net3 _net1 Is="1e-12" Rs="10" N="1" Xti="3" Cj0="0" Vj="0.75" M="0.33" Fc="0.5"
+  R:R1 _net2 _net4 R="8000"
+  R:R2 _net4 _net3 R="120"
+  # .MODEL:DMODEL  D (IS=1E-12 RS=10 N=1 XTI=3 CJO=0 VJ=0.75 M=0.33 FC=0.5) 
+  # .MODEL:QMODEL  PNP (IS=2.23835E-12 BF=149.682 NF=1.2 VAF=59.0895 IKF=0.118079 ISE=9.09119E-14 NE=1.42175 BR=0.587475 NR=0.75 VAR=100.388 IKR=0.0934405 ISC=9.09118E-14 NC=2 RB=15.5445 IRB=0.450416 RBM=12.8364 RE=0.0939759 RC=2.76027 XTB=0.497353 XTI=2.9942 EG=1.05 CJE=1E-11 VJE=0.75 MJE=0.33 TF=1E-09 XTF=1 VTF=10 ITF=0.01 CJC=1E-11 VJC=0.75 MJC=0.33 XCJC=0.9 FC=0.5 TR=1E-07 PTF=0 KF=0 AF=1) 
+  # .MODEL:Q1MODEL  PNP (IS=2.23835E-12 BF=149.682 NF=1.2 VAF=59.0895 IKF=0.118079 ISE=9.09119E-14 NE=1.42175 BR=0.587475 NR=0.75 VAR=100.388 IKR=0.0934405 ISC=9.09118E-14 NC=2 RB=15.5445 IRB=0.450416 RBM=12.8364 RE=0.0939759 RC=2.76027 XTB=0.497353 XTI=2.9942 EG=1.05 CJE=1E-11 VJE=0.75 MJE=0.33 TF=1E-09 XTF=1 VTF=10 ITF=0.01 CJC=0 VJC=0.75 MJC=0.33 XCJC=0.9 FC=0.5 TR=1E-07 PTF=0 KF=0 AF=1) 
+.Def:End
+  </Model>
+  <Symbol>
+	<.ID 120 60 T>  
+	<Line 20 40 20 0 #000080 2 1>
+	<Line 40 20 0 40 #000080 2 1>
+	<Line 40 40 20 -20 #000080 2 1>
+	<Line 80 40 0 40 #000080 2 1>
+	<Line 80 60 20 -20 #000080 2 1>
+	<Line 60 20 40 0 #000080 2 1>
+	<Line 100 40 0 -20 #000080 2 1>
+	<Line 108 40 -8 0 #000080 2 1>
+	<Line 108 64 0 16 #000080 2 1>
+	<Line 100 80 8 0 #000080 2 1>
+	<Line 108 56 0 -16 #000080 2 1>
+	<Line 100 80 0 10 #000080 2 1>
+	<Line 100 90 0 10 #000080 2 1>
+	<Line 100 20 0 -20 #000080 2 1>
+	<Line 60 60 20 0 #000080 2 1>
+	<Line 60 55 -10 -5 #000080 2 1>
+	<Line 50 50 5 10 #000080 2 1>
+	<Line 40 40 20 20 #000080 2 1>
+	<Line 80 60 20 20 #000080 2 1>
+	<Line 90 70 5 10 #000080 2 1>
+	<Line 100 75 -10 -5 #000080 2 1>
+	<Line 112 56 -8 0 #000080 2 1>
+	<Line 108 64 -4 -8 #000080 2 1>
+	<Line 112 64 -8 0 #000080 2 1>
+	<Line 108 64 4 -8 #000080 2 1>
+	<.PortSym 20 40 2 0>
+	<.PortSym 100 0 1 0>
+	<.PortSym 100 100 3 0>
+  </Symbol>
+</Component>
+
+<Component BD677>
+  <Description>
+BD677 Darlington
+4.0 AMPERES POWER TRANSISTORS NPN SILICON
+60 VOLTS
+40 WATTS
+Added by Frans Schreuder <fransschreuder@users.sourceforge.net>
+  </Description>
+  <Model>
+	.Def:Transistors_BD677 _net1 _net2 _net3
+  BJT:Q1 _net2 _net1 _net4 gnd Type="npn" Is="6.82736e-17" Bf="43.4441" Nf="0.85" Vaf="30" Ikf="1.14362" Ise="9.48937e-15" Ne="2.04295" Br="0.665831" Nr="1.5" Var="64.8234" Ikr="0.0980345" Isc="9.48937e-15" Nc="1" Rb="20.4512" Irb="0.277791" Rbm="16.9143" Re="0.574152" Rc="6.88011" Xtb="0.401039" Xti="2.96301" Eg="1.05" Cje="1e-11" Vje="0.75" Mje="0.33" Tf="1e-09" Xtf="1" Vtf="10" Itf="0.01" Cjc="1e-11" Vjc="0.75" Mjc="0.33" Xcjc="0.9" Fc="0.5" Tr="1e-07" Ptf="0" Kf="0" Af="1" Cjs="0" Vjs="0.75" Mjs="0"
+  BJT:Q2 _net4 _net1 _net3 gnd Type="npn" Area="5.21716" Is="6.82736e-17" Bf="43.4441" Nf="0.85" Vaf="30" Ikf="1.14362" Ise="9.48937e-15" Ne="2.04295" Br="0.665831" Nr="1.5" Var="64.8234" Ikr="0.0980345" Isc="9.48937e-15" Nc="1" Rb="20.4512" Irb="0.277791" Rbm="16.9143" Re="0.574152" Rc="6.88011" Xtb="0.401039" Xti="2.96301" Eg="1.05" Cje="1e-11" Vje="0.75" Mje="0.33" Tf="1e-09" Xtf="1" Vtf="10" Itf="0.01" Cjc="0" Vjc="0.75" Mjc="0.33" Xcjc="0.9" Fc="0.5" Tr="1e-07" Ptf="0" Kf="0" Af="1" Cjs="0" Vjs="0.75" Mjs="0"
+  Diode:D1 _net1 _net3 Is="1e-12" Rs="9.53186" N="0.964987" Xti="2.96499" Cj0="0" Vj="0.75" M="0.33" Fc="0.5"
+  R:R1 _net2 _net4 R="8000"
+  R:R2 _net4 _net3 R="120"
+  # .MODEL:DMODEL  D (IS=1E-12 RS=9.53186 N=0.964987 XTI=2.96499 CJO=0 VJ=0.75 M=0.33 FC=0.5) 
+  # .MODEL:QMODEL  NPN (IS=6.82736E-17 BF=43.4441 NF=0.85 VAF=30 IKF=1.14362 ISE=9.48937E-15 NE=2.04295 BR=0.665831 NR=1.5 VAR=64.8234 IKR=0.0980345 ISC=9.48937E-15 NC=1 RB=20.4512 IRB=0.277791 RBM=16.9143 RE=0.574152 RC=6.88011 XTB=0.401039 XTI=2.96301 EG=1.05 CJE=1E-11 VJE=0.75 MJE=0.33 TF=1E-09 XTF=1 VTF=10 ITF=0.01 CJC=1E-11 VJC=0.75 MJC=0.33 XCJC=0.9 FC=0.5 TR=1E-07 PTF=0 KF=0 AF=1) 
+  # .MODEL:Q1MODEL  NPN (IS=6.82736E-17 BF=43.4441 NF=0.85 VAF=30 IKF=1.14362 ISE=9.48937E-15 NE=2.04295 BR=0.665831 NR=1.5 VAR=64.8234 IKR=0.0980345 ISC=9.48937E-15 NC=1 RB=20.4512 IRB=0.277791 RBM=16.9143 RE=0.574152 RC=6.88011 XTB=0.401039 XTI=2.96301 EG=1.05 CJE=1E-11 VJE=0.75 MJE=0.33 TF=1E-09 XTF=1 VTF=10 ITF=0.01 CJC=0 VJC=0.75 MJC=0.33 XCJC=0.9 FC=0.5 TR=1E-07 PTF=0 KF=0 AF=1) 
+.Def:End
+  </Model>
+  <Symbol>
+	<.ID 120 60 T>  
+	<Line 20 40 20 0 #000080 2 1>
+	<Line 40 20 0 40 #000080 2 1>
+	<Line 40 40 20 -20 #000080 2 1>
+	<Line 40 40 20 20 #000080 2 1>
+	<Line 56 52 4 8 #000080 2 1>
+	<Line 52 56 8 4 #000080 2 1>
+	<Line 60 60 20 0 #000080 2 1>
+	<Line 80 40 0 40 #000080 2 1>
+	<Line 80 60 20 -20 #000080 2 1>
+	<Line 80 60 20 20 #000080 2 1>
+	<Line 96 72 4 8 #000080 2 1>
+	<Line 92 76 8 4 #000080 2 1>
+	<Line 60 20 40 0 #000080 2 1>
+	<Line 100 40 0 -20 #000080 2 1>
+	<Line 108 40 -8 0 #000080 2 1>
+	<Line 108 64 0 16 #000080 2 1>
+	<Line 100 80 8 0 #000080 2 1>
+	<Line 104 56 8 0 #000080 2 1>
+	<Line 108 56 -4 8 #000080 2 1>
+	<Line 104 64 8 0 #000080 2 1>
+	<Line 108 56 4 8 #000080 2 1>
+	<Line 108 56 0 -16 #000080 2 1>
+	<Line 100 80 0 10 #000080 2 1>
+	<Line 100 90 0 10 #000080 2 1>
+	<Line 100 20 0 -20 #000080 2 1>
+	<.PortSym 20 40 2 0>
+	<.PortSym 100 0 1 0>
+	<.PortSym 100 100 3 0>
+  </Symbol>
+</Component>
+
+<Component BD677A>
+  <Description>
+BD677A Darlington
+4.0 AMPERES POWER TRANSISTORS NPN SILICON
+60 VOLTS
+40 WATTS
+Added by Frans Schreuder <fransschreuder@users.sourceforge.net>
+  </Description>
+  <Model>
+	.Def:Transistors_BD677A _net1 _net2 _net3
+  BJT:Q1 _net2 _net1 _net4 gnd Type="npn" Is="6.82736e-17" Bf="43.4441" Nf="0.85" Vaf="30" Ikf="1.14362" Ise="9.48937e-15" Ne="2.04295" Br="0.665831" Nr="1.5" Var="64.8234" Ikr="0.0980345" Isc="9.48937e-15" Nc="1" Rb="20.4512" Irb="0.277791" Rbm="16.9143" Re="0.574152" Rc="6.88011" Xtb="0.401039" Xti="2.96301" Eg="1.05" Cje="1e-11" Vje="0.75" Mje="0.33" Tf="1e-09" Xtf="1" Vtf="10" Itf="0.01" Cjc="1e-11" Vjc="0.75" Mjc="0.33" Xcjc="0.9" Fc="0.5" Tr="1e-07" Ptf="0" Kf="0" Af="1" Cjs="0" Vjs="0.75" Mjs="0"
+  BJT:Q2 _net4 _net1 _net3 gnd Type="npn" Area="5.21716" Is="6.82736e-17" Bf="43.4441" Nf="0.85" Vaf="30" Ikf="1.14362" Ise="9.48937e-15" Ne="2.04295" Br="0.665831" Nr="1.5" Var="64.8234" Ikr="0.0980345" Isc="9.48937e-15" Nc="1" Rb="20.4512" Irb="0.277791" Rbm="16.9143" Re="0.574152" Rc="6.88011" Xtb="0.401039" Xti="2.96301" Eg="1.05" Cje="1e-11" Vje="0.75" Mje="0.33" Tf="1e-09" Xtf="1" Vtf="10" Itf="0.01" Cjc="0" Vjc="0.75" Mjc="0.33" Xcjc="0.9" Fc="0.5" Tr="1e-07" Ptf="0" Kf="0" Af="1" Cjs="0" Vjs="0.75" Mjs="0"
+  Diode:D1 _net1 _net3 Is="1e-12" Rs="9.53186" N="0.964987" Xti="2.96499" Cj0="0" Vj="0.75" M="0.33" Fc="0.5"
+  R:R1 _net2 _net4 R="8000"
+  R:R2 _net4 _net3 R="120"
+  # .MODEL:DMODEL  D (IS=1E-12 RS=9.53186 N=0.964987 XTI=2.96499 CJO=0 VJ=0.75 M=0.33 FC=0.5) 
+  # .MODEL:QMODEL  NPN (IS=6.82736E-17 BF=43.4441 NF=0.85 VAF=30 IKF=1.14362 ISE=9.48937E-15 NE=2.04295 BR=0.665831 NR=1.5 VAR=64.8234 IKR=0.0980345 ISC=9.48937E-15 NC=1 RB=20.4512 IRB=0.277791 RBM=16.9143 RE=0.574152 RC=6.88011 XTB=0.401039 XTI=2.96301 EG=1.05 CJE=1E-11 VJE=0.75 MJE=0.33 TF=1E-09 XTF=1 VTF=10 ITF=0.01 CJC=1E-11 VJC=0.75 MJC=0.33 XCJC=0.9 FC=0.5 TR=1E-07 PTF=0 KF=0 AF=1) 
+  # .MODEL:Q1MODEL  NPN (IS=6.82736E-17 BF=43.4441 NF=0.85 VAF=30 IKF=1.14362 ISE=9.48937E-15 NE=2.04295 BR=0.665831 NR=1.5 VAR=64.8234 IKR=0.0980345 ISC=9.48937E-15 NC=1 RB=20.4512 IRB=0.277791 RBM=16.9143 RE=0.574152 RC=6.88011 XTB=0.401039 XTI=2.96301 EG=1.05 CJE=1E-11 VJE=0.75 MJE=0.33 TF=1E-09 XTF=1 VTF=10 ITF=0.01 CJC=0 VJC=0.75 MJC=0.33 XCJC=0.9 FC=0.5 TR=1E-07 PTF=0 KF=0 AF=1) 
+.Def:End
+  </Model>
+  <Symbol>
+	<.ID 120 60 T>  
+	<Line 20 40 20 0 #000080 2 1>
+	<Line 40 20 0 40 #000080 2 1>
+	<Line 40 40 20 -20 #000080 2 1>
+	<Line 40 40 20 20 #000080 2 1>
+	<Line 56 52 4 8 #000080 2 1>
+	<Line 52 56 8 4 #000080 2 1>
+	<Line 60 60 20 0 #000080 2 1>
+	<Line 80 40 0 40 #000080 2 1>
+	<Line 80 60 20 -20 #000080 2 1>
+	<Line 80 60 20 20 #000080 2 1>
+	<Line 96 72 4 8 #000080 2 1>
+	<Line 92 76 8 4 #000080 2 1>
+	<Line 60 20 40 0 #000080 2 1>
+	<Line 100 40 0 -20 #000080 2 1>
+	<Line 108 40 -8 0 #000080 2 1>
+	<Line 108 64 0 16 #000080 2 1>
+	<Line 100 80 8 0 #000080 2 1>
+	<Line 104 56 8 0 #000080 2 1>
+	<Line 108 56 -4 8 #000080 2 1>
+	<Line 104 64 8 0 #000080 2 1>
+	<Line 108 56 4 8 #000080 2 1>
+	<Line 108 56 0 -16 #000080 2 1>
+	<Line 100 80 0 10 #000080 2 1>
+	<Line 100 90 0 10 #000080 2 1>
+	<Line 100 20 0 -20 #000080 2 1>
+	<.PortSym 20 40 2 0>
+	<.PortSym 100 0 1 0>
+	<.PortSym 100 100 3 0>
+  </Symbol>
+</Component>
+
+<Component BD678>
+  <Description>
+BD678 Darlington
+4.0 AMPERES POWER TRANSISTORS PNP SILICON
+60 VOLTS
+40 WATTS
+Added by Frans Schreuder <fransschreuder@users.sourceforge.net>
+  </Description>
+  <Model>
+	.Def:Transistors_BD678 _net1 _net2 _net3
+  BJT:Q1 _net2 _net1 _net4 gnd Type="pnp" Is="2.23835e-12" Bf="149.682" Nf="1.2" Vaf="59.0895" Ikf="0.118079" Ise="9.09119e-14" Ne="1.42175" Br="0.587475" Nr="0.75" Var="100.388" Ikr="0.0934405" Isc="9.09118e-14" Nc="2" Rb="15.5445" Irb="0.450416" Rbm="12.8364" Re="0.0939759" Rc="2.76027" Xtb="0.497353" Xti="2.9942" Eg="1.05" Cje="1e-11" Vje="0.75" Mje="0.33" Tf="1e-09" Xtf="1" Vtf="10" Itf="0.01" Cjc="1e-11" Vjc="0.75" Mjc="0.33" Xcjc="0.9" Fc="0.5" Tr="1e-07" Ptf="0" Kf="0" Af="1" Cjs="0" Vjs="0.75" Mjs="0"
+  BJT:Q2 _net4 _net1 _net3 gnd Type="pnp" Area="2.46191" Is="2.23835e-12" Bf="149.682" Nf="1.2" Vaf="59.0895" Ikf="0.118079" Ise="9.09119e-14" Ne="1.42175" Br="0.587475" Nr="0.75" Var="100.388" Ikr="0.0934405" Isc="9.09118e-14" Nc="2" Rb="15.5445" Irb="0.450416" Rbm="12.8364" Re="0.0939759" Rc="2.76027" Xtb="0.497353" Xti="2.9942" Eg="1.05" Cje="1e-11" Vje="0.75" Mje="0.33" Tf="1e-09" Xtf="1" Vtf="10" Itf="0.01" Cjc="0" Vjc="0.75" Mjc="0.33" Xcjc="0.9" Fc="0.5" Tr="1e-07" Ptf="0" Kf="0" Af="1" Cjs="0" Vjs="0.75" Mjs="0"
+  Diode:D1 _net3 _net1 Is="1e-12" Rs="10" N="1" Xti="3" Cj0="0" Vj="0.75" M="0.33" Fc="0.5"
+  R:R1 _net2 _net4 R="8000"
+  R:R2 _net4 _net3 R="120"
+  # .MODEL:DMODEL  D (IS=1E-12 RS=10 N=1 XTI=3 CJO=0 VJ=0.75 M=0.33 FC=0.5) 
+  # .MODEL:QMODEL  PNP (IS=2.23835E-12 BF=149.682 NF=1.2 VAF=59.0895 IKF=0.118079 ISE=9.09119E-14 NE=1.42175 BR=0.587475 NR=0.75 VAR=100.388 IKR=0.0934405 ISC=9.09118E-14 NC=2 RB=15.5445 IRB=0.450416 RBM=12.8364 RE=0.0939759 RC=2.76027 XTB=0.497353 XTI=2.9942 EG=1.05 CJE=1E-11 VJE=0.75 MJE=0.33 TF=1E-09 XTF=1 VTF=10 ITF=0.01 CJC=1E-11 VJC=0.75 MJC=0.33 XCJC=0.9 FC=0.5 TR=1E-07 PTF=0 KF=0 AF=1) 
+  # .MODEL:Q1MODEL  PNP (IS=2.23835E-12 BF=149.682 NF=1.2 VAF=59.0895 IKF=0.118079 ISE=9.09119E-14 NE=1.42175 BR=0.587475 NR=0.75 VAR=100.388 IKR=0.0934405 ISC=9.09118E-14 NC=2 RB=15.5445 IRB=0.450416 RBM=12.8364 RE=0.0939759 RC=2.76027 XTB=0.497353 XTI=2.9942 EG=1.05 CJE=1E-11 VJE=0.75 MJE=0.33 TF=1E-09 XTF=1 VTF=10 ITF=0.01 CJC=0 VJC=0.75 MJC=0.33 XCJC=0.9 FC=0.5 TR=1E-07 PTF=0 KF=0 AF=1) 
+.Def:End
+  </Model>
+  <Symbol>
+	<.ID 120 60 T> 
+	<Line 20 40 20 0 #000080 2 1>
+	<Line 40 20 0 40 #000080 2 1>
+	<Line 40 40 20 -20 #000080 2 1>
+	<Line 80 40 0 40 #000080 2 1>
+	<Line 80 60 20 -20 #000080 2 1>
+	<Line 60 20 40 0 #000080 2 1>
+	<Line 100 40 0 -20 #000080 2 1>
+	<Line 108 40 -8 0 #000080 2 1>
+	<Line 108 64 0 16 #000080 2 1>
+	<Line 100 80 8 0 #000080 2 1>
+	<Line 108 56 0 -16 #000080 2 1>
+	<Line 100 80 0 10 #000080 2 1>
+	<Line 100 90 0 10 #000080 2 1>
+	<Line 100 20 0 -20 #000080 2 1>
+	<Line 60 60 20 0 #000080 2 1>
+	<Line 60 55 -10 -5 #000080 2 1>
+	<Line 50 50 5 10 #000080 2 1>
+	<Line 40 40 20 20 #000080 2 1>
+	<Line 80 60 20 20 #000080 2 1>
+	<Line 90 70 5 10 #000080 2 1>
+	<Line 100 75 -10 -5 #000080 2 1>
+	<Line 112 56 -8 0 #000080 2 1>
+	<Line 108 64 -4 -8 #000080 2 1>
+	<Line 112 64 -8 0 #000080 2 1>
+	<Line 108 64 4 -8 #000080 2 1>
+	<.PortSym 20 40 2 0>
+	<.PortSym 100 0 1 0>
+	<.PortSym 100 100 3 0>
+  </Symbol>
+</Component>
+
+<Component BD678A>
+  <Description>
+BD678A Darlington
+4.0 AMPERES POWER TRANSISTORS PNP SILICON
+60 VOLTS
+40 WATTS
+Added by Frans Schreuder <fransschreuder@users.sourceforge.net>
+  </Description>
+  <Model>
+	.Def:Transistors_BD678A _net1 _net2 _net3
+  BJT:Q1 _net2 _net1 _net4 gnd Type="pnp" Is="2.23835e-12" Bf="149.682" Nf="1.2" Vaf="59.0895" Ikf="0.118079" Ise="9.09119e-14" Ne="1.42175" Br="0.587475" Nr="0.75" Var="100.388" Ikr="0.0934405" Isc="9.09118e-14" Nc="2" Rb="15.5445" Irb="0.450416" Rbm="12.8364" Re="0.0939759" Rc="2.76027" Xtb="0.497353" Xti="2.9942" Eg="1.05" Cje="1e-11" Vje="0.75" Mje="0.33" Tf="1e-09" Xtf="1" Vtf="10" Itf="0.01" Cjc="1e-11" Vjc="0.75" Mjc="0.33" Xcjc="0.9" Fc="0.5" Tr="1e-07" Ptf="0" Kf="0" Af="1" Cjs="0" Vjs="0.75" Mjs="0"
+  BJT:Q2 _net4 _net1 _net3 gnd Type="pnp" Area="2.46191" Is="2.23835e-12" Bf="149.682" Nf="1.2" Vaf="59.0895" Ikf="0.118079" Ise="9.09119e-14" Ne="1.42175" Br="0.587475" Nr="0.75" Var="100.388" Ikr="0.0934405" Isc="9.09118e-14" Nc="2" Rb="15.5445" Irb="0.450416" Rbm="12.8364" Re="0.0939759" Rc="2.76027" Xtb="0.497353" Xti="2.9942" Eg="1.05" Cje="1e-11" Vje="0.75" Mje="0.33" Tf="1e-09" Xtf="1" Vtf="10" Itf="0.01" Cjc="0" Vjc="0.75" Mjc="0.33" Xcjc="0.9" Fc="0.5" Tr="1e-07" Ptf="0" Kf="0" Af="1" Cjs="0" Vjs="0.75" Mjs="0"
+  Diode:D1 _net3 _net1 Is="1e-12" Rs="10" N="1" Xti="3" Cj0="0" Vj="0.75" M="0.33" Fc="0.5"
+  R:R1 _net2 _net4 R="8000"
+  R:R2 _net4 _net3 R="120"
+  # .MODEL:DMODEL  D (IS=1E-12 RS=10 N=1 XTI=3 CJO=0 VJ=0.75 M=0.33 FC=0.5) 
+  # .MODEL:QMODEL  PNP (IS=2.23835E-12 BF=149.682 NF=1.2 VAF=59.0895 IKF=0.118079 ISE=9.09119E-14 NE=1.42175 BR=0.587475 NR=0.75 VAR=100.388 IKR=0.0934405 ISC=9.09118E-14 NC=2 RB=15.5445 IRB=0.450416 RBM=12.8364 RE=0.0939759 RC=2.76027 XTB=0.497353 XTI=2.9942 EG=1.05 CJE=1E-11 VJE=0.75 MJE=0.33 TF=1E-09 XTF=1 VTF=10 ITF=0.01 CJC=1E-11 VJC=0.75 MJC=0.33 XCJC=0.9 FC=0.5 TR=1E-07 PTF=0 KF=0 AF=1) 
+  # .MODEL:Q1MODEL  PNP (IS=2.23835E-12 BF=149.682 NF=1.2 VAF=59.0895 IKF=0.118079 ISE=9.09119E-14 NE=1.42175 BR=0.587475 NR=0.75 VAR=100.388 IKR=0.0934405 ISC=9.09118E-14 NC=2 RB=15.5445 IRB=0.450416 RBM=12.8364 RE=0.0939759 RC=2.76027 XTB=0.497353 XTI=2.9942 EG=1.05 CJE=1E-11 VJE=0.75 MJE=0.33 TF=1E-09 XTF=1 VTF=10 ITF=0.01 CJC=0 VJC=0.75 MJC=0.33 XCJC=0.9 FC=0.5 TR=1E-07 PTF=0 KF=0 AF=1) 
+.Def:End
+  </Model>
+  <Symbol>
+	<.ID 120 60 T> 
+	<Line 20 40 20 0 #000080 2 1>
+	<Line 40 20 0 40 #000080 2 1>
+	<Line 40 40 20 -20 #000080 2 1>
+	<Line 80 40 0 40 #000080 2 1>
+	<Line 80 60 20 -20 #000080 2 1>
+	<Line 60 20 40 0 #000080 2 1>
+	<Line 100 40 0 -20 #000080 2 1>
+	<Line 108 40 -8 0 #000080 2 1>
+	<Line 108 64 0 16 #000080 2 1>
+	<Line 100 80 8 0 #000080 2 1>
+	<Line 108 56 0 -16 #000080 2 1>
+	<Line 100 80 0 10 #000080 2 1>
+	<Line 100 90 0 10 #000080 2 1>
+	<Line 100 20 0 -20 #000080 2 1>
+	<Line 60 60 20 0 #000080 2 1>
+	<Line 60 55 -10 -5 #000080 2 1>
+	<Line 50 50 5 10 #000080 2 1>
+	<Line 40 40 20 20 #000080 2 1>
+	<Line 80 60 20 20 #000080 2 1>
+	<Line 90 70 5 10 #000080 2 1>
+	<Line 100 75 -10 -5 #000080 2 1>
+	<Line 112 56 -8 0 #000080 2 1>
+	<Line 108 64 -4 -8 #000080 2 1>
+	<Line 112 64 -8 0 #000080 2 1>
+	<Line 108 64 4 -8 #000080 2 1>
+	<.PortSym 20 40 2 0>
+	<.PortSym 100 0 1 0>
+	<.PortSym 100 100 3 0>
+  </Symbol>
+</Component>
+
+<Component BD679>
+  <Description>
+BD679 Darlington
+4.0 AMPERES POWER TRANSISTORS NPN SILICON
+80 VOLTS
+40 WATTS
+Added by Frans Schreuder <fransschreuder@users.sourceforge.net>
+  </Description>
+  <Model>
+	.Def:Transistors_BD679 _net1 _net2 _net3
+  BJT:Q1 _net2 _net1 _net4 gnd Type="npn" Is="6.82736e-17" Bf="43.4441" Nf="0.85" Vaf="30" Ikf="1.14362" Ise="9.48937e-15" Ne="2.04295" Br="0.665831" Nr="1.5" Var="64.8234" Ikr="0.0980345" Isc="9.48937e-15" Nc="1" Rb="20.4512" Irb="0.277791" Rbm="16.9143" Re="0.574152" Rc="6.88011" Xtb="0.401039" Xti="2.96301" Eg="1.05" Cje="1e-11" Vje="0.75" Mje="0.33" Tf="1e-09" Xtf="1" Vtf="10" Itf="0.01" Cjc="1e-11" Vjc="0.75" Mjc="0.33" Xcjc="0.9" Fc="0.5" Tr="1e-07" Ptf="0" Kf="0" Af="1" Cjs="0" Vjs="0.75" Mjs="0"
+  BJT:Q2 _net4 _net1 _net3 gnd Type="npn" Area="5.21716" Is="6.82736e-17" Bf="43.4441" Nf="0.85" Vaf="30" Ikf="1.14362" Ise="9.48937e-15" Ne="2.04295" Br="0.665831" Nr="1.5" Var="64.8234" Ikr="0.0980345" Isc="9.48937e-15" Nc="1" Rb="20.4512" Irb="0.277791" Rbm="16.9143" Re="0.574152" Rc="6.88011" Xtb="0.401039" Xti="2.96301" Eg="1.05" Cje="1e-11" Vje="0.75" Mje="0.33" Tf="1e-09" Xtf="1" Vtf="10" Itf="0.01" Cjc="0" Vjc="0.75" Mjc="0.33" Xcjc="0.9" Fc="0.5" Tr="1e-07" Ptf="0" Kf="0" Af="1" Cjs="0" Vjs="0.75" Mjs="0"
+  Diode:D1 _net1 _net3 Is="1e-12" Rs="9.53186" N="0.964987" Xti="2.96499" Cj0="0" Vj="0.75" M="0.33" Fc="0.5"
+  R:R1 _net2 _net4 R="8000"
+  R:R2 _net4 _net3 R="120"
+  # .MODEL:DMODEL  D (IS=1E-12 RS=9.53186 N=0.964987 XTI=2.96499 CJO=0 VJ=0.75 M=0.33 FC=0.5) 
+  # .MODEL:QMODEL  NPN (IS=6.82736E-17 BF=43.4441 NF=0.85 VAF=30 IKF=1.14362 ISE=9.48937E-15 NE=2.04295 BR=0.665831 NR=1.5 VAR=64.8234 IKR=0.0980345 ISC=9.48937E-15 NC=1 RB=20.4512 IRB=0.277791 RBM=16.9143 RE=0.574152 RC=6.88011 XTB=0.401039 XTI=2.96301 EG=1.05 CJE=1E-11 VJE=0.75 MJE=0.33 TF=1E-09 XTF=1 VTF=10 ITF=0.01 CJC=1E-11 VJC=0.75 MJC=0.33 XCJC=0.9 FC=0.5 TR=1E-07 PTF=0 KF=0 AF=1) 
+  # .MODEL:Q1MODEL  NPN (IS=6.82736E-17 BF=43.4441 NF=0.85 VAF=30 IKF=1.14362 ISE=9.48937E-15 NE=2.04295 BR=0.665831 NR=1.5 VAR=64.8234 IKR=0.0980345 ISC=9.48937E-15 NC=1 RB=20.4512 IRB=0.277791 RBM=16.9143 RE=0.574152 RC=6.88011 XTB=0.401039 XTI=2.96301 EG=1.05 CJE=1E-11 VJE=0.75 MJE=0.33 TF=1E-09 XTF=1 VTF=10 ITF=0.01 CJC=0 VJC=0.75 MJC=0.33 XCJC=0.9 FC=0.5 TR=1E-07 PTF=0 KF=0 AF=1) 
+.Def:End
+  </Model>
+  <Symbol>
+	<.ID 120 60 T> 
+	<Line 20 40 20 0 #000080 2 1>
+	<Line 40 20 0 40 #000080 2 1>
+	<Line 40 40 20 -20 #000080 2 1>
+	<Line 40 40 20 20 #000080 2 1>
+	<Line 56 52 4 8 #000080 2 1>
+	<Line 52 56 8 4 #000080 2 1>
+	<Line 60 60 20 0 #000080 2 1>
+	<Line 80 40 0 40 #000080 2 1>
+	<Line 80 60 20 -20 #000080 2 1>
+	<Line 80 60 20 20 #000080 2 1>
+	<Line 96 72 4 8 #000080 2 1>
+	<Line 92 76 8 4 #000080 2 1>
+	<Line 60 20 40 0 #000080 2 1>
+	<Line 100 40 0 -20 #000080 2 1>
+	<Line 108 40 -8 0 #000080 2 1>
+	<Line 108 64 0 16 #000080 2 1>
+	<Line 100 80 8 0 #000080 2 1>
+	<Line 104 56 8 0 #000080 2 1>
+	<Line 108 56 -4 8 #000080 2 1>
+	<Line 104 64 8 0 #000080 2 1>
+	<Line 108 56 4 8 #000080 2 1>
+	<Line 108 56 0 -16 #000080 2 1>
+	<Line 100 80 0 10 #000080 2 1>
+	<Line 100 90 0 10 #000080 2 1>
+	<Line 100 20 0 -20 #000080 2 1>
+	<.PortSym 20 40 2 0>
+	<.PortSym 100 0 1 0>
+	<.PortSym 100 100 3 0>
+  </Symbol>
+</Component>
+
+<Component BD679A>
+  <Description>
+BD679A Darlington
+4.0 AMPERES POWER TRANSISTORS NPN SILICON
+80 VOLTS
+40 WATTS
+Added by Frans Schreuder <fransschreuder@users.sourceforge.net>
+  </Description>
+  <Model>
+.Def:Transistors_BD679A _net1 _net2 _net3
+  BJT:Q1 _net2 _net1 _net4 gnd Type="npn" Is="6.82736e-17" Bf="43.4441" Nf="0.85" Vaf="30" Ikf="1.14362" Ise="9.48937e-15" Ne="2.04295" Br="0.665831" Nr="1.5" Var="64.8234" Ikr="0.0980345" Isc="9.48937e-15" Nc="1" Rb="20.4512" Irb="0.277791" Rbm="16.9143" Re="0.574152" Rc="6.88011" Xtb="0.401039" Xti="2.96301" Eg="1.05" Cje="1e-11" Vje="0.75" Mje="0.33" Tf="1e-09" Xtf="1" Vtf="10" Itf="0.01" Cjc="1e-11" Vjc="0.75" Mjc="0.33" Xcjc="0.9" Fc="0.5" Tr="1e-07" Ptf="0" Kf="0" Af="1" Cjs="0" Vjs="0.75" Mjs="0"
+  BJT:Q2 _net4 _net1 _net3 gnd Type="npn" Area="5.21716" Is="6.82736e-17" Bf="43.4441" Nf="0.85" Vaf="30" Ikf="1.14362" Ise="9.48937e-15" Ne="2.04295" Br="0.665831" Nr="1.5" Var="64.8234" Ikr="0.0980345" Isc="9.48937e-15" Nc="1" Rb="20.4512" Irb="0.277791" Rbm="16.9143" Re="0.574152" Rc="6.88011" Xtb="0.401039" Xti="2.96301" Eg="1.05" Cje="1e-11" Vje="0.75" Mje="0.33" Tf="1e-09" Xtf="1" Vtf="10" Itf="0.01" Cjc="0" Vjc="0.75" Mjc="0.33" Xcjc="0.9" Fc="0.5" Tr="1e-07" Ptf="0" Kf="0" Af="1" Cjs="0" Vjs="0.75" Mjs="0"
+  Diode:D1 _net1 _net3 Is="1e-12" Rs="9.53186" N="0.964987" Xti="2.96499" Cj0="0" Vj="0.75" M="0.33" Fc="0.5"
+  R:R1 _net2 _net4 R="8000"
+  R:R2 _net4 _net3 R="120"
+  # .MODEL:DMODEL  D (IS=1E-12 RS=9.53186 N=0.964987 XTI=2.96499 CJO=0 VJ=0.75 M=0.33 FC=0.5) 
+  # .MODEL:QMODEL  NPN (IS=6.82736E-17 BF=43.4441 NF=0.85 VAF=30 IKF=1.14362 ISE=9.48937E-15 NE=2.04295 BR=0.665831 NR=1.5 VAR=64.8234 IKR=0.0980345 ISC=9.48937E-15 NC=1 RB=20.4512 IRB=0.277791 RBM=16.9143 RE=0.574152 RC=6.88011 XTB=0.401039 XTI=2.96301 EG=1.05 CJE=1E-11 VJE=0.75 MJE=0.33 TF=1E-09 XTF=1 VTF=10 ITF=0.01 CJC=1E-11 VJC=0.75 MJC=0.33 XCJC=0.9 FC=0.5 TR=1E-07 PTF=0 KF=0 AF=1) 
+  # .MODEL:Q1MODEL  NPN (IS=6.82736E-17 BF=43.4441 NF=0.85 VAF=30 IKF=1.14362 ISE=9.48937E-15 NE=2.04295 BR=0.665831 NR=1.5 VAR=64.8234 IKR=0.0980345 ISC=9.48937E-15 NC=1 RB=20.4512 IRB=0.277791 RBM=16.9143 RE=0.574152 RC=6.88011 XTB=0.401039 XTI=2.96301 EG=1.05 CJE=1E-11 VJE=0.75 MJE=0.33 TF=1E-09 XTF=1 VTF=10 ITF=0.01 CJC=0 VJC=0.75 MJC=0.33 XCJC=0.9 FC=0.5 TR=1E-07 PTF=0 KF=0 AF=1) 
+.Def:End
+  </Model>
+  <Symbol>
+	<.ID 120 60 T> 
+	<Line 20 40 20 0 #000080 2 1>
+	<Line 40 20 0 40 #000080 2 1>
+	<Line 40 40 20 -20 #000080 2 1>
+	<Line 40 40 20 20 #000080 2 1>
+	<Line 56 52 4 8 #000080 2 1>
+	<Line 52 56 8 4 #000080 2 1>
+	<Line 60 60 20 0 #000080 2 1>
+	<Line 80 40 0 40 #000080 2 1>
+	<Line 80 60 20 -20 #000080 2 1>
+	<Line 80 60 20 20 #000080 2 1>
+	<Line 96 72 4 8 #000080 2 1>
+	<Line 92 76 8 4 #000080 2 1>
+	<Line 60 20 40 0 #000080 2 1>
+	<Line 100 40 0 -20 #000080 2 1>
+	<Line 108 40 -8 0 #000080 2 1>
+	<Line 108 64 0 16 #000080 2 1>
+	<Line 100 80 8 0 #000080 2 1>
+	<Line 104 56 8 0 #000080 2 1>
+	<Line 108 56 -4 8 #000080 2 1>
+	<Line 104 64 8 0 #000080 2 1>
+	<Line 108 56 4 8 #000080 2 1>
+	<Line 108 56 0 -16 #000080 2 1>
+	<Line 100 80 0 10 #000080 2 1>
+	<Line 100 90 0 10 #000080 2 1>
+	<Line 100 20 0 -20 #000080 2 1>
+	<.PortSym 20 40 2 0>
+	<.PortSym 100 0 1 0>
+	<.PortSym 100 100 3 0>
+  </Symbol>
+</Component>
+
+<Component BD680>
+  <Description>
+BD680 Darlington
+4.0 AMPERES POWER TRANSISTORS PNP SILICON
+80 VOLTS
+40 WATTS
+Added by Frans Schreuder <fransschreuder@users.sourceforge.net>
+  </Description>
+  <Model>
+	.Def:Transistors_BD680 _net1 _net2 _net3
+  BJT:Q1 _net2 _net1 _net4 gnd Type="pnp" Is="2.23835e-12" Bf="149.682" Nf="1.2" Vaf="59.0895" Ikf="0.118079" Ise="9.09119e-14" Ne="1.42175" Br="0.587475" Nr="0.75" Var="100.388" Ikr="0.0934405" Isc="9.09118e-14" Nc="2" Rb="15.5445" Irb="0.450416" Rbm="12.8364" Re="0.0939759" Rc="2.76027" Xtb="0.497353" Xti="2.9942" Eg="1.05" Cje="1e-11" Vje="0.75" Mje="0.33" Tf="1e-09" Xtf="1" Vtf="10" Itf="0.01" Cjc="1e-11" Vjc="0.75" Mjc="0.33" Xcjc="0.9" Fc="0.5" Tr="1e-07" Ptf="0" Kf="0" Af="1" Cjs="0" Vjs="0.75" Mjs="0"
+  BJT:Q2 _net4 _net1 _net3 gnd Type="pnp" Area="2.46191" Is="2.23835e-12" Bf="149.682" Nf="1.2" Vaf="59.0895" Ikf="0.118079" Ise="9.09119e-14" Ne="1.42175" Br="0.587475" Nr="0.75" Var="100.388" Ikr="0.0934405" Isc="9.09118e-14" Nc="2" Rb="15.5445" Irb="0.450416" Rbm="12.8364" Re="0.0939759" Rc="2.76027" Xtb="0.497353" Xti="2.9942" Eg="1.05" Cje="1e-11" Vje="0.75" Mje="0.33" Tf="1e-09" Xtf="1" Vtf="10" Itf="0.01" Cjc="0" Vjc="0.75" Mjc="0.33" Xcjc="0.9" Fc="0.5" Tr="1e-07" Ptf="0" Kf="0" Af="1" Cjs="0" Vjs="0.75" Mjs="0"
+  Diode:D1 _net3 _net1 Is="1e-12" Rs="10" N="1" Xti="3" Cj0="0" Vj="0.75" M="0.33" Fc="0.5"
+  R:R1 _net2 _net4 R="8000"
+  R:R2 _net4 _net3 R="120"
+  # .MODEL:DMODEL  D (IS=1E-12 RS=10 N=1 XTI=3 CJO=0 VJ=0.75 M=0.33 FC=0.5) 
+  # .MODEL:QMODEL  PNP (IS=2.23835E-12 BF=149.682 NF=1.2 VAF=59.0895 IKF=0.118079 ISE=9.09119E-14 NE=1.42175 BR=0.587475 NR=0.75 VAR=100.388 IKR=0.0934405 ISC=9.09118E-14 NC=2 RB=15.5445 IRB=0.450416 RBM=12.8364 RE=0.0939759 RC=2.76027 XTB=0.497353 XTI=2.9942 EG=1.05 CJE=1E-11 VJE=0.75 MJE=0.33 TF=1E-09 XTF=1 VTF=10 ITF=0.01 CJC=1E-11 VJC=0.75 MJC=0.33 XCJC=0.9 FC=0.5 TR=1E-07 PTF=0 KF=0 AF=1) 
+  # .MODEL:Q1MODEL  PNP (IS=2.23835E-12 BF=149.682 NF=1.2 VAF=59.0895 IKF=0.118079 ISE=9.09119E-14 NE=1.42175 BR=0.587475 NR=0.75 VAR=100.388 IKR=0.0934405 ISC=9.09118E-14 NC=2 RB=15.5445 IRB=0.450416 RBM=12.8364 RE=0.0939759 RC=2.76027 XTB=0.497353 XTI=2.9942 EG=1.05 CJE=1E-11 VJE=0.75 MJE=0.33 TF=1E-09 XTF=1 VTF=10 ITF=0.01 CJC=0 VJC=0.75 MJC=0.33 XCJC=0.9 FC=0.5 TR=1E-07 PTF=0 KF=0 AF=1) 
+.Def:End
+  </Model>
+  <Symbol>
+	<.ID 120 60 T> 
+	<Line 20 40 20 0 #000080 2 1>
+	<Line 40 20 0 40 #000080 2 1>
+	<Line 40 40 20 -20 #000080 2 1>
+	<Line 80 40 0 40 #000080 2 1>
+	<Line 80 60 20 -20 #000080 2 1>
+	<Line 60 20 40 0 #000080 2 1>
+	<Line 100 40 0 -20 #000080 2 1>
+	<Line 108 40 -8 0 #000080 2 1>
+	<Line 108 64 0 16 #000080 2 1>
+	<Line 100 80 8 0 #000080 2 1>
+	<Line 108 56 0 -16 #000080 2 1>
+	<Line 100 80 0 10 #000080 2 1>
+	<Line 100 90 0 10 #000080 2 1>
+	<Line 100 20 0 -20 #000080 2 1>
+	<Line 60 60 20 0 #000080 2 1>
+	<Line 60 55 -10 -5 #000080 2 1>
+	<Line 50 50 5 10 #000080 2 1>
+	<Line 40 40 20 20 #000080 2 1>
+	<Line 80 60 20 20 #000080 2 1>
+	<Line 90 70 5 10 #000080 2 1>
+	<Line 100 75 -10 -5 #000080 2 1>
+	<Line 112 56 -8 0 #000080 2 1>
+	<Line 108 64 -4 -8 #000080 2 1>
+	<Line 112 64 -8 0 #000080 2 1>
+	<Line 108 64 4 -8 #000080 2 1>
+	<.PortSym 20 40 2 0>
+	<.PortSym 100 0 1 0>
+	<.PortSym 100 100 3 0>
+  </Symbol>
+</Component>
+
+<Component BD680A>
+  <Description>
+BD680A Darlington
+4.0 AMPERES POWER TRANSISTORS PNP SILICON
+80 VOLTS
+40 WATTS
+Added by Frans Schreuder <fransschreuder@users.sourceforge.net>
+  </Description>
+  <Model>
+	.Def:Transistors_BD680A _net1 _net2 _net3
+  BJT:Q1 _net2 _net1 _net4 gnd Type="pnp" Is="2.23835e-12" Bf="149.682" Nf="1.2" Vaf="59.0895" Ikf="0.118079" Ise="9.09119e-14" Ne="1.42175" Br="0.587475" Nr="0.75" Var="100.388" Ikr="0.0934405" Isc="9.09118e-14" Nc="2" Rb="15.5445" Irb="0.450416" Rbm="12.8364" Re="0.0939759" Rc="2.76027" Xtb="0.497353" Xti="2.9942" Eg="1.05" Cje="1e-11" Vje="0.75" Mje="0.33" Tf="1e-09" Xtf="1" Vtf="10" Itf="0.01" Cjc="1e-11" Vjc="0.75" Mjc="0.33" Xcjc="0.9" Fc="0.5" Tr="1e-07" Ptf="0" Kf="0" Af="1" Cjs="0" Vjs="0.75" Mjs="0"
+  BJT:Q2 _net4 _net1 _net3 gnd Type="pnp" Area="2.46191" Is="2.23835e-12" Bf="149.682" Nf="1.2" Vaf="59.0895" Ikf="0.118079" Ise="9.09119e-14" Ne="1.42175" Br="0.587475" Nr="0.75" Var="100.388" Ikr="0.0934405" Isc="9.09118e-14" Nc="2" Rb="15.5445" Irb="0.450416" Rbm="12.8364" Re="0.0939759" Rc="2.76027" Xtb="0.497353" Xti="2.9942" Eg="1.05" Cje="1e-11" Vje="0.75" Mje="0.33" Tf="1e-09" Xtf="1" Vtf="10" Itf="0.01" Cjc="0" Vjc="0.75" Mjc="0.33" Xcjc="0.9" Fc="0.5" Tr="1e-07" Ptf="0" Kf="0" Af="1" Cjs="0" Vjs="0.75" Mjs="0"
+  Diode:D1 _net3 _net1 Is="1e-12" Rs="10" N="1" Xti="3" Cj0="0" Vj="0.75" M="0.33" Fc="0.5"
+  R:R1 _net2 _net4 R="8000"
+  R:R2 _net4 _net3 R="120"
+  # .MODEL:DMODEL  D (IS=1E-12 RS=10 N=1 XTI=3 CJO=0 VJ=0.75 M=0.33 FC=0.5) 
+  # .MODEL:QMODEL  PNP (IS=2.23835E-12 BF=149.682 NF=1.2 VAF=59.0895 IKF=0.118079 ISE=9.09119E-14 NE=1.42175 BR=0.587475 NR=0.75 VAR=100.388 IKR=0.0934405 ISC=9.09118E-14 NC=2 RB=15.5445 IRB=0.450416 RBM=12.8364 RE=0.0939759 RC=2.76027 XTB=0.497353 XTI=2.9942 EG=1.05 CJE=1E-11 VJE=0.75 MJE=0.33 TF=1E-09 XTF=1 VTF=10 ITF=0.01 CJC=1E-11 VJC=0.75 MJC=0.33 XCJC=0.9 FC=0.5 TR=1E-07 PTF=0 KF=0 AF=1) 
+  # .MODEL:Q1MODEL  PNP (IS=2.23835E-12 BF=149.682 NF=1.2 VAF=59.0895 IKF=0.118079 ISE=9.09119E-14 NE=1.42175 BR=0.587475 NR=0.75 VAR=100.388 IKR=0.0934405 ISC=9.09118E-14 NC=2 RB=15.5445 IRB=0.450416 RBM=12.8364 RE=0.0939759 RC=2.76027 XTB=0.497353 XTI=2.9942 EG=1.05 CJE=1E-11 VJE=0.75 MJE=0.33 TF=1E-09 XTF=1 VTF=10 ITF=0.01 CJC=0 VJC=0.75 MJC=0.33 XCJC=0.9 FC=0.5 TR=1E-07 PTF=0 KF=0 AF=1) 
+.Def:End
+  </Model>
+  <Symbol>
+	<.ID 120 60 T> 
+	<Line 20 40 20 0 #000080 2 1>
+	<Line 40 20 0 40 #000080 2 1>
+	<Line 40 40 20 -20 #000080 2 1>
+	<Line 80 40 0 40 #000080 2 1>
+	<Line 80 60 20 -20 #000080 2 1>
+	<Line 60 20 40 0 #000080 2 1>
+	<Line 100 40 0 -20 #000080 2 1>
+	<Line 108 40 -8 0 #000080 2 1>
+	<Line 108 64 0 16 #000080 2 1>
+	<Line 100 80 8 0 #000080 2 1>
+	<Line 108 56 0 -16 #000080 2 1>
+	<Line 100 80 0 10 #000080 2 1>
+	<Line 100 90 0 10 #000080 2 1>
+	<Line 100 20 0 -20 #000080 2 1>
+	<Line 60 60 20 0 #000080 2 1>
+	<Line 60 55 -10 -5 #000080 2 1>
+	<Line 50 50 5 10 #000080 2 1>
+	<Line 40 40 20 20 #000080 2 1>
+	<Line 80 60 20 20 #000080 2 1>
+	<Line 90 70 5 10 #000080 2 1>
+	<Line 100 75 -10 -5 #000080 2 1>
+	<Line 112 56 -8 0 #000080 2 1>
+	<Line 108 64 -4 -8 #000080 2 1>
+	<Line 112 64 -8 0 #000080 2 1>
+	<Line 108 64 4 -8 #000080 2 1>
+	<.PortSym 20 40 2 0>
+	<.PortSym 100 0 1 0>
+	<.PortSym 100 100 3 0>
+  </Symbol>
+</Component>
+
+<Component BD681>
+  <Description>
+BD681 Darlington
+4.0 AMPERES POWER TRANSISTORS NPN SILICON
+100 VOLTS
+40 WATTS
+Added by Frans Schreuder <fransschreuder@users.sourceforge.net>
+  </Description>
+  <Model>
+.Def:Transistors_BD681 _net1 _net2 _net3
+  BJT:Q1 _net2 _net1 _net4 gnd Type="npn" Is="6.82736e-17" Bf="43.4441" Nf="0.85" Vaf="30" Ikf="1.14362" Ise="9.48937e-15" Ne="2.04295" Br="0.665831" Nr="1.5" Var="64.8234" Ikr="0.0980345" Isc="9.48937e-15" Nc="1" Rb="20.4512" Irb="0.277791" Rbm="16.9143" Re="0.574152" Rc="6.88011" Xtb="0.401039" Xti="2.96301" Eg="1.05" Cje="1e-11" Vje="0.75" Mje="0.33" Tf="1e-09" Xtf="1" Vtf="10" Itf="0.01" Cjc="1e-11" Vjc="0.75" Mjc="0.33" Xcjc="0.9" Fc="0.5" Tr="1e-07" Ptf="0" Kf="0" Af="1" Cjs="0" Vjs="0.75" Mjs="0"
+  BJT:Q2 _net4 _net1 _net3 gnd Type="npn" Area="5.21716" Is="6.82736e-17" Bf="43.4441" Nf="0.85" Vaf="30" Ikf="1.14362" Ise="9.48937e-15" Ne="2.04295" Br="0.665831" Nr="1.5" Var="64.8234" Ikr="0.0980345" Isc="9.48937e-15" Nc="1" Rb="20.4512" Irb="0.277791" Rbm="16.9143" Re="0.574152" Rc="6.88011" Xtb="0.401039" Xti="2.96301" Eg="1.05" Cje="1e-11" Vje="0.75" Mje="0.33" Tf="1e-09" Xtf="1" Vtf="10" Itf="0.01" Cjc="0" Vjc="0.75" Mjc="0.33" Xcjc="0.9" Fc="0.5" Tr="1e-07" Ptf="0" Kf="0" Af="1" Cjs="0" Vjs="0.75" Mjs="0"
+  Diode:D1 _net1 _net3 Is="1e-12" Rs="9.53186" N="0.964987" Xti="2.96499" Cj0="0" Vj="0.75" M="0.33" Fc="0.5"
+  R:R1 _net2 _net4 R="8000"
+  R:R2 _net4 _net3 R="120"
+  # .MODEL:DMODEL  D (IS=1E-12 RS=9.53186 N=0.964987 XTI=2.96499 CJO=0 VJ=0.75 M=0.33 FC=0.5) 
+  # .MODEL:QMODEL  NPN (IS=6.82736E-17 BF=43.4441 NF=0.85 VAF=30 IKF=1.14362 ISE=9.48937E-15 NE=2.04295 BR=0.665831 NR=1.5 VAR=64.8234 IKR=0.0980345 ISC=9.48937E-15 NC=1 RB=20.4512 IRB=0.277791 RBM=16.9143 RE=0.574152 RC=6.88011 XTB=0.401039 XTI=2.96301 EG=1.05 CJE=1E-11 VJE=0.75 MJE=0.33 TF=1E-09 XTF=1 VTF=10 ITF=0.01 CJC=1E-11 VJC=0.75 MJC=0.33 XCJC=0.9 FC=0.5 TR=1E-07 PTF=0 KF=0 AF=1) 
+  # .MODEL:Q1MODEL  NPN (IS=6.82736E-17 BF=43.4441 NF=0.85 VAF=30 IKF=1.14362 ISE=9.48937E-15 NE=2.04295 BR=0.665831 NR=1.5 VAR=64.8234 IKR=0.0980345 ISC=9.48937E-15 NC=1 RB=20.4512 IRB=0.277791 RBM=16.9143 RE=0.574152 RC=6.88011 XTB=0.401039 XTI=2.96301 EG=1.05 CJE=1E-11 VJE=0.75 MJE=0.33 TF=1E-09 XTF=1 VTF=10 ITF=0.01 CJC=0 VJC=0.75 MJC=0.33 XCJC=0.9 FC=0.5 TR=1E-07 PTF=0 KF=0 AF=1) 
+.Def:End
+  </Model>
+  <Symbol>
+	<.ID 120 60 T> 
+	<Line 20 40 20 0 #000080 2 1>
+	<Line 40 20 0 40 #000080 2 1>
+	<Line 40 40 20 -20 #000080 2 1>
+	<Line 40 40 20 20 #000080 2 1>
+	<Line 56 52 4 8 #000080 2 1>
+	<Line 52 56 8 4 #000080 2 1>
+	<Line 60 60 20 0 #000080 2 1>
+	<Line 80 40 0 40 #000080 2 1>
+	<Line 80 60 20 -20 #000080 2 1>
+	<Line 80 60 20 20 #000080 2 1>
+	<Line 96 72 4 8 #000080 2 1>
+	<Line 92 76 8 4 #000080 2 1>
+	<Line 60 20 40 0 #000080 2 1>
+	<Line 100 40 0 -20 #000080 2 1>
+	<Line 108 40 -8 0 #000080 2 1>
+	<Line 108 64 0 16 #000080 2 1>
+	<Line 100 80 8 0 #000080 2 1>
+	<Line 104 56 8 0 #000080 2 1>
+	<Line 108 56 -4 8 #000080 2 1>
+	<Line 104 64 8 0 #000080 2 1>
+	<Line 108 56 4 8 #000080 2 1>
+	<Line 108 56 0 -16 #000080 2 1>
+	<Line 100 80 0 10 #000080 2 1>
+	<Line 100 90 0 10 #000080 2 1>
+	<Line 100 20 0 -20 #000080 2 1>
+	<.PortSym 20 40 2 0>
+	<.PortSym 100 0 1 0>
+	<.PortSym 100 100 3 0>
+  </Symbol>
+</Component>
+
+<Component BD682>
+  <Description>
+BD682 Darlington
+4.0 AMPERES POWER TRANSISTORS PNP SILICON
+100 VOLTS
+40 WATTS
+Added by Frans Schreuder <fransschreuder@users.sourceforge.net>
+  </Description>
+  <Model>
+	.Def:Transistors_BD682 _net1 _net2 _net3
+  BJT:Q1 _net2 _net1 _net4 gnd Type="pnp" Is="2.23835e-12" Bf="149.682" Nf="1.2" Vaf="59.0895" Ikf="0.118079" Ise="9.09119e-14" Ne="1.42175" Br="0.587475" Nr="0.75" Var="100.388" Ikr="0.0934405" Isc="9.09118e-14" Nc="2" Rb="15.5445" Irb="0.450416" Rbm="12.8364" Re="0.0939759" Rc="2.76027" Xtb="0.497353" Xti="2.9942" Eg="1.05" Cje="1e-11" Vje="0.75" Mje="0.33" Tf="1e-09" Xtf="1" Vtf="10" Itf="0.01" Cjc="1e-11" Vjc="0.75" Mjc="0.33" Xcjc="0.9" Fc="0.5" Tr="1e-07" Ptf="0" Kf="0" Af="1" Cjs="0" Vjs="0.75" Mjs="0"
+  BJT:Q2 _net4 _net1 _net3 gnd Type="pnp" Area="2.46191" Is="2.23835e-12" Bf="149.682" Nf="1.2" Vaf="59.0895" Ikf="0.118079" Ise="9.09119e-14" Ne="1.42175" Br="0.587475" Nr="0.75" Var="100.388" Ikr="0.0934405" Isc="9.09118e-14" Nc="2" Rb="15.5445" Irb="0.450416" Rbm="12.8364" Re="0.0939759" Rc="2.76027" Xtb="0.497353" Xti="2.9942" Eg="1.05" Cje="1e-11" Vje="0.75" Mje="0.33" Tf="1e-09" Xtf="1" Vtf="10" Itf="0.01" Cjc="0" Vjc="0.75" Mjc="0.33" Xcjc="0.9" Fc="0.5" Tr="1e-07" Ptf="0" Kf="0" Af="1" Cjs="0" Vjs="0.75" Mjs="0"
+  Diode:D1 _net3 _net1 Is="1e-12" Rs="10" N="1" Xti="3" Cj0="0" Vj="0.75" M="0.33" Fc="0.5"
+  R:R1 _net2 _net4 R="8000"
+  R:R2 _net4 _net3 R="120"
+  # .MODEL:DMODEL  D (IS=1E-12 RS=10 N=1 XTI=3 CJO=0 VJ=0.75 M=0.33 FC=0.5) 
+  # .MODEL:QMODEL  PNP (IS=2.23835E-12 BF=149.682 NF=1.2 VAF=59.0895 IKF=0.118079 ISE=9.09119E-14 NE=1.42175 BR=0.587475 NR=0.75 VAR=100.388 IKR=0.0934405 ISC=9.09118E-14 NC=2 RB=15.5445 IRB=0.450416 RBM=12.8364 RE=0.0939759 RC=2.76027 XTB=0.497353 XTI=2.9942 EG=1.05 CJE=1E-11 VJE=0.75 MJE=0.33 TF=1E-09 XTF=1 VTF=10 ITF=0.01 CJC=1E-11 VJC=0.75 MJC=0.33 XCJC=0.9 FC=0.5 TR=1E-07 PTF=0 KF=0 AF=1) 
+  # .MODEL:Q1MODEL  PNP (IS=2.23835E-12 BF=149.682 NF=1.2 VAF=59.0895 IKF=0.118079 ISE=9.09119E-14 NE=1.42175 BR=0.587475 NR=0.75 VAR=100.388 IKR=0.0934405 ISC=9.09118E-14 NC=2 RB=15.5445 IRB=0.450416 RBM=12.8364 RE=0.0939759 RC=2.76027 XTB=0.497353 XTI=2.9942 EG=1.05 CJE=1E-11 VJE=0.75 MJE=0.33 TF=1E-09 XTF=1 VTF=10 ITF=0.01 CJC=0 VJC=0.75 MJC=0.33 XCJC=0.9 FC=0.5 TR=1E-07 PTF=0 KF=0 AF=1) 
+.Def:End
+  </Model>
+  <Symbol>
+	<.ID 120 60 T> 
+	<Line 20 40 20 0 #000080 2 1>
+	<Line 40 20 0 40 #000080 2 1>
+	<Line 40 40 20 -20 #000080 2 1>
+	<Line 80 40 0 40 #000080 2 1>
+	<Line 80 60 20 -20 #000080 2 1>
+	<Line 60 20 40 0 #000080 2 1>
+	<Line 100 40 0 -20 #000080 2 1>
+	<Line 108 40 -8 0 #000080 2 1>
+	<Line 108 64 0 16 #000080 2 1>
+	<Line 100 80 8 0 #000080 2 1>
+	<Line 108 56 0 -16 #000080 2 1>
+	<Line 100 80 0 10 #000080 2 1>
+	<Line 100 90 0 10 #000080 2 1>
+	<Line 100 20 0 -20 #000080 2 1>
+	<Line 60 60 20 0 #000080 2 1>
+	<Line 60 55 -10 -5 #000080 2 1>
+	<Line 50 50 5 10 #000080 2 1>
+	<Line 40 40 20 20 #000080 2 1>
+	<Line 80 60 20 20 #000080 2 1>
+	<Line 90 70 5 10 #000080 2 1>
+	<Line 100 75 -10 -5 #000080 2 1>
+	<Line 112 56 -8 0 #000080 2 1>
+	<Line 108 64 -4 -8 #000080 2 1>
+	<Line 112 64 -8 0 #000080 2 1>
+	<Line 108 64 4 -8 #000080 2 1>
+	<.PortSym 20 40 2 0>
+	<.PortSym 100 0 1 0>
+	<.PortSym 100 100 3 0>
+  </Symbol>
+</Component>
+
 <Component BF720>
   <Description>
     Si npn 1.5W  300V 100mA  60MHz pkg:SOT-223 2,1,3
