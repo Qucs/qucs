@@ -3,7 +3,7 @@
 QucsDigiLib \- A wrapper script for digital modules and libraries.
 .SH SYNOPSIS
 .B qucsdigilib
-[\fIOPTION\fR] \fIinfile\fR \fIoutfile\fR \fIdir\fR
+[\fIOPTION\fR] \fIinfile\fR \fIdir\fR \fIentity\fR \fIlibrary\fR
 .SH DESCRIPTION
 
 \fBQucs\fR is an integrated circuit simulator which means you are able
@@ -28,11 +28,14 @@ then copied into the VHDL directory.
 the filename of the VHDL file to be simulated located in the
 directory specified in \fIDIR\fR
 .TP
-\fR OUTFILE
-the filename of the binary compiled file to be produced
-.TP
 \fR DIR
 the name of the directory where the compilation is going to be performed
+.TP
+\fR ENTITY
+the entity name implemented in the VHDL file
+.TP
+\fR LIBRARY
+library name into which the module will reside
 .SH AVAILABILITY
 The latest version of Qucs can always be obtained from
 \fBwww.sourceforge.net\fR or \fBwww.freshmeat.net\fR

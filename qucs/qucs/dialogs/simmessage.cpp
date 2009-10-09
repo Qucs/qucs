@@ -355,13 +355,13 @@ void SimMessage::startSimulator()
       }
       destFile.writeBlock(text.ascii(), text.length());
       destFile.close();
-      QString Module = vhdlDir.filePath(entity+".o");
 #ifdef __MINGW32__
       CommandLine << getShortPathName(QucsSettings.BinDir + QucsDigiLib)
-		  << "netlist.txt" << Module << getShortPathName(SimPath);
+		  << "netlist.txt" << getShortPathName(SimPath)
+		  << entity << lib;
 #else
       CommandLine << QucsSettings.BinDir + QucsDigiLib << "netlist.txt"
-		  << Module << SimPath;
+		  << SimPath << entity << lib;
 #endif
     }
   }

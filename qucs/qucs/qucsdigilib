@@ -26,15 +26,16 @@ set -e
 # catch termination signal and kill all child processes
 #trap 'kill 0; exit 0' SIGTERM
 
-if [ "$#" != 3 ]; then
-    echo "Usage: $0 <netlist.txt> <output.o> <directory>"
+if [ "$#" != 4 ]; then
+    echo "Usage: $0 <netlist.txt> <directory> <entity> <library>"
     echo "Directory has to contain the file 'netlist.txt'."
     exit 1
 fi
 
 NAME=$1
-NAMEOUT=$2
-DIR=$3
+DIR=$2
+ENTITY=$3
+LIBRARY=$4
 
 if [ ! -d "$DIR" ]; then
     echo "$DIR: Not a directory"
@@ -50,9 +51,11 @@ fi
 
 CXX=`freehdl-config --cxx`
 CXXFLAGS=`freehdl-config --cxxflags`
+AR=ar
+RANLIB=ranlib
 
-cp $NAME digi.vhdl
-NAME="digi"
+cp $NAME $ENTITY.vhdl
+NAME=$ENTITY
 
 echo -n "running C++ conversion..."
 freehdl-v2cc -o $NAME.cc $NAME.vhdl
@@ -63,5 +66,10 @@ $CXX $CXXFLAGS -c $NAME.cc
 echo " done."
 
 echo -n "copying module to VHDL directory..."
-cp $NAME.o $NAMEOUT
+cp $NAME.o vhdl/$LIBRARY
+echo " done."
+
+echo -n "updating VHDL library..."
+$AR cru vhdl/lib$LIBRARY.a vhdl/$LIBRARY/*.o
+$RANLIB vhdl/lib$LIBRARY.a
 echo " done."
