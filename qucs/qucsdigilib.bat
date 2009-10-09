@@ -21,11 +21,12 @@ REM the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
 REM Boston, MA 02110-1301, USA.  
 REM
 
-if not exist "%3" goto usage
+if not exist "%4" goto usage
 
 set NAME=%1
-set NAMEOUT=%2
-set DIR=%3
+set DIR=%2
+set ENTITY=%3
+set LIBRARY=%4
 
 if not exist "%DIR%" goto nodir
 
@@ -33,15 +34,13 @@ cd /d "%DIR%"
 
 if not exist %NAME% goto nofile
 
-copy %NAME% digi.vhdl > NUL
-set NAME=digi
-
-REM set MINGWDIR=H:/Daten/Misc/mingw
-REM set FREEHDL=H:/Daten/Misc/freehdl
-REM set QUCSDIR=H:/Daten/Misc/Qucs
+copy %NAME% %ENTITY%.vhdl > NUL
+set NAME=%ENTITY%
 
 set CXX=g++
 set CXXFLAGS=-O2 -I"%FREEHDL%/include"
+set AR=ar
+set RANLIB=ranlib
 
 set PATH=%PATH%;%FREEHDL%/bin;%MINGWDIR%/bin;%QUCSDIR%/bin
 
@@ -52,12 +51,16 @@ echo compiling functions...
 %CXX% %CXXFLAGS% -c %NAME%.cc
 
 echo copying modules to VHDL directory...
-copy %NAME%.o %NAMEOUT%
+copy %NAME%.o vhdl/%LIBRARY%
+
+echo updating VHDL library...
+%AR% cru vhdl/lib%LIBRARY%.a vhdl/%LIBRARY%/*.o
+%RANLIB% vhdl/lib%LIBRARY%.a
 
 goto end
 
 :usage
-echo Usage: %0 "<netlist.txt> <output.o> <directory>"
+echo Usage: %0 "<netlist.txt> <directory> <entity> <library>"
 echo Directory has to contain the file 'netlist.txt'.
 exit /b 1
 goto end
