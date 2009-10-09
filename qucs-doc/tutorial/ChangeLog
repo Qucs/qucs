@@ -1,3 +1,8 @@
+2009-10-09  Stefan Jahn  <stefan@lkcc.org>
+
+	* functions/math.tex (paragraph{\label{par:Integrate}Integrate
+	vector.}): Fixed example equation.
+
 2009-10-07  Stefan Jahn  <stefan@lkcc.org>
 
 	* functions/functions.tex: Added description of arccosec(),
