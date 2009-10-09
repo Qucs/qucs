@@ -26,6 +26,8 @@ files.
 Version 0.0.16
 --------------
 
+ * support for pre-compiled VHDL modules and libraries made from user
+   written VHDL code
  * new component: NIGBT
  * translation into Kazakh
  * allow equations in Verilog-HDL and VHDL subcircuits
