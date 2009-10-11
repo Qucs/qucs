@@ -269,12 +269,16 @@ void SimMessage::slotFinishSpiceNetlist()
 // ------------------------------------------------------------------------
 #ifdef __MINGW32__
 #include <windows.h>
-static QString getShortPathName(QString longpath) {
+static QString pathName(QString longpath) {
   const char * lpath = QDir::convertSeparators(longpath).ascii();
   char spath[2048];
   int len = GetShortPathNameA(lpath,spath,sizeof(spath)-1);
   spath[len] = '\0';
   return QString(spath);
+}
+#else
+static QString pathName(QString longpath) {
+  return longpath;
 }
 #endif
 
@@ -313,15 +317,16 @@ void SimMessage::startSimulator()
     // Simulation.
     if (Doc->simulation) {
       SimTime = Doc->SimTime;
-#ifdef __MINGW32__
-      CommandLine << getShortPathName(QucsSettings.BinDir + QucsDigi)
-		  << "netlist.txt" << DataSet
-		  << SimTime << getShortPathName(SimPath)
-		  << getShortPathName(QucsSettings.BinDir);
-#else
-      CommandLine << QucsSettings.BinDir + QucsDigi << "netlist.txt" << DataSet
-		  << SimTime << SimPath << QucsSettings.BinDir;
-#endif
+      QString libs = Doc->Libraries.lower();
+      if(libs.isEmpty()) {
+	libs = "-Wl";
+      } else {
+	libs.replace(" ",",-l");
+	libs = "-Wl,-l" + libs;
+      }
+      CommandLine << pathName(QucsSettings.BinDir + QucsDigi)
+		  << "netlist.txt" << DataSet << SimTime << pathName(SimPath)
+		  << pathName(QucsSettings.BinDir) << libs;
     }
     // Module.
     else {
@@ -355,14 +360,8 @@ void SimMessage::startSimulator()
       }
       destFile.writeBlock(text.ascii(), text.length());
       destFile.close();
-#ifdef __MINGW32__
-      CommandLine << getShortPathName(QucsSettings.BinDir + QucsDigiLib)
-		  << "netlist.txt" << getShortPathName(SimPath)
-		  << entity << lib;
-#else
-      CommandLine << QucsSettings.BinDir + QucsDigiLib << "netlist.txt"
-		  << SimPath << entity << lib;
-#endif
+      CommandLine << pathName(QucsSettings.BinDir + QucsDigiLib)
+		  << "netlist.txt" << pathName(SimPath) << entity << lib;
     }
   }
   // Simulate schematic window.
@@ -409,25 +408,13 @@ void SimMessage::startSimulator()
       }
     } else {
       if (isVerilog) {
-#ifdef __MINGW32__
-	CommandLine << getShortPathName(QucsSettings.BinDir + QucsVeri)
-		    << "netlist.txt" << DataSet
-		    << SimTime << getShortPathName(SimPath)
-		    << getShortPathName(QucsSettings.BinDir) << "-c";
-#else
-	CommandLine << QucsSettings.BinDir + QucsVeri << "netlist.txt"
-           << DataSet << SimTime << SimPath << QucsSettings.BinDir << "-c";
-#endif
+	CommandLine << pathName(QucsSettings.BinDir + QucsVeri)
+		    << "netlist.txt" << DataSet << SimTime << pathName(SimPath)
+		    << pathName(QucsSettings.BinDir) << "-c";
       } else {
-#ifdef __MINGW32__
-	CommandLine << getShortPathName(QucsSettings.BinDir + QucsDigi)
-		    << "netlist.txt" << DataSet
-		    << SimTime << getShortPathName(SimPath)
-		    << getShortPathName(QucsSettings.BinDir) << "-c";
-#else
-	CommandLine << QucsSettings.BinDir + QucsDigi << "netlist.txt"
-           << DataSet << SimTime << SimPath << QucsSettings.BinDir << "-c";
-#endif
+	CommandLine << pathName(QucsSettings.BinDir + QucsDigi)
+		    << "netlist.txt" << DataSet << SimTime << pathName(SimPath)
+		    << pathName(QucsSettings.BinDir) << "-Wl" << "-c";
       }
     }
   }
