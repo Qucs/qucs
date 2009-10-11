@@ -134,7 +134,7 @@ void DigiSettingsDialog::slotOk()
     Doc->SimOpenDpl = Doc->simulation ? true : false;
     changed = true;
   }
-  if(Doc->Libraries != NameEdit->text()) {
+  if(Doc->Library != NameEdit->text()) {
     QString lib = NameEdit->text().stripWhiteSpace();
     Doc->Library = lib;
     changed = true;

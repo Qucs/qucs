@@ -3,7 +3,7 @@
 QucsDigi \- A wrapper script for digital simulations.
 .SH SYNOPSIS
 .B qucsdigi
-[\fIOPTION\fR] \fIinfile\fR \fIoutfile\fR \fItime\fR \fIdir\fR \fIbindir\fR
+[\fIOPTION\fR] \fIinfile\fR \fIoutfile\fR \fItime\fR \fIdir\fR \fIbindir\fR \fIvlibs\fR
 .SH DESCRIPTION
 
 \fBQucs\fR is an integrated circuit simulator which means you are able
@@ -38,6 +38,10 @@ the name of the directory where the simulation is going to be performed
 .TP
 \fR BINDIR
 the location where the \fIqucsconv\fR program is installed
+.TP
+\fR VLIBS
+a -Wl linker option passing extraneous libraries against which 
+resulting simulation binary is linked
 .SH AVAILABILITY
 The latest version of Qucs can always be obtained from
 \fBwww.sourceforge.net\fR or \fBwww.freshmeat.net\fR

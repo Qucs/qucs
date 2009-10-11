@@ -3,7 +3,7 @@
 REM
 REM qucsdigi.bat - wrapper script for digital simulation
 REM
-REM Copyright (C) 2005, 2006 Stefan Jahn <stefan@lkcc.org>
+REM Copyright (C) 2005, 2006, 2009 Stefan Jahn <stefan@lkcc.org>
 REM
 REM This is free software; you can redistribute it and/or modify
 REM it under the terms of the GNU General Public License as published by
@@ -21,14 +21,15 @@ REM the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
 REM Boston, MA 02110-1301, USA.  
 REM
 
-if not exist "%5" goto usage
+if not exist "%6" goto usage
 
 set NAME=%1
 set NAMEOUT=%2
 set TIME=%~3
 set DIR=%4
 set BINDIR=%5
-set OPTION=%6
+set VLIBS=%6
+set OPTION=%7
 
 if not exist "%DIR%" goto nodir
 
@@ -39,20 +40,15 @@ if not exist %NAME% goto nofile
 copy %NAME% digi.vhdl > NUL
 set NAME=digi
 
-REM set MINGWDIR=H:/Daten/Misc/mingw
-REM set FREEHDL=H:/Daten/Misc/freehdl
-REM set QUCSDIR=H:/Daten/Misc/Qucs
-
 set CXX=g++
 set CXXFLAGS=-O2 -I"%FREEHDL%/include"
-REM set NAMEOUT=digi.dat
 set LDFLAGS=-L"%FREEHDL%/lib" -L"%FREEHDL%/lib/freehdl" -Wl,--enable-auto-import -s
 set LIBS=-lfreehdl-kernel -lfreehdl-std -lieee -lregex
 
 set PATH=%PATH%;%FREEHDL%/bin;%MINGWDIR%/bin;%QUCSDIR%/bin
 
 echo running C++ conversion...
-freehdl-v2cc -m %NAME%._main_.cc -L"%FREEHDL%/share/freehdl/lib" -o %NAME%.cc %NAME%.vhdl
+freehdl-v2cc -m %NAME%._main_.cc -L"%FREEHDL%/share/freehdl/lib" -Lvhdl -o %NAME%.cc %NAME%.vhdl
 
 echo compiling functions...
 %CXX% %CXXFLAGS% -c %NAME%.cc
@@ -61,7 +57,7 @@ echo compiling main...
 %CXX% %CXXFLAGS% -c %NAME%._main_.cc
 
 echo linking...
-%CXX% %NAME%._main_.o %NAME%.o %LDFLAGS% %LIBS% -o %NAME%.exe
+%CXX% %NAME%._main_.o %NAME%.o %LDFLAGS% -Lvhdl %VLIBS% %LIBS% -o %NAME%.exe
 
 echo simulating...
 %NAME%.exe -q -cmd "dc -f %NAME%.vcd -t 1 ps -q;d;run %TIME%;q;" < NUL
@@ -72,7 +68,7 @@ qucsconv %OPTION% -if vcd -of qucsdata -i %NAME%.vcd -o %NAMEOUT%
 goto end
 
 :usage
-echo Usage: %0 "<netlist.txt> <output.dat> <time> <directory> <bindirectory> <convoption>"
+echo Usage: %0 "<netlist.txt> <output.dat> <time> <directory> <bindirectory> <vlibs> [<convoption>]"
 echo Directory has to contain the file 'netlist.txt'.
 exit /b 1
 goto end

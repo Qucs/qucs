@@ -45,7 +45,7 @@ set RANLIB=ranlib
 set PATH=%PATH%;%FREEHDL%/bin;%MINGWDIR%/bin;%QUCSDIR%/bin
 
 echo running C++ conversion...
-freehdl-v2cc -L"%FREEHDL%/share/freehdl/lib" -o %NAME%.cc %NAME%.vhdl
+freehdl-v2cc -l%LIBRARY% -Lvhdl -L"%FREEHDL%/share/freehdl/lib" -o %NAME%.cc %NAME%.vhdl
 
 echo compiling functions...
 %CXX% %CXXFLAGS% -c %NAME%.cc
