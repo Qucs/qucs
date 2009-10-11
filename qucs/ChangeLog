@@ -1,3 +1,9 @@
+2009-10-11  Stefan Jahn  <stefan@lkcc.org>
+
+	* dialogs/simmessage.cpp (startSimulator): Simulation of VHDL
+	files are now able to reference into pre-compiled modules, i.e.
+	libraries.
+
 2009-10-09  Stefan Jahn  <stefan@lkcc.org>
 
 	* qucsdigilib: Putting all modules into a library when creating a

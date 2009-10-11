@@ -58,7 +58,7 @@ cp $NAME $ENTITY.vhdl
 NAME=$ENTITY
 
 echo -n "running C++ conversion..."
-freehdl-v2cc -o $NAME.cc $NAME.vhdl
+freehdl-v2cc -l$LIBRARY -Lvhdl -o $NAME.cc $NAME.vhdl
 echo " done."
 
 echo -n "compiling functions..."
