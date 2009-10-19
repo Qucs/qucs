@@ -8262,7 +8262,7 @@ Chcete změny před uzavřením uložit?</translation>
     </message>
     <message>
         <source>Edit Circuit Symbol</source>
-        <translation>Upravit symbol komponenty</translation>
+        <translation type="obsolete">Upravit symbol komponenty</translation>
     </message>
     <message>
         <source>Edits the symbol for this schematic</source>
@@ -8278,17 +8278,17 @@ Upraví symbol v tomto schématu</translation>
     </message>
     <message>
         <source>Edit Schematic</source>
-        <translation>Upravit schéma</translation>
+        <translation type="obsolete">Upravit schéma</translation>
     </message>
     <message>
         <source>Edits the schematic</source>
-        <translation>Upraví schéma</translation>
+        <translation type="obsolete">Upraví schéma</translation>
     </message>
     <message>
         <source>Edit Schematic
 
 Edits the schematic</source>
-        <translation>Upravit schéma
+        <translation type="obsolete">Upravit schéma
 
 Upraví schéma</translation>
     </message>
@@ -14260,6 +14260,52 @@ soubory automaticky otevírat s odpovídajícími programy.</translation>
         <source>ERROR: Cannot create library file &quot;%s&quot;.</source>
         <translation>CHYBA: Nelze vytvořit knihovnu v souboru &quot;%s&quot;.</translation>
     </message>
+    <message>
+        <source>generic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit Text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edits the Text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit Text
+
+Edits the text file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit Schematic</source>
+        <translation type="unfinished">Upravit schéma</translation>
+    </message>
+    <message>
+        <source>Edits the schematic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit Schematic
+
+Edits the schematic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit Circuit Symbol</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edits the symbol for this schematic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit Circuit Symbol
+
+Edits the symbol for this schematic</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SearchDialog</name>
@@ -14773,6 +14819,20 @@ Chyby:
     <message>
         <source>Page %1 of %2</source>
         <translation>Stránka %1 z %2</translation>
+    </message>
+    <message>
+        <source>Edit Text Symbol</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edits the symbol for this text document</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit Text Symbol
+
+Edits the symbol for this text document</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

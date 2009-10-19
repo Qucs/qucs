@@ -7463,7 +7463,7 @@ Kapatmadan önce kaydetmek ister misiniz?</translation>
     </message>
     <message>
         <source>Edit Circuit Symbol</source>
-        <translation>Devre Simgesini Düzenle</translation>
+        <translation type="obsolete">Devre Simgesini Düzenle</translation>
     </message>
     <message>
         <source>Edits the symbol for this schematic</source>
@@ -7479,17 +7479,17 @@ Bu tasarının simgesini düzenler</translation>
     </message>
     <message>
         <source>Edit Schematic</source>
-        <translation>Tasarıyı Değiştir/Düzenle</translation>
+        <translation type="obsolete">Tasarıyı Değiştir/Düzenle</translation>
     </message>
     <message>
         <source>Edits the schematic</source>
-        <translation>Tasarıyı düzenler/değiştirir</translation>
+        <translation type="obsolete">Tasarıyı düzenler/değiştirir</translation>
     </message>
     <message>
         <source>Edit Schematic
 
 Edits the schematic</source>
-        <translation>Tasarıyı Düzenle
+        <translation type="obsolete">Tasarıyı Düzenle
 
 Tasarıyı düzenler/değiştirir</translation>
     </message>
@@ -11955,6 +11955,54 @@ uygun bir uygulama ile açılabilsinler.</translation>
         <source>ERROR: Cannot create library file &quot;%s&quot;.</source>
         <translation>HATA: &quot;%s&quot; kütüphanesi oluşturulamıyor.</translation>
     </message>
+    <message>
+        <source>generic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit Text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edits the Text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit Text
+
+Edits the text file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit Schematic</source>
+        <translation type="unfinished">Tasarıyı Değiştir/Düzenle</translation>
+    </message>
+    <message>
+        <source>Edits the schematic</source>
+        <translation type="unfinished">Tasarıyı düzenler/değiştirir</translation>
+    </message>
+    <message>
+        <source>Edit Schematic
+
+Edits the schematic</source>
+        <translation type="unfinished">Tasarıyı Düzenle
+
+Tasarıyı düzenler/değiştirir</translation>
+    </message>
+    <message>
+        <source>Edit Circuit Symbol</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edits the symbol for this schematic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit Circuit Symbol
+
+Edits the symbol for this schematic</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SearchDialog</name>
@@ -12455,6 +12503,20 @@ Hatalar:
     <message>
         <source>Page %1 of %2</source>
         <translation>Sayfa %2&apos; nin %1 &apos;i</translation>
+    </message>
+    <message>
+        <source>Edit Text Symbol</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edits the symbol for this text document</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit Text Symbol
+
+Edits the symbol for this text document</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

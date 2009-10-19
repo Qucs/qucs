@@ -8773,11 +8773,11 @@ Continuare ?</translation>
     </message>
     <message>
         <source>Edit Circuit Symbol</source>
-        <translation>Modifica simbolo circuito</translation>
+        <translation type="obsolete">Modifica simbolo circuito</translation>
     </message>
     <message>
         <source>Edit Schematic</source>
-        <translation>Modifica schema</translation>
+        <translation type="obsolete">Modifica schema</translation>
     </message>
     <message>
         <source>Edits the symbol for this schematic</source>
@@ -8793,13 +8793,13 @@ Modifica il simbolo per questo schema</translation>
     </message>
     <message>
         <source>Edits the schematic</source>
-        <translation>Modifica lo schema</translation>
+        <translation type="obsolete">Modifica lo schema</translation>
     </message>
     <message>
         <source>Edit Schematic
 
 Edits the schematic</source>
-        <translation>Modifica schema
+        <translation type="obsolete">Modifica schema
 
 Modifica lo schema</translation>
     </message>
@@ -12782,6 +12782,56 @@ fine di aprirli utilizzando il programma appropriato.</translation>
         <source>ERROR: Cannot create library file &quot;%s&quot;.</source>
         <translation>ERRORE: Impossibile creare il file di libreria &quot;%s&quot;.</translation>
     </message>
+    <message>
+        <source>generic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit Text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edits the Text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit Text
+
+Edits the text file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit Schematic</source>
+        <translation type="unfinished">Modifica schema</translation>
+    </message>
+    <message>
+        <source>Edits the schematic</source>
+        <translation type="unfinished">Modifica lo schema</translation>
+    </message>
+    <message>
+        <source>Edit Schematic
+
+Edits the schematic</source>
+        <translation type="unfinished">Modifica schema
+
+Modifica lo schema</translation>
+    </message>
+    <message>
+        <source>Edit Circuit Symbol</source>
+        <translation type="unfinished">Modifica simbolo circuito</translation>
+    </message>
+    <message>
+        <source>Edits the symbol for this schematic</source>
+        <translation type="unfinished">Modifica il simbolo per questo schema</translation>
+    </message>
+    <message>
+        <source>Edit Circuit Symbol
+
+Edits the symbol for this schematic</source>
+        <translation type="unfinished">Modifica simbolo circuito
+
+Modifica il simbolo per questo schema</translation>
+    </message>
 </context>
 <context>
     <name>SearchDialog</name>
@@ -13283,6 +13333,20 @@ Errori:
     <message>
         <source>Page %1 of %2</source>
         <translation>Pagina %1 di %2</translation>
+    </message>
+    <message>
+        <source>Edit Text Symbol</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edits the symbol for this text document</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit Text Symbol
+
+Edits the symbol for this text document</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

@@ -7609,11 +7609,11 @@ Erori:
     </message>
     <message>
         <source>Edit Circuit Symbol</source>
-        <translation>Editează Simbolul Circuitului</translation>
+        <translation type="obsolete">Editează Simbolul Circuitului</translation>
     </message>
     <message>
         <source>Edit Schematic</source>
-        <translation>Editează Schema</translation>
+        <translation type="obsolete">Editează Schema</translation>
     </message>
     <message>
         <source>Edits the symbol for this schematic</source>
@@ -7629,13 +7629,13 @@ Editează simbolul pentru aceasta schemă</translation>
     </message>
     <message>
         <source>Edits the schematic</source>
-        <translation>Editează schema</translation>
+        <translation type="obsolete">Editează schema</translation>
     </message>
     <message>
         <source>Edit Schematic
 
 Edits the schematic</source>
-        <translation>Editează Schema
+        <translation type="obsolete">Editează Schema
 
 Editează această schemă</translation>
     </message>
@@ -11816,6 +11816,56 @@ open files with an appropriate program.</source>
         <source>ERROR: Cannot create library file &quot;%s&quot;.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>generic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit Text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edits the Text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit Text
+
+Edits the text file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit Schematic</source>
+        <translation type="unfinished">Editează Schema</translation>
+    </message>
+    <message>
+        <source>Edits the schematic</source>
+        <translation type="unfinished">Editează schema</translation>
+    </message>
+    <message>
+        <source>Edit Schematic
+
+Edits the schematic</source>
+        <translation type="unfinished">Editează Schema
+
+Editează această schemă</translation>
+    </message>
+    <message>
+        <source>Edit Circuit Symbol</source>
+        <translation type="unfinished">Editează Simbolul Circuitului</translation>
+    </message>
+    <message>
+        <source>Edits the symbol for this schematic</source>
+        <translation type="unfinished">Editează simbolul pentru schema aceasta</translation>
+    </message>
+    <message>
+        <source>Edit Circuit Symbol
+
+Edits the symbol for this schematic</source>
+        <translation type="unfinished">Editează Simbolul Circuitului
+
+Editează simbolul pentru aceasta schemă</translation>
+    </message>
 </context>
 <context>
     <name>SearchDialog</name>
@@ -12301,6 +12351,20 @@ Erori:
     </message>
     <message>
         <source>Page %1 of %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit Text Symbol</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edits the symbol for this text document</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit Text Symbol
+
+Edits the symbol for this text document</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -47,7 +47,8 @@ protected:
 
 class VHDL_File_Info {
 public:
-  VHDL_File_Info(QString);
+  VHDL_File_Info();
+  VHDL_File_Info(QString, bool isfile = false);
  ~VHDL_File_Info() {};
   QString parsePorts(QString, int);
   QString parseGenerics(QString, int);

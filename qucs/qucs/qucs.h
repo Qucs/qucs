@@ -62,6 +62,7 @@ public:
   static int testFile(const QString&);
   bool gotoPage(const QString&);   // to load a document
   QucsDoc *getDoc(int No=-1);
+  QucsDoc* findDoc (QString, int * Pos = 0);
 
   QString ProjName;   // name of the project, that is open
 
@@ -190,7 +191,7 @@ private:
   void switchEditMode(bool);
   void changeSchematicSymbolMode(Schematic*);
   bool deleteDirectoryContent(QDir& Dir);
-
+  bool isTextDocument(QWidget *);
 
 
 /* **************************************************
