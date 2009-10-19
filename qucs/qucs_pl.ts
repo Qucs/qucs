@@ -7754,11 +7754,11 @@ Czy chcesz kontynuować ?</translation>
     </message>
     <message>
         <source>Edit Circuit Symbol</source>
-        <translation>Zmień Symbol Układu</translation>
+        <translation type="obsolete">Zmień Symbol Układu</translation>
     </message>
     <message>
         <source>Edit Schematic</source>
-        <translation>Edytuj Schemat</translation>
+        <translation type="obsolete">Edytuj Schemat</translation>
     </message>
     <message>
         <source>Edits the symbol for this schematic</source>
@@ -7774,13 +7774,13 @@ Edytuj szmbol dla tego schematu</translation>
     </message>
     <message>
         <source>Edits the schematic</source>
-        <translation>Edytuj schemat</translation>
+        <translation type="obsolete">Edytuj schemat</translation>
     </message>
     <message>
         <source>Edit Schematic
 
 Edits the schematic</source>
-        <translation>Edytuj Schemat
+        <translation type="obsolete">Edytuj Schemat
 
 Edytuj schemat</translation>
     </message>
@@ -12234,6 +12234,54 @@ otworzyć ten plik odpowiednim programem.</translation>
         <source>ERROR: Cannot create library file &quot;%s&quot;.</source>
         <translation>BŁĄD: Nie można utowrzyć biblioteki &quot;%s&quot;.</translation>
     </message>
+    <message>
+        <source>generic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit Text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edits the Text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit Text
+
+Edits the text file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit Schematic</source>
+        <translation type="unfinished">Edytuj Schemat</translation>
+    </message>
+    <message>
+        <source>Edits the schematic</source>
+        <translation type="unfinished">Edytuj schemat</translation>
+    </message>
+    <message>
+        <source>Edit Schematic
+
+Edits the schematic</source>
+        <translation type="unfinished">Edytuj Schemat
+
+Edytuj schemat</translation>
+    </message>
+    <message>
+        <source>Edit Circuit Symbol</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edits the symbol for this schematic</source>
+        <translation type="unfinished">Edytuj symbol dla tego schematu</translation>
+    </message>
+    <message>
+        <source>Edit Circuit Symbol
+
+Edits the symbol for this schematic</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SearchDialog</name>
@@ -12726,6 +12774,20 @@ Błędy:
     <message>
         <source>Page %1 of %2</source>
         <translation>Strona %1 z %2</translation>
+    </message>
+    <message>
+        <source>Edit Text Symbol</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edits the symbol for this text document</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit Text Symbol
+
+Edits the symbol for this text document</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

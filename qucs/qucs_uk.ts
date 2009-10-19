@@ -7451,7 +7451,7 @@ Quits the application</source>
     </message>
     <message>
         <source>Edit Circuit Symbol</source>
-        <translation>Змінити позначення схеми</translation>
+        <translation type="obsolete">Змінити позначення схеми</translation>
     </message>
     <message>
         <source>Edits the symbol for this schematic</source>
@@ -7465,11 +7465,11 @@ Edits the symbol for this schematic</source>
     </message>
     <message>
         <source>Edit Schematic</source>
-        <translation>Змінити схему</translation>
+        <translation type="obsolete">Змінити схему</translation>
     </message>
     <message>
         <source>Edits the schematic</source>
-        <translation>Правка схеми</translation>
+        <translation type="obsolete">Правка схеми</translation>
     </message>
     <message>
         <source>Edit Schematic
@@ -8852,7 +8852,7 @@ Edits the symbol for this schematic</source>
         <source>Edit Schematic
 
 Edits the schematic</source>
-        <translation>Змінити схему
+        <translation type="obsolete">Змінити схему
 
 Правка схеми</translation>
     </message>
@@ -10745,6 +10745,56 @@ open files with an appropriate program.</source>
         <source>ERROR: Cannot create library file &quot;%s&quot;.</source>
         <translation>ПОМИЛКА: Неможливо створити файл бібліотеки &quot;%s&quot;.</translation>
     </message>
+    <message>
+        <source>generic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit Text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edits the Text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit Text
+
+Edits the text file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit Schematic</source>
+        <translation type="unfinished">Змінити схему</translation>
+    </message>
+    <message>
+        <source>Edits the schematic</source>
+        <translation type="unfinished">Правка схеми</translation>
+    </message>
+    <message>
+        <source>Edit Schematic
+
+Edits the schematic</source>
+        <translation type="unfinished">Змінити схему
+
+Правка схеми</translation>
+    </message>
+    <message>
+        <source>Edit Circuit Symbol</source>
+        <translation type="unfinished">Змінити позначення схеми</translation>
+    </message>
+    <message>
+        <source>Edits the symbol for this schematic</source>
+        <translation type="unfinished">Правка позначення для цієї схеми</translation>
+    </message>
+    <message>
+        <source>Edit Circuit Symbol
+
+Edits the symbol for this schematic</source>
+        <translation type="unfinished">Змінити позначення схеми
+
+Правка позначення для цієї схеми</translation>
+    </message>
 </context>
 <context>
     <name>SearchDialog</name>
@@ -11225,6 +11275,20 @@ Errors:
     <message>
         <source>Page %1 of %2</source>
         <translation>Сторінка %1 з %2</translation>
+    </message>
+    <message>
+        <source>Edit Text Symbol</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edits the symbol for this text document</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit Text Symbol
+
+Edits the symbol for this text document</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

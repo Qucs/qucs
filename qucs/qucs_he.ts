@@ -7535,7 +7535,7 @@ Errors:
     </message>
     <message>
         <source>Edit Circuit Symbol</source>
-        <translation>ערוך סמל מעגל</translation>
+        <translation type="obsolete">ערוך סמל מעגל</translation>
     </message>
     <message>
         <source>Edits the symbol for this schematic</source>
@@ -7551,17 +7551,17 @@ Edits the symbol for this schematic</source>
     </message>
     <message>
         <source>Edit Schematic</source>
-        <translation>ערוך סכימה</translation>
+        <translation type="obsolete">ערוך סכימה</translation>
     </message>
     <message>
         <source>Edits the schematic</source>
-        <translation>עורך את הסכימה</translation>
+        <translation type="obsolete">עורך את הסכימה</translation>
     </message>
     <message>
         <source>Edit Schematic
 
 Edits the schematic</source>
-        <translation>ערוך סכימה עורך את הסכימה</translation>
+        <translation type="obsolete">ערוך סכימה עורך את הסכימה</translation>
     </message>
     <message>
         <source>file components</source>
@@ -11724,6 +11724,52 @@ open files with an appropriate program.</source>
         <source>ERROR: Cannot create library file &quot;%s&quot;.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>generic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit Text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edits the Text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit Text
+
+Edits the text file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit Schematic</source>
+        <translation type="unfinished">ערוך סכימה</translation>
+    </message>
+    <message>
+        <source>Edits the schematic</source>
+        <translation type="unfinished">עורך את הסכימה</translation>
+    </message>
+    <message>
+        <source>Edit Schematic
+
+Edits the schematic</source>
+        <translation type="unfinished">ערוך סכימה עורך את הסכימה</translation>
+    </message>
+    <message>
+        <source>Edit Circuit Symbol</source>
+        <translation type="unfinished">ערוך סמל מעגל</translation>
+    </message>
+    <message>
+        <source>Edits the symbol for this schematic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit Circuit Symbol
+
+Edits the symbol for this schematic</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SearchDialog</name>
@@ -12201,6 +12247,20 @@ Errors:
     </message>
     <message>
         <source>Page %1 of %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit Text Symbol</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edits the symbol for this text document</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit Text Symbol
+
+Edits the symbol for this text document</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

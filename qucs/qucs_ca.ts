@@ -7683,11 +7683,11 @@ Errores:
     </message>
     <message>
         <source>Edit Circuit Symbol</source>
-        <translation>Editar Símbolo del circuito</translation>
+        <translation type="obsolete">Editar Símbolo del circuito</translation>
     </message>
     <message>
         <source>Edit Schematic</source>
-        <translation>Editar Esquema</translation>
+        <translation type="obsolete">Editar Esquema</translation>
     </message>
     <message>
         <source>Edits the symbol for this schematic</source>
@@ -7703,13 +7703,13 @@ Edita els símboels de este esquema</translation>
     </message>
     <message>
         <source>Edits the schematic</source>
-        <translation>Edita el esquema</translation>
+        <translation type="obsolete">Edita el esquema</translation>
     </message>
     <message>
         <source>Edit Schematic
 
 Edits the schematic</source>
-        <translation>Editar Esquema
+        <translation type="obsolete">Editar Esquema
 
 Edita el esquema</translation>
     </message>
@@ -12165,6 +12165,56 @@ abrir els fitxers amb el programa apropiado.</translation>
         <source>ERROR: Cannot create library file &quot;%s&quot;.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>generic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit Text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edits the Text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit Text
+
+Edits the text file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit Schematic</source>
+        <translation type="unfinished">Editar Esquema</translation>
+    </message>
+    <message>
+        <source>Edits the schematic</source>
+        <translation type="unfinished">Edita el esquema</translation>
+    </message>
+    <message>
+        <source>Edit Schematic
+
+Edits the schematic</source>
+        <translation type="unfinished">Editar Esquema
+
+Edita el esquema</translation>
+    </message>
+    <message>
+        <source>Edit Circuit Symbol</source>
+        <translation type="unfinished">Editar Símbolo del circuito</translation>
+    </message>
+    <message>
+        <source>Edits the symbol for this schematic</source>
+        <translation type="unfinished">Edita els símboels de este esquema</translation>
+    </message>
+    <message>
+        <source>Edit Circuit Symbol
+
+Edits the symbol for this schematic</source>
+        <translation type="unfinished">Editar Símbolo del circuito
+
+Edita els símboels de este esquema</translation>
+    </message>
 </context>
 <context>
     <name>SearchDialog</name>
@@ -12666,6 +12716,20 @@ Errores:
     <message>
         <source>Page %1 of %2</source>
         <translation>Página %1 de %2</translation>
+    </message>
+    <message>
+        <source>Edit Text Symbol</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edits the symbol for this text document</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit Text Symbol
+
+Edits the symbol for this text document</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

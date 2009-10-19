@@ -8309,7 +8309,7 @@ Do you want to save the changes before closing?</source>
     </message>
     <message>
         <source>Edit Circuit Symbol</source>
-        <translation>Изменить обозначение схемы</translation>
+        <translation type="obsolete">Изменить обозначение схемы</translation>
     </message>
     <message>
         <source>Edits the symbol for this schematic</source>
@@ -8325,17 +8325,17 @@ Edits the symbol for this schematic</source>
     </message>
     <message>
         <source>Edit Schematic</source>
-        <translation>Изменить схему</translation>
+        <translation type="obsolete">Изменить схему</translation>
     </message>
     <message>
         <source>Edits the schematic</source>
-        <translation>Правка схемы</translation>
+        <translation type="obsolete">Правка схемы</translation>
     </message>
     <message>
         <source>Edit Schematic
 
 Edits the schematic</source>
-        <translation>Изменить схему
+        <translation type="obsolete">Изменить схему
 
 Правка схемы</translation>
     </message>
@@ -14299,6 +14299,56 @@ open files with an appropriate program.</source>
         <source>ERROR: Cannot create library file &quot;%s&quot;.</source>
         <translation>ОШИБКА: Не удается создать библиотечный файл &quot;%s&quot;.</translation>
     </message>
+    <message>
+        <source>generic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit Text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edits the Text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit Text
+
+Edits the text file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit Schematic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edits the schematic</source>
+        <translation type="unfinished">Правка схемы</translation>
+    </message>
+    <message>
+        <source>Edit Schematic
+
+Edits the schematic</source>
+        <translation type="unfinished">Изменить схему
+
+Правка схемы</translation>
+    </message>
+    <message>
+        <source>Edit Circuit Symbol</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edits the symbol for this schematic</source>
+        <translation type="unfinished">Правка обозначения для этой схемы</translation>
+    </message>
+    <message>
+        <source>Edit Circuit Symbol
+
+Edits the symbol for this schematic</source>
+        <translation type="unfinished">Изменить обозначение схемы
+
+Правка обозначения для этой схемы</translation>
+    </message>
 </context>
 <context>
     <name>SearchDialog</name>
@@ -14823,6 +14873,20 @@ Errors:
     <message>
         <source>Page %1 of %2</source>
         <translation>Страница %1 из %2</translation>
+    </message>
+    <message>
+        <source>Edit Text Symbol</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edits the symbol for this text document</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit Text Symbol
+
+Edits the symbol for this text document</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>
