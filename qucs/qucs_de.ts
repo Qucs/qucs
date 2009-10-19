@@ -8318,7 +8318,7 @@ Wollen Sie die Änderungen vor dem Schließen speichern?</translation>
     </message>
     <message>
         <source>Edit Circuit Symbol</source>
-        <translation>Schaltkreissymbol bearbeiten</translation>
+        <translation type="obsolete">Schaltkreissymbol bearbeiten</translation>
     </message>
     <message>
         <source>Edits the symbol for this schematic</source>
@@ -8334,17 +8334,17 @@ Bearbeitet das Symbol für diesen Schaltkreis</translation>
     </message>
     <message>
         <source>Edit Schematic</source>
-        <translation>Schaltplan bearbeiten</translation>
+        <translation type="obsolete">Schaltplan bearbeiten</translation>
     </message>
     <message>
         <source>Edits the schematic</source>
-        <translation>Bearbeitet den Schaltplan</translation>
+        <translation type="obsolete">Bearbeitet den Schaltplan</translation>
     </message>
     <message>
         <source>Edit Schematic
 
 Edits the schematic</source>
-        <translation>Schaltplan bearbeiten
+        <translation type="obsolete">Schaltplan bearbeiten
 
 Bearbeitet den Schaltplan</translation>
     </message>
@@ -14326,6 +14326,56 @@ mit einem entsprechendem Programm zu assoziieren.</translation>
         <source>ERROR: Cannot create library file &quot;%s&quot;.</source>
         <translation>FEHLER: Die Bibliotheksdatei &quot;%1&quot; kann nicht erstellt werden.</translation>
     </message>
+    <message>
+        <source>generic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit Text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edits the Text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit Text
+
+Edits the text file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit Schematic</source>
+        <translation type="unfinished">Schaltplan bearbeiten</translation>
+    </message>
+    <message>
+        <source>Edits the schematic</source>
+        <translation type="unfinished">Bearbeitet den Schaltplan</translation>
+    </message>
+    <message>
+        <source>Edit Schematic
+
+Edits the schematic</source>
+        <translation type="unfinished">Schaltplan bearbeiten
+
+Bearbeitet den Schaltplan</translation>
+    </message>
+    <message>
+        <source>Edit Circuit Symbol</source>
+        <translation type="unfinished">Schaltkreissymbol bearbeiten</translation>
+    </message>
+    <message>
+        <source>Edits the symbol for this schematic</source>
+        <translation type="unfinished">Bearbeitet das Symbol für diesen Schaltkreis</translation>
+    </message>
+    <message>
+        <source>Edit Circuit Symbol
+
+Edits the symbol for this schematic</source>
+        <translation type="unfinished">Schaltkreissymol bearbeiten
+
+Bearbeitet das Symbol für diesen Schaltkreis</translation>
+    </message>
 </context>
 <context>
     <name>SearchDialog</name>
@@ -14852,6 +14902,20 @@ Fehler:
     <message>
         <source>Page %1 of %2</source>
         <translation>Seite %1 von %2</translation>
+    </message>
+    <message>
+        <source>Edit Text Symbol</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edits the symbol for this text document</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit Text Symbol
+
+Edits the symbol for this text document</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

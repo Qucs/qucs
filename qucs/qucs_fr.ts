@@ -7739,11 +7739,11 @@ Erreurs :
     </message>
     <message>
         <source>Edit Circuit Symbol</source>
-        <translation>Modifier le symbole du circuit</translation>
+        <translation type="obsolete">Modifier le symbole du circuit</translation>
     </message>
     <message>
         <source>Edit Schematic</source>
-        <translation>Modifier le schéma</translation>
+        <translation type="obsolete">Modifier le schéma</translation>
     </message>
     <message>
         <source>Edits the symbol for this schematic</source>
@@ -7759,13 +7759,13 @@ Modifie le symbole pour ce schéma</translation>
     </message>
     <message>
         <source>Edits the schematic</source>
-        <translation>Modifie le schéma</translation>
+        <translation type="obsolete">Modifie le schéma</translation>
     </message>
     <message>
         <source>Edit Schematic
 
 Edits the schematic</source>
-        <translation>Modifie le schéma
+        <translation type="obsolete">Modifie le schéma
 
 Modifie ce schéma</translation>
     </message>
@@ -12417,6 +12417,54 @@ ouvrir ceux-ci avec le programme ad-hoc.</translation>
         <source>ERROR: Cannot create library file &quot;%s&quot;.</source>
         <translation>ERREUR : impossible de créer la bibliothèque &quot;%s&quot;.</translation>
     </message>
+    <message>
+        <source>generic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit Text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edits the Text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit Text
+
+Edits the text file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit Schematic</source>
+        <translation type="unfinished">Modifier le schéma</translation>
+    </message>
+    <message>
+        <source>Edits the schematic</source>
+        <translation type="unfinished">Modifie le schéma</translation>
+    </message>
+    <message>
+        <source>Edit Schematic
+
+Edits the schematic</source>
+        <translation type="unfinished">Modifie le schéma
+
+Modifie ce schéma</translation>
+    </message>
+    <message>
+        <source>Edit Circuit Symbol</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edits the symbol for this schematic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit Circuit Symbol
+
+Edits the symbol for this schematic</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SearchDialog</name>
@@ -12914,6 +12962,20 @@ Erreurs :
     <message>
         <source>Page %1 of %2</source>
         <translation>Page %1 sur %2</translation>
+    </message>
+    <message>
+        <source>Edit Text Symbol</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edits the symbol for this text document</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit Text Symbol
+
+Edits the symbol for this text document</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

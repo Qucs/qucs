@@ -7482,10 +7482,6 @@ Overwrite ?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Edit Circuit Symbol</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Edits the symbol for this schematic</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7493,20 +7489,6 @@ Overwrite ?</source>
         <source>Edit Circuit Symbol
 
 Edits the symbol for this schematic</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Edit Schematic</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Edits the schematic</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Edit Schematic
-
-Edits the schematic</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -10045,6 +10027,52 @@ open files with an appropriate program.</source>
         <source>ERROR: Cannot create library file &quot;%s&quot;.</source>
         <translation>ERRO: Não pode criar o arquivo de biblioteca &quot;%s&quot;.</translation>
     </message>
+    <message>
+        <source>generic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit Text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edits the Text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit Text
+
+Edits the text file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit Schematic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edits the schematic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit Schematic
+
+Edits the schematic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit Circuit Symbol</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edits the symbol for this schematic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit Circuit Symbol
+
+Edits the symbol for this schematic</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SearchDialog</name>
@@ -10457,6 +10485,20 @@ are included in the search.</source>
     <message>
         <source>Page %1 of %2</source>
         <translation>Página %1 de %2</translation>
+    </message>
+    <message>
+        <source>Edit Text Symbol</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edits the symbol for this text document</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit Text Symbol
+
+Edits the symbol for this text document</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

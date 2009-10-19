@@ -39,10 +39,12 @@
 #include "main.h"
 #include "node.h"
 #include "schematic.h"
+#include "textdoc.h"
 #include "viewpainter.h"
 #include "mouseactions.h"
 #include "diagrams/diagrams.h"
 #include "paintings/paintings.h"
+#include "components/vhdlfile.h"
 
 // just dummies for empty lists
 QPtrList<Wire>      SymbolWires;
@@ -182,6 +184,26 @@ void Schematic::becomeCurrent(bool update)
 {
   QString *ps;
   App->printCursorPosition(0, 0);
+
+  // update appropriate menu entry
+  if (symbolMode) {
+    if (DocName.right(4) == ".sym") {
+      App->symEdit->setMenuText(tr("Edit Text"));
+      App->symEdit->setStatusTip(tr("Edits the Text"));
+      App->symEdit->setWhatsThis(tr("Edit Text\n\nEdits the text file"));
+    }
+    else {
+      App->symEdit->setMenuText(tr("Edit Schematic"));
+      App->symEdit->setStatusTip(tr("Edits the schematic"));
+      App->symEdit->setWhatsThis(tr("Edit Schematic\n\nEdits the schematic"));
+    }
+  }
+  else {
+    App->symEdit->setMenuText(tr("Edit Circuit Symbol"));
+    App->symEdit->setStatusTip(tr("Edits the symbol for this schematic"));
+    App->symEdit->setWhatsThis(
+	tr("Edit Circuit Symbol\n\nEdits the symbol for this schematic"));
+  }
 
   if(symbolMode) {
     Nodes = &SymbolNodes;
@@ -1244,23 +1266,85 @@ int Schematic::adjustPortNumbers()
 
   QString Str;
   int countPort = 0;
-  for(Component *pc = DocComps.first(); pc!=0; pc = DocComps.next())
-    if(pc->Model == "Port") {
+
+  // handle VHDL file symbol
+  if(DataDisplay.section('.',1).left(3) == "vhd" ||
+     DataDisplay.section('.',1).left(4) == "vhdl") {
+
+    QStringList::iterator it;
+    QStringList Names, GNames, GTypes, GDefs;
+    int Number;
+
+    // get ports from VHDL file
+    QFileInfo Info(DocName);
+    QString Name = Info.dirPath() + QDir::separator() + DataDisplay;
+
+    // obtain VHDL information either from open text document or the
+    // file directly
+    VHDL_File_Info VInfo;
+    TextDoc * d = (TextDoc*)App->findDoc (Name);
+    if (d)
+      VInfo = VHDL_File_Info (d->text());
+    else
+      VInfo = VHDL_File_Info (Name, true);
+    Names = QStringList::split(",",VInfo.PortNames);
+
+    for(pp = SymbolPaints.first(); pp!=0; pp = SymbolPaints.next())
+      if(pp->Name == ".ID ") {
+	ID_Text * id = (ID_Text *) pp;
+	id->Prefix = VInfo.EntityName.upper();
+	id->Parameter.clear();
+	GNames = QStringList::split(",",VInfo.GenNames);
+	GTypes = QStringList::split(",",VInfo.GenTypes);
+	GDefs = QStringList::split(",",VInfo.GenDefs);
+	for(Number = 1, it = GNames.begin(); it != GNames.end(); ++it) {
+	  id->Parameter.append(new SubParameter(
+ 	    true,
+	    *it+"="+GDefs[Number-1],
+	    tr("generic")+" "+QString::number(Number),
+	    GTypes[Number-1]));
+	  Number++;
+	}
+      }
+
+    for(Number = 1, it = Names.begin(); it != Names.end(); ++it, Number++) {
       countPort++;
 
-      Str = pc->Props.getFirst()->Value;
+      Str = QString::number(Number);
       // search for matching port symbol
       for(pp = SymbolPaints.first(); pp!=0; pp = SymbolPaints.next())
-        if(pp->Name == ".PortSym ")
-          if(((PortSymbol*)pp)->numberStr == Str)  break;
+	if(pp->Name == ".PortSym ")
+	  if(((PortSymbol*)pp)->numberStr == Str) break;
 
-      if(pp)  ((PortSymbol*)pp)->nameStr = pc->Name;
+      if(pp)
+	((PortSymbol*)pp)->nameStr = *it;
       else {
-        SymbolPaints.append(new PortSymbol(x1, y2, Str, pc->Name));
-        y2 += 40;
+	SymbolPaints.append(new PortSymbol(x1, y2, Str, *it));
+	y2 += 40;
       }
     }
+  }
+  // handle schematic symbol
+  else {
+    // go through all components in a schematic
+    for(Component *pc = DocComps.first(); pc!=0; pc = DocComps.next())
+      if(pc->Model == "Port") {
+	countPort++;
 
+	Str = pc->Props.getFirst()->Value;
+	// search for matching port symbol
+	for(pp = SymbolPaints.first(); pp!=0; pp = SymbolPaints.next())
+	  if(pp->Name == ".PortSym ")
+	    if(((PortSymbol*)pp)->numberStr == Str) break;
+
+	if(pp)
+	  ((PortSymbol*)pp)->nameStr = pc->Name;
+	else {
+	  SymbolPaints.append(new PortSymbol(x1, y2, Str, pc->Name));
+	  y2 += 40;
+	}
+      }
+  }
 
   // delete not accounted port symbols
   for(pp = SymbolPaints.first(); pp!=0; ) {

@@ -7346,7 +7346,7 @@ Overwrite ?</source>
     </message>
     <message>
         <source>Edit Circuit Symbol</source>
-        <translation>Cұлбаның белгісін өзгерту</translation>
+        <translation type="obsolete">Cұлбаның белгісін өзгерту</translation>
     </message>
     <message>
         <source>Edits the symbol for this schematic</source>
@@ -7362,17 +7362,17 @@ Edits the symbol for this schematic</source>
     </message>
     <message>
         <source>Edit Schematic</source>
-        <translation>Сұлбаны өзгерту</translation>
+        <translation type="obsolete">Сұлбаны өзгерту</translation>
     </message>
     <message>
         <source>Edits the schematic</source>
-        <translation>Сұлбаны өзгерту</translation>
+        <translation type="obsolete">Сұлбаны өзгерту</translation>
     </message>
     <message>
         <source>Edit Schematic
 
 Edits the schematic</source>
-        <translation>Сұлбаны өзгерту
+        <translation type="obsolete">Сұлбаны өзгерту
 
 Сұлбаны реттеу</translation>
     </message>
@@ -10018,6 +10018,56 @@ open files with an appropriate program.</source>
         <source>ERROR: Cannot create library file &quot;%s&quot;.</source>
         <translation>ҚАТЕ:&quot;%s&quot; кітапханалық файлды құру мүмкін емес.</translation>
     </message>
+    <message>
+        <source>generic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit Text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edits the Text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit Text
+
+Edits the text file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit Schematic</source>
+        <translation type="unfinished">Сұлбаны өзгерту</translation>
+    </message>
+    <message>
+        <source>Edits the schematic</source>
+        <translation type="unfinished">Сұлбаны өзгерту</translation>
+    </message>
+    <message>
+        <source>Edit Schematic
+
+Edits the schematic</source>
+        <translation type="unfinished">Сұлбаны өзгерту
+
+Сұлбаны реттеу</translation>
+    </message>
+    <message>
+        <source>Edit Circuit Symbol</source>
+        <translation type="unfinished">Cұлбаның белгісін өзгерту</translation>
+    </message>
+    <message>
+        <source>Edits the symbol for this schematic</source>
+        <translation type="unfinished">Бұл сұлба үшін белгіні өзгерту</translation>
+    </message>
+    <message>
+        <source>Edit Circuit Symbol
+
+Edits the symbol for this schematic</source>
+        <translation type="unfinished">Сұлбаның белгісін өзгерту
+
+Бұл сұлбаның белгісін өзгерту</translation>
+    </message>
 </context>
 <context>
     <name>SearchDialog</name>
@@ -10430,6 +10480,20 @@ are included in the search.</source>
     <message>
         <source>Page %1 of %2</source>
         <translation>%2 ішінде %1 парақ</translation>
+    </message>
+    <message>
+        <source>Edit Text Symbol</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edits the symbol for this text document</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit Text Symbol
+
+Edits the symbol for this text document</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>
