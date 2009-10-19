@@ -7397,7 +7397,7 @@ Overwrite ?</source>
     </message>
     <message>
         <source>Edit Circuit Symbol</source>
-        <translation>تحرير دائرة الرمز</translation>
+        <translation type="obsolete">تحرير دائرة الرمز</translation>
     </message>
     <message>
         <source>Edits the symbol for this schematic</source>
@@ -7413,17 +7413,17 @@ Edits the symbol for this schematic</source>
     </message>
     <message>
         <source>Edit Schematic</source>
-        <translation>تحرير تخطيطي</translation>
+        <translation type="obsolete">تحرير تخطيطي</translation>
     </message>
     <message>
         <source>Edits the schematic</source>
-        <translation>تعديلات التخطيطي</translation>
+        <translation type="obsolete">تعديلات التخطيطي</translation>
     </message>
     <message>
         <source>Edit Schematic
 
 Edits the schematic</source>
-        <translation>تحرير تخطيطي 
+        <translation type="obsolete">تحرير تخطيطي 
 
 تعديلات التخطيطي</translation>
     </message>
@@ -10089,6 +10089,56 @@ open files with an appropriate program.</source>
         <source>ERROR: Cannot create library file &quot;%s&quot;.</source>
         <translation>ERROR: Cannot create library file &quot;%s&quot;.</translation>
     </message>
+    <message>
+        <source>generic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit Text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edits the Text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit Text
+
+Edits the text file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit Schematic</source>
+        <translation type="unfinished">تحرير تخطيطي</translation>
+    </message>
+    <message>
+        <source>Edits the schematic</source>
+        <translation type="unfinished">تعديلات التخطيطي</translation>
+    </message>
+    <message>
+        <source>Edit Schematic
+
+Edits the schematic</source>
+        <translation type="unfinished">تحرير تخطيطي 
+
+تعديلات التخطيطي</translation>
+    </message>
+    <message>
+        <source>Edit Circuit Symbol</source>
+        <translation type="unfinished">تحرير دائرة الرمز</translation>
+    </message>
+    <message>
+        <source>Edits the symbol for this schematic</source>
+        <translation type="unfinished">تعديلات لهذا الرمز التخطيطي</translation>
+    </message>
+    <message>
+        <source>Edit Circuit Symbol
+
+Edits the symbol for this schematic</source>
+        <translation type="unfinished">تحرير دائرة الرمز ذ
+
+تعديلات لهذا الرمز التخطيطي</translation>
+    </message>
 </context>
 <context>
     <name>SearchDialog</name>
@@ -10503,6 +10553,20 @@ are included in the search.</source>
     <message>
         <source>Page %1 of %2</source>
         <translation>صفحة ٪ 1 من 2 ٪</translation>
+    </message>
+    <message>
+        <source>Edit Text Symbol</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edits the symbol for this text document</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit Text Symbol
+
+Edits the symbol for this text document</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

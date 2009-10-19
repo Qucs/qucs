@@ -7600,7 +7600,7 @@ Errors occured during simulation on </source>
     </message>
     <message>
         <source>Edit Circuit Symbol</source>
-        <translation>回路シンボルを編集</translation>
+        <translation type="obsolete">回路シンボルを編集</translation>
     </message>
     <message>
         <source>Edits the symbol for this schematic</source>
@@ -7616,17 +7616,17 @@ Edits the symbol for this schematic</source>
     </message>
     <message>
         <source>Edit Schematic</source>
-        <translation>回路図編集</translation>
+        <translation type="obsolete">回路図編集</translation>
     </message>
     <message>
         <source>Edits the schematic</source>
-        <translation>回路図を編集します</translation>
+        <translation type="obsolete">回路図を編集します</translation>
     </message>
     <message>
         <source>Edit Schematic
 
 Edits the schematic</source>
-        <translation>回路図を編集
+        <translation type="obsolete">回路図を編集
 
 回路図を編集します</translation>
     </message>
@@ -12026,6 +12026,56 @@ open files with an appropriate program.</source>
         <source>ERROR: Cannot create library file &quot;%s&quot;.</source>
         <translation>エラー;　ライブラリ&quot;%s&quot;を作成できません.</translation>
     </message>
+    <message>
+        <source>generic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit Text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edits the Text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit Text
+
+Edits the text file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit Schematic</source>
+        <translation type="unfinished">回路図編集</translation>
+    </message>
+    <message>
+        <source>Edits the schematic</source>
+        <translation type="unfinished">回路図を編集します</translation>
+    </message>
+    <message>
+        <source>Edit Schematic
+
+Edits the schematic</source>
+        <translation type="unfinished">回路図を編集
+
+回路図を編集します</translation>
+    </message>
+    <message>
+        <source>Edit Circuit Symbol</source>
+        <translation type="unfinished">回路シンボルを編集</translation>
+    </message>
+    <message>
+        <source>Edits the symbol for this schematic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit Circuit Symbol
+
+Edits the symbol for this schematic</source>
+        <translation type="unfinished">回路シンボルを編集
+
+この回路図の為のシンボルを編集</translation>
+    </message>
 </context>
 <context>
     <name>SearchDialog</name>
@@ -12538,6 +12588,20 @@ Errors:
     <message>
         <source>Page %1 of %2</source>
         <translation>ページ %1 から %2</translation>
+    </message>
+    <message>
+        <source>Edit Text Symbol</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edits the symbol for this text document</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit Text Symbol
+
+Edits the symbol for this text document</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

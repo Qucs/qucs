@@ -18,11 +18,10 @@
 #ifndef TEXTDOC_H
 #define TEXTDOC_H
 
-#include "qucsdoc.h"
-
 #include <qtextedit.h>
-#include <qsyntaxhighlighter.h>
 #include <qfont.h>
+
+#include "qucsdoc.h"
 
 class SyntaxHighlighter;
 
@@ -64,20 +63,6 @@ public slots:
 
 private:
   SyntaxHighlighter *syntaxHighlight;
-};
-
-
-class SyntaxHighlighter : public QSyntaxHighlighter {
-public:
- SyntaxHighlighter(TextDoc*);
- virtual ~SyntaxHighlighter();
-
- int highlightParagraph(const QString&, int);
-
-private:
-  TextDoc *Doc;
-  void markWord(const QString&, int, int);
-  void markAttribute(const QString&, int, int);
 };
 
 #endif

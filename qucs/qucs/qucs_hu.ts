@@ -7731,7 +7731,7 @@ Hibák:
     </message>
     <message>
         <source>Edit Circuit Symbol</source>
-        <translation>Áramköri szimbólum szerkesztése</translation>
+        <translation type="obsolete">Áramköri szimbólum szerkesztése</translation>
     </message>
     <message>
         <source>Edits the symbol for this schematic</source>
@@ -7747,17 +7747,17 @@ Szerkeszti az áramköri szimbólumot a kapcsoláshoz</translation>
     </message>
     <message>
         <source>Edit Schematic</source>
-        <translation>Kapcsolási rajz szerkesztése</translation>
+        <translation type="obsolete">Kapcsolási rajz szerkesztése</translation>
     </message>
     <message>
         <source>Edits the schematic</source>
-        <translation>Szerkeszti a kapcsolási rajzot</translation>
+        <translation type="obsolete">Szerkeszti a kapcsolási rajzot</translation>
     </message>
     <message>
         <source>Edit Schematic
 
 Edits the schematic</source>
-        <translation>Kapcsolási rajz szerkesztése
+        <translation type="obsolete">Kapcsolási rajz szerkesztése
 
 Szerkeszti a kapcsolási rajzot</translation>
     </message>
@@ -12315,6 +12315,56 @@ a fájlt a megfelelő program nyissa meg.</translation>
         <source>ERROR: Cannot create library file &quot;%s&quot;.</source>
         <translation>HIBA: A &quot;%1&quot; alkatrész-katalógus fájl nem hozható létre.</translation>
     </message>
+    <message>
+        <source>generic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit Text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edits the Text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit Text
+
+Edits the text file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit Schematic</source>
+        <translation type="unfinished">Kapcsolási rajz szerkesztése</translation>
+    </message>
+    <message>
+        <source>Edits the schematic</source>
+        <translation type="unfinished">Szerkeszti a kapcsolási rajzot</translation>
+    </message>
+    <message>
+        <source>Edit Schematic
+
+Edits the schematic</source>
+        <translation type="unfinished">Kapcsolási rajz szerkesztése
+
+Szerkeszti a kapcsolási rajzot</translation>
+    </message>
+    <message>
+        <source>Edit Circuit Symbol</source>
+        <translation type="unfinished">Áramköri szimbólum szerkesztése</translation>
+    </message>
+    <message>
+        <source>Edits the symbol for this schematic</source>
+        <translation type="unfinished">Szerkeszti az áramköri szimbólumot a kapcsoláshoz</translation>
+    </message>
+    <message>
+        <source>Edit Circuit Symbol
+
+Edits the symbol for this schematic</source>
+        <translation type="unfinished">Áramköri szimbólum szerkesztése
+
+Szerkeszti az áramköri szimbólumot a kapcsoláshoz</translation>
+    </message>
 </context>
 <context>
     <name>SearchDialog</name>
@@ -12828,6 +12878,20 @@ Hibák:
     <message>
         <source>Page %1 of %2</source>
         <translation>%1/%2 oldal</translation>
+    </message>
+    <message>
+        <source>Edit Text Symbol</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edits the symbol for this text document</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit Text Symbol
+
+Edits the symbol for this text document</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

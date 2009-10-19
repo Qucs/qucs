@@ -1,3 +1,8 @@
+2009-10-19  Stefan Jahn  <stefan@lkcc.org>
+
+	* vhdlfile.cpp (VHDL_File_Info): Allowing function to read VHDL
+	file information directly from files.
+
 2009-10-06  Stefan Jahn  <stefan@lkcc.org>
 
 	* vhdlfile.cpp (VHDL_File_Info): Implemented class which parses

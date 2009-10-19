@@ -240,8 +240,30 @@ bool VHDL_File::createSubNetlist(QTextStream *stream)
 }
 
 // -------------------------------------------------------
-VHDL_File_Info::VHDL_File_Info(QString File)
+VHDL_File_Info::VHDL_File_Info()
 {
+  EntityName = "";
+  PortNames = "";
+  TypeNames = "";
+  GenTypes = "";
+  GenNames = "";
+  GenDefs = "";
+}
+
+// -------------------------------------------------------
+VHDL_File_Info::VHDL_File_Info(QString File, bool isfile)
+{
+  if (isfile) {
+    QFile f(File);
+    if(!f.open(IO_ReadOnly))
+      File = "";
+    else {
+      QByteArray FileContent = f.readAll();
+      File = QString(FileContent);
+    }
+    f.close();
+  }
+  
   QString s;
   PortNames = "";
   int i=0, j, k=0;

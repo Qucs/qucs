@@ -38,7 +38,7 @@ MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
 qucs_SOURCES = node.cpp element.cpp qucsdoc.cpp wire.cpp mouseactions.cpp   \
   qucs.cpp main.cpp wirelabel.cpp qucs_init.cpp qucs_actions.cpp            \
   viewpainter.cpp mnemo.cpp schematic.cpp schematic_element.cpp textdoc.cpp \
-  schematic_file.cpp
+  schematic_file.cpp syntax.cpp
 
 nodist_qucs_SOURCES = $(MOCFILES)
 
@@ -49,7 +49,7 @@ qucs_LDADD = components/libcomponents.a diagrams/libdiagrams.a \
   $(X11_LIBS) $(QT_LIBS)
 
 noinst_HEADERS = $(MOCHEADERS) main.h wire.h qucsdoc.h element.h      \
-  node.h wirelabel.h viewpainter.h mnemo.h mouseactions.h
+  node.h wirelabel.h viewpainter.h mnemo.h mouseactions.h syntax.h
 
 # rules for translations
 TRANSLATIONS = qucs_de.ts qucs_pl.ts qucs_fr.ts qucs_it.ts qucs_ro.ts \

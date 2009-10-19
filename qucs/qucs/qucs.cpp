@@ -296,11 +296,27 @@ QucsDoc* QucsApp::getDoc(int No)
     w = DocumentTab->page(No);
 
   if(w) {
-    if(w->inherits("QTextEdit"))
+    if(isTextDocument (w))
       return (QucsDoc*) ((TextDoc*)w);
-    return (QucsDoc*) ((Schematic*)w);
+    else
+      return (QucsDoc*) ((Schematic*)w);
   }
 
+  return 0;
+}
+
+// ---------------------------------------------------------------
+// Returns a pointer to the QucsDoc object whose file name is "Name".
+QucsDoc * QucsApp::findDoc (QString File, int * Pos)
+{
+  QucsDoc * d;
+  int No = 0;
+  File = QDir::convertSeparators (File);
+  while ((d = getDoc (No++)) != 0)
+    if (QDir::convertSeparators (d->DocName) == File) {
+      if (Pos) *Pos = No - 1;
+      return d;
+    }
   return 0;
 }
 
@@ -538,16 +554,13 @@ void QucsApp::slotCMenuRename()
   QListViewItem *Item = Content->selectedItem();
   if(!Item) return;
 
-  int No=0;
-  QucsDoc *d;  // search, if file is open
-  while((d=getDoc(No++)) != 0)
-    if(d->DocName == QucsWorkDir.filePath(Item->text(0))) {
-      QMessageBox::critical(this, tr("Error"),
-				  tr("Cannot rename an open file!"));
-      return;
-    }
+  QString Name = Item->text(0);
+  if (findDoc (QucsWorkDir.filePath(Name))) {
+    QMessageBox::critical(this, tr("Error"),
+			        tr("Cannot rename an open file!"));
+    return;
+  }
 
-  QString Name   = Item->text(0);
   QString Suffix = Name.section('.',-1);   // remember suffix
   QString Base   = Name.section('.',0,-2);
   if(Base.isEmpty()) Base = Name;
@@ -578,15 +591,13 @@ void QucsApp::slotCMenuDelete()
   if(item == 0) return;
   QString FileName = QucsWorkDir.filePath(item->text(0));
 
-  int No=0;
-  QucsDoc *d;  // search, if file is open
-  while((d=getDoc(No++)) != 0)
-    if(d->DocName == FileName) {
-      QMessageBox::critical(this, tr("Error"),
-                   tr("Cannot delete an open file!"));
-      return;
-   }
+  if (findDoc (FileName)) {
+    QMessageBox::critical(this, tr("Error"),
+			        tr("Cannot delete an open file!"));
+    return;
+  }
 
+  int No;
   No = QMessageBox::warning(this, tr("Warning"),
              tr("This will delete the file permanently! Continue ?"),
              tr("No"), tr("Yes"));
@@ -1140,20 +1151,18 @@ bool QucsApp::gotoPage(const QString& Name)
 {
   int No = DocumentTab->currentPageIndex();
 
-  int i=0;
-  QucsDoc *d;  // search, if page is already loaded
-  while((d=getDoc(i++)) != 0)
-    if(QDir::convertSeparators (d->DocName) == QDir::convertSeparators (Name))
-      break;
+  int i = 0;
+  QucsDoc * d = findDoc (Name, &i);  // search, if page is already loaded
 
   if(d) {   // open page found ?
     d->becomeCurrent(true);
-    DocumentTab->setCurrentPage(i-1);  // make new document the current
+    DocumentTab->setCurrentPage(i);  // make new document the current
     return true;
   }
 
   QFileInfo Info(Name);
-  if((Info.extension(false) == "sch") || (Info.extension(false) == "dpl"))
+  if(Info.extension(false) == "sch" || Info.extension(false) == "dpl" || 
+     Info.extension(false) == "sym")
     d = new Schematic(this, Name);
   else
     d = new TextDoc(this, Name);
@@ -1253,7 +1262,7 @@ bool QucsApp::saveAs()
       else s = QucsWorkDir.path();
     }
 
-    if(w->inherits("QTextEdit"))
+    if(isTextDocument (w))
       Filter = tr("VHDL Sources")+" (*.vhdl *.vhd);;" + tr("Any File")+" (*)";
     else
       Filter = QucsFileFilter;
@@ -1262,7 +1271,7 @@ bool QucsApp::saveAs()
     if(s.isEmpty())  return false;
     Info.setFile(s);                 // try to guess the best extension ...
     if(Info.extension(false).isEmpty()) {  // ... if no one was specified
-      if(w->inherits("QTextEdit"))
+      if(isTextDocument (w))
         s += ".vhdl";
       else
         s += ".sch";
@@ -1280,10 +1289,7 @@ bool QucsApp::saveAs()
     }
 
     // search, if document is open
-    int No=0;
-    QucsDoc *d;
-    while((d=getDoc(No++)) != 0)
-      if(d->DocName == s) break;
+    QucsDoc * d = findDoc (s);
     if(d) {
       QMessageBox::information(this, tr("Info"),
 		tr("Cannot overwrite an open document"));
@@ -1418,24 +1424,27 @@ bool QucsApp::closeAllFiles()
 // Is called when another document is selected via the TabBar.
 void QucsApp::slotChangeView(QWidget *w)
 {
-  editText->setHidden(true); // disable text edit of component property
+  editText->setHidden (true); // disable text edit of component property
 
-  QucsDoc *Doc;
-  if(w->inherits("QTextEdit")) {
+  QucsDoc * Doc;
+
+  // for text documents
+  if (isTextDocument (w)) {
     TextDoc *d = (TextDoc*)w;
     Doc = (QucsDoc*)d;
-
+    // update menu entries, etc. if neccesary
     if(mainAccel->isEnabled())
-      switchSchematicDoc(false);
+      switchSchematicDoc (false);
   }
+  // for schematic documents
   else {
     Schematic *d = (Schematic*)w;
     Doc = (QucsDoc*)d;
-
+    // already in schematic?
     if(mainAccel->isEnabled()) {
       // which mode: schematic or symbol editor ?
       if((CompChoose->count() > 1) == d->symbolMode)
-        changeSchematicSymbolMode(d);
+        changeSchematicSymbolMode (d);
     }
     else {
       switchSchematicDoc(true);
@@ -1472,7 +1481,7 @@ void QucsApp::slotFileSettings()
   editText->setHidden(true); // disable text edit of component property
 
   QWidget *w = DocumentTab->currentPage();
-  if(w->inherits("QTextEdit")) {
+  if(isTextDocument (w)) {
     DigiSettingsDialog *d = new DigiSettingsDialog((TextDoc*)w);
     d->exec();
   }
@@ -1528,7 +1537,7 @@ void QucsApp::updatePortNumber(QucsDoc *currDoc, int No)
   QWidget *w;
   Component *pc_tmp;
   while((w=DocumentTab->page(No++)) != 0) {
-    if(w->inherits("QTextEdit"))  continue;
+    if(isTextDocument (w))  continue;
 
     // start from the last to omit re-appended components
     Schematic *Doc = (Schematic*)w;
@@ -1556,7 +1565,7 @@ void QucsApp::printCurrentDocument(bool fitToPage)
   statusBar()->message(tr("Printing..."));
   editText->setHidden(true); // disable text edit of component property
 
-  if(DocumentTab->currentPage()->inherits("QTextEdit"))
+  if(isTextDocument (DocumentTab->currentPage()))
     Printer->setOrientation(QPrinter::Portrait);
   else
     Printer->setOrientation(QPrinter::Landscape);
@@ -1640,7 +1649,7 @@ void QucsApp::slotEditCut()
   statusBar()->message(tr("Cutting selection..."));
 
   Schematic *Doc = (Schematic*)DocumentTab->currentPage();
-  if(Doc->inherits("QTextEdit")) {
+  if(isTextDocument (Doc)) {
     ((TextDoc*)Doc)->viewport()->setFocus();
     ((TextDoc*)Doc)->cut();
     return;
@@ -1664,7 +1673,7 @@ void QucsApp::slotEditCopy()
   statusBar()->message(tr("Copying selection to clipboard..."));
 
   Schematic *Doc = (Schematic*)DocumentTab->currentPage();
-  if(Doc->inherits("QTextEdit")) {
+  if(isTextDocument (Doc)) {
     ((TextDoc*)Doc)->viewport()->setFocus();
     ((TextDoc*)Doc)->copy();
     return;
@@ -1754,7 +1763,7 @@ void QucsApp::slotSimulate()
 
   QucsDoc *Doc;
   QWidget *w = DocumentTab->currentPage();
-  if(w->inherits("QTextEdit")) {
+  if(isTextDocument (w)) {
     Doc = (QucsDoc*)((TextDoc*)w);
     if(Doc->SimTime.isEmpty() && ((TextDoc*)Doc)->simulation) {
       DigiSettingsDialog *d = new DigiSettingsDialog((TextDoc*)Doc);
@@ -1825,11 +1834,11 @@ void QucsApp::slotAfterSimulation(int Status, SimMessage *sim)
     sim->slotClose();   // close and delete simulation window
   }
   else
-    if(w) if(!sim->DocWidget->inherits("QTextEdit"))
+    if(w) if(!isTextDocument (sim->DocWidget))
       // load recent simulation data (if document is still open)
       ((Schematic*)sim->DocWidget)->reloadGraphs();
 
-  if(!sim->DocWidget->inherits("QTextEdit"))
+  if(!isTextDocument (sim->DocWidget))
     ((Schematic*)sim->DocWidget)->viewport()->update();
 
   // put all dataset files into "Content"-ListView (update)
@@ -1856,16 +1865,14 @@ void QucsApp::slotChangePage(QString& DocName, QString& DataDisplay)
 
   QWidget  *w = DocumentTab->currentPage();
 
-  int z=0;  // search, if page is already loaded
-  QucsDoc  *d;
-  while((d=getDoc(z++)) != 0)
-    if(QDir::convertSeparators (d->DocName) == QDir::convertSeparators (Name))
-      break;
+  int z = 0;  // search, if page is already loaded
+  QucsDoc * d = findDoc (Name, &z);
 
   if(d)
-    DocumentTab->setCurrentPage(z-1);
+    DocumentTab->setCurrentPage(z);
   else {   // no open page found ?
-    if(DataDisplay.section('.',1).left(3) != "vhd")
+    if(DataDisplay.section('.',1).left(3) != "vhd" &&
+       DataDisplay.section('.',1).left(4) != "vhdl")
       d = new Schematic(this, Name);
     else
       d = new TextDoc(this, Name);
@@ -1896,7 +1903,7 @@ void QucsApp::slotChangePage(QString& DocName, QString& DataDisplay)
 
 
   if(DocumentTab->currentPage() == w)      // if page not ...
-    if(!w->inherits("QTextEdit"))
+    if(!isTextDocument (w))
       ((Schematic*)w)->reloadGraphs();  // ... changes, reload here !
 
   TabView->setCurrentPage(2);   // switch to "Component"-Tab
@@ -2063,6 +2070,7 @@ void QucsApp::switchSchematicDoc(bool SchematicMode)
 {
   mainAccel->setEnabled(SchematicMode);
 
+  // text document
   if(!SchematicMode) {
     if(activeAction) {
       activeAction->blockSignals(true); // do not call toggle slot
@@ -2074,6 +2082,7 @@ void QucsApp::switchSchematicDoc(bool SchematicMode)
     select->setOn(true);
     select->blockSignals(false);
   }
+  // schematic document
   else {
     MouseMoveAction = 0;
     MousePressAction = &MouseActions::MPressSelect;
@@ -2081,7 +2090,6 @@ void QucsApp::switchSchematicDoc(bool SchematicMode)
     MouseDoubleClickAction = &MouseActions::MDoubleClickSelect;
   }
 
-  symEdit->setEnabled(SchematicMode);
   selectMarker->setEnabled(SchematicMode);
   alignTop->setEnabled(SchematicMode);
   alignBottom->setEnabled(SchematicMode);
@@ -2100,6 +2108,7 @@ void QucsApp::switchSchematicDoc(bool SchematicMode)
   editMirror->setEnabled(SchematicMode);
   editMirrorY->setEnabled(SchematicMode);
   intoH->setEnabled(SchematicMode);
+  popH->setEnabled(SchematicMode);
   dcbias->setEnabled(SchematicMode);
   insWire->setEnabled(SchematicMode);
   insLabel->setEnabled(SchematicMode);
@@ -2113,22 +2122,11 @@ void QucsApp::switchSchematicDoc(bool SchematicMode)
 // ---------------------------------------------------------
 void QucsApp::switchEditMode(bool SchematicMode)
 {
-  if(SchematicMode) {
-    symEdit->setMenuText(tr("Edit Circuit Symbol"));
-    symEdit->setStatusTip(tr("Edits the symbol for this schematic"));
-    symEdit->setWhatsThis(
-	tr("Edit Circuit Symbol\n\nEdits the symbol for this schematic"));
-  }
-  else {
-    symEdit->setMenuText(tr("Edit Schematic"));
-    symEdit->setStatusTip(tr("Edits the schematic"));
-    symEdit->setWhatsThis(tr("Edit Schematic\n\nEdits the schematic"));
-  }
-
-
   fillComboBox(SchematicMode);
   slotSetCompView(0);
 
+  intoH->setEnabled(SchematicMode);
+  popH->setEnabled(SchematicMode);
   editActivate->setEnabled(SchematicMode);
   changeProps->setEnabled(SchematicMode);
   insEquation->setEnabled(SchematicMode);
@@ -2155,20 +2153,66 @@ void QucsApp::changeSchematicSymbolMode(Schematic *Doc)
 }
 
 // ---------------------------------------------------------
+bool QucsApp::isTextDocument(QWidget *w) {
+  if (w->inherits("QTextEdit"))
+    return true;
+  return false;
+}
+
+// ---------------------------------------------------------
 // Is called if the "symEdit" action is activated, i.e. if the user
 // switches between the two painting mode: Schematic and (subcircuit)
 // symbol.
 void QucsApp::slotSymbolEdit()
 {
-  editText->setHidden(true); // disable text edit of component property
+  QWidget *w = DocumentTab->currentPage();
 
-  Schematic *Doc = (Schematic*)DocumentTab->currentPage();
-  Doc->switchPaintMode();   // twist the view coordinates
-  changeSchematicSymbolMode(Doc);
-  Doc->becomeCurrent(true);
+  // in a text document (e.g. VHDL)
+  if (isTextDocument (w)) {
+    TextDoc *TDoc = (TextDoc*)w;
+    // set 'DataDisplay' document of text file to symbol file
+    QFileInfo Info(TDoc->DocName);
+    QString sym = Info.baseName()+".sym";
+    TDoc->DataDisplay = sym;
 
-  Doc->viewport()->update();
-  view->drawn = false;
+    // symbol file already loaded?
+    int paint_mode = 0;
+    if (!findDoc (QucsWorkDir.filePath(sym)))
+      paint_mode = 1;
+
+    // change current page to appropriate symbol file
+    slotChangePage(TDoc->DocName,TDoc->DataDisplay);
+
+    // set 'DataDisplay' document of symbol file to original text file
+    Schematic *SDoc = (Schematic*)DocumentTab->currentPage();
+    SDoc->DataDisplay = Info.fileName();
+
+    // change into symbol mode
+    if (paint_mode) // but only switch coordinates if newly loaded
+      SDoc->switchPaintMode();
+    SDoc->symbolMode = true;
+    changeSchematicSymbolMode(SDoc);
+    SDoc->becomeCurrent(true);
+    SDoc->viewport()->update();
+    view->drawn = false;
+  }
+  // in a normal schematic, data display or symbol file
+  else {
+    Schematic *SDoc = (Schematic*)w;
+    // in a symbol file
+    if(SDoc->DocName.right(4) == ".sym") {
+      slotChangePage(SDoc->DocName, SDoc->DataDisplay);
+    }
+    // in a normal schematic
+    else {
+      editText->setHidden(true); // disable text edit of component property
+      SDoc->switchPaintMode();   // twist the view coordinates
+      changeSchematicSymbolMode(SDoc);
+      SDoc->becomeCurrent(true);
+      SDoc->viewport()->update();
+      view->drawn = false;
+    }
+  }
 }
 
 // -----------------------------------------------------------
