@@ -45,6 +45,7 @@ public:
   void  becomeCurrent(bool);
   bool  loadSimulationTime(QString&);
   void  outcommmentSelected();
+  void  setLanguage(int);
   QFont TextFont;
 
   bool simulation;   // simulation or module
@@ -62,6 +63,7 @@ public slots:
   void slotSetChanged();
 
 private:
+  int language;
   SyntaxHighlighter *syntaxHighlight;
 };
 
