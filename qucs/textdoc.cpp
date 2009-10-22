@@ -31,10 +31,10 @@
 #include <qpopupmenu.h>
 #include <qsyntaxhighlighter.h>
 
-#include "textdoc.h"
-#include "syntax.h"
 #include "main.h"
 #include "qucs.h"
+#include "textdoc.h"
+#include "syntax.h"
 
 TextDoc::TextDoc(QucsApp *App_, const QString& Name_) : QucsDoc(App_, Name_)
 {
@@ -55,6 +55,15 @@ TextDoc::TextDoc(QucsApp *App_, const QString& Name_) : QucsDoc(App_, Name_)
   setUndoDepth(QucsSettings.maxUndo);
 
   QFileInfo Info(Name_);
+  if (Info.extension (false) == "vhd" || Info.extension (false) == "vhdl")
+    setLanguage (LANG_VHDL);
+  else if (Info.extension (false) == "v")
+    setLanguage (LANG_VERILOG);
+  else if (Info.extension (false) == "va")
+    setLanguage (LANG_VERILOGA);
+  else
+    setLanguage (LANG_NONE);
+  
   if(App) {
     if(Name_.isEmpty())
       App->DocumentTab->addTab(this, QPixmap(empty_xpm),
@@ -73,6 +82,7 @@ TextDoc::TextDoc(QucsApp *App_, const QString& Name_) : QucsDoc(App_, Name_)
             SLOT(slotCursorPosChanged(int, int)));
 
     syntaxHighlight = new SyntaxHighlighter(this);
+    syntaxHighlight->setLanguage (language);
   }
 }
 
@@ -82,6 +92,12 @@ TextDoc::~TextDoc()
     delete syntaxHighlight;
     App->DocumentTab->removePage(this);  // delete tab in TabBar
   }
+}
+
+// ---------------------------------------------------
+void TextDoc::setLanguage(int lang)
+{
+  language = lang;
 }
 
 // ---------------------------------------------------
