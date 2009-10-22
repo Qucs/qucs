@@ -1,3 +1,16 @@
+2009-10-22  Stefan Jahn  <stefan@lkcc.org>
+
+	* syntax.cpp (markWord): Syntax highlighting now depends on the
+	language of the displayed language.  Added support for
+	Verilog-HDL.
+
+	* textdoc.cpp (TextDoc): Setting up current (computer) language
+	when loading a document and passing it to the syntax highlighter.
+
+	* qucs.cpp (slotOpenContent): Allowing Verilog-HDL (.v) files to
+	be double-clicked in Content-Tab, which opens the file in builtin
+	text editor.
+
 2009-10-19  Stefan Jahn  <stefan@lkcc.org>
 
 	* textdoc.cpp: Moved syntax highligther class into 'syntax.cpp'

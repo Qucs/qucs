@@ -1263,7 +1263,9 @@ bool QucsApp::saveAs()
     }
 
     if(isTextDocument (w))
-      Filter = tr("VHDL Sources")+" (*.vhdl *.vhd);;" + tr("Any File")+" (*)";
+      Filter = tr("VHDL Sources")+" (*.vhdl *.vhd);;" +
+	       tr("Verilog Sources")+" (*.v);;"+
+	       tr("Any File")+" (*)";
     else
       Filter = QucsFileFilter;
     s = QFileDialog::getSaveFileName(s, Filter,
@@ -1949,11 +1951,12 @@ void QucsApp::slotOpenContent(QListViewItem *item)
   QFileInfo Info(QucsWorkDir.filePath(item->text(0)));
   QString Suffix = Info.extension(false);
 
-  if((Suffix == "sch") || (Suffix == "dpl") || (Suffix.left(3) == "vhd")) {
+  if(Suffix == "sch" || Suffix == "dpl" || Suffix.left(3) == "vhd" ||
+     Suffix == "v") {
     gotoPage(Info.absFilePath());
 
     if(item->text(1).isEmpty())     // is subcircuit ?
-      if(Suffix.left(3) != "vhd") return;  // is VHDL subcircuit ?
+      if(Suffix == "sch") return;
 
     select->blockSignals(true);  // switch on the 'select' action ...
     select->setOn(true);
