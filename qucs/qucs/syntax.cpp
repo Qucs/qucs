@@ -113,8 +113,8 @@ int SyntaxHighlighter::highlightParagraph(const QString& text, int)
         }
       iNumber = -1;
     }
-    // ----- maybe a comment -------------------------------
-    else if(c == '-') {
+    // ----- maybe a VHDL comment -------------------------------
+    else if(language == LANG_VHDL && c == '-') {
       if(i > 0)
         if(text.at(i-1) == '-') {  // VHDL comment starts with --
           setFormat(i-1, text.length()-i, QucsSettings.VHDL_Comment);
@@ -122,9 +122,22 @@ int SyntaxHighlighter::highlightParagraph(const QString& text, int)
         }
       continue;
     }
+    // ----- maybe a Verilog comment -------------------------------
+    else if(language == LANG_VERILOG && c == '/') {
+      if(i > 0)
+        if(text.at(i-1) == '/') {  // Verilog comment starts with //
+          setFormat(i-1, text.length()-i, QucsSettings.VHDL_Comment);
+          return 0;
+        }
+      continue;
+    }
     // ----- no special syntax yet (or anymore) --------------
     else {
-      if(c.isLetter())
+      if(language == LANG_VERILOG && c == '`' && text.at(i+1).isLetter())
+	iWord = i;
+      else if(language == LANG_VERILOG && c == '$' && text.at(i+1).isLetter())
+	iWord = i;
+      else if(c.isLetter())
         iWord = i;     // start a word
       else if(c.isNumber()) {
         iExpo = -1;
@@ -147,107 +160,257 @@ int SyntaxHighlighter::highlightParagraph(const QString& text, int)
   return 0;
 }
 
+// ---------------------------------------------------
+typedef const char*  pChar;
+typedef const char** ppChar;
 
 // ---------------------------------------------------
 // reserved VHDL words in alphabetical order
-typedef const char*  pChar;
-typedef const char** ppChar;
-pChar List_A[] = {"abs", "access", "after", "alias", "all", "and",
-                  "architecture", "array", "assert", "attribute", 0};
-pChar List_B[] = {"begin", "block", "body", "buffer", "bus", 0};
-pChar List_C[] = {"case", "component", "configuration", "constant", 0};
-pChar List_D[] = {"disconnect", "downto", 0};
-pChar List_E[] = {"else", "elsif", "end", "entity", "exit", 0};
-pChar List_F[] = {"file", "for", "function", 0};
-pChar List_G[] = {"generate", "generic", "group", "guarded", 0};
-pChar List_I[] = {"if", "impure", "in", "inertial", "inout", "is", 0};
-pChar List_L[] = {"label", "library", "linkage", "literal", "loop", 0};
-pChar List_M[] = {"map", "mod", 0};
-pChar List_N[] = {"nand", "new", "next", "nor", "not", "null", 0};
-pChar List_O[] = {"of", "on", "open", "or", "others", "out", 0};
-pChar List_P[] = {"package", "port", "postponed", "procedure", "process",
-                  "pure", 0};
-pChar List_R[] = {"range", "record", "register", "reject", "rem", "report",
-                  "return", "rol", "ror", 0};
-pChar List_S[] = {"select", "severity", "shared", "signal", "sla", "sll",
-                  "sra", "srl", "subtype", 0};
-pChar List_T[] = {"then", "to", "transport", "type", 0};
-pChar List_U[] = {"unaffected", "units", "until", "use", 0};
-pChar List_V[] = {"variable", 0};
-pChar List_W[] = {"wait", "when", "while", "with", 0};
-pChar List_X[] = {"xnor", "xor", 0};
+pChar VHD_List_A[] = {"abs", "access", "after", "alias", "all", "and",
+                      "architecture", "array", "assert", "attribute", 0};
+pChar VHD_List_B[] = {"begin", "block", "body", "buffer", "bus", 0};
+pChar VHD_List_C[] = {"case", "component", "configuration", "constant", 0};
+pChar VHD_List_D[] = {"disconnect", "downto", 0};
+pChar VHD_List_E[] = {"else", "elsif", "end", "entity", "exit", 0};
+pChar VHD_List_F[] = {"file", "for", "function", 0};
+pChar VHD_List_G[] = {"generate", "generic", "group", "guarded", 0};
+pChar VHD_List_I[] = {"if", "impure", "in", "inertial", "inout", "is", 0};
+pChar VHD_List_L[] = {"label", "library", "linkage", "literal", "loop", 0};
+pChar VHD_List_M[] = {"map", "mod", 0};
+pChar VHD_List_N[] = {"nand", "new", "next", "nor", "not", "null", 0};
+pChar VHD_List_O[] = {"of", "on", "open", "or", "others", "out", 0};
+pChar VHD_List_P[] = {"package", "port", "postponed", "procedure", "process",
+                      "pure", 0};
+pChar VHD_List_R[] = {"range", "record", "register", "reject", "rem", "report",
+                      "return", "rol", "ror", 0};
+pChar VHD_List_S[] = {"select", "severity", "shared", "signal", "sla", "sll",
+                      "sra", "srl", "subtype", 0};
+pChar VHD_List_T[] = {"then", "to", "transport", "type", 0};
+pChar VHD_List_U[] = {"unaffected", "units", "until", "use", 0};
+pChar VHD_List_V[] = {"variable", 0};
+pChar VHD_List_W[] = {"wait", "when", "while", "with", 0};
+pChar VHD_List_X[] = {"xnor", "xor", 0};
 
-ppChar WordList[] =
-  {(ppChar)&List_A, (ppChar)&List_B, (ppChar)&List_C, (ppChar)&List_D,
-   (ppChar)&List_E, (ppChar)&List_F, (ppChar)&List_G, 0, (ppChar)&List_I,
-   0, 0, (ppChar)&List_L, (ppChar)&List_M, (ppChar)&List_N,
-   (ppChar)&List_O, (ppChar)&List_P, 0, (ppChar)&List_R, (ppChar)&List_S,
-   (ppChar)&List_T, (ppChar)&List_U, (ppChar)&List_V, (ppChar)&List_W,
-   (ppChar)&List_X};
+ppChar VHD_WordList[] =
+  {(ppChar)&VHD_List_A, (ppChar)&VHD_List_B, (ppChar)&VHD_List_C,
+   (ppChar)&VHD_List_D, (ppChar)&VHD_List_E, (ppChar)&VHD_List_F,
+   (ppChar)&VHD_List_G, 0,                   (ppChar)&VHD_List_I,
+   0,                   0,                   (ppChar)&VHD_List_L,
+   (ppChar)&VHD_List_M, (ppChar)&VHD_List_N, (ppChar)&VHD_List_O,
+   (ppChar)&VHD_List_P, 0,                   (ppChar)&VHD_List_R,
+   (ppChar)&VHD_List_S, (ppChar)&VHD_List_T, (ppChar)&VHD_List_U,
+   (ppChar)&VHD_List_V, (ppChar)&VHD_List_W, (ppChar)&VHD_List_X,
+   0,                   0};
 
-pChar List_Units[] = {"fs", "ps", "ns", "us", "ms", "sec", "min", "hr", 0};
+pChar VHD_List_Units[] =
+  {"fs", "ps", "ns", "us", "ms", "sec", "min", "hr", 0};
 
-pChar List_DataTypes[] = {
+pChar VHD_List_DataTypes[] = {
    "bit", "bit_vector", "boolean", "std_logic", "std_logic_vector",
    "std_ulogic", "std_ulogic_vector", "signed", "unsigned", "integer",
    "real", "time", "character", "natural", 0};
 
 // ---------------------------------------------------
+// reserved Verilog-HDL words in alphabetical order
+pChar V_List_A[] = {"always", "and", "assign", "attribute", 0};
+pChar V_List_B[] = {"begin", "buf", "bufif0", "bufif1", 0};
+pChar V_List_C[] = {"case", "casex", "casez", "cmos", 0};
+pChar V_List_D[] = {"deassign", "default", "defparam", "disable", 0};
+pChar V_List_E[] = {"edge", "else", "end", "endattribute", "endcase",
+		    "endfunction", "endmodule", "endprimitive", "endspecify",
+		    "endtable", "endtask", "event", 0};
+pChar V_List_F[] = {"for", "force", "forever", "fork", "function", 0};
+pChar V_List_H[] = {"highz0", "highz1", 0};
+pChar V_List_I[] = {"if", "ifnone", "initial", "inout", "input", 0};
+pChar V_List_J[] = {"join", 0};
+pChar V_List_L[] = {"large", 0};
+pChar V_List_M[] = {"medium", "module", "macromodule", 0};
+pChar V_List_N[] = {"nand", "negedge", "nmos", "nor", "not", "notif0",
+		    "notif1", 0};
+pChar V_List_O[] = {"or", "output", 0};
+pChar V_List_P[] = {"pmos", "posedge", "primitive", "pull0", "pull1",
+		    "pulldown", "pullup", 0};
+pChar V_List_R[] = {"rcmos", "release", "repeat",
+		    "rnmos", "rpmos", "rtran", "rtranif0", "rtranif1", 0};
+pChar V_List_S[] = {"scalared", "signed", "small", "specify", "strength",
+		    "strong0", "strong1", 0};
+pChar V_List_T[] = {"table", "task", "tran", "tranif0", "tranif1", 0};
+pChar V_List_U[] = {"unsigned", 0};
+pChar V_List_V[] = {"vectored", 0};
+pChar V_List_W[] = {"wait", "weak0", "weak1", "while", 0};
+pChar V_List_X[] = {"xnor", "xor", 0};
+
+ppChar V_WordList[] =
+  {(ppChar)&V_List_A, (ppChar)&V_List_B, (ppChar)&V_List_C, (ppChar)&V_List_D,
+   (ppChar)&V_List_E, (ppChar)&V_List_F, 0,                 (ppChar)&V_List_H,
+   (ppChar)&V_List_I, (ppChar)&V_List_J, 0,                 (ppChar)&V_List_L,
+   (ppChar)&V_List_M, (ppChar)&V_List_N, (ppChar)&V_List_O, (ppChar)&V_List_P,
+   0,                 (ppChar)&V_List_R, (ppChar)&V_List_S, (ppChar)&V_List_T,
+   (ppChar)&V_List_U, (ppChar)&V_List_V, (ppChar)&V_List_W, (ppChar)&V_List_X,
+   0,               0};
+
+pChar V_List_Directives[] =
+  {"reset_all", "timescale", "define", "include", "ifdef", "else", "endif",
+   "celldefine", "endcelldefine", "default_nettype", "unconnected_drive",
+   "nounconnected_drive", "delay_mode_zero", "delay_mode_unit",
+   "delay_mode_path", "delay_mode_distributed", "uselib", 0};
+
+pChar V_List_DataTypes[] = {
+   "reg", "integer", "time", "real", "realtime", "wire", "tri", "wor",
+   "trior", "wand", "triand", "tri0", "tri1", "supply0", "supply1", "trireg",
+   "parameter", "specparam", "event", 0};
+
+pChar V_List_Functions[] =
+  {"setup", "hold", "setuphold", "skew", "recovery", "period", "width",
+   "monitor", "display", "write", "strobe", "fopen", "fclose", "time",
+   "stime", "realtime", "timeformat", "printtimescale", "random", "readmemb",
+   "readmemh", "finish", "stop", 0};
+
+// ---------------------------------------------------
 void SyntaxHighlighter::markWord(const QString& text, int start, int len)
 {
-  QString Word = text.mid(start, len).lower();
-  int idx = (int)(Word.at(0).latin1() - 'a');
-  if(idx < 0 || idx > 23)
-    return;
-  pChar *List = WordList[idx];
-
+  pChar *List;
+  // apply font
   QFont newFont = Doc->TextFont;
   newFont.setPointSize((int)Doc->Scale);
 
+  // get word
+  QString Word = text.mid(start, len);
+
+  // switch case sensitivity
+  switch (language) {
+  case LANG_VHDL:
+    Word = Word.lower();
+    break;
+  default:
+    break;
+  }
+
+  // get index into wordlist
+  int idx = (int)(Word.at(0).latin1() - 'a');
+  if(idx >= 0 && idx <= 25) {
+
+    // switch wordlist
+    switch (language) {
+    case LANG_VHDL:
+      List = VHD_WordList[idx];
+      break;
+    case LANG_VERILOG:
+      List = V_WordList[idx];
+      break;
+    default:
+      List = 0;
+      break;
+    }
+
+    // mark reserved words
+    if(List)
+      for( ; *List != 0; List++)
+	if(Word == *List) {
+	  newFont.setWeight(QFont::Bold);
+	  setFormat(start, len, newFont);
+	  return;
+	}
+  }
+
+  // mark data types
+  switch (language) {
+  case LANG_VHDL:
+    List = VHD_List_DataTypes;
+    break;
+  case LANG_VERILOG:
+    List = V_List_DataTypes;
+    break;
+  default:
+    List = 0;
+    break;
+  }
   if(List)
     for( ; *List != 0; List++)
       if(Word == *List) {
-        newFont.setWeight(QFont::Bold);
-        setFormat(start, len, newFont);
-        return;
+	setFormat(start, len, QucsSettings.VHDL_Types);
+	return;
       }
 
-  for(List = List_DataTypes; *List != 0; List++)
-    if(Word == *List) {
-      setFormat(start, len, QucsSettings.VHDL_Types);
-      return;
-    }
+  // mark units
+  switch (language) {
+  case LANG_VHDL:
+    List = VHD_List_Units;
+  default:
+    List = 0;
+    break;
+  }
+  if(List)
+    for( ; *List != 0; List++)
+      if(Word == *List) {
+	newFont.setWeight(QFont::Bold);
+	setFormat(start, len, newFont, QucsSettings.VHDL_Real);
+	return;
+      }
 
-  for(List = List_Units; *List != 0; List++)
-    if(Word == *List) {
-      newFont.setWeight(QFont::Bold);
-      setFormat(start, len, newFont, QucsSettings.VHDL_Real);
-      return;
-    }
+
+  if (Word.at(0) == '`' || Word.at(0) == '$')
+    Word = Word.mid(1);
+  // mark directives
+  switch (language) {
+  case LANG_VERILOG:
+    List = V_List_Directives;
+    break;
+  default:
+    List = 0;
+    break;
+  }
+  if(List)
+    for( ; *List != 0; List++)
+      if(Word == *List) {
+	newFont.setWeight(QFont::Bold);
+	setFormat(start, len, newFont, QucsSettings.VHDL_Attributes);
+	return;
+      }
+
+  // mark special functions
+  switch (language) {
+  case LANG_VERILOG:
+    List = V_List_Functions;
+    break;
+  default:
+    List = 0;
+    break;
+  }
+  if(List)
+    for( ; *List != 0; List++)
+      if(Word == *List) {
+	newFont.setWeight(QFont::Bold);
+	setFormat(start, len, newFont, QucsSettings.VHDL_Types);
+	return;
+      }
 }
 
 // ---------------------------------------------------
-pChar List_Attrib_A[] = {"active", "ascending", 0};
-pChar List_Attrib_B[] = {"base", 0};
-pChar List_Attrib_D[] = {"delayed", 0};
-pChar List_Attrib_E[] = {"event", 0};
-pChar List_Attrib_H[] = {"high", 0};
-pChar List_Attrib_I[] = {"image", 0};
-pChar List_Attrib_L[] =
-   {"last_active", "last_event", "last_value", "left", "leftof", "length", "low", 0};
-pChar List_Attrib_P[] = {"pos", "pred", 0};
-pChar List_Attrib_Q[] = {"quiet", 0};
-pChar List_Attrib_R[] = {"range", "reverse_range", "right", "rightof", 0};
-pChar List_Attrib_S[] = {"stable", "succ", 0};
-pChar List_Attrib_T[] = {"transaction", 0};
-pChar List_Attrib_V[] = {"val", "value", 0};
+// reserved VHDL attributes in alphabetical order
+pChar VHD_List_Attrib_A[] = {"active", "ascending", 0};
+pChar VHD_List_Attrib_B[] = {"base", 0};
+pChar VHD_List_Attrib_D[] = {"delayed", 0};
+pChar VHD_List_Attrib_E[] = {"event", 0};
+pChar VHD_List_Attrib_H[] = {"high", 0};
+pChar VHD_List_Attrib_I[] = {"image", 0};
+pChar VHD_List_Attrib_L[] = {"last_active", "last_event", "last_value", "left",
+			     "leftof", "length", "low", 0};
+pChar VHD_List_Attrib_P[] = {"pos", "pred", 0};
+pChar VHD_List_Attrib_Q[] = {"quiet", 0};
+pChar VHD_List_Attrib_R[] = {"range", "reverse_range", "right", "rightof", 0};
+pChar VHD_List_Attrib_S[] = {"stable", "succ", 0};
+pChar VHD_List_Attrib_T[] = {"transaction", 0};
+pChar VHD_List_Attrib_V[] = {"val", "value", 0};
 
-ppChar Attribute_List[] =
-  {(ppChar)&List_Attrib_A, (ppChar)&List_Attrib_B, 0, (ppChar)&List_Attrib_D,
-   (ppChar)&List_Attrib_E, 0, 0, (ppChar)&List_Attrib_H, (ppChar)&List_Attrib_I,
-   0, 0, (ppChar)&List_Attrib_L, 0, 0, 0, (ppChar)&List_Attrib_P,
-   (ppChar)&List_Attrib_Q, (ppChar)&List_Attrib_R, (ppChar)&List_Attrib_S,
-   (ppChar)&List_Attrib_T, 0, (ppChar)&List_Attrib_V};
+ppChar VHD_Attribute_List[] =
+  {(ppChar)&VHD_List_Attrib_A, (ppChar)&VHD_List_Attrib_B, 0,
+   (ppChar)&VHD_List_Attrib_D, (ppChar)&VHD_List_Attrib_E, 0,
+   0, (ppChar)&VHD_List_Attrib_H, (ppChar)&VHD_List_Attrib_I,
+   0, 0, (ppChar)&VHD_List_Attrib_L, 0, 0, 0,
+   (ppChar)&VHD_List_Attrib_P, (ppChar)&VHD_List_Attrib_Q,
+   (ppChar)&VHD_List_Attrib_R, (ppChar)&VHD_List_Attrib_S,
+   (ppChar)&VHD_List_Attrib_T, 0, (ppChar)&VHD_List_Attrib_V};
 
 void SyntaxHighlighter::markAttribute(const QString& text, int start, int len)
 {
@@ -255,7 +418,7 @@ void SyntaxHighlighter::markAttribute(const QString& text, int start, int len)
   int idx = (int)(Word.at(0).latin1() - 'a');
   if(idx < 0 || idx > 22)
     return;
-  pChar *List = Attribute_List[idx];
+  pChar *List = VHD_Attribute_List[idx];
 
   if(List)
     for(; *List != 0; List++)
