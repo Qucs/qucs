@@ -26,6 +26,8 @@ files.
 Version 0.0.16
 --------------
 
+ * direct association of symbol drawings to Verilog-HDL and VHDL code
+ * added Verilog-HDL syntax highlighting in text documents
  * support for pre-compiled VHDL modules and libraries made from user
    written VHDL code
  * new component: NIGBT

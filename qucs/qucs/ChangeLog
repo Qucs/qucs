@@ -1,3 +1,11 @@
+2009-10-23  Stefan Jahn  <stefan@lkcc.org>
+
+	* syntax.cpp (highlightParagraph): Added support for (* *)
+	comments in Verilog-HDL files.  Also nested comments are allowed.
+
+	* schematic.cpp (adjustPortNumbers): Support for ceation of
+	Verilog-HDL text file's default symbol.
+
 2009-10-22  Stefan Jahn  <stefan@lkcc.org>
 
 	* syntax.cpp (markWord): Syntax highlighting now depends on the

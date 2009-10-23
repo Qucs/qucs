@@ -1,3 +1,8 @@
+2009-10-23  Stefan Jahn  <stefan@lkcc.org>
+
+	* verilogfile.cpp (Verilog_File_Info): Added class for parsing
+	port information from Verilog-HDL code/files.
+
 2009-10-19  Stefan Jahn  <stefan@lkcc.org>
 
 	* vhdlfile.cpp (VHDL_File_Info): Allowing function to read VHDL
