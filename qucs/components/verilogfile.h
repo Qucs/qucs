@@ -37,8 +37,20 @@ protected:
   void createSymbol();
   QString loadFile();
 
-  QString EntityName;
+  QString ModuleName;
   QString ErrText;
+};
+
+class Verilog_File_Info {
+public:
+  Verilog_File_Info();
+  Verilog_File_Info(QString, bool isfile = false);
+ ~Verilog_File_Info() {};
+  QString parsePorts(QString, int);
+
+public:
+  QString ModuleName;
+  QString PortNames;
 };
 
 #endif
