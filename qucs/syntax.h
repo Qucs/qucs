@@ -27,7 +27,7 @@ enum language_type {
 
 enum textstate_type {
   STATE_NONE = 0,
-  STATE_COMMENT,
+  STATE_COMMENT = 100,
 };
 
 class SyntaxHighlighter : public QSyntaxHighlighter {

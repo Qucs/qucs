@@ -45,6 +45,7 @@
 #include "diagrams/diagrams.h"
 #include "paintings/paintings.h"
 #include "components/vhdlfile.h"
+#include "components/verilogfile.h"
 
 // just dummies for empty lists
 QPtrList<Wire>      SymbolWires;
@@ -1267,10 +1268,11 @@ int Schematic::adjustPortNumbers()
   QString Str;
   int countPort = 0;
 
-  // handle VHDL file symbol
-  if(DataDisplay.section('.',1).left(3) == "vhd" ||
-     DataDisplay.section('.',1).left(4) == "vhdl") {
+  QFileInfo Info (DataDisplay);
+  QString Suffix = Info.extension (false);
 
+  // handle VHDL file symbol
+  if (Suffix == "vhd" || Suffix == "vhdl") {
     QStringList::iterator it;
     QStringList Names, GNames, GTypes, GDefs;
     int Number;
@@ -1305,6 +1307,51 @@ int Schematic::adjustPortNumbers()
 	    GTypes[Number-1]));
 	  Number++;
 	}
+      }
+
+    for(Number = 1, it = Names.begin(); it != Names.end(); ++it, Number++) {
+      countPort++;
+
+      Str = QString::number(Number);
+      // search for matching port symbol
+      for(pp = SymbolPaints.first(); pp!=0; pp = SymbolPaints.next())
+	if(pp->Name == ".PortSym ")
+	  if(((PortSymbol*)pp)->numberStr == Str) break;
+
+      if(pp)
+	((PortSymbol*)pp)->nameStr = *it;
+      else {
+	SymbolPaints.append(new PortSymbol(x1, y2, Str, *it));
+	y2 += 40;
+      }
+    }
+  }
+  // handle Verilog-HDL file symbol
+  else if (Suffix == "v") {
+
+    QStringList::iterator it;
+    QStringList Names;
+    int Number;
+
+    // get ports from Verilog-HDL file
+    QFileInfo Info (DocName);
+    QString Name = Info.dirPath() + QDir::separator() + DataDisplay;
+
+    // obtain Verilog-HDL information either from open text document or the
+    // file directly
+    Verilog_File_Info VInfo;
+    TextDoc * d = (TextDoc*)App->findDoc (Name);
+    if (d)
+      VInfo = Verilog_File_Info (d->text());
+    else
+      VInfo = Verilog_File_Info (Name, true);
+    Names = QStringList::split(",",VInfo.PortNames);
+
+    for(pp = SymbolPaints.first(); pp!=0; pp = SymbolPaints.next())
+      if(pp->Name == ".ID ") {
+	ID_Text * id = (ID_Text *) pp;
+	id->Prefix = VInfo.ModuleName.upper();
+	id->Parameter.clear();
       }
 
     for(Number = 1, it = Names.begin(); it != Names.end(); ++it, Number++) {
