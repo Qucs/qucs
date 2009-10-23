@@ -45,17 +45,33 @@ void SyntaxHighlighter::setLanguage(int lang)
 }
 
 // ---------------------------------------------------
-int SyntaxHighlighter::highlightParagraph(const QString& text, int)
+int SyntaxHighlighter::highlightParagraph(const QString& text, int state)
 {
   QChar c;
   bool isFloat=false;
-  int  iString=-1, iWord=-1, iNumber=-1, iExpo=-1, i=0;
+  int  iString=-1, iWord=-1, iNumber=-1, iExpo=-1, i=0, iComment=-1;
   QFont font = Doc->TextFont;
   font.setPointSize((int)Doc->Scale);
   setFormat(0, text.length(), font, QPen::black);
 
+  if (state < 0)
+    state = STATE_NONE;
+  if (state >= STATE_COMMENT)
+    iComment = 0;
+
   for(c = text.at(i); !c.isNull(); c = text.at(++i)) {
-    if(iString >= 0) {
+    // ----- current text is a comment ---------------------------
+    if (iComment >= 0) {
+      setFormat (iComment, i-iComment+1, QucsSettings.VHDL_Comment);
+      if (i > 0 && c == ')' && text.at (i-1) == '*') {
+	if (--state < STATE_COMMENT) {
+	  state = STATE_NONE;
+	  iComment = -1;
+	}
+      }
+    }
+    // ----- current text is a string ----------------------------
+    else if(iString >= 0) {
       setFormat(iString, i-iString+1, QucsSettings.VHDL_String);
       if(c == '"')
         iString = -1;
@@ -118,7 +134,7 @@ int SyntaxHighlighter::highlightParagraph(const QString& text, int)
       if(i > 0)
         if(text.at(i-1) == '-') {  // VHDL comment starts with --
           setFormat(i-1, text.length()-i, QucsSettings.VHDL_Comment);
-          return 0;
+          return state;
         }
       continue;
     }
@@ -127,7 +143,7 @@ int SyntaxHighlighter::highlightParagraph(const QString& text, int)
       if(i > 0)
         if(text.at(i-1) == '/') {  // Verilog comment starts with //
           setFormat(i-1, text.length()-i, QucsSettings.VHDL_Comment);
-          return 0;
+          return state;
         }
       continue;
     }
@@ -149,15 +165,24 @@ int SyntaxHighlighter::highlightParagraph(const QString& text, int)
       }
     }
 
-    if(c == '\'') {
-      if(i > 1)
-        if(text.at(i-2) == '\'')
-          setFormat(i-2, 3, QucsSettings.VHDL_Character);
+    if (state < STATE_COMMENT) {
+      if(c == '\'') {
+	if(i > 1)
+	  if(text.at(i-2) == '\'')
+	    setFormat(i-2, 3, QucsSettings.VHDL_Character);
+      }
+      else if(c == '"')
+	iString = i;
     }
-    else if(c == '"')
-      iString = i;
+    if (language == LANG_VERILOG &&
+	i > 0 && c == '*' && text.at(i-1) == '(') {
+      if (state >= STATE_COMMENT) state++;
+      else state = STATE_COMMENT;
+      iComment = i-1;
+    }
   }
-  return 0;
+    
+  return state;
 }
 
 // ---------------------------------------------------

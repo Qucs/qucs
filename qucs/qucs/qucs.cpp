@@ -1874,7 +1874,8 @@ void QucsApp::slotChangePage(QString& DocName, QString& DataDisplay)
     DocumentTab->setCurrentPage(z);
   else {   // no open page found ?
     if(DataDisplay.section('.',1).left(3) != "vhd" &&
-       DataDisplay.section('.',1).left(4) != "vhdl")
+       DataDisplay.section('.',1).left(4) != "vhdl" &&
+       DataDisplay.section('.',1).left(1) != "v")
       d = new Schematic(this, Name);
     else
       d = new TextDoc(this, Name);

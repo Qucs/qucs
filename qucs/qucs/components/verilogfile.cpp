@@ -69,7 +69,7 @@ QString Verilog_File::verilogCode(int)
   QString s;
   Port *pp = Ports.first();
   if(pp) {
-    s = "  " + EntityName + " " + Name + " (";
+    s = "  " + ModuleName + " " + Name + " (";
 
     // output all node names
     if(pp)  s += pp->Connection->Name;
@@ -99,72 +99,10 @@ QString Verilog_File::loadFile()
   File = stream.read();   // QString is better for "find" function
   f.close();
 
-  int i=0, j, k=0;
-  while((i=File.find("//", i)) >= 0) { // remove all Verilog comments
-    j = File.find('\n', i+2);          // (This also finds "//" within a ...
-    if(j < 0)                          //  string, but as no strings are ...
-      File = File.left(i);             //  allowed in module headers, it ...
-    else                               //  does not matter.)
-      File.remove(i, j-i);
-  }
-
-  i=0;
-  while((i=File.find("/*", i)) >= 0) { // remove all Verilog comments
-    j = File.find("*/", i+2);          // (This also finds "/*" within a ...
-    if(j < 0)                          //  string, but as no strings are ...
-      File = File.left(i);             //  allowed in module headers, it ...
-    else                               //  does not matter.)
-      File.remove(i, j-i+2);
-  }
-
-  QRegExp Expr,Expr1;
-  Expr.setCaseSensitive(true);
-  Expr1.setCaseSensitive(true);
-  k--;
-  Expr.setPattern("\\bmodule\\b");  // start of last module
-  k = File.findRev(Expr, k);
-  if(k < 0)
-    return QString("");
-
-  Expr.setPattern("\\bendmodule\\b");    // end of last module
-  i = File.find(Expr, k+7);
-  if(i < 0)
-    return QString("");
-  s = File.mid(k+7, i-k-7);  // cut out module declaration
-
-  Expr.setPattern("\\b");
-  i = s.find(Expr);
-  if(i < 0)
-    return QString("");
-  j = s.find(Expr, i+1);
-  if(j < 0)
-    return QString("");
-  EntityName = s.mid(i, j-i);  // save module name
-
-  i = s.find('(', j);
-  if(i < 0)
-    return QString("");
-
-  j = s.find(')', i);
-  if(j < 0)
-    return QString("");
-  s = s.mid(i+1, j-i-1);
-
-  i = 0;    // remove all Verilog identifiers (e.g. "input")
-  Expr.setPattern("(\\binput\\b|\\boutput\\b|\\binout\\b)");
-  Expr1.setPattern("(\\b)");
-  while((i=s.find(Expr, i)) >= 0) {
-    j = s.find(Expr1, i+1);
-    if(j < 0)
-      s = s.left(i);
-    else
-      s.remove(i, j-i);
-  }
-
-  s.remove(' ');
-  s.remove('\n');
-  s.remove('\t');
-  return s;
+  // parse ports, i.e. network connections
+  Verilog_File_Info VInfo(File);
+  ModuleName = VInfo.ModuleName;
+  return VInfo.PortNames;
 }
 
 // -------------------------------------------------------
@@ -254,4 +192,106 @@ bool Verilog_File::createSubNetlist(QTextStream *stream)
   stream->writeRawBytes(FileContent.data(), FileContent.size());
   (*stream) << '\n';
   return true;
+}
+
+// -------------------------------------------------------
+Verilog_File_Info::Verilog_File_Info()
+{
+  ModuleName = "";
+  PortNames = "";
+}
+
+// -------------------------------------------------------
+Verilog_File_Info::Verilog_File_Info(QString File, bool isfile)
+{
+  if (isfile) {
+    QFile f(File);
+    if(!f.open(IO_ReadOnly))
+      File = "";
+    else {
+      QByteArray FileContent = f.readAll();
+      File = QString(FileContent);
+    }
+    f.close();
+  }
+  
+  QString s;
+  int i=0, j, k=0;
+  while((i=File.find("//", i)) >= 0) { // remove all Verilog comments
+    j = File.find('\n', i+2);          // (This also finds "//" within a ...
+    if(j < 0)                          //  string, but as no strings are ...
+      File = File.left(i);             //  allowed in module headers, it ...
+    else                               //  does not matter.)
+      File.remove(i, j-i);
+  }
+
+  i=0;
+  while((i=File.find("/*", i)) >= 0) { // remove all Verilog comments
+    j = File.find("*/", i+2);          // (This also finds "/*" within a ...
+    if(j < 0)                          //  string, but as no strings are ...
+      File = File.left(i);             //  allowed in module headers, it ...
+    else                               //  does not matter.)
+      File.remove(i, j-i+2);
+  }
+
+  QRegExp Expr,Expr1;
+  Expr.setCaseSensitive(true);
+  Expr1.setCaseSensitive(true);
+  k--;
+  Expr.setPattern("\\bmodule\\b");  // start of last module
+  k = File.findRev(Expr, k);
+  if(k < 0)
+    return;
+
+  Expr.setPattern("\\bendmodule\\b");    // end of last module
+  i = File.find(Expr, k+7);
+  if(i < 0)
+    return;
+  s = File.mid(k+7, i-k-7);  // cut out module declaration
+
+  Expr.setPattern("\\b");
+  i = s.find(Expr);
+  if(i < 0)
+    return;
+  j = s.find(Expr, i+1);
+  if(j < 0)
+    return;
+  ModuleName = s.mid(i, j-i);  // save module name
+
+  i = s.find('(', j);
+  if(i < 0)
+    return;
+
+  j = s.find(')', i);
+  if(j < 0)
+    return;
+  s = s.mid(i+1, j-i-1);
+
+  // parse ports, i.e. network connections; and generics, i.e. parameters
+  PortNames = parsePorts (s, 0);
+}
+
+// -------------------------------------------------------
+QString Verilog_File_Info::parsePorts(QString s, int i)
+{
+  QRegExp Expr,Expr1;
+  Expr.setCaseSensitive(true);
+  Expr1.setCaseSensitive(true);
+
+  int j;
+  i = 0;    // remove all Verilog identifiers (e.g. "input")
+  Expr.setPattern("(\\binput\\b|\\boutput\\b|\\binout\\b)");
+  Expr1.setPattern("(\\b)");
+  while((i=s.find(Expr, i)) >= 0) {
+    j = s.find(Expr1, i+1);
+    if(j < 0)
+      s = s.left(i);
+    else
+      s.remove(i, j-i);
+  }
+
+  s.remove(' ');
+  s.remove('\n');
+  s.remove('\t');
+  return s;
 }
