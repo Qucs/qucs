@@ -207,6 +207,8 @@ void TextDoc::becomeCurrent (bool)
     App->insEntity->setWhatsThis (
 	tr("Verilog entity\n\nInserts the skeleton of a Verilog module"));
   }
+  App->simulate->setEnabled (true);
+  App->editActivate->setEnabled (true);
 }
 
 // ---------------------------------------------------

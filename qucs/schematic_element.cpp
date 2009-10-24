@@ -2243,7 +2243,8 @@ Component* Schematic::searchSelSubcircuit()
   for(Component *pc = Components->first(); pc != 0; pc = Components->next()) {
     if(!pc->isSelected) continue;
     if(pc->Model != "Sub")
-      if(pc->Model != "VHDL") continue;
+      if(pc->Model != "VHDL")
+	if(pc->Model != "Verilog") continue;
 
     if(sub != 0) return 0;    // more than one subcircuit selected
     sub = pc;

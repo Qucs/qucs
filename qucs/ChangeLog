@@ -1,5 +1,11 @@
 2009-10-24  Stefan Jahn  <stefan@lkcc.org>
 
+	* syntax.cpp (highlightParagraph): Added syntaxhighlighting for
+	Verilog-A sources.
+
+	* qucs.cpp (initContentListView): Added new 'Verilog-A' file
+	content tab.  VA files can now be edited in builtin text editor.
+
 	* textdoc.cpp (becomeCurrent): Changing menu entry for skeleton
 	inserting depending on the language.
 	(commentSelected): Disabling code depending on language.
