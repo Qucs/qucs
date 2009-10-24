@@ -44,8 +44,11 @@ public:
   void  showNoZoom();
   void  becomeCurrent(bool);
   bool  loadSimulationTime(QString&);
-  void  outcommmentSelected();
-  void  setLanguage(int);
+  void  commentSelected ();
+  void  insertSkeleton ();
+  void  setLanguage (int);
+  void  setLanguage (const QString&);
+
   QFont TextFont;
 
   bool simulation;   // simulation or module

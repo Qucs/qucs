@@ -7347,17 +7347,17 @@ Felülírjam?</translation>
     </message>
     <message>
         <source>Cannot delete the open file: </source>
-        <translation>Nyitott fájlt nem lehet törölni:</translation>
+        <translation type="obsolete">Nyitott fájlt nem lehet törölni:</translation>
     </message>
     <message>
         <source>This will delete the files
 </source>
-        <translation>Azt akarja töröljem a fájlokat
+        <translation type="obsolete">Azt akarja töröljem a fájlokat
 </translation>
     </message>
     <message>
         <source>permanently! Continue ?</source>
-        <translation>Végleges! Folytatja?</translation>
+        <translation type="obsolete">Végleges! Folytatja?</translation>
     </message>
     <message>
         <source>Cannot create work directory !</source>
@@ -7831,15 +7831,15 @@ Nem indítható a tápvonal tervező program!
     </message>
     <message>
         <source>Cannot delete data display: </source>
-        <translation>Az adatmegjelenítő nem törölhető:</translation>
+        <translation type="obsolete">Az adatmegjelenítő nem törölhető:</translation>
     </message>
     <message>
         <source>Cannot delete data file: </source>
-        <translation>Adat fájl nem törölhető:</translation>
+        <translation type="obsolete">Adat fájl nem törölhető:</translation>
     </message>
     <message>
         <source>Cannot delete VHDL source: </source>
-        <translation>VHDL forrás nem törölhető:</translation>
+        <translation type="obsolete">VHDL forrás nem törölhető:</translation>
     </message>
     <message>
         <source>Creating new text editor...</source>
@@ -9670,7 +9670,7 @@ A kiválasztott elemeket vízszintesen egyvonalba mozgatja</translation>
     </message>
     <message>
         <source>Cannot delete Verilog source: </source>
-        <translation>Verilog forrás nem törölhető:
+        <translation type="obsolete">Verilog forrás nem törölhető:
 </translation>
     </message>
     <message>
@@ -9705,6 +9705,54 @@ Convert data file to various file formats</source>
     </message>
     <message>
         <source>Kazakh by Erbol Keshubaev</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>unknown</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Verilog source</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>VHDL source</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>data file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>data display</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>schematic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>symbol</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>VHDL configuration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>configuration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot delete the open file `%1&apos;!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This will delete the files%1permanently! Continue ?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot delete %1: `%2&apos;!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -12891,6 +12939,36 @@ Hibák:
         <source>Edit Text Symbol
 
 Edits the symbol for this text document</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>VHDL entity</source>
+        <translation type="unfinished">VHDL entitás</translation>
+    </message>
+    <message>
+        <source>Inserts skeleton of VHDL entity</source>
+        <translation type="unfinished">Váz illesztés a VHDL entitáshoz</translation>
+    </message>
+    <message>
+        <source>VHDL entity
+
+Inserts the skeleton of a VHDL entity</source>
+        <translation type="unfinished">VHDL entitás
+
+Váz illesztés a VHDL entitáshoz</translation>
+    </message>
+    <message>
+        <source>Verilog module</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inserts skeleton of Verilog module</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Verilog entity
+
+Inserts the skeleton of a Verilog module</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -8020,17 +8020,17 @@ Zkopíruje vybranou oblast do schránky</translation>
     </message>
     <message>
         <source>Cannot delete the open file: </source>
-        <translation>Nelze smazat otevřený soubor: </translation>
+        <translation type="obsolete">Nelze smazat otevřený soubor: </translation>
     </message>
     <message>
         <source>This will delete the files
 </source>
-        <translation>Soubory budou smazány
+        <translation type="obsolete">Soubory budou smazány
 </translation>
     </message>
     <message>
         <source>permanently! Continue ?</source>
-        <translation>nenávratně! Pokračovat?</translation>
+        <translation type="obsolete">nenávratně! Pokračovat?</translation>
     </message>
     <message>
         <source>Cannot create work directory !</source>
@@ -8318,15 +8318,15 @@ Upraví schéma</translation>
     </message>
     <message>
         <source>Cannot delete data display: </source>
-        <translation>Nelze smazat údaje z datové vizualizace: </translation>
+        <translation type="obsolete">Nelze smazat údaje z datové vizualizace: </translation>
     </message>
     <message>
         <source>Cannot delete data file: </source>
-        <translation>Nelze smazat datovou sadu ze souboru: </translation>
+        <translation type="obsolete">Nelze smazat datovou sadu ze souboru: </translation>
     </message>
     <message>
         <source>Cannot delete VHDL source: </source>
-        <translation>Zdrojový soubor VHDL nelze smazat: </translation>
+        <translation type="obsolete">Zdrojový soubor VHDL nelze smazat: </translation>
     </message>
     <message>
         <source>Creating new text editor...</source>
@@ -9988,7 +9988,7 @@ Vyrovnat svisle vybrané prvky</translation>
     </message>
     <message>
         <source>Cannot delete Verilog source: </source>
-        <translation>Nelze smazat Verilog data: </translation>
+        <translation type="obsolete">Nelze smazat Verilog data: </translation>
     </message>
     <message>
         <source>probes</source>
@@ -10022,6 +10022,54 @@ Convert data file to various file formats</source>
     </message>
     <message>
         <source>Kazakh by Erbol Keshubaev</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>unknown</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Verilog source</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>VHDL source</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>data file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>data display</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>schematic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>symbol</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>VHDL configuration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>configuration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot delete the open file `%1&apos;!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This will delete the files%1permanently! Continue ?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot delete %1: `%2&apos;!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -14832,6 +14880,36 @@ Chyby:
         <source>Edit Text Symbol
 
 Edits the symbol for this text document</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>VHDL entity</source>
+        <translation type="unfinished">VHDL entita</translation>
+    </message>
+    <message>
+        <source>Inserts skeleton of VHDL entity</source>
+        <translation type="unfinished">Vloží konstrukci VHDL entity</translation>
+    </message>
+    <message>
+        <source>VHDL entity
+
+Inserts the skeleton of a VHDL entity</source>
+        <translation type="unfinished">VHDL entita
+
+Vloží konstrukci VHDL entity</translation>
+    </message>
+    <message>
+        <source>Verilog module</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inserts skeleton of Verilog module</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Verilog entity
+
+Inserts the skeleton of a Verilog module</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
