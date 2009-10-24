@@ -9454,6 +9454,18 @@ Convert data file to various file formats</source>
         <source>Cannot delete %1: `%2&apos;!</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Verilog-A Sources</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Verilog-A</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Verilog-A source</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsAttenuator</name>

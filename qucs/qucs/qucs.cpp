@@ -124,6 +124,7 @@ QucsApp::QucsApp()
     tr("Qucs Documents")+" (*.sch *.dpl);;"+
     tr("VHDL Sources")+" (*.vhdl *.vhd);;"+
     tr("Verilog Sources")+" (*.v);;"+
+    tr("Verilog-A Sources")+" (*.va);;"+
     tr("Any File")+" (*)";
   QucsWorkDir.setPath(QDir::homeDirPath()+QDir::convertSeparators ("/.qucs"));
   QucsHomeDir.setPath(QDir::homeDirPath()+QDir::convertSeparators ("/.qucs"));
@@ -190,6 +191,7 @@ void QucsApp::initContentListView()
   ConDatasets   = new QListViewItem(Content, tr("Datasets"));
   ConDisplays   = new QListViewItem(Content, tr("Data Displays"));
   ConVerilog    = new QListViewItem(Content, tr("Verilog"));
+  ConVerilogA   = new QListViewItem(Content, tr("Verilog-A"));
   ConSources    = new QListViewItem(Content, tr("VHDL"));
   ConSchematics = new QListViewItem(Content, tr("Schematics"));
 }
@@ -619,6 +621,8 @@ QString QucsApp::fileType (const QString& Ext)
   QString Type = tr("unknown");
   if (Ext == "v")
     Type = tr("Verilog source");
+  else if (Ext == "va")
+    Type = tr("Verilog-A source");
   else if (Ext == "vhd" || Ext == "vhdl")
     Type = tr("VHDL source");
   else if (Ext == "dat")
@@ -648,7 +652,7 @@ void QucsApp::slotCMenuDelGroup ()
 
   const char * extensions[] =
     { "sch", "dpl", "dat", "vhdl", "vhd", "v", "sym",
-      "vhdl.cfg", "vhd.cfg", 0 };
+      "vhdl.cfg", "vhd.cfg", "va", 0 };
 
   int i;
   for (i = 0; extensions[i] != 0; i++) {
@@ -831,9 +835,10 @@ void QucsApp::readProjectFiles()
     delete ConSources->firstChild();
   while(ConVerilog->firstChild())
     delete ConVerilog->firstChild();
+  while(ConVerilogA->firstChild())
+    delete ConVerilogA->firstChild();
   while(ConOthers->firstChild())
     delete ConOthers->firstChild();
-
 
   int n;
   // put all files into "Content"-ListView
@@ -841,7 +846,7 @@ void QucsApp::readProjectFiles()
   QStringList::iterator it;
   QString Str;
   for(it = Elements.begin(); it != Elements.end(); ++it) {
-    Str = (*it).section('.',1);
+    Str = QucsDoc::fileSuffix (*it);
     if(Str == "sch") {
       n = testFile(QucsWorkDir.filePath((*it).ascii()));
       if(n >= 0) {
@@ -859,6 +864,8 @@ void QucsApp::readProjectFiles()
       new QListViewItem(ConSources, (*it).ascii());
     else if(Str == "v")
       new QListViewItem(ConVerilog, (*it).ascii());
+    else if(Str == "va")
+      new QListViewItem(ConVerilogA, (*it).ascii());
     else
       new QListViewItem(ConOthers, (*it).ascii());
   }
@@ -1203,6 +1210,7 @@ bool QucsApp::saveAs()
     if(isTextDocument (w))
       Filter = tr("VHDL Sources")+" (*.vhdl *.vhd);;" +
 	       tr("Verilog Sources")+" (*.v);;"+
+	       tr("Verilog-A Sources")+" (*.va);;"+
 	       tr("Any File")+" (*)";
     else
       Filter = QucsFileFilter;
@@ -1245,16 +1253,19 @@ bool QucsApp::saveAs()
     if(Info.dirPath(true) == QucsWorkDir.absPath())
       if(!ProjName.isEmpty()) {
         s = Info.fileName();  // remove path from file name
-        if(Info.extension(false) == "sch")
+	QString ext = Info.extension (false);
+        if(ext == "sch")
           Content->setSelected(new QListViewItem(ConSchematics, s), true);
-        else if(Info.extension(false) == "dpl")
+        else if(ext == "dpl")
           Content->setSelected(new QListViewItem(ConDisplays, s), true);
-        else if(Info.extension(false) == "dat")
+        else if(ext == "dat")
           Content->setSelected(new QListViewItem(ConDatasets, s), true);
-        else if((Info.extension(false) == "vhdl") || (Info.extension(false) == "vhd"))
+        else if((ext == "vhdl") || (ext == "vhd"))
           Content->setSelected(new QListViewItem(ConSources, s), true);
-        else if(Info.extension(false) == "v")
+        else if(ext == "v")
           Content->setSelected(new QListViewItem(ConVerilog, s), true);
+        else if(ext == "va")
+          Content->setSelected(new QListViewItem(ConVerilogA, s), true);
         else
           Content->setSelected(new QListViewItem(ConOthers, s), true);
       }
@@ -1449,10 +1460,11 @@ void QucsApp::updatePortNumber(QucsDoc *currDoc, int No)
   if(No<0) return;
 
   QString pathName = currDoc->DocName;
-  QFileInfo Info(pathName);
+  QString ext = currDoc->fileSuffix ();
+  QFileInfo Info (pathName);
   QString Model, File, Name = Info.fileName();
 
-  if(Info.extension() == "sch") {
+  if (ext == "sch") {
     Model = "Sub";
 
     // enter new port number into ListView
@@ -1465,10 +1477,10 @@ void QucsApp::updatePortNumber(QucsDoc *currDoc, int No)
       }
     }
   }
-  else if(Info.extension() == "vhdl" || Info.extension() == "vhd") {
+  else if (ext == "vhdl" || ext == "vhd") {
     Model = "VHDL";
   }
-  else if(Info.extension() == "v") {
+  else if (ext == "v") {
     Model = "Verilog";
   }
 
@@ -1811,12 +1823,11 @@ void QucsApp::slotChangePage(QString& DocName, QString& DataDisplay)
   if(d)
     DocumentTab->setCurrentPage(z);
   else {   // no open page found ?
-    if(DataDisplay.section('.',1).left(3) != "vhd" &&
-       DataDisplay.section('.',1).left(4) != "vhdl" &&
-       DataDisplay.section('.',1).left(1) != "v")
-      d = new Schematic(this, Name);
+    QString ext = QucsDoc::fileSuffix (DataDisplay);
+    if (ext != "vhd" && ext != "vhdl" && ext != "v" && ext != "va")
+      d = new Schematic (this, Name);
     else
-      d = new TextDoc(this, Name);
+      d = new TextDoc (this, Name);
 
     QFile file(Name);
     if(file.open(IO_ReadOnly)) {      // try to load document
@@ -1890,8 +1901,8 @@ void QucsApp::slotOpenContent(QListViewItem *item)
   QFileInfo Info(QucsWorkDir.filePath(item->text(0)));
   QString Suffix = Info.extension(false);
 
-  if(Suffix == "sch" || Suffix == "dpl" || Suffix.left(3) == "vhd" ||
-     Suffix == "v") {
+  if (Suffix == "sch" || Suffix == "dpl" || Suffix == "vhdl" ||
+      Suffix == "v" || Suffix == "va") {
     gotoPage(Info.absFilePath());
 
     if(item->text(1).isEmpty())     // is subcircuit ?
