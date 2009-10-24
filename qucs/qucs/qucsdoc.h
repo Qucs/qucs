@@ -43,6 +43,11 @@ public:
   virtual void  showAll() {};
   virtual void  showNoZoom() {};
 
+  static QString fileSuffix (const QString&);
+  QString fileSuffix (void);
+  static QString fileBase (const QString&);
+  QString fileBase (void);
+
   QString DocName;
   QString DataSet;     // name of the default dataset
   QString DataDisplay; // name of the default data display

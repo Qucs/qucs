@@ -7213,17 +7213,17 @@ Overwrite ?</source>
     </message>
     <message>
         <source>Cannot delete the open file: </source>
-        <translation>Açık kütük silinemez:</translation>
+        <translation type="obsolete">Açık kütük silinemez:</translation>
     </message>
     <message>
         <source>This will delete the files
 </source>
-        <translation>Bu, kütükleri silecek
+        <translation type="obsolete">Bu, kütükleri silecek
 </translation>
     </message>
     <message>
         <source>permanently! Continue ?</source>
-        <translation>geri alınamaz biçimde! Devam ?</translation>
+        <translation type="obsolete">geri alınamaz biçimde! Devam ?</translation>
     </message>
     <message>
         <source>Cannot create work directory !</source>
@@ -7511,15 +7511,15 @@ Tasarıyı düzenler/değiştirir</translation>
     </message>
     <message>
         <source>Cannot delete data display: </source>
-        <translation>Veri göstergesi silinemiyor: </translation>
+        <translation type="obsolete">Veri göstergesi silinemiyor: </translation>
     </message>
     <message>
         <source>Cannot delete data file: </source>
-        <translation>Veri kütüğü silinemiyor: </translation>
+        <translation type="obsolete">Veri kütüğü silinemiyor: </translation>
     </message>
     <message>
         <source>Cannot delete VHDL source: </source>
-        <translation>VHDL kütüğü silinemiyor: </translation>
+        <translation type="obsolete">VHDL kütüğü silinemiyor: </translation>
     </message>
     <message>
         <source>Creating new text editor...</source>
@@ -9370,7 +9370,7 @@ Seçili bileşenleri dikey olarak ortala</translation>
     </message>
     <message>
         <source>Cannot delete Verilog source: </source>
-        <translation>Verilog kaynağı silinemiyor: </translation>
+        <translation type="obsolete">Verilog kaynağı silinemiyor: </translation>
     </message>
     <message>
         <source>probes</source>
@@ -9404,6 +9404,54 @@ Convert data file to various file formats</source>
     </message>
     <message>
         <source>Kazakh by Erbol Keshubaev</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>unknown</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Verilog source</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>VHDL source</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>data file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>data display</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>schematic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>symbol</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>VHDL configuration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>configuration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot delete the open file `%1&apos;!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This will delete the files%1permanently! Continue ?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot delete %1: `%2&apos;!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -12516,6 +12564,36 @@ Hatalar:
         <source>Edit Text Symbol
 
 Edits the symbol for this text document</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>VHDL entity</source>
+        <translation type="unfinished">VHDL varlığı</translation>
+    </message>
+    <message>
+        <source>Inserts skeleton of VHDL entity</source>
+        <translation type="unfinished">Bir &quot;VHDL varlığı&quot; iskeleti koyar</translation>
+    </message>
+    <message>
+        <source>VHDL entity
+
+Inserts the skeleton of a VHDL entity</source>
+        <translation type="unfinished">VHDL varlığı
+
+Bir VHDL varlığı iskeleti koyar</translation>
+    </message>
+    <message>
+        <source>Verilog module</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inserts skeleton of Verilog module</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Verilog entity
+
+Inserts the skeleton of a Verilog module</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

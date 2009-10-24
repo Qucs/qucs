@@ -8067,17 +8067,17 @@ Copies the selected section to the clipboard</source>
     </message>
     <message>
         <source>Cannot delete the open file: </source>
-        <translation>Невозможно удалить открытый файл: </translation>
+        <translation type="obsolete">Невозможно удалить открытый файл: </translation>
     </message>
     <message>
         <source>This will delete the files
 </source>
-        <translation>Это приведет к удалению файлов
+        <translation type="obsolete">Это приведет к удалению файлов
 </translation>
     </message>
     <message>
         <source>permanently! Continue ?</source>
-        <translation>безвозвратно! Продолжить?</translation>
+        <translation type="obsolete">безвозвратно! Продолжить?</translation>
     </message>
     <message>
         <source>Cannot create work directory !</source>
@@ -8365,15 +8365,15 @@ Edits the schematic</source>
     </message>
     <message>
         <source>Cannot delete data display: </source>
-        <translation>Невозможно удалить просмотр данных:</translation>
+        <translation type="obsolete">Невозможно удалить просмотр данных:</translation>
     </message>
     <message>
         <source>Cannot delete data file: </source>
-        <translation>Невозможно удалить файл данных</translation>
+        <translation type="obsolete">Невозможно удалить файл данных</translation>
     </message>
     <message>
         <source>Cannot delete VHDL source: </source>
-        <translation>Невозможно удалить исходный текст VHDL</translation>
+        <translation type="obsolete">Невозможно удалить исходный текст VHDL</translation>
     </message>
     <message>
         <source>Creating new text editor...</source>
@@ -10029,7 +10029,7 @@ Center vertically selected elements</source>
     </message>
     <message>
         <source>Cannot delete Verilog source: </source>
-        <translation>Не удается удалить файл исходного текста Verilog: </translation>
+        <translation type="obsolete">Не удается удалить файл исходного текста Verilog: </translation>
     </message>
     <message>
         <source>probes</source>
@@ -10065,6 +10065,54 @@ Convert data file to various file formats</source>
     </message>
     <message>
         <source>Kazakh by Erbol Keshubaev</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>unknown</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Verilog source</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>VHDL source</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>data file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>data display</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>schematic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>symbol</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>VHDL configuration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>configuration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot delete the open file `%1&apos;!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This will delete the files%1permanently! Continue ?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot delete %1: `%2&apos;!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -14886,6 +14934,36 @@ Errors:
         <source>Edit Text Symbol
 
 Edits the symbol for this text document</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>VHDL entity</source>
+        <translation type="unfinished">Объект VHDL</translation>
+    </message>
+    <message>
+        <source>Inserts skeleton of VHDL entity</source>
+        <translation type="unfinished">Вставляет каркас объекта VHDL</translation>
+    </message>
+    <message>
+        <source>VHDL entity
+
+Inserts the skeleton of a VHDL entity</source>
+        <translation type="unfinished">Объект VHDL
+
+Вставляет каркас объекта VHDL</translation>
+    </message>
+    <message>
+        <source>Verilog module</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inserts skeleton of Verilog module</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Verilog entity
+
+Inserts the skeleton of a Verilog module</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

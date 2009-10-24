@@ -614,151 +614,89 @@ void QucsApp::slotCMenuDelete()
 }
 
 // ----------------------------------------------------------
-// Deletes all files with that name (and suffix sch, dpl, dat, vhdl, v).
-void QucsApp::slotCMenuDelGroup()
+QString QucsApp::fileType (const QString& Ext)
 {
-  QListViewItem *item = Content->selectedItem();
-  if(item == 0) return;
-  QString s = item->text(0);
-  s = s.section('.',0,0);  // cut off suffix from file name
+  QString Type = tr("unknown");
+  if (Ext == "v")
+    Type = tr("Verilog source");
+  else if (Ext == "vhd" || Ext == "vhdl")
+    Type = tr("VHDL source");
+  else if (Ext == "dat")
+    Type = tr("data file");
+  else if (Ext == "dpl")
+    Type = tr("data display");
+  else if (Ext == "sch")
+    Type = tr("schematic");
+  else if (Ext == "sym")
+    Type = tr("symbol");
+  else if (Ext == "vhdl.cfg" || Ext == "vhdl.cfg")
+    Type = tr("VHDL configuration");
+  else if (Ext == "cfg")
+    Type = tr("configuration");
+  return Type;
+}
 
-  QString NameSCH = QucsWorkDir.filePath(s+".sch");
-  QString NameDPL = QucsWorkDir.filePath(s+".dpl");
-  QString NameDAT = QucsWorkDir.filePath(s+".dat");
-  QString NameDIG = QucsWorkDir.filePath(s+".vhdl");
-  QString NameVHD = QucsWorkDir.filePath(s+".vhd");
-  QString NameVER = QucsWorkDir.filePath(s+".v");
+// ----------------------------------------------------------
+// Deletes all files with that name (and suffix sch, dpl, dat, vhdl, etc.).
+void QucsApp::slotCMenuDelGroup ()
+{
+  QListViewItem * item = Content->selectedItem ();
+  if (item == 0)
+    return;
+  QString s = item->text (0);
+  s = QucsDoc::fileBase (s); // cut off suffix from file name
 
-  int No=0;
-  QucsDoc *d;  // search, if files are open
-  while((d=getDoc(No++)) != 0) {
-    if(d->DocName == NameSCH) {
+  const char * extensions[] =
+    { "sch", "dpl", "dat", "vhdl", "vhd", "v", "sym",
+      "vhdl.cfg", "vhd.cfg", 0 };
+
+  int i;
+  for (i = 0; extensions[i] != 0; i++) {
+    QString Short = s + "." + extensions[i];
+    QString Name = QucsWorkDir.filePath (Short);
+    // search, if files are open
+    if (findDoc (Name)) {
       QMessageBox::critical(this, tr("Error"),
-                   tr("Cannot delete the open file: ")+NameSCH);
-      return;
-    }
-    if(d->DocName == NameDPL) {
-      QMessageBox::critical(this, tr("Error"),
-                   tr("Cannot delete the open file: ")+NameDPL);
-      return;
-    }
-    if(d->DocName == NameDIG) {
-      QMessageBox::critical(this, tr("Error"),
-                   tr("Cannot delete the open file: ")+NameDIG);
-      return;
-    }
-    if(d->DocName == NameVHD) {
-      QMessageBox::critical(this, tr("Error"),
-                   tr("Cannot delete the open file: ")+NameVHD);
-      return;
-    }
-    if(d->DocName == NameVER) {
-      QMessageBox::critical(this, tr("Error"),
-                   tr("Cannot delete the open file: ")+NameVER);
+		tr("Cannot delete the open file `%1'!").arg(Short));
       return;
     }
   }
 
-
-  bool SCH_exists = QFile::exists(NameSCH);
-  bool DPL_exists = QFile::exists(NameDPL);
-  bool DAT_exists = QFile::exists(NameDAT);
-  bool DIG_exists = QFile::exists(NameDIG);
-  bool VHD_exists = QFile::exists(NameVHD);
-  bool VER_exists = QFile::exists(NameVER);
-
-  QString Str;
-  if(SCH_exists)  Str += s+".sch\n";
-  if(DPL_exists)  Str += s+".dpl\n";
-  if(DAT_exists)  Str += s+".dat\n";
-  if(DIG_exists)  Str += s+".vhdl\n";
-  if(VHD_exists)  Str += s+".vhd\n";
-  if(VER_exists)  Str += s+".v\n";
-
-  No = QMessageBox::warning(this, tr("Warning"),
-	tr("This will delete the files\n")+Str+tr("permanently! Continue ?"),
+  // check existence of files
+  QString Str = "\n";
+  for (i = 0; extensions[i] != 0; i++) {
+    QString Short = s + "." + extensions[i];
+    QString Long = QucsWorkDir.filePath (Short);
+    bool exists = QFile::exists (Long);
+    if (exists)
+      Str += Short + "\n";
+  }
+  int No;
+  No = QMessageBox::warning (this, tr("Warning"),
+	tr("This will delete the files%1permanently! Continue ?").arg(Str),
 	tr("No"), tr("Yes"));
-  if(No != 1) return;
+  if (No != 1)
+    return;
 
-  // remove files .................
-  if(SCH_exists)
-    if(!QFile::remove(NameSCH)) {
-      QMessageBox::critical(this, tr("Error"),
-		tr("Cannot delete schematic: ")+s+".sch");
-      return;
-    }
-  if(DPL_exists)
-    if(!QFile::remove(NameDPL)) {
-      QMessageBox::critical(this, tr("Error"),
-		tr("Cannot delete data display: ")+s+".dpl");
-      return;
-    }
-  if(DAT_exists)
-    if(!QFile::remove(NameDAT)) {
-      QMessageBox::critical(this, tr("Error"),
-		tr("Cannot delete data file: ")+s+".dat");
-      return;
-    }
-  if(DIG_exists)
-    if(!QFile::remove(NameDIG)) {
-      QMessageBox::critical(this, tr("Error"),
-		tr("Cannot delete VHDL source: ")+s+".vhdl");
-      return;
-    }
-  if(VHD_exists)
-    if(!QFile::remove(NameVHD)) {
-      QMessageBox::critical(this, tr("Error"),
-		tr("Cannot delete VHDL source: ")+s+".vhd");
-      return;
-    }
-  if(VER_exists)
-    if(!QFile::remove(NameVER)) {
-      QMessageBox::critical(this, tr("Error"),
-		tr("Cannot delete Verilog source: ")+s+".v");
-      return;
-    }
-
-  // remove items from listview ........
-  if(SCH_exists) {
-    item = Content->findItem(s+".sch", 0);
-    if(item) {
-      item->parent()->takeItem(item);
-      delete item;
-    }
-  }
-  if(DPL_exists) {
-    item = Content->findItem(s+".dpl", 0);
-    if(item) {
-      item->parent()->takeItem(item);
-      delete item;
-    }
-  }
-  if(DAT_exists) {
-    item = Content->findItem(s+".dat", 0);
-    if(item) {
-      item->parent()->takeItem(item);
-      delete item;
-    }
-  }
-  if(DIG_exists) {
-    item = Content->findItem(s+".vhdl", 0);
-    if(item) {
-      item->parent()->takeItem(item);
-      delete item;
-    }
-  }
-  if(VHD_exists) {
-    item = Content->findItem(s+".vhd", 0);
-    if(item) {
-      item->parent()->takeItem(item);
-      delete item;
-    }
-  }
-  if(VER_exists) {
-    item = Content->findItem(s+".v", 0);
-    if(item) {
-      item->parent()->takeItem(item);
-      delete item;
+  // file removal
+  for (i = 0; extensions[i] != 0; i++) {
+    QString Short = s + "." + extensions[i];
+    QString Name = QucsWorkDir.filePath (Short);
+    bool exists = QFile::exists (Name);
+    if (exists) {
+      // remove files
+      if (!QFile::remove (Name)) {
+	QMessageBox::critical(this, tr("Error"),
+		tr("Cannot delete %1: `%2'!").arg(fileType (extensions[i])).
+	        arg(Short));
+	continue;
+      }
+      // remove items from listview
+      item = Content->findItem (Short, 0);
+      if (item) {
+	item->parent()->takeItem (item);
+	delete item;
+      }
     }
   }
 }
@@ -2070,21 +2008,21 @@ void QucsApp::slotExpandContentList(QListViewItem*)
 // ---------------------------------------------------------
 // This function is called if the document type changes, i.e.
 // from schematic to text document or vice versa.
-void QucsApp::switchSchematicDoc(bool SchematicMode)
+void QucsApp::switchSchematicDoc (bool SchematicMode)
 {
-  mainAccel->setEnabled(SchematicMode);
+  mainAccel->setEnabled (SchematicMode);
 
   // text document
-  if(!SchematicMode) {
-    if(activeAction) {
-      activeAction->blockSignals(true); // do not call toggle slot
-      activeAction->setOn(false);       // set last toolbar button off
-      activeAction->blockSignals(false);
+  if (!SchematicMode) {
+    if (activeAction) {
+      activeAction->blockSignals (true); // do not call toggle slot
+      activeAction->setOn (false);       // set last toolbar button off
+      activeAction->blockSignals (false);
     }
     activeAction = select;
-    select->blockSignals(true);
-    select->setOn(true);
-    select->blockSignals(false);
+    select->blockSignals (true);
+    select->setOn (true);
+    select->blockSignals (false);
   }
   // schematic document
   else {
@@ -2094,33 +2032,34 @@ void QucsApp::switchSchematicDoc(bool SchematicMode)
     MouseDoubleClickAction = &MouseActions::MDoubleClickSelect;
   }
 
-  selectMarker->setEnabled(SchematicMode);
-  alignTop->setEnabled(SchematicMode);
-  alignBottom->setEnabled(SchematicMode);
-  alignLeft->setEnabled(SchematicMode);
-  alignRight->setEnabled(SchematicMode);
-  centerHor->setEnabled(SchematicMode);
-  centerVert->setEnabled(SchematicMode);
-  distrHor->setEnabled(SchematicMode);
-  distrVert->setEnabled(SchematicMode);
-  onGrid->setEnabled(SchematicMode);
-  moveText->setEnabled(SchematicMode);
-  filePrintFit->setEnabled(SchematicMode);
-  editFind->setEnabled(!SchematicMode);
-  editFindAgain->setEnabled(!SchematicMode);
-  editRotate->setEnabled(SchematicMode);
-  editMirror->setEnabled(SchematicMode);
-  editMirrorY->setEnabled(SchematicMode);
-  intoH->setEnabled(SchematicMode);
-  popH->setEnabled(SchematicMode);
-  dcbias->setEnabled(SchematicMode);
-  insWire->setEnabled(SchematicMode);
-  insLabel->setEnabled(SchematicMode);
-  insPort->setEnabled(SchematicMode);
-  insGround->setEnabled(SchematicMode);
-  insEquation->setEnabled(SchematicMode);
-  insEntity->setEnabled(!SchematicMode);
-  setMarker->setEnabled(SchematicMode);
+  selectMarker->setEnabled (SchematicMode);
+  alignTop->setEnabled (SchematicMode);
+  alignBottom->setEnabled (SchematicMode);
+  alignLeft->setEnabled (SchematicMode);
+  alignRight->setEnabled (SchematicMode);
+  centerHor->setEnabled (SchematicMode);
+  centerVert->setEnabled (SchematicMode);
+  distrHor->setEnabled (SchematicMode);
+  distrVert->setEnabled (SchematicMode);
+  onGrid->setEnabled (SchematicMode);
+  moveText->setEnabled (SchematicMode);
+  filePrintFit->setEnabled (SchematicMode);
+  editRotate->setEnabled (SchematicMode);
+  editMirror->setEnabled (SchematicMode);
+  editMirrorY->setEnabled (SchematicMode);
+  intoH->setEnabled (SchematicMode);
+  popH->setEnabled (SchematicMode);
+  dcbias->setEnabled (SchematicMode);
+  insWire->setEnabled (SchematicMode);
+  insLabel->setEnabled (SchematicMode);
+  insPort->setEnabled (SchematicMode);
+  insGround->setEnabled (SchematicMode);
+  insEquation->setEnabled (SchematicMode);
+  setMarker->setEnabled (SchematicMode);
+
+  editFind->setEnabled (!SchematicMode);
+  editFindAgain->setEnabled (!SchematicMode);
+  insEntity->setEnabled (!SchematicMode);
 }
 
 // ---------------------------------------------------------

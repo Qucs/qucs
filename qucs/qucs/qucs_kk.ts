@@ -7112,33 +7112,33 @@ Overwrite ?</source>
     </message>
     <message>
         <source>Cannot delete the open file: </source>
-        <translation>Ашық файлды жою мүмкін емес:</translation>
+        <translation type="obsolete">Ашық файлды жою мүмкін емес:</translation>
     </message>
     <message>
         <source>This will delete the files
 </source>
-        <translation>Бұл файлдың өшуіне әкеп соғады
+        <translation type="obsolete">Бұл файлдың өшуіне әкеп соғады
 </translation>
     </message>
     <message>
         <source>permanently! Continue ?</source>
-        <translation>қайтарылмайды! Жалғастырасыз ба?</translation>
+        <translation type="obsolete">қайтарылмайды! Жалғастырасыз ба?</translation>
     </message>
     <message>
         <source>Cannot delete data display: </source>
-        <translation>Мәліметтерді шолуды жою мүмкін емес:</translation>
+        <translation type="obsolete">Мәліметтерді шолуды жою мүмкін емес:</translation>
     </message>
     <message>
         <source>Cannot delete data file: </source>
-        <translation>Мәліметтер файлын жою мүмкін емес:</translation>
+        <translation type="obsolete">Мәліметтер файлын жою мүмкін емес:</translation>
     </message>
     <message>
         <source>Cannot delete VHDL source: </source>
-        <translation>VHDL бастапқы мәтінді жою мүмкін емес:</translation>
+        <translation type="obsolete">VHDL бастапқы мәтінді жою мүмкін емес:</translation>
     </message>
     <message>
         <source>Cannot delete Verilog source: </source>
-        <translation>Verilog көзін жою мүмкін емес:</translation>
+        <translation type="obsolete">Verilog көзін жою мүмкін емес:</translation>
     </message>
     <message>
         <source>Cannot create work directory !</source>
@@ -8867,6 +8867,54 @@ Trolltech Qt жайлы</translation>
         <source>Kazakh by Erbol Keshubaev</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>unknown</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Verilog source</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>VHDL source</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>data file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>data display</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>schematic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>symbol</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>VHDL configuration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>configuration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot delete the open file `%1&apos;!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This will delete the files%1permanently! Continue ?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot delete %1: `%2&apos;!</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsAttenuator</name>
@@ -10493,6 +10541,36 @@ are included in the search.</source>
         <source>Edit Text Symbol
 
 Edits the symbol for this text document</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>VHDL entity</source>
+        <translation type="unfinished">VHDL объектісі</translation>
+    </message>
+    <message>
+        <source>Inserts skeleton of VHDL entity</source>
+        <translation type="unfinished">VHDL объектінің негізін енгізеді</translation>
+    </message>
+    <message>
+        <source>VHDL entity
+
+Inserts the skeleton of a VHDL entity</source>
+        <translation type="unfinished">VHDL объектісі
+
+VHDL объектісінің негізін қояды</translation>
+    </message>
+    <message>
+        <source>Verilog module</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inserts skeleton of Verilog module</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Verilog entity
+
+Inserts the skeleton of a Verilog module</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

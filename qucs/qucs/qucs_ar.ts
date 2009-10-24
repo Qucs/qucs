@@ -7163,33 +7163,33 @@ Overwrite ?</source>
     </message>
     <message>
         <source>Cannot delete the open file: </source>
-        <translation>لا يمكن حذف ملف مفتوح:</translation>
+        <translation type="obsolete">لا يمكن حذف ملف مفتوح:</translation>
     </message>
     <message>
         <source>This will delete the files
 </source>
-        <translation>هذا من شأنه حذف الملفات
+        <translation type="obsolete">هذا من شأنه حذف الملفات
 </translation>
     </message>
     <message>
         <source>permanently! Continue ?</source>
-        <translation>بشكل دائم! الاستمرار؟</translation>
+        <translation type="obsolete">بشكل دائم! الاستمرار؟</translation>
     </message>
     <message>
         <source>Cannot delete data display: </source>
-        <translation>لا يمكن حذف بيانات العرض :</translation>
+        <translation type="obsolete">لا يمكن حذف بيانات العرض :</translation>
     </message>
     <message>
         <source>Cannot delete data file: </source>
-        <translation>لا يمكن حذف ملف بيانات :</translation>
+        <translation type="obsolete">لا يمكن حذف ملف بيانات :</translation>
     </message>
     <message>
         <source>Cannot delete VHDL source: </source>
-        <translation>لا يمكن حذف مصدر VHDL  :</translation>
+        <translation type="obsolete">لا يمكن حذف مصدر VHDL  :</translation>
     </message>
     <message>
         <source>Cannot delete Verilog source: </source>
-        <translation>لا يمكن حذف مصدر فيريلوج  :</translation>
+        <translation type="obsolete">لا يمكن حذف مصدر فيريلوج  :</translation>
     </message>
     <message>
         <source>Cannot create work directory !</source>
@@ -8931,6 +8931,54 @@ Convert data file to various file formats</source>
         <source>Kazakh by Erbol Keshubaev</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>unknown</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Verilog source</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>VHDL source</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>data file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>data display</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>schematic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>symbol</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>VHDL configuration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>configuration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot delete the open file `%1&apos;!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This will delete the files%1permanently! Continue ?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot delete %1: `%2&apos;!</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsAttenuator</name>
@@ -10566,6 +10614,36 @@ are included in the search.</source>
         <source>Edit Text Symbol
 
 Edits the symbol for this text document</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>VHDL entity</source>
+        <translation type="unfinished">قيمة VHDL </translation>
+    </message>
+    <message>
+        <source>Inserts skeleton of VHDL entity</source>
+        <translation type="unfinished">إضافة هيكل قيمة VHDL    </translation>
+    </message>
+    <message>
+        <source>VHDL entity
+
+Inserts the skeleton of a VHDL entity</source>
+        <translation type="unfinished">قيمة VHDL 
+
+إضافة هيكل قيمة VHDL</translation>
+    </message>
+    <message>
+        <source>Verilog module</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inserts skeleton of Verilog module</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Verilog entity
+
+Inserts the skeleton of a Verilog module</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
