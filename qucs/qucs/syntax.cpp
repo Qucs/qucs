@@ -139,7 +139,8 @@ int SyntaxHighlighter::highlightParagraph(const QString& text, int state)
       continue;
     }
     // ----- maybe a Verilog comment -------------------------------
-    else if(language == LANG_VERILOG && c == '/') {
+    else if((language == LANG_VERILOG || language == LANG_VERILOGA)
+	    && c == '/') {
       if(i > 0)
         if(text.at(i-1) == '/') {  // Verilog comment starts with //
           setFormat(i-1, text.length()-i, QucsSettings.VHDL_Comment);
@@ -149,9 +150,11 @@ int SyntaxHighlighter::highlightParagraph(const QString& text, int state)
     }
     // ----- no special syntax yet (or anymore) --------------
     else {
-      if(language == LANG_VERILOG && c == '`' && text.at(i+1).isLetter())
+      if((language == LANG_VERILOG || language == LANG_VERILOGA)
+	 && c == '`' && text.at(i+1).isLetter())
 	iWord = i;
-      else if(language == LANG_VERILOG && c == '$' && text.at(i+1).isLetter())
+      else if((language == LANG_VERILOG || language == LANG_VERILOGA)
+	      && c == '$' && text.at(i+1).isLetter())
 	iWord = i;
       else if(c.isLetter())
         iWord = i;     // start a word
@@ -174,8 +177,8 @@ int SyntaxHighlighter::highlightParagraph(const QString& text, int state)
       else if(c == '"')
 	iString = i;
     }
-    if (language == LANG_VERILOG &&
-	i > 0 && c == '*' && text.at(i-1) == '(') {
+    if ((language == LANG_VERILOG || language == LANG_VERILOGA)
+	&& i > 0 && c == '*' && text.at(i-1) == '(') {
       if (state >= STATE_COMMENT) state++;
       else state = STATE_COMMENT;
       iComment = i-1;
@@ -292,6 +295,54 @@ pChar V_List_Functions[] =
    "readmemh", "finish", "stop", 0};
 
 // ---------------------------------------------------
+// reserved Verilog-A words in alphabetical order
+pChar VA_List_A[] = {"abstol", "access", "analog", "ac_stim", "analysis", 0};
+pChar VA_List_B[] = {"begin", "branch", "bound_step", 0};
+pChar VA_List_C[] = {"case", 0};
+pChar VA_List_D[] = {"discipline", "ddt_nature", "ddt", "delay",
+		     "discontinuity", "default", 0 };
+pChar VA_List_E[] = {"enddiscipline", "else", "end", "endnature", "exclude",
+		     "endfunction", "endmodule", "electrical", "endcase", 0};
+pChar VA_List_F[] = {"for", "flow", "from", "final_step", "flicker_noise",
+		     "function", 0};
+pChar VA_List_G[] = {"generate", "ground", 0};
+pChar VA_List_I[] = {"if", "idt_nature", "inf", "idt", "initial_step",
+		     "input", "inout", 0};
+pChar VA_List_L[] = {"laplace_nd", "laplace_np", "laplace_zd", "laplace_zp",
+		     "last_crossing", 0};
+pChar VA_List_M[] = {"module", 0};
+pChar VA_List_N[] = {"nature", "noise_table", 0};
+pChar VA_List_P[] = {"potential", "parameter", 0};
+pChar VA_List_S[] = {"slew", 0};
+pChar VA_List_T[] = {"timer", "transition", 0};
+pChar VA_List_U[] = {"units", 0};
+pChar VA_List_W[] = {"white_noise", "while", 0};
+pChar VA_List_Z[] = {"zi_nd", "zi_np", "zi_zd", "zi_zp", 0};
+
+ppChar VA_WordList[] =
+  {(ppChar)&VA_List_A, (ppChar)&VA_List_B, (ppChar)&VA_List_C,
+   (ppChar)&VA_List_D, (ppChar)&VA_List_E, (ppChar)&VA_List_F,
+   (ppChar)&VA_List_G, 0,                  (ppChar)&VA_List_I,
+   0,                  0,                  (ppChar)&VA_List_L,
+   (ppChar)&VA_List_M, (ppChar)&VA_List_N, 0,
+   (ppChar)&VA_List_P, 0,                  0,
+   (ppChar)&VA_List_S, (ppChar)&VA_List_T, (ppChar)&VA_List_U,
+   0,                  (ppChar)&VA_List_W, 0,
+   0,                  (ppChar)&VA_List_Z };
+
+pChar VA_List_Units[] =
+  {"T", "G", "M", "K", "m", "u", "n", "p", "f", "a", 0};
+
+pChar VA_List_Directives[] =
+  {"define", "else", "undef", "ifdef", "endif", "include", "resetall", 0};
+
+pChar VA_List_DataTypes[] = {
+   "integer", "real", 0};
+
+pChar VA_List_Functions[] =
+  {"realtime", "temperature", "vt", "display", "strobe", 0};
+
+// ---------------------------------------------------
 void SyntaxHighlighter::markWord(const QString& text, int start, int len)
 {
   pChar *List;
@@ -324,7 +375,7 @@ void SyntaxHighlighter::markWord(const QString& text, int start, int len)
       List = V_WordList[idx];
       break;
     default:
-      List = 0;
+      List = VA_WordList[idx];;
       break;
     }
 
@@ -347,7 +398,7 @@ void SyntaxHighlighter::markWord(const QString& text, int start, int len)
     List = V_List_DataTypes;
     break;
   default:
-    List = 0;
+    List = VA_List_DataTypes;
     break;
   }
   if(List)
@@ -361,6 +412,10 @@ void SyntaxHighlighter::markWord(const QString& text, int start, int len)
   switch (language) {
   case LANG_VHDL:
     List = VHD_List_Units;
+    break;
+  case LANG_VERILOGA:
+    List = VA_List_Units;
+    break;
   default:
     List = 0;
     break;
@@ -374,41 +429,48 @@ void SyntaxHighlighter::markWord(const QString& text, int start, int len)
       }
 
 
-  if (Word.at(0) == '`' || Word.at(0) == '$')
+  if (Word.at(0) == '`' || Word.at(0) == '$') {
     Word = Word.mid(1);
-  // mark directives
-  switch (language) {
-  case LANG_VERILOG:
-    List = V_List_Directives;
-    break;
-  default:
-    List = 0;
-    break;
-  }
-  if(List)
-    for( ; *List != 0; List++)
-      if(Word == *List) {
-	newFont.setWeight(QFont::Bold);
-	setFormat(start, len, newFont, QucsSettings.VHDL_Attributes);
-	return;
-      }
+    // mark directives
+    switch (language) {
+    case LANG_VERILOG:
+      List = V_List_Directives;
+      break;
+    case LANG_VERILOGA:
+      List = VA_List_Directives;
+      break;
+    default:
+      List = 0;
+      break;
+    }
+    if(List)
+      for( ; *List != 0; List++)
+	if(Word == *List) {
+	  newFont.setWeight(QFont::Bold);
+	  setFormat(start, len, newFont, QucsSettings.VHDL_Attributes);
+	  return;
+	}
 
-  // mark special functions
-  switch (language) {
-  case LANG_VERILOG:
-    List = V_List_Functions;
-    break;
-  default:
-    List = 0;
-    break;
+    // mark special functions
+    switch (language) {
+    case LANG_VERILOG:
+      List = V_List_Functions;
+      break;
+    case LANG_VERILOGA:
+      List = VA_List_Functions;
+      break;
+    default:
+      List = 0;
+      break;
+    }
+    if(List)
+      for( ; *List != 0; List++)
+	if(Word == *List) {
+	  newFont.setWeight(QFont::Bold);
+	  setFormat(start, len, newFont, QucsSettings.VHDL_Types);
+	  return;
+	}
   }
-  if(List)
-    for( ; *List != 0; List++)
-      if(Word == *List) {
-	newFont.setWeight(QFont::Bold);
-	setFormat(start, len, newFont, QucsSettings.VHDL_Types);
-	return;
-      }
 }
 
 // ---------------------------------------------------
