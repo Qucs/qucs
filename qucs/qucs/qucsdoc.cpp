@@ -91,3 +91,22 @@ QucsDoc::QucsDoc(QucsApp *App_, const QString& Name_)
   showBias = -1;  // don't show DC bias (currently for "Schematic" only)
   Scale = 1.0;
 }
+
+QString QucsDoc::fileSuffix (const QString& Name) {
+  QFileInfo Info (Name);
+  return Info.extension (false);
+}
+
+QString QucsDoc::fileSuffix (void) {
+  return fileSuffix (DocName);
+}
+
+QString QucsDoc::fileBase (const QString& Name) {
+  QFileInfo Info (Name);
+  return Info.baseName ();
+}
+
+QString QucsDoc::fileBase (void) {
+  return fileBase (DocName);
+}
+

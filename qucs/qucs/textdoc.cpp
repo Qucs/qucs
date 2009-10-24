@@ -53,16 +53,8 @@ TextDoc::TextDoc(QucsApp *App_, const QString& Name_) : QucsDoc(App_, Name_)
   tmpPosX = tmpPosY = 1;  // set to 1 to trigger line highlighting
   Scale = (float)TextFont.pointSize();
   setUndoDepth(QucsSettings.maxUndo);
-
-  QFileInfo Info(Name_);
-  if (Info.extension (false) == "vhd" || Info.extension (false) == "vhdl")
-    setLanguage (LANG_VHDL);
-  else if (Info.extension (false) == "v")
-    setLanguage (LANG_VERILOG);
-  else if (Info.extension (false) == "va")
-    setLanguage (LANG_VERILOGA);
-  else
-    setLanguage (LANG_NONE);
+  setLanguage (Name_);
+  QFileInfo Info (Name_);
   
   if(App) {
     if(Name_.isEmpty())
@@ -95,7 +87,21 @@ TextDoc::~TextDoc()
 }
 
 // ---------------------------------------------------
-void TextDoc::setLanguage(int lang)
+void TextDoc::setLanguage (const QString& FileName)
+{
+  QFileInfo Info (FileName);
+  if (Info.extension (false) == "vhd" || Info.extension (false) == "vhdl")
+    setLanguage (LANG_VHDL);
+  else if (Info.extension (false) == "v")
+    setLanguage (LANG_VERILOG);
+  else if (Info.extension (false) == "va")
+    setLanguage (LANG_VERILOGA);
+  else
+    setLanguage (LANG_NONE);
+}
+
+// ---------------------------------------------------
+void TextDoc::setLanguage (int lang)
 {
   language = lang;
 }
@@ -153,36 +159,54 @@ bool TextDoc::loadSettings(void)
 }
 
 // ---------------------------------------------------
-void TextDoc::setName(const QString& Name_)
+void TextDoc::setName (const QString& Name_)
 {
   DocName = Name_;
+  setLanguage (DocName);
 
-  QFileInfo Info(DocName);
+  QFileInfo Info (DocName);
   if (App)
-    App->DocumentTab->setTabLabel(this, Info.fileName());
+    App->DocumentTab->setTabLabel (this, Info.fileName ());
 
-  DataSet = Info.baseName()+".dat";
-  DataDisplay = Info.baseName()+".dpl";
+  DataSet = Info.baseName () + ".dat";
+  DataDisplay = Info.baseName () + ".dpl";
 }
 
 // ---------------------------------------------------
-void TextDoc::becomeCurrent(bool)
+void TextDoc::becomeCurrent (bool)
 {
   int x, y;
-  getCursorPosition(&x, &y);
-  slotCursorPosChanged(x, y);
-  viewport()->setFocus();
+  getCursorPosition (&x, &y);
+  slotCursorPosChanged (x, y);
+  viewport()->setFocus ();
 
-  if(isUndoAvailable())  App->undo->setEnabled(true);
-  else  App->undo->setEnabled(false);
-  if(isRedoAvailable())  App->redo->setEnabled(true);
-  else  App->redo->setEnabled(false);
+  if (isUndoAvailable ())
+    App->undo->setEnabled (true);
+  else
+    App->undo->setEnabled (false);
+  if (isRedoAvailable ())
+    App->redo->setEnabled (true);
+  else
+    App->redo->setEnabled (false);
 
-  // update appropriate menu entry
-  App->symEdit->setMenuText(tr("Edit Text Symbol"));
-  App->symEdit->setStatusTip(tr("Edits the symbol for this text document"));
-  App->symEdit->setWhatsThis(
+  // update appropriate menu entries
+  App->symEdit->setMenuText (tr("Edit Text Symbol"));
+  App->symEdit->setStatusTip (tr("Edits the symbol for this text document"));
+  App->symEdit->setWhatsThis (
 	tr("Edit Text Symbol\n\nEdits the symbol for this text document"));
+
+  if (language == LANG_VHDL) {
+    App->insEntity->setMenuText (tr("VHDL entity"));
+    App->insEntity->setStatusTip (tr("Inserts skeleton of VHDL entity"));
+    App->insEntity->setWhatsThis (
+	tr("VHDL entity\n\nInserts the skeleton of a VHDL entity"));
+  }
+  else if (language == LANG_VERILOG || language == LANG_VERILOGA) {
+    App->insEntity->setMenuText (tr("Verilog module"));
+    App->insEntity->setStatusTip (tr("Inserts skeleton of Verilog module"));
+    App->insEntity->setWhatsThis (
+	tr("Verilog entity\n\nInserts the skeleton of a Verilog module"));
+  }
 }
 
 // ---------------------------------------------------
@@ -225,42 +249,43 @@ QPopupMenu *TextDoc::createPopupMenu( const QPoint &pos )
 }
 
 // ---------------------------------------------------
-bool TextDoc::load()
+bool TextDoc::load ()
 {
-  QFile file(DocName);
-  if(!file.open(IO_ReadOnly))
+  QFile file (DocName);
+  if (!file.open (IO_ReadOnly))
     return false;
+  setLanguage (DocName);
 
-  QTextStream stream(&file);
-  setText(stream.read());
-  setModified(false);
-  slotSetChanged();
-  file.close();
-  lastSaved = QDateTime::currentDateTime();
+  QTextStream stream (&file);
+  setText (stream.read ());
+  setModified (false);
+  slotSetChanged ();
+  file.close ();
+  lastSaved = QDateTime::currentDateTime ();
 
-  loadSettings();
+  loadSettings ();
   SimOpenDpl = simulation ? true : false;
   return true;
 }
 
 // ---------------------------------------------------
-int TextDoc::save()
+int TextDoc::save ()
 {
-  saveSettings();
+  saveSettings ();
 
-  QFile file(DocName);
-  if(!file.open(IO_WriteOnly))
+  QFile file (DocName);
+  if (!file.open (IO_WriteOnly))
     return -1;
+  setLanguage (DocName);
 
-  QTextStream stream(&file);
-  stream << text();
-  setModified(false);
-  slotSetChanged();
-  file.close();
+  QTextStream stream (&file);
+  stream << text ();
+  setModified (false);
+  slotSetChanged ();
+  file.close ();
 
-  QFileInfo Info(DocName);
-  lastSaved = Info.lastModified();
-
+  QFileInfo Info (DocName);
+  lastSaved = Info.lastModified ();
   return 0;
 }
 
@@ -356,23 +381,50 @@ bool TextDoc::loadSimulationTime(QString& Time)
 }
 
 // ---------------------------------------------------
-void TextDoc::outcommmentSelected()
+void TextDoc::commentSelected ()
 {
-  QString s = selectedText();
-  if(s.isEmpty())
+  QString s = selectedText ();
+  if (s.isEmpty ())
     return;
 
-  if(s.left(2) == "--")
-    s.remove(0, 2);
-  else
-    s = "--" + s;
+  // use comment string indicator depending on language
+  QString co;
+  int cl;
+  switch (language) {
+  case LANG_VHDL: 
+    co = "--"; cl = 2;
+    break;
+  case LANG_VERILOG:
+  case LANG_VERILOGA:
+    co = "//"; cl = 2;
+    break;
+  default:
+    co = ""; cl = 0;
+    break;
+  }
 
-  for(int i=s.length()-2; i>=0; i--)
-    if(s.at(i) == '\n') {
-      if(s.mid(i+1, 2) == "--")
-        s.remove(i+1, 2);
+  if (s.left (cl) == co)
+    s.remove (0, cl);
+  else
+    s = co + s;
+
+  for (int i = s.length () - cl; i >= 0; i--)
+    if (s.at (i) == '\n') {
+      if (s.mid (i+1, cl) == co)
+        s.remove(i+1, cl);
       else
-        s.insert(i+1, "--");
+        s.insert (i+1, co);
     }
-  insert(s);
+  insert (s);
+}
+
+// ---------------------------------------------------
+void TextDoc::insertSkeleton ()
+{
+  if (language == LANG_VHDL)
+    insert ("entity  is\n  port ( : in bit);\nend;\n"
+	    "architecture  of  is\n  signal : bit;\nbegin\n\nend;\n\n");
+  else if (language == LANG_VERILOG)
+    insert ("module  ( );\ninput ;\noutput ;\nbegin\n\nend\n"
+	    "endmodule\n\n");
 }

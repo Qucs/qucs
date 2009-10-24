@@ -7255,31 +7255,6 @@ Overwrite ?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cannot delete the open file: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>This will delete the files
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>permanently! Continue ?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cannot delete data display: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cannot delete data file: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cannot delete VHDL source: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Cannot create work directory !</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8568,10 +8543,6 @@ Sobre Qt da Trolltech</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cannot delete Verilog source: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>New Text</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8867,6 +8838,54 @@ Convert data file to various file formats</source>
     </message>
     <message>
         <source>Kazakh by Erbol Keshubaev</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>unknown</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Verilog source</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>VHDL source</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>data file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>data display</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>schematic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>symbol</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>VHDL configuration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>configuration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot delete the open file `%1&apos;!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This will delete the files%1permanently! Continue ?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot delete %1: `%2&apos;!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -10498,6 +10517,34 @@ are included in the search.</source>
         <source>Edit Text Symbol
 
 Edits the symbol for this text document</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>VHDL entity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inserts skeleton of VHDL entity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>VHDL entity
+
+Inserts the skeleton of a VHDL entity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Verilog module</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inserts skeleton of Verilog module</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Verilog entity
+
+Inserts the skeleton of a Verilog module</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
