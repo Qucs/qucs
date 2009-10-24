@@ -7735,7 +7735,7 @@ Erreurs :
     </message>
     <message>
         <source>Cannot delete the open file: </source>
-        <translation>Ne peut effacer le fichier en cours d&apos;utilisation :</translation>
+        <translation type="obsolete">Ne peut effacer le fichier en cours d&apos;utilisation :</translation>
     </message>
     <message>
         <source>Edit Circuit Symbol</source>
@@ -7772,12 +7772,12 @@ Modifie ce schéma</translation>
     <message>
         <source>This will delete the files
 </source>
-        <translation>Ceci effacera les fichiers
+        <translation type="obsolete">Ceci effacera les fichiers
 </translation>
     </message>
     <message>
         <source>permanently! Continue ?</source>
-        <translation>définitivement ! Poursuivre ?</translation>
+        <translation type="obsolete">définitivement ! Poursuivre ?</translation>
     </message>
     <message>
         <source>Admittance Smith</source>
@@ -7837,15 +7837,15 @@ Modifie ce schéma</translation>
     </message>
     <message>
         <source>Cannot delete data display: </source>
-        <translation>Impossible d&apos;effacer le graphique : </translation>
+        <translation type="obsolete">Impossible d&apos;effacer le graphique : </translation>
     </message>
     <message>
         <source>Cannot delete data file: </source>
-        <translation>Impossible de détruire le fichier de données : </translation>
+        <translation type="obsolete">Impossible de détruire le fichier de données : </translation>
     </message>
     <message>
         <source>Cannot delete VHDL source: </source>
-        <translation>Impossible de détruire la source VHDL : </translation>
+        <translation type="obsolete">Impossible de détruire la source VHDL : </translation>
     </message>
     <message>
         <source>Creating new text editor...</source>
@@ -9681,7 +9681,7 @@ Centre verticalement les éléments sélectionnés</translation>
     </message>
     <message>
         <source>Cannot delete Verilog source: </source>
-        <translation>Impossible d&apos;effacer le fichier source Vérilog : </translation>
+        <translation type="obsolete">Impossible d&apos;effacer le fichier source Vérilog : </translation>
     </message>
     <message>
         <source>probes</source>
@@ -9715,6 +9715,54 @@ Convert data file to various file formats</source>
     </message>
     <message>
         <source>Kazakh by Erbol Keshubaev</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>unknown</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Verilog source</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>VHDL source</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>data file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>data display</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>schematic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>symbol</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>VHDL configuration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>configuration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot delete the open file `%1&apos;!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This will delete the files%1permanently! Continue ?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot delete %1: `%2&apos;!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -12975,6 +13023,36 @@ Erreurs :
         <source>Edit Text Symbol
 
 Edits the symbol for this text document</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>VHDL entity</source>
+        <translation type="unfinished">Entité VHDL</translation>
+    </message>
+    <message>
+        <source>Inserts skeleton of VHDL entity</source>
+        <translation type="unfinished">Insère un prototype d&apos;entité VHDL</translation>
+    </message>
+    <message>
+        <source>VHDL entity
+
+Inserts the skeleton of a VHDL entity</source>
+        <translation type="unfinished">Entité VHDL
+
+Insère un prototype d&apos;entité VHDL</translation>
+    </message>
+    <message>
+        <source>Verilog module</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inserts skeleton of Verilog module</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Verilog entity
+
+Inserts the skeleton of a Verilog module</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

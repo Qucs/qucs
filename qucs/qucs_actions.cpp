@@ -127,19 +127,19 @@ void QucsApp::slotEditMirrorY(bool on)
 
 // -----------------------------------------------------------------------
 // Is called when the activate/deactivate toolbar button is pressed.
-void QucsApp::slotEditActivate(bool on)
+void QucsApp::slotEditActivate (bool on)
 {
-  TextDoc *Doc = (TextDoc*)DocumentTab->currentPage();
-  if(Doc->inherits("QTextEdit")) {
-    Doc->clearParagraphBackground(Doc->tmpPosX);
-    Doc->outcommmentSelected();
+  TextDoc * Doc = (TextDoc *) DocumentTab->currentPage ();
+  if (isTextDocument (Doc)) {
+    Doc->clearParagraphBackground (Doc->tmpPosX);
+    Doc->commentSelected ();
 
-    editActivate->blockSignals(true);
-    editActivate->setOn(false);  // release toolbar button
-    editActivate->blockSignals(false);
+    editActivate->blockSignals (true);
+    editActivate->setOn (false);  // release toolbar button
+    editActivate->blockSignals (false);
   }
   else
-    performToggleAction(on, editActivate,
+    performToggleAction (on, editActivate,
         &Schematic::activateSelectedComponents,
         &MouseActions::MMoveActivate, &MouseActions::MPressActivate);
 }
@@ -277,17 +277,16 @@ void QucsApp::slotEditPaste(bool on)
 }
 
 // -----------------------------------------------------------------------
-void QucsApp::slotInsertEntity()
+void QucsApp::slotInsertEntity ()
 {
-  TextDoc *Doc = (TextDoc*)DocumentTab->currentPage();
-  Doc->viewport()->setFocus();
-  Doc->clearParagraphBackground(Doc->tmpPosX);
-  Doc->insert("entity  is\n  port ( : in bit);\nend;\n"
-              "architecture  of  is\n  signal : bit;\nbegin\n\nend;\n\n");
+  TextDoc * Doc = (TextDoc *) DocumentTab->currentPage ();
+  Doc->viewport()->setFocus ();
+  Doc->clearParagraphBackground (Doc->tmpPosX);
+  Doc->insertSkeleton ();
 
   int x, y;
-  Doc->getCursorPosition(&x, &y);
-  Doc->slotCursorPosChanged(x, y);
+  Doc->getCursorPosition (&x, &y);
+  Doc->slotCursorPosChanged (x, y);
 }
   
 // -----------------------------------------------------------------------

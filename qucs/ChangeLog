@@ -1,3 +1,17 @@
+2009-10-24  Stefan Jahn  <stefan@lkcc.org>
+
+	* textdoc.cpp (becomeCurrent): Changing menu entry for skeleton
+	inserting depending on the language.
+	(commentSelected): Disabling code depending on language.
+	(insertSkeleton): Inserting module/entity prototype depending on
+	language.
+
+	* qucsdoc.cpp: Added helper functions for document file suffix and
+	basename extraction.
+
+	* qucs.cpp (slotCMenuDelGroup): Additionally removing '*.sym'
+	files during group removal.
+
 2009-10-23  Stefan Jahn  <stefan@lkcc.org>
 
 	* syntax.cpp (highlightParagraph): Added support for (* *)

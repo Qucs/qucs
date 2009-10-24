@@ -7151,16 +7151,16 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>Cannot delete the open file: </source>
-        <translation>לא יכול למחוק את הקובץ הפתוח:</translation>
+        <translation type="obsolete">לא יכול למחוק את הקובץ הפתוח:</translation>
     </message>
     <message>
         <source>This will delete the files
 </source>
-        <translation>הפעולה הבעה תמחק את הקבצים</translation>
+        <translation type="obsolete">הפעולה הבעה תמחק את הקבצים</translation>
     </message>
     <message>
         <source>permanently! Continue ?</source>
-        <translation>לצמיתות! להמשיך?</translation>
+        <translation type="obsolete">לצמיתות! להמשיך?</translation>
     </message>
     <message>
         <source>Cannot create work directory !</source>
@@ -7593,18 +7593,6 @@ Edits the schematic</source>
     </message>
     <message>
         <source>content of current project</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cannot delete data display: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cannot delete data file: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cannot delete VHDL source: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -9329,10 +9317,6 @@ Center vertically selected elements</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cannot delete Verilog source: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>probes</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9364,6 +9348,54 @@ Convert data file to various file formats</source>
     </message>
     <message>
         <source>Kazakh by Erbol Keshubaev</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>unknown</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Verilog source</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>VHDL source</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>data file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>data display</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>schematic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>symbol</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>VHDL configuration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>configuration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot delete the open file `%1&apos;!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This will delete the files%1permanently! Continue ?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot delete %1: `%2&apos;!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -12261,6 +12293,34 @@ Errors:
         <source>Edit Text Symbol
 
 Edits the symbol for this text document</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>VHDL entity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inserts skeleton of VHDL entity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>VHDL entity
+
+Inserts the skeleton of a VHDL entity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Verilog module</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inserts skeleton of Verilog module</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Verilog entity
+
+Inserts the skeleton of a Verilog module</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

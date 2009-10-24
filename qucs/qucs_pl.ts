@@ -7750,7 +7750,7 @@ Czy chcesz kontynuować ?</translation>
     </message>
     <message>
         <source>Cannot delete the open file: </source>
-        <translation>Nie mogę usunąć otwartego pliku:</translation>
+        <translation type="obsolete">Nie mogę usunąć otwartego pliku:</translation>
     </message>
     <message>
         <source>Edit Circuit Symbol</source>
@@ -7787,12 +7787,12 @@ Edytuj schemat</translation>
     <message>
         <source>This will delete the files
 </source>
-        <translation>To spowoduje usunięcie plików
+        <translation type="obsolete">To spowoduje usunięcie plików
 </translation>
     </message>
     <message>
         <source>permanently! Continue ?</source>
-        <translation>bezpowrotnie! Czy chcesy kontynuować ?</translation>
+        <translation type="obsolete">bezpowrotnie! Czy chcesy kontynuować ?</translation>
     </message>
     <message>
         <source>SPICE netlist</source>
@@ -7832,15 +7832,15 @@ Edytuj schemat</translation>
     </message>
     <message>
         <source>Cannot delete data display: </source>
-        <translation>Nie mogę usunąć prezentacji wyników: </translation>
+        <translation type="obsolete">Nie mogę usunąć prezentacji wyników: </translation>
     </message>
     <message>
         <source>Cannot delete data file: </source>
-        <translation>Nie mogę usunąć pliku z danymi: </translation>
+        <translation type="obsolete">Nie mogę usunąć pliku z danymi: </translation>
     </message>
     <message>
         <source>Cannot delete VHDL source: </source>
-        <translation>Nie mogę usunąć źródła VHDL: </translation>
+        <translation type="obsolete">Nie mogę usunąć źródła VHDL: </translation>
     </message>
     <message>
         <source>Creating new text editor...</source>
@@ -9668,7 +9668,7 @@ wyśrodkowuje w pionie wybrane elementy</translation>
     </message>
     <message>
         <source>Cannot delete Verilog source: </source>
-        <translation>Nie mogę usunąć źródła Verilog:  </translation>
+        <translation type="obsolete">Nie mogę usunąć źródła Verilog:  </translation>
     </message>
     <message>
         <source>probes</source>
@@ -9702,6 +9702,54 @@ Convert data file to various file formats</source>
     </message>
     <message>
         <source>Kazakh by Erbol Keshubaev</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>unknown</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Verilog source</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>VHDL source</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>data file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>data display</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>schematic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>symbol</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>VHDL configuration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>configuration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot delete the open file `%1&apos;!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This will delete the files%1permanently! Continue ?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot delete %1: `%2&apos;!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -12787,6 +12835,36 @@ Błędy:
         <source>Edit Text Symbol
 
 Edits the symbol for this text document</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>VHDL entity</source>
+        <translation type="unfinished">VHDL entity</translation>
+    </message>
+    <message>
+        <source>Inserts skeleton of VHDL entity</source>
+        <translation type="unfinished">wstaw szkielet VHDL entity</translation>
+    </message>
+    <message>
+        <source>VHDL entity
+
+Inserts the skeleton of a VHDL entity</source>
+        <translation type="unfinished">VHDL entity
+
+wstawia szkielet VHDL entity</translation>
+    </message>
+    <message>
+        <source>Verilog module</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inserts skeleton of Verilog module</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Verilog entity
+
+Inserts the skeleton of a Verilog module</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

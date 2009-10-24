@@ -8076,17 +8076,17 @@ Kopiert den ausgewählten Bereich in die Zwischenablage</translation>
     </message>
     <message>
         <source>Cannot delete the open file: </source>
-        <translation>Geöffnete Datei kann nicht gelöscht werden: </translation>
+        <translation type="obsolete">Geöffnete Datei kann nicht gelöscht werden: </translation>
     </message>
     <message>
         <source>This will delete the files
 </source>
-        <translation>Dies löscht die Dateien
+        <translation type="obsolete">Dies löscht die Dateien
 </translation>
     </message>
     <message>
         <source>permanently! Continue ?</source>
-        <translation>unwiderruflich! Fortfahren?</translation>
+        <translation type="obsolete">unwiderruflich! Fortfahren?</translation>
     </message>
     <message>
         <source>Cannot create work directory !</source>
@@ -8374,15 +8374,15 @@ Bearbeitet den Schaltplan</translation>
     </message>
     <message>
         <source>Cannot delete data display: </source>
-        <translation>Die Datenvisualisierung kann nicht gelöscht werden: </translation>
+        <translation type="obsolete">Die Datenvisualisierung kann nicht gelöscht werden: </translation>
     </message>
     <message>
         <source>Cannot delete data file: </source>
-        <translation>Die Datensatzdatei kann nicht gelöscht werden: </translation>
+        <translation type="obsolete">Die Datensatzdatei kann nicht gelöscht werden: </translation>
     </message>
     <message>
         <source>Cannot delete VHDL source: </source>
-        <translation>Die VHDL Quelldatei kann nicht gelöscht werden: </translation>
+        <translation type="obsolete">Die VHDL Quelldatei kann nicht gelöscht werden: </translation>
     </message>
     <message>
         <source>Creating new text editor...</source>
@@ -10048,7 +10048,7 @@ Zentriert ausgewählte Elemente vertikal</translation>
     </message>
     <message>
         <source>Cannot delete Verilog source: </source>
-        <translation>Die Verilog Quelldatei kann nicht gelöscht werden: </translation>
+        <translation type="obsolete">Die Verilog Quelldatei kann nicht gelöscht werden: </translation>
     </message>
     <message>
         <source>probes</source>
@@ -10084,6 +10084,54 @@ Konvertiert Datendatei in verschiedene Datenformate</translation>
     </message>
     <message>
         <source>Kazakh by Erbol Keshubaev</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>unknown</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Verilog source</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>VHDL source</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>data file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>data display</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>schematic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>symbol</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>VHDL configuration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>configuration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot delete the open file `%1&apos;!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This will delete the files%1permanently! Continue ?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot delete %1: `%2&apos;!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -14915,6 +14963,36 @@ Fehler:
         <source>Edit Text Symbol
 
 Edits the symbol for this text document</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>VHDL entity</source>
+        <translation type="unfinished">VHDL-Entität</translation>
+    </message>
+    <message>
+        <source>Inserts skeleton of VHDL entity</source>
+        <translation type="unfinished">Fügt das Gerüst einer VHDL-Entität ein</translation>
+    </message>
+    <message>
+        <source>VHDL entity
+
+Inserts the skeleton of a VHDL entity</source>
+        <translation type="unfinished">VHDL-Entität
+
+Fügt das Gerüst einer VHDL-Entität ein</translation>
+    </message>
+    <message>
+        <source>Verilog module</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inserts skeleton of Verilog module</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Verilog entity
+
+Inserts the skeleton of a Verilog module</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
