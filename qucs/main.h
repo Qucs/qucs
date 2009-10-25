@@ -43,9 +43,9 @@ struct tQucsSettings {
   QColor BGColor;      // background color of view area
   QString Language;
 
-  // VHDL syntax highlighting
-  QColor VHDL_Comment, VHDL_String, VHDL_Integer, VHDL_Real,
-         VHDL_Character, VHDL_Types, VHDL_Attributes;
+  // syntax highlighting
+  QColor Comment, String, Integer, Real, Character, Type,
+    Attribute, Directive, Task;
 
   unsigned int maxUndo;    // size of undo stack
   QString Editor;

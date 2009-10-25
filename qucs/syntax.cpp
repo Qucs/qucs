@@ -62,7 +62,7 @@ int SyntaxHighlighter::highlightParagraph(const QString& text, int state)
   for(c = text.at(i); !c.isNull(); c = text.at(++i)) {
     // ----- current text is a comment ---------------------------
     if (iComment >= 0) {
-      setFormat (iComment, i-iComment+1, QucsSettings.VHDL_Comment);
+      setFormat (iComment, i-iComment+1, QucsSettings.Comment);
       if (i > 0 && c == ')' && text.at (i-1) == '*') {
 	if (--state < STATE_COMMENT) {
 	  state = STATE_NONE;
@@ -72,7 +72,7 @@ int SyntaxHighlighter::highlightParagraph(const QString& text, int state)
     }
     // ----- current text is a string ----------------------------
     else if(iString >= 0) {
-      setFormat(iString, i-iString+1, QucsSettings.VHDL_String);
+      setFormat(iString, i-iString+1, QucsSettings.String);
       if(c == '"')
         iString = -1;
       continue;
@@ -123,9 +123,9 @@ int SyntaxHighlighter::highlightParagraph(const QString& text, int state)
       if(c != '_')
         if(!c.isLetter()) {
           if(isFloat)
-            setFormat(iNumber, i-iNumber, QucsSettings.VHDL_Real);
+            setFormat(iNumber, i-iNumber, QucsSettings.Real);
           else
-            setFormat(iNumber, i-iNumber, QucsSettings.VHDL_Integer);
+            setFormat(iNumber, i-iNumber, QucsSettings.Integer);
         }
       iNumber = -1;
     }
@@ -133,7 +133,7 @@ int SyntaxHighlighter::highlightParagraph(const QString& text, int state)
     else if(language == LANG_VHDL && c == '-') {
       if(i > 0)
         if(text.at(i-1) == '-') {  // VHDL comment starts with --
-          setFormat(i-1, text.length()-i, QucsSettings.VHDL_Comment);
+          setFormat(i-1, text.length()-i, QucsSettings.Comment);
           return state;
         }
       continue;
@@ -143,7 +143,7 @@ int SyntaxHighlighter::highlightParagraph(const QString& text, int state)
 	    && c == '/') {
       if(i > 0)
         if(text.at(i-1) == '/') {  // Verilog comment starts with //
-          setFormat(i-1, text.length()-i, QucsSettings.VHDL_Comment);
+          setFormat(i-1, text.length()-i, QucsSettings.Comment);
           return state;
         }
       continue;
@@ -172,7 +172,7 @@ int SyntaxHighlighter::highlightParagraph(const QString& text, int state)
       if(c == '\'') {
 	if(i > 1)
 	  if(text.at(i-2) == '\'')
-	    setFormat(i-2, 3, QucsSettings.VHDL_Character);
+	    setFormat(i-2, 3, QucsSettings.Character);
       }
       else if(c == '"')
 	iString = i;
@@ -404,7 +404,7 @@ void SyntaxHighlighter::markWord(const QString& text, int start, int len)
   if(List)
     for( ; *List != 0; List++)
       if(Word == *List) {
-	setFormat(start, len, QucsSettings.VHDL_Types);
+	setFormat(start, len, QucsSettings.Type);
 	return;
       }
 
@@ -424,7 +424,7 @@ void SyntaxHighlighter::markWord(const QString& text, int start, int len)
     for( ; *List != 0; List++)
       if(Word == *List) {
 	newFont.setWeight(QFont::Bold);
-	setFormat(start, len, newFont, QucsSettings.VHDL_Real);
+	setFormat(start, len, newFont, QucsSettings.Real);
 	return;
       }
 
@@ -447,7 +447,7 @@ void SyntaxHighlighter::markWord(const QString& text, int start, int len)
       for( ; *List != 0; List++)
 	if(Word == *List) {
 	  newFont.setWeight(QFont::Bold);
-	  setFormat(start, len, newFont, QucsSettings.VHDL_Attributes);
+	  setFormat(start, len, newFont, QucsSettings.Directive);
 	  return;
 	}
 
@@ -467,7 +467,7 @@ void SyntaxHighlighter::markWord(const QString& text, int start, int len)
       for( ; *List != 0; List++)
 	if(Word == *List) {
 	  newFont.setWeight(QFont::Bold);
-	  setFormat(start, len, newFont, QucsSettings.VHDL_Types);
+	  setFormat(start, len, newFont, QucsSettings.Task);
 	  return;
 	}
   }
@@ -510,7 +510,7 @@ void SyntaxHighlighter::markAttribute(const QString& text, int start, int len)
   if(List)
     for(; *List != 0; List++)
       if(Word == *List) {
-        setFormat(start-1, len+1, QucsSettings.VHDL_Attributes);
+        setFormat(start-1, len+1, QucsSettings.Attribute);
         return;
       }
 }

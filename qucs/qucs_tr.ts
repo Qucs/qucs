@@ -11507,7 +11507,7 @@ uygun bir uygulama ile açılabilsinler.</translation>
     </message>
     <message>
         <source>VHDL Editor</source>
-        <translation>VHDL metin düzenleyici</translation>
+        <translation type="obsolete">VHDL metin düzenleyici</translation>
     </message>
     <message>
         <source>Czech</source>
@@ -11527,6 +11527,18 @@ uygun bir uygulama ile açılabilsinler.</translation>
     </message>
     <message>
         <source>Kazakh</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Directive</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Task</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Source Code Editor</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

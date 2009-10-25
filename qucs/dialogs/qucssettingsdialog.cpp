@@ -110,54 +110,65 @@ QucsSettingsDialog::QucsSettingsDialog(QucsApp *parent, const char *name)
 
   // ...........................................................
   QWidget *Tab3 = new QWidget(t);
-  QGridLayout *gp3 = new QGridLayout(Tab3,5,2,5,5);
+  QGridLayout *gp3 = new QGridLayout(Tab3,5,3,5,5);
 
   gp3->addMultiCellWidget(new QLabel(tr("Colors for Syntax Highlighting:"), Tab3), 0,0,0,1);
 
   ColorComment = new QPushButton(tr("Comment"), Tab3);
-  ColorComment->setPaletteForegroundColor(QucsSettings.VHDL_Comment);
+  ColorComment->setPaletteForegroundColor(QucsSettings.Comment);
   ColorComment->setPaletteBackgroundColor(QucsSettings.BGColor);
   connect(ColorComment, SIGNAL(clicked()), SLOT(slotColorComment()));
   gp3->addWidget(ColorComment,1,0);
 
   ColorString = new QPushButton(tr("String"), Tab3);
-  ColorString->setPaletteForegroundColor(QucsSettings.VHDL_String);
+  ColorString->setPaletteForegroundColor(QucsSettings.String);
   ColorString->setPaletteBackgroundColor(QucsSettings.BGColor);
   connect(ColorString, SIGNAL(clicked()), SLOT(slotColorString()));
   gp3->addWidget(ColorString,1,1);
 
   ColorInteger = new QPushButton(tr("Integer Number"), Tab3);
-  ColorInteger->setPaletteForegroundColor(QucsSettings.VHDL_Integer);
+  ColorInteger->setPaletteForegroundColor(QucsSettings.Integer);
   ColorInteger->setPaletteBackgroundColor(QucsSettings.BGColor);
   connect(ColorInteger, SIGNAL(clicked()), SLOT(slotColorInteger()));
-  gp3->addWidget(ColorInteger,2,0);
+  gp3->addWidget(ColorInteger,1,2);
 
   ColorReal = new QPushButton(tr("Real Number"), Tab3);
-  ColorReal->setPaletteForegroundColor(QucsSettings.VHDL_Real);
+  ColorReal->setPaletteForegroundColor(QucsSettings.Real);
   ColorReal->setPaletteBackgroundColor(QucsSettings.BGColor);
   connect(ColorReal, SIGNAL(clicked()), SLOT(slotColorReal()));
-  gp3->addWidget(ColorReal,2,1);
+  gp3->addWidget(ColorReal,2,0);
 
   ColorCharacter = new QPushButton(tr("Character"), Tab3);
-  ColorCharacter->setPaletteForegroundColor(QucsSettings.VHDL_Character);
+  ColorCharacter->setPaletteForegroundColor(QucsSettings.Character);
   ColorCharacter->setPaletteBackgroundColor(QucsSettings.BGColor);
   connect(ColorCharacter, SIGNAL(clicked()), SLOT(slotColorCharacter()));
-  gp3->addWidget(ColorCharacter,3,0);
+  gp3->addWidget(ColorCharacter,2,1);
 
   ColorDataType = new QPushButton(tr("Data Type"), Tab3);
-  ColorDataType->setPaletteForegroundColor(QucsSettings.VHDL_Types);
+  ColorDataType->setPaletteForegroundColor(QucsSettings.Type);
   ColorDataType->setPaletteBackgroundColor(QucsSettings.BGColor);
   connect(ColorDataType, SIGNAL(clicked()), SLOT(slotColorDataType()));
-  gp3->addWidget(ColorDataType,3,1);
+  gp3->addWidget(ColorDataType,2,2);
 
-  ColorAttributes = new QPushButton(tr("Attribute"), Tab3);
-  ColorAttributes->setPaletteForegroundColor(QucsSettings.VHDL_Attributes);
-  ColorAttributes->setPaletteBackgroundColor(QucsSettings.BGColor);
-  connect(ColorAttributes, SIGNAL(clicked()), SLOT(slotColorAttributes()));
-  gp3->addWidget(ColorAttributes,4,0);
+  ColorAttribute = new QPushButton(tr("Attribute"), Tab3);
+  ColorAttribute->setPaletteForegroundColor(QucsSettings.Attribute);
+  ColorAttribute->setPaletteBackgroundColor(QucsSettings.BGColor);
+  connect(ColorAttribute, SIGNAL(clicked()), SLOT(slotColorAttribute()));
+  gp3->addWidget(ColorAttribute,3,0);
 
+  ColorDirective = new QPushButton(tr("Directive"), Tab3);
+  ColorDirective->setPaletteForegroundColor(QucsSettings.Directive);
+  ColorDirective->setPaletteBackgroundColor(QucsSettings.BGColor);
+  connect(ColorDirective, SIGNAL(clicked()), SLOT(slotColorDirective()));
+  gp3->addWidget(ColorDirective,3,1);
 
-  t->addTab(Tab3, tr("VHDL Editor"));
+  ColorTask = new QPushButton(tr("Task"), Tab3);
+  ColorTask->setPaletteForegroundColor(QucsSettings.Task);
+  ColorTask->setPaletteBackgroundColor(QucsSettings.BGColor);
+  connect(ColorTask, SIGNAL(clicked()), SLOT(slotColorTask()));
+  gp3->addWidget(ColorTask,3,2);
+
+  t->addTab(Tab3, tr("Source Code Editor"));
 
   // ...........................................................
   QWidget *Tab2 = new QWidget(t);
@@ -337,32 +348,40 @@ void QucsSettingsDialog::slotApply()
   QucsSettings.Language =
       LanguageCombo->currentText().section('(',1,1).remove(')');
 
-  if(QucsSettings.VHDL_Comment != ColorComment->paletteForegroundColor()) {
-    QucsSettings.VHDL_Comment = ColorComment->paletteForegroundColor();
+  if(QucsSettings.Comment != ColorComment->paletteForegroundColor()) {
+    QucsSettings.Comment = ColorComment->paletteForegroundColor();
     changed = true;
   }
-  if(QucsSettings.VHDL_String != ColorString->paletteForegroundColor()) {
-    QucsSettings.VHDL_String = ColorString->paletteForegroundColor();
+  if(QucsSettings.String != ColorString->paletteForegroundColor()) {
+    QucsSettings.String = ColorString->paletteForegroundColor();
     changed = true;
   }
-  if(QucsSettings.VHDL_Integer != ColorInteger->paletteForegroundColor()) {
-    QucsSettings.VHDL_Integer = ColorInteger->paletteForegroundColor();
+  if(QucsSettings.Integer != ColorInteger->paletteForegroundColor()) {
+    QucsSettings.Integer = ColorInteger->paletteForegroundColor();
     changed = true;
   }
-  if(QucsSettings.VHDL_Real != ColorReal->paletteForegroundColor()) {
-    QucsSettings.VHDL_Real = ColorReal->paletteForegroundColor();
+  if(QucsSettings.Real != ColorReal->paletteForegroundColor()) {
+    QucsSettings.Real = ColorReal->paletteForegroundColor();
     changed = true;
   }
-  if(QucsSettings.VHDL_Character != ColorCharacter->paletteForegroundColor()) {
-    QucsSettings.VHDL_Character = ColorCharacter->paletteForegroundColor();
+  if(QucsSettings.Character != ColorCharacter->paletteForegroundColor()) {
+    QucsSettings.Character = ColorCharacter->paletteForegroundColor();
     changed = true;
   }
-  if(QucsSettings.VHDL_Types != ColorDataType->paletteForegroundColor()) {
-    QucsSettings.VHDL_Types = ColorDataType->paletteForegroundColor();
+  if(QucsSettings.Type != ColorDataType->paletteForegroundColor()) {
+    QucsSettings.Type = ColorDataType->paletteForegroundColor();
     changed = true;
   }
-  if(QucsSettings.VHDL_Attributes != ColorAttributes->paletteForegroundColor()) {
-    QucsSettings.VHDL_Attributes = ColorAttributes->paletteForegroundColor();
+  if(QucsSettings.Attribute != ColorAttribute->paletteForegroundColor()) {
+    QucsSettings.Attribute = ColorAttribute->paletteForegroundColor();
+    changed = true;
+  }
+  if(QucsSettings.Directive != ColorDirective->paletteForegroundColor()) {
+    QucsSettings.Directive = ColorDirective->paletteForegroundColor();
+    changed = true;
+  }
+  if(QucsSettings.Task != ColorTask->paletteForegroundColor()) {
+    QucsSettings.Task = ColorTask->paletteForegroundColor();
     changed = true;
   }
 
@@ -425,7 +444,9 @@ void QucsSettingsDialog::slotDefaultValues()
   ColorReal->setPaletteForegroundColor(Qt::darkMagenta);
   ColorCharacter->setPaletteForegroundColor(Qt::magenta);
   ColorDataType->setPaletteForegroundColor(Qt::darkRed);
-  ColorAttributes->setPaletteForegroundColor(Qt::darkCyan);
+  ColorAttribute->setPaletteForegroundColor(Qt::darkCyan);
+  ColorDirective->setPaletteForegroundColor(Qt::darkCyan);
+  ColorTask->setPaletteForegroundColor(Qt::darkRed);
 
   undoNumEdit->setText("20");
   editorEdit->setText(QucsSettings.BinDir + "qucsedit");
@@ -487,10 +508,28 @@ void QucsSettingsDialog::slotColorDataType()
 }
 
 // -----------------------------------------------------------
-void QucsSettingsDialog::slotColorAttributes()
+void QucsSettingsDialog::slotColorAttribute()
 {
   QColor c = QColorDialog::getColor(
-		ColorAttributes->paletteForegroundColor(), this);
+		ColorAttribute->paletteForegroundColor(), this);
   if(c.isValid())
-    ColorAttributes->setPaletteForegroundColor(c);
+    ColorAttribute->setPaletteForegroundColor(c);
+}
+
+// -----------------------------------------------------------
+void QucsSettingsDialog::slotColorDirective()
+{
+  QColor c = QColorDialog::getColor(
+		ColorDirective->paletteForegroundColor(), this);
+  if(c.isValid())
+    ColorDirective->setPaletteForegroundColor(c);
+}
+
+// -----------------------------------------------------------
+void QucsSettingsDialog::slotColorTask()
+{
+  QColor c = QColorDialog::getColor(
+		ColorTask->paletteForegroundColor(), this);
+  if(c.isValid())
+    ColorTask->setPaletteForegroundColor(c);
 }

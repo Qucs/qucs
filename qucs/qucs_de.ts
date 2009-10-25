@@ -13869,7 +13869,7 @@ mit einem entsprechendem Programm zu assoziieren.</translation>
     </message>
     <message>
         <source>VHDL Editor</source>
-        <translation>VHDL Editor</translation>
+        <translation type="obsolete">VHDL Editor</translation>
     </message>
     <message>
         <source>Czech</source>
@@ -13889,6 +13889,18 @@ mit einem entsprechendem Programm zu assoziieren.</translation>
     </message>
     <message>
         <source>Kazakh</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Directive</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Task</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Source Code Editor</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
