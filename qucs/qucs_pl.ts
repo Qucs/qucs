@@ -11786,7 +11786,7 @@ otworzyć ten plik odpowiednim programem.</translation>
     </message>
     <message>
         <source>VHDL Editor</source>
-        <translation>Edytor VHDL</translation>
+        <translation type="obsolete">Edytor VHDL</translation>
     </message>
     <message>
         <source>Czech</source>
@@ -11806,6 +11806,18 @@ otworzyć ten plik odpowiednim programem.</translation>
     </message>
     <message>
         <source>Kazakh</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Directive</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Task</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Source Code Editor</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -1,3 +1,8 @@
+2009-10-25  Stefan Jahn  <stefan@lkcc.org>
+
+	* dialogs/qucssettingsdialog.cpp (QucsSettingsDialog): Added
+	syntax highlighting color settings for directives and tasks.
+
 2009-10-24  Stefan Jahn  <stefan@lkcc.org>
 
 	* syntax.cpp (highlightParagraph): Added syntaxhighlighting for

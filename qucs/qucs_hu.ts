@@ -11882,7 +11882,7 @@ a fájlt a megfelelő program nyissa meg.</translation>
     </message>
     <message>
         <source>VHDL Editor</source>
-        <translation>VHDL Szerkesztő</translation>
+        <translation type="obsolete">VHDL Szerkesztő</translation>
     </message>
     <message>
         <source>Czech</source>
@@ -11902,6 +11902,18 @@ a fájlt a megfelelő program nyissa meg.</translation>
     </message>
     <message>
         <source>Kazakh</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Directive</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Task</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Source Code Editor</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
