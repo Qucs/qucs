@@ -11737,7 +11737,7 @@ abrir els fitxers amb el programa apropiado.</translation>
     </message>
     <message>
         <source>VHDL Editor</source>
-        <translation>Editor VHDL</translation>
+        <translation type="obsolete">Editor VHDL</translation>
     </message>
     <message>
         <source>Czech</source>
@@ -11757,6 +11757,18 @@ abrir els fitxers amb el programa apropiado.</translation>
     </message>
     <message>
         <source>Kazakh</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Directive</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Task</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Source Code Editor</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -84,13 +84,15 @@ bool loadSettings()
     else if(Setting == "Language") {
 	QucsSettings.Language = Line; }
     else if(Setting == "SyntaxColor") {
-	QucsSettings.VHDL_Comment.setNamedColor(Line.section(",", 0,0));
-	QucsSettings.VHDL_String.setNamedColor(Line.section(",", 1,1));
-	QucsSettings.VHDL_Integer.setNamedColor(Line.section(",", 2,2));
-	QucsSettings.VHDL_Real.setNamedColor(Line.section(",", 3,3));
-	QucsSettings.VHDL_Character.setNamedColor(Line.section(",", 4,4));
-	QucsSettings.VHDL_Types.setNamedColor(Line.section(",", 5,5));
-	QucsSettings.VHDL_Attributes.setNamedColor(Line.section(",", 6,6));
+	QucsSettings.Comment.setNamedColor(Line.section(",", 0,0));
+	QucsSettings.String.setNamedColor(Line.section(",", 1,1));
+	QucsSettings.Integer.setNamedColor(Line.section(",", 2,2));
+	QucsSettings.Real.setNamedColor(Line.section(",", 3,3));
+	QucsSettings.Character.setNamedColor(Line.section(",", 4,4));
+	QucsSettings.Type.setNamedColor(Line.section(",", 5,5));
+	QucsSettings.Attribute.setNamedColor(Line.section(",", 6,6));
+	QucsSettings.Directive.setNamedColor(Line.section(",", 7,7));
+	QucsSettings.Task.setNamedColor(Line.section(",", 8,8));
     }
     else if(Setting == "NodeWiring") {
 	QucsSettings.NodeWiring = Line.toInt(&ok); }
@@ -122,13 +124,15 @@ bool saveApplSettings(QucsApp *qucs)
     << "maxUndo=" << QucsSettings.maxUndo << "\n"
     << "Editor=" << QucsSettings.Editor << "\n"
     << "SyntaxColor="
-    << QucsSettings.VHDL_Comment.name() << ","
-    << QucsSettings.VHDL_String.name() << ","
-    << QucsSettings.VHDL_Integer.name() << ","
-    << QucsSettings.VHDL_Real.name() << ","
-    << QucsSettings.VHDL_Character.name() << ","
-    << QucsSettings.VHDL_Types.name() << ","
-    << QucsSettings.VHDL_Attributes.name() << "\n"
+    << QucsSettings.Comment.name() << ","
+    << QucsSettings.String.name() << ","
+    << QucsSettings.Integer.name() << ","
+    << QucsSettings.Real.name() << ","
+    << QucsSettings.Character.name() << ","
+    << QucsSettings.Type.name() << ","
+    << QucsSettings.Attribute.name() << ","
+    << QucsSettings.Directive.name() << ","
+    << QucsSettings.Task.name() << "\n"
     << "NodeWiring=" << QucsSettings.NodeWiring << "\n";
 
   QStringList::Iterator it = QucsSettings.FileTypes.begin();
@@ -571,21 +575,25 @@ int main(int argc, char *argv[])
   if(!QucsSettings.BGColor.isValid())
     QucsSettings.BGColor.setRgb(255, 250, 225);
 
-  // VHDL syntax highlighting
-  if(!QucsSettings.VHDL_Comment.isValid())
-    QucsSettings.VHDL_Comment = Qt::gray;
-  if(!QucsSettings.VHDL_String.isValid())
-    QucsSettings.VHDL_String = Qt::red;
-  if(!QucsSettings.VHDL_Integer.isValid())
-    QucsSettings.VHDL_Integer = Qt::blue;
-  if(!QucsSettings.VHDL_Real.isValid())
-    QucsSettings.VHDL_Real = Qt::darkMagenta;
-  if(!QucsSettings.VHDL_Character.isValid())
-    QucsSettings.VHDL_Character = Qt::magenta;
-  if(!QucsSettings.VHDL_Types.isValid())
-    QucsSettings.VHDL_Types = Qt::darkRed;
-  if(!QucsSettings.VHDL_Attributes.isValid())
-    QucsSettings.VHDL_Attributes = Qt::darkCyan;
+  // syntax highlighting
+  if(!QucsSettings.Comment.isValid())
+    QucsSettings.Comment = Qt::gray;
+  if(!QucsSettings.String.isValid())
+    QucsSettings.String = Qt::red;
+  if(!QucsSettings.Integer.isValid())
+    QucsSettings.Integer = Qt::blue;
+  if(!QucsSettings.Real.isValid())
+    QucsSettings.Real = Qt::darkMagenta;
+  if(!QucsSettings.Character.isValid())
+    QucsSettings.Character = Qt::magenta;
+  if(!QucsSettings.Type.isValid())
+    QucsSettings.Type = Qt::darkRed;
+  if(!QucsSettings.Attribute.isValid())
+    QucsSettings.Attribute = Qt::darkCyan;
+  if(!QucsSettings.Directive.isValid())
+    QucsSettings.Directive = Qt::darkCyan;
+  if(!QucsSettings.Task.isValid())
+    QucsSettings.Task = Qt::darkRed;
 
   var = getenv ("ASCODIR");
   if (var != NULL) {

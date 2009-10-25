@@ -56,7 +56,9 @@ private slots:
   void slotColorReal();
   void slotColorCharacter();
   void slotColorDataType();
-  void slotColorAttributes();
+  void slotColorAttribute();
+  void slotColorDirective();
+  void slotColorTask();
 
 public:
   QucsApp *App;
@@ -68,7 +70,8 @@ public:
   QLineEdit *undoNumEdit, *editorEdit, *Input_Suffix, *Input_Program;
   QListView *List_Suffix;
   QPushButton *ColorComment, *ColorString, *ColorInteger,
-       *ColorReal, *ColorCharacter, *ColorDataType, *ColorAttributes;
+       *ColorReal, *ColorCharacter, *ColorDataType, *ColorAttribute,
+       *ColorDirective, *ColorTask;
 
   QVBoxLayout *all;
   QIntValidator *val200;

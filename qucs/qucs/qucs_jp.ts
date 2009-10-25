@@ -11587,7 +11587,7 @@ open files with an appropriate program.</source>
     </message>
     <message>
         <source>VHDL Editor</source>
-        <translation>VHDLエディタ</translation>
+        <translation type="obsolete">VHDLエディタ</translation>
     </message>
     <message>
         <source>Czech</source>
@@ -11607,6 +11607,18 @@ open files with an appropriate program.</source>
     </message>
     <message>
         <source>Kazakh</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Directive</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Task</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Source Code Editor</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
