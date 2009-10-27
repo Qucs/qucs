@@ -4,7 +4,7 @@
 #
 # Automake input file.
 #
-# Copyright (C) 2004, 2006 Stefan Jahn <stefan@lkcc.org>
+# Copyright (C) 2004, 2006, 2009 Stefan Jahn <stefan@lkcc.org>
 #
 # This is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -27,16 +27,16 @@ noinst_LIBRARIES = libdialogs.a
 MOCHEADERS = settingsdialog.h simmessage.h qucssettingsdialog.h      \
      labeldialog.h changedialog.h matchdialog.h digisettingsdialog.h \
      sweepdialog.h searchdialog.h librarydialog.h importdialog.h     \
-     packagedialog.h savedialog.h \
+     packagedialog.h savedialog.h vasettingsdialog.h                 \
      vtabbutton.h vtabbar.h vtabwidget.h vtabbeddockwidget.h
 
 MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
 
 libdialogs_a_SOURCES = settingsdialog.cpp newprojdialog.cpp \
-     simmessage.cpp qucssettingsdialog.cpp labeldialog.cpp changedialog.cpp  \
+     simmessage.cpp qucssettingsdialog.cpp labeldialog.cpp changedialog.cpp \
      matchdialog.cpp sweepdialog.cpp digisettingsdialog.cpp searchdialog.cpp \
      librarydialog.cpp importdialog.cpp packagedialog.cpp \
-     savedialog.cpp \
+     savedialog.cpp vasettingsdialog.cpp \
      vtabbutton.cpp vtabbar.cpp vtabwidget.cpp vtabbeddockwidget.cpp
 
 nodist_libdialogs_a_SOURCES = $(MOCFILES)

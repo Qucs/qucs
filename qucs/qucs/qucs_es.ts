@@ -7128,6 +7128,10 @@ Use:  qucsedit [-r] archivo
         <source>gate-drain overlap depletion threshold</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Cannot save C++ file &quot;%1&quot;!</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
@@ -9690,15 +9694,7 @@ Convert data file to various file formats</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cannot delete the open file `%1&apos;!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>This will delete the files%1permanently! Continue ?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cannot delete %1: `%2&apos;!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -9711,6 +9707,14 @@ Convert data file to various file formats</source>
     </message>
     <message>
         <source>Verilog-A source</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot delete the open file &quot;%1&quot;!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot delete %1: &quot;%2&quot;!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -12863,6 +12867,109 @@ Inserta esqueleto de la entidad VHDL</translation>
         <source>Verilog entity
 
 Inserts the skeleton of a Verilog module</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>VASettingsDialog</name>
+    <message>
+        <source>Document Settings</source>
+        <translation type="unfinished">Propiedades del documento</translation>
+    </message>
+    <message>
+        <source>Digital Simulation Settings</source>
+        <translation type="obsolete">Ajustes de la simulación digital</translation>
+    </message>
+    <message>
+        <source>Simulation</source>
+        <translation type="obsolete">Simulación</translation>
+    </message>
+    <message>
+        <source>Duration of Simulation:</source>
+        <translation type="obsolete">Duración de la Simulación:</translation>
+    </message>
+    <message>
+        <source>Precompile Module</source>
+        <translation type="obsolete">Módulo a precompilar</translation>
+    </message>
+    <message>
+        <source>Library Name:</source>
+        <translation type="obsolete">Nombre de la Biblioteca:</translation>
+    </message>
+    <message>
+        <source>Libraries:</source>
+        <translation type="obsolete">Librerías:</translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished">Aceptar</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Cancelar</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation type="obsolete">Error</translation>
+    </message>
+    <message>
+        <source>Code Creation Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Browse</source>
+        <translation type="unfinished">Examinar</translation>
+    </message>
+    <message>
+        <source>Output file:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Recreate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Icon description:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Description:</source>
+        <translation type="unfinished">Descripción:</translation>
+    </message>
+    <message>
+        <source>unspecified device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>NPN/PNP polarity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>NMOS/PMOS polarity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>analog only</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>digital only</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>both</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PNG files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Any file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enter an Icon File Name</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

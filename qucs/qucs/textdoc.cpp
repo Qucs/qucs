@@ -35,6 +35,9 @@
 #include "qucs.h"
 #include "textdoc.h"
 #include "syntax.h"
+#include "components/vhdlfile.h"
+#include "components/verilogfile.h"
+#include "components/vafile.h"
 
 TextDoc::TextDoc(QucsApp *App_, const QString& Name_) : QucsDoc(App_, Name_)
 {
@@ -49,6 +52,7 @@ TextDoc::TextDoc(QucsApp *App_, const QString& Name_) : QucsDoc(App_, Name_)
   Library = "";
   Libraries = "";
   SetChanged = false;
+  devtype = DEV_DEF;
 
   tmpPosX = tmpPosY = 1;  // set to 1 to trigger line highlighting
   Scale = (float)TextFont.pointSize();
@@ -107,54 +111,68 @@ void TextDoc::setLanguage (int lang)
 }
 
 // ---------------------------------------------------
-bool TextDoc::saveSettings(void)
+bool TextDoc::saveSettings (void)
 {
-  QFile file(DocName + ".cfg");
-  if(!file.open(IO_WriteOnly))
+  QFile file (DocName + ".cfg");
+  if (!file.open (IO_WriteOnly))
     return false;
 
-  QTextStream stream(&file);
-
-  stream << "VHDL settings file, Qucs " PACKAGE_VERSION "\n"
+  QTextStream stream (&file);
+  stream << "Textfile settings file, Qucs " PACKAGE_VERSION "\n"
 	 << "Simulation=" << simulation << "\n"
 	 << "Duration=" << SimTime << "\n"
 	 << "Module=" << (!simulation) << "\n"
 	 << "Library=" << Library << "\n"
-	 << "Libraries=" << Libraries << "\n";
+	 << "Libraries=" << Libraries << "\n"
+	 << "ShortDesc=" << ShortDesc << "\n"
+	 << "LongDesc=" << LongDesc << "\n"
+	 << "Icon=" << Icon << "\n"
+	 << "Recreate=" << recreate << "\n"
+	 << "DeviceType=" << devtype << "\n";
 
-  file.close();
+  file.close ();
   SetChanged = false;
   return true;
 }
 
 // ---------------------------------------------------
-bool TextDoc::loadSettings(void)
+bool TextDoc::loadSettings (void)
 {
-  QFile file(DocName + ".cfg");
-  if(!file.open(IO_ReadOnly))
+  QFile file (DocName + ".cfg");
+  if (!file.open (IO_ReadOnly))
     return false;
 
-  QTextStream stream(&file);
+  QTextStream stream (&file);
   QString Line, Setting;
 
   bool ok;
-  while(!stream.atEnd()) {
-    Line = stream.readLine();
-    Setting = Line.section('=',0,0);
-    Line    = Line.section('=',1).stripWhiteSpace();
-    if(Setting == "Simulation") {
-      simulation = Line.toInt(&ok);
-    } else if(Setting == "Duration") {
+  while (!stream.atEnd ()) {
+    Line = stream.readLine ();
+    Setting = Line.section ('=', 0, 0);
+    Line = Line.section ('=', 1).stripWhiteSpace ();
+    if (Setting == "Simulation") {
+      simulation = Line.toInt (&ok);
+    } else if (Setting == "Duration") {
       SimTime = Line;
-    } else if(Setting == "Module") {
-    } else if(Setting == "Library") {
+    } else if (Setting == "Module") {
+    } else if (Setting == "Library") {
       Library = Line;
-    } else if(Setting == "Libraries") {
+    } else if (Setting == "Libraries") {
       Libraries = Line;
+    } else if (Setting == "ShortDesc") {
+      ShortDesc = Line;
+    } else if (Setting == "LongDesc") {
+      LongDesc = Line;
+    } else if (Setting == "Icon") {
+      Icon = Line;
+    } else if (Setting == "Recreate") {
+      recreate = Line.toInt (&ok);
+    } else if (Setting == "DeviceType") {
+      devtype = Line.toInt (&ok);
     }
   }
 
-  file.close();
+  file.close ();
   return true;
 }
 
@@ -429,4 +447,28 @@ void TextDoc::insertSkeleton ()
   else if (language == LANG_VERILOG)
     insert ("module  ( );\ninput ;\noutput ;\nbegin\n\nend\n"
 	    "endmodule\n\n");
+}
+
+// ---------------------------------------------------
+QString TextDoc::getModuleName (void)
+{
+  switch (language) {
+  case LANG_VHDL:
+    {
+      VHDL_File_Info VInfo (text ());
+      return VInfo.EntityName;
+    }
+  case LANG_VERILOG:
+    {
+      Verilog_File_Info VInfo (text ());
+      return VInfo.ModuleName;
+    }
+  case LANG_VERILOGA:
+    {
+      VerilogA_File_Info VInfo (text ());
+      return VInfo.ModuleName;
+    }
+  default:
+    return "";
+  }
 }

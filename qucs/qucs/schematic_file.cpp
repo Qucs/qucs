@@ -181,6 +181,68 @@ bool Schematic::pasteFromClipboard(QTextStream *stream, QPtrList<Element> *pe)
 }
 
 // -------------------------------------------------------------
+int Schematic::saveSymbolCpp (void)
+{
+  QFileInfo info (DocName);
+  QString cppfile = info.dirPath () + QDir::separator() + DataSet;
+  QFile file (cppfile);
+
+  if (!file.open (IO_WriteOnly)) {
+    QMessageBox::critical (0, QObject::tr("Error"),
+		   QObject::tr("Cannot save C++ file \"%1\"!").arg(cppfile));
+    return -1;
+  }
+
+  QTextStream stream (&file);
+
+  // automatically compute boundings of drawing
+  int xmin = INT_MAX;
+  int ymin = INT_MAX;
+  int xmax = INT_MIN;
+  int ymax = INT_MIN;
+  int x1, y1, x2, y2;
+  int maxNum = 0;
+  Painting * pp;
+
+  stream << "  // symbol drawing code\n";
+  for (pp = SymbolPaints.first (); pp != 0; pp = SymbolPaints.next ()) {
+    if (pp->Name == ".ID ") continue;
+    pp->Bounding (x1, y1, x2, y2);
+    if (x1 < xmin) xmin = x1;
+    if (x2 > xmax) xmax = x2;
+    if (y1 < ymin) ymin = y1;
+    if (y2 > ymax) ymax = y2;
+    if (pp->Name == ".PortSym ") {
+      if (((PortSymbol*)pp)->numberStr.toInt() > maxNum)
+	maxNum = ((PortSymbol*)pp)->numberStr.toInt();
+      continue;
+    }
+    stream << "  " << pp->saveCpp () << "\n";
+  }
+
+  stream << "\n  // terminal definitions\n";
+  for (int i = 1; i <= maxNum; i++) {
+    for (pp = SymbolPaints.first (); pp != 0; pp = SymbolPaints.next ()) {
+      if (pp->Name == ".PortSym ")
+	if (((PortSymbol*)pp)->numberStr.toInt() == i)
+	  stream << "  " << pp->saveCpp () << "\n";
+    }
+  }
+
+  stream << "\n  // symbol boundings\n"
+	 << "  x1 = " << xmin << "; " << "  y1 = " << ymin << ";\n"
+	 << "  x2 = " << xmax << "; " << "  y2 = " << ymax << ";\n";
+
+  stream << "\n  // property text position\n";
+  for (pp = SymbolPaints.first (); pp != 0; pp = SymbolPaints.next ())
+    if (pp->Name == ".ID ")
+      stream << "  " << pp->saveCpp () << "\n";
+
+  file.close ();
+  return 0;
+}
+
+// -------------------------------------------------------------
 // Returns the number of subcircuit ports.
 int Schematic::saveDocument()
 {
@@ -255,6 +317,15 @@ int Schematic::saveDocument()
   stream << "</Paintings>\n";
 
   file.close();
+
+  // additionally save symbol C++ code if in a symbol drawing and the
+  // associated file is a Verilog-A file
+  if (fileSuffix () == "sym") {
+    if (fileSuffix (DataDisplay) == "va") {
+      saveSymbolCpp ();
+    }
+  }
+
   return 0;
 }
 
