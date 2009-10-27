@@ -146,6 +146,17 @@ QString GraphicLine::save()
 }
 
 // --------------------------------------------------------------------------
+QString GraphicLine::saveCpp()
+{
+  QString s = 
+    QString ("new Line (%1, %2, %3, %4, QPen (QColor (\"%5\"), %6, %7))").
+    arg(cx+x1).arg(cy+y1).arg(cx+x2).arg(cy+y2).
+    arg(Pen.color().name()).arg(Pen.width()).arg(toPenString(Pen.style()));
+  s = "Lines.append (" + s + ");";
+  return s;
+}
+
+// --------------------------------------------------------------------------
 // Checks if the resize area was clicked.
 bool GraphicLine::resizeTouched(float fX, float fY, float len)
 {

@@ -33,6 +33,7 @@ public:
 
   bool load(const QString&);
   QString save();
+  QString saveCpp();
   void paint(ViewPainter*);
   bool getSelected(float, float, float);
   void Bounding(int&, int&, int&, int&);
