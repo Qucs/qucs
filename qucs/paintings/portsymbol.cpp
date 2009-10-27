@@ -159,6 +159,16 @@ QString PortSymbol::save()
 }
 
 // --------------------------------------------------------------------------
+QString PortSymbol::saveCpp()
+{
+  QString s = 
+    QString ("new Port (%1, %2)").
+    arg(cx).arg(cy);
+  s = "Ports.append (" + s + "); /* " + nameStr + " */";
+  return s;
+}
+
+// --------------------------------------------------------------------------
 // Checks if the coordinates x/y point to the painting.
 bool PortSymbol::getSelected(float fX, float fY, float)
 {

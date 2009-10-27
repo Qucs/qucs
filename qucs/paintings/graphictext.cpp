@@ -179,6 +179,21 @@ QString GraphicText::save()
   return s;
 }
 
+// --------------------------------------------------------------------------
+QString GraphicText::saveCpp()
+{
+  QString t = Text;
+  convert2ASCII(t);
+
+  QString s = 
+    QString ("new Text (%1, %2, \"%3\", QColor (\"%4\"), %5, %6, %7)").
+    arg(cx).arg(cy).arg(t).
+    arg(Color.name()).arg(Font.pointSize()).
+    arg(sin(M_PI * Angle / 180.0)).arg(cos(M_PI * Angle / 180.0));
+  s = "Texts.append (" + s + ");";
+  return s;
+}
+
 // -----------------------------------------------------------------------
 // fx/fy are the precise coordinates, gx/gy are the coordinates set on grid.
 // x/y are coordinates without scaling.

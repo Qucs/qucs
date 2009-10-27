@@ -155,6 +155,18 @@ QString EllipseArc::save()
 }
 
 // --------------------------------------------------------------------------
+QString EllipseArc::saveCpp()
+{
+  QString s = 
+    QString ("new Arc (%1, %2, %3, %4, %5, %6, "
+	     "QPen (QColor (\"%7\"), %8, %8))").
+    arg(cx).arg(cy).arg(x2).arg(y2).arg(Angle).arg(ArcLen).
+    arg(Pen.color().name()).arg(Pen.width()).arg(toPenString(Pen.style()));
+  s = "Arcs.append (" + s + ");";
+  return s;
+}
+
+// --------------------------------------------------------------------------
 // Checks if the resize area was clicked.
 bool EllipseArc::resizeTouched(float fX, float fY, float len)
 {

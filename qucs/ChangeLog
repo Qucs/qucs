@@ -1,3 +1,27 @@
+2009-10-27  Stefan Jahn  <stefan@lkcc.org>
+
+	* paintings/rectangle.cpp, paintings/portsymbol.cpp,
+	paintings/id_text.cpp, paintings/graphictext.cpp,
+	paintings/graphicline.cpp, paintings/ellipsearc.cpp,
+	paintings/ellipse.cpp, paintings/arrow.cpp (saveCpp): Added
+	support functions for saving drawing as C++ code snippet.
+
+	* dialogs/vasettingsdialog.cpp (VASettingsDialog): Added new
+	property dialog for Verilog-A files.
+
+	* textdoc.cpp (getModuleName): Added function to obtain
+	module/entity name of a text file (e.g. Verilog or VHDL).
+	(saveSettings): Saving additional settings for Verilog-A text
+	files.
+
+	* schematic_file.cpp (saveSymbolCpp): Added code to save C++
+	symbol drawing code into the dataset of a schematic.
+	(saveDocument): Usin above function to save C++ code of a symbol
+	drawing document associated with a Verilog-A file.
+
+	* schematic.cpp (adjustPortNumbers): Creating/updating Verilog-A
+	text file's default symbol when switching to symbol page.
+
 2009-10-25  Stefan Jahn  <stefan@lkcc.org>
 
 	* dialogs/qucssettingsdialog.cpp (QucsSettingsDialog): Added
@@ -28,7 +52,7 @@
 	* syntax.cpp (highlightParagraph): Added support for (* *)
 	comments in Verilog-HDL files.  Also nested comments are allowed.
 
-	* schematic.cpp (adjustPortNumbers): Support for ceation of
+	* schematic.cpp (adjustPortNumbers): Support for creation of
 	Verilog-HDL text file's default symbol.
 
 2009-10-22  Stefan Jahn  <stefan@lkcc.org>

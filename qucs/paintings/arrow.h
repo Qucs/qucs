@@ -37,6 +37,7 @@ public:
   static Element* info(QString&, char* &, bool getNewOne=false);
   bool load(const QString&);
   QString save();
+  QString saveCpp();
   void MouseMoving(QPainter*, int, int, int, int, QPainter*, int, int, bool);
   bool MousePressing();
   bool getSelected(float, float, float);

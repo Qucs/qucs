@@ -7326,6 +7326,10 @@ Použití:  qucsedit [-r] soubor
         <source>gate-drain overlap depletion threshold</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Cannot save C++ file &quot;%1&quot;!</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
@@ -10061,15 +10065,7 @@ Convert data file to various file formats</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cannot delete the open file `%1&apos;!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>This will delete the files%1permanently! Continue ?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cannot delete %1: `%2&apos;!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -10082,6 +10078,14 @@ Convert data file to various file formats</source>
     </message>
     <message>
         <source>Verilog-A source</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot delete the open file &quot;%1&quot;!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot delete %1: &quot;%2&quot;!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -14930,6 +14934,93 @@ Vloží konstrukci VHDL entity</translation>
         <source>Verilog entity
 
 Inserts the skeleton of a Verilog module</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>VASettingsDialog</name>
+    <message>
+        <source>Document Settings</source>
+        <translation type="unfinished">Nastavení dokumentu</translation>
+    </message>
+    <message>
+        <source>Simulation</source>
+        <translation type="obsolete">Simulace</translation>
+    </message>
+    <message>
+        <source>Duration of Simulation:</source>
+        <translation type="obsolete">Doba trvání simulace:</translation>
+    </message>
+    <message>
+        <source>Library Name:</source>
+        <translation type="obsolete">Jméno knihovny:</translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished">Ok</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Code Creation Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Browse</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Output file:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Recreate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Icon description:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Description:</source>
+        <translation type="unfinished">Popis:</translation>
+    </message>
+    <message>
+        <source>unspecified device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>NPN/PNP polarity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>NMOS/PMOS polarity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>analog only</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>digital only</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>both</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PNG files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Any file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enter an Icon File Name</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

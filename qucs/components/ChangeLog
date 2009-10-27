@@ -1,3 +1,8 @@
+2009-10-27  Stefan Jahn  <stefan@lkcc.org>
+
+	* vafile.cpp (VerilogA_File_Info): Added new class parsing ports
+	and module name of a Verilog-A file.
+
 2009-10-23  Stefan Jahn  <stefan@lkcc.org>
 
 	* verilogfile.cpp (Verilog_File_Info): Added class for parsing
