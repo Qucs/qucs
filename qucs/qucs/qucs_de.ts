@@ -7382,6 +7382,10 @@ Verwendung:  qucsedit [-r] Datei
         <source>gate-drain overlap depletion threshold</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Cannot save C++ file &quot;%1&quot;!</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
@@ -10123,15 +10127,7 @@ Konvertiert Datendatei in verschiedene Datenformate</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cannot delete the open file `%1&apos;!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>This will delete the files%1permanently! Continue ?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cannot delete %1: `%2&apos;!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -10144,6 +10140,14 @@ Konvertiert Datendatei in verschiedene Datenformate</translation>
     </message>
     <message>
         <source>Verilog-A source</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot delete the open file &quot;%1&quot;!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot delete %1: &quot;%2&quot;!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -15017,6 +15021,109 @@ Fügt das Gerüst einer VHDL-Entität ein</translation>
         <source>Verilog entity
 
 Inserts the skeleton of a Verilog module</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>VASettingsDialog</name>
+    <message>
+        <source>Document Settings</source>
+        <translation type="unfinished">Dokumenteneinstellungen</translation>
+    </message>
+    <message>
+        <source>Digital Simulation Settings</source>
+        <translation type="obsolete">Einstellungen für die Digitalsimulation</translation>
+    </message>
+    <message>
+        <source>Simulation</source>
+        <translation type="obsolete">Simulation</translation>
+    </message>
+    <message>
+        <source>Duration of Simulation:</source>
+        <translation type="obsolete">Zeitdauer der Simulation:</translation>
+    </message>
+    <message>
+        <source>Precompile Module</source>
+        <translation type="obsolete">Modul vorkompilieren</translation>
+    </message>
+    <message>
+        <source>Library Name:</source>
+        <translation type="obsolete">Bibliotheksname:</translation>
+    </message>
+    <message>
+        <source>Libraries:</source>
+        <translation type="obsolete">Bibliotheken:</translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished">Ok</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Abbrechen</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation type="obsolete">Fehler</translation>
+    </message>
+    <message>
+        <source>Code Creation Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Browse</source>
+        <translation type="unfinished">Durchsuchen</translation>
+    </message>
+    <message>
+        <source>Output file:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Recreate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Icon description:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Description:</source>
+        <translation type="unfinished">Beschreibung:</translation>
+    </message>
+    <message>
+        <source>unspecified device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>NPN/PNP polarity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>NMOS/PMOS polarity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>analog only</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>digital only</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>both</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PNG files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Any file</source>
+        <translation type="unfinished">Alle Dateien</translation>
+    </message>
+    <message>
+        <source>Enter an Icon File Name</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

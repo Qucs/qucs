@@ -179,6 +179,22 @@ QString Ellipse::save()
 }
 
 // --------------------------------------------------------------------------
+QString Ellipse::saveCpp()
+{
+  QString b = filled ?
+    QString (", QBrush (QColor (\"%1\"), %2)").
+    arg(Brush.color().name()).arg(toBrushString(Brush.style())) : "";
+  QString s = 
+    QString ("new Area (%1, %2, %3, %4, "
+	     "QPen (QColor (\"%5\"), %6, %7)%8)").
+    arg(cx).arg(cy).arg(x2).arg(y2).
+    arg(Pen.color().name()).arg(Pen.width()).arg(toPenString(Pen.style())).
+    arg(b);
+  s = "Ellips.append (" + s + ");";
+  return s;
+}
+
+// --------------------------------------------------------------------------
 // Checks if the resize area was clicked.
 bool Ellipse::resizeTouched(float fX, float fY, float len)
 {

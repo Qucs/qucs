@@ -88,6 +88,7 @@ public:
   bool    paste(QTextStream*, QPtrList<Element>*);
   bool    load();
   int     save();
+  int     saveSymbolCpp (void);
   void    becomeCurrent(bool);
   bool    undo();
   bool    redo();

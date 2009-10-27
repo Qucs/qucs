@@ -56,11 +56,13 @@
 #include <qlineedit.h>
 #include <qstringlist.h>
 #include <qdragobject.h>
+#include <qsyntaxhighlighter.h>
 
 #include "main.h"
 #include "qucs.h"
 #include "qucsdoc.h"
 #include "textdoc.h"
+#include "syntax.h"
 #include "schematic.h"
 #include "mouseactions.h"
 #include "wire.h"
@@ -71,6 +73,7 @@
 #include "dialogs/newprojdialog.h"
 #include "dialogs/settingsdialog.h"
 #include "dialogs/digisettingsdialog.h"
+#include "dialogs/vasettingsdialog.h"
 #include "dialogs/qucssettingsdialog.h"
 #include "dialogs/searchdialog.h"
 #include "dialogs/sweepdialog.h"
@@ -661,7 +664,7 @@ void QucsApp::slotCMenuDelGroup ()
     // search, if files are open
     if (findDoc (Name)) {
       QMessageBox::critical(this, tr("Error"),
-		tr("Cannot delete the open file `%1'!").arg(Short));
+		tr("Cannot delete the open file \"%1\"!").arg(Short));
       return;
     }
   }
@@ -691,7 +694,7 @@ void QucsApp::slotCMenuDelGroup ()
       // remove files
       if (!QFile::remove (Name)) {
 	QMessageBox::critical(this, tr("Error"),
-		tr("Cannot delete %1: `%2'!").arg(fileType (extensions[i])).
+		tr("Cannot delete %1: \"%2\"!").arg(fileType (extensions[i])).
 	        arg(Short));
 	continue;
       }
@@ -1427,18 +1430,28 @@ void QucsApp::slotNextTab()
 }
 
 // --------------------------------------------------------------
-void QucsApp::slotFileSettings()
+void QucsApp::slotFileSettings ()
 {
-  editText->setHidden(true); // disable text edit of component property
+  editText->setHidden (true); // disable text edit of component property
 
-  QWidget *w = DocumentTab->currentPage();
-  if(isTextDocument (w)) {
-    DigiSettingsDialog *d = new DigiSettingsDialog((TextDoc*)w);
-    d->exec();
+  QWidget * w = DocumentTab->currentPage ();
+  if (isTextDocument (w)) {
+    QucsDoc * Doc = (QucsDoc *) ((TextDoc *) w);
+    // Verilog-A properties
+    if (Doc->fileSuffix () == "va") {
+      VASettingsDialog * d = new VASettingsDialog ((TextDoc *) w);
+      d->exec ();
+    }
+    // VHDL and Verilog-HDL properties
+    else {
+      DigiSettingsDialog * d = new DigiSettingsDialog ((TextDoc *) w);
+      d->exec ();
+    }
   }
+  // schematic properties
   else {
-    SettingsDialog *d = new SettingsDialog((Schematic*)w);
-    d->exec();
+    SettingsDialog * d = new SettingsDialog ((Schematic *) w);
+    d->exec ();
   }
   view->drawn = false;
 }
@@ -1720,7 +1733,7 @@ void QucsApp::slotSimulate()
     if(Doc->SimTime.isEmpty() && ((TextDoc*)Doc)->simulation) {
       DigiSettingsDialog *d = new DigiSettingsDialog((TextDoc*)Doc);
       if(d->exec() == QDialog::Rejected)
-        return;
+	return;
     }
   }
   else

@@ -35,6 +35,7 @@ public:
   virtual Painting* newOne();
   virtual bool load(const QString&) { return true; };
   virtual QString save();
+  virtual QString saveCpp();
   virtual void paint(ViewPainter*) {};
   virtual void MouseMoving(QPainter*, int, int, int, int,
                            QPainter*, int, int, bool) {};
@@ -48,6 +49,8 @@ public:
   virtual void mirrorY() {};
   virtual bool Dialog() { return false; };
 
+  QString toPenString (int);
+  QString toBrushString (int);
   QString Name; // name of painting, e.g. for saving
   int  State;   // state for different mouse operations
 };

@@ -140,6 +140,15 @@ QString ID_Text::save()
 }
 
 // --------------------------------------------------------------------------
+QString ID_Text::saveCpp()
+{
+  QString s = 
+    QString ("tx = %1; ty = %2;").
+    arg(cx).arg(cy);
+  return s;
+}
+
+// --------------------------------------------------------------------------
 // Checks if the coordinates x/y point to the painting.
 bool ID_Text::getSelected(float fX, float fY, float)
 {

@@ -26,7 +26,10 @@ files.
 Version 0.0.16
 --------------
 
- * direct association of symbol drawings to Verilog-HDL and VHDL code
+ * support for C++ code export of symbol drawings associated with
+   Verilog-A files
+ * direct association of symbol drawings to Verilog-HDL, Verilog-A
+   and VHDL code
  * added Verilog-HDL syntax highlighting in text documents
  * support for pre-compiled VHDL modules and libraries made from user
    written VHDL code
