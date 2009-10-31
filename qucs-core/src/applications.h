@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: applications.h,v 1.34 2009/04/19 12:01:33 ela Exp $
+ * $Id: applications.h,v 1.35 2009/10/31 17:18:27 ela Exp $
  *
  */
 
@@ -670,6 +670,10 @@ struct application_t eqn::applications[] = {
     { TAG_VECTOR, TAG_VECTOR } },
   { "Freq2Time", TAG_VECTOR, evaluate::freq2time_v_v, 2,
     { TAG_VECTOR, TAG_VECTOR } },
+  { "receiver",  TAG_VECTOR, evaluate::receiver_v_v,  2,
+    { TAG_VECTOR, TAG_VECTOR } },
+  { "receiver",  TAG_VECTOR, evaluate::receiver_v_v,  3,
+    { TAG_VECTOR, TAG_VECTOR, TAG_DOUBLE } },
   { "fftshift",  TAG_VECTOR, evaluate::fftshift_v, 1, { TAG_VECTOR } },
 
   { "xvalue", TAG_COMPLEX, evaluate::xvalue_d, 2,

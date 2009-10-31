@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: evaluate.cpp,v 1.85 2009/09/13 10:03:16 ela Exp $
+ * $Id: evaluate.cpp,v 1.86 2009/10/31 17:18:27 ela Exp $
  *
  */
 
@@ -41,6 +41,7 @@
 #include "poly.h"
 #include "spline.h"
 #include "fourier.h"
+#include "receiver.h"
 #include "constants.h"
 #include "fspecial.h"
 #include "circuit.h"
@@ -4424,6 +4425,40 @@ constant * evaluate::matrix_x (constant * args) {
   }
   /* return result matrix */
   res->m = m;
+  return res;
+}
+
+// ********************** EMI receiver *********************
+constant * evaluate::receiver_v_v (constant * args) {
+  _ARV0 (da);
+  _ARV1 (dt);
+  _DEFV ();
+
+  // run receiver functionality
+  vector * ed;
+  if (_ARG(2)) {
+    _ARI2 (len);
+    ed = emi::receiver (da, dt, len);
+  }
+  else {
+    ed = emi::receiver (da, dt);
+  }
+
+  // create two vectors for spectrum and frequency
+  int rlen = ed->getSize ();
+  vector * rvec = new vector (rlen);
+  vector * rfeq = new vector (rlen);
+  for (int i = 0; i < rlen; i++) {
+    (*rvec)(i) = real (ed->get (i));
+    (*rfeq)(i) = imag (ed->get (i));
+  }
+  delete ed;
+
+  // put results back into equation solver
+  node * gen = SOLVEE(0)->addGeneratedEquation (rfeq, "Frequency");
+  res->addPrepDependencies (A(gen)->result);
+  res->dropdeps = 1;
+  res->v = rvec;
   return res;
 }
 

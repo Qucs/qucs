@@ -1,3 +1,18 @@
+2009-10-31  Stefan Jahn  <stefan@lkcc.org>
+
+	* interpolator.cpp: Implemented interpolator class.  It will be
+	useful for "everywhere" use in the simulator, e.g. file based
+	sources, the EMI receiver functionality, etc.  Still have to add
+	complex version of the interpolator.
+
+	* receiver.cpp: Implemented EMI receiver functionality.
+
+	* evaluate.cpp: Put EMI receiver functionality in place for the
+	equation solver.
+
+	* spline.cpp: Added new function passing original vectors as
+	simple pointers to the spline object.
+
 2009-10-04  Stefan Jahn  <stefan@lkcc.org>
 
 	* matvec.cpp: Added two more static helper functions to determine
