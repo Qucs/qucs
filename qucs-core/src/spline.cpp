@@ -1,7 +1,7 @@
 /*
  * spline.cpp - spline class implementation
  *
- * Copyright (C) 2005, 2006 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2005, 2006, 2009 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: spline.cpp,v 1.4 2006-02-23 09:02:01 raimi Exp $
+ * $Id: spline.cpp,v 1.5 2009-10-31 17:18:27 ela Exp $
  *
  */
 
@@ -100,6 +100,18 @@ void spline::vectors (tvector<nr_double_t> y, tvector<nr_double_t> t) {
   realloc (i);
   for (i = 0; i <= n; i++) {
     f0[i] = y_(i); x[i] = t_(i);
+  }
+}
+
+// Pass interpolation datapoints as pointers.
+void spline::vectors (nr_double_t * y, nr_double_t * t, int len) {
+  int i = len;
+  assert (i >= 3);
+
+  // create local copy of f(x)
+  realloc (i);
+  for (i = 0; i <= n; i++) {
+    f0[i] = y[i]; x[i] = t[i];
   }
 }
 

@@ -1,7 +1,7 @@
 /*
  * spline.h - spline class definitions
  *
- * Copyright (C) 2005, 2006 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2005, 2006, 2009 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: spline.h,v 1.4 2006-02-23 09:02:01 raimi Exp $
+ * $Id: spline.h,v 1.5 2009-10-31 17:18:27 ela Exp $
  *
  */
 
@@ -49,6 +49,7 @@ class spline
 
   void vectors (vector, vector);
   void vectors (tvector<nr_double_t>, tvector<nr_double_t>);
+  void vectors (nr_double_t *, nr_double_t *, int);
   void construct (void);
   poly evaluate (nr_double_t);
   void setBoundary (int b) { boundary = b; }

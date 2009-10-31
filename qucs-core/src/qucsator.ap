@@ -1,7 +1,7 @@
 #
 # src/qucsator.ap - Autodsp input file.
 #
-# Copyright (C) 2005, 2006, 2007, 2008 Stefan Jahn <stefan@lkcc.org>
+# Copyright (C) 2005, 2006, 2007, 2008, 2009 Stefan Jahn <stefan@lkcc.org>
 #
 # This is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -30,7 +30,8 @@ SOURCES = ucs.cpp circuit.cpp check_netlist.cpp operatingpoint.cpp          \
 	parasweep.cpp equation.cpp evaluate.cpp acsolver.cpp                \
 	trsolver.cpp transient.cpp integrator.cpp nodeset.cpp hbsolver.cpp  \
 	spline.cpp fourier.cpp pair.cpp characteristic.cpp history.cpp      \
-	range.cpp devstates.cpp differentiate.cpp module.cpp
+	range.cpp devstates.cpp differentiate.cpp module.cpp receiver.cpp   \
+	interpolator.cpp 
 
 # Additional libraries.
 LIBS = -lqucsator -lcomponent -lmicrostrip -ldevices -ldigital -lverilog \
