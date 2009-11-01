@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: receiver.cpp,v 1.2 2009/11/01 10:41:02 ela Exp $
+ * $Id: receiver.cpp,v 1.3 2009/11/01 11:51:17 ela Exp $
  *
  */
 
@@ -69,6 +69,14 @@ nr_double_t emi::f_2ndorder (nr_double_t fc, nr_double_t bw, nr_double_t f) {
   nr_complex_t p = rect (0, f / fc);
   nr_complex_t w = p / q / (1.0 + p / q + p * p);
   return norm (w);
+}
+
+/* Construction of a gaussian filter for given center frequency,
+   bandwidth and the frequency for which the filter is evaluated. */
+nr_double_t emi::f_gauss (nr_double_t fc, nr_double_t bw, nr_double_t f) {
+  nr_double_t a = log (0.5) / bw / bw;
+  nr_double_t s = f - fc;
+  return exp (a * s * s);
 }
 
 /* The function computes a EMI receiver spectrum based on the given
