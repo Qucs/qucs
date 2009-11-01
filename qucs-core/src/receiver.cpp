@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: receiver.cpp,v 1.3 2009/11/01 11:51:17 ela Exp $
+ * $Id: receiver.cpp,v 1.4 2009/11/01 17:31:31 ela Exp $
  *
  */
 
@@ -136,15 +136,17 @@ vector * emi::receiver (nr_double_t * ida, nr_double_t duration, int ilength) {
     nr_double_t fstop = settings[i].stop;
     nr_double_t fstep = settings[i].stepsize;
 
-    fcur = fstart;
-    while (fcur <= fstop) {
+    /* go through frequencies */
+    for (fcur = fstart; fcur <= fstop; fcur += fstep) {
       /* calculate indices covering current bandwidth */
-      int il = floor ((fcur - bw / 2) / fres);
-      int ir = ceil  ((fcur + bw / 2) / fres);
+      nr_double_t lo = fcur - bw / 2;
+      nr_double_t hi = fcur + bw / 2;
+      int il = floor (lo / fres);
+      int ir = floor (hi / fres);
 
       /* right index (ri) greater 0 and left index less than points ->
 	 at least part of data is within bandwidth indices */
-      if (ir >= 0 && il < points - 1) {
+      if (ir >= 0 && il < points - 1 && hi >= fres) {
 	/* adjust indices to reside in the data array */
 	if (il < 0) il = 0;
 	if (ir > points - 1) ir = points - 1;
@@ -163,9 +165,6 @@ vector * emi::receiver (nr_double_t * ida, nr_double_t duration, int ilength) {
 	ed->add (rect (dcur, fcur));
 	ei++;
       }
-
-      /* goto next frequency */
-      fcur += fstep;
     }
   }
 
