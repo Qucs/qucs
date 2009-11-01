@@ -1,9 +1,9 @@
 2009-11-01  Stefan Jahn  <stefan@lkcc.org>
 
-	* receiver.cpp: Now having two types of filters for the EMI
-	receiver: ideal and simple bandpass of 2nd order.  Also saving
-	time vector to be reconstructed since it is equidistant (thereby
-	can be calculated) anyway.  Always use interpolation.
+	* receiver.cpp: Now having three types of filters for the EMI
+	receiver: ideal, simple bandpass of 2nd order and gaussian.  Also
+	saving time vector to be reconstructed since it is equidistant
+	(thereby can be calculated) anyway.  Always use interpolation.	
 
 2009-10-31  Stefan Jahn  <stefan@lkcc.org>
 
