@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: receiver.cpp,v 1.1 2009-10-31 17:18:27 ela Exp $
+ * $Id: receiver.cpp,v 1.2 2009-11-01 10:41:02 ela Exp $
  *
  */
 
@@ -51,18 +51,37 @@ nr_int32_t emi::nearestbin32 (int x) {
   return current;
 }
 
+/* Ideal filter construction for given center frequency, bandwidth and
+   the frequency for which the filter is evaluated. */
+nr_double_t emi::f_ideal (nr_double_t fc, nr_double_t bw, nr_double_t f) {
+  nr_double_t lo = fc - bw / 2;
+  nr_double_t hi = fc + bw / 2;
+  if (f >= lo && f < hi)
+    return 1.0;
+  return 0.0;
+}
+
+/* Construction of a bandpass filter of 2nd order for given center
+   frequency, bandwidth and the frequency for which the filter is
+   evaluated. */
+nr_double_t emi::f_2ndorder (nr_double_t fc, nr_double_t bw, nr_double_t f) {
+  nr_double_t q = fc / bw;
+  nr_complex_t p = rect (0, f / fc);
+  nr_complex_t w = p / q / (1.0 + p / q + p * p);
+  return norm (w);
+}
+
 /* The function computes a EMI receiver spectrum based on the given
    waveform in the time domain.  The number of points in the waveform
-   is required to be a power of two. */
-vector * emi::receiver (nr_double_t * ida, nr_double_t * idt, int ilength) {
+   is required to be a power of two.  Also the samples are supposed
+   to be equidistant. */
+vector * emi::receiver (nr_double_t * ida, nr_double_t duration, int ilength) {
 
-  int i, n, points, istart, istop;
-  nr_double_t tstart, tstop, fres;
+  int i, n, points;
+  nr_double_t fres;
   vector * ed = new vector ();
   
   points = ilength;
-  istart = 0;
-  istop = ilength - 1;
   
   /* ilength must be a power of 2 - write wrapper later on */
   fourier::_fft_1d (ida, ilength, 1); /* 1 = forward fft */
@@ -74,9 +93,7 @@ vector * emi::receiver (nr_double_t * ida, nr_double_t * idt, int ilength) {
   }
 
   /* calculate frequency step */
-  tstart = idt[istart];
-  tstop = idt[istop];
-  fres = 1.0 / (tstop - tstart);
+  fres = 1.0 / duration;
 
   /* generate data vector; inplace calculation of magnitudes */
   nr_double_t * d = ida;
@@ -124,16 +141,11 @@ vector * emi::receiver (nr_double_t * ida, nr_double_t * idt, int ilength) {
 	if (il < 0) il = 0;
 	if (ir > points - 1) ir = points - 1;
 	 
-	/* bandpass calculation */
-	nr_double_t q = fcur / bw;
-	nr_double_t a = 1.0;
-
 	/* sum-up the values within the bandwidth */
 	dcur = 0;
 	for (int j = 0; j < ir - il; j++){
-	  nr_complex_t p = rect (0, fres * (il + j) / fcur);
-	  nr_complex_t w = a / q * p / (1.0 + p / q + p * p);
-	  dcur += norm (w) * d[il + j]; 
+	  nr_double_t f = fres * (il + j);
+	  dcur += f_2ndorder (fcur, bw, f) * d[il + j]; 
 	}
 
 	/* add noise to the result */
@@ -166,47 +178,40 @@ vector * emi::receiver (vector * da, vector * dt, int len) {
   // find a power-of-two length
   nlen = emi::nearestbin32 (len);
 
+  nr_double_t duration = real (dt->get (olen - 1) - dt->get (0));
   nr_double_t * ida = new nr_double_t[2 * nlen];
-  nr_double_t * idt = new nr_double_t[nlen];
+  nr_double_t * idt = new nr_double_t[olen];
 
-  // no interpolation necessary
-  if (olen == nlen) {
-    // just copy values
-    for (i = 0; i < olen; i++) {
-      ida[2 * i + 0] = real ((*da)(i));
-      ida[2 * i + 1] = 0;
-      idt[i] = real ((*dt)(i));
-    }
+  // interpolation is always performed in order to ensure equidistant samples
+
+  // copy values for interpolator object
+  for (i = 0; i < olen; i++) {
+    ida[i] = real ((*da)(i));
+    idt[i] = real ((*dt)(i));
   }
-  // interpolation necessary
-  else {
-    // copy values for interpolator object
-    for (i = 0; i < olen; i++) {
-      ida[i] = real ((*da)(i));
-      idt[i] = real ((*dt)(i));
-    }
-    // create interpolator (use cubic splines)
-    interpolator * inter = new interpolator ();
-    inter->vectors (ida, idt, olen);
-    inter->prepare (INTERPOL_CUBIC, REPEAT_NO, DATA_RECTANGULAR);
-    // adjust the time domain vector using interpolation
-    nr_double_t tstep = real (dt->get (olen - 1) - dt->get (0)) / nlen;
-    for (i = 0; i < nlen; i++) {
-      nr_double_t t = i * tstep;
-      ida[2 * i + 0] = inter->rinterpolate (t);
-      ida[2 * i + 1] = 0;
-      idt[i] = t;
-    }
-    // destroy interpolator
-    delete inter;
+
+  // create interpolator (use cubic splines)
+  interpolator * inter = new interpolator ();
+  inter->vectors (ida, idt, olen);
+  inter->prepare (INTERPOL_CUBIC, REPEAT_NO, DATA_RECTANGULAR);
+  delete[] idt;
+
+  // adjust the time domain vector using interpolation
+  nr_double_t tstep = duration / (nlen - 1);
+  for (i = 0; i < nlen; i++) {
+    nr_double_t t = i * tstep;
+    ida[2 * i + 0] = inter->rinterpolate (t);
+    ida[2 * i + 1] = 0;
   }
+
+  // destroy interpolator
+  delete inter;
 
   // run actual EMI receiver computations
-  vector * res = receiver (ida, idt, nlen);
+  vector * res = receiver (ida, duration, nlen);
 
   // delete intermediate data
   delete[] ida;
-  delete[] idt;
 
   return res;
 }

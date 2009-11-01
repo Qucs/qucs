@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: receiver.h,v 1.1 2009-10-31 17:18:27 ela Exp $
+ * $Id: receiver.h,v 1.2 2009-11-01 10:41:02 ela Exp $
  *
  */
 
@@ -28,6 +28,7 @@
 
 namespace emi {
 
+  // receiver setting
   struct settings {
     nr_double_t start;
     nr_double_t stop;
@@ -35,8 +36,13 @@ namespace emi {
     nr_double_t bandwidth;
   };
 
+  // internal helper functions
   nr_int32_t nearestbin32 (int);
-  vector * receiver (nr_double_t *, nr_double_t *, int);
+  nr_double_t f_2ndorder (nr_double_t, nr_double_t, nr_double_t);
+  nr_double_t f_ideal (nr_double_t, nr_double_t, nr_double_t);
+  vector * receiver (nr_double_t *, nr_double_t, int);
+
+  // external functionality
   vector * receiver (vector *, vector *, int len = -1);
 
 } // namespace
