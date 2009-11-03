@@ -1,7 +1,7 @@
 /*
  * ifile.h - file based current source class definitions
  *
- * Copyright (C) 2007, 2008 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2007, 2008, 2009 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,16 +18,15 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: ifile.h,v 1.3 2008-10-05 17:52:11 ela Exp $
+ * $Id: ifile.h,v 1.4 2009-11-03 21:26:01 ela Exp $
  *
  */
 
 #ifndef __IFILE_H__
 #define __IFILE_H__
 
-class vector;
 class dataset;
-class spline;
+class interpolator;
 
 class ifile : public circuit
 {
@@ -40,17 +39,12 @@ class ifile : public circuit
   void initTR (void);
   void calcTR (nr_double_t);
   void prepare (void);
-  nr_double_t interpolate (vector * , vector * , nr_double_t);
-  nr_double_t interpolate_lin (vector *, vector *, nr_double_t, int);
 
 private:
   dataset * data;
   int dataType;
   int interpolType;
-  vector * ts;          // time samples
-  vector * is;          // current samples
-  nr_double_t duration; // waveform duration
-  spline * sp;
+  interpolator * inter;
 };
 
 #endif /* __IFILE_H__ */

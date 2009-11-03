@@ -1,7 +1,7 @@
 /*
  * check_csv.cpp - checker for CSV files
  *
- * Copyright (C) 2007 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2007, 2009 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_csv.cpp,v 1.2 2007-08-16 08:10:48 ela Exp $
+ * $Id: check_csv.cpp,v 1.3 2009-11-03 21:26:01 ela Exp $
  *
  */
 
@@ -116,6 +116,9 @@ static void csv_create_dataset (int len) {
     }
     indep->add (v->get (l));
   }
+
+  // cleanup
+  delete s;
 }
 
 /* This function is the checker routine for a parsed CSV.  It returns

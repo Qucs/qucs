@@ -1,3 +1,8 @@
+2009-11-03  Stefan Jahn  <stefan@lkcc.org>
+
+	* ifile.cpp, vfile.cpp: Using new interpolator class for sample
+	interpolation.
+
 2009-05-14  Stefan Jahn  <stefan@lkcc.org>
 
 	* coaxline.cpp: Fixed computation of cut-off frequencies.

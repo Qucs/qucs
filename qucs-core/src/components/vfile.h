@@ -2,7 +2,7 @@
  * vfile.h - file based voltage source class definitions
  *
  * Copyright (C) 2007 Gunther Kraut <gn.kraut@t-online.de>
- * Copyright (C) 2007, 2008 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2007, 2008, 2009 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,16 +19,15 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: vfile.h,v 1.4 2008-10-05 17:52:14 ela Exp $
+ * $Id: vfile.h,v 1.5 2009-11-03 21:26:01 ela Exp $
  *
  */
 
 #ifndef __VFILE_H__
 #define __VFILE_H__
 
-class vector;
 class dataset;
-class spline;
+class interpolator;
 
 class vfile : public circuit
 {
@@ -41,17 +40,12 @@ class vfile : public circuit
   void initTR (void);
   void calcTR (nr_double_t);
   void prepare (void);
-  nr_double_t interpolate (vector * , vector * , nr_double_t);
-  nr_double_t interpolate_lin (vector *, vector *, nr_double_t, int);
 
 private:
   dataset * data;
   int dataType;
   int interpolType;
-  vector * ts;          // time samples
-  vector * vs;          // voltage samples
-  nr_double_t duration; // waveform duration
-  spline * sp;
+  interpolator * inter;
 };
 
 #endif /* __VFILE_H__ */

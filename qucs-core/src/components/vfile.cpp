@@ -2,7 +2,7 @@
  * vfile.cpp - file based voltage source class implementation
  *
  * Copyright (C) 2007 Gunther Kraut <gn.kraut@t-online.de>
- * Copyright (C) 2007, 2008 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2007, 2008, 2009 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: vfile.cpp,v 1.7 2008-10-07 20:15:32 ela Exp $
+ * $Id: vfile.cpp,v 1.8 2009-11-03 21:26:01 ela Exp $
  *
  */
 
@@ -31,30 +31,23 @@
 #include "dataset.h"
 #include "poly.h"
 #include "spline.h"
+#include "interpolator.h"
 #include "vfile.h"
 
-// Type of data and interpolators.
-#define INTERPOL_LINEAR  1
-#define INTERPOL_CUBIC   2
-#define INTERPOL_HOLD    3
-#define REPEAT_NO 	 1
-#define REPEAT_YES       2
-
+// Constructor creates vfile object in memory.
 vfile::vfile () : circuit (2) {
   type = CIR_VFILE;
   setVSource (true);
   setVoltageSources (1);
   interpolType = dataType = 0;
-  ts = NULL;
-  vs = NULL;
-  sp = NULL;
   data = NULL;
+  inter = NULL;
 }
 
 // Destructor deletes vfile object from memory.
 vfile::~vfile () {
   if (data) delete data;
-  if (sp) delete sp;
+  if (inter) delete inter;
 }
 
 void vfile::prepare (void) {
@@ -94,108 +87,13 @@ void vfile::prepare (void) {
 		  file);
 	return;
       }
-      vs = data->getVariables();    // voltage
-      ts = data->getDependencies(); // time
-      int tlen = ts->getSize();
-      if (dataType == REPEAT_YES) {
-	// waveform duration
-	duration = real (ts->get (tlen - 1)) - real(ts->get (0));
-	// set first voltage to the end of the voltage vector
-	vs->set (vs->get (0), tlen - 1);
-	// add samples at the end to perform correct interpolation
-	if (interpolType == INTERPOL_CUBIC) {
-	  // add two additional points
-	  data->appendVariable (new vector(1,vs->get(1)));
-	  data->appendDependency (new vector(1,ts->get(1)+ts->get(tlen-1)));
-	  data->appendVariable (new vector(1,vs->get(2)));
-	  data->appendDependency (new vector(1,ts->get(2)+ts->get(tlen-1)));
-	}
-      }
+      vector * vs = data->getVariables();    // voltage
+      vector * ts = data->getDependencies(); // time
+      inter = new interpolator ();
+      inter->rvectors (vs, ts);
+      inter->prepare (interpolType, dataType);
     }
   }
-}
-
-/* This function returns an interpolated value for f(x).  The
-   piecewise function f is given by 'var' and the appropriate
-   dependent data by 'dep'.  The piecewise dependency data must be
-   real and sorted in ascendant order. */
-nr_double_t vfile::interpolate (vector * var, vector * dep, nr_double_t x) {
-  int idx = -1, len = dep->getSize ();
-  nr_double_t res = 0;
-
-  // no chance to interpolate
-  if (len <= 0) {
-    return res;
-  }
-  // no interpolation necessary
-  else if (len == 1) {
-    res = real (var->get (0));
-    return res;
-  }
-  else if (dataType == REPEAT_YES)
-    x = x - floor (x / duration) * duration;
-
-  // linear interpolation
-  if (interpolType == INTERPOL_LINEAR) {
-    // find appropriate dependency index
-    for (int i = 0; i < len; i++) {
-      if (x >= real (dep->get (i))) idx = i;
-    }
-    // dependency variable in scope or beyond
-    if (idx != -1) {
-      if (x == real (dep->get (idx))) {
-	// found direct value
-        res = real (var->get (idx));
-      }
-      else {
-	// dependency variable is beyond scope; use last tangent
-	if (idx == len - 1) idx--;
-	res = interpolate_lin (dep, var, x, idx);
-      }
-    }
-    else {
-      // dependency variable is before scope; use first tangent
-      idx = 0;
-      res = interpolate_lin (dep, var, x, idx);
-    }
-  }
-  // cubic spline interpolation
-  else if (interpolType == INTERPOL_CUBIC) {
-    // create splines if necessary
-    if (sp == NULL) {
-      sp = new spline (SPLINE_BC_NATURAL);
-      if (dataType == REPEAT_YES) sp->setBoundary (SPLINE_BC_PERIODIC);
-      sp->vectors (*var, *dep);
-      sp->construct ();
-    }
-    // evaluate spline functions
-    res = sp->evaluate (x).f0;
-  }
-  else if (interpolType == INTERPOL_HOLD) {
-    // find appropriate dependency index
-    for (int i = 0; i < len; i++) {
-      if (x >= real (dep->get (i))) idx = i;
-    }
-    if (idx != -1) // dependency variable in scope or beyond
-      res = real (var->get (idx));
-    else // dependency variable is before scope
-      res = real (var->get (0));
-  }
-  return res;
-}
- 
-
-/* The function is called by the overall interpolator to perform
-   linear interpolation. */
-nr_double_t vfile::interpolate_lin (vector * dep, vector * var, nr_double_t x,
-				    int idx) {
-  nr_double_t x1, x2, y1, y2;
-
-  x1 = real (dep->get (idx));
-  x2 = real (dep->get (idx + 1));
-  y1 = real (var->get (idx));
-  y2 = real (var->get (idx + 1));
-  return ((x2 - x) * y1 + (x - x1) * y2) / (x2 - x1);
 }
 
 void vfile::initSP (void) {
@@ -225,7 +123,7 @@ void vfile::initTR (void) {
 void vfile::calcTR (nr_double_t t) {
   nr_double_t G = getPropertyDouble ("G");
   nr_double_t T = getPropertyDouble ("T");
-  nr_double_t u = interpolate (vs, ts, t - T);
+  nr_double_t u = inter->rinterpolate (t - T);
   setE (VSRC_1, G * u);
 }
 
