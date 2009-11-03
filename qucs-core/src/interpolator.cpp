@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: interpolator.cpp,v 1.1 2009/10/31 17:18:27 ela Exp $
+ * $Id: interpolator.cpp,v 1.2 2009/11/03 21:26:01 ela Exp $
  *
  */
 
@@ -33,6 +33,8 @@
 
 #include "poly.h"
 #include "spline.h"
+#include "object.h"
+#include "vector.h"
 #include "interpolator.h"
 
 // Constructor creates an instance of the interpolator class.
@@ -53,19 +55,43 @@ interpolator::~interpolator () {
   if (cy) free (cy);
 }
 
+// Cleans up vector storage.
+void interpolator::cleanup (void) {
+  if (rx) { free (rx); rx = NULL; }
+  if (ry) { free (ry); ry = NULL; }
+  if (cy) { free (cy); cy = NULL; }
+}
+
 // Pass real interpolation datapoints as pointers.
 void interpolator::vectors (nr_double_t * y, nr_double_t * x, int len) {
   int len1 = len;
   int len2 = 2 + len * sizeof (nr_double_t);
-  if (ry) { free (ry); ry = NULL; }
   if (len > 0) {
     ry = (nr_double_t *) malloc (len2 * sizeof (nr_double_t));
     memcpy (ry, y, len1 * sizeof (nr_double_t));
   }
-  if (rx) { free (rx); rx = NULL; }
   if (len > 0) {
     rx = (nr_double_t *) malloc (len2 * sizeof (nr_double_t));
     memcpy (rx, x, len1 * sizeof (nr_double_t));
+  }
+
+  dataType = (DATA_REAL & DATA_MASK_TYPE);
+  length = len;
+}
+
+// Pass real interpolation datapoints as vectors.
+void interpolator::rvectors (vector * y, vector * x) {
+  int len  = y->getSize ();
+  int len1 = len;
+  int len2 = 2 + len * sizeof (nr_double_t);
+  cleanup ();
+  if (len > 0) {
+    ry = (nr_double_t *) malloc (len2 * sizeof (nr_double_t));
+    for (int i = 0; i < len1; i++) ry[i] = real (y->get (i));
+  }
+  if (len > 0) {
+    rx = (nr_double_t *) malloc (len2 * sizeof (nr_double_t));
+    for (int i = 0; i < len1; i++) rx[i] = real (x->get (i));
   }
 
   dataType = (DATA_REAL & DATA_MASK_TYPE);
@@ -76,15 +102,33 @@ void interpolator::vectors (nr_double_t * y, nr_double_t * x, int len) {
 void interpolator::vectors (nr_complex_t * y, nr_double_t * x, int len) {
   int len1 = len;
   int len2 = 2 + len;
-  if (cy) { free (cy); cy = NULL; }
+  cleanup ();
   if (len > 0) {
     cy = (nr_complex_t *) malloc (len2 * sizeof (nr_complex_t));
     memcpy (cy, y, len1 * sizeof (nr_complex_t));
   }
-  if (rx) { free (rx); rx = NULL; }
   if (len > 0) {
     rx = (nr_double_t *) malloc (len2 * sizeof (nr_double_t));
     memcpy (rx, x, len1 * sizeof (nr_double_t));
+  }
+
+  dataType = (DATA_COMPLEX & DATA_MASK_TYPE);
+  length = len;
+}
+
+// Pass complex interpolation datapoints as vectors.
+void interpolator::cvectors (vector * y, vector * x) {
+  int len  = y->getSize ();
+  int len1 = len;
+  int len2 = 2 + len;
+  cleanup ();
+  if (len > 0) {
+    cy = (nr_complex_t *) malloc (len2 * sizeof (nr_complex_t));
+    for (int i = 0; i < len1; i++) cy[i] = y->get (i);
+  }
+  if (len > 0) {
+    rx = (nr_double_t *) malloc (len2 * sizeof (nr_double_t));
+    for (int i = 0; i < len1; i++) rx[i] = real (x->get (i));
   }
 
   dataType = (DATA_COMPLEX & DATA_MASK_TYPE);
@@ -97,7 +141,7 @@ void interpolator::prepare (int interpol, int repitition, int domain) {
   dataType |= (domain & DATA_MASK_DOMAIN);
   repeat = repitition;
 
-  if (dataType & REPEAT_YES) {
+  if (repeat & REPEAT_YES) {
     duration = rx[length - 1] - rx[0];
     // set first value to the end of the value vector
     if (cy) cy[length - 1] = cy[0];
@@ -108,10 +152,17 @@ void interpolator::prepare (int interpol, int repitition, int domain) {
     // create splines if necessary
     if (sp) delete sp;
     sp = new spline (SPLINE_BC_NATURAL);
-    if (dataType & REPEAT_YES)
-      sp->setBoundary (SPLINE_BC_PERIODIC);
+    if (repeat & REPEAT_YES) sp->setBoundary (SPLINE_BC_PERIODIC);
     sp->vectors (ry, rx, length);
     sp->construct ();
+  }
+
+  if (cy != NULL && domain & DATA_POLAR) {
+    // convert complex data if necssary
+    for (int i = 0; i < length; i++) {
+      nr_complex_t z = cy[i];
+      cy[i] = rect (abs (z), arg (z));
+    }
   }
 }
 
@@ -124,7 +175,7 @@ int interpolator::findIndex (nr_double_t x) {
   int av;
   while (lo < hi) {
     av = lo + ((hi - lo) / 2);
-    if (x > rx[av])
+    if (x >= rx[av])
       lo = av + 1; 
     else
       // can't be hi = av-1: here rx[av] >= x,
@@ -132,7 +183,7 @@ int interpolator::findIndex (nr_double_t x) {
       hi = av; 
   }
   // hi == lo, using hi or lo depends on taste 
-  if (lo < length &&  lo > 0 && x >= rx[lo - 1])
+  if (lo <= length && lo > 0 && x >= rx[lo - 1])
     return lo - 1; // found
   else
     return 0; // not found
@@ -176,7 +227,7 @@ nr_double_t interpolator::rinterpolate (nr_double_t x) {
     res = ry[0];
     return res;
   }
-  else if (dataType & REPEAT_YES)
+  else if (repeat & REPEAT_YES)
     x = x - floor (x / duration) * duration;
 
   // linear interpolation
@@ -186,9 +237,10 @@ nr_double_t interpolator::rinterpolate (nr_double_t x) {
     if (x == rx[idx])
       res = ry[idx];
     // dependency variable is beyond scope; use last tangent
-    if (idx == length - 1)
-      idx--;
-    res = linear (x, idx);
+    else {
+      if (idx == length - 1) idx--;
+      res = linear (x, idx);
+    }
   }
   // cubic spline interpolation
   else if (interpolType & INTERPOL_CUBIC) {
@@ -198,7 +250,7 @@ nr_double_t interpolator::rinterpolate (nr_double_t x) {
   else if (interpolType & INTERPOL_HOLD) {
     // find appropriate dependency index
     idx = findIndex (x);
-    res = ry[0];
+    res = ry[idx];
   }
   return res;
 }

@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: receiver.cpp,v 1.4 2009/11/01 17:31:31 ela Exp $
+ * $Id: receiver.cpp,v 1.5 2009/11/03 21:26:01 ela Exp $
  *
  */
 
@@ -138,15 +138,19 @@ vector * emi::receiver (nr_double_t * ida, nr_double_t duration, int ilength) {
 
     /* go through frequencies */
     for (fcur = fstart; fcur <= fstop; fcur += fstep) {
-      /* calculate indices covering current bandwidth */
+
+      /* calculate upper and lower frequency bounds */
       nr_double_t lo = fcur - bw / 2;
       nr_double_t hi = fcur + bw / 2;
+      if (hi < fres) continue;
+
+      /* calculate indices covering current bandwidth */
       int il = floor (lo / fres);
       int ir = floor (hi / fres);
 
       /* right index (ri) greater 0 and left index less than points ->
 	 at least part of data is within bandwidth indices */
-      if (ir >= 0 && il < points - 1 && hi >= fres) {
+      if (ir >= 0 && il < points - 1) {
 	/* adjust indices to reside in the data array */
 	if (il < 0) il = 0;
 	if (ir > points - 1) ir = points - 1;
@@ -185,28 +189,23 @@ vector * emi::receiver (vector * da, vector * dt, int len) {
   // find a power-of-two length
   nlen = emi::nearestbin32 (len);
 
-  nr_double_t duration = real (dt->get (olen - 1) - dt->get (0));
-  nr_double_t * ida = new nr_double_t[2 * nlen];
-  nr_double_t * idt = new nr_double_t[olen];
+  nr_double_t tstart = real (dt->get (0));
+  nr_double_t tstop = real (dt->get (olen - 1));
+  nr_double_t duration = tstop - tstart;
 
-  // interpolation is always performed in order to ensure equidistant samples
-
-  // copy values for interpolator object
-  for (i = 0; i < olen; i++) {
-    ida[i] = real ((*da)(i));
-    idt[i] = real ((*dt)(i));
-  }
+  /* please note: interpolation is always performed in order to ensure
+     equidistant samples */
 
   // create interpolator (use cubic splines)
   interpolator * inter = new interpolator ();
-  inter->vectors (ida, idt, olen);
+  inter->rvectors (da, dt);
   inter->prepare (INTERPOL_CUBIC, REPEAT_NO, DATA_RECTANGULAR);
-  delete[] idt;
 
   // adjust the time domain vector using interpolation
+  nr_double_t * ida = new nr_double_t[2 * nlen];
   nr_double_t tstep = duration / (nlen - 1);
   for (i = 0; i < nlen; i++) {
-    nr_double_t t = i * tstep;
+    nr_double_t t = i * tstep + tstart;
     ida[2 * i + 0] = inter->rinterpolate (t);
     ida[2 * i + 1] = 0;
   }

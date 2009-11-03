@@ -1,3 +1,15 @@
+2009-11-03  Stefan Jahn  <stefan@lkcc.org>
+
+	* receiver.cpp (receiver): Fixed small bug occurring if time
+	vector not starting with zero time is passed.  Using new vector
+	object passer in interpolator class.
+
+	* interpolator.cpp: Allowing vector objects to be passed as
+	original sample vectors.
+	(rinterpolate): Fixed tiny bugs in linear and hold interpolation.
+
+	* check_csv.cpp: Fixed memory leak.
+
 2009-11-01  Stefan Jahn  <stefan@lkcc.org>
 
 	* receiver.cpp: Now having three types of filters for the EMI

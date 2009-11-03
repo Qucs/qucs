@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: interpolator.h,v 1.1 2009/10/31 17:18:27 ela Exp $
+ * $Id: interpolator.h,v 1.2 2009/11/03 21:26:01 ela Exp $
  *
  */
 
@@ -28,7 +28,7 @@
 // Type of data and interpolators.
 #define INTERPOL_LINEAR  1
 #define INTERPOL_CUBIC   2
-#define INTERPOL_HOLD    3
+#define INTERPOL_HOLD    4
 
 #define REPEAT_NO 	 1
 #define REPEAT_YES       2
@@ -48,13 +48,16 @@ class interpolator
 
   void vectors (nr_double_t *, nr_double_t *, int);
   void vectors (nr_complex_t *, nr_double_t *, int);
-  void prepare (int, int, int);
+  void rvectors (vector *, vector *);
+  void cvectors (vector *, vector *);
+  void prepare (int, int, int domain = DATA_RECTANGULAR);
   nr_double_t rinterpolate (nr_double_t);
 
 private:
   int findIndex (nr_double_t);
   int findIndex_old (nr_double_t);
   nr_double_t linear (nr_double_t, int);
+  void cleanup (void);
 
 private:
   int dataType;
