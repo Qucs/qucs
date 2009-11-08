@@ -7062,6 +7062,50 @@ Usage:  qucsedit [-r] file
         <source>Cannot save C++ file &quot;%1&quot;!</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>lumped components</source>
+        <translation type="unfinished">集中定数部品</translation>
+    </message>
+    <message>
+        <source>sources</source>
+        <translation type="unfinished">ソース源部品</translation>
+    </message>
+    <message>
+        <source>probes</source>
+        <translation type="unfinished">プローブ</translation>
+    </message>
+    <message>
+        <source>transmission lines</source>
+        <translation type="unfinished">伝送線路部品</translation>
+    </message>
+    <message>
+        <source>nonlinear components</source>
+        <translation type="unfinished">非線形部品</translation>
+    </message>
+    <message>
+        <source>verilog-a devices</source>
+        <translation type="unfinished">Verilog-a　デバイス</translation>
+    </message>
+    <message>
+        <source>digital components</source>
+        <translation type="unfinished">デジタル部品</translation>
+    </message>
+    <message>
+        <source>file components</source>
+        <translation type="unfinished">ファイル部品</translation>
+    </message>
+    <message>
+        <source>simulations</source>
+        <translation type="unfinished">シミュレーション部品</translation>
+    </message>
+    <message>
+        <source>diagrams</source>
+        <translation type="unfinished">図表部品</translation>
+    </message>
+    <message>
+        <source>paintings</source>
+        <translation type="unfinished">図形描画部品</translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
@@ -7174,19 +7218,19 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>lumped components</source>
-        <translation>集中定数部品</translation>
+        <translation type="obsolete">集中定数部品</translation>
     </message>
     <message>
         <source>sources</source>
-        <translation>ソース源部品</translation>
+        <translation type="obsolete">ソース源部品</translation>
     </message>
     <message>
         <source>transmission lines</source>
-        <translation>伝送線路部品</translation>
+        <translation type="obsolete">伝送線路部品</translation>
     </message>
     <message>
         <source>nonlinear components</source>
-        <translation>非線形部品</translation>
+        <translation type="obsolete">非線形部品</translation>
     </message>
     <message>
         <source>file data</source>
@@ -7194,15 +7238,15 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>simulations</source>
-        <translation>シミュレーション部品</translation>
+        <translation type="obsolete">シミュレーション部品</translation>
     </message>
     <message>
         <source>diagrams</source>
-        <translation>図表部品</translation>
+        <translation type="obsolete">図表部品</translation>
     </message>
     <message>
         <source>paintings</source>
-        <translation>図形描画部品</translation>
+        <translation type="obsolete">図形描画部品</translation>
     </message>
     <message>
         <source>Rename</source>
@@ -7656,11 +7700,11 @@ Edits the schematic</source>
     </message>
     <message>
         <source>file components</source>
-        <translation>ファイル部品</translation>
+        <translation type="obsolete">ファイル部品</translation>
     </message>
     <message>
         <source>digital components</source>
-        <translation>デジタル部品</translation>
+        <translation type="obsolete">デジタル部品</translation>
     </message>
     <message>
         <source>Others</source>
@@ -9526,11 +9570,11 @@ Center vertically selected elements</source>
     </message>
     <message>
         <source>probes</source>
-        <translation>プローブ</translation>
+        <translation type="obsolete">プローブ</translation>
     </message>
     <message>
         <source>verilog-a devices</source>
-        <translation>Verilog-a　デバイス</translation>
+        <translation type="obsolete">Verilog-a　デバイス</translation>
     </message>
     <message>
         <source>&amp;Import/Export Data...</source>

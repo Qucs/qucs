@@ -7108,6 +7108,50 @@ Use:  qucsedit [-r] fitxer
         <source>Cannot save C++ file &quot;%1&quot;!</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>lumped components</source>
+        <translation type="unfinished">componentes sueltos</translation>
+    </message>
+    <message>
+        <source>sources</source>
+        <translation type="unfinished">fuentes</translation>
+    </message>
+    <message>
+        <source>probes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>transmission lines</source>
+        <translation type="unfinished">línees de transmisión</translation>
+    </message>
+    <message>
+        <source>nonlinear components</source>
+        <translation type="unfinished">componentes no líneales</translation>
+    </message>
+    <message>
+        <source>verilog-a devices</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>digital components</source>
+        <translation type="unfinished">componentes digitales</translation>
+    </message>
+    <message>
+        <source>file components</source>
+        <translation type="unfinished">componentes del fitxer</translation>
+    </message>
+    <message>
+        <source>simulations</source>
+        <translation type="unfinished">simulaciones</translation>
+    </message>
+    <message>
+        <source>diagrams</source>
+        <translation type="unfinished">diagramas</translation>
+    </message>
+    <message>
+        <source>paintings</source>
+        <translation type="unfinished">pinturas</translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
@@ -7220,19 +7264,19 @@ Use:  qucsedit [-r] fitxer
     </message>
     <message>
         <source>lumped components</source>
-        <translation>componentes sueltos</translation>
+        <translation type="obsolete">componentes sueltos</translation>
     </message>
     <message>
         <source>sources</source>
-        <translation>fuentes</translation>
+        <translation type="obsolete">fuentes</translation>
     </message>
     <message>
         <source>transmission lines</source>
-        <translation>línees de transmisión</translation>
+        <translation type="obsolete">línees de transmisión</translation>
     </message>
     <message>
         <source>nonlinear components</source>
-        <translation>componentes no líneales</translation>
+        <translation type="obsolete">componentes no líneales</translation>
     </message>
     <message>
         <source>file data</source>
@@ -7240,15 +7284,15 @@ Use:  qucsedit [-r] fitxer
     </message>
     <message>
         <source>simulations</source>
-        <translation>simulaciones</translation>
+        <translation type="obsolete">simulaciones</translation>
     </message>
     <message>
         <source>diagrams</source>
-        <translation>diagramas</translation>
+        <translation type="obsolete">diagramas</translation>
     </message>
     <message>
         <source>paintings</source>
-        <translation>pinturas</translation>
+        <translation type="obsolete">pinturas</translation>
     </message>
     <message>
         <source>Rename</source>
@@ -7743,11 +7787,11 @@ Edita el esquema</translation>
     </message>
     <message>
         <source>file components</source>
-        <translation>componentes del fitxer</translation>
+        <translation type="obsolete">componentes del fitxer</translation>
     </message>
     <message>
         <source>digital components</source>
-        <translation>componentes digitales</translation>
+        <translation type="obsolete">componentes digitales</translation>
     </message>
     <message>
         <source>Others</source>
@@ -9589,14 +9633,6 @@ Center vertically selected elements</source>
     </message>
     <message>
         <source>Verilog</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>probes</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>verilog-a devices</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

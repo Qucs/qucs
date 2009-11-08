@@ -7386,6 +7386,50 @@ Verwendung:  qucsedit [-r] Datei
         <source>Cannot save C++ file &quot;%1&quot;!</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>lumped components</source>
+        <translation type="unfinished">diskrete Komponenten</translation>
+    </message>
+    <message>
+        <source>sources</source>
+        <translation type="unfinished">Quellen</translation>
+    </message>
+    <message>
+        <source>probes</source>
+        <translation type="unfinished">Messgeräte</translation>
+    </message>
+    <message>
+        <source>transmission lines</source>
+        <translation type="unfinished">Übertragungsstrecken</translation>
+    </message>
+    <message>
+        <source>nonlinear components</source>
+        <translation type="unfinished">nichtlineare Komponenten</translation>
+    </message>
+    <message>
+        <source>verilog-a devices</source>
+        <translation type="unfinished">Verilog-A Komponenten</translation>
+    </message>
+    <message>
+        <source>digital components</source>
+        <translation type="unfinished">digitale Komponenten</translation>
+    </message>
+    <message>
+        <source>file components</source>
+        <translation type="unfinished">Dateikomponenten</translation>
+    </message>
+    <message>
+        <source>simulations</source>
+        <translation type="unfinished">Simulationen</translation>
+    </message>
+    <message>
+        <source>diagrams</source>
+        <translation type="unfinished">Diagramme</translation>
+    </message>
+    <message>
+        <source>paintings</source>
+        <translation type="unfinished">Zeichnungen</translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
@@ -7924,7 +7968,7 @@ Kopiert den ausgewählten Bereich in die Zwischenablage</translation>
     </message>
     <message>
         <source>digital components</source>
-        <translation>digitale Komponenten</translation>
+        <translation type="obsolete">digitale Komponenten</translation>
     </message>
     <message>
         <source>Schematic</source>
@@ -7996,35 +8040,35 @@ Kopiert den ausgewählten Bereich in die Zwischenablage</translation>
     </message>
     <message>
         <source>lumped components</source>
-        <translation>diskrete Komponenten</translation>
+        <translation type="obsolete">diskrete Komponenten</translation>
     </message>
     <message>
         <source>sources</source>
-        <translation>Quellen</translation>
+        <translation type="obsolete">Quellen</translation>
     </message>
     <message>
         <source>transmission lines</source>
-        <translation>Übertragungsstrecken</translation>
+        <translation type="obsolete">Übertragungsstrecken</translation>
     </message>
     <message>
         <source>nonlinear components</source>
-        <translation>nichtlineare Komponenten</translation>
+        <translation type="obsolete">nichtlineare Komponenten</translation>
     </message>
     <message>
         <source>file components</source>
-        <translation>Dateikomponenten</translation>
+        <translation type="obsolete">Dateikomponenten</translation>
     </message>
     <message>
         <source>simulations</source>
-        <translation>Simulationen</translation>
+        <translation type="obsolete">Simulationen</translation>
     </message>
     <message>
         <source>diagrams</source>
-        <translation>Diagramme</translation>
+        <translation type="obsolete">Diagramme</translation>
     </message>
     <message>
         <source>paintings</source>
-        <translation>Zeichnungen</translation>
+        <translation type="obsolete">Zeichnungen</translation>
     </message>
     <message>
         <source>Rename</source>
@@ -10056,11 +10100,11 @@ Zentriert ausgewählte Elemente vertikal</translation>
     </message>
     <message>
         <source>probes</source>
-        <translation>Messgeräte</translation>
+        <translation type="obsolete">Messgeräte</translation>
     </message>
     <message>
         <source>verilog-a devices</source>
-        <translation>Verilog-A Komponenten</translation>
+        <translation type="obsolete">Verilog-A Komponenten</translation>
     </message>
     <message>
         <source>&amp;Import/Export Data...</source>

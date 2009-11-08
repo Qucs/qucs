@@ -7136,6 +7136,50 @@ Invocation :  qucsedit [-r] fichier
         <source>Cannot save C++ file &quot;%1&quot;!</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>lumped components</source>
+        <translation type="unfinished">composants discrets</translation>
+    </message>
+    <message>
+        <source>sources</source>
+        <translation type="unfinished">sources</translation>
+    </message>
+    <message>
+        <source>probes</source>
+        <translation type="unfinished">sondes</translation>
+    </message>
+    <message>
+        <source>transmission lines</source>
+        <translation type="unfinished">composants distribués</translation>
+    </message>
+    <message>
+        <source>nonlinear components</source>
+        <translation type="unfinished">composants non-linéaires</translation>
+    </message>
+    <message>
+        <source>verilog-a devices</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>digital components</source>
+        <translation type="unfinished">Macrocomposants numériques</translation>
+    </message>
+    <message>
+        <source>file components</source>
+        <translation type="unfinished">Fichier de composants</translation>
+    </message>
+    <message>
+        <source>simulations</source>
+        <translation type="unfinished">simulations</translation>
+    </message>
+    <message>
+        <source>diagrams</source>
+        <translation type="unfinished">graphiques</translation>
+    </message>
+    <message>
+        <source>paintings</source>
+        <translation type="unfinished">décor</translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
@@ -7282,19 +7326,19 @@ Le remplacer ?</translation>
     </message>
     <message>
         <source>lumped components</source>
-        <translation>composants discrets</translation>
+        <translation type="obsolete">composants discrets</translation>
     </message>
     <message>
         <source>sources</source>
-        <translation>sources</translation>
+        <translation type="obsolete">sources</translation>
     </message>
     <message>
         <source>transmission lines</source>
-        <translation>composants distribués</translation>
+        <translation type="obsolete">composants distribués</translation>
     </message>
     <message>
         <source>nonlinear components</source>
-        <translation>composants non-linéaires</translation>
+        <translation type="obsolete">composants non-linéaires</translation>
     </message>
     <message>
         <source>file data</source>
@@ -7302,15 +7346,15 @@ Le remplacer ?</translation>
     </message>
     <message>
         <source>simulations</source>
-        <translation>simulations</translation>
+        <translation type="obsolete">simulations</translation>
     </message>
     <message>
         <source>paintings</source>
-        <translation>décor</translation>
+        <translation type="obsolete">décor</translation>
     </message>
     <message>
         <source>diagrams</source>
-        <translation>graphiques</translation>
+        <translation type="obsolete">graphiques</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -7809,11 +7853,11 @@ Modifie ce schéma</translation>
     </message>
     <message>
         <source>file components</source>
-        <translation>Fichier de composants</translation>
+        <translation type="obsolete">Fichier de composants</translation>
     </message>
     <message>
         <source>digital components</source>
-        <translation>Macrocomposants numériques</translation>
+        <translation type="obsolete">Macrocomposants numériques</translation>
     </message>
     <message>
         <source>Others</source>
@@ -9689,11 +9733,7 @@ Centre verticalement les éléments sélectionnés</translation>
     </message>
     <message>
         <source>probes</source>
-        <translation>sondes</translation>
-    </message>
-    <message>
-        <source>verilog-a devices</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">sondes</translation>
     </message>
     <message>
         <source>&amp;Import/Export Data...</source>

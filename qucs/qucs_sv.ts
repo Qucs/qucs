@@ -6928,6 +6928,50 @@ Usage:  qucsedit [-r] file
         <source>Cannot save C++ file &quot;%1&quot;!</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>lumped components</source>
+        <translation type="unfinished">diskreta komponeter</translation>
+    </message>
+    <message>
+        <source>sources</source>
+        <translation type="unfinished">källor</translation>
+    </message>
+    <message>
+        <source>probes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>transmission lines</source>
+        <translation type="unfinished">transmissionslinjer</translation>
+    </message>
+    <message>
+        <source>nonlinear components</source>
+        <translation type="unfinished">icke-linjära komponenter</translation>
+    </message>
+    <message>
+        <source>verilog-a devices</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>digital components</source>
+        <translation type="unfinished">digitala komponenter</translation>
+    </message>
+    <message>
+        <source>file components</source>
+        <translation type="unfinished">filkomponenter</translation>
+    </message>
+    <message>
+        <source>simulations</source>
+        <translation type="unfinished">simuleringar</translation>
+    </message>
+    <message>
+        <source>diagrams</source>
+        <translation type="unfinished">kurvor</translation>
+    </message>
+    <message>
+        <source>paintings</source>
+        <translation type="unfinished">färgläggningar</translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
@@ -7082,19 +7126,19 @@ Skriva över?</translation>
     </message>
     <message>
         <source>lumped components</source>
-        <translation>diskreta komponeter</translation>
+        <translation type="obsolete">diskreta komponeter</translation>
     </message>
     <message>
         <source>sources</source>
-        <translation>källor</translation>
+        <translation type="obsolete">källor</translation>
     </message>
     <message>
         <source>transmission lines</source>
-        <translation>transmissionslinjer</translation>
+        <translation type="obsolete">transmissionslinjer</translation>
     </message>
     <message>
         <source>nonlinear components</source>
-        <translation>icke-linjära komponenter</translation>
+        <translation type="obsolete">icke-linjära komponenter</translation>
     </message>
     <message>
         <source>file data</source>
@@ -7102,15 +7146,15 @@ Skriva över?</translation>
     </message>
     <message>
         <source>simulations</source>
-        <translation>simuleringar</translation>
+        <translation type="obsolete">simuleringar</translation>
     </message>
     <message>
         <source>diagrams</source>
-        <translation>kurvor</translation>
+        <translation type="obsolete">kurvor</translation>
     </message>
     <message>
         <source>paintings</source>
-        <translation>färgläggningar</translation>
+        <translation type="obsolete">färgläggningar</translation>
     </message>
     <message>
         <source>Rename</source>
@@ -7448,11 +7492,11 @@ Redigerar schemat</translation>
     </message>
     <message>
         <source>digital components</source>
-        <translation>digitala komponenter</translation>
+        <translation type="obsolete">digitala komponenter</translation>
     </message>
     <message>
         <source>file components</source>
-        <translation>filkomponenter</translation>
+        <translation type="obsolete">filkomponenter</translation>
     </message>
     <message>
         <source>Others</source>
@@ -9288,14 +9332,6 @@ Center vertically selected elements</source>
     </message>
     <message>
         <source>Verilog</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>probes</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>verilog-a devices</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

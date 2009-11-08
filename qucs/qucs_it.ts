@@ -7281,6 +7281,50 @@ Usage:  qucsedit [-r] file
         <source>Cannot save C++ file &quot;%1&quot;!</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>lumped components</source>
+        <translation type="unfinished">componenti discreti</translation>
+    </message>
+    <message>
+        <source>sources</source>
+        <translation type="unfinished">generatori</translation>
+    </message>
+    <message>
+        <source>probes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>transmission lines</source>
+        <translation type="unfinished">linee di trasmissione</translation>
+    </message>
+    <message>
+        <source>nonlinear components</source>
+        <translation type="unfinished">componenti non lineari</translation>
+    </message>
+    <message>
+        <source>verilog-a devices</source>
+        <translation type="unfinished">dispositivi verilog-a</translation>
+    </message>
+    <message>
+        <source>digital components</source>
+        <translation type="unfinished">componenti digitali</translation>
+    </message>
+    <message>
+        <source>file components</source>
+        <translation type="unfinished">componenti file</translation>
+    </message>
+    <message>
+        <source>simulations</source>
+        <translation type="unfinished">simulazioni</translation>
+    </message>
+    <message>
+        <source>diagrams</source>
+        <translation type="unfinished">diagrammi</translation>
+    </message>
+    <message>
+        <source>paintings</source>
+        <translation type="unfinished">disegni</translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
@@ -8127,19 +8171,19 @@ Breve introduzione a Qucs</translation>
     </message>
     <message>
         <source>lumped components</source>
-        <translation>componenti discreti</translation>
+        <translation type="obsolete">componenti discreti</translation>
     </message>
     <message>
         <source>sources</source>
-        <translation>generatori</translation>
+        <translation type="obsolete">generatori</translation>
     </message>
     <message>
         <source>transmission lines</source>
-        <translation>linee di trasmissione</translation>
+        <translation type="obsolete">linee di trasmissione</translation>
     </message>
     <message>
         <source>nonlinear components</source>
-        <translation>componenti non lineari</translation>
+        <translation type="obsolete">componenti non lineari</translation>
     </message>
     <message>
         <source>file data</source>
@@ -8147,15 +8191,15 @@ Breve introduzione a Qucs</translation>
     </message>
     <message>
         <source>simulations</source>
-        <translation>simulazioni</translation>
+        <translation type="obsolete">simulazioni</translation>
     </message>
     <message>
         <source>paintings</source>
-        <translation>disegni</translation>
+        <translation type="obsolete">disegni</translation>
     </message>
     <message>
         <source>diagrams</source>
-        <translation>diagrammi</translation>
+        <translation type="obsolete">diagrammi</translation>
     </message>
     <message>
         <source>Rename</source>
@@ -8835,11 +8879,11 @@ Modifica lo schema</translation>
     </message>
     <message>
         <source>file components</source>
-        <translation>componenti file</translation>
+        <translation type="obsolete">componenti file</translation>
     </message>
     <message>
         <source>digital components</source>
-        <translation>componenti digitali</translation>
+        <translation type="obsolete">componenti digitali</translation>
     </message>
     <message>
         <source>Others</source>
@@ -10046,12 +10090,8 @@ Centra verticalmente gli elementi selezionati</translation>
         <translation type="obsolete">Impossibile cancellare sorgente Verilog: </translation>
     </message>
     <message>
-        <source>probes</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>verilog-a devices</source>
-        <translation>dispositivi verilog-a</translation>
+        <translation type="obsolete">dispositivi verilog-a</translation>
     </message>
     <message>
         <source>&amp;Import/Export Data...</source>

@@ -17,13 +17,6 @@
 
 #include <stdlib.h>
 
-#include "components.h"
-#include "node.h"
-#include "main.h"
-#include "qucs.h"
-#include "schematic.h"
-#include "viewpainter.h"
-
 #include <qdir.h>
 #include <qpen.h>
 #include <qpoint.h>
@@ -32,6 +25,15 @@
 #include <qtabwidget.h>
 #include <qmessagebox.h>
 #include <qdom.h>
+#include <qdict.h>
+
+#include "components.h"
+#include "node.h"
+#include "main.h"
+#include "qucs.h"
+#include "schematic.h"
+#include "viewpainter.h"
+#include "module.h"
 
 // ***********************************************************************
 // **********                                                   **********
@@ -1495,207 +1497,18 @@ Component* getComponentFromName(QString& Line)
     return 0;
   }
 
-  QString cstr = Line.section(' ',0,0); // component type
-  char first = Line.at(1).latin1();     // first letter of component name
-  cstr.remove(0,2);    // remove leading "<" and first letter
+  QString cstr = Line.section (' ',0,0); // component type
+  cstr.remove (0,1);    // remove leading "<"
+  if (cstr == "Lib") c = new LibComp ();
+  else if (cstr == "Eqn") c = new Equation ();
+  else if (cstr == "Rus") c = new Resistor (false);  // backward compatible
+  else if (cstr.left (6) == "SPfile" && cstr != "SPfile") {
+    // backward compatible
+    c = new SParamFile ();
+    c->Props.getLast()->Value = cstr.mid (6); }
+  else
+    c = Module::getComponent (cstr);
 
-  // to speed up the string comparision, they are ordered by the first
-  // letter of their name
-  switch(first) {
-  case 'R' : if(cstr.isEmpty()) c = new Resistor();
-        else if(cstr == "ECTLINE") c = new RectLine();
-	else if(cstr == "us") c = new Resistor(false);  // backward capatible
-	else if(cstr == "SFF") c = new RS_FlipFlop();
-	else if(cstr == "elais") c = new Relais();
-	else if(cstr == "FEDD") c = new RFedd();
-	else if(cstr == "FEDD2P") c = new RFedd2P();
-	else if(cstr == "LCG") c = new RLCG();
-	break;
-  case 'C' : if(cstr.isEmpty()) c = new Capacitor();
-	else if(cstr == "CCS") c = new CCCS();
-	else if(cstr == "CVS") c = new CCVS();
-	else if(cstr == "irculator") c = new Circulator();
-	else if(cstr == "oupler") c = new Coupler();
-	else if(cstr == "LIN") c = new Coplanar();
-	else if(cstr == "OPEN") c = new CPWopen();
-	else if(cstr == "SHORT") c = new CPWshort();
-	else if(cstr == "GAP") c = new CPWgap();
-	else if(cstr == "STEP") c = new CPWstep();
-	else if(cstr == "OAX") c = new CoaxialLine();
-	break;
-  case 'L' : if(cstr.isEmpty()) c = new Inductor();
-	else if(cstr == "ib") c = new LibComp();
-	break;
-  case 'G' : if(cstr == "ND") c = new Ground();
-        else if(cstr == "yrator") c = new Gyrator();
-        break;
-  case 'I' : if(cstr == "Probe") c = new iProbe();
-        else if(cstr == "dc") c = new Ampere_dc();
-        else if(cstr == "ac") c = new Ampere_ac();
-        else if(cstr == "noise") c = new Ampere_noise();
-        else if(cstr == "solator") c = new Isolator();
-        else if(cstr == "pulse") c = new iPulse();
-        else if(cstr == "rect") c = new iRect();
-        else if(cstr == "Inoise") c = new Noise_ii();
-        else if(cstr == "Vnoise") c = new Noise_iv();
-        else if(cstr == "nv") c = new Logical_Inv();
-        else if(cstr == "exp") c = new iExp();
-        else if(cstr == "file") c = new iFile();
-        break;
-  case 'J' : if(cstr == "FET") c = new JFET();
-	else if(cstr == "KFF") c = new JK_FlipFlop();
-        break;
-  case 'V' : if(cstr == "dc") c = new Volt_dc();
-        else if(cstr == "ac") c = new Volt_ac();
-        else if(cstr == "CCS") c = new VCCS();
-        else if(cstr == "CVS") c = new VCVS();
-        else if(cstr == "Probe") c = new vProbe();
-        else if(cstr == "noise") c = new Volt_noise();
-        else if(cstr == "pulse") c = new vPulse();
-        else if(cstr == "rect") c = new vRect();
-        else if(cstr == "Vnoise") c = new Noise_vv();
-        else if(cstr == "HDL") c = new VHDL_File();
-        else if(cstr == "erilog") c = new Verilog_File();
-        else if(cstr == "exp") c = new vExp();
-        else if(cstr == "file") c = new vFile();
-        break;
-  case 'T' : if(cstr == "r") c = new Transformer();
-        else if(cstr == "LIN") c = new TLine();
-        else if(cstr == "LIN4P") c = new TLine_4Port();
-        else if(cstr == "WIST") c = new TwistedPair();
-        else if(cstr == "riac") c = new Triac();
-        break;
-  case 's' : if(cstr == "Tr") c = new symTrafo();
-        break;
-  case 'P' : if(cstr == "ac") c = new Source_ac();
-        else if(cstr == "ort") c = new SubCirPort();
-        else if(cstr == "Shift") c = new Phaseshifter();
-        else if(cstr == "M_Mod") c = new PM_Modulator();
-        break;
-  case 'S' : if(cstr == "Pfile") c = new SParamFile();
-        else if(cstr.left(5) == "Pfile") {  // backward compatible
-          c = new SParamFile();
-          c->Props.getLast()->Value = cstr.mid(5); }
-        else if(cstr == "ub")   c = new Subcircuit();
-        else if(cstr == "UBST") c = new Substrate();
-        else if(cstr == "PICE") c = new SpiceFile();
-        else if(cstr == "witch") c = new Switch();
-        else if(cstr == "CR") c = new Thyristor();
-        break;
-  case 'D' : if(cstr == "CBlock") c = new dcBlock();
-	else if(cstr == "CFeed") c = new dcFeed();
-	else if(cstr == "iode") c = new Diode();
-	else if(cstr == "igiSource") c = new Digi_Source();
-	else if(cstr == "FF") c = new D_FlipFlop();
-	else if(cstr == "iac") c = new Diac();
-	else if(cstr == "LS_nto1") c = new DLS_nto1();
-	else if(cstr == "LS_1ton") c = new DLS_1ton();
-	break;
-  case 'B' : if(cstr == "iasT") c = new BiasT();
-        else if(cstr == "JT") c = new BJTsub();
-        else if(cstr == "OND") c = new BondWire();
-        else if(cstr == "uf") c = new Logical_Buf();
-        break;
-  case 'A' : if(cstr == "ttenuator") c = new Attenuator();
-        else if(cstr == "mp") c = new Amplifier();
-        else if(cstr == "ND") c = new Logical_AND();
-        else if(cstr == "M_Mod") c = new AM_Modulator();
-        break;
-  case 'M' : if(cstr == "UT") c = new Mutual();
-	else if(cstr == "UT2") c = new Mutual2();
-	else if(cstr == "LIN") c = new MSline();
-	else if(cstr == "OSFET") c = new MOSFET_sub();
-	else if(cstr == "STEP") c = new MSstep();
-	else if(cstr == "CORN") c = new MScorner();
-	else if(cstr == "TEE") c = new MStee();
-	else if(cstr == "CROSS") c = new MScross();
-	else if(cstr == "MBEND") c = new MSmbend();
-	else if(cstr == "OPEN") c = new MSopen();
-	else if(cstr == "GAP") c = new MSgap();
-	else if(cstr == "COUPLED") c = new MScoupled();
-	else if(cstr == "VIA") c = new MSvia();
-	else if(cstr == "RSTUB") c = new MSrstub();
-	else if(cstr == "ESFET") c = new MESFET();
-	break;
-  case 'E' : if(cstr == "qn") c = new Equation();
-	else if(cstr == "DD") c = new EqnDefined();
-	else if(cstr == "KV26MOS") c = new EKV26MOS();
-        break;
-  case 'O' : if(cstr == "pAmp") c = new OpAmp();
-        else if(cstr == "R") c = new Logical_OR();
-        break;
-  case 'N' : if(cstr == "OR") c = new Logical_NOR();
-        else if(cstr == "AND") c = new Logical_NAND();
-        break;
-  case 'n' : if(cstr == "igbt") c = new nigbt();
-        break;
-  case '.' : if(cstr == "DC") c = new DC_Sim();
-        else if(cstr == "AC") c = new AC_Sim();
-        else if(cstr == "TR") c = new TR_Sim();
-        else if(cstr == "SP") c = new SP_Sim();
-        else if(cstr == "HB") c = new HB_Sim();
-        else if(cstr == "SW") c = new Param_Sweep();
-        else if(cstr == "Digi") c = new Digi_Sim();
-        else if(cstr == "Opt") c = new Optimize_Sim();
-        break;
-  case '_' : if(cstr == "BJT") c = new BJT();
-	else if(cstr == "MOSFET") c = new MOSFET();
-        break;
-  case 'X' : if(cstr == "OR") c = new Logical_XOR();
-        else if(cstr == "NOR") c = new Logical_XNOR();
-        break;
-  case 'h' : if(cstr == "icumL2V2p1") c = new hicumL2V2p1();
-        else if(cstr == "ic2_full") c = new hic2_full();
-        else if(cstr == "ic0_full") c = new hic0_full();
-        else if(cstr == "icumL0V1p2") c = new hicumL0V1p2();
-        else if(cstr == "icumL2V2p23") c = new hicumL2V2p23();
-        else if(cstr == "a1b") c = new ha1b();
-        else if(cstr == "pribin4bit") c = new hpribin4bit();
-        break;
-  case 'H' : if(cstr == "BT_X") c = new HBT_X();
-        break;
-  case 'm' : if(cstr == "od_amp") c = new mod_amp();
-        else if(cstr == "ux2to1") c = new mux2to1();
-        else if(cstr == "ux4to1") c = new mux4to1();
-        else if(cstr == "ux8to1") c = new mux8to1();
-        break;
-  case 'l' : if(cstr == "og_amp") c = new log_amp();
-        else if(cstr == "ogic_0") c = new logic_0();
-        else if(cstr == "ogic_1") c = new logic_1();
-        break;
-  case 'p' : if(cstr == "otentiometer") c = new potentiometer();
-        else if(cstr == "hotodiode") c = new photodiode();
-        else if(cstr == "hototransistor") c = new phototransistor();
-        else if(cstr == "ad2bit") c = new pad2bit();
-        else if(cstr == "ad3bit") c = new pad3bit();
-        else if(cstr == "ad4bit") c = new pad4bit();
-        break;
-  case 'd' : if(cstr == "ff_SR") c = new dff_SR();
-        else if(cstr == "mux2to4") c = new dmux2to4();
-        else if(cstr == "mux3to8") c = new dmux3to8();
-        else if(cstr == "mux4to16") c = new dmux4to16();
-        break;
-  case 'j' : if(cstr == "kff_SR") c = new jkff_SR();
-        break;
-  case 't' : if(cstr == "ff_SR") c = new tff_SR();
-        break;
-  case 'g' : if(cstr == "atedDlatch") c = new gatedDlatch();
-        else if(cstr == "reytobinary4bit") c = new greytobinary4bit();
-        break;
-  case 'a' : if(cstr == "ndor4x2") c = new andor4x2();
-        else if(cstr == "ndor4x3") c = new andor4x3();
-        else if(cstr == "ndor4x4") c = new andor4x4();
-        break;
-  case 'f' : if(cstr == "a1b") c = new fa1b();
-        else if(cstr == "a2b") c = new fa2b();
-        break;
-  case 'b' : if(cstr == "inarytogrey4bit") c = new binarytogrey4bit();
-        break;
-  case 'c' : if(cstr == "omp_1bit") c = new comp_1bit();
-        else if(cstr == "omp_2bit") c = new comp_2bit();
-        else if(cstr == "omp_4bit") c = new comp_4bit();
-        break;
-  }
   if(!c) {
     QMessageBox::critical(0, QObject::tr("Error"),
 	QObject::tr("Format Error:\nUnknown component!"));
