@@ -7377,6 +7377,50 @@ Usage:  qucsedit [-r] file
         <source>Cannot save C++ file &quot;%1&quot;!</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>lumped components</source>
+        <translation type="unfinished">дискретные компоненты</translation>
+    </message>
+    <message>
+        <source>sources</source>
+        <translation type="unfinished">источники</translation>
+    </message>
+    <message>
+        <source>probes</source>
+        <translation type="unfinished">измерители</translation>
+    </message>
+    <message>
+        <source>transmission lines</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>nonlinear components</source>
+        <translation type="unfinished">нелинейные компоненты</translation>
+    </message>
+    <message>
+        <source>verilog-a devices</source>
+        <translation type="unfinished">устройства verilog-a</translation>
+    </message>
+    <message>
+        <source>digital components</source>
+        <translation type="unfinished">цифровые компоненты</translation>
+    </message>
+    <message>
+        <source>file components</source>
+        <translation type="unfinished">файловые компоненты</translation>
+    </message>
+    <message>
+        <source>simulations</source>
+        <translation type="unfinished">виды моделирования</translation>
+    </message>
+    <message>
+        <source>diagrams</source>
+        <translation type="unfinished">диаграммы</translation>
+    </message>
+    <message>
+        <source>paintings</source>
+        <translation type="unfinished">рисунки</translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
@@ -7915,7 +7959,7 @@ Copies the selected section to the clipboard</source>
     </message>
     <message>
         <source>digital components</source>
-        <translation>цифровые компоненты</translation>
+        <translation type="obsolete">цифровые компоненты</translation>
     </message>
     <message>
         <source>Schematic</source>
@@ -7987,35 +8031,35 @@ Copies the selected section to the clipboard</source>
     </message>
     <message>
         <source>lumped components</source>
-        <translation>дискретные компоненты</translation>
+        <translation type="obsolete">дискретные компоненты</translation>
     </message>
     <message>
         <source>sources</source>
-        <translation>источники</translation>
+        <translation type="obsolete">источники</translation>
     </message>
     <message>
         <source>transmission lines</source>
-        <translation>линии передачи данных</translation>
+        <translation type="obsolete">линии передачи данных</translation>
     </message>
     <message>
         <source>nonlinear components</source>
-        <translation>нелинейные компоненты</translation>
+        <translation type="obsolete">нелинейные компоненты</translation>
     </message>
     <message>
         <source>file components</source>
-        <translation>файловые компоненты</translation>
+        <translation type="obsolete">файловые компоненты</translation>
     </message>
     <message>
         <source>simulations</source>
-        <translation>виды моделирования</translation>
+        <translation type="obsolete">виды моделирования</translation>
     </message>
     <message>
         <source>diagrams</source>
-        <translation>диаграммы</translation>
+        <translation type="obsolete">диаграммы</translation>
     </message>
     <message>
         <source>paintings</source>
-        <translation>рисунки</translation>
+        <translation type="obsolete">рисунки</translation>
     </message>
     <message>
         <source>Rename</source>
@@ -10037,11 +10081,11 @@ Center vertically selected elements</source>
     </message>
     <message>
         <source>probes</source>
-        <translation>измерители</translation>
+        <translation type="obsolete">измерители</translation>
     </message>
     <message>
         <source>verilog-a devices</source>
-        <translation>устройства verilog-a</translation>
+        <translation type="obsolete">устройства verilog-a</translation>
     </message>
     <message>
         <source>&amp;Import/Export Data...</source>

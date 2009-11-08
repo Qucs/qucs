@@ -6864,6 +6864,50 @@ qucsedit [-r] file :إستعمال
         <source>Cannot save C++ file &quot;%1&quot;!</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>lumped components</source>
+        <translation type="unfinished">صنف العناصر</translation>
+    </message>
+    <message>
+        <source>sources</source>
+        <translation type="unfinished">المصادر</translation>
+    </message>
+    <message>
+        <source>probes</source>
+        <translation type="unfinished">تحقيقات</translation>
+    </message>
+    <message>
+        <source>transmission lines</source>
+        <translation type="unfinished">انتقال الخط</translation>
+    </message>
+    <message>
+        <source>nonlinear components</source>
+        <translation type="unfinished">العناصر غير الخطية</translation>
+    </message>
+    <message>
+        <source>verilog-a devices</source>
+        <translation type="unfinished">أجهزة فيريلوج</translation>
+    </message>
+    <message>
+        <source>digital components</source>
+        <translation type="unfinished">عناصر الرقمية</translation>
+    </message>
+    <message>
+        <source>file components</source>
+        <translation type="unfinished">عناصر الملفات</translation>
+    </message>
+    <message>
+        <source>simulations</source>
+        <translation type="unfinished">المحاكاة </translation>
+    </message>
+    <message>
+        <source>diagrams</source>
+        <translation type="unfinished">رسوم بيانية</translation>
+    </message>
+    <message>
+        <source>paintings</source>
+        <translation type="unfinished">لوحات</translation>
+    </message>
 </context>
 <context>
     <name>QucsApp</name>
@@ -7075,47 +7119,47 @@ Overwrite ?</source>
     </message>
     <message>
         <source>lumped components</source>
-        <translation>صنف العناصر</translation>
+        <translation type="obsolete">صنف العناصر</translation>
     </message>
     <message>
         <source>sources</source>
-        <translation>المصادر</translation>
+        <translation type="obsolete">المصادر</translation>
     </message>
     <message>
         <source>probes</source>
-        <translation>تحقيقات</translation>
+        <translation type="obsolete">تحقيقات</translation>
     </message>
     <message>
         <source>transmission lines</source>
-        <translation>انتقال الخط</translation>
+        <translation type="obsolete">انتقال الخط</translation>
     </message>
     <message>
         <source>nonlinear components</source>
-        <translation>العناصر غير الخطية</translation>
+        <translation type="obsolete">العناصر غير الخطية</translation>
     </message>
     <message>
         <source>verilog-a devices</source>
-        <translation>أجهزة فيريلوج</translation>
+        <translation type="obsolete">أجهزة فيريلوج</translation>
     </message>
     <message>
         <source>digital components</source>
-        <translation>عناصر الرقمية</translation>
+        <translation type="obsolete">عناصر الرقمية</translation>
     </message>
     <message>
         <source>file components</source>
-        <translation>عناصر الملفات</translation>
+        <translation type="obsolete">عناصر الملفات</translation>
     </message>
     <message>
         <source>simulations</source>
-        <translation>المحاكاة </translation>
+        <translation type="obsolete">المحاكاة </translation>
     </message>
     <message>
         <source>diagrams</source>
-        <translation>رسوم بيانية</translation>
+        <translation type="obsolete">رسوم بيانية</translation>
     </message>
     <message>
         <source>paintings</source>
-        <translation>لوحات</translation>
+        <translation type="obsolete">لوحات</translation>
     </message>
     <message>
         <source>Rename</source>

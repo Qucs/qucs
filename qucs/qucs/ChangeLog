@@ -1,3 +1,18 @@
+2009-11-08  Stefan Jahn  <stefan@lkcc.org>
+
+	* qucs.cpp (slotSetCompView, fillComboBox, slotSelectComponent):
+	Using new module/category interface for filling the component view
+	and instantiating components for use on the schematic.
+
+	* module.cpp: New components are now registered in
+	registerModules() function for static linking.  This is now the
+	only location where to tell the application about such a
+	component.
+
+	* module.h (class Module): Implemented new module and category
+	classes for use as dynamic lists for available components seen in
+	the component tab.
+
 2009-10-27  Stefan Jahn  <stefan@lkcc.org>
 
 	* paintings/rectangle.cpp, paintings/portsymbol.cpp,

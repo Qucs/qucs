@@ -7047,6 +7047,50 @@ Folosire:  qucsedit [-r] file
         <source>Cannot save C++ file &quot;%1&quot;!</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>lumped components</source>
+        <translation type="unfinished">componente discrete</translation>
+    </message>
+    <message>
+        <source>sources</source>
+        <translation type="unfinished">surse</translation>
+    </message>
+    <message>
+        <source>probes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>transmission lines</source>
+        <translation type="unfinished">linii de transmisie</translation>
+    </message>
+    <message>
+        <source>nonlinear components</source>
+        <translation type="unfinished">componente neliniare</translation>
+    </message>
+    <message>
+        <source>verilog-a devices</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>digital components</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>file components</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>simulations</source>
+        <translation type="unfinished">simulări</translation>
+    </message>
+    <message>
+        <source>diagrams</source>
+        <translation type="unfinished">diagrame</translation>
+    </message>
+    <message>
+        <source>paintings</source>
+        <translation type="unfinished">desene</translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
@@ -7135,19 +7179,19 @@ Folosire:  qucsedit [-r] file
     </message>
     <message>
         <source>lumped components</source>
-        <translation>componente discrete</translation>
+        <translation type="obsolete">componente discrete</translation>
     </message>
     <message>
         <source>sources</source>
-        <translation>surse</translation>
+        <translation type="obsolete">surse</translation>
     </message>
     <message>
         <source>transmission lines</source>
-        <translation>linii de transmisie</translation>
+        <translation type="obsolete">linii de transmisie</translation>
     </message>
     <message>
         <source>nonlinear components</source>
-        <translation>componente neliniare</translation>
+        <translation type="obsolete">componente neliniare</translation>
     </message>
     <message>
         <source>file data</source>
@@ -7155,15 +7199,15 @@ Folosire:  qucsedit [-r] file
     </message>
     <message>
         <source>simulations</source>
-        <translation>simulări</translation>
+        <translation type="obsolete">simulări</translation>
     </message>
     <message>
         <source>paintings</source>
-        <translation>desene</translation>
+        <translation type="obsolete">desene</translation>
     </message>
     <message>
         <source>diagrams</source>
-        <translation>diagrame</translation>
+        <translation type="obsolete">diagrame</translation>
     </message>
     <message>
         <source>Rename</source>
@@ -7652,14 +7696,6 @@ Editează această schemă</translation>
     <message>
         <source>permanently! Continue ?</source>
         <translation type="obsolete">definitiv! Continuaţi?</translation>
-    </message>
-    <message>
-        <source>file components</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>digital components</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Others</source>
@@ -9408,14 +9444,6 @@ Center vertically selected elements</source>
     </message>
     <message>
         <source>Verilog</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>probes</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>verilog-a devices</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

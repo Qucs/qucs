@@ -7330,6 +7330,50 @@ Použití:  qucsedit [-r] soubor
         <source>Cannot save C++ file &quot;%1&quot;!</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>lumped components</source>
+        <translation type="unfinished">diskrétní komponenty</translation>
+    </message>
+    <message>
+        <source>sources</source>
+        <translation type="unfinished">zdroje</translation>
+    </message>
+    <message>
+        <source>probes</source>
+        <translation type="unfinished">sondy</translation>
+    </message>
+    <message>
+        <source>transmission lines</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>nonlinear components</source>
+        <translation type="unfinished">nelineární komponenty</translation>
+    </message>
+    <message>
+        <source>verilog-a devices</source>
+        <translation type="unfinished">verilog-a zařízení</translation>
+    </message>
+    <message>
+        <source>digital components</source>
+        <translation type="unfinished">digitální komponenty</translation>
+    </message>
+    <message>
+        <source>file components</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>simulations</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>diagrams</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>paintings</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
@@ -7868,7 +7912,7 @@ Zkopíruje vybranou oblast do schránky</translation>
     </message>
     <message>
         <source>digital components</source>
-        <translation>digitální komponenty</translation>
+        <translation type="obsolete">digitální komponenty</translation>
     </message>
     <message>
         <source>Schematic</source>
@@ -7940,35 +7984,35 @@ Zkopíruje vybranou oblast do schránky</translation>
     </message>
     <message>
         <source>lumped components</source>
-        <translation>diskrétní komponenty</translation>
+        <translation type="obsolete">diskrétní komponenty</translation>
     </message>
     <message>
         <source>sources</source>
-        <translation>zdroje</translation>
+        <translation type="obsolete">zdroje</translation>
     </message>
     <message>
         <source>transmission lines</source>
-        <translation>přenosová vedení</translation>
+        <translation type="obsolete">přenosová vedení</translation>
     </message>
     <message>
         <source>nonlinear components</source>
-        <translation>nelineární komponenty</translation>
+        <translation type="obsolete">nelineární komponenty</translation>
     </message>
     <message>
         <source>file components</source>
-        <translation>datové komponenty</translation>
+        <translation type="obsolete">datové komponenty</translation>
     </message>
     <message>
         <source>simulations</source>
-        <translation>simulace</translation>
+        <translation type="obsolete">simulace</translation>
     </message>
     <message>
         <source>diagrams</source>
-        <translation>diagramy</translation>
+        <translation type="obsolete">diagramy</translation>
     </message>
     <message>
         <source>paintings</source>
-        <translation>grafika</translation>
+        <translation type="obsolete">grafika</translation>
     </message>
     <message>
         <source>Rename</source>
@@ -9996,11 +10040,11 @@ Vyrovnat svisle vybrané prvky</translation>
     </message>
     <message>
         <source>probes</source>
-        <translation>sondy</translation>
+        <translation type="obsolete">sondy</translation>
     </message>
     <message>
         <source>verilog-a devices</source>
-        <translation>verilog-a zařízení</translation>
+        <translation type="obsolete">verilog-a zařízení</translation>
     </message>
     <message>
         <source>&amp;Import/Export Data...</source>

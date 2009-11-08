@@ -7168,6 +7168,50 @@ Stosowanie:  qucsedit [-r] plik
         <source>Cannot save C++ file &quot;%1&quot;!</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>lumped components</source>
+        <translation type="unfinished">elementy skupione</translation>
+    </message>
+    <message>
+        <source>sources</source>
+        <translation type="unfinished">źródła</translation>
+    </message>
+    <message>
+        <source>probes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>transmission lines</source>
+        <translation type="unfinished">linie transmisyjne</translation>
+    </message>
+    <message>
+        <source>nonlinear components</source>
+        <translation type="unfinished">elementy nieliniowe</translation>
+    </message>
+    <message>
+        <source>verilog-a devices</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>digital components</source>
+        <translation type="unfinished">elementy cyfrowe</translation>
+    </message>
+    <message>
+        <source>file components</source>
+        <translation type="unfinished">komponenty pliku</translation>
+    </message>
+    <message>
+        <source>simulations</source>
+        <translation type="unfinished">symulacje</translation>
+    </message>
+    <message>
+        <source>diagrams</source>
+        <translation type="unfinished">wykresy</translation>
+    </message>
+    <message>
+        <source>paintings</source>
+        <translation type="unfinished">wzory graficzne</translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
@@ -7276,19 +7320,19 @@ Stosowanie:  qucsedit [-r] plik
     </message>
     <message>
         <source>lumped components</source>
-        <translation>elementy skupione</translation>
+        <translation type="obsolete">elementy skupione</translation>
     </message>
     <message>
         <source>sources</source>
-        <translation>źródła</translation>
+        <translation type="obsolete">źródła</translation>
     </message>
     <message>
         <source>transmission lines</source>
-        <translation>linie transmisyjne</translation>
+        <translation type="obsolete">linie transmisyjne</translation>
     </message>
     <message>
         <source>nonlinear components</source>
-        <translation>elementy nieliniowe</translation>
+        <translation type="obsolete">elementy nieliniowe</translation>
     </message>
     <message>
         <source>file data</source>
@@ -7296,15 +7340,15 @@ Stosowanie:  qucsedit [-r] plik
     </message>
     <message>
         <source>simulations</source>
-        <translation>symulacje</translation>
+        <translation type="obsolete">symulacje</translation>
     </message>
     <message>
         <source>paintings</source>
-        <translation>wzory graficzne</translation>
+        <translation type="obsolete">wzory graficzne</translation>
     </message>
     <message>
         <source>diagrams</source>
-        <translation>wykresy</translation>
+        <translation type="obsolete">wykresy</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -7804,11 +7848,11 @@ Edytuj schemat</translation>
     </message>
     <message>
         <source>file components</source>
-        <translation>komponenty pliku</translation>
+        <translation type="obsolete">komponenty pliku</translation>
     </message>
     <message>
         <source>digital components</source>
-        <translation>elementy cyfrowe</translation>
+        <translation type="obsolete">elementy cyfrowe</translation>
     </message>
     <message>
         <source>Others</source>
@@ -9673,14 +9717,6 @@ wyśrodkowuje w pionie wybrane elementy</translation>
     <message>
         <source>Cannot delete Verilog source: </source>
         <translation type="obsolete">Nie mogę usunąć źródła Verilog:  </translation>
-    </message>
-    <message>
-        <source>probes</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>verilog-a devices</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>&amp;Import/Export Data...</source>
