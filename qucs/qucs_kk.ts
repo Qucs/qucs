@@ -6814,6 +6814,50 @@ Usage:  qucsedit [-r] file
         <source>Cannot save C++ file &quot;%1&quot;!</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>lumped components</source>
+        <translation type="unfinished">дискреттік компоненттер</translation>
+    </message>
+    <message>
+        <source>sources</source>
+        <translation type="unfinished">қорек көздері</translation>
+    </message>
+    <message>
+        <source>probes</source>
+        <translation type="unfinished">тестілеу</translation>
+    </message>
+    <message>
+        <source>transmission lines</source>
+        <translation type="unfinished">мәліметтерді беру арнасы</translation>
+    </message>
+    <message>
+        <source>nonlinear components</source>
+        <translation type="unfinished">сызықтық емес компоненттер</translation>
+    </message>
+    <message>
+        <source>verilog-a devices</source>
+        <translation type="unfinished">verilog құрылғылары</translation>
+    </message>
+    <message>
+        <source>digital components</source>
+        <translation type="unfinished">цифрлық компоненттер</translation>
+    </message>
+    <message>
+        <source>file components</source>
+        <translation type="unfinished">файл компоненттері</translation>
+    </message>
+    <message>
+        <source>simulations</source>
+        <translation type="unfinished">Моделдеу түрлері</translation>
+    </message>
+    <message>
+        <source>diagrams</source>
+        <translation type="unfinished">диаграммалар</translation>
+    </message>
+    <message>
+        <source>paintings</source>
+        <translation type="unfinished">суреттер</translation>
+    </message>
 </context>
 <context>
     <name>QucsApp</name>
@@ -7024,47 +7068,47 @@ Overwrite ?</source>
     </message>
     <message>
         <source>lumped components</source>
-        <translation>дискреттік компоненттер</translation>
+        <translation type="obsolete">дискреттік компоненттер</translation>
     </message>
     <message>
         <source>sources</source>
-        <translation>қорек көздері</translation>
+        <translation type="obsolete">қорек көздері</translation>
     </message>
     <message>
         <source>probes</source>
-        <translation>тестілеу</translation>
+        <translation type="obsolete">тестілеу</translation>
     </message>
     <message>
         <source>transmission lines</source>
-        <translation>мәліметтерді беру арнасы</translation>
+        <translation type="obsolete">мәліметтерді беру арнасы</translation>
     </message>
     <message>
         <source>nonlinear components</source>
-        <translation>сызықтық емес компоненттер</translation>
+        <translation type="obsolete">сызықтық емес компоненттер</translation>
     </message>
     <message>
         <source>verilog-a devices</source>
-        <translation>verilog құрылғылары</translation>
+        <translation type="obsolete">verilog құрылғылары</translation>
     </message>
     <message>
         <source>digital components</source>
-        <translation>цифрлық компоненттер</translation>
+        <translation type="obsolete">цифрлық компоненттер</translation>
     </message>
     <message>
         <source>file components</source>
-        <translation>файл компоненттері</translation>
+        <translation type="obsolete">файл компоненттері</translation>
     </message>
     <message>
         <source>simulations</source>
-        <translation>Моделдеу түрлері</translation>
+        <translation type="obsolete">Моделдеу түрлері</translation>
     </message>
     <message>
         <source>diagrams</source>
-        <translation>диаграммалар</translation>
+        <translation type="obsolete">диаграммалар</translation>
     </message>
     <message>
         <source>paintings</source>
-        <translation>суреттер</translation>
+        <translation type="obsolete">суреттер</translation>
     </message>
     <message>
         <source>Rename</source>

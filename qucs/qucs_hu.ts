@@ -7106,6 +7106,50 @@ Digitális szimuláció</translation>
         <source>Cannot save C++ file &quot;%1&quot;!</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>lumped components</source>
+        <translation type="unfinished">Álltalános alkatrészek</translation>
+    </message>
+    <message>
+        <source>sources</source>
+        <translation type="unfinished">Áram és feszültségforrások</translation>
+    </message>
+    <message>
+        <source>probes</source>
+        <translation type="unfinished">próbák</translation>
+    </message>
+    <message>
+        <source>transmission lines</source>
+        <translation type="unfinished">Tápvonalak</translation>
+    </message>
+    <message>
+        <source>nonlinear components</source>
+        <translation type="unfinished">Nemlineáris, aktív alkatrészek</translation>
+    </message>
+    <message>
+        <source>verilog-a devices</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>digital components</source>
+        <translation type="unfinished">digitális alkatrészek</translation>
+    </message>
+    <message>
+        <source>file components</source>
+        <translation type="unfinished">fájl alkatrészek</translation>
+    </message>
+    <message>
+        <source>simulations</source>
+        <translation type="unfinished">Szimulációk</translation>
+    </message>
+    <message>
+        <source>diagrams</source>
+        <translation type="unfinished">Diagramok</translation>
+    </message>
+    <message>
+        <source>paintings</source>
+        <translation type="unfinished">Feliratok, rajzelemek</translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
@@ -7267,19 +7311,19 @@ Felülírjam?</translation>
     </message>
     <message>
         <source>lumped components</source>
-        <translation>Álltalános alkatrészek</translation>
+        <translation type="obsolete">Álltalános alkatrészek</translation>
     </message>
     <message>
         <source>sources</source>
-        <translation>Áram és feszültségforrások</translation>
+        <translation type="obsolete">Áram és feszültségforrások</translation>
     </message>
     <message>
         <source>transmission lines</source>
-        <translation>Tápvonalak</translation>
+        <translation type="obsolete">Tápvonalak</translation>
     </message>
     <message>
         <source>nonlinear components</source>
-        <translation>Nemlineáris, aktív alkatrészek</translation>
+        <translation type="obsolete">Nemlineáris, aktív alkatrészek</translation>
     </message>
     <message>
         <source>file data</source>
@@ -7287,15 +7331,15 @@ Felülírjam?</translation>
     </message>
     <message>
         <source>simulations</source>
-        <translation>Szimulációk</translation>
+        <translation type="obsolete">Szimulációk</translation>
     </message>
     <message>
         <source>diagrams</source>
-        <translation>Diagramok</translation>
+        <translation type="obsolete">Diagramok</translation>
     </message>
     <message>
         <source>paintings</source>
-        <translation>Feliratok, rajzelemek</translation>
+        <translation type="obsolete">Feliratok, rajzelemek</translation>
     </message>
     <message>
         <source>Rename</source>
@@ -7803,11 +7847,11 @@ Nem indítható a tápvonal tervező program!
     </message>
     <message>
         <source>file components</source>
-        <translation>fájl alkatrészek</translation>
+        <translation type="obsolete">fájl alkatrészek</translation>
     </message>
     <message>
         <source>digital components</source>
-        <translation>digitális alkatrészek</translation>
+        <translation type="obsolete">digitális alkatrészek</translation>
     </message>
     <message>
         <source>Others</source>
@@ -9679,11 +9723,7 @@ A kiválasztott elemeket vízszintesen egyvonalba mozgatja</translation>
     </message>
     <message>
         <source>probes</source>
-        <translation>próbák</translation>
-    </message>
-    <message>
-        <source>verilog-a devices</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">próbák</translation>
     </message>
     <message>
         <source>&amp;Import/Export Data...</source>

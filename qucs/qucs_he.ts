@@ -6963,6 +6963,50 @@ Usage:  qucsedit [-r] file
         <source>Cannot save C++ file &quot;%1&quot;!</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>lumped components</source>
+        <translation type="unfinished">רכיבים מאוחדים</translation>
+    </message>
+    <message>
+        <source>sources</source>
+        <translation type="unfinished">מקורות</translation>
+    </message>
+    <message>
+        <source>probes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>transmission lines</source>
+        <translation type="unfinished">קוי תמסורת</translation>
+    </message>
+    <message>
+        <source>nonlinear components</source>
+        <translation type="unfinished">רכיבים לא לינאריים</translation>
+    </message>
+    <message>
+        <source>verilog-a devices</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>digital components</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>file components</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>simulations</source>
+        <translation type="unfinished">סימולציות</translation>
+    </message>
+    <message>
+        <source>diagrams</source>
+        <translation type="unfinished">דיאגרמות</translation>
+    </message>
+    <message>
+        <source>paintings</source>
+        <translation type="unfinished">ציורים</translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
@@ -7071,19 +7115,19 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>lumped components</source>
-        <translation>רכיבים מאוחדים</translation>
+        <translation type="obsolete">רכיבים מאוחדים</translation>
     </message>
     <message>
         <source>sources</source>
-        <translation>מקורות</translation>
+        <translation type="obsolete">מקורות</translation>
     </message>
     <message>
         <source>transmission lines</source>
-        <translation>קוי תמסורת</translation>
+        <translation type="obsolete">קוי תמסורת</translation>
     </message>
     <message>
         <source>nonlinear components</source>
-        <translation>רכיבים לא לינאריים</translation>
+        <translation type="obsolete">רכיבים לא לינאריים</translation>
     </message>
     <message>
         <source>file data</source>
@@ -7091,15 +7135,15 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>simulations</source>
-        <translation>סימולציות</translation>
+        <translation type="obsolete">סימולציות</translation>
     </message>
     <message>
         <source>diagrams</source>
-        <translation>דיאגרמות</translation>
+        <translation type="obsolete">דיאגרמות</translation>
     </message>
     <message>
         <source>paintings</source>
-        <translation>ציורים</translation>
+        <translation type="obsolete">ציורים</translation>
     </message>
     <message>
         <source>Rename</source>
@@ -7566,14 +7610,6 @@ Edits the symbol for this schematic</source>
 
 Edits the schematic</source>
         <translation type="obsolete">ערוך סכימה עורך את הסכימה</translation>
-    </message>
-    <message>
-        <source>file components</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>digital components</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Others</source>
@@ -9318,14 +9354,6 @@ Center vertically selected elements</source>
     </message>
     <message>
         <source>Verilog</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>probes</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>verilog-a devices</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

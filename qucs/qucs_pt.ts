@@ -6974,6 +6974,50 @@ Usage:  qucsedit [-r] file
         <source>Cannot save C++ file &quot;%1&quot;!</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>lumped components</source>
+        <translation type="unfinished">componentes soltos</translation>
+    </message>
+    <message>
+        <source>sources</source>
+        <translation type="unfinished">fontes</translation>
+    </message>
+    <message>
+        <source>probes</source>
+        <translation type="unfinished">ponteiras</translation>
+    </message>
+    <message>
+        <source>transmission lines</source>
+        <translation type="unfinished">linhas de transmissão</translation>
+    </message>
+    <message>
+        <source>nonlinear components</source>
+        <translation type="unfinished">componentes não-lineares</translation>
+    </message>
+    <message>
+        <source>verilog-a devices</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>digital components</source>
+        <translation type="unfinished">componentes digitais</translation>
+    </message>
+    <message>
+        <source>file components</source>
+        <translation type="unfinished">componentes em arquivo</translation>
+    </message>
+    <message>
+        <source>simulations</source>
+        <translation type="unfinished">simulações</translation>
+    </message>
+    <message>
+        <source>diagrams</source>
+        <translation type="unfinished">diagramas</translation>
+    </message>
+    <message>
+        <source>paintings</source>
+        <translation type="unfinished">desenho</translation>
+    </message>
 </context>
 <context>
     <name>QucsApp</name>
@@ -7176,39 +7220,39 @@ Overwrite ?</source>
     </message>
     <message>
         <source>lumped components</source>
-        <translation>componentes soltos</translation>
+        <translation type="obsolete">componentes soltos</translation>
     </message>
     <message>
         <source>sources</source>
-        <translation>fontes</translation>
+        <translation type="obsolete">fontes</translation>
     </message>
     <message>
         <source>transmission lines</source>
-        <translation>linhas de transmissão</translation>
+        <translation type="obsolete">linhas de transmissão</translation>
     </message>
     <message>
         <source>nonlinear components</source>
-        <translation>componentes não-lineares</translation>
+        <translation type="obsolete">componentes não-lineares</translation>
     </message>
     <message>
         <source>digital components</source>
-        <translation>componentes digitais</translation>
+        <translation type="obsolete">componentes digitais</translation>
     </message>
     <message>
         <source>file components</source>
-        <translation>componentes em arquivo</translation>
+        <translation type="obsolete">componentes em arquivo</translation>
     </message>
     <message>
         <source>simulations</source>
-        <translation>simulações</translation>
+        <translation type="obsolete">simulações</translation>
     </message>
     <message>
         <source>diagrams</source>
-        <translation>diagramas</translation>
+        <translation type="obsolete">diagramas</translation>
     </message>
     <message>
         <source>paintings</source>
-        <translation>desenho</translation>
+        <translation type="obsolete">desenho</translation>
     </message>
     <message>
         <source>Rename</source>
@@ -8540,11 +8584,7 @@ Sobre Qt da Trolltech</translation>
     </message>
     <message>
         <source>probes</source>
-        <translation>ponteiras</translation>
-    </message>
-    <message>
-        <source>verilog-a devices</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">ponteiras</translation>
     </message>
     <message>
         <source>New Text</source>

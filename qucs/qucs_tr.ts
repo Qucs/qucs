@@ -6971,6 +6971,50 @@ Kullanım:  qucsedit [-r] kütük
         <source>Cannot save C++ file &quot;%1&quot;!</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>lumped components</source>
+        <translation type="unfinished">sınıflandırılmamış bileşenler</translation>
+    </message>
+    <message>
+        <source>sources</source>
+        <translation type="unfinished">kaynaklar</translation>
+    </message>
+    <message>
+        <source>probes</source>
+        <translation type="unfinished">ölçüm uçları</translation>
+    </message>
+    <message>
+        <source>transmission lines</source>
+        <translation type="unfinished">iletim hatları</translation>
+    </message>
+    <message>
+        <source>nonlinear components</source>
+        <translation type="unfinished">doğrusal olmayan bileşenler</translation>
+    </message>
+    <message>
+        <source>verilog-a devices</source>
+        <translation type="unfinished">verilog-a devre elemanları</translation>
+    </message>
+    <message>
+        <source>digital components</source>
+        <translation type="unfinished">dijital bileşenler</translation>
+    </message>
+    <message>
+        <source>file components</source>
+        <translation type="unfinished">kütük bileşenleri</translation>
+    </message>
+    <message>
+        <source>simulations</source>
+        <translation type="unfinished">benzetimler</translation>
+    </message>
+    <message>
+        <source>diagrams</source>
+        <translation type="unfinished">çizgeler</translation>
+    </message>
+    <message>
+        <source>paintings</source>
+        <translation type="unfinished">boyamalar</translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
@@ -7129,39 +7173,39 @@ Overwrite ?</source>
     </message>
     <message>
         <source>lumped components</source>
-        <translation>sınıflandırılmamış bileşenler</translation>
+        <translation type="obsolete">sınıflandırılmamış bileşenler</translation>
     </message>
     <message>
         <source>sources</source>
-        <translation>kaynaklar</translation>
+        <translation type="obsolete">kaynaklar</translation>
     </message>
     <message>
         <source>transmission lines</source>
-        <translation>iletim hatları</translation>
+        <translation type="obsolete">iletim hatları</translation>
     </message>
     <message>
         <source>nonlinear components</source>
-        <translation>doğrusal olmayan bileşenler</translation>
+        <translation type="obsolete">doğrusal olmayan bileşenler</translation>
     </message>
     <message>
         <source>digital components</source>
-        <translation>dijital bileşenler</translation>
+        <translation type="obsolete">dijital bileşenler</translation>
     </message>
     <message>
         <source>file components</source>
-        <translation>kütük bileşenleri</translation>
+        <translation type="obsolete">kütük bileşenleri</translation>
     </message>
     <message>
         <source>simulations</source>
-        <translation>benzetimler</translation>
+        <translation type="obsolete">benzetimler</translation>
     </message>
     <message>
         <source>diagrams</source>
-        <translation>çizgeler</translation>
+        <translation type="obsolete">çizgeler</translation>
     </message>
     <message>
         <source>paintings</source>
-        <translation>boyamalar</translation>
+        <translation type="obsolete">boyamalar</translation>
     </message>
     <message>
         <source>Rename</source>
@@ -9378,11 +9422,11 @@ Seçili bileşenleri dikey olarak ortala</translation>
     </message>
     <message>
         <source>probes</source>
-        <translation>ölçüm uçları</translation>
+        <translation type="obsolete">ölçüm uçları</translation>
     </message>
     <message>
         <source>verilog-a devices</source>
-        <translation>verilog-a devre elemanları</translation>
+        <translation type="obsolete">verilog-a devre elemanları</translation>
     </message>
     <message>
         <source>&amp;Import/Export Data...</source>

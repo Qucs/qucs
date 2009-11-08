@@ -1,3 +1,8 @@
+2009-11-08  Stefan Jahn  <stefan@lkcc.org>
+
+	* component.cpp (getComponentFromName): Using new module interface
+	for instantiating components currently loaded.
+
 2009-10-27  Stefan Jahn  <stefan@lkcc.org>
 
 	* vafile.cpp (VerilogA_File_Info): Added new class parsing ports
