@@ -6966,6 +6966,50 @@ Usage:  qucsedit [-r] file
         <source>Cannot save C++ file &quot;%1&quot;!</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>lumped components</source>
+        <translation type="unfinished">дискретні компоненти</translation>
+    </message>
+    <message>
+        <source>sources</source>
+        <translation type="unfinished">джерела</translation>
+    </message>
+    <message>
+        <source>probes</source>
+        <translation type="unfinished">проби</translation>
+    </message>
+    <message>
+        <source>transmission lines</source>
+        <translation type="unfinished">лінії передачі</translation>
+    </message>
+    <message>
+        <source>nonlinear components</source>
+        <translation type="unfinished">нелінійні компоненти</translation>
+    </message>
+    <message>
+        <source>verilog-a devices</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>digital components</source>
+        <translation type="unfinished">цифрові компоненти</translation>
+    </message>
+    <message>
+        <source>file components</source>
+        <translation type="unfinished">файлові компоненти</translation>
+    </message>
+    <message>
+        <source>simulations</source>
+        <translation type="unfinished">види моделювання</translation>
+    </message>
+    <message>
+        <source>diagrams</source>
+        <translation type="unfinished">діаграми</translation>
+    </message>
+    <message>
+        <source>paintings</source>
+        <translation type="unfinished">малюнки</translation>
+    </message>
 </context>
 <context>
     <name>QucsApp</name>
@@ -7113,7 +7157,7 @@ Quits the application</source>
     </message>
     <message>
         <source>digital components</source>
-        <translation>цифрові компоненти</translation>
+        <translation type="obsolete">цифрові компоненти</translation>
     </message>
     <message>
         <source>Schematic</source>
@@ -7177,35 +7221,35 @@ Quits the application</source>
     </message>
     <message>
         <source>lumped components</source>
-        <translation>дискретні компоненти</translation>
+        <translation type="obsolete">дискретні компоненти</translation>
     </message>
     <message>
         <source>sources</source>
-        <translation>джерела</translation>
+        <translation type="obsolete">джерела</translation>
     </message>
     <message>
         <source>transmission lines</source>
-        <translation>лінії передачі</translation>
+        <translation type="obsolete">лінії передачі</translation>
     </message>
     <message>
         <source>nonlinear components</source>
-        <translation>нелінійні компоненти</translation>
+        <translation type="obsolete">нелінійні компоненти</translation>
     </message>
     <message>
         <source>file components</source>
-        <translation>файлові компоненти</translation>
+        <translation type="obsolete">файлові компоненти</translation>
     </message>
     <message>
         <source>simulations</source>
-        <translation>види моделювання</translation>
+        <translation type="obsolete">види моделювання</translation>
     </message>
     <message>
         <source>diagrams</source>
-        <translation>діаграми</translation>
+        <translation type="obsolete">діаграми</translation>
     </message>
     <message>
         <source>paintings</source>
-        <translation>малюнки</translation>
+        <translation type="obsolete">малюнки</translation>
     </message>
     <message>
         <source>Rename</source>
@@ -9499,11 +9543,7 @@ About Qt by Trolltech</source>
     </message>
     <message>
         <source>probes</source>
-        <translation>проби</translation>
-    </message>
-    <message>
-        <source>verilog-a devices</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">проби</translation>
     </message>
     <message>
         <source>&amp;Import/Export Data...</source>

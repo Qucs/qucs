@@ -66,6 +66,7 @@
 #include "schematic.h"
 #include "mouseactions.h"
 #include "wire.h"
+#include "module.h"
 #include "components/components.h"
 #include "paintings/paintings.h"
 #include "diagrams/diagrams.h"
@@ -145,6 +146,7 @@ QucsApp::QucsApp()
   viewBrowseDock->setOn(true);
   initCursorMenu();
   HierarchyHistory.setAutoDelete(true);
+  Module::registerModules ();
 
   // default settings of the printer
   Printer = new QPrinter(QPrinter::HighResolution);
@@ -178,6 +180,7 @@ QucsApp::QucsApp()
 
 QucsApp::~QucsApp()
 {
+  Module::unregisterModules ();
   delete Printer;
 }
 
@@ -325,144 +328,48 @@ QucsDoc * QucsApp::findDoc (QString File, int * Pos)
   return 0;
 }
 
-// ####################################################################
-// #####  The following arrays contains the elements that appear  #####
-// #####  in the component listview.                              #####
-// ####################################################################
-typedef Element*  (*pInfoFunc) (QString&, char* &, bool);
-pInfoFunc lumpedComponents[] =
-  {&Resistor::info, &Resistor::info_us, &Capacitor::info, &Inductor::info,
-   &Ground::info, &SubCirPort::info, &Transformer::info, &symTrafo::info,
-   &dcBlock::info, &dcFeed::info, &BiasT::info, &Attenuator::info,
-   &Amplifier::info, &Isolator::info, &Circulator::info,
-   &Gyrator::info, &Phaseshifter::info, &Coupler::info, &iProbe::info,
-   &vProbe::info, &Mutual::info, &Mutual2::info, &Switch::info,
-   &Relais::info, &RFedd::info, &RFedd2P::info, 0};
-
-pInfoFunc Sources[] =
-  {&Volt_dc::info, &Ampere_dc::info, &Volt_ac::info, &Ampere_ac::info,
-   &Source_ac::info, &Volt_noise::info, &Ampere_noise::info, &VCCS::info,
-   &CCCS::info, &VCVS::info, &CCVS::info, &vPulse::info, &iPulse::info,
-   &vRect::info, &iRect::info, &Noise_ii::info, &Noise_vv::info,
-   &Noise_iv::info, &AM_Modulator::info, &PM_Modulator::info, &iExp::info,
-   &vExp::info, &vFile::info, &iFile::info, 0};
-
-pInfoFunc Probes[] =
-  {&iProbe::info, &vProbe::info, 0};
-
-pInfoFunc TransmissionLines[] =
-  {&TLine::info, &TLine_4Port::info, &TwistedPair::info, &CoaxialLine::info,
-   &RectLine::info, &RLCG::info,
-   &Substrate::info, &MSline::info, &MScoupled::info, &MScorner::info,
-   &MSmbend::info, &MSstep::info, &MStee::info, &MScross::info, &MSopen::info,
-   &MSgap::info, &MSvia::info, &MSrstub::info, &Coplanar::info, &CPWopen::info,
-   &CPWshort::info, &CPWgap::info, &CPWstep::info, &BondWire::info, 0};
-
-pInfoFunc nonlinearComps[] =
-  {&Diode::info, &BJT::info, &BJT::info_pnp, &BJTsub::info,
-   &BJTsub::info_pnp, &JFET::info, &JFET::info_p,
-   &MOSFET::info, &MOSFET::info_p, &MOSFET::info_depl,
-   &MOSFET_sub::info, &MOSFET_sub::info_p, &MOSFET_sub::info_depl,
-   &OpAmp::info, &EqnDefined::info, &Diac::info, &Triac::info,
-   &Thyristor::info,
-   0};
-
-pInfoFunc VerilogAComps[] =
-  {&hicumL2V2p1::info, &HBT_X::info, &mod_amp::info, &hic2_full::info,
-   &log_amp::info, &hic0_full::info, &hic0_full::info_pnp,
-   &potentiometer::info, &MESFET::info, &EKV26MOS::info, &EKV26MOS::info_pmos,
-   &hicumL0V1p2::info, &hicumL0V1p2::info_pnp, &hicumL2V2p23::info,
-   &photodiode::info, &phototransistor::info, &nigbt::info, 0};
-
-pInfoFunc digitalComps[] =
-  {&Digi_Source::info, &Logical_Inv::info, &Logical_OR::info,
-   &Logical_NOR::info, &Logical_AND::info, &Logical_NAND::info,
-   &Logical_XOR::info, &Logical_XNOR::info, &Logical_Buf::info,
-   &andor4x2::info,  &andor4x3::info, &andor4x4::info,
-   &mux2to1::info,  &mux4to1::info,  &mux8to1::info, 
-   &dmux2to4::info, &dmux3to8::info,  &dmux4to16::info,
-   &ha1b::info, &fa1b::info,  &fa2b::info,
-   &RS_FlipFlop::info, &D_FlipFlop::info, &dff_SR::info, 
-   &JK_FlipFlop::info, &jkff_SR::info, &tff_SR::info, 
-   &gatedDlatch::info,
-   &logic_0::info, &logic_1::info, 
-   &pad2bit::info, &pad3bit::info, &pad4bit::info, 
-   &DLS_nto1::info, &DLS_1ton::info,  
-   &binarytogrey4bit::info,  &greytobinary4bit::info,
-   &comp_1bit::info, &comp_2bit::info, &comp_4bit::info,
-   &hpribin4bit::info, 
-   &VHDL_File::info, &Verilog_File::info, 
-   &Digi_Sim::info, 0};
-
-pInfoFunc Simulations[] =
-  {&DC_Sim::info, &TR_Sim::info, &AC_Sim::info, &SP_Sim::info,
-   &HB_Sim::info, &Param_Sweep::info, &Digi_Sim::info, &Optimize_Sim::info,
-   0};
-
-pInfoFunc FileComponents[] =
-  {&SpiceFile::info, &SParamFile::info1, &SParamFile::info2,
-   &SParamFile::info, &Subcircuit::info, 0};
-
-pInfoFunc Diagrams[] =
-  {&RectDiagram::info, &PolarDiagram::info, &TabDiagram::info,
-   &SmithDiagram::info, &SmithDiagram::info_y, &PSDiagram::info,
-   &PSDiagram::info_sp, &Rect3DDiagram::info, &CurveDiagram::info,
-   &TimingDiagram::info, &TruthDiagram::info, 0};
-
-pInfoFunc Paintings[] =
-  {&GraphicLine::info, &Arrow::info, &GraphicText::info,
-   &Ellipse::info, &Rectangle::info, &Ellipse::info_filled,
-   &Rectangle::info_filled, &EllipseArc::info, 0};
-
-// Order of the component groups in the ComboBox
-pInfoFunc *ComponentGroups[] =
-  {lumpedComponents, Sources, Probes, TransmissionLines, nonlinearComps,
-   VerilogAComps, digitalComps, FileComponents, Simulations, Diagrams, 0};
-
 // ---------------------------------------------------------------
 // Put the component groups into the ComboBox. It is possible to
 // only put the paintings in it, because of "symbol painting mode".
-void QucsApp::fillComboBox(bool setAll)
+void QucsApp::fillComboBox (bool setAll)
 {
-  CompChoose->setSizeLimit(11); //Increase this if you add items below.
-  CompChoose->clear();
-  if(setAll) {
-    CompChoose->insertItem(tr("lumped components"));
-    CompChoose->insertItem(tr("sources"));
-    CompChoose->insertItem(tr("probes"));
-    CompChoose->insertItem(tr("transmission lines"));
-    CompChoose->insertItem(tr("nonlinear components"));
-    CompChoose->insertItem(tr("verilog-a devices"));
-    CompChoose->insertItem(tr("digital components"));
-    CompChoose->insertItem(tr("file components"));
-    CompChoose->insertItem(tr("simulations"));
-    CompChoose->insertItem(tr("diagrams"));
+  CompChoose->setSizeLimit (11); // Increase this if you add items below.
+  CompChoose->clear ();
+
+  QStringList cats = Category::getCategories ();
+  for (QStringList::Iterator it = cats.begin (); it != cats.end (); ++it) {
+    if (*it != QObject::tr("paintings")) {
+      if (setAll) CompChoose->insertItem (*it);
+    }
+    else CompChoose->insertItem (*it);
   }
-  CompChoose->insertItem(tr("paintings"));
 }
 
 // ----------------------------------------------------------
 // Whenever the Component Library ComboBox is changed, this slot fills the
 // Component IconView with the appropriat components.
-void QucsApp::slotSetCompView(int index)
+void QucsApp::slotSetCompView (int index)
 {
-  editText->setHidden(true); // disable text edit of component property
+  editText->setHidden (true); // disable text edit of component property
 
-  char *File;
-  QString Name;
-  pInfoFunc *Infos = 0;
-
-  CompComps->clear();   // clear the IconView
-  if((index+1) >= CompChoose->count())  // because of symbol edit mode
-    Infos = &Paintings[0];
+  QPtrList<Module> Comps;
+  CompComps->clear ();   // clear the IconView
+  if (CompChoose->count () <= 0) return;
+  QString item = CompChoose->text (index);
+  if ((index + 1) >= CompChoose->count ()) // because of symbol edit mode
+    Comps = Category::getModules (QObject::tr("paintings"));
   else
-    Infos = ComponentGroups[index];
+    Comps = Category::getModules (item);
 
-  while(*Infos != 0) {
-    (**Infos) (Name, File, false);
-    new QIconViewItem(CompComps, Name,
-		QImage(QucsSettings.BitmapDir+QString(File)+".png"));
-    Infos++;
+  char * File;
+  QString Name;
+  Module * Mod;
+  for (Mod = Comps.first(); Mod; Mod = Comps.next ()) {
+    if (Mod->info) {
+      *(Mod->info) (Name, File, false);
+      new QIconViewItem (CompComps, Name,
+		QImage (QucsSettings.BitmapDir + QString (File) + ".png"));
+    }
   }
 }
 
@@ -493,22 +400,24 @@ void QucsApp::slotSelectComponent(QIconViewItem *item)
   }
   activeAction = 0;
 
-
   MouseMoveAction = &MouseActions::MMoveElement;
   MousePressAction = &MouseActions::MPressElement;
   MouseReleaseAction = 0;
   MouseDoubleClickAction = 0;
 
   pInfoFunc Infos = 0;
-  int i = CompComps->index(item);
+  int i = CompComps->index (item);
+  QPtrList<Module> Comps;
   if((CompChoose->currentItem()+1) >= CompChoose->count())
-    Infos = Paintings[i];   // the only one in "symbol-painting" mode
+    // the only one in "symbol-painting" mode
+    Comps = Category::getModules (QObject::tr("paintings"));
   else
-    Infos = *(ComponentGroups[CompChoose->currentItem()] + i);
+    Comps = Category::getModules (CompChoose->currentText ());
+  Infos = Comps.at(i)->info;
 
-  char *Dummy2;
+  char * Dummy2;
   QString Dummy1;
-  if(Infos)
+  if (Infos)
     view->selElem = (*Infos) (Dummy1, Dummy2, true);
 }
 
@@ -1871,11 +1780,11 @@ void QucsApp::slotChangePage(QString& DocName, QString& DataDisplay)
     if(!isTextDocument (w))
       ((Schematic*)w)->reloadGraphs();  // ... changes, reload here !
 
-  TabView->setCurrentPage(2);   // switch to "Component"-Tab
-  if(Name.right(4) == ".dpl") {
-    int i = sizeof(ComponentGroups)/sizeof(pInfoFunc) - 2;
-    CompChoose->setCurrentItem(i);   // switch to diagrams
-    slotSetCompView(i);
+  TabView->setCurrentPage (2);   // switch to "Component"-Tab
+  if (Name.right(4) == ".dpl") {
+    int i = Category::getModulesNr (QObject::tr("diagrams"));
+    CompChoose->setCurrentItem (i);   // switch to diagrams
+    slotSetCompView (i);
   }
 }
 
