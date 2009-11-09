@@ -30,7 +30,7 @@ Distribution process:
 
 * Test build and packaging.
   - Maintainance currently requires the following software packages:
-     + Autoconf version 2.57 (at least)
+     + Autoconf version 2.64 (at least)
      + GNU automake 1.7.0 (at least)
      + flex 2.5.31 (but at least 2.5.9)
      + GNU M4 (any version)
