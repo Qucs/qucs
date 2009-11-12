@@ -1,3 +1,8 @@
+2009-11-12  Stefan Jahn  <stefan@lkcc.org>
+
+	* interpolator.cpp (cinterpolate): Implemented complex data
+	interpolations.
+
 2009-11-03  Stefan Jahn  <stefan@lkcc.org>
 
 	* receiver.cpp (receiver): Fixed small bug occurring if time

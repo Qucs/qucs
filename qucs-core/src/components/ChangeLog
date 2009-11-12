@@ -1,3 +1,11 @@
+2009-11-12  Stefan Jahn  <stefan@lkcc.org>
+
+	* spfile.cpp: Using new interpolator class functionality for
+	S-parameter and noise parameter interpolations.
+
+	* spfile.h (class spfile_vector): Put the former structure into a
+	real class for easier use.
+
 2009-11-03  Stefan Jahn  <stefan@lkcc.org>
 
 	* ifile.cpp, vfile.cpp: Using new interpolator class for sample

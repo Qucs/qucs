@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: interpolator.h,v 1.2 2009/11/03 21:26:01 ela Exp $
+ * $Id: interpolator.h,v 1.3 2009/11/12 18:36:02 ela Exp $
  *
  */
 
@@ -52,11 +52,15 @@ class interpolator
   void cvectors (vector *, vector *);
   void prepare (int, int, int domain = DATA_RECTANGULAR);
   nr_double_t rinterpolate (nr_double_t);
+  nr_complex_t cinterpolate (nr_double_t);
 
 private:
   int findIndex (nr_double_t);
   int findIndex_old (nr_double_t);
-  nr_double_t linear (nr_double_t, int);
+  nr_double_t linear (nr_double_t,
+		      nr_double_t, nr_double_t, nr_double_t, nr_double_t);
+  nr_double_t rlinear (nr_double_t, int);
+  nr_complex_t clinear (nr_double_t, int);
   void cleanup (void);
 
 private:
@@ -67,7 +71,7 @@ private:
   nr_double_t * rx;
   nr_double_t * ry;
   nr_double_t duration;
-  spline * sp;
+  spline * rsp, * isp;
   nr_complex_t * cy;
 };
 

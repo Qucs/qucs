@@ -1,7 +1,7 @@
 /*
  * spfile.cpp - S-parameter file class implementation
  *
- * Copyright (C) 2004, 2005, 2006, 2008 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005, 2006, 2008, 2009 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: spfile.cpp,v 1.31 2008/10/07 20:15:32 ela Exp $
+ * $Id: spfile.cpp,v 1.32 2009/11/12 18:36:02 ela Exp $
  *
  */
 
@@ -32,13 +32,46 @@
 #include "strlist.h"
 #include "poly.h"
 #include "spline.h"
+#include "interpolator.h"
 #include "spfile.h"
 
-// Type of data and interpolators.
-#define DATA_RECTANGULAR 1
-#define DATA_POLAR       2
-#define INTERPOL_LINEAR  1
-#define INTERPOL_CUBIC   2
+// Constructor for S-parameter file vector.
+spfile_vector::spfile_vector () {
+  v = f = 0;
+  isreal = 1;
+  inter = NULL;
+  r = c = 0;
+}
+
+// Destructor for S-parameter file vector.
+spfile_vector::~spfile_vector () {
+  if (inter) delete inter;
+}
+
+// Passes vectors and their data types to the S-parameter file vector.
+void spfile_vector::prepare (vector * _v, vector * _f,
+			     bool _isreal, int it, int dt) {
+  v = _v;
+  f = _f;
+  isreal = _isreal;
+  inter = new interpolator ();
+  if (isreal) {
+    inter->rvectors (v, f);
+    inter->prepare (it, REPEAT_NO, dt | DATA_REAL);
+  }
+  else {
+    inter->cvectors (v, f);
+    inter->prepare (it, REPEAT_NO, dt | DATA_COMPLEX);
+  }
+}
+
+// Returns interpolated data.
+nr_complex_t spfile_vector::interpolate (nr_double_t x) {
+  if (isreal)
+    return inter->rinterpolate (x);
+  else
+    return inter->cinterpolate (x);
+}
 
 // Constructor creates an empty and unnamed instance of the spfile class.
 spfile::spfile () : circuit () {
@@ -52,28 +85,10 @@ spfile::spfile () : circuit () {
 
 // Destructor deletes spfile object from memory.
 spfile::~spfile () {
-  if (spara) {
-    for (int i = 0; i < sqr (getSize ()); i++) {
-      if (spara[i].v1) delete spara[i].v1;
-      if (spara[i].v2) delete spara[i].v2;
-    }
-    free (spara);
-  }
-  if (RN) {
-    if (RN->v1) delete RN->v1;
-    if (RN->v2) delete RN->v2;
-    free (RN);
-  }
-  if (FMIN) {
-    if (FMIN->v1) delete FMIN->v1;
-    if (FMIN->v2) delete FMIN->v2;
-    free (FMIN);
-  }
-  if (SOPT) {
-    if (SOPT->v1) delete SOPT->v1;
-    if (SOPT->v2) delete SOPT->v2;
-    free (SOPT);
-  }
+  if (spara) delete[] spara;
+  if (RN) delete RN;
+  if (FMIN) delete FMIN;
+  if (SOPT) delete SOPT;
 #if DEBUG && 0
   if (data) {
     data->setFile ("spfile.dat");
@@ -102,7 +117,7 @@ matrix spfile::getInterpolMatrixS (nr_double_t frequency) {
   for (int r = 0; r < getSize () - 1; r++) {
     for (int c = 0; c < getSize () - 1; c++) {
       int i = r * getSize () + c;
-      s.set (r, c, interpolate (&spara[i], frequency));
+      s.set (r, c, spara[i].interpolate (frequency));
     }
   }
   
@@ -132,9 +147,9 @@ void spfile::calcNoiseSP (nr_double_t frequency) {
 
 matrix spfile::calcMatrixCs (nr_double_t frequency) {
   // set interpolated noise correlation matrix
-  nr_double_t r = real (interpolate (RN, frequency));
-  nr_double_t f = real (interpolate (FMIN, frequency));
-  nr_complex_t g = interpolate (SOPT, frequency);
+  nr_double_t r = real (RN->interpolate (frequency));
+  nr_double_t f = real (FMIN->interpolate (frequency));
+  nr_complex_t g = SOPT->interpolate (frequency);
   matrix s = getInterpolMatrixS (frequency);
   matrix n = correlationMatrix (f, g, r, s);
   matrix c = expandNoiseMatrix (n, expandSParaMatrix (s));
@@ -351,8 +366,7 @@ void spfile::createIndex (void) {
   }
 
   // create vector index
-  spara = (struct spfile_index_t *)
-    calloc (1, sizeof (struct spfile_index_t) * s * s);
+  spara = new spfile_vector[s * s] ();
 
   // go through list of variable vectors and find matrix entries
   for (v = data->getVariables (); v != NULL; v = (vector *) v->getNext ()) {
@@ -361,30 +375,23 @@ void spfile::createIndex (void) {
       i = r * s + c;
       spara[i].r = r;
       spara[i].c = c;
-      spara[i].v = v;
-      spara[i].f = sfreq;
+      spara[i].prepare (v, sfreq, false, interpolType, dataType);
       paraType = n[0];  // save type of touchstone data
       free (n);
     }
     if ((n = v->getName ()) != NULL) {
       // find noise parameter vectors
       if (!strcmp (n, "Rn")) {
-	RN = (struct spfile_index_t *)
-	  calloc (1, sizeof (struct spfile_index_t));
-	RN->v = v;
-	RN->f = nfreq;
+	RN = new spfile_vector ();
+	RN->prepare (v, nfreq, true, interpolType, dataType);
       }
       else if (!strcmp (n, "Fmin")) {
-	FMIN = (struct spfile_index_t *)
-	  calloc (1, sizeof (struct spfile_index_t));
-	FMIN->v = v;
-	FMIN->f = nfreq;
+	FMIN = new spfile_vector ();
+	FMIN->prepare (v, nfreq, true, interpolType, dataType);
       }
       else if (!strcmp (n, "Sopt")) {
-	SOPT = (struct spfile_index_t *)
-	  calloc (1, sizeof (struct spfile_index_t));
-	SOPT->v = v;
-	SOPT->f = nfreq;
+	SOPT = new spfile_vector ();
+	SOPT->prepare (v, nfreq, false, interpolType, dataType);
       }
     }
   }
@@ -439,125 +446,6 @@ nr_double_t spfile::noiseFigure (matrix s, matrix c, nr_double_t& Fmin,
 
   // noise figure itself
   return real (1.0 + c.get (1, 1) / norm (s.get (1, 0)));
-}
-
-/* This function returns an interpolated value for f(x).  The
-   piecewise function f is given by 'var' and the appropriate
-   dependent data by 'dep'.  The piecewise dependency data must be
-   real and sorted in ascendant order. */
-nr_complex_t spfile::interpolate (struct spfile_index_t * data,
-				  nr_double_t x) {
-  vector * dep = data->f;
-  vector * var = data->v;
-  int idx = -1, len = dep->getSize ();
-  nr_complex_t res = 0;
-
-  // no chance to interpolate
-  if (len <= 0) {
-    return res;
-  }
-  // no interpolation necessary
-  else if (len == 1) {
-    res = var->get (0);
-  }
-  // linear interpolation
-  else if (interpolType == INTERPOL_LINEAR || len < 3) {
-    // find appropriate dependency index
-    for (int i = 0; i < len; i++) {
-      if (x >= real (dep->get (i))) idx = i;
-    }
-    // dependency variable in scope or beyond
-    if (idx != -1) {
-      if (x == real (dep->get (idx))) {
-	// found direct value
-	res = var->get (idx);
-      }
-      else {
-	// dependency variable is beyond scope; use last tangent
-	if (idx == len - 1) idx--;
-	res = interpolate_lin (dep, var, x, idx);
-      }
-    }
-    else {
-      // dependency variable is before scope; use first tangent
-      idx = 0;
-      res = interpolate_lin (dep, var, x, idx);
-    }
-  }
-  // cubic spline interpolation
-  else if (interpolType == INTERPOL_CUBIC) {
-    // create splines if necessary
-    if (data->v1 == NULL && data->v2 == NULL) {
-      data->v1 = new spline (SPLINE_BC_NATURAL);
-      data->v2 = new spline (SPLINE_BC_NATURAL);
-      if (dataType == DATA_RECTANGULAR) {
-	data->v1->vectors (real (*var), *dep);
-	data->v2->vectors (imag (*var), *dep);
-      }
-      else if (dataType == DATA_POLAR) {
-	data->v1->vectors (abs (*var), *dep);
-	data->v2->vectors (unwrap (arg (*var)), *dep);
-      }
-      data->v1->construct ();
-      data->v2->construct ();
-    }
-    // evaluate spline functions
-    res = interpolate_spl (data->v1, data->v2, x);
-  }
-  return res;
-}
-
-/* The function is called by the overall interpolator to perform
-   cubic spline interpolation. */
-nr_complex_t spfile::interpolate_spl (spline * v1, spline * v2,
-				      nr_double_t x) {
-  nr_double_t f1 = v1->evaluate (x).f0;
-  nr_double_t f2 = v2->evaluate (x).f0;
-  // rectangular data
-  if (dataType == DATA_RECTANGULAR) {
-    return rect (f1, f2);
-  }
-  // polar data
-  else if (dataType == DATA_POLAR) {
-    return polar (f1, f2);
-  }
-  return 0;
-}
-
-/* The function is called by the overall interpolator to perform
-   linear interpolation. */
-nr_complex_t spfile::interpolate_lin (vector * dep, vector * var,
-				      nr_double_t x, int idx) {
-  nr_double_t x1, x2, y1, y2, f1, f2;
-
-  x1 = real (dep->get (idx));
-  x2 = real (dep->get (idx + 1));
-
-  // rectangular data
-  if (dataType == DATA_RECTANGULAR) {
-    y1 = real (var->get (idx));
-    y2 = real (var->get (idx + 1));
-    f1 = ((x2 - x) * y1 + (x - x1) * y2) / (x2 - x1);
-    y1 = imag (var->get (idx));
-    y2 = imag (var->get (idx + 1));
-    f2 = ((x2 - x) * y1 + (x - x1) * y2) / (x2 - x1);
-    return rect (f1, f2);
-  }
-  // polar data
-  else if (dataType == DATA_POLAR) {
-    y1 = abs (var->get (idx));
-    y2 = abs (var->get (idx + 1));
-    f1 = ((x2 - x) * y1 + (x - x1) * y2) / (x2 - x1);
-    y1 = arg (var->get (idx));
-    y2 = arg (var->get (idx + 1));
-    if (y1 < 0 && y2 > 0 && fabs (y2 - y1) >= M_PI) {
-      // fix clockwise phase steps in left half-plane
-      y1 += 2 * M_PI;
-    }
-    f2 = ((x2 - x) * y1 + (x - x1) * y2) / (x2 - x1);
-    return polar (f1, f2);
-  }
-  return 0;
 }
 
 void spfile::initDC (void) {
