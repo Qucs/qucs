@@ -1,7 +1,7 @@
 /*
  * spfile.h - S-parameter file class definitions
  *
- * Copyright (C) 2004, 2005, 2006, 2008 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005, 2006, 2008, 2009 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: spfile.h,v 1.16 2008-10-05 17:52:14 ela Exp $
+ * $Id: spfile.h,v 1.17 2009-11-12 18:36:02 ela Exp $
  *
  */
 
@@ -28,13 +28,23 @@
 class vector;
 class matvec;
 class dataset;
-class spline;
+class interpolator;
 
-struct spfile_index_t {
+class spfile_vector
+{
+ public:
+  spfile_vector ();
+  ~spfile_vector ();
+
+ public:
+  void prepare (vector *, vector *, bool, int, int);
+  nr_complex_t interpolate (nr_double_t);
+
+ public:
   vector * v;
   vector * f;
-  spline * v1;
-  spline * v2;
+  int isreal;
+  interpolator * inter;
   int r;
   int c;
 };
@@ -54,9 +64,6 @@ class spfile : public circuit
   void calcNoiseAC (nr_double_t);
   void createIndex (void);
   void prepare (void);
-  nr_complex_t interpolate (struct spfile_index_t * , nr_double_t);
-  nr_complex_t interpolate_lin (vector *, vector *, nr_double_t, int);
-  nr_complex_t interpolate_spl (spline *, spline *, nr_double_t);
   void createVector (int, int);
   matrix correlationMatrix (nr_double_t, nr_complex_t, nr_double_t, matrix);
   nr_double_t noiseFigure (matrix, matrix, nr_double_t&, nr_complex_t&,
@@ -72,10 +79,10 @@ class spfile : public circuit
   dataset * data;
   vector * sfreq;
   vector * nfreq;
-  struct spfile_index_t * spara;
-  struct spfile_index_t * RN;
-  struct spfile_index_t * FMIN;
-  struct spfile_index_t * SOPT;
+  spfile_vector * spara;
+  spfile_vector * RN;
+  spfile_vector * FMIN;
+  spfile_vector * SOPT;
   char paraType;
   int  dataType;
   int  interpolType;
