@@ -2534,6 +2534,16 @@ Added by Frans Schreuder <fransschreuder@users.sourceforge.net>
   </Model>
 </Component>
 
+<Component BFG425W>
+  <Description>
+    Si  npn 135mW 4.5V 25mA 25GHz pkg:SOT-343
+    added by Frans Schreuder
+  </Description>
+<Model>
+    <_BJT BFG425W_ 1 0 0 8 -26 0 0 "npn" 0 "4.717e-17" 0 "0.9934" 0 "0.985" 0 "0.304" 0 "0.121" 0 "31.12" 0 "1.874" 0 "3.002e-13" 0 "3" 0 "4.848e-16" 0 "1.546" 0 "145" 0 "11.37" 0 "6.175" 0 "0" 0 "1.78" 0 "0.1779" 0 "14.41" 0 "3.109e-13" 0 "0.9" 0 "0.3456" 0 "1.377e-13" 0 "0.5569" 0 "0.2079" 0 "0.5" 0 "6.675e-13" 0 "0.4183" 0 "0.2391" 0 "0.5501" 0 "4.122e-12" 0 "68.2" 0 "2.004" 0 "1.525" 0 "0" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1.5" 0 "3" 0 "1.11" 0 "26.85" 0 "1" 0>
+  </Model>
+</Component>
+
 <Component BFP193W>
   <Description>
     Si  npn 500mW 12V 25mA 8GHz pkg:SOT-343
