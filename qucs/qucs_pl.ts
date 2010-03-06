@@ -326,7 +326,7 @@
     </message>
     <message>
         <source>CSV files</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Pliki CSV</translation>
     </message>
 </context>
 <context>
@@ -968,11 +968,11 @@
     </message>
     <message>
         <source>Type</source>
-        <translation type="unfinished">Typ</translation>
+        <translation>Typ</translation>
     </message>
     <message>
         <source>Type:</source>
-        <translation type="unfinished">Typ:</translation>
+        <translation>Typ:</translation>
     </message>
 </context>
 <context>
@@ -1087,7 +1087,7 @@
     </message>
     <message>
         <source>CSV files</source>
-        <translation type="unfinished"></translation>
+        <translation>Pliki CSV</translation>
     </message>
     <message>
         <source>Convert Data File...</source>
@@ -8856,17 +8856,17 @@ Urochomienie progranu QucsFilter</translation>
     </message>
     <message>
         <source>Line calculation</source>
-        <translation>Obliczenie linii</translation>
+        <translation>Kalkulator linii</translation>
     </message>
     <message>
         <source>Starts QucsTrans</source>
-        <translation>Uruchom QucsTrans</translation>
+        <translation>Uruchamia QucsTrans</translation>
     </message>
     <message>
         <source>Line calculation
 
 Starts transmission line calculator</source>
-        <translation>Obliczanie linii
+        <translation>Kalkulator linii
 
 Uruchamia kalkulator linii transmisyjnych</translation>
     </message>
@@ -11865,11 +11865,11 @@ otworzyć ten plik odpowiednim programem.</translation>
     <name>QucsTranscalc</name>
     <message>
         <source>Load</source>
-        <translation>Załaduj</translation>
+        <translation>Otwórz</translation>
     </message>
     <message>
         <source>&amp;Load</source>
-        <translation>Za&amp;ładuj</translation>
+        <translation>&amp;Otwórz</translation>
     </message>
     <message>
         <source>Save</source>
@@ -11905,11 +11905,11 @@ otworzyć ten plik odpowiednim programem.</translation>
     </message>
     <message>
         <source>Analyze</source>
-        <translation>Analizuj</translation>
+        <translation>Analiza</translation>
     </message>
     <message>
         <source>&amp;Analyze</source>
-        <translation>&amp;Analizuj</translation>
+        <translation>&amp;Analiza</translation>
     </message>
     <message>
         <source>Synthesize</source>
@@ -11937,7 +11937,7 @@ otworzyć ten plik odpowiednim programem.</translation>
     </message>
     <message>
         <source>&amp;Execute</source>
-        <translation>&amp;Wykonaj</translation>
+        <translation type="unfinished">Oblicz&amp;enia</translation>
     </message>
     <message>
         <source>Transmission Line Type</source>
@@ -11961,7 +11961,7 @@ otworzyć ten plik odpowiednim programem.</translation>
     </message>
     <message>
         <source>Substrate Parameters</source>
-        <translation>Parametry substratu</translation>
+        <translation>Parametry podłoża</translation>
     </message>
     <message>
         <source>Component Parameters</source>
@@ -11989,11 +11989,11 @@ otworzyć ten plik odpowiednim programem.</translation>
     </message>
     <message>
         <source>Ready.</source>
-        <translation>Gotowy.</translation>
+        <translation>Gotowe.</translation>
     </message>
     <message>
         <source>ErEff</source>
-        <translation>ErEff</translation>
+        <translation>Efektywne Er</translation>
     </message>
     <message>
         <source>Conductor Losses</source>
@@ -12005,7 +12005,7 @@ otworzyć ten plik odpowiednim programem.</translation>
     </message>
     <message>
         <source>Skin Depth</source>
-        <translation>Głębokośc naskórka</translation>
+        <translation>Głębokość wnikania</translation>
     </message>
     <message>
         <source>TE-Modes</source>
@@ -12013,7 +12013,7 @@ otworzyć ten plik odpowiednim programem.</translation>
     </message>
     <message>
         <source>TM-Modes</source>
-        <translation>mod TM</translation>
+        <translation>Mod TM</translation>
     </message>
     <message>
         <source>ErEff Even</source>
@@ -12045,15 +12045,15 @@ otworzyć ten plik odpowiednim programem.</translation>
     </message>
     <message>
         <source>Relative Permeability</source>
-        <translation></translation>
+        <translation>względna</translation>
     </message>
     <message>
         <source>Height of Substrate</source>
-        <translation>Grubość substratu</translation>
+        <translation>Grubość podłoża</translation>
     </message>
     <message>
         <source>Height of Box Top</source>
-        <translation>Wysokość podełka</translation>
+        <translation>Wysokość do pokrywy</translation>
     </message>
     <message>
         <source>Strip Thickness</source>
@@ -12061,7 +12061,7 @@ otworzyć ten plik odpowiednim programem.</translation>
     </message>
     <message>
         <source>Strip Conductivity</source>
-        <translation>przewodność paska</translation>
+        <translation>Przewodność paska</translation>
     </message>
     <message>
         <source>Dielectric Loss Tangent</source>
@@ -12093,11 +12093,11 @@ otworzyć ten plik odpowiednim programem.</translation>
     </message>
     <message>
         <source>Conductivity of Metal</source>
-        <translation>przewodność metalu</translation>
+        <translation>Przewodność metalu</translation>
     </message>
     <message>
         <source>Magnetic Loss Tangent</source>
-        <translation>tangens kąta stratności</translation>
+        <translation>Tangens kąta stratności</translation>
     </message>
     <message>
         <source>Width of Waveguide</source>
@@ -12185,7 +12185,7 @@ otworzyć ten plik odpowiednim programem.</translation>
     </message>
     <message>
         <source>Transcalc File</source>
-        <translation>Plik Transcalc</translation>
+        <translation>Plik kalkulatora Transcalc</translation>
     </message>
     <message>
         <source>Enter a Filename</source>
@@ -12225,20 +12225,21 @@ otworzyć ten plik odpowiednim programem.</translation>
     </message>
     <message>
         <source>Microstrip Line</source>
-        <translation type="unfinished">Linia mikropaskowa</translation>
+        <translation>Linia mikropaskowa</translation>
     </message>
     <message>
         <source>Coplanar Waveguide</source>
-        <translation type="unfinished"></translation>
+        <translation>Falowód koplanarny</translation>
     </message>
     <message>
         <source>Grounded Coplanar</source>
-        <translation type="unfinished"></translation>
+        <translation>Linia koplanarna &quot;grounded&quot;</translation>
     </message>
     <message>
         <source>Copyright (C) 2008 by Michael Margraf
 </source>
-        <translation type="unfinished">Copyright (C) 2008 by Michael Margraf
+        <translation>Copyright (C) 2008 by Michael Margraf
+
 </translation>
     </message>
 </context>
