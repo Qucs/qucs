@@ -6858,6 +6858,14 @@ Usage:  qucsedit [-r] file
         <source>paintings</source>
         <translation type="unfinished">суреттер</translation>
     </message>
+    <message>
+        <source>HICUM Level 2 v2.24 verilog device</source>
+        <translation type="unfinished">HICUM Level 2 v2.24 Verilog-моделі</translation>
+    </message>
+    <message>
+        <source>HICUM L2 v2.24</source>
+        <translation type="unfinished">HICUM L2 v2.24 нұсқасы</translation>
+    </message>
 </context>
 <context>
     <name>QucsApp</name>
