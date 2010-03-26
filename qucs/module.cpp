@@ -274,6 +274,7 @@ void Module::registerModules (void) {
   REGISTER_VERILOGA_2 (EKV26MOS, info, info_pmos);
   REGISTER_VERILOGA_2 (hicumL0V1p2, info, info_pnp);
   REGISTER_VERILOGA_1 (hicumL2V2p23);
+  REGISTER_VERILOGA_1 (hicumL2V2p24);
   REGISTER_VERILOGA_1 (photodiode);
   REGISTER_VERILOGA_1 (phototransistor);
   REGISTER_VERILOGA_1 (nigbt);
