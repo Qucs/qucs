@@ -6972,6 +6972,14 @@ Usage:  qucsedit [-r] file
         <source>paintings</source>
         <translation type="unfinished">färgläggningar</translation>
     </message>
+    <message>
+        <source>HICUM Level 2 v2.24 verilog device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>HICUM L2 v2.24</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>

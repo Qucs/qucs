@@ -6908,6 +6908,14 @@ qucsedit [-r] file :إستعمال
         <source>paintings</source>
         <translation type="unfinished">لوحات</translation>
     </message>
+    <message>
+        <source>HICUM Level 2 v2.24 verilog device</source>
+        <translation type="unfinished">أجهزة فيريلوج  v2.23 2 HICUM  {2.24?}</translation>
+    </message>
+    <message>
+        <source>HICUM L2 v2.24</source>
+        <translation type="unfinished">HICUM L2 v2.24</translation>
+    </message>
 </context>
 <context>
     <name>QucsApp</name>
