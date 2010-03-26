@@ -1,3 +1,7 @@
+2010-03-26  Stefan Jahn  <stefan@lkcc.org>
+
+	* hicumL2V2p24.va: Added new HICUM L2 v2.24 compact model.
+
 2009-10-02  Stefan Jahn  <stefan@lkcc.org>
 
 	* nigbt.va: Reformulated equations for implicit system variables.

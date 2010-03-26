@@ -1,7 +1,7 @@
 /*
  * components.h - global component header file
  *
- * Copyright (C) 2003-2009 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003-2010 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: components.h,v 1.11 2009-09-22 15:48:34 ela Exp $
+ * $Id: components.h,v 1.12 2010-03-26 16:45:04 ela Exp $
  *
  */
 
@@ -146,6 +146,7 @@
 #include "verilog/EKV26MOS.core.h"
 #include "verilog/hicumL0V1p2.core.h"
 #include "verilog/hicumL2V2p23.core.h"
+#include "verilog/hicumL2V2p24.core.h"
 #include "verilog/photodiode.core.h"
 #include "verilog/phototransistor.core.h"
 #include "verilog/nigbt.core.h"
