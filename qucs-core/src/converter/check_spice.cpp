@@ -1,7 +1,7 @@
 /*
  * check_spice.cpp - checker for a Spice netlist
  *
- * Copyright (C) 2004-2009 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004-2010 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_spice.cpp,v 1.56 2009/04/22 16:33:22 ela Exp $
+ * $Id: check_spice.cpp,v 1.57 2010/03/26 16:45:04 ela Exp $
  *
  */
 
@@ -673,8 +673,12 @@ static void spice_adjust_device (struct definition_t * def,
 	      def->type = strdup ("hic2_full");
 	      hic = true;
 	    }
-	    else if (level == 2 && version >= 2.23) {
+	    else if (level == 2 && version == 2.23) {
 	      def->type = strdup ("hicumL2V2p23");
+	      hic = true;
+	    }
+	    else if (level == 2 && version >= 2.24) {
+	      def->type = strdup ("hicumL2V2p24");
 	      hic = true;
 	    }
 	  }

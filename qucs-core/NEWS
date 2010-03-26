@@ -1,7 +1,7 @@
 -- 
 -- NEWS
 -- 
--- Copyright (C) 2003-2009 Stefan Jahn <stefan@lkcc.org>
+-- Copyright (C) 2003-2010 Stefan Jahn <stefan@lkcc.org>
 -- 
 -- This is free software; you can redistribute it and/or modify
 -- it under the terms of the GNU General Public License as published by
@@ -28,7 +28,7 @@ Version 0.0.16
 
  * implementation of EMI receiver functionality in the equation solver
  * support for Matlab v4 as an export file format in qucsconv
- * new Verilog-A device model: NIGBT
+ * new Verilog-A device model: NIGBT, HICUM L2 v2.24
 
 Version 0.0.15
 --------------

@@ -1,7 +1,7 @@
 /*
  * module.cpp - module class implementation
  *
- * Copyright (C) 2008, 2009 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2008, 2009, 2010 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: module.cpp,v 1.12 2009/09/22 15:48:34 ela Exp $
+ * $Id: module.cpp,v 1.13 2010/03/26 16:45:04 ela Exp $
  *
  */
 
@@ -235,6 +235,7 @@ void module::registerModules (void) {
   REGISTER_CIRCUIT (EKV26MOS);
   REGISTER_CIRCUIT (hicumL0V1p2);
   REGISTER_CIRCUIT (hicumL2V2p23);
+  REGISTER_CIRCUIT (hicumL2V2p24);
   REGISTER_CIRCUIT (photodiode);
   REGISTER_CIRCUIT (phototransistor);
   REGISTER_CIRCUIT (nigbt);

@@ -1,7 +1,7 @@
 /*
  * qucs_producer.cpp - the Qucs netlist producer
  *
- * Copyright (C) 2004-2009 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004-2010 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: qucs_producer.cpp,v 1.32 2009/04/09 18:56:43 ela Exp $
+ * $Id: qucs_producer.cpp,v 1.33 2010/03/26 16:45:04 ela Exp $
  *
  */
 
@@ -368,6 +368,26 @@ qucs_devices[] = {
   },
   /* hicum/l2 v2.23 bipolar transistor */
   { "hicumL2V2p23", "hicumL2V2p23", "Q", 5,
+    { "c10", "qp0", "ich", "hfe", "hfc", "hjei", "hjci", "ibeis", "mbei",
+      "ireis", "mrei", "ibeps", "mbep", "ireps", "mrep", "mcf", "tbhrec",
+      "ibcis", "mbci", "ibcxs", "mbcx", "ibets", "abet", "tunode", "favl",
+      "qavl", "alfav", "alqav", "rbi0", "rbx", "fgeo", "fdqr0", "fcrbi",
+      "fqi", "re", "rcx", "itss", "msf", "iscs", "msc", "tsf", "rsu", "csu",
+      "cjei0", "vdei", "zei", "ajei", "cjep0", "vdep", "zep", "ajep",
+      "cjci0", "vdci", "zci", "vptci", "cjcx0", "vdcx", "zcx", "vptcx",
+      "fbcpar", "fbepar", "cjs0", "vds", "zs", "vpts", "t0", "dt0h", "tbvl",
+      "tef0", "gtfe", "thcs", "ahc", "fthc", "rci0", "vlim", "vces", "vpt",
+      "tr", "cbepar", "cbcpar", "alqf", "alit", "flnqs", "kf", "af", "cfbe",
+      "latb", "latl", "vgb", "alt0", "kt0", "zetaci", "alvs", "alces",
+      "zetarbi", "zetarbx", "zetarcx", "zetare", "zetacx", "vge", "vgc",
+      "vgs", "f1vg", "f2vg", "zetact", "zetabet", "alb", "flsh", "rth", "cth",
+      "flcomp", "tnom", "dt", "Temp", NULL },
+    NULL,
+    "1 0 0 8 -26 0 0",
+    NULL
+  },
+  /* hicum/l2 v2.24 bipolar transistor */
+  { "hicumL2V2p24", "hicumL2V2p24", "Q", 5,
     { "c10", "qp0", "ich", "hfe", "hfc", "hjei", "hjci", "ibeis", "mbei",
       "ireis", "mrei", "ibeps", "mbep", "ireps", "mrep", "mcf", "tbhrec",
       "ibcis", "mbci", "ibcxs", "mbcx", "ibets", "abet", "tunode", "favl",

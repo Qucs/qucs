@@ -4,7 +4,7 @@
 #
 # Automake input file for the verilog device library.
 #
-# Copyright (C) 2006, 2007, 2008, 2009 Stefan Jahn <stefan@lkcc.org>
+# Copyright (C) 2006, 2007, 2008, 2009, 2010 Stefan Jahn <stefan@lkcc.org>
 #
 # This is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -37,6 +37,7 @@ libverilog_a_SOURCES = HBT_X.analogfunction.cpp HBT_X.core.cpp \
 	EKV26MOS.analogfunction.cpp EKV26MOS.core.cpp \
 	hicumL0V1p2.analogfunction.cpp hicumL0V1p2.core.cpp \
 	hicumL2V2p23.analogfunction.cpp hicumL2V2p23.core.cpp \
+	hicumL2V2p24.analogfunction.cpp hicumL2V2p24.core.cpp \
 	photodiode.analogfunction.cpp photodiode.core.cpp \
 	phototransistor.analogfunction.cpp phototransistor.core.cpp \
 	nigbt.analogfunction.cpp nigbt.core.cpp \
@@ -83,6 +84,7 @@ noinst_HEADERS = HBT_X.analogfunction.h HBT_X.defs.h HBT_X.core.h \
 	EKV26MOS.analogfunction.h EKV26MOS.defs.h EKV26MOS.core.h \
 	hicumL0V1p2.analogfunction.h hicumL0V1p2.defs.h hicumL0V1p2.core.h \
 	hicumL2V2p23.analogfunction.h hicumL2V2p23.defs.h hicumL2V2p23.core.h \
+	hicumL2V2p24.analogfunction.h hicumL2V2p24.defs.h hicumL2V2p24.core.h \
 	photodiode.analogfunction.h photodiode.defs.h photodiode.core.h \
 	phototransistor.analogfunction.h phototransistor.defs.h \
 	phototransistor.core.h \
@@ -122,7 +124,7 @@ noinst_HEADERS = HBT_X.analogfunction.h HBT_X.defs.h HBT_X.core.h \
 VERILOG_FILES = constants.vams disciplines.vams \
   fbh_hbt-2_2a.va hicumL2V2p11.va mod_amp.va hicumL2V2p22.va log_amp.va \
   hicumL0V1p12.va potentiometer.va MESFET.va hicumL0V1p2.va hicumL2V2p23.va \
-  photodiode.va EKV26MOS.va phototransistor.va nigbt.va \
+  photodiode.va EKV26MOS.va phototransistor.va nigbt.va hicumL2V2p24.va \
   \
   dff_SR.va jkff_SR.va tff_SR.va gatedDlatch.va logic_0.va logic_1.va \
   mux2to1.va mux4to1.va mux8to1.va DLS_nto1.va DLS_1ton.va andor4x2.va \
@@ -283,6 +285,19 @@ hicumL2V2p23.defs.h: hicumL2V2p23.va
 	$(ADMSXML) $< -e qucsVersion.xml -e qucsMODULEdefs.xml
 hicumL2V2p23.gui.cpp: qucsVersion.xml qucsMODULEgui.xml
 hicumL2V2p23.gui.cpp: hicumL2V2p23.va
+	$(ADMSXML) $< -e qucsVersion.xml -e qucsMODULEgui.xml
+
+hicumL2V2p24.analogfunction.cpp: analogfunction.xml
+hicumL2V2p24.analogfunction.cpp: hicumL2V2p24.va
+	$(ADMSXML) $< -e analogfunction.xml
+hicumL2V2p24.core.cpp: hicumL2V2p24.defs.h qucsVersion.xml qucsMODULEcore.xml
+hicumL2V2p24.core.cpp: hicumL2V2p24.va
+	$(ADMSXML) $< -e qucsVersion.xml -e qucsMODULEcore.xml
+hicumL2V2p24.defs.h: qucsVersion.xml qucsMODULEdefs.xml
+hicumL2V2p24.defs.h: hicumL2V2p24.va
+	$(ADMSXML) $< -e qucsVersion.xml -e qucsMODULEdefs.xml
+hicumL2V2p24.gui.cpp: qucsVersion.xml qucsMODULEgui.xml
+hicumL2V2p24.gui.cpp: hicumL2V2p24.va
 	$(ADMSXML) $< -e qucsVersion.xml -e qucsMODULEgui.xml
 
 photodiode.analogfunction.cpp: analogfunction.xml

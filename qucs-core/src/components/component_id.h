@@ -1,7 +1,7 @@
 /*
  * component_id.h - global component identifier header file
  *
- * Copyright (C) 2003-2009 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003-2010 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: component_id.h,v 1.66 2009/09/22 15:48:34 ela Exp $
+ * $Id: component_id.h,v 1.67 2010/03/26 16:45:04 ela Exp $
  *
  */
 
@@ -150,6 +150,7 @@ enum circuit_type {
   CIR_EKV26MOS,
   CIR_hicumL0V1p2,
   CIR_hicumL2V2p23,
+  CIR_hicumL2V2p24,
   CIR_photodiode,
   CIR_phototransistor,
   CIR_nigbt,

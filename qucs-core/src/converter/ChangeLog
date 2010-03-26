@@ -1,3 +1,8 @@
+2010-03-26  Stefan Jahn  <stefan@lkcc.org>
+
+	* qucs_producer.cpp, check_spice.cpp: Added translation of
+	HiCUM/L2 2.24 models.
+
 2009-10-05  Stefan Jahn  <stefan@lkcc.org>
 
 	* matlab_producer.cpp: Checking for endianness at runtime.
