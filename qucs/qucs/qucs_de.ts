@@ -7430,6 +7430,14 @@ Verwendung:  qucsedit [-r] Datei
         <source>paintings</source>
         <translation type="unfinished">Zeichnungen</translation>
     </message>
+    <message>
+        <source>HICUM Level 2 v2.24 verilog device</source>
+        <translation type="unfinished">HICUM Level 2 v2.24 Verilogmodell</translation>
+    </message>
+    <message>
+        <source>HICUM L2 v2.24</source>
+        <translation type="unfinished">HICUM L2 v2.24</translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
