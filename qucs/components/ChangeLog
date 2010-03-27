@@ -1,3 +1,9 @@
+2010-03-27  Stefan Jahn  <stefan@lkcc.org>
+
+	* component.cpp (vhdlCode): Fixed XNOR implementation for VHDL
+	code.  XNOR itself not supported by VHDL std_logic (only bit) so
+	far.
+
 2010-03-26  Stefan Jahn  <stefan@lkcc.org>
 
 	* hicumL2V2p24.cpp (hicumL2V2p24): Added new HICUM/L2 v2.24 model.
