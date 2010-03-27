@@ -1305,20 +1305,35 @@ QString GateComponent::vhdlCode(int NumPorts)
   Port *pp = Ports.first();
   QString s = "  " + pp->Connection->Name + " <= ";  // output port
 
-  QString Op = ' ' + Model.lower() + ' ';
-  if(Model.at(0) == 'N') {
-    s += "not (";    // nor, nand is NOT assoziative !!! but xnor is !!!
-    Op = Op.remove(1, 1);
+  // xnor NOT defined for std_logic, so here use not and xor
+  if (Model == "XNOR") {
+    QString Op = " xor ";
+
+    // first input port
+    pp = Ports.next();
+    QString rhs = pp->Connection->Name;
+
+    // output all input ports with node names
+    for (pp = Ports.next (); pp != 0; pp = Ports.next ())
+      rhs = "not ((" + rhs + ")" + Op + pp->Connection->Name + ")";
+    s += rhs;
   }
+  else {
+    QString Op = ' ' + Model.lower() + ' ';
+    if(Model.at(0) == 'N') {
+      s += "not (";    // nor, nand is NOT assoziative !!! but xnor is !!!
+      Op = Op.remove(1, 1);
+    }
 
-  pp = Ports.next();
-  s += pp->Connection->Name;   // first input port
+    pp = Ports.next();
+    s += pp->Connection->Name;   // first input port
 
-  // output all input ports with node names
-  for(pp = Ports.next(); pp != 0; pp = Ports.next())
-    s += Op + pp->Connection->Name;
-  if(Model.at(0) == 'N')
-    s += ')';
+    // output all input ports with node names
+    for(pp = Ports.next(); pp != 0; pp = Ports.next())
+      s += Op + pp->Connection->Name;
+    if(Model.at(0) == 'N')
+      s += ')';
+  }
 
   if(NumPorts <= 0) { // no truth table simulation ?
     QString td = Props.at(2)->Value;        // delay time
