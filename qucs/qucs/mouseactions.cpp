@@ -864,6 +864,18 @@ void MouseActions::rightPressMenu(Schematic *Doc, QMouseEvent *Event, float fX, 
       QucsMain->editMirror->addTo(ComponentMenu);
     if(!QucsMain->editMirrorY->isOn())
       QucsMain->editMirrorY->addTo(ComponentMenu);
+
+    // right-click menu to go into hierarchy
+    if(focusElement) {
+      if(focusElement->Type & isComponent)
+	if(((Component*)focusElement)->Model == "Sub")
+	  if(!QucsMain->intoH->isOn())
+	    QucsMain->intoH->addTo(ComponentMenu);
+    }
+    // right-click menu to pop out of hierarchy    
+    if(!focusElement)
+      if(!QucsMain->popH->isOn())
+	QucsMain->popH->addTo(ComponentMenu);
   } while(false);
 
   *focusMEvent = *Event;  // remember event for "edit component" action
