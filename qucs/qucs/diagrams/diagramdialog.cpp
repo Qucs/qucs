@@ -258,6 +258,8 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
   GraphList = new QListBox(GraphGroup);
   connect(GraphList, SIGNAL(clicked(QListBoxItem*)),
 		     SLOT(slotSelectGraph(QListBoxItem*)));
+  connect(GraphList, SIGNAL(doubleClicked(QListBoxItem*)),
+		     SLOT(slotDeleteGraph()));
   QPushButton *NewButt = new QPushButton(tr("New Graph"), GraphGroup);
   connect(NewButt, SIGNAL(clicked()), SLOT(slotNewGraph()));
   QPushButton *DelButt = new QPushButton(tr("Delete Graph"), GraphGroup);
