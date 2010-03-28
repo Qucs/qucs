@@ -1,3 +1,8 @@
+2010-03-28  Stefan Jahn  <stefan@lkcc.org>
+
+	* mouseactions.cpp (rightPressMenu): Added hierarchy menu items to
+	right-click menu when appropriate.
+
 2009-11-08  Stefan Jahn  <stefan@lkcc.org>
 
 	* qucs.cpp (slotSetCompView, fillComboBox, slotSelectComponent):
