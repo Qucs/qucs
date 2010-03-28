@@ -1,5 +1,9 @@
 2010-03-28  Stefan Jahn  <stefan@lkcc.org>
 
+	* diagrams/diagramdialog.cpp (DiagramDialog): Allowing to
+	double-click on "Graph" list to remove the graph.  Consistent to
+	double-click on "Dataset" to add a graph.
+
 	* mouseactions.cpp (rightPressMenu): Added hierarchy menu items to
 	right-click menu when appropriate.
 
