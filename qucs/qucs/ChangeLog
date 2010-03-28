@@ -1,5 +1,9 @@
 2010-03-28  Stefan Jahn  <stefan@lkcc.org>
 
+	* qucs_actions.cpp (slotSelect): Avoid going to select mode when
+	in wiring mode.  Just goto new wiring mode with current path
+	deleted.
+
 	* diagrams/diagramdialog.cpp (DiagramDialog): Allowing to
 	double-click on "Graph" list to remove the graph.  Consistent to
 	double-click on "Dataset" to add a graph.
