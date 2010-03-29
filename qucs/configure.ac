@@ -228,6 +228,12 @@ AC_LANG(C)
 dnl Check for additional header files.
 AC_CHECK_HEADERS([ieeefp.h])
 
+dnl Check for LibBoard files.
+dnl AC_LANG(C++)
+dnl AC_CHECK_HEADERS([Board.h])
+dnl AC_CHECK_LIB(board, fprintf)
+dnl AC_LANG(C)
+
 dnl Check for path transformation.
 case $build_os in
 mingw* | cygwin*)
