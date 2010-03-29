@@ -1,3 +1,11 @@
+2010-03-29  Stefan Jahn  <stefan@lkcc.org>
+
+	* digi_source.cpp (vhdlCode,verilogCode): Simplified code for
+	truth table simulation.
+
+	* diode.cpp (createSymbol): Added 'US' symbol.  It's according to
+	IEEE 315 section 16.3 "Rectifier."
+
 2010-03-27  Stefan Jahn  <stefan@lkcc.org>
 
 	* component.cpp (vhdlCode): Fixed XNOR implementation for VHDL

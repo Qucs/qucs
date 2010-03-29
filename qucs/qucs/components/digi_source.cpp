@@ -133,11 +133,11 @@ QString Digi_Source::vhdlCode(int NumPorts)
     State = '0';
     int Num = Props.getFirst()->Value.toInt() - 1;
     
-    for(z=1<<(NumPorts-Num); z>0; z--) {
-      s += Out + State + "';";    // next value for signal
-      s += "  wait for "+QString::number(1 << Num)+" ns;\n";
-      State ^= 1;
-    }
+    s += Out + State + "';";    // first value for signal
+    s += "  wait for "+QString::number(1 << Num)+" ns;\n";
+    State ^= 1;
+    s += Out + State + "';";    // next value for signal
+    s += "  wait for "+QString::number(1 << Num)+" ns;\n";
   }
 
   s += "  end process;\n";
@@ -179,10 +179,9 @@ QString Digi_Source::verilogCode(int NumPorts)
     int Num = Props.getFirst()->Value.toInt() - 1;    
     s += "  always begin\n";
     s += "    " + r + " = 0;\n";
-    for(z=1<<(NumPorts-Num); z>0; z--) {
-      s += "    #"+ QString::number(1 << Num) + ";\n";
-      s += "    " + r + " = !" + r + ";\n";
-    }
+    s += "    #"+ QString::number(1 << Num) + ";\n";
+    s += "    " + r + " = !" + r + ";\n";
+    s += "    #"+ QString::number(1 << Num) + ";\n";
   }
 
   s += "  end\n";

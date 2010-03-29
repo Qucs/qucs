@@ -79,7 +79,7 @@ Diode::Diode()
   Props.append(new Property("Area", "1.0", false,
 	QObject::tr("default area for diode")));
   Props.append(new Property("Symbol", "normal", false,
-	QObject::tr("schematic symbol")+" [normal, Schottky, Zener, Varactor]"));
+	QObject::tr("schematic symbol")+" [normal, US, Schottky, Zener, Varactor]"));
 
   createSymbol();
   tx = x1+4;
@@ -109,6 +109,10 @@ void Diode::createSymbol()
     Lines.append(new Line(-30,  0, -9,  0,QPen(QPen::darkBlue,2)));
     Lines.append(new Line( -6,  0, 30,  0,QPen(QPen::darkBlue,2)));
     Lines.append(new Line( -9, -9, -9,  9,QPen(QPen::darkBlue,2)));
+  }
+  else if(Props.getLast()->Value.at(0) == 'U') {
+    Lines.append(new Line(-30,  0, -6,  0,QPen(QPen::darkBlue,2)));
+    Lines.append(new Line(  6,  0, 30,  0,QPen(QPen::darkBlue,2)));
   }
   else {
     Lines.append(new Line(-30,  0, 30,  0,QPen(QPen::darkBlue,2)));
