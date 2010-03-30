@@ -1,3 +1,8 @@
+2010-03-30  Stefan Jahn  <stefan@lkcc.org>
+
+	* amplifier.cpp: Fixed noise implementation of amplifier.  Input
+	deferred noise now independent from gain.
+
 2009-11-12  Stefan Jahn  <stefan@lkcc.org>
 
 	* spfile.cpp: Using new interpolator class functionality for
