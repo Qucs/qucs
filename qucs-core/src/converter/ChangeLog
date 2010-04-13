@@ -1,3 +1,8 @@
+2010-04-13  Stefan Jahn  <stefan@lkcc.org>
+
+	* check_vcd.cpp: Improved speed of VCD data processing a lot.
+	Still need to verify if all working OK.
+
 2010-03-26  Stefan Jahn  <stefan@lkcc.org>
 
 	* qucs_producer.cpp, check_spice.cpp: Added translation of

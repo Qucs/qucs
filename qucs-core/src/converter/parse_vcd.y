@@ -22,7 +22,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: parse_vcd.y,v 1.7 2008-11-02 19:09:07 ela Exp $
+ * $Id: parse_vcd.y,v 1.8 2010-04-13 20:24:33 ela Exp $
  *
  */
 
@@ -37,7 +37,7 @@
 
 #define YYERROR_VERBOSE 42
 #define YYDEBUG 1
-#define YYMAXDEPTH 1000000
+#define YYMAXDEPTH 10000000
 
 #include "check_vcd.h"
 

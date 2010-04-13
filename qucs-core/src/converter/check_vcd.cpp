@@ -1,7 +1,7 @@
 /*
  * check_vcd.cpp - iterate a vcd file
  *
- * Copyright (C) 2005, 2006, 2008 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2005, 2006, 2008, 2010 Stefan Jahn <stefan@lkcc.org>
  * Copyright (C) 2005 Raimund Jacob <raimi@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_vcd.cpp,v 1.15 2008-11-02 19:09:07 ela Exp $
+ * $Id: check_vcd.cpp,v 1.16 2010-04-13 20:24:33 ela Exp $
  *
  */
 
@@ -71,6 +71,35 @@ vcd_find_code (struct vcd_scope * root, char * code) {
   return NULL;
 }
 
+#define FAST 1
+
+#if FAST
+
+static struct vcd_changeset *
+vcd_find_firstset_fast (struct vcd_changeset * root) {
+  static struct vcd_changeset * last = root;
+  struct vcd_changeset * result = NULL;
+  result = last;
+  if (last) last = last->next;
+  return result;
+}
+
+/* Reverses the given change set and returns the pointer to the new
+   root change set. */
+static struct vcd_changeset *
+vcd_reverse_changesets (struct vcd_changeset * root) {
+  struct vcd_changeset * cs = NULL;
+  while (root != NULL) {
+    struct vcd_changeset * next = root->next;
+    root->next = cs;
+    cs = root;
+    root = next;
+  }
+  return cs;
+}
+
+#else
+
 /* Returns the change set with the smallest time stamp which is yet
    unprocessed.  It is based upon the fact that the list is in reverse
    order. */
@@ -86,6 +115,8 @@ vcd_find_firstset (struct vcd_changeset * root) {
   }
   return result;
 }
+
+#endif
 
 /* Looks for the a variable name in the given list of variables. */
 static struct vcd_variable *
@@ -106,8 +137,17 @@ static void vcd_sort_changesets (struct vcd_changeset * root) {
   struct vcd_change * vc;
   struct vcd_variable * vv;
 
+#if FAST
+  // for fast lookup, need to reverse list
+  root = vcd_reverse_changesets (root);
+#endif
+
   // as long as there are still changesets unprocessed
+#if FAST
+  while ((cs = vcd_find_firstset_fast (root)) != NULL) {
+#else
   while ((cs = vcd_find_firstset (root)) != NULL) {
+#endif
     // create set if necessary
     if (current == NULL || current->t != cs->t) {
       vs = (struct vcd_set *) calloc (1, sizeof (struct vcd_set));
