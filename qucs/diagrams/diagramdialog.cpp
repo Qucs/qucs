@@ -660,7 +660,7 @@ void DiagramDialog::slotTakeVar(QListViewItem *Item)
   QString s  = GraphInput->text();
   QString s1 = Item->text(0);
   QFileInfo Info(defaultDataSet);
-  if(ChooseData->currentText() != Info.baseName())
+  if(ChooseData->currentText() != Info.baseName(true))
     s1 = ChooseData->currentText() + ":" + s1;
   GraphInput->setText(s.left(i) + s1 + s.right(s.length()-i));
 

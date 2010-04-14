@@ -1,3 +1,8 @@
+2010-04-14  Stefan Jahn  <stefan@lkcc.org>
+
+	* schematic.cpp (setName): Handling schematic etc. filenames with
+	a '.' (dot) in the filename correctly.
+
 2010-03-28  Stefan Jahn  <stefan@lkcc.org>
 
 	* qucs_actions.cpp (slotSelect): Avoid going to select mode when

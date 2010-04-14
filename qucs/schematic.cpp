@@ -245,19 +245,20 @@ void Schematic::becomeCurrent(bool update)
 }
 
 // ---------------------------------------------------
-void Schematic::setName(const QString& Name_)
+void Schematic::setName (const QString& Name_)
 {
   DocName = Name_;
+  QFileInfo Info (DocName);
+  if (App) App->DocumentTab->setTabLabel (this, Info.fileName ());
 
-  QFileInfo Info(DocName);
-  if (App)
-    App->DocumentTab->setTabLabel(this, Info.fileName());
-
-  DataSet = Info.baseName()+".dat";
-  if(Info.extension(false) != "dpl")
-    DataDisplay = Info.baseName()+".dpl";
+  QString base = Info.baseName (true);
+  qDebug (base);
+  QString ext = Info.extension (false);
+  DataSet = base + ".dat";
+  if (ext != "dpl")
+    DataDisplay = base + ".dpl";
   else
-    DataDisplay = Info.baseName()+".sch";
+    DataDisplay = base + ".sch";
 }
 
 // ---------------------------------------------------
