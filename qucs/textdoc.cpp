@@ -186,8 +186,8 @@ void TextDoc::setName (const QString& Name_)
   if (App)
     App->DocumentTab->setTabLabel (this, Info.fileName ());
 
-  DataSet = Info.baseName () + ".dat";
-  DataDisplay = Info.baseName () + ".dpl";
+  DataSet = Info.baseName (true) + ".dat";
+  DataDisplay = Info.baseName (true) + ".dpl";
 }
 
 // ---------------------------------------------------

@@ -1119,6 +1119,10 @@ bool QucsApp::saveAs()
       else s = QucsWorkDir.path();
     }
 
+    // list of known file extensions
+    QString ext = "vhdl;vhd;v;va;sch;dpl";
+    QStringList extlist = QStringList::split (';', ext);
+
     if(isTextDocument (w))
       Filter = tr("VHDL Sources")+" (*.vhdl *.vhd);;" +
 	       tr("Verilog Sources")+" (*.v);;"+
@@ -1129,8 +1133,10 @@ bool QucsApp::saveAs()
     s = QFileDialog::getSaveFileName(s, Filter,
                      this, "", tr("Enter a Document Name"));
     if(s.isEmpty())  return false;
-    Info.setFile(s);                 // try to guess the best extension ...
-    if(Info.extension(false).isEmpty()) {  // ... if no one was specified
+    Info.setFile(s);               // try to guess the best extension ...
+    ext = Info.extension(false);
+    if(ext.isEmpty() ||
+       !extlist.contains(ext)) {   // ... if no one was specified or is unknown
       if(isTextDocument (w))
         s += ".vhdl";
       else
@@ -2048,7 +2054,7 @@ void QucsApp::slotSymbolEdit()
     TextDoc *TDoc = (TextDoc*)w;
     // set 'DataDisplay' document of text file to symbol file
     QFileInfo Info(TDoc->DocName);
-    QString sym = Info.baseName()+".sym";
+    QString sym = Info.baseName(true)+".sym";
     TDoc->DataDisplay = sym;
 
     // symbol file already loaded?

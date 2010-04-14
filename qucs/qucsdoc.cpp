@@ -76,13 +76,15 @@ QucsDoc::QucsDoc(QucsApp *App_, const QString& Name_)
   QFileInfo Info(DocName);
   if(!DocName.isEmpty()) {
     DocName = Info.absFilePath();
+    QString base = Info.baseName(true);
+    QString ext = Info.extension(false);
 
-    DataSet = Info.baseName()+".dat";   // name of the default dataset
-    if(Info.extension(false) != "dpl")
-      DataDisplay = Info.baseName()+".dpl"; // name of default data display
+    DataSet = base + ".dat";       // name of the default dataset
+    if(ext != "dpl")
+      DataDisplay = base + ".dpl"; // name of default data display
     else {
-      DataDisplay = Info.baseName()+".sch"; // name of default schematic
-      GridOn = false;     // data display without grid (per default)
+      DataDisplay = base + ".sch"; // name of default schematic
+      GridOn = false;              // data display without grid (per default)
     }
   }
   SimOpenDpl = true;
@@ -103,7 +105,7 @@ QString QucsDoc::fileSuffix (void) {
 
 QString QucsDoc::fileBase (const QString& Name) {
   QFileInfo Info (Name);
-  return Info.baseName ();
+  return Info.baseName (true);
 }
 
 QString QucsDoc::fileBase (void) {
