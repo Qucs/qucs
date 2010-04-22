@@ -114,7 +114,7 @@ QString SubCirPort::vhdlCode(int)
   QString s = "  net_out";
   Node *pn = Ports.getFirst()->Connection;
   s += pn->Name + " <= ";
-  s += pn->Name + " or '0';\n";
+  s += pn->Name + ";\n";
   return s;
 }
 
