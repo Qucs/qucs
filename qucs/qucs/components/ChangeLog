@@ -1,3 +1,9 @@
+2010-04-22  Stefan Jahn  <stefan@lkcc.org>
+
+	* subcirport.cpp (vhdlCode): Don't use 'outsig or 0', use just a
+	buffer without or'ing to avoid signal changes ('Z' or '0' ->
+	'X'!).
+
 2010-03-29  Stefan Jahn  <stefan@lkcc.org>
 
 	* digi_source.cpp (vhdlCode,verilogCode): Simplified code for
