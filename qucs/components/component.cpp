@@ -262,13 +262,19 @@ void Component::paint(ViewPainter *p)
       newFont.setUnderline(pt->under);
       p->Painter->setFont(newFont);
       p->Painter->setPen(pt->Color);
-      p->Painter->drawText(0, 0, 0, 0, Qt::AlignLeft|Qt::DontClip, pt->s);
+      if (0) {
+	p->Painter->drawText(0, 0, 0, 0, Qt::AlignLeft|Qt::DontClip, pt->s);
+      } else {
+	int w, h;
+	w = p->drawTextMapped (pt->s, 0, 0, &h);
+      }
     }
     p->Painter->setWorldMatrix(wm);
     p->Painter->setWorldXForm(false);
   }
-  p->Painter->setFont(f);
 
+  // restore old font
+  p->Painter->setFont(f);
 
   p->Painter->setPen(QPen(QPen::black,1));
   p->map(cx+tx, cy+ty, x, y);

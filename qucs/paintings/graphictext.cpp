@@ -77,7 +77,7 @@ void GraphicText::paint(ViewPainter *p)
   Font.setPointSize(Size);   // restore real font size
   p->Painter->setWorldMatrix(wm);
   p->Painter->setWorldXForm(false);
-  x2 = int(float(w)  / p->Scale);
+  x2 = int(float(w) / p->Scale);
   y2 = int(float(h) / p->Scale);
   p->Painter->setFont(f);
 }
