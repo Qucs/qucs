@@ -7114,6 +7114,46 @@ Usage:  qucsedit [-r] file
         <source>HICUM L2 v2.24</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>HICUM Level 0 v1.3 verilog device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>high-injection roll-off current</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>TC of iqf (bandgap coefficient of zero bias hole charge)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Emitter part coefficient of the zero bias hole charge temperature variation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Collector part coefficient of the zero bias hole charge temperature variation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Bandgap parameter of ver</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Bandgap parameter of vef</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specific recombination current at the BC barrier for high forward injection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>npn HICUM L0 v1.3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>pnp HICUM L0 v1.3</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
