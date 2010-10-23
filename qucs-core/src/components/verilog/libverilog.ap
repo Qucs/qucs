@@ -34,6 +34,7 @@ SOURCES = HBT_X.analogfunction.cpp HBT_X.core.cpp \
         MESFET.analogfunction.cpp MESFET.core.cpp \
 	EKV26MOS.analogfunction.cpp EKV26MOS.core.cpp \
         hicumL0V1p2.analogfunction.cpp hicumL0V1p2.core.cpp \
+        hicumL0V1p3.analogfunction.cpp hicumL0V1p3.core.cpp \
         hicumL2V2p23.analogfunction.cpp hicumL2V2p23.core.cpp \
 	hicumL2V2p24.analogfunction.cpp hicumL2V2p24.core.cpp \
         photodiode.analogfunction.cpp photodiode.core.cpp \

@@ -36,6 +36,7 @@ libverilog_a_SOURCES = HBT_X.analogfunction.cpp HBT_X.core.cpp \
 	MESFET.analogfunction.cpp MESFET.core.cpp \
 	EKV26MOS.analogfunction.cpp EKV26MOS.core.cpp \
 	hicumL0V1p2.analogfunction.cpp hicumL0V1p2.core.cpp \
+	hicumL0V1p3.analogfunction.cpp hicumL0V1p3.core.cpp \
 	hicumL2V2p23.analogfunction.cpp hicumL2V2p23.core.cpp \
 	hicumL2V2p24.analogfunction.cpp hicumL2V2p24.core.cpp \
 	photodiode.analogfunction.cpp photodiode.core.cpp \
@@ -83,6 +84,7 @@ noinst_HEADERS = HBT_X.analogfunction.h HBT_X.defs.h HBT_X.core.h \
 	MESFET.analogfunction.h MESFET.defs.h MESFET.core.h \
 	EKV26MOS.analogfunction.h EKV26MOS.defs.h EKV26MOS.core.h \
 	hicumL0V1p2.analogfunction.h hicumL0V1p2.defs.h hicumL0V1p2.core.h \
+	hicumL0V1p3.analogfunction.h hicumL0V1p3.defs.h hicumL0V1p3.core.h \
 	hicumL2V2p23.analogfunction.h hicumL2V2p23.defs.h hicumL2V2p23.core.h \
 	hicumL2V2p24.analogfunction.h hicumL2V2p24.defs.h hicumL2V2p24.core.h \
 	photodiode.analogfunction.h photodiode.defs.h photodiode.core.h \
@@ -125,7 +127,7 @@ VERILOG_FILES = constants.vams disciplines.vams \
   fbh_hbt-2_2a.va hicumL2V2p11.va mod_amp.va hicumL2V2p22.va log_amp.va \
   hicumL0V1p12.va potentiometer.va MESFET.va hicumL0V1p2.va hicumL2V2p23.va \
   photodiode.va EKV26MOS.va phototransistor.va nigbt.va hicumL2V2p24.va \
-  \
+  hicumL0V1p3.va \
   dff_SR.va jkff_SR.va tff_SR.va gatedDlatch.va logic_0.va logic_1.va \
   mux2to1.va mux4to1.va mux8to1.va DLS_nto1.va DLS_1ton.va andor4x2.va \
   andor4x3.va andor4x4.va dmux2to4.va dmux3to8.va dmux4to16.va ha1b.va \
@@ -272,6 +274,19 @@ hicumL0V1p2.defs.h: hicumL0V1p2.va
 	$(ADMSXML) $< -e qucsVersion.xml -e qucsMODULEdefs.xml
 hicumL0V1p2.gui.cpp: qucsVersion.xml qucsMODULEgui.xml
 hicumL0V1p2.gui.cpp: hicumL0V1p2.va
+	$(ADMSXML) $< -e qucsVersion.xml -e qucsMODULEgui.xml
+
+hicumL0V1p3.analogfunction.cpp: analogfunction.xml
+hicumL0V1p3.analogfunction.cpp: hicumL0V1p3.va
+	$(ADMSXML) $< -e analogfunction.xml
+hicumL0V1p3.core.cpp: hicumL0V1p3.defs.h qucsVersion.xml qucsMODULEcore.xml
+hicumL0V1p3.core.cpp: hicumL0V1p3.va
+	$(ADMSXML) $< -e qucsVersion.xml -e qucsMODULEcore.xml
+hicumL0V1p3.defs.h: qucsVersion.xml qucsMODULEdefs.xml
+hicumL0V1p3.defs.h: hicumL0V1p3.va
+	$(ADMSXML) $< -e qucsVersion.xml -e qucsMODULEdefs.xml
+hicumL0V1p3.gui.cpp: qucsVersion.xml qucsMODULEgui.xml
+hicumL0V1p3.gui.cpp: hicumL0V1p3.va
 	$(ADMSXML) $< -e qucsVersion.xml -e qucsMODULEgui.xml
 
 hicumL2V2p23.analogfunction.cpp: analogfunction.xml

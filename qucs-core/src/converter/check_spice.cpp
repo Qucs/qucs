@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_spice.cpp,v 1.57 2010-03-26 16:45:04 ela Exp $
+ * $Id: check_spice.cpp,v 1.58 2010-10-23 15:29:13 ela Exp $
  *
  */
 
@@ -654,7 +654,9 @@ static void spice_adjust_device (struct definition_t * def,
 	    def->pairs = spice_del_property (def->pairs, p2);
 	    if (level == 0) {
 	      if (version >= 1.11) {
-		if (version >= 1.2)
+		if (version >= 1.3)
+		  def->type = strdup ("hicumL0V1p3");
+		else if (version >= 1.2)
 		  def->type = strdup ("hicumL0V1p2");
 		else
 		  def->type = strdup ("hic0_full");
