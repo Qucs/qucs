@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_vcd.cpp,v 1.16 2010/04/13 20:24:33 ela Exp $
+ * $Id: check_vcd.cpp,v 1.17 2010/10/23 15:29:13 ela Exp $
  *
  */
 
@@ -71,10 +71,26 @@ vcd_find_code (struct vcd_scope * root, char * code) {
   return NULL;
 }
 
-#define FAST 1
+// Free's the given VCD change.
+static void vcd_free_change (struct vcd_change * vc) {
+  free (vc->code);
+  free (vc->value);
+  free (vc);
+}
 
-#if FAST
+// Free's the given VCD changeset.
+static void vcd_free_changeset (struct vcd_changeset * cs) {
+  struct vcd_change * vc, * vnext;
+  for (vc = cs->changes; vc; vc = vnext) {
+    vnext = vc->next;
+    vcd_free_change (vc);
+  }
+  free (cs);
+}
 
+#if VCD_FAST
+
+/* Returns changes sets in the list's order itself. */
 static struct vcd_changeset *
 vcd_find_firstset_fast (struct vcd_changeset * root) {
   static struct vcd_changeset * last = root;
@@ -137,13 +153,13 @@ static void vcd_sort_changesets (struct vcd_changeset * root) {
   struct vcd_change * vc;
   struct vcd_variable * vv;
 
-#if FAST
+#if VCD_FAST
   // for fast lookup, need to reverse list
   root = vcd_reverse_changesets (root);
 #endif
 
   // as long as there are still changesets unprocessed
-#if FAST
+#if VCD_FAST
   while ((cs = vcd_find_firstset_fast (root)) != NULL) {
 #else
   while ((cs = vcd_find_firstset (root)) != NULL) {
@@ -184,8 +200,12 @@ static void vcd_sort_changesets (struct vcd_changeset * root) {
 	current->variables = vv;
       }
     }
+#ifndef VCD_FAST
     // changeset processed
     cs->done = 1;
+#else
+    //vcd_free_changeset (cs);
+#endif
   }
 }
 
@@ -534,14 +554,7 @@ static void vcd_free_file (struct vcd_file * vcd) {
   struct vcd_changeset * cs, * cnext;
   for (cs = vcd->changesets; cs; cs = cnext) {
     cnext = cs->next;
-    struct vcd_change * vc, * vnext;
-    for (vc = cs->changes; vc; vc = vnext) {
-      vnext = vc->next;
-      free (vc->code);
-      free (vc->value);
-      free (vc);
-    }
-    free (cs);
+    vcd_free_changeset (cs);
   }
   free (vcd);
 }
