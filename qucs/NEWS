@@ -1,7 +1,7 @@
 --
 -- NEWS
 --
--- Copyright (C) 2003-2009 Stefan Jahn <stefan@lkcc.org>
+-- Copyright (C) 2003-2010 Stefan Jahn <stefan@lkcc.org>
 --
 -- This is free software; you can redistribute it and/or modify
 -- it under the terms of the GNU General Public License as published by
@@ -33,7 +33,7 @@ Version 0.0.16
  * added Verilog-HDL and Verilog-A syntax highlighting in text documents
  * support for pre-compiled VHDL modules and libraries made from user
    written VHDL code
- * new components: NIGBT, HICUM L2 v2.24
+ * new components: NIGBT, HICUM L2 v2.24, HICUM L0 v1.3
  * translation into Kazakh
  * allow equations in Verilog-HDL and VHDL subcircuits
 
