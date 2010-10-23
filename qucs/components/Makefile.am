@@ -56,7 +56,8 @@ libcomponents_a_SOURCES = phaseshifter.cpp gyrator.cpp componentdialog.cpp    \
   dmux2to4.cpp dmux3to8.cpp dmux4to16.cpp ha1b.cpp fa1b.cpp fa2b.cpp          \
   pad2bit.cpp pad3bit.cpp pad4bit.cpp binarytogrey4bit.cpp vafile.cpp         \
   greytobinary4bit.cpp comp_1bit.cpp comp_2bit.cpp comp_4bit.cpp              \
-  hpribin4bit.cpp msrstub.cpp phototransistor.cpp nigbt.cpp hicumL2V2p24.cpp
+  hpribin4bit.cpp msrstub.cpp phototransistor.cpp nigbt.cpp hicumL2V2p24.cpp  \
+  hicumL0V1p3.cpp
 
 nodist_libcomponents_a_SOURCES = $(MOCFILES)
 
@@ -84,7 +85,7 @@ noinst_HEADERS = $(MOCHEADERS) resistor.h components.h capacitor.h vccs.h     \
   andor4x4.h dmux2to4.h dmux3to8.h dmux4to16.h ha1b.h fa1b.h fa2b.h pad2bit.h \
   pad3bit.h pad4bit.h binarytogrey4bit.h greytobinary4bit.h comp_1bit.h       \
   comp_2bit.h comp_4bit.h hpribin4bit.h msrstub.h phototransistor.h nigbt.h   \
-  vafile.h hicumL2V2p24.h
+  vafile.h hicumL2V2p24.h hicumL0V1p3.h
 
 INCLUDES = $(X11_INCLUDES) $(QT_INCLUDES) -I$(top_srcdir)/qucs
 
