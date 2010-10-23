@@ -1,3 +1,8 @@
+2010-10-23  Stefan Jahn  <stefan@lkcc.org>
+
+	* symbolwidget.cpp (createSymbol): Adjusted symbol for new HICUM
+	models.
+
 2010-03-27  Stefan Jahn  <stefan@lkcc.org>
 
 	* library/Ideal.lib (VSub): Fixed model ports.
