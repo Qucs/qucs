@@ -1,5 +1,5 @@
 /*
- * hicumL0V1p3.cpp - device implementations for hicumL0V1p3 module
+ * hicumL0V1p2g.cpp - device implementations for hicumL0V1p2g module
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -9,11 +9,11 @@
  */
 
 #include "node.h"
-#include "hicumL0V1p3.h"
+#include "hicumL0V1p2g.h"
 
-hicumL0V1p3::hicumL0V1p3()
+hicumL0V1p2g::hicumL0V1p2g()
 {
-  Description = QObject::tr ("HICUM Level 0 v1.3 verilog device");
+  Description = QObject::tr ("HICUM Level 0 v1.2g verilog device");
 
   Props.append (new Property ("Type", "npn", true,
     QObject::tr ("polarity") + " [npn, pnp]"));
@@ -43,7 +43,7 @@ hicumL0V1p3::hicumL0V1p3()
     +" ("+QObject::tr ("A")+")"));
   Props.append (new Property ("iqfe", "0.0", false,
     QObject::tr ("high-injection roll-off current")));
-  Props.append (new Property ("ahq", "0", false,
+  Props.append (new Property ("ahq", "0.0", false,
     QObject::tr ("Smoothing factor for the d.c. injection width")));
   Props.append (new Property ("ibes", "1e-18", false,
     QObject::tr ("BE saturation current")
@@ -105,7 +105,7 @@ hicumL0V1p3::hicumL0V1p3()
   Props.append (new Property ("vlim", "0.5", false,
     QObject::tr ("Voltage dividing ohmic and satur.region")
     +" ("+QObject::tr ("V")+")"));
-  Props.append (new Property ("vpt", "100", false,
+  Props.append (new Property ("vpt", "100.0", false,
     QObject::tr ("Punch-through voltage")
     +" ("+QObject::tr ("V")+")"));
   Props.append (new Property ("vces", "0.1", false,
@@ -119,7 +119,7 @@ hicumL0V1p3::hicumL0V1p3()
     +" ("+QObject::tr ("V")+")"));
   Props.append (new Property ("zci", "0.333", false,
     QObject::tr ("BC exponent factor")));
-  Props.append (new Property ("vptci", "100", false,
+  Props.append (new Property ("vptci", "100.0", false,
     QObject::tr ("Punch-through voltage of BC junction")
     +" ("+QObject::tr ("V")+")"));
   Props.append (new Property ("cjcx0", "1.0e-20", false,
@@ -130,7 +130,7 @@ hicumL0V1p3::hicumL0V1p3()
     +" ("+QObject::tr ("V")+")"));
   Props.append (new Property ("zcx", "0.333", false,
     QObject::tr ("External BC exponent factor")));
-  Props.append (new Property ("vptcx", "100", false,
+  Props.append (new Property ("vptcx", "100.0", false,
     QObject::tr ("Punch-through voltage")
     +" ("+QObject::tr ("V")+")"));
   Props.append (new Property ("fbc", "1.0", false,
@@ -173,7 +173,7 @@ hicumL0V1p3::hicumL0V1p3()
     +" ("+QObject::tr ("V")+")"));
   Props.append (new Property ("zs", "0.3", false,
     QObject::tr ("External SC exponent factor")));
-  Props.append (new Property ("vpts", "100", false,
+  Props.append (new Property ("vpts", "100.0", false,
     QObject::tr ("SC punch-through voltage")
     +" ("+QObject::tr ("V")+")"));
   Props.append (new Property ("cbcpar", "0.0", false,
@@ -238,18 +238,18 @@ hicumL0V1p3::hicumL0V1p3()
   Props.append (new Property ("zetaiqf", "0.0", false,
     QObject::tr ("TC of iqf (bandgap coefficient of zero bias hole charge)")));
   Props.append (new Property ("alkav", "0.0", false,
-    QObject::tr ("TC of avalanche prefactor")
+    QObject::tr ("TC of avalanche prefactor, identical to alfav of Hicum/L2")
     +" ("+QObject::tr ("1/K")+")"));
   Props.append (new Property ("aleav", "0.0", false,
-    QObject::tr ("TC of avalanche exponential factor")
+    QObject::tr ("TC of avalanche exponential factor, identical to alqav of Hicum/L2")
     +" ("+QObject::tr ("1/K")+")"));
-  Props.append (new Property ("zetarth", "0.0", false,
-    QObject::tr ("Exponent factor for temperature dependent thermal resistance")));
   Props.append (new Property ("flsh", "0", false,
     QObject::tr ("Flag for self-heating calculation")));
   Props.append (new Property ("rth", "0.0", false,
     QObject::tr ("Thermal resistance")
     +" ("+QObject::tr ("K/W")+")"));
+  Props.append (new Property ("zetarth", "0.0", false,
+    QObject::tr ("Exponent factor for temperature dependent thermal resistance")));
   Props.append (new Property ("cth", "0.0", false,
     QObject::tr ("Thermal capacitance")
     +" ("+QObject::tr ("Ws/K")+")"));
@@ -264,9 +264,9 @@ hicumL0V1p3::hicumL0V1p3()
   Props.append (new Property ("deltc", "0.0", false,
     QObject::tr ("Collector part coefficient of the zero bias hole charge temperature variation")));
   Props.append (new Property ("zetaver", "0.0", false,
-    QObject::tr ("Bandgap parameter of ver")));
+    QObject::tr ("Bandgap TC parameter of ver")));
   Props.append (new Property ("zetavef", "0.0", false,
-    QObject::tr ("Bandgap parameter of vef")));
+    QObject::tr ("Bandgap TC parameter of vef")));
   Props.append (new Property ("ibhrec", "0.0", false,
     QObject::tr ("Specific recombination current at the BC barrier for high forward injection")
     +" ("+QObject::tr ("A")+")"));
@@ -276,35 +276,35 @@ hicumL0V1p3::hicumL0V1p3()
   createSymbol ();
   tx = x2 + 4;
   ty = y1 + 4;
-  Model = "hicumL0V1p3";
+  Model = "hicumL0V1p2g";
   Name  = "T";
 }
 
-Component * hicumL0V1p3::newOne()
+Component * hicumL0V1p2g::newOne()
 {
-  hicumL0V1p3 * p = new hicumL0V1p3();
+  hicumL0V1p2g * p = new hicumL0V1p2g();
   p->Props.getFirst()->Value = Props.getFirst()->Value; 
   p->recreate(0); 
   return p;
 }
 
-Element * hicumL0V1p3::info(QString& Name, char * &BitmapFile, bool getNewOne)
+Element * hicumL0V1p2g::info(QString& Name, char * &BitmapFile, bool getNewOne)
 {
-  Name = QObject::tr("npn HICUM L0 v1.3");
+  Name = QObject::tr("npn HICUM L0 v1.2g");
   BitmapFile = (char *) "npnsub_therm";
 
-  if(getNewOne) return new hicumL0V1p3();
+  if(getNewOne) return new hicumL0V1p2g();
   return 0;
 }
 
-Element * hicumL0V1p3::info_pnp(QString& Name, char * &BitmapFile, bool getNewOne)
+Element * hicumL0V1p2g::info_pnp(QString& Name, char * &BitmapFile, bool getNewOne)
 {
-  Name = QObject::tr("pnp HICUM L0 v1.3");
+  Name = QObject::tr("pnp HICUM L0 v1.2g");
   BitmapFile = (char *) "pnpsub_therm";
 
   if(getNewOne)
   {
-    hicumL0V1p3* p = new hicumL0V1p3();
+    hicumL0V1p2g* p = new hicumL0V1p2g();
     p->Props.getFirst()->Value = "pnp";
     p->recreate(0);
     return p;
@@ -312,7 +312,7 @@ Element * hicumL0V1p3::info_pnp(QString& Name, char * &BitmapFile, bool getNewOn
   return 0;
 }
 
-void hicumL0V1p3::createSymbol()
+void hicumL0V1p2g::createSymbol()
 {
   // normal bipolar
   Lines.append(new Line(-10,-15,-10, 15,QPen(QPen::darkBlue,3)));
@@ -371,9 +371,9 @@ void hicumL0V1p3::createSymbol()
   x2 =  30; y2 =  30;
 }
 
-QString hicumL0V1p3::netlist()
+QString hicumL0V1p2g::netlist()
 {
-  QString s = "hicumL0V1p3:"+Name;
+  QString s = "hicumL0V1p2g:"+Name;
 
   // output all node names
   for(Port *p1 = Ports.first(); p1 != 0; p1 = Ports.next())
