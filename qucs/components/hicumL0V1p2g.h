@@ -1,5 +1,5 @@
 /*
- * hicumL0V1p3.h - device definitions for hicumL0V1p3 module
+ * hicumL0V1p2g.h - device definitions for hicumL0V1p2g module
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -8,16 +8,16 @@
  * 
  */
 
-#ifndef hicumL0V1p3_H
-#define hicumL0V1p3_H
+#ifndef hicumL0V1p2g_H
+#define hicumL0V1p2g_H
 
 #include "component.h"
 
-class hicumL0V1p3 : public MultiViewComponent
+class hicumL0V1p2g : public MultiViewComponent
 {
   public:
-    hicumL0V1p3();
-    ~hicumL0V1p3() { };
+    hicumL0V1p2g();
+    ~hicumL0V1p2g() { };
     Component* newOne();
     static Element* info(QString&, char* &, bool getNewOne=false);
     static Element* info_pnp(QString&, char* &, bool getNewOne=false);
@@ -26,4 +26,4 @@ class hicumL0V1p3 : public MultiViewComponent
     QString netlist();
 };
 
-#endif /* hicumL0V1p3_H */
+#endif /* hicumL0V1p2g_H */
