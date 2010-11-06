@@ -54,7 +54,7 @@ SOURCES = phaseshifter.cpp gyrator.cpp componentdialog.cpp    \
   pad2bit.cpp pad3bit.cpp pad4bit.cpp binarytogrey4bit.cpp vafile.cpp         \
   greytobinary4bit.cpp comp_1bit.cpp comp_2bit.cpp comp_4bit.cpp              \
   hpribin4bit.cpp msrstub.cpp phototransistor.cpp nigbt.cpp hicumL2V2p24.cpp  \
-  hicumL0V1p3.cpp
+  hicumL0V1p2g.cpp
 
 # List of special Qt files.
 MOCHEADERS = componentdialog.h spicedialog.h optimizedialog.h spicefile.h

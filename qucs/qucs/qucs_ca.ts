@@ -7161,10 +7161,6 @@ Use:  qucsedit [-r] fitxer
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>HICUM Level 0 v1.3 verilog device</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>high-injection roll-off current</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7181,23 +7177,35 @@ Use:  qucsedit [-r] fitxer
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Bandgap parameter of ver</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Bandgap parameter of vef</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Specific recombination current at the BC barrier for high forward injection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>npn HICUM L0 v1.3</source>
+        <source>HICUM Level 0 v1.2g verilog device</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>pnp HICUM L0 v1.3</source>
+        <source>TC of avalanche prefactor, identical to alfav of Hicum/L2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>TC of avalanche exponential factor, identical to alqav of Hicum/L2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Bandgap TC parameter of ver</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Bandgap TC parameter of vef</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>npn HICUM L0 v1.2g</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>pnp HICUM L0 v1.2g</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
