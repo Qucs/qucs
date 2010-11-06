@@ -28,7 +28,7 @@ Version 0.0.16
 
  * implementation of EMI receiver functionality in the equation solver
  * support for Matlab v4 as an export file format in qucsconv
- * new Verilog-A device model: NIGBT, HICUM L2 v2.24, HICUM L0 v1.3
+ * new Verilog-A device model: NIGBT, HICUM L2 v2.24, HICUM L0 v1.2g
 
 Version 0.0.15
 --------------
