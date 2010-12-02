@@ -189,6 +189,7 @@ void module::registerModules (void) {
   REGISTER_CIRCUIT (msgap);
   REGISTER_CIRCUIT (msmbend);
   REGISTER_CIRCUIT (mscoupled);
+  REGISTER_CIRCUIT (mslange);  
   REGISTER_CIRCUIT (mstee);
   REGISTER_CIRCUIT (mscross);
   REGISTER_CIRCUIT (msvia);
