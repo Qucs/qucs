@@ -370,7 +370,10 @@ void SimMessage::startSimulator()
     for(QStringList::Iterator it = Collect.begin();
 	it != Collect.end(); ++it) {
       // don't put library includes into netlist...
-      if ((*it).right(4) != ".lst") {
+      if ((*it).right(4) != ".lst" &&
+	  (*it).right(5) != ".vhdl" &&
+	  (*it).right(4) != ".vhd" &&
+	  (*it).right(2) != ".v") {
 	Stream << *it << '\n';
       }
     }
