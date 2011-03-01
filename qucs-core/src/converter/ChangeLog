@@ -1,3 +1,8 @@
+2011-03-01  Stefan Jahn  <stefan@lkcc.org>
+
+	* check_spice.cpp: Fixed PULSE source statement translation
+	(period time) in SPICE converter.
+
 2010-10-23  Stefan Jahn  <stefan@lkcc.org>
 
 	* check_vcd.cpp: Code cleanup for free()'ing VCD changesets.

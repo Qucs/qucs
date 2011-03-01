@@ -1,7 +1,7 @@
 /*
  * check_spice.cpp - checker for a Spice netlist
  *
- * Copyright (C) 2004-2010 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004-2011 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_spice.cpp,v 1.58 2010-10-23 15:29:13 ela Exp $
+ * $Id: check_spice.cpp,v 1.59 2011-03-01 17:02:20 ela Exp $
  *
  */
 
@@ -1505,11 +1505,9 @@ spice_translate_source (struct definition_t * root,
       spice_set_property_value (pulse, ui, v);
       v  = spice_get_property_value (pulse, "TH"); // PW
       v += spice_get_property_value (pulse, "Tr");
-      v += spice_get_property_value (pulse, "Tf");
       spice_set_property_value (pulse, "TH", v);
       v  = spice_get_property_value (pulse, "TL"); // PER
       v -= spice_get_property_value (pulse, "TH");
-      v -= spice_get_property_value (pulse, "Td");
       spice_set_property_value (pulse, "TL", v);
     }
     // single pulse
