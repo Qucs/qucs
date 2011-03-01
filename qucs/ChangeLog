@@ -1,5 +1,8 @@
 2011-03-01  Stefan Jahn  <stefan@lkcc.org>
 
+	* qucs.cpp (QucsApp): Fixed usage for "qucs <filename>" on command
+	line.
+
 	* dialogs/simmessage.cpp (startSimulator): Avoid outputting file
 	names of library file include names into the netlist.
 

@@ -171,9 +171,13 @@ QucsApp::QucsApp()
     QString arg = qApp->argv()[z];
     if(*(arg) != '-') {
       // allow uri's: file:/home/linuxuser/Desktop/example.sch
-      QString f = QDir::convertSeparators(QUriDrag::uriToLocalFile(arg));
-      if(f.isEmpty()) f = arg;
-      gotoPage(f);
+      if(arg.contains(":/")) {
+        QString f = QDir::convertSeparators(QUriDrag::uriToLocalFile(arg));
+        if(f.isEmpty()) f = arg;
+        gotoPage(f);
+      } else {
+        gotoPage(arg);
+      }
     }
   }
 }
