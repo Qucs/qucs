@@ -1,3 +1,8 @@
+2011-03-02  Stefan Jahn  <stefan@lkcc.org>
+
+	* transline.tex (subsection{Losses}): Fixed documentation of
+	conductor losses in coaxial line.
+
 2009-05-19  Stefan Jahn  <stefan@lkcc.org>
 
 	* maths.tex (section{Frequency-Time Domain Transformation}): Fixed
