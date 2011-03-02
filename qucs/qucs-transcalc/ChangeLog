@@ -1,3 +1,8 @@
+2011-03-02  Stefan Jahn  <stefan@lkcc.org>
+
+	* coax.cpp (alphac_coax): Fixed factor of 2 in conductor loss
+	calculation.
+
 2009-05-14  Stefan Jahn  <stefan@lkcc.org>
 
 	* coax.cpp (show_results): Fixed computation of cut-off
