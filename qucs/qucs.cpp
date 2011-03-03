@@ -83,6 +83,7 @@
 #include "dialogs/simmessage.h"
 #include "dialogs/vtabwidget.h"
 #include "dialogs/vtabbeddockwidget.h"
+#include "octave_window.h"
 
 extern const char *empty_xpm[];
 
@@ -129,6 +130,7 @@ QucsApp::QucsApp()
     tr("VHDL Sources")+" (*.vhdl *.vhd);;"+
     tr("Verilog Sources")+" (*.v);;"+
     tr("Verilog-A Sources")+" (*.va);;"+
+    tr("Octave Scripts")+" (*.m *.oct);;"+
     tr("Any File")+" (*)";
   QucsWorkDir.setPath(QDir::homeDirPath()+QDir::convertSeparators ("/.qucs"));
   QucsHomeDir.setPath(QDir::homeDirPath()+QDir::convertSeparators ("/.qucs"));
@@ -144,6 +146,7 @@ QucsApp::QucsApp()
   viewToolBar->setOn(true);
   viewStatusBar->setOn(true);
   viewBrowseDock->setOn(true);
+  slotViewOctaveDock(false);
   initCursorMenu();
   HierarchyHistory.setAutoDelete(true);
   Module::registerModules ();
@@ -200,6 +203,7 @@ void QucsApp::initContentListView()
   ConOthers     = new QListViewItem(Content, tr("Others"));
   ConDatasets   = new QListViewItem(Content, tr("Datasets"));
   ConDisplays   = new QListViewItem(Content, tr("Data Displays"));
+  ConOctave     = new QListViewItem(Content, tr("Octave"));
   ConVerilog    = new QListViewItem(Content, tr("Verilog"));
   ConVerilogA   = new QListViewItem(Content, tr("Verilog-A"));
   ConSources    = new QListViewItem(Content, tr("VHDL"));
@@ -291,6 +295,14 @@ void QucsApp::initView()
   setDockEnabled(dock,DockBottom,false);
   moveDockWindow(dock,DockLeft);
   TabView->setCurrentPage(0);
+
+  // ----------------------------------------------------------
+  // Octave docking window
+  octDock = new QDockWindow(QDockWindow::InDock, this);
+  octDock->setCloseMode(QDockWindow::Always);
+  connect(octDock, SIGNAL(visibilityChanged(bool)), SLOT(slotToggleOctave(bool)));
+  octave = new OctaveWindow(octDock);
+  moveDockWindow(octDock, Qt::DockBottom);
 
   // ............................................
   readProjects(); // reads all projects and inserts them into the ListBox
@@ -755,6 +767,8 @@ void QucsApp::readProjectFiles()
     delete ConVerilogA->firstChild();
   while(ConOthers->firstChild())
     delete ConOthers->firstChild();
+  while(ConOctave->firstChild())
+    delete ConOctave->firstChild();
 
   int n;
   // put all files into "Content"-ListView
@@ -782,6 +796,8 @@ void QucsApp::readProjectFiles()
       new QListViewItem(ConVerilog, (*it).ascii());
     else if(Str == "va")
       new QListViewItem(ConVerilogA, (*it).ascii());
+    else if((Str == "m") || (Str == "oct"))
+      new QListViewItem(ConOctave, (*it).ascii());
     else
       new QListViewItem(ConOthers, (*it).ascii());
   }
@@ -1188,6 +1204,8 @@ bool QucsApp::saveAs()
           Content->setSelected(new QListViewItem(ConVerilog, s), true);
         else if(ext == "va")
           Content->setSelected(new QListViewItem(ConVerilogA, s), true);
+        else if(ext == "m" || ext == "oct")
+          Content->setSelected(new QListViewItem(ConOctave, s), true);
         else
           Content->setSelected(new QListViewItem(ConOthers, s), true);
       }
@@ -1662,8 +1680,8 @@ void QucsApp::slotSimulate()
     if(!saveAs()) return;    // ... save schematic before
 
   // Perhaps the document was modified from another program ?
+  QFileInfo Info(Doc->DocName);
   if(Doc->lastSaved.isValid()) {
-    QFileInfo Info(Doc->DocName);
     if(Doc->lastSaved < Info.lastModified()) {
       int No = QMessageBox::warning(this, tr("Warning"),
                tr("The document was modified by another program !") + '\n' +
@@ -1675,6 +1693,16 @@ void QucsApp::slotSimulate()
   }
 
   slotResetWarnings();
+
+  if(Info.extension(false) == "m" || Info.extension(false) == "oct") {
+    // It is an Octave script.
+    if(Doc->DocChanged)
+      Doc->save();
+    slotViewOctaveDock(true);
+    octave->runOctaveScript(Doc->DocName);
+    return;
+  }
+
   SimMessage *sim = new SimMessage(w, this);
   // disconnect is automatically performed, if one of the involved objects
   // is destroyed !
@@ -1714,7 +1742,13 @@ void QucsApp::slotAfterSimulation(int Status, SimMessage *sim)
   }
   else if(sim->SimOpenDpl) {
     // switch to data display
-    slotChangePage(sim->DocName, sim->DataDisplay);
+    if(sim->DataDisplay.right(2) == ".m" ||
+       sim->DataDisplay.right(4) == ".oct") {  // Is it an Octave script?
+      octave->startOctave();
+      octave->runOctaveScript(sim->DataDisplay);
+    }
+    else
+      slotChangePage(sim->DocName, sim->DataDisplay);
     sim->slotClose();   // close and delete simulation window
   }
   else
@@ -1808,7 +1842,11 @@ void QucsApp::slotToPage()
     return;
   }
 
-  slotChangePage(d->DocName, d->DataDisplay);
+  if(d->DocName.right(2) == ".m" ||
+     d->DocName.right(4) == ".oct")
+    slotViewOctaveDock(true);
+  else
+    slotChangePage(d->DocName, d->DataDisplay);
 }
 
 // -------------------------------------------------------------------
@@ -1834,7 +1872,8 @@ void QucsApp::slotOpenContent(QListViewItem *item)
   QString Suffix = Info.extension(false);
 
   if (Suffix == "sch" || Suffix == "dpl" || Suffix == "vhdl" ||
-      Suffix == "v" || Suffix == "va") {
+      Suffix == "v" || Suffix == "va" ||
+      Suffix == "m" || Suffix == "oct") {
     gotoPage(Info.absFilePath());
 
     if(item->text(1).isEmpty())     // is subcircuit ?

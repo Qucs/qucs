@@ -79,6 +79,9 @@ QucsDoc::QucsDoc(QucsApp *App_, const QString& Name_)
     QString base = Info.baseName(true);
     QString ext = Info.extension(false);
 
+    if(ext == "m" || ext == "oct")
+      SimTime = "1";
+
     DataSet = base + ".dat";       // name of the default dataset
     if(ext != "dpl")
       DataDisplay = base + ".dpl"; // name of default data display
