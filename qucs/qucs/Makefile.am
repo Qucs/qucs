@@ -4,7 +4,7 @@
 #
 # Automake input file.
 #
-# Copyright (C) 2004, 2005, 2006, 2007, 2008 Stefan Jahn <stefan@lkcc.org>
+# Copyright (C) 2004-2011 Stefan Jahn <stefan@lkcc.org>
 #
 # This is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -32,13 +32,13 @@ endif
 
 bin_PROGRAMS = qucs
 
-MOCHEADERS = qucs.h schematic.h textdoc.h
+MOCHEADERS = qucs.h schematic.h textdoc.h octave_window.h
 MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
 
 qucs_SOURCES = node.cpp element.cpp qucsdoc.cpp wire.cpp mouseactions.cpp   \
   qucs.cpp main.cpp wirelabel.cpp qucs_init.cpp qucs_actions.cpp            \
   viewpainter.cpp mnemo.cpp schematic.cpp schematic_element.cpp textdoc.cpp \
-  schematic_file.cpp syntax.cpp module.cpp
+  schematic_file.cpp syntax.cpp module.cpp octave_window.cpp
 
 nodist_qucs_SOURCES = $(MOCFILES)
 

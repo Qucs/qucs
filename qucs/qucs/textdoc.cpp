@@ -188,6 +188,8 @@ void TextDoc::setName (const QString& Name_)
 
   DataSet = Info.baseName (true) + ".dat";
   DataDisplay = Info.baseName (true) + ".dpl";
+  if(Info.extension(false) == "m" || Info.extension(false) == "oct")
+    SimTime = "1";
 }
 
 // ---------------------------------------------------

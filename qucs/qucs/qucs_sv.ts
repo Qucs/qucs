@@ -1423,6 +1423,13 @@ men är nu %1 !</translation>
     </message>
 </context>
 <context>
+    <name>OctaveWindow</name>
+    <message>
+        <source>ERROR: Cannot start Octave!</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>OptimizeDialog</name>
     <message>
         <source>Edit Optimization Properties</source>
@@ -9474,6 +9481,28 @@ Convert data file to various file formats</source>
     </message>
     <message>
         <source>Cannot delete %1: &quot;%2&quot;!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Octave Scripts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Octave</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Octave Window</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Shows/hides the Octave dock window</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Octave Window
+
+Shows/hides the Octave dock window</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -32,6 +32,7 @@
 #include "main.h"
 #include "qucs.h"
 #include "dialogs/vtabbeddockwidget.h"
+#include "octave_window.h"
 
 // ----------------------------------------------------------
 // initializes all QActions of the application
@@ -609,6 +610,13 @@ void QucsApp::initActions()
 	tr("Browse Window\n\nEnables/disables the browse dock window"));
   connect(viewBrowseDock, SIGNAL(toggled(bool)), SLOT(slotViewBrowseDock(bool)));
 
+  viewOctaveDock = new QAction(tr("&Octave Window"), 0, this, 0);
+  viewOctaveDock->setToggleAction(true);
+  viewOctaveDock->setStatusTip(tr("Shows/hides the Octave dock window"));
+  viewOctaveDock->setWhatsThis(
+      tr("Octave Window\n\nShows/hides the Octave dock window"));
+  connect(viewOctaveDock, SIGNAL(toggled(bool)), SLOT(slotViewOctaveDock(bool)));
+
   helpIndex = new QAction("Help Index...", tr("Help Index..."), Key_F1, this);
   helpIndex->setStatusTip(tr("Index of Qucs Help"));
   helpIndex->setWhatsThis(tr("Help Index\n\nIndex of intern Qucs help"));
@@ -740,6 +748,7 @@ void QucsApp::initMenuBar()
   viewToolBar->addTo(viewMenu);
   viewStatusBar->addTo(viewMenu);
   viewBrowseDock->addTo(viewMenu);
+  viewOctaveDock->addTo(viewMenu);
 
   helpMenu = new QPopupMenu();  // menuBar entry helpMenu
   helpIndex->addTo(helpMenu);
@@ -907,6 +916,26 @@ void QucsApp::slotToggleDock(bool on)
   viewBrowseDock->blockSignals(true);
   viewBrowseDock->setOn(on);
   viewBrowseDock->blockSignals(false);
+}
+
+// ----------------------------------------------------------
+// turn Octave Dock Window on or off
+void QucsApp::slotViewOctaveDock(bool toggle)
+{
+  if(toggle) {
+    octDock->show();
+    octave->startOctave();
+  }
+  else
+    octDock->hide();
+}
+
+// ----------------------------------------------------------
+void QucsApp::slotToggleOctave(bool on)
+{
+  viewOctaveDock->blockSignals(true);
+  viewOctaveDock->setOn(on);
+  viewOctaveDock->blockSignals(false);
 }
 
 // ----------------------------------------------------------

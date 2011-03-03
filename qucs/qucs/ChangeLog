@@ -1,3 +1,8 @@
+2011-03-03  Stefan Jahn  <stefan@lkcc.org>
+
+	* octave_window.cpp (startOctave): First implementation of
+	GNU Octave connection to qucs.  Thank you very much Michael!
+
 2011-03-01  Stefan Jahn  <stefan@lkcc.org>
 
 	* qucs.cpp (QucsApp): Fixed usage for "qucs <filename>" on command

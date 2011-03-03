@@ -43,6 +43,7 @@ class QIconView;
 class QIconViewItem;
 class VTabbedDockWidget;
 class VTabWidget;
+class OctaveWindow;
 
 typedef bool (Schematic::*pToggleFunc) ();
 typedef void (MouseActions::*pMouseFunc) (Schematic*, QMouseEvent*);
@@ -162,11 +163,13 @@ private:
 // ********* Widgets on the main area **********************************
   VTabbedDockWidget   *dock;
   VTabWidget    *TabView;
+  QDockWindow   *octDock;
+  OctaveWindow  *octave;
 
   QListBox      *Projects;
   QListView     *Content;
   QListViewItem *ConSchematics, *ConSources, *ConDisplays, *ConDatasets,
-                *ConOthers, *ConVerilog, *ConVerilogA;
+                *ConOthers, *ConVerilog, *ConVerilogA, *ConOctave;
 
   QComboBox     *CompChoose;
 
@@ -209,6 +212,8 @@ private slots:
   void slotViewToolBar(bool toggle);    // toggle the toolbar
   void slotViewStatusBar(bool toggle);  // toggle the statusbar
   void slotViewBrowseDock(bool toggle); // toggle the dock window
+  void slotViewOctaveDock(bool); // toggle the dock window
+  void slotToggleOctave(bool);
   void slotToggleDock(bool);
   void slotHelpAbout();     // shows an about dialog
   void slotHelpAboutQt();   // shows the standard about dialog for Qt
@@ -220,7 +225,7 @@ private:
   void initStatusBar();  // setup the statusbar
 
   QAction *helpAboutApp, *helpAboutQt, *viewToolBar, *viewStatusBar,
-          *viewBrowseDock;
+          *viewBrowseDock, *viewOctaveDock;
 
   // menus contain the items of their menubar
   QPopupMenu *fileMenu, *editMenu, *insMenu, *projMenu, *simMenu, *viewMenu,
