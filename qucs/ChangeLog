@@ -1,5 +1,8 @@
 2011-03-04  Stefan Jahn  <stefan@lkcc.org>
 
+	* qucs.cpp (openProject): When changing projects, also change
+	Octave current directory.
+
 	* octave/getQucsVariable.m, octave/showQucsDataSet.m,
 	octave/loadQucsDataSet.m: Added default scripts.
 

@@ -25,6 +25,8 @@ public:
   QSize sizeHint();
   bool startOctave();
   void runOctaveScript(const QString&);
+  void sendCommand(const QString&);
+  void adjustDirectory();
 
 private slots:
   void slotDisplayMsg();
