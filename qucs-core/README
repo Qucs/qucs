@@ -1,7 +1,7 @@
 -- 
 -- README
 -- 
--- Copyright (C) 2003, 2004, 2005, 2006 Stefan Jahn <stefan@lkcc.org>
+-- Copyright (C) 2003, 2004, 2005, 2006, 2011 Stefan Jahn <stefan@lkcc.org>
 -- 
 -- This is free software; you can redistribute it and/or modify
 -- it under the terms of the GNU General Public License as published by
@@ -67,15 +67,14 @@ file INSTALL included in this distribution.
 Please note:  Users of the FreeBSD OS may use a GNU make (probably gmake)
 to compile and install the package.
 
-Getting the latest CVS snapshot
+Getting the latest SVN snapshot
 ===============================
 
-You can always get the latest Qucsator version from our CVS
+You can always get the latest Qucsator version from our SVN
 repository.  Please use an official release if you want to work with
-Qucsator.  The CVS version might not even compile.
+Qucsator.  The SVN version might not even compile.
 
-    $ cvs -z3 -d:pserver:anonymous@qucs.cvs.sourceforge.net:/cvsroot/qucs \
-      co qucs-core
+    $ svn co https://qucs.svn.sourceforge.net/svnroot/qucs/trunk/qucs-core
 
 Press 'Enter' when asked for a password.  Run `sh autogen.sh' and
 `configure' with the appropriate options.  Maintainance currently
