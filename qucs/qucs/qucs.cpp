@@ -822,6 +822,7 @@ void QucsApp::openProject(const QString& Path, const QString& Name)
     return;
   }
   QucsWorkDir.setPath(ProjDir.path());
+  octave->adjustDirectory();
 
   Content->setColumnText(0,tr("Content of '")+Name+tr("'")); // column text
   ConSchematics->setOpen(false); // get sure to have it closed
@@ -886,6 +887,7 @@ void QucsApp::slotMenuCloseProject()
   slotResetWarnings();
   setCaption("Qucs " PACKAGE_VERSION + tr(" - Project: "));
   QucsWorkDir.setPath(QDir::homeDirPath()+QDir::convertSeparators ("/.qucs"));
+  octave->adjustDirectory();
 
   Content->setColumnText(0,tr("Content of")); // column text
   initContentListView();

@@ -90,31 +90,37 @@ bool OctaveWindow::startOctave()
   }
 
   output->clear();
-  octProcess.writeToStdin("cd \"" + QucsWorkDir.absPath() + "\"\n");
+  adjustDirectory();
   return true;
+}
+
+// ------------------------------------------------------------------------
+void OctaveWindow::adjustDirectory()
+{
+  sendCommand("cd \"" + QucsWorkDir.absPath() + "\"");
+}
+
+// ------------------------------------------------------------------------
+void OctaveWindow::sendCommand(const QString& cmd)
+{
+  int par = output->paragraphs() - 1;
+  int idx = output->paragraphLength(par);
+  output->insertAt(cmd + "\n", par, idx);
+  octProcess.writeToStdin(cmd + "\n");
+  output->scrollToBottom();
 }
 
 // ------------------------------------------------------------------------
 void OctaveWindow::runOctaveScript(const QString& name)
 {
   QFileInfo info(name);
-  int par = output->paragraphs() - 1;
-  int idx = output->paragraphLength(par);
-  output->insertAt(info.baseName(true) + "\n", par, idx);
-
-  octProcess.writeToStdin(info.baseName(true) + "\n");
-  output->scrollToBottom();
+  sendCommand(info.baseName(true));
 }
 
 // ------------------------------------------------------------------------
 void OctaveWindow::slotSendCommand()
 {
-  int par = output->paragraphs() - 1;
-  int idx = output->paragraphLength(par);
-  output->insertAt(input->text() + "\n", par, idx);
-  output->scrollToBottom();
-
-  octProcess.writeToStdin(input->text() + "\n");
+  sendCommand(input->text());
   if(!input->text().stripWhiteSpace().isEmpty())
     cmdHistory.append(input->text());
   histIterator = cmdHistory.end();
