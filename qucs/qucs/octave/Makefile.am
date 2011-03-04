@@ -23,7 +23,8 @@
 #
 
 # basic scripts
-BASICS = getQucsVariable.m loadQucsDataSet.m showQucsDataSet.m
+BASICS = getQucsVariable.m loadQucsDataSet.m showQucsDataSet.m \
+	loadQucsVariable.m
 
 EXTRA_DIST = $(BASICS)
 
