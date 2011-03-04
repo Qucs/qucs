@@ -22,7 +22,7 @@
 # Boston, MA 02110-1301, USA.  
 #
 
-SUBDIRS = bitmaps components diagrams paintings dialogs
+SUBDIRS = bitmaps components diagrams paintings dialogs octave
 
 if COND_WIN32
 bin_SCRIPTS = qucsdigi.bat qucsveri.bat qucsdigilib.bat

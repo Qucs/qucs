@@ -1,3 +1,15 @@
+2011-03-04  Stefan Jahn  <stefan@lkcc.org>
+
+	* octave/getQucsVariable.m, octave/showQucsDataSet.m,
+	octave/loadQucsDataSet.m: Added default scripts.
+
+	* octave_window.cpp (OctaveWindow): Setting fixed-width font for
+	Octave window.  Adding Octave script path location for default
+	scripts.
+
+	* paintings/graphictext.cpp (saveCpp): Fixed text rotation of
+	generated Text() component.
+
 2011-03-03  Stefan Jahn  <stefan@lkcc.org>
 
 	* octave_window.cpp (startOctave): First implementation of

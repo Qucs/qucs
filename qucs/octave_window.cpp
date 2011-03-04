@@ -19,6 +19,13 @@ extern QDir QucsWorkDir;  // current project path
 
 OctaveWindow::OctaveWindow(QDockWindow *parent_): QWidget(parent_, 0)
 {
+  QFont font;
+  font = QFont("Courier New");
+  font.setPointSize(QucsSettings.font.pointSize()-1);
+  font.setStyleHint(QFont::Courier);
+  font.setFixedPitch(true);
+  setFont(font);
+
   vBox = new QVBoxLayout(this);
 
   output = new QTextEdit(this);
@@ -68,7 +75,8 @@ bool OctaveWindow::startOctave()
     return true;
 
   QStringList CommandLine;
-  CommandLine << "octave" << "--no-history" << "-i";
+  CommandLine << "octave" << "--no-history" << "-i" << "-f"
+	      << "-p" << QDir::convertSeparators(QucsSettings.OctaveDir);
   octProcess.setArguments(CommandLine);
 
   disconnect(&octProcess, 0, 0, 0);

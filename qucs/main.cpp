@@ -560,11 +560,14 @@ int main(int argc, char *argv[])
       QDir::convertSeparators (QucsDirStr + "/share/qucs/lang/");
     QucsSettings.LibDir =
       QDir::convertSeparators (QucsDirStr + "/share/qucs/library/");
+    QucsSettings.OctaveDir =
+      QDir::convertSeparators (QucsDirStr + "/share/qucs/octave/");
   } else {
     QucsSettings.BinDir = BINARYDIR;
     QucsSettings.BitmapDir = BITMAPDIR;
     QucsSettings.LangDir = LANGUAGEDIR;
     QucsSettings.LibDir = LIBRARYDIR;
+    QucsSettings.OctaveDir = OCTAVEDIR;
   }
   QucsSettings.Editor = QucsSettings.BinDir + "qucsedit";
 
