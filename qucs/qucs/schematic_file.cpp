@@ -207,16 +207,16 @@ int Schematic::saveSymbolCpp (void)
   stream << "  // symbol drawing code\n";
   for (pp = SymbolPaints.first (); pp != 0; pp = SymbolPaints.next ()) {
     if (pp->Name == ".ID ") continue;
-    pp->Bounding (x1, y1, x2, y2);
-    if (x1 < xmin) xmin = x1;
-    if (x2 > xmax) xmax = x2;
-    if (y1 < ymin) ymin = y1;
-    if (y2 > ymax) ymax = y2;
     if (pp->Name == ".PortSym ") {
       if (((PortSymbol*)pp)->numberStr.toInt() > maxNum)
 	maxNum = ((PortSymbol*)pp)->numberStr.toInt();
       continue;
     }
+    pp->Bounding (x1, y1, x2, y2);
+    if (x1 < xmin) xmin = x1;
+    if (x2 > xmax) xmax = x2;
+    if (y1 < ymin) ymin = y1;
+    if (y2 > ymax) ymax = y2;
     stream << "  " << pp->saveCpp () << "\n";
   }
 
