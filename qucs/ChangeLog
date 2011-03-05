@@ -1,5 +1,8 @@
 2011-03-05  Stefan Jahn  <stefan@lkcc.org>
 
+	* schematic_file.cpp (saveSymbolCpp): Fixed bounding box
+	calculation for generated C++ symbol code.
+
 	* syntax.cpp: Added syntax highlighting for Octave files.
 
 2011-03-04  Stefan Jahn  <stefan@lkcc.org>
