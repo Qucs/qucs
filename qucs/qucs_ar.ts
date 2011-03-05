@@ -10810,9 +10810,23 @@ Inserts the skeleton of a VHDL entity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Verilog entity
+        <source>Verilog module
 
 Inserts the skeleton of a Verilog module</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Octave function</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inserts skeleton of Octave function</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Octave function
+
+Inserts the skeleton of a Octave function</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

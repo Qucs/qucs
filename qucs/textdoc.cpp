@@ -94,12 +94,15 @@ TextDoc::~TextDoc()
 void TextDoc::setLanguage (const QString& FileName)
 {
   QFileInfo Info (FileName);
-  if (Info.extension (false) == "vhd" || Info.extension (false) == "vhdl")
+  QString ext = Info.extension (false);
+  if (ext == "vhd" || ext == "vhdl")
     setLanguage (LANG_VHDL);
-  else if (Info.extension (false) == "v")
+  else if (ext == "v")
     setLanguage (LANG_VERILOG);
-  else if (Info.extension (false) == "va")
+  else if (ext == "va")
     setLanguage (LANG_VERILOGA);
+  else if (ext == "m" || ext == "oct")
+    setLanguage (LANG_OCTAVE);
   else
     setLanguage (LANG_NONE);
 }
@@ -225,7 +228,13 @@ void TextDoc::becomeCurrent (bool)
     App->insEntity->setMenuText (tr("Verilog module"));
     App->insEntity->setStatusTip (tr("Inserts skeleton of Verilog module"));
     App->insEntity->setWhatsThis (
-	tr("Verilog entity\n\nInserts the skeleton of a Verilog module"));
+	tr("Verilog module\n\nInserts the skeleton of a Verilog module"));
+  }
+  else if (language == LANG_OCTAVE) {
+    App->insEntity->setMenuText (tr("Octave function"));
+    App->insEntity->setStatusTip (tr("Inserts skeleton of Octave function"));
+    App->insEntity->setWhatsThis (
+	tr("Octave function\n\nInserts the skeleton of a Octave function"));
   }
   App->simulate->setEnabled (true);
   App->editActivate->setEnabled (true);
@@ -420,6 +429,9 @@ void TextDoc::commentSelected ()
   case LANG_VERILOGA:
     co = "//"; cl = 2;
     break;
+  case LANG_OCTAVE:
+    co = "%"; cl = 1;
+    break;
   default:
     co = ""; cl = 0;
     break;
@@ -449,6 +461,9 @@ void TextDoc::insertSkeleton ()
   else if (language == LANG_VERILOG)
     insert ("module  ( );\ninput ;\noutput ;\nbegin\n\nend\n"
 	    "endmodule\n\n");
+  else if (language == LANG_OCTAVE)
+    insert ("function  =  ( )\n"
+	    "endfunction\n\n");
 }
 
 // ---------------------------------------------------
@@ -469,6 +484,11 @@ QString TextDoc::getModuleName (void)
     {
       VerilogA_File_Info VInfo (text ());
       return VInfo.ModuleName;
+    }
+  case LANG_OCTAVE:
+    {
+      QFileInfo Info (DocName);
+      return Info.baseName (true);
     }
   default:
     return "";
