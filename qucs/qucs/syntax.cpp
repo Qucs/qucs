@@ -73,6 +73,9 @@ int SyntaxHighlighter::highlightParagraph(const QString& text, int state)
     // ----- current text is a string ----------------------------
     else if(iString >= 0) {
       setFormat(iString, i-iString+1, QucsSettings.String);
+      if (language == LANG_OCTAVE)
+	if(c == '\'')
+	  iString = -1;
       if(c == '"')
         iString = -1;
       continue;
@@ -148,6 +151,11 @@ int SyntaxHighlighter::highlightParagraph(const QString& text, int state)
         }
       continue;
     }
+    // ----- maybe a Octave comment -------------------------------
+    else if((language == LANG_OCTAVE) && (c == '%' || c == '#')) {
+      setFormat(i, text.length()-i+1, QucsSettings.Comment);
+      return state;
+    }
     // ----- no special syntax yet (or anymore) --------------
     else {
       if((language == LANG_VERILOG || language == LANG_VERILOGA)
@@ -169,12 +177,12 @@ int SyntaxHighlighter::highlightParagraph(const QString& text, int state)
     }
 
     if (state < STATE_COMMENT) {
-      if(c == '\'') {
+      if(c == '\'' && language != LANG_OCTAVE) {
 	if(i > 1)
 	  if(text.at(i-2) == '\'')
 	    setFormat(i-2, 3, QucsSettings.Character);
       }
-      else if(c == '"')
+      else if(c == '"' || (c == '\'' && language == LANG_OCTAVE))
 	iString = i;
     }
     if ((language == LANG_VERILOG || language == LANG_VERILOGA)
@@ -343,6 +351,37 @@ pChar VA_List_Functions[] =
   {"realtime", "temperature", "vt", "display", "strobe", 0};
 
 // ---------------------------------------------------
+// reserved Octave words in alphabetical order
+pChar OCT_List_C[] = {"case", "catch", 0};
+pChar OCT_List_E[] = {"else", "elseif", "end", "endfor", "endfunction",
+		      "endif", "endswitch", "end_try_catch", "endwhile",
+		      "end_unwind_protect", 0};
+pChar OCT_List_F[] = {"for", "function", 0};
+pChar OCT_List_I[] = {"if", 0};
+pChar OCT_List_O[] = {"otherwise", 0};
+pChar OCT_List_S[] = {"switch", 0};
+pChar OCT_List_T[] = {"try", 0};
+pChar OCT_List_U[] = {"unwind_protect", "unwind_protect_cleanup", 0};
+pChar OCT_List_W[] = {"while", 0};
+
+ppChar OCT_WordList[] =
+  {0,                   0,                   (ppChar)&OCT_List_C,
+   0,                   (ppChar)&OCT_List_E, (ppChar)&OCT_List_F,
+   0,                   0,                   (ppChar)&OCT_List_I,
+   0,                   0,                   0,
+   0,                   0,                   (ppChar)&OCT_List_O,
+   0,                   0,                   0,
+   (ppChar)&OCT_List_S, (ppChar)&OCT_List_T, (ppChar)&OCT_List_U,
+   0,                   (ppChar)&OCT_List_W, 0,
+   0,                   0};
+
+pChar OCT_List_DataTypes[] = {
+   "inf", "nan", "pi", 0};
+
+pChar OCT_List_Functions[] =
+  {"plot", 0};
+
+// ---------------------------------------------------
 void SyntaxHighlighter::markWord(const QString& text, int start, int len)
 {
   pChar *List;
@@ -374,6 +413,9 @@ void SyntaxHighlighter::markWord(const QString& text, int start, int len)
     case LANG_VERILOG:
       List = V_WordList[idx];
       break;
+    case LANG_OCTAVE:
+      List = OCT_WordList[idx];
+      break;
     default:
       List = VA_WordList[idx];;
       break;
@@ -396,6 +438,9 @@ void SyntaxHighlighter::markWord(const QString& text, int start, int len)
     break;
   case LANG_VERILOG:
     List = V_List_DataTypes;
+    break;
+  case LANG_OCTAVE:
+    List = OCT_List_DataTypes;
     break;
   default:
     List = VA_List_DataTypes;
@@ -458,6 +503,9 @@ void SyntaxHighlighter::markWord(const QString& text, int start, int len)
       break;
     case LANG_VERILOGA:
       List = VA_List_Functions;
+      break;
+    case LANG_OCTAVE:
+      List = OCT_List_Functions;
       break;
     default:
       List = 0;

@@ -1,3 +1,7 @@
+2011-03-05  Stefan Jahn  <stefan@lkcc.org>
+
+	* syntax.cpp: Added syntax highlighting for Octave files.
+
 2011-03-04  Stefan Jahn  <stefan@lkcc.org>
 
 	* qucs.cpp (openProject): When changing projects, also change
