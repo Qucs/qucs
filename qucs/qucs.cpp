@@ -1142,13 +1142,14 @@ bool QucsApp::saveAs()
     }
 
     // list of known file extensions
-    QString ext = "vhdl;vhd;v;va;sch;dpl";
+    QString ext = "vhdl;vhd;v;va;sch;dpl;m;oct";
     QStringList extlist = QStringList::split (';', ext);
 
     if(isTextDocument (w))
       Filter = tr("VHDL Sources")+" (*.vhdl *.vhd);;" +
 	       tr("Verilog Sources")+" (*.v);;"+
 	       tr("Verilog-A Sources")+" (*.va);;"+
+	       tr("Octave Scripts")+" (*.m *.oct);;"+
 	       tr("Any File")+" (*)";
     else
       Filter = QucsFileFilter;
