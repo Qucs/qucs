@@ -275,7 +275,9 @@ void TextDoc::slotSetChanged()
 QPopupMenu *TextDoc::createPopupMenu( const QPoint &pos )
 {
    QPopupMenu *popup = QTextEdit::createPopupMenu( pos );
-   App->fileSettings->addTo(popup);
+   if (language != LANG_OCTAVE) {
+     App->fileSettings->addTo(popup);
+   }
    return popup;
 }
 
