@@ -1,3 +1,8 @@
+2011-03-07  Stefan Jahn  <stefan@lkcc.org>
+
+	* qucs.cpp (slotFileSettings), textdoc.cpp (createPopupMenu):
+	Disabling document settings dialog for Octave files.
+
 2011-03-06  Stefan Jahn  <stefan@lkcc.org>
 
 	* qucs_de.ts: Updated German translations.

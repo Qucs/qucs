@@ -1377,8 +1377,12 @@ void QucsApp::slotFileSettings ()
   QWidget * w = DocumentTab->currentPage ();
   if (isTextDocument (w)) {
     QucsDoc * Doc = (QucsDoc *) ((TextDoc *) w);
+    QString ext = Doc->fileSuffix ();
+    // Octave properties
+    if (ext == "m" || ext == "oct") {
+    }
     // Verilog-A properties
-    if (Doc->fileSuffix () == "va") {
+    else if (ext == "va") {
       VASettingsDialog * d = new VASettingsDialog ((TextDoc *) w);
       d->exec ();
     }
