@@ -1034,11 +1034,11 @@
     </message>
     <message>
         <source>Type</source>
-        <translation type="unfinished">Typ</translation>
+        <translation>Typ</translation>
     </message>
     <message>
         <source>Type:</source>
-        <translation type="unfinished">Typ:</translation>
+        <translation>Typ:</translation>
     </message>
 </context>
 <context>
@@ -1217,7 +1217,7 @@
     </message>
     <message>
         <source>Matlab</source>
-        <translation type="unfinished"></translation>
+        <translation>Matlab</translation>
     </message>
 </context>
 <context>
@@ -1637,7 +1637,7 @@ ist aber %1 !</translation>
     <name>OctaveWindow</name>
     <message>
         <source>ERROR: Cannot start Octave!</source>
-        <translation type="unfinished"></translation>
+        <translation>FEHLER: Octave kann nicht gestartet werden!</translation>
     </message>
 </context>
 <context>
@@ -7295,11 +7295,11 @@ Verwendung:  qucsedit [-r] Datei
     </message>
     <message>
         <source>WARNING: Equations in &quot;%1&quot; are &apos;time&apos; typed.</source>
-        <translation type="unfinished"></translation>
+        <translation>WARNUNG: Gleichungen in &quot;%1&quot; sind vom Typ &apos;time&apos;.</translation>
     </message>
     <message>
         <source>NIGBT verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation>NIGBT Verilogmodell</translation>
     </message>
     <message>
         <source>gate-drain overlap area</source>
@@ -7307,15 +7307,15 @@ Verwendung:  qucsedit [-r] Datei
     </message>
     <message>
         <source>m**2</source>
-        <translation type="unfinished"></translation>
+        <translation>m²</translation>
     </message>
     <message>
         <source>area of the device</source>
-        <translation type="unfinished"></translation>
+        <translation>Fläche des Bauteils</translation>
     </message>
     <message>
         <source>MOS transconductance</source>
-        <translation type="unfinished"></translation>
+        <translation>MOS-Transkonduktanz</translation>
     </message>
     <message>
         <source>ambipolar recombination lifetime</source>
@@ -7323,23 +7323,23 @@ Verwendung:  qucsedit [-r] Datei
     </message>
     <message>
         <source>metallurgical base width</source>
-        <translation type="unfinished"></translation>
+        <translation>metallurgische Basisweite</translation>
     </message>
     <message>
         <source>gate-source capacitance per unit area</source>
-        <translation type="unfinished"></translation>
+        <translation>Kapazitätsbelag der Gate-Source-Kapazität</translation>
     </message>
     <message>
         <source>F/cm**2</source>
-        <translation type="unfinished"></translation>
+        <translation>F/cm²</translation>
     </message>
     <message>
         <source>gate-drain oxide capacitance per unit area</source>
-        <translation type="unfinished"></translation>
+        <translation>Kapazitätsbelag der Gate-Drain-Kapazität</translation>
     </message>
     <message>
         <source>A/cm**2</source>
-        <translation type="unfinished"></translation>
+        <translation>A/cm²</translation>
     </message>
     <message>
         <source>triode region factor</source>
@@ -7347,23 +7347,23 @@ Verwendung:  qucsedit [-r] Datei
     </message>
     <message>
         <source>electron mobility</source>
-        <translation type="unfinished"></translation>
+        <translation>Elektronenbeweglichkeit</translation>
     </message>
     <message>
         <source>cm**2/Vs</source>
-        <translation type="unfinished"></translation>
+        <translation>cm²/Vs</translation>
     </message>
     <message>
         <source>hole mobility</source>
-        <translation type="unfinished"></translation>
+        <translation>Löcherbeweglichkeit</translation>
     </message>
     <message>
         <source>base doping</source>
-        <translation type="unfinished"></translation>
+        <translation>Basisdotierung</translation>
     </message>
     <message>
         <source>1/cm**3</source>
-        <translation type="unfinished"></translation>
+        <translation>1/cm³</translation>
     </message>
     <message>
         <source>transverse field factor</source>
@@ -7371,7 +7371,7 @@ Verwendung:  qucsedit [-r] Datei
     </message>
     <message>
         <source>NIGBT</source>
-        <translation type="unfinished"></translation>
+        <translation>NIGBT</translation>
     </message>
     <message>
         <source>avalanche uniformity factor</source>
@@ -7391,59 +7391,59 @@ Verwendung:  qucsedit [-r] Datei
     </message>
     <message>
         <source>Cannot save C++ file &quot;%1&quot;!</source>
-        <translation type="unfinished"></translation>
+        <translation>Die C++ Datei &quot;%1&quot; kann nicht gespeichert werden!</translation>
     </message>
     <message>
         <source>lumped components</source>
-        <translation type="unfinished">diskrete Komponenten</translation>
+        <translation>diskrete Komponenten</translation>
     </message>
     <message>
         <source>sources</source>
-        <translation type="unfinished">Quellen</translation>
+        <translation>Quellen</translation>
     </message>
     <message>
         <source>probes</source>
-        <translation type="unfinished">Messgeräte</translation>
+        <translation>Messgeräte</translation>
     </message>
     <message>
         <source>transmission lines</source>
-        <translation type="unfinished">Übertragungsstrecken</translation>
+        <translation>Übertragungsstrecken</translation>
     </message>
     <message>
         <source>nonlinear components</source>
-        <translation type="unfinished">nichtlineare Komponenten</translation>
+        <translation>nichtlineare Komponenten</translation>
     </message>
     <message>
         <source>verilog-a devices</source>
-        <translation type="unfinished">Verilog-A Komponenten</translation>
+        <translation>Verilog-A Komponenten</translation>
     </message>
     <message>
         <source>digital components</source>
-        <translation type="unfinished">digitale Komponenten</translation>
+        <translation>digitale Komponenten</translation>
     </message>
     <message>
         <source>file components</source>
-        <translation type="unfinished">Dateikomponenten</translation>
+        <translation>Dateikomponenten</translation>
     </message>
     <message>
         <source>simulations</source>
-        <translation type="unfinished">Simulationen</translation>
+        <translation>Simulationen</translation>
     </message>
     <message>
         <source>diagrams</source>
-        <translation type="unfinished">Diagramme</translation>
+        <translation>Diagramme</translation>
     </message>
     <message>
         <source>paintings</source>
-        <translation type="unfinished">Zeichnungen</translation>
+        <translation>Zeichnungen</translation>
     </message>
     <message>
         <source>HICUM Level 2 v2.24 verilog device</source>
-        <translation type="unfinished">HICUM Level 2 v2.24 Verilogmodell</translation>
+        <translation>HICUM Level 2 v2.24 Verilogmodell</translation>
     </message>
     <message>
         <source>HICUM L2 v2.24</source>
-        <translation type="unfinished">HICUM L2 v2.24</translation>
+        <translation>HICUM L2 v2.24</translation>
     </message>
     <message>
         <source>HICUM Level 0 v1.3 verilog device</source>
@@ -7479,7 +7479,7 @@ Verwendung:  qucsedit [-r] Datei
     </message>
     <message>
         <source>HICUM Level 0 v1.2g verilog device</source>
-        <translation type="unfinished"></translation>
+        <translation>HICUM Level 0 v1.2g Verilogmodell</translation>
     </message>
     <message>
         <source>TC of avalanche prefactor, identical to alfav of Hicum/L2</source>
@@ -7499,11 +7499,11 @@ Verwendung:  qucsedit [-r] Datei
     </message>
     <message>
         <source>npn HICUM L0 v1.2g</source>
-        <translation type="unfinished"></translation>
+        <translation>npn HICUM L0 v1.2g</translation>
     </message>
     <message>
         <source>pnp HICUM L0 v1.2g</source>
-        <translation type="unfinished"></translation>
+        <translation>pnp HICUM L0 v1.2g</translation>
     </message>
 </context>
 <context>
@@ -8451,7 +8451,7 @@ Wollen Sie die Änderungen vor dem Schließen speichern?</translation>
         <source>Edit Circuit Symbol
 
 Edits the symbol for this schematic</source>
-        <translation>Schaltkreissymol bearbeiten
+        <translation>Schaltkreissymbol bearbeiten
 
 Bearbeitet das Symbol für diesen Schaltkreis</translation>
     </message>
@@ -10207,89 +10207,91 @@ Konvertiert Datendatei in verschiedene Datenformate</translation>
     </message>
     <message>
         <source>Kazakh by Erbol Keshubaev</source>
-        <translation type="unfinished"></translation>
+        <translation>Kasachisch von Erbol Keshubaev</translation>
     </message>
     <message>
         <source>unknown</source>
-        <translation type="unfinished"></translation>
+        <translation>unbekannt</translation>
     </message>
     <message>
         <source>Verilog source</source>
-        <translation type="unfinished"></translation>
+        <translation>Verilog Quelle</translation>
     </message>
     <message>
         <source>VHDL source</source>
-        <translation type="unfinished"></translation>
+        <translation>VHDL Quelle</translation>
     </message>
     <message>
         <source>data file</source>
-        <translation type="unfinished"></translation>
+        <translation>Datendatei</translation>
     </message>
     <message>
         <source>data display</source>
-        <translation type="unfinished"></translation>
+        <translation>Datenvisualisierung</translation>
     </message>
     <message>
         <source>schematic</source>
-        <translation type="unfinished"></translation>
+        <translation>Schaltplan</translation>
     </message>
     <message>
         <source>symbol</source>
-        <translation type="unfinished"></translation>
+        <translation>Symbol</translation>
     </message>
     <message>
         <source>VHDL configuration</source>
-        <translation type="unfinished"></translation>
+        <translation>VHDL Konfiguration</translation>
     </message>
     <message>
         <source>configuration</source>
-        <translation type="unfinished"></translation>
+        <translation>Konfiguration</translation>
     </message>
     <message>
         <source>This will delete the files%1permanently! Continue ?</source>
-        <translation type="unfinished"></translation>
+        <translation>Dies löscht die Dateien%1unwiderruflich! Fortfahren ?</translation>
     </message>
     <message>
         <source>Verilog-A Sources</source>
-        <translation type="unfinished"></translation>
+        <translation>Verilog-A Quellen</translation>
     </message>
     <message>
         <source>Verilog-A</source>
-        <translation type="unfinished"></translation>
+        <translation>Verilog-A</translation>
     </message>
     <message>
         <source>Verilog-A source</source>
-        <translation type="unfinished"></translation>
+        <translation>Verilog-A Quelle</translation>
     </message>
     <message>
         <source>Cannot delete the open file &quot;%1&quot;!</source>
-        <translation type="unfinished"></translation>
+        <translation>Die geöffnete Datei &quot;%1&quot; kann nicht gelöscht werden!</translation>
     </message>
     <message>
         <source>Cannot delete %1: &quot;%2&quot;!</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 kann nicht gelöscht werden: &quot;%2&quot;!</translation>
     </message>
     <message>
         <source>Octave Scripts</source>
-        <translation type="unfinished"></translation>
+        <translation>Octave Skripte</translation>
     </message>
     <message>
         <source>Octave</source>
-        <translation type="unfinished"></translation>
+        <translation>Octave</translation>
     </message>
     <message>
         <source>&amp;Octave Window</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Octave Fenster</translation>
     </message>
     <message>
         <source>Shows/hides the Octave dock window</source>
-        <translation type="unfinished"></translation>
+        <translation>Blendet das Octave Fenster ein/aus</translation>
     </message>
     <message>
         <source>Octave Window
 
 Shows/hides the Octave dock window</source>
-        <translation type="unfinished"></translation>
+        <translation>Octave Fenster
+
+Blendet das Octave Fenster ein/aus</translation>
     </message>
 </context>
 <context>
@@ -14034,11 +14036,11 @@ mit einem entsprechendem Programm zu assoziieren.</translation>
     </message>
     <message>
         <source>Kazakh</source>
-        <translation type="unfinished"></translation>
+        <translation>Kasachisch</translation>
     </message>
     <message>
         <source>Directive</source>
-        <translation type="unfinished"></translation>
+        <translation>Direktive</translation>
     </message>
     <message>
         <source>Task</source>
@@ -14046,7 +14048,7 @@ mit einem entsprechendem Programm zu assoziieren.</translation>
     </message>
     <message>
         <source>Source Code Editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Quellcode Editor</translation>
     </message>
 </context>
 <context>
@@ -14545,51 +14547,53 @@ mit einem entsprechendem Programm zu assoziieren.</translation>
     </message>
     <message>
         <source>generic</source>
-        <translation type="unfinished"></translation>
+        <translation>generisch</translation>
     </message>
     <message>
         <source>Edit Text</source>
-        <translation type="unfinished"></translation>
+        <translation>Text bearbeiten</translation>
     </message>
     <message>
         <source>Edits the Text</source>
-        <translation type="unfinished"></translation>
+        <translation>Bearbeitet den Text</translation>
     </message>
     <message>
         <source>Edit Text
 
 Edits the text file</source>
-        <translation type="unfinished"></translation>
+        <translation>Text bearbeiten
+
+Bearbeitet den Text</translation>
     </message>
     <message>
         <source>Edit Schematic</source>
-        <translation type="unfinished">Schaltplan bearbeiten</translation>
+        <translation>Schaltplan bearbeiten</translation>
     </message>
     <message>
         <source>Edits the schematic</source>
-        <translation type="unfinished">Bearbeitet den Schaltplan</translation>
+        <translation>Bearbeitet den Schaltplan</translation>
     </message>
     <message>
         <source>Edit Schematic
 
 Edits the schematic</source>
-        <translation type="unfinished">Schaltplan bearbeiten
+        <translation>Schaltplan bearbeiten
 
 Bearbeitet den Schaltplan</translation>
     </message>
     <message>
         <source>Edit Circuit Symbol</source>
-        <translation type="unfinished">Schaltkreissymbol bearbeiten</translation>
+        <translation>Schaltkreissymbol bearbeiten</translation>
     </message>
     <message>
         <source>Edits the symbol for this schematic</source>
-        <translation type="unfinished">Bearbeitet das Symbol für diesen Schaltkreis</translation>
+        <translation>Bearbeitet das Symbol für diesen Schaltkreis</translation>
     </message>
     <message>
         <source>Edit Circuit Symbol
 
 Edits the symbol for this schematic</source>
-        <translation type="unfinished">Schaltkreissymol bearbeiten
+        <translation>Schaltkreissymbol bearbeiten
 
 Bearbeitet das Symbol für diesen Schaltkreis</translation>
     </message>
@@ -14954,11 +14958,11 @@ Fehler:
     </message>
     <message>
         <source>ERROR: Cannot create VHDL directory &quot;%1&quot;!</source>
-        <translation type="unfinished"></translation>
+        <translation>FEHLER: Das VHDL-Verzeichnis &quot;%1&quot; kann nicht erzeugt werden!</translation>
     </message>
     <message>
         <source>ERROR: Cannot create &quot;%1&quot;!</source>
-        <translation type="unfinished"></translation>
+        <translation>FEHLER: Die Datei &quot;%1&quot; kann nicht erzeugt werden!</translation>
     </message>
 </context>
 <context>
@@ -15122,68 +15126,74 @@ Fehler:
     </message>
     <message>
         <source>Edit Text Symbol</source>
-        <translation type="unfinished"></translation>
+        <translation>Textsymbol bearbeiten</translation>
     </message>
     <message>
         <source>Edits the symbol for this text document</source>
-        <translation type="unfinished"></translation>
+        <translation>Bearbeitet das Symbol für dieses Textdokument</translation>
     </message>
     <message>
         <source>Edit Text Symbol
 
 Edits the symbol for this text document</source>
-        <translation type="unfinished"></translation>
+        <translation>Textsymbol bearbeiten
+
+Bearbeitet das Symbol für dieses Textdokument</translation>
     </message>
     <message>
         <source>VHDL entity</source>
-        <translation type="unfinished">VHDL-Entität</translation>
+        <translation>VHDL-Entität</translation>
     </message>
     <message>
         <source>Inserts skeleton of VHDL entity</source>
-        <translation type="unfinished">Fügt das Gerüst einer VHDL-Entität ein</translation>
+        <translation>Fügt das Gerüst einer VHDL-Entität ein</translation>
     </message>
     <message>
         <source>VHDL entity
 
 Inserts the skeleton of a VHDL entity</source>
-        <translation type="unfinished">VHDL-Entität
+        <translation>VHDL-Entität
 
 Fügt das Gerüst einer VHDL-Entität ein</translation>
     </message>
     <message>
         <source>Verilog module</source>
-        <translation type="unfinished"></translation>
+        <translation>Verilogmodul</translation>
     </message>
     <message>
         <source>Inserts skeleton of Verilog module</source>
-        <translation type="unfinished"></translation>
+        <translation>Fügt das Gerüst eines Verilogmoduls ein</translation>
     </message>
     <message>
         <source>Verilog module
 
 Inserts the skeleton of a Verilog module</source>
-        <translation type="unfinished"></translation>
+        <translation>Verilogmodul
+
+Fügt das Gerüst eines Verilogmoduls ein</translation>
     </message>
     <message>
         <source>Octave function</source>
-        <translation type="unfinished"></translation>
+        <translation>Octave-Funktion</translation>
     </message>
     <message>
         <source>Inserts skeleton of Octave function</source>
-        <translation type="unfinished"></translation>
+        <translation>Fügt das Gerüst einer Octave-Funktion ein</translation>
     </message>
     <message>
         <source>Octave function
 
 Inserts the skeleton of a Octave function</source>
-        <translation type="unfinished"></translation>
+        <translation>Octave-Funktion
+
+Fügt das Gerüst einer Octave-Funktion ein</translation>
     </message>
 </context>
 <context>
     <name>VASettingsDialog</name>
     <message>
         <source>Document Settings</source>
-        <translation type="unfinished">Dokumenteneinstellungen</translation>
+        <translation>Dokumenteneinstellungen</translation>
     </message>
     <message>
         <source>Digital Simulation Settings</source>
@@ -15211,11 +15221,11 @@ Inserts the skeleton of a Octave function</source>
     </message>
     <message>
         <source>Ok</source>
-        <translation type="unfinished">Ok</translation>
+        <translation>Ok</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Abbrechen</translation>
+        <translation>Abbrechen</translation>
     </message>
     <message>
         <source>Error</source>
@@ -15223,63 +15233,63 @@ Inserts the skeleton of a Octave function</source>
     </message>
     <message>
         <source>Code Creation Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Einstellungen für die Codeerzeugung</translation>
     </message>
     <message>
         <source>Browse</source>
-        <translation type="unfinished">Durchsuchen</translation>
+        <translation>Durchsuchen</translation>
     </message>
     <message>
         <source>Output file:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ausgabedatei:</translation>
     </message>
     <message>
         <source>Recreate</source>
-        <translation type="unfinished"></translation>
+        <translation>Neu erzeugen</translation>
     </message>
     <message>
         <source>Icon description:</source>
-        <translation type="unfinished"></translation>
+        <translation>Bildbeschreibung:</translation>
     </message>
     <message>
         <source>Description:</source>
-        <translation type="unfinished">Beschreibung:</translation>
+        <translation>Beschreibung:</translation>
     </message>
     <message>
         <source>unspecified device</source>
-        <translation type="unfinished"></translation>
+        <translation>unspezifizisches Bauteil</translation>
     </message>
     <message>
         <source>NPN/PNP polarity</source>
-        <translation type="unfinished"></translation>
+        <translation>NPN/PNP Polarität</translation>
     </message>
     <message>
         <source>NMOS/PMOS polarity</source>
-        <translation type="unfinished"></translation>
+        <translation>NMOS/PMOS Polarität</translation>
     </message>
     <message>
         <source>analog only</source>
-        <translation type="unfinished"></translation>
+        <translation>nur analog</translation>
     </message>
     <message>
         <source>digital only</source>
-        <translation type="unfinished"></translation>
+        <translation>nur digital</translation>
     </message>
     <message>
         <source>both</source>
-        <translation type="unfinished"></translation>
+        <translation>beide</translation>
     </message>
     <message>
         <source>PNG files</source>
-        <translation type="unfinished"></translation>
+        <translation>PNG Dateien</translation>
     </message>
     <message>
         <source>Any file</source>
-        <translation type="unfinished">Alle Dateien</translation>
+        <translation>Alle Dateien</translation>
     </message>
     <message>
         <source>Enter an Icon File Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Geben Sie einen Bilddateinamen ein</translation>
     </message>
 </context>
 </TS>
