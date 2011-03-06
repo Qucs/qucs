@@ -1,3 +1,8 @@
+2011-03-07  Stefan Jahn  <stefan@lkcc.org>
+
+	* evaluate.cpp: Implemented 'equal' (== and !=) operations for
+	more argument variations.
+
 2009-11-12  Stefan Jahn  <stefan@lkcc.org>
 
 	* interpolator.cpp (cinterpolate): Implemented complex data
