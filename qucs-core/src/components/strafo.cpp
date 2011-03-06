@@ -1,7 +1,7 @@
 /*
  * strafo.cpp - symmetrical trafo class implementation
  *
- * Copyright (C) 2003, 2004, 2005, 2008 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004, 2005, 2008, 2011 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,7 +31,6 @@
 
 strafo::strafo () : circuit (6) {
   type = CIR_STRAFO;
-  setVoltageSources (2);
 }
 
 void strafo::initSP (void) {
@@ -70,9 +69,18 @@ void strafo::initSP (void) {
 }
 
 void strafo::initDC (void) {
+  setVoltageSources (3);
+  allocMatrixMNA ();
+  voltageSource (VSRC_1, NODE_1, NODE_6);
+  voltageSource (VSRC_2, NODE_5, NODE_4);
+  voltageSource (VSRC_3, NODE_2, NODE_3);
+}
+
+void strafo::initAC (void) {
   nr_double_t t1 = getPropertyDouble ("T1");
   nr_double_t t2 = getPropertyDouble ("T2");
 
+  setVoltageSources (2);
   allocMatrixMNA ();
 
   setB (NODE_1, VSRC_1, -1.0); setB (NODE_2, VSRC_1, + t1);
@@ -93,10 +101,6 @@ void strafo::initDC (void) {
   setD (VSRC_1, VSRC_2, 0); setD (VSRC_2, VSRC_1, 0);
   setE (VSRC_1, 0.0);
   setE (VSRC_2, 0.0);
-}
-
-void strafo::initAC (void) {
-  initDC ();
 }
 
 void strafo::initTR (void) {

@@ -1,7 +1,7 @@
 /*
  * trafo.cpp - trafo class implementation
  *
- * Copyright (C) 2003, 2004, 2005, 2008 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004, 2005, 2008, 2011 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,7 +31,6 @@
 
 trafo::trafo () : circuit (4) {
   type = CIR_TRAFO;
-  setVoltageSources (1);
 }
 
 void trafo::initSP (void) {
@@ -52,7 +51,15 @@ void trafo::initSP (void) {
 }
 
 void trafo::initDC (void) {
+  setVoltageSources (2);
+  allocMatrixMNA ();
+  voltageSource (VSRC_1, NODE_1, NODE_4);
+  voltageSource (VSRC_2, NODE_2, NODE_3);
+}
+
+void trafo::initAC (void) {
   nr_double_t t = getPropertyDouble ("T");
+  setVoltageSources (1);
   allocMatrixMNA ();
   setB (NODE_1, VSRC_1, -1); setB (NODE_2, VSRC_1, +t);
   setB (NODE_3, VSRC_1, -t); setB (NODE_4, VSRC_1, +1);
@@ -60,10 +67,6 @@ void trafo::initDC (void) {
   setC (VSRC_1, NODE_3, +t); setC (VSRC_1, NODE_4, -1);
   setD (VSRC_1, VSRC_1, +0);
   setE (VSRC_1, 0);
-}
-
-void trafo::initAC (void) {
-  initDC ();
 }
 
 void trafo::initTR (void) {

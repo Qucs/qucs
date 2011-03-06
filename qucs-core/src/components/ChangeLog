@@ -1,3 +1,7 @@
+2011-03-06  Stefan Jahn  <stefan@lkcc.org>
+
+	* strafo.cpp, trafo.cpp: Fixed DC model of transformers.
+
 2011-03-02  Stefan Jahn  <stefan@lkcc.org>
 
 	* coaxline.cpp: Fixed factor of 2 in conductor loss calculation.
