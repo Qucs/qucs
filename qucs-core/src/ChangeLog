@@ -1,5 +1,8 @@
 2011-03-07  Stefan Jahn  <stefan@lkcc.org>
 
+	* applications.h: Stated more possible combinations for ?:
+	operation.
+
 	* evaluate.cpp: Implemented 'equal' (== and !=) operations for
 	more argument variations.
 
