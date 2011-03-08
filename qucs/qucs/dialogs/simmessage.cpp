@@ -51,11 +51,13 @@ SimMessage::SimMessage(QWidget *w, QWidget *parent)
 
   DocName = Doc->DocName;
   DataDisplay = Doc->DataDisplay;
+  Script = Doc->Script;
   QFileInfo Info(DocName);
   DataSet = QDir::convertSeparators(Info.dirPath()) +
     QDir::separator() + Doc->DataSet;
   showBias = Doc->showBias;     // save some settings as the document...
   SimOpenDpl = Doc->SimOpenDpl; // ...could be closed during the simulation.
+  SimRunScript = Doc->SimRunScript;
 
   all = new QVBoxLayout(this);
   all->setSpacing(5);

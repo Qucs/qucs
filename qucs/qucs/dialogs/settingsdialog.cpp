@@ -48,21 +48,30 @@ SettingsDialog::SettingsDialog(Schematic *Doc_)
 
   // ...........................................................
   QWidget *Tab1 = new QWidget(t);
-  QGridLayout *gp = new QGridLayout(Tab1,4,2,5,5);
+  QGridLayout *gp = new QGridLayout(Tab1,6,2,5,5);
 
   QLabel *l1 = new QLabel(tr("Data Display:"), Tab1);
-  gp->addWidget(l1,0,0);
+  gp->addWidget(l1,1,0);
   Input_DataDisplay = new QLineEdit(Tab1);
   gp->addWidget(Input_DataDisplay,0,1);
 
   QLabel *l2 = new QLabel(tr("Data Set:"), Tab1);
-  gp->addWidget(l2,1,0);
+  gp->addWidget(l2,0,0);
   Input_DataSet = new QLineEdit(Tab1);
   gp->addWidget(Input_DataSet,1,1);
 
   Check_OpenDpl = new QCheckBox(tr("open data display after simulation"),
 				Tab1);
   gp->addMultiCellWidget(Check_OpenDpl,2,2,0,1);
+
+  QLabel *l20 = new QLabel(tr("Octave Script:"), Tab1);
+  gp->addWidget(l20,3,0);
+  Input_Script = new QLineEdit(Tab1);
+  gp->addWidget(Input_Script,3,1);
+
+  Check_RunScript = new QCheckBox(tr("run script after simulation"),
+				Tab1);
+  gp->addMultiCellWidget(Check_RunScript,4,4,0,1);
 
   t->addTab(Tab1, tr("Simulation"));
 
@@ -139,7 +148,9 @@ SettingsDialog::SettingsDialog(Schematic *Doc_)
 
   Input_DataSet->setText(Doc->DataSet);
   Input_DataDisplay->setText(Doc->DataDisplay);
+  Input_Script->setText(Doc->Script);
   Check_OpenDpl->setChecked(Doc->SimOpenDpl);
+  Check_RunScript->setChecked(Doc->SimRunScript);
   Check_GridOn->setChecked(Doc->GridOn);
   Input_GridX->setText(QString::number(Doc->GridX));
   Input_GridY->setText(QString::number(Doc->GridY));
@@ -186,8 +197,18 @@ void SettingsDialog::slotApply()
     changed = true;
   }
 
+  if(Doc->Script != Input_Script->text()) {
+    Doc->Script = Input_Script->text();
+    changed = true;
+  }
+
   if(Doc->SimOpenDpl != Check_OpenDpl->isChecked()) {
     Doc->SimOpenDpl = Check_OpenDpl->isChecked();
+    changed = true;
+  }
+
+  if(Doc->SimRunScript != Check_RunScript->isChecked()) {
+    Doc->SimRunScript = Check_RunScript->isChecked();
     changed = true;
   }
 

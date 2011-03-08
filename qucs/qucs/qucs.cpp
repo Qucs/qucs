@@ -1747,21 +1747,28 @@ void QucsApp::slotAfterSimulation(int Status, SimMessage *sim)
       Dia->show();
     }
   }
-  else if(sim->SimOpenDpl) {
-    // switch to data display
-    if(sim->DataDisplay.right(2) == ".m" ||
-       sim->DataDisplay.right(4) == ".oct") {  // Is it an Octave script?
+  else {
+    if(sim->SimRunScript) {
+      // run script
       octave->startOctave();
-      octave->runOctaveScript(sim->DataDisplay);
+      octave->runOctaveScript(sim->Script);
+    }
+    if(sim->SimOpenDpl) {
+      // switch to data display
+      if(sim->DataDisplay.right(2) == ".m" ||
+	 sim->DataDisplay.right(4) == ".oct") {  // Is it an Octave script?
+	octave->startOctave();
+	octave->runOctaveScript(sim->DataDisplay);
+      }
+      else
+	slotChangePage(sim->DocName, sim->DataDisplay);
+      sim->slotClose();   // close and delete simulation window
     }
     else
-      slotChangePage(sim->DocName, sim->DataDisplay);
-    sim->slotClose();   // close and delete simulation window
+      if(w) if(!isTextDocument (sim->DocWidget))
+	// load recent simulation data (if document is still open)
+	((Schematic*)sim->DocWidget)->reloadGraphs();
   }
-  else
-    if(w) if(!isTextDocument (sim->DocWidget))
-      // load recent simulation data (if document is still open)
-      ((Schematic*)sim->DocWidget)->reloadGraphs();
 
   if(!isTextDocument (sim->DocWidget))
     ((Schematic*)sim->DocWidget)->viewport()->update();
@@ -1797,7 +1804,8 @@ void QucsApp::slotChangePage(QString& DocName, QString& DataDisplay)
     DocumentTab->setCurrentPage(z);
   else {   // no open page found ?
     QString ext = QucsDoc::fileSuffix (DataDisplay);
-    if (ext != "vhd" && ext != "vhdl" && ext != "v" && ext != "va")
+    if (ext != "vhd" && ext != "vhdl" && ext != "v" && ext != "va" && 
+	ext != "oct" && ext != "m")
       d = new Schematic (this, Name);
     else
       d = new TextDoc (this, Name);

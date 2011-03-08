@@ -10534,6 +10534,14 @@ are included in the search.</source>
         <source>Cancel</source>
         <translation>إلغاء</translation>
     </message>
+    <message>
+        <source>Octave Script:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>run script after simulation</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SimMessage</name>

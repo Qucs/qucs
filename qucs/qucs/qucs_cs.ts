@@ -14684,6 +14684,14 @@ jméně je hledaný řetězec. Do hledání budou zahrnuty všechny knihovny.</t
         <source>Letter portrait</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Octave Script:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>run script after simulation</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SimMessage</name>
