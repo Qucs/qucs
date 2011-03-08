@@ -14783,6 +14783,14 @@ werden in die Suche mit einbezogen.</translation>
         <source>Letter portrait</source>
         <translation>Letter Hochformat</translation>
     </message>
+    <message>
+        <source>Octave Script:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>run script after simulation</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SimMessage</name>

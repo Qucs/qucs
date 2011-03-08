@@ -1,3 +1,9 @@
+2011-03-08  Stefan Jahn  <stefan@lkcc.org>
+
+	* dialogs/settingsdialog.cpp (SettingsDialog): Added script
+	setting to simulations.  The script can be enabled to be run after
+	simulation.
+
 2011-03-07  Stefan Jahn  <stefan@lkcc.org>
 
 	* qucs.cpp (slotFileSettings), textdoc.cpp (createPopupMenu):

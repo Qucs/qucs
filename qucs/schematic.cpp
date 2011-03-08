@@ -252,9 +252,9 @@ void Schematic::setName (const QString& Name_)
   if (App) App->DocumentTab->setTabLabel (this, Info.fileName ());
 
   QString base = Info.baseName (true);
-  qDebug (base);
   QString ext = Info.extension (false);
   DataSet = base + ".dat";
+  Script = base + ".m";
   if (ext != "dpl")
     DataDisplay = base + ".dpl";
   else

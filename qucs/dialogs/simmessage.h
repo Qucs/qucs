@@ -77,7 +77,8 @@ public:
   QWidget *DocWidget;
   int showBias;
   bool SimOpenDpl;
-  QString DocName, DataSet, DataDisplay;
+  bool SimRunScript;
+  QString DocName, DataSet, DataDisplay, Script;
 
   QProcess      SimProcess;
   QTextEdit    *ProgText, *ErrText;

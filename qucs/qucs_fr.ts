@@ -12856,6 +12856,14 @@ le nom inclut le texte recherchée. La recherche est
         <source>Letter portrait</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Octave Script:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>run script after simulation</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SimMessage</name>
