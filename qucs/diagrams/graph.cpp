@@ -159,12 +159,12 @@ int Graph::getSelected(int x, int y)
     if(*pp <= BRANCHEND) z++;
     pp++;
     if(*pp <= BRANCHEND) {
+      if(*pp <= GRAPHEND)  return -1;   // not even one point ?
       z++;
       pp++;
       if(*pp < BRANCHEND)  return -1;   // not even one point ?
     }
   }
-
 
   if(Style >= GRAPHSTYLE_STAR) {
     // for graph symbols
@@ -184,11 +184,8 @@ int Graph::getSelected(int x, int y)
         pp++;
       }
     }
-
     return -1;
   }
-
-
 
   // for graph lines
   while(*pp > GRAPHEND) {

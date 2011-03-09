@@ -138,6 +138,11 @@ QucsApp::QucsApp()
   move  (QucsSettings.x,  QucsSettings.y);
   resize(QucsSettings.dx, QucsSettings.dy);
 
+  MouseMoveAction = 0;
+  MousePressAction = 0;
+  MouseReleaseAction = 0;
+  MouseDoubleClickAction = 0;
+
   initView();
   initActions();
   initMenuBar();
