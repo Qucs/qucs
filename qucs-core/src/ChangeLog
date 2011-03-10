@@ -1,3 +1,7 @@
+2011-03-10  Stefan Jahn  <stefan@lkcc.org>
+
+	* evaluate.cpp: Fixed out-of-bounds segfault in [] operator.
+
 2011-03-07  Stefan Jahn  <stefan@lkcc.org>
 
 	* applications.h: Stated more possible combinations for ?:

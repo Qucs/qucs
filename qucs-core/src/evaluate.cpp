@@ -2085,7 +2085,7 @@ void evaluate::extract_vector (constant * args, int idx, int &skip, int &size,
       // independent vectors
       range * r = RNG (_ARES (idx));
       int i, n, k;
-      int len = v->getSize ();
+      int len = res->v->getSize ();
       i = (int) r->lo ();
       if (i < 0 || i >= len) {
 	char txt[256];
