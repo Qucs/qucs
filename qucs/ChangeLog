@@ -1,3 +1,8 @@
+2011-03-10  Stefan Jahn  <stefan@lkcc.org>
+
+	* dialogs/settingsdialog.cpp (SettingsDialog): Fixed position of
+	data display and dataset input text fields.
+
 2011-03-09  Stefan Jahn  <stefan@lkcc.org>
 
 	* diagrams/graph.cpp (getSelected): Fixed out-of-bounds access for

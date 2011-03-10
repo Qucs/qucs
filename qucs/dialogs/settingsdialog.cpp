@@ -53,12 +53,12 @@ SettingsDialog::SettingsDialog(Schematic *Doc_)
   QLabel *l1 = new QLabel(tr("Data Display:"), Tab1);
   gp->addWidget(l1,1,0);
   Input_DataDisplay = new QLineEdit(Tab1);
-  gp->addWidget(Input_DataDisplay,0,1);
+  gp->addWidget(Input_DataDisplay,1,1);
 
   QLabel *l2 = new QLabel(tr("Data Set:"), Tab1);
   gp->addWidget(l2,0,0);
   Input_DataSet = new QLineEdit(Tab1);
-  gp->addWidget(Input_DataSet,1,1);
+  gp->addWidget(Input_DataSet,0,1);
 
   Check_OpenDpl = new QCheckBox(tr("open data display after simulation"),
 				Tab1);
