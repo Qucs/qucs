@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: range.h,v 1.2 2008-08-14 18:21:23 ela Exp $
+ * $Id$
  *
  */
 

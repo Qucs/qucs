@@ -21,7 +21,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: parse_mdl.y,v 1.4 2006-09-12 08:08:03 raimi Exp $
+ * $Id$
  *
  */
 

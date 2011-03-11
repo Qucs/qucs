@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: coaxline.cpp,v 1.7 2011-03-02 18:04:17 ela Exp $
+ * $Id$
  *
  */
 

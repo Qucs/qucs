@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: relais.cpp,v 1.6 2009-03-20 15:41:50 ela Exp $
+ * $Id$
  *
  */
 

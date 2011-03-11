@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: transient.cpp,v 1.19 2006-09-07 10:56:53 raimi Exp $
+ * $Id$
  *
  */
 

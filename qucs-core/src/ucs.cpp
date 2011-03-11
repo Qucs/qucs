@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.
  *
- * $Id: ucs.cpp,v 1.33 2009-03-03 18:30:12 ela Exp $
+ * $Id$
  *
  */
 

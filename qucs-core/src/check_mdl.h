@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_mdl.h,v 1.3 2006-09-04 08:05:39 raimi Exp $
+ * $Id$
  *
  */
 

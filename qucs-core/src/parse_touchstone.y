@@ -21,7 +21,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: parse_touchstone.y,v 1.6 2006-06-07 08:34:37 raimi Exp $
+ * $Id$
  *
  */
 

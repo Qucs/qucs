@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: consts.h,v 1.6 2007-08-07 20:43:04 ela Exp $
+ * $Id$
  *
  */
 

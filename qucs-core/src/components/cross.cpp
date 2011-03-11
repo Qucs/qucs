@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: cross.cpp,v 1.8 2008-12-19 19:46:21 ela Exp $
+ * $Id$
  *
  */
 

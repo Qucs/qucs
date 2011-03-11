@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: net.cpp,v 1.36 2007-12-30 13:05:16 ela Exp $
+ * $Id$
  *
  */
 

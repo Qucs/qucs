@@ -21,7 +21,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: scan_mdl.l,v 1.2 2006-09-04 08:05:39 raimi Exp $
+ * $Id$
  *
  */
 

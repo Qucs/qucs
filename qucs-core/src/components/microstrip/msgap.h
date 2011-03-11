@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.
  *
- * $Id: msgap.h,v 1.8 2008-10-05 17:52:17 ela Exp $
+ * $Id$
  *
  */
 

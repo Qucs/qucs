@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: itrafo.h,v 1.5 2005-06-02 18:17:52 raimi Exp $
+ * $Id$
  *
  */
 

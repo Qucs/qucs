@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: integrator.cpp,v 1.5 2006-09-07 10:56:53 raimi Exp $
+ * $Id$
  *
  */
 

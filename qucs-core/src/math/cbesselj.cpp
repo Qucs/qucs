@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: cbesselj.cpp,v 1.2 2008-01-16 18:44:38 ela Exp $
+ * $Id$
  *
  */
 

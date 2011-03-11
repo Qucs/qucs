@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: hash.cpp,v 1.3 2007-05-17 09:28:14 ela Exp $
+ * $Id$
  *
  */
 

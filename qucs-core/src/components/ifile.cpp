@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: ifile.cpp,v 1.5 2009-11-03 21:26:01 ela Exp $
+ * $Id$
  *
  */
 

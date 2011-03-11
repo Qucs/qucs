@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: rectline.cpp,v 1.5 2008-10-11 16:06:47 ela Exp $
+ * $Id$
  *
  */
 

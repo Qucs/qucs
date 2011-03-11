@@ -21,7 +21,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: parse_dataset.y,v 1.5 2006-07-20 10:47:34 raimi Exp $
+ * $Id$
  *
  */
 

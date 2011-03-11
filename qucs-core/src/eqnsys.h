@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: eqnsys.h,v 1.20 2006-07-03 08:52:23 raimi Exp $
+ * $Id$
  *
  */
 

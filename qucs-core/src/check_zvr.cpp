@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_zvr.cpp,v 1.2 2007-04-11 17:57:19 ela Exp $
+ * $Id$
  *
  */
 

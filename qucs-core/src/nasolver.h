@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: nasolver.h,v 1.26 2008-11-16 12:20:36 ela Exp $
+ * $Id$
  *
  */
 

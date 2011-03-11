@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: nodelist.cpp,v 1.13 2008-11-16 12:20:36 ela Exp $
+ * $Id$
  *
  */
 

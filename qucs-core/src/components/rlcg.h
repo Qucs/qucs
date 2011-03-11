@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: rlcg.h,v 1.1 2009-04-01 18:54:54 ela Exp $
+ * $Id$
  *
  */
 

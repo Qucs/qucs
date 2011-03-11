@@ -35,7 +35,7 @@ hybrid::hybrid () : circuit (4) {
 
 void hybrid::initSP (void) {
   nr_complex_t p = polar (1.0, rad (getPropertyDouble ("phi")));
-  nr_double_t k = sqrt (2);
+  nr_double_t  k = M_SQRT2;
 
   allocMatrixS ();
   setS (NODE_1, NODE_1, 0.0); setS (NODE_2, NODE_2, 0.0);
@@ -47,7 +47,9 @@ void hybrid::initSP (void) {
   setS (NODE_1, NODE_3, k); setS (NODE_3, NODE_1, k);
   setS (NODE_1, NODE_4, k); setS (NODE_4, NODE_1, k);
   setS (NODE_2, NODE_3, k); setS (NODE_3, NODE_2, k);
-  setS (NODE_2, NODE_4, k*p); setS (NODE_4, NODE_2, k*p);
+
+  setS (NODE_2, NODE_4, k * p);
+  setS (NODE_4, NODE_2, k * p);
 }
 
 void hybrid::initDC (void) {
@@ -59,7 +61,7 @@ void hybrid::initDC (void) {
 }
 
 void hybrid::initAC (void) {
-  nr_double_t k = 2.0 * sqrt (2.0);
+  nr_double_t  k = 2.0 * M_SQRT2;
   nr_complex_t p = polar (1.0, rad (getPropertyDouble ("phi")));
   nr_complex_t d = 2.0 * p * (p - 4.0) - 1.0;
   nr_complex_t y;

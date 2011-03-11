@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: pair.h,v 1.2 2007-09-16 16:49:39 ela Exp $
+ * $Id$
  *
  */
 

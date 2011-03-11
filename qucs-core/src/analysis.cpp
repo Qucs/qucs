@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: analysis.cpp,v 1.14 2008-10-26 17:59:46 ela Exp $
+ * $Id$
  *
  */
 

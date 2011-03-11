@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: tswitch.cpp,v 1.6 2008-11-02 17:44:39 ela Exp $
+ * $Id$
  *
  */
 

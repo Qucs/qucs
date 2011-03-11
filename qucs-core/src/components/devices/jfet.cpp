@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: jfet.cpp,v 1.37 2008-10-27 17:07:17 ela Exp $
+ * $Id$
  *
  */
 

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: ptrlist.cpp,v 1.5 2008-02-15 17:56:00 ela Exp $
+ * $Id$
  *
  */
 

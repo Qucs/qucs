@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.
  *
- * $Id: cpwline.h,v 1.11 2008-10-05 17:52:16 ela Exp $
+ * $Id$
  *
  */
 

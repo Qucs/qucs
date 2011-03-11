@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: cmplx.cpp,v 1.3 2008-01-13 10:50:23 ela Exp $
+ * $Id$
  *
  */
 

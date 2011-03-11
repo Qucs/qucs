@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: vnoise.h,v 1.9 2008-10-05 17:52:14 ela Exp $
+ * $Id$
  *
  */
 

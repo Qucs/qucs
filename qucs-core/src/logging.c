@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: logging.c,v 1.12 2006-01-02 07:09:44 margraf Exp $
+ * $Id$
  *
  */
 

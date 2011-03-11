@@ -22,7 +22,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: scan_vcd.l,v 1.8 2008-11-02 19:09:07 ela Exp $
+ * $Id$
  *
  */
 

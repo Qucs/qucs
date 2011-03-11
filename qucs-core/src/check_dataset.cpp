@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_dataset.cpp,v 1.4 2006-03-27 09:55:49 raimi Exp $
+ * $Id$
  *
  */
 

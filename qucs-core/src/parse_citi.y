@@ -21,7 +21,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: parse_citi.y,v 1.1 2006-06-06 13:09:45 raimi Exp $
+ * $Id$
  *
  */
 

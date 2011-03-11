@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: amplifier.cpp,v 1.9 2010-03-30 14:51:49 ela Exp $
+ * $Id$
  *
  */
 

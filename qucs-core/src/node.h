@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: node.h,v 1.4 2005-06-02 18:17:51 raimi Exp $
+ * $Id$
  *
  */
 

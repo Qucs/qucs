@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_touchstone.cpp,v 1.17 2008-04-23 19:00:45 ela Exp $
+ * $Id$
  *
  */
 

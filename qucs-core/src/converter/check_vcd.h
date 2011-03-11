@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_vcd.h,v 1.10 2010-10-23 15:29:13 ela Exp $
+ * $Id$
  *
  */
 

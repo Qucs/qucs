@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: property.cpp,v 1.15 2009-03-07 19:20:14 ela Exp $
+ * $Id$
  *
  */
 

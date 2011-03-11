@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: mutual2.cpp,v 1.6 2008-10-07 20:15:32 ela Exp $
+ * $Id$
  *
  */
 

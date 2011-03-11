@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.
  *
- * $Id: fspecial.cpp,v 1.4 2008-10-08 16:32:59 ela Exp $
+ * $Id$
  *
  */
 

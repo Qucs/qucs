@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: receiver.h,v 1.3 2009-11-01 11:51:17 ela Exp $
+ * $Id$
  *
  */
 

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: or.cpp,v 1.8 2009-04-07 19:48:31 ela Exp $
+ * $Id$
  *
  */
 

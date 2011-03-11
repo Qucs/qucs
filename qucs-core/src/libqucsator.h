@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: libqucsator.h,v 1.5 2005-12-12 07:46:52 raimi Exp $
+ * $Id$
  *
  */
 

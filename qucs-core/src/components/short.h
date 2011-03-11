@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: short.h,v 1.1 2006-04-05 08:27:06 raimi Exp $
+ * $Id$
  *
  */
 

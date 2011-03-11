@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_csv.h,v 1.1 2007-08-15 20:27:50 ela Exp $
+ * $Id$
  *
  */
 

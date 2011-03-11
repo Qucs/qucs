@@ -21,7 +21,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: scan_netlist.l,v 1.25 2009-04-16 15:14:55 ela Exp $
+ * $Id$
  *
  */
 

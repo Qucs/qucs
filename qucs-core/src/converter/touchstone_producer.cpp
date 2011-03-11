@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: touchstone_producer.cpp,v 1.5 2008-01-13 10:50:22 ela Exp $
+ * $Id$
  *
  */
 

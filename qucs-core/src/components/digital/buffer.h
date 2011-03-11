@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: buffer.h,v 1.1 2008-11-08 20:05:54 ela Exp $
+ * $Id$
  *
  */
 
