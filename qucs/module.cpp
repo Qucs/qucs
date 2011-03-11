@@ -184,6 +184,7 @@ void Module::registerModules (void) {
   REGISTER_LUMPED_1 (Gyrator);
   REGISTER_LUMPED_1 (Phaseshifter);
   REGISTER_LUMPED_1 (Coupler);
+  REGISTER_LUMPED_1 (Hybrid);
   REGISTER_LUMPED_1 (iProbe);
   REGISTER_LUMPED_1 (vProbe);
   REGISTER_LUMPED_1 (Mutual);
@@ -226,6 +227,7 @@ void Module::registerModules (void) {
   // transmission lines
   REGISTER_TRANS_1 (TLine);
   REGISTER_TRANS_1 (TLine_4Port);
+  REGISTER_TRANS_1 (CoupledTLine);
   REGISTER_TRANS_1 (TwistedPair);
   REGISTER_TRANS_1 (CoaxialLine);
   REGISTER_TRANS_1 (RectLine);
@@ -261,6 +263,7 @@ void Module::registerModules (void) {
   REGISTER_NONLINEAR_1 (Diac);
   REGISTER_NONLINEAR_1 (Triac);
   REGISTER_NONLINEAR_1 (Thyristor);
+  REGISTER_NONLINEAR_1 (TunnelDiode);
 
   // verilog-a devices
   REGISTER_VERILOGA_1 (hicumL2V2p1);
