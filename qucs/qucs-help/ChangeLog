@@ -1,3 +1,8 @@
+2011-03-11  Stefan Jahn  <stefan@lkcc.org>
+
+	* docs/en/octave.html: Added short description of Octave
+	interface.
+
 2009-10-08  Stefan Jahn  <stefan@lkcc.org>
 
 	* docs/cs/index.html: Updated Czech translations of internal help
