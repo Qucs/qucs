@@ -7505,6 +7505,102 @@ Verwendung:  qucsedit [-r] Datei
         <source>pnp HICUM L0 v1.2g</source>
         <translation>pnp HICUM L0 v1.2g</translation>
     </message>
+    <message>
+        <source>hybrid (unsymmetrical 3dB coupler)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hybrid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>coupled transmission lines</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>characteristic impedance of even mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>characteristic impedance of odd mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>relative dielectric constant of even mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>relative dielectric constant of odd mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>attenuation factor per length of even mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>attenuation factor per length of odd mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Coupled Transmission Line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>resonance tunnel diode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>peak current</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>valley current</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>valley voltage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>resonance energy in Ws</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fermi energy in Ws</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>resonance width in Ws</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>maximum of transmission</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>fitting factor for electron density</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>fitting factor for voltage drop</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>fitting factor for diode current</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>zero-bias depletion capacitance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>life-time of electrons</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tunnel Diode</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
