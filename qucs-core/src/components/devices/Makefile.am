@@ -4,7 +4,7 @@
 #
 # Automake input file for the component library.
 #
-# Copyright (C) 2004, 2007, 2008 Stefan Jahn <stefan@lkcc.org>
+# Copyright (C) 2004, 2007, 2008, 2011 Stefan Jahn <stefan@lkcc.org>
 #
 # This is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -27,10 +27,10 @@
 noinst_LIBRARIES = libdevices.a
 
 libdevices_a_SOURCES = device.cpp diode.cpp jfet.cpp bjt.cpp mosfet.cpp \
-  eqndefined.cpp diac.cpp thyristor.cpp triac.cpp
+  eqndefined.cpp diac.cpp thyristor.cpp triac.cpp tunneldiode.cpp
 
 noinst_HEADERS = device.h diode.h jfet.h bjt.h mosfet.h eqndefined.h diac.h \
-  thyristor.h triac.h
+  thyristor.h triac.h tunneldiode.h
 
 INCLUDES = -I$(top_srcdir)/src -I$(top_srcdir)/src/math \
   -I$(top_srcdir)/src/components

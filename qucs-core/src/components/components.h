@@ -1,7 +1,7 @@
 /*
  * components.h - global component header file
  *
- * Copyright (C) 2003-2010 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003-2011 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -71,6 +71,7 @@
 #include "tswitch.h"
 #include "relais.h"
 #include "tline.h"
+#include "ctline.h"
 #include "coaxline.h"
 #include "rectline.h"
 #include "twistedpair.h"
@@ -86,6 +87,7 @@
 #include "amplifier.h"
 #include "opamp.h"
 #include "coupler.h"
+#include "hybrid.h"
 #include "rfedd.h"
 
 #include "vnoise.h"
@@ -102,6 +104,7 @@
 #include "devices/diac.h"
 #include "devices/thyristor.h"
 #include "devices/triac.h"
+#include "devices/tunneldiode.h"
 
 #include "microstrip/substrate.h"
 

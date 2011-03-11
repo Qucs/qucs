@@ -1,7 +1,7 @@
 /*
  * component_id.h - global component identifier header file
  *
- * Copyright (C) 2003-2010 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003-2011 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -72,6 +72,7 @@ enum circuit_type {
   CIR_TSWITCH,
   CIR_RELAIS,
   CIR_TLINE,
+  CIR_CTLINE,
   CIR_COAXLINE,
   CIR_RECTANGULAR,
   CIR_TWISTEDPAIR,
@@ -86,6 +87,7 @@ enum circuit_type {
   CIR_IRECT,
   CIR_AMPLIFIER,
   CIR_COUPLER,
+  CIR_HYBRID,
   CIR_RFEDD,
 
   // noise sources
@@ -126,6 +128,7 @@ enum circuit_type {
   CIR_DIAC,
   CIR_TRIAC,
   CIR_THYRISTOR,
+  CIR_TUNNELDIODE,
 
   // digital components
   CIR_INVERTER,

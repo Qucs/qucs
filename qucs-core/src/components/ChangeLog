@@ -1,3 +1,12 @@
+2011-03-11  Stefan Jahn  <stefan@lkcc.org>
+
+	* devices/tunneldiode.cpp: New tunnel diode model implemented.
+
+	* hybrid.cpp: Hybrid model added.
+
+	* ctline.cpp: New ideal coupled transmission line model
+	implemented.
+
 2011-03-06  Stefan Jahn  <stefan@lkcc.org>
 
 	* strafo.cpp, trafo.cpp: Fixed DC model of transformers.
