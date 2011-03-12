@@ -153,6 +153,7 @@ enum circuit_type {
   CIR_EKV26MOS,
   CIR_hicumL0V1p2,
   CIR_hicumL0V1p2g,
+  CIR_hicumL0V1p3,
   CIR_hicumL2V2p23,
   CIR_hicumL2V2p24,
   CIR_photodiode,

@@ -238,6 +238,7 @@ void module::registerModules (void) {
   REGISTER_CIRCUIT (EKV26MOS);
   REGISTER_CIRCUIT (hicumL0V1p2);
   REGISTER_CIRCUIT (hicumL0V1p2g);
+  REGISTER_CIRCUIT (hicumL0V1p3);
   REGISTER_CIRCUIT (hicumL2V2p23);
   REGISTER_CIRCUIT (hicumL2V2p24);
   REGISTER_CIRCUIT (photodiode);

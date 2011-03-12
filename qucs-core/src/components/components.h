@@ -149,6 +149,7 @@
 #include "verilog/EKV26MOS.core.h"
 #include "verilog/hicumL0V1p2.core.h"
 #include "verilog/hicumL0V1p2g.core.h"
+#include "verilog/hicumL0V1p3.core.h"
 #include "verilog/hicumL2V2p23.core.h"
 #include "verilog/hicumL2V2p24.core.h"
 #include "verilog/photodiode.core.h"
