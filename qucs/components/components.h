@@ -148,6 +148,7 @@
 #include "EKV26MOS.h"
 #include "hicumL0V1p2.h"
 #include "hicumL0V1p2g.h"
+#include "hicumL0V1p3.h"
 #include "hicumL2V2p23.h"
 #include "hicumL2V2p24.h"
 #include "photodiode.h"

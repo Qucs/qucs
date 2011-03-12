@@ -35,7 +35,7 @@ Version 0.0.16
  * support for pre-compiled VHDL modules and libraries made from user
    written VHDL code
  * new components: NIGBT, HICUM L2 v2.24, HICUM L0 v1.2g, tunnel diode,
-   ideal coupled transmission line, hybrid
+   ideal coupled transmission line, hybrid, HICUM L0 v1.3
  * translation into Kazakh
  * allow equations in Verilog-HDL and VHDL subcircuits
 

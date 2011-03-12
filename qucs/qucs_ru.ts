@@ -7438,7 +7438,7 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>HICUM Level 0 v1.3 verilog device</source>
-        <translation type="obsolete">HICUM Level 0 v1.3 Verilog-модель</translation>
+        <translation type="unfinished">HICUM Level 0 v1.3 Verilog-модель</translation>
     </message>
     <message>
         <source>high-injection roll-off current</source>
@@ -7462,11 +7462,11 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>npn HICUM L0 v1.3</source>
-        <translation type="obsolete">npn HICUM L0 v1.3</translation>
+        <translation type="unfinished">npn HICUM L0 v1.3</translation>
     </message>
     <message>
         <source>pnp HICUM L0 v1.3</source>
-        <translation type="obsolete">pnp HICUM L0 v1.3</translation>
+        <translation type="unfinished">pnp HICUM L0 v1.3</translation>
     </message>
     <message>
         <source>HICUM Level 0 v1.2g verilog device</source>
@@ -7590,6 +7590,38 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>Tunnel Diode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Flag for using third order solution for transfer current</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>bias dependence for reverse Early voltage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Flag for turning temperature dependence of tef0 on and off</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>TC of Reverse Early voltage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>TC of AVER</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Bandgap difference between base and BE-junction</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Frist-order TC of iqfh</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Second-order TC of iqfh</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
