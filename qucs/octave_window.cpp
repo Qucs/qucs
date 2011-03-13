@@ -75,8 +75,8 @@ bool OctaveWindow::startOctave()
     return true;
 
   QStringList CommandLine;
-  CommandLine << "octave" << "--no-history" << "-i" << "-f"
-	      << "-p" << QDir::convertSeparators(QucsSettings.OctaveDir);
+  CommandLine << "octave" << "--no-history" << "-i" << "-f" << "-p"
+	      << QDir::convertSeparators(QucsSettings.OctaveDir);
   octProcess.setArguments(CommandLine);
 
   disconnect(&octProcess, 0, 0, 0);
@@ -84,12 +84,13 @@ bool OctaveWindow::startOctave()
   connect(&octProcess, SIGNAL(readyReadStdout()), SLOT(slotDisplayMsg()));
   connect(&octProcess, SIGNAL(processExited()), SLOT(slotOctaveEnded()));
 
+  output->clear();
+
   if(!octProcess.start()) {
     output->setText(tr("ERROR: Cannot start Octave!"));
     return false;
   }
 
-  output->clear();
   adjustDirectory();
   return true;
 }
