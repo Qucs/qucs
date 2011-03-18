@@ -1,3 +1,8 @@
+2011-03-18  Stefan Jahn  <stefan@lkcc.org>
+
+	* qucsdigilib.bat, qucsdigi.bat: Fixing digital simulation
+	scripts.
+
 2011-03-10  Stefan Jahn  <stefan@lkcc.org>
 
 	* dialogs/settingsdialog.cpp (SettingsDialog): Fixed position of

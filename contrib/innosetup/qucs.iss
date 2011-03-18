@@ -1,7 +1,7 @@
 ;
 ; qucs.iss - inno Setup script file
 ;
-; Copyright (C) 2005, 2006, 2007, 2008 Stefan Jahn <stefan@lkcc.org>
+; Copyright (C) 2005-2011 Stefan Jahn <stefan@lkcc.org>
 ;
 ; This is free software; you can redistribute it and/or modify
 ; it under the terms of the GNU General Public License as published by
@@ -19,10 +19,10 @@
 ; Boston, MA 02110-1301, USA.
 ;
 
-#define RELEASE "0.0.14"
+#define RELEASE "0.0.16"
 #define BASENAME "qucs"
 #define APPNAME "Qucs"
-#define APPVERNAME "Quite Universal Circuit Simulator 0.0.14 binary package for Win32"
+#define APPVERNAME "Quite Universal Circuit Simulator 0.0.16 binary package for Win32"
 #define URL "http://qucs.sourceforge.net"
 #define TREE "C:\home\qucstree"
 

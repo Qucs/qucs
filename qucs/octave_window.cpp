@@ -106,9 +106,10 @@ void OctaveWindow::sendCommand(const QString& cmd)
 {
   int par = output->paragraphs() - 1;
   int idx = output->paragraphLength(par);
-  output->insertAt(cmd + "\n", par, idx);
-  octProcess.writeToStdin(cmd + "\n");
+  QString cmdstr = cmd + "\n";
+  output->insertAt(cmdstr, par, idx);
   output->scrollToBottom();
+  octProcess.writeToStdin(cmdstr);
 }
 
 // ------------------------------------------------------------------------
