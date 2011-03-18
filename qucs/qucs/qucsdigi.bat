@@ -3,7 +3,7 @@
 REM
 REM qucsdigi.bat - wrapper script for digital simulation
 REM
-REM Copyright (C) 2005, 2006, 2009 Stefan Jahn <stefan@lkcc.org>
+REM Copyright (C) 2005, 2006, 2009, 2011 Stefan Jahn <stefan@lkcc.org>
 REM
 REM This is free software; you can redistribute it and/or modify
 REM it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@ REM the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
 REM Boston, MA 02110-1301, USA.  
 REM
 
-if not exist "%6" goto usage
+if "X%6"=="X" goto usage
 
 set NAME=%1
 set NAMEOUT=%2
