@@ -1892,7 +1892,7 @@ void QucsApp::slotOpenContent(QListViewItem *item)
   QString Suffix = Info.extension(false);
 
   if (Suffix == "sch" || Suffix == "dpl" || Suffix == "vhdl" ||
-      Suffix == "v" || Suffix == "va" ||
+      Suffix == "vhd" || Suffix == "v" || Suffix == "va" ||
       Suffix == "m" || Suffix == "oct") {
     gotoPage(Info.absFilePath());
 

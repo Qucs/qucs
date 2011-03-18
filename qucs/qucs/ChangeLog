@@ -1,5 +1,11 @@
 2011-03-18  Stefan Jahn  <stefan@lkcc.org>
 
+	* qucs.cpp (slotOpenContent): Allowing double click on .vhd files.
+
+	* schematic_file.cpp (saveSymbolCpp): Including terminal centers
+	into computation of the boundig box when exporting the C++ code
+	for the symbol.
+
 	* qucsdigilib.bat, qucsdigi.bat: Fixing digital simulation
 	scripts.
 
