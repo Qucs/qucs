@@ -210,6 +210,12 @@ int Schematic::saveSymbolCpp (void)
     if (pp->Name == ".PortSym ") {
       if (((PortSymbol*)pp)->numberStr.toInt() > maxNum)
 	maxNum = ((PortSymbol*)pp)->numberStr.toInt();
+      x1 = ((PortSymbol*)pp)->cx;
+      y1 = ((PortSymbol*)pp)->cy;
+      if (x1 < xmin) xmin = x1;
+      if (x1 > xmax) xmax = x1;
+      if (y1 < ymin) ymin = y1;
+      if (y1 > ymax) ymax = y1;
       continue;
     }
     pp->Bounding (x1, y1, x2, y2);
