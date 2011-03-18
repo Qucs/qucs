@@ -654,7 +654,9 @@ static void spice_adjust_device (struct definition_t * def,
 	    def->pairs = spice_del_property (def->pairs, p2);
 	    if (level == 0) {
 	      if (version >= 1.11) {
-		if (version >= 1.3)
+		if (version >= 1.2e9)
+		  def->type = strdup ("hicumL0V1p2g");
+		else if (version >= 1.3)
 		  def->type = strdup ("hicumL0V1p3");
 		else if (version >= 1.2)
 		  def->type = strdup ("hicumL0V1p2");

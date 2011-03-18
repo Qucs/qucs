@@ -1,3 +1,7 @@
+2011-03-18  Stefan Jahn  <stefan@lkcc.org>
+
+	* check_spice.cpp: Allow HICUM/L0 V1.2G to be detected.
+
 2011-03-01  Stefan Jahn  <stefan@lkcc.org>
 
 	* check_spice.cpp: Fixed PULSE source statement translation
