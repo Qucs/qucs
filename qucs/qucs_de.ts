@@ -7303,7 +7303,7 @@ Verwendung:  qucsedit [-r] Datei
     </message>
     <message>
         <source>gate-drain overlap area</source>
-        <translation type="unfinished"></translation>
+        <translation>Gate-Drain Überlappfläche</translation>
     </message>
     <message>
         <source>m**2</source>
@@ -7383,7 +7383,7 @@ Verwendung:  qucsedit [-r] Datei
     </message>
     <message>
         <source>emitter saturation current density</source>
-        <translation type="unfinished"></translation>
+        <translation>Sättigungsstromdichte des Emitterstroms</translation>
     </message>
     <message>
         <source>gate-drain overlap depletion threshold</source>
@@ -7447,15 +7447,15 @@ Verwendung:  qucsedit [-r] Datei
     </message>
     <message>
         <source>HICUM Level 0 v1.3 verilog device</source>
-        <translation type="unfinished">HICUM Level 0 v1.3 Verilogmodell</translation>
+        <translation>HICUM Level 0 v1.3 Verilogmodell</translation>
     </message>
     <message>
         <source>high-injection roll-off current</source>
-        <translation type="unfinished"></translation>
+        <translation>Grenzstrom für die Hochstrominjektion</translation>
     </message>
     <message>
         <source>TC of iqf (bandgap coefficient of zero bias hole charge)</source>
-        <translation type="unfinished"></translation>
+        <translation>TK von iqf (Bandabstandskoeffizient der Löcherladung bei 0V)</translation>
     </message>
     <message>
         <source>Emitter part coefficient of the zero bias hole charge temperature variation</source>
@@ -7471,11 +7471,11 @@ Verwendung:  qucsedit [-r] Datei
     </message>
     <message>
         <source>npn HICUM L0 v1.3</source>
-        <translation type="unfinished">npn HICUM L0 v1.3</translation>
+        <translation>npn HICUM L0 v1.3</translation>
     </message>
     <message>
         <source>pnp HICUM L0 v1.3</source>
-        <translation type="unfinished">pnp HICUM L0 v1.3</translation>
+        <translation>pnp HICUM L0 v1.3</translation>
     </message>
     <message>
         <source>HICUM Level 0 v1.2g verilog device</source>
@@ -7507,51 +7507,51 @@ Verwendung:  qucsedit [-r] Datei
     </message>
     <message>
         <source>hybrid (unsymmetrical 3dB coupler)</source>
-        <translation type="unfinished"></translation>
+        <translation>Hybrid (unsymmetrischer 3dB-Koppler)</translation>
     </message>
     <message>
         <source>Hybrid</source>
-        <translation type="unfinished"></translation>
+        <translation>Hybrid</translation>
     </message>
     <message>
         <source>coupled transmission lines</source>
-        <translation type="unfinished"></translation>
+        <translation>gekoppelte Leitungen</translation>
     </message>
     <message>
         <source>characteristic impedance of even mode</source>
-        <translation type="unfinished"></translation>
+        <translation>charakteristische Impedanz des Gleichtakts</translation>
     </message>
     <message>
         <source>characteristic impedance of odd mode</source>
-        <translation type="unfinished"></translation>
+        <translation>charakteristische Impedanz des Gegentakts</translation>
     </message>
     <message>
         <source>relative dielectric constant of even mode</source>
-        <translation type="unfinished"></translation>
+        <translation>relative Dielektrizitätskonstante des Gleichtakts</translation>
     </message>
     <message>
         <source>relative dielectric constant of odd mode</source>
-        <translation type="unfinished"></translation>
+        <translation>relative Dielektrizitätskonstante des Gegentakts</translation>
     </message>
     <message>
         <source>attenuation factor per length of even mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Dämpfungsfaktor pro Länge des Gleichtakts</translation>
     </message>
     <message>
         <source>attenuation factor per length of odd mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Dämpfungsfaktor pro Länge des Gegentakts</translation>
     </message>
     <message>
         <source>Coupled Transmission Line</source>
-        <translation type="unfinished"></translation>
+        <translation>Gekoppelte Leitung</translation>
     </message>
     <message>
         <source>resonance tunnel diode</source>
-        <translation type="unfinished"></translation>
+        <translation>Resonanz-Tunneldiode</translation>
     </message>
     <message>
         <source>peak current</source>
-        <translation type="unfinished"></translation>
+        <translation>Spitzenstrom</translation>
     </message>
     <message>
         <source>valley current</source>
@@ -7563,43 +7563,43 @@ Verwendung:  qucsedit [-r] Datei
     </message>
     <message>
         <source>resonance energy in Ws</source>
-        <translation type="unfinished"></translation>
+        <translation>Resonanzenergie in Ws</translation>
     </message>
     <message>
         <source>Fermi energy in Ws</source>
-        <translation type="unfinished"></translation>
+        <translation>Fermi-Energie in Ws</translation>
     </message>
     <message>
         <source>resonance width in Ws</source>
-        <translation type="unfinished"></translation>
+        <translation>Resonanzweite in Ws</translation>
     </message>
     <message>
         <source>maximum of transmission</source>
-        <translation type="unfinished"></translation>
+        <translation>Maximum der Übertragung</translation>
     </message>
     <message>
         <source>fitting factor for electron density</source>
-        <translation type="unfinished"></translation>
+        <translation>Anpassfaktor für die Elektronendichte</translation>
     </message>
     <message>
         <source>fitting factor for voltage drop</source>
-        <translation type="unfinished"></translation>
+        <translation>Anpassfaktor für den Spannungsabfall</translation>
     </message>
     <message>
         <source>fitting factor for diode current</source>
-        <translation type="unfinished"></translation>
+        <translation>Anpassfaktor für den Diodenstrom</translation>
     </message>
     <message>
         <source>zero-bias depletion capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>Sperrschichtkapazität bei 0V</translation>
     </message>
     <message>
         <source>life-time of electrons</source>
-        <translation type="unfinished"></translation>
+        <translation>Lebendauer der Elektronen</translation>
     </message>
     <message>
         <source>Tunnel Diode</source>
-        <translation type="unfinished"></translation>
+        <translation>Tunneldiode</translation>
     </message>
     <message>
         <source>Flag for using third order solution for transfer current</source>
@@ -14913,11 +14913,11 @@ werden in die Suche mit einbezogen.</translation>
     </message>
     <message>
         <source>Octave Script:</source>
-        <translation type="unfinished"></translation>
+        <translation>Octave Skript:</translation>
     </message>
     <message>
         <source>run script after simulation</source>
-        <translation type="unfinished"></translation>
+        <translation>Ausführung des Skripts nach der Simulation</translation>
     </message>
 </context>
 <context>
