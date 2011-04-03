@@ -43,7 +43,7 @@ rectwaveguide::~rectwaveguide()
 double rectwaveguide::kval ()
 {
   double kval;
-  kval = 2. * M_PI * f * sqrt(mur * er)/C0;
+  kval = 2.0 * M_PI * f * sqrt (mur * er) / C0;
   return kval;
 }
  
@@ -54,7 +54,7 @@ double rectwaveguide::kval ()
 double rectwaveguide::kc (int m, int n)
 {
   double kcval;
-  kcval = sqrt(pow((m*M_PI/a),2.0) + pow((n*M_PI/b),2.0));
+  kcval = sqrt (pow ((m * M_PI / a), 2.0) + pow ((n * M_PI / b), 2.0));
   return kcval;
 }
 
@@ -65,7 +65,7 @@ double rectwaveguide::kc (int m, int n)
 double rectwaveguide::fc (int m, int n)
 {
   double fcval;
-  fcval =  (kc(m, n) * C0)/ (2 * M_PI * sqrt(mur * er));
+  fcval =  kc (m, n) * C0 / (2.0 * M_PI * sqrt (mur * er));
   return fcval;
 }
 
@@ -79,10 +79,10 @@ double rectwaveguide::alphac ()
   double ac;
   short m, n, mmax, nmax;
 
-  Rs = sqrt((M_PI * f * mur* MU0)/sigma);
-  k = kval();
+  Rs = sqrt ((M_PI * f * mur * MU0) / sigma);
+  k = kval ();
   ac = 0.0;
-  mmax = (int) floor (f/fc(1,0));
+  mmax = (int) floor (f / fc (1,0));
   nmax = mmax;
 
   /* below from Ramo, Whinnery & Van Duzer */
@@ -120,7 +120,7 @@ double rectwaveguide::alphac ()
     }
   }
   
-  ac = ac * 20.0 * log10(exp(1.)); /* convert from Np/m to db/m */
+  ac = ac * 20.0 * log10 (exp (1.0)); /* convert from Np/m to db/m */
   return ac;
 }
 
@@ -130,8 +130,8 @@ double rectwaveguide::alphac ()
 double rectwaveguide::alphac_cutoff ()
 {
   double acc;
-  acc = sqrt(pow(kc(1,0),2.0) - pow(kval(),2.0));
-  acc = 20 * log10(exp(1.0)) * acc;
+  acc = sqrt (pow (kc(1,0), 2.0) - pow (kval (), 2.0));
+  acc = 20 * log10 (exp (1.0)) * acc;
   return acc;
 }
 
@@ -143,11 +143,11 @@ double rectwaveguide::alphad()
   double k, beta;
   double ad;
 
-  k = kval();
-  beta = sqrt(pow(k,2.) - pow(kc(1,0),2.0));  
+  k = kval ();
+  beta = sqrt (pow (k, 2.0) - pow (kc (1,0), 2.0));  
   
-  ad = (pow(k,2.0) * tand)/(2.0 * beta);
-  ad = ad * 20.0 * log10(exp(1.)); /* convert from Np/m to db/m */
+  ad = (pow (k, 2.0) * tand) / (2.0 * beta);
+  ad = ad * 20.0 * log10 (exp (1.0)); /* convert from Np/m to db/m */
   return ad;
 }
   
@@ -186,7 +186,6 @@ void rectwaveguide::get_rectwaveguide_elec ()
   ang_l = getProperty ("Ang_l", UNIT_ANG, ANG_RAD);
 }
 
-
 /*
  * get_rectwaveguide_phys
  * get and assign rectwaveguide physical parameters
@@ -198,7 +197,6 @@ void rectwaveguide::get_rectwaveguide_phys ()
   b = getProperty ("b", UNIT_LENGTH, LENGTH_M);
   l = getProperty ("L", UNIT_LENGTH, LENGTH_M);
 }
-
 
 /*
  * analyze - analysis function
@@ -218,24 +216,23 @@ void rectwaveguide::analyze ()
   /* Get and assign physical parameters */
   get_rectwaveguide_phys();
 
-  k = kval();
+  k = kval ();
       
-  if (kc(1,0) <= k) {
-    /*propagating modes */
-    beta = sqrt(pow(k,2.) - pow(kc(1,0),2.0));
-    lambda_g = (2. * M_PI)/beta;
-    /*	Z0 = (k * ZF0)/beta; */
-    Z0 = 2.0 * ZF0 * (b/a) * 1/
-      sqrt(1.0 - pow((fc(1,0)/f),2.0));
+  if (kc (1,0) <= k) {
+    /* propagating modes */
+    beta = sqrt (pow (k, 2.0) - pow (kc (1,0), 2.0));
+    lambda_g = 2.0 * M_PI / beta;
+    /* Z0 = (k * ZF0) / beta; */
+    Z0 = k * ZF0 / beta;
 
     /* calculate electrical angle */
-    lambda_g = (2. * M_PI)/beta;
-    ang_l = (2.0 * M_PI * l)/lambda_g;    /* in radians */
+    lambda_g = 2.0 * M_PI / beta;
+    ang_l = 2.0 * M_PI * l / lambda_g;    /* in radians */
     atten_cond = alphac () * l;
     atten_dielectric = alphad () * l;
-    er_eff = (1.0 - pow((fc(1,0)/f),2.0));
+    er_eff = (1.0 - pow ((fc (1,0) / f), 2.0));
   } else { 
-    /*evanascent modes */	
+    /* evanascent modes */	
     Z0 = 0;
     ang_l = 0;
     er_eff = 0;
