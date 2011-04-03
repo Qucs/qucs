@@ -1,3 +1,8 @@
+2011-04-03  Stefan Jahn  <stefan@lkcc.org>
+
+	* strafo.cpp, trafo.cpp: Using AC model for transient simulation
+	of (symmetrical) trafo.
+
 2011-03-11  Stefan Jahn  <stefan@lkcc.org>
 
 	* hybrid.cpp: Replaced sqrt(2) by M_SQRT2.

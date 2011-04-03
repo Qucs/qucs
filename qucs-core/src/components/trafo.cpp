@@ -70,7 +70,7 @@ void trafo::initAC (void) {
 }
 
 void trafo::initTR (void) {
-  initDC ();
+  initAC ();
 }
 
 // properties

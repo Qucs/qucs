@@ -104,7 +104,7 @@ void strafo::initAC (void) {
 }
 
 void strafo::initTR (void) {
-  initDC ();
+  initAC ();
 }
 
 // properties
