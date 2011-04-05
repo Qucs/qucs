@@ -1522,6 +1522,7 @@ Component* getComponentFromName(QString& Line)
   cstr.remove (0,1);    // remove leading "<"
   if (cstr == "Lib") c = new LibComp ();
   else if (cstr == "Eqn") c = new Equation ();
+  else if (cstr == "SPICE") c = new SpiceFile();
   else if (cstr == "Rus") c = new Resistor (false);  // backward compatible
   else if (cstr.left (6) == "SPfile" && cstr != "SPfile") {
     // backward compatible
