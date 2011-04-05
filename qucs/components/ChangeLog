@@ -1,3 +1,8 @@
+2011-04-05  Stefan Jahn  <stefan@lkcc.org>
+
+	* component.cpp (getComponentFromName): Fixing wrong rotation /
+	mirror bug of SPICE file components.
+
 2011-03-12  Stefan Jahn  <stefan@lkcc.org>
 
 	* hicumL0V1p3.cpp (hicumL0V1p3): Added new HICUM/L0 v1.3 model.
