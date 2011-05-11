@@ -7091,6 +7091,7 @@ Kullanım:  qucsedit [-r] kütük
         <translation type="unfinished"></translation>
     </message>
     <message>
+<<<<<<< HEAD
         <source>hybrid (unsymmetrical 3dB coupler)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7216,6 +7217,13 @@ Kullanım:  qucsedit [-r] kütük
     </message>
     <message>
         <source>Second-order TC of iqfh</source>
+=======
+        <source>microchip lange coupler</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Microstrip Lange Coupler</source>
+>>>>>>> mslange
         <translation type="unfinished"></translation>
     </message>
 </context>
