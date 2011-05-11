@@ -105,6 +105,7 @@ enum circuit_type {
   CIR_MSOPEN,
   CIR_MSGAP,
   CIR_MSCOUPLED,
+  CIR_MSLANGE,
   CIR_MSTEE,
   CIR_MSCROSS,
   CIR_MSVIA,
