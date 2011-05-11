@@ -6984,7 +6984,6 @@ qucsedit [-r] file :إستعمال
         <translation type="unfinished"></translation>
     </message>
     <message>
-<<<<<<< HEAD
         <source>hybrid (unsymmetrical 3dB coupler)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7110,13 +7109,6 @@ qucsedit [-r] file :إستعمال
     </message>
     <message>
         <source>Second-order TC of iqfh</source>
-=======
-        <source>microchip lange coupler</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Microstrip Lange Coupler</source>
->>>>>>> mslange
         <translation type="unfinished"></translation>
     </message>
 </context>

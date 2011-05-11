@@ -7155,7 +7155,6 @@ Folosire:  qucsedit [-r] file
         <translation type="unfinished"></translation>
     </message>
     <message>
-<<<<<<< HEAD
         <source>hybrid (unsymmetrical 3dB coupler)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7293,13 +7292,6 @@ Folosire:  qucsedit [-r] file
     </message>
     <message>
         <source>pnp HICUM L0 v1.3</source>
-=======
-        <source>microchip lange coupler</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Microstrip Lange Coupler</source>
->>>>>>> mslange
         <translation type="unfinished"></translation>
     </message>
 </context>
