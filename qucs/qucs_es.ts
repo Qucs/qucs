@@ -7379,6 +7379,14 @@ Use:  qucsedit [-r] archivo
         <source>Second-order TC of iqfh</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>microstrip lange coupler</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Microstrip Lange Coupler</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
