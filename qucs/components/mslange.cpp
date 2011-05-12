@@ -20,7 +20,7 @@
 
 MSlange::MSlange()
 {
-  Description = QObject::tr("microchip lange coupler");
+  Description = QObject::tr("microstrip lange coupler");
 
   Lines.append(new Line(-30,-30,-30, 10,QPen(QPen::darkBlue,2)));
   Lines.append(new Line(-30, 30,-30, 20,QPen(QPen::darkBlue,2)));
