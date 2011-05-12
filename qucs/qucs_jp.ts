@@ -7309,6 +7309,14 @@ Usage:  qucsedit [-r] file
         <source>pnp HICUM L0 v1.3</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>microstrip lange coupler</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Microstrip Lange Coupler</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
