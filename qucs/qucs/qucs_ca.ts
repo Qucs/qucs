@@ -7362,7 +7362,7 @@ Use:  qucsedit [-r] fitxer
     <message>
         <source>Microstrip Lange Coupler</source>
         <translation type="unfinished"></translation>
-    </message>    
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
