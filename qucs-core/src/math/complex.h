@@ -33,7 +33,7 @@ typedef cmplx nr_complex_t;
 #elif defined HAVE_TR1_COMPLEX
 #include <tr1/complex>
 using namespace std;
-using namespace std::tr1;
+//using namespace std::tr1;
 typedef std::complex<nr_double_t> nr_complex_t;
 #else
 #include <complex>
@@ -52,26 +52,38 @@ nr_complex_t rect (const nr_double_t x, const nr_double_t y = 0.0);
 // overloaded math functions
 #ifndef HAVE_CXX_COMPLEX_ACOS
 nr_complex_t    acos (const nr_complex_t);
+#else
+using std::tr1::acos;
 #endif
 
 #ifndef HAVE_CXX_COMPLEX_ACOSH
 nr_complex_t   acosh (const nr_complex_t);
+#else
+using std::tr1::acosh;
 #endif
 
 #ifndef HAVE_CXX_COMPLEX_ASIN
 nr_complex_t    asin (const nr_complex_t);
+#else
+using std::tr1::asin;
 #endif
 
 #ifndef HAVE_CXX_COMPLEX_ASINH
 nr_complex_t   asinh (const nr_complex_t);
+#else
+using std::tr1::asinh;
 #endif 
 
 #ifndef HAVE_CXX_COMPLEX_ATAN
 nr_complex_t    atan (const nr_complex_t);
+#else
+using std::tr1::atan;
 #endif 
 
 #ifndef HAVE_CXX_COMPLEX_ATANH
 nr_complex_t   atanh (const nr_complex_t);
+#else
+using std::tr1::atanh;
 #endif 
 
 #ifndef HAVE_CXX_COMPLEX_ATAN2

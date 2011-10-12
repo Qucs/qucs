@@ -121,8 +121,13 @@ AC_DEFUN([AC_CHECK_CXX_COMPLEX_POW],
 		        #endif
 		        ]],
 	       	         [[complex<double> x,y;  
-			 pow(x,double(2.0));
-			 pow(x, y); pow(double(2.0), x);
+			#ifdef HAVE_TR1_COMPLEX
+			 std::tr1::pow(x,double(2.0));
+			 std::tr1::pow(x, y); std::tr1::pow(double(2.0), x);
+		        #else
+			 std::pow(x,double(2.0));
+			 std::pow(x, y); std::pow(double(2.0), x);
+		        #endif
 		         return 0;]])],
                     [AS_VAR_SET([ac_var], [yes])],
 		    [AS_VAR_SET([ac_var], [no])])])

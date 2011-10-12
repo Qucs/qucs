@@ -867,6 +867,16 @@ nr_double_t eqnsys<nr_type_t>::euclidian_r (int r, int c) {
   return scale * sqrt (n);
 }
 
+template <typename nr_type_t>
+inline nr_type_t cond_conj (nr_type_t t) {
+  return std::tr1::conj(t);
+}
+
+template <>
+inline double cond_conj (double t) {
+  return t;
+}
+
 /* The function decomposes the matrix A into two matrices, the
    orthonormal matrix Q and the upper triangular matrix R.  The
    original matrix is replaced by the householder vectors in the lower
@@ -920,7 +930,7 @@ void eqnsys<nr_type_t>::factorize_qrh (void) {
 
     // apply householder transformation to remaining columns
     for (r = c + 1; r < N; r++) {
-      for (f = 0, k = c; k < N; k++) f += conj (A_(k, c)) * A_(k, r);
+      for (f = 0, k = c; k < N; k++) f += cond_conj (A_(k, c)) * A_(k, r);
       for (k = c; k < N; k++) A_(k, r) -= 2.0 * f * A_(k, c);
     }
 
@@ -994,7 +1004,7 @@ void eqnsys<nr_type_t>::substitute_qrh (void) {
   // form the new right hand side Q'B
   for (c = 0; c < N - 1; c++) {
     // scalar product u_k^T * B
-    for (f = 0, r = c; r < N; r++) f += conj (A_(r, c)) * B_(r);
+    for (f = 0, r = c; r < N; r++) f += cond_conj (A_(r, c)) * B_(r);
     // z - 2 * f * u_k
     for (r = c; r < N; r++) B_(r) -= 2.0 * f * A_(r, c);
   }
@@ -1021,9 +1031,9 @@ void eqnsys<nr_type_t>::substitute_qr_householder (void) {
   for (c = 0; c < N; c++) {
     if (T_(c) != 0) {
       // scalar product u' * B
-      for (f = B_(c), r = c + 1; r < N; r++) f += conj (A_(r, c)) * B_(r);
+      for (f = B_(c), r = c + 1; r < N; r++) f += cond_conj (A_(r, c)) * B_(r);
       // z - T * f * u
-      f *= conj (T_(c)); B_(c) -= f;
+      f *= cond_conj (T_(c)); B_(c) -= f;
       for (r = c + 1; r < N; r++) B_(r) -= f * A_(r, c);
     }
   }
@@ -1060,7 +1070,7 @@ void eqnsys<nr_type_t>::substitute_qr_householder_ls (void) {
   for (c = N - 1; c >= 0; c--) {
     if (T_(c) != 0) {
       // scalar product u' * B
-      for (f = B_(c), r = c + 1; r < N; r++) f += conj (A_(r, c)) * B_(r);
+      for (f = B_(c), r = c + 1; r < N; r++) f += cond_conj (A_(r, c)) * B_(r);
       // z - T * f * u_k
       f *= T_(c); B_(c) -= f;
       for (r = c + 1; r < N; r++) B_(r) -= f * A_(r, c);
@@ -1169,9 +1179,9 @@ void eqnsys<nr_type_t>::householder_apply_left (int c, nr_type_t t) {
   for (r = c + 1; r < N; r++) {
     // calculate f = u' * A (a scalar product)
     f = A_(c, r);
-    for (k = c + 1; k < N; k++) f += conj (A_(k, c)) * A_(k, r);
+    for (k = c + 1; k < N; k++) f += cond_conj (A_(k, c)) * A_(k, r);
     // calculate A -= T * f * u
-    f *= conj (t); A_(c, r) -= f;
+    f *= cond_conj (t); A_(c, r) -= f;
     for (k = c + 1; k < N; k++) A_(k, r) -= f * A_(k, c);
   }
 }
@@ -1186,9 +1196,9 @@ void eqnsys<nr_type_t>::householder_apply_right (int r, nr_type_t t) {
   for (c = r + 1; c < N; c++) {
     // calculate f = u' * A (a scalar product)
     f = A_(c, r + 1);
-    for (k = r + 2; k < N; k++) f += conj (A_(r, k)) * A_(c, k);
+    for (k = r + 2; k < N; k++) f += cond_conj (A_(r, k)) * A_(c, k);
     // calculate A -= T * f * u
-    f *= conj (t); A_(c, r + 1) -= f;
+    f *= cond_conj (t); A_(c, r + 1) -= f;
     for (k = r + 2; k < N; k++) A_(c, k) -= f * A_(r, k);
   }
 }
@@ -1210,9 +1220,9 @@ void eqnsys<nr_type_t>::householder_apply_right_extern (int r, nr_type_t t) {
   for (c = r + 1; c < N; c++) {
     // calculate f = u' * A (a scalar product)
     f = V_(c, r + 1);
-    for (k = r + 2; k < N; k++) f += conj (A_(r, k)) * V_(c, k);
+    for (k = r + 2; k < N; k++) f += cond_conj (A_(r, k)) * V_(c, k);
     // calculate A -= T * f * u
-    f *= conj (t); V_(c, r + 1) -= f;
+    f *= cond_conj (t); V_(c, r + 1) -= f;
     for (k = r + 2; k < N; k++) V_(c, k) -= f * A_(r, k);
   }
 }
@@ -1249,7 +1259,7 @@ void eqnsys<nr_type_t>::substitute_svd (void) {
     f = 0.0;
     // non-zero result only if S is non-zero
     if (S_(c) != 0.0) {
-      for (r = 0; r < N; r++) f += conj (U_(r, c)) * B_(r);
+      for (r = 0; r < N; r++) f += cond_conj (U_(r, c)) * B_(r);
       // this is the divide by S
       f /= S_(c);
     }
@@ -1257,7 +1267,7 @@ void eqnsys<nr_type_t>::substitute_svd (void) {
   }
   // matrix multiply by V to get the final solution
   for (r = 0; r < N; r++) {
-    for (f = 0.0, c = 0; c < N; c++) f += conj (V_(c, r)) * R_(c);
+    for (f = 0.0, c = 0; c < N; c++) f += cond_conj (V_(c, r)) * R_(c);
     X_(r) = f;
   }
 }
@@ -1265,6 +1275,7 @@ void eqnsys<nr_type_t>::substitute_svd (void) {
 /* The function decomposes the matrix A into three other matrices U, S
    and V'.  The matrix A is overwritten by the U matrix, S is stored
    in a separate vector and V in a separate matrix. */
+
 template <class nr_type_t>
 void eqnsys<nr_type_t>::factorize_svd (void) {
   int i, j, l;
@@ -1292,7 +1303,7 @@ void eqnsys<nr_type_t>::factorize_svd (void) {
   for (l = N, i = N - 1; i >= 0; l = i--) {
     if (i < N - 1) {
       if ((t = R_(i)) != 0.0) {
-	householder_apply_right_extern (i, conj (t));
+	householder_apply_right_extern (i, cond_conj (t));
       }
       else for (j = l; j < N; j++) // cleanup this row
 	V_(i, j) = V_(j, i) = 0.0;
@@ -1306,7 +1317,7 @@ void eqnsys<nr_type_t>::factorize_svd (void) {
     for (j = l; j < N; j++) // cleanup upper row
       A_(i, j) = 0.0;
     if ((t = T_(i)) != 0.0) {
-      householder_apply_left (i, conj (t));
+      householder_apply_left (i, cond_conj (t));
       for (j = l; j < N; j++) A_(j, i) *= -t;
     }
     else for (j = l; j < N; j++) // cleanup this column
