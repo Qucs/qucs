@@ -1,3 +1,11 @@
+<<<<<<< HEAD
+=======
+2011-03-18  Stefan Jahn  <stefan@lkcc.org>
+
+	* configure.ac: Released version 0.0.16 and bumped up to version
+        0.0.17.
+
+>>>>>>> 80028cb8206ee83926db69b5bd20c9a3c932403d
 2009-11-09  Stefan Jahn  <stefan@lkcc.org>
 
 	* configure.ac: Requiring Autoconf 2.64 version at least for

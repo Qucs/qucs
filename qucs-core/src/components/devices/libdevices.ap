@@ -1,7 +1,11 @@
 #
 # src/components/devices/libdevices.ap - Autodsp input file.
 #
+<<<<<<< HEAD
 # Copyright (C) 2005, 2007, 2008 Stefan Jahn <stefan@lkcc.org>
+=======
+# Copyright (C) 2005, 2007, 2008, 2011 Stefan Jahn <stefan@lkcc.org>
+>>>>>>> 80028cb8206ee83926db69b5bd20c9a3c932403d
 #
 # This is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -25,7 +29,11 @@ NAME = libdevices
 
 # List all sources here.
 SOURCES = device.cpp diode.cpp jfet.cpp bjt.cpp mosfet.cpp eqndefined.cpp \
+<<<<<<< HEAD
 	diac.cpp thyristor.cpp triac.cpp
+=======
+	diac.cpp thyristor.cpp triac.cpp tunneldiode.cpp
+>>>>>>> 80028cb8206ee83926db69b5bd20c9a3c932403d
 
 # Additional libraries.
 LIBS = 

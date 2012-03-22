@@ -1,7 +1,11 @@
 /*
  * coaxline.cpp - coaxial cable class implementation
  *
+<<<<<<< HEAD
  * Copyright (C) 2006, 2008, 2009 Stefan Jahn <stefan@lkcc.org>
+=======
+ * Copyright (C) 2006, 2008, 2009, 2011 Stefan Jahn <stefan@lkcc.org>
+>>>>>>> 80028cb8206ee83926db69b5bd20c9a3c932403d
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +22,11 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
+<<<<<<< HEAD
  * $Id: coaxline.cpp,v 1.6 2009/05/14 18:04:41 ela Exp $
+=======
+ * $Id$
+>>>>>>> 80028cb8206ee83926db69b5bd20c9a3c932403d
  *
  */
 
@@ -52,7 +60,11 @@ void coaxline::calcPropagation (nr_double_t frequency) {
   // calculate losses
   ad = M_PI / C0 * frequency * sqrt (er) * tand;
   rs = sqrt (M_PI * frequency * mur * MU0 * rho);
+<<<<<<< HEAD
   ac = sqrt (er) / 2 * (1 / d + 1 / D) / log (D / d) * rs / Z0;
+=======
+  ac = sqrt (er) * (1 / d + 1 / D) / log (D / d) * rs / Z0;
+>>>>>>> 80028cb8206ee83926db69b5bd20c9a3c932403d
 
   // calculate propagation constants and reference impedance
   alpha = ac + ad;

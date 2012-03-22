@@ -21,7 +21,11 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
+<<<<<<< HEAD
  * $Id: scan_citi.l,v 1.1 2006/06/06 07:45:51 raimi Exp $
+=======
+ * $Id$
+>>>>>>> 80028cb8206ee83926db69b5bd20c9a3c932403d
  *
  */
 

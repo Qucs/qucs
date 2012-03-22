@@ -1,7 +1,11 @@
 /*
  * evaluate.cpp - the Qucs equation evaluator implementations
  *
+<<<<<<< HEAD
  * Copyright (C) 2004-2009 Stefan Jahn <stefan@lkcc.org>
+=======
+ * Copyright (C) 2004-2011 Stefan Jahn <stefan@lkcc.org>
+>>>>>>> 80028cb8206ee83926db69b5bd20c9a3c932403d
  * Copyright (C) 2006 Gunther Kraut <gn.kraut@t-online.de>
  *
  * This is free software; you can redistribute it and/or modify
@@ -19,7 +23,11 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
+<<<<<<< HEAD
  * $Id: evaluate.cpp,v 1.86 2009/10/31 17:18:27 ela Exp $
+=======
+ * $Id$
+>>>>>>> 80028cb8206ee83926db69b5bd20c9a3c932403d
  *
  */
 
@@ -2085,7 +2093,11 @@ void evaluate::extract_vector (constant * args, int idx, int &skip, int &size,
       // independent vectors
       range * r = RNG (_ARES (idx));
       int i, n, k;
+<<<<<<< HEAD
       int len = v->getSize ();
+=======
+      int len = res->v->getSize ();
+>>>>>>> 80028cb8206ee83926db69b5bd20c9a3c932403d
       i = (int) r->lo ();
       if (i < 0 || i >= len) {
 	char txt[256];
@@ -4289,6 +4301,90 @@ constant * evaluate::equal_d_d (constant * args) {
   _RETB (d0 == d1);
 }
 
+<<<<<<< HEAD
+=======
+constant * evaluate::equal_d_c (constant * args) {
+  _ARD0 (d0);
+  _ARC1 (c1);
+  _DEFB ();
+  _RETB (d0 == *c1);
+}
+
+constant * evaluate::equal_d_v (constant * args) {
+  _ARD0 (d0);
+  _ARV1 (v1);
+  _DEFV ();
+  vector * v = new vector ();
+  for (int i = 0; i < v1->getSize (); i++) {
+    v->add (d0 == real (v1->get (i)) ? 1.0 : 0.0);
+  }
+  res->v = v;
+  return res;
+}
+
+constant * evaluate::equal_c_d (constant * args) {
+  _ARC0 (c0);
+  _ARD1 (d1);
+  _DEFB ();
+  _RETB (*c0 == d1);
+}
+
+constant * evaluate::equal_c_c (constant * args) {
+  _ARC0 (c0);
+  _ARC1 (c1);
+  _DEFB ();
+  _RETB (*c0 == *c1);
+}
+
+constant * evaluate::equal_c_v (constant * args) {
+  _ARC0 (c0);
+  _ARV1 (v1);
+  _DEFV ();
+  vector * v = new vector ();
+  for (int i = 0; i < v1->getSize (); i++) {
+    v->add (*c0 == v1->get (i) ? 1.0 : 0.0);
+  }
+  res->v = v;
+  return res;
+}
+
+constant * evaluate::equal_v_d (constant * args) {
+  _ARV0 (v0);
+  _ARD1 (d1);
+  _DEFV ();
+  vector * v = new vector ();
+  for (int i = 0; i < v0->getSize (); i++) {
+    v->add (real (v0->get (i)) == d1 ? 1.0 : 0.0);
+  }
+  res->v = v;
+  return res;
+}
+
+constant * evaluate::equal_v_c (constant * args) {
+  _ARV0 (v0);
+  _ARC1 (c1);
+  _DEFV ();
+  vector * v = new vector ();
+  for (int i = 0; i < v0->getSize (); i++) {
+    v->add (v0->get (i) == *c1 ? 1.0 : 0.0);
+  }
+  res->v = v;
+  return res;
+}
+
+constant * evaluate::equal_v_v (constant * args) {
+  _ARV0 (v0);
+  _ARV1 (v1);
+  _DEFV ();
+  vector * v = new vector ();
+  for (int i = 0; i < v0->getSize (); i++) {
+    v->add (v0->get (i) == v1->get (i) ? 1.0 : 0.0);
+  }
+  res->v = v;
+  return res;
+}
+
+>>>>>>> 80028cb8206ee83926db69b5bd20c9a3c932403d
 constant * evaluate::equal_b_b (constant * args) {
   _ARB0 (b0);
   _ARB1 (b1);
@@ -4304,6 +4400,90 @@ constant * evaluate::notequal_d_d (constant * args) {
   _RETB (d0 != d1);
 }
 
+<<<<<<< HEAD
+=======
+constant * evaluate::notequal_d_c (constant * args) {
+  _ARD0 (d0);
+  _ARC1 (c1);
+  _DEFB ();
+  _RETB (d0 != *c1);
+}
+
+constant * evaluate::notequal_d_v (constant * args) {
+  _ARD0 (d0);
+  _ARV1 (v1);
+  _DEFV ();
+  vector * v = new vector ();
+  for (int i = 0; i < v1->getSize (); i++) {
+    v->add (d0 != real (v1->get (i)) ? 1.0 : 0.0);
+  }
+  res->v = v;
+  return res;
+}
+
+constant * evaluate::notequal_c_d (constant * args) {
+  _ARC0 (c0);
+  _ARD1 (d1);
+  _DEFB ();
+  _RETB (*c0 != d1);
+}
+
+constant * evaluate::notequal_c_c (constant * args) {
+  _ARC0 (c0);
+  _ARC1 (c1);
+  _DEFB ();
+  _RETB (*c0 != *c1);
+}
+
+constant * evaluate::notequal_c_v (constant * args) {
+  _ARC0 (c0);
+  _ARV1 (v1);
+  _DEFV ();
+  vector * v = new vector ();
+  for (int i = 0; i < v1->getSize (); i++) {
+    v->add (*c0 != v1->get (i) ? 1.0 : 0.0);
+  }
+  res->v = v;
+  return res;
+}
+
+constant * evaluate::notequal_v_d (constant * args) {
+  _ARV0 (v0);
+  _ARD1 (d1);
+  _DEFV ();
+  vector * v = new vector ();
+  for (int i = 0; i < v0->getSize (); i++) {
+    v->add (real (v0->get (i)) != d1 ? 1.0 : 0.0);
+  }
+  res->v = v;
+  return res;
+}
+
+constant * evaluate::notequal_v_c (constant * args) {
+  _ARV0 (v0);
+  _ARC1 (c1);
+  _DEFV ();
+  vector * v = new vector ();
+  for (int i = 0; i < v0->getSize (); i++) {
+    v->add (v0->get (i) != *c1 ? 1.0 : 0.0);
+  }
+  res->v = v;
+  return res;
+}
+
+constant * evaluate::notequal_v_v (constant * args) {
+  _ARV0 (v0);
+  _ARV1 (v1);
+  _DEFV ();
+  vector * v = new vector ();
+  for (int i = 0; i < v0->getSize (); i++) {
+    v->add (v0->get (i) != v1->get (i) ? 1.0 : 0.0);
+  }
+  res->v = v;
+  return res;
+}
+
+>>>>>>> 80028cb8206ee83926db69b5bd20c9a3c932403d
 constant * evaluate::notequal_b_b (constant * args) {
   _ARB0 (b0);
   _ARB1 (b1);

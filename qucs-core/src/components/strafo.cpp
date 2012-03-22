@@ -1,7 +1,11 @@
 /*
  * strafo.cpp - symmetrical trafo class implementation
  *
+<<<<<<< HEAD
  * Copyright (C) 2003, 2004, 2005, 2008 Stefan Jahn <stefan@lkcc.org>
+=======
+ * Copyright (C) 2003, 2004, 2005, 2008, 2011 Stefan Jahn <stefan@lkcc.org>
+>>>>>>> 80028cb8206ee83926db69b5bd20c9a3c932403d
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +22,11 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
+<<<<<<< HEAD
  * $Id: strafo.cpp,v 1.15 2008/10/07 20:15:32 ela Exp $
+=======
+ * $Id$
+>>>>>>> 80028cb8206ee83926db69b5bd20c9a3c932403d
  *
  */
 
@@ -31,7 +39,10 @@
 
 strafo::strafo () : circuit (6) {
   type = CIR_STRAFO;
+<<<<<<< HEAD
   setVoltageSources (2);
+=======
+>>>>>>> 80028cb8206ee83926db69b5bd20c9a3c932403d
 }
 
 void strafo::initSP (void) {
@@ -70,9 +81,24 @@ void strafo::initSP (void) {
 }
 
 void strafo::initDC (void) {
+<<<<<<< HEAD
   nr_double_t t1 = getPropertyDouble ("T1");
   nr_double_t t2 = getPropertyDouble ("T2");
 
+=======
+  setVoltageSources (3);
+  allocMatrixMNA ();
+  voltageSource (VSRC_1, NODE_1, NODE_6);
+  voltageSource (VSRC_2, NODE_5, NODE_4);
+  voltageSource (VSRC_3, NODE_2, NODE_3);
+}
+
+void strafo::initAC (void) {
+  nr_double_t t1 = getPropertyDouble ("T1");
+  nr_double_t t2 = getPropertyDouble ("T2");
+
+  setVoltageSources (2);
+>>>>>>> 80028cb8206ee83926db69b5bd20c9a3c932403d
   allocMatrixMNA ();
 
   setB (NODE_1, VSRC_1, -1.0); setB (NODE_2, VSRC_1, + t1);
@@ -95,12 +121,17 @@ void strafo::initDC (void) {
   setE (VSRC_2, 0.0);
 }
 
+<<<<<<< HEAD
 void strafo::initAC (void) {
   initDC ();
 }
 
 void strafo::initTR (void) {
   initDC ();
+=======
+void strafo::initTR (void) {
+  initAC ();
+>>>>>>> 80028cb8206ee83926db69b5bd20c9a3c932403d
 }
 
 // properties

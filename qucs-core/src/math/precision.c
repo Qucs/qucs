@@ -18,7 +18,11 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
+<<<<<<< HEAD
  * $Id: precision.c,v 1.2 2009/10/05 16:10:58 ela Exp $
+=======
+ * $Id$
+>>>>>>> 80028cb8206ee83926db69b5bd20c9a3c932403d
  *
  */
 

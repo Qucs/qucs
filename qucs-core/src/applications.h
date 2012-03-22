@@ -1,7 +1,11 @@
 /*
  * applications.h - the Qucs application list
  *
+<<<<<<< HEAD
  * Copyright (C) 2005, 2006, 2007, 2008, 2009 Stefan Jahn <stefan@lkcc.org>
+=======
+ * Copyright (C) 2005-2011 Stefan Jahn <stefan@lkcc.org>
+>>>>>>> 80028cb8206ee83926db69b5bd20c9a3c932403d
  * Copyright (C) 2006 Gunther Kraut <gn.kraut@t-online.de>
  *
  * This is free software; you can redistribute it and/or modify
@@ -19,7 +23,11 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
+<<<<<<< HEAD
  * $Id: applications.h,v 1.35 2009/10/31 17:18:27 ela Exp $
+=======
+ * $Id$
+>>>>>>> 80028cb8206ee83926db69b5bd20c9a3c932403d
  *
  */
 
@@ -892,10 +900,35 @@ struct application_t eqn::applications[] = {
   { "?:", TAG_VECTOR,  evaluate::ifthenelse_v_v_v, 3,
     { TAG_VECTOR, TAG_COMPLEX, TAG_VECTOR } },
   { "?:", TAG_VECTOR,  evaluate::ifthenelse_v_v_v, 3,
+<<<<<<< HEAD
     { TAG_VECTOR, TAG_VECTOR,  TAG_BOOLEAN } },
   { "?:", TAG_VECTOR,  evaluate::ifthenelse_v_v_v, 3,
     { TAG_VECTOR, TAG_VECTOR,  TAG_DOUBLE } },
   { "?:", TAG_VECTOR,  evaluate::ifthenelse_v_v_v, 3,
+=======
+    { TAG_VECTOR, TAG_BOOLEAN, TAG_BOOLEAN } },
+  { "?:", TAG_VECTOR,  evaluate::ifthenelse_v_v_v, 3,
+    { TAG_VECTOR, TAG_DOUBLE,  TAG_BOOLEAN } },
+  { "?:", TAG_VECTOR,  evaluate::ifthenelse_v_v_v, 3,
+    { TAG_VECTOR, TAG_COMPLEX, TAG_BOOLEAN } },
+  { "?:", TAG_VECTOR,  evaluate::ifthenelse_v_v_v, 3,
+    { TAG_VECTOR, TAG_VECTOR,  TAG_BOOLEAN } },
+  { "?:", TAG_VECTOR,  evaluate::ifthenelse_v_v_v, 3,
+    { TAG_VECTOR, TAG_BOOLEAN, TAG_DOUBLE } },
+  { "?:", TAG_VECTOR,  evaluate::ifthenelse_v_v_v, 3,
+    { TAG_VECTOR, TAG_DOUBLE,  TAG_DOUBLE } },
+  { "?:", TAG_VECTOR,  evaluate::ifthenelse_v_v_v, 3,
+    { TAG_VECTOR, TAG_COMPLEX, TAG_DOUBLE } },
+  { "?:", TAG_VECTOR,  evaluate::ifthenelse_v_v_v, 3,
+    { TAG_VECTOR, TAG_VECTOR,  TAG_DOUBLE } },
+  { "?:", TAG_VECTOR,  evaluate::ifthenelse_v_v_v, 3,
+    { TAG_VECTOR, TAG_BOOLEAN, TAG_COMPLEX } },
+  { "?:", TAG_VECTOR,  evaluate::ifthenelse_v_v_v, 3,
+    { TAG_VECTOR, TAG_DOUBLE,  TAG_COMPLEX } },
+  { "?:", TAG_VECTOR,  evaluate::ifthenelse_v_v_v, 3,
+    { TAG_VECTOR, TAG_COMPLEX, TAG_COMPLEX } },
+  { "?:", TAG_VECTOR,  evaluate::ifthenelse_v_v_v, 3,
+>>>>>>> 80028cb8206ee83926db69b5bd20c9a3c932403d
     { TAG_VECTOR, TAG_VECTOR,  TAG_COMPLEX } },
 
   { "<=", TAG_BOOLEAN, evaluate::lessorequal_d_d, 2,
@@ -965,8 +998,49 @@ struct application_t eqn::applications[] = {
   { ">",  TAG_VECTOR,  evaluate::greater_v_v, 2,
     { TAG_VECTOR,  TAG_VECTOR  } },
 
+<<<<<<< HEAD
   { "==", TAG_BOOLEAN, evaluate::equal_d_d, 2,    { TAG_DOUBLE, TAG_DOUBLE } },
   { "!=", TAG_BOOLEAN, evaluate::notequal_d_d, 2, { TAG_DOUBLE, TAG_DOUBLE } },
+=======
+  { "==", TAG_BOOLEAN, evaluate::equal_d_d, 2,
+    { TAG_DOUBLE, TAG_DOUBLE } },
+  { "==", TAG_BOOLEAN, evaluate::equal_d_c, 2,
+    { TAG_DOUBLE, TAG_COMPLEX } },
+  { "==", TAG_BOOLEAN, evaluate::equal_d_v, 2,
+    { TAG_DOUBLE, TAG_VECTOR } },
+  { "==",  TAG_BOOLEAN, evaluate::equal_c_d, 2,
+    { TAG_COMPLEX, TAG_DOUBLE  } },
+  { "==",  TAG_BOOLEAN, evaluate::equal_c_c, 2,
+    { TAG_COMPLEX, TAG_COMPLEX } },
+  { "==",  TAG_VECTOR,  evaluate::equal_c_v, 2,
+    { TAG_COMPLEX, TAG_VECTOR  } },
+  { "==",  TAG_VECTOR,  evaluate::equal_v_d, 2,
+    { TAG_VECTOR,  TAG_DOUBLE  } },
+  { "==",  TAG_VECTOR,  evaluate::equal_v_c, 2,
+    { TAG_VECTOR,  TAG_COMPLEX } },
+  { "==",  TAG_VECTOR,  evaluate::equal_v_v, 2,
+    { TAG_VECTOR,  TAG_VECTOR  } },
+
+  { "!=", TAG_BOOLEAN, evaluate::notequal_d_d, 2,
+    { TAG_DOUBLE, TAG_DOUBLE } },
+  { "!=", TAG_BOOLEAN, evaluate::notequal_d_c, 2,
+    { TAG_DOUBLE, TAG_COMPLEX } },
+  { "!=", TAG_BOOLEAN, evaluate::notequal_d_v, 2,
+    { TAG_DOUBLE, TAG_VECTOR } },
+  { "!=",  TAG_BOOLEAN, evaluate::notequal_c_d, 2,
+    { TAG_COMPLEX, TAG_DOUBLE  } },
+  { "!=",  TAG_BOOLEAN, evaluate::notequal_c_c, 2,
+    { TAG_COMPLEX, TAG_COMPLEX } },
+  { "!=",  TAG_VECTOR,  evaluate::notequal_c_v, 2,
+    { TAG_COMPLEX, TAG_VECTOR  } },
+  { "!=",  TAG_VECTOR,  evaluate::notequal_v_d, 2,
+    { TAG_VECTOR,  TAG_DOUBLE  } },
+  { "!=",  TAG_VECTOR,  evaluate::notequal_v_c, 2,
+    { TAG_VECTOR,  TAG_COMPLEX } },
+  { "!=",  TAG_VECTOR,  evaluate::notequal_v_v, 2,
+    { TAG_VECTOR,  TAG_VECTOR  } },
+
+>>>>>>> 80028cb8206ee83926db69b5bd20c9a3c932403d
   { "!",  TAG_BOOLEAN, evaluate::not_b, 1,   { TAG_BOOLEAN } },
   { "||", TAG_BOOLEAN, evaluate::or_b_b, 2,  { TAG_BOOLEAN, TAG_BOOLEAN } },
   { "&&", TAG_BOOLEAN, evaluate::and_b_b, 2, { TAG_BOOLEAN, TAG_BOOLEAN } },

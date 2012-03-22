@@ -1,7 +1,11 @@
 -- 
 -- NEWS
 -- 
+<<<<<<< HEAD
 -- Copyright (C) 2003-2010 Stefan Jahn <stefan@lkcc.org>
+=======
+-- Copyright (C) 2003-2011 Stefan Jahn <stefan@lkcc.org>
+>>>>>>> 80028cb8206ee83926db69b5bd20c9a3c932403d
 -- 
 -- This is free software; you can redistribute it and/or modify
 -- it under the terms of the GNU General Public License as published by
@@ -23,12 +27,26 @@ This file lists user visible changes that were made between releases.  For
 more verbose descriptions of these and internal changes see the ChangeLog
 files.
 
+<<<<<<< HEAD
 Version 0.0.16
 --------------
 
  * implementation of EMI receiver functionality in the equation solver
  * support for Matlab v4 as an export file format in qucsconv
  * new Verilog-A device model: NIGBT, HICUM L2 v2.24, HICUM L0 v1.2g
+=======
+Version 0.0.17
+--------------
+
+Version 0.0.16
+--------------
+
+ * new models: hybrid, ideal coupled transmission line, tunnel diode
+ * implementation of EMI receiver functionality in the equation solver
+ * support for Matlab v4 as an export file format in qucsconv
+ * new Verilog-A device model: NIGBT, HICUM L2 v2.24, HICUM L0 v1.2g,
+   HICUM L0 v1.3
+>>>>>>> 80028cb8206ee83926db69b5bd20c9a3c932403d
 
 Version 0.0.15
 --------------

@@ -1,7 +1,11 @@
 /*
  * trafo.cpp - trafo class implementation
  *
+<<<<<<< HEAD
  * Copyright (C) 2003, 2004, 2005, 2008 Stefan Jahn <stefan@lkcc.org>
+=======
+ * Copyright (C) 2003, 2004, 2005, 2008, 2011 Stefan Jahn <stefan@lkcc.org>
+>>>>>>> 80028cb8206ee83926db69b5bd20c9a3c932403d
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +22,11 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
+<<<<<<< HEAD
  * $Id: trafo.cpp,v 1.15 2008/10/07 20:15:32 ela Exp $
+=======
+ * $Id$
+>>>>>>> 80028cb8206ee83926db69b5bd20c9a3c932403d
  *
  */
 
@@ -31,7 +39,10 @@
 
 trafo::trafo () : circuit (4) {
   type = CIR_TRAFO;
+<<<<<<< HEAD
   setVoltageSources (1);
+=======
+>>>>>>> 80028cb8206ee83926db69b5bd20c9a3c932403d
 }
 
 void trafo::initSP (void) {
@@ -52,7 +63,19 @@ void trafo::initSP (void) {
 }
 
 void trafo::initDC (void) {
+<<<<<<< HEAD
   nr_double_t t = getPropertyDouble ("T");
+=======
+  setVoltageSources (2);
+  allocMatrixMNA ();
+  voltageSource (VSRC_1, NODE_1, NODE_4);
+  voltageSource (VSRC_2, NODE_2, NODE_3);
+}
+
+void trafo::initAC (void) {
+  nr_double_t t = getPropertyDouble ("T");
+  setVoltageSources (1);
+>>>>>>> 80028cb8206ee83926db69b5bd20c9a3c932403d
   allocMatrixMNA ();
   setB (NODE_1, VSRC_1, -1); setB (NODE_2, VSRC_1, +t);
   setB (NODE_3, VSRC_1, -t); setB (NODE_4, VSRC_1, +1);
@@ -62,12 +85,17 @@ void trafo::initDC (void) {
   setE (VSRC_1, 0);
 }
 
+<<<<<<< HEAD
 void trafo::initAC (void) {
   initDC ();
 }
 
 void trafo::initTR (void) {
   initDC ();
+=======
+void trafo::initTR (void) {
+  initAC ();
+>>>>>>> 80028cb8206ee83926db69b5bd20c9a3c932403d
 }
 
 // properties

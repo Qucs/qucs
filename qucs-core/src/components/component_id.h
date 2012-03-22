@@ -1,7 +1,11 @@
 /*
  * component_id.h - global component identifier header file
  *
+<<<<<<< HEAD
  * Copyright (C) 2003-2010 Stefan Jahn <stefan@lkcc.org>
+=======
+ * Copyright (C) 2003-2011 Stefan Jahn <stefan@lkcc.org>
+>>>>>>> 80028cb8206ee83926db69b5bd20c9a3c932403d
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +22,11 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
+<<<<<<< HEAD
  * $Id: component_id.h,v 1.69 2010/11/06 18:47:59 ela Exp $
+=======
+ * $Id$
+>>>>>>> 80028cb8206ee83926db69b5bd20c9a3c932403d
  *
  */
 
@@ -72,6 +80,10 @@ enum circuit_type {
   CIR_TSWITCH,
   CIR_RELAIS,
   CIR_TLINE,
+<<<<<<< HEAD
+=======
+  CIR_CTLINE,
+>>>>>>> 80028cb8206ee83926db69b5bd20c9a3c932403d
   CIR_COAXLINE,
   CIR_RECTANGULAR,
   CIR_TWISTEDPAIR,
@@ -86,6 +98,10 @@ enum circuit_type {
   CIR_IRECT,
   CIR_AMPLIFIER,
   CIR_COUPLER,
+<<<<<<< HEAD
+=======
+  CIR_HYBRID,
+>>>>>>> 80028cb8206ee83926db69b5bd20c9a3c932403d
   CIR_RFEDD,
 
   // noise sources
@@ -127,6 +143,10 @@ enum circuit_type {
   CIR_DIAC,
   CIR_TRIAC,
   CIR_THYRISTOR,
+<<<<<<< HEAD
+=======
+  CIR_TUNNELDIODE,
+>>>>>>> 80028cb8206ee83926db69b5bd20c9a3c932403d
 
   // digital components
   CIR_INVERTER,
@@ -151,6 +171,10 @@ enum circuit_type {
   CIR_EKV26MOS,
   CIR_hicumL0V1p2,
   CIR_hicumL0V1p2g,
+<<<<<<< HEAD
+=======
+  CIR_hicumL0V1p3,
+>>>>>>> 80028cb8206ee83926db69b5bd20c9a3c932403d
   CIR_hicumL2V2p23,
   CIR_hicumL2V2p24,
   CIR_photodiode,

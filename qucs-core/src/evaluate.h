@@ -1,7 +1,11 @@
 /*
  * evaluate.h - definitions for Qucs equation evaluations
  *
+<<<<<<< HEAD
  * Copyright (C) 2004, 2005, 2006, 2007, 2009 Stefan Jahn <stefan@lkcc.org>
+=======
+ * Copyright (C) 2004-2011 Stefan Jahn <stefan@lkcc.org>
+>>>>>>> 80028cb8206ee83926db69b5bd20c9a3c932403d
  * Copyright (C) 2006 Gunther Kraut <gn.kraut@t-online.de>
  *
  * This is free software; you can redistribute it and/or modify
@@ -19,7 +23,11 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
+<<<<<<< HEAD
  * $Id: evaluate.h,v 1.51 2009/10/31 17:18:27 ela Exp $
+=======
+ * $Id$
+>>>>>>> 80028cb8206ee83926db69b5bd20c9a3c932403d
  *
  */
 
@@ -750,8 +758,29 @@ public:
   static constant * greaterorequal_v_c (constant *);
   static constant * greaterorequal_v_v (constant *);
   static constant * equal_d_d (constant *);
+<<<<<<< HEAD
   static constant * equal_b_b (constant *);
   static constant * notequal_d_d (constant *);
+=======
+  static constant * equal_d_c (constant *);
+  static constant * equal_d_v (constant *);
+  static constant * equal_c_d (constant *);
+  static constant * equal_c_c (constant *);
+  static constant * equal_c_v (constant *);
+  static constant * equal_v_d (constant *);
+  static constant * equal_v_c (constant *);
+  static constant * equal_v_v (constant *);
+  static constant * equal_b_b (constant *);
+  static constant * notequal_d_d (constant *);
+  static constant * notequal_d_c (constant *);
+  static constant * notequal_d_v (constant *);
+  static constant * notequal_c_d (constant *);
+  static constant * notequal_c_c (constant *);
+  static constant * notequal_c_v (constant *);
+  static constant * notequal_v_d (constant *);
+  static constant * notequal_v_c (constant *);
+  static constant * notequal_v_v (constant *);
+>>>>>>> 80028cb8206ee83926db69b5bd20c9a3c932403d
   static constant * notequal_b_b (constant *);
   static constant * not_b (constant *);
   static constant * or_b_b (constant *);

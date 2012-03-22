@@ -1,3 +1,18 @@
+<<<<<<< HEAD
+=======
+2011-03-10  Stefan Jahn  <stefan@lkcc.org>
+
+	* evaluate.cpp: Fixed out-of-bounds segfault in [] operator.
+
+2011-03-07  Stefan Jahn  <stefan@lkcc.org>
+
+	* applications.h: Stated more possible combinations for ?:
+	operation.
+
+	* evaluate.cpp: Implemented 'equal' (== and !=) operations for
+	more argument variations.
+
+>>>>>>> 80028cb8206ee83926db69b5bd20c9a3c932403d
 2009-11-12  Stefan Jahn  <stefan@lkcc.org>
 
 	* interpolator.cpp (cinterpolate): Implemented complex data

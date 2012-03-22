@@ -18,7 +18,11 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
+<<<<<<< HEAD
  * $Id: module.cpp,v 1.15 2010/11/06 18:47:59 ela Exp $
+=======
+ * $Id$
+>>>>>>> 80028cb8206ee83926db69b5bd20c9a3c932403d
  *
  */
 
@@ -171,17 +175,29 @@ void module::registerModules (void) {
   REGISTER_CIRCUIT (relais);
   REGISTER_CIRCUIT (tline);
   REGISTER_CIRCUIT (tline4p);
+<<<<<<< HEAD
+=======
+  REGISTER_CIRCUIT (ctline);
+>>>>>>> 80028cb8206ee83926db69b5bd20c9a3c932403d
   REGISTER_CIRCUIT (coaxline);
   REGISTER_CIRCUIT (rectline);
   REGISTER_CIRCUIT (twistedpair);
   REGISTER_CIRCUIT (rlcg);
   REGISTER_CIRCUIT (coupler);
+<<<<<<< HEAD
+=======
+  REGISTER_CIRCUIT (hybrid);
+>>>>>>> 80028cb8206ee83926db69b5bd20c9a3c932403d
   REGISTER_CIRCUIT (diode);
   REGISTER_CIRCUIT (eqndefined);
   REGISTER_CIRCUIT (rfedd);
   REGISTER_CIRCUIT (diac);
   REGISTER_CIRCUIT (thyristor);
   REGISTER_CIRCUIT (triac);
+<<<<<<< HEAD
+=======
+  REGISTER_CIRCUIT (tunneldiode);
+>>>>>>> 80028cb8206ee83926db69b5bd20c9a3c932403d
   REGISTER_CIRCUIT (msline);
   REGISTER_CIRCUIT (mscorner);
   REGISTER_CIRCUIT (msstep);
@@ -236,6 +252,10 @@ void module::registerModules (void) {
   REGISTER_CIRCUIT (EKV26MOS);
   REGISTER_CIRCUIT (hicumL0V1p2);
   REGISTER_CIRCUIT (hicumL0V1p2g);
+<<<<<<< HEAD
+=======
+  REGISTER_CIRCUIT (hicumL0V1p3);
+>>>>>>> 80028cb8206ee83926db69b5bd20c9a3c932403d
   REGISTER_CIRCUIT (hicumL2V2p23);
   REGISTER_CIRCUIT (hicumL2V2p24);
   REGISTER_CIRCUIT (photodiode);

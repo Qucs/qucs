@@ -1,7 +1,11 @@
 /*
  * check_spice.cpp - checker for a Spice netlist
  *
+<<<<<<< HEAD
  * Copyright (C) 2004-2010 Stefan Jahn <stefan@lkcc.org>
+=======
+ * Copyright (C) 2004-2011 Stefan Jahn <stefan@lkcc.org>
+>>>>>>> 80028cb8206ee83926db69b5bd20c9a3c932403d
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +22,11 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
+<<<<<<< HEAD
  * $Id: check_spice.cpp,v 1.58 2010/10/23 15:29:13 ela Exp $
+=======
+ * $Id$
+>>>>>>> 80028cb8206ee83926db69b5bd20c9a3c932403d
  *
  */
 
@@ -654,7 +662,13 @@ static void spice_adjust_device (struct definition_t * def,
 	    def->pairs = spice_del_property (def->pairs, p2);
 	    if (level == 0) {
 	      if (version >= 1.11) {
+<<<<<<< HEAD
 		if (version >= 1.3)
+=======
+		if (version >= 1.2e9)
+		  def->type = strdup ("hicumL0V1p2g");
+		else if (version >= 1.3)
+>>>>>>> 80028cb8206ee83926db69b5bd20c9a3c932403d
 		  def->type = strdup ("hicumL0V1p3");
 		else if (version >= 1.2)
 		  def->type = strdup ("hicumL0V1p2");
@@ -1505,11 +1519,17 @@ spice_translate_source (struct definition_t * root,
       spice_set_property_value (pulse, ui, v);
       v  = spice_get_property_value (pulse, "TH"); // PW
       v += spice_get_property_value (pulse, "Tr");
+<<<<<<< HEAD
       v += spice_get_property_value (pulse, "Tf");
       spice_set_property_value (pulse, "TH", v);
       v  = spice_get_property_value (pulse, "TL"); // PER
       v -= spice_get_property_value (pulse, "TH");
       v -= spice_get_property_value (pulse, "Td");
+=======
+      spice_set_property_value (pulse, "TH", v);
+      v  = spice_get_property_value (pulse, "TL"); // PER
+      v -= spice_get_property_value (pulse, "TH");
+>>>>>>> 80028cb8206ee83926db69b5bd20c9a3c932403d
       spice_set_property_value (pulse, "TL", v);
     }
     // single pulse

@@ -1,7 +1,11 @@
 /*
  * qucs_producer.cpp - the Qucs netlist producer
  *
+<<<<<<< HEAD
  * Copyright (C) 2004-2010 Stefan Jahn <stefan@lkcc.org>
+=======
+ * Copyright (C) 2004-2011 Stefan Jahn <stefan@lkcc.org>
+>>>>>>> 80028cb8206ee83926db69b5bd20c9a3c932403d
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +22,11 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
+<<<<<<< HEAD
  * $Id: qucs_producer.cpp,v 1.35 2010/11/06 18:47:59 ela Exp $
+=======
+ * $Id$
+>>>>>>> 80028cb8206ee83926db69b5bd20c9a3c932403d
  *
  */
 
@@ -348,6 +356,7 @@ qucs_devices[] = {
   },
   /* hicum/l0 v1.3 bipolar transistor */
   { "hicumL0V1p3", "hicumL0V1p3", "Q", 5,
+<<<<<<< HEAD
     { "Type", "is", "mcf", "mcr", "vef", "ver", "iqf", "fiqf", "iqr", "iqfh",
       "iqfe", "ahq", "ibes", "mbe", "ires", "mre", "ibcs", "mbc", "cje0",
       "vde", "ze", "aje", "vdedc", "zedc", "ajedc", "t0", "dt0h", "tbvl",
@@ -360,6 +369,20 @@ qucs_devices[] = {
       "zetarbx", "zetarcx", "zetare", "zetaiqf", "alkav", "aleav", "zetarth",
       "flsh", "rth", "cth", "tnom", "dt", "delte", "deltc", "zetaver",
       "zetavef", "ibhrec", "Temp", NULL },
+=======
+    { "Type", "is", "it_mod", "mcf", "mcr", "vef", "ver", "aver", "iqf",
+      "fiqf", "iqr", "iqfh", "tfh", "ahq", "ibes", "mbe", "ires", "mre",
+      "ibcs", "mbc", "cje0", "vde", "ze", "aje", "vdedc", "zedc", "ajedc",
+      "t0", "dt0h", "tbvl", "tef0", "gte", "thcs", "ahc", "tr", "rci0",
+      "vlim", "vpt", "vces", "cjci0", "vdci", "zci", "vptci", "cjcx0", "vdcx",
+      "zcx", "vptcx", "fbc", "rbi0", "vr0e", "vr0c", "fgeo", "rbx", "rcx",
+      "re", "itss", "msf", "iscs", "msc", "cjs0", "vds", "zs", "vpts",
+      "cbcpar", "cbepar", "eavl", "kavl", "kf", "af", "vgb", "vge", "vgc",
+      "vgs", "f1vg", "f2vg", "alt0", "kt0", "zetact", "zetabet", "zetaci",
+      "alvs", "alces", "zetarbi", "zetarbx", "zetarcx", "zetare", "zetaiqf",
+      "alkav", "aleav", "zetarth", "tef_temp", "zetaver", "zetavgbe", "dvgbe",
+      "aliqfh", "kiqfh", "flsh", "rth", "cth", "tnom", "dt", "Temp", NULL },
+>>>>>>> 80028cb8206ee83926db69b5bd20c9a3c932403d
     NULL,
     "1 0 0 8 -26 0 0",
     NULL

@@ -1,6 +1,10 @@
 /*
  * RCS Info
+<<<<<<< HEAD
  * $Id: constants.vams,v 1.2 2006/10/31 12:25:37 raimi Exp $
+=======
+ * $Id$
+>>>>>>> 80028cb8206ee83926db69b5bd20c9a3c932403d
  *
  */
 
