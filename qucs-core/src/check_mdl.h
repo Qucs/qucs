@@ -38,7 +38,7 @@ __BEGIN_DECLS
 /* Available functions of the checker. */
 int  mdl_check (void);
 int  mdl_parse (void);
-int  mdl_error (char *);
+int  mdl_error (const char *);
 int  mdl_lex (void);
 int  mdl_lex_destroy (void);
 void mdl_destroy (void);

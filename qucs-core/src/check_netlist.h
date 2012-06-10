@@ -46,7 +46,7 @@ void netlist_destroy (void);
 void netlist_destroy_env (void);
 int  netlist_checker (environment *);
 int  netlist_parse (void);
-int  netlist_error (char *);
+int  netlist_error (const char *);
 int  netlist_lex (void);
 int  netlist_lex_destroy (void);
 int  netlist_checker_variables (environment *);

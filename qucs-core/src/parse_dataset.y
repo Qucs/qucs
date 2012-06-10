@@ -144,7 +144,7 @@ IdentifierList: /* nothing */ { $$ = dataset_idents = new strlist (); }
 
 %%
 
-int dataset_error (char * error) {
+int dataset_error (const char * error) {
   logprint (LOG_ERROR, "line %d: %s\n", dataset_lineno, error);
   return 0;
 }

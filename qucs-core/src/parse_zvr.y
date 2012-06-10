@@ -190,7 +190,7 @@ DataHeader:
 
 %%
 
-int zvr_error (char * error) {
+int zvr_error (const char * error) {
   fprintf (stderr, "line %d: %s\n", zvr_lineno, error);
   return 0;
 }

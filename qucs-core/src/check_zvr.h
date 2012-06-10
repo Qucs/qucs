@@ -38,7 +38,7 @@ __BEGIN_DECLS
 /* Available functions of the checker. */
 int  zvr_check (void);
 int  zvr_parse (void);
-int  zvr_error (char *);
+int  zvr_error (const char *);
 int  zvr_lex (void);
 int  zvr_lex_destroy (void);
 void zvr_destroy (void);

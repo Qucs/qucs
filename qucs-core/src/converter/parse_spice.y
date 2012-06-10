@@ -955,7 +955,7 @@ SubBodyLine:
 
 %%
 
-int spice_error (char * error) {
+int spice_error (const char * error) {
   fprintf (stderr, "line %d: %s\n", spice_lineno, error);
   return 0;
 }

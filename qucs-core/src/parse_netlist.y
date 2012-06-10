@@ -650,7 +650,7 @@ DefBodyLine:
 
 %%
 
-int netlist_error (char * error) {
+int netlist_error (const char * error) {
   logprint (LOG_ERROR, "line %d: %s\n", netlist_lineno, error);
   return 0;
 }

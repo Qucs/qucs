@@ -131,7 +131,7 @@ DataList: /* nothing */ { $$ = NULL; }
 
 %%
 
-int csv_error (char * error) {
+int csv_error (const char * error) {
   logprint (LOG_ERROR, "line %d: %s\n", csv_lineno, error);
   return 0;
 }

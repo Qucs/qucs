@@ -44,7 +44,7 @@ extern int vcd_correct;
 /* Available functions of the checker. */
 int  vcd_checker (void);
 int  vcd_parse (void);
-int  vcd_error (char *);
+int  vcd_error (const char *);
 int  vcd_lex (void);
 int  vcd_lex_destroy (void);
 void vcd_destroy (void);
