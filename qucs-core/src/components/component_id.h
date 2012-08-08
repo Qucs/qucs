@@ -1,6 +1,7 @@
 /*
  * component_id.h - global component identifier header file
  *
+*/
 
   CIR_hicumL0V1p3,
 
