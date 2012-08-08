@@ -1,4 +1,3 @@
-
 2011-03-10  Stefan Jahn  <stefan@lkcc.org>
 
 	* evaluate.cpp: Fixed out-of-bounds segfault in [] operator.
@@ -10,7 +9,6 @@
 
 	* evaluate.cpp: Implemented 'equal' (== and !=) operations for
 	more argument variations.
-
 
 2009-11-12  Stefan Jahn  <stefan@lkcc.org>
 
