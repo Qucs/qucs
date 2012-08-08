@@ -18,11 +18,9 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
-<<<<<<< HEAD
- * $Id: digisource.h,v 1.3 2008/10/05 17:52:15 ela Exp $
-=======
+
  * $Id$
->>>>>>> 80028cb8206ee83926db69b5bd20c9a3c932403d
+
  *
  */
 

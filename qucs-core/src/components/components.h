@@ -1,11 +1,7 @@
 /*
  * components.h - global component header file
  *
-<<<<<<< HEAD
- * Copyright (C) 2003-2010 Stefan Jahn <stefan@lkcc.org>
-=======
  * Copyright (C) 2003-2011 Stefan Jahn <stefan@lkcc.org>
->>>>>>> 80028cb8206ee83926db69b5bd20c9a3c932403d
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,11 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
-<<<<<<< HEAD
- * $Id: components.h,v 1.14 2010/11/06 18:47:59 ela Exp $
-=======
  * $Id$
->>>>>>> 80028cb8206ee83926db69b5bd20c9a3c932403d
  *
  */
 
@@ -79,10 +71,7 @@
 #include "tswitch.h"
 #include "relais.h"
 #include "tline.h"
-<<<<<<< HEAD
-=======
 #include "ctline.h"
->>>>>>> 80028cb8206ee83926db69b5bd20c9a3c932403d
 #include "coaxline.h"
 #include "rectline.h"
 #include "twistedpair.h"
@@ -98,10 +87,7 @@
 #include "amplifier.h"
 #include "opamp.h"
 #include "coupler.h"
-<<<<<<< HEAD
-=======
 #include "hybrid.h"
->>>>>>> 80028cb8206ee83926db69b5bd20c9a3c932403d
 #include "rfedd.h"
 
 #include "vnoise.h"
@@ -118,10 +104,7 @@
 #include "devices/diac.h"
 #include "devices/thyristor.h"
 #include "devices/triac.h"
-<<<<<<< HEAD
-=======
 #include "devices/tunneldiode.h"
->>>>>>> 80028cb8206ee83926db69b5bd20c9a3c932403d
 
 #include "microstrip/substrate.h"
 
@@ -167,10 +150,7 @@
 #include "verilog/EKV26MOS.core.h"
 #include "verilog/hicumL0V1p2.core.h"
 #include "verilog/hicumL0V1p2g.core.h"
-<<<<<<< HEAD
-=======
 #include "verilog/hicumL0V1p3.core.h"
->>>>>>> 80028cb8206ee83926db69b5bd20c9a3c932403d
 #include "verilog/hicumL2V2p23.core.h"
 #include "verilog/hicumL2V2p24.core.h"
 #include "verilog/photodiode.core.h"

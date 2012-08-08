@@ -26,10 +26,7 @@ files.
 Version 0.0.16
 --------------
 
-<<<<<<< HEAD
-=======
  * fixed documentation of conductor losses in coax line
->>>>>>> 80028cb8206ee83926db69b5bd20c9a3c932403d
  * updates in the "measurement expressions" chapter of the workbook
 
 Version 0.0.15

@@ -1,5 +1,4 @@
-<<<<<<< HEAD
-=======
+
 2011-04-03  Stefan Jahn  <stefan@lkcc.org>
 
 	* strafo.cpp, trafo.cpp: Using AC model for transient simulation
@@ -24,7 +23,7 @@
 
 	* coaxline.cpp: Fixed factor of 2 in conductor loss calculation.
 
->>>>>>> 80028cb8206ee83926db69b5bd20c9a3c932403d
+
 2010-03-30  Stefan Jahn  <stefan@lkcc.org>
 
 	* amplifier.cpp: Fixed noise implementation of amplifier.  Input

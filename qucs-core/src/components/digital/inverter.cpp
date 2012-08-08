@@ -18,11 +18,9 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
-<<<<<<< HEAD
- * $Id: inverter.cpp,v 1.7 2009/04/07 19:48:31 ela Exp $
-=======
+
  * $Id$
->>>>>>> 80028cb8206ee83926db69b5bd20c9a3c932403d
+
  *
  */
 

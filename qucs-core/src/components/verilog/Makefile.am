@@ -4,11 +4,7 @@
 #
 # Automake input file for the verilog device library.
 #
-<<<<<<< HEAD
-# Copyright (C) 2006, 2007, 2008, 2009, 2010 Stefan Jahn <stefan@lkcc.org>
-=======
 # Copyright (C) 2006-2011 Stefan Jahn <stefan@lkcc.org>
->>>>>>> 80028cb8206ee83926db69b5bd20c9a3c932403d
 #
 # This is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -41,10 +37,7 @@ libverilog_a_SOURCES = HBT_X.analogfunction.cpp HBT_X.core.cpp \
 	EKV26MOS.analogfunction.cpp EKV26MOS.core.cpp \
 	hicumL0V1p2.analogfunction.cpp hicumL0V1p2.core.cpp \
 	hicumL0V1p2g.analogfunction.cpp hicumL0V1p2g.core.cpp \
-<<<<<<< HEAD
-=======
 	hicumL0V1p3.analogfunction.cpp hicumL0V1p3.core.cpp \
->>>>>>> 80028cb8206ee83926db69b5bd20c9a3c932403d
 	hicumL2V2p23.analogfunction.cpp hicumL2V2p23.core.cpp \
 	hicumL2V2p24.analogfunction.cpp hicumL2V2p24.core.cpp \
 	photodiode.analogfunction.cpp photodiode.core.cpp \
@@ -93,10 +86,7 @@ noinst_HEADERS = HBT_X.analogfunction.h HBT_X.defs.h HBT_X.core.h \
 	EKV26MOS.analogfunction.h EKV26MOS.defs.h EKV26MOS.core.h \
 	hicumL0V1p2.analogfunction.h hicumL0V1p2.defs.h hicumL0V1p2.core.h \
 	hicumL0V1p2g.analogfunction.h hicumL0V1p2g.defs.h hicumL0V1p2g.core.h \
-<<<<<<< HEAD
-=======
 	hicumL0V1p3.analogfunction.h hicumL0V1p3.defs.h hicumL0V1p3.core.h \
->>>>>>> 80028cb8206ee83926db69b5bd20c9a3c932403d
 	hicumL2V2p23.analogfunction.h hicumL2V2p23.defs.h hicumL2V2p23.core.h \
 	hicumL2V2p24.analogfunction.h hicumL2V2p24.defs.h hicumL2V2p24.core.h \
 	photodiode.analogfunction.h photodiode.defs.h photodiode.core.h \
@@ -139,11 +129,7 @@ VERILOG_FILES = constants.vams disciplines.vams \
   fbh_hbt-2_2a.va hicumL2V2p11.va mod_amp.va hicumL2V2p22.va log_amp.va \
   hicumL0V1p12.va potentiometer.va MESFET.va hicumL0V1p2.va hicumL2V2p23.va \
   photodiode.va EKV26MOS.va phototransistor.va nigbt.va hicumL2V2p24.va \
-<<<<<<< HEAD
-  hicumL0V1p2g.va \
-=======
   hicumL0V1p2g.va hicumL0V1p3.va \
->>>>>>> 80028cb8206ee83926db69b5bd20c9a3c932403d
   dff_SR.va jkff_SR.va tff_SR.va gatedDlatch.va logic_0.va logic_1.va \
   mux2to1.va mux4to1.va mux8to1.va DLS_nto1.va DLS_1ton.va andor4x2.va \
   andor4x3.va andor4x4.va dmux2to4.va dmux3to8.va dmux4to16.va ha1b.va \
@@ -305,8 +291,6 @@ hicumL0V1p2g.gui.cpp: qucsVersion.xml qucsMODULEgui.xml
 hicumL0V1p2g.gui.cpp: hicumL0V1p2g.va
 	$(ADMSXML) $< -e qucsVersion.xml -e qucsMODULEgui.xml
 
-<<<<<<< HEAD
-=======
 hicumL0V1p3.analogfunction.cpp: analogfunction.xml
 hicumL0V1p3.analogfunction.cpp: hicumL0V1p3.va
 	$(ADMSXML) $< -e analogfunction.xml
@@ -320,7 +304,6 @@ hicumL0V1p3.gui.cpp: qucsVersion.xml qucsMODULEgui.xml
 hicumL0V1p3.gui.cpp: hicumL0V1p3.va
 	$(ADMSXML) $< -e qucsVersion.xml -e qucsMODULEgui.xml
 
->>>>>>> 80028cb8206ee83926db69b5bd20c9a3c932403d
 hicumL2V2p23.analogfunction.cpp: analogfunction.xml
 hicumL2V2p23.analogfunction.cpp: hicumL2V2p23.va
 	$(ADMSXML) $< -e analogfunction.xml

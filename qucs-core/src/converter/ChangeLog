@@ -1,5 +1,4 @@
-<<<<<<< HEAD
-=======
+
 2011-03-18  Stefan Jahn  <stefan@lkcc.org>
 
 	* check_spice.cpp: Allow HICUM/L0 V1.2G to be detected.
@@ -9,7 +8,7 @@
 	* check_spice.cpp: Fixed PULSE source statement translation
 	(period time) in SPICE converter.
 
->>>>>>> 80028cb8206ee83926db69b5bd20c9a3c932403d
+
 2010-10-23  Stefan Jahn  <stefan@lkcc.org>
 
 	* check_vcd.cpp: Code cleanup for free()'ing VCD changesets.
