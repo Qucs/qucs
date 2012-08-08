@@ -345,7 +345,7 @@ VectorValueChange:
 
 %%
 
-int vcd_error (char * error) {
+int vcd_error (const char * error) {
   fprintf (stderr, "line %d: %s\n", vcd_lineno, error);
   return 0;
 }

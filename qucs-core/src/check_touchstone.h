@@ -72,7 +72,7 @@ extern struct touchstone_t touchstone_options;
 
 /* Available functions of the checker. */
 int touchstone_parse (void);
-int touchstone_error (char *);
+int touchstone_error (const char *);
 int touchstone_lex (void);
 int touchstone_lex_destroy (void);
 int touchstone_check (void);

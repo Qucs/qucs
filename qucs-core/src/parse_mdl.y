@@ -619,7 +619,7 @@ CONNPAIR_Line:
 
 %%
 
-int mdl_error (char * error) {
+int mdl_error (const char * error) {
   fprintf (stderr, "line %d: %s\n", mdl_lineno, error);
   return 0;
 }

@@ -42,7 +42,7 @@ __BEGIN_DECLS
 
 /* Available functions of the checker. */
 int dataset_parse (void);
-int dataset_error (char *);
+int dataset_error (const char *);
 int dataset_lex (void);
 int dataset_lex_destroy (void);
 int dataset_check (dataset *);

@@ -229,7 +229,7 @@ VarList: { $$ = new vector (); }
 
 %%
 
-int citi_error (char * error) {
+int citi_error (const char * error) {
   logprint (LOG_ERROR, "line %d: %s\n", citi_lineno, error);
   return 0;
 }

@@ -55,7 +55,7 @@ extern struct definition_t * device_root;
 /* Available functions of the checker. */
 int  spice_checker (void);
 int  spice_parse (void);
-int  spice_error (char *);
+int  spice_error (const char *);
 int  spice_lex (void);
 int  spice_lex_destroy (void);
 void spice_destroy (void);

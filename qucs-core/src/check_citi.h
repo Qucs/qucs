@@ -62,7 +62,7 @@ extern struct citi_t citi_options;
 
 /* Available functions of the checker. */
 int citi_parse (void);
-int citi_error (char *);
+int citi_error (const char *);
 int citi_lex (void);
 int citi_lex_destroy (void);
 int citi_check (void);

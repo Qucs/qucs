@@ -191,7 +191,7 @@ DataLine:
 
 %%
 
-int touchstone_error (char * error) {
+int touchstone_error (const char * error) {
   logprint (LOG_ERROR, "line %d: %s\n", touchstone_lineno, error);
   return 0;
 }
