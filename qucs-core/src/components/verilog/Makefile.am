@@ -751,6 +751,6 @@ else
 GENERATED_FILES =
 endif
 
-CLEANFILES = *~ *.orig *.rej #$(GENERATED_FILES)
+CLEANFILES = *~ *.orig *.rej $(GENERATED_FILES)
 
 MAINTAINERCLEANFILES = Makefile.in
