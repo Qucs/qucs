@@ -33,7 +33,7 @@ rm -rf autom4te.cache
 cd qucs-core
 ./autogen.sh
 make
-make clean
+make distclean
 rm -rf autom4te.cache
 cd ..
 cd ..
