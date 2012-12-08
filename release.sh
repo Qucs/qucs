@@ -42,13 +42,14 @@ cd ..
 echo creating source archive...
 tar -zcvf qucs-$RELEASE.tar.gz qucs-$RELEASE
 
-DISTS="precise"
+DISTS="precise quantal"
 
 cp qucs-$RELEASE.tar.gz qucs_$RELEASE.orig.tar.gz
 cd qucs-$RELEASE
-COUNT=-2 #last version number in repository
+COUNT=-0 #last version number in repository
 for DIST in ${DISTS} ; do
 	COUNT=$(($COUNT-1))
 	dch -D $DIST -m -v $RELEASE$COUNT -b
 	debuild -S -k8AD5905E
+	./configure 
 done
