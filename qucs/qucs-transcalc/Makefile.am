@@ -37,7 +37,7 @@ qucstrans_LDADD = libtranscalc.a $(X11_LIBS) $(QT_LIBS)
 
 nodist_qucstrans_SOURCES = $(MOCFILES)
 
-INCLUDES = $(X11_INCLUDES) $(QT_INCLUDES)
+AM_CPPFLAGS = $(X11_INCLUDES) $(QT_INCLUDES)
 qucstrans_LDFLAGS = $(X11_LDFLAGS) $(QT_LDFLAGS)
 
 noinst_HEADERS = $(MOCHEADERS) transline.h units.h microstrip.h coax.h \
@@ -48,7 +48,9 @@ noinst_LIBRARIES = libtranscalc.a
 libtranscalc_a_SOURCES = microstrip.cpp transline.cpp coax.cpp \
 	rectwaveguide.cpp c_microstrip.cpp coplanar.cpp
 
-%.moc.cpp: %.h
+SUFFIXES = .moc.cpp
+
+.h.moc.cpp:
 	$(MOC) -o $@ $<
 
 CLEANFILES = *~

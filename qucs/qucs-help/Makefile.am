@@ -35,13 +35,15 @@ qucshelp_SOURCES = main.cpp qucshelp.cpp htmldatafetcher.cpp
 
 nodist_qucshelp_SOURCES = $(MOCFILES)
 
-INCLUDES = $(X11_INCLUDES) $(QT_INCLUDES)
+AM_CPPFLAGS = $(X11_INCLUDES) $(QT_INCLUDES)
 qucshelp_LDFLAGS = $(X11_LDFLAGS) $(QT_LDFLAGS)
 qucshelp_LDADD = $(X11_LIBS) $(QT_LIBS)
 
 noinst_HEADERS = htmldatafetcher.h $(MOCHEADERS)
 
-%.moc.cpp: %.h
+SUFFIXES = .moc.cpp
+
+.h.moc.cpp:
 	$(MOC) -o $@ $<
 
 CLEANFILES = *~

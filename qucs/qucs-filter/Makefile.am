@@ -34,14 +34,16 @@ qucsfilter_SOURCES = main.cpp qucsfilter.cpp helpdialog.cpp lc_filter.cpp \
 
 nodist_qucsfilter_SOURCES = $(MOCFILES)
 
-INCLUDES = $(X11_INCLUDES) $(QT_INCLUDES)
+AM_CPPFLAGS = $(X11_INCLUDES) $(QT_INCLUDES)
 qucsfilter_LDFLAGS = $(X11_LDFLAGS) $(QT_LDFLAGS)
 qucsfilter_LDADD = $(X11_LIBS) $(QT_LIBS)
 
 noinst_HEADERS = $(MOCHEADERS) lc_filter.h qf_poly.h qf_filter.h qf_cauer.h \
   qf_matrix.h
 
-%.moc.cpp: %.h
+SUFFIXES = .moc.cpp
+
+.h.moc.cpp:
 	$(MOC) -o $@ $<
 
 CLEANFILES = *~

@@ -38,13 +38,15 @@ qucslib_SOURCES = main.cpp qucslib.cpp displaydialog.cpp symbolwidget.cpp \
 
 nodist_qucslib_SOURCES = $(MOCFILES)
 
-INCLUDES = $(X11_INCLUDES) $(QT_INCLUDES)
+AM_CPPFLAGS = $(X11_INCLUDES) $(QT_INCLUDES)
 qucslib_LDFLAGS = $(X11_LDFLAGS) $(QT_LDFLAGS)
 qucslib_LDADD = $(X11_LIBS) $(QT_LIBS)
 
 noinst_HEADERS = $(MOCHEADERS)
 
-%.moc.cpp: %.h
+SUFFIXES = .moc.cpp
+
+.h.moc.cpp:
 	$(MOC) -o $@ $<
 
 CLEANFILES = *~
