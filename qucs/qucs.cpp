@@ -88,7 +88,6 @@
 #include "dialogs/vtabwidget.h"
 #include "dialogs/vtabbeddockwidget.h"
 #include "octave_window.h"
-
 extern const char *empty_xpm[];
 
 QDir QucsWorkDir;  // current project path
@@ -2102,7 +2101,7 @@ void QucsApp::changeSchematicSymbolMode(Schematic *Doc)
 
 // ---------------------------------------------------------
 bool QucsApp::isTextDocument(QWidget *w) {
-  if (w->inherits("QTextEdit"))
+  if (w->inherits("Q3TextEdit"))
     return true;
   return false;
 }
