@@ -6,7 +6,7 @@ then
   RELEASE=$1
 else
   RELEASE=$(date +"%y%m%d")
-  RELEASE=${RELEASE:0:6}
+  RELEASE="0.0.17."${RELEASE:0:6}
 fi
 echo Building release: $RELEASE
 
@@ -40,11 +40,14 @@ cd ..
 cd ..
 
 echo creating source archive...
+
 tar -zcvf qucs-$RELEASE.tar.gz qucs-$RELEASE
 
 DISTS="precise quantal"
 
+#wget https://launchpad.net/~fransschreuder1/+archive/qucs/+files/qucs_0.0.17.orig.tar.gz
 cp qucs-$RELEASE.tar.gz qucs_$RELEASE.orig.tar.gz
+
 cd qucs-$RELEASE
 COUNT=-0 #last version number in repository
 for DIST in ${DISTS} ; do
