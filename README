@@ -1,7 +1,27 @@
-This git repository is UNOFFICIALLY copied from qucs.sourceforge.net, as described on their forum
-https://sourceforge.net/projects/qucs/forums/forum/311049/topic/3970384
+Official mirror from qucs SVN, hosted on:
+http://sourceforge.net/projects/qucs
 
-Hopefully the qucs developers will take over changes made in this repository, otherwise I will at least try to stay in sinc with the CVS
+Compile instructions Linux (Ubuntu):
+First make sure you have all packages installed:
+build-essential flex bison qt4-dev-tools gperf
 
-fransschreuder
+Install ADMS 2.3.0:
 
+svn checkout svn://svn.code.sf.net/p/qucs/code/trunk/adms-2.3.0 adms-2.3.0
+./configure
+make
+sudo make install 
+sudo ldconfig
+
+Compile qucs:
+cd qucs
+./autogen.sh
+make
+sudo make install
+
+
+Compile qucs-core:
+cd qucs-core
+./autogen.sh
+make
+sudo make install
