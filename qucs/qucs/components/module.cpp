@@ -242,7 +242,7 @@ void module::registerModules (void) {
   REGISTER_CIRCUIT (hicumL0V1p3);
   REGISTER_CIRCUIT (hicumL2V2p23);
   REGISTER_CIRCUIT (hicumL2V2p24);
-  REGISTER_CIRCUIT (hicumL2V2p31n); 
+  REGISTER_CIRCUIT (hicumL2V2p31n);
   REGISTER_CIRCUIT (photodiode);
   REGISTER_CIRCUIT (phototransistor);
   REGISTER_CIRCUIT (nigbt);
