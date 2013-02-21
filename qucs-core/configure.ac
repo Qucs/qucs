@@ -11,6 +11,21 @@ AC_CANONICAL_HOST
 AC_CANONICAL_TARGET
 AM_INIT_AUTOMAKE([no-define])
 AM_MAINTAINER_MODE
+
+dnl Adds LIBRARY conditional for --enable-qucslib mode to
+dnl build qucs as a library
+AC_ARG_ENABLE(qucslib,
+AS_HELP_STRING([--enable-qucslib],
+               [enable qucslib build, default: no]),
+[case "${enableval}" in
+             yes) qucslib=true ;;
+             no)  qucslib=false ;;
+             *)   AC_MSG_ERROR([bad value ${enableval} for --enable-qucslib]) ;;
+esac],
+[qucslib=false])
+
+AM_CONDITIONAL(QUCSLIB, test x"$qucslib" = x"true")
+
 AC_PREFIX_DEFAULT([/usr/local])
 test "x$prefix" = xNONE && prefix="/usr/local"
 
@@ -101,9 +116,9 @@ dnl Check for new platforms.
 osversion="`grep \"$host\" $srcdir/doc/PLATFORMS 2>/dev/null`"
 if test "x$osversion" = "x"; then
   AC_MSG_RESULT([
-  The $PACKAGE package has never been compiled or run on this platform.  
+  The $PACKAGE package has never been compiled or run on this platform.
   Please send an email to <qucs-devel@lists.sourceforge.net> including your
-  compiler version and whether it worked correctly or not.  '$host' 
+  compiler version and whether it worked correctly or not.  '$host'
   will then be added to the PLATFORMS file included in this package.
 ])
 fi

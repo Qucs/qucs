@@ -1,5 +1,5 @@
 ## Process this file with automake to produce Makefile.in
-# 
+#
 # src/Makefile.am
 #
 # Automake input file.
@@ -10,24 +10,30 @@
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; either version 2, or (at your option)
 # any later version.
-# 
+#
 # This software is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU General Public License
 # along with this package; see the file COPYING.  If not, write to
 # the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
-# Boston, MA 02110-1301, USA.  
+# Boston, MA 02110-1301, USA.
 #
 
 EXTRA_DIST = parse_netlist.y scan_netlist.l scan_dataset.l parse_dataset.y \
 	parse_touchstone.y scan_touchstone.l parse_citi.y scan_citi.l \
 	gperfapphash.cpp parse_zvr.y scan_zvr.l parse_mdl.y scan_mdl.l \
-	parse_csv.y scan_csv.l 
+	parse_csv.y scan_csv.l
 
 SUBDIRS = math components . converter
+
+if QUCSLIB
+noinst_LIBRARIES = libqucsator.a libqucsatorfull.a
+else
+noinst_LIBRARIES = libqucsator.a
+endif
 
 bin_PROGRAMS = qucsator
 
@@ -68,8 +74,6 @@ noinst_HEADERS = $(noinst_TEMPLATES) check_netlist.h input.h net.h            \
 	nasolution.h check_mdl.h tokens_mdl.h differentiate.h tokens_csv.h    \
 	check_csv.h module.h analyses.h compat.h receiver.h interpolator.h
 
-noinst_LIBRARIES = libqucsator.a
-
 libqucsator_a_SOURCES = dataset.cpp check_dataset.cpp parse_dataset.cpp      \
 	scan_dataset.cpp check_touchstone.cpp vector.cpp object.cpp          \
 	property.cpp parse_touchstone.cpp scan_touchstone.cpp variable.cpp   \
@@ -78,6 +82,25 @@ libqucsator_a_SOURCES = dataset.cpp check_dataset.cpp parse_dataset.cpp      \
 	scan_citi.cpp check_citi.cpp parse_zvr.cpp scan_zvr.cpp sweep.cpp    \
 	check_zvr.cpp parse_mdl.cpp scan_mdl.cpp check_mdl.cpp check_csv.cpp \
 	parse_csv.cpp scan_csv.cpp
+
+if QUCSLIB
+libqucsatorfull_a_LIBADD = libqucsator.a		      \
+	math/libqucsmath.a	              \
+	components/libcomponent.a	      \
+	components/microstrip/libmicrostrip.a \
+	components/devices/libdevices.a	      \
+	components/digital/libdigital.a       \
+	components/verilog/libverilog.a
+
+libqucsatorfull_a_SOURCES = circuit.cpp check_netlist.cpp operatingpoint.cpp  \
+	parse_netlist.cpp scan_netlist.cpp node.cpp net.cpp input.cpp        \
+	analysis.cpp spsolver.cpp dcsolver.cpp nodelist.cpp environment.cpp  \
+	parasweep.cpp equation.cpp evaluate.cpp acsolver.cpp                 \
+	trsolver.cpp transient.cpp integrator.cpp nodeset.cpp hbsolver.cpp   \
+	spline.cpp fourier.cpp pair.cpp characteristic.cpp history.cpp       \
+	range.cpp devstates.cpp differentiate.cpp module.cpp receiver.cpp    \
+	interpolator.cpp
+endif
 
 if MAINTAINER_MODE
 generated_FILES = scan_netlist.cpp parse_netlist.cpp scan_dataset.cpp     \
@@ -129,7 +152,7 @@ parse_zvr.cpp: parse_zvr.y
 parse_mdl.cpp: parse_mdl.y
 	$(YACC) -v -o $@ --defines=tokens_mdl.h $<
 else
-generated_FILES = 
+generated_FILES =
 endif
 
 if MAINTAINER_MODE
