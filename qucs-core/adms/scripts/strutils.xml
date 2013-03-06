@@ -1,0 +1,53 @@
+<admst version="2.3.0"  xmlns:admst="http://mot-adms.svn.sourceforge.net/viewvc/*checkout*/mot-adms/trunk/adms/admst.dtd">
+  <admst:open file="strutils.trg">
+  upper-case: 1.0: B
+  upper-case: 2.1: A
+  upper-case: 3.0: B
+  upper-case: 4.1: A
+  upper-case: 5.4: COMMENTCAVA
+  upper-case: 6.5: CAVATRESBIEN
+  lower-case: 1.0: b
+  lower-case: 2.1: a
+  lower-case: 3.0: b
+  lower-case: 4.1: a
+  lower-case: 5.4: commentcava
+  lower-case: 6.5: cavatresbien
+  original: 1 B: 0: B
+  original: 2 A: 1: A
+  original: 3 b: 2: b
+  original: 4 a: 3: a
+  original: 5 CommentCaVa: 4: CommentCaVa
+  original: 6 CaVatresBien: 5: CaVatresBien
+---- basicstringbasicstringbasicstringbasicstringbasicstringbasicstring cavatresbiencommentcavaabab
+---- basicstringbasicstringbasicstringbasicstringbasicstringbasicstring CAVATRESBIENCOMMENTCAVAABAB
+oooo basicstringbasicstringbasicstringbasicstring CAVATRESBIENCOMMENTCAVAAB
+oooo basicstringbasicstringbasicstringbasicstring CAVATRESBIENCOMMENTCAVAAB
+  </admst:open>
+  <admst:message format="strutils.trg: created\n"/>
+  <admst:open file="strutils.va">
+`include &quot;discipline.h&quot;
+module strutils(p,n);
+  inout p, n;
+  electrical p, n;
+  parameter real B=1.0;
+  parameter real A=1.0;
+  real b,a;
+  real CommentCaVa,CaVatresBien;
+  analog a=1;
+endmodule
+  </admst:open>
+  <admst:message format="strutils.va: file created\n"/>
+  <admst:read file="strutils.va"/>
+  <admst:reverse select="/module/variable"/>
+  <admst:variable name="upper-case" path="upper-case(/module/variable)"/>
+  <admst:variable name="lower-case" path="lower-case(/module/variable)"/>
+  <admst:text select="$(upper-case)" format="  upper-case: %(position(.)).%(index($(upper-case),.)): %(.)\n"/>
+  <admst:text select="$(lower-case)" format="  lower-case: %(position(.)).%(index($(lower-case),.)): %(.)\n"/>
+  <admst:text select="/module/variable" format="  original: %(position(.)) %(.): %(index(../variable,.)): %(.)\n"/>
+  <admst:push into="/@lc" select="lower-case(/module/variable)"/>
+  <admst:text format="---- %(/@lc/datatypename) %(/@lc)\n"/>
+  <admst:text format="---- %(/@lc/datatypename) %(upper-case(/@lc))\n"/>
+  <admst:push into="/@uc" select="upper-case(/module/variable)" onduplicate="ignore"/>
+  <admst:text format="oooo %(/@uc/datatypename) %(/@uc)\n"/>
+  <admst:text format="oooo %(/@uc/datatypename) %(upper-case(/@uc))\n"/>
+</admst>

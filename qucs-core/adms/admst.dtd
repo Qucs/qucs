@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+     This dtd describes the basic data structures used by admst transforms
+     You can try using xmllint: xmllint myadmstscript.xml -noout -postvalid -noblanks
+--> 
+<!--
+  $Id: admst.dtd 1176 2008-12-04 15:02:59Z r29173 $
+-->
+<!--
+  $Log$
+  Revision 1.4  2005/09/14 15:41:31  r29173
+  renamed admst:templates to admst:template (same for apply-template)
+
+  Revision 1.3  2005/08/18 10:45:23  r29173
+  renamed admst:choice to admst:choose (admst:choice tolerated)
+
+  Revision 1.2  2005/03/31 18:12:00  r29173
+  migration to adms-2.x.x: converted to adms2 syntax
+
+  Revision 1.6  2005/03/22 11:30:18  r29173
+  migration to adms-2.x.x: clean-up xml constructs
+
+  Revision 1.5  2005/03/17 08:26:28  r29173
+  migration to adms-2.x.x: move all href from absolute to relative values
+
+  Revision 1.4  2005/02/25 12:49:35  r29173
+  migration to adms-2.x.x: renamed admst transforms
+
+-->
+
+<!ENTITY % anyadmst '#PCDATA|admst:return|admst:fatal|admst:warning|admst:count|admst:choose|admst:copy|admst:getenv|admst:setenv|admst:open|admst:templates|admst:template|admst:if-inside|admst:if-not-inside|admst:differentiate|admst:push|admst:reverse|admst:value-of|admst:new|admst:for-each|admst:reset|admst:if|admst:assert|admst:text|admst:apply-template|admst:apply-templates|admst:join|admst:message|admst:error|admst:value-to|admst:variable|admst:read'>
+
+<!ELEMENT admst (%anyadmst;)*>
+<!ATTLIST admst version CDATA #IMPLIED>
+<!ATTLIST admst xmlns:admst CDATA #IMPLIED>
+<!ATTLIST admst xmlns:m CDATA #IMPLIED>
+<!ATTLIST admst xmlns:html CDATA #IMPLIED>
+
+<!ELEMENT admst:count EMPTY>
+<!ATTLIST admst:count select CDATA #REQUIRED>
+
+<!ELEMENT admst:return EMPTY>
+<!ATTLIST admst:return name CDATA #REQUIRED>
+<!ATTLIST admst:return value CDATA #REQUIRED>
+
+<!ELEMENT admst:choose (admst:when+,admst:otherwise?)>
+<!ELEMENT admst:when (%anyadmst;)*>
+<!ATTLIST admst:when test CDATA #REQUIRED>
+<!ELEMENT admst:otherwise (%anyadmst;)*>
+
+<!ELEMENT admst:open (%anyadmst;)*>
+<!ATTLIST admst:open file CDATA #REQUIRED>
+
+<!ELEMENT admst:copy EMPTY>
+<!ATTLIST admst:copy from CDATA #REQUIRED>
+<!ATTLIST admst:copy to CDATA #REQUIRED>
+
+<!ELEMENT admst:getenv EMPTY>
+<!ATTLIST admst:getenv name CDATA #REQUIRED>
+
+<!ELEMENT admst:setenv EMPTY>
+<!ATTLIST admst:setenv name CDATA #REQUIRED>
+<!ATTLIST admst:setenv value CDATA #REQUIRED>
+
+<!ELEMENT admst:error EMPTY>
+<!ATTLIST admst:error format CDATA #IMPLIED>
+<!ATTLIST admst:error test CDATA #IMPLIED>
+
+<!ELEMENT admst:warning EMPTY>
+<!ATTLIST admst:warning format CDATA #IMPLIED>
+<!ATTLIST admst:warning test CDATA #IMPLIED>
+
+<!ELEMENT admst:message EMPTY>
+<!ATTLIST admst:message format CDATA #IMPLIED>
+<!ATTLIST admst:message test CDATA #IMPLIED>
+
+<!ELEMENT admst:fatal EMPTY>
+<!ATTLIST admst:fatal format CDATA #IMPLIED>
+<!ATTLIST admst:fatal test CDATA #IMPLIED>
+
+<!ELEMENT admst:reset EMPTY>
+<!ATTLIST admst:reset select CDATA #REQUIRED>
+
+<!ELEMENT admst:for-each (%anyadmst;)*>
+<!ATTLIST admst:for-each select CDATA #REQUIRED>
+
+<!ELEMENT admst:templates (%anyadmst;)*>
+<!ATTLIST admst:templates mode CDATA #IMPLIED>
+<!ATTLIST admst:templates match CDATA #IMPLIED>
+<!ELEMENT admst:template (%anyadmst;)*>
+<!ATTLIST admst:template mode CDATA #IMPLIED>
+<!ATTLIST admst:template match CDATA #IMPLIED>
+
+<!ELEMENT admst:new (%anyadmst;)*>
+<!ATTLIST admst:new datatype CDATA #IMPLIED>
+<!ATTLIST admst:new arguments CDATA #IMPLIED>
+<!ATTLIST admst:new inputs CDATA #IMPLIED>
+<!ATTLIST admst:new test CDATA #IMPLIED>
+
+<!ELEMENT admst:if (%anyadmst;)*>
+<!ATTLIST admst:if test CDATA #IMPLIED>
+
+<!ELEMENT admst:read EMPTY>
+<!ATTLIST admst:read file CDATA #IMPLIED>
+
+<!ELEMENT admst:push EMPTY>
+<!ATTLIST admst:push into CDATA #IMPLIED>
+<!ATTLIST admst:push select CDATA #REQUIRED>
+<!ATTLIST admst:push test CDATA #IMPLIED>
+<!ATTLIST admst:push onduplicate CDATA #IMPLIED>
+<!ATTLIST admst:push oncompare CDATA #IMPLIED>
+
+<!ELEMENT admst:variable EMPTY>
+<!ATTLIST admst:variable name CDATA #REQUIRED>
+<!ATTLIST admst:variable value CDATA #IMPLIED>
+<!ATTLIST admst:variable string CDATA #IMPLIED>
+<!ATTLIST admst:variable select CDATA #IMPLIED>
+<!ATTLIST admst:variable test CDATA #IMPLIED>
+<!ATTLIST admst:variable path CDATA #IMPLIED>
+
+<!ELEMENT admst:value-to EMPTY>
+<!ATTLIST admst:value-to select CDATA #REQUIRED>
+<!ATTLIST admst:value-to value CDATA #IMPLIED>
+<!ATTLIST admst:value-to string CDATA #IMPLIED>
+<!ATTLIST admst:value-to test CDATA #IMPLIED>
+<!ATTLIST admst:value-to path CDATA #IMPLIED>
+
+<!ELEMENT admst:differentiate EMPTY>
+<!ATTLIST admst:differentiate select CDATA #REQUIRED>
+<!ATTLIST admst:differentiate probe CDATA #IMPLIED>
+
+<!ELEMENT admst:apply-templates (%anyadmst;)*>
+<!ATTLIST admst:apply-templates select CDATA #REQUIRED>
+<!ATTLIST admst:apply-templates required (yes|no) "yes">
+<!ATTLIST admst:apply-templates match CDATA #IMPLIED>
+<!ATTLIST admst:apply-templates test CDATA #IMPLIED>
+
+<!ELEMENT admst:text EMPTY>
+<!ATTLIST admst:text format CDATA #IMPLIED>
+<!ATTLIST admst:text select CDATA #IMPLIED>
+<!ATTLIST admst:text test CDATA #IMPLIED>
+
+<!ELEMENT admst:value-of EMPTY>
+<!ATTLIST admst:value-of select CDATA #REQUIRED>
+
+<!ELEMENT admst:reverse EMPTY>
+<!ATTLIST admst:reverse select CDATA #REQUIRED>
+
+<!ELEMENT admst:if-inside (%anyadmst;)*>
+<!ATTLIST admst:if-inside test CDATA #IMPLIED>
+<!ATTLIST admst:if-inside list CDATA #IMPLIED>
+<!ATTLIST admst:if-inside select CDATA #IMPLIED>
+
+<!ELEMENT admst:if-not-inside (%anyadmst;)*>
+<!ATTLIST admst:if-not-inside test CDATA #IMPLIED>
+<!ATTLIST admst:if-not-inside list CDATA #IMPLIED>
+<!ATTLIST admst:if-not-inside select CDATA #IMPLIED>
+
+<!ELEMENT admst:assert EMPTY>
+<!ATTLIST admst:assert test CDATA #IMPLIED>
+<!ATTLIST admst:assert format CDATA #IMPLIED>
+<!ATTLIST admst:assert select CDATA #IMPLIED>
+
+<!ELEMENT admst:join (%anyadmst;)*>
+<!ATTLIST admst:join select CDATA #REQUIRED>
+<!ATTLIST admst:join separator CDATA #IMPLIED>
+
+

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE admst PUBLIC "-//adms//DTD admst 2.0//-" "http://mot-adms.svn.sourceforge.net/viewvc/mot-adms/trunk/adms/admst.dtd" >
+<!--
+    Usage: admsXml -e admstvariables.xml
+    This example gives some hints on how to use admst variables.
+    There are two types of admst variables:
+    1- global variables: they first occur outside any admst:template
+       They are 'seen' by any admst:template
+    2- local variables: they occur inside admst:template
+    Variables are declared using:
+    1- <admst:variable name="variable">
+    or
+    2- <admst:variable name="myvariable" select="<string>">
+    or
+    3- <admst:variable name="myvariable" select="%p">
+    In 2- myvariable is a string.
+    In 3- myvariable is a adms element.
+    The value of admst variables is accessed through $myvariable or $(myvariable).
+    Limitations (adms-2.2.0): $(anystring) doesn't work inside admstpath.
+-->
+<admst version="2.3.0" xmlns:admst="https://mot-adms.svn.sourceforge.net/viewvc/mot-adms/trunk/adms/admsstyle.xsl">
+
+<admst:template match="globalvariable">
+  <admst:text format="my global variable: $myglobalvariable_string\n"></admst:text>
+  <admst:text format="\$myglobalvariable_pointer/name =&gt; %($myglobalvariable_pointer/name)\n"></admst:text>
+  <admst:variable name="mylocalvariable" select="this is the value of \$mylocalvariable"></admst:variable>
+  <admst:text format="\$myglobalvariable_string =&gt; $(myglobalvariable_string)\n"></admst:text>
+  <admst:variable name="mylocalvariable" select="this is the value of \$mylocalvariable"></admst:variable>
+  <admst:text format="\$mylocalvariable =&gt; $mylocalvariable\n"></admst:text>
+</admst:template>
+
+<!-- as string -->
+<admst:variable name="myglobalvariable_string" select="this is the value of \$myglobalvariable"></admst:variable>
+<!-- as adms element -->
+<admst:variable name="myglobalvariable_pointer" path="."></admst:variable>
+<admst:apply-templates select="." match="globalvariable"></admst:apply-templates>
+
+</admst>

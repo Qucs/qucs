@@ -1,0 +1,74 @@
+#Compile adms using gcc at command line (cygwin environment)
+#Usage: make -f make.cyg
+
+VERSION=$(shell grep VERSION config.h | sed 's/.*"\(.*\)".*/\1/')
+BASENAME=cygadmsXml
+EXE=$(BASENAME).exe
+DLL=$(BASENAME)-$(VERSION).dll
+LIB=$(BASENAME)-$(VERSION).lib
+EXP=$(BASENAME)-$(VERSION).exp
+PDB=$(BASENAME)-$(VERSION).pdb
+
+DISTEXE=$$HOME/local/bin/admsXml.exe
+DISTDLL=$$HOME/local/bin/$(DLL)
+
+all: $(EXE)
+	@rm -f $(DISTDLL) $(DISTEXE) && \
+	cp -f $(EXE) $(DISTEXE) && \
+	cp -f $(DLL) $(DISTDLL) && \
+	echo "$(EXE) and $(DISTEXE) created" && \
+	echo "$(DLL) and $(DISTDLL) created"
+
+DEFS=-DHAVE_CONFIG_H  -DinsideElement -DinsidePreprocessor -DinsideVeriloga
+CPPFLAGS=-g -Wall
+LDFLAGS=$(PKG_LIBS)
+CCC=gcc -mno-cygwin -o
+CCDLL=gcc -mno-cygwin --shared -o
+CCEXE=gcc.exe -mno-cygwin -o
+OBJ=o
+CFLAGS=$(DEFS) $(CPPFLAGS) -I.
+LD=$(LDFLAGS)
+
+adms=admsXml/adms.c
+src= $(adms) \
+  admsXml/preprocessorLex.c admsXml/preprocessorMain.c admsXml/preprocessorYacc.c \
+  admsXml/verilogaYacc.c admsXml/verilogaLex.c \
+  admsXml/admstpathYacc.c
+obj=$(subst .c,.$(OBJ),$(src))
+
+$(DLL): $(obj); $(CCDLL) $@ $+ $(CFLAGS) $(LD)
+$(EXE): admsXml/admsXml.c admsXml/admstpath.c admsXml/admsImplicitTransforms.xml.c admsXml/admstpath.c $(DLL); $(CCEXE) $@ $< $(CFLAGS) $(DLL) $(LD)
+
+$(obj): %.$(OBJ) : %.c; $(CCC) $@ -c $< $(CFLAGS)
+
+%:%.c
+%:%.o
+admsXml/disciplines.vams.c: admsXml/disciplines.vams admsXml/mkctext.pl
+	(cd admsXml && perl ../admsXml/mkctext.pl disciplines.vams admsXml)
+admsXml/constants.vams.c: admsXml/constants.vams admsXml/mkctext.pl
+	(cd admsXml && perl ../admsXml/mkctext.pl constants.vams admsXml)
+admsXml/admstpath.c admsXml/admstpath.dtd $(adms): adms.xml admstpath.xml admsXml/mkelements.pl
+	(cd admsXml && perl mkelements.pl ..)
+admsXml/admsImplicitTransforms.xml.c: admsXml/admsImplicitTransforms.xml 
+	(cd admsXml && perl ../admsXml/mkctext.pl admsImplicitTransforms.xml admsXml)
+admsXml/verilogaYacc.y: admsXml/verilogaYacc.y.in admsXml/mkgrammar.pl adms.xml
+	perl admsXml/mkgrammar.pl $<
+	mv verilogaYacc.y $@
+admsXml/verilogaLex.c: admsXml/verilogaLex.l adms.xml
+	flex  -Pveriloga -olex.yy.c $<
+	mv lex.yy.c $@
+admsXml/verilogaYacc.c: admsXml/verilogaYacc.y
+	bison -y -by -d -pveriloga $<
+	mv y.tab.c $@ && mv y.tab.h admsXml/verilogaYacc.h
+admsXml/preprocessorLex.c: admsXml/preprocessorLex.l admsXml/disciplines.vams.c admsXml/constants.vams.c adms.xml
+	flex -Ppreprocessor -olex.yy.c $<
+	mv lex.yy.c $@
+admsXml/preprocessorYacc.c: admsXml/preprocessorYacc.y adms.xml
+	bison -y -by -d -ppreprocessor $<
+	mv y.tab.c $@ && mv y.tab.h admsXml/preprocessorYacc.h
+admsXml/admstpathYacc.c: admsXml/admstpathYacc.y
+	bison -y -by -padmstpath $<
+	mv y.tab.c $@
+
+clean:
+	rm -f admsXml.$(OBJ) $(PDB) *.exp $(LIB) $(DLL) $(EXE) admsXml/*.lib

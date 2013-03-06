@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  This dtd describes the basic data structures used by adms classes
+  It is used to check the validy of file http://mot-adms/sourceforge.net/xml-files/admstpath.xml
+  You can try using xmllint: xmllint admstpath.xml -noout -postvalid -noblanks
+-->
+<!-- $Id: metaadmstpath.xsd 505 2007-01-23 11:17:43Z r29173 $ -->
+<!--
+  $Log$
+  Revision 1.1  2005/05/03 07:43:32  r29173
+  schema version of dtd's
+
+  Revision 1.2  2005/03/17 08:26:28  r29173
+  migration to adms-2.x.x: move all href from absolute to relative values
+  
+  Revision 1.1  2005/03/16 16:17:17  r29173
+  migration to adms-2.x.x: build prerequisites for admst path
+  
+  Revision 1.4  2005/02/25 12:49:35  r29173
+  migration to adms-2.x.x: renamed admst transforms
+  
+-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+  <xs:element name="admstpath" type="freegrammar"/>
+  <xs:complexType name="freegrammar">
+    <xs:sequence>
+      <xs:element ref="freegrammar"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="freegrammar">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="terminal"/>
+        <xs:element maxOccurs="unbounded" ref="productionset"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="terminal">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="description">
+          <xs:attributeGroup ref="attlist.terminal"/>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="description">
+    <xs:sequence>
+      <xs:element ref="description"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="description" type="xs:string"/>
+  <xs:element name="productionset">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="production"/>
+      </xs:sequence>
+      <xs:attributeGroup ref="attlist.productionset"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="production">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="prodem"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="prodem">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" ref="script"/>
+      </xs:sequence>
+      <xs:attributeGroup ref="attlist.prodem"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="script" type="xs:string"/>
+  <xs:attributeGroup name="attlist.terminal">
+    <xs:attribute name="token" use="required"/>
+    <xs:attribute name="regexp" use="required"/>
+    <xs:attribute name="ignore" default="no">
+      <xs:simpleType>
+        <xs:restriction base="xs:token">
+          <xs:enumeration value="yes"/>
+          <xs:enumeration value="no"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="attlist.prodem">
+    <xs:attribute name="name" use="required"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="attlist.productionset">
+    <xs:attribute name="name" use="required"/>
+    <xs:attribute name="empty" default="no">
+      <xs:simpleType>
+        <xs:restriction base="xs:token">
+          <xs:enumeration value="yes"/>
+          <xs:enumeration value="no"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:attributeGroup>
+</xs:schema>

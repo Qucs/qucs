@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE admst SYSTEM "admst.dtd">
+<admst version="2.3.0" xmlns:admst="http://mot-adms.sourceforge.net/xml-files/admst">
+<admst:template match="print_expression">
+  <admst:choose>
+    <admst:when test="[datatypename='number']">%(value)%(scalingunit)</admst:when>
+    <admst:otherwise>-%(datatypename)-not-done-yet--</admst:otherwise>
+  </admst:choose>
+</admst:template>
+<admst:for-each select="/module">
+<admst:variable name="mname" select="%(name)"/>
+<admst:message format="build file %(name).net\n"/>
+<admst:open file="%(name).net">
+<admst:text format="*** Interface: %(/simulator/package_string)\n"/>
+<admst:text format="*** created by: %(/simulator/fullname) - %(/simulator/currentdate)\n"/>
+<admst:text format="\n"/>
+  <admst:text format="* Simple test circuit - automatically created %(/simulator/currentdate) \n"/>
+  <admst:text format="\n"/>
+  <admst:text format=".options scale=1 gmin=1e-12 reltol=1.0e-8 vabstol=1.0e-08\n"/>
+  <admst:text format="\n"/>
+  <admst:text format="model my$mname $mname\n"/>
+  <admst:for-each select="variable[scope='global_model']">
+    <admst:if test="[input='yes']">
+      <admst:text format="+ %(name) = %(print_expression(default/tree))\n"/>
+    </admst:if>
+  </admst:for-each>
+  <admst:text format="\n"/>
+  <admst:text format="$mname "/>
+  <admst:text select="node[location='external']" format="N_$(mname)_%(name)_int "/>
+  <admst:text format="my$mname  \n"/>
+  <admst:for-each select="variable[scope='global_instance']">
+    <admst:if test="[input='yes']">
+      <admst:choose>
+        <admst:when test="attribute[name='spice:isflag' and value='yes']">
+        </admst:when>
+        <admst:otherwise>
+          <admst:choose>
+            <admst:when test="attribute[name='spice:name']">
+              <admst:for-each select="attribute[name='spice:name']">
+                <admst:text format="+ %(value) = %(print_expression(default/tree))\n"/>
+              </admst:for-each>
+            </admst:when>
+            <admst:otherwise>
+              <admst:text format="+ %(name) = %(print_expression(default/tree))\n"/>
+            </admst:otherwise>
+          </admst:choose>
+        </admst:otherwise>
+      </admst:choose>
+    </admst:if>
+  </admst:for-each>
+  <admst:text format="\n"/>
+  <admst:for-each select="node[location='external']">
+    <admst:text format="* inout node \n"/>
+    <admst:text format="v_$(mname)_%(name)_vdd N_$(mname)_%(name)_vdd 0 vsource dc=1.0\n"/>
+    <admst:text format="r_$(mname)_%(name)1  N_$(mname)_%(name)_int 0 resistor r=1.0\n"/>
+    <admst:text format="r_$(mname)_%(name)2  N_$(mname)_%(name)_int N_$(mname)_%(name)_vdd resistor r=1.0\n"/>
+  </admst:for-each>
+  <admst:text format="\n"/>
+  <admst:text format="opPoint dc oppoint=screen print=yes\n"/>
+  <admst:text format="* infoall info what=all save=all\n"/>
+</admst:open>
+</admst:for-each>
+
+</admst>

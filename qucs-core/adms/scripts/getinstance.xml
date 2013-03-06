@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE admst PUBLIC "-//adms//DTD admst 2.0//-" "http://mot-adms.sourceforge.net/xml-files/adms/admst.dtd">
+<!--
+  Usage: admsXml -e getinstance.xml
+  This file prints all instances defined in file <vafile>.
+  Note: will work with adms-2.2.2 only - previous versions had bugs :-( 
+-->
+<!--
+  $Id: getinstance.xml 1102 2008-10-03 14:09:22Z r29173 $
+  $Log$
+  Revision 1.7  2006/03/23 13:46:44  r29173
+  cosmetic changes
+
+  Revision 1.4  2006/03/23 07:51:39  r29173
+  fixed bug in computation of ddx
+-->
+
+<admst version="2.3.0"  xmlns:admst="http://mot-adms.svn.sourceforge.net/viewvc/*checkout*/mot-adms/trunk/adms/admst.dtd">
+  <admst:template match=":instance">
+    <admst:text format="  %(instantiator/name).%(module/name) #("/>
+    <admst:join select="parameterset" separator=", ">
+      <admst:text format=".%(parameter)(value)"/>
+    </admst:join>
+    <admst:text format=") %(name) ("/>
+    <admst:join select="terminal" separator=", ">
+      <admst:text format="%(nodefrominstantiator/name)"/>
+    </admst:join>
+    <admst:text format=");\n"/>
+  </admst:template>
+  <admst:open file="getinstance.va">
+    `include &quot;discipline.h&quot;
+    module c(ct1,ct2);
+      inout      ct1, ct2;
+      electrical ct1, ct2;
+      parameter real cP1 = 10;
+      parameter real cP2 = 10;
+      analog
+        begin
+          I(ct1,ct2)&lt;+V(ct1,ct2)/(cP1+cP2);
+        end
+    endmodule
+    module b(bt1,bt2);
+      inout      bt1, bt2;
+      electrical bt1, bt2;
+      parameter real bP1 = 10;
+      parameter real bP2 = 10;
+      analog
+        begin
+          I(bt1,bt2)&lt;+V(bt1,bt2)/bP1;
+        end
+        c #(.cP1(bP2),.cP2(bP1)) C1(bt1,bt2);
+    endmodule
+    module a(at1, at2);
+      parameter real aP=1.0;
+      inout      at1, at2;
+      electrical at1, at2;
+      electrical topin;
+      analog
+        begin
+          I(at1,at2)&lt;+V(at1,at2)/aP;
+        end
+        b #(.bP1(aP),.bP2(1/aP)) B1(at1,at2);
+        b #(.bP2(aP)) B2(at2,at1);
+    endmodule
+  </admst:open>
+  <admst:read file="getinstance.va"/>
+  <admst:message format="getinstance.va: file created\n"/>
+  <admst:for-each select="/module">
+    <admst:text format="Module: %(name)\n"/>
+    <admst:apply-templates select="instance" match=":instance" required="yes"/>
+    <admst:text format="\n"/>
+  </admst:for-each>
+</admst>

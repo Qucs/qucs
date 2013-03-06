@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+  Usage: admsXml -e blockvariables.xml
+  This file illustrates how block variables can be access
+  from within the adms data tree.
+-->
+<!--
+  $Id: blockvariables.xml 1102 2008-10-03 14:09:22Z r29173 $
+  $Log$
+  Revision 1.3  2006/09/04 08:51:05  r29173
+  tons of simplifications
+
+  Revision 1.2  2006/03/24 16:49:04  r29173
+  updated to adms-2.2.2
+
+  Revision 1.1  2006/03/24 16:36:27  r29173
+  initial import
+
+-->
+
+<!DOCTYPE admst SYSTEM "admst.dtd">
+<admst version="2.3.0"  xmlns:admst="http://mot-adms.svn.sourceforge.net/viewvc/*checkout*/mot-adms/trunk/adms/admst.dtd">
+
+<admst:template match=":block">
+  <admst:choose>
+    <admst:when test="adms[datatypename='assignment']">
+      <admst:text format="[%(lhs/block/name).%(lhs/name)]"/>
+    </admst:when>
+    <admst:when test="adms[datatypename='block']">
+      <admst:text format="\nblock:%(name) "/>
+      <admst:for-each select="variable">
+        <admst:text format="%(block/name).%(name)("/>
+        <admst:for-each select="probe">%(branch/pnode/name),%(branch/nnode/name)</admst:for-each>
+        <admst:text format=") "/>
+      </admst:for-each>
+      <admst:text format="\n{"/>
+      <admst:apply-templates select="item" match=":block"/>
+      <admst:text format="}\n"/>
+    </admst:when>
+  </admst:choose>
+</admst:template>
+<admst:open file="blockvariables.va">
+    `include &quot;disciplines.h&quot;
+    module myblockvariable (p,n);
+      inout p, n;
+      electrical p, n;
+      parameter real w=1u;
+      parameter real l=1u;
+      parameter integer level=0;
+      real a1;
+      analog
+        begin : main
+          begin : A
+            real a1, a2, a3;
+            real b1, b2, b3;
+            a1=V(p,n); //A.a1
+          end
+          a1=1; //myblockvariable.a1
+          begin : B
+            real a1, a2, a3, a4;
+            real b1, b2, b3;
+            b1=1; //B.b1
+            begin : C
+              real a1, a2, a3;
+              real b1, b2, b3;
+              a2=V(p,n); //C.a2
+            end
+            a2=V(p,n); //B.a2
+          end
+          a1=w/l; //myblockvariable.a1
+          I(p,n) &lt;+ a1*V(p,n);
+        end
+    endmodule
+</admst:open>
+<admst:message format="blockvariables.va: file created\n"/>
+<admst:read file="blockvariables.va"/>
+<admst:for-each select="/module">
+  <admst:apply-templates select="analog/code" match=":block"/>
+</admst:for-each> 
+</admst>
+

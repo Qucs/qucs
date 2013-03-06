@@ -1,0 +1,720 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+ <!DOCTYPE admst PUBLIC "-///DTD admst 2.0//-" "http://mot-adms.sourceforge.net/xml-files/adms/admst.dtd">
+ <admst version="2.3.0"  xmlns:admst="http://mot-adms.svn.sourceforge.net" xmlns:m="http://mot-adms.svn.sourceforge.net" >
+ <!--
+   $Id: vlatommlMODULE.htm.xml 1156 2008-11-10 15:28:15Z r29173 $
+   $Log$
+   Revision 1.19  2006/03/09 13:35:02  r29173
+   updated to adms-2.2.0
+   Revision 1.15  2005/04/01 14:16:25  r29173
+   migration to adms-2.x.x: updated version to 2.0.0
+   Revision 1.14  2005/04/01 08:33:22  r29173
+   migration to adms-2.x.x: removed predicate options
+   Revision 1.13  2005/03/23 13:34:53  r29173
+   made few improvements
+   Revision 1.12  2005/03/14 17:34:22  r29173
+   migration to adms-2.x.x: start xpath coding; add documentation
+   Revision 1.11  2005/03/11 09:04:52  r29173
+   migration to adms-2.x.x: admst:if requires attribute 'test'
+   Revision 1.10  2005/02/28 09:22:12  r29173
+   migration to adms-2.x.x: admst:size renamed admst:count
+   Revision 1.9  2005/02/28 08:03:31  r29173
+   migration to adms-2.x.x: admst:version required
+   Revision 1.8  2005/02/25 15:31:41  r29173
+   migration to adms-2.x.x: code clean-up
+   Revision 1.7  2005/02/20 11:46:07  r29173
+   migration to adms-2.x.x: renamed device to module
+   Revision 1.6  2005/02/18 16:34:24  r29173
+   migration to adms-2.x.x: changed syntax of admst:open
+   Revision 1.5  2005/02/17 17:00:17  r29173
+   added missing "errno.h"; turned some warnings off; added more stuffs to vlatomml
+   Revision 1.4  2005/02/15 17:32:49  r29173
+   migration to adms-2.x.x: fixed bug in valueto:nature:units
+ -->
+ <!--
+      Copyrights 2004-2005 Freescale Semiconductor http://www.freescale.com/
+      Written by Laurent Lemaitre - r29173@users.sourceforge.net
+      Documentation:
+        TO-DO!
+      Translater from Verilog-AMS to XHTML/mathML
+      Supported by adms-2.x.x
+      This file is part of adms - http://sourceforge.net/projects/mot-adms.
+      adms is free software; you can redistribute it and/or modify
+      it under the terms of the GNU General Public License as published by
+      the Free Software Foundation; either version 2 of the License, or
+      (at your option) any later version.
+      adms is distributed in the hope that it will be useful,
+      but WITHOUT ANY WARRANTY; without even the implied warranty of
+      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+      GNU General Public License for more details.
+      You should have received a copy of the GNU General Public License
+      along with adms; if not, write to the Free Software
+      Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ -->
+   <!-- handling of device: starting point -->
+   <admst:for-each select="/module">
+     <admst:open file="%(name).xhtml">
+     <admst:text format="&lt;?xml version=&quot;1.0&quot; encoding=&quot;iso-8859-1&quot;?&gt;\n"/>
+     <admst:text format="&lt;?xml-stylesheet type=&quot;text/xsl&quot; href=&quot;http://www.w3.org/Math/XSL/pmathml.xsl&quot;?&gt;\n"/>
+     <admst:text format="&lt;!-- created by %(/simulator/fullname) on %(/simulator/currentdate) --&gt;\n"/>
+     <admst:text format="&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0 Transitional//EN&quot; &quot;&quot;\n"/>
+[
+  &lt;!ENTITY ac               &quot;&amp;#x0290F;&quot; &gt;&lt;!--most positive --&gt;
+  &lt;!ENTITY acE              &quot;&amp;#x029DB;&quot; &gt;&lt;!--most positive, two lines below --&gt;
+  &lt;!ENTITY amalg            &quot;&amp;#x02A3F;&quot; &gt;&lt;!--/amalg B: amalgamation or coproduct --&gt;
+  &lt;!ENTITY barvee           &quot;&amp;#x022BD;&quot; &gt;&lt;!--bar, vee --&gt;
+  &lt;!ENTITY barwed           &quot;&amp;#x022BC;&quot; &gt;&lt;!--/barwedge B: logical and, bar above --&gt;
+  &lt;!ENTITY Barwed           &quot;&amp;#x02306;&quot; &gt;&lt;!--/doublebarwedge B: log and, dbl bar above --&gt;
+  &lt;!ENTITY bsolb            &quot;&amp;#x029C5;&quot; &gt;&lt;!--reverse solidus in square --&gt;
+  &lt;!ENTITY Cap              &quot;&amp;#x022D2;&quot; &gt;&lt;!--/Cap /doublecap B: dbl intersection --&gt;
+  &lt;!ENTITY capand           &quot;&amp;#x02A44;&quot; &gt;&lt;!--intersection, and --&gt;
+  &lt;!ENTITY capbrcup         &quot;&amp;#x02A49;&quot; &gt;&lt;!--intersection, bar, union --&gt;
+  &lt;!ENTITY capcap           &quot;&amp;#x02A4B;&quot; &gt;&lt;!--intersection, intersection, joined --&gt;
+  &lt;!ENTITY capcup           &quot;&amp;#x02A47;&quot; &gt;&lt;!--intersection above union --&gt;
+  &lt;!ENTITY capdot           &quot;&amp;#x02A40;&quot; &gt;&lt;!--intersection, with dot --&gt;
+  &lt;!ENTITY caps             &quot;&amp;#x02229;&amp;#x0FE00;&quot; &gt;&lt;!--intersection, serifs --&gt;
+  &lt;!ENTITY ccaps            &quot;&amp;#x02A4D;&quot; &gt;&lt;!--closed intersection, serifs --&gt;
+  &lt;!ENTITY ccups            &quot;&amp;#x02A4C;&quot; &gt;&lt;!--closed union, serifs --&gt;
+  &lt;!ENTITY ccupssm          &quot;&amp;#x02A50;&quot; &gt;&lt;!--closed union, serifs, smash product --&gt;
+  &lt;!ENTITY coprod           &quot;&amp;#x02210;&quot; &gt;&lt;!--/coprod L: coproduct operator --&gt;
+  &lt;!ENTITY Cup              &quot;&amp;#x022D3;&quot; &gt;&lt;!--/Cup /doublecup B: dbl union --&gt;
+  &lt;!ENTITY cupbrcap         &quot;&amp;#x02A48;&quot; &gt;&lt;!--union, bar, intersection --&gt;
+  &lt;!ENTITY cupcap           &quot;&amp;#x02A46;&quot; &gt;&lt;!--union above intersection --&gt;
+  &lt;!ENTITY cupcup           &quot;&amp;#x02A4A;&quot; &gt;&lt;!--union, union, joined --&gt;
+  &lt;!ENTITY cupdot           &quot;&amp;#x0228D;&quot; &gt;&lt;!--union, with dot --&gt;
+  &lt;!ENTITY cupor            &quot;&amp;#x02A45;&quot; &gt;&lt;!--union, or --&gt;
+  &lt;!ENTITY cups             &quot;&amp;#x0222A;&amp;#x0FE00;&quot; &gt;&lt;!--union, serifs --&gt;
+  &lt;!ENTITY cuvee            &quot;&amp;#x022CE;&quot; &gt;&lt;!--/curlyvee B: curly logical or --&gt;
+  &lt;!ENTITY cuwed            &quot;&amp;#x022CF;&quot; &gt;&lt;!--/curlywedge B: curly logical and --&gt;
+  &lt;!ENTITY dagger           &quot;&amp;#x02020;&quot; &gt;&lt;!--/dagger B: dagger relation --&gt;
+  &lt;!ENTITY Dagger           &quot;&amp;#x02021;&quot; &gt;&lt;!--/ddagger B: double dagger relation --&gt;
+  &lt;!ENTITY diam             &quot;&amp;#x022C4;&quot; &gt;&lt;!--/diamond B: open diamond --&gt;
+  &lt;!ENTITY divonx           &quot;&amp;#x022C7;&quot; &gt;&lt;!--/divideontimes B: division on times --&gt;
+  &lt;!ENTITY eplus            &quot;&amp;#x02A71;&quot; &gt;&lt;!--equal, plus --&gt;
+  &lt;!ENTITY hercon           &quot;&amp;#x022B9;&quot; &gt;&lt;!--hermitian conjugate matrix --&gt;
+  &lt;!ENTITY intcal           &quot;&amp;#x022BA;&quot; &gt;&lt;!--/intercal B: intercal --&gt;
+  &lt;!ENTITY iprod            &quot;&amp;#x02A3C;&quot; &gt;&lt;!--/intprod --&gt;
+  &lt;!ENTITY loplus           &quot;&amp;#x02A2D;&quot; &gt;&lt;!--plus sign in left half circle --&gt;
+  &lt;!ENTITY lotimes          &quot;&amp;#x02A34;&quot; &gt;&lt;!--multiply sign in left half circle  --&gt;
+  &lt;!ENTITY lthree           &quot;&amp;#x022CB;&quot; &gt;&lt;!--/leftthreetimes B: --&gt;
+  &lt;!ENTITY ltimes           &quot;&amp;#x022C9;&quot; &gt;&lt;!--/ltimes B: times sign, left closed --&gt;
+  &lt;!ENTITY midast           &quot;&amp;#x0002A;&quot; &gt;&lt;!--/ast B: asterisk --&gt;
+  &lt;!ENTITY minusb           &quot;&amp;#x0229F;&quot; &gt;&lt;!--/boxminus B: minus sign in box --&gt;
+  &lt;!ENTITY minusd           &quot;&amp;#x02238;&quot; &gt;&lt;!--/dotminus B: minus sign, dot above --&gt;
+  &lt;!ENTITY minusdu          &quot;&amp;#x02A2A;&quot; &gt;&lt;!--minus sign, dot below --&gt;
+  &lt;!ENTITY ncap             &quot;&amp;#x02A43;&quot; &gt;&lt;!--bar, intersection --&gt;
+  &lt;!ENTITY ncup             &quot;&amp;#x02A42;&quot; &gt;&lt;!--bar, union --&gt;
+  &lt;!ENTITY oast             &quot;&amp;#x0229B;&quot; &gt;&lt;!--/circledast B: asterisk in circle --&gt;
+  &lt;!ENTITY ocir             &quot;&amp;#x0229A;&quot; &gt;&lt;!--/circledcirc B: small circle in circle --&gt;
+  &lt;!ENTITY odash            &quot;&amp;#x0229D;&quot; &gt;&lt;!--/circleddash B: hyphen in circle --&gt;
+  &lt;!ENTITY odiv             &quot;&amp;#x02A38;&quot; &gt;&lt;!--divide in circle --&gt;
+  &lt;!ENTITY odot             &quot;&amp;#x02299;&quot; &gt;&lt;!--/odot B: middle dot in circle --&gt;
+  &lt;!ENTITY odsold           &quot;&amp;#x029BC;&quot; &gt;&lt;!--dot, solidus, dot in circle --&gt;
+  &lt;!ENTITY ofcir            &quot;&amp;#x029BF;&quot; &gt;&lt;!--filled circle in circle --&gt;
+  &lt;!ENTITY ogt              &quot;&amp;#x029C1;&quot; &gt;&lt;!--greater-than in circle --&gt;
+  &lt;!ENTITY ohbar            &quot;&amp;#x029B5;&quot; &gt;&lt;!--circle with horizontal bar --&gt;
+  &lt;!ENTITY olcir            &quot;&amp;#x029BE;&quot; &gt;&lt;!--large circle in circle --&gt;
+  &lt;!ENTITY olt              &quot;&amp;#x029C0;&quot; &gt;&lt;!--less-than in circle --&gt;
+  &lt;!ENTITY omid             &quot;&amp;#x029B6;&quot; &gt;&lt;!--vertical bar in circle --&gt;
+  &lt;!ENTITY ominus           &quot;&amp;#x02296;&quot; &gt;&lt;!--/ominus B: minus sign in circle --&gt;
+  &lt;!ENTITY opar             &quot;&amp;#x029B7;&quot; &gt;&lt;!--parallel in circle --&gt;
+  &lt;!ENTITY operp            &quot;&amp;#x029B9;&quot; &gt;&lt;!--perpendicular in circle --&gt;
+  &lt;!ENTITY oplus            &quot;&amp;#x02295;&quot; &gt;&lt;!--/oplus B: plus sign in circle --&gt;
+  &lt;!ENTITY osol             &quot;&amp;#x02298;&quot; &gt;&lt;!--/oslash B: solidus in circle --&gt;
+  &lt;!ENTITY otimes           &quot;&amp;#x02297;&quot; &gt;&lt;!--/otimes B: multiply sign in circle --&gt;
+  &lt;!ENTITY Otimes           &quot;&amp;#x02A37;&quot; &gt;&lt;!--multiply sign in double circle --&gt;
+  &lt;!ENTITY otimesas         &quot;&amp;#x02A36;&quot; &gt;&lt;!--multiply sign in circle, circumflex accent --&gt;
+  &lt;!ENTITY ovbar            &quot;&amp;#x0233D;&quot; &gt;&lt;!--circle with vertical bar --&gt;
+  &lt;!ENTITY plusacir         &quot;&amp;#x02A23;&quot; &gt;&lt;!--plus, circumflex accent above --&gt;
+  &lt;!ENTITY plusb            &quot;&amp;#x0229E;&quot; &gt;&lt;!--/boxplus B: plus sign in box --&gt;
+  &lt;!ENTITY pluscir          &quot;&amp;#x02A22;&quot; &gt;&lt;!--plus, small circle above --&gt;
+  &lt;!ENTITY plusdo           &quot;&amp;#x02214;&quot; &gt;&lt;!--/dotplus B: plus sign, dot above --&gt;
+  &lt;!ENTITY plusdu           &quot;&amp;#x02A25;&quot; &gt;&lt;!--plus sign, dot below --&gt;
+  &lt;!ENTITY pluse            &quot;&amp;#x02A72;&quot; &gt;&lt;!--plus, equals --&gt;
+  &lt;!ENTITY plussim          &quot;&amp;#x02A26;&quot; &gt;&lt;!--plus, similar below --&gt;
+  &lt;!ENTITY plustwo          &quot;&amp;#x02A27;&quot; &gt;&lt;!--plus, two; Nim-addition --&gt;
+  &lt;!ENTITY prod             &quot;&amp;#x0220F;&quot; &gt;&lt;!--/prod L: product operator --&gt;
+  &lt;!ENTITY race             &quot;&amp;#x029DA;&quot; &gt;&lt;!--reverse most positive, line below --&gt;
+  &lt;!ENTITY roplus           &quot;&amp;#x02A2E;&quot; &gt;&lt;!--plus sign in right half circle --&gt;
+  &lt;!ENTITY rotimes          &quot;&amp;#x02A35;&quot; &gt;&lt;!--multiply sign in right half circle --&gt;
+  &lt;!ENTITY rthree           &quot;&amp;#x022CC;&quot; &gt;&lt;!--/rightthreetimes B: --&gt;
+  &lt;!ENTITY rtimes           &quot;&amp;#x022CA;&quot; &gt;&lt;!--/rtimes B: times sign, right closed --&gt;
+  &lt;!ENTITY sdot             &quot;&amp;#x022C5;&quot; &gt;&lt;!--/cdot B: small middle dot --&gt;
+  &lt;!ENTITY sdotb            &quot;&amp;#x022A1;&quot; &gt;&lt;!--/dotsquare /boxdot B: small dot in box --&gt;
+  &lt;!ENTITY setmn            &quot;&amp;#x02216;&quot; &gt;&lt;!--/setminus B: reverse solidus --&gt;
+  &lt;!ENTITY simplus          &quot;&amp;#x02A24;&quot; &gt;&lt;!--plus, similar above --&gt;
+  &lt;!ENTITY smashp           &quot;&amp;#x02A33;&quot; &gt;&lt;!--smash product --&gt;
+  &lt;!ENTITY solb             &quot;&amp;#x029C4;&quot; &gt;&lt;!--solidus in square --&gt;
+  &lt;!ENTITY sqcap            &quot;&amp;#x02293;&quot; &gt;&lt;!--/sqcap B: square intersection --&gt;
+  &lt;!ENTITY sqcaps           &quot;&amp;#x02293;&amp;#x0FE00;&quot; &gt;&lt;!--square intersection, serifs --&gt;
+  &lt;!ENTITY sqcup            &quot;&amp;#x02294;&quot; &gt;&lt;!--/sqcup B: square union --&gt;
+  &lt;!ENTITY sqcups           &quot;&amp;#x02294;&amp;#x0FE00;&quot; &gt;&lt;!--square union, serifs --&gt;
+  &lt;!ENTITY ssetmn           &quot;&amp;#x02216;&amp;#x0FE00;&quot; &gt;&lt;!--/smallsetminus B: sm reverse solidus --&gt;
+  &lt;!ENTITY sstarf           &quot;&amp;#x022C6;&quot; &gt;&lt;!--/star B: small star, filled --&gt;
+  &lt;!ENTITY subdot           &quot;&amp;#x02ABD;&quot; &gt;&lt;!--subset, with dot --&gt;
+  &lt;!ENTITY sum              &quot;&amp;#x02211;&quot; &gt;&lt;!--/sum L: summation operator --&gt;
+  &lt;!ENTITY supdot           &quot;&amp;#x02ABE;&quot; &gt;&lt;!--superset, with dot --&gt;
+  &lt;!ENTITY timesb           &quot;&amp;#x022A0;&quot; &gt;&lt;!--/boxtimes B: multiply sign in box --&gt;
+  &lt;!ENTITY timesbar         &quot;&amp;#x02A31;&quot; &gt;&lt;!--multiply sign, bar below --&gt;
+  &lt;!ENTITY timesd           &quot;&amp;#x02A30;&quot; &gt;&lt;!--times, dot --&gt;
+  &lt;!ENTITY tridot           &quot;&amp;#x025EC;&quot; &gt;&lt;!--dot in triangle --&gt;
+  &lt;!ENTITY triminus         &quot;&amp;#x02A3A;&quot; &gt;&lt;!--minus in triangle --&gt;
+  &lt;!ENTITY triplus          &quot;&amp;#x02A39;&quot; &gt;&lt;!--plus in triangle --&gt;
+  &lt;!ENTITY trisb            &quot;&amp;#x029CD;&quot; &gt;&lt;!--triangle, serifs at bottom --&gt;
+  &lt;!ENTITY tritime          &quot;&amp;#x02A3B;&quot; &gt;&lt;!--multiply in triangle --&gt;
+  &lt;!ENTITY uplus            &quot;&amp;#x0228E;&quot; &gt;&lt;!--/uplus B: plus sign in union --&gt;
+  &lt;!ENTITY veebar           &quot;&amp;#x022BB;&quot; &gt;&lt;!--/veebar B: logical or, bar below --&gt;
+  &lt;!ENTITY wedbar           &quot;&amp;#x02A5F;&quot; &gt;&lt;!--wedge, bar below --&gt;
+  &lt;!ENTITY wreath           &quot;&amp;#x02240;&quot; &gt;&lt;!--/wr B: wreath product --&gt;
+  &lt;!ENTITY xcap             &quot;&amp;#x022C2;&quot; &gt;&lt;!--/bigcap L: intersection operator --&gt;
+  &lt;!ENTITY xcirc            &quot;&amp;#x025EF;&quot; &gt;&lt;!--/bigcirc B: large circle --&gt;
+  &lt;!ENTITY xcup             &quot;&amp;#x022C3;&quot; &gt;&lt;!--/bigcup L: union operator --&gt;
+  &lt;!ENTITY xdtri            &quot;&amp;#x025BD;&quot; &gt;&lt;!--/bigtriangledown B: big dn tri, open --&gt;
+  &lt;!ENTITY xodot            &quot;&amp;#x02299;&quot; &gt;&lt;!--/bigodot L: circle dot operator --&gt;
+  &lt;!ENTITY xoplus           &quot;&amp;#x02295;&quot; &gt;&lt;!--/bigoplus L: circle plus operator --&gt;
+  &lt;!ENTITY xotime           &quot;&amp;#x02297;&quot; &gt;&lt;!--/bigotimes L: circle times operator --&gt;
+  &lt;!ENTITY xsqcup           &quot;&amp;#x02294;&quot; &gt;&lt;!--/bigsqcup L: square union operator --&gt;
+  &lt;!ENTITY xuplus           &quot;&amp;#x0228E;&quot; &gt;&lt;!--/biguplus L: --&gt;
+  &lt;!ENTITY xutri            &quot;&amp;#x025B3;&quot; &gt;&lt;!--/bigtriangleup B: big up tri, open --&gt;
+  &lt;!ENTITY xvee             &quot;&amp;#x022C1;&quot; &gt;&lt;!--/bigvee L: logical and operator --&gt;
+  &lt;!ENTITY xwedge           &quot;&amp;#x022C0;&quot; &gt;&lt;!--/bigwedge L: logical or operator --&gt;
+]
+     <admst:text format="&gt;\n\n"/>
+
+     <html xmlns="http://www.w3.org/1999/xhtml" xmlns:html="http://www.w3.org/1999/xhtml">
+       <head>
+         <title><admst:text format="Module %(name) (%(/simulator/currentdate))\n"/></title>
+         <meta content="XHTML+MML" name="GENERATOR"/>
+         <meta http-equiv="Content-Type" content="text/html" charset="iso-8859-1"/>
+         <meta name="keywords" content="vlatomml.xml adms compact modeling"/>
+         <meta name="Generator" content="%(/simulator/fullname) [%(/simulator/currentdate)]"/>
+         <meta name="Originator" content="%(/simulator/package_string) [r29173@users.sourceforge.net http://mot-adms.sourceforge.net/]"/>
+         <OBJECT ID="MathPlayer" CLASSID="clsid:32F66A20-7614-11D4-BD11-00104BD3F987" title="MathPlayer"/>
+         <admst:text format="&lt;?import namespace=&quot;m&quot; implementation=&quot;#MathPlayer&quot; ?&gt;"/>
+         <script language="javascript">
+           <admst:text format="&lt;!-- \n"/>function IsMPInstalled()\n
+           {\n
+             try {\n
+               var oMP = new ActiveXObject(&quot;MathPlayer.Factory.1&quot;);\n
+               return true;\n
+             }\n
+             catch(e) {\n
+               return false;\n
+             }\n
+           }\n
+           function IsIE55LaterWindows()\n
+           {\n
+             var pos=navigator.appVersion.indexOf(&quot;MSIE &quot;)+5;\n
+             return( navigator.appName==&quot;Microsoft Internet Explorer&quot;\n
+             &amp;&amp; navigator.platform==&quot;Win32&quot; &amp;&amp; parseFloat(navigator.appVersion.substr(pos))>=&quot;5.5&quot;);\n
+           }\n
+           <admst:text format=" --&gt;\n"/>
+         </script>
+       </head>
+       <body text="#000000" vLink="#00b2b2" link="#0000e5" bgColor="#ffffff">
+         <script language="javascript">
+           <admst:text format="&lt;!-- \n"/>if(IsIE55LaterWindows() ) {\n
+             if(!IsMPInstalled() ) {\n
+               if( confirm(&quot;This page requires Design Science's MathPlayer to display equations and symbols.\\nMathPlayer is not currently installed, so equations and symbols will not display properly.\\n\\nWould you like to download and install MathPlayer now?&quot;) )\n
+                  window.open(&quot;http://www.dessci.com/en/products/mathplayer&quot;, &quot;MPDownload&quot;);\n
+             }\n
+           }\n
+           else {\n
+             alert(&quot;This page uses Design Science's MathPlayer to display equations and symbols,\\nand requires Microsoft Internet Explorer 5.5 or later on Windows.\\n\\nAs you are using a different browser, equations and symbols will not display properly.&quot;);\n
+           }\n
+           <admst:text format=" --&gt;\n"/>
+         </script>
+         <h1>Module %(name) (%(/simulator/currentdate))</h1>
+         <small><div style="font-style: italic; text-align: left; margin-left: 40px;">
+         <span style="font-style: italic;">Note:\n
+         This file has been created automatically from a Verilog-AMS input file using </span><a
+         style="font-style: italic;" href="http://mot-adms.sourceforge.net/">adms</a><span
+         style="font-style: italic;"> and xml translater </span><a
+         style="font-style: italic;"
+         href="http://mot-adms.sourceforge.net/xml-files/scripts/vlatomml.xml">vlatomml.xml</a><span
+         style="font-style: italic;">.\n
+         The main purpose of the translater is to help debugging adms and\n
+         simplifying the process of documenting compact devices.\n
+         </span><span style="font-style: italic;">The rendering of the output\n
+         can greatly be improved. Any comments/helps highly appreciated.<a
+         href="mailto:r29173@users.sourceforge.net?subject=%%5Bvlatomml%%5D:">[r29173]</a></span>
+         <br/>
+         <div>Usefull links:</div>
+         <ul>
+           <li><a href="http://mot-adms.sourceforge.net/xml-files/scripts/vlatomml.xml">\n
+               vlatomml.xml</a>: script used to convert verilog-ams code into xhtml+mathml format using\n
+               <a href="http://mot-adms.sourceforge.net">adms</a>
+           </li>
+           <li><a href="http://www.dessci.com/">MathPlayer</a>: displays mathml equations in browser (IE5/IE6 only)</li>
+           <li><a href="http://www.w3.org/Math/">W3C-MathML</a>: good starting point to learn mathml</li>
+         </ul>
+         </div></small>
+         <hr/>
+         <h2>Input Variables</h2>
+           <admst:for-each select="/module">
+             <table border="1" style="font-size: 10.0pt;">
+               <caption>Input Variables: instance=%(count(variable[input='yes' and parametertype='instance'])) (bold) and model=%(count(variable[input='yes' and parametertype='model']))</caption>
+               <tbody>
+                 <tr>
+                   <td>name</td>
+                   <td>description</td>
+                   <td>default</td>
+                 </tr>
+               <admst:for-each select="variable[input='yes' and parametertype='instance']">
+               <tr style="font-weight: bold;">
+                 <td>%(name)</td>
+                 <td>
+                   <admst:choose>
+                     <admst:when test="attribute[name='info']">
+                       <admst:for-each select="attribute[name='info']">
+                       %(value)</admst:for-each>
+                     </admst:when>
+                     <admst:otherwise>-</admst:otherwise>
+                   </admst:choose>
+                 </td>
+                 <td>
+                   <admst:apply-templates select="default" match=":expression" />
+                   <admst:for-each select="attribute[name='units']">
+                      (%(value))</admst:for-each>
+                 </td>
+               </tr>
+               </admst:for-each>
+               <admst:for-each select="variable[input='yes' and parametertype='model']">
+               <tr>
+                 <td>%(name)</td>
+                 <td>
+                   <admst:choose>
+                     <admst:when test="attribute[name='info']">
+                       <admst:for-each select="attribute[name='info']">
+                       %(value)</admst:for-each>
+                     </admst:when>
+                     <admst:otherwise>-</admst:otherwise>
+                   </admst:choose>
+                 </td>
+                 <td>
+                   <admst:apply-templates select="default" match=":expression" />
+                   <admst:for-each select="attribute[name='units']">
+                      (%(value))</admst:for-each>
+                 </td>
+               </tr>
+               </admst:for-each>
+               </tbody>
+             </table>
+           </admst:for-each>
+         <h2>Output Variables</h2>
+           <admst:for-each select="/module">
+             <table border="1" style="font-size: 10.0pt;">
+               <caption>Output Variables: instance=%(count(variable[input='no' and output='yes' and parametertype='instance'])) (bold) and model=%(count(variable[input='no' and output='yes' and parametertype='model'])) (red-underlined: temperature dependent)</caption>
+               <tbody>
+                 <tr>
+                   <td>name</td>
+                   <td>description</td>
+                   <td>dependencies</td>
+                 </tr>
+               <admst:for-each select="variable[input='no' and output='yes' and parametertype='instance']">
+               <tr style="font-weight: bold;">
+                 <admst:choose>
+                   <admst:when test="[TemperatureDependent='yes']">
+                     <td style="text-decoration:underline; color:red;">%(name)</td>
+                   </admst:when>
+                   <admst:otherwise>
+                     <td>%(name)</td>
+                   </admst:otherwise>
+                 </admst:choose>
+                 <td>
+                 <admst:choose>
+                   <admst:when test="attribute[name='info']">
+                     <admst:for-each select="attribute[name='info']">
+                     %(value)</admst:for-each>
+                   </admst:when>
+                   <admst:otherwise>-</admst:otherwise>
+                 </admst:choose>
+                 </td>
+                 <td>
+                   <admst:join select="variable" separator=", ">
+                     %(name)</admst:join>
+                 </td>
+               </tr>
+               </admst:for-each>
+               <admst:for-each select="variable[input='no' and output='yes' and parametertype='model']">
+               <tr>
+                 <admst:choose>
+                   <admst:when test="[TemperatureDependent='yes']">
+                     <td style="text-decoration:underline; color:red;">%(name)</td>
+                   </admst:when>
+                   <admst:otherwise>
+                     <td>%(name)</td>
+                   </admst:otherwise>
+                 </admst:choose>
+                 <td>
+                   <admst:choose>
+                     <admst:when test="attribute[name='info']">
+                       <admst:for-each select="attribute[name='info']">
+                         %(value)</admst:for-each>
+                     </admst:when>
+                     <admst:otherwise>-</admst:otherwise>
+                   </admst:choose>
+                 </td>
+                 <td>
+                   <admst:join select="variable" separator=", ">
+                     %(name)</admst:join>
+                 </td>
+               </tr>
+               </admst:for-each>
+               </tbody>
+             </table>
+           </admst:for-each>
+         <h2>Nature/Discipline Definition</h2>
+           <table border="1" style="font-size: 10.0pt;">
+             <caption>Nature</caption>
+             <tbody>
+               <tr>
+                 <td>name</td>
+                 <td>access</td>
+                 <td>abstol</td>
+                 <td>units</td>
+               </tr>
+             <admst:for-each select="/nature">
+             <tr>
+               <td>%(name)</td>
+               <td>%(access)</td>
+               <td>%(abstol)</td>
+               <td>%(units)</td>
+             </tr>
+             </admst:for-each>
+             </tbody>
+           </table>
+           <table border="1" style="font-size: 10.0pt;">
+             <caption>Discipline</caption>
+             <tbody>
+               <tr>
+                 <td>name</td>
+                 <td>potential</td>
+                 <td>flow</td>
+               </tr>
+             <admst:for-each select="/discipline">
+             <tr>
+               <td>%(name)</td>
+               <td>%(potential/name)</td>
+               <td>%(flow/name)</td>
+             </tr>
+             </admst:for-each>
+             </tbody>
+           </table>
+         <h2>Model Equations</h2>
+         <div style="font-style: italic; text-align: left; margin-left: 40px;">
+         <small>Notations used:
+         <ul>
+         <li>green: input parameter</li>
+         <li>bar over: variable never used</li>
+         <li>bar under: temperature dependent variable</li>
+         <li>red: voltage dependent variable</li>
+         </ul>
+         </small>
+         </div>
+         <div style="color: black; font-size: 10.0pt;">
+           <math xmlns="http://www.w3.org/1998/Math/MathML">
+             <admst:apply-templates select="analog/code" match=":%(datatypename)"/>
+           </math>
+         </div>
+       </body>
+     </html>
+   </admst:open>
+   <admst:text format="%(name).xhtml\n"/>
+   </admst:for-each>
+   <!-- handling of expression -->
+   <admst:template match=":expression">
+     <admst:apply-templates select="tree" match=":%(datatypename)" required="yes"/>
+   </admst:template>
+   <admst:template match=":mapply_unary">
+     <mfenced>
+       <mrow>
+         <admst:if test="[name='plus']"><mo>+</mo></admst:if>
+         <admst:if test="[name='minus']"><mo>-</mo></admst:if>
+         <admst:if test="[name='not']"><mo>!</mo></admst:if>
+         <admst:if test="[name='bw_not']"><mo>~</mo></admst:if>
+         <admst:apply-templates select="arg1" match=":%(datatypename)" required="yes"/>
+       </mrow>
+     </mfenced>
+   </admst:template>
+   <admst:template match=":mapply_binary:default">
+     <admst:apply-templates select="arg1" match=":%(datatypename)" required="yes"/>
+     <admst:if test="[name='bw_or']"><mo>|</mo></admst:if>
+     <admst:if test="[name='bw_and']"><mo>&amp;amp;</mo></admst:if>
+     <admst:if test="[name='addp']"><mo>+</mo></admst:if>
+     <admst:if test="[name='addm']"><mo>-</mo></admst:if>
+     <admst:if test="[name='multtime']"><mo>&amp;sdot;</mo></admst:if>
+     <admst:if test="[name='and']"><mo>&amp;amp;&amp;amp;</mo></admst:if>
+     <admst:if test="[name='equ']"><mo>==</mo></admst:if>
+     <admst:if test="[name='gt']"><mo>&amp;gt;</mo></admst:if>
+     <admst:if test="[name='gt_equ']"><mo>&amp;gt;=</mo></admst:if>
+     <admst:if test="[name='lt']"><mo>&amp;lt;</mo></admst:if>
+     <admst:if test="[name='lt_equ']"><mo>&amp;lt;=</mo></admst:if>
+     <admst:if test="[name='notequ']"><mo>!=</mo></admst:if>
+     <admst:if test="[name='or']"><mo>||</mo></admst:if>
+     <admst:apply-templates select="arg2" match=":%(datatypename)" required="yes"/>
+   </admst:template>
+   <admst:template match=":mapply_binary">
+     <admst:value-to select="/simulator/tmp1" string=""/>
+     <admst:if test="[name='multdiv']">
+       <mrow>
+         <mfrac>
+           <admst:apply-templates select="arg1" match=":%(datatypename)" required="yes"/>
+           <admst:apply-templates select="arg2" match=":%(datatypename)" required="yes"/>
+           <admst:value-to select="/simulator/tmp1" string="1"/>
+         </mfrac>
+       </mrow>
+     </admst:if>
+     <admst:if test="/simulator[tmp1='']">
+       <mfenced>
+         <mrow>
+           <admst:apply-templates select="." match=":mapply_binary:default" required="yes"/>
+         </mrow>
+       </mfenced>
+     </admst:if>
+   </admst:template>
+   <admst:template match=":mapply_ternary">
+     <admst:if test="[name='conditional']">
+       <mfenced>
+         <mrow>
+             <admst:apply-templates select="arg1" match=":%(datatypename)" required="yes"/>
+           <mo>?</mo>
+             <admst:apply-templates select="arg2" match=":%(datatypename)" required="yes"/>
+           <mo>:</mo>
+             <admst:apply-templates select="arg3" match=":%(datatypename)" required="yes"/>
+         </mrow>
+       </mfenced>
+     </admst:if>
+   </admst:template>
+   <!-- fixme: add mechanism in order to print easier attributes of m:mi -->
+   <admst:template match=":variable">
+        <admst:if test="[TemperatureDependent='yes']">
+          <admst:text format="&lt;munder&gt;\n"/>
+        </admst:if>
+        <admst:if test="[usedinmodel='no' and usedininstance='no' and usedinevaluate='no']">
+          <admst:text format="&lt;mover&gt;\n"/>
+        </admst:if>
+        <admst:text format="&lt;mi\n"/>
+          <admst:if test="[input='yes']"> color=&apos;green&apos;</admst:if>
+          <admst:if test="probe"> color=&apos;red&apos;</admst:if>
+        <admst:text format="&gt;%(name)\n"/>
+        <admst:text format="&lt;/mi&gt;\n"/>
+        <admst:if test="[usedinmodel='no' and usedininstance='no' and usedinevaluate='no']">
+          <mo>_</mo>
+          <admst:text format="&lt;/mover&gt;\n"/>
+        </admst:if>
+        <admst:if test="[TemperatureDependent='yes']">
+          <mo>-</mo>
+          <admst:text format="&lt;/munder&gt;\n"/>
+        </admst:if>
+   </admst:template>
+   <!-- fixme: add mechanism in order to print easier attributes of mi -->
+   <admst:template match=":variable:lhs">
+     <maction actiontype="statusline">
+        <admst:if test="[TemperatureDependent='yes']">
+          <admst:text format="&lt;munder&gt;\n"/>
+        </admst:if>
+        <admst:if test="[usedinmodel='no' and usedininstance='no' and usedinevaluate='no']">
+          <admst:text format="&lt;mover&gt;\n"/>
+        </admst:if>
+        <admst:text format="&lt;mi\n"/>
+          <admst:if test="[input='yes']"> color='green'</admst:if>
+          <admst:if test="probe"> color='red'</admst:if>
+        <admst:text format="&gt;%(name)\n"/>
+        <admst:text format="&lt;/mi&gt;\n"/>
+        <admst:if test="[usedinmodel='no' and usedininstance='no' and usedinevaluate='no']">
+          <mo>_</mo>
+          <admst:text format="&lt;/mover&gt;\n"/>
+        </admst:if>
+        <admst:if test="[TemperatureDependent='yes']">
+          <mo>-</mo>
+          <admst:text format="&lt;/munder&gt;\n"/>
+        </admst:if>
+       <mtext>
+       <admst:choose>
+         <admst:when test="attribute[name='info']">
+           <admst:for-each select="attribute[name='info']">%(value)</admst:for-each>
+         </admst:when>
+         <admst:otherwise>no desc</admst:otherwise>
+       </admst:choose>
+       </mtext>
+     </maction>
+   </admst:template>
+   <admst:template match=":function">
+     <admst:value-to select="/simulator/tmp1" string=""/>
+     <mrow>
+     <admst:if test="[name='abs']">
+       <mfenced separators="" open="|" close="|">
+         <admst:for-each select="arguments">
+           <admst:apply-templates select="." match=":%(datatypename)" required="yes"/>
+         </admst:for-each>
+         <admst:value-to select="/simulator/tmp1" string="1"/>
+       </mfenced>
+     </admst:if>
+     <admst:if test="[name='sqrt']">
+       <msqrt>
+         <admst:for-each select="arguments">
+           <admst:apply-templates select="." match=":%(datatypename)" required="yes"/>
+         </admst:for-each>
+         <admst:value-to select="/simulator/tmp1" string="1"/>
+       </msqrt>
+     </admst:if>
+     <admst:if test="[name='exp']">
+       <msup>
+         <mi><admst:text format="e"/></mi>
+         <admst:for-each select="arguments">
+           <admst:apply-templates select="." match=":%(datatypename)" required="yes"/>
+         </admst:for-each>
+         <admst:value-to select="/simulator/tmp1" string="1"/>
+       </msup>
+     </admst:if>
+     <admst:if test="[name='pow']">
+       <msup>
+         <admst:for-each select="arguments">
+           <admst:apply-templates select="." match=":%(datatypename)" required="yes"/>
+         </admst:for-each>
+         <admst:value-to select="/simulator/tmp1" string="1"/>
+       </msup>
+     </admst:if>
+     <admst:if test="/simulator[tmp1='']">
+       <mi>%(name)</mi>
+       <mo> </mo>
+       <admst:if test="arguments">
+         <mfenced>
+           <admst:for-each select="arguments">
+             <admst:apply-templates select="." match=":%(datatypename)" required="yes"/>
+           </admst:for-each>
+         </mfenced>
+       </admst:if>
+     </admst:if>
+     </mrow>
+   </admst:template>
+   <admst:template match=":string">
+     <mrow><mtext>&quot;%(value)&quot;</mtext></mrow>
+   </admst:template>
+   <admst:template match=":number">
+     <admst:if test="[scalingunit='1']"><mn>%(value)</mn></admst:if>
+     <admst:if test="[scalingunit='E']"><mn>%(value)</mn>&amp;sdot;1.0e+18</admst:if>
+     <admst:if test="[scalingunit='P']"><mn>%(value)</mn>P</admst:if>
+     <admst:if test="[scalingunit='T']"><mn>%(value)</mn>T</admst:if>
+     <admst:if test="[scalingunit='G']"><mn>%(value)</mn>G</admst:if>
+     <admst:if test="[scalingunit='M']"><mn>%(value)</mn>M</admst:if>
+     <admst:if test="[scalingunit='k']"><mn>%(value)</mn>k</admst:if>
+     <admst:if test="[scalingunit='h']"><mn>%(value)</mn>&amp;sdot;1.0e+2</admst:if>
+     <admst:if test="[scalingunit='D']"><mn>%(value)</mn>&amp;sdot;1.0e+1</admst:if>
+     <admst:if test="[scalingunit='d']"><mn>%(value)</mn>&amp;sdot;1.0e-1</admst:if>
+     <admst:if test="[scalingunit='c']"><mn>%(value)</mn>&amp;sdot;1.0e-2</admst:if>
+     <admst:if test="[scalingunit='m']"><mn>%(value)</mn>m</admst:if>
+     <admst:if test="[scalingunit='u']"><mn>%(value)</mn>&amp;micro;</admst:if>
+     <admst:if test="[scalingunit='n']"><mn>%(value)</mn>n</admst:if>
+     <admst:if test="[scalingunit='A']"><mn>%(value)</mn>&amp;angst;</admst:if>
+     <admst:if test="[scalingunit='p']"><mn>%(value)</mn>p</admst:if>
+     <admst:if test="[scalingunit='f']"><mn>%(value)</mn>f</admst:if>
+     <admst:if test="[scalingunit='a']"><mn>%(value)</mn>&amp;sdot;1.0e-18</admst:if>
+   </admst:template>
+   <admst:template match=":probe">
+     <admst:apply-templates select="." match=":probe_and_source" required="yes"/>
+   </admst:template>
+   <!-- handling of probes and sources -->
+   <admst:template match=":probe_and_source">
+     <mrow>
+       <mi>%(nature/access)</mi>
+       <mo> </mo>
+       <mfenced>
+         <mi>%(branch/pnode/name)</mi>
+         <mi>%(branch/pnode/name)</mi>
+       </mfenced>
+     </mrow>
+   </admst:template>
+   <!-- handling of attributes -->
+   <admst:template match=":attribute">
+   </admst:template>
+   <!-- handling of block -->
+   <admst:template match=":block">
+     <mfenced separators="" open="" close="">
+     <mtable columnalign="left">
+       <admst:if test="[name='initial_model']">
+         <mtr> <mtd> <mtext color="red">Initial Model</mtext> </mtd> </mtr>
+       </admst:if>
+       <admst:if test="[name='initial_instance']">
+         <mtr> <mtd> <mtext color="red">Initial Instance</mtext> </mtd> </mtr>
+       </admst:if>
+       <admst:for-each select="item">
+           <mtr>
+             <mtd>
+               <admst:apply-templates select="." match=":%(datatypename)"/>
+             </mtd>
+           </mtr>
+       </admst:for-each>
+       <admst:if test="[name='initial_model']">
+         <mtr> <mtd> <mtext color="red">------------ end of Initial Model</mtext> </mtd> </mtr>
+       </admst:if>
+       <admst:if test="[name='initial_instance']">
+         <mtr> <mtd> <mtext color="red">------------ end of Initial Instance</mtext> </mtd> </mtr>
+       </admst:if>
+     </mtable>
+     </mfenced>
+   </admst:template>
+   <!-- handling of conditional -->
+   <admst:template match=":conditional">
+     <mrow>
+       <mtable columnalign="left">
+         <mtr>
+           <mtd>
+             <mo>if</mo>
+             <mfenced>
+               <admst:apply-templates select="if" match=":expression"/>
+             </mfenced>
+           </mtd>
+         </mtr>
+         <mtr>
+           <mtd>
+             <mfenced color="red" separators="" open="|" close="">
+               <admst:apply-templates select="then" match=":%(datatypename)"/>
+             </mfenced>
+           </mtd>
+         </mtr>
+         <admst:if test="else"><mo>else</mo>
+           <mtr>
+             <mtd>
+               <mfenced separators="" open="|" close="">
+                 <admst:apply-templates select="else" match=":%(datatypename)"/>
+               </mfenced>
+             </mtd>
+           </mtr>
+         </admst:if>
+       </mtable>
+     </mrow>
+   </admst:template>
+   <!-- handling of callfunction -->
+   <admst:template match=":callfunction">
+       <mrow>
+         <admst:apply-templates select="function" match=":function"/><mo>;</mo>
+       </mrow>
+   </admst:template>
+   <!-- handling of nilled -->
+   <admst:template match=":nilled">
+   </admst:template>
+   <!-- handling of whileloop -->
+   <admst:template match=":whileloop">
+   </admst:template>
+   <!-- handling of assignment -->
+   <admst:template match=":assignment">
+     <mrow>
+       <admst:apply-templates select="lhs" match=":variable:lhs" />
+       <mo>=</mo>
+       <admst:apply-templates select="rhs" match=":expression" />
+       <mo>;</mo>
+     </mrow>
+   </admst:template>
+   <!-- handling of contribution -->
+   <admst:template match=":contribution">
+     <mrow>
+       <admst:apply-templates select="lhs" match=":probe_and_source" required="yes"/>
+       <mo>&amp;lt;+</mo>
+       <admst:apply-templates select="rhs" match=":expression"/>
+       <mi>;</mi>
+     </mrow>
+   </admst:template>
+ </admst>
+

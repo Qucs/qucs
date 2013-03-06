@@ -1,0 +1,1122 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+
+  Usage: admsXml <vafile> -e analogfunction.xml 
+
+  This file extracts all analog functions defined in file <vafile>
+  and transforms them into ready-to-compile C code. Two new files
+  - analogfunction.cpp and file analogfunction.h - are auto-created.
+
+  This file is made available as illustrative example on how to manipulate
+  the analog function element in the adms data tree.
+  It shows how to generate the partial derivatives of analog functions.
+  Its admst:template's can be freely re-used by other simulator xml interface.
+
+  A 'main' C routine is created and gives a way to print the partial derivatives
+  of analog functions using the 'xgraph' program.
+
+  You can compile the auto-created file as follows:
+    1- unix: gcc -Wall -DSTAND_ALONE analogfunction.cpp -o analogfunction.exe
+    2- windows: cl -W4 -DSTAND_ALONE analogfunction.cpp -o analogfunction.exe
+  This command will create an executable called analogfunction.exe. 
+  Running the executable will create two xgraph data files y.data and dy.data.
+  You can visualized the results by using the following command:
+    xgraph.exe -P  y.data dy.data
+
+  Summary:
+    1. admsXml analogfunction.va -e analogfunction.xml
+    2. gcc -Wall -DSTAND_ALONE analogfunction.cpp -o analogfunction.exe
+    3. analogfunction.exe
+    4. xgraph.exe -P y.data dy.data
+
+  ** BEGIN-OF-FILE analogfunction.va ***************************************************************
+
+`include "discipline.h"
+
+module myanalogfunction (p,q);
+electrical p,q;
+real a,b;
+
+  analog   function real myfunction;
+    input x;
+    real  x;
+    begin
+      if(x<0.2)
+        myfunction =  abs(x);
+      else if(x<0.6)
+        myfunction =  cos(2*x);
+      else
+        myfunction =  sin(2*x);
+    end
+  endfunction
+
+  analog   function real norm;
+    input x, y, index;
+    real  x, y;
+    integer  index;
+
+    begin
+      case(index)
+        0: norm =  max(abs(x),abs(y));
+        1: norm =  abs(x)+abs(y);
+        2: norm =  sqrt(pow(x,2)+pow(y,2));
+        default: $strobe("Warning: norm does not exist"); 
+      endcase
+    end
+  endfunction
+
+`define VEXLIM  200.0
+  analog   function real expLin;
+    input x;
+    real  x;
+    real  expl;
+
+    begin
+      if (x < `VEXLIM)
+          expLin = exp(x);
+      else begin
+          expl = exp(`VEXLIM);
+          expLin = expl  * (1.0 + (x - `VEXLIM));
+      end
+    end
+  endfunction
+
+  analog   function real triangle;
+    input x;
+    real  x;
+    real  pwl;
+    integer n;
+    begin
+      n=floor(x);
+      triangle = (n==2*floor(n/2))?x-n:n-x;
+    end
+  endfunction
+
+  analog   function real linLog;
+    input x;
+    real  x;
+    real  vlim;
+
+    begin
+      vlim=10.0;
+      if (x < vlim)
+          linLog = x;
+      else
+          linLog = vlim + ln(1.0 + (x - vlim));
+    end
+  endfunction
+
+
+analog
+  begin
+    case (a)
+      1,2: begin a=1; b=0; end
+      3,4: begin a=2; b=0; end
+      5,6: begin a=3; b=0; end
+      default : begin a=1234; b=5678; end
+    endcase
+  end
+endmodule
+  ** END-OF-FILE ***************************************************************
+
+-->
+<!--
+  $Id: analogfunction.xml 1103 2008-10-03 14:17:20Z r29173 $
+  $Log$
+  Revision 1.5  2006/09/04 08:51:05  r29173
+  tons of simplifications
+
+  Revision 1.4  2006/03/23 07:51:39  r29173
+  fixed bug in computation of ddx
+
+-->
+
+<!DOCTYPE admst SYSTEM "admst.dtd">
+<admst version="2.3.0"  xmlns:admst="http://mot-adms.svn.sourceforge.net/viewvc/*checkout*/mot-adms/trunk/adms/admst.dtd">
+
+<admst:variable name="myfunction"/>
+
+<admst:for-each select="/module">
+<!-- definition of variables -->
+<admst:variable name="module" path="name"/>
+</admst:for-each>
+
+<admst:template match="c:math_h">
+inline double _cos(double arg)             { return  cos(arg); }
+inline double _d0_cos(double arg)          { return (-sin(arg)); }
+inline double _sin(double arg)             { return  sin(arg); }
+inline double _d0_sin(double arg)          { return (cos(arg)); }
+inline double _tan(double arg)             { return  tan(arg); }
+inline double _d0_tan(double arg)          { return (1.0/cos(arg)/cos(arg)); }
+inline double _cosh(double arg)            { return  cosh(arg); }
+inline double _d0_cosh(double arg)         { return (sinh(arg)); }
+inline double _sinh(double arg)            { return  sinh(arg); }
+inline double _d0_sinh(double arg)         { return (cosh(arg)); }
+inline double _tanh(double arg)            { return  tanh(arg); }
+inline double _d0_tanh(double arg)         { return (1.0/cosh(arg)/cosh(arg)); }
+inline double _acos(double arg)            { return  acos(arg); }
+inline double _d0_acos(double arg)         { return (-1.0/sqrt(1-arg*arg)); }
+inline double _asin(double arg)            { return  asin(arg); }
+inline double _d0_asin(double arg)         { return (+1.0/sqrt(1-arg*arg)); }
+inline double _atan(double arg)            { return  atan(arg); }
+inline double _d0_atan(double arg)         { return (+1.0/(1+arg*arg)); }
+inline double _logE(double arg)            { return  log(arg); }
+inline double _d0_logE(double arg)         { return (1.0/arg); }
+inline double _log10(double arg)           { return  log10(arg); }
+inline double _d0_log10(double arg)        { return (1.0/arg/log(10)); }
+inline double _exp(double arg)             { return  exp(arg); }
+inline double _d0_exp(double arg)          { return exp(arg); } /* fixme */
+inline double _sqrt(double arg)            { return  sqrt(arg); }
+inline double _d0_sqrt(double arg)         { return (1.0/sqrt(arg)/2.0); } /* fixme */
+inline double _abs(double arg)             { return  fabs(arg); }
+inline double _d0_abs(double arg)          { return (((arg)&gt;=0)?(+1.0):(-1.0)); }
+
+inline double _hypot(double x,double y)    { return sqrt((x)*(x)+(y)*(y)); }
+inline double _d0_hypot(double x,double y) { return (x)/sqrt((x)*(x)+(y)*(y)); } /* fixme */
+inline double _d1_hypot(double x,double y) { return (y)/sqrt((x)*(x)+(y)*(y)); } /* fixme */
+
+inline double _max(double x,double y)      { return ((x)&gt;(y))?(x):(y); }
+inline double _d0_max(double x,double y)   { return ((x)&gt;(y))?1.0:0.0; }
+inline double _d1_max(double x,double y)   { return ((x)&gt;(y))?0.0:1.0; }
+
+inline double _min(double x,double y)      { return ((x)&lt;(y))?(x):(y); }
+inline double _d0_min(double x,double y)   { return ((x)&lt;(y))?1.0:0.0; }
+inline double _d1_min(double x,double y)   { return ((x)&lt;(y))?0.0:1.0; }
+
+inline double _pow(double x,double y)      { return pow(x,y); }
+inline double _d0_pow(double x,double y)   { return (x==0.0)?0.0:((y/x)*pow(x,y)); } /* fixme */
+inline double _d1_pow(double x,double y)   { return (x==0.0)?0.0:((log(x)/exp(0.0))*pow(x,y)); } /* fixme */
+
+#define _limexp(arg)    _exp(val,arg)
+#define _d_limexp(arg)  _d_exp(val,dval,arg)
+
+inline double $(module)_vt (double Tdev) {
+  return 1.3806503e-23*Tdev/1.602176462e-19;
+}
+inline double $(module)_d_vt (double Tdev, double d_Tdev) {
+  double vt_Tdev=1.3806503e-23/1.602176462e-19;
+  return vt_Tdev*d_Tdev;
+}
+
+</admst:template>
+
+<!-- expression//function: mapping verilog-name == C-name of function -->
+<admst:template match="afunction:getname">
+  <admst:choose>
+    <admst:when test="[name='abs']"><admst:return name="afunction:getname" string="abs"/></admst:when>
+    <admst:when test="[name='\$shrinkl']"><admst:return name="afunction:getname" string="shrinkl"/></admst:when>
+    <admst:when test="[name='\$shrinka']"><admst:return name="afunction:getname" string="shrinka"/></admst:when>
+    <admst:when test="[name='log']"><admst:return name="afunction:getname" string="log10"/></admst:when>
+    <admst:when test="[name='ln']"><admst:return name="afunction:getname" string="logE"/></admst:when>
+    <admst:when test="[name='limexp']"><admst:return name="afunction:getname" string="limexp"/></admst:when>
+    <admst:when test="[name='\$limexp']"><admst:return name="afunction:getname" string="limexp"/></admst:when>
+    <admst:when test="[name='\$vt']"><admst:return name="afunction:getname" string="vt"/></admst:when>
+    <admst:when test="[name='\$model']"><admst:return name="afunction:getname" string="_modelname"/></admst:when>
+    <admst:when test="[name='\$instance']"><admst:return name="afunction:getname" string="_instancename"/></admst:when>
+    <admst:when test="[name='\$temperature']"><admst:return name="afunction:getname" string="_circuit_temp"/></admst:when>
+    <admst:when test="[name='\$nominal_temperature']"><admst:return name="afunction:getname" string="_circuit_tnom"/></admst:when>
+    <admst:otherwise><admst:return name="afunction:getname" string="%(name)"/></admst:otherwise>
+  </admst:choose>
+</admst:template>
+
+<admst:template match="v2c:converttype">
+  <admst:choose>
+    <admst:when test="[type='integer']">
+      <admst:text format="int"/>
+    </admst:when>
+    <admst:when test="[type='real']">
+      <admst:text format="double"/>
+    </admst:when>
+    <admst:when test="[type='string']">
+      <admst:text format="char*"/>
+    </admst:when>
+    <admst:otherwise>
+      <admst:fatal format="should not be reached\n"/>
+    </admst:otherwise>
+  </admst:choose>
+</admst:template>
+
+<admst:template match="af:print:expression">
+  <admst:choose>
+    <admst:when test="adms[datatypename='expression']">
+      <admst:apply-templates select="tree" match="af:print:expression">
+        <admst:variable name="expression" select="%(returned('x')/value)"/>
+        <admst:for-each select="$globalanalogfunction/variable[input='yes']">
+          <admst:variable name="dx_%(name)" select="%(returned('dx.%(name)')/value)"/>
+        </admst:for-each>
+      </admst:apply-templates>
+      <admst:return name="x" string="$expression"/>
+      <admst:for-each select="$globalanalogfunction/variable[input='yes']">
+        <admst:return name="dx.%(name)" string="$(dx_%(name))"/>
+      </admst:for-each>
+    </admst:when>
+    <admst:when test="adms[datatypename='probe']">
+      <admst:fatal format="probe not allowed inside analog functions\n"/>
+    </admst:when>
+    <admst:when test="adms[datatypename='variable']">
+      <admst:variable name="variable" select="%(name)"/>
+      <admst:return name="x" string="$variable"/>
+      <admst:for-each select="$globalanalogfunction/variable[input='yes']">
+        <admst:variable name="ddx" select="%(name)"/>
+        <admst:choose>
+          <admst:when test="[$variable='$ddx']">
+            <admst:return name="dx.$ddx" string="1.0"/>
+          </admst:when>
+          <admst:when test="../..[input='yes']">
+            <admst:return name="dx.$ddx" string="0.0"/>
+          </admst:when>
+          <admst:otherwise>
+            <admst:return name="dx.$ddx" string="$(variable)_$ddx"/>
+          </admst:otherwise>
+        </admst:choose>
+      </admst:for-each>
+
+    </admst:when>
+    <admst:when test="adms[datatypename='mapply_unary']">
+      <admst:if test="[name='plus']">
+        <admst:variable name="op" select="+"/>
+      </admst:if>
+      <admst:if test="[name='minus']">
+        <admst:variable name="op" select="-"/>
+      </admst:if>
+      <admst:if test="[name='not']">
+        <admst:variable name="op" select="!"/>
+      </admst:if>
+      <admst:if test="[name='bw_not']">
+        <admst:variable name="op" select="~"/>
+      </admst:if>
+      <admst:apply-templates select="arg1" match="af:print:expression"><admst:variable name="arg1" select="%(returned('x')/value)"/></admst:apply-templates>
+      <admst:return name="x" string="($op$arg1)"/>
+      <admst:for-each select="$globalanalogfunction/variable[input='yes']">
+        <admst:return name="dx.%(name)" string="0.0"/>
+      </admst:for-each>
+    </admst:when>
+    <admst:when test="adms[datatypename='mapply_binary']">
+      <admst:apply-templates select="arg1" match="af:print:expression">
+        <admst:variable name="x" select="%(returned('x')/value)"/>
+        <admst:for-each select="$globalanalogfunction/variable[input='yes']">
+          <admst:variable name="dx_%(name)" select="%(returned('dx.%(name)')/value)"/>
+        </admst:for-each>
+      </admst:apply-templates>
+      <admst:apply-templates select="arg2" match="af:print:expression">
+        <admst:variable name="y" select="%(returned('x')/value)"/>
+        <admst:for-each select="$globalanalogfunction/variable[input='yes']">
+          <admst:variable name="dy_%(name)" select="%(returned('dx.%(name)')/value)"/>
+        </admst:for-each>
+      </admst:apply-templates>
+      <admst:choose>
+        <admst:when test="[name='addp']">
+          <admst:choose>
+            <admst:when test="[$x='0.0' and $y='0.0']">
+              <admst:return name="x" string="0.0"/>
+            </admst:when>
+            <admst:when test="[$x='0.0']">
+              <admst:return name="x" string="(+$y)"/>
+            </admst:when>
+            <admst:when test="[$y='0.0']">
+              <admst:return name="x" string="$x"/>
+            </admst:when>
+            <admst:otherwise>
+              <admst:return name="x" string="($x+$y)"/>
+            </admst:otherwise>
+          </admst:choose>
+          <admst:for-each select="$globalanalogfunction/variable[input='yes']">
+            <admst:variable name="df" select="%(name)"/>
+            <admst:choose>
+              <admst:when test="[$x='0.0' and $y='0.0']">
+                <admst:variable name="dx" select="0.0"/>
+                <admst:variable name="dy" select="0.0"/>
+              </admst:when>
+              <admst:when test="[$x='0.0']">
+                <admst:variable name="dx" select="0.0"/>
+                <admst:variable name="dy" select="$(dy_$df)"/>
+              </admst:when>
+              <admst:when test="[$y='0.0']">
+                <admst:variable name="dx" select="$(dx_$df)"/>
+                <admst:variable name="dy" select="0.0"/>
+              </admst:when>
+              <admst:otherwise>
+                <admst:variable name="dx" select="$(dx_$df)"/>
+                <admst:variable name="dy" select="$(dy_$df)"/>
+              </admst:otherwise>
+            </admst:choose>
+            <admst:choose>
+              <admst:when test="[$dx='0.0' and $dy='0.0']">
+                <admst:return name="dx.$df" string="0.0"/>
+              </admst:when>
+              <admst:when test="[$dx='0.0']">
+                <admst:return name="dx.$df" string="(+$dy)"/>
+              </admst:when>
+              <admst:when test="[$dy='0.0']">
+                <admst:return name="dx.$df" string="$dx"/>
+              </admst:when>
+              <admst:otherwise>
+                <admst:return name="dx.$df" string="($dx+$dy)"/>
+              </admst:otherwise>
+            </admst:choose>
+          </admst:for-each>
+        </admst:when>
+        <admst:when test="[name='addm']">
+          <admst:choose>
+            <admst:when test="[$x='0.0' and $y='0.0']">
+              <admst:return name="x" string="0.0"/>
+            </admst:when>
+            <admst:when test="[$x='0.0']">
+              <admst:return name="x" string="(-$y)"/>
+            </admst:when>
+            <admst:when test="[$y='0.0']">
+              <admst:return name="x" string="$x"/>
+            </admst:when>
+            <admst:otherwise>
+              <admst:return name="x" string="($x-$y)"/>
+            </admst:otherwise>
+          </admst:choose>
+          <admst:for-each select="$globalanalogfunction/variable[input='yes']">
+            <admst:variable name="df" select="%(name)"/>
+            <admst:choose>
+              <admst:when test="[$x='0.0' and $y='0.0']">
+                <admst:variable name="dx" select="0.0"/>
+                <admst:variable name="dy" select="0.0"/>
+              </admst:when>
+              <admst:when test="[$x='0.0']">
+                <admst:variable name="dx" select="0.0"/>
+                <admst:variable name="dy" select="$(dy_$df)"/>
+              </admst:when>
+              <admst:when test="[$y='0.0']">
+                <admst:variable name="dx" select="$(dx_$df)"/>
+                <admst:variable name="dy" select="0.0"/>
+              </admst:when>
+              <admst:otherwise>
+                <admst:variable name="dx" select="$(dx_$df)"/>
+                <admst:variable name="dy" select="$(dy_$df)"/>
+              </admst:otherwise>
+            </admst:choose>
+            <admst:choose>
+              <admst:when test="[$dx='0.0' and $dy='0.0']">
+                <admst:return name="dx.$df" string="0.0"/>
+              </admst:when>
+              <admst:when test="[$dx='0.0']">
+                <admst:return name="dx.$df" string="(-$dy)"/>
+              </admst:when>
+              <admst:when test="[$dy='0.0']">
+                <admst:return name="dx.$df" string="$dx"/>
+              </admst:when>
+              <admst:otherwise>
+                <admst:return name="dx.$df" string="($dx-$dy)"/>
+              </admst:otherwise>
+            </admst:choose>
+          </admst:for-each>
+        </admst:when>
+        <admst:when test="[name='multtime']">
+          <admst:choose>
+            <admst:when test="[$x='0.0' or $y='0.0']">
+              <admst:return name="x" string="0.0"/>
+            </admst:when>
+            <admst:when test="[$x='1.0' and $y='1.0']">
+              <admst:return name="x" string="1.0"/>
+            </admst:when>
+            <admst:otherwise>
+              <admst:return name="x" string="($x*$y)"/>
+            </admst:otherwise>
+          </admst:choose>
+          <admst:for-each select="$globalanalogfunction/variable[input='yes']">
+            <admst:variable name="df" select="%(name)"/>
+            <admst:choose>
+              <admst:when test="[$x='0.0' or $y='0.0']">
+                <admst:variable name="dx" select="0.0"/>
+                <admst:variable name="dy" select="0.0"/>
+              </admst:when>
+              <admst:when test="[$x='1.0' and $y='1.0']">
+                <admst:variable name="dx" select="0.0"/>
+                <admst:variable name="dy" select="0.0"/>
+              </admst:when>
+              <admst:otherwise>
+                <admst:variable name="dx" select="$(dx_$df)"/>
+                <admst:variable name="dy" select="$(dy_$df)"/>
+              </admst:otherwise>
+            </admst:choose>
+            <admst:choose>
+              <admst:when test="[$x='0.0' and $y='0.0']">
+                <admst:return name="dx.$df" string="0.0"/>
+              </admst:when>
+              <admst:when test="[$dx='0.0' and $dy='0.0']">
+                <admst:return name="dx.$df" string="0.0"/>
+              </admst:when>
+              <admst:when test="[$dx='0.0' and $dy='1.0']">
+                <admst:return name="dx.$df" string="($x)"/>
+              </admst:when>
+              <admst:when test="[$dx='1.0' and $dy='0.0']">
+                <admst:return name="dx.$df" string="($y)"/>
+              </admst:when>
+              <admst:when test="[$dx='0.0']">
+                <admst:return name="dx.$df" string="($x*$dy)"/>
+              </admst:when>
+              <admst:when test="[$dy='0.0']">
+                <admst:return name="dx.$df" string="$dx*$y"/>
+              </admst:when>
+              <admst:when test="[$dx='1.0' and $dy='1.0']">
+                <admst:return name="dx.$df" string="($x+$y)"/>
+              </admst:when>
+              <admst:when test="[$dx='1.0']">
+                <admst:return name="dx.$df" string="($y+($dy*$x))"/>
+              </admst:when>
+              <admst:when test="[$dy='1.0']">
+                <admst:return name="dx.$df" string="($dx*$y)+$x"/>
+              </admst:when>
+              <admst:when test="[$x='1.0']">
+                <admst:return name="dx.$df" string="$dy"/>
+              </admst:when>
+              <admst:when test="[$y='1.0']">
+                <admst:return name="dx.$df" string="$dx"/>
+              </admst:when>
+              <admst:otherwise>
+                <admst:return name="dx.$df" string="(($dx*$y)+($x*$dy))"/>
+              </admst:otherwise>
+            </admst:choose>
+          </admst:for-each>
+        </admst:when>
+        <admst:when test="[name='multdiv']">
+          <admst:choose>
+            <admst:when test="[$x='0.0']">
+              <admst:return name="x" string="0.0"/>
+            </admst:when>
+            <admst:when test="[$x='1.0' and $y='1.0']">
+              <admst:return name="x" string="1.0"/>
+            </admst:when>
+            <admst:otherwise>
+              <admst:return name="x" string="($x/$y)"/>
+            </admst:otherwise>
+          </admst:choose>
+          <admst:for-each select="$globalanalogfunction/variable[input='yes']">
+            <admst:variable name="df" select="%(name)"/>
+            <admst:choose>
+              <admst:when test="[$x='0.0']">
+                <admst:variable name="dx" select="0.0"/>
+                <admst:variable name="dy" select="0.0"/>
+              </admst:when>
+              <admst:when test="[$x='1.0' and $y='1.0']">
+                <admst:variable name="dx" select="0.0"/>
+                <admst:variable name="dy" select="0.0"/>
+              </admst:when>
+              <admst:otherwise>
+                <admst:variable name="dx" select="$(dx_$df)"/>
+                <admst:variable name="dy" select="$(dy_$(df))"/>
+              </admst:otherwise>
+            </admst:choose>
+            <admst:choose>
+              <admst:when test="[$x='0.0']">
+                <admst:return name="dx.$df" string="0.0"/>
+              </admst:when>
+              <admst:when test="[$dx='0.0' and $dy='0.0']">
+                <admst:return name="dx.$df" string="0.0"/>
+              </admst:when>
+              <admst:when test="[$x='1.0']">
+                <admst:choose>
+                  <admst:when test="[$dy='1.0']">
+                    <admst:return name="dx.$df" string="(-1/($y*$y))"/>
+                  </admst:when>
+                  <admst:otherwise>
+                    <admst:return name="dx.$df" string="(-$dy/($y*$y))"/>
+                  </admst:otherwise>
+                </admst:choose>
+              </admst:when>
+              <admst:when test="[$dx='0.0']">
+                <admst:choose>
+                  <admst:when test="[$dy='1.0']">
+                    <admst:return name="dx.$df" string="(-$x/($y*$y))"/>
+                  </admst:when>
+                  <admst:otherwise>
+                    <admst:return name="dx.$df" string="(-($x*$dy)/($y*$y))"/>
+                  </admst:otherwise>
+                </admst:choose>
+              </admst:when>
+              <admst:when test="[$dx='1.0']">
+                <admst:choose>
+                  <admst:when test="[$dy='0.0']">
+                    <admst:return name="dx.$df" string="(1/$y)"/>
+                  </admst:when>
+                  <admst:when test="[$dy='1.0']">
+                    <admst:return name="dx.$df" string="(($y-$x)/($y*$y))"/>
+                  </admst:when>
+                  <admst:otherwise>
+                    <admst:return name="dx.$df" string="(($y-($x*$dy))/($y*$y))"/>
+                  </admst:otherwise>
+                </admst:choose>
+              </admst:when>
+              <admst:otherwise>
+                <admst:choose>
+                  <admst:when test="[$y='1.0']">
+                    <admst:return name="dx.$df" string="$dx"/>
+                  </admst:when>
+                  <admst:when test="[$dy='0.0']">
+                    <admst:return name="dx.$df" string="$dx/$y"/>
+                  </admst:when>
+                  <admst:when test="[$dy='1.0']">
+                    <admst:return name="dx.$df" string="(($dx*$y)-$x)/($y*$y)"/>
+                  </admst:when>
+                  <admst:otherwise>
+                    <admst:return name="dx.$df" string="($dx*$y-$x*$dy)/($y*$y)"/>
+                  </admst:otherwise>
+                </admst:choose>
+              </admst:otherwise>
+            </admst:choose>
+          </admst:for-each>
+        </admst:when>
+        <admst:otherwise>
+          <admst:choose>
+            <admst:when test="[name='bw_equr']">
+              <admst:return name="x" string="($x^~$y)"/>
+            </admst:when>
+            <admst:when test="[name='bw_equl']">
+              <admst:return name="x" string="($x~^$y)"/>
+            </admst:when>
+            <admst:when test="[name='bw_xor']">
+              <admst:return name="x" string="($x^$y)"/>
+            </admst:when>
+            <admst:when test="[name='bw_or']">
+              <admst:return name="x" string="($x|$y)"/>
+            </admst:when>
+            <admst:when test="[name='bw_and']">
+              <admst:return name="x" string="($x&amp;$y)"/>
+            </admst:when>
+            <admst:when test="[name='or']">
+              <admst:return name="x" string="($x||$y)"/>
+            </admst:when>
+            <admst:when test="[name='and']">
+              <admst:return name="x" string="($x&amp;&amp;$y)"/>
+            </admst:when>
+            <admst:when test="[name='equ']">
+              <admst:return name="x" string="($x==$y)"/>
+            </admst:when>
+            <admst:when test="[name='multmod']">
+              <admst:return name="x" string="((int)$x%%(int)$y)"/>
+            </admst:when>
+            <admst:when test="[name='notequ']">
+              <admst:return name="x" string="($x!=$y)"/>
+            </admst:when>
+            <admst:when test="[name='lt']">
+              <admst:return name="x" string="($x&lt;$y)"/>
+            </admst:when>
+            <admst:when test="[name='lt_equ']">
+              <admst:return name="x" string="($x&lt;=$y)"/>
+            </admst:when>
+            <admst:when test="[name='gt']">
+              <admst:return name="x" string="($x&gt;$y)"/>
+            </admst:when>
+            <admst:when test="[name='gt_equ']">
+              <admst:return name="x" string="($x&gt;=$y)"/>
+            </admst:when>
+            <admst:when test="[name='shiftr']">
+              <admst:return name="x" string="($x&gt;&gt;$y)"/>
+            </admst:when>
+            <admst:when test="[name='shiftl']">
+              <admst:return name="x" string="($x&lt;&lt;$y)"/>
+            </admst:when>
+            <admst:otherwise>
+              <admst:error format="%(name): function not handled\n"/>
+            </admst:otherwise>
+          </admst:choose>
+          <admst:for-each select="$globalanalogfunction/variable[input='yes']">
+            <admst:return name="dx.%(name)" string="0.0"/>
+          </admst:for-each>
+        </admst:otherwise>
+      </admst:choose>
+    </admst:when>
+    <admst:when test="adms[datatypename='mapply_ternary']">
+      <admst:apply-templates select="arg1" match="af:print:expression">
+        <admst:variable name="x" select="%(returned('x')/value)"/>
+      </admst:apply-templates>
+      <admst:if test="[name='conditional']">
+        <admst:apply-templates select="arg2" match="af:print:expression">
+          <admst:variable name="y" select="%(returned('x')/value)"/>
+          <admst:for-each select="$globalanalogfunction/variable[input='yes']">
+            <admst:variable name="dy_%(name)" select="%(returned('dx.%(name)')/value)"/>
+          </admst:for-each>
+        </admst:apply-templates>
+        <admst:apply-templates select="arg3" match="af:print:expression">
+          <admst:variable name="z" select="%(returned('x')/value)"/>
+          <admst:for-each select="$globalanalogfunction/variable[input='yes']">
+            <admst:variable name="dz_%(name)" select="%(returned('dx.%(name)')/value)"/>
+          </admst:for-each>
+        </admst:apply-templates>
+        <admst:return name="x" string="($x?$y:$z)"/>
+        <admst:for-each select="$globalanalogfunction/variable[input='yes']">
+          <admst:variable name="df" select="%(name)"/>
+          <admst:return name="dx.$df" string="($x?$(dy_$df):$(dz_$df))"/>
+        </admst:for-each>
+      </admst:if>
+    </admst:when>
+
+    <admst:when test="adms[datatypename='function']">
+      <admst:apply-templates select="." match="afunction:getname">
+        <admst:variable name="function" select="%(returned('afunction:getname')/value)"/>
+      </admst:apply-templates>
+      <admst:variable name="args" select=""/>
+      <admst:for-each select="arguments">
+        <admst:if test="[not($args='')]">
+          <admst:variable name="args" select="$args,"/>
+        </admst:if>
+        <admst:apply-templates select="." match="af:print:expression">
+          <admst:variable name="index" select="%(index(../arguments,.))"/>
+          <admst:variable name="args" select="$args%(returned('x')/value)"/>
+          <admst:for-each select="$globalanalogfunction/variable[input='yes']">
+            <admst:variable name="arg$(index)_%(name)" select="%(returned('dx.%(name)')/value)"/>
+          </admst:for-each>
+        </admst:apply-templates>
+      </admst:for-each>
+      <admst:choose>
+        <admst:when test="[ name='cos' or name='sin' or name='tan' or name='cosh' or name='sinh' or name='tanh' or name='acos' or name='asin'
+                            or name='atan' or name='ln' or name='log' or name='exp' or name='sqrt' or name='abs' or name='limexp'
+                            or name='pow' or name='hypot' or name='min' or name='max' ]">
+          <admst:return name="x" string="_$function($args)"/>
+          <admst:for-each select="$globalanalogfunction/variable[input='yes']">
+            <admst:variable name="name" path="name"/>
+            <admst:variable name="ret" select=""/>
+            <admst:for-each select="../../arguments">
+              <admst:if test="[not($ret='')]">
+                <admst:variable name="ret" select="$ret+"/>
+              </admst:if>
+              <admst:variable name="index" select="%(index(../arguments,.))"/>
+              <admst:variable name="ret" select="$(ret)_d$(index)_$function($args)*($(arg$(index)_$name))"/>
+            </admst:for-each>
+            <admst:return name="dx.$name" string="$ret"/>
+          </admst:for-each>
+        </admst:when>
+        <admst:when test="[name='ceil' or name='floor']">
+          <admst:return name="x" string="$function($args)"/>
+          <admst:for-each select="$globalanalogfunction/variable[input='yes']">
+            <admst:variable name="name" path="name"/>
+            <admst:return name="dx.$name" string="0.0"/>
+          </admst:for-each>
+        </admst:when>
+        <admst:otherwise>
+          <admst:return name="x" string="$(module)_$function($args)"/>
+          <admst:for-each select="$globalanalogfunction/variable[input='yes']">
+            <admst:variable name="name" path="name"/>
+            <admst:variable name="darg" select=""/>
+            <admst:for-each select="../../arguments">
+              <admst:variable name="index" select="%(index(../arguments,.))"/>
+              <admst:variable name="darg" select="$darg,($(arg$(index)_$name))"/>
+            </admst:for-each>
+            <admst:return name="dx.$name" string="$(module)_d_$function($args$darg)"/>
+          </admst:for-each>
+        </admst:otherwise>
+      </admst:choose>
+    </admst:when>
+
+    <admst:when test="adms[datatypename='string']">
+      <admst:return name="x" string="&quot;%(value)&quot;"/>
+      <admst:for-each select="$globalanalogfunction/variable[input='yes']">
+        <admst:return name="dx.%(name)" string="0.0"/>
+      </admst:for-each>
+    </admst:when>
+    <admst:when test="adms[datatypename='number']">
+      <admst:choose>
+        <admst:when test="[scalingunit='1']">
+          <admst:return name="x" string="%(value)"/>
+        </admst:when>
+        <admst:when test="[scalingunit='E']">
+          <admst:return name="x" string="(%(value)*1.0e+18)"/>
+        </admst:when>
+        <admst:when test="[scalingunit='P']">
+          <admst:return name="x" string="(%(value)*1.0e+15)"/>
+        </admst:when>
+        <admst:when test="[scalingunit='T']">
+          <admst:return name="x" string="(%(value)*1.0e+12)"/>
+        </admst:when>
+        <admst:when test="[scalingunit='G']">
+          <admst:return name="x" string="(%(value)*1.0e+9)"/>
+        </admst:when>
+        <admst:when test="[scalingunit='M']">
+          <admst:return name="x" string="(%(value)*1.0e+6)"/>
+        </admst:when>
+        <admst:when test="[scalingunit='k']">
+          <admst:return name="x" string="(%(value)*1.0e+3)"/>
+        </admst:when>
+        <admst:when test="[scalingunit='h']">
+          <admst:return name="x" string="(%(value)*1.0e+2)"/>
+        </admst:when>
+        <admst:when test="[scalingunit='D']">
+          <admst:return name="x" string="(%(value)*1.0e+1)"/>
+        </admst:when>
+        <admst:when test="[scalingunit='d']">
+          <admst:return name="x" string="(%(value)*1.0e-1)"/>
+        </admst:when>
+        <admst:when test="[scalingunit='c']">
+          <admst:return name="x" string="(%(value)*1.0e-2)"/>
+        </admst:when>
+        <admst:when test="[scalingunit='m']">
+          <admst:return name="x" string="(%(value)*1.0e-3)"/>
+        </admst:when>
+        <admst:when test="[scalingunit='u']">
+          <admst:return name="x" string="(%(value)*1.0e-6)"/>
+        </admst:when>
+        <admst:when test="[scalingunit='n']">
+          <admst:return name="x" string="(%(value)*1.0e-9)"/>
+        </admst:when>
+        <admst:when test="[scalingunit='A']">
+          <admst:return name="x" string="(%(value)*1.0e-10)"/>
+        </admst:when>
+        <admst:when test="[scalingunit='p']">
+          <admst:return name="x" string="(%(value)*1.0e-12)"/>
+        </admst:when>
+        <admst:when test="[scalingunit='f']">
+          <admst:return name="x" string="(%(value)*1.0e-15)"/>
+        </admst:when>
+        <admst:when test="[scalingunit='a']">
+          <admst:return name="x" string="(%(value)*1.0e-18)"/>
+        </admst:when>
+        <admst:otherwise>
+          <admst:fatal format="scaling unit not supported: %(scalingunit)\n"/>
+        </admst:otherwise>
+      </admst:choose>
+      <admst:for-each select="$globalanalogfunction/variable[input='yes']">
+        <admst:return name="dx.%(name)" string="0.0"/>
+      </admst:for-each>
+    </admst:when>
+    <admst:otherwise>
+      <admst:fatal format="%(datatypename): not handled inside expression\n"/>
+    </admst:otherwise>
+  </admst:choose>
+</admst:template>
+
+<admst:template match="af:print:derivate">
+  <admst:choose>
+    <admst:when test="adms[datatypename='callfunction']">
+      <admst:choose>
+        <admst:when test="function[name='\$strobe']">
+          <admst:variable name="outputfile" select="stdout"/>
+        </admst:when>
+      </admst:choose>
+      <admst:variable name="args" select=""/>
+      <admst:for-each select="function/arguments">
+        <admst:apply-templates select="." match="af:print:expression">
+          <admst:variable name="index" select="%(index(../arguments,.))"/>
+          <admst:variable name="args" select="$args,%(returned('x')/value)"/>
+        </admst:apply-templates>
+      </admst:for-each>
+      <admst:return name="x" string="fprintf($outputfile$args); fprintf($outputfile,&quot;\\n&quot;);\n"/>
+    </admst:when>
+    <admst:when test="adms[datatypename='whileloop']">
+      <admst:apply-templates select="whileblock" match="af:print:expression">
+        <admst:variable name="whileblock" select="%(returned('x')/value)"/>
+      </admst:apply-templates>
+      <admst:apply-templates select="while" match="af:print:derivate">
+        <admst:variable name="while" select="%(returned('x')/value)"/>
+      </admst:apply-templates>
+      <admst:return name="x" string="while($whileblock)\n$while"/>
+    </admst:when>
+    <admst:when test="adms[datatypename='conditional']">
+      <admst:apply-templates select="if" match="af:print:expression">
+        <admst:variable name="if" select="%(returned('x')/value)"/>
+      </admst:apply-templates>
+      <admst:apply-templates select="then" match="af:print:derivate">
+        <admst:variable name="then" select="%(returned('x')/value)"/>
+        </admst:apply-templates>
+      <admst:if test="else">
+        <admst:apply-templates select="else" match="af:print:derivate">
+          <admst:variable name="then" select="$(then)else\n%(returned('x')/value)"/>
+        </admst:apply-templates>
+      </admst:if>
+      <admst:return name="x" string="if($if)\n$then"/>
+    </admst:when>
+    <admst:when test="adms[datatypename='case']">
+      <admst:apply-templates select="case" match="af:print:expression">
+        <admst:variable name="case" select="switch ((int)%(returned('x')/value)) {\n"/>
+      </admst:apply-templates>
+      <admst:for-each select="caseitem">
+        <admst:variable name="condition" select=""/>
+        <admst:for-each select="condition">
+          <admst:variable name="condition" select="$condition case %(.):"/>
+        </admst:for-each>
+        <admst:variable name="case" select="$case $condition"/>
+        <admst:if test="[defaultcase='yes']">
+          <admst:variable name="case" select="$case default:"/>
+        </admst:if>
+        <admst:variable name="case" select="$case \n"/>
+        <admst:apply-templates select="code" match="af:print:derivate">
+          <admst:variable name="case" select="$case%(returned('x')/value) break;\n"/>
+        </admst:apply-templates>
+      </admst:for-each>
+      <admst:return name="x" string="$case }"/>
+    </admst:when>
+    <admst:when test="adms[datatypename='contribution']">
+      <admst:fatal format="contribution not allowed inside analog functions\n"/>
+    </admst:when>
+    <admst:when test="adms[datatypename='assignment']">
+      <admst:variable name="lhs" select="%(lhs/name)"/>
+      <admst:apply-templates select="rhs" match="af:print:expression">
+        <admst:variable name="rhs" select=""/>
+        <admst:for-each select="$globalanalogfunction/variable[input='yes']">
+          <admst:variable name="rhs" select="$rhs$(lhs)_%(name)=%(returned('dx.%(name)')/value);\n"/>
+        </admst:for-each>
+        <admst:variable name="rhs" select="$rhs$lhs=%(returned('x')/value);\n"/>
+      </admst:apply-templates>
+      <admst:return name="x" string="{$rhs}\n"/>
+    </admst:when>
+    <admst:when test="adms[datatypename='nilled']">
+      <admst:return name="x" string=";"/>
+    </admst:when>
+    <admst:when test="adms[datatypename='block']">
+      <admst:variable name="block" select=""/>
+      <admst:for-each select="item">
+        <admst:apply-templates select="." match="af:print:derivate">
+          <admst:variable name="block" select="$block%(returned('x')/value)"/>
+        </admst:apply-templates>
+      </admst:for-each>
+      <admst:return name="x" string="{$block}"/>
+    </admst:when>
+    <admst:otherwise>
+      <admst:fatal format="%(datatypename): not handled inside blocks\n"/>
+    </admst:otherwise>
+  </admst:choose>
+</admst:template>
+
+<admst:template match="af:print">
+  <admst:choose>
+    <admst:when test="adms[datatypename='callfunction']">
+      <admst:choose>
+        <admst:when test="function[name='\$strobe']">
+          <admst:variable name="outputfile" select="stdout"/>
+        </admst:when>
+      </admst:choose>
+      <admst:variable name="args" select=""/>
+      <admst:for-each select="function/arguments">
+        <admst:apply-templates select="." match="af:print:expression">
+          <admst:variable name="index" select="%(index(../arguments,.))"/>
+          <admst:variable name="args" select="$args,%(returned('x')/value)"/>
+        </admst:apply-templates>
+      </admst:for-each>
+      <admst:return name="x" string="fprintf($outputfile$args); fprintf($outputfile,&quot;\\n&quot;);\n"/>
+    </admst:when>
+    <admst:when test="adms[datatypename='whileloop']">
+      <admst:apply-templates select="whileblock" match="af:print:expression">
+        <admst:variable name="whileblock" select="%(returned('x')/value)"/>
+      </admst:apply-templates>
+      <admst:apply-templates select="while" match="af:print">
+        <admst:variable name="while" select="%(returned('x')/value)"/>
+      </admst:apply-templates>
+      <admst:return name="x" string="while($whileblock)\n$while"/>
+    </admst:when>
+    <admst:when test="adms[datatypename='conditional']">
+      <admst:apply-templates select="if" match="af:print:expression">
+        <admst:variable name="if" select="%(returned('x')/value)"/>
+      </admst:apply-templates>
+      <admst:apply-templates select="then" match="af:print">
+        <admst:variable name="then" select="%(returned('x')/value)"/>
+        </admst:apply-templates>
+      <admst:if test="else">
+        <admst:apply-templates select="else" match="af:print">
+          <admst:variable name="then" select="$(then)else\n%(returned('x')/value)"/>
+        </admst:apply-templates>
+      </admst:if>
+      <admst:return name="x" string="if($if)\n$then"/>
+    </admst:when>
+    <admst:when test="adms[datatypename='case']">
+      <admst:apply-templates select="case" match="af:print:expression">
+        <admst:variable name="case" select="switch ((int)%(returned('x')/value)) {\n"/>
+      </admst:apply-templates>
+      <admst:for-each select="caseitem">
+        <admst:variable name="condition" select=""/>
+        <admst:for-each select="condition">
+          <admst:variable name="condition" select="$condition case %(.):"/>
+        </admst:for-each>
+        <admst:variable name="case" select="$case $condition"/>
+        <admst:if test="[defaultcase='yes']">
+          <admst:variable name="case" select="$case default:"/>
+        </admst:if>
+        <admst:variable name="case" select="$case \n"/>
+        <admst:apply-templates select="code" match="af:print">
+          <admst:variable name="case" select="$case%(returned('x')/value) break;\n"/>
+        </admst:apply-templates>
+      </admst:for-each>
+      <admst:return name="x" string="$case }"/>
+    </admst:when>
+    <admst:when test="adms[datatypename='contribution']">
+      <admst:fatal format="contribution not allowed inside analog functions\n"/>
+    </admst:when>
+    <admst:when test="adms[datatypename='assignment']">
+      <admst:apply-templates select="rhs" match="af:print:expression">
+        <admst:return name="x" string="%(../lhs/name)=%(returned('x')/value);\n"/>
+      </admst:apply-templates>
+    </admst:when>
+    <admst:when test="adms[datatypename='nilled']">
+      <admst:return name="x" string=";"/>
+    </admst:when>
+    <admst:when test="adms[datatypename='block']">
+      <admst:variable name="block" select=""/>
+      <admst:for-each select="item">
+        <admst:apply-templates select="." match="af:print">
+          <admst:variable name="block" select="$block%(returned('x')/value)"/>
+        </admst:apply-templates>
+      </admst:for-each>
+      <admst:return name="x" string="{$block}"/>
+    </admst:when>
+    <admst:otherwise>
+      <admst:fatal format="%(datatypename): not handled inside blocks\n"/>
+    </admst:otherwise>
+  </admst:choose>
+</admst:template>
+
+<admst:template match="analogfunctionH">
+<admst:for-each select="/module/analogfunction">
+  <admst:variable name="function" select="%(name)"/>
+<admst:apply-templates select="." match="v2c:converttype"/> $(module)_$function (<admst:join select="variable[input='yes']" separator=", ">
+    <admst:apply-templates select="." match="v2c:converttype"/><admst:text format=" %(name)"/>
+  </admst:join>);
+
+<admst:apply-templates select="." match="v2c:converttype"/> $(module)_d_$(function) (<admst:join select="variable[input='yes']" separator=", ">
+    <admst:apply-templates select="." match="v2c:converttype"/><admst:text format=" %(name)"/>
+  </admst:join>, <admst:join select="variable[input='yes']" separator=", ">
+    <admst:apply-templates select="." match="v2c:converttype"/><admst:text format=" d_%(name)"/>
+  </admst:join>);
+
+</admst:for-each>
+</admst:template>
+
+<admst:template match="analogfunctionC">
+<admst:for-each select="/module/analogfunction">
+  <admst:variable name="globalanalogfunction" select="%(.)"/>
+  <admst:variable name="function" select="%(name)"/>
+<admst:apply-templates select="." match="v2c:converttype"/> $(module)_$function (<admst:join select="variable[input='yes']" separator=", ">
+    <admst:apply-templates select="." match="v2c:converttype"/><admst:text format=" %(name)"/>
+  </admst:join>)
+{
+<admst:text format="double $function; "/>
+  <admst:for-each select="variable[input='no' and output='no']">
+    <admst:apply-templates select="." match="v2c:converttype"/><admst:text format=" %(name);"/>
+  </admst:for-each>
+  <admst:apply-templates select="tree" match="af:print">
+    <admst:text format="%(returned('x')/value)"/>
+  </admst:apply-templates>
+  return $function;
+}
+double $(module)_d_$(function) (<admst:join select="variable[input='yes']" separator=", ">
+    
+    <admst:apply-templates select="." match="v2c:converttype"/><admst:text format=" %(name)"/>
+  </admst:join>, <admst:join select="variable[input='yes']" separator=", ">
+    <admst:apply-templates select="." match="v2c:converttype"/><admst:text format=" d_%(name)"/>
+  </admst:join>)
+{
+<admst:text format="double $function"/>
+  <admst:for-each select="$globalanalogfunction/variable[input='yes']">
+    <admst:variable name="ddx" select="%(name)"/>
+    <admst:text format="; double $(function)_$(ddx)"/>
+  </admst:for-each>
+  <admst:for-each select="variable[input='no' and output='no']">
+    <admst:variable name="name" select="%(name)"/>
+    <admst:text format="; "/><admst:apply-templates select="." match="v2c:converttype"/><admst:text format=" $(name)"/>
+    <admst:for-each select="$globalanalogfunction/variable[input='yes']">
+      <admst:variable name="ddx" select="%(name)"/>
+      <admst:text format="; "/><admst:apply-templates select="." match="v2c:converttype"/><admst:text format=" $(name)_$(ddx)"/>
+    </admst:for-each>
+  </admst:for-each>;
+  <admst:apply-templates select="tree" match="af:print:derivate">
+    <admst:text format="%(returned('x')/value)"/>
+  </admst:apply-templates>
+  return <admst:join select="$globalanalogfunction/variable[input='yes']" separator="+">
+    <admst:text format="$(function)_%(name)*d_%(name)"/>
+  </admst:join>;
+}
+
+</admst:for-each>
+#ifdef STAND_ALONE
+int
+main(void)
+{
+<admst:for-each select="/module/analogfunction">
+
+
+<admst:variable name="myfunction" select="triangle"/>
+<admst:variable name="function" select="%(name)"/>
+  double my$function, myd_$function, <admst:join select="variable[input='yes']" separator=", ">
+    
+    <admst:text format="my$function%(name)=0.0"/>
+  </admst:join>;
+  my$function=$(module)_$function(<admst:join select="variable[input='yes']" separator=", ">
+    
+    <admst:text format="my$function%(name)"/>
+  </admst:join>);
+  myd_$function=$(module)_d_$function(<admst:join select="variable[input='yes']" separator=", ">
+    
+    <admst:text format="my$function%(name)"/>
+  </admst:join>,<admst:join select="variable[input='yes']" separator=", ">
+    <admst:text format="1.0"/>
+  </admst:join>);
+  printf(&quot;my$function=%%e\\n&quot;,my$function);
+  printf(&quot;myd_$function=%%e\\n&quot;,myd_$function);</admst:for-each>
+  printf(&quot;(1.0,1.0) norm0=%%e dnorm0=%%e [expected: 1.0]\\n&quot;,          $(module)_norm(1.0,1.0,0.0), $(module)_d_norm(1.0,1.0,0.0,1.0,1.0,1.0));
+  printf(&quot;(1.0,1.0) norm1=%%e dnorm1=%%e [expected: 2.0]\\n&quot;,          $(module)_norm(1.0,1.0,1.0), $(module)_d_norm(1.0,1.0,1.0,1.0,1.0,1.0));
+  printf(&quot;(1.0,1.0) norm2=%%e dnorm2=%%e [expected: sqrt(2.0)=%%e]\\n&quot;,$(module)_norm(1.0,1.0,2.0), $(module)_d_norm(1.0,1.0,2.0,1.0,1.0,1.0),sqrt(2));
+  double x,xnb=500.0,xmin=0.0,xmax=10.0,xstep=(xmax-xmin)/xnb;
+  FILE*y=fopen("y.data","w");
+  FILE*dy=fopen("dy.data","w");
+  for(x=xmin;x&lt;=xmax;x+=xstep)
+  {
+    fprintf(y,&quot;%%.2f %%.2f\\n&quot;,x,$(module)_$myfunction(x));
+    fprintf(dy,&quot;%%.2f %%.2f\\n&quot;,x,$(module)_d_$myfunction(x,1.0));
+  }
+  fclose(y);
+  fclose(dy);
+  return 0;
+}
+#endif /* STAND_ALONE */
+
+</admst:template>
+
+<admst:variable name="globalanalogfunction"/>
+<admst:open file="analogfunction.h">/*
+ * analogfunction.h - analog function header
+ *
+ * This is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2, or (at your option)
+ * any later version.
+ * 
+ */
+
+#ifdef __cplusplus
+extern &quot;C&quot;
+{
+#endif /*__cplusplus*/
+
+#ifndef __$(module)_ANALOGFUNCTION_H__
+#define __$(module)_ANALOGFUNCTION_H__
+
+<admst:apply-templates select="/module" match="analogfunctionH"/>
+#endif /* __$(module)_ANALOGFUNCTION_H__ */
+#ifdef __cplusplus
+}
+#endif /*__cplusplus*/
+
+</admst:open>
+<admst:message format="analogfunction.h created\n"/>
+<admst:open file="analogfunction.cpp">/*
+ * analogfunction.cpp - analog function implementations
+ *
+ * This is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2, or (at your option)
+ * any later version.
+ * 
+ */
+
+
+#include &lt;stdio.h&gt;
+#include &quot;analogfunction.h&quot;
+#include &lt;math.h&gt;
+
+#ifdef __cplusplus
+extern &quot;C&quot;
+{
+#endif /*__cplusplus*/
+  <admst:apply-templates select="." match="c:math_h"/>
+  <admst:apply-templates select="/module" match="analogfunctionC">
+  </admst:apply-templates>
+#ifdef __cplusplus
+}
+#endif /*__cplusplus*/
+
+</admst:open>
+<admst:message format="analogfunction.cpp created\n"/>
+</admst>

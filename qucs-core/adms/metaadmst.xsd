@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  This dtd describes the basic data structures used by admst classes
+  It is used to check the validy of file http://mot-adms/sourceforge.net/xml-files/admst.xml
+  You can try using xmllint: xmllint admst.xml -noout -postvalid -noblanks
+-->
+<!-- RCS Info -->
+<!-- $Id: metaadmst.xsd 262 2005-05-03 07:43:32Z r29173 $ -->
+<!--
+  $Log$
+  Revision 1.1  2005/05/03 07:43:32  r29173
+  schema version of dtd's
+
+  Revision 1.2  2005/03/14 17:34:20  r29173
+  migration to adms-2.x.x: start xpath coding; add documentation
+  
+  Revision 1.1  2005/02/25 11:46:17  r29173
+  migration to adms-2.x.x: defines admst namespace
+  
+-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+  <xs:element name="admst">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="transform"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="transform">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="attribute"/>
+        <xs:element minOccurs="0" ref="usage"/>
+        <xs:element minOccurs="0" ref="description"/>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="example"/>
+      </xs:sequence>
+      <xs:attributeGroup ref="attlist.transform"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="attribute">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" ref="description"/>
+      </xs:sequence>
+      <xs:attributeGroup ref="attlist.attribute"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="usage">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="description" type="xs:string"/>
+  <xs:element name="example">
+    <xs:complexType/>
+  </xs:element>
+  <xs:attributeGroup name="attlist.transform">
+    <xs:attribute name="name" use="required"/>
+    <xs:attribute name="info"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="attlist.attribute">
+    <xs:attribute name="name" use="required"/>
+    <xs:attribute name="datatypename" use="required"/>
+    <xs:attribute name="datatypefamily" use="required"/>
+    <xs:attribute name="size" default="any">
+      <xs:simpleType>
+        <xs:restriction base="xs:token">
+          <xs:enumeration value="scalar"/>
+          <xs:enumeration value="list"/>
+          <xs:enumeration value="any"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+    <xs:attribute name="required" default="yes">
+      <xs:simpleType>
+        <xs:restriction base="xs:token">
+          <xs:enumeration value="yes"/>
+          <xs:enumeration value="no"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+    <xs:attribute name="default"/>
+  </xs:attributeGroup>
+</xs:schema>

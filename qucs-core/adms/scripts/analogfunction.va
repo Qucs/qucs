@@ -1,0 +1,76 @@
+`include "discipline.h"
+
+module myanalogfunction (p,q);
+electrical p,q;
+real a,b;
+
+  analog   function real myfunction;
+    input x;
+    real  x;
+    begin
+      if(x<0.2)
+        myfunction =  abs(x);
+      else if(x<0.6)
+        myfunction =  cos(2*x);
+      else
+        myfunction =  sin(2*x);
+    end
+  endfunction
+
+  analog   function real norm;
+    input x, y, index;
+    real  x, y;
+    integer  index;
+
+    begin
+      case(index)
+        0: norm =  max(abs(x),abs(y));
+        1: norm =  abs(x)+abs(y);
+        2: norm =  sqrt(pow(x,2)+pow(y,2));
+        default: $strobe("Warning: norm does not exist"); 
+      endcase
+    end
+  endfunction
+
+`define VEXLIM  200.0
+  analog   function real expLin;
+    input x;
+    real  x;
+    real  expl;
+
+    begin
+      if (x < `VEXLIM)
+          expLin = exp(x);
+      else begin
+          expl = exp(`VEXLIM);
+          expLin = expl  * (1.0 + (x - `VEXLIM));
+      end
+    end
+  endfunction
+
+  analog   function real linLog;
+    input x;
+    real  x;
+    real  vlim;
+
+    begin
+      vlim=10.0;
+      if (x < vlim)
+          linLog = x;
+      else
+          linLog = vlim + ln(1.0 + (x - vlim));
+    end
+  endfunction
+
+
+analog
+  begin
+    case (a)
+      1,2: begin a=1; b=0; end
+      3,4: begin a=2; b=0; end
+      5,6: begin a=3; b=0; end
+      default : begin a=1234; b=5678; end
+    endcase
+  end
+endmodule
+

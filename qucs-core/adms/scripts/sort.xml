@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE admst PUBLIC "-//adms//DTD admst 2.0//-" "http://mot-adms.sourceforge.net/xml-files/adms/admst.dtd">
+<!--
+  Usage: admsXml -e sort.xml
+  Description: create file sort.va, then gives different usages of sort() and reverse()
+-->
+<!--
+  $Id: getinstance.xml 505 2007-01-23 11:17:43Z r29173 $
+  $Log$
+  Revision 1.7  2006/03/23 13:46:44  r29173
+  cosmetic changes
+
+  Revision 1.4  2006/03/23 07:51:39  r29173
+  fixed bug in computation of ddx
+-->
+
+<admst version="2.3.0" xmlns:admst="http://mot-adms.svn.sourceforge.net/viewvc/*checkout*/mot-adms/trunk/adms/admst.dtd">
+  <!-- create file sort.va -->
+  <admst:variable name="module1" select="index"/>
+  <admst:open file="$(module1).va">
+`include &quot;discipline.h&quot;
+module $(module1)(p,n);
+  inout p, n;
+  electrical p, n;
+  parameter real B=1.0;
+  parameter real A=1.0;
+  real b,a;
+  analog a=1;
+endmodule
+  </admst:open>
+  <admst:message format="$(module1).va: file created\n"/>
+  <admst:read file="$(module1).va"/>
+  <admst:apply-templates select="module[name='$(module1)']" match="adms.implicit.xml.module"/>
+  <!-- test sort() and reverse() -->
+  <admst:for-each select="/module">
+  01 ** foreach(variable) text................................@returns (B,A,b,a)
+    <admst:text format=" "/>
+    <admst:for-each select="variable"><admst:text format="%(.),"/></admst:for-each>
+    <admst:text format=" "/>
+    <admst:for-each select="variable"><admst:text format="%(position(.)).%(index(../variable,.)) "/></admst:for-each>
+  02 ** foreach.sort(variable) text...........................@returns (A,B,a,b)
+    <admst:text format=" "/>
+    <admst:for-each select="sort(variable)"><admst:text format="%(.),"/></admst:for-each>
+    <admst:text format=" "/>
+    <admst:for-each select="sort(variable)"><admst:text format="%(position(.)).%(index(../variable,.)) "/></admst:for-each>
+  03 ** \$p1=variable text(\$p1)................................@returns (B,A,b,a)
+    <admst:variable name="p1" path="variable"/>
+    <admst:text format=" "/>
+    <admst:text select="$p1" format="%(.),"/>
+    <admst:text format=" "/>
+    <admst:text select="$p1" format="%(position(.)).%(index($p1,.)) "/>
+  04 ** \$p1=sort(variable) text(\$p1)..........................@returns (A,B,a,b)
+    <admst:variable name="p1" path="sort(variable)"/>
+    <admst:text format=" "/>
+    <admst:text select="$p1" format="%(.),"/>
+    <admst:text format=" "/>
+    <admst:text select="$p1" format="%(position(.)).%(index($p1,.)) "/>
+  05 ** text(variable)........................................@returns (B,A,b,a)
+    <admst:text format=" "/>
+    <admst:text select="variable" format="%(.),"/>
+    <admst:text format=" "/>
+    <admst:text select="variable" format="%(position(.)).%(index(../variable,.)) "/>
+  06 ** text(sort(variable))..................................@returns (A,B,a,b)
+    <admst:text format=" "/>
+    <admst:text select="sort(variable)" format="%(.),"/>
+    <admst:text format=" "/>
+    <admst:text select="sort(variable)" format="%(position(.)).%(index(../variable,.)) "/>
+  07 ** foreach(reverse(variable))............................@returns (a,b,A,B)
+    <admst:text format=" "/>
+    <admst:for-each select="reverse(variable)"><admst:text format="%(.),"/></admst:for-each>
+    <admst:text format=" "/>
+    <admst:for-each select="reverse(variable)"><admst:text format="%(position(.)).%(index(../variable,.)) "/></admst:for-each>
+  08 ** \$p1=variable text(reverse(\$p1)).......................@returns (a,b,A,B)
+    <admst:variable name="p1" path="variable"/>
+    <admst:text format=" "/>
+    <admst:text select="reverse($p1)" format="%(.),"/>
+    <admst:text format=" "/>
+    <admst:text select="reverse($p1)" format="%(position(.)).%(index($p1,.)) "/>
+  09 ** \$p1=reverse(variable) text(\$p1).......................@returns (a,b,A,B)
+    <admst:variable name="p1" path="reverse(variable)"/>
+    <admst:text format=" "/>
+    <admst:text select="$p1" format="%(.),"/>
+    <admst:text format=" "/>
+    <admst:text select="$p1" format="%(position(.)).%(index($p1,.)) "/>
+  10 ** reset(\$p1) push(\$p1,variable[input='no']) text(\$p1)...@returns (a,b)
+    <admst:variable name="p1"/>
+    <admst:push into="$p1" select="variable[input='no']"/>
+    <admst:text format=" "/>
+    <admst:text select="$p1" format="%(.),"/>
+    <admst:text format=" "/>
+    <admst:text select="$p1" format="%(position(.)).%(index($p1,.)) "/>
+  11 ** \$p2=reverse(sort(\$p1)) text(\$p2)......................@returns (b,a)
+    <admst:variable name="p2" path="reverse(sort($p1))"/>
+    <admst:text format=" "/>
+    <admst:text select="$p2" format="%(.),"/>
+    <admst:text format=" "/>
+    <admst:text select="$p2" format="%(position(.)).%(index($p2,.)) "/>
+  12 ** push(\$p1,variable) text(\$p1)..........................@returns (a,b,A,B,a,b)
+    <admst:push into="$p1" select="variable"/>
+    <admst:text format=" "/>
+    <admst:text select="$p1" format="%(.),"/>
+    <admst:text format=" "/>
+    <admst:text select="$p1" format="%(position(.)).%(index($p1,.)) "/>
+  13 ** text(sort(reverse(\$p1)))..............................@returns (A,B,a,a,b,b)
+    <admst:text format=" "/>
+    <admst:text select="sort(reverse($p1))" format="%(.),"/>
+    <admst:text format=" "/>
+    <admst:text select="sort(reverse($p1))" format="%(position(.)).%(index($p1,.)) "/>
+  14 ** reset(\$p3) push(\$p3,\$p2) push(\$p3,\$p1) text(\$p1)......@returns (b,a,B,A,b,a,a,b)
+    <admst:variable name="p3"/>
+    <admst:push into="$p3" select="$p2"/>
+    <admst:push into="$p3" select="$p1"/>
+    <admst:text format=" "/>
+    <admst:text select="$p3" format="%(.),"/>
+    <admst:text format=" "/>
+    <admst:text select="$p3" format="%(position(.)).%(index($p1,.)) "/>
+    <admst:text format="\n"/>
+  </admst:for-each>
+  <admst:open file="target">
+  01 ** foreach(variable) text................................@returns (B,A,b,a) B,A,b,a, 1.0 2.1 3.2 4.3
+  02 ** foreach.sort(variable) text...........................@returns (A,B,a,b) A,B,a,b, 1.1 2.0 3.3 4.2
+  03 ** \$p1=variable text(\$p1)................................@returns (B,A,b,a) B,A,b,a, 1.0 2.1 3.2 4.3
+  04 ** \$p1=sort(variable) text(\$p1)..........................@returns (A,B,a,b) A,B,a,b, 1.0 2.1 3.2 4.3
+  05 ** text(variable)........................................@returns (B,A,b,a) B,A,b,a, 1.0 2.1 3.2 4.3
+  06 ** text(sort(variable))..................................@returns (A,B,a,b) A,B,a,b, 1.1 2.0 3.3 4.2
+  07 ** foreach(reverse(variable))............................@returns (a,b,A,B) a,b,A,B, 1.3 2.2 3.1 4.0
+  08 ** \$p1=variable text(reverse(\$p1)).......................@returns (a,b,A,B) a,b,A,B, 1.3 2.2 3.1 4.0
+  09 ** \$p1=reverse(variable) text(\$p1).......................@returns (a,b,A,B) a,b,A,B, 1.0 2.1 3.2 4.3
+  10 ** reset(\$p1) push(\$p1,variable[input='no']) text(\$p1)...@returns (a,b) a,b, 1.0 2.1
+  11 ** \$p2=reverse(sort(\$p1)) text(\$p2)......................@returns (b,a) b,a, 1.0 2.1
+  12 ** push(\$p1,variable) text(\$p1)..........................@returns (a,b,A,B,a,b) a,b,A,B,a,b, 1.0 2.1 3.2 4.3 5.0 6.1
+  13 ** text(sort(reverse(\$p1)))..............................@returns (A,B,a,a,b,b) A,B,a,a,b,b, 1.2 2.3 3.0 4.0 5.1 6.1
+  14 ** reset(\$p3) push(\$p3,\$p2) push(\$p3,\$p1) text(\$p1)......@returns (b,a,B,A,b,a,a,b) b,a,B,A,b,a,a,b, 1.1 2.0 3.3 4.2 5.1 6.0 7.0 8.1
+  </admst:open>
+  <admst:message format="target: file created\n"/>
+</admst>
+

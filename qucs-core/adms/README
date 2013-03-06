@@ -1,0 +1,120 @@
+##
+## RCS Info
+## $Id: README 1049 2008-07-31 13:53:12Z r29173 $
+## 
+## Log
+## $Log$
+## Revision 1.5  2006/08/04 17:15:32  r29173
+## rearranged code partionning into files
+##
+## Revision 1.4  2005/05/03 07:58:29  r29173
+## moved admsNS into admsFile
+##
+## Revision 1.3  2004/08/03 12:33:54  r29173
+## import adms-1.21.0 from local CVS
+##
+## Revision 1.1.1.1  2004/05/21 12:20:01  r29173
+## recreated cvs data structure (crashed after revision 1.13.0!)
+##
+## Revision 1.7  2004/05/13 07:34:51  r29173
+## continue removing GNode* structure
+##
+## Revision 1.6  2004/04/20 13:09:30  r29173
+## removed subdir admsTree
+##
+## Revision 1.5  2004/01/29 13:19:29  r29173
+## created ChangeLog when file is missing
+##
+## Revision 1.4  2004/01/15 14:59:47  r29173
+## added prerequisites
+##
+## Revision 1.3  2004/01/05 11:41:27  r29173
+## updated (simplified)
+##
+## Revision 1.2  2003/06/20 08:26:11  r29173
+## added RCS info into files
+##
+## Revision 1.3  2003/06/19 12:52:15  r29173
+## fixed dependency problem
+##
+## Revision 1.2  2003/05/21 14:20:55  r29173
+## add rcs info
+##
+##
+
+0- Prerequisites
+    0- gnu make is required (do not use other native make)
+ 
+1- Description
+  ADMS is a code generator that converts electrical compact device models
+  specified in high-level description language into ready-to-compile c code
+  for the API of spice simulators.
+
+2- Installation - Unix or Linux
+    0- run: ./configure - see file INSTALLATION for more options
+    1- run: gmake
+    2- run: gmake install
+  If the installation fails try:
+    0- run: autoheader
+    1- run: aclocal
+    2- run: automake
+    3- run: autoconf
+    4- run: ./configure - see file INSTALLATION for more options
+    5- run: gmake
+    6- run: gmake install
+    In two shots:
+      autoheader && aclocal && automake && autoconf && ./configure
+      gmake && gmake install 
+
+3- Installation - Windows with cygwin environment
+    0- run: ./configure - see file INSTALLATION for more options
+    1- run: gmake
+    2- run: gmake install
+  If the installation fails try:
+    0- run: autoheader
+    1- run: aclocal
+    2- run: automake
+    3- run: autoconf
+    4- run: ./configure - see file INSTALLATION for more options
+    5- run: gmake
+    6- run: gmake install
+    In two shots:
+      autoheader && aclocal && automake && autoconf && ./configure
+      gmake && gmake install 
+
+4- Installation windows (no cygwin environment)
+  0- run:
+       cl -DYY_NO_UNISTD_H -DPACKAGE_VERSION=\"msvc-229\" -DHAVE_CONFIG_H -DinsideElement -DinsidePreprocessor -DinsideVeriloga -I. -IadmsXml \
+          admsXml/adms.c admsXml/preprocessorLex.c admsXml/preprocessorMain.c admsXml/preprocessorYacc.c admsXml/verilogaLex.c admsXml/verilogaYacc.c \
+          admsXml/admsXml.c admsXml/admstpathYacc.c -o admsXml.exe
+     If the installation fails send a message to r29173@users.sourceforge.net
+     (note that there is NO strong support for windows compilers.)
+
+5- Directory Structure
+   adms
+    - metaadms.dtd
+      DTD of file adms.xml 
+    - adms.xml
+      This file defines the data structure used by adms to save parsed hdl code.
+    - auxconf
+      set-up files created by automake -a -c
+    - scripts:
+      perl scripts
+    - admsXml
+      source code
+
+5- For developers (using the cygwin environment)
+  Here is how I create the compilation environment after checking out adms from
+  the CVS repository:
+  0- run: autoheader (create autom4te.cache/config-h.in from configure.in)
+  1- run: mkdir auxconf (create directory auxconf)
+  2- run: aclocal (create aclocal.m4 from configure.in)
+  3- run: libtoolize --force --ltdl -c (create libltdl and config.guess, config.sub, ltmain.sh in auxconf)
+  4- run: automake -a -c (create missing, mkinstalldirs, install-sh in auxconf and all Makefile.in)
+  5- run: autoconf (create configure)
+  6- run: ./configure --enable-maintainer-mode
+  In three shots:
+    rm -rf auxconf && autoheader && mkdir auxconf && aclocal && libtoolize --force --ltdl -c 
+    touch ChangeLog && automake -a -c && autoconf
+    ./configure --enable-maintainer-mode
+

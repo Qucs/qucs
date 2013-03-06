@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+     This dtd describes the basic data structures used by adms classes
+     It is used to check the validy of file http://mot-adms/sourceforge.net/xml-files/admstpath.xml
+     You can try using xmllint: xmllint admstpath.xml -noout -postvalid -noblanks
+--> 
+<!--
+  $Id: metaadmstpath.dtd 990 2008-04-29 15:08:06Z r29173 $
+-->
+<!--
+  $Log$
+  Revision 1.11  2006/09/13 16:13:19  r29173
+  started migration to www.antlr.org tools
+
+  Revision 1.10  2005/12/02 17:48:42  r29173
+  cleaned-up admstpath lexical analyzer (lexan)
+
+  Revision 1.9  2005/11/30 13:58:35  r29173
+  added nodes maincode and headercode
+
+  Revision 1.8  2005/04/06 08:26:49  r29173
+  simplified code
+
+  Revision 1.7  2005/03/31 18:12:01  r29173
+  migration to adms-2.x.x: converted to adms2 syntax
+
+  Revision 1.6  2005/03/24 17:39:02  r29173
+  migration to adms-2.x.x: moved c-code from perl to xml
+
+  Revision 1.5  2005/03/24 17:03:27  r29173
+  migration to adms-2.x.x: fixed bugs in admstpath parser
+
+  Revision 1.4  2005/03/23 13:38:33  r29173
+  migration to adms-2.x.x: added xpath parser
+
+  Revision 1.3  2005/03/22 11:30:18  r29173
+  migration to adms-2.x.x: clean-up xml constructs
+
+  Revision 1.2  2005/03/17 08:26:28  r29173
+  migration to adms-2.x.x: move all href from absolute to relative values
+
+  Revision 1.1  2005/03/16 16:17:17  r29173
+  migration to adms-2.x.x: build prerequisites for admst path
+
+  Revision 1.4  2005/02/25 12:49:35  r29173
+  migration to adms-2.x.x: renamed admst transforms
+
+--> 
+
+<!ELEMENT admstpath (lex,yacc) >
+<!ELEMENT lex (ignore,constant+,regexp+) >
+<!ELEMENT constant (#PCDATA) >
+<!ELEMENT regexp (#PCDATA) >
+<!ELEMENT ignore (#PCDATA) >
+
+<!ATTLIST constant id CDATA #REQUIRED value CDATA #IMPLIED >
+<!ATTLIST regexp   id CDATA #REQUIRED >
+<!ATTLIST ignore   id CDATA #REQUIRED value CDATA #IMPLIED >
+
+<!ELEMENT yacc (productionset+) >
+<!ELEMENT productionset (production+,empty?) >
+<!ELEMENT production (item+) >
+<!ELEMENT item EMPTY >
+<!ELEMENT empty EMPTY >
+
+<!ATTLIST productionset id     CDATA #REQUIRED >
+<!ATTLIST productionset ret    CDATA #REQUIRED >
+<!ATTLIST item          linkto CDATA #REQUIRED >
