@@ -5,6 +5,7 @@ AC_PREREQ([2.68])
 AC_INIT([adms],[2.3.0],[r29173@gmail.com])
 AC_CONFIG_SRCDIR([admsXml.c])
 AC_CONFIG_HEADERS([config.h])
+AC_CONFIG_AUX_DIR([.])
 
 # specific configuration.
 AC_CONFIG_AUX_DIR([auxconf])
