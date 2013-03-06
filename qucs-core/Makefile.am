@@ -22,9 +22,10 @@
 # Boston, MA 02110-1301, USA.
 #
 
-## if maintainer mode we build adms, unless told otherwise
+## if maintainer mode we may build adms
 if MAINTAINER_MODE
-if BUILD_ADMS
+## Test if an internal adms has been requested
+if USE_INTERNAL_ADMS
 SUBDIRS = adms
 else
 SUBDIRS =

@@ -147,9 +147,14 @@ INCLUDES = -I$(top_srcdir)/src -I$(top_srcdir)/src/math \
   -I$(top_srcdir)/src/components -I$(top_srcdir)/src/components/devices
 
 if MAINTAINER_MODE
-
-if BUILD_ADMS
-include $(top_builddir)/Makefile.env
+## configure determines if we want to build and use the
+## bundled version of ADMS, or the host's ADMS. Here we
+## set the path to the admsXml binary depeding on the choice 
+## the user made at configure time
+if USE_INTERNAL_ADMS
+ADMSXML = $(abs_top_builddir)/adms/admsXml/admsXml
+else
+ADMSXML = @ADMSXML@
 endif
 
 HBT_X.analogfunction.cpp: analogfunction.xml

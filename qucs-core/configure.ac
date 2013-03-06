@@ -5,7 +5,6 @@ AC_PREREQ(2.64)
 AC_INIT(qucs-core,0.0.17,qucs-bugs@lists.sourceforge.net)
 AC_CONFIG_SRCDIR([src/circuit.cpp])
 AC_CONFIG_HEADERS([config.h])
-##AC_CONFIG_AUX_DIR([.])
 
 AC_CANONICAL_BUILD
 AC_CANONICAL_HOST
@@ -13,8 +12,9 @@ AC_CANONICAL_TARGET
 AM_INIT_AUTOMAKE([no-define])
 AM_MAINTAINER_MODE
 
-dnl Adds LIBRARY conditional for --enable-qucslib mode to
-dnl build qucs as a library
+dnl Adds LIBRARY conditional for --enable-qucslib mode to also 
+dnl build a library based on the qucs code. Default is to not 
+dnl build it as a library and this is not required for distributions
 AC_ARG_ENABLE(qucslib,
 AS_HELP_STRING([--enable-qucslib],
                [enable qucslib build, default: no]),
@@ -24,22 +24,8 @@ AS_HELP_STRING([--enable-qucslib],
              *)   AC_MSG_ERROR([bad value ${enableval} for --enable-qucslib]) ;;
 esac],
 [qucslib=false])
-
+dnl set a conditional to test for in Makefile.am
 AM_CONDITIONAL(QUCSLIB, test x"$qucslib" = x"true")
-
-dnl Example of default-enabled feature
-AC_ARG_ENABLE(adms,
-    AS_HELP_STRING([--disable-adms], [disable adms build, default: no]),
-[case "${enableval}" in
-             yes) adms=true
-             echo You enabled adms! ;;
-             no)  adms=false
-             echo You disabled adms! ;;
-             *)   AC_MSG_ERROR([bad value ${enableval} for --disable-adms]) ;;
-esac],
-[adms=true])
-
-AM_CONDITIONAL([BUILD_ADMS], [test x"$adms" = x"true"])
 
 AC_PREFIX_DEFAULT([/usr/local])
 test "x$prefix" = xNONE && prefix="/usr/local"
@@ -147,19 +133,43 @@ if test $USE_MAINTAINER_MODE = yes; then
   fi
 fi
 
+dnl check for adms
 if test $USE_MAINTAINER_MODE = yes; then
-  dnl AC_SUBST_FILE([adms_root])
-  if test x"$adms" = x"true"; then
-    AC_MSG_RESULT([admsXml will be built.])
-    AC_CONFIG_FILES([Makefile.env])
-  else
-    dnl check is admsXml is present on the system
-    AC_PATH_PROG(ADMSXML, admsXml, :)
-    AC_CHECK_PROG(ADMS_CHECK,admsXml,yes)
-    if test x"$ADMS_CHECK" != x"yes" ; then
-        AC_MSG_ERROR([admsXml not found, install admsXml or run with --disable-adms=no to build local version.])
-    fi
-  fi
+  dnl now, to build or not to build the adms subproject. The adms
+  dnl subproject is required to generate code during the maintainer  
+  dnl build process. It is not required for distributions. It is 
+  dnl only required if MAINTAINER_MODE is true in the Makefile.am's
+  dnl
+  dnl The default behaviour is "check for adms, if it's not there,
+  dnl build and use the bundled copy". Note also that it supports
+  dnl --with-mkadms=PATH (user may have a copy installed in an odd
+  dnl place), --with-mkadms=internal (needed for distcheck, where
+  dnl we want to test everything) and --with-mkadms=external (for
+  dnl package maintainers, who don't like bundled subprojects).
+  AC_ARG_WITH([mkadms],
+    [AS_HELP_STRING([--with-mkadms],
+      [Either the full path to adms, or "external", "internal", or "check" @<:@check@:>@])],
+    [ADMSXML=$withval],
+    [with_mkadms=check])
+  AS_IF([test "$with_mkadms" = check -o "$with_mkadms" = external],
+    [AC_PATH_PROG([ADMSXML], [mkadms], [no])
+     AC_MSG_NOTICE([Using host external admsXml rather than bundled version.])],
+    [AC_MSG_NOTICE([Using bundled admsXml.])])
+  AS_IF([test "$with_mkadms" = external -a "$ADMSXML" = no],
+    [AC_MSG_ERROR([External adms demanded, but not found.])])
+  dnl We conditionally set ADMSXML in the top level Makefile.am in
+  dnl qucs-core. AM_SUBST_NOTMAKE([ADMSXML]) stops automake from 
+  dnl generating a line of the form ADMSXML = @ADMSXML@ in Makefile.in. 
+  dnl We need to do that assignment conditionally.
+  AM_SUBST_NOTMAKE([ADMSXML])
+  dnl We set up an automake conditional because we need to do 
+  dnl different stuff for internal/external adms inside Makefile.am
+  AM_CONDITIONAL([USE_INTERNAL_ADMS],
+    [test "$with_mkadms" = internal -o "$ADMSXML" = no])
+  dnl if we are using internal adms we need to add it to the
+  dnl subdirectories autoconf will recurse into as it has its
+  dnl own configure.ac and Makefile.am
+  AM_COND_IF([USE_INTERNAL_ADMS], [AC_CONFIG_SUBDIRS([adms])])
 fi
 
 dnl Checks for libraries.
@@ -281,11 +291,6 @@ AC_CONFIG_FILES([Makefile
                  src/components/devices/Makefile
                  src/components/digital/Makefile
                  src/components/verilog/Makefile])
-if test $USE_MAINTAINER_MODE = yes; then
-  if test x"$adms" = x"true"; then
-    AC_CONFIG_SUBDIRS([adms])
-  fi
-fi
 AC_OUTPUT
 
 dnl Print results.
