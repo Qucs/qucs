@@ -40,6 +40,7 @@ libverilog_a_SOURCES = HBT_X.analogfunction.cpp HBT_X.core.cpp \
 	hicumL0V1p3.analogfunction.cpp hicumL0V1p3.core.cpp \
 	hicumL2V2p23.analogfunction.cpp hicumL2V2p23.core.cpp \
 	hicumL2V2p24.analogfunction.cpp hicumL2V2p24.core.cpp \
+        hicumL2V2p31n.analogfunction.cpp hicumL2V2p31n.core.cpp \
 	photodiode.analogfunction.cpp photodiode.core.cpp \
 	phototransistor.analogfunction.cpp phototransistor.core.cpp \
 	nigbt.analogfunction.cpp nigbt.core.cpp \
@@ -89,6 +90,7 @@ noinst_HEADERS = HBT_X.analogfunction.h HBT_X.defs.h HBT_X.core.h \
 	hicumL0V1p3.analogfunction.h hicumL0V1p3.defs.h hicumL0V1p3.core.h \
 	hicumL2V2p23.analogfunction.h hicumL2V2p23.defs.h hicumL2V2p23.core.h \
 	hicumL2V2p24.analogfunction.h hicumL2V2p24.defs.h hicumL2V2p24.core.h \
+	hicumL2V2p31n.analogfunction.h hicumL2V2p31n.defs.h hicumL2V2p31n.core.h \
 	photodiode.analogfunction.h photodiode.defs.h photodiode.core.h \
 	phototransistor.analogfunction.h phototransistor.defs.h \
 	phototransistor.core.h \
@@ -129,7 +131,7 @@ VERILOG_FILES = constants.vams disciplines.vams \
   fbh_hbt-2_2a.va hicumL2V2p11.va mod_amp.va hicumL2V2p22.va log_amp.va \
   hicumL0V1p12.va potentiometer.va MESFET.va hicumL0V1p2.va hicumL2V2p23.va \
   photodiode.va EKV26MOS.va phototransistor.va nigbt.va hicumL2V2p24.va \
-  hicumL0V1p2g.va hicumL0V1p3.va \
+  hicumL0V1p2g.va hicumL0V1p3.va hicumL2V2p31n.va \
   dff_SR.va jkff_SR.va tff_SR.va gatedDlatch.va logic_0.va logic_1.va \
   mux2to1.va mux4to1.va mux8to1.va DLS_nto1.va DLS_1ton.va andor4x2.va \
   andor4x3.va andor4x4.va dmux2to4.va dmux3to8.va dmux4to16.va ha1b.va \
@@ -338,6 +340,20 @@ hicumL2V2p24.defs.h: hicumL2V2p24.va
 hicumL2V2p24.gui.cpp: qucsVersion.xml qucsMODULEgui.xml
 hicumL2V2p24.gui.cpp: hicumL2V2p24.va
 	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEgui.xml
+
+hicumL2V2p31n.analogfunction.cpp: analogfunction.xml
+hicumL2V2p31n.analogfunction.cpp: hicumL2V2p31n.va
+	$(ADMSXML) $< -e analogfunction.xml
+hicumL2V2p31n.core.cpp: hicumL2V2p31n.defs.h qucsVersion.xml qucsMODULEcore.xml
+hicumL2V2p31n.core.cpp: hicumL2V2p31n.va
+	$(ADMSXML) $< -e qucsVersion.xml -e qucsMODULEcore.xml
+hicumL2V2p31n.defs.h: qucsVersion.xml qucsMODULEdefs.xml
+hicumL2V2p31n.defs.h: hicumL2V2p31n.va
+	$(ADMSXML) $< -e qucsVersion.xml -e qucsMODULEdefs.xml
+hicumL2V2p31n.gui.cpp: qucsVersion.xml qucsMODULEgui.xml
+hicumL2V2p31n.gui.cpp: hicumL2V2p31n.va
+	$(ADMSXML) $< -e qucsVersion.xml -e qucsMODULEgui.xml 
+
 
 photodiode.analogfunction.cpp: analogfunction.xml
 photodiode.analogfunction.cpp: photodiode.va

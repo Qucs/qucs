@@ -153,6 +153,7 @@
 #include "verilog/hicumL0V1p3.core.h"
 #include "verilog/hicumL2V2p23.core.h"
 #include "verilog/hicumL2V2p24.core.h"
+#include "verilog/hicumL2V2p31n.core.h" 
 #include "verilog/photodiode.core.h"
 #include "verilog/phototransistor.core.h"
 #include "verilog/nigbt.core.h"
