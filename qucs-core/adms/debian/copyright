@@ -1,0 +1,40 @@
+This package was debianized by Valentyn Pavliuchenko <valentyn.pavliuchenko@gmail.com> on
+Sat, 24 Nov 2012 21:44:08 +0200.
+
+It was downloaded from https://sourceforge.net/projects/mot-adms
+
+	Laurent Lemaitre <Laurent_Lemaitre-R29173@email.mot.com>
+	Colin McAndrew <Colin_McAndrew-RP3881@email.mot.com>
+	James Victory <James_Victory-RZCB60@email.mot.com>
+	Steven D Hamm <Steve_Hamm-RXET30@email.mot.com>
+	Savithri S <Savithri_S-A12801@email.mot.com>
+	Kuntal Joardar <Kuntal_Joardar-RRNR50@email.mot.com>
+Upstream Authors:	Laurent Lemaitre <Laurent_Lemaitre-R29173@email.mot.com>
+			Colin McAndrew <Colin_McAndrew-RP3881@email.mot.com>
+			James Victory <James_Victory-RZCB60@email.mot.com>
+			Steven D Hamm <Steve_Hamm-RXET30@email.mot.com>
+			Savithri S <Savithri_S-A12801@email.mot.com>
+			Kuntal Joardar <Kuntal_Joardar-RRNR50@email.mot.com>
+
+
+Copyright (C) 2012 Valentyn Pavliuchenko <valentyn.pavliuchenko@gmail.com>
+
+    This program is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation; either version 2 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program; if not, write to the Free Software
+    Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
+
+
+On Debian GNU/Linux systems, the complete text of the GNU General
+Public License can be found in `/usr/share/common-licenses/GPL'.
+
+ -- Valentyn Pavliuchenko <valentyn.pavliuchenko@gmail.com>,  Sat, 24 Nov 2012 21:44:08 +0200.
