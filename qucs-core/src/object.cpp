@@ -7,18 +7,18 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This software is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this package; see the file COPYING.  If not, write to
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
- * Boston, MA 02110-1301, USA.  
+ * Boston, MA 02110-1301, USA.
  *
- * $Id$
+ * $Id: object.cpp 1870 2013-03-06 12:52:07Z crobarcro $
  *
  */
 
@@ -48,6 +48,8 @@ object::object () {
 
 // This constructor creates a named instance of the object class.
 object::object (const char * n) {
+  // create a copy of the character array pointed to by n
+  // and get a pointer to the copy using strdup
   name = strdup (n);
   prev = next = NULL;
   prop = NULL;
