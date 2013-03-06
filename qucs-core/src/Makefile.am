@@ -179,6 +179,7 @@ gperfappgen.h: applications.h
 	sed -e 's/evaluate::[a-zA-Z0-9_]*/NULL/g' < $< > $@
 
 gperf_FILES = gperfapphash.cpp gperfapphash.gph gperfappgen.h
+
 else
 gperf_FILES =
 endif

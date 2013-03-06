@@ -5,6 +5,7 @@ AC_PREREQ(2.64)
 AC_INIT(qucs-core,0.0.17,qucs-bugs@lists.sourceforge.net)
 AC_CONFIG_SRCDIR([src/circuit.cpp])
 AC_CONFIG_HEADERS([config.h])
+##AC_CONFIG_AUX_DIR([.])
 
 AC_CANONICAL_BUILD
 AC_CANONICAL_HOST
@@ -25,6 +26,20 @@ esac],
 [qucslib=false])
 
 AM_CONDITIONAL(QUCSLIB, test x"$qucslib" = x"true")
+
+dnl Example of default-enabled feature
+AC_ARG_ENABLE(adms,
+    AS_HELP_STRING([--disable-adms], [disable adms build, default: no]),
+[case "${enableval}" in
+             yes) adms=true
+             echo You enabled adms! ;;
+             no)  adms=false
+             echo You disabled adms! ;;
+             *)   AC_MSG_ERROR([bad value ${enableval} for --disable-adms]) ;;
+esac],
+[adms=true])
+
+AM_CONDITIONAL([BUILD_ADMS], [test x"$adms" = x"true"])
 
 AC_PREFIX_DEFAULT([/usr/local])
 test "x$prefix" = xNONE && prefix="/usr/local"
@@ -131,10 +146,19 @@ if test $USE_MAINTAINER_MODE = yes; then
     AC_MSG_ERROR([The $PACKAGE package requires an installed gperf.])
   fi
 fi
-AC_PATH_PROG(ADMSXML, admsXml, :)
+
 if test $USE_MAINTAINER_MODE = yes; then
-  if test "$ADMSXML" = ":"; then
-    AC_MSG_ERROR([The $PACKAGE package requires an installed adms.])
+  dnl AC_SUBST_FILE([adms_root])
+  if test x"$adms" = x"true"; then
+    AC_MSG_RESULT([admsXml will be built.])
+    AC_CONFIG_FILES([Makefile.env])
+  else
+    dnl check is admsXml is present on the system
+    AC_PATH_PROG(ADMSXML, admsXml, :)
+    AC_CHECK_PROG(ADMS_CHECK,admsXml,yes)
+    if test x"$ADMS_CHECK" != x"yes" ; then
+        AC_MSG_ERROR([admsXml not found, install admsXml or run with --disable-adms=no to build local version.])
+    fi
   fi
 fi
 
@@ -257,6 +281,11 @@ AC_CONFIG_FILES([Makefile
                  src/components/devices/Makefile
                  src/components/digital/Makefile
                  src/components/verilog/Makefile])
+if test $USE_MAINTAINER_MODE = yes; then
+  if test x"$adms" = x"true"; then
+    AC_CONFIG_SUBDIRS([adms])
+  fi
+fi
 AC_OUTPUT
 
 dnl Print results.

@@ -148,6 +148,10 @@ INCLUDES = -I$(top_srcdir)/src -I$(top_srcdir)/src/math \
 
 if MAINTAINER_MODE
 
+if BUILD_ADMS
+include $(top_builddir)/Makefile.env
+endif
+
 HBT_X.analogfunction.cpp: analogfunction.xml
 HBT_X.analogfunction.cpp: fbh_hbt-2_2a.va
 	$(ADMSXML) $< -e $(srcdir)/analogfunction.xml
