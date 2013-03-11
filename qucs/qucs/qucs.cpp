@@ -22,7 +22,6 @@
 #include <QDebug>
 #include <limits.h>
 
-#include <q3accel.h>
 #include <qimage.h>
 #include <qsplitter.h>
 #include <q3vbox.h>
@@ -31,7 +30,6 @@
 #include <qmessagebox.h>
 #include <qdir.h>
 #include <qpainter.h>
-#include <q3filedialog.h>
 #include <qinputdialog.h>
 #include <qapplication.h>
 #include <qclipboard.h>
@@ -51,7 +49,6 @@
 #include <qtoolbutton.h>
 #include <qstatusbar.h>
 #include <q3toolbar.h>
-#include <q3popupmenu.h>
 #include <qmenubar.h>
 #include <q3process.h>
 #include <qlineedit.h>
@@ -60,7 +57,6 @@
 #include <q3syntaxhighlighter.h>
 //Added by qt3to4:
 #include <QCloseEvent>
-#include <Q3TextStream>
 #include <Q3PtrList>
 
 #include "main.h"
@@ -96,6 +92,7 @@ QDir QucsHomeDir;  // Qucs user directory where all projects are located
 
 
 // IconView without dragging icon bitmap
+/*
 class myIconView : public Q3IconView
 {
 public:
@@ -120,7 +117,7 @@ protected:
     return DragPic;
   };
 };
-
+*/
 
 
 QucsApp::QucsApp()
@@ -208,15 +205,26 @@ QucsApp::~QucsApp()
 // #######################################################################
 void QucsApp::initContentListView()
 {
-  Content->clear();   // remove all documents
-  ConOthers     = new Q3ListViewItem(Content, tr("Others"));
-  ConDatasets   = new Q3ListViewItem(Content, tr("Datasets"));
-  ConDisplays   = new Q3ListViewItem(Content, tr("Data Displays"));
-  ConOctave     = new Q3ListViewItem(Content, tr("Octave"));
-  ConVerilog    = new Q3ListViewItem(Content, tr("Verilog"));
-  ConVerilogA   = new Q3ListViewItem(Content, tr("Verilog-A"));
-  ConSources    = new Q3ListViewItem(Content, tr("VHDL"));
-  ConSchematics = new Q3ListViewItem(Content, tr("Schematics"));
+
+  Content->clear();
+
+  ConOthers = new QTreeWidgetItem(Content);
+  ConOthers->setText(0, tr("Others"));
+  ConDatasets = new QTreeWidgetItem(Content);
+  ConDatasets->setText(0, tr("Datasets"));
+  ConDisplays = new QTreeWidgetItem(Content);
+  ConDisplays->setText(0, tr("Data Displays"));
+  ConOctave = new QTreeWidgetItem(Content);
+  ConOctave->setText(0, tr("Octave"));
+  ConVerilog = new QTreeWidgetItem(Content);
+  ConVerilog->setText(0, tr("Verilog"));
+  ConVerilogA = new QTreeWidgetItem(Content);
+  ConVerilogA->setText(0, tr("Verilog-A"));
+  ConSources = new QTreeWidgetItem(Content);
+  ConSources->setText(0, tr("VHDL"));
+  ConSchematics = new QTreeWidgetItem(Content);
+  ConSchematics->setText(0, tr("Schematics"));
+
 }
 
 void QucsApp::initView()
@@ -286,26 +294,27 @@ void QucsApp::initView()
 
   // ----------------------------------------------------------
   // "Content Tab" of the left QTabWidget
-  // TODO: This should become a QTreeView
-  Content = new Q3ListView(this);
-  Content->setRootIsDecorated(true); // open/close decoration for root items
-  Content->setSorting(-1);    // no sorting
-  Content->addColumn(tr("Content of"));
-  Content->addColumn(tr("Note"));
-  Content->setColumnWidthMode(0,Q3ListView::Manual);
-  Content->setColumnWidth(0, 150);
+  Content = new QTreeWidget(this);
+  Content->setColumnCount(2);
+  QStringList headers;
+  headers << tr("Content of") << tr("Note");
+  Content->setHeaderLabels(headers);
+  Content->setSortingEnabled(false);
+  Content->setColumnWidth(0,150);
+
+  Content->setContextMenuPolicy(Qt::ActionsContextMenu);
 
   initContentListView();
 
   TabView->addTab(Content,tr("Content"));
   TabView->setTabToolTip(TabView->indexOf(Content), tr("content of current project"));
 
-  connect(Content, SIGNAL(doubleClicked(Q3ListViewItem*)),
-		   SLOT(slotOpenContent(Q3ListViewItem*)));
-  connect(Content, SIGNAL(clicked(Q3ListViewItem*)),
-		   SLOT(slotSelectSubcircuit(Q3ListViewItem*)));
-  connect(Content, SIGNAL(expanded(Q3ListViewItem*)),
-		   SLOT(slotExpandContentList(Q3ListViewItem*)));
+
+  connect(Content, SIGNAL(itemDoubleClicked(QTreeWidgetItem*, int)),
+		   SLOT(slotOpenContent(QTreeWidgetItem*)));
+  #warning Which signal to connect to?
+  connect(Content, SIGNAL(clicked(QTreeWidgetItem*)),
+		   SLOT(slotSelectSubcircuit(QTreeWidgetItem*)));
 
   // ----------------------------------------------------------
   // "Component Tab" of the left QTabWidget
@@ -478,25 +487,42 @@ void QucsApp::slotSelectComponent(QListWidgetItem *item)
 }
 
 // ####################################################################
-// #####  Functions for the menu that appears when left-clicking  #####
+// #####  Functions for the menu that appears when right-clicking #####
 // #####  on a file in the "Content" ListView.                    #####
 // ####################################################################
 
 void QucsApp::initCursorMenu()
 {
-  ContentMenu = new Q3PopupMenu(Content);
-  ContentMenu->insertItem(tr("Open"), this, SLOT(slotCMenuOpen()));
-  ContentMenu->insertItem(tr("Rename"), this, SLOT(slotCMenuRename()));
-  ContentMenu->insertItem(tr("Delete"), this, SLOT(slotCMenuDelete()));
-  ContentMenu->insertItem(tr("Delete Group"), this, SLOT(slotCMenuDelGroup()));
 
-  connect(Content,
-	  SIGNAL(contextMenuRequested(Q3ListViewItem*, const QPoint&, int)),
-	  SLOT(slotShowContentMenu(Q3ListViewItem*, const QPoint&, int)));
+  // TODO -> The contentmenu is also shown when the user right-clicks on a category...
+  ContentMenu = new QMenu(this);
+
+  ActionCMenuOpen = new QAction(tr("Open"), ContentMenu);
+  connect(ActionCMenuOpen, SIGNAL(triggered()), this, SLOT(slotCMenuOpen()));
+  Content->addAction(ActionCMenuOpen);
+
+  ActionCMenuRename = new QAction(tr("Rename"), ContentMenu);
+  connect(ActionCMenuRename, SIGNAL(triggered()), this, SLOT(slotCMenuRename()));
+  Content->addAction(ActionCMenuRename);
+
+  ActionCMenuDelete = new QAction(tr("Delete"), ContentMenu);
+  connect(ActionCMenuDelete, SIGNAL(triggered()), this, SLOT(slotCMenuDelete()));
+  Content->addAction(ActionCMenuDelete);
+
+  // TODO -> not implemented yet...
+  //ActionCMenuDelGroup = new QAction(tr("Delete Group"), ContentMenu);
+  //connect(ActionCMenuDelGroup, SIGNAL(triggered()), this, SLOT(slotCMenuDelGroup()));
+  //Content->addAction(ActionCMenuDelGroup);
+
+//
+//  connect(Content,
+//	  SIGNAL(contextMenuRequested(Q3ListViewItem*, const QPoint&, int)),
+//	  SLOT(slotShowContentMenu(Q3ListViewItem*, const QPoint&, int)));
 }
 
 // ----------------------------------------------------------
 // Shows the menu.
+/*
 void QucsApp::slotShowContentMenu(Q3ListViewItem *item, const QPoint& point, int)
 {
   if(item)
@@ -508,11 +534,11 @@ void QucsApp::slotShowContentMenu(Q3ListViewItem *item, const QPoint& point, int
       ContentMenu->popup(point);
     }
 }
-
+*/
 // ----------------------------------------------------------
 void QucsApp::slotCMenuOpen()
 {
-  Q3ListViewItem *Item = Content->selectedItem();
+  QTreeWidgetItem *Item = Content->currentItem();
   if(Item == 0) return;
 
   slotOpenContent(Item);
@@ -521,7 +547,7 @@ void QucsApp::slotCMenuOpen()
 // ----------------------------------------------------------
 void QucsApp::slotCMenuRename()
 {
-  Q3ListViewItem *Item = Content->selectedItem();
+  QTreeWidgetItem *Item = Content->currentItem();
   if(!Item) return;
 
   QString Name = Item->text(0);
@@ -557,7 +583,7 @@ void QucsApp::slotCMenuRename()
 // ----------------------------------------------------------
 void QucsApp::slotCMenuDelete()
 {
-  Q3ListViewItem *item = Content->selectedItem();
+  QTreeWidgetItem *item = Content->currentItem();
   if(item == 0) return;
   QString FileName = QucsWorkDir.filePath(item->text(0));
 
@@ -579,7 +605,6 @@ void QucsApp::slotCMenuDelete()
     return;
   }
 
-  item->parent()->takeItem(item);
   delete item;
 }
 
@@ -609,10 +634,11 @@ QString QucsApp::fileType (const QString& Ext)
 }
 
 // ----------------------------------------------------------
+// TODO -> not implemented yet
 // Deletes all files with that name (and suffix sch, dpl, dat, vhdl, etc.).
 void QucsApp::slotCMenuDelGroup ()
 {
-  Q3ListViewItem * item = Content->selectedItem ();
+  QTreeWidgetItem *item = Content->currentItem();
   if (item == 0)
     return;
   QString s = item->text (0);
@@ -628,8 +654,7 @@ void QucsApp::slotCMenuDelGroup ()
     QString Name = QucsWorkDir.filePath (Short);
     // search, if files are open
     if (findDoc (Name)) {
-      QMessageBox::critical(this, tr("Error"),
-		tr("Cannot delete the open file \"%1\"!").arg(Short));
+      QMessageBox::critical(this, tr("Error"), tr("Cannot delete the open file \"%1\"!").arg(Short));
       return;
     }
   }
@@ -658,16 +683,16 @@ void QucsApp::slotCMenuDelGroup ()
     if (exists) {
       // remove files
       if (!QFile::remove (Name)) {
-	QMessageBox::critical(this, tr("Error"),
-		tr("Cannot delete %1: \"%2\"!").arg(fileType (extensions[i])).
+	       QMessageBox::critical(this, tr("Error"),	tr("Cannot delete %1: \"%2\"!").arg(fileType (extensions[i])).
 	        arg(Short));
-	continue;
+	       continue;
       }
       // remove items from listview
-      item = Content->findItem (Short, 0);
+      //item = Content->findItem (Short, 0);
       if (item) {
-	item->parent()->takeItem (item);
-	delete item;
+	     // TODO???
+       //item->parent()->takeItem (item);
+	     delete item;
       }
     }
   }
@@ -739,10 +764,10 @@ int QucsApp::testFile(const QString& DocName)
   // .........................................
   // To strongly speed up the file read operation the whole file is
   // read into the memory in one piece.
-  Q3TextStream ReadWhole(&file);
+  QTextStream ReadWhole(&file);
   QString FileString = ReadWhole.read();
   file.close();
-  Q3TextStream stream(&FileString, QIODevice::ReadOnly);
+  QTextStream stream(&FileString, QIODevice::ReadOnly);
 
 
   // read header ........................
@@ -793,6 +818,7 @@ int QucsApp::testFile(const QString& DocName)
 void QucsApp::readProjectFiles()
 {
   // Delete the content files, but don't delete the parent items !!!
+/* TODO
   while(ConSchematics->firstChild())
     delete ConSchematics->firstChild();
   while(ConDisplays->firstChild())
@@ -809,6 +835,10 @@ void QucsApp::readProjectFiles()
     delete ConOthers->firstChild();
   while(ConOctave->firstChild())
     delete ConOctave->firstChild();
+*/
+
+  //Is this OK instead of the above??
+  initContentListView();
 
   int n;
   // put all files into "Content"-ListView
@@ -820,27 +850,46 @@ void QucsApp::readProjectFiles()
     if(Str == "sch") {
       n = testFile(QucsWorkDir.filePath((*it).ascii()));
       if(n >= 0) {
-        if(n > 0)
-          new Q3ListViewItem(ConSchematics, (*it).ascii(),
-                            QString::number(n)+tr("-port"));
-        else new Q3ListViewItem(ConSchematics, (*it).ascii());
+        if(n > 0) {
+          QTreeWidgetItem *temp = new QTreeWidgetItem(ConSchematics);
+          temp->setText(0, (*it).ascii());
+          temp->setText(1, QString::number(n)+tr("-port"));
+        }
+        else {
+          QTreeWidgetItem *temp = new QTreeWidgetItem(ConSchematics);
+          temp->setText(0, (*it).ascii());
       }
     }
-    else if(Str == "dpl")
-      new Q3ListViewItem(ConDisplays, (*it).ascii());
-    else if(Str == "dat")
-      new Q3ListViewItem(ConDatasets, (*it).ascii());
-    else if((Str == "vhdl") || (Str == "vhd"))
-      new Q3ListViewItem(ConSources, (*it).ascii());
-    else if(Str == "v")
-      new Q3ListViewItem(ConVerilog, (*it).ascii());
-    else if(Str == "va")
-      new Q3ListViewItem(ConVerilogA, (*it).ascii());
-    else if((Str == "m") || (Str == "oct"))
-      new Q3ListViewItem(ConOctave, (*it).ascii());
-    else
-      new Q3ListViewItem(ConOthers, (*it).ascii());
+    else if(Str == "dpl") {
+      QTreeWidgetItem *temp = new QTreeWidgetItem(ConDisplays);
+      temp->setText(0, (*it).ascii());
+    }
+    else if(Str == "dat") {
+      QTreeWidgetItem *temp = new QTreeWidgetItem(ConDatasets);
+      temp->setText(0, (*it).ascii()); 
+    }
+    else if((Str == "vhdl") || (Str == "vhd")) {
+      QTreeWidgetItem *temp = new QTreeWidgetItem(ConSources);
+      temp->setText(0, (*it).ascii());  
+    }
+    else if(Str == "v") {
+      QTreeWidgetItem *temp = new QTreeWidgetItem(ConVerilog);
+      temp->setText(0, (*it).ascii());  
+    }
+    else if(Str == "va") {
+      QTreeWidgetItem *temp = new QTreeWidgetItem(ConVerilogA);
+      temp->setText(0, (*it).ascii());  
+    }
+    else if((Str == "m") || (Str == "oct")) {
+      QTreeWidgetItem *temp = new QTreeWidgetItem(ConOctave);
+      temp->setText(0, (*it).ascii());  
+    }
+    else {
+      QTreeWidgetItem *temp = new QTreeWidgetItem(ConOthers);
+      temp->setText(0, (*it).ascii());  
+    }
   }
+}
 }
 
 // ----------------------------------------------------------
@@ -864,9 +913,11 @@ void QucsApp::openProject(const QString& Path, const QString& Name)
   QucsWorkDir.setPath(ProjDir.path());
   octave->adjustDirectory();
 
-  Content->setColumnText(0,tr("Content of '")+Name+tr("'")); // column text
-  ConSchematics->setOpen(false); // get sure to have it closed
-  ConSchematics->setOpen(true);  // also calls readProjectFiles()
+  QStringList headers;
+  headers << tr("Content of ") + Name << tr("Note");
+  Content->setHeaderLabels(headers);
+
+  readProjectFiles();
 
   TabView->setCurrentPage(1);   // switch to "Content"-Tab
   ProjName = Name;   // remember the name of project
@@ -879,20 +930,18 @@ void QucsApp::openProject(const QString& Path, const QString& Name)
 // Is called when the open project menu is called.
 void QucsApp::slotMenuOpenProject()
 {
-  Q3FileDialog *d = new Q3FileDialog(QucsHomeDir.path());
-  d->setCaption(tr("Choose Project Directory for Opening"));
-  d->setShowHiddenFiles(true);
-  d->setMode(Q3FileDialog::DirectoryOnly);
-  if(d->exec() != QDialog::Accepted) return;
-
-  QString s = d->selectedFile();
+  QString d = QFileDialog::getExistingDirectory(this, tr("Choose Project Directory for Opening"),
+                                                 QucsHomeDir.path(),
+                                                 QFileDialog::ShowDirsOnly
+                                                 | QFileDialog::DontResolveSymlinks);
+  QString s = d;
   if(s.isEmpty()) return;
 
   s = s.left(s.length()-1);   // cut off trailing '/'
   int i = s.findRev('/');
   if(i > 0) s = s.mid(i+1);   // cut out the last subdirectory
   s.remove("_prj");
-  openProject(d->selectedFile(), s);
+  openProject(d, s);
 }
 
 // ----------------------------------------------------------
@@ -929,7 +978,10 @@ void QucsApp::slotMenuCloseProject()
   QucsWorkDir.setPath(QDir::homeDirPath()+QDir::convertSeparators ("/.qucs"));
   octave->adjustDirectory();
 
-  Content->setColumnText(0,tr("Content of")); // column text
+  QStringList headers;
+  headers << tr("Content of") << tr("Note");
+  Content->setHeaderLabels(headers);
+
   initContentListView();
 
   TabView->setCurrentPage(0);   // switch to "Projects"-Tab
@@ -1003,20 +1055,20 @@ bool QucsApp::deleteProject(const QString& Path, const QString& Name)
 // Is called, when "Delete Project" menu is activated.
 void QucsApp::slotMenuDelProject()
 {
-  Q3FileDialog *d = new Q3FileDialog(QucsHomeDir.path());
-  d->setCaption(tr("Choose Project Directory for Deleting"));
-  d->setShowHiddenFiles(true);
-  d->setMode(Q3FileDialog::DirectoryOnly);
-  if(d->exec() != QDialog::Accepted) return;
 
-  QString s = d->selectedFile();
+  QString d = QFileDialog::getExistingDirectory(this, tr("Choose Project Directory for Deleting"),
+                                                 QucsHomeDir.path(),
+                                                 QFileDialog::ShowDirsOnly
+                                                 | QFileDialog::DontResolveSymlinks);
+  QString s = d;
+
   if(s.isEmpty()) return;
 
   s = s.left(s.length()-1);  // cut off trailing '/'
   int i = s.findRev('/');
   if(i > 0) s = s.mid(i+1);  // cut out the last subdirectory
   s = s.left(s.length()-4);  // remove "_prj" from name
-  deleteProject(d->selectedFile(), s);
+  deleteProject(d, s);
   readProjects();   // re-reads all projects and inserts them into the ListBox
 }
 
@@ -1235,6 +1287,7 @@ bool QucsApp::saveAs()
       if(!ProjName.isEmpty()) {
         s = Info.fileName();  // remove path from file name
 	QString ext = Info.extension (false);
+  /*
         if(ext == "sch")
           Content->setSelected(new Q3ListViewItem(ConSchematics, s), true);
         else if(ext == "dpl")
@@ -1251,6 +1304,7 @@ bool QucsApp::saveAs()
           Content->setSelected(new Q3ListViewItem(ConOctave, s), true);
         else
           Content->setSelected(new Q3ListViewItem(ConOthers, s), true);
+*/
       }
   }
 
@@ -1483,8 +1537,11 @@ void QucsApp::updatePortNumber(QucsDoc *currDoc, int No)
     Model = "Sub";
 
     // enter new port number into ListView
-    Q3ListViewItem *p;
-    for(p = ConSchematics->firstChild(); p!=0; p = p->nextSibling()) {
+    // TODO I'm not sure if I do things correctly here -> RECHECK!!!
+    QTreeWidgetItem *p;
+    //for(p = ConSchematics->firstChild(); p!=0; p = p->nextSibling()) {
+    for(int i=0; i<ConSchematics->childCount(); i++) {
+      p = ConSchematics->child(i);
       if(p->text(0) == Name) {
         if(No == 0) p->setText(1,"");
         else p->setText(1,QString::number(No)+tr("-port"));
@@ -1879,7 +1936,9 @@ void QucsApp::slotChangePage(QString& DocName, QString& DataDisplay)
     }
     else {
       if(file.open(QIODevice::ReadWrite)) {  // if document doesn't exist, create
-        new Q3ListViewItem(ConDisplays, DataDisplay); // add new name
+        //TODO RECHECK!! new Q3ListViewItem(ConDisplays, DataDisplay); // add new name
+        QTreeWidgetItem *temp = new QTreeWidgetItem(ConDisplays);
+        temp->setText(0,DataDisplay);
         d->DataDisplay = Info.fileName();
       }
       else {
@@ -1924,7 +1983,7 @@ void QucsApp::slotToPage()
 
 // -------------------------------------------------------------------
 // Is called when a double-click is made in the content ListView.
-void QucsApp::slotOpenContent(Q3ListViewItem *item)
+void QucsApp::slotOpenContent(QTreeWidgetItem *item)
 {
   editText->setHidden(true); // disable text edit of component property
 
@@ -1996,7 +2055,7 @@ void QucsApp::slotOpenContent(Q3ListViewItem *item)
 
 // ---------------------------------------------------------
 // Is called when the mouse is clicked within the Content QListView.
-void QucsApp::slotSelectSubcircuit(Q3ListViewItem *item)
+void QucsApp::slotSelectSubcircuit(QTreeWidgetItem *item)
 {
   editText->setHidden(true); // disable text edit of component property
 
@@ -2052,13 +2111,6 @@ void QucsApp::slotSelectSubcircuit(Q3ListViewItem *item)
   MouseDoubleClickAction = 0;
 }
 
-// ---------------------------------------------------------
-// Is called when one of the Content ListView parents was expanded
-// to show the files. It re-reads all files.
-void QucsApp::slotExpandContentList(Q3ListViewItem*)
-{
-  readProjectFiles();
-}
 
 // ---------------------------------------------------------
 // This function is called if the document type changes, i.e.

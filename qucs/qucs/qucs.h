@@ -19,7 +19,7 @@
 #define QUCS_H
 
 #include <QtGui>
-#include <q3mainwindow.h>
+//#include <q3mainwindow.h>
 #include <QMainWindow>
 #include <qstring.h>
 #include <qdir.h>
@@ -27,7 +27,7 @@
 #include <q3accel.h>
 #include <QLabel>
 #include <Q3PtrList>
-#include <Q3PopupMenu>
+//#include <Q3PopupMenu>
 #include <QMouseEvent>
 #include <QCloseEvent>
 #include <Q3ScrollView>
@@ -46,19 +46,19 @@ class SearchDialog;
 class QLabel;
 class QAction;
 class QPrinter;
-class Q3ToolBar;
+//class Q3ToolBar;
 class QLineEdit;
 class QComboBox;
 class QTabWidget;
-class Q3PopupMenu;
-class Q3ListBox;
-class Q3ListBoxItem;
+//class Q3PopupMenu;
+//class Q3ListBox;
+//class Q3ListBoxItem;
 class Q3ListView;
 class Q3ListViewItem;
-class Q3IconView;
-class Q3IconViewItem;
-class VTabbedDockWidget;
-class VTabWidget;
+//class Q3IconView;
+//class Q3IconViewItem;
+//class VTabbedDockWidget;
+//class VTabWidget;
 class OctaveWindow;
 
 typedef bool (Schematic::*pToggleFunc) ();
@@ -129,7 +129,7 @@ public slots:
   void slot2PortMatching();
 
   // for menu that appears by right click in content ListView
-  void slotShowContentMenu(Q3ListViewItem*, const QPoint&, int);
+  //void slotShowContentMenu(Q3ListViewItem*, const QPoint&, int);
   void slotCMenuOpen();
   void slotCMenuRename();
   void slotCMenuDelete();
@@ -139,9 +139,8 @@ private slots:
   void slotMenuOpenProject();
   void slotOpenProject(QListWidgetItem*);
   void slotMenuCloseProject();
-  void slotSelectSubcircuit(Q3ListViewItem*);
-  void slotExpandContentList(Q3ListViewItem*);
-  void slotOpenContent(Q3ListViewItem*);
+  void slotSelectSubcircuit(QTreeWidgetItem*);
+  void slotOpenContent(QTreeWidgetItem*);
   void slotSetCompView(int);
   void slotProjNewButt();
   void slotProjOpenButt();
@@ -165,7 +164,10 @@ public:
   QListWidget *CompComps;
 
   // menu appearing by right mouse button click on content listview
-  Q3PopupMenu *ContentMenu;
+  QMenu *ContentMenu;
+
+  // corresponding actions
+  QAction *ActionCMenuOpen, *ActionCMenuRename, *ActionCMenuDelete, *ActionCMenuDelGroup;
 
   QAction *fileNew, *textNew, *fileNewDpl, *fileOpen, *fileSave, *fileSaveAs,
           *fileSaveAll, *fileClose, *fileSettings, *filePrint, *fileQuit,
@@ -181,16 +183,18 @@ private:
 // ********* Widgets on the main area **********************************
   //VTabbedDockWidget   *dock;
   QDockWidget *dock;
-  //VTabWidget    *TabView;
   QTabWidget *TabView;
-  //Q3DockWindow   *octDock;
   QDockWidget *octDock;
   OctaveWindow  *octave;
 
   QListWidget      *Projects;
-  Q3ListView     *Content;
-  Q3ListViewItem *ConSchematics, *ConSources, *ConDisplays, *ConDatasets,
+  //Q3ListView     *Content;
+  QTreeWidget *Content;
+  //Q3ListViewItem *ConSchematics, *ConSources, *ConDisplays, *ConDatasets,
+  //              *ConOthers, *ConVerilog, *ConVerilogA, *ConOctave;
+  QTreeWidgetItem *ConSchematics, *ConSources, *ConDisplays, *ConDatasets,
                 *ConOthers, *ConVerilog, *ConVerilogA, *ConOctave;
+
 
   QComboBox     *CompChoose;
 
