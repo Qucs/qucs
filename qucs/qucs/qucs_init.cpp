@@ -19,18 +19,8 @@
 # include <config.h>
 #endif
 #include <QtGui>
-#include <qaction.h>
-#include <q3accel.h>
-#include <qmenubar.h>
-#include <qstatusbar.h>
-#include <qlabel.h>
-#include <qtimer.h>
-#include <qimage.h>
-#include <q3whatsthis.h>
-#include <qmessagebox.h>
-#include <qicon.h>
-//Added by qt3to4:
-#include <Q3PopupMenu>
+
+
 
 #include "main.h"
 #include "qucs.h"
@@ -61,9 +51,6 @@ QAction* Q3Action(QString a, QString c, unsigned int d, QObject* e)
 // initializes all QActions of the application
 void QucsApp::initActions()
 {
-  // to connect more than one key to an action
-  mainAccel = new Q3Accel(this);
-
   activeAction = 0;   // no active action
 
   // note: first argument of QAction() for backward compatibility Qt < 3.2
@@ -273,10 +260,25 @@ void QucsApp::initActions()
   connect(editFindAgain, SIGNAL(activated()), SLOT(slotEditFindAgain()));
 
   // to ease usage with notebooks, backspace can also be used to delete
-  mainAccel->connectItem(mainAccel->insertItem(Qt::Key_Backspace),
-                         editDelete, SLOT(toggle()) );
+  // currently not supported
+  //mainAccel->connectItem(mainAccel->insertItem(Qt::Key_Backspace),
+  //                       editDelete, SLOT(toggle()) );
 
-  // cursor left/right to move marker on a graph
+  // cursor left/right/up/down to move marker on a graph
+  cursorLeft = new QShortcut(QKeySequence(Qt::Key_Left), this);
+  connect(cursorLeft, SIGNAL(activated()), SLOT(slotCursorLeft()));
+
+  cursorRight = new QShortcut(QKeySequence(Qt::Key_Right), this);
+  connect(cursorRight, SIGNAL(activated()), SLOT(slotCursorRight()));
+
+  cursorUp = new QShortcut(QKeySequence(Qt::Key_Up), this);
+  connect(cursorUp, SIGNAL(activated()), SLOT(slotCursorUp()));
+
+  cursorDown = new QShortcut(QKeySequence(Qt::Key_Down), this);
+  connect(cursorDown, SIGNAL(activated()), SLOT(slotCursorDown()));
+
+
+/*
   mainAccel->connectItem(mainAccel->insertItem(Qt::Key_Left),
 			this, SLOT(slotCursorLeft()));
   mainAccel->connectItem(mainAccel->insertItem(Qt::Key_Right),
@@ -287,6 +289,7 @@ void QucsApp::initActions()
 			this, SLOT(slotCursorDown()));
   mainAccel->connectItem(mainAccel->insertItem(Qt::Key_Tab),
 			this, SLOT(slotNextTab()));
+*/
 
   undo = new QAction(QIcon((QucsSettings.BitmapDir + "undo.png")), tr("&Undo"), this);
   undo->setShortcut(Qt::CTRL+Qt::Key_Z);

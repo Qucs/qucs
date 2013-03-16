@@ -20,43 +20,13 @@
 #endif
 #include <QtGui>
 #include <QDebug>
+#include <QtCore>
 #include <limits.h>
 
-#include <qimage.h>
-#include <qsplitter.h>
-#include <q3vbox.h>
-#include <q3hbox.h>
-#include <qlabel.h>
-#include <qmessagebox.h>
-#include <qdir.h>
-#include <qpainter.h>
-#include <qinputdialog.h>
-#include <qapplication.h>
-#include <qclipboard.h>
-#include <qfont.h>
-#include <q3textedit.h>
-#include <qcheckbox.h>
-#include <qaction.h>
-#include <qtabwidget.h>
-#include <qcombobox.h>
-#include <q3iconview.h>
-#include <qpushbutton.h>
-#include <q3listview.h>
-#include <q3listbox.h>
-#include <qprinter.h>
-#include <q3filedialog.h>
-#include <qpixmap.h>
-#include <qtoolbutton.h>
-#include <qstatusbar.h>
-#include <q3toolbar.h>
-#include <qmenubar.h>
+
 #include <q3process.h>
-#include <qlineedit.h>
-#include <qstringlist.h>
-#include <q3dragobject.h>
 #include <q3syntaxhighlighter.h>
 //Added by qt3to4:
-#include <QCloseEvent>
 #include <Q3PtrList>
 
 #include "main.h"
@@ -82,8 +52,8 @@
 #include "dialogs/labeldialog.h"
 #include "dialogs/matchdialog.h"
 #include "dialogs/simmessage.h"
-#include "dialogs/vtabwidget.h"
-#include "dialogs/vtabbeddockwidget.h"
+//#include "dialogs/vtabwidget.h"
+//#include "dialogs/vtabbeddockwidget.h"
 #include "octave_window.h"
 extern const char *empty_xpm[];
 
@@ -180,13 +150,14 @@ QucsApp::QucsApp()
     QString arg = qApp->argv()[z];
     if(*(arg) != '-') {
       // allow uri's: file:/home/linuxuser/Desktop/example.sch
-      if(arg.contains(":/")) {
-        QString f = QDir::convertSeparators(Q3UriDrag::uriToLocalFile(arg));
-        if(f.isEmpty()) f = arg;
-        gotoPage(f);
-      } else {
+      //TODO
+      //if(arg.contains(":/")) {
+        //QString f = QDir::convertSeparators(Q3UriDrag::uriToLocalFile(arg));
+      //  if(f.isEmpty()) f = arg;
+      //  gotoPage(f);
+      //} else {
         gotoPage(arg);
-      }
+      //}
     }
   }
 }
@@ -858,6 +829,7 @@ void QucsApp::readProjectFiles()
         else {
           QTreeWidgetItem *temp = new QTreeWidgetItem(ConSchematics);
           temp->setText(0, (*it).ascii());
+        }
       }
     }
     else if(Str == "dpl") {
@@ -889,7 +861,6 @@ void QucsApp::readProjectFiles()
       temp->setText(0, (*it).ascii());  
     }
   }
-}
 }
 
 // ----------------------------------------------------------
@@ -1164,9 +1135,8 @@ void QucsApp::slotFileOpen()
 
   statusBar()->message(tr("Opening file..."));
 
-  QString s = Q3FileDialog::getOpenFileName(
-	lastDirOpenSave.isEmpty() ? QString(".") : lastDirOpenSave,
-	QucsFileFilter, this, 0, tr("Enter a Schematic Name"));
+  QString s = QFileDialog::getOpenFileName(this, tr("Enter a Schematic Name"), 
+    lastDirOpenSave.isEmpty() ? QString(".") : lastDirOpenSave, QucsFileFilter);
 
   if(s.isEmpty())
     statusBar()->message(tr("Opening aborted"), 2000);
@@ -1245,8 +1215,8 @@ bool QucsApp::saveAs()
 	       tr("Any File")+" (*)";
     else
       Filter = QucsFileFilter;
-    s = Q3FileDialog::getSaveFileName(s, Filter,
-                     this, "", tr("Enter a Document Name"));
+      s = QFileDialog::getSaveFileName(this, tr("Enter a Document Name"),
+        QucsWorkDir.absPath(), Filter);
     if(s.isEmpty())  return false;
     Info.setFile(s);               // try to guess the best extension ...
     ext = Info.extension(false);
@@ -1439,7 +1409,7 @@ void QucsApp::slotChangeView(QWidget *w)
     TextDoc *d = (TextDoc*)w;
     Doc = (QucsDoc*)d;
     // update menu entries, etc. if neccesary
-    if(mainAccel->isEnabled())
+    if(cursorLeft->isEnabled())
       switchSchematicDoc (false);
   }
   // for schematic documents
@@ -1447,7 +1417,7 @@ void QucsApp::slotChangeView(QWidget *w)
     Schematic *d = (Schematic*)w;
     Doc = (QucsDoc*)d;
     // already in schematic?
-    if(mainAccel->isEnabled()) {
+    if(cursorLeft->isEnabled()) {
       // which mode: schematic or symbol editor ?
       if((CompChoose->count() > 1) == d->symbolMode)
         changeSchematicSymbolMode (d);
@@ -2117,7 +2087,11 @@ void QucsApp::slotSelectSubcircuit(QTreeWidgetItem *item)
 // from schematic to text document or vice versa.
 void QucsApp::switchSchematicDoc (bool SchematicMode)
 {
-  mainAccel->setEnabled (SchematicMode);
+  // switch our scroll key actions on/off according to SchematicMode
+  cursorLeft->setEnabled(SchematicMode);
+  cursorRight->setEnabled(SchematicMode);
+  cursorUp->setEnabled(SchematicMode);
+  cursorDown->setEnabled(SchematicMode);
 
   // text document
   if (!SchematicMode) {
