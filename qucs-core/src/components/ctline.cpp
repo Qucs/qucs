@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id$
+ * $Id: ctline.cpp 1876 2013-03-11 08:00:11Z fransschreuder $
  *
  */
 
