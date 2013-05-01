@@ -60,7 +60,7 @@ if [ -r config.status ]; then
   CMD=`awk '/^#.*\/?configure .*/ { $1 = ""; print; exit }' < config.status`
   if test "x$CMD" = "x" ; then
     # Autoconf 2.5x
-    eval set -- ./configure `grep "with options" < config.status | \
+    eval set -- ./configure  `grep "with options" < config.status | \
          sed 's/^[^"]*["]\(.*\)\\\"$/\1/'` '"$@"'
   else
     set -- $CMD "$@"
@@ -68,5 +68,5 @@ if [ -r config.status ]; then
 else
   set -- ./configure --enable-maintainer-mode "$@"
 fi
-echo Running `for i; do echo "'$i'"; done` ...
-"$@"
+echo Running `for i; do echo "'$i'"$@; done` ...
+"$@" --with-mkadms=internal
