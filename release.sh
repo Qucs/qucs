@@ -17,7 +17,7 @@ then
 fi
 
 echo exporting git tree...
-WINDIR=$PWD/qucs-win32-bin
+
 git clone ./ release/
 mv release/qucs-core release/qucs/
 mv release/qucs release/qucs-$RELEASE
@@ -31,24 +31,35 @@ tar -zxvf ASCO-0.4.8.tar.gz
 rm ASCO-0.4.8.tar.gz
 mv ASCO-0.4.8 asco
 cd asco
+touch NEWS
 tar -zxvf Autotools.tar.gz
 ./autogen.sh
+automake --add-missing
+aclocal
 cd ..
 
-#include the freehdl archive
-wget http://freehdl.seul.org/~enaroska/freehdl-0.0.7.tar.gz
-tar -zxvf freehdl-0.0.7.tar.gz
-rm freehdl-0.0.7.tar.gz
-mv freehdl-0.0.7 freehdl
+###include the freehdl archive
+#wget http://freehdl.seul.org/~enaroska/freehdl-0.0.7.tar.gz
+#tar -zxvf freehdl-0.0.7.tar.gz
+#rm freehdl-0.0.7.tar.gz
+#mv freehdl-0.0.7 freehdl
+
+#include verilog in the archive
+#wget ftp://icarus.com/pub/eda/verilog/v0.9/verilog-0.9.6.tar.gz
+#tar -zxvf verilog-0.9.6.tar.gz
+#rm verilog-0.9.6.tar.gz
+#mv verilog-0.9.6 verilog
+
 
 sed -i 's/# AC_CONFIG_SUBDIRS(qucs-core)/AC_CONFIG_SUBDIRS(qucs-core)/g' configure.ac
 sed -i 's/# RELEASEDIRS="qucs-core"/RELEASEDIRS="qucs-core"/g' configure.ac
-sed -i 's/# AC_CONFIG_SUBDIRS(freehdl)/AC_CONFIG_SUBDIRS(freehdl)/g' configure.ac
-sed -i 's/# RELEASEDIRS="$RELEASEDIRS freehdl"/RELEASEDIRS="$RELEASEDIRS freehdl"/g' configure.ac
+#sed -i 's/# AC_CONFIG_SUBDIRS(freehdl)/AC_CONFIG_SUBDIRS(freehdl)/g' configure.ac
+#sed -i 's/# RELEASEDIRS="$RELEASEDIRS freehdl"/RELEASEDIRS="$RELEASEDIRS freehdl"/g' configure.ac
+#sed -i 's/# AC_CONFIG_SUBDIRS(verilog)/AC_CONFIG_SUBDIRS(verilog)/g' configure.ac
+#sed -i 's/# RELEASEDIRS="$RELEASEDIRS verilog"/RELEASEDIRS="$RELEASEDIRS verilog"/g' configure.ac
 sed -i 's/# AC_CONFIG_SUBDIRS(asco)/AC_CONFIG_SUBDIRS(asco)/g' configure.ac
 sed -i 's/# RELEASEDIRS="$RELEASEDIRS asco"/RELEASEDIRS="$RELEASEDIRS asco"/g' configure.ac
 
-exit
 ./autogen.sh
 make distclean
 rm -rf autom4te.cache
@@ -83,8 +94,17 @@ done
 
 echo "Building mingw32"
 make clean
+INNOSETUP="/home/franss/.wine/drive_c/Program Files (x86)/Inno Setup 5/Compil32.exe"
+WINDIR=$PWD/release/qucs-win32-bin
 QTDIR=~/.wine/drive_c/Qt/4.8.4/ ./mingw-configure --prefix=$WINDIR
 sed -i 's/-fno-rtti/ /g' qucs-filter-v2/Makefile
+cp ../../qucs/qucs/qucsdigi.bat qucs #is deleted by the linux build for some reason
 make
 make install
+
+
+cp contrib/innosetup/gpl.rtf $WINDIR
+cp -r contrib/innosetup/misc $WINDIR
+wine "$INNOSETUP" /cc contrib/innosetup/qucs.iss
+mv contrib/innosetup/Output/qucs-0.0.17-setup.exe ../qucs-$RELEASE.exe
 
