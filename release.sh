@@ -102,9 +102,24 @@ cp ../../qucs/qucs/qucsdigi.bat qucs #is deleted by the linux build for some rea
 make
 make install
 
-
 cp contrib/innosetup/gpl.rtf $WINDIR
 cp -r contrib/innosetup/misc $WINDIR
+wget http://bleyer.org/icarus/iverilog-0.9.6_setup.exe
+mv iverilog-0.9.6_setup.exe $WINDIR
+https://downloads.sourceforge.net/project/qucs/qucs-binary/0.0.16/freehdl-0.0.8-setup.exe
+mv freehdl-0.0.8-setup.exe $WINDIR
+
 wine "$INNOSETUP" /cc contrib/innosetup/qucs.iss
 mv contrib/innosetup/Output/qucs-0.0.17-setup.exe ../qucs-$RELEASE.exe
+
+
+
+
+
+
+
+
+
+
+
 
