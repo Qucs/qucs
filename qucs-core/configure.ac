@@ -162,15 +162,20 @@ if test $USE_MAINTAINER_MODE = yes; then
   dnl generating a line of the form ADMSXML = @ADMSXML@ in Makefile.in. 
   dnl We need to do that assignment conditionally.
   AM_SUBST_NOTMAKE([ADMSXML])
-  dnl We set up an automake conditional because we need to do 
-  dnl different stuff for internal/external adms inside Makefile.am
-  AM_CONDITIONAL([USE_INTERNAL_ADMS],
-    [test "$with_mkadms" = internal -o "$ADMSXML" = no])
-  dnl if we are using internal adms we need to add it to the
-  dnl subdirectories autoconf will recurse into as it has its
-  dnl own configure.ac and Makefile.am
-  AM_COND_IF([USE_INTERNAL_ADMS], [AC_CONFIG_SUBDIRS([adms])])
+else
+  dnl not maintainer mode, set with_mkadms to external which will prevent it
+  dnl being built
+  with_mkadms = external
 fi
+
+dnl We set up an automake conditional because we need to do 
+dnl different stuff for internal/external adms inside Makefile.am
+AM_CONDITIONAL([USE_INTERNAL_ADMS],
+  [test "$with_mkadms" = internal -o "$ADMSXML" = no])
+dnl if we are using internal adms we need to add it to the
+dnl subdirectories autoconf will recurse into as it has its
+dnl own configure.ac and Makefile.am
+AM_COND_IF([USE_INTERNAL_ADMS], [AC_CONFIG_SUBDIRS([adms])])
 
 dnl Checks for libraries.
 AC_CHECK_LIB(m, sin)
