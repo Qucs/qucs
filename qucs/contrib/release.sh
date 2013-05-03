@@ -1,5 +1,5 @@
 #!/bin/bash
-
+cd ../..
 
 if [ $# -ne 0 ]
 then
