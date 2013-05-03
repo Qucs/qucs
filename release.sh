@@ -95,7 +95,9 @@ done
 echo "Building mingw32"
 make clean
 INNOSETUP="/home/franss/.wine/drive_c/Program Files (x86)/Inno Setup 5/Compil32.exe"
-WINDIR=$PWD/release/qucs-win32-bin
+cd ..
+WINDIR=$PWD/qucs-win32-bin
+cd qucs-$RELEASE
 QTDIR=~/.wine/drive_c/Qt/4.8.4/ ./mingw-configure --prefix=$WINDIR
 sed -i 's/-fno-rtti/ /g' qucs-filter-v2/Makefile
 cp ../../qucs/qucs/qucsdigi.bat qucs #is deleted by the linux build for some reason
@@ -106,8 +108,18 @@ cp contrib/innosetup/gpl.rtf $WINDIR
 cp -r contrib/innosetup/misc $WINDIR
 wget http://bleyer.org/icarus/iverilog-0.9.6_setup.exe
 mv iverilog-0.9.6_setup.exe $WINDIR
-https://downloads.sourceforge.net/project/qucs/qucs-binary/0.0.16/freehdl-0.0.8-setup.exe
+wget https://downloads.sourceforge.net/project/qucs/qucs-binary/0.0.16/freehdl-0.0.8-setup.exe
 mv freehdl-0.0.8-setup.exe $WINDIR
+wget https://downloads.sourceforge.net/project/qucs/qucs-binary/0.0.15/mingw32-g%2B%2B-0.0.2-setup.exe
+mv mingw32-g++-0.0.2-setup.exe $WINDIR
+
+cp $QTDIR/bin/mingwm10.dll $WINDIR/bin
+cp $QTDIR/bin/Qt3Support4.dll  $WINDIR/bin
+cp $QTDIR/bin/QtCore4.dll  $WINDIR/bin
+cp $QTDIR/bin/QtGui4.dll  $WINDIR/bin
+cp $QTDIR/bin/QtNetwork4.dll  $WINDIR/bin
+cp $QTDIR/bin/QtXml4.dll  $WINDIR/bin
+cp /usr/lib/gcc/i586-mingw32msvc/4.2.1-sjlj/*.dll $WINDIR/bin
 
 wine "$INNOSETUP" /cc contrib/innosetup/qucs.iss
 mv contrib/innosetup/Output/qucs-0.0.17-setup.exe ../qucs-$RELEASE.exe
