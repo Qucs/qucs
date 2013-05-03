@@ -87,7 +87,7 @@ COUNT=-0 #last version number in repository
 for DIST in ${DISTS} ; do
 	COUNT=$(($COUNT-1))
 	dch -D $DIST -m -v $RELEASE$COUNT -b
-	debuild -S #-k8AD5905E
+	debuild -S -k8AD5905E
 	./configure 
 done
 
@@ -98,7 +98,8 @@ INNOSETUP="/home/franss/.wine/drive_c/Program Files (x86)/Inno Setup 5/Compil32.
 cd ..
 WINDIR=$PWD/qucs-win32-bin
 cd qucs-$RELEASE
-QTDIR=~/.wine/drive_c/Qt/4.8.4/ ./mingw-configure --prefix=$WINDIR
+export QTDIR=~/.wine/drive_c/Qt/4.8.4/ 
+./mingw-configure --prefix=$WINDIR
 sed -i 's/-fno-rtti/ /g' qucs-filter-v2/Makefile
 cp ../../qucs/qucs/qucsdigi.bat qucs #is deleted by the linux build for some reason
 make
