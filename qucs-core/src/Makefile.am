@@ -27,11 +27,11 @@ EXTRA_DIST = parse_netlist.y scan_netlist.l scan_dataset.l parse_dataset.y \
 	gperfapphash.cpp parse_zvr.y scan_zvr.l parse_mdl.y scan_mdl.l \
 	parse_csv.y scan_csv.l
 
-SUBDIRS = math components . converter
-
 if QUCSLIB
+SUBDIRS = math components m-interface . converter
 noinst_LIBRARIES = libqucsator.a libqucsatorfull.a
 else
+SUBDIRS = math components . converter
 noinst_LIBRARIES = libqucsator.a
 endif
 
@@ -85,6 +85,7 @@ libqucsator_a_SOURCES = dataset.cpp check_dataset.cpp parse_dataset.cpp      \
 
 if QUCSLIB
 libqucsatorfull_a_LIBADD = libqucsator.a		      \
+	m-interface/libmint.a           \
 	math/libqucsmath.a	              \
 	components/libcomponent.a	      \
 	components/microstrip/libmicrostrip.a \
