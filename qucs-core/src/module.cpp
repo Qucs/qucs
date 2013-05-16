@@ -237,6 +237,7 @@ void module::registerModules (void) {
   REGISTER_CIRCUIT (potentiometer);
   REGISTER_CIRCUIT (MESFET);
   REGISTER_CIRCUIT (EKV26MOS);
+  REGISTER_CIRCUIT (bsim3v34nMOS);
   REGISTER_CIRCUIT (hicumL0V1p2);
   REGISTER_CIRCUIT (hicumL0V1p2g);
   REGISTER_CIRCUIT (hicumL0V1p3);
