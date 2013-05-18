@@ -2,6 +2,7 @@
  * module.cpp - module class implementation
  *
  * Copyright (C) 2008, 2009, 2010 Stefan Jahn <stefan@lkcc.org>
+ * New models added Mike Brinson 2013 mbrin72043@yahoo.co.uk
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -238,6 +239,7 @@ void module::registerModules (void) {
   REGISTER_CIRCUIT (MESFET);
   REGISTER_CIRCUIT (EKV26MOS);
   REGISTER_CIRCUIT (bsim3v34nMOS);
+  REGISTER_CIRCUIT (bsim3v34pMOS);
   REGISTER_CIRCUIT (hicumL0V1p2);
   REGISTER_CIRCUIT (hicumL0V1p2g);
   REGISTER_CIRCUIT (hicumL0V1p3);
