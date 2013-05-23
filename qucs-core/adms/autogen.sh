@@ -32,7 +32,11 @@ echo -n "Creating config.h.in... "
 autoheader
 echo "done."
 echo -n "Libtoolizing... "
-${LIBTOOLIZE:-libtoolize}
+case `uname` in
+  *Darwin*) LIBTOOLIZE=glibtoolize ;;
+  *)        LIBTOOLIZE=libtoolize ;;
+esac
+$LIBTOOLIZE
 echo "done."
 echo -n "Creating Makefile.in(s)... "
 ${AUTOMAKE:-automake}
