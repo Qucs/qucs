@@ -27,10 +27,7 @@
 
 #include "real.h"
 
-#ifndef HAVE_COMPLEX
-#include "cmplx.h"
-typedef cmplx nr_complex_t;
-#elif defined HAVE_TR1_COMPLEX
+#if defined HAVE_TR1_COMPLEX
 #include <tr1/complex>
 using namespace std;
 //using namespace std::tr1;
@@ -46,8 +43,14 @@ typedef std::complex<nr_double_t> nr_complex_t;
 #undef log2
 #endif
 
-// create a complex object given rectangle coordinates
-nr_complex_t rect (const nr_double_t x, const nr_double_t y = 0.0);
+/*!\brief Construct a complex number using rectangular notation
+   \param[in] x Real part
+   \param[in] y Imagninary part
+   \return complex number in rectangular form
+*/
+inline nr_complex_t rect (const nr_double_t x, const nr_double_t y = 0.0) {
+  return nr_complex_t (x, y);
+}
 
 // overloaded math functions
 #ifndef HAVE_CXX_COMPLEX_ACOS
@@ -102,12 +105,6 @@ nr_complex_t    cosh (const nr_complex_t);
 nr_complex_t     exp (const nr_complex_t);
 #endif
 
-#ifndef HAVE_CXX_COMPLEX_FMOD
-nr_complex_t    fmod (const nr_complex_t x, const nr_complex_t y);
-nr_complex_t    fmod (const nr_complex_t x, const nr_double_t y);
-nr_complex_t    fmod (const nr_double_t x, const nr_complex_t y);
-#endif
-
 #ifndef HAVE_CXX_COMPLEX_LOG 
 nr_complex_t     log (const nr_complex_t);
 #endif 
@@ -121,15 +118,38 @@ nr_complex_t    log2 (const nr_complex_t);
 #endif
 
 #ifndef HAVE_CXX_COMPLEX_NORM
-nr_double_t     norm (const nr_complex_t);
+/*!\brief Compute euclidian norm of complex number
+
+   Compute \f$(\Re\mathrm{e}\;z )^2+ (\Im\mathrm{m}\;z)^2=|z|^2\f$
+   \param[in] z Complex number
+   \return Euclidian norm of z
+*/
+inline nr_double_t norm (const nr_complex_t z) {
+  nr_double_t r = real (z);
+  nr_double_t i = imag (z);
+  return r * r + i * i;
+}
 #endif
 
 #ifndef HAVE_CXX_COMPLEX_POLAR
-nr_complex_t   polar (const nr_double_t mag, const nr_double_t ang = 0.0);
+/*!\brief Construct a complex number using polar notation
+   \param[in] mag Magnitude
+   \param[in] ang Angle
+   \return complex number in rectangular form
+*/
+inline nr_complex_t polar (const nr_double_t mag, const nr_double_t ang = 0.0) {
+  return rect (mag * cos (ang), mag * sin (ang));
+}
 #endif
 
 #ifndef HAVE_CXX_COMPLEX_POLAR_COMPLEX
-nr_complex_t   polar (const nr_complex_t a, const nr_complex_t p);
+/*!\brief Construct a complex number using polar notation
+   \param[in] mag Magnitude
+   \param[in] ang Angle
+   \return complex number in rectangular form
+   \todo Why not inline
+*/
+nr_complex_t   polar (const nr_complex_t a, const nr_complex_t p = 0.0);
 nr_complex_t   polar (const nr_double_t a, const nr_complex_t p);
 nr_complex_t   polar (const nr_complex_t a, const nr_double_t p = 0.0);
 #endif
@@ -161,7 +181,16 @@ nr_complex_t     tanh (const nr_complex_t);
 #endif
 
 // extra math functions
-nr_double_t       dB (const nr_complex_t);
+/*!\brief Magnitude in dB
+
+   Compute \f$10\log_{10} |z|^2=20\log_{10} |z|\f$
+   \param[in] z complex number
+   \return Magnitude in dB
+*/
+inline nr_double_t dB (const nr_complex_t z) {
+  return 10.0 * log10 (norm (z));
+}
+
 nr_complex_t  limexp (const nr_complex_t);
 nr_complex_t     cot (const nr_complex_t);
 nr_complex_t    acot (const nr_complex_t);
@@ -174,16 +203,125 @@ nr_complex_t    ytor (const nr_complex_t, const nr_complex_t zref = 50.0);
 nr_complex_t    rtoy (const nr_complex_t, const nr_complex_t zref = 50.0);
 nr_complex_t  signum (const nr_complex_t);
 nr_complex_t    sign (const nr_complex_t);
-nr_complex_t    sinc (const nr_complex_t);
+/*!\brief Cardinal sinus 
+   
+   Compute \f$\mathrm{sinc}\;z=\frac{\sin z}{z}\f$
+   \param[in] z complex number
+   \return cardianal sinus of z
+*/
+inline nr_complex_t    sinc (const nr_complex_t z) {
+  if (real(z) == 0 && imag(z)) return 1;
+  return sin (z) / z;
+}
 nr_double_t   xhypot (const nr_complex_t, const nr_complex_t);
 nr_double_t   xhypot (const nr_double_t, const nr_complex_t);
 nr_double_t   xhypot (const nr_complex_t, const nr_double_t);
-nr_complex_t   floor (const nr_complex_t);
-nr_complex_t    ceil (const nr_complex_t);
-nr_complex_t     fix (const nr_complex_t);
-nr_complex_t   trunc (const nr_complex_t);
-nr_complex_t   round (const nr_complex_t);
-nr_complex_t     sqr (const nr_complex_t);
+
+#ifndef HAVE_CXX_COMPLEX_FLOOR 
+/*!\brief Complex floor 
+
+    floor is the largest integral value not greater than argument
+    Apply floor to real and imaginary part 
+    \param[in] z complex number
+    \return floored complex number
+*/
+inline nr_complex_t   floor (const nr_complex_t z) {
+  return rect (floor (real (z)), floor (imag (z)));
+}
+#endif
+
+/*!\brief Complex ceil
+    Ceil is the smallest integral value not less than argument
+    Apply ceil to real and imaginary part 
+    \param[in] z complex number
+    \return ceilled complex number
+*/
+inline nr_complex_t ceil (const nr_complex_t z) {
+  return rect (ceil (real (z)), ceil (imag (z)));
+}
+/*!\brief Complex fix
+    
+    Apply fix to real and imaginary part 
+    \param[in] z complex number
+    \return fixed complex number
+    \todo why not using real fix
+*/
+inline nr_complex_t fix (const nr_complex_t z) {
+  nr_double_t x = real (z);
+  nr_double_t y = imag (z);
+  x = (x > 0) ? floor (x) : ceil (x);
+  y = (y > 0) ? floor (y) : ceil (y);
+  return rect (x, y);
+}
+/*!\brief Complex round
+    round is the nearest integral value 
+    Apply round to real and imaginary part 
+    \param[in] z complex number
+    \return rounded complex number
+*/
+inline nr_complex_t round (const nr_complex_t z) {
+  return rect (round (real (z)), round (imag (z)));
+}
+
+/*!\brief Complex trunc
+    
+    Apply round to integer, towards zero to real and imaginary part 
+    \param[in] z complex number
+    \return rounded complex number
+*/
+inline nr_complex_t trunc (const nr_complex_t z) {
+  return rect (trunc (real (z)), trunc (imag (z)));
+}
+
+#ifndef HAVE_CXX_COMPLEX_FMOD
+/*!\brief Complex fmod
+    Apply fmod to the complex z
+    \param[in] x complex number (dividant)
+    \param[in] y complex number (divisor)
+    \return return \f$x - n * y\f$ where n is the quotient of \f$x / y\f$, 
+    rounded towards zero to an integer.
+*/
+inline nr_complex_t    fmod (const nr_complex_t x, const nr_complex_t y) {
+  nr_complex_t n = floor (x / y);
+  return x - n * y;
+}
+
+/*!\brief Complex fmod (double version)
+    Apply fmod to the complex z
+    \param[in] x complex number (dividant)
+    \param[in] y double number (divisor)
+    \return return \f$x - n * y\f$ where n is the quotient of \f$x / y\f$, 
+    rounded towards zero to an integer.
+*/
+inline nr_complex_t    fmod (const nr_complex_t x, const nr_double_t y) {
+  nr_complex_t n = floor (x / y);
+  return x - n * y;
+}
+
+/*!\brief Complex fmod (double version)
+    Apply fmod to the complex z
+    \param[in] x double number (dividant)
+    \param[in] y complex number (divisor)
+    \return return \f$x - n * y\f$ where n is the quotient of \f$x / y\f$, 
+    rounded towards zero to an integer.
+*/
+inline nr_complex_t  fmod (const nr_double_t x, const nr_complex_t y) {
+  nr_complex_t n = floor (x / y);
+  return x - n * y;
+}
+#endif
+
+/*!\brief Square of complex number
+    
+    \param[in] z complex number
+    \return squared complex number
+*/
+inline nr_complex_t sqr (const nr_complex_t z) {
+  nr_double_t r = real (z);
+  nr_double_t i = imag (z);
+  return rect (r * r - i * i, 2 * r * i);
+}
+
 nr_complex_t    step (const nr_complex_t);
 nr_complex_t      jn (const int, const nr_complex_t);
 nr_complex_t      yn (const int, const nr_complex_t);

@@ -40,43 +40,7 @@
 
 using namespace fspecial;
 
-/*!\brief Construct a complex number using rectangular notation
-   \param[in] x Real part
-   \param[in] y Imagninary part
-   \return complex number in rectangular form
-   \todo Why not inline?
-   \todo Move before polar
-*/
-nr_complex_t rect (const nr_double_t x, const nr_double_t y) {
-  return nr_complex_t (x, y);
-}
 
-#ifndef HAVE_CXX_COMPLEX_NORM
-/*!\brief Compute euclidian norm of complex number
-
-   Compute \f$(\Re\mathrm{e}\;z )^2+ (\Im\mathrm{m}\;z)^2=|z|^2\f$
-   \param[in] z Complex number
-   \return Euclidian norm of z
-   \todo Why not inline
-*/
-nr_double_t norm (const nr_complex_t z) {
-  nr_double_t r = real (z);
-  nr_double_t i = imag (z);
-  return r * r + i * i;
-}
-#endif
-
-#ifndef HAVE_CXX_COMPLEX_POLAR
-/*!\brief Construct a complex number using polar notation
-   \param[in] mag Magnitude
-   \param[in] ang Angle
-   \return complex number in rectangular form
-   \todo Why not inline
-*/
-nr_complex_t polar (const nr_double_t mag, const nr_double_t ang) {
-  return rect (mag * cos (ang), mag * sin (ang));
-}
-#endif
 
 #ifndef HAVE_CXX_COMPLEX_POLAR_COMPLEX
 /*!\brief Extension of polar construction to complex
@@ -445,16 +409,6 @@ nr_complex_t acoth (const nr_complex_t z) {
   return 0.5 * log (2.0 / (z - 1.0) + 1.0);
 }
 
-/*!\brief Magnitude in dB
-
-   Compute \f$10\log_{10} |z|^2=20\log_{10} |z|\f$
-   \param[in] z complex number
-   \return Magnitude in dB
-   \todo Why not inline?
-*/
-nr_double_t dB (const nr_complex_t z) {
-  return 10.0 * log10 (norm (z));
-}
 
 /*!\brief Converts impedance to reflexion coefficient
 
@@ -493,61 +447,6 @@ nr_complex_t rtoy (const nr_complex_t r, nr_complex_t zref) {
   return (1.0 - r) / (1.0 + r) / zref;
 }
 
-#ifndef HAVE_CXX_COMPLEX_FLOOR 
-/*!\brief Complex floor 
-
-    floor is the largest integral value not greater than argument
-    Apply floor to real and imaginary part 
-    \param[in] z complex number
-    \return floored complex number
-    \todo Why not inline?
-    \todo Move near ceil
-*/
-nr_complex_t floor (const nr_complex_t z) {
-  return rect (floor (real (z)), floor (imag (z)));
-}
-#endif
-
-#ifndef HAVE_CXX_COMPLEX_FMOD
-/*!\brief Complex fmod
-    Apply fmod to the complex z
-    \param[in] x complex number (dividant)
-    \param[in] y complex number (divisor)
-    \return return \f$x - n * y\f$ where n is the quotient of \f$x / y\f$, 
-    rounded towards zero to an integer.
-    \todo Why not inline?
-*/
-nr_complex_t fmod (const nr_complex_t x, const nr_complex_t y) {
-  nr_complex_t n = floor (x / y);
-  return x - n * y;
-}
-
-/*!\brief Complex fmod (double version)
-    Apply fmod to the complex z
-    \param[in] x complex number (dividant)
-    \param[in] y double number (divisor)
-    \return return \f$x - n * y\f$ where n is the quotient of \f$x / y\f$, 
-    rounded towards zero to an integer.
-    \todo Why not inline?
-*/
-nr_complex_t fmod (const nr_complex_t x, const nr_double_t y) {
-  nr_complex_t n = floor (x / y);
-  return x - n * y;
-}
-
-/*!\brief Complex fmod (double version)
-    Apply fmod to the complex z
-    \param[in] x double number (dividant)
-    \param[in] y complex number (divisor)
-    \return return \f$x - n * y\f$ where n is the quotient of \f$x / y\f$, 
-    rounded towards zero to an integer.
-    \todo Why not inline?
-*/
-nr_complex_t fmod (const nr_double_t x, const nr_complex_t y) {
-  nr_complex_t n = floor (x / y);
-  return x - n * y;
-}
-#endif
 
 /*!\brief complex signum function 
    
@@ -617,78 +516,10 @@ nr_double_t xhypot (const nr_complex_t a, const nr_double_t b) {
   return xhypot (a, nr_complex_t (b));
 }
 
-/*!\brief Cardinal sinus 
-   
-   Compute \f$\mathrm{sinc}\;z=\frac{\sin z}{z}\f$
-   \param[in] z complex number
-   \return cardianal sinus of z
-   \todo Why not inline
-*/
-nr_complex_t sinc (const nr_complex_t z) {
-  if (z == 0) return 1;
-  return sin (z) / z;
-}
 
-/*!\brief Complex ceil
-    Ceil is the smallest integral value not less than argument
-    Apply ceil to real and imaginary part 
-    \param[in] z complex number
-    \return ceilled complex number
-    \todo Why not inline?
-*/
-nr_complex_t ceil (const nr_complex_t z) {
-  return rect (ceil (real (z)), ceil (imag (z)));
-}
 
-/*!\brief Complex ceil
-    
-    Apply fix to real and imaginary part 
-    \param[in] z complex number
-    \return fixed complex number
-    \todo Why not inline?
-    \todo why not using real fix
-*/
-nr_complex_t fix (const nr_complex_t z) {
-  nr_double_t x = real (z);
-  nr_double_t y = imag (z);
-  x = (x > 0) ? floor (x) : ceil (x);
-  y = (y > 0) ? floor (y) : ceil (y);
-  return rect (x, y);
-}
 
-/*!\brief Complex round
-    round is the nearest integral value 
-    Apply round to real and imaginary part 
-    \param[in] z complex number
-    \return rounded complex number
-    \todo Why not inline?
-*/
-nr_complex_t round (const nr_complex_t z) {
-  return rect (round (real (z)), round (imag (z)));
-}
 
-/*!\brief Complex trunc
-    
-    Apply round to integer, towards zero to real and imaginary part 
-    \param[in] z complex number
-    \return rounded complex number
-    \todo Why not inline?
-*/
-nr_complex_t trunc (const nr_complex_t z) {
-  return rect (trunc (real (z)), trunc (imag (z)));
-}
-
-/*!\brief Square of complex number
-    
-    \param[in] z complex number
-    \return squared complex number
-    \todo Why not inline?
-*/
-nr_complex_t sqr (const nr_complex_t z) {
-  nr_double_t r = real (z);
-  nr_double_t i = imag (z);
-  return rect (r * r - i * i, 2 * r * i);
-}
 
 /*!\brief Heaviside step function for complex number
    
