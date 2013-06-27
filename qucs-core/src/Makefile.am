@@ -27,17 +27,17 @@ EXTRA_DIST = parse_netlist.y scan_netlist.l scan_dataset.l parse_dataset.y \
 	gperfapphash.cpp parse_zvr.y scan_zvr.l parse_mdl.y scan_mdl.l \
 	parse_csv.y scan_csv.l
 
-if QUCSLIB
-SUBDIRS = math components m-interface . converter
-noinst_LIBRARIES = libqucsator.a libqucsatorfull.a
-else
-SUBDIRS = math components . converter
-noinst_LIBRARIES = libqucsator.a
-endif
+#if QUCSLIB
+SUBDIRS = math components interface . converter
+#noinst_LIBRARIES = libqucsator.a libqucsatorfull.a
+#else
+#SUBDIRS = math components . converter
+#noinst_LIBRARIES = libqucsator.a
+#endif
 
 bin_PROGRAMS = qucsator
 
-INCLUDES = -I$(top_srcdir)/src/math -I$(top_srcdir)/src/components
+INCLUDES = -I$(top_srcdir)/src/math -I$(top_srcdir)/src/components -I$(top_srcdir)/src/interface
 
 qucsator_LDADD = libqucsator.a		      \
 	math/libqucsmath.a	              \
@@ -45,7 +45,8 @@ qucsator_LDADD = libqucsator.a		      \
 	components/microstrip/libmicrostrip.a \
 	components/devices/libdevices.a	      \
 	components/digital/libdigital.a       \
-	components/verilog/libverilog.a
+	components/verilog/libverilog.a \
+	interface/libmint.a
 
 qucsator_SOURCES = ucs.cpp circuit.cpp check_netlist.cpp operatingpoint.cpp  \
 	parse_netlist.cpp scan_netlist.cpp node.cpp net.cpp input.cpp        \
@@ -84,14 +85,14 @@ libqucsator_a_SOURCES = dataset.cpp check_dataset.cpp parse_dataset.cpp      \
 	parse_csv.cpp scan_csv.cpp
 
 if QUCSLIB
-libqucsatorfull_a_LIBADD = libqucsator.a		      \
-	m-interface/libmint.a           \
+libqucsatorfull_a_LIBADD = libqucsator.a	\
 	math/libqucsmath.a	              \
 	components/libcomponent.a	      \
 	components/microstrip/libmicrostrip.a \
 	components/devices/libdevices.a	      \
 	components/digital/libdigital.a       \
-	components/verilog/libverilog.a
+	components/verilog/libverilog.a \
+	interface/libmint.a
 
 libqucsatorfull_a_SOURCES = circuit.cpp check_netlist.cpp operatingpoint.cpp  \
 	parse_netlist.cpp scan_netlist.cpp node.cpp net.cpp input.cpp        \
