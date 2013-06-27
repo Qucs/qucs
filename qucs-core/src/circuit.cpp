@@ -7,16 +7,16 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This software is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this package; see the file COPYING.  If not, write to
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
- * Boston, MA 02110-1301, USA.  
+ * Boston, MA 02110-1301, USA.
  *
  * $Id$
  *
@@ -317,7 +317,7 @@ void circuit::setSubcircuit (char * n) {
 void circuit::print (void) {
   for (int i = 0; i < getSize (); i++) {
     for (int j = 0; j < getSize (); j++) {
-      logprint (LOG_STATUS, "%s S%d%d(%+.3e,%+.3e) ", getName (), i, j, 
+      logprint (LOG_STATUS, "%s S%d%d(%+.3e,%+.3e) ", getName (), i, j,
 		(double) real (getS (i, j)), (double) imag (getS (i, j)));
     }
     logprint (LOG_STATUS, "\n");
@@ -327,7 +327,7 @@ void circuit::print (void) {
 
 /* Returns the current substrate of the circuit object.  Used for
    microstrip components only. */
-substrate * circuit::getSubstrate (void) { 
+substrate * circuit::getSubstrate (void) {
   return subst;
 }
 
@@ -577,7 +577,7 @@ int circuit::hasCharacteristic (char * n) {
 }
 
 // Returns the S-parameter at the given matrix position.
-nr_complex_t circuit::getS (int x, int y) { 
+nr_complex_t circuit::getS (int x, int y) {
   return MatrixS[y + x * size];
 }
 
@@ -587,7 +587,7 @@ void circuit::setS (int x, int y, nr_complex_t z) {
 }
 
 // Returns the noise-correlation-parameter at the given matrix position.
-nr_complex_t circuit::getN (int r, int c) { 
+nr_complex_t circuit::getN (int r, int c) {
   return MatrixN[c + r * (size + nsources)];
 }
 
@@ -887,8 +887,14 @@ nr_double_t circuit::getHistoryAge (void) {
 /* This function should be used to apply the time vector history to
    the value histories of a circuit. */
 void circuit::applyHistory (history * h) {
+
   tvector<nr_double_t> * t = h->getTvector ();
-  for (int i = 0; i < nHistories; i++) histories[i].setTvector (t);
+
+  for (int i = 0; i < nHistories; i++)
+  {
+      histories[i].setTvector (t);
+  }
+
 }
 
 // Returns voltage at the given time for the given node.
