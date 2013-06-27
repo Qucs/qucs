@@ -28,9 +28,9 @@ INCLUDES = -I$(top_srcdir)/src -I$(top_srcdir)/src/math -I$(top_srcdir)/src/comp
 
 noinst_HEADERS = qucs_interface.h e_trsolver.h
 
-noinst_LIBRARIES = libmint.a
+noinst_LIBRARIES = libinterface.a
 
-libmint_a_SOURCES = qucs_interface.cpp e_trsolver.cpp
+libinterface_a_SOURCES = qucs_interface.cpp e_trsolver.cpp
 
 CLEANFILES = *~ *.orig *.rej
 

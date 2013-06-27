@@ -27,11 +27,13 @@ EXTRA_DIST = parse_netlist.y scan_netlist.l scan_dataset.l parse_dataset.y \
 	gperfapphash.cpp parse_zvr.y scan_zvr.l parse_mdl.y scan_mdl.l \
 	parse_csv.y scan_csv.l
 
-#if QUCSLIB
 SUBDIRS = math components interface . converter
+
+noinst_LIBRARIES = libqucsator.a
+
+#if QUCSLIB
 #noinst_LIBRARIES = libqucsator.a libqucsatorfull.a
 #else
-#SUBDIRS = math components . converter
 #noinst_LIBRARIES = libqucsator.a
 #endif
 
@@ -46,7 +48,7 @@ qucsator_LDADD = libqucsator.a		      \
 	components/devices/libdevices.a	      \
 	components/digital/libdigital.a       \
 	components/verilog/libverilog.a \
-	interface/libmint.a
+	interface/libinterface.a
 
 qucsator_SOURCES = ucs.cpp circuit.cpp check_netlist.cpp operatingpoint.cpp  \
 	parse_netlist.cpp scan_netlist.cpp node.cpp net.cpp input.cpp        \
