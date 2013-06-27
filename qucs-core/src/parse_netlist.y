@@ -145,6 +145,8 @@ InputLine:
   }
 ;
 
+/* An action line in the netlist, i.e. the specification of the type 
+   of simulation to be performed  */
 ActionLine:
   '.' Identifier ':' InstanceIdentifier PairList Eol { 
     $$ = (struct definition_t *) calloc (sizeof (struct definition_t), 1);
@@ -156,6 +158,9 @@ ActionLine:
   }
 ;
 
+/* A definition line in the netlist, i.e. a component specification
+   such as R:R1 _net0 gnd R="50 Ohm" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
+ */
 DefinitionLine:
   Identifier ':' InstanceIdentifier NodeList PairList Eol { 
     $$ = (struct definition_t *) calloc (sizeof (struct definition_t), 1);
@@ -178,6 +183,7 @@ NodeIdentifier:
   | ScaleOrUnit { $$ = $1; }
 ;
 
+/* List of nodes for a component */ 
 NodeList: /* nothing */ { $$ = NULL; }
   | NodeIdentifier NodeList {
     $$ = (struct node_t *) calloc (sizeof (struct node_t), 1);
@@ -186,6 +192,7 @@ NodeList: /* nothing */ { $$ = NULL; }
   }
 ;
 
+/* Assigns the list of key-value pairs x="y" */
 PairList: /* nothing */ { $$ = NULL; }
   | Assign Value PairList {
     $$ = (struct pair_t *) calloc (sizeof (struct pair_t), 1);
@@ -206,10 +213,12 @@ PairList: /* nothing */ { $$ = NULL; }
   }    
 ;
 
+/* A empty value in a pair list */
 NoneValue:  { /* nothing */ }
   | '"' '"' { /* also nothing */ }
 ;
 
+/* A property value, can either be on its own or enclosed in quotes */
 Value:
   PropertyValue {
     $$ = $1;
