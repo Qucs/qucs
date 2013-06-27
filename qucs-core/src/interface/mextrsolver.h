@@ -1,6 +1,6 @@
 
-#include "m_interface.h"
-#include "m_trsolver.h"
+#include "qucs_interface.h"
+#include "e_trsolver.h"
 #include "mex.h"
 
 #ifndef MEXTRSOLVER_H

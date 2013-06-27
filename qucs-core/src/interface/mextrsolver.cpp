@@ -1,6 +1,6 @@
 #include <string>
-#include "m_interface.h"
-#include "m_trsolver.h"
+#include "qucs_interface.h"
+#include "e_trsolver.h"
 #include "mextrsolver.h"
 
 
@@ -8,7 +8,7 @@
 void mextrsolvermessage(int level, const char* warningmsg, ...)
 {
     // we don't use level, it is just there to match the prototype
-    // for the function in m_trsolver
+    // for the function in e_trsolver
     (void) level;
 
     //mexWarnMsgIdAndTxt("MATLAB:trsolver", warningmsg);
@@ -69,8 +69,8 @@ int mextrsolver::prepare_netlist(int nlhs, mxArray *plhs[], int nrhs, const mxAr
     // call the prepare_netlist method with the input
     notopened = thequcsint.prepare_netlist (input_buf);
 
-    // get the pointer to the m_trsolver analysis
-    thetrsolver = (m_trsolver *)thequcsint.getETR();
+    // get the pointer to the e_trsolver analysis
+    thetrsolver = (e_trsolver *)thequcsint.getETR();
 
     if (thetrsolver == NULL)
     {
