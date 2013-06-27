@@ -1,6 +1,6 @@
 ## Process this file with automake to produce Makefile.in
 #
-# src/m-interface/Makefile.am
+# src/interface/Makefile.am
 #
 # Automake input file for the component library.
 #
@@ -22,15 +22,15 @@
 # Boston, MA 02110-1301, USA.
 #
 
-# the m-interface library rules
+# the interface library rules
 
 INCLUDES = -I$(top_srcdir)/src -I$(top_srcdir)/src/math -I$(top_srcdir)/src/components
 
-noinst_HEADERS = m_interface.h m_trsolver.h
+noinst_HEADERS = qucs_interface.h e_trsolver.h
 
 noinst_LIBRARIES = libmint.a
 
-libmint_a_SOURCES = m_interface.cpp m_trsolver.cpp
+libmint_a_SOURCES = qucs_interface.cpp e_trsolver.cpp
 
 CLEANFILES = *~ *.orig *.rej
 

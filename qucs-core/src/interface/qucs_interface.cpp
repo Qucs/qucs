@@ -1,5 +1,5 @@
 /*
- * m_interface.cpp - m-code interface implementation
+ * qucs_interface.cpp - m-code interface implementation
  *
  * Copyright (C) 2013 Richard Crozier <richard.crozier@yahoo.co.uk>
  *
@@ -44,6 +44,7 @@
 #include "exceptionstack.h"
 #include "check_netlist.h"
 #include "module.h"
+#include "qucs_interface.h"
 
 #if HAVE_UNISTD_H
 #include <unistd.h>
@@ -52,11 +53,12 @@
 using namespace qucs;
 
 // constructor
-qucsmint::qucsmint (char * infile)
+qucsint::qucsint ()
 {
 
     int listing = 0;
-    int ret = 0;
+    ret = 0;
+    err = 0;
 
     loginit ();
     precinit ();
@@ -111,6 +113,26 @@ qucsmint::qucsmint (char * infile)
 //    }
 //  }
 
+    //estack.print ("uncaught");
+}
+
+// destructor
+qucsint::~qucsint ()
+{
+    delete subnet;
+    delete in;
+//    delete out;
+    delete root;
+
+    // delete modules
+    module::unregisterModules ();
+
+    netlist_destroy_env ();
+}
+
+int qucsint::prepare_netlist (char * infile)
+{
+
     // create static modules
     module::registerModules ();
 
@@ -138,39 +160,71 @@ qucsmint::qucsmint (char * infile)
     if (netlist_check)
     {
         logprint (LOG_STATUS, "checker notice, netlist OK\n");
-        return 0;
+        return -2;
     }
 
-    //estack.print ("uncaught");
-}
-
-// destructor
-qucsmint::~qucsmint ()
-{
-    delete subnet;
-    delete in;
-    delete out;
-    delete root;
-
-    // delete modules
-    module::unregisterModules ();
-
-    netlist_destroy_env ();
-}
-
-int qucsmint::evaluate ()
-{
     // attach a ground to the netlist
     gnd = new ground ();
     gnd->setNode (0, "gnd");
     gnd->setName ("GND");
     subnet->insertCircuit (gnd);
 
+    // apply some data to all analyses
+    for (int i = 0; i < subnet->getNActions(); i++)
+    {
+        subnet->setActionNet(i, subnet);
+        //a->setData (out);
+    }
+
+
+    return 0;
+}
+
+int qucsint::evaluate ()
+{
     // analyse the netlist
-    int err = 0;
+    err = 0;
+    ret = 0;
     out = subnet->runAnalysis (err);
     ret |= err;
 
+    return ret;
+}
+
+// Returns a pointer to the e_trsolver if it is present
+analysis * qucsint::getETR()
+{
+//    analysis * a;
+//    int i;
+
+    // apply some data to all analyses
+//    for (i = 0; i < subnet->actions->length (); i++)
+//    {
+//        a = subnet->actions->get (i);
+//        if (a->type==analysis_type::ANALYSIS_E_TRANSIENT)
+//        {
+//            a->setNet(subnet);
+            return subnet->findAnalysis (ANALYSIS_E_TRANSIENT);
+//        }
+//        //a->setNet (this);
+//        //a->setData (out);
+//    }
+//    return nullptr;
+}
+
+//int qucsint::trevaluate ()
+//{
+//    // analyse the netlist
+//    err = 0;
+//    ret = 0;
+//    out = subnet->runAnalysis (err);
+//    ret |= err;
+//
+//    return ret;
+//}
+
+int qucsint::output (char * outfile)
+{
     // evaluate output dataset
     ret |= root->equationSolver (out);
 

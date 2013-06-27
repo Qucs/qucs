@@ -22,16 +22,44 @@
  *
  */
 
-#ifndef __M_TRSOLVER_H__
-#define __M_TRSOLVER_H__
+#if HAVE_CONFIG_H
+# include <config.h>
+#endif
 
-class m_trsolver : public trsolver
+#include "trsolver.h"
+
+#ifndef __E_TRSOLVER_H__
+#define __E_TRSOLVER_H__
+
+#define ETR_MODE_ASYNC 0
+#define ETR_MODE_SYNC 1
+
+class e_trsolver : public trsolver
 {
 public:
+    ACREATOR (e_trsolver);
+    //e_trsolver ();
+    e_trsolver (char *);
+    e_trsolver (e_trsolver &);
+    ~e_trsolver ();
 
-    m_trsolver (char *);
-    m_trsolver (trsolver &);
-    ~m_trsolver ();
+    int init (nr_double_t, nr_double_t, int);
+//    int prepare_net (char * infile);
+    void initSteps (void);
+    void initETR (nr_double_t start, nr_double_t, int);
+    int stepsolve_sync(nr_double_t synctime);
+    int stepsolve_async(nr_double_t steptime);
+    void acceptstep_sync();
+    void getsolution(double *);
+    int getN();
+    int getM();
+    int finish();
+
+    // debugging functions
+    void debug(void);
+    void printx(void);
+
+    void (*messagefcn)(int, const char *, ...);
 
 private:
 
@@ -41,10 +69,15 @@ private:
     nr_double_t vntol;
     nr_double_t time;
     nr_double_t saveCurrent;
+    nr_double_t lastsynctime;
     int running;
     int rejected;
+    int convError;
+
+    int solve_nonlinear_step (void);
+    void adjustDelta_sync (nr_double_t);
 
 };
 
-#endif /* __M_TRSOLVER_H__ */
+#endif /* __e_trsolver_H__ */
 

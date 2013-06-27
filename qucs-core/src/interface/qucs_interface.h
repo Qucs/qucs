@@ -1,5 +1,5 @@
 /*
- * m_interface.h - m-code interface class definitions
+ * qucs_interface.h - m-code interface class definitions
  *
  * Copyright (C) 2003, 2004, 2005, 2006, 2007 Stefan Jahn <stefan@lkcc.org>
  *
@@ -22,42 +22,71 @@
  *
  */
 
-/*! \file m_interface.h
+/*! \file qucs_interface.h
  * \brief The m-code interface class header file.
  *
  * Contains the m-code interface class definition.
  */
 
-#ifndef __M_INTERFACE_H__
-#define __M_INTERFACE_H__
+#if HAVE_CONFIG_H
+# include <config.h>
+#endif
 
-/*! \class qucsmint
+#include <stdio.h>
+#include <stdlib.h>
+#include <assert.h>
+#include <string.h>
+#include <time.h>
+
+#include "logging.h"
+#include "precision.h"
+#include "component.h"
+#include "components.h"
+#include "net.h"
+#include "input.h"
+#include "dataset.h"
+#include "equation.h"
+#include "environment.h"
+#include "exceptionstack.h"
+#include "check_netlist.h"
+#include "module.h"
+#include "e_trsolver.h"
+
+#if HAVE_UNISTD_H
+#include <unistd.h>
+#endif
+
+#ifndef __QUCS_INTERFACE_H__
+#define __QUCS_INTERFACE_H__
+
+/*! \class qucsint
  * \brief class for performing circuit analyses.
  *
- * This class is used for performing all the anlyses specified in
- * a circuit description. The actual solver classes for specific
- * analysis types inheirit from this class and override it's
- * methods.
+ * This class is used for interfacing qucs with octave and matlab
  *
  */
-class qucsmint
+class qucsint
 {
 
 public:
-    qucsmint(char * infile);
-    ~qucsmint();
+    qucsint();
+    ~qucsint();
 
+    int prepare_netlist (char * infile);
     int evaluate();
+    int output (char * outfile);
+    analysis * getETR(void);
 
 
 private:
 
-  char * outfile = NULL;
   net * subnet;
   input * in;
   circuit * gnd;
   dataset * out;
   environment * root;
+  int err;
+  int ret;
 
 };
 
