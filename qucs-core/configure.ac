@@ -12,8 +12,8 @@ AC_CANONICAL_TARGET
 AM_INIT_AUTOMAKE([no-define])
 AM_MAINTAINER_MODE
 
-dnl Adds LIBRARY conditional for --enable-qucslib mode to also 
-dnl build a library based on the qucs code. Default is to not 
+dnl Adds LIBRARY conditional for --enable-qucslib mode to also
+dnl build a library based on the qucs code. Default is to not
 dnl build it as a library and this is not required for distributions
 AC_ARG_ENABLE(qucslib,
 AS_HELP_STRING([--enable-qucslib],
@@ -136,8 +136,8 @@ fi
 dnl check for adms
 if test $USE_MAINTAINER_MODE = yes; then
   dnl now, to build or not to build the adms subproject. The adms
-  dnl subproject is required to generate code during the maintainer  
-  dnl build process. It is not required for distributions. It is 
+  dnl subproject is required to generate code during the maintainer
+  dnl build process. It is not required for distributions. It is
   dnl only required if MAINTAINER_MODE is true in the Makefile.am's
   dnl
   dnl The default behaviour is "check for adms, if it's not there,
@@ -158,8 +158,8 @@ if test $USE_MAINTAINER_MODE = yes; then
   AS_IF([test "$with_mkadms" = external -a "$ADMSXML" = no],
     [AC_MSG_ERROR([External adms demanded, but not found.])])
   dnl We conditionally set ADMSXML in the top level Makefile.am in
-  dnl qucs-core. AM_SUBST_NOTMAKE([ADMSXML]) stops automake from 
-  dnl generating a line of the form ADMSXML = @ADMSXML@ in Makefile.in. 
+  dnl qucs-core. AM_SUBST_NOTMAKE([ADMSXML]) stops automake from
+  dnl generating a line of the form ADMSXML = @ADMSXML@ in Makefile.in.
   dnl We need to do that assignment conditionally.
   AM_SUBST_NOTMAKE([ADMSXML])
 else
@@ -168,7 +168,7 @@ else
   with_mkadms = external
 fi
 
-dnl We set up an automake conditional because we need to do 
+dnl We set up an automake conditional because we need to do
 dnl different stuff for internal/external adms inside Makefile.am
 AM_CONDITIONAL([USE_INTERNAL_ADMS],
   [test "$with_mkadms" = internal -o "$ADMSXML" = no])
@@ -290,7 +290,7 @@ AC_CONFIG_FILES([Makefile
                  doc/Makefile
                  src/Makefile
                  src/math/Makefile
-                 src/m-interface/Makefile
+                 src/interface/Makefile
                  src/converter/Makefile
                  src/components/Makefile
                  src/components/microstrip/Makefile
