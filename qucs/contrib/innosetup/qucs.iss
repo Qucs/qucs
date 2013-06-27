@@ -19,12 +19,14 @@
 ; Boston, MA 02110-1301, USA.
 ;
 
-#define RELEASE "0.0.17"
+#define RELEASE "0.0.18"
 #define BASENAME "qucs"
 #define APPNAME "Qucs"
-#define APPVERNAME "Quite Universal Circuit Simulator 0.0.17 binary package for Win32"
+#define APPVERNAME "Quite Universal Circuit Simulator 0.0.18 binary package for Win32"
 #define URL "http://qucs.sourceforge.net"
 #define TREE "c:\qucs-git\release\qucs-win32-bin\"
+#define octaveversion "3.6.4"
+
 
 [Setup]
 AppName={# APPNAME}
@@ -46,7 +48,9 @@ ChangesEnvironment=yes
 Root: HKLM; Subkey: SYSTEM\CurrentControlSet\Control\Session Manager\Environment; ValueType: string; ValueName: QUCSDIR; ValueData: {app}; Flags: deletevalue createvalueifdoesntexist noerror; MinVersion: 0,4.00.1381
 Root: HKLM; Subkey: SYSTEM\CurrentControlSet\Control\Session Manager\Environment; ValueType: string; ValueName: HOME; ValueData: {code:HomeDir}; Flags: createvalueifdoesntexist noerror; MinVersion: 0,4.00.1381
 Root: HKLM; Subkey: SYSTEM\CurrentControlSet\Control\Session Manager\Environment; ValueType: string; ValueName: ASCODIR; ValueData: {app}; Flags: deletevalue createvalueifdoesntexist noerror; MinVersion: 0,4.00.1381
+Root: HKLM; Subkey: SYSTEM\CurrentControlSet\Control\Session Manager\Environment; ValueType: string; ValueName: OCTAVEDIR; ValueData: {app}\share\qucs\octave; Flags: deletevalue createvalueifdoesntexist noerror; MinVersion: 0,4.00.1381
 Root: HKLM; Subkey: SYSTEM\CurrentControlSet\Control\Session Manager\Environment; ValueName: "Path"; ValueType: "string"; ValueData: "{app}\bin;{olddata}"; Check: NotOnPathAlready(); Flags: preservestringtype;
+Root: HKLM; Subkey: SYSTEM\CurrentControlSet\Control\Session Manager\Environment; ValueName: "Path"; ValueType: "string"; ValueData: "{code:OctaveDir};{olddata}"; Tasks: octave; Check: OctaveNotOnPathAlready(); Flags: preservestringtype;
 ;Root: HKCU; Subkey: Environment; ValueType: string; ValueName: QUCSDIR; ValueData: {app}; Flags: deletevalue createvalueifdoesntexist; MinVersion: 0,4.00.1381
 ;Root: HKCU; Subkey: Environment; ValueType: string; ValueName: HOME; ValueData: {code:HomeDir}; Flags: createvalueifdoesntexist; MinVersion: 0,4.00.1381
 ;Root: HKCU; Subkey: Environment; ValueType: string; ValueName: ASCODIR; ValueData: {app}; Flags: deletevalue createvalueifdoesntexist; MinVersion: 0,4.00.1381
@@ -55,6 +59,11 @@ Root: HKLM; Subkey: SYSTEM\CurrentControlSet\Control\Session Manager\Environment
 
 [Tasks]
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
+Name: "iverilog"; Description: "Install iverilog 0.9.6"; GroupDescription: "Install bundled software"; Flags: checkedonce
+Name: "mingw32"; Description: "Install Mingw32 0.0.2 (Required for FreeHDL)"; GroupDescription: "Install bundled software"; Flags: checkedonce
+Name: "freehdl"; Description: "Install FreeHDL 0.0.8"; GroupDescription: "Install bundled software"; Flags: checkedonce
+Name: "octave"; Description: "Download Octave"; GroupDescription: "Install bundled software"; Flags: checkedonce
+
 
 [Files]
 Source: "{# TREE}\bin\*"; DestDir: "{app}\bin"; Flags: ignoreversion recursesubdirs createallsubdirs
@@ -62,7 +71,7 @@ Source: "{# TREE}\bin\*"; DestDir: "{app}\bin"; Flags: ignoreversion recursesubd
 Source: "{# TREE}\share\*"; DestDir: "{app}\share"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "{# TREE}\misc\*"; DestDir: "{app}\misc"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
-Source: "{# TREE}\iverilog-0.9.5_setup.exe"; DestDir: "{tmp}"
+Source: "{# TREE}\iverilog-0.9.6_setup.exe"; DestDir: "{tmp}"
 Source: "{# TREE}\freehdl-0.0.8-setup.exe"; DestDir: "{tmp}"
 Source: "{# TREE}\mingw32-g++-0.0.2-setup.exe"; DestDir: "{tmp}"
 
@@ -74,9 +83,10 @@ Name: "{group}\{cm:UninstallProgram,Qucs}"; Filename: "{uninstallexe}"
 Name: "{userdesktop}\Qucs"; Filename: "{app}\bin\qucs.exe"; IconFilename: "{app}\misc\qucs64x64.ico"; WorkingDir: "{app}\bin"; Tasks: desktopicon
 
 [Run]
-Filename: "{tmp}\iverilog-0.9.5_setup.exe"; Parameters: ""; Check: ShouldInstallVerilog 
-Filename: "{tmp}\mingw32-g++-0.0.2-setup.exe"; Parameters: ""; Check: ShouldInstallMingw
-Filename: "{tmp}\freehdl-0.0.8-setup.exe"; Parameters: ""; Check: ShouldInstallFreehdl 
+Filename: "{tmp}\iverilog-0.9.6_setup.exe"; Parameters: ""; Tasks: iverilog 
+Filename: "{tmp}\mingw32-g++-0.0.2-setup.exe"; Parameters: ""; Tasks: mingw32
+Filename: "{tmp}\freehdl-0.0.8-setup.exe"; Parameters: ""; Tasks: freehdl
+
 
 [Code]
 function HomeDir(Param: String): String;
@@ -116,20 +126,20 @@ function NotOnPathAlready(): Boolean;
 var
   BinDir, Path: String;
 begin
-  Log('Checking if Gtk2Hs\bin dir is already on the %PATH%');
-  if RegQueryStringValue(HKEY_CURRENT_USER, 'Environment', 'Path', Path) then
+  Log('Checking if Qucs\bin dir is already on the %PATH%');
+  if RegQueryStringValue(HKEY_LOCAL_MACHINE, 'SYSTEM\CurrentControlSet\Control\Session Manager\Environment', 'Path', Path) then
   begin // Successfully read the value
-    Log('HKCU\Environment\PATH = ' + Path);
+    Log('HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Environment\PATH = ' + Path);
     BinDir := ExpandConstant('{app}\bin');
-    Log('Looking for Gtk2Hs\bin dir in %PATH%: ' + BinDir + ' in ' + Path);
+    Log('Looking for Qucs\bin dir in %PATH%: ' + BinDir + ' in ' + Path);
     if Pos(LowerCase(BinDir), Lowercase(Path)) = 0 then
     begin
-      Log('Did not find Gtk2Hs\bin dir in %PATH% so will add it');
+      Log('Did not find Qucs\bin dir in %PATH% so will add it');
       Result := True;
     end
     else
     begin
-      Log('Found Gtk2Hs bin dir in %PATH% so will not add it again');
+      Log('Found Qucs bin dir in %PATH% so will not add it again');
       Result := False;
     end
   end
@@ -139,6 +149,36 @@ begin
     Result := True;
   end;
 end;
+
+
+function OctaveNotOnPathAlready(): Boolean;
+var
+  BinDir, Path: String;
+begin
+  Log('Checking if octave-{# octaveversion}\bin dir is already on the %PATH%');
+  if RegQueryStringValue(HKEY_LOCAL_MACHINE, 'SYSTEM\CurrentControlSet\Control\Session Manager\Environment', 'Path', Path) then
+  begin // Successfully read the value
+    Log('HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Environment\PATH = ' + Path);
+    BinDir := ExpandConstant('{pf}\octave-{# octaveversion}\bin');
+    Log('Looking for octave-{# octaveversion}\bin dir in %PATH%: ' + BinDir + ' in ' + Path);
+    if Pos(LowerCase(BinDir), Lowercase(Path)) = 0 then
+    begin
+      Log('Did not find octave-{# octaveversion}\bin dir in %PATH% so will add it');
+      Result := True;
+    end
+    else
+    begin
+      Log('Found octave-{# octaveversion} bin dir in %PATH% so will not add it again');
+      Result := False;
+    end
+  end
+  else // The key probably doesn't exist
+  begin
+    Log('Could not access HKCU\Environment\PATH so assume it is ok to add it');
+    Result := True;
+  end;
+end;
+
 
 procedure CurUninstallStepChanged(CurUninstallStep: TUninstallStep);
 var
@@ -156,36 +196,56 @@ begin
   end;
 end;
 
-
-
-function ShouldInstallVerilog: Boolean;
+function DownloadOctave: Boolean;
+var
+  ErrCode: Integer;
 begin
-  Result := False;
-  // Ask the user a Yes/No question
-  if MsgBox('Install iverilog?', mbConfirmation, MB_YESNO) = IDYES then
-  begin
-    Result := True;
-  end;
-
-
+  MsgBox('A browser will be opened to download octave-{# octaveversion} Setup', mbConfirmation, MB_OK);
+  Result := True;
+  ShellExec('open', 'http://sourceforge.net/projects/octave/files/Octave%20Windows%20binaries/Octave%203.6.4%20for%20Windows%20Microsoft%20Visual%20Studio/octave-3.6.4-vs2010-setup.exe/download',
+      '', '', SW_SHOW, ewNoWait, ErrCode);
 end;
 
-function ShouldInstallFreehdl: Boolean;
+
+function NextButtonClick(CurPageID: Integer): Boolean;
 begin
-  Result := False;
-  if MsgBox('Install Freehdl?', mbConfirmation, MB_YESNO) = IDYES then
+  Result := True;
+  if CurPageID = wpSelectTasks then
   begin
-    Result := True;
+    if WizardForm.TasksList.Checked[5] then
+      DownloadOctave;
   end;
 end;
 
-function ShouldInstallMingw: Boolean;
+function OctaveDir(Param: String): String;
+var Dir : String;
+var Found : Boolean;
 begin
-  Result := False;
-  if MsgBox('Install Mingw32? This package is required if you want to install Freehdl', mbConfirmation, MB_YESNO) = IDYES then
+  Found := False;
+
+    BrowseForFolder('Please select a directory where octave ' +
+                    'is installed, then click OK.', Dir, False);
+    if DirExists (Dir) then
+    begin
+      if FileExists(Dir + '\bin\octave.exe') then
+      begin
+        Found := True;
+      end;
+    end;
+  if Found = False then
   begin
-    Result := True;
+    Dir := 'c:\Software\octave{# octaveversion}\bin';
+  end
+  else
+  begin
+    Dir := Dir + '\bin';
   end;
+
+  Result := Dir;
 end;
+
+
+
+
 
 

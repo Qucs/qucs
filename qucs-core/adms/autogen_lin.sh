@@ -34,7 +34,11 @@ echo -n "Creating config.h.in... "
 autoheader
 echo "done."
 echo -n "Libtoolizing... "
-libtoolize --copy --force --ltdl -c
+case `uname` in
+  *Darwin*) LIBTOOLIZE=glibtoolize ;;
+  *)        LIBTOOLIZE=libtoolize ;;
+esac
+$LIBTOOLIZE --copy --force --ltdl -c
 echo "done."
 echo -n "Creating Makefile.in(s)... "
 automake --copy -Wall --add-missing

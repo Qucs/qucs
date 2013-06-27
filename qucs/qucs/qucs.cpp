@@ -288,9 +288,8 @@ void QucsApp::initView()
   connect(Content, SIGNAL(itemDoubleClicked(QTreeWidgetItem*, int)),
 		   SLOT(slotOpenContent(QTreeWidgetItem*)));
 
-  #warning Which signal to connect to?
-  //connect(Content, SIGNAL(clicked(QTreeWidgetItem*)),
-	//	   SLOT(slotSelectSubcircuit(QTreeWidgetItem*)));
+  connect(Content, SIGNAL(itemPressed(QTreeWidgetItem*, int)),
+           SLOT(slotSelectSubcircuit(QTreeWidgetItem*)));
 
   // ----------------------------------------------------------
   // "Component Tab" of the left QTabWidget
@@ -313,6 +312,7 @@ void QucsApp::initView()
   slotSetCompView(0);
   connect(CompChoose, SIGNAL(activated(int)), SLOT(slotSetCompView(int)));
   connect(CompComps, SIGNAL(itemActivated(QListWidgetItem*)), SLOT(slotSelectComponent(QListWidgetItem*)));
+  connect(CompComps, SIGNAL(itemPressed(QListWidgetItem*)), SLOT(slotSelectComponent(QListWidgetItem*)));
 
   dock->setWidget(TabView);
   dock->setAllowedAreas(Qt::LeftDockWidgetArea);
@@ -487,6 +487,11 @@ void QucsApp::initCursorMenu()
   connect(ActionCMenuDelete, SIGNAL(triggered()), this, SLOT(slotCMenuDelete()));
   ContentMenu->addAction(ActionCMenuDelete);
 
+  ActionCMenuInsert = new QAction(tr("Insert"), ContentMenu);
+  connect(ActionCMenuInsert, SIGNAL(triggered()), this, SLOT(slotCMenuInsert()));
+  ContentMenu->addAction(ActionCMenuInsert);
+
+
   // TODO -> not implemented yet...
   //ActionCMenuDelGroup = new QAction(tr("Delete Group"), ContentMenu);
   //connect(ActionCMenuDelGroup, SIGNAL(triggered()), this, SLOT(slotCMenuDelGroup()));
@@ -501,6 +506,14 @@ void QucsApp::initCursorMenu()
 void QucsApp::slotShowContentMenu(const QPoint& pos) {
 
   QTreeWidgetItem *item = Content->currentItem();
+  if(item->text(1  ).contains(tr("-port")))
+  {
+      ActionCMenuInsert->setVisible(true);
+  }
+  else
+  {
+      ActionCMenuInsert->setVisible(false);
+  }
 
   // only show contentmenu when child is selected...
   if(item->parent()!= 0) {
@@ -645,6 +658,8 @@ void QucsApp::slotCMenuDelGroup ()
     }
   }
 
+
+
   // check existence of files
   QString Str = "\n";
   for (i = 0; extensions[i] != 0; i++) {
@@ -684,6 +699,13 @@ void QucsApp::slotCMenuDelGroup ()
   }
 }
 
+
+// ----------------------------------------------------------
+// Inserts the selected subschematic in the schematic
+void QucsApp::slotCMenuInsert ()
+{
+    slotSelectSubcircuit(Content->currentItem());
+}
 
 // ################################################################
 // #####    Functions that handle the project operations.     #####
@@ -831,6 +853,7 @@ void QucsApp::readProjectFiles()
   QStringList Elements = QucsWorkDir.entryList("*", QDir::Files, QDir::Name);
   QStringList::iterator it;
   QString Str;
+  ConSchematics->setExpanded(true);
   for(it = Elements.begin(); it != Elements.end(); ++it) {
     Str = QucsDoc::fileSuffix (*it);
     if(Str == "sch") {
@@ -1411,6 +1434,38 @@ bool QucsApp::closeAllFiles()
   return true;
 }   
 
+
+void QucsApp::slotFileExamples()
+{
+  statusBar()->message(tr("Open examples directory..."));
+  QString path = QDir::toNativeSeparators(QucsSettings.ExamplesDir);
+  QDesktopServices::openUrl(QUrl("file:///" + path.replace("\\","/")));
+  statusBar()->message(tr("Ready."));
+}
+
+void QucsApp::slotHelpTutorial()
+{
+  QString path = QDir::toNativeSeparators(QucsSettings.DocDir);
+  QUrl url = QUrl("file:///" + path.replace("\\","/") + "tutorial/" + QObject::sender()->objectName());
+  QDesktopServices::openUrl(url);
+}
+
+void QucsApp::slotHelpTechnical()
+{
+  QString path = QDir::toNativeSeparators(QucsSettings.DocDir);
+  QUrl url = QUrl("file:///" + path.replace("\\","/") + "technical/" + QObject::sender()->objectName());
+  QDesktopServices::openUrl(url);
+}
+
+void QucsApp::slotHelpReport()
+{
+  QString path = QDir::toNativeSeparators(QucsSettings.DocDir);
+  QUrl url = QUrl("file:///" + path.replace("\\","/") + "report/" + QObject::sender()->objectName());
+  QDesktopServices::openUrl(url);
+}
+
+
+
 // --------------------------------------------------------------
 // Is called when another document is selected via the TabBar.
 void QucsApp::slotChangeView(QWidget *w)
@@ -1845,7 +1900,7 @@ void QucsApp::slotAfterSimulation(int Status, SimMessage *sim)
 {
   if(Status != 0) return;  // errors ocurred ?
 
-  if(sim->ErrText->lines() > 1)   // were there warnings ?
+  if(sim->ErrText->document()->lineCount() > 1)   // were there warnings ?
     slotShowWarnings();
 
   int i=0;

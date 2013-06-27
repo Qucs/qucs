@@ -103,6 +103,10 @@ public slots:
   void slotFileSaveAs();  // save a document under a different filename
   void slotFileSaveAll(); // save all open documents
   void slotFileClose();   // close the actual file
+  void slotFileExamples();   // show the examples in a file browser
+  void slotHelpTutorial();   // Open a pdf tutorial
+  void slotHelpReport();   // Open a pdf report
+  void slotHelpTechnical();   // Open a pdf technical document
   void slotFileClose (int); // close the file with given index
   void slotSymbolEdit();  // edit the symbol for the schematic
   void slotFileSettings();// open dialog to change file settings
@@ -134,6 +138,7 @@ public slots:
   void slotCMenuRename();
   void slotCMenuDelete();
   void slotCMenuDelGroup();
+  void slotCMenuInsert();
 
 private slots:
   void slotMenuOpenProject();
@@ -167,10 +172,10 @@ public:
   QMenu *ContentMenu;
 
   // corresponding actions
-  QAction *ActionCMenuOpen, *ActionCMenuRename, *ActionCMenuDelete, *ActionCMenuDelGroup;
+  QAction *ActionCMenuOpen, *ActionCMenuRename, *ActionCMenuDelete, *ActionCMenuDelGroup, *ActionCMenuInsert;
 
   QAction *fileNew, *textNew, *fileNewDpl, *fileOpen, *fileSave, *fileSaveAs,
-          *fileSaveAll, *fileClose, *fileSettings, *filePrint, *fileQuit,
+          *fileSaveAll, *fileClose, *fileExamples, *fileSettings, *filePrint, *fileQuit,
           *projNew, *projOpen, *projDel, *projClose, *applSettings,
           *editCut, *editCopy, *magAll, *magOne, *magMinus, *filePrintFit,
           *symEdit, *intoH, *popH, *simulate, *dpl_sch, *undo, *redo, *dcbias;
@@ -256,6 +261,9 @@ private:
   // menus contain the items of their menubar
   QMenu *fileMenu, *editMenu, *insMenu, *projMenu, *simMenu, *viewMenu,
              *helpMenu, *alignMenu, *toolMenu;
+
+  // submenus for the PDF documents 
+  QMenu *helpTechnical, *helpReport, *helpTutorial;
 
   QToolBar *fileToolbar, *editToolbar, *viewToolbar, *workToolbar;
 

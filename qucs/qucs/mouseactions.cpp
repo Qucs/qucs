@@ -286,7 +286,7 @@ void MouseActions::MMoveElement(Schematic *Doc, QMouseEvent *Event)
     Doc->PostPaintEvent (_NotRop, 0,0,0,0);
     x -= Doc->contentsX();
     y -= Doc->contentsY();
-    ((Painting*)selElem)->MouseMoving(Doc, fx, fy, gx, gy,
+    ((Painting*)selElem)->MouseMoving(Doc, x, y, gx, gy,
                                        Doc, x, y, drawn);
     drawn = true;
     Doc->viewport()->update();
@@ -1296,7 +1296,7 @@ void MouseActions::MPressElement(Schematic *Doc, QMouseEvent *Event, float, floa
   if(((Painting*)selElem)->MousePressing()) {
     Doc->Paintings->append((Painting*)selElem);
     ((Painting*)selElem)->Bounding(x1,y1,x2,y2);
-    Doc->enlargeView(x1, y1, x2, y2);
+    //Doc->enlargeView(x1, y1, x2, y2);
     selElem = ((Painting*)selElem)->newOne();
 
     Doc->viewport()->update();

@@ -18,54 +18,69 @@
 #ifndef LIBRARYDIALOG_H
 #define LIBRARYDIALOG_H
 
-#include <qregexp.h>
-#include <q3ptrlist.h>
-#include <qstringlist.h>
-#include <q3textstream.h>
-#include <qdialog.h>
-#include <qfile.h>
-#include <qdir.h>
-#include <qcheckbox.h>
-//Added by qt3to4:
-#include <Q3VBoxLayout>
+#include <QRegExp>
+
+#include <QList>
+#include <QStringList>
+#include <QTextStream>
+#include <QDialog>
+#include <QFile>
+#include <QDir>
+#include <QCheckBox>
+#include <QVBoxLayout>
 #include <QLabel>
+#include <QStackedWidget>
 
 class QLabel;
 class QucsApp;
 class QLineEdit;
-class Q3TextEdit;
+class QTextEdit;
 class QPushButton;
-class Q3VBoxLayout;
-class Q3ListViewItem;
-class Q3VButtonGroup;
+class QVBoxLayout;
+class QTreeWidgetItem;
+class QGroupBox;
 class QRegExpValidator;
+class QStackedWidget;
 
 
 class LibraryDialog : public QDialog {
    Q_OBJECT
 public:
-  LibraryDialog(QucsApp*, Q3ListViewItem*);
+  LibraryDialog(QucsApp*, QTreeWidgetItem*);
  ~LibraryDialog();
 
 private slots:
-  void slotCreate();
-  void slotNext();
+  void slotCreateNext();
+  void slotSave();
   void slotSelectNone();
   void slotSelectAll();
+  void slotCheckDescrChanged(int);
+  void slotPrevDescr();
+  void slotNextDescr();
+  void slotUpdateDescription();
 
 private:
-  void intoStream(Q3TextStream&, QString&, const char*);
+  void intoStream(QTextStream&, QString&, const char*);
   int intoFile(QString&, QString&,  QStringList&);
 
 private:
-  Q3VBoxLayout *all;   // the mother of all widgets
+  int curDescr;
+  QVBoxLayout *all;   // the mother of all widgets
+  QStackedWidget *stackedWidgets;
   QLabel *theLabel;
+  QLabel *checkedCktName;
+  QLabel *libSaveName;
   QLineEdit *NameEdit;
-  Q3TextEdit *ErrText;
-  Q3VButtonGroup *Group;
-  QPushButton *ButtCreate, *ButtCancel, *ButtSelectAll, *ButtSelectNone;
-  Q3PtrList<QCheckBox> BoxList;
+  QTextEdit *ErrText;
+  QTextEdit *textDescr;
+  QGroupBox *Group;
+  QPushButton *ButtCreateNext, *ButtCancel, *ButtSelectAll, *ButtSelectNone;
+  QPushButton *prevButt, *nextButt;
+  QPushButton *createButt;
+  QList<QCheckBox *> BoxList;
+  QStringList SelectedNames;
   QStringList Descriptions;
+  QCheckBox *checkDescr;
 
   QucsApp *App;
   QFile LibFile;

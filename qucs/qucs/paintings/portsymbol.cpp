@@ -17,7 +17,8 @@
 #include <QtGui>
 #include "main.h"
 #include "portsymbol.h"
-
+#include "schematic.h"
+#include "qucs.h"
 
 PortSymbol::PortSymbol(int cx_, int cy_, const QString& numberStr_,
                                          const QString& nameStr_)
@@ -30,7 +31,7 @@ PortSymbol::PortSymbol(int cx_, int cy_, const QString& numberStr_,
   Angel = 0;
   nameStr = nameStr_;
   numberStr = numberStr_;
-  QFontMetrics  metrics(QucsSettings.font);
+  QFontMetrics  metrics(((Schematic*)QucsMain->DocumentTab->currentPage())->font());   // get size of text
   QSize r = metrics.size(0, nameStr);
   x1 = -r.width() - 8;
   y1 = -((r.height() + 8) >> 1);
@@ -104,10 +105,10 @@ void PortSymbol::paint(ViewPainter *p)
 }
 
 // --------------------------------------------------------------------------
-void PortSymbol::paintScheme(QPainter *p)
+void PortSymbol::paintScheme(Schematic *p)
 {
-  p->drawEllipse(cx-4, cy-4, 8, 8);
-  p->drawRect(cx+x1, cy+y1, x2, y2);
+  p->PostPaintEvent(_Ellipse, cx-4, cy-4, 8, 8);
+  p->PostPaintEvent(_Rect, cx+x1, cy+y1, x2, y2);
 }
 
 // --------------------------------------------------------------------------

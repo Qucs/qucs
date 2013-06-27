@@ -100,6 +100,13 @@ void QucsApp::initActions()
   fileClose->setWhatsThis(tr("Close File\n\nCloses the current document"));
   connect(fileClose, SIGNAL(activated()), SLOT(slotFileClose()));
 
+  fileExamples = new QAction(tr("&Examples"), this);
+  fileExamples->setStatusTip(tr("Opens a file explorer with example documents"));
+  fileExamples->setWhatsThis(
+	        tr("Examples\n\nOpens a file explorer with example documents"));
+  connect(fileExamples, SIGNAL(activated()), SLOT(slotFileExamples()));
+
+
   symEdit = new QAction(tr("&Edit Circuit Symbol"), this);
   symEdit->setShortcut(Qt::Key_F9);
   symEdit->setStatusTip(tr("Edits the symbol for this schematic"));
@@ -417,9 +424,9 @@ void QucsApp::initActions()
 
   editRotate = new QAction(QIcon((QucsSettings.BitmapDir + "rotate_ccw.png")), tr("Rotate"), this);
   editRotate->setShortcut(Qt::CTRL+Qt::Key_R);
-  editRotate->setStatusTip(tr("Rotates the selected component by 90°"));
+  editRotate->setStatusTip(tr("Rotates the selected component by 90\x00B0"));
   editRotate->setWhatsThis(
-    tr("Rotate\n\nRotates the selected component by 90° counter-clockwise"));
+    tr("Rotate\n\nRotates the selected component by 90\x00B0 counter-clockwise"));
   editRotate->setToggleAction(true);
   connect(editRotate, SIGNAL(toggled(bool)), SLOT(slotEditRotate(bool)));
 
@@ -652,6 +659,8 @@ void QucsApp::initMenuBar()
   fileMenu->addAction(filePrint);
   fileMenu->addAction(filePrintFit);
   fileMenu->insertSeparator();
+  fileMenu->addAction(fileExamples);
+  fileMenu->insertSeparator();
   fileMenu->addAction(fileSettings);
   fileMenu->addAction(symEdit);
   fileMenu->insertSeparator();
@@ -761,9 +770,73 @@ void QucsApp::initMenuBar()
   helpMenu->addAction(helpIndex);
   helpMenu->addAction(helpGetStart);
   helpMenu->insertSeparator();
+
+
+
+  //Fill submenu's with filenames of PDF documents
+  QDir TechnicalDir = QDir(QucsSettings.DocDir.replace('\\','/'));
+
+  if(TechnicalDir.cd("technical"))
+  {
+    helpTechnical = new QMenu(tr("&Technical Papers"));
+    helpMenu->addMenu(helpTechnical);
+    TechnicalDir.setFilter(QDir::Files);
+    QStringList entries = TechnicalDir.entryList();
+    for(int i=0;i<entries.size();i++)
+    {
+      QAction* helpTechnicalActions = new QAction(entries[i], this);
+      helpTechnicalActions->setObjectName ( entries[i] );
+      helpTechnicalActions->setStatusTip(tr("Open ")+entries[i]);
+      helpTechnicalActions->setWhatsThis(tr(entries[i]+"\n\nOpen "+entries[i]));
+      connect(helpTechnicalActions, SIGNAL(activated()), SLOT(slotHelpTechnical()));
+      helpTechnical->addAction(helpTechnicalActions);
+    }
+
+  }
+
+//Fill submenu's with filenames of PDF documents
+  QDir ReportDir = QDir(QucsSettings.DocDir.replace('\\','/'));
+  if(ReportDir.cd("report"))
+  {
+    helpReport = new QMenu(tr("Technical &Reports"));
+    helpMenu->addMenu(helpReport);
+    ReportDir.setFilter(QDir::Files);
+    QStringList entries = ReportDir.entryList();
+    for(int i=0;i<entries.size();i++)
+    {
+      QAction* helpReportActions = new QAction(entries[i], this);
+      helpReportActions->setObjectName ( entries[i] );
+      helpReportActions->setStatusTip(tr("Open ")+entries[i]);
+      helpReportActions->setWhatsThis(tr(entries[i]+"\n\nOpen "+entries[i]));
+      connect(helpReportActions, SIGNAL(activated()), SLOT(slotHelpReport()));
+      helpReport->addAction(helpReportActions);
+    }
+  }
+
+//Fill submenu's with filenames of PDF documents
+  QDir TutorialDir = QDir(QucsSettings.DocDir.replace('\\','/'));
+  if(TutorialDir.cd("tutorial"))
+  {
+    helpTutorial = new QMenu(tr("T&utorials"));
+    helpMenu->addMenu(helpTutorial);
+    TutorialDir.setFilter(QDir::Files);
+    QStringList entries = TutorialDir.entryList();
+    for(int i=0;i<entries.size();i++)
+    {
+      QAction* helpTutorialActions = new QAction(entries[i], this);
+      helpTutorialActions->setObjectName ( entries[i] );
+      helpTutorialActions->setStatusTip(tr("Open ")+entries[i]);
+      helpTutorialActions->setWhatsThis(tr(entries[i]+"\n\nOpen "+entries[i]));
+      connect(helpTutorialActions, SIGNAL(activated()), SLOT(slotHelpTutorial()));
+      helpTutorial->addAction(helpTutorialActions);
+    }
+  }
+
+
+  helpMenu->insertSeparator();
   helpMenu->addAction(helpAboutApp);
   helpMenu->addAction(helpAboutQt);
-  
+
 
   menuBar()->addMenu(fileMenu);
   menuBar()->addMenu(editMenu);
@@ -996,3 +1069,4 @@ void QucsApp::slotHelpAboutQt()
 {
   QMessageBox::aboutQt(this, tr("About Qt"));
 }
+

@@ -33,23 +33,29 @@ hybrid::hybrid () : circuit (4) {
   type = CIR_HYBRID;
 }
 
-void hybrid::initSP (void) {
-  nr_complex_t p = polar (1.0, rad (getPropertyDouble ("phi")));
-  nr_double_t  k = M_SQRT2;
 
+//All functions below are obtained from
+//http://qucs.sourceforge.net/tech/node56.html
+
+void hybrid::initSP (void) {
+
+  nr_complex_t p = polar (1.0, rad (getPropertyDouble ("phi")));
+  //nr_double_t  k = sqrt(1-pow((1/M_SQRT2),2));
+  nr_double_t  k = (1/M_SQRT2); //last line reduces to this for 1/sqrt(2)
+  
   allocMatrixS ();
+//S11 = S22 = S33 = S44 = 0
   setS (NODE_1, NODE_1, 0.0); setS (NODE_2, NODE_2, 0.0);
   setS (NODE_3, NODE_3, 0.0); setS (NODE_4, NODE_4, 0.0);
-
-  setS (NODE_1, NODE_2, 0.0); setS (NODE_2, NODE_1, 0.0);
-  setS (NODE_3, NODE_4, 0.0); setS (NODE_4, NODE_3, 0.0);
-
-  setS (NODE_1, NODE_3, k); setS (NODE_3, NODE_1, k);
-  setS (NODE_1, NODE_4, k); setS (NODE_4, NODE_1, k);
-  setS (NODE_2, NODE_3, k); setS (NODE_3, NODE_2, k);
-
-  setS (NODE_2, NODE_4, k * p);
-  setS (NODE_4, NODE_2, k * p);
+//S14 = S23 = S32 = S41 = 0
+  setS (NODE_1, NODE_4, 0.0); setS (NODE_2, NODE_3, 0.0);
+  setS (NODE_3, NODE_2, 0.0); setS (NODE_4, NODE_1, 0.0);
+//S12 = S21 = S34 = S43 = sqrt(1-k^2)
+  setS (NODE_1, NODE_2, k); setS (NODE_2, NODE_1, k);
+  setS (NODE_3, NODE_4, k); setS (NODE_4, NODE_3, k);
+//S13 = S31 = S24 = S42 = k*exp(j * p)
+  setS (NODE_1, NODE_3, k * p);  setS (NODE_3, NODE_1, k * p);
+  setS (NODE_2, NODE_4, k * p);  setS (NODE_4, NODE_2, k * p);
 }
 
 void hybrid::initDC (void) {
@@ -61,34 +67,36 @@ void hybrid::initDC (void) {
 }
 
 void hybrid::initAC (void) {
-  nr_double_t  k = 2.0 * M_SQRT2;
-  nr_complex_t p = polar (1.0, rad (getPropertyDouble ("phi")));
-  nr_complex_t d = 2.0 * p * (p - 4.0) - 1.0;
-  nr_complex_t y;
 
-  setVoltageSources (0);
-  allocMatrixMNA ();
-  d *= getPropertyDouble ("Zref");
+    nr_double_t  k = 1 / M_SQRT2;
+    nr_complex_t y;
+    nr_complex_t A = k*k*(nr_complex_t(1,0)+polar(1.0, 2.0*rad (getPropertyDouble ("phi"))));
+    nr_double_t B  = 2 * sqrt(1-(k*k));
+    nr_complex_t C = polar (2*k, rad (getPropertyDouble ("phi")));
+    nr_complex_t D = getPropertyDouble ("Zref") * ((A*A)-(C*C));
 
-  y = (-6.0*p*p + 8.0*p - 1.0) / d;
-  setY (NODE_1, NODE_1, y); setY (NODE_3, NODE_3, y);
+    setVoltageSources (0);
+    allocMatrixMNA ();
+//    d *= getPropertyDouble ("Zref");
 
-  y = (-2.0*p*p + 8.0*p - 5.0) / d;
-  setY (NODE_2, NODE_2, y); setY (NODE_4, NODE_4, y);
+    y = (A*(nr_complex_t(2,0)-A))/D;
+    setY (NODE_1, NODE_1, y); setY (NODE_2, NODE_2, y);
+    setY (NODE_3, NODE_3, y); setY (NODE_4, NODE_4, y);
 
-  y = 2.0*k * (p * (p - 1.0) - 0.5) / d;
-  setY (NODE_1, NODE_3, y); setY (NODE_3, NODE_1, y);
+    y = (nr_complex_t(-1,0)*A*B)/D;
+    setY (NODE_1, NODE_2, y); setY (NODE_2, NODE_1, y);
+    setY (NODE_3, NODE_4, y); setY (NODE_4, NODE_3, y);
 
-  y = k * (p - 2.0) / d;
-  setY (NODE_2, NODE_4, y); setY (NODE_4, NODE_2, y);
+    y = (C*(nr_complex_t(-2,0)+A))/D;
+    setY (NODE_1, NODE_3, y); setY (NODE_3, NODE_1, y);
+    setY (NODE_2, NODE_4, y); setY (NODE_4, NODE_2, y);
 
-  y = k * (-2.0*p + 1.0) / d;
-  setY (NODE_1, NODE_4, y); setY (NODE_4, NODE_1, y);
-  setY (NODE_2, NODE_3, y); setY (NODE_3, NODE_2, y);
+    y= (B*C)/D;
+    setY (NODE_1, NODE_4, y); setY (NODE_4, NODE_1, y);
+    setY (NODE_2, NODE_3, y); setY (NODE_3, NODE_2, y);
 
-  y = (4.0*p + 4.0) / d;
-  setY (NODE_1, NODE_2, y); setY (NODE_2, NODE_1, y);
-  setY (NODE_3, NODE_4, y); setY (NODE_4, NODE_3, y);
+
+    
 }
 
 void hybrid::initTR (void) {
@@ -104,3 +112,4 @@ PROP_OPT [] = {
   PROP_NO_PROP };
 struct define_t hybrid::cirdef =
   { "Hybrid", 4, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR, PROP_DEF };
+

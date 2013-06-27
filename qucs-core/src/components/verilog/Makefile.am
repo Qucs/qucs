@@ -5,6 +5,7 @@
 # Automake input file for the verilog device library.
 #
 # Copyright (C) 2006-2011 Stefan Jahn <stefan@lkcc.org>
+# More models added 2013 Mike Beinson mbrin72043@yahoo.co.uk
 #
 # This is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -35,6 +36,10 @@ libverilog_a_SOURCES = HBT_X.analogfunction.cpp HBT_X.core.cpp \
 	potentiometer.analogfunction.cpp potentiometer.core.cpp \
 	MESFET.analogfunction.cpp MESFET.core.cpp \
 	EKV26MOS.analogfunction.cpp EKV26MOS.core.cpp \
+        bsim3v34nMOS.analogfunction.cpp bsim3v34nMOS.core.cpp \
+        bsim3v34pMOS.analogfunction.cpp bsim3v34pMOS.core.cpp \
+        bsim4v30nMOS.analogfunction.cpp bsim4v30nMOS.core.cpp \
+        bsim4v30pMOS.analogfunction.cpp bsim4v30pMOS.core.cpp \
 	hicumL0V1p2.analogfunction.cpp hicumL0V1p2.core.cpp \
 	hicumL0V1p2g.analogfunction.cpp hicumL0V1p2g.core.cpp \
 	hicumL0V1p3.analogfunction.cpp hicumL0V1p3.core.cpp \
@@ -85,6 +90,10 @@ noinst_HEADERS = HBT_X.analogfunction.h HBT_X.defs.h HBT_X.core.h \
         potentiometer.core.h \
 	MESFET.analogfunction.h MESFET.defs.h MESFET.core.h \
 	EKV26MOS.analogfunction.h EKV26MOS.defs.h EKV26MOS.core.h \
+	bsim3v34nMOS.analogfunction.h bsim3v34nMOS.defs.h bsim3v34nMOS.core.h \
+	bsim3v34pMOS.analogfunction.h bsim3v34pMOS.defs.h bsim3v34pMOS.core.h \
+        bsim4v30nMOS.analogfunction.h bsim4v30nMOS.defs.h bsim4v30nMOS.core.h \
+        bsim4v30pMOS.analogfunction.h bsim4v30pMOS.defs.h bsim4v30pMOS.core.h \
 	hicumL0V1p2.analogfunction.h hicumL0V1p2.defs.h hicumL0V1p2.core.h \
 	hicumL0V1p2g.analogfunction.h hicumL0V1p2g.defs.h hicumL0V1p2g.core.h \
 	hicumL0V1p3.analogfunction.h hicumL0V1p3.defs.h hicumL0V1p3.core.h \
@@ -92,8 +101,7 @@ noinst_HEADERS = HBT_X.analogfunction.h HBT_X.defs.h HBT_X.core.h \
 	hicumL2V2p24.analogfunction.h hicumL2V2p24.defs.h hicumL2V2p24.core.h \
 	hicumL2V2p31n.analogfunction.h hicumL2V2p31n.defs.h hicumL2V2p31n.core.h \
 	photodiode.analogfunction.h photodiode.defs.h photodiode.core.h \
-	phototransistor.analogfunction.h phototransistor.defs.h \
-	phototransistor.core.h \
+	phototransistor.analogfunction.h phototransistor.defs.h phototransistor.core.h \
 	nigbt.analogfunction.h nigbt.defs.h nigbt.core.h \
 	\
 	dff_SR.analogfunction.h dff_SR.defs.h dff_SR.core.h \
@@ -130,8 +138,9 @@ noinst_HEADERS = HBT_X.analogfunction.h HBT_X.defs.h HBT_X.core.h \
 VERILOG_FILES = constants.vams disciplines.vams \
   fbh_hbt-2_2a.va hicumL2V2p11.va mod_amp.va hicumL2V2p22.va log_amp.va \
   hicumL0V1p12.va potentiometer.va MESFET.va hicumL0V1p2.va hicumL2V2p23.va \
-  photodiode.va EKV26MOS.va phototransistor.va nigbt.va hicumL2V2p24.va \
-  hicumL0V1p2g.va hicumL0V1p3.va hicumL2V2p31n.va \
+  photodiode.va EKV26MOS.va bsim3v34nMOS.va  bsim3v34pMOS.va bsim4v30nMOS.va bsim4v30pMOS.va \
+  hicumL2V2p24.va hicumL0V1p2g.va hicumL0V1p3.va hicumL2V2p31n.va \
+  phototransistor.va nigbt.va \
   dff_SR.va jkff_SR.va tff_SR.va gatedDlatch.va logic_0.va logic_1.va \
   mux2to1.va mux4to1.va mux8to1.va DLS_nto1.va DLS_1ton.va andor4x2.va \
   andor4x3.va andor4x4.va dmux2to4.va dmux3to8.va dmux4to16.va ha1b.va \
@@ -275,6 +284,59 @@ EKV26MOS.defs.h: EKV26MOS.va
 EKV26MOS.gui.cpp: qucsVersion.xml qucsMODULEgui.xml
 EKV26MOS.gui.cpp: EKV26MOS.va
 	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEgui.xml
+
+bsim3v34nMOS.analogfunction.cpp: analogfunction.xml
+bsim3v34nMOS.analogfunction.cpp: bsim3v34nMOS.va
+	$(ADMSXML) $< -e $(srcdir)/analogfunction.xml
+bsim3v34nMOS.core.cpp: bsim3v34nMOS.defs.h qucsVersion.xml qucsMODULEcore.xml
+bsim3v34nMOS.core.cpp: bsim3v34nMOS.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEcore.xml
+bsim3v34nMOS.defs.h: qucsVersion.xml qucsMODULEdefs.xml
+bsim3v34nMOS.defs.h: bsim3v34nMOS.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEdefs.xml
+bsim3v34nMOS.gui.cpp: qucsVersion.xml qucsMODULEgui.xml
+bsim3v34nMOS.gui.cpp: bsim3v34nMOS.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEgui.xml
+
+bsim3v34pMOS.analogfunction.cpp: analogfunction.xml
+bsim3v34pMOS.analogfunction.cpp: bsim3v34pMOS.va
+	$(ADMSXML) $< -e $(srcdir)/analogfunction.xml
+bsim3v34pMOS.core.cpp: bsim3v34pMOS.defs.h qucsVersion.xml qucsMODULEcore.xml
+bsim3v34pMOS.core.cpp: bsim3v34pMOS.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEcore.xml
+bsim3v34pMOS.defs.h: qucsVersion.xml qucsMODULEdefs.xml
+bsim3v34pMOS.defs.h: bsim3v34pMOS.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEdefs.xml
+bsim3v34pMOS.gui.cpp: qucsVersion.xml qucsMODULEgui.xml
+bsim3v34pMOS.gui.cpp: bsim3v34pMOS.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEgui.xml
+
+bsim4v30nMOS.analogfunction.cpp: analogfunction.xml
+bsim4v30nMOS.analogfunction.cpp: bsim4v30nMOS.va
+	$(ADMSXML) $< -e $(srcdir)/analogfunction.xml
+bsim4v30nMOS.core.cpp: bsim4v30nMOS.defs.h qucsVersion.xml qucsMODULEcore.xml
+bsim4v30nMOS.core.cpp: bsim4v30nMOS.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEcore.xml
+bsim4v30nMOS.defs.h: qucsVersion.xml qucsMODULEdefs.xml
+bsim4v30nMOS.defs.h: bsim4v30nMOS.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEdefs.xml
+bsim4v30nMOS.gui.cpp: qucsVersion.xml qucsMODULEgui.xml
+bsim4v30nMOS.gui.cpp: bsim4v30nMOS.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEgui.xml
+
+bsim4v30pMOS.analogfunction.cpp: analogfunction.xml
+bsim4v30pMOS.analogfunction.cpp: bsim4v30pMOS.va
+	$(ADMSXML) $< -e $(srcdir)/analogfunction.xml
+bsim4v30pMOS.core.cpp: bsim4v30pMOS.defs.h qucsVersion.xml qucsMODULEcore.xml
+bsim4v30pMOS.core.cpp: bsim4v30pMOS.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEcore.xml
+bsim4v30pMOS.defs.h: qucsVersion.xml qucsMODULEdefs.xml
+bsim4v30pMOS.defs.h: bsim4v30pMOS.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEdefs.xml
+bsim4v30pMOS.gui.cpp: qucsVersion.xml qucsMODULEgui.xml
+bsim4v30pMOS.gui.cpp: bsim4v30pMOS.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEgui.xml
+
 
 hicumL0V1p2.analogfunction.cpp: analogfunction.xml
 hicumL0V1p2.analogfunction.cpp: hicumL0V1p2.va

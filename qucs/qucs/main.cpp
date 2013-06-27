@@ -174,7 +174,7 @@ QString complexDeg(double real, double imag, int Precision)
   if(fabs(imag) < 1e-250) Text = QString::number(real,'g',Precision);
   else {
     Text  = QString::number(sqrt(real*real+imag*imag),'g',Precision) + " / ";
-    Text += QString::number(180.0/M_PI*atan2(imag,real),'g',Precision) + '°';
+    Text += QString::number(180.0/M_PI*atan2(imag,real),'g',Precision) + QString::fromUtf8("Â°");
   }
   return Text;
 }
@@ -448,7 +448,7 @@ bool VHDL_Time(QString& t, const QString& Name)
       if(strcmp(p, "min") == 0) break;
       if(strcmp(p, "hr") == 0)  break;
     }
-    t = "§" + QObject::tr("Error: Wrong time format in \"%1\". Use positive number with units").arg(Name)
+    t = QString::fromUtf8("Â§")  + QObject::tr("Error: Wrong time format in \"%1\". Use positive number with units").arg(Name)
             + " fs, ps, ns, us, ms, sec, min, hr.\n";
     return false;
   }
@@ -511,7 +511,7 @@ bool Verilog_Time(QString& t, const QString& Name)
       if(strcmp(p, "min") == 0) { factor = 1e12*60; break; }
       if(strcmp(p, "hr") == 0)  { factor = 1e12*60*60; break; }
     }
-    t = "§" + QObject::tr("Error: Wrong time format in \"%1\". Use positive number with units").arg(Name)
+    t = QString::fromUtf8("Â§")  + QObject::tr("Error: Wrong time format in \"%1\". Use positive number with units").arg(Name)
             + " fs, ps, ns, us, ms, sec, min, hr.\n";
     return false;
   }
@@ -581,15 +581,20 @@ int main(int argc, char *argv[])
       QDir::convertSeparators (QucsDirStr + "/share/qucs/library/");
     QucsSettings.OctaveDir =
       QDir::convertSeparators (QucsDirStr + "/share/qucs/octave/");
+    QucsSettings.ExamplesDir = 
+      QDir::convertSeparators (QucsDirStr + "/share/qucs/docs/examples/");
+    QucsSettings.DocDir = 
+      QDir::convertSeparators (QucsDirStr + "/share/qucs/docs/");
   } else {
     QucsSettings.BinDir = BINARYDIR;
     QucsSettings.BitmapDir = BITMAPDIR;
     QucsSettings.LangDir = LANGUAGEDIR;
     QucsSettings.LibDir = LIBRARYDIR;
     QucsSettings.OctaveDir = OCTAVEDIR;
+    QucsSettings.ExamplesDir = QDir(DOCDIR).canonicalPath()+"/examples/";
+    QucsSettings.DocDir = DOCDIR;
   }
   QucsSettings.Editor = QucsSettings.BinDir + "qucsedit";
-
   QucsWorkDir.setPath(QDir::homeDirPath()+QDir::convertSeparators ("/.qucs"));
   QucsHomeDir.setPath(QDir::homeDirPath()+QDir::convertSeparators ("/.qucs"));
   loadSettings();
@@ -623,8 +628,16 @@ int main(int argc, char *argv[])
     QString AscoDirStr = AscoDir.canonicalPath ();
     QucsSettings.AscoDir =
       QDir::convertSeparators (AscoDirStr + "/bin/");
-  } else {
-    QucsSettings.AscoDir = "";
+  } 
+  else {
+    QFile file("/usr/local/bin/asco");
+    if ( file.exists() ){
+      QucsSettings.AscoDir =
+          QDir::convertSeparators ("/usr/local/bin/");
+      file.close();
+    }
+    else
+      QucsSettings.AscoDir = "";
   }
 
   a.setFont(QucsSettings.font);
