@@ -53,6 +53,10 @@
 #define dState 0 // delta T state
 #define sState 1 // solution state
 
+// Macro for the n-th state of the solution vector history.
+#define SOL(state) (solution[(int) getState (sState, (state))])
+
+
 using namespace transient;
 
 // Constructor creates an unnamed instance of the trsolver class.
@@ -113,10 +117,6 @@ void trsolver::initSteps (void)
     if (swp != NULL) delete swp;
     swp = createSweep ("time");
 }
-
-// Macro for the n-th state of the solution vector history.
-#define SOL(state) (solution[(int) getState (sState, (state))])
-
 
 // Performs the initial DC analysis.
 int trsolver::dcAnalysis (void)
@@ -412,7 +412,10 @@ void trsolver::initHistory (nr_double_t t)
         {
             c->applyHistory (tHistory);
             saveHistory (c);
-            if (c->getHistoryAge () > age) age = c->getHistoryAge ();
+            if (c->getHistoryAge () > age)
+            {
+                age = c->getHistoryAge ();
+            }
         }
     }
     // set maximum required age for all circuits
@@ -575,7 +578,11 @@ void trsolver::nextStates (void)
 {
     circuit * root = subnet->getRoot ();
     for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ())
+    {
+        // for each circuit get the next state
         c->nextState ();
+    }
+
     *SOL (0) = *x; // save current solution
     nextState ();
     statSteps++;

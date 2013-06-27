@@ -62,7 +62,8 @@ enum analysis_type
     ANALYSIS_AC,
     ANALYSIS_HBALANCE,
     ANALYSIS_TRANSIENT,
-    ANALYSIS_SPARAMETER
+    ANALYSIS_SPARAMETER,
+    ANALYSIS_E_TRANSIENT
 };
 
 /*! \class analysis

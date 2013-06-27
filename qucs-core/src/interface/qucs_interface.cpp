@@ -56,7 +56,7 @@ using namespace qucs;
 qucsint::qucsint ()
 {
 
-    int listing = 0;
+    //int listing = 0;
     ret = 0;
     err = 0;
 

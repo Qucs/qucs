@@ -7,16 +7,16 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This software is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this package; see the file COPYING.  If not, write to
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
- * Boston, MA 02110-1301, USA.  
+ * Boston, MA 02110-1301, USA.
  *
  * $Id: module.cpp 1872 2013-03-06 14:13:37Z fransschreuder $
  *
@@ -192,7 +192,7 @@ void module::registerModules (void) {
   REGISTER_CIRCUIT (msgap);
   REGISTER_CIRCUIT (msmbend);
   REGISTER_CIRCUIT (mscoupled);
-  REGISTER_CIRCUIT (mslange);  
+  REGISTER_CIRCUIT (mslange);
   REGISTER_CIRCUIT (mstee);
   REGISTER_CIRCUIT (mscross);
   REGISTER_CIRCUIT (msvia);
@@ -242,7 +242,7 @@ void module::registerModules (void) {
   REGISTER_CIRCUIT (hicumL0V1p3);
   REGISTER_CIRCUIT (hicumL2V2p23);
   REGISTER_CIRCUIT (hicumL2V2p24);
-  REGISTER_CIRCUIT (hicumL2V2p31n); 
+  REGISTER_CIRCUIT (hicumL2V2p31n);
   REGISTER_CIRCUIT (photodiode);
   REGISTER_CIRCUIT (phototransistor);
   REGISTER_CIRCUIT (nigbt);
@@ -283,6 +283,7 @@ void module::registerModules (void) {
   REGISTER_ANALYSIS (trsolver);
   REGISTER_ANALYSIS (hbsolver);
   REGISTER_ANALYSIS (parasweep);
+  REGISTER_ANALYSIS (e_trsolver);
 }
 
 // Global module unregistration.

@@ -7,16 +7,16 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This software is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this package; see the file COPYING.  If not, write to
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
- * Boston, MA 02110-1301, USA.  
+ * Boston, MA 02110-1301, USA.
  *
  * $Id$
  *
@@ -312,7 +312,7 @@ void net::orderAnalysis (void) {
 	if (cn != NULL && !strcmp (cn, child->getName ())) {
 	  a->addAnalysis (child);
 	  // apply DC analysis if necessary
-	  if (child->getType () != ANALYSIS_DC && 
+	  if (child->getType () != ANALYSIS_DC &&
 	      child->getType () != ANALYSIS_SWEEP && dc != NULL) {
 	    if (!dcApplied) removeAnalysis (dc);
 	    a->addAnalysis (dc);
@@ -547,6 +547,23 @@ void net::delNodeset (void) {
   nset = NULL;
 }
 
+/* sets the net of the action with a given index to the supplied net */
+void net::setActionNet(int index, net * subnet)
+{
+    analysis * a;
+    if (index < actions->length())
+    {
+        a = actions->get (index);
+        a->setNet(subnet);
+    }
+}
+
+/* sets the net of the action with a given index to the supplied net */
+int net::getNActions()
+{
+    return actions->length();
+}
+
 #if DEBUG
 // DEBUG function: Lists the netlist.
 void net::list (void) {
@@ -558,7 +575,7 @@ void net::list (void) {
     // list each circuit
     logprint (LOG_STATUS, "       %s[", c->getName ());
     for (int i = 0; i < c->getSize (); i++) {
-      logprint (LOG_STATUS, "%s-%d", 
+      logprint (LOG_STATUS, "%s-%d",
 		c->getNode(i)->getName (), c->getNode(i)->getNode ());
       if (i < c->getSize () - 1)
 	logprint (LOG_STATUS, ",");

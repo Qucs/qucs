@@ -29,6 +29,7 @@
 #include "tmatrix.h"
 #include "eqnsys.h"
 #include "nasolution.h"
+#include "analysis.h"
 
 // Convergence helper definitions.
 #define CONV_None            0
@@ -85,6 +86,7 @@ protected:
     void createMatrix (void);
     void storeSolution (void);
     void recallSolution (void);
+    int  checkConvergence (void);
 
 private:
     void assignVoltageSources (void);
@@ -103,7 +105,6 @@ private:
     char * createOP (const char *, const char *);
     void saveNodeVoltages (void);
     void saveBranchCurrents (void);
-    int  checkConvergence (void);
     nr_type_t MatValX (nr_complex_t, nr_complex_t *);
     nr_type_t MatValX (nr_complex_t, nr_double_t *);
 
@@ -120,6 +121,7 @@ protected:
     int eqnAlgo;
     int updateMatrix;
     nr_double_t gMin, srcFactor;
+    const char * desc;
 
 private:
     nodelist * nlist;
@@ -130,7 +132,7 @@ private:
     nasolution<nr_type_t> solution;
 
 private:
-    const char * desc;
+
     calculate_func_t calculate_func;
 };
 
