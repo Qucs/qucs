@@ -26,7 +26,7 @@ DOXYFILE_ENCODING      = UTF-8
 # identify the project. Note that if you do not use Doxywizard you need
 # to put quotes around the project name if it contains spaces.
 
-PROJECT_NAME           = Qucs
+PROJECT_NAME           = Qucs-core
 
 # The PROJECT_NUMBER tag can be used to enter a project or revision number.
 # This could be handy for archiving the generated documentation or
@@ -1677,7 +1677,7 @@ GROUP_GRAPHS           = YES
 # collaboration diagrams in a style similar to the OMG's Unified Modeling
 # Language.
 
-UML_LOOK               = NO
+UML_LOOK               = YES
 
 # If the UML_LOOK tag is enabled, the fields and methods are shown inside
 # the class node. If there are many fields or methods and many nodes the
