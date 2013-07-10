@@ -524,9 +524,9 @@ void e_trsolver::acceptstep_sync()
     {
         // make the circuit histories no longer than the total of
         // all the stored deltas in the solution history
-        //nr_double_t deltasum = 0.0;
-        //for (int i = 0; i<8; i++) deltasum += deltas[i];
-        //tHistory->setAge (deltasum);
+        nr_double_t deltasum = 0.0;
+        for (int i = 0; i<8; i++) deltasum += deltas[i];
+        tHistory->setAge (deltasum);
         // update the solution history with the new results
         updateHistory (current);
     }
