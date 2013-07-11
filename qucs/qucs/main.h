@@ -26,6 +26,7 @@
 #include "wire.h"
 #include "node.h"
 #include "diagrams/diagram.h"
+#include <QSettings>
 
 class QucsApp;
 class Component;
@@ -59,13 +60,14 @@ struct tQucsSettings {
   QString DocDir;
 
   unsigned int NodeWiring;
-
+  QDir QucsWorkDir;
+  QDir QucsHomeDir;
+  QDir OctaveBinDir;
   // registered filename extensions with program to open the file
   QStringList FileTypes;
 };
 
 extern tQucsSettings QucsSettings;  // extern because nearly everywhere used
-extern QFont savingFont;       // to remember which font to save in "qucsrc"
 
 extern QucsApp *QucsMain;  // the Qucs application itself
 extern QString lastDir;    // to remember last directory for several dialogs

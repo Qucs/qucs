@@ -40,65 +40,50 @@
 
 tQucsSettings QucsSettings;
 
-QFont savingFont;    // to remember which font to save in "qucsrc"
-
 QucsApp *QucsMain;  // the Qucs application itself
 QString lastDir;    // to remember last directory for several dialogs
+
 
 // #########################################################################
 // Loads the settings file and stores the settings.
 bool loadSettings()
 {
-  QFile file(QucsHomeDir.filePath("qucsrc"));
-  if(!file.open(QIODevice::ReadOnly)) return false; // settings file doesn't exist
+    QSettings settings("qucs","qucs");
 
-  Q3TextStream stream(&file);
-  QString Line, Setting;
+    if(settings.contains("x"))QucsSettings.x=settings.value("x").toInt();
+    if(settings.contains("y"))QucsSettings.y=settings.value("y").toInt();
+    if(settings.contains("dx"))QucsSettings.dx=settings.value("dx").toInt();
+    if(settings.contains("dy"))QucsSettings.dy=settings.value("dy").toInt();
+    if(settings.contains("font"))QucsSettings.font.fromString(settings.value("font").toString());
+    if(settings.contains("largeFontSize"))QucsSettings.largeFontSize=settings.value("largeFontSize").toDouble();
+    if(settings.contains("maxUndo"))QucsSettings.maxUndo=settings.value("maxUndo").toInt();
+    if(settings.contains("NodeWiring"))QucsSettings.NodeWiring=settings.value("NodeWiring").toInt();
+    if(settings.contains("BGColor"))QucsSettings.BGColor.setNamedColor(settings.value("BGColor").toString());
+    if(settings.contains("Editor"))QucsSettings.Editor=settings.value("Editor").toString();
+    if(settings.contains("FileTypes"))QucsSettings.FileTypes=settings.value("FileTypes").toStringList();
+    if(settings.contains("Language"))QucsSettings.Language=settings.value("Language").toString();
+    if(settings.contains("Comment"))QucsSettings.Comment.setNamedColor(settings.value("Comment").toString());
+    if(settings.contains("String"))QucsSettings.String.setNamedColor(settings.value("String").toString());
+    if(settings.contains("Integer"))QucsSettings.Integer.setNamedColor(settings.value("Integer").toString());
+    if(settings.contains("Real"))QucsSettings.Real.setNamedColor(settings.value("Real").toString());
+    if(settings.contains("Character"))QucsSettings.Character.setNamedColor(settings.value("Character").toString());
+    if(settings.contains("Type"))QucsSettings.Type.setNamedColor(settings.value("Type").toString());
+    if(settings.contains("Attribute"))QucsSettings.Attribute.setNamedColor(settings.value("Attribute").toString());
+    if(settings.contains("Directive"))QucsSettings.Directive.setNamedColor(settings.value("Directive").toString());
+    if(settings.contains("Task"))QucsSettings.Comment.setNamedColor(settings.value("Task").toString());
 
-  bool ok;
-  while(!stream.atEnd()) {
-    Line = stream.readLine();
-    Setting = Line.section('=',0,0);
-    Line    = Line.section('=',1).stripWhiteSpace();
-    if(Setting == "Position") {
-	QucsSettings.x = Line.section(",",0,0).toInt(&ok);
-	QucsSettings.y = Line.section(",",1,1).toInt(&ok); }
-    else if(Setting == "Size") {
-	QucsSettings.dx = Line.section(",",0,0).toInt(&ok);
-	QucsSettings.dy = Line.section(",",1,1).toInt(&ok); }
-    else if(Setting == "Font") {
-	QucsSettings.font.fromString(Line);
-	savingFont = QucsSettings.font;
-
-	QucsSettings.largeFontSize
-		= floor(4.0/3.0 * QucsSettings.font.pointSize());
-	}
-    else if(Setting == "BGColor") {
-	QucsSettings.BGColor.setNamedColor(Line); }
-    else if(Setting == "maxUndo") {
-	QucsSettings.maxUndo = Line.toInt(&ok); }
-    else if(Setting == "Editor") {
-	QucsSettings.Editor = Line; }
-    else if(Setting == "FileType") {
-	QucsSettings.FileTypes.append(Line); }
-    else if(Setting == "Language") {
-	QucsSettings.Language = Line; }
-    else if(Setting == "SyntaxColor") {
-	QucsSettings.Comment.setNamedColor(Line.section(",", 0,0));
-	QucsSettings.String.setNamedColor(Line.section(",", 1,1));
-	QucsSettings.Integer.setNamedColor(Line.section(",", 2,2));
-	QucsSettings.Real.setNamedColor(Line.section(",", 3,3));
-	QucsSettings.Character.setNamedColor(Line.section(",", 4,4));
-	QucsSettings.Type.setNamedColor(Line.section(",", 5,5));
-	QucsSettings.Attribute.setNamedColor(Line.section(",", 6,6));
-	QucsSettings.Directive.setNamedColor(Line.section(",", 7,7));
-	QucsSettings.Task.setNamedColor(Line.section(",", 8,8));
-    }
-    else if(Setting == "NodeWiring") {
-	QucsSettings.NodeWiring = Line.toInt(&ok); }
-  }
-
-  file.close();
+    if(settings.contains("Editor"))QucsSettings.Editor = settings.value("Editor").toString();
+    //if(settings.contains("BinDir"))QucsSettings.BinDir = settings.value("BinDir").toString();
+    //if(settings.contains("BitmapDir"))QucsSettings.BitmapDir = settings.value("BitmapDir").toString();
+    //if(settings.contains("LangDir"))QucsSettings.LangDir = settings.value("LangDir").toString();
+    //if(settings.contains("LibDir"))QucsSettings.LibDir = settings.value("LibDir").toString();
+    //if(settings.contains("AscoDir"))QucsSettings.AscoDir = settings.value("AscoDir").toString();
+    //if(settings.contains("OctaveDir"))QucsSettings.OctaveDir = settings.value("OctaveDir").toString();
+    //if(settings.contains("ExamplesDir"))QucsSettings.ExamplesDir = settings.value("ExamplesDir").toString();
+    //if(settings.contains("DocDir"))QucsSettings.DocDir = settings.value("DocDir").toString();
+    if(settings.contains("OctaveBinDir"))QucsSettings.OctaveBinDir.setPath(settings.value("OctaveBinDir").toString());
+    if(settings.contains("QucsHomeDir"))QucsSettings.QucsHomeDir.setPath(settings.value("QucsHomeDir").toString());
+    QucsSettings.QucsWorkDir = QucsSettings.QucsHomeDir;
   return true;
 }
 
@@ -106,41 +91,42 @@ bool loadSettings()
 // Saves the settings in the settings file.
 bool saveApplSettings(QucsApp *qucs)
 {
-  QFile file(QucsHomeDir.filePath("qucsrc"));
-  if(!file.open(QIODevice::WriteOnly)) {    // settings file cannot be created
-    QMessageBox::warning(0, QObject::tr("Warning"),
-			QObject::tr("Cannot save settings !"));
-    return false;
-  }
+    QSettings settings ("qucs","qucs");
 
-  Q3TextStream stream(&file);
-
-  stream << "Settings file, Qucs " PACKAGE_VERSION "\n"
-    << "Position=" << qucs->x() << "," << qucs->y() << "\n"
-    << "Size=" << qucs->width() << "," << qucs->height() << "\n"
-    << "Font=" << savingFont.toString() << "\n"
-    << "Language=" << QucsSettings.Language << "\n"
-    << "BGColor=" << QucsSettings.BGColor.name() << "\n"
-    << "maxUndo=" << QucsSettings.maxUndo << "\n"
-    << "Editor=" << QucsSettings.Editor << "\n"
-    << "SyntaxColor="
-    << QucsSettings.Comment.name() << ","
-    << QucsSettings.String.name() << ","
-    << QucsSettings.Integer.name() << ","
-    << QucsSettings.Real.name() << ","
-    << QucsSettings.Character.name() << ","
-    << QucsSettings.Type.name() << ","
-    << QucsSettings.Attribute.name() << ","
-    << QucsSettings.Directive.name() << ","
-    << QucsSettings.Task.name() << "\n"
-    << "NodeWiring=" << QucsSettings.NodeWiring << "\n";
-
-  QStringList::Iterator it = QucsSettings.FileTypes.begin();
-  while(it != QucsSettings.FileTypes.end())
-    stream << "FileType=" << (*(it++)) << "\n";
-
-  file.close();
+    settings.setValue("x", QucsSettings.x);
+    settings.setValue("y", QucsSettings.y);
+    settings.setValue("dx", QucsSettings.dx);
+    settings.setValue("dy", QucsSettings.dy);
+    settings.setValue("font", QucsSettings.font.toString());
+    settings.setValue("largeFontSize", QucsSettings.largeFontSize);
+    settings.setValue("maxUndo", QucsSettings.maxUndo);
+    settings.setValue("NodeWiring", QucsSettings.NodeWiring);
+    settings.setValue("BGColor", QucsSettings.BGColor.name());
+    settings.setValue("Editor", QucsSettings.Editor);
+    settings.setValue("FileTypes", QucsSettings.FileTypes);
+    settings.setValue("Language", QucsSettings.Language);
+    settings.setValue("Comment", QucsSettings.Comment.name());
+    settings.setValue("String", QucsSettings.String.name());
+    settings.setValue("Integer", QucsSettings.Integer.name());
+    settings.setValue("Real", QucsSettings.Real.name());
+    settings.setValue("Character", QucsSettings.Character.name());
+    settings.setValue("Type", QucsSettings.Type.name());
+    settings.setValue("Attribute", QucsSettings.Attribute.name());
+    settings.setValue("Directive", QucsSettings.Directive.name());
+    settings.setValue("Task", QucsSettings.Comment.name());
+    settings.setValue("Editor", QucsSettings.Editor);
+    //settings.setValue("BinDir", QucsSettings.BinDir);
+    //settings.setValue("BitmapDir", QucsSettings.BitmapDir);
+    //settings.setValue("LangDir", QucsSettings.LangDir);
+    //settings.setValue("LibDir", QucsSettings.LibDir);
+    //settings.setValue("AscoDir", QucsSettings.AscoDir);
+    //settings.setValue("OctaveDir", QucsSettings.OctaveDir);
+    //settings.setValue("ExamplesDir", QucsSettings.ExamplesDir);
+    //settings.setValue("DocDir", QucsSettings.DocDir);
+    settings.setValue("OctaveBinDir", QucsSettings.OctaveBinDir.canonicalPath());
+    settings.setValue("QucsHomeDir", QucsSettings.QucsHomeDir.canonicalPath());
   return true;
+
 }
 
 // #########################################################################
@@ -382,7 +368,7 @@ QString properAbsFileName(const QString& Name)
 {
   QString s = Name;
   QFileInfo Info(s);
-  if(Info.isRelative()) s = QucsWorkDir.filePath(s);
+  if(Info.isRelative()) s = QucsSettings.QucsWorkDir.filePath(s);
   return QDir::cleanDirPath(s);
 }
 
@@ -547,7 +533,6 @@ bool checkVersion(QString& Line)
 // ##########                  Program Start                      ##########
 // ##########                                                     ##########
 // #########################################################################
-
 int main(int argc, char *argv[])
 {
   // apply default settings
@@ -566,37 +551,52 @@ int main(int argc, char *argv[])
   QucsSettings.dx = w*3/4;
   QucsSettings.dy = h*3/4;
 
-  // is application relocated?
-  char * var = getenv ("QUCSDIR");
-  if (var != NULL) {
-    QDir QucsDir = QDir (var);
-    QString QucsDirStr = QucsDir.canonicalPath ();
-    QucsSettings.BinDir =
-      QDir::convertSeparators (QucsDirStr + "/bin/");
-    QucsSettings.BitmapDir =
-      QDir::convertSeparators (QucsDirStr + "/share/qucs/bitmaps/");
-    QucsSettings.LangDir =
-      QDir::convertSeparators (QucsDirStr + "/share/qucs/lang/");
-    QucsSettings.LibDir =
-      QDir::convertSeparators (QucsDirStr + "/share/qucs/library/");
-    QucsSettings.OctaveDir =
-      QDir::convertSeparators (QucsDirStr + "/share/qucs/octave/");
-    QucsSettings.ExamplesDir = 
-      QDir::convertSeparators (QucsDirStr + "/share/qucs/docs/examples/");
-    QucsSettings.DocDir = 
-      QDir::convertSeparators (QucsDirStr + "/share/qucs/docs/");
-  } else {
-    QucsSettings.BinDir = BINARYDIR;
-    QucsSettings.BitmapDir = BITMAPDIR;
-    QucsSettings.LangDir = LANGUAGEDIR;
-    QucsSettings.LibDir = LIBRARYDIR;
-    QucsSettings.OctaveDir = OCTAVEDIR;
-    QucsSettings.ExamplesDir = QDir(DOCDIR).canonicalPath()+"/examples/";
-    QucsSettings.DocDir = DOCDIR;
+  // check for relocation env variable
+  char* var = getenv("QUCSDIR");
+  QDir QucsDir;
+  if (var!= NULL)
+  {
+      QucsDir = QDir(var);
   }
+  else
+  {
+     QString QucsApplicationPath = QCoreApplication::applicationDirPath();
+     #ifdef __APPLE__
+     QucsDir = QDir(QucsApplicationPath.section("/bin",0,0));
+     #else
+     QucsDir = QDir(QucsApplicationPath.replace("/bin",""));
+     #endif
+
+  }
+
+  QucsSettings.BinDir = QucsDir.canonicalPath() + "/bin/";
+  QucsSettings.BitmapDir = QucsDir.canonicalPath() + "/share/qucs/bitmaps/";
+  QucsSettings.LangDir =QucsDir.canonicalPath() + "/share/qucs/lang/";
+  QucsSettings.LibDir =QucsDir.canonicalPath() + "/share/qucs/library/";
+  QucsSettings.OctaveDir =QucsDir.canonicalPath() + "/share/qucs/octave/";
+  QucsSettings.ExamplesDir = QucsDir.canonicalPath() + "/share/qucs/docs/examples/";
+  QucsSettings.DocDir = QucsDir.canonicalPath() + "/share/qucs/docs/";
+
   QucsSettings.Editor = QucsSettings.BinDir + "qucsedit";
-  QucsWorkDir.setPath(QDir::homeDirPath()+QDir::convertSeparators ("/.qucs"));
-  QucsHomeDir.setPath(QDir::homeDirPath()+QDir::convertSeparators ("/.qucs"));
+  QucsSettings.QucsHomeDir.setPath(QDir::homeDirPath()+QDir::convertSeparators ("/.qucs"));
+  QucsSettings.QucsWorkDir.setPath(QucsSettings.QucsHomeDir.canonicalPath());
+
+  var = getenv("OCTAVEBINDIR");
+  if(var != NULL)
+  {
+      QucsSettings.OctaveBinDir.setPath(var);
+  }
+  else
+  {
+#ifdef __MINGW32__
+      QucsSettings.OctaveBinDir.setPath("C:/Software/Octave-3.6.4/bin/");
+#else
+      QFile octaveExec("/usr/bin/octave");
+      if(octaveExec.exists())QucsSettings.OctaveBinDir.setPath("/usr/bin/");
+      QFile octaveExec1("/usr/local/bin/octave");
+      if(octaveExec1.exists()) QucsSettings.OctaveBinDir.setPath("/usr/local/bin/");
+#endif
+  }
   loadSettings();
 
   if(!QucsSettings.BGColor.isValid())
@@ -622,23 +622,7 @@ int main(int argc, char *argv[])
   if(!QucsSettings.Task.isValid())
     QucsSettings.Task = Qt::darkRed;
 
-  var = getenv ("ASCODIR");
-  if (var != NULL) {
-    QDir AscoDir = QDir (var);
-    QString AscoDirStr = AscoDir.canonicalPath ();
-    QucsSettings.AscoDir =
-      QDir::convertSeparators (AscoDirStr + "/bin/");
-  } 
-  else {
-    QFile file("/usr/local/bin/asco");
-    if ( file.exists() ){
-      QucsSettings.AscoDir =
-          QDir::convertSeparators ("/usr/local/bin/");
-      file.close();
-    }
-    else
-      QucsSettings.AscoDir = "";
-  }
+    QucsSettings.AscoDir = QucsSettings.BinDir;
 
   a.setFont(QucsSettings.font);
 
@@ -657,6 +641,6 @@ int main(int argc, char *argv[])
   a.setMainWidget(QucsMain);
   QucsMain->show();
   int result = a.exec();
-  saveApplSettings(QucsMain);
+  //saveApplSettings(QucsMain);
   return result;
 }

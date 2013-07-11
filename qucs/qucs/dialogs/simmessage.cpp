@@ -121,7 +121,7 @@ SimMessage::SimMessage(QWidget *w, QWidget *parent)
 
 SimMessage::~SimMessage()
 {
-  if(SimProcess.Running)  SimProcess.kill();
+  if(SimProcess.state()==QProcess::Running)  SimProcess.kill();
   delete all;
 }
 
@@ -133,21 +133,21 @@ bool SimMessage::startProcess()
 
   QString txt = tr("Starting new simulation on %1 at %2").
     arg(QDate::currentDate().toString("ddd dd. MMM yyyy")).
-    arg(QTime::currentTime().toString("hh:mm:ss"));
+    arg(QTime::currentTime().toString("hh:mm:ss:zzz"));
   ProgText->insert(txt + "\n\n");
   
   SimProcess.blockSignals(false);
- /* On Qt4 it shows as running even before we .start it. FIXME
-  if(SimProcess.Running) {
+ /* On Qt4 it shows as running even before we .start it. FIXME*/
+  if(SimProcess.state()==QProcess::Running ||SimProcess.state()==QProcess::Starting) {
     qDebug() << "running!";  
     ErrText->insert(tr("ERROR: Simulator is still running!"));
     FinishSimulation(-1);
     return false;
   }
-*/
+
   Collect.clear();  // clear list for NodeSets, SPICE components etc.
   ProgText->insert(tr("creating netlist... "));
-  NetlistFile.setName(QucsHomeDir.filePath("netlist.txt"));
+  NetlistFile.setName(QucsSettings.QucsHomeDir.filePath("netlist.txt"));
    if(!NetlistFile.open(QIODevice::WriteOnly)) {
     ErrText->insert(tr("ERROR: Cannot write netlist file!"));
     FinishSimulation(-1);
@@ -219,7 +219,7 @@ void SimMessage::nextSPICE()
 
   QFile SpiceFile;
   if(FileName.find(QDir::separator()) < 0)  // add path ?
-    SpiceFile.setName(QucsWorkDir.path() + QDir::separator() + FileName);
+    SpiceFile.setName(QucsSettings.QucsWorkDir.path() + QDir::separator() + FileName);
   else
     SpiceFile.setName(FileName);
   if(!SpiceFile.open(QIODevice::ReadOnly)) {
@@ -322,7 +322,7 @@ void SimMessage::startSimulator()
   QString SimTime;
   QString Program;
   QStringList Arguments;
-  QString SimPath = QDir::convertSeparators (QucsHomeDir.absPath());
+  QString SimPath = QDir::convertSeparators (QucsSettings.QucsHomeDir.absPath());
 #ifdef __MINGW32__
   QString QucsDigiLib = "qucsdigilib.bat";
   QString QucsDigi = "qucsdigi.bat";
@@ -375,7 +375,7 @@ void SimMessage::startSimulator()
       QString entity = VInfo.EntityName.lower();
       QString lib = Doc->Library.lower();
       if (lib.isEmpty()) lib = "work";
-      QString dir = QDir::convertSeparators (QucsHomeDir.path());
+      QString dir = QDir::convertSeparators (QucsSettings.QucsHomeDir.path());
       QDir vhdlDir(dir);
       if(!vhdlDir.exists("vhdl"))
 	if(!vhdlDir.mkdir("vhdl")) {
@@ -443,14 +443,14 @@ void SimMessage::startSimulator()
       if((SimOpt = findOptimization((Schematic*)DocWidget))) {
 	    ((Optimize_Sim*)SimOpt)->createASCOnetlist();
 	    Program = QucsSettings.AscoDir + "asco"+ executablePostfix; 
-        Arguments << "-qucs" << QucsHomeDir.filePath("asco_netlist.txt") 
+        Arguments << "-qucs" << QucsSettings.QucsHomeDir.filePath("asco_netlist.txt")
                   << "-o" << "asco_out";
       }
       else {
 	    Program = QucsSettings.BinDir + "qucsator" + executablePostfix;
 
         Arguments << "-b" << "-g" << "-i" 
-                  << QucsHomeDir.filePath("netlist.txt") 
+                  << QucsSettings.QucsHomeDir.filePath("netlist.txt")
                   << "-o" << DataSet;
       }
     } else {
@@ -614,32 +614,32 @@ void SimMessage::FinishSimulation(int Status)
   if(Status == 0) {
     QString txt = tr("Simulation ended on %1 at %2").
       arg(d.toString("ddd dd. MMM yyyy")).
-      arg(t.toString("hh:mm:ss"));
+      arg(t.toString("hh:mm:ss:zzz"));
     ProgText->insert("\n" + txt + "\n" + tr("Ready.") + "\n");
   }
   else {
     QString txt = tr("Errors occurred during simulation on %1 at %2").
       arg(d.toString("ddd dd. MMM yyyy")).
-      arg(t.toString("hh:mm:ss"));
+      arg(t.toString("hh:mm:ss:zzz"));
     ProgText->insert("\n" + txt + "\n" + tr("Aborted.") + "\n");
   }
 
-  QFile file(QucsHomeDir.filePath("log.txt"));  // save simulator messages
+  QFile file(QucsSettings.QucsHomeDir.filePath("log.txt"));  // save simulator messages
   if(file.open(QIODevice::WriteOnly)) {
     int z;
     QTextStream stream(&file);
     stream << tr("Output:\n-------") << "\n\n";
-    for(z=0; z<=ProgText->document()->blockCount(); z++)
-      stream << ProgText->document()->findBlock(z).text() << "\n";
+    for(int z=0; z<ProgText->document()->blockCount(); z++)
+      stream << ProgText->document()->findBlockByNumber(z).text() << "\n";
     stream << "\n\n\n" << tr("Errors:\n-------") << "\n\n";
-    for(z=0; z<ErrText->document()->blockCount(); z++)
-      stream << ErrText->document()->findBlock(z).text() << "\n";
+    for(int z=0; z<ErrText->document()->blockCount(); z++)
+      stream << ErrText->document()->findBlockByNumber(z).text() << "\n";
     file.close();
   }
 
   if(Status == 0) {
     if(SimOpt) { // save optimization data
-      QFile ifile(QucsHomeDir.filePath("asco_out.dat"));
+      QFile ifile(QucsSettings.QucsHomeDir.filePath("asco_out.dat"));
       QFile ofile(DataSet);
       if(ifile.open(QIODevice::ReadOnly)) {
 	if(ofile.open(QIODevice::WriteOnly)) {

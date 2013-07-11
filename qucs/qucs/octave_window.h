@@ -6,10 +6,9 @@
 #ifndef OCTAVE_WINDOW_H
 #define OCTAVE_WINDOW_H
 
-#include <qwidget.h>
-#include <q3process.h>
-#include <qstringlist.h>
-//Added by qt3to4:
+#include <QWidget>
+#include <QProcess>
+#include <QStringList>
 #include <QKeyEvent>
 #include <Q3VBoxLayout>
 #include <QDockWidget>
@@ -35,7 +34,7 @@ public:
 private slots:
   void slotDisplayMsg();
   void slotDisplayErr();
-  void slotOctaveEnded();
+  void slotOctaveEnded(int status);
   void slotSendCommand();
 
 protected:
@@ -46,7 +45,7 @@ private:
   Q3TextEdit *output;
   QLineEdit *input;
 
-  Q3Process octProcess;
+  QProcess octProcess;
 
   QStringList cmdHistory;
   QStringList::Iterator histIterator;

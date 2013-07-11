@@ -18,7 +18,12 @@
 #include <Q3VBoxLayout>
 #include <QKeyEvent>
 
-extern QDir QucsWorkDir;  // current project path
+#ifdef __MINGW32__
+#define executableSuffix ".exe"
+#else
+#define executableSuffix ""
+#endif
+
 
 OctaveWindow::OctaveWindow(QDockWidget *parent_): QWidget(parent_, 0)
 {
@@ -55,7 +60,7 @@ OctaveWindow::OctaveWindow(QDockWidget *parent_): QWidget(parent_, 0)
 // -----------------------------------------------------------------
 OctaveWindow::~OctaveWindow()
 {
-  if(octProcess.isRunning())
+  if(octProcess.state()==QProcess::Running)
     octProcess.kill();
 }
 
@@ -74,22 +79,41 @@ QSize OctaveWindow::sizeHint()
 // ------------------------------------------------------------------------
 bool OctaveWindow::startOctave()
 {
-  if(octProcess.isRunning())
+  if(octProcess.state()==QProcess::Running)
     return true;
 
-  QStringList CommandLine;
-  CommandLine << "octave" << "--no-history" << "-i" << "-f" << "-p"
-	      << QDir::convertSeparators(QucsSettings.OctaveDir);
-  octProcess.setArguments(CommandLine);
+  QString OctavePath=QucsSettings.OctaveBinDir.canonicalPath();
+
+
+  QString Program;
+  QStringList Arguments;
+
+  OctavePath = QDir::toNativeSeparators(OctavePath+"/"+"octave"+QString(executableSuffix));
+
+  Program = OctavePath;
+  Arguments << "--no-history" << "-i" << "-f" << "-p"
+            << QDir::toNativeSeparators(QucsSettings.OctaveDir); // m-files location
 
   disconnect(&octProcess, 0, 0, 0);
-  connect(&octProcess, SIGNAL(readyReadStderr()), SLOT(slotDisplayErr()));
-  connect(&octProcess, SIGNAL(readyReadStdout()), SLOT(slotDisplayMsg()));
-  connect(&octProcess, SIGNAL(processExited()), SLOT(slotOctaveEnded()));
+  connect(&octProcess, SIGNAL(readyReadStandardError()), SLOT(slotDisplayErr()));
+  connect(&octProcess, SIGNAL(readyReadStandardOutput()), SLOT(slotDisplayMsg()));
+  connect(&octProcess, SIGNAL(finished(int)), SLOT(slotOctaveEnded(int)));
+#ifdef __MINGW32__
+  QString sep(";"); // path separator
+#else
+  QString sep(":");
+#endif
 
+  // append process PATH, othewise Octave does not find gnuplot
+  QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
+  env.insert("PATH", env.value("PATH") + sep + QucsSettings.BinDir );
+  octProcess.setProcessEnvironment(env);
   output->clear();
 
-  if(!octProcess.start()) {
+  octProcess.start(Program, Arguments);
+
+  if(octProcess.state()!=QProcess::Running&&
+          octProcess.state()!=QProcess::Starting) {
     output->setText(tr("ERROR: Cannot start Octave!"));
     return false;
   }
@@ -101,7 +125,7 @@ bool OctaveWindow::startOctave()
 // ------------------------------------------------------------------------
 void OctaveWindow::adjustDirectory()
 {
-  sendCommand("cd \"" + QucsWorkDir.absPath() + "\"");
+  sendCommand("cd \"" + QucsSettings.QucsWorkDir.absPath() + "\"");
 }
 
 // ------------------------------------------------------------------------
@@ -112,7 +136,8 @@ void OctaveWindow::sendCommand(const QString& cmd)
   QString cmdstr = cmd + "\n";
   output->insertAt(cmdstr, par, idx);
   output->scrollToBottom();
-  octProcess.writeToStdin(cmdstr);
+  //octProcess.writeToStdin(cmdstr);
+  octProcess.write(cmdstr);
 }
 
 // ------------------------------------------------------------------------
@@ -158,7 +183,7 @@ void OctaveWindow::slotDisplayMsg()
 {
   int par = output->paragraphs() - 1;
   int idx = output->paragraphLength(par);
-  output->insertAt(QString(octProcess.readStdout()), par, idx);
+  output->insertAt(QString(octProcess.readAllStandardOutput()), par, idx);
   output->scrollToBottom();
 }
 
@@ -171,13 +196,14 @@ void OctaveWindow::slotDisplayErr()
 
   int par = output->paragraphs() - 1;
   int idx = output->paragraphLength(par);
-  output->insertAt(QString(octProcess.readStderr()), par, idx);
+  output->insertAt(QString(octProcess.readAllStandardError()), par, idx);
   output->scrollToBottom();
 }
 
 // ------------------------------------------------------------------------
 // Is called when the simulation process terminates.
-void OctaveWindow::slotOctaveEnded()
+void OctaveWindow::slotOctaveEnded(int status)
 {
+  qDebug() << "Octave ended status" << status;
   output->clear();
 }

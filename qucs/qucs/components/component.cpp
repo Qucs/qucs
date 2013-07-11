@@ -378,7 +378,9 @@ void Component::print(ViewPainter *p, float FontScale)
 // Rotates the component 90 counter-clockwise around its center
 void Component::rotate()
 {
-  if(Ports.count() < 1) return;  // do not rotate components without ports
+  // Port count only available after recreate, createSymbol
+  if ((Model != "Sub") && (Model !="VHDL") && (Model != "Verilog")) // skip port count
+    if(Ports.count() < 1) return;  // do not rotate components without ports
   int tmp, dx, dy;
 
   // rotate all lines
@@ -476,7 +478,9 @@ void Component::rotate()
 // Mirrors the component about the x-axis.
 void Component::mirrorX()
 {
-  if(Ports.count() < 1) return;  // do not rotate components without ports
+  // Port count only available after recreate, createSymbol
+  if ((Model != "Sub") && (Model !="VHDL") && (Model != "Verilog")) // skip port count
+    if(Ports.count() < 1) return;  // do not rotate components without ports
 
   // mirror all lines
   for(Line *p1 = Lines.first(); p1 != 0; p1 = Lines.next()) {
@@ -536,7 +540,9 @@ void Component::mirrorX()
 // Mirrors the component about the y-axis.
 void Component::mirrorY()
 {
-  if(Ports.count() < 1) return;  // do not rotate components without ports
+  // Port count only available after recreate, createSymbol
+  if ((Model != "Sub") && (Model !="VHDL") && (Model != "Verilog")) // skip port count
+    if(Ports.count() < 1) return;  // do not rotate components without ports
 
   // mirror all lines
   for(Line *p1 = Lines.first(); p1 != 0; p1 = Lines.next()) {
@@ -1247,8 +1253,14 @@ void MultiViewComponent::recreate(Schematic *Doc)
   
   bool mmir = mirroredX;
   int  rrot = rotated;
-  if(mmir)  mirrorX();   // mirror
-  for(int z=0; z<rrot; z++)  rotate(); // rotate
+  if (mmir && rrot==2) // mirrorX and rotate 180 = mirrorY
+    mirrorY(); 
+  else  {
+    if(mmir)
+      mirrorX();   // mirror
+    if (rrot)
+      for(int z=0; z<rrot; z++)  rotate(); // rotate
+  }
 
   rotated = rrot;   // restore properties (were changed by rotate/mirror)
   mirroredX = mmir;

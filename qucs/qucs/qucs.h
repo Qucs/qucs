@@ -36,6 +36,7 @@
 #include <QTabWidget>
 #include <QDockWidget>
 //#include <QListWidget>
+#include <QSettings>
 
 class QucsDoc;
 class Schematic;
@@ -64,16 +65,12 @@ typedef bool (Schematic::*pToggleFunc) ();
 typedef void (MouseActions::*pMouseFunc) (Schematic*, QMouseEvent*);
 typedef void (MouseActions::*pMouseFunc2) (Schematic*, QMouseEvent*, float, float);
 
-extern QDir QucsWorkDir;
-extern QDir QucsHomeDir;
-
-
 class QucsApp : public QMainWindow {
   Q_OBJECT
 public:
   QucsApp();
  ~QucsApp();
-
+  QSettings *qucsSettings;
   bool closeAllFiles();
   static int testFile(const QString&);
   bool gotoPage(const QString&);   // to load a document
@@ -158,7 +155,6 @@ private slots:
   void slotChangePage(QString&, QString&);
   void slotNextTab();
   void slotHideEdit();
-
 signals:
   void signalKillEmAll();
 
@@ -215,8 +211,6 @@ private:
   void printCurrentDocument(bool);
   bool saveFile(QucsDoc *Doc=0);
   bool saveAs();
-  void readProjects();
-  void readProjectFiles();
   void openProject(const QString&, const QString&);
   bool deleteProject(const QString&, const QString&);
   void updatePortNumber(QucsDoc*, int);
@@ -227,7 +221,10 @@ private:
   bool deleteDirectoryContent(QDir& Dir);
   bool isTextDocument(QWidget *);
   void closeFile(int);
+public:
 
+  void readProjects();
+  void readProjectFiles();
 
 /* **************************************************
    *****  The following methods are located in  *****
@@ -304,6 +301,7 @@ public slots:
   void slotInsertPort(bool);
   void slotInsertEntity();
   void slotSetWire(bool);
+  void slotEscape();
   void slotSelect(bool);
   void slotEditActivate(bool);
   void slotInsertLabel(bool);

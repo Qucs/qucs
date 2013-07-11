@@ -35,7 +35,7 @@
 #include <qpushbutton.h>
 #include <q3listbox.h>
 #include <qcheckbox.h>
-#include <q3process.h>
+#include <QProcess>
 #include <qmessagebox.h>
 #include <qcombobox.h>
 
@@ -259,8 +259,8 @@ void SpiceDialog::slotButtBrowse()
   lastDir = Info.dirPath(true);  // remember last directory
 
   // snip path if file in current directory
-  if(QucsWorkDir.exists(Info.fileName()) &&
-     QucsWorkDir.absPath() == Info.dirPath(true)) s = Info.fileName();
+  if(QucsSettings.QucsWorkDir.exists(Info.fileName()) &&
+     QucsSettings.QucsWorkDir.absPath() == Info.dirPath(true)) s = Info.fileName();
   FileEdit->setText(s);
 
   Comp->Props.at(1)->Value = "";
@@ -282,7 +282,7 @@ bool SpiceDialog::loadSpiceNetList(const QString& s)
 {
   Comp->withSim = false;
   if(s.isEmpty()) return false;
-  QFileInfo FileInfo(QucsWorkDir, s);
+  QFileInfo FileInfo(QucsSettings.QucsWorkDir, s);
 
   NodesList->clear();
   PortsList->clear();
@@ -307,22 +307,23 @@ bool SpiceDialog::loadSpiceNetList(const QString& s)
       piping = false;
     }
     script = QucsSettings.BinDir + script;
-    SpicePrep = new Q3Process(this);
-    SpicePrep->addArgument(interpreter);
-    SpicePrep->addArgument(script);
-    SpicePrep->addArgument(FileInfo.filePath());
+    QString spiceCommand;
+    SpicePrep = new QProcess(this);
+    spiceCommand+=interpreter+" ";
+    spiceCommand+=script+" ";
+    spiceCommand+=FileInfo.filePath()+" ";
 
     QFile PrepFile;
-    QFileInfo PrepInfo(QucsWorkDir, s + ".pre");
+    QFileInfo PrepInfo(QucsSettings.QucsWorkDir, s + ".pre");
     QString PrepName = PrepInfo.filePath();
 
     if (!piping) {
-      SpicePrep->addArgument(PrepName);
-      connect(SpicePrep, SIGNAL(readyReadStdout()), SLOT(slotSkipOut()));
-      connect(SpicePrep, SIGNAL(readyReadStderr()), SLOT(slotGetPrepErr()));
+      spiceCommand+=PrepName+" ";
+      connect(SpicePrep, SIGNAL(readyReadStandardOutput()), SLOT(slotSkipOut()));
+      connect(SpicePrep, SIGNAL(readyReadStandardError()), SLOT(slotGetPrepErr()));
     } else {
-      connect(SpicePrep, SIGNAL(readyReadStdout()), SLOT(slotGetPrepOut()));
-      connect(SpicePrep, SIGNAL(readyReadStderr()), SLOT(slotGetPrepErr()));
+      connect(SpicePrep, SIGNAL(readyReadStandardOutput()), SLOT(slotGetPrepOut()));
+      connect(SpicePrep, SIGNAL(readyReadStandardError()), SLOT(slotGetPrepErr()));
     }
 
     QMessageBox *MBox = new QMessageBox(tr("Info"),
@@ -342,8 +343,8 @@ bool SpiceDialog::loadSpiceNetList(const QString& s)
       }
       prestream = new Q3TextStream(&PrepFile);
     }
-
-    if(!SpicePrep->start()) {
+    SpicePrep->start(spiceCommand);
+    if(SpicePrep->state()!=QProcess::Starting&&SpicePrep->state()!=QProcess::Running) {
       QMessageBox::critical(this, tr("Error"),
         tr("Cannot execute \"%1\".").arg(interpreter + " " + script));
       if (piping) {
@@ -352,7 +353,7 @@ bool SpiceDialog::loadSpiceNetList(const QString& s)
       }
       return false;
     }
-    SpicePrep->closeStdin();
+    //SpicePrep->closeStdin();
 
     MBox->exec();
     delete SpicePrep;
@@ -365,20 +366,15 @@ bool SpiceDialog::loadSpiceNetList(const QString& s)
       QMessageBox::critical(this, tr("SPICE Preprocessor Error"), Error);
       return false;
     }
-    FileInfo = QFileInfo(QucsWorkDir, s + ".pre");
+    FileInfo = QFileInfo(QucsSettings.QucsWorkDir, s + ".pre");
   }
 
   // first call Qucsconv ............
-  QucsConv = new Q3Process(this);
-  QucsConv->addArgument(QucsSettings.BinDir + "qucsconv");
-  QucsConv->addArgument("-if");
-  QucsConv->addArgument("spice");
-  QucsConv->addArgument("-of");
-  QucsConv->addArgument("qucs");
-  QucsConv->addArgument("-i");
-  QucsConv->addArgument(FileInfo.filePath());
-  connect(QucsConv, SIGNAL(readyReadStdout()), SLOT(slotGetNetlist()));
-  connect(QucsConv, SIGNAL(readyReadStderr()), SLOT(slotGetError()));
+  QucsConv = new QProcess(this);
+  QString QucsconvCmd = QucsSettings.BinDir + "qucsconv -if spice -of qucs -i"+
+          FileInfo.filePath();
+  connect(QucsConv, SIGNAL(readyReadStandardOutput()), SLOT(slotGetNetlist()));
+  connect(QucsConv, SIGNAL(readyReadStandardError()), SLOT(slotGetError()));
 
   QMessageBox *MBox = new QMessageBox(tr("Info"),
 	       tr("Converting SPICE file \"%1\".").arg(FileInfo.filePath()),
@@ -386,13 +382,13 @@ bool SpiceDialog::loadSpiceNetList(const QString& s)
                QMessageBox::NoButton, QMessageBox::NoButton, this, 0, true,
 	       Qt::WStyle_DialogBorder |  Qt::WDestructiveClose);
   connect(QucsConv, SIGNAL(processExited()), MBox, SLOT(close()));
-
-  if(!QucsConv->start()) {
+  QucsConv->start(QucsconvCmd);
+  if(QucsConv->state()!=QProcess::Starting&&QucsConv->state()!=QProcess::Running) {
     QMessageBox::critical(this, tr("Error"),
       tr("Cannot execute \"%1\".").arg(QucsSettings.BinDir + "qucsconv"));
     return false;
   }
-  QucsConv->closeStdin();
+  //QucsConv->closeStdin();
 
   MBox->exec();
   delete QucsConv;
@@ -422,31 +418,31 @@ bool SpiceDialog::loadSpiceNetList(const QString& s)
 // -------------------------------------------------------------------------
 void SpiceDialog::slotSkipErr()
 {
-  SpicePrep->readStderr();
+  SpicePrep->read(9999);
 }
 
 // -------------------------------------------------------------------------
 void SpiceDialog::slotSkipOut()
 {
-  SpicePrep->readStdout();
+  SpicePrep->read(9999);
 }
 
 // -------------------------------------------------------------------------
 void SpiceDialog::slotGetPrepErr()
 {
-  Error += QString(SpicePrep->readStderr());
+  Error += QString(SpicePrep->read(9999));
 }
 
 // -------------------------------------------------------------------------
 void SpiceDialog::slotGetPrepOut()
 {
-  (*prestream) << QString(SpicePrep->readStdout());
+  (*prestream) << QString(SpicePrep->read(9999));
 }
 
 // -------------------------------------------------------------------------
 void SpiceDialog::slotGetError()
 {
-  Error += QString(QucsConv->readStderr());
+  Error += QString(QucsConv->read(9999));
 }
 
 // -------------------------------------------------------------------------
@@ -454,7 +450,7 @@ void SpiceDialog::slotGetNetlist()
 {
   int i;
   QString s;
-  Line += QString(QucsConv->readStdout());
+  Line += QString(QucsConv->read(9999));
 
   while((i = Line.find('\n')) >= 0) {
 
@@ -506,7 +502,7 @@ void SpiceDialog::slotGetNetlist()
 // -------------------------------------------------------------------------
 void SpiceDialog::slotButtEdit()
 {
-  Doc->App->editFile(QucsWorkDir.filePath(FileEdit->text()));
+  Doc->App->editFile(QucsSettings.QucsWorkDir.filePath(FileEdit->text()));
 }
 
 // -------------------------------------------------------------------------
