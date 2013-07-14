@@ -1724,19 +1724,19 @@ constant * evaluate::arcoth_v (constant * args) {
 constant * evaluate:: QUCS_CONCAT2 (cfunc,_d) (constant * args) {   \
   _ARD0 (d);							    \
   _DEFD ();							    \
-  _RETD (real (cfunc (rect (d, 0))));				    \
+  _RETD (real (cfunc (nr_complex_t (d, 0))));				    \
 }								    \
 constant * evaluate:: QUCS_CONCAT2 (cfunc,_d_d) (constant * args) { \
   _ARD0 (d);							    \
   _ARD1 (z);							    \
   _DEFD ();							    \
-  _RETD (real (cfunc (rect (d, 0), z)));			    \
+  _RETD (real (cfunc (nr_complex_t (d, 0), z)));			    \
 }								    \
 constant * evaluate:: QUCS_CONCAT2 (cfunc,_d_c) (constant * args) { \
   _ARD0 (d);							    \
   _ARC1 (z);							    \
   _DEFC ();							    \
-  _RETC (cfunc (rect (d, 0), *z));				    \
+  _RETC (cfunc (nr_complex_t (d, 0), *z));				    \
 }								    \
 constant * evaluate:: QUCS_CONCAT2 (cfunc,_c) (constant * args) {   \
   _ARC0 (c);							    \
@@ -2291,7 +2291,7 @@ constant * evaluate:: QUCS_CONCAT2 (cfunc,_m_d) (constant * args) {  \
   _ARM0 (m);							     \
   _ARD1 (z);							     \
   _DEFM ();							     \
-  _RETM (cfunc (*m, rect (z, 0)));				     \
+  _RETM (cfunc (*m, nr_complex_t (z, 0)));				     \
 }								     \
 constant * evaluate:: QUCS_CONCAT2 (cfunc,_m_c) (constant * args) {  \
   _ARM0 (m);							     \
@@ -2314,7 +2314,7 @@ constant * evaluate:: QUCS_CONCAT2 (cfunc,_mv_d) (constant * args) { \
   _ARMV0 (m);							     \
   _ARD1 (z);							     \
   _DEFMV ();							     \
-  _RETMV (cfunc (*m, rect (z, 0)));				     \
+  _RETMV (cfunc (*m, nr_complex_t (z, 0)));				     \
 }								     \
 constant * evaluate:: QUCS_CONCAT2 (cfunc,_mv_c) (constant * args) { \
   _ARMV0 (m);							     \
@@ -2406,14 +2406,14 @@ constant * evaluate::stos_m_d_d (constant * args) {
 constant * evaluate::stos_m_d_c (constant * args) {
   _ARM0 (m); _ARD1 (zref); _ARC2 (z0); _DEFM ();
   _CHKM (m);
-  _RETM (stos (*m, rect (zref, 0), *z0));
+  _RETM (stos (*m, nr_complex_t (zref, 0), *z0));
 }
 
 // Function -- MATRIX stos (MATRIX, COMPLEX, DOUBLE)
 constant * evaluate::stos_m_c_d (constant * args) {
   _ARM0 (m); _ARC1 (zref); _ARD2 (z0); _DEFM ();
   _CHKM (m);
-  _RETM (stos (*m, *zref, rect (z0, 0)));
+  _RETM (stos (*m, *zref, nr_complex_t (z0, 0)));
 }
 
 // Function -- MATRIX stos (MATRIX, COMPLEX, COMPLEX)
@@ -2434,7 +2434,7 @@ constant * evaluate::stos_m_v (constant * args) {
 constant * evaluate::stos_m_v_d (constant * args) {
   _ARM0 (m); _ARV1 (zref); _ARD2 (z0); _DEFM ();
   _CHKM (m); _CHKMA (m, m->getRows () == zref->getSize ());
-  _RETM (stos (*m, *zref, rect (z0, 0)));
+  _RETM (stos (*m, *zref, nr_complex_t (z0, 0)));
 }
 
 // Function -- MATRIX stos (MATRIX, VECTOR, COMPLEX)
@@ -2448,7 +2448,7 @@ constant * evaluate::stos_m_v_c (constant * args) {
 constant * evaluate::stos_m_d_v (constant * args) {
   _ARM0 (m); _ARD1 (zref); _ARV2 (z0); _DEFM ();
   _CHKM (m); _CHKMA (m, m->getRows () == z0->getSize ());
-  _RETM (stos (*m, rect (zref, 0), *z0));
+  _RETM (stos (*m, nr_complex_t (zref, 0), *z0));
 }
 
 // Function -- MATRIX stos (MATRIX, COMPLEX, VECTOR)
@@ -2491,14 +2491,14 @@ constant * evaluate::stos_mv_d_d (constant * args) {
 constant * evaluate::stos_mv_d_c (constant * args) {
   _ARMV0 (mv); _ARD1 (zref); _ARC2 (z0); _DEFMV ();
   _CHKMV (mv);
-  _RETMV (stos (*mv, rect (zref, 0), *z0));
+  _RETMV (stos (*mv, nr_complex_t (zref, 0), *z0));
 }
 
 // Function -- MATVEC stos (MATVEC, COMPLEX, DOUBLE)
 constant * evaluate::stos_mv_c_d (constant * args) {
   _ARMV0 (mv); _ARC1 (zref); _ARD2 (z0); _DEFMV ();
   _CHKMV (mv);
-  _RETMV (stos (*mv, *zref, rect (z0, 0)));
+  _RETMV (stos (*mv, *zref, nr_complex_t (z0, 0)));
 }
 
 // Function -- MATVEC stos (MATVEC, COMPLEX, COMPLEX)
@@ -2519,7 +2519,7 @@ constant * evaluate::stos_mv_v (constant * args) {
 constant * evaluate::stos_mv_v_d (constant * args) {
   _ARMV0 (mv); _ARV1 (zref); _ARD2 (z0); _DEFMV ();
   _CHKMV (mv); _CHKMVA (mv, mv->getRows () == zref->getSize ());
-  _RETMV (stos (*mv, *zref, rect (z0, 0)));
+  _RETMV (stos (*mv, *zref, nr_complex_t (z0, 0)));
 }
 
 // Function -- MATVEC stos (MATVEC, VECTOR, COMPLEX)
@@ -2533,7 +2533,7 @@ constant * evaluate::stos_mv_v_c (constant * args) {
 constant * evaluate::stos_mv_d_v (constant * args) {
   _ARMV0 (mv); _ARD1 (zref); _ARV2 (z0); _DEFMV ();
   _CHKMV (mv); _CHKMVA (mv, mv->getRows () == z0->getSize ());
-  _RETMV (stos (*mv, rect (zref, 0), *z0));
+  _RETMV (stos (*mv, nr_complex_t (zref, 0), *z0));
 }
 
 // Function -- MATVEC stos (MATVEC, COMPLEX, VECTOR)
@@ -2769,7 +2769,7 @@ constant * evaluate::noise_circle_d_v (constant * args) {
   int i, a, j; nr_complex_t v;
   for (i = 0, j = 0; i < C.getSize (); i++) {
     for (a = 0; a < arc->getSize (); a++, j++) {
-      v = C.get (i) + R.get (i) * exp (rect (0, 1) * rad (arc->get (a)));
+      v = C.get (i) + R.get (i) * exp (nr_complex_t (0, 1) * rad (arc->get (a)));
       circle->set (v, j);
     }
   }
@@ -2807,7 +2807,7 @@ constant * evaluate::noise_circle_v_v (constant * args) {
     C = *Sopt / (1 + N);
     for (i = 0; i < C.getSize (); i++) {
       for (a = 0; a < arc->getSize (); a++) {
-	v = C.get (i) + R.get (i) * exp (rect (0, 1) * rad (arc->get (a)));
+	v = C.get (i) + R.get (i) * exp (nr_complex_t (0, 1) * rad (arc->get (a)));
 	j = i * F->getSize () * arc->getSize () + f * arc->getSize () + a;
 	circle->set (v, j);
       }
@@ -2846,7 +2846,7 @@ constant * evaluate::stab_circle_l_v (constant * args) {
   int a, d, i; nr_complex_t v;
   for (i = 0, d = 0; i < S->getSize (); i++) {
     for (a = 0; a < arc->getSize (); a++, d++) {
-      v = C.get (i) + R.get (i) * exp (rect (0, 1) * rad (arc->get (a)));
+      v = C.get (i) + R.get (i) * exp (nr_complex_t (0, 1) * rad (arc->get (a)));
       circle->set (v, d);
     }
   }
@@ -2877,7 +2877,7 @@ constant * evaluate::stab_circle_s_v (constant * args) {
   int a, d, i; nr_complex_t v;
   for (i = 0, d = 0; i < S->getSize (); i++) {
     for (a = 0; a < arc->getSize (); a++, d++) {
-      v = C.get (i) + R.get (i) * exp (rect (0, 1) * rad (arc->get (a)));
+      v = C.get (i) + R.get (i) * exp (nr_complex_t (0, 1) * rad (arc->get (a)));
       circle->set (v, d);
     }
   }
@@ -2917,7 +2917,7 @@ constant * evaluate::ga_circle_d_v (constant * args) {
   int i, a, j; nr_complex_t v;
   for (i = 0, j = 0; i < C.getSize (); i++) {
     for (a = 0; a < arc->getSize (); a++, j++) {
-      v = C.get (i) + R.get (i) * exp (rect (0, 1) * rad (arc->get (a)));
+      v = C.get (i) + R.get (i) * exp (nr_complex_t (0, 1) * rad (arc->get (a)));
       circle->set (v, j);
     }
   }
@@ -2957,7 +2957,7 @@ constant * evaluate::ga_circle_v_v (constant * args) {
     R = sqrt (1 - 2 * k * g * abs (s) + g * g * norm (s)) / abs (d);
     for (i = 0; i < C.getSize (); i++) {
       for (a = 0; a < arc->getSize (); a++) {
-	v = C.get (i) + R.get (i) * exp (rect (0, 1) * rad (arc->get (a)));
+	v = C.get (i) + R.get (i) * exp (nr_complex_t (0, 1) * rad (arc->get (a)));
 	j = i * G->getSize () * arc->getSize () + f * arc->getSize () + a;
 	circle->set (v, j);
       }
@@ -3002,7 +3002,7 @@ constant * evaluate::gp_circle_d_v (constant * args) {
   int i, a, j; nr_complex_t v;
   for (i = 0, j = 0; i < C.getSize (); i++) {
     for (a = 0; a < arc->getSize (); a++, j++) {
-      v = C.get (i) + R.get (i) * exp (rect (0, 1) * rad (arc->get (a)));
+      v = C.get (i) + R.get (i) * exp (nr_complex_t (0, 1) * rad (arc->get (a)));
       circle->set (v, j);
     }
   }
@@ -3042,7 +3042,7 @@ constant * evaluate::gp_circle_v_v (constant * args) {
     R = sqrt (1 - 2 * k * g * abs (s) + g * g * norm (s)) / abs (d);
     for (i = 0; i < C.getSize (); i++) {
       for (a = 0; a < arc->getSize (); a++) {
-	v = C.get (i) + R.get (i) * exp (rect (0, 1) * rad (arc->get (a)));
+	v = C.get (i) + R.get (i) * exp (nr_complex_t (0, 1) * rad (arc->get (a)));
 	j = i * G->getSize () * arc->getSize () + f * arc->getSize () + a;
 	circle->set (v, j);
       }
@@ -3466,14 +3466,14 @@ constant * evaluate::polar_c_d (constant * args) {
   _ARC0 (a);
   _ARD1 (p);
   _DEFC ();
-  _RETC (polar (*a, rect (rad (p), 0)));
+  _RETC (polar (*a, nr_complex_t (rad (p), 0)));
 }
 
 constant * evaluate::polar_d_c (constant * args) {
   _ARD0 (a);
   _ARC1 (p);
   _DEFC ();
-  _RETC (polar (rect (a, 0), rad (*p)));
+  _RETC (polar (nr_complex_t (a, 0), rad (*p)));
 }
 
 constant * evaluate::polar_c_c (constant * args) {
@@ -3487,7 +3487,7 @@ constant * evaluate::polar_d_v (constant * args) {
   _ARD0 (a);
   _ARV1 (v);
   _DEFV ();
-  _RETV (polar (rect (a, 0), rad (*v)));
+  _RETV (polar (nr_complex_t (a, 0), rad (*v)));
 }
 
 constant * evaluate::polar_c_v (constant * args) {
@@ -3501,7 +3501,7 @@ constant * evaluate::polar_v_d (constant * args) {
   _ARV0 (v);
   _ARD1 (p);
   _DEFV ();
-  _RETV (polar (*v, rect (rad (p), 0)));
+  _RETV (polar (*v, nr_complex_t (rad (p), 0)));
 }
 
 constant * evaluate::polar_v_c (constant * args) {
@@ -3689,7 +3689,7 @@ constant * evaluate::runavg_d_d (constant * args) {
 			  "larger or equal 1");
     __RETV ();
   }
-  _RETV (runavg (rect (x, 0), n));
+  _RETV (runavg (nr_complex_t (x, 0), n));
 }
 
 constant * evaluate::runavg_c_d (constant * args) {

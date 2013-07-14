@@ -912,7 +912,7 @@ matrix stos (matrix s, nr_complex_t zref, nr_complex_t z0) {
   \todo s, zref and z0 const
 */ 
 matrix stos (matrix s, nr_double_t zref, nr_double_t z0) {
-  return stos (s, rect (zref, 0), rect (z0, 0));
+  return stos (s, nr_complex_t (zref, 0), nr_complex_t (z0, 0));
 }
 
 /*!\brief S renormalization (variation)

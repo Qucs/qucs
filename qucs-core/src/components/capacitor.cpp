@@ -57,7 +57,7 @@ capacitor::capacitor () : circuit (2) {
 */
 void capacitor::calcSP (nr_double_t frequency) {
   nr_double_t c = getPropertyDouble ("C") * z0;
-  nr_complex_t y = 2.0 * rect (0, 2.0 * M_PI * frequency * c);
+  nr_complex_t y = 2.0 * nr_complex_t (0, 2.0 * M_PI * frequency * c);
   setS (NODE_1, NODE_1, 1.0 / (1.0 + y));
   setS (NODE_2, NODE_2, 1.0 / (1.0 + y));
   setS (NODE_1, NODE_2, y / (1.0 + y));
@@ -84,7 +84,7 @@ void capacitor::initDC (void) {
 */
 void capacitor::calcAC (nr_double_t frequency) {
   nr_double_t c = getPropertyDouble ("C");
-  nr_complex_t y = rect (0, 2.0 * M_PI * frequency * c);
+  nr_complex_t y = nr_complex_t (0, 2.0 * M_PI * frequency * c);
   setY (NODE_1, NODE_1, +y); setY (NODE_2, NODE_2, +y);
   setY (NODE_1, NODE_2, -y); setY (NODE_2, NODE_1, -y);
 }

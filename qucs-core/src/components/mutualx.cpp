@@ -74,7 +74,7 @@ matrix mutualx::calcMatrixZ (nr_double_t frequency) {
       nr_double_t l1 = real (L->get (r));
       nr_double_t l2 = real (L->get (c));
       nr_double_t k = real (C->get (state)) * sqrt (l1 * l2);
-      z.set (r, c, rect (0.0, k * o));
+      z.set (r, c, nr_complex_t (0.0, k * o));
     }
   }
   return z;
@@ -97,7 +97,7 @@ void mutualx::calcAC (nr_double_t frequency) {
       nr_double_t l1 = real (L->get (r));
       nr_double_t l2 = real (L->get (c));
       nr_double_t k = real (C->get (state)) * sqrt (l1 * l2);
-      setD (VSRC_1 + r, VSRC_1 + c, rect (0.0, k * o));
+      setD (VSRC_1 + r, VSRC_1 + c, nr_complex_t (0.0, k * o));
     }
   }
 }

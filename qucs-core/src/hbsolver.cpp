@@ -428,7 +428,7 @@ void hbsolver::collectFrequencies (void) {
   // pre-calculate the j[O] vector
   OM = new tvector<nr_complex_t> (nlfreqs);
   for (n = i = 0; n < nlfreqs; n++, i++)
-    OM_(n) = rect (0, 2 * M_PI * negfreqs (i));
+    OM_(n) = nr_complex_t (0, 2 * M_PI * negfreqs (i));
 }
 
 // Split netlist into excitation, linear and non-linear part.

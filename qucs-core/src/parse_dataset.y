@@ -127,10 +127,10 @@ FloatList: /* nothing */ { $$ = dataset_vector = new vector (); }
     dataset_vector->add ($1);
   }
   | COMPLEX FloatList {
-    dataset_vector->add (rect ($1.r, $1.i));
+    dataset_vector->add (nr_complex_t ($1.r, $1.i));
   }
   | IMAG FloatList {
-    dataset_vector->add (rect (0.0, $1));
+    dataset_vector->add (nr_complex_t (0.0, $1));
   }
   | Eol FloatList { /* skip to next line */ }
 ;

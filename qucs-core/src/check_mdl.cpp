@@ -81,7 +81,7 @@ static void mdl_create_vardataset (struct mdl_point_t * point,
   // create vectors
   for (struct mdl_point_t * p = point; p != NULL; p = p->next) {
     int n = (p->y - 1) * 2 + p->x - 1;
-    v[n].add (rect (p->r, p->i));
+    v[n].add (nr_complex_t (p->r, p->i));
   }
   // go through indices
   for (int x = 1; x < dsize->x + 1; x++) {

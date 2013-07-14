@@ -42,17 +42,17 @@ void mutual::calcSP (nr_double_t frequency) {
   nr_double_t k = getPropertyDouble ("k");
   nr_double_t o = 2 * M_PI * frequency;
   nr_double_t a = k * k - 1;
-  nr_complex_t d = rect (o * o * l1 * l2 * a / 2 / z0 + 2 * z0, o * (l1 + l2));
+  nr_complex_t d = nr_complex_t (o * o * l1 * l2 * a / 2 / z0 + 2 * z0, o * (l1 + l2));
   nr_complex_t r;
-  r = rect (2 * z0, o * l2) / d;
+  r = nr_complex_t (2 * z0, o * l2) / d;
   setS (NODE_1, NODE_4, r); setS (NODE_4, NODE_1, r);
   r = 1.0 - r;
   setS (NODE_1, NODE_1, r); setS (NODE_4, NODE_4, r);
-  r = rect (2 * z0, o * l1) / d;
+  r = nr_complex_t (2 * z0, o * l1) / d;
   setS (NODE_2, NODE_3, r); setS (NODE_3, NODE_2, r);
   r = 1.0 - r;
   setS (NODE_2, NODE_2, r); setS (NODE_3, NODE_3, r);
-  r = rect (0, o * k * sqrt (l1 * l2)) / d;
+  r = nr_complex_t (0, o * k * sqrt (l1 * l2)) / d;
   setS (NODE_1, NODE_2, r); setS (NODE_2, NODE_1, r);
   setS (NODE_3, NODE_4, r); setS (NODE_4, NODE_3, r);
   r = -r;
@@ -67,9 +67,9 @@ matrix mutual::calcMatrixY (nr_double_t frequency) {
   nr_double_t k = getPropertyDouble ("k");
   nr_double_t o = 2 * M_PI * frequency;
   nr_double_t a = 1 - k * k;
-  nr_complex_t z1 = rect (0, o * l1 * a);
-  nr_complex_t z2 = rect (0, o * l2 * a);
-  nr_complex_t y3 = rect (0, k / (o * sqrt (l1 * l2) * a));
+  nr_complex_t z1 = nr_complex_t (0, o * l1 * a);
+  nr_complex_t z2 = nr_complex_t (0, o * l2 * a);
+  nr_complex_t y3 = nr_complex_t (0, k / (o * sqrt (l1 * l2) * a));
   
   matrix y = matrix (4);
   y.set (NODE_1, NODE_1, +1.0 / z1); y.set (NODE_4, NODE_4, +1.0 / z1);

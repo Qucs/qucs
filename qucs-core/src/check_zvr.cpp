@@ -229,7 +229,7 @@ int zvr_check (void) {
     vec->vd->setName (zvr_vector_txt (vec));
     for (struct zvr_line_t * line = root->d; line; line = line->next) {
       vec->vi->add (line->d);
-      vec->vd->add (rect (line->r, line->i));
+      vec->vd->add (nr_complex_t (line->r, line->i));
     }
     vec->vd->setDependencies (zvr_create_dep (vec->nf));
     zvr_result->appendDependency (vec->vi);

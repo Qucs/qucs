@@ -51,7 +51,7 @@ using namespace fspecial;
    \todo Move near real polar
 */
 nr_complex_t polar (const nr_complex_t a, const nr_complex_t p) {
-  return a * exp (rect (imag (p), -real (p)));
+  return a * exp (nr_complex_t(imag (p),-real (p)));
 }
 #endif
 
@@ -78,11 +78,11 @@ nr_complex_t acos (const nr_complex_t z) {
   nr_double_t r = real (z);
   nr_double_t i = imag (z);
 #if 0
-  return rect (0.0, -2.0) * log (M_SQRT1_2 * (sqrt (z + 1) + sqrt (z - 1)));
+  return nr_complex_t (0.0, -2.0) * log (M_SQRT1_2 * (sqrt (z + 1) + sqrt (z - 1)));
 #else
   nr_complex_t y = sqrt (z * z - 1.0);
   if (r * i < 0.0) y = -y;
-  return rect (0, -1.0) * log (z + y);
+  return nr_complex_t (0, -1.0) * log (z + y);
 #endif
 }
 #endif
@@ -224,7 +224,7 @@ nr_complex_t sin (const nr_complex_t z) {
 nr_complex_t asin (const nr_complex_t z) {
   nr_double_t r = real (z);
   nr_double_t i = imag (z);
-  return nr_complex_t (0.0, -1.0) * log (rect (-i, r) + sqrt (1.0 - z * z));
+  return nr_complex_t (0.0, -1.0) * log (nr_complex_t (-i, r) + sqrt (1.0 - z * z));
 }
 #endif
 
@@ -305,7 +305,7 @@ nr_complex_t sqrt (const nr_complex_t z) {
 nr_complex_t tan (const nr_complex_t z) {
   nr_double_t r = 2.0 * real (z);
   nr_double_t i = 2.0 * imag (z);
-  return rect (0.0, -1.0) + rect (0.0, 2.0) / (polar (exp (-i), r) + 1.0);
+  return nr_complex_t (0.0, -1.0) + nr_complex_t (0.0, 2.0) / (polar (exp (-i), r) + 1.0);
 }
 #endif
 
@@ -316,7 +316,7 @@ nr_complex_t tan (const nr_complex_t z) {
    \return arc tangent of z
 */
 nr_complex_t atan (const nr_complex_t z) {
-  return rect (0.0, -0.5) * log (rect (0, 2) / (z + rect (0, 1)) - 1.0);
+  return nr_complex_t (0.0, -0.5) * log (nr_complex_t (0, 2) / (z + nr_complex_t (0, 1)) - 1.0);
 }
 #endif
 
@@ -367,7 +367,7 @@ nr_complex_t atanh (const nr_complex_t z) {
 nr_complex_t cot (const nr_complex_t z) {
   nr_double_t r = 2.0 * real (z);
   nr_double_t i = 2.0 * imag (z);
-  return rect (0.0, 1.0) + rect (0.0, 2.0) / (polar (exp (-i), r) - 1.0);
+  return nr_complex_t (0.0, 1.0) + nr_complex_t (0.0, 2.0) / (polar (exp (-i), r) - 1.0);
 }
 
 /*!\brief Compute complex arc cotangent
@@ -376,7 +376,7 @@ nr_complex_t cot (const nr_complex_t z) {
    \return arc cotangent of z
 */
 nr_complex_t acot (const nr_complex_t z) {
-  return rect (0.0, -0.5) * log (rect (0, 2) / (z - rect (0, 1)) + 1.0);
+  return nr_complex_t (0.0, -0.5) * log (nr_complex_t (0, 2) / (z - nr_complex_t (0, 1)) + 1.0);
 }
 
 /*!\brief Compute complex argument hyperbolic secant
@@ -544,7 +544,7 @@ nr_complex_t step (const nr_complex_t z) {
     y = 1.0;
   else
     y = 0.5;
-  return rect (x, y);
+  return nr_complex_t (x, y);
 }
 
 nr_complex_t cbesselj (unsigned int, nr_complex_t);
@@ -568,7 +568,7 @@ nr_complex_t jn (const int n, const nr_complex_t z) {
    \bug Not implemented
 */ 
 nr_complex_t yn (const int n, const nr_complex_t z) {
-  return rect (yn (n, real (z)), 0);
+  return nr_complex_t (yn (n, real (z)), 0);
 }
 
 /*!\brief Modified Bessel function of first kind
@@ -578,7 +578,7 @@ nr_complex_t yn (const int n, const nr_complex_t z) {
    \bug Not implemented
 */
 nr_complex_t i0 (const nr_complex_t z) {
-  return rect (i0 (real (z)), 0);
+  return nr_complex_t (i0 (real (z)), 0);
 }
 
 /*!\brief Error function
@@ -588,7 +588,7 @@ nr_complex_t i0 (const nr_complex_t z) {
    \bug Not implemented
 */
 nr_complex_t erf (const nr_complex_t z) {
-  return rect (erf (real (z)), 0);
+  return nr_complex_t (erf (real (z)), 0);
 }
 
 /*!\brief Complementart error function
@@ -598,7 +598,7 @@ nr_complex_t erf (const nr_complex_t z) {
    \bug Not implemented
 */
 nr_complex_t erfc (const nr_complex_t z) {
-  return rect (erfc (real (z)), 0);
+  return nr_complex_t (erfc (real (z)), 0);
 }
 
 /*!\brief Inverse of error function
@@ -608,7 +608,7 @@ nr_complex_t erfc (const nr_complex_t z) {
    \bug Not implemented
 */
 nr_complex_t erfinv (const nr_complex_t z) {
-  return rect (erfinv (real (z)), 0);
+  return nr_complex_t (erfinv (real (z)), 0);
 }
 
 /*!\brief Inverse of complementart error function
@@ -618,7 +618,7 @@ nr_complex_t erfinv (const nr_complex_t z) {
    \bug Not implemented
 */
 nr_complex_t erfcinv (const nr_complex_t z) {
-  return rect (erfcinv (real (z)), 0);
+  return nr_complex_t (erfcinv (real (z)), 0);
 }
 
 /*!\brief Equality of two complex

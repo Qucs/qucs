@@ -81,9 +81,9 @@ matrix msstep::calcMatrixZ (nr_double_t frequency) {
   L2 *= Ls;
 
   // build Z-parameter matrix
-  nr_complex_t z21 = rect (0.0, -0.5e12 / (M_PI * frequency * Cs));
-  nr_complex_t z11 = rect (0.0, 2e-9 * M_PI * frequency * L1) + z21;
-  nr_complex_t z22 = rect (0.0, 2e-9 * M_PI * frequency * L2) + z21;
+  nr_complex_t z21 = nr_complex_t (0.0, -0.5e12 / (M_PI * frequency * Cs));
+  nr_complex_t z11 = nr_complex_t (0.0, 2e-9 * M_PI * frequency * L1) + z21;
+  nr_complex_t z22 = nr_complex_t (0.0, 2e-9 * M_PI * frequency * L2) + z21;
   matrix z (2);
   z.set (0, 0, z11);
   z.set (0, 1, z21);

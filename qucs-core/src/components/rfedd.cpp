@@ -149,7 +149,7 @@ void rfedd::initModel (void) {
   snold = createVariable ("S", false);
   fn = createVariable ("F");
   fnold = createVariable ("F", false);
-  seqn = getEnv()->getChecker()->addComplex ("#laplace", sn, rect (0, 0));
+  seqn = getEnv()->getChecker()->addComplex ("#laplace", sn, nr_complex_t (0, 0));
   feqn = getEnv()->getChecker()->addDouble ("#frequency", fn, 0);
   A(seqn)->evalType (); A(seqn)->skip = 1;
   A(feqn)->evalType (); A(feqn)->skip = 1;
@@ -195,7 +195,7 @@ void rfedd::prepareModel (void) {
 void rfedd::updateLocals (nr_double_t frequency) {
 
   // update frequency variables for equations
-  setResult (seqn, rect (0, 2 * M_PI * frequency));
+  setResult (seqn, nr_complex_t (0, 2 * M_PI * frequency));
   setResult (feqn, frequency);
 
   // get local subcircuit values

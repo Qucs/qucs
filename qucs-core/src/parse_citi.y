@@ -211,7 +211,7 @@ FloatList: { $$ = new vector (); }
     $$ = $3;
   }
   | Float ',' Float Eol FloatList {
-    $5->add (rect ($1, $3));
+    $5->add (nr_complex_t ($1, $3));
     $$ = $5;
   }
 ;

@@ -1350,7 +1350,7 @@ void nasolver<nr_type_t>::saveResults (const char * volts, const char * amps,
             if (strcmp (volts, "vn"))
                 c->saveOperatingPoints ();
             n = createOP (c->getName (), volts);
-            saveVariable (n, rect (c->getOperatingPoint ("Vr"),
+            saveVariable (n, nr_complex_t (c->getOperatingPoint ("Vr"),
                                    c->getOperatingPoint ("Vi")), f);
             free (n);
         }
