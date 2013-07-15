@@ -4,7 +4,9 @@ classdef qucstrans < qucs
     
     % Copyright Richard Crozier 2013
     
-    properties
+    properties ( SetAccess = protected, GetAccess = public )
+        
+        isinitialised; % for marking the solver as initialised
         
     end
     
@@ -14,6 +16,8 @@ classdef qucstrans < qucs
         function this = qucstrans(netlist)
             
             this = this@qucs(@m_trsolver_interface_mex, netlist);
+            
+            this.isinitialised = false;
             
         end
 
