@@ -1586,7 +1586,7 @@ checker_copy_subcircuits (struct definition_t * type,
     icopy->append (type->instance);
     icopy->append (*(instances));
     icopy->append (inst->instance);
-    child->setName (icopy->toString ("."));
+    child->setName (std::string(icopy->toString (".")));
     delete icopy;
 
     return root;

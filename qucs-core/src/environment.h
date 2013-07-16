@@ -32,6 +32,7 @@
 #define __ENVIRONMENT_H__
 
 #include <list>
+#include <string>
 
 #include "equation.h"
 
@@ -54,12 +55,11 @@ class environment
 {
  public:
   environment ();
-  environment (const char *);
+  environment (const std::string & p_name);
   environment (const environment &);
   virtual ~environment ();
   void copy (const environment &);
-  void setName (char *);
-  char * getName (void);
+  void setName (char *) = delete;
   void print (bool all = false);
   void setDefinitions (struct definition_t * d) { defs = d; }
   struct definition_t * getDefinitions (void) { return defs; }
@@ -105,10 +105,18 @@ class environment
     children.remove (child);
   }
 
-  void addChild (environment *);
+  /*! set the name */
+  void setName (const std::string p_name) {
+    this->name = p_name;
+  }
+
+  /*! Returns the name of the environment. */
+  std::string getName(void) {
+    return this->name;
+  }
 
  private:
-  char * name;
+  std::string name;
   variable * root;
   eqn::checker * checkee;
   eqn::solver * solvee;

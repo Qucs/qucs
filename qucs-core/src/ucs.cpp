@@ -54,6 +54,7 @@
 
 using namespace qucs;
 
+/*! \todo replace environement name root by "/" in order to be filesystem compatible */
 int main (int argc, char ** argv) {
 
   char * infile = NULL;
@@ -217,7 +218,7 @@ int main (int argc, char ** argv) {
 
 
   // create root environment
-  root = new environment ("root");
+  root = new environment (std::string("root"));
 
   // create netlist object and input
   subnet = new net ("subnet");

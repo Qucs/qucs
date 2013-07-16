@@ -52,6 +52,8 @@
 #include <unistd.h>
 #endif
 
+#include <string>
+
 using namespace qucs;
 
 // constructor
@@ -93,6 +95,7 @@ qucsint::~qucsint ()
     netlist_destroy_env ();
 }
 
+/*!\ todo: replace "root" by / as environement root */
 int qucsint::prepare_netlist (char * infile)
 {
 
@@ -100,7 +103,7 @@ int qucsint::prepare_netlist (char * infile)
     module::registerModules ();
 
     // create root environment
-    root = new qucs::environment ("root");
+    root = new qucs::environment (std::string("root"));
 
     // create netlist object and input
     subnet = new net ("subnet");
