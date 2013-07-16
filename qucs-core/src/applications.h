@@ -1035,6 +1035,14 @@ struct application_t eqn::applications[] = {
   { "vector", TAG_VECTOR, evaluate::vector_x, -1, { TAG_UNKNOWN } },
   { "matrix", TAG_MATRIX, evaluate::matrix_x, -1, { TAG_UNKNOWN } },
 
+  { "assert",  TAG_BOOLEAN, evaluate::assert_b, 1,   { TAG_BOOLEAN } },
+  { "assert",  TAG_BOOLEAN, evaluate::assert_d, 1,   { TAG_DOUBLE } },
+  { "assert",  TAG_BOOLEAN, evaluate::assert_v, 1,   { TAG_VECTOR } },
+
+  { "bugon",  TAG_BOOLEAN, evaluate::bugon_b, 1,   { TAG_BOOLEAN } },
+  { "bugon",  TAG_BOOLEAN, evaluate::bugon_d, 1,   { TAG_DOUBLE } },
+  { "bugon",  TAG_BOOLEAN, evaluate::bugon_v, 1,   { TAG_VECTOR } },
+
   { NULL, 0, NULL, 0, { 0 } /* end of list */ }
 };
 

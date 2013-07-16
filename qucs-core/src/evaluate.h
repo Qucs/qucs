@@ -778,6 +778,13 @@ public:
 
   static constant * vector_x (constant *);
   static constant * matrix_x (constant *);
+  
+  static constant * assert_d (constant *);
+  static constant * assert_v (constant *);
+  static constant * assert_b (constant *);
+  static constant * bugon_d (constant *);
+  static constant * bugon_v (constant *);
+  static constant * bugon_b (constant *);
 };
 
 // Type of application function.
