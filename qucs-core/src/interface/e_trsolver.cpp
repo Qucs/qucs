@@ -321,7 +321,7 @@ void e_trsolver::initETR (nr_double_t start, nr_double_t firstdelta, int mode)
     {
         delta = firstdelta;
         deltaMin = NR_TINY * 10;
-        deltaMax = NR_MAX / 10;
+        deltaMax =  std::numeric_limits<nr_double_t>::max() / 10;
     }
 
     // initialize step history

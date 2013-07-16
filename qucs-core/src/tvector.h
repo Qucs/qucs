@@ -26,6 +26,9 @@
 #define __TVECTOR_H__
 
 #include <assert.h>
+
+#include <limits>
+
 #include "precision.h"
 
 namespace qucs {
@@ -90,7 +93,7 @@ class tvector
   int  isFinite (void);
   void print (void);
   void reorder (int *);
-  int  contains (nr_type_t, nr_double_t eps = NR_EPSI);
+  int  contains (nr_type_t, nr_double_t eps = std::numeric_limits<nr_double_t>::epsilon());
 
   // some basic vector operations
 #ifndef _MSC_VER

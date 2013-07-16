@@ -71,7 +71,7 @@ void fspecial::ellip_ke (nr_double_t arg, nr_double_t &k, nr_double_t &e) {
       a = t;
       f *= 2;
       s += f * c * c;
-      if (c / a < NR_EPSI) break;
+      if (c / a < std::numeric_limits<nr_double_t>::epsilon()) break;
     }
     if (i >= iMax) {
       k = 0; e = 0;
@@ -504,7 +504,7 @@ nr_double_t fspecial::i0 (nr_double_t x) {
   nr_double_t y = fabs (x);
   nr_double_t val;
 
-  if (y < 2.0 * sqrt (NR_EPSI)) {
+  if (y < 2.0 * sqrt (std::numeric_limits<nr_double_t>::epsilon())) {
     val = 1.0;
   }
   else if (y <= 3.0) {

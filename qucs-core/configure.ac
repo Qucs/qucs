@@ -642,14 +642,10 @@ AC_ARG_ENABLE([double],
      double_size=4
      ;;
    *)
-     double_type="none"
-     double_size=0
+     AC_MSG_ERROR([valid types are double, float and ldouble.])
      ;;
    esac],
   [double_type="double"; double_size=8])
-if test "$double_type" = none; then
-  AC_MSG_ERROR([valid types are double, float and ldouble.])
-fi
 AC_DEFINE_UNQUOTED(nr_double_t, $double_type,
   [The global type of double representation.])
 AC_SUBST(QUCS_DOUBLE_TYPE, $double_type)

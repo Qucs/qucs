@@ -32,6 +32,8 @@
 #include <cmath>
 #include <float.h>
 
+#include <limits>
+
 #include "compat.h"
 #include "logging.h"
 #include "precision.h"
@@ -1011,7 +1013,7 @@ void eqnsys<nr_type_t>::substitute_qrh (void) {
   for (r = N - 1; r >= 0; r--) {
     f = B_(r);
     for (c = r + 1; c < N; c++) f -= A_(r, c) * X_(cMap[c]);
-    if (abs (R_(r)) > NR_EPSI)
+    if (abs (R_(r)) > std::numeric_limits<nr_double_t>::epsilon())
       X_(cMap[r]) = f / R_(r);
     else
       X_(cMap[r]) = 0;
@@ -1039,7 +1041,7 @@ void eqnsys<nr_type_t>::substitute_qr_householder (void) {
   // backward substitution in order to solve RX = Q'B
   for (r = N - 1; r >= 0; r--) {
     for (f = B_(r), c = r + 1; c < N; c++) f -= A_(r, c) * X_(cMap[c]);
-    if (abs (A_(r, r)) > NR_EPSI)
+    if (abs (A_(r, r)) > std::numeric_limits<nr_double_t>::epsilon())
       X_(cMap[r]) = f / A_(r, r);
     else
       X_(cMap[r]) = 0;
@@ -1058,7 +1060,7 @@ void eqnsys<nr_type_t>::substitute_qr_householder_ls (void) {
   // forward substitution in order to solve R'X = B
   for (r = 0; r < N; r++) {
     for (f = B_(r), c = 0; c < r; c++) f -= A_(c, r) * B_(c);
-    if (abs (A_(r, r)) > NR_EPSI)
+    if (abs (A_(r, r)) > std::numeric_limits<nr_double_t>::epsilon())
       B_(r) = f / A_(r, r);
     else
       B_(r) = 0;
@@ -1241,7 +1243,7 @@ void eqnsys<nr_type_t>::chop_svd (void) {
   nr_double_t Max, Min;
   Max = 0.0;
   for (c = 0; c < N; c++) if (fabs (S_(c)) > Max) Max = fabs (S_(c));
-  Min = Max * NR_EPSI;
+  Min = Max * std::numeric_limits<nr_double_t>::max();
   for (c = 0; c < N; c++) if (fabs (S_(c)) < Min) S_(c) = 0.0;
 }
 

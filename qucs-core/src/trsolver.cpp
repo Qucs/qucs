@@ -876,7 +876,7 @@ nr_double_t trsolver::checkDelta (void)
     nr_double_t LTEreltol = getPropertyDouble ("LTEreltol");
     nr_double_t LTEabstol = getPropertyDouble ("LTEabstol");
     nr_double_t LTEfactor = getPropertyDouble ("LTEfactor");
-    nr_double_t dif, rel, tol, lte, q, n = NR_MAX;
+    nr_double_t dif, rel, tol, lte, q, n =  std::numeric_limits<nr_double_t>::max();
     int N = countNodes ();
     int M = countVoltageSources ();
 

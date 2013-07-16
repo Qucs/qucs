@@ -25,6 +25,8 @@
 #ifndef __EQNSYS_H__
 #define __EQNSYS_H__
 
+#include <limits>
+
 //! Definition of equation system solving algorithms.
 enum algo_type {
   ALGO_INVERSE                    = 0x0001,

@@ -73,10 +73,10 @@ void touchstone_print_noise (void) {
     // noise data
     for (int i = 0; i < touchstone_data.vf->getSize (); i++) {
       nr_double_t f = real (touchstone_data.vf->get (i));
-      fprintf (touchstone_out, "%." NR_DECS "e"
-	       " %+." NR_DECS "e"
-	       " %+." NR_DECS "e" " %+." NR_DECS "e"
-	       " %+." NR_DECS "e"
+      fprintf (touchstone_out, "%." "20" "e"
+	       " %+." "20" "e"
+	       " %+." "20" "e" " %+." "20" "e"
+	       " %+." "20" "e"
 	       touchstone_crlf, f,
 	       10.0 * std::log10 (real (touchstone_data.fmin->get (i))),
 	       abs (touchstone_data.sopt->get (i)),
@@ -98,8 +98,8 @@ void touchstone_print (void) {
     for (int i = 0; i < touchstone_data.vd->getSize (); i++) {
       matrix S = touchstone_data.mv->get (i);
       nr_double_t f = real (touchstone_data.vd->get (i));
-      fprintf (touchstone_out, "%." NR_DECS "e"
-	       " %+." NR_DECS "e" " %+." NR_DECS "e"
+      fprintf (touchstone_out, "%." "20" "e"
+	       " %+." "20" "e" " %+." "20" "e"
 	       touchstone_crlf, f, real (S(0,0)), imag (S(0,0)));
     }
   }
@@ -108,11 +108,11 @@ void touchstone_print (void) {
     for (int i = 0; i < touchstone_data.vd->getSize (); i++) {
       matrix S = touchstone_data.mv->get (i);
       nr_double_t f = real (touchstone_data.vd->get (i));
-      fprintf (touchstone_out, "%." NR_DECS "e"
-	       " %+." NR_DECS "e" " %+." NR_DECS "e"
-	       " %+." NR_DECS "e" " %+." NR_DECS "e"
-	       " %+." NR_DECS "e" " %+." NR_DECS "e"
-	       " %+." NR_DECS "e" " %+." NR_DECS "e"
+      fprintf (touchstone_out, "%." "20" "e"
+	       " %+." "20" "e" " %+." "20" "e"
+	       " %+." "20" "e" " %+." "20" "e"
+	       " %+." "20" "e" " %+." "20" "e"
+	       " %+." "20" "e" " %+." "20" "e"
 	       touchstone_crlf, f,
 	       real (S(0,0)), imag (S(0,0)),
 	       real (S(1,0)), imag (S(1,0)),
@@ -125,18 +125,18 @@ void touchstone_print (void) {
     for (int i = 0; i < touchstone_data.vd->getSize (); i++) {
       matrix S = touchstone_data.mv->get (i);
       nr_double_t f = real (touchstone_data.vd->get (i));
-      fprintf (touchstone_out, "%." NR_DECS "e"
-	       " %+." NR_DECS "e" " %+." NR_DECS "e"
-	       " %+." NR_DECS "e" " %+." NR_DECS "e"
-	       " %+." NR_DECS "e" " %+." NR_DECS "e"
-	       touchstone_crlf "      %"  NR_DECS "s"
-	       " %+." NR_DECS "e" " %+." NR_DECS "e"
-	       " %+." NR_DECS "e" " %+." NR_DECS "e"
-	       " %+." NR_DECS "e" " %+." NR_DECS "e"
-	       touchstone_crlf "      %"  NR_DECS "s"
-	       " %+." NR_DECS "e" " %+." NR_DECS "e"
-	       " %+." NR_DECS "e" " %+." NR_DECS "e"
-	       " %+." NR_DECS "e" " %+." NR_DECS "e"
+      fprintf (touchstone_out, "%." "20" "e"
+	       " %+." "20" "e" " %+." "20" "e"
+	       " %+." "20" "e" " %+." "20" "e"
+	       " %+." "20" "e" " %+." "20" "e"
+	       touchstone_crlf "      %"  "20" "s"
+	       " %+." "20" "e" " %+." "20" "e"
+	       " %+." "20" "e" " %+." "20" "e"
+	       " %+." "20" "e" " %+." "20" "e"
+	       touchstone_crlf "      %"  "20" "s"
+	       " %+." "20" "e" " %+." "20" "e"
+	       " %+." "20" "e" " %+." "20" "e"
+	       " %+." "20" "e" " %+." "20" "e"
 	       touchstone_crlf,
 	       f,
 	       real (S(0,0)), imag (S(0,0)),
@@ -157,14 +157,14 @@ void touchstone_print (void) {
       nr_double_t f = real (touchstone_data.vd->get (i));
       int cs = S.getCols ();
       int rs = S.getRows ();
-      fprintf (touchstone_out, "%." NR_DECS "e", f);
+      fprintf (touchstone_out, "%." "20" "e", f);
       for (int r = 0; r < rs; r++) {
 	if (r >= 1)
-	  fprintf (touchstone_out, "      %"  NR_DECS "s", " ");
+	  fprintf (touchstone_out, "      %"  "20" "s", " ");
 	for (int c = 0; c < cs; c++) {
 	  if (c > 1 && (c & 3) == 0)
-	    fprintf (touchstone_out, "      %"  NR_DECS "s", " ");
-	  fprintf (touchstone_out, " %+." NR_DECS "e" " %+." NR_DECS "e",
+	    fprintf (touchstone_out, "      %"  "20" "s", " ");
+	  fprintf (touchstone_out, " %+." "20" "e" " %+." "20" "e",
 		   real (S(r,c)), imag (S(r,c)));
 	  if ((c > 1 && (c & 3) == 3) || (c == cs - 1))
 	    fprintf (touchstone_out, touchstone_crlf);
