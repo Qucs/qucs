@@ -218,7 +218,7 @@ void environment::equationSolver (void) {
 
 // Adds a child to the environment.
 void environment::addChild (environment * child) {
-  children->add (child);
+  children->push_front (child);
 }
 
 // Removes a child from the environment.

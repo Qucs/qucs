@@ -439,15 +439,15 @@ void hbsolver::splitCircuits (void) {
   for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ()) {
     if (c->isNonLinear ()) {
       // non-linear part
-      nolcircuits.add (c);
+      nolcircuits.push_front(c);
     }
     else if (isExcitation (c)) {
       // get sinusoidal sources
-      excitations.add (c);
+      excitations.push_front(c);
     }
     else if (c->getType () != CIR_GROUND) {
       // linear part
-      lincircuits.add (c);
+      lincircuits.push_front (c);
     }
   }
 }
@@ -546,7 +546,7 @@ int hbsolver::assignNodes (ptrlist<circuit> circuits, strlist * nodes,
 void hbsolver::prepareLinear (void) {
   for (ptrlistiterator<circuit> it (lincircuits); *it; ++it) (*it)->initHB ();
   nlnvsrcs = assignVoltageSources (lincircuits);
-  nnlvsrcs = excitations.length ();
+  nnlvsrcs = excitations.size ();
   nnanodes = nanodes->length ();
   nexnodes = exnodes->length ();
   nbanodes = banodes->length ();

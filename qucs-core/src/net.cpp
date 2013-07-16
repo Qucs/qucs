@@ -85,8 +85,8 @@ net::~net () {
     n = (circuit *) c->getNext ();
     delete c;
   }
-  // delete original actions
-  for (int i = 0; i < orgacts->length (); i++) delete orgacts->get (i);
+  // delete original actions 
+  for (int i = 0; i < orgacts->size (); i++) delete orgacts->get (i);
   delete orgacts;
   // delete nodeset
   delNodeset ();
@@ -181,8 +181,8 @@ int net::containsCircuit (circuit * cand) {
 /* This function prepends the given analysis to the list of registered
    analyses. */
 void net::insertAnalysis (analysis * a) {
-  orgacts->add (a);
-  actions->add (a);
+  orgacts->push_front (a);
+  actions->push_front (a);
 }
 
 /* The function removes the given analysis from the list of registered
@@ -196,7 +196,7 @@ void net::removeAnalysis (analysis * a) {
    there is no such analysis. */
 analysis * net::findAnalysis (char * n) {
   if (n == NULL) return NULL;
-  for (int i = 0; i < actions->length (); i++) {
+  for (int i = 0; i < actions->size (); i++) {
     analysis * a = actions->get (i);
     if (!strcmp (a->getName (), n))
       return a;
@@ -208,7 +208,7 @@ analysis * net::findAnalysis (char * n) {
    object specified by the given type of analysis and returns NULL if
    there is no such analysis. */
 analysis * net::findAnalysis (int type) {
-  for (int i = 0; i < actions->length (); i++) {
+  for (int i = 0; i < actions->size (); i++) {
     analysis * a = actions->get (i);
     if (a->getType () == type)
       return a;
@@ -219,7 +219,7 @@ analysis * net::findAnalysis (int type) {
 /* Looks recursively for a type of analysis. */
 int net::containsAnalysis (analysis * child, int type) {
   ptrlist<analysis> * alist = child->getAnalysis ();
-  for (int i = 0; alist && i < alist->length (); i++) {
+  for (int i = 0; alist && i < alist->size (); i++) {
     analysis * a = alist->get (i);
     if (a->getType () == type)
       return 1;
@@ -237,7 +237,7 @@ dataset * net::runAnalysis (int &err) {
   int i;
 
   // apply some data to all analyses
-  for (i = 0; i < actions->length (); i++) {
+  for (i = 0; i < actions->size (); i++) {
     a = actions->get (i);
     if (!a->isExternal ())
     {
@@ -250,7 +250,7 @@ dataset * net::runAnalysis (int &err) {
   orderAnalysis ();
 
   // initialize analyses
-  for (i = 0; i < actions->length (); i++) {
+  for (i = 0; i < actions->size (); i++) {
     a = actions->get (i);
     if (!a->isExternal ())
     {
@@ -259,7 +259,7 @@ dataset * net::runAnalysis (int &err) {
   }
 
   // solve the analyses
-  for (i = 0; i < actions->length (); i++) {
+  for (i = 0; i < actions->size (); i++) {
     a = actions->get (i);
     if (!a->isExternal ())
     {
@@ -269,7 +269,7 @@ dataset * net::runAnalysis (int &err) {
   }
 
   // cleanup analyses
-  for (i = 0; i < actions->length (); i++) {
+  for (i = 0; i < actions->size (); i++) {
     a = actions->get (i);
     if (!a->isExternal ())
     {
@@ -284,7 +284,7 @@ dataset * net::runAnalysis (int &err) {
    there is no recursive sweep it returns NULL. */
 analysis * net::findSecondOrder (void) {
   analysis * parent = NULL;
-  for (int i = 0; i < actions->length (); i++) {
+  for (int i = 0; i < actions->size (); i++) {
     analysis * a = actions->get (i);
     // parameter sweeps are potential parent sweeps
     if (a->getType () == ANALYSIS_SWEEP) {
@@ -320,7 +320,7 @@ void net::orderAnalysis (void) {
       child = getChildAnalysis (parent);
       removeAnalysis (child);
       // apply sub-analysis to each parent analysis if any
-      for (i = 0; i < actions->length (); i++) {
+      for (i = 0; i < actions->size (); i++) {
 	a = actions->get (i);
 	char * cn = getChild (a);
 	if (cn != NULL && !strcmp (cn, child->getName ())) {
@@ -335,7 +335,7 @@ void net::orderAnalysis (void) {
 	}
       }
       // sort the sub-analysis of each parent
-      for (i = 0; i < actions->length (); i++) {
+      for (i = 0; i < actions->size (); i++) {
 	a = actions->get (i);
 	sortChildAnalyses (a);
       }
@@ -353,7 +353,7 @@ void net::orderAnalysis (void) {
 // This function sorts the analyses of the given parent analysis.
 void net::sortChildAnalyses (analysis * parent) {
   ptrlist<analysis> * alist = parent->getAnalysis ();
-  for (int i = 0; alist && i < alist->length (); i++) {
+  for (int i = 0; alist && i < alist->size (); i++) {
     analysis * a = alist->get (i);
     if (a->getType () == ANALYSIS_DC
 	|| containsAnalysis (a, ANALYSIS_DC)) {
@@ -565,7 +565,7 @@ void net::delNodeset (void) {
 void net::setActionNet(int index, net * subnet)
 {
     analysis * a;
-    if (index < actions->length())
+    if (index < actions->size())
     {
         a = actions->get (index);
         a->setNet(subnet);
@@ -575,7 +575,7 @@ void net::setActionNet(int index, net * subnet)
 /* sets the net of the action with a given index to the supplied net */
 int net::getNActions()
 {
-    return actions->length();
+    return actions->size();
 }
 
 #if DEBUG

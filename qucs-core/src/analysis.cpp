@@ -92,7 +92,7 @@ analysis::analysis (analysis & a) : object (a) {
    associated with the current analysis object. */
 void analysis::addAnalysis (analysis * a) {
   if (!actions) actions = new ptrlist<analysis> ();
-  actions->add (a);
+  actions->push_front (a);
 }
 
 /* This function deletes the given analysis from the actions being

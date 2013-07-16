@@ -56,16 +56,14 @@ class ptrlist
   ptrlist ();
   ~ptrlist ();
   ptrlist (const ptrlist &);
-  void add (type_t *);
-  void append (type_t *);
+  void push_front (type_t *);
+  void push_back (type_t *);
   void del (type_t *);
-  int  length (void);
-  int  contains (type_t *);
-  int  index (type_t *);
+  int  size(void) const { return  s; }
   type_t * get (int);
 
  private:
-  int size;
+  int s;
   ptrentry<type_t> * root;
 };
 
@@ -85,7 +83,7 @@ class ptrlistiterator
   type_t * operator-- (void);
   type_t * operator * (void) { return current (); }
   type_t * current (void);
-  type_t * first (void);
+  type_t * begin (void);
   type_t * last (void);
 
  private:
