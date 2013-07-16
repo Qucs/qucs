@@ -1500,7 +1500,7 @@ checker_copy_subcircuits (struct definition_t * type,
 
     // create environment for subcircuit instance
     environment * child = new environment (*(type->env));
-    parent->addChild (child);
+    parent->push_front_Child (child);
 
     // put instance properties into subcircuit environment
     for (struct pair_t * pair = inst->pairs; pair != NULL; pair = pair->next)
@@ -2281,7 +2281,7 @@ int netlist_checker (environment * env)
         def->sub = checker_build_equations (def->sub, &eqns);
         // setup the subcircuit environment
         environment * subenv = new environment (def->instance);
-        env_root->addChild (subenv);
+        env_root->push_front_Child (subenv);
         checker_setup_env (def, subenv, eqns);
         if (def->sub) def->sub->env = subenv;
         // add subcircuit parameters to equations

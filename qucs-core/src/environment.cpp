@@ -214,15 +214,6 @@ void environment::equationSolver (void) {
   checkee->setEquations (solvee->getEquations ());
 }
 
-// Adds a child to the environment.
-void environment::addChild (environment * child) {
-  children.push_front (child);
-}
-
-// Removes a child from the environment.
-void environment::delChild (environment * child) {
-  children.remove (child);
-}
 
 /* The function solves the equations of the current environment object
    as well as these of its children, updates the variables and passes

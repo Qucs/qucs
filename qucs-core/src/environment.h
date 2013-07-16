@@ -95,8 +95,16 @@ class environment
   void setValue (char *, eqn::constant *);
   void saveResults (void);
 
-  // children functionality
-  void delChild (environment *);
+  /*! Adds a child to the environment. */
+  inline void push_front_Child (environment * child) {
+    children.push_front (child);
+  }
+
+  /*! Removes a child from the environment. */
+  void remove_Child (environment * child) {
+    children.remove (child);
+  }
+
   void addChild (environment *);
 
  private:
