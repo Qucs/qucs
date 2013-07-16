@@ -377,7 +377,6 @@ SET(LIBQUCS_SRC
 	strlist.cpp
 	trsolver.cpp
   acsolver.cpp
-  characteristic.cpp
   check_citi.cpp
   check_csv.cpp
   check_dataset.cpp
@@ -407,7 +406,6 @@ SET(LIBQUCS_SRC
   nodelist.cpp
   nodeset.cpp
   object.cpp
-  operatingpoint.cpp
   receiver.cpp
   spsolver.cpp
   sweep.cpp

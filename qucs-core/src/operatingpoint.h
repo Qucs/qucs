@@ -29,15 +29,7 @@
 
 namespace qucs {
 
-class operatingpoint : public qucs::pair
-{
- public:
-  operatingpoint ();
-  operatingpoint (const char *);
-  operatingpoint (const char *, nr_double_t);
-  operatingpoint (const operatingpoint &);
-  ~operatingpoint () { }
-};
+typedef class qucs::pair operatingpoint;
 
 } // namespace qucs
 

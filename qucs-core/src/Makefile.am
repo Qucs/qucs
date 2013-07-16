@@ -75,12 +75,12 @@ libqucs_la_SOURCES = dataset.cpp check_dataset.cpp parse_dataset.cpp      \
 	matvec.cpp parse_citi.cpp                                            \
 	scan_citi.cpp check_citi.cpp parse_zvr.cpp scan_zvr.cpp sweep.cpp    \
 	check_zvr.cpp parse_mdl.cpp scan_mdl.cpp check_mdl.cpp check_csv.cpp \
-	parse_csv.cpp scan_csv.cpp circuit.cpp check_netlist.cpp operatingpoint.cpp  \
+	parse_csv.cpp scan_csv.cpp circuit.cpp check_netlist.cpp \
 	parse_netlist.cpp scan_netlist.cpp node.cpp net.cpp input.cpp        \
 	analysis.cpp spsolver.cpp dcsolver.cpp nodelist.cpp environment.cpp  \
 	parasweep.cpp equation.cpp evaluate.cpp acsolver.cpp                 \
 	trsolver.cpp transient.cpp integrator.cpp nodeset.cpp hbsolver.cpp   \
-	spline.cpp fourier.cpp characteristic.cpp history.cpp       \
+	spline.cpp fourier.cpp history.cpp       \
 	range.cpp devstates.cpp differentiate.cpp module.cpp receiver.cpp    \
 	interpolator.cpp
 
