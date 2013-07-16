@@ -28,10 +28,12 @@
  * Contains the environment class definition.
  */
 
-#include "equation.h"
-
 #ifndef __ENVIRONMENT_H__
 #define __ENVIRONMENT_H__
+
+#include <list>
+
+#include "equation.h"
 
 namespace qucs {
 
@@ -39,7 +41,7 @@ class variable;
 class checker;
 class solver;
 class dataset;
-template <class type_t> class ptrlist;
+
 
 /*! \class environment
  * \brief Houses the settings for netlist evaluation.
@@ -102,7 +104,7 @@ class environment
   variable * root;
   eqn::checker * checkee;
   eqn::solver * solvee;
-  ptrlist<environment> * children;
+  std::list<environment *> children;
   bool iscopy;
   struct definition_t * defs;
 };

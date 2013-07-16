@@ -25,6 +25,8 @@
 #ifndef __NET_H__
 #define __NET_H__
 
+#include "ptrlist.h"
+
 namespace qucs {
 
 class circuit;
@@ -34,7 +36,7 @@ class nodeset;
 class analysis;
 class dataset;
 class environment;
-template <class type_t> class ptrlist;
+
 
 class net : public object
 {
@@ -85,8 +87,7 @@ class net : public object
   nodeset * getNodeset (void) { return nset; }
   void setSrcFactor (nr_double_t f) { srcFactor = f; }
   nr_double_t getSrcFactor (void) { return srcFactor; }
-  void setActionNet(int, net *);
-  int getNActions(void);
+  void setActionNetAll(net *);
 
  private:
   nodeset * nset;

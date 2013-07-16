@@ -142,11 +142,7 @@ int qucsint::prepare_netlist (char * infile)
     subnet->insertCircuit (gnd);
 
     // apply some data to all analyses
-    for (int i = 0; i < subnet->getNActions(); i++)
-    {
-        subnet->setActionNet(i, subnet);
-        //a->setData (out);
-    }
+    subnet->setActionNetAll(subnet);
 
     return NETLIST_OK;
 }
