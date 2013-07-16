@@ -110,14 +110,6 @@
 
 #endif
 
-#define NR_NAN nr_nan
 
-__BEGIN_DECLS
-
-extern nr_double_t nr_nan;
-
-void precinit (void);
-
-__END_DECLS
 
 #endif /* __PRECISION_H__ */

@@ -63,7 +63,6 @@ qucsint::qucsint ()
     err = 0;
 
     loginit ();
-    precinit ();
     ::srand (::time (NULL));
 
 }
@@ -75,7 +74,6 @@ qucsint::qucsint (char* infile)
     err = 0;
 
     loginit ();
-    precinit ();
     ::srand (::time (NULL));
 
     prepare_netlist (infile);

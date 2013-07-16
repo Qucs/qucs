@@ -71,7 +71,6 @@ int main (int argc, char ** argv) {
   std::list<std::string> vamodules;
 
   loginit ();
-  precinit ();
   ::srand (::time (NULL));
 
   // check program arguments

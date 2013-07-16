@@ -111,7 +111,6 @@ int main (int argc, char ** argv) {
   char * infile = NULL, * outfile = NULL, * input = NULL, * output = NULL;
 
   loginit ();
-  precinit ();
 
   // check program arguments
   for (int i = 1; i < argc; i++) {

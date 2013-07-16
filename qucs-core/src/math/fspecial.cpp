@@ -573,7 +573,7 @@ nr_double_t fspecial::ltqnorm (nr_double_t x) {
   }
   // Cases when output will be NaN:
   else if (x < 0.0 || x > 1.0 || std::isnan (x)) {
-    z = +NR_NAN;
+    z = +std::numeric_limits<nr_double_t>::quiet_NaN();
   }
 
   // The relative error of the approximation has absolute value less

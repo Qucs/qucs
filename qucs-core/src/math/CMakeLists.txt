@@ -7,7 +7,6 @@ SET(MATH_SRC
   complex.cpp
   fspecial.cpp
   matrix.cpp
-  precision.c
   real.cpp
 )
 
