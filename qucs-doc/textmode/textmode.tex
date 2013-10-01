@@ -206,6 +206,21 @@ Using this modified netlist with qucs starts an AC analysis of the circuit. The 
 qucsator < rc_ac.net > rc_ac.dat
 \end{verbatim}
 
+The saved data from the simulation can be processed via Octave or Python; the next two subsections continue the example.
+
+\begin{figure}[htb]
+\begin{center}
+  \includegraphics[angle=0,width=0.8\linewidth]{rc_ac.eps}
+  \caption{Simulation Result}
+  \label{plot:rc_ac_octave}
+\end{center}
+\end{figure}
+
+
+\subsubsection{Analysis with Octave}
+
+
+
 Starting GNU Octave and issuing the following commands
 
 \begin{verbatim}
@@ -213,15 +228,101 @@ data=loadQucsDataSet('temp.dat')
 loglog(data(1).data, data(3).data)
 \end{verbatim}
 
-produces a log-log plot of the output voltage versus the frequency. A slightly more polished plot is shown in Fig. \ref{plot:rc_ac}.
+produces a log-log plot of the output voltage versus the frequency. A slightly more polished plot is shown in Fig. \ref{plot:rc_ac_octave}.
+
+
+\subsubsection{Analysis with Python}
+
+Similar to the octave scripts, Qucs provides a Python script which allows parsing of the generated simulation data file. The code example below shows how to load and parse the data file with Python. The plot using Matplotlib is shown in Fig. \ref{plot:rc_ac_python}.
+
+
+\begin{verbatim}
+
+import numpy as np
+import matplotlib.pyplot as plt
+import parse_result as pr
+
+data = pr.parse_file('rc_ac.dat')
+
+x = data['acfrequency']
+y = np.abs(data['out.v'])
+
+plt.loglog(x, y, '-r')
+plt.grid()
+plt.xlabel('Frequency')
+plt.xlabel('Voltage')
+plt.legend(['out.v'])
+plt.show()
+plt.savefig('rc_ac_python.eps') # save plot as eps file
+
+\end{verbatim}
+
 
 \begin{figure}[h]
 \begin{center}
-	\includegraphics[angle=0,width=0.8\linewidth]{rc_ac.eps}
-	\caption{Simulation Result}
-	\label{plot:rc_ac}
+  \includegraphics[angle=0,width=0.8\linewidth]{rc_ac_python.eps}
+  \caption{Simulation Result}
+  \label{plot:rc_ac_python}
 \end{center}
 \end{figure}
+
+
+\pagebreak
+
+\paragraph{Nested Simulations.}Qucs allows for nested simulations; as an example we consider an AC analysis together with a parameter sweep. The AC analysis is set up as before, but in addition the value of the capacitor C1 is increased in $5$ steps from $10$nF to $100$nF. The netlist for this simulation is as follows.
+
+
+\begin{verbatim}
+
+Vac:V1 in gnd U="1 V" f="1 kHz"
+R:R1 out in R="1 kOhm"
+C:C1 out gnd C="Cx"
+
+.SW:SW1 Sim="AC1" Type="lin" Param="Cx" Start="10 nF" Stop="100 nF" Points="5"
+
+.AC:AC1 Start="1 Hz" Stop="10 MHz" Points="100" Type="log" Noise="no"
+
+\end{verbatim}
+
+
+The provided Python script can parse data files produced by such a nested simulation as well; in case of two nested simulations it returns not vectors, but matrices. The Python script below parses the simulation data file and plots the output voltage versus the frequency for two different capacitor values ($10$nF and $100$nF, respectively). The corresponding plot is shown in Fig. \ref{}.
+
+
+\begin{verbatim}
+
+import numpy as np
+import matplotlib.pyplot as plt
+import parse_result as pr
+
+data = pr.parse_file('rc_ac_sweep.dat')
+
+x = data['acfrequency']
+y = np.abs(data['out.v'])
+c = data['Cx']
+
+plt.loglog(x,y[0,:],'-r')
+plt.loglog(x,y[4,:],'-g')
+plt.legend(['Cx=' + str(c[0]), 'Cx=' + str(c[4])])
+plt.xlabel('Frequency')
+plt.ylabel('Voltage')
+plt.title('Output Voltage vs. Frequency')
+plt.grid()
+plt.savefig('rc_ac_sweep_python.eps')
+plt.show()
+
+
+\end{verbatim}
+
+
+\begin{figure}[h]
+\begin{center}
+  \includegraphics[angle=0,width=0.8\linewidth]{rc_ac_sweep_python.eps}
+  \caption{Simulation Result}
+  \label{plot:rc_ac_python}
+\end{center}
+\end{figure}
+
+
 
 
 
