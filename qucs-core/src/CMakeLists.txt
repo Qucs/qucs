@@ -30,8 +30,9 @@ endif()
 #AC_HEADER_STDC !! obsolete, need to check?
 #Define STDC_HEADERS if the system has ANSI C header files.
 #Specifically, this macro checks for `stdlib.h', `stdarg.h', `string.h', and `float.h';
-# Lifted the cmake checks from gd-libdg repo
+# Lifted the cmake checks from gd-libdg, Lua
 # https://bitbucket.org/libgd/gd-libgd
+# https://github.com/LuaDist/libgd/tree/master/cmake/modules
 INCLUDE (CheckIncludeFiles)
 SET(CMAKE_REQUIRED_INCLUDES "/usr/include" "/usr/local/include")
 SET(CMAKE_MODULE_PATH "${qucs-core_SOURCE_DIR}/cmake/modules")

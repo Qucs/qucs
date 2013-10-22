@@ -11,5 +11,5 @@ namespace Outer {
 int main()
 {
   using namespace Outer::Inner;
-  return i;,
+  return i;
 }
