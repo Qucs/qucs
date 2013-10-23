@@ -81,18 +81,20 @@ foreach(type ${ParserTypes})
 
   add_flex_bison_dependency(scan${type} parse${type})
 
-  set(flexInputs   ${flexInputs}   ${FLEX_scan${type}_INPUT}   )
-  set(flexOutputs  ${flexOutputs}  ${FLEX_scan${type}_OUTPUTS} )
-  set(bisonInputs  ${bisonInputs}  ${BISON_parse${type}_INPUT} )
-  set(bisonOutputs ${bisonOutputs} ${BISON_parse${type}_OUPUTS})
+  set(convflexInputs   ${convflexInputs}   ${FLEX_scan${type}_INPUT}   )
+  set(convflexOutputs  ${convflexOutputs}  ${FLEX_scan${type}_OUTPUTS} )
+  set(convbisonInputs  ${convbisonInputs}  ${BISON_parse${type}_INPUT} )
+  set(convbisonOutputs ${convbisonOutputs} ${BISON_parse${type}_OUTPUTS})
 
 endforeach()
 
-set(generated_FILES ${flexOupus} ${bisonOutputs})
+set(conv_generated ${convflexOupus} ${convbisonOutputs})
 
-message(STATUS "----> Scanner / Parser ${generated_FILES}\n")
-message(STATUS "----> Bison Inputs     ${bisonInputs}\n")
-message(STATUS "----> Flex Inputs      ${flexInputs}\n")
+#message(STATUS "----> Scanner / Parser ${conv_generated}\n")
+message(STATUS "Qucsconv -- Flex Inputs  : ${convflexInputs}")
+message(STATUS "Qucsconv -- Flex Outputs : ${convflexOutputs}")
+message(STATUS "Qucsconv -- Bison Inputs : ${convbisonInputs}")
+message(STATUS "Qucsconv -- Bison Outputs: ${convbisonOutputs}")
 
 
 #parse_spice.cpp scan_spice.cpp tokens_spice.h \

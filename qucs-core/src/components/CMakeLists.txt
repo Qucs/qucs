@@ -12,10 +12,10 @@ INCLUDE_DIRECTORIES( ${CMAKE_SOURCE_DIR}
                      ../ )
 
 
+#ADD_SUBDIRECTORY( verilog )
 ADD_SUBDIRECTORY( microstrip )
 ADD_SUBDIRECTORY( devices )
 ADD_SUBDIRECTORY( digital )
-ADD_SUBDIRECTORY( verilog )
 
 
 SET(COMPONENT_SRC  attenuator.cpp dcblock.cpp open.cpp vccs.cpp

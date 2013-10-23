@@ -15,7 +15,10 @@ INCLUDE_DIRECTORIES( ${CMAKE_SOURCE_DIR}
                      ${CMAKE_CURRENT_SOURCE_DIR}
                      ${CMAKE_CURRENT_SOURCE_DIR}/math  #precision.h
                      ${CMAKE_CURRENT_SOURCE_DIR}/components #component.h
+                     ${CMAKE_CURRENT_SOURCE_DIR}/interface 
+                     # out of source include, generated stuff
                      ${CMAKE_CURRENT_BINARY_DIR}/components #/verilog/*.core.h generated stuff
+                     ${CMAKE_CURRENT_BINARY_DIR} #/src/gperfapphash.cpp 
                      .. #config.h
                       )
 
@@ -333,9 +336,6 @@ endif()
 
 
 
-ADD_SUBDIRECTORY( components )
-ADD_SUBDIRECTORY( math )
-#ADD_SUBDIRECTORY( interface )
 
 
 
@@ -384,18 +384,24 @@ foreach(type ${ParserTypes})
 
   add_flex_bison_dependency(scan${type} parse${type})
 
+
+  #message("\n SOO A~~~ ${BISON_parse${type}_OUTPUTS}")
+
   set(flexInputs   ${flexInputs}   ${FLEX_scan${type}_INPUT}   )
   set(flexOutputs  ${flexOutputs}  ${FLEX_scan${type}_OUTPUTS} )
   set(bisonInputs  ${bisonInputs}  ${BISON_parse${type}_INPUT} )
-  set(bisonOutputs ${bisonOutputs} ${BISON_parse${type}_OUPUTS})
+  set(bisonOutputs ${bisonOutputs} ${BISON_parse${type}_OUTPUTS})
 
 endforeach()
 
 set(generated_SRC ${flexOutputs} ${bisonOutputs})
 
-message(STATUS "----> Scanner / Parser     ${generated_SRC}\n")
-message(STATUS "----> Bison Inputs     ${bisonInputs}\n")
-message(STATUS "----> Flex Inputs      ${flexInputs}\n")
+#message(STATUS "----> Scanner / Parser     ${generated_SRC}\n")
+message(STATUS "Qucsator -- Flex Inputs : ${flexInputs}")
+message(STATUS "Qucsator -- Flex Outputs: ${flexOutputs}")
+message(STATUS "Qucsator -- Bison Inputs : ${bisonInputs}")
+message(STATUS "Qucsator -- Bison Outputs: ${bisonOutputs}")
+
 
 
 #BISON_TARGET(parsenetlist parse_netlist.y ${CMAKE_CURRENT_BINARY_DIR}/parser_netlist.cpp
@@ -443,7 +449,17 @@ SET(LIBQUCSATOR_SRC
 #    "${CMAKE_BINARY_DIR}/config.h"
 #)
 
+ADD_LIBRARY(qucsator ${LIBQUCSATOR_SRC} ${generated_SRC} )
 
+
+
+ADD_SUBDIRECTORY( math )
+ADD_SUBDIRECTORY( components )
+
+# actually interface needs to be after components/verilog
+# it includes components.h, which includes all verilog.core.h
+#ADD_SUBDIRECTORY( interface )
+#add_dependencies( interface DEPENDS components/verilog)
 
 
 SET(QUCSATOR_SRC
@@ -458,14 +474,14 @@ SET(QUCSATOR_SRC
 	range.cpp devstates.cpp differentiate.cpp module.cpp receiver.cpp
 	interpolator.cpp )
 
-set(TEMPLATES tmatrix.cpp eqnsys.cpp nasolver.cpp states.cpp tvector.cpp
-	ptrlist.cpp tridiag.cpp hash.cpp valuelist.cpp nasolution.cpp )
 
+#Do yourself a favor and just put template classes in headers.
 
+# how to handle these template classes?
+# http://stackoverflow.com/questions/115703/storing-c-template-function-definitions-in-a-cpp-file
 
-
-ADD_LIBRARY(qucsator ${LIBQUCSATOR_SRC} ${generated_SRC})
-
+set(TEMPLATES tmatrix.h eqnsys.h nasolver.h states.h tvector.h
+	ptrlist.h tridiag.h hash.h valuelist.h nasolution.h )
 
 
 #qucsator_LDADD = libqucsator.a		      \
@@ -478,17 +494,16 @@ ADD_LIBRARY(qucsator ${LIBQUCSATOR_SRC} ${generated_SRC})
 #	interface/libinterface.a
 #
 
-#ADD_EXECUTABLE(qucsator ${QUCSATOR_SRC})
+
+# after qucsator
 
 
-# target names must be different, use target property to rename
-add_executable(qucsator-bin ${QUCSATOR_SRC} ${TEMPLATES})
-target_link_libraries( qucsator-bin qucsmath component microstrip devices digital verilog )#interface)
-SET_TARGET_PROPERTIES(qucsator-bin PROPERTIES OUTPUT_NAME qucsator)
-
-
-# after ator
 ADD_SUBDIRECTORY( converter )
+
+
+
+
+### WHAT ABOUT set_source_files_properties(foo.ext PROPERTIES GENERATED TRUE)
 
 #!# needed before qucsconv can be compiled
 # run qucsator -l > pipe to qucsdef.h
@@ -497,7 +512,7 @@ ADD_SUBDIRECTORY( converter )
 #endif
 
 
-
+# 1)
 # t <- s
 #gperfappgen.h: applications.h
 #	sed -e 's/evaluate::[a-zA-Z0-9_]*/NULL/g' < $< > $@
@@ -505,17 +520,44 @@ ADD_SUBDIRECTORY( converter )
 #	actual evaluation function (applications) for the equations
 #	in Qucs.
 # --> replace evaluate::[whatever] by NULL
+find_program (SED_TOOL NAMES sed)
+if (NOT SED_TOOL)
+	message (FATAL_ERROR "Unable to find sed")
+endif (NOT SED_TOOL)
 
-
+add_custom_command(
+  OUTPUT gperfappgen.h
+  COMMAND ${SED_TOOL} -e 's/evaluate::[a-zA-Z0-9_]*/NULL/g'
+    < ${CMAKE_CURRENT_SOURCE_DIR}/applications.h
+    > ${CMAKE_CURRENT_BINARY_DIR}/gperfappgen.h
+  DEPENDS ${applications.h}
+)
 
 # t <- s
 #gperfappgen.cpp: gperfappgen.h
 #
 
+set(gperf_SRC gperfappgen.cpp  gperfappgen.h )
+##
+add_executable(gperfappgen ${gperf_SRC})
+#ok
 
 # run gperfappgen > pipe to gperfapphash.gph
 #gperfapphash.gph: gperfappgen$(EXEEXT)
 #	./$< > $@
+
+add_custom_command(
+  OUTPUT gperfapphash.gph
+  COMMAND gperfappgen > ${CMAKE_CURRENT_BINARY_DIR}/gperfapphash.gph
+  DEPENDS ${gperfappgen}
+)
+
+
+find_program (GPERF_TOOL NAMES gperf)
+if (NOT GPERF_TOOL)
+	message (FATAL_ERROR "Unable to find gperf")
+endif (NOT GPERF_TOOL)
+
 
 #gperfapphash.cpp: gperfapphash.gph
 #	$(GPERF) -I -m 8 $< | sed -e 's/{""},/{"",0},/g' > $@
@@ -525,7 +567,12 @@ ADD_SUBDIRECTORY( converter )
 #     Perform  multiple  choices of the -i and -j values, and choose the best results. This increases the running
 #     time by a factor of ITERATIONS but does a good job minimizing the generated table size.
 # replacing?? what??
-
+ADD_CUSTOM_COMMAND(
+    OUTPUT gperfapphash.cpp
+    COMMAND ${GPERF_TOOL} -I -m 8 gperfapphash.gph > temp.gperf
+    COMMAND ${SED_TOOL} -e 's/{""},/{"",0},/g' < temp.gperf > ${CMAKE_CURRENT_BINARY_DIR}/gperfapphash.cpp
+    DEPENDS gperfapphash.gph
+)
 
 
 # target <- source (includea)
@@ -537,10 +584,20 @@ ADD_SUBDIRECTORY( converter )
 #gperfappgen_SOURCES = gperfappgen.cpp
 
 # for cleaning (autogenerated)
-#gperf_FILES = gperfapphash.cpp gperfapphash.gph gperfappgen.h
+#set(gperf_FILES gperfapphash.cpp gperfapphash.gph gperfappgen.h)
 
 
-#set(gperf_SRC gperfappgen.cpp )
-##
-#add_executable(gperfappgen gperfappgen.cpp gperfappgen.h)
+ADD_CUSTOM_TARGET( equation.cpp DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/gperfapphash.cpp )
+
+# 
+# nogood ADD_CUSTOM_TARGET( interface DEPENDS verilog )
+#set_source_files_properties(equation.cpp properties object_depends gperfapphash.cpp)
+
+
+# target names must be different, use target property to rename
+add_executable(qucsator-bin ${QUCSATOR_SRC} ${TEMPLATES} )
+
+target_link_libraries( qucsator-bin qucsmath component microstrip devices digital interface verilog)
+
+SET_TARGET_PROPERTIES(qucsator-bin PROPERTIES OUTPUT_NAME qucsator)
 

@@ -30,9 +30,32 @@ OPTION(ENABLE_QUCSLIB "enable qucslib build, default: OFF")
 #    esac
 #  fi
 
+## DEPENDS
+# adms
+# sed, gperf, make
 
 
-
+#  CFLAGS="$CFLAGS -pipe"
+#  CXXFLAGS="$CXXFLAGS -pipe -fno-exceptions -fno-rtti -fno-check-new"
+#  if test $USE_MAINTAINER_MODE = yes; then
+#    CFLAGS="$CFLAGS -W -Wall -Wmissing-prototypes"
+#    CXXFLAGS="$CXXFLAGS -W -Wall"
+#-pipe Use pipes rather than temporary files for communication between the various stages of compilation.  This fails to work on some systems where the assembler is unable to read from a pipe; but the GNU assembler has no trouble.
+#
+##https://blog.mozilla.org/nnethercote/2011/01/18/the-dangers-of-fno-exceptions/
+#-fno-exceptions option is used, which means that exception-handling is disabled.
+#
+#-fno-rtti
+#    Disable generation of information about every class with virtual functions for use by the C++ runtime type identification features (`dynamic_cast' and `typeid'). If you don't use those parts of the language, you can save some space by using this flag. Note that exception handling uses the same information, but it will generate it as needed. The `dynamic_cast' operator can still be used for casts that do not require runtime type information, i.e. casts to void * or to unambiguous base classes. 
+#
+#-fno-check-new"  specific to GCC
+#
+# -Wmissing-prototypes
+#           Warn if a global function is defined without a previous prototype declaration.  This warning is issued even if the definition itself
+#           provides a prototype.  The aim is to detect global functions that fail to be declared in header files.
+#    
+#
+#
 set(PROJECT_VERSION_MAJOR "0")
 set(PROJECT_VERSION_MINOR "0")
 set(PROJECT_VERSION_PATCH "18")

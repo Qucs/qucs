@@ -51,18 +51,6 @@ message(STATUS " ==> found admsXml " ${ADMSXML})
 
 #http://stackoverflow.com/questions/2687136/how-do-i-make-build-rules-in-cmake-to-preprocess-lazy-c-lzz-files-that-genera
 
-#function(lazy_compile2 filename)
-#    get_filename_component(base ${filename} NAME_WE)
-#    set(base_abs ${CMAKE_CURRENT_BINARY_DIR}/${base})
-#    set(output ${base_abs}.core.cpp ${base_abs}.core.h)
-#    add_custom_command(
-#        OUTPUT ${output}
-#        COMMAND ${ADMSXML} ${filename} -e qucsVersion.xml -e qucsMODULEcore.xml )
-#    set_source_files_properties(${output} PROPERTIES GENERATED TRUE)
-#set( result ${result} ${output})
-#  message(STATUS "${result}")
-#endfunction()
-
 
 # TODO, if VA files change, should recompile
 
@@ -94,10 +82,6 @@ function(adms_compile filename)
     add_custom_command(
         OUTPUT ${output}
         COMMAND ${ADMSXML} ${CMAKE_CURRENT_SOURCE_DIR}/${filename} -e ${CMAKE_CURRENT_SOURCE_DIR}/qucsVersion.xml -e ${CMAKE_CURRENT_SOURCE_DIR}/qucsMODULEcore.xml )
-        #depends ${filename}) invalid?
-#        [ 10%] Generating mod_amp.core.cpp, mod_amp.core.h
-#cd /Users/guilherme/git/qucs/qucs-core/build/src/components/verilog && /usr/local/bin/admsXml /Users/guilherme/git/qucs/qucs-core/src/components/verilog/mod_amp.va -e /Users/guilherme/git/qucs/qucs-core/src/components/verilog/qucsVersion.xml -e /Users/guilherme/git/qucs/qucs-core/src/components/verilog/qucsMODULEcore.xml depends mod_amp.va
-#[fatal..] option -f: cannot read file './depends'
     set_source_files_properties(${output} PROPERTIES GENERATED TRUE)
     set(core ${core} ${output} PARENT_SCOPE)
 
@@ -126,7 +110,7 @@ foreach (_va ${VA_FILES})
 endforeach()
 
 #message(STATUS " ==> analog\n " ${analogfunc})
-message(STATUS " ==> core\n   " ${core})
+#message(STATUS " ==> core\n   " ${core})
 #message(STATUS " ==> defs\n   " ${defs})
 
 
@@ -147,24 +131,3 @@ add_library(verilog  ${analogfunc} ${core} ${defs} ${result} ${heads})
 #ADMSXML = @ADMSXML@
 #endif
 #
-#
-#nigbt.analogfunction.cpp: analogfunction.xml
-#nigbt.analogfunction.cpp: nigbt.va
-#	$(ADMSXML) $< -e $(srcdir)/analogfunction.xml
-#
-#nigbt.core.cpp: nigbt.defs.h qucsVersion.xml qucsMODULEcore.xml
-#nigbt.core.cpp: nigbt.va
-#	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEcore.xml
-#
-#nigbt.defs.h: qucsVersion.xml qucsMODULEdefs.xml
-#nigbt.defs.h: nigbt.va
-#	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEdefs.xml
-#
-#nigbt.gui.cpp: qucsVersion.xml qucsMODULEgui.xml
-#nigbt.gui.cpp: nigbt.va
-#	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEgui.xml
-#
-#
-#
-#
-#ADD_LIBRARY(verilog $VERILOG_SRC} )

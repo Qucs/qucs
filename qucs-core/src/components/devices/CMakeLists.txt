@@ -18,7 +18,6 @@ SET( DEVICES_SRC  device.cpp diode.cpp jfet.cpp bjt.cpp mosfet.cpp
   eqndefined.cpp diac.cpp thyristor.cpp triac.cpp tunneldiode.cpp )
 
 
-
 ADD_LIBRARY(devices ${DEVICES_SRC} )
 
 
