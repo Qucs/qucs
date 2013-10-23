@@ -93,8 +93,11 @@ function(adms_compile filename)
 
     add_custom_command(
         OUTPUT ${output}
-        COMMAND ${ADMSXML} ${filename} -e qucsVersion.xml -e qucsMODULEcore.xml
-        depends ${filename})
+        COMMAND ${ADMSXML} ${CMAKE_CURRENT_SOURCE_DIR}/${filename} -e ${CMAKE_CURRENT_SOURCE_DIR}/qucsVersion.xml -e ${CMAKE_CURRENT_SOURCE_DIR}/qucsMODULEcore.xml )
+        #depends ${filename}) invalid?
+#        [ 10%] Generating mod_amp.core.cpp, mod_amp.core.h
+#cd /Users/guilherme/git/qucs/qucs-core/build/src/components/verilog && /usr/local/bin/admsXml /Users/guilherme/git/qucs/qucs-core/src/components/verilog/mod_amp.va -e /Users/guilherme/git/qucs/qucs-core/src/components/verilog/qucsVersion.xml -e /Users/guilherme/git/qucs/qucs-core/src/components/verilog/qucsMODULEcore.xml depends mod_amp.va
+#[fatal..] option -f: cannot read file './depends'
     set_source_files_properties(${output} PROPERTIES GENERATED TRUE)
     set(core ${core} ${output} PARENT_SCOPE)
 
@@ -102,7 +105,7 @@ function(adms_compile filename)
     set(output ${base_abs}.defs.h)
     add_custom_command(
         OUTPUT ${output}
-        COMMAND ${ADMSXML} ${filename} -e qucsVersion.xml -e qucsMODULEdefs.xml )
+        COMMAND ${ADMSXML} ${CMAKE_CURRENT_SOURCE_DIR}/${filename} -e ${CMAKE_CURRENT_SOURCE_DIR}/qucsVersion.xml -e ${CMAKE_CURRENT_SOURCE_DIR}/qucsMODULEdefs.xml )
     set_source_files_properties(${output} PROPERTIES GENERATED TRUE)
     set(defs ${defs} ${output} PARENT_SCOPE)
 
@@ -123,12 +126,12 @@ foreach (_va ${VA_FILES})
 endforeach()
 
 #message(STATUS " ==> analog\n " ${analogfunc})
-#message(STATUS " ==> core\n   " ${core})
+message(STATUS " ==> core\n   " ${core})
 #message(STATUS " ==> defs\n   " ${defs})
 
 
 # create target library out of generated files
-add_library(verilog  ${analogfunc} ${result} ${heads})
+add_library(verilog  ${analogfunc} ${core} ${defs} ${result} ${heads})
 
 #SET_TARGET_PROPERTIES(verilog PROPERTIES LINKER_LANGUAGE CXX)
 

@@ -3,8 +3,6 @@
 cmake_minimum_required(VERSION 2.8)
 project (qucsconv)
 
-find_package(BISON)
-find_package(FLEX)
 
 # defines nr_double_t
 ADD_DEFINITIONS( -DHAVE_CONFIG_H )
@@ -21,11 +19,18 @@ LINK_DIRECTORIES(${CMAKE_BINARY_DIR}/..
                  ${CMAKE_BINARY_DIR}/src/math/ )
 
 
-SET(QUCSCONV_SRC qucsconv.cpp parse_spice.cpp scan_spice.cpp
-	check_spice.cpp qucs_producer.cpp parse_vcd.cpp scan_vcd.cpp
-	check_vcd.cpp csv_producer.cpp touchstone_producer.cpp
+SET(QUCSCONV_SRC
+  qucsconv.cpp
+	check_spice.cpp
+	check_vcd.cpp
+  qucs_producer.cpp
+  csv_producer.cpp
+  touchstone_producer.cpp
 	matlab_producer.cpp)
 
+# generated
+  #parse_spice.cpp scan_spice.cpp
+  #parse_vcd.cpp scan_vcd.cpp
 
 #noinst_HEADERS = tokens_spice.h check_spice.h qucs_producer.h check_vcd.h \
 #	tokens_vcd.h csv_producer.h touchstone_producer.h matlab_producer.h
@@ -33,45 +38,73 @@ SET(QUCSCONV_SRC qucsconv.cpp parse_spice.cpp scan_spice.cpp
 #generated_FILES = parse_spice.cpp scan_spice.cpp tokens_spice.h \
 #	parse_vcd.cpp scan_vcd.cpp tokens_vcd.h
 
-#scan_spice.cpp: scan_spice.l
-#	$(LEX) -o$@ $<
 
-#parse_spice.cpp: parse_spice.y
-#	$(YACC) -v -o $@ --defines=tokens_spice.h $<
-
-BISON_TARGET(parsespice parse_spice.y ${CMAKE_CURRENT_BINARY_DIR}/parser_spice.cpp)
-FLEX_TARGET(scanspice scan_spice.l  ${CMAKE_CURRENT_BIANRY_DIR}/scan_spice.cpp)
+#BISON_TARGET(parsespice parse_spice.y
+#    ${CMAKE_CURRENT_BINARY_DIR}/parser_spice.cpp
+#    COMPILE_FLAGS --defines="${PROJECT_SOURCE_DIR}/tokens_spice.h" )
+#
+#FLEX_TARGET(scanspice scan_spice.l  ${CMAKE_CURRENT_BIANRY_DIR}/scan_spice.cpp)
 #ADD_FLEX_BISON_DEPENDENCY(parsespice scanspice)
+#
+#set(bisonInputs  ${bisonInputs}  ${BISON_parsespice_INPUT} )
+#set(bisonOutputs ${bisonOutputs} ${BISON_parsespice_OUPUTS})
+#set(flexInputs   ${flexInputs}   ${FLEX_scanspice_INPUT}   )
+#set(flexOutputs  ${flexOutputs}  ${FLEX_scanspice_OUTPUTS} )
+#
+#
+#
+#BISON_TARGET(parsevcd parse_vcd.y
+#    ${CMAKE_CURRENT_BINARY_DIR}/parser_vcd.cpp
+#    COMPILE_FLAGS --defines="${PROJECT_SOURCE_DIR}/tokens_vcd.h" )
+#
+#FLEX_TARGET(scanvcd scan_vcd.l  ${CMAKE_CURRENT_BIANRY_DIR}/scan_vcd.cpp)
+#ADD_FLEX_BISON_DEPENDENCY(parsevcd scanvcd)
 
 
-#scan_vcd.cpp: scan_vcd.l
-#	$(LEX) -o$@ $<
+find_package(BISON)
+find_package(FLEX)
 
-#parse_vcd.cpp: parse_vcd.y
-#	$(YACC) -v -o $@ --defines=tokens_vcd.h $<
+set(ParserTypes
+  spice
+  vcd)
 
-BISON_TARGET(parsevcd parse_vcd.y ${CMAKE_CURRENT_BINARY_DIR}/parser_vcd.cpp)
-FLEX_TARGET(scanvcd scan_vcd.l  ${CMAKE_CURRENT_BIANRY_DIR}/scan_vcd.cpp)
+set(generated_SRC)
+
+# TODO Double check the location where the generated scanner/parser should go
+foreach(type ${ParserTypes})
+
+  flex_target(scan${type} scan_${type}.l ${PROJECT_SOURCE_DIR}/scan_${type}.cpp)
+
+  bison_target(parse${type}
+               parse_${type}.y ${PROJECT_SOURCE_DIR}/parse_${type}.cpp
+               COMPILE_FLAGS --defines="${PROJECT_SOURCE_DIR}/tokens_${type}.h" )
+
+  add_flex_bison_dependency(scan${type} parse${type})
+
+  set(flexInputs   ${flexInputs}   ${FLEX_scan${type}_INPUT}   )
+  set(flexOutputs  ${flexOutputs}  ${FLEX_scan${type}_OUTPUTS} )
+  set(bisonInputs  ${bisonInputs}  ${BISON_parse${type}_INPUT} )
+  set(bisonOutputs ${bisonOutputs} ${BISON_parse${type}_OUPUTS})
+
+endforeach()
+
+set(generated_FILES ${flexOupus} ${bisonOutputs})
+
+message(STATUS "----> Scanner / Parser ${generated_FILES}\n")
+message(STATUS "----> Bison Inputs     ${bisonInputs}\n")
+message(STATUS "----> Flex Inputs      ${flexInputs}\n")
 
 
-ADD_EXECUTABLE(qucsconv ${QUCSCONV_SRC})
+#parse_spice.cpp scan_spice.cpp tokens_spice.h \
+#	parse_vcd.cpp scan_vcd.cpp tokens_vcd.h
+
+
+ADD_EXECUTABLE(qucsconv ${QUCSCONV_SRC} ${generated_FILES})
 
 
 #qucsconv_LDADD = ../libqucsator.a ../math/libqucsmath.a
 TARGET_LINK_LIBRARIES(qucsconv qucsator qucsmath)
 
-#${FLEX_parsespice_LIBRARIES}
-#${FLEX_parsesvdc_LIBRARIES})
-
-#BISON_TARGET(MyParser yacc.y ${CMAKE_CURRENT_BINARY_DIR}/y.tab.c)
-#FLEX_TARGET(MyScanner lex.l  ${CMAKE_CURRENT_BINARY_DIR}/lex.yy.c)
-#ADD_FLEX_BISON_DEPENDENCY(MyScanner MyParser)
-#
-#include_directories(${CMAKE_CURRENT_BINARY_DIR})
-#add_executable(LexYacc
-#  ${BISON_MyParser_OUTPUTS}
-#  ${FLEX_MyScanner_OUTPUTS})
-#target_link_libraries(LexYacc ${FLEX_LIBRARIES} ${BISON_LIBRARIES})
 
 #
 ## Create target for the parser
