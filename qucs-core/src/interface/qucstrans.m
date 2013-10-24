@@ -1,15 +1,15 @@
 classdef qucstrans < qucs
     % interface to the qucs transient circuit solver
     %
-    
+
     % Copyright Richard Crozier 2013
-    
+
     properties ( SetAccess = protected, GetAccess = public )
-        
+
         isinitialised; % for marking the solver as initialised
-        
+
     end
-    
+
     methods
         
         %% Constructor - Create a new instance of the class
