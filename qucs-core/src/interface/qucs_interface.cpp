@@ -176,7 +176,6 @@ int qucsint::prepare_netlist (char * infile)
         //a->setData (out);
     }
 
-
     return 0;
 }
 
@@ -194,22 +193,8 @@ int qucsint::evaluate ()
 // Returns a pointer to the e_trsolver if it is present
 analysis * qucsint::getETR()
 {
-//    analysis * a;
-//    int i;
-
-    // apply some data to all analyses
-//    for (i = 0; i < subnet->actions->length (); i++)
-//    {
-//        a = subnet->actions->get (i);
-//        if (a->type==analysis_type::ANALYSIS_E_TRANSIENT)
-//        {
-//            a->setNet(subnet);
-            return subnet->findAnalysis (ANALYSIS_E_TRANSIENT);
-//        }
-//        //a->setNet (this);
-//        //a->setData (out);
-//    }
-//    return nullptr;
+    // get a pointer to the external transient solver interface
+    return subnet->findAnalysis (ANALYSIS_E_TRANSIENT);
 }
 
 //int qucsint::trevaluate ()
