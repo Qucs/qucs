@@ -46,6 +46,7 @@
 #include "exception.h"
 #include "exceptionstack.h"
 #include "e_trsolver.h"
+#include "environment.h"
 
 #define STEPDEBUG   0 // set to zero for release
 #define BREAKPOINTS 0 // exact breakpoint calculation
@@ -206,17 +207,20 @@ int e_trsolver::init (nr_double_t start, nr_double_t firstdelta, int mode)
     // prepare the netlist
     //prepare_net (infile);
 
+    // run the equation solver for the netlist
+    this->getEnv()->runSolver();
+
     int error = 0;
     char * solver = getPropertyString ("Solver");
     relaxTSR = !strcmp (getPropertyString ("relaxTSR"), "yes") ? true : false;
     initialDC = !strcmp (getPropertyString ("initialDC"), "yes") ? true : false;
     // fetch simulation properties
-    MaxIterations = getPropertyInteger ("MaxIter");
-    reltol = getPropertyDouble ("reltol");
-    abstol = getPropertyDouble ("abstol");
-    vntol = getPropertyDouble ("vntol");
+//    MaxIterations = getPropertyInteger ("MaxIter");
+//    reltol = getPropertyDouble ("reltol");
+//    abstol = getPropertyDouble ("abstol");
+//    vntol = getPropertyDouble ("vntol");
 
-//    runs++;
+    runs++;
     saveCurrent = current = 0;
     stepDelta = -1;
     converged = 0;
@@ -438,7 +442,8 @@ int e_trsolver::stepsolve_sync(nr_double_t synctime)
 
         try_running () // #defined as:    do {
         {
-            error += solve_nonlinear_step ();
+//            error += solve_nonlinear_step ();
+            error += solve_nonlinear ();
         }
         catch_exception () // #defined as:   } while (0); if (estack.top ()) switch (estack.top()->getCode ())
         {
@@ -775,75 +780,80 @@ int e_trsolver::finish()
     return 0;
 }
 
-/* The single step non-linear iterative nodal analysis netlist solver. */
-int e_trsolver::solve_nonlinear_step (void)
-{
-    int convergence, run = 0, error = 0;
-    qucs::exception * e;
-
-    updateMatrix = 1;
-
-    if (convHelper == CONV_GMinStepping)
-    {
-        // use the alternative non-linear solver solve_nonlinear_continuation_gMin
-        // instead of the basic solver provided by this function
-        iterations = 0;
-        error = solve_nonlinear_continuation_gMin ();
-        return error;
-    }
-    else if (convHelper == CONV_SourceStepping)
-    {
-        // use the alternative non-linear solver solve_nonlinear_continuation_Source
-        // instead of the basic solver provided by this function
-        iterations = 0;
-        error = solve_nonlinear_continuation_Source ();
-        return error;
-    }
-
-    // run solving loop until convergence is reached
-    do
-    {
-        error = solve_once ();
-        if (!error)
-        {
-            // convergence check
-            convergence = (run > 0) ? checkConvergence () : 0;
-            savePreviousIteration ();
-            run++;
-            // control fixpoint iterations
-            if (fixpoint)
-            {
-                if (convergence && !updateMatrix)
-                {
-                    updateMatrix = 1;
-                    convergence = 0;
-                }
-                else
-                {
-                    updateMatrix = 0;
-                }
-            }
-        }
-        else
-        {
-            break;
-        }
-    }
-    while (!convergence &&
-            run < MaxIterations * (1 + this->convHelper ? 1 : 0));
-
-    if (run >= MaxIterations || error)
-    {
-        e = new qucs::exception (EXCEPTION_NO_CONVERGENCE);
-        e->setText ("no convergence in %s analysis after %d iterations",
-                    desc, run);
-        throw_exception (e);
-        error++;
-    }
-
-    iterations = run;
-    return error;
-}
+///* The single step non-linear iterative nodal analysis netlist solver. */
+//int e_trsolver::solve_nonlinear_step (void)
+//{
+//    int convergence, run = 0, error = 0;
+//    qucs::exception * e;
+//
+//    // fetch simulation properties
+//    MaxIterations = getPropertyInteger ("MaxIter");
+//    reltol = getPropertyDouble ("reltol");
+//    abstol = getPropertyDouble ("abstol");
+//    vntol = getPropertyDouble ("vntol");
+//    updateMatrix = 1;
+//
+//    if (convHelper == CONV_GMinStepping)
+//    {
+//        // use the alternative non-linear solver solve_nonlinear_continuation_gMin
+//        // instead of the basic solver provided by this function
+//        iterations = 0;
+//        error = solve_nonlinear_continuation_gMin ();
+//        return error;
+//    }
+//    else if (convHelper == CONV_SourceStepping)
+//    {
+//        // use the alternative non-linear solver solve_nonlinear_continuation_Source
+//        // instead of the basic solver provided by this function
+//        iterations = 0;
+//        error = solve_nonlinear_continuation_Source ();
+//        return error;
+//    }
+//
+//    // run solving loop until convergence is reached
+//    do
+//    {
+//        error = solve_once ();
+//        if (!error)
+//        {
+//            // convergence check
+//            convergence = (run > 0) ? checkConvergence () : 0;
+//            savePreviousIteration ();
+//            run++;
+//            // control fixpoint iterations
+//            if (fixpoint)
+//            {
+//                if (convergence && !updateMatrix)
+//                {
+//                    updateMatrix = 1;
+//                    convergence = 0;
+//                }
+//                else
+//                {
+//                    updateMatrix = 0;
+//                }
+//            }
+//        }
+//        else
+//        {
+//            break;
+//        }
+//    }
+//    while (!convergence &&
+//            run < MaxIterations * (1 + this->convHelper ? 1 : 0));
+//
+//    if (run >= MaxIterations || error)
+//    {
+//        e = new qucs::exception (EXCEPTION_NO_CONVERGENCE);
+//        e->setText ("no convergence in %s analysis after %d iterations",
+//                    desc, run);
+//        throw_exception (e);
+//        error++;
+//    }
+//
+//    iterations = run;
+//    return error;
+//}
 
 void e_trsolver::getsolution(double * lastsol)
 {

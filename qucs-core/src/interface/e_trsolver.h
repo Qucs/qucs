@@ -74,7 +74,7 @@ private:
     int rejected;
     int convError;
 
-    int solve_nonlinear_step (void);
+//    int solve_nonlinear_step (void);
     void adjustDelta_sync (nr_double_t);
 
 };
