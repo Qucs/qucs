@@ -3,32 +3,44 @@ classdef synctrcircuit < qucstrans
     % based on an interface to the qucs transient circuit solvers
     %
     %
-    
+
     % Copyright Richard Crozier 2013
-    
+
     properties (SetAccess = private, GetAccess = public)
         
-        last_t;
+        t_history;
+        sol_history;
         
+        hist_length = 2;
+
     end
-    
+
+    properties (SetAccess = public, GetAccess = public )
+        dydt_history;
+    end
+
     methods
-        
+
         function this = synctrcircuit(netlist)
-            
+
             this = this@qucstrans(netlist);
-            
+
         end
-        
+
         function init(this, tstart)
             % initialises the circuit solver
-            
+
             this.cppcall('init_sync', tstart);
-            
+
             this.isinitialised = true;
-            
-            this.last_t = tstart;
-            
+
+            % initialist the history of previous time and solution values
+            this.t_history = nan * ones(1, this.hist_length);
+
+            this.sol_history = nan * ones(this.getn() + this.getm(), this.hist_length);
+
+            this.acceptstep( tstart + eps );
+
         end
         
         function stepsolve(this, t)
@@ -52,13 +64,13 @@ classdef synctrcircuit < qucstrans
             % integrators. To add the solution to the history and move on
             % to the next step, the acceptstep_sync function must be used.
             %
-            
+
             if ~isscalar(t)
                 error('t must be a scalar.');
             end
-            
+
             this.cppcall('stepsolve_sync', t);
-            
+
         end
         
         function [sol, NM] = getsolution(this)
@@ -76,9 +88,9 @@ classdef synctrcircuit < qucstrans
             % of nodal voltages and branch currents respectively are
             % returned in the two element vector NM.
             %
-            
+
             [sol, NM] = this.cppcall('getsolution');
-            
+
         end
         
         function acceptstep(this, t)
@@ -94,13 +106,20 @@ classdef synctrcircuit < qucstrans
             %   t - the time point at which the circuit is to be
             %     recalculated and added to the solution history
             % 
-            
+
             stepsolve(this, t);
-            
+
             this.cppcall('acceptstep_sync');
-            
-            this.last_t = t;
-            
+
+            % push the new t value  and solution onto the history
+            this.t_history = circshift(this.t_history, [0, -1]);
+
+            this.t_history(end) = t;
+
+            this.sol_history = circshift(this.sol_history, [0, -1]);
+
+            this.sol_history(:,end) = this.getsolution();
+
         end
         
     end
@@ -129,12 +148,15 @@ classdef synctrcircuit < qucstrans
             
             if isempty(flag)
                 % accept the time step into the circuit solution history
+
+                qtr_sync.dydt_history = synctrcircuit.odefcn(t, y, qtr_sync);
+
                 qtr_sync.acceptstep(t);
-                
+
             elseif strcmp(flag, 'init')
                 % initialise the circuit
-                qtr_sync.init(t(1)+10*eps(t(1)));
-                
+%                 qtr_sync.init(t(1));
+
             elseif strcmp(flag, 'done')
                 
 %                 qtr_sync.
@@ -156,26 +178,62 @@ classdef synctrcircuit < qucstrans
             % because contrary to what the ode solver documentation states,
             % the solver function is called before the OutputFcn is ever
             % called with the 'init' flag in odearguments.m
+            
             if qtr_sync.isinitialised
                 % if the circuit is initialised start solving
-                
-                % attempt to solve the circuit at the current time step
-                qtr_sync.stepsolve(t);
-                
-                % get the solution just calculated
-                sol = qtr_sync.getsolution();
-                
-                % get the derivative w.r.t.
-                dydt = (sol - y) / (t - qtr_sync.last_t);
-                
+
+                if qtr_sync.t_history(end) == t
+%                     dydt = qtr_sync.dydt_history;
+
+                    fit_time = qtr_sync.t_history(~isnan(qtr_sync.t_history));
+
+                    fit_time = [ fit_time(1:end-1), t ];
+
+                    if numel(fit_time) == 2
+                        dydt = (qtr_sync.sol_history(:,end-1) - y) ./ (t - fit_time(end - 1));
+                    else
+
+                        % need to use y in here
+                        fit_sol = [qtr_sync.sol_history(:,1:end-1), y];
+                        fit_sol = permute(fit_sol(~isnan(fit_sol)), [ 2, 3, 1 ]);
+
+                        [ ~, p1p2der1 ] = threepntcubicsplinefit([ repmat(fit_time, [1, 1, numel(sol)]), ...
+                            fit_sol ]);
+
+                        dydt = squeeze(p1p2der1(2,1,:) .* t.^2 + p1p2der1(2,2,:) .* t + p1p2der1(2,3,:));
+                    end
+
+                else
+                    % attempt to solve the circuit at the current time step
+%                     if t - qtr_sync.t_history(end) < eps
+                    qtr_sync.stepsolve(t);
+
+                    % get the solution just calculated
+                    sol = qtr_sync.getsolution();
+
+                    % get the derivative w.r.t.
+
+                    fit_time = [ qtr_sync.t_history(~isnan(qtr_sync.t_history)), t ]';
+
+                    if numel(fit_time) == 2
+                        dydt = (sol - y) ./ (t - qtr_sync.t_history(end));
+                    else
+                        fit_sol = permute([ qtr_sync.sol_history(:,1:end), sol ], [ 2, 3, 1 ]);
+
+                        [ ~, p1p2der1 ] = threepntcubicsplinefit([ repmat(fit_time, [1, 1, numel(sol)]), ...
+                            fit_sol ]);
+
+                        dydt = squeeze(p1p2der1(2,1,:) .* t.^2 + p1p2der1(2,2,:) .* t + p1p2der1(2,3,:));
+                    end
+
+                end
+
             else
                 dydt = zeros(length(y),1);
             end
-            
+
         end
-        
-        
-        
+
     end
-    
+
 end
