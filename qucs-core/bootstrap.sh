@@ -1,10 +1,10 @@
 #! /bin/sh
 #
-# autogen.sh
+# bootstrap.sh
 #
-# Run this script to re-generate all maintainer-generated files.
+# Run this script in preparation for running configure and make.
 #
-# Copyright (C) 2003, 2009 Stefan Jahn <stefan@lkcc.org>
+# Copyright (C) 2013 Richard Crozier <richard.crozier@yahoo.co.uk.org>
 #
 # This is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -32,11 +32,11 @@ if [ -d "./adms" ]; then
   elif [ -e "./adms/autogen.sh" ]; then
     ./adms/autogen.sh "$@";
   else
-    echo "Could not locate adms autogen script in ./adms, you may use --disable-adms to use installed version"
+    echo "Could not locate adms autogen script in ./adms, you may use configure with --disable-adms to use installed version"
     exit
   fi
 else
-  echo "No local adms source folder found (you may need to use the --diable-adms option to build with installed version)"
+  echo "No local adms source folder found (you may need to use the configure --diable-adms option to build with installed version)"
 fi
 
 echo -n "Creating aclocal.m4... "
@@ -45,28 +45,16 @@ echo "done."
 echo -n "Creating config.h.in... "
 autoheader
 echo "done."
+echo -n "Libtoolizing... "
+case `uname` in
+  *Darwin*) LIBTOOLIZE=glibtoolize ;;
+  *)        LIBTOOLIZE=libtoolize ;;
+esac
+$LIBTOOLIZE
+echo "done."
 echo -n "Creating Makefile.in(s)... "
 ${AUTOMAKE:-automake} -a -f -c
 echo "done."
 echo -n "Creating configure... "
 autoconf
 echo "done."
-
-#
-# run configure, maybe with parameters recorded in config.status
-#
-if [ -r config.status ]; then
-  # Autoconf 2.13
-  CMD=`awk '/^#.*\/?configure .*/ { $1 = ""; print; exit }' < config.status`
-  if test "x$CMD" = "x" ; then
-    # Autoconf 2.5x
-    eval set -- ./configure  `grep "with options" < config.status | \
-         sed 's/^[^"]*["]\(.*\)\\\"$/\1/'` '"$@"'
-  else
-    set -- $CMD "$@"
-  fi
-else
-  set -- ./configure --enable-maintainer-mode "$@"
-fi
-echo Running `for i; do echo "'$i'"$@; done` ...
-"$@" --with-mkadms=internal
