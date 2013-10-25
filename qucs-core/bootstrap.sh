@@ -28,8 +28,10 @@ cd `dirname $0`
 if [ -d "./adms" ]; then
 # if present, run bootstrap on the adms subproject
   if [ -e "./adms/bootstrap.sh" ]; then
-    ./adms/autogen_lin.sh "$@"
+    echo "running adms bootstrap.sh ..."
+    ./adms/bootstrap.sh "$@"
   elif [ -e "./adms/autogen.sh" ]; then
+    echo "running autogen.sh for the adms sources ..."
     ./adms/autogen.sh "$@";
   else
     echo "Could not locate adms autogen script in ./adms, you may use configure with --disable-adms to use installed version"
@@ -39,6 +41,7 @@ else
   echo "No local adms source folder found (you may need to use the configure --diable-adms option to build with installed version)"
 fi
 
+echo "bootstrapping the qucs-core sources..."
 echo -n "Creating aclocal.m4... "
 ${ACLOCAL:-aclocal} -I m4
 echo "done."
