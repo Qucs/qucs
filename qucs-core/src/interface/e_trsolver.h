@@ -22,10 +22,6 @@
  *
  */
 
-#if HAVE_CONFIG_H
-# include <config.h>
-#endif
-
 #include "trsolver.h"
 
 #ifndef __E_TRSOLVER_H__
