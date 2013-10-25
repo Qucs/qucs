@@ -40,7 +40,7 @@ SUBDIRS += src doc .
 
 ACLOCAL_AMFLAGS = -I m4
 
-EXTRA_DIST = BUGS autogen.sh depcomp RELEASE
+EXTRA_DIST = BUGS bootstrap.sh depcomp RELEASE
 
 CLEANFILES = *~ *.orig *.rej
 MAINTAINERCLEANFILES = aclocal.m4 config.h.in configure Makefile.in \
