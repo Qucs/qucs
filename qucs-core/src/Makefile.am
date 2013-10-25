@@ -32,6 +32,7 @@ SUBDIRS = math components interface . converter
 INCLUDES = -I$(top_srcdir)/src/math -I$(top_srcdir)/src/components -I$(top_srcdir)/src/interface
 
 lib_LTLIBRARIES = libqucs.la
+
 libqucs_la_LIBADD = math/libqucsmath.la   \
 	components/libcomponent.la	      \
 	components/microstrip/libmicrostrip.la \
@@ -84,12 +85,6 @@ bin_PROGRAMS = qucsator
 qucsator_LDADD = libqucs.la
 
 qucsator_SOURCES = ucs.cpp
-
-## This line ensures ldconfig is called after installation if necessary
-## for qucsator to find the required shared library
-install-exec-hook:
-	 ldd $bindir/qucsator | grep -i "not found" >& /dev/null && ldconfig
-
 
 if MAINTAINER_MODE
 generated_FILES = scan_netlist.cpp parse_netlist.cpp scan_dataset.cpp     \
