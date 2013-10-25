@@ -48,10 +48,6 @@
 #include "module.h"
 #include "e_trsolver.h"
 
-#if HAVE_UNISTD_H
-#include <unistd.h>
-#endif
-
 #ifndef __QUCS_INTERFACE_H__
 #define __QUCS_INTERFACE_H__
 
