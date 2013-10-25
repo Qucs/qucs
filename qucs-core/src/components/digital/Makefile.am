@@ -24,9 +24,9 @@
 
 # the digital library rules
 
-noinst_LIBRARIES = libdigital.a
+noinst_LTLIBRARIES = libdigital.la
 
-libdigital_a_SOURCES = digital.cpp inverter.cpp nor.cpp or.cpp nand.cpp \
+libdigital_la_SOURCES = digital.cpp inverter.cpp nor.cpp or.cpp nand.cpp \
   and.cpp xnor.cpp xor.cpp digisource.cpp buffer.cpp
 
 noinst_HEADERS = digital.h inverter.h nor.h or.h nand.h and.h xnor.h xor.h \

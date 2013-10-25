@@ -24,9 +24,9 @@
 
 # the microstrip library rules
 
-noinst_LIBRARIES = libmicrostrip.a
+noinst_LTLIBRARIES = libmicrostrip.la
 
-libmicrostrip_a_SOURCES = substrate.cpp msline.cpp mscorner.cpp msmbend.cpp   \
+libmicrostrip_la_SOURCES = substrate.cpp msline.cpp mscorner.cpp msmbend.cpp   \
 	msstep.cpp msopen.cpp msgap.cpp mscoupled.cpp mslange.cpp mstee.cpp mscross.cpp   \
 	msvia.cpp cpwline.cpp cpwopen.cpp cpwshort.cpp cpwgap.cpp cpwstep.cpp \
 	bondwire.cpp msrstub.cpp

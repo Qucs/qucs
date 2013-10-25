@@ -3,6 +3,10 @@
 
 AC_PREREQ(2.64)
 AC_INIT(qucs-core,0.0.18,qucs-bugs@lists.sourceforge.net)
+LT_PREREQ([2.2.2])
+LT_INIT([disable-static dlopen win32-dll])
+dnl AC_CONFIG_MACRO_DIR([libltdl/m4])
+
 AC_CONFIG_SRCDIR([src/circuit.cpp])
 AC_CONFIG_HEADERS([config.h])
 
@@ -11,21 +15,6 @@ AC_CANONICAL_HOST
 AC_CANONICAL_TARGET
 AM_INIT_AUTOMAKE([no-define])
 AM_MAINTAINER_MODE
-
-dnl Adds LIBRARY conditional for --enable-qucslib mode to also
-dnl build a library based on the qucs code. Default is to not
-dnl build it as a library and this is not required for distributions
-AC_ARG_ENABLE(qucslib,
-AS_HELP_STRING([--enable-qucslib],
-               [enable qucslib build, default: no]),
-[case "${enableval}" in
-             yes) qucslib=true ;;
-             no)  qucslib=false ;;
-             *)   AC_MSG_ERROR([bad value ${enableval} for --enable-qucslib]) ;;
-esac],
-[qucslib=false])
-dnl set a conditional to test for in Makefile.am
-AM_CONDITIONAL(QUCSLIB, test x"$qucslib" = x"true")
 
 AC_PREFIX_DEFAULT([/usr/local])
 test "x$prefix" = xNONE && prefix="/usr/local"
