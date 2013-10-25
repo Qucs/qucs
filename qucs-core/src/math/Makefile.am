@@ -22,7 +22,7 @@
 # Boston, MA 02110-1301, USA.
 #
 
-INCLUDES = -I$(top_srcdir)/src
+AM_CPPFLAGS = -I$(top_srcdir)/src
 
 pkginclude_HEADERS = precision.h
 

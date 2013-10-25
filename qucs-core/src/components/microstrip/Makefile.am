@@ -35,7 +35,7 @@ noinst_HEADERS = substrate.h msline.h mscorner.h msmbend.h msstep.h msopen.h \
 	msgap.h mscoupled.h mslange.cpp mstee.h mscross.h msvia.h cpwline.h cpwopen.h    \
 	cpwshort.h cpwgap.h cpwstep.h bondwire.h msrstub.h
 
-INCLUDES = -I$(top_srcdir)/src -I$(top_srcdir)/src/math \
+AM_CPPFLAGS = -I$(top_srcdir)/src -I$(top_srcdir)/src/math \
   -I$(top_srcdir)/src/components -I$(top_srcdir)/src/components/devices
 
 CLEANFILES = *~ *.orig *.rej

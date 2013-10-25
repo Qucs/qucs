@@ -29,7 +29,7 @@ EXTRA_DIST = parse_netlist.y scan_netlist.l scan_dataset.l parse_dataset.y \
 
 SUBDIRS = math components interface . converter
 
-INCLUDES = -I$(top_srcdir)/src/math -I$(top_srcdir)/src/components -I$(top_srcdir)/src/interface
+AM_CPPFLAGS = -I$(top_srcdir)/src/math -I$(top_srcdir)/src/components -I$(top_srcdir)/src/interface
 
 lib_LTLIBRARIES = libqucs.la
 

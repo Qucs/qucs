@@ -28,7 +28,7 @@ bin_PROGRAMS = qucsconv
 
 qucsconv_LDADD = ../libqucs.la ../math/libqucsmath.la
 
-INCLUDES = -I$(top_srcdir)/src -I$(top_srcdir)/src/math
+AM_CPPFLAGS = -I$(top_srcdir)/src -I$(top_srcdir)/src/math
 
 qucsconv_SOURCES = qucsconv.cpp parse_spice.cpp scan_spice.cpp \
 	check_spice.cpp qucs_producer.cpp parse_vcd.cpp scan_vcd.cpp \
