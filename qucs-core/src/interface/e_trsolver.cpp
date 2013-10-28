@@ -877,11 +877,6 @@ int e_trsolver::getM()
     return countVoltageSources ();
 }
 
-int e_trsolver::getM()
-{
-    return countVoltageSources ();
-}
-
 int e_trsolver::getJacRows()
 {
     return A->getRows();
