@@ -49,6 +49,9 @@ public:
     void getsolution(double *);
     int getN();
     int getM();
+    int getJacRows();
+    int getJacCols();
+    double getJacData(int, int);
     int finish();
 
     // debugging functions
@@ -70,7 +73,7 @@ private:
     int rejected;
     int convError;
 
-    int solve_nonlinear_step (void);
+//    int solve_nonlinear_step (void);
     void adjustDelta_sync (nr_double_t);
 
 };

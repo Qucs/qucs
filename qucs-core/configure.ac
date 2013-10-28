@@ -5,7 +5,7 @@ AC_PREREQ(2.64)
 AC_INIT(qucs-core,0.0.18,qucs-bugs@lists.sourceforge.net)
 LT_PREREQ([2.2.2])
 LT_INIT([disable-static dlopen win32-dll])
-dnl AC_CONFIG_MACRO_DIR([libltdl/m4])
+AC_CONFIG_MACRO_DIR([m4])
 
 AC_CONFIG_SRCDIR([src/circuit.cpp])
 AC_CONFIG_HEADERS([config.h])
@@ -22,7 +22,6 @@ test "x$prefix" = xNONE && prefix="/usr/local"
 dnl Checks for programs.
 AC_PROG_CXX
 AC_PROG_CC
-AC_PROG_RANLIB
 AC_CHECK_TOOL(AR, ar, :)
 
 dnl Check for parser and lexer generators.

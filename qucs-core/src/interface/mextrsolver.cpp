@@ -302,3 +302,35 @@ int mextrsolver::getM(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[]
     outpointer[0] = (double)xM;
     
 }
+
+void mextrsolver::getJac(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
+{
+    double * outpointer;
+
+    /* check for proper number of arguments */
+    if(nrhs!=2)
+        mexErrMsgIdAndTxt( "MATLAB:trsolver:invalidNumInputs",
+                           "No input required.");
+    else if(nlhs > 1)
+        mexErrMsgIdAndTxt( "MATLAB:trsolver:maxlhs",
+                           "Too many output arguments.");
+
+    int jrows = thetrsolver->getJacRows();
+    int jcols = thetrsolver->getJacCols();
+
+    // copy the solution
+    plhs[0] = mxCreateDoubleMatrix( (mwSize)(jrows), (mwSize)(jcols), mxREAL);
+
+    // get a pointer to the start of the actual output data array
+    outpointer = mxGetPr(plhs[0]);
+
+    // copy the jacobian matrix data into the matlab matrix
+    for(int c = 0; c < jcols; c++)
+    {
+        for(int r = 0; r < jrows; r++)
+        {
+            outpointer[(c*jrow)+r] = (double)thetrsolver->getJacData(r, c);
+        }
+    }
+
+}

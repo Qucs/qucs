@@ -32,7 +32,7 @@ libdigital_la_SOURCES = digital.cpp inverter.cpp nor.cpp or.cpp nand.cpp \
 noinst_HEADERS = digital.h inverter.h nor.h or.h nand.h and.h xnor.h xor.h \
   digisource.h buffer.h
 
-INCLUDES = -I$(top_srcdir)/src -I$(top_srcdir)/src/math \
+AM_CPPFLAGS = -I$(top_srcdir)/src -I$(top_srcdir)/src/math \
   -I$(top_srcdir)/src/components
 
 CLEANFILES = *~ *.orig *.rej
