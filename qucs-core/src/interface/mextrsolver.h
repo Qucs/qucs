@@ -31,6 +31,7 @@ class mextrsolver
         int getsolution(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[]);
         int getN(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[]);
         int getM(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[]);
+        void getJac(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[]);
 
     protected:
 

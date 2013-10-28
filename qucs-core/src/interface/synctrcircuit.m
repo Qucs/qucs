@@ -183,25 +183,28 @@ classdef synctrcircuit < qucstrans
                 % if the circuit is initialised start solving
 
                 if qtr_sync.t_history(end) == t
-%                     dydt = qtr_sync.dydt_history;
 
-                    fit_time = qtr_sync.t_history(~isnan(qtr_sync.t_history));
-
-                    fit_time = [ fit_time(1:end-1), t ];
-
-                    if numel(fit_time) == 2
-                        dydt = (qtr_sync.sol_history(:,end-1) - y) ./ (t - fit_time(end - 1));
-                    else
-
-                        % need to use y in here
-                        fit_sol = [qtr_sync.sol_history(:,1:end-1), y];
-                        fit_sol = permute(fit_sol(~isnan(fit_sol)), [ 2, 3, 1 ]);
-
-                        [ ~, p1p2der1 ] = threepntcubicsplinefit([ repmat(fit_time, [1, 1, numel(sol)]), ...
-                            fit_sol ]);
-
-                        dydt = squeeze(p1p2der1(2,1,:) .* t.^2 + p1p2der1(2,2,:) .* t + p1p2der1(2,3,:));
-                    end
+                    dydt = zeros(length(y),1);
+                    
+% %                     dydt = qtr_sync.dydt_history;
+% 
+%                     fit_time = qtr_sync.t_history(~isnan(qtr_sync.t_history));
+% 
+%                     fit_time = [ fit_time(1:end-1), t ];
+% 
+%                     if numel(fit_time) == 1
+%                         dydt = (qtr_sync.sol_history(:,end-1) - y) ./ (t - fit_time(end - 1));
+%                     else
+% 
+%                         % need to use y in here
+%                         fit_sol = [qtr_sync.sol_history(:,1:end-1), y];
+%                         fit_sol = permute(fit_sol(~isnan(fit_sol)), [ 2, 3, 1 ]);
+% 
+%                         [ ~, p1p2der1 ] = threepntcubicsplinefit(...
+%                                             [ repmat(fit_time, [1, 1, numel(fit_sol)]), fit_sol ]);
+% 
+%                         dydt = squeeze(p1p2der1(2,1,:) .* t.^2 + p1p2der1(2,2,:) .* t + p1p2der1(2,3,:));
+%                     end
 
                 else
                     % attempt to solve the circuit at the current time step
@@ -220,8 +223,8 @@ classdef synctrcircuit < qucstrans
                     else
                         fit_sol = permute([ qtr_sync.sol_history(:,1:end), sol ], [ 2, 3, 1 ]);
 
-                        [ ~, p1p2der1 ] = threepntcubicsplinefit([ repmat(fit_time, [1, 1, numel(sol)]), ...
-                            fit_sol ]);
+                        [ ~, p1p2der1 ] = threepntcubicsplinefit(...
+                                            [ repmat(fit_time, [1, 1, numel(sol)]), fit_sol ] );
 
                         dydt = squeeze(p1p2der1(2,1,:) .* t.^2 + p1p2der1(2,2,:) .* t + p1p2der1(2,3,:));
                     end

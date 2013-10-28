@@ -49,6 +49,9 @@ public:
     void getsolution(double *);
     int getN();
     int getM();
+    int getJacRows();
+    int getJacCols();
+    double getJacData(int, int);
     int finish();
 
     // debugging functions

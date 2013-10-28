@@ -20,7 +20,8 @@ enum ClassMethods { evNotDefined,
                     debug,
                     printx, 
                     getN, 
-                    getM
+                    getM,
+                    getJac
                   };
 
 // Map to associate the command strings with the class
@@ -40,6 +41,7 @@ void Initialize()
     s_mapClassMethodStrs["printx"]              = printx;
     s_mapClassMethodStrs["getN"]                = getN;
     s_mapClassMethodStrs["getM"]                = getM;
+    s_mapClassMethodStrs["getJac"]              = getJac
 }
 
 void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
@@ -116,6 +118,9 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         return;
     case getM:
         mextrsolver_instance->getM(nlhs, plhs, nrhs, prhs);
+        return;
+    case getJac:
+        mextrsolver_instance->getJac(nlhs, plhs, nrhs, prhs);
         return;
     default:
         mexErrMsgTxt("Unrecognised class command string.");

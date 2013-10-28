@@ -877,6 +877,26 @@ int e_trsolver::getM()
     return countVoltageSources ();
 }
 
+int e_trsolver::getM()
+{
+    return countVoltageSources ();
+}
+
+int e_trsolver::getJacRows()
+{
+    return A->getRows();
+}
+
+int e_trsolver::getJacCols()
+{
+    return A->getCols();
+}
+
+double e_trsolver::getJacData(int r, int c)
+{
+    return A->get(r,c);
+}
+
 // properties
 PROP_REQ [] =
 {
