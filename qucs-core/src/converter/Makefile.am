@@ -1,5 +1,5 @@
 ## Process this file with automake to produce Makefile.in
-# 
+#
 # src/converter/Makefile.am
 #
 # Automake input file.
@@ -10,25 +10,25 @@
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; either version 2, or (at your option)
 # any later version.
-# 
+#
 # This software is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU General Public License
 # along with this package; see the file COPYING.  If not, write to
 # the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
-# Boston, MA 02110-1301, USA.  
+# Boston, MA 02110-1301, USA.
 #
 
 EXTRA_DIST = parse_spice.y scan_spice.l parse_vcd.y scan_vcd.l
 
 bin_PROGRAMS = qucsconv
 
-qucsconv_LDADD = ../libqucsator.a ../math/libqucsmath.a
+qucsconv_LDADD = ../libqucs.la ../math/libqucsmath.la
 
-INCLUDES = -I$(top_srcdir)/src -I$(top_srcdir)/src/math
+AM_CPPFLAGS = -I$(top_srcdir)/src -I$(top_srcdir)/src/math
 
 qucsconv_SOURCES = qucsconv.cpp parse_spice.cpp scan_spice.cpp \
 	check_spice.cpp qucs_producer.cpp parse_vcd.cpp scan_vcd.cpp \
@@ -55,7 +55,7 @@ parse_vcd.cpp: parse_vcd.y
 	$(YACC) -v -o $@ --defines=tokens_vcd.h $<
 
 else
-generated_FILES = 
+generated_FILES =
 endif
 
 CLEANFILES = *~ *.orig *.rej *.output

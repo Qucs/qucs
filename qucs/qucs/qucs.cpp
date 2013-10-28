@@ -104,6 +104,8 @@ QucsApp::QucsApp()
   //QucsSettings.QucsWorkDir.setPath(QDir::homeDirPath()+QDir::convertSeparators ("/.qucs"));
   //QucsSettings.QucsHomeDir.setPath(QDir::homeDirPath()+QDir::convertSeparators ("/.qucs"));
 
+  updateSchNameHash();
+
   move  (QucsSettings.x,  QucsSettings.y);
   resize(QucsSettings.dx, QucsSettings.dy);
 
@@ -201,7 +203,7 @@ void QucsApp::initView()
 
 
   // set application icon
-  setIcon (QPixmap(QucsSettings.BitmapDir + "big.qucs.xpm"));
+  setIcon (QPixmap(":/bitmaps/big.qucs.xpm"));
 
   DocumentTab = new QTabWidget(this);
   setCentralWidget(DocumentTab);
@@ -220,7 +222,7 @@ void QucsApp::initView()
   //TabView = new VTabWidget(VTabInterface::TabLeft,dock);  // tabs on the left side
   TabView = new QTabWidget(this);
   TabView->setTabPosition(QTabWidget::West);
-  
+
   connect(dock, SIGNAL(visibilityChanged(bool)), SLOT(slotToggleDock(bool)));
 
   view = new MouseActions();
@@ -323,7 +325,7 @@ void QucsApp::initView()
   //octDock = new Q3DockWindow(Q3DockWindow::InDock, this);
   //octDock->setCloseMode(Q3DockWindow::Always);
   octDock = new QDockWidget();
-  
+
   connect(octDock, SIGNAL(visibilityChanged(bool)), SLOT(slotToggleOctave(bool)));
   octave = new OctaveWindow(octDock);
   this->addDockWidget(Qt::BottomDockWidgetArea, octDock);
@@ -388,7 +390,7 @@ void QucsApp::fillComboBox (bool setAll)
 
 // ----------------------------------------------------------
 // Whenever the Component Library ComboBox is changed, this slot fills the
-// Component IconView with the appropriat components.
+// Component IconView with the appropriate components.
 void QucsApp::slotSetCompView (int index)
 {
   editText->setHidden (true); // disable text edit of component property
@@ -405,10 +407,11 @@ void QucsApp::slotSetCompView (int index)
   char * File;
   QString Name;
   Module * Mod;
+  // Populate list of component bitmaps
   for (Mod = Comps.first(); Mod; Mod = Comps.next ()) {
     if (Mod->info) {
       *(Mod->info) (Name, File, false);
-      QListWidgetItem *item = new QListWidgetItem(QPixmap(QucsSettings.BitmapDir + QString (File) + ".png"), Name);
+        QListWidgetItem *item = new QListWidgetItem(QPixmap(":/bitmaps/" + QString (File) + ".png"), Name);
       item->setToolTip(Name);
       CompComps->addItem(item);
     }
@@ -714,13 +717,13 @@ void QucsApp::slotCMenuInsert ()
 void QucsApp::readProjects()
 {
   QDir ProjDir(QucsSettings.QucsHomeDir);
-  if(!ProjDir.cd(QucsSettings.QucsHomeDir.canonicalPath())) { // work directory exists ?
-    if(!ProjDir.mkdir(QucsSettings.QucsHomeDir.canonicalPath())) { // no, then create it
+  if(!ProjDir.cd(QucsSettings.QucsHomeDir.absolutePath())) { // work directory exists ?
+    if(!ProjDir.mkdir(QucsSettings.QucsHomeDir.absolutePath())) { // no, then create it
       QMessageBox::warning(this, tr("Warning"),
                    tr("Cannot create work directory !"));
       return;
     }
-    ProjDir.cd(QucsSettings.QucsHomeDir.canonicalPath());
+    ProjDir.cd(QucsSettings.QucsHomeDir.absolutePath());
   }
 
   // get all directories
@@ -786,7 +789,7 @@ int QucsApp::testFile(const QString& DocName)
     Line = stream.readLine();
     Line = Line.stripWhiteSpace();
   } while(Line.isEmpty());
-  
+
   if(Line.left(16) != "<Qucs Schematic ") {  // wrong file type ?
     file.close();
     return -3;
@@ -875,27 +878,27 @@ void QucsApp::readProjectFiles()
     }
     else if(Str == "dat") {
       QTreeWidgetItem *temp = new QTreeWidgetItem(ConDatasets);
-      temp->setText(0, (*it).ascii()); 
+      temp->setText(0, (*it).ascii());
     }
     else if((Str == "vhdl") || (Str == "vhd")) {
       QTreeWidgetItem *temp = new QTreeWidgetItem(ConSources);
-      temp->setText(0, (*it).ascii());  
+      temp->setText(0, (*it).ascii());
     }
     else if(Str == "v") {
       QTreeWidgetItem *temp = new QTreeWidgetItem(ConVerilog);
-      temp->setText(0, (*it).ascii());  
+      temp->setText(0, (*it).ascii());
     }
     else if(Str == "va") {
       QTreeWidgetItem *temp = new QTreeWidgetItem(ConVerilogA);
-      temp->setText(0, (*it).ascii());  
+      temp->setText(0, (*it).ascii());
     }
     else if((Str == "m") || (Str == "oct")) {
       QTreeWidgetItem *temp = new QTreeWidgetItem(ConOctave);
-      temp->setText(0, (*it).ascii());  
+      temp->setText(0, (*it).ascii());
     }
     else {
       QTreeWidgetItem *temp = new QTreeWidgetItem(ConOthers);
-      temp->setText(0, (*it).ascii());  
+      temp->setText(0, (*it).ascii());
     }
   }
 }
@@ -1139,7 +1142,7 @@ bool QucsApp::gotoPage(const QString& Name)
   }
 
   QFileInfo Info(Name);
-  if(Info.extension(false) == "sch" || Info.extension(false) == "dpl" || 
+  if(Info.extension(false) == "sch" || Info.extension(false) == "dpl" ||
      Info.extension(false) == "sym")
     d = new Schematic(this, Name);
   else
@@ -1171,7 +1174,7 @@ void QucsApp::slotFileOpen()
 
   statusBar()->message(tr("Opening file..."));
 
-  QString s = QFileDialog::getOpenFileName(this, tr("Enter a Schematic Name"), 
+  QString s = QFileDialog::getOpenFileName(this, tr("Enter a Schematic Name"),
     lastDirOpenSave.isEmpty() ? QString(".") : lastDirOpenSave, QucsFileFilter);
 
   if(s.isEmpty())
@@ -1215,6 +1218,9 @@ void QucsApp::slotFileSave()
 
   DocumentTab->blockSignals(false);
   statusBar()->message(tr("Ready."));
+
+  if(!ProjName.isEmpty())
+    readProjectFiles();  // re-read the content ListView
 }
 
 // --------------------------------------------------------------
@@ -1337,6 +1343,12 @@ void QucsApp::slotFileSaveAs()
 
   DocumentTab->blockSignals(false);
   statusBar()->message(tr("Ready."));
+
+  // refresh the schematic file path
+  this->updateSchNameHash();
+
+  if(!ProjName.isEmpty())
+    readProjectFiles();  // re-read the content ListView
 }
 
 
@@ -1356,10 +1368,17 @@ void QucsApp::slotFileSaveAll()
   }
 
   DocumentTab->blockSignals(false);
-  // Call update() to update subcircuit symbols in current document.
-  ((Q3ScrollView*)DocumentTab->currentPage())->viewport()->update();
+  // Call update() to update subcircuit symbols in current Schematic document.
+  // TextDoc has no viewport, it needs no update.
+  QString tabType = DocumentTab->currentWidget()->className();
+  if (tabType == "Schematic") {
+    ((Q3ScrollView*)DocumentTab->currentPage())->viewport()->update();
+  }
   view->drawn = false;
   statusBar()->message(tr("Ready."));
+
+  // refresh the schematic file path
+  this->updateSchNameHash();
 }
 
 // --------------------------------------------------------------
@@ -1427,11 +1446,11 @@ bool QucsApp::closeAllFiles()
   QucsDoc *doc = 0;
   while((doc = getDoc()) != 0)
 	delete doc;
-	
+
 
   switchEditMode(true);   // set schematic edit mode
   return true;
-}   
+}
 
 
 void QucsApp::slotFileExamples()
@@ -1561,6 +1580,17 @@ void QucsApp::slotApplSettings()
   QucsSettingsDialog *d = new QucsSettingsDialog(this);
   d->exec();
   view->drawn = false;
+}
+
+
+// --------------------------------------------------------------
+void QucsApp::slotRefreshSchPath()
+{
+  this->updateSchNameHash();
+
+  QMessageBox msgBox;
+  msgBox.setText("The schematic file path has been refreshed.");
+  msgBox.exec();
 }
 
 
@@ -1763,7 +1793,7 @@ void QucsApp::slotEditCopy()
     ((TextDoc*)Doc)->copy();
     return;
   }
-  
+
   editText->setHidden(true); // disable text edit of component property
   QClipboard *cb = QApplication::clipboard();  // get system clipboard
 
@@ -1787,7 +1817,7 @@ void QucsApp::slotIntoHierarchy()
   QString *ps = new QString("*");
   HierarchyHistory.append(ps);    // sign not to clear HierarchyHistory
 
-  QString s = QucsSettings.QucsWorkDir.filePath(pc->Props.getFirst()->Value);
+  QString s = pc->getSubcircuitFile();
   if(!gotoPage(s)) {
     HierarchyHistory.remove();
     return;
@@ -1920,7 +1950,7 @@ void QucsApp::slotAfterSimulation(int Status, SimMessage *sim)
     sim->slotClose();   // close and delete simulation window
     if(w) {  // schematic still open ?
       SweepDialog *Dia = new SweepDialog((Schematic*)sim->DocWidget);
-      
+
     }
   }
   else {
@@ -1980,7 +2010,7 @@ void QucsApp::slotChangePage(QString& DocName, QString& DataDisplay)
     DocumentTab->setCurrentPage(z);
   else {   // no open page found ?
     QString ext = QucsDoc::fileSuffix (DataDisplay);
-    if (ext != "vhd" && ext != "vhdl" && ext != "v" && ext != "va" && 
+    if (ext != "vhd" && ext != "vhdl" && ext != "v" && ext != "va" &&
 	ext != "oct" && ext != "m")
       d = new Schematic (this, Name);
     else
@@ -2051,7 +2081,7 @@ void QucsApp::slotOpenContent(QTreeWidgetItem *item)
   if(item == 0) return;   // no item was double clicked
   if(item->parent() == 0) return; // no document, but item "schematic", ...
 
-/*  
+/*
   QucsSettings.QucsWorkDir.setPath(QucsSettings.QucsHomeDir.path());
   QString p = ProjName+"_prj";
   if(!QucsSettings.QucsWorkDir.cd(p)) {
@@ -2463,3 +2493,79 @@ void QucsApp::slotHideEdit()
 {
   editText->setHidden(true);
 }
+
+// -----------------------------------------------------------
+// Searches the qucs path list for all schematic files and creates
+// a hash for lookup later
+void QucsApp::updateSchNameHash(void)
+{
+    // update the list of paths to search in qucsPathList, this
+    // removes nonexisting entries
+    updatePathList();
+
+    // now go through the paths creating a map to all the schematic files
+    // found in the directories. Note that we go through the list of paths from
+    // first index to last index. Since keys are unique it means schematic files
+    // in directories at the end of the list take precendence over those at the
+    // start of the list, we should warn about shadowing of schematic files in
+    // this way in the future
+    QStringList nameFilter;
+    nameFilter << "*.sch";
+
+    // clear out any existing hash table entriess
+    schNameHash.clear();
+
+    foreach (QString qucspath, qucsPathList) {
+        QDir thispath(qucspath);
+        // get all the schematic files in the directory
+        QFileInfoList schfilesList = thispath.entryInfoList( nameFilter, QDir::Files );
+        // put each one in the hash table with the unique key the base name of
+        // the file, note this will overwrite the value if the key already exists
+        foreach (QFileInfo schfile, schfilesList) {
+            QString bn = schfile.completeBaseName();
+            schNameHash[schfile.completeBaseName()] = schfile.absoluteFilePath();
+        }
+    }
+
+    // finally check the home/working directory
+    QDir thispath(QucsSettings.QucsWorkDir);
+    QFileInfoList schfilesList = thispath.entryInfoList( nameFilter, QDir::Files );
+    // put each one in the hash table with the unique key the base name of
+    // the file, note this will overwrite the value if the key already exists
+    foreach (QFileInfo schfile, schfilesList) {
+        schNameHash[schfile.completeBaseName()] = schfile.absoluteFilePath();
+    }
+}
+
+// -----------------------------------------------------------
+// update the list of paths, pruning non-existing paths
+void QucsApp::updatePathList(void)
+{
+    // check each path actually exists, if not remove it
+    QMutableListIterator<QString> i(qucsPathList);
+    while (i.hasNext()) {
+        i.next();
+        QDir thispath(i.value());
+        if (!thispath.exists())
+        {
+            // the path does not exist, remove it from the list
+            i.remove();
+        }
+    }
+}
+
+// replace the old path list with a new one
+void QucsApp::updatePathList(QStringList newPathList)
+{
+    // clear out the old path list
+    qucsPathList.clear();
+
+    // copy the new path into the path list
+    foreach(QString path, newPathList)
+    {
+        qucsPathList.append(path);
+    }
+    // do the normal path update operations
+    updatePathList();
+}
+

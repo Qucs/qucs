@@ -115,6 +115,7 @@ libltdl/
 *.o
 *.so
 *.mex*
+*.pyc
 
 # Packages #
 ############

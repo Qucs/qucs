@@ -24,15 +24,15 @@
 
 # the digital library rules
 
-noinst_LIBRARIES = libdigital.a
+noinst_LTLIBRARIES = libdigital.la
 
-libdigital_a_SOURCES = digital.cpp inverter.cpp nor.cpp or.cpp nand.cpp \
+libdigital_la_SOURCES = digital.cpp inverter.cpp nor.cpp or.cpp nand.cpp \
   and.cpp xnor.cpp xor.cpp digisource.cpp buffer.cpp
 
 noinst_HEADERS = digital.h inverter.h nor.h or.h nand.h and.h xnor.h xor.h \
   digisource.h buffer.h
 
-INCLUDES = -I$(top_srcdir)/src -I$(top_srcdir)/src/math \
+AM_CPPFLAGS = -I$(top_srcdir)/src -I$(top_srcdir)/src/math \
   -I$(top_srcdir)/src/components
 
 CLEANFILES = *~ *.orig *.rej

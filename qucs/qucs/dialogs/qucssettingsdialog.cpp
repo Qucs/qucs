@@ -20,7 +20,7 @@
 #endif
 
 #include "qucssettingsdialog.h"
-
+#include <iostream>
 #include <QGridLayout>
 #include <QVBoxLayout>
 #include "main.h"
@@ -40,302 +40,343 @@
 #include <QMessageBox>
 #include <QCheckBox>
 
+using namespace std;
 
 QucsSettingsDialog::QucsSettingsDialog(QucsApp *parent, const char *name)
-			: QDialog(parent, name)
+    : QDialog(parent, name)
 {
-  App = parent;
-  setWindowTitle(tr("Edit Qucs Properties"));
+    App = parent;
+    setWindowTitle(tr("Edit Qucs Properties"));
 
-  Expr.setPattern("[\\w_]+");
-  Validator  = new QRegExpValidator(Expr, this);
+    Expr.setPattern("[\\w_]+");
+    Validator  = new QRegExpValidator(Expr, this);
 
-  all = new QVBoxLayout(this); // to provide the neccessary size
-  QTabWidget *t = new QTabWidget();
-  all->addWidget(t);
+    all = new QVBoxLayout(this); // to provide the neccessary size
+    QTabWidget *t = new QTabWidget();
+    all->addWidget(t);
 
-  // ...........................................................
-  QWidget *Tab1 = new QWidget(t);
-  QGridLayout *gp = new QGridLayout(Tab1);
+    // ...........................................................
+    // The application setings tab
+    QWidget *appSettingsTab = new QWidget(t);
+    QGridLayout *appSettingsGrid = new QGridLayout(appSettingsTab);
 
-  gp->addWidget(new QLabel(tr("Font (set after reload):"), Tab1), 0,0);
-  FontButton = new QPushButton(Tab1);
-  connect(FontButton, SIGNAL(clicked()), SLOT(slotFontDialog()));
-  gp->addWidget(FontButton,0,1);
+    appSettingsGrid->addWidget(new QLabel(tr("Font (set after reload):"), appSettingsTab), 0,0);
+    FontButton = new QPushButton(appSettingsTab);
+    connect(FontButton, SIGNAL(clicked()), SLOT(slotFontDialog()));
+    appSettingsGrid->addWidget(FontButton,0,1);
 
-  gp->addWidget(new QLabel(tr("Document Background Color:"), Tab1) ,1,0);
-  BGColorButton = new QPushButton("      ", Tab1);
-  connect(BGColorButton, SIGNAL(clicked()), SLOT(slotBGColorDialog()));
-  gp->addWidget(BGColorButton,1,1);
+    appSettingsGrid->addWidget(new QLabel(tr("Document Background Color:"), appSettingsTab) ,1,0);
+    BGColorButton = new QPushButton("      ", appSettingsTab);
+    connect(BGColorButton, SIGNAL(clicked()), SLOT(slotBGColorDialog()));
+    appSettingsGrid->addWidget(BGColorButton,1,1);
 
-  gp->addWidget(new QLabel(tr("Language (set after reload):"), Tab1) ,2,0);
-  LanguageCombo = new QComboBox(Tab1);
-  LanguageCombo->insertItem(tr("system language"));
-  LanguageCombo->insertItem(tr("English")+" (en)");
-  LanguageCombo->insertItem(tr("German")+" (de)");
-  LanguageCombo->insertItem(tr("French")+" (fr)");
-  LanguageCombo->insertItem(tr("Spanish")+" (es)");
-  LanguageCombo->insertItem(tr("Italian")+" (it)");
-  LanguageCombo->insertItem(tr("Polish")+" (pl)");
-  LanguageCombo->insertItem(tr("Romanian")+" (ro)");
-  LanguageCombo->insertItem(tr("Japanese")+" (jp)");
-  LanguageCombo->insertItem(tr("Swedish")+" (sv)");
-  LanguageCombo->insertItem(tr("Hungarian")+" (hu)");
-  LanguageCombo->insertItem(tr("Hebrew")+" (he)");
-  LanguageCombo->insertItem(tr("Portuguese")+" (pt)");
-  LanguageCombo->insertItem(tr("Turkish")+" (tr)");
-  LanguageCombo->insertItem(tr("Ukrainian")+" (uk)");
-  LanguageCombo->insertItem(tr("Russian")+" (ru)");
-  LanguageCombo->insertItem(tr("Czech")+" (cs)");
-  LanguageCombo->insertItem(tr("Catalan")+" (ca)");
-  LanguageCombo->insertItem(tr("Arabic")+" (ar)");
-  LanguageCombo->insertItem(tr("Kazakh")+" (kk)");
-  gp->addWidget(LanguageCombo,2,1);
+    appSettingsGrid->addWidget(new QLabel(tr("Language (set after reload):"), appSettingsTab) ,2,0);
+    LanguageCombo = new QComboBox(appSettingsTab);
+    LanguageCombo->insertItem(tr("system language"));
+    LanguageCombo->insertItem(tr("English")+" (en)");
+    LanguageCombo->insertItem(tr("German")+" (de)");
+    LanguageCombo->insertItem(tr("French")+" (fr)");
+    LanguageCombo->insertItem(tr("Spanish")+" (es)");
+    LanguageCombo->insertItem(tr("Italian")+" (it)");
+    LanguageCombo->insertItem(tr("Polish")+" (pl)");
+    LanguageCombo->insertItem(tr("Romanian")+" (ro)");
+    LanguageCombo->insertItem(tr("Japanese")+" (jp)");
+    LanguageCombo->insertItem(tr("Swedish")+" (sv)");
+    LanguageCombo->insertItem(tr("Hungarian")+" (hu)");
+    LanguageCombo->insertItem(tr("Hebrew")+" (he)");
+    LanguageCombo->insertItem(tr("Portuguese")+" (pt)");
+    LanguageCombo->insertItem(tr("Turkish")+" (tr)");
+    LanguageCombo->insertItem(tr("Ukrainian")+" (uk)");
+    LanguageCombo->insertItem(tr("Russian")+" (ru)");
+    LanguageCombo->insertItem(tr("Czech")+" (cs)");
+    LanguageCombo->insertItem(tr("Catalan")+" (ca)");
+    LanguageCombo->insertItem(tr("Arabic")+" (ar)");
+    LanguageCombo->insertItem(tr("Kazakh")+" (kk)");
+    appSettingsGrid->addWidget(LanguageCombo,2,1);
 
-  val200 = new QIntValidator(0, 200, this);
-  gp->addWidget(new QLabel(tr("maximum undo operations:"), Tab1) ,3,0);
-  undoNumEdit = new QLineEdit(Tab1);
-  undoNumEdit->setValidator(val200);
-  gp->addWidget(undoNumEdit,3,1);
+    val200 = new QIntValidator(0, 200, this);
+    appSettingsGrid->addWidget(new QLabel(tr("maximum undo operations:"), appSettingsTab) ,3,0);
+    undoNumEdit = new QLineEdit(appSettingsTab);
+    undoNumEdit->setValidator(val200);
+    appSettingsGrid->addWidget(undoNumEdit,3,1);
 
-  gp->addWidget(new QLabel(tr("text editor:"), Tab1) ,4,0);
-  editorEdit = new QLineEdit(Tab1);
-  gp->addWidget(editorEdit,4,1);
+    appSettingsGrid->addWidget(new QLabel(tr("text editor:"), appSettingsTab) ,4,0);
+    editorEdit = new QLineEdit(appSettingsTab);
+    appSettingsGrid->addWidget(editorEdit,4,1);
 
-  gp->addWidget(new QLabel(tr("start wiring when clicking open node:"), Tab1) ,5,0);
-  checkWiring = new QCheckBox(Tab1);
-  gp->addWidget(checkWiring,5,1);
-
-
-  t->addTab(Tab1, tr("Settings"));
-
-  // ...........................................................
-  QWidget *Tab3 = new QWidget(t);
-  QGridLayout *gp3 = new QGridLayout(Tab3);
-
-  gp3->addMultiCellWidget(new QLabel(tr("Colors for Syntax Highlighting:"), Tab3), 0,0,0,1);
-
-  ColorComment = new QPushButton(tr("Comment"), Tab3);
-  ColorComment->setPaletteForegroundColor(QucsSettings.Comment);
-  ColorComment->setPaletteBackgroundColor(QucsSettings.BGColor);
-  connect(ColorComment, SIGNAL(clicked()), SLOT(slotColorComment()));
-  gp3->addWidget(ColorComment,1,0);
-
-  ColorString = new QPushButton(tr("String"), Tab3);
-  ColorString->setPaletteForegroundColor(QucsSettings.String);
-  ColorString->setPaletteBackgroundColor(QucsSettings.BGColor);
-  connect(ColorString, SIGNAL(clicked()), SLOT(slotColorString()));
-  gp3->addWidget(ColorString,1,1);
-
-  ColorInteger = new QPushButton(tr("Integer Number"), Tab3);
-  ColorInteger->setPaletteForegroundColor(QucsSettings.Integer);
-  ColorInteger->setPaletteBackgroundColor(QucsSettings.BGColor);
-  connect(ColorInteger, SIGNAL(clicked()), SLOT(slotColorInteger()));
-  gp3->addWidget(ColorInteger,1,2);
-
-  ColorReal = new QPushButton(tr("Real Number"), Tab3);
-  ColorReal->setPaletteForegroundColor(QucsSettings.Real);
-  ColorReal->setPaletteBackgroundColor(QucsSettings.BGColor);
-  connect(ColorReal, SIGNAL(clicked()), SLOT(slotColorReal()));
-  gp3->addWidget(ColorReal,2,0);
-
-  ColorCharacter = new QPushButton(tr("Character"), Tab3);
-  ColorCharacter->setPaletteForegroundColor(QucsSettings.Character);
-  ColorCharacter->setPaletteBackgroundColor(QucsSettings.BGColor);
-  connect(ColorCharacter, SIGNAL(clicked()), SLOT(slotColorCharacter()));
-  gp3->addWidget(ColorCharacter,2,1);
-
-  ColorDataType = new QPushButton(tr("Data Type"), Tab3);
-  ColorDataType->setPaletteForegroundColor(QucsSettings.Type);
-  ColorDataType->setPaletteBackgroundColor(QucsSettings.BGColor);
-  connect(ColorDataType, SIGNAL(clicked()), SLOT(slotColorDataType()));
-  gp3->addWidget(ColorDataType,2,2);
-
-  ColorAttribute = new QPushButton(tr("Attribute"), Tab3);
-  ColorAttribute->setPaletteForegroundColor(QucsSettings.Attribute);
-  ColorAttribute->setPaletteBackgroundColor(QucsSettings.BGColor);
-  connect(ColorAttribute, SIGNAL(clicked()), SLOT(slotColorAttribute()));
-  gp3->addWidget(ColorAttribute,3,0);
-
-  ColorDirective = new QPushButton(tr("Directive"), Tab3);
-  ColorDirective->setPaletteForegroundColor(QucsSettings.Directive);
-  ColorDirective->setPaletteBackgroundColor(QucsSettings.BGColor);
-  connect(ColorDirective, SIGNAL(clicked()), SLOT(slotColorDirective()));
-  gp3->addWidget(ColorDirective,3,1);
-
-  ColorTask = new QPushButton(tr("Task"), Tab3);
-  ColorTask->setPaletteForegroundColor(QucsSettings.Task);
-  ColorTask->setPaletteBackgroundColor(QucsSettings.BGColor);
-  connect(ColorTask, SIGNAL(clicked()), SLOT(slotColorTask()));
-  gp3->addWidget(ColorTask,3,2);
+    appSettingsGrid->addWidget(new QLabel(tr("start wiring when clicking open node:"), appSettingsTab) ,5,0);
+    checkWiring = new QCheckBox(appSettingsTab);
+    appSettingsGrid->addWidget(checkWiring,5,1);
 
 
-  t->addTab(Tab3, tr("Source Code Editor"));
+    t->addTab(appSettingsTab, tr("Settings"));
 
-  // ...........................................................
-  QWidget *Tab2 = new QWidget(t);
-  QGridLayout *gp2 = new QGridLayout(Tab2);
+    // ...........................................................
+    // The source code editor settings tab
+    QWidget *editorTab = new QWidget(t);
+    QGridLayout *editorGrid = new QGridLayout(editorTab);
 
-  QLabel *note = new QLabel(
-     tr("Register filename extensions here in order to\nopen files with an appropriate program."));
-  gp2->addWidget(note,0,0,1,2);
+    editorGrid->addMultiCellWidget(new QLabel(tr("Colors for Syntax Highlighting:"), editorTab), 0,0,0,1);
 
-  tableWidget = new QTableWidget(Tab2);
-  tableWidget->setColumnCount(2);
+    ColorComment = new QPushButton(tr("Comment"), editorTab);
+    ColorComment->setPaletteForegroundColor(QucsSettings.Comment);
+    ColorComment->setPaletteBackgroundColor(QucsSettings.BGColor);
+    connect(ColorComment, SIGNAL(clicked()), SLOT(slotColorComment()));
+    editorGrid->addWidget(ColorComment,1,0);
 
-  QTableWidgetItem *item1 = new QTableWidgetItem();
-  QTableWidgetItem *item2 = new QTableWidgetItem();
+    ColorString = new QPushButton(tr("String"), editorTab);
+    ColorString->setPaletteForegroundColor(QucsSettings.String);
+    ColorString->setPaletteBackgroundColor(QucsSettings.BGColor);
+    connect(ColorString, SIGNAL(clicked()), SLOT(slotColorString()));
+    editorGrid->addWidget(ColorString,1,1);
 
-  tableWidget->setHorizontalHeaderItem(0, item1);
-  tableWidget->setHorizontalHeaderItem(1, item2);
+    ColorInteger = new QPushButton(tr("Integer Number"), editorTab);
+    ColorInteger->setPaletteForegroundColor(QucsSettings.Integer);
+    ColorInteger->setPaletteBackgroundColor(QucsSettings.BGColor);
+    connect(ColorInteger, SIGNAL(clicked()), SLOT(slotColorInteger()));
+    editorGrid->addWidget(ColorInteger,1,2);
 
-  item1->setText(tr("Suffix"));
-  item2->setText(tr("Program"));
+    ColorReal = new QPushButton(tr("Real Number"), editorTab);
+    ColorReal->setPaletteForegroundColor(QucsSettings.Real);
+    ColorReal->setPaletteBackgroundColor(QucsSettings.BGColor);
+    connect(ColorReal, SIGNAL(clicked()), SLOT(slotColorReal()));
+    editorGrid->addWidget(ColorReal,2,0);
 
-  tableWidget->horizontalHeader()->setStretchLastSection(true);
-  tableWidget->verticalHeader()->hide();
-  connect(tableWidget, SIGNAL(cellClicked(int,int)), SLOT(slotTableCliked(int,int)));
-  gp2->addWidget(tableWidget,1,0,3,1);
+    ColorCharacter = new QPushButton(tr("Character"), editorTab);
+    ColorCharacter->setPaletteForegroundColor(QucsSettings.Character);
+    ColorCharacter->setPaletteBackgroundColor(QucsSettings.BGColor);
+    connect(ColorCharacter, SIGNAL(clicked()), SLOT(slotColorCharacter()));
+    editorGrid->addWidget(ColorCharacter,2,1);
 
-  // fill listview with already registered file extensions
-  QStringList::Iterator it = QucsSettings.FileTypes.begin();
-  while(it != QucsSettings.FileTypes.end()) {
-    int row = tableWidget->rowCount();
-    tableWidget->setRowCount(row+1);
-    QTableWidgetItem *suffix = new QTableWidgetItem(QString((*it).section('/',0,0)));
-    QTableWidgetItem *program = new QTableWidgetItem(QString((*it).section('/',1,1)));
-    suffix->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
-    program->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
-    tableWidget->setItem(row, 0, suffix);
-    tableWidget->setItem(row, 1, program);
-    it++;
-  }
+    ColorDataType = new QPushButton(tr("Data Type"), editorTab);
+    ColorDataType->setPaletteForegroundColor(QucsSettings.Type);
+    ColorDataType->setPaletteBackgroundColor(QucsSettings.BGColor);
+    connect(ColorDataType, SIGNAL(clicked()), SLOT(slotColorDataType()));
+    editorGrid->addWidget(ColorDataType,2,2);
 
-  QLabel *l5 = new QLabel(tr("Suffix:"), Tab2);
-  gp2->addWidget(l5,1,1);
-  Input_Suffix = new QLineEdit(Tab2);
-  Input_Suffix->setValidator(Validator);
-  gp2->addWidget(Input_Suffix,1,2);
+    ColorAttribute = new QPushButton(tr("Attribute"), editorTab);
+    ColorAttribute->setPaletteForegroundColor(QucsSettings.Attribute);
+    ColorAttribute->setPaletteBackgroundColor(QucsSettings.BGColor);
+    connect(ColorAttribute, SIGNAL(clicked()), SLOT(slotColorAttribute()));
+    editorGrid->addWidget(ColorAttribute,3,0);
+
+    ColorDirective = new QPushButton(tr("Directive"), editorTab);
+    ColorDirective->setPaletteForegroundColor(QucsSettings.Directive);
+    ColorDirective->setPaletteBackgroundColor(QucsSettings.BGColor);
+    connect(ColorDirective, SIGNAL(clicked()), SLOT(slotColorDirective()));
+    editorGrid->addWidget(ColorDirective,3,1);
+
+    ColorTask = new QPushButton(tr("Task"), editorTab);
+    ColorTask->setPaletteForegroundColor(QucsSettings.Task);
+    ColorTask->setPaletteBackgroundColor(QucsSettings.BGColor);
+    connect(ColorTask, SIGNAL(clicked()), SLOT(slotColorTask()));
+    editorGrid->addWidget(ColorTask,3,2);
+
+
+    t->addTab(editorTab, tr("Source Code Editor"));
+
+    // ...........................................................
+    // The file types tab
+    QWidget *fileTypesTab = new QWidget(t);
+    QGridLayout *fileTypesGrid = new QGridLayout(fileTypesTab);
+
+    QLabel *note = new QLabel(
+        tr("Register filename extensions here in order to\nopen files with an appropriate program."));
+    fileTypesGrid->addWidget(note,0,0,1,2);
+
+    // the fileTypesTableWidget displays information on the file types
+    fileTypesTableWidget = new QTableWidget(fileTypesTab);
+    fileTypesTableWidget->setColumnCount(2);
+
+    QTableWidgetItem *item1 = new QTableWidgetItem();
+    QTableWidgetItem *item2 = new QTableWidgetItem();
+
+    fileTypesTableWidget->setHorizontalHeaderItem(0, item1);
+    fileTypesTableWidget->setHorizontalHeaderItem(1, item2);
+
+    item1->setText(tr("Suffix"));
+    item2->setText(tr("Program"));
+
+    fileTypesTableWidget->horizontalHeader()->setStretchLastSection(true);
+    fileTypesTableWidget->verticalHeader()->hide();
+    connect(fileTypesTableWidget, SIGNAL(cellClicked(int,int)), SLOT(slotTableClicked(int,int)));
+    fileTypesGrid->addWidget(fileTypesTableWidget,1,0,3,1);
+
+    // fill listview with already registered file extensions
+    QStringList::Iterator it = QucsSettings.FileTypes.begin();
+    while(it != QucsSettings.FileTypes.end())
+    {
+        int row = fileTypesTableWidget->rowCount();
+        fileTypesTableWidget->setRowCount(row+1);
+        QTableWidgetItem *suffix = new QTableWidgetItem(QString((*it).section('/',0,0)));
+        QTableWidgetItem *program = new QTableWidgetItem(QString((*it).section('/',1,1)));
+        suffix->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+        program->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+        fileTypesTableWidget->setItem(row, 0, suffix);
+        fileTypesTableWidget->setItem(row, 1, program);
+        it++;
+    }
+
+    QLabel *l5 = new QLabel(tr("Suffix:"), fileTypesTab);
+    fileTypesGrid->addWidget(l5,1,1);
+    Input_Suffix = new QLineEdit(fileTypesTab);
+    Input_Suffix->setValidator(Validator);
+    fileTypesGrid->addWidget(Input_Suffix,1,2);
 //  connect(Input_Suffix, SIGNAL(returnPressed()), SLOT(slotGotoProgEdit())); //not implemented
 
-  QLabel *l6 = new QLabel(tr("Program:"), Tab2);
-  gp2->addWidget(l6,2,1);
-  Input_Program = new QLineEdit(Tab2);
-  gp2->addWidget(Input_Program,2,2);
+    QLabel *l6 = new QLabel(tr("Program:"), fileTypesTab);
+    fileTypesGrid->addWidget(l6,2,1);
+    Input_Program = new QLineEdit(fileTypesTab);
+    fileTypesGrid->addWidget(Input_Program,2,2);
 
-  QPushButton *AddButt = new QPushButton(tr("Set"));
-  gp2->addWidget(AddButt,3,1);
-  connect(AddButt, SIGNAL(clicked()), SLOT(slotAdd()));
-  QPushButton *RemoveButt = new QPushButton(tr("Remove"));
-  gp2->addWidget(RemoveButt,3,2);
-  connect(RemoveButt, SIGNAL(clicked()), SLOT(slotRemove()));
+    QPushButton *AddButt = new QPushButton(tr("Set"));
+    fileTypesGrid->addWidget(AddButt,3,1);
+    connect(AddButt, SIGNAL(clicked()), SLOT(slotAddFileType()));
+    QPushButton *RemoveButt = new QPushButton(tr("Remove"));
+    fileTypesGrid->addWidget(RemoveButt,3,2);
+    connect(RemoveButt, SIGNAL(clicked()), SLOT(slotRemoveFileType()));
 
-  gp2->setRowStretch(3,4);
-  t->addTab(Tab2, tr("File Types"));
+    fileTypesGrid->setRowStretch(3,4);
+    t->addTab(fileTypesTab, tr("File Types"));
 
-  // ...........................................................
-  QWidget *Tab4 = new QWidget(t);
-  QGridLayout *gp4 = new QGridLayout(Tab4);
+    // ...........................................................
+    // The locations tab
+    QWidget *locationsTab = new QWidget(t);
+    QGridLayout *locationsGrid = new QGridLayout(locationsTab);
 
-  QLabel *note2 = new QLabel(
-     tr("Edit the standard paths and external applications"));
-  gp4->addWidget(note2,0,0,1,2);
-  gp4->addWidget(new QLabel(tr("Octave path:"), Tab4) ,2,0);
-  octaveEdit = new QLineEdit(Tab4);
-  gp4->addWidget(octaveEdit,2,1);
-  QPushButton *OctaveButt = new QPushButton("...");
-  gp4->addWidget(OctaveButt, 2, 2);
-  connect(OctaveButt, SIGNAL(clicked()), SLOT(slotOctaveBrowse()));
+    QLabel *note2 = new QLabel(
+        tr("Edit the standard paths and external applications"));
+    locationsGrid->addWidget(note2,0,0,1,2);
+    locationsGrid->addWidget(new QLabel(tr("Octave path:"), locationsTab) ,1,0);
 
-  gp4->addWidget(new QLabel(tr("Qucs Home:"), Tab4) ,3,0);
-  homeEdit = new QLineEdit(Tab4);
-  gp4->addWidget(homeEdit,3,1);
-  QPushButton *HomeButt = new QPushButton("...");
-  gp4->addWidget(HomeButt, 3, 2);
-  connect(HomeButt, SIGNAL(clicked()), SLOT(slotHomeDirBrowse()));
+    octaveEdit = new QLineEdit(locationsTab);
+    locationsGrid->addWidget(octaveEdit,1,1);
+    QPushButton *OctaveButt = new QPushButton("...");
+    locationsGrid->addWidget(OctaveButt, 1, 2);
+    connect(OctaveButt, SIGNAL(clicked()), SLOT(slotOctaveBrowse()));
+
+    locationsGrid->addWidget(new QLabel(tr("Qucs Home:"), locationsTab) ,2,0);
+    homeEdit = new QLineEdit(locationsTab);
+    locationsGrid->addWidget(homeEdit,2,1);
+    QPushButton *HomeButt = new QPushButton("...");
+    locationsGrid->addWidget(HomeButt, 2, 2);
+    connect(HomeButt, SIGNAL(clicked()), SLOT(slotHomeDirBrowse()));
+
+    // the pathsTableWidget displays the path list
+    pathsTableWidget = new QTableWidget(locationsTab);
+    pathsTableWidget->setColumnCount(1);
+
+    QTableWidgetItem *pitem1 = new QTableWidgetItem();
+
+    pathsTableWidget->setHorizontalHeaderItem(0, pitem1);
+
+    pitem1->setText(tr("Path List"));
+
+    pathsTableWidget->horizontalHeader()->setStretchLastSection(true);
+    pathsTableWidget->verticalHeader()->hide();
+    // allow multiple items to be selected
+    pathsTableWidget->setSelectionMode(QAbstractItemView::ExtendedSelection);
+    connect(pathsTableWidget, SIGNAL(cellClicked(int,int)), SLOT(slotPathTableClicked(int,int)));
+    locationsGrid->addWidget(pathsTableWidget,3,0,3,2);
+
+    QPushButton *AddPathButt = new QPushButton("Add Path");
+    locationsGrid->addWidget(AddPathButt, 3, 2);
+    connect(AddPathButt, SIGNAL(clicked()), SLOT(slotAddPath()));
+
+    QPushButton *AddPathSubFolButt = new QPushButton("Add Path With SubFolders");
+    locationsGrid->addWidget(AddPathSubFolButt, 4, 2);
+    connect(AddPathSubFolButt, SIGNAL(clicked()), SLOT(slotAddPathWithSubFolders()));
+
+    QPushButton *RemovePathButt = new QPushButton("Remove Path");
+    locationsGrid->addWidget(RemovePathButt , 5, 2);
+    connect(RemovePathButt, SIGNAL(clicked()), SLOT(slotRemovePath()));
+
+    // create a copy of the current global path list
+    currentPaths = QStringList(qucsPathList);
+    makePathTable();
+
+    t->addTab(locationsTab, tr("Locations"));
+
+    // ...........................................................
+    // buttons on the bottom of the dialog (independent of the TabWidget)
+
+    QHBoxLayout *Butts = new QHBoxLayout();
+    Butts->setSpacing(3);
+    Butts->setMargin(3);
+    all->addLayout(Butts);
+
+    QPushButton *OkButt = new QPushButton(tr("OK"));
+    Butts->addWidget(OkButt);
+    connect(OkButt, SIGNAL(clicked()), SLOT(slotOK()));
+    QPushButton *ApplyButt = new QPushButton(tr("Apply"));
+    Butts->addWidget(ApplyButt);
+    connect(ApplyButt, SIGNAL(clicked()), SLOT(slotApply()));
+    QPushButton *CancelButt = new QPushButton(tr("Cancel"));
+    Butts->addWidget(CancelButt);
+    connect(CancelButt, SIGNAL(clicked()), SLOT(reject()));
+    QPushButton *DefaultButt = new QPushButton(tr("Default Values"));
+    Butts->addWidget(DefaultButt);
+    connect(DefaultButt, SIGNAL(clicked()), SLOT(slotDefaultValues()));
 
 
 
-  t->addTab(Tab4, tr("Locations"));
-  // ...........................................................
+    OkButt->setDefault(true);
 
+    // ...........................................................
+    // fill the fields with the Qucs-Properties
+    Font  = QucsSettings.font;
+    FontButton->setText(Font.toString());
+    BGColorButton->setPaletteBackgroundColor(QucsSettings.BGColor);
+    undoNumEdit->setText(QString::number(QucsSettings.maxUndo));
+    editorEdit->setText(QucsSettings.Editor);
+    checkWiring->setChecked(QucsSettings.NodeWiring);
 
-  // buttons on the bottom of the dialog (independent of the TabWidget)
-  QHBoxLayout *Butts = new QHBoxLayout();
-  Butts->setSpacing(3);
-  Butts->setMargin(3);
-  all->addLayout(Butts);
+    for(int z=LanguageCombo->count()-1; z>=0; z--)
+        if(LanguageCombo->text(z).section('(',1,1).remove(')') == QucsSettings.Language)
+            LanguageCombo->setCurrentItem(z);
+    octaveEdit->setText(QucsSettings.OctaveBinDir.canonicalPath());
+    homeEdit->setText(QucsSettings.QucsHomeDir.canonicalPath());
 
-  QPushButton *OkButt = new QPushButton(tr("OK"));
-  Butts->addWidget(OkButt);
-  connect(OkButt, SIGNAL(clicked()), SLOT(slotOK()));
-  QPushButton *ApplyButt = new QPushButton(tr("Apply"));
-  Butts->addWidget(ApplyButt);
-  connect(ApplyButt, SIGNAL(clicked()), SLOT(slotApply()));
-  QPushButton *CancelButt = new QPushButton(tr("Cancel"));
-  Butts->addWidget(CancelButt);
-  connect(CancelButt, SIGNAL(clicked()), SLOT(reject()));
-  QPushButton *DefaultButt = new QPushButton(tr("Default Values"));
-  Butts->addWidget(DefaultButt);
-  connect(DefaultButt, SIGNAL(clicked()), SLOT(slotDefaultValues()));
-
-
-
-  OkButt->setDefault(true);
-
-  // ...........................................................
-  // fill the fields with the Qucs-Properties
-  Font  = QucsSettings.font;
-  FontButton->setText(Font.toString());
-  BGColorButton->setPaletteBackgroundColor(QucsSettings.BGColor);
-  undoNumEdit->setText(QString::number(QucsSettings.maxUndo));
-  editorEdit->setText(QucsSettings.Editor);
-  checkWiring->setChecked(QucsSettings.NodeWiring);
-
-  for(int z=LanguageCombo->count()-1; z>=0; z--)
-    if(LanguageCombo->text(z).section('(',1,1).remove(')') == QucsSettings.Language)
-      LanguageCombo->setCurrentItem(z);
-  octaveEdit->setText(QucsSettings.OctaveBinDir.canonicalPath());
-  homeEdit->setText(QucsSettings.QucsHomeDir.canonicalPath());
-
-  resize(300, 200);
+    resize(300, 200);
 }
 
 QucsSettingsDialog::~QucsSettingsDialog()
 {
-  delete all;
-  delete val200;
-  delete Validator;
+    delete all;
+    delete val200;
+    delete Validator;
 }
 
 // -----------------------------------------------------------
-void QucsSettingsDialog::slotAdd()
+void QucsSettingsDialog::slotAddFileType()
 {
-    QModelIndexList indexes = tableWidget->selectionModel()->selection().indexes();
-    if (indexes.count()){
-      tableWidget->item(indexes.at(0).row(),0)->setText(Input_Suffix->text());
-      tableWidget->item(indexes.at(0).row(),1)->setText(Input_Program->text());
-      tableWidget->selectionModel()->clear();
-      return;
+    QModelIndexList indexes = fileTypesTableWidget->selectionModel()->selection().indexes();
+    if (indexes.count())
+    {
+        fileTypesTableWidget->item(indexes.at(0).row(),0)->setText(Input_Suffix->text());
+        fileTypesTableWidget->item(indexes.at(0).row(),1)->setText(Input_Program->text());
+        fileTypesTableWidget->selectionModel()->clear();
+        return;
     }
 
     //check before append
-    for(int r=0; r < tableWidget->rowCount(); r++)
-      if(tableWidget->item(r,0)->text() == Input_Suffix->text()) {
-        QMessageBox::critical(this, tr("Error"),
-              tr("This suffix is already registered!"));
-        return;
-      }
+    for(int r=0; r < fileTypesTableWidget->rowCount(); r++)
+        if(fileTypesTableWidget->item(r,0)->text() == Input_Suffix->text())
+        {
+            QMessageBox::critical(this, tr("Error"),
+                                  tr("This suffix is already registered!"));
+            return;
+        }
 
-    int row = tableWidget->rowCount();
-    tableWidget->setRowCount(row+1);
+    int row = fileTypesTableWidget->rowCount();
+    fileTypesTableWidget->setRowCount(row+1);
 
     QTableWidgetItem *newSuffix = new QTableWidgetItem(QString(Input_Suffix->text()));
     newSuffix->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
-    tableWidget->setItem(row, 0, newSuffix);
+    fileTypesTableWidget->setItem(row, 0, newSuffix);
 
     QTableWidgetItem *newProgram = new QTableWidgetItem(Input_Program->text());
-    tableWidget->setItem(row, 1, newProgram);
+    fileTypesTableWidget->setItem(row, 1, newProgram);
     newProgram->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
 
     Input_Suffix->setFocus();
@@ -344,121 +385,276 @@ void QucsSettingsDialog::slotAdd()
 }
 
 // -----------------------------------------------------------
-void QucsSettingsDialog::slotRemove()
+void QucsSettingsDialog::slotRemoveFileType()
 {
-    QModelIndexList indexes = tableWidget->selectionModel()->selection().indexes();
-    if (indexes.count()){
-      tableWidget->removeRow(indexes.at(0).row());
-      tableWidget->selectionModel()->clear();
-      Input_Suffix->setText("");
-      Input_Program->setText("");
-      return;
+    QModelIndexList indexes = fileTypesTableWidget->selectionModel()->selection().indexes();
+    if (indexes.count())
+    {
+        fileTypesTableWidget->removeRow(indexes.at(0).row());
+        fileTypesTableWidget->selectionModel()->clear();
+        Input_Suffix->setText("");
+        Input_Program->setText("");
+        return;
     }
 }
 
 // -----------------------------------------------------------
+// Applies any changed settings and closes the dialog
 void QucsSettingsDialog::slotOK()
 {
-  slotApply();
-  accept();
+    slotApply();
+    accept();
 }
 
 // -----------------------------------------------------------
+// Applies any changed settings
 void QucsSettingsDialog::slotApply()
 {
-  bool changed = false;
+    bool changed = false;
 
-  if(QucsSettings.BGColor != BGColorButton->paletteBackgroundColor()) {
-    QucsSettings.BGColor = BGColorButton->paletteBackgroundColor();
+    if(QucsSettings.BGColor != BGColorButton->paletteBackgroundColor())
+    {
+        QucsSettings.BGColor = BGColorButton->paletteBackgroundColor();
 
-    int No=0;
-    QWidget *w;
-    while((w=App->DocumentTab->page(No++)) != 0)
-      if(w->inherits("QTextEdit"))
-        ((TextDoc*)w)->viewport()->setPaletteBackgroundColor(
-					QucsSettings.BGColor);
-      else
-        ((Schematic*)w)->viewport()->setPaletteBackgroundColor(
-					QucsSettings.BGColor);
-    changed = true;
-  }
+        int No=0;
+        QWidget *w;
+        while((w=App->DocumentTab->page(No++)) != 0)
+            if(w->inherits("QTextEdit"))
+                ((TextDoc*)w)->viewport()->setPaletteBackgroundColor(
+                    QucsSettings.BGColor);
+            else
+                ((Schematic*)w)->viewport()->setPaletteBackgroundColor(
+                    QucsSettings.BGColor);
+        changed = true;
+    }
 
-  QucsSettings.font=Font;
+    QucsSettings.font=Font;
 
-  QucsSettings.Language =
-      LanguageCombo->currentText().section('(',1,1).remove(')');
+    QucsSettings.Language =
+        LanguageCombo->currentText().section('(',1,1).remove(')');
 
-  if(QucsSettings.Comment != ColorComment->paletteForegroundColor()) {
-    QucsSettings.Comment = ColorComment->paletteForegroundColor();
-    changed = true;
-  }
-  if(QucsSettings.String != ColorString->paletteForegroundColor()) {
-    QucsSettings.String = ColorString->paletteForegroundColor();
-    changed = true;
-  }
-  if(QucsSettings.Integer != ColorInteger->paletteForegroundColor()) {
-    QucsSettings.Integer = ColorInteger->paletteForegroundColor();
-    changed = true;
-  }
-  if(QucsSettings.Real != ColorReal->paletteForegroundColor()) {
-    QucsSettings.Real = ColorReal->paletteForegroundColor();
-    changed = true;
-  }
-  if(QucsSettings.Character != ColorCharacter->paletteForegroundColor()) {
-    QucsSettings.Character = ColorCharacter->paletteForegroundColor();
-    changed = true;
-  }
-  if(QucsSettings.Type != ColorDataType->paletteForegroundColor()) {
-    QucsSettings.Type = ColorDataType->paletteForegroundColor();
-    changed = true;
-  }
-  if(QucsSettings.Attribute != ColorAttribute->paletteForegroundColor()) {
-    QucsSettings.Attribute = ColorAttribute->paletteForegroundColor();
-    changed = true;
-  }
-  if(QucsSettings.Directive != ColorDirective->paletteForegroundColor()) {
-    QucsSettings.Directive = ColorDirective->paletteForegroundColor();
-    changed = true;
-  }
-  if(QucsSettings.Task != ColorTask->paletteForegroundColor()) {
-    QucsSettings.Task = ColorTask->paletteForegroundColor();
-    changed = true;
-  }
+    if(QucsSettings.Comment != ColorComment->paletteForegroundColor())
+    {
+        QucsSettings.Comment = ColorComment->paletteForegroundColor();
+        changed = true;
+    }
+    if(QucsSettings.String != ColorString->paletteForegroundColor())
+    {
+        QucsSettings.String = ColorString->paletteForegroundColor();
+        changed = true;
+    }
+    if(QucsSettings.Integer != ColorInteger->paletteForegroundColor())
+    {
+        QucsSettings.Integer = ColorInteger->paletteForegroundColor();
+        changed = true;
+    }
+    if(QucsSettings.Real != ColorReal->paletteForegroundColor())
+    {
+        QucsSettings.Real = ColorReal->paletteForegroundColor();
+        changed = true;
+    }
+    if(QucsSettings.Character != ColorCharacter->paletteForegroundColor())
+    {
+        QucsSettings.Character = ColorCharacter->paletteForegroundColor();
+        changed = true;
+    }
+    if(QucsSettings.Type != ColorDataType->paletteForegroundColor())
+    {
+        QucsSettings.Type = ColorDataType->paletteForegroundColor();
+        changed = true;
+    }
+    if(QucsSettings.Attribute != ColorAttribute->paletteForegroundColor())
+    {
+        QucsSettings.Attribute = ColorAttribute->paletteForegroundColor();
+        changed = true;
+    }
+    if(QucsSettings.Directive != ColorDirective->paletteForegroundColor())
+    {
+        QucsSettings.Directive = ColorDirective->paletteForegroundColor();
+        changed = true;
+    }
+    if(QucsSettings.Task != ColorTask->paletteForegroundColor())
+    {
+        QucsSettings.Task = ColorTask->paletteForegroundColor();
+        changed = true;
+    }
 
-  bool ok;
-  if(QucsSettings.maxUndo != undoNumEdit->text().toUInt(&ok)) {
-    QucsSettings.maxUndo = undoNumEdit->text().toInt(&ok);
-    changed = true;
-  }
-  if(QucsSettings.Editor != editorEdit->text()) {
-    QucsSettings.Editor = editorEdit->text();
-    changed = true;
-  }
-  if(QucsSettings.NodeWiring != (unsigned)checkWiring->isChecked()) {
-    QucsSettings.NodeWiring = checkWiring->isChecked();
-    changed = true;
-  }
+    bool ok;
+    if(QucsSettings.maxUndo != undoNumEdit->text().toUInt(&ok))
+    {
+        QucsSettings.maxUndo = undoNumEdit->text().toInt(&ok);
+        changed = true;
+    }
+    if(QucsSettings.Editor != editorEdit->text())
+    {
+        QucsSettings.Editor = editorEdit->text();
+        changed = true;
+    }
+    if(QucsSettings.NodeWiring != (unsigned)checkWiring->isChecked())
+    {
+        QucsSettings.NodeWiring = checkWiring->isChecked();
+        changed = true;
+    }
 
-  QucsSettings.FileTypes.clear();
-  for (int row=0; row < tableWidget->rowCount(); row++){
-      QucsSettings.FileTypes.append(tableWidget->item(row,0)->text()
-                                    +"/"+
-                                    tableWidget->item(row,1)->text());
-  }
-  QucsSettings.OctaveBinDir = octaveEdit->text();
-  QucsSettings.QucsHomeDir = homeEdit->text();
+    QucsSettings.FileTypes.clear();
+    for (int row=0; row < fileTypesTableWidget->rowCount(); row++)
+    {
+        QucsSettings.FileTypes.append(fileTypesTableWidget->item(row,0)->text()
+                                      +"/"+
+                                      fileTypesTableWidget->item(row,1)->text());
+    }
+    QucsSettings.OctaveBinDir = octaveEdit->text();
+    QucsSettings.QucsHomeDir = homeEdit->text();
 
-  saveApplSettings(App);  // also sets the small and large font
+    saveApplSettings(App);  // also sets the small and large font
 
-  if(changed)
-  {
-      App->readProjects();
-      App->readProjectFiles();
-      App->repaint();
-  }
+    if(changed)
+    {
+        App->readProjects();
+        App->readProjectFiles();
+        App->repaint();
+    }
+
+    // update the schenatic filelist hash
+    QucsMain->updatePathList(currentPaths);
+    QucsMain->updateSchNameHash();
+}
+
+
+// -----------------------------------------------------------
+void QucsSettingsDialog::slotFontDialog()
+{
+    bool ok;
+    QFont tmpFont = QFontDialog::getFont(&ok, Font, this);
+    if(ok)
+    {
+        Font = tmpFont;
+        FontButton->setText(Font.toString());
+    }
 }
 
 // -----------------------------------------------------------
+void QucsSettingsDialog::slotBGColorDialog()
+{
+    QColor c = QColorDialog::getColor(
+                   BGColorButton->paletteBackgroundColor(), this);
+    if(c.isValid())
+        BGColorButton->setPaletteBackgroundColor(c);
+}
+
+// -----------------------------------------------------------
+void QucsSettingsDialog::slotDefaultValues()
+{
+    //Font = QFont("Helvetica", 12);
+    FontButton->setText(Font.toString());
+    LanguageCombo->setCurrentItem(0);
+    BGColorButton->setPaletteBackgroundColor(QColor(255,250,225));
+
+    ColorComment->setPaletteForegroundColor(Qt::gray);
+    ColorString->setPaletteForegroundColor(Qt::red);
+    ColorInteger->setPaletteForegroundColor(Qt::blue);
+    ColorReal->setPaletteForegroundColor(Qt::darkMagenta);
+    ColorCharacter->setPaletteForegroundColor(Qt::magenta);
+    ColorDataType->setPaletteForegroundColor(Qt::darkRed);
+    ColorAttribute->setPaletteForegroundColor(Qt::darkCyan);
+    ColorDirective->setPaletteForegroundColor(Qt::darkCyan);
+    ColorTask->setPaletteForegroundColor(Qt::darkRed);
+
+    undoNumEdit->setText("20");
+    editorEdit->setText(QucsSettings.BinDir + "qucs");
+    checkWiring->setChecked(false);
+}
+
+// -----------------------------------------------------------
+void QucsSettingsDialog::slotColorComment()
+{
+    QColor c = QColorDialog::getColor(
+                   ColorComment->paletteForegroundColor(), this);
+    if(c.isValid())
+        ColorComment->setPaletteForegroundColor(c);
+}
+
+// -----------------------------------------------------------
+void QucsSettingsDialog::slotColorString()
+{
+    QColor c = QColorDialog::getColor(
+                   ColorString->paletteForegroundColor(), this);
+    if(c.isValid())
+        ColorString->setPaletteForegroundColor(c);
+}
+
+// -----------------------------------------------------------
+void QucsSettingsDialog::slotColorInteger()
+{
+    QColor c = QColorDialog::getColor(
+                   ColorInteger->paletteForegroundColor(), this);
+    if(c.isValid())
+        ColorInteger->setPaletteForegroundColor(c);
+}
+
+// -----------------------------------------------------------
+void QucsSettingsDialog::slotColorReal()
+{
+    QColor c = QColorDialog::getColor(
+                   ColorReal->paletteForegroundColor(), this);
+    if(c.isValid())
+        ColorReal->setPaletteForegroundColor(c);
+}
+
+// -----------------------------------------------------------
+void QucsSettingsDialog::slotColorCharacter()
+{
+    QColor c = QColorDialog::getColor(
+                   ColorCharacter->paletteForegroundColor(), this);
+    if(c.isValid())
+        ColorCharacter->setPaletteForegroundColor(c);
+}
+
+// -----------------------------------------------------------
+void QucsSettingsDialog::slotColorDataType()
+{
+    QColor c = QColorDialog::getColor(
+                   ColorDataType->paletteForegroundColor(), this);
+    if(c.isValid())
+        ColorDataType->setPaletteForegroundColor(c);
+}
+
+// -----------------------------------------------------------
+void QucsSettingsDialog::slotColorAttribute()
+{
+    QColor c = QColorDialog::getColor(
+                   ColorAttribute->paletteForegroundColor(), this);
+    if(c.isValid())
+        ColorAttribute->setPaletteForegroundColor(c);
+}
+
+// -----------------------------------------------------------
+void QucsSettingsDialog::slotColorDirective()
+{
+    QColor c = QColorDialog::getColor(
+                   ColorDirective->paletteForegroundColor(), this);
+    if(c.isValid())
+        ColorDirective->setPaletteForegroundColor(c);
+}
+
+// -----------------------------------------------------------
+void QucsSettingsDialog::slotColorTask()
+{
+    QColor c = QColorDialog::getColor(
+                   ColorTask->paletteForegroundColor(), this);
+    if(c.isValid())
+        ColorTask->setPaletteForegroundColor(c);
+}
+
+void QucsSettingsDialog::slotTableClicked(int row, int col)
+{
+    Input_Suffix->setText(fileTypesTableWidget->item(row,0)->text());
+    Input_Program->setText(fileTypesTableWidget->item(row,1)->text());
+}
+
+// -----------------------------------------------------------
+// The locations tab slots
+
 void QucsSettingsDialog::slotOctaveBrowse()
 {
     QFileDialog fileDialog( this, tr("Select the octave bin directory"), octaveEdit->text() );
@@ -468,7 +664,7 @@ void QucsSettingsDialog::slotOctaveBrowse()
     octaveEdit->setText(fileDialog.selectedFile());
 }
 
-// -----------------------------------------------------------
+
 void QucsSettingsDialog::slotHomeDirBrowse()
 {
     QFileDialog fileDialog( this, tr("Select the home directory"), homeEdit->text() );
@@ -478,133 +674,101 @@ void QucsSettingsDialog::slotHomeDirBrowse()
     homeEdit->setText(fileDialog.selectedFile());
 }
 
-
-// -----------------------------------------------------------
-void QucsSettingsDialog::slotFontDialog()
+void QucsSettingsDialog::slotPathTableClicked(int row, int col)
 {
-  bool ok;
-  QFont tmpFont = QFontDialog::getFont(&ok, Font, this);
-  if(ok) {
-    Font = tmpFont;
-    FontButton->setText(Font.toString());
-  }
+    //Input_Path->setText(fileTypesTableWidget->item(row,0)->text());
 }
 
-// -----------------------------------------------------------
-void QucsSettingsDialog::slotBGColorDialog()
+void QucsSettingsDialog::slotAddPath()
 {
-  QColor c = QColorDialog::getColor(
-		BGColorButton->paletteBackgroundColor(), this);
-  if(c.isValid())
-    BGColorButton->setPaletteBackgroundColor(c);
+    QFileDialog fileDialog( this, tr("Select a directory"), QucsSettings.QucsWorkDir.canonicalPath());
+    fileDialog.setAcceptMode(QFileDialog::AcceptOpen);
+    fileDialog.setFileMode(QFileDialog::DirectoryOnly);
+
+    if (fileDialog.exec())
+    {
+        currentPaths.append(fileDialog.selectedFile());
+        // reconstruct the table again
+        makePathTable();
+    }
+    else
+    {
+        // user cancelled
+    }
 }
 
-// -----------------------------------------------------------
-void QucsSettingsDialog::slotDefaultValues()
+void QucsSettingsDialog::slotAddPathWithSubFolders()
 {
-  //Font = QFont("Helvetica", 12);
-  FontButton->setText(Font.toString());
-  LanguageCombo->setCurrentItem(0);
-  BGColorButton->setPaletteBackgroundColor(QColor(255,250,225));
+    // open a file dialog to select the top level directory
+    QFileDialog fileDialog( this, tr("Select a directory"), QucsSettings.QucsWorkDir.canonicalPath());
+    fileDialog.setAcceptMode(QFileDialog::AcceptOpen);
+    fileDialog.setFileMode(QFileDialog::DirectoryOnly);
 
-  ColorComment->setPaletteForegroundColor(Qt::gray);
-  ColorString->setPaletteForegroundColor(Qt::red);
-  ColorInteger->setPaletteForegroundColor(Qt::blue);
-  ColorReal->setPaletteForegroundColor(Qt::darkMagenta);
-  ColorCharacter->setPaletteForegroundColor(Qt::magenta);
-  ColorDataType->setPaletteForegroundColor(Qt::darkRed);
-  ColorAttribute->setPaletteForegroundColor(Qt::darkCyan);
-  ColorDirective->setPaletteForegroundColor(Qt::darkCyan);
-  ColorTask->setPaletteForegroundColor(Qt::darkRed);
+    QString path;
+    QFileInfo pathfinfo;
 
-  undoNumEdit->setText("20");
-  editorEdit->setText(QucsSettings.BinDir + "qucsedit");
-  checkWiring->setChecked(false);
+    if (fileDialog.exec())
+    {
+        // Iterate through the directories
+        QDirIterator pathIter(fileDialog.selectedFile(), QDirIterator::Subdirectories);
+        while (pathIter.hasNext())
+        {
+            path = pathIter.next();
+            pathfinfo = pathIter.fileInfo();
+
+            if (pathfinfo.isDir() & !pathfinfo.isSymLink() & !path.endsWith("."))
+            {
+                QDir thispath(path);
+                currentPaths.append(thispath.canonicalPath());
+            }
+        }
+        makePathTable();
+    }
+    else
+    {
+        // user cancelled
+    }
+
+
 }
 
-// -----------------------------------------------------------
-void QucsSettingsDialog::slotColorComment()
+void QucsSettingsDialog::slotRemovePath()
 {
-  QColor c = QColorDialog::getColor(
-		ColorComment->paletteForegroundColor(), this);
-  if(c.isValid())
-    ColorComment->setPaletteForegroundColor(c);
+    //Input_Path->setText(fileTypesTableWidget->item(row,0)->text());
+    // get the selected items from the table
+    QList<QTableWidgetItem *> selectedPaths = pathsTableWidget->selectedItems();
+
+    foreach (QTableWidgetItem * item, selectedPaths)
+    {
+        QString path = item->text();
+        //removedPaths.append(path);
+        int pathind = currentPaths.indexOf(path,0);
+        if (pathind != -1)
+        {
+            currentPaths.removeAt(pathind);
+        }
+    }
+
+    makePathTable();
 }
 
-// -----------------------------------------------------------
-void QucsSettingsDialog::slotColorString()
+// makePathTable()
+//
+// Reconstructs the table containing the list of search paths
+// in the locations tab
+void QucsSettingsDialog::makePathTable()
 {
-  QColor c = QColorDialog::getColor(
-		ColorString->paletteForegroundColor(), this);
-  if(c.isValid())
-    ColorString->setPaletteForegroundColor(c);
-}
+    // remove all the paths from the table if present
+    pathsTableWidget->clearContents();
+    pathsTableWidget->setRowCount(0);
 
-// -----------------------------------------------------------
-void QucsSettingsDialog::slotColorInteger()
-{
-  QColor c = QColorDialog::getColor(
-		ColorInteger->paletteForegroundColor(), this);
-  if(c.isValid())
-    ColorInteger->setPaletteForegroundColor(c);
-}
-
-// -----------------------------------------------------------
-void QucsSettingsDialog::slotColorReal()
-{
-  QColor c = QColorDialog::getColor(
-		ColorReal->paletteForegroundColor(), this);
-  if(c.isValid())
-    ColorReal->setPaletteForegroundColor(c);
-}
-
-// -----------------------------------------------------------
-void QucsSettingsDialog::slotColorCharacter()
-{
-  QColor c = QColorDialog::getColor(
-		ColorCharacter->paletteForegroundColor(), this);
-  if(c.isValid())
-    ColorCharacter->setPaletteForegroundColor(c);
-}
-
-// -----------------------------------------------------------
-void QucsSettingsDialog::slotColorDataType()
-{
-  QColor c = QColorDialog::getColor(
-		ColorDataType->paletteForegroundColor(), this);
-  if(c.isValid())
-    ColorDataType->setPaletteForegroundColor(c);
-}
-
-// -----------------------------------------------------------
-void QucsSettingsDialog::slotColorAttribute()
-{
-  QColor c = QColorDialog::getColor(
-		ColorAttribute->paletteForegroundColor(), this);
-  if(c.isValid())
-    ColorAttribute->setPaletteForegroundColor(c);
-}
-
-// -----------------------------------------------------------
-void QucsSettingsDialog::slotColorDirective()
-{
-  QColor c = QColorDialog::getColor(
-		ColorDirective->paletteForegroundColor(), this);
-  if(c.isValid())
-    ColorDirective->setPaletteForegroundColor(c);
-}
-
-// -----------------------------------------------------------
-void QucsSettingsDialog::slotColorTask()
-{
-  QColor c = QColorDialog::getColor(
-		ColorTask->paletteForegroundColor(), this);
-  if(c.isValid())
-      ColorTask->setPaletteForegroundColor(c);
-}
-
-void QucsSettingsDialog::slotTableCliked(int row, int col)
-{
-    Input_Suffix->setText(tableWidget->item(row,0)->text());
-    Input_Program->setText(tableWidget->item(row,1)->text());
+    // fill listview with the list of paths
+    foreach (QString pathstr, currentPaths)
+    {
+        int row = pathsTableWidget->rowCount();
+        pathsTableWidget->setRowCount(row+1);
+        QTableWidgetItem *path = new QTableWidgetItem(pathstr);
+        path->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+        pathsTableWidget->setItem(row, 0, path);
+    }
 }

@@ -79,6 +79,8 @@ public:
   QString fileType (const QString&);
 
   QString ProjName;   // name of the project, that is open
+  //QList<QString> qucsPathList; // the qucs path list for subcircuits and spice files
+  QHash<QString,QString> schNameHash; // QHash for the schematic files lookup
 
   QLineEdit *editText;  // for edit component properties on schematic
   SearchDialog *SearchDia;  // global in order to keep values
@@ -113,6 +115,7 @@ public slots:
   void slotEditCut();     // put marked object into clipboard and delete it
   void slotEditCopy();    // put the marked object into the clipboard
   void slotApplSettings();// open dialog to change application settings
+  void slotRefreshSchPath(); // refresh the schematic path hash
 
   void slotIntoHierarchy();
   void slotPopHierarchy();
@@ -172,7 +175,7 @@ public:
 
   QAction *fileNew, *textNew, *fileNewDpl, *fileOpen, *fileSave, *fileSaveAs,
           *fileSaveAll, *fileClose, *fileExamples, *fileSettings, *filePrint, *fileQuit,
-          *projNew, *projOpen, *projDel, *projClose, *applSettings,
+          *projNew, *projOpen, *projDel, *projClose, *applSettings, *refreshSchPath,
           *editCut, *editCopy, *magAll, *magOne, *magMinus, *filePrintFit,
           *symEdit, *intoH, *popH, *simulate, *dpl_sch, *undo, *redo, *dcbias;
 
@@ -221,10 +224,14 @@ private:
   bool deleteDirectoryContent(QDir& Dir);
   bool isTextDocument(QWidget *);
   void closeFile(int);
+
 public:
 
   void readProjects();
   void readProjectFiles();
+  void updatePathList(void); // update the list of paths, pruning non-existing paths
+  void updatePathList(QStringList);
+  void updateSchNameHash(void); // maps all schematic files in the path list
 
 /* **************************************************
    *****  The following methods are located in  *****
@@ -259,7 +266,7 @@ private:
   QMenu *fileMenu, *editMenu, *insMenu, *projMenu, *simMenu, *viewMenu,
              *helpMenu, *alignMenu, *toolMenu;
 
-  // submenus for the PDF documents 
+  // submenus for the PDF documents
   QMenu *helpTechnical, *helpReport, *helpTutorial;
 
   QToolBar *fileToolbar, *editToolbar, *viewToolbar, *workToolbar;

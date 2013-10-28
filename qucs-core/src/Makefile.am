@@ -29,74 +29,49 @@ EXTRA_DIST = parse_netlist.y scan_netlist.l scan_dataset.l parse_dataset.y \
 
 SUBDIRS = math components interface . converter
 
-noinst_LIBRARIES = libqucsator.a
+AM_CPPFLAGS = -I$(top_srcdir)/src/math -I$(top_srcdir)/src/components -I$(top_srcdir)/src/interface
 
-#if QUCSLIB
-#noinst_LIBRARIES = libqucsator.a libqucsatorfull.a
-#else
-#noinst_LIBRARIES = libqucsator.a
-#endif
+lib_LTLIBRARIES = libqucs.la
 
-bin_PROGRAMS = qucsator
+libqucs_la_LIBADD = math/libqucsmath.la   \
+	components/libcomponent.la	      \
+	components/microstrip/libmicrostrip.la \
+	components/devices/libdevices.la	      \
+	components/digital/libdigital.la       \
+	components/verilog/libverilog.la \
+	interface/libinterface.la
+## In case we want to build windows dlls some day
+libqucs_la_LDFLAGS = -no-undefined
 
-INCLUDES = -I$(top_srcdir)/src/math -I$(top_srcdir)/src/components -I$(top_srcdir)/src/interface
-
-qucsator_LDADD = libqucsator.a		      \
-	math/libqucsmath.a	              \
-	components/libcomponent.a	      \
-	components/microstrip/libmicrostrip.a \
-	components/devices/libdevices.a	      \
-	components/digital/libdigital.a       \
-	components/verilog/libverilog.a \
-	interface/libinterface.a
-
-qucsator_SOURCES = ucs.cpp circuit.cpp check_netlist.cpp operatingpoint.cpp  \
-	parse_netlist.cpp scan_netlist.cpp node.cpp net.cpp input.cpp        \
-	analysis.cpp spsolver.cpp dcsolver.cpp nodelist.cpp environment.cpp  \
-	parasweep.cpp equation.cpp evaluate.cpp acsolver.cpp                 \
-	trsolver.cpp transient.cpp integrator.cpp nodeset.cpp hbsolver.cpp   \
-	spline.cpp fourier.cpp pair.cpp characteristic.cpp history.cpp       \
-	range.cpp devstates.cpp differentiate.cpp module.cpp receiver.cpp    \
-	interpolator.cpp
+pkginclude_HEADERS = logging.h net.h input.h dataset.h equation.h    \
+	environment.h exceptionstack.h check_netlist.h module.h
 
 noinst_TEMPLATES = tmatrix.cpp eqnsys.cpp nasolver.cpp states.cpp tvector.cpp \
 	ptrlist.cpp tridiag.cpp hash.cpp valuelist.cpp nasolution.cpp
 
-noinst_HEADERS = $(noinst_TEMPLATES) check_netlist.h input.h net.h            \
-	tokens_netlist.h dataset.h logging.h node.h property.h vector.h       \
+noinst_HEADERS = $(noinst_TEMPLATES)            \
+	tokens_netlist.h node.h property.h vector.h       \
 	tokens_dataset.h check_dataset.h strlist.h tokens_touchstone.h        \
 	check_touchstone.h matrix.h analysis.h spsolver.h dcsolver.h object.h \
-	nodelist.h variable.h environment.h parasweep.h eqnsys.h sweep.h      \
-	operatingpoint.h libqucsator.h equation.h evaluate.h exception.h      \
-	exceptionstack.h matvec.h constants.h consts.h nasolver.h tmatrix.h   \
+	nodelist.h variable.h parasweep.h eqnsys.h sweep.h      \
+	operatingpoint.h libqucsator.h evaluate.h exception.h      \
+	matvec.h constants.h consts.h nasolver.h tmatrix.h   \
 	circuit.h acsolver.h trsolver.h transient.h integrator.h states.h     \
 	tvector.h nodeset.h netdefs.h qucsdefs.h ptrlist.h hbsolver.h poly.h  \
 	spline.h tridiag.h fourier.h hash.h applications.h                    \
 	valuelist.h pair.h characteristic.h range.h history.h                 \
 	devstates.h tokens_citi.h check_citi.h check_zvr.h tokens_zvr.h       \
 	nasolution.h check_mdl.h tokens_mdl.h differentiate.h tokens_csv.h    \
-	check_csv.h module.h analyses.h compat.h receiver.h interpolator.h
+	check_csv.h analyses.h compat.h receiver.h interpolator.h
 
-libqucsator_a_SOURCES = dataset.cpp check_dataset.cpp parse_dataset.cpp      \
+libqucs_la_SOURCES = dataset.cpp check_dataset.cpp parse_dataset.cpp      \
 	scan_dataset.cpp check_touchstone.cpp vector.cpp object.cpp          \
 	property.cpp parse_touchstone.cpp scan_touchstone.cpp variable.cpp   \
 	strlist.cpp logging.c exception.cpp exceptionstack.cpp               \
 	matvec.cpp matrix.cpp parse_citi.cpp                                 \
 	scan_citi.cpp check_citi.cpp parse_zvr.cpp scan_zvr.cpp sweep.cpp    \
 	check_zvr.cpp parse_mdl.cpp scan_mdl.cpp check_mdl.cpp check_csv.cpp \
-	parse_csv.cpp scan_csv.cpp
-
-if QUCSLIB
-libqucsatorfull_a_LIBADD = libqucsator.a	\
-	math/libqucsmath.a	              \
-	components/libcomponent.a	      \
-	components/microstrip/libmicrostrip.a \
-	components/devices/libdevices.a	      \
-	components/digital/libdigital.a       \
-	components/verilog/libverilog.a \
-	interface/libmint.a
-
-libqucsatorfull_a_SOURCES = circuit.cpp check_netlist.cpp operatingpoint.cpp  \
+	parse_csv.cpp scan_csv.cpp circuit.cpp check_netlist.cpp operatingpoint.cpp  \
 	parse_netlist.cpp scan_netlist.cpp node.cpp net.cpp input.cpp        \
 	analysis.cpp spsolver.cpp dcsolver.cpp nodelist.cpp environment.cpp  \
 	parasweep.cpp equation.cpp evaluate.cpp acsolver.cpp                 \
@@ -104,7 +79,12 @@ libqucsatorfull_a_SOURCES = circuit.cpp check_netlist.cpp operatingpoint.cpp  \
 	spline.cpp fourier.cpp pair.cpp characteristic.cpp history.cpp       \
 	range.cpp devstates.cpp differentiate.cpp module.cpp receiver.cpp    \
 	interpolator.cpp
-endif
+
+bin_PROGRAMS = qucsator
+
+qucsator_LDADD = libqucs.la
+
+qucsator_SOURCES = ucs.cpp
 
 if MAINTAINER_MODE
 generated_FILES = scan_netlist.cpp parse_netlist.cpp scan_dataset.cpp     \

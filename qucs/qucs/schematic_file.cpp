@@ -23,7 +23,6 @@
 #include <qdir.h>
 #include <qstringlist.h>
 #include <qregexp.h>
-#include <q3process.h>
 #include <q3textedit.h>
 #include <QTextEdit>
 #include <q3ptrlist.h>
@@ -977,7 +976,7 @@ bool Schematic::throughAllComps(QTextStream *stream, int& countInit,
 
       // load subcircuit schematic
       s = pc->Props.first()->Value;
-      Schematic *d = new Schematic(0, QucsSettings.QucsWorkDir.filePath(s));
+      Schematic *d = new Schematic(0, pc->getSubcircuitFile());
       if(!d->loadDocument()) {  // load document if possible
         delete d;
         ErrText->insert(QObject::tr("ERROR: Cannot load subcircuit \"%1\".").arg(s));

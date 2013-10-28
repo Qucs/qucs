@@ -25,9 +25,9 @@
 
 # the verilog devices library rules
 
-noinst_LIBRARIES = libverilog.a
+noinst_LTLIBRARIES = libverilog.la
 
-libverilog_a_SOURCES = HBT_X.analogfunction.cpp HBT_X.core.cpp \
+libverilog_la_SOURCES = HBT_X.analogfunction.cpp HBT_X.core.cpp \
 	hicumL2V2p1.analogfunction.cpp hicumL2V2p1.core.cpp \
 	mod_amp.analogfunction.cpp mod_amp.core.cpp \
 	hic2_full.analogfunction.cpp hic2_full.core.cpp \
@@ -154,13 +154,13 @@ XML_FILES = analogfunction.xml qucsVersion.xml qucsMODULEcore.xml \
 
 EXTRA_DIST = $(VERILOG_FILES) $(XML_FILES)
 
-INCLUDES = -I$(top_srcdir)/src -I$(top_srcdir)/src/math \
+AM_CPPFLAGS = -I$(top_srcdir)/src -I$(top_srcdir)/src/math \
   -I$(top_srcdir)/src/components -I$(top_srcdir)/src/components/devices
 
 if MAINTAINER_MODE
 ## configure determines if we want to build and use the
 ## bundled version of ADMS, or the host's ADMS. Here we
-## set the path to the admsXml binary depeding on the choice 
+## set the path to the admsXml binary depeding on the choice
 ## the user made at configure time
 if USE_INTERNAL_ADMS
 ADMSXML = $(abs_top_builddir)/adms/admsXml/admsXml
@@ -414,7 +414,7 @@ hicumL2V2p31n.defs.h: hicumL2V2p31n.va
 	$(ADMSXML) $< -e qucsVersion.xml -e qucsMODULEdefs.xml
 hicumL2V2p31n.gui.cpp: qucsVersion.xml qucsMODULEgui.xml
 hicumL2V2p31n.gui.cpp: hicumL2V2p31n.va
-	$(ADMSXML) $< -e qucsVersion.xml -e qucsMODULEgui.xml 
+	$(ADMSXML) $< -e qucsVersion.xml -e qucsMODULEgui.xml
 
 
 photodiode.analogfunction.cpp: analogfunction.xml

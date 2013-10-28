@@ -7,8 +7,8 @@
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
 		<Build>
-			<Target title="Debug">
-				<Option output="bin/Debug/qucs-core" prefix_auto="1" extension_auto="1" />
+			<Target title="all">
+				<Option output="src/qucsator" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj/Debug/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
@@ -16,23 +16,12 @@
 					<Add option="-g" />
 				</Compiler>
 			</Target>
-			<Target title="Release">
-				<Option output="bin/Release/qucs-core" prefix_auto="1" extension_auto="1" />
-				<Option object_output="obj/Release/" />
-				<Option type="1" />
-				<Option compiler="gcc" />
-				<Compiler>
-					<Add option="-O2" />
-				</Compiler>
-				<Linker>
-					<Add option="-s" />
-				</Linker>
-			</Target>
 		</Build>
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
 		<Unit filename="Makefile.am" />
+		<Unit filename="bootstrap.sh" />
 		<Unit filename="configure.ac" />
 		<Unit filename="doc/Makefile.am" />
 		<Unit filename="src/Makefile.am" />

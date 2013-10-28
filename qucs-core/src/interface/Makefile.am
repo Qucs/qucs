@@ -24,13 +24,13 @@
 
 # the interface library rules
 
-INCLUDES = -I$(top_srcdir)/src -I$(top_srcdir)/src/math -I$(top_srcdir)/src/components
+AM_CPPFLAGS = -I$(top_srcdir)/src -I$(top_srcdir)/src/math -I$(top_srcdir)/src/components
 
-noinst_HEADERS = qucs_interface.h e_trsolver.h
+pkginclude_HEADERS = qucs_interface.h e_trsolver.h
 
-noinst_LIBRARIES = libinterface.a
+noinst_LTLIBRARIES = libinterface.la
 
-libinterface_a_SOURCES = qucs_interface.cpp e_trsolver.cpp
+libinterface_la_SOURCES = qucs_interface.cpp e_trsolver.cpp
 
 CLEANFILES = *~ *.orig *.rej
 
