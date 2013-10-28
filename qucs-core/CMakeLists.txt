@@ -12,6 +12,9 @@ cmake_policy(VERSION 2.6)
 
 #set(CMAKE_VERBOSE_MAKEFILE ON)
 
+
+add_definitions(-DDEBUG) # otherwise qucsator cannot generate qucsdefs.h
+
 OPTION(ENABLE_QUCSLIB "enable qucslib build, default: OFF")
 #OPTION(ENABLE_DOUBLE " type of double representation, default=double")
 #-D <var>:<type>=<value>: Create a cmake cache entry.

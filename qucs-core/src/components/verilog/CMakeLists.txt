@@ -20,15 +20,27 @@ INCLUDE_DIRECTORIES( ${CMAKE_SOURCE_DIR}
 # apart from the commented names, all is derived from
 # the va file itself.
 
+#  //REGISTER_CIRCUIT (hicumL2V2p1);
+#  //REGISTER_CIRCUIT (HBT_X);
+#  REGISTER_CIRCUIT (mod_amp);
+#  //REGISTER_CIRCUIT (hic2_full);
+#  REGISTER_CIRCUIT (log_amp);
+#  //REGISTER_CIRCUIT (hic0_full);
+#  REGISTER_CIRCUIT (potentiometer);
+
+# TODO sort out the dependencies to allow parallel build
+# TODO how to make sure constants / disciplines will be generated
+
 SET( VA_FILES
 #  constants.vams   #--> created by admsXml
 #  disciplines.vams #--> created by admsXml
-  #fbh_hbt-2_2a.va  #--> XBT_X
-  #hicumL2V2p11.va  #--> hicumL2V2p1
+
+  fbh_hbt-2_2a.va  #--> HBT_X
+  hicumL2V2p11.va  #--> hicumL2V2p1
   mod_amp.va
-  #hicumL2V2p22.va  #--> hic2_full
+  hicumL2V2p22.va  #--> hic2_full
   log_amp.va
-  #hicumL0V1p12.va  #--> hic0_full
+  hicumL0V1p12.va  #--> hic0_full
   potentiometer.va MESFET.va hicumL0V1p2.va hicumL2V2p23.va
   photodiode.va EKV26MOS.va bsim3v34nMOS.va  bsim3v34pMOS.va bsim4v30nMOS.va bsim4v30pMOS.va
   hicumL2V2p24.va hicumL0V1p2g.va hicumL0V1p3.va hicumL2V2p31n.va
@@ -57,6 +69,32 @@ message(STATUS " ==> found admsXml " ${ADMSXML})
 # process Verilog-A file and append generated files
 # into global 'result' list
 function(adms_compile filename)
+
+    # TODO either fix the va files or copy out of the tree
+    # TODO is 'cp' portable?
+    # handle .va files on which the filename differend from module name
+    if(${filename} STREQUAL fbh_hbt-2_2a.va)
+      set(rename HBT_X.va)
+      execute_process(COMMAND cp ${CMAKE_CURRENT_SOURCE_DIR}/${filename} ${CMAKE_CURRENT_SOURCE_DIR}/${rename})
+      set(filename ${rename})
+    endif()
+    if(${filename} STREQUAL hicumL2V2p11.va)
+      set(rename hicumL2V2p1.va)
+      execute_process(COMMAND cp ${CMAKE_CURRENT_SOURCE_DIR}/${filename} ${CMAKE_CURRENT_SOURCE_DIR}/${rename})
+      set(filename ${rename})
+    endif()
+    if(${filename} STREQUAL hicumL2V2p22.va)
+      set(rename hic2_full.va)
+      execute_process(COMMAND cp ${CMAKE_CURRENT_SOURCE_DIR}/${filename} ${CMAKE_CURRENT_SOURCE_DIR}/${rename})
+      set(filename ${rename})
+    endif()
+    if(${filename} STREQUAL hicumL0V1p12.va)
+      set(rename hic0_full.va)
+      execute_process(COMMAND cp ${CMAKE_CURRENT_SOURCE_DIR}/${filename} ${CMAKE_CURRENT_SOURCE_DIR}/${rename})
+      set(filename ${rename})
+    endif()
+
+
     # basename
     get_filename_component(base ${filename} NAME_WE)
     set(base_abs ${CMAKE_CURRENT_BINARY_DIR}/${base})
@@ -77,7 +115,7 @@ function(adms_compile filename)
     #set_source_files_properties(${output} properties object_depends ${filename})
     #set_source_files_properties(${filename} properties object_outputs ${output})
 
-#message(STATUS " ==> core\n\n\n   " ${filename})
+    #message(STATUS " ==> core\n\n\n   " ${filename})
 
     add_custom_command(
         OUTPUT ${output}

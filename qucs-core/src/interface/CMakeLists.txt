@@ -16,3 +16,6 @@ SET(INTERFACE_SRC qucs_interface.cpp e_trsolver.cpp)
 
 ADD_LIBRARY(interface ${INTERFACE_SRC})
 
+ADD_DEPENDENCIES(interface verilog)
+
+
