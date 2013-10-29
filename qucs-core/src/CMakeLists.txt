@@ -1,12 +1,10 @@
 
-# TODO check wich checks do have inpact on the code, which HAVE_H change things
-
 PROJECT(qucsator CXX C)
 
 INCLUDE_DIRECTORIES( ${CMAKE_SOURCE_DIR}
                      ${CMAKE_CURRENT_SOURCE_DIR}
-                     ${CMAKE_SOURCE_DIR}/src/math  #precision.h
-                     ${CMAKE_SOURCE_DIR}/src/components #component.h
+                     ${CMAKE_SOURCE_DIR}/src/math
+                     ${CMAKE_SOURCE_DIR}/src/components
                      ${CMAKE_SOURCE_DIR}/src/interface
                      # out of source include, generated stuff
                      ${CMAKE_BINARY_DIR} # /generated config.h
@@ -14,7 +12,9 @@ INCLUDE_DIRECTORIES( ${CMAKE_SOURCE_DIR}
                      ${CMAKE_CURRENT_BINARY_DIR}/components #/verilog/*.core.h generated stuff
                       )
 
+#
 # Checks for libraries.
+#
 #AC_CHECK_LIB(m, sin) need to check for sin?
 find_library(MATH_LIB NAMES m)
 if(NOT MATH_LIB)
@@ -24,9 +24,9 @@ else()
 endif()
 
 # Checks for header files.
-#AC_HEADER_STDC !! obsolete, need to check?
-#Define STDC_HEADERS if the system has ANSI C header files.
-#Specifically, this macro checks for `stdlib.h', `stdarg.h', `string.h', and `float.h';
+# AC_HEADER_STDC !! obsolete, need to check?
+# Define STDC_HEADERS if the system has ANSI C header files.
+# Specifically, this macro checks for `stdlib.h', `stdarg.h', `string.h', and `float.h';
 # Lifted the cmake checks from gd-libdg, Lua
 # https://bitbucket.org/libgd/gd-libgd
 # https://github.com/LuaDist/libgd/tree/master/cmake/modules
@@ -34,9 +34,10 @@ INCLUDE (CheckIncludeFiles)
 SET(CMAKE_REQUIRED_INCLUDES "/usr/include" "/usr/local/include")
 SET(CMAKE_MODULE_PATH "${qucs-core_SOURCE_DIR}/cmake/modules")
 include(AC_HEADER_STDC)
-#include(CheckPrototypeExists)
 
+#
 # Further header checks
+#
 INCLUDE (CheckIncludeFile)
 set(INCLUDES
   stddef.h
@@ -46,6 +47,7 @@ set(INCLUDES
   ieeefp.h
   memory.h)
 
+#
 # Check if header can be included.
 # Define HAVE_[basename]_H to 1 if you have the header.
 foreach(header ${INCLUDES})
@@ -57,12 +59,11 @@ endforeach()
 
 
 # Checks for typedefs, structures, and compiler characteristics.
-#AC_C_CONST  !!obsolete
-#AC_C_CONST "This macro is
-#obsolescent, as current C compilers support `const'.  New programs
-#need not use this macro."
+# AC_C_CONST  !!obsolete
+# AC_C_CONST "This macro is
+# obsolescent, as current C compilers support `const'.  New programs
+# need not use this macro."
 #/* Define to empty if `const' does not conform to ANSI C. */
-#/* #undef const */
 
 #
 # Check for type sizes.
@@ -107,7 +108,7 @@ endif()
 #  * defines: nr_double_t,  The global type of double representation.
 #  * defines: NR_DOUBLE_SIZE,  The size of the double representation.
 #  * Use -DENABLE-DOUBLE="[float,double, long double]"
-If( ENABLE-DOUBLE )
+IF( ENABLE-DOUBLE )
   # User defined
   set(DoubleType ${ENABLE-DOUBLE})
 
@@ -125,7 +126,7 @@ If( ENABLE-DOUBLE )
 
   # The size of the double representation.
   set( NR_DOUBLE_SIZE ${DoubleSize} )
-else()
+ELSE()
   # Default
   set(DoubleType "double")
   # The global type of double representation.
@@ -134,30 +135,26 @@ else()
 
   # The size of the double representation.
   set( NR_DOUBLE_SIZE ${DoubleSize} )
-endif()
-message(STATUS "using double type: ${DoubleType}; size: ${DoubleSize}")
+ENDIF()
+MESSAGE(STATUS "using double type: ${DoubleType}; size: ${DoubleSize}")
 
 
-
-#dnl Checks for library functions.
-# Checks for library functions.
-# TODO, do they need to be defined on the header?
-# the definitions do not seem to be used anywhere.
-
-#these seem to be handled in math/real.cpp
-#ifndef HAVE_ROUND
-#ifndef HAVE_TRUNC
-#ifndef HAVE_ACOSH
-#ifndef HAVE_ASINH
-
+#
+# Check for library functions
+#  * not all functons seem to be used after defined.
+#
 include(CheckFunctionExists)
 set(REQUIRED_FUNCTIONS
-  floor pow exp sqrt log10 log
-  cos sin acos asin tan atan sinh
-	cosh tanh fabs modf atan2 jn yn
-  erf erfc round trunc acosh
-  asinh strdup strerror strchr )
-#check_function_exists ("${REQUIRED_FUNCTIONS}" TRUE)
+  #floor pow exp sqrt log10 log
+  #cos sin
+  acos asin                         # for real.cpp
+  #tan atan sinh
+	#cosh tanh fabs modf atan2 jn yn
+  erf erfc                          # for fspecial.cpp
+  round trunc acosh asinh           # for real.cpp
+  #strdup strerror
+  strchr )                          # for compat.h, matvec.cpp, scan_*.cpp
+
 foreach(func ${REQUIRED_FUNCTIONS})
   string(TOUPPER ${func} FNAME)
   CHECK_FUNCTION_EXISTS(${func} HAVE_${FNAME})
@@ -221,8 +218,8 @@ endif()
 #
 # Check for list of complex functions.
 #
-set(COMPLEX_FUNCS cos cosh exp log log10 sin sinh sqrt tan tanh
-            acos acosh asin asinh atan atanh log2 norm)
+set(COMPLEX_FUNCS acos acosh asin asinh atan atanh cos cosh
+                  exp log log10 sin sinh sqrt tan tanh log2 norm )
 
 # TODO any better way to scape the ";"
 foreach(func ${COMPLEX_FUNCS})

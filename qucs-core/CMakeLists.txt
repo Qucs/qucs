@@ -11,7 +11,6 @@
 PROJECT(qucs-core CXX)
 
 CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
-#cmake_policy(VERSION 2.6)
 
 #set(CMAKE_VERBOSE_MAKEFILE ON)
 
@@ -94,3 +93,15 @@ ADD_SUBDIRECTORY( src )
 ADD_SUBDIRECTORY( doc )
 
 #EXTRA_DIST = BUGS autogen.sh depcomp RELEASE
+
+# TODO tarball
+# TODO bundle
+
+SET(CPACK_GENERATOR "TGZ")
+#SET(CPACK_DEBIAN_PACKAGE_MAINTAINER "guitorri") #required
+
+# build a CPack driven installer package
+#include (InstallRequiredSystemLibraries)
+set (CPACK_PACKAGE_VERSION_MAJOR 0)
+set (CPACK_PACKAGE_VERSION_MINOR 18)
+include (CPack)
