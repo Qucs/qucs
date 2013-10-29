@@ -1,32 +1,15 @@
-PROJECT(verilog CXX)
-cmake_minimum_required(VERSION 2.8)
-
-
-# defines nr_double_t
-ADD_DEFINITIONS( -DHAVE_CONFIG_H )
-
 #INCLUDES = -I$(top_srcdir)/src -I$(top_srcdir)/src/math \
 #  -I$(top_srcdir)/src/components -I$(top_srcdir)/src/components/devices
 
-
 INCLUDE_DIRECTORIES( ${CMAKE_SOURCE_DIR}
                      ${CMAKE_CURRENT_SOURCE_DIR}
-                     ../../..
-                     ../../
-                     ../
-                     ../devices/
-                     ../../math )
+                     ${CMAKE_SOURCE_DIR}/src/math
+                     ${CMAKE_SOURCE_DIR}/src/components
+                     ${CMAKE_SOURCE_DIR}/src/components/devices )
 
 # apart from the commented names, all is derived from
 # the va file itself.
 
-#  //REGISTER_CIRCUIT (hicumL2V2p1);
-#  //REGISTER_CIRCUIT (HBT_X);
-#  REGISTER_CIRCUIT (mod_amp);
-#  //REGISTER_CIRCUIT (hic2_full);
-#  REGISTER_CIRCUIT (log_amp);
-#  //REGISTER_CIRCUIT (hic0_full);
-#  REGISTER_CIRCUIT (potentiometer);
 
 # TODO sort out the dependencies to allow parallel build
 # TODO how to make sure constants / disciplines will be generated
@@ -51,8 +34,9 @@ SET( VA_FILES
   fa1b.va fa2b.va pad2bit.va pad3bit.va pad4bit.va binarytogrey4bit.va
   greytobinary4bit.va comp_1bit.va comp_2bit.va comp_4bit.va hpribin4bit.va )
 
-
+#
 # find and assing admsXml to variable
+#
 FIND_PROGRAM( ADMSXML admsXml
   PATHS /usr/local/bin/ /usr/local/Cellar/adms/HEAD/bin/
   DOC "admsXml application" )
@@ -109,13 +93,7 @@ function(adms_compile filename)
     # append outputs to global list/scope
     set(analogfunc ${analogfunc} ${output} PARENT_SCOPE)
 
-
     set(output ${base_abs}.core.cpp ${base_abs}.core.h)
-
-    #set_source_files_properties(${output} properties object_depends ${filename})
-    #set_source_files_properties(${filename} properties object_outputs ${output})
-
-    #message(STATUS " ==> core\n\n\n   " ${filename})
 
     add_custom_command(
         OUTPUT ${output}
@@ -151,13 +129,10 @@ endforeach()
 #message(STATUS " ==> core\n   " ${core})
 #message(STATUS " ==> defs\n   " ${defs})
 
-
 # create target library out of generated files
 add_library(verilog  ${analogfunc} ${core} ${defs} ${result} ${heads})
 
-#SET_TARGET_PROPERTIES(verilog PROPERTIES LINKER_LANGUAGE CXX)
 
-#
 #if MAINTAINER_MODE
 ### configure determines if we want to build and use the
 ### bundled version of ADMS, or the host's ADMS. Here we
@@ -169,3 +144,8 @@ add_library(verilog  ${analogfunc} ${core} ${defs} ${result} ${heads})
 #ADMSXML = @ADMSXML@
 #endif
 #
+# XML_FILES = analogfunction.xml qucsVersion.xml qucsMODULEcore.xml \
+#   qucsMODULEdefs.xml qucsMODULEgui.xml
+#
+# EXTRA_DIST = $(VERILOG_FILES) $(XML_FILES)
+

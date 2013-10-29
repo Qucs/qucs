@@ -1,19 +1,8 @@
 
-
-cmake_minimum_required(VERSION 2.8)
-project (qucsconv)
-
-
-# defines nr_double_t
-ADD_DEFINITIONS( -DHAVE_CONFIG_H )
-
 INCLUDE_DIRECTORIES( ${CMAKE_SOURCE_DIR}
                      ${CMAKE_CURRENT_SOURCE_DIR}
-                     ${CMAKE_CURRENT_SOURCE_DIR}/../math  #precision.h
-                     ../.. # qucs-core
-                     ..   # qucs-core/src
+                     ${CMAKE_SOURCE_DIR}/src/math
                      ${CMAKE_CURRENT_BINARY_DIR} ) # qucdefs.h
-
 
 
 LINK_DIRECTORIES(${CMAKE_BINARY_DIR}/..
@@ -29,11 +18,8 @@ SET(QUCSCONV_SRC
   touchstone_producer.cpp
 	matlab_producer.cpp)
 
-#set(hdrs check_spice.h check_vcd.h)
-
 #noinst_HEADERS = tokens_spice.h qucs_producer.h  \
 #	tokens_vcd.h csv_producer.h touchstone_producer.h matlab_producer.h
-
 
 find_package(BISON)
 find_package(FLEX)
@@ -89,6 +75,9 @@ ADD_EXECUTABLE(qucsconv ${QUCSCONV_SRC} ${conv_generated} )
 
 ADD_DEPENDENCIES(qucsconv defs)
 
-# link libraries: libqucsator libqucsmath
 TARGET_LINK_LIBRARIES(qucsconv qucsator qucsmath)
 
+#
+# Handle installation
+#
+INSTALL(TARGETS qucsconv DESTINATION bin)

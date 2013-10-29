@@ -1,22 +1,8 @@
-PROJECT(component CXX)
-
-# defines nr_double_t
-ADD_DEFINITIONS( -DHAVE_CONFIG_H )
-
-#INCLUDES = -I$(top_srcdir)/src -I$(top_srcdir)/src/math
 
 INCLUDE_DIRECTORIES( ${CMAKE_SOURCE_DIR}
                      ${CMAKE_CURRENT_SOURCE_DIR}
-                     ../../
-                     ../math
-                     ../ )
-
-
-ADD_SUBDIRECTORY( verilog )
-ADD_SUBDIRECTORY( microstrip )
-ADD_SUBDIRECTORY( devices )
-ADD_SUBDIRECTORY( digital )
-
+                     ${CMAKE_SOURCE_DIR}/src
+                     ${CMAKE_SOURCE_DIR}/src/math )
 
 SET(COMPONENT_SRC  attenuator.cpp dcblock.cpp open.cpp vccs.cpp
 	biastee.cpp circulator.cpp dcfeed.cpp pac.cpp vcvs.cpp capacitor.cpp
@@ -32,5 +18,8 @@ SET(COMPONENT_SRC  attenuator.cpp dcblock.cpp open.cpp vccs.cpp
 
 ADD_LIBRARY(component ${COMPONENT_SRC} )
 
-#ok!
 
+ADD_SUBDIRECTORY( verilog )
+ADD_SUBDIRECTORY( microstrip )
+ADD_SUBDIRECTORY( devices )
+ADD_SUBDIRECTORY( digital )

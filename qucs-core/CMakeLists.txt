@@ -4,59 +4,42 @@
 #   cmake .. -DCMAKE_INSTALL_PREFIX=/new/install/prefix
 #
 # By default, the prefix is "/usr/local"
-
-PROJECT(qucs-core CXX)
-
-cmake_minimum_required(VERSION 2.6)
-cmake_policy(VERSION 2.6)
-
-#set(CMAKE_VERBOSE_MAKEFILE ON)
-
-
-add_definitions(-DDEBUG) # otherwise qucsator cannot generate qucsdefs.h
-
-OPTION(ENABLE_QUCSLIB "enable qucslib build, default: OFF")
-#OPTION(ENABLE_DOUBLE " type of double representation, default=double")
-#-D <var>:<type>=<value>: Create a cmake cache entry.
-
-
-#  AC_DEFINE(DEBUG, 1, [Define if debug output should be supported.])
-#else
-#  AC_DEFINE(NDEBUG, 1, [Define if debug code should be suppressed.])
-#  if test "x$GCC" = xyes; then
-#    CFLAGS="`echo $CFLAGS | sed -e 's/\-g //g'`"
-#    CXXFLAGS="`echo $CXXFLAGS | sed -e 's/\-g //g'`"
-# disable stripping (debian bug #437876)
-#    case $host_os in
-#      *darwin*) LDFLAGS="$LDFLAGS" ;;
-#      *)        LDFLAGS="$LDFLAGS -s" ;;
-#    esac
-#  fi
-
 ## DEPENDS
 # adms
 # sed, gperf, make
 
+PROJECT(qucs-core CXX)
 
-#  CFLAGS="$CFLAGS -pipe"
-#  CXXFLAGS="$CXXFLAGS -pipe -fno-exceptions -fno-rtti -fno-check-new"
-#  if test $USE_MAINTAINER_MODE = yes; then
-#    CFLAGS="$CFLAGS -W -Wall -Wmissing-prototypes"
-#    CXXFLAGS="$CXXFLAGS -W -Wall"
-#-pipe Use pipes rather than temporary files for communication between the various stages of compilation.  This fails to work on some systems where the assembler is unable to read from a pipe; but the GNU assembler has no trouble.
+CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
+#cmake_policy(VERSION 2.6)
+
+#set(CMAKE_VERBOSE_MAKEFILE ON)
+
+# otherwise qucsator cannot generate qucsdefs.h
+add_definitions(-DDEBUG)
+
+# defines nr_double_t
+ADD_DEFINITIONS( -DHAVE_CONFIG_H )
+
+# TODO
+#OPTION(ENABLE_QUCSLIB "enable qucslib build, default: OFF")
+#OPTION(ENABLE_DOUBLE " type of double representation, default=double")
+
+# TODO configure debug/release flags
+
+
+# Flags used on Autotools:
 #
-##https://blog.mozilla.org/nnethercote/2011/01/18/the-dangers-of-fno-exceptions/
-#-fno-exceptions option is used, which means that exception-handling is disabled.
+# -pipe : Use pipes rather than temporary files for communication between the various stages of compilation.
 #
-#-fno-rtti
-#    Disable generation of information about every class with virtual functions for use by the C++ runtime type identification features (`dynamic_cast' and `typeid'). If you don't use those parts of the language, you can save some space by using this flag. Note that exception handling uses the same information, but it will generate it as needed. The `dynamic_cast' operator can still be used for casts that do not require runtime type information, i.e. casts to void * or to unambiguous base classes. 
+# https://blog.mozilla.org/nnethercote/2011/01/18/the-dangers-of-fno-exceptions/
+# -fno-exceptions option is used, which means that exception-handling is disabled.
 #
-#-fno-check-new"  specific to GCC
+# -fno-rtti :  Disable generation of information about every class with virtual functions.
 #
-# -Wmissing-prototypes
-#           Warn if a global function is defined without a previous prototype declaration.  This warning is issued even if the definition itself
-#           provides a prototype.  The aim is to detect global functions that fail to be declared in header files.
-#    
+# -fno-check-new : specific to GCC
+#
+# -Wmissing-prototypes : Warn if a global function is defined without a previous prototype declaration.
 #
 #
 set(PROJECT_VERSION_MAJOR "0")
@@ -68,7 +51,7 @@ set(PROJECT_COPYRIGHT_YEAR "2013")
 set(PROJECT_DOMAIN_FIRST "qucs")
 set(PROJECT_DOMAIN_SECOND "org")
 
-#TODO rename the above variables?
+#TODO rename the above variables? Project/Package?
 
 # Define to the address where bug reports for this package should be sent.
 set(PACKAGE_BUGREPORT "qucs-bugs@lists.sourceforge.net")
@@ -88,11 +71,6 @@ set(PACKAGE_URL "http://sourceforge.net/projects/qucs/")
 # Define to the version of this package.
 set(PACKAGE_VERSION ${PROJECT_VERSION})
 
-
-
-
-
-
 #
 # Avoid source tree pollution
 #
@@ -102,25 +80,13 @@ endif(CMAKE_SOURCE_DIR STREQUAL CMAKE_BINARY_DIR)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/modules/")
 
 
-
-
-# defines nr_double_t
-#ADD_DEFINITIONS( -DHAVE_CONFIG_H )
-
-#INCLUDES = -I$(top_srcdir)/src -I$(top_srcdir)/src/math
-
 INCLUDE_DIRECTORIES( ${CMAKE_SOURCE_DIR}
                      ${CMAKE_CURRENT_SOURCE_DIR}
-                     ../../
-                     ../math
-                     ../ )
-
-
+                     ${CMAKE_SOURCE_DIR}/src
+                     ${CMAKE_SOURCE_DIR}/src/math )
 
 # What about admsXml?? build or used packaged?
 # There is no admsXml packaged out there... need to build if not installed
-
-#SUBDIRS += src doc .
 
 #ACLOCAL_AMFLAGS = -I m4
 

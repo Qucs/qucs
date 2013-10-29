@@ -1,29 +1,16 @@
 
-# TODO check wich check do have inpact on the code, which HAVE_H change things
-
+# TODO check wich checks do have inpact on the code, which HAVE_H change things
 
 PROJECT(qucsator CXX C)
 
-#AC_INIT(qucs-core,0.0.18,qucs-bugs@lists.sourceforge.net)
-#AC_CONFIG_SRCDIR([src/circuit.cpp])
-#AC_CONFIG_HEADERS([config.h])
-
-
-## need to generate config
-
-
-# defines nr_double_t
-ADD_DEFINITIONS( -DHAVE_CONFIG_H )
-
 INCLUDE_DIRECTORIES( ${CMAKE_SOURCE_DIR}
                      ${CMAKE_CURRENT_SOURCE_DIR}
-                     ${CMAKE_CURRENT_SOURCE_DIR}/math  #precision.h
-                     ${CMAKE_CURRENT_SOURCE_DIR}/components #component.h
-                     ${CMAKE_CURRENT_SOURCE_DIR}/interface 
+                     ${CMAKE_SOURCE_DIR}/src/math  #precision.h
+                     ${CMAKE_SOURCE_DIR}/src/components #component.h
+                     ${CMAKE_SOURCE_DIR}/src/interface
                      # out of source include, generated stuff
+                     ${CMAKE_CURRENT_BINARY_DIR} #/src/gperfapphash.cpp
                      ${CMAKE_CURRENT_BINARY_DIR}/components #/verilog/*.core.h generated stuff
-                     ${CMAKE_CURRENT_BINARY_DIR} #/src/gperfapphash.cpp 
-                     .. #config.h
                       )
 
 # Checks for libraries.
@@ -338,26 +325,11 @@ if(NOT HAVE_CXX_COMPLEX_POLAR_COMPLEX)
 endif()
 
 
-
-#INCLUDES = -I$(top_srcdir)/src/math -I$(top_srcdir)/src/components -I$(top_srcdir)/src/interface
-
 LINK_DIRECTORIES(${CMAKE_BINARY_DIR}/..
                  ${CMAKE_BINARY_DIR}/src/math/ )
 
 #set( LINKER_FLAGS " -lstdc++ " )
 #set( CMAKE_EXE_LINKER_FLAGS "${LINKER_FLAGS}")
-
-#qucsconv_LDADD = ../libqucsator.a ../math/libqucsmath.a
-#TARGET_LINK_LIBRARIES(qucsator qucsmath microstrip devices digital verilog)
-
-
-
-# TODO, don' know how to handle this
-#/* Define to 1 if `lex' declares `yytext' as a `char *' by default, not a
-#   `char[]'. */
-#/* #undef YYTEXT_POINTER */
-# potential workaround at:
-# http://brlcad.org/websvn/filedetails.php?repname=BRL-CAD&path=%2Fbrlcad%2Ftrunk%2Fsrc%2Fother%2Fstep%2FCMake%2FFindLEX.cmake&rev=49763&peg=49763
 
 
 find_package(BISON)
@@ -372,6 +344,13 @@ set(ParserTypes
   touchstone
   zvr)
 
+# Flex/Bison generated code:
+#   parse_dataset.cpp scan_dataset.cpp
+#   parse_citi.cpp scan_citi.cpp
+#	  parse_csv.cpp scan_csv.cpp
+#   parse_mdl.cpp scan_mdl.cpp
+#   parse_touchstone.cpp scan_touchstone.cpp
+#   parse_zvr.cpp scan_zvr.cpp
 
 # TODO Double check the location where the generated scanner/parser should go
 foreach(type ${ParserTypes})
@@ -383,9 +362,6 @@ foreach(type ${ParserTypes})
                COMPILE_FLAGS --defines="${PROJECT_SOURCE_DIR}/tokens_${type}.h" )
 
   add_flex_bison_dependency(scan${type} parse${type})
-
-
-  #message("\n SOO A~~~ ${BISON_parse${type}_OUTPUTS}")
 
   set(flexInputs   ${flexInputs}   ${FLEX_scan${type}_INPUT}   )
   set(flexOutputs  ${flexOutputs}  ${FLEX_scan${type}_OUTPUTS} )
@@ -403,14 +379,9 @@ set(generated_SRC ${flexOutputs} ${bisonOutputs})
 # message(STATUS "Qucsator -- Bison Outputs: ${bisonOutputs}")
 
 
-
-#BISON_TARGET(parsenetlist parse_netlist.y ${CMAKE_CURRENT_BINARY_DIR}/parser_netlist.cpp
-#             COMPILE_FLAGS
-#             --defines="${PROJECT_BINARY_DIR}/tokens_netlist.h")
-#FLEX_TARGET(scannetlist scan_netlist.l  ${CMAKE_CURRENT_BIANRY_DIR}/scan_netlist.cpp)
-
-
-# Static code
+#
+# Source code
+#
 SET(LIBQUCSATOR_SRC
   dataset.cpp
   vector.cpp
@@ -424,7 +395,6 @@ SET(LIBQUCSATOR_SRC
 	matvec.cpp
   matrix.cpp
   sweep.cpp
-
   check_dataset.cpp
   check_citi.cpp
   check_csv.cpp
@@ -432,44 +402,34 @@ SET(LIBQUCSATOR_SRC
   check_touchstone.cpp
 	check_zvr.cpp
 )
-# Generated code
-#  parse_dataset.cpp scan_dataset.cpp
-#  parse_citi.cpp scan_citi.cpp
-#	parse_csv.cpp scan_csv.cpp
-#  parse_mdl.cpp scan_mdl.cpp
-#  parse_touchstone.cpp scan_touchstone.cpp
-#  parse_zvr.cpp scan_zvr.cpp )
-# ok
 
 
+#
+# Configure the header config.h
+#
+CONFIGURE_FILE (
+    "${CMAKE_SOURCE_DIR}/config.h.cmake"
+    "${CMAKE_BINARY_DIR}/config.h"
+)
 
-## configure the header config.h
-#CONFIGURE_FILE (
-#    "${CMAKE_SOURCE_DIR}/config.h.cmake"
-#    "${CMAKE_BINARY_DIR}/config.h"
-#)
-
+#
+# Build libquacsator
+#
 ADD_LIBRARY(qucsator ${LIBQUCSATOR_SRC} ${generated_SRC} )
-
 
 
 ADD_SUBDIRECTORY( math )
 ADD_SUBDIRECTORY( components )
-
 ADD_SUBDIRECTORY( converter )
-
-# actually interface needs to be after components/verilog
-# it includes components.h, which includes all verilog.core.h
 ADD_SUBDIRECTORY( interface )
-#add_dependencies( interface DEPENDS components/verilog)
 
 
 SET(QUCSATOR_SRC
   ucs.cpp circuit.cpp check_netlist.cpp operatingpoint.cpp
 	parse_netlist.cpp scan_netlist.cpp node.cpp net.cpp input.cpp
 	analysis.cpp spsolver.cpp dcsolver.cpp nodelist.cpp environment.cpp
-	parasweep.cpp 
-  equation.cpp  # <= gperf
+	parasweep.cpp
+  equation.cpp  # <= depends on gperfapphash.cpp
   evaluate.cpp acsolver.cpp
 	trsolver.cpp transient.cpp integrator.cpp nodeset.cpp hbsolver.cpp
 	spline.cpp fourier.cpp pair.cpp characteristic.cpp history.cpp
@@ -477,47 +437,36 @@ SET(QUCSATOR_SRC
 	interpolator.cpp )
 
 
-#Do yourself a favor and just put template classes in headers.
-
-# how to handle these template classes?
-# http://stackoverflow.com/questions/115703/storing-c-template-function-definitions-in-a-cpp-file
-
-set(TEMPLATES tmatrix.h eqnsys.h nasolver.h states.h tvector.h
-	ptrlist.h tridiag.h hash.h valuelist.h nasolution.h )
-
-
-#qucsator_LDADD = libqucsator.a		      \
-#	math/libqucsmath.a	              \
-#	components/libcomponent.a	      \
-#	components/microstrip/libmicrostrip.a \
-#	components/devices/libdevices.a	      \
-#	components/digital/libdigital.a       \
-#	components/verilog/libverilog.a \
-#	interface/libinterface.a
 #
+# Template classes
+#
+SET(TEMPLATES tmatrix.h eqnsys.h nasolver.h states.h tvector.h
+	            ptrlist.h tridiag.h hash.h valuelist.h nasolution.h )
 
 
-# after qucsator
-
-### WHAT ABOUT set_source_files_properties(foo.ext PROPERTIES GENERATED TRUE)
-
-
-
-
-
-# 1)
-# t <- s
-#gperfappgen.h: applications.h
-#	sed -e 's/evaluate::[a-zA-Z0-9_]*/NULL/g' < $< > $@
-#	* evaluate.h (class evaluate): New class implementing the
-#	actual evaluation function (applications) for the equations
-#	in Qucs.
+#
+# Check for sed
+#
 find_program (SED_TOOL NAMES sed)
 if (NOT SED_TOOL)
 	message (FATAL_ERROR "Unable to find sed")
 endif (NOT SED_TOOL)
 
-# --> replace evaluate::[whatever] by NULL
+#
+# Check for gperf
+#
+find_program (GPERF_TOOL NAMES gperf)
+if (NOT GPERF_TOOL)
+	message (FATAL_ERROR "Unable to find gperf")
+endif (NOT GPERF_TOOL)
+
+#
+# Replace 'evaluate::[whatever]' by NULL
+#
+#	* evaluate.h (class evaluate): New class implementing the
+#	actual evaluation function (applications) for the equations
+#	in Qucs.
+#
 add_custom_command(
   OUTPUT gperfappgen.h
   COMMAND ${SED_TOOL} -e 's/evaluate::[a-zA-Z0-9_]*/NULL/g'
@@ -526,40 +475,29 @@ add_custom_command(
   DEPENDS ${applications.h}
 )
 
-# t <- s
-#gperfappgen.cpp: gperfappgen.h
 #
-
+# Compile gperfappgen
+# * used to generate gperf input file (used in qucsator)
+#
 set(gperf_SRC gperfappgen.cpp  gperfappgen.h )
-##
+
 add_executable(gperfappgen ${gperf_SRC})
-#ok
 
-# run gperfappgen > pipe to gperfapphash.gph
-#gperfapphash.gph: gperfappgen$(EXEEXT)
-#	./$< > $@
-
+#
+# Run gperfappgen, pipe to gperf input to gperfapphash.gph
+#
 add_custom_command(
   OUTPUT gperfapphash.gph
   COMMAND gperfappgen > ${CMAKE_CURRENT_BINARY_DIR}/gperfapphash.gph
   DEPENDS ${gperfappgen}
 )
 
-
-find_program (GPERF_TOOL NAMES gperf)
-if (NOT GPERF_TOOL)
-	message (FATAL_ERROR "Unable to find gperf")
-endif (NOT GPERF_TOOL)
-
-
-#gperfapphash.cpp: gperfapphash.gph
-#	$(GPERF) -I -m 8 $< | sed -e 's/{""},/{"",0},/g' > $@
-# run gperf
-#  -I Include the necessary system include file <string.h> at the beginning of the code.
-#  -m, --multiple-iterations=ITERATIONS
-#     Perform  multiple  choices of the -i and -j values, and choose the best results. This increases the running
-#     time by a factor of ITERATIONS but does a good job minimizing the generated table size.
-# replacing?? what??
+#
+# Run gperf, create hash table.
+#  * -I, Include the necessary system include files at the beginning of the code.
+#  * -m, Perform multiple iterations to minimize generated table.
+#  * Replace '{""}' by '{"",0}; (why?)
+#
 ADD_CUSTOM_COMMAND(
     OUTPUT gperfapphash.cpp
     COMMAND ${GPERF_TOOL} -I -m 8 ${CMAKE_CURRENT_SOURCE_DIR}/gperfapphash.gph > temp.gperf
@@ -567,36 +505,29 @@ ADD_CUSTOM_COMMAND(
     DEPENDS gperfapphash.gph
 )
 
-
-# target <- source (includea)
-#equation.cpp: gperfapphash.cpp
+#  target <- source (includea)
+# equation.cpp: gperfapphash.cpp
 #
-
-
-#noinst_PROGRAMS = gperfappgen
-#gperfappgen_SOURCES = gperfappgen.cpp
+# noinst_PROGRAMS = gperfappgen
+# gperfappgen_SOURCES = gperfappgen.cpp
 
 # for cleaning (autogenerated)
 #set(gperf_FILES gperfapphash.cpp gperfapphash.gph gperfappgen.h)
 
-# doens't work
-#ADD_CUSTOM_TARGET( equation.cpp DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/gperfapphash.cpp )
+# Force gperf to run before include into equation.cpp
 ADD_CUSTOM_TARGET( equation DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/gperfapphash.cpp equation.cpp )
 
+# target library and binary names must be different, use target property to rename
+ADD_EXECUTABLE(qucsator-bin ${QUCSATOR_SRC} ${TEMPLATES} )
 
-
-# 
-# nogood ADD_CUSTOM_TARGET( interface DEPENDS verilog )
-#set_source_files_properties(equation.cpp properties object_depends gperfapphash.cpp)
-
-
-# target names must be different, use target property to rename
-# force gperf to run
-add_executable(qucsator-bin ${QUCSATOR_SRC} ${TEMPLATES} )
+SET_TARGET_PROPERTIES(qucsator-bin PROPERTIES OUTPUT_NAME qucsator)
 
 ADD_DEPENDENCIES(qucsator-bin equation)
 
-target_link_libraries( qucsator-bin qucsator qucsmath component microstrip devices digital verilog interface )
+TARGET_LINK_LIBRARIES( qucsator-bin qucsator qucsmath component microstrip devices digital verilog interface )
 
-SET_TARGET_PROPERTIES(qucsator-bin PROPERTIES OUTPUT_NAME qucsator)
+#
+# Handle install
+#
+INSTALL(TARGETS qucsator-bin DESTINATION bin)
 

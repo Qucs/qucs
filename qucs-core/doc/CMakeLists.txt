@@ -1,8 +1,8 @@
 
 #EXTRA_DIST = PLATFORMS
 
-SET(MANPAGES qucsator.1 qucsconv. )
+SET(MANPAGES qucsator.1 qucsconv.1 )
 
-# man pages
-#INSTALL( FILE DESTINATION share/man/man1 )
+INSTALL(FILES ${MANPAGES} DESTINATION share/man/man1)
+
 
