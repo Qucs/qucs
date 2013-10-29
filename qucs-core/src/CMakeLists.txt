@@ -9,6 +9,7 @@ INCLUDE_DIRECTORIES( ${CMAKE_SOURCE_DIR}
                      ${CMAKE_SOURCE_DIR}/src/components #component.h
                      ${CMAKE_SOURCE_DIR}/src/interface
                      # out of source include, generated stuff
+                     ${CMAKE_BINARY_DIR} # /generated config.h
                      ${CMAKE_CURRENT_BINARY_DIR} #/src/gperfapphash.cpp
                      ${CMAKE_CURRENT_BINARY_DIR}/components #/verilog/*.core.h generated stuff
                       )

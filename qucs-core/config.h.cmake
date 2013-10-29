@@ -260,7 +260,7 @@
 #cmakedefine SIZEOF_SHORT @SIZEOF_SHORT@
 
 /* Define to 1 if you have the ANSI C header files. */
-#cmakedefine STDC_HEADERS
+#cmakedefine STDC_HEADERS 1
 
 /* Define to 1 if `lex' declares `yytext' as a `char *' by default, not a
    `char[]'. */
