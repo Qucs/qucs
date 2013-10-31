@@ -3,12 +3,16 @@
 
 AC_PREREQ(2.64)
 AC_INIT(qucs-core,0.0.18,qucs-bugs@lists.sourceforge.net)
+AC_CONFIG_HEADERS([config.h])
+AC_CONFIG_MACRO_DIR([m4])
+AC_CONFIG_AUX_DIR([build-aux])
+
 LT_PREREQ([2.2.2])
+AM_PROG_AR
 LT_INIT([disable-static dlopen win32-dll])
 AC_CONFIG_MACRO_DIR([m4])
 
 AC_CONFIG_SRCDIR([src/circuit.cpp])
-AC_CONFIG_HEADERS([config.h])
 
 AC_CANONICAL_BUILD
 AC_CANONICAL_HOST
@@ -23,7 +27,9 @@ dnl Checks for programs.
 AC_PROG_CXX
 AX_CXX_COMPILE_STDCXX_11
 AC_PROG_CC
-AC_CHECK_TOOL(AR, ar, :)
+AC_PROG_LN_S
+AC_PROG_INSTALL
+AC_PROG_CC_C_O
 
 dnl Check for parser and lexer generators.
 AC_PROG_YACC
