@@ -49,8 +49,9 @@ class history
   int leftidx (void);
   int unused (void);
   void drop (void);
-  void setTvector (tvector<nr_double_t> * v) { t = v; }
-  tvector<nr_double_t> * getTvector (void) { return t; }
+  void apply (const history & h) {
+    this->t = h.t;
+  }
   void self (void) { t = values; }
 
   nr_double_t interpol (nr_double_t, int, bool);
