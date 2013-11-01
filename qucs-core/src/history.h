@@ -38,11 +38,11 @@ class history
   /*! The copy constructor creates a new instance based on the given
    history object. */
   history (const history &h)
-    {
+  {
       this->age = h.age;
-      this->t = h.t;
+      this->t = h.t ? new tvector<nr_double_t> (*(h.t)) : NULL;
       this->values = h.values ? new tvector<nr_double_t> (*(h.values)) : NULL;
-    }
+  }
 
   /*! Destructor deletes a history object. */
   ~history () {
