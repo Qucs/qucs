@@ -35,29 +35,24 @@ class history
 {
  public:
   /*! default constructor */
-  history () : age(0), 
-    values(NULL), t(NULL)
-    {};
+  history ():
+    sign(false),
+    age(0),
+    values(std::make_shared<std::vector<nr_double_t>>()),
+    t(std::make_shared<std::vector<nr_double_t>>()) 
+  {};
   
   /*! The copy constructor creates a new instance based on the given
-   history object. */
+      history object. */
   history (const history &h)
   {
       this->age = h.age;
-      this->t = h.t ? new std::vector<nr_double_t> (*(h.t)) : NULL;
-      this->values = h.values ? new std::vector<nr_double_t> (*(h.values)) : NULL;
-  }
-
-  /*! Destructor deletes a history object. */
-  ~history () {
-    if (this->values) 
-      delete this->values;
+      this->t = std::make_shared<std::vector<nr_double_t>>(*(h.t));
+      this->values = std::make_shared<std::vector<nr_double_t>>(*(h.values));
   }
 
   /*! The function appends the given value to the history. */
   void append (const nr_double_t val) {
-    if (values == NULL) 
-      this->values = new std::vector<nr_double_t>;
     this->values->push_back(val);
     if (this->values != this->t) 
       this->drop ();
@@ -85,12 +80,12 @@ class history
 
   //! Returns the last (youngest) time value in the history
   nr_double_t last (void) const {
-    return (t != NULL) ? this->t->back() : 0.0;
+    return this->t->empty() ? 0.0 : this->t->back();
   }
 
   //! Returns the first (oldest) time value in the history.
   nr_double_t first (void) const {
-    return (this->t != NULL) ? (*this->t)[leftidx ()] : 0.0;
+    return this->t->empty() ? 0.0 : (*this->t)[leftidx ()];
   }
 
   // Returns left-most valid index into the time value vector.
@@ -132,8 +127,8 @@ class history
  private:
   bool sign;
   nr_double_t age;
-  std::vector<nr_double_t> * values;
-  std::vector<nr_double_t> *t;
+  std::shared_ptr<std::vector<nr_double_t>> values;
+  std::shared_ptr<std::vector<nr_double_t>> t;
 };
 
 } // namespace qucs
