@@ -48,7 +48,7 @@ MAINTAINERCLEANFILES = aclocal.m4 config.h.in configure Makefile.in \
 DISTCLEANFILES = config.cache config.log
 
 # test suite
-TESTS = tests/basic/ueqri.net
+TESTS = tests/basic/u=ri@dc.net
 TEST_EXTENSIONS = .net
 NET_LOG_COMPILER = src/qucsator
 AM_NET_LOG_FLAGS = -i
