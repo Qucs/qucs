@@ -25,6 +25,10 @@
 #ifndef __HISTORY_H__
 #define __HISTORY_H__
 
+#include <memory>
+#include <vector>
+#include <tvector.h>
+
 namespace qucs {
 
 class history
@@ -40,8 +44,8 @@ class history
   history (const history &h)
   {
       this->age = h.age;
-      this->t = h.t ? new tvector<nr_double_t> (*(h.t)) : NULL;
-      this->values = h.values ? new tvector<nr_double_t> (*(h.values)) : NULL;
+      this->t = h.t ? new std::vector<nr_double_t> (*(h.t)) : NULL;
+      this->values = h.values ? new std::vector<nr_double_t> (*(h.values)) : NULL;
   }
 
   /*! Destructor deletes a history object. */
@@ -53,8 +57,8 @@ class history
   /*! The function appends the given value to the history. */
   void append (const nr_double_t val) {
     if (values == NULL) 
-      this->values = new tvector<nr_double_t>;
-    this->values->add (val);
+      this->values = new std::vector<nr_double_t>;
+    this->values->push_back(val);
     if (this->values != this->t) 
       this->drop ();
   }
@@ -62,13 +66,13 @@ class history
   /* This function drops the most recent n values in the history. */
   void truncate (const int n)
   {
-    this->t->truncate (n);
-    this->values->truncate (n);
+    this->t->resize (n);
+    this->values->resize (n);
   }
 
   int getSize (void) const
   {
-    return this->t == NULL ? 0.0 : t->getSize ();
+    return this->t == NULL ? 0.0 : t->size ();
   }
 
   void setAge (const nr_double_t a) { this->age = a; }
@@ -79,29 +83,29 @@ class history
     this->t = h.t;
   }
 
+  //! Returns the last (youngest) time value in the history
+  nr_double_t last (void) const {
+    return (t != NULL) ? this->t->back() : 0.0;
+  }
+
+  //! Returns the first (oldest) time value in the history.
+  nr_double_t first (void) const {
+    return (this->t != NULL) ? (*this->t)[leftidx ()] : 0.0;
+  }
+
   // Returns left-most valid index into the time value vector.
-  int leftidx (void) const {
-    int ts = this->t->getSize ();
-    int vs = this->values->getSize ();
+  unsigned int leftidx (void) const {
+    int ts = this->t->size ();
+    int vs = this->values->size ();
     return ts - vs > 0 ? ts - vs : 0;
   }
 
   /*! Returns number of unused values (time value vector shorter than
    value vector). */
-  int unused (void) const {
-    int ts = t->getSize ();
-    int vs = values->getSize ();
+  int unused (void) {
+    int ts = t->size ();
+    int vs = values->size ();
     return vs - ts > 0 ? vs - ts : 0;
-  }
-
-  //! Returns the first (oldest) time value in the history.
-  nr_double_t first (void) const {
-    return (this->t != NULL) ? (*this->t)(leftidx ()) : 0.0;
-  }
-
-  //! Returns the last (youngest) time value in the history
-  nr_double_t last (void) const {
-    return (t != NULL) ? (*this->t)(t->getSize () - 1) : 0.0;
   }
   
   //! Returns the duration of the history.
@@ -119,17 +123,17 @@ class history
   int seek (nr_double_t, int, int, nr_double_t&, int);
 
   nr_double_t getTfromidx (const int idx)  {
-    return this->t == NULL ? 0.0 : this->t->get(idx);
+    return this->t == NULL ? 0.0 : (*this->t)[idx];
   }
   nr_double_t getValfromidx (const int idx) {
-    return this->values == NULL ? 0.0 : this->values->get(idx);
+    return this->values == NULL ? 0.0 : (*this->values)[idx];
   }
 
  private:
   bool sign;
   nr_double_t age;
-  tvector<nr_double_t> * values;
-  tvector<nr_double_t> * t;
+  std::vector<nr_double_t> * values;
+  std::vector<nr_double_t> *t;
 };
 
 } // namespace qucs
