@@ -1180,8 +1180,17 @@ void QucsApp::slotFileOpen()
   if(s.isEmpty())
     statusBar()->message(tr("Opening aborted"), 2000);
   else {
+
+
+
+
+    updateRecentFilesList(s);
+    slotUpdateRecentFiles();
+
     gotoPage(s);
     lastDirOpenSave = s;   // remember last directory and file
+
+
     statusBar()->message(tr("Ready."));
   }
 }
@@ -2569,3 +2578,21 @@ void QucsApp::updatePathList(QStringList newPathList)
     updatePathList();
 }
 
+
+void QucsApp::updateRecentFilesList(QString s)
+{
+    QSettings* settings = new QSettings("qucs","qucs");
+    QucsSettings.numRecentDocs++;
+    if (!QucsSettings.RecentDocs.contains(s)) {
+        QucsSettings.RecentDocs.append(s);
+    } else {
+        QucsSettings.RecentDocs.remove(s);
+        QucsSettings.RecentDocs.append(s);
+    }
+    if (QucsSettings.RecentDocs.count()>8) {
+        QucsSettings.RecentDocs.removeFirst();
+    }
+    //qDebug()<<s;
+    settings->setValue("RecentDocs",QucsSettings.RecentDocs.join("*"));
+    delete settings;
+}
