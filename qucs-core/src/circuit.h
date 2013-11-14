@@ -245,7 +245,7 @@ class circuit : public object, public integrator
   static char * createInternal (const char *, const char *);
   void setInternalNode (int, const char *);
 
-  // matrix operations
+  //  operations
   void   allocMatrixS (void);
   void   allocMatrixN (int sources = 0);
   void   allocMatrixMNA (void);

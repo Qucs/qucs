@@ -109,8 +109,8 @@ int input::netlist (net * netlist) {
 
 /* The little helper function creates a vector given by the list of
    values. */
-vector * input::createVector (struct value_t * values) {
-  vector * v = new vector ();
+::vector * input::createVector (struct value_t * values) {
+  ::vector * v = new ::vector ();
   for (; values != NULL; values = values->next) v->add (values->value);
   return v;
 }
@@ -253,7 +253,7 @@ void input::factory (void) {
 	  // zero-length value lists
 	  variable * v = new variable (pairs->key);
 	  constant * c = new constant (TAG_VECTOR);
-	  c->v = new vector ();
+	  c->v = new ::vector ();
 	  v->setConstant (c);
 	  o->addProperty (pairs->key, v);
 	}

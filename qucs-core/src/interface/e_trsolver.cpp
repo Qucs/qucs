@@ -45,8 +45,8 @@
 #include "transient.h"
 #include "exception.h"
 #include "exceptionstack.h"
-#include "e_trsolver.h"
 #include "environment.h"
+#include "e_trsolver.h"
 
 #define STEPDEBUG   0 // set to zero for release
 #define BREAKPOINTS 0 // exact breakpoint calculation

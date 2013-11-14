@@ -34,32 +34,32 @@ class dataset : public object
   dataset (char *);
   dataset (const dataset &);
   ~dataset ();
-  void addDependency (vector *);
-  void addDependencies (vector *);
-  void appendDependency (vector *);
-  void appendDependencies (vector *);
-  void addVariable (vector *);
-  void addVariables (vector *);
-  void appendVariable (vector *);
-  void appendVariables (vector *);
-  void applyDependencies (vector * v);
-  void delDependency (vector *);
-  void delVariable (vector *);
+  void addDependency (::vector *);
+  void addDependencies (::vector *);
+  void appendDependency (::vector *);
+  void appendDependencies (::vector *);
+  void addVariable (::vector *);
+  void addVariables (::vector *);
+  void appendVariable (::vector *);
+  void appendVariables (::vector *);
+  void applyDependencies (::vector * v);
+  void delDependency (::vector *);
+  void delVariable (::vector *);
 
   void assignDependency (char *, char *);
   char * getFile (void);
   void setFile (const char *);
   void print (void);
-  void printData (vector *, FILE *);
-  void printDependency (vector *, FILE *);
-  void printVariable (vector *, FILE *);
-  vector * findDependency (const char *);
-  vector * findVariable (const char *);
-  vector * getDependencies (void) { return dependencies; }
-  vector * getVariables (void) { return variables; }
-  int isDependency (vector *);
-  int isVariable (vector *);
-  vector * findOrigin (char *);
+  void printData (::vector *, FILE *);
+  void printDependency (::vector *, FILE *);
+  void printVariable (::vector *, FILE *);
+  ::vector * findDependency (const char *);
+  ::vector * findVariable (const char *);
+  ::vector * getDependencies (void) { return dependencies; }
+  ::vector * getVariables (void) { return variables; }
+  int isDependency (::vector *);
+  int isVariable (::vector *);
+  ::vector * findOrigin (char *);
   static dataset * load (const char *);
   static dataset * load_touchstone (const char *);
   static dataset * load_csv (const char *);
@@ -72,8 +72,8 @@ class dataset : public object
 
  private:
   char * file;
-  vector * dependencies;
-  vector * variables;
+  ::vector * dependencies;
+  ::vector * variables;
 };
 
 #endif /* __DATASET_H__ */

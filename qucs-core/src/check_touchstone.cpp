@@ -47,7 +47,7 @@
 
 strlist * touchstone_idents = NULL;
 dataset * touchstone_result = NULL;
-vector  * touchstone_vector = NULL;
+::vector  * touchstone_vector = NULL;
 
 /* default touchstone options */
 struct touchstone_t touchstone_options = { 
@@ -61,13 +61,13 @@ static const char * touchstone_valid_options[] = {
    input and output list of vectors of this function is the
    touchstone_vector variable. */
 static void touchstone_join (void) {
-  vector * yroot, * xroot, * next = NULL;
+  ::vector * yroot, * xroot, * next = NULL;
   /* go through each vector */
   for (yroot = touchstone_vector; yroot != NULL; yroot = next) {
     /* go through each trailing vector */
-    next = (vector *) yroot->getNext ();
+    next = (::vector *) yroot->getNext ();
     for (xroot = next; xroot != NULL; xroot = next) {
-      next = (vector *) xroot->getNext ();
+      next = (::vector *) xroot->getNext ();
       /* append xroot vector to yroot vector (even no. of values) ? */
       if ((xroot->getSize () & 1) == 0) {
 	/* yes, delete the xroot vector and adjust list */
@@ -89,7 +89,7 @@ static void touchstone_join (void) {
    matrix.  The function return zero on success and non-zero
    otherwise. */
 static int touchstone_vector_check (void) {
-  vector * root = touchstone_vector, * next;
+  ::vector * root = touchstone_vector, * next;
   int even = 0, errors = 0, size = root->getSize (), noise = 0, lines = 1;
   nr_double_t f = real (root->get (0));
 
@@ -111,8 +111,8 @@ static int touchstone_vector_check (void) {
   }
 
   /* go through each vector */
-  for (root = (vector *) root->getNext (); root != NULL; root = next) {
-    next = (vector *) root->getNext ();
+  for (root = (::vector *) root->getNext (); root != NULL; root = next) {
+    next = (::vector *) root->getNext ();
     nr_double_t freq = real (root->get (0));
     
     /* check increasing frequency value */
@@ -214,21 +214,21 @@ static char * touchstone_create_set (int r, int c) {
 
 /* The function actually creates the resulting dataset. */
 static void touchstone_create (void) {
-  vector * f, * v, * root, * next, * nf = NULL;
+  ::vector * f, * v, * root, * next, * nf = NULL;
   int ports = touchstone_options.ports, n;
   nr_complex_t val;
   strlist * s;
 
   /* create dataset and frequency vector */
   touchstone_result = new dataset ();
-  f = new vector ("frequency");
+  f = new ::vector ("frequency");
   touchstone_result->appendDependency (f);
   s = new strlist ();
   s->add (f->getName ());
   /* create variable vectors for the resulting dataset */
   for (int r = 0; r < ports; r++) {
     for (int c = 0; c < ports; c++) {
-      v = new vector ();
+      v = new ::vector ();
       v->setName (touchstone_create_set (r, c));
       v->setDependencies (new strlist (*s));
       touchstone_result->appendVariable (v);
@@ -238,18 +238,18 @@ static void touchstone_create (void) {
 
   /* create noise vectors if necessary */
   if (touchstone_options.noise) {
-    nf = new vector ("nfreq");
+    nf = new ::vector ("nfreq");
     touchstone_result->appendDependency (nf);
     s = new strlist ();
     s->add (nf->getName ());
     /* append noise parameters to dataset */
-    v = new vector ("Fmin");
+    v = new ::vector ("Fmin");
     v->setDependencies (new strlist (*s));
     touchstone_result->appendVariable (v);
-    v = new vector ("Sopt");
+    v = new ::vector ("Sopt");
     v->setDependencies (new strlist (*s));
     touchstone_result->appendVariable (v);
-    v = new vector ("Rn");
+    v = new ::vector ("Rn");
     v->setDependencies (new strlist (*s));
     touchstone_result->appendVariable (v);    
     delete s;
@@ -257,7 +257,7 @@ static void touchstone_create (void) {
 
   /* go through each vector */
   for (n = 0, root = touchstone_vector; root != NULL; root = next, n++) {
-    next = (vector *) root->getNext ();
+    next = (::vector *) root->getNext ();
     // handle data lines
     if (n < touchstone_options.lines) {
       /* fill frequency vector */
@@ -286,7 +286,7 @@ static void touchstone_create (void) {
 			 rad (real (root->get (pos + 1))));
 	  }
 	  v->add (val);
-	  v = (vector *) v->getNext ();
+	  v = (::vector *) v->getNext ();
 	}
       }
     }
@@ -320,7 +320,7 @@ static void touchstone_create (void) {
    impedance 50 Ohms. */
 static void touchstone_normalize_sp (void) {
   int ports = touchstone_options.ports;
-  vector * v = touchstone_result->getVariables ();
+  ::vector * v = touchstone_result->getVariables ();
   int i, j, n, len = v->getSize ();
   matrix s = matrix (ports);
 
@@ -331,7 +331,7 @@ static void touchstone_normalize_sp (void) {
     for (i = 0; i < ports; i++) {
       for (j = 0; j < ports; j++) {
 	s.set (i, j, v->get (n));
-	v = (vector *) v->getNext ();
+	v = (::vector *) v->getNext ();
       }
     }
     // convert the temporary matrix
@@ -341,7 +341,7 @@ static void touchstone_normalize_sp (void) {
     for (i = 0; i < ports; i++) {
       for (j = 0; j < ports; j++) {
 	v->set (s.get (i, j), n);
-	v = (vector *) v->getNext ();
+	v = (::vector *) v->getNext ();
       }
     }    
   }
@@ -350,7 +350,7 @@ static void touchstone_normalize_sp (void) {
 /* The function transforms the reference impedance given in the
    touchstone file to the internal reference impedance 50 Ohms. */
 static void touchstone_normalize (void) {
-  vector * v = touchstone_result->getVariables ();
+  ::vector * v = touchstone_result->getVariables ();
   int ports = touchstone_options.ports;
 
   // transform S-parameters if necessary
@@ -382,16 +382,16 @@ static void touchstone_normalize (void) {
 	  *v /= touchstone_options.resistance;
 	break;
       }
-      v = (vector *) v->getNext ();
+      v = (::vector *) v->getNext ();
     }
   }
 }
 
 /* Removes temporary data items from memory if necessary. */
 static void touchstone_finalize (void) {
-  vector * root, * next;
+  ::vector * root, * next;
   for (root = touchstone_vector; root != NULL; root = next) {
-    next = (vector *) root->getNext ();
+    next = (::vector *) root->getNext ();
     delete root;
   }
   touchstone_vector = NULL;

@@ -330,7 +330,7 @@ nr_complex_t atan (const nr_complex_t z) {
    \return arc tangent of z
 */
 nr_complex_t atan2 (const nr_complex_t y, const nr_complex_t x) {
-  nr_complex_t a = std::tr1::atan (y / x);
+  nr_complex_t a = std::atan (y / x);
   return real (x) > 0.0 ? a : -a;
 }
 #endif

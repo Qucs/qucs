@@ -186,7 +186,7 @@ void vector::set (const nr_complex_t z, int i) {
 }
 
 // The function returns the current size of the vector.
-int vector::getSize (void) {
+int vector::getSize (void) const {
   return size;
 }
 

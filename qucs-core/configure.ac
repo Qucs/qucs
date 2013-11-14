@@ -21,6 +21,7 @@ test "x$prefix" = xNONE && prefix="/usr/local"
 
 dnl Checks for programs.
 AC_PROG_CXX
+AX_CXX_COMPILE_STDCXX_11
 AC_PROG_CC
 AC_CHECK_TOOL(AR, ar, :)
 

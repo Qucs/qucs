@@ -88,7 +88,7 @@ static void matlab_header (nr_int32_t rows, nr_int32_t cols, char * name) {
 }
 
 // Writes a Matlab v4 vector.
-static void matlab_vector (vector * v) {
+static void matlab_vector (::vector * v) {
   int n;
 
   // real part
@@ -124,7 +124,7 @@ static void matlab_matrix (matrix * m) {
 }
 
 // Saves a dataset vector into a Matlab file.
-static void matlab_save (vector * v) {
+static void matlab_save (::vector * v) {
   int r, c;
   char * n, * sn;
   char * vn = v->getName ();
@@ -170,18 +170,18 @@ static void matlab_save (vector * v) {
 void matlab_producer (void) {
 
   dataset * data = qucs_data;
-  vector * v;
+  ::vector * v;
 
   // initialize endianness
   initendian ();
 
   // independent vectors and matrices
-  for (v = data->getDependencies (); v != NULL; v = (vector *) v->getNext ()) {
+  for (v = data->getDependencies (); v != NULL; v = (::vector *) v->getNext ()) {
     matlab_save (v);
   }
 
   // dependent vectors and matrices
-  for (v = data->getVariables (); v != NULL; v = (vector *) v->getNext ()) {
+  for (v = data->getVariables (); v != NULL; v = (::vector *) v->getNext ()) {
     matlab_save (v);
   }
 }

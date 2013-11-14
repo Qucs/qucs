@@ -228,7 +228,7 @@ public:
      * Saves the given variable into the dataset associated with the
      * analysis.  Creates the dataset vector if necessary.
      */
-    void saveVariable (const char *, nr_complex_t, vector *);
+     void saveVariable (const char *, nr_complex_t, ::vector *);
 
     /*! \fn getProgress
      * \brief get

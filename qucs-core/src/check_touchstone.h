@@ -42,7 +42,7 @@ class vector;
 class strlist;
 
 extern dataset * touchstone_result;
-extern vector  * touchstone_vector;
+extern ::vector  * touchstone_vector;
 extern strlist * touchstone_idents;
 
 struct touchstone_t {

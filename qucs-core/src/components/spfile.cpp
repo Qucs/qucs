@@ -49,7 +49,7 @@ spfile_vector::~spfile_vector () {
 }
 
 // Passes vectors and their data types to the S-parameter file vector.
-void spfile_vector::prepare (vector * _v, vector * _f,
+void spfile_vector::prepare (::vector * _v, ::vector * _f,
 			     bool _isreal, int it, int dt) {
   v = _v;
   f = _f;
@@ -341,8 +341,8 @@ void spfile::createVector (int r, int c) {
   int i = r * getSize () + c;
   spara[i].r = r;
   spara[i].c = c;
-  vector * v = new vector (matvec::createMatrixString ("S", r, c), 
-			   sfreq->getSize ());
+  ::vector * v = new ::vector (matvec::createMatrixString ("S", r, c), 
+			       sfreq->getSize ());
   v->setDependencies (new strlist ());
   v->getDependencies()->add (sfreq->getName ());
   data->addVariable (v);
@@ -354,11 +354,11 @@ void spfile::createVector (int r, int c) {
    frequency vector.  It also tries to find the noise parameter
    data. */
 void spfile::createIndex (void) {
-  vector * v; int s = getSize (); char * n;
+  ::vector * v; int s = getSize (); char * n;
   int r, c, i;
 
   // go through list of dependency vectors and find frequency vectors
-  for (v = data->getDependencies (); v != NULL; v = (vector *) v->getNext ()) {
+  for (v = data->getDependencies (); v != NULL; v = (::vector *) v->getNext ()) {
     if ((n = v->getName ()) != NULL) {
       if (!strcmp (n, "frequency")) sfreq = v;
       else if (!strcmp (n, "nfreq")) nfreq = v;
@@ -369,7 +369,7 @@ void spfile::createIndex (void) {
   spara = new spfile_vector[s * s] ();
 
   // go through list of variable vectors and find matrix entries
-  for (v = data->getVariables (); v != NULL; v = (vector *) v->getNext ()) {
+  for (v = data->getVariables (); v != NULL; v = (::vector *) v->getNext ()) {
     if ((n = matvec::isMatrixVector (v->getName (), r, c)) != NULL) {
       // save matrix vector indices
       i = r * s + c;

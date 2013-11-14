@@ -612,7 +612,7 @@ matrix eye (int s) {
    \param[in] diag vector to write on the diagonal
    \todo diag is const
 */
-matrix diagonal (vector diag) {
+matrix diagonal (::vector diag) {
   int size = diag.getSize ();
   matrix res (size);
   for (int i = 0; i < size; i++) res (i, i) = diag (i);
@@ -878,7 +878,7 @@ matrix inverse (matrix a) {
   \return Renormalized scattering matrix
   \todo s, zref and z0 const
 */
-matrix stos (matrix s, vector zref, vector z0) {
+matrix stos (matrix s, ::vector zref, ::vector z0) {
   int d = s.getRows ();
   matrix e, r, a;
 
@@ -900,7 +900,7 @@ matrix stos (matrix s, vector zref, vector z0) {
 */
 matrix stos (matrix s, nr_complex_t zref, nr_complex_t z0) {
   int d = s.getRows ();
-  return stos (s, vector (d, zref), vector (d, z0));
+  return stos (s, ::vector (d, zref), ::vector (d, z0));
 }
 
 /*!\brief S renormalization with all part identic and real
@@ -923,8 +923,8 @@ matrix stos (matrix s, nr_double_t zref, nr_double_t z0) {
    \return Renormalized scattering matrix
    \todo s, zref and z0 const
 */ 
-matrix stos (matrix s, vector zref, nr_complex_t z0) {
-  return stos (s, zref, vector (zref.getSize (), z0));
+matrix stos (matrix s, ::vector zref, nr_complex_t z0) {
+  return stos (s, zref, ::vector (zref.getSize (), z0));
 }
 
 /*!\brief S renormalization (variation)
@@ -935,8 +935,8 @@ matrix stos (matrix s, vector zref, nr_complex_t z0) {
   \todo s, zref and z0 const
   \return Renormalized scattering matrix
 */ 
-matrix stos (matrix s, nr_complex_t zref, vector z0) {
-  return stos (s, vector (z0.getSize (), zref), z0);
+matrix stos (matrix s, nr_complex_t zref, ::vector z0) {
+  return stos (s, ::vector (z0.getSize (), zref), z0);
 }
 
 /*!\brief Scattering parameters to impedance matrix
@@ -961,7 +961,7 @@ matrix stos (matrix s, nr_complex_t zref, vector z0) {
   \todo s, z0 const
   \return Impedance matrix
 */  
-matrix stoz (matrix s, vector z0) {
+matrix stoz (matrix s, ::vector z0) {
   int d = s.getRows ();
   matrix e, zref, gref;
 
@@ -981,7 +981,7 @@ matrix stoz (matrix s, vector z0) {
    \todo s and z0 const?
 */
 matrix stoz (matrix s, nr_complex_t z0) {
-  return stoz (s, vector (s.getRows (), z0));
+  return stoz (s, ::vector (s.getRows (), z0));
 }
 
 /*!\brief Convert impedance matrix scattering parameters.
@@ -1006,7 +1006,7 @@ matrix stoz (matrix s, nr_complex_t z0) {
   \bug not correct if zref is complex
   \todo z and z0 const?
 */
-matrix ztos (matrix z, vector z0) {
+matrix ztos (matrix z, ::vector z0) {
   int d = z.getRows ();
   matrix e, zref, gref;
 
@@ -1026,7 +1026,7 @@ matrix ztos (matrix z, vector z0) {
    \todo z and z0 const
  */
 matrix ztos (matrix z, nr_complex_t z0) {
-  return ztos (z, vector (z.getRows (), z0));
+  return ztos (z, ::vector (z.getRows (), z0));
 }
 
 /*!\brief impedance matrix to admittance matrix.
@@ -1070,7 +1070,7 @@ matrix ztoy (matrix z) {
   \todo s and z0 const
   \return Admittance matrix
 */
-matrix stoy (matrix s, vector z0) {
+matrix stoy (matrix s, ::vector z0) {
   int d = s.getRows ();
   matrix e, zref, gref;
 
@@ -1090,7 +1090,7 @@ matrix stoy (matrix s, vector z0) {
    \todo s and z0 const
  */
 matrix stoy (matrix s, nr_complex_t z0) {
-  return stoy (s, vector (s.getRows (), z0));
+  return stoy (s, ::vector (s.getRows (), z0));
 }
 
 /*!\brief Admittance matrix to scattering parameters
@@ -1121,7 +1121,7 @@ matrix stoy (matrix s, nr_complex_t z0) {
    \todo why not y and z0 const
    \return Scattering matrix
 */
-matrix ytos (matrix y, vector z0) {
+matrix ytos (matrix y, ::vector z0) {
   int d = y.getRows ();
   matrix e, zref, gref;
 
@@ -1140,7 +1140,7 @@ matrix ytos (matrix y, vector z0) {
    \todo y and z0 const
  */
 matrix ytos (matrix y, nr_complex_t z0) {
-  return ytos (y, vector (y.getRows (), z0));
+  return ytos (y, ::vector (y.getRows (), z0));
 }
 /*!\brief Converts chain matrix to scattering parameters.
 

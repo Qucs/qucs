@@ -56,37 +56,37 @@ inline nr_complex_t rect (const nr_double_t x, const nr_double_t y = 0.0) {
 #ifndef HAVE_CXX_COMPLEX_ACOS
 nr_complex_t    acos (const nr_complex_t);
 #else
-using std::tr1::acos;
+using std::acos;
 #endif
 
 #ifndef HAVE_CXX_COMPLEX_ACOSH
 nr_complex_t   acosh (const nr_complex_t);
 #else
-using std::tr1::acosh;
+using std::acosh;
 #endif
 
 #ifndef HAVE_CXX_COMPLEX_ASIN
 nr_complex_t    asin (const nr_complex_t);
 #else
-using std::tr1::asin;
+using std::asin;
 #endif
 
 #ifndef HAVE_CXX_COMPLEX_ASINH
 nr_complex_t   asinh (const nr_complex_t);
 #else
-using std::tr1::asinh;
+using std::asinh;
 #endif 
 
 #ifndef HAVE_CXX_COMPLEX_ATAN
 nr_complex_t    atan (const nr_complex_t);
 #else
-using std::tr1::atan;
+using std::atan;
 #endif 
 
 #ifndef HAVE_CXX_COMPLEX_ATANH
 nr_complex_t   atanh (const nr_complex_t);
 #else
-using std::tr1::atanh;
+using std::atanh;
 #endif 
 
 #ifndef HAVE_CXX_COMPLEX_ATAN2

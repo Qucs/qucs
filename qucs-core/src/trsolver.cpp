@@ -856,11 +856,11 @@ void trsolver::initCircuitTR (circuit * c)
    (for the given timestamp) into the output dataset. */
 void trsolver::saveAllResults (nr_double_t time)
 {
-    vector * t;
+    ::vector * t;
     // add current frequency to the dependency of the output dataset
     if ((t = data->findDependency ("time")) == NULL)
     {
-        t = new vector ("time");
+      t = new ::vector ("time");
         data->addDependency (t);
     }
     if (runs == 1) t->add (time);

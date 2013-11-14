@@ -87,7 +87,7 @@ public:
   constant * getResult (void) { return res; } 
   nr_double_t getResultDouble (void);
   nr_complex_t getResultComplex (void);
-  vector getResultVector (void);
+  ::vector getResultVector (void);
   void setResult (constant *);
   char * getInstance (void);
   void setInstance (const char *);
@@ -164,7 +164,7 @@ public:
   union {
     nr_double_t d;
     nr_complex_t * c;
-    vector * v;
+    ::vector * v;
     matrix * m;
     matvec * mv;
     char chr;
@@ -302,7 +302,7 @@ public:
   bool containsVariable (char *);
   nr_double_t getDouble (char *);
   void setDouble (char *, nr_double_t);
-  vector getVector (char *);
+  ::vector getVector (char *);
   void setDefinitions (struct definition_t * d) { defs = d; }
   struct definition_t * getDefinitions (void) { return defs; }
   node * findProperty (char *);
@@ -326,10 +326,10 @@ public:
   void setData (dataset * d) { data = d; }
   dataset * getDataset (void) { return data; }
   void evaluate (void);
-  node * addEquationData (vector *, bool ref = false);
+  node * addEquationData (::vector *, bool ref = false);
   node * addEquationData (matvec *);
-  node * addGeneratedEquation (vector *, const char *);
-  vector * dataVector (node *);
+  node * addGeneratedEquation (::vector *, const char *);
+  ::vector * dataVector (node *);
   void checkinDataset (void);
   void checkoutDataset (void);
   static int dataSize (constant *);
@@ -337,8 +337,8 @@ public:
   int getDataSize (char *);
   strlist * collectDataDependencies (node *);
   int dataSize (strlist *);
-  vector * getDataVector (char *);
-  void findMatrixVectors (vector *);
+  ::vector * getDataVector (char *);
+  void findMatrixVectors (::vector *);
   char * isMatrixVector (char *, int&, int&);
   int findEquationResult (node *);
   int solve (dataset *);

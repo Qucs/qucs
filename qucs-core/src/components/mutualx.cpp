@@ -63,8 +63,8 @@ matrix mutualx::calcMatrixY (nr_double_t frequency) {
 matrix mutualx::calcMatrixZ (nr_double_t frequency) {
   int inductors = getSize () / 2;
   int r, c, state;
-  vector * L = getPropertyVector ("L");
-  vector * C = getPropertyVector ("k");
+  ::vector * L = getPropertyVector ("L");
+  ::vector * C = getPropertyVector ("k");
   nr_double_t o = 2 * M_PI * frequency;
   matrix z = matrix (inductors);
 
@@ -87,8 +87,8 @@ void mutualx::initAC (void) {
 void mutualx::calcAC (nr_double_t frequency) {
   int inductors = getSize () / 2;
   int r, c, state;
-  vector * L = getPropertyVector ("L");
-  vector * C = getPropertyVector ("k");
+  ::vector * L = getPropertyVector ("L");
+  ::vector * C = getPropertyVector ("k");
   nr_double_t o = 2 * M_PI * frequency;
 
   // fill D-Matrix
@@ -120,8 +120,8 @@ void mutualx::initTR (void) {
 void mutualx::calcTR (nr_double_t) {
   int inductors = getSize () / 2;
   int r, c, state;
-  vector * L = getPropertyVector ("L");
-  vector * C = getPropertyVector ("k");
+  ::vector * L = getPropertyVector ("L");
+  ::vector * C = getPropertyVector ("k");
 
   nr_double_t * veq = new nr_double_t[inductors * inductors];
   nr_double_t * req = new nr_double_t[inductors * inductors];

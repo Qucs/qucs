@@ -44,14 +44,14 @@
 #include "check_csv.h"
 
 strlist * csv_header = NULL;
-vector  * csv_vector = NULL;
+::vector  * csv_vector = NULL;
 dataset * csv_result = NULL;
 
 /* Removes temporary data items from memory if necessary. */
 static void csv_finalize (void) {
-  vector * root, * next;
+  ::vector * root, * next;
   for (root = csv_vector; root != NULL; root = next) {
-    next = (vector *) root->getNext ();
+    next = (::vector *) root->getNext ();
     delete root;
   }
   csv_vector = NULL;
@@ -76,7 +76,7 @@ static void csv_validate_str (char * n) {
 
 /* Creates dataset from CSV vectors. */
 static void csv_create_dataset (int len) {
-  vector * dep, * indep, * v;
+  ::vector * dep, * indep, * v;
   char * n, depn[256];
   strlist * s;
 
@@ -84,7 +84,7 @@ static void csv_create_dataset (int len) {
   csv_result = new dataset ();
 
   // add dependency vector
-  indep = new vector ();
+  indep = new ::vector ();
   csv_result->appendDependency (indep);
   s = new strlist ();
   n = csv_header ? csv_header->get (0) : (char *) "x";
@@ -94,7 +94,7 @@ static void csv_create_dataset (int len) {
 
   // create variable vector(s)
   for (int i = 1; i < len; i++) {
-    v = new vector ();
+    v = new ::vector ();
     n = csv_header ? csv_header->get (i) : NULL;
     if (n == NULL) {
       sprintf (depn, "y%d", i);
@@ -107,12 +107,12 @@ static void csv_create_dataset (int len) {
   }
 
   // fill all vectors in dataset
-  for (v = csv_vector; v != NULL; v = (vector *) v->getNext ()) {
+  for (v = csv_vector; v != NULL; v = (::vector *) v->getNext ()) {
     dep = csv_result->getVariables ();
     int l;
     for (l = 0; l < v->getSize () - 1; l++) {
       dep->add (v->get (l));
-      dep = (vector *) dep->getNext ();
+      dep = (::vector *) dep->getNext ();
     }
     indep->add (v->get (l));
   }
@@ -135,7 +135,7 @@ int csv_check (void) {
   // data lines available
   else {
     // check number of columns in each data line
-    for (vector * v = csv_vector; v != NULL; v = (vector *) v->getNext ()) {
+    for (::vector * v = csv_vector; v != NULL; v = (::vector *) v->getNext ()) {
       if (len == -1) len = v->getSize ();
       else {
 	if (v->getSize () != len) {

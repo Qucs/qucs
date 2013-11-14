@@ -91,7 +91,7 @@ constant::constant (const constant & o) : node (o) {
     c = dataref ? o.c : new nr_complex_t (*o.c);
     break;
   case TAG_VECTOR:
-    v = dataref ? o.v : new vector (*o.v);
+    v = dataref ? o.v : new ::vector (*o.v);
     break;
   case TAG_MATRIX:
     m = dataref ? o.m : new matrix (*o.m);
@@ -1007,15 +1007,15 @@ nr_complex_t node::getResultComplex (void) {
 
 /* Returns an immediate vector depending on the type of the equation
    nodes result type. */
-vector node::getResultVector (void) {
+::vector node::getResultVector (void) {
   constant * c = getResult ();
-  vector v;
+  ::vector v;
   if (c != NULL) {
     switch (getType ()) {
     case TAG_MATRIX:
       {
 	int ro, co, n = 0;
-	v = vector (c->m->getRows () * c->m->getCols ());
+	v = ::vector (c->m->getRows () * c->m->getCols ());
 	for (co = 0; co < c->m->getCols (); co++)
 	  for (ro = 0; ro < c->m->getRows (); ro++)
 	    v (n++) = c->m->get (ro, co);
@@ -1024,11 +1024,11 @@ vector node::getResultVector (void) {
     case TAG_VECTOR:
       v = *(c->v); break;
     case TAG_DOUBLE:
-      v = vector (1); v (0) = c->d; break;
+      v = ::vector (1); v (0) = c->d; break;
     case TAG_COMPLEX:
-      v = vector (1); v (0) = *(c->c); break;
+      v = ::vector (1); v (0) = *(c->c); break;
     case TAG_BOOLEAN:
-      v = vector (1); v (0) = c->b ? 1.0 : 0.0; break;
+      v = ::vector (1); v (0) = c->b ? 1.0 : 0.0; break;
     }
   }
   return v;
@@ -1629,7 +1629,7 @@ void solver::evaluate (void) {
 
 /* This function adds the given dataset vector to the set of equations
    stored in the equation solver. */
-node * solver::addEquationData (vector * v, bool ref) {
+node * solver::addEquationData (::vector * v, bool ref) {
   constant * con = new constant (TAG_VECTOR);
   con->v = v;
   con->dataref = ref;
@@ -1644,12 +1644,12 @@ node * solver::addEquationData (vector * v, bool ref) {
 /* The function puts the given vector into the equation set.  The
    resulting data vector is going to be copied and exported - given a
    generated name based upon the second argument. */
-node * solver::addGeneratedEquation (vector * v, const char * n) {
+node * solver::addGeneratedEquation (::vector * v, const char * n) {
   // create generated name
   char * str = (char *) malloc (strlen (n) + 6);
   sprintf (str, "%s.%04d", n, ++generated);
   // copy data vector
-  vector * c = new vector (*v);
+  ::vector * c = new ::vector (*v);
   c->setName (str);
   // put vector into the equation set and ensure data export as
   // independent variable
@@ -1666,24 +1666,24 @@ node * solver::addGeneratedEquation (vector * v, const char * n) {
 
 /* Depending on the type of equation result the function converts the
    given equation node to one or more valid dataset vector(s). */
-vector * solver::dataVector (node * eqn) {
-  vector * v = NULL;
+::vector * solver::dataVector (node * eqn) {
+  ::vector * v = NULL;
   if (!eqn->getResult ()) return NULL;
   switch (eqn->getType ()) {
   case TAG_VECTOR: // simple vector
-    v = new vector (* (eqn->getResult()->v));
+    v = new ::vector (* (eqn->getResult()->v));
     v->setNext (NULL); v->setPrev (NULL);
     break;
   case TAG_DOUBLE: // double value
-    v = new vector ();
+    v = new ::vector ();
     v->add (eqn->getResult()->d);
     break;
   case TAG_BOOLEAN: // boolean value
-    v = new vector ();
+    v = new ::vector ();
     v->add (eqn->getResult()->b ? 1 : 0);
     break;
   case TAG_COMPLEX: // complex value
-    v = new vector ();
+    v = new ::vector ();
     v->add (* (eqn->getResult()->c));
     break;
   case TAG_MATVEC: // matrix vector
@@ -1694,7 +1694,7 @@ vector * solver::dataVector (node * eqn) {
       for (int r = 0; r < mv->getRows (); r++) {
 	for (int c = 0; c < mv->getCols (); c++) {
 	  // name gets automatically assigned
-	  vector * t = new vector (mv->get (r, c));
+	  ::vector * t = new ::vector (mv->get (r, c));
 	  // chain the vectors appropriately
 	  t->setNext (v); v = t;
 	}
@@ -1707,7 +1707,7 @@ vector * solver::dataVector (node * eqn) {
       matrix * m = eqn->getResult()->m;
       for (int r = 0; r < m->getRows (); r++) {
 	for (int c = 0; c < m->getCols (); c++) {
-	  vector * t = new vector ();
+	  ::vector * t = new ::vector ();
 	  t->setName (matvec::createMatrixString (A(eqn)->result, r, c));
 	  t->add (m->get (r, c));
 	  // chain the vectors appropriately
@@ -1727,10 +1727,10 @@ vector * solver::dataVector (node * eqn) {
    these to the list of equation node inside the equation solver. */
 void solver::checkinDataset (void) {
   if (data == NULL) return;
-  vector * v;
+  ::vector * v;
   findMatrixVectors (data->getDependencies ());
   findMatrixVectors (data->getVariables ());
-  for (v = data->getDependencies (); v != NULL; v = (vector *) v->getNext ()) {
+  for (v = data->getDependencies (); v != NULL; v = (::vector *) v->getNext ()) {
     if (v->getRequested () != -1) {
       node * eqn = addEquationData (v, true);
       strlist * deps = new strlist ();
@@ -1739,7 +1739,7 @@ void solver::checkinDataset (void) {
       delete deps;
     }
   }
-  for (v = data->getVariables (); v != NULL; v = (vector *) v->getNext ()) {
+  for (v = data->getVariables (); v != NULL; v = (::vector *) v->getNext ()) {
     if (v->getRequested () != -1) {
       node * eqn = addEquationData (v, true);
       eqn->setDataDependencies (v->getDependencies ());
@@ -1751,21 +1751,21 @@ void solver::checkinDataset (void) {
    for possible matrix vectors.  These are detected by the vectors'
    names (e.g. S[1,1]).  The matrix vectors found in the dataset get
    converted and saved into the set of equations.  */
-void solver::findMatrixVectors (vector * v) {
-  vector * vec;
+void solver::findMatrixVectors (::vector * v) {
+  ::vector * vec;
   strlist * deps;
   char * p, * cand;
   int s, r, c, a, b, n = 1;
 
   // initialize the  'found' flag
-  for (vec = v; vec != NULL; vec = (vector *) vec->getNext ())
+  for (vec = v; vec != NULL; vec = (::vector *) vec->getNext ())
     vec->setRequested (0);
 
   // loop through the dataset vector until no more matrix vector is found
   do {
     r = c = s = -1; cand = NULL; deps = NULL;
     // go through the dataset
-    for (vec = v; vec != NULL; vec = (vector *) vec->getNext ()) {
+    for (vec = v; vec != NULL; vec = (::vector *) vec->getNext ()) {
       // skip detected vectors
       if (vec->getRequested ()) continue;
       // is the vector a possible matrix vector element ?
@@ -1800,7 +1800,7 @@ void solver::findMatrixVectors (vector * v) {
       matvec * mv = new matvec (s, r + 1, c + 1);
       mv->setName (cand);
       // go through the dataset vector once again
-      for (vec = v; vec != NULL; vec = (vector *) vec->getNext ()) {
+      for (vec = v; vec != NULL; vec = (::vector *) vec->getNext ()) {
 	// and collect the vectors with the same 'found' flags
 	if (vec->getRequested () == n) {
 	  p = matvec::isMatrixVector (vec->getName (), a, b);
@@ -1886,8 +1886,8 @@ int solver::dataSize (strlist * deps) {
   int size = 1;
   for (int i = 0; deps != NULL && i < deps->length (); i++) {
     char * str = deps->get (i);
-    vector * dep = data->findDependency (str);
-    vector * var = data->findVariable (str);
+    ::vector * dep = data->findDependency (str);
+    ::vector * var = data->findVariable (str);
     size *= dep ? dep->getSize () : var ? var->getSize () : 1;
   }
   return size;
@@ -1896,8 +1896,8 @@ int solver::dataSize (strlist * deps) {
 /* The function returns the data vector in the dataset according to
    the given variable name.  If there is no such variable, it returns
    NULL. */
-vector * solver::getDataVector (char * str) {
-  vector * var;
+::vector * solver::getDataVector (char * str) {
+  ::vector * var;
   /* search for variables in dataset */
   if (data != NULL) {
     if ((var = data->findVariable (str)) != NULL)
@@ -1981,7 +1981,7 @@ void solver::checkoutDataset (void) {
 
     // is the equation result already in the dataset ?
     if (!findEquationResult (eqn)) {
-      vector * v = dataVector (eqn);
+      ::vector * v = dataVector (eqn);
       if (v == NULL) continue;
 
       // collect inherited dataset dependencies
@@ -2236,11 +2236,11 @@ void checker::setDouble (char * ident, nr_double_t val) {
 /* The functions looks through the set of equations for a vector
    result and returns it.  If there is no such assignment, an empty
    vector is returned. */ 
-vector checker::getVector (char * ident) {
+::vector checker::getVector (char * ident) {
   foreach_equation (eqn) {
     if (!strcmp (ident, eqn->result)) {
       return eqn->getResultVector ();
     }
   }
-  return vector ();
+  return ::vector ();
 }

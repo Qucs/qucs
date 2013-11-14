@@ -79,7 +79,7 @@ void tswitch::initAC (void) {
 }
 
 void tswitch::initTR (void) {
-  vector * values = getPropertyVector ("time");
+  ::vector * values = getPropertyVector ("time");
   T = real (sum (*values));
   repeat = (values->getSize () % 2) == 0 ? true : false;
   initDC ();
@@ -89,7 +89,7 @@ void tswitch::calcTR (nr_double_t t) {
   char * init = getPropertyString ("init");
   nr_double_t ron = getPropertyDouble ("Ron");
   nr_double_t roff = getPropertyDouble ("Roff");
-  vector * values = getPropertyVector ("time");
+  ::vector * values = getPropertyVector ("time");
   bool on = !strcmp (init, "on");
   nr_double_t ti = 0;
 

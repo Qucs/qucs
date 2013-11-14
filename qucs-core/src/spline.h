@@ -43,11 +43,11 @@ class spline
  public:
   spline ();
   spline (int);
-  spline (vector, vector);
+  spline (::vector, ::vector);
   spline (tvector<nr_double_t>, tvector<nr_double_t>);
   ~spline ();
 
-  void vectors (vector, vector);
+  void vectors (::vector, ::vector);
   void vectors (tvector<nr_double_t>, tvector<nr_double_t>);
   void vectors (nr_double_t *, nr_double_t *, int);
   void construct (void);

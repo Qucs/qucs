@@ -46,12 +46,12 @@ struct touchstone_data_t {
   int ports;           // number of S-parameter ports
   double resistance;   // reference impedance
   const char * format; // data format
-  vector * vd;         // appropriate dependency vector
+  ::vector * vd;         // appropriate dependency vector
   matvec * mv;         // appropriate data matrix vector
-  vector * fmin;       // minimum noise figure
-  vector * sopt;       // optimum input refelction for minimum noise figure
-  vector * rn;         // effective noise resistance
-  vector * vf;         // dependency vector for noise
+  ::vector * fmin;       // minimum noise figure
+  ::vector * sopt;       // optimum input refelction for minimum noise figure
+  ::vector * rn;         // effective noise resistance
+  ::vector * vf;         // dependency vector for noise
 }
 touchstone_data;
 
@@ -176,13 +176,13 @@ void touchstone_print (void) {
    type (G, H, Y, Z, etc.) matrix from the given dataset and stores it
    into the global Touchstone structure. */
 void touchstone_find_data (dataset * data, const char * name) {
-  vector * v;
+  ::vector * v;
   char * n, * vn, * vd = NULL, * vf = NULL;
   strlist * deps;
   int r, c, rs = -1, cs  = -1, s = 0;
 
   // find parameter matrix data and its dimensions
-  for (v = data->getVariables (); v != NULL; v = (vector *) v->getNext ()) {
+  for (v = data->getVariables (); v != NULL; v = (::vector *) v->getNext ()) {
     vn = v->getName ();
     // requested matrix vector name found?
     if (strstr (vn, name) == vn) {
@@ -222,7 +222,7 @@ void touchstone_find_data (dataset * data, const char * name) {
     matvec * mv = new matvec (s, ss + 1, ss + 1);
     mv->setName (name);
     // fill in matrix vectors
-    for (v = data->getVariables (); v; v = (vector *) v->getNext ()) {
+    for (v = data->getVariables (); v; v = (::vector *) v->getNext ()) {
       vn = v->getName ();
       if (strstr (vn, name) == vn) {
 	if ((n = matvec::isMatrixVector (vn, r, c)) != NULL) {
@@ -235,7 +235,7 @@ void touchstone_find_data (dataset * data, const char * name) {
     touchstone_data.mv = mv;
     touchstone_data.parameter = toupper (mv->getName ()[0]);
     // look for dependency (frequency) vector
-    for (v = data->getDependencies (); v; v = (vector *) v->getNext ()) {
+    for (v = data->getDependencies (); v; v = (::vector *) v->getNext ()) {
       if (vd && !strcmp (v->getName (), vd)) {
 	touchstone_data.vd = v;
       }

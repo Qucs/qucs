@@ -651,7 +651,9 @@ void circuit::setMatrixS (matrix s) {
    circuit. */
 matrix circuit::getMatrixS (void) {
   matrix res (size);
-  memcpy (res.getData (), MatrixS, sizeof (nr_complex_t) * size * size);
+  for(unsigned int i=0; i < size; ++i)
+    for(unsigned int j=0; i < size; ++j)
+      res(i,j) = MatrixS[i*size + j];
   return res;
 }
 
@@ -670,7 +672,9 @@ void circuit::setMatrixN (matrix n) {
    matrix of the circuit. */
 matrix circuit::getMatrixN (void) {
   matrix res (size);
-  memcpy (res.getData (), MatrixN, sizeof (nr_complex_t) * size * size);
+  for(unsigned int i=0; i < size; ++i)
+    for(unsigned int j=0; i < size; ++j)
+      res(i,j) = MatrixN[i*size + j];
   return res;
 }
 
@@ -689,7 +693,9 @@ void circuit::setMatrixY (matrix y) {
    circuit. */
 matrix circuit::getMatrixY (void) {
   matrix res (size);
-  memcpy (res.getData (), MatrixY, sizeof (nr_complex_t) * size * size);
+  for(unsigned int i=0; i < size; ++i)
+    for(unsigned int j=0; i < size; ++j)
+      res(i,j) = MatrixY[i*size + j];
   return res;
 }
 

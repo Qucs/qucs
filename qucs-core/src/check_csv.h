@@ -30,7 +30,7 @@ class vector;
 class strlist;
 
 extern dataset * csv_result;
-extern vector  * csv_vector;
+extern ::vector  * csv_vector;
 extern strlist * csv_header;
 
 /* Externalize variables used by the scanner and parser. */

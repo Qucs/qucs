@@ -41,10 +41,10 @@ namespace emi {
   nr_double_t f_2ndorder (nr_double_t, nr_double_t, nr_double_t);
   nr_double_t f_gauss (nr_double_t, nr_double_t, nr_double_t);
   nr_double_t f_ideal (nr_double_t, nr_double_t, nr_double_t);
-  vector * receiver (nr_double_t *, nr_double_t, int);
+  ::vector * receiver (nr_double_t *, nr_double_t, int);
 
   // external functionality
-  vector * receiver (vector *, vector *, int len = -1);
+  ::vector * receiver (::vector *, ::vector *, int len = -1);
 
 } // namespace
 

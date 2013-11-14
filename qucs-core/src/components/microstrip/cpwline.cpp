@@ -36,16 +36,20 @@ cpwline::cpwline () : circuit (2) {
   type = CIR_CPWLINE;
 }
 
-/* The function computes the complete elliptic integral of first kind
+/*! K(k)
+
+ The function computes the complete elliptic integral of first kind
    K() and the second kind E() using the arithmetic-geometric mean
-   algorithm (AGM) by Abramowitz and Stegun. */
+   algorithm (AGM) by Abramowitz and Stegun. 
+\todo move to common math
+*/
 void cpwline::ellipke (nr_double_t arg, nr_double_t &k, nr_double_t &e) {
   int iMax = 16;
   if (arg == 1.0) {
     k = NR_INF; // infinite
     e = 0;
   }
-  else if (isinf (arg) && arg < 0) {
+  else if (std::isinf (arg) && arg < 0) {
     k = 0;
     e = NR_INF; // infinite
   }

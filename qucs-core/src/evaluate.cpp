@@ -79,7 +79,7 @@ using namespace fspecial;
 #define _D(var,idx) nr_double_t (var) = D (_ARES (idx));
 #define _BO(var,idx) bool (var) = B (_ARES (idx));
 #define _CX(var,idx) nr_complex_t * (var) = C (_ARES (idx));
-#define _V(var,idx) vector * (var) = V (_ARES (idx));
+#define _V(var,idx) ::vector * (var) = V (_ARES (idx));
 #define _M(var,idx) matrix * (var) = M (_ARES (idx));
 #define _MV(var,idx) matvec * (var) = MV (_ARES (idx));
 #define _I(var,idx) int (var) = INT (_ARES (idx));
@@ -123,14 +123,14 @@ using namespace fspecial;
 #define _RETD(var) res->d = (var); return res;
 #define _RETB(var) res->b = (var); return res;
 #define _RETC(var) res->c = new nr_complex_t (var); return res;
-#define _RETV(var) res->v = new vector (var); return res;
+#define _RETV(var) res->v = new ::vector (var); return res;
 #define _RETM(var) res->m = new matrix (var); return res;
 #define _RETMV(var) res->mv = new matvec (var); return res;
 #define _RETR(var) res->r = (var); return res;
 
 // Return value macros without arguments.
 #define __RETC() res->c = new nr_complex_t (); return res;
-#define __RETV() res->v = new vector (); return res;
+#define __RETV() res->v = new ::vector (); return res;
 #define __RETM() res->m = new matrix (); return res;
 #define __RETMV() res->mv = new matvec (); return res;
 
@@ -1283,7 +1283,7 @@ constant * evaluate::deg2rad_c (constant * args) {
 constant * evaluate::deg2rad_v (constant * args) {
   _ARV0 (v1);
   _DEFV ();
-  vector * v = new vector ();
+  ::vector * v = new ::vector ();
   for (int i = 0; i < v1->getSize (); i++) v->add (rad (real (v1->get (i))));
   res->v = v;
   return res;
@@ -1304,7 +1304,7 @@ constant * evaluate::rad2deg_c (constant * args) {
 constant * evaluate::rad2deg_v (constant * args) {
   _ARV0 (v1);
   _DEFV ();
-  vector * v = new vector ();
+  ::vector * v = new ::vector ();
   for (int i = 0; i < v1->getSize (); i++) v->add (deg (real (v1->get (i))));
   res->v = v;
   return res;
@@ -1794,7 +1794,7 @@ constant * evaluate::rtoswr_c (constant * args) {
 constant * evaluate::rtoswr_v (constant * args) {
   _ARV0 (v1);
   _DEFV ();
-  res->v = new vector (v1->getSize ());
+  res->v = new ::vector (v1->getSize ());
   for (int i = 0; i < v1->getSize (); i++)
     res->v->set ((1 + abs (v1->get (i))) / (1 - abs (v1->get (i))), i);
   return res;
@@ -2032,9 +2032,9 @@ constant * evaluate::index_mv_2 (constant * args) {
     sprintf (txt, "matvec indices [%d,%d] out of bounds [1-%d,1-%d]",
 	     r, c, mv->getRows (), mv->getCols ());
     THROW_MATH_EXCEPTION (txt);
-    res->v = new vector (mv->getSize ());
+    res->v = new ::vector (mv->getSize ());
   } else {
-    res->v = new vector (mv->get (r - 1, c - 1));
+    res->v = new ::vector (mv->get (r - 1, c - 1));
   }
   return res;
 }
@@ -2068,7 +2068,7 @@ void evaluate::extract_vector (constant * args, int idx, int &skip, int &size,
   _ARV0 (v);
   int i = INT (_ARES (idx));
   int type = _ARG(idx)->getType ();
-  vector * vres;
+  ::vector * vres;
   strlist * deps = _ARES(0)->getDataDependencies ();
   int didx = (deps ? deps->length () : 0) - idx;
   int dsize = SOLVEE(0)->getDependencySize (deps, idx);
@@ -2077,7 +2077,7 @@ void evaluate::extract_vector (constant * args, int idx, int &skip, int &size,
   if (type == TAG_RANGE) {
     if (dsize > 1) {
       // dependent vectors: only ':' possible
-      vres = new vector (*(res->v));
+      vres = new ::vector (*(res->v));
       skip *= deps ? SOLVEE(0)->getDataSize (deps->get (didx - 1)) : 1;
       size *= deps ? SOLVEE(0)->getDataSize (deps->get (didx)) : 1;
     }
@@ -2100,7 +2100,7 @@ void evaluate::extract_vector (constant * args, int idx, int &skip, int &size,
       }
       size = 0;
       for (n = 0; n < len; n++) if (r->inside (n)) size++;
-      vres = new vector (size);
+      vres = new ::vector (size);
       for (k = 0, n = 0; n < len; n++) {
 	if (r->inside (n))
 	  vres->set (res->v->get (n), k++);
@@ -2109,7 +2109,7 @@ void evaluate::extract_vector (constant * args, int idx, int &skip, int &size,
   }
   // a subset
   else {
-    vres = new vector (dsize * size);
+    vres = new ::vector (dsize * size);
     int len = deps ? SOLVEE(0)->getDataSize (deps->get (didx)) : v->getSize ();
     if (i < 0 || i >= len) {
       char txt[256];
@@ -2134,7 +2134,7 @@ constant * evaluate::index_v_1 (constant * args) {
   _ARV0 (v);
   _DEFV ();
   int skip = 1, size = 1;
-  res->v = new vector (*v);
+  res->v = new ::vector (*v);
   extract_vector (args, 1, skip, size, res);
   return res;
 }
@@ -2143,7 +2143,7 @@ constant * evaluate::index_v_2 (constant * args) {
   _ARV0 (v);
   _DEFV ();
   int skip = 1, size = 1;
-  res->v = new vector (*v);
+  res->v = new ::vector (*v);
   if (!EQUATION_HAS_DEPS (_ARES(0), 2)) {
     char txt[256];
     sprintf (txt, "invalid number of vector indices (%d > %d)", 2,
@@ -2203,16 +2203,16 @@ constant * evaluate::interpolate_v_v_d (constant * args) {
   if (v1->getSize () < 3) {
     THROW_MATH_EXCEPTION ("interpolate: number of datapoints must be greater "
 			  "than 2");
-    res->v = new vector ();
+    res->v = new ::vector ();
     return res;
   }
   nr_double_t last  = real (v2->get (v2->getSize () - 1));
   nr_double_t first = real (v2->get (0));
   constant * arg = new constant (TAG_VECTOR);
-  arg->v = new vector (::linspace (first, last, n));
+  arg->v = new ::vector (::linspace (first, last, n));
   arg->solvee = args->getResult(0)->solvee;
   arg->evaluate ();
-  vector * val = new vector (n);
+  ::vector * val = new ::vector (n);
   spline spl (SPLINE_BC_NATURAL);
   spl.vectors (*v1, *v2);
   spl.construct ();
@@ -2233,7 +2233,7 @@ constant * evaluate:: QUCS_CONCAT2 (efunc,_v_v) (constant * args) { \
   _ARV0 (v);							    \
   _ARV1 (t);							    \
   _DEFV ();							    \
-  vector * val = new vector (QUCS_CONCAT2 (cfunc,_1d) (*v));	    \
+  ::vector * val = new ::vector (QUCS_CONCAT2 (cfunc,_1d) (*v));    \
   int k = val->getSize ();					    \
   *val = isign > 0 ? *val / k : *val * k;			    \
   res->v = val;							    \
@@ -2245,7 +2245,7 @@ constant * evaluate:: QUCS_CONCAT2 (efunc,_v_v) (constant * args) { \
   nr_double_t first = real (t->get (0));			    \
   nr_double_t delta = (last - first) / (n - 1);			    \
   constant * arg = new constant (TAG_VECTOR);			    \
-  arg->v = new vector (::linspace (0, 1.0 / delta, n));		    \
+  arg->v = new ::vector (::linspace (0, 1.0 / delta, n));	    \
   arg->solvee = args->getResult(0)->solvee;			    \
   arg->evaluate ();						    \
   node * gen = SOLVEE(0)->addGeneratedEquation (arg->v, dep);	    \
@@ -2259,7 +2259,7 @@ constant * evaluate:: QUCS_CONCAT2 (efunc,_v_v) (constant * args) { \
 constant * evaluate:: QUCS_CONCAT2 (cfunc,_v) (constant * args) { \
   _ARV0 (v);							  \
   _DEFV ();							  \
-  vector * val = new vector (QUCS_CONCAT2 (cfunc,_1d) (*v));	  \
+  ::vector * val = new ::vector (QUCS_CONCAT2 (cfunc,_1d) (*v));  \
   res->v = val;							  \
   res->dropdeps = 1;						  \
   return res;							  \
@@ -2276,7 +2276,7 @@ FOURIER_HELPER_2 (idft);
 constant * evaluate::fftshift_v (constant * args) {
   _ARV0 (v);
   _DEFV ();
-  res->v = new vector (fftshift (*v));
+  res->v = new ::vector (fftshift (*v));
   return res;
 }
 
@@ -2657,7 +2657,7 @@ constant * evaluate::mu1_m (constant * args) {
 constant * evaluate::mu1_mv (constant * args) {
   _ARMV0 (mv);
   _DEFV ();
-  vector k;
+  ::vector k;
   k = (1 - norm (mv->get (0, 0))) /
     (abs (mv->get (1, 1) - conj (mv->get (0, 0)) * det (*mv)) +
      abs (mv->get (0, 1) * mv->get (1, 0)));
@@ -2677,7 +2677,7 @@ constant * evaluate::mu2_m (constant * args) {
 constant * evaluate::mu2_mv (constant * args) {
   _ARMV0 (mv);
   _DEFV ();
-  vector k;
+  ::vector k;
   k = (1 - norm (mv->get (1, 1))) /
     (abs (mv->get (0, 0) - conj (mv->get (1, 1)) * det (*mv)) +
      abs (mv->get (0, 1) * mv->get (1, 0)));
@@ -2704,7 +2704,7 @@ constant * evaluate::linspace (constant * args) {
   _DEFV ();
   if (points < 2) {
     THROW_MATH_EXCEPTION ("linspace: number of points must be greater than 1");
-    res->v = new vector ();
+    res->v = new ::vector ();
     return res;
   }
   _RETV (::linspace (start, stop, points));
@@ -2717,12 +2717,12 @@ constant * evaluate::logspace (constant * args) {
   _DEFV ();
   if (points < 2) {
     THROW_MATH_EXCEPTION ("logspace: number of points must be greater than 1");
-    res->v = new vector ();
+    res->v = new ::vector ();
     return res;
   }
   if (start * stop <= 0) {
     THROW_MATH_EXCEPTION ("logspace: invalid start/stop values");
-    res->v = new vector (points);
+    res->v = new ::vector (points);
     return res;
   }
   _RETV (::logspace (start, stop, points));
@@ -2734,11 +2734,11 @@ constant * evaluate::logspace (constant * args) {
   if (n < 2) {                                  \
     THROW_MATH_EXCEPTION ("Circle: number of points must be greater than 1"); \
     _DEFV (); \
-    res->v = new vector ();                     \
+    res->v = new ::vector ();			\
     return res;                                 \
   }                                             \
   constant * arg = new constant (TAG_VECTOR);   \
-  arg->v = new vector (::linspace (0, 360, n)); \
+  arg->v = new ::vector (::linspace (0, 360, n));	\
   arg->solvee = args->getResult(0)->solvee;     \
   arg->evaluate ();                             \
   delete args->get(argi);                       \
@@ -2748,24 +2748,24 @@ constant * evaluate::logspace (constant * args) {
 // Circle helper macro with no additional argument given.
 #define CIRCLE_HELPER_A()                        \
   constant * arg = new constant (TAG_VECTOR);    \
-  arg->v = new vector (::linspace (0, 360, 64)); \
+  arg->v = new ::vector (::linspace (0, 360, 64));	\
   arg->solvee = args->getResult(0)->solvee;      \
   arg->evaluate ();                              \
   args->append (arg);
 
 // ***************** s-parameter noise circles *****************
 constant * evaluate::noise_circle_d_v (constant * args) {
-  vector * Sopt = V (_ARES(0));
-  vector * Fmin = V (_ARES(1));
-  vector * Rn   = V (_ARES(2));
+  ::vector * Sopt = V (_ARES(0));
+  ::vector * Fmin = V (_ARES(1));
+  ::vector * Rn   = V (_ARES(2));
   nr_double_t F = D (_ARES(3));
-  vector * arc  = V (_ARES(4));
+  ::vector * arc  = V (_ARES(4));
 
   _DEFV ();
-  vector N = circuit::z0 / 4 / *Rn * (F - *Fmin) * norm (1 + *Sopt);
-  vector R = sqrt (N * N + N * (1 - norm (*Sopt))) / (1 + N);
-  vector C = *Sopt / (1 + N);
-  vector * circle = new vector (C.getSize () * arc->getSize ());
+  ::vector N = circuit::z0 / 4 / *Rn * (F - *Fmin) * norm (1 + *Sopt);
+  ::vector R = sqrt (N * N + N * (1 - norm (*Sopt))) / (1 + N);
+  ::vector C = *Sopt / (1 + N);
+  ::vector * circle = new ::vector (C.getSize () * arc->getSize ());
   int i, a, j; nr_complex_t v;
   for (i = 0, j = 0; i < C.getSize (); i++) {
     for (a = 0; a < arc->getSize (); a++, j++) {
@@ -2791,16 +2791,16 @@ constant * evaluate::noise_circle_d (constant * args) {
 }
 
 constant * evaluate::noise_circle_v_v (constant * args) {
-  vector * Sopt = V (_ARES(0));
-  vector * Fmin = V (_ARES(1));
-  vector * Rn   = V (_ARES(2));
-  vector * F    = V (_ARES(3));
-  vector * arc  = V (_ARES(4));
+  ::vector * Sopt = V (_ARES(0));
+  ::vector * Fmin = V (_ARES(1));
+  ::vector * Rn   = V (_ARES(2));
+  ::vector * F    = V (_ARES(3));
+  :: vector * arc  = V (_ARES(4));
 
   _DEFV ();
-  vector * circle =
-    new vector (Sopt->getSize () * arc->getSize () * F->getSize ());
-  int i, a, j, f; nr_complex_t v; vector N, R, C;
+  ::vector * circle =
+      new ::vector (Sopt->getSize () * arc->getSize () * F->getSize ());
+  int i, a, j, f; nr_complex_t v; ::vector N, R, C;
   for (f = 0; f < F->getSize (); f++) {
     N = circuit::z0 / 4 / *Rn * (F->get (f) - *Fmin) * norm (1 + *Sopt);
     R = sqrt (N * N + N * (1 - norm (*Sopt))) / (1 + N);
@@ -2839,10 +2839,10 @@ constant * evaluate::stab_circle_l_v (constant * args) {
   _ARMV0 (S);
   _ARV1 (arc);
   _DEFV ();
-  vector D = norm (S->get (1, 1)) - norm (det (*S));
-  vector C = (conj (S->get (1, 1)) - S->get (0, 0) * conj (det (*S))) / D;
-  vector R = abs (S->get (0, 1)) * abs (S->get (1, 0)) / D;
-  vector * circle = new vector (S->getSize () * arc->getSize ());
+  ::vector D = norm (S->get (1, 1)) - norm (det (*S));
+  ::vector C = (conj (S->get (1, 1)) - S->get (0, 0) * conj (det (*S))) / D;
+  ::vector R = abs (S->get (0, 1)) * abs (S->get (1, 0)) / D;
+  ::vector * circle = new ::vector (S->getSize () * arc->getSize ());
   int a, d, i; nr_complex_t v;
   for (i = 0, d = 0; i < S->getSize (); i++) {
     for (a = 0; a < arc->getSize (); a++, d++) {
@@ -2870,10 +2870,10 @@ constant * evaluate::stab_circle_s_v (constant * args) {
   _ARMV0 (S);
   _ARV1 (arc);
   _DEFV ();
-  vector D = norm (S->get (0, 0)) - norm (det (*S));
-  vector C = (conj (S->get (0, 0)) - S->get (1, 1) * conj (det (*S))) / D;
-  vector R = abs (S->get (0, 1)) * abs (S->get (1, 0)) / D;
-  vector * circle = new vector (S->getSize () * arc->getSize ());
+  ::vector D = norm (S->get (0, 0)) - norm (det (*S));
+  ::vector C = (conj (S->get (0, 0)) - S->get (1, 1) * conj (det (*S))) / D;
+  ::vector R = abs (S->get (0, 1)) * abs (S->get (1, 0)) / D;
+  ::vector * circle = new ::vector (S->getSize () * arc->getSize ());
   int a, d, i; nr_complex_t v;
   for (i = 0, d = 0; i < S->getSize (); i++) {
     for (a = 0; a < arc->getSize (); a++, d++) {
@@ -2903,7 +2903,7 @@ constant * evaluate::ga_circle_d_v (constant * args) {
   _ARD1 (G);
   _ARV2 (arc);
   _DEFV ();
-  vector g, D, c, s, k, C, R, d;
+  ::vector g, D, c, s, k, C, R, d;
   D = det (*S);
   c = S->get (0, 0) - conj (S->get (1, 1)) * D;
   k = rollet (*S);
@@ -2913,7 +2913,7 @@ constant * evaluate::ga_circle_d_v (constant * args) {
   C = g * conj (c) / d;
   R = sqrt (1 - 2 * k * g * abs (s) + g * g * norm (s)) / abs (d);
 
-  vector * circle = new vector (S->getSize () * arc->getSize ());
+  ::vector * circle = new ::vector (S->getSize () * arc->getSize ());
   int i, a, j; nr_complex_t v;
   for (i = 0, j = 0; i < C.getSize (); i++) {
     for (a = 0; a < arc->getSize (); a++, j++) {
@@ -2943,9 +2943,9 @@ constant * evaluate::ga_circle_v_v (constant * args) {
   _ARV1 (G);
   _ARV2 (arc);
   _DEFV ();
-  vector * circle =
-    new vector (S->getSize () * arc->getSize () * G->getSize ());
-  int i, a, j, f; nr_complex_t v; vector g, D, c, s, k, R, C, d;
+  ::vector * circle =
+    new ::vector (S->getSize () * arc->getSize () * G->getSize ());
+  int i, a, j, f; nr_complex_t v; ::vector g, D, c, s, k, R, C, d;
   D = det (*S);
   c = S->get (0, 0) - conj (S->get (1, 1)) * D;
   k = rollet (*S);
@@ -2988,7 +2988,7 @@ constant * evaluate::gp_circle_d_v (constant * args) {
   _ARD1 (G);
   _ARV2 (arc);
   _DEFV ();
-  vector g, D, c, s, k, C, R, d;
+  ::vector g, D, c, s, k, C, R, d;
   D = det (*S);
   c = S->get (1, 1) - conj (S->get (0, 0)) * D;
   k = rollet (*S);
@@ -2998,7 +2998,7 @@ constant * evaluate::gp_circle_d_v (constant * args) {
   C = g * conj (c) / d;
   R = sqrt (1 - 2 * k * g * abs (s) + g * g * norm (s)) / abs (d);
 
-  vector * circle = new vector (S->getSize () * arc->getSize ());
+  ::vector * circle = new ::vector (S->getSize () * arc->getSize ());
   int i, a, j; nr_complex_t v;
   for (i = 0, j = 0; i < C.getSize (); i++) {
     for (a = 0; a < arc->getSize (); a++, j++) {
@@ -3028,9 +3028,9 @@ constant * evaluate::gp_circle_v_v (constant * args) {
   _ARV1 (G);
   _ARV2 (arc);
   _DEFV ();
-  vector * circle =
-    new vector (S->getSize () * arc->getSize () * G->getSize ());
-  int i, a, j, f; nr_complex_t v; vector g, D, c, s, k, R, C, d;
+  ::vector * circle =
+      new ::vector (S->getSize () * arc->getSize () * G->getSize ());
+  int i, a, j, f; nr_complex_t v; ::vector g, D, c, s, k, R, C, d;
   D = det (*S);
   c = S->get (1, 1) - conj (S->get (0, 0)) * D;
   k = rollet (*S);
@@ -3105,7 +3105,7 @@ constant * evaluate::xvalue_d (constant * args) {
     THROW_MATH_EXCEPTION ("not an appropriate dependent data vector");
     _RETC (0.0);
   }
-  vector * indep = SOLVEE(0)->getDataVector (deps->get (0));
+  ::vector * indep = SOLVEE(0)->getDataVector (deps->get (0));
   int idx, i;
   nr_double_t t, diff = NR_MAX;
   for (idx = i = 0; i < v->getSize (); i++) {
@@ -3127,7 +3127,7 @@ constant * evaluate::xvalue_c (constant * args) {
     THROW_MATH_EXCEPTION ("not an appropriate dependent data vector");
     _RETC (0.0);
   }
-  vector * indep = SOLVEE(0)->getDataVector (deps->get (0));
+  ::vector * indep = SOLVEE(0)->getDataVector (deps->get (0));
   int idx, i;
   nr_double_t t, diff = NR_MAX;
   for (idx = i = 0; i < v->getSize (); i++) {
@@ -3150,7 +3150,7 @@ constant * evaluate::yvalue_d (constant * args) {
     THROW_MATH_EXCEPTION ("not an appropriate dependent data vector");
     _RETC (0.0);
   }
-  vector * indep = SOLVEE(0)->getDataVector (deps->get (0));
+  ::vector * indep = SOLVEE(0)->getDataVector (deps->get (0));
   int idx, i;
   nr_double_t t, diff = NR_MAX;
   for (idx = i = 0; i < indep->getSize (); i++) {
@@ -3172,7 +3172,7 @@ constant * evaluate::yvalue_c (constant * args) {
     THROW_MATH_EXCEPTION ("not an appropriate dependent data vector");
     _RETC (0.0);
   }
-  vector * indep = SOLVEE(0)->getDataVector (deps->get (0));
+  ::vector * indep = SOLVEE(0)->getDataVector (deps->get (0));
   int idx, i;
   nr_double_t t, diff = NR_MAX;
   for (idx = i = 0; i < indep->getSize (); i++) {
@@ -3195,7 +3195,7 @@ constant * evaluate::max_r (constant * args) {
     THROW_MATH_EXCEPTION ("not an appropriate dependent data vector");
     _RETD (0.0);
   }
-  vector * indep = SOLVEE(0)->getDataVector (deps->get (0));
+  ::vector * indep = SOLVEE(0)->getDataVector (deps->get (0));
   nr_complex_t c;
   nr_double_t d, M = -NR_MAX;
   for (int i = 0; i < indep->getSize (); i++) {
@@ -3217,7 +3217,7 @@ constant * evaluate::min_r (constant * args) {
     THROW_MATH_EXCEPTION ("not an appropriate dependent data vector");
     _RETD (0.0);
   }
-  vector * indep = SOLVEE(0)->getDataVector (deps->get (0));
+  ::vector * indep = SOLVEE(0)->getDataVector (deps->get (0));
   nr_complex_t c;
   nr_double_t d, M = +NR_MAX;
   for (int i = 0; i < indep->getSize (); i++) {
@@ -3239,7 +3239,7 @@ constant * evaluate::avg_r (constant * args) {
     THROW_MATH_EXCEPTION ("not an appropriate dependent data vector");
     _RETC (0.0);
   }
-  vector * indep = SOLVEE(0)->getDataVector (deps->get (0));
+  ::vector * indep = SOLVEE(0)->getDataVector (deps->get (0));
   nr_complex_t c = 0.0;
   int i, k;
   for (k = i = 0; i < indep->getSize (); i++) {
@@ -3733,7 +3733,7 @@ constant * evaluate::vt_c (constant * args) {
 constant * evaluate::vt_v (constant * args) {
   _ARV0 (v1);
   _DEFV ();
-  vector * v = new vector ();
+  ::vector * v = new ::vector ();
   for (int i = 0; i < v1->getSize (); i++) v->add (v1->get (i) * kBoverQ);
   res->v = v;
   return res;
@@ -3750,7 +3750,7 @@ constant * evaluate::kbd_d_d (constant * args) {
     THROW_MATH_EXCEPTION ("kbd: vector length must be greater than zero");
     __RETV ();
   }
-  vector v (size);
+  ::vector v (size);
   for (i = 0; i < size / 2; i++) {
     sval += i0 (M_PI * alpha * sqrt (1.0 - sqr (4.0 * i / size - 1.0)));
     v (i) = sval;
@@ -3861,24 +3861,24 @@ constant * evaluate::ifthenelse_v_v (constant * args) {
   _ARB0 (cond);
   int t1 = _ARG(1)->getType ();
   int t2 = _ARG(2)->getType ();
-  vector v1, v2;
+  ::vector v1, v2;
   switch (t1) {
   case TAG_DOUBLE:
-    v1 = vector (1); v1 (0) = D(_ARES(1)); break;
+    v1 = ::vector (1); v1 (0) = D(_ARES(1)); break;
   case TAG_COMPLEX:
-    v1 = vector (1); v1 (0) = *C(_ARES(1)); break;
+    v1 = ::vector (1); v1 (0) = *C(_ARES(1)); break;
   case TAG_BOOLEAN:
-    v1 = vector (1); v1 (0) = B(_ARES(1)) ? 1.0 : 0.0; break;
+    v1 = ::vector (1); v1 (0) = B(_ARES(1)) ? 1.0 : 0.0; break;
   case TAG_VECTOR:
     v1 = *V(_ARES(1)); break;
   }
   switch (t2) {
   case TAG_DOUBLE:
-    v2 = vector (1); v2 (0) = D(_ARES(2)); break;
+    v2 = ::vector (1); v2 (0) = D(_ARES(2)); break;
   case TAG_COMPLEX:
-    v2 = vector (1); v2 (0) = *C(_ARES(2)); break;
+    v2 = ::vector (1); v2 (0) = *C(_ARES(2)); break;
   case TAG_BOOLEAN:
-    v2 = vector (1); v2 (0) = B(_ARES(2)) ? 1.0 : 0.0; break;
+    v2 = ::vector (1); v2 (0) = B(_ARES(2)) ? 1.0 : 0.0; break;
   case TAG_VECTOR:
     v2 = *V(_ARES(2)); break;
   }
@@ -3890,30 +3890,30 @@ constant * evaluate::ifthenelse_v_v_v (constant * args) {
   _ARV0 (cond);
   int t1 = _ARG(1)->getType ();
   int t2 = _ARG(2)->getType ();
-  vector v1, v2;
+  ::vector v1, v2;
   switch (t1) {
   case TAG_DOUBLE:
-    v1 = vector (1); v1 (0) = D(_ARES(1)); break;
+    v1 = ::vector (1); v1 (0) = D(_ARES(1)); break;
   case TAG_COMPLEX:
-    v1 = vector (1); v1 (0) = *C(_ARES(1)); break;
+    v1 = ::vector (1); v1 (0) = *C(_ARES(1)); break;
   case TAG_BOOLEAN:
-    v1 = vector (1); v1 (0) = B(_ARES(1)) ? 1.0 : 0.0; break;
+    v1 = ::vector (1); v1 (0) = B(_ARES(1)) ? 1.0 : 0.0; break;
   case TAG_VECTOR:
     v1 = *V(_ARES(1)); break;
   }
   switch (t2) {
   case TAG_DOUBLE:
-    v2 = vector (1); v2 (0) = D(_ARES(2)); break;
+    v2 = ::vector (1); v2 (0) = D(_ARES(2)); break;
   case TAG_COMPLEX:
-    v2 = vector (1); v2 (0) = *C(_ARES(2)); break;
+    v2 = ::vector (1); v2 (0) = *C(_ARES(2)); break;
   case TAG_BOOLEAN:
-    v2 = vector (1); v2 (0) = B(_ARES(2)) ? 1.0 : 0.0; break;
+    v2 = ::vector (1); v2 (0) = B(_ARES(2)) ? 1.0 : 0.0; break;
   case TAG_VECTOR:
     v2 = *V(_ARES(2)); break;
   }
   _DEFV ();
   int i, a, b;
-  vector * v = new vector ();
+  ::vector * v = new ::vector ();
   for (a = b = i = 0; i < cond->getSize (); i++) {
     v->add (cond->get (i) != 0.0 ? v1 (a) : v2 (b));
     a++;
@@ -3944,7 +3944,7 @@ constant * evaluate::less_d_v (constant * args) {
   _ARD0 (d0);
   _ARV1 (v1);
   _DEFV ();
-  vector * v = new vector ();
+  ::vector * v = new ::vector ();
   for (int i = 0; i < v1->getSize (); i++) {
     v->add (d0 < v1->get (i) ? 1.0 : 0.0);
   }
@@ -3970,7 +3970,7 @@ constant * evaluate::less_c_v (constant * args) {
   _ARC0 (c0);
   _ARV1 (v1);
   _DEFV ();
-  vector * v = new vector ();
+  ::vector * v = new ::vector ();
   for (int i = 0; i < v1->getSize (); i++) {
     v->add (*c0 < v1->get (i) ? 1.0 : 0.0);
   }
@@ -3982,7 +3982,7 @@ constant * evaluate::less_v_d (constant * args) {
   _ARV0 (v0);
   _ARD1 (d1);
   _DEFV ();
-  vector * v = new vector ();
+  ::vector * v = new ::vector ();
   for (int i = 0; i < v0->getSize (); i++) {
     v->add (real (v0->get (i)) < d1 ? 1.0 : 0.0);
   }
@@ -3994,7 +3994,7 @@ constant * evaluate::less_v_c (constant * args) {
   _ARV0 (v0);
   _ARC1 (c1);
   _DEFV ();
-  vector * v = new vector ();
+  ::vector * v = new ::vector ();
   for (int i = 0; i < v0->getSize (); i++) {
     v->add (v0->get (i) < *c1 ? 1.0 : 0.0);
   }
@@ -4006,7 +4006,7 @@ constant * evaluate::less_v_v (constant * args) {
   _ARV0 (v0);
   _ARV1 (v1);
   _DEFV ();
-  vector * v = new vector ();
+  ::vector * v = new ::vector ();
   for (int i = 0; i < v0->getSize (); i++) {
     v->add (v0->get (i) < v1->get (i) ? 1.0 : 0.0);
   }
@@ -4033,7 +4033,7 @@ constant * evaluate::greater_d_v (constant * args) {
   _ARD0 (d0);
   _ARV1 (v1);
   _DEFV ();
-  vector * v = new vector ();
+  ::vector * v = new ::vector ();
   for (int i = 0; i < v1->getSize (); i++) {
     v->add (d0 > real (v1->get (i)) ? 1.0 : 0.0);
   }
@@ -4059,7 +4059,7 @@ constant * evaluate::greater_c_v (constant * args) {
   _ARC0 (c0);
   _ARV1 (v1);
   _DEFV ();
-  vector * v = new vector ();
+  ::vector * v = new ::vector ();
   for (int i = 0; i < v1->getSize (); i++) {
     v->add (*c0 > v1->get (i) ? 1.0 : 0.0);
   }
@@ -4071,7 +4071,7 @@ constant * evaluate::greater_v_d (constant * args) {
   _ARV0 (v0);
   _ARD1 (d1);
   _DEFV ();
-  vector * v = new vector ();
+  ::vector * v = new ::vector ();
   for (int i = 0; i < v0->getSize (); i++) {
     v->add (real (v0->get (i)) > d1 ? 1.0 : 0.0);
   }
@@ -4083,7 +4083,7 @@ constant * evaluate::greater_v_c (constant * args) {
   _ARV0 (v0);
   _ARC1 (c1);
   _DEFV ();
-  vector * v = new vector ();
+  ::vector * v = new ::vector ();
   for (int i = 0; i < v0->getSize (); i++) {
     v->add (v0->get (i) > *c1 ? 1.0 : 0.0);
   }
@@ -4095,7 +4095,7 @@ constant * evaluate::greater_v_v (constant * args) {
   _ARV0 (v0);
   _ARV1 (v1);
   _DEFV ();
-  vector * v = new vector ();
+  ::vector * v = new ::vector ();
   for (int i = 0; i < v0->getSize (); i++) {
     v->add (v0->get (i) > v1->get (i) ? 1.0 : 0.0);
   }
@@ -4122,7 +4122,7 @@ constant * evaluate::lessorequal_d_v (constant * args) {
   _ARD0 (d0);
   _ARV1 (v1);
   _DEFV ();
-  vector * v = new vector ();
+  ::vector * v = new ::vector ();
   for (int i = 0; i < v1->getSize (); i++) {
     v->add (d0 <= real (v1->get (i)) ? 1.0 : 0.0);
   }
@@ -4148,7 +4148,7 @@ constant * evaluate::lessorequal_c_v (constant * args) {
   _ARC0 (c0);
   _ARV1 (v1);
   _DEFV ();
-  vector * v = new vector ();
+  ::vector * v = new ::vector ();
   for (int i = 0; i < v1->getSize (); i++) {
     v->add (*c0 <= v1->get (i) ? 1.0 : 0.0);
   }
@@ -4160,7 +4160,7 @@ constant * evaluate::lessorequal_v_d (constant * args) {
   _ARV0 (v0);
   _ARD1 (d1);
   _DEFV ();
-  vector * v = new vector ();
+  ::vector * v = new ::vector ();
   for (int i = 0; i < v0->getSize (); i++) {
     v->add (real (v0->get (i)) <= d1 ? 1.0 : 0.0);
   }
@@ -4172,7 +4172,7 @@ constant * evaluate::lessorequal_v_c (constant * args) {
   _ARV0 (v0);
   _ARC1 (c1);
   _DEFV ();
-  vector * v = new vector ();
+  ::vector * v = new ::vector ();
   for (int i = 0; i < v0->getSize (); i++) {
     v->add (v0->get (i) <= *c1 ? 1.0 : 0.0);
   }
@@ -4184,7 +4184,7 @@ constant * evaluate::lessorequal_v_v (constant * args) {
   _ARV0 (v0);
   _ARV1 (v1);
   _DEFV ();
-  vector * v = new vector ();
+  ::vector * v = new ::vector ();
   for (int i = 0; i < v0->getSize (); i++) {
     v->add (v0->get (i) <= v1->get (i) ? 1.0 : 0.0);
   }
@@ -4211,7 +4211,7 @@ constant * evaluate::greaterorequal_d_v (constant * args) {
   _ARD0 (d0);
   _ARV1 (v1);
   _DEFV ();
-  vector * v = new vector ();
+  ::vector * v = new ::vector ();
   for (int i = 0; i < v1->getSize (); i++) {
     v->add (d0 >= real (v1->get (i)) ? 1.0 : 0.0);
   }
@@ -4237,7 +4237,7 @@ constant * evaluate::greaterorequal_c_v (constant * args) {
   _ARC0 (c0);
   _ARV1 (v1);
   _DEFV ();
-  vector * v = new vector ();
+  ::vector * v = new ::vector ();
   for (int i = 0; i < v1->getSize (); i++) {
     v->add (*c0 >= v1->get (i) ? 1.0 : 0.0);
   }
@@ -4249,7 +4249,7 @@ constant * evaluate::greaterorequal_v_d (constant * args) {
   _ARV0 (v0);
   _ARD1 (d1);
   _DEFV ();
-  vector * v = new vector ();
+  ::vector * v = new ::vector ();
   for (int i = 0; i < v0->getSize (); i++) {
     v->add (real (v0->get (i)) >= d1 ? 1.0 : 0.0);
   }
@@ -4261,7 +4261,7 @@ constant * evaluate::greaterorequal_v_c (constant * args) {
   _ARV0 (v0);
   _ARC1 (c1);
   _DEFV ();
-  vector * v = new vector ();
+  ::vector * v = new ::vector ();
   for (int i = 0; i < v0->getSize (); i++) {
     v->add (v0->get (i) >= *c1 ? 1.0 : 0.0);
   }
@@ -4273,7 +4273,7 @@ constant * evaluate::greaterorequal_v_v (constant * args) {
   _ARV0 (v0);
   _ARV1 (v1);
   _DEFV ();
-  vector * v = new vector ();
+  ::vector * v = new ::vector ();
   for (int i = 0; i < v0->getSize (); i++) {
     v->add (v0->get (i) >= v1->get (i) ? 1.0 : 0.0);
   }
@@ -4300,7 +4300,7 @@ constant * evaluate::equal_d_v (constant * args) {
   _ARD0 (d0);
   _ARV1 (v1);
   _DEFV ();
-  vector * v = new vector ();
+  ::vector * v = new ::vector ();
   for (int i = 0; i < v1->getSize (); i++) {
     v->add (d0 == real (v1->get (i)) ? 1.0 : 0.0);
   }
@@ -4326,7 +4326,7 @@ constant * evaluate::equal_c_v (constant * args) {
   _ARC0 (c0);
   _ARV1 (v1);
   _DEFV ();
-  vector * v = new vector ();
+  ::vector * v = new ::vector ();
   for (int i = 0; i < v1->getSize (); i++) {
     v->add (*c0 == v1->get (i) ? 1.0 : 0.0);
   }
@@ -4338,7 +4338,7 @@ constant * evaluate::equal_v_d (constant * args) {
   _ARV0 (v0);
   _ARD1 (d1);
   _DEFV ();
-  vector * v = new vector ();
+  ::vector * v = new ::vector ();
   for (int i = 0; i < v0->getSize (); i++) {
     v->add (real (v0->get (i)) == d1 ? 1.0 : 0.0);
   }
@@ -4350,7 +4350,7 @@ constant * evaluate::equal_v_c (constant * args) {
   _ARV0 (v0);
   _ARC1 (c1);
   _DEFV ();
-  vector * v = new vector ();
+  ::vector * v = new ::vector ();
   for (int i = 0; i < v0->getSize (); i++) {
     v->add (v0->get (i) == *c1 ? 1.0 : 0.0);
   }
@@ -4362,7 +4362,7 @@ constant * evaluate::equal_v_v (constant * args) {
   _ARV0 (v0);
   _ARV1 (v1);
   _DEFV ();
-  vector * v = new vector ();
+  ::vector * v = new ::vector ();
   for (int i = 0; i < v0->getSize (); i++) {
     v->add (v0->get (i) == v1->get (i) ? 1.0 : 0.0);
   }
@@ -4396,7 +4396,7 @@ constant * evaluate::notequal_d_v (constant * args) {
   _ARD0 (d0);
   _ARV1 (v1);
   _DEFV ();
-  vector * v = new vector ();
+  ::vector * v = new ::vector ();
   for (int i = 0; i < v1->getSize (); i++) {
     v->add (d0 != real (v1->get (i)) ? 1.0 : 0.0);
   }
@@ -4422,7 +4422,7 @@ constant * evaluate::notequal_c_v (constant * args) {
   _ARC0 (c0);
   _ARV1 (v1);
   _DEFV ();
-  vector * v = new vector ();
+  ::vector * v = new ::vector ();
   for (int i = 0; i < v1->getSize (); i++) {
     v->add (*c0 != v1->get (i) ? 1.0 : 0.0);
   }
@@ -4434,7 +4434,7 @@ constant * evaluate::notequal_v_d (constant * args) {
   _ARV0 (v0);
   _ARD1 (d1);
   _DEFV ();
-  vector * v = new vector ();
+  ::vector * v = new ::vector ();
   for (int i = 0; i < v0->getSize (); i++) {
     v->add (real (v0->get (i)) != d1 ? 1.0 : 0.0);
   }
@@ -4446,7 +4446,7 @@ constant * evaluate::notequal_v_c (constant * args) {
   _ARV0 (v0);
   _ARC1 (c1);
   _DEFV ();
-  vector * v = new vector ();
+  ::vector * v = new ::vector ();
   for (int i = 0; i < v0->getSize (); i++) {
     v->add (v0->get (i) != *c1 ? 1.0 : 0.0);
   }
@@ -4458,7 +4458,7 @@ constant * evaluate::notequal_v_v (constant * args) {
   _ARV0 (v0);
   _ARV1 (v1);
   _DEFV ();
-  vector * v = new vector ();
+  ::vector * v = new ::vector ();
   for (int i = 0; i < v0->getSize (); i++) {
     v->add (v0->get (i) != v1->get (i) ? 1.0 : 0.0);
   }
@@ -4583,7 +4583,7 @@ constant * evaluate::bugon_v (constant * args) {
 // ******************* immediate vectors *******************
 constant * evaluate::vector_x (constant * args) {
   _DEFV ();
-  vector * v = new vector ();
+  ::vector * v = new ::vector ();
   for (node * arg = args; arg != NULL; arg = arg->getNext ()) {
     constant * c = arg->getResult ();
     switch (arg->getType ()) {
@@ -4607,8 +4607,8 @@ constant * evaluate::vector_x (constant * args) {
 constant * evaluate::matrix_x (constant * args) {
   _DEFM ();
   /* create temporary list of vectors */
-  vector * va = NULL;
-  vector * v = new vector ();
+  ::vector * va = NULL;
+  ::vector * v = new ::vector ();
   va = v;
   for (node * arg = args; arg != NULL; arg = arg->getNext ()) {
     constant * c = arg->getResult ();
@@ -4624,7 +4624,7 @@ constant * evaluate::matrix_x (constant * args) {
     case TAG_CHAR:
       if (c->chr == ';') {
 	/* append new vector, i.e. a new matrix row */
-	vector * vn = new vector ();
+	::vector * vn = new ::vector ();
 	v->setNext (vn);
 	v = vn;
       }
@@ -4636,17 +4636,17 @@ constant * evaluate::matrix_x (constant * args) {
   }
   /* determine matrix dimensions and create it */
   int r, c;
-  for (r = 0, c = 0, v = va; v != NULL; v = (vector *) v->getNext (), r++) {
+  for (r = 0, c = 0, v = va; v != NULL; v = (::vector *) v->getNext (), r++) {
     if (c < v->getSize ()) c = v->getSize ();
   }
   matrix * m = new matrix (r, c);
   /* fill in matrix entries and delete temporary vector list */
-  vector * vn = NULL;
+  ::vector * vn = NULL;
   for (r = 0, v = va; v != NULL; v = vn, r++) {
     for (c = 0; c < v->getSize (); c++) {
       m->set (r, c, v->get (c));
     }
-    vn = (vector *) v->getNext ();
+    vn = (::vector *) v->getNext ();
     delete v;
   }
   /* return result matrix */
@@ -4661,7 +4661,7 @@ constant * evaluate::receiver_v_v (constant * args) {
   _DEFV ();
 
   // run receiver functionality
-  vector * ed;
+  ::vector * ed;
   if (_ARG(2)) {
     _ARI2 (len);
     ed = emi::receiver (da, dt, len);
@@ -4672,8 +4672,8 @@ constant * evaluate::receiver_v_v (constant * args) {
 
   // create two vectors for spectrum and frequency
   int rlen = ed->getSize ();
-  vector * rvec = new vector (rlen);
-  vector * rfeq = new vector (rlen);
+  ::vector * rvec = new ::vector (rlen);
+  ::vector * rfeq = new ::vector (rlen);
   for (int i = 0; i < rlen; i++) {
     (*rvec)(i) = real (ed->get (i));
     (*rfeq)(i) = imag (ed->get (i));

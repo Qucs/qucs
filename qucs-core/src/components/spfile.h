@@ -37,12 +37,12 @@ class spfile_vector
   ~spfile_vector ();
 
  public:
-  void prepare (vector *, vector *, bool, int, int);
+  void prepare (::vector *, ::vector *, bool, int, int);
   nr_complex_t interpolate (nr_double_t);
 
  public:
-  vector * v;
-  vector * f;
+  ::vector * v;
+  ::vector * f;
   int isreal;
   interpolator * inter;
   int r;
@@ -77,8 +77,8 @@ class spfile : public circuit
 
  private:
   dataset * data;
-  vector * sfreq;
-  vector * nfreq;
+  ::vector * sfreq;
+  ::vector * nfreq;
   spfile_vector * spara;
   spfile_vector * RN;
   spfile_vector * FMIN;

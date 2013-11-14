@@ -48,12 +48,14 @@
 #include "tvector.h"
 #include "tmatrix.h"
 #include "eqnsys.h"
-#include "constants.h"
 #include "precision.h"
 #include "operatingpoint.h"
 #include "exception.h"
 #include "exceptionstack.h"
 #include "nasolver.h"
+
+// T0 is a shit load after all
+#include "constants.h"
 
 using namespace qucs;
 
@@ -1305,7 +1307,7 @@ void nasolver<nr_type_t>::recallSolution (void)
    into the output dataset. */
 template <class nr_type_t>
 void nasolver<nr_type_t>::saveResults (const char * volts, const char * amps,
-                                       int saveOPs, vector * f)
+                                       int saveOPs, ::vector * f)
 {
     int N = countNodes ();
     int M = countVoltageSources ();

@@ -349,7 +349,7 @@ void environment::updateReferences (environment * up) {
 }
 
 // Returns vector of an assignment in the equation checker.
-vector environment::getVector (char * ident) {
+::vector environment::getVector (char * ident) {
   return checkee->getVector (ident);
 }
 

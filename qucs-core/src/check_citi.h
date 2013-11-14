@@ -42,7 +42,7 @@ struct citi_header_t {
 
 struct citi_package_t {
   struct citi_header_t * head;
-  vector * data;
+  ::vector * data;
   struct citi_package_t * next;
 };
 
