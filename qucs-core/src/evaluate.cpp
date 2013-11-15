@@ -4516,6 +4516,70 @@ constant * evaluate::srand_d (constant * args) {
   }
 }
 
+
+// ******************* assert test *************************
+constant * evaluate::assert_b(constant *args)
+{
+    _ARB0(b0);
+    if(!b0)
+	abort();
+     _DEFB ();
+    _RETB(true);
+}
+
+
+constant * evaluate::assert_d(constant *args)
+{
+    _ARD0(d0);
+    if(d0 == 0.0)
+	abort();
+     _DEFB ();
+    _RETB(true);
+}
+
+
+constant * evaluate::assert_v (constant * args) {
+  _ARV0 (v0);
+  for (int i = 0; i < v0->getSize (); i++) {
+    if( v0->get(i) == 0.0 )
+	abort();
+  }
+  _DEFB (); 
+  _RETB(true);
+}
+
+
+constant * evaluate::bugon_b(constant *args)
+{
+    _ARB0(b0);
+    if(b0)
+	abort();
+     _DEFB ();
+    _RETB(true);
+}
+
+
+constant * evaluate::bugon_d(constant *args)
+{
+    _ARD0(d0);
+    if(d0 != 0.0)
+	abort();
+     _DEFB ();
+    _RETB(true);
+}
+
+
+constant * evaluate::bugon_v (constant * args) {
+  _ARV0 (v0);
+  for (int i = 0; i < v0->getSize (); i++) {
+    if( v0->get(i) != 0.0 )
+	abort();
+  }
+  _DEFB (); 
+  _RETB(true);
+}
+
+
 // ******************* immediate vectors *******************
 constant * evaluate::vector_x (constant * args) {
   _DEFV ();

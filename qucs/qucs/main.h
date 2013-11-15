@@ -64,6 +64,9 @@ struct tQucsSettings {
   QDir OctaveBinDir;
   // registered filename extensions with program to open the file
   QStringList FileTypes;
+
+  unsigned int numRecentDocs;
+  QStringList RecentDocs;
 };
 
 extern tQucsSettings QucsSettings;  // extern because nearly everywhere used

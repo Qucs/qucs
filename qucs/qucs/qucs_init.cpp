@@ -663,6 +663,11 @@ void QucsApp::initMenuBar()
   fileMenu->addAction(textNew);
   fileMenu->addAction(fileOpen);
   fileMenu->addAction(fileClose);
+
+  recentfilesMenu = new QMenu(tr("Open Recent"),fileMenu);
+  fileMenu->addMenu(recentfilesMenu);
+  slotUpdateRecentFiles();
+
   fileMenu->insertSeparator();
   fileMenu->addAction(fileSave);
   fileMenu->addAction(fileSaveAll);
@@ -679,7 +684,6 @@ void QucsApp::initMenuBar()
   fileMenu->addAction(refreshSchPath);
   fileMenu->insertSeparator();
   fileMenu->addAction(fileQuit);
-
 
   editMenu = new QMenu(tr("&Edit"));  // menuBar entry editMenu
   editMenu->addAction(undo);
