@@ -243,6 +243,7 @@ AC_CHECK_FUNCS([floor pow exp sqrt log10 log cos sin acos asin tan atan sinh \
 dnl Checks for complex classes and functions.
 AC_CXX_NAMESPACES
 AC_CXX_HAVE_COMPLEX
+AS_IF([test "X$ac_cv_cxx_have_complex" = "X"],[AC_MSG_ERROR([Qucs Need a templated complex class])])
 AC_CXX_HAVE_TR1_COMPLEX
 AC_CHECK_CXX_COMPLEX_FUNCS([cos cosh exp log log10 sin sinh sqrt tan tanh])
 AC_CHECK_CXX_COMPLEX_FUNCS([acos acosh asin asinh atan atanh])

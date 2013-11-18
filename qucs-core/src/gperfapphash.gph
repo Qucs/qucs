@@ -703,3 +703,9 @@ struct appindex { const char * key; int index; };
 "srandom_D", 		694
 "vector", 		695
 "matrix", 		696
+"assert_B", 		697
+"assert_D", 		698
+"assert_V", 		699
+"bugon_B", 		700
+"bugon_D", 		701
+"bugon_V", 		702
