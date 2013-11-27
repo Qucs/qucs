@@ -7,16 +7,16 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This software is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this package; see the file COPYING.  If not, write to
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
- * Boston, MA 02110-1301, USA.  
+ * Boston, MA 02110-1301, USA.
  *
  * $Id$
  *
@@ -29,7 +29,8 @@
 #include "analysis.h"
 #include "equation.h"
 
-using namespace eqn;
+//using namespace qucs::eqn;
+namespace qucs {
 
 // Enumerate possible types of variables.
 enum variably_type {
@@ -42,8 +43,13 @@ enum variably_type {
 };
 
 class substrate;
-class equation;
 class analysis;
+
+namespace eqn {
+  class equation;
+  class constant;
+}
+
 
 class variable
 {
@@ -59,14 +65,14 @@ class variable
 
   void setType (int t) { type = t; }
   int getType (void) { return type; }
-  void setConstant (constant * c) { type = VAR_CONSTANT; value.c = c; }
-  constant * getConstant (void) { return value.c; }
-  void setReference (reference * r) { type = VAR_REFERENCE; value.r = r; }
-  reference * getReference (void) { return value.r; }
+  void setConstant (eqn::constant * c) { type = VAR_CONSTANT; value.c = c; }
+  eqn::constant * getConstant (void) { return value.c; }
+  void setReference (eqn::reference * r) { type = VAR_REFERENCE; value.r = r; }
+  eqn::reference * getReference (void) { return value.r; }
   void setSubstrate (substrate * s) { type = VAR_SUBSTRATE; value.s = s; }
   substrate * getSubstrate (void) { return value.s; }
-  void setValue (constant * v) { type = VAR_VALUE; value.v = v; }
-  constant * getValue (void) { return value.v; }
+  void setValue (eqn::constant * v) { type = VAR_VALUE; value.v = v; }
+  eqn::constant * getValue (void) { return value.v; }
   void setAnalysis (analysis * a) { type = VAR_ANALYSIS; value.a = a; }
   analysis * getAnalysis (void) { return value.a; }
   char * toString (void);
@@ -79,13 +85,15 @@ class variable
   bool pass;
   int type;
   union value_t {
-    constant * c;  // equation constant
-    reference * r; // equation reference
+    eqn::constant * c;  // equation constant
+    eqn::reference * r; // equation reference
     substrate * s; // substrate definition
-    constant * v;  // equation result
+    eqn::constant * v;  // equation result
     analysis * a;  // analysis
   } value;
   variable * next;
 };
+
+} // namespace qucs
 
 #endif /* __VARIABLE_H__ */

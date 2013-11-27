@@ -7,16 +7,16 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This software is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this package; see the file COPYING.  If not, write to
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
- * Boston, MA 02110-1301, USA.  
+ * Boston, MA 02110-1301, USA.
  *
  * $Id$
  *
@@ -29,7 +29,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <math.h>
+#include <cmath>
 
 #include "consts.h"
 #include "object.h"
@@ -39,6 +39,8 @@
 
 // Helper macro.
 #define Swap(a,b) { nr_double_t t; t = a; a = b; b = t; }
+
+namespace qucs {
 
 using namespace fourier;
 
@@ -241,12 +243,12 @@ void fourier::_idft_1d (nr_double_t * data, int len) {
    each dimension. */
 void fourier::_fft_nd (nr_double_t * data, int len[], int nd, int isign) {
 
- int i, i1, i2, i3, i2rev, i3rev, ip1, ip2, ip3, ifp1, ifp2; 
- int ibit, k1, k2, n, np, nr, nt; 
- 
+ int i, i1, i2, i3, i2rev, i3rev, ip1, ip2, ip3, ifp1, ifp2;
+ int ibit, k1, k2, n, np, nr, nt;
+
  // compute total number of complex values
  for (nt = 1, i = 0; i < nd; i++) nt *= len[i];
- 
+
  // main loop over the dimensions
  for (np = 1, i = nd - 1; i >= 0; i--) {
    n = len[i];
@@ -254,7 +256,7 @@ void fourier::_fft_nd (nr_double_t * data, int len[], int nd, int isign) {
    ip1 = np << 1;
    ip2 = ip1 * n;
    ip3 = ip2 * nr;
- 
+
    // bit-reversal method
    for (i2rev = 1, i2 = 1; i2 <= ip2; i2 += ip1) {
      if (i2 < i2rev) {
@@ -275,7 +277,7 @@ void fourier::_fft_nd (nr_double_t * data, int len[], int nd, int isign) {
    }
 
    // Danielson-Lanzcos algorithm
-   nr_double_t ti, tr, wt, th, wr, wi, wpi, wpr; 
+   nr_double_t ti, tr, wt, th, wr, wi, wpi, wpr;
    ifp1 = ip1;
    while (ifp1 < ip2) {
      ifp2 = ifp1 << 1;
@@ -324,3 +326,4 @@ vector fourier::fftshift (vector var) {
   return res;
 }
 
+} // namespace qucs

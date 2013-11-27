@@ -31,6 +31,8 @@
 #include "substrate.h"
 #include "mscorner.h"
 
+using namespace qucs;
+
 mscorner::mscorner () : circuit (2) {
   type = CIR_MSCORNER;
 }
@@ -58,7 +60,7 @@ void mscorner::initCheck (void) {
   // capacitance in pF
   C = W * ((10.35 * er + 2.5) * Wh + (2.6 * er + 5.64));
   // inductivity in nH
-  L = 220.0 * h * (1.0 - 1.35 * exp (-0.18 * pow (Wh, 1.39)));
+  L = 220.0 * h * (1.0 - 1.35 * qucs::exp (-0.18 * pow (Wh, 1.39)));
 }
 
 void mscorner::initSP (void) {

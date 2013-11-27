@@ -8,23 +8,23 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This software is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this package; see the file COPYING.  If not, write to
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
- * Boston, MA 02110-1301, USA.  
+ * Boston, MA 02110-1301, USA.
  *
  * $Id$
  *
  */
 
 /*!\file complex.cpp
-   
+
    Implement complex number class and functions
 */
 
@@ -32,15 +32,22 @@
 # include <config.h>
 #endif
 
-#include <math.h>
+#include <cmath>
+#include <assert.h>
+#include <errno.h>
+#include <stdio.h>
+#include <stdlib.h>
 
+#include "constants.h"
+#include "precision.h"
 #include "complex.h"
 #include "consts.h"
 #include "fspecial.h"
 
+using namespace COMP_STD;
 using namespace fspecial;
 
-
+namespace qucs {
 
 #ifndef HAVE_CXX_COMPLEX_POLAR_COMPLEX
 /*!\brief Extension of polar construction to complex
@@ -55,7 +62,7 @@ nr_complex_t polar (const nr_complex_t a, const nr_complex_t p) {
 }
 #endif
 
-#ifndef HAVE_CXX_COMPLEX_COS 
+#ifndef HAVE_CXX_COMPLEX_COS
 /*!\brief Compute complex cosinus
 
    \param[in] z complex angle
@@ -100,6 +107,17 @@ nr_complex_t cosh (const nr_complex_t z) {
 }
 #endif
 
+#ifndef HAVE_CXX_COMPLEX_SECH
+/*!\brief Compute complex hyperbolic secant
+
+   \param[in] z complex angle
+   \return hyperbolic secant of z
+*/
+nr_complex_t sech (const nr_complex_t z) {
+    return (1.0 / std::cosh (z));
+}
+#endif
+
 #ifndef HAVE_CXX_COMPLEX_ACOSH
 /*!\brief Compute complex argument hyperbolic cosinus
 
@@ -108,6 +126,17 @@ nr_complex_t cosh (const nr_complex_t z) {
 */
 nr_complex_t acosh (const nr_complex_t z) {
   return log (z + sqrt (z * z - 1.0));
+}
+#endif
+
+#ifndef HAVE_CXX_COMPLEX_COSECH
+/*!\brief Compute complex argument hyperbolic cosec
+
+   \param[in] z complex arc
+   \return argument hyperbolic cosec of z
+*/
+nr_complex_t     cosech (const nr_complex_t z) {
+  return (1.0 / sinh(z));
 }
 #endif
 
@@ -134,7 +163,7 @@ nr_complex_t limexp (const nr_complex_t z) {
   return nr_complex_t (mag * cos (imag (z)), mag * sin (imag (z)));
 }
 
-#ifndef HAVE_CXX_COMPLEX_LOG 
+#ifndef HAVE_CXX_COMPLEX_LOG
 /*!\brief Compute principal value of natural logarithm of z
 
    \param[in] z complex number
@@ -144,9 +173,9 @@ nr_complex_t log (const nr_complex_t z) {
   nr_double_t phi = arg (z);
   return nr_complex_t (log (abs (z)), phi);
 }
-#endif 
+#endif
 
-#ifndef HAVE_CXX_COMPLEX_LOG10 
+#ifndef HAVE_CXX_COMPLEX_LOG10
 /*!\brief Compute principal value of decimal logarithm of z
 
    \param[in] z complex number
@@ -166,7 +195,7 @@ nr_complex_t log10 (const nr_complex_t z) {
 */
 nr_complex_t log2 (const nr_complex_t z) {
   nr_double_t phi = arg (z);
-  return nr_complex_t (log (abs (z)) * M_LOG2E, phi * M_LOG2E);
+  return nr_complex_t (std::log (std::abs (z)) * M_LOG2E, phi * M_LOG2E);
 }
 #endif
 
@@ -191,7 +220,7 @@ nr_complex_t pow (const nr_double_t d, const nr_complex_t z) {
   return exp (z * log (d));
 }
 
-/*!\brief Compute complex power function 
+/*!\brief Compute complex power function
 
    \param[in] z1 complex mantisse
    \param[in] z2 complex exponent
@@ -202,7 +231,7 @@ nr_complex_t pow (const nr_complex_t z1, const nr_complex_t z2) {
 }
 #endif
 
-#ifndef HAVE_CXX_COMPLEX_SIN 
+#ifndef HAVE_CXX_COMPLEX_SIN
 /*!\brief Compute complex sinus
 
    \param[in] z complex angle
@@ -250,7 +279,7 @@ nr_complex_t sinh (const nr_complex_t z) {
 nr_complex_t asinh (const nr_complex_t z) {
   return log (z + sqrt (z * z + 1.0));
 }
-#endif 
+#endif
 
 #ifndef HAVE_CXX_COMPLEX_SQRT
 /*!\brief Compute principal value of square root
@@ -322,8 +351,8 @@ nr_complex_t atan (const nr_complex_t z) {
 
 #ifndef HAVE_CXX_COMPLEX_ATAN2
 /*!\brief Compute complex arc tangent fortran like function
-    
-   atan2 is a two-argument function that computes the arc tangent of y / x 
+
+   atan2 is a two-argument function that computes the arc tangent of y / x
    given y and x, but with a range of \f$(-\pi;\pi]\f$
 
    \param[in] z complex angle
@@ -344,7 +373,7 @@ nr_complex_t atan2 (const nr_complex_t y, const nr_complex_t x) {
 nr_complex_t tanh (const nr_complex_t z) {
   nr_double_t r = 2.0 * real (z);
   nr_double_t i = 2.0 * imag (z);
-  return 1.0 - 2.0 / (polar (exp (r), i) + 1.0);
+  return 1.0 - 2.0 / (COMP_STD::polar (exp (r), i) + 1.0);
 }
 #endif
 
@@ -367,7 +396,7 @@ nr_complex_t atanh (const nr_complex_t z) {
 nr_complex_t cot (const nr_complex_t z) {
   nr_double_t r = 2.0 * real (z);
   nr_double_t i = 2.0 * imag (z);
-  return rect (0.0, 1.0) + rect (0.0, 2.0) / (polar (exp (-i), r) - 1.0);
+  return rect (0.0, 1.0) + rect (0.0, 2.0) / (COMP_STD::polar (std::exp (-i), r) - 1.0);
 }
 
 /*!\brief Compute complex arc cotangent
@@ -397,7 +426,7 @@ nr_complex_t asech (const nr_complex_t z) {
 nr_complex_t coth (const nr_complex_t z) {
   nr_double_t r = 2.0 * real (z);
   nr_double_t i = 2.0 * imag (z);
-  return 1.0 + 2.0 / (polar (exp (r), i) - 1.0);
+  return 1.0 + 2.0 / (COMP_STD::polar (std::exp (r), i) - 1.0);
 }
 
 /*!\brief Compute complex argument hyperbolic cotangent
@@ -448,8 +477,8 @@ nr_complex_t rtoy (const nr_complex_t r, nr_complex_t zref) {
 }
 
 
-/*!\brief complex signum function 
-   
+/*!\brief complex signum function
+
     compute \f[
     \mathrm{signum}\;z= \mathrm{signum} (re^{i\theta})
                      = \begin{cases}
@@ -466,8 +495,8 @@ nr_complex_t signum (const nr_complex_t z) {
   return z / abs (z);
 }
 
-/*!\brief complex sign function 
-   
+/*!\brief complex sign function
+
     compute \f[
     \mathrm{sign}\;z= \mathrm{sign} (re^{i\theta})
                      = \begin{cases}
@@ -486,8 +515,8 @@ nr_complex_t sign (const nr_complex_t z) {
 
 /*!\brief Euclidean distance function for complex argument
 
-   The xhypot() function returns \f$\sqrt{a^2+b^2}\f$.  
-   This is the length of the hypotenuse of a right-angle triangle with sides 
+   The xhypot() function returns \f$\sqrt{a^2+b^2}\f$.
+   This is the length of the hypotenuse of a right-angle triangle with sides
    of length a and b, or the distance
    of the point (a,b) from the origin.
 
@@ -499,20 +528,20 @@ nr_double_t xhypot (const nr_complex_t a, const nr_complex_t b) {
   nr_double_t c = norm (a);
   nr_double_t d = norm (b);
   if (c > d)
-    return abs (a) * sqrt (1 + d / c);
+    return abs (a) * std::sqrt (1 + d / c);
   else if (d == 0)
     return 0;
   else
-    return abs (b) * sqrt (1 + c / d);
+    return abs (b) * std::sqrt (1 + c / d);
 }
 
 /*!\brief Euclidean distance function for a double b complex */
-nr_double_t xhypot (const nr_double_t a, const nr_complex_t b) {
+nr_double_t xhypot (nr_double_t a, nr_complex_t b) {
   return xhypot (nr_complex_t (a), b);
 }
 
 /*!\brief Euclidean distance function for b double a complex */
-nr_double_t xhypot (const nr_complex_t a, const nr_double_t b) {
+nr_double_t xhypot (nr_complex_t a, nr_double_t b) {
   return xhypot (a, nr_complex_t (b));
 }
 
@@ -522,13 +551,13 @@ nr_double_t xhypot (const nr_complex_t a, const nr_double_t b) {
 
 
 /*!\brief Heaviside step function for complex number
-   
+
    Apply Heaviside to real and imaginary part
    \param[in] z Heaviside argument
    \return Heaviside step
    \todo Create Heaviside alias
    \todo Why not using real heaviside
-*/ 
+*/
 nr_complex_t step (const nr_complex_t z) {
   nr_double_t x = real (z);
   nr_double_t y = imag (z);
@@ -549,96 +578,108 @@ nr_complex_t step (const nr_complex_t z) {
 
 nr_complex_t cbesselj (unsigned int, nr_complex_t);
 
+#include "cbesselj.cpp"
+
 /*!\brief Bessel function of first kind
-   
-   \param[in] n order 
+
+   \param[in] n order
    \param[in] z argument
-   \return Bessel function of first kind of order n 
+   \return Bessel function of first kind of order n
    \bug Not implemented
-*/ 
+*/
 nr_complex_t jn (const int n, const nr_complex_t z) {
   return cbesselj (n, z);
 }
 
 /*!\brief Bessel function of second kind
-   
-   \param[in] n order 
+
+   \param[in] n order
    \param[in] z argument
-   \return Bessel function of second kind of order n 
+   \return Bessel function of second kind of order n
    \bug Not implemented
-*/ 
+*/
 nr_complex_t yn (const int n, const nr_complex_t z) {
-  return rect (yn (n, real (z)), 0);
+  return rect (::yn (n, COMP_STD::real (z)), 0);
 }
 
 /*!\brief Modified Bessel function of first kind
-   
+
    \param[in] z argument
    \return Modified Bessel function of first kind of order 0
    \bug Not implemented
 */
 nr_complex_t i0 (const nr_complex_t z) {
-  return rect (i0 (real (z)), 0);
+  return rect (fspecial::i0 (COMP_STD::real (z)), 0);
 }
 
 /*!\brief Error function
-   
+
    \param[in] z argument
    \return Error function
    \bug Not implemented
 */
 nr_complex_t erf (const nr_complex_t z) {
-  return rect (erf (real (z)), 0);
+#ifndef HAVE_ERF
+  nr_double_t zerf = fspecial::erf (COMP_STD::real (z));
+#else
+  nr_double_t zerf = ::erf (COMP_STD::real (z));
+#endif
+  return rect (zerf, 0);
 }
 
 /*!\brief Complementart error function
-   
+
    \param[in] z argument
    \return Complementary error function
    \bug Not implemented
 */
 nr_complex_t erfc (const nr_complex_t z) {
-  return rect (erfc (real (z)), 0);
+#ifndef HAVE_ERFC
+  nr_double_t zerfc = fspecial::erfc (COMP_STD::real (z));
+#else
+  nr_double_t zerfc = ::erfc (COMP_STD::real (z));
+#endif
+  return rect (zerfc, 0);
 }
 
 /*!\brief Inverse of error function
-   
+
    \param[in] z argument
    \return Inverse of error function
    \bug Not implemented
 */
 nr_complex_t erfinv (const nr_complex_t z) {
-  return rect (erfinv (real (z)), 0);
+  return rect (fspecial::erfinv (COMP_STD::real (z)), 0);
 }
 
 /*!\brief Inverse of complementart error function
-   
+
    \param[in] z argument
    \return Inverse of complementary error function
    \bug Not implemented
 */
 nr_complex_t erfcinv (const nr_complex_t z) {
-  return rect (erfcinv (real (z)), 0);
+  return rect (fspecial::erfcinv (COMP_STD::real (z)), 0);
 }
 
 /*!\brief Equality of two complex
   \todo Why not inline
-  \note Like equality of double this test 
+  \note Like equality of double this test
         is meaningless in finite precision
 	Use instead fabs(x-x0) < tol
 */
 bool operator==(const nr_complex_t z1, const nr_complex_t z2) {
-  return (real (z1) == real (z2)) && (imag (z1) == imag (z2));
+  return (COMP_STD::real (z1) == COMP_STD::real (z2)) && (COMP_STD::imag (z1) == COMP_STD::imag (z2));
 }
 
 /*!\brief Inequality of two complex
   \todo Why not inline
-  \note Like inequality of double this test 
+  \note Like inequality of double this test
         is meaningless in finite precision
 	Use instead fabs(x-x0) > tol
 */
 bool operator!=(const nr_complex_t z1, const nr_complex_t z2) {
-  return (real (z1) != real (z2)) || (imag (z1) != imag (z2));
+  return (COMP_STD::real (z1) != COMP_STD::real (z2)) || (COMP_STD::imag (z1) != COMP_STD::imag (z2));
 }
 
 /*!\brief Superior of equal
@@ -662,30 +703,32 @@ bool operator>(const nr_complex_t z1, const nr_complex_t z2) {
   return norm (z1) > norm (z2);
 }
 
-/*!\brief Inferior 
+/*!\brief Inferior
    \todo Why not inline
 */
 bool operator<(const nr_complex_t z1, const nr_complex_t z2) {
   return norm (z1) < norm (z2);
 }
 
-/*!\brief Modulo 
-   \todo Why not inline 
+/*!\brief Modulo
+   \todo Why not inline
 */
 nr_complex_t operator%(const nr_complex_t z1, const nr_complex_t z2) {
   return z1 - z2 * floor (z1 / z2);
 }
 
-/*!\brief Modulo 
-   \todo Why not inline 
+/*!\brief Modulo
+   \todo Why not inline
 */
 nr_complex_t operator%(const nr_complex_t z1, const nr_double_t r2) {
   return z1 - r2 * floor (z1 / r2);
 }
 
-/*!\brief Modulo 
-   \todo Why not inline 
+/*!\brief Modulo
+   \todo Why not inline
 */
 nr_complex_t operator%(const nr_double_t r1, const nr_complex_t z2) {
   return r1 - z2 * floor (r1 / z2);
 }
+
+} // namespace qucs

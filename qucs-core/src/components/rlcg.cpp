@@ -7,16 +7,16 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This software is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this package; see the file COPYING.  If not, write to
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
- * Boston, MA 02110-1301, USA.  
+ * Boston, MA 02110-1301, USA.
  *
  * $Id$
  *
@@ -28,6 +28,8 @@
 
 #include "component.h"
 #include "rlcg.h"
+
+using namespace qucs;
 
 rlcg::rlcg () : circuit (2) {
   type = CIR_RLCG;
@@ -41,15 +43,15 @@ void rlcg::calcPropagation (nr_double_t frequency) {
   nr_double_t G = getPropertyDouble ("G");
   nr_complex_t Z = rect (R, 2 * M_PI * frequency * L);
   nr_complex_t Y = rect (G, 2 * M_PI * frequency * C);
-  g = sqrt (Z * Y);
-  z = sqrt (Z / Y);
+  g = qucs::sqrt (Z * Y);
+  z = qucs::sqrt (Z / Y);
 }
 
 void rlcg::calcSP (nr_double_t frequency) {
   nr_double_t l = getPropertyDouble ("Length");
   calcPropagation (frequency);
   nr_complex_t r = (z - z0) / (z + z0);
-  nr_complex_t p = exp (-l * g);
+  nr_complex_t p = qucs::exp (-l * g);
   nr_complex_t s11 = r * (1.0 - p * p) / (1.0 - p * p * r * r);
   nr_complex_t s21 = p * (1.0 - r * r) / (1.0 - p * p * r * r);
   setS (NODE_1, NODE_1, s11); setS (NODE_2, NODE_2, s11);
@@ -127,7 +129,7 @@ void rlcg::initTR (void) {
 
 // properties
 PROP_REQ [] = {
-  { "R", PROP_REAL, { 0.0, PROP_NO_STR }, PROP_POS_RANGE }, 
+  { "R", PROP_REAL, { 0.0, PROP_NO_STR }, PROP_POS_RANGE },
   { "L", PROP_REAL, { 0.6e-6, PROP_NO_STR }, PROP_POS_RANGEX },
   { "C", PROP_REAL, { 240e-12, PROP_NO_STR }, PROP_POS_RANGEX },
   { "G", PROP_REAL, { 0.0, PROP_NO_STR }, PROP_POS_RANGE },

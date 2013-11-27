@@ -1,7 +1,7 @@
-
-#include "qucs_interface.h"
-#include "e_trsolver.h"
 #include "mex.h"
+#include <qucs-core/qucs_interface.h>
+#include <qucs-core/e_trsolver.h>
+
 
 #ifndef MEXTRSOLVER_H
 #define MEXTRSOLVER_H

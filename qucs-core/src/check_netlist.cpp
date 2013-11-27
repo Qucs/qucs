@@ -29,7 +29,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <math.h>
+#include <cmath>
 #include <assert.h>
 #include <float.h>
 
@@ -42,6 +42,9 @@
 #include "environment.h"
 #include "variable.h"
 #include "module.h"
+
+using namespace qucs;
+using namespace qucs::eqn;
 
 /* Global definitions for parser and checker. */
 struct definition_t * definition_root = NULL;
@@ -442,7 +445,7 @@ static int checker_evaluate_scale (struct value_t * value)
             if (*scale == 'B')
             {
                 scale++;
-                val = pow (10.0, val / 10.0);
+                val = std::pow (10.0, val / 10.0);
                 if (*scale == 'm')
                 {
                     scale++;
@@ -2153,8 +2156,8 @@ void netlist_status (void)
     struct definition_t * cir;
     int count;
     logprint (LOG_STATUS, "netlist content\n");
-    qucs::hashiterator<module> it;
-    for (it = qucs::hashiterator<module> (module::modules); *it; ++it)
+    hashiterator<module> it;
+    for (it = hashiterator<module> (module::modules); *it; ++it)
     {
         def = it.currentVal()->definition;
         for (count = 0, cir = definition_root; cir != NULL; cir = cir->next)
@@ -2338,3 +2341,4 @@ void netlist_destroy_env (void)
         env_root = NULL;
     }
 }
+

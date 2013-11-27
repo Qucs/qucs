@@ -25,6 +25,8 @@
 #ifndef __NET_H__
 #define __NET_H__
 
+namespace qucs {
+
 class circuit;
 class node;
 class nodelist;
@@ -101,5 +103,7 @@ class net : public object
   int insertedNodes;
   nr_double_t srcFactor;
 };
+
+} // namespace qucs
 
 #endif /* __NET_H__ */

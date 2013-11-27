@@ -25,11 +25,12 @@
 #if HAVE_CONFIG_H
 # include <config.h>
 #endif
+#include "qucs_typedefs.h"
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <math.h>
+#include <cmath>
 #include <float.h>
 #include <assert.h>
 
@@ -55,7 +56,7 @@
 #include "exceptionstack.h"
 #include "nasolver.h"
 
-using namespace qucs;
+namespace qucs {
 
 // Constructor creates an unnamed instance of the nasolver class.
 template <class nr_type_t>
@@ -1427,3 +1428,5 @@ char * nasolver<nr_type_t>::createI (int n, const char * amps, int saveOPs)
         sprintf (text, "%s.%s", name, amps);
     return text;
 }
+
+} // namespace qucs

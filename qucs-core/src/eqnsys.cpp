@@ -7,16 +7,16 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This software is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this package; see the file COPYING.  If not, write to
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
- * Boston, MA 02110-1301, USA.  
+ * Boston, MA 02110-1301, USA.
  *
  * $Id$
  *
@@ -25,13 +25,17 @@
 #if HAVE_CONFIG_H
 # include <config.h>
 #endif
+// the types required for qucs library files are defined
+// in qucs_typedefs.h, created by configure from
+// qucs_typedefs.h.in
+#include "qucs_typedefs.h"
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+//#include <stdio.h>
+//#include <stdlib.h>
+//#include <string.h>
 #include <assert.h>
 #include <time.h>
-#include <math.h>
+#include <cmath>
 #include <float.h>
 
 #include "compat.h"
@@ -46,7 +50,7 @@
 // Little helper macro.
 #define Swap(type,a,b) { type t; t = a; a = b; b = t; }
 
-using namespace qucs;
+namespace qucs {
 
 // Constructor creates an unnamed instance of the eqnsys class.
 template <class nr_type_t>
@@ -126,7 +130,7 @@ template <class nr_type_t>
 void eqnsys<nr_type_t>::solve (void) {
 #if DEBUG && 0
   time_t t = time (NULL);
-#endif  
+#endif
   switch (algo) {
   case ALGO_INVERSE:
     solve_inverse ();
@@ -197,7 +201,7 @@ void eqnsys<nr_type_t>::solve_gauss (void) {
   nr_double_t MaxPivot;
   nr_type_t f;
   int i, c, r, pivot;
-  
+
   // triangulate the matrix
   for (i = 0; i < N; i++) {
     // find maximum column value for pivoting
@@ -465,7 +469,7 @@ void eqnsys<nr_type_t>::substitute_lu_crout (void) {
     for (c = 0; c < i; c++) f -= A_(i, c) * X_(c);
     X_(i) = f / A_(i, i);
   }
-   
+
   // backward substitution in order to solve UX = Y
   for (i = N - 1; i >= 0; i--) {
     f = X_(i);
@@ -491,7 +495,7 @@ void eqnsys<nr_type_t>::substitute_lu_doolittle (void) {
     // remember that the Lii diagonal are ones only in Doolittle's definition
     X_(i) = f;
   }
-   
+
   // backward substitution in order to solve UX = Y
   for (i = N - 1; i >= 0; i--) {
     f = X_(i);
@@ -782,7 +786,7 @@ void eqnsys<nr_type_t>::preconditioner (void) {
   for (int i = 0; i < N; i++) {
     // find maximum column value for pivoting
     for (MaxPivot = 0, pivot = i, r = 0; r < N; r++) {
-      if (abs (A_(r, i)) > MaxPivot && 
+      if (abs (A_(r, i)) > MaxPivot &&
 	  abs (A_(i, r)) >= abs (A_(r, r))) {
         MaxPivot = abs (A_(r, i));
         pivot = r;
@@ -1489,5 +1493,7 @@ void eqnsys<nr_type_t>::diagonalize_svd (void) {
     }
   }
 }
+
+} // namespace qucs
 
 #undef V_

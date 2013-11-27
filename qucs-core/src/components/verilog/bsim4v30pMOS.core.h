@@ -5,13 +5,13 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- * 
+ *
  */
 
 #ifndef __bsim4v30pMOS_H__
 #define __bsim4v30pMOS_H__
 
-class bsim4v30pMOS : public circuit
+class bsim4v30pMOS : public qucs::circuit
 {
  public:
   CREATOR (bsim4v30pMOS);
@@ -32,7 +32,7 @@ class bsim4v30pMOS : public circuit
   void calcTR (nr_double_t);
   void initHB (int);
   void calcHB (int);
-  
+
  private:
   void initVerilog (void);
   void calcVerilog (void);
@@ -42,8 +42,8 @@ class bsim4v30pMOS : public circuit
   void initializeInstance (void);
   void initialStep (void);
   void finalStep (void);
-  matrix calcMatrixY (nr_double_t);
-  matrix calcMatrixCy (nr_double_t);
+  qucs::matrix calcMatrixY (nr_double_t);
+  qucs::matrix calcMatrixCy (nr_double_t);
 
  private:
   int doHB;

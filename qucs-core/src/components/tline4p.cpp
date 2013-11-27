@@ -7,16 +7,16 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This software is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this package; see the file COPYING.  If not, write to
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
- * Boston, MA 02110-1301, USA.  
+ * Boston, MA 02110-1301, USA.
  *
  * $Id$
  *
@@ -29,6 +29,8 @@
 #include "component.h"
 #include "tline4p.h"
 
+using namespace qucs;
+
 tline4p::tline4p () : circuit (4) {
   type = CIR_TLINE4P;
 }
@@ -38,17 +40,17 @@ void tline4p::calcSP (nr_double_t frequency) {
   nr_double_t z = getPropertyDouble ("Z");
   nr_double_t a = getPropertyDouble ("Alpha");
   nr_double_t b = 2 * M_PI * frequency / C0;
-  a = log (a) / 2;
+  a = qucs::log (a) / 2;
 
   nr_complex_t g = rect (a, b);
   nr_double_t p = 2 * z0 + z;
   nr_double_t n = 2 * z0 - z;
-  nr_complex_t e = exp (2.0 * g * l);
+  nr_complex_t e = qucs::exp (2.0 * g * l);
   nr_complex_t d = p * p * e - n * n;
 
   nr_complex_t s11 = z * (p * e + n) / d;
   nr_complex_t s14 = 1.0 - s11;
-  nr_complex_t s12 = 4.0 * z * z0 * exp (g * l) / d;
+  nr_complex_t s12 = 4.0 * z * z0 * qucs::exp (g * l) / d;
 
   setS (NODE_1, NODE_1, +s11); setS (NODE_2, NODE_2, +s11);
   setS (NODE_3, NODE_3, +s11); setS (NODE_4, NODE_4, +s11);
@@ -103,7 +105,7 @@ void tline4p::calcAC (nr_double_t frequency) {
   nr_double_t z = getPropertyDouble ("Z");
   nr_double_t a = getPropertyDouble ("Alpha");
   nr_double_t b = 2 * M_PI * frequency / C0;
-  a = log (a) / 2;
+  a = qucs::log (a) / 2;
   if (l != 0.0) {
     nr_complex_t g = rect (a, b);
     nr_complex_t y11 = coth (g * l) / z;
@@ -132,7 +134,7 @@ void tline4p::initTR (void) {
     setB (NODE_4, VSRC_1, -1); setB (NODE_3, VSRC_2, -1);
     setC (VSRC_1, NODE_1, +1); setC (VSRC_2, NODE_2, +1);
     setC (VSRC_1, NODE_4, -1); setC (VSRC_2, NODE_3, -1);
-    setD (VSRC_1, VSRC_1, -z); setD (VSRC_2, VSRC_2, -z); 
+    setD (VSRC_1, VSRC_1, -z); setD (VSRC_2, VSRC_2, -z);
   } else {
     setVoltageSources (2);
     allocMatrixMNA ();
@@ -146,10 +148,10 @@ void tline4p::calcTR (nr_double_t t) {
   nr_double_t a = getPropertyDouble ("Alpha");
   nr_double_t z = getPropertyDouble ("Z");
   nr_double_t T = l / C0;
-  a = log (a) / 2;
+  a = qucs::log (a) / 2;
   if (T > 0.0) {
     T = t - T;
-    a = exp (-a / 2 * l);
+    a = qucs::exp (-a / 2 * l);
     setE (VSRC_1, a * (getV (NODE_2, T) - getV (NODE_3, T) +
 		       z * getJ (VSRC_2, T)));
     setE (VSRC_2, a * (getV (NODE_1, T) - getV (NODE_4, T) +
@@ -159,7 +161,7 @@ void tline4p::calcTR (nr_double_t t) {
 
 // properties
 PROP_REQ [] = {
-  { "Z", PROP_REAL, { 50, PROP_NO_STR }, PROP_POS_RANGE }, 
+  { "Z", PROP_REAL, { 50, PROP_NO_STR }, PROP_POS_RANGE },
   { "L", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_NO_RANGE },
   PROP_NO_PROP };
 PROP_OPT [] = {

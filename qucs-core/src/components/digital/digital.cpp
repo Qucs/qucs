@@ -7,16 +7,16 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This software is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this package; see the file COPYING.  If not, write to
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
- * Boston, MA 02110-1301, USA.  
+ * Boston, MA 02110-1301, USA.
  *
  * $Id$
  *
@@ -28,7 +28,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <math.h>
+#include <cmath>
 
 #include "complex.h"
 #include "object.h"
@@ -38,6 +38,8 @@
 
 #define NODE_OUT 0 /* first node is output node */
 #define NODE_IN1 1 /* input nodes start here */
+
+using namespace qucs;
 
 // Constructor.
 digital::digital () : circuit () {
@@ -81,7 +83,7 @@ nr_double_t digital::getVin (int input) {
 nr_double_t digital::calcTransferX (int input) {
   nr_double_t v = getPropertyDouble ("V");
   nr_double_t t = getPropertyDouble ("TR");
-  return tanh (t * (getVin (input) / v - 0.5));
+  return qucs::tanh (t * (getVin (input) / v - 0.5));
 }
 
 // Computes a slightly modified transfer function.
@@ -93,7 +95,7 @@ nr_double_t digital::calcTransfer (int input) {
 nr_double_t digital::calcDerivativeX (int input) {
   nr_double_t v = getPropertyDouble ("V");
   nr_double_t t = getPropertyDouble ("TR");
-  nr_double_t x = tanh (t * (getVin (input) / v - 0.5));
+  nr_double_t x = qucs::tanh (t * (getVin (input) / v - 0.5));
   return t * (1 - x * x);
 }
 

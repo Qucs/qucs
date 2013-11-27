@@ -7,16 +7,16 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This software is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this package; see the file COPYING.  If not, write to
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
- * Boston, MA 02110-1301, USA.  
+ * Boston, MA 02110-1301, USA.
  *
  * $Id: ctline.cpp 1876 2013-03-11 08:00:11Z fransschreuder $
  *
@@ -28,6 +28,8 @@
 
 #include "component.h"
 #include "ctline.h"
+
+using namespace qucs;
 
 ctline::ctline () : circuit (4) {
   type = CIR_CTLINE;
@@ -43,8 +45,8 @@ void ctline::calcSP (nr_double_t frequency) {
   nr_double_t ao  = getPropertyDouble ("Ao");
   nr_double_t o   = 2.0 * M_PI * frequency;
 
-  nr_complex_t ge = rect (log (ae) / 2, o / C0 * sqrt (ere)) * l;
-  nr_complex_t go = rect (log (ao) / 2, o / C0 * sqrt (ero)) * l;
+  nr_complex_t ge = rect (qucs::log (ae) / 2, o / C0 * qucs::sqrt (ere)) * l;
+  nr_complex_t go = rect (qucs::log (ao) / 2, o / C0 * qucs::sqrt (ero)) * l;
   nr_complex_t xe = 2.0 * ze * z0 * cosh (ge) + (ze*ze + z0*z0) * sinh (ge);
   nr_complex_t xo = 2.0 * zo * z0 * cosh (go) + (zo*zo + z0*z0) * sinh (go);
   nr_complex_t ye = ze * z0 / xe;
@@ -112,8 +114,8 @@ void ctline::calcAC (nr_double_t frequency) {
 
   if (l != 0.0) {
     nr_complex_t y11, y12, y13, y14;
-    nr_complex_t arg_e = rect (log (ae) / 2.0, o / C0 * sqrt (ere)) * l;
-    nr_complex_t arg_o = rect (log (ao) / 2.0, o / C0 * sqrt (ero)) * l;
+    nr_complex_t arg_e = rect (qucs::log (ae) / 2.0, o / C0 * qucs::sqrt (ere)) * l;
+    nr_complex_t arg_o = rect (qucs::log (ao) / 2.0, o / C0 * qucs::sqrt (ero)) * l;
 
     y12   =  0.5 / sinh (arg_e) / ze;
     y13   = -0.5 / sinh (arg_o) / zo;
@@ -138,13 +140,13 @@ void ctline::calcAC (nr_double_t frequency) {
 
 // properties
 PROP_REQ [] = {
-  { "Ze", PROP_REAL, { 50, PROP_NO_STR }, PROP_POS_RANGE }, 
-  { "Zo", PROP_REAL, { 50, PROP_NO_STR }, PROP_POS_RANGE }, 
+  { "Ze", PROP_REAL, { 50, PROP_NO_STR }, PROP_POS_RANGE },
+  { "Zo", PROP_REAL, { 50, PROP_NO_STR }, PROP_POS_RANGE },
   { "L", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_NO_RANGE },
   PROP_NO_PROP };
 PROP_OPT [] = {
-  { "Ere", PROP_REAL, { 1, PROP_NO_STR }, PROP_POS_RANGE }, 
-  { "Ero", PROP_REAL, { 1, PROP_NO_STR }, PROP_POS_RANGE }, 
+  { "Ere", PROP_REAL, { 1, PROP_NO_STR }, PROP_POS_RANGE },
+  { "Ero", PROP_REAL, { 1, PROP_NO_STR }, PROP_POS_RANGE },
   { "Ae", PROP_REAL, { 1, PROP_NO_STR }, PROP_POS_RANGEX },
   { "Ao", PROP_REAL, { 1, PROP_NO_STR }, PROP_POS_RANGEX },
   { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },

@@ -7,16 +7,16 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This software is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this package; see the file COPYING.  If not, write to
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
- * Boston, MA 02110-1301, USA.  
+ * Boston, MA 02110-1301, USA.
  *
  * $Id$
  *
@@ -29,7 +29,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <math.h>
+#include <cmath>
 #include <ctype.h>
 
 #include "logging.h"
@@ -49,8 +49,9 @@
 #include "exception.h"
 #include "exceptionstack.h"
 
+namespace qucs {
+
 using namespace eqn;
-using namespace qucs;
 
 #define A(a) ((assignment *) (a))
 #define N(n) ((node *) (n))
@@ -155,7 +156,7 @@ static char * Cplx2String (nr_complex_t c) {
     sprintf (str, "%g", (double) real (c));
   }
   else {
-    sprintf (str, "(%g%cj%g)", (double ) real (c), 
+    sprintf (str, "(%g%cj%g)", (double ) real (c),
 	     imag (c) >= 0.0 ? '+' : '-', (double) fabs (imag (c)));
   }
   return str;
@@ -217,14 +218,14 @@ char * constant::toString (void) {
   case TAG_CHAR:
     sprintf (str, "'%c'", chr);
     txt = strdup (str);
-    break;    
+    break;
   case TAG_STRING:
     sprintf (str, "'%s'", s);
     txt = strdup (str);
-    break;    
+    break;
   case TAG_RANGE:
     txt = strdup (r->toString ());
-    break;    
+    break;
   default:
     txt = strdup ("(no such type)");
     break;
@@ -1255,7 +1256,7 @@ int checker::checkExport (void) {
 void checker::list (void) {
   for (node * eqn = equations; eqn != NULL; eqn = eqn->getNext ()) {
     logprint (LOG_STATUS, "%s", eqn->evalPossible ? "!" : "?");
-    logprint (LOG_STATUS, "%s", eqn->evalPossible ? 
+    logprint (LOG_STATUS, "%s", eqn->evalPossible ?
 	      (eqn->getType () == TAG_UNKNOWN ? "U!" :
 	       eqn->getType () == TAG_DOUBLE  ? "D!" :
 	       eqn->getType () == TAG_BOOLEAN ? "B!" :
@@ -1304,7 +1305,7 @@ int checker::findUndefined (int noundefined) {
 	    eqn->collectDependencies ();
 	    continue;
 	  }
-	} 
+	}
 	// give an error
 	if (noundefined) {
 	  if (isGenerated (var)) // skip probably generated variables
@@ -1614,7 +1615,7 @@ void solver::evaluate (void) {
       eqn->evaluated++;
 #if DEBUG && 0
       // print equation results
-      logprint (LOG_STATUS, "%s = %s\n", A(eqn)->result, 
+      logprint (LOG_STATUS, "%s = %s\n", A(eqn)->result,
 		eqn->getResult () ? eqn->getResult()->toString () : "error");
 #if TESTING_DERIVATIVE || 0
       // print equation
@@ -1992,7 +1993,7 @@ void solver::checkoutDataset (void) {
 	delete datadeps;
 	datadeps = NULL;
       }
-	
+
       // store variable vector(s)
       if (datadeps && datadeps->length () > 0) {
 	v->setDependencies (datadeps);
@@ -2210,7 +2211,7 @@ node * checker::createReference (const char * type, const char * ident,
 
 /* The functions looks through the set of equations for a real valued
    result and returns it.  If there is no such assignment, zero is
-   returned. */ 
+   returned. */
 nr_double_t checker::getDouble (char * ident) {
   foreach_equation (eqn) {
     if (!strcmp (ident, eqn->result)) {
@@ -2235,7 +2236,7 @@ void checker::setDouble (char * ident, nr_double_t val) {
 
 /* The functions looks through the set of equations for a vector
    result and returns it.  If there is no such assignment, an empty
-   vector is returned. */ 
+   vector is returned. */
 vector checker::getVector (char * ident) {
   foreach_equation (eqn) {
     if (!strcmp (ident, eqn->result)) {
@@ -2244,3 +2245,5 @@ vector checker::getVector (char * ident) {
   }
   return vector ();
 }
+
+} // namespace qucs

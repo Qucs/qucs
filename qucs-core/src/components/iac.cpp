@@ -7,16 +7,16 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This software is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this package; see the file COPYING.  If not, write to
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
- * Boston, MA 02110-1301, USA.  
+ * Boston, MA 02110-1301, USA.
  *
  * $Id$
  *
@@ -28,6 +28,8 @@
 
 #include "component.h"
 #include "iac.h"
+
+using namespace qucs;
 
 iac::iac () : circuit (2) {
   type = CIR_IAC;
@@ -50,7 +52,7 @@ void iac::initDC (void) {
 void iac::initAC (void) {
   nr_double_t a = getPropertyDouble ("I");
   nr_double_t p = getPropertyDouble ("Phase");
-  nr_complex_t i = polar (a, rad (p));
+  nr_complex_t i = qucs::polar (a, rad (p));
   allocMatrixMNA ();
   setI (NODE_1, +i); setI (NODE_2, -i);
 }
@@ -63,7 +65,7 @@ void iac::calcTR (nr_double_t t) {
   nr_double_t s = getNet()->getSrcFactor ();
   nr_double_t o = 2 * M_PI * f;
   nr_double_t T = p / f / 360;
-  nr_double_t i = s * a * exp (-(t + T) * d * f) * sin (o * t + rad (p));
+  nr_double_t i = s * a * qucs::exp (-(t + T) * d * f) * qucs::sin (o * t + rad (p));
   setI (NODE_1, +i); setI (NODE_2, -i);
 }
 

@@ -32,6 +32,8 @@
 #include "msopen.h"
 #include "msgap.h"
 
+using namespace qucs;
+
 msgap::msgap () : circuit (2) {
   type = CIR_MSGAP;
 }
@@ -79,11 +81,11 @@ matrix msgap::calcMatrixY (nr_double_t frequency) {
   Q1 = 0.04598 * (0.03 + pow (W1, Q5)) * (0.272 + 0.07 * er);
   Q2 = 0.107 * (W1 + 9.0) * pow (s, 3.23) +
     2.09 * pow (s, 1.05) * (1.5 + 0.3 * W1) / (1.0 + 0.6 * W1);
-  Q3 = exp (-0.5978 * pow (W2, +1.35)) - 0.55;
-  Q4 = exp (-0.5978 * pow (W2, -1.35)) - 0.55;
+  Q3 = qucs::exp (-0.5978 * pow (W2, +1.35)) - 0.55;
+  Q4 = qucs::exp (-0.5978 * pow (W2, -1.35)) - 0.55;
 
-  nr_double_t Cs = 5e-10 * h * exp (-1.86 * s) * Q1 *
-    (1.0 + 4.19 * (1.0 - exp (-0.785 * sqrt (1.0 / W1) * W2)));
+  nr_double_t Cs = 5e-10 * h * qucs::exp (-1.86 * s) * Q1 *
+    (1.0 + 4.19 * (1.0 - qucs::exp (-0.785 * qucs::sqrt (1.0 / W1) * W2)));
   C1 *= (Q2 + Q3) / (Q2 + 1.0);
   C2 *= (Q2 + Q4) / (Q2 + 1.0);
 

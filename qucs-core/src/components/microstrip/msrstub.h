@@ -25,7 +25,7 @@
 #ifndef __MSRSTUB_H__
 #define __MSRSTUB_H__
 
-class msrstub : public circuit
+class msrstub : public qucs::circuit
 {
  public:
   CREATOR (msrstub);

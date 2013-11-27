@@ -5,11 +5,12 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- * 
+ *
  */
 
 #ifndef __hicumL2V2p24_DEFS_H__
 #define __hicumL2V2p24_DEFS_H__
+
 
 // required properties
 PROP_REQ [] = {

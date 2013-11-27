@@ -46,6 +46,8 @@
 #include "characteristic.h"
 #include "component_id.h"
 
+namespace qucs {
+
 // normalising impedance
 const nr_double_t circuit::z0 = 50.0;
 
@@ -906,3 +908,5 @@ nr_double_t circuit::getV (int port, nr_double_t t) {
 nr_double_t circuit::getJ (int nr, nr_double_t t) {
   return histories[nr + getSize ()].nearest (t);
 }
+
+} // namespace qucs

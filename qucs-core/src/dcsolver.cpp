@@ -7,16 +7,16 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This software is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this package; see the file COPYING.  If not, write to
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
- * Boston, MA 02110-1301, USA.  
+ * Boston, MA 02110-1301, USA.
  *
  * $Id$
  *
@@ -36,6 +36,8 @@
 #include "analysis.h"
 #include "nasolver.h"
 #include "dcsolver.h"
+
+namespace qucs {
 
 // Constructor creates an unnamed instance of the dcsolver class.
 dcsolver::dcsolver () : nasolver<nr_double_t> () {
@@ -215,9 +217,11 @@ PROP_OPT [] = {
   { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },
   { "saveAll", PROP_STR, { PROP_NO_VAL, "no" }, PROP_RNG_YESNO },
   { "convHelper", PROP_STR, { PROP_NO_VAL, "none" },
-    PROP_RNG_STR6 ("none", "SourceStepping", "gMinStepping", 
+    PROP_RNG_STR6 ("none", "SourceStepping", "gMinStepping",
 		   "LineSearch", "Attenuation", "SteepestDescent") },
   { "Solver", PROP_STR, { PROP_NO_VAL, "CroutLU" }, PROP_RNG_SOL },
   PROP_NO_PROP };
 struct define_t dcsolver::anadef =
   { "DC", 0, PROP_ACTION, PROP_NO_SUBSTRATE, PROP_LINEAR, PROP_DEF };
+
+} // namespace qucs

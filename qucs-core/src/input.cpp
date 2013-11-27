@@ -7,16 +7,16 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This software is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this package; see the file COPYING.  If not, write to
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
- * Boston, MA 02110-1301, USA.  
+ * Boston, MA 02110-1301, USA.
  *
  * $Id$
  *
@@ -45,6 +45,8 @@
 #include "equation.h"
 #include "module.h"
 
+namespace qucs {
+
 // Global variables.
 int netlist_check = 0;
 
@@ -58,7 +60,7 @@ input::input () : object () {
 // Constructor creates an named instance of the input class.
 input::input (char * file) : object (file) {
   if ((fd = fopen (file, "r")) == NULL) {
-    logprint (LOG_ERROR, "cannot open file `%s': %s\n", 
+    logprint (LOG_ERROR, "cannot open file `%s': %s\n",
 	      file, strerror (errno));
     fd = stdin;
   }
@@ -159,7 +161,7 @@ void input::factory (void) {
 	    if (pairs->value->var) {
 	      // add list sweeps and constants to the properties
 	      variable * v = new variable (pairs->key);
-	      constant * c = new constant (TAG_VECTOR);
+	      eqn::constant * c = new eqn::constant (eqn::TAG_VECTOR);
 	      c->v = createVector (pairs->value);
 	      v->setConstant (c);
 	      a->addProperty (pairs->key, v);
@@ -252,7 +254,7 @@ void input::factory (void) {
 	if (pairs->value == NULL) {
 	  // zero-length value lists
 	  variable * v = new variable (pairs->key);
-	  constant * c = new constant (TAG_VECTOR);
+	  eqn::constant * c = new eqn::constant (eqn::TAG_VECTOR);
 	  c->v = new vector ();
 	  v->setConstant (c);
 	  o->addProperty (pairs->key, v);
@@ -274,7 +276,7 @@ void input::factory (void) {
 	  if (pairs->value->var) {
 	    // add value lists to the properties
 	    variable * v = new variable (pairs->key);
-	    constant * c = new constant (TAG_VECTOR);
+	    eqn::constant * c = new eqn::constant (eqn::TAG_VECTOR);
 	    c->v = createVector (pairs->value);
 	    v->setConstant (c);
 	    o->addProperty (pairs->key, v);
@@ -322,7 +324,7 @@ void input::assignDefaultProperties (object * obj, struct define_t * def) {
   }
 }
 
-// The function creates components specified by the type of component. 
+// The function creates components specified by the type of component.
 circuit * input::createCircuit (char * type) {
   module * m;
   if ((m = module::modules.get (type)) != NULL)
@@ -350,3 +352,5 @@ substrate * input::createSubstrate (char * type) {
   logprint (LOG_ERROR, "no such substrate type `%s'\n", type);
   return NULL;
 }
+
+} // namespace qucs

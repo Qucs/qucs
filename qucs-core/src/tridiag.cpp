@@ -7,16 +7,16 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This software is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this package; see the file COPYING.  If not, write to
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
- * Boston, MA 02110-1301, USA.  
+ * Boston, MA 02110-1301, USA.
  *
  * $Id$
  *
@@ -30,11 +30,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <math.h>
+#include <cmath>
 
 #include "compat.h"
 #include "complex.h"
 #include "tvector.h"
+
+namespace qucs {
 
 // Constructor creates an instance of the tridiag class.
 template <class nr_type_t>
@@ -127,7 +129,7 @@ void tridiag<nr_type_t>::solve (void) {
 
 /* This function solves a tridiagonal equation system given
    by
-       diag[0]  abov[0]        0   .....            0 
+       diag[0]  abov[0]        0   .....            0
        belo[1]  diag[1]  abov[1]   .....            0
              0  belo[2]  diag[2]
              0        0  belo[3]   .....    abov[n-2]
@@ -141,7 +143,7 @@ void tridiag<nr_type_t>::solve_ns (void) {
   e = belo->getData ();
   b = c = x = rhs->getData ();
   int i, n = diag->getSize ();
-  
+
   // factorize A = LU
   al[0] = d[0];
   ga[0] = f[0] / al[0];
@@ -288,7 +290,7 @@ template <class nr_type_t>
 void tridiag<nr_type_t>::solve_s_cyc (void) {
   d = al = diag->getData ();
   f = ga = offdiag->getData ();
-  b = c = z  = x = rhs->getData (); 
+  b = c = z  = x = rhs->getData ();
   nr_type_t t;
   int i, n = diag->getSize ();
   de = new nr_type_t[n];
@@ -333,3 +335,5 @@ void tridiag<nr_type_t>::solve_s_cyc (void) {
 
   delete[] de;
 }
+
+} // namespace qucs

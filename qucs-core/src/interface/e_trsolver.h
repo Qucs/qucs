@@ -22,13 +22,16 @@
  *
  */
 
-#include "trsolver.h"
 
 #ifndef __E_TRSOLVER_H__
 #define __E_TRSOLVER_H__
 
+#include "trsolver.h"
+
 #define ETR_MODE_ASYNC 0
 #define ETR_MODE_SYNC 1
+
+namespace qucs {
 
 class e_trsolver : public trsolver
 {
@@ -77,6 +80,8 @@ private:
     void adjustDelta_sync (nr_double_t);
 
 };
+
+} // namespace qucs
 
 #endif /* __e_trsolver_H__ */
 

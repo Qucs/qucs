@@ -7,16 +7,16 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This software is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this package; see the file COPYING.  If not, write to
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
- * Boston, MA 02110-1301, USA.  
+ * Boston, MA 02110-1301, USA.
  *
  * $Id$
  *
@@ -33,6 +33,8 @@
 #include "object.h"
 #include "netdefs.h"
 #include "nodeset.h"
+
+namespace qucs {
 
 // Constructor creates an unnamed instance of the node set class.
 nodeset::nodeset () {
@@ -98,3 +100,5 @@ PROP_OPT [] = {
   PROP_NO_PROP };
 struct define_t nodeset::miscdef =
   { "NodeSet", 1, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR, PROP_DEF };
+
+} // namespace qucs

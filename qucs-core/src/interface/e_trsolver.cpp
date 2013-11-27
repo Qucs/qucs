@@ -28,7 +28,7 @@
 
 #include <stdio.h>
 #include <string.h>
-#include <math.h>
+#include <cmath>
 #include <float.h>
 
 #include "compat.h"
@@ -58,6 +58,8 @@
 #ifndef sState
 #define sState 1 // solution state
 #endif
+
+namespace qucs {
 
 using namespace transient;
 
@@ -929,3 +931,4 @@ struct define_t e_trsolver::anadef =
 
 
 
+} // namespace qucs

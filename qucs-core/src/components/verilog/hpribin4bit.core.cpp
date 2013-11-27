@@ -5,7 +5,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- * 
+ *
  */
 
 #if HAVE_CONFIG_H
@@ -181,7 +181,7 @@
 #define m11_min(v11,v00,x,y)    v11 = ((x)<(y))?0.0:1.0;
 #define m00_pow(v00,x,y)        v00 = pow(x,y);
 #define m10_pow(v10,v00,x,y)    v10 = (x==0.0)?0.0:(v00)*(y)/(x);
-#define m11_pow(v11,v00,x,y)    v11 = (x==0.0)?0.0:(log(x)*(v00));
+#define m11_pow(v11,v00,x,y)    v11 = (x==0.0)?0.0:(qucs::log(x)*(v00));
 
 #define m00_div(v00,v10,x,y)    double v10=1/(y); double v00=(x)*v10;
 #define m10_div(v10,v00,vv,x,y)
@@ -190,47 +190,47 @@
 #define m00_mult(v00,v10,v11,x,y) double v10=(x); double v11=(y); double v00=v10*v11;
 #define m00_add(v00,x,y)        double v00=(x)+(y);
 
-#define m00_cos(v00,x)          v00 = cos(x);
-#define m10_cos(v10,v00,x)      v10 = (-sin(x));
-#define m00_sin(v00,x)          v00 = sin(x);
-#define m10_sin(v10,v00,x)      v10 = (cos(x));
-#define m00_tan(v00,x)          v00 = tan(x);
+#define m00_cos(v00,x)          v00 = qucs::cos(x);
+#define m10_cos(v10,v00,x)      v10 = (-qucs::sin(x));
+#define m00_sin(v00,x)          v00 = qucs::sin(x);
+#define m10_sin(v10,v00,x)      v10 = (qucs::cos(x));
+#define m00_tan(v00,x)          v00 = qucs::tan(x);
 #define m10_tan(v10,v00,x)      v10 = (1.0/cos(x)/cos(x));
-#define m00_cosh(v00,x)         v00 = cosh(x);
-#define m10_cosh(v10,v00,x)     v10 = (sinh(x));
-#define m00_sinh(v00,x)         v00 = sinh(x);
-#define m10_sinh(v10,v00,x)     v10 = (cosh(x));
-#define m00_tanh(v00,x)         v00 = tanh(x);
-#define m10_tanh(v10,v00,x)     v10 = (1.0/cosh(x)/cosh(x));
-#define m00_acos(v00,x)         v00 = acos(x);
-#define m10_acos(v10,v00,x)     v10 = (-1.0/sqrt(1-x*x));
+#define m00_cosh(v00,x)         v00 = qucs::cosh(x);
+#define m10_cosh(v10,v00,x)     v10 = (qucs::sinh(x));
+#define m00_sinh(v00,x)         v00 = qucs::sinh(x);
+#define m10_sinh(v10,v00,x)     v10 = (qucs::cosh(x));
+#define m00_tanh(v00,x)         v00 = qucs::tanh(x);
+#define m10_tanh(v10,v00,x)     v10 = (1.0/qucs::cosh(x)/qucs::cosh(x));
+#define m00_acos(v00,x)         v00 = qucs::acos(x);
+#define m10_acos(v10,v00,x)     v10 = (-1.0/qucs::sqrt(1-x*x));
 #define m00_asin(v00,x)         v00 = asin(x);
-#define m10_asin(v10,v00,x)     v10 = (+1.0/sqrt(1-x*x));
+#define m10_asin(v10,v00,x)     v10 = (+1.0/qucs::sqrt(1-x*x));
 #define m00_atan(v00,x)         v00 = atan(x);
 #define m10_atan(v10,v00,x)     v10 = (+1.0/(1+x*x));
 #define m00_atanh(v00,x)        v00 = atanh(x);
 #define m10_atanh(v10,v00,x)    v10 = (+1.0/(1-x*x));
-#define m00_logE(v00,x)         v00 = log(x);
+#define m00_logE(v00,x)         v00 = qucs::log(x);
 #define m10_logE(v10,v00,x)     v10 = (1.0/x);
-#define m00_log10(v00,x)        v00 = log10(x);
+#define m00_log10(v00,x)        v00 = std::log10(x);
 #define m10_log10(v10,v00,x)    v10 = (1.0/x/M_LN10);
-#define m00_sqrt(v00,x)         v00 = sqrt(x);
+#define m00_sqrt(v00,x)         v00 = qucs::sqrt(x);
 #define m10_sqrt(v10,v00,x)     v10 = (0.5/v00);
 #define m00_fabs(v00,x)         v00 = fabs(x);
 #define m10_fabs(v10,v00,x)     v10 = (((x)>=0)?(+1.0):(-1.0));
 
-#define m00_exp(v00,x)          v00 = exp(x);
+#define m00_exp(v00,x)          v00 = qucs::exp(x);
 #define m10_exp(v10,v00,x)      v10 = v00;
 
 #define m00_abs(v00)            ((v00)<(0)?(-(v00)):(v00))
 #define m00_floor(v00,x)        v00 = floor(x);
-#define m00_limexp(v00,x)       v00 = ((x)<80.0?exp(x):exp(80.0)*(x-79.0));
-#define m10_limexp(v10,v00,x)   v10 = ((x)<80.0?(v00):exp(80.0));
+#define m00_limexp(v00,x)       v00 = ((x)<80.0?qucs::exp(x):qucs::exp(80.0)*(x-79.0));
+#define m10_limexp(v10,v00,x)   v10 = ((x)<80.0?(v00):qucs::exp(80.0));
 
 #define m20_logE(v00)           (-1.0/v00/v00)
-#define m20_exp(v00)            exp(v00)
-#define m20_limexp(v00)         ((v00)<80.0?exp(v00):0.0)
-#define m20_sqrt(v00)           (-0.25/(v00)/sqrt(v00))
+#define m20_exp(v00)            qucs::exp(v00)
+#define m20_limexp(v00)         ((v00)<80.0?qucs::exp(v00):0.0)
+#define m20_sqrt(v00)           (-0.25/(v00)/qucs::sqrt(v00))
 #define m20_fabs(v00)           0.0
 #define m20_pow(x,y)            ((y)*((y)-1.0)*pow(x,y)/(x)/(x))
 #define m00_vt(x)               (kBoverQ*(x))
@@ -246,7 +246,8 @@
 // $vt and $vt() functions 
 #define _vt_nom                 (kBoverQ*_circuit_temp)
 
-using namespace device;
+using namespace qucs;
+using namespace qucs::device;
 
 /* Device constructor. */
 hpribin4bit::hpribin4bit() : circuit (13)
@@ -524,8 +525,8 @@ _load_static_jacobian1(V,V,1.0);
 void hpribin4bit::calcDC (void)
 {
   // evaluate Verilog code
-  initVerilog ();		
-  calcVerilog ();		
+  initVerilog ();
+  calcVerilog ();
 
   // fill right hand side and static jacobian
   for (int i1 = 0; i1 < 13; i1++) {
@@ -589,7 +590,7 @@ void hpribin4bit::initSP (void)
 /* Perform S-parameter calculations. */
 void hpribin4bit::calcSP (nr_double_t frequency)
 {
-  setMatrixS (ytos (calcMatrixY (frequency)));   
+  setMatrixS (ytos (calcMatrixY (frequency)));
 }
 
 /* Initialization of transient analysis. */
@@ -653,7 +654,7 @@ void hpribin4bit::calcTR (nr_double_t)
     if (_caps[i1][i1][i3][i4] != 0.0)
       transientCapacitanceC2V (i1, i3, i4, _caps[i1][i1][i3][i4], BP(i3,i4));
   } } }
-     
+
   // charge: 1-node, voltage: 1-node
   for (i1 = 0; i1 < 13; i1++) {
   for (i3 = 0; i3 < 13; i3++) {

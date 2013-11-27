@@ -7,16 +7,16 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This software is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this package; see the file COPYING.  If not, write to
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
- * Boston, MA 02110-1301, USA.  
+ * Boston, MA 02110-1301, USA.
  *
  * $Id$
  *
@@ -29,7 +29,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <math.h>
+#include <cmath>
 #include <assert.h>
 #include <float.h>
 #include <ctype.h>
@@ -96,7 +96,7 @@ static struct property_t req_spice_IC[] = {
 struct define_t spice_definition_available[] =
 {
   /* resistor */
-  { "R", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR, 
+  { "R", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
     req_spice_R, opt_spice_R },
   /* inductor */
   { "L", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
@@ -424,7 +424,7 @@ static struct pair_t * spice_get_pairs (struct definition_t * def) {
 static struct definition_t *
 spice_find_device (struct definition_t * root, char * type) {
   for (struct definition_t * def = root; def != NULL; def = def->next) {
-    if (def->action && !strcasecmp (def->type, "MODEL") && 
+    if (def->action && !strcasecmp (def->type, "MODEL") &&
 	!strcasecmp (def->instance, type)) {
       return def;
     }
@@ -1202,7 +1202,7 @@ void spice_destroy (void) {
   netlist_free_nodes (spice_nodes);
   spice_nodes = NULL;
   if (spice_title) free (spice_title);
-  spice_title = NULL;  
+  spice_title = NULL;
 }
 
 /* Unchains a definition and deletes it. */
@@ -1336,7 +1336,7 @@ static void spice_extract_properties (struct definition_t * def,
     spice_value_done (val);
     if (val->hint & HINT_MSTOP) break; // stop here if necessary
     i++;
-  }  
+  }
 }
 
 /* This function tries to reproduce a Spice netlist line.  It is used
@@ -1364,9 +1364,9 @@ static char * spice_untranslated_text (struct definition_t * def) {
 	       (val->hint & HINT_MSTART) ? " " : "",
 	       val->ident,
 	       ((val->hint & HINT_MSTART) && val->next &&
-	        (val->next->hint & HINT_MSTOP)) || 
+	        (val->next->hint & HINT_MSTOP)) ||
 	       (val->hint & HINT_MSTOP) ? "" : " ",
-	       (val->hint & HINT_MSTART && val->next) ? "(" : 
+	       (val->hint & HINT_MSTART && val->next) ? "(" :
 	       (val->hint & HINT_MSTOP) ? ")" : " ");
     }
     txt = (char *) realloc (txt, strlen (txt) + strlen (str) + 1);
@@ -1802,7 +1802,7 @@ spice_find_coupled_inductor (struct definition_t * root,
 }
 
 // Get the coefficient of coupling.
-static struct value_t * 
+static struct value_t *
 spice_get_value_coupled (struct definition_t * def) {
   struct value_t * val = NULL;
   foreach_value (def->values, val) {
@@ -1812,7 +1812,7 @@ spice_get_value_coupled (struct definition_t * def) {
 }
 
 // Generates a coupled inductor instance description.
-static char * 
+static char *
 spice_coupled_instance (struct definition_t * k1, struct definition_t * k2,
 			struct definition_t * k3) {
   char * inst = (char *) malloc (strlen (k1->instance) +
@@ -2188,7 +2188,7 @@ static void spice2g6_nxtpwr (int * seq, int nd) {
   k = nd;
   do {
     if (seq[k - 1] != 0) break;
-  } 
+  }
   while (--k != 0);
 
   if (k == 0) {
@@ -2389,7 +2389,7 @@ spice_translate_poly (struct definition_t * root, struct definition_t * def) {
     // add first (really evaluating) I and Q equations
     struct definition_t * ieqn, * qeqn;
     root = spice_add_edd_equation (root, def, 1, &ieqn, &qeqn);
-      
+
     // contruct polynomial expression
     char * expr = spice_create_poly (prop, nd, 0);
 
@@ -2463,7 +2463,7 @@ spice_translate_poly_lc (struct definition_t * root,
     // add I and Q equations
     struct definition_t * ieqn, * qeqn;
     root = spice_add_edd_equation (root, def, 1, &ieqn, &qeqn);
-      
+
     // contruct polynomial expression
     char * expr1 = strdup (spice_create_poly (prop, 1, 1));
     char * expr2 = expr1;
@@ -2550,7 +2550,7 @@ spice_post_translator (struct definition_t * root) {
 	target = spice_find_definition (root, "Vdc", key);
 	if (target) {
 	  // adjust the controlling nodes of the source
-	  spice_adjust_vsource_nodes (def, target);      
+	  spice_adjust_vsource_nodes (def, target);
 	  spice_translate_nodes (def, 1);
 	}
 	else {
@@ -3039,7 +3039,7 @@ static void spice_lister (struct definition_t * root) {
 	fprintf (stderr, " %g[%d]", val->value, val->hint);
     }
     fprintf (stderr, "\n");
-  }  
+  }
 }
 #endif
 

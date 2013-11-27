@@ -5,13 +5,13 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- * 
+ *
  */
 
 #ifndef __gatedDlatch_H__
 #define __gatedDlatch_H__
 
-class gatedDlatch : public circuit
+class gatedDlatch : public qucs::circuit
 {
  public:
   CREATOR (gatedDlatch);
@@ -32,7 +32,7 @@ class gatedDlatch : public circuit
   void calcTR (nr_double_t);
   void initHB (int);
   void calcHB (int);
-  
+
  private:
   void initVerilog (void);
   void calcVerilog (void);
@@ -42,8 +42,8 @@ class gatedDlatch : public circuit
   void initializeInstance (void);
   void initialStep (void);
   void finalStep (void);
-  matrix calcMatrixY (nr_double_t);
-  matrix calcMatrixCy (nr_double_t);
+  qucs::matrix calcMatrixY (nr_double_t);
+  qucs::matrix calcMatrixCy (nr_double_t);
 
  private:
   int doHB;

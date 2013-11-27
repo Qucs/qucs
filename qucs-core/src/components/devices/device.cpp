@@ -7,16 +7,16 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This software is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this package; see the file COPYING.  If not, write to
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
- * Boston, MA 02110-1301, USA.  
+ * Boston, MA 02110-1301, USA.
  *
  * $Id$
  *
@@ -28,7 +28,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <math.h>
+#include <cmath>
 
 #include "complex.h"
 #include "object.h"
@@ -41,7 +41,8 @@
 #include "resistor.h"
 #include "capacitor.h"
 
-using namespace device;
+using namespace qucs;
+using namespace qucs::device;
 
 /* This function can be used to create an extra resistor circuit.  If
    the 'res' argument is NULL then the new circuit is created, the
@@ -162,7 +163,7 @@ void device::pnJunctionBIP (nr_double_t Upn, nr_double_t Iss, nr_double_t Ute,
     I = -Iss * (1 + a);
     g = +Iss * 3 * a / Upn;
   }
-  else { 
+  else {
     nr_double_t e = exp (MIN (Upn / Ute, 709));
     I = Iss * (e - 1);
     g = Iss * e / Ute;
@@ -189,7 +190,7 @@ device::pnCapacitance (nr_double_t Uj, nr_double_t Cj, nr_double_t Vj,
   if (Uj <= Fc * Vj)
     c = Cj * exp (-Mj * log (1 - Uj / Vj));
   else
-    c = Cj * exp (-Mj * log (1 - Fc)) * 
+    c = Cj * exp (-Mj * log (1 - Fc)) *
       (1 + Mj * (Uj - Fc * Vj) / Vj / (1 - Fc));
   return c;
 }
@@ -291,7 +292,7 @@ device::fetVoltage (nr_double_t Ufet, nr_double_t Uold, nr_double_t Uth) {
     if (DeltaU <= 0) { /* staying off */
       if (-DeltaU > Utsthi) {
 	Ufet = Uold - Utsthi;
-      } 
+      }
     } else { /* going on */
       if (Ufet <= Uth + 0.5) {
 	if (DeltaU > Utstlo) {

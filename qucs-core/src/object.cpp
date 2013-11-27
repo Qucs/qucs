@@ -37,6 +37,7 @@
 #include "object.h"
 #include "variable.h"
 
+namespace qucs {
 
 // Constructor creates an unnamed instance of the object class.
 object::object () {
@@ -262,3 +263,5 @@ char * object::propertyList (void) {
   }
   return ptxt;
 }
+
+} // namespace qucs

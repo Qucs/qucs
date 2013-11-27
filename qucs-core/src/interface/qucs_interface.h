@@ -23,33 +23,45 @@
  */
 
 /*! \file qucs_interface.h
- * \brief The m-code interface class header file.
+ * \brief The generic external interface class header file.
  *
  * Contains the m-code interface class definition.
  */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <assert.h>
-#include <string.h>
-#include <time.h>
+//#include <stdio.h>
+//#include <stdlib.h>
+//#include <assert.h>
+//#include <string.h>
+//#include <time.h>
 
-#include "logging.h"
-#include "precision.h"
-#include "component.h"
-#include "components.h"
-#include "net.h"
-#include "input.h"
-#include "dataset.h"
-#include "equation.h"
-#include "environment.h"
-#include "exceptionstack.h"
-#include "check_netlist.h"
-#include "module.h"
-#include "e_trsolver.h"
+//#include <qucs-core/logging.h>"
+//#include <qucs-core/precision.h"
+//#include "component.h"
+//#include "components.h"
+//#include <qucs-core/net.h>
+//#include <qucs-core/input.h>
+//#include <qucs-core/dataset.h>
+//#include <qucs-core/equation.h>
+//#include <qucs-core/environment.h>
+//#include <qucs-core/circuit.h>
+//#include "exceptionstack.h"
+//#include "check_netlist.h"
+//#include "module.h"
+//#include "e_trsolver.h"
 
 #ifndef __QUCS_INTERFACE_H__
 #define __QUCS_INTERFACE_H__
+
+// forward declarations of some classes to avoid including
+// header files and speed compilation a little
+namespace qucs {
+  class net;
+  class input;
+  class circuit;
+  class dataset;
+  class environment;
+  class analysis;
+}
 
 /*! \class qucsint
  * \brief class for performing circuit analyses.
@@ -67,19 +79,19 @@ public:
     int prepare_netlist (char * infile);
     int evaluate();
     int output (char * outfile);
-    analysis * getETR(void);
+    qucs::analysis * getETR(void);
 
 
 private:
 
-  net * subnet;
-  input * in;
-  circuit * gnd;
-  dataset * out;
-  environment * root;
+  qucs::net * subnet;
+  qucs::input * in;
+  qucs::circuit * gnd;
+  qucs::dataset * out;
+  qucs::environment * root;
   int err;
   int ret;
 
 };
 
-#endif /* __ANALYSIS_H__ */
+#endif /* __QUCS_INTERFACE_H__ */

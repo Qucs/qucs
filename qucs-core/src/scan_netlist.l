@@ -10,16 +10,16 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This software is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this package; see the file COPYING.  If not, write to
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
- * Boston, MA 02110-1301, USA.  
+ * Boston, MA 02110-1301, USA.
  *
  * $Id$
  *
@@ -52,6 +52,8 @@
 # define strrchr rindex
 #endif
 
+using namespace qucs;
+
 static double netlist_evaluate_scale (double val, char * scale) {
   double factor = 1.0;
   while (isspace (scale[0])) scale++;
@@ -71,7 +73,7 @@ static double netlist_evaluate_scale (double val, char * scale) {
   case 'u': factor = 1e-06; break;
   case 'n': factor = 1e-09; break;
   case 'p': factor = 1e-12; break;
-  case 'f': 
+  case 'f':
     if (scale[1] == 't')
       factor = 0.3048;
     else
@@ -200,7 +202,7 @@ UCOMPLEX {UCREAL}{UCIMAG}
     netlist_lval.ident = (char *) calloc (len + 2, 1);
     memcpy (netlist_lval.ident, netlist_text, len + 1);
     yyless (netlist_leng - 1); /* push back last character */
-    return Assign; 
+    return Assign;
   }
 
 <INITIAL,STR>"[" { /* special token for the value list */ return '['; }
@@ -218,12 +220,12 @@ UCOMPLEX {UCREAL}{UCIMAG}
     BEGIN(COMMENT);
   }
 <INITIAL>\" { /* string constant starts here */
-    BEGIN(STR);  
+    BEGIN(STR);
     return '"';
   }
 <INITIAL>. { /* any other character in invalid */
-    logprint (LOG_ERROR, 
-	      "line %d: syntax error, unrecognized character: `%s'\n", 
+    logprint (LOG_ERROR,
+	      "line %d: syntax error, unrecognized character: `%s'\n",
 	      netlist_lineno, netlist_text);
     return InvalidCharacter;
   }
@@ -232,11 +234,11 @@ UCOMPLEX {UCREAL}{UCIMAG}
 <COMMENT>\r?\n { BEGIN(INITIAL); /* skipping ends here */ }
 
 <STR>\" { /* string constant ends here */
-    BEGIN(INITIAL); 
+    BEGIN(INITIAL);
     return '"';
   }
 <STR>\r?\n { /* string in a single line only */
-    logprint (LOG_ERROR, 
+    logprint (LOG_ERROR,
 	      "line %d: syntax error, unterminated string constant\n",
 	      netlist_lineno);
     return Eol;
@@ -244,8 +246,8 @@ UCOMPLEX {UCREAL}{UCIMAG}
 <STR,EQN>{SPACE} /* skip spaces */
 
 <STR>. { /* any other character is invalid */
-    logprint (LOG_ERROR, 
-	      "line %d: syntax error, unrecognized character: `%s'\n", 
+    logprint (LOG_ERROR,
+	      "line %d: syntax error, unrecognized character: `%s'\n",
 	      netlist_lineno, netlist_text);
     return InvalidCharacter;
   }
@@ -300,8 +302,8 @@ UCOMPLEX {UCREAL}{UCIMAG}
 <EQN>\r?\n { /* detect end of line */ BEGIN(INITIAL); return Eol; }
 
 <EQN>. { /* any other character in invalid */
-    logprint (LOG_ERROR, 
-	      "line %d: syntax error, unrecognized character: `%s'\n", 
+    logprint (LOG_ERROR,
+	      "line %d: syntax error, unrecognized character: `%s'\n",
 	      netlist_lineno, netlist_text);
     return InvalidCharacter;
   }

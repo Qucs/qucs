@@ -28,6 +28,8 @@
 #include "nasolver.h"
 #include "states.h"
 
+namespace qucs {
+
 class sweep;
 class circuit;
 class history;
@@ -99,5 +101,7 @@ protected:
     bool initialDC;
 
 };
+
+} // namespace qucs
 
 #endif /* __TRSOLVER_H__ */

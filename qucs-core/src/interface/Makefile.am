@@ -24,7 +24,8 @@
 
 # the interface library rules
 
-AM_CPPFLAGS = -I$(top_srcdir)/src -I$(top_srcdir)/src/math -I$(top_srcdir)/src/components
+AM_CPPFLAGS = -I$(top_srcdir)/src -I$(top_srcdir)/src/math \
+	-I$(top_srcdir)/src/components -I$(top_builddir)/src/components
 
 pkginclude_HEADERS = qucs_interface.h e_trsolver.h
 

@@ -26,7 +26,7 @@
 #ifndef __MSMBEND_H__
 #define __MSMBEND_H__
 
-class msmbend : public circuit
+class msmbend : public qucs::circuit
 {
  public:
   CREATOR (msmbend);
@@ -34,7 +34,7 @@ class msmbend : public circuit
   void initDC (void);
   void initAC (void);
   void calcAC (nr_double_t);
-  matrix calcMatrixZ (nr_double_t);
+  qucs::matrix calcMatrixZ (nr_double_t);
 };
 
 #endif /* __MSMBEND_H__ */

@@ -27,6 +27,8 @@
 #ifndef __ENVIRONMENT_H__
 #define __ENVIRONMENT_H__
 
+namespace qucs {
+
 class variable;
 class checker;
 class solver;
@@ -91,5 +93,7 @@ class environment
   bool iscopy;
   struct definition_t * defs;
 };
+
+} // namespace qucs
 
 #endif /* __ENVIRONMENT_H__ */

@@ -25,7 +25,7 @@
 #ifndef __MSVIA_H__
 #define __MSVIA_H__
 
-class msvia : public circuit
+class msvia : public qucs::circuit
 {
  public:
   CREATOR (msvia);

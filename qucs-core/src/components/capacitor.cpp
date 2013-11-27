@@ -7,22 +7,22 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This software is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this package; see the file COPYING.  If not, write to
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
- * Boston, MA 02110-1301, USA.  
+ * Boston, MA 02110-1301, USA.
  *
  * $Id$
  *
  */
 
-/*!\file capacitor.cpp 
+/*!\file capacitor.cpp
    \brief capacitor class implementation
 
    A capacitor is a passive device that strore electric energy
@@ -36,13 +36,15 @@
 #include "component.h"
 #include "capacitor.h"
 
+using namespace qucs;
+
 /*!\brief Constructor */
 capacitor::capacitor () : circuit (2) {
   type = CIR_CAPACITOR;
   setISource (true);
 }
 
-/*!\brief Compute S parameters 
+/*!\brief Compute S parameters
 
   \f$S\f$ parameter are computed from admitance, therefore \f$S\f$
   matrix of a capacitor of capacitance \f$C\f$ is:
@@ -69,9 +71,9 @@ void capacitor::initDC (void) {
   allocMatrixMNA ();
 }
 
-/*!\brief AC model 
-   
-   Capacitor (capacitance \f$C\f$) is modelized by 
+/*!\brief AC model
+
+   Capacitor (capacitance \f$C\f$) is modelized by
    its \f$Y\f$ matrix:
    \f[
    Y=\begin{pmatrix}

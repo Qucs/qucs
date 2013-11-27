@@ -55,10 +55,10 @@
   <admst:if test="[name='minus']"> <admst:text format="-"/> </admst:if>
   <admst:if test="[name='not']"> <admst:text format="!"/> </admst:if>
   <admst:if test="[name='bw_not']"> <admst:text format="~"/> </admst:if>
-  <admst:value-of select="arg1/adms/datatypename"/>	
+  <admst:value-of select="arg1/adms/datatypename"/>
   <admst:apply-templates select="arg1" match=":%s" required="yes"/>
 </admst:template>
-  
+
 <admst:template match=":string">
   <admst:text format="&quot;%(value)&quot;"/>
 </admst:template>
@@ -131,7 +131,7 @@
 
 <admst:template match=":property">
   <!-- name -->
-  <admst:value-of select="name"/> 
+  <admst:value-of select="name"/>
   <admst:text format="  { &quot;%s&quot;, "/>
 
   <!-- type -->
@@ -175,11 +175,12 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- * 
+ *
  */
 
 #ifndef __$(module)_DEFS_H__
 #define __$(module)_DEFS_H__
+
 
 <!-- find temp and tnom parameters -->
 <admst:variable name="tnom" string="none"/>

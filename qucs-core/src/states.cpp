@@ -37,6 +37,8 @@
 #define STATE_NUM   8
 #define STATE_MASK  7
 
+namespace qucs {
+
 // Constructor creates an unnamed instance of the states class.
 template <class state_type_t>
 states<state_type_t>::states ()
@@ -154,3 +156,5 @@ void states<state_type_t>::saveState (int state, state_type_t * values)
         values[i] = getState (state, i);
     }
 }
+
+} // namespace qucs

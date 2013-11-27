@@ -7,16 +7,16 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This software is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this package; see the file COPYING.  If not, write to
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
- * Boston, MA 02110-1301, USA.  
+ * Boston, MA 02110-1301, USA.
  *
  * $Id$
  *
@@ -29,6 +29,8 @@
 #include "component.h"
 #include "cccs.h"
 
+using namespace qucs;
+
 cccs::cccs () : circuit (4) {
   type = CIR_CCCS;
   setVoltageSources (1);
@@ -39,8 +41,8 @@ void cccs::calcSP (nr_double_t frequency) {
   nr_double_t g = getPropertyDouble ("G");
   nr_double_t t = getPropertyDouble ("T");
 
-  nr_complex_t z1 = polar (g, M_PI - 2.0 * M_PI * frequency * t);
-  nr_complex_t z2 = polar (g, - 2.0 * M_PI * frequency * t);
+  nr_complex_t z1 = qucs::polar (g, M_PI - 2.0 * M_PI * frequency * t);
+  nr_complex_t z2 = qucs::polar (g, - 2.0 * M_PI * frequency * t);
 
   setS (NODE_1, NODE_1, 0.0); setS (NODE_1, NODE_2, 0.0);
   setS (NODE_1, NODE_3, 0.0); setS (NODE_1, NODE_4, 1.0);
@@ -71,7 +73,7 @@ void cccs::initAC (void) {
 void cccs::calcAC (nr_double_t frequency) {
   nr_double_t g = getPropertyDouble ("G");
   nr_double_t t = getPropertyDouble ("T");
-  nr_complex_t r = polar (1.0 / g, - 2.0 * M_PI * frequency * t);
+  nr_complex_t r = qucs::polar (1.0 / g, - 2.0 * M_PI * frequency * t);
   setB (NODE_1, VSRC_1, +r); setB (NODE_4, VSRC_1, -r);
 }
 

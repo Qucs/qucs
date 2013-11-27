@@ -7,16 +7,16 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This software is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this package; see the file COPYING.  If not, write to
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
- * Boston, MA 02110-1301, USA.  
+ * Boston, MA 02110-1301, USA.
  *
  * $Id$
  *
@@ -42,7 +42,8 @@
 // state variable shortcuts
 #define UdPrev deviceVar (_UdPrev)
 
-using namespace device;
+using namespace qucs;
+using namespace qucs::device;
 
 // Constructor for the diode.
 diode::diode () : circuit (2) {
@@ -234,10 +235,10 @@ void diode::prepareDC (void) {
     else {
       int good = 0;
       tol = 1e-3 * Ibv;
-      Xbv = Bv - Ut * log (1 + Ibv / Is);
+      Xbv = Bv - Ut * qucs::log (1 + Ibv / Is);
       for (int i = 0; i < 25 ; i++) {
-	Xbv = Bv - Ut * log (Ibv / Is + 1 - Xbv / Ut);
-	Xibv = Is * (exp ((Bv - Xbv) / Ut) - 1 + Xbv / Ut);
+	Xbv = Bv - Ut * qucs::log (Ibv / Is + 1 - Xbv / Ut);
+	Xibv = Is * (qucs::exp ((Bv - Xbv) / Ut) - 1 + Xbv / Ut);
 	if (fabs (Xibv - Ibv) < tol) {
 	  Bv = Xbv;
 	  good = 1;
@@ -307,7 +308,7 @@ void diode::calcDC (void) {
     gd = +Is * 3 * a / Ud;
   }
   else { // middle region
-    nr_double_t a = exp (-(Bv + Ud) / N / Ut);
+    nr_double_t a = qucs::exp (-(Bv + Ud) / N / Ut);
     Id = -Is * a;
     gd = +Is * a / Ut / N;
   }
@@ -315,8 +316,8 @@ void diode::calcDC (void) {
   // knee current calculations
   if (Ikf != 0.0) {
     nr_double_t a = Ikf / (Ikf + Id);
-    gd *= 0.5 * (2 - Id * a / Ikf) * sqrt (a);
-    Id *= sqrt (a);
+    gd *= 0.5 * (2 - Id * a / Ikf) * qucs::sqrt (a);
+    Id *= qucs::sqrt (a);
   }
 
   Id += gtiny * Ud;
@@ -366,7 +367,7 @@ void diode::calcOperatingPoints (void) {
   nr_double_t Fc  = getPropertyDouble ("Fc");
   nr_double_t Cp  = getPropertyDouble ("Cp");
   nr_double_t Tt  = getScaledProperty ("Tt");
-  
+
   // calculate capacitances and charges
   nr_double_t Cd;
   Cd = pnCapacitance (Ud, Cj0, Vj, M, Fc) + Tt * gd + Cp;
@@ -446,7 +447,7 @@ void diode::calcHB (int frequency) {
   setCV (NODE_C, -Cd * Ud);
   setCV (NODE_A, +Cd * Ud);
 
-  // fill in C's (dQ/dU) into QV-Matrix 
+  // fill in C's (dQ/dU) into QV-Matrix
   setQV (NODE_C, NODE_C, +Cd); setQV (NODE_A, NODE_A, +Cd);
   setQV (NODE_C, NODE_A, -Cd); setQV (NODE_A, NODE_C, -Cd);
 }

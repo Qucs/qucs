@@ -7,16 +7,16 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This software is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this package; see the file COPYING.  If not, write to
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
- * Boston, MA 02110-1301, USA.  
+ * Boston, MA 02110-1301, USA.
  *
  * $Id$
  *
@@ -37,7 +37,8 @@
 #define NODE_E 2 /* emitter node    */
 #define NODE_S 3 /* substrate node  */
 
-using namespace device;
+using namespace qucs;
+using namespace qucs::device;
 
 bjt::bjt () : circuit (4) {
   cbcx = rb = re = rc = NULL;
@@ -193,7 +194,7 @@ void bjt::initModel (void) {
   nr_double_t Bf  = getPropertyDouble ("Bf");
   nr_double_t Br  = getPropertyDouble ("Br");
   nr_double_t Xtb = getPropertyDouble ("Xtb");
-  nr_double_t F = exp (Xtb * log (T2 / T1));
+  nr_double_t F = qucs::exp (Xtb * qucs::log (T2 / T1));
   setScaledProperty ("Bf", Bf * F);
   setScaledProperty ("Br", Br * F);
 
@@ -202,9 +203,9 @@ void bjt::initModel (void) {
   nr_double_t Isc = getPropertyDouble ("Isc");
   nr_double_t Ne  = getPropertyDouble ("Ne");
   nr_double_t Nc  = getPropertyDouble ("Nc");
-  nr_double_t G = log (IsT / Is);
-  nr_double_t F1 = exp (G / Ne);
-  nr_double_t F2 = exp (G / Nc);
+  nr_double_t G = qucs::log (IsT / Is);
+  nr_double_t F1 = qucs::exp (G / Ne);
+  nr_double_t F2 = qucs::exp (G / Nc);
   Ise = Ise / F * F1;
   Isc = Isc / F * F2;
   setScaledProperty ("Ise", Ise * A);
@@ -444,7 +445,7 @@ void bjt::calcDC (void) {
   Q1 = 1 / (1 - Ubc * Vaf - Ube * Var);
   Q2 = If * Ikf + Ir * Ikr;
   nr_double_t SArg = 1.0 + 4.0 * Q2;
-  nr_double_t Sqrt = SArg > 0 ? sqrt (SArg) : 1;
+  nr_double_t Sqrt = SArg > 0 ? qucs::sqrt (SArg) : 1;
   Qb = Q1 * (1 + Sqrt) / 2;
   dQbdUbe = Q1 * (Qb * Var + gif * Ikf / Sqrt);
   dQbdUbc = Q1 * (Qb * Vaf + gir * Ikr / Sqrt);
@@ -476,8 +477,8 @@ void bjt::calcDC (void) {
       nr_double_t a, b, z;
       a = (Ibci + Ibcn + Ibei + Iben) / Irb;
       a = MAX (a, NR_TINY); // enforce positive values
-      z = (sqrt (1 + 144 / sqr (M_PI) * a) - 1) / 24 * sqr (M_PI) / sqrt (a);
-      b = tan (z);
+      z = (qucs::sqrt (1 + 144 / sqr (M_PI) * a) - 1) / 24 * sqr (M_PI) / qucs::sqrt (a);
+      b = qucs::tan (z);
       Rbb = Rbm + 3 * (Rb - Rbm) * (b - z) / z / sqr (b);
     }
     else {
@@ -594,7 +595,7 @@ void bjt::calcOperatingPoints (void) {
   if (If != 0.0) {
     nr_double_t e, Tff, dTffdUbe, dTffdUbc, a;
     a = 1 / (1 + Itf / If);
-    e = 2 * exp (MIN (Ubc * Vtf, 709));
+    e = 2 * qucs::exp (MIN (Ubc * Vtf, 709));
     Tff = Tf * (1 + Xtf * sqr (a) * e);
     dTffdUbe = Tf * Xtf * 2 * gif * Itf * cubic (a) / sqr (If) * e;
     Cbe += (If * dTffdUbe + Tff * (gif - If / Qb * dQbdUbe)) / Qb;

@@ -7,16 +7,16 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This software is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this package; see the file COPYING.  If not, write to
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
- * Boston, MA 02110-1301, USA.  
+ * Boston, MA 02110-1301, USA.
  *
  * $Id$
  *
@@ -36,6 +36,8 @@
 #include "object.h"
 #include "vector.h"
 #include "interpolator.h"
+
+namespace qucs {
 
 // Constructor creates an instance of the interpolator class.
 interpolator::interpolator () {
@@ -213,13 +215,13 @@ int interpolator::findIndex (nr_double_t x) {
   while (lo < hi) {
     av = lo + ((hi - lo) / 2);
     if (x >= rx[av])
-      lo = av + 1; 
+      lo = av + 1;
     else
       // can't be hi = av-1: here rx[av] >= x,
       // so hi can't be < av if rx[av] == x
-      hi = av; 
+      hi = av;
   }
-  // hi == lo, using hi or lo depends on taste 
+  // hi == lo, using hi or lo depends on taste
   if (lo <= length && lo > 0 && x >= rx[lo - 1])
     return lo - 1; // found
   else
@@ -280,7 +282,7 @@ nr_double_t interpolator::rinterpolate (nr_double_t x) {
     return res;
   }
   else if (repeat & REPEAT_YES)
-    x = x - floor (x / duration) * duration;
+    x = x - std::floor (x / duration) * duration;
 
   // linear interpolation
   if (interpolType & INTERPOL_LINEAR) {
@@ -324,7 +326,7 @@ nr_complex_t interpolator::cinterpolate (nr_double_t x) {
     return res;
   }
   else if (repeat & REPEAT_YES)
-    x = x - floor (x / duration) * duration;
+    x = x - std::floor (x / duration) * duration;
 
   // linear interpolation
   if (interpolType & INTERPOL_LINEAR) {
@@ -357,3 +359,5 @@ nr_complex_t interpolator::cinterpolate (nr_double_t x) {
   else
     return res;
 }
+
+} // namespace qucs

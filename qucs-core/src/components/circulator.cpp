@@ -7,16 +7,16 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This software is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this package; see the file COPYING.  If not, write to
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
- * Boston, MA 02110-1301, USA.  
+ * Boston, MA 02110-1301, USA.
  *
  * $Id$
  *
@@ -28,6 +28,8 @@
 
 #include "component.h"
 #include "circulator.h"
+
+using namespace qucs;
 
 circulator::circulator () : circuit (3) {
   type = CIR_CIRCULATOR;
@@ -45,17 +47,17 @@ void circulator::calcSP (nr_double_t) {
   setS (NODE_1, NODE_1, (r2 * r3 - r1) / d);
   setS (NODE_2, NODE_2, (r1 * r3 - r2) / d);
   setS (NODE_3, NODE_3, (r1 * r2 - r3) / d);
-  setS (NODE_1, NODE_2, sqrt (z2 / z1) * (z1 + z0) /
+  setS (NODE_1, NODE_2, qucs::sqrt (z2 / z1) * (z1 + z0) /
 	(z2 + z0) * r3 * (1 - r1 * r1) / d);
-  setS (NODE_2, NODE_3, sqrt (z3 / z2) * (z2 + z0) /
+  setS (NODE_2, NODE_3, qucs::sqrt (z3 / z2) * (z2 + z0) /
 	(z3 + z0) * r1 * (1 - r2 * r2) / d);
-  setS (NODE_3, NODE_1, sqrt (z1 / z3) * (z3 + z0) /
+  setS (NODE_3, NODE_1, qucs::sqrt (z1 / z3) * (z3 + z0) /
 	(z1 + z0) * r2 * (1 - r3 * r3) / d);
-  setS (NODE_2, NODE_1, sqrt (z1 / z2) * (z2 + z0) /
+  setS (NODE_2, NODE_1, qucs::sqrt (z1 / z2) * (z2 + z0) /
 	(z1 + z0) * (1 - r2 * r2) / d);
-  setS (NODE_1, NODE_3, sqrt (z3 / z1) * (z1 + z0) /
+  setS (NODE_1, NODE_3, qucs::sqrt (z3 / z1) * (z1 + z0) /
 	(z3 + z0) * (1 - r1 * r1) / d);
-  setS (NODE_3, NODE_2, sqrt (z2 / z3) * (z3 + z0) /
+  setS (NODE_3, NODE_2, qucs::sqrt (z2 / z3) * (z3 + z0) /
 	(z2 + z0) * (1 - r3 * r3) / d);
 }
 
@@ -71,12 +73,12 @@ void circulator::initDC (void) {
   nr_double_t s11 = (r2 * r3 - r1) / d;
   nr_double_t s22 = (r1 * r3 - r2) / d;
   nr_double_t s33 = (r1 * r2 - r3) / d;
-  nr_double_t s12 = sqrt (z2/z1) * (z1+z0) / (z2+z0) * r3 * (1-r1*r1) / d;
-  nr_double_t s23 = sqrt (z3/z2) * (z2+z0) / (z3+z0) * r1 * (1-r2*r2) / d;
-  nr_double_t s31 = sqrt (z1/z3) * (z3+z0) / (z1+z0) * r2 * (1-r3*r3) / d;
-  nr_double_t s21 = sqrt (z1/z2) * (z2+z0) / (z1+z0) * (1-r2*r2) / d;
-  nr_double_t s13 = sqrt (z3/z1) * (z1+z0) / (z3+z0) * (1-r1*r1) / d;
-  nr_double_t s32 = sqrt (z2/z3) * (z3+z0) / (z2+z0) * (1-r3*r3) / d;
+  nr_double_t s12 = qucs::sqrt (z2/z1) * (z1+z0) / (z2+z0) * r3 * (1-r1*r1) / d;
+  nr_double_t s23 = qucs::sqrt (z3/z2) * (z2+z0) / (z3+z0) * r1 * (1-r2*r2) / d;
+  nr_double_t s31 = qucs::sqrt (z1/z3) * (z3+z0) / (z1+z0) * r2 * (1-r3*r3) / d;
+  nr_double_t s21 = qucs::sqrt (z1/z2) * (z2+z0) / (z1+z0) * (1-r2*r2) / d;
+  nr_double_t s13 = qucs::sqrt (z3/z1) * (z1+z0) / (z3+z0) * (1-r1*r1) / d;
+  nr_double_t s32 = qucs::sqrt (z2/z3) * (z3+z0) / (z2+z0) * (1-r3*r3) / d;
 
   allocMatrixMNA ();
 
