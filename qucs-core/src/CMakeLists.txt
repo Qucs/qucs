@@ -390,8 +390,7 @@ SET(LIBQUCSATOR_SRC
   logging.c
   exception.cpp
   exceptionstack.cpp
-	matvec.cpp
-  matrix.cpp
+  matvec.cpp
   sweep.cpp
   check_dataset.cpp
   check_citi.cpp
