@@ -36,13 +36,18 @@ SET( VA_FILES
 
 #
 # find and assing admsXml to variable
+# Use -DADMSXML_DIR=[path] to select ADMS location
 #
 FIND_PROGRAM( ADMSXML admsXml
-  PATHS /Users/guilherme/local/qucs-head/bin #/usr/local/bin/ /usr/local/Cellar/adms/HEAD/bin/
+  HINTS ${ADMSXML_DIR}
+  PATHS /usr/local/bin/ /opt/local/bin/
   DOC "admsXml application" )
 
-
-message(STATUS " ==> found admsXml " ${ADMSXML})
+if(ADMSXML)
+  message(STATUS "Found admsXml: " ${ADMSXML})
+else()
+  message(FATAL_ERROR "admsXml was not found!")
+endif()
 
 
 #http://stackoverflow.com/questions/2687136/how-do-i-make-build-rules-in-cmake-to-preprocess-lazy-c-lzz-files-that-genera
