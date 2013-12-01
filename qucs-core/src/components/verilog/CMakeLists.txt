@@ -38,7 +38,7 @@ SET( VA_FILES
 # find and assing admsXml to variable
 #
 FIND_PROGRAM( ADMSXML admsXml
-  PATHS /usr/local/bin/ /usr/local/Cellar/adms/HEAD/bin/
+  PATHS /Users/guilherme/local/qucs-head/bin #/usr/local/bin/ /usr/local/Cellar/adms/HEAD/bin/
   DOC "admsXml application" )
 
 
