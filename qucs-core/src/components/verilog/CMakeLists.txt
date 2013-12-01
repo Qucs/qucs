@@ -1,5 +1,3 @@
-#INCLUDES = -I$(top_srcdir)/src -I$(top_srcdir)/src/math \
-#  -I$(top_srcdir)/src/components -I$(top_srcdir)/src/components/devices
 
 INCLUDE_DIRECTORIES( ${CMAKE_SOURCE_DIR}
                      ${CMAKE_CURRENT_SOURCE_DIR}
@@ -7,23 +5,18 @@ INCLUDE_DIRECTORIES( ${CMAKE_SOURCE_DIR}
                      ${CMAKE_SOURCE_DIR}/src/components
                      ${CMAKE_SOURCE_DIR}/src/components/devices )
 
-# apart from the commented names, all is derived from
-# the va file itself.
-
-
-# TODO sort out the dependencies to allow parallel build
-# TODO how to make sure constants / disciplines will be generated
+# TODO does constants / disciplines need to be generated, or adms creates them as needed?
 
 SET( VA_FILES
-#  constants.vams   #--> created by admsXml
+#  constants.vams   #--> created by admsXml if not found
 #  disciplines.vams #--> created by admsXml
 
-  fbh_hbt-2_2a.va  #--> HBT_X
-  hicumL2V2p11.va  #--> hicumL2V2p1
+  fbh_hbt-2_2a.va  #--> module HBT_X
+  hicumL2V2p11.va  #--> module hicumL2V2p1
   mod_amp.va
-  hicumL2V2p22.va  #--> hic2_full
+  hicumL2V2p22.va  #--> module hic2_full
   log_amp.va
-  hicumL0V1p12.va  #--> hic0_full
+  hicumL0V1p12.va  #--> module hic0_full
   potentiometer.va MESFET.va hicumL0V1p2.va hicumL2V2p23.va
   photodiode.va EKV26MOS.va bsim3v34nMOS.va  bsim3v34pMOS.va bsim4v30nMOS.va bsim4v30pMOS.va
   hicumL2V2p24.va hicumL0V1p2g.va hicumL0V1p3.va hicumL2V2p31n.va
@@ -34,10 +27,9 @@ SET( VA_FILES
   fa1b.va fa2b.va pad2bit.va pad3bit.va pad4bit.va binarytogrey4bit.va
   greytobinary4bit.va comp_1bit.va comp_2bit.va comp_4bit.va hpribin4bit.va )
 
-#
-# find and assing admsXml to variable
-# Use -DADMSXML_DIR=[path] to select ADMS location
-#
+# Check if admsXml is available
+#  * Use -DADMSXML_DIR=[path] to give the path containing admsXml
+#  * Try a few othe locations
 FIND_PROGRAM( ADMSXML admsXml
   HINTS ${ADMSXML_DIR}
   PATHS /usr/local/bin/ /opt/local/bin/
@@ -50,69 +42,62 @@ else()
 endif()
 
 
-#http://stackoverflow.com/questions/2687136/how-do-i-make-build-rules-in-cmake-to-preprocess-lazy-c-lzz-files-that-genera
+# TODO, test if VA files change, should recompile
 
-
-# TODO, if VA files change, should recompile
-
-# process Verilog-A file and append generated files
-# into global 'result' list
+# Function to process Verilog-A files
+#  * generated files are added to global lists (analogfunc, core)
 function(adms_compile filename)
 
-    # TODO either fix the va files or copy out of the tree
-    # TODO is 'cp' portable?
-    # handle .va files on which the filename differend from module name
+    # Ugly hack to handle .va files on which the filename differs from module name.
+    # The generated files are named after the Verilog-A module's name.
+
+    # Default
+    set(fileout ${filename})
+
+    # Special cases
     if(${filename} STREQUAL fbh_hbt-2_2a.va)
-      set(rename HBT_X.va)
-      execute_process(COMMAND cp ${CMAKE_CURRENT_SOURCE_DIR}/${filename} ${CMAKE_CURRENT_SOURCE_DIR}/${rename})
-      set(filename ${rename})
+      set(fileout HBT_X)
     endif()
     if(${filename} STREQUAL hicumL2V2p11.va)
-      set(rename hicumL2V2p1.va)
-      execute_process(COMMAND cp ${CMAKE_CURRENT_SOURCE_DIR}/${filename} ${CMAKE_CURRENT_SOURCE_DIR}/${rename})
-      set(filename ${rename})
+      set(fileout hicumL2V2p1)
     endif()
     if(${filename} STREQUAL hicumL2V2p22.va)
-      set(rename hic2_full.va)
-      execute_process(COMMAND cp ${CMAKE_CURRENT_SOURCE_DIR}/${filename} ${CMAKE_CURRENT_SOURCE_DIR}/${rename})
-      set(filename ${rename})
+      set(fileout hic2_full)
     endif()
     if(${filename} STREQUAL hicumL0V1p12.va)
-      set(rename hic0_full.va)
-      execute_process(COMMAND cp ${CMAKE_CURRENT_SOURCE_DIR}/${filename} ${CMAKE_CURRENT_SOURCE_DIR}/${rename})
-      set(filename ${rename})
+      set(fileout hic0_full)
     endif()
 
-
-    # basename
-    get_filename_component(base ${filename} NAME_WE)
+    # Verilog-A file basename, strip suffix
+    get_filename_component(base ${fileout} NAME_WE)
     set(base_abs ${CMAKE_CURRENT_BINARY_DIR}/${base})
 
-    # list output names
+    # set outputs 1
     set(output ${base_abs}.analogfunction.cpp ${base_abs}.analogfunction.h)
+
     # custom command/rule to generate outputs with admsXml
     add_custom_command(
         OUTPUT ${output}
-        COMMAND ${ADMSXML} ${CMAKE_CURRENT_SOURCE_DIR}/${filename} -e  ${CMAKE_CURRENT_SOURCE_DIR}/analogfunction.xml)
+        COMMAND ${ADMSXML} ${CMAKE_CURRENT_SOURCE_DIR}/${filename}
+                           -e  ${CMAKE_CURRENT_SOURCE_DIR}/analogfunction.xml)
     set_source_files_properties(${output} PROPERTIES GENERATED TRUE)
-    # append outputs to global list/scope
+
+    # append outputs 1 to global list/scope
     set(analogfunc ${analogfunc} ${output} PARENT_SCOPE)
 
-    set(output ${base_abs}.core.cpp ${base_abs}.core.h)
+    # set outputs 2
+    set(output ${base_abs}.core.cpp ${base_abs}.core.h ${base_abs}.defs.h)
 
     add_custom_command(
         OUTPUT ${output}
-        COMMAND ${ADMSXML} ${CMAKE_CURRENT_SOURCE_DIR}/${filename} -e ${CMAKE_CURRENT_SOURCE_DIR}/qucsVersion.xml -e ${CMAKE_CURRENT_SOURCE_DIR}/qucsMODULEcore.xml )
+        COMMAND ${ADMSXML} ${CMAKE_CURRENT_SOURCE_DIR}/${filename}
+                           -e ${CMAKE_CURRENT_SOURCE_DIR}/qucsVersion.xml
+                           -e ${CMAKE_CURRENT_SOURCE_DIR}/qucsMODULEcore.xml
+                           -e ${CMAKE_CURRENT_SOURCE_DIR}/qucsMODULEdefs.xml )
     set_source_files_properties(${output} PROPERTIES GENERATED TRUE)
+
+    # append outputs 2 to global list/scope
     set(core ${core} ${output} PARENT_SCOPE)
-
-
-    set(output ${base_abs}.defs.h)
-    add_custom_command(
-        OUTPUT ${output}
-        COMMAND ${ADMSXML} ${CMAKE_CURRENT_SOURCE_DIR}/${filename} -e ${CMAKE_CURRENT_SOURCE_DIR}/qucsVersion.xml -e ${CMAKE_CURRENT_SOURCE_DIR}/qucsMODULEdefs.xml )
-    set_source_files_properties(${output} PROPERTIES GENERATED TRUE)
-    set(defs ${defs} ${output} PARENT_SCOPE)
 
     # no need to generate GUI code? Integrated by hand already?
     #set(output ${base_abs}.gui.cpp ${base_abs}.gui.h)
@@ -120,34 +105,24 @@ function(adms_compile filename)
 endfunction()
 
 
-# clear list
+# clear global lists
 set(analogfunc)
 set(core)
-set(defs) # only def.h files, it did't work if appened with core.{cpp,h}
+#set(defs) # only def.h files, it did't work if appened with core.{cpp,h}
 
-# process VA files and append generated to list
+# Process each Verilog-A file.
+#  * generated files get added to global lists (analogfunc, core)
 foreach (_va ${VA_FILES})
   adms_compile(${_va})
 endforeach()
 
 #message(STATUS " ==> analog\n " ${analogfunc})
 #message(STATUS " ==> core\n   " ${core})
-#message(STATUS " ==> defs\n   " ${defs})
 
-# create target library out of generated files
-add_library(verilog  ${analogfunc} ${core} ${defs} ${result} ${heads})
+# create target library out of lists of generated files
+add_library(verilog  ${analogfunc} ${core} )
 
 
-#if MAINTAINER_MODE
-### configure determines if we want to build and use the
-### bundled version of ADMS, or the host's ADMS. Here we
-### set the path to the admsXml binary depeding on the choice
-### the user made at configure time
-#if USE_INTERNAL_ADMS
-#ADMSXML = $(abs_top_builddir)/adms/admsXml/admsXml
-#else
-#ADMSXML = @ADMSXML@
-#endif
 #
 # XML_FILES = analogfunction.xml qucsVersion.xml qucsMODULEcore.xml \
 #   qucsMODULEdefs.xml qucsMODULEgui.xml
