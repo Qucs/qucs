@@ -26,56 +26,56 @@ endif()
 SET( VA_FILES
 #  constants.vams   #--> created by admsXml if not found
 #  disciplines.vams #--> created by admsXml
-  andor4x3.va
-  dff_SR.va
-  fa1b.va
-  fbh_hbt-2_2a.va  #--> module HBT_X
-  greytobinary4bit.va
-  hicumL0V1p12.va  #--> module hic0_full
-  hicumL2V2p11.va  #--> module hicumL2V2p1
-  hicumL2V2p22.va  #--> module hic2_full
-  hicumL2V2p24.va
-  log_amp.va
-  mod_amp.va
-  mux2to1.va
-  photodiode.va
-  phototransistor.va
-  potentiometer.va
-  bsim3v34pMOS.va
-  DLS_1ton.va
-  DLS_nto1.va
-  EKV26MOS.va
-  MESFET.va
   andor4x2.va
+  andor4x3.va
   andor4x4.va
   binarytogrey4bit.va
   bsim3v34nMOS.va
+  bsim3v34pMOS.va
   bsim4v30nMOS.va
   bsim4v30pMOS.va
   comp_1bit.va
   comp_2bit.va
   comp_4bit.va
+  dff_SR.va
+  DLS_1ton.va
+  DLS_nto1.va
   dmux2to4.va
   dmux3to8.va
   dmux4to16.va
+  EKV26MOS.va
+  fa1b.va
   fa2b.va
+  fbh_hbt-2_2a.va  #--> module HBT_X
   gatedDlatch.va
+  greytobinary4bit.va
   ha1b.va
+  hicumL0V1p12.va  #--> module hic0_full
   hicumL0V1p2.va
   hicumL0V1p2g.va
   hicumL0V1p3.va
+  hicumL2V2p11.va  #--> module hicumL2V2p1
+  hicumL2V2p22.va  #--> module hic2_full
   hicumL2V2p23.va
+  hicumL2V2p24.va
   hicumL2V2p31n.va
   hpribin4bit.va
   jkff_SR.va
+  log_amp.va
   logic_0.va
   logic_1.va
+  MESFET.va
+  mod_amp.va
+  mux2to1.va
   mux4to1.va
   mux8to1.va
   nigbt.va
   pad2bit.va
   pad3bit.va
   pad4bit.va
+  photodiode.va
+  phototransistor.va
+  potentiometer.va
   tff_SR.va
   )
 
