@@ -1,8 +1,10 @@
 #include <string>
+//#include <qucs-core/qucs_typedefs.h>
 #include <qucs-core/qucs_interface.h>
 #include <qucs-core/e_trsolver.h>
 #include "mextrsolver.h"
 
+using namespace qucs;
 
 // function to display messages
 void mextrsolvermessage(int level, const char* warningmsg, ...)
