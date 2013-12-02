@@ -66,7 +66,7 @@ set(conv_generated ${convflexOutputs} ${convbisonOutputs})
 add_custom_command(
   OUTPUT qucsdefs.h
   COMMAND ${CMAKE_CURRENT_BINARY_DIR}/../qucsator -l > ${CMAKE_CURRENT_BINARY_DIR}/qucsdefs.h
-  DEPENDS qucsator-bin
+  DEPENDS qucsator
 )
 
 ADD_CUSTOM_TARGET( defs DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/qucsdefs.h)
@@ -75,7 +75,7 @@ ADD_EXECUTABLE(qucsconv ${QUCSCONV_SRC} ${conv_generated} )
 
 ADD_DEPENDENCIES(qucsconv defs)
 
-TARGET_LINK_LIBRARIES(qucsconv qucsator qucsmath)
+TARGET_LINK_LIBRARIES(qucsconv qucs)
 
 #
 # Handle installation
