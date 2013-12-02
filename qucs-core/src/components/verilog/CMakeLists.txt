@@ -148,7 +148,8 @@ endforeach()
 #message(STATUS " ==> core\n   " ${core})
 
 # create target library out of lists of generated files
-add_library(verilog  ${analogfunc} ${core} )
+set(verilog_SRC  ${analogfunc} ${core} )
+add_library(verilog ${verilog_SRC})
 
 #
 # XML_FILES = analogfunction.xml qucsVersion.xml qucsMODULEcore.xml \
