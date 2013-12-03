@@ -7,16 +7,16 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This software is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this package; see the file COPYING.  If not, write to
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
- * Boston, MA 02110-1301, USA.  
+ * Boston, MA 02110-1301, USA.
  *
  * $Id$
  *
@@ -35,7 +35,8 @@
 #define NODE_S 2 /* source node */
 #define NODE_B 3 /* bulk node   */
 
-using namespace device;
+using namespace qucs;
+using namespace qucs::device;
 
 mosfet::mosfet () : circuit (4) {
   transientMode = 0;
@@ -220,7 +221,7 @@ void mosfet::initModel (void) {
   // calculate DC transconductance coefficient
   nr_double_t Kp = getPropertyDouble ("Kp");
   nr_double_t Uo = getPropertyDouble ("Uo");
-  nr_double_t F1 = exp (1.5 * log (T1 / T2));
+  nr_double_t F1 = qucs::exp (1.5 * qucs::log (T1 / T2));
   Kp = Kp * F1;
   Uo = Uo * F1;
   setScaledProperty ("Kp", Kp);
@@ -246,7 +247,7 @@ void mosfet::initModel (void) {
   if ((Phi = P) <= 0) {
     if (Nsub > 0) {
       if (Nsub * 1e6 >= NiSi) {
-	Phi = 2 * Ut * log (Nsub * 1e6 / NiSi);
+	Phi = 2 * Ut * qucs::log (Nsub * 1e6 / NiSi);
       } else {
 	logprint (LOG_STATUS, "WARNING: substrate doping less than instrinsic "
 		  "density, adjust Nsub >= %g\n", NiSi / 1e6);
@@ -263,7 +264,7 @@ void mosfet::initModel (void) {
   nr_double_t G = getPropertyDouble ("Gamma");
   if ((Ga = G) < 0) {
     if (Cox > 0 && Nsub > 0) {
-      Ga = sqrt (2 * Q * ESi * E0 * Nsub * 1e6) / Cox;
+      Ga = qucs::sqrt (2 * Q * ESi * E0 * Nsub * 1e6) / Cox;
     } else {
       logprint (LOG_STATUS, "WARNING: adjust Tox, Nsub or Gamma to get a "
 		"valid bulk threshold\n");
@@ -286,7 +287,7 @@ void mosfet::initModel (void) {
     }
     PhiMS = PhiG - (4.15 + Eg / 2 + pol * Phi / 2);
     if (Nss >= 0 && Cox > 0) {
-      Vto = PhiMS - Q * Nss * 1e4 / Cox + pol * (Phi + Ga * sqrt (Phi));
+      Vto = PhiMS - Q * Nss * 1e4 / Cox + pol * (Phi + Ga * qucs::sqrt (Phi));
     } else {
       logprint (LOG_STATUS, "WARNING: adjust Tox, Nss or Vt0 to get a "
 		"valid threshold voltage\n");
@@ -320,7 +321,7 @@ void mosfet::initModel (void) {
   setScaledProperty ("Pb", Pb);
   if (Cj <= 0) {
     if (Pb > 0 && Nsub >= 0) {
-      Cj = sqrt (ESi * E0 * Q * Nsub * 1e6 / 2 / Pb);
+      Cj = qucs::sqrt (ESi * E0 * Q * Nsub * 1e6 / 2 / Pb);
     }
     else {
       logprint (LOG_STATUS, "WARNING: adjust Pb, Nsub or Cj to get a "
@@ -361,7 +362,7 @@ void mosfet::initModel (void) {
   nr_double_t F4, E1, E2;
   E1 = Egap (T1);
   E2 = Egap (T2);
-  F4 = exp (- QoverkB / T2 * (T2 / T1 * E1 - E2));
+  F4 = qucs::exp (- QoverkB / T2 * (T2 / T1 * E1 - E2));
   Is = Is * F4;
   Js = Js * F4;
   nr_double_t Isd = (Ad > 0) ? Js * Ad : Is;
@@ -438,10 +439,10 @@ void mosfet::calcDC (void) {
 
   // first calculate sqrt (Upn - Phi)
   nr_double_t Upn = (MOSdir > 0) ? Ubs : Ubd;
-  nr_double_t Sarg, Sphi = sqrt (Phi);
+  nr_double_t Sarg, Sphi = qucs::sqrt (Phi);
   if (Upn <= 0) {
     // take equation as is
-    Sarg = sqrt (Phi - Upn);
+    Sarg = qucs::sqrt (Phi - Upn);
   }
   else {
     // taylor series of "sqrt (x - 1)" -> continual at Ubs/Ubd = 0
@@ -578,7 +579,7 @@ void mosfet::calcOperatingPoints (void) {
   nr_double_t Fc   = getPropertyDouble ("Fc");
   nr_double_t Tt   = getPropertyDouble ("Tt");
   nr_double_t W    = getPropertyDouble ("W");
-  
+
   nr_double_t Cbs, Cbd, Cgd, Cgb, Cgs;
 
   // capacitance of bulk-drain diode

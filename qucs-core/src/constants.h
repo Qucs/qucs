@@ -7,25 +7,25 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This software is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this package; see the file COPYING.  If not, write to
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
- * Boston, MA 02110-1301, USA.  
+ * Boston, MA 02110-1301, USA.
  *
  * $Id$
  *
  */
 
-/*!\file constants.h 
+/*!\file constants.h
    \brief global natural constant header file
    \todo Create a material header
-*/ 
+*/
 #ifndef __CONSTANTS_H__
 #define __CONSTANTS_H__
 
@@ -45,7 +45,7 @@
 */
 #define H    6.626069311e-34
 /*!\brief Absolute 0 in centigrade  */
-#define K    -273.15  
+#define K    -273.15
 /*!\brief standard temperature      */
 #define T0   290
 
@@ -59,7 +59,7 @@
 #define QoverkB    1.16045045690360379713e+4
 
 /*!\brief Relative permittivity of Silicon dioxide (Silica) */
-#define ESiO2      3.9  
+#define ESiO2      3.9
 /*!\brief Relative permittivity of Silicon */
 #define ESi        11.7
 /*!\brief relative permittivity of Germanium */
@@ -67,14 +67,14 @@
 /*!\brief Relative permittivity of Gallium(III) arsenide */
 #define EGaAs      13.1
 /*!\brief Intrinsic carrier concentration in 1/m^3 of Silicon */
-#define NiSi       1.45e16 
+#define NiSi       1.45e16
 /*!\brief Intrinsic carrier concentration in 1/m^3 of Germanium */
 #define NiGe       2.40e19
 /*!\brief Intrinsic carrier concentration in 1/m^3 of Gallium(III) arsenide */
 #define NiGaAs     9.00e12
 /*!\brief Energy gap at 300K in eV of Silicon */
-#define EgSi       1.11    
-/*!\brief Energy gap at 300K in eV of Schottky 
+#define EgSi       1.11
+/*!\brief Energy gap at 300K in eV of Schottky
   \todo What kind of metal (ideal, real, gold)?
 */
 #define EgSchottky 0.69
@@ -85,61 +85,61 @@
 /*!\brief Energy gap at 0K in eV of Silicon */
 #define Eg0Si      1.16
 
-/*!\brief Gmin 
+/*!\brief Gmin
    \todo Define and document
 */
 #define GMin       NR_TINY
 
-/*!\brief Square a value
-   \param[in] x value to square
-   \return squarred expression
-   \todo static inline
-*/
-#define sqr(x)    ((x) * (x))
+///*!\brief Square a value
+//   \param[in] x value to square
+//   \return squarred expression
+//   \todo static inline
+//*/
+//#define sqr(x)    ((x) * (x))
 /*!\brief cube function
    \param[in] x value to put at cube
    \return Cubed expression
    \todo static inline
 */
 #define cubic(x)  ((x) * (x) * (x))
-/*!\brief quad function
-   \param[in] x function parameter
-   \return \f$x^4\f$
-   \todo will be better to implement as static inline
-   because we could do something like
-   tmp = sqr(x);
-   return sqr(tmp);
-*/
-#define quadr(x)  (exp (4 * log (fabs (x))))
-/*!\brief hyperbolic cotangent 
-   \todo Better as static inline 
-*/
-#define coth(x)   (1.0 / tanh (x))
-/*!\brief hyperbolic secant
-   \todo Better as static inline 
-*/
-#define sech(x)   (1.0 / cosh (x))
-/*!\brief hyperbolic cosecant
-   \todo Better as static inline 
-*/
-#define cosech(x) (1.0 / sinh (x))
+///*!\brief quad function
+//   \param[in] x function parameter
+//   \return \f$x^4\f$
+//   \todo will be better to implement as static inline
+//   because we could do something like
+//   tmp = sqr(x);
+//   return sqr(tmp);
+//*/
+//#define quadr(x)  (exp (4 * log (fabs (x))))
+///*!\brief hyperbolic cotangent
+//   \todo Better as static inline
+//*/
+//#define coth(x)   (1.0 / tanh (x))
+///*!\brief hyperbolic secant
+//   \todo Better as static inline
+//*/
+//#define sech(x)   (1.0 / cosh (x))
+///*!\brief hyperbolic cosecant
+//   \todo Better as static inline
+//*/
+//#define cosech(x) (1.0 / sinh (x))
 /*!\brief Convert kelvin to celcius
-   \todo Better as static inline 
+   \todo Better as static inline
    \todo Rename as kelvin2celcius
 */
 #define kelvin(x) ((x) - K)
 /*!\brief Convert celcius to kelvin
-   \todo Better as static inline 
+   \todo Better as static inline
    \todo Rename as celcius2kelvin
 */
 #define degree(x) (K + (x))
 /*!\brief Convert degree to radian
-   \todo Better as static inline 
+   \todo Better as static inline
    \todo Rename as deg2rad
 */
 #define rad(x)    (M_PI * (x) / 180.0)
 /*!\brief Convert radian to degree
-   \todo Better as static inline 
+   \todo Better as static inline
    \todo Rename as rad2deg
 */
 #define deg(x)    (180.0 * (x) / M_PI)

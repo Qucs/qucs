@@ -7,16 +7,16 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This software is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this package; see the file COPYING.  If not, write to
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
- * Boston, MA 02110-1301, USA.  
+ * Boston, MA 02110-1301, USA.
  *
  * $Id$
  *
@@ -36,6 +36,8 @@
 #include "matrix.h"
 #include "matvec.h"
 #include "constants.h"
+
+using namespace qucs;
 
 /* Global variables. */
 /* dataset * qucs_data = NULL;   -- already defined in CSV producer */
@@ -76,7 +78,7 @@ void touchstone_print_noise (void) {
 	       " %+." NR_DECS "e" " %+." NR_DECS "e"
 	       " %+." NR_DECS "e"
 	       touchstone_crlf, f,
-	       10.0 * log10 (real (touchstone_data.fmin->get (i))),
+	       10.0 * qucs::log10 (real (touchstone_data.fmin->get (i))),
 	       abs (touchstone_data.sopt->get (i)),
 	       deg (arg (touchstone_data.sopt->get (i))),
 	       real (touchstone_data.rn->get (i)) /
@@ -99,7 +101,7 @@ void touchstone_print (void) {
       fprintf (touchstone_out, "%." NR_DECS "e"
 	       " %+." NR_DECS "e" " %+." NR_DECS "e"
 	       touchstone_crlf, f, real (S(0,0)), imag (S(0,0)));
-    }    
+    }
   }
   // two-port file
   else if (touchstone_data.ports == 2) {

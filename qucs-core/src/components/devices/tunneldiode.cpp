@@ -7,16 +7,16 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This software is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this package; see the file COPYING.  If not, write to
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
- * Boston, MA 02110-1301, USA.  
+ * Boston, MA 02110-1301, USA.
  *
  * $Id$
  *
@@ -34,7 +34,8 @@
 #define NODE_A1 0 /* cathode node */
 #define NODE_A2 1 /* anode node   */
 
-using namespace device;
+using namespace qucs;
+using namespace qucs::device;
 
 // Constructor for the diode.
 tunneldiode::tunneldiode () : circuit (2) {
@@ -63,13 +64,13 @@ void tunneldiode::calcId (nr_double_t U, nr_double_t& I, nr_double_t& G) {
   nr_double_t e = (eta - U) / de;
   nr_double_t b = e;
   if (e < 15.0)  // avoid numerical overflow
-    b = log (1.0 + exp ( e ));
+    b = qucs::log (1.0 + qucs::exp ( e ));
 
   // current
   I = b * a;
 
   // derivative
-  G = Q / dv / de / (1.0 + exp(-e)) * a - b * Q / dv / dW / (1.0 + sqr (U/dW));
+  G = Q / dv / de / (1.0 + qucs::exp(-e)) * a - b * Q / dv / dW / (1.0 + sqr (U/dW));
 }
 
 // Callback for DC analysis.
@@ -98,9 +99,9 @@ void tunneldiode::calcDC (void) {
 
   // thermal-ionic current
   nv *= T / Q;
-  nr_double_t c = A * Iv / sinh (Vv / nv);
-  Id += c * sinh (Ud / nv);
-  gd += c * cosh (Ud / nv) / nv;
+  nr_double_t c = A * Iv / qucs::sinh (Vv / nv);
+  Id += c * qucs::sinh (Ud / nv);
+  gd += c * qucs::cosh (Ud / nv) / nv;
 
   nr_double_t Ieq = Id - Ud * gd;
 

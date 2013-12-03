@@ -7,16 +7,16 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This software is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this package; see the file COPYING.  If not, write to
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
- * Boston, MA 02110-1301, USA.  
+ * Boston, MA 02110-1301, USA.
  *
  * $Id$
  *
@@ -30,7 +30,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <math.h>
+#include <cmath>
 
 #include "logging.h"
 #include "object.h"
@@ -43,6 +43,8 @@
 # define strchr  index
 # define strrchr rindex
 #endif
+
+namespace qucs {
 
 // Constructor creates an unnamed instance of the matvec class.
 matvec::matvec () {
@@ -103,7 +105,7 @@ char * matvec::getName (void) {
 /* This function saves the given vector to the matvec object with the
    appropriate matrix indices. */
 void matvec::set (vector v, int r, int c) {
-  assert (v.getSize () == size && 
+  assert (v.getSize () == size &&
 	  r >= 0 && r < rows && c >= 0 && c < cols);
   for (int i = 0; i < size; i++) data[i].set (r, c, v.get (i));
 }
@@ -480,6 +482,11 @@ matvec inverse (matvec a) {
   return res;
 }
 
+// Compute inverse matrices of the given matrix vector.
+matvec sqr (matvec a) {
+  return a * a;
+}
+
 // Compute n-th power of the given matrix vector.
 matvec pow (matvec a, int n) {
   matvec res (a.getSize (), a.getRows (), a.getCols ());
@@ -610,7 +617,7 @@ matvec stoz (matvec s, vector z0) {
   assert (s.getCols () == s.getRows () && s.getCols () == z0.getSize ());
   matvec res (s.getSize (), s.getCols (), s.getRows ());
   for (int i = 0; i < s.getSize (); i++) res.set (stoz (s.get (i), z0), i);
-  return res;  
+  return res;
 }
 
 matvec stoz (matvec s, nr_complex_t z0) {
@@ -622,7 +629,7 @@ matvec ztos (matvec z, vector z0) {
   assert (z.getCols () == z.getRows () && z.getCols () == z0.getSize ());
   matvec res (z.getSize (), z.getCols (), z.getRows ());
   for (int i = 0; i < z.getSize (); i++) res.set (ztos (z.get (i), z0), i);
-  return res;  
+  return res;
 }
 
 matvec ztos (matvec z, nr_complex_t z0) {
@@ -634,7 +641,7 @@ matvec ztoy (matvec z) {
   assert (z.getCols () == z.getRows ());
   matvec res (z.getSize (), z.getCols (), z.getRows ());
   for (int i = 0; i < z.getSize (); i++) res.set (ztoy (z.get (i)), i);
-  return res;  
+  return res;
 }
 
 // Convert admittance matrix vector to impedance matrix vector.
@@ -642,7 +649,7 @@ matvec ytoz (matvec y) {
   assert (y.getCols () == y.getRows ());
   matvec res (y.getSize (), y.getCols (), y.getRows ());
   for (int i = 0; i < y.getSize (); i++) res.set (ytoz (y.get (i)), i);
-  return res;  
+  return res;
 }
 
 /* This function converts 2x2 matrix vectors from any of the matrix
@@ -653,7 +660,7 @@ matvec twoport (matvec m, char in, char out) {
   matvec res (m.getSize (), 2, 2);
   for (int i = 0; i < m.getSize (); i++)
     res.set (twoport (m.get (i), in, out), i);
-  return res;  
+  return res;
 }
 
 /* The function returns the Rollet stability factor vector of the
@@ -673,3 +680,5 @@ vector b1 (matvec m) {
   for (int i = 0; i < m.getSize (); i++) res.set (b1 (m.get (i)), i);
   return res;
 }
+
+} // namespace qucs

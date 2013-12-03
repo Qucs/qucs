@@ -25,6 +25,7 @@
 #ifndef __NASOLVER_H__
 #define __NASOLVER_H__
 
+#include "qucs_typedefs.h"
 #include "tvector.h"
 #include "tmatrix.h"
 #include "eqnsys.h"
@@ -38,6 +39,8 @@
 #define CONV_SteepestDescent 3
 #define CONV_GMinStepping    4
 #define CONV_SourceStepping  5
+
+namespace qucs {
 
 class analysis;
 class circuit;
@@ -135,6 +138,8 @@ private:
 
     calculate_func_t calculate_func;
 };
+
+} // namespace qucs
 
 #include "nasolver.cpp"
 

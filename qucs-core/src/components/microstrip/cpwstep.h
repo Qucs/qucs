@@ -25,7 +25,7 @@
 #ifndef __CPWSTEP_H__
 #define __CPWSTEP_H__
 
-class cpwstep : public circuit
+class cpwstep : public qucs::circuit
 {
  public:
   CREATOR (cpwstep);

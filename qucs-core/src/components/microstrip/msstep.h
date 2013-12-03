@@ -26,7 +26,7 @@
 #ifndef __MSSTEP_H__
 #define __MSSTEP_H__
 
-class msstep : public circuit
+class msstep : public qucs::circuit
 {
  public:
   CREATOR (msstep);
@@ -35,7 +35,7 @@ class msstep : public circuit
   void initAC (void);
   void calcAC (nr_double_t);
   void initTR (void);
-  matrix calcMatrixZ (nr_double_t);
+  qucs::matrix calcMatrixZ (nr_double_t);
 };
 
 #endif /* __MSSTEP_H__ */

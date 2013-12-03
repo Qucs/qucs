@@ -45,6 +45,7 @@
 #include "check_netlist.h"
 #include "module.h"
 #include "qucs_interface.h"
+#include "analysis.h"
 
 #if HAVE_UNISTD_H
 #include <unistd.h>
@@ -64,56 +65,6 @@ qucsint::qucsint ()
     precinit ();
     ::srand (::time (NULL));
 
-//  // check program arguments
-//  for (int i = 1; i < argc; i++) {
-//    if (!strcmp (argv[i], "-v") || !strcmp (argv[i], "--version")) {
-//      fprintf (stdout,
-//	"Qucsator " PACKAGE_VERSION "\n"
-//	"Copyright (C) 2003-2009 "
-//	"Stefan Jahn <stefan@lkcc.org>\n"
-//        "Copyright (C) 2006 Helene Parruitte <parruit@enseirb.fr>\n"
-//        "Copyright (C) 2006 Bastien Roucaries <roucaries.bastien@gmail.com>\n"
-//	"\nThis is free software; see the source for copying "
-//	"conditions.  There is NO\n"
-//	"warranty; not even for MERCHANTABILITY or FITNESS FOR A "
-//	"PARTICULAR PURPOSE.\n");
-//      return 0;
-//    }
-//    if (!strcmp (argv[i], "-h") || !strcmp (argv[i], "--help")) {
-//      fprintf (stdout,
-//	"Usage: %s [OPTION]...\n\n"
-//	"  -h, --help     display this help and exit\n"
-//	"  -v, --version  display version information and exit\n"
-//	"  -i FILENAME    use file as input netlist (default stdin)\n"
-//	"  -o FILENAME    use file as output dataset (default stdout)\n"
-//	"  -b, --bar      enable textual progress bar\n"
-//	"  -g, --gui      special progress bar used by gui\n"
-//	"  -c, --check    check the input netlist and exit\n"
-//	"\nReport bugs to <" PACKAGE_BUGREPORT ">.\n", argv[0]);
-//      return 0;
-//    }
-//    else if (!strcmp (argv[i], "-i")) {
-//      infile = argv[++i];
-//    }
-//    else if (!strcmp (argv[i], "-o")) {
-//      outfile = argv[++i];
-//      file_status = stdout;
-//    }
-//    else if (!strcmp (argv[i], "-b") || !strcmp (argv[i], "--bar")) {
-//      progressbar_enable = 1;
-//    }
-//    else if (!strcmp (argv[i], "-g") || !strcmp (argv[i], "--gui")) {
-//      progressbar_gui = 1;
-//    }
-//    else if (!strcmp (argv[i], "-c") || !strcmp (argv[i], "--check")) {
-//      netlist_check = 1;
-//    }
-//    else if (!strcmp (argv[i], "-l") || !strcmp (argv[i], "--listing")) {
-//      listing = 1;
-//    }
-//  }
-
-    //estack.print ("uncaught");
 }
 
 // destructor
@@ -137,7 +88,7 @@ int qucsint::prepare_netlist (char * infile)
     module::registerModules ();
 
     // create root environment
-    root = new environment ("root");
+    root = new qucs::environment ("root");
 
     // create netlist object and input
     subnet = new net ("subnet");
@@ -196,17 +147,6 @@ analysis * qucsint::getETR()
     // get a pointer to the external transient solver interface
     return subnet->findAnalysis (ANALYSIS_E_TRANSIENT);
 }
-
-//int qucsint::trevaluate ()
-//{
-//    // analyse the netlist
-//    err = 0;
-//    ret = 0;
-//    out = subnet->runAnalysis (err);
-//    ret |= err;
-//
-//    return ret;
-//}
 
 int qucsint::output (char * outfile)
 {

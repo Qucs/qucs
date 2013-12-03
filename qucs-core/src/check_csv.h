@@ -7,16 +7,16 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This software is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this package; see the file COPYING.  If not, write to
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
- * Boston, MA 02110-1301, USA.  
+ * Boston, MA 02110-1301, USA.
  *
  * $Id$
  *
@@ -25,13 +25,15 @@
 #ifndef __CHECK_CSV_H__
 #define __CHECK_CSV_H__
 
-class dataset;
-class vector;
-class strlist;
+namespace qucs {
+  class dataset;
+  class vector;
+  class strlist;
+}
 
-extern dataset * csv_result;
-extern vector  * csv_vector;
-extern strlist * csv_header;
+extern qucs::dataset * csv_result;
+extern qucs::vector  * csv_vector;
+extern qucs::strlist * csv_header;
 
 /* Externalize variables used by the scanner and parser. */
 extern int csv_lineno;

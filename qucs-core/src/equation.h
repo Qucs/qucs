@@ -7,16 +7,16 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This software is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this package; see the file COPYING.  If not, write to
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
- * Boston, MA 02110-1301, USA.  
+ * Boston, MA 02110-1301, USA.
  *
  * $Id$
  *
@@ -30,6 +30,10 @@
 #include "vector.h"
 #include "matrix.h"
 #include "matvec.h"
+
+struct definition_t;
+
+namespace qucs {
 
 class strlist;
 class dataset;
@@ -84,7 +88,7 @@ public:
   int getType (void) { return type; }
   int getTag (void) { return tag; }
   void setType (int tag) { type = tag; }
-  constant * getResult (void) { return res; } 
+  constant * getResult (void) { return res; }
   nr_double_t getResultDouble (void);
   nr_complex_t getResultComplex (void);
   vector getResultVector (void);
@@ -92,7 +96,7 @@ public:
   char * getInstance (void);
   void setInstance (const char *);
   void applyInstance (void);
-  constant * calculate (void);    
+  constant * calculate (void);
   strlist * collectDependencies (void);
   strlist * collectDataDependencies (void);
 
@@ -105,7 +109,7 @@ public:
   virtual node * differentiate (char *) { return this; }
   virtual node * recreate (void) { return new node (*this); }
   virtual void replace (char *, char *) { }
-  
+
 public:
   int duplicate;
   int cycle;
@@ -216,7 +220,7 @@ public:
   void mul (assignment *);
   void add (assignment *);
   void mulref (assignment *);
-  
+
 public:
   char * result;
   node * body;
@@ -352,6 +356,8 @@ private:
   checker * checkee;
 };
 
-} /* namespace */
+} /* namespace eqn */
+
+} // namespace qucs
 
 #endif /* __EQUATION_H__ */

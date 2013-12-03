@@ -7,16 +7,16 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This software is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this package; see the file COPYING.  If not, write to
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
- * Boston, MA 02110-1301, USA.  
+ * Boston, MA 02110-1301, USA.
  *
  * $Id$
  *
@@ -28,6 +28,8 @@
 
 #include "component.h"
 #include "inoise.h"
+
+using namespace qucs;
 
 inoise::inoise () : circuit (2) {
   type = CIR_INOISE;
@@ -63,7 +65,7 @@ void inoise::calcNoiseAC (nr_double_t frequency) {
 
 // properties
 PROP_REQ [] = {
-  { "i", PROP_REAL, { 1e-6, PROP_NO_STR }, PROP_POS_RANGE }, 
+  { "i", PROP_REAL, { 1e-6, PROP_NO_STR }, PROP_POS_RANGE },
   PROP_NO_PROP };
 PROP_OPT [] = {
   { "a", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },

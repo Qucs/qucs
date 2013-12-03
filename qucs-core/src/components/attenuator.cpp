@@ -7,16 +7,16 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This software is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this package; see the file COPYING.  If not, write to
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
- * Boston, MA 02110-1301, USA.  
+ * Boston, MA 02110-1301, USA.
  *
  * $Id$
  *
@@ -29,6 +29,8 @@
 #include "component.h"
 #include "attenuator.h"
 
+using namespace qucs;
+
 attenuator::attenuator () : circuit (2) {
   type = CIR_ATTENUATOR;
 }
@@ -39,7 +41,7 @@ void attenuator::initSP (void) {
   nr_double_t z = getPropertyDouble ("Zref");
   nr_double_t r = (z - z0) / (z + z0);
   nr_double_t s11 = r * (1 - a) / (a - r * r);
-  nr_double_t s21 = sqrt (a) * (1 - r * r) / (a - r * r);
+  nr_double_t s21 = qucs::sqrt (a) * (1 - r * r) / (a - r * r);
   setS (NODE_1, NODE_1, s11);
   setS (NODE_2, NODE_2, s11);
   setS (NODE_1, NODE_2, s21);
@@ -54,8 +56,8 @@ void attenuator::calcNoiseSP (nr_double_t) {
   nr_double_t f = (l - 1) * (r * r - 1) / sqr (l - r * r) * kelvin (T) / T0;
   setN (NODE_1, NODE_1, -f * (r * r + l));
   setN (NODE_2, NODE_2, -f * (r * r + l));
-  setN (NODE_1, NODE_2, +f * 2 * r * sqrt (l));
-  setN (NODE_2, NODE_1, +f * 2 * r * sqrt (l));
+  setN (NODE_1, NODE_2, +f * 2 * r * qucs::sqrt (l));
+  setN (NODE_2, NODE_1, +f * 2 * r * qucs::sqrt (l));
 }
 
 void attenuator::calcNoiseAC (nr_double_t) {
@@ -65,8 +67,8 @@ void attenuator::calcNoiseAC (nr_double_t) {
   nr_double_t f = 4.0 * kelvin (T) / T0 / z / (l - 1);
   setN (NODE_1, NODE_1, +f * (l + 1));
   setN (NODE_2, NODE_2, +f * (l + 1));
-  setN (NODE_1, NODE_2, -f * 2 * sqrt (l));
-  setN (NODE_2, NODE_1, -f * 2 * sqrt (l));
+  setN (NODE_1, NODE_2, -f * 2 * qucs::sqrt (l));
+  setN (NODE_2, NODE_1, -f * 2 * qucs::sqrt (l));
 }
 
 void attenuator::initDC (void) {
@@ -82,7 +84,7 @@ void attenuator::initDC (void) {
     allocMatrixMNA ();
     nr_double_t zref = getPropertyDouble ("Zref");
     nr_double_t z11 = zref * (a + 1) / (a - 1);
-    nr_double_t z21 = zref * (sqrt (a) * 2) / (a - 1);
+    nr_double_t z21 = zref * (qucs::sqrt (a) * 2) / (a - 1);
     setB (NODE_1, VSRC_1, +1.0); setB (NODE_1, VSRC_2, +0.0);
     setB (NODE_2, VSRC_1, +0.0); setB (NODE_2, VSRC_2, +1.0);
     setC (VSRC_1, NODE_1, -1.0); setC (VSRC_1, NODE_2, +0.0);
@@ -100,8 +102,8 @@ void attenuator::initDC (void) {
     nr_double_t f = 1 / z / (a - 1);
     setY (NODE_1, NODE_1, f * (a + 1));
     setY (NODE_2, NODE_2, f * (a + 1));
-    setY (NODE_1, NODE_2, -f * 2 * sqrt (a));
-    setY (NODE_2, NODE_1, -f * 2 * sqrt (a));
+    setY (NODE_1, NODE_2, -f * 2 * qucs::sqrt (a));
+    setY (NODE_2, NODE_1, -f * 2 * qucs::sqrt (a));
   }
 #endif
 }
@@ -121,8 +123,8 @@ void attenuator::initAC (void) {
     allocMatrixMNA ();
     nr_double_t zref = getPropertyDouble ("Zref");
     nr_double_t z11 = zref * (a + 1) / (a - 1);
-    nr_double_t z21 = zref * (sqrt (a) * 2) / (a - 1);
-  
+    nr_double_t z21 = zref * (qucs::sqrt (a) * 2) / (a - 1);
+
     // build Z-parameter matrix and convert it to Y-parameters
     matrix z (2);
     z.set (NODE_1, NODE_1, z11); z.set (NODE_2, NODE_2, z11);
@@ -137,8 +139,8 @@ void attenuator::initAC (void) {
     nr_double_t f = 1 / z / (a - 1);
     setY (NODE_1, NODE_1, f * (a + 1));
     setY (NODE_2, NODE_2, f * (a + 1));
-    setY (NODE_1, NODE_2, -f * 2 * sqrt (a));
-    setY (NODE_2, NODE_1, -f * 2 * sqrt (a));
+    setY (NODE_1, NODE_2, -f * 2 * qucs::sqrt (a));
+    setY (NODE_2, NODE_1, -f * 2 * qucs::sqrt (a));
   }
 #endif
 }

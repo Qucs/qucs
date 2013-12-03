@@ -40,6 +40,8 @@ SUBDIRS += src doc .
 
 ACLOCAL_AMFLAGS = -I m4
 
+nodist_pkginclude_HEADERS = qucs_typedefs.h
+
 EXTRA_DIST = BUGS bootstrap.sh depcomp RELEASE
 
 CLEANFILES = *~ *.orig *.rej

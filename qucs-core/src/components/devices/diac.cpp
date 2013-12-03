@@ -8,16 +8,16 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This software is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this package; see the file COPYING.  If not, write to
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
- * Boston, MA 02110-1301, USA.  
+ * Boston, MA 02110-1301, USA.
  *
  * $Id$
  *
@@ -36,7 +36,8 @@
 #define NODE_A2 1 /* anode 2 (cathode) */
 #define NODE_IN 2 /* internal node */
 
-using namespace device;
+using namespace qucs;
+using namespace qucs::device;
 
 // Constructor for the diac.
 diac::diac () : circuit (3) {
@@ -78,20 +79,20 @@ void diac::calcTheModel (bool last) {
   if (isOn)
     Ut = N * kelvin (T) * kBoverQ;
   else
-    Ut  = Ubo / log (Ibo / Is);
+    Ut  = Ubo / qucs::log (Ibo / Is);
 
   Vd = Ud = real (getV (NODE_IN) - getV (NODE_A2));
   Ud = fabs (Ud) / Ut;
   Id = sign (Vd) * Is;
 
   if (Ud >= 80.0) {
-    Id *= exp (80.0) * (1.0 + Ud - 80.0) - 1.0;
+    Id *= qucs::exp (80.0) * (1.0 + Ud - 80.0) - 1.0;
     Ud  = 80.0;
   }
   else
-    Id *= exp (Ud) - 1.0;
+    Id *= qucs::exp (Ud) - 1.0;
 
-  gd  = Is / Ut * exp (Ud);
+  gd  = Is / Ut * qucs::exp (Ud);
   Ieq = Id - Vd * gd;
 
   // fill in I-Vector
@@ -194,12 +195,12 @@ void diac::calcTR (nr_double_t time) {
 
 // properties
 PROP_REQ [] = {
-  { "Ibo", PROP_REAL, { 50e-6, PROP_NO_STR }, PROP_POS_RANGEX }, 
-  { "Vbo", PROP_REAL, { 30, PROP_NO_STR }, PROP_POS_RANGEX }, 
+  { "Ibo", PROP_REAL, { 50e-6, PROP_NO_STR }, PROP_POS_RANGEX },
+  { "Vbo", PROP_REAL, { 30, PROP_NO_STR }, PROP_POS_RANGEX },
   PROP_NO_PROP };
 PROP_OPT [] = {
-  { "Cj0", PROP_REAL, { 10e-12, PROP_NO_STR }, PROP_POS_RANGE }, 
-  { "Is", PROP_REAL, { 1e-10, PROP_NO_STR }, PROP_POS_RANGE }, 
+  { "Cj0", PROP_REAL, { 10e-12, PROP_NO_STR }, PROP_POS_RANGE },
+  { "Is", PROP_REAL, { 1e-10, PROP_NO_STR }, PROP_POS_RANGE },
   { "N", PROP_REAL, { 2.0, PROP_NO_STR }, PROP_RNGII (0.1, 100) },
   { "Ri", PROP_REAL, { 10.0, PROP_NO_STR }, PROP_POS_RANGEX },
   { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },

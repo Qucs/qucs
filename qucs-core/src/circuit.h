@@ -7,16 +7,16 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This software is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this package; see the file COPYING.  If not, write to
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
- * Boston, MA 02110-1301, USA.  
+ * Boston, MA 02110-1301, USA.
  *
  * $Id$
  *
@@ -24,18 +24,6 @@
 
 #ifndef __CIRCUIT_H__
 #define __CIRCUIT_H__
-
-enum circuit_flag {
-  CIRCUIT_ENABLED     = 1,
-  CIRCUIT_LINEAR      = 2,
-  CIRCUIT_ORIGINAL    = 4,
-  CIRCUIT_VSOURCE     = 8,
-  CIRCUIT_ISOURCE     = 16,
-  CIRCUIT_INTVSOURCE  = 32,
-  CIRCUIT_VARSIZE     = 64,
-  CIRCUIT_PROBE       = 128,
-  CIRCUIT_HISTORY     = 256,
-};
 
 #define NODE_1 0
 #define NODE_2 1
@@ -54,9 +42,26 @@ enum circuit_flag {
 
 #define CREATOR(val) \
   val (); \
-  static circuit * create (void) { return new val (); } \
+  static qucs::circuit * create (void) { return new val (); } \
   static struct define_t cirdef; \
   static struct define_t * definition (void) { return &cirdef; }
+
+#include "integrator.h"
+#include "valuelist.h"
+
+namespace qucs {
+
+enum circuit_flag {
+  CIRCUIT_ENABLED     = 1,
+  CIRCUIT_LINEAR      = 2,
+  CIRCUIT_ORIGINAL    = 4,
+  CIRCUIT_VSOURCE     = 8,
+  CIRCUIT_ISOURCE     = 16,
+  CIRCUIT_INTVSOURCE  = 32,
+  CIRCUIT_VARSIZE     = 64,
+  CIRCUIT_PROBE       = 128,
+  CIRCUIT_HISTORY     = 256,
+};
 
 class node;
 class property;
@@ -67,9 +72,6 @@ class matrix;
 class net;
 class environment;
 class history;
-
-#include "integrator.h"
-#include "valuelist.h"
 
 class circuit : public object, public integrator
 {
@@ -298,5 +300,7 @@ class circuit : public object, public integrator
   int nHistories;
   history * histories;
 };
+
+} // namespace qucs
 
 #endif /* __CIRCUIT_H__ */

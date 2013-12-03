@@ -56,6 +56,7 @@
 // Macro for the n-th state of the solution vector history.
 #define SOL(state) (solution[(int) getState (sState, (state))])
 
+namespace qucs {
 
 using namespace transient;
 
@@ -960,3 +961,5 @@ PROP_OPT [] =
 };
 struct define_t trsolver::anadef =
     { "TR", 0, PROP_ACTION, PROP_NO_SUBSTRATE, PROP_LINEAR, PROP_DEF };
+
+} // namespace qucs

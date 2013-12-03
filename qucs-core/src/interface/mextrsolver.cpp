@@ -1,8 +1,10 @@
 #include <string>
-#include "qucs_interface.h"
-#include "e_trsolver.h"
+//#include <qucs-core/qucs_typedefs.h>
+#include <qucs-core/qucs_interface.h>
+#include <qucs-core/e_trsolver.h>
 #include "mextrsolver.h"
 
+using namespace qucs;
 
 // function to display messages
 void mextrsolvermessage(int level, const char* warningmsg, ...)
@@ -329,7 +331,7 @@ void mextrsolver::getJac(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prh
     {
         for(int r = 0; r < jrows; r++)
         {
-            outpointer[(c*jrow)+r] = (double)thetrsolver->getJacData(r, c);
+            outpointer[(c*jrows)+r] = (double)thetrsolver->getJacData(r, c);
         }
     }
 

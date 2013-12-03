@@ -7,32 +7,32 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This software is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this package; see the file COPYING.  If not, write to
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
- * Boston, MA 02110-1301, USA.  
+ * Boston, MA 02110-1301, USA.
  *
  * $Id$
  *
  */
 
-/*\file consts.h 
+/*\file consts.h
   Global math constant header file
 */
 
 #ifndef __CONSTS_H__
 #define __CONSTS_H__
 
-#include <math.h>
+#include <cmath>
 
 #ifndef M_PI
-/*!\brief  Archimedes' constant (\f$\pi\f$) */ 
+/*!\brief  Archimedes' constant (\f$\pi\f$) */
 #define M_PI      3.1415926535897932384626433832795029
 #endif
 /*!\brief Half of Archimedes' constant (\f$\pi/2\f$) */
@@ -83,7 +83,7 @@
 #ifndef M_SQRT1_2
 #define M_SQRT1_2 0.7071067811865475244008443621048490
 #endif
-/*!\brief LIMEXP 
+/*!\brief LIMEXP
   \todo What is it?
 */
 #ifndef M_LIMEXP

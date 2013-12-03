@@ -33,9 +33,9 @@
 # include <config.h>
 #endif
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+//#include <stdio.h>
+//#include <stdlib.h>
+//#include <string.h>
 
 #include "object.h"
 #include "complex.h"
@@ -45,6 +45,8 @@
 #include "dataset.h"
 #include "ptrlist.h"
 #include "analysis.h"
+
+namespace qucs {
 
 //Constructor. Creates an unnamed instance of the analysis class.
 analysis::analysis () : object () {
@@ -158,3 +160,5 @@ void analysis::saveVariable (const char * n, nr_complex_t z, vector * f) {
   }
   d->add (z);
 }
+
+} // namespace qucs

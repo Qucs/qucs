@@ -7,16 +7,16 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This software is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this package; see the file COPYING.  If not, write to
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
- * Boston, MA 02110-1301, USA.  
+ * Boston, MA 02110-1301, USA.
  *
  * $Id$
  *
@@ -25,7 +25,43 @@
 #ifndef __MATVEC_H__
 #define __MATVEC_H__
 
+namespace qucs {
+
 class matrix;
+class matvec;
+
+// forward declarations
+matvec transpose (matvec);
+matvec conj      (matvec);
+vector det       (matvec);
+matvec inverse   (matvec);
+matvec sqr       (matvec);
+matvec pow       (matvec, int);
+matvec pow       (matvec, vector);
+matvec twoport   (matvec, char, char);
+matvec real      (matvec);
+matvec imag      (matvec);
+matvec abs       (matvec);
+matvec dB        (matvec);
+matvec arg       (matvec);
+matvec adjoint   (matvec);
+vector rollet    (matvec);
+vector b1        (matvec);
+matvec stos (matvec, nr_complex_t, nr_complex_t);
+matvec stos (matvec, nr_double_t, nr_double_t);
+matvec stos (matvec, vector, nr_complex_t);
+matvec stos (matvec, nr_complex_t, vector);
+matvec stos (matvec, vector, vector);
+matvec stoz (matvec, nr_complex_t);
+matvec stoz (matvec, vector);
+matvec ztos (matvec, nr_complex_t);
+matvec ztos (matvec, vector);
+matvec ztoy (matvec);
+matvec stoy (matvec, nr_complex_t);
+matvec stoy (matvec, vector);
+matvec ytos (matvec, nr_complex_t);
+matvec ytos (matvec, vector);
+matvec ytoz (matvec);
 
 class matvec
 {
@@ -91,6 +127,7 @@ class matvec
   friend matvec conj      (matvec);
   friend vector det       (matvec);
   friend matvec inverse   (matvec);
+  friend matvec sqr       (matvec);
   friend matvec pow       (matvec, int);
   friend matvec pow       (matvec, vector);
   friend matvec twoport   (matvec, char, char);
@@ -126,5 +163,7 @@ class matvec
   char * name;
   matrix * data;
 };
+
+} // namespace qucs
 
 #endif /* __MATVEC_H__ */

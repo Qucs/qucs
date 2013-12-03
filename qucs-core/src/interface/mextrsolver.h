@@ -1,7 +1,8 @@
-
-#include "qucs_interface.h"
-#include "e_trsolver.h"
 #include "mex.h"
+//#include <qucs-core/qucs_typedefs.h>
+#include <qucs-core/qucs_interface.h>
+#include <qucs-core/e_trsolver.h>
+
 
 #ifndef MEXTRSOLVER_H
 #define MEXTRSOLVER_H
@@ -16,7 +17,7 @@ class mextrsolver
         // the one and only trsolver object to which the class
         // will interface
         qucsint thequcsint;
-        e_trsolver * thetrsolver;
+        qucs::e_trsolver * thetrsolver;
 
         // test method
         void debug(void);

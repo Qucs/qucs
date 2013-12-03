@@ -41,7 +41,7 @@ void Initialize()
     s_mapClassMethodStrs["printx"]              = printx;
     s_mapClassMethodStrs["getN"]                = getN;
     s_mapClassMethodStrs["getM"]                = getM;
-    s_mapClassMethodStrs["getJac"]              = getJac
+    s_mapClassMethodStrs["getJac"]              = getJac;
 }
 
 void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])

@@ -7,16 +7,16 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This software is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this package; see the file COPYING.  If not, write to
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
- * Boston, MA 02110-1301, USA.  
+ * Boston, MA 02110-1301, USA.
  *
  * $Id$
  *
@@ -25,10 +25,12 @@
 #ifndef __CHECK_CITI_H__
 #define __CHECK_CITI_H__
 
-class dataset;
-class vector;
+namespace qucs {
+  class dataset;
+  class vector;
+}
 
-extern dataset * citi_result;
+extern qucs::dataset * citi_result;
 extern struct citi_package_t * citi_root;
 
 struct citi_header_t {
@@ -42,7 +44,7 @@ struct citi_header_t {
 
 struct citi_package_t {
   struct citi_header_t * head;
-  vector * data;
+  qucs::vector * data;
   struct citi_package_t * next;
 };
 

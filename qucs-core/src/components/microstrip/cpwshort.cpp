@@ -31,6 +31,8 @@
 #include "cpwline.h"
 #include "cpwshort.h"
 
+using namespace qucs;
+
 cpwshort::cpwshort () : circuit (1) {
   type = CIR_CPWSHORT;
 }

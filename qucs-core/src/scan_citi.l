@@ -10,16 +10,16 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This software is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this package; see the file COPYING.  If not, write to
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
- * Boston, MA 02110-1301, USA.  
+ * Boston, MA 02110-1301, USA.
  *
  * $Id$
  *
@@ -49,6 +49,8 @@
 #include "dataset.h"
 #include "check_citi.h"
 #include "tokens_citi.h"
+
+using namespace qucs;
 
 %}
 
@@ -81,7 +83,7 @@ EOL      \r?\n
   }
 
 <INITIAL,DATAS>("RI"|"MAG"|"MAGANGLE"|"DBANGLE") {
-    citi_lval.ident = strdup (citi_text); 
+    citi_lval.ident = strdup (citi_text);
     return VarType;
   }
 
@@ -100,7 +102,7 @@ EOL      \r?\n
 <LISTS>^"SEG" { return SEG; }
 
 <INITIAL,DATAS,VALUES>{ID} { /* identify identifier */
-    citi_lval.ident = strdup (citi_text); 
+    citi_lval.ident = strdup (citi_text);
     return Identifier;
   }
 
@@ -128,8 +130,8 @@ EOL      \r?\n
 <COMMENTS>{EOL}+ { BEGIN(INITIAL); /* skipping ends here */ }
 
 <*>. { /* any other character in invalid */
-    logprint (LOG_ERROR, 
-	      "line %d: syntax error, unrecognized character: `%s'\n", 
+    logprint (LOG_ERROR,
+	      "line %d: syntax error, unrecognized character: `%s'\n",
 	      citi_lineno, citi_text);
     return InvalidCharacter;
   }

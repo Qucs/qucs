@@ -27,12 +27,12 @@
 
 namespace fspecial {
 
-#ifndef HAVE_ERF
+//#ifndef HAVE_ERF
   nr_double_t     erf (nr_double_t);
-#endif
-#ifndef HAVE_ERFC
+//#endif
+//#ifndef HAVE_ERFC
   nr_double_t    erfc (nr_double_t);
-#endif
+//#endif
   nr_double_t  erfinv (nr_double_t);
   nr_double_t erfcinv (nr_double_t);
   nr_double_t ltqnorm (nr_double_t);

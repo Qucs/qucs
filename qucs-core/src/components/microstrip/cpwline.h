@@ -26,7 +26,7 @@
 #ifndef __CPWLINE_H__
 #define __CPWLINE_H__
 
-class cpwline : public circuit
+class cpwline : public qucs::circuit
 {
  public:
   CREATOR (cpwline);

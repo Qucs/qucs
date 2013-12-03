@@ -7,16 +7,16 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This software is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this package; see the file COPYING.  If not, write to
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
- * Boston, MA 02110-1301, USA.  
+ * Boston, MA 02110-1301, USA.
  *
  * $Id$
  *
@@ -28,6 +28,8 @@
 
 #include "component.h"
 #include "coupler.h"
+
+using namespace qucs;
 
 coupler::coupler () : circuit (4) {
   type = CIR_COUPLER;
@@ -41,20 +43,20 @@ void coupler::initSP (void) {
   nr_double_t r = (z0 - z) / (z0 + z);
   nr_double_t k2 = k * k;
   nr_double_t r2 = r * r;
-  nr_complex_t a = k2 * (polar (1.0, 2 * p) + 1.0);
+  nr_complex_t a = k2 * (qucs::polar (1.0, 2 * p) + 1.0);
   nr_complex_t b = r2 * (1.0 - a);
-  nr_complex_t c = k2 * (polar (1.0, 2 * p) - 1.0);
+  nr_complex_t c = k2 * (qucs::polar (1.0, 2 * p) - 1.0);
   nr_complex_t d = 1.0 - 2.0 * r2 * (1.0 + c) + b * b;
-  nr_complex_t s = r * (a * b + c + polar (2 * r2 * k2, 2 * p)) / d;
+  nr_complex_t s = r * (a * b + c + qucs::polar (2 * r2 * k2, 2 * p)) / d;
   setS (NODE_1, NODE_1, s); setS (NODE_2, NODE_2, s);
   setS (NODE_3, NODE_3, s); setS (NODE_4, NODE_4, s);
-  s = sqrt (1 - k2) * (1.0 - r2) * (1.0 - b) / d;
+  s = qucs::sqrt (1 - k2) * (1.0 - r2) * (1.0 - b) / d;
   setS (NODE_1, NODE_2, s); setS (NODE_2, NODE_1, s);
   setS (NODE_3, NODE_4, s); setS (NODE_4, NODE_3, s);
-  s = polar (k, p) * (1.0 - r2) * (1.0 + b) / d;
+  s = qucs::polar (k, p) * (1.0 - r2) * (1.0 + b) / d;
   setS (NODE_1, NODE_3, s); setS (NODE_3, NODE_1, s);
   setS (NODE_2, NODE_4, s); setS (NODE_4, NODE_2, s);
-  s = 2 * sqrt (1.0 - k2) * polar (k, p) * r * (1.0 - r2) / d;
+  s = 2 * qucs::sqrt (1.0 - k2) * qucs::polar (k, p) * r * (1.0 - r2) / d;
   setS (NODE_1, NODE_4, s); setS (NODE_4, NODE_1, s);
   setS (NODE_2, NODE_3, s); setS (NODE_3, NODE_2, s);
 }
@@ -73,9 +75,9 @@ void coupler::initAC (void) {
   nr_double_t k = getPropertyDouble ("k");
   nr_double_t z = getPropertyDouble ("Z");
   nr_double_t p = rad (getPropertyDouble ("phi"));
-  nr_double_t b = 2 * sqrt (1 - k * k);
-  nr_complex_t a = k * k * (polar (1.0, 2 * p) + 1.0);
-  nr_complex_t c = polar (2 * k, p);
+  nr_double_t b = 2 * qucs::sqrt (1 - k * k);
+  nr_complex_t a = k * k * (qucs::polar (1.0, 2 * p) + 1.0);
+  nr_complex_t c = qucs::polar (2 * k, p);
   nr_complex_t d = z * (a * a - c * c);
   nr_complex_t y;
   y = a * (2.0 - a) / d;

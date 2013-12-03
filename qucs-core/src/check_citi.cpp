@@ -7,16 +7,16 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This software is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this package; see the file COPYING.  If not, write to
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
- * Boston, MA 02110-1301, USA.  
+ * Boston, MA 02110-1301, USA.
  *
  * $Id$
  *
@@ -30,7 +30,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
-#include <math.h>
+#include <cmath>
 
 #include "logging.h"
 #include "complex.h"
@@ -43,7 +43,9 @@
 #include "constants.h"
 #include "check_citi.h"
 
-dataset * citi_result = NULL;
+using namespace qucs;
+
+qucs::dataset * citi_result = NULL;
 struct citi_package_t * citi_root = NULL;
 
 /* Returns the number of vectors in a package. */
@@ -98,14 +100,14 @@ static vector * citi_create_vector (struct citi_package_t * p, int i,
   if (!strcmp (type, "MAGANGLE")) {
     for (int i = 0; i < vec->getSize (); i++) {
       nr_complex_t val = vec->get (i);
-      val = polar (real (val), rad (imag (val)));
+      val = std::polar (real (val), rad (imag (val)));
       vec->set (val, i);
     }
   }
   else if (!strcmp (type, "DBANGLE")) {
     for (int i = 0; i < vec->getSize (); i++) {
       nr_complex_t val = vec->get (i);
-      val = polar (pow (10.0, real (val) / 20.0), rad (imag (val)));
+      val = std::polar (std::pow (10.0, real (val) / 20.0), rad (imag (val)));
       vec->set (val, i);
     }
   }
@@ -282,3 +284,4 @@ void citi_init (void) {
   citi_result = NULL;
   citi_root = NULL;
 }
+

@@ -30,6 +30,8 @@
 #include "substrate.h"
 #include "msvia.h"
 
+using namespace qucs;
+
 msvia::msvia () : circuit (2) {
   R = 0;
   Z = 0;
@@ -75,9 +77,9 @@ nr_complex_t msvia::calcImpedance (nr_double_t frequency) {
 
   // create Z-parameter
   nr_double_t fs  = M_PI * MU0 * sqr (t) / rho;
-  nr_double_t res = R * sqrt (1 + frequency * fs);
-  nr_double_t a   = sqrt (sqr (r) + sqr (h));
-  nr_double_t ind = MU0 * (h * log ((h + a) / r) + 1.5 * (r - a));
+  nr_double_t res = R * qucs::sqrt (1 + frequency * fs);
+  nr_double_t a   = qucs::sqrt (sqr (r) + sqr (h));
+  nr_double_t ind = MU0 * (h * qucs::log ((h + a) / r) + 1.5 * (r - a));
   return Z = rect (res, frequency * ind);
 }
 

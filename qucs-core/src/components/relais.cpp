@@ -7,16 +7,16 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This software is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this package; see the file COPYING.  If not, write to
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
- * Boston, MA 02110-1301, USA.  
+ * Boston, MA 02110-1301, USA.
  *
  * $Id$
  *
@@ -45,7 +45,7 @@ void relais::initSP (void) {
 
 void relais::calcNoiseSP (nr_double_t) {
   nr_double_t T = getPropertyDouble ("Temp");
-  nr_double_t f = kelvin (T) * 4.0 * r * z0 / sqr (2.0 * z0 + r) / T0;
+  nr_double_t f = kelvin (T) * 4.0 * r * z0 / qucs::sqr (2.0 * z0 + r) / T0;
   setN (NODE_2, NODE_2, +f); setN (NODE_3, NODE_3, +f);
   setN (NODE_2, NODE_3, -f); setN (NODE_3, NODE_2, -f);
 }

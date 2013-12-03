@@ -51,6 +51,8 @@
 #include "environment.h"
 #include "component_id.h"
 
+namespace qucs {
+
 // Constructor creates an unnamed instance of the net class.
 net::net () : object () {
   root = drop = NULL;
@@ -584,3 +586,5 @@ void net::list (void) {
   }
 }
 #endif /* DEBUG */
+
+} // namespace qucs

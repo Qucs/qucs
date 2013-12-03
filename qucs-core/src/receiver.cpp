@@ -8,16 +8,16 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This software is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this package; see the file COPYING.  If not, write to
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
- * Boston, MA 02110-1301, USA.  
+ * Boston, MA 02110-1301, USA.
  *
  * $Id$
  *
@@ -30,7 +30,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <math.h>
+#include <cmath>
 
 #include "consts.h"
 #include "object.h"
@@ -40,6 +40,8 @@
 #include "interpolator.h"
 #include "fourier.h"
 #include "receiver.h"
+
+namespace qucs {
 
 /* The function returns a power-of-two value which is equal or larger
    than the given value.  The maximum returned value is 2^30. */
@@ -88,9 +90,9 @@ vector * emi::receiver (nr_double_t * ida, nr_double_t duration, int ilength) {
   int i, n, points;
   nr_double_t fres;
   vector * ed = new vector ();
-  
+
   points = ilength;
-  
+
   /* ilength must be a power of 2 - write wrapper later on */
   fourier::_fft_1d (ida, ilength, 1); /* 1 = forward fft */
 
@@ -120,10 +122,10 @@ vector * emi::receiver (nr_double_t * ida, nr_double_t duration, int ilength) {
     {  30e6,   1e9, 120e3, 120e3 },
     {     0,     0,     0,      0}
   };
-  
+
   /* define EMI noise floor */
-  nr_double_t noise = pow (10.0, (-100.0 / 40.0)) * 1e-6; 
-  
+  nr_double_t noise = std::pow (10.0, (-100.0 / 40.0)) * 1e-6;
+
   /* generate resulting data & frequency vector */
   nr_double_t fcur, dcur;
   int ei = 0;
@@ -145,8 +147,8 @@ vector * emi::receiver (nr_double_t * ida, nr_double_t duration, int ilength) {
       if (hi < fres) continue;
 
       /* calculate indices covering current bandwidth */
-      int il = floor (lo / fres);
-      int ir = floor (hi / fres);
+      int il = std::floor (lo / fres);
+      int ir = std::floor (hi / fres);
 
       /* right index (ri) greater 0 and left index less than points ->
 	 at least part of data is within bandwidth indices */
@@ -154,17 +156,17 @@ vector * emi::receiver (nr_double_t * ida, nr_double_t duration, int ilength) {
 	/* adjust indices to reside in the data array */
 	if (il < 0) il = 0;
 	if (ir > points - 1) ir = points - 1;
-	 
+
 	/* sum-up the values within the bandwidth */
 	dcur = 0;
 	for (int j = 0; j < ir - il; j++){
 	  nr_double_t f = fres * (il + j);
-	  dcur += f_2ndorder (fcur, bw, f) * d[il + j]; 
+	  dcur += f_2ndorder (fcur, bw, f) * d[il + j];
 	}
 
 	/* add noise to the result */
 	dcur += noise * sqrt (bw);
-      
+
 	/* save result */
 	ed->add (rect (dcur, fcur));
 	ei++;
@@ -221,3 +223,5 @@ vector * emi::receiver (vector * da, vector * dt, int len) {
 
   return res;
 }
+
+} // namespace qucs

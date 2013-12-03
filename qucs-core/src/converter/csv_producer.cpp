@@ -7,16 +7,16 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This software is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this package; see the file COPYING.  If not, write to
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
- * Boston, MA 02110-1301, USA.  
+ * Boston, MA 02110-1301, USA.
  *
  * $Id$
  *
@@ -30,11 +30,14 @@
 #include <stdlib.h>
 #include <time.h>
 #include <string.h>
+#include "dataset.h"
 
 #include "csv_producer.h"
 
+using namespace qucs;
+
 /* Global variables. */
-dataset * qucs_data = NULL;
+qucs::dataset * qucs_data = NULL;
 /* FILE * csv_out = NULL; -- already defined in CSV lexer */
 
 struct csv_data {
@@ -118,7 +121,7 @@ void csv_producer (char * variable, const char * sep) {
   }
   // save dependency + all variable depending on it
   else if (variable && (v = qucs_data->findDependency (variable)) != NULL) {
-    
+
     // prepare dependency + variables structures
     vector * vars;
     int vectors = 1;

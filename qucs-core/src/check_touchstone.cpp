@@ -7,16 +7,16 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This software is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this package; see the file COPYING.  If not, write to
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
- * Boston, MA 02110-1301, USA.  
+ * Boston, MA 02110-1301, USA.
  *
  * $Id$
  *
@@ -30,7 +30,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
-#include <math.h>
+#include <cmath>
 
 #include "logging.h"
 #include "complex.h"
@@ -45,12 +45,14 @@
 
 #define ZREF 50.0 /* reference impedance */
 
+using namespace qucs;
+
 strlist * touchstone_idents = NULL;
 dataset * touchstone_result = NULL;
 vector  * touchstone_vector = NULL;
 
 /* default touchstone options */
-struct touchstone_t touchstone_options = { 
+struct touchstone_t touchstone_options = {
   "GHz", 'S', "MA", 50.0, 1e9, 0, 0, 0 };
 
 /* available touchstone options */
@@ -101,7 +103,7 @@ static int touchstone_vector_check (void) {
     even = 1;
   }
   /* first line determines the number of expected ports */
-  touchstone_options.ports = (int) sqrt ((size - 1) / 2.0);
+  touchstone_options.ports = (int) qucs::sqrt ((size - 1) / 2.0);
 
   /* check first frequency value */
   if (f < 0.0) {
@@ -114,7 +116,7 @@ static int touchstone_vector_check (void) {
   for (root = (vector *) root->getNext (); root != NULL; root = next) {
     next = (vector *) root->getNext ();
     nr_double_t freq = real (root->get (0));
-    
+
     /* check increasing frequency value */
     if (f >= freq) {
       if (!noise) {
@@ -251,7 +253,7 @@ static void touchstone_create (void) {
     touchstone_result->appendVariable (v);
     v = new vector ("Rn");
     v->setDependencies (new strlist (*s));
-    touchstone_result->appendVariable (v);    
+    touchstone_result->appendVariable (v);
     delete s;
   }
 
@@ -278,11 +280,11 @@ static void touchstone_create (void) {
 			real (root->get (pos + 1)));
 	  }
 	  else if (!strcmp (touchstone_options.format, "MA")) {
-	    val = polar (real (root->get (pos + 0)),
+	    val = qucs::polar (real (root->get (pos + 0)),
 			 rad (real (root->get (pos + 1))));
 	  }
 	  else if (!strcmp (touchstone_options.format, "dB")) {
-	    val = polar (pow (10.0, real (root->get (pos + 0)) / 20.0),
+	    val = qucs::polar (std::pow (10.0, real (root->get (pos + 0)) / 20.0),
 			 rad (real (root->get (pos + 1))));
 	  }
 	  v->add (val);
@@ -296,14 +298,14 @@ static void touchstone_create (void) {
       nf->add (real (root->get (0)) * touchstone_options.factor);
       /* fill minimum noise figure vector */
       v = touchstone_result->findVariable ("Fmin");
-      val = pow (10.0, real (root->get (1)) / 10.0);
+      val = std::pow (10.0, real (root->get (1)) / 10.0);
       v->add (val);
       /* fill optimal noise reflexion coefficient vector */
       v = touchstone_result->findVariable ("Sopt");
-      val = polar (real (root->get (2)), rad (real (root->get (3))));
+      val = qucs::polar (real (root->get (2)), rad (real (root->get (3))));
       if (ZREF != touchstone_options.resistance) {
 	// re-normalize reflexion coefficient if necessary
-	nr_double_t r = (ZREF - touchstone_options.resistance) / 
+	nr_double_t r = (ZREF - touchstone_options.resistance) /
 	  (ZREF + touchstone_options.resistance);
 	val = (val - r) / (1.0 - r * val);
       }
@@ -343,7 +345,7 @@ static void touchstone_normalize_sp (void) {
 	v->set (s.get (i, j), n);
 	v = (vector *) v->getNext ();
       }
-    }    
+    }
   }
 }
 
@@ -421,7 +423,7 @@ int touchstone_check (void) {
 
   /* first checking the options */
   if (touchstone_idents->length () > 3) {
-    logprint (LOG_ERROR, "checker error, found %d options\n", 
+    logprint (LOG_ERROR, "checker error, found %d options\n",
 	      touchstone_idents->length ());
     errors++;
   }
@@ -434,7 +436,7 @@ int touchstone_check (void) {
   for (i = 0; i < touchstone_idents->length (); i++) {
     char * str = touchstone_idents->get (i);
     if ((n = touchstone_idents->contains (str)) != 1) {
-      logprint (LOG_ERROR, "checker error, option `%s' occurred %dx\n", 
+      logprint (LOG_ERROR, "checker error, option `%s' occurred %dx\n",
 		str, n);
       errors++;
     }
@@ -469,7 +471,7 @@ int touchstone_check (void) {
     errors += touchstone_vector_check ();
 
     /* check validity of ports and parameters */
-    if ((touchstone_options.parameter == 'G' || 
+    if ((touchstone_options.parameter == 'G' ||
 	 touchstone_options.parameter == 'H') &&
 	touchstone_options.ports != 2) {
       logprint (LOG_ERROR, "checker error, %c-parameters for %d-ports not "

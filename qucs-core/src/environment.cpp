@@ -7,16 +7,16 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This software is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this package; see the file COPYING.  If not, write to
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
- * Boston, MA 02110-1301, USA.  
+ * Boston, MA 02110-1301, USA.
  *
  * $Id$
  *
@@ -36,6 +36,10 @@
 #include "ptrlist.h"
 #include "logging.h"
 #include "environment.h"
+
+using namespace qucs::eqn;
+
+namespace qucs {
 
 // Constructor creates an unnamed instance of the environment class.
 environment::environment () {
@@ -267,7 +271,7 @@ void environment::fetchConstants (void) {
     if (var->getType () == VAR_CONSTANT) {
       constant * c = var->getConstant ();
       switch (c->getType ()) {
-      case TAG_DOUBLE: 
+      case TAG_DOUBLE:
 	c->d = getDouble (var->getName ());
 	break;
       case TAG_VECTOR:
@@ -382,7 +386,7 @@ void environment::setDoubleConstant (char * ident, nr_double_t val) {
   }
 }
 
-// Returns the referenced value of a variable in the environment. 
+// Returns the referenced value of a variable in the environment.
 char * environment::getDoubleReference (char * ident) {
   variable * var = getVariable (ident);
   if (var != NULL &&  var->getType () == VAR_REFERENCE) {
@@ -392,7 +396,7 @@ char * environment::getDoubleReference (char * ident) {
   return NULL;
 }
 
-// Sets the referenced value of a variable in the environment. 
+// Sets the referenced value of a variable in the environment.
 void environment::setDoubleReference (char * ident, char * val) {
   variable * var = getVariable (ident);
   if (var != NULL) {
@@ -429,3 +433,5 @@ void environment::print (bool all) {
       (*it)->print ();
   }
 }
+
+} // namespace qucs

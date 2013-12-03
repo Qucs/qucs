@@ -7,16 +7,16 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This software is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this package; see the file COPYING.  If not, write to
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
- * Boston, MA 02110-1301, USA.  
+ * Boston, MA 02110-1301, USA.
  *
  * $Id$
  *
@@ -39,6 +39,8 @@
 #define DATA_COMPLEX     0x0001
 #define DATA_REAL        0x0002
 #define DATA_MASK_TYPE   0x00FF
+
+namespace qucs {
 
 class interpolator
 {
@@ -74,5 +76,7 @@ private:
   spline * rsp, * isp;
   nr_complex_t * cy;
 };
+
+} // namespace qucs
 
 #endif /* __INTERPOLATOR_H__ */

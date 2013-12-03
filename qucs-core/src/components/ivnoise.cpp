@@ -7,16 +7,16 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This software is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this package; see the file COPYING.  If not, write to
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
- * Boston, MA 02110-1301, USA.  
+ * Boston, MA 02110-1301, USA.
  *
  * $Id$
  *
@@ -33,6 +33,8 @@
 #define NODE_I1N 3
 #define NODE_V2P 1
 #define NODE_V2N 2
+
+using namespace qucs;
 
 ivnoise::ivnoise () : circuit (4) {
   type = CIR_IVNOISE;
@@ -55,7 +57,7 @@ void ivnoise::calcNoiseSP (nr_double_t frequency) {
   nr_double_t k = a + c * pow (frequency, e);
   nr_double_t i1 = getPropertyDouble ("i1") / k / kB / T0;
   nr_double_t u2 = getPropertyDouble ("v2") / k / kB / T0;
-  nr_double_t ci = C * sqrt (i1 * u2) / 2;
+  nr_double_t ci = C * qucs::sqrt (i1 * u2) / 2;
 
   // entries of source 1
   setN (NODE_I1P, NODE_I1P, +i1 * z0); setN (NODE_I1N, NODE_I1N, +i1 * z0);
@@ -91,7 +93,7 @@ void ivnoise::calcNoiseAC (nr_double_t frequency) {
   nr_double_t k = a + c * pow (frequency, e);
   nr_double_t i1 = getPropertyDouble ("i1") / k / kB / T0;
   nr_double_t u2 = getPropertyDouble ("v2") / k / kB / T0;
-  nr_double_t ci = C * sqrt (i1 * u2);
+  nr_double_t ci = C * qucs::sqrt (i1 * u2);
   setN (NODE_I1P, NODE_I1P, +i1); setN (NODE_I1N, NODE_I1N, +i1);
   setN (NODE_I1P, NODE_I1N, -i1); setN (NODE_I1N, NODE_I1P, -i1);
   setN (NODE_5, NODE_I1P, ci);
@@ -101,9 +103,9 @@ void ivnoise::calcNoiseAC (nr_double_t frequency) {
 
 // properties
 PROP_REQ [] = {
-  { "i1", PROP_REAL, { 1e-6, PROP_NO_STR }, PROP_POS_RANGE }, 
-  { "v2", PROP_REAL, { 1e-6, PROP_NO_STR }, PROP_POS_RANGE }, 
-  { "C", PROP_REAL, { 0.5, PROP_NO_STR }, PROP_RNGII (-1, 1) }, 
+  { "i1", PROP_REAL, { 1e-6, PROP_NO_STR }, PROP_POS_RANGE },
+  { "v2", PROP_REAL, { 1e-6, PROP_NO_STR }, PROP_POS_RANGE },
+  { "C", PROP_REAL, { 0.5, PROP_NO_STR }, PROP_RNGII (-1, 1) },
   PROP_NO_PROP };
 PROP_OPT [] = {
   { "a", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },

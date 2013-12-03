@@ -7,16 +7,16 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This software is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this package; see the file COPYING.  If not, write to
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
- * Boston, MA 02110-1301, USA.  
+ * Boston, MA 02110-1301, USA.
  *
  * $Id$
  *
@@ -32,7 +32,8 @@
 #include "device.h"
 #include "eqndefined.h"
 
-using namespace eqn;
+using namespace qucs;
+using namespace qucs::eqn;
 
 // Constructor for the equation defined device.
 eqndefined::eqndefined () : circuit () {
@@ -419,7 +420,7 @@ void eqndefined::initSP (void) {
 
 // Callback for S-parameter analysis.
 void eqndefined::calcSP (nr_double_t frequency) {
-  setMatrixS (ytos (calcMatrixY (frequency)));   
+  setMatrixS (ytos (calcMatrixY (frequency)));
 }
 
 // Callback for initializing the HB analysis.
@@ -460,29 +461,29 @@ void eqndefined::calcHB (int) {
     }
     setCV (i * 2 + 0, +cv);
     setCV (i * 2 + 1, -cv);
-  }  
+  }
 }
 
 // properties
 PROP_REQ [] = {
-  { "I1", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
-  { "Q1", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
+  { "I1", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE },
+  { "Q1", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE },
   PROP_NO_PROP };
 PROP_OPT [] = {
-  { "I2", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
-  { "Q2", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
-  { "I3", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
-  { "Q3", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
-  { "I4", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
-  { "Q4", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
-  { "I5", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
-  { "Q5", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
-  { "I6", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
-  { "Q6", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
-  { "I7", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
-  { "Q7", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
-  { "I8", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
-  { "Q8", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE }, 
+  { "I2", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE },
+  { "Q2", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE },
+  { "I3", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE },
+  { "Q3", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE },
+  { "I4", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE },
+  { "Q4", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE },
+  { "I5", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE },
+  { "Q5", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE },
+  { "I6", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE },
+  { "Q6", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE },
+  { "I7", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE },
+  { "Q7", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE },
+  { "I8", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE },
+  { "Q8", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE },
   PROP_NO_PROP };
 struct define_t eqndefined::cirdef =
   { "EDD",

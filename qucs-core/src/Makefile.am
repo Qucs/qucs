@@ -29,7 +29,8 @@ EXTRA_DIST = parse_netlist.y scan_netlist.l scan_dataset.l parse_dataset.y \
 
 SUBDIRS = math components interface . converter
 
-AM_CPPFLAGS = -I$(top_srcdir)/src/math -I$(top_srcdir)/src/components -I$(top_srcdir)/src/interface
+AM_CPPFLAGS = -I$(top_srcdir)/src/math -I$(top_srcdir)/src/components \
+	-I$(top_srcdir)/src/interface -I$(builddir)
 
 lib_LTLIBRARIES = libqucs.la
 
@@ -40,29 +41,31 @@ libqucs_la_LIBADD = math/libqucsmath.la   \
 	components/digital/libdigital.la       \
 	components/verilog/libverilog.la \
 	interface/libinterface.la
-## In case we want to build windows dlls some day
+## In case we want to build windows dlls
 libqucs_la_LDFLAGS = -no-undefined
 
-pkginclude_HEADERS = logging.h net.h input.h dataset.h equation.h    \
-	environment.h exceptionstack.h check_netlist.h module.h
+pkginclude_TEMPLATES = tmatrix.cpp tvector.cpp eqnsys.cpp states.cpp \
+	nasolver.cpp nasolution.cpp valuelist.cpp
 
-noinst_TEMPLATES = tmatrix.cpp eqnsys.cpp nasolver.cpp states.cpp tvector.cpp \
-	ptrlist.cpp tridiag.cpp hash.cpp valuelist.cpp nasolution.cpp
+noinst_TEMPLATES = ptrlist.cpp tridiag.cpp hash.cpp
+
+pkginclude_HEADERS = $(pkginclude_TEMPLATES) \
+	logging.h net.h input.h dataset.h equation.h tvector.h tmatrix.h \
+	environment.h exceptionstack.h check_netlist.h module.h nasolver.h \
+	states.h analysis.h trsolver.h nasolution.h eqnsys.h compat.h \
+	exception.h object.h node.h circuit.h constants.h vector.h \
+	nodeset.h nodelist.h strlist.h operatingpoint.h pair.h consts.h  \
+	integrator.h valuelist.h
 
 noinst_HEADERS = $(noinst_TEMPLATES)            \
-	tokens_netlist.h node.h property.h vector.h       \
-	tokens_dataset.h check_dataset.h strlist.h tokens_touchstone.h        \
-	check_touchstone.h analysis.h spsolver.h dcsolver.h object.h \
-	nodelist.h variable.h parasweep.h eqnsys.h sweep.h      \
-	operatingpoint.h libqucsator.h evaluate.h exception.h      \
-	matvec.h constants.h consts.h nasolver.h tmatrix.h   \
-	circuit.h acsolver.h trsolver.h transient.h integrator.h states.h     \
-	tvector.h nodeset.h netdefs.h qucsdefs.h ptrlist.h hbsolver.h poly.h  \
-	spline.h tridiag.h fourier.h hash.h applications.h                    \
-	valuelist.h pair.h characteristic.h range.h history.h                 \
-	devstates.h tokens_citi.h check_citi.h check_zvr.h tokens_zvr.h       \
-	nasolution.h check_mdl.h tokens_mdl.h differentiate.h tokens_csv.h    \
-	check_csv.h analyses.h compat.h receiver.h interpolator.h
+	tokens_netlist.h tokens_dataset.h check_dataset.h tokens_touchstone.h       \
+	check_touchstone.h  spsolver.h dcsolver.h property.h variable.h       \
+	parasweep.h sweep.h libqucsator.h evaluate.h matvec.h acsolver.h   \
+	transient.h netdefs.h qucsdefs.h ptrlist.h hbsolver.h poly.h     \
+	spline.h tridiag.h fourier.h hash.h applications.h characteristic.h    \
+	range.h history.h devstates.h tokens_citi.h check_citi.h check_zvr.h  \
+	tokens_zvr.h check_mdl.h tokens_mdl.h differentiate.h tokens_csv.h  \
+	check_csv.h analyses.h receiver.h interpolator.h
 
 libqucs_la_SOURCES = dataset.cpp check_dataset.cpp parse_dataset.cpp      \
 	scan_dataset.cpp check_touchstone.cpp vector.cpp object.cpp          \
@@ -87,6 +90,8 @@ qucsator_LDADD = libqucs.la
 qucsator_SOURCES = ucs.cpp
 
 if MAINTAINER_MODE
+## Here we create the various input parsing code files using
+## lex and yacc, these files will be distributed
 generated_FILES = scan_netlist.cpp parse_netlist.cpp scan_dataset.cpp     \
 	parse_dataset.cpp tokens_dataset.h tokens_netlist.h               \
 	parse_touchstone.cpp tokens_touchstone.h scan_touchstone.cpp      \
@@ -144,9 +149,17 @@ qucsdefs.h: qucsator$(EXEEXT)
 	./$< -l > $@
 endif
 
+## The qucs equation definitions use a hash lookup table
+## generated using gperf and put in gperfapphash.cpp which
+## is #included in the body of equation.cpp
 equation.cpp: gperfapphash.cpp
 
 if MAINTAINER_MODE
+## Here we generate gperfapphash.cpp for equation.cpp.
+##
+## To generate the hash table code we must first create a
+## program to create the hash input file for gperf, called
+## gperfappgen.
 noinst_PROGRAMS = gperfappgen
 
 gperfappgen_SOURCES = gperfappgen.cpp
@@ -162,6 +175,8 @@ gperfappgen.cpp: gperfappgen.h
 gperfappgen.h: applications.h
 	sed -e 's/evaluate::[a-zA-Z0-9_]*/NULL/g' < $< > $@
 
+## Store the gperf names in their own variable as the are
+## not distributed but must be removed in a maintainer-clean
 gperf_FILES = gperfapphash.cpp gperfapphash.gph gperfappgen.h
 
 else
