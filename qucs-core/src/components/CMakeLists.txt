@@ -4,22 +4,71 @@ INCLUDE_DIRECTORIES( ${CMAKE_SOURCE_DIR}
                      ${CMAKE_SOURCE_DIR}/src
                      ${CMAKE_SOURCE_DIR}/src/math )
 
-SET(COMPONENT_SRC  attenuator.cpp dcblock.cpp open.cpp vccs.cpp
-	biastee.cpp circulator.cpp dcfeed.cpp pac.cpp vcvs.cpp capacitor.cpp
-	ground.cpp resistor.cpp cccs.cpp cross.cpp trafo.cpp inductor.cpp
-	tee.cpp ccvs.cpp isolator.cpp itrafo.cpp strafo.cpp vdc.cpp idc.cpp
-	vac.cpp phaseshifter.cpp gyrator.cpp tline.cpp iprobe.cpp iac.cpp
-	spfile.cpp vnoise.cpp inoise.cpp vpulse.cpp ipulse.cpp vrect.cpp
-	irect.cpp amplifier.cpp opamp.cpp iinoise.cpp mutual.cpp mutual2.cpp
-	vvnoise.cpp ivnoise.cpp coupler.cpp coaxline.cpp vprobe.cpp vam.cpp
-	vpm.cpp tswitch.cpp relais.cpp short.cpp twistedpair.cpp tline4p.cpp
-	vexp.cpp iexp.cpp mutualx.cpp vfile.cpp ifile.cpp rfedd.cpp
-	rectline.cpp rlcg.cpp hybrid.cpp ctline.cpp )
+SET( COMPONENTS_SRC
+  amplifier.cpp
+  attenuator.cpp
+  biastee.cpp
+  capacitor.cpp
+  cccs.cpp
+  ccvs.cpp
+  circulator.cpp
+  coaxline.cpp
+  coupler.cpp
+  cross.cpp
+  ctline.cpp
+  dcblock.cpp
+  dcfeed.cpp
+  ground.cpp
+  gyrator.cpp
+  hybrid.cpp
+  iac.cpp
+  idc.cpp
+  iexp.cpp
+  ifile.cpp
+  iinoise.cpp
+  inductor.cpp
+  inoise.cpp
+  iprobe.cpp
+  ipulse.cpp
+  irect.cpp
+  isolator.cpp
+  itrafo.cpp
+  ivnoise.cpp
+  mutual.cpp
+  mutual2.cpp
+  mutualx.cpp
+  opamp.cpp
+  open.cpp
+  pac.cpp
+  phaseshifter.cpp
+  rectline.cpp
+  relais.cpp
+  resistor.cpp
+  rfedd.cpp
+  rlcg.cpp
+  short.cpp
+  spfile.cpp
+  strafo.cpp
+  tee.cpp
+  tline.cpp
+  tline4p.cpp
+  trafo.cpp
+  tswitch.cpp
+  twistedpair.cpp
+  vac.cpp
+  vam.cpp
+  vccs.cpp
+  vcvs.cpp
+  vdc.cpp
+  vexp.cpp
+  vfile.cpp
+  vnoise.cpp
+  vpm.cpp
+  vprobe.cpp
+  vpulse.cpp
+  vrect.cpp
+  vvnoise.cpp
+)
 
-ADD_LIBRARY(component ${COMPONENT_SRC} )
+ADD_LIBRARY(components OBJECT ${COMPONENTS_SRC} )
 
-
-ADD_SUBDIRECTORY( verilog )
-ADD_SUBDIRECTORY( microstrip )
-ADD_SUBDIRECTORY( devices )
-ADD_SUBDIRECTORY( digital )

@@ -2,6 +2,14 @@
 INCLUDE_DIRECTORIES( ${CMAKE_SOURCE_DIR}
                      ${CMAKE_CURRENT_SOURCE_DIR} )
 
-SET(QUCSMATH_SRC complex.cpp fspecial.cpp matrix.cpp real.cpp cbesselj.cpp precision.c)
+SET(MATH_SRC
+  cbesselj.cpp
+  complex.cpp
+  fspecial.cpp
+  matrix.cpp
+  precision.c
+  real.cpp
+)
 
-ADD_LIBRARY(qucsmath ${QUCSMATH_SRC} )
+ADD_LIBRARY(math OBJECT ${MATH_SRC} )
+

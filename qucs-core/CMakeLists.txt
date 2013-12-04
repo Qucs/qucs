@@ -1,21 +1,36 @@
+##
 # You can change the install location by
 # running cmake like this:
 #   mkdir build; cd build
 #   cmake .. -DCMAKE_INSTALL_PREFIX=/new/install/prefix
-#
-# By default, the prefix is "/usr/local"
-## DEPENDS
-# adms
-# sed, gperf, make
 
+## Notes
+# * By default, the prefix is "/usr/local"
+# * Use -DADMSXML_DIR=[path] to give the path containing admsXml
+
+## Dependencies
+# * CMake 2.8.8
+# * adms 2.3.0
+# * sed
+# * gperf
+# * flex
+# * bison
+# * make
+
+
+##
+# qucs-core
+#   * qucsator, libqucs
+#   * qucsconv
+#
 PROJECT(qucs-core CXX)
 
-CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
+CMAKE_MINIMUM_REQUIRED(VERSION 2.8.8)
 
-#set(CMAKE_VERBOSE_MAKEFILE ON)
+#SET(CMAKE_VERBOSE_MAKEFILE ON)
 
 # otherwise qucsator cannot generate qucsdefs.h
-add_definitions(-DDEBUG)
+ADD_DEFINITIONS(-DDEBUG)
 
 # defines nr_double_t
 ADD_DEFINITIONS( -DHAVE_CONFIG_H )
@@ -27,7 +42,7 @@ ADD_DEFINITIONS( -DHAVE_CONFIG_H )
 # TODO configure debug/release flags
 
 
-# Flags used on Autotools:
+# TODO check flags used on Autotools are needed:
 #
 # -pipe : Use pipes rather than temporary files for communication between the various stages of compilation.
 #
@@ -41,57 +56,59 @@ ADD_DEFINITIONS( -DHAVE_CONFIG_H )
 # -Wmissing-prototypes : Warn if a global function is defined without a previous prototype declaration.
 #
 #
-set(PROJECT_VERSION_MAJOR "0")
-set(PROJECT_VERSION_MINOR "0")
-set(PROJECT_VERSION_PATCH "18")
-set(PROJECT_VERSION "${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}.${PROJECT_VERSION_PATCH}")
-set(PROJECT_VENDOR "Qucs team. This program is licensed under the GNU GPL")
-set(PROJECT_COPYRIGHT_YEAR "2013")
-set(PROJECT_DOMAIN_FIRST "qucs")
-set(PROJECT_DOMAIN_SECOND "org")
+SET(PROJECT_VERSION_MAJOR "0")
+SET(PROJECT_VERSION_MINOR "0")
+SET(PROJECT_VERSION_PATCH "18")
+SET(PROJECT_VERSION "${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}.${PROJECT_VERSION_PATCH}")
+SET(PROJECT_VENDOR "Qucs team. This program is licensed under the GNU GPL")
+SET(PROJECT_COPYRIGHT_YEAR "2013")
+SET(PROJECT_DOMAIN_FIRST "qucs")
+SET(PROJECT_DOMAIN_SECOND "org")
 
 #TODO rename the above variables? Project/Package?
 
 # Define to the address where bug reports for this package should be sent.
-set(PACKAGE_BUGREPORT "qucs-bugs@lists.sourceforge.net")
+SET(PACKAGE_BUGREPORT "qucs-bugs@lists.sourceforge.net")
 
 # Define to the full name of this package.
-set(PACKAGE_NAME "qucs-core")
+SET(PACKAGE_NAME "qucs-core")
 
 # Define to the full name and version of this package.
-set(PACKAGE_STRING "${PACKAGE_NAME} ${PROJECT_VERSION}")
+SET(PACKAGE_STRING "${PACKAGE_NAME} ${PROJECT_VERSION}")
 
 # Define to the one symbol short name of this package.
-set(PACKAGE_TARNAME ${PACKAGE_NAME})
+SET(PACKAGE_TARNAME ${PACKAGE_NAME})
 
 # Define to the home page for this package.
-set(PACKAGE_URL "http://sourceforge.net/projects/qucs/")
+SET(PACKAGE_URL "http://sourceforge.net/projects/qucs/")
 
 # Define to the version of this package.
-set(PACKAGE_VERSION ${PROJECT_VERSION})
+SET(PACKAGE_VERSION ${PROJECT_VERSION})
 
 #
 # Avoid source tree pollution
 #
-If(CMAKE_SOURCE_DIR STREQUAL CMAKE_BINARY_DIR)
-	message(FATAL_ERROR "In-source builds are not permitted. Make a separate folder for building:\nmkdir build; cd build; cmake ..\nBefore that, remove the files already created:\nrm -rf CMakeCache.txt CMakeFiles")
-endif(CMAKE_SOURCE_DIR STREQUAL CMAKE_BINARY_DIR)
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/modules/")
+IF(CMAKE_SOURCE_DIR STREQUAL CMAKE_BINARY_DIR)
+	MESSAGE(FATAL_ERROR "\nIn-source builds are not permitted.
+                       Make a separate folder for building:
+                       $ mkdir build; cd build; cmake ..
+                       Before that, remove the files already created:
+                       $ rm -rf CMakeCache.txt CMakeFiles")
+ENDIF()
+
+#
+# Set locations of CMake modules, used on tests, find,...
+#
+SET(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/modules/")
 
 
-INCLUDE_DIRECTORIES( ${CMAKE_SOURCE_DIR}
-                     ${CMAKE_CURRENT_SOURCE_DIR}
-                     ${CMAKE_SOURCE_DIR}/src
-                     ${CMAKE_SOURCE_DIR}/src/math )
-
-# What about admsXml?? build or used packaged?
-# There is no admsXml packaged out there... need to build if not installed
-
-#ACLOCAL_AMFLAGS = -I m4
-
+#
+# Go look for stuff to build/install...
+#
 ADD_SUBDIRECTORY( src )
 ADD_SUBDIRECTORY( doc )
 
+# TODO install distributables
 #EXTRA_DIST = BUGS autogen.sh depcomp RELEASE
 
 # TODO tarball
@@ -102,6 +119,6 @@ SET(CPACK_GENERATOR "TGZ")
 
 # build a CPack driven installer package
 #include (InstallRequiredSystemLibraries)
-set (CPACK_PACKAGE_VERSION_MAJOR 0)
-set (CPACK_PACKAGE_VERSION_MINOR 18)
+SET (CPACK_PACKAGE_VERSION_MAJOR 0)
+SET (CPACK_PACKAGE_VERSION_MINOR 18)
 include (CPack)

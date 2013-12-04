@@ -6,7 +6,7 @@ INCLUDE_DIRECTORIES( ${CMAKE_SOURCE_DIR}
                      ${CMAKE_SOURCE_DIR}/src/math
                      ${CMAKE_SOURCE_DIR}/src/components
                      ${CMAKE_SOURCE_DIR}/src/interface
-                     # out of source include, generated stuff
+                     # out of source include, generated code
                      ${CMAKE_BINARY_DIR} # /generated config.h
                      ${CMAKE_CURRENT_BINARY_DIR} #/src/gperfapphash.cpp
                      ${CMAKE_CURRENT_BINARY_DIR}/components #/verilog/*.core.h generated stuff
@@ -16,12 +16,12 @@ INCLUDE_DIRECTORIES( ${CMAKE_SOURCE_DIR}
 # Checks for libraries.
 #
 #AC_CHECK_LIB(m, sin) need to check for sin?
-find_library(MATH_LIB NAMES m)
-if(NOT MATH_LIB)
-  message(SEND_ERROR "Math lib not found: ${MATH_LIB}" )
-else()
-  message(STATUS "Math lib found at: ${MATH_LIB}" )
-endif()
+FIND_LIBRARY(MATH_LIB NAMES m)
+IF(NOT MATH_LIB)
+  MESSAGE(SEND_ERROR "Math lib not found: ${MATH_LIB}" )
+ELSE()
+  MESSAGE(STATUS "Math lib found at: ${MATH_LIB}" )
+ENDIF()
 
 # Checks for header files.
 # AC_HEADER_STDC !! obsolete, need to check?
@@ -33,74 +33,76 @@ endif()
 INCLUDE (CheckIncludeFiles)
 SET(CMAKE_REQUIRED_INCLUDES "/usr/include" "/usr/local/include")
 SET(CMAKE_MODULE_PATH "${qucs-core_SOURCE_DIR}/cmake/modules")
-include(AC_HEADER_STDC)
+INCLUDE(AC_HEADER_STDC)
 
 #
 # Further header checks
 #
 INCLUDE (CheckIncludeFile)
-set(INCLUDES
+
+# list of headers to be checked
+SET( INCLUDES
+  ieeefp.h
+  memory.h
   stddef.h
   stdlib.h
   string.h
   unistd.h
-  ieeefp.h
-  memory.h)
+)
 
 #
 # Check if header can be included.
-# Define HAVE_[basename]_H to 1 if you have the header.
-foreach(header ${INCLUDES})
-  get_filename_component(base ${header} NAME_WE)
-  string(TOUPPER ${base} base)
-  check_include_file ( ${header} HAVE_${base}_H )
-  #message(STATUS "${header}  --> ${HAVE_${base}_H}")
-endforeach()
+#  * Define HAVE_[basename]_H to 1 if you have the header.
+#
+FOREACH( header ${INCLUDES} )
+  GET_FILENAME_COMPONENT(base ${header} NAME_WE)
+  STRING(TOUPPER ${base} base)
+  CHECK_INCLUDE_FILE( ${header} HAVE_${base}_H )
+  #MESSAGE(STATUS "${header}  --> ${HAVE_${base}_H}")
+ENDFOREACH()
 
 
 # Checks for typedefs, structures, and compiler characteristics.
 # AC_C_CONST  !!obsolete
-# AC_C_CONST "This macro is
-# obsolescent, as current C compilers support `const'.  New programs
-# need not use this macro."
-#/* Define to empty if `const' does not conform to ANSI C. */
+# AC_C_CONST "This macro is obsolescent, as current C compilers support `const'.
+# New programs need not use this macro."
 
 #
 # Check for type sizes.
 #
-include(CheckTypeSize)
+INCLUDE(CheckTypeSize)
 CHECK_TYPE_SIZE("short" SIZEOF_SHORT)
 CHECK_TYPE_SIZE("int"   SIZEOF_INT)
 CHECK_TYPE_SIZE("long"  SIZEOF_LONG)
 CHECK_TYPE_SIZE("double"  SIZEOF_DOUBLE)
 CHECK_TYPE_SIZE("long double"  SIZEOF_LONG_DOUBLE)
-#message(STATUS "short  ${SIZEOF_SHORT}" )
-#message(STATUS "int   ${SIZEOF_INT}" )
-#message(STATUS "long  ${SIZEOF_LONG}" )
-#message(STATUS "double ${SIZEOF_DOUBLE}" )
-#message(STATUS "long double ${SIZEOF_LONG_DOUBLE}" )
+#MESSAGE(STATUS "short  ${SIZEOF_SHORT}" )
+#MESSAGE(STATUS "int   ${SIZEOF_INT}" )
+#MESSAGE(STATUS "long  ${SIZEOF_LONG}" )
+#MESSAGE(STATUS "double ${SIZEOF_DOUBLE}" )
+#MESSAGE(STATUS "long double ${SIZEOF_LONG_DOUBLE}" )
 
 #
 # Check C-type for 32-bit integers.
 #
-if( ${SIZEOF_SHORT} EQUAL 4)
-  set( nr_int32_t "short")
-elseif( ${SIZEOF_INT} EQUAL 4)
-  set( nr_int32_t "int")
-elseif( ${SIZEOF_long} EQUAL 4)
-  set( nr_int32_t "long")
-endif()
+IF( ${SIZEOF_SHORT} EQUAL 4)
+  SET( nr_int32_t "short")
+ELSEIF( ${SIZEOF_INT} EQUAL 4)
+  SET( nr_int32_t "int")
+ELSEIF( ${SIZEOF_long} EQUAL 4)
+  SET( nr_int32_t "long")
+ENDIF()
 
 #
 # Check C-type for 16-bit integers.
 #
-if( ${SIZEOF_SHORT} EQUAL 2)
-  set( nr_int16_t "short")
-elseif( ${SIZEOF_INT} EQUAL 2)
-  set( nr_int16_t "int")
-elseif( ${SIZEOF_long} EQUAL 2)
-  set( nr_int16_t "long")
-endif()
+IF( ${SIZEOF_SHORT} EQUAL 2)
+  SET( nr_int16_t "short")
+ELSEIF( ${SIZEOF_INT} EQUAL 2)
+  SET( nr_int16_t "int")
+ELSEIF( ${SIZEOF_long} EQUAL 2)
+  SET( nr_int16_t "long")
+ENDIF()
 
 #
 # Check for double type.
@@ -110,41 +112,41 @@ endif()
 #  * Use -DENABLE-DOUBLE="[float,double, long double]"
 IF( ENABLE-DOUBLE )
   # User defined
-  set(DoubleType ${ENABLE-DOUBLE})
+  SET(DoubleType ${ENABLE-DOUBLE})
 
   # valid types
-  set(ValidTypes "float" "double" "long double" )
+  SET(ValidTypes "float" "double" "long double" )
 
-  list(FIND ValidTypes ${DoubleType} HasType)
+  LIST(FIND ValidTypes ${DoubleType} HasType)
   IF ( HasType EQUAL -1)
     MESSAGE(FATAL_ERROR "Valid types are: ${ValidTypes}")
   ENDIF()
 
   # The global type of double representation.
-  set( nr_double_t  DoubleType )
+  SET( nr_double_t  DoubleType )
   CHECK_TYPE_SIZE(${DoubleType}  DoubleSize)
 
   # The size of the double representation.
-  set( NR_DOUBLE_SIZE ${DoubleSize} )
+  SET( NR_DOUBLE_SIZE ${DoubleSize} )
 ELSE()
-  # Default
-  set(DoubleType "double")
+  # Default double
+  SET(DoubleType "double")
   # The global type of double representation.
-  set( nr_double_t ${DoubleType} )
+  SET( nr_double_t ${DoubleType} )
   CHECK_TYPE_SIZE(${DoubleType}  DoubleSize)
 
   # The size of the double representation.
-  set( NR_DOUBLE_SIZE ${DoubleSize} )
+  SET( NR_DOUBLE_SIZE ${DoubleSize} )
 ENDIF()
 MESSAGE(STATUS "using double type: ${DoubleType}; size: ${DoubleSize}")
-
 
 #
 # Check for library functions
 #  * not all functons seem to be used after defined.
+#  * commented functions have no HAVE_{func} used anywhere in the code
 #
-include(CheckFunctionExists)
-set(REQUIRED_FUNCTIONS
+INCLUDE(CheckFunctionExists)
+SET(REQUIRED_FUNCTIONS
   #floor pow exp sqrt log10 log
   #cos sin
   acos asin                         # for real.cpp
@@ -155,15 +157,15 @@ set(REQUIRED_FUNCTIONS
   #strdup strerror
   strchr )                          # for compat.h, matvec.cpp, scan_*.cpp
 
-foreach(func ${REQUIRED_FUNCTIONS})
-  string(TOUPPER ${func} FNAME)
+FOREACH( func ${REQUIRED_FUNCTIONS} )
+  STRING(TOUPPER ${func} FNAME)
   CHECK_FUNCTION_EXISTS(${func} HAVE_${FNAME})
   #message(STATUS "${func}  --> ${HAVE_${FNAME}}")
-endforeach()
+ENDFOREACH()
 
 
 #
-# Checks for complex classes and functions.
+# Checks for complex classes and functions, as in the Autotools scripts.
 #
 # AC_CXX_NAMESPACES !!custom m4
 # AC_CXX_HAVE_COMPLEX !!custom m4
@@ -177,7 +179,6 @@ endforeach()
 # AC_CHECK_CXX_COMPLEX_POLAR
 # AC_CHECK_CXX_COMPLEX_POLAR_COMPLEX !failed
 
-
 #
 # Namespace
 #
@@ -187,10 +188,9 @@ TRY_COMPILE( HAVE_NAMESPACES
         ${CMAKE_BINARY_DIR}
         ${CMAKE_SOURCE_DIR}/cmake/namespaces.cpp
         OUTPUT_VARIABLE TRY_OUT)
-if(NOT HAVE_NAMESPACES)
-  message(SEND_ERROR "${PROJECT_NAME} requires an c++ compiler with namespace HAVE_NAMESPACES failed")# ${TRY_OUT}")
-endif()
-
+IF(NOT HAVE_NAMESPACES)
+  MESSAGE(SEND_ERROR "${PROJECT_NAME} requires an c++ compiler with namespace HAVE_NAMESPACES failed")# ${TRY_OUT}")
+ENDIF()
 
 #
 # Check whether the compiler has complex<T>
@@ -200,9 +200,9 @@ TRY_COMPILE( HAVE_COMPLEX
         ${CMAKE_SOURCE_DIR}/cmake/complex.cpp
         COMPILE_DEFINITIONS -DHAVE_NAMESPACES
         OUTPUT_VARIABLE TRY_OUT)
-if(NOT HAVE_COMPLEX)
-  message(SEND_ERROR "HAVE_COMPLEX failed")# ${TRY_OUT}")
-endif()
+IF(NOT HAVE_COMPLEX)
+  MESSAGE(SEND_ERROR "HAVE_COMPLEX failed")# ${TRY_OUT}")
+ENDIF()
 
 #
 # Check whether the compiler has TR1 compliant complex<T>
@@ -211,19 +211,21 @@ TRY_COMPILE( HAVE_TR1_COMPLEX
         ${CMAKE_BINARY_DIR}
         ${CMAKE_SOURCE_DIR}/cmake/tr1_complex.cpp
         OUTPUT_VARIABLE TRY_OUT)
-if(NOT HAVE_TR1_COMPLEX)
-  message(SEND_ERROR "HAVE_COMPLEX failed")# ${TRY_OUT}")
-endif()
+IF(NOT HAVE_TR1_COMPLEX)
+  MESSAGE(SEND_ERROR "HAVE_COMPLEX failed")# ${TRY_OUT}")
+ENDIF()
 
 #
 # Check for list of complex functions.
 #
-set(COMPLEX_FUNCS acos acosh asin asinh atan atanh cos cosh
+SET(COMPLEX_FUNCS acos acosh asin asinh atan atanh cos cosh
                   exp log log10 sin sinh sqrt tan tanh log2 norm )
 
-# TODO any better way to scape the ";"
-foreach(func ${COMPLEX_FUNCS})
-  set(code
+#
+# code inlined to easily replace '${func}'
+# TODO any better way to scape the ";" ?
+FOREACH(func ${COMPLEX_FUNCS})
+  SET(code
     "#ifdef HAVE_TR1_COMPLEX
     #include <tr1/complex>
       using namespace std\;
@@ -257,9 +259,8 @@ foreach(func ${COMPLEX_FUNCS})
           OUTPUT_VARIABLE TRY_OUT)
   if(NOT HAVE_CXX_COMPLEX_${FNAME})
     message(STATUS "HAVE_CXX_COMPLEX_${FNAME} failed")# ${TRY_OUT}")
-  endif()
-endforeach()
-
+  ENDIF()
+ENDFOREACH()
 
 #
 # Check whether you have the complex pow function.
@@ -269,9 +270,9 @@ TRY_COMPILE( HAVE_CXX_COMPLEX_POW
         ${CMAKE_SOURCE_DIR}/cmake/complex_pow.cpp
         COMPILE_DEFINITIONS -DHAVE_NAMESPACES -DHAVE_COMPLEX -DHAVE_TR1_COMPLEX
         OUTPUT_VARIABLE TRY_OUT)
-if(NOT HAVE_CXX_COMPLEX_POW)
-  message(SEND_ERROR "HAVE_CXX_COMPLEX_POW failed")# ${TRY_OUT}")
-endif()
+IF(NOT HAVE_CXX_COMPLEX_POW)
+  MESSAGE(SEND_ERROR "HAVE_CXX_COMPLEX_POW failed")# ${TRY_OUT}")
+ENDIF()
 
 #
 # Check whether you have the complex atan2 function.
@@ -281,9 +282,9 @@ TRY_COMPILE( HAVE_CXX_COMPLEX_ATAN2
         ${CMAKE_SOURCE_DIR}/cmake/complex_atan2.cpp
         COMPILE_DEFINITIONS -DHAVE_NAMESPACES -DHAVE_COMPLEX -DHAVE_TR1_COMPLEX
         OUTPUT_VARIABLE TRY_OUT)
-if(NOT HAVE_CXX_COMPLEX_ATAN2)
-  message(STATUS "HAVE_CXX_COMPLEX_ATAN2 failed ") #${TRY_OUT}")
-endif()
+IF(NOT HAVE_CXX_COMPLEX_ATAN2)
+  MESSAGE(STATUS "HAVE_CXX_COMPLEX_ATAN2 failed ") #${TRY_OUT}")
+ENDIF()
 
 #
 # Check wheter you have the complex fmod function.
@@ -293,9 +294,9 @@ TRY_COMPILE( HAVE_CXX_COMPLEX_FMOD
         ${CMAKE_SOURCE_DIR}/cmake/complex_fmod.cpp
         COMPILE_DEFINITIONS -DHAVE_NAMESPACES -DHAVE_COMPLEX -DHAVE_TR1_COMPLEX
         OUTPUT_VARIABLE TRY_OUT)
-if(NOT HAVE_CXX_COMPLEX_FMOD)
-  message(STATUS "HAVE_CXX_COMPLEX_FMOD failed ") #${TRY_OUT}")
-endif()
+IF(NOT HAVE_CXX_COMPLEX_FMOD)
+  MESSAGE(STATUS "HAVE_CXX_COMPLEX_FMOD failed ") #${TRY_OUT}")
+ENDIF()
 
 #
 # Check whether you have the complex polar (double, double) function.
@@ -305,10 +306,9 @@ TRY_COMPILE( HAVE_CXX_COMPLEX_POLAR
         ${CMAKE_SOURCE_DIR}/cmake/complex_polar.cpp
         COMPILE_DEFINITIONS -DHAVE_NAMESPACES -DHAVE_COMPLEX -DHAVE_TR1_COMPLEX
         OUTPUT_VARIABLE TRY_OUT)
-if(NOT HAVE_CXX_COMPLEX_POLAR)
-  message(STATUS "HAVE_CXX_COMPLEX_POLAR failed ") #${TRY_OUT}")
-endif()
-
+IF(NOT HAVE_CXX_COMPLEX_POLAR)
+  MESSAGE(STATUS "HAVE_CXX_COMPLEX_POLAR failed ") #${TRY_OUT}")
+ENDIF()
 
 #
 # Check wheter you have the complex polar (complex, complex) function.
@@ -318,91 +318,76 @@ TRY_COMPILE( HAVE_CXX_COMPLEX_POLAR_COMPLEX
         ${CMAKE_SOURCE_DIR}/cmake/complex_polar_complex.cpp
         COMPILE_DEFINITIONS -DHAVE_NAMESPACES -DHAVE_COMPLEX -DHAVE_TR1_COMPLEX
         OUTPUT_VARIABLE TRY_OUT)
-if(NOT HAVE_CXX_COMPLEX_POLAR_COMPLEX)
-  message(STATUS "HAVE_CXX_COMPLEX_POLAR_COMPLEX failed ") #${TRY_OUT}")
-endif()
-
-
+IF(NOT HAVE_CXX_COMPLEX_POLAR_COMPLEX)
+  MESSAGE(STATUS "HAVE_CXX_COMPLEX_POLAR_COMPLEX failed ") #${TRY_OUT}")
+ENDIF()
 
 #
-# Configure the header config.h
+# Configure the header config.h, interpolate above definitions.
 #
 CONFIGURE_FILE (
     "${CMAKE_SOURCE_DIR}/config.h.cmake"
     "${CMAKE_BINARY_DIR}/config.h"
 )
 
+#
+# Need Flex / Bison
+#
+FIND_PACKAGE(FLEX)
+FIND_PACKAGE(BISON)
 
-#LINK_DIRECTORIES(${CMAKE_BINARY_DIR}
-#                 ${CMAKE_BINARY_DIR}/..
-#                 ${CMAKE_BINARY_DIR}/src/math/ )
-
-#set( LINKER_FLAGS " -lstdc++ " )
-#set( CMAKE_EXE_LINKER_FLAGS "${LINKER_FLAGS}")
-
-
-find_package(BISON)
-find_package(FLEX)
-
-set(ParserTypes
-  netlist
-  dataset
-  citi
+# List of lexer/parsers type names
+SET(ParserTypes
 	csv
+  citi
+  dataset
   mdl
+  netlist
   touchstone
-  zvr)
+  zvr
+)
 
-# Flex/Bison generated code:
-#   parse_dataset.cpp scan_dataset.cpp
-#   parse_citi.cpp scan_citi.cpp
-#	  parse_csv.cpp scan_csv.cpp
-#   parse_mdl.cpp scan_mdl.cpp
-#   parse_touchstone.cpp scan_touchstone.cpp
-#   parse_zvr.cpp scan_zvr.cpp
+# Flex/Bison generated code, example:
+#   - parse_csv.cpp scan_csv.cpp
 
 # TODO Double check the location where the generated scanner/parser should go
-foreach(type ${ParserTypes})
+FOREACH( type ${ParserTypes} )
 
-  flex_target(scan${type} scan_${type}.l ${PROJECT_SOURCE_DIR}/scan_${type}.cpp)
+  FLEX_TARGET(scan${type} scan_${type}.l ${PROJECT_SOURCE_DIR}/scan_${type}.cpp)
 
-  bison_target(parse${type}
+  BISON_TARGET(parse${type}
                parse_${type}.y ${PROJECT_SOURCE_DIR}/parse_${type}.cpp
                COMPILE_FLAGS --defines="${PROJECT_SOURCE_DIR}/tokens_${type}.h" )
 
-  add_flex_bison_dependency(scan${type} parse${type})
+  ADD_FLEX_BISON_DEPENDENCY(scan${type} parse${type})
 
-  set(flexInputs   ${flexInputs}   ${FLEX_scan${type}_INPUT}   )
-  set(flexOutputs  ${flexOutputs}  ${FLEX_scan${type}_OUTPUTS} )
-  set(bisonInputs  ${bisonInputs}  ${BISON_parse${type}_INPUT} )
-  set(bisonOutputs ${bisonOutputs} ${BISON_parse${type}_OUTPUTS})
+  SET(flexInputs   ${flexInputs}   ${FLEX_scan${type}_INPUT}   )
+  SET(flexOutputs  ${flexOutputs}  ${FLEX_scan${type}_OUTPUTS} )
+  SET(bisonInputs  ${bisonInputs}  ${BISON_parse${type}_INPUT} )
+  SET(bisonOutputs ${bisonOutputs} ${BISON_parse${type}_OUTPUTS})
+ENDFOREACH()
 
-endforeach()
-
+#
 # Combine all genereated flex/bison files
-set(generated_SRC ${flexOutputs} ${bisonOutputs})
+#
+SET(generated_SRC ${flexOutputs} ${bisonOutputs})
 
-#message(STATUS "----> Scanner / Parser     ${generated_SRC}\n")
-# message(STATUS "Qucsator -- Flex Inputs : ${flexInputs}")
-# message(STATUS "Qucsator -- Flex Outputs: ${flexOutputs}")
-# message(STATUS "Qucsator -- Bison Inputs : ${bisonInputs}")
-# message(STATUS "Qucsator -- Bison Outputs: ${bisonOutputs}")
+#MESSAGE(STATUS "----> Scanner / Parser     ${generated_SRC}\n")
+#MESSAGE(STATUS "Qucsator -- Flex Inputs : ${flexInputs}")
+#MESSAGE(STATUS "Qucsator -- Flex Outputs: ${flexOutputs}")
+#MESSAGE(STATUS "Qucsator -- Bison Inputs : ${bisonInputs}")
+#MESSAGE(STATUS "Qucsator -- Bison Outputs: ${bisonOutputs}")
 
-
-ADD_SUBDIRECTORY( math )
-ADD_SUBDIRECTORY( components )
-ADD_SUBDIRECTORY( converter )
-ADD_SUBDIRECTORY( interface )
 
 #
-# Source code
+# Source code libqucs
 #
-SET(LIBQUCSATOR_SRC
+SET(LIBQUCS_SRC
+  ${generated_SRC}
 	analysis.cpp
 	check_zvr.cpp
 	interpolator.cpp
 	parasweep.cpp
-	parse_netlist.cpp
 	property.cpp
 	range.cpp
 	spline.cpp
@@ -442,7 +427,6 @@ SET(LIBQUCSATOR_SRC
   operatingpoint.cpp
   pair.cpp
   receiver.cpp
-  scan_netlist.cpp
   spsolver.cpp
   sweep.cpp
   transient.cpp
@@ -460,18 +444,18 @@ SET(TEMPLATES tmatrix.h eqnsys.h nasolver.h states.h tvector.h
 #
 # Check for sed
 #
-find_program (SED_TOOL NAMES sed)
-if (NOT SED_TOOL)
-	message (FATAL_ERROR "Unable to find sed")
-endif (NOT SED_TOOL)
+FIND_PROGRAM(SED_TOOL NAMES sed)
+IF(NOT SED_TOOL)
+	MESSAGE(FATAL_ERROR "Unable to find sed")
+ENDIF()
 
 #
 # Check for gperf
 #
-find_program (GPERF_TOOL NAMES gperf)
-if (NOT GPERF_TOOL)
-	message (FATAL_ERROR "Unable to find gperf")
-endif (NOT GPERF_TOOL)
+FIND_PROGRAM(GPERF_TOOL NAMES gperf)
+IF (NOT GPERF_TOOL)
+	MESSAGE(FATAL_ERROR "Unable to find gperf")
+ENDIF()
 
 #
 # Replace 'evaluate::[whatever]' by NULL
@@ -480,7 +464,7 @@ endif (NOT GPERF_TOOL)
 #	actual evaluation function (applications) for the equations
 #	in Qucs.
 #
-add_custom_command(
+ADD_CUSTOM_COMMAND(
   OUTPUT gperfappgen.h
   COMMAND ${SED_TOOL} -e 's/evaluate::[a-zA-Z0-9_]*/NULL/g'
     < ${CMAKE_CURRENT_SOURCE_DIR}/applications.h
@@ -492,14 +476,14 @@ add_custom_command(
 # Compile gperfappgen
 # * used to generate gperf input file (used in qucsator)
 #
-set(gperf_SRC gperfappgen.cpp  gperfappgen.h )
+SET(gperf_SRC gperfappgen.cpp  gperfappgen.h )
 
-add_executable(gperfappgen ${gperf_SRC})
+ADD_EXECUTABLE(gperfappgen ${gperf_SRC})
 
 #
 # Run gperfappgen, pipe to gperf input to gperfapphash.gph
 #
-add_custom_command(
+ADD_CUSTOM_COMMAND(
   OUTPUT gperfapphash.gph
   COMMAND gperfappgen > ${CMAKE_CURRENT_BINARY_DIR}/gperfapphash.gph
   DEPENDS ${gperfappgen}
@@ -528,31 +512,58 @@ ADD_CUSTOM_COMMAND(
 #set(gperf_FILES gperfapphash.cpp gperfapphash.gph gperfappgen.h)
 
 
+# Qucs library dependencies
+ADD_SUBDIRECTORY( interface )
+ADD_SUBDIRECTORY( components )
+ADD_SUBDIRECTORY( components/digital )
+ADD_SUBDIRECTORY( components/devices )
+ADD_SUBDIRECTORY( components/microstrip )
+ADD_SUBDIRECTORY( components/verilog )
+ADD_SUBDIRECTORY( math )
 
-# target library and binary names must be different, use target property to rename
-#ADD_EXECUTABLE(qucsator ${QUCSATOR_SRC} ${TEMPLATES} )
+# Qucsconv application
+ADD_SUBDIRECTORY( converter )
+
+# Linux?
+#set(CMAKE_SHARED_LINKER_FLAGS "-Wl,--export-all-symbols")
+
+#
+# Create qucsator
+#
 ADD_EXECUTABLE(qucsator ucs.cpp )
 
 #
-# Build libqucs
+# Build libqucs as SHARED, dynamic library
 #
-#ADD_LIBRARY(qucs ${generated_SRC} ${LIBQUCSATOR_SRC}  ${TEMPLATES} )
-ADD_LIBRARY(qucs SHARED ${generated_SRC} ${LIBQUCSATOR_SRC}  ${TEMPLATES} )
-#${qucsmath_src} ${component_src} ${microstrip_src} ${devices_src} ${digital_src} ${verilog_src} ${interface_src} )
+# After:
+# - http://stackoverflow.com/questions/11429055/cmake-how-create-a-single-shared-library-from-all-static-libraries-of-subprojec
+#
+ADD_LIBRARY(qucs SHARED
+  ${LIBQUCS_SRC}
+  ${TEMPLATES}
+  $<TARGET_OBJECTS:math>
+  $<TARGET_OBJECTS:components>
+  $<TARGET_OBJECTS:interface>
+  $<TARGET_OBJECTS:verilog>
+  $<TARGET_OBJECTS:microstrip>
+  $<TARGET_OBJECTS:devices>
+  $<TARGET_OBJECTS:digital>
+)
 
-
+#
 # Force gperf to run before include into equation.cpp
+#
 ADD_CUSTOM_TARGET( equation DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/gperfapphash.cpp equation.cpp )
 ADD_DEPENDENCIES( qucs equation )
 
-
+#
+# Link qucsator and libqucs
+#
 TARGET_LINK_LIBRARIES( qucsator qucs )
-
-target_link_libraries(qucs qucsmath component microstrip devices digital verilog interface )
-
 
 #
 # Handle install
 #
 INSTALL(TARGETS qucsator DESTINATION bin)
+INSTALL(TARGETS qucs DESTINATION lib)
 
