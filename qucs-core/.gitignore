@@ -19,3 +19,10 @@ INSTALL
 depcomp
 *.a
 install-sh
+
+*.cmake
+CMakeCache.txt
+CMakeFiles
+Makefile
+cmake_install.cmake
+install_manifest.txt
