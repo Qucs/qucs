@@ -5,21 +5,6 @@ INCLUDE_DIRECTORIES( ${CMAKE_SOURCE_DIR}
                      ${CMAKE_SOURCE_DIR}/src/components
                      ${CMAKE_SOURCE_DIR}/src/components/devices )
 
-#
-# Check if admsXml is available
-#  * Use -DADMSXML_DIR=[path] to give the path containing admsXml
-#  * Try a few othe locations
-#
-FIND_PROGRAM( ADMSXML admsXml
-  HINTS ${ADMSXML_DIR}
-  PATHS /usr/local/bin/ /opt/local/bin/
-  DOC "admsXml application" )
-
-IF(ADMSXML)
-  MESSAGE(STATUS "Found admsXml: " ${ADMSXML})
-ELSE()
-  MESSAGE(FATAL_ERROR "admsXml was not found!")
-ENDIF()
 
 # TODO does constants / disciplines need to be generated, or adms creates them as needed?
 # TODO, test if VA files change, should recompile

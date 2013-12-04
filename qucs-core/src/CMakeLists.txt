@@ -331,12 +331,8 @@ CONFIGURE_FILE (
 )
 
 #
-# Need Flex / Bison
-#
-FIND_PACKAGE(FLEX)
-FIND_PACKAGE(BISON)
-
 # List of lexer/parsers type names
+#
 SET(ParserTypes
 	csv
   citi
@@ -455,22 +451,6 @@ SET(HEADERS
   module.h
   net.h
 )
-
-#
-# Check for sed
-#
-FIND_PROGRAM(SED_TOOL NAMES sed)
-IF(NOT SED_TOOL)
-	MESSAGE(FATAL_ERROR "Unable to find sed")
-ENDIF()
-
-#
-# Check for gperf
-#
-FIND_PROGRAM(GPERF_TOOL NAMES gperf)
-IF (NOT GPERF_TOOL)
-	MESSAGE(FATAL_ERROR "Unable to find gperf")
-ENDIF()
 
 #
 # Replace 'evaluate::[whatever]' by NULL

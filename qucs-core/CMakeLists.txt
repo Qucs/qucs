@@ -16,6 +16,7 @@
 # * flex
 # * bison
 # * make
+# * C++ compiler
 
 
 ##
@@ -101,6 +102,57 @@ ENDIF()
 #
 SET(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/modules/")
 
+
+#
+# Need Flex / Bison
+#
+SET(FLEX_MINIMAL_VERSION "2.5.9")
+FIND_PACKAGE(FLEX REQUIRED)
+IF(FLEX_FOUND)
+  MESSAGE(STATUS "Found flex: ${FLEX_EXECUTABLE} / Version: ${FLEX_VERSION}" )
+ENDIF()
+
+SET(BISON_MINIMAL_VERSION "2.4")
+FIND_PACKAGE(BISON REQUIRED)
+IF(BISON_FOUND)
+  MESSAGE(STATUS "Found bison: ${BISON_EXECUTABLE} / Version: ${BISON_VERSION}" )
+ENDIF()
+
+#
+# Check for sed
+#
+FIND_PROGRAM(SED_TOOL NAMES sed)
+IF(NOT SED_TOOL)
+	MESSAGE(FATAL_ERROR "Unable to find sed")
+ELSE()
+  MESSAGE(STATUS "Found sed: " ${SED_TOOL})
+ENDIF()
+
+#
+# Check for gperf
+#
+FIND_PROGRAM(GPERF_TOOL NAMES gperf)
+IF (NOT GPERF_TOOL)
+	MESSAGE(FATAL_ERROR "Unable to find gperf")
+ELSE()
+  MESSAGE(STATUS "Found gperf: " ${GPERF_TOOL})
+ENDIF()
+
+#
+# Check if admsXml is available
+#  * Use -DADMSXML_DIR=[path] to give the path containing admsXml
+#  * Try a few othe locations
+#
+FIND_PROGRAM( ADMSXML admsXml
+  HINTS ${ADMSXML_DIR}
+  PATHS /usr/local/bin/ /opt/local/bin/
+  DOC "admsXml application" )
+
+IF(ADMSXML)
+  MESSAGE(STATUS "Found admsXml: " ${ADMSXML})
+ELSE()
+  MESSAGE(FATAL_ERROR "admsXml was not found!")
+ENDIF()
 
 #
 # Go look for stuff to build/install...

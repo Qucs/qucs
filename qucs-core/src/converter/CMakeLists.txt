@@ -15,12 +15,6 @@ SET(QUCSCONV_SRC
   touchstone_producer.cpp
 )
 
-#
-# Need Flex / Bison
-#
-FIND_PACKAGE(BISON)
-FIND_PACKAGE(FLEX)
-
 SET(ParserTypes
   spice
   vcd
