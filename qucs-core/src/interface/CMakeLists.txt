@@ -10,7 +10,14 @@ SET( INTERFACE_SRC
   e_trsolver.cpp
 )
 
+SET(HEADERS
+  e_trsolver.h
+  qucs_interface.h
+)
+
 ADD_LIBRARY(interface OBJECT ${INTERFACE_SRC})
 
 ADD_DEPENDENCIES(interface verilog)
+
+INSTALL(FILES ${HEADERS} DESTINATION include/qucs-core)
 

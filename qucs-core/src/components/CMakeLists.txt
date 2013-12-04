@@ -70,5 +70,13 @@ SET( COMPONENTS_SRC
   vvnoise.cpp
 )
 
+SET(HEADERS
+  component.h
+  components.h
+)
+
+
 ADD_LIBRARY(components OBJECT ${COMPONENTS_SRC} )
+
+INSTALL(FILES ${HEADERS} DESTINATION include/qucs-core)
 

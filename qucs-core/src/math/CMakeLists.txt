@@ -11,5 +11,12 @@ SET(MATH_SRC
   real.cpp
 )
 
+SET(HEADERS
+  precision.h
+)
+
 ADD_LIBRARY(math OBJECT ${MATH_SRC} )
+
+INSTALL(FILES ${HEADERS} DESTINATION include/qucs-core)
+
 

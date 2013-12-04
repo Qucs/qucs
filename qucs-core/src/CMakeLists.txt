@@ -442,6 +442,21 @@ SET(TEMPLATES tmatrix.h eqnsys.h nasolver.h states.h tvector.h
 
 
 #
+# Include headers
+#
+SET(HEADERS
+	environment.h
+  check_netlist.h
+  dataset.h
+  equation.h
+  exceptionstack.h
+  input.h
+  logging.h
+  module.h
+  net.h
+)
+
+#
 # Check for sed
 #
 FIND_PROGRAM(SED_TOOL NAMES sed)
@@ -565,5 +580,5 @@ TARGET_LINK_LIBRARIES( qucsator qucs )
 # Handle install
 #
 INSTALL(TARGETS qucsator DESTINATION bin)
-INSTALL(TARGETS qucs DESTINATION lib)
-
+INSTALL(TARGETS qucs     DESTINATION lib)
+INSTALL(FILES ${HEADERS} DESTINATION include/qucs-core)
