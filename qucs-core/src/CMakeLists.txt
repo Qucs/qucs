@@ -545,6 +545,13 @@ ADD_LIBRARY(qucs SHARED
   $<TARGET_OBJECTS:digital>
 )
 
+IF (APPLE)
+       SET_TARGET_PROPERTIES(qucs
+          PROPERTIES
+          #LINK_FLAGS "-current_version ${${PROJECT_NAME}PROJECT_VERSION} -compatibility_version ${${PROJECT_NAME}PROJECT_VERSION}"
+          INSTALL_NAME_DIR "${CMAKE_INSTALL_PREFIX}/lib"
+       )
+ENDIF (APPLE)
 #
 # Force gperf to run before include into equation.cpp
 #
