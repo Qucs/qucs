@@ -67,8 +67,7 @@ SET( VA_FILES
 
 
 # clear lists of generated files
-SET(analogfunc)
-SET(core)
+SET(generated_SRC)
 
 # Process each Verilog-A file.
 #  * generated files get added to lists (analogfunc, core)
@@ -98,47 +97,31 @@ FOREACH( filename ${VA_FILES} )
     GET_FILENAME_COMPONENT(base ${fileout} NAME_WE)
     SET(base_abs ${CMAKE_CURRENT_BINARY_DIR}/${base})
 
-    # set outputs 1
-    SET(output ${base_abs}.analogfunction.cpp ${base_abs}.analogfunction.h)
+    # set outputs for each Verilog-A input
+    SET(output ${base_abs}.analogfunction.cpp ${base_abs}.analogfunction.h
+               ${base_abs}.core.cpp ${base_abs}.core.h ${base_abs}.defs.h)
 
     # custom command/rule to generate outputs with admsXml
     ADD_CUSTOM_COMMAND(
         OUTPUT ${output}
         COMMAND ${ADMSXML} ${CMAKE_CURRENT_SOURCE_DIR}/${filename}
-                           -e  ${CMAKE_CURRENT_SOURCE_DIR}/analogfunction.xml)
-    SET_SOURCE_FILES_PROPERTIES(${output} PROPERTIES GENERATED TRUE)
-
-    # append outputs 1 to global list 'analogfunc'
-    SET(analogfunc ${analogfunc} ${output} )
-
-    #TODO need to be in two steps? can't we pass several xml files to adms?
-
-    # set outputs 2
-    SET(output ${base_abs}.core.cpp ${base_abs}.core.h ${base_abs}.defs.h)
-
-    ADD_CUSTOM_COMMAND(
-        OUTPUT ${output}
-        COMMAND ${ADMSXML} ${CMAKE_CURRENT_SOURCE_DIR}/${filename}
+                           -e ${CMAKE_CURRENT_SOURCE_DIR}/analogfunction.xml
                            -e ${CMAKE_CURRENT_SOURCE_DIR}/qucsVersion.xml
                            -e ${CMAKE_CURRENT_SOURCE_DIR}/qucsMODULEcore.xml
                            -e ${CMAKE_CURRENT_SOURCE_DIR}/qucsMODULEdefs.xml )
     SET_SOURCE_FILES_PROPERTIES(${output} PROPERTIES GENERATED TRUE)
 
-    # append outputs 2 to list 'core'
-    SET(core ${core} ${output} )
+    # append outputs list of generated sources
+    SET(generated_SRC ${generated_SRC} ${output} )
 
     # no need to generate GUI code? Integrated manually already?
     #set(output ${base_abs}.gui.cpp ${base_abs}.gui.h)
         #COMMAND ${ADMSXML} ${filename} -e qucsVersion.xml -e qucsMODULEgui.xml )
 ENDFOREACH()
 
-#MESSAGE(STATUS " ==> analog\n " ${analogfunc})
-#MESSAGE(STATUS " ==> core\n   " ${core})
+#MESSAGE(STATUS " ==> generated\n " ${generated_SRC})
 
-
-SET( verilog_SRC  ${analogfunc} ${core} )
-
-ADD_LIBRARY( verilog OBJECT ${verilog_SRC} )
+ADD_LIBRARY( verilog OBJECT ${generated_SRC} )
 
 
 # TODO install distributable files
