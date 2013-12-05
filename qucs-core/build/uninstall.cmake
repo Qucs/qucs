@@ -11,7 +11,7 @@ foreach (file ${files})
     message(STATUS "Uninstalling \"$ENV{DESTDIR}${file}\"")
     if (EXISTS "$ENV{DESTDIR}${file}")
         execute_process(
-            COMMAND /usr/local/Cellar/cmake/2.8.11.2/bin/cmake -E remove "$ENV{DESTDIR}${file}"
+            COMMAND /usr/local/Cellar/cmake/2.8.12.1/bin/cmake -E remove "$ENV{DESTDIR}${file}"
             OUTPUT_VARIABLE rm_out
             RESULT_VARIABLE rm_retval
         )
