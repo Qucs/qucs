@@ -16,13 +16,17 @@ INCLUDE_DIRECTORIES( ${CMAKE_SOURCE_DIR}
 # Checks for libraries.
 #
 #AC_CHECK_LIB(m, sin) need to check for sin?
-FIND_LIBRARY(MATH_LIB NAMES m)
-IF(NOT MATH_LIB)
-  MESSAGE(SEND_ERROR "Math lib not found: ${MATH_LIB}" )
-ELSE()
-  MESSAGE(STATUS "Math lib found at: ${MATH_LIB}" )
+IF(NOT WIN32)
+  FIND_LIBRARY(MATH_LIB NAMES m)
+  IF(NOT MATH_LIB)
+    MESSAGE(SEND_ERROR "Math lib not found: ${MATH_LIB}" )
+  ELSE()
+    MESSAGE(STATUS "Math lib found at: ${MATH_LIB}" )
+  ENDIF()
 ENDIF()
 
+
+#
 # Checks for header files.
 # AC_HEADER_STDC !! obsolete, need to check?
 # Define STDC_HEADERS if the system has ANSI C header files.
@@ -560,5 +564,11 @@ TARGET_LINK_LIBRARIES( qucsator qucs )
 # Handle install
 #
 INSTALL(TARGETS qucsator DESTINATION bin)
-INSTALL(TARGETS qucs     DESTINATION lib)
+
+# set Windows runtime location for libqucs
+# See: http://www.cmake.org/pipermail/cmake/2010-June/037461.html
+INSTALL(TARGETS qucs
+     RUNTIME DESTINATION bin COMPONENT runtime
+     ARCHIVE DESTINATION lib COMPONENT devel)
+
 INSTALL(FILES ${HEADERS} DESTINATION include/qucs-core)

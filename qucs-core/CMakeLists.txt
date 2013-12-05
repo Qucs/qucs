@@ -170,6 +170,15 @@ if(UNIX AND ENABLE_RPATH)
   set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 endif()
 
+# CMake adds --enable-all-exports on Cygwin (since Cygwin is
+# supposed to be UNIX-like), but we need to add it explicitly for
+# a native windows build with the MinGW tools.
+IF(WIN32)
+  SET(CMAKE_SHARED_LIBRARY_CREATE_C_FLAGS   "-shared -Wl,--export-all-symbols -Wl,--enable-auto-import")
+  SET(CMAKE_SHARED_LIBRARY_CREATE_CXX_FLAGS "-shared -Wl,--export-all-symbols -Wl,--enable-auto-import")
+  SET(CMAKE_EXE_LINKER_FLAGS "-Wl,--enable-auto-import")
+ENDIF()
+
 #
 # Go look for stuff to build/install...
 #
