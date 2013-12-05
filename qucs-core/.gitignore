@@ -25,4 +25,5 @@ CMakeCache.txt
 CMakeFiles
 Makefile
 cmake_install.cmake
+uninstall.cmake
 install_manifest.txt
