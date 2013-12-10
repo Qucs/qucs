@@ -1,10 +1,43 @@
 #!/bin/perl -w
+#
+# mktext.pl
+#
+# perl helper script for adms build system
+#
+# takes two argments, a file name and a path intended to
+# be the top level source directory path for adms.
+#
+# It creates a small C file, which copies the input file into a C
+# character array. The name of the C file is generated from the
+# input file name e.g.
+#
+# > echo "Some text" > infile.txt
+#
+# > mktext.pl infile.txt /my/top/level/source/directory
+# svn version: Unversioned directory
+# created: infile.txt.c
+#
+# > cat infile.txt.c
+# /* File automatically created by mkctext.pl*/
+#
+# const char * infile_txt = ""
+# "Some text\n"
+# ;
+#
+# if the directory containing the file is under subversion
+# version control, the text SVN_VERSION in the file is replaced
+# with the version number reported by svnversion
+#
+
 
 my $filename=shift;
 my $top_srcdir=shift;
 $top_srcdir=".." if not defined $top_srcdir;
 
 #svn
+# cygpath is a Cygwin utility to convert Unix and Windows format paths
+#
+#
 my$cygpath_top_srcdir=$top_srcdir;
 if($cygpath_top_srcdir=`cygpath -ad $top_srcdir 2>/dev/null`)
 {
