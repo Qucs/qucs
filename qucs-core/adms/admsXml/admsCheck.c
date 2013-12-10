@@ -1,7 +1,7 @@
 /*
  * RCS Info
  * $Id: admsCheck.c 1110 2008-10-14 13:40:29Z r29173 $
- * 
+ *
  * Log
  * $Log$
  * Revision 1.17  2006/09/13 16:13:20  r29173
@@ -88,6 +88,16 @@
  *
  */
 
+
+/*
+  admsCheck
+
+  Small program to perform a test run of adms using dummy.va and dummy.xml
+
+  Used by 'make check' in the adms build system
+
+*/
+
 #include "adms.h"
 /*constants*/
 #include "dummy.xml.c"

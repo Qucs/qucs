@@ -36,8 +36,6 @@ $top_srcdir=".." if not defined $top_srcdir;
 
 #svn
 # cygpath is a Cygwin utility to convert Unix and Windows format paths
-#
-#
 my$cygpath_top_srcdir=$top_srcdir;
 if($cygpath_top_srcdir=`cygpath -ad $top_srcdir 2>/dev/null`)
 {

@@ -93,28 +93,41 @@ incfile=constants.vams disciplines.vams adms.implicit.xml dummy.va dummy.xml
 incfilec=$(incfile:=.c)
 
 if MAINTAINER_MODE
+
 generated_FILES=adms.h adms.c verilogaYacc.y admstpathYacc.y admstpathYacc.h $(incfilec)
+
 BUILT_SOURCES = $(generated_FILES)
+
 SUFFIXES=.vams .vams.c .va .va.c .xml .xml.c .y.in
+
+# use mkctext.pl to create C files containing the contents of each
+# input file in a C character array. The output is used by make check
+# only
 $(incfilec):%.c:% ${srcdir}/mkctext.pl
 	$(PERL) ${srcdir}/mkctext.pl $< $(top_srcdir)
+
 admstpathYacc.y admstpathYacc.h adms.h adms.c: ${top_srcdir}/adms.xml ${top_srcdir}/admstpath.xml ${srcdir}/mkelements.pl
 	$(PERL) ${srcdir}/mkelements.pl $(top_srcdir)
+
 verilogaYacc.y: ${srcdir}/verilogaYacc.y.in ${srcdir}/mkgrammar.pl
 	$(PERL) ${srcdir}/mkgrammar.pl ${srcdir}/verilogaYacc.y.in
 # -b -> re-defines file-prefix (not y.tab.c)
 # -d -> creates #define file
 verilogaLex.c: verilogaLex.l
 	flex -Pveriloga -overilogaLex.c ${srcdir}/verilogaLex.l
+
 verilogaYacc.c: verilogaYacc.y verilogaLex.l
 	bison -by -d -pveriloga ${srcdir}/verilogaYacc.y
 	mv -f y.tab.c verilogaYacc.c
 	mv -f y.tab.h verilogaYacc.h
+
 admstpathYacc.c: admstpathYacc.y admstpathYacc.h
 	bison -by -padmstpath ${srcdir}/admstpathYacc.y
 	mv -f y.tab.c admstpathYacc.c
+
 preprocessorLex.c: preprocessorLex.l
 	flex -Ppreprocessor -opreprocessorLex.c ${srcdir}/preprocessorLex.l
+
 preprocessorYacc.c: preprocessorYacc.y preprocessorLex.l
 	bison -by -d -ppreprocessor ${srcdir}/preprocessorYacc.y
 	mv -f y.tab.c preprocessorYacc.c
@@ -156,6 +169,7 @@ admsXml_LDADD=-lm libadmsElement.la libadmsVeriloga.la libadmsPreprocessor.la li
 
 admsXml.c: adms.implicit.xml.c
 
+# Rules to create the admsCheck test program
 admsCheck.c=$(incfilec)
 admsCheck_SOURCES=admsCheck.c
 admsCheck_LDADD=libadmsElement.la
