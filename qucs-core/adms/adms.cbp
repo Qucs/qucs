@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="adms" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="all">
+				<Option output="admsXml/admsXml" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+				</Compiler>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+		</Compiler>
+		<Unit filename="AUTHORS" />
+		<Unit filename="ChangeLog" />
+		<Unit filename="Makefile.am" />
+		<Unit filename="README" />
+		<Unit filename="adms.css" />
+		<Unit filename="adms.xml" />
+		<Unit filename="admsXml/Makefile.am" />
+		<Unit filename="admsXml/adms.implicit.xml" />
+		<Unit filename="admsXml/constants.vams" />
+		<Unit filename="admsXml/disciplines.vams" />
+		<Unit filename="admsXml/dummy.va" />
+		<Unit filename="admsXml/dummy.xml" />
+		<Unit filename="admsXml/mkctext.pl" />
+		<Unit filename="admsXml/mkelements.pl" />
+		<Unit filename="admsXml/mkgrammar.pl" />
+		<Unit filename="admsXml/preprocessorLex.l" />
+		<Unit filename="admsXml/preprocessorMain.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="admsstyle.xsl" />
+		<Unit filename="admst.dtd" />
+		<Unit filename="admst.xml" />
+		<Unit filename="admstpath.xml" />
+		<Unit filename="admstpathstyle.xsl" />
+		<Unit filename="admststyle.xsl" />
+		<Unit filename="bootstrap.sh" />
+		<Unit filename="configure.ac" />
+		<Unit filename="make.cyg" />
+		<Unit filename="make.win" />
+		<Unit filename="metaadms.dtd" />
+		<Unit filename="metaadms.xsd" />
+		<Unit filename="metaadmst.dtd" />
+		<Unit filename="metaadmst.xsd" />
+		<Unit filename="metaadmstpath.dtd" />
+		<Unit filename="metaadmstpath.xsd" />
+		<Unit filename="scripts/Makefile.am" />
+		<Unit filename="scripts/admstvariables.xml" />
+		<Unit filename="scripts/analogfunction.va" />
+		<Unit filename="scripts/analogfunction.xml" />
+		<Unit filename="scripts/arobavariable.xml" />
+		<Unit filename="scripts/attributes.xml" />
+		<Unit filename="scripts/blockvariables.xml" />
+		<Unit filename="scripts/croixvariable.xml" />
+		<Unit filename="scripts/dependency.xml" />
+		<Unit filename="scripts/getargv.xml" />
+		<Unit filename="scripts/getenv.xml" />
+		<Unit filename="scripts/getinstance.xml" />
+		<Unit filename="scripts/gettransform.xml" />
+		<Unit filename="scripts/sort.xml" />
+		<Unit filename="scripts/strutils.xml" />
+		<Unit filename="scripts/vlatommlMODULE.htm.xml" />
+		<Unit filename="scripts/vlatovla.xml" />
+		<Extensions>
+			<code_completion />
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>
