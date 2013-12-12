@@ -353,7 +353,7 @@ nr_complex_t interpolator::cinterpolate (nr_double_t x) {
 
   // depending on the data type return appropriate complex value
   if (dataType & DATA_POLAR)
-    return polar (real (res), imag (res));
+    return std::polar (real (res), imag (res));
   else
     return res;
 }

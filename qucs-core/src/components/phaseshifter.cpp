@@ -37,9 +37,9 @@ void phaseshifter::initSP (void) {
   nr_double_t p = rad (getPropertyDouble ("phi"));
   nr_double_t z = getPropertyDouble ("Zref");
   nr_double_t r = (z0 - z) / (z0 + z);
-  nr_complex_t d = 1.0 - polar (r * r, 2 * p);
-  nr_complex_t s11 = r * (polar (1.0, 2 * p) - 1.0) / d;
-  nr_complex_t s21 = (1.0 - r * r) * polar (1.0, p) / d;
+  nr_complex_t d = 1.0 - std::polar (r * r, 2 * p);
+  nr_complex_t s11 = r * (std::polar (1.0, 2 * p) - 1.0) / d;
+  nr_complex_t s21 = (1.0 - r * r) * std::polar (1.0, p) / d;
   allocMatrixS ();
   setS (NODE_1, NODE_1, s11);
   setS (NODE_2, NODE_2, s11);

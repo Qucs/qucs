@@ -3459,28 +3459,28 @@ constant * evaluate::polar_d_d (constant * args) {
   _ARD0 (a);
   _ARD1 (p);
   _DEFC ();
-  _RETC (polar (a, rad (p)));
+  _RETC (std::polar (a, rad (p)));
 }
 
 constant * evaluate::polar_c_d (constant * args) {
   _ARC0 (a);
   _ARD1 (p);
   _DEFC ();
-  _RETC (polar (*a, nr_complex_t (rad (p), 0)));
+  _RETC (qucs::polar (*a, nr_complex_t (rad (p), 0)));
 }
 
 constant * evaluate::polar_d_c (constant * args) {
   _ARD0 (a);
   _ARC1 (p);
   _DEFC ();
-  _RETC (polar (nr_complex_t (a, 0), rad (*p)));
+  _RETC (qucs::polar (nr_complex_t (a, 0), rad (*p)));
 }
 
 constant * evaluate::polar_c_c (constant * args) {
   _ARC0 (a);
   _ARC1 (p);
   _DEFC ();
-  _RETC (polar (*a, rad (*p)));
+  _RETC (qucs::polar (*a, rad (*p)));
 }
 
 constant * evaluate::polar_d_v (constant * args) {

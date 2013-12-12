@@ -41,20 +41,20 @@ void coupler::initSP (void) {
   nr_double_t r = (z0 - z) / (z0 + z);
   nr_double_t k2 = k * k;
   nr_double_t r2 = r * r;
-  nr_complex_t a = k2 * (polar (1.0, 2 * p) + 1.0);
+  nr_complex_t a = k2 * (std::polar (1.0, 2 * p) + 1.0);
   nr_complex_t b = r2 * (1.0 - a);
-  nr_complex_t c = k2 * (polar (1.0, 2 * p) - 1.0);
+  nr_complex_t c = k2 * (std::polar (1.0, 2 * p) - 1.0);
   nr_complex_t d = 1.0 - 2.0 * r2 * (1.0 + c) + b * b;
-  nr_complex_t s = r * (a * b + c + polar (2 * r2 * k2, 2 * p)) / d;
+  nr_complex_t s = r * (a * b + c + std::polar (2 * r2 * k2, 2 * p)) / d;
   setS (NODE_1, NODE_1, s); setS (NODE_2, NODE_2, s);
   setS (NODE_3, NODE_3, s); setS (NODE_4, NODE_4, s);
   s = sqrt (1 - k2) * (1.0 - r2) * (1.0 - b) / d;
   setS (NODE_1, NODE_2, s); setS (NODE_2, NODE_1, s);
   setS (NODE_3, NODE_4, s); setS (NODE_4, NODE_3, s);
-  s = polar (k, p) * (1.0 - r2) * (1.0 + b) / d;
+  s = std::polar (k, p) * (1.0 - r2) * (1.0 + b) / d;
   setS (NODE_1, NODE_3, s); setS (NODE_3, NODE_1, s);
   setS (NODE_2, NODE_4, s); setS (NODE_4, NODE_2, s);
-  s = 2 * sqrt (1.0 - k2) * polar (k, p) * r * (1.0 - r2) / d;
+  s = 2 * sqrt (1.0 - k2) * std::polar (k, p) * r * (1.0 - r2) / d;
   setS (NODE_1, NODE_4, s); setS (NODE_4, NODE_1, s);
   setS (NODE_2, NODE_3, s); setS (NODE_3, NODE_2, s);
 }
@@ -74,8 +74,8 @@ void coupler::initAC (void) {
   nr_double_t z = getPropertyDouble ("Z");
   nr_double_t p = rad (getPropertyDouble ("phi"));
   nr_double_t b = 2 * sqrt (1 - k * k);
-  nr_complex_t a = k * k * (polar (1.0, 2 * p) + 1.0);
-  nr_complex_t c = polar (2 * k, p);
+  nr_complex_t a = k * k * (std::polar (1.0, 2 * p) + 1.0);
+  nr_complex_t c = std::polar (2 * k, p);
   nr_complex_t d = z * (a * a - c * c);
   nr_complex_t y;
   y = a * (2.0 - a) / d;

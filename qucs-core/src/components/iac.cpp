@@ -50,7 +50,7 @@ void iac::initDC (void) {
 void iac::initAC (void) {
   nr_double_t a = getPropertyDouble ("I");
   nr_double_t p = getPropertyDouble ("Phase");
-  nr_complex_t i = polar (a, rad (p));
+  nr_complex_t i = std::polar (a, rad (p));
   allocMatrixMNA ();
   setI (NODE_1, +i); setI (NODE_2, -i);
 }

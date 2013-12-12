@@ -78,9 +78,9 @@ matrix bjt::calcMatrixY (nr_double_t frequency) {
   // compute influence of excess phase
   nr_double_t phase = rad (Ptf) * Tf * 2 * M_PI * frequency;
 #if NEWSGP
-  nr_complex_t gmf = polar (gm, -phase);
+  nr_complex_t gmf = std::polar (gm, -phase);
 #else
-  nr_complex_t gmf = polar (gm + go, -phase) - go;
+  nr_complex_t gmf = std::polar (gm + go, -phase) - go;
 #endif
 
   // build admittance matrix

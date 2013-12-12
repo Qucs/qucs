@@ -215,7 +215,7 @@ vector fourier::dft_1d (vector var, int isign) {
     nr_double_t th = - isign * 2 * M_PI * n / len;
     nr_complex_t val = 0;
     for (k = 0; k < len; k++)
-      val += var (k) * polar (1.0, th * k);
+      val += var (k) * std::polar (1.0, th * k);
     res (n) = isign < 0 ? val / (nr_double_t) len : val;
   }
   return res;

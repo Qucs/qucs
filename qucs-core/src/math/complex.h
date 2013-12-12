@@ -27,16 +27,8 @@
 
 #include "real.h"
 
-#if defined HAVE_TR1_COMPLEX
-#include <tr1/complex>
-using namespace std;
-//using namespace std::tr1;
-typedef std::complex<nr_double_t> nr_complex_t;
-#else
 #include <complex>
-using namespace std;
 typedef std::complex<nr_double_t> nr_complex_t;
-#endif
 
 // undefine this macro if it is defined already
 #ifdef log2
@@ -45,39 +37,39 @@ typedef std::complex<nr_double_t> nr_complex_t;
 
 // overloaded math functions
 #ifndef HAVE_CXX_COMPLEX_ACOS
+namespace std {
 nr_complex_t    acos (const nr_complex_t);
-#else
-using std::acos;
+}
 #endif
 
 #ifndef HAVE_CXX_COMPLEX_ACOSH
+namespace std {
 nr_complex_t   acosh (const nr_complex_t);
-#else
-using std::acosh;
+}
 #endif
 
 #ifndef HAVE_CXX_COMPLEX_ASIN
+namespace std {
 nr_complex_t    asin (const nr_complex_t);
-#else
-using std::asin;
+}
 #endif
 
 #ifndef HAVE_CXX_COMPLEX_ASINH
+namespace std {
 nr_complex_t   asinh (const nr_complex_t);
-#else
-using std::asinh;
+}
 #endif 
 
 #ifndef HAVE_CXX_COMPLEX_ATAN
+namespace std {
 nr_complex_t    atan (const nr_complex_t);
-#else
-using std::atan;
+}
 #endif 
 
 #ifndef HAVE_CXX_COMPLEX_ATANH
+namespace std {
 nr_complex_t   atanh (const nr_complex_t);
-#else
-using std::atanh;
+}
 #endif 
 
 #ifndef HAVE_CXX_COMPLEX_ATAN2
@@ -85,23 +77,33 @@ nr_complex_t   atan2 (const nr_complex_t, const nr_complex_t);
 #endif
 
 #ifndef HAVE_CXX_COMPLEX_COS 
+namespace std {
 nr_complex_t     cos (const nr_complex_t);
+}
 #endif
 
 #ifndef HAVE_CXX_COMPLEX_COSH
+namespace std {
 nr_complex_t    cosh (const nr_complex_t);
+}
 #endif
 
 #ifndef HAVE_CXX_COMPLEX_EXP
+namespace std {
 nr_complex_t     exp (const nr_complex_t);
+}
 #endif
 
-#ifndef HAVE_CXX_COMPLEX_LOG 
+#ifndef HAVE_CXX_COMPLEX_LOG
+namespace std {
 nr_complex_t     log (const nr_complex_t);
+}
 #endif 
 
-#ifndef HAVE_CXX_COMPLEX_LOG10 
+#ifndef HAVE_CXX_COMPLEX_LOG10
+namespace std {
 nr_complex_t   log10 (const nr_complex_t);
+}
 #endif
 
 #ifndef HAVE_CXX_COMPLEX_LOG2
@@ -109,6 +111,7 @@ nr_complex_t    log2 (const nr_complex_t);
 #endif
 
 #ifndef HAVE_CXX_COMPLEX_NORM
+namespace std {
 /*!\brief Compute euclidian norm of complex number
 
    Compute \f$(\Re\mathrm{e}\;z )^2+ (\Im\mathrm{m}\;z)^2=|z|^2\f$
@@ -120,9 +123,11 @@ inline nr_double_t norm (const nr_complex_t z) {
   nr_double_t i = imag (z);
   return r * r + i * i;
 }
+}
 #endif
 
 #ifndef HAVE_CXX_COMPLEX_POLAR
+namespace std {
 /*!\brief Construct a complex number using polar notation
    \param[in] mag Magnitude
    \param[in] ang Angle
@@ -131,9 +136,11 @@ inline nr_double_t norm (const nr_complex_t z) {
 inline nr_complex_t polar (const nr_double_t mag, const nr_double_t ang = 0.0) {
   return nr_complex_t (mag * cos (ang), mag * sin (ang));
 }
+}
 #endif
 
 #ifndef HAVE_CXX_COMPLEX_POLAR_COMPLEX
+namespace qucs {
 /*!\brief Construct a complex number using polar notation
    \param[in] mag Magnitude
    \param[in] ang Angle
@@ -143,6 +150,7 @@ inline nr_complex_t polar (const nr_double_t mag, const nr_double_t ang = 0.0) {
 nr_complex_t   polar (const nr_complex_t a, const nr_complex_t p = 0.0);
 nr_complex_t   polar (const nr_double_t a, const nr_complex_t p);
 nr_complex_t   polar (const nr_complex_t a, const nr_double_t p = 0.0);
+}
 #endif
 
 #ifndef HAVE_CXX_COMPLEX_POW
@@ -151,24 +159,34 @@ nr_complex_t     pow (const nr_double_t, const nr_complex_t);
 nr_complex_t     pow (const nr_complex_t, const nr_complex_t);
 #endif
 
-#ifndef HAVE_CXX_COMPLEX_SIN 
+#ifndef HAVE_CXX_COMPLEX_SIN
+namespace std {
 nr_complex_t     sin (const nr_complex_t);
+}
 #endif
 
 #ifndef HAVE_CXX_COMPLEX_SINH
+namespace std {
 nr_complex_t    sinh (const nr_complex_t);
+}
 #endif
 
 #ifndef HAVE_CXX_COMPLEX_SQRT
+namespace std {
 nr_complex_t    sqrt (const nr_complex_t);
+}
 #endif 
 
 #ifndef HAVE_CXX_COMPLEX_TAN
+namespace std {
 nr_complex_t     tan (const nr_complex_t);
+}
 #endif
 
 #ifndef HAVE_CXX_COMPLEX_TANH
+namespace std {
 nr_complex_t     tanh (const nr_complex_t);
+}
 #endif
 
 // extra math functions

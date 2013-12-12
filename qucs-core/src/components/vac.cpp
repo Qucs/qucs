@@ -52,7 +52,7 @@ void vac::initAC (void) {
   initDC ();
   nr_double_t a = getPropertyDouble ("U");
   nr_double_t p = getPropertyDouble ("Phase");
-  setE (VSRC_1, polar (a, rad (p)));
+  setE (VSRC_1, std::polar (a, rad (p)));
 }
 
 void vac::initTR (void) {
@@ -82,7 +82,7 @@ void vac::calcHB (nr_double_t frequency) {
   if (f == frequency) {
     nr_double_t a = getPropertyDouble ("U");
     nr_double_t p = getPropertyDouble ("Phase");
-    setE (VSRC_1, polar (a, rad (p)));
+    setE (VSRC_1, std::polar (a, rad (p)));
   }
   else {
     setE (VSRC_1, 0);

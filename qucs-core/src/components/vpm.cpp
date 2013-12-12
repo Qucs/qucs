@@ -51,7 +51,7 @@ void vpm::initAC (void) {
   initDC ();
   nr_double_t a = getPropertyDouble ("U");
   nr_double_t p = getPropertyDouble ("Phase");
-  setE (VSRC_1, polar (a, rad (p)));
+  setE (VSRC_1, std::polar (a, rad (p)));
 }
 
 void vpm::initTR (void) {

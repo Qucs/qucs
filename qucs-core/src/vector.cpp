@@ -1110,13 +1110,13 @@ vector yn (const int n, vector v) {
 
 vector polar (const nr_complex_t a, vector v) {
   vector result (v);
-  for (int i = 0; i < v.getSize (); i++) result.set (polar (a, v.get (i)), i);
+  for (int i = 0; i < v.getSize (); i++) result.set (qucs::polar (a, v.get (i)), i);
   return result;
 }
 
 vector polar (vector v, const nr_complex_t p) {
   vector result (v);
-  for (int i = 0; i < v.getSize (); i++) result.set (polar (v.get (i), p), i);
+  for (int i = 0; i < v.getSize (); i++) result.set (qucs::polar (v.get (i), p), i);
   return result;
 }
 
@@ -1131,7 +1131,7 @@ vector polar (vector a, vector p) {
   }
   vector res (len);
   for (j = i = n = 0; n < len; n++) {
-    res (n) = polar (a (i), p (j));
+    res (n) = qucs::polar (a (i), p (j));
     if (++i >= len1) i = 0;  if (++j >= len2) j = 0;
   }
   return res;
