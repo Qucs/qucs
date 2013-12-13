@@ -59,6 +59,11 @@
 #define sState 1 // solution state
 #endif
 
+// Macro for the n-th state of the solution vector history.
+#ifndef SOL
+#define SOL(state) (solution[(int) getState (sState, (state))])
+#endif
+
 namespace qucs {
 
 using namespace transient;
@@ -117,6 +122,10 @@ e_trsolver::~e_trsolver ()
         {
             delete solution[i];
         }
+        if (lastsolution[i] != NULL)
+        {
+            delete lastsolution[i];
+        }
     }
     if (tHistory) delete tHistory;
 
@@ -140,54 +149,6 @@ void e_trsolver::initSteps (void)
     if (swp != NULL) delete swp;
     swp = createSweep ("time");
 }
-
-// Macro for the n-th state of the solution vector history.
-#define SOL(state) (solution[(int) getState (sState, (state))])
-
-//int e_trsolver::prepare_net (char * infile)
-//{
-//
-//    // create static modules
-//    module::registerModules ();
-//
-//    // create root environment
-//    root = new environment ("root");
-//
-//    // create netlist object and input
-//    subnet = new net ("subnet");
-//    in = infile ? new input (infile) : new input ();
-//
-//    // pass root environment to netlist object and input
-//    subnet->setEnv (root);
-//    in->setEnv (root);
-//
-//    // get input netlist
-//    if (in->netlist (subnet) != 0)
-//    {
-//        if (netlist_check)
-//        {
-//            // replace with mex error message
-//            messagefcn (LOG_STATUS, "checker notice, netlist check FAILED\n");
-//        }
-//        return -1;
-//    }
-//    if (netlist_check)
-//    {
-//        messagefcn (LOG_STATUS, "checker notice, netlist OK\n");
-//        return -2;
-//    }
-//
-//    // attach a ground to the netlist
-//    gnd = new ground ();
-//    gnd->setNode (0, "gnd");
-//    gnd->setName ("GND");
-//    subnet->insertCircuit (gnd);
-//
-//    // apply the netlist to this solver
-//    //this->setNet (subnet);
-//
-//    return 0;
-//}
 
 void e_trsolver::debug()
 {
@@ -217,10 +178,10 @@ int e_trsolver::init (nr_double_t start, nr_double_t firstdelta, int mode)
     relaxTSR = !strcmp (getPropertyString ("relaxTSR"), "yes") ? true : false;
     initialDC = !strcmp (getPropertyString ("initialDC"), "yes") ? true : false;
     // fetch simulation properties
-//    MaxIterations = getPropertyInteger ("MaxIter");
-//    reltol = getPropertyDouble ("reltol");
-//    abstol = getPropertyDouble ("abstol");
-//    vntol = getPropertyDouble ("vntol");
+    MaxIterations = getPropertyInteger ("MaxIter");
+    reltol = getPropertyDouble ("reltol");
+    abstol = getPropertyDouble ("abstol");
+    vntol = getPropertyDouble ("vntol");
 
     runs++;
     saveCurrent = current = 0;
@@ -266,6 +227,7 @@ int e_trsolver::init (nr_double_t start, nr_double_t firstdelta, int mode)
     // Apply the nodesets and adjust previous solutions.
     applyNodeset (false);
     fillSolution (x);
+    fillLastSolution (x);
 
     // Tell integrators to be initialized.
     setMode (MODE_INIT);
@@ -287,6 +249,11 @@ int e_trsolver::init (nr_double_t start, nr_double_t firstdelta, int mode)
 
     return 0;
 
+}
+
+void e_trsolver::fillLastSolution (tvector<nr_double_t> * s)
+{
+    for (int i = 0; i < 8; i++) * lastsolution[(int) getState (sState, (i))] = *s;
 }
 
 /* Goes through the list of circuit objects and runs its initTR()
@@ -350,13 +317,21 @@ void e_trsolver::initETR (nr_double_t start, nr_double_t firstdelta, int mode)
         // is provided and used elsewhere to update the solutions
         solution[i] = new tvector<nr_double_t>;
         setState (sState, (nr_double_t) i, i);
+        lastsolution[i] = new tvector<nr_double_t>;
     }
 
-    // tell circuits about the transient analysis
+    // Initialise history tracking for asynchronous solvers
+    // See acceptstep_async and rejectstep_async for more
+    // information
+    lastasynctime = start;
+    saveState (dState, lastdeltas);
+    lastdelta = delta;
+
+    // tell circuit elements about the transient analysis
     circuit *c, * root = subnet->getRoot ();
     for (c = root; c != NULL; c = (circuit *) c->getNext ())
         initCircuitTR (c);
-    // also initialize created circuits
+    // also initialize the created circuit elements
     for (c = root; c != NULL; c = (circuit *) c->getPrev ())
         initCircuitTR (c);
 }
@@ -638,11 +613,8 @@ int e_trsolver::stepsolve_async(nr_double_t steptime)
     convError = 0;
 
     time = steptime;
-
-
     //delta = (steptime - time) / 10;
     //if (progress) logprogressbar (i, swp->getSize (), 40);
-
 #if DEBUG && 0
     messagefcn (LOG_STATUS, "NOTIFY: %s: solving netlist for t = %e\n",
               getName (), (double) time);
@@ -658,6 +630,7 @@ int e_trsolver::stepsolve_async(nr_double_t steptime)
                       getName (), (double) delta, (double) current);
         }
 #endif
+        // update the integration coefficients
         updateCoefficients (delta);
 
         // Run predictor to get a start value for the solution vector for
@@ -766,6 +739,67 @@ int e_trsolver::stepsolve_async(nr_double_t steptime)
     return 0;
 }
 
+// accept an asynchronous step into the solution history
+void e_trsolver::acceptstep_async(void)
+{
+    // copy the solution in case we wish to step back to this
+    // point later
+    copySolution (solution, lastsolution);
+
+    // Store the time
+    lastasynctime = time;
+
+    // Store the deltas history
+    saveState (dState, lastdeltas);
+
+    // Store the current delta
+    lastdelta = delta;
+}
+
+// reject the last asynchronous step and restore the history
+// of solutions to the last major step
+void e_trsolver::rejectstep_async(void)
+{
+    // restore the solution (node voltages and branch currents) from
+    // the previously stored solution
+    copySolution (lastsolution, solution);
+
+    // Restore the circuit histories to their previous states
+    truncateHistory (lastasynctime);
+
+    // Restore the time deltas
+    inputState (dState, lastdeltas);
+
+    for (int i = 0; i < 8; i++)
+    {
+        deltas[i] = lastdeltas[i];
+    }
+
+    delta = lastdelta;
+
+    // copy the deltas to all the circuit elements
+    setDelta ();
+
+    // reset the corrector and predictor coefficients
+    calcCorrectorCoeff (corrType, corrOrder, corrCoeff, deltas);
+    calcPredictorCoeff (predType, predOrder, predCoeff, deltas);
+}
+
+/* Makes a copy of a set of solution vectors */
+void e_trsolver::copySolution (tvector<nr_double_t> * src[8], tvector<nr_double_t> * dest[8])
+{
+    for (int i = 0; i < 8; i++)
+    {
+        // check sizes are the same
+        assert (src[i]->getSize () == dest[i]->getSize ());
+        // copy over the data values
+        for (int j = 0; j < src[i]->getSize (); j++)
+        {
+            dest[i]->set (j, src[i]->get (j));
+        }
+    }
+}
+
 int e_trsolver::finish()
 {
     solve_post ();
@@ -782,80 +816,6 @@ int e_trsolver::finish()
     return 0;
 }
 
-///* The single step non-linear iterative nodal analysis netlist solver. */
-//int e_trsolver::solve_nonlinear_step (void)
-//{
-//    int convergence, run = 0, error = 0;
-//    qucs::exception * e;
-//
-//    // fetch simulation properties
-//    MaxIterations = getPropertyInteger ("MaxIter");
-//    reltol = getPropertyDouble ("reltol");
-//    abstol = getPropertyDouble ("abstol");
-//    vntol = getPropertyDouble ("vntol");
-//    updateMatrix = 1;
-//
-//    if (convHelper == CONV_GMinStepping)
-//    {
-//        // use the alternative non-linear solver solve_nonlinear_continuation_gMin
-//        // instead of the basic solver provided by this function
-//        iterations = 0;
-//        error = solve_nonlinear_continuation_gMin ();
-//        return error;
-//    }
-//    else if (convHelper == CONV_SourceStepping)
-//    {
-//        // use the alternative non-linear solver solve_nonlinear_continuation_Source
-//        // instead of the basic solver provided by this function
-//        iterations = 0;
-//        error = solve_nonlinear_continuation_Source ();
-//        return error;
-//    }
-//
-//    // run solving loop until convergence is reached
-//    do
-//    {
-//        error = solve_once ();
-//        if (!error)
-//        {
-//            // convergence check
-//            convergence = (run > 0) ? checkConvergence () : 0;
-//            savePreviousIteration ();
-//            run++;
-//            // control fixpoint iterations
-//            if (fixpoint)
-//            {
-//                if (convergence && !updateMatrix)
-//                {
-//                    updateMatrix = 1;
-//                    convergence = 0;
-//                }
-//                else
-//                {
-//                    updateMatrix = 0;
-//                }
-//            }
-//        }
-//        else
-//        {
-//            break;
-//        }
-//    }
-//    while (!convergence &&
-//            run < MaxIterations * (1 + this->convHelper ? 1 : 0));
-//
-//    if (run >= MaxIterations || error)
-//    {
-//        e = new qucs::exception (EXCEPTION_NO_CONVERGENCE);
-//        e->setText ("no convergence in %s analysis after %d iterations",
-//                    desc, run);
-//        throw_exception (e);
-//        error++;
-//    }
-//
-//    iterations = run;
-//    return error;
-//}
 
 void e_trsolver::getsolution(double * lastsol)
 {
@@ -866,6 +826,18 @@ void e_trsolver::getsolution(double * lastsol)
     for (int r = 0; r < N + M; r++)
     {
         lastsol[r]  = real(x->get(r));
+    }
+}
+
+/* The following function removed stored times newer than a specified time
+   from all the circuit element histories */
+void e_trsolver::truncateHistory (nr_double_t t)
+{
+    // truncate all the circuit element histories
+    circuit * root = subnet->getRoot ();
+    for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ())
+    {
+        if (c->hasHistory ()) c->truncateHistory (t);
     }
 }
 

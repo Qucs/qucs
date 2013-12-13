@@ -29,6 +29,9 @@ class mextrsolver
         void init_async(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[]);
         int stepsolve_sync(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[]);
         void acceptstep_sync(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[]);
+        int stepsolve_async(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[]);
+        void acceptstep_async(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[]);
+        void rejectstep_async(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[]);
         int getsolution(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[]);
         int getN(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[]);
         int getM(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[]);

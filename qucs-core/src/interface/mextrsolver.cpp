@@ -148,6 +148,61 @@ void mextrsolver::acceptstep_sync(int nlhs, mxArray *plhs[], int nrhs, const mxA
     thetrsolver->acceptstep_sync();
 }
 
+
+// solves the circuit at a specified time point
+int mextrsolver::stepsolve_async(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
+{
+
+    /* check for proper number of arguments */
+    if(nrhs!=3)
+        mexErrMsgIdAndTxt( "MATLAB:trsolver:invalidNumInputs",
+                           "One input required.");
+    else if(nlhs > 1)
+        mexErrMsgIdAndTxt( "MATLAB:trsolver:maxlhs",
+                           "Too many output arguments.");
+
+    /* input must be a scalar */
+    if ((mxGetM(prhs[2])!=1) | (mxGetN(prhs[2])!=1))
+        mexErrMsgIdAndTxt( "MATLAB:trsolver:inputNotVector",
+                           "Input must be a scalar.");
+
+
+    double synctime = mxGetScalar(prhs[2]);
+
+    thetrsolver->stepsolve_async(synctime);
+
+    return 0;
+}
+
+
+void mextrsolver::acceptstep_async(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
+{
+    /* check for proper number of arguments */
+    if(nrhs!=2)
+        mexErrMsgIdAndTxt( "MATLAB:trsolver:invalidNumInputs",
+                           "No input required.");
+    else if(nlhs > 0)
+        mexErrMsgIdAndTxt( "MATLAB:trsolver:maxlhs",
+                           "Too many output arguments.");
+
+
+    thetrsolver->acceptstep_async();
+}
+
+void mextrsolver::rejectstep_async(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
+{
+    /* check for proper number of arguments */
+    if(nrhs!=2)
+        mexErrMsgIdAndTxt( "MATLAB:trsolver:invalidNumInputs",
+                           "No input required.");
+    else if(nlhs > 0)
+        mexErrMsgIdAndTxt( "MATLAB:trsolver:maxlhs",
+                           "Too many output arguments.");
+
+
+    thetrsolver->rejectstep_async();
+}
+
 // gets the last solution calculated by the solver
 int mextrsolver::getsolution(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 {
