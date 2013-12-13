@@ -22,6 +22,12 @@
  *
  */
 
+/*! \file environment.h
+ * \brief The environment class definition.
+ *
+ * Contains the environment class definition.
+ */
+
 #include "equation.h"
 
 #ifndef __ENVIRONMENT_H__
@@ -35,6 +41,13 @@ class solver;
 class dataset;
 template <class type_t> class ptrlist;
 
+/*! \class environment
+ * \brief Houses the settings for netlist evaluation.
+ *
+ * The environment class holds information and pointers to the
+ * classes and methods used to evaluate a netlist.
+ *
+ */
 class environment
 {
  public:
