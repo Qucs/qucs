@@ -1,6 +1,9 @@
 
 #include "config.h"
-#include "qucs_interface.h"
+#include "qucs-core/qucs_interface.h"
+#include "qucs-core/e_trsolver.h"
+
+using namespace qucs;
 
 void testmessage(int level, const char * message, ...);
 
@@ -35,6 +38,8 @@ int main (int argc, char ** argv)
         the_e_trsolver->stepsolve_async(t);
 
         the_e_trsolver->printx();
+
+        the_e_trsolver->acceptstep_async();
     }
 
     //the_e_trsolver->debug();

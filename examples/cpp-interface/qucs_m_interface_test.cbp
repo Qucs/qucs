@@ -16,9 +16,6 @@
 					<Add option="-Wall" />
 					<Add option="-g" />
 				</Compiler>
-				<Linker>
-					<Add library="../qucs/qucs-core/libqucs-core.a" />
-				</Linker>
 			</Target>
 			<Target title="Release">
 				<Option output="bin/Release/qucs_m_interface_test" prefix_auto="1" extension_auto="1" />
@@ -36,28 +33,11 @@
 		<Compiler>
 			<Add option="-Wall" />
 			<Add option="-DHAVE_CONFIG_H" />
-			<Add directory="../qucs/qucs-core" />
-			<Add directory="../qucs/qucs-core/src" />
-			<Add directory="../qucs/qucs-core/src/components" />
-			<Add directory="../qucs/qucs-core/src/components/devices" />
-			<Add directory="../qucs/qucs-core/src/components/digital" />
-			<Add directory="../qucs/qucs-core/src/components/verilog" />
-			<Add directory="../qucs/qucs-core/src/components/microstrip" />
-			<Add directory="../qucs/qucs-core/src/converter" />
-			<Add directory="../qucs/qucs-core/src/interface" />
-			<Add directory="../qucs/qucs-core/src/math" />
+			<Add directory="../../qucs-core" />
 		</Compiler>
 		<Linker>
-			<Add directory="../qucs/qucs-core" />
-			<Add directory="../qucs/qucs-core/src" />
-			<Add directory="../qucs/qucs-core/src/components" />
-			<Add directory="../qucs/qucs-core/src/components/devices" />
-			<Add directory="../qucs/qucs-core/src/components/digital" />
-			<Add directory="../qucs/qucs-core/src/components/verilog" />
-			<Add directory="../qucs/qucs-core/src/components/microstrip" />
-			<Add directory="../qucs/qucs-core/src/converter" />
-			<Add directory="../qucs/qucs-core/src/interface" />
-			<Add directory="../qucs/qucs-core/src/math" />
+			<Add library="qucs" />
+			<Add directory="../../qucs-core" />
 		</Linker>
 		<Unit filename="main.cpp" />
 		<Extensions>
