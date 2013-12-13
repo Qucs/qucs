@@ -27,6 +27,13 @@
 
 namespace qucs {
 
+/*! \class states
+ * \brief template class for storing state variables.
+ *
+ * This class is used for storing sets of states for use
+ * by the transient integrators.
+ *
+ */
 template <class state_type_t>
 class states
 {
@@ -47,10 +54,14 @@ class states
   void prevState (void);
   void fillState (int, state_type_t);
   void saveState (int, state_type_t *);
+  void inputState (int, state_type_t *);
 
  private:
+  // stateval: array for holding all the sets of states. Multiple sets of
+  // states are stored in one large array which is indexed appropriately
+  // to get the right state set and value
   state_type_t * stateval;
-  int nstates;
+  int nstates; // the number of sets of states stored
   int currentstate;
 };
 

@@ -157,4 +157,17 @@ void states<state_type_t>::saveState (int state, state_type_t * values)
     }
 }
 
+/* This function stores the values in the given pointer location
+   into the state. */
+template <class state_type_t>
+void states<state_type_t>::inputState (int state, state_type_t * values)
+{
+    // loop through the list of states copying them into the
+    // supplied input array
+    for (int i = 0; i < STATE_NUM; i++)
+    {
+        setState (state, values[i], i);
+    }
+}
+
 } // namespace qucs
