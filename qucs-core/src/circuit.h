@@ -22,6 +22,12 @@
  *
  */
 
+/*! \file circuit.h
+ * \brief The circuit class header file.
+ *
+ * Contains the circuit class definition.
+ */
+
 #ifndef __CIRCUIT_H__
 #define __CIRCUIT_H__
 
@@ -73,6 +79,15 @@ class net;
 class environment;
 class history;
 
+/*! \class circuit
+ * \brief base class for qucs circuit elements.
+ *
+ * This is the base class for all circuit elements and provides the
+ * the functionality required for all simulation types. It has a number
+ * of virtual functions intended to be overridden by the inheiriting
+ * class
+ *
+ */
 class circuit : public object, public integrator
 {
  public:
@@ -82,7 +97,16 @@ class circuit : public object, public integrator
   circuit (const circuit &);
   ~circuit ();
 
-  // functionality to be overloaded by real circuit implementations
+  // functionality to be overloaded by real, derived circuit element
+  // implementations
+  /*! \fn initSP
+   * \brief placehoder for S-Parameter initialisation function
+   *
+   * Virtual function intended to be overridden by the
+   * inheiriting circuit element's S-Parameter initialisation
+   * function. initSP is called before commencing the simulation
+   * to set up the S-Parameter matrix.
+   */
   virtual void initSP (void) { allocMatrixS (); }
   virtual void calcSP (nr_double_t) { }
   virtual void initDC (void) { allocMatrixMNA (); }
@@ -105,14 +129,40 @@ class circuit : public object, public integrator
   virtual void calcCharacteristics (nr_double_t) { }
   virtual void saveCharacteristics (nr_double_t) { }
 
-  // real basics
+  // basic circuit element functionality
   void   setNode (int, const char *, int intern = 0);
   node * getNode (int);
   void   setType (int t) { type = t; }
   int    getType (void) { return type; }
+  /*! \fn getSize
+   * \brief Get the number of ports the circuit element has.
+   *
+   * Gets the number of ports the circuit element has
+   */
   int    getSize (void) { return size; }
+  /*! \fn setSize
+   * \brief Set the number of ports the circuit element has.
+   * \param s integer representing the number of ports
+   *
+   * Sets/changes the number of ports the circuit element has.
+   * On setting this value, previously stored node and matrix
+   * information is completely lost unless the new size equals
+   * the original size
+   */
   void   setSize (int);
+  /*! \fn isEnabled
+   * \brief Reports if circuit element is enabled.
+   *
+   * Returns true if the circuit element is enabled or false
+   * otherwise.
+   */
   bool   isEnabled (void) { return RETFLAG (CIRCUIT_ENABLED); }
+  /*! \fn setEnabled
+   * \brief Set a circuit element to be enabled or diabled.
+   * \param e boolean indicating whether to enable or disable
+   *
+   * Sets the circuit element to be enabled or disabled.
+   */
   void   setEnabled (bool e) { MODFLAG (e, CIRCUIT_ENABLED); }
   bool   isVariableSized (void) { return RETFLAG (CIRCUIT_VARSIZE); }
   void   setVariableSized (bool v) { MODFLAG (v, CIRCUIT_VARSIZE); }
@@ -162,6 +212,7 @@ class circuit : public object, public integrator
   void setHistory (bool h) { MODFLAG (h, CIRCUIT_HISTORY); }
   void initHistory (nr_double_t);
   void deleteHistory (void);
+  void truncateHistory (nr_double_t);
   void appendHistory (int, nr_double_t);
   void applyHistory (history *);
   nr_double_t getV (int, nr_double_t);

@@ -875,6 +875,17 @@ void circuit::deleteHistory (void) {
   setHistory (false);
 }
 
+// Truncates the transient analysis history (i.e. removes values newer
+// newer than time tcut).
+void circuit::truncateHistory (nr_double_t tcut) {
+  if (histories != NULL) {
+    for (int i = 0; i < nHistories; i++)
+    {
+      histories[i].truncate (tcut);
+    }
+  }
+}
+
 // Appends a history value.
 void circuit::appendHistory (int n, nr_double_t val) {
   histories[n].append (val);
