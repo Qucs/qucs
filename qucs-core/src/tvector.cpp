@@ -144,11 +144,20 @@ void tvector<nr_type_t>::add (nr_type_t z) {
   data[size++] = z;
 }
 
-// Rejects the given number of values in the tvector.
+// Rejects the given number of values from the start of the tvector.
 template <class nr_type_t>
 void tvector<nr_type_t>::drop (int n) {
   if (n < size) {
     for (int i = 0; i < size - n; i++) data[i] = data[i + n];
+    size -= n;
+  }
+  else size = 0;
+}
+
+// Rejects the given number of values from the end of the tvector.
+template <class nr_type_t>
+void tvector<nr_type_t>::truncate (int n) {
+  if (n < size) {
     size -= n;
   }
   else size = 0;
