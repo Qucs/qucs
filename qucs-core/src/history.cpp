@@ -64,6 +64,30 @@ void history::append (nr_double_t val) {
   if (values != t) drop ();
 }
 
+/* This function drops the most recent n values in the history. */
+void history::truncate (int n)
+{
+  t->truncate (n);
+  values->truncate (n);
+}
+
+/* This function drops those values in the history which are newer
+   than the specified time. */
+void history::truncate (nr_double_t tcut)
+{
+    int i;
+    int ts = t->getSize ();
+
+    for (i = leftidx (); i < ts; i++)
+    {
+      if (t->get (i) > tcut)
+      {
+        break;
+      }
+    }
+    truncate (ts - i);
+}
+
 // Returns left-most valid index into the time value vector.
 int history::leftidx (void) {
   int ts = t->getSize ();
