@@ -1,5 +1,5 @@
 /*
- * states.cpp - save-state variable class implementation
+ * states.cpp - save-state variable template class implementation
  *
  * Copyright (C) 2004 Stefan Jahn <stefan@lkcc.org>
  *
@@ -21,10 +21,6 @@
  * $Id$
  *
  */
-
-#if HAVE_CONFIG_H
-# include <config.h>
-#endif
 
 #include <stdio.h>
 #include <stdlib.h>

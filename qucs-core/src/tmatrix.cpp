@@ -22,9 +22,6 @@
  *
  */
 
-#if HAVE_CONFIG_H
-# include <config.h>
-#endif
 #include "qucs_typedefs.h"
 
 #include <assert.h>

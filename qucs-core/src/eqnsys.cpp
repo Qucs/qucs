@@ -22,17 +22,11 @@
  *
  */
 
-#if HAVE_CONFIG_H
-# include <config.h>
-#endif
 // the types required for qucs library files are defined
 // in qucs_typedefs.h, created by configure from
 // qucs_typedefs.h.in
 #include "qucs_typedefs.h"
 
-//#include <stdio.h>
-//#include <stdlib.h>
-//#include <string.h>
 #include <assert.h>
 #include <time.h>
 #include <cmath>
