@@ -19,18 +19,6 @@ dnl AM_INIT_AUTOMAKE does several things, including defining VERSION and PACKAGE
 AM_INIT_AUTOMAKE([no-define])
 AM_MAINTAINER_MODE
 
-dnl AX_PREFIX_CONFIG_H takes the usual config.h generated header file; looks for each
-dnl of the generated "#define SOMEDEF" lines, and prefixes the defined name (ie. makes
-dnl it"#define PREFIX_SOMEDEF". The result is written to the output config.header file.
-dnl The PREFIX is converted to uppercase for the conversions.
-dnl
-dnl Defaults:
-dnl
-dnl  OUTPUT-HEADER = $PACKAGE-config.h
-dnl  PREFIX = $PACKAGE
-dnl  ORIG-HEADER, from AM_CONFIG_HEADER(config.h)
-dnl AX_PREFIX_CONFIG_H
-
 AC_PREFIX_DEFAULT([/usr/local])
 test "x$prefix" = xNONE && prefix="/usr/local"
 
