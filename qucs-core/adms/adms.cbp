@@ -27,6 +27,11 @@
 		<Unit filename="adms.xml" />
 		<Unit filename="admsXml/Makefile.am" />
 		<Unit filename="admsXml/adms.implicit.xml" />
+		<Unit filename="admsXml/admsCheck.1" />
+		<Unit filename="admsXml/admsCheck.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="admsXml/admsPreprocessor.h" />
 		<Unit filename="admsXml/constants.vams" />
 		<Unit filename="admsXml/disciplines.vams" />
 		<Unit filename="admsXml/dummy.va" />
@@ -38,6 +43,7 @@
 		<Unit filename="admsXml/preprocessorMain.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="admsXml/verilogaLex.l" />
 		<Unit filename="admsstyle.xsl" />
 		<Unit filename="admst.dtd" />
 		<Unit filename="admst.xml" />
