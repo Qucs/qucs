@@ -612,7 +612,7 @@ void Schematic::print(QPrinter*, QPainter *Painter, bool printAll, bool fitToPag
   }
 
 
-  bool selected;
+  //bool selected;
   ViewPainter p;
   int StartX = UsedX1;
   int StartY = UsedY1;
@@ -636,85 +636,97 @@ void Schematic::print(QPrinter*, QPainter *Painter, bool printAll, bool fitToPag
   if(!symbolMode)
     paintFrame(&p);
 
-  for(Component *pc = Components->first(); pc != 0; pc = Components->next())
-    if(pc->isSelected || printAll) {
-      selected = pc->isSelected;
-      pc->isSelected = false;
-      pc->print(&p, screenDpiX / printerDpiX);
-      pc->isSelected = selected;
+  paintSchToViewpainter(&p,printAll,false,screenDpiX,printerDpiX);
+
+    Painter->setFont(oldFont);
+}
+
+
+void Schematic::paintSchToViewpainter(ViewPainter *p, bool printAll, bool toImage, int screenDpiX, int printerDpiX)
+{
+    bool selected;
+
+    for(Component *pc = Components->first(); pc != 0; pc = Components->next())
+      if(pc->isSelected || printAll) {
+        selected = pc->isSelected;
+        pc->isSelected = false;
+        if (toImage) {
+            pc->paint(p);
+        } else {
+            pc->print(p, screenDpiX / printerDpiX);
+        }
+        pc->isSelected = selected;
+      }
+
+    for(Wire *pw = Wires->first(); pw != 0; pw = Wires->next()) {
+      if(pw->isSelected || printAll) {
+        selected = pw->isSelected;
+        pw->isSelected = false;
+        pw->paint(p);   // paint all selected wires
+        pw->isSelected = selected;
+      }
+      if(pw->Label)
+        if(pw->Label->isSelected || printAll) {
+          selected = pw->Label->isSelected;
+          pw->Label->isSelected = false;
+          pw->Label->paint(p);
+          pw->Label->isSelected = selected;
+        }
     }
 
-  for(Wire *pw = Wires->first(); pw != 0; pw = Wires->next()) {
-    if(pw->isSelected || printAll) {
-      selected = pw->isSelected;
-      pw->isSelected = false;
-      pw->paint(&p);   // paint all selected wires
-      pw->isSelected = selected;
-    }
-    if(pw->Label)
-      if(pw->Label->isSelected || printAll) {
-        selected = pw->Label->isSelected;
-        pw->Label->isSelected = false;
-        pw->Label->paint(&p);
-        pw->Label->isSelected = selected;
-      }
-  }
-
-  Element *pe;
-  for(Node *pn = Nodes->first(); pn != 0; pn = Nodes->next()) {
-    for(pe = pn->Connections.first(); pe != 0; pe = pn->Connections.next())
-      if(pe->isSelected || printAll) {
-        pn->paint(&p); // paint all nodes with selected elements
-        break;
-      }
-    if(pn->Label)
-      if(pn->Label->isSelected || printAll) {
-        selected = pn->Label->isSelected;
-        pn->Label->isSelected = false;
-        pn->Label->paint(&p);
-        pn->Label->isSelected = selected;
-      }
-  }
-
-  Graph  *pg;
-  Marker *pm;
-  for(Diagram *pd = Diagrams->first(); pd != 0; pd = Diagrams->next())
-    if(pd->isSelected || printAll) {
-      // if graph or marker is selected, deselect during printing
-      for(pg = pd->Graphs.first(); pg != 0; pg = pd->Graphs.next()) {
-	if(pg->isSelected)  pg->Type |= 1;  // remember selection
-	pg->isSelected = false;
-	for(pm = pg->Markers.first(); pm != 0; pm = pg->Markers.next()) {
-	  if(pm->isSelected)  pm->Type |= 1;  // remember selection
-	  pm->isSelected = false;
-	}
-      }
-
-      selected = pd->isSelected;
-      pd->isSelected = false;
-      pd->paint(&p);  // paint all selected diagrams with graphs and markers
-      pd->isSelected = selected;
-
-      // revert selection of graphs and markers
-      for(pg = pd->Graphs.first(); pg != 0; pg = pd->Graphs.next()) {
-	if(pg->Type & 1)  pg->isSelected = true;
-	pg->Type &= -2;
-	for(pm = pg->Markers.first(); pm != 0; pm = pg->Markers.next()) {
-	  if(pm->Type & 1)  pm->isSelected = true;
-	  pm->Type &= -2;
-	}
-      }
+    Element *pe;
+    for(Node *pn = Nodes->first(); pn != 0; pn = Nodes->next()) {
+      for(pe = pn->Connections.first(); pe != 0; pe = pn->Connections.next())
+        if(pe->isSelected || printAll) {
+          pn->paint(p); // paint all nodes with selected elements
+          break;
+        }
+      if(pn->Label)
+        if(pn->Label->isSelected || printAll) {
+          selected = pn->Label->isSelected;
+          pn->Label->isSelected = false;
+          pn->Label->paint(p);
+          pn->Label->isSelected = selected;
+        }
     }
 
-  for(Painting *pp = Paintings->first(); pp != 0; pp = Paintings->next())
-    if(pp->isSelected || printAll) {
-      selected = pp->isSelected;
-      pp->isSelected = false;
-      pp->paint(&p);   // paint all selected paintings
-      pp->isSelected = selected;
-    }
+    for(Painting *pp = Paintings->first(); pp != 0; pp = Paintings->next())
+      if(pp->isSelected || printAll) {
+        selected = pp->isSelected;
+        pp->isSelected = false;
+        pp->paint(p);   // paint all selected paintings
+        pp->isSelected = selected;
+      }
 
-  Painter->setFont(oldFont);
+    Graph  *pg;
+    Marker *pm;
+    for(Diagram *pd = Diagrams->first(); pd != 0; pd = Diagrams->next())
+      if(pd->isSelected || printAll) {
+        // if graph or marker is selected, deselect during printing
+        for(pg = pd->Graphs.first(); pg != 0; pg = pd->Graphs.next()) {
+      if(pg->isSelected)  pg->Type |= 1;  // remember selection
+      pg->isSelected = false;
+      for(pm = pg->Markers.first(); pm != 0; pm = pg->Markers.next()) {
+        if(pm->isSelected)  pm->Type |= 1;  // remember selection
+        pm->isSelected = false;
+      }
+        }
+
+        selected = pd->isSelected;
+        pd->isSelected = false;
+        pd->paint(p);  // paint all selected diagrams with graphs and markers
+        pd->isSelected = selected;
+
+        // revert selection of graphs and markers
+        for(pg = pd->Graphs.first(); pg != 0; pg = pd->Graphs.next()) {
+      if(pg->Type & 1)  pg->isSelected = true;
+      pg->Type &= -2;
+      for(pm = pg->Markers.first(); pm != 0; pm = pg->Markers.next()) {
+        if(pm->Type & 1)  pm->isSelected = true;
+        pm->Type &= -2;
+      }
+        }
+      }
 }
 
 // -----------------------------------------------------------
@@ -2122,4 +2134,146 @@ void Schematic::contentsDragMoveEvent(QDragMoveEvent *Event)
   }
 
   Event->accept();
+}
+
+void Schematic::getSchWidthAndHeight(int &w, int &h, int& xmin_, int& ymin_)
+{
+    int xmin= INT_MAX,
+        ymin= INT_MAX,
+        xmax= INT_MIN,
+        ymax= INT_MIN;
+
+    for(Component *pc = Components->first(); pc != 0; pc = Components->next()) {
+        int x1,y1,x2,y2,d1,d2,d3,d4;
+        pc->entireBounds(x1,y1,x2,y2,this->textCorr());
+
+        d1 = std::min(x1,x2);
+        if (d1<xmin) xmin = d1;
+        d2 = std::max(x2,x1);
+        if (d2>xmax) xmax = d2;
+        d3 = std::min(y1,y2);
+        if (d3<ymin) ymin = d3;
+        d4 = std::max(y2,y1);
+        if (d4>ymax) ymax = d4;
+    }
+
+    for(Wire *pw = Wires->first(); pw != 0; pw = Wires->next()) {
+        int xc,yc;
+        pw->getCenter(xc,yc);
+
+        if (xc<xmin) xmin = xc;
+        if (xc>xmax) xmax = xc;
+        if (yc<ymin) ymin = yc;
+        if (yc>ymax) ymax = yc;
+    }
+
+    for(Diagram *pd = Diagrams->first(); pd != 0; pd = Diagrams->next()) {
+
+        int x1,y1,x2,y2,d1,d2,d3,d4;
+        pd->Bounding(x1,y1,x2,y2);
+
+        d1 = std::min(x1,x2);
+        if (d1<xmin) xmin = d1;
+        d2 = std::max(x2,x1);
+        if (d2>xmax) xmax = d2;
+        d3 = std::min(y1,y2);
+        if (d3<ymin) ymin = d3;
+        d4 = std::max(y2,y1);
+        if (d4>ymax) ymax = d4;
+    }
+
+    for(Painting *pp = Paintings->first(); pp != 0; pp = Paintings->next()) {
+       int x1,y1,x2,y2,d1,d2,d3,d4;
+       pp->Bounding(x1,y1,x2,y2);
+
+       d1 = std::min(x1,x2);
+       if (d1<xmin) xmin = d1;
+       d2 = std::max(x2,x1);
+       if (d2>xmax) xmax = d2;
+       d3 = std::min(y1,y2);
+       if (d3<ymin) ymin = d3;
+       d4 = std::max(y2,y1);
+       if (d4>ymax) ymax = d4;
+    }
+
+    w = abs(xmax - xmin);
+    h = abs(ymax - ymin);
+    xmin_ = xmin;
+    ymin_ = ymin;
+}
+
+void Schematic::getSelAreaWidthAndHeight(int &wsel, int &hsel, int& xmin_sel_, int& ymin_sel_)
+{
+    int xmin= INT_MAX,
+        ymin= INT_MAX,
+        xmax= INT_MIN,
+        ymax= INT_MIN;
+
+     for(Component *pc = Components->first(); pc != 0; pc = Components->next()) {
+         if (pc->isSelected) {
+           int x1,y1,x2,y2,d1,d2,d3,d4;
+           pc->entireBounds(x1,y1,x2,y2,this->textCorr());
+           d1 = std::min(x1,x2);
+           if (d1<xmin) xmin = d1;
+           d2 = std::max(x2,x1);
+           if (d2>xmax) xmax = d2;
+           d3 = std::min(y1,y2);
+           if (d3<ymin) ymin = d3;
+           d4 = std::max(y2,y1);
+           if (d4>ymax) ymax = d4;
+         }
+    }
+
+    for(Wire *pw = Wires->first(); pw != 0; pw = Wires->next()) {
+
+        if (pw->isSelected) {
+            int xc,yc;
+            pw->getCenter(xc,yc);
+
+            if (xc<xmin) xmin = xc;
+            if (xc>xmax) xmax = xc;
+            if (yc<ymin) ymin = yc;
+            if (yc>ymax) ymax = yc;
+        }
+    }
+
+    for(Diagram *pd = Diagrams->first(); pd != 0; pd = Diagrams->next()) {
+
+
+
+        if (pd->isSelected) {
+            int x1,y1,x2,y2,d1,d2,d3,d4;
+            pd->Bounding(x1,y1,x2,y2);
+
+            d1 = std::min(x1,x2);
+            if (d1<xmin) xmin = d1;
+            d2 = std::max(x2,x1);
+            if (d2>xmax) xmax = d2;
+            d3 = std::min(y1,y2);
+            if (d3<ymin) ymin = d3;
+            d4 = std::max(y2,y1);
+            if (d4>ymax) ymax = d4;
+        }
+    }
+
+    for(Painting *pp = Paintings->first(); pp != 0; pp = Paintings->next()) {
+
+       if (pp->isSelected) {
+           int x1,y1,x2,y2,d1,d2,d3,d4;
+           pp->Bounding(x1,y1,x2,y2);
+           d1 = std::min(x1,x2);
+           if (d1<xmin) xmin = d1;
+           d2 = std::max(x2,x1);
+           if (d2>xmax) xmax = d2;
+           d3 = std::min(y1,y2);
+           if (d3<ymin) ymin = d3;
+           d4 = std::max(y2,y1);
+           if (d4>ymax) ymax = d4;
+       }
+    }
+
+    wsel = abs(xmax - xmin);
+    hsel = abs(ymax - ymin);
+    xmin_sel_ = xmin;
+    ymin_sel_ = ymin;
 }
