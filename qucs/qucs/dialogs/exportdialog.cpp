@@ -15,22 +15,27 @@
  *                                                                         *
  ***************************************************************************/
 #include <math.h>
-#include "exportdiagramdialog.h"
+#include "exportdialog.h"
 
-ExportDiagramDialog::ExportDiagramDialog(int w, int h, QString filename_, QWidget *parent) :
+ExportDialog::ExportDialog(int w, int h, int wsel, int hsel, QString filename_, bool nosel_, QWidget *parent) :
     QDialog(parent)
 {
 
     setCaption(tr("Export graphics"));
     dwidth = w;
     dheight = h;
+    dwidthsel = wsel;
+    dheightsel = hsel;
     svg = false;
+    noselected = nosel_;
 
     filename = filename_;
 
     lblFilename = new QLabel(tr("Save to file (Graphics format by extension)"));
     lblResolutionX = new QLabel(tr("Width  in pixels"));
     lblResolutionY = new QLabel(tr("Height in pixels"));
+    lblRatio = new QLabel(tr("Scale factor: "));
+    lblFormat = new QLabel(tr("Image format:"));
 
     ExportButt = new QPushButton(tr("Export"));
     connect(ExportButt,SIGNAL(clicked()),this,SLOT(accept()));
@@ -49,6 +54,14 @@ ExportDiagramDialog::ExportDiagramDialog(int w, int h, QString filename_, QWidge
     editResolutionY = new QLineEdit(QString::number(dheight));
     editResolutionY->setValidator(val);
     editResolutionY->setEnabled(false);
+    editScale = new QLineEdit(QString::number(1.0));
+    QDoubleValidator *val1 = new QDoubleValidator(0,20.0,2,this);
+    editScale->setValidator(val1);
+
+    cbxImgType = new QComboBox(this);
+    QStringList lst;
+    lst<<"Colour"<<"Monochrome";
+    cbxImgType->addItems(lst);
 
     cbRatio = new QCheckBox(tr("Original width to height ratio"));
     cbRatio->setChecked(true);
@@ -58,57 +71,77 @@ ExportDiagramDialog::ExportDiagramDialog(int w, int h, QString filename_, QWidge
     connect(cbResolution,SIGNAL(toggled(bool)),editResolutionX,SLOT(setDisabled(bool)));
     connect(cbResolution,SIGNAL(toggled(bool)),editResolutionY,SLOT(setDisabled(bool)));
     connect(cbResolution,SIGNAL(toggled(bool)),cbRatio,SLOT(setDisabled(bool)));
+    connect(cbResolution,SIGNAL(toggled(bool)),editScale,SLOT(setDisabled(bool)));
     connect(cbResolution,SIGNAL(toggled(bool)),this,SLOT(restoreOriginalWtoH()));
     cbResolution->setChecked(true);
 
     connect(editResolutionX,SIGNAL(textEdited(QString)),this,SLOT(calcHeight()));
     connect(editResolutionY,SIGNAL(textEdited(QString)),this,SLOT(calcWidth()));
+    connect(editScale,SIGNAL(textChanged(QString)),this,SLOT(recalcScale()));
+
+    cbSelected = new QCheckBox(tr("Export selected only"));
+    connect(cbSelected,SIGNAL(toggled(bool)),this,SLOT(setSelectedWH()));
+    cbSelected->setChecked(false);
+    if (noselected) cbSelected->setDisabled(true);
+
+    //cbResolution->setEnabled(false);
+    cbRatio->setEnabled(false);
+
 
     top = new QVBoxLayout;
     lower1 = new QHBoxLayout;
     lower2 = new QHBoxLayout;
     lower3 = new QHBoxLayout;
+    lower4 = new QHBoxLayout;
 
     top->addWidget(lblFilename);
     lower1->addWidget(editFilename);
     lower1->addWidget(SaveButt);
     top->addLayout(lower1);
+    lower4->addWidget(lblFormat);
+    lower4->addWidget(cbxImgType);
+    top->addLayout(lower4);
     top->addWidget(cbResolution);
     //top->addWidget(cbRatio);
+    lower3->addWidget(lblRatio);
+    lower3->addWidget(editScale);
+    top->addLayout(lower3);
     top->addWidget(lblResolutionX);
     top->addWidget(editResolutionX);
     top->addWidget(lblResolutionY);
     top->addWidget(editResolutionY);
+    top->addWidget(cbSelected);
+
     lower2->addWidget(ExportButt);
     lower2->addWidget(CancelButt);
     top->addLayout(lower2);
     this->setLayout(top);
 
     this->layout()->setSizeConstraint(QLayout::SetFixedSize);
-    this->setWindowTitle(tr("Export diagram to raster or vector image"));
+    this->setWindowTitle(tr("Export schematic to raster or vector image"));
 }
 
-QString ExportDiagramDialog::FileToSave()
+QString ExportDialog::FileToSave()
 {
     return editFilename->text();
 }
 
-bool ExportDiagramDialog::isOriginalSize()
+bool ExportDialog::isOriginalSize()
 {
     return cbResolution->isChecked();
 }
 
-int ExportDiagramDialog::Xpixels()
+int ExportDialog::Xpixels()
 {
     return editResolutionX->text().toInt();
 }
 
-int ExportDiagramDialog::Ypixels()
+int ExportDialog::Ypixels()
 {
     return editResolutionY->text().toInt();
 }
 
-void ExportDiagramDialog::setFileName()
+void ExportDialog::setFileName()
 {
     /*QString nam = dialog.getSaveFileName(this,tr("Export diagram to file"),QDir::homeDirPath(),
                                          "SVG vector graphics (*.svg) ;;"
@@ -135,7 +168,7 @@ void ExportDiagramDialog::setFileName()
     }
 }
 
-void ExportDiagramDialog::calcWidth()
+void ExportDialog::calcWidth()
 {
     if (cbRatio->isChecked()) {
         float h = editResolutionY->text().toFloat();
@@ -145,7 +178,7 @@ void ExportDiagramDialog::calcWidth()
 }
 
 
-void ExportDiagramDialog::calcHeight()
+void ExportDialog::calcHeight()
 {
     if (cbRatio->isChecked()) {
         float w = editResolutionX->text().toFloat();
@@ -155,27 +188,33 @@ void ExportDiagramDialog::calcHeight()
 
 }
 
-void ExportDiagramDialog::recalcRatio()
+void ExportDialog::recalcRatio()
 {
     if (cbRatio->isChecked()) {
         calcHeight();
     }
 }
 
-void ExportDiagramDialog::restoreOriginalWtoH()
+void ExportDialog::restoreOriginalWtoH()
 {
     if (cbResolution->isChecked()) {
+        editScale->setText(QString::number(1.0));
         editResolutionX->setText(QString::number(dwidth));
         editResolutionY->setText(QString::number(dheight));
     }
 }
 
-bool ExportDiagramDialog::isSvg()
+bool ExportDialog::isSvg()
 {
     return svg;
 }
 
-void ExportDiagramDialog::setSvg(QString filename)
+bool ExportDialog::isExportSelected()
+{
+    return cbSelected->isChecked();
+}
+
+void ExportDialog::setSvg(QString filename)
 {
     QFileInfo graphics_file(filename);
     QString ext = graphics_file.suffix();
@@ -183,9 +222,74 @@ void ExportDiagramDialog::setSvg(QString filename)
         svg = true;
         cbResolution->setChecked(true);
         cbResolution->setDisabled(true);
+        cbxImgType->setDisabled(true);
         cbRatio->setChecked(true);
     } else {
         svg = false;
         cbResolution->setEnabled(true);
+        cbxImgType->setEnabled(true);
+    }
+}
+
+bool ExportDialog::isValidFilename()
+{
+    QString nam = editFilename->text();
+    QStringList filetypes;
+    QFileInfo inf(nam);
+    filetypes<<"png"<<"svg"<<"jpeg"<<"jpg"<<"PNG"<<"JPG"<<"SVG"<<"JPEG";
+
+    if (filetypes.contains(inf.suffix())) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+void ExportDialog::setSelectedWH()
+{
+    if (cbSelected->isChecked()) {
+        editResolutionX->setText(QString::number(dwidthsel));
+        editResolutionY->setText(QString::number(dheightsel));
+    } else {
+        editResolutionX->setText(QString::number(dwidth));
+        editResolutionY->setText(QString::number(dheight));
+    }
+    recalcScale();
+}
+
+void ExportDialog::setDiagram()
+{
+    cbSelected->setChecked(true);
+    cbSelected->setDisabled(true);
+    this->setWindowTitle(tr("Export diagram to raster or vector image"));
+}
+
+float ExportDialog::getScale()
+{
+    scale = editScale->text().toFloat();
+    return scale;
+}
+
+void ExportDialog::recalcScale()
+{
+    scale = editScale->text().toFloat();
+    if (cbSelected->isChecked()) {
+        editResolutionX->setText(QString::number(scale*dwidthsel));
+        editResolutionY->setText(QString::number(scale*dheightsel));
+    } else {
+        editResolutionX->setText(QString::number(scale*dwidth));
+        editResolutionY->setText(QString::number(scale*dheight));
+    }
+
+}
+
+ExportDialog::ImgFormat ExportDialog::getImgFormat()
+{
+    switch (cbxImgType->currentIndex()) {
+    case 0 : return ExportDialog::Coloured;
+        break;
+    case 1 : return ExportDialog::Monochrome;
+        break;
+    default : break;
     }
 }
