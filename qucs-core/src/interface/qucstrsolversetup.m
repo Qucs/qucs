@@ -25,7 +25,7 @@ function qucstrsolversetup(dodebug, verbose)
     % store the current directory
     origdir = pwd;
 
-    % change to the mfemm directory (the directory this file is in)
+    % change to the qucstrsolversetup directory (the directory this file is in)
     cd(fileparts(which('qucstrsolversetup.m')));
 
     % set some common compiler flags, we replace all calls to printf to
