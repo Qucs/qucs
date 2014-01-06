@@ -15,12 +15,12 @@
  *                                                                         *
  ***************************************************************************/
 #include <QtGui>
-#include <qdir.h>
-#include <qfile.h>
-#include <q3textstream.h>
-#include <qregexp.h>
-#include <qstring.h>
-#include <qstringlist.h>
+#include <QDir>
+#include <QFile>
+#include <Q3TextStream>
+#include <QRegExp>
+#include <QString>
+#include <QStringList>
 
 #include "opt_sim.h"
 #include "main.h"

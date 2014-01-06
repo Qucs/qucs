@@ -19,19 +19,19 @@
 #include "main.h"
 #include "qucs.h"
 //Added by qt3to4:
-#include <q3button.h>
+#include <Q3Button>
 #include <QLabel>
 #include <Q3GridLayout>
 #include <Q3VBoxLayout>
 #include "schematic.h"
 
-#include <q3hbox.h>
-#include <q3vbox.h>
-#include <qlayout.h>
-#include <q3hgroupbox.h>
-#include <qvalidator.h>
-#include <qtabwidget.h>
-#include <q3filedialog.h>
+#include <Q3HBox>
+#include <Q3VBox>
+#include <QLayout>
+#include <Q3HGroupBox>
+#include <QValidator>
+#include <QTabWidget>
+#include <Q3FileDialog>
 
 #include <math.h>
 

@@ -69,19 +69,19 @@ matrix bjt::calcMatrixY (nr_double_t frequency) {
   nr_double_t Tf   = getPropertyDouble ("Tf");
 
   // compute admittance matrix entries
-  nr_complex_t Ybe = rect (gbe, 2.0 * M_PI * frequency * Cbe);
-  nr_complex_t Ybc = rect (gbc, 2.0 * M_PI * frequency * Cbci);
-  nr_complex_t Ycs = rect (0.0, 2.0 * M_PI * frequency * Ccs);
+  nr_complex_t Ybe = nr_complex_t (gbe, 2.0 * M_PI * frequency * Cbe);
+  nr_complex_t Ybc = nr_complex_t (gbc, 2.0 * M_PI * frequency * Cbci);
+  nr_complex_t Ycs = nr_complex_t (0.0, 2.0 * M_PI * frequency * Ccs);
 
   // admittance matrix entries for "transcapacitance"
-  nr_complex_t Ybebc = rect (0.0, 2.0 * M_PI * frequency * dQbedUbc);
+  nr_complex_t Ybebc = nr_complex_t (0.0, 2.0 * M_PI * frequency * dQbedUbc);
 
   // compute influence of excess phase
   nr_double_t phase = rad (Ptf) * Tf * 2 * M_PI * frequency;
 #if NEWSGP
-  nr_complex_t gmf = polar (gm, -phase);
+  nr_complex_t gmf = std::polar (gm, -phase);
 #else
-  nr_complex_t gmf = polar (gm + go, -phase) - go;
+  nr_complex_t gmf = std::polar (gm + go, -phase) - go;
 #endif
 
   // build admittance matrix

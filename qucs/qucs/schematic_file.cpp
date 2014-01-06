@@ -19,13 +19,13 @@
 # include <config.h>
 #endif
 #include <QtGui>
-#include <qmessagebox.h>
-#include <qdir.h>
-#include <qstringlist.h>
-#include <qregexp.h>
-#include <q3textedit.h>
+#include <QMessageBox>
+#include <QDir>
+#include <QStringList>
+#include <QRegExp>
+#include <Q3TextEdit>
 #include <QTextEdit>
-#include <q3ptrlist.h>
+#include <Q3PtrList>
 //Added by qt3to4:
 #include <Q3TextStream>
 #include <Q3ValueList>
@@ -687,6 +687,7 @@ bool Schematic::loadDocument()
     if(Line.isEmpty()) continue;
 
     if(Line == "<Symbol>") {
+      if ((Schematic*)QucsMain != 0) // GUI running, load Symbols
       if(!loadPaintings(&stream, &SymbolPaints)) {
 	file.close();
 	return false;
@@ -702,17 +703,20 @@ bool Schematic::loadDocument()
     if(Line == "<Wires>") {
       if(!loadWires(&stream)) { file.close(); return false; } }
     else
+    if ((Schematic*)QucsMain != 0) { // GUI running, load Diagrams, Paintings
     if(Line == "<Diagrams>") {
       if(!loadDiagrams(&stream, &DocDiags)) { file.close(); return false; } }
     else
     if(Line == "<Paintings>") {
       if(!loadPaintings(&stream, &DocPaints)) { file.close(); return false; } }
     else {
+        qDebug() << Line;
       QMessageBox::critical(0, QObject::tr("Error"),
 		   QObject::tr("File Format Error:\nUnknown field!"));
       file.close();
       return false;
     }
+    } // Diagrams, Paintings 
   }
 
   file.close();

@@ -185,11 +185,11 @@ int parasweep::solve (void) {
 /* This function saves the results of a single solve() functionality
    into the output dataset. */
 void parasweep::saveResults (void) {
-  vector * v;
+  qucs::vector * v;
 
   // add current frequency to the dependencies of the output dataset
   if ((v = data->findDependency (var->getName ())) == NULL) {
-    v = new vector (var->getName ());
+    v = new qucs::vector (var->getName ());
     v->setOrigin (getName ());
     data->addDependency (v);
   }

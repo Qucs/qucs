@@ -32,13 +32,13 @@ class vector;
 namespace fourier {
 
   // public functions
-  vector  fft_1d (vector, int isign = 1);
-  vector ifft_1d (vector);
-  vector  dft_1d (vector, int isign = 1);
-  vector idft_1d (vector);
+  qucs::vector  fft_1d (qucs::vector, int isign = 1);
+  qucs::vector ifft_1d (qucs::vector);
+  qucs::vector  dft_1d (qucs::vector, int isign = 1);
+  qucs::vector idft_1d (qucs::vector);
 
   // additional public function
-  vector fftshift (vector);
+  qucs::vector fftshift (qucs::vector);
 
   // internal functions
   void  _fft_1d (nr_double_t *, int, int isign = 1);

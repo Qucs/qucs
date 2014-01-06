@@ -22,15 +22,15 @@
 #include "qucshelp.h"
 #include "htmldatafetcher.h"
 
-#include <qpushbutton.h>
-#include <qaction.h>
-#include <qpixmap.h>
-#include <qfile.h>
-#include <q3textstream.h>
-#include <q3popupmenu.h>
-#include <qmenubar.h>
-#include <qapplication.h>
-#include <q3listview.h>
+#include <QPushButton>
+#include <QAction>
+#include <QPixmap>
+#include <QFile>
+#include <Q3TextStream>
+#include <Q3PopupMenu>
+#include <QMenuBar>
+#include <QApplication>
+#include <Q3ListView>
 
 
 

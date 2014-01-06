@@ -22,8 +22,8 @@
 
 #include "vtabglobal.h"
 #include "vtabbutton.h"
-#include <qwidget.h>
-#include <q3ptrlist.h>
+#include <QWidget>
+#include <Q3PtrList>
 //Added by qt3to4:
 #include <Q3VBoxLayout>
 

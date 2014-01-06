@@ -180,7 +180,7 @@ ValueList: /* nothing */ { }
 
 List:
   SegListBegin Eol SEG Float Float Float Eol SegListEnd Eol {
-    $$ = new vector (linspace ($5, $4, (int) $6));
+    $$ = new vector (qucs::linspace ($5, $4, (int) $6));
   }
   | VarListBegin Eol VarList VarListEnd Eol {
     $$ = $3;
@@ -213,7 +213,7 @@ FloatList: { $$ = new vector (); }
     $$ = $3;
   }
   | Float ',' Float Eol FloatList {
-    $5->add (rect ($1, $3));
+    $5->add (nr_complex_t ($1, $3));
     $$ = $5;
   }
 ;

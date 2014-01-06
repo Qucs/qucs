@@ -20,8 +20,8 @@
 
 #include "painting.h"
 
-#include <qstring.h>
-#include <q3ptrlist.h>
+#include <QString>
+#include <Q3PtrList>
 
 struct SubParameter {
   SubParameter(bool display_, const QString& Name_, const QString& Descr_)

@@ -50,8 +50,8 @@ class interpolator
 
   void vectors (nr_double_t *, nr_double_t *, int);
   void vectors (nr_complex_t *, nr_double_t *, int);
-  void rvectors (vector *, vector *);
-  void cvectors (vector *, vector *);
+  void rvectors (qucs::vector *, qucs::vector *);
+  void cvectors (qucs::vector *, qucs::vector *);
   void prepare (int, int, int domain = DATA_RECTANGULAR);
   nr_double_t rinterpolate (nr_double_t);
   nr_complex_t cinterpolate (nr_double_t);

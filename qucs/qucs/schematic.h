@@ -34,11 +34,11 @@
 #include "viewpainter.h"
 #include "node.h"
 
-#include <q3scrollview.h>
-#include <qpainter.h>
-#include <q3ptrlist.h>
-#include <qfile.h>
-#include <qstringlist.h>
+#include <Q3ScrollView>
+#include <QPainter>
+#include <Q3PtrList>
+#include <QFile>
+#include <QStringList>
 
 class Q3TextEdit;
 class QTextEdit;

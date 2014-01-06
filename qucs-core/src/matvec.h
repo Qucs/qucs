@@ -75,15 +75,15 @@ class matvec
   int getRows (void) { return rows; }
   void setName (const char *);
   char * getName (void);
-  void set (vector, int, int);
+  void set (qucs::vector, int, int);
   void set (matrix, int);
-  vector get (int, int);
+  qucs::vector get (int, int);
   matrix get (int);
   static char * createMatrixString (const char *, int, int);
   static char * createMatrixString (char, int, int);
   static char * isMatrixVector (char *, int&, int&);
-  static matvec * getMatrixVector (vector *, char *);
-  static void getMatrixVectorSize (vector *, char *, int&, int&, int&);
+  static matvec * getMatrixVector (qucs::vector *, char *);
+  static void getMatrixVectorSize (qucs::vector *, char *, int&, int&, int&);
 
   // operator functions
   friend matvec operator + (matvec, matvec);
@@ -93,8 +93,8 @@ class matvec
   friend matvec operator + (nr_complex_t, matvec);
   friend matvec operator + (matvec, nr_double_t);
   friend matvec operator + (nr_double_t, matvec);
-  friend matvec operator + (matvec, vector);
-  friend matvec operator + (vector, matvec);
+  friend matvec operator + (matvec, qucs::vector);
+  friend matvec operator + (qucs::vector, matvec);
   friend matvec operator - (matvec, matvec);
   friend matvec operator - (matvec, matrix);
   friend matvec operator - (matrix, matvec);
@@ -102,13 +102,13 @@ class matvec
   friend matvec operator - (nr_complex_t, matvec);
   friend matvec operator - (matvec, nr_double_t);
   friend matvec operator - (nr_double_t, matvec);
-  friend matvec operator - (matvec, vector);
-  friend matvec operator - (vector, matvec);
+  friend matvec operator - (matvec, qucs::vector);
+  friend matvec operator - (qucs::vector, matvec);
   friend matvec operator / (matvec, nr_complex_t);
   friend matvec operator / (matvec, nr_double_t);
-  friend matvec operator / (matvec, vector);
-  friend matvec operator * (matvec, vector);
-  friend matvec operator * (vector, matvec);
+  friend matvec operator / (matvec, qucs::vector);
+  friend matvec operator * (matvec, qucs::vector);
+  friend matvec operator * (qucs::vector, matvec);
   friend matvec operator * (matvec, nr_complex_t);
   friend matvec operator * (nr_complex_t, matvec);
   friend matvec operator * (matvec, nr_double_t);
@@ -125,11 +125,11 @@ class matvec
   // other operations
   friend matvec transpose (matvec);
   friend matvec conj      (matvec);
-  friend vector det       (matvec);
+  friend qucs::vector det       (matvec);
   friend matvec inverse   (matvec);
   friend matvec sqr       (matvec);
   friend matvec pow       (matvec, int);
-  friend matvec pow       (matvec, vector);
+  friend matvec pow       (matvec, qucs::vector);
   friend matvec twoport   (matvec, char, char);
   friend matvec real      (matvec);
   friend matvec imag      (matvec);
@@ -137,23 +137,23 @@ class matvec
   friend matvec dB        (matvec);
   friend matvec arg       (matvec);
   friend matvec adjoint   (matvec);
-  friend vector rollet    (matvec);
-  friend vector b1        (matvec);
+  friend qucs::vector rollet    (matvec);
+  friend qucs::vector b1        (matvec);
 
   friend matvec stos (matvec, nr_complex_t, nr_complex_t z0 = 50.0);
   friend matvec stos (matvec, nr_double_t, nr_double_t z0 = 50.0);
-  friend matvec stos (matvec, vector, nr_complex_t z0 = 50.0);
-  friend matvec stos (matvec, nr_complex_t, vector);
-  friend matvec stos (matvec, vector, vector);
+  friend matvec stos (matvec, qucs::vector, nr_complex_t z0 = 50.0);
+  friend matvec stos (matvec, nr_complex_t, qucs::vector);
+  friend matvec stos (matvec, qucs::vector, qucs::vector);
   friend matvec stoz (matvec, nr_complex_t z0 = 50.0);
-  friend matvec stoz (matvec, vector);
+  friend matvec stoz (matvec, qucs::vector);
   friend matvec ztos (matvec, nr_complex_t z0 = 50.0);
-  friend matvec ztos (matvec, vector);
+  friend matvec ztos (matvec, qucs::vector);
   friend matvec ztoy (matvec);
   friend matvec stoy (matvec, nr_complex_t z0 = 50.0);
-  friend matvec stoy (matvec, vector);
+  friend matvec stoy (matvec, qucs::vector);
   friend matvec ytos (matvec, nr_complex_t z0 = 50.0);
-  friend matvec ytos (matvec, vector);
+  friend matvec ytos (matvec, qucs::vector);
   friend matvec ytoz (matvec);
 
  private:

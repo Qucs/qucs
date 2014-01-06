@@ -85,6 +85,7 @@ class tvector
   void add (nr_type_t);
   void clear (void);
   void drop (int);
+  void truncate (int);
   void exchangeRows (int, int);
   int  isFinite (void);
   void print (void);

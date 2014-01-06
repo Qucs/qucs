@@ -110,7 +110,7 @@ sed -i 's/# RELEASEDIRS="$RELEASEDIRS asco"/RELEASEDIRS="$RELEASEDIRS asco"/g' c
 make distclean
 rm -rf autom4te.cache
 
-
+libtoolize
 cd qucs-core
 ./bootstrap.sh
 ./configure --enable-maintainer-mode
@@ -128,7 +128,9 @@ cd ..
 
 echo creating source archive...
 
-tar -zcvf qucs-$RELEASE.tar.gz qucs-$RELEASE
+tar -zcvhf qucs-$RELEASE.tar.gz qucs-$RELEASE
+rm -rf qucs-$RELEASE
+tar -zxvf qucs-$RELEASE.tar.gz #make the symbolic links actual files
 
 DISTS="precise quantal raring saucy"
 
@@ -190,7 +192,9 @@ cp $QTDIR/bin/QtGui4.dll  $WINDIR/bin
 cp $QTDIR/bin/QtNetwork4.dll  $WINDIR/bin
 cp $QTDIR/bin/QtXml4.dll  $WINDIR/bin
 cp $QTDIR/bin/QtSql4.dll  $WINDIR/bin
+cp $QTDIR/bin/QtSvg4.dll $WINDIR/bin
 cp $QTDIR/bin/libgcc_s_dw2-1.dll $WINDIR/bin
+
 
 cp /usr/lib/gcc/i586-mingw32msvc/4.2.1-sjlj/*.dll $WINDIR/bin
 cp /usr/lib/gcc/i686-w64-mingw32/4.6/*.dll $WINDIR/bin

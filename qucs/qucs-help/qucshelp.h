@@ -18,11 +18,11 @@
 #ifndef QUCSHELP_H
 #define QUCSHELP_H
 
-#include <q3mainwindow.h>
-#include <q3textbrowser.h>
-#include <qdir.h>
-#include <qfont.h>
-#include <qstringlist.h>
+#include <Q3MainWindow>
+#include <Q3TextBrowser>
+#include <QDir>
+#include <QFont>
+#include <QStringList>
 
 struct tQucsSettings {
   int x, y, dx, dy;    // position and size of main window

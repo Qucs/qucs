@@ -19,8 +19,8 @@
 
 #include "vtabbeddockwidget.h"
 #include "vtabwidget.h"
-#include <qapplication.h>
-#include <q3mainwindow.h>
+#include <QApplication>
+#include <Q3MainWindow>
 
 VTabbedDockWidget::VTabbedDockWidget(Place p, QWidget* parent, const char* name): Q3DockWindow(p, parent, name)
 {

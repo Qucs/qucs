@@ -23,15 +23,15 @@
 # include <unistd.h>
 #endif
 #include <QtGui>
-#include <qregexp.h>
+#include <QRegExp>
 #include <QProcess>
-#include <qstring.h>
-#include <qstringlist.h>
-#include <qmessagebox.h>
-#include <q3textstream.h>
-#include <qfile.h>
-#include <qdir.h>
-#include <qfileinfo.h>
+#include <QString>
+#include <QStringList>
+#include <QMessageBox>
+#include <Q3TextStream>
+#include <QFile>
+#include <QDir>
+#include <QFileInfo>
 
 #include "spicefile.h"
 #include "schematic.h"

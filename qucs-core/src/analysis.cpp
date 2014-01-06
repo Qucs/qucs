@@ -24,6 +24,7 @@
  */
 
  /*! \file analysis.cpp
+  * \brief Implementation of the analysis class.
   *
   * Contains the implementation of the analysis class.
   *

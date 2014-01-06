@@ -233,7 +233,7 @@ static variable * checker_add_variable (environment * env,
         c->d = 0.0; // initialize the variable
         break;
     case TAG_VECTOR:
-        c->v = new vector ();
+	  c->v = new qucs::vector ();
         break;
     }
     v->setConstant (c);

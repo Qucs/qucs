@@ -22,9 +22,9 @@
 #include "marker.h"
 #include "element.h"
 
-#include <qcolor.h>
-#include <q3ptrlist.h>
-#include <qdatetime.h>
+#include <QColor>
+#include <Q3PtrList>
+#include <QDateTime>
 
 
 // meaning of the values in a graph "Points" list

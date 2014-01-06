@@ -23,7 +23,7 @@
 #include "element.h"
 #include "viewpainter.h"
 
-#include <qfile.h>
+#include <QFile>
 //Added by qt3to4:
 #include <Q3TextStream>
 #include <Q3PtrList>
@@ -103,7 +103,6 @@ public:
 
   bool hideLines;       // for "Rect3D": hide invisible lines ?
   int rotX, rotY, rotZ; // for "Rect3D": rotation around x, y and z axis
-
 
 protected:
   void calcSmithAxisScale(Axis*, int&, int&);

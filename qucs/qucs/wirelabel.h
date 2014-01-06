@@ -21,9 +21,9 @@
 #include "element.h"
 #include "viewpainter.h"
 
-#include <qpainter.h>
-#include <qstring.h>
-#include <q3ptrlist.h>
+#include <QPainter>
+#include <QString>
+#include <Q3PtrList>
 
 class Wire;
 class Node;

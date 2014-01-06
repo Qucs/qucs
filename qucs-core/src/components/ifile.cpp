@@ -87,8 +87,8 @@ void ifile::prepare (void) {
 		  file);
 	return;
       }
-      vector * is = data->getVariables();    // current
-      vector * ts = data->getDependencies(); // time
+      qucs::vector * is = data->getVariables();    // current
+      qucs::vector * ts = data->getDependencies(); // time
       inter = new interpolator ();
       inter->rvectors (is, ts);
       inter->prepare (interpolType, dataType);

@@ -59,7 +59,7 @@ void digisource::initAC (void) {
 }
 
 void digisource::initTR (void) {
-  vector * values = getPropertyVector ("times");
+  qucs::vector * values = getPropertyVector ("times");
   T = real (sum (*values));
   initDC ();
 }
@@ -67,7 +67,7 @@ void digisource::initTR (void) {
 void digisource::calcTR (nr_double_t t) {
   char * init = getPropertyString ("init");
   nr_double_t v = getPropertyDouble ("V");
-  vector * values = getPropertyVector ("times");
+  qucs::vector * values = getPropertyVector ("times");
   bool lo = !strcmp (init, "low");
   nr_double_t ti = 0;
 

@@ -18,10 +18,10 @@
 #ifndef QUCS_MAIN_H
 #define QUCS_MAIN_H
 
-#include <qfont.h>
-#include <qcolor.h>
-#include <q3ptrlist.h>
-#include <qstringlist.h>
+#include <QFont>
+#include <QColor>
+#include <Q3PtrList>
+#include <QStringList>
 
 #include "wire.h"
 #include "node.h"

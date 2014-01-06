@@ -21,11 +21,12 @@
 #include <QtGui>
 #include <QDebug>
 #include <QtCore>
+#include <QtSvg>
 #include <limits.h>
 
 
 #include <QProcess>
-#include <q3syntaxhighlighter.h>
+#include <Q3SyntaxHighlighter>
 //Added by qt3to4:
 #include <Q3PtrList>
 #include <Q3TextEdit>
@@ -53,6 +54,7 @@
 #include "dialogs/labeldialog.h"
 #include "dialogs/matchdialog.h"
 #include "dialogs/simmessage.h"
+#include "dialogs/exportdiagramdialog.h"
 //#include "dialogs/vtabwidget.h"
 //#include "dialogs/vtabbeddockwidget.h"
 #include "octave_window.h"
@@ -145,6 +147,8 @@ QucsApp::QucsApp()
   select->setOn(true);  // switch on the 'select' action
   switchSchematicDoc(true);  // "untitled" document is schematic
 
+  lastExportFilename = QDir::homePath() + QDir::separator() + "export.png";
+
   // load documents given as command line arguments
   for(int z=1; z<qApp->argc(); z++) {
     QString arg = qApp->argv()[z];
@@ -156,6 +160,10 @@ QucsApp::QucsApp()
       //  if(f.isEmpty()) f = arg;
       //  gotoPage(f);
       //} else {
+        // get and set absolute path, QucsWorkDir now finds subcircuits
+        QFileInfo Info(arg);
+        QucsSettings.QucsWorkDir.setPath(Info.absoluteDir().absolutePath());
+        arg = QucsSettings.QucsWorkDir.filePath(Info.fileName());
         gotoPage(arg);
       //}
     }
@@ -2594,7 +2602,106 @@ void QucsApp::updateRecentFilesList(QString s)
     if (QucsSettings.RecentDocs.count()>8) {
         QucsSettings.RecentDocs.removeFirst();
     }
-    //qDebug()<<s;
+
     settings->setValue("RecentDocs",QucsSettings.RecentDocs.join("*"));
     delete settings;
+}
+
+void QucsApp::slotSaveDiagramToGraphicsFile()
+{
+    float scal = 1.0;
+
+
+
+    Diagram* dia = ((Diagram*)view->focusElement);
+
+    int x1,y1,x2,y2,xc,yc;
+    dia->Bounding(x1,y1,x2,y2);
+    dia->isSelected=false;
+    dia->getCenter(xc,yc);
+    int w = abs(x2 - x1);
+    int h = abs(y2 - y1);
+    int dx = abs(((x2+x1)/2)-xc);
+    int dy = abs(((y1+y2)/2)-yc);
+    w = w + dx;
+    h = h + dy;
+
+    ExportDiagramDialog* dlg = new ExportDiagramDialog(w,h,lastExportFilename,this);
+
+    if (dlg->exec()) {
+
+        if (!dlg->isOriginalSize()) {
+            scal = (float) dlg->Xpixels()/w;
+            w = round(w*scal);
+            h = round(h*scal);
+        }
+
+        QString filename = dlg->FileToSave();
+        lastExportFilename = filename;
+        QStringList filetypes;
+        QFileInfo inf(filename);
+        filetypes<<"png"<<"svg"<<"jpeg"<<"jpg"<<"PNG"<<"JPG"<<"SVG"<<"JPEG";
+
+        if (filetypes.contains(inf.suffix())) {
+
+            if (!dlg->isSvg()) {
+                QImage* img = new QImage(w,h,QImage::Format_RGB888);
+                QPainter* p = new QPainter(img);
+                p->fillRect(0,0,w,h,Qt::white);
+                ViewPainter* vp = new ViewPainter(p);
+                vp->init(p,scal,0,0,x1*scal,(y1-dy)*scal,scal,scal);
+                dia->paint(vp);
+                img->save(filename);
+
+                delete vp;
+                delete p;
+                delete img;
+
+            } else {
+
+                float ratio = 300 / (this->physicalDpiX());
+                QSvgGenerator* svg1 = new QSvgGenerator();
+                svg1->setResolution(300);
+                svg1->setFileName(filename);
+                svg1->setSize(QSize(1.12*w*ratio,1.1*h*ratio));
+                QPainter *p = new QPainter(svg1);
+                p->fillRect(0,0,svg1->size().width(),svg1->size().height(),Qt::white);
+                ViewPainter *vp = new ViewPainter(p);
+                vp->init(p,1.0,0,0,x1,(y1-dy),1.0/ratio,1.0);
+                dia->paint(vp);
+
+                delete vp;
+                delete p;
+                delete svg1;
+
+            }
+
+            if (inf.exists()) {
+                QMessageBox* msg =  new QMessageBox(QMessageBox::Information,tr("Export diagram to graphics"),
+                                                tr("Sucessfully exported!"),
+                                                QMessageBox::Ok);
+                msg->exec();
+                delete msg;
+            } else {
+                QMessageBox* msg =  new QMessageBox(QMessageBox::Critical,tr("Export diagram to graphics"),
+                                                tr("Disk write error!"),
+                                                QMessageBox::Ok);
+                msg->exec();
+                delete msg;
+            }
+
+        } else {
+            QMessageBox* msg =  new QMessageBox(QMessageBox::Critical,tr("Export diagram to graphics"),
+                                                tr("Unsupported format of graphics file. \n"
+                                                "Use PNG, JPEG or SVG graphics!"),
+                                                QMessageBox::Ok);
+            msg->exec();
+            delete msg;
+        }
+
+    }
+
+    dia->isSelected=true;
+    delete dlg;
+
 }

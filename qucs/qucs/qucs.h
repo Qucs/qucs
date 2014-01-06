@@ -19,10 +19,10 @@
 #define QUCS_H
 
 #include <QtGui>
-//#include <q3mainwindow.h>
+//#include <Q3MainWindow>
 #include <QMainWindow>
-#include <qstring.h>
-#include <qdir.h>
+#include <QString>
+#include <QDir>
 //Added by qt3to4:
 #include <QLabel>
 #include <Q3PtrList>
@@ -346,6 +346,7 @@ public slots:
   void slotAddToProject();
   void slotApplyCompText();
   void slotOpenRecent(int num);
+  void slotSaveDiagramToGraphicsFile();
 
 private slots:
   void slotCursorLeft();
@@ -365,5 +366,6 @@ private:
   void showHTML(const QString&);
   bool performToggleAction(bool, QAction*, pToggleFunc, pMouseFunc, pMouseFunc2);
   friend class SaveDialog;
+  QString lastExportFilename;
 };
 #endif

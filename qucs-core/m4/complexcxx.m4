@@ -19,12 +19,10 @@ dnl Complex
 AC_DEFUN([AC_CXX_HAVE_COMPLEX],
 [AC_CACHE_CHECK(whether the compiler has complex<T>,
 ac_cv_cxx_have_complex,
-[AC_REQUIRE([AC_CXX_NAMESPACES])	
- AC_LANG_PUSH(C++)
+[AC_LANG_PUSH(C++)
  AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[#include <complex>
-#ifdef HAVE_NAMESPACES
 using namespace std;
-#endif]],
+]],
 [[complex<float> a; complex<double> b; 
 abs(b); real(b); imag(b); arg(b); conj(b); return 0;]])],
  ac_cv_cxx_have_complex=yes, ac_cv_cxx_have_complex=no)
@@ -35,45 +33,16 @@ if test "$ac_cv_cxx_have_complex" = yes; then
 fi
 ])
 
-dnl TR1 Complex
-AC_DEFUN([AC_CXX_HAVE_TR1_COMPLEX],
-[AC_CACHE_CHECK(whether the compiler has TR1 compliant complex<T>,
-ac_cv_cxx_have_tr1_complex,
-[AC_LANG_PUSH(C++)
- AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[#include <tr1/complex>
-using namespace std;
-using namespace std::tr1;]],
-[[complex<float> a; complex<double> b; 
-abs(b); real(b); imag(b); arg(b); return 0;]])],
- ac_cv_cxx_have_tr1_complex=yes, ac_cv_cxx_have_tr1_complex=no)
- AC_LANG_POP
-])
-if test "$ac_cv_cxx_have_tr1_complex" = yes; then
-  AC_DEFINE(HAVE_TR1_COMPLEX,[1],
-	    [Define if the compiler has TR1 compliant complex<T>.])
-fi
-])
-
 
 dnl equivalent of AC_CHECK_FUNC
 AC_DEFUN([AC_CHECK_CXX_COMPLEX_FUNC],
-[AC_REQUIRE([AC_CXX_NAMESPACES])
- AC_REQUIRE([AC_CXX_HAVE_COMPLEX])
- AC_REQUIRE([AC_CXX_HAVE_TR1_COMPLEX])
+[AC_REQUIRE([AC_CXX_HAVE_COMPLEX])
  AS_VAR_PUSHDEF([ac_var], [ac_cv_cpp_complex_func_$1])dnl
  AC_CACHE_CHECK([for complex $1], [ac_var],
 [AC_LANG_PUSH(C++)
  AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
-		    #ifdef HAVE_TR1_COMPLEX
-		    #include <tr1/complex>
-		    using namespace std;
-		    using namespace std::tr1;
-		    #else
-		    #include <complex>
-		    #ifdef HAVE_NAMESPACES
-		    using namespace std;
-		    #endif
-		    #endif
+                    #include <complex>
+                    using namespace std;
 		    #ifdef log2
 		    #undef log2
 		    #endif]],
@@ -102,32 +71,17 @@ done
 
 dnl equivalent of AC_CHECK_FUNC
 AC_DEFUN([AC_CHECK_CXX_COMPLEX_POW],
-[AC_REQUIRE([AC_CXX_NAMESPACES])
- AC_REQUIRE([AC_CXX_HAVE_COMPLEX])
- AC_REQUIRE([AC_CXX_HAVE_TR1_COMPLEX])
+[AC_REQUIRE([AC_CXX_HAVE_COMPLEX])
  AS_VAR_PUSHDEF([ac_var], [ac_cv_cpp_complex_func_pow])dnl
  AC_CACHE_CHECK([for complex pow], [ac_var],
  [AC_LANG_PUSH(C++)
   AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
-			#ifdef HAVE_TR1_COMPLEX
-		        # include <tr1/complex>
-		          using namespace std;
-			  using namespace std::tr1;
-		        #else
 		        # include <complex>
-		        # ifdef HAVE_NAMESPACES
-		           using namespace std;
-		        #endif
-		        #endif
+		        using namespace std;
 		        ]],
 	       	         [[complex<double> x,y;  
-			#ifdef HAVE_TR1_COMPLEX
-			 std::tr1::pow(x,double(2.0));
-			 std::tr1::pow(x, y); std::tr1::pow(double(2.0), x);
-		        #else
 			 std::pow(x,double(2.0));
 			 std::pow(x, y); std::pow(double(2.0), x);
-		        #endif
 		         return 0;]])],
                     [AS_VAR_SET([ac_var], [yes])],
 		    [AS_VAR_SET([ac_var], [no])])])
@@ -140,23 +94,13 @@ AS_VAR_POPDEF([ac_var])dnl
 
 dnl equivalent of AC_CHECK_FUNC
 AC_DEFUN([AC_CHECK_CXX_COMPLEX_ATAN2],
-[AC_REQUIRE([AC_CXX_NAMESPACES])
- AC_REQUIRE([AC_CXX_HAVE_COMPLEX])
- AC_REQUIRE([AC_CXX_HAVE_TR1_COMPLEX])
+[AC_REQUIRE([AC_CXX_HAVE_COMPLEX])
  AS_VAR_PUSHDEF([ac_var], [ac_cv_cpp_complex_func_atan2])dnl
  AC_CACHE_CHECK([for complex atan2], [ac_var],
  [AC_LANG_PUSH(C++)
   AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
-			#ifdef HAVE_TR1_COMPLEX
-		        # include <tr1/complex>
-			  using namespace std;
-			  using namespace std::tr1;
-		        #else
 		        # include <complex>
-		        # ifdef HAVE_NAMESPACES
-		           using namespace std;
-		        #endif
-		        #endif
+		        using namespace std;
 			 ]],
 	       	         [[complex<double> x(1,1),y(1,1);  
 			 atan2(x,double(1.0));
@@ -173,23 +117,13 @@ AS_VAR_POPDEF([ac_var])dnl
 
 dnl equivalent of AC_CHECK_FUNC
 AC_DEFUN([AC_CHECK_CXX_COMPLEX_FMOD],
-[AC_REQUIRE([AC_CXX_NAMESPACES])
- AC_REQUIRE([AC_CXX_HAVE_COMPLEX])
- AC_REQUIRE([AC_CXX_HAVE_TR1_COMPLEX])
+[AC_REQUIRE([AC_CXX_HAVE_COMPLEX])
  AS_VAR_PUSHDEF([ac_var], [ac_cv_cpp_complex_func_fmod])dnl
  AC_CACHE_CHECK([for complex fmod], [ac_var],
  [AC_LANG_PUSH(C++)
   AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
-			#ifdef HAVE_TR1_COMPLEX
-		        # include <tr1/complex>
-		          using namespace std;
-			  using namespace std::tr1;
-		        #else
 		        # include <complex>
-		        # ifdef HAVE_NAMESPACES
-		           using namespace std;
-		        #endif
-		        #endif
+   	                using namespace std;
 		        ]],
 	       	         [[complex<double> x,y;  
 			 fmod(x,double(2.0));
@@ -207,23 +141,13 @@ AS_VAR_POPDEF([ac_var])dnl
 
 dnl equivalent of AC_CHECK_FUNC
 AC_DEFUN([AC_CHECK_CXX_COMPLEX_POLAR],
-[AC_REQUIRE([AC_CXX_NAMESPACES])
- AC_REQUIRE([AC_CXX_HAVE_COMPLEX])
- AC_REQUIRE([AC_CXX_HAVE_TR1_COMPLEX])
+[AC_REQUIRE([AC_CXX_HAVE_COMPLEX])
  AS_VAR_PUSHDEF([ac_var], [ac_cv_cpp_complex_func_polar])dnl
  AC_CACHE_CHECK([for complex polar (double, double)], [ac_var],
  [AC_LANG_PUSH(C++)
   AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
-			#ifdef HAVE_TR1_COMPLEX
-		        # include <tr1/complex>
-		          using namespace std;
-			  using namespace std::tr1;
-		        #else
 		        # include <complex>
-		        # ifdef HAVE_NAMESPACES
-		           using namespace std;
-		        #endif
-		        #endif
+		        using namespace std;
 		        ]],
 	       	         [[
 			 /* In order to get an error with g++ need to take real */
@@ -241,23 +165,13 @@ AS_VAR_POPDEF([ac_var])dnl
 
 dnl equivalent of AC_CHECK_FUNC
 AC_DEFUN([AC_CHECK_CXX_COMPLEX_POLAR_COMPLEX],
-[AC_REQUIRE([AC_CXX_NAMESPACES])
- AC_REQUIRE([AC_CXX_HAVE_COMPLEX])
- AC_REQUIRE([AC_CXX_HAVE_TR1_COMPLEX])
+[AC_REQUIRE([AC_CXX_HAVE_COMPLEX])
  AS_VAR_PUSHDEF([ac_var], [ac_cv_cpp_complex_func_polar_complex])dnl
  AC_CACHE_CHECK([for complex polar (complex, complex)], [ac_var],
  [AC_LANG_PUSH(C++)
   AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
-			#ifdef HAVE_TR1_COMPLEX
-		        # include <tr1/complex>
-		          using namespace std;
-			  using namespace std::tr1;
-		        #else
 		        # include <complex>
-		        # ifdef HAVE_NAMESPACES
-		           using namespace std;
-		        #endif
-		        #endif
+		        using namespace std;
 		        ]],
 	       	         [[
 			 /* In order to get an error with g++ need to take real */

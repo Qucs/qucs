@@ -38,32 +38,32 @@ class dataset : public object
   dataset (char *);
   dataset (const dataset &);
   ~dataset ();
-  void addDependency (vector *);
-  void addDependencies (vector *);
-  void appendDependency (vector *);
-  void appendDependencies (vector *);
-  void addVariable (vector *);
-  void addVariables (vector *);
-  void appendVariable (vector *);
-  void appendVariables (vector *);
-  void applyDependencies (vector * v);
-  void delDependency (vector *);
-  void delVariable (vector *);
+  void addDependency (qucs::vector *);
+  void addDependencies (qucs::vector *);
+  void appendDependency (qucs::vector *);
+  void appendDependencies (qucs::vector *);
+  void addVariable (qucs::vector *);
+  void addVariables (qucs::vector *);
+  void appendVariable (qucs::vector *);
+  void appendVariables (qucs::vector *);
+  void applyDependencies (qucs::vector * v);
+  void delDependency (qucs::vector *);
+  void delVariable (qucs::vector *);
 
   void assignDependency (char *, char *);
   char * getFile (void);
   void setFile (const char *);
   void print (void);
-  void printData (vector *, FILE *);
-  void printDependency (vector *, FILE *);
-  void printVariable (vector *, FILE *);
-  vector * findDependency (const char *);
-  vector * findVariable (const char *);
-  vector * getDependencies (void) { return dependencies; }
-  vector * getVariables (void) { return variables; }
-  int isDependency (vector *);
-  int isVariable (vector *);
-  vector * findOrigin (char *);
+  void printData (qucs::vector *, FILE *);
+  void printDependency (qucs::vector *, FILE *);
+  void printVariable (qucs::vector *, FILE *);
+  qucs::vector * findDependency (const char *);
+  qucs::vector * findVariable (const char *);
+  qucs::vector * getDependencies (void) { return dependencies; }
+  qucs::vector * getVariables (void) { return variables; }
+  int isDependency (qucs::vector *);
+  int isVariable (qucs::vector *);
+  qucs::vector * findOrigin (char *);
   static dataset * load (const char *);
   static dataset * load_touchstone (const char *);
   static dataset * load_csv (const char *);
@@ -76,8 +76,8 @@ class dataset : public object
 
  private:
   char * file;
-  vector * dependencies;
-  vector * variables;
+  qucs::vector * dependencies;
+  qucs::vector * variables;
 };
 
 } // namespace qucs

@@ -27,12 +27,10 @@
 #endif
 #include <locale.h>
 
-#include <q3textstream.h>
-#include <qmessagebox.h>
-#include <qregexp.h>
-#include <qdatetime.h>
-//Added by qt3to4:
-#include <Q3CString>
+#include <Q3TextStream>
+#include <QMessageBox>
+#include <QRegExp>
+#include <QDateTime>
 
 #include "diagram.h"
 #include "qucs.h"
@@ -45,23 +43,6 @@
 #ifdef __MINGW32__
 # define finite(x) _finite(x)
 #endif
-
-#if defined (__MINGW32__)
-// strtod() appears to be so sloooooooo under Win32...
-static double strtod_faster (char * pPos, char ** pEnd) {
-  *pEnd = pPos;
-  while ((**pEnd) && (**pEnd > ' ') && (**pEnd != 'j') && (**pEnd != 'i'))
-    (*pEnd)++;
-  if ((**pEnd == 'j') || (**pEnd == 'i'))
-    (*pEnd)--;
-  Q3CString str = Q3CString (pPos, *pEnd - pPos + 1);
-  bool ok;
-  double x = str.toDouble (&ok);
-  if (!ok) *pEnd = pPos;
-  return x;
-}
-#define strtod(a,b) strtod_faster(a,b)
-#endif /* __MINGW32__ */
 
 using namespace std;
 

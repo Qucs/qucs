@@ -38,10 +38,10 @@ namespace qucs {
 class strlist;
 class vector;
 
-vector linspace (nr_double_t, nr_double_t, int);
-vector logspace (nr_double_t, nr_double_t, int);
-vector runavg (vector, const int);
-vector runavg (const nr_complex_t, const int);
+qucs::vector linspace (nr_double_t, nr_double_t, int);
+qucs::vector logspace (nr_double_t, nr_double_t, int);
+qucs::vector runavg (qucs::vector, const int);
+qucs::vector runavg (const nr_complex_t, const int);
 
 class vector : public object
 {
@@ -59,7 +59,7 @@ class vector : public object
   nr_complex_t get (int);
   void set (nr_double_t, int);
   void set (const nr_complex_t, int);
-  int getSize (void);
+  int getSize (void) const;
   int checkSizes (vector, vector);
   int getRequested (void) { return requested; }
   void setRequested (int n) { requested = n; }

@@ -22,8 +22,8 @@
 #include "element.h"
 #include "viewpainter.h"
 
-#include <qpainter.h>
-#include <q3valuelist.h>
+#include <QPainter>
+#include <Q3ValueList>
 
 class Diagram;
 class Graph;

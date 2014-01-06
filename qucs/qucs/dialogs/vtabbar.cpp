@@ -20,8 +20,8 @@
 #include "vtabbutton.h"
 #include "vtabbar.h"
 
-#include <qlayout.h>
-#include <qtooltip.h>
+#include <QLayout>
+#include <QToolTip>
 //Added by qt3to4:
 #include <Q3VBoxLayout>
 

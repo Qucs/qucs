@@ -16,6 +16,9 @@ enum ClassMethods { evNotDefined,
                     init_async,
                     stepsolve_sync,
                     acceptstep_sync,
+                    stepsolve_async,
+                    acceptstep_async,
+                    rejectstep_async,
                     getsolution,
                     debug,
                     printx, 
@@ -36,6 +39,9 @@ void Initialize()
     s_mapClassMethodStrs["init_async"]          = init_async;
     s_mapClassMethodStrs["stepsolve_sync"]      = stepsolve_sync;
     s_mapClassMethodStrs["acceptstep_sync"]     = acceptstep_sync;
+    s_mapClassMethodStrs["stepsolve_async"]     = stepsolve_async;
+    s_mapClassMethodStrs["acceptstep_async"]    = acceptstep_async;
+    s_mapClassMethodStrs["rejectstep_async"]    = rejectstep_async;
     s_mapClassMethodStrs["getsolution"]         = getsolution;
     s_mapClassMethodStrs["debug"]               = debug;
     s_mapClassMethodStrs["printx"]              = printx;
@@ -103,6 +109,15 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         return;
     case acceptstep_sync:
         mextrsolver_instance->acceptstep_sync(nlhs, plhs, nrhs, prhs);
+        return;
+    case stepsolve_async:
+        mextrsolver_instance->stepsolve_async(nlhs, plhs, nrhs, prhs);
+        return;
+	case acceptstep_async:
+        mextrsolver_instance->acceptstep_async(nlhs, plhs, nrhs, prhs);
+        return;
+    case rejectstep_async:
+        mextrsolver_instance->rejectstep_async(nlhs, plhs, nrhs, prhs);
         return;
     case getsolution:
         mextrsolver_instance->getsolution(nlhs, plhs, nrhs, prhs);

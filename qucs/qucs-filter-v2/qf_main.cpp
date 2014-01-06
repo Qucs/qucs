@@ -2,17 +2,17 @@
 # include <config.h>
 #endif
 
-#include <qbuffer.h>
-#include <q3textstream.h>
-#include <qobject.h>
-#include <qapplication.h>
-#include <q3textedit.h>
-#include <qdir.h>
-#include <qtextcodec.h>
-#include <qclipboard.h>
-#include <qlineedit.h>
-#include <qcombobox.h>
-#include <qcheckbox.h>
+#include <QBuffer>
+#include <Q3TextStream>
+#include <QObject>
+#include <QApplication>
+#include <Q3TextEdit>
+#include <QDir>
+#include <QTextCodec>
+#include <QClipboard>
+#include <QLineEdit>
+#include <QComboBox>
+#include <QCheckBox>
 
 #include "qf_common.h"
 #include "qf_poly.h"

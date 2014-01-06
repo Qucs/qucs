@@ -1,7 +1,7 @@
 ##
 ## RCS Info
 ## $Id: Makefile.am 1181 2009-09-28 16:16:03Z r29173 $
-## 
+##
 ## Log
 ## $Log$
 ## Revision 1.15  2006/08/04 17:15:31  r29173
@@ -93,31 +93,45 @@ incfile=constants.vams disciplines.vams adms.implicit.xml dummy.va dummy.xml
 incfilec=$(incfile:=.c)
 
 if MAINTAINER_MODE
+
 generated_FILES=adms.h adms.c verilogaYacc.y admstpathYacc.y admstpathYacc.h $(incfilec)
+
+BUILT_SOURCES = $(generated_FILES)
+
 SUFFIXES=.vams .vams.c .va .va.c .xml .xml.c .y.in
+
+# use mkctext.pl to create C files containing the contents of each
+# input file in a C character array. The output is used by make check
+# only
 $(incfilec):%.c:% ${srcdir}/mkctext.pl
 	$(PERL) ${srcdir}/mkctext.pl $< $(top_srcdir)
+
 admstpathYacc.y admstpathYacc.h adms.h adms.c: ${top_srcdir}/adms.xml ${top_srcdir}/admstpath.xml ${srcdir}/mkelements.pl
 	$(PERL) ${srcdir}/mkelements.pl $(top_srcdir)
+
 verilogaYacc.y: ${srcdir}/verilogaYacc.y.in ${srcdir}/mkgrammar.pl
 	$(PERL) ${srcdir}/mkgrammar.pl ${srcdir}/verilogaYacc.y.in
 # -b -> re-defines file-prefix (not y.tab.c)
 # -d -> creates #define file
 verilogaLex.c: verilogaLex.l
-	flex -Pveriloga -overilogaLex.c verilogaLex.l
+	flex -Pveriloga -overilogaLex.c ${srcdir}/verilogaLex.l
+
 verilogaYacc.c: verilogaYacc.y verilogaLex.l
-	bison -by -d -pveriloga verilogaYacc.y 
-	mv -f y.tab.c verilogaYacc.c 
-	mv -f y.tab.h verilogaYacc.h 
+	bison -by -d -pveriloga ${srcdir}/verilogaYacc.y
+	mv -f y.tab.c verilogaYacc.c
+	mv -f y.tab.h verilogaYacc.h
+
 admstpathYacc.c: admstpathYacc.y admstpathYacc.h
-	bison -by -padmstpath admstpathYacc.y 
-	mv -f y.tab.c admstpathYacc.c 
+	bison -by -padmstpath ${srcdir}/admstpathYacc.y
+	mv -f y.tab.c admstpathYacc.c
+
 preprocessorLex.c: preprocessorLex.l
-	flex -Ppreprocessor -opreprocessorLex.c preprocessorLex.l
+	flex -Ppreprocessor -opreprocessorLex.c ${srcdir}/preprocessorLex.l
+
 preprocessorYacc.c: preprocessorYacc.y preprocessorLex.l
-	bison -by -d -ppreprocessor preprocessorYacc.y 
-	mv -f y.tab.c preprocessorYacc.c 
-	mv -f y.tab.h preprocessorYacc.h 
+	bison -by -d -ppreprocessor ${srcdir}/preprocessorYacc.y
+	mv -f y.tab.c preprocessorYacc.c
+	mv -f y.tab.h preprocessorYacc.h
 else
 generated_FILES =
 endif
@@ -130,7 +144,7 @@ libadmsElement_la_SOURCES=adms.c
 libadmsElement_la_CPPFLAGS=-DinsideElement
 libadmsElement_la_LDFLAGS=-no-undefined
 
-preprocessorLex.l: $(incfilec) 
+preprocessorLex.l: $(incfilec)
 libadmsPreprocessor_la_SOURCES=preprocessorYacc.c preprocessorLex.l preprocessorMain.c
 libadmsPreprocessor_la_CPPFLAGS=-DinsidePreprocessor
 libadmsPreprocessor_la_LDFLAGS=-no-undefined
@@ -155,6 +169,7 @@ admsXml_LDADD=-lm libadmsElement.la libadmsVeriloga.la libadmsPreprocessor.la li
 
 admsXml.c: adms.implicit.xml.c
 
+# Rules to create the admsCheck test program
 admsCheck.c=$(incfilec)
 admsCheck_SOURCES=admsCheck.c
 admsCheck_LDADD=libadmsElement.la

@@ -17,11 +17,11 @@
 #include <QtGui>
 #include "markerdialog.h"
 
-#include <qlayout.h>
-#include <qlabel.h>
-#include <q3hbox.h>
-#include <qpushbutton.h>
-#include <qvalidator.h>
+#include <QLayout>
+#include <QLabel>
+#include <Q3HBox>
+#include <QPushButton>
+#include <QValidator>
 //Added by qt3to4:
 #include <Q3GridLayout>
 #include "diagram.h"

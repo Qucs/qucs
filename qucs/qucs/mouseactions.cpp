@@ -35,14 +35,14 @@
 #include "diagrams/timingdiagram.h"
 #include "dialogs/labeldialog.h"
 
-#include <qinputdialog.h>
-#include <qclipboard.h>
-#include <qapplication.h>
-#include <qmessagebox.h>
-#include <q3popupmenu.h>
-#include <qevent.h>
-#include <qaction.h>
-#include <qtabwidget.h>
+#include <QInputDialog>
+#include <QClipboard>
+#include <QApplication>
+#include <QMessageBox>
+#include <Q3PopupMenu>
+#include <QEvent>
+#include <QAction>
+#include <QTabWidget>
 
 #include <limits.h>
 #include <stdlib.h>
@@ -837,6 +837,18 @@ void MouseActions::rightPressMenu(Schematic *Doc, QMouseEvent *Event, float fX, 
       QucsMain->editPaste->addTo(ComponentMenu);
     break;
   }
+
+  while (true) {
+      if (focusElement) {
+          if (focusElement->Type == isDiagram) {
+
+              ComponentMenu->insertItem(QObject::tr("Export Graphics"), QucsMain,
+                      SLOT(slotSaveDiagramToGraphicsFile()));
+          }
+      }
+      break;
+  }
+
   if(!QucsMain->editDelete->isOn())
     QucsMain->editDelete->addTo(ComponentMenu);
   if(focusElement) if(focusElement->Type == isMarker) {

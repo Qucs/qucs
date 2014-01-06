@@ -37,6 +37,8 @@ class history
   ~history ();
 
   void append (nr_double_t);
+  void truncate (int);
+  void truncate (nr_double_t);
   void setAge (nr_double_t a) { age = a; }
   nr_double_t getAge (void) { return age; }
   nr_double_t duration (void);
