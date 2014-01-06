@@ -54,6 +54,7 @@
 #include "exception.h"
 #include "exceptionstack.h"
 #include "nasolver.h"
+#include "constants.h"
 
 namespace qucs {
 

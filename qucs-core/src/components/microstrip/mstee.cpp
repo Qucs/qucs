@@ -99,9 +99,9 @@ void mstee::calcSP (nr_double_t frequency) {
   setS (NODE_3, NODE_1, 2.0 * qucs::sqrt (Ta2) / (1.0 + n1));
   setS (NODE_2, NODE_3, 2.0 * qucs::sqrt (Tb2) / (1.0 + n2));
   setS (NODE_3, NODE_2, 2.0 * qucs::sqrt (Tb2) / (1.0 + n2));
-  setS (NODE_1, NODE_2, 2.0 / (sqrt (Ta2 * Tb2) * nr_complex_t (1, Bt * z0) +
+  setS (NODE_1, NODE_2, 2.0 / (qucs::sqrt (Ta2 * Tb2) * nr_complex_t (1, Bt * z0) +
 			       qucs::sqrt (Ta2 / Tb2) + qucs::sqrt (Tb2 / Ta2)));
-  setS (NODE_2, NODE_1, 2.0 / (sqrt (Ta2 * Tb2) * nr_complex_t (1, Bt * z0) +
+  setS (NODE_2, NODE_1, 2.0 / (qucs::sqrt (Ta2 * Tb2) * nr_complex_t (1, Bt * z0) +
 			       qucs::sqrt (Ta2 / Tb2) + qucs::sqrt (Tb2 / Ta2)));
 }
 
@@ -267,7 +267,7 @@ void mstee::calcAC (nr_double_t frequency) {
   setD (VSRC_1, VSRC_1, nr_complex_t (0, -1 / Ta2 / Bt));
   setD (VSRC_1, VSRC_2, nr_complex_t (0, -1 / qucs::sqrt (Ta2 * Tb2) / Bt));
   setD (VSRC_1, VSRC_3, nr_complex_t (0, -1 / qucs::sqrt (Ta2) / Bt));
-  setD (VSRC_2, VSRC_1, nr_complex_t (0, -1 / sqrt (Ta2 * Tb2) / Bt));
+  setD (VSRC_2, VSRC_1, nr_complex_t (0, -1 / qucs::sqrt (Ta2 * Tb2) / Bt));
   setD (VSRC_2, VSRC_2, nr_complex_t (0, -1 / Tb2 / Bt));
   setD (VSRC_2, VSRC_3, nr_complex_t (0, -1 / qucs::sqrt (Tb2) / Bt));
   setD (VSRC_3, VSRC_1, nr_complex_t (0, -1 / qucs::sqrt (Ta2) / Bt));

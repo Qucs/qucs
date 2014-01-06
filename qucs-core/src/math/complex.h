@@ -26,14 +26,7 @@
 #define __COMPLEX_H__
 
 #include "real.h"
-
-#if defined HAVE_TR1_COMPLEX
-#include <tr1/complex>
-#define COMP_STD std::tr1
-#else
 #include <complex>
-#define COMP_STD std
-#endif
 
 typedef std::complex<nr_double_t> nr_complex_t;
 
@@ -49,7 +42,7 @@ namespace qucs {
 nr_complex_t    acos (const nr_complex_t);
 #else
 inline nr_complex_t acos (const nr_complex_t z) {
-    return COMP_STD::acos (z);
+    return std::acos (z);
 #endif
 
 #ifndef HAVE_CXX_COMPLEX_ACOSH
@@ -80,7 +73,7 @@ inline nr_complex_t sech (const nr_complex_t z) {
 nr_complex_t    asin (const nr_complex_t);
 #else
 inline nr_complex_t asin (const nr_complex_t z) {
-    return COMP_STD::asin (z);
+    return std::asin (z);
 }
 #endif
 
@@ -88,7 +81,7 @@ inline nr_complex_t asin (const nr_complex_t z) {
 nr_complex_t   asinh (const nr_complex_t);
 #else
 inline nr_complex_t asinh (const nr_complex_t z) {
-    return COMP_STD::asinh (z);
+    return std::asinh (z);
 }
 #endif
 
@@ -96,7 +89,7 @@ inline nr_complex_t asinh (const nr_complex_t z) {
 nr_complex_t    atan (const nr_complex_t);
 #else
 inline nr_complex_t atan (const nr_complex_t z) {
-    return COMP_STD::atan (z);
+    return std::atan (z);
 }
 #endif
 
@@ -104,7 +97,7 @@ inline nr_complex_t atan (const nr_complex_t z) {
 nr_complex_t   atanh (const nr_complex_t);
 #else
 inline nr_complex_t atanh (const nr_complex_t z) {
-    return COMP_STD::atanh (z);
+    return std::atanh (z);
 }
 #endif
 
@@ -112,7 +105,7 @@ inline nr_complex_t atanh (const nr_complex_t z) {
 nr_complex_t   atan2 (const nr_complex_t, const nr_complex_t);
 #else
 inline nr_complex_t atan2 (const nr_complex_t z) {
-    return COMP_STD::atan2 (z);
+    return std::atan2 (z);
 }
 #endif
 
@@ -128,23 +121,17 @@ inline nr_complex_t cos (const nr_complex_t z) {
 nr_complex_t     cosech (const nr_complex_t);
 #else
 inline nr_complex_t     cosech (const nr_complex_t z) {
-  return COMP_STD::cosech (z);
+  return std::cosech (z);
 }
 #endif
 
-#ifndef HAVE_CXX_COMPLEX_COSH
-nr_complex_t    cosh (const nr_complex_t);
-#else
-inline nr_complex_t    cosh (const nr_complex_t z) {
-  return COMP_STD::cosh (z);
-}
-#endif
 
 #ifndef HAVE_CXX_COMPLEX_EXP
 nr_complex_t     exp (const nr_complex_t);
 #else
 inline nr_complex_t exp (const nr_complex_t z) {
     return std::exp (z);
+}
 #endif
 
 #ifndef HAVE_CXX_COMPLEX_LOG
@@ -167,7 +154,7 @@ inline nr_complex_t log10 (const nr_complex_t z) {
 nr_complex_t    log2 (const nr_complex_t);
 #else
 inline nr_complex_t log2 (const nr_complex_t z) {
-    return COMP_STD::log2 (z);
+    return std::log2 (z);
 }
 #endif
 
@@ -179,13 +166,13 @@ inline nr_complex_t log2 (const nr_complex_t z) {
    \return Euclidian norm of z
 */
 inline nr_double_t norm (const nr_complex_t z) {
-  nr_double_t r = COMP_STD::real (z);
-  nr_double_t i = COMP_STD::imag (z);
+  nr_double_t r = std::real (z);
+  nr_double_t i = std::imag (z);
   return r * r + i * i;
 }
 #else
 inline nr_double_t norm (const nr_complex_t z) {
-  return COMP_STD::norm (z);
+  return std::norm (z);
 }
 #endif
 
@@ -200,7 +187,8 @@ inline nr_complex_t polar (const nr_double_t mag, const nr_double_t ang = 0.0) {
 }
 #else
 inline nr_complex_t polar (const nr_double_t mag, const nr_double_t ang) {
-  return COMP_STD::polar (mag, ang);
+  return std::polar (mag, ang);
+}
 #endif
 
 #ifndef HAVE_CXX_COMPLEX_POLAR_COMPLEX
@@ -215,13 +203,13 @@ nr_complex_t   polar (const nr_double_t a, const nr_complex_t p);
 nr_complex_t   polar (const nr_complex_t a, const nr_double_t p = 0.0);
 #else
 inline nr_complex_t   polar (const nr_complex_t a, const nr_complex_t p) {
-  return COMP_STD::polar(a, p);
+  return std::polar(a, p);
 }
 inline nr_complex_t   polar (const nr_double_t a, const nr_complex_t p) {
-  return COMP_STD::polar(a, p);
+  return std::polar(a, p);
 }
 inline nr_complex_t   polar (const nr_complex_t a, const nr_double_t p) {
-  return COMP_STD::polar(a, p);
+  return std::polar(a, p);
 }
 #endif
 
@@ -231,13 +219,13 @@ nr_complex_t     pow (const nr_double_t, const nr_complex_t);
 nr_complex_t     pow (const nr_complex_t, const nr_complex_t);
 #else
 inline nr_complex_t     pow (const nr_complex_t z, const nr_double_t d) {
-  return COMP_STD::pow (z, d);
+  return std::pow (z, d);
 }
 inline nr_complex_t     pow (const nr_double_t d, const nr_complex_t z) {
-  return COMP_STD::pow (d, z);
+  return std::pow (d, z);
 }
 inline nr_complex_t     pow (const nr_complex_t z1, const nr_complex_t z2) {
-  return COMP_STD::pow (z1, z2);
+  return std::pow (z1, z2);
 }
 #endif
 
@@ -331,7 +319,7 @@ inline nr_complex_t   floor (const nr_complex_t z) {
 }
 #else
 inline nr_complex_t floor (const nr_complex_t z) {
-  return COMP_STD::floor (z);
+  return std::floor (z);
 }
 #endif
 
@@ -434,13 +422,13 @@ inline nr_complex_t  fmod (const nr_double_t x, const nr_complex_t y) {
 }
 #else
 inline nr_complex_t    fmod (const nr_complex_t x, const nr_complex_t y) {
-  return COMP_STD::fmod (x, y);
+  return std::fmod (x, y);
 }
 inline nr_complex_t    fmod (const nr_complex_t x, const nr_double_t y) {
-  return COMP_STD::fmod (x, y);
+  return std::fmod (x, y);
 }
 inline nr_complex_t  fmod (const nr_double_t x, const nr_complex_t y) {
-  return COMP_STD::fmod (x, y);
+  return std::fmod (x, y);
 }
 #endif
 

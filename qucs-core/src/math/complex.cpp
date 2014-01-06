@@ -44,7 +44,7 @@
 #include "consts.h"
 #include "fspecial.h"
 
-using namespace COMP_STD;
+using namespace std;
 using namespace fspecial;
 
 namespace qucs {
@@ -104,10 +104,6 @@ nr_complex_t cosh (const nr_complex_t z) {
   nr_double_t r = real (z);
   nr_double_t i = imag (z);
   return (std::polar (exp (r), i) + std::polar (exp (-r), -i)) / 2.0;
-}
-#else
-nr_complex_t cosh (const nr_complex_t z) {
-  return std::cosh (z);
 }
 #endif
 
@@ -363,7 +359,7 @@ nr_complex_t atan (const nr_complex_t z) {
    \return arc tangent of z
 */
 nr_complex_t atan2 (const nr_complex_t y, const nr_complex_t x) {
-  nr_complex_t a = std::atan (y / x);
+  nr_complex_t a = qucs::atan (y / x);
   return real (x) > 0.0 ? a : -a;
 }
 #endif
@@ -603,7 +599,7 @@ nr_complex_t jn (const int n, const nr_complex_t z) {
    \bug Not implemented
 */
 nr_complex_t yn (const int n, const nr_complex_t z) {
-  return nr_complex_t (::yn (n, COMP_STD::real (z)), 0);
+  return nr_complex_t (::yn (n, std::real (z)), 0);
 }
 
 /*!\brief Modified Bessel function of first kind
@@ -613,7 +609,7 @@ nr_complex_t yn (const int n, const nr_complex_t z) {
    \bug Not implemented
 */
 nr_complex_t i0 (const nr_complex_t z) {
-  return nr_complex_t (fspecial::i0 (COMP_STD::real (z)), 0);
+  return nr_complex_t (fspecial::i0 (std::real (z)), 0);
 }
 
 /*!\brief Error function
@@ -624,9 +620,9 @@ nr_complex_t i0 (const nr_complex_t z) {
 */
 nr_complex_t erf (const nr_complex_t z) {
 #ifndef HAVE_ERF
-  nr_double_t zerf = fspecial::erf (COMP_STD::real (z));
+  nr_double_t zerf = fspecial::erf (std::real (z));
 #else
-  nr_double_t zerf = ::erf (COMP_STD::real (z));
+  nr_double_t zerf = ::erf (std::real (z));
 #endif
   return nr_complex_t (zerf, 0);
 }
@@ -639,11 +635,11 @@ nr_complex_t erf (const nr_complex_t z) {
 */
 nr_complex_t erfc (const nr_complex_t z) {
 #ifndef HAVE_ERFC
-  nr_double_t zerfc = fspecial::erfc (COMP_STD::real (z));
+  nr_double_t zerfc = fspecial::erfc (std::real (z));
 #else
-  nr_double_t zerfc = ::erfc (COMP_STD::real (z));
+  nr_double_t zerfc = ::erfc (std::real (z));
 #endif
-  return nr_complex_t (zerfc (real (z)), 0);
+  return nr_complex_t (zerfc, 0);
 }
 
 /*!\brief Inverse of error function
@@ -653,7 +649,7 @@ nr_complex_t erfc (const nr_complex_t z) {
    \bug Not implemented
 */
 nr_complex_t erfinv (const nr_complex_t z) {
-  return nr_complex_t (fspecial::erfinv (COMP_STD::real (z)), 0);
+  return nr_complex_t (fspecial::erfinv (std::real (z)), 0);
 }
 
 /*!\brief Inverse of complementart error function
@@ -663,7 +659,7 @@ nr_complex_t erfinv (const nr_complex_t z) {
    \bug Not implemented
 */
 nr_complex_t erfcinv (const nr_complex_t z) {
-  return nr_complex_t (fspecial::erfcinv (COMP_STD::real (z)), 0);
+  return nr_complex_t (fspecial::erfcinv (std::real (z)), 0);
 }
 
 /*!\brief Equality of two complex
@@ -673,7 +669,7 @@ nr_complex_t erfcinv (const nr_complex_t z) {
 	Use instead fabs(x-x0) < tol
 */
 bool operator==(const nr_complex_t z1, const nr_complex_t z2) {
-  return (COMP_STD::real (z1) == COMP_STD::real (z2)) && (COMP_STD::imag (z1) == COMP_STD::imag (z2));
+  return (std::real (z1) == std::real (z2)) && (std::imag (z1) == std::imag (z2));
 }
 
 /*!\brief Inequality of two complex
@@ -683,7 +679,7 @@ bool operator==(const nr_complex_t z1, const nr_complex_t z2) {
 	Use instead fabs(x-x0) > tol
 */
 bool operator!=(const nr_complex_t z1, const nr_complex_t z2) {
-  return (COMP_STD::real (z1) != COMP_STD::real (z2)) || (COMP_STD::imag (z1) != COMP_STD::imag (z2));
+  return (std::real (z1) != std::real (z2)) || (std::imag (z1) != std::imag (z2));
 }
 
 /*!\brief Superior of equal

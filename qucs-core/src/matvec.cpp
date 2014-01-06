@@ -171,14 +171,14 @@ char * matvec::isMatrixVector (char * n, int& r, int& c) {
 /* This function looks through the vector list given in `data' to find
    matrix entries specified by `name' and returns the matrix vector
    dimensions. */
-void matvec::getMatrixVectorSize (::vector * data, char * name,
+void matvec::getMatrixVectorSize (qucs::vector * data, char * name,
 				  int& rs, int& cs, int& ss) {
   qucs::vector * v;
   char * vn, * n;
   int r, c, s;
   rs = cs = ss = -1;
   // go through vector list
-  for (v = data; v != NULL; v = (::vector *) v->getNext ()) {
+  for (v = data; v != NULL; v = (qucs::vector *) v->getNext ()) {
     vn = v->getName ();
     // requested matrix name found?
     if (strstr (vn, name) == vn) {
@@ -197,7 +197,7 @@ void matvec::getMatrixVectorSize (::vector * data, char * name,
    matrix entries specified by `name' and returns a matrix vector
    object.  If there are no such matrices the function returns
    NULL. */
-matvec * matvec::getMatrixVector (::vector * data, char * name) {
+matvec * matvec::getMatrixVector (qucs::vector * data, char * name) {
 
   // obtain matrix vector dimensions
   int rs, cs, ss;
@@ -212,7 +212,7 @@ matvec * matvec::getMatrixVector (::vector * data, char * name) {
     matvec * mv = new matvec (ss, rs + 1, cs + 1);
     mv->setName (name);
     // go through vector list again and fill in matrix vectors
-    for (v = data; v; v = (::vector *) v->getNext ()) {
+    for (v = data; v; v = (qucs::vector *) v->getNext ()) {
       vn = v->getName ();
       if (strstr (vn, name) == vn) {
         if ((n = matvec::isMatrixVector (vn, r, c)) != NULL) {
@@ -268,7 +268,7 @@ matvec operator + (matvec a, qucs::vector b) {
 }
 
 // Matrix vector addition with vector in different order.
-matvec operator + (::vector b, matvec a) {
+matvec operator + (qucs::vector b, matvec a) {
   return a + b;
 }
 
@@ -369,7 +369,7 @@ matvec operator - (matvec a, qucs::vector b) {
 }
 
 // Matrix vector subtraction with vector in different order.
-matvec operator - (::vector b, matvec a) {
+matvec operator - (qucs::vector b, matvec a) {
   return -a + b;
 }
 
@@ -421,7 +421,7 @@ matvec operator * (matvec a, qucs::vector b) {
 }
 
 // Matrix vector scaling by a second vector in different order.
-matvec operator * (::vector a, matvec b) {
+matvec operator * (qucs::vector a, matvec b) {
   return b * a;
 }
 

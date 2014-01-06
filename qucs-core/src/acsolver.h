@@ -44,7 +44,7 @@ class acsolver : public nasolver<nr_complex_t>
   static void calc (acsolver *);
   void init (void);
   void saveAllResults (nr_double_t);
-  void saveNoiseResults (::vector *);
+  void saveNoiseResults (qucs::vector *);
 
  private:
   sweep * swp;
