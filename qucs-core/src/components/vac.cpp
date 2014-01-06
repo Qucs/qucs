@@ -82,7 +82,7 @@ void vac::calcHB (nr_double_t frequency) {
   if (f == frequency) {
     nr_double_t a = getPropertyDouble ("U");
     nr_double_t p = getPropertyDouble ("Phase");
-    setE (VSRC_1, qucs::polar (a, rad (p)));
+    setE (VSRC_1, qucs::polar (a, rad (p)));9
   }
   else {
     setE (VSRC_1, 0);

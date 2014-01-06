@@ -5,11 +5,11 @@ AC_PREREQ(2.64)
 
 AC_INIT([qucs-core],[0.0.18],[qucs-bugs@lists.sourceforge.net])
 LT_PREREQ([2.2.2])
+AM_PROG_AR
 LT_INIT([disable-static dlopen win32-dll])
 AC_CONFIG_MACRO_DIR([m4])
-
+AC_CONFIG_AUX_DIR([build-aux])
 AC_CONFIG_SRCDIR([src/circuit.cpp])
-AC_CONFIG_HEADERS([config.h])
 
 AC_CANONICAL_BUILD
 AC_CANONICAL_HOST
@@ -24,8 +24,11 @@ test "x$prefix" = xNONE && prefix="/usr/local"
 
 dnl Checks for programs.
 AC_PROG_CXX
+AX_CXX_COMPILE_STDCXX_11
 AC_PROG_CC
-AC_CHECK_TOOL(AR, ar, :)
+AC_PROG_LN_S
+AC_PROG_INSTALL
+AC_PROG_CC_C_O
 
 dnl Check for parser and lexer generators.
 AC_PROG_YACC
@@ -251,7 +254,6 @@ dnl Checks for complex classes and functions.
 AC_CXX_NAMESPACES
 AC_CXX_HAVE_COMPLEX
 AS_IF([test "X$ac_cv_cxx_have_complex" = "X"],[AC_MSG_ERROR([Qucs Need a templated complex class])])
-AC_CXX_HAVE_TR1_COMPLEX
 AC_CHECK_CXX_COMPLEX_FUNCS([cos cosh exp log log10 sin sinh sqrt tan tanh])
 AC_CHECK_CXX_COMPLEX_FUNCS([acos acosh asin asinh atan atanh])
 AC_CHECK_CXX_COMPLEX_FUNCS([log2 norm])

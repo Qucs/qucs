@@ -89,8 +89,8 @@ void vfile::prepare (void) {
 		  file);
 	return;
       }
-      vector * vs = data->getVariables();    // voltage
-      vector * ts = data->getDependencies(); // time
+      qucs::vector * vs = data->getVariables();    // voltage
+      qucs::vector * ts = data->getDependencies(); // time
       inter = new interpolator ();
       inter->rvectors (vs, ts);
       inter->prepare (interpolType, dataType);

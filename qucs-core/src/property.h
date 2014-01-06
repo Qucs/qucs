@@ -52,7 +52,7 @@ class property
   void setNext (property * p) { next = p; }
   void setName (char *);
   char * getName (void);
-  vector * getVector (void);
+  qucs::vector * getVector (void);
   nr_double_t getDouble (void);
   int getInteger (void);
   char * getString (void);

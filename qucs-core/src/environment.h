@@ -79,7 +79,7 @@ class environment
   void equationSolver (void);
 
   // subcircuit specific
-  vector getVector (char *);
+  qucs::vector getVector (char *);
   void setDoubleConstant (char *, nr_double_t);
   nr_double_t getDoubleConstant (char *);
   void setDouble (char *, nr_double_t);

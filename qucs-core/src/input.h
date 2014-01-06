@@ -48,7 +48,7 @@ class input : public object
   environment * getEnv (void) { return env; }
   void setEnv (environment * e) { env = e; }
   static void assignDefaultProperties (object *, struct define_t *);
-  static vector * createVector (struct value_t *);
+  static qucs::vector * createVector (struct value_t *);
 
  private:
   FILE * fd;

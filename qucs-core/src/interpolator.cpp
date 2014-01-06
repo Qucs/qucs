@@ -160,7 +160,7 @@ void interpolator::prepare (int interpol, int repitition, int domain) {
     ang = unwrap (ang);
     // store complex data
     for (int i = 0; i < length; i++) {
-      cy[i] = rect (abs (cy[i]), real (ang (i)));
+      cy[i] = nr_complex_t (abs (cy[i]), real (ang (i)));
     }
   }
 
@@ -262,7 +262,7 @@ nr_complex_t interpolator::clinear (nr_double_t x, int idx) {
   y1 = cy[idx]; y2 = cy[idx+1];
   r = linear (x, x1, x2, real (y1), real (y2));
   i = linear (x, x1, x2, imag (y1), imag (y2));
-  return rect (r, i);
+  return nr_complex_t (r, i);
 }
 
 /* This function interpolates for real values.  Returns the linear
@@ -345,7 +345,7 @@ nr_complex_t interpolator::cinterpolate (nr_double_t x) {
     // evaluate spline functions
     nr_double_t r = rsp->evaluate (x).f0;
     nr_double_t i = isp->evaluate (x).f0;
-    res = rect (r, i);
+    res = nr_complex_t (r, i);
   }
   else if (interpolType & INTERPOL_HOLD) {
     // find appropriate dependency index
@@ -355,7 +355,7 @@ nr_complex_t interpolator::cinterpolate (nr_double_t x) {
 
   // depending on the data type return appropriate complex value
   if (dataType & DATA_POLAR)
-    return polar (real (res), imag (res));
+    return std::polar (real (res), imag (res));
   else
     return res;
 }

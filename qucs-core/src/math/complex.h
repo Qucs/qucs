@@ -29,16 +29,13 @@
 
 #if defined HAVE_TR1_COMPLEX
 #include <tr1/complex>
-//using namespace std;
-//using namespace std::tr1;
-typedef std::complex<nr_double_t> nr_complex_t;
 #define COMP_STD std::tr1
 #else
 #include <complex>
-//using namespace std;
-typedef std::complex<nr_double_t> nr_complex_t;
 #define COMP_STD std
 #endif
+
+typedef std::complex<nr_double_t> nr_complex_t;
 
 // undefine this macro if it is defined already
 #ifdef log2
@@ -47,29 +44,19 @@ typedef std::complex<nr_double_t> nr_complex_t;
 
 namespace qucs {
 
-/*!\brief Construct a complex number using rectangular notation
-   \param[in] x Real part
-   \param[in] y Imagninary part
-   \return complex number in rectangular form
-*/
-inline nr_complex_t rect (const nr_double_t x, const nr_double_t y = 0.0) {
-  return nr_complex_t (x, y);
-}
-
 // overloaded math functions
 #ifndef HAVE_CXX_COMPLEX_ACOS
 nr_complex_t    acos (const nr_complex_t);
 #else
 inline nr_complex_t acos (const nr_complex_t z) {
     return COMP_STD::acos (z);
-}
 #endif
 
 #ifndef HAVE_CXX_COMPLEX_ACOSH
 nr_complex_t   acosh (const nr_complex_t);
 #else
 inline nr_complex_t acosh (const nr_complex_t z) {
-    return COMP_STD::acosh (z);
+    return std::acosh (z);
 }
 #endif
 
@@ -141,7 +128,15 @@ inline nr_complex_t cos (const nr_complex_t z) {
 nr_complex_t     cosech (const nr_complex_t);
 #else
 inline nr_complex_t     cosech (const nr_complex_t z) {
-  return std::cosech (z);
+  return COMP_STD::cosech (z);
+}
+#endif
+
+#ifndef HAVE_CXX_COMPLEX_COSH
+nr_complex_t    cosh (const nr_complex_t);
+#else
+inline nr_complex_t    cosh (const nr_complex_t z) {
+  return COMP_STD::cosh (z);
 }
 #endif
 
@@ -150,7 +145,6 @@ nr_complex_t     exp (const nr_complex_t);
 #else
 inline nr_complex_t exp (const nr_complex_t z) {
     return std::exp (z);
-}
 #endif
 
 #ifndef HAVE_CXX_COMPLEX_LOG
@@ -202,12 +196,11 @@ inline nr_double_t norm (const nr_complex_t z) {
    \return complex number in rectangular form
 */
 inline nr_complex_t polar (const nr_double_t mag, const nr_double_t ang = 0.0) {
-  return rect (mag * std::cos (ang), mag * std::sin (ang));
+  return nr_complex_t (mag * std::cos (ang), mag * std::sin (ang));
 }
 #else
 inline nr_complex_t polar (const nr_double_t mag, const nr_double_t ang) {
   return COMP_STD::polar (mag, ang);
-}
 #endif
 
 #ifndef HAVE_CXX_COMPLEX_POLAR_COMPLEX
@@ -334,7 +327,7 @@ nr_double_t   xhypot (const nr_complex_t, const nr_double_t);
     \return floored complex number
 */
 inline nr_complex_t   floor (const nr_complex_t z) {
-  return rect (std::floor (real (z)), std::floor (imag (z)));
+  return nr_complex_t (std::floor (real (z)), std::floor (imag (z)));
 }
 #else
 inline nr_complex_t floor (const nr_complex_t z) {
@@ -349,7 +342,7 @@ inline nr_complex_t floor (const nr_complex_t z) {
     \return ceilled complex number
 */
 inline nr_complex_t ceil (const nr_complex_t z) {
-  return rect (std::ceil (real (z)), std::ceil (imag (z)));
+  return nr_complex_t (std::ceil (real (z)), std::ceil (imag (z)));
 }
 /*!\brief Complex fix
 
@@ -363,7 +356,7 @@ inline nr_complex_t fix (const nr_complex_t z) {
   nr_double_t y = imag (z);
   x = (x > 0) ? std::floor (x) : std::ceil (x);
   y = (y > 0) ? std::floor (y) : std::ceil (y);
-  return rect (x, y);
+  return nr_complex_t (x, y);
 }
 /*!\brief Complex round
     round is the nearest integral value
@@ -381,7 +374,7 @@ inline nr_complex_t round (const nr_complex_t z) {
   zreal = qucs::round(zreal);
   zimag = qucs::round(zimag);
 #endif
-  return rect (zreal, zimag);
+  return nr_complex_t (zreal, zimag);
 }
 
 /*!\brief Complex trunc
@@ -400,7 +393,7 @@ inline nr_complex_t trunc (const nr_complex_t z) {
   zreal = qucs::trunc(zreal);
   zimag = qucs::trunc(zimag);
 #endif
-  return rect (zreal, zimag);
+  return nr_complex_t (zreal, zimag);
 }
 
 #ifndef HAVE_CXX_COMPLEX_FMOD
@@ -459,7 +452,7 @@ inline nr_complex_t  fmod (const nr_double_t x, const nr_complex_t y) {
 inline nr_complex_t sqr (const nr_complex_t z) {
   nr_double_t r = real (z);
   nr_double_t i = imag (z);
-  return rect (r * r - i * i, 2 * r * i);
+  return nr_complex_t (r * r - i * i, 2 * r * i);
 }
 
 nr_complex_t    step (const nr_complex_t);

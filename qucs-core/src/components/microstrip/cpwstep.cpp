@@ -114,7 +114,7 @@ nr_complex_t cpwstep::calcY (nr_double_t frequency) {
   c = M_1_PI * ((a * a + 1) / a * qucs::log ((1 + a) / (1 - a)) -
 		2 * qucs::log (4 * a / (1 - a * a)));
   c = c * (x1 + x2) / 2;
-  return rect (0, c * o);
+  return nr_complex_t (0, c * o);
 }
 
 void cpwstep::initDC (void) {

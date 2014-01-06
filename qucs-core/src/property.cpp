@@ -159,7 +159,7 @@ property * property::findProperty (const char * n) {
 #define V(con) ((constant *) (con))->v
 
 // Returns the property's value as vector.
-vector * property::getVector (void) {
+qucs::vector * property::getVector (void) {
   if (var != NULL) {
     if (var->getType () == VAR_CONSTANT)
       return V (var->getConstant ());

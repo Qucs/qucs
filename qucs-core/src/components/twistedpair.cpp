@@ -43,7 +43,7 @@ void twistedpair::initSP (void) {
 void twistedpair::calcSP (nr_double_t frequency) {
   calcPropagation (frequency);
 
-  nr_complex_t g = rect (alpha, beta);
+  nr_complex_t g = nr_complex_t (alpha, beta);
   nr_double_t p = 2 * z0 + zl;
   nr_double_t n = 2 * z0 - zl;
   nr_complex_t e = qucs::exp (2.0 * g * len);
@@ -170,7 +170,7 @@ void twistedpair::saveCharacteristics (nr_double_t) {
 void twistedpair::calcAC (nr_double_t frequency) {
   if (len != 0.0) {
     calcPropagation (frequency);
-    nr_complex_t g = rect (alpha, beta);
+    nr_complex_t g = nr_complex_t (alpha, beta);
     nr_complex_t y11 = coth (g * len) / zl;
     nr_complex_t y21 = -cosech (g * len) / zl;
     setY (NODE_1, NODE_1, +y11); setY (NODE_2, NODE_2, +y11);

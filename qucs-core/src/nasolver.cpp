@@ -49,7 +49,6 @@
 #include "tvector.h"
 #include "tmatrix.h"
 #include "eqnsys.h"
-#include "constants.h"
 #include "precision.h"
 #include "operatingpoint.h"
 #include "exception.h"
@@ -1306,7 +1305,7 @@ void nasolver<nr_type_t>::recallSolution (void)
    into the output dataset. */
 template <class nr_type_t>
 void nasolver<nr_type_t>::saveResults (const char * volts, const char * amps,
-                                       int saveOPs, vector * f)
+                                       int saveOPs, qucs::vector * f)
 {
     int N = countNodes ();
     int M = countVoltageSources ();
@@ -1349,7 +1348,7 @@ void nasolver<nr_type_t>::saveResults (const char * volts, const char * amps,
             if (strcmp (volts, "vn"))
                 c->saveOperatingPoints ();
             n = createOP (c->getName (), volts);
-            saveVariable (n, rect (c->getOperatingPoint ("Vr"),
+            saveVariable (n, nr_complex_t (c->getOperatingPoint ("Vr"),
                                    c->getOperatingPoint ("Vi")), f);
             free (n);
         }
