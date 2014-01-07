@@ -26,6 +26,7 @@
 # include <config.h>
 #endif
 
+#include <cmath>
 #include "component.h"
 #include "tswitch.h"
 
@@ -82,8 +83,16 @@ void tswitch::initAC (void) {
 
 void tswitch::initTR (void) {
   qucs::vector * values = getPropertyVector ("time");
+  // Find the total time of the switching periods
   T = real (sum (*values));
+  // if the user enters an even number of switchng times
+  // the pattern is repeated continuously
   repeat = (values->getSize () % 2) == 0 ? true : false;
+  // make the time taken to go from fully on to fully off
+  // the smallest switching time / 500, or the smallest possible
+  // number
+  duration = std::max(NR_TINY, values->minimum() / 100);
+
   initDC ();
 }
 
@@ -91,17 +100,59 @@ void tswitch::calcTR (nr_double_t t) {
   char * init = getPropertyString ("init");
   nr_double_t ron = getPropertyDouble ("Ron");
   nr_double_t roff = getPropertyDouble ("Roff");
+  nr_double_t r = 0;
   qucs::vector * values = getPropertyVector ("time");
   bool on = !strcmp (init, "on");
   nr_double_t ti = 0;
 
-  if (repeat) t = t - T * floor (t / T);
-  for (int i = 0; i < values->getSize (); i++) {
-    ti += real (values->get (i));
-    if (t >= ti) on = !on; else break;
+  if (repeat) {
+    // if the user enters an even number of switchng times
+    // the pattern is repeated continuously. This is acieved by
+    // subtracting an integer number of total switching periods
+    // from the real time
+    t = t - T * floor (t / T);
   }
 
-  setD (VSRC_1, VSRC_1, on ? -ron : -roff);
+  // Initialise the last switching time to be a full
+  // switching duration
+  nr_double_t ts = t - duration;
+
+  // here we determine whether a switching event should occur
+  // by looping through the list of switching times and comparing
+  // to the current time
+  for (int i = 0; i < values->getSize (); i++) {
+    // add the current value from the list of switching times
+    // to a counter
+    ti += real (values->get (i));
+
+    if (t >= ti) {
+      // the current time is greater than or equal to the current
+      // sum of switching times so the switch state changes
+      on = !on;
+      // store the switching time
+      ts = ti;
+    }
+    else {
+      // the current sum of switching times is in the future
+      // so exit the loop
+      break;
+    }
+  }
+  // calculate the time since the switch occured
+  nr_double_t tdiff = std::max(NR_TINY, t - ts);
+  // set the time difference to be no more than the max switch duration
+  if (tdiff > duration) {
+        tdiff = duration;
+  }
+  // Set the appropriate resistance
+  if (on) {
+    r = roff - ( (roff - ron) * (tdiff / duration) );
+  }
+  else{
+    r = ron + ( (roff - ron) * (tdiff / duration) );
+  }
+
+  setD (VSRC_1, VSRC_1, -r);
 }
 
 // properties
@@ -111,7 +162,7 @@ PROP_REQ [] = {
   PROP_NO_PROP };
 PROP_OPT [] = {
   { "Ron", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
-  { "Roff", PROP_REAL, { 1e12, PROP_NO_STR }, PROP_POS_RANGE },
+  { "Roff", PROP_REAL, { 1e9, PROP_NO_STR }, PROP_POS_RANGE },
   { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },
   PROP_NO_PROP };
 struct define_t tswitch::cirdef =

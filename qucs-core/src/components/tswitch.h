@@ -40,6 +40,7 @@ class tswitch : public qucs::circuit
  private:
   nr_double_t initState (void);
   nr_double_t T;
+  nr_double_t duration;
   bool repeat;
 };
 
