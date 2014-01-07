@@ -206,7 +206,7 @@ int nodelist::contains (char * str) {
   return res;
 }
 
-// Returns the node number of the give node name.
+// Returns the node number of the given node name.
 int nodelist::getNodeNr (char * str) {
   for (struct nodelist_t * n = root; n != NULL; n = n->next) {
     if (n->name != NULL && str != NULL && !strcmp (n->name, str))
