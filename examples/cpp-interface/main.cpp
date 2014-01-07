@@ -22,6 +22,7 @@ int main (int argc, char ** argv)
 
     the_e_trsolver = (e_trsolver *)thequcsint.getETR();
 
+    // make the output message function our custom function
     the_e_trsolver->messagefcn = &testmessage;
 
     //the_e_trsolver->debug();
