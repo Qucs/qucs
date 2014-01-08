@@ -167,9 +167,6 @@ void e_trsolver::debug()
    netlist solver. It prepares the circuit for simulation. */
 int e_trsolver::init (nr_double_t start, nr_double_t firstdelta, int mode)
 {
-    // prepare the netlist
-    //prepare_net (infile);
-
     // run the equation solver for the netlist
     this->getEnv()->runSolver();
 
@@ -817,7 +814,7 @@ int e_trsolver::finish()
 }
 
 
-void e_trsolver::getsolution(double * lastsol)
+void e_trsolver::getsolution (double * lastsol)
 {
     int N = countNodes ();
     int M = countVoltageSources ();
@@ -827,6 +824,85 @@ void e_trsolver::getsolution(double * lastsol)
     {
         lastsol[r]  = real(x->get(r));
     }
+}
+
+/* getNodeV attempts to get the voltage of the node with a
+   given name. returns -1 if the node name was not found */
+int e_trsolver::getNodeV (char * label, nr_double_t& nodeV)
+{
+    int r = nlist->getNodeNr (label);
+
+    if (r == -1)
+    {
+      return r;
+    }
+    else
+    {
+      nodeV = x->get(r);
+      return 0;
+    }
+}
+
+/* Get the voltage reported by a voltage probe */
+int e_trsolver::getVProbeV (char * probename, nr_double_t& probeV)
+{
+    // check for NULL name
+    if (probename)
+    {
+        circuit * root = subnet->getRoot ();
+        for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ())
+        {
+            // Skip non-probe circuit elements
+            if (!c->isProbe ()) continue;
+            // Skip elements with subcircuits
+            if (c->getSubcircuit ()) continue;
+
+            if (strcmp (probename, c->getName () ) == 0)
+            {
+                // Saves the real and imaginary voltages in the probe to the
+                // named variables Vr and Vi
+                c->saveOperatingPoints ();
+                // We are only interested in the real part for transient
+                // analysis
+                probeV = c->getOperatingPoint ("Vr");
+
+                return 0;
+            }
+        }
+    }
+
+    return -1;
+}
+
+/* Get the current reported by a current probe */
+int e_trsolver::getIProbeI (char * probename, nr_double_t& probeI)
+{
+
+        // check for NULL name
+    if (probename)
+    {
+        circuit * root = subnet->getRoot ();
+        for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ())
+        {
+            // Skip elements with subcircuits
+            if (c->getSubcircuit ()) continue;
+            // don't output internal (helper) voltage sources
+            if (c->isInternalVoltageSource ()) continue;
+            // examine only real voltage sources and explicit
+            // current probes
+            if (!c->isVSource ()) continue;
+            // Check if it is the desired voltage source
+            if (strcmp (probename, c->getName () ) == 0)
+            {
+                // Saves the real and imaginary voltages in the probe to the
+                // named variables Vr and Vi
+                probeI = real (x->get (c->getVoltageSource () + getN ()));
+
+                return 0;
+            }
+        }
+    }
+    return -1;
 }
 
 /* The following function removed stored times newer than a specified time
@@ -869,10 +945,6 @@ double e_trsolver::getJacData(int r, int c)
 // properties
 PROP_REQ [] =
 {
-    {
-        "Type", PROP_STR, { PROP_NO_VAL, "lin" },
-        PROP_RNG_STR2 ("lin", "log")
-    },
     PROP_NO_PROP
 };
 PROP_OPT [] =
