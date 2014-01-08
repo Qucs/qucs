@@ -125,9 +125,9 @@ protected:
     int updateMatrix;
     nr_double_t gMin, srcFactor;
     const char * desc;
+    nodelist * nlist;
 
 private:
-    nodelist * nlist;
     eqnsys<nr_type_t> * eqns;
     nr_double_t reltol;
     nr_double_t abstol;
