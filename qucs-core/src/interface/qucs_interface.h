@@ -22,11 +22,15 @@
  *
  */
 
-/*! \file qucs_interface.h
- * \brief The generic external interface class header file.
- *
- * Contains the m-code interface class definition.
- */
+/** \file qucs_interface.h
+  * \brief The generic external interface class header file.
+  *
+  * Contains the m-code interface class definition.
+  */
+
+/**
+  * \defgroup QucsInterface
+  */
 
 //#include <stdio.h>
 //#include <stdlib.h>
@@ -63,12 +67,14 @@ namespace qucs {
   class analysis;
 }
 
-/*! \class qucsint
- * \brief class for performing circuit analyses.
- *
- * This class is used for interfacing qucs with octave and matlab
- *
- */
+/** \class qucsint
+  * \brief class for performing circuit analyses.
+  *
+  * \ingroup QucsInterface
+  *
+  * This class is used for interfacing qucs with external software
+  *
+  */
 class qucsint
 {
 
