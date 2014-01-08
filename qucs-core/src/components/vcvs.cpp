@@ -70,19 +70,19 @@ void vcvs::initAC (void) {
 }
 
 void vcvs::calcAC (nr_double_t frequency) {
-  nr_double_t t = getPropertyDouble ("T");
+  nr_double_t T = getPropertyDouble ("T");
   nr_complex_t g = qucs::polar (getPropertyDouble ("G"),
-			  - 2.0 * M_PI * frequency * t);
+			  - 2.0 * M_PI * frequency * T);
   setC (VSRC_1, NODE_1, +g); setC (VSRC_1, NODE_4, -g);
 }
 
 void vcvs::initTR (void) {
-  nr_double_t t = getPropertyDouble ("T");
+  nr_double_t T = getPropertyDouble ("T");
   initDC ();
   deleteHistory ();
-  if (t > 0.0) {
+  if (T > 0.0) {
     setHistory (true);
-    initHistory (t);
+    initHistory (T);
     setC (VSRC_1, NODE_1, 0.0); setC (VSRC_1, NODE_4, 0.0);
   }
 }
