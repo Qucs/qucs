@@ -317,7 +317,7 @@ static nr_double_t erfc8 (nr_double_t x) {
   int i;
   n = p[5];
   for (i = 4; i >= 0; --i) n = x * n + p[i];
-  d = p[6];
+  d = q[6];
   for (i = 5; i >= 0; --i) d = x * d + q[i];
 
   return exp (-x * x) * (n / d);
