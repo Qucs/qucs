@@ -230,7 +230,7 @@ int net::containsAnalysis (analysis * child, int type) {
 }
 
 /* This function runs all registered analyses applied to the current
-   netlist. */
+   netlist, except for external analysis types. */
 dataset * net::runAnalysis (int &err) {
   dataset * out = new dataset ();
   analysis * a;
@@ -239,8 +239,11 @@ dataset * net::runAnalysis (int &err) {
   // apply some data to all analyses
   for (i = 0; i < actions->length (); i++) {
     a = actions->get (i);
-    a->setNet (this);
-    a->setData (out);
+    if (!a->isExternal ())
+    {
+      a->setNet (this);
+      a->setData (out);
+    }
   }
 
   // re-order analyses
@@ -249,20 +252,29 @@ dataset * net::runAnalysis (int &err) {
   // initialize analyses
   for (i = 0; i < actions->length (); i++) {
     a = actions->get (i);
-    err |= a->initialize ();
+    if (!a->isExternal ())
+    {
+      err |= a->initialize ();
+    }
   }
 
   // solve the analyses
   for (i = 0; i < actions->length (); i++) {
     a = actions->get (i);
-    a->getEnv()->runSolver ();
-    err |= a->solve ();
+    if (!a->isExternal ())
+    {
+      a->getEnv()->runSolver ();
+      err |= a->solve ();
+    }
   }
 
   // cleanup analyses
   for (i = 0; i < actions->length (); i++) {
     a = actions->get (i);
-    err |= a->cleanup ();
+    if (!a->isExternal ())
+    {
+        err |= a->cleanup ();
+    }
   }
 
   return out;

@@ -145,6 +145,18 @@ public:
         return 0;
     }
 
+    /*! \fn isExternal
+    * \brief informs whether this is an external sim
+    *
+    * External simulations will be ignored by qucsator. This
+    * function is used to determine whether the analysis is
+    * external or not.
+    */
+    virtual bool isExternal (void)
+    {
+        return false;
+    }
+
     dataset * getData (void)
     {
         return data;
