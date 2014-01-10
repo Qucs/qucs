@@ -62,7 +62,7 @@ install-exec-hook:
 	@echo "                    NOTE                      "
 	@echo "On some systems (e.g. Linux) you may need"
 	@echo "to run sudo ldconfig or reboot before running"
-	@echo "qucsator or trying to use the libraries it
+	@echo "qucsator or trying to use the libraries it"
 	@echo "installs. Otherwise you will receive an error"
 	@echo "about loading the shared libraries."
 	@echo "----------------------------------------------"
