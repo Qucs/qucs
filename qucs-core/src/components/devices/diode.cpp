@@ -54,7 +54,7 @@ diode::diode () : circuit (2) {
 void diode::calcSP (nr_double_t frequency) {
   nr_double_t gd = getOperatingPoint ("gd");
   nr_double_t Cd = getOperatingPoint ("Cd");
-  nr_complex_t y = 2 * z0 * rect (gd, Cd * 2.0 * M_PI * frequency);
+  nr_complex_t y = 2 * z0 * nr_complex_t (gd, Cd * 2.0 * M_PI * frequency);
   setS (NODE_C, NODE_C, 1.0 / (1.0 + y));
   setS (NODE_A, NODE_A, 1.0 / (1.0 + y));
   setS (NODE_C, NODE_A, y / (1.0 + y));
@@ -387,7 +387,7 @@ void diode::initAC (void) {
 void diode::calcAC (nr_double_t frequency) {
   nr_double_t gd = getOperatingPoint ("gd");
   nr_double_t Cd = getOperatingPoint ("Cd");
-  nr_complex_t y = rect (gd, Cd * 2.0 * M_PI * frequency);
+  nr_complex_t y = nr_complex_t (gd, Cd * 2.0 * M_PI * frequency);
   setY (NODE_C, NODE_C, +y); setY (NODE_A, NODE_A, +y);
   setY (NODE_C, NODE_A, -y); setY (NODE_A, NODE_C, -y);
 }

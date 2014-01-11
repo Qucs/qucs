@@ -75,7 +75,7 @@ nr_complex_t msrstub::calcZ (nr_double_t frequency) {
   nr_double_t er    = subst->getPropertyDouble ("er");
   nr_double_t h     = subst->getPropertyDouble ("h");
 
-  return rect (0, calcReactance (r1, r2, al, er, h, frequency));
+  return nr_complex_t (0, calcReactance (r1, r2, al, er, h, frequency));
 }
 
 void msrstub::initDC (void) {

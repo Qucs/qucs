@@ -525,7 +525,7 @@ using namespace device;
 <admst:text format="\n"/>
 <admst:text format="  for (int i1 = 0; i1 < $nbr_nodes; i1++) {\n"/>
 <admst:text format="    for (int i2 = 0; i2 < $nbr_nodes; i2++) {\n"/>
-<admst:text format="      y (i1,i2) = rect (_jstat[i1][i2], _jdyna[i1][i2] * 2 * M_PI * _freq);\n"/>
+<admst:text format="      y (i1,i2) = nr_complex_t (_jstat[i1][i2], _jdyna[i1][i2] * 2 * M_PI * _freq);\n"/>
 <admst:text format="    }\n  }\n"/>
   return y;
 <admst:text format="\n}\n\n"/>

@@ -176,7 +176,7 @@ vector fourier::fft_1d (vector var, int isign) {
   // store transformed data items in result vector
   vector res = vector (size);
   for (n = i = 0; i < size; i++, n += 2) {
-    res (i) = rect (data[n], data[n+1]);
+    res (i) = nr_complex_t (data[n], data[n+1]);
     if (isign < 0) res (i) /= size;
   }
 

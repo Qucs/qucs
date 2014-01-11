@@ -43,8 +43,8 @@ void ctline::calcSP (nr_double_t frequency) {
   nr_double_t ao  = getPropertyDouble ("Ao");
   nr_double_t o   = 2.0 * M_PI * frequency;
 
-  nr_complex_t ge = rect (log (ae) / 2, o / C0 * sqrt (ere)) * l;
-  nr_complex_t go = rect (log (ao) / 2, o / C0 * sqrt (ero)) * l;
+  nr_complex_t ge = nr_complex_t (log (ae) / 2, o / C0 * sqrt (ere)) * l;
+  nr_complex_t go = nr_complex_t (log (ao) / 2, o / C0 * sqrt (ero)) * l;
   nr_complex_t xe = 2.0 * ze * z0 * cosh (ge) + (ze*ze + z0*z0) * sinh (ge);
   nr_complex_t xo = 2.0 * zo * z0 * cosh (go) + (zo*zo + z0*z0) * sinh (go);
   nr_complex_t ye = ze * z0 / xe;
@@ -112,8 +112,8 @@ void ctline::calcAC (nr_double_t frequency) {
 
   if (l != 0.0) {
     nr_complex_t y11, y12, y13, y14;
-    nr_complex_t arg_e = rect (log (ae) / 2.0, o / C0 * sqrt (ere)) * l;
-    nr_complex_t arg_o = rect (log (ao) / 2.0, o / C0 * sqrt (ero)) * l;
+    nr_complex_t arg_e = nr_complex_t (log (ae) / 2.0, o / C0 * sqrt (ere)) * l;
+    nr_complex_t arg_o = nr_complex_t (log (ao) / 2.0, o / C0 * sqrt (ero)) * l;
 
     y12   =  0.5 / sinh (arg_e) / ze;
     y13   = -0.5 / sinh (arg_o) / zo;

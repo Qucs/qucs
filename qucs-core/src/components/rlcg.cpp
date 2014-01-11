@@ -39,8 +39,8 @@ void rlcg::calcPropagation (nr_double_t frequency) {
   nr_double_t L = getPropertyDouble ("L");
   nr_double_t C = getPropertyDouble ("C");
   nr_double_t G = getPropertyDouble ("G");
-  nr_complex_t Z = rect (R, 2 * M_PI * frequency * L);
-  nr_complex_t Y = rect (G, 2 * M_PI * frequency * C);
+  nr_complex_t Z = nr_complex_t (R, 2 * M_PI * frequency * L);
+  nr_complex_t Y = nr_complex_t (G, 2 * M_PI * frequency * C);
   g = sqrt (Z * Y);
   z = sqrt (Z / Y);
 }

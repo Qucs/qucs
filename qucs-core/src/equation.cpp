@@ -995,7 +995,7 @@ nr_complex_t node::getResultComplex (void) {
   if (c != NULL) {
     switch (getType ()) {
     case TAG_DOUBLE:
-      return rect (c->d, 0.0); break;
+      return nr_complex_t (c->d, 0.0); break;
     case TAG_COMPLEX:
       return *(c->c); break;
     case TAG_BOOLEAN:
