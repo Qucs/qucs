@@ -569,6 +569,7 @@ INSTALL(TARGETS qucsator DESTINATION bin)
 # See: http://www.cmake.org/pipermail/cmake/2010-June/037461.html
 INSTALL(TARGETS qucs
      RUNTIME DESTINATION bin COMPONENT runtime
-     ARCHIVE DESTINATION lib COMPONENT devel)
+     ARCHIVE DESTINATION lib COMPONENT devel
+     LIBRARY DESTINATION lib COMPONENT library)
 
 INSTALL(FILES ${HEADERS} DESTINATION include/qucs-core)
