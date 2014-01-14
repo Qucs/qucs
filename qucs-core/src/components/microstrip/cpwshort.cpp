@@ -77,7 +77,7 @@ void cpwshort::checkProperties (void) {
 nr_complex_t cpwshort::calcZ (nr_double_t frequency) {
   nr_double_t o = 2 * M_PI * frequency;
   nr_double_t l = calcLend (frequency);
-  return rect (0, l * o);
+  return nr_complex_t (0, l * o);
 }
 
 void cpwshort::initDC (void) {

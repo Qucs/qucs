@@ -274,7 +274,7 @@ static void touchstone_create (void) {
 	  }
 	  /* depending on the touchstone data format */
 	  if (!strcmp (touchstone_options.format, "RI")) {
-	    val = rect (real (root->get (pos + 0)),
+	    val = nr_complex_t (real (root->get (pos + 0)),
 			real (root->get (pos + 1)));
 	  }
 	  else if (!strcmp (touchstone_options.format, "MA")) {

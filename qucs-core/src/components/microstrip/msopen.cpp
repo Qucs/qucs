@@ -113,11 +113,11 @@ nr_complex_t msopen::calcY (nr_double_t frequency) {
     l2 = (0.008285 * tanh (0.5665 * W / h) + 0.0103) *
       h / 2.54e-5 / 25 * ZlEffFreq * 1e-9;
     r2 = (1.024 * tanh (2.025 * W / h)) * ZlEffFreq;
-    y = rect (0, c1 * o) + 1.0 / rect (r2, l2 * o - 1 / c2 / o);
+    y = nr_complex_t (0, c1 * o) + 1.0 / nr_complex_t (r2, l2 * o - 1 / c2 / o);
   }
   else {
     nr_double_t c = calcCend (frequency, W, h, t, er, SModel, DModel, Model);
-    y = rect (0, c * o);
+    y = nr_complex_t (0, c * o);
   }
   return y;
 }

@@ -40,7 +40,7 @@ void tline::calcSP (nr_double_t frequency) {
   nr_double_t r = (z - z0) / (z + z0);
   nr_double_t b = 2 * M_PI * frequency / C0;
   a = log (a) / 2;
-  nr_complex_t p = exp (-l * rect (a, b));
+  nr_complex_t p = exp (-l * nr_complex_t (a, b));
   nr_complex_t s11 = r * (1.0 - p * p) / (1.0 - p * p * r * r);
   nr_complex_t s21 = p * (1.0 - r * r) / (1.0 - p * p * r * r);
   setS (NODE_1, NODE_1, s11); setS (NODE_2, NODE_2, s11);
@@ -118,8 +118,8 @@ void tline::calcAC (nr_double_t frequency) {
   nr_double_t b = 2 * M_PI * frequency / C0;
   a = log (a) / 2;
   if (l != 0.0) {
-    nr_complex_t y11 = +1 / z / tanh (rect (a, b) * l);
-    nr_complex_t y21 = -1 / z / sinh (rect (a, b) * l);
+    nr_complex_t y11 = +1 / z / tanh (nr_complex_t (a, b) * l);
+    nr_complex_t y21 = -1 / z / sinh (nr_complex_t (a, b) * l);
     setY (NODE_1, NODE_1, y11); setY (NODE_2, NODE_2, y11);
     setY (NODE_1, NODE_2, y21); setY (NODE_2, NODE_1, y21);
   }

@@ -66,7 +66,7 @@ nr_double_t emi::f_ideal (nr_double_t fc, nr_double_t bw, nr_double_t f) {
    evaluated. */
 nr_double_t emi::f_2ndorder (nr_double_t fc, nr_double_t bw, nr_double_t f) {
   nr_double_t q = fc / bw;
-  nr_complex_t p = rect (0, f / fc);
+  nr_complex_t p = nr_complex_t (0, f / fc);
   nr_complex_t w = p / q / (1.0 + p / q + p * p);
   return norm (w);
 }
@@ -166,7 +166,7 @@ vector * emi::receiver (nr_double_t * ida, nr_double_t duration, int ilength) {
 	dcur += noise * sqrt (bw);
       
 	/* save result */
-	ed->add (rect (dcur, fcur));
+	ed->add (nr_complex_t (dcur, fcur));
 	ei++;
       }
     }

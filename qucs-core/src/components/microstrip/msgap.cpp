@@ -94,9 +94,9 @@ matrix msgap::calcMatrixY (nr_double_t frequency) {
   }
 
   // build Y-parameter matrix
-  nr_complex_t y21 = rect (0.0, -2.0 * M_PI * frequency * Cs);
-  nr_complex_t y11 = rect (0.0,  2.0 * M_PI * frequency * (C1 + Cs));
-  nr_complex_t y22 = rect (0.0,  2.0 * M_PI * frequency * (C2 + Cs));
+  nr_complex_t y21 = nr_complex_t (0.0, -2.0 * M_PI * frequency * Cs);
+  nr_complex_t y11 = nr_complex_t (0.0,  2.0 * M_PI * frequency * (C1 + Cs));
+  nr_complex_t y22 = nr_complex_t (0.0,  2.0 * M_PI * frequency * (C2 + Cs));
   matrix y (2);
   y.set (0, 0, y11);
   y.set (0, 1, y21);
