@@ -30,6 +30,7 @@ pkginclude_HEADERS = qucs_interface.h e_trsolver.h
 
 noinst_LTLIBRARIES = libinterface.la
 
+
 libinterface_la_SOURCES = qucs_interface.cpp e_trsolver.cpp
 
 CLEANFILES = *~ *.orig *.rej

@@ -166,7 +166,7 @@ matrix triac::calcMatrixY (nr_double_t frequency) {
   nr_double_t gi = getOperatingPoint ("gi");
   nr_double_t gg = 1.0 / getPropertyDouble ("Rg");
   nr_double_t Ci = getOperatingPoint ("Ci");
-  nr_complex_t yi = rect (gi, Ci * 2.0 * M_PI * frequency);
+  nr_complex_t yi = nr_complex_t (gi, Ci * 2.0 * M_PI * frequency);
   matrix y (4);
   y.set (NODE_A2, NODE_A2, +gd);
   y.set (NODE_IN, NODE_IN, +gd +yi +gg);

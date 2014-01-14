@@ -40,7 +40,7 @@ void tline4p::calcSP (nr_double_t frequency) {
   nr_double_t b = 2 * M_PI * frequency / C0;
   a = log (a) / 2;
 
-  nr_complex_t g = rect (a, b);
+  nr_complex_t g = nr_complex_t (a, b);
   nr_double_t p = 2 * z0 + z;
   nr_double_t n = 2 * z0 - z;
   nr_complex_t e = exp (2.0 * g * l);
@@ -105,7 +105,7 @@ void tline4p::calcAC (nr_double_t frequency) {
   nr_double_t b = 2 * M_PI * frequency / C0;
   a = log (a) / 2;
   if (l != 0.0) {
-    nr_complex_t g = rect (a, b);
+    nr_complex_t g = nr_complex_t (a, b);
     nr_complex_t y11 = coth (g * l) / z;
     nr_complex_t y21 = -cosech (g * l) / z;
     setY (NODE_1, NODE_1, +y11); setY (NODE_2, NODE_2, +y11);

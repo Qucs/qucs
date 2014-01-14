@@ -805,8 +805,12 @@ int QucsApp::testFile(const QString& DocName)
 
   Line = Line.mid(16, Line.length()-17);
   if(!checkVersion(Line)) { // wrong version number ?
-    file.close();
-    return -4;
+      if (!QucsSettings.IgnoreFutureVersion) {
+          file.close();
+          return -4;
+      }
+    //file.close();
+    //return -4;
   }
 
   // read content ....................
@@ -2689,8 +2693,15 @@ void QucsApp::slotSaveSchematicToGraphicsFile(bool diagram)
             } else {
                 QSvgGenerator* svg1 = new QSvgGenerator();
                 svg1->setResolution(this->physicalDpiX());
-                svg1->setFileName(filename);
-                svg1->setSize(QSize(1.12*w,1.1*h));
+
+                if (dlg->needsInkscape()) {
+                    svg1->setFileName(filename+".tmp.svg");
+                } else {
+                    svg1->setFileName(filename);
+                }
+
+                //svg1->setSize(QSize(1.12*w,1.1*h));
+                svg1->setSize(QSize(1.12*w,h));
                 QPainter *p = new QPainter(svg1);
                 p->fillRect(0,0,svg1->size().width(),svg1->size().height(),Qt::white);
                 ViewPainter *vp = new ViewPainter(p);
@@ -2701,6 +2712,36 @@ void QucsApp::slotSaveSchematicToGraphicsFile(bool diagram)
                 delete vp;
                 delete p;
                 delete svg1;
+
+                if (dlg->needsInkscape()) {
+                    QString cmd = "inkscape -z -D --file=";
+                    cmd += filename+".tmp.svg ";
+
+                    if (dlg->isPdf_Tex()) {
+                        QString tmp = filename;
+                        tmp.chop(4);
+                        cmd = cmd + "--export-pdf="+ tmp + " --export-latex";
+                    }
+
+                    if (dlg->isPdf()) {
+                        cmd = cmd + "--export-pdf=" + filename;
+                    }
+
+                    if (dlg->isEps()) {
+                        cmd = cmd + "--export-eps=" + filename;   
+                    }
+
+                    int result = QProcess::execute(cmd);
+
+                    if (result!=0) {
+                        QMessageBox* msg =  new QMessageBox(QMessageBox::Critical,tr("Export to image"),
+                                                            tr("Inkscape start error!"),
+                                                            QMessageBox::Ok);
+                        msg->exec();
+                        delete msg;
+                    }
+                    QFile::remove(filename+".tmp.svg");
+                }
             }
 
             successExportMessages(QFile::exists(filename));

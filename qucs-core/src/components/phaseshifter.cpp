@@ -66,8 +66,8 @@ void phaseshifter::initAC (void) {
     nr_double_t z = getPropertyDouble ("Zref");
     nr_double_t y11 =  1 / z / tan (p);
     nr_double_t y21 = -1 / z / sin (p);
-    setY (NODE_1, NODE_1, rect (0, y11)); setY (NODE_2, NODE_2, rect (0, y11));
-    setY (NODE_1, NODE_2, rect (0, y21)); setY (NODE_2, NODE_1, rect (0, y21));
+    setY (NODE_1, NODE_1, nr_complex_t (0, y11)); setY (NODE_2, NODE_2, nr_complex_t (0, y11));
+    setY (NODE_1, NODE_2, nr_complex_t (0, y21)); setY (NODE_2, NODE_1, nr_complex_t (0, y21));
   }
 }
 

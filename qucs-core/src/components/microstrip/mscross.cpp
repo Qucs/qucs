@@ -140,15 +140,15 @@ matrix mscross::calcMatrixY (nr_double_t f) {
 
   // compute admittance matrix
   nr_double_t o = 2 * M_PI * f;
-  nr_complex_t yc1 = rect (0, o * C1);
-  nr_complex_t yc2 = rect (0, o * C2);
-  nr_complex_t yc3 = rect (0, o * C3);
-  nr_complex_t yc4 = rect (0, o * C4);
-  nr_complex_t yl1 = 1.0 / rect (0, o * L1);
-  nr_complex_t yl2 = 1.0 / rect (0, o * L2);
-  nr_complex_t yl3 = 1.0 / rect (0, o * L3);
-  nr_complex_t yl4 = 1.0 / rect (0, o * L4);
-  nr_complex_t yl5 = 1.0 / rect (0, o * L5);
+  nr_complex_t yc1 = nr_complex_t (0, o * C1);
+  nr_complex_t yc2 = nr_complex_t (0, o * C2);
+  nr_complex_t yc3 = nr_complex_t (0, o * C3);
+  nr_complex_t yc4 = nr_complex_t (0, o * C4);
+  nr_complex_t yl1 = 1.0 / nr_complex_t (0, o * L1);
+  nr_complex_t yl2 = 1.0 / nr_complex_t (0, o * L2);
+  nr_complex_t yl3 = 1.0 / nr_complex_t (0, o * L3);
+  nr_complex_t yl4 = 1.0 / nr_complex_t (0, o * L4);
+  nr_complex_t yl5 = 1.0 / nr_complex_t (0, o * L5);
   matrix Y (6);
   Y.set (NODE_1, NODE_1, yl1 + yc1);
   Y.set (NODE_2, NODE_2, yl2 + yc2);
