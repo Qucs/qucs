@@ -1,3 +1,7 @@
+
+### !!!! EXPERIMENTAL/DEVELOPMENT BUILD SYSTEM
+### !!!! If you need support please use Autotools build system
+
 ##
 # You can change the install location by
 # running cmake like this:
@@ -7,6 +11,16 @@
 ## Notes
 # * By default, the prefix is "/usr/local"
 # * Use -DADMSXML_DIR=[path] to give the path containing admsXml
+
+
+## Running with QtCreator
+# Open this CMakeLists.txt with 'Open File or Project..."
+# Provide CMake arguments:
+# * Set admsXml path, (after building with Autotools)
+# * Enable debug symbols for the debugger.
+#
+# Add the following arguments to the 'Run CMake':
+# -DAMSXML_DIR=~/git/qucs/qucs-core/adms/admsXml/ -DCMAKE_BUILD_TYPE:STRING=Debug
 
 ## Dependencies
 # * CMake 2.8.8
