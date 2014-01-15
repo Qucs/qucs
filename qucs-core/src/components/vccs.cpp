@@ -29,6 +29,8 @@
 #include "component.h"
 #include "vccs.h"
 
+using namespace qucs;
+
 vccs::vccs () : circuit (4) {
   type = CIR_VCCS;
 }

@@ -29,6 +29,8 @@
 #include "component.h"
 #include "vac.h"
 
+using namespace qucs;
+
 vac::vac () : circuit (2) {
   type = CIR_VAC;
   setVSource (true);

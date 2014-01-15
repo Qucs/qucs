@@ -29,6 +29,8 @@
 #include "component.h"
 #include "pac.h"
 
+using namespace qucs;
+
 pac::pac () : circuit (2) {
   type = CIR_PAC;
   setISource (true);

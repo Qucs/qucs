@@ -29,6 +29,8 @@
 #include "component.h"
 #include "relais.h"
 
+using namespace qucs;
+
 relais::relais () : circuit (4) {
   type = CIR_RELAIS;
   setVoltageSources (1);

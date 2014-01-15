@@ -30,6 +30,8 @@
 #include "component.h"
 #include "vexp.h"
 
+using namespace qucs;
+
 vexp::vexp () : circuit (2) {
   type = CIR_VEXP;
   setVSource (true);

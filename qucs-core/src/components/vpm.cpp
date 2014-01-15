@@ -29,6 +29,8 @@
 #include "component.h"
 #include "vpm.h"
 
+using namespace qucs;
+
 vpm::vpm () : circuit (3) {
   type = CIR_VPM;
   setVSource (true);
