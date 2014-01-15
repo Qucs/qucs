@@ -27,6 +27,7 @@
 #define __E_TRSOLVER_H__
 
 #include "trsolver.h"
+#include <vector>
 
 #define ETR_MODE_ASYNC 0
 #define ETR_MODE_SYNC 1
@@ -183,6 +184,8 @@ private:
     int convError;
 
     void updateExternalInterpTime(nr_double_t);
+    void storeHistoryAges (void);
+    void updateHistoryAges(nr_double_t);
 
 //    int solve_nonlinear_step (void);
     void adjustDelta_sync (nr_double_t);
@@ -191,6 +194,7 @@ private:
 
     // For going back in history of a solution after multiple
     // solution steps
+    std::vector<nr_double_t> initialhistages;
     tvector<nr_double_t> * lastsolution[8];
     nr_double_t lastasynctime;
     nr_double_t lastdeltas[8];

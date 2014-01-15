@@ -242,6 +242,7 @@ int e_trsolver::init (nr_double_t start, nr_double_t firstdelta, int mode)
     if (mode == ETR_MODE_ASYNC)
     {
         delta /= 10;
+
     }
     else if (mode == ETR_MODE_SYNC)
     {
@@ -250,8 +251,26 @@ int e_trsolver::init (nr_double_t start, nr_double_t firstdelta, int mode)
     fillState (dState, delta);
     adjustOrder (1);
 
+    storeHistoryAges ();
+
     return 0;
 
+}
+
+/* Stores all the initial history lengths requested by the circuit
+   elements for later use (to make sure we don't set the histories
+   to be less than these initial requested values) */
+void e_trsolver::storeHistoryAges (void)
+{
+    circuit * root = subnet->getRoot ();
+    for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ())
+    {
+        // get the a
+        if (c->hasHistory ())
+        {
+            initialhistages.push_back (c->getHistoryAge ());
+        }
+    }
 }
 
 void e_trsolver::fillLastSolution (tvector<nr_double_t> * s)
@@ -616,6 +635,11 @@ int e_trsolver::stepsolve_async(nr_double_t steptime)
     // update the interpolation time of any externally controlled
     // components which require it.
     updateExternalInterpTime(time);
+    // make the stored histories for all ircuits that have
+    // requested them at least as long as the next major time
+    // step so we can reject the step later if needed and
+    // restore all the histories to their previous state
+    updateHistoryAges (time - lastasynctime);
 
     //delta = (steptime - time) / 10;
     //if (progress) logprogressbar (i, swp->getSize (), 40);
@@ -800,6 +824,22 @@ void e_trsolver::copySolution (tvector<nr_double_t> * src[8], tvector<nr_double_
         for (int j = 0; j < src[i]->getSize (); j++)
         {
             dest[i]->set (j, src[i]->get (j));
+        }
+    }
+}
+
+void e_trsolver::updateHistoryAges (nr_double_t newage)
+{
+    int i = 0;
+    circuit * root = subnet->getRoot ();
+    for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ())
+    {
+        // set the history length to retain to be at least
+        // the length of the supplied age
+        if (c->hasHistory ())
+        {
+            c->setHistoryAge (std::max (initialhistages[i], newage));
+            i++;
         }
     }
 }
@@ -1064,7 +1104,6 @@ PROP_OPT [] =
 };
 struct define_t e_trsolver::anadef =
     { "ETR", 0, PROP_ACTION, PROP_NO_SUBSTRATE, PROP_LINEAR, PROP_DEF };
-
 
 
 } // namespace qucs
