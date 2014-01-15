@@ -642,7 +642,7 @@ matrix mux8to1::calcMatrixY (nr_double_t frequency)
 
   for (int i1 = 0; i1 < 15; i1++) {
     for (int i2 = 0; i2 < 15; i2++) {
-      y (i1,i2) = rect (_jstat[i1][i2], _jdyna[i1][i2] * 2 * M_PI * _freq);
+      y (i1,i2) = nr_complex_t (_jstat[i1][i2], _jdyna[i1][i2] * 2 * M_PI * _freq);
     }
   }
 

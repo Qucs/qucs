@@ -93,7 +93,7 @@ void msline::calcSP (nr_double_t frequency) {
   // calculate S-parameters
   nr_double_t z = zl / z0;
   nr_double_t y = 1 / z;
-  nr_complex_t g = rect (alpha, beta);
+  nr_complex_t g = nr_complex_t (alpha, beta);
   nr_complex_t n = 2.0 * cosh (g * l) + (z + y) * sinh (g * l);
   nr_complex_t s11 = (z - y) * sinh (g * l) / n;
   nr_complex_t s21 = 2.0 / n;
@@ -468,7 +468,7 @@ void msline::calcAC (nr_double_t frequency) {
   calcPropagation (frequency);
 
   // calculate Y-parameters
-  nr_complex_t g = rect (alpha, beta);
+  nr_complex_t g = nr_complex_t (alpha, beta);
   nr_complex_t y11 = coth (g * l) / zl;
   nr_complex_t y21 = -cosech (g * l) / zl;
   setY (NODE_1, NODE_1, y11); setY (NODE_2, NODE_2, y11);

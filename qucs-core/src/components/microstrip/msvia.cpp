@@ -78,7 +78,7 @@ nr_complex_t msvia::calcImpedance (nr_double_t frequency) {
   nr_double_t res = R * sqrt (1 + frequency * fs);
   nr_double_t a   = sqrt (sqr (r) + sqr (h));
   nr_double_t ind = MU0 * (h * log ((h + a) / r) + 1.5 * (r - a));
-  return Z = rect (res, frequency * ind);
+  return Z = nr_complex_t (res, frequency * ind);
 }
 
 nr_double_t msvia::calcResistance (void) {

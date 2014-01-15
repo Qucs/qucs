@@ -191,7 +191,7 @@ void rectline::calcPropagation (nr_double_t frequency) {
     beta = 0;
     alpha = -sqrt (- (sqr (k0) - sqr (kc)));
     // wave impedance 
-    zl = (k0 * Z0) / rect (0, -alpha) ;
+    zl = (k0 * Z0) / nr_complex_t (0, -alpha) ;
   }
 }
 
@@ -249,7 +249,7 @@ void rectline::calcSP (nr_double_t frequency) {
   // calculate S-parameters
   nr_complex_t z = zl / z0;
   nr_complex_t y = 1.0 / z;
-  nr_complex_t g = rect (alpha, beta);
+  nr_complex_t g = nr_complex_t (alpha, beta);
   nr_complex_t n = 2.0 * cosh (g * l) + (z + y) * sinh (g * l);
   nr_complex_t s11 = (z - y) * sinh (g * l) / n;
   nr_complex_t s21 = 2.0 / n;
@@ -281,7 +281,7 @@ void rectline::calcAC (nr_double_t frequency) {
   calcPropagation (frequency);
 
   // calculate Y-parameters
-  nr_complex_t g = rect (alpha, beta);
+  nr_complex_t g = nr_complex_t (alpha, beta);
   nr_complex_t y11 = coth (g * l) / zl;
   nr_complex_t y21 = -cosech (g * l) / zl;
   setY (NODE_1, NODE_1, y11); setY (NODE_2, NODE_2, y11);

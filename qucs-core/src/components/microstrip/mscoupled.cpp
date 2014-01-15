@@ -93,8 +93,8 @@ void mscoupled::calcSP (nr_double_t frequency) {
 
   // compute propagation constants for even and odd mode
   calcPropagation (frequency);
-  nr_complex_t ge = rect (ae, be);
-  nr_complex_t go = rect (ao, bo);
+  nr_complex_t ge = nr_complex_t (ae, be);
+  nr_complex_t go = nr_complex_t (ao, bo);
 
   // compute abbreviations
   nr_complex_t Ee, Eo, De, Do, Xe, Xo, Ye, Yo;
@@ -430,8 +430,8 @@ void mscoupled::calcAC (nr_double_t frequency) {
 
   // compute propagation constants for even and odd mode
   calcPropagation (frequency);
-  nr_complex_t ge = rect (ae, be);
-  nr_complex_t go = rect (ao, bo);
+  nr_complex_t ge = nr_complex_t (ae, be);
+  nr_complex_t go = nr_complex_t (ao, bo);
 
   // compute abbreviations
   nr_complex_t De, Do, y1, y2, y3, y4;

@@ -62,12 +62,12 @@ matrix mosfet::calcMatrixY (nr_double_t frequency) {
   nr_double_t gmb = getOperatingPoint ("gmb");
 
   // compute the models admittances
-  nr_complex_t Ygd = rect (0.0, 2.0 * M_PI * frequency * Cgd);
-  nr_complex_t Ygs = rect (0.0, 2.0 * M_PI * frequency * Cgs);
+  nr_complex_t Ygd = nr_complex_t (0.0, 2.0 * M_PI * frequency * Cgd);
+  nr_complex_t Ygs = nr_complex_t (0.0, 2.0 * M_PI * frequency * Cgs);
   nr_complex_t Yds = gds;
-  nr_complex_t Ybd = rect (gbd, 2.0 * M_PI * frequency * Cbd);
-  nr_complex_t Ybs = rect (gbs, 2.0 * M_PI * frequency * Cbs);
-  nr_complex_t Ygb = rect (0.0, 2.0 * M_PI * frequency * Cgb);
+  nr_complex_t Ybd = nr_complex_t (gbd, 2.0 * M_PI * frequency * Cbd);
+  nr_complex_t Ybs = nr_complex_t (gbs, 2.0 * M_PI * frequency * Cbs);
+  nr_complex_t Ygb = nr_complex_t (0.0, 2.0 * M_PI * frequency * Cgb);
 
   // build admittance matrix and convert it to S-parameter matrix
   matrix y (4);

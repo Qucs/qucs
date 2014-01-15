@@ -56,8 +56,8 @@ matrix jfet::calcMatrixY (nr_double_t frequency) {
   nr_double_t gm  = getOperatingPoint ("gm");
 
   // compute the models admittances
-  nr_complex_t Ygd = rect (ggd, 2.0 * M_PI * frequency * Cgd);
-  nr_complex_t Ygs = rect (ggs, 2.0 * M_PI * frequency * Cgs);
+  nr_complex_t Ygd = nr_complex_t (ggd, 2.0 * M_PI * frequency * Cgd);
+  nr_complex_t Ygs = nr_complex_t (ggs, 2.0 * M_PI * frequency * Cgs);
   nr_complex_t Yds = gds;
 
   // build admittance matrix and convert it to S-parameter matrix

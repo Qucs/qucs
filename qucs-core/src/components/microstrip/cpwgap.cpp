@@ -52,7 +52,7 @@ matrix cpwgap::calcMatrixY (nr_double_t frequency) {
     (p - sqrt (1 + p * p) + log ((1 + sqrt (1 + p * p)) / p));
 
   // build Y-parameter matrix
-  nr_complex_t y11 = rect (0.0, 2.0 * M_PI * frequency * C);
+  nr_complex_t y11 = nr_complex_t (0.0, 2.0 * M_PI * frequency * C);
   matrix y (2);
   y.set (0, 0, +y11);
   y.set (0, 1, -y11);

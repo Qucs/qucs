@@ -365,7 +365,7 @@ matrix eqndefined::calcMatrixY (nr_double_t frequency) {
     for (j = 0; j < branches; j++, k++) {
       int r = i * 2;
       int c = j * 2;
-      nr_complex_t val = rect (_jstat[k], o * _jdyna[k]);
+      nr_complex_t val = nr_complex_t (_jstat[k], o * _jdyna[k]);
       y (r + 0, c + 0) = +val;
       y (r + 1, c + 1) = +val;
       y (r + 0, c + 1) = -val;

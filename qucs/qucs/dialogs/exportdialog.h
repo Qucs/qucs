@@ -14,19 +14,19 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-#ifndef EXPORTDIAGRAMDIALOG_H
-#define EXPORTDIAGRAMDIALOG_H
+#ifndef EXPORTDIALOG_H
+#define EXPORTDIALOG_H
 
 #include <QObject>
 #include <QtGui>
 #include <QDialog>
 
 
-class ExportDiagramDialog : public QDialog
+class ExportDialog : public QDialog
 {
     Q_OBJECT
 public:
-    explicit ExportDiagramDialog(int w, int h, QString filename_, QWidget *parent = 0);
+    explicit ExportDialog(int w, int h, int wsel, int hsel, QString filename_, bool nosel_=true, QWidget *parent = 0);
     
 private:
     QPushButton* ExportButt;
@@ -34,33 +34,57 @@ private:
     QPushButton* SaveButt;
 
     QLabel* lblFilename;
-    QLabel *lblResolutionX;
-    QLabel *lblResolutionY;
+    QLabel* lblResolutionX;
+    QLabel* lblResolutionY;
+    QLabel* lblRatio;
+    QLabel* lblFormat;
 
     QCheckBox* cbResolution;
     QCheckBox* cbRatio;
+    QCheckBox* cbSelected;
 
     QLineEdit* editFilename;
     QLineEdit* editResolutionX;
     QLineEdit* editResolutionY;
+    QLineEdit* editScale;
+
+    QComboBox* cbxImgType;
 
     QHBoxLayout* lower1;
     QHBoxLayout* lower2;
     QHBoxLayout* lower3;
+    QHBoxLayout* lower4;
     QVBoxLayout* top;
 
     int dwidth, dheight;
 
-    bool svg;
+    int dwidthsel, dheightsel;
+
+    float scale;
+
+    bool svg, noselected;
 
     QString filename;
 
 public:
+
+    enum ImgFormat {Coloured, Monochrome};
+
     QString FileToSave();
     bool isOriginalSize();
+    bool isExportSelected();
     int Xpixels();
     int Ypixels();
     bool isSvg();
+    bool needsInkscape();
+    bool isValidFilename();
+    bool isPdf();
+    bool isPdf_Tex();
+    bool isEps();
+    void setDiagram();
+    float getScale();
+
+    ExportDialog::ImgFormat getImgFormat();
 
 signals:
     
@@ -71,9 +95,11 @@ private slots:
     void recalcRatio();
     void restoreOriginalWtoH();
     void setSvg(QString filename);
+    void setSelectedWH();
+    void recalcScale();
 
 public slots:
     
 };
 
-#endif // EXPORTDIAGRAMDIALOG_H
+#endif // EXPORTDIALOG_H
