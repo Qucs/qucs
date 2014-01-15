@@ -47,6 +47,8 @@
 #include "exceptionstack.h"
 #include "environment.h"
 #include "e_trsolver.h"
+#include "component_id.h"
+#include "ecvs.h"
 
 #define STEPDEBUG   0 // set to zero for release
 #define BREAKPOINTS 0 // exact breakpoint calculation
@@ -157,6 +159,10 @@ void e_trsolver::debug()
     for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ())
     {
         messagefcn (0, c->getName() );
+
+        if (c->getSubcircuit ()) {
+            printf ("subcircuit Name %s\n", c->getSubcircuit ());
+        }
     }
 
     //netlist_list();
@@ -377,6 +383,9 @@ int e_trsolver::stepsolve_sync(nr_double_t synctime)
     convError = 0;
 
     time = synctime;
+    // update the interpolation time of any externally controlled
+    // components which require it.
+    updateExternalInterpTime(time);
 
     // copy the externally chosen time step to delta
     delta = time - lastsynctime;
@@ -480,7 +489,6 @@ void e_trsolver::acceptstep_sync()
 //        stepDelta = deltaOld;
 //        nextStates ();
 //        rejected = 0;
-
         adjustOrder ();
     }
     else
@@ -501,11 +509,6 @@ void e_trsolver::acceptstep_sync()
     // Initialize or update history.
     if (running > 1)
     {
-        // make the circuit histories no longer than the total of
-        // all the stored deltas in the solution history
-        nr_double_t deltasum = 0.0;
-        for (int i = 0; i<8; i++) deltasum += deltas[i];
-        tHistory->setAge (deltasum);
         // update the solution history with the new results
         updateHistory (current);
     }
@@ -610,6 +613,10 @@ int e_trsolver::stepsolve_async(nr_double_t steptime)
     convError = 0;
 
     time = steptime;
+    // update the interpolation time of any externally controlled
+    // components which require it.
+    updateExternalInterpTime(time);
+
     //delta = (steptime - time) / 10;
     //if (progress) logprogressbar (i, swp->getSize (), 40);
 #if DEBUG && 0
@@ -846,63 +853,148 @@ int e_trsolver::getNodeV (char * label, nr_double_t& nodeV)
 /* Get the voltage reported by a voltage probe */
 int e_trsolver::getVProbeV (char * probename, nr_double_t& probeV)
 {
+    // string to hold the full name of the circuit
+    std::string fullname;
+
     // check for NULL name
     if (probename)
     {
         circuit * root = subnet->getRoot ();
         for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ())
         {
-            // Skip non-probe circuit elements
-            if (!c->isProbe ()) continue;
-            // Skip elements with subcircuits
-            if (c->getSubcircuit ()) continue;
+            if (c->getType () == CIR_VPROBE) {
 
-            if (strcmp (probename, c->getName () ) == 0)
-            {
-                // Saves the real and imaginary voltages in the probe to the
-                // named variables Vr and Vi
-                c->saveOperatingPoints ();
-                // We are only interested in the real part for transient
-                // analysis
-                probeV = c->getOperatingPoint ("Vr");
+                fullname.clear ();
 
-                return 0;
+                // Subcircuit elements top level name is the
+                // subcircuit type (the base name of the subcircuit
+                // file)
+                if (c->getSubcircuit ())
+                {
+                    fullname.append (c->getSubcircuit ());
+                    fullname.append (".");
+                }
+
+                // append the user supplied name to search for
+                fullname.append (probename);
+
+                // Check if it is the desired voltage source
+                if (strcmp (fullname.c_str(), c->getName ()) == 0)
+                {
+                    // Saves the real and imaginary voltages in the probe to the
+                    // named variables Vr and Vi
+                    c->saveOperatingPoints ();
+                    // We are only interested in the real part for transient
+                    // analysis
+                    probeV = c->getOperatingPoint ("Vr");
+
+                    return 0;
+                }
             }
         }
     }
-
     return -1;
 }
 
 /* Get the current reported by a current probe */
 int e_trsolver::getIProbeI (char * probename, nr_double_t& probeI)
 {
+    // string to hold the full name of the circuit
+    std::string fullname;
 
-        // check for NULL name
+    // check for NULL name
     if (probename)
     {
         circuit * root = subnet->getRoot ();
         for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ())
         {
-            // Skip elements with subcircuits
-            if (c->getSubcircuit ()) continue;
-            // don't output internal (helper) voltage sources
-            if (c->isInternalVoltageSource ()) continue;
-            // examine only real voltage sources and explicit
-            // current probes
-            if (!c->isVSource ()) continue;
-            // Check if it is the desired voltage source
-            if (strcmp (probename, c->getName () ) == 0)
-            {
-                // Saves the real and imaginary voltages in the probe to the
-                // named variables Vr and Vi
-                probeI = real (x->get (c->getVoltageSource () + getN ()));
+            if (c->getType () == CIR_IPROBE) {
 
-                return 0;
+                fullname.clear ();
+
+                // Subcircuit elements top level name is the
+                // subcircuit type (the base name of the subcircuit
+                // file)
+                if (c->getSubcircuit ())
+                {
+                    fullname.append (c->getSubcircuit ());
+                    fullname.append (".");
+                }
+
+                // append the user supplied name to search for
+                fullname.append (probename);
+
+                // Check if it is the desired voltage source
+                if (strcmp (fullname.c_str(), c->getName ()) == 0)
+                {
+                    // Get the current reported by the probe
+                    probeI = real (x->get (c->getVoltageSource () + getN ()));
+
+                    return 0;
+                }
             }
         }
     }
     return -1;
+}
+
+int e_trsolver::setECVSVoltage(char * ecvsname, nr_double_t V)
+{
+    // string to hold the full name of the circuit
+    std::string fullname;
+
+    // check for NULL name
+    if (ecvsname)
+    {
+        circuit * root = subnet->getRoot ();
+        for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ())
+        {
+            // examine only ECVS elements
+            if (c->getType () == CIR_ECVS) {
+
+                fullname.clear ();
+
+                // Subcircuit elements top level name is the
+                // subcircuit type (the base name of the subcircuit
+                // file)
+                if (c->getSubcircuit ())
+                {
+                    fullname.append (c->getSubcircuit ());
+                    fullname.append (".");
+                }
+
+                // append the user supplied name to search for
+                fullname.append (ecvsname);
+
+                // Check if it is the desired voltage source
+                if (strcmp (fullname.c_str(), c->getName ()) == 0)
+                {
+                    // Set the voltage to the desired value
+                    c->setProperty("U", V);
+                    return 0;
+                }
+            }
+        }
+    }
+    return -1;
+}
+
+void e_trsolver::updateExternalInterpTime(nr_double_t t)
+{
+    circuit * root = subnet->getRoot ();
+    for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ())
+    {
+        // examine only external elements that have interpolation,
+        // such as ECVS elements
+        if (c->getType () == CIR_ECVS) {
+            // Set the voltage to the desired value
+            c->setProperty ("Tnext", t);
+            if (tHistory != NULL && tHistory->getSize () > 0)
+            {
+              c->setHistoryAge ( t - tHistory->last () + 0.1 * (t - tHistory->last ()) );
+            }
+        }
+    }
 }
 
 /* The following function removed stored times newer than a specified time

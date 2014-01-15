@@ -869,8 +869,18 @@ void circuit::transientCapacitanceC (int qpos, int vpos,
 void circuit::initHistory (nr_double_t age) {
   nHistories = getSize () + getVoltageSources ();
   histories = new history[nHistories];
-  for (int i = 0; i < nHistories; i++) histories[i].setAge (age);
+  setHistoryAge (age);
 }
+
+// Sets the age of all circuit histories
+void circuit::setHistoryAge (nr_double_t age) {
+  for (int i = 0; i < nHistories; i++)
+  {
+    histories[i].setAge (age);
+  }
+}
+
+
 
 // The function deletes the histories for the transient analysis.
 void circuit::deleteHistory (void) {
@@ -901,6 +911,17 @@ void circuit::appendHistory (int n, nr_double_t val) {
 nr_double_t circuit::getHistoryAge (void) {
   if (histories) return histories[0].getAge ();
   return 0.0;
+}
+
+// Returns size of the history
+int circuit::getHistorySize (void) {
+  return histories[0].getSize ();
+}
+
+// Returns the time with the specified index
+nr_double_t circuit::getHistoryTFromIndex (int idx)
+{
+  return histories[0].getTfromidx (idx);
 }
 
 /* This function should be used to apply the time vector history to

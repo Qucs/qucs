@@ -41,9 +41,11 @@ class history
   void truncate (nr_double_t);
   void setAge (nr_double_t a) { age = a; }
   nr_double_t getAge (void) { return age; }
+  int getSize (void);
   nr_double_t duration (void);
   nr_double_t last (void);
   nr_double_t first (void);
+
   int leftidx (void);
   int unused (void);
   void drop (void);
@@ -54,6 +56,8 @@ class history
   nr_double_t interpol (nr_double_t, int, bool);
   nr_double_t nearest (nr_double_t, bool interpolate = true);
   int seek (nr_double_t, int, int, nr_double_t&, int);
+  nr_double_t getTfromidx (int);
+  nr_double_t getValfromidx (int);
 
  private:
   bool sign;

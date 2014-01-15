@@ -56,6 +56,7 @@ public:
 
     int init (nr_double_t, nr_double_t, int);
     int finish ();
+    bool isExternal() { return true; };
 
 public:
     void initSteps (void);
@@ -67,6 +68,30 @@ public:
     void rejectstep_async (void);
     void truncateHistory (nr_double_t);
     void getsolution (double *);
+
+    /** \brief Sets the voltage of an exterally controlled voltage source.
+      * \param ecvsname The name of the voltage source to be set.
+      * \param V New value of the voltage.
+      * \return Integer flag reporting success or failure.
+      *
+      * This method searches for the ecvs component with the given
+      * name in \a ecvsname. If the ecvs exists, the value of the voltage
+      * to be set at the next time step is set to the supplied value in
+      * \a V.
+      *
+      * You can set the voltage of ecvs components in subcircuits created
+      * by using a name up of the subcircuit heirarchy it is in, e.g. the
+      * name
+      *
+      * SUBtop.SUBlower.ECVS1
+      *
+      * to set the voltage of an ecvs named ECVS1 which is located in
+      * subcircuit SUBlower, which is itself in subcircuit SUBtop in
+      * the top level circuit.
+      *
+      * Returns 0 if the ecvs was found, and -1 otherwise.
+      */
+    int setECVSVoltage(char * ecvsname, nr_double_t V);
 
     /// Returns the number of node voltages in the circuit.
     int getN ();
@@ -156,6 +181,8 @@ private:
     int running;
     int rejected;
     int convError;
+
+    void updateExternalInterpTime(nr_double_t);
 
 //    int solve_nonlinear_step (void);
     void adjustDelta_sync (nr_double_t);

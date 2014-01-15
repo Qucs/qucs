@@ -218,6 +218,9 @@ class circuit : public object, public integrator
   nr_double_t getV (int, nr_double_t);
   nr_double_t getJ (int, nr_double_t);
   nr_double_t getHistoryAge (void);
+  void setHistoryAge (nr_double_t);
+  int getHistorySize (void);
+  nr_double_t getHistoryTFromIndex (int);
 
   // s-parameter helpers
   int  getPort (void) { return pacport; }

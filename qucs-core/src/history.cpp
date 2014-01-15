@@ -29,6 +29,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <cmath>
 
 #include "precision.h"
 #include "tvector.h"
@@ -200,6 +201,42 @@ int history::seek (nr_double_t tval, int l, int r, nr_double_t& diff,
     return seek (tval, l, i, diff, idx);
   }
   return idx;
+}
+
+nr_double_t history::getTfromidx (int idx)
+{
+  if (t == NULL)
+  {
+    return 0;
+  }
+  else
+  {
+    return t->get(idx);
+  }
+}
+
+nr_double_t history::getValfromidx (int idx)
+{
+  if (t == NULL)
+  {
+    return 0;
+  }
+  else
+  {
+    return values->get(idx);
+  }
+}
+
+int history::getSize (void)
+{
+  if (t == NULL)
+  {
+    return 0;
+  }
+  else
+  {
+    return t->getSize ();
+  }
 }
 
 } // namespace qucs
