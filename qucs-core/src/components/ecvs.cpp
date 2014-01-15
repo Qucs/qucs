@@ -67,22 +67,25 @@ void ecvs::initTR (void) {
 
 void ecvs::calcTR (nr_double_t t) {
   nr_double_t V = 0;
+  nr_double_t y0 = 0;
   nr_double_t Tlast;
+  int hsize = getHistorySize ();
   // choose the voltage at the current time by interpolating
   // at the current time, using the previous values of the
   // voltage and the value of the voltage at the specified
   // next time in Tnext
-  if (getHistorySize () < 2)
+  nr_double_t y1 = getPropertyDouble ("U");
+  if (hsize < 1)
   {
     Tlast = t;
+    y0 = y1;
   }
   else
   {
-    Tlast = getHistoryTFromIndex (getHistorySize ()-2);
+    Tlast = getHistoryTFromIndex (hsize-1);
+    y0 = (getV (NODE_1, hsize-1) - getV (NODE_2, hsize-1));
   }
   nr_double_t Tnext = getPropertyDouble ("Tnext");
-  nr_double_t y0 = (getV (NODE_1, Tlast) - getV (NODE_2, Tlast));
-  nr_double_t y1 = getPropertyDouble ("U");
   // do the interpolation
   nr_double_t tdiff = t - Tlast;
   if (tdiff <= 0)
@@ -93,10 +96,12 @@ void ecvs::calcTR (nr_double_t t) {
   {
     V =  y0 + (y1 - y0) * (tdiff / (Tnext - Tlast));
   }
+#ifdef DEBUG
+  printf ("ECVS -- t: %e, V: %e\n", t, V);
+#endif
   // set the voltage source value
   setE (VSRC_1, V);
 }
-
 
 // properties
 PROP_REQ [] = {

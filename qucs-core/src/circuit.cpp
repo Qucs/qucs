@@ -942,6 +942,11 @@ nr_double_t circuit::getV (int port, nr_double_t t) {
   return histories[port].nearest (t);
 }
 
+// Returns voltage at the given index from the history for the given node.
+nr_double_t circuit::getV (int port, int idx) {
+  return histories[port].getValfromidx (idx);
+}
+
 // Returns current at the given time for the given voltage source.
 nr_double_t circuit::getJ (int nr, nr_double_t t) {
   return histories[nr + getSize ()].nearest (t);

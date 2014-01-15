@@ -216,6 +216,7 @@ class circuit : public object, public integrator
   void appendHistory (int, nr_double_t);
   void applyHistory (history *);
   nr_double_t getV (int, nr_double_t);
+  nr_double_t getV (int, int);
   nr_double_t getJ (int, nr_double_t);
   nr_double_t getHistoryAge (void);
   void setHistoryAge (nr_double_t);
