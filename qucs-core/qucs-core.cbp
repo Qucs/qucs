@@ -40,6 +40,9 @@
 		<Unit filename="bootstrap.sh" />
 		<Unit filename="configure.ac" />
 		<Unit filename="doc/Makefile.am" />
+		<Unit filename="m4/ax_cxx_compile_stdcxx_11.m4" />
+		<Unit filename="m4/complexcxx.m4" />
+		<Unit filename="m4/namespace.m4" />
 		<Unit filename="qucs_typedefs.h.in" />
 		<Unit filename="src/Makefile.am" />
 		<Unit filename="src/acsolver.cpp" />
@@ -139,6 +142,8 @@
 		<Unit filename="src/components/digital/xnor.h" />
 		<Unit filename="src/components/digital/xor.cpp" />
 		<Unit filename="src/components/digital/xor.h" />
+		<Unit filename="src/components/ecvs.cpp" />
+		<Unit filename="src/components/ecvs.h" />
 		<Unit filename="src/components/ground.cpp" />
 		<Unit filename="src/components/ground.h" />
 		<Unit filename="src/components/gyrator.cpp" />
