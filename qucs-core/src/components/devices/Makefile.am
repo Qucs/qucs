@@ -29,6 +29,8 @@ noinst_LTLIBRARIES = libdevices.la
 libdevices_la_SOURCES = device.cpp diode.cpp jfet.cpp bjt.cpp mosfet.cpp \
   eqndefined.cpp diac.cpp thyristor.cpp triac.cpp tunneldiode.cpp
 
+pkginclude_HEADERS = device.h
+
 noinst_HEADERS = device.h diode.h jfet.h bjt.h mosfet.h eqndefined.h diac.h \
   thyristor.h triac.h tunneldiode.h
 

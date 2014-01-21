@@ -44,6 +44,10 @@ libqucs_la_LIBADD = math/libqucsmath.la   \
 ## In case we want to build windows dlls
 libqucs_la_LDFLAGS = -no-undefined
 
+pkginclude_HEADERS = compat.h logging.h object.h vector.h consts.h node.h \
+  net.h circuit.h integrator.h states.h states.cpp valuelist.h valuelist.cpp \
+  constants.h netdefs.h
+
 noinst_TEMPLATES = ptrlist.cpp tridiag.cpp hash.cpp \
 	tmatrix.cpp tvector.cpp eqnsys.cpp states.cpp \
 	nasolver.cpp nasolution.cpp valuelist.cpp

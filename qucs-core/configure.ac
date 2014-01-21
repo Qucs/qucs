@@ -111,11 +111,11 @@ fi
 unset enable_debug
 
 case $host_os in
-  *linux* | *cygwin* | *mingw* )
+  *linux* | *cygwin* )
   dnl Yet another compiler check.
   if test "x$GCC" = xyes; then
     CFLAGS="$CFLAGS -pipe"
-    CXXFLAGS="$CXXFLAGS -pipe -fno-exceptions -fno-check-new"
+    CXXFLAGS="$CXXFLAGS -pipe -fno-exceptions -fno-check-new -ldl -rdynamic"
     if test $USE_MAINTAINER_MODE = yes; then
       CFLAGS="$CFLAGS -W -Wall -Wmissing-prototypes"
       CXXFLAGS="$CXXFLAGS -W -Wall"
@@ -138,6 +138,17 @@ case $host_os in
     fi
   else
     AC_MSG_ERROR([clang++ required but not found])
+  fi
+  ;;
+
+  *mingw* )
+  if test "x$GCC" = xyes; then
+    CFLAGS="$CFLAGS -pipe"
+    CXXFLAGS="$CXXFLAGS -pipe -fno-exceptions -fno-check-new -ldl"
+    if test $USE_MAINTAINER_MODE = yes; then
+      CFLAGS="$CFLAGS -W -Wall -Wmissing-prototypes"
+      CXXFLAGS="$CXXFLAGS -W -Wall"
+    fi
   fi
   ;;
 esac

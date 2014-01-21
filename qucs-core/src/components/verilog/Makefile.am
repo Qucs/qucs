@@ -855,6 +855,9 @@ else
 GENERATED_FILES =
 endif
 
+pkginclude_HEADERS = analogfunction.xml qucsVersion.xml qucsMODULEcore.xml \
+                         qucsMODULEdefs.xml qucsMODULEgui.xml
+
 CLEANFILES = *~ *.orig *.rej $(GENERATED_FILES)
 
 MAINTAINERCLEANFILES = Makefile.in

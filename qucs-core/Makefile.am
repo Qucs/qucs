@@ -44,6 +44,8 @@ nodist_pkginclude_HEADERS = qucs_typedefs.h
 
 EXTRA_DIST = BUGS bootstrap.sh depcomp RELEASE
 
+pkginclude_HEADERS = config.h
+
 CLEANFILES = *~ *.orig *.rej
 MAINTAINERCLEANFILES = aclocal.m4 config.h.in configure Makefile.in \
 	stamp-h.in stamp-h[0-9].in

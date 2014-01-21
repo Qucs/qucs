@@ -40,6 +40,8 @@ libcomponent_la_SOURCES = attenuator.cpp dcblock.cpp open.cpp vccs.cpp        \
 	vexp.cpp iexp.cpp mutualx.cpp vfile.cpp ifile.cpp rfedd.cpp          \
 	rectline.cpp rlcg.cpp hybrid.cpp ctline.cpp ecvs.cpp
 
+pkginclude_HEADERS = component.h components.h component_id.h
+
 noinst_HEADERS = attenuator.h dcblock.h open.h vccs.h biastee.h circulator.h \
 	dcfeed.h pac.h vcvs.h capacitor.h ground.h resistor.h cccs.h cross.h \
 	trafo.h inductor.h tee.h ccvs.h isolator.h component.h itrafo.h      \
