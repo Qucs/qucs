@@ -7,16 +7,16 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This software is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this package; see the file COPYING.  If not, write to
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
- * Boston, MA 02110-1301, USA.  
+ * Boston, MA 02110-1301, USA.
  *
  * $Id$
  *
@@ -28,6 +28,8 @@
 
 #include "component.h"
 #include "digisource.h"
+
+using namespace qucs;
 
 digisource::digisource () : circuit (1) {
   type = CIR_DIGISOURCE;
@@ -57,7 +59,7 @@ void digisource::initAC (void) {
 }
 
 void digisource::initTR (void) {
-  vector * values = getPropertyVector ("times");
+  qucs::vector * values = getPropertyVector ("times");
   T = real (sum (*values));
   initDC ();
 }
@@ -65,7 +67,7 @@ void digisource::initTR (void) {
 void digisource::calcTR (nr_double_t t) {
   char * init = getPropertyString ("init");
   nr_double_t v = getPropertyDouble ("V");
-  vector * values = getPropertyVector ("times");
+  qucs::vector * values = getPropertyVector ("times");
   bool lo = !strcmp (init, "low");
   nr_double_t ti = 0;
 

@@ -7,16 +7,16 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This software is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this package; see the file COPYING.  If not, write to
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
- * Boston, MA 02110-1301, USA.  
+ * Boston, MA 02110-1301, USA.
  *
  * $Id$
  *
@@ -25,7 +25,7 @@
 #ifndef __MOSFET_H__
 #define __MOSFET_H__
 
-class mosfet : public circuit
+class mosfet : public qucs::circuit
 {
  public:
   CREATOR (mosfet);
@@ -47,8 +47,8 @@ class mosfet : public circuit
  private:
   nr_double_t transientChargeTR (int, nr_double_t&, nr_double_t, nr_double_t);
   nr_double_t transientChargeSR (int, nr_double_t&, nr_double_t, nr_double_t);
-  matrix calcMatrixY (nr_double_t);
-  matrix calcMatrixCy (nr_double_t);
+  qucs::matrix calcMatrixY (nr_double_t);
+  qucs::matrix calcMatrixCy (nr_double_t);
 
  private:
   nr_double_t UbsPrev, UbdPrev, UgsPrev, UgdPrev, UdsPrev, Udsat, Uon;
@@ -57,9 +57,9 @@ class mosfet : public circuit
   nr_double_t Qgd, Qgs, Qbd, Qbs, Qgb, Ibs, Ibd;
   nr_double_t Ugd, Ugs, Ubs, Ubd, Uds, Ugb;
   int transientMode;
-  circuit * rs;
-  circuit * rd;
-  circuit * rg;
+  qucs::circuit * rs;
+  qucs::circuit * rd;
+  qucs::circuit * rg;
 };
 
 #endif /* __MOSFET_H__ */

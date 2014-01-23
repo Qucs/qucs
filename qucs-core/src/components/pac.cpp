@@ -7,16 +7,16 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This software is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this package; see the file COPYING.  If not, write to
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
- * Boston, MA 02110-1301, USA.  
+ * Boston, MA 02110-1301, USA.
  *
  * $Id$
  *
@@ -28,6 +28,8 @@
 
 #include "component.h"
 #include "pac.h"
+
+using namespace qucs;
 
 pac::pac () : circuit (2) {
   type = CIR_PAC;
@@ -45,7 +47,7 @@ void pac::calcSP (nr_double_t) {
 void pac::calcNoiseSP (nr_double_t) {
   nr_double_t r = getPropertyDouble ("Z");
   nr_double_t T = getPropertyDouble ("Temp");
-  nr_double_t f = kelvin (T) * 4.0 * r * z0 / sqr (2.0 * z0 + r) / T0;
+  nr_double_t f = kelvin (T) * 4.0 * r * z0 / qucs::sqr (2.0 * z0 + r) / T0;
   setN (NODE_1, NODE_1, +f); setN (NODE_2, NODE_2, +f);
   setN (NODE_1, NODE_2, -f); setN (NODE_2, NODE_1, -f);
 }
@@ -60,7 +62,7 @@ void pac::calcDC (void) {
 void pac::calcAC (nr_double_t) {
   nr_double_t p = getPropertyDouble ("P");
   nr_double_t r = getPropertyDouble ("Z");
-  nr_double_t i = sqrt (8 * p / r);
+  nr_double_t i = std::sqrt (8 * p / r);
   calcDC ();
   setI (NODE_1, +i); setI (NODE_2, -i);
 }
@@ -77,7 +79,7 @@ void pac::calcTR (nr_double_t t) {
   nr_double_t p = getPropertyDouble ("P");
   nr_double_t r = getPropertyDouble ("Z");
   nr_double_t f = getPropertyDouble ("f");
-  nr_double_t i = sqrt (8 * p / r) * sin (2 * M_PI * f * t);
+  nr_double_t i = std::sqrt (8 * p / r) * std::sin (2 * M_PI * f * t);
   calcDC ();
   setI (NODE_1, +i); setI (NODE_2, -i);
 }
@@ -96,7 +98,7 @@ void pac::calcHB (nr_double_t frequency) {
   if (f == frequency) {
     nr_double_t p = getPropertyDouble ("P");
     nr_double_t r = getPropertyDouble ("Z");
-    nr_double_t u = sqrt (4 * p * r);
+    nr_double_t u = std::sqrt (4 * p * r);
     setE (VSRC_1, u);
   }
   else {

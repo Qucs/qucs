@@ -7,16 +7,16 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This software is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this package; see the file COPYING.  If not, write to
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
- * Boston, MA 02110-1301, USA.  
+ * Boston, MA 02110-1301, USA.
  *
  * $Id$
  *
@@ -29,7 +29,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <math.h>
+#include <cmath>
 #include <assert.h>
 #include <float.h>
 #include <ctype.h>
@@ -41,6 +41,8 @@
 #include "dataset.h"
 #include "constants.h"
 #include "check_zvr.h"
+
+using namespace qucs;
 
 // Global variables.
 dataset * zvr_result = NULL;
@@ -184,14 +186,14 @@ static void zvr_conversion (struct zvr_data_t * root) {
       for (n = 0; n < var->getSize (); n++) {
 	nr_double_t r = real (var->get (n));
 	nr_double_t i = imag (var->get (n));
-	var->set (polar (pow (10.0, r / 20.0), rad (i)), n);
+	var->set (std::polar (std::pow (10.0, r / 20.0), rad (i)), n);
       }
     }
     // magnitude in [dB]
     else if (!strcmp (hdr->d_FMT, "MAGNITUDE") && !strcmp (hdr->d_UNT, "dB")) {
       for (n = 0; n < var->getSize (); n++) {
 	nr_double_t r = real (var->get (n));
-	var->set (pow (10.0, r / 20.0), n);
+	var->set (std::pow (10.0, r / 20.0), n);
       }
     }
     // linear magnitude and angle in [degree]
@@ -199,7 +201,7 @@ static void zvr_conversion (struct zvr_data_t * root) {
       for (n = 0; n < var->getSize (); n++) {
 	nr_double_t r = real (var->get (n));
 	nr_double_t i = imag (var->get (n));
-	var->set (polar (r, rad (i)), n);
+	var->set (std::polar (r, rad (i)), n);
       }
     }
     // magnitude in [dB] and angle in [degree]
@@ -207,7 +209,7 @@ static void zvr_conversion (struct zvr_data_t * root) {
       for (n = 0; n < var->getSize (); n++) {
 	nr_double_t r = real (var->get (n));
 	nr_double_t i = imag (var->get (n));
-	var->set (polar (pow (10.0, r / 20.0), rad (i)), n);
+	var->set (std::polar (std::pow (10.0, r / 20.0), rad (i)), n);
       }
     }
   }

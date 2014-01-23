@@ -8,16 +8,16 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This software is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this package; see the file COPYING.  If not, write to
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
- * Boston, MA 02110-1301, USA.  
+ * Boston, MA 02110-1301, USA.
  *
  * $Id$
  *
@@ -30,16 +30,19 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <math.h>
+#include <cmath>
 #include <float.h>
 #include <assert.h>
 
+#include "real.h"
 #include "complex.h"
 #include "object.h"
 #include "logging.h"
 #include "strlist.h"
 #include "vector.h"
 #include "consts.h"
+
+namespace qucs {
 
 // Constructor creates an unnamed instance of the vector class.
 vector::vector () : object () {
@@ -186,7 +189,7 @@ void vector::set (const nr_complex_t z, int i) {
 }
 
 // The function returns the current size of the vector.
-int vector::getSize (void) {
+int vector::getSize (void) const {
   return size;
 }
 
@@ -361,7 +364,7 @@ vector conj (vector v) {
 vector dB (vector v) {
   vector result (v);
   for (int i = 0; i < v.getSize (); i++)
-    result.set (10.0 * log10 (norm (v.get (i))), i);
+    result.set (10.0 * std::log10 (norm (v.get (i))), i);
   return result;
 }
 
@@ -508,6 +511,18 @@ vector cosh (vector v) {
   return result;
 }
 
+vector sech (vector v) {
+  vector result (v);
+  for (int i = 0; i < v.getSize (); i++) result.set (sech (v.get (i)), i);
+  return result;
+}
+
+vector cosech (vector v) {
+  vector result (v);
+  for (int i = 0; i < v.getSize (); i++) result.set (cosech (v.get (i)), i);
+  return result;
+}
+
 vector acosh (vector v) {
   vector result (v);
   for (int i = 0; i < v.getSize (); i++) result.set (acosh (v.get (i)), i);
@@ -600,7 +615,7 @@ vector diff (vector var, vector dep, int n) {
       }
       else {
 	c =
-	  ((y.get (yi) - y.get (yi - 1)) / (x.get (xi) - x.get (xi - 1)) + 
+	  ((y.get (yi) - y.get (yi - 1)) / (x.get (xi) - x.get (xi - 1)) +
 	   (y.get (yi + 1) - y.get (yi)) / (x.get (xi + 1) - x.get (xi))) /
 	  2.0;
       }
@@ -964,12 +979,12 @@ vector logspace (nr_double_t start, nr_double_t stop, int points) {
   // check direction and sign of values
   d = fabs (start) > fabs (stop) ? -1 : 1;
   // compute logarithmic step size
-  step = (log (last) - log (first)) / (points - 1);
+  step = (::log (last) - ::log (first)) / (points - 1);
   for (int i = 0, j = points - 1; i < points; i++, j--) {
     if (d > 0)
-      result.set (start * exp (step * i), i);
+      result.set (start * ::exp (step * i), i);
     else
-      result.set (stop * exp (step * i), j);
+      result.set (stop * ::exp (step * i), j);
   }
   return result;
 }
@@ -1049,11 +1064,11 @@ static nr_double_t integrate_n (vector v) { /* using trapezoidal rule */
 }
 
 nr_double_t vector::rms (void) {
-  nr_double_t result = sqrt (integrate_n (*this) / getSize ());
-  return result; 
+  nr_double_t result = std::sqrt (integrate_n (*this) / getSize ());
+  return result;
 }
 
-nr_double_t vector::variance (void) { 
+nr_double_t vector::variance (void) {
   nr_double_t result = 0.0;
   nr_complex_t average = avg (*this);
   for (int i = 0; i < getSize (); i++) result += norm (get (i) - average);
@@ -1063,7 +1078,7 @@ nr_double_t vector::variance (void) {
 }
 
 nr_double_t vector::stddev (void) {
-  return sqrt (variance ());
+  return std::sqrt (variance ());
 }
 
 vector erf (vector v) {
@@ -1110,13 +1125,13 @@ vector yn (const int n, vector v) {
 
 vector polar (const nr_complex_t a, vector v) {
   vector result (v);
-  for (int i = 0; i < v.getSize (); i++) result.set (polar (a, v.get (i)), i);
+  for (int i = 0; i < v.getSize (); i++) result.set (qucs::polar (a, v.get (i)), i);
   return result;
 }
 
 vector polar (vector v, const nr_complex_t p) {
   vector result (v);
-  for (int i = 0; i < v.getSize (); i++) result.set (polar (v.get (i), p), i);
+  for (int i = 0; i < v.getSize (); i++) result.set (qucs::polar (v.get (i), p), i);
   return result;
 }
 
@@ -1131,7 +1146,7 @@ vector polar (vector a, vector p) {
   }
   vector res (len);
   for (j = i = n = 0; n < len; n++) {
-    res (n) = polar (a (i), p (j));
+    res (n) = qucs::polar (a (i), p (j));
     if (++i >= len1) i = 0;  if (++j >= len2) j = 0;
   }
   return res;
@@ -1233,3 +1248,5 @@ void vector::print (void) {
   }
 }
 #endif /* DEBUG */
+
+} // namespace qucs

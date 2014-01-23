@@ -26,7 +26,7 @@
 #ifndef __MSCORNER_H__
 #define __MSCORNER_H__
 
-class mscorner : public circuit
+class mscorner : public qucs::circuit
 {
  public:
   CREATOR (mscorner);
@@ -38,7 +38,7 @@ class mscorner : public circuit
 
  private:
   void initCheck (void);
-  matrix calcMatrixZ (nr_double_t);
+  qucs::matrix calcMatrixZ (nr_double_t);
   nr_double_t L, C, h;
 };
 

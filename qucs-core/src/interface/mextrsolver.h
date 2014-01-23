@@ -1,7 +1,6 @@
-
-#include "qucs_interface.h"
-#include "e_trsolver.h"
 #include "mex.h"
+#include <qucs-core/qucs_interface.h>
+
 
 #ifndef MEXTRSOLVER_H
 #define MEXTRSOLVER_H
@@ -13,10 +12,9 @@ class mextrsolver
         mextrsolver();
         virtual ~mextrsolver();
 
-        // the one and only trsolver object to which the class
-        // will interface
-        qucsint thequcsint;
-        e_trsolver * thetrsolver;
+        // the one and only trsolver_interface object, interface to the
+        // qucs transient solver
+        qucs::trsolver_interface * qtr;
 
         // test method
         void debug(void);
@@ -28,6 +26,9 @@ class mextrsolver
         void init_async(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[]);
         int stepsolve_sync(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[]);
         void acceptstep_sync(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[]);
+        int stepsolve_async(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[]);
+        void acceptstep_async(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[]);
+        void rejectstep_async(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[]);
         int getsolution(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[]);
         int getN(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[]);
         int getM(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[]);

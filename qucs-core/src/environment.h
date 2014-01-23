@@ -22,10 +22,18 @@
  *
  */
 
+/*! \file environment.h
+ * \brief The environment class definition.
+ *
+ * Contains the environment class definition.
+ */
+
 #include "equation.h"
 
 #ifndef __ENVIRONMENT_H__
 #define __ENVIRONMENT_H__
+
+namespace qucs {
 
 class variable;
 class checker;
@@ -33,6 +41,13 @@ class solver;
 class dataset;
 template <class type_t> class ptrlist;
 
+/*! \class environment
+ * \brief Houses the settings for netlist evaluation.
+ *
+ * The environment class holds information and pointers to the
+ * classes and methods used to evaluate a netlist.
+ *
+ */
 class environment
 {
  public:
@@ -64,7 +79,7 @@ class environment
   void equationSolver (void);
 
   // subcircuit specific
-  vector getVector (char *);
+  qucs::vector getVector (char *);
   void setDoubleConstant (char *, nr_double_t);
   nr_double_t getDoubleConstant (char *);
   void setDouble (char *, nr_double_t);
@@ -91,5 +106,7 @@ class environment
   bool iscopy;
   struct definition_t * defs;
 };
+
+} // namespace qucs
 
 #endif /* __ENVIRONMENT_H__ */

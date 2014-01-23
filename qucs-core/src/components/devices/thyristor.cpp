@@ -8,16 +8,16 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This software is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this package; see the file COPYING.  If not, write to
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
- * Boston, MA 02110-1301, USA.  
+ * Boston, MA 02110-1301, USA.
  *
  * $Id$
  *
@@ -37,7 +37,8 @@
 #define NODE_GA 2 /* gate */
 #define NODE_IN 3 /* internal node */
 
-using namespace device;
+using namespace qucs;
+using namespace qucs::device;
 
 // Constructor for the thyristor.
 thyristor::thyristor () : circuit (4) {
@@ -71,7 +72,7 @@ void thyristor::calcTheModel (bool last) {
   nr_double_t Ut, Ud_bo, Ieq, Vd;
 
   Ut = N * kelvin (T) * kBoverQ;
-  Ud_bo = log (Ibo / Is + 1.0);
+  Ud_bo = std::log (Ibo / Is + 1.0);
 
   Vd = Ud = real (getV (NODE_IN) - getV (NODE_A2));
   Id = Is;
@@ -84,13 +85,13 @@ void thyristor::calcTheModel (bool last) {
     isOn = Ud > Ud_bo;
 
   if (Ud >= 80.0) {
-    Id *= exp (80.0) * (1.0 + Ud - 80.0) - 1.0;
+    Id *= std::exp (80.0) * (1.0 + Ud - 80.0) - 1.0;
     Ud  = 80.0;
   }
   else
-    Id *= exp (Ud) - 1.0;
+    Id *= std::exp (Ud) - 1.0;
 
-  gd  = Is / Ut * exp (Ud);
+  gd  = Is / Ut * std::exp (Ud);
   Ieq = Id - Vd * gd;
 
   // fill in I-Vector
@@ -100,19 +101,19 @@ void thyristor::calcTheModel (bool last) {
   setI (NODE_GA, +0.0);
 
   if (!isOn) {
-    Ut = Ubo / log (Ibo / Is);
+    Ut = Ubo / std::log (Ibo / Is);
     Vd = Ud = real (getV (NODE_A1) - getV (NODE_IN));
     Id = Is;
     Ud /= Ut;
 
     if (Ud >= 80.0) {
-      Id *= exp (80.0) * (1.0 + Ud - 80.0) - 1.0;
+      Id *= std::exp (80.0) * (1.0 + Ud - 80.0) - 1.0;
       Ud  = 80.0;
     }
     else
-      Id *= exp (Ud) - 1.0;
+      Id *= std::exp (Ud) - 1.0;
 
-    gi  = Is / Ut * exp (Ud);
+    gi  = Is / Ut * std::exp (Ud);
     Ieq = Id - Vd * gi;
     addI (NODE_A1, -Ieq);
     addI (NODE_IN, +Ieq);
@@ -219,12 +220,12 @@ void thyristor::calcTR (nr_double_t time) {
 
 // properties
 PROP_REQ [] = {
-  { "Igt", PROP_REAL, { 50e-6, PROP_NO_STR }, PROP_POS_RANGEX }, 
-  { "Vbo", PROP_REAL, { 30, PROP_NO_STR }, PROP_POS_RANGEX }, 
+  { "Igt", PROP_REAL, { 50e-6, PROP_NO_STR }, PROP_POS_RANGEX },
+  { "Vbo", PROP_REAL, { 30, PROP_NO_STR }, PROP_POS_RANGEX },
   PROP_NO_PROP };
 PROP_OPT [] = {
-  { "Cj0", PROP_REAL, { 10e-12, PROP_NO_STR }, PROP_POS_RANGE }, 
-  { "Is", PROP_REAL, { 1e-10, PROP_NO_STR }, PROP_POS_RANGE }, 
+  { "Cj0", PROP_REAL, { 10e-12, PROP_NO_STR }, PROP_POS_RANGE },
+  { "Is", PROP_REAL, { 1e-10, PROP_NO_STR }, PROP_POS_RANGE },
   { "N", PROP_REAL, { 2.0, PROP_NO_STR }, PROP_RNGII (0.1, 100) },
   { "Ri", PROP_REAL, { 10.0, PROP_NO_STR }, PROP_POS_RANGEX },
   { "Rg", PROP_REAL, { 5.0, PROP_NO_STR }, PROP_POS_RANGEX },

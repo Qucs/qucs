@@ -7,16 +7,16 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This software is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this package; see the file COPYING.  If not, write to
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
- * Boston, MA 02110-1301, USA.  
+ * Boston, MA 02110-1301, USA.
  *
  * $Id$
  *
@@ -29,6 +29,8 @@
 #include "component.h"
 #include "tline.h"
 
+using namespace qucs;
+
 tline::tline () : circuit (2) {
   type = CIR_TLINE;
 }
@@ -39,8 +41,8 @@ void tline::calcSP (nr_double_t frequency) {
   nr_double_t a = getPropertyDouble ("Alpha");
   nr_double_t r = (z - z0) / (z + z0);
   nr_double_t b = 2 * M_PI * frequency / C0;
-  a = log (a) / 2;
-  nr_complex_t p = exp (-l * nr_complex_t (a, b));
+  a = std::log (a) / 2;
+  nr_complex_t p = std::exp (-l * nr_complex_t (a, b));
   nr_complex_t s11 = r * (1.0 - p * p) / (1.0 - p * p * r * r);
   nr_complex_t s21 = p * (1.0 - r * r) / (1.0 - p * p * r * r);
   setS (NODE_1, NODE_1, s11); setS (NODE_2, NODE_2, s11);
@@ -52,12 +54,12 @@ void tline::calcNoiseSP (nr_double_t) {
   nr_double_t l = getPropertyDouble ("L");
   nr_double_t z = getPropertyDouble ("Z");
   nr_double_t a = getPropertyDouble ("Alpha");
-  a = log (a) / 2;
-  a = exp (a * l);
+  a = std::log (a) / 2;
+  a = std::exp (a * l);
   nr_double_t r = (z - z0) / (z + z0);
   nr_double_t f = (a - 1) * (r * r - 1) / sqr (a - r * r) * kelvin (T) / T0;
   nr_double_t n11 = -f * (r * r + a);
-  nr_double_t n21 = +f * 2 * r * sqrt (a);
+  nr_double_t n21 = +f * 2 * r * std::sqrt (a);
   setN (NODE_1, NODE_1, n11); setN (NODE_2, NODE_2, n11);
   setN (NODE_1, NODE_2, n21); setN (NODE_2, NODE_1, n21);
 }
@@ -67,12 +69,12 @@ void tline::calcNoiseAC (nr_double_t) {
   nr_double_t l = getPropertyDouble ("L");
   nr_double_t z = getPropertyDouble ("Z");
   nr_double_t a = getPropertyDouble ("Alpha");
-  a = log (a) / 2;
+  a = std::log (a) / 2;
   if (a * l != 0.0) {
-    a = exp (a * l);
+    a = std::exp (a * l);
     nr_double_t f = 4.0 * kelvin (T) / T0 / z / (a - 1);
     nr_double_t n11 = +f * (a + 1);
-    nr_double_t n21 = -f * 2 * sqrt (a);
+    nr_double_t n21 = -f * 2 * std::sqrt (a);
     setN (NODE_1, NODE_1, n11); setN (NODE_2, NODE_2, n11);
     setN (NODE_1, NODE_2, n21); setN (NODE_2, NODE_1, n21);
   }
@@ -82,14 +84,14 @@ void tline::initDC (void) {
   nr_double_t z = getPropertyDouble ("Z");
   nr_double_t a = getPropertyDouble ("Alpha");
   nr_double_t l = getPropertyDouble ("L");
-  a = log (a) / 2;
+  a = std::log (a) / 2;
   if (a * l != 0.0) {
     setVoltageSources (0);
     allocMatrixMNA ();
-    a = exp (a * l);
+    a = std::exp (a * l);
     nr_double_t f = 1 / z / (a - 1);
     nr_double_t y11 = +f * (a + 1);
-    nr_double_t y21 = -f * 2 * sqrt (a);
+    nr_double_t y21 = -f * 2 * std::sqrt (a);
     setY (NODE_1, NODE_1, y11); setY (NODE_2, NODE_2, y11);
     setY (NODE_1, NODE_2, y21); setY (NODE_2, NODE_1, y21);
   } else {
@@ -116,7 +118,7 @@ void tline::calcAC (nr_double_t frequency) {
   nr_double_t z = getPropertyDouble ("Z");
   nr_double_t a = getPropertyDouble ("Alpha");
   nr_double_t b = 2 * M_PI * frequency / C0;
-  a = log (a) / 2;
+  a = std::log (a) / 2;
   if (l != 0.0) {
     nr_complex_t y11 = +1 / z / tanh (nr_complex_t (a, b) * l);
     nr_complex_t y21 = -1 / z / sinh (nr_complex_t (a, b) * l);
@@ -136,7 +138,7 @@ void tline::initTR (void) {
     initHistory (l / C0);
     setB (NODE_1, VSRC_1, +1); setB (NODE_2, VSRC_2, +1);
     setC (VSRC_1, NODE_1, +1); setC (VSRC_2, NODE_2, +1);
-    setD (VSRC_1, VSRC_1, -z); setD (VSRC_2, VSRC_2, -z); 
+    setD (VSRC_1, VSRC_1, -z); setD (VSRC_2, VSRC_2, -z);
   } else {
     setVoltageSources (1);
     allocMatrixMNA ();
@@ -149,10 +151,10 @@ void tline::calcTR (nr_double_t t) {
   nr_double_t a = getPropertyDouble ("Alpha");
   nr_double_t z = getPropertyDouble ("Z");
   nr_double_t T = l / C0;
-  a = log (a) / 2;
+  a = std::log (a) / 2;
   if (T > 0.0) {
     T = t - T;
-    a = exp (-a / 2 * l);
+    a = std::exp (-a / 2 * l);
     setE (VSRC_1, a * (getV (NODE_2, T) + z * getJ (VSRC_2, T)));
     setE (VSRC_2, a * (getV (NODE_1, T) + z * getJ (VSRC_1, T)));
   }
@@ -160,7 +162,7 @@ void tline::calcTR (nr_double_t t) {
 
 // properties
 PROP_REQ [] = {
-  { "Z", PROP_REAL, { 50, PROP_NO_STR }, PROP_POS_RANGE }, 
+  { "Z", PROP_REAL, { 50, PROP_NO_STR }, PROP_POS_RANGE },
   { "L", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_NO_RANGE },
   PROP_NO_PROP };
 PROP_OPT [] = {

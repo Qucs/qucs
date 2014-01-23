@@ -26,7 +26,7 @@
 #ifndef __MSOPEN_H__
 #define __MSOPEN_H__
 
-class msopen : public circuit
+class msopen : public qucs::circuit
 {
  public:
   CREATOR (msopen);

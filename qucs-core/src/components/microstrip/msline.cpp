@@ -7,16 +7,16 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This software is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this package; see the file COPYING.  If not, write to
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
- * Boston, MA 02110-1301, USA.  
+ * Boston, MA 02110-1301, USA.
  *
  * $Id$
  *
@@ -29,6 +29,8 @@
 #include "component.h"
 #include "substrate.h"
 #include "msline.h"
+
+using namespace qucs;
 
 msline::msline () : circuit (2) {
   alpha = beta = zl = ereff = 0;
@@ -81,7 +83,7 @@ void msline::calcPropagation (nr_double_t frequency) {
   zl    = ZlEffFreq;
   ereff = ErEffFreq;
   alpha = ac + ad;
-  beta  = sqrt (ErEffFreq) * 2 * M_PI * frequency / C0;
+  beta  = std::sqrt (ErEffFreq) * 2 * M_PI * frequency / C0;
 }
 
 void msline::calcSP (nr_double_t frequency) {
@@ -94,8 +96,8 @@ void msline::calcSP (nr_double_t frequency) {
   nr_double_t z = zl / z0;
   nr_double_t y = 1 / z;
   nr_complex_t g = nr_complex_t (alpha, beta);
-  nr_complex_t n = 2.0 * cosh (g * l) + (z + y) * sinh (g * l);
-  nr_complex_t s11 = (z - y) * sinh (g * l) / n;
+  nr_complex_t n = 2.0 * cosh (g * l) + (z + y) * std::sinh (g * l);
+  nr_complex_t s11 = (z - y) * std::sinh (g * l) / n;
   nr_complex_t s21 = 2.0 / n;
   setS (NODE_1, NODE_1, s11); setS (NODE_2, NODE_2, s11);
   setS (NODE_1, NODE_2, s21); setS (NODE_2, NODE_1, s21);
@@ -128,7 +130,7 @@ void msline::analyseQuasiStatic (nr_double_t W, nr_double_t h, nr_double_t t,
 
     // compute strip thickness effect
     if (t != 0) {
-      dW1 = t / M_PI * log (4 * M_E / sqrt (sqr (t / h) + 
+      dW1 = t / M_PI * std::log (4 * M_E / std::sqrt (sqr (t / h) +
 					    sqr (M_1_PI / (W / t + 1.10))));
     }
     else dW1 = 0;
@@ -137,27 +139,27 @@ void msline::analyseQuasiStatic (nr_double_t W, nr_double_t h, nr_double_t t,
 
     // compute characteristic impedance
     if (W / h < 3.3) {
-      c = log (4 * h / Wr + sqrt (sqr (4 * h / Wr) + 2));
-      b = (er - 1) / (er + 1) / 2 * (log (M_PI_2) + log (2 * M_2_PI) / er);
-      z = (c - b) * Z0 / M_PI / sqrt (2 * (er + 1));
+      c = std::log (4 * h / Wr + std::sqrt (sqr (4 * h / Wr) + 2));
+      b = (er - 1) / (er + 1) / 2 * (std::log (M_PI_2) + std::log (2 * M_2_PI) / er);
+      z = (c - b) * Z0 / M_PI / std::sqrt (2 * (er + 1));
     }
     else {
-      c = 1 + log (M_PI_2) + log (Wr / h / 2 + 0.94);
-      d = M_1_PI / 2 * (1 + log (sqr (M_PI) / 16)) * (er - 1) / sqr (er);
+      c = 1 + std::log (M_PI_2) + std::log (Wr / h / 2 + 0.94);
+      d = M_1_PI / 2 * (1 + std::log (sqr (M_PI) / 16)) * (er - 1) / sqr (er);
       x = 2 * M_LN2 / M_PI + Wr / h / 2 + (er + 1) / 2 / M_PI / er * c + d;
-      z = Z0 / 2 / x / sqrt (er);
+      z = Z0 / 2 / x / std::sqrt (er);
     }
 
     // compute effective dielectric constant
     if (W / h < 1.3) {
-      a = log (8 * h / Wr) + sqr (Wr / h) / 32;
-      b = (er - 1) / (er + 1) / 2 * (log (M_PI_2) + log (2 * M_2_PI) / er);
+      a = std::log (8 * h / Wr) + sqr (Wr / h) / 32;
+      b = (er - 1) / (er + 1) / 2 * (std::log (M_PI_2) + std::log (2 * M_2_PI) / er);
       e = (er + 1) / 2 * sqr (a / (a - b));
     }
     else {
-      a = (er - 1) / 2 / M_PI / er * (log (2.1349 * Wr / h + 4.0137) - 
+      a = (er - 1) / 2 / M_PI / er * (std::log (2.1349 * Wr / h + 4.0137) -
 				      0.5169 / er);
-      b = Wr / h / 2 + M_1_PI * log (8.5397 * Wr / h + 16.0547);
+      b = Wr / h / 2 + M_1_PI * std::log (8.5397 * Wr / h + 16.0547);
       e = er * sqr ((b - a) / b);
     }
   }
@@ -169,22 +171,22 @@ void msline::analyseQuasiStatic (nr_double_t W, nr_double_t h, nr_double_t t,
     // consider strip thickness equations
     if (t != 0 && t < W / 2) {
       nr_double_t arg = (u < M_1_PI / 2) ? 2 * M_PI * W / t : h / t;
-      dW = t / M_PI * (1 + log (2 * arg));
+      dW = t / M_PI * (1 + std::log (2 * arg));
       if (t / dW >= 0.75) dW = 0;
     }
     WEff = W + dW; u = WEff / h;
 
     // effective dielectric constant
-    e = (er + 1) / 2 + (er - 1) / 2 / sqrt (1 + 10 / u);
+    e = (er + 1) / 2 + (er - 1) / 2 / std::sqrt (1 + 10 / u);
 
     // characteristic impedance
     if (u < 1.0) {
-      z = M_1_PI / 2 * log (8 / u + u / 4);
+      z = M_1_PI / 2 * std::log (8 / u + u / 4);
     }
     else {
       z = 1 / (u + 2.42 - 0.44 / u + pow (1 - 1 / u, 6));
     }
-    z = Z0 * z / sqrt (e);
+    z = Z0 * z / std::sqrt (e);
   }
   // HAMMERSTAD and JENSEN
   else if (!strcmp (Model, "Hammerstad")) {
@@ -195,10 +197,10 @@ void msline::analyseQuasiStatic (nr_double_t W, nr_double_t h, nr_double_t t,
 
     // compute strip thickness effect
     if (t != 0) {
-      du1 = t / M_PI * log (1 + 4 * M_E / t / sqr (coth (sqrt (6.517 * u))));
+      du1 = t / M_PI * std::log (1 + 4 * M_E / t / sqr (coth (std::sqrt (6.517 * u))));
     }
     else du1 = 0;
-    du = du1 * (1 + sech (sqrt (er - 1))) / 2;
+    du = du1 * (1 + sech (std::sqrt (er - 1))) / 2;
     u1 = u + du1;
     ur = u + du;
     WEff = ur * h;
@@ -206,14 +208,14 @@ void msline::analyseQuasiStatic (nr_double_t W, nr_double_t h, nr_double_t t,
     // compute impedances for homogeneous medium
     Hammerstad_zl (ur, zr);
     Hammerstad_zl (u1, z1);
-    
+
     // compute effective dielectric constant
     Hammerstad_ab (ur, er, a, b);
     Hammerstad_er (ur, er, a, b, e);
 
     // compute final characteristic impedance and dielectric constant
     // including strip thickness effects
-    z = zr / sqrt (e);
+    z = zr / std::sqrt (e);
     e = e * sqr (z1 / zr);
   }
 
@@ -243,30 +245,30 @@ void msline::analyseDispersion (nr_double_t W, nr_double_t h, nr_double_t er,
   // SCHNEIDER
   else if (!strcmp (Model, "Schneider")) {
     nr_double_t k, f;
-    k = sqrt (ErEff / er);
-    f = 4 * h * frequency / C0 * sqrt (er - 1);
+    k = std::sqrt (ErEff / er);
+    f = 4 * h * frequency / C0 * std::sqrt (er - 1);
     f = sqr (f);
     e = ErEff * sqr ((1 + f) / (1 + k * f));
-    z = ZlEff * sqrt (ErEff / e);
+    z = ZlEff * std::sqrt (ErEff / e);
   }
   // YAMASHITA
   else if (!strcmp (Model, "Yamashita")) {
     nr_double_t k, f;
-    k = sqrt (er / ErEff);
-    f = 4 * h * frequency / C0 * sqrt (er - 1) *
-      (0.5 + sqr (1 + 2 * log10 (1 + W / h)));
+    k = std::sqrt (er / ErEff);
+    f = 4 * h * frequency / C0 * std::sqrt (er - 1) *
+      (0.5 + sqr (1 + 2 * std::log10 (1 + W / h)));
     e = ErEff * sqr ((1 + k * pow (f, 1.5) / 4) / (1 + pow (f, 1.5) / 4));
-  }  
+  }
   // KOBAYASHI
   else if (!strcmp (Model, "Kobayashi")) {
     nr_double_t n, no, nc, fh, fk;
-    fk = C0 * atan (er * sqrt ((ErEff - 1) / (er - ErEff))) /
-      (2 * M_PI * h * sqrt (er - ErEff));
+    fk = C0 * atan (er * std::sqrt ((ErEff - 1) / (er - ErEff))) /
+      (2 * M_PI * h * std::sqrt (er - ErEff));
     fh = fk / (0.75 + (0.75 - 0.332 / pow (er, 1.73)) * W / h);
-    no = 1 + 1 / (1 + sqrt (W / h)) + 0.32 * cubic (1 / (1 + sqrt (W / h))); 
+    no = 1 + 1 / (1 + std::sqrt (W / h)) + 0.32 * cubic (1 / (1 + std::sqrt (W / h)));
     if (W / h < 0.7) {
-      nc = 1 + 1.4 / (1 + W / h) * (0.15 - 0.235 * 
-				    exp (-0.45 * frequency / fh));
+      nc = 1 + 1.4 / (1 + W / h) * (0.15 - 0.235 *
+				    std::exp (-0.45 * frequency / fh));
     }
     else nc = 1;
     n = no * nc < 2.32 ? no * nc : 2.32;
@@ -275,19 +277,19 @@ void msline::analyseDispersion (nr_double_t W, nr_double_t h, nr_double_t er,
   // PRAMANICK and BHARTIA
   else if (!strcmp (Model, "Pramanick")) {
     nr_double_t Weff, We, f;
-    f = 2 * MU0 * h * frequency * sqrt (ErEff / er) / ZlEff;
+    f = 2 * MU0 * h * frequency * std::sqrt (ErEff / er) / ZlEff;
     e = er - (er - ErEff) / (1 + sqr (f));
-    Weff = Z0 * h / ZlEff / sqrt (ErEff);
+    Weff = Z0 * h / ZlEff / std::sqrt (ErEff);
     We = W + (Weff - W) / (1 + sqr (f));
-    z = Z0 * h / We / sqrt (e);
+    z = Z0 * h / We / std::sqrt (e);
   }
   // HAMMERSTAD and JENSEN
   else if (!strcmp (Model, "Hammerstad")) {
     nr_double_t f, g;
-    g = sqr (M_PI) / 12 * (er - 1) / ErEff * sqrt (2 * M_PI * ZlEff / Z0);
+    g = sqr (M_PI) / 12 * (er - 1) / ErEff * std::sqrt (2 * M_PI * ZlEff / Z0);
     f = 2 * MU0 * h * frequency / ZlEff;
     e = er - (er - ErEff) / (1 + g * sqr (f));
-    z = ZlEff * sqrt (ErEff / e) * (e - 1) / (ErEff - 1);
+    z = ZlEff * std::sqrt (ErEff / e) * (e - 1) / (ErEff - 1);
   }
   // KIRSCHNING and JANSEN
   else if (!strcmp (Model, "Kirschning")) {
@@ -309,8 +311,8 @@ void msline::analyseDispersion (nr_double_t W, nr_double_t h, nr_double_t er,
    coupled microstrip lines by Hammerstad and Jensen. */
 void msline::Hammerstad_ab (nr_double_t u, nr_double_t er, nr_double_t& a,
 			    nr_double_t& b) {
-  a = 1 + log ((quadr (u) + sqr (u / 52)) / (quadr (u) + 0.432)) / 49 + 
-    log (1 + cubic (u / 18.1)) / 18.7;
+  a = 1 + std::log ((quadr (u) + sqr (u / 52)) / (quadr (u) + 0.432)) / 49 +
+    std::log (1 + cubic (u / 18.1)) / 18.7;
   b = 0.564 * pow ((er - 0.9) / (er + 3), 0.053);
 }
 
@@ -327,8 +329,8 @@ void msline::Hammerstad_er (nr_double_t u, nr_double_t er, nr_double_t a,
    equation is used in single and coupled microstrip calculations as
    well. */
 void msline::Hammerstad_zl (nr_double_t u, nr_double_t& zl) {
-  nr_double_t fu = 6 + (2 * M_PI - 6) * exp (- pow (30.666 / u, 0.7528));
-  zl = Z0 / 2 / M_PI * log (fu / u + sqrt (1 + sqr (2 / u)));
+  nr_double_t fu = 6 + (2 * M_PI - 6) * std::exp (- pow (30.666 / u, 0.7528));
+  zl = Z0 / 2 / M_PI * std::log (fu / u + std::sqrt (1 + sqr (2 / u)));
 }
 
 /* Calculates dispersion effects for effective dielectric constant and
@@ -342,7 +344,7 @@ void msline::Getsinger_disp (nr_double_t h, nr_double_t er, nr_double_t ErEff,
   f = frequency * 2 * MU0 * h / ZlEff;
   e = er - (er - ErEff) / (1 + g * sqr (f));
   d = (er - e) * (e - ErEff) / e / (er - ErEff);
-  z = ZlEff * sqrt (e / ErEff) / (1 + d);  // group delay model
+  z = ZlEff * std::sqrt (e / ErEff) / (1 + d);  // group delay model
 }
 
 /* This function computes the dispersion of the effective dielectric
@@ -352,11 +354,11 @@ void msline::Getsinger_disp (nr_double_t h, nr_double_t er, nr_double_t ErEff,
 void msline::Kirschning_er (nr_double_t u, nr_double_t fn, nr_double_t er,
 			    nr_double_t ErEff, nr_double_t& ErEffFreq) {
   nr_double_t p, p1, p2, p3, p4;
-  p1 = 0.27488 + (0.6315 + 0.525 / pow (1 + 0.0157 * fn, 20)) * u - 
-    0.065683 * exp (-8.7513 * u);
-  p2 = 0.33622 * (1 - exp (-0.03442 * er));
-  p3 = 0.0363 * exp (-4.6 * u) * (1 - exp (- pow (fn / 38.7, 4.97)));
-  p4 = 1 + 2.751 * (1 - exp (- pow (er / 15.916, 8)));
+  p1 = 0.27488 + (0.6315 + 0.525 / pow (1 + 0.0157 * fn, 20)) * u -
+    0.065683 * std::exp (-8.7513 * u);
+  p2 = 0.33622 * (1 - std::exp (-0.03442 * er));
+  p3 = 0.0363 * std::exp (-4.6 * u) * (1 - std::exp (- pow (fn / 38.7, 4.97)));
+  p4 = 1 + 2.751 * (1 - std::exp (- pow (er / 15.916, 8)));
   p  = p1 * p2 * pow ((0.1844 + p3 * p4) * fn, 1.5763);
   ErEffFreq  = er - (er - ErEff) / (1 + p);
 }
@@ -372,15 +374,15 @@ void msline::Kirschning_zl (nr_double_t u, nr_double_t fn, nr_double_t er,
   nr_double_t r11, r12, r13, r14, r15, r16;
   r1 = 0.03891 * pow (er, 1.4);
   r2 = 0.267 * pow (u, 7);
-  r3 = 4.766 * exp (-3.228 * pow (u, 0.641));
+  r3 = 4.766 * std::exp (-3.228 * pow (u, 0.641));
   r4 = 0.016 + pow (0.0514 * er, 4.524);
   r5 = pow (fn / 28.843, 12);
   r6 = 22.20 * pow (u, 1.92);
-  r7 = 1.206 - 0.3144 * exp (-r1) * (1 - exp (-r2));
-  r8 = 1 + 1.275 * (1 - exp (-0.004625 * r3 * 
+  r7 = 1.206 - 0.3144 * std::exp (-r1) * (1 - std::exp (-r2));
+  r8 = 1 + 1.275 * (1 - std::exp (-0.004625 * r3 *
 			     pow (er, 1.674) * pow (fn / 18.365, 2.745)));
-  r9 = 5.086 * r4 * r5 / (0.3838 + 0.386 * r4) * 
-    exp (-r6) / (1 + 1.2992 * r5) * 
+  r9 = 5.086 * r4 * r5 / (0.3838 + 0.386 * r4) *
+    std::exp (-r6) / (1 + 1.2992 * r5) *
     pow (er - 1, 6) / (1 + 10 * pow (er - 1, 6));
   r10 = 0.00044 * pow (er, 2.136) + 0.0184;
   r11 = pow (fn / 19.47, 6) / (1 + 0.0962 * pow (fn / 19.47, 6));
@@ -388,9 +390,9 @@ void msline::Kirschning_zl (nr_double_t u, nr_double_t fn, nr_double_t er,
   r13 = 0.9408 * pow (ErEffFreq, r8) - 0.9603;
   r14 = (0.9408 - r9) * pow (ErEff, r8) - 0.9603;
   r15 = 0.707 * r10 * pow (fn / 12.3, 1.097);
-  r16 = 1 + 0.0503 * sqr (er) * r11 * (1 - exp (- pow (u / 15, 6)));
-  r17 = r7 * (1 - 1.1241 * r12 / r16 * 
-	      exp (-0.026 * pow (fn, 1.15656) - r15));
+  r16 = 1 + 0.0503 * sqr (er) * r11 * (1 - std::exp (- pow (u / 15, 6)));
+  r17 = r7 * (1 - 1.1241 * r12 / r16 *
+	      std::exp (-0.026 * pow (fn, 1.15656) - r15));
   ZlEffFreq = ZlEff * pow (r13 / r14, r17);
 }
 
@@ -398,7 +400,7 @@ void msline::Kirschning_zl (nr_double_t u, nr_double_t fn, nr_double_t er,
    single microstrip line. */
 void msline::analyseLoss (nr_double_t W, nr_double_t t, nr_double_t er,
 			  nr_double_t rho, nr_double_t D, nr_double_t tand,
-			  nr_double_t ZlEff1, nr_double_t ZlEff2, 
+			  nr_double_t ZlEff1, nr_double_t ZlEff2,
 			  nr_double_t ErEff,
 			  nr_double_t frequency, const char * Model,
 			  nr_double_t& ac, nr_double_t& ad) {
@@ -410,7 +412,7 @@ void msline::analyseLoss (nr_double_t W, nr_double_t t, nr_double_t er,
 
     // conductor losses
     if (t != 0.0) {
-      Rs = sqrt (M_PI * frequency * MU0 * rho); // skin resistance
+      Rs = std::sqrt (M_PI * frequency * MU0 * rho); // skin resistance
       ds = rho / Rs;                            // skin depth
       // valid for t > 3 * ds
       if (t < 3 * ds) {
@@ -419,7 +421,7 @@ void msline::analyseLoss (nr_double_t W, nr_double_t t, nr_double_t er,
 		  "height t (%g) < 3 * skin depth (%g)\n", t, 3 * ds);
       }
       // current distribution factor
-      Ki = exp (-1.2 * pow ((ZlEff1 + ZlEff2) / 2 / Z0, 0.7));
+      Ki = std::exp (-1.2 * pow ((ZlEff1 + ZlEff2) / 2 / Z0, 0.7));
       // D is RMS surface roughness
       Kr = 1 + M_2_PI * atan (1.4 * sqr (D / ds));
       ac = Rs / (ZlEff1 * W) * Ki * Kr;
@@ -427,7 +429,7 @@ void msline::analyseLoss (nr_double_t W, nr_double_t t, nr_double_t er,
 
     // dielectric losses
     l0 = C0 / frequency;
-    ad = M_PI * er / (er - 1) * (ErEff - 1) / sqrt (ErEff) * tand / l0;
+    ad = M_PI * er / (er - 1) * (ErEff - 1) / std::sqrt (ErEff) * tand / l0;
   }
 }
 

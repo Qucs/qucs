@@ -7,16 +7,16 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This software is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this package; see the file COPYING.  If not, write to
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
- * Boston, MA 02110-1301, USA.  
+ * Boston, MA 02110-1301, USA.
  *
  * $Id$
  *
@@ -36,6 +36,8 @@
 #include "matrix.h"
 #include "matvec.h"
 #include "constants.h"
+
+using namespace qucs;
 
 /* Global variables. */
 FILE * matlab_out = NULL; // output file stream
@@ -88,7 +90,7 @@ static void matlab_header (nr_int32_t rows, nr_int32_t cols, char * name) {
 }
 
 // Writes a Matlab v4 vector.
-static void matlab_vector (vector * v) {
+static void matlab_vector (::vector * v) {
   int n;
 
   // real part
@@ -124,7 +126,7 @@ static void matlab_matrix (matrix * m) {
 }
 
 // Saves a dataset vector into a Matlab file.
-static void matlab_save (vector * v) {
+static void matlab_save (::vector * v) {
   int r, c;
   char * n, * sn;
   char * vn = v->getName ();
@@ -151,7 +153,7 @@ static void matlab_save (vector * v) {
 	sprintf (sn, "%s_%d_%d", n, r + 1, c + 1);
       } else {
 	sprintf (sn, "%s", vn);
-      }	
+      }
       matlab_header (v->getSize (), 1, sn);
       matlab_vector (v);
       free (sn);
@@ -170,18 +172,18 @@ static void matlab_save (vector * v) {
 void matlab_producer (void) {
 
   dataset * data = qucs_data;
-  vector * v;
+  qucs::vector * v;
 
   // initialize endianness
   initendian ();
 
   // independent vectors and matrices
-  for (v = data->getDependencies (); v != NULL; v = (vector *) v->getNext ()) {
+  for (v = data->getDependencies (); v != NULL; v = (::vector *) v->getNext ()) {
     matlab_save (v);
   }
 
   // dependent vectors and matrices
-  for (v = data->getVariables (); v != NULL; v = (vector *) v->getNext ()) {
+  for (v = data->getVariables (); v != NULL; v = (::vector *) v->getNext ()) {
     matlab_save (v);
   }
 }

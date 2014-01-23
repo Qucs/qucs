@@ -1,5 +1,5 @@
 /*
- * states.cpp - save-state variable class implementation
+ * states.cpp - save-state variable template class implementation
  *
  * Copyright (C) 2004 Stefan Jahn <stefan@lkcc.org>
  *
@@ -22,10 +22,6 @@
  *
  */
 
-#if HAVE_CONFIG_H
-# include <config.h>
-#endif
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -36,6 +32,8 @@
 #define STATE_SHIFT 3
 #define STATE_NUM   8
 #define STATE_MASK  7
+
+namespace qucs {
 
 // Constructor creates an unnamed instance of the states class.
 template <class state_type_t>
@@ -154,3 +152,18 @@ void states<state_type_t>::saveState (int state, state_type_t * values)
         values[i] = getState (state, i);
     }
 }
+
+/* This function stores the values in the given pointer location
+   into the state. */
+template <class state_type_t>
+void states<state_type_t>::inputState (int state, state_type_t * values)
+{
+    // loop through the list of states copying them into the
+    // supplied input array
+    for (int i = 0; i < STATE_NUM; i++)
+    {
+        setState (state, values[i], i);
+    }
+}
+
+} // namespace qucs

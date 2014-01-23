@@ -7,16 +7,16 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This software is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this package; see the file COPYING.  If not, write to
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
- * Boston, MA 02110-1301, USA.  
+ * Boston, MA 02110-1301, USA.
  *
  * $Id$
  *
@@ -40,6 +40,8 @@
 #define DATA_REAL        0x0002
 #define DATA_MASK_TYPE   0x00FF
 
+namespace qucs {
+
 class interpolator
 {
  public:
@@ -48,8 +50,8 @@ class interpolator
 
   void vectors (nr_double_t *, nr_double_t *, int);
   void vectors (nr_complex_t *, nr_double_t *, int);
-  void rvectors (vector *, vector *);
-  void cvectors (vector *, vector *);
+  void rvectors (qucs::vector *, qucs::vector *);
+  void cvectors (qucs::vector *, qucs::vector *);
   void prepare (int, int, int domain = DATA_RECTANGULAR);
   nr_double_t rinterpolate (nr_double_t);
   nr_complex_t cinterpolate (nr_double_t);
@@ -74,5 +76,7 @@ private:
   spline * rsp, * isp;
   nr_complex_t * cy;
 };
+
+} // namespace qucs
 
 #endif /* __INTERPOLATOR_H__ */

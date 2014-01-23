@@ -7,16 +7,16 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This software is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this package; see the file COPYING.  If not, write to
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
- * Boston, MA 02110-1301, USA.  
+ * Boston, MA 02110-1301, USA.
  *
  * $Id: ctline.cpp 1876 2013-03-11 08:00:11Z fransschreuder $
  *
@@ -28,6 +28,8 @@
 
 #include "component.h"
 #include "ctline.h"
+
+using namespace qucs;
 
 ctline::ctline () : circuit (4) {
   type = CIR_CTLINE;
@@ -43,14 +45,14 @@ void ctline::calcSP (nr_double_t frequency) {
   nr_double_t ao  = getPropertyDouble ("Ao");
   nr_double_t o   = 2.0 * M_PI * frequency;
 
-  nr_complex_t ge = nr_complex_t (log (ae) / 2, o / C0 * sqrt (ere)) * l;
-  nr_complex_t go = nr_complex_t (log (ao) / 2, o / C0 * sqrt (ero)) * l;
-  nr_complex_t xe = 2.0 * ze * z0 * cosh (ge) + (ze*ze + z0*z0) * sinh (ge);
-  nr_complex_t xo = 2.0 * zo * z0 * cosh (go) + (zo*zo + z0*z0) * sinh (go);
+  nr_complex_t ge = nr_complex_t (std::log (ae) / 2, o / C0 * std::sqrt (ere)) * l;
+  nr_complex_t go = nr_complex_t (std::log (ao) / 2, o / C0 * std::sqrt (ero)) * l;
+  nr_complex_t xe = 2.0 * ze * z0 * std::cosh (ge) + (ze*ze + z0*z0) * std::sinh (ge);
+  nr_complex_t xo = 2.0 * zo * z0 * std::cosh (go) + (zo*zo + z0*z0) * std::sinh (go);
   nr_complex_t ye = ze * z0 / xe;
   nr_complex_t yo = zo * z0 / xo;
-  xe = (ze*ze - z0*z0) * sinh (ge) / 2.0 / xe;
-  xo = (zo*zo - z0*z0) * sinh (go) / 2.0 / xo;
+  xe = (ze*ze - z0*z0) * std::sinh (ge) / 2.0 / xe;
+  xo = (zo*zo - z0*z0) * std::sinh (go) / 2.0 / xo;
 
   setS (NODE_1, NODE_1, xe+xo); setS (NODE_2, NODE_2, xe+xo);
   setS (NODE_3, NODE_3, xe+xo); setS (NODE_4, NODE_4, xe+xo);
@@ -112,13 +114,13 @@ void ctline::calcAC (nr_double_t frequency) {
 
   if (l != 0.0) {
     nr_complex_t y11, y12, y13, y14;
-    nr_complex_t arg_e = nr_complex_t (log (ae) / 2.0, o / C0 * sqrt (ere)) * l;
-    nr_complex_t arg_o = nr_complex_t (log (ao) / 2.0, o / C0 * sqrt (ero)) * l;
+    nr_complex_t arg_e = nr_complex_t (std::log (ae) / 2.0, o / C0 * std::sqrt (ere)) * l;
+    nr_complex_t arg_o = nr_complex_t (std::log (ao) / 2.0, o / C0 * std::sqrt (ero)) * l;
 
     y12   =  0.5 / sinh (arg_e) / ze;
     y13   = -0.5 / sinh (arg_o) / zo;
-    arg_e = cosh (arg_e) * y12;
-    arg_o = cosh (arg_o) * y13;
+    arg_e = std::cosh (arg_e) * y12;
+    arg_o = std::cosh (arg_o) * y13;
     y11   = arg_e - arg_o;
     y14   = arg_e + arg_o;
     arg_e = y12;
@@ -138,13 +140,13 @@ void ctline::calcAC (nr_double_t frequency) {
 
 // properties
 PROP_REQ [] = {
-  { "Ze", PROP_REAL, { 50, PROP_NO_STR }, PROP_POS_RANGE }, 
-  { "Zo", PROP_REAL, { 50, PROP_NO_STR }, PROP_POS_RANGE }, 
+  { "Ze", PROP_REAL, { 50, PROP_NO_STR }, PROP_POS_RANGE },
+  { "Zo", PROP_REAL, { 50, PROP_NO_STR }, PROP_POS_RANGE },
   { "L", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_NO_RANGE },
   PROP_NO_PROP };
 PROP_OPT [] = {
-  { "Ere", PROP_REAL, { 1, PROP_NO_STR }, PROP_POS_RANGE }, 
-  { "Ero", PROP_REAL, { 1, PROP_NO_STR }, PROP_POS_RANGE }, 
+  { "Ere", PROP_REAL, { 1, PROP_NO_STR }, PROP_POS_RANGE },
+  { "Ero", PROP_REAL, { 1, PROP_NO_STR }, PROP_POS_RANGE },
   { "Ae", PROP_REAL, { 1, PROP_NO_STR }, PROP_POS_RANGEX },
   { "Ao", PROP_REAL, { 1, PROP_NO_STR }, PROP_POS_RANGEX },
   { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },

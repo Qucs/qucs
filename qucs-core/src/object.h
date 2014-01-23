@@ -36,6 +36,8 @@
   static struct define_t miscdef; \
   static struct define_t * definition (void) { return &miscdef; }
 
+namespace qucs {
+
 class property;
 class variable;
 class vector;
@@ -88,5 +90,7 @@ class object
   property * prop;
   char * ptxt;
 };
+
+} // namespace qucs
 
 #endif /* __OBJECT_H__ */

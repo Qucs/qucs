@@ -7,16 +7,16 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This software is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this package; see the file COPYING.  If not, write to
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
- * Boston, MA 02110-1301, USA.  
+ * Boston, MA 02110-1301, USA.
  *
  * $Id$
  *
@@ -30,11 +30,15 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
-#include <math.h>
+#include <cmath>
 
 #include "complex.h"
 #include "variable.h"
 #include "property.h"
+
+namespace qucs {
+
+using namespace eqn;
 
 // Constructor creates an unnamed instance of the property class.
 property::property () {
@@ -155,7 +159,7 @@ property * property::findProperty (const char * n) {
 #define V(con) ((constant *) (con))->v
 
 // Returns the property's value as vector.
-vector * property::getVector (void) {
+qucs::vector * property::getVector (void) {
   if (var != NULL) {
     if (var->getType () == VAR_CONSTANT)
       return V (var->getConstant ());
@@ -190,8 +194,8 @@ nr_double_t property::getDouble (void) {
 
 // Returns the property's value as integer.
 int property::getInteger (void) {
-  if (var != NULL) return (int) floor (D (var->getConstant ()));
-  return (int) floor (value);
+  if (var != NULL) return (int) std::floor (D (var->getConstant ()));
+  return (int) std::floor (value);
 }
 
 // Sets the property's value being a double.
@@ -228,7 +232,7 @@ char * property::toString (void) {
     txt = strdup ("(no such type)");
     break;
   case PROPERTY_INT:
-    sprintf (text, "%d", (int) floor (value));
+    sprintf (text, "%d", (int) std::floor (value));
     txt = strdup (text);
     break;
   case PROPERTY_STR:
@@ -245,3 +249,5 @@ char * property::toString (void) {
   }
   return txt;
 }
+
+} // namespace qucs

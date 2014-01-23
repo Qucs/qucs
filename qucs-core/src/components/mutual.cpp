@@ -7,16 +7,16 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This software is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this package; see the file COPYING.  If not, write to
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
- * Boston, MA 02110-1301, USA.  
+ * Boston, MA 02110-1301, USA.
  *
  * $Id$
  *
@@ -28,6 +28,8 @@
 
 #include "component.h"
 #include "mutual.h"
+
+using namespace qucs;
 
 mutual::mutual () : circuit (4) {
   type = CIR_MUTUAL;
@@ -52,7 +54,7 @@ void mutual::calcSP (nr_double_t frequency) {
   setS (NODE_2, NODE_3, r); setS (NODE_3, NODE_2, r);
   r = 1.0 - r;
   setS (NODE_2, NODE_2, r); setS (NODE_3, NODE_3, r);
-  r = nr_complex_t (0, o * k * sqrt (l1 * l2)) / d;
+  r = nr_complex_t (0, o * k * std::sqrt (l1 * l2)) / d;
   setS (NODE_1, NODE_2, r); setS (NODE_2, NODE_1, r);
   setS (NODE_3, NODE_4, r); setS (NODE_4, NODE_3, r);
   r = -r;
@@ -69,8 +71,8 @@ matrix mutual::calcMatrixY (nr_double_t frequency) {
   nr_double_t a = 1 - k * k;
   nr_complex_t z1 = nr_complex_t (0, o * l1 * a);
   nr_complex_t z2 = nr_complex_t (0, o * l2 * a);
-  nr_complex_t y3 = nr_complex_t (0, k / (o * sqrt (l1 * l2) * a));
-  
+  nr_complex_t y3 = nr_complex_t (0, k / (o * std::sqrt (l1 * l2) * a));
+
   matrix y = matrix (4);
   y.set (NODE_1, NODE_1, +1.0 / z1); y.set (NODE_4, NODE_4, +1.0 / z1);
   y.set (NODE_1, NODE_4, -1.0 / z1); y.set (NODE_4, NODE_1, -1.0 / z1);
@@ -120,7 +122,7 @@ void mutual::calcTR (nr_double_t) {
   nr_double_t i1 = real (getJ (VSRC_1));
   nr_double_t i2 = real (getJ (VSRC_2));
   nr_double_t r11, r12, r21, r22, v11, v22, v12, v21;
-  nr_double_t M12 = k * sqrt (l1 * l2);
+  nr_double_t M12 = k * std::sqrt (l1 * l2);
 
   // self inductances
   setState  (fState11, i1 * l1);

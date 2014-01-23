@@ -8,16 +8,16 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This software is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this package; see the file COPYING.  If not, write to
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
- * Boston, MA 02110-1301, USA.  
+ * Boston, MA 02110-1301, USA.
  *
  * $Id$
  *
@@ -29,6 +29,8 @@
 
 #include "component.h"
 #include "vexp.h"
+
+using namespace qucs;
 
 vexp::vexp () : circuit (2) {
   type = CIR_VEXP;
@@ -73,12 +75,12 @@ void vexp::calcTR (nr_double_t t) {
     ut = u1;
   }
   else if (t > t1 && t <= t2) { // rising edge
-    ut = u1 + (u2 - u1) * (1 - exp (-(t - t1) / tr));
+    ut = u1 + (u2 - u1) * (1 - std::exp (-(t - t1) / tr));
   }
   else { // falling edge
     ut += u1;
-    ut += (u2 - u1) * (1 - exp (-(t - t1) / tr));
-    ut -= (u2 - u1) * (1 - exp (-(t - t2) / tf));
+    ut += (u2 - u1) * (1 - std::exp (-(t - t1) / tr));
+    ut -= (u2 - u1) * (1 - std::exp (-(t - t2) / tf));
   }
   setE (VSRC_1, ut * s);
 }

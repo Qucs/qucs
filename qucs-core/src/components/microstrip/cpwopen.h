@@ -25,7 +25,7 @@
 #ifndef __CPWOPEN_H__
 #define __CPWOPEN_H__
 
-class cpwopen : public circuit
+class cpwopen : public qucs::circuit
 {
  public:
   CREATOR (cpwopen);

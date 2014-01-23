@@ -10,16 +10,16 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This software is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this package; see the file COPYING.  If not, write to
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
- * Boston, MA 02110-1301, USA.  
+ * Boston, MA 02110-1301, USA.
  *
  * $Id$
  *
@@ -45,6 +45,8 @@
 #include "strlist.h"
 #include "check_touchstone.h"
 
+using namespace qucs;
+
 %}
 
 %name-prefix="touchstone_"
@@ -57,8 +59,8 @@
 %union {
   char * ident;
   double f;
-  vector * v;
-  strlist * list;
+  qucs::vector * v;
+  qucs::strlist * list;
 }
 
 %type <list> OptionList
@@ -77,7 +79,7 @@ OptionLine: /* option line */
     touchstone_vector = NULL;
     touchstone_options.resistance = $4;
   }
-  | '#' OptionList Eol { 
+  | '#' OptionList Eol {
     touchstone_vector = NULL;
     touchstone_options.resistance = 50.0;
   }
@@ -107,7 +109,7 @@ Dataset: /* nothing */ { }
 ;
 
 DataLine:
-    Float Float Float { 
+    Float Float Float {
     /* 1-port start */
     $$ = new vector ();
     $$->add ($1);
@@ -147,7 +149,7 @@ DataLine:
     $$->add ($6);
     $$->add ($7);
   }
-  | Float Float Float Float Float Float Float Float { 
+  | Float Float Float Float Float Float Float Float {
     /* 4- and n-port continued */
     $$ = new vector ();
     $$->add ($1);
@@ -159,7 +161,7 @@ DataLine:
     $$->add ($7);
     $$->add ($8);
   }
-  | Float Float Float Float Float Float { 
+  | Float Float Float Float Float Float {
     /* 3- and n-port continued */
     $$ = new vector ();
     $$->add ($1);
@@ -169,7 +171,7 @@ DataLine:
     $$->add ($5);
     $$->add ($6);
   }
-  | Float Float Float Float { 
+  | Float Float Float Float {
     /* n-port continued */
     $$ = new vector ();
     $$->add ($1);
@@ -177,7 +179,7 @@ DataLine:
     $$->add ($3);
     $$->add ($4);
   }
-  | Float Float { 
+  | Float Float {
     /* n-port continued */
     $$ = new vector ();
     $$->add ($1);

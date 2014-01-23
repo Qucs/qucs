@@ -8,16 +8,16 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This software is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this package; see the file COPYING.  If not, write to
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
- * Boston, MA 02110-1301, USA.  
+ * Boston, MA 02110-1301, USA.
  *
  * $Id$
  *
@@ -28,18 +28,22 @@
 
 #include "consts.h"
 #include "precision.h"
+#include "complex_missing_std.h"
+#include "complex.h"
 
 #ifdef log2
 #undef log2
 #endif
 
+namespace qucs {
+
 class strlist;
 class vector;
 
-vector linspace (nr_double_t, nr_double_t, int);
-vector logspace (nr_double_t, nr_double_t, int);
-vector runavg (vector, const int);
-vector runavg (const nr_complex_t, const int);
+qucs::vector linspace (nr_double_t, nr_double_t, int);
+qucs::vector logspace (nr_double_t, nr_double_t, int);
+qucs::vector runavg (qucs::vector, const int);
+qucs::vector runavg (const nr_complex_t, const int);
 
 class vector : public object
 {
@@ -57,7 +61,7 @@ class vector : public object
   nr_complex_t get (int);
   void set (nr_double_t, int);
   void set (const nr_complex_t, int);
-  int getSize (void);
+  int getSize (void) const;
   int checkSizes (vector, vector);
   int getRequested (void) { return requested; }
   void setRequested (int n) { requested = n; }
@@ -139,6 +143,8 @@ class vector : public object
   friend vector sinh    (vector);
   friend vector asinh   (vector);
   friend vector cosh    (vector);
+  friend vector sech    (vector);
+  friend vector cosech  (vector);
   friend vector acosh   (vector);
   friend vector asech   (vector);
   friend vector tanh    (vector);
@@ -222,5 +228,96 @@ class vector : public object
   nr_complex_t * data;
   char * origin;
 };
+
+/* declarations of friend functions to make them available in the
+   qucs namespace without argument-dependent lookup, see
+
+   http://stackoverflow.com/questions/7785886/access-friend-function-defined-in-class
+
+   for more info
+*/
+nr_complex_t sum     (vector);
+nr_complex_t prod    (vector);
+nr_complex_t avg     (vector);
+vector  cumsum  (vector);
+vector  cumprod (vector);
+vector  cumavg  (vector);
+vector  dbm     (vector, const nr_complex_t);
+nr_complex_t integrate (vector v, const nr_complex_t);
+nr_double_t integrate (vector v, const nr_double_t);
+vector real   (vector);  // the real part
+vector imag   (vector);  // the imaginary part
+vector conj   (vector);  // the complex conjugate
+vector norm   (vector);  // the square of the magnitude
+vector arg    (vector);  // the angle in the plane
+vector dB     (vector);
+vector log    (vector);
+vector log2   (vector);
+vector pow    (vector, const nr_complex_t);
+vector pow    (vector, const nr_double_t);
+vector pow    (const nr_complex_t, vector);
+vector pow    (const nr_double_t, vector);
+vector pow    (vector, vector);
+vector ztor   (vector, nr_complex_t);
+vector rtoz   (vector, nr_complex_t);
+vector ytor   (vector, nr_complex_t);
+vector rtoy   (vector, nr_complex_t);
+vector diff   (vector, vector, int);
+vector unwrap (vector, nr_double_t, nr_double_t);
+vector polar   (vector, const nr_complex_t);
+vector polar   (const nr_complex_t, vector);
+vector polar   (vector, vector);
+vector atan2   (vector, const nr_double_t);
+vector atan2   (const nr_double_t, vector);
+vector atan2   (vector, vector);
+vector dbm2w   (vector);
+vector w2dbm   (vector);
+vector xhypot  (vector, vector);
+vector xhypot  (vector, const nr_complex_t);
+vector xhypot  (vector, const nr_double_t);
+vector xhypot  (const nr_complex_t, vector);
+vector xhypot  (const nr_double_t, vector);
+vector abs     (vector);
+vector log10   (vector);
+vector exp     (vector);
+vector limexp  (vector);
+vector sqrt    (vector);
+vector sin     (vector);
+vector asin    (vector);
+vector cos     (vector);
+vector acos    (vector);
+vector tan     (vector);
+vector atan    (vector);
+vector cot     (vector);
+vector acot    (vector);
+vector sinh    (vector);
+vector asinh   (vector);
+vector cosh    (vector);
+vector sech    (vector);
+vector cosech  (vector);
+vector acosh   (vector);
+vector asech   (vector);
+vector tanh    (vector);
+vector atanh   (vector);
+vector coth    (vector);
+vector acoth   (vector);
+vector signum  (vector);
+vector sign    (vector);
+vector sinc    (vector);
+vector ceil    (vector);
+vector floor   (vector);
+vector fix     (vector);
+vector round   (vector);
+vector sqr     (vector);
+vector step    (vector);
+vector jn      (const int, vector);
+vector yn      (const int, vector);
+vector i0      (vector);
+vector erf     (vector);
+vector erfc    (vector);
+vector erfinv  (vector);
+vector erfcinv (vector);
+
+} // namespace qucs
 
 #endif /* __VECTOR_H__ */

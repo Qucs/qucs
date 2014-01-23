@@ -37,6 +37,7 @@
 #include "object.h"
 #include "variable.h"
 
+namespace qucs {
 
 // Constructor creates an unnamed instance of the object class.
 object::object () {
@@ -146,7 +147,7 @@ property * object::addProperty (const char * n, variable * val) {
 /* Returns the requested property value which has been previously
    added as its vector representation.  If there is no such property
    the function returns NULL. */
-vector * object::getPropertyVector (const char * n) {
+qucs::vector * object::getPropertyVector (const char * n) {
   property * p = prop->findProperty (n);
   if (p != NULL) return p->getVector ();
   return NULL;
@@ -262,3 +263,5 @@ char * object::propertyList (void) {
   }
   return ptxt;
 }
+
+} // namespace qucs

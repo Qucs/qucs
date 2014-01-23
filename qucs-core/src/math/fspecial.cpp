@@ -29,7 +29,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <math.h>
+#include <cmath>
 #include <float.h>
 
 #include "compat.h"
@@ -317,7 +317,7 @@ static nr_double_t erfc8 (nr_double_t x) {
   int i;
   n = p[5];
   for (i = 4; i >= 0; --i) n = x * n + p[i];
-  d = p[6];
+  d = q[6];
   for (i = 5; i >= 0; --i) d = x * d + q[i];
 
   return exp (-x * x) * (n / d);
@@ -350,7 +350,10 @@ nr_double_t fspecial::erfc (nr_double_t x) {
   }
   return (x < 0.0) ? 2.0 - val : val;
 }
-
+#else
+nr_double_t  fspecial::erfc (nr_double_t d) {
+  return ::erfc (d);
+}
 #endif /* HAVE_ERFC */
 
 #ifndef HAVE_ERF
@@ -375,6 +378,10 @@ nr_double_t fspecial::erf (nr_double_t x) {
   return 1.0 - erfc (x);
 }
 
+#else
+nr_double_t  fspecial::erf (nr_double_t d) {
+  return ::erf (d);
+}
 #endif /* HAVE_ERF */
 
 // Inverse of the error function erf().
@@ -420,7 +427,7 @@ nr_double_t fspecial::erfinv (nr_double_t y) {
 static nr_double_t bi0_data[12] = {
   -.07660547252839144951,
   1.92733795399380827000,
-   .22826445869203013390, 
+   .22826445869203013390,
    .01304891466707290428,
    .00043442709008164874,
    .00000942265768600193,
@@ -436,7 +443,7 @@ static cheb_series bi0_cs = {
 };
 
 static nr_double_t ai0_data[21] = {
-   .07575994494023796, 
+   .07575994494023796,
    .00759138081082334,
    .00041531313389237,
    .00001070076463439,
@@ -582,3 +589,4 @@ nr_double_t fspecial::ltqnorm (nr_double_t x) {
 nr_double_t fspecial::erfcinv (nr_double_t x) {
   return -ltqnorm (x / 2.0) / M_SQRT2;
 }
+

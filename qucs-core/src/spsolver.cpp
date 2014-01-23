@@ -7,16 +7,16 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This software is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this package; see the file COPYING.  If not, write to
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
- * Boston, MA 02110-1301, USA.  
+ * Boston, MA 02110-1301, USA.
  *
  * $Id$
  *
@@ -60,6 +60,8 @@
 #define SORTED_LIST 1   // use sorted node list?
 
 #define TINYS (NR_TINY * 1.235) // 'tiny' value for singularities
+
+namespace qucs {
 
 // Constructor creates an unnamed instance of the spsolver class.
 spsolver::spsolver () : analysis () {
@@ -151,9 +153,9 @@ circuit * spsolver::interconnectJoin (node * n1, node * n2) {
 
       // compute S'ij
       p = s->getS (i1, j1);
-      p += 
-	(s->getS (k, j1) * s->getS (i1, l) * (1.0 - s->getS (l, k)) * tiny3 + 
-	 s->getS (l, j1) * s->getS (i1, k) * (1.0 - s->getS (k, l)) * tiny3 + 
+      p +=
+	(s->getS (k, j1) * s->getS (i1, l) * (1.0 - s->getS (l, k)) * tiny3 +
+	 s->getS (l, j1) * s->getS (i1, k) * (1.0 - s->getS (k, l)) * tiny3 +
 	 s->getS (k, j1) * s->getS (l, l) * s->getS (i1, k) * tiny3 +
 	 s->getS (l, j1) * s->getS (k, k) * s->getS (i1, l) * tiny3) / d;
       result->setS (i2++, j2, p);
@@ -281,13 +283,13 @@ void spsolver::noiseInterconnect (circuit * result, node * n1, node * n2) {
   int k = n1->getPort (), l = n2->getPort ();
 
   // denominator needs to be calculated only once
-  nr_complex_t t = (1.0 - c->getS (k, l)) * (1.0 - c->getS (l, k)) - 
+  nr_complex_t t = (1.0 - c->getS (k, l)) * (1.0 - c->getS (l, k)) -
     c->getS (k, k) * c->getS (l, l);
 
   // avoid singularity when two full reflective ports are interconnected
   nr_double_t tiny1 = (t == 0) ? 1.0 - TINYS : 1.0;
   nr_double_t tiny2 = tiny1 * tiny1;
-  t = (1.0 - c->getS (k, l) * tiny1) * (1.0 - c->getS (l, k) * tiny1) - 
+  t = (1.0 - c->getS (k, l) * tiny1) * (1.0 - c->getS (l, k) * tiny1) -
     c->getS (k, k) * c->getS (l, l) * tiny2;
 
   int j2; // column index for resulting matrix
@@ -594,7 +596,7 @@ int spsolver::solve (void) {
 #if DEBUG
   logprint (LOG_STATUS, "NOTIFY: %s: solving SP netlist\n", getName ());
 #endif
-  
+
   swp->reset ();
   for (int i = 0; i < swp->getSize (); i++) {
     freq = swp->next ();
@@ -608,7 +610,7 @@ int spsolver::solve (void) {
     logprint (LOG_STATUS, "NOTIFY: %s: solving netlist for f = %e\n",
 	      getName (), (double) freq);
 #endif
-    
+
     while (ports > subnet->getPorts ()) {
       reduce ();
       ports -= 2;
@@ -1109,7 +1111,7 @@ PROP_REQ [] = {
   PROP_NO_PROP };
 PROP_OPT [] = {
   { "Noise", PROP_STR, { PROP_NO_VAL, "no" }, PROP_RNG_YESNO },
-  { "NoiseIP", PROP_INT, { 1, PROP_NO_STR }, PROP_RNGII (1, MAX_PORTS) }, 
+  { "NoiseIP", PROP_INT, { 1, PROP_NO_STR }, PROP_RNGII (1, MAX_PORTS) },
   { "NoiseOP", PROP_INT, { 2, PROP_NO_STR }, PROP_RNGII (1, MAX_PORTS) },
   { "Start", PROP_REAL, { 1e9, PROP_NO_STR }, PROP_POS_RANGE },
   { "Stop", PROP_REAL, { 10e9, PROP_NO_STR }, PROP_POS_RANGE },
@@ -1120,3 +1122,5 @@ PROP_OPT [] = {
   PROP_NO_PROP };
 struct define_t spsolver::anadef =
   { "SP", 0, PROP_ACTION, PROP_NO_SUBSTRATE, PROP_LINEAR, PROP_DEF };
+
+} // namespace qucs

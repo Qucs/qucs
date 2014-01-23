@@ -10,16 +10,16 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This software is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this package; see the file COPYING.  If not, write to
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
- * Boston, MA 02110-1301, USA.  
+ * Boston, MA 02110-1301, USA.
  *
  * $Id$
  *
@@ -41,6 +41,8 @@
 #include "logging.h"
 #include "equation.h"
 #include "range.h"
+
+using namespace qucs;
 
 %}
 
@@ -87,11 +89,11 @@
     double r;
     double i;
   } c;
-  eqn::node * eqn;
-  eqn::constant * con;
-  eqn::reference * ref;
-  eqn::application * app;
-  eqn::assignment * assign;
+  qucs::eqn::node * eqn;
+  qucs::eqn::constant * con;
+  qucs::eqn::reference * ref;
+  qucs::eqn::application * app;
+  qucs::eqn::assignment * assign;
 }
 
 %type <ident> Identifier Assign NodeIdentifier InstanceIdentifier
@@ -145,10 +147,10 @@ InputLine:
   }
 ;
 
-/* An action line in the netlist, i.e. the specification of the type 
+/* An action line in the netlist, i.e. the specification of the type
    of simulation to be performed  */
 ActionLine:
-  '.' Identifier ':' InstanceIdentifier PairList Eol { 
+  '.' Identifier ':' InstanceIdentifier PairList Eol {
     $$ = (struct definition_t *) calloc (sizeof (struct definition_t), 1);
     $$->action = PROP_ACTION;
     $$->type = $2;
@@ -162,7 +164,7 @@ ActionLine:
    such as R:R1 _net0 gnd R="50 Ohm" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
  */
 DefinitionLine:
-  Identifier ':' InstanceIdentifier NodeList PairList Eol { 
+  Identifier ':' InstanceIdentifier NodeList PairList Eol {
     $$ = (struct definition_t *) calloc (sizeof (struct definition_t), 1);
     $$->action = PROP_COMPONENT;
     $$->type = $1;
@@ -183,7 +185,7 @@ NodeIdentifier:
   | ScaleOrUnit { $$ = $1; }
 ;
 
-/* List of nodes for a component */ 
+/* List of nodes for a component */
 NodeList: /* nothing */ { $$ = NULL; }
   | NodeIdentifier NodeList {
     $$ = (struct node_t *) calloc (sizeof (struct node_t), 1);
@@ -199,7 +201,7 @@ PairList: /* nothing */ { $$ = NULL; }
     $$->key = $1;
     $$->value = $2;
     $$->next = $3;
-  }    
+  }
   | Assign NoneValue PairList {
     if (0) {
       $$ = (struct pair_t *) calloc (sizeof (struct pair_t), 1);
@@ -210,7 +212,7 @@ PairList: /* nothing */ { $$ = NULL; }
       free ($1);
       $$ = $3;
     }
-  }    
+  }
 ;
 
 /* A empty value in a pair list */
@@ -290,7 +292,7 @@ EquationLine:
 ;
 
 EquationList: /* nothing */ { $$ = NULL; }
-  | Equation EquationList { 
+  | Equation EquationList {
     $1->setNext ($2);
     $$ = $1;
   }
@@ -383,7 +385,7 @@ Matrix:
 ;
 
 Constant:
-    REAL { 
+    REAL {
     $$ = new eqn::constant (eqn::TAG_DOUBLE);
     $$->d = $1;
   }

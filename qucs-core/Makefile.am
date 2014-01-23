@@ -40,6 +40,8 @@ SUBDIRS += src doc .
 
 ACLOCAL_AMFLAGS = -I m4
 
+nodist_pkginclude_HEADERS = qucs_typedefs.h
+
 EXTRA_DIST = BUGS bootstrap.sh depcomp RELEASE
 
 CLEANFILES = *~ *.orig *.rej
@@ -53,3 +55,15 @@ TESTS = tests/basic/u=ri/u=ri@dc.net tests/basic/u=ri/u=ri@ac.net tests/basic/u=
 TEST_EXTENSIONS = .net
 NET_LOG_COMPILER = src/qucsator
 AM_NET_LOG_FLAGS = -i
+
+
+install-exec-hook:
+	@echo "----------------------------------------------"
+	@echo "                    NOTE                      "
+	@echo "On some systems (e.g. Linux) you may need"
+	@echo "to run sudo ldconfig or reboot before running"
+	@echo "qucsator or trying to use the libraries it"
+	@echo "installs. Otherwise you will receive an error"
+	@echo "about loading the shared libraries."
+	@echo "----------------------------------------------"
+

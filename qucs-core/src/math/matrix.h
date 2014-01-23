@@ -7,16 +7,16 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This software is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this package; see the file COPYING.  If not, write to
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
- * Boston, MA 02110-1301, USA.  
+ * Boston, MA 02110-1301, USA.
  *
  * $Id$
  *
@@ -25,10 +25,61 @@
 #ifndef __MATRIX_H__
 #define __MATRIX_H__
 
+namespace qucs {
+
 class vector;
 class matrix;
 
 matrix eye (int);
+matrix transpose (matrix);
+matrix conj (matrix);
+matrix abs (matrix);
+matrix dB (matrix);
+matrix arg (matrix);
+matrix adjoint (matrix);
+matrix real (matrix);
+matrix imag (matrix);
+matrix sqr (matrix);
+matrix eye (int, int);
+matrix diagonal (vector);
+matrix pow (matrix, int);
+nr_complex_t cofactor (matrix, int, int);
+nr_complex_t detLaplace (matrix);
+nr_complex_t detGauss (matrix);
+nr_complex_t det (matrix);
+matrix inverseLaplace (matrix);
+matrix inverseGaussJordan (matrix);
+matrix inverse (matrix);
+matrix stos (matrix, nr_complex_t, nr_complex_t);
+matrix stos (matrix, nr_double_t, nr_double_t);
+matrix stos (matrix, vector, nr_complex_t);
+matrix stos (matrix, nr_complex_t, vector);
+matrix stos (matrix, vector, vector);
+matrix stoz (matrix, nr_complex_t);
+matrix stoz (matrix, vector);
+matrix ztos (matrix, nr_complex_t);
+matrix ztos (matrix, vector);
+matrix ztoy (matrix);
+matrix stoy (matrix, nr_complex_t);
+matrix stoy (matrix, vector);
+matrix ytos (matrix, nr_complex_t);
+matrix ytos (matrix, vector);
+matrix ytoz (matrix);
+matrix stoa (matrix, nr_complex_t, nr_complex_t);
+matrix atos (matrix, nr_complex_t, nr_complex_t);
+matrix stoh (matrix, nr_complex_t, nr_complex_t);
+matrix htos (matrix, nr_complex_t, nr_complex_t);
+matrix stog (matrix, nr_complex_t, nr_complex_t);
+matrix gtos (matrix, nr_complex_t, nr_complex_t);
+matrix cytocs (matrix, matrix);
+matrix cztocs (matrix, matrix);
+matrix cztocy (matrix, matrix);
+matrix cstocy (matrix, matrix);
+matrix cytocz (matrix, matrix);
+matrix cstocz (matrix, matrix);
+matrix twoport (matrix, char, char);
+nr_double_t rollet (matrix);
+nr_double_t b1 (matrix);
 
 /*!\brief Dense complex matrix class */
 class matrix
@@ -82,8 +133,9 @@ class matrix
   friend matrix adjoint (matrix);
   friend matrix real (matrix);
   friend matrix imag (matrix);
+  friend matrix sqr (matrix);
   friend matrix eye (int, int);
-  friend matrix diagonal (vector);
+  friend matrix diagonal (qucs::vector);
   friend matrix pow (matrix, int);
   friend nr_complex_t cofactor (matrix, int, int);
   friend nr_complex_t detLaplace (matrix);
@@ -94,18 +146,18 @@ class matrix
   friend matrix inverse (matrix);
   friend matrix stos (matrix, nr_complex_t, nr_complex_t z0 = 50.0);
   friend matrix stos (matrix, nr_double_t, nr_double_t z0 = 50.0);
-  friend matrix stos (matrix, vector, nr_complex_t z0 = 50.0);
-  friend matrix stos (matrix, nr_complex_t, vector);
-  friend matrix stos (matrix, vector, vector);
+  friend matrix stos (matrix, qucs::vector, nr_complex_t z0 = 50.0);
+  friend matrix stos (matrix, nr_complex_t, qucs::vector);
+  friend matrix stos (matrix, qucs::vector, qucs::vector);
   friend matrix stoz (matrix, nr_complex_t z0 = 50.0);
-  friend matrix stoz (matrix, vector);
+  friend matrix stoz (matrix, qucs::vector);
   friend matrix ztos (matrix, nr_complex_t z0 = 50.0);
-  friend matrix ztos (matrix, vector);
+  friend matrix ztos (matrix, qucs::vector);
   friend matrix ztoy (matrix);
   friend matrix stoy (matrix, nr_complex_t z0 = 50.0);
-  friend matrix stoy (matrix, vector);
+  friend matrix stoy (matrix, qucs::vector);
   friend matrix ytos (matrix, nr_complex_t z0 = 50.0);
-  friend matrix ytos (matrix, vector);
+  friend matrix ytos (matrix, qucs::vector);
   friend matrix ytoz (matrix);
   friend matrix stoa (matrix, nr_complex_t z1 = 50.0, nr_complex_t z2 = 50.0);
   friend matrix atos (matrix, nr_complex_t z1 = 50.0, nr_complex_t z2 = 50.0);
@@ -124,23 +176,23 @@ class matrix
   friend nr_double_t rollet (matrix);
   friend nr_double_t b1 (matrix);
 
-  /*! \brief Read access operator 
+  /*! \brief Read access operator
       \param[in] r: row number (from 0 like usually in C)
       \param[in] c: column number (from 0 like usually in C)
       \return Cell in the row r and column c
       \todo: Why not inline
       \todo: Why not r and c not const
       \todo: Create a debug version checking out of bound (using directly assert)
-  */  
+  */
   nr_complex_t  operator () (int r, int c) const { return data[r * cols + c]; }
-  /*! \brief Write access operator 
+  /*! \brief Write access operator
       \param[in] r: row number (from 0 like usually in C)
       \param[in] c: column number (from 0 like usually in C)
       \return Reference to cell in the row r and column c
       \todo: Why not inline
       \todo: Why r and c not const
       \todo: Create a debug version checking out of bound (using directly assert)
-  */  
+  */
   nr_complex_t& operator () (int r, int c) { return data[r * cols + c]; }
 
  private:
@@ -151,5 +203,7 @@ class matrix
   /*! Matrix data */
   nr_complex_t * data;
 };
+
+} // namespace qucs
 
 #endif /* __MATRIX_H__ */

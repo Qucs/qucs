@@ -7,16 +7,16 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This software is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this package; see the file COPYING.  If not, write to
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
- * Boston, MA 02110-1301, USA.  
+ * Boston, MA 02110-1301, USA.
  *
  * $Id$
  *
@@ -28,6 +28,8 @@
 
 #include "component.h"
 #include "coaxline.h"
+
+using namespace qucs;
 
 coaxline::coaxline () : circuit (2) {
   alpha = beta = zl = fc = 0;
@@ -50,14 +52,14 @@ void coaxline::calcPropagation (nr_double_t frequency) {
   }
 
   // calculate losses
-  ad = M_PI / C0 * frequency * sqrt (er) * tand;
-  rs = sqrt (M_PI * frequency * mur * MU0 * rho);
-  ac = sqrt (er) * (1 / d + 1 / D) / log (D / d) * rs / Z0;
+  ad = M_PI / C0 * frequency * std::sqrt (er) * tand;
+  rs = std::sqrt (M_PI * frequency * mur * MU0 * rho);
+  ac = std::sqrt (er) * (1 / d + 1 / D) / std::log (D / d) * rs / Z0;
 
   // calculate propagation constants and reference impedance
   alpha = ac + ad;
-  beta  = sqrt (er * mur) * 2 * M_PI * frequency / C0;
-  zl = Z0 / 2 / M_PI / sqrt (er) * log (D / d);
+  beta  = std::sqrt (er * mur) * 2 * M_PI * frequency / C0;
+  zl = Z0 / 2 / M_PI / std::sqrt (er) * std::log (D / d);
 }
 
 void coaxline::calcNoiseSP (nr_double_t) {
@@ -82,7 +84,7 @@ void coaxline::initCheck (void) {
 	      "ERROR: Inner diameter larger than outer diameter.\n");
   }
   nr_double_t f1, f2, cl;
-  cl = C0 / sqrt (mur * er);
+  cl = C0 / std::sqrt (mur * er);
   f1 = cl / (M_PI_2 * (D + d)); // TE_11
   f2 = cl / (1 * (D - d));      // TM_N1
   fc = MIN (f1, f2);
@@ -167,7 +169,7 @@ void coaxline::calcNoiseAC (nr_double_t) {
 
 // properties
 PROP_REQ [] = {
-  { "D", PROP_REAL, { 2.95e-3, PROP_NO_STR }, PROP_POS_RANGEX }, 
+  { "D", PROP_REAL, { 2.95e-3, PROP_NO_STR }, PROP_POS_RANGEX },
   { "d", PROP_REAL, { 0.9e-3, PROP_NO_STR }, PROP_POS_RANGEX },
   { "L", PROP_REAL, { 1500e-3, PROP_NO_STR }, PROP_NO_RANGE },
   { "er", PROP_REAL, { 2.29, PROP_NO_STR }, PROP_RNGII (1, 100) },

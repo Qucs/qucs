@@ -46,6 +46,8 @@
 #include "characteristic.h"
 #include "component_id.h"
 
+namespace qucs {
+
 // normalising impedance
 const nr_double_t circuit::z0 = 50.0;
 
@@ -651,7 +653,9 @@ void circuit::setMatrixS (matrix s) {
    circuit. */
 matrix circuit::getMatrixS (void) {
   matrix res (size);
-  memcpy (res.getData (), MatrixS, sizeof (nr_complex_t) * size * size);
+  for(unsigned int i=0; i < size; ++i)
+    for(unsigned int j=0; i < size; ++j)
+      res(i,j) = MatrixS[i*size + j];
   return res;
 }
 
@@ -670,7 +674,9 @@ void circuit::setMatrixN (matrix n) {
    matrix of the circuit. */
 matrix circuit::getMatrixN (void) {
   matrix res (size);
-  memcpy (res.getData (), MatrixN, sizeof (nr_complex_t) * size * size);
+  for(unsigned int i=0; i < size; ++i)
+    for(unsigned int j=0; i < size; ++j)
+      res(i,j) = MatrixN[i*size + j];
   return res;
 }
 
@@ -689,7 +695,9 @@ void circuit::setMatrixY (matrix y) {
    circuit. */
 matrix circuit::getMatrixY (void) {
   matrix res (size);
-  memcpy (res.getData (), MatrixY, sizeof (nr_complex_t) * size * size);
+  for(unsigned int i=0; i < size; ++i)
+    for(unsigned int j=0; i < size; ++j)
+      res(i,j) = MatrixY[i*size + j];
   return res;
 }
 
@@ -861,8 +869,18 @@ void circuit::transientCapacitanceC (int qpos, int vpos,
 void circuit::initHistory (nr_double_t age) {
   nHistories = getSize () + getVoltageSources ();
   histories = new history[nHistories];
-  for (int i = 0; i < nHistories; i++) histories[i].setAge (age);
+  setHistoryAge (age);
 }
+
+// Sets the age of all circuit histories
+void circuit::setHistoryAge (nr_double_t age) {
+  for (int i = 0; i < nHistories; i++)
+  {
+    histories[i].setAge (age);
+  }
+}
+
+
 
 // The function deletes the histories for the transient analysis.
 void circuit::deleteHistory (void) {
@@ -871,6 +889,17 @@ void circuit::deleteHistory (void) {
     histories = NULL;
   }
   setHistory (false);
+}
+
+// Truncates the transient analysis history (i.e. removes values newer
+// newer than time tcut).
+void circuit::truncateHistory (nr_double_t tcut) {
+  if (histories != NULL) {
+    for (int i = 0; i < nHistories; i++)
+    {
+      histories[i].truncate (tcut);
+    }
+  }
 }
 
 // Appends a history value.
@@ -882,6 +911,17 @@ void circuit::appendHistory (int n, nr_double_t val) {
 nr_double_t circuit::getHistoryAge (void) {
   if (histories) return histories[0].getAge ();
   return 0.0;
+}
+
+// Returns size of the history
+int circuit::getHistorySize (void) {
+  return histories[0].getSize ();
+}
+
+// Returns the time with the specified index
+nr_double_t circuit::getHistoryTFromIndex (int idx)
+{
+  return histories[0].getTfromidx (idx);
 }
 
 /* This function should be used to apply the time vector history to
@@ -902,7 +942,14 @@ nr_double_t circuit::getV (int port, nr_double_t t) {
   return histories[port].nearest (t);
 }
 
+// Returns voltage at the given index from the history for the given node.
+nr_double_t circuit::getV (int port, int idx) {
+  return histories[port].getValfromidx (idx);
+}
+
 // Returns current at the given time for the given voltage source.
 nr_double_t circuit::getJ (int nr, nr_double_t t) {
   return histories[nr + getSize ()].nearest (t);
 }
+
+} // namespace qucs

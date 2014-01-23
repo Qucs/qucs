@@ -155,7 +155,8 @@ XML_FILES = analogfunction.xml qucsVersion.xml qucsMODULEcore.xml \
 EXTRA_DIST = $(VERILOG_FILES) $(XML_FILES)
 
 AM_CPPFLAGS = -I$(top_srcdir)/src -I$(top_srcdir)/src/math \
-  -I$(top_srcdir)/src/components -I$(top_srcdir)/src/components/devices
+  -I$(top_srcdir)/src/components -I$(top_srcdir)/src/components/devices \
+  -I$(builddir)
 
 if MAINTAINER_MODE
 ## configure determines if we want to build and use the
@@ -405,16 +406,16 @@ hicumL2V2p24.gui.cpp: hicumL2V2p24.va
 
 hicumL2V2p31n.analogfunction.cpp: analogfunction.xml
 hicumL2V2p31n.analogfunction.cpp: hicumL2V2p31n.va
-	$(ADMSXML) $< -e analogfunction.xml
-hicumL2V2p31n.core.cpp: hicumL2V2p31n.defs.h qucsVersion.xml qucsMODULEcore.xml
+	$(ADMSXML) $< -e $(srcdir)/analogfunction.xml
+hicumL2V2p31n.core.cpp: hicumL2V2p31n.defs.h $(srcdir)/qucsVersion.xml $(srcdir)/qucsMODULEcore.xml
 hicumL2V2p31n.core.cpp: hicumL2V2p31n.va
-	$(ADMSXML) $< -e qucsVersion.xml -e qucsMODULEcore.xml
-hicumL2V2p31n.defs.h: qucsVersion.xml qucsMODULEdefs.xml
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEcore.xml
+hicumL2V2p31n.defs.h: $(srcdir)/qucsVersion.xml $(srcdir)/qucsMODULEdefs.xml
 hicumL2V2p31n.defs.h: hicumL2V2p31n.va
-	$(ADMSXML) $< -e qucsVersion.xml -e qucsMODULEdefs.xml
-hicumL2V2p31n.gui.cpp: qucsVersion.xml qucsMODULEgui.xml
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEdefs.xml
+hicumL2V2p31n.gui.cpp: $(srcdir)/qucsVersion.xml $(srcdir)/qucsMODULEgui.xml
 hicumL2V2p31n.gui.cpp: hicumL2V2p31n.va
-	$(ADMSXML) $< -e qucsVersion.xml -e qucsMODULEgui.xml
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEgui.xml
 
 
 photodiode.analogfunction.cpp: analogfunction.xml

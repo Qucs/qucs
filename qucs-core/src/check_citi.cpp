@@ -7,16 +7,16 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This software is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this package; see the file COPYING.  If not, write to
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
- * Boston, MA 02110-1301, USA.  
+ * Boston, MA 02110-1301, USA.
  *
  * $Id$
  *
@@ -30,7 +30,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
-#include <math.h>
+#include <cmath>
 
 #include "logging.h"
 #include "complex.h"
@@ -43,13 +43,15 @@
 #include "constants.h"
 #include "check_citi.h"
 
-dataset * citi_result = NULL;
+using namespace qucs;
+
+qucs::dataset * citi_result = NULL;
 struct citi_package_t * citi_root = NULL;
 
 /* Returns the number of vectors in a package. */
 static int citi_count_vectors (struct citi_package_t * p) {
   int i = 0;
-  for (vector * v = p->data; v != NULL; v = (vector *) v->getNext ()) i++;
+  for (qucs::vector * v = p->data; v != NULL; v = (qucs::vector *) v->getNext ()) i++;
   return i;
 }
 
@@ -63,9 +65,9 @@ static int citi_count_variables (struct citi_package_t * p) {
 }
 
 /* Returns the n-th vector in the package. */
-static vector * citi_get_vector (struct citi_package_t * p, int n) {
-  vector * v = p->data;
-  for (int i = 0; v != NULL; v = (vector *) v->getNext (), i++) {
+static qucs::vector * citi_get_vector (struct citi_package_t * p, int n) {
+  qucs::vector * v = p->data;
+  for (int i = 0; v != NULL; v = (qucs::vector *) v->getNext (), i++) {
     if (i == n) return v;
   }
   return NULL;
@@ -87,25 +89,25 @@ static char * citi_get_package (struct citi_package_t * p) {
 }
 
 /* Create a valid vector for the dataset. */
-static vector * citi_create_vector (struct citi_package_t * p, int i,
+static qucs::vector * citi_create_vector (struct citi_package_t * p, int i,
 				    char * n, char * type) {
-  vector * vec;
+  qucs::vector * vec;
   vec = citi_get_vector (p, i); // fetch vector
-  vec = new vector (*vec);      // copy vector
+  vec = new qucs::vector (*vec);      // copy vector
   vec->reverse ();              // reverse vector
 
   // convert data if necessary
   if (!strcmp (type, "MAGANGLE")) {
     for (int i = 0; i < vec->getSize (); i++) {
       nr_complex_t val = vec->get (i);
-      val = polar (real (val), rad (imag (val)));
+      val = std::polar (real (val), rad (imag (val)));
       vec->set (val, i);
     }
   }
   else if (!strcmp (type, "DBANGLE")) {
     for (int i = 0; i < vec->getSize (); i++) {
       nr_complex_t val = vec->get (i);
-      val = polar (pow (10.0, real (val) / 20.0), rad (imag (val)));
+      val = std::polar (std::pow (10.0, real (val) / 20.0), rad (imag (val)));
       vec->set (val, i);
     }
   }
@@ -123,14 +125,14 @@ static int citi_vector_length (strlist deps) {
     return 0;
   // calculate length of resulting dependent variable
   for (int i = 0; i < deps.length(); i++) {
-    vector * v = citi_result->findDependency (deps.get (i));
+    qucs::vector * v = citi_result->findDependency (deps.get (i));
     if (v != NULL) n *= v->getSize ();
   }
   return n;
 }
 
 /* Checks length of variable vectors. */
-static int citi_check_dep_length (vector * v, strlist deps, char * package) {
+static int citi_check_dep_length (qucs::vector * v, strlist deps, char * package) {
   int rlength = v->getSize ();
   int dlength = citi_vector_length (deps);
   if (rlength != dlength) {
@@ -156,10 +158,10 @@ void citi_finalize (void) {
       hn = h->next;
       free (h);
     }
-    vector * v, * vn;
+    qucs::vector * v, * vn;
     /* go through each vector */
     for (v = p->data; v != NULL; v = vn) {
-      vn = (vector *) v->getNext ();
+      vn = (qucs::vector *) v->getNext ();
       delete v;
     }
     pn = p->next;
@@ -209,7 +211,7 @@ int citi_check (void) {
 
     /* go through each header */
     for (h = p->head; h != NULL; h = h->next) {
-      vector * v;
+      qucs::vector * v;
       if (h->var != NULL) {
 	char txt[256];
 	if (h->i1 >= 0) {
@@ -282,3 +284,4 @@ void citi_init (void) {
   citi_result = NULL;
   citi_root = NULL;
 }
+

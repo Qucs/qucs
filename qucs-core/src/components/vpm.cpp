@@ -7,16 +7,16 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This software is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this package; see the file COPYING.  If not, write to
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
- * Boston, MA 02110-1301, USA.  
+ * Boston, MA 02110-1301, USA.
  *
  * $Id$
  *
@@ -28,6 +28,8 @@
 
 #include "component.h"
 #include "vpm.h"
+
+using namespace qucs;
 
 vpm::vpm () : circuit (3) {
   type = CIR_VPM;
@@ -51,7 +53,7 @@ void vpm::initAC (void) {
   initDC ();
   nr_double_t a = getPropertyDouble ("U");
   nr_double_t p = getPropertyDouble ("Phase");
-  setE (VSRC_1, polar (a, rad (p)));
+  setE (VSRC_1, qucs::polar (a, rad (p)));
 }
 
 void vpm::initTR (void) {
@@ -65,15 +67,15 @@ void vpm::calcTR (nr_double_t t) {
   nr_double_t a = getPropertyDouble ("U");
   nr_double_t v = real (getV  (NODE_3));
   nr_double_t b = 2 * M_PI * f * t + rad (p) + v * d;
-  nr_double_t u = a * sin (b);
-  nr_double_t g = a * cos (b) * d;
+  nr_double_t u = a * std::sin (b);
+  nr_double_t g = a * std::cos (b) * d;
   setE (VSRC_1, g * v - u);
   setC (VSRC_1, NODE_3, g);
 }
 
 // properties
 PROP_REQ [] = {
-  { "U", PROP_REAL, { 1, PROP_NO_STR }, PROP_NO_RANGE }, 
+  { "U", PROP_REAL, { 1, PROP_NO_STR }, PROP_NO_RANGE },
   { "f", PROP_REAL, { 1e9, PROP_NO_STR }, PROP_POS_RANGE },
   { "M", PROP_REAL, { 1, PROP_NO_STR }, PROP_RNGII (0, 1) },
   PROP_NO_PROP };

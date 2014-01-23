@@ -69,10 +69,10 @@ to compile and install the package.
 Getting the latest SVN snapshot
 ===============================
 
-You can always get the latest documentation version from our SVN
+You can always get the latest documentation version from our git 
 repository.
 
-    $ svn co https://qucs.svn.sourceforge.net/svnroot/qucs/trunk/qucs-doc
+    $ git clone http://git.code.sf.net/p/qucs/git/qucs-doc qucs-doc
 
 Press 'Enter' when asked for a password.  Run `sh autogen.sh' and
 `configure' with the appropriate options.  Maintainance currently

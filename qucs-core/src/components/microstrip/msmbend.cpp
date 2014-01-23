@@ -31,6 +31,8 @@
 #include "substrate.h"
 #include "msmbend.h"
 
+using namespace qucs;
+
 msmbend::msmbend () : circuit (2) {
   type = CIR_MSMBEND;
 }
@@ -70,7 +72,7 @@ matrix msmbend::calcMatrixZ (nr_double_t frequency) {
   // capacitance in pF
   C = W * ((3.93 * er + 0.62) * Wh + (7.6 * er + 3.80));
   // inductance in nH
-  L = 440.0 * h * (1.0 - 1.062 * exp (-0.177 * pow (Wh, 0.947)));
+  L = 440.0 * h * (1.0 - 1.062 * std::exp (-0.177 * pow (Wh, 0.947)));
 
   // calculate Z-parameters
   z21 = nr_complex_t (0.0, -0.5e12 / (M_PI * frequency * C));

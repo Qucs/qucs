@@ -22,13 +22,22 @@
  *
  */
 
+/** \file ecvs.h
+  * \brief The externally controlled transient solver implementation file.
+  *
+  */
+
+/**
+  * \ingroup QucsInterface
+  */
+
 #if HAVE_CONFIG_H
 # include <config.h>
 #endif
 
 #include <stdio.h>
 #include <string.h>
-#include <math.h>
+#include <cmath>
 #include <float.h>
 
 #include "compat.h"
@@ -45,8 +54,10 @@
 #include "transient.h"
 #include "exception.h"
 #include "exceptionstack.h"
-#include "e_trsolver.h"
 #include "environment.h"
+#include "e_trsolver.h"
+#include "component_id.h"
+#include "ecvs.h"
 
 #define STEPDEBUG   0 // set to zero for release
 #define BREAKPOINTS 0 // exact breakpoint calculation
@@ -58,6 +69,13 @@
 #ifndef sState
 #define sState 1 // solution state
 #endif
+
+// Macro for the n-th state of the solution vector history.
+#ifndef SOL
+#define SOL(state) (solution[(int) getState (sState, (state))])
+#endif
+
+namespace qucs {
 
 using namespace transient;
 
@@ -105,6 +123,10 @@ e_trsolver::e_trsolver (char * n)
 // Destructor deletes the e_trsolver class object.
 e_trsolver::~e_trsolver ()
 {
+
+    solve_post ();
+    if (progress) logprogressclear (40);
+
     deinitTR ();
 
     if (swp) delete swp;
@@ -114,6 +136,10 @@ e_trsolver::~e_trsolver ()
         if (solution[i] != NULL)
         {
             delete solution[i];
+        }
+        if (lastsolution[i] != NULL)
+        {
+            delete lastsolution[i];
         }
     }
     if (tHistory) delete tHistory;
@@ -132,61 +158,6 @@ e_trsolver::e_trsolver (e_trsolver & o)
     initialDC = o.initialDC;
 }
 
-// This function creates the time sweep if necessary.
-void e_trsolver::initSteps (void)
-{
-    if (swp != NULL) delete swp;
-    swp = createSweep ("time");
-}
-
-// Macro for the n-th state of the solution vector history.
-#define SOL(state) (solution[(int) getState (sState, (state))])
-
-//int e_trsolver::prepare_net (char * infile)
-//{
-//
-//    // create static modules
-//    module::registerModules ();
-//
-//    // create root environment
-//    root = new environment ("root");
-//
-//    // create netlist object and input
-//    subnet = new net ("subnet");
-//    in = infile ? new input (infile) : new input ();
-//
-//    // pass root environment to netlist object and input
-//    subnet->setEnv (root);
-//    in->setEnv (root);
-//
-//    // get input netlist
-//    if (in->netlist (subnet) != 0)
-//    {
-//        if (netlist_check)
-//        {
-//            // replace with mex error message
-//            messagefcn (LOG_STATUS, "checker notice, netlist check FAILED\n");
-//        }
-//        return -1;
-//    }
-//    if (netlist_check)
-//    {
-//        messagefcn (LOG_STATUS, "checker notice, netlist OK\n");
-//        return -2;
-//    }
-//
-//    // attach a ground to the netlist
-//    gnd = new ground ();
-//    gnd->setNode (0, "gnd");
-//    gnd->setName ("GND");
-//    subnet->insertCircuit (gnd);
-//
-//    // apply the netlist to this solver
-//    //this->setNet (subnet);
-//
-//    return 0;
-//}
-
 void e_trsolver::debug()
 {
     circuit * root = subnet->getRoot ();
@@ -194,6 +165,10 @@ void e_trsolver::debug()
     for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ())
     {
         messagefcn (0, c->getName() );
+
+        if (c->getSubcircuit ()) {
+            printf ("subcircuit Name %s\n", c->getSubcircuit ());
+        }
     }
 
     //netlist_list();
@@ -204,9 +179,6 @@ void e_trsolver::debug()
    netlist solver. It prepares the circuit for simulation. */
 int e_trsolver::init (nr_double_t start, nr_double_t firstdelta, int mode)
 {
-    // prepare the netlist
-    //prepare_net (infile);
-
     // run the equation solver for the netlist
     this->getEnv()->runSolver();
 
@@ -215,10 +187,10 @@ int e_trsolver::init (nr_double_t start, nr_double_t firstdelta, int mode)
     relaxTSR = !strcmp (getPropertyString ("relaxTSR"), "yes") ? true : false;
     initialDC = !strcmp (getPropertyString ("initialDC"), "yes") ? true : false;
     // fetch simulation properties
-//    MaxIterations = getPropertyInteger ("MaxIter");
-//    reltol = getPropertyDouble ("reltol");
-//    abstol = getPropertyDouble ("abstol");
-//    vntol = getPropertyDouble ("vntol");
+    MaxIterations = getPropertyInteger ("MaxIter");
+    reltol = getPropertyDouble ("reltol");
+    abstol = getPropertyDouble ("abstol");
+    vntol = getPropertyDouble ("vntol");
 
     runs++;
     saveCurrent = current = 0;
@@ -254,16 +226,13 @@ int e_trsolver::init (nr_double_t start, nr_double_t firstdelta, int mode)
     setCalculation ((calculate_func_t) &calcTR);
     solve_pre ();
 
-    // Create time sweep if necessary.
-    //initSteps ();
-    //swp->reset ();
-
     // Recall the DC solution.
     recallSolution ();
 
     // Apply the nodesets and adjust previous solutions.
     applyNodeset (false);
     fillSolution (x);
+    fillLastSolution (x);
 
     // Tell integrators to be initialized.
     setMode (MODE_INIT);
@@ -275,16 +244,47 @@ int e_trsolver::init (nr_double_t start, nr_double_t firstdelta, int mode)
     if (mode == ETR_MODE_ASYNC)
     {
         delta /= 10;
+
     }
     else if (mode == ETR_MODE_SYNC)
     {
         //lastsynctime = start - delta;
     }
+    else
+    {
+        qucs::exception * e = new qucs::exception (EXCEPTION_UNKNOWN_ETR_MODE);
+        e->setText ("Unknown ETR mode.");
+        throw_exception (e);
+        return -2;
+    }
     fillState (dState, delta);
     adjustOrder (1);
 
+    storeHistoryAges ();
+
     return 0;
 
+}
+
+/* Stores all the initial history lengths requested by the circuit
+   elements for later use (to make sure we don't set the histories
+   to be less than these initial requested values) */
+void e_trsolver::storeHistoryAges (void)
+{
+    circuit * root = subnet->getRoot ();
+    for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ())
+    {
+        // get the a
+        if (c->hasHistory ())
+        {
+            initialhistages.push_back (c->getHistoryAge ());
+        }
+    }
+}
+
+void e_trsolver::fillLastSolution (tvector<nr_double_t> * s)
+{
+    for (int i = 0; i < 8; i++) * lastsolution[(int) getState (sState, (i))] = *s;
 }
 
 /* Goes through the list of circuit objects and runs its initTR()
@@ -348,13 +348,21 @@ void e_trsolver::initETR (nr_double_t start, nr_double_t firstdelta, int mode)
         // is provided and used elsewhere to update the solutions
         solution[i] = new tvector<nr_double_t>;
         setState (sState, (nr_double_t) i, i);
+        lastsolution[i] = new tvector<nr_double_t>;
     }
 
-    // tell circuits about the transient analysis
+    // Initialise history tracking for asynchronous solvers
+    // See acceptstep_async and rejectstep_async for more
+    // information
+    lastasynctime = start;
+    saveState (dState, lastdeltas);
+    lastdelta = delta;
+
+    // tell circuit elements about the transient analysis
     circuit *c, * root = subnet->getRoot ();
     for (c = root; c != NULL; c = (circuit *) c->getNext ())
         initCircuitTR (c);
-    // also initialize created circuits
+    // also initialize the created circuit elements
     for (c = root; c != NULL; c = (circuit *) c->getPrev ())
         initCircuitTR (c);
 }
@@ -403,6 +411,9 @@ int e_trsolver::stepsolve_sync(nr_double_t synctime)
     convError = 0;
 
     time = synctime;
+    // update the interpolation time of any externally controlled
+    // components which require it.
+    updateExternalInterpTime(time);
 
     // copy the externally chosen time step to delta
     delta = time - lastsynctime;
@@ -506,7 +517,6 @@ void e_trsolver::acceptstep_sync()
 //        stepDelta = deltaOld;
 //        nextStates ();
 //        rejected = 0;
-
         adjustOrder ();
     }
     else
@@ -527,11 +537,6 @@ void e_trsolver::acceptstep_sync()
     // Initialize or update history.
     if (running > 1)
     {
-        // make the circuit histories no longer than the total of
-        // all the stored deltas in the solution history
-        nr_double_t deltasum = 0.0;
-        for (int i = 0; i<8; i++) deltasum += deltas[i];
-        tHistory->setAge (deltasum);
         // update the solution history with the new results
         updateHistory (current);
     }
@@ -636,11 +641,17 @@ int e_trsolver::stepsolve_async(nr_double_t steptime)
     convError = 0;
 
     time = steptime;
-
+    // update the interpolation time of any externally controlled
+    // components which require it.
+    updateExternalInterpTime(time);
+    // make the stored histories for all ircuits that have
+    // requested them at least as long as the next major time
+    // step so we can reject the step later if needed and
+    // restore all the histories to their previous state
+    updateHistoryAges (time - lastasynctime);
 
     //delta = (steptime - time) / 10;
     //if (progress) logprogressbar (i, swp->getSize (), 40);
-
 #if DEBUG && 0
     messagefcn (LOG_STATUS, "NOTIFY: %s: solving netlist for t = %e\n",
               getName (), (double) time);
@@ -656,6 +667,7 @@ int e_trsolver::stepsolve_async(nr_double_t steptime)
                       getName (), (double) delta, (double) current);
         }
 #endif
+        // update the integration coefficients
         updateCoefficients (delta);
 
         // Run predictor to get a start value for the solution vector for
@@ -764,98 +776,101 @@ int e_trsolver::stepsolve_async(nr_double_t steptime)
     return 0;
 }
 
-int e_trsolver::finish()
+// accept an asynchronous step into the solution history
+void e_trsolver::acceptstep_async(void)
 {
-    solve_post ();
+    // copy the solution in case we wish to step back to this
+    // point later
+    copySolution (solution, lastsolution);
 
-    if (progress) logprogressclear (40);
+    // Store the time
+    lastasynctime = time;
 
-    messagefcn (LOG_STATUS, "NOTIFY: %s: average time-step %g, %d rejections\n",
-              getName (), (double) (saveCurrent / statSteps), statRejected);
-    messagefcn (LOG_STATUS, "NOTIFY: %s: average NR-iterations %g, "
-              "%d non-convergences\n", getName (),
-              (double) statIterations / statSteps, statConvergence);
+    // Store the deltas history
+    saveState (dState, lastdeltas);
 
-    // cleanup
-    return 0;
+    // Store the current delta
+    lastdelta = delta;
 }
 
-///* The single step non-linear iterative nodal analysis netlist solver. */
-//int e_trsolver::solve_nonlinear_step (void)
+// reject the last asynchronous step and restore the history
+// of solutions to the last major step
+void e_trsolver::rejectstep_async(void)
+{
+    // restore the solution (node voltages and branch currents) from
+    // the previously stored solution
+    copySolution (lastsolution, solution);
+
+    // Restore the circuit histories to their previous states
+    truncateHistory (lastasynctime);
+
+    // Restore the time deltas
+    inputState (dState, lastdeltas);
+
+    for (int i = 0; i < 8; i++)
+    {
+        deltas[i] = lastdeltas[i];
+    }
+
+    delta = lastdelta;
+
+    // copy the deltas to all the circuit elements
+    setDelta ();
+
+    // reset the corrector and predictor coefficients
+    calcCorrectorCoeff (corrType, corrOrder, corrCoeff, deltas);
+    calcPredictorCoeff (predType, predOrder, predCoeff, deltas);
+}
+
+/* Makes a copy of a set of solution vectors */
+void e_trsolver::copySolution (tvector<nr_double_t> * src[8], tvector<nr_double_t> * dest[8])
+{
+    for (int i = 0; i < 8; i++)
+    {
+        // check sizes are the same
+        assert (src[i]->getSize () == dest[i]->getSize ());
+        // copy over the data values
+        for (int j = 0; j < src[i]->getSize (); j++)
+        {
+            dest[i]->set (j, src[i]->get (j));
+        }
+    }
+}
+
+void e_trsolver::updateHistoryAges (nr_double_t newage)
+{
+    int i = 0;
+    circuit * root = subnet->getRoot ();
+    for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ())
+    {
+        // set the history length to retain to be at least
+        // the length of the supplied age
+        if (c->hasHistory ())
+        {
+            c->setHistoryAge (std::max (initialhistages[i], newage));
+            i++;
+        }
+    }
+}
+
+//int e_trsolver::finish()
 //{
-//    int convergence, run = 0, error = 0;
-//    qucs::exception * e;
+//    solve_post ();
 //
-//    // fetch simulation properties
-//    MaxIterations = getPropertyInteger ("MaxIter");
-//    reltol = getPropertyDouble ("reltol");
-//    abstol = getPropertyDouble ("abstol");
-//    vntol = getPropertyDouble ("vntol");
-//    updateMatrix = 1;
+//    if (progress) logprogressclear (40);
 //
-//    if (convHelper == CONV_GMinStepping)
-//    {
-//        // use the alternative non-linear solver solve_nonlinear_continuation_gMin
-//        // instead of the basic solver provided by this function
-//        iterations = 0;
-//        error = solve_nonlinear_continuation_gMin ();
-//        return error;
-//    }
-//    else if (convHelper == CONV_SourceStepping)
-//    {
-//        // use the alternative non-linear solver solve_nonlinear_continuation_Source
-//        // instead of the basic solver provided by this function
-//        iterations = 0;
-//        error = solve_nonlinear_continuation_Source ();
-//        return error;
-//    }
+//    messagefcn (LOG_STATUS, "NOTIFY: %s: average time-step %g, %d rejections\n",
+//              getName (), (double) (saveCurrent / statSteps), statRejected);
+//    messagefcn (LOG_STATUS, "NOTIFY: %s: average NR-iterations %g, "
+//              "%d non-convergences\n", getName (),
+//              (double) statIterations / statSteps, statConvergence);
 //
-//    // run solving loop until convergence is reached
-//    do
-//    {
-//        error = solve_once ();
-//        if (!error)
-//        {
-//            // convergence check
-//            convergence = (run > 0) ? checkConvergence () : 0;
-//            savePreviousIteration ();
-//            run++;
-//            // control fixpoint iterations
-//            if (fixpoint)
-//            {
-//                if (convergence && !updateMatrix)
-//                {
-//                    updateMatrix = 1;
-//                    convergence = 0;
-//                }
-//                else
-//                {
-//                    updateMatrix = 0;
-//                }
-//            }
-//        }
-//        else
-//        {
-//            break;
-//        }
-//    }
-//    while (!convergence &&
-//            run < MaxIterations * (1 + this->convHelper ? 1 : 0));
-//
-//    if (run >= MaxIterations || error)
-//    {
-//        e = new qucs::exception (EXCEPTION_NO_CONVERGENCE);
-//        e->setText ("no convergence in %s analysis after %d iterations",
-//                    desc, run);
-//        throw_exception (e);
-//        error++;
-//    }
-//
-//    iterations = run;
-//    return error;
+//    // cleanup
+//    return 0;
 //}
 
-void e_trsolver::getsolution(double * lastsol)
+
+void e_trsolver::getsolution (double * lastsol)
 {
     int N = countNodes ();
     int M = countVoltageSources ();
@@ -867,14 +882,180 @@ void e_trsolver::getsolution(double * lastsol)
     }
 }
 
-int e_trsolver::getN()
+/* getNodeV attempts to get the voltage of the node with a
+   given name. returns -1 if the node name was not found */
+int e_trsolver::getNodeV (char * label, nr_double_t& nodeV)
 {
-    return countNodes ();
+    int r = nlist->getNodeNr (label);
+
+    if (r == -1)
+    {
+      return r;
+    }
+    else
+    {
+      nodeV = x->get(r);
+      return 0;
+    }
 }
 
-int e_trsolver::getM()
+/* Get the voltage reported by a voltage probe */
+int e_trsolver::getVProbeV (char * probename, nr_double_t& probeV)
 {
-    return countVoltageSources ();
+    // string to hold the full name of the circuit
+    std::string fullname;
+
+    // check for NULL name
+    if (probename)
+    {
+        circuit * root = subnet->getRoot ();
+        for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ())
+        {
+            if (c->getType () == CIR_VPROBE) {
+
+                fullname.clear ();
+
+                // Subcircuit elements top level name is the
+                // subcircuit type (the base name of the subcircuit
+                // file)
+                if (c->getSubcircuit ())
+                {
+                    fullname.append (c->getSubcircuit ());
+                    fullname.append (".");
+                }
+
+                // append the user supplied name to search for
+                fullname.append (probename);
+
+                // Check if it is the desired voltage source
+                if (strcmp (fullname.c_str(), c->getName ()) == 0)
+                {
+                    // Saves the real and imaginary voltages in the probe to the
+                    // named variables Vr and Vi
+                    c->saveOperatingPoints ();
+                    // We are only interested in the real part for transient
+                    // analysis
+                    probeV = c->getOperatingPoint ("Vr");
+
+                    return 0;
+                }
+            }
+        }
+    }
+    return -1;
+}
+
+/* Get the current reported by a current probe */
+int e_trsolver::getIProbeI (char * probename, nr_double_t& probeI)
+{
+    // string to hold the full name of the circuit
+    std::string fullname;
+
+    // check for NULL name
+    if (probename)
+    {
+        circuit * root = subnet->getRoot ();
+        for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ())
+        {
+            if (c->getType () == CIR_IPROBE) {
+
+                fullname.clear ();
+
+                // Subcircuit elements top level name is the
+                // subcircuit type (the base name of the subcircuit
+                // file)
+                if (c->getSubcircuit ())
+                {
+                    fullname.append (c->getSubcircuit ());
+                    fullname.append (".");
+                }
+
+                // append the user supplied name to search for
+                fullname.append (probename);
+
+                // Check if it is the desired voltage source
+                if (strcmp (fullname.c_str(), c->getName ()) == 0)
+                {
+                    // Get the current reported by the probe
+                    probeI = real (x->get (c->getVoltageSource () + getN ()));
+
+                    return 0;
+                }
+            }
+        }
+    }
+    return -1;
+}
+
+int e_trsolver::setECVSVoltage(char * ecvsname, nr_double_t V)
+{
+    // string to hold the full name of the circuit
+    std::string fullname;
+
+    // check for NULL name
+    if (ecvsname)
+    {
+        circuit * root = subnet->getRoot ();
+        for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ())
+        {
+            // examine only ECVS elements
+            if (c->getType () == CIR_ECVS) {
+
+                fullname.clear ();
+
+                // Subcircuit elements top level name is the
+                // subcircuit type (the base name of the subcircuit
+                // file)
+                if (c->getSubcircuit ())
+                {
+                    fullname.append (c->getSubcircuit ());
+                    fullname.append (".");
+                }
+
+                // append the user supplied name to search for
+                fullname.append (ecvsname);
+
+                // Check if it is the desired voltage source
+                if (strcmp (fullname.c_str(), c->getName ()) == 0)
+                {
+                    // Set the voltage to the desired value
+                    c->setProperty("U", V);
+                    return 0;
+                }
+            }
+        }
+    }
+    return -1;
+}
+
+void e_trsolver::updateExternalInterpTime(nr_double_t t)
+{
+    circuit * root = subnet->getRoot ();
+    for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ())
+    {
+        // examine only external elements that have interpolation,
+        // such as ECVS elements
+        if (c->getType () == CIR_ECVS) {
+            // Set the voltage to the desired value
+            c->setProperty ("Tnext", t);
+            if (tHistory != NULL && tHistory->getSize () > 0)
+            {
+              c->setHistoryAge ( t - tHistory->last () + 0.1 * (t - tHistory->last ()) );
+            }
+        }
+    }
+}
+
+/* The following function removed stored times newer than a specified time
+   from all the circuit element histories */
+void e_trsolver::truncateHistory (nr_double_t t)
+{
+    // truncate all the circuit element histories
+    circuit * root = subnet->getRoot ();
+    for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ())
+    {
+        if (c->hasHistory ()) c->truncateHistory (t);
+    }
 }
 
 int e_trsolver::getJacRows()
@@ -887,18 +1068,14 @@ int e_trsolver::getJacCols()
     return A->getCols();
 }
 
-double e_trsolver::getJacData(int r, int c)
+void e_trsolver::getJacData(int r, int c, nr_double_t& data)
 {
-    return A->get(r,c);
+    data = A->get(r,c);
 }
 
 // properties
 PROP_REQ [] =
 {
-    {
-        "Type", PROP_STR, { PROP_NO_VAL, "lin" },
-        PROP_RNG_STR2 ("lin", "log")
-    },
     PROP_NO_PROP
 };
 PROP_OPT [] =
@@ -928,4 +1105,4 @@ struct define_t e_trsolver::anadef =
     { "ETR", 0, PROP_ACTION, PROP_NO_SUBSTRATE, PROP_LINEAR, PROP_DEF };
 
 
-
+} // namespace qucs

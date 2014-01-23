@@ -7,16 +7,16 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This software is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this package; see the file COPYING.  If not, write to
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
- * Boston, MA 02110-1301, USA.  
+ * Boston, MA 02110-1301, USA.
  *
  * $Id$
  *
@@ -30,7 +30,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
-#include <math.h>
+#include <cmath>
 
 #include "logging.h"
 #include "complex.h"
@@ -39,7 +39,8 @@
 #include "equation.h"
 #include "differentiate.h"
 
-using namespace eqn;
+using namespace qucs;
+using namespace qucs::eqn;
 
 // Short helper macros.
 #define C(con) ((constant *) (con))
@@ -322,7 +323,7 @@ node * differentiate::power_reduce (node * f0, node * f1) {
       delete f0; delete f1;
       retCon (1);
     }
-    nr_double_t t = pow (D(f0), D(f1));
+    nr_double_t t = std::pow (D(f0), D(f1));
     delete f0; delete f1;
     retCon (t);
   } else if (isOne (f1)) {

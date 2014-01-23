@@ -7,16 +7,16 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This software is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this package; see the file COPYING.  If not, write to
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
- * Boston, MA 02110-1301, USA.  
+ * Boston, MA 02110-1301, USA.
  *
  * $Id$
  *
@@ -29,7 +29,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <math.h>
+#include <cmath>
 #include <ctype.h>
 
 #include "logging.h"
@@ -49,8 +49,9 @@
 #include "exception.h"
 #include "exceptionstack.h"
 
+namespace qucs {
+
 using namespace eqn;
-using namespace qucs;
 
 #define A(a) ((assignment *) (a))
 #define N(n) ((node *) (n))
@@ -91,7 +92,7 @@ constant::constant (const constant & o) : node (o) {
     c = dataref ? o.c : new nr_complex_t (*o.c);
     break;
   case TAG_VECTOR:
-    v = dataref ? o.v : new vector (*o.v);
+    v = dataref ? o.v : new qucs::vector (*o.v);
     break;
   case TAG_MATRIX:
     m = dataref ? o.m : new matrix (*o.m);
@@ -155,7 +156,7 @@ static char * Cplx2String (nr_complex_t c) {
     sprintf (str, "%g", (double) real (c));
   }
   else {
-    sprintf (str, "(%g%cj%g)", (double ) real (c), 
+    sprintf (str, "(%g%cj%g)", (double ) real (c),
 	     imag (c) >= 0.0 ? '+' : '-', (double) fabs (imag (c)));
   }
   return str;
@@ -217,14 +218,14 @@ char * constant::toString (void) {
   case TAG_CHAR:
     sprintf (str, "'%c'", chr);
     txt = strdup (str);
-    break;    
+    break;
   case TAG_STRING:
     sprintf (str, "'%s'", s);
     txt = strdup (str);
-    break;    
+    break;
   case TAG_RANGE:
     txt = strdup (r->toString ());
-    break;    
+    break;
   default:
     txt = strdup ("(no such type)");
     break;
@@ -1007,15 +1008,15 @@ nr_complex_t node::getResultComplex (void) {
 
 /* Returns an immediate vector depending on the type of the equation
    nodes result type. */
-vector node::getResultVector (void) {
+qucs::vector node::getResultVector (void) {
   constant * c = getResult ();
-  vector v;
+  qucs::vector v;
   if (c != NULL) {
     switch (getType ()) {
     case TAG_MATRIX:
       {
 	int ro, co, n = 0;
-	v = vector (c->m->getRows () * c->m->getCols ());
+	v = qucs::vector (c->m->getRows () * c->m->getCols ());
 	for (co = 0; co < c->m->getCols (); co++)
 	  for (ro = 0; ro < c->m->getRows (); ro++)
 	    v (n++) = c->m->get (ro, co);
@@ -1024,11 +1025,11 @@ vector node::getResultVector (void) {
     case TAG_VECTOR:
       v = *(c->v); break;
     case TAG_DOUBLE:
-      v = vector (1); v (0) = c->d; break;
+      v = qucs::vector (1); v (0) = c->d; break;
     case TAG_COMPLEX:
-      v = vector (1); v (0) = *(c->c); break;
+      v = qucs::vector (1); v (0) = *(c->c); break;
     case TAG_BOOLEAN:
-      v = vector (1); v (0) = c->b ? 1.0 : 0.0; break;
+      v = qucs::vector (1); v (0) = c->b ? 1.0 : 0.0; break;
     }
   }
   return v;
@@ -1255,7 +1256,7 @@ int checker::checkExport (void) {
 void checker::list (void) {
   for (node * eqn = equations; eqn != NULL; eqn = eqn->getNext ()) {
     logprint (LOG_STATUS, "%s", eqn->evalPossible ? "!" : "?");
-    logprint (LOG_STATUS, "%s", eqn->evalPossible ? 
+    logprint (LOG_STATUS, "%s", eqn->evalPossible ?
 	      (eqn->getType () == TAG_UNKNOWN ? "U!" :
 	       eqn->getType () == TAG_DOUBLE  ? "D!" :
 	       eqn->getType () == TAG_BOOLEAN ? "B!" :
@@ -1304,7 +1305,7 @@ int checker::findUndefined (int noundefined) {
 	    eqn->collectDependencies ();
 	    continue;
 	  }
-	} 
+	}
 	// give an error
 	if (noundefined) {
 	  if (isGenerated (var)) // skip probably generated variables
@@ -1614,7 +1615,7 @@ void solver::evaluate (void) {
       eqn->evaluated++;
 #if DEBUG && 0
       // print equation results
-      logprint (LOG_STATUS, "%s = %s\n", A(eqn)->result, 
+      logprint (LOG_STATUS, "%s = %s\n", A(eqn)->result,
 		eqn->getResult () ? eqn->getResult()->toString () : "error");
 #if TESTING_DERIVATIVE || 0
       // print equation
@@ -1629,7 +1630,7 @@ void solver::evaluate (void) {
 
 /* This function adds the given dataset vector to the set of equations
    stored in the equation solver. */
-node * solver::addEquationData (vector * v, bool ref) {
+node * solver::addEquationData (qucs::vector * v, bool ref) {
   constant * con = new constant (TAG_VECTOR);
   con->v = v;
   con->dataref = ref;
@@ -1644,12 +1645,12 @@ node * solver::addEquationData (vector * v, bool ref) {
 /* The function puts the given vector into the equation set.  The
    resulting data vector is going to be copied and exported - given a
    generated name based upon the second argument. */
-node * solver::addGeneratedEquation (vector * v, const char * n) {
+node * solver::addGeneratedEquation (qucs::vector * v, const char * n) {
   // create generated name
   char * str = (char *) malloc (strlen (n) + 6);
   sprintf (str, "%s.%04d", n, ++generated);
   // copy data vector
-  vector * c = new vector (*v);
+  qucs::vector * c = new qucs::vector (*v);
   c->setName (str);
   // put vector into the equation set and ensure data export as
   // independent variable
@@ -1666,24 +1667,24 @@ node * solver::addGeneratedEquation (vector * v, const char * n) {
 
 /* Depending on the type of equation result the function converts the
    given equation node to one or more valid dataset vector(s). */
-vector * solver::dataVector (node * eqn) {
-  vector * v = NULL;
+qucs::vector * solver::dataVector (node * eqn) {
+  qucs::vector * v = NULL;
   if (!eqn->getResult ()) return NULL;
   switch (eqn->getType ()) {
   case TAG_VECTOR: // simple vector
-    v = new vector (* (eqn->getResult()->v));
+    v = new qucs::vector (* (eqn->getResult()->v));
     v->setNext (NULL); v->setPrev (NULL);
     break;
   case TAG_DOUBLE: // double value
-    v = new vector ();
+    v = new qucs::vector ();
     v->add (eqn->getResult()->d);
     break;
   case TAG_BOOLEAN: // boolean value
-    v = new vector ();
+    v = new qucs::vector ();
     v->add (eqn->getResult()->b ? 1 : 0);
     break;
   case TAG_COMPLEX: // complex value
-    v = new vector ();
+    v = new qucs::vector ();
     v->add (* (eqn->getResult()->c));
     break;
   case TAG_MATVEC: // matrix vector
@@ -1694,7 +1695,7 @@ vector * solver::dataVector (node * eqn) {
       for (int r = 0; r < mv->getRows (); r++) {
 	for (int c = 0; c < mv->getCols (); c++) {
 	  // name gets automatically assigned
-	  vector * t = new vector (mv->get (r, c));
+	  qucs::vector * t = new qucs::vector (mv->get (r, c));
 	  // chain the vectors appropriately
 	  t->setNext (v); v = t;
 	}
@@ -1707,7 +1708,7 @@ vector * solver::dataVector (node * eqn) {
       matrix * m = eqn->getResult()->m;
       for (int r = 0; r < m->getRows (); r++) {
 	for (int c = 0; c < m->getCols (); c++) {
-	  vector * t = new vector ();
+	  qucs::vector * t = new qucs::vector ();
 	  t->setName (matvec::createMatrixString (A(eqn)->result, r, c));
 	  t->add (m->get (r, c));
 	  // chain the vectors appropriately
@@ -1727,10 +1728,10 @@ vector * solver::dataVector (node * eqn) {
    these to the list of equation node inside the equation solver. */
 void solver::checkinDataset (void) {
   if (data == NULL) return;
-  vector * v;
+  qucs::vector * v;
   findMatrixVectors (data->getDependencies ());
   findMatrixVectors (data->getVariables ());
-  for (v = data->getDependencies (); v != NULL; v = (vector *) v->getNext ()) {
+  for (v = data->getDependencies (); v != NULL; v = (qucs::vector *) v->getNext ()) {
     if (v->getRequested () != -1) {
       node * eqn = addEquationData (v, true);
       strlist * deps = new strlist ();
@@ -1739,7 +1740,7 @@ void solver::checkinDataset (void) {
       delete deps;
     }
   }
-  for (v = data->getVariables (); v != NULL; v = (vector *) v->getNext ()) {
+  for (v = data->getVariables (); v != NULL; v = (qucs::vector *) v->getNext ()) {
     if (v->getRequested () != -1) {
       node * eqn = addEquationData (v, true);
       eqn->setDataDependencies (v->getDependencies ());
@@ -1751,21 +1752,21 @@ void solver::checkinDataset (void) {
    for possible matrix vectors.  These are detected by the vectors'
    names (e.g. S[1,1]).  The matrix vectors found in the dataset get
    converted and saved into the set of equations.  */
-void solver::findMatrixVectors (vector * v) {
-  vector * vec;
+void solver::findMatrixVectors (qucs::vector * v) {
+  qucs::vector * vec;
   strlist * deps;
   char * p, * cand;
   int s, r, c, a, b, n = 1;
 
   // initialize the  'found' flag
-  for (vec = v; vec != NULL; vec = (vector *) vec->getNext ())
+  for (vec = v; vec != NULL; vec = (qucs::vector *) vec->getNext ())
     vec->setRequested (0);
 
   // loop through the dataset vector until no more matrix vector is found
   do {
     r = c = s = -1; cand = NULL; deps = NULL;
     // go through the dataset
-    for (vec = v; vec != NULL; vec = (vector *) vec->getNext ()) {
+    for (vec = v; vec != NULL; vec = (qucs::vector *) vec->getNext ()) {
       // skip detected vectors
       if (vec->getRequested ()) continue;
       // is the vector a possible matrix vector element ?
@@ -1800,7 +1801,7 @@ void solver::findMatrixVectors (vector * v) {
       matvec * mv = new matvec (s, r + 1, c + 1);
       mv->setName (cand);
       // go through the dataset vector once again
-      for (vec = v; vec != NULL; vec = (vector *) vec->getNext ()) {
+      for (vec = v; vec != NULL; vec = (qucs::vector *) vec->getNext ()) {
 	// and collect the vectors with the same 'found' flags
 	if (vec->getRequested () == n) {
 	  p = matvec::isMatrixVector (vec->getName (), a, b);
@@ -1886,8 +1887,8 @@ int solver::dataSize (strlist * deps) {
   int size = 1;
   for (int i = 0; deps != NULL && i < deps->length (); i++) {
     char * str = deps->get (i);
-    vector * dep = data->findDependency (str);
-    vector * var = data->findVariable (str);
+    qucs::vector * dep = data->findDependency (str);
+    qucs::vector * var = data->findVariable (str);
     size *= dep ? dep->getSize () : var ? var->getSize () : 1;
   }
   return size;
@@ -1896,8 +1897,8 @@ int solver::dataSize (strlist * deps) {
 /* The function returns the data vector in the dataset according to
    the given variable name.  If there is no such variable, it returns
    NULL. */
-vector * solver::getDataVector (char * str) {
-  vector * var;
+qucs::vector * solver::getDataVector (char * str) {
+  qucs::vector * var;
   /* search for variables in dataset */
   if (data != NULL) {
     if ((var = data->findVariable (str)) != NULL)
@@ -1981,7 +1982,7 @@ void solver::checkoutDataset (void) {
 
     // is the equation result already in the dataset ?
     if (!findEquationResult (eqn)) {
-      vector * v = dataVector (eqn);
+      qucs::vector * v = dataVector (eqn);
       if (v == NULL) continue;
 
       // collect inherited dataset dependencies
@@ -1992,7 +1993,7 @@ void solver::checkoutDataset (void) {
 	delete datadeps;
 	datadeps = NULL;
       }
-	
+
       // store variable vector(s)
       if (datadeps && datadeps->length () > 0) {
 	v->setDependencies (datadeps);
@@ -2210,7 +2211,7 @@ node * checker::createReference (const char * type, const char * ident,
 
 /* The functions looks through the set of equations for a real valued
    result and returns it.  If there is no such assignment, zero is
-   returned. */ 
+   returned. */
 nr_double_t checker::getDouble (char * ident) {
   foreach_equation (eqn) {
     if (!strcmp (ident, eqn->result)) {
@@ -2235,12 +2236,14 @@ void checker::setDouble (char * ident, nr_double_t val) {
 
 /* The functions looks through the set of equations for a vector
    result and returns it.  If there is no such assignment, an empty
-   vector is returned. */ 
-vector checker::getVector (char * ident) {
+   vector is returned. */
+qucs::vector checker::getVector (char * ident) {
   foreach_equation (eqn) {
     if (!strcmp (ident, eqn->result)) {
       return eqn->getResultVector ();
     }
   }
-  return vector ();
+  return qucs::vector ();
 }
+
+} // namespace qucs
