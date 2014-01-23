@@ -22,6 +22,15 @@
  *
  */
 
+/** \file ecvs.h
+  * \brief The externally controlled voltage source component header file.
+  *
+  */
+
+/**
+  * \ingroup QucsInterface
+  */
+
 #ifndef __ECVS_H__
 #define __ECVS_H__
 

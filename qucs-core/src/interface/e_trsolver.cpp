@@ -22,6 +22,15 @@
  *
  */
 
+/** \file ecvs.h
+  * \brief The externally controlled transient solver implementation file.
+  *
+  */
+
+/**
+  * \ingroup QucsInterface
+  */
+
 #if HAVE_CONFIG_H
 # include <config.h>
 #endif
@@ -114,6 +123,10 @@ e_trsolver::e_trsolver (char * n)
 // Destructor deletes the e_trsolver class object.
 e_trsolver::~e_trsolver ()
 {
+
+    solve_post ();
+    if (progress) logprogressclear (40);
+
     deinitTR ();
 
     if (swp) delete swp;
@@ -143,13 +156,6 @@ e_trsolver::e_trsolver (e_trsolver & o)
     tHistory = o.tHistory ? new history (*o.tHistory) : NULL;
     relaxTSR = o.relaxTSR;
     initialDC = o.initialDC;
-}
-
-// This function creates the time sweep if necessary.
-void e_trsolver::initSteps (void)
-{
-    if (swp != NULL) delete swp;
-    swp = createSweep ("time");
 }
 
 void e_trsolver::debug()
@@ -220,10 +226,6 @@ int e_trsolver::init (nr_double_t start, nr_double_t firstdelta, int mode)
     setCalculation ((calculate_func_t) &calcTR);
     solve_pre ();
 
-    // Create time sweep if necessary.
-    //initSteps ();
-    //swp->reset ();
-
     // Recall the DC solution.
     recallSolution ();
 
@@ -247,6 +249,13 @@ int e_trsolver::init (nr_double_t start, nr_double_t firstdelta, int mode)
     else if (mode == ETR_MODE_SYNC)
     {
         //lastsynctime = start - delta;
+    }
+    else
+    {
+        qucs::exception * e = new qucs::exception (EXCEPTION_UNKNOWN_ETR_MODE);
+        e->setText ("Unknown ETR mode.");
+        throw_exception (e);
+        return -2;
     }
     fillState (dState, delta);
     adjustOrder (1);
@@ -844,21 +853,21 @@ void e_trsolver::updateHistoryAges (nr_double_t newage)
     }
 }
 
-int e_trsolver::finish()
-{
-    solve_post ();
-
-    if (progress) logprogressclear (40);
-
-    messagefcn (LOG_STATUS, "NOTIFY: %s: average time-step %g, %d rejections\n",
-              getName (), (double) (saveCurrent / statSteps), statRejected);
-    messagefcn (LOG_STATUS, "NOTIFY: %s: average NR-iterations %g, "
-              "%d non-convergences\n", getName (),
-              (double) statIterations / statSteps, statConvergence);
-
-    // cleanup
-    return 0;
-}
+//int e_trsolver::finish()
+//{
+//    solve_post ();
+//
+//    if (progress) logprogressclear (40);
+//
+//    messagefcn (LOG_STATUS, "NOTIFY: %s: average time-step %g, %d rejections\n",
+//              getName (), (double) (saveCurrent / statSteps), statRejected);
+//    messagefcn (LOG_STATUS, "NOTIFY: %s: average NR-iterations %g, "
+//              "%d non-convergences\n", getName (),
+//              (double) statIterations / statSteps, statConvergence);
+//
+//    // cleanup
+//    return 0;
+//}
 
 
 void e_trsolver::getsolution (double * lastsol)
@@ -1049,16 +1058,6 @@ void e_trsolver::truncateHistory (nr_double_t t)
     }
 }
 
-int e_trsolver::getN()
-{
-    return countNodes ();
-}
-
-int e_trsolver::getM()
-{
-    return countVoltageSources ();
-}
-
 int e_trsolver::getJacRows()
 {
     return A->getRows();
@@ -1069,9 +1068,9 @@ int e_trsolver::getJacCols()
     return A->getCols();
 }
 
-double e_trsolver::getJacData(int r, int c)
+void e_trsolver::getJacData(int r, int c, nr_double_t& data)
 {
-    return A->get(r,c);
+    data = A->get(r,c);
 }
 
 // properties

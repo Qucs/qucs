@@ -235,10 +235,10 @@ void diode::prepareDC (void) {
     else {
       int good = 0;
       tol = 1e-3 * Ibv;
-      Xbv = Bv - Ut * qucs::log (1 + Ibv / Is);
+      Xbv = Bv - Ut * std::log (1 + Ibv / Is);
       for (int i = 0; i < 25 ; i++) {
-	Xbv = Bv - Ut * qucs::log (Ibv / Is + 1 - Xbv / Ut);
-	Xibv = Is * (qucs::exp ((Bv - Xbv) / Ut) - 1 + Xbv / Ut);
+	Xbv = Bv - Ut * std::log (Ibv / Is + 1 - Xbv / Ut);
+	Xibv = Is * (std::exp ((Bv - Xbv) / Ut) - 1 + Xbv / Ut);
 	if (fabs (Xibv - Ibv) < tol) {
 	  Bv = Xbv;
 	  good = 1;
@@ -308,7 +308,7 @@ void diode::calcDC (void) {
     gd = +Is * 3 * a / Ud;
   }
   else { // middle region
-    nr_double_t a = qucs::exp (-(Bv + Ud) / N / Ut);
+    nr_double_t a = std::exp (-(Bv + Ud) / N / Ut);
     Id = -Is * a;
     gd = +Is * a / Ut / N;
   }
@@ -316,8 +316,8 @@ void diode::calcDC (void) {
   // knee current calculations
   if (Ikf != 0.0) {
     nr_double_t a = Ikf / (Ikf + Id);
-    gd *= 0.5 * (2 - Id * a / Ikf) * qucs::sqrt (a);
-    Id *= qucs::sqrt (a);
+    gd *= 0.5 * (2 - Id * a / Ikf) * std::sqrt (a);
+    Id *= std::sqrt (a);
   }
 
   Id += gtiny * Ud;

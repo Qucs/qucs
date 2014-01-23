@@ -46,12 +46,12 @@ void twistedpair::calcSP (nr_double_t frequency) {
   nr_complex_t g = nr_complex_t (alpha, beta);
   nr_double_t p = 2 * z0 + zl;
   nr_double_t n = 2 * z0 - zl;
-  nr_complex_t e = qucs::exp (2.0 * g * len);
+  nr_complex_t e = std::exp (2.0 * g * len);
   nr_complex_t d = p * p * e - n * n;
 
   nr_complex_t s11 = zl * (p * e + n) / d;
   nr_complex_t s14 = 1.0 - s11;
-  nr_complex_t s12 = 4.0 * zl * z0 * qucs::exp (g * len) / d;
+  nr_complex_t s12 = 4.0 * zl * z0 * std::exp (g * len) / d;
 
   setS (NODE_1, NODE_1, +s11); setS (NODE_2, NODE_2, +s11);
   setS (NODE_3, NODE_3, +s11); setS (NODE_4, NODE_4, +s11);
@@ -120,7 +120,7 @@ nr_double_t twistedpair::calcLoss (nr_double_t frequency) {
   // calculate conductor losses
   rout = d / 2;
   if (frequency > 0.0) {
-    delta = qucs::sqrt (rho / (M_PI * frequency * MU0 * mur));
+    delta = std::sqrt (rho / (M_PI * frequency * MU0 * mur));
     rin = rout - delta;
     if (rin < 0.0) rin = 0.0;
   }
@@ -129,7 +129,7 @@ nr_double_t twistedpair::calcLoss (nr_double_t frequency) {
 
   // calculate dielectric losses
   l0 = C0 / frequency;
-  ad = M_PI * tand * qucs::sqrt (ereff) / l0;
+  ad = M_PI * tand * std::sqrt (ereff) / l0;
 
   alpha = ac + ad;
   return alpha;
@@ -139,7 +139,7 @@ nr_double_t twistedpair::calcLength (void) {
   nr_double_t l  = getPropertyDouble ("L");
   nr_double_t T  = getPropertyDouble ("T");
   nr_double_t D  = getPropertyDouble ("D");
-  len = l * T * M_PI * D * qucs::sqrt (1 + 1 / sqr (T * M_PI * D));
+  len = l * T * M_PI * D * std::sqrt (1 + 1 / sqr (T * M_PI * D));
   return len;
 }
 
@@ -154,8 +154,8 @@ void twistedpair::calcPropagation (nr_double_t frequency) {
   q = 0.25 + 0.001 * p * p;  // soft PTFE
   q = 0.25 + 0.0004 * p * p; // usual
   ereff = 1.0 + q * (er - 1.0);
-  zl = Z0 / M_PI / qucs::sqrt (ereff) * acosh (D / d);
-  beta = 2 * M_PI * frequency / C0 * qucs::sqrt (ereff);
+  zl = Z0 / M_PI / std::sqrt (ereff) * std::acosh (D / d);
+  beta = 2 * M_PI * frequency / C0 * std::sqrt (ereff);
   angle = deg (p);
   alpha = calcLoss (frequency);
 }

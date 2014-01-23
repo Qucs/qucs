@@ -40,17 +40,17 @@ void tline4p::calcSP (nr_double_t frequency) {
   nr_double_t z = getPropertyDouble ("Z");
   nr_double_t a = getPropertyDouble ("Alpha");
   nr_double_t b = 2 * M_PI * frequency / C0;
-  a = qucs::log (a) / 2;
+  a = std::log (a) / 2;
 
   nr_complex_t g = nr_complex_t (a, b);
   nr_double_t p = 2 * z0 + z;
   nr_double_t n = 2 * z0 - z;
-  nr_complex_t e = qucs::exp (2.0 * g * l);
+  nr_complex_t e = std::exp (2.0 * g * l);
   nr_complex_t d = p * p * e - n * n;
 
   nr_complex_t s11 = z * (p * e + n) / d;
   nr_complex_t s14 = 1.0 - s11;
-  nr_complex_t s12 = 4.0 * z * z0 * qucs::exp (g * l) / d;
+  nr_complex_t s12 = 4.0 * z * z0 * std::exp (g * l) / d;
 
   setS (NODE_1, NODE_1, +s11); setS (NODE_2, NODE_2, +s11);
   setS (NODE_3, NODE_3, +s11); setS (NODE_4, NODE_4, +s11);
@@ -105,7 +105,7 @@ void tline4p::calcAC (nr_double_t frequency) {
   nr_double_t z = getPropertyDouble ("Z");
   nr_double_t a = getPropertyDouble ("Alpha");
   nr_double_t b = 2 * M_PI * frequency / C0;
-  a = qucs::log (a) / 2;
+  a = std::log (a) / 2;
   if (l != 0.0) {
     nr_complex_t g = nr_complex_t (a, b);
     nr_complex_t y11 = coth (g * l) / z;
@@ -148,10 +148,10 @@ void tline4p::calcTR (nr_double_t t) {
   nr_double_t a = getPropertyDouble ("Alpha");
   nr_double_t z = getPropertyDouble ("Z");
   nr_double_t T = l / C0;
-  a = qucs::log (a) / 2;
+  a = std::log (a) / 2;
   if (T > 0.0) {
     T = t - T;
-    a = qucs::exp (-a / 2 * l);
+    a = std::exp (-a / 2 * l);
     setE (VSRC_1, a * (getV (NODE_2, T) - getV (NODE_3, T) +
 		       z * getJ (VSRC_2, T)));
     setE (VSRC_2, a * (getV (NODE_1, T) - getV (NODE_4, T) +

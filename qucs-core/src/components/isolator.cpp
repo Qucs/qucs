@@ -44,7 +44,7 @@ void isolator::initSP (void) {
   setS (NODE_1, NODE_1, s1);
   setS (NODE_2, NODE_2, s2);
   setS (NODE_1, NODE_2, 0);
-  setS (NODE_2, NODE_1, qucs::sqrt (1 - s1 * s1) * qucs::sqrt (1 - s2 * s2));
+  setS (NODE_2, NODE_1, std::sqrt (1 - s1 * s1) * std::sqrt (1 - s2 * s2));
 }
 
 void isolator::calcNoiseSP (nr_double_t) {
@@ -54,8 +54,8 @@ void isolator::calcNoiseSP (nr_double_t) {
   nr_double_t r = (z0 - z1) / (z0 + z2);
   nr_double_t f = 4 * z0 / sqr (z1 + z0) * kelvin (T) / T0;
   setN (NODE_1, NODE_1, f * z1);
-  setN (NODE_1, NODE_2, f * qucs::sqrt (z1 * z2) * r);
-  setN (NODE_2, NODE_1, f * qucs::sqrt (z1 * z2) * r);
+  setN (NODE_1, NODE_2, f * std::sqrt (z1 * z2) * r);
+  setN (NODE_2, NODE_1, f * std::sqrt (z1 * z2) * r);
   setN (NODE_2, NODE_2, f * z2 * r * r);
 }
 
@@ -66,7 +66,7 @@ void isolator::calcNoiseAC (nr_double_t) {
   nr_double_t f = 4 * kelvin (T) / T0;
   setN (NODE_1, NODE_1, +f / z1);
   setN (NODE_1, NODE_2, 0);
-  setN (NODE_2, NODE_1, -f * 2 / qucs::sqrt (z1 * z2));
+  setN (NODE_2, NODE_1, -f * 2 / std::sqrt (z1 * z2));
   setN (NODE_2, NODE_2, +f / z2);
 }
 
@@ -74,7 +74,7 @@ void isolator::initDC (void) {
   nr_double_t z1 = getPropertyDouble ("Z1");
   nr_double_t z2 = getPropertyDouble ("Z2");
 #if AUGMENTED
-  nr_double_t z21 = 2 * qucs::sqrt (z1 * z2);
+  nr_double_t z21 = 2 * std::sqrt (z1 * z2);
   setVoltageSources (2);
   allocMatrixMNA ();
   setB (NODE_1, VSRC_1, +1.0); setB (NODE_1, VSRC_2, +0.0);
@@ -89,7 +89,7 @@ void isolator::initDC (void) {
   allocMatrixMNA ();
   setY (NODE_1, NODE_1, 1 / z1);
   setY (NODE_1, NODE_2, 0);
-  setY (NODE_2, NODE_1, -2 / qucs::sqrt (z1 * z2));
+  setY (NODE_2, NODE_1, -2 / std::sqrt (z1 * z2));
   setY (NODE_2, NODE_2, 1 / z2);
 #endif
 }

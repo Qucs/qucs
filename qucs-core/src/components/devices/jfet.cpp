@@ -151,7 +151,7 @@ void jfet::initModel (void) {
   // compute Beta temperature and area dependency
   nr_double_t Beta    = getPropertyDouble ("Beta");
   nr_double_t Betatce = getPropertyDouble ("Betatce");
-  Beta = Beta * qucs::exp (Betatce * DT * qucs::log (1.01));
+  Beta = Beta * std::exp (Betatce * DT * std::log (1.01));
   setScaledProperty ("Beta", Beta * A);
 
   // compute Rs and Rd area dependency

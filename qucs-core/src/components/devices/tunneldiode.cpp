@@ -64,13 +64,13 @@ void tunneldiode::calcId (nr_double_t U, nr_double_t& I, nr_double_t& G) {
   nr_double_t e = (eta - U) / de;
   nr_double_t b = e;
   if (e < 15.0)  // avoid numerical overflow
-    b = qucs::log (1.0 + qucs::exp ( e ));
+    b = std::log (1.0 + std::exp ( e ));
 
   // current
   I = b * a;
 
   // derivative
-  G = Q / dv / de / (1.0 + qucs::exp(-e)) * a - b * Q / dv / dW / (1.0 + sqr (U/dW));
+  G = Q / dv / de / (1.0 + std::exp(-e)) * a - b * Q / dv / dW / (1.0 + sqr (U/dW));
 }
 
 // Callback for DC analysis.
@@ -99,9 +99,9 @@ void tunneldiode::calcDC (void) {
 
   // thermal-ionic current
   nv *= T / Q;
-  nr_double_t c = A * Iv / qucs::sinh (Vv / nv);
-  Id += c * qucs::sinh (Ud / nv);
-  gd += c * qucs::cosh (Ud / nv) / nv;
+  nr_double_t c = A * Iv / std::sinh (Vv / nv);
+  Id += c * std::sinh (Ud / nv);
+  gd += c * std::cosh (Ud / nv) / nv;
 
   nr_double_t Ieq = Id - Ud * gd;
 

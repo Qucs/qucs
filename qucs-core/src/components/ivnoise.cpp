@@ -57,7 +57,7 @@ void ivnoise::calcNoiseSP (nr_double_t frequency) {
   nr_double_t k = a + c * pow (frequency, e);
   nr_double_t i1 = getPropertyDouble ("i1") / k / kB / T0;
   nr_double_t u2 = getPropertyDouble ("v2") / k / kB / T0;
-  nr_double_t ci = C * qucs::sqrt (i1 * u2) / 2;
+  nr_double_t ci = C * std::sqrt (i1 * u2) / 2;
 
   // entries of source 1
   setN (NODE_I1P, NODE_I1P, +i1 * z0); setN (NODE_I1N, NODE_I1N, +i1 * z0);
@@ -93,7 +93,7 @@ void ivnoise::calcNoiseAC (nr_double_t frequency) {
   nr_double_t k = a + c * pow (frequency, e);
   nr_double_t i1 = getPropertyDouble ("i1") / k / kB / T0;
   nr_double_t u2 = getPropertyDouble ("v2") / k / kB / T0;
-  nr_double_t ci = C * qucs::sqrt (i1 * u2);
+  nr_double_t ci = C * std::sqrt (i1 * u2);
   setN (NODE_I1P, NODE_I1P, +i1); setN (NODE_I1N, NODE_I1N, +i1);
   setN (NODE_I1P, NODE_I1N, -i1); setN (NODE_I1N, NODE_I1P, -i1);
   setN (NODE_5, NODE_I1P, ci);

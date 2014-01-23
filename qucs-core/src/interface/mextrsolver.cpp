@@ -1,7 +1,5 @@
 #include <string>
-//#include <qucs-core/qucs_typedefs.h>
 #include <qucs-core/qucs_interface.h>
-#include <qucs-core/e_trsolver.h>
 #include "mextrsolver.h"
 
 using namespace qucs;
@@ -18,8 +16,6 @@ void mextrsolvermessage(int level, const char* warningmsg, ...)
     mexPrintf("%s\n", warningmsg);
 }
 
-
-
 mextrsolver::mextrsolver()
 {
     //ctor
@@ -31,14 +27,9 @@ mextrsolver::~mextrsolver()
     //dtor
 }
 
-void mextrsolver::debug()
-{
-    thetrsolver->debug();
-}
-
 void mextrsolver::printx()
 {
-    thetrsolver->printx();
+    qtr.printSolution ();
 }
 
 int mextrsolver::prepare_netlist(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
@@ -66,22 +57,22 @@ int mextrsolver::prepare_netlist(int nlhs, mxArray *plhs[], int nrhs, const mxAr
                            "Input must be a row vector.");
 
     /* copy the string data from prhs[2] into a C string input_ buf.    */
-    input_buf = mxArrayToString(prhs[2]);
+    input_buf = mxArrayToString (prhs[2]);
 
     // call the prepare_netlist method with the input
-    notopened = thequcsint.prepare_netlist (input_buf);
+    notopened = qtr.prepare_netlist (input_buf);
 
     // get the pointer to the e_trsolver analysis
-    thetrsolver = (e_trsolver *)thequcsint.getETR();
+    qtr.getETR ();
 
-    if (thetrsolver == NULL)
+    if (qtr.getIsInitialised ())
     {
         notopened = 0;
     }
     else
     {
         // make the message function mextrsolvermessage
-        thetrsolver->messagefcn = &mextrsolvermessage;
+        qtr.messagefcn = &mextrsolvermessage;
     }
 
     plhs[0] = mxCreateDoubleMatrix( (mwSize)(1), (mwSize)(1), mxREAL);
@@ -97,13 +88,6 @@ int mextrsolver::prepare_netlist(int nlhs, mxArray *plhs[], int nrhs, const mxAr
         mexErrMsgIdAndTxt( "MATLAB:trsolver:inputNotVector",
                            "File could not be opened, or no transient analysis present.");
     }
-
-
-//    // Generate error if any regions are multiply defined
-//    // (i.e. tagged by more than one block label)
-//    if (theFPProc.bMultiplyDefinedLabels)
-//        mexErrMsgIdAndTxt( "MATLAB:fpproc:regionsmultiplydefined",
-//                           "Some regions in the problem have been defined by more than one block label.");
 
     return notopened;
 }
@@ -128,7 +112,7 @@ int mextrsolver::stepsolve_sync(int nlhs, mxArray *plhs[], int nrhs, const mxArr
 
     double synctime = mxGetScalar(prhs[2]);
 
-    thetrsolver->stepsolve_sync(synctime);
+    qtr.stepsolve_sync(synctime);
 
     return 0;
 }
@@ -145,7 +129,7 @@ void mextrsolver::acceptstep_sync(int nlhs, mxArray *plhs[], int nrhs, const mxA
                            "Too many output arguments.");
 
 
-    thetrsolver->acceptstep_sync();
+    qtr.acceptstep_sync();
 }
 
 
@@ -169,7 +153,7 @@ int mextrsolver::stepsolve_async(int nlhs, mxArray *plhs[], int nrhs, const mxAr
 
     double synctime = mxGetScalar(prhs[2]);
 
-    thetrsolver->stepsolve_async(synctime);
+    qtr.stepsolve_async(synctime);
 
     return 0;
 }
@@ -186,7 +170,7 @@ void mextrsolver::acceptstep_async(int nlhs, mxArray *plhs[], int nrhs, const mx
                            "Too many output arguments.");
 
 
-    thetrsolver->acceptstep_async();
+    qtr.acceptstep_async();
 }
 
 void mextrsolver::rejectstep_async(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
@@ -200,7 +184,7 @@ void mextrsolver::rejectstep_async(int nlhs, mxArray *plhs[], int nrhs, const mx
                            "Too many output arguments.");
 
 
-    thetrsolver->rejectstep_async();
+    qtr.rejectstep_async();
 }
 
 // gets the last solution calculated by the solver
@@ -218,9 +202,9 @@ int mextrsolver::getsolution(int nlhs, mxArray *plhs[], int nrhs, const mxArray 
                            "Too many output arguments.");
 
 
-    xN = thetrsolver->getN();
-    xM = thetrsolver->getM();
-    
+    xN = qtr.getN();
+    xM = qtr.getM();
+
     //mexPrintf("%d %d\n", xN, xM);
 
     if (xN <= 0)
@@ -236,7 +220,7 @@ int mextrsolver::getsolution(int nlhs, mxArray *plhs[], int nrhs, const mxArray 
     outpointer = mxGetPr(plhs[0]);
 
     // copy the data into the array
-    thetrsolver->getsolution(outpointer);
+    qtr.getsolution(outpointer);
 
     // copy the number of nodal voltages and branch currents
     plhs[1] = mxCreateDoubleMatrix( (mwSize)(1), (mwSize)(2), mxREAL);
@@ -272,7 +256,7 @@ void mextrsolver::init_sync(int nlhs, mxArray *plhs[], int nrhs, const mxArray *
 
     start = mxGetScalar(prhs[2]);
 
-    thetrsolver->init(start, 1e-6, ETR_MODE_SYNC);
+    qtr.init(start, 1e-6, ETR_MODE_SYNC);
 }
 
 void mextrsolver::init_async(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
@@ -303,7 +287,7 @@ void mextrsolver::init_async(int nlhs, mxArray *plhs[], int nrhs, const mxArray 
 
     firstdelta = mxGetScalar(prhs[3]);
 
-    thetrsolver->init(start, firstdelta, ETR_MODE_ASYNC);
+    qtr.init(start, firstdelta, ETR_MODE_ASYNC);
 }
 
 
@@ -321,8 +305,8 @@ int mextrsolver::getN(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[]
                            "Too many output arguments.");
 
 
-    int xN = thetrsolver->getN();
-    
+    int xN = qtr.getN();
+
     // copy the solution
     plhs[0] = mxCreateDoubleMatrix( (mwSize)(1), (mwSize)(1), mxREAL);
 
@@ -347,8 +331,8 @@ int mextrsolver::getM(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[]
                            "Too many output arguments.");
 
 
-    int xM = thetrsolver->getM();
-    
+    int xM = qtr.getM();
+
     // copy the solution
     plhs[0] = mxCreateDoubleMatrix( (mwSize)(1), (mwSize)(1), mxREAL);
 
@@ -357,7 +341,7 @@ int mextrsolver::getM(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[]
 
     // copy the data into the array
     outpointer[0] = (double)xM;
-    
+
 }
 
 void mextrsolver::getJac(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
@@ -372,8 +356,8 @@ void mextrsolver::getJac(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prh
         mexErrMsgIdAndTxt( "MATLAB:trsolver:maxlhs",
                            "Too many output arguments.");
 
-    int jrows = thetrsolver->getJacRows();
-    int jcols = thetrsolver->getJacCols();
+    int jrows = qtr.getJacRows();
+    int jcols = qtr.getJacCols();
 
     // copy the solution
     plhs[0] = mxCreateDoubleMatrix( (mwSize)(jrows), (mwSize)(jcols), mxREAL);
@@ -386,7 +370,7 @@ void mextrsolver::getJac(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prh
     {
         for(int r = 0; r < jrows; r++)
         {
-            outpointer[(c*jrows)+r] = (double)thetrsolver->getJacData(r, c);
+            outpointer[(c*jrows)+r] = (double)qtr.getJacData(r, c);
         }
     }
 

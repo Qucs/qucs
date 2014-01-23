@@ -69,7 +69,7 @@ void vac::calcTR (nr_double_t t) {
   nr_double_t s = getNet()->getSrcFactor ();
   nr_double_t o = 2 * M_PI * f;
   nr_double_t T = p / f / 360;
-  nr_double_t u = s * a * qucs::exp (-(t + T) * d * f) * qucs::sin (o * t + rad (p));
+  nr_double_t u = s * a * std::exp (-(t + T) * d * f) * std::sin (o * t + rad (p));
   setE (VSRC_1, u);
 }
 

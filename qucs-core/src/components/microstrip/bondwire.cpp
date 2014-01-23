@@ -142,7 +142,7 @@ void bondwire::getProperties (void) {
  */
 static nr_double_t skindepth (const nr_double_t f,
 			      const nr_double_t rho, const nr_double_t mur) {
-  return qucs::sqrt (rho / (M_PI * f * MU0 * mur));
+  return std::sqrt (rho / (M_PI * f * MU0 * mur));
 }
 
 /*! Compute resitance of the wire.
@@ -207,7 +207,7 @@ static nr_double_t correctionfactor (const nr_double_t f,
     if (delta / d < 1e-2)
       return delta / d;
     else
-      return (mur / 4) * qucs::tanh ((4 * delta) / d);
+      return (mur / 4) * std::tanh ((4 * delta) / d);
   }
   return mur / 4;
 }
@@ -256,8 +256,8 @@ nr_double_t bondwire::Lfreespace (const nr_double_t f) const {
   nr_double_t d2l = d / (2.0 * l);
   nr_double_t tmp;
 
-  tmp = qucs::log (_2ld + qucs::sqrt (1 + _2ld * _2ld));
-  tmp += d2l - qucs::sqrt (1 + d2l * d2l);
+  tmp = std::log (_2ld + std::sqrt (1 + _2ld * _2ld));
+  tmp += d2l - std::sqrt (1 + d2l * d2l);
   tmp += correctionfactor (f, d, rho, mur);
 
   return MU0 * (M_1_PI / 2) * l * tmp;
@@ -298,10 +298,10 @@ nr_double_t bondwire::Lmirror (void) const {
   nr_double_t tmp;
 
   /* compute \$\ln \frac{l+\sqrt{l^2+d^2/4}}{l+\sqrt{l^2+4h^2}}\$ */
-  tmp  = qucs::log ((l + qucs::sqrt (l * l + d * d / 4)) / (l + qucs::sqrt (l * l + 4 * h * h)));
-  tmp += qucs::log (4 * h / d);
-  tmp += qucs::sqrt (1 + 4 * h * h / (l * l));
-  tmp -= qucs::sqrt (1 + d * d / (4 * l * l));
+  tmp  = std::log ((l + std::sqrt (l * l + d * d / 4)) / (l + std::sqrt (l * l + 4 * h * h)));
+  tmp += std::log (4 * h / d);
+  tmp += std::sqrt (1 + 4 * h * h / (l * l));
+  tmp -= std::sqrt (1 + d * d / (4 * l * l));
   tmp -= 2 * h / l;
   tmp += d / (2 * l);
 

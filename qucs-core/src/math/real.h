@@ -34,9 +34,7 @@ nr_double_t   real (const nr_double_t);
 nr_double_t   imag (const nr_double_t);
 nr_double_t   norm (const nr_double_t);
 nr_double_t   conj (const nr_double_t);
-//#ifndef HAVE_COMPLEX
 nr_double_t   abs (const nr_double_t);
-//#endif
 
 /*!\brief Square a value
 
@@ -65,22 +63,12 @@ nr_double_t   sinc (const nr_double_t);
 nr_double_t    fix (const nr_double_t);
 nr_double_t   step (const nr_double_t);
 
-#ifndef HAVE_ROUND
+// functions introduced in C++ 11
 nr_double_t  round (const nr_double_t);
-#else
-inline nr_double_t  round (const nr_double_t d) {
-  return ::round (d);
-}
-#endif
-#ifndef HAVE_TRUNC
 nr_double_t  trunc (const nr_double_t);
-#endif
-#ifndef HAVE_ACOSH
 nr_double_t  acosh (const nr_double_t);
-#endif
-#ifndef HAVE_ASINH
 nr_double_t  asinh (const nr_double_t);
-#endif
+
 
 inline nr_double_t coth (const nr_double_t d) {
   return 1.0 / std::tanh (d);
@@ -89,7 +77,11 @@ inline nr_double_t coth (const nr_double_t d) {
 // more extra math functions
 unsigned int factorial (unsigned int);
 
-// std functions
+
+// std functions, these are provided here primarily for the use in the
+// macros in evaluate.cpp, where it is much easier if there is a version
+// in the qucs namespace. In general, throughout the sources, the std
+// function should be used directly
 inline nr_double_t sqrt (const nr_double_t d)
 {
     return std::sqrt (d);

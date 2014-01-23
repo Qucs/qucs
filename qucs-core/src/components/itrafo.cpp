@@ -40,12 +40,12 @@ void itrafo::initSP (void) {
   nr_double_t z = getPropertyDouble ("Z");
   nr_double_t n = 2 * z0 + z;
   setS (NODE_1, NODE_1,  (2.0 * z0 - z) / n);
-  setS (NODE_1, NODE_2,  (2.0 * qucs::sqrt (z0 * z)) / n);
-  setS (NODE_1, NODE_3, -(2.0 * qucs::sqrt (z0 * z)) / n);
-  setS (NODE_2, NODE_1,  (2.0 * qucs::sqrt (z0 * z)) / n);
+  setS (NODE_1, NODE_2,  (2.0 * std::sqrt (z0 * z)) / n);
+  setS (NODE_1, NODE_3, -(2.0 * std::sqrt (z0 * z)) / n);
+  setS (NODE_2, NODE_1,  (2.0 * std::sqrt (z0 * z)) / n);
   setS (NODE_2, NODE_2,  (z) / n);
   setS (NODE_2, NODE_3,  (2.0 * z0) / n);
-  setS (NODE_3, NODE_1, -(2.0 * qucs::sqrt (z0 * z)) / n);
+  setS (NODE_3, NODE_1, -(2.0 * std::sqrt (z0 * z)) / n);
   setS (NODE_3, NODE_2,  (2.0 * z0) / n);
   setS (NODE_3, NODE_3,  (z) / n);
 }

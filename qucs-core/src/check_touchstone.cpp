@@ -103,7 +103,7 @@ static int touchstone_vector_check (void) {
     even = 1;
   }
   /* first line determines the number of expected ports */
-  touchstone_options.ports = (int) qucs::sqrt ((size - 1) / 2.0);
+  touchstone_options.ports = (int) std::sqrt ((size - 1) / 2.0);
 
   /* check first frequency value */
   if (f < 0.0) {

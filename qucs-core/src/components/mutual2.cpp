@@ -51,9 +51,9 @@ matrix mutual2::calcMatrixY (nr_double_t frequency) {
   nr_complex_t y11 = nr_complex_t (0, (k23 * k23 - 1) / l1 / a / o);
   nr_complex_t y22 = nr_complex_t (0, (k12 * k12 - 1) / l3 / a / o);
   nr_complex_t y44 = nr_complex_t (0, (k13 * k13 - 1) / l2 / a / o);
-  nr_complex_t y12 = nr_complex_t (0, (k13 - k12 * k23) / qucs::sqrt (l1 * l3) / a / o);
-  nr_complex_t y15 = nr_complex_t (0, (k12 - k13 * k23) / qucs::sqrt (l1 * l2) / a / o);
-  nr_complex_t y25 = nr_complex_t (0, (k23 - k12 * k13) / qucs::sqrt (l2 * l3) / a / o);
+  nr_complex_t y12 = nr_complex_t (0, (k13 - k12 * k23) / std::sqrt (l1 * l3) / a / o);
+  nr_complex_t y15 = nr_complex_t (0, (k12 - k13 * k23) / std::sqrt (l1 * l2) / a / o);
+  nr_complex_t y25 = nr_complex_t (0, (k23 - k12 * k13) / std::sqrt (l2 * l3) / a / o);
 
   matrix y = matrix (6);
   y.set (NODE_1, NODE_1, +y11); y.set (NODE_6, NODE_6, +y11);
@@ -125,9 +125,9 @@ void mutual2::calcTR (nr_double_t) {
   nr_double_t l1  = getPropertyDouble ("L1");
   nr_double_t l2  = getPropertyDouble ("L2");
   nr_double_t l3  = getPropertyDouble ("L3");
-  nr_double_t M12 = k12 * qucs::sqrt (l1 * l2);
-  nr_double_t M13 = k13 * qucs::sqrt (l1 * l3);
-  nr_double_t M23 = k23 * qucs::sqrt (l2 * l3);
+  nr_double_t M12 = k12 * std::sqrt (l1 * l2);
+  nr_double_t M13 = k13 * std::sqrt (l1 * l3);
+  nr_double_t M23 = k23 * std::sqrt (l2 * l3);
   nr_double_t r11, r12, r13, r21, r22, r23, r31, r32, r33;
   nr_double_t v11, v12, v13, v21, v22, v23, v31, v32, v33;
   nr_double_t i1 = real (getJ (VSRC_1));

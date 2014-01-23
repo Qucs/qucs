@@ -22,6 +22,15 @@
  *
  */
 
+/** \file ecvs.h
+  * \brief The externally controlled voltage source component implementation file.
+  *
+  */
+
+/**
+  * \ingroup QucsInterface
+  */
+
 #if HAVE_CONFIG_H
 # include <config.h>
 #endif

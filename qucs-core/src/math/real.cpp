@@ -35,29 +35,43 @@
 
 namespace qucs {
 
-#ifndef HAVE_ROUND
+
 nr_double_t round (const nr_double_t arg) {
+// std::round was introduced in C++11
+#ifndef HAVE_ROUND
   return (arg > 0) ? floor (arg + 0.5) : ceil (arg - 0.5);
-}
+#else
+  return std::round (arg);
 #endif /* HAVE_ROUND */
+}
 
-#ifndef HAVE_TRUNC
 nr_double_t trunc (const double arg) {
+// std::trunc was introduced in C++11
+#ifndef HAVE_TRUNC
   return arg > 0 ? floor (arg) : floor (arg + 1);
-}
+#else
+  return std::trunc (arg);
 #endif /* HAVE_TRUNC */
+}
 
-#ifndef HAVE_ACOSH
 nr_double_t acosh (const double arg) {
+// std::acosh was introduced in C++11
+#ifndef HAVE_ACOSH
   return log (arg + sqrt (arg * arg - 1.0));
-}
+#else
+  return std::acosh (arg);
 #endif /* HAVE_ACOSH */
-
-#ifndef HAVE_ASINH
-nr_double_t asinh (const double arg) {
-  return log (arg + sqrt (arg * arg + 1.0));
 }
+
+nr_double_t asinh (const double arg) {
+// std::asinh was introduced in C++11
+#ifndef HAVE_ASINH
+  return log (arg + sqrt (arg * arg + 1.0));
+#else
+  return std::asinh (arg);
 #endif /* HAVE_ASINH */
+}
+
 
 /*!\brief Compute factorial n ie \$n!\$
 

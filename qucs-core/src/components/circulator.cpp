@@ -47,17 +47,17 @@ void circulator::calcSP (nr_double_t) {
   setS (NODE_1, NODE_1, (r2 * r3 - r1) / d);
   setS (NODE_2, NODE_2, (r1 * r3 - r2) / d);
   setS (NODE_3, NODE_3, (r1 * r2 - r3) / d);
-  setS (NODE_1, NODE_2, qucs::sqrt (z2 / z1) * (z1 + z0) /
+  setS (NODE_1, NODE_2, std::sqrt (z2 / z1) * (z1 + z0) /
 	(z2 + z0) * r3 * (1 - r1 * r1) / d);
-  setS (NODE_2, NODE_3, qucs::sqrt (z3 / z2) * (z2 + z0) /
+  setS (NODE_2, NODE_3, std::sqrt (z3 / z2) * (z2 + z0) /
 	(z3 + z0) * r1 * (1 - r2 * r2) / d);
-  setS (NODE_3, NODE_1, qucs::sqrt (z1 / z3) * (z3 + z0) /
+  setS (NODE_3, NODE_1, std::sqrt (z1 / z3) * (z3 + z0) /
 	(z1 + z0) * r2 * (1 - r3 * r3) / d);
-  setS (NODE_2, NODE_1, qucs::sqrt (z1 / z2) * (z2 + z0) /
+  setS (NODE_2, NODE_1, std::sqrt (z1 / z2) * (z2 + z0) /
 	(z1 + z0) * (1 - r2 * r2) / d);
-  setS (NODE_1, NODE_3, qucs::sqrt (z3 / z1) * (z1 + z0) /
+  setS (NODE_1, NODE_3, std::sqrt (z3 / z1) * (z1 + z0) /
 	(z3 + z0) * (1 - r1 * r1) / d);
-  setS (NODE_3, NODE_2, qucs::sqrt (z2 / z3) * (z3 + z0) /
+  setS (NODE_3, NODE_2, std::sqrt (z2 / z3) * (z3 + z0) /
 	(z2 + z0) * (1 - r3 * r3) / d);
 }
 
@@ -73,12 +73,12 @@ void circulator::initDC (void) {
   nr_double_t s11 = (r2 * r3 - r1) / d;
   nr_double_t s22 = (r1 * r3 - r2) / d;
   nr_double_t s33 = (r1 * r2 - r3) / d;
-  nr_double_t s12 = qucs::sqrt (z2/z1) * (z1+z0) / (z2+z0) * r3 * (1-r1*r1) / d;
-  nr_double_t s23 = qucs::sqrt (z3/z2) * (z2+z0) / (z3+z0) * r1 * (1-r2*r2) / d;
-  nr_double_t s31 = qucs::sqrt (z1/z3) * (z3+z0) / (z1+z0) * r2 * (1-r3*r3) / d;
-  nr_double_t s21 = qucs::sqrt (z1/z2) * (z2+z0) / (z1+z0) * (1-r2*r2) / d;
-  nr_double_t s13 = qucs::sqrt (z3/z1) * (z1+z0) / (z3+z0) * (1-r1*r1) / d;
-  nr_double_t s32 = qucs::sqrt (z2/z3) * (z3+z0) / (z2+z0) * (1-r3*r3) / d;
+  nr_double_t s12 = std::sqrt (z2/z1) * (z1+z0) / (z2+z0) * r3 * (1-r1*r1) / d;
+  nr_double_t s23 = std::sqrt (z3/z2) * (z2+z0) / (z3+z0) * r1 * (1-r2*r2) / d;
+  nr_double_t s31 = std::sqrt (z1/z3) * (z3+z0) / (z1+z0) * r2 * (1-r3*r3) / d;
+  nr_double_t s21 = std::sqrt (z1/z2) * (z2+z0) / (z1+z0) * (1-r2*r2) / d;
+  nr_double_t s13 = std::sqrt (z3/z1) * (z1+z0) / (z3+z0) * (1-r1*r1) / d;
+  nr_double_t s32 = std::sqrt (z2/z3) * (z3+z0) / (z2+z0) * (1-r3*r3) / d;
 
   allocMatrixMNA ();
 

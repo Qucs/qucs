@@ -79,20 +79,20 @@ void diac::calcTheModel (bool last) {
   if (isOn)
     Ut = N * kelvin (T) * kBoverQ;
   else
-    Ut  = Ubo / qucs::log (Ibo / Is);
+    Ut  = Ubo / std::log (Ibo / Is);
 
   Vd = Ud = real (getV (NODE_IN) - getV (NODE_A2));
   Ud = fabs (Ud) / Ut;
   Id = sign (Vd) * Is;
 
   if (Ud >= 80.0) {
-    Id *= qucs::exp (80.0) * (1.0 + Ud - 80.0) - 1.0;
+    Id *= std::exp (80.0) * (1.0 + Ud - 80.0) - 1.0;
     Ud  = 80.0;
   }
   else
-    Id *= qucs::exp (Ud) - 1.0;
+    Id *= std::exp (Ud) - 1.0;
 
-  gd  = Is / Ut * qucs::exp (Ud);
+  gd  = Is / Ut * std::exp (Ud);
   Ieq = Id - Vd * gd;
 
   // fill in I-Vector

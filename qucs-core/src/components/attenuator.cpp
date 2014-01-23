@@ -41,7 +41,7 @@ void attenuator::initSP (void) {
   nr_double_t z = getPropertyDouble ("Zref");
   nr_double_t r = (z - z0) / (z + z0);
   nr_double_t s11 = r * (1 - a) / (a - r * r);
-  nr_double_t s21 = qucs::sqrt (a) * (1 - r * r) / (a - r * r);
+  nr_double_t s21 = std::sqrt (a) * (1 - r * r) / (a - r * r);
   setS (NODE_1, NODE_1, s11);
   setS (NODE_2, NODE_2, s11);
   setS (NODE_1, NODE_2, s21);
@@ -56,8 +56,8 @@ void attenuator::calcNoiseSP (nr_double_t) {
   nr_double_t f = (l - 1) * (r * r - 1) / sqr (l - r * r) * kelvin (T) / T0;
   setN (NODE_1, NODE_1, -f * (r * r + l));
   setN (NODE_2, NODE_2, -f * (r * r + l));
-  setN (NODE_1, NODE_2, +f * 2 * r * qucs::sqrt (l));
-  setN (NODE_2, NODE_1, +f * 2 * r * qucs::sqrt (l));
+  setN (NODE_1, NODE_2, +f * 2 * r * std::sqrt (l));
+  setN (NODE_2, NODE_1, +f * 2 * r * std::sqrt (l));
 }
 
 void attenuator::calcNoiseAC (nr_double_t) {
@@ -67,8 +67,8 @@ void attenuator::calcNoiseAC (nr_double_t) {
   nr_double_t f = 4.0 * kelvin (T) / T0 / z / (l - 1);
   setN (NODE_1, NODE_1, +f * (l + 1));
   setN (NODE_2, NODE_2, +f * (l + 1));
-  setN (NODE_1, NODE_2, -f * 2 * qucs::sqrt (l));
-  setN (NODE_2, NODE_1, -f * 2 * qucs::sqrt (l));
+  setN (NODE_1, NODE_2, -f * 2 * std::sqrt (l));
+  setN (NODE_2, NODE_1, -f * 2 * std::sqrt (l));
 }
 
 void attenuator::initDC (void) {
@@ -84,7 +84,7 @@ void attenuator::initDC (void) {
     allocMatrixMNA ();
     nr_double_t zref = getPropertyDouble ("Zref");
     nr_double_t z11 = zref * (a + 1) / (a - 1);
-    nr_double_t z21 = zref * (qucs::sqrt (a) * 2) / (a - 1);
+    nr_double_t z21 = zref * (std::sqrt (a) * 2) / (a - 1);
     setB (NODE_1, VSRC_1, +1.0); setB (NODE_1, VSRC_2, +0.0);
     setB (NODE_2, VSRC_1, +0.0); setB (NODE_2, VSRC_2, +1.0);
     setC (VSRC_1, NODE_1, -1.0); setC (VSRC_1, NODE_2, +0.0);
@@ -102,8 +102,8 @@ void attenuator::initDC (void) {
     nr_double_t f = 1 / z / (a - 1);
     setY (NODE_1, NODE_1, f * (a + 1));
     setY (NODE_2, NODE_2, f * (a + 1));
-    setY (NODE_1, NODE_2, -f * 2 * qucs::sqrt (a));
-    setY (NODE_2, NODE_1, -f * 2 * qucs::sqrt (a));
+    setY (NODE_1, NODE_2, -f * 2 * std::sqrt (a));
+    setY (NODE_2, NODE_1, -f * 2 * std::sqrt (a));
   }
 #endif
 }
@@ -123,7 +123,7 @@ void attenuator::initAC (void) {
     allocMatrixMNA ();
     nr_double_t zref = getPropertyDouble ("Zref");
     nr_double_t z11 = zref * (a + 1) / (a - 1);
-    nr_double_t z21 = zref * (qucs::sqrt (a) * 2) / (a - 1);
+    nr_double_t z21 = zref * (std::sqrt (a) * 2) / (a - 1);
 
     // build Z-parameter matrix and convert it to Y-parameters
     matrix z (2);
@@ -139,8 +139,8 @@ void attenuator::initAC (void) {
     nr_double_t f = 1 / z / (a - 1);
     setY (NODE_1, NODE_1, f * (a + 1));
     setY (NODE_2, NODE_2, f * (a + 1));
-    setY (NODE_1, NODE_2, -f * 2 * qucs::sqrt (a));
-    setY (NODE_2, NODE_1, -f * 2 * qucs::sqrt (a));
+    setY (NODE_1, NODE_2, -f * 2 * std::sqrt (a));
+    setY (NODE_2, NODE_1, -f * 2 * std::sqrt (a));
   }
 #endif
 }

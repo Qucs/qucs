@@ -1429,4 +1429,19 @@ char * nasolver<nr_type_t>::createI (int n, const char * amps, int saveOPs)
     return text;
 }
 
+
+/* Alternaive to countNodes () */
+template <class nr_type_t>
+int nasolver<nr_type_t>::getN()
+{
+    return countNodes ();
+}
+
+/* Alternative to countVoltageSources () */
+template <class nr_type_t>
+int nasolver<nr_type_t>::getM()
+{
+    return countVoltageSources ();
+}
+
 } // namespace qucs

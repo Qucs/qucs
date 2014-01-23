@@ -42,8 +42,8 @@ hybrid::hybrid () : circuit (4) {
 void hybrid::initSP (void) {
 
   nr_complex_t p = qucs::polar (1.0, rad (getPropertyDouble ("phi")));
-  //nr_double_t  k = qucs::sqrt(1-pow((1/M_SQRT2),2));
-  nr_double_t  k = (1/M_SQRT2); //last line reduces to this for 1/qucs::sqrt(2)
+  //nr_double_t  k = std::sqrt(1-pow((1/M_SQRT2),2));
+  nr_double_t  k = (1/M_SQRT2); //last line reduces to this for 1/std::sqrt(2)
 
   allocMatrixS ();
 //S11 = S22 = S33 = S44 = 0
@@ -52,7 +52,7 @@ void hybrid::initSP (void) {
 //S14 = S23 = S32 = S41 = 0
   setS (NODE_1, NODE_4, 0.0); setS (NODE_2, NODE_3, 0.0);
   setS (NODE_3, NODE_2, 0.0); setS (NODE_4, NODE_1, 0.0);
-//S12 = S21 = S34 = S43 = qucs::sqrt(1-k^2)
+//S12 = S21 = S34 = S43 = std::sqrt(1-k^2)
   setS (NODE_1, NODE_2, k); setS (NODE_2, NODE_1, k);
   setS (NODE_3, NODE_4, k); setS (NODE_4, NODE_3, k);
 //S13 = S31 = S24 = S42 = k*exp(j * p)
@@ -73,7 +73,7 @@ void hybrid::initAC (void) {
     nr_double_t  k = 1 / M_SQRT2;
     nr_complex_t y;
     nr_complex_t A = k*k*(nr_complex_t(1,0)+qucs::polar(1.0, 2.0*rad (getPropertyDouble ("phi"))));
-    nr_double_t B  = 2 * qucs::sqrt(1-(k*k));
+    nr_double_t B  = 2 * std::sqrt(1-(k*k));
     nr_complex_t C = qucs::polar (2*k, rad (getPropertyDouble ("phi")));
     nr_complex_t D = getPropertyDouble ("Zref") * ((A*A)-(C*C));
 

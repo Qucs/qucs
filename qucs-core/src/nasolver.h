@@ -73,6 +73,12 @@ public:
     }
     const char * getHelperDescription (void);
 
+    //interface convenience functions
+    /// Returns the number of node voltages in the circuit.
+    int getN ();
+    /// Returns the number of branch currents in the circuit.
+    int getM ();
+
 protected:
     void restartNR (void);
     void savePreviousIteration (void);

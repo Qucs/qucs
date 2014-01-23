@@ -72,7 +72,7 @@ void triac::calcTheModel (bool last) {
   nr_double_t Ut, Ud_bo, Ieq, Vd;
 
   Ut = N * kelvin (T) * kBoverQ;
-  Ud_bo = qucs::log (Ibo / Is + 1.0);
+  Ud_bo = std::log (Ibo / Is + 1.0);
 
   Vd = Ud = real (getV (NODE_IN) - getV (NODE_A2));
   Id = sign (Ud) * Is;
@@ -85,13 +85,13 @@ void triac::calcTheModel (bool last) {
     isOn = Ud > Ud_bo;
 
   if (Ud >= 80.0) {
-    Id *= qucs::exp (80.0) * (1.0 + Ud - 80.0) - 1.0;
+    Id *= std::exp (80.0) * (1.0 + Ud - 80.0) - 1.0;
     Ud  = 80.0;
   }
   else
-    Id *= qucs::exp (Ud) - 1.0;
+    Id *= std::exp (Ud) - 1.0;
 
-  gd  = Is / Ut * qucs::exp (Ud);
+  gd  = Is / Ut * std::exp (Ud);
   Ieq = Id - Vd * gd;
 
   // fill in I-Vector
@@ -101,19 +101,19 @@ void triac::calcTheModel (bool last) {
   setI (NODE_GA, +0.0);
 
   if (!isOn) {
-    Ut = Ubo / qucs::log (Ibo / Is);
+    Ut = Ubo / std::log (Ibo / Is);
     Vd = Ud = real (getV (NODE_A1) - getV (NODE_IN));
     Id = sign (Ud) * Is;
     Ud = fabs (Ud) / Ut;
 
     if (Ud >= 80.0) {
-      Id *= qucs::exp (80.0) * (1.0 + Ud - 80.0) - 1.0;
+      Id *= std::exp (80.0) * (1.0 + Ud - 80.0) - 1.0;
       Ud  = 80.0;
     }
     else
-      Id *= qucs::exp (Ud) - 1.0;
+      Id *= std::exp (Ud) - 1.0;
 
-    gi  = Is / Ut * qucs::exp (Ud);
+    gi  = Is / Ut * std::exp (Ud);
     Ieq = Id - Vd * gi;
     addI (NODE_A1, -Ieq);
     addI (NODE_IN, +Ieq);

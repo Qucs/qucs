@@ -22,15 +22,21 @@
  *
  */
 
+/** \file e_trsolver.h
+  * \brief The externally controlled trsolver external class header file.
+  *
+  */
+
+/**
+  * \ingroup QucsInterface
+  */
 
 #ifndef __E_TRSOLVER_H__
 #define __E_TRSOLVER_H__
 
+#include "qucs_interface.h"
 #include "trsolver.h"
 #include <vector>
-
-#define ETR_MODE_ASYNC 0
-#define ETR_MODE_SYNC 1
 
 namespace qucs {
 
@@ -56,18 +62,16 @@ public:
     ~e_trsolver ();
 
     int init (nr_double_t, nr_double_t, int);
-    int finish ();
+//    int finish ();
     bool isExternal() { return true; };
 
 public:
-    void initSteps (void);
-    void initETR (nr_double_t start, nr_double_t, int);
+
     int stepsolve_sync (nr_double_t synctime);
     void acceptstep_sync (void);
     int stepsolve_async (nr_double_t steptime);
     void acceptstep_async (void);
     void rejectstep_async (void);
-    void truncateHistory (nr_double_t);
     void getsolution (double *);
 
     /** \brief Sets the voltage of an exterally controlled voltage source.
@@ -94,12 +98,6 @@ public:
       */
     int setECVSVoltage(char * ecvsname, nr_double_t V);
 
-    /// Returns the number of node voltages in the circuit.
-    int getN ();
-
-    /// Returns the number of branch currents in the circuit.
-    int getM ();
-
     /// Returns the number of rows in the Jacobian matrix for the circuit
     int getJacRows ();
 
@@ -112,7 +110,7 @@ public:
       * \return The Jacobian matrix data at the specified location.
       *
       */
-    double getJacData (int r, int c);
+    void getJacData (int r, int c, nr_double_t& data);
 
     /** \brief Obtains the voltage of a node by name
       * \param label Pointer to character array containing the name of the voltage
@@ -183,6 +181,8 @@ private:
     int rejected;
     int convError;
 
+    void initETR (nr_double_t start, nr_double_t, int);
+    void truncateHistory (nr_double_t);
     void updateExternalInterpTime(nr_double_t);
     void storeHistoryAges (void);
     void updateHistoryAges(nr_double_t);

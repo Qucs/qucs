@@ -67,7 +67,7 @@ void amplifier::initSP (void) {
   setS (NODE_1, NODE_1, (z1 - z0) / (z1 + z0));
   setS (NODE_1, NODE_2, 0);
   setS (NODE_2, NODE_2, (z2 - z0) / (z2 + z0));
-  setS (NODE_2, NODE_1, 4 * z0 * qucs::sqrt (z1 * z2) * g / (z1 + z0) / (z2 + z0));
+  setS (NODE_2, NODE_1, 4 * z0 * std::sqrt (z1 * z2) * g / (z1 + z0) / (z2 + z0));
 }
 
 void amplifier::calcNoiseSP (nr_double_t) {
@@ -101,7 +101,7 @@ void amplifier::initDC (void) {
 
   setY (NODE_1, NODE_1, 1 / z1);
   setY (NODE_1, NODE_2, 0);
-  setY (NODE_2, NODE_1, -2 * g / qucs::sqrt (z1 * z2));
+  setY (NODE_2, NODE_1, -2 * g / std::sqrt (z1 * z2));
   setY (NODE_2, NODE_2, 1 / z2);
 }
 

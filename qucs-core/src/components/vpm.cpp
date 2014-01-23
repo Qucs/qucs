@@ -67,8 +67,8 @@ void vpm::calcTR (nr_double_t t) {
   nr_double_t a = getPropertyDouble ("U");
   nr_double_t v = real (getV  (NODE_3));
   nr_double_t b = 2 * M_PI * f * t + rad (p) + v * d;
-  nr_double_t u = a * qucs::sin (b);
-  nr_double_t g = a * qucs::cos (b) * d;
+  nr_double_t u = a * std::sin (b);
+  nr_double_t g = a * std::cos (b) * d;
   setE (VSRC_1, g * v - u);
   setC (VSRC_1, NODE_3, g);
 }

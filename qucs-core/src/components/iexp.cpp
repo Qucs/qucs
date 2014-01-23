@@ -74,12 +74,12 @@ void iexp::calcTR (nr_double_t t) {
     it = i1;
   }
   else if (t > t1 && t <= t2) { // rising edge
-    it = i1 + (i2 - i1) * (1 - qucs::exp (-(t - t1) / tr));
+    it = i1 + (i2 - i1) * (1 - std::exp (-(t - t1) / tr));
   }
   else { // falling edge
     it += i1;
-    it += (i2 - i1) * (1 - qucs::exp (-(t - t1) / tr));
-    it -= (i2 - i1) * (1 - qucs::exp (-(t - t2) / tf));
+    it += (i2 - i1) * (1 - std::exp (-(t - t1) / tr));
+    it -= (i2 - i1) * (1 - std::exp (-(t - t2) / tf));
   }
   setI (NODE_1, +it * s); setI (NODE_2, -it * s);
 }

@@ -24,8 +24,11 @@ test "x$prefix" = xNONE && prefix="/usr/local"
 
 dnl Checks for programs.
 AC_PROG_CXX
+AX_CXX_COMPILE_STDCXX_11
 AC_PROG_CC
-AC_CHECK_TOOL(AR, ar, :)
+AC_PROG_LN_S
+AC_PROG_INSTALL
+AC_PROG_CC_C_O
 
 dnl Check for parser and lexer generators.
 AC_PROG_YACC
@@ -97,7 +100,7 @@ unset enable_debug
 dnl Yet another compiler check.
 if test "x$GCC" = xyes; then
   CFLAGS="$CFLAGS -pipe"
-  CXXFLAGS="$CXXFLAGS -pipe -fno-exceptions -fno-rtti -fno-check-new"
+  CXXFLAGS="$CXXFLAGS -pipe -fno-exceptions -fno-check-new"
   if test $USE_MAINTAINER_MODE = yes; then
     CFLAGS="$CFLAGS -W -Wall -Wmissing-prototypes"
     CXXFLAGS="$CXXFLAGS -W -Wall"
@@ -250,10 +253,9 @@ AC_CHECK_FUNCS([floor pow exp sqrt log10 log cos sin acos asin tan atan sinh \
 dnl Checks for complex classes and functions.
 AC_CXX_NAMESPACES
 AC_CXX_HAVE_COMPLEX
-AS_IF([test "X$ac_cv_cxx_have_complex" = "X"],[AC_MSG_ERROR([Qucs Need a templated complex class])])
-AC_CHECK_CXX_COMPLEX_FUNCS([cos cosh exp log log10 sin sinh sqrt tan tanh])
-AC_CHECK_CXX_COMPLEX_FUNCS([acos acosh asin asinh atan atanh])
-AC_CHECK_CXX_COMPLEX_FUNCS([log2 norm])
+AS_IF([test "X$ac_cv_cxx_have_complex" = "X"],[AC_MSG_ERROR([Qucs needs a templated complex class])])
+AC_CHECK_CXX_COMPLEX_FUNCS([cos cosh exp log log10 sin sinh sqrt tan \
+        tanh acos acosh asin asinh atan atanh log2 norm])
 AC_CHECK_CXX_COMPLEX_POW
 AC_CHECK_CXX_COMPLEX_ATAN2
 AC_CHECK_CXX_COMPLEX_FMOD

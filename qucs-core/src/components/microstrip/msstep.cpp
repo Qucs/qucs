@@ -57,13 +57,13 @@ matrix msstep::calcMatrixZ (nr_double_t frequency) {
   nr_double_t t     = subst->getPropertyDouble ("t");
 
   // compute parallel capacitance
-  nr_double_t t1 = qucs::log10 (er);
+  nr_double_t t1 = std::log10 (er);
   nr_double_t t2 = W1 / W2;
-  nr_double_t Cs = qucs::sqrt (W1 * W2) *
+  nr_double_t Cs = std::sqrt (W1 * W2) *
     (t2 * (10.1 * t1 + 2.33) - 12.6 * t1 - 3.17);
 
   // compute series inductance
-  t1 = qucs::log10 (t2);
+  t1 = std::log10 (t2);
   t2 = t2 - 1;
   nr_double_t Ls = h * (t2 * (40.5 + 0.2 * t2) - 75 * t1);
 
@@ -71,12 +71,12 @@ matrix msstep::calcMatrixZ (nr_double_t frequency) {
   msline::analyseQuasiStatic (W1, h, t, er, SModel, ZlEff, ErEff, WEff);
   msline::analyseDispersion  (W1, h, er, ZlEff, ErEff, frequency, DModel,
 			      ZlEffFreq, ErEffFreq);
-  nr_double_t L1 = ZlEffFreq * qucs::sqrt (ErEffFreq) / C0;
+  nr_double_t L1 = ZlEffFreq * std::sqrt (ErEffFreq) / C0;
 
   msline::analyseQuasiStatic (W2, h, t, er, SModel, ZlEff, ErEff, WEff);
   msline::analyseDispersion  (W2, h, er, ZlEff, ErEff, frequency, DModel,
 			      ZlEffFreq, ErEffFreq);
-  nr_double_t L2 = ZlEffFreq * qucs::sqrt (ErEffFreq) / C0;
+  nr_double_t L2 = ZlEffFreq * std::sqrt (ErEffFreq) / C0;
 
   Ls /= (L1 + L2);
   L1 *= Ls;

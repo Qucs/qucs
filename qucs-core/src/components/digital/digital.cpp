@@ -83,7 +83,7 @@ nr_double_t digital::getVin (int input) {
 nr_double_t digital::calcTransferX (int input) {
   nr_double_t v = getPropertyDouble ("V");
   nr_double_t t = getPropertyDouble ("TR");
-  return qucs::tanh (t * (getVin (input) / v - 0.5));
+  return std::tanh (t * (getVin (input) / v - 0.5));
 }
 
 // Computes a slightly modified transfer function.
@@ -95,7 +95,7 @@ nr_double_t digital::calcTransfer (int input) {
 nr_double_t digital::calcDerivativeX (int input) {
   nr_double_t v = getPropertyDouble ("V");
   nr_double_t t = getPropertyDouble ("TR");
-  nr_double_t x = qucs::tanh (t * (getVin (input) / v - 0.5));
+  nr_double_t x = std::tanh (t * (getVin (input) / v - 0.5));
   return t * (1 - x * x);
 }
 

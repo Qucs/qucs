@@ -78,7 +78,7 @@ void touchstone_print_noise (void) {
 	       " %+." NR_DECS "e" " %+." NR_DECS "e"
 	       " %+." NR_DECS "e"
 	       touchstone_crlf, f,
-	       10.0 * qucs::log10 (real (touchstone_data.fmin->get (i))),
+	       10.0 * std::log10 (real (touchstone_data.fmin->get (i))),
 	       abs (touchstone_data.sopt->get (i)),
 	       deg (arg (touchstone_data.sopt->get (i))),
 	       real (touchstone_data.rn->get (i)) /

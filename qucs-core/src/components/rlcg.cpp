@@ -43,15 +43,15 @@ void rlcg::calcPropagation (nr_double_t frequency) {
   nr_double_t G = getPropertyDouble ("G");
   nr_complex_t Z = nr_complex_t (R, 2 * M_PI * frequency * L);
   nr_complex_t Y = nr_complex_t (G, 2 * M_PI * frequency * C);
-  g = qucs::sqrt (Z * Y);
-  z = qucs::sqrt (Z / Y);
+  g = std::sqrt (Z * Y);
+  z = std::sqrt (Z / Y);
 }
 
 void rlcg::calcSP (nr_double_t frequency) {
   nr_double_t l = getPropertyDouble ("Length");
   calcPropagation (frequency);
   nr_complex_t r = (z - z0) / (z + z0);
-  nr_complex_t p = qucs::exp (-l * g);
+  nr_complex_t p = std::exp (-l * g);
   nr_complex_t s11 = r * (1.0 - p * p) / (1.0 - p * p * r * r);
   nr_complex_t s21 = p * (1.0 - r * r) / (1.0 - p * p * r * r);
   setS (NODE_1, NODE_1, s11); setS (NODE_2, NODE_2, s11);

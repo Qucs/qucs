@@ -311,7 +311,7 @@ void spfile::prepare (void) {
   if (data == NULL) data = dataset::load_touchstone (file);
   if (data != NULL) {
     // determine the number of ports defined by that file
-    int ports = (int) qucs::sqrt ((double) data->countVariables ());
+    int ports = (int) std::sqrt ((double) data->countVariables ());
     if (ports == getSize () - 1) {
       if (spara == NULL) {
 	// find matrix vector entries in touchstone dataset
@@ -432,9 +432,9 @@ nr_double_t spfile::noiseFigure (matrix s, matrix c, nr_double_t& Fmin,
   // optimal source reflection coefficient
   Sopt = 1 - norm (n2);
   if (real (Sopt) < 0.0)
-    Sopt = (1.0 + qucs::sqrt (Sopt)) / n2;  // avoid a negative radicant
+    Sopt = (1.0 + std::sqrt (Sopt)) / n2;  // avoid a negative radicant
   else
-    Sopt = (1.0 - qucs::sqrt (Sopt)) / n2;
+    Sopt = (1.0 - std::sqrt (Sopt)) / n2;
 
   // minimum noise figure
   Fmin = real (1.0 + (c.get (1, 1) - n1 * norm (Sopt)) /

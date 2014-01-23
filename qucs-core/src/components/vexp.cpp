@@ -75,12 +75,12 @@ void vexp::calcTR (nr_double_t t) {
     ut = u1;
   }
   else if (t > t1 && t <= t2) { // rising edge
-    ut = u1 + (u2 - u1) * (1 - qucs::exp (-(t - t1) / tr));
+    ut = u1 + (u2 - u1) * (1 - std::exp (-(t - t1) / tr));
   }
   else { // falling edge
     ut += u1;
-    ut += (u2 - u1) * (1 - qucs::exp (-(t - t1) / tr));
-    ut -= (u2 - u1) * (1 - qucs::exp (-(t - t2) / tf));
+    ut += (u2 - u1) * (1 - std::exp (-(t - t1) / tr));
+    ut -= (u2 - u1) * (1 - std::exp (-(t - t2) / tf));
   }
   setE (VSRC_1, ut * s);
 }

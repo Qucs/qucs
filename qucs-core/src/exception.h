@@ -37,6 +37,7 @@ enum exception_type {
   EXCEPTION_WRONG_VOLTAGE,
   EXCEPTION_SINGULAR,
   EXCEPTION_MATH,
+  EXCEPTION_UNKNOWN_ETR_MODE,
 };
 
 class exception

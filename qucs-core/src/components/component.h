@@ -34,6 +34,7 @@
 
 #include "compat.h"
 #include "logging.h"
+#include "complex_missing_std.h"
 #include "complex.h"
 #include "object.h"
 #include "vector.h"

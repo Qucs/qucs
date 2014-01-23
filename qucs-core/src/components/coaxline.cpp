@@ -52,14 +52,14 @@ void coaxline::calcPropagation (nr_double_t frequency) {
   }
 
   // calculate losses
-  ad = M_PI / C0 * frequency * qucs::sqrt (er) * tand;
-  rs = qucs::sqrt (M_PI * frequency * mur * MU0 * rho);
-  ac = qucs::sqrt (er) * (1 / d + 1 / D) / qucs::log (D / d) * rs / Z0;
+  ad = M_PI / C0 * frequency * std::sqrt (er) * tand;
+  rs = std::sqrt (M_PI * frequency * mur * MU0 * rho);
+  ac = std::sqrt (er) * (1 / d + 1 / D) / std::log (D / d) * rs / Z0;
 
   // calculate propagation constants and reference impedance
   alpha = ac + ad;
-  beta  = qucs::sqrt (er * mur) * 2 * M_PI * frequency / C0;
-  zl = Z0 / 2 / M_PI / qucs::sqrt (er) * qucs::log (D / d);
+  beta  = std::sqrt (er * mur) * 2 * M_PI * frequency / C0;
+  zl = Z0 / 2 / M_PI / std::sqrt (er) * std::log (D / d);
 }
 
 void coaxline::calcNoiseSP (nr_double_t) {
@@ -84,7 +84,7 @@ void coaxline::initCheck (void) {
 	      "ERROR: Inner diameter larger than outer diameter.\n");
   }
   nr_double_t f1, f2, cl;
-  cl = C0 / qucs::sqrt (mur * er);
+  cl = C0 / std::sqrt (mur * er);
   f1 = cl / (M_PI_2 * (D + d)); // TE_11
   f2 = cl / (1 * (D - d));      // TM_N1
   fc = MIN (f1, f2);

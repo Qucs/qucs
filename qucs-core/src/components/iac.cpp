@@ -65,7 +65,7 @@ void iac::calcTR (nr_double_t t) {
   nr_double_t s = getNet()->getSrcFactor ();
   nr_double_t o = 2 * M_PI * f;
   nr_double_t T = p / f / 360;
-  nr_double_t i = s * a * qucs::exp (-(t + T) * d * f) * qucs::sin (o * t + rad (p));
+  nr_double_t i = s * a * std::exp (-(t + T) * d * f) * std::sin (o * t + rad (p));
   setI (NODE_1, +i); setI (NODE_2, -i);
 }
 

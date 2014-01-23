@@ -95,14 +95,14 @@ void mstee::calcSP (nr_double_t frequency) {
   setS (NODE_1, NODE_1, (1.0 - n1) / (1.0 + n1));
   setS (NODE_2, NODE_2, (1.0 - n2) / (1.0 + n2));
   setS (NODE_3, NODE_3, (1.0 - n3) / (1.0 + n3));
-  setS (NODE_1, NODE_3, 2.0 * qucs::sqrt (Ta2) / (1.0 + n1));
-  setS (NODE_3, NODE_1, 2.0 * qucs::sqrt (Ta2) / (1.0 + n1));
-  setS (NODE_2, NODE_3, 2.0 * qucs::sqrt (Tb2) / (1.0 + n2));
-  setS (NODE_3, NODE_2, 2.0 * qucs::sqrt (Tb2) / (1.0 + n2));
-  setS (NODE_1, NODE_2, 2.0 / (qucs::sqrt (Ta2 * Tb2) * nr_complex_t (1, Bt * z0) +
-			       qucs::sqrt (Ta2 / Tb2) + qucs::sqrt (Tb2 / Ta2)));
-  setS (NODE_2, NODE_1, 2.0 / (qucs::sqrt (Ta2 * Tb2) * nr_complex_t (1, Bt * z0) +
-			       qucs::sqrt (Ta2 / Tb2) + qucs::sqrt (Tb2 / Ta2)));
+  setS (NODE_1, NODE_3, 2.0 * std::sqrt (Ta2) / (1.0 + n1));
+  setS (NODE_3, NODE_1, 2.0 * std::sqrt (Ta2) / (1.0 + n1));
+  setS (NODE_2, NODE_3, 2.0 * std::sqrt (Tb2) / (1.0 + n2));
+  setS (NODE_3, NODE_2, 2.0 * std::sqrt (Tb2) / (1.0 + n2));
+  setS (NODE_1, NODE_2, 2.0 / (std::sqrt (Ta2 * Tb2) * nr_complex_t (1, Bt * z0) +
+			       std::sqrt (Ta2 / Tb2) + std::sqrt (Tb2 / Ta2)));
+  setS (NODE_2, NODE_1, 2.0 / (std::sqrt (Ta2 * Tb2) * nr_complex_t (1, Bt * z0) +
+			       std::sqrt (Ta2 / Tb2) + std::sqrt (Tb2 / Ta2)));
 }
 
 void mstee::calcPropagation (nr_double_t f) {
@@ -135,17 +135,17 @@ void mstee::calcPropagation (nr_double_t f) {
   nr_double_t Da, Db, D2, fpa, fpb, lda, ldb, da, db, d2, r, q;
 
   // equivalent parallel plate line widths
-  Da = Z0 / Zla * h / qucs::sqrt (Era);
-  Db = Z0 / Zlb * h / qucs::sqrt (Erb);
-  D2 = Z0 / Zl2 * h / qucs::sqrt (Er2);
+  Da = Z0 / Zla * h / std::sqrt (Era);
+  Db = Z0 / Zlb * h / std::sqrt (Erb);
+  D2 = Z0 / Zl2 * h / std::sqrt (Er2);
 
   // first higher order mode cut-off frequencies
   fpa = 0.4e6 * Zla / h;
   fpb = 0.4e6 * Zlb / h;
 
   // effective wavelengths of quasi-TEM mode
-  lda = C0 / qucs::sqrt (Era) / f;
-  ldb = C0 / qucs::sqrt (Erb) / f;
+  lda = C0 / std::sqrt (Era) / f;
+  ldb = C0 / std::sqrt (Erb) / f;
 
   // main arm displacements
   da = 0.055 * D2 * Zla / Zl2 * (1 - 2 * Zla / Zl2 * sqr (f / fpa));
@@ -156,10 +156,10 @@ void mstee::calcPropagation (nr_double_t f) {
   Lb = 0.5 * W2 - db;
 
   // displacement and length of line in the side arm
-  r = qucs::sqrt (Zla * Zlb) / Zl2;
+  r = std::sqrt (Zla * Zlb) / Zl2;
   q = sqr (f) / fpa / fpb;
-  d2 = qucs::sqrt (Da * Db) * (0.5 - r * (0.05 + 0.7 * qucs::exp (-1.6 * r) +
-				    0.25 * r * q - 0.17 * qucs::log (r)));
+  d2 = std::sqrt (Da * Db) * (0.5 - r * (0.05 + 0.7 * std::exp (-1.6 * r) +
+				    0.25 * r * q - 0.17 * std::log (r)));
   L2 = 0.5 * MAX (Wa, Wb) - d2;
 
   // turn ratio of transformers in main arms
@@ -171,9 +171,9 @@ void mstee::calcPropagation (nr_double_t f) {
   Tb2 = MAX (Tb2, NR_TINY);
 
   // shunt susceptance
-  Bt = 5.5 * qucs::sqrt (Da * Db / lda / ldb) * (er + 2) / er /
-    Zl2 / qucs::sqrt (Ta2 * Tb2) * qucs::sqrt (da * db) / D2 *
-    (1 + 0.9 * qucs::log (r) + 4.5 * r * q - 4.4 * qucs::exp (-1.3 * r) -
+  Bt = 5.5 * std::sqrt (Da * Db / lda / ldb) * (er + 2) / er /
+    Zl2 / std::sqrt (Ta2 * Tb2) * std::sqrt (da * db) / D2 *
+    (1 + 0.9 * std::log (r) + 4.5 * r * q - 4.4 * std::exp (-1.3 * r) -
      20 * sqr (Zl2 / Z0));
 }
 
@@ -265,13 +265,13 @@ void mstee::calcAC (nr_double_t frequency) {
 
   // calculate Z-parameters
   setD (VSRC_1, VSRC_1, nr_complex_t (0, -1 / Ta2 / Bt));
-  setD (VSRC_1, VSRC_2, nr_complex_t (0, -1 / qucs::sqrt (Ta2 * Tb2) / Bt));
-  setD (VSRC_1, VSRC_3, nr_complex_t (0, -1 / qucs::sqrt (Ta2) / Bt));
-  setD (VSRC_2, VSRC_1, nr_complex_t (0, -1 / qucs::sqrt (Ta2 * Tb2) / Bt));
+  setD (VSRC_1, VSRC_2, nr_complex_t (0, -1 / std::sqrt (Ta2 * Tb2) / Bt));
+  setD (VSRC_1, VSRC_3, nr_complex_t (0, -1 / std::sqrt (Ta2) / Bt));
+  setD (VSRC_2, VSRC_1, nr_complex_t (0, -1 / std::sqrt (Ta2 * Tb2) / Bt));
   setD (VSRC_2, VSRC_2, nr_complex_t (0, -1 / Tb2 / Bt));
-  setD (VSRC_2, VSRC_3, nr_complex_t (0, -1 / qucs::sqrt (Tb2) / Bt));
-  setD (VSRC_3, VSRC_1, nr_complex_t (0, -1 / qucs::sqrt (Ta2) / Bt));
-  setD (VSRC_3, VSRC_2, nr_complex_t (0, -1 / qucs::sqrt (Tb2) / Bt));
+  setD (VSRC_2, VSRC_3, nr_complex_t (0, -1 / std::sqrt (Tb2) / Bt));
+  setD (VSRC_3, VSRC_1, nr_complex_t (0, -1 / std::sqrt (Ta2) / Bt));
+  setD (VSRC_3, VSRC_2, nr_complex_t (0, -1 / std::sqrt (Tb2) / Bt));
   setD (VSRC_3, VSRC_3, nr_complex_t (0, -1 / Bt));
 }
 

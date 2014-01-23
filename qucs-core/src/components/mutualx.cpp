@@ -75,7 +75,7 @@ matrix mutualx::calcMatrixZ (nr_double_t frequency) {
     for (c = 0; c < inductors; c++, state++) {
       nr_double_t l1 = real (L->get (r));
       nr_double_t l2 = real (L->get (c));
-      nr_double_t k = real (C->get (state)) * qucs::sqrt (l1 * l2);
+      nr_double_t k = real (C->get (state)) * std::sqrt (l1 * l2);
       z.set (r, c, nr_complex_t (0.0, k * o));
     }
   }
@@ -98,7 +98,7 @@ void mutualx::calcAC (nr_double_t frequency) {
     for (c = 0; c < inductors; c++, state++) {
       nr_double_t l1 = real (L->get (r));
       nr_double_t l2 = real (L->get (c));
-      nr_double_t k = real (C->get (state)) * qucs::sqrt (l1 * l2);
+      nr_double_t k = real (C->get (state)) * std::sqrt (l1 * l2);
       setD (VSRC_1 + r, VSRC_1 + c, nr_complex_t (0.0, k * o));
     }
   }
@@ -134,7 +134,7 @@ void mutualx::calcTR (nr_double_t) {
       nr_double_t l1 = real (L->get (r));
       nr_double_t l2 = real (L->get (c));
       nr_double_t i = real (getJ (VSRC_1 + c));
-      nr_double_t k = real (C->get (state)) * qucs::sqrt (l1 * l2);
+      nr_double_t k = real (C->get (state)) * std::sqrt (l1 * l2);
       setState  (2 * state, i * k);
       integrate (2 * state, k, req[state], veq[state]);
     }

@@ -74,8 +74,8 @@ void mslange::calcPropagation (nr_double_t frequency) {
   nr_double_t k0 = 2 * M_PI * frequency / C0;
   ae = ace + ade;
   ao = aco + ado;
-  be = qucs::sqrt (ErEffeFreq) * k0;
-  bo = qucs::sqrt (ErEffoFreq) * k0;
+  be = std::sqrt (ErEffeFreq) * k0;
+  bo = std::sqrt (ErEffoFreq) * k0;
   ze = ZleFreq;
   zo = ZloFreq;
   ee = ErEffeFreq;
@@ -100,12 +100,12 @@ void mslange::calcSP (nr_double_t frequency) {
 
   // compute abbreviations
   nr_complex_t Ee, Eo, De, Do, Xe, Xo, Ye, Yo;
-  Ee = (sqr (ze) + sqr (z0)) * qucs::sinh (ge * l);
-  Eo = (sqr (zo) + sqr (z0)) * qucs::sinh (go * l);
+  Ee = (sqr (ze) + sqr (z0)) * std::sinh (ge * l);
+  Eo = (sqr (zo) + sqr (z0)) * std::sinh (go * l);
   De = 2 * ze * z0 * cosh (ge * l) + Ee;
   Do = 2 * zo * z0 * cosh (go * l) + Eo;
-  Xe = (sqr (ze) - sqr (z0)) * qucs::sinh (ge * l) / 2.0 / De;
-  Xo = (sqr (zo) - sqr (z0)) * qucs::sinh (go * l) / 2.0 / Do;
+  Xe = (sqr (ze) - sqr (z0)) * std::sinh (ge * l) / 2.0 / De;
+  Xo = (sqr (zo) - sqr (z0)) * std::sinh (go * l) / 2.0 / Do;
   Ye = ze * z0 / De;
   Yo = zo * z0 / Do;
 
@@ -155,30 +155,30 @@ void mslange::analysQuasiStatic (nr_double_t W, nr_double_t h, nr_double_t s,
 
     // modifying equations for even mode
     m = 0.2175 + pow (4.113 + pow (20.36 / g, 6), -0.251) +
-      qucs::log (pow (g, 10) / (1 + pow (g / 13.8, 10))) / 323;
-    Alpha = 0.5 * qucs::exp (-g);
+      std::log (pow (g, 10) / (1 + pow (g / 13.8, 10))) / 323;
+    Alpha = 0.5 * std::exp (-g);
     Psi = 1 + g / 1.45 + pow (g, 2.09) / 3.95;
     Phi = 0.8645 * pow (u, 0.172);
     Pe = Phi / (Psi * (Alpha * pow (u, m) + (1 - Alpha) * pow (u, -m)));
     // TODO: is this ... Psi * (Alpha ... or ... Psi / (Alpha ... ?
 
     // modifying equations for odd mode
-    n = (1 / 17.7 + qucs::exp (-6.424 - 0.76 * qucs::log (g) - pow (g / 0.23, 5))) *
-      qucs::log ((10 + 68.3 * sqr (g)) / (1 + 32.5 * pow (g, 3.093)));
-    Beta = 0.2306 + qucs::log (pow (g, 10) / (1 + pow (g / 3.73, 10))) / 301.8 +
-      qucs::log (1 + 0.646 * pow (g, 1.175)) / 5.3;
-    Theta = 1.729 + 1.175 * qucs::log (1 + 0.627 / (g + 0.327 * pow (g, 2.17)));
-    Po = Pe - Theta / Psi * qucs::exp (Beta * pow (u, -n) * qucs::log (u));
+    n = (1 / 17.7 + std::exp (-6.424 - 0.76 * std::log (g) - pow (g / 0.23, 5))) *
+      std::log ((10 + 68.3 * sqr (g)) / (1 + 32.5 * pow (g, 3.093)));
+    Beta = 0.2306 + std::log (pow (g, 10) / (1 + pow (g / 3.73, 10))) / 301.8 +
+      std::log (1 + 0.646 * pow (g, 1.175)) / 5.3;
+    Theta = 1.729 + 1.175 * std::log (1 + 0.627 / (g + 0.327 * pow (g, 2.17)));
+    Po = Pe - Theta / Psi * std::exp (Beta * pow (u, -n) * std::log (u));
 
     // further modifying equations
-    r = 1 + 0.15 * (1 - qucs::exp (1 - sqr (er - 1) / 8.2) / (1 + pow (g, -6)));
-    fo1 = 1 - qucs::exp (-0.179 * pow (g, 0.15) -
-		   0.328 * pow (g, r) / qucs::log (M_E + pow (g / 7, 2.8)));
-    q = qucs::exp (-1.366 - g);
-    p = qucs::exp (-0.745 * pow (g, 0.295)) / qucs::cosh (pow (g, 0.68));
-    fo = fo1 * qucs::exp (p * qucs::log (u) + q * qucs::sin (M_PI * qucs::log10 (u)));
+    r = 1 + 0.15 * (1 - std::exp (1 - sqr (er - 1) / 8.2) / (1 + pow (g, -6)));
+    fo1 = 1 - std::exp (-0.179 * pow (g, 0.15) -
+		   0.328 * pow (g, r) / std::log (M_E + pow (g / 7, 2.8)));
+    q = std::exp (-1.366 - g);
+    p = std::exp (-0.745 * pow (g, 0.295)) / std::cosh (pow (g, 0.68));
+    fo = fo1 * std::exp (p * std::log (u) + q * std::sin (M_PI * std::log10 (u)));
 
-    Mu = g * qucs::exp (-g) + u * (20 + sqr (g)) / (10 + sqr (g));
+    Mu = g * std::exp (-g) + u * (20 + sqr (g)) / (10 + sqr (g));
     msline::Hammerstad_ab (Mu, er, a, b);
     Fe = pow (1 + 10 / Mu, -a * b);
     msline::Hammerstad_ab (u, er, a, b);
@@ -192,11 +192,11 @@ void mslange::analysQuasiStatic (nr_double_t W, nr_double_t h, nr_double_t s,
 
     // first variant
     Zl1 = Z0 / (u + 1.98 * pow (u, 0.172));
-    Zl1 /= qucs::sqrt (ErEff);
+    Zl1 /= std::sqrt (ErEff);
 
     // second variant
     msline::Hammerstad_zl (u, Zl1);
-    Zl1 /= qucs::sqrt (ErEff);
+    Zl1 /= std::sqrt (ErEff);
 
     Zle = Zl1 / (1 - Zl1 * Pe / Z0);
     Zlo = Zl1 / (1 - Zl1 * Po / Z0);
@@ -213,53 +213,53 @@ void mslange::analysQuasiStatic (nr_double_t W, nr_double_t h, nr_double_t s,
       nr_double_t dW = 0;
       // SCHNEIDER, referred by JANSEN
       if (u >= M_1_PI / 2 && M_1_PI / 2 > 2 * t / h)
-	dW = t * (1 + qucs::log (2 * h / t)) / M_PI;
+	dW = t * (1 + std::log (2 * h / t)) / M_PI;
       else if (W > 2 * t)
-	dW = t * (1 + qucs::log (4 * M_PI * W / t)) / M_PI;
+	dW = t * (1 + std::log (4 * M_PI * W / t)) / M_PI;
       // JANSEN
       nr_double_t dt = 2 * t * h / s / er;
-      nr_double_t We = W + dW * (1 - 0.5 * qucs::exp (-0.69 * dW / dt));
+      nr_double_t We = W + dW * (1 - 0.5 * std::exp (-0.69 * dW / dt));
       nr_double_t Wo = We + dt;
       ue = We / h;
       uo = Wo / h;
     }
 
     // even relative dielectric constant
-    v = ue * (20 + sqr (g)) / (10 + sqr (g)) + g * qucs::exp (-g);
+    v = ue * (20 + sqr (g)) / (10 + sqr (g)) + g * std::exp (-g);
     msline::Hammerstad_ab (v, er, ae, be);
     msline::Hammerstad_er (v, er, ae, be, ErEffe);
 
     // odd relative dielectric constant
     msline::Hammerstad_ab (uo, er, a, b);
     msline::Hammerstad_er (uo, er, a, b, ErEff);
-    d = 0.593 + 0.694 * qucs::exp (-0.562 * uo);
+    d = 0.593 + 0.694 * std::exp (-0.562 * uo);
     bo = 0.747 * er / (0.15 + er);
-    co = bo - (bo - 0.207) * qucs::exp (-0.414 * uo);
-    ao = 0.7287 * (ErEff - (er + 1) / 2) * (1 - qucs::exp (-0.179 * uo));
-    ErEffo = ((er + 1) / 2 + ao - ErEff) * qucs::exp (-co * pow (g, d)) + ErEff;
+    co = bo - (bo - 0.207) * std::exp (-0.414 * uo);
+    ao = 0.7287 * (ErEff - (er + 1) / 2) * (1 - std::exp (-0.179 * uo));
+    ErEffo = ((er + 1) / 2 + ao - ErEff) * std::exp (-co * pow (g, d)) + ErEff;
 
     // characteristic impedance of single line
     msline::Hammerstad_zl (u, Zl1);
-    Zl1 /= qucs::sqrt (ErEff);
+    Zl1 /= std::sqrt (ErEff);
 
     // even characteristic impedance
     q1 = 0.8695 * pow (ue, 0.194);
     q2 = 1 + 0.7519 * g + 0.189 * pow (g, 2.31);
     q3 = 0.1975 + pow (16.6 + pow (8.4 / g, 6), -0.387) +
-      qucs::log (pow (g, 10) / (1 + pow (g / 3.4, 10))) / 241;
+      std::log (pow (g, 10) / (1 + pow (g / 3.4, 10))) / 241;
     q4 = q1 / q2 * 2 /
-      (qucs::exp (-g) * pow (ue, q3) + (2 - qucs::exp (-g)) * pow (ue, -q3));
-    Zle = qucs::sqrt (ErEff / ErEffe) * Zl1 / (1 - Zl1 * qucs::sqrt (ErEff) * q4 / Z0);
+      (std::exp (-g) * pow (ue, q3) + (2 - std::exp (-g)) * pow (ue, -q3));
+    Zle = std::sqrt (ErEff / ErEffe) * Zl1 / (1 - Zl1 * std::sqrt (ErEff) * q4 / Z0);
 
     // odd characteristic impedance
-    q5 = 1.794 + 1.14 * qucs::log (1 + 0.638 / (g + 0.517 * pow (g, 2.43)));
-    q6 = 0.2305 + qucs::log (pow (g, 10) / (1 + pow (g / 5.8, 10))) / 281.3 +
-      qucs::log (1 + 0.598 * pow (g, 1.154)) / 5.1;
+    q5 = 1.794 + 1.14 * std::log (1 + 0.638 / (g + 0.517 * pow (g, 2.43)));
+    q6 = 0.2305 + std::log (pow (g, 10) / (1 + pow (g / 5.8, 10))) / 281.3 +
+      std::log (1 + 0.598 * pow (g, 1.154)) / 5.1;
     q7 = (10 + 190 * sqr (g)) / (1 + 82.3 * cubic (g));
-    q8 = qucs::exp (-6.5 - 0.95 * qucs::log (g) - pow (g / 0.15, 5));
-    q9 = qucs::log (q7) * (q8 + 1 / 16.5);
-    q10 = (q2 * q4 - q5 * qucs::exp (qucs::log (uo) * q6 * pow (uo, -q9))) / q2;
-    Zlo = qucs::sqrt (ErEff / ErEffo) * Zl1 / (1 - Zl1 * qucs::sqrt (ErEff) * q10 / Z0);
+    q8 = std::exp (-6.5 - 0.95 * std::log (g) - pow (g / 0.15, 5));
+    q9 = std::log (q7) * (q8 + 1 / 16.5);
+    q10 = (q2 * q4 - q5 * std::exp (std::log (uo) * q6 * pow (uo, -q9))) / q2;
+    Zlo = std::sqrt (ErEff / ErEffo) * Zl1 / (1 - Zl1 * std::sqrt (ErEff) * q10 / Z0);
   }
 //  nr_double_t Zle4, Zlo4, C, Z04;
 
@@ -308,30 +308,30 @@ void mslange::analyseDispersion (nr_double_t W, nr_double_t h, nr_double_t s,
 
     // even relative dielectric constant dispersion
     p1 = 0.27488 * (0.6315 + 0.525 / pow (1 + 0.0157 * fn, 20)) * u -
-      0.065683 * qucs::exp (-8.7513 * u);
-    p2 = 0.33622 * (1 - qucs::exp (-0.03442 * er));
-    p3 = 0.0363 * qucs::exp (-4.6 * u) * (1 - qucs::exp (- pow (fn / 38.7, 4.97)));
-    p4 = 1 + 2.751 * (1 - qucs::exp (- pow (er / 15.916, 8)));
-    p5 = 0.334 * qucs::exp (-3.3 * cubic (er / 15)) + 0.746;
-    p6 = p5 * qucs::exp (- pow (fn / 18, 0.368));
+      0.065683 * std::exp (-8.7513 * u);
+    p2 = 0.33622 * (1 - std::exp (-0.03442 * er));
+    p3 = 0.0363 * std::exp (-4.6 * u) * (1 - std::exp (- pow (fn / 38.7, 4.97)));
+    p4 = 1 + 2.751 * (1 - std::exp (- pow (er / 15.916, 8)));
+    p5 = 0.334 * std::exp (-3.3 * cubic (er / 15)) + 0.746;
+    p6 = p5 * std::exp (- pow (fn / 18, 0.368));
     p7 = 1 + 4.069 * p6 * pow (g, 0.479) *
-      qucs::exp (-1.347 * pow (g, 0.595) - 0.17 * pow (g, 2.5));
+      std::exp (-1.347 * pow (g, 0.595) - 0.17 * pow (g, 2.5));
     Fe = p1 * p2 * pow ((p3 * p4 + 0.1844 * p7) * fn, 1.5763);
     ErEffeFreq = er - (er - ErEffe) / (1 + Fe);
 
     // odd relative dielectric constant dispersion
     nr_double_t p8, p9, p10, p11, p12, p13, p14, p15, Fo;
     p8 = 0.7168 * (1 + 1.076 / (1 + 0.0576 * (er - 1)));
-    p9 = p8 - 0.7913 * (1 - qucs::exp (- pow (fn / 20, 1.424))) *
+    p9 = p8 - 0.7913 * (1 - std::exp (- pow (fn / 20, 1.424))) *
       atan (2.481 * pow (er / 8, 0.946));
     p10 = 0.242 * pow (er - 1, 0.55);
-    p11 = 0.6366 * (qucs::exp (-0.3401 * fn) - 1) *
+    p11 = 0.6366 * (std::exp (-0.3401 * fn) - 1) *
       atan (1.263 * pow (u / 3, 1.629));
     p12 = p9 + (1 - p9) / (1 + 1.183 * pow (u, 1.376));
     p13 = 1.695 * p10 / (0.414 + 1.605 * p10);
-    p14 = 0.8928 + 0.1072 * (1 - qucs::exp (-0.42 * pow (fn / 20, 3.215)));
+    p14 = 0.8928 + 0.1072 * (1 - std::exp (-0.42 * pow (fn / 20, 3.215)));
     p15 = fabs (1 - 0.8928 * (1 + p11) *
-		qucs::exp (-p13 * pow (g, 1.092)) * p12 / p14);
+		std::exp (-p13 * pow (g, 1.092)) * p12 / p14);
     Fo = p1 * p2 * pow ((p3 * p4 + 0.1844) * fn * p15, 1.5763);
     ErEffoFreq = er - (er - ErEffo) / (1 + Fo);
 
@@ -339,23 +339,23 @@ void mslange::analyseDispersion (nr_double_t W, nr_double_t h, nr_double_t s,
     nr_double_t t, q11, q12, q13, q14, q15, q16, q17, q18, q19, q20, q21;
     q11 = 0.893 * (1 - 0.3 / (1 + 0.7 * (er - 1)));
     t = pow (fn / 20, 4.91);
-    q12 = 2.121 * t / (1 + q11 * t) * qucs::exp (-2.87 * g) * pow (g, 0.902);
+    q12 = 2.121 * t / (1 + q11 * t) * std::exp (-2.87 * g) * pow (g, 0.902);
     q13 = 1 + 0.038 * pow (er / 8, 5.1);
     t = quadr (er / 15);
     q14 = 1 + 1.203 * t / (1 + t);
-    q15 = 1.887 * qucs::exp (-1.5 * pow (g, 0.84)) * pow (g, q14) /
+    q15 = 1.887 * std::exp (-1.5 * pow (g, 0.84)) * pow (g, q14) /
       (1 + 0.41 * pow (fn / 15, 3) *
        pow (u, 2 / q13) / (0.125 + pow (u, 1.626 / q13)));
     q16 = q15 * (1 + 9 / (1 + 0.403 * sqr (er - 1)));
-    q17 = 0.394 * (1 - qucs::exp (-1.47 * pow (u / 7, 0.672))) *
-      (1 - qucs::exp (-4.25 * pow (fn / 20, 1.87)));
-    q18 = 0.61 * (1 - qucs::exp (-2.31 * pow (u / 8, 1.593))) /
+    q17 = 0.394 * (1 - std::exp (-1.47 * pow (u / 7, 0.672))) *
+      (1 - std::exp (-4.25 * pow (fn / 20, 1.87)));
+    q18 = 0.61 * (1 - std::exp (-2.31 * pow (u / 8, 1.593))) /
       (1 + 6.544 * pow (g, 4.17));
     q19 = 0.21 * quadr (g) / (1 + 0.18 * pow (g, 4.9)) / (1 + 0.1 * sqr (u)) /
       (1 + pow (fn / 24, 3));
     q20 = q19 * (0.09 + 1 / (1 + 0.1 * pow (er - 1, 2.7)));
     t = pow (u, 2.5);
-    q21 = fabs (1 - 42.54 * pow (g, 0.133) * qucs::exp (-0.812 * g) * t /
+    q21 = fabs (1 - 42.54 * pow (g, 0.133) * std::exp (-0.812 * g) * t /
 		(1 + 0.033 * t));
 
     nr_double_t re, qe, pe, de, Ce, q0, ZlFreq, ErEffFreq;
@@ -363,11 +363,11 @@ void mslange::analyseDispersion (nr_double_t W, nr_double_t h, nr_double_t s,
     msline::Kirschning_zl (u, fn, er, ErEffe, ErEffFreq, Zle, q0, ZlFreq);
     re = pow (fn / 28.843, 12);
     qe = 0.016 + pow (0.0514 * er * q21, 4.524);
-    pe = 4.766 * qucs::exp (-3.228 * pow (u, 0.641));
+    pe = 4.766 * std::exp (-3.228 * pow (u, 0.641));
     t = pow (er - 1, 6);
     de = 5.086 * qe * re / (0.3838 + 0.386 * qe) *
-      qucs::exp (-22.2 * pow (u, 1.92)) / (1 + 1.2992 * re) * t / (1 + 10 * t);
-    Ce = 1 + 1.275 * (1 - qucs::exp (-0.004625 * pe * pow (er, 1.674) *
+      std::exp (-22.2 * pow (u, 1.92)) / (1 + 1.2992 * re) * t / (1 + 10 * t);
+    Ce = 1 + 1.275 * (1 - std::exp (-0.004625 * pe * pow (er, 1.674) *
 	 pow (fn / 18.365, 2.745))) - q12 + q16 - q17 + q18 + q20;
     ZleFreq = Zle * pow ((0.9408 * pow (ErEffFreq, Ce) - 0.9603) /
 			 ((0.9408 - de) * pow (ErEffe, Ce) - 0.9603), q0);
@@ -442,8 +442,8 @@ void mslange::calcAC (nr_double_t frequency) {
 
   // compute abbreviations
   nr_complex_t De, Do, y1, y2, y3, y4;
-  De = 0.5 / (ze * qucs::sinh (ge * l));
-  Do = 0.5 / (zo * qucs::sinh (go * l));
+  De = 0.5 / (ze * std::sinh (ge * l));
+  Do = 0.5 / (zo * std::sinh (go * l));
   y2 = -De - Do;
   y3 = -De + Do;
   De *= cosh (ge * l);

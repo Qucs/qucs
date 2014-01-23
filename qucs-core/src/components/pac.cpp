@@ -62,7 +62,7 @@ void pac::calcDC (void) {
 void pac::calcAC (nr_double_t) {
   nr_double_t p = getPropertyDouble ("P");
   nr_double_t r = getPropertyDouble ("Z");
-  nr_double_t i = qucs::sqrt (8 * p / r);
+  nr_double_t i = std::sqrt (8 * p / r);
   calcDC ();
   setI (NODE_1, +i); setI (NODE_2, -i);
 }
@@ -79,7 +79,7 @@ void pac::calcTR (nr_double_t t) {
   nr_double_t p = getPropertyDouble ("P");
   nr_double_t r = getPropertyDouble ("Z");
   nr_double_t f = getPropertyDouble ("f");
-  nr_double_t i = qucs::sqrt (8 * p / r) * qucs::sin (2 * M_PI * f * t);
+  nr_double_t i = std::sqrt (8 * p / r) * std::sin (2 * M_PI * f * t);
   calcDC ();
   setI (NODE_1, +i); setI (NODE_2, -i);
 }
@@ -98,7 +98,7 @@ void pac::calcHB (nr_double_t frequency) {
   if (f == frequency) {
     nr_double_t p = getPropertyDouble ("P");
     nr_double_t r = getPropertyDouble ("Z");
-    nr_double_t u = qucs::sqrt (4 * p * r);
+    nr_double_t u = std::sqrt (4 * p * r);
     setE (VSRC_1, u);
   }
   else {

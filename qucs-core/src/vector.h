@@ -28,6 +28,8 @@
 
 #include "consts.h"
 #include "precision.h"
+#include "complex_missing_std.h"
+#include "complex.h"
 
 #ifdef log2
 #undef log2

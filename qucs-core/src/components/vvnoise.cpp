@@ -57,7 +57,7 @@ void vvnoise::calcNoiseSP (nr_double_t frequency) {
   nr_double_t k = a + c * pow (frequency, e);
   nr_double_t u1 = getPropertyDouble ("v1") / k / kB / T0 / 4 / z0;
   nr_double_t u2 = getPropertyDouble ("v2") / k / kB / T0 / 4 / z0;
-  nr_double_t cu = C * qucs::sqrt (u1 * u2);
+  nr_double_t cu = C * std::sqrt (u1 * u2);
 
   // entries of source 1
   setN (NODE_V1P, NODE_V1P, +u1); setN (NODE_V1N, NODE_V1N, +u1);
@@ -94,7 +94,7 @@ void vvnoise::calcNoiseAC (nr_double_t frequency) {
   nr_double_t k = a + c * pow (frequency, e);
   nr_double_t u1 = getPropertyDouble ("v1") / k / kB / T0;
   nr_double_t u2 = getPropertyDouble ("v2") / k / kB / T0;
-  nr_double_t cu = C * qucs::sqrt (u1 * u2);
+  nr_double_t cu = C * std::sqrt (u1 * u2);
   setN (NODE_5, NODE_5, u1); setN (NODE_6, NODE_6, u2);
   setN (NODE_5, NODE_6, cu); setN (NODE_6, NODE_5, cu);
 }

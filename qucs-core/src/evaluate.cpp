@@ -34,6 +34,7 @@
 #include <cmath>
 
 #include "logging.h"
+#include "complex_missing_std.h"
 #include "complex.h"
 #include "object.h"
 #include "vector.h"
@@ -174,6 +175,63 @@ constant * evaluate:: QUCS_CONCAT2 (cfunc,_v) (constant * args) { \
   _RETV (cfunc (*v));						  \
 }
 
+// The following macro is meant to be used for some simple functions,
+// which must explicitly use the double function from the std namespace
+#define MAKE_FUNC_DEFINITION_0_STD(cfunc) \
+constant * evaluate:: QUCS_CONCAT2 (cfunc,_d) (constant * args) { \
+  _ARD0 (d);							  \
+  _DEFD ();							  \
+  _RETD_STD (cfunc (d));						  \
+}								  \
+constant * evaluate:: QUCS_CONCAT2 (cfunc,_c) (constant * args) { \
+  _ARC0 (c);							  \
+  _DEFC ();							  \
+  _RETC (cfunc (*c));						  \
+}								  \
+constant * evaluate:: QUCS_CONCAT2 (cfunc,_v) (constant * args) { \
+  _ARV0 (v);							  \
+  _DEFV ();							  \
+  _RETV (cfunc (*v));						  \
+}
+
+// The following macro is meant to be used for some simple functions,
+// which must explicitly use the double function from the qucs namespace
+#define MAKE_FUNC_DEFINITION_0_QUCS(cfunc) \
+constant * evaluate:: QUCS_CONCAT2 (cfunc,_d) (constant * args) { \
+  _ARD0 (d);							  \
+  _DEFD ();							  \
+  _RETD_QUCS (cfunc (d));						  \
+}								  \
+constant * evaluate:: QUCS_CONCAT2 (cfunc,_c) (constant * args) { \
+  _ARC0 (c);							  \
+  _DEFC ();							  \
+  _RETC (cfunc (*c));						  \
+}								  \
+constant * evaluate:: QUCS_CONCAT2 (cfunc,_v) (constant * args) { \
+  _ARV0 (v);							  \
+  _DEFV ();							  \
+  _RETV (cfunc (*v));						  \
+}
+
+// The following macro is meant to be used for some simple functions,
+// which must explicitly use the double function from the fspecial namespace
+#define MAKE_FUNC_DEFINITION_0_SPECIAL(cfunc) \
+constant * evaluate:: QUCS_CONCAT2 (cfunc,_d) (constant * args) { \
+  _ARD0 (d);							  \
+  _DEFD ();							  \
+  _RETD_SPECIAL (cfunc (d));						  \
+}								  \
+constant * evaluate:: QUCS_CONCAT2 (cfunc,_c) (constant * args) { \
+  _ARC0 (c);							  \
+  _DEFC ();							  \
+  _RETC (cfunc (*c));						  \
+}								  \
+constant * evaluate:: QUCS_CONCAT2 (cfunc,_v) (constant * args) { \
+  _ARV0 (v);							  \
+  _DEFV ();							  \
+  _RETV (cfunc (*v));						  \
+}
+
 #define MAKE_FUNC_DEFINITION_1(cfunc) \
 constant * evaluate:: QUCS_CONCAT2 (cfunc,_d) (constant * args) { \
   _ARD0 (d);							  \
@@ -201,60 +259,8 @@ constant * evaluate:: QUCS_CONCAT2 (cfunc,_mv) (constant * args) {\
   _RETMV (cfunc (*mv));						  \
 }
 
-// The following macro is meant to be used for some simple functions.
-#define MAKE_FUNC_DEFINITION_0_QUCS(cfunc) \
-constant * evaluate:: QUCS_CONCAT2 (cfunc,_d) (constant * args) { \
-  _ARD0 (d);							  \
-  _DEFD ();							  \
-  _RETD_QUCS (cfunc (d));						  \
-}								  \
-constant * evaluate:: QUCS_CONCAT2 (cfunc,_c) (constant * args) { \
-  _ARC0 (c);							  \
-  _DEFC ();							  \
-  _RETC (cfunc (*c));						  \
-}								  \
-constant * evaluate:: QUCS_CONCAT2 (cfunc,_v) (constant * args) { \
-  _ARV0 (v);							  \
-  _DEFV ();							  \
-  _RETV (cfunc (*v));						  \
-}
-
-#define MAKE_FUNC_DEFINITION_0_STD(cfunc) \
-constant * evaluate:: QUCS_CONCAT2 (cfunc,_d) (constant * args) { \
-  _ARD0 (d);							  \
-  _DEFD ();							  \
-  _RETD_STD (cfunc (d));						  \
-}								  \
-constant * evaluate:: QUCS_CONCAT2 (cfunc,_c) (constant * args) { \
-  _ARC0 (c);							  \
-  _DEFC ();							  \
-  _RETC (cfunc (*c));						  \
-}								  \
-constant * evaluate:: QUCS_CONCAT2 (cfunc,_v) (constant * args) { \
-  _ARV0 (v);							  \
-  _DEFV ();							  \
-  _RETV (cfunc (*v));						  \
-}
-
-#define MAKE_FUNC_DEFINITION_0_SPECIAL(cfunc) \
-constant * evaluate:: QUCS_CONCAT2 (cfunc,_d) (constant * args) { \
-  _ARD0 (d);							  \
-  _DEFD ();							  \
-  _RETD_SPECIAL (cfunc (d));						  \
-}								  \
-constant * evaluate:: QUCS_CONCAT2 (cfunc,_c) (constant * args) { \
-  _ARC0 (c);							  \
-  _DEFC ();							  \
-  _RETC (cfunc (*c));						  \
-}								  \
-constant * evaluate:: QUCS_CONCAT2 (cfunc,_v) (constant * args) { \
-  _ARV0 (v);							  \
-  _DEFV ();							  \
-  _RETV (cfunc (*v));						  \
-}
-
-MAKE_FUNC_DEFINITION_0_QUCS (exp);    // exponential function
-MAKE_FUNC_DEFINITION_0_QUCS (limexp); // limited exponential function
+MAKE_FUNC_DEFINITION_0 (exp);    // exponential function
+MAKE_FUNC_DEFINITION_0 (limexp); // limited exponential function
 MAKE_FUNC_DEFINITION_0 (sin);    // sine
 MAKE_FUNC_DEFINITION_0 (cos);    // cosine
 MAKE_FUNC_DEFINITION_0 (tan);    // tangent
@@ -1401,22 +1407,22 @@ constant * evaluate::sqrt_d (constant * args) {
   _ARD0 (d1);
   _DEFC ();
   if (d1 < 0.0)
-    res->c = new nr_complex_t (0.0, qucs::sqrt (-d1));
+    res->c = new nr_complex_t (0.0, std::sqrt (-d1));
   else
-    res->c = new nr_complex_t (qucs::sqrt (d1));
+    res->c = new nr_complex_t (std::sqrt (d1));
   return res;
 }
 
 constant * evaluate::sqrt_c (constant * args) {
   _ARC0 (c1);
   _DEFC ();
-  _RETC (qucs::sqrt (*c1));
+  _RETC (std::sqrt (*c1));
 }
 
 constant * evaluate::sqrt_v (constant * args) {
   _ARV0 (v1);
   _DEFV ();
-  _RETV (qucs::sqrt (*v1));
+  _RETV (sqrt (*v1));
 }
 
 // ********** natural logarithm *****************
@@ -1424,22 +1430,22 @@ constant * evaluate::ln_d (constant * args) {
   _ARD0 (d1);
   _DEFC ();
   if (d1 < 0.0)
-    res->c = new nr_complex_t (qucs::log (-d1), M_PI);
+    res->c = new nr_complex_t (std::log (-d1), M_PI);
   else
-    res->c = new nr_complex_t (qucs::log (d1));
+    res->c = new nr_complex_t (std::log (d1));
   return res;
 }
 
 constant * evaluate::ln_c (constant * args) {
   _ARC0 (c1);
   _DEFC ();
-  _RETC (qucs::log (*c1));
+  _RETC (std::log (*c1));
 }
 
 constant * evaluate::ln_v (constant * args) {
   _ARV0 (v1);
   _DEFV ();
-  _RETV (qucs::log (*v1));
+  _RETV (log (*v1));
 }
 
 // ********** decimal logarithm *****************
@@ -1456,13 +1462,13 @@ constant * evaluate::log10_d (constant * args) {
 constant * evaluate::log10_c (constant * args) {
   _ARC0 (c1);
   _DEFC ();
-  _RETC (qucs::log10 (*c1));
+  _RETC (std::log10 (*c1));
 }
 
 constant * evaluate::log10_v (constant * args) {
   _ARV0 (v1);
   _DEFV ();
-  _RETV (qucs::log10 (*v1));
+  _RETV (log10 (*v1));
 }
 
 // ********** binary logarithm *****************
@@ -1470,9 +1476,9 @@ constant * evaluate::log2_d (constant * args) {
   _ARD0 (d1);
   _DEFC ();
   if (d1 < 0.0)
-    res->c = new nr_complex_t (qucs::log (-d1) * M_LOG2E, M_PI * M_LOG2E);
+    res->c = new nr_complex_t (std::log (-d1) * M_LOG2E, M_PI * M_LOG2E);
   else
-    res->c = new nr_complex_t (qucs::log (d1) * M_LOG2E);
+    res->c = new nr_complex_t (std::log (d1) * M_LOG2E);
   return res;
 }
 
@@ -1485,7 +1491,7 @@ constant * evaluate::log2_c (constant * args) {
 constant * evaluate::log2_v (constant * args) {
   _ARV0 (v1);
   _DEFV ();
-  _RETV (qucs::log2 (*v1));
+  _RETV (log2 (*v1));
 }
 
 // ************* arcus sine *********************
@@ -1523,7 +1529,7 @@ constant * evaluate::arccos_c (constant * args) {
 constant * evaluate::arccos_v (constant * args) {
   _ARV0 (v1);
   _DEFV ();
-  _RETV (qucs::acos (*v1));
+  _RETV (acos (*v1));
 }
 
 // ************** arcus tangent ******************
@@ -1549,7 +1555,7 @@ constant * evaluate::arctan_v (constant * args) {
 constant * evaluate::cot_d (constant * args) {
   _ARD0 (d1);
   _DEFD ();
-  _RETD (1.0 / qucs::tan (d1));
+  _RETD (1.0 / std::tan (d1));
 }
 
 constant * evaluate::cot_c (constant * args) {
@@ -1561,7 +1567,7 @@ constant * evaluate::cot_c (constant * args) {
 constant * evaluate::cot_v (constant * args) {
   _ARV0 (v1);
   _DEFV ();
-  _RETV (qucs::cot (*v1));
+  _RETV (cot (*v1));
 }
 
 // ************ arcus cotangent *****************
@@ -1580,20 +1586,20 @@ constant * evaluate::arccot_c (constant * args) {
 constant * evaluate::arccot_v (constant * args) {
   _ARV0 (v1);
   _DEFV ();
-  _RETV (qucs::acot (*v1));
+  _RETV (acot (*v1));
 }
 
 // ***************** secans *********************
 constant * evaluate::sec_d (constant * args) {
   _ARD0 (d1);
   _DEFD ();
-  _RETD (1.0 / qucs::cos (d1));
+  _RETD (1.0 / std::cos (d1));
 }
 
 constant * evaluate::sec_c (constant * args) {
   _ARC0 (c1);
   _DEFC ();
-  _RETC (1.0 / qucs::cos (*c1));
+  _RETC (1.0 / std::cos (*c1));
 }
 
 constant * evaluate::sec_v (constant * args) {
@@ -1759,7 +1765,7 @@ constant * evaluate::artanh_v (constant * args) {
 constant * evaluate::arcoth_d (constant * args) {
   _ARD0 (d1);
   _DEFD ();
-  _RETD (0.5 * qucs::log ((d1 + 1.0) / (d1 - 1.0)));
+  _RETD (0.5 * std::log ((d1 + 1.0) / (d1 - 1.0)));
 }
 
 constant * evaluate::arcoth_c (constant * args) {
@@ -2780,7 +2786,7 @@ constant * evaluate::logspace (constant * args) {
     res->v = new qucs::vector (points);
     return res;
   }
-  _RETV (::logspace (start, stop, points));
+  _RETV (qucs::logspace (start, stop, points));
 }
 
 // Circle helper macro with a number of points given.
@@ -3344,7 +3350,7 @@ MAKE_FUNC_DEFINITION_0_SPECIAL (erf);     // error function
 //#ifndef HAVE_ERFC
 MAKE_FUNC_DEFINITION_0_SPECIAL (erfc);    // complementary error function
 //#else
-//MAKE_FUNC_DEFINITION_0 (erfc);    // complementary error function
+//MAKE_FUNC_DEFINITION_0_STD (erfc);    // complementary error function
 //#endif
 MAKE_FUNC_DEFINITION_0_SPECIAL (erfinv);  // inverse of error function
 MAKE_FUNC_DEFINITION_0_SPECIAL (erfcinv); // inverse of complementary error function

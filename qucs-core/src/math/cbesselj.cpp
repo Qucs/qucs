@@ -163,7 +163,7 @@ cbesselj_mediumarg_odd (unsigned int n, nr_complex_t z)
   for (k = 1; k <= m - 1; k++)
     {
       t = (k * M_PI) / (2 * m);
-      ak = cos (z * qucs::sin (t)) * qucs::cos (n * t);
+      ak = cos (z * std::sin (t)) * std::cos (n * t);
       second += ak;
     }
   return first + second / (nr_double_t) m;
@@ -190,7 +190,7 @@ cbesselj_mediumarg_even (unsigned int n, nr_complex_t z)
   for (k = 1; k <= m - 1; k++)
     {
       t = (k * M_PI) / (2 * m);
-      ak = qucs::sin (z * qucs::sin (t)) * qucs::sin (n * t);
+      ak = std::sin (z * std::sin (t)) * std::sin (n * t);
       second += ak;
     }
   return first + second / (nr_double_t) m;
