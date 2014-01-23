@@ -91,7 +91,7 @@ real ICC, IEC, q1, q2, IB, IC, IE, Q1, RelSensitivity;
   Q1=(V(BI,EI) >Vje/2) ? Tf*ICC+Cje*con5*(Mje*V(BI,EI)*V(BI,EI)/Vje+con3*V(BI,EI))
                        : Tf*ICC+Cje*((Vje/con3)*(1-pow((1-V(BI,EI)),con3)));
   I(BI,EI) <+ ddt(Q1);
-  RelSensitivity = P0+P1*V(Wavelength)+P2*pow(V(Wavelength),2)+P3*pow(V(Wavelength),3)+P4*pow(V(Wavelength),4);
+  RelSensitivity = P0+P1*V(Wavelength)+P2*pow(V(Wavelength),2.0)+P3*pow(V(Wavelength),3.0)+P4*pow(V(Wavelength),4.0);
   I(CI,BI2) <+ ( (Responsivity*RelSensitivity)/(Bf*100) )*V(Power);
 // Noise contributions
   I(Collector,CI)  <+ white_noise(FourKT*con9, "thermal");
