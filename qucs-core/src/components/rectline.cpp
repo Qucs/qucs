@@ -66,20 +66,20 @@ void rectline::calcResistivity (char * Mat, nr_double_t T) {
       rho = 2e-11;
     }
     else if (T < 15) {
-      rho = 6.66667e-17 * pow (T, 5) - 3.88549e-15 * pow (T, 4) +
-	9.82267e-14 * pow (T, 3) - 1.29684e-12 * pow (T, 2) +
+      rho = 6.66667e-17 * pow (T, 5.0) - 3.88549e-15 * pow (T, 4.0) +
+	9.82267e-14 * pow (T, 3.0) - 1.29684e-12 * pow (T, 2.0) +
 	8.68341e-12 * T - 2.72120e-12;
     }
     else if (T < 45) {
-      rho = 6.60731e-15 * pow (T, 3) - 1.14812e-13 * pow (T, 2) -
+      rho = 6.60731e-15 * pow (T, 3.0) - 1.14812e-13 * pow (T, 2.0) -
 	1.11681e-12 * T + 4.23709e-11;
     }
     else if (T < 100) {
-      rho = -6.53059e-15 * pow (T, 3) +	1.73783e-12 * pow (T, 2) -
+      rho = -6.53059e-15 * pow (T, 3.0) +	1.73783e-12 * pow (T, 2.0) -
 	8.73888e-11 * T + 1.37016e-9;
     }
     else if (T < 350) {
-      rho = 1.00018e-17 * pow (T, 3) - 8.72408e-15 * pow (T, 2) +
+      rho = 1.00018e-17 * pow (T, 3.0) - 8.72408e-15 * pow (T, 2.0) +
 	7.06020e-11 * T - 3.51125e-9;
     }
     else {
@@ -89,18 +89,18 @@ void rectline::calcResistivity (char * Mat, nr_double_t T) {
     //rho = 1.7e-8;
   }
   else if (!strcmp (Mat, "StainlessSteel")) {
-    rho = 7.4121e-17 * pow (T, 4) - 5.3504e-14 * pow (T, 3) +
-      1.2902e-11 * pow (T, 2) - 2.9186e-10 * T +4.9320e-7;
+    rho = 7.4121e-17 * pow (T, 4.0) - 5.3504e-14 * pow (T, 3.0) +
+      1.2902e-11 * pow (T, 2.0) - 2.9186e-10 * T +4.9320e-7;
   }
   else if (!strcmp (Mat, "Gold")) {
     if (T < 20) {
       rho = 0.00000000024;
     }
     else if (T < 65) {
-      rho = 2e-12 * pow (T, 2) - 8e-11 * T + 1e-9;
+      rho = 2e-12 * pow (T, 2.0) - 8e-11 * T + 1e-9;
     }
     else if (T < 80) {
-      rho = 5e-13 * pow (T, 3) - 1e-10 * pow (T, 2) + 9e-9 * T - 2e-7;
+      rho = 5e-13 * pow (T, 3.0) - 1e-10 * pow (T, 2.0) + 9e-9 * T - 2e-7;
     }
     else if (T < 300) {
       rho = 8e-11 * T - 1e-10;
