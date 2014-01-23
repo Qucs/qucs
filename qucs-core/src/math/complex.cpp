@@ -604,12 +604,12 @@ nr_complex_t round (const nr_complex_t z)
 {
     nr_double_t zreal = real (z);
     nr_double_t zimag = imag (z);
-#ifdef HAVE_ROUND
-    zreal = std::round (zreal);
-    zimag = std::round (zimag);
-#else
+#ifndef HAVE_ROUND
     zreal = qucs::round (zreal);
     zimag = qucs::round (zimag);
+#else
+    zreal = std::round (zreal);
+    zimag = std::round (zimag);
 #endif
     return nr_complex_t (zreal, zimag);
 }
