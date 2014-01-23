@@ -26,8 +26,6 @@ AM_CPPFLAGS = -I$(top_srcdir)/src
 
 EXTRA_DIST = cbesselj.cpp
 
-#pkginclude_HEADERS = precision.h complex.h real.h
-
 noinst_HEADERS = fspecial.h matrix.h complex_missing_std.h \
     precision.h complex.h real.h
 

@@ -44,22 +44,11 @@ libqucs_la_LIBADD = math/libqucsmath.la   \
 ## In case we want to build windows dlls
 libqucs_la_LDFLAGS = -no-undefined
 
-#pkginclude_TEMPLATES = tmatrix.cpp tvector.cpp eqnsys.cpp states.cpp \
-#	nasolver.cpp nasolution.cpp valuelist.cpp
-
 noinst_TEMPLATES = ptrlist.cpp tridiag.cpp hash.cpp \
 	tmatrix.cpp tvector.cpp eqnsys.cpp states.cpp \
 	nasolver.cpp nasolution.cpp valuelist.cpp
 
-#pkginclude_HEADERS = \ #$(pkginclude_TEMPLATES) \
-#	logging.h net.h input.h dataset.h equation.h tvector.h tmatrix.h \
-#	environment.h exceptionstack.h check_netlist.h module.h nasolver.h \
-#	states.h analysis.h trsolver.h nasolution.h eqnsys.h compat.h \
-#	exception.h object.h node.h circuit.h constants.h vector.h \
-#	nodeset.h nodelist.h strlist.h operatingpoint.h pair.h consts.h  \
-#	integrator.h valuelist.h
-
-noinst_HEADERS = $(maybe_HEADERS) $(noinst_TEMPLATES)            \
+noinst_HEADERS = $(noinst_TEMPLATES)            \
 	tokens_netlist.h tokens_dataset.h check_dataset.h tokens_touchstone.h       \
 	check_touchstone.h  spsolver.h dcsolver.h property.h variable.h       \
 	parasweep.h sweep.h libqucsator.h evaluate.h matvec.h acsolver.h   \
