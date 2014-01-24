@@ -7,16 +7,16 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This software is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this package; see the file COPYING.  If not, write to
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
- * Boston, MA 02110-1301, USA.  
+ * Boston, MA 02110-1301, USA.
  *
  * $Id: components.h 1872 2013-03-06 14:13:37Z fransschreuder $
  *
@@ -157,7 +157,7 @@
 #include "verilog/hicumL0V1p3.core.h"
 #include "verilog/hicumL2V2p23.core.h"
 #include "verilog/hicumL2V2p24.core.h"
-#include "verilog/hicumL2V2p31n.core.h" 
+#include "verilog/hicumL2V2p31n.core.h"
 #include "verilog/photodiode.core.h"
 #include "verilog/phototransistor.core.h"
 #include "verilog/nigbt.core.h"
@@ -191,5 +191,7 @@
 #include "verilog/comp_2bit.core.h"
 #include "verilog/comp_4bit.core.h"
 #include "verilog/hpribin4bit.core.h"
+
+#include "ecvs.h"
 
 #endif /* __COMPONENTS_H__ */

@@ -10,16 +10,16 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This software is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this package; see the file COPYING.  If not, write to
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
- * Boston, MA 02110-1301, USA.  
+ * Boston, MA 02110-1301, USA.
  *
  * $Id$
  *
@@ -49,6 +49,8 @@
 #include "dataset.h"
 #include "check_dataset.h"
 #include "tokens_dataset.h"
+
+using namespace qucs;
 
 %}
 
@@ -106,8 +108,8 @@ IEND     "/indep"
   }
 
 <INITIAL,DESCRIPTION>{ID} { /* identify identifier */
-    dataset_lval.ident = strdup (dataset_text); 
-    return Identifier; 
+    dataset_lval.ident = strdup (dataset_text);
+    return Identifier;
   }
 
 <INITIAL>{CREAL} { /* identify real float */
@@ -139,11 +141,11 @@ IEND     "/indep"
     return Integer;
   }
 
-<INITIAL>"<" { /* pass the '<' to the parser */ 
+<INITIAL>"<" { /* pass the '<' to the parser */
     BEGIN(DESCRIPTION);
     return '<';
   }
-<DESCRIPTION>">" { /* pass the '>' to the parser */ 
+<DESCRIPTION>">" { /* pass the '>' to the parser */
     BEGIN(INITIAL);
     return '>';
   }
@@ -155,8 +157,8 @@ IEND     "/indep"
     BEGIN(COMMENT);
   }
 <INITIAL,DESCRIPTION>. { /* any other character in invalid */
-    logprint (LOG_ERROR, 
-	      "line %d: syntax error, unrecognized character: `%s'\n", 
+    logprint (LOG_ERROR,
+	      "line %d: syntax error, unrecognized character: `%s'\n",
 	      dataset_lineno, dataset_text);
     return InvalidCharacter;
   }

@@ -25,7 +25,7 @@
 #ifndef __CPWSHORT_H__
 #define __CPWSHORT_H__
 
-class cpwshort : public circuit
+class cpwshort : public qucs::circuit
 {
  public:
   CREATOR (cpwshort);

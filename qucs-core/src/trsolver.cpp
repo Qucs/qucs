@@ -56,6 +56,7 @@
 // Macro for the n-th state of the solution vector history.
 #define SOL(state) (solution[(int) getState (sState, (state))])
 
+namespace qucs {
 
 using namespace transient;
 
@@ -856,11 +857,11 @@ void trsolver::initCircuitTR (circuit * c)
    (for the given timestamp) into the output dataset. */
 void trsolver::saveAllResults (nr_double_t time)
 {
-    vector * t;
+    qucs::vector * t;
     // add current frequency to the dependency of the output dataset
     if ((t = data->findDependency ("time")) == NULL)
     {
-        t = new vector ("time");
+      t = new qucs::vector ("time");
         data->addDependency (t);
     }
     if (runs == 1) t->add (time);
@@ -960,3 +961,5 @@ PROP_OPT [] =
 };
 struct define_t trsolver::anadef =
     { "TR", 0, PROP_ACTION, PROP_NO_SUBSTRATE, PROP_LINEAR, PROP_DEF };
+
+} // namespace qucs

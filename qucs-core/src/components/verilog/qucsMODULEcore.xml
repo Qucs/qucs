@@ -36,7 +36,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- * 
+ *
  */
 
 <admst:for-each select="/module">
@@ -60,10 +60,10 @@
   <admst:text format="#define %s"/>
   <admst:value-of select="position(.)-2"/>
   <admst:text format=" %s\n"/>
-  </admst:if> 
+  </admst:if>
 </admst:for-each>
 <admst:text format="// internal nodes\n"/>
-<admst:for-each select="node"> 
+<admst:for-each select="node">
   <admst:if test="[location='internal' and name!='GND']">
   <admst:value-of select="name"/>
   <admst:text format="#define %s"/>
@@ -216,7 +216,8 @@
 <admst:text format="\n\n// \$vt and \$vt() functions "/>
 #define _vt_nom                 (kBoverQ*_circuit_temp)
 
-using namespace device;
+using namespace qucs;
+using namespace qucs::device;
 
 <!-- ---------------------------------------------------------------------- -->
 
@@ -233,7 +234,7 @@ using namespace device;
 <admst:for-each select="node">
   <admst:if test="[location='internal' and name!='GND']">
   <admst:value-of select="name"/>
-  <admst:value-of select="name"/>  
+  <admst:value-of select="name"/>
   <admst:text format="  setInternalNode (%s, &quot;%s&quot;);\n"/>
   </admst:if>
 </admst:for-each>
@@ -270,7 +271,7 @@ using namespace device;
 
 <admst:text format="/* Initialize Verilog-AMS code. */\n"/>
 <admst:text format="void $module::initVerilog (void)\n{\n"/>
-		
+
 <admst:text format="  // initialization of noise variables\n"/>
 <admst:for-each select="source[whitenoise='yes']">
   <admst:value-of select="branch/nnode/name"/>
@@ -342,13 +343,13 @@ using namespace device;
     <admst:value-of select="name"/>
     <admst:choose>
     <admst:when test="[type='real']">
-    <admst:text format="  %s = getPropertyDouble (&quot;%s&quot;);\n"/> 
+    <admst:text format="  %s = getPropertyDouble (&quot;%s&quot;);\n"/>
     </admst:when>
     <admst:when test="[type='integer']">
-    <admst:text format="  %s = getPropertyInteger (&quot;%s&quot;);\n"/> 
+    <admst:text format="  %s = getPropertyInteger (&quot;%s&quot;);\n"/>
     </admst:when>
     <admst:otherwise>
-    <admst:text format="  %s = getPropertyString (&quot;%s&quot;);\n"/> 
+    <admst:text format="  %s = getPropertyString (&quot;%s&quot;);\n"/>
     </admst:otherwise>
     </admst:choose>
   </admst:if>
@@ -415,8 +416,8 @@ using namespace device;
 <admst:text format="/* Perform DC iteration. */\n"/>
 <admst:text format="void $module::calcDC (void)\n{"/>
   // evaluate Verilog code
-  initVerilog ();		
-  calcVerilog ();		
+  initVerilog ();
+  calcVerilog ();
 
   // fill right hand side and static jacobian
 <admst:text format="\n"/>
@@ -447,12 +448,12 @@ using namespace device;
     <admst:for-each select="../node">
       <admst:if test="[name!='GND']">
       <admst:value-of select="name"/>
-      <admst:variable name="node2" select="%s"/>      
+      <admst:variable name="node2" select="%s"/>
       <admst:text format="  setOperatingPoint (&quot;jstat[$node1][$node2]&quot;, _jstat[$node1][$node2]);\n"/>
       <admst:text format="  setOperatingPoint (&quot;jdyna[$node1][$node2]&quot;, _jdyna[$node1][$node2]);\n"/>
-      </admst:if> 
+      </admst:if>
     </admst:for-each>
-</admst:if> 
+</admst:if>
 </admst:for-each>
 
 <admst:for-each select="source[whitenoise='yes']">
@@ -541,7 +542,7 @@ using namespace device;
 
 <admst:text format="/* Perform S-parameter calculations. */\n"/>
 <admst:text format="void $module::calcSP (nr_double_t frequency)\n{"/>
-  setMatrixS (ytos (calcMatrixY (frequency)));   
+  setMatrixS (ytos (calcMatrixY (frequency)));
 <admst:text format="\n}\n\n"/>
 
 <!-- ---------------------------------------------------------------------- -->
@@ -607,15 +608,15 @@ using namespace device;
 <admst:text format="    if (i3 != i4)\n"/>
 <admst:text format="    if (_caps[i1][i1][i3][i4] != 0.0)\n"/>
 <admst:text format="      transientCapacitanceC2V (i1, i3, i4, _caps[i1][i1][i3][i4], BP(i3,i4));\n"/>
-<admst:text format="  } } }\n"/>     
+<admst:text format="  } } }\n"/>
   // charge: 1-node, voltage: 1-node
 <admst:text format="\n"/>
 <admst:text format="  for (i1 = 0; i1 < $nbr_nodes; i1++) {\n"/>
-<admst:text format="  for (i3 = 0; i3 < $nbr_nodes; i3++) {\n"/>               
+<admst:text format="  for (i3 = 0; i3 < $nbr_nodes; i3++) {\n"/>
 <admst:text format="    if (_caps[i1][i1][i3][i3] != 0.0)\n"/>
 <admst:text format="      transientCapacitanceC (i1, i3, _caps[i1][i1][i3][i3], NP(i3));\n"/>
-<admst:text format="  } }\n"/> 
-  
+<admst:text format="  } }\n"/>
+
 <admst:text format="}\n\n"/>
 
 <!-- ---------------------------------------------------------------------- -->
@@ -719,14 +720,14 @@ using namespace device;
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- * 
+ *
  */
 
 <admst:for-each select="/module">
 #ifndef __$(module)_H__
 #define __$(module)_H__
 
-class $(module) : public circuit
+class $(module) : public qucs::circuit
 {
  public:
   CREATOR ($(module));
@@ -747,7 +748,7 @@ class $(module) : public circuit
   void calcTR (nr_double_t);
   void initHB (int);
   void calcHB (int);
-  
+
  private:
   void initVerilog (void);
   void calcVerilog (void);
@@ -757,8 +758,8 @@ class $(module) : public circuit
   void initializeInstance (void);
   void initialStep (void);
   void finalStep (void);
-  matrix calcMatrixY (nr_double_t);
-  matrix calcMatrixCy (nr_double_t);
+  qucs::matrix calcMatrixY (nr_double_t);
+  qucs::matrix calcMatrixCy (nr_double_t);
 
  private:
   int doHB;
@@ -784,13 +785,13 @@ class $(module) : public circuit
     <admst:value-of select="name"/>
     <admst:choose>
     <admst:when test="[type='real']">
-    <admst:text format="  nr_double_t %s;\n"/> 
+    <admst:text format="  nr_double_t %s;\n"/>
     </admst:when>
     <admst:when test="[type='integer']">
-    <admst:text format="  int %s;\n"/> 
+    <admst:text format="  int %s;\n"/>
     </admst:when>
     <admst:otherwise>
-    <admst:text format="  char * %s;\n"/> 
+    <admst:text format="  char * %s;\n"/>
     </admst:otherwise>
     </admst:choose>
   </admst:if>

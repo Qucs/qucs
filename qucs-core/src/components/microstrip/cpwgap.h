@@ -25,14 +25,14 @@
 #ifndef __CPWGAP_H__
 #define __CPWGAP_H__
 
-class cpwgap : public circuit
+class cpwgap : public qucs::circuit
 {
  public:
   CREATOR (cpwgap);
   void calcSP (nr_double_t);
   void initDC (void);
   void calcAC (nr_double_t);
-  matrix calcMatrixY (nr_double_t);
+  qucs::matrix calcMatrixY (nr_double_t);
 };
 
 #endif /* __CPWGAP_H__ */

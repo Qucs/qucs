@@ -25,6 +25,7 @@
 #ifndef __NASOLVER_H__
 #define __NASOLVER_H__
 
+#include "qucs_typedefs.h"
 #include "tvector.h"
 #include "tmatrix.h"
 #include "eqnsys.h"
@@ -38,6 +39,8 @@
 #define CONV_SteepestDescent 3
 #define CONV_GMinStepping    4
 #define CONV_SourceStepping  5
+
+namespace qucs {
 
 class analysis;
 class circuit;
@@ -61,7 +64,7 @@ public:
     void solve_post (void);
     void setDescription (const char * n) { desc = n; }
     const char * getDescription (void) { return desc; }
-    void saveResults (const char *, const char *, int, vector * f = NULL);
+    void saveResults (const char *, const char *, int, qucs::vector * f = NULL);
     typedef void (* calculate_func_t) (nasolver<nr_type_t> *);
     void setCalculation (calculate_func_t f) { calculate_func = f; }
     void calculate (void)
@@ -69,6 +72,12 @@ public:
         if (calculate_func) (*calculate_func) (this);
     }
     const char * getHelperDescription (void);
+
+    //interface convenience functions
+    /// Returns the number of node voltages in the circuit.
+    int getN ();
+    /// Returns the number of branch currents in the circuit.
+    int getM ();
 
 protected:
     void restartNR (void);
@@ -122,9 +131,9 @@ protected:
     int updateMatrix;
     nr_double_t gMin, srcFactor;
     const char * desc;
+    nodelist * nlist;
 
 private:
-    nodelist * nlist;
     eqnsys<nr_type_t> * eqns;
     nr_double_t reltol;
     nr_double_t abstol;
@@ -135,6 +144,8 @@ private:
 
     calculate_func_t calculate_func;
 };
+
+} // namespace qucs
 
 #include "nasolver.cpp"
 

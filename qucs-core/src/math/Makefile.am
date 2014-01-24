@@ -24,14 +24,15 @@
 
 AM_CPPFLAGS = -I$(top_srcdir)/src
 
-pkginclude_HEADERS = precision.h
+EXTRA_DIST = cbesselj.cpp
 
-noinst_HEADERS = complex.h fspecial.h real.h matrix.h
+noinst_HEADERS = fspecial.h matrix.h complex_missing_std.h \
+    precision.h complex.h real.h
 
 noinst_LTLIBRARIES = libqucsmath.la
 
 libqucsmath_la_SOURCES = complex.cpp fspecial.cpp matrix.cpp real.cpp \
-  cbesselj.cpp precision.c
+   precision.c
 
 CLEANFILES = *~ *.orig *.rej *.output
 MAINTAINERCLEANFILES = Makefile.in

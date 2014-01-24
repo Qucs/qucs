@@ -7,16 +7,16 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This software is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this package; see the file COPYING.  If not, write to
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
- * Boston, MA 02110-1301, USA.  
+ * Boston, MA 02110-1301, USA.
  *
  * $Id$
  *
@@ -24,14 +24,14 @@
 
 /*!\file cbesselj.cpp
    \brief compute complex bessel J function
- 
+
   Bibligraphy:
 
   [1] Bessel function of the first kind with complex argument
       Yousif, Hashim A.; Melka, Richard
       Computer Physics Communications, vol. 106, Issue 3, pp.199-206
       11/1997, ELSEVIER, doi://10.1016/S0010-4655(97)00087-8
-      
+
   [2] Handbook of Mathematical Functions with
       Formulas, Graphs, and Mathematical Tables
       Milton Abramowitz and Irene A. Stegun
@@ -45,31 +45,32 @@
 
   [4] Mathematica Manual
       Bessel, Airy, Struve Functions> BesselJ[nu,z]
-      Representations through equivalent functions 
+      Representations through equivalent functions
       http://functions.wolfram.com/BesselAiryStruveFunctions/BesselJ/27/ShowAll.html
 
-  [5] Algorithms for the evaluation of Bessel functions 
+  [5] Algorithms for the evaluation of Bessel functions
       of complex argument and integer orders
       G. D. C. Kuiken
-      Applied Mathematics Letters, Volume 2, Issue 4, 
+      Applied Mathematics Letters, Volume 2, Issue 4,
       1989,  Pages 353-356
       doi://10.1016/0893-9659(89)90086-4
-      
+
 */
 
-#if HAVE_CONFIG_H
-# include <config.h>
-#endif
-
-#include <math.h>
-#include <assert.h>
-#include <errno.h>
-#include <stdio.h>
-#include <stdlib.h>
-
-#include "complex.h"
-#include "constants.h"
-#include "precision.h"
+//#if HAVE_CONFIG_H
+//# include <config.h>
+//#endif
+//
+//#include <cmath>
+//#include <assert.h>
+//#include <errno.h>
+//#include <stdio.h>
+//#include <stdlib.h>
+//
+//#include "real.h"
+//#include "complex.h"
+//#include "constants.h"
+//#include "precision.h"
 
 #define SMALL_J0_BOUND 1e6
 
@@ -82,6 +83,7 @@
 /*! \brief Arbitrary value for iteration*/
 #define MAX_SMALL_ITERATION 2048
 
+//using namespace qucs;
 
 /*!\brief Implement bessel J function for small arguments
     according to [5]
@@ -92,8 +94,8 @@
     R_{-1}&=1 & R_k &= a_k R_{k-1} \\
     a_0&=\frac{\left(\frac{1}{2}z\right)^n}{n!} &
     a_{+k}&=\frac{-\frac{1}{4} z^2}{k(n+k)}
-    \}
-    
+Â    \}
+
     \todo Not really adapted to high order
           therefore we do not check overflow for n >> 1
 
@@ -151,7 +153,7 @@ cbesselj_mediumarg_odd (unsigned int n, nr_complex_t z)
   nr_double_t t;
   nr_double_t m1pna2;
 
-  m = (2 * abs (z) + 0.25 * (n + abs (imag (z))));
+  m = (2 * std::abs (z) + 0.25 * (n + std::abs (imag (z))));
 
   /* -1^(n/2) */
   m1pna2 = (n / 2) % 2 == 0 ? 1.0 : -1.0;
@@ -161,7 +163,7 @@ cbesselj_mediumarg_odd (unsigned int n, nr_complex_t z)
   for (k = 1; k <= m - 1; k++)
     {
       t = (k * M_PI) / (2 * m);
-      ak = cos (z * sin (t)) * cos (n * t);
+      ak = cos (z * std::sin (t)) * std::cos (n * t);
       second += ak;
     }
   return first + second / (nr_double_t) m;
@@ -178,7 +180,7 @@ cbesselj_mediumarg_even (unsigned int n, nr_complex_t z)
   nr_double_t t;
   nr_double_t m1pn1a2;
 
-  m = (2 * abs (z) + 0.25 * (n + abs (imag (z))));
+  m = (2 * std::abs (z) + 0.25 * (n + std::abs (imag (z))));
 
   /* -1^(n/2) */
   m1pn1a2 = ((n - 1) / 2) % 2 == 0 ? 1.0 : -1.0;
@@ -188,7 +190,7 @@ cbesselj_mediumarg_even (unsigned int n, nr_complex_t z)
   for (k = 1; k <= m - 1; k++)
     {
       t = (k * M_PI) / (2 * m);
-      ak = sin (z * sin (t)) * sin (n * t);
+      ak = std::sin (z * std::sin (t)) * std::sin (n * t);
       second += ak;
     }
   return first + second / (nr_double_t) m;
@@ -209,8 +211,8 @@ cbesselj_mediumarg (unsigned int n, nr_complex_t z)
 /*! \brief num of P(k) (n = 8) will overlow above this value */
 #define MAX_LARGE_ITERATION 430
 
-/*!\brief besselj for large argument 
-  
+/*!\brief besselj for large argument
+
     Based on [5] eq (5)
 */
 static nr_complex_t
@@ -278,7 +280,7 @@ cbesselj_largearg (unsigned int n, nr_complex_t z)
   return tmp / sqrt (M_PI * z);
 }
 
-/*!\brief Main entry point for besselj function 
+/*!\brief Main entry point for besselj function
 
 */
 nr_complex_t
@@ -289,7 +291,7 @@ cbesselj (unsigned int n, nr_complex_t z)
 
   /* J_n(-z)=(-1)^n J_n(z) */
   /*
-     if(real(z) < 0.0) 
+     if(real(z) < 0.0)
      {
      z = -z;
      mul = (n % 2) == 0 ? 1.0 : -1.0 ;

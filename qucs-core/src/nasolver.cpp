@@ -22,14 +22,15 @@
  *
  */
 
-#if HAVE_CONFIG_H
-# include <config.h>
-#endif
+// the types required for qucs library files are defined
+// in qucs_typedefs.h, created by configure from
+// qucs_typedefs.h.in
+#include "qucs_typedefs.h"
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <math.h>
+#include <cmath>
 #include <float.h>
 #include <assert.h>
 
@@ -48,14 +49,14 @@
 #include "tvector.h"
 #include "tmatrix.h"
 #include "eqnsys.h"
-#include "constants.h"
 #include "precision.h"
 #include "operatingpoint.h"
 #include "exception.h"
 #include "exceptionstack.h"
 #include "nasolver.h"
+#include "constants.h"
 
-using namespace qucs;
+namespace qucs {
 
 // Constructor creates an unnamed instance of the nasolver class.
 template <class nr_type_t>
@@ -1305,7 +1306,7 @@ void nasolver<nr_type_t>::recallSolution (void)
    into the output dataset. */
 template <class nr_type_t>
 void nasolver<nr_type_t>::saveResults (const char * volts, const char * amps,
-                                       int saveOPs, vector * f)
+                                       int saveOPs, qucs::vector * f)
 {
     int N = countNodes ();
     int M = countVoltageSources ();
@@ -1427,3 +1428,20 @@ char * nasolver<nr_type_t>::createI (int n, const char * amps, int saveOPs)
         sprintf (text, "%s.%s", name, amps);
     return text;
 }
+
+
+/* Alternaive to countNodes () */
+template <class nr_type_t>
+int nasolver<nr_type_t>::getN()
+{
+    return countNodes ();
+}
+
+/* Alternative to countVoltageSources () */
+template <class nr_type_t>
+int nasolver<nr_type_t>::getM()
+{
+    return countVoltageSources ();
+}
+
+} // namespace qucs

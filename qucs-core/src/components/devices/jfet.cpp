@@ -7,16 +7,16 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This software is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this package; see the file COPYING.  If not, write to
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
- * Boston, MA 02110-1301, USA.  
+ * Boston, MA 02110-1301, USA.
  *
  * $Id$
  *
@@ -34,7 +34,8 @@
 #define NODE_D 1 /* drain node  */
 #define NODE_S 2 /* source node */
 
-using namespace device;
+using namespace qucs;
+using namespace qucs::device;
 
 jfet::jfet () : circuit (3) {
   rs = rd = NULL;
@@ -150,7 +151,7 @@ void jfet::initModel (void) {
   // compute Beta temperature and area dependency
   nr_double_t Beta    = getPropertyDouble ("Beta");
   nr_double_t Betatce = getPropertyDouble ("Betatce");
-  Beta = Beta * exp (Betatce * DT * log (1.01));
+  Beta = Beta * std::exp (Betatce * DT * std::log (1.01));
   setScaledProperty ("Beta", Beta * A);
 
   // compute Rs and Rd area dependency
@@ -351,7 +352,7 @@ void jfet::calcOperatingPoints (void) {
   nr_double_t Cgs0 = getScaledProperty ("Cgs");
   nr_double_t Pb   = getScaledProperty ("Pb");
   nr_double_t Fc   = getPropertyDouble ("Fc");
-  
+
   nr_double_t Cgs, Cgd;
 
   // capacitance of gate-drain diode

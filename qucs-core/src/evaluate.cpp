@@ -8,16 +8,16 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This software is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this package; see the file COPYING.  If not, write to
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
- * Boston, MA 02110-1301, USA.  
+ * Boston, MA 02110-1301, USA.
  *
  * $Id$
  *
@@ -31,9 +31,10 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
-#include <math.h>
+#include <cmath>
 
 #include "logging.h"
+#include "complex_missing_std.h"
 #include "complex.h"
 #include "object.h"
 #include "vector.h"
@@ -52,9 +53,9 @@
 #include "exceptionstack.h"
 #include "strlist.h"
 
-using namespace eqn;
 using namespace qucs;
-using namespace fourier;
+using namespace qucs::eqn;
+using namespace qucs::fourier;
 using namespace fspecial;
 
 // Short macros in order to obtain the correct constant value.
@@ -79,7 +80,7 @@ using namespace fspecial;
 #define _D(var,idx) nr_double_t (var) = D (_ARES (idx));
 #define _BO(var,idx) bool (var) = B (_ARES (idx));
 #define _CX(var,idx) nr_complex_t * (var) = C (_ARES (idx));
-#define _V(var,idx) vector * (var) = V (_ARES (idx));
+#define _V(var,idx) qucs::vector * (var) = V (_ARES (idx));
 #define _M(var,idx) matrix * (var) = M (_ARES (idx));
 #define _MV(var,idx) matvec * (var) = MV (_ARES (idx));
 #define _I(var,idx) int (var) = INT (_ARES (idx));
@@ -121,16 +122,19 @@ using namespace fspecial;
 
 // Return value macros.
 #define _RETD(var) res->d = (var); return res;
+#define _RETD_QUCS(var) res->d = (qucs::var); return res;
+#define _RETD_STD(var) res->d = (std::var); return res;
+#define _RETD_SPECIAL(var) res->d = (fspecial::var); return res;
 #define _RETB(var) res->b = (var); return res;
 #define _RETC(var) res->c = new nr_complex_t (var); return res;
-#define _RETV(var) res->v = new vector (var); return res;
+#define _RETV(var) res->v = new qucs::vector (var); return res;
 #define _RETM(var) res->m = new matrix (var); return res;
 #define _RETMV(var) res->mv = new matvec (var); return res;
 #define _RETR(var) res->r = (var); return res;
 
 // Return value macros without arguments.
 #define __RETC() res->c = new nr_complex_t (); return res;
-#define __RETV() res->v = new vector (); return res;
+#define __RETV() res->v = new qucs::vector (); return res;
 #define __RETM() res->m = new matrix (); return res;
 #define __RETMV() res->mv = new matvec (); return res;
 
@@ -159,6 +163,63 @@ constant * evaluate:: QUCS_CONCAT2 (cfunc,_d) (constant * args) { \
   _ARD0 (d);							  \
   _DEFD ();							  \
   _RETD (cfunc (d));						  \
+}								  \
+constant * evaluate:: QUCS_CONCAT2 (cfunc,_c) (constant * args) { \
+  _ARC0 (c);							  \
+  _DEFC ();							  \
+  _RETC (cfunc (*c));						  \
+}								  \
+constant * evaluate:: QUCS_CONCAT2 (cfunc,_v) (constant * args) { \
+  _ARV0 (v);							  \
+  _DEFV ();							  \
+  _RETV (cfunc (*v));						  \
+}
+
+// The following macro is meant to be used for some simple functions,
+// which must explicitly use the double function from the std namespace
+#define MAKE_FUNC_DEFINITION_0_STD(cfunc) \
+constant * evaluate:: QUCS_CONCAT2 (cfunc,_d) (constant * args) { \
+  _ARD0 (d);							  \
+  _DEFD ();							  \
+  _RETD_STD (cfunc (d));						  \
+}								  \
+constant * evaluate:: QUCS_CONCAT2 (cfunc,_c) (constant * args) { \
+  _ARC0 (c);							  \
+  _DEFC ();							  \
+  _RETC (cfunc (*c));						  \
+}								  \
+constant * evaluate:: QUCS_CONCAT2 (cfunc,_v) (constant * args) { \
+  _ARV0 (v);							  \
+  _DEFV ();							  \
+  _RETV (cfunc (*v));						  \
+}
+
+// The following macro is meant to be used for some simple functions,
+// which must explicitly use the double function from the qucs namespace
+#define MAKE_FUNC_DEFINITION_0_QUCS(cfunc) \
+constant * evaluate:: QUCS_CONCAT2 (cfunc,_d) (constant * args) { \
+  _ARD0 (d);							  \
+  _DEFD ();							  \
+  _RETD_QUCS (cfunc (d));						  \
+}								  \
+constant * evaluate:: QUCS_CONCAT2 (cfunc,_c) (constant * args) { \
+  _ARC0 (c);							  \
+  _DEFC ();							  \
+  _RETC (cfunc (*c));						  \
+}								  \
+constant * evaluate:: QUCS_CONCAT2 (cfunc,_v) (constant * args) { \
+  _ARV0 (v);							  \
+  _DEFV ();							  \
+  _RETV (cfunc (*v));						  \
+}
+
+// The following macro is meant to be used for some simple functions,
+// which must explicitly use the double function from the fspecial namespace
+#define MAKE_FUNC_DEFINITION_0_SPECIAL(cfunc) \
+constant * evaluate:: QUCS_CONCAT2 (cfunc,_d) (constant * args) { \
+  _ARD0 (d);							  \
+  _DEFD ();							  \
+  _RETD_SPECIAL (cfunc (d));						  \
 }								  \
 constant * evaluate:: QUCS_CONCAT2 (cfunc,_c) (constant * args) { \
   _ARC0 (c);							  \
@@ -206,12 +267,12 @@ MAKE_FUNC_DEFINITION_0 (tan);    // tangent
 MAKE_FUNC_DEFINITION_0 (sinh);   // sine hyperbolicus
 MAKE_FUNC_DEFINITION_0 (cosh);   // cosine hyperbolicus
 MAKE_FUNC_DEFINITION_0 (tanh);   // tangent hyperbolicus
-MAKE_FUNC_DEFINITION_0 (coth);   // cotangent hyperbolicus
-MAKE_FUNC_DEFINITION_0 (sech);   // secans hyperbolicus
-MAKE_FUNC_DEFINITION_0 (cosech); // cosecans hyperbolicus
-MAKE_FUNC_DEFINITION_0 (signum); // signum function
-MAKE_FUNC_DEFINITION_0 (sign);   // sign function
-MAKE_FUNC_DEFINITION_0 (sinc);   // sin(x)/x aka sinc function
+MAKE_FUNC_DEFINITION_0_QUCS (coth);   // cotangent hyperbolicus
+MAKE_FUNC_DEFINITION_0_QUCS (sech);   // secans hyperbolicus
+MAKE_FUNC_DEFINITION_0_QUCS (cosech); // cosecans hyperbolicus
+MAKE_FUNC_DEFINITION_0_QUCS (signum); // signum function
+MAKE_FUNC_DEFINITION_0_QUCS (sign);   // sign function
+MAKE_FUNC_DEFINITION_0_QUCS (sinc);   // sin(x)/x aka sinc function
 MAKE_FUNC_DEFINITION_0 (sqr);    // square value
 
 MAKE_FUNC_DEFINITION_1 (real);   // real value
@@ -911,7 +972,7 @@ constant * evaluate::modulo_d_d (constant * args) {
   _ARD0 (d1);
   _ARD1 (d2);
   _DEFD ();
-  _RETD (fmod (d1, d2));
+  _RETD (std::fmod (d1, d2));
 }
 
 constant * evaluate::modulo_c_c (constant * args) {
@@ -975,14 +1036,14 @@ constant * evaluate::power_d_d (constant * args) {
   _ARD0 (d1);
   _ARD1 (d2);
   _DEFD ();
-  _RETD (pow (d1, d2));
+  _RETD (std::pow (d1, d2));
 }
 
 constant * evaluate::power_c_c (constant * args) {
   _ARC0 (c1);
   _ARC1 (c2);
   _DEFC ();
-  _RETC (pow (*c1, *c2));
+  _RETC (std::pow (*c1, *c2));
 }
 
 constant * evaluate::power_c_d (constant * args) {
@@ -1283,7 +1344,7 @@ constant * evaluate::deg2rad_c (constant * args) {
 constant * evaluate::deg2rad_v (constant * args) {
   _ARV0 (v1);
   _DEFV ();
-  vector * v = new vector ();
+  qucs::vector * v = new qucs::vector ();
   for (int i = 0; i < v1->getSize (); i++) v->add (rad (real (v1->get (i))));
   res->v = v;
   return res;
@@ -1304,7 +1365,7 @@ constant * evaluate::rad2deg_c (constant * args) {
 constant * evaluate::rad2deg_v (constant * args) {
   _ARV0 (v1);
   _DEFV ();
-  vector * v = new vector ();
+  qucs::vector * v = new qucs::vector ();
   for (int i = 0; i < v1->getSize (); i++) v->add (deg (real (v1->get (i))));
   res->v = v;
   return res;
@@ -1314,7 +1375,7 @@ constant * evaluate::rad2deg_v (constant * args) {
 constant * evaluate::dB_d (constant * args) {
   _ARD0 (d1);
   _DEFD ();
-  _RETD (10.0 * log10 (fabs (d1)));
+  _RETD (10.0 * std::log10 (std::fabs (d1)));
 }
 
 constant * evaluate::dB_c (constant * args) {
@@ -1346,16 +1407,16 @@ constant * evaluate::sqrt_d (constant * args) {
   _ARD0 (d1);
   _DEFC ();
   if (d1 < 0.0)
-    res->c = new nr_complex_t (0.0, sqrt (-d1));
+    res->c = new nr_complex_t (0.0, std::sqrt (-d1));
   else
-    res->c = new nr_complex_t (sqrt (d1));
+    res->c = new nr_complex_t (std::sqrt (d1));
   return res;
 }
 
 constant * evaluate::sqrt_c (constant * args) {
   _ARC0 (c1);
   _DEFC ();
-  _RETC (sqrt (*c1));
+  _RETC (std::sqrt (*c1));
 }
 
 constant * evaluate::sqrt_v (constant * args) {
@@ -1369,16 +1430,16 @@ constant * evaluate::ln_d (constant * args) {
   _ARD0 (d1);
   _DEFC ();
   if (d1 < 0.0)
-    res->c = new nr_complex_t (log (-d1), M_PI);
+    res->c = new nr_complex_t (std::log (-d1), M_PI);
   else
-    res->c = new nr_complex_t (log (d1));
+    res->c = new nr_complex_t (std::log (d1));
   return res;
 }
 
 constant * evaluate::ln_c (constant * args) {
   _ARC0 (c1);
   _DEFC ();
-  _RETC (log (*c1));
+  _RETC (std::log (*c1));
 }
 
 constant * evaluate::ln_v (constant * args) {
@@ -1392,16 +1453,16 @@ constant * evaluate::log10_d (constant * args) {
   _ARD0 (d1);
   _DEFC ();
   if (d1 < 0.0)
-    res->c = new nr_complex_t (log10 (-d1), M_PI * M_LOG10E);
+    res->c = new nr_complex_t (std::log10 (-d1), M_PI * M_LOG10E);
   else
-    res->c = new nr_complex_t (log10 (d1));
+    res->c = new nr_complex_t (std::log10 (d1));
   return res;
 }
 
 constant * evaluate::log10_c (constant * args) {
   _ARC0 (c1);
   _DEFC ();
-  _RETC (log10 (*c1));
+  _RETC (std::log10 (*c1));
 }
 
 constant * evaluate::log10_v (constant * args) {
@@ -1415,16 +1476,16 @@ constant * evaluate::log2_d (constant * args) {
   _ARD0 (d1);
   _DEFC ();
   if (d1 < 0.0)
-    res->c = new nr_complex_t (log (-d1) * M_LOG2E, M_PI * M_LOG2E);
+    res->c = new nr_complex_t (std::log (-d1) * M_LOG2E, M_PI * M_LOG2E);
   else
-    res->c = new nr_complex_t (log (d1) * M_LOG2E);
+    res->c = new nr_complex_t (std::log (d1) * M_LOG2E);
   return res;
 }
 
 constant * evaluate::log2_c (constant * args) {
   _ARC0 (c1);
   _DEFC ();
-  _RETC (log2 (*c1));
+  _RETC (qucs::log2 (*c1));
 }
 
 constant * evaluate::log2_v (constant * args) {
@@ -1437,7 +1498,7 @@ constant * evaluate::log2_v (constant * args) {
 constant * evaluate::arcsin_d (constant * args) {
   _ARD0 (d1);
   _DEFD ();
-  _RETD (asin (d1));
+  _RETD (std::asin (d1));
 }
 
 constant * evaluate::arcsin_c (constant * args) {
@@ -1456,13 +1517,13 @@ constant * evaluate::arcsin_v (constant * args) {
 constant * evaluate::arccos_d (constant * args) {
   _ARD0 (d1);
   _DEFD ();
-  _RETD (acos (d1));
+  _RETD (std::acos (d1));
 }
 
 constant * evaluate::arccos_c (constant * args) {
   _ARC0 (c1);
   _DEFC ();
-  _RETC (acos (*c1));
+  _RETC (qucs::acos (*c1));
 }
 
 constant * evaluate::arccos_v (constant * args) {
@@ -1475,13 +1536,13 @@ constant * evaluate::arccos_v (constant * args) {
 constant * evaluate::arctan_d (constant * args) {
   _ARD0 (d1);
   _DEFD ();
-  _RETD (atan (d1));
+  _RETD (std::atan (d1));
 }
 
 constant * evaluate::arctan_c (constant * args) {
   _ARC0 (c1);
   _DEFC ();
-  _RETC (atan (*c1));
+  _RETC (qucs::atan (*c1));
 }
 
 constant * evaluate::arctan_v (constant * args) {
@@ -1494,13 +1555,13 @@ constant * evaluate::arctan_v (constant * args) {
 constant * evaluate::cot_d (constant * args) {
   _ARD0 (d1);
   _DEFD ();
-  _RETD (1.0 / tan (d1));
+  _RETD (1.0 / std::tan (d1));
 }
 
 constant * evaluate::cot_c (constant * args) {
   _ARC0 (c1);
   _DEFC ();
-  _RETC (cot (*c1));
+  _RETC (qucs::cot (*c1));
 }
 
 constant * evaluate::cot_v (constant * args) {
@@ -1513,13 +1574,13 @@ constant * evaluate::cot_v (constant * args) {
 constant * evaluate::arccot_d (constant * args) {
   _ARD0 (d1);
   _DEFD ();
-  _RETD (M_PI_2 - atan (d1));
+  _RETD (M_PI_2 - std::atan (d1));
 }
 
 constant * evaluate::arccot_c (constant * args) {
   _ARC0 (c1);
   _DEFC ();
-  _RETC (acot (*c1));
+  _RETC (qucs::acot (*c1));
 }
 
 constant * evaluate::arccot_v (constant * args) {
@@ -1532,26 +1593,26 @@ constant * evaluate::arccot_v (constant * args) {
 constant * evaluate::sec_d (constant * args) {
   _ARD0 (d1);
   _DEFD ();
-  _RETD (1.0 / cos (d1));
+  _RETD (1.0 / std::cos (d1));
 }
 
 constant * evaluate::sec_c (constant * args) {
   _ARC0 (c1);
   _DEFC ();
-  _RETC (1.0 / cos (*c1));
+  _RETC (1.0 / std::cos (*c1));
 }
 
 constant * evaluate::sec_v (constant * args) {
   _ARV0 (v1);
   _DEFV ();
-  _RETV (1.0 / cos (*v1));
+  _RETV (1.0 / qucs::cos (*v1));
 }
 
 // *************** arcus secans *******************
 constant * evaluate::arcsec_d (constant * args) {
   _ARD0 (d1);
   _DEFD ();
-  _RETD (acos (1.0 / d1));
+  _RETD (std::acos (1.0 / d1));
 }
 
 constant * evaluate::arcsec_c (constant * args) {
@@ -1589,7 +1650,7 @@ constant * evaluate::cosec_v (constant * args) {
 constant * evaluate::arccosec_d (constant * args) {
   _ARD0 (d1);
   _DEFD ();
-  _RETD (asin (1.0 / d1));
+  _RETD (std::asin (1.0 / d1));
 }
 
 constant * evaluate::arccosec_c (constant * args) {
@@ -1704,19 +1765,19 @@ constant * evaluate::artanh_v (constant * args) {
 constant * evaluate::arcoth_d (constant * args) {
   _ARD0 (d1);
   _DEFD ();
-  _RETD (0.5 * log ((d1 + 1.0) / (d1 - 1.0)));
+  _RETD (0.5 * std::log ((d1 + 1.0) / (d1 - 1.0)));
 }
 
 constant * evaluate::arcoth_c (constant * args) {
   _ARC0 (c1);
   _DEFC ();
-  _RETC (acoth (*c1));
+  _RETC (qucs::acoth (*c1));
 }
 
 constant * evaluate::arcoth_v (constant * args) {
   _ARV0 (v1);
   _DEFV ();
-  _RETV (acoth (*v1));
+  _RETV (qucs::acoth (*v1));
 }
 
 // This is the rtoz, ztor, ytor, rtoy helper macro.
@@ -1794,7 +1855,7 @@ constant * evaluate::rtoswr_c (constant * args) {
 constant * evaluate::rtoswr_v (constant * args) {
   _ARV0 (v1);
   _DEFV ();
-  res->v = new vector (v1->getSize ());
+  res->v = new qucs::vector (v1->getSize ());
   for (int i = 0; i < v1->getSize (); i++)
     res->v->set ((1 + abs (v1->get (i))) / (1 - abs (v1->get (i))), i);
   return res;
@@ -2032,9 +2093,9 @@ constant * evaluate::index_mv_2 (constant * args) {
     sprintf (txt, "matvec indices [%d,%d] out of bounds [1-%d,1-%d]",
 	     r, c, mv->getRows (), mv->getCols ());
     THROW_MATH_EXCEPTION (txt);
-    res->v = new vector (mv->getSize ());
+    res->v = new qucs::vector (mv->getSize ());
   } else {
-    res->v = new vector (mv->get (r - 1, c - 1));
+    res->v = new qucs::vector (mv->get (r - 1, c - 1));
   }
   return res;
 }
@@ -2068,7 +2129,7 @@ void evaluate::extract_vector (constant * args, int idx, int &skip, int &size,
   _ARV0 (v);
   int i = INT (_ARES (idx));
   int type = _ARG(idx)->getType ();
-  vector * vres;
+  qucs::vector * vres;
   strlist * deps = _ARES(0)->getDataDependencies ();
   int didx = (deps ? deps->length () : 0) - idx;
   int dsize = SOLVEE(0)->getDependencySize (deps, idx);
@@ -2077,7 +2138,7 @@ void evaluate::extract_vector (constant * args, int idx, int &skip, int &size,
   if (type == TAG_RANGE) {
     if (dsize > 1) {
       // dependent vectors: only ':' possible
-      vres = new vector (*(res->v));
+      vres = new qucs::vector (*(res->v));
       skip *= deps ? SOLVEE(0)->getDataSize (deps->get (didx - 1)) : 1;
       size *= deps ? SOLVEE(0)->getDataSize (deps->get (didx)) : 1;
     }
@@ -2100,7 +2161,7 @@ void evaluate::extract_vector (constant * args, int idx, int &skip, int &size,
       }
       size = 0;
       for (n = 0; n < len; n++) if (r->inside (n)) size++;
-      vres = new vector (size);
+      vres = new qucs::vector (size);
       for (k = 0, n = 0; n < len; n++) {
 	if (r->inside (n))
 	  vres->set (res->v->get (n), k++);
@@ -2109,7 +2170,7 @@ void evaluate::extract_vector (constant * args, int idx, int &skip, int &size,
   }
   // a subset
   else {
-    vres = new vector (dsize * size);
+    vres = new qucs::vector (dsize * size);
     int len = deps ? SOLVEE(0)->getDataSize (deps->get (didx)) : v->getSize ();
     if (i < 0 || i >= len) {
       char txt[256];
@@ -2134,7 +2195,7 @@ constant * evaluate::index_v_1 (constant * args) {
   _ARV0 (v);
   _DEFV ();
   int skip = 1, size = 1;
-  res->v = new vector (*v);
+  res->v = new qucs::vector (*v);
   extract_vector (args, 1, skip, size, res);
   return res;
 }
@@ -2143,7 +2204,7 @@ constant * evaluate::index_v_2 (constant * args) {
   _ARV0 (v);
   _DEFV ();
   int skip = 1, size = 1;
-  res->v = new vector (*v);
+  res->v = new qucs::vector (*v);
   if (!EQUATION_HAS_DEPS (_ARES(0), 2)) {
     char txt[256];
     sprintf (txt, "invalid number of vector indices (%d > %d)", 2,
@@ -2203,16 +2264,16 @@ constant * evaluate::interpolate_v_v_d (constant * args) {
   if (v1->getSize () < 3) {
     THROW_MATH_EXCEPTION ("interpolate: number of datapoints must be greater "
 			  "than 2");
-    res->v = new vector ();
+    res->v = new qucs::vector ();
     return res;
   }
   nr_double_t last  = real (v2->get (v2->getSize () - 1));
   nr_double_t first = real (v2->get (0));
   constant * arg = new constant (TAG_VECTOR);
-  arg->v = new vector (::linspace (first, last, n));
+  arg->v = new qucs::vector (qucs::linspace (first, last, n));
   arg->solvee = args->getResult(0)->solvee;
   arg->evaluate ();
-  vector * val = new vector (n);
+  qucs::vector * val = new qucs::vector (n);
   spline spl (SPLINE_BC_NATURAL);
   spl.vectors (*v1, *v2);
   spl.construct ();
@@ -2233,7 +2294,7 @@ constant * evaluate:: QUCS_CONCAT2 (efunc,_v_v) (constant * args) { \
   _ARV0 (v);							    \
   _ARV1 (t);							    \
   _DEFV ();							    \
-  vector * val = new vector (QUCS_CONCAT2 (cfunc,_1d) (*v));	    \
+  qucs::vector * val = new qucs::vector (QUCS_CONCAT2 (cfunc,_1d) (*v));    \
   int k = val->getSize ();					    \
   *val = isign > 0 ? *val / k : *val * k;			    \
   res->v = val;							    \
@@ -2245,7 +2306,7 @@ constant * evaluate:: QUCS_CONCAT2 (efunc,_v_v) (constant * args) { \
   nr_double_t first = real (t->get (0));			    \
   nr_double_t delta = (last - first) / (n - 1);			    \
   constant * arg = new constant (TAG_VECTOR);			    \
-  arg->v = new vector (::linspace (0, 1.0 / delta, n));		    \
+  arg->v = new qucs::vector (qucs::linspace (0, 1.0 / delta, n));	    \
   arg->solvee = args->getResult(0)->solvee;			    \
   arg->evaluate ();						    \
   node * gen = SOLVEE(0)->addGeneratedEquation (arg->v, dep);	    \
@@ -2259,7 +2320,7 @@ constant * evaluate:: QUCS_CONCAT2 (efunc,_v_v) (constant * args) { \
 constant * evaluate:: QUCS_CONCAT2 (cfunc,_v) (constant * args) { \
   _ARV0 (v);							  \
   _DEFV ();							  \
-  vector * val = new vector (QUCS_CONCAT2 (cfunc,_1d) (*v));	  \
+  qucs::vector * val = new qucs::vector (QUCS_CONCAT2 (cfunc,_1d) (*v));  \
   res->v = val;							  \
   res->dropdeps = 1;						  \
   return res;							  \
@@ -2276,7 +2337,7 @@ FOURIER_HELPER_2 (idft);
 constant * evaluate::fftshift_v (constant * args) {
   _ARV0 (v);
   _DEFV ();
-  res->v = new vector (fftshift (*v));
+  res->v = new qucs::vector (fftshift (*v));
   return res;
 }
 
@@ -2657,7 +2718,7 @@ constant * evaluate::mu1_m (constant * args) {
 constant * evaluate::mu1_mv (constant * args) {
   _ARMV0 (mv);
   _DEFV ();
-  vector k;
+  qucs::vector k;
   k = (1 - norm (mv->get (0, 0))) /
     (abs (mv->get (1, 1) - conj (mv->get (0, 0)) * det (*mv)) +
      abs (mv->get (0, 1) * mv->get (1, 0)));
@@ -2677,7 +2738,7 @@ constant * evaluate::mu2_m (constant * args) {
 constant * evaluate::mu2_mv (constant * args) {
   _ARMV0 (mv);
   _DEFV ();
-  vector k;
+  qucs::vector k;
   k = (1 - norm (mv->get (1, 1))) /
     (abs (mv->get (0, 0) - conj (mv->get (1, 1)) * det (*mv)) +
      abs (mv->get (0, 1) * mv->get (1, 0)));
@@ -2704,10 +2765,10 @@ constant * evaluate::linspace (constant * args) {
   _DEFV ();
   if (points < 2) {
     THROW_MATH_EXCEPTION ("linspace: number of points must be greater than 1");
-    res->v = new vector ();
+    res->v = new qucs::vector ();
     return res;
   }
-  _RETV (::linspace (start, stop, points));
+  _RETV (qucs::linspace (start, stop, points));
 }
 
 constant * evaluate::logspace (constant * args) {
@@ -2717,15 +2778,15 @@ constant * evaluate::logspace (constant * args) {
   _DEFV ();
   if (points < 2) {
     THROW_MATH_EXCEPTION ("logspace: number of points must be greater than 1");
-    res->v = new vector ();
+    res->v = new qucs::vector ();
     return res;
   }
   if (start * stop <= 0) {
     THROW_MATH_EXCEPTION ("logspace: invalid start/stop values");
-    res->v = new vector (points);
+    res->v = new qucs::vector (points);
     return res;
   }
-  _RETV (::logspace (start, stop, points));
+  _RETV (qucs::logspace (start, stop, points));
 }
 
 // Circle helper macro with a number of points given.
@@ -2734,11 +2795,11 @@ constant * evaluate::logspace (constant * args) {
   if (n < 2) {                                  \
     THROW_MATH_EXCEPTION ("Circle: number of points must be greater than 1"); \
     _DEFV (); \
-    res->v = new vector ();                     \
+    res->v = new qucs::vector ();			\
     return res;                                 \
   }                                             \
   constant * arg = new constant (TAG_VECTOR);   \
-  arg->v = new vector (::linspace (0, 360, n)); \
+  arg->v = new qucs::vector (qucs::linspace (0, 360, n));	\
   arg->solvee = args->getResult(0)->solvee;     \
   arg->evaluate ();                             \
   delete args->get(argi);                       \
@@ -2748,24 +2809,24 @@ constant * evaluate::logspace (constant * args) {
 // Circle helper macro with no additional argument given.
 #define CIRCLE_HELPER_A()                        \
   constant * arg = new constant (TAG_VECTOR);    \
-  arg->v = new vector (::linspace (0, 360, 64)); \
+  arg->v = new qucs::vector (qucs::linspace (0, 360, 64));	\
   arg->solvee = args->getResult(0)->solvee;      \
   arg->evaluate ();                              \
   args->append (arg);
 
 // ***************** s-parameter noise circles *****************
 constant * evaluate::noise_circle_d_v (constant * args) {
-  vector * Sopt = V (_ARES(0));
-  vector * Fmin = V (_ARES(1));
-  vector * Rn   = V (_ARES(2));
+  qucs::vector * Sopt = V (_ARES(0));
+  qucs::vector * Fmin = V (_ARES(1));
+  qucs::vector * Rn   = V (_ARES(2));
   nr_double_t F = D (_ARES(3));
-  vector * arc  = V (_ARES(4));
+  qucs::vector * arc  = V (_ARES(4));
 
   _DEFV ();
-  vector N = circuit::z0 / 4 / *Rn * (F - *Fmin) * norm (1 + *Sopt);
-  vector R = sqrt (N * N + N * (1 - norm (*Sopt))) / (1 + N);
-  vector C = *Sopt / (1 + N);
-  vector * circle = new vector (C.getSize () * arc->getSize ());
+  qucs::vector N = circuit::z0 / 4 / *Rn * (F - *Fmin) * norm (1 + *Sopt);
+  qucs::vector R = sqrt (N * N + N * (1 - norm (*Sopt))) / (1 + N);
+  qucs::vector C = *Sopt / (1 + N);
+  qucs::vector * circle = new qucs::vector (C.getSize () * arc->getSize ());
   int i, a, j; nr_complex_t v;
   for (i = 0, j = 0; i < C.getSize (); i++) {
     for (a = 0; a < arc->getSize (); a++, j++) {
@@ -2791,16 +2852,16 @@ constant * evaluate::noise_circle_d (constant * args) {
 }
 
 constant * evaluate::noise_circle_v_v (constant * args) {
-  vector * Sopt = V (_ARES(0));
-  vector * Fmin = V (_ARES(1));
-  vector * Rn   = V (_ARES(2));
-  vector * F    = V (_ARES(3));
-  vector * arc  = V (_ARES(4));
+  qucs::vector * Sopt = V (_ARES(0));
+  qucs::vector * Fmin = V (_ARES(1));
+  qucs::vector * Rn   = V (_ARES(2));
+  qucs::vector * F    = V (_ARES(3));
+  :: vector * arc  = V (_ARES(4));
 
   _DEFV ();
-  vector * circle =
-    new vector (Sopt->getSize () * arc->getSize () * F->getSize ());
-  int i, a, j, f; nr_complex_t v; vector N, R, C;
+  qucs::vector * circle =
+      new qucs::vector (Sopt->getSize () * arc->getSize () * F->getSize ());
+  int i, a, j, f; nr_complex_t v; qucs::vector N, R, C;
   for (f = 0; f < F->getSize (); f++) {
     N = circuit::z0 / 4 / *Rn * (F->get (f) - *Fmin) * norm (1 + *Sopt);
     R = sqrt (N * N + N * (1 - norm (*Sopt))) / (1 + N);
@@ -2839,10 +2900,10 @@ constant * evaluate::stab_circle_l_v (constant * args) {
   _ARMV0 (S);
   _ARV1 (arc);
   _DEFV ();
-  vector D = norm (S->get (1, 1)) - norm (det (*S));
-  vector C = (conj (S->get (1, 1)) - S->get (0, 0) * conj (det (*S))) / D;
-  vector R = abs (S->get (0, 1)) * abs (S->get (1, 0)) / D;
-  vector * circle = new vector (S->getSize () * arc->getSize ());
+  qucs::vector D = norm (S->get (1, 1)) - norm (det (*S));
+  qucs::vector C = (conj (S->get (1, 1)) - S->get (0, 0) * conj (det (*S))) / D;
+  qucs::vector R = abs (S->get (0, 1)) * abs (S->get (1, 0)) / D;
+  qucs::vector * circle = new qucs::vector (S->getSize () * arc->getSize ());
   int a, d, i; nr_complex_t v;
   for (i = 0, d = 0; i < S->getSize (); i++) {
     for (a = 0; a < arc->getSize (); a++, d++) {
@@ -2870,10 +2931,10 @@ constant * evaluate::stab_circle_s_v (constant * args) {
   _ARMV0 (S);
   _ARV1 (arc);
   _DEFV ();
-  vector D = norm (S->get (0, 0)) - norm (det (*S));
-  vector C = (conj (S->get (0, 0)) - S->get (1, 1) * conj (det (*S))) / D;
-  vector R = abs (S->get (0, 1)) * abs (S->get (1, 0)) / D;
-  vector * circle = new vector (S->getSize () * arc->getSize ());
+  qucs::vector D = norm (S->get (0, 0)) - norm (det (*S));
+  qucs::vector C = (conj (S->get (0, 0)) - S->get (1, 1) * conj (det (*S))) / D;
+  qucs::vector R = abs (S->get (0, 1)) * abs (S->get (1, 0)) / D;
+  qucs::vector * circle = new qucs::vector (S->getSize () * arc->getSize ());
   int a, d, i; nr_complex_t v;
   for (i = 0, d = 0; i < S->getSize (); i++) {
     for (a = 0; a < arc->getSize (); a++, d++) {
@@ -2903,7 +2964,7 @@ constant * evaluate::ga_circle_d_v (constant * args) {
   _ARD1 (G);
   _ARV2 (arc);
   _DEFV ();
-  vector g, D, c, s, k, C, R, d;
+  qucs::vector g, D, c, s, k, C, R, d;
   D = det (*S);
   c = S->get (0, 0) - conj (S->get (1, 1)) * D;
   k = rollet (*S);
@@ -2913,7 +2974,7 @@ constant * evaluate::ga_circle_d_v (constant * args) {
   C = g * conj (c) / d;
   R = sqrt (1 - 2 * k * g * abs (s) + g * g * norm (s)) / abs (d);
 
-  vector * circle = new vector (S->getSize () * arc->getSize ());
+  qucs::vector * circle = new qucs::vector (S->getSize () * arc->getSize ());
   int i, a, j; nr_complex_t v;
   for (i = 0, j = 0; i < C.getSize (); i++) {
     for (a = 0; a < arc->getSize (); a++, j++) {
@@ -2943,9 +3004,9 @@ constant * evaluate::ga_circle_v_v (constant * args) {
   _ARV1 (G);
   _ARV2 (arc);
   _DEFV ();
-  vector * circle =
-    new vector (S->getSize () * arc->getSize () * G->getSize ());
-  int i, a, j, f; nr_complex_t v; vector g, D, c, s, k, R, C, d;
+  qucs::vector * circle =
+    new qucs::vector (S->getSize () * arc->getSize () * G->getSize ());
+  int i, a, j, f; nr_complex_t v; qucs::vector g, D, c, s, k, R, C, d;
   D = det (*S);
   c = S->get (0, 0) - conj (S->get (1, 1)) * D;
   k = rollet (*S);
@@ -2988,7 +3049,7 @@ constant * evaluate::gp_circle_d_v (constant * args) {
   _ARD1 (G);
   _ARV2 (arc);
   _DEFV ();
-  vector g, D, c, s, k, C, R, d;
+  qucs::vector g, D, c, s, k, C, R, d;
   D = det (*S);
   c = S->get (1, 1) - conj (S->get (0, 0)) * D;
   k = rollet (*S);
@@ -2998,7 +3059,7 @@ constant * evaluate::gp_circle_d_v (constant * args) {
   C = g * conj (c) / d;
   R = sqrt (1 - 2 * k * g * abs (s) + g * g * norm (s)) / abs (d);
 
-  vector * circle = new vector (S->getSize () * arc->getSize ());
+  qucs::vector * circle = new qucs::vector (S->getSize () * arc->getSize ());
   int i, a, j; nr_complex_t v;
   for (i = 0, j = 0; i < C.getSize (); i++) {
     for (a = 0; a < arc->getSize (); a++, j++) {
@@ -3028,9 +3089,9 @@ constant * evaluate::gp_circle_v_v (constant * args) {
   _ARV1 (G);
   _ARV2 (arc);
   _DEFV ();
-  vector * circle =
-    new vector (S->getSize () * arc->getSize () * G->getSize ());
-  int i, a, j, f; nr_complex_t v; vector g, D, c, s, k, R, C, d;
+  qucs::vector * circle =
+      new qucs::vector (S->getSize () * arc->getSize () * G->getSize ());
+  int i, a, j, f; nr_complex_t v; qucs::vector g, D, c, s, k, R, C, d;
   D = det (*S);
   c = S->get (1, 1) - conj (S->get (0, 0)) * D;
   k = rollet (*S);
@@ -3105,7 +3166,7 @@ constant * evaluate::xvalue_d (constant * args) {
     THROW_MATH_EXCEPTION ("not an appropriate dependent data vector");
     _RETC (0.0);
   }
-  vector * indep = SOLVEE(0)->getDataVector (deps->get (0));
+  qucs::vector * indep = SOLVEE(0)->getDataVector (deps->get (0));
   int idx, i;
   nr_double_t t, diff = NR_MAX;
   for (idx = i = 0; i < v->getSize (); i++) {
@@ -3127,7 +3188,7 @@ constant * evaluate::xvalue_c (constant * args) {
     THROW_MATH_EXCEPTION ("not an appropriate dependent data vector");
     _RETC (0.0);
   }
-  vector * indep = SOLVEE(0)->getDataVector (deps->get (0));
+  qucs::vector * indep = SOLVEE(0)->getDataVector (deps->get (0));
   int idx, i;
   nr_double_t t, diff = NR_MAX;
   for (idx = i = 0; i < v->getSize (); i++) {
@@ -3150,7 +3211,7 @@ constant * evaluate::yvalue_d (constant * args) {
     THROW_MATH_EXCEPTION ("not an appropriate dependent data vector");
     _RETC (0.0);
   }
-  vector * indep = SOLVEE(0)->getDataVector (deps->get (0));
+  qucs::vector * indep = SOLVEE(0)->getDataVector (deps->get (0));
   int idx, i;
   nr_double_t t, diff = NR_MAX;
   for (idx = i = 0; i < indep->getSize (); i++) {
@@ -3172,7 +3233,7 @@ constant * evaluate::yvalue_c (constant * args) {
     THROW_MATH_EXCEPTION ("not an appropriate dependent data vector");
     _RETC (0.0);
   }
-  vector * indep = SOLVEE(0)->getDataVector (deps->get (0));
+  qucs::vector * indep = SOLVEE(0)->getDataVector (deps->get (0));
   int idx, i;
   nr_double_t t, diff = NR_MAX;
   for (idx = i = 0; i < indep->getSize (); i++) {
@@ -3195,7 +3256,7 @@ constant * evaluate::max_r (constant * args) {
     THROW_MATH_EXCEPTION ("not an appropriate dependent data vector");
     _RETD (0.0);
   }
-  vector * indep = SOLVEE(0)->getDataVector (deps->get (0));
+  qucs::vector * indep = SOLVEE(0)->getDataVector (deps->get (0));
   nr_complex_t c;
   nr_double_t d, M = -NR_MAX;
   for (int i = 0; i < indep->getSize (); i++) {
@@ -3217,7 +3278,7 @@ constant * evaluate::min_r (constant * args) {
     THROW_MATH_EXCEPTION ("not an appropriate dependent data vector");
     _RETD (0.0);
   }
-  vector * indep = SOLVEE(0)->getDataVector (deps->get (0));
+  qucs::vector * indep = SOLVEE(0)->getDataVector (deps->get (0));
   nr_complex_t c;
   nr_double_t d, M = +NR_MAX;
   for (int i = 0; i < indep->getSize (); i++) {
@@ -3239,7 +3300,7 @@ constant * evaluate::avg_r (constant * args) {
     THROW_MATH_EXCEPTION ("not an appropriate dependent data vector");
     _RETC (0.0);
   }
-  vector * indep = SOLVEE(0)->getDataVector (deps->get (0));
+  qucs::vector * indep = SOLVEE(0)->getDataVector (deps->get (0));
   nr_complex_t c = 0.0;
   int i, k;
   for (k = i = 0; i < indep->getSize (); i++) {
@@ -3276,16 +3337,24 @@ constant * evaluate::range_c_c (constant *) {
   _RETR (new range ('.', 0, 0, '.'));
 }
 
-MAKE_FUNC_DEFINITION_0 (ceil);    // ceil double->integer conversion
-MAKE_FUNC_DEFINITION_0 (floor);   // floor double->integer conversion
-MAKE_FUNC_DEFINITION_0 (fix);     // fix double->integer conversion
-MAKE_FUNC_DEFINITION_0 (step);    // step function
-MAKE_FUNC_DEFINITION_0 (round);   // round function
-MAKE_FUNC_DEFINITION_0 (erf);     // error function 
-MAKE_FUNC_DEFINITION_0 (erfc);    // complementary error function 
-MAKE_FUNC_DEFINITION_0 (erfinv);  // inverse of error function 
-MAKE_FUNC_DEFINITION_0 (erfcinv); // inverse of complementary error function 
-MAKE_FUNC_DEFINITION_0 (i0);      // modified bessel zero order 
+MAKE_FUNC_DEFINITION_0_STD (ceil);        // ceil double->integer conversion
+MAKE_FUNC_DEFINITION_0_STD (floor);       // floor double->integer conversion
+MAKE_FUNC_DEFINITION_0_QUCS (fix);        // fix double->integer conversion
+MAKE_FUNC_DEFINITION_0_QUCS (step);       // step function
+MAKE_FUNC_DEFINITION_0_QUCS (round);      // round function
+//#ifndef HAVE_ERF
+MAKE_FUNC_DEFINITION_0_SPECIAL (erf);     // error function
+//#else
+//MAKE_FUNC_DEFINITION_0_STD (erf);     // error function
+//#endif
+//#ifndef HAVE_ERFC
+MAKE_FUNC_DEFINITION_0_SPECIAL (erfc);    // complementary error function
+//#else
+//MAKE_FUNC_DEFINITION_0_STD (erfc);    // complementary error function
+//#endif
+MAKE_FUNC_DEFINITION_0_SPECIAL (erfinv);  // inverse of error function
+MAKE_FUNC_DEFINITION_0_SPECIAL (erfcinv); // inverse of complementary error function
+MAKE_FUNC_DEFINITION_0_SPECIAL (i0);      // modified bessel zero order
 
 // ******************* cumulative sum *********************
 constant * evaluate::cumsum_d (constant * args) {
@@ -3402,7 +3471,7 @@ constant * evaluate::jn_d_d (constant * args) {
   _ARI0 (n);
   _ARD1 (x);
   _DEFD ();
-  _RETD (jn (n, x));
+  _RETD (::jn (n, x));
 }
 
 constant * evaluate::jn_d_c (constant * args) {
@@ -3424,7 +3493,7 @@ constant * evaluate::yn_d_d (constant * args) {
   _ARI0 (n);
   _ARD1 (x);
   _DEFD ();
-  _RETD (yn (n, x));
+  _RETD (::yn (n, x));
 }
 
 constant * evaluate::yn_d_c (constant * args) {
@@ -3445,13 +3514,13 @@ constant * evaluate::yn_d_v (constant * args) {
 constant * evaluate::sqr_m (constant * args) {
   _ARM0 (m1);
   _DEFM ();
-  _RETM (sqr (*m1));
+  _RETM (qucs::sqr (*m1));
 }
 
 constant * evaluate::sqr_mv (constant * args) {
   _ARMV0 (m1);
   _DEFMV ();
-  _RETMV (sqr (*m1));
+  _RETMV (qucs::sqr (*m1));
 }
 
 // ******************* polar *********************
@@ -3459,28 +3528,28 @@ constant * evaluate::polar_d_d (constant * args) {
   _ARD0 (a);
   _ARD1 (p);
   _DEFC ();
-  _RETC (polar (a, rad (p)));
+  _RETC (std::polar (a, rad (p)));
 }
 
 constant * evaluate::polar_c_d (constant * args) {
   _ARC0 (a);
   _ARD1 (p);
   _DEFC ();
-  _RETC (polar (*a, nr_complex_t (rad (p), 0)));
+  _RETC (qucs::polar (*a, nr_complex_t (rad (p), 0)));
 }
 
 constant * evaluate::polar_d_c (constant * args) {
   _ARD0 (a);
   _ARC1 (p);
   _DEFC ();
-  _RETC (polar (nr_complex_t (a, 0), rad (*p)));
+  _RETC (qucs::polar (nr_complex_t (a, 0), rad (*p)));
 }
 
 constant * evaluate::polar_c_c (constant * args) {
   _ARC0 (a);
   _ARC1 (p);
   _DEFC ();
-  _RETC (polar (*a, rad (*p)));
+  _RETC (qucs::polar (*a, rad (*p)));
 }
 
 constant * evaluate::polar_d_v (constant * args) {
@@ -3527,7 +3596,7 @@ constant * evaluate::arctan2_d_d (constant * args) {
     THROW_MATH_EXCEPTION ("arctan2: not defined for (0,0)");
     _RETD (-M_PI / 2);
   }
-  _RETD (atan2 (y, x));
+  _RETD (std::atan2 (y, x));
 }
 
 constant * evaluate::arctan2_d_v (constant * args) {
@@ -3555,7 +3624,7 @@ constant * evaluate::arctan2_v_v (constant * args) {
 constant * evaluate::dbm2w_d (constant * args) {
   _ARD0 (d1);
   _DEFD ();
-  _RETD (0.001 * pow (10.0, d1 / 10.0));
+  _RETD (0.001 * std::pow (10.0, d1 / 10.0));
 }
 
 constant * evaluate::dbm2w_c (constant * args) {
@@ -3574,7 +3643,7 @@ constant * evaluate::dbm2w_v (constant * args) {
 constant * evaluate::w2dbm_d (constant * args) {
   _ARD0 (d1);
   _DEFD ();
-  _RETD (10.0 * log10 (d1 / 0.001));
+  _RETD (10.0 * std::log10 (d1 / 0.001));
 }
 
 constant * evaluate::w2dbm_c (constant * args) {
@@ -3622,14 +3691,14 @@ constant * evaluate::integrate_v_c (constant * args) {
 constant * evaluate::dbm_d (constant * args) {
   _ARD0 (d1);
   _DEFD ();
-  _RETD (10.0 * log10 (norm (d1) / circuit::z0 / 0.001));
+  _RETD (10.0 * std::log10 (norm (d1) / circuit::z0 / 0.001));
 }
 
 constant * evaluate::dbm_d_d (constant * args) {
   _ARD0 (d1);
   _ARD1 (z);
   _DEFD ();
-  _RETD (10.0 * log10 (norm (d1) / z / 0.001));
+  _RETD (10.0 * std::log10 (norm (d1) / z / 0.001));
 }
 
 constant * evaluate::dbm_c (constant * args) {
@@ -3733,7 +3802,7 @@ constant * evaluate::vt_c (constant * args) {
 constant * evaluate::vt_v (constant * args) {
   _ARV0 (v1);
   _DEFV ();
-  vector * v = new vector ();
+  qucs::vector * v = new qucs::vector ();
   for (int i = 0; i < v1->getSize (); i++) v->add (v1->get (i) * kBoverQ);
   res->v = v;
   return res;
@@ -3750,16 +3819,16 @@ constant * evaluate::kbd_d_d (constant * args) {
     THROW_MATH_EXCEPTION ("kbd: vector length must be greater than zero");
     __RETV ();
   }
-  vector v (size);
+  qucs::vector v (size);
   for (i = 0; i < size / 2; i++) {
-    sval += i0 (M_PI * alpha * sqrt (1.0 - sqr (4.0 * i / size - 1.0)));
+    sval += fspecial::i0 (M_PI * alpha * std::sqrt (1.0 - sqr (4.0 * i / size - 1.0)));
     v (i) = sval;
   }
   // need to add one more value to the normalization factor at size/2
-  sval += i0 (M_PI * alpha * sqrt (1.0 - sqr (4.0 * (size / 2) / size - 1.0)));
+  sval += fspecial::i0 (M_PI * alpha * std::sqrt (1.0 - sqr (4.0 * (size / 2) / size - 1.0)));
   // normalize the window and fill in the righthand side of the window
   for (i = 0; i < size / 2; i++) {
-    v (i) = sqrt (v (i) / sval);
+    v (i) = std::sqrt (v (i) / sval);
     v (size - 1 - i) = v (i);
   }
   _RETV (v);
@@ -3861,24 +3930,24 @@ constant * evaluate::ifthenelse_v_v (constant * args) {
   _ARB0 (cond);
   int t1 = _ARG(1)->getType ();
   int t2 = _ARG(2)->getType ();
-  vector v1, v2;
+  qucs::vector v1, v2;
   switch (t1) {
   case TAG_DOUBLE:
-    v1 = vector (1); v1 (0) = D(_ARES(1)); break;
+    v1 = qucs::vector (1); v1 (0) = D(_ARES(1)); break;
   case TAG_COMPLEX:
-    v1 = vector (1); v1 (0) = *C(_ARES(1)); break;
+    v1 = qucs::vector (1); v1 (0) = *C(_ARES(1)); break;
   case TAG_BOOLEAN:
-    v1 = vector (1); v1 (0) = B(_ARES(1)) ? 1.0 : 0.0; break;
+    v1 = qucs::vector (1); v1 (0) = B(_ARES(1)) ? 1.0 : 0.0; break;
   case TAG_VECTOR:
     v1 = *V(_ARES(1)); break;
   }
   switch (t2) {
   case TAG_DOUBLE:
-    v2 = vector (1); v2 (0) = D(_ARES(2)); break;
+    v2 = qucs::vector (1); v2 (0) = D(_ARES(2)); break;
   case TAG_COMPLEX:
-    v2 = vector (1); v2 (0) = *C(_ARES(2)); break;
+    v2 = qucs::vector (1); v2 (0) = *C(_ARES(2)); break;
   case TAG_BOOLEAN:
-    v2 = vector (1); v2 (0) = B(_ARES(2)) ? 1.0 : 0.0; break;
+    v2 = qucs::vector (1); v2 (0) = B(_ARES(2)) ? 1.0 : 0.0; break;
   case TAG_VECTOR:
     v2 = *V(_ARES(2)); break;
   }
@@ -3890,30 +3959,30 @@ constant * evaluate::ifthenelse_v_v_v (constant * args) {
   _ARV0 (cond);
   int t1 = _ARG(1)->getType ();
   int t2 = _ARG(2)->getType ();
-  vector v1, v2;
+  qucs::vector v1, v2;
   switch (t1) {
   case TAG_DOUBLE:
-    v1 = vector (1); v1 (0) = D(_ARES(1)); break;
+    v1 = qucs::vector (1); v1 (0) = D(_ARES(1)); break;
   case TAG_COMPLEX:
-    v1 = vector (1); v1 (0) = *C(_ARES(1)); break;
+    v1 = qucs::vector (1); v1 (0) = *C(_ARES(1)); break;
   case TAG_BOOLEAN:
-    v1 = vector (1); v1 (0) = B(_ARES(1)) ? 1.0 : 0.0; break;
+    v1 = qucs::vector (1); v1 (0) = B(_ARES(1)) ? 1.0 : 0.0; break;
   case TAG_VECTOR:
     v1 = *V(_ARES(1)); break;
   }
   switch (t2) {
   case TAG_DOUBLE:
-    v2 = vector (1); v2 (0) = D(_ARES(2)); break;
+    v2 = qucs::vector (1); v2 (0) = D(_ARES(2)); break;
   case TAG_COMPLEX:
-    v2 = vector (1); v2 (0) = *C(_ARES(2)); break;
+    v2 = qucs::vector (1); v2 (0) = *C(_ARES(2)); break;
   case TAG_BOOLEAN:
-    v2 = vector (1); v2 (0) = B(_ARES(2)) ? 1.0 : 0.0; break;
+    v2 = qucs::vector (1); v2 (0) = B(_ARES(2)) ? 1.0 : 0.0; break;
   case TAG_VECTOR:
     v2 = *V(_ARES(2)); break;
   }
   _DEFV ();
   int i, a, b;
-  vector * v = new vector ();
+  qucs::vector * v = new qucs::vector ();
   for (a = b = i = 0; i < cond->getSize (); i++) {
     v->add (cond->get (i) != 0.0 ? v1 (a) : v2 (b));
     a++;
@@ -3944,7 +4013,7 @@ constant * evaluate::less_d_v (constant * args) {
   _ARD0 (d0);
   _ARV1 (v1);
   _DEFV ();
-  vector * v = new vector ();
+  qucs::vector * v = new qucs::vector ();
   for (int i = 0; i < v1->getSize (); i++) {
     v->add (d0 < v1->get (i) ? 1.0 : 0.0);
   }
@@ -3970,7 +4039,7 @@ constant * evaluate::less_c_v (constant * args) {
   _ARC0 (c0);
   _ARV1 (v1);
   _DEFV ();
-  vector * v = new vector ();
+  qucs::vector * v = new qucs::vector ();
   for (int i = 0; i < v1->getSize (); i++) {
     v->add (*c0 < v1->get (i) ? 1.0 : 0.0);
   }
@@ -3982,7 +4051,7 @@ constant * evaluate::less_v_d (constant * args) {
   _ARV0 (v0);
   _ARD1 (d1);
   _DEFV ();
-  vector * v = new vector ();
+  qucs::vector * v = new qucs::vector ();
   for (int i = 0; i < v0->getSize (); i++) {
     v->add (real (v0->get (i)) < d1 ? 1.0 : 0.0);
   }
@@ -3994,7 +4063,7 @@ constant * evaluate::less_v_c (constant * args) {
   _ARV0 (v0);
   _ARC1 (c1);
   _DEFV ();
-  vector * v = new vector ();
+  qucs::vector * v = new qucs::vector ();
   for (int i = 0; i < v0->getSize (); i++) {
     v->add (v0->get (i) < *c1 ? 1.0 : 0.0);
   }
@@ -4006,7 +4075,7 @@ constant * evaluate::less_v_v (constant * args) {
   _ARV0 (v0);
   _ARV1 (v1);
   _DEFV ();
-  vector * v = new vector ();
+  qucs::vector * v = new qucs::vector ();
   for (int i = 0; i < v0->getSize (); i++) {
     v->add (v0->get (i) < v1->get (i) ? 1.0 : 0.0);
   }
@@ -4033,7 +4102,7 @@ constant * evaluate::greater_d_v (constant * args) {
   _ARD0 (d0);
   _ARV1 (v1);
   _DEFV ();
-  vector * v = new vector ();
+  qucs::vector * v = new qucs::vector ();
   for (int i = 0; i < v1->getSize (); i++) {
     v->add (d0 > real (v1->get (i)) ? 1.0 : 0.0);
   }
@@ -4059,7 +4128,7 @@ constant * evaluate::greater_c_v (constant * args) {
   _ARC0 (c0);
   _ARV1 (v1);
   _DEFV ();
-  vector * v = new vector ();
+  qucs::vector * v = new qucs::vector ();
   for (int i = 0; i < v1->getSize (); i++) {
     v->add (*c0 > v1->get (i) ? 1.0 : 0.0);
   }
@@ -4071,7 +4140,7 @@ constant * evaluate::greater_v_d (constant * args) {
   _ARV0 (v0);
   _ARD1 (d1);
   _DEFV ();
-  vector * v = new vector ();
+  qucs::vector * v = new qucs::vector ();
   for (int i = 0; i < v0->getSize (); i++) {
     v->add (real (v0->get (i)) > d1 ? 1.0 : 0.0);
   }
@@ -4083,7 +4152,7 @@ constant * evaluate::greater_v_c (constant * args) {
   _ARV0 (v0);
   _ARC1 (c1);
   _DEFV ();
-  vector * v = new vector ();
+  qucs::vector * v = new qucs::vector ();
   for (int i = 0; i < v0->getSize (); i++) {
     v->add (v0->get (i) > *c1 ? 1.0 : 0.0);
   }
@@ -4095,7 +4164,7 @@ constant * evaluate::greater_v_v (constant * args) {
   _ARV0 (v0);
   _ARV1 (v1);
   _DEFV ();
-  vector * v = new vector ();
+  qucs::vector * v = new qucs::vector ();
   for (int i = 0; i < v0->getSize (); i++) {
     v->add (v0->get (i) > v1->get (i) ? 1.0 : 0.0);
   }
@@ -4122,7 +4191,7 @@ constant * evaluate::lessorequal_d_v (constant * args) {
   _ARD0 (d0);
   _ARV1 (v1);
   _DEFV ();
-  vector * v = new vector ();
+  qucs::vector * v = new qucs::vector ();
   for (int i = 0; i < v1->getSize (); i++) {
     v->add (d0 <= real (v1->get (i)) ? 1.0 : 0.0);
   }
@@ -4148,7 +4217,7 @@ constant * evaluate::lessorequal_c_v (constant * args) {
   _ARC0 (c0);
   _ARV1 (v1);
   _DEFV ();
-  vector * v = new vector ();
+  qucs::vector * v = new qucs::vector ();
   for (int i = 0; i < v1->getSize (); i++) {
     v->add (*c0 <= v1->get (i) ? 1.0 : 0.0);
   }
@@ -4160,7 +4229,7 @@ constant * evaluate::lessorequal_v_d (constant * args) {
   _ARV0 (v0);
   _ARD1 (d1);
   _DEFV ();
-  vector * v = new vector ();
+  qucs::vector * v = new qucs::vector ();
   for (int i = 0; i < v0->getSize (); i++) {
     v->add (real (v0->get (i)) <= d1 ? 1.0 : 0.0);
   }
@@ -4172,7 +4241,7 @@ constant * evaluate::lessorequal_v_c (constant * args) {
   _ARV0 (v0);
   _ARC1 (c1);
   _DEFV ();
-  vector * v = new vector ();
+  qucs::vector * v = new qucs::vector ();
   for (int i = 0; i < v0->getSize (); i++) {
     v->add (v0->get (i) <= *c1 ? 1.0 : 0.0);
   }
@@ -4184,7 +4253,7 @@ constant * evaluate::lessorequal_v_v (constant * args) {
   _ARV0 (v0);
   _ARV1 (v1);
   _DEFV ();
-  vector * v = new vector ();
+  qucs::vector * v = new qucs::vector ();
   for (int i = 0; i < v0->getSize (); i++) {
     v->add (v0->get (i) <= v1->get (i) ? 1.0 : 0.0);
   }
@@ -4211,7 +4280,7 @@ constant * evaluate::greaterorequal_d_v (constant * args) {
   _ARD0 (d0);
   _ARV1 (v1);
   _DEFV ();
-  vector * v = new vector ();
+  qucs::vector * v = new qucs::vector ();
   for (int i = 0; i < v1->getSize (); i++) {
     v->add (d0 >= real (v1->get (i)) ? 1.0 : 0.0);
   }
@@ -4237,7 +4306,7 @@ constant * evaluate::greaterorequal_c_v (constant * args) {
   _ARC0 (c0);
   _ARV1 (v1);
   _DEFV ();
-  vector * v = new vector ();
+  qucs::vector * v = new qucs::vector ();
   for (int i = 0; i < v1->getSize (); i++) {
     v->add (*c0 >= v1->get (i) ? 1.0 : 0.0);
   }
@@ -4249,7 +4318,7 @@ constant * evaluate::greaterorequal_v_d (constant * args) {
   _ARV0 (v0);
   _ARD1 (d1);
   _DEFV ();
-  vector * v = new vector ();
+  qucs::vector * v = new qucs::vector ();
   for (int i = 0; i < v0->getSize (); i++) {
     v->add (real (v0->get (i)) >= d1 ? 1.0 : 0.0);
   }
@@ -4261,7 +4330,7 @@ constant * evaluate::greaterorequal_v_c (constant * args) {
   _ARV0 (v0);
   _ARC1 (c1);
   _DEFV ();
-  vector * v = new vector ();
+  qucs::vector * v = new qucs::vector ();
   for (int i = 0; i < v0->getSize (); i++) {
     v->add (v0->get (i) >= *c1 ? 1.0 : 0.0);
   }
@@ -4273,7 +4342,7 @@ constant * evaluate::greaterorequal_v_v (constant * args) {
   _ARV0 (v0);
   _ARV1 (v1);
   _DEFV ();
-  vector * v = new vector ();
+  qucs::vector * v = new qucs::vector ();
   for (int i = 0; i < v0->getSize (); i++) {
     v->add (v0->get (i) >= v1->get (i) ? 1.0 : 0.0);
   }
@@ -4300,7 +4369,7 @@ constant * evaluate::equal_d_v (constant * args) {
   _ARD0 (d0);
   _ARV1 (v1);
   _DEFV ();
-  vector * v = new vector ();
+  qucs::vector * v = new qucs::vector ();
   for (int i = 0; i < v1->getSize (); i++) {
     v->add (d0 == real (v1->get (i)) ? 1.0 : 0.0);
   }
@@ -4326,7 +4395,7 @@ constant * evaluate::equal_c_v (constant * args) {
   _ARC0 (c0);
   _ARV1 (v1);
   _DEFV ();
-  vector * v = new vector ();
+  qucs::vector * v = new qucs::vector ();
   for (int i = 0; i < v1->getSize (); i++) {
     v->add (*c0 == v1->get (i) ? 1.0 : 0.0);
   }
@@ -4338,7 +4407,7 @@ constant * evaluate::equal_v_d (constant * args) {
   _ARV0 (v0);
   _ARD1 (d1);
   _DEFV ();
-  vector * v = new vector ();
+  qucs::vector * v = new qucs::vector ();
   for (int i = 0; i < v0->getSize (); i++) {
     v->add (real (v0->get (i)) == d1 ? 1.0 : 0.0);
   }
@@ -4350,7 +4419,7 @@ constant * evaluate::equal_v_c (constant * args) {
   _ARV0 (v0);
   _ARC1 (c1);
   _DEFV ();
-  vector * v = new vector ();
+  qucs::vector * v = new qucs::vector ();
   for (int i = 0; i < v0->getSize (); i++) {
     v->add (v0->get (i) == *c1 ? 1.0 : 0.0);
   }
@@ -4362,7 +4431,7 @@ constant * evaluate::equal_v_v (constant * args) {
   _ARV0 (v0);
   _ARV1 (v1);
   _DEFV ();
-  vector * v = new vector ();
+  qucs::vector * v = new qucs::vector ();
   for (int i = 0; i < v0->getSize (); i++) {
     v->add (v0->get (i) == v1->get (i) ? 1.0 : 0.0);
   }
@@ -4396,7 +4465,7 @@ constant * evaluate::notequal_d_v (constant * args) {
   _ARD0 (d0);
   _ARV1 (v1);
   _DEFV ();
-  vector * v = new vector ();
+  qucs::vector * v = new qucs::vector ();
   for (int i = 0; i < v1->getSize (); i++) {
     v->add (d0 != real (v1->get (i)) ? 1.0 : 0.0);
   }
@@ -4422,7 +4491,7 @@ constant * evaluate::notequal_c_v (constant * args) {
   _ARC0 (c0);
   _ARV1 (v1);
   _DEFV ();
-  vector * v = new vector ();
+  qucs::vector * v = new qucs::vector ();
   for (int i = 0; i < v1->getSize (); i++) {
     v->add (*c0 != v1->get (i) ? 1.0 : 0.0);
   }
@@ -4434,7 +4503,7 @@ constant * evaluate::notequal_v_d (constant * args) {
   _ARV0 (v0);
   _ARD1 (d1);
   _DEFV ();
-  vector * v = new vector ();
+  qucs::vector * v = new qucs::vector ();
   for (int i = 0; i < v0->getSize (); i++) {
     v->add (real (v0->get (i)) != d1 ? 1.0 : 0.0);
   }
@@ -4446,7 +4515,7 @@ constant * evaluate::notequal_v_c (constant * args) {
   _ARV0 (v0);
   _ARC1 (c1);
   _DEFV ();
-  vector * v = new vector ();
+  qucs::vector * v = new qucs::vector ();
   for (int i = 0; i < v0->getSize (); i++) {
     v->add (v0->get (i) != *c1 ? 1.0 : 0.0);
   }
@@ -4458,7 +4527,7 @@ constant * evaluate::notequal_v_v (constant * args) {
   _ARV0 (v0);
   _ARV1 (v1);
   _DEFV ();
-  vector * v = new vector ();
+  qucs::vector * v = new qucs::vector ();
   for (int i = 0; i < v0->getSize (); i++) {
     v->add (v0->get (i) != v1->get (i) ? 1.0 : 0.0);
   }
@@ -4544,7 +4613,7 @@ constant * evaluate::assert_v (constant * args) {
     if( v0->get(i) == 0.0 )
 	abort();
   }
-  _DEFB (); 
+  _DEFB ();
   _RETB(true);
 }
 
@@ -4575,7 +4644,7 @@ constant * evaluate::bugon_v (constant * args) {
     if( v0->get(i) != 0.0 )
 	abort();
   }
-  _DEFB (); 
+  _DEFB ();
   _RETB(true);
 }
 
@@ -4583,7 +4652,7 @@ constant * evaluate::bugon_v (constant * args) {
 // ******************* immediate vectors *******************
 constant * evaluate::vector_x (constant * args) {
   _DEFV ();
-  vector * v = new vector ();
+  qucs::vector * v = new qucs::vector ();
   for (node * arg = args; arg != NULL; arg = arg->getNext ()) {
     constant * c = arg->getResult ();
     switch (arg->getType ()) {
@@ -4607,8 +4676,8 @@ constant * evaluate::vector_x (constant * args) {
 constant * evaluate::matrix_x (constant * args) {
   _DEFM ();
   /* create temporary list of vectors */
-  vector * va = NULL;
-  vector * v = new vector ();
+  qucs::vector * va = NULL;
+  qucs::vector * v = new qucs::vector ();
   va = v;
   for (node * arg = args; arg != NULL; arg = arg->getNext ()) {
     constant * c = arg->getResult ();
@@ -4624,7 +4693,7 @@ constant * evaluate::matrix_x (constant * args) {
     case TAG_CHAR:
       if (c->chr == ';') {
 	/* append new vector, i.e. a new matrix row */
-	vector * vn = new vector ();
+	qucs::vector * vn = new qucs::vector ();
 	v->setNext (vn);
 	v = vn;
       }
@@ -4636,17 +4705,17 @@ constant * evaluate::matrix_x (constant * args) {
   }
   /* determine matrix dimensions and create it */
   int r, c;
-  for (r = 0, c = 0, v = va; v != NULL; v = (vector *) v->getNext (), r++) {
+  for (r = 0, c = 0, v = va; v != NULL; v = (::vector *) v->getNext (), r++) {
     if (c < v->getSize ()) c = v->getSize ();
   }
   matrix * m = new matrix (r, c);
   /* fill in matrix entries and delete temporary vector list */
-  vector * vn = NULL;
+  qucs::vector * vn = NULL;
   for (r = 0, v = va; v != NULL; v = vn, r++) {
     for (c = 0; c < v->getSize (); c++) {
       m->set (r, c, v->get (c));
     }
-    vn = (vector *) v->getNext ();
+    vn = (::vector *) v->getNext ();
     delete v;
   }
   /* return result matrix */
@@ -4661,7 +4730,7 @@ constant * evaluate::receiver_v_v (constant * args) {
   _DEFV ();
 
   // run receiver functionality
-  vector * ed;
+  qucs::vector * ed;
   if (_ARG(2)) {
     _ARI2 (len);
     ed = emi::receiver (da, dt, len);
@@ -4672,8 +4741,8 @@ constant * evaluate::receiver_v_v (constant * args) {
 
   // create two vectors for spectrum and frequency
   int rlen = ed->getSize ();
-  vector * rvec = new vector (rlen);
-  vector * rfeq = new vector (rlen);
+  qucs::vector * rvec = new qucs::vector (rlen);
+  qucs::vector * rfeq = new qucs::vector (rlen);
   for (int i = 0; i < rlen; i++) {
     (*rvec)(i) = real (ed->get (i));
     (*rfeq)(i) = imag (ed->get (i));
@@ -4690,3 +4759,4 @@ constant * evaluate::receiver_v_v (constant * args) {
 
 // Include the application array.
 #include "applications.h"
+

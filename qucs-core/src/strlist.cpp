@@ -7,16 +7,16 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This software is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this package; see the file COPYING.  If not, write to
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
- * Boston, MA 02110-1301, USA.  
+ * Boston, MA 02110-1301, USA.
  *
  * $Id$
  *
@@ -31,6 +31,8 @@
 #include <string.h>
 
 #include "strlist.h"
+
+namespace qucs {
 
 // Constructor creates an instance of the strlist class.
 strlist::strlist () {
@@ -105,7 +107,7 @@ int strlist::length (void) {
 int strlist::contains (char * str) {
   int res = 0;
   for (struct strlist_t * s = root; s != NULL; s = s->next) {
-    if (s->str != NULL && str != NULL && !strcmp (s->str, str)) 
+    if (s->str != NULL && str != NULL && !strcmp (s->str, str))
       res++;
   }
   return res;
@@ -116,7 +118,7 @@ int strlist::contains (char * str) {
 int strlist::index (char * str) {
   int res = 0;
   for (struct strlist_t * s = root; s != NULL; s = s->next, res++) {
-    if (s->str != NULL && str != NULL && !strcmp (s->str, str)) 
+    if (s->str != NULL && str != NULL && !strcmp (s->str, str))
       return res;
   }
   return -1;
@@ -249,3 +251,5 @@ char * strlistiterator::first (void) {
 char * strlistiterator::last (void) {
   return _last ? _last->str : NULL;
 }
+
+} // namespace qucs

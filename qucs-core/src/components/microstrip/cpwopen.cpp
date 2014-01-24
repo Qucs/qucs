@@ -31,6 +31,8 @@
 #include "cpwline.h"
 #include "cpwopen.h"
 
+using namespace qucs;
+
 cpwopen::cpwopen () : circuit (1) {
   type = CIR_CPWOPEN;
 }

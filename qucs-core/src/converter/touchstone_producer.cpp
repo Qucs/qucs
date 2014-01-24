@@ -7,16 +7,16 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This software is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this package; see the file COPYING.  If not, write to
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
- * Boston, MA 02110-1301, USA.  
+ * Boston, MA 02110-1301, USA.
  *
  * $Id$
  *
@@ -37,6 +37,8 @@
 #include "matvec.h"
 #include "constants.h"
 
+using namespace qucs;
+
 /* Global variables. */
 /* dataset * qucs_data = NULL;   -- already defined in CSV producer */
 /* FILE * touchstone_out = NULL; -- already defined in Touchstone lexer */
@@ -46,12 +48,12 @@ struct touchstone_data_t {
   int ports;           // number of S-parameter ports
   double resistance;   // reference impedance
   const char * format; // data format
-  vector * vd;         // appropriate dependency vector
+  qucs::vector * vd;         // appropriate dependency vector
   matvec * mv;         // appropriate data matrix vector
-  vector * fmin;       // minimum noise figure
-  vector * sopt;       // optimum input refelction for minimum noise figure
-  vector * rn;         // effective noise resistance
-  vector * vf;         // dependency vector for noise
+  qucs::vector * fmin;       // minimum noise figure
+  qucs::vector * sopt;       // optimum input refelction for minimum noise figure
+  qucs::vector * rn;         // effective noise resistance
+  qucs::vector * vf;         // dependency vector for noise
 }
 touchstone_data;
 
@@ -76,7 +78,7 @@ void touchstone_print_noise (void) {
 	       " %+." NR_DECS "e" " %+." NR_DECS "e"
 	       " %+." NR_DECS "e"
 	       touchstone_crlf, f,
-	       10.0 * log10 (real (touchstone_data.fmin->get (i))),
+	       10.0 * std::log10 (real (touchstone_data.fmin->get (i))),
 	       abs (touchstone_data.sopt->get (i)),
 	       deg (arg (touchstone_data.sopt->get (i))),
 	       real (touchstone_data.rn->get (i)) /
@@ -99,7 +101,7 @@ void touchstone_print (void) {
       fprintf (touchstone_out, "%." NR_DECS "e"
 	       " %+." NR_DECS "e" " %+." NR_DECS "e"
 	       touchstone_crlf, f, real (S(0,0)), imag (S(0,0)));
-    }    
+    }
   }
   // two-port file
   else if (touchstone_data.ports == 2) {
@@ -176,13 +178,13 @@ void touchstone_print (void) {
    type (G, H, Y, Z, etc.) matrix from the given dataset and stores it
    into the global Touchstone structure. */
 void touchstone_find_data (dataset * data, const char * name) {
-  vector * v;
+  qucs::vector * v;
   char * n, * vn, * vd = NULL, * vf = NULL;
   strlist * deps;
   int r, c, rs = -1, cs  = -1, s = 0;
 
   // find parameter matrix data and its dimensions
-  for (v = data->getVariables (); v != NULL; v = (vector *) v->getNext ()) {
+  for (v = data->getVariables (); v != NULL; v = (::vector *) v->getNext ()) {
     vn = v->getName ();
     // requested matrix vector name found?
     if (strstr (vn, name) == vn) {
@@ -222,7 +224,7 @@ void touchstone_find_data (dataset * data, const char * name) {
     matvec * mv = new matvec (s, ss + 1, ss + 1);
     mv->setName (name);
     // fill in matrix vectors
-    for (v = data->getVariables (); v; v = (vector *) v->getNext ()) {
+    for (v = data->getVariables (); v; v = (::vector *) v->getNext ()) {
       vn = v->getName ();
       if (strstr (vn, name) == vn) {
 	if ((n = matvec::isMatrixVector (vn, r, c)) != NULL) {
@@ -235,7 +237,7 @@ void touchstone_find_data (dataset * data, const char * name) {
     touchstone_data.mv = mv;
     touchstone_data.parameter = toupper (mv->getName ()[0]);
     // look for dependency (frequency) vector
-    for (v = data->getDependencies (); v; v = (vector *) v->getNext ()) {
+    for (v = data->getDependencies (); v; v = (::vector *) v->getNext ()) {
       if (vd && !strcmp (v->getName (), vd)) {
 	touchstone_data.vd = v;
       }

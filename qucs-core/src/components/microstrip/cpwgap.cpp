@@ -30,6 +30,8 @@
 #include "substrate.h"
 #include "cpwgap.h"
 
+using namespace qucs;
+
 cpwgap::cpwgap () : circuit (2) {
   type = CIR_CPWGAP;
 }
@@ -49,7 +51,7 @@ matrix cpwgap::calcMatrixY (nr_double_t frequency) {
   er = (er + 1) / 2;
   nr_double_t p = g / 4 / W;
   nr_double_t C = 2 * E0 * er * W / M_PI *
-    (p - sqrt (1 + p * p) + log ((1 + sqrt (1 + p * p)) / p));
+    (p - std::sqrt (1 + p * p) + std::log ((1 + std::sqrt (1 + p * p)) / p));
 
   // build Y-parameter matrix
   nr_complex_t y11 = nr_complex_t (0.0, 2.0 * M_PI * frequency * C);

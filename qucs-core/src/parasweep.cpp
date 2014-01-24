@@ -7,16 +7,16 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This software is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this package; see the file COPYING.  If not, write to
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
- * Boston, MA 02110-1301, USA.  
+ * Boston, MA 02110-1301, USA.
  *
  * $Id$
  *
@@ -43,6 +43,10 @@
 #include "environment.h"
 #include "sweep.h"
 #include "parasweep.h"
+
+using namespace qucs::eqn;
+
+namespace qucs {
 
 // Constructor creates an unnamed instance of the parasweep class.
 parasweep::parasweep () : analysis () {
@@ -181,11 +185,11 @@ int parasweep::solve (void) {
 /* This function saves the results of a single solve() functionality
    into the output dataset. */
 void parasweep::saveResults (void) {
-  vector * v;
+  qucs::vector * v;
 
   // add current frequency to the dependencies of the output dataset
   if ((v = data->findDependency (var->getName ())) == NULL) {
-    v = new vector (var->getName ());
+    v = new qucs::vector (var->getName ());
     v->setOrigin (getName ());
     data->addDependency (v);
   }
@@ -206,3 +210,5 @@ PROP_OPT [] = {
   PROP_NO_PROP };
 struct define_t parasweep::anadef =
   { "SW", 0, PROP_ACTION, PROP_NO_SUBSTRATE, PROP_LINEAR, PROP_DEF };
+
+} // namespace qucs

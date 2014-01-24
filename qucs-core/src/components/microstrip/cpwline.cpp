@@ -31,21 +31,27 @@
 #include "substrate.h"
 #include "cpwline.h"
 
+using namespace qucs;
+
 cpwline::cpwline () : circuit (2) {
   Zl = Er = 0;
   type = CIR_CPWLINE;
 }
 
-/* The function computes the complete elliptic integral of first kind
+/*! K(k)
+
+ The function computes the complete elliptic integral of first kind
    K() and the second kind E() using the arithmetic-geometric mean
-   algorithm (AGM) by Abramowitz and Stegun. */
+   algorithm (AGM) by Abramowitz and Stegun.
+\todo move to common math
+*/
 void cpwline::ellipke (nr_double_t arg, nr_double_t &k, nr_double_t &e) {
   int iMax = 16;
   if (arg == 1.0) {
     k = NR_INF; // infinite
     e = 0;
   }
-  else if (isinf (arg) && arg < 0) {
+  else if (std::isinf (arg) && arg < 0) {
     k = 0;
     e = NR_INF; // infinite
   }
@@ -53,19 +59,19 @@ void cpwline::ellipke (nr_double_t arg, nr_double_t &k, nr_double_t &e) {
     nr_double_t a, b, c, f, s, fk = 1, fe = 1, t, da = arg;
     int i;
     if (arg < 0) {
-      fk = 1 / sqrt (1 - arg);
-      fe = sqrt (1 - arg);
+      fk = 1 / std::sqrt (1 - arg);
+      fe = std::sqrt (1 - arg);
       da = -arg / (1 - arg);
     }
     a = 1;
-    b = sqrt (1 - da);
-    c = sqrt (da);
+    b = std::sqrt (1 - da);
+    c = std::sqrt (da);
     f = 0.5;
     s = f * c * c;
     for (i = 0; i < iMax; i++) {
       t = (a + b) / 2;
       c = (a - b) / 2;
-      b = sqrt (a * b);
+      b = std::sqrt (a * b);
       a = t;
       f *= 2;
       s += f * c * c;
@@ -97,11 +103,11 @@ nr_double_t cpwline::ellipk (nr_double_t k) {
 nr_double_t cpwline::ellipa (nr_double_t k) {
   nr_double_t r, kp;
   if (k < M_SQRT1_2) {
-    kp = sqrt (1 - k * k);
-    r = M_PI / log (2 * (1 + sqrt (kp)) / (1 - sqrt (kp)));
+    kp = std::sqrt (1 - k * k);
+    r = M_PI / std::log (2 * (1 + std::sqrt (kp)) / (1 - std::sqrt (kp)));
   }
   else {
-    r = log (2 * (1 + sqrt (k)) / (1 - sqrt (k))) / M_PI;
+    r = std::log (2 * (1 + std::sqrt (k)) / (1 - std::sqrt (k))) / M_PI;
   }
   return r;
 }
@@ -130,11 +136,11 @@ void cpwline::initPropagation (void) {
 
   // other local variables (quasi-static constants)
   nr_double_t k1, kk1, kpk1, k2, k3, q1, q2, q3 = 0, qz, er0 = 0;
-  
+
   // compute the necessary quasi-static approx. (K1, K3, er(0) and Z(0))
   k1   = W / (W + s + s);
   kk1  = ellipk (k1);
-  kpk1 = ellipk (sqrt (1 - k1 * k1));
+  kpk1 = ellipk (std::sqrt (1 - k1 * k1));
   if (approx) {
     q1 = ellipa (k1);
   } else {
@@ -143,11 +149,11 @@ void cpwline::initPropagation (void) {
 
   // backside is metal
   if (backMetal) {
-    k3  = tanh ((M_PI / 4) * (W / h)) / tanh ((M_PI / 4) * (W + s + s) / h);
+    k3  = std::tanh ((M_PI / 4) * (W / h)) / std::tanh ((M_PI / 4) * (W + s + s) / h);
     if (approx) {
       q3 = ellipa (k3);
     } else {
-      q3 = ellipk (k3) / ellipk (sqrt (1 - k3 * k3));
+      q3 = ellipk (k3) / ellipk (std::sqrt (1 - k3 * k3));
     }
     qz  = 1 / (q1 + q3);
     er0 = 1 + q3 * qz * (er - 1);
@@ -155,11 +161,11 @@ void cpwline::initPropagation (void) {
   }
   // backside is air
   else {
-    k2  = sinh ((M_PI / 4) * (W / h)) / sinh ((M_PI / 4) * (W + s + s) / h);
+    k2  = std::sinh ((M_PI / 4) * (W / h)) / std::sinh ((M_PI / 4) * (W + s + s) / h);
     if (approx) {
       q2 = ellipa (k2);
     } else {
-      q2 = ellipk (k2) / ellipk (sqrt (1 - k2 * k2));
+      q2 = ellipk (k2) / ellipk (std::sqrt (1 - k2 * k2));
     }
     er0 = 1 + (er - 1) / 2 * q2 / q1;
     zl_factor = Z0 / 4 / q1;
@@ -168,7 +174,7 @@ void cpwline::initPropagation (void) {
   // adds effect of strip thickness
   if (t > 0) {
     nr_double_t d, se, We, ke, qe;
-    d  = (t * 1.25 / M_PI) * (1 + log (4 * M_PI * W / t));
+    d  = (t * 1.25 / M_PI) * (1 + std::log (4 * M_PI * W / t));
     se = s - d;
     We = W + d;
 
@@ -177,7 +183,7 @@ void cpwline::initPropagation (void) {
     if (approx) {
       qe = ellipa (ke);
     } else {
-      qe = ellipk (ke) / ellipk (sqrt (1 - ke * ke));
+      qe = ellipk (ke) / ellipk (std::sqrt (1 - ke * ke));
     }
     // backside is metal
     if (backMetal) {
@@ -195,29 +201,29 @@ void cpwline::initPropagation (void) {
   }
 
   // pre-compute square roots
-  sr_er = sqrt (er);
-  sr_er0 = sqrt (er0);
+  sr_er = std::sqrt (er);
+  sr_er0 = std::sqrt (er0);
 
   // cut-off frequency of the TE0 mode
-  fte = (C0 / 4) / (h * sqrt (er - 1));
+  fte = (C0 / 4) / (h * std::sqrt (er - 1));
 
   // dispersion factor G
-  nr_double_t p = log (W / h);
+  nr_double_t p = std::log (W / h);
   nr_double_t u = 0.54 - (0.64 - 0.015 * p) * p;
   nr_double_t v = 0.43 - (0.86 - 0.54 * p) * p;
-  G = exp (u * log (W / s) + v);
+  G = std::exp (u * std::log (W / s) + v);
 
   // loss constant factors (computed only once for efficency sake)
   nr_double_t ac = 0;
   if (t > 0) {
     // equations by GHIONE
-    nr_double_t n  = (1 - k1) * 8 * M_PI / (t * (1 + k1)); 
+    nr_double_t n  = (1 - k1) * 8 * M_PI / (t * (1 + k1));
     nr_double_t a  = W / 2;
     nr_double_t b  = a + s;
-    ac = (M_PI + log (n * a)) / a + (M_PI + log (n * b)) / b;
+    ac = (M_PI + std::log (n * a)) / a + (M_PI + std::log (n * b)) / b;
   }
   ac_factor  = ac / (4 * Z0 * kk1 * kpk1 * (1 - k1 * k1));
-  ac_factor *= sqrt (M_PI * MU0 * rho); // Rs factor
+  ac_factor *= std::sqrt (M_PI * MU0 * rho); // Rs factor
   ad_factor  = (er / (er - 1)) * tand * M_PI / C0;
 
   bt_factor  = 2 * M_PI / C0;
@@ -241,7 +247,7 @@ void cpwline::calcAB (nr_double_t f, nr_double_t& zl, nr_double_t& al,
   // for now, the loss are limited to strip losses (no radiation
   // losses yet) losses in neper/length
   ad *= f * (sr_er_f - 1 / sr_er_f);
-  ac *= sqrt (f) * sr_er0;
+  ac *= std::sqrt (f) * sr_er0;
 
   al  = ac + ad;
   bt *= sr_er_f * f;
@@ -284,26 +290,26 @@ void cpwline::analyseQuasiStatic (nr_double_t W, nr_double_t s, nr_double_t h,
 
   // local variables (quasi-static constants)
   nr_double_t k1, k2, k3, q1, q2, q3 = 0, qz;
-  
+
   ErEff = er;
   ZlEff = 0;
 
   // compute the necessary quasi-static approx. (K1, K3, er(0) and Z(0))
   k1 = W / (W + s + s);
-  q1 = ellipk (k1) / ellipk (sqrt (1 - k1 * k1));
+  q1 = ellipk (k1) / ellipk (std::sqrt (1 - k1 * k1));
 
   // backside is metal
   if (backMetal) {
-    k3  = tanh ((M_PI / 4) * (W / h)) / tanh ((M_PI / 4) * (W + s + s) / h);
-    q3 = ellipk (k3) / ellipk (sqrt (1 - k3 * k3));
+    k3  = std::tanh ((M_PI / 4) * (W / h)) / std::tanh ((M_PI / 4) * (W + s + s) / h);
+    q3 = ellipk (k3) / ellipk (std::sqrt (1 - k3 * k3));
     qz  = 1 / (q1 + q3);
     ErEff = 1 + q3 * qz * (er - 1);
     ZlEff = Z0 / 2 * qz;
   }
   // backside is air
   else {
-    k2  = sinh ((M_PI / 4) * (W / h)) / sinh ((M_PI / 4) * (W + s + s) / h);
-    q2 = ellipk (k2) / ellipk (sqrt (1 - k2 * k2));
+    k2  = std::sinh ((M_PI / 4) * (W / h)) / std::sinh ((M_PI / 4) * (W + s + s) / h);
+    q2 = ellipk (k2) / ellipk (std::sqrt (1 - k2 * k2));
     ErEff = 1 + (er - 1) / 2 * q2 / q1;
     ZlEff = Z0 / 4 / q1;
   }
@@ -311,13 +317,13 @@ void cpwline::analyseQuasiStatic (nr_double_t W, nr_double_t s, nr_double_t h,
   // adds effect of strip thickness
   if (t > 0) {
     nr_double_t d, se, We, ke, qe;
-    d  = (t * 1.25 / M_PI) * (1 + log (4 * M_PI * W / t));
+    d  = (t * 1.25 / M_PI) * (1 + std::log (4 * M_PI * W / t));
     se = s - d;
     We = W + d;
 
     // modifies k1 accordingly (k1 = ke)
     ke = We / (We + se + se); // ke = k1 + (1 - k1 * k1) * d / 2 / s;
-    qe = ellipk (ke) / ellipk (sqrt (1 - ke * ke));
+    qe = ellipk (ke) / ellipk (std::sqrt (1 - ke * ke));
 
     // backside is metal
     if (backMetal) {
@@ -333,7 +339,7 @@ void cpwline::analyseQuasiStatic (nr_double_t W, nr_double_t s, nr_double_t h,
     // modifies ErEff as well
     ErEff = ErEff - (0.7 * (ErEff - 1) * t / s) / (q1 + (0.7 * t / s));
   }
-  ErEff = sqrt (ErEff);
+  ErEff = std::sqrt (ErEff);
   ZlEff /= ErEff;
 }
 
@@ -352,16 +358,16 @@ void cpwline::analyseDispersion (nr_double_t W, nr_double_t s, nr_double_t h,
   ZlEffFreq = ZlEff * ErEff;
 
   // cut-off frequency of the TE0 mode
-  fte = (C0 / 4) / (h * sqrt (er - 1));
+  fte = (C0 / 4) / (h * std::sqrt (er - 1));
 
   // dispersion factor G
-  nr_double_t p = log (W / h);
+  nr_double_t p = std::log (W / h);
   nr_double_t u = 0.54 - (0.64 - 0.015 * p) * p;
   nr_double_t v = 0.43 - (0.86 - 0.54 * p) * p;
-  G = exp (u * log (W / s) + v);
+  G = std::exp (u * std::log (W / s) + v);
 
   // add the dispersive effects to er0
-  ErEffFreq += (sqrt (er) - ErEff) / (1 + G * pow (frequency / fte, -1.8));
+  ErEffFreq += (std::sqrt (er) - ErEff) / (1 + G * pow (frequency / fte, -1.8));
 
   // computes impedance
   ZlEffFreq /= ErEffFreq;

@@ -71,7 +71,7 @@ static unsigned hash_key_length (char * key) {
 
 // Constructor for the hash table.
 template <class type_t>
-hash<type_t>::hash (int size) {
+qucs::hash<type_t>::hash (int size) {
   // set initial hash table size to a binary value
   int n;
   for (n = size, buckets = 1; n != 1; n >>= 1) 
@@ -93,7 +93,7 @@ hash<type_t>::hash (int size) {
 
 // Destructor for the hash table.
 template <class type_t>
-hash<type_t>::~hash () {
+qucs::hash<type_t>::~hash () {
   for (int n = 0; n < buckets; n++) {
     if (table[n]) delete table[n];
   }
@@ -103,7 +103,7 @@ hash<type_t>::~hash () {
 /* Clears the hash table.  Afterwards it does not contain any key.
    The hash table is also shrunken to a minimal size.  */
 template <class type_t>
-void hash<type_t>::clear (void) {
+void qucs::hash<type_t>::clear (void) {
   for (int n = 0; n < buckets; n++) {
     if (table[n]) delete table[n];
   }
@@ -119,7 +119,7 @@ void hash<type_t>::clear (void) {
 
 // Returns number of items in the hash.
 template <class type_t>
-int hash<type_t>::count (void) {
+int qucs::hash<type_t>::count (void) {
   return keys;
 }
 
@@ -127,7 +127,7 @@ int hash<type_t>::count (void) {
    expand the hash codes or half (type is HASH_SHRINK) its size and
    shrink the hash codes if these would be placed somewhere else.  */
 template <class type_t>
-void hash<type_t>::rehash (int type) {
+void qucs::hash<type_t>::rehash (int type) {
   int n, e;
   hashbucket<type_t> * bucket, * next;
 
@@ -189,7 +189,7 @@ void hash<type_t>::rehash (int type) {
    will be doubled).  When the key already exists then the value just
    gets replaced dropping and returning the old value.  */
 template <class type_t>
-type_t * hash<type_t>::put (char * key, type_t * value) {
+type_t * qucs::hash<type_t>::put (char * key, type_t * value) {
   int code = this->code (key);
   hashbucket<type_t> * bucket = table[HASH_LOCATION (code)];
 
@@ -234,7 +234,7 @@ type_t * hash<type_t>::put (char * key, type_t * value) {
    hash table.  Return NULL if the key has not been found within the
    hash, otherwise the previous value.  */
 template <class type_t>
-type_t * hash<type_t>::del (char * key) {
+type_t * qucs::hash<type_t>::del (char * key) {
   type_t * value;
   int code = this->code (key);
   hashbucket<type_t> * bucket = table[HASH_LOCATION (code)];
@@ -262,7 +262,7 @@ type_t * hash<type_t>::del (char * key) {
 /* Hash table lookup.  Find a value for a given key in the hash table.
    Return NULL if the key has not been found within the hash table.  */
 template <class type_t>
-type_t * hash<type_t>::get (char * key) {
+type_t * qucs::hash<type_t>::get (char * key) {
   int code = this->code (key);
   hashbucket<type_t> * bucket = table[HASH_LOCATION (code)];
   if (bucket) {

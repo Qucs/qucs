@@ -7,16 +7,16 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This software is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this package; see the file COPYING.  If not, write to
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
- * Boston, MA 02110-1301, USA.  
+ * Boston, MA 02110-1301, USA.
  *
  * $Id$
  *
@@ -37,13 +37,16 @@
    a formal specification of the Touchstone file format, intended for use
    with documents and specifications produced by the EIA/IBIS Open Forum. */
 
-class dataset;
-class vector;
-class strlist;
+// forward declarations
+namespace qucs {
+  class dataset;
+  class vector;
+  class strlist;
+}
 
-extern dataset * touchstone_result;
-extern vector  * touchstone_vector;
-extern strlist * touchstone_idents;
+extern qucs::dataset * touchstone_result;
+extern qucs::vector  * touchstone_vector;
+extern qucs::strlist * touchstone_idents;
 
 struct touchstone_t {
   const char * unit;

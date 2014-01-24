@@ -26,37 +26,54 @@
 # include <config.h>
 #endif
 
-#include <math.h>
+#include <stdlib.h>
+#include <cmath>
 #include <assert.h>
 
 #include "consts.h"
 #include "real.h"
 
-#ifndef HAVE_ROUND
+namespace qucs {
+
+
 nr_double_t round (const nr_double_t arg) {
+// std::round was introduced in C++11
+#ifndef HAVE_ROUND
   return (arg > 0) ? floor (arg + 0.5) : ceil (arg - 0.5);
-}
+#else
+  return std::round (arg);
 #endif /* HAVE_ROUND */
+}
 
-#ifndef HAVE_TRUNC
 nr_double_t trunc (const double arg) {
+// std::trunc was introduced in C++11
+#ifndef HAVE_TRUNC
   return arg > 0 ? floor (arg) : floor (arg + 1);
-}
+#else
+  return std::trunc (arg);
 #endif /* HAVE_TRUNC */
+}
 
-#ifndef HAVE_ACOSH
 nr_double_t acosh (const double arg) {
+// std::acosh was introduced in C++11
+#ifndef HAVE_ACOSH
   return log (arg + sqrt (arg * arg - 1.0));
-}
+#else
+  return std::acosh (arg);
 #endif /* HAVE_ACOSH */
-
-#ifndef HAVE_ASINH
-nr_double_t asinh (const double arg) {
-  return log (arg + sqrt (arg * arg + 1.0));
 }
-#endif /* HAVE_ASINH */
 
-/*!\brief Compute factorial n ie \$n!\$ 
+nr_double_t asinh (const double arg) {
+// std::asinh was introduced in C++11
+#ifndef HAVE_ASINH
+  return log (arg + sqrt (arg * arg + 1.0));
+#else
+  return std::asinh (arg);
+#endif /* HAVE_ASINH */
+}
+
+
+/*!\brief Compute factorial n ie \$n!\$
 
 */
 unsigned int
@@ -106,16 +123,16 @@ nr_double_t norm (const nr_double_t r) {
   return r * r;
 }
 
-/*!\brief Compute complex modulus of real number 	 
-	  	 
-   \param[in] r Real number 	 
-   \return Modulus of r 	 
-   \todo Why not inline 	 
-*/ 	 
-nr_double_t abs (const nr_double_t r) { 	 
-  return fabs (r); 	 
+/*!\brief Compute complex modulus of real number
+
+   \param[in] r Real number
+   \return Modulus of r
+   \todo Why not inline
+*/
+nr_double_t abs (const nr_double_t r) {
+  return std::abs (r);
 }
- 	 
+
 /*!\brief Conjugate of real number
 
    \param[in] r Real number
@@ -147,8 +164,8 @@ nr_double_t limexp (const nr_double_t r) {
   return r < M_LIMEXP ? exp (r) : exp (M_LIMEXP) * (1.0 + (r - M_LIMEXP));
 }
 
-/*!\brief real signum function 
-   
+/*!\brief real signum function
+
     compute \f[
     \mathrm{signum}\;d=
                      = \begin{cases}
@@ -166,8 +183,8 @@ nr_double_t signum (const nr_double_t d) {
   return d < 0 ? -1 : 1;
 }
 
-/*!\brief real sign function 
-   
+/*!\brief real sign function
+
     compute \f[
     \mathrm{sign}\;d=
                      = \begin{cases}
@@ -185,8 +202,8 @@ nr_double_t sign (const nr_double_t d) {
 
 /*!\brief Euclidean distance function
 
-   The xhypot() function returns \f$\sqrt{a^2+b^2}\f$.  
-   This is the length of the hypotenuse of a right-angle triangle with sides 
+   The xhypot() function returns \f$\sqrt{a^2+b^2}\f$.
+   This is the length of the hypotenuse of a right-angle triangle with sides
    of length a and b, or the distance
    of the point (a,b) from the origin.
 
@@ -209,8 +226,8 @@ nr_double_t xhypot (const nr_double_t a, const nr_double_t b) {
   }
 }
 
-/*!\brief Real cardinal sinus 
-   
+/*!\brief Real cardinal sinus
+
    Compute \f$\mathrm{sinc}\;d=\frac{\sin d}{d}\f$
    \param[in] d real number
    \return cardianal sinus of s
@@ -221,7 +238,7 @@ nr_double_t sinc (const nr_double_t d) {
   return sin (d) / d;
 }
 
-/*!\brief Fix function 
+/*!\brief Fix function
 
     Fix is nearest integral value in direction of 0,
     \f[
@@ -230,7 +247,7 @@ nr_double_t sinc (const nr_double_t d) {
     \operatorname{ceil} d  & \text{else}
     \end{cases}
     \f]
-    
+
     \param[in] d real number
     \return fixed complex number
     \todo Why not inline?
@@ -240,14 +257,14 @@ nr_double_t fix (const nr_double_t d) {
 }
 
 /*!\brief Heaviside step function
-   
-   The Heaviside step function, H, also called unit step function, 
-   is a discontinuous function whose value is zero for negative argument and 
+
+   The Heaviside step function, H, also called unit step function,
+   is a discontinuous function whose value is zero for negative argument and
    one for positive argument. For zero by convention, H(0)=0.5
    \param[in] d Heaviside argument
    \return Heaviside step
    \todo Create Heaviside alias
-*/ 
+*/
 nr_double_t step (const nr_double_t d) {
   nr_double_t x = d;
   if (x < 0.0)
@@ -258,3 +275,5 @@ nr_double_t step (const nr_double_t d) {
     x = 0.5;
   return x;
 }
+
+} // namespace qucs

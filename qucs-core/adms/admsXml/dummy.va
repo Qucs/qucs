@@ -1,4 +1,7 @@
 // DUMMY EXAMPLE
+//
+// example and test verilog file for use with adms
+//
 `include"discipline.h"
 module dummy(p,q);
  inout  p,q;

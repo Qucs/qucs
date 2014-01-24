@@ -7,16 +7,16 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This software is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this package; see the file COPYING.  If not, write to
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
- * Boston, MA 02110-1301, USA.  
+ * Boston, MA 02110-1301, USA.
  *
  * $Id$
  *
@@ -27,7 +27,7 @@
 #endif
 
 #include <stdio.h>
-#include <math.h>
+#include <cmath>
 
 #include "object.h"
 #include "complex.h"
@@ -38,6 +38,8 @@
 #include "analysis.h"
 #include "nasolver.h"
 #include "acsolver.h"
+
+namespace qucs {
 
 // Constructor creates an unnamed instance of the acsolver class.
 acsolver::acsolver () : nasolver<nr_complex_t> () {
@@ -99,7 +101,7 @@ int acsolver::solve (void) {
     logprint (LOG_STATUS, "NOTIFY: %s: solving netlist for f = %e\n",
 	      getName (), (double) freq);
 #endif
-    
+
     // start the linear solver
     eqnAlgo = ALGO_LU_DECOMPOSITION;
     solve_linear ();
@@ -139,10 +141,10 @@ void acsolver::init (void) {
 /* This function saves the results of a single solve() functionality
    (for the given frequency) into the output dataset. */
 void acsolver::saveAllResults (nr_double_t freq) {
-  vector * f;
+  qucs::vector * f;
   // add current frequency to the dependency of the output dataset
   if ((f = data->findDependency ("acfrequency")) == NULL) {
-    f = new vector ("acfrequency");
+    f = new qucs::vector ("acfrequency");
     data->addDependency (f);
   }
   if (runs == 1) f->add (freq);
@@ -156,7 +158,7 @@ void acsolver::saveAllResults (nr_double_t freq) {
 
 /* The function computes the final noise results and puts them into
    the output dataset. */
-void acsolver::saveNoiseResults (vector * f) {
+void acsolver::saveNoiseResults (qucs::vector * f) {
   int N = countNodes ();
   int M = countVoltageSources ();
   for (int r = 0; r < N + M; r++) {
@@ -236,3 +238,5 @@ PROP_OPT [] = {
   PROP_NO_PROP };
 struct define_t acsolver::anadef =
   { "AC", 0, PROP_ACTION, PROP_NO_SUBSTRATE, PROP_LINEAR, PROP_DEF };
+
+} // namespace qucs

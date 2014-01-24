@@ -8,16 +8,16 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This software is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this package; see the file COPYING.  If not, write to
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
- * Boston, MA 02110-1301, USA.  
+ * Boston, MA 02110-1301, USA.
  *
  * $Id$
  *
@@ -30,9 +30,9 @@
 #include "component.h"
 #include "rectline.h"
 
-/*!\file rectangular.cpp 
+/*!\file rectangular.cpp
    A TE10 rectangular waveguide
-  
+
    References:
    [1] Microwave engineering
        David M. Pozar
@@ -51,6 +51,9 @@
 
 */
 
+
+using namespace qucs;
+
 rectline::rectline () : circuit (2) {
   alpha = beta = fc_low = fc_high = 0.0;
   zl = 0.0;
@@ -59,11 +62,11 @@ rectline::rectline () : circuit (2) {
 
 void rectline::calcResistivity (char * Mat, nr_double_t T) {
   if (!strcmp (Mat, "Copper")) {
-    if (T < 7) { 
+    if (T < 7) {
       rho = 2e-11;
     }
     else if (T < 15) {
-      rho = 6.66667e-17 * pow (T, 5) - 3.88549e-15 * pow (T, 4) + 
+      rho = 6.66667e-17 * pow (T, 5) - 3.88549e-15 * pow (T, 4) +
 	9.82267e-14 * pow (T, 3) - 1.29684e-12 * pow (T, 2) +
 	8.68341e-12 * T - 2.72120e-12;
     }
@@ -108,23 +111,23 @@ void rectline::calcResistivity (char * Mat, nr_double_t T) {
   }
 }
 
-/*! Compute propagation constant 
-    
+/*! Compute propagation constant
+
     According to [1] table 3.2 p 128
     Wawe number in vacuum is:
-    \f[ 
+    \f[
     k=\omega\sqrt{\mu\varepsilon}=\omega\sqrt{\mu_r \varepsilon_r \mu_0 \varepsilon_0}
     \f]
     Where \f$\omega=2\pi f\f$, \f$f\f$ is the frequency, $\f\mu\f$ the magnetic permeability,
     \f$\varepsilon_r\f$ the permitivity. Using well known formula \f$c^2\mu_0\varepsilon_0=1\f$, we found:
     \f[
-    k=\frac{\omega}{c} sqrt{\mu_r \varepsilon_r}
+    k=\frac{\omega}{c} std::sqrt{\mu_r \varepsilon_r}
     \f]
     In general case \f$k_c\f$ is:
     \f[
     k_c = \sqrt{\left(\frac{m\pi}{a}\right)^2+\left(\frac{n\pi}{b}\right)^2}
     \f]
-    Where \f$a\f$ is the wider dimension of the guide and \f$b\f$ the smaller and \f$(n,m)\in\mathbb{N}^2\f$. 
+    Where \f$a\f$ is the wider dimension of the guide and \f$b\f$ the smaller and \f$(n,m)\in\mathbb{N}^2\f$.
     In the TE10 case it simplifies to:
     \f[
     k_c = \sqrt{\left(\frac{\pi}{a}\right)^2} = \frac{\pi}{a}
@@ -133,7 +136,7 @@ void rectline::calcResistivity (char * Mat, nr_double_t T) {
     \f[
     \beta = \sqrt{k^2 - k_c^2}
     \f]
-    Loss could be divised in dielectric and resistive loss. 
+    Loss could be divised in dielectric and resistive loss.
     Dielectric loss are computed using:
     \f[
     \alpha_d = \frac{k^2 \tan \delta}{2\beta}
@@ -145,7 +148,7 @@ void rectline::calcResistivity (char * Mat, nr_double_t T) {
     Wave impedance is for TE10:
     \f[
     Z = \frac{k Z_0}{\beta}
-    \f]  
+    \f]
 */
 void rectline::calcPropagation (nr_double_t frequency) {
   nr_double_t er   = getPropertyDouble ("er");
@@ -166,19 +169,19 @@ void rectline::calcPropagation (nr_double_t frequency) {
 	      "band (%g <= TE10 <= %g) or outside non propagative mode "
 	      "<= %g\n", frequency, fc_low, fc_high, fc_low);
   }
-  // calculate wave number 
-  k0 = (2.0 * M_PI * frequency * sqrt (er * mur)) / C0;
+  // calculate wave number
+  k0 = (2.0 * M_PI * frequency * std::sqrt (er * mur)) / C0;
   kc = M_PI / a;
 
   // calculate losses only for propagative mode
   if (frequency >= fc_low) {
     // calculate beta
-    beta = sqrt (sqr (k0) - sqr (kc));
+    beta = std::sqrt (sqr (k0) - sqr (kc));
 
     // dielectric
     ad = (sqr(k0) * tand) / (2.0 * beta);
     // resistive
-    rs = sqrt (M_PI * frequency * mur * MU0 * rho);
+    rs = std::sqrt (M_PI * frequency * mur * MU0 * rho);
     ac = rs * (2.0 * b * sqr (M_PI) + cubic (a) * sqr (k0)) /
       (cubic (a) * b * beta * k0 *  Z0);
     alpha = (ad + ac);
@@ -189,8 +192,8 @@ void rectline::calcPropagation (nr_double_t frequency) {
   } else {
     /* according to [2] eq 3.207 */
     beta = 0;
-    alpha = -sqrt (- (sqr (k0) - sqr (kc)));
-    // wave impedance 
+    alpha = -std::sqrt (- (sqr (k0) - sqr (kc)));
+    // wave impedance
     zl = (k0 * Z0) / nr_complex_t (0, -alpha) ;
   }
 }
@@ -206,7 +209,7 @@ void rectline::calcNoiseSP (nr_double_t) {
   setMatrixN (kelvin (T) / T0 * (e - s * transpose (conj (s))));
 }
 
-/*! Check validity of parameter and compute cutoff frequencies 
+/*! Check validity of parameter and compute cutoff frequencies
     \note do not check validity of epsr or mur because some research stuff could use epsr < 1 (plasma)
 */
 void rectline::initCheck (void) {
@@ -218,7 +221,7 @@ void rectline::initCheck (void) {
   if (a < b) {
     logprint (LOG_ERROR, "ERROR: a < b should be a >= b.\n");
   }
-  nr_double_t c = sqrt (epsr * mur);
+  nr_double_t c = std::sqrt (epsr * mur);
   fc_low =  C0 / (2.0 * a * c);
   /* min of second TE mode and first TM mode */
   fc_high = MIN (C0 / (a * c),  C0 / (2.0  * b * c));
@@ -257,12 +260,12 @@ void rectline::calcSP (nr_double_t frequency) {
   setS (NODE_1, NODE_2, s21); setS (NODE_2, NODE_1, s21);
 }
 
-/* ! Compute DC 
-     \note below cut off it is an open circuit 
+/* ! Compute DC
+     \note below cut off it is an open circuit
 */
 void rectline::initDC (void) {
   allocMatrixMNA ();
-  // open circuit 
+  // open circuit
   clearY ();
 }
 
@@ -299,7 +302,7 @@ void rectline::calcNoiseAC (nr_double_t) {
 
 // properties
 PROP_REQ [] = {
-  { "a", PROP_REAL, { 2.86e-2, PROP_NO_STR }, PROP_POS_RANGEX }, 
+  { "a", PROP_REAL, { 2.86e-2, PROP_NO_STR }, PROP_POS_RANGEX },
   { "b", PROP_REAL, { 1.016e-2, PROP_NO_STR }, PROP_POS_RANGEX },
   { "L", PROP_REAL, { 1500e-3, PROP_NO_STR }, PROP_NO_RANGE },
   { "er", PROP_REAL, { 1, PROP_NO_STR }, PROP_RNGII (1, 100) },

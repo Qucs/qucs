@@ -7,16 +7,16 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This software is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this package; see the file COPYING.  If not, write to
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
- * Boston, MA 02110-1301, USA.  
+ * Boston, MA 02110-1301, USA.
  *
  * $Id$
  *
@@ -25,8 +25,11 @@
 #ifndef __CHECK_ZVR_H__
 #define __CHECK_ZVR_H__
 
-class dataset;
-class vector;
+// forward declarations
+namespace qucs {
+  class dataset;
+  class vector;
+}
 
 /* Externalize variables used by the scanner and parser. */
 extern int zvr_lineno;
@@ -47,7 +50,7 @@ void zvr_init (void);
 __END_DECLS
 
 /* Declaration of ZVR data structures. */
-extern dataset * zvr_result;
+extern qucs::dataset * zvr_result;
 extern struct zvr_data_t * zvr_root;
 
 struct zvr_header_t {
@@ -65,8 +68,8 @@ struct zvr_vector_t {
   char * n1;
   char * n2;
   char * nf;
-  vector * vi;
-  vector * vd;
+  qucs::vector * vi;
+  qucs::vector * vd;
 };
 
 struct zvr_line_t {
@@ -81,5 +84,6 @@ struct zvr_data_t {
   struct zvr_line_t * d;
   struct zvr_data_t * next;
 };
+
 
 #endif /* __CHECK_ZVR_H__ */

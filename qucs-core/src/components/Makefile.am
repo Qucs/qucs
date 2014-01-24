@@ -38,9 +38,7 @@ libcomponent_la_SOURCES = attenuator.cpp dcblock.cpp open.cpp vccs.cpp        \
 	vvnoise.cpp ivnoise.cpp coupler.cpp coaxline.cpp vprobe.cpp vam.cpp  \
 	vpm.cpp tswitch.cpp relais.cpp short.cpp twistedpair.cpp tline4p.cpp \
 	vexp.cpp iexp.cpp mutualx.cpp vfile.cpp ifile.cpp rfedd.cpp          \
-	rectline.cpp rlcg.cpp hybrid.cpp ctline.cpp
-
-pkginclude_HEADERS = component.h components.h
+	rectline.cpp rlcg.cpp hybrid.cpp ctline.cpp ecvs.cpp
 
 noinst_HEADERS = attenuator.h dcblock.h open.h vccs.h biastee.h circulator.h \
 	dcfeed.h pac.h vcvs.h capacitor.h ground.h resistor.h cccs.h cross.h \
@@ -51,7 +49,8 @@ noinst_HEADERS = attenuator.h dcblock.h open.h vccs.h biastee.h circulator.h \
 	vvnoise.h ivnoise.h coupler.h coaxline.h vprobe.h vam.h vpm.h        \
 	tswitch.h relais.h short.h twistedpair.h tline4p.h vexp.h iexp.h     \
 	mutualx.h vfile.h ifile.h rfedd.h rectline.h components.h rlcg.h     \
-	hybrid.h ctline.h
+	hybrid.h ctline.h ecvs.h \
+	component.h components.h component_id.h
 
 AM_CPPFLAGS = -I$(top_srcdir)/src -I$(top_srcdir)/src/math
 

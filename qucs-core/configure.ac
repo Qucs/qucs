@@ -2,11 +2,9 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ(2.64)
-AC_INIT(qucs-core,0.0.18,qucs-bugs@lists.sourceforge.net)
+AC_INIT([qucs-core],[0.0.18],[qucs-bugs@lists.sourceforge.net])
 AC_CONFIG_HEADERS([config.h])
-AC_CONFIG_MACRO_DIR([m4])
 AC_CONFIG_AUX_DIR([build-aux])
-
 LT_PREREQ([2.2.2])
 AM_PROG_AR
 LT_INIT([disable-static dlopen win32-dll])
@@ -17,6 +15,8 @@ AC_CONFIG_SRCDIR([src/circuit.cpp])
 AC_CANONICAL_BUILD
 AC_CANONICAL_HOST
 AC_CANONICAL_TARGET
+
+dnl AM_INIT_AUTOMAKE does several things, including defining VERSION and PACKAGE
 AM_INIT_AUTOMAKE([no-define])
 AM_MAINTAINER_MODE
 
@@ -25,6 +25,7 @@ test "x$prefix" = xNONE && prefix="/usr/local"
 
 dnl Checks for programs.
 AC_PROG_CXX
+AX_CXX_COMPILE_STDCXX_11
 AC_PROG_CC
 AC_PROG_LN_S
 AC_PROG_INSTALL
@@ -100,7 +101,7 @@ unset enable_debug
 dnl Yet another compiler check.
 if test "x$GCC" = xyes; then
   CFLAGS="$CFLAGS -pipe"
-  CXXFLAGS="$CXXFLAGS -pipe -fno-exceptions -fno-rtti -fno-check-new"
+  CXXFLAGS="$CXXFLAGS -pipe -fno-exceptions -fno-check-new"
   if test $USE_MAINTAINER_MODE = yes; then
     CFLAGS="$CFLAGS -W -Wall -Wmissing-prototypes"
     CXXFLAGS="$CXXFLAGS -W -Wall"
@@ -195,6 +196,7 @@ elif test $ac_cv_sizeof_long -eq 4; then
   type32=long
 fi
 AC_DEFINE_UNQUOTED(nr_int32_t, $type32, [C-type for 32-bit integers.])
+AC_SUBST(QUCS_INT32_TYPE, $type32)
 unset type32
 type16="short"
 if test $ac_cv_sizeof_short -eq 2; then
@@ -205,6 +207,7 @@ elif test $ac_cv_sizeof_long -eq 2; then
   type16=long
 fi
 AC_DEFINE_UNQUOTED(nr_int16_t, $type16, [C-type for 16-bit integers.])
+AC_SUBST(QUCS_INT16_TYPE, $type16)
 unset type16
 
 dnl Check for double type.
@@ -236,8 +239,10 @@ if test "$double_type" = none; then
 fi
 AC_DEFINE_UNQUOTED(nr_double_t, $double_type,
   [The global type of double representation.])
+AC_SUBST(QUCS_DOUBLE_TYPE, $double_type)
 AC_DEFINE_UNQUOTED(NR_DOUBLE_SIZE, $double_size,
   [The size of the double representation.])
+AC_SUBST(QUCS_DOUBLE_SIZE, $double_size)
 unset double_type
 unset double_size
 
@@ -249,11 +254,9 @@ AC_CHECK_FUNCS([floor pow exp sqrt log10 log cos sin acos asin tan atan sinh \
 dnl Checks for complex classes and functions.
 AC_CXX_NAMESPACES
 AC_CXX_HAVE_COMPLEX
-AS_IF([test "X$ac_cv_cxx_have_complex" = "X"],[AC_MSG_ERROR([Qucs Need a templated complex class])])
-AC_CXX_HAVE_TR1_COMPLEX
-AC_CHECK_CXX_COMPLEX_FUNCS([cos cosh exp log log10 sin sinh sqrt tan tanh])
-AC_CHECK_CXX_COMPLEX_FUNCS([acos acosh asin asinh atan atanh])
-AC_CHECK_CXX_COMPLEX_FUNCS([log2 norm])
+AS_IF([test "X$ac_cv_cxx_have_complex" = "X"],[AC_MSG_ERROR([Qucs needs a templated complex class])])
+AC_CHECK_CXX_COMPLEX_FUNCS([cos cosh exp log log10 sin sinh sqrt tan \
+        tanh acos acosh asin asinh atan atanh log2 norm])
 AC_CHECK_CXX_COMPLEX_POW
 AC_CHECK_CXX_COMPLEX_ATAN2
 AC_CHECK_CXX_COMPLEX_FMOD
@@ -282,6 +285,7 @@ AH_TOP([
 
 dnl Add here all your Makefiles. These are created by configure.
 AC_CONFIG_FILES([Makefile
+                 qucs_typedefs.h
                  doc/Makefile
                  src/Makefile
                  src/math/Makefile

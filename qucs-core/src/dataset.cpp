@@ -7,16 +7,16 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This software is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this package; see the file COPYING.  If not, write to
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
- * Boston, MA 02110-1301, USA.  
+ * Boston, MA 02110-1301, USA.
  *
  * $Id$
  *
@@ -31,7 +31,7 @@
 #include <string.h>
 #include <errno.h>
 #include <assert.h>
-#include <math.h>
+#include <cmath>
 
 #include "logging.h"
 #include "complex.h"
@@ -45,6 +45,8 @@
 #include "check_citi.h"
 #include "check_zvr.h"
 #include "check_mdl.h"
+
+namespace qucs {
 
 // Constructor creates an unnamed instance of the dataset class.
 dataset::dataset () : object () {
@@ -341,7 +343,7 @@ void dataset::print (void) {
 
   // print header
   fprintf (f, "<Qucs Dataset " PACKAGE_VERSION ">\n");
-  
+
   // print dependencies
   for (vector * d = dependencies; d != NULL; d = (vector *) d->getNext ()) {
     printDependency (d, f);
@@ -354,7 +356,7 @@ void dataset::print (void) {
     else
       printDependency (v, f);
   }
-  
+
   // close file if necessary
   if (file) fclose (f);
 }
@@ -380,7 +382,7 @@ void dataset::printVariable (vector * v, FILE * f) {
       fprintf (f, " %s", *it);
   }
   fprintf (f, ">\n");
-  
+
   // print data itself
   printData (v, f);
 
@@ -398,7 +400,7 @@ void dataset::printData (vector * v, FILE * f) {
       fprintf (f, "  %+." NR_DECS "e\n", (double) real (c));
     }
     else {
-      fprintf (f, "  %+." NR_DECS "e%cj%." NR_DECS "e\n", (double) real (c), 
+      fprintf (f, "  %+." NR_DECS "e%cj%." NR_DECS "e\n", (double) real (c),
 	       imag (c) >= 0.0 ? '+' : '-', (double) fabs (imag (c)));
     }
   }
@@ -556,3 +558,5 @@ dataset * dataset::load_mdl (const char * file) {
   if (mdl_result) mdl_result->setFile (file);
   return mdl_result;
 }
+
+} // namespace qucs

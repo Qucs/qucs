@@ -26,14 +26,14 @@
 #ifndef __MSGAP_H__
 #define __MSGAP_H__
 
-class msgap : public circuit
+class msgap : public qucs::circuit
 {
  public:
   CREATOR (msgap);
   void calcSP (nr_double_t);
   void initDC (void);
   void calcAC (nr_double_t);
-  matrix calcMatrixY (nr_double_t);
+  qucs::matrix calcMatrixY (nr_double_t);
 };
 
 #endif /* __MSGAP_H__ */

@@ -7,16 +7,16 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This software is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this package; see the file COPYING.  If not, write to
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
- * Boston, MA 02110-1301, USA.  
+ * Boston, MA 02110-1301, USA.
  *
  * $Id$
  *
@@ -35,6 +35,8 @@
 #include "interpolator.h"
 #include "spfile.h"
 
+using namespace qucs;
+
 // Constructor for S-parameter file vector.
 spfile_vector::spfile_vector () {
   v = f = 0;
@@ -49,7 +51,7 @@ spfile_vector::~spfile_vector () {
 }
 
 // Passes vectors and their data types to the S-parameter file vector.
-void spfile_vector::prepare (vector * _v, vector * _f,
+void spfile_vector::prepare (qucs::vector * _v, qucs::vector * _f,
 			     bool _isreal, int it, int dt) {
   v = _v;
   f = _f;
@@ -120,7 +122,7 @@ matrix spfile::getInterpolMatrixS (nr_double_t frequency) {
       s.set (r, c, spara[i].interpolate (frequency));
     }
   }
-  
+
   // then convert them to S-parameters if necessary
   switch (paraType) {
   case 'Y':
@@ -172,7 +174,7 @@ matrix spfile::expandSParaMatrix (matrix s) {
   ss = (2 - g - ports + sa) / (1 - ports * g - sa);
   res.set (ports - 1, ports - 1, ss);
   fr = (1.0 - g * ss) / (1.0 - g);
-    
+
   // compute S'im
   for (r = 0; r < ports - 1; r++) {
     for (sc = 0, c = 0; c < ports - 1; c++) sc += s.get (r, c);
@@ -274,7 +276,7 @@ matrix spfile::shrinkNoiseMatrix (matrix n, matrix s) {
   // create D' vector
   matrix d (ports - 1, 1);
   for (r = 0; r < ports - 1; r++) d.set (r, 0, s.get (r, ports - 1));
-  
+
   // shrink noise correlation matrix
   matrix res (ports - 1);
   res = k * n * adjoint (k) + kelvin (T) / T0 * fabs (1.0 - norm (g)) /
@@ -309,7 +311,7 @@ void spfile::prepare (void) {
   if (data == NULL) data = dataset::load_touchstone (file);
   if (data != NULL) {
     // determine the number of ports defined by that file
-    int ports = (int) sqrt ((double) data->countVariables ());
+    int ports = (int) std::sqrt ((double) data->countVariables ());
     if (ports == getSize () - 1) {
       if (spara == NULL) {
 	// find matrix vector entries in touchstone dataset
@@ -341,8 +343,8 @@ void spfile::createVector (int r, int c) {
   int i = r * getSize () + c;
   spara[i].r = r;
   spara[i].c = c;
-  vector * v = new vector (matvec::createMatrixString ("S", r, c), 
-			   sfreq->getSize ());
+  qucs::vector * v = new qucs::vector (matvec::createMatrixString ("S", r, c),
+			       sfreq->getSize ());
   v->setDependencies (new strlist ());
   v->getDependencies()->add (sfreq->getName ());
   data->addVariable (v);
@@ -354,11 +356,11 @@ void spfile::createVector (int r, int c) {
    frequency vector.  It also tries to find the noise parameter
    data. */
 void spfile::createIndex (void) {
-  vector * v; int s = getSize (); char * n;
+  qucs::vector * v; int s = getSize (); char * n;
   int r, c, i;
 
   // go through list of dependency vectors and find frequency vectors
-  for (v = data->getDependencies (); v != NULL; v = (vector *) v->getNext ()) {
+  for (v = data->getDependencies (); v != NULL; v = (::vector *) v->getNext ()) {
     if ((n = v->getName ()) != NULL) {
       if (!strcmp (n, "frequency")) sfreq = v;
       else if (!strcmp (n, "nfreq")) nfreq = v;
@@ -369,7 +371,7 @@ void spfile::createIndex (void) {
   spara = new spfile_vector[s * s] ();
 
   // go through list of variable vectors and find matrix entries
-  for (v = data->getVariables (); v != NULL; v = (vector *) v->getNext ()) {
+  for (v = data->getVariables (); v != NULL; v = (::vector *) v->getNext ()) {
     if ((n = matvec::isMatrixVector (v->getName (), r, c)) != NULL) {
       // save matrix vector indices
       i = r * s + c;
@@ -430,9 +432,9 @@ nr_double_t spfile::noiseFigure (matrix s, matrix c, nr_double_t& Fmin,
   // optimal source reflection coefficient
   Sopt = 1 - norm (n2);
   if (real (Sopt) < 0.0)
-    Sopt = (1.0 + sqrt (Sopt)) / n2;  // avoid a negative radicant
+    Sopt = (1.0 + std::sqrt (Sopt)) / n2;  // avoid a negative radicant
   else
-    Sopt = (1.0 - sqrt (Sopt)) / n2;
+    Sopt = (1.0 - std::sqrt (Sopt)) / n2;
 
   // minimum noise figure
   Fmin = real (1.0 + (c.get (1, 1) - n1 * norm (Sopt)) /

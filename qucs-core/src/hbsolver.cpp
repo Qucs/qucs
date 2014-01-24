@@ -7,16 +7,16 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This software is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this package; see the file COPYING.  If not, write to
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
- * Boston, MA 02110-1301, USA.  
+ * Boston, MA 02110-1301, USA.
  *
  * $Id$
  *
@@ -48,6 +48,8 @@
 #include "hbsolver.h"
 
 #define HB_DEBUG 0
+
+namespace qucs {
 
 using namespace fourier;
 
@@ -156,7 +158,7 @@ int hbsolver::solve (void) {
 
   // prepares the linear part --> 0 = IC + [YV] * VS
   prepareLinear ();
-  
+
   runs++;
   logprint (LOG_STATUS, "NOTIFY: %s: solving for %d frequencies\n",
 	    getName (), lnfreqs);
@@ -208,7 +210,7 @@ int hbsolver::solve (void) {
       fprintf (stderr, "IG -- current in f:\n"); IG->print ();
       fprintf (stderr, "IR -- corrected Jacobi current in f:\n"); IR->print ();
 #endif
-      
+
       // solve HB equation --> FV = IC + [YV] * VS + j[O] * FQ + IG
       solveHB ();
 
@@ -235,12 +237,12 @@ int hbsolver::solve (void) {
 
       // C-Jacobian into frequency domain
       MatrixFFT (JQ);
-      
+
 #if HB_DEBUG
       fprintf (stderr, "JQ -- dQ/dV C-Jacobian in f:\n"); JQ->print ();
       fprintf (stderr, "JG -- dI/dV G-Jacobian in f:\n"); JG->print ();
 #endif
-      
+
       // calculate Jacobian --> JF = [YV] + j[O] * JQ + JG
       calcJacobian ();
 
@@ -630,7 +632,7 @@ void hbsolver::fillMatrixLinearA (tmatrix<nr_complex_t> * A, int f) {
 	  C_(nr, nc) += cir->getC (nr, c);
 	}
       }
-    
+
       // apply D-matrix entries
       for (r = 0; r < v; r++) {
 	nr = cir->getVoltageSource () + r;
@@ -722,7 +724,7 @@ void hbsolver::createMatrixLinearY (void) {
   Z = new tmatrix<nr_complex_t> (sy * lnfreqs);
 
   // prepare equation system
-  eqnsys<nr_complex_t> eqns;  
+  eqnsys<nr_complex_t> eqns;
   tvector<nr_complex_t> * V;
   tvector<nr_complex_t> * I;
 
@@ -957,8 +959,8 @@ int hbsolver::checkBalance (void) {
 /* This function fills in the matrix and vector entries for the
    non-linear HB equations for a given frequency index. */
 void hbsolver::fillMatrixNonLinear (tmatrix<nr_complex_t> * jg,
-				    tmatrix<nr_complex_t> * jq, 
-				    tvector<nr_complex_t> * ig, 
+				    tmatrix<nr_complex_t> * jq,
+				    tvector<nr_complex_t> * ig,
 				    tvector<nr_complex_t> * fq,
 				    tvector<nr_complex_t> * ir,
 				    tvector<nr_complex_t> * qr,
@@ -1024,7 +1026,7 @@ void hbsolver::prepareNonLinear (void) {
   if (VP == NULL) {
     VP = new tvector<nr_complex_t> (N * nlfreqs);
   }
-  
+
   // error vector
   if (FV == NULL) {
     FV = new tvector<nr_complex_t> (N * nlfreqs);
@@ -1041,7 +1043,7 @@ void hbsolver::prepareNonLinear (void) {
   if (IN == NULL) {
     IN = new tvector<nr_complex_t> (N * nlfreqs);
   }
-  
+
   // assign nodes
   assignNodes (nolcircuits, nanodes);
 
@@ -1111,7 +1113,7 @@ void hbsolver::VectorFFT (tvector<nr_complex_t> * V, int isign) {
     }
   }
 }
-			
+
 /* The following function transforms a vector using an Inverse Fast
    Fourier Transformation from the frequency domain to the domain
    time. */
@@ -1164,7 +1166,7 @@ void hbsolver::MatrixFFT (tmatrix<nr_complex_t> * M) {
    Care must be taken with indexing here: In the frequency domain only
    real positive frequencies are used and computed, but in the time
    domain we have more values because of the periodic continuation in
-   the frequency domain. 
+   the frequency domain.
    RHS = j[O] * CV + GV - (IC + j[O] * FQ + IG)
    Also the right hand side of the equation system for the new voltage
    vector is computed here. */
@@ -1423,6 +1425,8 @@ PROP_OPT [] = {
   PROP_NO_PROP };
 struct define_t hbsolver::anadef =
   { "HB", 0, PROP_ACTION, PROP_NO_SUBSTRATE, PROP_LINEAR, PROP_DEF };
+
+} // namespace qucs
 
 /* TODO list for HB Solver:
    - Take care about nodes with non-linear components only.

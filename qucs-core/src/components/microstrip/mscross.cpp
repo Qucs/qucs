@@ -7,16 +7,16 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This software is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this package; see the file COPYING.  If not, write to
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
- * Boston, MA 02110-1301, USA.  
+ * Boston, MA 02110-1301, USA.
  *
  * $Id$
  *
@@ -30,6 +30,8 @@
 #include "substrate.h"
 #include "msline.h"
 #include "mscross.h"
+
+using namespace qucs;
 
 mscross::mscross () : circuit (6) {
   type = CIR_MSCROSS;
@@ -85,13 +87,13 @@ nr_double_t mscross::capCorrection (nr_double_t W, nr_double_t f) {
   msline::analyseQuasiStatic (W, h, t, er, SModel, ZlEff, ErEff, WEff);
   msline::analyseDispersion  (W, h, er, ZlEff, ErEff, f, DModel,
                               Zl2, Er2);
-  return Zl1 / Zl2 * sqrt (Er2 / Er1);
+  return Zl1 / Zl2 * std::sqrt (Er2 / Er1);
 }
 
 nr_double_t mscross::calcCap (nr_double_t W1, nr_double_t h, nr_double_t W2) {
   nr_double_t W1h = W1 / h;
   nr_double_t W2h = W2 / h;
-  nr_double_t X = log10 (W1h) * (86.6 * W2h - 30.9 * sqrt (W2h) + 367) + 
+  nr_double_t X = std::log10 (W1h) * (86.6 * W2h - 30.9 * std::sqrt (W2h) + 367) +
     cubic (W2h) + 74 * W2h + 130;
   return 1e-12 * W1 * (0.25 * X * pow (W1h, -1.0 / 3.0) - 60 +
 			      1 / W2h / 2 - 0.375 * W1h * (1 - W2h));
@@ -100,7 +102,7 @@ nr_double_t mscross::calcCap (nr_double_t W1, nr_double_t h, nr_double_t W2) {
 nr_double_t mscross::calcInd (nr_double_t W1, nr_double_t h, nr_double_t W2) {
   nr_double_t W1h = W1 / h;
   nr_double_t W2h = W2 / h;
-  nr_double_t Y = 165.6 * W2h + 31.2 * sqrt (W2h) - 11.8 * sqr (W2h);
+  nr_double_t Y = 165.6 * W2h + 31.2 * std::sqrt (W2h) - 11.8 * sqr (W2h);
   return 1e-9 * h * (Y * W1h - 32 * W2h + 3) * pow (W1h, -1.5);
 }
 
@@ -126,7 +128,7 @@ matrix mscross::calcMatrixY (nr_double_t f) {
   L3 = calcInd (W3, h, (W4 + W2) / 2);
   L4 = calcInd (W4, h, (W3 + W1) / 2);
 
-  L5 = 1e-9 * h * (5 * W2h * cos (M_PI / 2 * (1.5 - W1h)) -
+  L5 = 1e-9 * h * (5 * W2h * std::cos (M_PI / 2 * (1.5 - W1h)) -
 		   (1 + 7 / W1h ) / W2h - 337.5);
 
   // center inductance correction

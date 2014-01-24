@@ -7,16 +7,16 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This software is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this package; see the file COPYING.  If not, write to
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
- * Boston, MA 02110-1301, USA.  
+ * Boston, MA 02110-1301, USA.
  *
  * $Id$
  *
@@ -26,6 +26,8 @@
 #define __SPLINE_H__
 
 #include "tvector.h"
+
+namespace qucs {
 
 // Types of boundary conditions.
 enum spline_boundary_type {
@@ -43,11 +45,11 @@ class spline
  public:
   spline ();
   spline (int);
-  spline (vector, vector);
+  spline (qucs::vector, qucs::vector);
   spline (tvector<nr_double_t>, tvector<nr_double_t>);
   ~spline ();
 
-  void vectors (vector, vector);
+  void vectors (qucs::vector, qucs::vector);
   void vectors (tvector<nr_double_t>, tvector<nr_double_t>);
   void vectors (nr_double_t *, nr_double_t *, int);
   void construct (void);
@@ -69,5 +71,7 @@ class spline
   int n;
   int boundary;
 };
+
+} // namespace qucs
 
 #endif /* __SPLINE_H__ */
