@@ -24,7 +24,7 @@ AC_PREFIX_DEFAULT([/usr/local])
 test "x$prefix" = xNONE && prefix="/usr/local"
 
 dnl Checks for programs.
-AC_PROG_CXX
+AC_PROG_CXX(clang++ g++)
 AX_CXX_COMPILE_STDCXX_11
 AC_PROG_CC
 AC_PROG_LN_S
@@ -98,15 +98,37 @@ else
 fi
 unset enable_debug
 
-dnl Yet another compiler check.
-if test "x$GCC" = xyes; then
-  CFLAGS="$CFLAGS -pipe"
-  CXXFLAGS="$CXXFLAGS -pipe -fno-exceptions -fno-check-new"
-  if test $USE_MAINTAINER_MODE = yes; then
-    CFLAGS="$CFLAGS -W -Wall -Wmissing-prototypes"
-    CXXFLAGS="$CXXFLAGS -W -Wall"
+case $host_os in
+  *linux* | *cygwin* | *mingw* )
+  dnl Yet another compiler check.
+  if test "x$GCC" = xyes; then
+    CFLAGS="$CFLAGS -pipe"
+    CXXFLAGS="$CXXFLAGS -pipe -fno-exceptions -fno-check-new"
+    if test $USE_MAINTAINER_MODE = yes; then
+      CFLAGS="$CFLAGS -W -Wall -Wmissing-prototypes"
+      CXXFLAGS="$CXXFLAGS -W -Wall"
+    fi
   fi
-fi
+  ;;
+
+  *darwin* )
+  dnl Check for MacOSX, require clang++
+  if test "$CXX" = "clang++" ; then
+    AC_MSG_CHECKING([whether clang works])
+
+    CFLAGS="$CFLAGS -pipe"
+    CXXFLAGS="$CXXFLAGS -pipe -fno-exceptions -stdlib=libc++"
+    LDDFLAGS="$LDDFLAGS -stdlib=libc++"
+    LIBS="$LIBS -lc++"
+    if test $USE_MAINTAINER_MODE = yes; then
+      CFLAGS="$CFLAGS -W -Wall -Wmissing-prototypes"
+      CXXFLAGS="$CXXFLAGS -W -Wall"
+    fi
+  else
+    AC_MSG_ERROR([clang++ required but not found])
+  fi
+  ;;
+esac
 
 dnl Check for new platforms.
 osversion="`grep \"$host\" $srcdir/doc/PLATFORMS 2>/dev/null`"
