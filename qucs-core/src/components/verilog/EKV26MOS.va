@@ -199,10 +199,10 @@ begin
     Kpa = Kp*(1.0+Akp/con1);           // Eqn 28
     Kpa_T = Kpa*pow( Tratio, Bex);     // Eqn 18
     Gammaa = Gamma+Agamma/con1;        // Eqn 29
-    C_epsilon = 4.0*pow(22e-3, 2);     // Eqn 30
+    C_epsilon = 4.0*pow(22e-3, 2.0);     // Eqn 30
     xi = 0.028*(10.0*(Leff/Lk)-1.0);   // Eqn 31
-    nnn = 1.0+0.5*(xi+ sqrt(pow(xi,2) + C_epsilon));
-    deltaV_RSCE = (2.0*Q0/Cox)*(1.0/pow(nnn,2)); // Eqn 32
+    nnn = 1.0+0.5*(xi+ sqrt(pow(xi,2.0) + C_epsilon));
+    deltaV_RSCE = (2.0*Q0/Cox)*(1.0/pow(nnn,2.0)); // Eqn 32
     con3 = -Vto_T-deltaV_RSCE+Phi_T;
     con5 = Gammaa/2.0;
     con6 = con5*con5;

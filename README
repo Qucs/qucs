@@ -7,7 +7,7 @@ build-essential flex bison qt4-dev-tools gperf
 Install ADMS 2.3.0:
 ./configure
 make
-sudo make install 
+sudo make install
 sudo ldconfig
 
 Compile qucs:
@@ -19,6 +19,11 @@ sudo make install
 
 Compile qucs-core:
 cd qucs-core
-./autogen.sh
+./bootstrap.sh
+./configure --enable-maintainer-mode --prefix=<path/to/install>
 make
 sudo make install
+
+
+
+

@@ -154,8 +154,8 @@ void mslange::analysQuasiStatic (nr_double_t W, nr_double_t h, nr_double_t s,
     nr_double_t Pe, Po, r, fo1, q, p, n, Psi, Phi, m, Theta;
 
     // modifying equations for even mode
-    m = 0.2175 + pow (4.113 + pow (20.36 / g, 6), -0.251) +
-      std::log (pow (g, 10) / (1 + pow (g / 13.8, 10))) / 323;
+    m = 0.2175 + pow (4.113 + pow (20.36 / g, 6.), -0.251) +
+      std::log (pow (g, 10.) / (1 + pow (g / 13.8, 10.))) / 323;
     Alpha = 0.5 * std::exp (-g);
     Psi = 1 + g / 1.45 + pow (g, 2.09) / 3.95;
     Phi = 0.8645 * pow (u, 0.172);
@@ -163,15 +163,15 @@ void mslange::analysQuasiStatic (nr_double_t W, nr_double_t h, nr_double_t s,
     // TODO: is this ... Psi * (Alpha ... or ... Psi / (Alpha ... ?
 
     // modifying equations for odd mode
-    n = (1 / 17.7 + std::exp (-6.424 - 0.76 * std::log (g) - pow (g / 0.23, 5))) *
+    n = (1 / 17.7 + std::exp (-6.424 - 0.76 * std::log (g) - pow (g / 0.23, 5.))) *
       std::log ((10 + 68.3 * sqr (g)) / (1 + 32.5 * pow (g, 3.093)));
-    Beta = 0.2306 + std::log (pow (g, 10) / (1 + pow (g / 3.73, 10))) / 301.8 +
+    Beta = 0.2306 + std::log (pow (g, 10.) / (1 + pow (g / 3.73, 10.))) / 301.8 +
       std::log (1 + 0.646 * pow (g, 1.175)) / 5.3;
     Theta = 1.729 + 1.175 * std::log (1 + 0.627 / (g + 0.327 * pow (g, 2.17)));
     Po = Pe - Theta / Psi * std::exp (Beta * pow (u, -n) * std::log (u));
 
     // further modifying equations
-    r = 1 + 0.15 * (1 - std::exp (1 - sqr (er - 1) / 8.2) / (1 + pow (g, -6)));
+    r = 1 + 0.15 * (1 - std::exp (1 - sqr (er - 1) / 8.2) / (1 + pow (g, -6.)));
     fo1 = 1 - std::exp (-0.179 * pow (g, 0.15) -
 		   0.328 * pow (g, r) / std::log (M_E + pow (g / 7, 2.8)));
     q = std::exp (-1.366 - g);
@@ -245,18 +245,18 @@ void mslange::analysQuasiStatic (nr_double_t W, nr_double_t h, nr_double_t s,
     // even characteristic impedance
     q1 = 0.8695 * pow (ue, 0.194);
     q2 = 1 + 0.7519 * g + 0.189 * pow (g, 2.31);
-    q3 = 0.1975 + pow (16.6 + pow (8.4 / g, 6), -0.387) +
-      std::log (pow (g, 10) / (1 + pow (g / 3.4, 10))) / 241;
+    q3 = 0.1975 + pow (16.6 + pow (8.4 / g, 6.), -0.387) +
+      std::log (pow (g, 10.) / (1 + pow (g / 3.4, 10.))) / 241;
     q4 = q1 / q2 * 2 /
       (std::exp (-g) * pow (ue, q3) + (2 - std::exp (-g)) * pow (ue, -q3));
     Zle = std::sqrt (ErEff / ErEffe) * Zl1 / (1 - Zl1 * std::sqrt (ErEff) * q4 / Z0);
 
     // odd characteristic impedance
     q5 = 1.794 + 1.14 * std::log (1 + 0.638 / (g + 0.517 * pow (g, 2.43)));
-    q6 = 0.2305 + std::log (pow (g, 10) / (1 + pow (g / 5.8, 10))) / 281.3 +
+    q6 = 0.2305 + std::log (pow (g, 10.) / (1 + pow (g / 5.8, 10.))) / 281.3 +
       std::log (1 + 0.598 * pow (g, 1.154)) / 5.1;
     q7 = (10 + 190 * sqr (g)) / (1 + 82.3 * cubic (g));
-    q8 = std::exp (-6.5 - 0.95 * std::log (g) - pow (g / 0.15, 5));
+    q8 = std::exp (-6.5 - 0.95 * std::log (g) - pow (g / 0.15, 5.));
     q9 = std::log (q7) * (q8 + 1 / 16.5);
     q10 = (q2 * q4 - q5 * std::exp (std::log (uo) * q6 * pow (uo, -q9))) / q2;
     Zlo = std::sqrt (ErEff / ErEffo) * Zl1 / (1 - Zl1 * std::sqrt (ErEff) * q10 / Z0);
@@ -307,11 +307,11 @@ void mslange::analyseDispersion (nr_double_t W, nr_double_t h, nr_double_t s,
     nr_double_t fn = frequency * h * 1e-6;
 
     // even relative dielectric constant dispersion
-    p1 = 0.27488 * (0.6315 + 0.525 / pow (1 + 0.0157 * fn, 20)) * u -
+    p1 = 0.27488 * (0.6315 + 0.525 / pow (1 + 0.0157 * fn, 20.)) * u -
       0.065683 * std::exp (-8.7513 * u);
     p2 = 0.33622 * (1 - std::exp (-0.03442 * er));
     p3 = 0.0363 * std::exp (-4.6 * u) * (1 - std::exp (- pow (fn / 38.7, 4.97)));
-    p4 = 1 + 2.751 * (1 - std::exp (- pow (er / 15.916, 8)));
+    p4 = 1 + 2.751 * (1 - std::exp (- pow (er / 15.916, 8.)));
     p5 = 0.334 * std::exp (-3.3 * cubic (er / 15)) + 0.746;
     p6 = p5 * std::exp (- pow (fn / 18, 0.368));
     p7 = 1 + 4.069 * p6 * pow (g, 0.479) *
@@ -344,7 +344,7 @@ void mslange::analyseDispersion (nr_double_t W, nr_double_t h, nr_double_t s,
     t = quadr (er / 15);
     q14 = 1 + 1.203 * t / (1 + t);
     q15 = 1.887 * std::exp (-1.5 * pow (g, 0.84)) * pow (g, q14) /
-      (1 + 0.41 * pow (fn / 15, 3) *
+      (1 + 0.41 * pow (fn / 15, 3.) *
        pow (u, 2 / q13) / (0.125 + pow (u, 1.626 / q13)));
     q16 = q15 * (1 + 9 / (1 + 0.403 * sqr (er - 1)));
     q17 = 0.394 * (1 - std::exp (-1.47 * pow (u / 7, 0.672))) *
@@ -352,7 +352,7 @@ void mslange::analyseDispersion (nr_double_t W, nr_double_t h, nr_double_t s,
     q18 = 0.61 * (1 - std::exp (-2.31 * pow (u / 8, 1.593))) /
       (1 + 6.544 * pow (g, 4.17));
     q19 = 0.21 * quadr (g) / (1 + 0.18 * pow (g, 4.9)) / (1 + 0.1 * sqr (u)) /
-      (1 + pow (fn / 24, 3));
+      (1 + pow (fn / 24, 3.));
     q20 = q19 * (0.09 + 1 / (1 + 0.1 * pow (er - 1, 2.7)));
     t = pow (u, 2.5);
     q21 = fabs (1 - 42.54 * pow (g, 0.133) * std::exp (-0.812 * g) * t /
@@ -361,10 +361,10 @@ void mslange::analyseDispersion (nr_double_t W, nr_double_t h, nr_double_t s,
     nr_double_t re, qe, pe, de, Ce, q0, ZlFreq, ErEffFreq;
     msline::Kirschning_er (u, fn, er, ErEffe, ErEffFreq);
     msline::Kirschning_zl (u, fn, er, ErEffe, ErEffFreq, Zle, q0, ZlFreq);
-    re = pow (fn / 28.843, 12);
+    re = pow (fn / 28.843, 12.);
     qe = 0.016 + pow (0.0514 * er * q21, 4.524);
     pe = 4.766 * std::exp (-3.228 * pow (u, 0.641));
-    t = pow (er - 1, 6);
+    t = pow (er - 1, 6.);
     de = 5.086 * qe * re / (0.3838 + 0.386 * qe) *
       std::exp (-22.2 * pow (u, 1.92)) / (1 + 1.2992 * re) * t / (1 + 10 * t);
     Ce = 1 + 1.275 * (1 - std::exp (-0.004625 * pe * pow (er, 1.674) *
@@ -379,11 +379,11 @@ void mslange::analyseDispersion (nr_double_t W, nr_double_t h, nr_double_t s,
     q29 = 15.16 / (1 + 0.196 * sqr (er - 1));
     t = sqr (er - 1);
     q25 = 0.3 * sqr (fn) / (10 + sqr (fn)) * (1 + 2.333 * t / (5 + t));
-    t = pow ((er - 1) / 13, 12);
+    t = pow ((er - 1) / 13, 12.);
     q26 = 30 - 22.2 * t / (1 + 3 * t) - q29;
     t = pow (er - 1, 1.5);
     q27 = 0.4 * pow (g, 0.84) * (1 + 2.5 * t / (5 + t));
-    t = pow (er - 1, 3);
+    t = pow (er - 1, 3.);
     q28 = 0.149 * t / (94.5 + 0.038 * t);
     q22 = 0.925 * pow (fn / q26, 1.536) / (1 + 0.3 * pow (fn / 30, 1.536));
     q23 = 1 + 0.005 * fn * q27 / (1 + 0.812 * pow (fn / 15, 1.9)) /

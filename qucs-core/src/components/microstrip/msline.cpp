@@ -184,7 +184,7 @@ void msline::analyseQuasiStatic (nr_double_t W, nr_double_t h, nr_double_t t,
       z = M_1_PI / 2 * std::log (8 / u + u / 4);
     }
     else {
-      z = 1 / (u + 2.42 - 0.44 / u + pow (1 - 1 / u, 6));
+      z = 1 / (u + 2.42 - 0.44 / u + pow ((1. - 1. / u), 6.));
     }
     z = Z0 * z / std::sqrt (e);
   }
@@ -354,11 +354,11 @@ void msline::Getsinger_disp (nr_double_t h, nr_double_t er, nr_double_t ErEff,
 void msline::Kirschning_er (nr_double_t u, nr_double_t fn, nr_double_t er,
 			    nr_double_t ErEff, nr_double_t& ErEffFreq) {
   nr_double_t p, p1, p2, p3, p4;
-  p1 = 0.27488 + (0.6315 + 0.525 / pow (1 + 0.0157 * fn, 20)) * u -
+  p1 = 0.27488 + (0.6315 + 0.525 / pow (1. + 0.0157 * fn, 20.)) * u -
     0.065683 * std::exp (-8.7513 * u);
   p2 = 0.33622 * (1 - std::exp (-0.03442 * er));
   p3 = 0.0363 * std::exp (-4.6 * u) * (1 - std::exp (- pow (fn / 38.7, 4.97)));
-  p4 = 1 + 2.751 * (1 - std::exp (- pow (er / 15.916, 8)));
+  p4 = 1 + 2.751 * (1 - std::exp (- pow (er / 15.916, 8.)));
   p  = p1 * p2 * pow ((0.1844 + p3 * p4) * fn, 1.5763);
   ErEffFreq  = er - (er - ErEff) / (1 + p);
 }
@@ -373,24 +373,24 @@ void msline::Kirschning_zl (nr_double_t u, nr_double_t fn, nr_double_t er,
   nr_double_t r1, r2, r3, r4, r5, r6, r7, r8, r9, r10;
   nr_double_t r11, r12, r13, r14, r15, r16;
   r1 = 0.03891 * pow (er, 1.4);
-  r2 = 0.267 * pow (u, 7);
+  r2 = 0.267 * pow (u, 7.);
   r3 = 4.766 * std::exp (-3.228 * pow (u, 0.641));
   r4 = 0.016 + pow (0.0514 * er, 4.524);
-  r5 = pow (fn / 28.843, 12);
+  r5 = pow (fn / 28.843, 12.);
   r6 = 22.20 * pow (u, 1.92);
   r7 = 1.206 - 0.3144 * std::exp (-r1) * (1 - std::exp (-r2));
   r8 = 1 + 1.275 * (1 - std::exp (-0.004625 * r3 *
 			     pow (er, 1.674) * pow (fn / 18.365, 2.745)));
   r9 = 5.086 * r4 * r5 / (0.3838 + 0.386 * r4) *
     std::exp (-r6) / (1 + 1.2992 * r5) *
-    pow (er - 1, 6) / (1 + 10 * pow (er - 1, 6));
+    pow (er - 1., 6.) / (1 + 10 * pow (er - 1., 6.));
   r10 = 0.00044 * pow (er, 2.136) + 0.0184;
-  r11 = pow (fn / 19.47, 6) / (1 + 0.0962 * pow (fn / 19.47, 6));
+  r11 = pow (fn / 19.47, 6.) / (1 + 0.0962 * pow (fn / 19.47, 6.));
   r12 = 1 / (1 + 0.00245 * sqr (u));
   r13 = 0.9408 * pow (ErEffFreq, r8) - 0.9603;
   r14 = (0.9408 - r9) * pow (ErEff, r8) - 0.9603;
   r15 = 0.707 * r10 * pow (fn / 12.3, 1.097);
-  r16 = 1 + 0.0503 * sqr (er) * r11 * (1 - std::exp (- pow (u / 15, 6)));
+  r16 = 1 + 0.0503 * sqr (er) * r11 * (1 - std::exp (- pow (u / 15., 6.)));
   r17 = r7 * (1 - 1.1241 * r12 / r16 *
 	      std::exp (-0.026 * pow (fn, 1.15656) - r15));
   ZlEffFreq = ZlEff * pow (r13 / r14, r17);
