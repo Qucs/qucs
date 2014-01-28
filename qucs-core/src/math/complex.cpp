@@ -635,15 +635,10 @@ nr_complex_t trunc (const nr_complex_t z)
 */
 nr_complex_t sech (const nr_complex_t z)
 {
-#ifndef HAVE_CXX_COMPLEX_COSH
     return (1.0 / std::cosh (z));
-#else
-    return (1.0 / std::cosh (z));
-#endif
 }
 
 
-#ifndef HAVE_CXX_COMPLEX_COSECH
 /*!\brief Compute complex argument hyperbolic cosec
 
    \param[in] z complex arc
@@ -651,9 +646,8 @@ nr_complex_t sech (const nr_complex_t z)
 */
 nr_complex_t     cosech (const nr_complex_t z)
 {
-    return (1.0 / sinh(z));
+    return (1.0 / std::sinh(z));
 }
-#endif
 
 nr_double_t dB (const nr_complex_t z)
 {
@@ -674,7 +668,6 @@ nr_complex_t limexp (const nr_complex_t z)
 
 
 
-#ifndef HAVE_CXX_COMPLEX_LOG2
 /*!\brief Compute principal value of binary logarithm of z
 
    \param[in] z complex number
@@ -682,10 +675,14 @@ nr_complex_t limexp (const nr_complex_t z)
 */
 nr_complex_t log2 (const nr_complex_t z)
 {
-    nr_double_t phi = arg (z);
+#ifndef HAVE_CXX_COMPLEX_LOG2
+    nr_double_t phi = std::arg (z);
     return nr_complex_t (std::log (std::abs (z)) * M_LOG2E, phi * M_LOG2E);
-}
+#else
+    return std::log2 (z);
 #endif
+}
+
 
 
 #ifndef HAVE_CXX_COMPLEX_ATAN2
@@ -699,7 +696,7 @@ nr_complex_t log2 (const nr_complex_t z)
 */
 nr_complex_t atan2 (const nr_complex_t y, const nr_complex_t x)
 {
-    nr_complex_t a = qucs::atan (y / x);
+    nr_complex_t a = std::atan (y / x);
     return real (x) > 0.0 ? a : -a;
 }
 #endif
@@ -712,8 +709,8 @@ nr_complex_t atan2 (const nr_complex_t y, const nr_complex_t x)
 */
 nr_complex_t cot (const nr_complex_t z)
 {
-    nr_double_t r = 2.0 * real (z);
-    nr_double_t i = 2.0 * imag (z);
+    nr_double_t r = 2.0 * std::real (z);
+    nr_double_t i = 2.0 * std::imag (z);
     return nr_complex_t (0.0, 1.0) + nr_complex_t (0.0, 2.0) / (std::polar (std::exp (-i), r) - 1.0);
 }
 
@@ -724,7 +721,7 @@ nr_complex_t cot (const nr_complex_t z)
 */
 nr_complex_t acot (const nr_complex_t z)
 {
-    return nr_complex_t (0.0, -0.5) * log (nr_complex_t (0, 2) / (z - nr_complex_t (0, 1)) + 1.0);
+    return nr_complex_t (0.0, -0.5) * std::log (nr_complex_t (0, 2) / (z - nr_complex_t (0, 1)) + 1.0);
 }
 
 /*!\brief Compute complex argument hyperbolic secant
@@ -735,7 +732,7 @@ nr_complex_t acot (const nr_complex_t z)
 */
 nr_complex_t asech (const nr_complex_t z)
 {
-    return log ((1.0 + sqrt (1.0 - z * z)) / z);
+    return std::log ((1.0 + std::sqrt (1.0 - z * z)) / z);
 }
 
 /*!\brief Compute complex hyperbolic cotangent
@@ -745,8 +742,8 @@ nr_complex_t asech (const nr_complex_t z)
 */
 nr_complex_t coth (const nr_complex_t z)
 {
-    nr_double_t r = 2.0 * real (z);
-    nr_double_t i = 2.0 * imag (z);
+    nr_double_t r = 2.0 * std::real (z);
+    nr_double_t i = 2.0 * std::imag (z);
     return 1.0 + 2.0 / (std::polar (std::exp (r), i) - 1.0);
 }
 
@@ -757,7 +754,7 @@ nr_complex_t coth (const nr_complex_t z)
 */
 nr_complex_t acoth (const nr_complex_t z)
 {
-    return 0.5 * log (2.0 / (z - 1.0) + 1.0);
+    return 0.5 * std::log (2.0 / (z - 1.0) + 1.0);
 }
 
 
