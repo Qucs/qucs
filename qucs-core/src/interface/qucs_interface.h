@@ -105,6 +105,7 @@ public:
     trsolver_interface (char* infile);
 //    ~trsolver_interface ();
 
+    void getETR(void);
     int init (double, double, int);
     bool getIsInitialised() { return isInitialised; };
     int stepsolve_sync (double synctime);
@@ -227,9 +228,9 @@ private:
     bool isInitialised;
     /// Pointer to etr sim
     qucs::e_trsolver * etr;
-    void getETR(void);
+
 };
 
-}
+} // namespace qucs
 
 #endif /* __QUCS_INTERFACE_H__ */
