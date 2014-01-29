@@ -1,4 +1,4 @@
-#include <iostream>
+#include <cstdio>
 #include <cmath>
 #include "qucs-core/qucs_interface.h"
 
@@ -14,7 +14,7 @@ void example_ecvs_async (void);
 int main (int argc, char ** argv)
 {
 
-//    example_probe_and_subcircuit_access_async ();
+    example_probe_and_subcircuit_access_async ();
 
     example_ecvs_async ();
 
@@ -29,7 +29,11 @@ void testmessage(int level, const char * message, ...)
 
 void example_probe_and_subcircuit_access_async (void)
 {
-    char infile[] = "example_probe_and_subcircuit_access.net";
+    char infile[] = "../../../example_probe_and_subcircuit_access.net";
+
+    printf ("\nRunning example_probe_and_subcircuit_access_async ... \n");
+    printf ("Demonstrates methods of extracting data during simulation.\n");
+    printf ("Evaluates netlist file %s.\n\n", infile);
 
     char * wirelabel = "test_label";
     char * vprobename = "VProbe1";
@@ -37,58 +41,55 @@ void example_probe_and_subcircuit_access_async (void)
     char * iprobename2 = "IProbe2";
     char * subcktvprobe = "SUB1.SUB1.VProbeS1";
 
-    nr_double_t node_voltage = 0;
-    nr_double_t probe_voltage;
-    nr_double_t probe_current;
+    double node_voltage = 0;
+    double probe_voltage;
+    double probe_current;
 
     int exists = -1;
 
-    qucsint thequcsint;
-    e_trsolver * the_e_trsolver;
+    trsolver_interface qtr;
 
-    thequcsint.prepare_netlist (infile);
+    qtr.prepare_netlist (infile);
 
-    the_e_trsolver = (qucs::e_trsolver *)thequcsint.getETR();
-
-    the_e_trsolver->messagefcn = &testmessage;
+    qtr.setMessageFcn (&testmessage);
 
     double tend = 1e-3;
     double start = 0.0;
     double delta = (tend - start) / 113.0;
 
-    the_e_trsolver->init (start, delta/100, ETR_MODE_ASYNC);
+    qtr.init (start, delta/100, ETR_MODE_ASYNC);
 
-    the_e_trsolver->printx ();
+    qtr.printSolution ();
 
     for (double t = start; t <= tend; t += delta)
     {
-        the_e_trsolver->stepsolve_async (t);
+        qtr.stepsolve_async (t);
 
         // prints the whole solution, all node voltages and branch currents
-        the_e_trsolver->printx ();
+        qtr.printSolution ();
 
-        exists = the_e_trsolver->getNodeV (wirelabel, node_voltage);
+        exists = qtr.getNodeV (wirelabel, node_voltage);
 
         if (exists == 0)
         {
             printf("%s node voltage: %f\n", wirelabel, node_voltage);
         }
 
-        exists = the_e_trsolver->getVProbeV (vprobename, probe_voltage);
+        exists = qtr.getVProbeV (vprobename, probe_voltage);
 
         if (exists == 0)
         {
             printf ("%s probe voltage: %f\n", vprobename, probe_voltage);
         }
 
-        exists = the_e_trsolver->getIProbeI (iprobename, probe_current);
+        exists = qtr.getIProbeI (iprobename, probe_current);
 
         if (exists == 0)
         {
             printf ("%s probe current: %f\n", iprobename, probe_current);
         }
 
-        exists = the_e_trsolver->getIProbeI (iprobename2, probe_current);
+        exists = qtr.getIProbeI (iprobename2, probe_current);
 
         if (exists == 0)
         {
@@ -96,61 +97,60 @@ void example_probe_and_subcircuit_access_async (void)
         }
 
 
-        exists = the_e_trsolver->getVProbeV (subcktvprobe, probe_voltage);
+        exists = qtr.getVProbeV (subcktvprobe, probe_voltage);
 
         if (exists == 0)
         {
             printf ("%s probe voltage: %f\n", subcktvprobe, probe_voltage);
         }
 
-        the_e_trsolver->acceptstep_async ();
+        qtr.acceptstep_async ();
 
     }
-
-    the_e_trsolver->finish ();
 }
 
 
 void example_ecvs_async (void)
 {
-    char infile[] = "example_ecvs.net";
+    char infile[] = "../../../example_ecvs.net";
+
+    printf ("\nRunning example_ecvs_async function\n");
+    printf ("Demonstrates setting a voltage source from external code\nduring simulation.\n");
+    printf ("Evaluates netlist file %s.\n\n", infile);
 
     char * ecvsname = "ECVS1";
     char * iprobename = "Pr1";
 
-    nr_double_t probe_current;
+    double probe_current;
 
     int exists = -1;
 
-    qucsint thequcsint;
-    e_trsolver * the_e_trsolver;
+    trsolver_interface qtr;
 
-    thequcsint.prepare_netlist (infile);
+    qtr.prepare_netlist (infile);
 
-    the_e_trsolver = (qucs::e_trsolver *)thequcsint.getETR();
-
-    the_e_trsolver->messagefcn = &testmessage;
+    qtr.setMessageFcn (&testmessage);
 
     double tend = 1;
     double start = 0.0;
     double delta = (tend - start) / 10;
 
-    the_e_trsolver->init (start, delta, ETR_MODE_ASYNC);
+    qtr.init (start, delta, ETR_MODE_ASYNC);
 
-    exists = the_e_trsolver->setECVSVoltage(ecvsname, 0);
+    exists = qtr.setECVSVoltage(ecvsname, 0);
 
-    the_e_trsolver->printx ();
+    qtr.printSolution ();
 
     for (double t = start; t <= tend; t += delta)
     {
-        exists = the_e_trsolver->setECVSVoltage (ecvsname, std::sin(2 * 3.142 * 1.0 * t));
+        exists = qtr.setECVSVoltage (ecvsname, std::sin(2 * 3.142 * 1.0 * t));
 
-        the_e_trsolver->stepsolve_async (t);
+        qtr.stepsolve_async (t);
 
         // prints the whole solution, all node voltages and branch currents
-        the_e_trsolver->printx ();
+        qtr.printSolution ();
 
-        exists = the_e_trsolver->getIProbeI (iprobename, probe_current);
+        exists = qtr.getIProbeI (iprobename, probe_current);
 
         if (exists == 0)
         {
@@ -159,7 +159,7 @@ void example_ecvs_async (void)
 
         // the solution must be explicitly accepted for it to become a
         // part of the circuit solution history
-        the_e_trsolver->acceptstep_async ();
+        qtr.acceptstep_async ();
     }
 }
 
