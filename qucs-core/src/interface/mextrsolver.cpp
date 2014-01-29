@@ -35,14 +35,13 @@ void mextrsolver::printx()
 int mextrsolver::prepare_netlist(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 {
     char *input_buf;
-    double *outpointer;
-    int notopened;
+    int result;
 
     /* check for proper number of arguments */
     if(nrhs!=3)
         mexErrMsgIdAndTxt ( "MATLAB:trsolver:invalidNumInputs",
                             "Three inputs required.");
-    else if(nlhs > 1)
+    else if(nlhs > 0)
         mexErrMsgIdAndTxt ( "MATLAB:trsolver:maxlhs",
                             "Too many output arguments.");
 
@@ -60,14 +59,33 @@ int mextrsolver::prepare_netlist(int nlhs, mxArray *plhs[], int nrhs, const mxAr
     input_buf = mxArrayToString (prhs[2]);
 
     // call the prepare_netlist method with the input
-    notopened = qtr.prepare_netlist (input_buf);
+    result = qtr.prepare_netlist (input_buf);
 
-    // get the pointer to the e_trsolver analysis
-    qtr.getETR ();
-
-    if (qtr.getIsInitialised ())
+    if (result == NETLIST_OK)
     {
-        notopened = 0;
+        // get the pointer to the e_trsolver analysis
+        qtr.getETR ();
+    }
+    else if (result == NETLIST_FAILED_CHECK)
+    {
+        mexErrMsgIdAndTxt ( "MATLAB:trsolver:netlistcheckfailure",
+                            "The netlist file failed the netlist check.");
+    }
+    else if (result == NETLIST_FILE_NOT_FOUND)
+    {
+        mexErrMsgIdAndTxt ( "MATLAB:trsolver:netlistcheckfailure",
+                            "The netlist was not found or could not be opened.");
+    }
+    else
+    {
+        mexErrMsgIdAndTxt ( "MATLAB:trsolver:unknownfailure",
+                            "The qucs interface returned an unknown error code.");
+    }
+
+    if (!qtr.getIsInitialised ())
+    {
+        mexErrMsgIdAndTxt ( "MATLAB:trsolver:noetr",
+                            "The transient solver could not be initialised (Is there an ETR sim in the netlist?).");
     }
     else
     {
@@ -75,21 +93,10 @@ int mextrsolver::prepare_netlist(int nlhs, mxArray *plhs[], int nrhs, const mxAr
         qtr.setMessageFcn (&mextrsolvermessage);
     }
 
-    plhs[0] = mxCreateDoubleMatrix( (mwSize)(1), (mwSize)(1), mxREAL);
-    // get a pointer to the start of the actual output data array
-    outpointer = mxGetPr (plhs[0]);
-    outpointer[0] = (double)(notopened);
-
     // free the char array as we are done with it
     mxFree (input_buf);
 
-    if (notopened)
-    {
-        mexErrMsgIdAndTxt ( "MATLAB:trsolver:inputNotVector",
-                            "File could not be opened, or no transient analysis present.");
-    }
-
-    return notopened;
+    return result;
 }
 
 // solves the circuit at a specified time point
