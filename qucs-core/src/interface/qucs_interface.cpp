@@ -106,6 +106,20 @@ int qucsint::prepare_netlist (char * infile)
 
     // create netlist object and input
     subnet = new net ("subnet");
+
+    // test if the file actually exists
+    FILE * pFile;
+    pFile = fopen (infile,"r");
+    if (pFile!=NULL)
+    {
+        // close the file again
+        fclose (pFile);
+    }
+    else
+    {
+        return NETLIST_FILE_NOT_FOUND;
+    }
+
     in = infile ? new input (infile) : new input ();
 
     // pass root environment to netlist object and input
@@ -120,12 +134,7 @@ int qucsint::prepare_netlist (char * infile)
             // replace with mex error message
             logprint (LOG_STATUS, "checker notice, netlist check FAILED\n");
         }
-        return -1;
-    }
-    if (netlist_check)
-    {
-        logprint (LOG_STATUS, "checker notice, netlist OK\n");
-        return -2;
+        return NETLIST_FAILED_CHECK;
     }
 
     // attach a ground to the netlist
@@ -141,7 +150,7 @@ int qucsint::prepare_netlist (char * infile)
         //a->setData (out);
     }
 
-    return 0;
+    return NETLIST_OK;
 }
 
 int qucsint::evaluate ()
@@ -186,8 +195,13 @@ trsolver_interface::trsolver_interface (char * infile)
     : qucsint (infile)
 {
     isInitialised = false;
-    prepare_netlist (infile);
-    getETR ();
+
+    int result = prepare_netlist (infile);
+
+    if (result == NETLIST_OK)
+    {
+        getETR ();
+    }
 }
 
 //trsolver_interface::~trsolver_interface ()

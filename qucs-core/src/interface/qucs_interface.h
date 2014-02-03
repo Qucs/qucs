@@ -35,8 +35,14 @@
 #ifndef __QUCS_INTERFACE_H__
 #define __QUCS_INTERFACE_H__
 
+
 namespace qucs
 {
+
+
+enum QUCS_ERROR_CODES { NETLIST_OK,
+                        NETLIST_FILE_NOT_FOUND,
+                        NETLIST_FAILED_CHECK };
 
 // forward declarations of some classes to avoid including
 // header files and speed compilation
@@ -105,6 +111,7 @@ public:
     trsolver_interface (char* infile);
 //    ~trsolver_interface ();
 
+    void getETR(void);
     int init (double, double, int);
     bool getIsInitialised() { return isInitialised; };
     int stepsolve_sync (double synctime);
@@ -227,9 +234,9 @@ private:
     bool isInitialised;
     /// Pointer to etr sim
     qucs::e_trsolver * etr;
-    void getETR(void);
+
 };
 
-}
+} // namespace qucs
 
 #endif /* __QUCS_INTERFACE_H__ */

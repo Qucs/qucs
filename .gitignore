@@ -57,6 +57,7 @@ tokens_vcd.h
 */adms/admsXml/verilogaLex.c
 */adms/admsXml/verilogaYacc.c
 */adms/admsXml/verilogaYacc.h
+*/adms/admsXml/verilogaYacc.y
 */adms/admsXml/admstpathYacc.c
 */adms/admsXml/admstpathYacc.h
 */adms/admsXml/admstpathYacc.y

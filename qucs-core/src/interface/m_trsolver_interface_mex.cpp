@@ -21,10 +21,14 @@ enum ClassMethods { evNotDefined,
                     rejectstep_async,
                     getsolution,
                     debug,
-                    printx, 
-                    getN, 
+                    printx,
+                    getN,
                     getM,
-                    getJac
+                    getJac,
+                    setecvs,
+                    getnodev,
+                    getvprobe,
+                    getiprobe
                   };
 
 // Map to associate the command strings with the class
@@ -48,6 +52,10 @@ void Initialize()
     s_mapClassMethodStrs["getN"]                = getN;
     s_mapClassMethodStrs["getM"]                = getM;
     s_mapClassMethodStrs["getJac"]              = getJac;
+    s_mapClassMethodStrs["setecvs"]             = setecvs;
+    s_mapClassMethodStrs["getnodev"]            = getnodev;
+    s_mapClassMethodStrs["getvprobe"]           = getvprobe;
+    s_mapClassMethodStrs["getiprobe"]           = getiprobe;
 }
 
 void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
@@ -122,9 +130,9 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     case getsolution:
         mextrsolver_instance->getsolution(nlhs, plhs, nrhs, prhs);
         return;
-    case debug:
-        mextrsolver_instance->debug();
-        return;
+//     case debug:
+//         mextrsolver_instance->debug();
+//         return;
     case printx:
         mextrsolver_instance->printx();
         return;
@@ -136,6 +144,18 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         return;
     case getJac:
         mextrsolver_instance->getJac(nlhs, plhs, nrhs, prhs);
+        return;
+    case setecvs:
+        mextrsolver_instance->setecvs(nlhs, plhs, nrhs, prhs);
+        return;
+    case getnodev:
+        mextrsolver_instance->getnodev(nlhs, plhs, nrhs, prhs);
+        return;
+    case getvprobe:
+        mextrsolver_instance->getvprobe(nlhs, plhs, nrhs, prhs);
+        return;
+    case getiprobe:
+        mextrsolver_instance->getiprobe(nlhs, plhs, nrhs, prhs);
         return;
     default:
         mexErrMsgTxt("Unrecognised class command string.");

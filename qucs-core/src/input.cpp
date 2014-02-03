@@ -60,7 +60,7 @@ input::input () : object () {
 // Constructor creates an named instance of the input class.
 input::input (char * file) : object (file) {
   if ((fd = fopen (file, "r")) == NULL) {
-    logprint (LOG_ERROR, "cannot open file `%s': %s\n",
+    logprint (LOG_ERROR, "cannot open file `%s': %s, using stdin instead\n",
 	      file, strerror (errno));
     fd = stdin;
   }
@@ -87,6 +87,7 @@ int input::netlist (net * netlist) {
   subnet = netlist;
 
   logprint (LOG_STATUS, "parsing netlist...\n");
+
   if (netlist_parse () != 0)
     return -1;
 
