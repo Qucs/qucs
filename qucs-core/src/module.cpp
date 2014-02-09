@@ -381,7 +381,7 @@ static void printprop (const char * type, const char * prefix,
 /* The function emits a complete list of the registered component
    definitions as compilable C-code. */
 void module::print (void) {
-  fprintf (stdout, def_prefix);
+  fprintf (stdout, "%s", def_prefix);
   qucs::hashiterator<module> it;
   for (it = qucs::hashiterator<module> (modules); *it; ++it) {
     module * m = it.currentVal ();
@@ -396,8 +396,8 @@ void module::print (void) {
 	     printstr (def->type), def->nodes, def->action, def->substrate,
 	     def->nonlinear, def->type, def->type);
   }
-  fprintf (stdout, def_stop);
-  fprintf (stdout, def_start);
+  fprintf (stdout, "%s", def_stop);
+  fprintf (stdout, "%s", def_start);
   fprintf (stdout, "{\n");
   for (it = qucs::hashiterator<module> (modules); *it; ++it) {
     module * m = it.currentVal ();
@@ -406,6 +406,6 @@ void module::print (void) {
   }
   fprintf (stdout, "  def_End\n");
   fprintf (stdout, "};\n");
-  fprintf (stdout, def_suffix);
+  fprintf (stdout, "%s", def_suffix);
 }
 #endif /* DEBUG */
