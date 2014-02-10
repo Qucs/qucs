@@ -27,8 +27,19 @@
 # include <config.h>
 #endif
 
+#include <iostream>
 #include <stdio.h>
 #include <stdlib.h>
+#include <map>
+#include <list>
+
+#ifdef __MINGW32__
+ #include <windows.h>
+#else
+ #include <dlfcn.h>
+#endif
+
+#include <cstdlib> //for exit
 
 #include "netdefs.h"
 #include "components.h"
@@ -38,6 +49,21 @@
 
 // Global module hash.
 qucs::hash<module> module::modules;
+
+// Our global factories for making loaded circuit objects
+// The factories are populated as dynamic modules are loaded
+// factorycreate hold the loaded modules constructor function
+std::map< std::string, creator_t *, std::less<std::string> > factorycreate;
+// factorydef hold the loaded modules definitions
+std::map< std::string, defs_t *, std::less<std::string> > factorydef;
+
+#if __MINGW32__
+  std::list<HINSTANCE> dl_list; // list to hold handles for dynamic libs
+  std::list<HINSTANCE>::iterator itr;
+#else
+  std::list<void *> dl_list; // list to hold handles for dynamic libs
+  std::list<void *>::iterator itr;
+#endif
 
 // Constructor creates an instance of the module class.
 module::module () {
@@ -409,3 +435,137 @@ void module::print (void) {
   fprintf (stdout, "%s", def_suffix);
 }
 #endif /* DEBUG */
+
+
+// look for dynamic libs, load and register them
+void module::registerDynamicModules ()
+{
+/* How it is supposed to work:
+ * 1) It will list the working directory contents looking for libraries
+ * 2) It will try to open each library and put its handle into a list
+ *   - Just by opening the lib it will already populate the factorycreate and factorydef
+ * 3) The factory is iterated to create new modules and add them to the global hash
+ *
+ * TODO:
+ *   - Add destructor for loaded objects
+ *   - Add other methods to find the libraries
+*/
+  // size of buffer for reading in directory entries
+  static unsigned int BUF_SIZE = 1024;
+
+  FILE *dl; // handle to read directory
+#ifdef __APPLE__
+  char *command_str = (char *)"ls *.dylib"; // command string to get dynamic lib names
+#endif
+#ifdef __linux__
+  char *command_str = (char *)"ls *.so"; // command string to get dynamic lib names
+#endif
+#ifdef __MINGW32__
+  char *command_str = (char *)"ls *.dll"; // command string to get dynamic lib names
+#endif
+
+  char in_buf[BUF_SIZE]; // input buffer for lib names
+
+  // get the names of all the dynamic libs (.so/.dylib/.dll files) in the working dir
+  dl = popen(command_str, "r");
+  if(!dl){
+    perror("popen");
+    exit(-1);
+  }
+
+  char name[1024];
+
+  while(fgets(in_buf, BUF_SIZE, dl)){
+    // trim off the whitespace
+    char *ws = strpbrk(in_buf, " \t\n");
+    if(ws) *ws = '\0';
+    // append ./ to the front of the lib name
+    sprintf(name, "./%s", in_buf);
+
+    // which lib is going to be loaded
+    fprintf( stdout, "try loading %s\n", name );
+
+#if __MINGW32__
+    // Load the DLL
+    HINSTANCE dlib = ::LoadLibrary(TEXT(name));
+    if (!dlib) {
+        std::cerr << "Unable to load DLL!\n";
+        exit(-1);
+    }
+#else //Linux and OSX
+    // for some reason the RTLD_NOW alones makes dlopen
+    // stick with the name (content) of the first loaded library
+    void* dlib = dlopen(name, RTLD_NOW|RTLD_LOCAL);
+    if(dlib == NULL){
+      std::cerr << dlerror() << std::endl;
+      exit(-1);
+    }
+#endif
+
+    // add the handle to our list
+    dl_list.insert(dl_list.end(), dlib);
+
+  }
+
+  // report on factorycreate
+  std::cout << "factorycreate.size() is " << factorycreate.size() << '\n';
+  std::cout << "factorycreate has registered:";
+
+  // print map key names/registered objects into factory
+  std::map<std::string, creator_t *, std::less<std::string> >::iterator fitr;
+  for (fitr=factorycreate.begin(); fitr!=factorycreate.end(); ++fitr)
+    std::cout << ' ' << fitr->first;
+  std::cout << '\n';
+
+  // loop again over registered keys in factory and register into hash
+  for (fitr=factorycreate.begin(); fitr!=factorycreate.end(); ++fitr) {
+
+    // fetch creator and definition by key name from factories
+    circuit_creator_t mycreate = factorycreate[fitr->first];
+    define_t *mydefine = factorydef[fitr->first]();
+
+    /*
+    printf("\n  type: %s\n",mydefine->type );
+    printf("  nodes: %i\n",mydefine->nodes );
+    printf("  action: %i\n",mydefine->action );
+    printf("  required->key: %s\n",mydefine->required->key);
+    */
+
+    // modified registerModule to register dynamic loaded modules
+    module * m = new module ();
+    m->circreate = mycreate;
+    m->definition = mydefine;
+
+    if (modules.get ((char *) mydefine->type) != NULL) {
+      logprint (LOG_ERROR, "load module already registered: %s\n", mydefine->type);
+    }
+    else {
+      modules.put ((char *) mydefine->type, m);
+    }
+  }
+
+  // print registered components
+  /*
+  qucs::hashiterator<module> it;
+  for (it = qucs::hashiterator<module> (module::modules); *it; ++it) {
+    module * m = it.currentVal ();
+    struct define_t * def = m->definition;
+    printf("\n" );
+    printf("type: %s\n",def->type );
+    printf("\n" );
+  }
+  */
+
+}
+
+// Close all the dynamic libs if any opened
+void module::closeDynamicLibs()
+{
+  for(itr=dl_list.begin(); itr!=dl_list.end(); itr++){
+#if __MINGW32__
+    FreeLibrary(*itr);
+#else
+    dlclose(*itr);
+#endif
+  }
+}

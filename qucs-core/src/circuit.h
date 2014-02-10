@@ -52,6 +52,7 @@
   static struct define_t cirdef; \
   static struct define_t * definition (void) { return &cirdef; }
 
+#include <map>
 #include "integrator.h"
 #include "valuelist.h"
 
@@ -302,7 +303,7 @@ class circuit : public object, public integrator
   static char * createInternal (const char *, const char *);
   void setInternalNode (int, const char *);
 
-  //  operations
+  // matrix operations
   void   allocMatrixS (void);
   void   allocMatrixN (int sources = 0);
   void   allocMatrixMNA (void);
@@ -357,5 +358,18 @@ class circuit : public object, public integrator
 };
 
 } // namespace qucs
+
+// typedef to make it easier to set up our factory
+typedef qucs::circuit *maker_t();
+// function typdefs to make it easier to set up our factories
+typedef qucs::circuit *creator_t();
+typedef struct define_t *defs_t();
+
+// our global factories defined in ucs.cpp
+extern "C" {
+ extern std::map<std::string, creator_t *, std::less<std::string> > factorycreate;
+ extern std::map<std::string, defs_t *, std::less<std::string> > factorydef;
+
+}
 
 #endif /* __CIRCUIT_H__ */

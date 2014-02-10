@@ -7,7 +7,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This software is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -126,6 +126,9 @@ int main (int argc, char ** argv) {
   }
 #endif /* DEBUG */
 
+  // look for dynamic libs, load and register them
+  module::registerDynamicModules ();
+
   // create root environment
   root = new environment ("root");
 
@@ -136,7 +139,7 @@ int main (int argc, char ** argv) {
   // pass root environment to netlist object and input
   subnet->setEnv (root);
   in->setEnv (root);
-  
+
   // get input netlist
   if (in->netlist (subnet) != 0) {
     if (netlist_check) {
@@ -172,8 +175,11 @@ int main (int argc, char ** argv) {
   delete out;
   delete root;
 
-  // delete modules
+  // delete static modules and dynamic modules
   module::unregisterModules ();
+
+  // close all the dynamic libs if any opened
+  module::closeDynamicLibs();
 
   netlist_destroy_env ();
   return ret;

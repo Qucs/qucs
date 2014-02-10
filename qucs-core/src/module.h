@@ -39,6 +39,10 @@ typedef struct define_t * (* circuit_definer_t) (void);
 typedef struct define_t * (* analysis_definer_t) (void);
 typedef struct define_t * (* misc_definer_t) (void);
 
+// function typdefs to make it easier to set up dynamic factories
+typedef circuit *creator_t();
+typedef struct define_t *defs_t();
+
 class module
 {
  public:
@@ -50,6 +54,9 @@ class module
   static void unregisterModules (void);
   static struct define_t * getModule (char *);
   static void print (void);
+
+  static void registerDynamicModules (void);
+  static void closeDynamicLibs (void);
 
  private:
   static void registerModule (analysis_definer_t , analysis_creator_t);
@@ -64,6 +71,7 @@ class module
   struct define_t * definition;
   circuit_creator_t circreate;
   analysis_creator_t anacreate;
+
 };
 
 } // namespace qucs
