@@ -33,6 +33,12 @@
 #include <map>
 #include <list>
 
+#include "netdefs.h"
+#include "components.h"
+#include "analyses.h"
+#include "netdefs.h"
+#include "module.h"
+
 #ifdef __MINGW32__
  #include <windows.h>
 #else
@@ -40,12 +46,6 @@
 #endif
 
 #include <cstdlib> //for exit
-
-#include "netdefs.h"
-#include "components.h"
-#include "analyses.h"
-#include "netdefs.h"
-#include "module.h"
 
 // Global module hash.
 qucs::hash<module> module::modules;
