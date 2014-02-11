@@ -3,9 +3,7 @@
  */
 
 #include <complex>
-#ifdef HAVE_NAMESPACES
-  using namespace std;
-#endif
+using namespace std;
 int main()
 {
   complex<float> a;

@@ -126,8 +126,17 @@ ADD_LIBRARY( verilog OBJECT ${generated_SRC} )
 
 # TODO install distributable files
 #
-# XML_FILES = analogfunction.xml qucsVersion.xml qucsMODULEcore.xml \
-#   qucsMODULEdefs.xml qucsMODULEgui.xml
 #
 # EXTRA_DIST = $(VERILOG_FILES) $(XML_FILES)
+
+SET(HEADERS
+  analogfunction.xml
+  qucsMODULEcore.xml
+  qucsMODULEdefs.xml
+  qucsMODULEgui.xml
+  qucsVersion.xml
+)
+
+INSTALL(FILES ${HEADERS} DESTINATION include/qucs-core)
+
 

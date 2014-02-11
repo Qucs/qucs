@@ -20,7 +20,6 @@ depcomp
 *.a
 install-sh
 
-*.cmake
 CMakeCache.txt
 CMakeFiles
 Makefile

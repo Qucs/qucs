@@ -18,6 +18,7 @@ SET( COMPONENTS_SRC
   ctline.cpp
   dcblock.cpp
   dcfeed.cpp
+  ecvs.cpp
   ground.cpp
   gyrator.cpp
   hybrid.cpp
@@ -72,6 +73,7 @@ SET( COMPONENTS_SRC
 
 SET(HEADERS
   component.h
+  component_id.h
   components.h
 )
 

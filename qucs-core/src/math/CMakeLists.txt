@@ -3,7 +3,7 @@ INCLUDE_DIRECTORIES( ${CMAKE_SOURCE_DIR}
                      ${CMAKE_CURRENT_SOURCE_DIR} )
 
 SET(MATH_SRC
-  cbesselj.cpp
+  #cbesselj.cpp
   complex.cpp
   fspecial.cpp
   matrix.cpp
@@ -12,7 +12,11 @@ SET(MATH_SRC
 )
 
 SET(HEADERS
+  complex.h
+  complex_missing_std.h
+  matrix.h
   precision.h
+  real.h
 )
 
 ADD_LIBRARY(math OBJECT ${MATH_SRC} )

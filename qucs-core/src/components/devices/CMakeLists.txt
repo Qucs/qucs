@@ -19,3 +19,9 @@ SET( DEVICES_SRC
 
 ADD_LIBRARY(devices OBJECT ${DEVICES_SRC} )
 
+SET(HEADERS
+  device.h
+)
+
+INSTALL(FILES ${HEADERS} DESTINATION include/qucs-core)
+

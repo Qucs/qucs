@@ -2,16 +2,8 @@
  * Check whehter you have the complex polar (double, double) function.
  */
 
-#ifdef HAVE_TR1_COMPLEX
-# include <tr1/complex>
-  using namespace std;
-  using namespace std::tr1;
-#else
 # include <complex>
-# ifdef HAVE_NAMESPACES
-  using namespace std;
-#endif
-#endif
+using namespace std;
 
 int main()
 {

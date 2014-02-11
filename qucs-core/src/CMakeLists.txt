@@ -144,21 +144,35 @@ ELSE()
 ENDIF()
 MESSAGE(STATUS "using double type: ${DoubleType}; size: ${DoubleSize}")
 
+
+# defines used in qucs_typedefs.h
+SET(QUCS_INT32_TYPE ${nr_int32_t})
+SET(QUCS_INT16_TYPE ${nr_int16_t})
+SET(QUCS_DOUBLE_TYPE ${DoubleType})
+SET(QUCS_DOUBLE_SIZE ${DoubleSize})
+#
+# Configure the header qucs_typedefs.h, interpolate above definitions.
+#
+CONFIGURE_FILE (
+    "${CMAKE_SOURCE_DIR}/qucs_typedefs.h.cmake"
+    "${CMAKE_BINARY_DIR}/qucs_typedefs.h"
+)
+
+
 #
 # Check for library functions
-#  * not all functons seem to be used after defined.
-#  * commented functions have no HAVE_{func} used anywhere in the code
+#  * not all functons seem to be used after defined. TODO check for HAVE_{func}
 #
 INCLUDE(CheckFunctionExists)
 SET(REQUIRED_FUNCTIONS
-  #floor pow exp sqrt log10 log
-  #cos sin
+  floor pow exp sqrt log10 log
+  cos sin
   acos asin                         # for real.cpp
-  #tan atan sinh
-	#cosh tanh fabs modf atan2 jn yn
+  tan atan sinh
+	cosh tanh fabs modf atan2 jn yn
   erf erfc                          # for fspecial.cpp
   round trunc acosh asinh           # for real.cpp
-  #strdup strerror
+  strdup strerror
   strchr )                          # for compat.h, matvec.cpp, scan_*.cpp
 
 FOREACH( func ${REQUIRED_FUNCTIONS} )
@@ -202,20 +216,8 @@ ENDIF()
 TRY_COMPILE( HAVE_COMPLEX
         ${CMAKE_BINARY_DIR}
         ${CMAKE_SOURCE_DIR}/cmake/complex.cpp
-        COMPILE_DEFINITIONS -DHAVE_NAMESPACES
         OUTPUT_VARIABLE TRY_OUT)
 IF(NOT HAVE_COMPLEX)
-  MESSAGE(SEND_ERROR "HAVE_COMPLEX failed")# ${TRY_OUT}")
-ENDIF()
-
-#
-# Check whether the compiler has TR1 compliant complex<T>
-#
-TRY_COMPILE( HAVE_TR1_COMPLEX
-        ${CMAKE_BINARY_DIR}
-        ${CMAKE_SOURCE_DIR}/cmake/tr1_complex.cpp
-        OUTPUT_VARIABLE TRY_OUT)
-IF(NOT HAVE_TR1_COMPLEX)
   MESSAGE(SEND_ERROR "HAVE_COMPLEX failed")# ${TRY_OUT}")
 ENDIF()
 
@@ -230,16 +232,8 @@ SET(COMPLEX_FUNCS acos acosh asin asinh atan atanh cos cosh
 # TODO any better way to scape the ";" ?
 FOREACH(func ${COMPLEX_FUNCS})
   SET(code
-    "#ifdef HAVE_TR1_COMPLEX
-    #include <tr1/complex>
+    " #include <complex>
       using namespace std\;
-      using namespace std::tr1\;
-    #else
-    #include <complex>
-    #ifdef HAVE_NAMESPACES
-      using namespace std\;
-    #endif
-    #endif
     #ifdef log2
     #undef log2
     #endif
@@ -259,7 +253,6 @@ FOREACH(func ${COMPLEX_FUNCS})
   TRY_COMPILE( HAVE_CXX_COMPLEX_${FNAME}
           ${CMAKE_BINARY_DIR}
           ${CMAKE_BINARY_DIR}/cmake/test_${func}.cpp
-          COMPILE_DEFINITIONS -DHAVE_NAMESPACES -DHAVE_COMPLEX -DHAVE_TR1_COMPLEX
           OUTPUT_VARIABLE TRY_OUT)
   if(NOT HAVE_CXX_COMPLEX_${FNAME})
     message(STATUS "HAVE_CXX_COMPLEX_${FNAME} failed")# ${TRY_OUT}")
@@ -437,23 +430,31 @@ SET(LIBQUCS_SRC
 #
 # Template classes
 #
-SET(TEMPLATES tmatrix.h eqnsys.h nasolver.h states.h tvector.h
+SET(TEMPLATES tmatrix.h tvector.h eqnsys.h nasolver.h states.h tvector.h
 	            ptrlist.h tridiag.h hash.h valuelist.h nasolution.h )
 
 
 #
-# Include headers
+# Include headers to be installed
 #
 SET(HEADERS
-	environment.h
-  check_netlist.h
-  dataset.h
-  equation.h
-  exceptionstack.h
-  input.h
+  ${CMAKE_BINARY_DIR}/config.h
+  ${CMAKE_BINARY_DIR}/qucs_typedefs.h
+  circuit.h
+  compat.h
+  constants.h
+  consts.h
+  integrator.h
   logging.h
-  module.h
   net.h
+  netdefs.h
+  node.h
+  object.h
+  states.cpp
+  states.h
+  valuelist.cpp
+  valuelist.h
+  vector.h
 )
 
 #
@@ -529,8 +530,21 @@ ADD_SUBDIRECTORY( converter )
 #
 # Create qucsator
 #
+
 ADD_EXECUTABLE(qucsator ucs.cpp )
 
+# Create a shared lib out of ucs
+# Used as a stub lib to satify the back linking of verilog-a 
+# dynamic modules. CMake will create the --out-implib need to 
+# provide the factory symbol.
+IF(WIN32)
+	ADD_LIBRARY(ucs SHARED ucs.cpp)
+	TARGET_LINK_LIBRARIES( ucs qucs )
+	INSTALL(TARGETS ucs
+		 RUNTIME DESTINATION bin COMPONENT runtime
+		 ARCHIVE DESTINATION lib COMPONENT devel
+		 LIBRARY DESTINATION lib COMPONENT library)
+ENDIF()
 #
 # Build libqucs as SHARED, dynamic library
 #
@@ -549,6 +563,8 @@ ADD_LIBRARY(qucs SHARED
   $<TARGET_OBJECTS:digital>
 )
 
+TARGET_LINK_LIBRARIES(qucs ${CMAKE_DL_LIBS})
+
 #
 # Create target to handle gperfapp dependency
 #
@@ -558,6 +574,7 @@ ADD_DEPENDENCIES( qucs equation )
 #
 # Link qucsator and libqucs
 #
+
 TARGET_LINK_LIBRARIES( qucsator qucs )
 
 #

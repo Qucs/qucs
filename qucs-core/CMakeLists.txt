@@ -193,6 +193,64 @@ IF(WIN32)
   SET(CMAKE_EXE_LINKER_FLAGS "-Wl,--enable-auto-import")
 ENDIF()
 
+
+# indiscriminate copy/paste from:
+#http://stackoverflow.com/questions/10984442/how-to-detect-c11-support-of-a-compiler-with-cmake/20165220#20165220
+
+# Initialize CXXFLAGS.
+IF(UNIX AND NOT APPLE)
+  SET(CMAKE_CXX_FLAGS                "-std=c++11")
+ENDIF()
+# CMake defaults to clang++, use proper library
+IF(APPLE)
+  SET(CMAKE_CXX_FLAGS                "-stdlib=libc++")
+ENDIF()
+
+# \todo fix headers and use standard C++ methods
+# * strdup is not C or C++ standart, it is POSIX
+#   adding -fpermissive let it compile with a ton of warnings
+# * problem with non-starndart _stricmp
+#   using -stdr=c++0x set g++ into strict ANSY, relax that with
+#   -U__STRICT_ANSI__. Could use -std=gnu++0x
+IF(WIN32)
+  SET(CMAKE_CXX_FLAGS                "-Wall -std=c++0x -fpermissive -U__STRICT_ANSI__")
+ENDIF()
+
+# indiscriminate copy/paste from:
+#http://stackoverflow.com/questions/10984442/how-to-detect-c11-support-of-a-compiler-with-cmake/20165220#20165220
+
+# Initialize CXXFLAGS.
+set(CMAKE_CXX_FLAGS                "-Wall -std=c++11")
+set(CMAKE_CXX_FLAGS_DEBUG          "-O0 -g")
+set(CMAKE_CXX_FLAGS_MINSIZEREL     "-Os -DNDEBUG")
+set(CMAKE_CXX_FLAGS_RELEASE        "-O4 -DNDEBUG")
+set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "-O2 -g")
+
+# Compiler-specific C++11 activation.
+if ("${CMAKE_CXX_COMPILER_ID}" MATCHES "GNU")
+    execute_process(
+        COMMAND ${CMAKE_CXX_COMPILER} -dumpversion OUTPUT_VARIABLE GCC_VERSION)
+    if (NOT (GCC_VERSION VERSION_GREATER 4.7 OR GCC_VERSION VERSION_EQUAL 4.7))
+        message(FATAL_ERROR "${PROJECT_NAME} requires g++ 4.7 or greater.")
+    endif ()
+elseif ("${CMAKE_CXX_COMPILER_ID}" MATCHES "Clang")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libc++")
+else ()
+    message(FATAL_ERROR "Your C++ compiler does not support C++11.")
+endif ()
+
+
+#
+# Set position independed code PIC
+#
+IF (UNIX AND NOT APPLE)
+  IF( CMAKE_SYSTEM_PROCESSOR STREQUAL "x86_64" )
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fPIC")
+  ENDIF()  
+ENDIF()
+
+
 #
 # Go look for stuff to build/install...
 #
@@ -210,7 +268,6 @@ configure_file(
 
 add_custom_target(uninstall
     COMMAND ${CMAKE_COMMAND} -P ${CMAKE_CURRENT_BINARY_DIR}/uninstall.cmake)
-
 
 
 # TODO install distributables

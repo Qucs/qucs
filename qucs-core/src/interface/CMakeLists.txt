@@ -11,7 +11,6 @@ SET( INTERFACE_SRC
 )
 
 SET(HEADERS
-  e_trsolver.h
   qucs_interface.h
 )
 
