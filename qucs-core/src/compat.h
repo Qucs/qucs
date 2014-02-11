@@ -46,6 +46,10 @@
 # ifndef isinf
 # define isinf(x)  (!_finite(x) && !_isnan(x))
 # endif
+#else
+# ifndef isinf
+# define isinf(x) std::isinf(x)
+# endif
 #endif
 
 #if (defined (__SVR4) && defined (__sun)) || defined (__sgi)
