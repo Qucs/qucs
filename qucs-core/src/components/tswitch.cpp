@@ -26,6 +26,7 @@
 # include <config.h>
 #endif
 
+#include <iostream>
 #include <cmath>
 #include "component.h"
 #include "tswitch.h"
@@ -101,6 +102,9 @@ void tswitch::calcTR (nr_double_t t) {
   nr_double_t ron = getPropertyDouble ("Ron");
   nr_double_t roff = getPropertyDouble ("Roff");
   nr_double_t r = 0;
+  nr_double_t rdiff = 0;
+  nr_double_t s_i = 0;
+  nr_double_t r_0 = 0;
   qucs::vector * values = getPropertyVector ("time");
   bool on = !strcmp (init, "on");
   nr_double_t ti = 0;
@@ -138,19 +142,39 @@ void tswitch::calcTR (nr_double_t t) {
       break;
     }
   }
-  // calculate the time since the switch occured
+  // calculate the time since the last switch occured
   nr_double_t tdiff = std::max(NR_TINY, t - ts);
-  // set the time difference to be no more than the max switch duration
+
+  // set the time difference to be no more than the max switch
+  // duration so when we interpolate below we only get the max
+  // or min function value if we are past a switching time
   if (tdiff > duration) {
         tdiff = duration;
   }
-  // Set the appropriate resistance
-  if (on) {
-    r = roff - ( (roff - ron) * (tdiff / duration) );
+
+  // Set the appropriate resistance. The resistance is interpolated
+  // along a cubic spline with zero derivative at the start and end
+  // points to ensure a smooth derivative
+  if (on)
+  {
+    r_0 = roff;
+
+    rdiff = ron - roff;
+
+    s_i = (rdiff) / (duration);
   }
-  else{
-    r = ron + ( (roff - ron) * (tdiff / duration) );
+  else
+  {
+    r_0 = ron;
+
+    rdiff = roff - ron;
+
+    s_i = (rdiff) / (duration);
   }
+
+  // perform the interpolation of the constrained cubic spline
+  r = r_0 + ((3. * s_i * std::pow (tdiff,2.0)) / (duration))
+          + ((-2. * s_i * std::pow (tdiff,3.0)) / std::pow (duration, 2.0));
 
   setD (VSRC_1, VSRC_1, -r);
 }
