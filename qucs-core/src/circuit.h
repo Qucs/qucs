@@ -365,7 +365,7 @@ typedef qucs::circuit *maker_t();
 typedef qucs::circuit *creator_t();
 typedef struct define_t *defs_t();
 
-// our global factories defined in ucs.cpp
+// our global factories defined in module.cpp
 extern "C" {
  extern std::map<std::string, creator_t *, std::less<std::string> > factorycreate;
  extern std::map<std::string, defs_t *, std::less<std::string> > factorydef;
