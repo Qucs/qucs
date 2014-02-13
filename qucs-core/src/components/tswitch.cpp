@@ -131,11 +131,12 @@ void tswitch::calcTR (nr_double_t t) {
     // to a counter
     ti += real (values->get (i));
 
-    if (t >= ti) {
+    if (t >= ti)
+    {
       // the current time is greater than or equal to the current
       // sum of switching times so the switch state changes
       on = !on;
-      // store the switching time
+      // store the current switching time
       ts = ti;
     }
     else {
