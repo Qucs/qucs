@@ -90,9 +90,11 @@ void tswitch::initTR (void) {
   // the pattern is repeated continuously
   repeat = (values->getSize () % 2) == 0 ? true : false;
   // make the time taken to go from fully on to fully off
-  // the smallest switching time / 500, or the smallest possible
-  // number
-  duration = std::max(NR_TINY, values->minimum() / 100);
+  // the smallest switching time / 100, or the smallest possible
+  // number, but no bogger than the max specified duration
+  nr_double_t maxduration = getPropertyDouble("MaxDuration");
+  duration = std::min ( std::max (10*NR_TINY, values->minimum() / 100),
+                        maxduration );
 
   initDC ();
 }
@@ -186,8 +188,9 @@ PROP_REQ [] = {
   PROP_NO_PROP };
 PROP_OPT [] = {
   { "Ron", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
-  { "Roff", PROP_REAL, { 1e9, PROP_NO_STR }, PROP_POS_RANGE },
+  { "Roff", PROP_REAL, { 1e12, PROP_NO_STR }, PROP_POS_RANGE },
   { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },
+  { "MaxDuration", PROP_REAL, { 1e-6, PROP_NO_STR }, PROP_MIN_VAL (10*NR_TINY) },
   PROP_NO_PROP };
 struct define_t tswitch::cirdef =
   { "Switch", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR, PROP_DEF };
