@@ -96,6 +96,17 @@ else
 #    esac
   fi
 fi
+
+dnl append -O0 to CXXFLAGS if in debug mode and using gcc
+dnl to assist with debugging by preventing optimisation.
+dnl gcc will use the final invocation of -OX and ignore earlier
+dnl values
+if test "$enable_debug" = yes; then
+ if test "x$GCC" = xyes; then
+    CXXFLAGS="$CXXFLAGS -O0"
+    AC_MSG_NOTICE([Appending gcc optimisation flag -O0 due to --enable-debug setting.])
+ fi
+fi
 unset enable_debug
 
 case $host_os in
