@@ -1,0 +1,46 @@
+//   Qucs resistive potentiometer model:
+//   This model can be used to construct working lin, log and inverse log
+//   potentiometers, or other devices with designer specified resistive taper functions.
+//   All required parameters can be extracted directly from
+//   manufacturers data sheets.
+//
+//   The structure and theoretical background to the potentiometer
+//   Verilog-a model are presented in the Qucs potentiometer report.
+//
+//   This is free software; you can redistribute it and/or modify
+//   it under the terms of the GNU General Public License as published by
+//   the Free Software Foundation; either version 2, or (at your option)
+//   any later version.
+//
+//   Copyright (C), Richard Crozier, richard DOT crozier AT yahoo DOT co DOT uk, February 2013.
+//
+`include "disciplines.vams"
+`include "constants.vams"
+//
+module vcresistor (C1, C2, P1, P2);
+inout P1, P2;
+input C1, C2;
+electrical C1, C2, P1, P2;
+
+`define attr(txt) (*txt*)
+//
+parameter real gain = 1 from [1e-6 : inf]
+  `attr(info="Gain" unit = "Ohm/Volt");
+
+real resistance;
+
+analog begin
+
+// Macromodel
+//
+// resistance is the voltage across the input ports
+  resistance = V(C1,C2) * gain;
+
+  if (resistance>0.0)
+    I(P1, P2) <+ V(P1, P2)/resistance ;
+  else
+    V(P1, P2) <+ 0.0 ;
+
+end
+
+endmodule

@@ -191,6 +191,7 @@
 #include "verilog/comp_2bit.core.h"
 #include "verilog/comp_4bit.core.h"
 #include "verilog/hpribin4bit.core.h"
+#include "verilog/vcresistor.core.h"
 
 #include "ecvs.h"
 
