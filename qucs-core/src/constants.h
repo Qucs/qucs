@@ -52,7 +52,7 @@
 /*!\brief Boltzmann constant (\f$k_B\f$) */
 #define kB   1.380650524e-23
 /*!\brief Elementary charge (\f$q_e\f$)  */
-#define Q    1.6021765314e-19
+#define Q_e    1.6021765314e-19
 /*!\brief Boltzmann constant over Elementary charge (\f$k_B/q_e\f$)*/
 #define kBoverQ    0.86173433260414314916e-4
 /*!\brief Elementary charge over Boltzmann constant (\f$q_e/k_B\f$)*/

@@ -264,7 +264,7 @@ void mosfet::initModel (void) {
   nr_double_t G = getPropertyDouble ("Gamma");
   if ((Ga = G) < 0) {
     if (Cox > 0 && Nsub > 0) {
-      Ga = std::sqrt (2 * Q * ESi * E0 * Nsub * 1e6) / Cox;
+      Ga = std::sqrt (2 * Q_e * ESi * E0 * Nsub * 1e6) / Cox;
     } else {
       logprint (LOG_STATUS, "WARNING: adjust Tox, Nsub or Gamma to get a "
 		"valid bulk threshold\n");
@@ -287,7 +287,7 @@ void mosfet::initModel (void) {
     }
     PhiMS = PhiG - (4.15 + Eg / 2 + pol * Phi / 2);
     if (Nss >= 0 && Cox > 0) {
-      Vto = PhiMS - Q * Nss * 1e4 / Cox + pol * (Phi + Ga * std::sqrt (Phi));
+      Vto = PhiMS - Q_e * Nss * 1e4 / Cox + pol * (Phi + Ga * std::sqrt (Phi));
     } else {
       logprint (LOG_STATUS, "WARNING: adjust Tox, Nss or Vt0 to get a "
 		"valid threshold voltage\n");
@@ -321,7 +321,7 @@ void mosfet::initModel (void) {
   setScaledProperty ("Pb", Pb);
   if (Cj <= 0) {
     if (Pb > 0 && Nsub >= 0) {
-      Cj = std::sqrt (ESi * E0 * Q * Nsub * 1e6 / 2 / Pb);
+      Cj = std::sqrt (ESi * E0 * Q_e * Nsub * 1e6 / 2 / Pb);
     }
     else {
       logprint (LOG_STATUS, "WARNING: adjust Pb, Nsub or Cj to get a "

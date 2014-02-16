@@ -56,7 +56,7 @@ void tunneldiode::calcId (nr_double_t U, nr_double_t& I, nr_double_t& G) {
   nr_double_t de   = getPropertyDouble ("de");
   nr_double_t dW   = getPropertyDouble ("dW");
 
-  U   = Wr - Q*U/dv;
+  U   = Wr - Q_e*U/dv;
   de *= kB * kelvin (getPropertyDouble ("Temp"));
 
   nr_double_t a = M_PI_2 + atan ( U / dW );
@@ -70,7 +70,7 @@ void tunneldiode::calcId (nr_double_t U, nr_double_t& I, nr_double_t& G) {
   I = b * a;
 
   // derivative
-  G = Q / dv / de / (1.0 + std::exp(-e)) * a - b * Q / dv / dW / (1.0 + sqr (U/dW));
+  G = Q_e / dv / de / (1.0 + std::exp(-e)) * a - b * Q_e / dv / dW / (1.0 + sqr (U/dW));
 }
 
 // Callback for DC analysis.
@@ -98,7 +98,7 @@ void tunneldiode::calcDC (void) {
   gd *= Gpos + Gneg;
 
   // thermal-ionic current
-  nv *= T / Q;
+  nv *= T / Q_e;
   nr_double_t c = A * Iv / std::sinh (Vv / nv);
   Id += c * std::sinh (Ud / nv);
   gd += c * std::cosh (Ud / nv) / nv;
