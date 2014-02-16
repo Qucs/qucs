@@ -38,8 +38,10 @@
 #define strcasecmp stricmp
 #endif
 
+#include "math.h"
 #ifdef __MINGW32__
-# define finite(x) _finite(x)
+//# define finite(x) _finite(x)
+# define finite(x) !std::isfinite(x)
 # ifndef isnan
 # define isnan(x)  _isnan(x)
 # endif
