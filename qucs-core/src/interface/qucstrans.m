@@ -23,12 +23,24 @@ classdef qucstrans < qucs
 
         %%%%% class methods
         
-        function debug(this)
-            this.cppcall('debug');
-        end
+%         function debug(this)
+%             this.cppcall('debug');
+%         end
+%         
+%         function printx(this)
+%             this.cppcall('printx');
+%         end
         
-        function printx(this)
-            this.cppcall('printx');
+        function voltage = getnodev (this, wirelabel)
+            voltage = this.cppcall('getnodev', wirelabel);
+        end
+
+        function voltage = getvprobe (this, vprobename)
+            voltage = this.cppcall('getvprobe', vprobename);
+        end
+
+        function current = getiprobe (this, iprobename)
+            current = this.cppcall('getiprobe', iprobename);
         end
         
     end
