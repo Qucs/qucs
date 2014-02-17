@@ -452,7 +452,7 @@ void mextrsolver::getiprobe(int nlhs, mxArray *plhs[], int nrhs, const mxArray *
     /* copy the string data from prhs[2] into a C string probename.    */
     probename = mxArrayToString (prhs[2]);
 
-    result = qtr.getVProbeV (probename, current);
+    result = qtr.getIProbeI (probename, current);
 
     if (result != 0)
     {
