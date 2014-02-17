@@ -6,7 +6,8 @@ AC_INIT([qucs-core],[0.0.18],[qucs-bugs@lists.sourceforge.net])
 AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_AUX_DIR([build-aux])
 LT_PREREQ([2.2.2])
-AM_PROG_AR
+dnl use AM_PROG_AR if present
+m4_ifdef([AM_PROG_AR], [AM_PROG_AR])
 LT_INIT([disable-static dlopen win32-dll])
 AC_CONFIG_MACRO_DIR([m4])
 
