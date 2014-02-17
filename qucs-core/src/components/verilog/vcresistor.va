@@ -1,11 +1,10 @@
-//   Qucs resistive potentiometer model:
-//   This model can be used to construct working lin, log and inverse log
-//   potentiometers, or other devices with designer specified resistive taper functions.
-//   All required parameters can be extracted directly from
-//   manufacturers data sheets.
+//   Qucs voltage controlled resistance model
 //
-//   The structure and theoretical background to the potentiometer
-//   Verilog-a model are presented in the Qucs potentiometer report.
+//   Provides an ideal voltage controlled resistance. For positive
+//   voltages the resistance is the voltage across the input ports
+//   multiplied by the gain.
+//
+//   For input voltages <= 0 the resistance is 1 uOhm (1e-6 Qhm)
 //
 //   This is free software; you can redistribute it and/or modify
 //   it under the terms of the GNU General Public License as published by
@@ -37,10 +36,18 @@ analog begin
   resistance = V(C1,C2) * gain;
 
   if (resistance>0.0)
+    // current is simply I = V/R
     I(P1, P2) <+ V(P1, P2)/resistance ;
   else
-    V(P1, P2) <+ 0.0 ;
+    // put a small resistance across the output
+    // ideally we would use:
+    // 
+    //  I(P1, P2) <+ 0.0 ;
+    //
+    // but this statement is not supported by 
+    // adms 2.3
+    I(P1, P2) <+ V(P1,P2)*1e6 ;
 
-end
+  end
 
 endmodule
