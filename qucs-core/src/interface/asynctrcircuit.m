@@ -4,7 +4,7 @@ classdef asynctrcircuit < qucstrans
     %
     %
 
-    % Copyright Richard Crozier 2013
+    % Copyright Richard Crozier 2013, 2014
 
     properties (SetAccess = private, GetAccess = public)
 
