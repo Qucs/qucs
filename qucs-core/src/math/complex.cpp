@@ -78,6 +78,8 @@ nr_complex_t asinh (const nr_complex_t z)
 
 
 #ifndef HAVE_CXX_COMPLEX_ACOS
+namespace std
+{
 /*! \brief Compute complex arc cosinus
     \param[in] z complex arc
     \return arc cosinus of z
