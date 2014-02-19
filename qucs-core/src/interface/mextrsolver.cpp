@@ -417,7 +417,7 @@ void mextrsolver::setecvs(int nlhs, mxArray *plhs[], int nrhs, const mxArray *pr
 
     result = qtr.setECVSVoltage (ecvsname, newvoltage);
 
-    if (!result)
+    if (result != 0)
     {
         // Throw an error if the voltage source was not found
         mexErrMsgIdAndTxt ( "MATLAB:trsolver:ecvsnotfound",
@@ -452,9 +452,9 @@ void mextrsolver::getiprobe(int nlhs, mxArray *plhs[], int nrhs, const mxArray *
     /* copy the string data from prhs[2] into a C string probename.    */
     probename = mxArrayToString (prhs[2]);
 
-    result = qtr.getVProbeV (probename, current);
+    result = qtr.getIProbeI (probename, current);
 
-    if (!result)
+    if (result != 0)
     {
         // Throw an error if the current probe was not found
         mexErrMsgIdAndTxt ( "MATLAB:trsolver:vprobenotfound",
@@ -501,7 +501,7 @@ void mextrsolver::getvprobe(int nlhs, mxArray *plhs[], int nrhs, const mxArray *
 
     result = qtr.getVProbeV (probename, voltage);
 
-    if (!result)
+    if (result != 0)
     {
         // Throw an error if the voltage probe was not found
         mexErrMsgIdAndTxt ( "MATLAB:trsolver:vprobenotfound",
@@ -546,10 +546,10 @@ void mextrsolver::getnodev(int nlhs, mxArray *plhs[], int nrhs, const mxArray *p
 
     /* copy the string data from prhs[2] into a C string nodename. */
     nodename = mxArrayToString (prhs[2]);
-
+    
     result = qtr.getNodeV (nodename, voltage);
 
-    if (!result)
+    if (result != 0)
     {
         // Throw an error if the node was not found
         mexErrMsgIdAndTxt ( "MATLAB:trsolver:vprobenotfound",

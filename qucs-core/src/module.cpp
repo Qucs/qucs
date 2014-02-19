@@ -280,6 +280,7 @@ void module::registerModules (void) {
   REGISTER_CIRCUIT (comp_2bit);
   REGISTER_CIRCUIT (comp_4bit);
   REGISTER_CIRCUIT (hpribin4bit);
+  REGISTER_CIRCUIT (vcresistor);
   REGISTER_CIRCUIT (ecvs);
 
   // analyses

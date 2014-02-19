@@ -26,6 +26,7 @@
 # include <config.h>
 #endif
 
+#include <iostream>
 #include <cmath>
 #include "component.h"
 #include "tswitch.h"
@@ -89,9 +90,11 @@ void tswitch::initTR (void) {
   // the pattern is repeated continuously
   repeat = (values->getSize () % 2) == 0 ? true : false;
   // make the time taken to go from fully on to fully off
-  // the smallest switching time / 500, or the smallest possible
-  // number
-  duration = std::max(NR_TINY, values->minimum() / 100);
+  // the smallest switching time / 100, or the smallest possible
+  // number, but no bogger than the max specified duration
+  nr_double_t maxduration = getPropertyDouble("MaxDuration");
+  duration = std::min ( std::max (10*NR_TINY, values->minimum() / 100),
+                        maxduration );
 
   initDC ();
 }
@@ -101,6 +104,9 @@ void tswitch::calcTR (nr_double_t t) {
   nr_double_t ron = getPropertyDouble ("Ron");
   nr_double_t roff = getPropertyDouble ("Roff");
   nr_double_t r = 0;
+  nr_double_t rdiff = 0;
+  nr_double_t s_i = 0;
+  nr_double_t r_0 = 0;
   qucs::vector * values = getPropertyVector ("time");
   bool on = !strcmp (init, "on");
   nr_double_t ti = 0;
@@ -125,11 +131,12 @@ void tswitch::calcTR (nr_double_t t) {
     // to a counter
     ti += real (values->get (i));
 
-    if (t >= ti) {
+    if (t >= ti)
+    {
       // the current time is greater than or equal to the current
       // sum of switching times so the switch state changes
       on = !on;
-      // store the switching time
+      // store the current switching time
       ts = ti;
     }
     else {
@@ -138,19 +145,39 @@ void tswitch::calcTR (nr_double_t t) {
       break;
     }
   }
-  // calculate the time since the switch occured
+  // calculate the time since the last switch occured
   nr_double_t tdiff = std::max(NR_TINY, t - ts);
-  // set the time difference to be no more than the max switch duration
+
+  // set the time difference to be no more than the max switch
+  // duration so when we interpolate below we only get the max
+  // or min function value if we are past a switching time
   if (tdiff > duration) {
         tdiff = duration;
   }
-  // Set the appropriate resistance
-  if (on) {
-    r = roff - ( (roff - ron) * (tdiff / duration) );
+
+  // Set the appropriate resistance. The resistance is interpolated
+  // along a cubic spline with zero derivative at the start and end
+  // points to ensure a smooth derivative
+  if (on)
+  {
+    r_0 = roff;
+
+    rdiff = ron - roff;
+
+    s_i = (rdiff) / (duration);
   }
-  else{
-    r = ron + ( (roff - ron) * (tdiff / duration) );
+  else
+  {
+    r_0 = ron;
+
+    rdiff = roff - ron;
+
+    s_i = (rdiff) / (duration);
   }
+
+  // perform the interpolation of the constrained cubic spline
+  r = r_0 + ((3. * s_i * std::pow (tdiff,2.0)) / (duration))
+          + ((-2. * s_i * std::pow (tdiff,3.0)) / std::pow (duration, 2.0));
 
   setD (VSRC_1, VSRC_1, -r);
 }
@@ -162,8 +189,9 @@ PROP_REQ [] = {
   PROP_NO_PROP };
 PROP_OPT [] = {
   { "Ron", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
-  { "Roff", PROP_REAL, { 1e9, PROP_NO_STR }, PROP_POS_RANGE },
+  { "Roff", PROP_REAL, { 1e12, PROP_NO_STR }, PROP_POS_RANGE },
   { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },
+  { "MaxDuration", PROP_REAL, { 1e-6, PROP_NO_STR }, PROP_MIN_VAL (10*NR_TINY) },
   PROP_NO_PROP };
 struct define_t tswitch::cirdef =
   { "Switch", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR, PROP_DEF };

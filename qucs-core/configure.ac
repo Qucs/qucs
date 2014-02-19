@@ -6,7 +6,8 @@ AC_INIT([qucs-core],[0.0.18],[qucs-bugs@lists.sourceforge.net])
 AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_AUX_DIR([build-aux])
 LT_PREREQ([2.2.2])
-AM_PROG_AR
+dnl use AM_PROG_AR if present
+m4_ifdef([AM_PROG_AR], [AM_PROG_AR])
 LT_INIT([disable-static dlopen win32-dll])
 AC_CONFIG_MACRO_DIR([m4])
 
@@ -95,6 +96,17 @@ else
 #      *)        LDFLAGS="$LDFLAGS -s" ;;
 #    esac
   fi
+fi
+
+dnl append -O0 to CXXFLAGS if in debug mode and using gcc
+dnl to assist with debugging by preventing optimisation.
+dnl gcc will use the final invocation of -OX and ignore earlier
+dnl values
+if test "$enable_debug" = yes; then
+ if test "x$GCC" = xyes; then
+    CXXFLAGS="$CXXFLAGS -O0"
+    AC_MSG_NOTICE([Appending gcc optimisation flag -O0 due to --enable-debug setting.])
+ fi
 fi
 unset enable_debug
 

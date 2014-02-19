@@ -78,7 +78,8 @@ libverilog_la_SOURCES = HBT_X.analogfunction.cpp HBT_X.core.cpp \
 	comp_1bit.analogfunction.cpp comp_1bit.core.cpp \
 	comp_2bit.analogfunction.cpp comp_2bit.core.cpp \
 	comp_4bit.analogfunction.cpp comp_4bit.core.cpp \
-	hpribin4bit.analogfunction.cpp hpribin4bit.core.cpp
+	hpribin4bit.analogfunction.cpp hpribin4bit.core.cpp \
+	vcresistor.analogfunction.cpp vcresistor.core.cpp
 
 noinst_HEADERS = HBT_X.analogfunction.h HBT_X.defs.h HBT_X.core.h \
 	hicumL2V2p1.analogfunction.h hicumL2V2p1.defs.h hicumL2V2p1.core.h \
@@ -133,7 +134,8 @@ noinst_HEADERS = HBT_X.analogfunction.h HBT_X.defs.h HBT_X.core.h \
 	comp_1bit.analogfunction.h comp_1bit.defs.h comp_1bit.core.h \
 	comp_2bit.analogfunction.h comp_2bit.defs.h comp_2bit.core.h \
 	comp_4bit.analogfunction.h comp_4bit.defs.h comp_4bit.core.h \
-	hpribin4bit.analogfunction.h hpribin4bit.defs.h hpribin4bit.core.h
+	hpribin4bit.analogfunction.h hpribin4bit.defs.h hpribin4bit.core.h \
+	vcresistor.analogfunction.h vcresistor.defs.h vcresistor.core.h
 
 VERILOG_FILES = constants.vams disciplines.vams \
   fbh_hbt-2_2a.va hicumL2V2p11.va mod_amp.va hicumL2V2p22.va log_amp.va \
@@ -145,7 +147,8 @@ VERILOG_FILES = constants.vams disciplines.vams \
   mux2to1.va mux4to1.va mux8to1.va DLS_nto1.va DLS_1ton.va andor4x2.va \
   andor4x3.va andor4x4.va dmux2to4.va dmux3to8.va dmux4to16.va ha1b.va \
   fa1b.va fa2b.va pad2bit.va pad3bit.va pad4bit.va binarytogrey4bit.va \
-  greytobinary4bit.va comp_1bit.va comp_2bit.va comp_4bit.va hpribin4bit.va
+  greytobinary4bit.va comp_1bit.va comp_2bit.va comp_4bit.va hpribin4bit.va \
+  vcresistor.va
 
 VERILOGDIGITAL_FILES =
 
@@ -832,6 +835,19 @@ nigbt.defs.h: nigbt.va
 	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEdefs.xml
 nigbt.gui.cpp: qucsVersion.xml qucsMODULEgui.xml
 nigbt.gui.cpp: nigbt.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEgui.xml
+
+vcresistor.analogfunction.cpp: analogfunction.xml
+vcresistor.analogfunction.cpp: vcresistor.va
+	$(ADMSXML) $< -e $(srcdir)/analogfunction.xml
+vcresistor.core.cpp: vcresistor.defs.h qucsVersion.xml qucsMODULEcore.xml
+vcresistor.core.cpp: vcresistor.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEcore.xml
+vcresistor.defs.h: qucsVersion.xml qucsMODULEdefs.xml
+vcresistor.defs.h: vcresistor.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEdefs.xml
+vcresistor.gui.cpp: qucsVersion.xml qucsMODULEgui.xml
+vcresistor.gui.cpp: vcresistor.va
 	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEgui.xml
 
 GENERATED_FILES = *.core.* *.analogfunction.* *.gui.* *.defs.* .*.adms .*.xml

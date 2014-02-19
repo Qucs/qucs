@@ -4,14 +4,13 @@ classdef asynctrcircuit < qucstrans
     %
     %
 
-    % Copyright Richard Crozier 2013
+    % Copyright Richard Crozier 2013, 2014
 
     properties (SetAccess = private, GetAccess = public)
-%         
-%         t_history;
-%         sol_history;
-%         
-%         hist_length = 2;
+
+        % used to determine if we need to accept or reject a step before
+        % continuing
+        step_solved;
 
     end
 
@@ -30,6 +29,8 @@ classdef asynctrcircuit < qucstrans
             this.cppcall('init_async', tstart, firstdelta);
 
             this.isinitialised = true;
+            
+            this.step_solved = false;
 
         end
         
@@ -55,12 +56,18 @@ classdef asynctrcircuit < qucstrans
             % to the next step, the acceptstep_sync function must be used.
             %
 
+            if this.step_solved == true
+                error ('A time step has already been solved and must be accepted or rejected before solving another.');
+            end
+            
             if ~isscalar(t)
                 error('t must be a scalar.');
             end
 
             this.cppcall('stepsolve_async', t);
 
+            this.step_solved = true;
+            
         end
         
         function [sol, NM] = getsolution(this)
@@ -97,18 +104,20 @@ classdef asynctrcircuit < qucstrans
             %     recalculated and added to the solution history
             % 
 
-            stepsolve(this, t);
+            if this.step_solved == false
+                
+                if nargin < 2
+                    error ('If no step has been solved, you must supply a time step at which to calculate it.');
+                end
+                    
+                % solve the step if it hasn't been done already
+                stepsolve(this, t);
+            end
 
             this.cppcall('acceptstep_async');
-
-%             % push the new t value  and solution onto the history
-%             this.t_history = circshift(this.t_history, [0, -1]);
-% 
-%             this.t_history(end) = t;
-% 
-%             this.sol_history = circshift(this.sol_history, [0, -1]);
-% 
-%             this.sol_history(:,end) = this.getsolution();
+            
+            % reset the step_solved flag
+            this.step_solved = false;
 
         end
         
@@ -122,6 +131,9 @@ classdef asynctrcircuit < qucstrans
             %
 
             this.cppcall('rejectstep_async');
+            
+            % reset the step_solved flag
+            this.step_solved = false;
 
         end
         
@@ -160,83 +172,9 @@ classdef asynctrcircuit < qucstrans
 
             elseif strcmp(flag, 'done')
                 
-%                 qtr_async.
-                
             end
             
         end
-%         
-%         function dydt = odefcn(t, y, qtr_sync)
-%             % static method for determining the derivatives of the circuit
-%             % solution at each time step for use with the ode solvers
-%             %
-%             % Syntax
-%             %
-%             % status = odefcn(t, y, qtr_sync)
-%             %
-%             
-%             % test if the circuit is initialised, this is necessary,
-%             % because contrary to what the ode solver documentation states,
-%             % the solver function is called before the OutputFcn is ever
-%             % called with the 'init' flag in odearguments.m
-%             
-%             if qtr_sync.isinitialised
-%                 % if the circuit is initialised start solving
-% 
-%                 if qtr_sync.t_history(end) == t
-% 
-%                     dydt = zeros(length(y),1);
-%                     
-% % %                     dydt = qtr_sync.dydt_history;
-% % 
-% %                     fit_time = qtr_sync.t_history(~isnan(qtr_sync.t_history));
-% % 
-% %                     fit_time = [ fit_time(1:end-1), t ];
-% % 
-% %                     if numel(fit_time) == 1
-% %                         dydt = (qtr_sync.sol_history(:,end-1) - y) ./ (t - fit_time(end - 1));
-% %                     else
-% % 
-% %                         % need to use y in here
-% %                         fit_sol = [qtr_sync.sol_history(:,1:end-1), y];
-% %                         fit_sol = permute(fit_sol(~isnan(fit_sol)), [ 2, 3, 1 ]);
-% % 
-% %                         [ ~, p1p2der1 ] = threepntcubicsplinefit(...
-% %                                             [ repmat(fit_time, [1, 1, numel(fit_sol)]), fit_sol ]);
-% % 
-% %                         dydt = squeeze(p1p2der1(2,1,:) .* t.^2 + p1p2der1(2,2,:) .* t + p1p2der1(2,3,:));
-% %                     end
-% 
-%                 else
-%                     % attempt to solve the circuit at the current time step
-% %                     if t - qtr_sync.t_history(end) < eps
-%                     qtr_sync.stepsolve(t);
-% 
-%                     % get the solution just calculated
-%                     sol = qtr_sync.getsolution();
-% 
-%                     % get the derivative w.r.t.
-% 
-%                     fit_time = [ qtr_sync.t_history(~isnan(qtr_sync.t_history)), t ]';
-% 
-%                     if numel(fit_time) == 2
-%                         dydt = (sol - y) ./ (t - qtr_sync.t_history(end));
-%                     else
-%                         fit_sol = permute([ qtr_sync.sol_history(:,1:end), sol ], [ 2, 3, 1 ]);
-% 
-%                         [ ~, p1p2der1 ] = threepntcubicsplinefit(...
-%                                             [ repmat(fit_time, [1, 1, numel(sol)]), fit_sol ] );
-% 
-%                         dydt = squeeze(p1p2der1(2,1,:) .* t.^2 + p1p2der1(2,2,:) .* t + p1p2der1(2,3,:));
-%                     end
-% 
-%                 end
-% 
-%             else
-%                 dydt = zeros(length(y),1);
-%             end
-% 
-%         end
 
     end
 
