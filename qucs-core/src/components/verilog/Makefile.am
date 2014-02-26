@@ -152,8 +152,12 @@ VERILOG_FILES = constants.vams disciplines.vams \
 
 VERILOGDIGITAL_FILES =
 
-XML_FILES = analogfunction.xml qucsVersion.xml qucsMODULEcore.xml \
-  qucsMODULEdefs.xml qucsMODULEgui.xml
+XML_FILES = analogfunction.xml \
+  qucsVersion.xml    \
+  qucsMODULEcore.xml \
+  qucsMODULEdefs.xml \
+  qucsMODULEgui.xml \
+  qucsMODULEguiJSONsymbol.xml
 
 EXTRA_DIST = $(VERILOG_FILES) $(XML_FILES)
 

@@ -134,6 +134,7 @@ SET(HEADERS
   qucsMODULEcore.xml
   qucsMODULEdefs.xml
   qucsMODULEgui.xml
+  qucsMODULEguiJSONsymbol.xml
   qucsVersion.xml
 )
 

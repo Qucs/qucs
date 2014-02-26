@@ -29,6 +29,12 @@
 <admst:variable name="nbr_sources_flickernoise" select="%s"/>
 </admst:for-each>
 
+<!-- parse command line, needs to be outside admst:open, keep last comand -->
+<!-- if last command is 'dyload' (i.e., -A dyload) emmit/append code for dynamic loader -->
+<admst:for-each select="argv">
+  <admst:variable name="dyload" string="%(.)"/>
+</admst:for-each>
+
 <admst:open file="$module.core.cpp">/*
  * $(module).core.cpp - device implementations for $(module) module
  *
@@ -708,6 +714,26 @@ using namespace qucs::device;
 
 <admst:text format="}\n"/>
 #include &quot;$(module).defs.h&quot;
+
+
+<!-- if 'dyload' is passed as last argument, emmit code for the dynamic loader -->
+<admst:if test="[$dyload='dyload']">
+  <admst:message format="last argument 'dyload' provided, emmiting code for the dynamic loader\n"/>
+  <admst:text format="\n// loader constructor interface\n"/>
+  <admst:text format="extern &quot;C&quot; {\n"/>
+  <admst:text format="  class proxy { public:\n"/>
+  <admst:text format="    proxy(){\n"/>
+  <admst:text format="      // register the constructor and the definitions with the global factories\n"/>
+  <admst:text format="      // Note that ::create and ::definition are handled by expanding the CREATOR define constructor\n"/>
+  <admst:text format="      factorycreate[&quot;$module&quot;] = $module::create;\n"/>
+  <admst:text format="      factorydef   [&quot;$module&quot;] = $module::definition;\n"/>
+  <admst:text format="    }\n"/>
+  <admst:text format="  };\n"/>
+  <admst:text format="  // our one instance of the proxy\n"/>
+  <admst:text format="  proxy p;\n"/>
+  <admst:text format="}\n"/>
+</admst:if>
+
 
 </admst:for-each>
 
