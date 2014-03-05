@@ -129,7 +129,7 @@ ADD_LIBRARY( verilog OBJECT ${generated_SRC} )
 #
 # EXTRA_DIST = $(VERILOG_FILES) $(XML_FILES)
 
-SET(HEADERS
+SET(XML_FILES
   analogfunction.xml
   qucsMODULEcore.xml
   qucsMODULEdefs.xml
@@ -138,6 +138,12 @@ SET(HEADERS
   qucsVersion.xml
 )
 
-INSTALL(FILES ${HEADERS} DESTINATION include/qucs-core)
+SET(MAKE_FILES
+  cpp2lib.makefile
+  va2cpp.makefile
+)
+
+INSTALL(FILES ${XML_FILES} DESTINATION include/qucs-core)
+INSTALL(FILES ${MAKE_FILES} DESTINATION include/qucs-core)
 
 

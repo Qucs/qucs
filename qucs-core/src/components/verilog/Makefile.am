@@ -157,9 +157,12 @@ XML_FILES = analogfunction.xml \
   qucsMODULEcore.xml \
   qucsMODULEdefs.xml \
   qucsMODULEgui.xml \
-  qucsMODULEguiJSONsymbol.xml
+  qucsMODULEguiJSONsymbol.xml \
 
-EXTRA_DIST = $(VERILOG_FILES) $(XML_FILES)
+MAKE_FILES = cpp2lib.makefile\
+  va2cpp.makefile
+
+EXTRA_DIST = $(VERILOG_FILES) $(XML_FILES) $(MAKE_FILES)
 
 AM_CPPFLAGS = -I$(top_srcdir)/src -I$(top_srcdir)/src/math \
   -I$(top_srcdir)/src/components -I$(top_srcdir)/src/components/devices \
