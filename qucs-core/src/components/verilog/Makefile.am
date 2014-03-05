@@ -157,7 +157,7 @@ XML_FILES = analogfunction.xml \
   qucsMODULEcore.xml \
   qucsMODULEdefs.xml \
   qucsMODULEgui.xml \
-  qucsMODULEguiJSONsymbol.xml \
+  qucsMODULEguiJSONsymbol.xml 
 
 MAKE_FILES = cpp2lib.makefile\
   va2cpp.makefile
