@@ -721,8 +721,8 @@ using namespace qucs::device;
   <admst:message format="last argument 'dyload' provided, emmiting code for the dynamic loader\n"/>
   <admst:text format="\n// loader constructor interface\n"/>
   <admst:text format="extern &quot;C&quot; {\n"/>
-  <admst:text format="  class proxy { public:\n"/>
-  <admst:text format="    proxy(){\n"/>
+  <admst:text format="  class va_proxy { public:\n"/>
+  <admst:text format="    va_proxy(){\n"/>
   <admst:text format="      // register the constructor and the definitions with the global factories\n"/>
   <admst:text format="      // Note that ::create and ::definition are handled by expanding the CREATOR define constructor\n"/>
   <admst:text format="      factorycreate[&quot;$module&quot;] = $module::create;\n"/>
@@ -730,7 +730,7 @@ using namespace qucs::device;
   <admst:text format="    }\n"/>
   <admst:text format="  };\n"/>
   <admst:text format="  // our one instance of the proxy\n"/>
-  <admst:text format="  proxy p;\n"/>
+  <admst:text format="  va_proxy proxy_instance;\n"/>
   <admst:text format="}\n"/>
 </admst:if>
 
