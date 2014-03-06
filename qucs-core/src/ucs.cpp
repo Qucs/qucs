@@ -101,8 +101,8 @@ int main (int argc, char ** argv) {
 #if DEBUG
     "  -l, --listing  emit C-code for available definitions\n"
 #endif
-    "  -p, --path     path or project (location of dynamic modules)\n"
-    "  -m, --module   basename of dynamic loaded modules\n"
+    "  -p, --path     project path (or location of dynamic modules)\n"
+    "  -m, --module   list of dynamic loaded modules (base names separated by space)\n"
 	"\nReport bugs to <" PACKAGE_BUGREPORT ">.\n", argv[0]);
       return 0;
     }
