@@ -862,8 +862,7 @@ else
 GENERATED_FILES =
 endif
 
-pkginclude_HEADERS = analogfunction.xml qucsVersion.xml qucsMODULEcore.xml \
-                         qucsMODULEdefs.xml qucsMODULEgui.xml
+pkginclude_HEADERS = $(XML_FILES) $(MAKE_FILES)
 
 CLEANFILES = *~ *.orig *.rej $(GENERATED_FILES)
 
