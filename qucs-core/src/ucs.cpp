@@ -31,6 +31,8 @@
 #include <assert.h>
 #include <string.h>
 #include <time.h>
+#include <list>
+#include <iostream>
 
 #include "logging.h"
 #include "precision.h"
@@ -53,7 +55,9 @@ using namespace qucs;
 
 int main (int argc, char ** argv) {
 
-  char * infile = NULL, * outfile = NULL;
+  char * infile = NULL;
+  char * outfile = NULL;
+  char * projPath = NULL;
   net * subnet;
   input * in;
   circuit * gnd;
@@ -61,6 +65,9 @@ int main (int argc, char ** argv) {
   environment * root;
   int listing = 0;
   int ret = 0;
+  int dynamicLoad = 0;
+
+  std::list<std::string> vamodules;
 
   loginit ();
   precinit ();
@@ -91,6 +98,11 @@ int main (int argc, char ** argv) {
 	"  -b, --bar      enable textual progress bar\n"
 	"  -g, --gui      special progress bar used by gui\n"
 	"  -c, --check    check the input netlist and exit\n"
+#if DEBUG
+    "  -l, --listing  emit C-code for available definitions\n"
+#endif
+    "  -p, --path     path or project (location of dynamic modules)\n"
+    "  -m, --module   basename of dynamic loaded modules\n"
 	"\nReport bugs to <" PACKAGE_BUGREPORT ">.\n", argv[0]);
       return 0;
     }
@@ -113,6 +125,17 @@ int main (int argc, char ** argv) {
     else if (!strcmp (argv[i], "-l") || !strcmp (argv[i], "--listing")) {
       listing = 1;
     }
+    else if (!strcmp (argv[i], "-p") || !strcmp (argv[i], "--path")) {
+      projPath = argv[++i];
+    }
+    else if (!strcmp (argv[i], "-m") || !strcmp (argv[i], "--module")) {
+      dynamicLoad = 1;
+    }
+    else {
+      if (dynamicLoad) {
+        vamodules.push_back(argv[i]);
+      }
+    }
   }
 
   // create static modules
@@ -127,7 +150,9 @@ int main (int argc, char ** argv) {
 #endif /* DEBUG */
 
   // look for dynamic libs, load and register them
-  module::registerDynamicModules ();
+  if (dynamicLoad) {
+    module::registerDynamicModules (projPath, vamodules);
+  }
 
   // create root environment
   root = new environment ("root");

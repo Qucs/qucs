@@ -438,9 +438,9 @@ void module::print (void) {
 
 
 // look for dynamic libs, load and register them
-void module::registerDynamicModules ()
+void module::registerDynamicModules (char *proj, std::list<std::string> modlist)
 {
-/* How it is supposed to work:
+/* How it is (WAS) supposed to work:
  * 1) It will list the working directory contents looking for libraries
  * 2) It will try to open each library and put its handle into a list
  *   - Just by opening the lib it will already populate the factorycreate and factorydef
@@ -449,45 +449,36 @@ void module::registerDynamicModules ()
  * TODO:
  *   - Add destructor for loaded objects
  *   - Add other methods to find the libraries
+ *
+ * Update
+ *  * project path is passed as paramter
+ *  * module names are passed as parameter
 */
-  // size of buffer for reading in directory entries
-  static unsigned int BUF_SIZE = 1024;
 
-  FILE *dl; // handle to read directory
+  fprintf(stdout,"project location: %s\n", proj);
+  fprintf(stdout,"modules to load: %i\n", modlist.size());
+
+  std::list<std::string>::iterator it;
+  for (it=modlist.begin(); it!=modlist.end(); ++it) {
+
+    std::string absPathLib = proj;
+
 #ifdef __APPLE__
-  char *command_str = (char *)"ls *.dylib"; // command string to get dynamic lib names
+    absPathLib = absPathLib + "/" + *it + ".dylib";
 #endif
 #ifdef __linux__
-  char *command_str = (char *)"ls *.so"; // command string to get dynamic lib names
+  absPathLib = absPathLib + "/" + *it + ".so";
 #endif
 #ifdef __MINGW32__
-  char *command_str = (char *)"ls *.dll"; // command string to get dynamic lib names
+  absPathLib = absPathLib + "\\" + *it + ".dll";
 #endif
 
-  char in_buf[BUF_SIZE]; // input buffer for lib names
-
-  // get the names of all the dynamic libs (.so/.dylib/.dll files) in the working dir
-  dl = popen(command_str, "r");
-  if(!dl){
-    perror("popen");
-    exit(-1);
-  }
-
-  char name[1024];
-
-  while(fgets(in_buf, BUF_SIZE, dl)){
-    // trim off the whitespace
-    char *ws = strpbrk(in_buf, " \t\n");
-    if(ws) *ws = '\0';
-    // append ./ to the front of the lib name
-    sprintf(name, "./%s", in_buf);
-
     // which lib is going to be loaded
-    fprintf( stdout, "try loading %s\n", name );
+    fprintf( stdout, "try loading %s\n", absPathLib.c_str() );
 
 #if __MINGW32__
     // Load the DLL
-    HINSTANCE dlib = ::LoadLibrary(TEXT(name));
+    HINSTANCE dlib = ::LoadLibrary(TEXT(absPathLib.c_str()));
     if (!dlib) {
         std::cerr << "Unable to load DLL!\n";
         exit(-1);
@@ -495,7 +486,7 @@ void module::registerDynamicModules ()
 #else //Linux and OSX
     // for some reason the RTLD_NOW alones makes dlopen
     // stick with the name (content) of the first loaded library
-    void* dlib = dlopen(name, RTLD_NOW|RTLD_LOCAL);
+    void* dlib = dlopen(absPathLib.c_str(), RTLD_NOW|RTLD_LOCAL);
     if(dlib == NULL){
       std::cerr << dlerror() << std::endl;
       exit(-1);
