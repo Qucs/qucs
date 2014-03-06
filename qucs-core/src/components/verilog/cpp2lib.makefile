@@ -32,7 +32,7 @@ else
   ifeq ($(UNAME_S),Linux)
     DLLEXT=.so
     CXX=g++
-    FLAGS=-shared -rdynamic  -Wl,-soname,$(MODEL)$(DLLEXT)
+    FLAGS=-fPIC -shared -rdynamic  -Wl,-soname,$(MODEL)$(DLLEXT)
     #-Wl,-headerpad_max_install_names
   endif
 
