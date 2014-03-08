@@ -163,3 +163,7 @@ Thumbs.db
 ################################
 *.layout
 *.depend
+
+# Doxygen html output #
+#######################
+qucs/contrib/doxygen/html/
