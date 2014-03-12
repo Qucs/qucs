@@ -53,7 +53,7 @@ inline double _exp(double arg)             { return  std::exp(arg); }
 inline double _d0_exp(double arg)          { return std::exp(arg); }
 inline double _sqrt(double arg)            { return  std::sqrt(arg); }
 inline double _d0_sqrt(double arg)         { return (1.0/std::sqrt(arg)/2.0); }
-inline double _abs(double arg)             { return  qucs::abs(arg); }
+inline double _abs(double arg)             { return  std::abs(arg); }
 inline double _d0_abs(double arg)          { return (((arg)&gt;=0)?(+1.0):(-1.0)); }
 inline int _floor(double arg)              { return  std::floor(arg); }
 inline int _d0_floor(double)               { return (1.0); }
