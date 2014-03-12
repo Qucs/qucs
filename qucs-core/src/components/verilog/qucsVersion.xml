@@ -1934,7 +1934,7 @@
 #define m10_sinh(v10,v00,x)     v10 = (std::cosh(x));
 #define m00_tanh(v00,x)         v00 = std::tanh(x);
 #define m10_tanh(v10,v00,x)     v10 = (1.0/std::cosh(x)/std::cosh(x));
-#define m00_acos(v00,x)         v00 = qucs::acos(x);
+#define m00_acos(v00,x)         v00 = std::acos(x);
 #define m10_acos(v10,v00,x)     v10 = (-1.0/std::sqrt(1-x*x));
 #define m00_asin(v00,x)         v00 = asin(x);
 #define m10_asin(v10,v00,x)     v10 = (+1.0/std::sqrt(1-x*x));
