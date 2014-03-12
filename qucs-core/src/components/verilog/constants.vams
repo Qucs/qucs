@@ -35,8 +35,8 @@
 `define P_H 6.62606876e-34
 // permittivity of vacuum in farads/meter
 `define P_EPS0 8.854187817e-12
-// permeability of vacuum in henrys/meter
-`define P_U0 (4.0e-7 * `M_PI)
+// permeability of vacuum in henrys/meter 4*pi*1e-7
+`define P_U0 1.25663706143591729538-6
 // zero celsius in kelvin
 `define P_CELSIUS0 273.15
 `endif
