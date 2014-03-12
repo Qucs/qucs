@@ -157,10 +157,12 @@ XML_FILES = analogfunction.xml \
   qucsMODULEcore.xml \
   qucsMODULEdefs.xml \
   qucsMODULEgui.xml \
-  qucsMODULEguiJSONsymbol.xml 
+  qucsMODULEguiJSONsymbol.xml
 
 MAKE_FILES = cpp2lib.makefile\
   va2cpp.makefile
+
+VA_INCLUDES = constants.vams disciplines.vams
 
 EXTRA_DIST = $(VERILOG_FILES) $(XML_FILES) $(MAKE_FILES)
 
@@ -862,7 +864,7 @@ else
 GENERATED_FILES =
 endif
 
-pkginclude_HEADERS = $(XML_FILES) $(MAKE_FILES)
+pkginclude_HEADERS = $(XML_FILES) $(MAKE_FILES) $(VA_INCLUDES)
 
 CLEANFILES = *~ *.orig *.rej $(GENERATED_FILES)
 

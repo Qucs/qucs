@@ -50,8 +50,11 @@ CPPFLAGS= -DHAVE_CONFIG_H -I./  -I$(INC)
 LIBSRUNTIME=-lqucs -ldl
 LDFLAGS=-L"$(PREFIX)/lib" $(LIBSRUNTIME) -Wl,-rpath -Wl,$(PROJDIR)
 
-# Required sources
+# Required (admsXml generated) sources
 SRC=$(MODEL).core.cpp $(MODEL).analogfunction.cpp
+
+# Generated headers
+HDR=$(MODEL).core.h $(MODEL).analogfunction.h
 
 # Default
 .PHONY: cpp2lib
@@ -64,7 +67,7 @@ $(MODEL)$(DLLEXT): $(SRC)
 	$(CXX)  $(CPPFLAGS) -o $(MODEL)$(DLLEXT) $(SRC) $(FLAGS) -L"$(PROJDIR)" $(LDFLAGS)
 
 clean:
-	@rm -f $(MODEL)$(DLLEXT)
+	@rm -f $(MODEL)$(DLLEXT) $(SRC) $(HDR)
 
 #bundle:
 #	@tar -cvf $(MODEL)_Files.tar $(GEN_SRC)

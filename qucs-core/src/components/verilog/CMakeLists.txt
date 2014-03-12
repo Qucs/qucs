@@ -143,7 +143,13 @@ SET(MAKE_FILES
   va2cpp.makefile
 )
 
-INSTALL(FILES ${XML_FILES} DESTINATION include/qucs-core)
-INSTALL(FILES ${MAKE_FILES} DESTINATION include/qucs-core)
+SET(VA_INCLUDES
+  constants.vams
+  disciplines.vams
+)
+
+INSTALL(FILES ${XML_FILES}   DESTINATION include/qucs-core)
+INSTALL(FILES ${MAKE_FILES}  DESTINATION include/qucs-core)
+INSTALL(FILES ${VA_INCLUDES} DESTINATION include/qucs-core)
 
 

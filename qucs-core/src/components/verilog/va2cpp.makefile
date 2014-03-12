@@ -55,8 +55,12 @@ va2cpp: $(GEN_SRC)
 # Run admsXml, create C++ out of Verilog-A
 # Last argument '-A dyload' enable code generation for the dynamic loader
 # The '-A' is not really defined. admsXml will take almost any `-[CHAR] command`
+# Include the search path to use constants.vams disciplines.vams distributed by qucs
+# wich are known to work.
 $(GEN_SRC): $(MODEL)$(VA)
-	$(admsXml) $(MODEL)$(VA) -e $(INC)/qucsVersion.xml    \
+	$(admsXml) $(MODEL)$(VA) \
+                           -I $(INC)                    \
+                           -e $(INC)/qucsVersion.xml    \
                            -e $(INC)/qucsMODULEcore.xml \
                            -e $(INC)/qucsMODULEdefs.xml \
                            -e $(INC)/analogfunction.xml \
