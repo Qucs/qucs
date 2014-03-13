@@ -967,7 +967,11 @@
       </admst:for-each>
       <admst:variable name="e" select="$(fname)($args)"/>
     </admst:when>
-    <admst:when test="[name='abs' or name='acos' or name='asin' or name='atan' or name='cos' or name='cosh' or name='exp' or name='hypot' or name='limexp' or name='ln' or name='log' or name='sin' or name='sinh' or name='sqrt' or name='tan' or name='tanh' or name='atanh']">
+<!--   hypot function name removed from single argument list. If left in list a cADM compile error occurs: Mike Brinson March 2014. -->
+    <admst:when test="[name='abs'  or name='acos' or name='asin'   or name='atan' or name='cos'  or
+                       name='cosh' or name='exp'  or name='limexp' or name='ln'   or name='log'  or
+                       name='sin'  or name='sinh' or name='sqrt'   or name='tan'  or name='tanh' or
+                       name='atanh']">
       <admst:assert test="arguments[count(.)=1]" format="%(name): should have one argument exactly\n"/>
       <admst:variable name="index" path="index(subexpression/expression/function,.)"/>
       <admst:variable name="fname" path="funcname(.)/[name='fname']/value"/>
