@@ -1615,9 +1615,9 @@
   <admst:text select="condition[dynamic='yes']" format="#ifdef _DYNAMIC\n"/>
   <admst:variable name="SkipFVariable" string="y"/>
   <admst:text format="for\n("/>
-  <admst:text format="%(e(initial/lhs/tree))=%(e(initial/rhs/tree));"/>
+  <admst:text format="%(e(initial/lhs))=%(e(initial/rhs/tree));"/>
   <admst:text format="%(e(condition/tree));"/>
-  <admst:text format="%(e(update/lhs/tree))=%(e(update/rhs/tree))"/>
+  <admst:text format="%(e(update/lhs))=%(e(update/rhs/tree))"/>
   <admst:text format=")\n"/>
   <admst:variable name="SkipFVariable" string="n"/>
   <admst:text select="forblock/adms[datatypename!='block']" format="{\n"/>
