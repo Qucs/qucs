@@ -101,6 +101,14 @@ To compile the work book:
 
 	$ cd tutorial && make book
 
+To compile the standalone reports:
+
+	$ cd report && make report
+
+To compile the report book
+
+	$ cd tutorial && make book
+
 The technical documentation is going to be release in PS, PDF and HTML.
 Both PS and PDF are produced by:
 
