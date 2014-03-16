@@ -41,10 +41,6 @@ typedef struct define_t * (* circuit_definer_t) (void);
 typedef struct define_t * (* analysis_definer_t) (void);
 typedef struct define_t * (* misc_definer_t) (void);
 
-// function typdefs to make it easier to set up dynamic factories
-typedef circuit *creator_t();
-typedef struct define_t *defs_t();
-
 class module
 {
  public:
