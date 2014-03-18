@@ -34,7 +34,7 @@
 #include <float.h>
 #include <ctype.h>
 
-#ifdef __MINGW32__
+#if defined(_WIN32) & not defined(__MINGW32__)
 #define strcasecmp stricmp
 #endif
 
