@@ -43,7 +43,7 @@
 /*!\brief Planck constant (\f$h\f$)
    \todo Add h bar (\f$h/(2\pi)\f$)
 */
-#define H    6.626069311e-34
+#define Hp    6.626069311e-34
 /*!\brief Absolute 0 in centigrade  */
 #define K    -273.15
 /*!\brief standard temperature      */
