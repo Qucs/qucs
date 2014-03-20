@@ -39,23 +39,5 @@
 #endif
 
 #include "math.h"
-#ifdef __MINGW32__
-//# define finite(x) _finite(x)
-# define finite(x) !std::isfinite(x)
-# ifndef isnan
-# define isnan(x)  _isnan(x)
-# endif
-# ifndef isinf
-# define isinf(x)  (!_finite(x) && !_isnan(x))
-# endif
-#else
-# ifndef isinf
-# define isinf(x) std::isinf(x)
-# endif
-#endif
-
-#if (defined (__SVR4) && defined (__sun)) || defined (__sgi)
-# define isinf(x) (!finite(x) && (x) == (x)) 
-#endif
 
 #endif /* __COMPAT_H__ */

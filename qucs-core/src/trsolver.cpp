@@ -897,7 +897,7 @@ nr_double_t trsolver::checkDelta (void)
         }
 
         dif = x->get (r) - SOL(0)->get (r);
-        if (finite (dif) && dif != 0)
+        if (isfinite (dif) && dif != 0)
         {
             // use Milne' estimate for the local truncation error
             rel = MAX (fabs (x->get (r)), fabs (SOL(0)->get (r)));

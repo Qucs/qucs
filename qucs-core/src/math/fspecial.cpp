@@ -45,7 +45,7 @@ void fspecial::ellip_ke (nr_double_t arg, nr_double_t &k, nr_double_t &e) {
     k = NR_INF; // infinite
     e = 0;
   }
-  else if (isinf (arg) && arg < 0) {
+  else if (std::isinf (arg) && arg < 0) {
     k = 0;
     e = NR_INF; // infinite
   }
@@ -570,7 +570,7 @@ nr_double_t fspecial::ltqnorm (nr_double_t x) {
     z = +NR_INF;
   }
   // Cases when output will be NaN:
-  else if (x < 0.0 || x > 1.0 || isnan (x)) {
+  else if (x < 0.0 || x > 1.0 || std::isnan (x)) {
     z = +NR_NAN;
   }
 

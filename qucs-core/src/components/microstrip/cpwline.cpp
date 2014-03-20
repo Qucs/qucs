@@ -51,7 +51,7 @@ void cpwline::ellipke (nr_double_t arg, nr_double_t &k, nr_double_t &e) {
     k = NR_INF; // infinite
     e = 0;
   }
-  else if (isinf (arg) && arg < 0) {
+  else if (std::isinf (arg) && arg < 0) {
     k = 0;
     e = NR_INF; // infinite
   }
