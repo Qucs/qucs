@@ -86,7 +86,7 @@ class vector : public object
   friend vector  cumsum  (vector);
   friend vector  cumprod (vector);
   friend vector  cumavg  (vector);
-  friend vector  dbm     (vector, const nr_complex_t z = 50.0);
+  friend vector  dbm     (vector, const nr_complex_t);
   friend nr_complex_t integrate (vector v, const nr_complex_t);
   friend nr_double_t integrate (vector v, const nr_double_t);
 
@@ -104,13 +104,12 @@ class vector : public object
   friend vector pow    (const nr_complex_t, vector);
   friend vector pow    (const nr_double_t, vector);
   friend vector pow    (vector, vector);
-  friend vector ztor   (vector, nr_complex_t zref = 50.0);
-  friend vector rtoz   (vector, nr_complex_t zref = 50.0);
-  friend vector ytor   (vector, nr_complex_t zref = 50.0);
-  friend vector rtoy   (vector, nr_complex_t zref = 50.0);
-  friend vector diff   (vector, vector, int n = 1);
-  friend vector unwrap (vector,
-			nr_double_t tol = M_PI, nr_double_t step = 2 * M_PI);
+  friend vector ztor   (vector, nr_complex_t);
+  friend vector rtoz   (vector, nr_complex_t);
+  friend vector ytor   (vector, nr_complex_t);
+  friend vector rtoy   (vector, nr_complex_t);
+  friend vector diff   (vector, vector, int);
+  friend vector unwrap (vector, nr_double_t, nr_double_t);
 
   friend vector polar   (vector, const nr_complex_t);
   friend vector polar   (const nr_complex_t, vector);
@@ -242,7 +241,7 @@ nr_complex_t avg     (vector);
 vector  cumsum  (vector);
 vector  cumprod (vector);
 vector  cumavg  (vector);
-vector  dbm     (vector, const nr_complex_t);
+vector  dbm     (vector, const nr_complex_t z = 50.0);
 nr_complex_t integrate (vector v, const nr_complex_t);
 nr_double_t integrate (vector v, const nr_double_t);
 vector real   (vector);  // the real part
@@ -258,12 +257,12 @@ vector pow    (vector, const nr_double_t);
 vector pow    (const nr_complex_t, vector);
 vector pow    (const nr_double_t, vector);
 vector pow    (vector, vector);
-vector ztor   (vector, nr_complex_t);
-vector rtoz   (vector, nr_complex_t);
-vector ytor   (vector, nr_complex_t);
-vector rtoy   (vector, nr_complex_t);
-vector diff   (vector, vector, int);
-vector unwrap (vector, nr_double_t, nr_double_t);
+vector ztor   (vector, nr_complex_t zref = 50.0);
+vector rtoz   (vector, nr_complex_t zref = 50.0);
+vector ytor   (vector, nr_complex_t zref = 50.0);
+vector rtoy   (vector, nr_complex_t zref = 50.0);
+vector diff   (vector, vector, int n = 1);
+vector unwrap (vector, nr_double_t tol = M_PI, nr_double_t step = 2 * M_PI);
 vector polar   (vector, const nr_complex_t);
 vector polar   (const nr_complex_t, vector);
 vector polar   (vector, vector);
