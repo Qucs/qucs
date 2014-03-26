@@ -144,7 +144,7 @@ case $host_os in
   *mingw* )
   if test "x$GCC" = xyes; then
     CFLAGS="$CFLAGS -pipe"
-    CXXFLAGS="$CXXFLAGS -pipe -fno-exceptions -fno-check-new -ldl"
+    CXXFLAGS="$CXXFLAGS -pipe -fno-exceptions -fno-check-new"
     if test $USE_MAINTAINER_MODE = yes; then
       CFLAGS="$CFLAGS -W -Wall -Wmissing-prototypes"
       CXXFLAGS="$CXXFLAGS -W -Wall"

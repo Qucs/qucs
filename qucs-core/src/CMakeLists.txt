@@ -533,18 +533,6 @@ ADD_SUBDIRECTORY( converter )
 
 ADD_EXECUTABLE(qucsator ucs.cpp )
 
-# Create a shared lib out of ucs
-# Used as a stub lib to satify the back linking of verilog-a 
-# dynamic modules. CMake will create the --out-implib need to 
-# provide the factory symbol.
-IF(WIN32)
-	ADD_LIBRARY(ucs SHARED ucs.cpp)
-	TARGET_LINK_LIBRARIES( ucs qucs )
-	INSTALL(TARGETS ucs
-		 RUNTIME DESTINATION bin COMPONENT runtime
-		 ARCHIVE DESTINATION lib COMPONENT devel
-		 LIBRARY DESTINATION lib COMPONENT library)
-ENDIF()
 #
 # Build libqucs as SHARED, dynamic library
 #

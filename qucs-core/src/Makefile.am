@@ -42,7 +42,7 @@ libqucs_la_LIBADD = math/libqucsmath.la   \
 	components/verilog/libverilog.la \
 	interface/libinterface.la
 ## In case we want to build windows dlls
-libqucs_la_LDFLAGS = -no-undefined
+libqucs_la_LDFLAGS = -shared -no-undefined
 
 pkginclude_HEADERS = compat.h logging.h object.h vector.h consts.h node.h \
   net.h circuit.h integrator.h states.h states.cpp valuelist.h valuelist.cpp \
