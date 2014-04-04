@@ -63,6 +63,7 @@ SET( VA_FILES
   phototransistor.va
   potentiometer.va
   tff_SR.va
+  vcresistor.va
 )
 
 
