@@ -1,0 +1,34 @@
+language: cpp
+
+compiler:
+  - gcc
+  - clang
+
+before_install:
+  - sudo apt-get install build-essential
+  - sudo apt-get install libqt4-dev libqt4-qt3support
+  - sudo apt-get install automake libtool gperf flex bison
+
+  # for adms
+  - sudo apt-get install libxml2 libxml2-dev
+  - sudo apt-get install zlib1g zlib1g-dev
+  - sudo apt-get install libgd2-xpm-dev
+
+  # configure cpan, no waiting for user input
+  - (echo y;echo o conf prerequisites_policy follow;echo o conf commit)| sudo cpan
+  - sudo cpan -i XML::LibXML
+  - sudo cpan -f GD
+
+script:
+  # build GUI components
+  - cd qucs
+  - sh autogen.sh
+  - ./configure --enable-maintainer-mode
+  - make
+  - cd ..
+
+  # build Qucs-ator
+  - cd qucs-core
+  - sh bootstrap.sh
+  - ./configure --enable-maintainer-mode
+  - make
