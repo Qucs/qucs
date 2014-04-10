@@ -406,7 +406,7 @@ tvector<nr_type_t> conj (tvector<nr_type_t> a) {
 template <class nr_type_t>
 int tvector<nr_type_t>::isFinite (void) {
   for (int i = 0; i < size; i++)
-    if (!isfinite (real (data[i]))) return 0;
+    if (!std::isfinite (real (data[i]))) return 0;
   return 1;
 }
 

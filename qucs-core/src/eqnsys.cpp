@@ -566,7 +566,7 @@ void eqnsys<nr_type_t>::solve_iterative (void) {
 	conv = 0;
 	break;
       }
-      if (!isfinite (diff)) { error++; break; }
+      if (!std::isfinite (diff)) { error++; break; }
     }
     // save last values
     *Xprev = *X;
@@ -649,7 +649,7 @@ void eqnsys<nr_type_t>::solve_sor (void) {
 	break;
       }
       d += diff; s += abs (X_(r));
-      if (!isfinite (diff)) { error++; break; }
+      if (!std::isfinite (diff)) { error++; break; }
     }
     if (!error) {
       // adjust relaxation based on average errors

@@ -332,7 +332,7 @@ void tmatrix<nr_type_t>::transpose (void) {
 template <class nr_type_t>
 int tmatrix<nr_type_t>::isFinite (void) {
   for (int i = 0; i < rows * cols; i++)
-    if (!isfinite (real (data[i]))) return 0;
+    if (!std::isfinite (real (data[i]))) return 0;
   return 1;
 }
 
