@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Qucs Specific #
 ######################
 */src/qucsator
@@ -174,4 +175,13 @@ qucs/contrib/doxygen/html/
 CMakeLists.txt.user
 
 
+=======
+*.o
+*.cpp~
+*.h~
+QFilterSintez
+*.pro.user
+Makefile
+moc_*.cpp
+>>>>>>> First commit. Main window interface implemented
 
