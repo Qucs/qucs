@@ -1,0 +1,8 @@
+*.o
+*.cpp~
+*.h~
+QFilterSintez
+*.pro.user
+Makefile
+moc_*.cpp
+
