@@ -22,21 +22,39 @@ FilterSintez::FilterSintez(QWidget *parent)
     edtF2 = new QLineEdit;
     edtF2->setValidator(val1);
 
-
     lblTyp = new QLabel(tr("Рассчитать фильтр:"));
-    btnChebyshev = new QPushButton(tr("Фильтр Чебышева"));
-    btnButterworth = new QPushButton(tr("Фильтр Баттерворта"));
-    btnInvChebyshev = new QPushButton(tr("Инверсный фильтр Чебышева"));
-    btnElliptic = new QPushButton(tr("Эллиптический фильтр"));
+    cbxFilterFunc = new QComboBox;
+    QStringList lst2;
+    lst2<<tr("Фильтр Баттерворта")
+        <<tr("Фильтр Чебышева")
+        <<tr("Инверсный фильтр Чебышева")
+        <<tr("Эллиптический фильтр");
+    cbxFilterFunc->addItems(lst2);
+    btnCalcFiltFunc = new QPushButton(tr("Рассчитать функцию фильтра"));
 
     lblResult = new QLabel(tr("Результаты расчёта: "));
     txtResult = new QTextEdit;
 
+
+    lblSch = new QLabel(tr("Схеманая реализация фильтра"));
     btnHighPass = new QRadioButton(tr("ФВЧ"));
     btnLowPass = new QRadioButton(tr("ФНЧ"));
     QButtonGroup *grp1 = new QButtonGroup;
     grp1->addButton(btnHighPass);
     grp1->addButton(btnLowPass);
+
+    cbxFilterType = new QComboBox;
+    QStringList lst;
+    lst<<tr("Биквадратный")
+      <<tr("С многопетлевой ОС")
+      <<tr("Саллена-Кея")
+      <<tr("Пассивный");
+    cbxFilterType->addItems(lst);
+
+    sch_pic = new QLabel;
+    QPixmap pix("dblquad.png");
+    sch_pic->resize(pix.size());
+    sch_pic->setPixmap(pix);
 
     top = new QHBoxLayout;
     left = new QVBoxLayout;
@@ -53,16 +71,19 @@ FilterSintez::FilterSintez(QWidget *parent)
     left->addWidget(lblF2);
     left->addWidget(edtF2);
     left->addWidget(lblTyp);
-    left->addWidget(btnChebyshev);
-    left->addWidget(btnButterworth);
-    left->addWidget(btnInvChebyshev);
-    left->addWidget(btnElliptic);
+    left->addWidget(cbxFilterFunc);
+
 
     center->addWidget(lblResult);
     center->addWidget(txtResult);
 
-    right->addWidget(btnLowPass);
-    right->addWidget(btnHighPass);
+    left->addWidget(lblSch);
+    left->addWidget(btnLowPass);
+    left->addWidget(btnHighPass);
+    left->addWidget(cbxFilterType);
+    left->addWidget(btnCalcFiltFunc);
+
+    right->addWidget(sch_pic);
 
     top->addLayout(left);
     top->addLayout(center);
@@ -76,4 +97,25 @@ FilterSintez::FilterSintez(QWidget *parent)
 FilterSintez::~FilterSintez()
 {
     
+}
+
+
+void FilterSintez::slotCalcFilter()
+{
+
+}
+
+void FilterSintez::calcChebyshev()
+{
+
+}
+
+void FilterSintez::calcButterworth()
+{
+
+}
+
+void FilterSintez::calcElliptic()
+{
+
 }

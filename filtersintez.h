@@ -21,23 +21,40 @@ private:
     QLineEdit *edtF1; // passband cutoff frequency F1
     QLineEdit *edtF2; // stopband cutoff frequency F2
 
-    QPushButton *btnChebyshev;
-    QPushButton *btnButterworth;
-    QPushButton *btnInvChebyshev;
-    QPushButton *btnElliptic;
+    QComboBox *cbxFilterFunc;
+    QPushButton *btnCalcFiltFunc;
 
     QLabel *lblResult;
     QTextEdit *txtResult;
 
+    QLabel *lblSch;
+
     QRadioButton *btnLowPass;
     QRadioButton *btnHighPass;
+
+    QComboBox *cbxFilterType;
+
+    QPushButton *btnElements;
+    //QPushButton *btnPassive;
 
     QHBoxLayout *top;
     QVBoxLayout *left;
     QVBoxLayout *center;
     QVBoxLayout *right;
     
+    QLabel *sch_pic;
+
     QWidget *zenter;
+
+    void calcChebyshev();
+    void calcButterworth();
+    void calcInvChebyshev();
+    void calcElliptic();
+
+
+private slots:
+
+    void slotCalcFilter();
 
 public:
     FilterSintez(QWidget *parent = 0);
