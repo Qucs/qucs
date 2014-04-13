@@ -39,13 +39,14 @@ FilterSintez::FilterSintez(QWidget *parent)
     txtResult = new QTextEdit;
 
 
-    lblSch = new QLabel(tr("Схеманая реализация фильтра"));
+    lblSch = new QLabel(tr("Схемная реализация фильтра"));
     btnHighPass = new QRadioButton(tr("ФВЧ"));
     btnLowPass = new QRadioButton(tr("ФНЧ"));
     QButtonGroup *grp1 = new QButtonGroup;
     grp1->addButton(btnHighPass);
     grp1->addButton(btnLowPass);
     btnLowPass->setChecked(true);
+    connect(grp1,SIGNAL(buttonClicked(int)),this,SLOT(slotUpdateSchematic()));
 
     cbxFilterType = new QComboBox;
     QStringList lst;
@@ -54,6 +55,7 @@ FilterSintez::FilterSintez(QWidget *parent)
       <<tr("Саллена-Кея")
       <<tr("Пассивный");
     cbxFilterType->addItems(lst);
+    connect(cbxFilterType,SIGNAL(currentIndexChanged(int)),this,SLOT(slotUpdateSchematic()));
 
     sch_pic = new QLabel;
     QPixmap pix("Images/dblquad.png");
@@ -119,6 +121,27 @@ void FilterSintez::slotCalcFilter()
     }
 
     //calcButterworth();
+}
+
+void FilterSintez::slotUpdateSchematic()
+{
+    QString s;
+    switch (cbxFilterType->currentIndex()) {
+    case 0 : s = "Images/dblquad.png";
+             break;
+    case 1 : s= "Images/multiloop.png";
+             break;
+    case 2 : if (btnHighPass->isChecked()) s = "Images/high-pass1.png";
+             else s = "Images/low-pass1.png";
+             break;
+    case 3 : s = "Images/passive.png";
+             break;
+    default: break;
+    }
+
+    QPixmap pix(s);
+    sch_pic->resize(pix.size());
+    sch_pic->setPixmap(pix);
 }
 
 void FilterSintez::calcChebyshev()

@@ -55,6 +55,7 @@ private:
 private slots:
 
     void slotCalcFilter();
+    void slotUpdateSchematic();
 
 public:
     FilterSintez(QWidget *parent = 0);
