@@ -330,3 +330,38 @@ void FilterSintez::calcElliptic()
 
     txtResult->setText(lst.join("\n"));
 }
+
+void FilterSintez::calcDblQuadHPF()
+{
+
+}
+
+void FilterSintez::calcDblQuadLPF()
+{
+
+}
+
+void FilterSintez::calcMultiloopHPF()
+{
+
+}
+
+void FilterSintez::calcMultiloopLPF()
+{
+
+}
+
+void FilterSintez::calcSallenKeyHPF()
+{
+
+}
+
+void FilterSintez::calcSallenKeyLPF()
+{
+
+}
+
+void FilterSintez::calcPassive()
+{
+
+}

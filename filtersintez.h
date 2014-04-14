@@ -51,6 +51,15 @@ private:
     void calcInvChebyshev();
     void calcElliptic();
 
+    void calcDblQuadLPF();
+    void calcDblQuadHPF();
+    void calcMultiloopLPF();
+    void calcMultiloopHPF();
+    void calcSallenKeyLPF();
+    void calcSallenKeyHPF();
+    void calcPassive();
+
+
 
 private slots:
 
