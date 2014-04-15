@@ -15,14 +15,17 @@ private:
     QLabel *lblF1;
     QLabel *lblF2;
     QLabel *lblTyp;
+    QLabel *lblKv;
 
     QLineEdit *edtA1; // passband attenuation A1
     QLineEdit *edtA2; // stopband attenuation A2
     QLineEdit *edtF1; // passband cutoff frequency F1
     QLineEdit *edtF2; // stopband cutoff frequency F2
+    QLineEdit *edtKv;
 
     QComboBox *cbxFilterFunc;
     QPushButton *btnCalcFiltFunc;
+    QPushButton *btnCalcSchematic;
 
     QLabel *lblResult;
     QTextEdit *txtResult;
@@ -46,10 +49,10 @@ private:
 
     QWidget *zenter;
 
-    void calcChebyshev();
-    void calcButterworth();
-    void calcInvChebyshev();
-    void calcElliptic();
+    int calcChebyshev();
+    int calcButterworth();
+    int calcInvChebyshev();
+    int calcElliptic();
 
     void calcDblQuadLPF();
     void calcDblQuadHPF();
@@ -59,12 +62,14 @@ private:
     void calcSallenKeyHPF();
     void calcPassive();
 
+    float Nfil,Fc;
 
 
 private slots:
 
     void slotCalcFilter();
     void slotUpdateSchematic();
+    void slotCalcSchematic();
 
 public:
     FilterSintez(QWidget *parent = 0);
