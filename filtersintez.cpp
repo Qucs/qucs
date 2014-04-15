@@ -6,6 +6,9 @@ const double PI=3.141592654;
 FilterSintez::FilterSintez(QWidget *parent)
     : QMainWindow(parent)
 {
+    Nfil = 4;
+    Fc = 1000;
+
     QTextCodec::setCodecForTr(QTextCodec::codecForName("UTF-8"));
 
     lblInputData = new QLabel(tr("Входные данные"));
@@ -13,6 +16,7 @@ FilterSintez::FilterSintez(QWidget *parent)
     lblA2 = new QLabel(tr("Затухание фильтра в полосе задерживания, A2"));
     lblF1 = new QLabel(tr("Частота среза фильтра в полосе пропускания, F1"));
     lblF2 = new QLabel(tr("Частота фильтра в полосе задерживания, F2"));
+    lblKv = new QLabel(tr("Усиление фильтра, Kv"));
 
     edtA1 = new QLineEdit("3");
     QDoubleValidator *val1 = new QDoubleValidator(0,100000,3);
@@ -23,6 +27,8 @@ FilterSintez::FilterSintez(QWidget *parent)
     edtF1->setValidator(val1);
     edtF2 = new QLineEdit("1200");
     edtF2->setValidator(val1);
+    edtKv = new QLineEdit("2");
+    edtKv->setValidator(val1);
 
     lblTyp = new QLabel(tr("Рассчитать фильтр:"));
     cbxFilterFunc = new QComboBox;
@@ -34,6 +40,8 @@ FilterSintez::FilterSintez(QWidget *parent)
     cbxFilterFunc->addItems(lst2);
     btnCalcFiltFunc = new QPushButton(tr("Рассчитать функцию фильтра"));
     connect(btnCalcFiltFunc,SIGNAL(clicked()),this,SLOT(slotCalcFilter()));
+    btnCalcSchematic = new QPushButton(tr("Рассчитать элементы схемы фильтра"));
+    connect(btnCalcSchematic,SIGNAL(clicked()),SLOT(slotCalcSchematic()));
 
     lblResult = new QLabel(tr("Результаты расчёта: "));
     txtResult = new QTextEdit;
@@ -76,6 +84,8 @@ FilterSintez::FilterSintez(QWidget *parent)
     left->addWidget(edtF1);
     left->addWidget(lblF2);
     left->addWidget(edtF2);
+    left->addWidget(lblKv);
+    left->addWidget(edtKv);
     left->addWidget(lblTyp);
     left->addWidget(cbxFilterFunc);
 
@@ -88,6 +98,7 @@ FilterSintez::FilterSintez(QWidget *parent)
     left->addWidget(btnHighPass);
     left->addWidget(cbxFilterType);
     left->addWidget(btnCalcFiltFunc);
+    left->addWidget(btnCalcSchematic);
 
     right->addWidget(sch_pic);
 
@@ -109,18 +120,34 @@ FilterSintez::~FilterSintez()
 void FilterSintez::slotCalcFilter()
 {
     switch (cbxFilterFunc->currentIndex()) {
-        case 0 : calcButterworth();
+        case 0 : Nfil = calcButterworth();
                  break;
-        case 1 : calcChebyshev();
+        case 1 : Nfil = calcChebyshev();
                  break;
-        case 2 : calcInvChebyshev();
+        case 2 : Nfil = calcInvChebyshev();
                  break;
-        case 3 : calcElliptic();
+        case 3 : Nfil = calcElliptic();
                  break;
         default: break;
     }
 
     //calcButterworth();
+}
+
+void FilterSintez::slotCalcSchematic()
+{
+    switch (cbxFilterType->currentIndex()) {
+    case 0 : calcDblQuadHPF();
+             break;
+    case 1 : calcMultiloopHPF();
+             break;
+    case 2 : if (btnHighPass->isChecked()) calcSallenKeyHPF();
+             else calcSallenKeyLPF();
+             break;
+    case 3 : calcPassive();
+             break;
+    default: break;
+    }
 }
 
 void FilterSintez::slotUpdateSchematic()
@@ -144,12 +171,13 @@ void FilterSintez::slotUpdateSchematic()
     sch_pic->setPixmap(pix);
 }
 
-void FilterSintez::calcChebyshev()
+int FilterSintez::calcChebyshev()
 {
     float A1 = edtA1->text().toFloat();
     float A2 = edtA2->text().toFloat();
     float F1 = edtF1->text().toFloat();
     float F2 = edtF2->text().toFloat();
+    Fc = F1;
 
     float W = F2/F1;
     float K4=pow(10,(0.1*A1));
@@ -184,9 +212,10 @@ void FilterSintez::calcChebyshev()
     }
 
     txtResult->setText(lst.join("\n"));
+    return N4;
 }
 
-void FilterSintez::calcButterworth()
+int FilterSintez::calcButterworth()
 {
     //float R1,l,w,q,Wc,C5,K7;
 
@@ -194,6 +223,7 @@ void FilterSintez::calcButterworth()
     float A2 = edtA2->text().toFloat();
     float F1 = edtF1->text().toFloat();
     float F2 = edtF2->text().toFloat();
+    Fc = F1;
 
     float W=F1/F2;
     float K1 = pow(10,(0.1*A1));
@@ -242,14 +272,17 @@ void FilterSintez::calcButterworth()
     }
 
     txtResult->setText(lst.join("\n"));
+
+    return N2;
 }
 
-void FilterSintez::calcInvChebyshev()
+int FilterSintez::calcInvChebyshev()
 {
     float A1 = edtA1->text().toFloat();
     float A2 = edtA2->text().toFloat();
     float F1 = edtF1->text().toFloat();
     float F2 = edtF2->text().toFloat();
+    Fc = F1;
 
     float W5=F2/F1;
     float K4=pow(10,(0.1*A1));
@@ -285,14 +318,17 @@ void FilterSintez::calcInvChebyshev()
     }
 
     txtResult->setText(lst.join("\n"));
+
+    return N5;
 }
 
-void FilterSintez::calcElliptic()
+int FilterSintez::calcElliptic()
 {
     float A1 = edtA1->text().toFloat();
     float A2 = edtA2->text().toFloat();
     float F1 = edtF1->text().toFloat();
     float F2 = edtF2->text().toFloat();
+    Fc = F1;
 
     float W5=F2/F1;
     float K9=F1/F2;
@@ -329,6 +365,8 @@ void FilterSintez::calcElliptic()
     }
 
     txtResult->setText(lst.join("\n"));
+
+    return N7;
 }
 
 void FilterSintez::calcDblQuadHPF()
@@ -353,12 +391,46 @@ void FilterSintez::calcMultiloopLPF()
 
 void FilterSintez::calcSallenKeyHPF()
 {
-
+    calcSallenKeyLPF();
 }
 
 void FilterSintez::calcSallenKeyLPF()
 {
+    float C1[20],C2[20],R1[20],R2[20],R3[20],R4[20];
 
+    float Kv = edtKv->text().toFloat();
+
+    QStringList lst;
+    lst<<"N C1 C2 R1 R2 R3 R4";
+
+    for (int K=1; K <= Nfil/2; K++) {
+        float B = 2*sin((2*K-1)*M_PI/(2*Nfil));
+        const float C = 1;
+
+        C2[K] = 10 / Fc;
+
+        float Wc = 2*M_PI*Fc;
+
+        C1[K] = (B*B+4*C*(Kv-1))*C2[K]/(4*C);
+
+        R1[K] = 2/(Wc*(B*C2[K]+sqrt((B*B + 4*C*(Kv-1))*(C2[K]*C2[K])-4*C*C1[K]*C2[K])));
+
+        R2[K] = 1/(C*C1[K]*C2[K]*R1[K]*Wc*Wc);
+
+        if (Kv != 1.0) {
+            R3[K] = Kv*(R1[K] + R2[K])/(Kv - 1);
+            R4[K] = Kv*(R1[K] + R2[K]);
+        } else {
+            R3[K] = 999;
+            R4[K] = 0;
+        }
+
+        lst<<QString::number(K)+"  "+QString::number(C1[K])+"  "+QString::number(C2[K])+
+             "  "+QString::number(R1[K])+"  "+QString::number(R2[K])+"  "+QString::number(R3[K])+
+             "  "+QString::number(R4[K]);
+    }
+
+    txtResult->setText(lst.join("\n"));
 }
 
 void FilterSintez::calcPassive()
