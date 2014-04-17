@@ -137,9 +137,11 @@ void FilterSintez::slotCalcFilter()
 void FilterSintez::slotCalcSchematic()
 {
     switch (cbxFilterType->currentIndex()) {
-    case 0 : calcDblQuadHPF();
+    case 0 : if (btnHighPass->isChecked()) calcDblQuadHPF();
+             else calcDblQuadLPF();
              break;
-    case 1 : calcMultiloopHPF();
+    case 1 : if (btnHighPass->isChecked()) calcMultiloopHPF();
+             else calcMultiloopLPF();
              break;
     case 2 : if (btnHighPass->isChecked()) calcSallenKeyHPF();
              else calcSallenKeyLPF();
@@ -391,7 +393,48 @@ void FilterSintez::calcMultiloopLPF()
 
 void FilterSintez::calcSallenKeyHPF()
 {
-    calcSallenKeyLPF();
+
+    float C1[20],R1[20],R2[20],R3[20],R4[20];
+
+    float Kv = edtKv->text().toFloat();
+
+    QStringList lst;
+    lst<<"N C1(uF) R1(kOhm) R2(kOhm) R3(kOhm) R4(kOhm)";
+
+    float Wc = 2*M_PI*Fc;
+
+    for (int K=1; K <= Nfil/2; K++) {
+        float B = 2*sin((2*K-1)*M_PI/(2*Nfil));
+        const float C = 1;
+
+        qDebug()<<B<<C;
+
+        C1[K] = 10 / Fc;
+
+        R2[K] = 4*C/(Wc*C1[K]*(B+sqrt(B*B+8*C*(Kv-1))));
+
+        R1[K] = C/(Wc*Wc*C1[K]*C1[K]*R2[K]);
+
+        if (Kv != 1.0) {
+            R3[K] = Kv*R2[K]/(Kv - 1);
+            R4[K] = Kv*R2[K];
+        } else {
+            R3[K] = 999;
+            R4[K] = 0;
+        }
+
+        R1[K]=1000*R1[K];
+        R2[K]=1000*R2[K];
+        R3[K]=1000*R3[K];
+        R4[K]=1000*R4[K];
+
+        lst<<QString::number(K)+"  "+QString::number(C1[K])+
+             "  "+QString::number(R1[K])+"  "+QString::number(R2[K])+"  "+QString::number(R3[K])+
+             "  "+QString::number(R4[K]);
+    }
+
+    txtResult->setText(lst.join("\n"));
+
 }
 
 void FilterSintez::calcSallenKeyLPF()
@@ -401,11 +444,13 @@ void FilterSintez::calcSallenKeyLPF()
     float Kv = edtKv->text().toFloat();
 
     QStringList lst;
-    lst<<"N C1 C2 R1 R2 R3 R4";
+    lst<<"N C1(uF) C2(uF) R1(kOhm) R2(kOhm) R3(kOhm) R4(kOhm)";
 
     for (int K=1; K <= Nfil/2; K++) {
         float B = 2*sin((2*K-1)*M_PI/(2*Nfil));
         const float C = 1;
+
+        qDebug()<<B<<C;
 
         C2[K] = 10 / Fc;
 
@@ -424,6 +469,11 @@ void FilterSintez::calcSallenKeyLPF()
             R3[K] = 999;
             R4[K] = 0;
         }
+
+        R1[K]=1000*R1[K];
+        R2[K]=1000*R2[K];
+        R3[K]=1000*R3[K];
+        R4[K]=1000*R4[K];
 
         lst<<QString::number(K)+"  "+QString::number(C1[K])+"  "+QString::number(C2[K])+
              "  "+QString::number(R1[K])+"  "+QString::number(R2[K])+"  "+QString::number(R3[K])+
