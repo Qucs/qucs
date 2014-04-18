@@ -204,13 +204,12 @@ int FilterSintez::calcChebyshev()
     float G1=0.5*(exp(V5)-exp(-V5));
     float G2=0.5*(exp(V4)+exp(-V4));
 
-    float R0[50],S4[50],O4[50];
-    lst<<""<<tr(" 2. Полюса")<<"Sk=SIN+j*COS";
-    for (int R=1;R<N4;R++) {
-            R0[R]=PI*(2*R-1)/(2*N4);
-            S4[R]=-1*G1*sin(R0[R]);
-            O4[R] = G2*cos(R0[R]);
-            lst<<QString::number(S4[R]) + "+ j*" + QString::number(O4[R]);
+    float S4[50],O4[50];
+    lst<<""<<tr(" 2. Полюса  Sk=SIN+j*COS");
+    for (int k=1;k<=N4;k++) {
+            S4[k]=-1*G1*sin(M_PI*(2*k-1)/(2*N4));
+            O4[k] = G2*cos(M_PI*(2*k-1)/(2*N4));
+            lst<<QString::number(S4[k]) + "+ j*" + QString::number(O4[k]);
     }
 
     txtResult->setText(lst.join("\n"));
@@ -227,51 +226,30 @@ int FilterSintez::calcButterworth()
     float F2 = edtF2->text().toFloat();
     Fc = F1;
 
-    float W=F1/F2;
     float K1 = pow(10,(0.1*A1));
     float K2 = pow(10,(0.1*A2));
     float C1=(K1-1)/(K2-1);
-    float J2=log10(C1)/(2*log10(W));
+    float J2=log10(C1)/(2*log10(F1/F2));
     int N2 = round(J2+1);
 
     QStringList lst;
     lst<<tr(" 1. Порядок фильтра Баттерворта");
     lst<<QString::number(N2);
-    int N3=(N2+1)/2;
-    lst<<tr(" Номер звена второго порядка");
+    int N3= N2/2;
+    lst<<tr(" Число звеньев 2-го порядка");
     lst<<QString::number(N3);
 
-    double R0[50],S2[50],O2[50];
+    float S2[50],O2[50];
     lst<<"";
-    lst<<tr(" 2. Полюса");
-    lst<<"Sk=SIN+j*COS";
-    //lst<<"SIN";
+    lst<<tr(" 2. Полюса Sk=SIN+j*COS");
 
-    for (int R=1;R<2*N2;R++) {
-        R0[R]=PI*(2*R-1)/(2*N2);
-        S2[R]=-1*sin(R0[R]);
-        O2[R]=cos(R0[R]);
-        lst<<QString::number(S2[R]) + " + j*" + QString::number(O2[R]);
+    for (int k=1;k<=N2;k++) {
+        S2[k]=-1*sin(M_PI*(2*k-1)/(2*N2));
+        O2[k]=cos(M_PI*(2*k-1)/(2*N2));
+        lst<<QString::number(S2[k]) + " + j*" + QString::number(O2[k]);
     }
 
     lst<<"";
-    lst<<tr(" 3. Передаточная функция");
-
-    float E[50],F[50],H[51];
-
-    lst<<tr("H(S)=П 1/{S^2+E[К]*S+1}, к=1...n/2, где n-четно  ");
-    lst<<tr("         к ");
-    lst<<tr("H(S)= 1/(S+1)*П 1/{S^2+E[К]*S+1}, к=1...(n-1)/2, где n-нечетно  ");
-    lst<<tr("                        к ");
-    lst<<tr("E[K] (Число сомножителей Е[К]считается для 2n)");
-
-    for (int K=1;K<2*N2;K++) {
-       F[K]=PI*(2*K-1)/(2*N2);
-       E[K]=2*sin(F[K]);
-
-       lst<<QString::number(E[K]);
-
-    }
 
     txtResult->setText(lst.join("\n"));
 
