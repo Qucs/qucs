@@ -16,12 +16,16 @@ private:
     QLabel *lblF2;
     QLabel *lblTyp;
     QLabel *lblKv;
+    QLabel *lblRpl1;
+    QLabel *lblRpl2;
 
     QLineEdit *edtA1; // passband attenuation A1
     QLineEdit *edtA2; // stopband attenuation A2
     QLineEdit *edtF1; // passband cutoff frequency F1
     QLineEdit *edtF2; // stopband cutoff frequency F2
     QLineEdit *edtKv;
+    QLineEdit *edtPassbRpl;
+    QLineEdit *edtStopbRpl;
 
     QComboBox *cbxFilterFunc;
     QPushButton *btnCalcFiltFunc;
@@ -63,6 +67,9 @@ private:
     void calcPassive();
 
     float Nfil,Fc;
+
+    QVector<float> coeffB;
+    QVector<float> coeffC;
 
 
 private slots:

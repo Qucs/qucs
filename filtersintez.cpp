@@ -16,7 +16,10 @@ FilterSintez::FilterSintez(QWidget *parent)
     lblA2 = new QLabel(tr("Затухание фильтра в полосе задерживания, A2"));
     lblF1 = new QLabel(tr("Частота среза фильтра в полосе пропускания, F1"));
     lblF2 = new QLabel(tr("Частота фильтра в полосе задерживания, F2"));
+    lblRpl1 = new QLabel(tr("амплитуда пульсаций в полосе пропускания (дБ)"));
+    lblRpl2 = new QLabel(tr("Амплитуда пульсаций в полосе задерживания (дБ)"));
     lblKv = new QLabel(tr("Усиление фильтра, Kv"));
+
 
     edtA1 = new QLineEdit("3");
     QDoubleValidator *val1 = new QDoubleValidator(0,100000,3);
@@ -27,6 +30,10 @@ FilterSintez::FilterSintez(QWidget *parent)
     edtF1->setValidator(val1);
     edtF2 = new QLineEdit("1200");
     edtF2->setValidator(val1);
+    edtPassbRpl = new QLineEdit("3");
+    edtPassbRpl->setValidator(val1);
+    edtStopbRpl = new QLineEdit("3");
+    edtStopbRpl->setValidator(val1);
     edtKv = new QLineEdit("2");
     edtKv->setValidator(val1);
 
@@ -84,6 +91,10 @@ FilterSintez::FilterSintez(QWidget *parent)
     left->addWidget(edtF1);
     left->addWidget(lblF2);
     left->addWidget(edtF2);
+    left->addWidget(lblRpl1);
+    left->addWidget(edtPassbRpl);
+    left->addWidget(lblRpl2);
+    left->addWidget(edtStopbRpl);
     left->addWidget(lblKv);
     left->addWidget(edtKv);
     left->addWidget(lblTyp);
@@ -136,6 +147,9 @@ void FilterSintez::slotCalcFilter()
 
 void FilterSintez::slotCalcSchematic()
 {
+
+    slotCalcFilter();
+
     switch (cbxFilterType->currentIndex()) {
     case 0 : if (btnHighPass->isChecked()) calcDblQuadHPF();
              else calcDblQuadLPF();
@@ -175,45 +189,52 @@ void FilterSintez::slotUpdateSchematic()
 
 int FilterSintez::calcChebyshev()
 {
-    float A1 = edtA1->text().toFloat();
+    float alpha = edtPassbRpl->text().toFloat();
     float A2 = edtA2->text().toFloat();
     float F1 = edtF1->text().toFloat();
     float F2 = edtF2->text().toFloat();
     Fc = F1;
 
-    float W = F2/F1;
-    float K4=pow(10,(0.1*A1));
-    float K5=pow(10,(0.1*A2));
-    float C=pow(((K5-1)/(K4-1)),0.5);
-    float J4=log(C+pow((C*C-1),0.5))/log(W+pow((W*W-1),0.5));
-    int N4=round(J4+1);
+    float eps=sqrt(pow(10,0.1*alpha)-1);
+
+    float N1 = acosh(sqrt((pow(10,0.1*A2)-1)/(eps*eps)))/acosh(F2/F1);
+    int N = ceil(N1);
 
     QStringList lst;
-
     lst<<tr(" 1. Порядок фильтра Чебышева");
-    lst<<QString::number(N4);
+    lst<<QString::number(N);
     lst<<tr(" 2. Неравномерность пропускания");
-    float E0=pow((K4-1),0.5);
-    lst<<QString::number(E0);
 
-    float E8=1/E0;
-    float X=E8+pow((E8*E8+1),0.5);
-    float V4=(1/(J4+1))*log(X);
-    float X1=log(E8+pow((E8*E8+1),0.5));
-    float V5=(1/(J4+1))*X1;
-    float G1=0.5*(exp(V5)-exp(-V5));
-    float G2=0.5*(exp(V4)+exp(-V4));
+    lst<<QString::number(eps);
+
+    float a = sinh((asinh(1/eps))/N);
+    float b = cosh((asinh(1/eps))/N);
+    qDebug()<<a<<b;
 
     float S4[50],O4[50];
     lst<<""<<tr(" 2. Полюса  Sk=SIN+j*COS");
-    for (int k=1;k<=N4;k++) {
-            S4[k]=-1*G1*sin(M_PI*(2*k-1)/(2*N4));
-            O4[k] = G2*cos(M_PI*(2*k-1)/(2*N4));
+    for (int k=1;k<=N;k++) {
+            S4[k]=-1*a*sin(M_PI*(2*k-1)/(2*N));
+            O4[k] = b*cos(M_PI*(2*k-1)/(2*N));
             lst<<QString::number(S4[k]) + "+ j*" + QString::number(O4[k]);
     }
 
+
+    coeffB.clear();
+    coeffC.clear();
+
+    for (int k=1;k<=N/2;k++) {
+        float B = -2.0*S4[k];
+        float C = S4[k]*S4[k] + O4[k]*O4[k];
+        coeffB<<B;
+        coeffC<<C;
+    }
+
+    qDebug()<<coeffB;
+    qDebug()<<coeffC;
+
     txtResult->setText(lst.join("\n"));
-    return N4;
+    return N;
 }
 
 int FilterSintez::calcButterworth()
@@ -243,13 +264,25 @@ int FilterSintez::calcButterworth()
     lst<<"";
     lst<<tr(" 2. Полюса Sk=SIN+j*COS");
 
+    coeffB.clear();
+
     for (int k=1;k<=N2;k++) {
         S2[k]=-1*sin(M_PI*(2*k-1)/(2*N2));
         O2[k]=cos(M_PI*(2*k-1)/(2*N2));
         lst<<QString::number(S2[k]) + " + j*" + QString::number(O2[k]);
     }
 
+    for (int k=1;k<=N2/2;k++) {
+        float B = -2.0*S2[k];
+        float C = S2[k]*S2[k] + O2[k]*O2[k];
+        coeffB<<B;
+        coeffC<<C;
+    }
+
     lst<<"";
+
+    qDebug()<<coeffB;
+    qDebug()<<coeffC;
 
     txtResult->setText(lst.join("\n"));
 
@@ -381,34 +414,34 @@ void FilterSintez::calcSallenKeyHPF()
 
     float Wc = 2*M_PI*Fc;
 
-    for (int K=1; K <= Nfil/2; K++) {
-        float B = 2*sin((2*K-1)*M_PI/(2*Nfil));
-        const float C = 1;
+    for (int k=1; k <= Nfil/2; k++) {
+        float B = coeffB.at(k-1);
+        float C = coeffC.at(k-1);
 
         qDebug()<<B<<C;
 
-        C1[K] = 10 / Fc;
+        C1[k] = 10 / Fc;
 
-        R2[K] = 4*C/(Wc*C1[K]*(B+sqrt(B*B+8*C*(Kv-1))));
+        R2[k] = 4*C/(Wc*C1[k]*(B+sqrt(B*B+8*C*(Kv-1))));
 
-        R1[K] = C/(Wc*Wc*C1[K]*C1[K]*R2[K]);
+        R1[k] = C/(Wc*Wc*C1[k]*C1[k]*R2[k]);
 
         if (Kv != 1.0) {
-            R3[K] = Kv*R2[K]/(Kv - 1);
-            R4[K] = Kv*R2[K];
+            R3[k] = Kv*R2[k]/(Kv - 1);
+            R4[k] = Kv*R2[k];
         } else {
-            R3[K] = 999;
-            R4[K] = 0;
+            R3[k] = 999;
+            R4[k] = 0;
         }
 
-        R1[K]=1000*R1[K];
-        R2[K]=1000*R2[K];
-        R3[K]=1000*R3[K];
-        R4[K]=1000*R4[K];
+        R1[k]=1000*R1[k];
+        R2[k]=1000*R2[k];
+        R3[k]=1000*R3[k];
+        R4[k]=1000*R4[k];
 
-        lst<<QString::number(K)+"  "+QString::number(C1[K])+
-             "  "+QString::number(R1[K])+"  "+QString::number(R2[K])+"  "+QString::number(R3[K])+
-             "  "+QString::number(R4[K]);
+        lst<<QString::number(k)+"  "+QString::number(C1[k])+
+             "  "+QString::number(R1[k])+"  "+QString::number(R2[k])+"  "+QString::number(R3[k])+
+             "  "+QString::number(R4[k]);
     }
 
     txtResult->setText(lst.join("\n"));
@@ -424,38 +457,38 @@ void FilterSintez::calcSallenKeyLPF()
     QStringList lst;
     lst<<"N C1(uF) C2(uF) R1(kOhm) R2(kOhm) R3(kOhm) R4(kOhm)";
 
-    for (int K=1; K <= Nfil/2; K++) {
-        float B = 2*sin((2*K-1)*M_PI/(2*Nfil));
+    for (int k=1; k <= Nfil/2; k++) {
+        float B = 2*sin((2*k-1)*M_PI/(2*Nfil));
         const float C = 1;
 
         qDebug()<<B<<C;
 
-        C2[K] = 10 / Fc;
+        C2[k] = 10 / Fc;
 
         float Wc = 2*M_PI*Fc;
 
-        C1[K] = (B*B+4*C*(Kv-1))*C2[K]/(4*C);
+        C1[k] = (B*B+4*C*(Kv-1))*C2[k]/(4*C);
 
-        R1[K] = 2/(Wc*(B*C2[K]+sqrt((B*B + 4*C*(Kv-1))*(C2[K]*C2[K])-4*C*C1[K]*C2[K])));
+        R1[k] = 2/(Wc*(B*C2[k]+sqrt((B*B + 4*C*(Kv-1))*(C2[k]*C2[k])-4*C*C1[k]*C2[k])));
 
-        R2[K] = 1/(C*C1[K]*C2[K]*R1[K]*Wc*Wc);
+        R2[k] = 1/(C*C1[k]*C2[k]*R1[k]*Wc*Wc);
 
         if (Kv != 1.0) {
-            R3[K] = Kv*(R1[K] + R2[K])/(Kv - 1);
-            R4[K] = Kv*(R1[K] + R2[K]);
+            R3[k] = Kv*(R1[k] + R2[k])/(Kv - 1);
+            R4[k] = Kv*(R1[k] + R2[k]);
         } else {
-            R3[K] = 999;
-            R4[K] = 0;
+            R3[k] = 999;
+            R4[k] = 0;
         }
 
-        R1[K]=1000*R1[K];
-        R2[K]=1000*R2[K];
-        R3[K]=1000*R3[K];
-        R4[K]=1000*R4[K];
+        R1[k]=1000*R1[k];
+        R2[k]=1000*R2[k];
+        R3[k]=1000*R3[k];
+        R4[k]=1000*R4[k];
 
-        lst<<QString::number(K)+"  "+QString::number(C1[K])+"  "+QString::number(C2[K])+
-             "  "+QString::number(R1[K])+"  "+QString::number(R2[K])+"  "+QString::number(R3[K])+
-             "  "+QString::number(R4[K]);
+        lst<<QString::number(k)+"  "+QString::number(C1[k])+"  "+QString::number(C2[k])+
+             "  "+QString::number(R1[k])+"  "+QString::number(R2[k])+"  "+QString::number(R3[k])+
+             "  "+QString::number(R4[k]);
     }
 
     txtResult->setText(lst.join("\n"));
