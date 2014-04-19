@@ -13,6 +13,10 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        filtersintez.cpp
+        filtersintez.cpp \
+    filter.cpp \
+    sallenkey.cpp
 
-HEADERS  += filtersintez.h
+HEADERS  += filtersintez.h \
+    filter.h \
+    sallenkey.h

@@ -69,7 +69,8 @@ private:
 
     QVector< std::complex<float> > Poles;
 
-    float Nfil,Fc;
+    float Fc;
+    int Nfil;
 
     QVector<float> coeffB;
     QVector<float> coeffC;
