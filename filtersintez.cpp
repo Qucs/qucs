@@ -432,6 +432,31 @@ void FilterSintez::calcSallenKeyHPF()
              "  "+QString::number(R4[k]);
     }
 
+    if (Nfil%2 != 0) {
+        int k = Nfil/2 + 1;
+        float re = Poles.at(k-1).real();
+        float im = Poles.at(k-1).imag();
+        float C = re*re + im*im;
+        C1[k] = 10/Fc;
+        R1[k] = 1.0/(Wc*C*C1[k]);
+
+        if (Kv != 1.0) {
+            R3[k] = Kv*(R1[k] + R2[k])/(Kv - 1);
+            R4[k] = Kv*(R1[k] + R2[k]);
+        } else {
+            R3[k] = 999;
+            R4[k] = 0;
+        }
+        R1[k]=1000*R1[k];
+        R2[k]=1000*R2[k];
+        R3[k]=1000*R3[k];
+        R4[k]=1000*R4[k];
+
+        lst<<QString::number(k)+"  "+QString::number(C1[k])+"  "+" --- "+
+             "  "+QString::number(R1[k])+"  "+" --- "+"  "+QString::number(R3[k])+
+             "  "+QString::number(R4[k]);
+    }
+
     txtResult->setText(lst.join("\n"));
 
 }
@@ -441,6 +466,7 @@ void FilterSintez::calcSallenKeyLPF()
     float C1[20],C2[20],R1[20],R2[20],R3[20],R4[20];
 
     float Kv = edtKv->text().toFloat();
+    float Wc = 2*M_PI*Fc;
 
     QStringList lst;
     lst<<"N C1(uF) C2(uF) R1(kOhm) R2(kOhm) R3(kOhm) R4(kOhm)";
@@ -456,13 +482,8 @@ void FilterSintez::calcSallenKeyLPF()
 
 
         C2[k] = 10 / Fc;
-
-        float Wc = 2*M_PI*Fc;
-
         C1[k] = (B*B+4*C*(Kv-1))*C2[k]/(4*C);
-
         R1[k] = 2/(Wc*(B*C2[k]+sqrt((B*B + 4*C*(Kv-1))*(C2[k]*C2[k])-4*C*C1[k]*C2[k])));
-
         R2[k] = 1/(C*C1[k]*C2[k]*R1[k]*Wc*Wc);
 
         if (Kv != 1.0) {
@@ -480,6 +501,31 @@ void FilterSintez::calcSallenKeyLPF()
 
         lst<<QString::number(k)+"  "+QString::number(C1[k])+"  "+QString::number(C2[k])+
              "  "+QString::number(R1[k])+"  "+QString::number(R2[k])+"  "+QString::number(R3[k])+
+             "  "+QString::number(R4[k]);
+    }
+
+    if (Nfil%2 != 0) {
+        int k = Nfil/2 + 1;
+        float re = Poles.at(k-1).real();
+        float im = Poles.at(k-1).imag();
+        float C = re*re + im*im;
+        C1[k] = 10/Fc;
+        R1[k] = 1.0/(Wc*C*C1[k]);
+
+        if (Kv != 1.0) {
+            R3[k] = Kv*(R1[k] + R2[k])/(Kv - 1);
+            R4[k] = Kv*(R1[k] + R2[k]);
+        } else {
+            R3[k] = 999;
+            R4[k] = 0;
+        }
+        R1[k]=1000*R1[k];
+        R2[k]=1000*R2[k];
+        R3[k]=1000*R3[k];
+        R4[k]=1000*R4[k];
+
+        lst<<QString::number(k)+"  "+QString::number(C1[k])+"  "+" --- "+
+             "  "+QString::number(R1[k])+"  "+" --- "+"  "+QString::number(R3[k])+
              "  "+QString::number(R4[k]);
     }
 
