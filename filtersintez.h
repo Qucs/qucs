@@ -3,6 +3,7 @@
 
 #include <QtGui>
 #include <QMainWindow>
+#include <complex>
 
 class FilterSintez : public QMainWindow
 {
@@ -65,6 +66,8 @@ private:
     void calcSallenKeyLPF();
     void calcSallenKeyHPF();
     void calcPassive();
+
+    QVector< std::complex<float> > Poles;
 
     float Nfil,Fc;
 

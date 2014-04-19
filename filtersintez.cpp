@@ -211,27 +211,18 @@ int FilterSintez::calcChebyshev()
     float b = cosh((asinh(1/eps))/N);
     qDebug()<<a<<b;
 
-    float S4[50],O4[50];
+    Poles.clear();
+
+
     lst<<""<<tr(" 2. Полюса  Sk=SIN+j*COS");
     for (int k=1;k<=N;k++) {
-            S4[k]=-1*a*sin(M_PI*(2*k-1)/(2*N));
-            O4[k] = b*cos(M_PI*(2*k-1)/(2*N));
-            lst<<QString::number(S4[k]) + "+ j*" + QString::number(O4[k]);
+            float re = -1*a*sin(M_PI*(2*k-1)/(2*N));
+            float im = b*cos(M_PI*(2*k-1)/(2*N));
+            std::complex<float> pol(re,im);
+            Poles.append(pol);
+            lst<<QString::number(re) + " + j*" + QString::number(im);
     }
 
-
-    coeffB.clear();
-    coeffC.clear();
-
-    for (int k=1;k<=N/2;k++) {
-        float B = -2.0*S4[k];
-        float C = S4[k]*S4[k] + O4[k]*O4[k];
-        coeffB<<B;
-        coeffC<<C;
-    }
-
-    qDebug()<<coeffB;
-    qDebug()<<coeffC;
 
     txtResult->setText(lst.join("\n"));
     return N;
@@ -260,29 +251,23 @@ int FilterSintez::calcButterworth()
     lst<<tr(" Число звеньев 2-го порядка");
     lst<<QString::number(N3);
 
-    float S2[50],O2[50];
+    //float S2[50],O2[50];
     lst<<"";
     lst<<tr(" 2. Полюса Sk=SIN+j*COS");
 
     coeffB.clear();
+    coeffC.clear();
+    Poles.clear();
 
     for (int k=1;k<=N2;k++) {
-        S2[k]=-1*sin(M_PI*(2*k-1)/(2*N2));
-        O2[k]=cos(M_PI*(2*k-1)/(2*N2));
-        lst<<QString::number(S2[k]) + " + j*" + QString::number(O2[k]);
-    }
-
-    for (int k=1;k<=N2/2;k++) {
-        float B = -2.0*S2[k];
-        float C = S2[k]*S2[k] + O2[k]*O2[k];
-        coeffB<<B;
-        coeffC<<C;
+        float re =-1*sin(M_PI*(2*k-1)/(2*N2));
+        float im =cos(M_PI*(2*k-1)/(2*N2));
+        std::complex<float> pol(re,im);
+        Poles.append(pol);
+        lst<<QString::number(re) + " + j*" + QString::number(im);
     }
 
     lst<<"";
-
-    qDebug()<<coeffB;
-    qDebug()<<coeffC;
 
     txtResult->setText(lst.join("\n"));
 
@@ -415,8 +400,11 @@ void FilterSintez::calcSallenKeyHPF()
     float Wc = 2*M_PI*Fc;
 
     for (int k=1; k <= Nfil/2; k++) {
-        float B = coeffB.at(k-1);
-        float C = coeffC.at(k-1);
+
+        float re = Poles.at(k-1).real();
+        float im = Poles.at(k-1).imag();
+        float B = -2.0*re;
+        float C = re*re + im*im;
 
         qDebug()<<B<<C;
 
@@ -458,10 +446,14 @@ void FilterSintez::calcSallenKeyLPF()
     lst<<"N C1(uF) C2(uF) R1(kOhm) R2(kOhm) R3(kOhm) R4(kOhm)";
 
     for (int k=1; k <= Nfil/2; k++) {
-        float B = 2*sin((2*k-1)*M_PI/(2*Nfil));
-        const float C = 1;
+
+        float re = Poles.at(k-1).real();
+        float im = Poles.at(k-1).imag();
+        float B = -2.0*re;
+        float C = re*re + im*im;
 
         qDebug()<<B<<C;
+
 
         C2[k] = 10 / Fc;
 
