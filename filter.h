@@ -8,15 +8,21 @@
 class Filter
 {
 
-private:
+public:
+    enum FType {HighPass, LowPass, BandPass};
+
+protected:
     QVector< std::complex<float> > Poles;
 
-    bool HighPass;
+    Filter::FType ftype;
+    int Nfil;
+    float Fc,Kv;
 
 public:
 
 
-    Filter(QVector< std::complex<float> > poles_, bool HighPass_ = false);
+    Filter(QVector< std::complex<float> > poles_, Filter::FType type_, float Fcutoff, float Kv_=1.0);
+    ~Filter();
 
     virtual QString* createSchematic()
     {

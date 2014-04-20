@@ -465,7 +465,7 @@ void FilterSintez::calcSallenKeyLPF()
 {
     float C1[20],C2[20],R1[20],R2[20],R3[20],R4[20];
 
-    float Kv = edtKv->text().toFloat();
+    float Kv = 1.0;
     float Wc = 2*M_PI*Fc;
 
     QStringList lst;
