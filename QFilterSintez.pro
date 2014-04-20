@@ -15,8 +15,10 @@ TEMPLATE = app
 SOURCES += main.cpp\
         filtersintez.cpp \
     filter.cpp \
-    sallenkey.cpp
+    sallenkey.cpp \
+    mfbfilter.cpp
 
 HEADERS  += filtersintez.h \
     filter.h \
-    sallenkey.h
+    sallenkey.h \
+    mfbfilter.h
