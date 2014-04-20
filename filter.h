@@ -5,6 +5,16 @@
 #include <math.h>
 #include <complex>
 
+struct RC_elements {
+    int   N;
+    float R1;
+    float R2;
+    float R3;
+    float R4;
+    float C1;
+    float C2;
+};
+
 class Filter
 {
 
@@ -13,6 +23,7 @@ public:
 
 protected:
     QVector< std::complex<float> > Poles;
+    QVector<RC_elements> Stages;
 
     Filter::FType ftype;
     int Nfil;
@@ -22,7 +33,11 @@ public:
 
 
     Filter(QVector< std::complex<float> > poles_, Filter::FType type_, float Fcutoff, float Kv_=1.0);
-    ~Filter();
+    virtual ~Filter();
+
+    void calcFirstOrder();
+
+    void createPartList(QStringList &lst);
 
     virtual QString* createSchematic()
     {
