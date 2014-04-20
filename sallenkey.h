@@ -6,23 +6,27 @@
 #include <math.h>
 #include "filter.h"
 
+struct RC_elements {
+    float R1;
+    float R2;
+    float R3;
+    float R4;
+    float C1;
+    float C2;
+};
+
 class SallenKey : public Filter
 {
 
 private:
 
-    std::vector<float> C1;
-    std::vector<float> C2;
-    std::vector<float> R1;
-    std::vector<float> R2;
-    std::vector<float> R3;
-    std::vector<float> R4;
+    QVector<RC_elements> Stages;
 
     void calcSallenKeyHPF();
     void calcSallenKeyLPF();
 
 public:
-    SallenKey(QVector< std::complex<float> > poles_, bool HighPass_ = false);
+    SallenKey(QVector< std::complex<float> > poles_, Filter::FType type_, float Fcutoff, float Kv_=1.0);
 
     QString* createSchematic();
     void calcFilter();
