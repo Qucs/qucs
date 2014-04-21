@@ -172,6 +172,7 @@ void FilterSintez::slotCalcSchematic()
                SallenKey sk(Poles,ftyp,Fc,Kv);
                sk.calcFilter();
                sk.createPartList(lst);
+               sk.createSchematic();
                txtResult->setText(lst.join("\n"));
              }
              break;
