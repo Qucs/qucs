@@ -183,5 +183,6 @@ QFilterSintez
 *.pro.user
 Makefile
 moc_*.cpp
->>>>>>> First commit. Main window interface implemented
+*.sch
+*.sch~
 
