@@ -2,6 +2,7 @@
 #define FILTERSINTEZ_H
 
 #include <QtGui>
+#include <QtSvg>
 #include <QMainWindow>
 #include <complex>
 
@@ -35,6 +36,7 @@ private:
     QLabel *lblResult;
     QTextEdit *txtResult;
 
+    QSvgWidget *imgAFR;
     QLabel *lblSch;
 
     QRadioButton *btnLowPass;

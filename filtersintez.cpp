@@ -72,6 +72,8 @@ FilterSintez::FilterSintez(QWidget *parent)
     cbxFilterType->addItems(lst);
     connect(cbxFilterType,SIGNAL(currentIndexChanged(int)),this,SLOT(slotUpdateSchematic()));
 
+    imgAFR = new QSvgWidget("AFR.svg");
+    imgAFR->show();
     sch_pic = new QLabel;
     QPixmap pix("Images/dblquad.png");
     sch_pic->resize(pix.size());
@@ -111,6 +113,7 @@ FilterSintez::FilterSintez(QWidget *parent)
     left->addWidget(btnCalcFiltFunc);
     left->addWidget(btnCalcSchematic);
 
+    right->addWidget(imgAFR);
     right->addWidget(sch_pic);
 
     top->addLayout(left);
