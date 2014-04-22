@@ -11,7 +11,7 @@ QString* SallenKey::createSchematic()
 {
     RC_elements stage;
     int dx = 0;
-    int N2ord = Nfil - Nfil%2; // number of 2-nd order stages
+    int N2ord = Nfil/2; // number of 2-nd order stages
     int N1stOrd = Nfil%2; // number of 1-st order stages
 
     QString *s = new QString("<Qucs Schematic 0.0.17>\n");
@@ -23,11 +23,16 @@ QString* SallenKey::createSchematic()
     *s += QString("<GND * 1 %1 290 0 0 0 0>\n").arg(20+dx);
     for (int i=1; i<=N2ord; i++) {
         stage = Stages.at(i-1);
+        qDebug()<<stage.N;
+        QString suffix1, suffix2;
+        float C1 = autoscaleCapacitor(stage.C1,suffix1);
+        float C2 = autoscaleCapacitor(stage.C2,suffix2);
+        qDebug()<<C1<<C2;
         *s += QString("<OpAmp OP%1 1 %2 160 -26 42 0 0 \"1e6\" 1 \"15 V\" 0>\n").arg(stage.N).arg(370+dx);
         *s += QString("<GND * 1 %1 270 0 0 0 0>\n").arg(270+dx);
         *s += QString("<GND * 1 %1 370 0 0 0 0>\n").arg(320+dx);
         *s += QString("<R R%1 1 %2 340 15 -26 0 1 \"34.45k\" 1 \"26.85\" 0 \"0.0\" 0 \"0.0\" 0 \"26.85\" 0 \"european\" 0>\n").arg(2+stage.N).arg(320+dx);
-        *s += QString("<C C%1 1 %2 190 -26 -45 1 0 \"2000p\" 1 \"\" 0 \"neutral\" 0>\n").arg(1+stage.N).arg(200+dx);
+        *s += QString("<C C%1 1 %2 190 -26 -45 1 0 \"%3%4\" 1 \"\" 0 \"neutral\" 0>\n").arg(1+stage.N).arg(200+dx).arg(C2,0,'g',3).arg(suffix1);
         *s += QString("<C C%1 1 %2 190 -26 17 0 0 \"2000p\" 1 \"\" 0 \"neutral\" 0>\n").arg(stage.N).arg(100+dx);
         *s += QString("<R R%1 1 %2 240 -75 -26 1 1 \"41.59k\" 1 \"26.85\" 0 \"0.0\" 0 \"0.0\" 0 \"26.85\" 0 \"european\" 0>\n").arg(1+stage.N).arg(270+dx);
         *s += QString("<R R%1 1 %2 70 -26 15 0 0 \"6.09k\" 1 \"26.85\" 0 \"0.0\" 0 \"0.0\" 0 \"26.85\" 0 \"european\" 0>\n").arg(stage.N).arg(330+dx);
@@ -36,14 +41,7 @@ QString* SallenKey::createSchematic()
     }
 
     if (N1stOrd!=0) {
-        stage = Stages.last();
-        *s += QString("<OpAmp OP%1 1 %2 160 -26 42 0 0 \"1e6\" 1 \"15 V\" 0>\n").arg(Nfil).arg(270+dx);
-        *s += QString("<GND * 1 %1 270 0 0 0 0>\n").arg(170+dx);
-        *s += QString("<GND * 1 %1 370 0 0 0 0>\n").arg(220+dx);
-        *s += QString("<R R%1 1 %2 340 15 -26 0 1 \"34.45k\" 1 \"26.85\" 0 \"0.0\" 0 \"0.0\" 0 \"26.85\" 0 \"european\" 0>\n").arg(Nfil+1).arg(220+dx);
-        *s += QString("<R R%1 1 %2 240 -75 -26 1 1 \"41.59k\" 1 \"26.85\" 0 \"0.0\" 0 \"0.0\" 0 \"26.85\" 0 \"european\" 0>\n").arg(Nfil).arg(170+dx);
-        *s += QString("<R R%1 1 %2 260 -26 15 1 2 \"1m\" 1 \"26.85\" 0 \"0.0\" 0 \"0.0\" 0 \"26.85\" 0 \"european\" 0>\n").arg(Nfil+2).arg(310+dx);
-        *s += QString("<C C%1 1 %2 190 -26 -45 1 0 \"2000p\" 1 \"\" 0 \"neutral\" 0>\n").arg(Nfil).arg(100+dx);
+        createFirstOrderComponents(*s,stage,dx);
     }
 
     *s += "</Components>\n";
@@ -58,7 +56,7 @@ QString* SallenKey::createSchematic()
             *s += QString("<%1 160 %2 160 \"\" 0 0 0 \"\">\n").arg(dx-20).arg(dx-50);
         }
         *s += QString("<%1 70 %2 70 \"\" 0 0 0 \"\">\n").arg(360+dx).arg(460+dx);
-        if (i==Nfil) {
+        if ((2*i)==Nfil) {
             *s += QString("<%1 70 %2 160 \"out\" %3 90 51 \"\">\n").arg(460+dx).arg(460+dx).arg(490+dx);
         } else {
             *s += QString("<%1 70 %2 160 \"\" 0 0 0 \"\">\n").arg(460+dx).arg(460+dx);
@@ -82,21 +80,7 @@ QString* SallenKey::createSchematic()
     }
 
     if (N1stOrd!=0) {
-        *s += QString("<%1 190 %2 190 \"\" 0 0 0 \"\">\n").arg(dx-20).arg(70+dx);
-        *s += QString("<%1 190 %2 160 \"\" 0 0 0 \"\">\n").arg(dx-20).arg(dx-20);
-        *s += QString("<%1 160 %2 160 \"\" 0 0 0 \"\">\n").arg(dx-20).arg(dx-50);
-
-        *s += QString("<%1 190 %2 190 \"\" 0 0 0 \"\">\n").arg(130+dx).arg(170+dx);
-        *s += QString("<%1 160 %2 160 \"out\" %3 130 39 \"\">\n").arg(310+dx).arg(360+dx).arg(380+dx);
-        *s += QString("<%1 260 %2 260 \"\" 0 0 0 \"\">\n").arg(340+dx).arg(360+dx);
-        *s += QString("<%1 160 %2 260 \"\" 0 0 0 \"\">\n").arg(360+dx).arg(360+dx);
-        *s += QString("<%1 190 %2 210 \"\" 0 0 0 \"\">\n").arg(170+dx).arg(170+dx);
-        *s += QString("<%1 140 %2 190 \"\" 0 0 0 \"\">\n").arg(170+dx).arg(170+dx);
-        *s += QString("<%1 140 %2 140 \"\" 0 0 0 \"\">\n").arg(170+dx).arg(240+dx);
-        *s += QString("<%1 180 %2 260 \"\" 0 0 0 \"\">\n").arg(220+dx).arg(220+dx);
-        *s += QString("<%1 180 %2 180 \"\" 0 0 0 \"\">\n").arg(220+dx).arg(240+dx);
-        *s += QString("<%1 260 %2 260 \"\" 0 0 0 \"\">\n").arg(220+dx).arg(280+dx);
-        *s += QString("<%1 260 %2 310 \"\" 0 0 0 \"\">\n").arg(220+dx).arg(220+dx);
+        createFirstOrderWires(*s,dx);
     }
 
     *s += "</Wires>\n";

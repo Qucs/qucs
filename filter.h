@@ -29,6 +29,10 @@ protected:
     int Nfil;
     float Fc,Kv;
 
+    void createFirstOrderComponents(QString &s,RC_elements stage, int dx);
+    void createFirstOrderWires(QString &s, int dx);
+    float autoscaleCapacitor(float C, QString &suffix);
+
 public:
 
 
