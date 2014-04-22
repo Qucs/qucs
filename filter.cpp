@@ -61,3 +61,54 @@ void Filter::createPartList(QStringList &lst)
              "  "+QString::number(stage.R4);
     }
 }
+
+void Filter::createFirstOrderComponents(QString &s,RC_elements stage,int dx)
+{
+    s += QString("<OpAmp OP%1 1 %2 160 -26 42 0 0 \"1e6\" 1 \"15 V\" 0>\n").arg(Nfil).arg(270+dx);
+    s += QString("<GND * 1 %1 270 0 0 0 0>\n").arg(170+dx);
+    s += QString("<GND * 1 %1 370 0 0 0 0>\n").arg(220+dx);
+    s += QString("<R R%1 1 %2 340 15 -26 0 1 \"34.45k\" 1 \"26.85\" 0 \"0.0\" 0 \"0.0\" 0 \"26.85\" 0 \"european\" 0>\n").arg(Nfil+1).arg(220+dx);
+    s += QString("<R R%1 1 %2 240 -75 -26 1 1 \"41.59k\" 1 \"26.85\" 0 \"0.0\" 0 \"0.0\" 0 \"26.85\" 0 \"european\" 0>\n").arg(Nfil).arg(170+dx);
+    s += QString("<R R%1 1 %2 260 -26 15 1 2 \"1m\" 1 \"26.85\" 0 \"0.0\" 0 \"0.0\" 0 \"26.85\" 0 \"european\" 0>\n").arg(Nfil+2).arg(310+dx);
+    s += QString("<C C%1 1 %2 190 -26 -45 1 0 \"2000p\" 1 \"\" 0 \"neutral\" 0>\n").arg(Nfil).arg(100+dx);
+}
+
+void Filter::createFirstOrderWires(QString &s, int dx)
+{
+    s += QString("<%1 190 %2 190 \"\" 0 0 0 \"\">\n").arg(dx-20).arg(70+dx);
+    s += QString("<%1 190 %2 160 \"\" 0 0 0 \"\">\n").arg(dx-20).arg(dx-20);
+    s += QString("<%1 160 %2 160 \"\" 0 0 0 \"\">\n").arg(dx-20).arg(dx-50);
+
+    s += QString("<%1 190 %2 190 \"\" 0 0 0 \"\">\n").arg(130+dx).arg(170+dx);
+    s += QString("<%1 160 %2 160 \"out\" %3 130 39 \"\">\n").arg(310+dx).arg(360+dx).arg(380+dx);
+    s += QString("<%1 260 %2 260 \"\" 0 0 0 \"\">\n").arg(340+dx).arg(360+dx);
+    s += QString("<%1 160 %2 260 \"\" 0 0 0 \"\">\n").arg(360+dx).arg(360+dx);
+    s += QString("<%1 190 %2 210 \"\" 0 0 0 \"\">\n").arg(170+dx).arg(170+dx);
+    s += QString("<%1 140 %2 190 \"\" 0 0 0 \"\">\n").arg(170+dx).arg(170+dx);
+    s += QString("<%1 140 %2 140 \"\" 0 0 0 \"\">\n").arg(170+dx).arg(240+dx);
+    s += QString("<%1 180 %2 260 \"\" 0 0 0 \"\">\n").arg(220+dx).arg(220+dx);
+    s += QString("<%1 180 %2 180 \"\" 0 0 0 \"\">\n").arg(220+dx).arg(240+dx);
+    s += QString("<%1 260 %2 260 \"\" 0 0 0 \"\">\n").arg(220+dx).arg(280+dx);
+    s += QString("<%1 260 %2 310 \"\" 0 0 0 \"\">\n").arg(220+dx).arg(220+dx);
+}
+
+
+float Filter::autoscaleCapacitor(float C, QString &suffix)
+{
+    float C1 = C*1e-6;
+
+    if (C1>=1e-7) {
+        suffix = "uF";
+        return C1*1e6;
+    }
+
+    if ((C1<1e-7)&&(C1>=1e-8)) {
+        suffix = "nF";
+        return C1*1e9;
+    }
+
+    if (C1<1e-8) {
+        suffix = "pF";
+        return C1*1e12;
+    }
+}

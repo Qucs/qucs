@@ -12,12 +12,12 @@ FilterSintez::FilterSintez(QWidget *parent)
     QTextCodec::setCodecForTr(QTextCodec::codecForName("UTF-8"));
 
     lblInputData = new QLabel(tr("Входные данные"));
-    lblA1 = new QLabel(tr("Затухание фильтра в полосе пропускания, A1"));
-    lblA2 = new QLabel(tr("Затухание фильтра в полосе задерживания, A2"));
-    lblF1 = new QLabel(tr("Частота среза фильтра в полосе пропускания, F1"));
-    lblF2 = new QLabel(tr("Частота фильтра в полосе задерживания, F2"));
-    lblRpl1 = new QLabel(tr("амплитуда пульсаций в полосе пропускания (дБ)"));
-    lblRpl2 = new QLabel(tr("Амплитуда пульсаций в полосе задерживания (дБ)"));
+    lblA1 = new QLabel(tr("Затухание фильтра в полосе пропускания, Ap"));
+    lblA2 = new QLabel(tr("Минимальное затухание фильтра в полосе задерживания, As"));
+    lblF1 = new QLabel(tr("Частота среза фильтра, Fc (Гц)"));
+    lblF2 = new QLabel(tr("Начало полосы задерживания, Fs (Гц)"));
+    lblRpl1 = new QLabel(tr("Амплитуда пульсаций в полосе пропускания Rp(дБ)"));
+    //lblRpl2 = new QLabel(tr("Амплитуда пульсаций в полосе задерживания (дБ)"));
     lblKv = new QLabel(tr("Усиление фильтра, Kv"));
 
 
@@ -32,8 +32,8 @@ FilterSintez::FilterSintez(QWidget *parent)
     edtF2->setValidator(val1);
     edtPassbRpl = new QLineEdit("3");
     edtPassbRpl->setValidator(val1);
-    edtStopbRpl = new QLineEdit("3");
-    edtStopbRpl->setValidator(val1);
+    //edtStopbRpl = new QLineEdit("3");
+    //edtStopbRpl->setValidator(val1);
     edtKv = new QLineEdit("2");
     edtKv->setValidator(val1);
 
@@ -95,8 +95,8 @@ FilterSintez::FilterSintez(QWidget *parent)
     left->addWidget(edtF2);
     left->addWidget(lblRpl1);
     left->addWidget(edtPassbRpl);
-    left->addWidget(lblRpl2);
-    left->addWidget(edtStopbRpl);
+    //left->addWidget(lblRpl2);
+    //left->addWidget(edtStopbRpl);
     left->addWidget(lblKv);
     left->addWidget(edtKv);
     left->addWidget(lblTyp);
