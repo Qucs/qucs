@@ -43,7 +43,7 @@ public:
 
     void createPartList(QStringList &lst);
 
-    virtual QString* createSchematic()
+    virtual void createSchematic(QString &s)
     {
 
     }

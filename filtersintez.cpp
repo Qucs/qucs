@@ -172,10 +172,11 @@ void FilterSintez::slotCalcSchematic()
              else calcMultiloopLPF();
              break;
     case 2 : {
+               QString s;
                SallenKey sk(Poles,ftyp,Fc,Kv);
                sk.calcFilter();
                sk.createPartList(lst);
-               sk.createSchematic();
+               sk.createSchematic(s);
                txtResult->setText(lst.join("\n"));
              }
              break;
