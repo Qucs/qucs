@@ -99,16 +99,17 @@ float Filter::autoscaleCapacitor(float C, QString &suffix)
 
     if (C1>=1e-7) {
         suffix = "uF";
-        return C1*1e6;
+        C1 *= 1e6;
     }
 
     if ((C1<1e-7)&&(C1>=1e-8)) {
         suffix = "nF";
-        return C1*1e9;
+        C1 *= 1e9;
     }
 
     if (C1<1e-8) {
         suffix = "pF";
-        return C1*1e12;
+        C1 *= 1e12;
     }
+    return C1;
 }
