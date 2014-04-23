@@ -14,11 +14,13 @@ private:
 
     void calcSallenKeyHPF();
     void calcSallenKeyLPF();
+    void createHighPassSchematic(QString &s);
+    void createLowPassSchematic(QString &s);
 
 public:
     SallenKey(QVector< std::complex<float> > poles_, Filter::FType type_, float Fcutoff, float Kv_=1.0);
 
-    QString* createSchematic();
+    void createSchematic(QString &s);
     void calcFilter();
 };
 
