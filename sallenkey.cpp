@@ -9,6 +9,8 @@ SallenKey::SallenKey(QVector< std::complex<float> > poles_, Filter::FType type_,
 
 QString* SallenKey::createSchematic()
 {
+    int const N_R=4; // number of resisitors in 2-order Sallen-Key stage
+    int const N_C=2; // number of capacitors in 2-order Sallen-Key stage
     RC_elements stage;
     int dx = 0;
     int N2ord = Nfil/2; // number of 2-nd order stages
@@ -27,16 +29,16 @@ QString* SallenKey::createSchematic()
         QString suffix1, suffix2;
         float C1 = autoscaleCapacitor(stage.C1,suffix1);
         float C2 = autoscaleCapacitor(stage.C2,suffix2);
-        qDebug()<<C1<<C2;
+        qDebug()<<C1<<suffix1<<" "<<C2<<suffix2;
         *s += QString("<OpAmp OP%1 1 %2 160 -26 42 0 0 \"1e6\" 1 \"15 V\" 0>\n").arg(stage.N).arg(370+dx);
         *s += QString("<GND * 1 %1 270 0 0 0 0>\n").arg(270+dx);
         *s += QString("<GND * 1 %1 370 0 0 0 0>\n").arg(320+dx);
-        *s += QString("<R R%1 1 %2 340 15 -26 0 1 \"34.45k\" 1 \"26.85\" 0 \"0.0\" 0 \"0.0\" 0 \"26.85\" 0 \"european\" 0>\n").arg(2+stage.N).arg(320+dx);
-        *s += QString("<C C%1 1 %2 190 -26 -45 1 0 \"%3%4\" 1 \"\" 0 \"neutral\" 0>\n").arg(1+stage.N).arg(200+dx).arg(C2,0,'g',3).arg(suffix1);
-        *s += QString("<C C%1 1 %2 190 -26 17 0 0 \"2000p\" 1 \"\" 0 \"neutral\" 0>\n").arg(stage.N).arg(100+dx);
-        *s += QString("<R R%1 1 %2 240 -75 -26 1 1 \"41.59k\" 1 \"26.85\" 0 \"0.0\" 0 \"0.0\" 0 \"26.85\" 0 \"european\" 0>\n").arg(1+stage.N).arg(270+dx);
-        *s += QString("<R R%1 1 %2 70 -26 15 0 0 \"6.09k\" 1 \"26.85\" 0 \"0.0\" 0 \"0.0\" 0 \"26.85\" 0 \"european\" 0>\n").arg(stage.N).arg(330+dx);
-        *s += QString("<R R%1 1 %2 260 -26 15 1 2 \"1m\" 1 \"26.85\" 0 \"0.0\" 0 \"0.0\" 0 \"26.85\" 0 \"european\" 0>\n").arg(3+stage.N).arg(410+dx);
+        *s += QString("<R R%1 1 %2 340 15 -26 0 1 \"%3k\" 1 \"26.85\" 0 \"0.0\" 0 \"0.0\" 0 \"26.85\" 0 \"european\" 0>\n").arg(3+(i-1)*N_R).arg(320+dx).arg(stage.R3,0,'f',3);
+        *s += QString("<C C%1 1 %2 190 -26 -45 1 0 \"%3%4\" 1 \"\" 0 \"neutral\" 0>\n").arg(2+(i-1)*N_C).arg(200+dx).arg(C2,0,'f',3).arg(suffix2);
+        *s += QString("<C C%1 1 %2 190 -26 17 0 0 \"%3%4\" 1 \"\" 0 \"neutral\" 0>\n").arg(1+(i-1)*N_C).arg(100+dx).arg(C1,0,'f',3).arg(suffix1);
+        *s += QString("<R R%1 1 %2 240 -75 -26 1 1 \"%3k\" 1 \"26.85\" 0 \"0.0\" 0 \"0.0\" 0 \"26.85\" 0 \"european\" 0>\n").arg(2+(i-1)*N_R).arg(270+dx).arg(stage.R2,0,'f',3);
+        *s += QString("<R R%1 1 %2 70 -26 15 0 0 \"%3k\" 1 \"26.85\" 0 \"0.0\" 0 \"0.0\" 0 \"26.85\" 0 \"european\" 0>\n").arg(1+(i-1)*N_R).arg(330+dx).arg(stage.R1,0,'f',3);
+        *s += QString("<R R%1 1 %2 260 -26 15 1 2 \"%3k\" 1 \"26.85\" 0 \"0.0\" 0 \"0.0\" 0 \"26.85\" 0 \"european\" 0>\n").arg(4+(i-1)*N_R).arg(410+dx).arg(stage.R4,0,'f',3);
         dx += 510;
     }
 
