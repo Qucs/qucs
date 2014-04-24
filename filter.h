@@ -28,8 +28,10 @@ protected:
     Filter::FType ftype;
     int Nfil;
     float Fc,Kv;
+    int Nr,Nc,Nopamp;
 
-    void createFirstOrderComponents(QString &s,RC_elements stage, int dx);
+    void createFirstOrderComponentsHPF(QString &s,RC_elements stage, int dx);
+    void createFirstOrderComponentsLPF(QString &s,RC_elements stage, int dx);
     void createFirstOrderWires(QString &s, int dx);
     float autoscaleCapacitor(float C, QString &suffix);
 

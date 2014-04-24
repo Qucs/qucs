@@ -38,6 +38,10 @@ void SallenKey::calcFilter()
     default:
         break;
     }
+
+    Nr = 4*(Nfil/2);
+    Nc = 2*(Nfil/2);
+    Nopamp = Nfil/2;
 }
 
 
@@ -162,7 +166,7 @@ void SallenKey::createHighPassSchematic(QString &s)
     }
 
     if (N1stOrd!=0) {
-        createFirstOrderComponents(s,stage,dx);
+        createFirstOrderComponentsHPF(s,stage,dx);
     }
 
     s += "</Components>\n";
@@ -243,7 +247,7 @@ void SallenKey::createLowPassSchematic(QString &s)
     }
 
     if (N1stOrd!=0) {
-        createFirstOrderComponents(s,stage,dx);
+        createFirstOrderComponentsLPF(s,stage,dx);
     }
 
     s += "</Components>\n";
