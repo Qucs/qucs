@@ -1,5 +1,6 @@
 #include "filtersintez.h"
 #include "sallenkey.h"
+#include "mfbfilter.h"
 #include <QTextCodec>
 
 
@@ -168,8 +169,12 @@ void FilterSintez::slotCalcSchematic()
     case 0 : if (btnHighPass->isChecked()) calcDblQuadHPF();
              else calcDblQuadLPF();
              break;
-    case 1 : if (btnHighPass->isChecked()) calcMultiloopHPF();
-             else calcMultiloopLPF();
+    case 1 : {
+                MFBfilter mfb(Poles,ftyp,Fc,Kv);
+                mfb.calcFilter();
+                mfb.createPartList(lst);
+                txtResult->setText(lst.join("\n"));
+             }
              break;
     case 2 : {
                QString s;
@@ -229,10 +234,8 @@ int FilterSintez::calcChebyshev()
 
     float a = sinh((asinh(1/eps))/N);
     float b = cosh((asinh(1/eps))/N);
-    qDebug()<<a<<b;
 
     Poles.clear();
-
 
     lst<<""<<tr(" 2. Полюса  Sk=SIN+j*COS");
     for (int k=1;k<=N;k++) {
