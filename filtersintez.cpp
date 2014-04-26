@@ -163,7 +163,8 @@ void FilterSintez::slotCalcSchematic()
 
     QStringList lst;
 
-    float Kv = edtKv->text().toFloat();
+    float G = edtKv->text().toFloat();
+    float Kv = pow(10,G/20.0);
 
     switch (cbxFilterType->currentIndex()) {
     case 0 : if (btnHighPass->isChecked()) calcDblQuadHPF();

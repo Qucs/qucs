@@ -23,6 +23,7 @@ public:
 
 protected:
     QVector< std::complex<float> > Poles;
+    QVector< std::complex<float> > Zeros;
     QVector<RC_elements> Stages;
 
     Filter::FType ftype;

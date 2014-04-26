@@ -31,9 +31,9 @@ void SallenKey::calcFilter()
     Stages.clear();
 
     switch (ftype) {
-    case Filter::LowPass : calcSallenKeyLPF();
+    case Filter::LowPass : calcLowPass();
         break;
-    case Filter::HighPass : calcSallenKeyHPF();
+    case Filter::HighPass : calcHighPass();
         break;
     default:
         break;
@@ -45,7 +45,7 @@ void SallenKey::calcFilter()
 }
 
 
-void SallenKey::calcSallenKeyLPF()
+void SallenKey::calcLowPass()
 {
     float R1,R2,R3,R4,C1,C2;
     float Wc = 2*M_PI*Fc;
@@ -88,7 +88,7 @@ void SallenKey::calcSallenKeyLPF()
 }
 
 
-void SallenKey::calcSallenKeyHPF()
+void SallenKey::calcHighPass()
 {
     float R1,R2,R3,R4,C1;
     float Wc = 2*M_PI*Fc;
