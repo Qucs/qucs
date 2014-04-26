@@ -152,7 +152,7 @@ void SallenKey::createHighPassSchematic(QString &s)
         QString suffix1, suffix2;
         float C1 = autoscaleCapacitor(stage.C1,suffix1);
         float C2 = autoscaleCapacitor(stage.C2,suffix2);
-        qDebug()<<C1<<suffix1<<" "<<C2<<suffix2<<stage.C1<<stage.C2;
+        //qDebug()<<C1<<suffix1<<" "<<C2<<suffix2<<stage.C1<<stage.C2;
         s += QString("<OpAmp OP%1 1 %2 160 -26 42 0 0 \"1e6\" 1 \"15 V\" 0>\n").arg(stage.N).arg(370+dx);
         s += QString("<GND * 1 %1 270 0 0 0 0>\n").arg(270+dx);
         s += QString("<GND * 1 %1 370 0 0 0 0>\n").arg(320+dx);
@@ -166,7 +166,8 @@ void SallenKey::createHighPassSchematic(QString &s)
     }
 
     if (N1stOrd!=0) {
-        createFirstOrderComponentsHPF(s,stage,dx);
+        qDebug()<<Stages.last().N;
+        createFirstOrderComponentsHPF(s,Stages.last(),dx);
     }
 
     s += "</Components>\n";
@@ -233,7 +234,6 @@ void SallenKey::createLowPassSchematic(QString &s)
         QString suffix1, suffix2;
         float C1 = autoscaleCapacitor(stage.C1,suffix1);
         float C2 = autoscaleCapacitor(stage.C2,suffix2);
-        qDebug()<<C1<<suffix1<<" "<<C2<<suffix2<<stage.C1<<stage.C2;
         s += QString("<OpAmp OP%1 1 %2 160 -26 42 0 0 \"1e6\" 1 \"15 V\" 0>\n").arg(stage.N).arg(370+dx);
         s += QString("<GND * 1 %1 270 0 0 0 0>\n").arg(270+dx);
         s += QString("<GND * 1 %1 370 0 0 0 0>\n").arg(320+dx);
@@ -247,7 +247,7 @@ void SallenKey::createLowPassSchematic(QString &s)
     }
 
     if (N1stOrd!=0) {
-        createFirstOrderComponentsLPF(s,stage,dx);
+        createFirstOrderComponentsLPF(s,Stages.last(),dx);
     }
 
     s += "</Components>\n";

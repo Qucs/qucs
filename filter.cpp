@@ -23,11 +23,12 @@ void Filter::calcFirstOrder()
         int k = Nfil/2 + 1;
         float Wc = 2*M_PI*Fc;
         float re = Poles.at(k-1).real();
-        float im = Poles.at(k-1).imag();
-        float C = re*re + im*im;
+        //float im = Poles.at(k-1).imag();
+        //float C = re*re + im*im;
+        float C = -re;
         float C1 = 10/Fc;
         float R1 = 1.0/(Wc*C*C1);
-
+        qDebug()<<C;
 
         if (Kv != 1.0) {
             R2 = Kv*R1/(Kv - 1);

@@ -19,7 +19,7 @@ FilterSintez::FilterSintez(QWidget *parent)
     lblF2 = new QLabel(tr("Начало полосы задерживания, Fs (Гц)"));
     lblRpl1 = new QLabel(tr("Амплитуда пульсаций в полосе пропускания Rp(дБ)"));
     //lblRpl2 = new QLabel(tr("Амплитуда пульсаций в полосе задерживания (дБ)"));
-    lblKv = new QLabel(tr("Усиление фильтра, Kv"));
+    lblKv = new QLabel(tr("Усиление фильтра, Kv (дБ)"));
 
 
     edtA1 = new QLineEdit("3");
