@@ -12,8 +12,8 @@ class SallenKey : public Filter
 
 private:
 
-    void calcSallenKeyHPF();
-    void calcSallenKeyLPF();
+    void calcHighPass();
+    void calcLowPass();
     void createHighPassSchematic(QString &s);
     void createLowPassSchematic(QString &s);
 

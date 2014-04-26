@@ -15,9 +15,9 @@ void MFBfilter::calcFilter()
     Stages.clear();
 
     switch (ftype) {
-    case Filter::LowPass : calcMFB_LPF();
+    case Filter::LowPass : calcLowPass();
         break;
-    case Filter::HighPass : calcMFB_HPF();
+    case Filter::HighPass : calcHighPass();
         break;
     default:
         break;
@@ -28,12 +28,12 @@ void MFBfilter::calcFilter()
     Nopamp = Nfil/2;
 }
 
-void MFBfilter::calcMFB_HPF()
+void MFBfilter::calcHighPass()
 {
 
 }
 
-void MFBfilter::calcMFB_LPF()
+void MFBfilter::calcLowPass()
 {
     float R1,R2,R3,C1,C2;
     float Wc = 2*M_PI*Fc;
@@ -46,7 +46,7 @@ void MFBfilter::calcMFB_LPF()
 
         qDebug()<<B<<C;
 
-        C2 = 10/Fc;
+        C2 = (10.0/Fc)*1e-6;
         C1 = (B*B*C2)/(4*C*(Kv+1));
         R2 = (2*(Kv+1))/(Wc*(B*C2+sqrt(B*B*C2*C2-4*C*C1*C2*(Kv+1))));
         R1 = R2/Kv;
@@ -54,9 +54,9 @@ void MFBfilter::calcMFB_LPF()
 
         RC_elements curr_stage;
         curr_stage.N = k;
-        curr_stage.R1 = 1000*R1;
-        curr_stage.R2  = 1000*R2;
-        curr_stage.R3 = 1000*R3;
+        curr_stage.R1 = R1;
+        curr_stage.R2  = R2;
+        curr_stage.R3 = R3;
         curr_stage.R4 = 0;
         curr_stage.C1 = C1;
         curr_stage.C2 = C2;
