@@ -14,6 +14,32 @@ Filter::~Filter()
 
 }
 
+void Filter::createSchematic(QString &s)
+{
+    switch (ftype) {
+    case Filter::HighPass : createHighPassSchematic(s);
+        break;
+    case Filter::LowPass : createLowPassSchematic(s);
+        break;
+    default: break;
+    }
+
+    QFile sch("filter.sch");
+    sch.open(QFile::WriteOnly);
+    QTextStream out(&sch);
+    out<<s;
+    sch.close();
+}
+
+void Filter::createHighPassSchematic(QString &s)
+{
+
+}
+
+void Filter::createLowPassSchematic(QString &s)
+{
+
+}
 
 void Filter::calcFilter()
 {
