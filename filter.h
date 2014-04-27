@@ -39,6 +39,8 @@ protected:
     float autoscaleCapacitor(float C, QString &suffix);
     virtual void calcHighPass();
     virtual void calcLowPass();
+    virtual void createHighPassSchematic(QString &s);
+    virtual void createLowPassSchematic(QString &s);
 
 public:
 
@@ -50,10 +52,8 @@ public:
 
     void createPartList(QStringList &lst);
 
-    virtual void createSchematic(QString &s)
-    {
+    virtual void createSchematic(QString &s);
 
-    }
 
     virtual void calcFilter();
 

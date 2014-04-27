@@ -35,7 +35,7 @@ FilterSintez::FilterSintez(QWidget *parent)
     edtPassbRpl->setValidator(val1);
     //edtStopbRpl = new QLineEdit("3");
     //edtStopbRpl->setValidator(val1);
-    edtKv = new QLineEdit("2");
+    edtKv = new QLineEdit("0");
     edtKv->setValidator(val1);
 
     lblTyp = new QLabel(tr("Рассчитать фильтр:"));
@@ -171,9 +171,11 @@ void FilterSintez::slotCalcSchematic()
              else calcDblQuadLPF();
              break;
     case 1 : {
+                QString s;
                 MFBfilter mfb(Poles,ftyp,Fc,Kv);
                 mfb.calcFilter();
                 mfb.createPartList(lst);
+                mfb.createSchematic(s);
                 txtResult->setText(lst.join("\n"));
              }
              break;

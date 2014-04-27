@@ -9,24 +9,6 @@ SallenKey::SallenKey(QVector< std::complex<float> > poles_, Filter::FType type_,
     Nop1 = 1;
 }
 
-void SallenKey::createSchematic(QString &s)
-{
-    switch (ftype) {
-    case Filter::HighPass : createHighPassSchematic(s);
-        break;
-    case Filter::LowPass : createLowPassSchematic(s);
-        break;
-    default: break;
-    }
-
-    QFile sch("filter.sch");
-    sch.open(QFile::WriteOnly);
-    QTextStream out(&sch);
-    out<<s;
-    sch.close();
-
-}
-
 
 void SallenKey::calcLowPass()
 {

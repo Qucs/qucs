@@ -7,14 +7,14 @@
 
 class MFBfilter : public Filter
 {
-private:
+protected:
     void calcHighPass();
     void calcLowPass();
+    void createHighPassSchematic(QString &s);
+    void createLowPassSchematic(QString &s);
 
 public:
     MFBfilter(QVector< std::complex<float> > poles_, Filter::FType type_, float Fcutoff, float Kv_=1.0);
-
-    void createSchematic(QString &s);
 
 };
 
