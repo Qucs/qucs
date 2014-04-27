@@ -29,12 +29,16 @@ protected:
     Filter::FType ftype;
     int Nfil;
     float Fc,Kv;
-    int Nr,Nc,Nopamp;
+    int Nr,Nc,Nopamp; // total number of R,C, opamp
+
+    int Nr1,Nc1,Nop1; // number of R,C, opamp per stage
 
     void createFirstOrderComponentsHPF(QString &s,RC_elements stage, int dx);
     void createFirstOrderComponentsLPF(QString &s,RC_elements stage, int dx);
     void createFirstOrderWires(QString &s, int dx);
     float autoscaleCapacitor(float C, QString &suffix);
+    virtual void calcHighPass();
+    virtual void calcLowPass();
 
 public:
 
@@ -51,10 +55,7 @@ public:
 
     }
 
-    virtual void calcFilter()
-    {
-
-    }
+    virtual void calcFilter();
 
 };
 

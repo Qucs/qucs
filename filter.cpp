@@ -14,6 +14,36 @@ Filter::~Filter()
 
 }
 
+
+void Filter::calcFilter()
+{
+    Stages.clear();
+
+    switch (ftype) {
+    case Filter::LowPass : calcLowPass();
+        break;
+    case Filter::HighPass : calcHighPass();
+        break;
+    default:
+        break;
+    }
+
+    Nr = Nr1*(Nfil/2);
+    Nc = Nc1*(Nfil/2);
+    Nopamp = Nop1*Nfil/2;
+}
+
+
+void Filter::calcHighPass()
+{
+
+}
+
+void Filter::calcLowPass()
+{
+
+}
+
 void Filter::calcFirstOrder()
 {
     if (Nfil%2 != 0) {

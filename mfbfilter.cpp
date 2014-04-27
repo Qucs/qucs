@@ -3,29 +3,14 @@
 MFBfilter::MFBfilter(QVector< std::complex<float> > poles_, Filter::FType type_, float Fcutoff, float Kv_)
     : Filter(poles_,type_,Fcutoff,Kv_)
 {
+    Nr1 = 3;
+    Nc1 = 2;
+    Nop1 = 1;
 }
 
 void MFBfilter::createSchematic(QString &s)
 {
 
-}
-
-void MFBfilter::calcFilter()
-{
-    Stages.clear();
-
-    switch (ftype) {
-    case Filter::LowPass : calcLowPass();
-        break;
-    case Filter::HighPass : calcHighPass();
-        break;
-    default:
-        break;
-    }
-
-    Nr = 3*(Nfil/2);
-    Nc = 2*(Nfil/2);
-    Nopamp = Nfil/2;
 }
 
 void MFBfilter::calcHighPass()
