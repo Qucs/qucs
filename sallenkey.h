@@ -18,7 +18,7 @@ protected:
     void createLowPassSchematic(QString &s);
 
 public:
-    SallenKey(QVector< std::complex<float> > poles_, Filter::FType type_, float Fcutoff, float Kv_=1.0);
+    SallenKey(Filter::FilterFunc ffunc_, Filter::FType type_, FilterParam par);
 
     //void createSchematic(QString &s);
 

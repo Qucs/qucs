@@ -1,12 +1,15 @@
 #include "filter.h"
 
-Filter::Filter(QVector< std::complex<float> > poles_, Filter::FType type_, float Fcutoff, float Kv_)
+Filter::Filter(Filter::FilterFunc ffunc_, Filter::FType type_, FilterParam par)
 {
-    Poles = poles_;
-    Nfil = Poles.count();
+    ffunc = ffunc_;
     ftype = type_;
-    Fc = Fcutoff;
-    Kv = Kv_;
+    Fc = par.Fc;
+    Fs = par.Fs;
+    Rp = par.Rp;
+    As = par.As;
+    Ap = par.Ap;
+    Kv = par.Kv;
 }
 
 Filter::~Filter()
@@ -44,6 +47,16 @@ void Filter::createLowPassSchematic(QString &s)
 void Filter::calcFilter()
 {
     Stages.clear();
+    Poles.clear();
+    Zeros.clear();
+
+    switch (ffunc) {
+    case Filter::Chebyshev : calcChebyshev();
+        break;
+    case Filter::Butterworth : calcButterworth();
+        break;
+    default : break;
+    }
 
     switch (ftype) {
     case Filter::LowPass : calcLowPass();
@@ -119,6 +132,15 @@ void Filter::createPartList(QStringList &lst)
     }
 }
 
+void Filter::createPolesZerosList(QStringList &lst)
+{
+    lst<<""<<QObject::tr("1. Полюса  Sk=SIN+j*COS");
+    std::complex<float> pole;
+    foreach(pole,Poles) {
+            lst<<QString::number(pole.real()) + " + j*" + QString::number(pole.imag());
+    }
+}
+
 void Filter::createFirstOrderComponentsHPF(QString &s,RC_elements stage,int dx)
 {
     QString suf;
@@ -185,4 +207,48 @@ float Filter::autoscaleCapacitor(float C, QString &suffix)
         C1 *= 1e12;
     }
     return C1;
+}
+
+
+
+void Filter::calcChebyshev()
+{
+    float eps=sqrt(pow(10,0.1*Rp)-1);
+
+    float N1 = acosh(sqrt((pow(10,0.1*As)-1)/(eps*eps)))/acosh(Fs/Fc);
+    int N = ceil(N1);
+
+    float a = sinh((asinh(1/eps))/N);
+    float b = cosh((asinh(1/eps))/N);
+
+    Poles.clear();
+    Zeros.clear();
+
+    for (int k=1;k<=N;k++) {
+            float re = -1*a*sin(M_PI*(2*k-1)/(2*N));
+            float im = b*cos(M_PI*(2*k-1)/(2*N));
+            std::complex<float> pol(re,im);
+            Poles.append(pol);
+    }
+
+    Nfil = Poles.count();
+}
+
+void Filter::calcButterworth()
+{
+    float C1=(pow(10,(0.1*Ap))-1)/(pow(10,(0.1*As))-1);
+    float J2=log10(C1)/(2*log10(Fc/Fs));
+    int N2 = round(J2+1);
+
+    Poles.clear();
+    Zeros.clear();
+
+    for (int k=1;k<=N2;k++) {
+        float re =-1*sin(M_PI*(2*k-1)/(2*N2));
+        float im =cos(M_PI*(2*k-1)/(2*N2));
+        std::complex<float> pol(re,im);
+        Poles.append(pol);
+    }
+
+    Nfil = Poles.count();
 }

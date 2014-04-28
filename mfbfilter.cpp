@@ -1,7 +1,7 @@
 #include "mfbfilter.h"
 
-MFBfilter::MFBfilter(QVector< std::complex<float> > poles_, Filter::FType type_, float Fcutoff, float Kv_)
-    : Filter(poles_,type_,Fcutoff,Kv_)
+MFBfilter::MFBfilter(Filter::FilterFunc ffunc_, Filter::FType type_, FilterParam par)
+    : Filter(ffunc_,type_,par)
 {
     switch (ftype) {
     case Filter::LowPass :

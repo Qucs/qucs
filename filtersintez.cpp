@@ -134,7 +134,8 @@ FilterSintez::~FilterSintez()
 
 void FilterSintez::slotCalcFilter()
 {
-    switch (cbxFilterFunc->currentIndex()) {
+
+   /* switch (cbxFilterFunc->currentIndex()) {
         case 0 : Nfil = calcButterworth();
                  break;
         case 1 : Nfil = calcChebyshev();
@@ -144,7 +145,7 @@ void FilterSintez::slotCalcFilter()
         case 3 : Nfil = calcElliptic();
                  break;
         default: break;
-    }
+    }*/
 
     //calcButterworth();
 }
@@ -152,7 +153,29 @@ void FilterSintez::slotCalcFilter()
 void FilterSintez::slotCalcSchematic()
 {
 
-    slotCalcFilter();
+    FilterParam par;
+    par.Ap = edtA1->text().toFloat();
+    par.As = edtA2->text().toFloat();
+    par.Rp = edtPassbRpl->text().toFloat();
+    par.Fc = edtF1->text().toFloat();
+    par.Fs = edtF2->text().toFloat();
+    float G = edtKv->text().toFloat();
+    par.Kv = pow(10,G/20.0);
+
+    QStringList lst;
+    Filter::FilterFunc ffunc;
+
+    switch (cbxFilterFunc->currentIndex()) {
+            case 0 : ffunc = Filter::Butterworth;
+                     break;
+            case 1 : ffunc = Filter::Chebyshev;
+                     break;
+            case 2 : ffunc = Filter::InvChebyshev;
+                     break;
+            case 3 : ffunc = Filter::Cauer;
+                     break;
+            default: break;
+        }
 
     Filter::FType ftyp;
     if (btnHighPass->isChecked()) {
@@ -161,10 +184,7 @@ void FilterSintez::slotCalcSchematic()
         ftyp = Filter::LowPass;
     }
 
-    QStringList lst;
 
-    float G = edtKv->text().toFloat();
-    float Kv = pow(10,G/20.0);
 
     switch (cbxFilterType->currentIndex()) {
     case 0 : if (btnHighPass->isChecked()) calcDblQuadHPF();
@@ -172,8 +192,9 @@ void FilterSintez::slotCalcSchematic()
              break;
     case 1 : {
                 QString s;
-                MFBfilter mfb(Poles,ftyp,Fc,Kv);
+                MFBfilter mfb(ffunc,ftyp,par);
                 mfb.calcFilter();
+                mfb.createPolesZerosList(lst);
                 mfb.createPartList(lst);
                 mfb.createSchematic(s);
                 txtResult->setText(lst.join("\n"));
@@ -181,8 +202,9 @@ void FilterSintez::slotCalcSchematic()
              break;
     case 2 : {
                QString s;
-               SallenKey sk(Poles,ftyp,Fc,Kv);
+               SallenKey sk(ffunc,ftyp,par);
                sk.calcFilter();
+               sk.createPolesZerosList(lst);
                sk.createPartList(lst);
                sk.createSchematic(s);
                txtResult->setText(lst.join("\n"));
@@ -215,90 +237,6 @@ void FilterSintez::slotUpdateSchematic()
     sch_pic->setPixmap(pix);
 }
 
-int FilterSintez::calcChebyshev()
-{
-    float alpha = edtPassbRpl->text().toFloat();
-    float A2 = edtA2->text().toFloat();
-    float F1 = edtF1->text().toFloat();
-    float F2 = edtF2->text().toFloat();
-    Fc = F1;
-
-    float eps=sqrt(pow(10,0.1*alpha)-1);
-
-    float N1 = acosh(sqrt((pow(10,0.1*A2)-1)/(eps*eps)))/acosh(F2/F1);
-    int N = ceil(N1);
-
-    QStringList lst;
-    lst<<tr(" 1. Порядок фильтра Чебышева");
-    lst<<QString::number(N);
-    lst<<tr(" 2. Неравномерность пропускания");
-
-    lst<<QString::number(eps);
-
-    float a = sinh((asinh(1/eps))/N);
-    float b = cosh((asinh(1/eps))/N);
-
-    Poles.clear();
-
-    lst<<""<<tr(" 2. Полюса  Sk=SIN+j*COS");
-    for (int k=1;k<=N;k++) {
-            float re = -1*a*sin(M_PI*(2*k-1)/(2*N));
-            float im = b*cos(M_PI*(2*k-1)/(2*N));
-            std::complex<float> pol(re,im);
-            Poles.append(pol);
-            lst<<QString::number(re) + " + j*" + QString::number(im);
-    }
-
-
-    txtResult->setText(lst.join("\n"));
-    return N;
-}
-
-int FilterSintez::calcButterworth()
-{
-    //float R1,l,w,q,Wc,C5,K7;
-
-    float A1 = edtA1->text().toFloat();
-    float A2 = edtA2->text().toFloat();
-    float F1 = edtF1->text().toFloat();
-    float F2 = edtF2->text().toFloat();
-    Fc = F1;
-
-    float K1 = pow(10,(0.1*A1));
-    float K2 = pow(10,(0.1*A2));
-    float C1=(K1-1)/(K2-1);
-    float J2=log10(C1)/(2*log10(F1/F2));
-    int N2 = round(J2+1);
-
-    QStringList lst;
-    lst<<tr(" 1. Порядок фильтра Баттерворта");
-    lst<<QString::number(N2);
-    int N3= N2/2;
-    lst<<tr(" Число звеньев 2-го порядка");
-    lst<<QString::number(N3);
-
-    //float S2[50],O2[50];
-    lst<<"";
-    lst<<tr(" 2. Полюса Sk=SIN+j*COS");
-
-    coeffB.clear();
-    coeffC.clear();
-    Poles.clear();
-
-    for (int k=1;k<=N2;k++) {
-        float re =-1*sin(M_PI*(2*k-1)/(2*N2));
-        float im =cos(M_PI*(2*k-1)/(2*N2));
-        std::complex<float> pol(re,im);
-        Poles.append(pol);
-        lst<<QString::number(re) + " + j*" + QString::number(im);
-    }
-
-    lst<<"";
-
-    txtResult->setText(lst.join("\n"));
-
-    return N2;
-}
 
 int FilterSintez::calcInvChebyshev()
 {

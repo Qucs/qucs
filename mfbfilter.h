@@ -14,7 +14,7 @@ protected:
     void createLowPassSchematic(QString &s);
 
 public:
-    MFBfilter(QVector< std::complex<float> > poles_, Filter::FType type_, float Fcutoff, float Kv_=1.0);
+    MFBfilter(Filter::FilterFunc ffunc_, Filter::FType type_, FilterParam par);
 
 };
 
