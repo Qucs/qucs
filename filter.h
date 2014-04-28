@@ -15,11 +15,21 @@ struct RC_elements {
     float C2;
 };
 
+struct FilterParam {
+    float Ap;
+    float As;
+    float Fc;
+    float Fs;
+    float Rp;
+    float Kv;
+};
+
 class Filter
 {
 
 public:
     enum FType {HighPass, LowPass, BandPass};
+    enum FilterFunc {Butterworth, Chebyshev, Cauer, Bessel, InvChebyshev};
 
 protected:
     QVector< std::complex<float> > Poles;
@@ -27,11 +37,16 @@ protected:
     QVector<RC_elements> Stages;
 
     Filter::FType ftype;
+    Filter::FilterFunc ffunc;
     int Nfil;
-    float Fc,Kv;
+    float Fc,Kv,Fs,Ap,As,Rp;
     int Nr,Nc,Nopamp; // total number of R,C, opamp
 
     int Nr1,Nc1,Nop1; // number of R,C, opamp per stage
+
+    void calcButterworth();
+    void calcChebyshev();
+    void calcCauer();
 
     void createFirstOrderComponentsHPF(QString &s,RC_elements stage, int dx);
     void createFirstOrderComponentsLPF(QString &s,RC_elements stage, int dx);
@@ -45,12 +60,13 @@ protected:
 public:
 
 
-    Filter(QVector< std::complex<float> > poles_, Filter::FType type_, float Fcutoff, float Kv_=1.0);
+    Filter(Filter::FilterFunc ffunc_, Filter::FType type_, FilterParam par);
     virtual ~Filter();
 
     void calcFirstOrder();
 
     void createPartList(QStringList &lst);
+    void createPolesZerosList(QStringList &lst);
 
     virtual void createSchematic(QString &s);
 

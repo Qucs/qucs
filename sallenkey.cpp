@@ -1,8 +1,8 @@
 #include "sallenkey.h"
 #include <iostream>
 
-SallenKey::SallenKey(QVector< std::complex<float> > poles_, Filter::FType type_, float Fcutoff, float Kv_) :
-    Filter(poles_, type_, Fcutoff, Kv_)
+SallenKey::SallenKey(Filter::FilterFunc ffunc_, Filter::FType type_, FilterParam par) :
+    Filter(ffunc_, type_, par)
 {
     Nr1 = 4;
     Nc1 = 2;
