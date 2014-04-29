@@ -185,4 +185,6 @@ Makefile
 moc_*.cpp
 *.sch
 *.sch~
+*.dat
+*.dpl
 

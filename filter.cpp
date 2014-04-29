@@ -9,7 +9,7 @@ Filter::Filter(Filter::FilterFunc ffunc_, Filter::FType type_, FilterParam par)
     Rp = par.Rp;
     As = par.As;
     Ap = par.Ap;
-    Kv = par.Kv;
+    Kv = par.Kv; // gain of 1 stage
 }
 
 Filter::~Filter()
@@ -103,7 +103,7 @@ void Filter::calcFirstOrder()
             R2 = Kv*R1/(Kv - 1);
             R3 = Kv*R1;
         } else {
-            R2 = 999;
+            R2 = 1.0;
             R3 = 0;
         }
         RC_elements curr_stage;
@@ -122,23 +122,28 @@ void Filter::calcFirstOrder()
 
 void Filter::createPartList(QStringList &lst)
 {
-    lst<<"N C1(uF) C2(uF) R1(kOhm) R2(kOhm) R3(kOhm) R4(kOhm)";
+    lst<<QObject::tr("Part list");
+    lst<<"Stage# C1(uF) C2(uF) R1(kOhm) R2(kOhm) R3(kOhm) R4(kOhm)";
     RC_elements stage;
 
     foreach (stage,Stages) {
-        lst<<QString::number(stage.N)+"  "+QString::number(stage.C1)+"  "+QString::number(stage.C2)+
-             "  "+QString::number(stage.R1)+"  "+QString::number(stage.R2)+"  "+QString::number(stage.R3)+
-             "  "+QString::number(stage.R4);
+        QString suff1,suff2;
+        float C1=autoscaleCapacitor(stage.C1,suff1);
+        float C2=autoscaleCapacitor(stage.C2,suff2);
+        lst<<QString("%1%2%3%4%5%6%7%8%9").arg(stage.N,6).arg(C1,10,'f',3).arg(suff1).arg(C2,10,'f',3).arg(suff2)
+             .arg(stage.R1,10,'f',3).arg(stage.R2,10,'f',3).arg(stage.R3,10,'f',3).arg(stage.R4,10,'f',3);
     }
 }
 
 void Filter::createPolesZerosList(QStringList &lst)
 {
-    lst<<""<<QObject::tr("1. Полюса  Sk=SIN+j*COS");
+    lst<<QString(QObject::tr("Filter order = %1")).arg(std::max(Poles.count(),Zeros.count()));
+    lst<<""<<QObject::tr("Poles list Pk=Re+j*Im");
     std::complex<float> pole;
     foreach(pole,Poles) {
             lst<<QString::number(pole.real()) + " + j*" + QString::number(pole.imag());
     }
+    lst<<"";
 }
 
 void Filter::createFirstOrderComponentsHPF(QString &s,RC_elements stage,int dx)
@@ -168,11 +173,11 @@ void Filter::createFirstOrderComponentsLPF(QString &s,RC_elements stage,int dx)
     s += QString("<C C%1 1 %2 240 26 -45 1 1 \"%3%4\" 1 \"\" 0 \"neutral\" 0>\n").arg(Nc+1).arg(170+dx).arg(C1,0,'f',3).arg(suf);
 }
 
-void Filter::createFirstOrderWires(QString &s, int dx)
+void Filter::createFirstOrderWires(QString &s, int dx, int y)
 {
     s += QString("<%1 190 %2 190 \"\" 0 0 0 \"\">\n").arg(dx-20).arg(70+dx);
-    s += QString("<%1 190 %2 160 \"\" 0 0 0 \"\">\n").arg(dx-20).arg(dx-20);
-    s += QString("<%1 160 %2 160 \"\" 0 0 0 \"\">\n").arg(dx-20).arg(dx-50);
+    s += QString("<%1 190 %2 %3 \"\" 0 0 0 \"\">\n").arg(dx-20).arg(dx-20).arg(y);
+    s += QString("<%1 %2 %3 %4 \"\" 0 0 0 \"\">\n").arg(dx-20).arg(y).arg(dx-50).arg(y);
 
     s += QString("<%1 190 %2 190 \"\" 0 0 0 \"\">\n").arg(130+dx).arg(170+dx);
     s += QString("<%1 160 %2 160 \"out\" %3 130 39 \"\">\n").arg(310+dx).arg(360+dx).arg(380+dx);

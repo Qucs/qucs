@@ -50,7 +50,7 @@ protected:
 
     void createFirstOrderComponentsHPF(QString &s,RC_elements stage, int dx);
     void createFirstOrderComponentsLPF(QString &s,RC_elements stage, int dx);
-    void createFirstOrderWires(QString &s, int dx);
+    void createFirstOrderWires(QString &s, int dx, int y);
     float autoscaleCapacitor(float C, QString &suffix);
     virtual void calcHighPass();
     virtual void calcLowPass();

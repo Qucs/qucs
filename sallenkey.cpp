@@ -14,6 +14,9 @@ void SallenKey::calcLowPass()
 {
     float R1,R2,R3,R4,C1,C2;
     float Wc = 2*M_PI*Fc;
+    float Nst = Nfil/2 + Nfil%2;
+    float Kv1 = pow(Kv,1.0/Nst);
+    qDebug()<<Kv1;
 
     for (int k=1; k <= Nfil/2; k++) {
 
@@ -26,15 +29,15 @@ void SallenKey::calcLowPass()
 
 
         C2 = 10 / Fc;
-        C1 = (B*B+4*C*(Kv-1))*C2/(4*C);
-        R1 = 2/(Wc*(B*C2+sqrt((B*B + 4*C*(Kv-1))*(C2*C2)-4*C*C1*C2)));
+        C1 = (B*B+4*C*(Kv1-1))*C2/(4*C);
+        R1 = 2/(Wc*(B*C2+sqrt((B*B + 4*C*(Kv1-1))*(C2*C2)-4*C*C1*C2)));
         R2 = 1/(C*C1*C2*R1*Wc*Wc);
 
         if (Kv != 1.0) {
-            R3 = Kv*(R1 + R2)/(Kv - 1);
-            R4 = Kv*(R1 + R2);
+            R3 = Kv1*(R1 + R2)/(Kv1 - 1);
+            R4 = Kv1*(R1 + R2);
         } else {
-            R3 = 999;
+            R3 = 1;
             R4 = 0;
         }
 
@@ -58,6 +61,8 @@ void SallenKey::calcHighPass()
     float R1,R2,R3,R4,C1;
     float Wc = 2*M_PI*Fc;
 
+    float Nst = Nfil/2 + Nfil%2;
+    float Kv1 = pow(Kv,1.0/Nst);
 
     for (int k=1; k <= Nfil/2; k++) {
 
@@ -70,15 +75,15 @@ void SallenKey::calcHighPass()
 
         C1 = 10 / Fc;
 
-        R2 = 4*C/(Wc*C1*(B+sqrt(B*B+8*C*(Kv-1))));
+        R2 = 4*C/(Wc*C1*(B+sqrt(B*B+8*C*(Kv1-1))));
 
         R1 = C/(Wc*Wc*C1*C1*R2);
 
         if (Kv != 1.0) {
-            R3 = Kv*R2/(Kv - 1);
-            R4 = Kv*R2;
+            R3 = Kv1*R2/(Kv1 - 1);
+            R4 = Kv1*R2;
         } else {
-            R3 = 999;
+            R3 = 1;
             R4 = 0;
         }
 
@@ -171,7 +176,7 @@ void SallenKey::createHighPassSchematic(QString &s)
     }
 
     if (N1stOrd!=0) {
-        createFirstOrderWires(s,dx);
+        createFirstOrderWires(s,dx,160);
     }
 
     s += "</Wires>\n";
@@ -251,7 +256,7 @@ void SallenKey::createLowPassSchematic(QString &s)
     }
 
     if (N1stOrd!=0) {
-        createFirstOrderWires(s,dx);
+        createFirstOrderWires(s,dx,160);
     }
 
     s += "</Wires>\n";
