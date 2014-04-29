@@ -13,8 +13,8 @@ FilterSintez::FilterSintez(QWidget *parent)
     QTextCodec::setCodecForTr(QTextCodec::codecForName("UTF-8"));
 
     lblInputData = new QLabel(tr("Входные данные"));
-    lblA1 = new QLabel(tr("Затухание фильтра в полосе пропускания, Ap"));
-    lblA2 = new QLabel(tr("Минимальное затухание фильтра в полосе задерживания, As"));
+    lblA1 = new QLabel(tr("Затухание в полосе пропускания, Ap"));
+    lblA2 = new QLabel(tr("Мин. затухание в полосе задерживания, As"));
     lblF1 = new QLabel(tr("Частота среза фильтра, Fc (Гц)"));
     lblF2 = new QLabel(tr("Начало полосы задерживания, Fs (Гц)"));
     lblRpl1 = new QLabel(tr("Амплитуда пульсаций в полосе пропускания Rp(дБ)"));
@@ -106,6 +106,7 @@ FilterSintez::FilterSintez(QWidget *parent)
 
     center->addWidget(lblResult);
     center->addWidget(txtResult);
+    txtResult->setMinimumWidth(400);
 
     left->addWidget(lblSch);
     left->addWidget(btnLowPass);
@@ -147,7 +148,6 @@ void FilterSintez::slotCalcFilter()
         default: break;
     }*/
 
-    //calcButterworth();
 }
 
 void FilterSintez::slotCalcSchematic()
