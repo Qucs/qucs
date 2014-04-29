@@ -30,7 +30,6 @@ private:
     QLineEdit *edtStopbRpl;
 
     QComboBox *cbxFilterFunc;
-    QPushButton *btnCalcFiltFunc;
     QPushButton *btnCalcSchematic;
 
     QLabel *lblResult;
@@ -56,11 +55,6 @@ private:
 
     QWidget *zenter;
 
-    int calcChebyshev();
-    int calcButterworth();
-    int calcInvChebyshev();
-    int calcElliptic();
-
     void calcDblQuadLPF();
     void calcDblQuadHPF();
     void calcMultiloopLPF();
@@ -80,7 +74,6 @@ private:
 
 private slots:
 
-    void slotCalcFilter();
     void slotUpdateSchematic();
     void slotCalcSchematic();
 

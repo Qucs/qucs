@@ -46,8 +46,6 @@ FilterSintez::FilterSintez(QWidget *parent)
         <<tr("Инверсный фильтр Чебышева")
         <<tr("Эллиптический фильтр");
     cbxFilterFunc->addItems(lst2);
-    btnCalcFiltFunc = new QPushButton(tr("Рассчитать функцию фильтра"));
-    connect(btnCalcFiltFunc,SIGNAL(clicked()),this,SLOT(slotCalcFilter()));
     btnCalcSchematic = new QPushButton(tr("Рассчитать элементы схемы фильтра"));
     connect(btnCalcSchematic,SIGNAL(clicked()),SLOT(slotCalcSchematic()));
 
@@ -68,7 +66,7 @@ FilterSintez::FilterSintez(QWidget *parent)
     QStringList lst;
     lst<<tr("Биквадратный")
       <<tr("С многопетлевой ОС")
-      <<tr("Саллена-Кея")
+      <<tr("Саллена-Ки")
       <<tr("Пассивный");
     cbxFilterType->addItems(lst);
     connect(cbxFilterType,SIGNAL(currentIndexChanged(int)),this,SLOT(slotUpdateSchematic()));
@@ -96,8 +94,6 @@ FilterSintez::FilterSintez(QWidget *parent)
     left->addWidget(edtF2);
     left->addWidget(lblRpl1);
     left->addWidget(edtPassbRpl);
-    //left->addWidget(lblRpl2);
-    //left->addWidget(edtStopbRpl);
     left->addWidget(lblKv);
     left->addWidget(edtKv);
     left->addWidget(lblTyp);
@@ -112,7 +108,6 @@ FilterSintez::FilterSintez(QWidget *parent)
     left->addWidget(btnLowPass);
     left->addWidget(btnHighPass);
     left->addWidget(cbxFilterType);
-    left->addWidget(btnCalcFiltFunc);
     left->addWidget(btnCalcSchematic);
 
     right->addWidget(imgAFR);
@@ -132,23 +127,6 @@ FilterSintez::~FilterSintez()
     
 }
 
-
-void FilterSintez::slotCalcFilter()
-{
-
-   /* switch (cbxFilterFunc->currentIndex()) {
-        case 0 : Nfil = calcButterworth();
-                 break;
-        case 1 : Nfil = calcChebyshev();
-                 break;
-        case 2 : Nfil = calcInvChebyshev();
-                 break;
-        case 3 : Nfil = calcElliptic();
-                 break;
-        default: break;
-    }*/
-
-}
 
 void FilterSintez::slotCalcSchematic()
 {
@@ -238,99 +216,6 @@ void FilterSintez::slotUpdateSchematic()
 }
 
 
-int FilterSintez::calcInvChebyshev()
-{
-    float A1 = edtA1->text().toFloat();
-    float A2 = edtA2->text().toFloat();
-    float F1 = edtF1->text().toFloat();
-    float F2 = edtF2->text().toFloat();
-    Fc = F1;
-
-    float W5=F2/F1;
-    float K4=pow(10,(0.1*A1));
-    float C5=pow((K4-1),0.5);
-
-    float J5 = log(C5+pow((C5*C5-1),0.5))/log(W5+pow((W5*W5-1),0.5));
-    int N5 = round(J5+1);
-
-    QStringList lst;
-
-    lst<<tr(" 1. Порядок  инверсного фильтра Чебышева")<<QString::number(N5);
-
-    float E0=pow((K4-1),0.5);
-    lst<<tr("  2. Неравномерность пропускания")<<QString::number(E0);
-
-    float E8=1/E0;
-    float X=E8+pow((E8*E8+1),0.5);
-    float V4=(1/(J5+1))*log(X);
-    float X1=log(E8+pow((E8*E8+1),0.5));
-    float V5=(1/(J5+1))*X1;
-    float G1=0.5*(exp(V5)-exp(-V5));
-    float G2=0.5*(exp(V4)+exp(-V4));
-
-    float R0[50],S4[50],O4[50];
-
-    lst<<tr(" 3. Полюса")<<"Sk=SIN+j*COS";
-
-    for (int R=1;R<N5;R++) {
-      R0[R]=M_PI*(2*R-1)/(2*N5);
-      S4[R]=-1*G1*sin(R0[R]);
-      O4[R]=G2*cos(R0[R]);
-      lst<<QString::number(S4[R]) + " + j*" + QString::number(O4[R]);
-    }
-
-    txtResult->setText(lst.join("\n"));
-
-    return N5;
-}
-
-int FilterSintez::calcElliptic()
-{
-    float A1 = edtA1->text().toFloat();
-    float A2 = edtA2->text().toFloat();
-    float F1 = edtF1->text().toFloat();
-    float F2 = edtF2->text().toFloat();
-    Fc = F1;
-
-    float W5=F2/F1;
-    float K9=F1/F2;
-    float K4=pow(10,(0.1*A1));
-    float K1=pow((1-K9*K9),0.5);
-
-    float J0=A2+12.16-20*log10(pow((K4-1),0.5));
-    float J9=6.08+20*log10((1+pow(K1,0.5))/(1-pow(K1,0.5)));
-    float J7=J0/J9;
-    int N7=round(J7+1);
-
-    QStringList lst;
-    lst<<tr(" 1. Порядок  эллиптического фильтра")<<QString::number(N7);
-    float E0=pow((K4-1),0.5);
-    lst<<tr(" 2. Неравномерность пропускания")<<QString::number(E0);
-
-    float E8=1/E0;
-    float X=E8+pow((E8*E8+1),0.5);
-    float V4=(1/(J7+1))*log(X);
-    float X1=log(E8+pow((E8*E8+1),0.5));
-    float V5=(1/(J7+1))*X1;
-    float G1=0.5*(exp(V5)-exp(-V5));
-    float G2=0.5*(exp(V4)+exp(-V4));
-    float R0[50],S4[50],O4[50];
-
-    lst<<tr(" 3. Полюса")<<"Sk=SIN+j*COS";
-
-    for (int R=1;R<N7;R++)
-            {
-            R0[R]=M_PI*(2*R-1)/(2*N7);
-            S4[R]=-1*G1*sin(R0[R]);
-            O4[R]=G2*cos(R0[R]);
-            lst<<QString::number(S4[R]) + " + j*" + QString::number(O4[R]);
-    }
-
-    txtResult->setText(lst.join("\n"));
-
-    return N7;
-}
-
 void FilterSintez::calcDblQuadHPF()
 {
 
@@ -340,18 +225,6 @@ void FilterSintez::calcDblQuadLPF()
 {
 
 }
-
-void FilterSintez::calcMultiloopHPF()
-{
-
-}
-
-void FilterSintez::calcMultiloopLPF()
-{
-
-}
-
-
 
 void FilterSintez::calcPassive()
 {
