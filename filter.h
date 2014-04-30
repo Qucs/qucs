@@ -38,7 +38,7 @@ protected:
 
     Filter::FType ftype;
     Filter::FilterFunc ffunc;
-    int Nfil;
+    int order;
     float Fc,Kv,Fs,Ap,As,Rp;
     int Nr,Nc,Nopamp; // total number of R,C, opamp
 
