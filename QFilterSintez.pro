@@ -16,9 +16,12 @@ SOURCES += main.cpp\
         filtersintez.cpp \
     filter.cpp \
     sallenkey.cpp \
-    mfbfilter.cpp
+    mfbfilter.cpp \
+    qf_poly.cpp
 
 HEADERS  += filtersintez.h \
     filter.h \
     sallenkey.h \
-    mfbfilter.h
+    mfbfilter.h \
+    qf_poly.h \
+    qf_matrix.h

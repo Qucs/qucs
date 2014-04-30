@@ -27,8 +27,8 @@ void MFBfilter::createLowPassSchematic(QString &s)
     //int const N_C=2; // number of capacitors in 2-order Sallen-Key stage
     RC_elements stage;
     int dx = 0;
-    int N2ord = Nfil/2; // number of 2-nd order stages
-    int N1stOrd = Nfil%2; // number of 1-st order stages
+    int N2ord = order/2; // number of 2-nd order stages
+    int N1stOrd = order%2; // number of 1-st order stages
 
     s += "<Qucs Schematic 0.0.17>\n";
     s += "<Components>\n";
@@ -81,7 +81,7 @@ void MFBfilter::createLowPassSchematic(QString &s)
         s += QString("<%1 210 %2 250 \"\" 0 0 0 \"\">\n").arg(320+dx).arg(320+dx);
         s += QString("<%1 130 %2 130 \"\" 0 0 0 \"\">\n").arg(320+dx).arg(470+dx);
         s += QString("<%1 270 %2 270 \"\" 0 0 0 \"\">\n").arg(430+dx).arg(470+dx);
-        if ((2*i)==Nfil) {
+        if ((2*i)==order) {
             s += QString("<%1 130 %2 270 \"out\" %3 170 70 \"\">\n").arg(470+dx).arg(470+dx).arg(500+dx);
         } else {
             s += QString("<%1 130 %2 270 \"\" 0 0 0 \"\">\n").arg(470+dx).arg(470+dx);
@@ -100,8 +100,8 @@ void MFBfilter::createHighPassSchematic(QString &s)
 {
     RC_elements stage;
     int dx = 0;
-    int N2ord = Nfil/2; // number of 2-nd order stages
-    int N1stOrd = Nfil%2; // number of 1-st order stages
+    int N2ord = order/2; // number of 2-nd order stages
+    int N1stOrd = order%2; // number of 1-st order stages
 
     s += "<Qucs Schematic 0.0.17>\n";
     s += "<Components>\n";
@@ -154,7 +154,7 @@ void MFBfilter::createHighPassSchematic(QString &s)
         s += QString("<%1 210 %2 250 \"\" 0 0 0 \"\">\n").arg(320+dx).arg(320+dx);
         s += QString("<%1 130 %2 130 \"\" 0 0 0 \"\">\n").arg(320+dx).arg(470+dx);
         s += QString("<%1 270 %2 270 \"\" 0 0 0 \"\">\n").arg(430+dx).arg(470+dx);
-        if ((2*i)==Nfil) {
+        if ((2*i)==order) {
             s += QString("<%1 130 %2 270 \"out\" %3 170 70 \"\">\n").arg(470+dx).arg(470+dx).arg(500+dx);
         } else {
             s += QString("<%1 130 %2 270 \"\" 0 0 0 \"\">\n").arg(470+dx).arg(470+dx);
@@ -174,7 +174,7 @@ void MFBfilter::calcHighPass()
     float R1,R2,C1,C2;
     float Wc = 2*M_PI*Fc;
 
-    for (int k=1; k <= Nfil/2; k++) {
+    for (int k=1; k <= order/2; k++) {
         float re = Poles.at(k-1).real();
         float im = Poles.at(k-1).imag();
         float B = -2.0*re;
@@ -207,7 +207,7 @@ void MFBfilter::calcLowPass()
     float R1,R2,R3,C1,C2;
     float Wc = 2*M_PI*Fc;
 
-    for (int k=1; k <= Nfil/2; k++) {
+    for (int k=1; k <= order/2; k++) {
         float re = Poles.at(k-1).real();
         float im = Poles.at(k-1).imag();
         float B = -2.0*re;

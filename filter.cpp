@@ -67,9 +67,9 @@ void Filter::calcFilter()
         break;
     }
 
-    Nr = Nr1*(Nfil/2);
-    Nc = Nc1*(Nfil/2);
-    Nopamp = Nop1*Nfil/2;
+    Nr = Nr1*(order/2);
+    Nc = Nc1*(order/2);
+    Nopamp = Nop1*order/2;
 }
 
 
@@ -85,11 +85,11 @@ void Filter::calcLowPass()
 
 void Filter::calcFirstOrder()
 {
-    if (Nfil%2 != 0) {
+    if (order%2 != 0) {
 
         float R2,R3;
 
-        int k = Nfil/2 + 1;
+        int k = order/2 + 1;
         float Wc = 2*M_PI*Fc;
         float re = Poles.at(k-1).real();
         //float im = Poles.at(k-1).imag();
@@ -236,7 +236,7 @@ void Filter::calcChebyshev()
             Poles.append(pol);
     }
 
-    Nfil = Poles.count();
+    order = Poles.count();
 }
 
 void Filter::calcButterworth()
@@ -255,5 +255,5 @@ void Filter::calcButterworth()
         Poles.append(pol);
     }
 
-    Nfil = Poles.count();
+    order = Poles.count();
 }
