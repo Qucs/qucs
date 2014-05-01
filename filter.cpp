@@ -9,7 +9,7 @@ Filter::Filter(Filter::FilterFunc ffunc_, Filter::FType type_, FilterParam par)
     Rp = par.Rp;
     As = par.As;
     Ap = par.Ap;
-    Kv = par.Kv; // gain of 1 stage
+    Kv = par.Kv;
 }
 
 Filter::~Filter()
@@ -44,7 +44,7 @@ void Filter::createLowPassSchematic(QString &s)
 
 }
 
-void Filter::calcFilter()
+bool Filter::calcFilter()
 {
     Stages.clear();
     Poles.clear();
@@ -55,7 +55,8 @@ void Filter::calcFilter()
         break;
     case Filter::Butterworth : calcButterworth();
         break;
-    default : break;
+    default : return false;
+        break;
     }
 
     switch (ftype) {
@@ -63,13 +64,14 @@ void Filter::calcFilter()
         break;
     case Filter::HighPass : calcHighPass();
         break;
-    default:
+    default: return false;
         break;
     }
 
     Nr = Nr1*(order/2);
     Nc = Nc1*(order/2);
     Nopamp = Nop1*order/2;
+    return true;
 }
 
 

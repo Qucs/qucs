@@ -28,8 +28,8 @@ class Filter
 {
 
 public:
-    enum FType {HighPass, LowPass, BandPass};
-    enum FilterFunc {Butterworth, Chebyshev, Cauer, Bessel, InvChebyshev};
+    enum FType {HighPass, LowPass, BandPass, NoFilter};
+    enum FilterFunc {Butterworth, Chebyshev, Cauer, Bessel, InvChebyshev, NoFunc};
 
 protected:
     QVector< std::complex<float> > Poles;
@@ -71,7 +71,7 @@ public:
     virtual void createSchematic(QString &s);
 
 
-    virtual void calcFilter();
+    virtual bool calcFilter();
 
 };
 
