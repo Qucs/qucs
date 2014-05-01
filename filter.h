@@ -31,6 +31,10 @@ public:
     enum FType {HighPass, LowPass, BandPass, NoFilter};
     enum FilterFunc {Butterworth, Chebyshev, Cauer, Bessel, InvChebyshev, NoFunc};
 
+private:
+    void besselCoefficients();
+    void cauerOrderEstim();
+
 protected:
     QVector< std::complex<float> > Poles;
     QVector< std::complex<float> > Zeros;
@@ -47,6 +51,7 @@ protected:
     void calcButterworth();
     void calcChebyshev();
     void calcCauer();
+    void calcBessel();
 
     void createFirstOrderComponentsHPF(QString &s,RC_elements stage, int dx);
     void createFirstOrderComponentsLPF(QString &s,RC_elements stage, int dx);
