@@ -141,7 +141,7 @@ void FilterSintez::slotCalcSchematic()
     par.Kv = pow(10,G/20.0);
 
     QStringList lst;
-    Filter::FilterFunc ffunc;
+    Filter::FilterFunc ffunc = Filter::NoFunc;
 
     switch (cbxFilterFunc->currentIndex()) {
             case 0 : ffunc = Filter::Butterworth;
@@ -155,7 +155,7 @@ void FilterSintez::slotCalcSchematic()
             default: break;
         }
 
-    Filter::FType ftyp;
+    Filter::FType ftyp = Filter::NoFilter;
     if (btnHighPass->isChecked()) {
         ftyp = Filter::HighPass;
     } else {
@@ -171,21 +171,23 @@ void FilterSintez::slotCalcSchematic()
     case 1 : {
                 QString s;
                 MFBfilter mfb(ffunc,ftyp,par);
-                mfb.calcFilter();
-                mfb.createPolesZerosList(lst);
-                mfb.createPartList(lst);
-                mfb.createSchematic(s);
-                txtResult->setText(lst.join("\n"));
+                if (mfb.calcFilter()) {
+                    mfb.createPolesZerosList(lst);
+                    mfb.createPartList(lst);
+                    mfb.createSchematic(s);
+                    txtResult->setText(lst.join("\n"));
+                }
              }
              break;
     case 2 : {
                QString s;
                SallenKey sk(ffunc,ftyp,par);
-               sk.calcFilter();
-               sk.createPolesZerosList(lst);
-               sk.createPartList(lst);
-               sk.createSchematic(s);
-               txtResult->setText(lst.join("\n"));
+               if (sk.calcFilter()) {
+                   sk.createPolesZerosList(lst);
+                   sk.createPartList(lst);
+                   sk.createSchematic(s);
+                   txtResult->setText(lst.join("\n"));
+               }
              }
              break;
     case 3 : calcPassive();
