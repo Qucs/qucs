@@ -36,12 +36,12 @@ void Filter::createSchematic(QString &s)
 
 void Filter::createHighPassSchematic(QString &s)
 {
-
+    s = "<Qucs Schematic 0.0.17>\n";
 }
 
 void Filter::createLowPassSchematic(QString &s)
 {
-
+    s = "<Qucs Schematic 0.0.17>\n";
 }
 
 bool Filter::calcFilter()
@@ -54,6 +54,8 @@ bool Filter::calcFilter()
     case Filter::Chebyshev : calcChebyshev();
         break;
     case Filter::Butterworth : calcButterworth();
+        break;
+    case Filter::Cauer : calcCauer();
         break;
     default : return false;
         break;
@@ -258,4 +260,96 @@ void Filter::calcButterworth()
     }
 
     order = Poles.count();
+}
+
+void Filter::cauerOrderEstim() // from Digital Filter Design Handbook page 102
+{
+    float k = Fc/Fs;
+    float kk = sqrt(sqrt(1.0-k*k));
+    float u = 0.5*(1.0-kk)/(1.0+kk);
+    float q = 150.0*pow(u,13) + 2.0*pow(u,9) + 2.0*pow(u,5) + u;
+    float dd = (pow(10.0,As/10.0)-1.0)/(pow(10.0,Rp/10.0)-1.0);
+    order = ceil(log10(16.0*dd)/log10(1.0/q));
+}
+
+void Filter::calcCauer() // from Digital Filter Designer's handbook p.103
+{
+    float P0;
+    //float H0;
+    float mu;
+    float aa[50],bb[50],cc[50];
+
+    cauerOrderEstim();
+    float k = Fc/Fs;
+    float kk = sqrt(sqrt(1.0-k*k));
+    float u = 0.5*(1.0-kk)/(1.0+kk);
+    float q = 150.0*pow(u,13) + 2.0*pow(u,9) + 2.0*pow(u,5) + u;
+    float numer = pow(10.0,Rp/20.0)+1.0;
+    float vv = log(numer/(pow(10.0,Rp/20.0)-1.0))/(2.0*order);
+    float sum = 0.0;
+    for (int m=0;m<5;m++) {
+        float term = pow(-1.0,m);
+        term = term*pow(q,m*(m+1));
+        term = term*sinh((2*m+1)*vv);
+        sum = sum +term;
+    }
+    numer = 2.0*sum*sqrt(sqrt(q));
+
+    sum=0.0;
+    for (int m=1;m<5;m++) {
+        float term = pow(-1.0,m);
+        term = term*pow(q,m*m);
+        term = term*cosh(2.0*m*vv);
+        sum += term;
+    }
+    float denom = 1.0+2.0*sum;
+    P0 = fabs(numer/denom);
+    float ww = 1.0+k*P0*P0;
+    ww = sqrt(ww*(1.0+P0*P0/k));
+    int r = (order-(order%2))/2;
+    //float numSecs = r;
+
+    for (int i=1;i<=r;i++) {
+        if ((order%2)!=0) {
+            mu = i;
+        } else {
+            mu = i-0.5;
+        }
+        sum = 0.0;
+        for(int m=0;m<5;m++) {
+            float term = pow(-1.0,m)*pow(q,m*(m+1));
+            term = term*sin((2*m+1)*M_PI*mu/order);
+            sum += term;
+        }
+        numer = 2.0*sum*sqrt(sqrt(q));
+
+        sum = 0.0;
+        for(int m=1;m<5;m++) {
+            float term = pow(-1.0,m)*pow(q,m*m);
+            term = term*cos(2.0*m*M_PI*mu/order);
+            sum += term;
+        }
+        denom = 1.0+2.0*sum;
+        float xx = numer/denom;
+        float yy = 1.0 - k*xx*xx;
+        yy = sqrt(yy*(1.0-(xx*xx/k)));
+        aa[i-1] = 1.0/(xx*xx);
+        denom = 1.0 + pow(P0*xx,2);
+        bb[i-1] = 2.0*P0*yy/denom;
+        denom = pow(denom,2);
+        numer = pow(P0*yy,2)+pow(xx*ww,2);
+        cc[i-1] = numer/denom;
+    }
+
+    Zeros.clear();
+    Poles.clear();
+    for (int i=0;i<r;i++) {
+        float im = sqrt(aa[i]);
+        Zeros.append(std::complex<float>(0,im));
+        Zeros.append(std::complex<float>(0,-im));
+        float re = -0.5*bb[i];
+        im = 0.5*sqrt(-1.0*bb[i]*bb[i]+4*cc[i]);
+        Poles.append(std::complex<float>(re,im));
+        Poles.append(std::complex<float>(re,-im));
+    }
 }
