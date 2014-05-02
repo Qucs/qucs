@@ -38,7 +38,7 @@ private:
 protected:
     QVector< std::complex<float> > Poles;
     QVector< std::complex<float> > Zeros;
-    QVector<RC_elements> Stages;
+    QVector<RC_elements> Sections;
 
     Filter::FType ftype;
     Filter::FilterFunc ffunc;

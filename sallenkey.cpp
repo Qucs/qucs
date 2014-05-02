@@ -14,7 +14,7 @@ void SallenKey::calcLowPass()
 {
     float R1,R2,R3,R4,C1,C2;
     float Wc = 2*M_PI*Fc;
-    int Nst = order/2 + order%2;
+    float Nst = order/2 + order%2;
     float Kv1 = pow(Kv,1.0/Nst);
     qDebug()<<Kv1;
 
@@ -49,7 +49,7 @@ void SallenKey::calcLowPass()
         curr_stage.R4 = 1000*R4;
         curr_stage.C1 = C1;
         curr_stage.C2 = C2;
-        Stages.append(curr_stage);
+        Sections.append(curr_stage);
     }
 
     this->calcFirstOrder();
@@ -95,7 +95,7 @@ void SallenKey::calcHighPass()
         curr_stage.R4 = 1000*R4;
         curr_stage.C1 = C1;
         curr_stage.C2 = C1;
-        Stages.append(curr_stage);
+        Sections.append(curr_stage);
     }
     calcFirstOrder();
 }
@@ -117,7 +117,7 @@ void SallenKey::createHighPassSchematic(QString &s)
     s += QString("<Vac V1 1 %1 260 18 -26 0 1 \"1 V\" 1 \"1 kHz\" 0 \"0\" 0 \"0\" 0>\n").arg(20+dx);
     s += QString("<GND * 1 %1 290 0 0 0 0>\n").arg(20+dx);
     for (int i=1; i<=N2ord; i++) {
-        stage = Stages.at(i-1);
+        stage = Sections.at(i-1);
         qDebug()<<stage.N;
         QString suffix1, suffix2;
         float C1 = autoscaleCapacitor(stage.C1,suffix1);
@@ -136,8 +136,8 @@ void SallenKey::createHighPassSchematic(QString &s)
     }
 
     if (N1stOrd!=0) {
-        qDebug()<<Stages.last().N;
-        createFirstOrderComponentsHPF(s,Stages.last(),dx);
+        qDebug()<<Sections.last().N;
+        createFirstOrderComponentsHPF(s,Sections.last(),dx);
     }
 
     s += "</Components>\n";
@@ -199,7 +199,7 @@ void SallenKey::createLowPassSchematic(QString &s)
     s += QString("<Vac V1 1 %1 260 18 -26 0 1 \"1 V\" 1 \"1 kHz\" 0 \"0\" 0 \"0\" 0>\n").arg(20+dx);
     s += QString("<GND * 1 %1 290 0 0 0 0>\n").arg(20+dx);
     for (int i=1; i<=N2ord; i++) {
-        stage = Stages.at(i-1);
+        stage = Sections.at(i-1);
         qDebug()<<stage.N;
         QString suffix1, suffix2;
         float C1 = autoscaleCapacitor(stage.C1,suffix1);
@@ -217,7 +217,7 @@ void SallenKey::createLowPassSchematic(QString &s)
     }
 
     if (N1stOrd!=0) {
-        createFirstOrderComponentsLPF(s,Stages.last(),dx);
+        createFirstOrderComponentsLPF(s,Sections.last(),dx);
     }
 
     s += "</Components>\n";
