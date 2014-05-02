@@ -351,13 +351,20 @@ void Filter::calcCauer() // from Digital Filter Designer's handbook p.103
     for (int i=0;i<r;i++) {
         float im = sqrt(aa[i]);
         Zeros.append(std::complex<float>(0,im));
-        Zeros.append(std::complex<float>(0,-im));
         float re = -0.5*bb[i];
         im = 0.5*sqrt(-1.0*bb[i]*bb[i]+4*cc[i]);
         Poles.append(std::complex<float>(re,im));
-        Poles.append(std::complex<float>(re,-im));
     }
+
     if (order%2!=0) {
         Poles.append(std::complex<float>(-cc[order-1],0.0));
+    }
+
+    for (int i=r-1;i>=0;i--) {
+        float im = sqrt(aa[i]);
+        Zeros.append(std::complex<float>(0,-im));
+        float re = -0.5*bb[i];
+        im = 0.5*sqrt(-1.0*bb[i]*bb[i]+4*cc[i]);
+        Poles.append(std::complex<float>(re,-im));
     }
 }
