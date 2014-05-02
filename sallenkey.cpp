@@ -14,7 +14,7 @@ void SallenKey::calcLowPass()
 {
     float R1,R2,R3,R4,C1,C2;
     float Wc = 2*M_PI*Fc;
-    float Nst = order/2 + order%2;
+    int Nst = order/2 + order%2;
     float Kv1 = pow(Kv,1.0/Nst);
     qDebug()<<Kv1;
 
