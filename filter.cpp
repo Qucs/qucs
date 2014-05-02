@@ -46,7 +46,7 @@ void Filter::createLowPassSchematic(QString &s)
 
 bool Filter::calcFilter()
 {
-    Stages.clear();
+    Sections.clear();
     Poles.clear();
     Zeros.clear();
 
@@ -118,7 +118,7 @@ void Filter::calcFirstOrder()
         curr_stage.R4 = 0;
         curr_stage.C1 = C1;
         curr_stage.C2 = 0;
-        Stages.append(curr_stage);
+        Sections.append(curr_stage);
 
     }
 
@@ -130,7 +130,7 @@ void Filter::createPartList(QStringList &lst)
     lst<<"Stage# C1(uF) C2(uF) R1(kOhm) R2(kOhm) R3(kOhm) R4(kOhm)";
     RC_elements stage;
 
-    foreach (stage,Stages) {
+    foreach (stage,Sections) {
         QString suff1,suff2;
         float C1=autoscaleCapacitor(stage.C1,suff1);
         float C2=autoscaleCapacitor(stage.C2,suff2);
@@ -142,6 +142,13 @@ void Filter::createPartList(QStringList &lst)
 void Filter::createPolesZerosList(QStringList &lst)
 {
     lst<<QString(QObject::tr("Filter order = %1")).arg(order);
+    if (!Zeros.isEmpty()) {
+        lst<<""<<QObject::tr("Zeros list Pk=Re+j*Im");
+        std::complex<float> zero;
+        foreach(zero,Zeros) {
+                lst<<QString::number(zero.real()) + " + j*" + QString::number(zero.imag());
+        }
+    }
     lst<<""<<QObject::tr("Poles list Pk=Re+j*Im");
     std::complex<float> pole;
     foreach(pole,Poles) {

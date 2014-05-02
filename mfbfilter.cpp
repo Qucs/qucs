@@ -38,7 +38,7 @@ void MFBfilter::createLowPassSchematic(QString &s)
     s += QString("<Vac V1 1 %1 330 18 -26 0 1 \"1 V\" 1 \"1 kHz\" 0 \"0\" 0 \"0\" 0>\n").arg(70+dx);
     s += QString("<GND * 1 %1 360 0 0 0 0>\n").arg(70+dx);
     for (int i=1; i<=N2ord; i++) {
-        stage = Stages.at(i-1);
+        stage = Sections.at(i-1);
         qDebug()<<stage.N;
         QString suffix1, suffix2;
         float C1 = autoscaleCapacitor(stage.C1,suffix1);
@@ -55,7 +55,7 @@ void MFBfilter::createLowPassSchematic(QString &s)
     }
 
     if (N1stOrd!=0) {
-        createFirstOrderComponentsLPF(s,Stages.last(),dx+10);
+        createFirstOrderComponentsLPF(s,Sections.last(),dx+10);
     }
 
     s += "</Components>\n";
@@ -111,7 +111,7 @@ void MFBfilter::createHighPassSchematic(QString &s)
     s += QString("<Vac V1 1 %1 330 18 -26 0 1 \"1 V\" 1 \"1 kHz\" 0 \"0\" 0 \"0\" 0>\n").arg(70+dx);
     s += QString("<GND * 1 %1 360 0 0 0 0>\n").arg(70+dx);
     for (int i=1; i<=N2ord; i++) {
-        stage = Stages.at(i-1);
+        stage = Sections.at(i-1);
         qDebug()<<stage.N;
         QString suffix1, suffix2;
         float C1 = autoscaleCapacitor(stage.C1,suffix1);
@@ -128,7 +128,7 @@ void MFBfilter::createHighPassSchematic(QString &s)
     }
 
     if (N1stOrd!=0) {
-        createFirstOrderComponentsHPF(s,Stages.last(),dx+10);
+        createFirstOrderComponentsHPF(s,Sections.last(),dx+10);
     }
 
     s += "</Components>\n";
@@ -195,7 +195,7 @@ void MFBfilter::calcHighPass()
         curr_stage.R4 = 0;
         curr_stage.C1 = C1;
         curr_stage.C2 = C2;
-        Stages.append(curr_stage);
+        Sections.append(curr_stage);
     }
 
     this->calcFirstOrder();
@@ -229,7 +229,7 @@ void MFBfilter::calcLowPass()
         curr_stage.R4 = 0;
         curr_stage.C1 = C1;
         curr_stage.C2 = C2;
-        Stages.append(curr_stage);
+        Sections.append(curr_stage);
     }
 
     this->calcFirstOrder();
