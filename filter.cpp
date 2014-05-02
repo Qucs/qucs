@@ -141,7 +141,7 @@ void Filter::createPartList(QStringList &lst)
 
 void Filter::createPolesZerosList(QStringList &lst)
 {
-    lst<<QString(QObject::tr("Filter order = %1")).arg(std::max(Poles.count(),Zeros.count()));
+    lst<<QString(QObject::tr("Filter order = %1")).arg(order);
     lst<<""<<QObject::tr("Poles list Pk=Re+j*Im");
     std::complex<float> pole;
     foreach(pole,Poles) {
@@ -341,6 +341,11 @@ void Filter::calcCauer() // from Digital Filter Designer's handbook p.103
         cc[i-1] = numer/denom;
     }
 
+    if (order%2!=0) {
+        cc[order-1] = P0; // first order section
+        bb[order-1] = 0;
+    }
+
     Zeros.clear();
     Poles.clear();
     for (int i=0;i<r;i++) {
@@ -351,5 +356,8 @@ void Filter::calcCauer() // from Digital Filter Designer's handbook p.103
         im = 0.5*sqrt(-1.0*bb[i]*bb[i]+4*cc[i]);
         Poles.append(std::complex<float>(re,im));
         Poles.append(std::complex<float>(re,-im));
+    }
+    if (order%2!=0) {
+        Poles.append(std::complex<float>(-cc[order-1],0.0));
     }
 }
