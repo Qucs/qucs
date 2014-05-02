@@ -141,7 +141,7 @@ void FilterSintez::slotCalcSchematic()
     par.Kv = pow(10,G/20.0);
 
     QStringList lst;
-    Filter::FilterFunc ffunc = Filter::NoFunc;
+    Filter::FilterFunc ffunc;
 
     switch (cbxFilterFunc->currentIndex()) {
             case 0 : ffunc = Filter::Butterworth;
@@ -152,7 +152,8 @@ void FilterSintez::slotCalcSchematic()
                      break;
             case 3 : ffunc = Filter::Cauer;
                      break;
-            default: break;
+            default: ffunc = Filter::NoFunc;
+                     break;
         }
 
     Filter::FType ftyp = Filter::NoFilter;
@@ -165,8 +166,7 @@ void FilterSintez::slotCalcSchematic()
 
 
     switch (cbxFilterType->currentIndex()) {
-    case 0 : if (btnHighPass->isChecked()) calcDblQuadHPF();
-             else calcDblQuadLPF();
+    case 0 : errorMessage(tr("Function unsupported!"));
              break;
     case 1 : {
                 QString s;
@@ -190,7 +190,7 @@ void FilterSintez::slotCalcSchematic()
                }
              }
              break;
-    case 3 : calcPassive();
+    case 3 : errorMessage(tr("Function unsupported!"));
              break;
     default: break;
     }
@@ -217,18 +217,11 @@ void FilterSintez::slotUpdateSchematic()
     sch_pic->setPixmap(pix);
 }
 
-
-void FilterSintez::calcDblQuadHPF()
+void FilterSintez::errorMessage(QString str)
 {
-
-}
-
-void FilterSintez::calcDblQuadLPF()
-{
-
-}
-
-void FilterSintez::calcPassive()
-{
-
+    QMessageBox* msg =  new QMessageBox(QMessageBox::Critical,tr("Active filter design"),
+                                        str,
+                                        QMessageBox::Ok);
+    msg->exec();
+    delete msg;
 }

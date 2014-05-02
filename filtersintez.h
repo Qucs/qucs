@@ -55,13 +55,7 @@ private:
 
     QWidget *zenter;
 
-    void calcDblQuadLPF();
-    void calcDblQuadHPF();
-    void calcMultiloopLPF();
-    void calcMultiloopHPF();
-    void calcSallenKeyLPF();
-    void calcSallenKeyHPF();
-    void calcPassive();
+    void errorMessage(QString s);
 
     QVector< std::complex<float> > Poles;
 
