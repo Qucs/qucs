@@ -176,19 +176,24 @@ void FilterSintez::slotCalcSchematic()
     }
 
     switch (cbxFilterType->currentIndex()) {
-    case 0 : errorMessage(tr("Function unsupported!"));
+    case 0 : errorMessage(tr("Function will be implemented in future version"));
              break;
     case 1 : {
                 QString s;
-                MFBfilter mfb(ffunc,ftyp,par);
-                if (mfb.calcFilter()) {
-                    mfb.createPolesZerosList(lst);
-                    mfb.createPartList(lst);
-                    mfb.createSchematic(s);
-                    txtResult->setText(lst.join("\n"));
+                if (!((ffunc==Filter::InvChebyshev)||(ffunc==Filter::Cauer))) {
+                    MFBfilter mfb(ffunc,ftyp,par);
+                    if (mfb.calcFilter()) {
+                        mfb.createPolesZerosList(lst);
+                        mfb.createPartList(lst);
+                        mfb.createSchematic(s);
+                        txtResult->setText(lst.join("\n"));
+                    } else {
+                        errorMessage(tr("Unable to implement filter with such parameters and topology \n"
+                                        "Change parapeters and/or topology and try again!"));
+                    }
                 } else {
-                    errorMessage(tr("Unable to implement filter with such parameters and topology \n"
-                                    "Change parapeters and/or topology and try again!"));
+                    errorMessage(tr("Unable to use MFB filter for Cauer or Inverse Chebyshev \n"
+                                 "frequency response. Try to use another topology."));
                 }
              }
              break;
@@ -206,7 +211,7 @@ void FilterSintez::slotCalcSchematic()
                }
              }
              break;
-    case 3 : errorMessage(tr("Function unsupported!"));
+    case 3 : errorMessage(tr("Function will be implemented in future version"));
              break;
     default: break;
     }
