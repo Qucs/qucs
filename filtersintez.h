@@ -40,6 +40,8 @@ private:
 
     QRadioButton *btnLowPass;
     QRadioButton *btnHighPass;
+    QRadioButton *btnBandPass;
+    QRadioButton *btnBandStop;
 
     QComboBox *cbxFilterType;
 

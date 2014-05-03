@@ -28,7 +28,7 @@ class Filter
 {
 
 public:
-    enum FType {HighPass, LowPass, BandPass, NoFilter};
+    enum FType {HighPass, LowPass, BandPass, BandStop, NoFilter};
     enum FilterFunc {Butterworth, Chebyshev, Cauer, Bessel, InvChebyshev, NoFunc};
 
 private:
