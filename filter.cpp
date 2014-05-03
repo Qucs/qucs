@@ -70,10 +70,12 @@ bool Filter::calcFilter()
         break;
     }
 
+    bool res = checkRCL();
+
     Nr = Nr1*(order/2);
     Nc = Nc1*(order/2);
     Nopamp = Nop1*order/2;
-    return true;
+    return res;
 }
 
 
@@ -225,7 +227,21 @@ float Filter::autoscaleCapacitor(float C, QString &suffix)
     return C1;
 }
 
-
+bool Filter::checkRCL()
+{
+    RC_elements sec;
+    foreach (sec,Sections) {
+        if (std::isnan(sec.R1)||
+                std::isnan(sec.R2)||
+                std::isnan(sec.R3)||
+                std::isnan(sec.R4)||
+                std::isnan(sec.C1)||
+                std::isnan(sec.C2)) {
+            return false;
+        }
+    }
+    return true;
+}
 
 void Filter::calcChebyshev()
 {

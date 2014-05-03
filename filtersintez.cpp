@@ -176,6 +176,9 @@ void FilterSintez::slotCalcSchematic()
                     mfb.createPartList(lst);
                     mfb.createSchematic(s);
                     txtResult->setText(lst.join("\n"));
+                } else {
+                    errorMessage(tr("Unable to implement filter with such parameters and topology \n"
+                                    "Chnange parapeters and/or topology and try again!"));
                 }
              }
              break;
@@ -187,6 +190,9 @@ void FilterSintez::slotCalcSchematic()
                    sk.createPartList(lst);
                    sk.createSchematic(s);
                    txtResult->setText(lst.join("\n"));
+               } else {
+                   errorMessage(tr("Unable to implement filter with such parameters and topology \n"
+                                   "Chnange parapeters and/or topology and try again!"));
                }
              }
              break;
