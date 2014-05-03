@@ -56,9 +56,15 @@ FilterSintez::FilterSintez(QWidget *parent)
     lblSch = new QLabel(tr("Схемная реализация фильтра"));
     btnHighPass = new QRadioButton(tr("ФВЧ"));
     btnLowPass = new QRadioButton(tr("ФНЧ"));
+    btnBandPass = new QRadioButton(tr("Band-pass"));
+    btnBandStop = new QRadioButton(tr("Band-stop"));
     QButtonGroup *grp1 = new QButtonGroup;
     grp1->addButton(btnHighPass);
     grp1->addButton(btnLowPass);
+    grp1->addButton(btnBandPass);
+    grp1->addButton(btnBandStop);
+    btnBandPass->setDisabled(true);
+    btnBandStop->setDisabled(true);
     btnLowPass->setChecked(true);
     connect(grp1,SIGNAL(buttonClicked(int)),this,SLOT(slotUpdateSchematic()));
 
@@ -107,6 +113,8 @@ FilterSintez::FilterSintez(QWidget *parent)
     left->addWidget(lblSch);
     left->addWidget(btnLowPass);
     left->addWidget(btnHighPass);
+    left->addWidget(btnBandPass);
+    left->addWidget(btnBandStop);
     left->addWidget(cbxFilterType);
     left->addWidget(btnCalcSchematic);
 
@@ -159,11 +167,13 @@ void FilterSintez::slotCalcSchematic()
     Filter::FType ftyp = Filter::NoFilter;
     if (btnHighPass->isChecked()) {
         ftyp = Filter::HighPass;
-    } else {
+    } else if (btnLowPass->isChecked()) {
         ftyp = Filter::LowPass;
+    } else if (btnBandPass->isChecked()) {
+        ftyp = Filter::BandPass;
+    } else if (btnBandStop->isChecked()) {
+        ftyp = Filter::BandStop;
     }
-
-
 
     switch (cbxFilterType->currentIndex()) {
     case 0 : errorMessage(tr("Function unsupported!"));
@@ -178,7 +188,7 @@ void FilterSintez::slotCalcSchematic()
                     txtResult->setText(lst.join("\n"));
                 } else {
                     errorMessage(tr("Unable to implement filter with such parameters and topology \n"
-                                    "Chnange parapeters and/or topology and try again!"));
+                                    "Change parapeters and/or topology and try again!"));
                 }
              }
              break;
@@ -192,7 +202,7 @@ void FilterSintez::slotCalcSchematic()
                    txtResult->setText(lst.join("\n"));
                } else {
                    errorMessage(tr("Unable to implement filter with such parameters and topology \n"
-                                   "Chnange parapeters and/or topology and try again!"));
+                                   "Change parapeters and/or topology and try again!"));
                }
              }
              break;
