@@ -57,6 +57,8 @@ bool Filter::calcFilter()
         break;
     case Filter::Cauer : calcCauer();
         break;
+    case Filter::InvChebyshev : calcInvChebyshev();
+        break;
     default : return false;
         break;
     }
@@ -283,6 +285,35 @@ void Filter::calcButterworth()
     }
 
     order = Poles.count();
+}
+
+void Filter::calcInvChebyshev() // Chebyshev Type-II filter
+{
+    Poles.clear();
+    Zeros.clear();
+
+
+
+    order = ceil(acosh(sqrt(pow(10.0,0.1*As)-1.0))/acosh(Fs/Fc));
+
+    float eps = 1.0/(sqrt(pow(10.0,0.1*As)-1.0));
+    float a = sinh((asinh(1.0/eps))/(order));
+    float b = cosh((asinh(1.0/eps))/(order));
+
+    for (int k=1;k<=order;k++) {
+        float im = 1.0/(cos(((2*k-1)*M_PI)/(2*order)));
+        Zeros.append(std::complex<float>(0,im));
+    }
+
+    for (int k=1;k<=order;k++) {
+        float re = -1*a*sin(M_PI*(2*k-1)/(2*order));
+        float im = b*cos(M_PI*(2*k-1)/(2*order));
+        std::complex<float> invpol(re,im); // inverse pole
+        std::complex<float> pol;
+        pol = std::complex<float>(1.0,0) / invpol; // pole
+        Poles.append(pol);
+    }
+
 }
 
 void Filter::cauerOrderEstim() // from Digital Filter Design Handbook page 102

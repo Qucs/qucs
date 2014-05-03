@@ -50,6 +50,7 @@ protected:
 
     void calcButterworth();
     void calcChebyshev();
+    void calcInvChebyshev();
     void calcCauer();
     void calcBessel();
     bool checkRCL(); // Checks RCL values. Are one of them NaN or not?
