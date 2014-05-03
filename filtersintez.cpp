@@ -46,6 +46,8 @@ FilterSintez::FilterSintez(QWidget *parent)
         <<tr("Инверсный фильтр Чебышева")
         <<tr("Эллиптический фильтр");
     cbxFilterFunc->addItems(lst2);
+    connect(cbxFilterFunc,SIGNAL(currentIndexChanged(int)),this,SLOT(slotSwitchParameters()));
+
     btnCalcSchematic = new QPushButton(tr("Рассчитать элементы схемы фильтра"));
     connect(btnCalcSchematic,SIGNAL(clicked()),SLOT(slotCalcSchematic()));
 
@@ -76,6 +78,7 @@ FilterSintez::FilterSintez(QWidget *parent)
       <<tr("Пассивный");
     cbxFilterType->addItems(lst);
     connect(cbxFilterType,SIGNAL(currentIndexChanged(int)),this,SLOT(slotUpdateSchematic()));
+    this->slotSwitchParameters();
 
     imgAFR = new QSvgWidget("AFR.svg");
     imgAFR->show();
@@ -236,6 +239,17 @@ void FilterSintez::slotUpdateSchematic()
     QPixmap pix(s);
     sch_pic->resize(pix.size());
     sch_pic->setPixmap(pix);
+}
+
+void FilterSintez::slotSwitchParameters()
+{
+    if (cbxFilterFunc->currentIndex()==0) {
+        edtA1->setEnabled(true);
+        edtPassbRpl->setEnabled(false);
+    } else {
+        edtA1->setEnabled(false);
+        edtPassbRpl->setEnabled(true);
+    }
 }
 
 void FilterSintez::errorMessage(QString str)
