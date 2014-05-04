@@ -113,6 +113,7 @@ FilterSintez::FilterSintez(QWidget *parent)
     center->addWidget(lblResult);
     center->addWidget(txtResult);
     txtResult->setMinimumWidth(400);
+    txtResult->setReadOnly(true);
 
     left->addWidget(lblSch);
     left->addWidget(btnLowPass);
@@ -260,7 +261,7 @@ void FilterSintez::slotSwitchParameters()
         edtPassbRpl->setEnabled(true);
     }
 
-    if (cbxFilterFunc->currentIndex()==3) {
+    if ((cbxFilterFunc->currentIndex()==3)||(cbxFilterFunc->currentIndex()==2)) {
         cbxFilterType->setCurrentIndex(0);
         cbxFilterType->setDisabled(true);
     } else {
