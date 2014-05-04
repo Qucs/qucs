@@ -193,6 +193,7 @@ void MFBfilter::calcHighPass()
         curr_stage.R2  = 1000*R2;
         curr_stage.R3 = 0;
         curr_stage.R4 = 0;
+        curr_stage.R5 = 0;
         curr_stage.C1 = C1;
         curr_stage.C2 = C2;
         Sections.append(curr_stage);
@@ -227,6 +228,7 @@ void MFBfilter::calcLowPass()
         curr_stage.R2  = 1000*R2;
         curr_stage.R3 = 1000*R3;
         curr_stage.R4 = 0;
+        curr_stage.R5 = 0;
         curr_stage.C1 = C1;
         curr_stage.C2 = C2;
         Sections.append(curr_stage);

@@ -131,15 +131,26 @@ void Filter::calcFirstOrder()
 void Filter::createPartList(QStringList &lst)
 {
     lst<<QObject::tr("Part list");
-    lst<<"Stage# C1(uF) C2(uF) R1(kOhm) R2(kOhm) R3(kOhm) R4(kOhm)";
+    if ((ffunc==Filter::InvChebyshev)||(ffunc==Filter::Cauer)) {
+        lst<<"Stage# C1(uF) R1(kOhm) R2(kOhm) R3(kOhm) R4(kOhm)  R5(kOhm)";
+    } else {
+        lst<<"Stage# C1(uF) C2(uF) R1(kOhm) R2(kOhm) R3(kOhm) R4(kOhm)";
+    }
+
     RC_elements stage;
 
     foreach (stage,Sections) {
         QString suff1,suff2;
         float C1=autoscaleCapacitor(stage.C1,suff1);
         float C2=autoscaleCapacitor(stage.C2,suff2);
-        lst<<QString("%1%2%3%4%5%6%7%8%9").arg(stage.N,6).arg(C1,10,'f',3).arg(suff1).arg(C2,10,'f',3).arg(suff2)
-             .arg(stage.R1,10,'f',3).arg(stage.R2,10,'f',3).arg(stage.R3,10,'f',3).arg(stage.R4,10,'f',3);
+        if ((ffunc==Filter::InvChebyshev)||(ffunc==Filter::Cauer)) {
+            lst<<QString("%1%2%3%4%5%6%7%8").arg(stage.N,6).arg(C1,10,'f',3).arg(suff1)
+                 .arg(stage.R1,10,'f',3).arg(stage.R2,10,'f',3).arg(stage.R3,10,'f',3).arg(stage.R4,10,'f',3).arg(stage.R5,10,'f',3);
+        } else {
+            lst<<QString("%1%2%3%4%5%6%7%8%9").arg(stage.N,6).arg(C1,10,'f',3).arg(suff1).arg(C2,10,'f',3).arg(suff2)
+                 .arg(stage.R1,10,'f',3).arg(stage.R2,10,'f',3).arg(stage.R3,10,'f',3).arg(stage.R4,10,'f',3);
+        }
+
     }
 }
 
