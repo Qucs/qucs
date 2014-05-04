@@ -1,6 +1,7 @@
 #include "filtersintez.h"
 #include "sallenkey.h"
 #include "mfbfilter.h"
+#include "schcauer.h"
 #include <QTextCodec>
 
 
@@ -72,7 +73,7 @@ FilterSintez::FilterSintez(QWidget *parent)
 
     cbxFilterType = new QComboBox;
     QStringList lst;
-    lst<<tr("Биквадратный")
+    lst<<tr("Cauer section")
       <<tr("С многопетлевой ОС")
       <<tr("Саллена-Ки")
       <<tr("Пассивный");
@@ -179,7 +180,15 @@ void FilterSintez::slotCalcSchematic()
     }
 
     switch (cbxFilterType->currentIndex()) {
-    case 0 : errorMessage(tr("Function will be implemented in future version"));
+    case 0 : {
+                QString s;
+                SchCauer cauer(ffunc,ftyp,par);
+                cauer.calcFilter();
+                cauer.createPolesZerosList(lst);
+                cauer.createPartList(lst);
+                txtResult->setText(lst.join("\n"));
+             }
+
              break;
     case 1 : {
                 QString s;
