@@ -81,7 +81,7 @@ FilterSintez::FilterSintez(QWidget *parent)
     connect(cbxFilterType,SIGNAL(currentIndexChanged(int)),this,SLOT(slotUpdateSchematic()));
     this->slotSwitchParameters();
 
-    imgAFR = new QSvgWidget("AFR.svg");
+    imgAFR = new QSvgWidget(":/images/AFR.svg");
     imgAFR->show();
     sch_pic = new QLabel;
     QPixmap pix("Images/dblquad.png");
