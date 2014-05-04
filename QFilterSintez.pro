@@ -17,11 +17,13 @@ SOURCES += main.cpp\
     filter.cpp \
     sallenkey.cpp \
     mfbfilter.cpp \
-    qf_poly.cpp
+    qf_poly.cpp \
+    schcauer.cpp
 
 HEADERS  += filtersintez.h \
     filter.h \
     sallenkey.h \
     mfbfilter.h \
     qf_poly.h \
-    qf_matrix.h
+    qf_matrix.h \
+    schcauer.h
