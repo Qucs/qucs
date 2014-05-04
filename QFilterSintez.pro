@@ -27,3 +27,6 @@ HEADERS  += filtersintez.h \
     qf_poly.h \
     qf_matrix.h \
     schcauer.h
+
+RESOURCES += \
+    qfiltersintez.qrc
