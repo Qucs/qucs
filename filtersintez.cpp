@@ -259,6 +259,13 @@ void FilterSintez::slotSwitchParameters()
         edtA1->setEnabled(false);
         edtPassbRpl->setEnabled(true);
     }
+
+    if (cbxFilterFunc->currentIndex()==3) {
+        cbxFilterType->setCurrentIndex(0);
+        cbxFilterType->setDisabled(true);
+    } else {
+        cbxFilterType->setDisabled(false);
+    }
 }
 
 void FilterSintez::errorMessage(QString str)
