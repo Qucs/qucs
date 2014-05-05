@@ -82,9 +82,14 @@ FilterSintez::FilterSintez(QWidget *parent)
     this->slotSwitchParameters();
 
     imgAFR = new QSvgWidget(":/images/AFR.svg");
+    QSize sz = imgAFR->size();
+    sz *= 0.5;
+    imgAFR->setFixedSize(sz);
     imgAFR->show();
     sch_pic = new QSvgWidget(":/images/sk-lowpass.svg");
-   // QPixmap pix("Images/dblquad.png");
+    sz = sch_pic->size();
+    sz *= 0.5;
+    sch_pic->setFixedSize(sz);
     sch_pic->show();
 
     top = new QHBoxLayout;
@@ -124,6 +129,7 @@ FilterSintez::FilterSintez(QWidget *parent)
 
     right->addWidget(imgAFR);
     right->addWidget(sch_pic);
+    right->addStretch();
 
     top->addLayout(left);
     top->addLayout(center);
@@ -246,10 +252,13 @@ void FilterSintez::slotUpdateSchematic()
     default: break;
     }
 
+    QSvgRenderer *ren = new QSvgRenderer(s);
+    QSize sz = ren->defaultSize();
+    sz *= 0.75;
+    delete ren;
+
     sch_pic->load(s);
-    //QPixmap pix(s);
-    //sch_pic->resize(pix.size());
-    //sch_pic->setPixmap(pix);
+    sch_pic->setFixedSize(sz);
 }
 
 void FilterSintez::slotSwitchParameters()
