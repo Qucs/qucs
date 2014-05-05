@@ -53,7 +53,7 @@ private:
     QVBoxLayout *center;
     QVBoxLayout *right;
     
-    QLabel *sch_pic;
+    QSvgWidget *sch_pic;
 
     QWidget *zenter;
 

@@ -1,5 +1,9 @@
 <RCC>
     <qresource prefix="/images">
+        <file>sk-highpass.svg</file>
+        <file>sk-lowpass.svg</file>
+        <file>mfb-lowpass.svg</file>
+        <file>mfb-highpass.svg</file>
         <file>AFR.svg</file>
     </qresource>
 </RCC>

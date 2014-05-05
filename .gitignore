@@ -9,4 +9,4 @@ moc_*.cpp
 *.sch~
 *.dat
 *.dpl
-
+qrc_*.cpp
