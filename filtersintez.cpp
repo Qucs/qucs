@@ -86,9 +86,9 @@ FilterSintez::FilterSintez(QWidget *parent)
     sz *= 0.5;
     imgAFR->setFixedSize(sz);
     imgAFR->show();
-    sch_pic = new QSvgWidget(":/images/sk-lowpass.svg");
+    sch_pic = new QSvgWidget(":/images/cauer.svg");
     sz = sch_pic->size();
-    sz *= 0.5;
+    sz *= 0.75;
     sch_pic->setFixedSize(sz);
     sch_pic->show();
 
@@ -239,7 +239,7 @@ void FilterSintez::slotUpdateSchematic()
 {
     QString s;
     switch (cbxFilterType->currentIndex()) {
-    case 0 : s = ":images/sk-lowpass.svg";
+    case 0 : s = ":images/cauer.svg";
              break;
     case 1 : if (btnHighPass->isChecked()) s = ":/images/mfb-highpass.svg";
         else s = ":/images/mfb-lowpass.svg";
