@@ -83,10 +83,9 @@ FilterSintez::FilterSintez(QWidget *parent)
 
     imgAFR = new QSvgWidget(":/images/AFR.svg");
     imgAFR->show();
-    sch_pic = new QLabel;
-    QPixmap pix("Images/dblquad.png");
-    sch_pic->resize(pix.size());
-    sch_pic->setPixmap(pix);
+    sch_pic = new QSvgWidget(":/images/sk-lowpass.svg");
+   // QPixmap pix("Images/dblquad.png");
+    sch_pic->show();
 
     top = new QHBoxLayout;
     left = new QVBoxLayout;
@@ -234,21 +233,23 @@ void FilterSintez::slotUpdateSchematic()
 {
     QString s;
     switch (cbxFilterType->currentIndex()) {
-    case 0 : s = "Images/dblquad.png";
+    case 0 : s = ":images/sk-lowpass.svg";
              break;
-    case 1 : s= "Images/multiloop.png";
+    case 1 : if (btnHighPass->isChecked()) s = ":/images/mfb-highpass.svg";
+        else s = ":/images/mfb-lowpass.svg";
              break;
-    case 2 : if (btnHighPass->isChecked()) s = "Images/high-pass1.png";
-             else s = "Images/low-pass1.png";
+    case 2 : if (btnHighPass->isChecked()) s = ":/images/sk-highpass.svg";
+             else s = ":/images/sk-lowpass.svg";
              break;
-    case 3 : s = "Images/passive.png";
+    case 3 : s = ":/images/mfb-lowpass.svg";
              break;
     default: break;
     }
 
-    QPixmap pix(s);
-    sch_pic->resize(pix.size());
-    sch_pic->setPixmap(pix);
+    sch_pic->load(s);
+    //QPixmap pix(s);
+    //sch_pic->resize(pix.size());
+    //sch_pic->setPixmap(pix);
 }
 
 void FilterSintez::slotSwitchParameters()
