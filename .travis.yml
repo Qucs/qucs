@@ -20,6 +20,9 @@ before_install:
   - sudo cpan -f GD
 
 script:
+  - uname -a
+  - $CXX --version
+
   # build GUI components
   - cd qucs
   - sh autogen.sh

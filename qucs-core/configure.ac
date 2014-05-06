@@ -112,21 +112,31 @@ unset enable_debug
 
 case $host_os in
   *linux* | *cygwin* )
-  dnl Yet another compiler check.
-  if test "x$GCC" = xyes; then
+
+  dnl Set Clang
+  dnl STRICT_ANSI: http://stackoverflow.com/questions/13525774/clang-and-float128-bug-error
+  if test "$CXX -dM -E - < /dev/null | grep __clang__" ; then
+    CFLAGS="$CFLAGS -pipe"
+    CXXFLAGS="$CXXFLAGS -pipe -fno-exceptions -ldl -D__STRICT_ANSI__"
+    use_CLANG="yes"
+  fi
+
+  dnl Set GCC
+  if test "x$use_CLANG" != "xyes" -a "x$GCC" = "xyes" ; then
     CFLAGS="$CFLAGS -pipe"
     CXXFLAGS="$CXXFLAGS -pipe -fno-exceptions -fno-check-new -ldl -rdynamic"
-    if test $USE_MAINTAINER_MODE = yes; then
-      CFLAGS="$CFLAGS -W -Wall -Wmissing-prototypes"
-      CXXFLAGS="$CXXFLAGS -W -Wall"
-    fi
+  fi
+
+  if test $USE_MAINTAINER_MODE = yes; then
+    CFLAGS="$CFLAGS -W -Wall -Wmissing-prototypes"
+    CXXFLAGS="$CXXFLAGS -W -Wall"
   fi
   ;;
 
   *darwin* )
 
   dnl MacOSX, clang++ flags
-  if test "$CXX" = "clang++" ; then
+  if test "$CXX -dM -E - < /dev/null | grep __clang__" ; then
     CFLAGS="$CFLAGS -pipe"
     CXXFLAGS="$CXXFLAGS -pipe -fno-exceptions -stdlib=libc++"
     LDDFLAGS="$LDDFLAGS -stdlib=libc++"
