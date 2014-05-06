@@ -134,7 +134,7 @@ void SchCauer::createLowPassSchematic(QString &s)
     }
 
     if (N1stOrd!=0) {
-        createFirstOrderComponentsLPF(s,Sections.last(),dx+10);
+        createFirstOrderComponentsLPF(s,Sections.last(),dx+80);
     }
 
     s += "</Components>\n";
@@ -189,7 +189,7 @@ void SchCauer::createLowPassSchematic(QString &s)
     }
 
     if (N1stOrd!=0) {
-            createFirstOrderWires(s,dx+10,260);
+            createFirstOrderWires(s,dx+80,260);
     }
 
     s += "</Wires>\n";
