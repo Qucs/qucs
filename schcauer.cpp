@@ -130,7 +130,7 @@ void SchCauer::createLowPassSchematic(QString &s)
         s += QString("<GND * 1 %1 290 0 0 0 0>\n").arg(240+dx);
         s += QString("<GND * 1 %1 440 0 0 0 0>\n").arg(250+dx);
 
-        dx += 630;
+        dx += 580;
     }
 
     if (N1stOrd!=0) {
@@ -144,7 +144,52 @@ void SchCauer::createLowPassSchematic(QString &s)
     s += "<80 220 80 260 \"\" 0 0 0 \"\">\n";
 
     for (int i=1; i<=N2ord; i++) {
+        if (i!=1) {
+            s += QString("<%1 260 %2 260 \"\" 0 0 0 \"\">\n").arg(dx+30).arg(140+dx);
+        }
+        s += QString("<%1 370 %2 370 \"\" 0 0 0 \"\">\n").arg(500+dx).arg(610+dx);
+        s += QString("<%1 220 %2 220 \"\" 0 0 0 \"\">\n").arg(210+dx).arg(220+dx);
+        s += QString("<%1 280 %2 370 \"\" 0 0 0 \"\">\n").arg(500+dx).arg(500+dx);
+        s += QString("<%1 280 %2 280 \"\" 0 0 0 \"\">\n").arg(500+dx).arg(530+dx);
+        s += QString("<%1 260 %2 260 \"\" 0 0 0 \"\">\n").arg(600+dx).arg(610+dx);
+        s += QString("<%1 260 %2 370 \"\" 0 0 0 \"\">\n").arg(610+dx).arg(610+dx);
+        s += QString("<%1 240 %2 240 \"\" 0 0 0 \"\">\n").arg(440+dx).arg(480+dx);
+        s += QString("<%1 400 %2 400 \"\" 0 0 0 \"\">\n").arg(340+dx).arg(420+dx);
+        s += QString("<%1 380 %2 380 \"\" 0 0 0 \"\">\n").arg(220+dx).arg(260+dx);
+        s += QString("<%1 380 %2 380 \"\" 0 0 0 \"\">\n").arg(260+dx).arg(270+dx);
+        s += QString("<%1 150 %2 220 \"\" 0 0 0 \"\">\n").arg(220+dx).arg(220+dx);
+        s += QString("<%1 150 %2 150 \"\" 0 0 0 \"\">\n").arg(220+dx).arg(300+dx);
+        s += QString("<%1 240 %2 240 \"\" 0 0 0 \"\">\n").arg(310+dx).arg(380+dx);
+        s += QString("<%1 260 %2 290 \"\" 0 0 0 \"\">\n").arg(240+dx).arg(240+dx);
+        s += QString("<%1 220 %2 220 \"\" 0 0 0 \"\">\n").arg(220+dx).arg(240+dx);
+        s += QString("<%1 420 %2 420 \"\" 0 0 0 \"\">\n").arg(250+dx).arg(270+dx);
+        s += QString("<%1 420 %2 440 \"\" 0 0 0 \"\">\n").arg(250+dx).arg(250+dx);
+        if ((2*i)==order) {
+            s += QString("<%1 110 %2 260 \"out\" %3 160 101 \"\">\n").arg(610+dx).arg(610+dx).arg(540+dx);
+        } else {
+            s += QString("<%1 110 %2 260 \"\" 0 0 0 \"\">\n").arg(610+dx).arg(610+dx);
+        }
+        s += QString("<%1 110 %2 110 \"\" 0 0 0 \"\">\n").arg(470+dx).arg(610+dx);
+        s += QString("<%1 110 %2 150 \"\" 0 0 0 \"\">\n").arg(220+dx).arg(220+dx);
+        s += QString("<%1 110 %2 110 \"\" 0 0 0 \"\">\n").arg(220+dx).arg(410+dx);
+        s += QString("<%1 220 %2 220 \"\" 0 0 0 \"\">\n").arg(140+dx).arg(150+dx);
+        s += QString("<%1 220 %2 260 \"\" 0 0 0 \"\">\n").arg(140+dx).arg(140+dx);
+        s += QString("<%1 260 %2 380 \"\" 0 0 0 \"\">\n").arg(140+dx).arg(140+dx);
+        s += QString("<%1 380 %2 380 \"\" 0 0 0 \"\">\n").arg(140+dx).arg(160+dx);
+        s += QString("<%1 240 %2 240 \"\" 0 0 0 \"\">\n").arg(480+dx).arg(530+dx);
+        s += QString("<%1 240 %2 400 \"\" 0 0 0 \"\">\n").arg(480+dx).arg(480+dx);
+        s += QString("<%1 320 %2 400 \"\" 0 0 0 \"\">\n").arg(420+dx).arg(420+dx);
+        s += QString("<%1 320 %2 320 \"\" 0 0 0 \"\">\n").arg(390+dx).arg(420+dx);
+        s += QString("<%1 320 %2 380 \"\" 0 0 0 \"\">\n").arg(260+dx).arg(260+dx);
+        s += QString("<%1 320 %2 320 \"\" 0 0 0 \"\">\n").arg(260+dx).arg(330+dx);
+        s += QString("<%1 150 %2 150 \"\" 0 0 0 \"\">\n").arg(360+dx).arg(380+dx);
+        s += QString("<%1 150 %2 240 \"\" 0 0 0 \"\">\n").arg(380+dx).arg(380+dx);
 
+        dx +=580;
+    }
+
+    if (N1stOrd!=0) {
+            createFirstOrderWires(s,dx+10,260);
     }
 
     s += "</Wires>\n";
