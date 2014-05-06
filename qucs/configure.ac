@@ -201,18 +201,20 @@ case $host_os in
     esac
     unset enable_mt
 
-    if test "x$QTDIR" == "x"; then
-      QTDIR="nonexistent"
+    dnl handle provided QTDIR environment variable
+    QTDIR_paths=""
+    if test "x$QTDIR" != "x"; then
+      echo "QTDIR provided: $QTDIR"
+      QTDIR_paths="$QTDIR/lib $QTDIR/lib64"
     fi
 
-    echo "QTDIR: .$QTDIR."
 
     dnl Check library path to Qt.
     QT_LDFLAGS=""
     QT_LIBS=""
     AC_MSG_RESULT([checking for Qt... $QT_VER ($QT_MTS)])
     AC_MSG_CHECKING([for Qt library])
-    paths="$QTDIR/lib $QTDIR/lib64 /usr/local/qt4/lib /usr/lib/qt4 /usr/lib/qt4/Qtconf /usr/lib \
+    paths="$QTDIR_paths /usr/local/qt4/lib /usr/lib/qt4 /usr/lib/qt4/Qtconf /usr/lib \
       /usr/X11R6/lib/X11/qt4 /usr/X11R6/lib/X11/qt4 /usr/X11R6/lib/qt4 \
       /usr/X11R6/lib /sw/lib /usr/lib64/qt4 /usr/X11R6/lib/qt4 $prefix/lib/qt4"
     AC_LANG(C++)
