@@ -192,6 +192,7 @@ void FilterSintez::slotCalcSchematic()
                 cauer.calcFilter();
                 cauer.createPolesZerosList(lst);
                 cauer.createPartList(lst);
+                cauer.createSchematic(s);
                 txtResult->setText(lst.join("\n"));
              }
 
