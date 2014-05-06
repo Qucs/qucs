@@ -224,9 +224,9 @@ bool Ellipse::resizeTouched(float fX, float fY, float len)
 
   State = 0;
   if(fX < fCX+len) State = 1;
-  else if(fX <= fX2-len) { State = -1; return false; }
+  else if(fX < fX2-len) { State = -1; return false; }
   if(fY < fCY+len)  State |= 2;
-  else if(fY <= fY2-len) { State = -1; return false; }
+  else if(fY < fY2-len) { State = -1; return false; }
 
   return true;
 }
@@ -260,17 +260,14 @@ void Ellipse::MouseMoving(
 	Schematic *p, int x, int y, bool drawn)
 {
   if(State > 0) {
-//    FIXME bug 141
-//    if(State > 1)
-//      paintScale->PostPaintEvent(_Ellipse, x1, y1, x2-x1, y2-y1); // erase old painting
+    if(State > 1)
+      paintScale->PostPaintEvent(_Ellipse, x1, y1, x2-x1, y2-y1); // erase old painting
     State++;
     x2 = gx;
     y2 = gy;
-//    FIXME bug 141
-//    paintScale->PostPaintEvent(_Ellipse, x1, y1, x2-x1, y2-y1);  // paint new painting
+    paintScale->PostPaintEvent(_Ellipse, x1, y1, x2-x1, y2-y1);  // paint new painting
   }
   else { x2 = gx; y2 = gy; }
-
 
   // FIXME #warning p->setPen(Qt::SolidLine);
   if(drawn) {
