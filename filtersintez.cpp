@@ -13,7 +13,7 @@ FilterSintez::FilterSintez(QWidget *parent)
 
     QTextCodec::setCodecForTr(QTextCodec::codecForName("UTF-8"));
 
-    lblInputData = new QLabel(tr("Входные данные"));
+    //lblInputData = new QLabel(tr("Входные данные"));
     lblA1 = new QLabel(tr("Затухание в полосе пропускания, Ap"));
     lblA2 = new QLabel(tr("Мин. затухание в полосе задерживания, As"));
     lblF1 = new QLabel(tr("Частота среза фильтра, Fc (Гц)"));
@@ -97,7 +97,7 @@ FilterSintez::FilterSintez(QWidget *parent)
     center = new QVBoxLayout;
     right = new QVBoxLayout;
 
-    left->addWidget(lblInputData);
+    //left->addWidget(lblInputData);
     left->addWidget(lblA1);
     left->addWidget(edtA1);
     left->addWidget(lblA2);
@@ -114,9 +114,9 @@ FilterSintez::FilterSintez(QWidget *parent)
     left->addWidget(cbxFilterFunc);
 
 
-    center->addWidget(lblResult);
+    /*center->addWidget(lblResult);
     center->addWidget(txtResult);
-    txtResult->setMinimumWidth(400);
+    txtResult->setMinimumWidth(400);*/
     txtResult->setReadOnly(true);
 
     left->addWidget(lblSch);
@@ -135,9 +135,16 @@ FilterSintez::FilterSintez(QWidget *parent)
     top->addLayout(center);
     top->addLayout(right);
 
+    top1 = new QVBoxLayout;
+    top1->addLayout(top);
+    QSplitter *sp1 = new QSplitter;
+    top1->addWidget(sp1);
+    top1->addWidget(txtResult);
+    txtResult->setMinimumHeight(100);
+
     zenter = new QWidget;
     this->setCentralWidget(zenter);
-    zenter->setLayout(top);
+    zenter->setLayout(top1);
 }
 
 FilterSintez::~FilterSintez()

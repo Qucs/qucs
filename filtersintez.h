@@ -52,6 +52,7 @@ private:
     QVBoxLayout *left;
     QVBoxLayout *center;
     QVBoxLayout *right;
+    QVBoxLayout *top1;
     
     QSvgWidget *sch_pic;
 
