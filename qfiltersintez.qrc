@@ -6,5 +6,6 @@
         <file>mfb-highpass.svg</file>
         <file>AFR.svg</file>
         <file>cauer.svg</file>
+        <file>high-pass.svg</file>
     </qresource>
 </RCC>
