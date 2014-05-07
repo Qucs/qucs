@@ -76,6 +76,7 @@ tokens_vcd.h
 # Temp Files #
 ##############
 *~
+.*.swp
 
 # Autotools Generated #
 #######################
@@ -128,6 +129,11 @@ ltmain.sh
 *.pyc
 moc_*.cpp
 .libs
+
+# Cmake recommended generated #
+###############################
+qucs/bin
+qucs-core/bin
 
 # Packages #
 ############
