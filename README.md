@@ -42,4 +42,21 @@ Compile qucs-core:
 
 Note, Qucs it will be installed by default to `/usr/local/`. This can be modified by passing `--prefix=[some location]` to the `./configure` script.
 
+###Compile with CMake (recommended on Archlinux)
+
+Compile qucs:
+    cd qucs
+    mkdir bin && cd bin
+    cmake ../
+    make
+    sudo make install
+
+Compile qucs-core
+    cd qucs-lib
+    mkdir bin && cd bin
+    cmake ../
+    make
+    sudo make install
+
+Note, to change cmake default install path, passing `-DCMAKE_INSTALL_PREFIX:PATH=[some location]` to the `cmake` script.
 
