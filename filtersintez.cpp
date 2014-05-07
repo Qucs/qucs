@@ -83,12 +83,17 @@ FilterSintez::FilterSintez(QWidget *parent)
 
     imgAFR = new QSvgWidget(":/images/AFR.svg");
     QSize sz = imgAFR->size();
-    sz *= 0.5;
+    sz *= 0.4;
     imgAFR->setFixedSize(sz);
     imgAFR->show();
-    sch_pic = new QSvgWidget(":/images/cauer.svg");
-    sz = sch_pic->size();
-    sz *= 0.75;
+
+    QString s1 = ":/images/cauer.svg";
+    QSvgRenderer *ren = new QSvgRenderer(s1);
+    sz = ren->defaultSize();
+    sz *= 0.65;
+    delete ren;
+
+    sch_pic = new QSvgWidget(s1);
     sch_pic->setFixedSize(sz);
     sch_pic->show();
 
@@ -272,7 +277,7 @@ void FilterSintez::slotUpdateSchematic()
 
     QSvgRenderer *ren = new QSvgRenderer(s);
     QSize sz = ren->defaultSize();
-    sz *= 0.75;
+    sz *= 0.65;
     delete ren;
 
     sch_pic->load(s);
