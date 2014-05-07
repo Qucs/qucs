@@ -9,6 +9,9 @@
 class SchCauer : public Filter // Cauer 2-order section
 {
 
+private:
+    void createGenericSchematic(QString &s);
+
 protected:
 
     void calcHighPass();
