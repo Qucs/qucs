@@ -185,15 +185,23 @@ void FilterSintez::slotCalcSchematic()
         ftyp = Filter::BandStop;
     }
 
+
     switch (cbxFilterType->currentIndex()) {
     case 0 : {
                 QString s;
-                SchCauer cauer(ffunc,ftyp,par);
-                cauer.calcFilter();
-                cauer.createPolesZerosList(lst);
-                cauer.createPartList(lst);
-                cauer.createSchematic(s);
-                txtResult->setText(lst.join("\n"));
+                if (((ffunc==Filter::InvChebyshev)||(ffunc==Filter::Cauer))) {
+                   SchCauer cauer(ffunc,ftyp,par);
+                   bool ok = cauer.calcFilter();
+                   cauer.createPolesZerosList(lst);
+                   cauer.createPartList(lst);
+                   if (ok) {
+                       cauer.createSchematic(s);
+                   }
+                   txtResult->setText(lst.join("\n"));
+                } else {
+                    errorMessage(tr("Unable to use Cauer section for Chebyshev or Butterworth \n"
+                                 "frequency response. Try to use another topology."));
+                }
              }
 
              break;
@@ -201,11 +209,12 @@ void FilterSintez::slotCalcSchematic()
                 QString s;
                 if (!((ffunc==Filter::InvChebyshev)||(ffunc==Filter::Cauer))) {
                     MFBfilter mfb(ffunc,ftyp,par);
-                    if (mfb.calcFilter()) {
-                        mfb.createPolesZerosList(lst);
-                        mfb.createPartList(lst);
+                    bool ok = mfb.calcFilter();
+                    mfb.createPolesZerosList(lst);
+                    mfb.createPartList(lst);
+                    txtResult->setText(lst.join("\n"));
+                    if (ok) {
                         mfb.createSchematic(s);
-                        txtResult->setText(lst.join("\n"));
                     } else {
                         errorMessage(tr("Unable to implement filter with such parameters and topology \n"
                                         "Change parapeters and/or topology and try again!"));
@@ -219,11 +228,12 @@ void FilterSintez::slotCalcSchematic()
     case 2 : {
                QString s;
                SallenKey sk(ffunc,ftyp,par);
-               if (sk.calcFilter()) {
-                   sk.createPolesZerosList(lst);
-                   sk.createPartList(lst);
+               bool ok = sk.calcFilter();
+               sk.createPolesZerosList(lst);
+               sk.createPartList(lst);
+               txtResult->setText(lst.join("\n"));
+               if (ok) {
                    sk.createSchematic(s);
-                   txtResult->setText(lst.join("\n"));
                } else {
                    errorMessage(tr("Unable to implement filter with such parameters and topology \n"
                                    "Change parapeters and/or topology and try again!"));
