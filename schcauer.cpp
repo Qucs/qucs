@@ -98,6 +98,16 @@ void SchCauer::calcHighPass()
 
 void SchCauer::createLowPassSchematic(QString &s)
 {
+    createGenericSchematic(s);
+}
+
+void SchCauer::createHighPassSchematic(QString &s)
+{
+    createGenericSchematic(s);
+}
+
+void SchCauer::createGenericSchematic(QString &s)
+{
     RC_elements stage;
     int dx = 0;
     int N2ord = order/2; // number of 2-nd order stages
@@ -134,7 +144,12 @@ void SchCauer::createLowPassSchematic(QString &s)
     }
 
     if (N1stOrd!=0) {
-        createFirstOrderComponentsLPF(s,Sections.last(),dx+80);
+        if (ftype==Filter::LowPass) {
+            createFirstOrderComponentsLPF(s,Sections.last(),dx+80);
+        } else if (ftype==Filter::HighPass) {
+            createFirstOrderComponentsHPF(s,Sections.last(),dx+80);
+        }
+
     }
 
     s += "</Components>\n";
@@ -193,10 +208,4 @@ void SchCauer::createLowPassSchematic(QString &s)
     }
 
     s += "</Wires>\n";
-
-}
-
-void SchCauer::createHighPassSchematic(QString &s)
-{
-    createLowPassSchematic(s);
 }
