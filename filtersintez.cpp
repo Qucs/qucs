@@ -79,14 +79,17 @@ FilterSintez::FilterSintez(QWidget *parent)
     connect(cbxFilterType,SIGNAL(currentIndexChanged(int)),this,SLOT(slotUpdateSchematic()));
     this->slotSwitchParameters();
 
-    imgAFR = new QSvgWidget(":/images/AFR.svg");
-    QSize sz = imgAFR->size();
-    sz *= 0.4;
+    QString s1 = ":/images/AFR.svg";
+    QSvgRenderer *ren = new QSvgRenderer(s1);
+    QSize sz = ren->defaultSize();
+    sz *= 1.1;
+    delete ren;
+    imgAFR = new QSvgWidget(s1);
     imgAFR->setFixedSize(sz);
     imgAFR->show();
 
-    QString s1 = ":/images/cauer.svg";
-    QSvgRenderer *ren = new QSvgRenderer(s1);
+    s1 = ":/images/cauer.svg";
+    ren = new QSvgRenderer(s1);
     sz = ren->defaultSize();
     sz *= 0.65;
     delete ren;
@@ -261,10 +264,15 @@ void FilterSintez::slotCalcSchematic()
 
 void FilterSintez::slotUpdateResponse()
 {
+    QString s = ":/images/AFR.svg";
+
     switch (cbxResponse->currentIndex()) {
-        case 0 : ftyp = Filter::LowPass;
+        case 0 :
+            s = ":/images/AFR.svg";
+            ftyp = Filter::LowPass;
             break;
-        case 1 : ftyp = Filter::HighPass;
+        case 1 : s = ":/images/high-pass.svg";
+            ftyp = Filter::HighPass;
             break;
         case 2 : ftyp = Filter::BandPass;
             break;
@@ -273,6 +281,14 @@ void FilterSintez::slotUpdateResponse()
         default: ftyp = Filter::NoFilter;
             break;
         }
+
+    QSvgRenderer *ren = new QSvgRenderer(s);
+    QSize sz = ren->defaultSize();
+    sz *= 1.1;
+    delete ren;
+
+    imgAFR->load(s);
+    imgAFR->setFixedSize(sz);
 }
 
 void FilterSintez::slotUpdateSchematic()
