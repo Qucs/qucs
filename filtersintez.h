@@ -5,6 +5,7 @@
 #include <QtSvg>
 #include <QMainWindow>
 #include <complex>
+#include "filter.h"
 
 class FilterSintez : public QMainWindow
 {
@@ -20,6 +21,7 @@ private:
     QLabel *lblKv;
     QLabel *lblRpl1;
     QLabel *lblRpl2;
+    QLabel *lblResp;
 
     QLineEdit *edtA1; // passband attenuation A1
     QLineEdit *edtA2; // stopband attenuation A2
@@ -38,12 +40,13 @@ private:
     QSvgWidget *imgAFR;
     QLabel *lblSch;
 
-    QRadioButton *btnLowPass;
+    /*QRadioButton *btnLowPass;
     QRadioButton *btnHighPass;
     QRadioButton *btnBandPass;
-    QRadioButton *btnBandStop;
+    QRadioButton *btnBandStop;*/
 
     QComboBox *cbxFilterType;
+    QComboBox *cbxResponse;
 
     QPushButton *btnElements;
     //QPushButton *btnPassive;
@@ -68,10 +71,12 @@ private:
     QVector<float> coeffB;
     QVector<float> coeffC;
 
+    Filter::FType ftyp;
 
 private slots:
 
     void slotUpdateSchematic();
+    void slotUpdateResponse();
     void slotCalcSchematic();
     void slotSwitchParameters();
 

@@ -10,6 +10,7 @@ FilterSintez::FilterSintez(QWidget *parent)
 {
     Nfil = 4;
     Fc = 1000;
+    ftyp = Filter::NoFilter;
 
     QTextCodec::setCodecForTr(QTextCodec::codecForName("UTF-8"));
 
@@ -57,19 +58,16 @@ FilterSintez::FilterSintez(QWidget *parent)
 
 
     lblSch = new QLabel(tr("Схемная реализация фильтра"));
-    btnHighPass = new QRadioButton(tr("ФВЧ"));
-    btnLowPass = new QRadioButton(tr("ФНЧ"));
-    btnBandPass = new QRadioButton(tr("Band-pass"));
-    btnBandStop = new QRadioButton(tr("Band-stop"));
-    QButtonGroup *grp1 = new QButtonGroup;
-    grp1->addButton(btnHighPass);
-    grp1->addButton(btnLowPass);
-    grp1->addButton(btnBandPass);
-    grp1->addButton(btnBandStop);
-    btnBandPass->setDisabled(true);
-    btnBandStop->setDisabled(true);
-    btnLowPass->setChecked(true);
-    connect(grp1,SIGNAL(buttonClicked(int)),this,SLOT(slotUpdateSchematic()));
+    lblResp = new QLabel(tr("Filter type:"));
+    cbxResponse = new QComboBox;
+    QStringList lst3;
+    lst3<<tr("LowPass")
+        <<tr("High Pass")
+        <<tr("Band Pass")
+        <<tr("Band Stop");
+    cbxResponse->addItems(lst3);
+    connect(cbxResponse,SIGNAL(),this,SLOT(slotUpdtaeResponse()));
+    connect(cbxResponse,SIGNAL(currentIndexChanged(int)),this,SLOT(slotUpdateSchematic()));
 
     cbxFilterType = new QComboBox;
     QStringList lst;
@@ -115,22 +113,21 @@ FilterSintez::FilterSintez(QWidget *parent)
     left->addWidget(edtPassbRpl);
     left->addWidget(lblKv);
     left->addWidget(edtKv);
-    left->addWidget(lblTyp);
-    left->addWidget(cbxFilterFunc);
+    QHBoxLayout *l3 = new QHBoxLayout;
+    l3->addWidget(lblTyp);
+    l3->addWidget(cbxFilterFunc);
+    left->addLayout(l3);
 
-
-    /*center->addWidget(lblResult);
-    center->addWidget(txtResult);
-    txtResult->setMinimumWidth(400);*/
-    txtResult->setReadOnly(true);
-
-    left->addWidget(lblSch);
-    left->addWidget(btnLowPass);
-    left->addWidget(btnHighPass);
-    left->addWidget(btnBandPass);
-    left->addWidget(btnBandStop);
-    left->addWidget(cbxFilterType);
+    QHBoxLayout *l1 = new QHBoxLayout;
+    l1->addWidget(lblResp);
+    l1->addWidget(cbxResponse);
+    left->addLayout(l1);
+    QHBoxLayout *l2 = new QHBoxLayout;
+    l2->addWidget(lblSch);
+    l2->addWidget(cbxFilterType);
+    left->addLayout(l2);
     left->addWidget(btnCalcSchematic);
+    left->addStretch();
 
     right->addWidget(imgAFR);
     right->addWidget(sch_pic);
@@ -144,8 +141,9 @@ FilterSintez::FilterSintez(QWidget *parent)
     top1->addLayout(top);
     QSplitter *sp1 = new QSplitter;
     top1->addWidget(sp1);
+    txtResult->setReadOnly(true);
     top1->addWidget(txtResult);
-    txtResult->setMinimumHeight(100);
+    txtResult->setMinimumHeight(180);
 
     zenter = new QWidget;
     this->setCentralWidget(zenter);
@@ -186,17 +184,20 @@ void FilterSintez::slotCalcSchematic()
                      break;
         }
 
-    Filter::FType ftyp = Filter::NoFilter;
-    if (btnHighPass->isChecked()) {
-        ftyp = Filter::HighPass;
-    } else if (btnLowPass->isChecked()) {
-        ftyp = Filter::LowPass;
-    } else if (btnBandPass->isChecked()) {
-        ftyp = Filter::BandPass;
-    } else if (btnBandStop->isChecked()) {
-        ftyp = Filter::BandStop;
-    }
 
+
+    switch (cbxResponse->currentIndex()) {
+    case 0 : ftyp = Filter::LowPass;
+        break;
+    case 1 : ftyp = Filter::HighPass;
+        break;
+    case 2 : ftyp = Filter::BandPass;
+        break;
+    case 3 : ftyp = Filter::BandStop;
+        break;
+    default: ftyp = Filter::NoFilter;
+        break;
+    }
 
     switch (cbxFilterType->currentIndex()) {
     case 0 : {
@@ -258,21 +259,45 @@ void FilterSintez::slotCalcSchematic()
     }
 }
 
+void FilterSintez::slotUpdateResponse()
+{
+    switch (cbxResponse->currentIndex()) {
+        case 0 : ftyp = Filter::LowPass;
+            break;
+        case 1 : ftyp = Filter::HighPass;
+            break;
+        case 2 : ftyp = Filter::BandPass;
+            break;
+        case 3 : ftyp = Filter::BandStop;
+            break;
+        default: ftyp = Filter::NoFilter;
+            break;
+        }
+}
+
 void FilterSintez::slotUpdateSchematic()
 {
+    slotUpdateResponse();
     QString s;
     switch (cbxFilterType->currentIndex()) {
     case 0 : s = ":images/cauer.svg";
              break;
-    case 1 : if (btnHighPass->isChecked()) s = ":/images/mfb-highpass.svg";
-        else s = ":/images/mfb-lowpass.svg";
+    case 1 : if (ftyp==Filter::HighPass) {
+            s = ":/images/mfb-highpass.svg";
+        } else if (ftyp==Filter::LowPass) {
+            s = ":/images/mfb-lowpass.svg";
+        }
              break;
-    case 2 : if (btnHighPass->isChecked()) s = ":/images/sk-highpass.svg";
-             else s = ":/images/sk-lowpass.svg";
-             break;
+    case 2 : if (ftyp==Filter::HighPass) {
+            s = ":/images/sk-highpass.svg";
+        } else if (ftyp==Filter::LowPass) {
+           s = ":/images/sk-lowpass.svg";
+        }
+        break;
     case 3 : s = ":/images/mfb-lowpass.svg";
-             break;
-    default: break;
+        break;
+    default:
+        break;
     }
 
     QSvgRenderer *ren = new QSvgRenderer(s);
