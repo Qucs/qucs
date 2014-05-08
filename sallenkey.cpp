@@ -30,7 +30,7 @@ void SallenKey::calcLowPass()
 
         C2 = 10 / Fc;
         C1 = (B*B+4*C*(Kv1-1))*C2/(4*C);
-        R1 = 2/(Wc*(B*C2+sqrt((B*B + 4*C*(Kv1-1))*(C2*C2)-4*C*C1*C2)));
+        R1 = 2/(Wc*(B*C2+sqrt((B*B + 4*C*(Kv1-1))*C2*C2-4*C*C1*C2)));
         R2 = 1/(C*C1*C2*R1*Wc*Wc);
 
         if (Kv != 1.0) {
