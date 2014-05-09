@@ -258,9 +258,10 @@ bool Filter::checkRCL()
 
 void Filter::calcChebyshev()
 {
+    float kf = std::max(Fs/Fc,Fc/Fs);
     float eps=sqrt(pow(10,0.1*Rp)-1);
 
-    float N1 = acosh(sqrt((pow(10,0.1*As)-1)/(eps*eps)))/acosh(Fs/Fc);
+    float N1 = acosh(sqrt((pow(10,0.1*As)-1)/(eps*eps)))/acosh(kf);
     int N = ceil(N1);
 
     float a = sinh((asinh(1/eps))/N);
@@ -281,8 +282,10 @@ void Filter::calcChebyshev()
 
 void Filter::calcButterworth()
 {
+    float kf = std::min(Fc/Fs,Fs/Fc);
+
     float C1=(pow(10,(0.1*Ap))-1)/(pow(10,(0.1*As))-1);
-    float J2=log10(C1)/(2*log10(Fc/Fs));
+    float J2=log10(C1)/(2*log10(kf));
     int N2 = round(J2+1);
 
     Poles.clear();
@@ -303,9 +306,9 @@ void Filter::calcInvChebyshev() // Chebyshev Type-II filter
     Poles.clear();
     Zeros.clear();
 
+    float kf = std::max(Fs/Fc,Fc/Fs);
 
-
-    order = ceil(acosh(sqrt(pow(10.0,0.1*As)-1.0))/acosh(Fs/Fc));
+    order = ceil(acosh(sqrt(pow(10.0,0.1*As)-1.0))/acosh(kf));
 
     float eps = 1.0/(sqrt(pow(10.0,0.1*As)-1.0));
     float a = sinh((asinh(1.0/eps))/(order));
@@ -329,7 +332,7 @@ void Filter::calcInvChebyshev() // Chebyshev Type-II filter
 
 void Filter::cauerOrderEstim() // from Digital Filter Design Handbook page 102
 {
-    float k = Fc/Fs;
+    float k = std::min(Fc/Fs,Fs/Fc);
     float kk = sqrt(sqrt(1.0-k*k));
     float u = 0.5*(1.0-kk)/(1.0+kk);
     float q = 150.0*pow(u,13) + 2.0*pow(u,9) + 2.0*pow(u,5) + u;
