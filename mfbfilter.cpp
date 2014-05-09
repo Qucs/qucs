@@ -119,8 +119,8 @@ void MFBfilter::createHighPassSchematic(QString &s)
         s += QString("<GND * 1 %1 380 0 0 0 0>\n").arg(200+dx);
         s += QString("<GND * 1 %1 350 0 0 0 0>\n").arg(360+dx);
         s += QString("<OpAmp OP%1 1 %2 270 -26 -70 1 0 \"1e6\" 1 \"15 V\" 0>\n").arg(1+(i-1)*Nop1).arg(390+dx);
-        s += QString("<R R%1 1 %2 350 17 -26 0 1 \"%3k\" 1 \"26.85\" 0 \"0.0\" 0 \"0.0\" 0 \"26.85\" 0 \"european\" 0>\n").arg(1+(i-1)*Nc1).arg(200+dx).arg(stage.R1,0,'f',3);
-        s += QString("<R R%1 1 %2 180 17 -26 0 1 \"%3k\" 1 \"26.85\" 0 \"0.0\" 0 \"0.0\" 0 \"26.85\" 0 \"european\" 0>\n").arg(2+(i-1)*Nc1).arg(320+dx).arg(stage.R2,0,'f',3);
+        s += QString("<R R%1 1 %2 350 17 -26 0 1 \"%3k\" 1 \"26.85\" 0 \"0.0\" 0 \"0.0\" 0 \"26.85\" 0 \"european\" 0>\n").arg(1+(i-1)*Nr1).arg(200+dx).arg(stage.R1,0,'f',3);
+        s += QString("<R R%1 1 %2 180 17 -26 0 1 \"%3k\" 1 \"26.85\" 0 \"0.0\" 0 \"0.0\" 0 \"26.85\" 0 \"european\" 0>\n").arg(2+(i-1)*Nr1).arg(320+dx).arg(stage.R2,0,'f',3);
         s += QString("<C C%1 1 %2 180 15 -26 0 1 \"%3%4\" 1 \"\" 0 \"neutral\" 0>\n").arg(1+(i-1)*Nc1).arg(200+dx).arg(C1,0,'f',3).arg(suffix1);
         s += QString("<C C%1 1 %2 250 -26 15 0 0 \"%3%4\" 1 \"\" 0 \"neutral\" 0>\n").arg(2+(i-1)*Nc1).arg(150+dx).arg(C2,0,'f',3).arg(suffix2);
         s += QString("<C C%1 1 %2 250 -26 15 0 0 \"%3%4\" 1 \"\" 0 \"neutral\" 0>\n").arg(3+(i-1)*Nc1).arg(250+dx).arg(C1,0,'f',3).arg(suffix1);
