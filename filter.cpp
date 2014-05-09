@@ -95,7 +95,7 @@ void Filter::calcFirstOrder()
 {
     if (order%2 != 0) {
 
-        float R2,R3;
+        float R1, R2,R3;
 
         int k = order/2 + 1;
         float Wc = 2*M_PI*Fc;
@@ -104,7 +104,13 @@ void Filter::calcFirstOrder()
         //float C = re*re + im*im;
         float C = -re;
         float C1 = 10/Fc;
-        float R1 = 1.0/(Wc*C*C1);
+
+        if (ftype==Filter::HighPass) {
+            R1 = 1.0*C/(Wc*C1);
+        } else {
+            R1 = 1.0/(Wc*C*C1);
+        }
+
         qDebug()<<C;
 
         if (Kv != 1.0) {
