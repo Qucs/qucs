@@ -66,7 +66,7 @@ FilterSintez::FilterSintez(QWidget *parent)
         <<tr("Band Pass")
         <<tr("Band Stop");
     cbxResponse->addItems(lst3);
-    connect(cbxResponse,SIGNAL(),this,SLOT(slotUpdtaeResponse()));
+    connect(cbxResponse,SIGNAL(currentIndexChanged(int)),this,SLOT(slotUpdateResponse()));
     connect(cbxResponse,SIGNAL(currentIndexChanged(int)),this,SLOT(slotUpdateSchematic()));
 
     cbxFilterType = new QComboBox;
