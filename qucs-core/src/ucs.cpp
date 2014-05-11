@@ -33,6 +33,7 @@
 #include <time.h>
 #include <list>
 #include <iostream>
+#include <fstream>
 
 #include "logging.h"
 #include "precision.h"
@@ -125,6 +126,7 @@ int main (int argc, char ** argv) {
     else if (!strcmp (argv[i], "-l") || !strcmp (argv[i], "--listing")) {
       listing = 1;
     }
+    // \todo remove command arguments
     else if (!strcmp (argv[i], "-p") || !strcmp (argv[i], "--path")) {
       projPath = argv[++i];
     }
@@ -150,9 +152,66 @@ int main (int argc, char ** argv) {
 #endif /* DEBUG */
 
   // look for dynamic libs, load and register them
+  // \todo, keep this way of loading or keep only annotated netlist?
   if (dynamicLoad) {
     module::registerDynamicModules (projPath, vamodules);
   }
+
+  else { //no argument, look into netlist
+
+    std::string sLine = "";
+    std::ifstream file;
+
+    std::string projPathNet ="";
+    std::string projVaMoules = "";
+
+    file.open(infile);
+
+    while (!file.eof()) {
+        getline(file, sLine);
+
+        if (sLine.find("--path") != std::string::npos) {
+            std::cout << sLine << std::endl;
+
+            size_t pos = 0;
+            pos = sLine.find("=");
+            sLine.erase(0, pos + 1);
+            std::cout << sLine << std::endl;
+
+//            projPath =  const_cast<char*>(sLine.c_str());
+//            projPath = (char*)sLine.c_str();
+
+//            std::cout << "inside" << projPath << std::endl;
+
+            projPathNet = sLine;
+
+        }
+
+        if (sLine.find("--module") != std::string::npos) {
+            std::cout << sLine << std::endl;
+
+            size_t pos = 0;
+            pos = sLine.find("=");
+            sLine.erase(0, pos + 1);
+            //std::cout << sLine << std::endl;
+            projVaMoules = sLine;
+
+            // put module names into list
+            std::istringstream ss(sLine);
+            std::string token;
+
+            while(std::getline(ss, token, ' ')) {
+                std::cout << token << '\n';
+
+                vamodules.push_back(token);
+            }
+        }
+    }
+
+    module::registerDynamicModules ((char*)projPathNet.c_str(), vamodules);
+    file.close();
+  }
+
 
   // create root environment
   root = new environment ("root");
