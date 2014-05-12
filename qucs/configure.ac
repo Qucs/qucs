@@ -136,10 +136,18 @@ case $host_os in
       if test x$WIN32 = xyes; then
         CXXFLAGS="$CXXFLAGS"
       fi
-      if test $USE_MAINTAINER_MODE = yes; then
-        CFLAGS="$CFLAGS -W -Wall -Wmissing-prototypes"
-        CXXFLAGS="$CXXFLAGS -W -Wall"
-      fi
+    fi
+
+    dnl Flags for Clang
+    if test "$CXX" = "clang++" ; then
+      CFLAGS="$CFLAGS -pipe"
+      CXXFLAGS="$CXXFLAGS -pipe -fno-exceptions -stdlib=libc++"
+      LDDFLAGS="$LDDFLAGS -stdlib=libc++"
+    fi
+
+    if test $USE_MAINTAINER_MODE = yes; then
+      CFLAGS="$CFLAGS -W -Wall -Wmissing-prototypes"
+      CXXFLAGS="$CXXFLAGS -W -Wall"
     fi
 
     dnl Check include path to Qt.
