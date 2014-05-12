@@ -129,20 +129,22 @@ fi
 
 case $host_os in
   *linux* | *cygwin* | *mingw* | *bsd* )
-    dnl Yet another compiler check.
-    if test "x$GCC" = xyes; then
+
+    dnl Set Clang
+    if test "$CXX -dM -E - < /dev/null | grep __clang__" ; then
+      CFLAGS="$CFLAGS -pipe"
+      CXXFLAGS="$CXXFLAGS -pipe -fno-exceptions"
+      LDDFLAGS="$LDDFLAGS"
+      use_CLANG="yes"
+    fi
+
+    dnl Set GCC.
+    if test "x$use_CLANG" != "xyes" -a "x$GCC" = "xyes" ; then
       CFLAGS="$CFLAGS -pipe"
       CXXFLAGS="$CXXFLAGS -pipe -fno-exceptions -fno-check-new"
       if test x$WIN32 = xyes; then
         CXXFLAGS="$CXXFLAGS"
       fi
-    fi
-
-    dnl Check for Clang
-    if test "$CXX -dM -E - < /dev/null | grep __clang__" ; then
-      CFLAGS="$CFLAGS -pipe"
-      CXXFLAGS="$CXXFLAGS -pipe -fno-exceptions -stdlib=libc++"
-      LDDFLAGS="$LDDFLAGS -stdlib=libc++"
     fi
 
     if test $USE_MAINTAINER_MODE = yes; then
