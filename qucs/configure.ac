@@ -138,8 +138,8 @@ case $host_os in
       fi
     fi
 
-    dnl Flags for Clang
-    if test "$CXX" = "clang++" ; then
+    dnl Check for Clang
+    if test "$CXX -dM -E - < /dev/null | grep __clang__" ; then
       CFLAGS="$CFLAGS -pipe"
       CXXFLAGS="$CXXFLAGS -pipe -fno-exceptions -stdlib=libc++"
       LDDFLAGS="$LDDFLAGS -stdlib=libc++"
