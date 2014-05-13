@@ -29,6 +29,7 @@ script:
   - ./configure --enable-maintainer-mode
   - make
   - cd ..
+  - cat qucs/config.log
 
   # build Qucs-ator
   - cd qucs-core
