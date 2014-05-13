@@ -46,9 +46,14 @@ FilterSintez::FilterSintez(QWidget *parent)
     lst2<<tr("Фильтр Баттерворта")
         <<tr("Фильтр Чебышева")
         <<tr("Инверсный фильтр Чебышева")
-        <<tr("Эллиптический фильтр");
+        <<tr("Эллиптический фильтр")
+        <<tr("User defined");
     cbxFilterFunc->addItems(lst2);
     connect(cbxFilterFunc,SIGNAL(currentIndexChanged(int)),this,SLOT(slotSwitchParameters()));
+
+    btnDefineTransferFunc = new QPushButton(tr("Manually define transfer function"));
+    btnDefineTransferFunc->setEnabled(false);
+    connect(btnDefineTransferFunc,SIGNAL(clicked()),this,SLOT(slotDefineTransferFunc()));
 
     btnCalcSchematic = new QPushButton(tr("Рассчитать элементы схемы фильтра"));
     connect(btnCalcSchematic,SIGNAL(clicked()),SLOT(slotCalcSchematic()));
@@ -121,6 +126,8 @@ FilterSintez::FilterSintez(QWidget *parent)
     l3->addWidget(cbxFilterFunc);
     left->addLayout(l3);
 
+    left->addWidget(btnDefineTransferFunc);
+
     QHBoxLayout *l1 = new QHBoxLayout;
     l1->addWidget(lblResp);
     l1->addWidget(cbxResponse);
@@ -182,6 +189,8 @@ void FilterSintez::slotCalcSchematic()
             case 2 : ffunc = Filter::InvChebyshev;
                      break;
             case 3 : ffunc = Filter::Cauer;
+                     break;
+            case 4 : ffunc = Filter::User;
                      break;
             default: ffunc = Filter::NoFunc;
                      break;
@@ -341,6 +350,27 @@ void FilterSintez::slotSwitchParameters()
     } else {
         cbxFilterType->setDisabled(false);
     }
+
+    if ((cbxFilterFunc->currentIndex()==4)) {
+        btnDefineTransferFunc->setEnabled(true);
+        edtF2->setEnabled(false);
+        edtPassbRpl->setEnabled(false);
+        edtA1->setEnabled(false);
+        edtA2->setEnabled(false);
+        edtKv->setEnabled(false);
+    } else {
+        btnDefineTransferFunc->setEnabled(false);
+        edtF2->setEnabled(true);
+        edtPassbRpl->setEnabled(true);
+        edtA1->setEnabled(true);
+        edtA2->setEnabled(true);
+        edtKv->setEnabled(true);
+    }
+}
+
+void FilterSintez::slotDefineTransferFunc()
+{
+
 }
 
 void FilterSintez::errorMessage(QString str)

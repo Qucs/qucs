@@ -33,6 +33,7 @@ private:
 
     QComboBox *cbxFilterFunc;
     QPushButton *btnCalcSchematic;
+    QPushButton *btnDefineTransferFunc;
 
     QLabel *lblResult;
     QTextEdit *txtResult;
@@ -79,6 +80,7 @@ private slots:
     void slotUpdateResponse();
     void slotCalcSchematic();
     void slotSwitchParameters();
+    void slotDefineTransferFunc();
 
 public:
     FilterSintez(QWidget *parent = 0);

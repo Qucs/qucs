@@ -30,7 +30,7 @@ class Filter
 
 public:
     enum FType {HighPass, LowPass, BandPass, BandStop, NoFilter};
-    enum FilterFunc {Butterworth, Chebyshev, Cauer, Bessel, InvChebyshev, NoFunc};
+    enum FilterFunc {Butterworth, Chebyshev, Cauer, Bessel, InvChebyshev, NoFunc, User};
 
 private:
     void besselCoefficients();
