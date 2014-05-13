@@ -117,7 +117,7 @@ case $host_os in
   dnl STRICT_ANSI: http://stackoverflow.com/questions/13525774/clang-and-float128-bug-error
   if test "$CXX -dM -E - < /dev/null | grep __clang__" ; then
     CFLAGS="$CFLAGS -pipe"
-    CXXFLAGS="$CXXFLAGS -pipe -fno-exceptions -D__STRICT_ANSI__"
+    CXXFLAGS="$CXXFLAGS -pipe -fno-exceptions -ldl -D__STRICT_ANSI__"
     use_CLANG="yes"
   fi
 
