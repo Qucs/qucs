@@ -54,6 +54,7 @@ protected:
     void calcInvChebyshev();
     void calcCauer();
     void calcBessel();
+    void calcUserTrFunc();
     bool checkRCL(); // Checks RCL values. Are one of them NaN or not?
 
     void createFirstOrderComponentsHPF(QString &s,RC_elements stage, int dx);

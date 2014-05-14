@@ -1,4 +1,5 @@
 #include "filter.h"
+#include "qf_poly.h"
 
 Filter::Filter(Filter::FilterFunc ffunc_, Filter::FType type_, FilterParam par)
 {
@@ -59,6 +60,7 @@ bool Filter::calcFilter()
         break;
     case Filter::InvChebyshev : calcInvChebyshev();
         break;
+    case Filter::User : calcUserTrFunc();
     default : return false;
         break;
     }
@@ -441,4 +443,23 @@ void Filter::calcCauer() // from Digital Filter Designer's handbook p.103
         im = 0.5*sqrt(-1.0*bb[i]*bb[i]+4*cc[i]);
         Poles.append(std::complex<float>(re,-im));
     }
+}
+
+void Filter::calcUserTrFunc()
+{
+    long double a[3]={1,2,1};
+    long double b[3]={2,2,1};
+
+
+    qf_poly Numenator(2,a);
+    qf_poly Denomenetor(2,b);
+
+    Numenator.to_roots();
+    Denomenetor.to_roots();
+
+    Numenator.disp_c();
+    Denomenetor.disp_c();
+
+    Numenator.roots_to_complex(Zeros);
+    Denomenetor.roots_to_complex(Poles);
 }
