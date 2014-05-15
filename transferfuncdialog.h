@@ -7,6 +7,22 @@
 class TransferFuncDialog : public QDialog
 {
     Q_OBJECT
+
+private:
+    QLabel *lblA;
+    QLabel *lblB;
+    QTableWidget *tblA;
+    QTableWidget *tblB;
+
+    QPushButton *btnAccept;
+    QPushButton *btnCancel;
+
+    QHBoxLayout *top;
+    QVBoxLayout *top1;
+    QVBoxLayout *low1;
+    QVBoxLayout *low2;
+    QHBoxLayout *low3;
+
 public:
     explicit TransferFuncDialog(QWidget *parent = 0);
     
