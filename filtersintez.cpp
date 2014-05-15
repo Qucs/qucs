@@ -2,6 +2,7 @@
 #include "sallenkey.h"
 #include "mfbfilter.h"
 #include "schcauer.h"
+#include "transferfuncdialog.h"
 #include <QTextCodec>
 
 
@@ -370,7 +371,9 @@ void FilterSintez::slotSwitchParameters()
 
 void FilterSintez::slotDefineTransferFunc()
 {
-
+    TransferFuncDialog *trfuncdlg = new TransferFuncDialog(this);
+    trfuncdlg->exec();
+    delete trfuncdlg;
 }
 
 void FilterSintez::errorMessage(QString str)
