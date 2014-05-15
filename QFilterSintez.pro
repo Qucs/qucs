@@ -18,7 +18,8 @@ SOURCES += main.cpp\
     sallenkey.cpp \
     mfbfilter.cpp \
     qf_poly.cpp \
-    schcauer.cpp
+    schcauer.cpp \
+    transferfuncdialog.cpp
 
 HEADERS  += filtersintez.h \
     filter.h \
@@ -26,7 +27,8 @@ HEADERS  += filtersintez.h \
     mfbfilter.h \
     qf_poly.h \
     qf_matrix.h \
-    schcauer.h
+    schcauer.h \
+    transferfuncdialog.h
 
 RESOURCES += \
     qfiltersintez.qrc
