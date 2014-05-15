@@ -9,19 +9,14 @@ before_install:
   - sudo apt-get install libqt4-dev libqt4-qt3support
   - sudo apt-get install automake libtool gperf flex bison
 
-  # for adms
-  - sudo apt-get install libxml2 libxml2-dev
-  - sudo apt-get install zlib1g zlib1g-dev
-  - sudo apt-get install libgd2-xpm-dev
-
-  # configure cpan, no waiting for user input
-  - (echo y;echo o conf prerequisites_policy follow;echo o conf commit)| sudo cpan
-  - sudo cpan -i XML::LibXML
-  - sudo cpan -f GD
-
 script:
   - uname -a
   - $CXX --version
+
+  # Build ADMS from release
+  - wget http://sourceforge.net/projects/mot-adms/files/adms-source/2.3/adms-2.3.2.tar.gz -O /tmp/adms-2.3.2.tar.gz
+  - tar -xzvf /tmp/adms-2.3.2.tar.gz
+  - cd adms-2.3.2 && ./configure --prefix=/usr && make && make install
 
   # build GUI components
   - cd qucs
@@ -33,5 +28,5 @@ script:
   # build Qucs-ator
   - cd qucs-core
   - sh bootstrap.sh
-  - ./configure --enable-maintainer-mode
+  - ./configure --enable-maintainer-mode --with-mkadms=`which admsXml`
   - make
