@@ -452,14 +452,20 @@ void Filter::calcUserTrFunc()
 
 
     qf_poly Numenator(2,a);
-    qf_poly Denomenetor(2,b);
+    qf_poly Denomenator(2,b);
 
     Numenator.to_roots();
-    Denomenetor.to_roots();
+    Denomenator.to_roots();
 
     Numenator.disp_c();
-    Denomenetor.disp_c();
+    Denomenator.disp_c();
 
     Numenator.roots_to_complex(Zeros);
-    Denomenetor.roots_to_complex(Poles);
+    Denomenator.roots_to_complex(Poles);
+}
+
+void Filter::set_TrFunc(QVector<float> a, QVector<float> b)
+{
+    vec_A = a;
+    vec_B = b;
 }

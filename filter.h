@@ -39,6 +39,8 @@ private:
 protected:
     QVector< std::complex<float> > Poles;
     QVector< std::complex<float> > Zeros;
+    QVector<float> vec_B; // Transfer function numenator
+    QVector<float> vec_A; // and denominator
     QVector<RC_elements> Sections;
 
     Filter::FType ftype;
@@ -79,8 +81,9 @@ public:
 
     virtual void createSchematic(QString &s);
 
-
     virtual bool calcFilter();
+
+    void set_TrFunc(QVector<float> a, QVector<float> b);
 
 };
 
