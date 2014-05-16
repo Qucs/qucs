@@ -54,15 +54,29 @@ void TransferFuncDialog::getCoeffs(QVector<float> &a, QVector<float> &b)
     a.clear();
     b.clear();
 
-    for (int i=0;i<tblA->rowCount();i++) {
-        QString str = tblA->item(i,0)->text();
-        if (str.isEmpty()) break;
-        a.append(str.toFloat());
+    for (int i=0;i< tblA->rowCount();i++) {
+        QTableWidgetItem *itm = tblA->item(i,0);
+        if (itm!=0) {
+            QString str = itm->text();
+            if (str.isEmpty()) break;
+            bool ok;
+            float n = str.toFloat(&ok);
+            //qDebug()<<n;
+            if (ok) a.append(n);
+        }
     }
 
-    for (int i=0;i<tblB->rowCount();i++) {
-        QString str = tblB->item(i,0)->text();
-        if (str.isEmpty()) break;
-        b.append(str.toFloat());
+
+
+    for (int i=0;i< tblB->rowCount();i++) {
+        QTableWidgetItem *itm = tblB->item(i,0);
+        if (itm!=0) {
+            QString str = itm->text();
+            if (str.isEmpty()) break;
+            bool ok;
+            float n = str.toFloat(&ok);
+            //qDebug()<<n;
+            if (ok) b.append(n);
+        }
     }
 }
