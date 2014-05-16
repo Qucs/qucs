@@ -319,6 +319,47 @@ QucsSettingsDialog::QucsSettingsDialog(QucsApp *parent, const char *name)
     t->addTab(locationsTab, tr("Locations"));
 
     // ...........................................................
+    // The shortcut tab
+    QWidget *shortcutTab = new QWidget(t);
+    QGridLayout *shortcutGrid = new QGridLayout(shortcutTab);
+
+    QLabel *note3 = new QLabel( tr("Edit the shortcut keyboard"));
+    shortcutGrid->addWidget(note3,0,0,1,2);
+    //shortcutGrid->setRowStretch(0,1);
+    //shortcutGrid->setRowStretch(1,2);
+
+    QTableWidget *shortcutTable = new QTableWidget(shortcutTab);
+    shortcutTable->setColumnCount(2);
+
+    QTableWidgetItem *item3 = new QTableWidgetItem();
+    QTableWidgetItem *item4 = new QTableWidgetItem();
+
+    shortcutTable->setHorizontalHeaderItem(0, item3);
+    shortcutTable->setHorizontalHeaderItem(1, item4);
+ 
+    item3->setFlags(Qt::NoItemFlags);
+    item3->setText(tr("Action Description"));
+    item4->setText(tr("Shortcut"));
+
+    shortcutTable->horizontalHeader()->setStretchLastSection(true);
+    shortcutTable->verticalHeader()->hide();
+
+    shortcutGrid->addWidget(shortcutTable, 1,0,3,1);
+
+    QPushButton *SetShortcutButt = new QPushButton("Set shortcut");
+    shortcutGrid->addWidget(SetShortcutButt, 1, 1);
+    connect(SetShortcutButt, SIGNAL(clicked()), this, SLOT(slotSetShortcut()));
+
+    QPushButton *RemoveShortcutButt = new QPushButton("Remove shortcut");
+    shortcutGrid->addWidget(RemoveShortcutButt, 2,1);
+    connect(RemoveShortcutButt, SIGNAL(clicked()), this, SLOT(slotRemoveShortcut()));
+
+    QPushButton *DefaultShortcutButt = new QPushButton("Reset To Default");
+    shortcutGrid->addWidget(DefaultShortcutButt, 3,1);
+    connect(DefaultShortcutButt, SIGNAL(clicked()), this, SLOT(slotDefaultShortcut()));
+
+    t->addTab(shortcutTab, tr("Shortcut"));
+    // ...........................................................
     // buttons on the bottom of the dialog (independent of the TabWidget)
 
     QHBoxLayout *Butts = new QHBoxLayout();
@@ -822,4 +863,33 @@ void QucsSettingsDialog::makePathTable()
         path->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
         pathsTableWidget->setItem(row, 0, path);
     }
+}
+
+// setShortcut()
+//
+// check the validation of the shortcut
+// check whether the shortcut is duplicated
+// set the shortcut and the text in shortcutTable
+void 
+QucsSettingsDialog::slotSetShortcut()
+{
+  qDebug("set shortcut");
+}
+
+// removeShortcut()
+//
+// set the shortcut to space and the text in shortcutTable
+void 
+QucsSettingsDialog::slotRemoveShortcut()
+{
+  qDebug("remove shortcut");
+}
+
+// removeShortcut()
+//
+// set the shortcut to space and the text in shortcutTable
+void 
+QucsSettingsDialog::slotDefaultShortcut()
+{
+  qDebug("default shortcut");
 }

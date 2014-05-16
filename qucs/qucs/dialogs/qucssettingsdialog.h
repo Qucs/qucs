@@ -72,8 +72,9 @@ private slots:
     void slotAddPath();
     void slotAddPathWithSubFolders();
     void slotRemovePath();
-
-
+    void slotSetShortcut();
+    void slotRemoveShortcut();
+    void slotDefaultShortcut();
 public:
     QucsApp *App;
 
