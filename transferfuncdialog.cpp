@@ -48,3 +48,21 @@ TransferFuncDialog::TransferFuncDialog(QWidget *parent) :
     this->setLayout(top1);
 
 }
+
+void TransferFuncDialog::getCoeffs(QVector<float> &a, QVector<float> &b)
+{
+    a.clear();
+    b.clear();
+
+    for (int i=0;i<tblA->rowCount();i++) {
+        QString str = tblA->item(i,0)->text();
+        if (str.isEmpty()) break;
+        a.append(str.toFloat());
+    }
+
+    for (int i=0;i<tblB->rowCount();i++) {
+        QString str = tblB->item(i,0)->text();
+        if (str.isEmpty()) break;
+        b.append(str.toFloat());
+    }
+}
