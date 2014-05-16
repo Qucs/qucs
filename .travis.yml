@@ -9,6 +9,10 @@ before_install:
   - sudo apt-get install libqt4-dev libqt4-qt3support
   - sudo apt-get install automake libtool gperf flex #bison
 
+  # Set xvfb for headless qucs GUI test
+  - "export DISPLAY=:99.0"
+  - "sh -e /etc/init.d/xvfb start"
+
 script:
   - uname -a
   - $CXX --version
@@ -25,15 +29,20 @@ script:
   - cd adms-2.3.2 && ./configure --prefix=/usr && make && sudo make install && cd ..
   - admsXml --version
 
-  # build GUI components
+  # build Qucs GUI components
   - cd qucs
   - sh autogen.sh
-  - ./configure --enable-maintainer-mode
-  - make
+  - ./configure --enable-maintainer-mode --prefix=/usr
+  - make && sudo make install
   - cd ..
 
-  # build Qucs-ator
+  # build Qucs-core
   - cd qucs-core
   - sh bootstrap.sh
-  - ./configure --enable-maintainer-mode --with-mkadms=`which admsXml`
-  - make
+  - ./configure --enable-maintainer-mode --prefix=/usr --with-mkadms=`which admsXml`
+  - make && sudo make install
+  - cd ..
+
+  # test installation
+  - qucs -v
+  - qucsator -v
