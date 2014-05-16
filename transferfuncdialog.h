@@ -25,6 +25,8 @@ private:
 
 public:
     explicit TransferFuncDialog(QWidget *parent = 0);
+
+    void getCoeffs(QVector<float> &a, QVector<float> &b);
     
 signals:
     
