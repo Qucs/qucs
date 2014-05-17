@@ -329,6 +329,8 @@ QucsSettingsDialog::QucsSettingsDialog(QucsApp *parent, const char *name)
     //shortcutGrid->setRowStretch(1,2);
 
     QTableWidget *shortcutTable = new QTableWidget(shortcutTab);
+    QMap<QString, QString>* map = &QucsSettings.Shortcut;
+    shortcutTable->setRowCount(map->size());
     shortcutTable->setColumnCount(2);
 
     QTableWidgetItem *item3 = new QTableWidgetItem();
@@ -345,6 +347,23 @@ QucsSettingsDialog::QucsSettingsDialog(QucsApp *parent, const char *name)
     shortcutTable->verticalHeader()->hide();
 
     shortcutGrid->addWidget(shortcutTable, 1,0,3,1);
+
+    // fill shortcut table with all shortcut in qucssettings
+    int row = 0;
+    QMap<QString, QString>::const_iterator iter = map->constBegin();
+    while(iter != map->constEnd())
+    {
+      qDebug(iter.key());
+      qDebug(iter.value());
+      QTableWidgetItem *action = new QTableWidgetItem(QString(iter.key()));
+      QTableWidgetItem *shortcut = new QTableWidgetItem(QString(iter.value()));
+      action->setFlags(action->flags() & ~Qt::ItemIsSelectable);
+      shortcut->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+      shortcutTable->setItem(row, 0, action);
+      shortcutTable->setItem(row, 1, shortcut);
+      iter++;
+      ++row;
+    }
 
     QPushButton *SetShortcutButt = new QPushButton("Set shortcut");
     shortcutGrid->addWidget(SetShortcutButt, 1, 1);
