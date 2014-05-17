@@ -69,8 +69,8 @@ private:
     float Fc;
     int Nfil;
 
-    QVector<float> coeffB;
-    QVector<float> coeffC;
+    QVector<long double> coeffB;
+    QVector<long double> coeffC;
 
     Filter::FType ftyp;
 
