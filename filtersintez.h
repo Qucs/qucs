@@ -70,7 +70,7 @@ private:
     int Nfil;
 
     QVector<long double> coeffB;
-    QVector<long double> coeffC;
+    QVector<long double> coeffA;
 
     Filter::FType ftyp;
 

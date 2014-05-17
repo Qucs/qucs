@@ -371,11 +371,10 @@ void FilterSintez::slotSwitchParameters()
 
 void FilterSintez::slotDefineTransferFunc()
 {
-    QVector<long double> a,b;
 
-    TransferFuncDialog *trfuncdlg = new TransferFuncDialog(this);
+    TransferFuncDialog *trfuncdlg = new TransferFuncDialog(coeffA,coeffB,this);
     if (trfuncdlg->exec()) {
-        trfuncdlg->getCoeffs(a,b);
+        trfuncdlg->getCoeffs(coeffA,coeffB);
         //qDebug()<<a<<b;
     }
     delete trfuncdlg;

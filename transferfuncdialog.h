@@ -24,7 +24,7 @@ private:
     QHBoxLayout *low3;
 
 public:
-    explicit TransferFuncDialog(QWidget *parent = 0);
+    explicit TransferFuncDialog(QVector<long double> &a, QVector<long double> &b, QWidget *parent = 0);
 
     void getCoeffs(QVector<long double> &a, QVector<long double> &b);
     
