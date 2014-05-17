@@ -74,6 +74,9 @@ struct tQucsSettings {
   unsigned int numRecentDocs;
   QStringList RecentDocs;
 
+  //shortcut
+  QMap<QString,QString> Shortcut;
+
   bool IgnoreFutureVersion;
 
 };
