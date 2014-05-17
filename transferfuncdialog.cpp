@@ -1,6 +1,6 @@
 #include "transferfuncdialog.h"
 
-TransferFuncDialog::TransferFuncDialog(QWidget *parent) :
+TransferFuncDialog::TransferFuncDialog(QVector<long double> &a, QVector<long double> &b, QWidget *parent) :
     QDialog(parent)
 {
     lblB = new QLabel(tr("Numenator b[i]="));
@@ -19,6 +19,18 @@ TransferFuncDialog::TransferFuncDialog(QWidget *parent) :
     tblA->setHorizontalHeaderLabels(head1);
     tblA->setVerticalHeaderLabels(indexes);
 
+    if (!a.isEmpty()) {
+        long double num;
+        int i = 0;
+
+        foreach (num,a) {
+            QTableWidgetItem *it = new QTableWidgetItem(QString::number((double)num));
+            tblA->setItem(i,0,it);
+            i++;
+        }
+    }
+
+
     tblB = new QTableWidget;
     QStringList head2;
     head2<<tr("b[i]");
@@ -26,6 +38,17 @@ TransferFuncDialog::TransferFuncDialog(QWidget *parent) :
     tblB->setRowCount(50);
     tblB->setHorizontalHeaderLabels(head2);
     tblB->setVerticalHeaderLabels(indexes);
+
+    if (!b.isEmpty()) {
+        long double num;
+        int i = 0;
+
+        foreach (num,b) {
+            QTableWidgetItem *it = new QTableWidgetItem(QString::number((double)num));
+            tblB->setItem(i,0,it);
+            i++;
+        }
+    }
 
     btnAccept = new QPushButton(tr("Accept"));
     connect(btnAccept,SIGNAL(clicked()),this,SLOT(accept()));
