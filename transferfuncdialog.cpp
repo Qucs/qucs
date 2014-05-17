@@ -6,18 +6,26 @@ TransferFuncDialog::TransferFuncDialog(QWidget *parent) :
     lblB = new QLabel(tr("Numenator b[i]="));
     lblA = new QLabel(tr("Denomenator a[i]="));
 
+    QStringList indexes;
+    for (int i=0;i<50;i++) {
+        indexes<<QString::number(i);
+    }
+
     tblA = new QTableWidget;
     QStringList head1;
     head1<<tr("a[i]");
     tblA->setColumnCount(head1.count());
     tblA->setRowCount(50);
     tblA->setHorizontalHeaderLabels(head1);
+    tblA->setVerticalHeaderLabels(indexes);
+
     tblB = new QTableWidget;
     QStringList head2;
     head2<<tr("b[i]");
     tblB->setColumnCount(head2.count());
     tblB->setRowCount(50);
     tblB->setHorizontalHeaderLabels(head2);
+    tblB->setVerticalHeaderLabels(indexes);
 
     btnAccept = new QPushButton(tr("Accept"));
     connect(btnAccept,SIGNAL(clicked()),this,SLOT(accept()));
@@ -49,7 +57,7 @@ TransferFuncDialog::TransferFuncDialog(QWidget *parent) :
 
 }
 
-void TransferFuncDialog::getCoeffs(QVector<float> &a, QVector<float> &b)
+void TransferFuncDialog::getCoeffs(QVector<long double> &a, QVector<long double> &b)
 {
     a.clear();
     b.clear();
@@ -60,7 +68,7 @@ void TransferFuncDialog::getCoeffs(QVector<float> &a, QVector<float> &b)
             QString str = itm->text();
             if (str.isEmpty()) break;
             bool ok;
-            float n = str.toFloat(&ok);
+            long double n = (long double) str.toDouble(&ok);
             //qDebug()<<n;
             if (ok) a.append(n);
         }
@@ -74,7 +82,7 @@ void TransferFuncDialog::getCoeffs(QVector<float> &a, QVector<float> &b)
             QString str = itm->text();
             if (str.isEmpty()) break;
             bool ok;
-            float n = str.toFloat(&ok);
+            long double n = (long double) str.toDouble(&ok);
             //qDebug()<<n;
             if (ok) b.append(n);
         }
