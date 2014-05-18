@@ -85,7 +85,7 @@ void TransferFuncDialog::getCoeffs(QVector<long double> &a, QVector<long double>
     a.clear();
     b.clear();
 
-    for (int i=0;i< tblA->rowCount();i++) {
+    for (int i=tblA->rowCount()-1;i>=0;i--) {
         QTableWidgetItem *itm = tblA->item(i,0);
         if (itm!=0) {
             QString str = itm->text();
@@ -99,7 +99,7 @@ void TransferFuncDialog::getCoeffs(QVector<long double> &a, QVector<long double>
 
 
 
-    for (int i=0;i< tblB->rowCount();i++) {
+    for (int i=tblB->rowCount()-1;i>=0;i--) {
         QTableWidgetItem *itm = tblB->item(i,0);
         if (itm!=0) {
             QString str = itm->text();

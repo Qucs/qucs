@@ -447,24 +447,26 @@ void Filter::calcCauer() // from Digital Filter Designer's handbook p.103
 
 void Filter::calcUserTrFunc()
 {
-    long double a[3]={1,2,1};
-    long double b[3]={2,2,1};
+    if ((!vec_A.isEmpty())&&(!vec_B.isEmpty())) {
+        long double *a = vec_A.data();
+        long double *b = vec_B.data();
 
+        qf_poly Numenator(2,a);
+        qf_poly Denomenator(2,b);
 
-    qf_poly Numenator(2,a);
-    qf_poly Denomenator(2,b);
+        Numenator.to_roots();
+        Denomenator.to_roots();
 
-    Numenator.to_roots();
-    Denomenator.to_roots();
+        Numenator.disp_c();
+        Denomenator.disp_c();
 
-    Numenator.disp_c();
-    Denomenator.disp_c();
+        Numenator.roots_to_complex(Zeros);
+        Denomenator.roots_to_complex(Poles);
+    }
 
-    Numenator.roots_to_complex(Zeros);
-    Denomenator.roots_to_complex(Poles);
 }
 
-void Filter::set_TrFunc(QVector<float> a, QVector<float> b)
+void Filter::set_TrFunc(QVector<long double> a, QVector<long double> b)
 {
     vec_A = a;
     vec_B = b;
