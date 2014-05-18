@@ -84,7 +84,7 @@ public:
     QPushButton *FontButton, *BGColorButton;
     QLineEdit *undoNumEdit, *editorEdit, *Input_Suffix, *Input_Program,
               *homeEdit, *admsXmlEdit, *ascoEdit, *octaveEdit;
-    QTableWidget *fileTypesTableWidget, *pathsTableWidget;
+    QTableWidget *fileTypesTableWidget, *pathsTableWidget, *shortcutTableWidget;
     QStandardItemModel *model;
     QPushButton *ColorComment, *ColorString, *ColorInteger,
                 *ColorReal, *ColorCharacter, *ColorDataType, *ColorAttribute,
@@ -100,6 +100,7 @@ private:
 
 private:
     void makePathTable();
+    void makeShortcutTable();
 
 };
 

@@ -328,42 +328,26 @@ QucsSettingsDialog::QucsSettingsDialog(QucsApp *parent, const char *name)
     //shortcutGrid->setRowStretch(0,1);
     //shortcutGrid->setRowStretch(1,2);
 
-    QTableWidget *shortcutTable = new QTableWidget(shortcutTab);
-    QMap<QString, QString>* map = &QucsSettings.Shortcut;
-    shortcutTable->setRowCount(map->size());
-    shortcutTable->setColumnCount(2);
+    shortcutTableWidget = new QTableWidget(shortcutTab);
+    shortcutTableWidget->setColumnCount(2);
 
     QTableWidgetItem *item3 = new QTableWidgetItem();
     QTableWidgetItem *item4 = new QTableWidgetItem();
 
-    shortcutTable->setHorizontalHeaderItem(0, item3);
-    shortcutTable->setHorizontalHeaderItem(1, item4);
+    shortcutTableWidget->setHorizontalHeaderItem(0, item3);
+    shortcutTableWidget->setHorizontalHeaderItem(1, item4);
  
     item3->setFlags(Qt::NoItemFlags);
     item3->setText(tr("Action Description"));
     item4->setText(tr("Shortcut"));
 
-    shortcutTable->horizontalHeader()->setStretchLastSection(true);
-    shortcutTable->verticalHeader()->hide();
+    shortcutTableWidget->horizontalHeader()->setStretchLastSection(true);
+    shortcutTableWidget->verticalHeader()->hide();
 
-    shortcutGrid->addWidget(shortcutTable, 1,0,1,2);
+    shortcutGrid->addWidget(shortcutTableWidget, 1,0,1,2);
 
     // fill shortcut table with all shortcut in qucssettings
-    int row = 0;
-    QMap<QString, QString>::const_iterator iter = map->constBegin();
-    while(iter != map->constEnd())
-    {
-      qDebug(iter.key());
-      qDebug(iter.value());
-      QTableWidgetItem *action = new QTableWidgetItem(QString(iter.key()));
-      QTableWidgetItem *shortcut = new QTableWidgetItem(QString(iter.value()));
-      action->setFlags(action->flags() & ~Qt::ItemIsSelectable & ~Qt::ItemIsEditable);
-      shortcut->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable);
-      shortcutTable->setItem(row, 0, action);
-      shortcutTable->setItem(row, 1, shortcut);
-      iter++;
-      ++row;
-    }
+    makeShortcutTable();
 
     QVBoxLayout *shortcutLeft = new QVBoxLayout();
 
@@ -900,11 +884,41 @@ void QucsSettingsDialog::makePathTable()
     }
 }
 
+// makeShortcutTable()
+//
+// Fill in the shortcut table with content in QucsSettings.Shortcut map
+void QucsSettingsDialog::makeShortcutTable()
+{
+  QMap<QString, QString>* map = &QucsSettings.Shortcut;
+
+  // remove all the item from the table
+  shortcutTableWidget->clearContents();
+  shortcutTableWidget->setRowCount(map->size());
+
+  // fill table with action name and shortcut
+  QMap<QString, QString>::const_iterator iter = map->constBegin();
+  int row = 0;
+  while(iter != map->constEnd())
+  {
+    qDebug(iter.key());
+    qDebug(iter.value());
+    QTableWidgetItem *action = new QTableWidgetItem(QString(iter.key()));
+    QTableWidgetItem *shortcut = new QTableWidgetItem(QString(iter.value()));
+    action->setFlags(action->flags() & ~Qt::ItemIsSelectable & ~Qt::ItemIsEditable);
+    shortcut->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable);
+    shortcutTableWidget->setItem(row, 0, action);
+    shortcutTableWidget->setItem(row, 1, shortcut);
+    iter++;
+    ++row;
+  }
+}
+
+
 // setShortcut()
 //
 // check the validation of the shortcut
 // check whether the shortcut is duplicated
-// set the shortcut and the text in shortcutTable
+// set the shortcut and the text in shortcutTableWidget
 void 
 QucsSettingsDialog::slotSetShortcut()
 {
@@ -913,7 +927,7 @@ QucsSettingsDialog::slotSetShortcut()
 
 // removeShortcut()
 //
-// set the shortcut to space and the text in shortcutTable
+// set the shortcut to space and the text in shortcutTableWidget
 void 
 QucsSettingsDialog::slotRemoveShortcut()
 {
