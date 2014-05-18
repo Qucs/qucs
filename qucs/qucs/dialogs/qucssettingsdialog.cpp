@@ -905,7 +905,7 @@ void QucsSettingsDialog::makeShortcutTable()
     QTableWidgetItem *action = new QTableWidgetItem(QString(iter.key()));
     QTableWidgetItem *shortcut = new QTableWidgetItem(QString(iter.value()));
     action->setFlags(action->flags() & ~Qt::ItemIsSelectable & ~Qt::ItemIsEditable);
-    shortcut->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable);
+    shortcut->setFlags(shortcut->flags() & ~Qt::ItemIsEditable);
     shortcutTableWidget->setItem(row, 0, action);
     shortcutTableWidget->setItem(row, 1, shortcut);
     iter++;
@@ -931,7 +931,13 @@ QucsSettingsDialog::slotSetShortcut()
 void 
 QucsSettingsDialog::slotRemoveShortcut()
 {
+  QMap<QString, QString>* map = &QucsSettings.Shortcut;
+
   qDebug("remove shortcut");
+  int row = shortcutTableWidget->currentRow();
+  QString key = shortcutTableWidget->item(row,0)->text();
+  (*map)[key] = QString("");
+  shortcutTableWidget->item(row,1)->setText(QString(""));
 }
 
 // removeShortcut()
