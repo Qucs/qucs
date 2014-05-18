@@ -941,4 +941,6 @@ void
 QucsSettingsDialog::slotDefaultShortcut()
 {
   qDebug("default shortcut");
+  setDefaultShortcut();
+  makeShortcutTable();
 }
