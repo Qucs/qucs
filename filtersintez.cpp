@@ -235,6 +235,9 @@ void FilterSintez::slotCalcSchematic()
                 QString s;
                 if (!((ffunc==Filter::InvChebyshev)||(ffunc==Filter::Cauer))) {
                     MFBfilter mfb(ffunc,ftyp,par);
+                    if (ffunc==Filter::User) {
+                        mfb.set_TrFunc(coeffA,coeffB);
+                    }
                     bool ok = mfb.calcFilter();
                     mfb.createPolesZerosList(lst);
                     mfb.createPartList(lst);
@@ -254,6 +257,9 @@ void FilterSintez::slotCalcSchematic()
     case 2 : {
                QString s;
                SallenKey sk(ffunc,ftyp,par);
+               if (ffunc==Filter::User) {
+                   sk.set_TrFunc(coeffA,coeffB);
+               }
                bool ok = sk.calcFilter();
                sk.createPolesZerosList(lst);
                sk.createPartList(lst);
