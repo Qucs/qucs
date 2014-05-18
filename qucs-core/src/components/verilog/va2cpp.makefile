@@ -10,14 +10,14 @@
 # Module/file name
 MODEL=
 
-# Please define
+# Please define Qucs prefix, used to define include path
 PREFIX=
 
 # Location of installed Qucs XML files
 INC=$(PREFIX)/include/qucs-core
 
-# Locate admsXml
-admsXml=$(PREFIX)/bin/admsXml
+# Locate admsXml, typicaly on the same prefix as Qucs
+ADMSXML=$(PREFIX)/bin/admsXml
 
 # file suffix
 VA=.va
@@ -58,7 +58,7 @@ va2cpp: clean $(GEN_SRC)
 # wich are known to work.
 $(GEN_SRC): $(MODEL)$(VA)
 	@echo '# va2cpp - Creating C++ sources.'
-	$(admsXml) $(MODEL)$(VA) \
+	$(ADMSXML) $(MODEL)$(VA) \
                            -I $(INC)                    \
                            -e $(INC)/qucsVersion.xml    \
                            -e $(INC)/qucsMODULEcore.xml \
