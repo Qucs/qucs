@@ -346,7 +346,7 @@ QucsSettingsDialog::QucsSettingsDialog(QucsApp *parent, const char *name)
     shortcutTable->horizontalHeader()->setStretchLastSection(true);
     shortcutTable->verticalHeader()->hide();
 
-    shortcutGrid->addWidget(shortcutTable, 1,0,3,1);
+    shortcutGrid->addWidget(shortcutTable, 1,0,1,2);
 
     // fill shortcut table with all shortcut in qucssettings
     int row = 0;
@@ -357,25 +357,41 @@ QucsSettingsDialog::QucsSettingsDialog(QucsApp *parent, const char *name)
       qDebug(iter.value());
       QTableWidgetItem *action = new QTableWidgetItem(QString(iter.key()));
       QTableWidgetItem *shortcut = new QTableWidgetItem(QString(iter.value()));
-      action->setFlags(action->flags() & ~Qt::ItemIsSelectable);
-      shortcut->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+      action->setFlags(action->flags() & ~Qt::ItemIsSelectable & ~Qt::ItemIsEditable);
+      shortcut->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable);
       shortcutTable->setItem(row, 0, action);
       shortcutTable->setItem(row, 1, shortcut);
       iter++;
       ++row;
     }
 
+    QVBoxLayout *shortcutLeft = new QVBoxLayout();
+
+    QLabel *ShortcutMessage = new QLabel("Keyin the shortcut below:");
+    shortcutLeft->addWidget(ShortcutMessage);
+
+    QLineEdit *ShortcutEdit = new QLineEdit("Edit shortcut here");
+    shortcutLeft->addWidget(ShortcutEdit);
+
+    QLabel *ShortcutState = new QLabel("Shortcut Setting State");
+    shortcutLeft->addWidget(ShortcutState);
+
+    QVBoxLayout *shortcutRight = new QVBoxLayout();
+
     QPushButton *SetShortcutButt = new QPushButton("Set shortcut");
-    shortcutGrid->addWidget(SetShortcutButt, 1, 1);
     connect(SetShortcutButt, SIGNAL(clicked()), this, SLOT(slotSetShortcut()));
+    shortcutRight->addWidget(SetShortcutButt);
 
     QPushButton *RemoveShortcutButt = new QPushButton("Remove shortcut");
-    shortcutGrid->addWidget(RemoveShortcutButt, 2,1);
     connect(RemoveShortcutButt, SIGNAL(clicked()), this, SLOT(slotRemoveShortcut()));
+    shortcutRight->addWidget(RemoveShortcutButt);
 
     QPushButton *DefaultShortcutButt = new QPushButton("Reset To Default");
-    shortcutGrid->addWidget(DefaultShortcutButt, 3,1);
     connect(DefaultShortcutButt, SIGNAL(clicked()), this, SLOT(slotDefaultShortcut()));
+    shortcutRight->addWidget(DefaultShortcutButt);
+
+    shortcutGrid->addLayout(shortcutLeft, 2, 0);
+    shortcutGrid->addLayout(shortcutRight, 2, 1);
 
     t->addTab(shortcutTab, tr("Shortcut"));
     // ...........................................................
