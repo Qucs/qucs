@@ -26,7 +26,7 @@
 if MAINTAINER_MODE
 ## Test if an internal adms has been requested
 if USE_INTERNAL_ADMS
-SUBDIRS = adms
+SUBDIRS = deps/adms
 else
 SUBDIRS =
 endif

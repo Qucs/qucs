@@ -25,14 +25,14 @@
 here=`pwd`
 cd `dirname $0`
 
-if [ -d "./adms" ]; then
+if [ -d "./deps/adms" ]; then
 # if present, run bootstrap on the adms subproject
-  if [ -e "./adms/bootstrap.sh" ]; then
+  if [ -e "./deps/adms/bootstrap.sh" ]; then
     echo "running adms bootstrap.sh ..."
-    ./adms/bootstrap.sh "$@"
-  elif [ -e "./adms/autogen.sh" ]; then
+    ./deps/adms/bootstrap.sh "$@"
+  elif [ -e "./deps/adms/autogen.sh" ]; then
     echo "running autogen.sh for the adms sources ..."
-    ./adms/autogen.sh "$@";
+    ./deps/adms/autogen.sh "$@";
   else
     echo "Could not locate adms autogen script in ./adms, you may use configure with --disable-adms to use installed version"
     exit

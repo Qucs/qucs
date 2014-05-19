@@ -176,7 +176,7 @@ if MAINTAINER_MODE
 ## set the path to the admsXml binary depeding on the choice
 ## the user made at configure time
 if USE_INTERNAL_ADMS
-ADMSXML = $(abs_top_builddir)/adms/admsXml/admsXml
+ADMSXML = $(abs_top_builddir)/deps/adms/admsXml/admsXml
 else
 ADMSXML = @ADMSXML@
 endif
