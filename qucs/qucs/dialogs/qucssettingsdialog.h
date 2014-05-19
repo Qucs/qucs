@@ -36,6 +36,7 @@ class QIntValidator;
 class QRegExpValidator;
 class QTableView;
 class QStandardItemModel;
+class KeySequenceEdit;
 
 class QucsSettingsDialog : public QDialog
 {
@@ -84,7 +85,8 @@ public:
     QComboBox *LanguageCombo;
     QPushButton *FontButton, *BGColorButton;
     QLineEdit *undoNumEdit, *editorEdit, *Input_Suffix, *Input_Program,
-              *homeEdit, *admsXmlEdit, *ascoEdit, *octaveEdit, *shortcutEdit;
+              *homeEdit, *admsXmlEdit, *ascoEdit, *octaveEdit;
+    KeySequenceEdit *shortcutEdit;
     QTableWidget *fileTypesTableWidget, *pathsTableWidget, *shortcutTableWidget;
     QStandardItemModel *model;
     QPushButton *ColorComment, *ColorString, *ColorInteger,

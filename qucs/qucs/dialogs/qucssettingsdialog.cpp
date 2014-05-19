@@ -26,6 +26,7 @@
 #include "main.h"
 #include "textdoc.h"
 #include "schematic.h"
+#include "keysequenceedit.h"
 
 #include <QWidget>
 #include <QLabel>
@@ -354,7 +355,7 @@ QucsSettingsDialog::QucsSettingsDialog(QucsApp *parent, const char *name)
     QLabel *shortcutMessage = new QLabel("Keyin the shortcut below:");
     shortcutLeft->addWidget(shortcutMessage);
 
-    shortcutEdit = new QLineEdit("Edit shortcut here");
+    shortcutEdit = new KeySequenceEdit();
     shortcutLeft->addWidget(shortcutEdit);
 
     QLabel *shortcutState = new QLabel("Shortcut Setting State");
