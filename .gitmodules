@@ -1,0 +1,3 @@
+[submodule "qucs-core/deps/adms"]
+	path = qucs-core/deps/adms
+	url = https://github.com/Qucs/ADMS.git
