@@ -4,6 +4,23 @@
 
 <http://sourceforge.net/projects/qucs>
 
+
+### Download the source
+
+Repositories (official and mirror):
+
+    git clone git://git.code.sf.net/p/qucs/git
+    git clone git://github.com/Qucs/qucs.git
+
+For development conveninence ADMS is provided as a Git submodule.
+To download the ADMS submodule either:
+
+   * clone submodules recursively:
+     * `git clone --recursive [repository]`
+   * or after cloning, do:
+     * `git submodule init`
+     * `git submodule update`
+
 ### Compile instructions Linux (Debian/Ubuntu)
 
 First make sure you have all dependencies installed:
@@ -40,6 +57,10 @@ Compile qucs-core:
     make
     sudo make install
 
-Note, Qucs it will be installed by default to `/usr/local/`. This can be modified by passing `--prefix=[some location]` to the `./configure` script.
+Note:
+
+ * Qucs it will be installed by default to `/usr/local/`. This can be modified by passing `--prefix=[some location]` to the `./configure` script.
+
+ * ADMS can be installed from a released tarball (>= 2.3.0). To use an already available `admsXml` pass the option `--with-mkadms=[path/to/admsXml]` to the `./configure` script
 
 
