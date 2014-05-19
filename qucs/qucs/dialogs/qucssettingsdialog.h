@@ -75,6 +75,7 @@ private slots:
     void slotSetShortcut();
     void slotRemoveShortcut();
     void slotDefaultShortcut();
+    int slotCheckUnique(QString);
 public:
     QucsApp *App;
 
@@ -83,7 +84,7 @@ public:
     QComboBox *LanguageCombo;
     QPushButton *FontButton, *BGColorButton;
     QLineEdit *undoNumEdit, *editorEdit, *Input_Suffix, *Input_Program,
-              *homeEdit, *admsXmlEdit, *ascoEdit, *octaveEdit;
+              *homeEdit, *admsXmlEdit, *ascoEdit, *octaveEdit, *shortcutEdit;
     QTableWidget *fileTypesTableWidget, *pathsTableWidget, *shortcutTableWidget;
     QStandardItemModel *model;
     QPushButton *ColorComment, *ColorString, *ColorInteger,

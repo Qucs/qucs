@@ -351,14 +351,14 @@ QucsSettingsDialog::QucsSettingsDialog(QucsApp *parent, const char *name)
 
     QVBoxLayout *shortcutLeft = new QVBoxLayout();
 
-    QLabel *ShortcutMessage = new QLabel("Keyin the shortcut below:");
-    shortcutLeft->addWidget(ShortcutMessage);
+    QLabel *shortcutMessage = new QLabel("Keyin the shortcut below:");
+    shortcutLeft->addWidget(shortcutMessage);
 
-    QLineEdit *ShortcutEdit = new QLineEdit("Edit shortcut here");
-    shortcutLeft->addWidget(ShortcutEdit);
+    shortcutEdit = new QLineEdit("Edit shortcut here");
+    shortcutLeft->addWidget(shortcutEdit);
 
-    QLabel *ShortcutState = new QLabel("Shortcut Setting State");
-    shortcutLeft->addWidget(ShortcutState);
+    QLabel *shortcutState = new QLabel("Shortcut Setting State");
+    shortcutLeft->addWidget(shortcutState);
 
     QVBoxLayout *shortcutRight = new QVBoxLayout();
 
@@ -923,6 +923,9 @@ void
 QucsSettingsDialog::slotSetShortcut()
 {
   qDebug("set shortcut");
+  qDebug(shortcutEdit->text());
+  int ret = slotCheckUnique(shortcutEdit->text());
+  qDebug(QString::number(ret));
 }
 
 // removeShortcut()
@@ -949,4 +952,25 @@ QucsSettingsDialog::slotDefaultShortcut()
   qDebug("default shortcut");
   setDefaultShortcut();
   makeShortcutTable();
+}
+
+// checkUnique()
+//
+// check whether input shortcut is conflict with any shortcut in table
+// return the row number if conflict
+int
+QucsSettingsDialog::slotCheckUnique(QString keySequence) 
+{
+  qDebug(keySequence);
+  QMap<QString, QString>* map = &QucsSettings.Shortcut;
+  QMap<QString, QString>::const_iterator iter = map->constBegin();
+  int row = 0;
+  while(iter != map->constEnd())
+  {
+    if (keySequence == QString(iter.value())) {
+      return row;
+    }
+    ++row;
+    iter++;
+  }
 }
