@@ -76,7 +76,7 @@ private slots:
     void slotSetShortcut();
     void slotRemoveShortcut();
     void slotDefaultShortcut();
-    int slotCheckUnique(QString);
+    void slotCheckUnique();
 public:
     QucsApp *App;
 
@@ -86,6 +86,7 @@ public:
     QPushButton *FontButton, *BGColorButton;
     QLineEdit *undoNumEdit, *editorEdit, *Input_Suffix, *Input_Program,
               *homeEdit, *admsXmlEdit, *ascoEdit, *octaveEdit;
+    QLabel *shortcutState;
     KeySequenceEdit *shortcutEdit;
     QTableWidget *fileTypesTableWidget, *pathsTableWidget, *shortcutTableWidget;
     QStandardItemModel *model;
@@ -100,11 +101,11 @@ public:
 
 private:
     QStringList currentPaths;
+    int conflictRow;
 
 private:
     void makePathTable();
     void makeShortcutTable();
-
 };
 
 #endif

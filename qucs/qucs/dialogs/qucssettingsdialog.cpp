@@ -357,8 +357,9 @@ QucsSettingsDialog::QucsSettingsDialog(QucsApp *parent, const char *name)
 
     shortcutEdit = new KeySequenceEdit();
     shortcutLeft->addWidget(shortcutEdit);
+    connect(shortcutEdit, SIGNAL(textChanged(QString)), this, SLOT(slotCheckUnique()));
 
-    QLabel *shortcutState = new QLabel("Shortcut Setting State");
+    shortcutState = new QLabel();
     shortcutLeft->addWidget(shortcutState);
 
     QVBoxLayout *shortcutRight = new QVBoxLayout();
@@ -598,6 +599,17 @@ void QucsSettingsDialog::slotApply()
     QucsSettings.OctaveBinDir = octaveEdit->text();
 
     QucsSettings.IgnoreFutureVersion = checkLoadFromFutureVersions->isChecked();
+
+    //shortcut section
+    for (int row=0; row < shortcutTableWidget->rowCount(); row++)
+    {
+      if (QucsSettings.Shortcut[shortcutTableWidget->item(row,0)->text()] 
+          != shortcutTableWidget->item(row,1)->text()) {
+        QucsSettings.Shortcut[shortcutTableWidget->item(row,0)->text()]
+          = shortcutTableWidget->item(row,1)->text();
+        changed = true;
+      }
+    }
 
     saveApplSettings(App);  // also sets the small and large font
 
@@ -925,8 +937,14 @@ QucsSettingsDialog::slotSetShortcut()
 {
   qDebug("set shortcut");
   qDebug(shortcutEdit->text());
-  int ret = slotCheckUnique(shortcutEdit->text());
-  qDebug(QString::number(ret));
+  qDebug(QString::number(conflictRow));
+  if (shortcutTableWidget->currentItem() != NULL) {
+    if (conflictRow != -1) {
+      shortcutTableWidget->item(conflictRow,1)->setText(QString(""));
+    }
+    shortcutTableWidget->currentItem()->setText(shortcutEdit->text());
+    shortcutEdit->clear();
+  }
 }
 
 // removeShortcut()
@@ -939,12 +957,14 @@ QucsSettingsDialog::slotRemoveShortcut()
 
   qDebug("remove shortcut");
   int row = shortcutTableWidget->currentRow();
-  QString key = shortcutTableWidget->item(row,0)->text();
-  (*map)[key] = QString("");
-  shortcutTableWidget->item(row,1)->setText(QString(""));
+  if (row >= 0 && row < shortcutTableWidget->rowCount()) {
+    QString key = shortcutTableWidget->item(row,0)->text();
+    (*map)[key] = QString("");
+    shortcutTableWidget->item(row,1)->setText(QString(""));
+  }
 }
 
-// removeShortcut()
+// defaultShortcut()
 //
 // set the shortcut to space and the text in shortcutTable
 void 
@@ -959,19 +979,29 @@ QucsSettingsDialog::slotDefaultShortcut()
 //
 // check whether input shortcut is conflict with any shortcut in table
 // return the row number if conflict
-int
-QucsSettingsDialog::slotCheckUnique(QString keySequence) 
+void
+QucsSettingsDialog::slotCheckUnique() 
 {
-  qDebug(keySequence);
-  QMap<QString, QString>* map = &QucsSettings.Shortcut;
-  QMap<QString, QString>::const_iterator iter = map->constBegin();
-  int row = 0;
-  while(iter != map->constEnd())
-  {
-    if (keySequence == QString(iter.value())) {
-      return row;
+  qDebug("check conflict");
+  conflictRow = -1;
+  if (!shortcutEdit->text().isEmpty()) {
+    qDebug(shortcutEdit->text());
+    QMap<QString, QString>* map = &QucsSettings.Shortcut;
+    QMap<QString, QString>::const_iterator iter = map->constBegin();
+    int row = 0;
+    while(iter != map->constEnd())
+    {
+      if (shortcutEdit->text() == QString(iter.value())) {
+        conflictRow = row;
+      }
+      ++row;
+      iter++;
     }
-    ++row;
-    iter++;
+  }
+  if (conflictRow != -1) {
+    shortcutState->setText(QString("shortcut conflict with: ") + 
+        shortcutTableWidget->item(conflictRow,0)->text());
+  } else {
+    shortcutState->setText(QString(""));
   }
 }
