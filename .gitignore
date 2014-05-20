@@ -167,3 +167,11 @@ Thumbs.db
 # Doxygen html output #
 #######################
 qucs/contrib/doxygen/html/
+
+# CMake #
+#########
+# created by Qt Creator
+CMakeLists.txt.user
+
+
+
