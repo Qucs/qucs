@@ -18,6 +18,7 @@ TransferFuncDialog::TransferFuncDialog(QVector<long double> &a, QVector<long dou
     tblA->setRowCount(50);
     tblA->setHorizontalHeaderLabels(head1);
     tblA->setVerticalHeaderLabels(indexes);
+    tblA->setFixedWidth(150);
 
     if (!a.isEmpty()) {
         long double num;
@@ -38,6 +39,7 @@ TransferFuncDialog::TransferFuncDialog(QVector<long double> &a, QVector<long dou
     tblB->setRowCount(50);
     tblB->setHorizontalHeaderLabels(head2);
     tblB->setVerticalHeaderLabels(indexes);
+    tblB->setFixedWidth(150);
 
     if (!b.isEmpty()) {
         long double num;
