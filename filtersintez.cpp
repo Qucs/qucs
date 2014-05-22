@@ -381,7 +381,6 @@ void FilterSintez::slotDefineTransferFunc()
     TransferFuncDialog *trfuncdlg = new TransferFuncDialog(coeffA,coeffB,this);
     if (trfuncdlg->exec()) {
         trfuncdlg->getCoeffs(coeffA,coeffB);
-        //qDebug()<<a<<b;
     }
     delete trfuncdlg;
 }

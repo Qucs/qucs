@@ -451,8 +451,11 @@ void Filter::calcUserTrFunc()
         long double *a = vec_A.data();
         long double *b = vec_B.data();
 
-        qf_poly Numenator(2,a);
-        qf_poly Denomenator(2,b);
+        int a_order = vec_A.count() - 1;
+        int b_order = vec_B.count() - 1;
+
+        qf_poly Numenator(a_order,a);
+        qf_poly Denomenator(b_order,b);
 
         Numenator.to_roots();
         Denomenator.to_roots();

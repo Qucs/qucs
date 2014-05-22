@@ -21,12 +21,12 @@ TransferFuncDialog::TransferFuncDialog(QVector<long double> &a, QVector<long dou
 
     if (!a.isEmpty()) {
         long double num;
-        int i = 0;
+        int i = a.count()-1;
 
         foreach (num,a) {
             QTableWidgetItem *it = new QTableWidgetItem(QString::number((double)num));
             tblA->setItem(i,0,it);
-            i++;
+            i--;
         }
     }
 
@@ -41,12 +41,12 @@ TransferFuncDialog::TransferFuncDialog(QVector<long double> &a, QVector<long dou
 
     if (!b.isEmpty()) {
         long double num;
-        int i = 0;
+        int i = b.count()-1;
 
         foreach (num,b) {
             QTableWidgetItem *it = new QTableWidgetItem(QString::number((double)num));
             tblB->setItem(i,0,it);
-            i++;
+            i--;
         }
     }
 
@@ -85,36 +85,38 @@ void TransferFuncDialog::getCoeffs(QVector<long double> &a, QVector<long double>
     a.clear();
     b.clear();
 
-    bool a0 = false;
+   // bool a0 = false;
 
     for (int i=tblA->rowCount()-1;i>=0;i--) {
         QTableWidgetItem *itm = tblA->item(i,0);
         if (itm!=0) {
 
-            if (!a0) a0 = true;
+            //if (!a0) a0 = true;
 
             QString str = itm->text();
-            //if ((str.isEmpty())&&(!a0)) break;
+            if ((str.isEmpty())) break;
             bool ok;
             long double n = (long double) str.toDouble(&ok);
             if (ok) a.append(n);
-        } else if (a0) a.append(0.0);
+        }
+        //else if (a0) a.append(0.0);
     }
 
 
-    bool b0 = true;
+    //bool b0 = true;
 
     for (int i=tblB->rowCount()-1;i>=0;i--) {
         QTableWidgetItem *itm = tblB->item(i,0);
         if (itm!=0) {
 
-            if (!b0) b0 = true;
+            //if (!b0) b0 = true;
 
             QString str = itm->text();
-            //if ((str.isEmpty())&&(!b0)) break;
+            if ((str.isEmpty())) break;
             bool ok;
             long double n = (long double) str.toDouble(&ok);
             if (ok) b.append(n);
-        } else if (b0) b.append(0.0);
+        }
+        //else if (b0) b.append(0.0);
     }
 }
