@@ -35,6 +35,7 @@ public:
 private:
     void besselCoefficients();
     void cauerOrderEstim();
+    void reformPolesZeros();
 
 protected:
     QVector< std::complex<float> > Poles;

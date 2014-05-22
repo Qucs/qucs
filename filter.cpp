@@ -469,6 +469,11 @@ void Filter::calcUserTrFunc()
 
 }
 
+void Filter::reformPolesZeros()
+{
+
+}
+
 void Filter::set_TrFunc(QVector<long double> a, QVector<long double> b)
 {
     vec_A = a;
