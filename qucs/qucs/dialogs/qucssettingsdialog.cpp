@@ -601,13 +601,14 @@ void QucsSettingsDialog::slotApply()
     QucsSettings.IgnoreFutureVersion = checkLoadFromFutureVersions->isChecked();
 
     //shortcut section
+    bool shortcutChanged = false;
     for (int row=0; row < shortcutTableWidget->rowCount(); row++)
     {
       if (QucsSettings.Shortcut[shortcutTableWidget->item(row,0)->text()] 
           != shortcutTableWidget->item(row,1)->text()) {
         QucsSettings.Shortcut[shortcutTableWidget->item(row,0)->text()]
           = shortcutTableWidget->item(row,1)->text();
-        changed = true;
+        shortcutChanged = true;
       }
     }
 
@@ -618,6 +619,9 @@ void QucsSettingsDialog::slotApply()
         App->readProjects();
         App->readProjectFiles();
         App->repaint();
+    }
+    if (shortcutChanged) {
+      App->setShortcut();
     }
 
     // update the schenatic filelist hash
@@ -953,13 +957,9 @@ QucsSettingsDialog::slotSetShortcut()
 void 
 QucsSettingsDialog::slotRemoveShortcut()
 {
-  QMap<QString, QString>* map = &QucsSettings.Shortcut;
-
   qDebug("remove shortcut");
   int row = shortcutTableWidget->currentRow();
   if (row >= 0 && row < shortcutTableWidget->rowCount()) {
-    QString key = shortcutTableWidget->item(row,0)->text();
-    (*map)[key] = QString("");
     shortcutTableWidget->item(row,1)->setText(QString(""));
   }
 }
@@ -985,17 +985,11 @@ QucsSettingsDialog::slotCheckUnique()
   qDebug("check conflict");
   conflictRow = -1;
   if (!shortcutEdit->text().isEmpty()) {
-    qDebug(shortcutEdit->text());
-    QMap<QString, QString>* map = &QucsSettings.Shortcut;
-    QMap<QString, QString>::const_iterator iter = map->constBegin();
     int row = 0;
-    while(iter != map->constEnd())
-    {
-      if (shortcutEdit->text() == QString(iter.value())) {
+    for (row = 0; row < shortcutTableWidget->rowCount(); ++row) {
+      if (shortcutEdit->text() == shortcutTableWidget->item(row,1)->text()) {
         conflictRow = row;
       }
-      ++row;
-      iter++;
     }
   }
   if (conflictRow != -1) {
