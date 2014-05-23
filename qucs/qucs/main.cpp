@@ -120,8 +120,6 @@ bool loadSettings()
     settings.beginGroup("shortcut");
     QStringList keys = settings.childKeys();
     foreach (QString key, keys) {
-        qDebug(key);
-        qDebug(settings.value(key).toString());
         QucsSettings.Shortcut[key] = settings.value(key).toString();
     }
     settings.endGroup();
@@ -189,8 +187,6 @@ bool saveApplSettings(QucsApp *qucs)
     QMap<QString, QString>* map = &QucsSettings.Shortcut;
     QMap<QString, QString>::const_iterator iter = map->constBegin();
     while (iter != map->constEnd()) {
-      qDebug(iter.key());
-      qDebug(iter.value());
       settings.setValue(iter.key(), iter.value());
       ++iter;
     }

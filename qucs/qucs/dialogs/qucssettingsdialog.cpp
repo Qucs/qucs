@@ -917,8 +917,6 @@ void QucsSettingsDialog::makeShortcutTable()
   int row = 0;
   while(iter != map->constEnd())
   {
-    qDebug(iter.key());
-    qDebug(iter.value());
     QTableWidgetItem *action = new QTableWidgetItem(QString(iter.key()));
     QTableWidgetItem *shortcut = new QTableWidgetItem(QString(iter.value()));
     action->setFlags(action->flags() & ~Qt::ItemIsSelectable & ~Qt::ItemIsEditable);
@@ -939,9 +937,6 @@ void QucsSettingsDialog::makeShortcutTable()
 void 
 QucsSettingsDialog::slotSetShortcut()
 {
-  qDebug("set shortcut");
-  qDebug(shortcutEdit->text());
-  qDebug(QString::number(conflictRow));
   if (shortcutTableWidget->currentItem() != NULL) {
     if (conflictRow != -1) {
       shortcutTableWidget->item(conflictRow,1)->setText(QString(""));
@@ -957,7 +952,6 @@ QucsSettingsDialog::slotSetShortcut()
 void 
 QucsSettingsDialog::slotRemoveShortcut()
 {
-  qDebug("remove shortcut");
   int row = shortcutTableWidget->currentRow();
   if (row >= 0 && row < shortcutTableWidget->rowCount()) {
     shortcutTableWidget->item(row,1)->setText(QString(""));
@@ -970,7 +964,6 @@ QucsSettingsDialog::slotRemoveShortcut()
 void 
 QucsSettingsDialog::slotDefaultShortcut()
 {
-  qDebug("default shortcut");
   setDefaultShortcut();
   makeShortcutTable();
 }
@@ -982,7 +975,6 @@ QucsSettingsDialog::slotDefaultShortcut()
 void
 QucsSettingsDialog::slotCheckUnique() 
 {
-  qDebug("check conflict");
   conflictRow = -1;
   if (!shortcutEdit->text().isEmpty()) {
     int row = 0;

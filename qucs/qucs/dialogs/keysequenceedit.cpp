@@ -85,8 +85,6 @@ KeySequenceEdit::keyPressEvent(QKeyEvent *event)
 void
 KeySequenceEdit::keyReleaseEvent(QKeyEvent *event)
 {
-  qDebug("key release");
-  qDebug() << "New KeySequence:" << QKeySequence(keyInt).toString(QKeySequence::NativeText); 
   setText(QKeySequence(keyInt).toString(QKeySequence::NativeText));
   clearFocus();
 }
