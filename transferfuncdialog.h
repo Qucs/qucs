@@ -30,6 +30,9 @@ public:
     
 signals:
     
+private slots:
+    void slotCheckCoeffs();
+
 public slots:
     
 };

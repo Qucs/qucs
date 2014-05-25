@@ -14,7 +14,7 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.48.3.1 r9886"
-   sodipodi:docname="AFR.svg">
+   sodipodi:docname="high-pass.svg">
   <defs
      id="defs4">
     <marker
@@ -117,7 +117,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -383,18 +383,6 @@
        d="m 177.16535,102.75588 -3.5433,10.62992 -3.54331,-10.62992"
        id="path8659"
        inkscape:connector-curvature="0" />
-    <text
-       xml:space="preserve"
-       style="font-size:12px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-       x="75"
-       y="12.423085"
-       id="text8661"
-       sodipodi:linespacing="125%"
-       transform="translate(3.7123325,5.4368782)"><tspan
-         sodipodi:role="line"
-         id="tspan8663"
-         x="75"
-         y="12.423085">АЧХ фильтра</tspan></text>
     <path
        style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="m 74.240424,107.94892 99.212596,0"
