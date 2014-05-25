@@ -16,13 +16,13 @@ FilterSintez::FilterSintez(QWidget *parent)
     QTextCodec::setCodecForTr(QTextCodec::codecForName("UTF-8"));
 
     //lblInputData = new QLabel(tr("Входные данные"));
-    lblA1 = new QLabel(tr("Затухание в полосе пропускания, Ap"));
-    lblA2 = new QLabel(tr("Мин. затухание в полосе задерживания, As"));
-    lblF1 = new QLabel(tr("Частота среза фильтра, Fc (Гц)"));
-    lblF2 = new QLabel(tr("Начало полосы задерживания, Fs (Гц)"));
-    lblRpl1 = new QLabel(tr("Амплитуда пульсаций в полосе пропускания Rp(дБ)"));
-    //lblRpl2 = new QLabel(tr("Амплитуда пульсаций в полосе задерживания (дБ)"));
-    lblKv = new QLabel(tr("Усиление фильтра, Kv (дБ)"));
+    lblA1 = new QLabel(tr("Passband attenuation, Ap"));
+    lblA2 = new QLabel(tr("Stopband attenuation, As"));
+    lblF1 = new QLabel(tr("Cuttof frequency, Fc (Гц)"));
+    lblF2 = new QLabel(tr("Stopband frequency, Fs (Гц)"));
+    lblRpl1 = new QLabel(tr("Passband ripple Rp(дБ)"));
+    //lblRpl2 = new QLabel(tr("Stopband ripple (дБ)"));
+    lblKv = new QLabel(tr("Passband gain, Kv (дБ)"));
 
 
     edtA1 = new QLineEdit("3");
@@ -41,13 +41,13 @@ FilterSintez::FilterSintez(QWidget *parent)
     edtKv = new QLineEdit("0");
     edtKv->setValidator(val1);
 
-    lblTyp = new QLabel(tr("Рассчитать фильтр:"));
+    lblTyp = new QLabel(tr("Approximation type:"));
     cbxFilterFunc = new QComboBox;
     QStringList lst2;
-    lst2<<tr("Фильтр Баттерворта")
-        <<tr("Фильтр Чебышева")
-        <<tr("Инверсный фильтр Чебышева")
-        <<tr("Эллиптический фильтр")
+    lst2<<tr("Butterworth")
+        <<tr("Chebyshev")
+        <<tr("Inverse Chebyshev")
+        <<tr("Cauer (Elliptic)")
         <<tr("User defined");
     cbxFilterFunc->addItems(lst2);
     connect(cbxFilterFunc,SIGNAL(currentIndexChanged(int)),this,SLOT(slotSwitchParameters()));
@@ -56,14 +56,14 @@ FilterSintez::FilterSintez(QWidget *parent)
     btnDefineTransferFunc->setEnabled(false);
     connect(btnDefineTransferFunc,SIGNAL(clicked()),this,SLOT(slotDefineTransferFunc()));
 
-    btnCalcSchematic = new QPushButton(tr("Рассчитать элементы схемы фильтра"));
+    btnCalcSchematic = new QPushButton(tr("Calculate and copy to clipboard"));
     connect(btnCalcSchematic,SIGNAL(clicked()),SLOT(slotCalcSchematic()));
 
-    lblResult = new QLabel(tr("Результаты расчёта: "));
+    lblResult = new QLabel(tr("Calculation console"));
     txtResult = new QTextEdit;
 
 
-    lblSch = new QLabel(tr("Схемная реализация фильтра"));
+    lblSch = new QLabel(tr("Filter topology"));
     lblResp = new QLabel(tr("Filter type:"));
     cbxResponse = new QComboBox;
     QStringList lst3;
@@ -78,12 +78,15 @@ FilterSintez::FilterSintez(QWidget *parent)
     cbxFilterType = new QComboBox;
     QStringList lst;
     lst<<tr("Cauer section")
-      <<tr("С многопетлевой ОС")
-      <<tr("Саллена-Ки")
-      <<tr("Пассивный");
+      <<tr("Multifeedback (MFB)")
+      <<tr("Sallen-Key (S-K)");
+     //<<tr("Пассивный");
     cbxFilterType->addItems(lst);
     connect(cbxFilterType,SIGNAL(currentIndexChanged(int)),this,SLOT(slotUpdateSchematic()));
     this->slotSwitchParameters();
+
+    lblAFR = new QLabel(tr("General amplitude frequenc response"));
+    lblTopology = new QLabel(tr("Filter topology preview (one stage)"));
 
     QString s1 = ":/images/AFR.svg";
     QSvgRenderer *ren = new QSvgRenderer(s1);
@@ -140,7 +143,9 @@ FilterSintez::FilterSintez(QWidget *parent)
     left->addWidget(btnCalcSchematic);
     left->addStretch();
 
+    right->addWidget(lblAFR);
     right->addWidget(imgAFR);
+    right->addWidget(lblTopology);
     right->addWidget(sch_pic);
     right->addStretch();
 

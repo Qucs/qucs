@@ -54,6 +54,7 @@ TransferFuncDialog::TransferFuncDialog(QVector<long double> &a, QVector<long dou
 
     btnAccept = new QPushButton(tr("Accept"));
     connect(btnAccept,SIGNAL(clicked()),this,SLOT(accept()));
+    connect(btnAccept,SIGNAL(clicked()),this,SLOT(slotCheckCoeffs()));
     btnCancel = new QPushButton(tr("Cancel"));
     connect(btnCancel,SIGNAL(clicked()),this,SLOT(reject()));
 
@@ -121,4 +122,9 @@ void TransferFuncDialog::getCoeffs(QVector<long double> &a, QVector<long double>
         }
         //else if (b0) b.append(0.0);
     }
+}
+
+void TransferFuncDialog::slotCheckCoeffs()
+{
+
 }

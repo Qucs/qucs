@@ -23,6 +23,9 @@ private:
     QLabel *lblRpl2;
     QLabel *lblResp;
 
+    QLabel *lblAFR;
+    QLabel *lblTopology;
+
     QLineEdit *edtA1; // passband attenuation A1
     QLineEdit *edtA2; // stopband attenuation A2
     QLineEdit *edtF1; // passband cutoff frequency F1
