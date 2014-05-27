@@ -34,7 +34,9 @@ PDFS = MESFET_Fig10.pdf MESFET_Fig17.pdf MESFET_Fig24.pdf MESFET_Fig6.pdf \
 
 report: $(XPDF)
 
-%.pdf: %.fig
+SUFFIXES = .fig .pdf
+
+.fig.pdf:
 	$(FIG2DEV) -L pdf $< > $@
 
 CLEANFILES = $(XPDF) *~ *.bak *.orig *.rej

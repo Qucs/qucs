@@ -29,7 +29,9 @@ PDFS = Pot_Fig10.pdf Pot_Fig2.pdf Pot_Fig4.pdf Pot_Fig6.pdf Pot_Fig8.pdf \
 
 report: $(XPDF)
 
-%.pdf: %.fig
+SUFFIXES = .fig .pdf
+
+.fig.pdf:
 	$(FIG2DEV) -L pdf $< > $@
 
 CLEANFILES = $(XPDF) *~ *.bak *.orig *.rej

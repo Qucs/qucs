@@ -37,21 +37,23 @@ tutorial: pics-tutorial $(TARGETS)
 
 book: pics-tutorial
 
-%.dvi: %.tex
+SUFFIXES = .dvi .tex .pdf .ps .idx .ind
+
+.tex.dvi:
 	$(LATEX) $<
 	$(LATEX) $<
 	$(LATEX) -interaction=batchmode $<
 
-%.pdf: %.tex
+.tex.pdf:
 	TEXINPUTS=$$TEXINPUTS:.. $(PDFLATEX) $<
 	$(MAKEINDEX) functions.idx -o functions.ind -s appendix.ist
 	TEXINPUTS=$$TEXINPUTS:.. $(PDFLATEX) $<
 	TEXINPUTS=$$TEXINPUTS:.. $(PDFLATEX) -interaction=batchmode $<
 
-%.ps: %.dvi
+.dvi.ps:
 	$(DVIPS) $< -o $@
 
-%.ind: %.idx
+.idx.ind:
 	$(MAKEINDEX) $< -o $@ -s appendix.ist
 
 CLEANFILES = *~ *.bak *.aux *.log *.toc *.pdf *.bbl *.blg *.dvi *.brf *.out *.idx *.ind *.ilg

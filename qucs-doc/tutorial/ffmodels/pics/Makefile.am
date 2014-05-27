@@ -31,7 +31,9 @@ PDFS = fig10.pdf fig14.pdf fig18.pdf fig21.pdf fig25.pdf fig5.pdf fig9.pdf \
 
 tutorial: $(XPDF)
 
-%.pdf: %.fig
+SUFFIXES = .fig .pdf
+
+.fig.pdf:
 	$(FIG2DEV) -L pdf $< > $@
 
 CLEANFILES = $(XPDF) *~ *.bak *.orig *.rej

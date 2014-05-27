@@ -35,7 +35,9 @@ PDFS = 555_timer_fig10.pdf 555_timer_fig19.pdf 555_timer_fig5.pdf \
 
 tutorial: $(XPDF)
 
-%.pdf: %.fig
+SUFFIXES = .fig .pdf
+
+.fig.pdf:
 	$(FIG2DEV) -L pdf $< > $@
 
 CLEANFILES = $(XPDF) *~ *.bak *.orig *.rej

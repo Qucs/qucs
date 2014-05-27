@@ -35,7 +35,9 @@ PNGS = equ_fig25.png equ_fig27.png equ_fig29.png equ_fig26.png equ_fig28.png \
 
 tutorial: $(XPDF)
 
-%.pdf: %.fig
+SUFFIXES = .fig .pdf
+
+.fig.pdf:
 	$(FIG2DEV) -L pdf $< > $@
 
 CLEANFILES = $(XPDF) *~ *.bak *.orig *.rej

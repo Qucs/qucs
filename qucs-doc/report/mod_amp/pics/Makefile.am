@@ -31,7 +31,9 @@ PDFS = mod_amp_Fig10.pdf mod_amp_Fig15.pdf mod_amp_Fig4.pdf mod_amp_Fig8.pdf \
 
 report: $(XPDF)
 
-%.pdf: %.fig
+SUFFIXES = .fig .pdf
+
+.fig.pdf:
 	$(FIG2DEV) -L pdf $< > $@
 
 CLEANFILES = $(XPDF) *~ *.bak *.orig *.rej

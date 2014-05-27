@@ -30,7 +30,9 @@ PDFS = stoq_fig13.pdf stoq_fig19.pdf stoq_fig2.pdf stoq_fig14.pdf \
 
 tutorial: $(XPDF)
 
-%.pdf: %.fig
+SUFFIXES = .fig .pdf
+
+.fig.pdf:
 	$(FIG2DEV) -L pdf $< > $@
 
 CLEANFILES = $(XPDF) *~ *.bak *.orig *.rej

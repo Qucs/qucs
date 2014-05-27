@@ -28,7 +28,9 @@ PDFS = PD_fig2.pdf PD_fig4.pdf PD_fig1.pdf PD_fig3.pdf PD_fig5.pdf
 
 report: $(XPDF)
 
-%.pdf: %.fig
+SUFFIXES = .fig .pdf
+
+.fig.pdf:
 	$(FIG2DEV) -L pdf $< > $@
 
 CLEANFILES = $(XPDF) *~ *.bak *.orig *.rej

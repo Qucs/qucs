@@ -38,17 +38,19 @@ tutorial: pics-tutorial $(TARGETS)
 
 book: pics-tutorial
 
-%.dvi: %.tex
+SUFFIXES = .dvi .tex .pdf .ps
+
+.tex.dvi:
 	$(LATEX) $<
 	$(LATEX) $<
 	$(LATEX) -interaction=batchmode $<
 
-%.pdf: %.tex
+.tex.pdf:
 	TEXINPUTS=$$TEXINPUTS:.. $(PDFLATEX) $<
 	TEXINPUTS=$$TEXINPUTS:.. $(PDFLATEX) $<
 	TEXINPUTS=$$TEXINPUTS:.. $(PDFLATEX) -interaction=batchmode $<
 
-%.ps: %.dvi
+.dvi.ps:
 	$(DVIPS) $< -o $@
 
 CLEANFILES = *~ *.bak *.aux *.log *.toc *.pdf *.bbl *.blg *.dvi *.brf *.out *.idx

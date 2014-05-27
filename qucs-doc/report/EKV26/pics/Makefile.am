@@ -30,7 +30,9 @@ PDFS = EKV_Fig1.pdf EKV_Fig3.pdf EKV_Fig5.pdf EKV_Fig7.pdf EKV_Fig9.pdf \
 
 report: $(XPDF)
 
-%.pdf: %.fig
+SUFFIXES = .pdf .fig
+
+.fig.pdf:
 	$(FIG2DEV) -L pdf $< > $@
 
 CLEANFILES = $(XPDF) *~ *.bak *.orig *.rej

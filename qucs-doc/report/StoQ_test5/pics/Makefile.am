@@ -30,7 +30,9 @@ PDFS = s2q_5_a_dpl.pdf s2q_5_b_sch.pdf s2q_5_d_dpl.pdf s2q_5_e_sch.pdf \
 
 report: $(XPDF)
 
-%.pdf: %.fig
+SUFFIXES = .fig .pdf
+
+.fig.pdf:
 	$(FIG2DEV) -L pdf $< > $@
 
 CLEANFILES = $(XPDF) *~ *.bak *.orig *.rej

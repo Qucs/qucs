@@ -70,34 +70,36 @@ html:
 
 technical.dvi: $(EPSFILES) $(PSFILES) $(MPSFILES)
 
-%.dvi: %.tex $(CHAPTERS) $(BIBFILE)
+SUFFIXES = .dvi .tex .pdf .ps .eps .fig .frg .m
+
+.tex.dvi: $(CHAPTERS) $(BIBFILE)
 	$(LATEX) $<
 	$(BIBTEX) $*
 	$(LATEX) $<
 	$(LATEX) -interaction=batchmode $<
 
-%.pdf: %.tex $(CHAPTERS) $(BIBFILE) $(PDFFILES) $(PDFFIGURES)
+.tex.pdf: $(CHAPTERS) $(BIBFILE) $(PDFFILES) $(PDFFIGURES)
 	$(PDFLATEX) $<
 	$(BIBTEX) $*
 	$(PDFLATEX) $<
 	$(PDFLATEX) -interaction=batchmode $<
 
-%.eps: %.fig
+.fig.eps:
 	$(FIG2DEV) -L eps $< > $@
 
-%.pdf: %.fig
+.fig.pdf:
 	$(FIG2DEV) -L pdf $< > $@
 
-%.frg: %.fig
+.fig.frg:
 	$(FIG2DEV) -L frg $< > $@
 
-%.pdf: %.eps
+.eps.pdf:
 	$(EPSTOPDF) $< -o=$@
 
-%.eps: %.m
+.m.eps:
 	$(OCTAVE) $<
 
-%.ps: %.dvi
+.dvi.ps:
 	$(DVIPS) $< -o $@
 
 CLEANFILES = *~ $(EPSFILES) *.bak *.aux *.log *.toc *.pdf *.bbl *.blg *.dvi \

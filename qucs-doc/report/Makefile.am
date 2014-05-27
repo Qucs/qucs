@@ -43,23 +43,25 @@ report:
 	  (cd $$d && $(MAKE) $(AM_MAKEFLAGS) report); \
 	done
 
-%.dvi: %.tex
+SUFFIXES = .dvi .tex .pdf .ps .eps .fig
+
+.tex.dvi:
 	$(LATEX) $<
 	$(LATEX) $<
 	$(LATEX) -interaction=batchmode $<
 
-%.pdf: %.tex
+.tex.pdf:
 	$(PDFLATEX) $<
 	$(PDFLATEX) $<
 	$(PDFLATEX) -interaction=batchmode $<
 
-%.eps: %.fig
+.fig.eps:
 	$(FIG2DEV) -L eps $< > $@
 
-%.pdf: %.eps
+.eps.pdf:
 	$(EPSTOPDF) $< -o=$@
 
-%.ps: %.dvi
+.dvi.ps:
 	$(DVIPS) $< -o $@
 
 CLEANFILES = *~ *.bak *.aux *.log *.toc *.pdf *.bbl *.blg *.dvi *.brf *.out *.idx

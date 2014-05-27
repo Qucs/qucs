@@ -28,7 +28,9 @@ PDFS = S2Q_test1_dpl.pdf S2Q_test1_mod_dpl.pdf S2Q_test1_sch.pdf
 
 report: $(XPDF)
 
-%.pdf: %.fig
+SUFFIXES = .fig .pdf
+
+.fig.pdf:
 	$(FIG2DEV) -L pdf $< > $@
 
 CLEANFILES = $(XPDF) *~ *.bak *.orig *.rej

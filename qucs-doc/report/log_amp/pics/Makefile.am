@@ -30,7 +30,9 @@ PDFS = log_amp_A.pdf log_amp_Fig2.pdf log_amp_Fig7.pdf log_amp_Fig10.pdf \
 
 report: $(XPDF)
 
-%.pdf: %.fig
+SUFFIXES = .fig .pdf
+
+.fig.pdf:
 	$(FIG2DEV) -L pdf $< > $@
 
 CLEANFILES = $(XPDF) *~ *.bak *.orig *.rej

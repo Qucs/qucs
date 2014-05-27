@@ -42,7 +42,9 @@ PDFS = comb1s.pdf g2bitsch.pdf mux21.pdf prim1tt.pdf regt.pdf dffl.pdf \
 
 tutorial: $(XPDF)
 
-%.pdf: %.fig
+SUFFIXES = .fig .pdf
+
+.fig.pdf:
 	$(FIG2DEV) -L pdf $< > $@
 
 CLEANFILES = $(XPDF) *~ *.bak *.orig *.rej

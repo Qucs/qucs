@@ -28,7 +28,9 @@ PDFS = APPC_fig1.pdf APPC_fig3.pdf APPC_fig5.pdf APPC_fig2.pdf APPC_fig4.pdf
 
 report: $(XPDF)
 
-%.pdf: %.fig
+SUFFIXES = .fig .pdf
+
+.fig.pdf:
 	$(FIG2DEV) -L pdf $< > $@
 
 CLEANFILES = $(XPDF) *~ *.bak *.orig *.rej

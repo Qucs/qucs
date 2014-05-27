@@ -40,7 +40,9 @@ PDFS = dwr1.pdf fig17_dpl.pdf fig24_dpl.pdf fig31_dpl.pdf fig3_sch.pdf \
 
 tutorial: $(XPDF)
 
-%.pdf: %.fig
+SUFFIXES = .fig .pdf
+
+.fig.pdf:
 	$(FIG2DEV) -L pdf $< > $@
 
 CLEANFILES = $(XPDF) *~ *.bak *.orig *.rej
