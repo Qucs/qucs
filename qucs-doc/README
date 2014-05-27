@@ -1,22 +1,22 @@
--- 
+--
 -- README
--- 
+--
 -- Copyright (C) 2005, 2006, 2011 Stefan Jahn <stefan@lkcc.org>
--- 
+--
 -- This is free software; you can redistribute it and/or modify
 -- it under the terms of the GNU General Public License as published by
 -- the Free Software Foundation; either version 2, or (at your option)
 -- any later version.
--- 
+--
 -- This software is distributed in the hope that it will be useful,
 -- but WITHOUT ANY WARRANTY; without even the implied warranty of
 -- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 -- GNU General Public License for more details.
--- 
+--
 -- You should have received a copy of the GNU General Public License
 -- along with this package; see the file COPYING.  If not, write to
 -- the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
--- Boston, MA 02110-1301, USA.  
+-- Boston, MA 02110-1301, USA.
 --
 
 
@@ -37,12 +37,13 @@ Installation
 
 Unpack the distribution tarball:
 
-    $ tar xvzf qucs-doc-<version>.tar.gz               (using GNU tar)
-    $ gzip -cd qucs-doc-<version>.tar.gz | tar xvf -   (using another tar)
-  
+    $ tar xvzf qucs-<version>.tar.gz               (using GNU tar)
+    $ gzip -cd qucs-<version>.tar.gz | tar xvf -   (using another tar)
+
 Change into the source directory:
 
-    $ cd qucs-doc-<version>
+    $ cd qucs-<version>
+    $ cd qucs-doc
 
 Configure the source package for your system:
 
@@ -57,7 +58,7 @@ Install:
     $ make install
 
 You must have root privileges if you want to install the package in the
-standard location (/usr/local) or in any location that is only writable 
+standard location (/usr/local) or in any location that is only writable
 by root.
 
 For further information on installing the package, please consult the
@@ -69,14 +70,12 @@ to compile and install the package.
 Getting the latest development snapshot
 =======================================
 
-You can always get the latest documentation version from our git 
+You can always get the latest documentation version from our git
 repository.
 
-    $ git clone http://git.code.sf.net/p/qucs/git/qucs-doc qucs-doc
+    $ git clone http://git.code.sf.net/p/qucs/git qucs
 
-Press 'Enter' when asked for a password.  Run `sh bootstrap.sh' and
-`configure' with the appropriate options.  Maintainance currently
-requires Autoconf version 2.57 and GNU automake 1.7.0.
+The documetation can be found in qucs/qucs-doc
 
 Package maintainance
 ====================
@@ -92,6 +91,7 @@ Maintainance currently requires the following software packages:
   + epsTk 2.0.1 (at least)
   + doxygen 1.4.5
   + dot 2.21 (graphviz 1.7)
+  + transfig (fig2dev)
 
 In order to produce the standalone tutorial:
 
