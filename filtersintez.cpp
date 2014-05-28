@@ -85,7 +85,7 @@ FilterSintez::FilterSintez(QWidget *parent)
     connect(cbxFilterType,SIGNAL(currentIndexChanged(int)),this,SLOT(slotUpdateSchematic()));
     this->slotSwitchParameters();
 
-    lblAFR = new QLabel(tr("General amplitude frequenc response"));
+    lblAFR = new QLabel(tr("General amplitude frequency response"));
     lblTopology = new QLabel(tr("Filter topology preview (one stage)"));
 
     QString s1 = ":/images/AFR.svg";
@@ -217,18 +217,23 @@ void FilterSintez::slotCalcSchematic()
         break;
     }
 
+    QString s;
+    bool ok = false;
+
     switch (cbxFilterType->currentIndex()) {
-    case 0 : {
-                QString s;
+    case 0 : {               
                 if (((ffunc==Filter::InvChebyshev)||(ffunc==Filter::Cauer))) {
                    SchCauer cauer(ffunc,ftyp,par);
-                   bool ok = cauer.calcFilter();
+                   ok = cauer.calcFilter();
                    cauer.createPolesZerosList(lst);
                    cauer.createPartList(lst);
+                   txtResult->setText(lst.join("\n"));
                    if (ok) {
                        cauer.createSchematic(s);
+                   } else {
+                       errorMessage(tr("Unable to implement filter with such parameters and topology \n"
+                                       "Change parapeters and/or topology and try again!"));
                    }
-                   txtResult->setText(lst.join("\n"));
                 } else {
                     errorMessage(tr("Unable to use Cauer section for Chebyshev or Butterworth \n"
                                  "frequency response. Try to use another topology."));
@@ -236,14 +241,13 @@ void FilterSintez::slotCalcSchematic()
              }
 
              break;
-    case 1 : {
-                QString s;
+    case 1 : {              
                 if (!((ffunc==Filter::InvChebyshev)||(ffunc==Filter::Cauer))) {
                     MFBfilter mfb(ffunc,ftyp,par);
                     if (ffunc==Filter::User) {
                         mfb.set_TrFunc(coeffA,coeffB);
                     }
-                    bool ok = mfb.calcFilter();
+                    ok = mfb.calcFilter();
                     mfb.createPolesZerosList(lst);
                     mfb.createPartList(lst);
                     txtResult->setText(lst.join("\n"));
@@ -260,12 +264,11 @@ void FilterSintez::slotCalcSchematic()
              }
              break;
     case 2 : {
-               QString s;
                SallenKey sk(ffunc,ftyp,par);
                if (ffunc==Filter::User) {
                    sk.set_TrFunc(coeffA,coeffB);
                }
-               bool ok = sk.calcFilter();
+               ok = sk.calcFilter();
                sk.createPolesZerosList(lst);
                sk.createPartList(lst);
                txtResult->setText(lst.join("\n"));
@@ -281,6 +284,16 @@ void FilterSintez::slotCalcSchematic()
              break;
     default: break;
     }
+
+    if (ok) {
+        txtResult->append(tr("\nFilter calculation was sucessfull"));
+    } else {
+        txtResult->append(tr("\nFilter calculation terminated with error"));
+    }
+
+    QClipboard *cb = QApplication::clipboard();
+    cb->setText(s);
+
 }
 
 void FilterSintez::slotUpdateResponse()
