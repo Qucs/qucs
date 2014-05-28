@@ -61,7 +61,9 @@ bool Filter::calcFilter()
     case Filter::InvChebyshev : calcInvChebyshev();
         break;
     case Filter::User : calcUserTrFunc();
-    default : return false;
+        break;
+    default :
+        return false;
         break;
     }
 
@@ -453,6 +455,8 @@ void Filter::calcUserTrFunc()
 
         int a_order = vec_A.count() - 1;
         int b_order = vec_B.count() - 1;
+
+        order = std::max(a_order,b_order);
 
         qf_poly Numenator(a_order,a);
         qf_poly Denomenator(b_order,b);
