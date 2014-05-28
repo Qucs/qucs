@@ -32,17 +32,17 @@ TEXFILES = titlepage.tex basics.tex workbook.tex intro.tex general.tex \
 TARGETS = workbook.pdf
 PICDIRS = coupler functions
 
+tutorial:
+	@for d in $(SUBDIRS); do \
+	  (cd $$d && $(MAKE) $(AM_MAKEFLAGS) tutorial); \
+	done
+
 pics-book:
 	@for d in $(PICDIRS); do \
 	  (cd $$d && $(MAKE) $(AM_MAKEFLAGS) book); \
 	done
 
 book: pics-book $(TARGETS)
-
-tutorial:
-	@for d in $(SUBDIRS); do \
-	  (cd $$d && $(MAKE) $(AM_MAKEFLAGS) tutorial); \
-	done
 
 SUFFIXES = .dvi .tex .pdf .ps
 
@@ -64,6 +64,10 @@ SUFFIXES = .dvi .tex .pdf .ps
 
 .dvi.ps:
 	$(DVIPS) $< -o $@
+
+# installation of documentation
+docdatadir = ${prefix}/share/qucs/docs/tutorial
+docdata_DATA = workbook.pdf
 
 CLEANFILES = *~ *.bak *.aux *.log *.toc *.pdf *.bbl *.blg *.dvi *.brf *.out *.idx
 MAINTAINERCLEANFILES = Makefile.in

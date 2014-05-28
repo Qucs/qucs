@@ -24,7 +24,18 @@
 
 SUBDIRS = technical tutorial report doxygen
 
+DOCPDF = tutorial report technical
+
 EXTRA_DIST = autogen.sh RELEASE
+
+# default to build all PDF files
+all-recursive: pdf
+
+pdf:
+	@for d in $(DOCPDF); do \
+	  (cd $$d && $(MAKE) $(AM_MAKEFLAGS) $$d); \
+	done
+	cd tutorial && $(MAKE) $(AM_MAKEFLAGS) book
 
 CLEANFILES = *~ *.orig *.rej
 MAINTAINERCLEANFILES = aclocal.m4 config.h.in configure Makefile.in \

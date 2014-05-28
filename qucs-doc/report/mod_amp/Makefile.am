@@ -51,6 +51,11 @@ SUFFIXES = .tex .dvi .ps
 .dvi.ps:
 	$(DVIPS) $< -o $@
 
+# installation of documentation
+docdatadir = ${prefix}/share/qucs/docs/report
+docdata_DATA = ${TARGETS}
+
+
 CLEANFILES = *~ *.bak *.aux *.log *.toc *.pdf *.bbl *.blg *.dvi *.brf *.out *.idx
 MAINTAINERCLEANFILES = Makefile.in
 DISTCLEANFILES = *.ps *.pdf

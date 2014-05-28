@@ -37,7 +37,7 @@ tutorial: $(XPDF)
 
 SUFFIXES = .fig .pdf
 
-.fig.pdf:
+.fig.pdf: $(XPDF)
 	$(FIG2DEV) -L pdf $< > $@
 
 CLEANFILES = $(XPDF) *~ *.bak *.orig *.rej

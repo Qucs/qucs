@@ -53,7 +53,7 @@ Now compile the package:
 
     $ make
 
-Install:
+Install all generated PDF documents:
 
     $ make install
 

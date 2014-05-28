@@ -61,7 +61,8 @@ CHAPTERS = sparameter.tex noisewaves.tex dcanalysis.tex acanalysis.tex \
   hbanalysis.tex grammar-common.tex grammar-qucs.tex grammar-data.tex  \
   hbnoise.tex synthesis.tex transline.tex maths.tex lineardevices.tex
 
-technical: technical.dvi technical.ps
+
+technical: technical.dvi technical.ps technical.pdf
 	$(TEX2PDF) technical
 
 html:
@@ -101,6 +102,13 @@ SUFFIXES = .dvi .tex .pdf .ps .eps .fig .frg .m
 
 .dvi.ps:
 	$(DVIPS) $< -o $@
+
+technical.pdf: technical.ps
+	$(PS2PDF) $<
+
+# installation of documentation
+docdatadir = ${prefix}/share/qucs/docs/technical
+docdata_DATA = technical.pdf
 
 CLEANFILES = *~ $(EPSFILES) *.bak *.aux *.log *.toc *.pdf *.bbl *.blg *.dvi \
   $(MPSFILES) $(PDFFIGURES) $(PDFFILES) *.brf *.out $(PSFRAGTEXS) *.orig *.rej

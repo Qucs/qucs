@@ -56,6 +56,10 @@ SUFFIXES = .dvi .tex .pdf .ps .idx .ind
 .idx.ind:
 	$(MAKEINDEX) $< -o $@ -s appendix.ist
 
+# installation of documentation
+docdatadir = ${prefix}/share/qucs/docs/tutorial
+docdata_DATA = ${TARGETS}
+
 CLEANFILES = *~ *.bak *.aux *.log *.toc *.pdf *.bbl *.blg *.dvi *.brf *.out *.idx *.ind *.ilg
 MAINTAINERCLEANFILES = Makefile.in
 DISTCLEANFILES = *.ps *.pdf
