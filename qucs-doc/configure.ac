@@ -134,7 +134,8 @@ AC_CONFIG_FILES([Makefile
 		 tutorial/equations/Makefile
 		 tutorial/equations/pics/Makefile
 		 tutorial/bjtbias/Makefile
-		 tutorial/bjtbias/pics/Makefile])
+		 tutorial/bjtbias/pics/Makefile
+		 tutorial/textmode/Makefile])
 
 AC_OUTPUT
 
