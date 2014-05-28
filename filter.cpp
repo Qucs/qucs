@@ -28,11 +28,11 @@ void Filter::createSchematic(QString &s)
     default: break;
     }
 
-    QFile sch("filter.sch");
+    /*QFile sch("filter.sch");
     sch.open(QFile::WriteOnly);
     QTextStream out(&sch);
     out<<s;
-    sch.close();
+    sch.close();*/
 }
 
 void Filter::createHighPassSchematic(QString &s)
