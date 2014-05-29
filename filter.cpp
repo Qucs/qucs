@@ -67,6 +67,16 @@ bool Filter::calcFilter()
         break;
     }
 
+    if (Poles.isEmpty()) {
+        return false;
+    }
+
+    if (((ffunc==Filter::Cauer)||
+         (ffunc==Filter::InvChebyshev))
+            &&(Zeros.isEmpty())) {
+        return false;
+    }
+
     switch (ftype) {
     case Filter::LowPass : calcLowPass();
         break;
