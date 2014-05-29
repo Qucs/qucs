@@ -97,7 +97,7 @@ void TransferFuncDialog::getCoeffs(QVector<long double> &a, QVector<long double>
             //if (!a0) a0 = true;
 
             QString str = itm->text();
-            if ((str.isEmpty())) break;
+            //if ((str.isEmpty())) break;
             bool ok;
             long double n = (long double) str.toDouble(&ok);
             if (ok) a.append(n);
@@ -115,7 +115,7 @@ void TransferFuncDialog::getCoeffs(QVector<long double> &a, QVector<long double>
             //if (!b0) b0 = true;
 
             QString str = itm->text();
-            if ((str.isEmpty())) break;
+            //if ((str.isEmpty())) break;
             bool ok;
             long double n = (long double) str.toDouble(&ok);
             if (ok) b.append(n);
