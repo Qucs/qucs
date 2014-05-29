@@ -479,13 +479,34 @@ void Filter::calcUserTrFunc()
 
         Numenator.roots_to_complex(Zeros);
         Denomenator.roots_to_complex(Poles);
+
+        reformPolesZeros();
     }
 
 }
 
 void Filter::reformPolesZeros()
 {
+    int Np = Poles.count();
+    int Nz = Zeros.count();
 
+    for (int i=0;i<Np/2;i++) {
+        if ((i%2)!=0) {
+            std::complex<float> tmp;
+            tmp = Poles[i];
+            Poles[i]=Poles[Np-1-i];
+            Poles[Np-1-i]=tmp;
+        }
+    }
+
+    for (int i=0;i<Nz/2;i++) {
+        if ((i%2)!=0) {
+            std::complex<float> tmp;
+            tmp = Poles[i];
+            Poles[i]=Poles[Nz-1-i];
+            Poles[Nz-1-i]=tmp;
+        }
+    }
 }
 
 void Filter::set_TrFunc(QVector<long double> a, QVector<long double> b)
