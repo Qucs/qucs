@@ -468,8 +468,8 @@ void Filter::calcUserTrFunc()
 
         order = std::max(a_order,b_order);
 
-        qf_poly Numenator(a_order,a);
-        qf_poly Denomenator(b_order,b);
+        qf_poly Numenator(b_order,b);
+        qf_poly Denomenator(a_order,a);
 
         Numenator.to_roots();
         Denomenator.to_roots();
