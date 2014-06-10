@@ -59,7 +59,7 @@ else
 endif
 
 # Linker flags
-LDFLAGS=-L"$(PREFIX)/lib" -Wl,-rpath -Wl,$(PROJDIR)
+LDFLAGS=-L$(PREFIX)/lib -Wl,-rpath -Wl,$(PROJDIR)
 
 # Required (admsXml generated) sources
 SRC=$(MODEL).core.cpp $(MODEL).analogfunction.cpp
