@@ -144,4 +144,27 @@ inline nr_double_t exp (const nr_double_t d)
 
 } // namespace qucs
 
+// \bug ugly hack, inject missing functions in std namespace
+// should check for availability
+#if (defined(__MAC_OS_X_VERSION_MAX_ALLOWED) && __MAC_OS_X_VERSION_MAX_ALLOWED <= 1060)
+namespace std {
+  static inline nr_double_t round( nr_double_t x) {
+     return qucs::round(x);
+  }
+  static inline nr_double_t trunc( nr_double_t x) {
+     return qucs::trunc(x);
+  }
+  static inline nr_double_t erf( nr_double_t x) {
+     return erf(x);
+  }
+  static inline nr_double_t acosh( nr_double_t x) {
+     return qucs::acosh(x);
+  }
+  static inline nr_double_t asinh( nr_double_t x) {
+     return qucs::asinh(x);
+  }
+} // namespace std
+#endif
+
+
 #endif /* __REAL_H__ */

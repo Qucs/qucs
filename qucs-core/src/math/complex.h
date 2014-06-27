@@ -241,4 +241,16 @@ bool operator <  (const nr_complex_t, const nr_complex_t);
 
 } // namespace qucs
 
+
+// \bug ugly hack, inject missing functions in std namespace
+// should check for availability
+#if (defined(__MAC_OS_X_VERSION_MAX_ALLOWED) && __MAC_OS_X_VERSION_MAX_ALLOWED <= 1060)
+namespace std {
+  static inline nr_double_t erfc( nr_double_t x) {
+     return erfc(x);
+  }
+} // namespace std
+#endif
+
+
 #endif /* __COMPLEX_H__ */

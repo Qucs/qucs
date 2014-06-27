@@ -35,7 +35,7 @@
 /* -------------------------------------------------------
                     C++11 Functions
    ------------------------------------------------------- */
-
+/* \bug already defined in complex.cpp ?
 #ifndef HAVE_CXX_COMPLEX_ASIN
 namespace std
 {
@@ -78,6 +78,7 @@ namespace std
 nr_complex_t atanh (const nr_complex_t);
 }
 #endif
+*/
 
 /* -------------------------------------------------------
         Functions Present in Standard Before C++11

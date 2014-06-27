@@ -38,6 +38,4 @@
 #define strcasecmp stricmp
 #endif
 
-#include "math.h"
-
 #endif /* __COMPAT_H__ */
