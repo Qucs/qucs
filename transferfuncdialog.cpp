@@ -3,6 +3,14 @@
 TransferFuncDialog::TransferFuncDialog(QVector<long double> &a, QVector<long double> &b, QWidget *parent) :
     QDialog(parent)
 {
+    this->setWindowTitle(tr("Define filter transfer function"));
+
+    imgTrfuncEq = new QLabel;
+    imgTrfuncEq->setPixmap(QPixmap(":images/trfunc.png"));
+    //imgTrfuncEq->setScaledContents(true);
+
+
+
     lblB = new QLabel(tr("Numenator b[i]="));
     lblA = new QLabel(tr("Denomenator a[i]="));
 
@@ -75,6 +83,7 @@ TransferFuncDialog::TransferFuncDialog(QVector<long double> &a, QVector<long dou
     top->addLayout(low2);
 
     top1 = new QVBoxLayout;
+    top1->addWidget(imgTrfuncEq);
     top1->addLayout(top);
     top1->addLayout(low3);
 

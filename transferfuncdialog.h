@@ -11,6 +11,7 @@ class TransferFuncDialog : public QDialog
 private:
     QLabel *lblA;
     QLabel *lblB;
+    QLabel *imgTrfuncEq;
     QTableWidget *tblA;
     QTableWidget *tblB;
 
