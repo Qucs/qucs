@@ -28,7 +28,8 @@ HEADERS  += filtersintez.h \
     qf_poly.h \
     qf_matrix.h \
     schcauer.h \
-    transferfuncdialog.h
+    transferfuncdialog.h \
+    bessel.h
 
 RESOURCES += \
     qfiltersintez.qrc

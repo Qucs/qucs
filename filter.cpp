@@ -1,5 +1,6 @@
 #include "filter.h"
 #include "qf_poly.h"
+#include "bessel.h"
 
 Filter::Filter(Filter::FilterFunc ffunc_, Filter::FType type_, FilterParam par)
 {
