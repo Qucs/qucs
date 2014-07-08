@@ -48,6 +48,7 @@ FilterSintez::FilterSintez(QWidget *parent)
         <<tr("Chebyshev")
         <<tr("Inverse Chebyshev")
         <<tr("Cauer (Elliptic)")
+        <<tr("Bessel")
         <<tr("User defined");
     cbxFilterFunc->addItems(lst2);
     connect(cbxFilterFunc,SIGNAL(currentIndexChanged(int)),this,SLOT(slotSwitchParameters()));
@@ -196,7 +197,9 @@ void FilterSintez::slotCalcSchematic()
                      break;
             case 3 : ffunc = Filter::Cauer;
                      break;
-            case 4 : ffunc = Filter::User;
+            case 4 : ffunc = Filter::Bessel;
+                     break;
+            case 5 : ffunc = Filter::User;
                      break;
             default: ffunc = Filter::NoFunc;
                      break;
@@ -376,7 +379,7 @@ void FilterSintez::slotSwitchParameters()
         cbxFilterType->setDisabled(false);
     }
 
-    if ((cbxFilterFunc->currentIndex()==4)) {
+    if ((cbxFilterFunc->currentIndex()==5)) {
         btnDefineTransferFunc->setEnabled(true);
         edtF2->setEnabled(false);
         edtPassbRpl->setEnabled(false);
