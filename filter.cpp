@@ -61,6 +61,8 @@ bool Filter::calcFilter()
         break;
     case Filter::InvChebyshev : calcInvChebyshev();
         break;
+    case Filter::Bessel : calcBessel();
+        break;
     case Filter::User : calcUserTrFunc();
         break;
     default :
@@ -456,6 +458,11 @@ void Filter::calcCauer() // from Digital Filter Designer's handbook p.103
         im = 0.5*sqrt(-1.0*bb[i]*bb[i]+4*cc[i]);
         Poles.append(std::complex<float>(re,-im));
     }
+}
+
+void Filter::calcBessel()
+{
+
 }
 
 void Filter::calcUserTrFunc()
