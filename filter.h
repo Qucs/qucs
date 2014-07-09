@@ -23,6 +23,7 @@ struct FilterParam {
     float Fs;
     float Rp;
     float Kv;
+    int order;
 };
 
 class Filter

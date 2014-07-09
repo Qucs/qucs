@@ -25,6 +25,7 @@ private:
 
     QLabel *lblAFR;
     QLabel *lblTopology;
+    QLabel *lblOrder;
 
     QLineEdit *edtA1; // passband attenuation A1
     QLineEdit *edtA2; // stopband attenuation A2
@@ -33,6 +34,7 @@ private:
     QLineEdit *edtKv;
     QLineEdit *edtPassbRpl;
     QLineEdit *edtStopbRpl;
+    QLineEdit *edtOrder;
 
     QComboBox *cbxFilterFunc;
     QPushButton *btnCalcSchematic;
