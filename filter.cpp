@@ -465,7 +465,16 @@ void Filter::calcCauer() // from Digital Filter Designer's handbook p.103
 
 void Filter::calcBessel()
 {
+    Poles.clear();
+    Zeros.clear();
 
+    if (order<=0) return;
+
+    for (int i=0;i<order;i++) {
+        Poles.append(std::complex<float>(BesselPoles[order-1][2*i],BesselPoles[order-1][2*i+1]));
+    }
+
+    reformPolesZeros();
 }
 
 void Filter::calcUserTrFunc()
