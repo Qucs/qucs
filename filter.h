@@ -34,7 +34,6 @@ public:
     enum FilterFunc {Butterworth, Chebyshev, Cauer, Bessel, InvChebyshev, NoFunc, User};
 
 private:
-    void besselCoefficients();
     void cauerOrderEstim();
     void reformPolesZeros();
 
