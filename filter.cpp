@@ -12,6 +12,9 @@ Filter::Filter(Filter::FilterFunc ffunc_, Filter::FType type_, FilterParam par)
     As = par.As;
     Ap = par.Ap;
     Kv = par.Kv;
+    if (ffunc==Filter::Bessel) {
+        order = par.order;
+    }
 }
 
 Filter::~Filter()

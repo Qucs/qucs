@@ -40,6 +40,10 @@ FilterSintez::FilterSintez(QWidget *parent)
     //edtStopbRpl->setValidator(val1);
     edtKv = new QLineEdit("0");
     edtKv->setValidator(val1);
+    QIntValidator *val2 = new QIntValidator(2,20);
+    lblOrder = new QLabel(tr("Filter order"));
+    edtOrder = new QLineEdit("5");
+    edtOrder->setValidator(val2);
 
     lblTyp = new QLabel(tr("Approximation type:"));
     cbxFilterFunc = new QComboBox;
@@ -126,6 +130,8 @@ FilterSintez::FilterSintez(QWidget *parent)
     left->addWidget(edtPassbRpl);
     left->addWidget(lblKv);
     left->addWidget(edtKv);
+    left->addWidget(lblOrder);
+    left->addWidget(edtOrder);
     QHBoxLayout *l3 = new QHBoxLayout;
     l3->addWidget(lblTyp);
     l3->addWidget(cbxFilterFunc);
@@ -198,6 +204,7 @@ void FilterSintez::slotCalcSchematic()
             case 3 : ffunc = Filter::Cauer;
                      break;
             case 4 : ffunc = Filter::Bessel;
+                     par.order = edtOrder->text().toInt();
                      break;
             case 5 : ffunc = Filter::User;
                      break;
