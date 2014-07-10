@@ -1,4 +1,4 @@
-#include "filtersintez.h"
+#include "qucsactivefilter.h"
 #include "sallenkey.h"
 #include "mfbfilter.h"
 #include "schcauer.h"
@@ -6,7 +6,7 @@
 #include <QTextCodec>
 
 
-FilterSintez::FilterSintez(QWidget *parent)
+QucsActiveFilter::QucsActiveFilter(QWidget *parent)
     : QMainWindow(parent)
 {
     Nfil = 4;
@@ -16,13 +16,13 @@ FilterSintez::FilterSintez(QWidget *parent)
     QTextCodec::setCodecForTr(QTextCodec::codecForName("UTF-8"));
 
     //lblInputData = new QLabel(tr("Входные данные"));
-    lblA1 = new QLabel(tr("Passband attenuation, Ap"));
-    lblA2 = new QLabel(tr("Stopband attenuation, As"));
-    lblF1 = new QLabel(tr("Cuttof frequency, Fc (Гц)"));
-    lblF2 = new QLabel(tr("Stopband frequency, Fs (Гц)"));
-    lblRpl1 = new QLabel(tr("Passband ripple Rp(дБ)"));
-    //lblRpl2 = new QLabel(tr("Stopband ripple (дБ)"));
-    lblKv = new QLabel(tr("Passband gain, Kv (дБ)"));
+    lblA1 = new QLabel(tr("Passband attenuation, Ap (dB)"));
+    lblA2 = new QLabel(tr("Stopband attenuation, As (dB)"));
+    lblF1 = new QLabel(tr("Cuttof frequency, Fc (Hz)"));
+    lblF2 = new QLabel(tr("Stopband frequency, Fs (Hz)"));
+    lblRpl1 = new QLabel(tr("Passband ripple Rp(dB)"));
+    //lblRpl2 = new QLabel(tr("Stopband ripple (dB)"));
+    lblKv = new QLabel(tr("Passband gain, Kv (dB)"));
 
 
     edtA1 = new QLineEdit("3");
@@ -173,13 +173,13 @@ FilterSintez::FilterSintez(QWidget *parent)
     zenter->setLayout(top1);
 }
 
-FilterSintez::~FilterSintez()
+QucsActiveFilter::~QucsActiveFilter()
 {
     
 }
 
 
-void FilterSintez::slotCalcSchematic()
+void QucsActiveFilter::slotCalcSchematic()
 {
 
     FilterParam par;
@@ -306,7 +306,7 @@ void FilterSintez::slotCalcSchematic()
 
 }
 
-void FilterSintez::slotUpdateResponse()
+void QucsActiveFilter::slotUpdateResponse()
 {
     QString s = ":/images/AFR.svg";
 
@@ -335,7 +335,7 @@ void FilterSintez::slotUpdateResponse()
     imgAFR->setFixedSize(sz);
 }
 
-void FilterSintez::slotUpdateSchematic()
+void QucsActiveFilter::slotUpdateSchematic()
 {
     slotUpdateResponse();
     QString s;
@@ -369,7 +369,7 @@ void FilterSintez::slotUpdateSchematic()
     sch_pic->setFixedSize(sz);
 }
 
-void FilterSintez::slotSwitchParameters()
+void QucsActiveFilter::slotSwitchParameters()
 {
     if (cbxFilterFunc->currentIndex()==0) {
         edtA1->setEnabled(true);
@@ -409,7 +409,7 @@ void FilterSintez::slotSwitchParameters()
     }
 }
 
-void FilterSintez::slotDefineTransferFunc()
+void QucsActiveFilter::slotDefineTransferFunc()
 {
 
     TransferFuncDialog *trfuncdlg = new TransferFuncDialog(coeffA,coeffB,this);
@@ -419,7 +419,7 @@ void FilterSintez::slotDefineTransferFunc()
     delete trfuncdlg;
 }
 
-void FilterSintez::errorMessage(QString str)
+void QucsActiveFilter::errorMessage(QString str)
 {
     QMessageBox* msg =  new QMessageBox(QMessageBox::Critical,tr("Active filter design"),
                                         str,

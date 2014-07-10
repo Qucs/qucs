@@ -1,10 +1,10 @@
 #include <QApplication>
-#include "filtersintez.h"
+#include "qucsactivefilter.h"
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    FilterSintez w;
+    QucsActiveFilter w;
     w.show();
     
     return a.exec();

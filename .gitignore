@@ -1,7 +1,7 @@
 *.o
 *.cpp~
 *.h~
-QFilterSintez
+qucsactivefilter
 *.pro.user
 Makefile
 moc_*.cpp
@@ -10,3 +10,10 @@ moc_*.cpp
 *.dat
 *.dpl
 qrc_*.cpp
+moc_*.cxx
+qrc_*.cxx
+CMakeFiles
+CMakeCache.txt
+*.cmake
+*.depends
+
