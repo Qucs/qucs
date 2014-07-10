@@ -386,7 +386,13 @@ void FilterSintez::slotSwitchParameters()
         cbxFilterType->setDisabled(false);
     }
 
-    if ((cbxFilterFunc->currentIndex()==5)) {
+    if ((cbxFilterFunc->currentIndex())==4) {
+        edtOrder->setEnabled(true);
+    } else {
+        edtOrder->setEnabled(false);
+    }
+
+    if ((cbxFilterFunc->currentIndex()==5)||(cbxFilterFunc->currentIndex()==4)) {
         btnDefineTransferFunc->setEnabled(true);
         edtF2->setEnabled(false);
         edtPassbRpl->setEnabled(false);
