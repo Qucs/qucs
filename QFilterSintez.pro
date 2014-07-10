@@ -13,15 +13,15 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        filtersintez.cpp \
     filter.cpp \
     sallenkey.cpp \
     mfbfilter.cpp \
     qf_poly.cpp \
     schcauer.cpp \
-    transferfuncdialog.cpp
+    transferfuncdialog.cpp \
+    qucsactivefilter.cpp
 
-HEADERS  += filtersintez.h \
+HEADERS  += \
     filter.h \
     sallenkey.h \
     mfbfilter.h \
@@ -29,7 +29,8 @@ HEADERS  += filtersintez.h \
     qf_matrix.h \
     schcauer.h \
     transferfuncdialog.h \
-    bessel.h
+    bessel.h \
+    qucsactivefilter.h
 
 RESOURCES += \
-    qfiltersintez.qrc
+    qucsactivefilter.qrc

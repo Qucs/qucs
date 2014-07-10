@@ -7,7 +7,7 @@
 #include <complex>
 #include "filter.h"
 
-class FilterSintez : public QMainWindow
+class QucsActiveFilter : public QMainWindow
 {
     Q_OBJECT
 
@@ -88,8 +88,8 @@ private slots:
     void slotDefineTransferFunc();
 
 public:
-    FilterSintez(QWidget *parent = 0);
-    ~FilterSintez();
+    QucsActiveFilter(QWidget *parent = 0);
+    ~QucsActiveFilter();
 };
 
 #endif // FILTERSINTEZ_H
