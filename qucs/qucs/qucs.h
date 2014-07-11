@@ -297,7 +297,7 @@ public:
   QAction *insWire, *insLabel, *insGround, *insPort, *insEquation, *magPlus,
           *editRotate, *editMirror, *editMirrorY, *editPaste, *select,
           *editActivate, *wire, *editDelete, *setMarker, *onGrid, *moveText,
-          *helpIndex, *helpGetStart, *callEditor, *callFilter, *callLine,
+          *helpIndex, *helpGetStart, *callEditor, *callFilter, *callLine, *callActiveFilter,
           *showMsg, *showNet, *alignTop, *alignBottom, *alignLeft, *alignRight,
           *distrHor, *distrVert, *selectAll, *callLib, *callMatch, *changeProps,
           *addToProj, *editFind, *editFindAgain, *insEntity, *selectMarker,
@@ -341,6 +341,7 @@ public slots:
   void slotShowLastNetlist();
   void slotCallEditor();
   void slotCallFilter();
+  void slotCallActiveFilter();
   void slotCallLine();
   void slotCallLibrary();
   void slotCallMatch();
