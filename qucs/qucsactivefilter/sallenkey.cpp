@@ -15,6 +15,9 @@
  *                                                                         *
  ***************************************************************************/
 
+#ifdef HAVE_CONFIG_H
+# include <config.h>
+#endif
 
 #include "sallenkey.h"
 #include <iostream>
@@ -129,7 +132,9 @@ void SallenKey::createHighPassSchematic(QString &s)
     int N2ord = order/2; // number of 2-nd order stages
     int N1stOrd = order%2; // number of 1-st order stages
 
-    s += "<Qucs Schematic 0.0.17>\n";
+    s += "<Qucs Schematic ";
+    s += PACKAGE_VERSION;
+    s += ">\n";
     s += "<Components>\n";
     s += QString("<.AC AC1 1 30 410 0 61 0 0 \"lin\" 1 \"1 Hz\" 1 \"%1 kHz\" 1 \"501\" 1 \"no\" 0>\n").arg((10.0*Fc)/1000.0);
     s += "<.DC DC1 1 280 410 0 61 0 0 \"26.85\" 0 \"0.001\" 0 \"1 pA\" 0 \"1 uV\" 0 \"no\" 0 \"150\" 0 \"no\" 0 \"none\" 0 \"CroutLU\" 0>\n";
@@ -211,7 +216,9 @@ void SallenKey::createLowPassSchematic(QString &s)
     int N2ord = order/2; // number of 2-nd order stages
     int N1stOrd = order%2; // number of 1-st order stages
 
-    s += "<Qucs Schematic 0.0.17>\n";
+    s += "<Qucs Schematic ";
+    s += PACKAGE_VERSION;
+    s += ">\n";
     s += "<Components>\n";
     s += QString("<.AC AC1 1 30 410 0 61 0 0 \"lin\" 1 \"1 Hz\" 1 \"%1 kHz\" 1 \"501\" 1 \"no\" 0>\n").arg((10.0*Fc)/1000.0);
     s += "<.DC DC1 1 280 410 0 61 0 0 \"26.85\" 0 \"0.001\" 0 \"1 pA\" 0 \"1 uV\" 0 \"no\" 0 \"150\" 0 \"no\" 0 \"none\" 0 \"CroutLU\" 0>\n";

@@ -15,6 +15,9 @@
  *                                                                         *
  ***************************************************************************/
 
+#ifdef HAVE_CONFIG_H
+# include <config.h>
+#endif
 
 #include "filter.h"
 #include "qf_poly.h"
@@ -59,12 +62,16 @@ void Filter::createSchematic(QString &s)
 
 void Filter::createHighPassSchematic(QString &s)
 {
-    s = "<Qucs Schematic 0.0.17>\n";
+    s = "<Qucs Schematic ";
+    s += PACKAGE_VERSION;
+    s += ">\n";
 }
 
 void Filter::createLowPassSchematic(QString &s)
 {
-    s = "<Qucs Schematic 0.0.17>\n";
+    s = "<Qucs Schematic ";
+    s += PACKAGE_VERSION;
+    s += ">\n";
 }
 
 bool Filter::calcFilter()
