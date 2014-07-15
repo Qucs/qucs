@@ -27,7 +27,7 @@ if !COND_MACOSX
   FILTERV2= qucs-filter-v2
 endif
 
-SUBDIRS = qucs qucs-edit qucs-help qucs-transcalc qucsactivefilter qucs-filter qucs-lib \
+SUBDIRS = qucs qucs-edit qucs-help qucs-transcalc qucs-activefilter qucs-filter qucs-lib \
 	qucs-attenuator $(FILTERV2) contrib $(RELEASEDIRS) 
 
 EXTRA_DIST = autogen.sh depcomp PLATFORMS RELEASE Info.plist
@@ -37,7 +37,7 @@ if COND_MACOSX
 app_PROGS = $(top_builddir)/qucs/qucs \
   $(top_builddir)/qucs-attenuator/qucsattenuator \
   $(top_builddir)/qucs-filter/qucsfilter \
-  $(top_builddir)/qucsactivefilter/qucsactivefilter \
+  $(top_builddir)/qucs-activefilter/qucsactivefilter \
   $(top_builddir)/qucs-help/qucshelp \
   $(top_builddir)/qucs-lib/qucslib \
   $(top_builddir)/qucs-edit/qucsedit \
