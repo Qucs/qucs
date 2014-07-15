@@ -14,6 +14,9 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
+#ifdef HAVE_CONFIG_H
+# include <config.h>
+#endif
 
 #include "schcauer.h"
 
@@ -130,7 +133,9 @@ void SchCauer::createGenericSchematic(QString &s)
     int N2ord = order/2; // number of 2-nd order stages
     int N1stOrd = order%2; // number of 1-st order stages
 
-    s += "<Qucs Schematic 0.0.17>\n";
+    s += "<Qucs Schematic ";
+    s += PACKAGE_VERSION;
+    s += ">\n";
     s += "<Components>\n";
     s += "<Vac V1 1 80 290 18 -26 0 1 \"1 V\" 0 \"1 kHz\" 0 \"0\" 0 \"0\" 0>\n";
     s += "<.DC DC1 1 40 510 0 61 0 0 \"26.85\" 0 \"0.001\" 0 \"1 pA\" 0 \"1 uV\" 0 \"no\" 0 \"150\" 0 \"no\" 0 \"none\" 0 \"CroutLU\" 0>\n";
