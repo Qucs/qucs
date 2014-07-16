@@ -74,6 +74,9 @@ struct tQucsSettings {
   unsigned int numRecentDocs;
   QStringList RecentDocs;
 
+  //shortcut
+  QMap<QString,QString> Shortcut;
+
   bool IgnoreFutureVersion;
 
 };
@@ -83,6 +86,7 @@ extern QucsApp *QucsMain;  // the Qucs application itself
 extern QString lastDir;    // to remember last directory for several dialogs
 extern QStringList qucsPathList;
 
+void setDefaultShortcut();
 bool loadSettings();
 bool saveApplSettings(QucsApp*);
 void qucsMessageOutput(QtMsgType type, const char *msg);

@@ -36,6 +36,7 @@ class QIntValidator;
 class QRegExpValidator;
 class QTableView;
 class QStandardItemModel;
+class KeySequenceEdit;
 
 class QucsSettingsDialog : public QDialog
 {
@@ -72,8 +73,10 @@ private slots:
     void slotAddPath();
     void slotAddPathWithSubFolders();
     void slotRemovePath();
-
-
+    void slotSetShortcut();
+    void slotRemoveShortcut();
+    void slotDefaultShortcut();
+    void slotCheckUnique();
 public:
     QucsApp *App;
 
@@ -83,7 +86,9 @@ public:
     QPushButton *FontButton, *BGColorButton;
     QLineEdit *undoNumEdit, *editorEdit, *Input_Suffix, *Input_Program,
               *homeEdit, *admsXmlEdit, *ascoEdit, *octaveEdit;
-    QTableWidget *fileTypesTableWidget, *pathsTableWidget;
+    QLabel *shortcutState;
+    KeySequenceEdit *shortcutEdit;
+    QTableWidget *fileTypesTableWidget, *pathsTableWidget, *shortcutTableWidget;
     QStandardItemModel *model;
     QPushButton *ColorComment, *ColorString, *ColorInteger,
                 *ColorReal, *ColorCharacter, *ColorDataType, *ColorAttribute,
@@ -96,10 +101,11 @@ public:
 
 private:
     QStringList currentPaths;
+    int conflictRow;
 
 private:
     void makePathTable();
-
+    void makeShortcutTable();
 };
 
 #endif

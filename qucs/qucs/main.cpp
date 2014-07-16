@@ -115,6 +115,15 @@ bool loadSettings()
         QString apath = settings.value("path").toString();
         qucsPathList.append(apath);
     }
+
+    // load shortcut
+    settings.beginGroup("shortcut");
+    QStringList keys = settings.childKeys();
+    foreach (QString key, keys) {
+        QucsSettings.Shortcut[key] = settings.value(key).toString();
+    }
+    settings.endGroup();
+
     settings.endArray();
 
     QucsSettings.numRecentDocs = 0;
@@ -172,7 +181,18 @@ bool saveApplSettings(QucsApp *qucs)
          settings.setValue("path", path);
          i++;
      }
-     settings.endArray();
+
+    //Save current shortcut settings
+    settings.beginGroup("shortcut");
+    QMap<QString, QString>* map = &QucsSettings.Shortcut;
+    QMap<QString, QString>::const_iterator iter = map->constBegin();
+    while (iter != map->constEnd()) {
+      settings.setValue(iter.key(), iter.value());
+      ++iter;
+    }
+    settings.endGroup();
+
+    settings.endArray();
 
   return true;
 
@@ -792,6 +812,10 @@ int main(int argc, char *argv[])
       if(octaveExec1.exists()) QucsSettings.OctaveBinDir.setPath(QString("/usr/local/bin/"));
 #endif
   }
+
+  //call qucs set default shortcut
+  setDefaultShortcut();
+
   loadSettings();
 
   if(!QucsSettings.BGColor.isValid())

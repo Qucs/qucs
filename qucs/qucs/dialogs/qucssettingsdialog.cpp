@@ -26,6 +26,7 @@
 #include "main.h"
 #include "textdoc.h"
 #include "schematic.h"
+#include "keysequenceedit.h"
 
 #include <QWidget>
 #include <QLabel>
@@ -319,6 +320,67 @@ QucsSettingsDialog::QucsSettingsDialog(QucsApp *parent, const char *name)
     t->addTab(locationsTab, tr("Locations"));
 
     // ...........................................................
+    // The shortcut tab
+    QWidget *shortcutTab = new QWidget(t);
+    QGridLayout *shortcutGrid = new QGridLayout(shortcutTab);
+
+    QLabel *note3 = new QLabel( tr("Edit the shortcut keyboard"));
+    shortcutGrid->addWidget(note3,0,0,1,2);
+    //shortcutGrid->setRowStretch(0,1);
+    //shortcutGrid->setRowStretch(1,2);
+
+    shortcutTableWidget = new QTableWidget(shortcutTab);
+    shortcutTableWidget->setColumnCount(2);
+
+    QTableWidgetItem *item3 = new QTableWidgetItem();
+    QTableWidgetItem *item4 = new QTableWidgetItem();
+
+    shortcutTableWidget->setHorizontalHeaderItem(0, item3);
+    shortcutTableWidget->setHorizontalHeaderItem(1, item4);
+ 
+    item3->setFlags(Qt::NoItemFlags);
+    item3->setText(tr("Action Description"));
+    item4->setText(tr("Shortcut"));
+
+    shortcutTableWidget->horizontalHeader()->setStretchLastSection(true);
+    shortcutTableWidget->verticalHeader()->hide();
+
+    shortcutGrid->addWidget(shortcutTableWidget, 1,0,1,2);
+
+    // fill shortcut table with all shortcut in qucssettings
+    makeShortcutTable();
+
+    QVBoxLayout *shortcutLeft = new QVBoxLayout();
+
+    QLabel *shortcutMessage = new QLabel("Keyin the shortcut below:");
+    shortcutLeft->addWidget(shortcutMessage);
+
+    shortcutEdit = new KeySequenceEdit();
+    shortcutLeft->addWidget(shortcutEdit);
+    connect(shortcutEdit, SIGNAL(textChanged(QString)), this, SLOT(slotCheckUnique()));
+
+    shortcutState = new QLabel();
+    shortcutLeft->addWidget(shortcutState);
+
+    QVBoxLayout *shortcutRight = new QVBoxLayout();
+
+    QPushButton *SetShortcutButt = new QPushButton("Set shortcut");
+    connect(SetShortcutButt, SIGNAL(clicked()), this, SLOT(slotSetShortcut()));
+    shortcutRight->addWidget(SetShortcutButt);
+
+    QPushButton *RemoveShortcutButt = new QPushButton("Remove shortcut");
+    connect(RemoveShortcutButt, SIGNAL(clicked()), this, SLOT(slotRemoveShortcut()));
+    shortcutRight->addWidget(RemoveShortcutButt);
+
+    QPushButton *DefaultShortcutButt = new QPushButton("Reset To Default");
+    connect(DefaultShortcutButt, SIGNAL(clicked()), this, SLOT(slotDefaultShortcut()));
+    shortcutRight->addWidget(DefaultShortcutButt);
+
+    shortcutGrid->addLayout(shortcutLeft, 2, 0);
+    shortcutGrid->addLayout(shortcutRight, 2, 1);
+
+    t->addTab(shortcutTab, tr("Shortcut"));
+    // ...........................................................
     // buttons on the bottom of the dialog (independent of the TabWidget)
 
     QHBoxLayout *Butts = new QHBoxLayout();
@@ -538,6 +600,18 @@ void QucsSettingsDialog::slotApply()
 
     QucsSettings.IgnoreFutureVersion = checkLoadFromFutureVersions->isChecked();
 
+    //shortcut section
+    bool shortcutChanged = false;
+    for (int row=0; row < shortcutTableWidget->rowCount(); row++)
+    {
+      if (QucsSettings.Shortcut[shortcutTableWidget->item(row,0)->text()] 
+          != shortcutTableWidget->item(row,1)->text()) {
+        QucsSettings.Shortcut[shortcutTableWidget->item(row,0)->text()]
+          = shortcutTableWidget->item(row,1)->text();
+        shortcutChanged = true;
+      }
+    }
+
     saveApplSettings(App);  // also sets the small and large font
 
     if(changed)
@@ -545,6 +619,9 @@ void QucsSettingsDialog::slotApply()
         App->readProjects();
         App->readProjectFiles();
         App->repaint();
+    }
+    if (shortcutChanged) {
+      App->setShortcut();
     }
 
     // update the schenatic filelist hash
@@ -822,4 +899,95 @@ void QucsSettingsDialog::makePathTable()
         path->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
         pathsTableWidget->setItem(row, 0, path);
     }
+}
+
+// makeShortcutTable()
+//
+// Fill in the shortcut table with content in QucsSettings.Shortcut map
+void QucsSettingsDialog::makeShortcutTable()
+{
+  QMap<QString, QString>* map = &QucsSettings.Shortcut;
+
+  // remove all the item from the table
+  shortcutTableWidget->clearContents();
+  shortcutTableWidget->setRowCount(map->size());
+
+  // fill table with action name and shortcut
+  QMap<QString, QString>::const_iterator iter = map->constBegin();
+  int row = 0;
+  while(iter != map->constEnd())
+  {
+    QTableWidgetItem *action = new QTableWidgetItem(QString(iter.key()));
+    QTableWidgetItem *shortcut = new QTableWidgetItem(QString(iter.value()));
+    action->setFlags(action->flags() & ~Qt::ItemIsSelectable & ~Qt::ItemIsEditable);
+    shortcut->setFlags(shortcut->flags() & ~Qt::ItemIsEditable);
+    shortcutTableWidget->setItem(row, 0, action);
+    shortcutTableWidget->setItem(row, 1, shortcut);
+    iter++;
+    ++row;
+  }
+}
+
+
+// setShortcut()
+//
+// check the validation of the shortcut
+// check whether the shortcut is duplicated
+// set the shortcut and the text in shortcutTableWidget
+void 
+QucsSettingsDialog::slotSetShortcut()
+{
+  if (shortcutTableWidget->currentItem() != NULL) {
+    if (conflictRow != -1) {
+      shortcutTableWidget->item(conflictRow,1)->setText(QString(""));
+    }
+    shortcutTableWidget->currentItem()->setText(shortcutEdit->text());
+    shortcutEdit->clear();
+  }
+}
+
+// removeShortcut()
+//
+// set the shortcut to space and the text in shortcutTableWidget
+void 
+QucsSettingsDialog::slotRemoveShortcut()
+{
+  int row = shortcutTableWidget->currentRow();
+  if (row >= 0 && row < shortcutTableWidget->rowCount()) {
+    shortcutTableWidget->item(row,1)->setText(QString(""));
+  }
+}
+
+// defaultShortcut()
+//
+// set the shortcut to space and the text in shortcutTable
+void 
+QucsSettingsDialog::slotDefaultShortcut()
+{
+  setDefaultShortcut();
+  makeShortcutTable();
+}
+
+// checkUnique()
+//
+// check whether input shortcut is conflict with any shortcut in table
+// return the row number if conflict
+void
+QucsSettingsDialog::slotCheckUnique() 
+{
+  conflictRow = -1;
+  if (!shortcutEdit->text().isEmpty()) {
+    int row = 0;
+    for (row = 0; row < shortcutTableWidget->rowCount(); ++row) {
+      if (shortcutEdit->text() == shortcutTableWidget->item(row,1)->text()) {
+        conflictRow = row;
+      }
+    }
+  }
+  if (conflictRow != -1) {
+    shortcutState->setText(QString("shortcut conflict with: ") + 
+        shortcutTableWidget->item(conflictRow,0)->text());
+  } else {
+    shortcutState->setText(QString(""));
+  }
 }
