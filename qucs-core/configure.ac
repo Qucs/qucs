@@ -638,22 +638,170 @@ AC_SUBST(QUCS_DOUBLE_SIZE, $double_size)
 unset double_type
 unset double_size
 
-dnl Checks for library functions.
-AC_CHECK_FUNCS([floor pow exp sqrt log10 log cos sin acos asin tan atan sinh \
-		cosh tanh fabs modf atan2 jn yn erf erfc round trunc acosh \
-		asinh strdup strerror strchr])
+echo "\nCheck functions in the global namespace"
+dnl http://www.cplusplus.com/reference/cmath/
+
+# Trigonometric functions
+AC_CHECK_FUNCS([ \
+cos \
+sin \
+tan \
+acos \
+asin \
+atan \
+atan2 \
+])
+
+#Hyperbolic functions
+AC_CHECK_FUNCS([ \
+cosh \
+sinh \
+tanh \
+acosh \
+asinh \
+atanh \
+])
+
+#Exponential and logarithmic functions
+AC_CHECK_FUNCS([ \
+exp \
+log \
+log10 \
+modf \
+])
+
+#Power functions
+AC_CHECK_FUNCS([ \
+pow \
+sqrt \
+hypot \
+])
+
+#Error and gamma functions
+AC_CHECK_FUNCS([ \
+erf \
+erfc \
+])
+
+# Rounding and remainder functions
+AC_CHECK_FUNCS([ \
+ceil \
+floor \
+fmod \
+trunc \
+round \
+])
+
+# Other functions
+AC_CHECK_FUNCS([ \
+fabs \
+])
+
+# Bessel funcions (libc ?)
+AC_CHECK_FUNCS([ jn yn ])
+
+# C strings
+# \bug strdup not in C++ STL
+AC_CHECK_FUNCS([ strdup strerror strchr])
 
 dnl Checks for complex classes and functions.
 AC_CXX_NAMESPACES
 AC_CXX_HAVE_COMPLEX
 AS_IF([test "X$ac_cv_cxx_have_complex" = "X"],[AC_MSG_ERROR([Qucs needs a templated complex class])])
-AC_CHECK_CXX_COMPLEX_FUNCS([cos cosh exp log log10 sin sinh sqrt tan \
-        tanh acos acosh asin asinh atan atanh log2 norm])
+
+
+echo "\nCheck complex transcendental overload in namespace std"
+dnl http://www.cplusplus.com/reference/complex/
+
+AC_CHECK_CXX_COMPLEX_FUNCS([ \
+  cos \
+  cosh \
+  exp \
+  log \
+  log2 \
+  log10 \
+dnl  pow \ skip, see below
+  sin \
+  sinh \
+  sqrt \
+  tan \
+  tanh \
+dnl C++11
+  acos \
+  acosh \
+  asin \
+  asinh \
+  atan \
+  atanh ])
+
+dnl Check complex values in namespace std
+AC_CHECK_CXX_COMPLEX_FUNCS([ \
+  real \
+  imag \
+  abs \
+  arg \
+  norm \
+  conj \
+dnl  polar \   skip, see below
+dnl C++11
+  proj ])
+
+dnl funcions with gwo arguments
 AC_CHECK_CXX_COMPLEX_POW
 AC_CHECK_CXX_COMPLEX_ATAN2
 AC_CHECK_CXX_COMPLEX_FMOD
 AC_CHECK_CXX_COMPLEX_POLAR
 AC_CHECK_CXX_COMPLEX_POLAR_COMPLEX
+
+
+dnl Depending on the implementation, funcions may or may not be included on the std namespace
+echo "\nCheck for functions in std:: namespace"
+ for f in std::acosh std::asinh std::atanh std::hypot std::trunc std::round std::erf std::erfc; do
+    AC_MSG_CHECKING([for $f])
+    AC_LINK_IFELSE([AC_LANG_SOURCE(
+                                  [[#include <cmath>
+                                  int main() { return $f(0.7) ? 1 : 0; }
+                                  ]])],
+      [AC_MSG_RESULT([yes])
+       if test $f = "std::acosh"; then
+         AC_DEFINE(HAVE_STD_ACOSH, 1,
+		     [Define to 1 if you have the `std::acosh` function.])
+
+       elif test $f = "std::asinh"; then
+         AC_DEFINE(HAVE_STD_ASINH, 1,
+	       [Define to 1 if you have the `std::asinh` function.])
+
+       elif test $f = "std::atanh"; then
+         AC_DEFINE(HAVE_STD_ATANH, 1,
+	       [Define to 1 if you have the `std::atanh` function.])
+
+       elif test $f = "std::hypot"; then
+         AC_DEFINE(HAVE_STD_HYPOT, 1,
+	       [Define to 1 if you have the `std::hypot` function.])
+
+       elif test $f = "std::fmod"; then
+         AC_DEFINE(HAVE_STD_FMOD, 1,
+         [Define to 1 if you have the `std::fmod` function.])
+
+       elif test $f = "std::trund"; then
+         AC_DEFINE(HAVE_STD_TRUNC, 1,
+         [Define to 1 if you have the `std::trunc` function.])
+
+       elif test $f = "std::round"; then
+         AC_DEFINE(HAVE_STD_ROUND, 1,
+		     [Define to 1 if you have the `std::round` function.])
+
+       elif test $f = "std::erf"; then
+         AC_DEFINE(HAVE_STD_ERF, 1,
+	       [Define to 1 if you have the `std::erf` function.])
+
+       elif test $f = "std::erfc"; then
+         AC_DEFINE(HAVE_STD_ERFC, 1,
+	       [Define to 1 if you have the `std::erfc` function.])
+       fi],
+      [AC_MSG_RESULT([no])])
+  done
+
 
 dnl Definitions at top of <config.h>.
 AH_TOP([
