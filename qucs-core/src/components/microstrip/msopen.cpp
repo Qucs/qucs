@@ -53,24 +53,24 @@ nr_double_t msopen::calcCend (nr_double_t frequency, nr_double_t W,
   nr_double_t dl = 0;
   /* Kirschning, Jansen and Koster */
   if (!strcmp (Model, "Kirschning")) {
-    nr_double_t Q6 = pow (ErEffFreq, 0.81);
-    nr_double_t Q7 = pow (W, 0.8544);
+    nr_double_t Q6 = qucs::pow (ErEffFreq, 0.81);
+    nr_double_t Q7 = qucs::pow (W, 0.8544);
     nr_double_t Q1 = 0.434907 *
       (Q6 + 0.26) / (Q6 - 0.189) * (Q7 + 0.236) / (Q7 + 0.87);
-    nr_double_t Q2 = pow (W, 0.371) / (2.358 * er + 1.0) + 1.0;
-    nr_double_t Q3 = atan (0.084 * pow (W, 1.9413 / Q2)) *
-      0.5274 / pow (ErEffFreq, 0.9236) + 1.0;
-    nr_double_t Q4 = 0.0377 * (6.0 - 5.0 * std::exp (0.036 * (1.0 - er))) *
-      atan (0.067 * pow (W, 1.456)) + 1.0;
-    nr_double_t Q5 = 1.0 - 0.218 * std::exp (-7.5 * W);
+    nr_double_t Q2 = qucs::pow (W, 0.371) / (2.358 * er + 1.0) + 1.0;
+    nr_double_t Q3 = qucs::atan (0.084 * qucs::pow (W, 1.9413 / Q2)) *
+      0.5274 / qucs::pow (ErEffFreq, 0.9236) + 1.0;
+    nr_double_t Q4 = 0.0377 * (6.0 - 5.0 * qucs::exp (0.036 * (1.0 - er))) *
+      qucs::atan (0.067 * qucs::pow (W, 1.456)) + 1.0;
+    nr_double_t Q5 = 1.0 - 0.218 * qucs::exp (-7.5 * W);
     dl = Q1 * Q3 * Q5 / Q4;
   }
   /* Hammerstad */
   else if (!strcmp (Model, "Hammerstad")) {
     dl = 0.102 * (W + 0.106) / (W + 0.264) *
-      (1.166 + (er + 1) / er * (0.9 + std::log (W + 2.475)));
+      (1.166 + (er + 1) / er * (0.9 + qucs::log (W + 2.475)));
   }
-  return dl * h * std::sqrt (ErEffFreq) / C0 / ZlEffFreq;
+  return dl * h * qucs::sqrt (ErEffFreq) / C0 / ZlEffFreq;
 }
 
 void msopen::calcSP (nr_double_t frequency) {
@@ -108,13 +108,13 @@ nr_complex_t msopen::calcY (nr_double_t frequency) {
     }
 
     nr_double_t c1, c2, l2, r2;
-    c1 = (1.125 * std::tanh (1.358 * W / h) - 0.315) *
+    c1 = (1.125 * qucs::tanh (1.358 * W / h) - 0.315) *
       h / 2.54e-5 / 25 / ZlEffFreq * 1e-12;
-    c2 = (6.832 * std::tanh (0.0109 * W / h) + 0.919) *
+    c2 = (6.832 * qucs::tanh (0.0109 * W / h) + 0.919) *
       h / 2.54e-5 / 25 / ZlEffFreq * 1e-12;
-    l2 = (0.008285 * std::tanh (0.5665 * W / h) + 0.0103) *
+    l2 = (0.008285 * qucs::tanh (0.5665 * W / h) + 0.0103) *
       h / 2.54e-5 / 25 * ZlEffFreq * 1e-9;
-    r2 = (1.024 * std::tanh (2.025 * W / h)) * ZlEffFreq;
+    r2 = (1.024 * qucs::tanh (2.025 * W / h)) * ZlEffFreq;
     y = nr_complex_t (0, c1 * o) + 1.0 / nr_complex_t (r2, l2 * o - 1 / c2 / o);
   }
   else {

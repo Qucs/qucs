@@ -44,19 +44,19 @@ nr_double_t msrstub::calcReactance (nr_double_t r1, nr_double_t r2,
   nr_double_t l0 = C0 / frequency;
   nr_double_t W = (r1 + (r2 - r1) / 2) * rad (alpha);
   nr_double_t ereff = (er + 1.0) / 2 + (er - 1.0) /
-    (2.0 * std::sqrt (1 + 10.0 * h / W));
-  nr_double_t k = 2.0 * M_PI * std::sqrt (ereff) / l0;
+    (2.0 * qucs::sqrt (1 + 10.0 * h / W));
+  nr_double_t k = 2.0 * M_PI * qucs::sqrt (ereff) / l0;
   nr_double_t a = k * r1;
   nr_double_t b = k * r2;
-  nr_double_t Z_0 = Z0 / std::sqrt (ereff) * std::sqrt (sqr (j0 (a)) + sqr (y0 (a))) /
-    std::sqrt (sqr (j1 (a)) + sqr (y1 (a)));
-  nr_double_t theta_1 = atan (y0 (a) / j0 (a));
+  nr_double_t Z_0 = Z0 / qucs::sqrt (ereff) * qucs::sqrt (sqr (j0 (a)) + sqr (y0 (a))) /
+    qucs::sqrt (sqr (j1 (a)) + sqr (y1 (a)));
+  nr_double_t theta_1 = qucs::atan (y0 (a) / j0 (a));
   //  nr_double_t theta_2 = atan (y0 (b) / j0 (b));
-  nr_double_t phi_1 = atan (-j1 (a) / y1 (a));
-  nr_double_t phi_2 = atan (-j1 (b) / y1 (b));
+  nr_double_t phi_1 = qucs::atan (-j1 (a) / y1 (a));
+  nr_double_t phi_2 = qucs::atan (-j1 (b) / y1 (b));
 
   nr_double_t X1 = h * Z_0 / (2.0 * M_PI * r1) * 360.0 / alpha *
-    std::cos (theta_1 - phi_2) / std::sin (phi_1 - phi_2);
+    qucs::cos (theta_1 - phi_2) / qucs::sin (phi_1 - phi_2);
 
   return X1;
 }
