@@ -83,7 +83,6 @@
 /*! \brief Arbitrary value for iteration*/
 #define MAX_SMALL_ITERATION 2048
 
-//using namespace qucs;
 
 /*!\brief Implement bessel J function for small arguments
     according to [5]
@@ -119,7 +118,7 @@ cbesselj_smallarg (unsigned int n, nr_complex_t z)
       return n > 0 ? 0.0 : 1;
     }
 
-  ak = ak / (nr_double_t) factorial (n);
+  ak = ak / (nr_double_t) qucs::factorial (n);
 
   /* R_0 */
   R0 = ak * 1.0;
