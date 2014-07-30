@@ -2,6 +2,7 @@
  * real.cpp - some real valued function implementations
  *
  * Copyright (C) 2008 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2014 Guilheme Brondani Torri <guitorri@gmail.com>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,122 +27,253 @@
 # include <config.h>
 #endif
 
-#include <stdlib.h>
+//#include <cstdlib>
 #include <cmath>
-#include <assert.h>
+#include <cassert>
 
 #include "consts.h"
 #include "real.h"
 
 namespace qucs {
 
-
-nr_double_t round (const nr_double_t arg) {
-// std::round was introduced in C++11
-#ifndef HAVE_ROUND
-  return (arg > 0) ? floor (arg + 0.5) : ceil (arg - 0.5);
-#else
-  return std::round (arg);
-#endif /* HAVE_ROUND */
+//
+// trigonometric
+//
+nr_double_t cos (const nr_double_t arg) {
+  return std::cos (arg);
 }
 
-nr_double_t trunc (const double arg) {
-// std::trunc was introduced in C++11
-#ifndef HAVE_TRUNC
-  return arg > 0 ? floor (arg) : floor (arg + 1);
-#else
-  return std::trunc (arg);
-#endif /* HAVE_TRUNC */
+nr_double_t sin (const nr_double_t arg) {
+  return std::sin (arg);
 }
 
-nr_double_t acosh (const double arg) {
-// std::acosh was introduced in C++11
-#ifndef HAVE_ACOSH
-  return log (arg + sqrt (arg * arg - 1.0));
-#else
+nr_double_t  tan (const nr_double_t arg) {
+  return std::tan (arg);
+}
+
+nr_double_t  acos (const nr_double_t arg) {
+  return std::acos (arg);
+}
+
+nr_double_t  asin (const nr_double_t arg) {
+  return std::asin (arg);
+}
+
+nr_double_t  atan (const nr_double_t arg) {
+  return std::atan (arg);
+}
+
+nr_double_t  atan2 (const nr_double_t x, const nr_double_t y) {
+  return std::atan2 (x,y);
+}
+
+//
+// hyperbolic
+//
+nr_double_t  cosh (const nr_double_t arg) {
+  return std::cosh (arg);
+}
+
+nr_double_t  sinh (const nr_double_t arg) {
+  return std::sinh (arg);
+}
+
+nr_double_t  tanh (const nr_double_t arg) {
+  return std::tanh (arg);
+}
+
+nr_double_t  acosh (const nr_double_t arg) {
+#ifdef HAVE_STD_ACOSH
+  // c++11
   return std::acosh (arg);
-#endif /* HAVE_ACOSH */
-}
-
-nr_double_t asinh (const double arg) {
-// std::asinh was introduced in C++11
-#ifndef HAVE_ASINH
-  return log (arg + sqrt (arg * arg + 1.0));
+#elif HAVE_ACOSH
+  return ::acosh (arg);
 #else
+  return log (arg + sqrt (arg * arg - 1.0));
+#endif
+}
+
+nr_double_t asinh (const nr_double_t arg)
+{
+#ifdef HAVE_STD_ASINH
+  // c++11
   return std::asinh (arg);
-#endif /* HAVE_ASINH */
+#elif HAVE_ASINH
+  return ::asinh (arg);
+#else
+  return log (arg + sqrt (arg * arg + 1.0));
+#endif
+}
+
+nr_double_t atanh (const nr_double_t arg)
+{
+#ifdef HAVE_STD_ATANH
+  // c++11
+  return std::atanh (arg);
+#elif HAVE_ATANH
+  return ::atanh (arg);
+#else
+  return 0.5 * log ( 2.0 / (1.0 - arg) - 1.0);
+#endif
 }
 
 
-/*!\brief Compute factorial n ie \$n!\$
+//
+// exponential and logarithmic functions
+//
+nr_double_t exp (const nr_double_t arg) {
+  return std::exp (arg);
+}
+nr_double_t log (const nr_double_t arg) {
+  return std::log (arg);
+}
+nr_double_t log10 (const nr_double_t arg) {
+  return std::log10 (arg);
+}
 
+//
+// power functions
+//
+
+nr_double_t pow (const nr_double_t a, const nr_double_t b)
+{
+  return std::pow (a,b);
+}
+
+nr_double_t sqrt (const nr_double_t d) {
+  return std::sqrt (d);
+}
+
+/*!\brief Euclidean distance function
+
+   The xhypot() function returns \f$\sqrt{a^2+b^2}\f$.
+   This is the length of the hypotenuse of a right-angle triangle with sides
+   of length a and b, or the distance
+   of the point (a,b) from the origin.
+
+   \param[in] a first length
+   \param[in] b second length
+   \return Euclidean distance from (0,0) to (a,b): \f$\sqrt{a^2+b^2}\f$
 */
-unsigned int
-factorial (unsigned int n) {
-  unsigned int result = 1;
-
-  /* 13! > 2^32 */
-  assert (n < 13);
-
-  if (n == 0)
-    return 1;
-
-  for (; n > 1; n--)
-    result = result * n;
-
-  return result;
+nr_double_t xhypot (const nr_double_t a, const nr_double_t b) {
+#ifdef HAVE_STD_HYPOT
+  return std::hypot(a,b) // c++11
+#else
+  nr_double_t c = fabs (a);
+  nr_double_t d = fabs (b);
+  if (c > d) {
+    nr_double_t e = d / c;
+    return c * sqrt (1 + e * e);
+  }
+  else if (d == 0)
+    return 0;
+  else {
+    nr_double_t e = c / d;
+    return d * sqrt (1 + e * e);
+  }
+#endif
 }
 
-/*!\brief Real part of real number
+//
+// error functions
+//
+
+nr_double_t erf( nr_double_t arg) {
+#ifdef HAVE_STD_ERF
+  return std::erf (arg); // c++11
+#elif HAVE_ERF
+  return ::erf (arg);
+#endif
+}
+
+
+//
+// rounding and remainder functions
+//
+nr_double_t ceil( nr_double_t arg) {
+  return std::ceil(arg);
+}
+
+nr_double_t floor( nr_double_t arg) {
+  return std::floor(arg);
+}
+
+nr_double_t fmod( nr_double_t arg) {
+#ifdef HAVE_STD_TRUNC
+  return std::fmod(arg);
+#else
+  return fmod(arg);
+#endif
+}
+
+nr_double_t trunc( nr_double_t arg) {
+#ifdef HAVE_STD_TRUNC
+  return qucs::trunc(arg);
+#elif HAVE_TRUNC
+  return ::trunc (arg);
+#else
+  return arg > 0 ? floor (arg) : floor (arg + 1);
+#endif
+}
+nr_double_t round( nr_double_t arg) {
+#ifdef HAVE_STD_ROUND
+  return qucs::round(arg);
+#elif HAVE_ROUND
+  return ::round (arg);
+#else
+  return (arg > 0) ? floor (arg + 0.5) : ceil (arg - 0.5);
+#endif
+}
+
+
+//
+// Qucs extra trigonometric helper
+//
+nr_double_t coth (const nr_double_t d) {
+  return 1.0 / std::tanh (d);
+}
+
+nr_double_t sech (const nr_double_t d) {
+  return  (1.0 / std::cosh (d));
+}
+
+nr_double_t cosech (const nr_double_t d) {
+  return  (1.0 / std::sinh (d));
+}
+
+
+//
+// Qucs extra math functions
+//
+
+/*!\brief Square a value
 
    \param[in] r Real number
-   \return Real part of r ie r
-   \todo Why not inline?
+   \return \f$x^2\f$
 */
-nr_double_t real (const nr_double_t r) {
-  return r;
-}
-
-/*!\brief Imaginary part of complex number
-
-   \param[in] r Real number
-   \return Imaginary part of r
-   \todo Why not inline?
-*/
-nr_double_t imag (const nr_double_t r) {
-  return 0.0;
-}
-
-/*!\brief Compute euclidian norm of real number
-
-   Compute \f$r^2\f$
-   \param[in] r Real number
-   \return Euclidian norm of r
-   \todo Why not inline
-*/
-nr_double_t norm (const nr_double_t r) {
+nr_double_t  sqr (const nr_double_t r) {
   return r * r;
 }
 
-/*!\brief Compute complex modulus of real number
-
-   \param[in] r Real number
-   \return Modulus of r
-   \todo Why not inline
-*/
-nr_double_t abs (const nr_double_t r) {
-  return std::abs (r);
+unsigned int sqr (unsigned int r) {
+  return r * r;
 }
 
-/*!\brief Conjugate of real number
+
+
+/*!\brief Quartic function
 
    \param[in] r Real number
-   \return Conjugate of real r ie r
-   \todo Why not inline?
+   \return \f$x^4\f$
 */
-nr_double_t conj (const nr_double_t r) {
-  return r;
+nr_double_t  quadr (const nr_double_t r) {
+  return r * r * r * r;
 }
+
+
+//
+//  extra math functions
+//
 
 /*!\brief Compute limited exponential
 
@@ -200,32 +332,6 @@ nr_double_t sign (const nr_double_t d) {
   return d < 0 ? -1 : 1;
 }
 
-/*!\brief Euclidean distance function
-
-   The xhypot() function returns \f$\sqrt{a^2+b^2}\f$.
-   This is the length of the hypotenuse of a right-angle triangle with sides
-   of length a and b, or the distance
-   of the point (a,b) from the origin.
-
-   \param[in] a first length
-   \param[in] b second length
-   \return Euclidean distance from (0,0) to (a,b): \f$\sqrt{a^2+b^2}\f$
-*/
-nr_double_t xhypot (const nr_double_t a, const nr_double_t b) {
-  nr_double_t c = fabs (a);
-  nr_double_t d = fabs (b);
-  if (c > d) {
-    nr_double_t e = d / c;
-    return c * sqrt (1 + e * e);
-  }
-  else if (d == 0)
-    return 0;
-  else {
-    nr_double_t e = c / d;
-    return d * sqrt (1 + e * e);
-  }
-}
-
 /*!\brief Real cardinal sinus
 
    Compute \f$\mathrm{sinc}\;d=\frac{\sin d}{d}\f$
@@ -275,5 +381,77 @@ nr_double_t step (const nr_double_t d) {
     x = 0.5;
   return x;
 }
+
+/*!\brief Compute factorial n ie \$n!\$
+
+*/
+unsigned int
+factorial (unsigned int n) {
+  unsigned int result = 1;
+
+  /* 13! > 2^32 */
+  assert (n < 13);
+
+  if (n == 0)
+    return 1;
+
+  for (; n > 1; n--)
+    result = result * n;
+
+  return result;
+}
+
+
+//
+// overload complex manipulations on reals
+//
+
+
+/*!\brief Real part of real number
+
+   \param[in] r Real number
+   \return Real part of r ie r
+*/
+nr_double_t real (const nr_double_t r) {
+  return r;
+}
+
+/*!\brief Imaginary part of complex number
+
+   \param[in] r Real number
+   \return Imaginary part of r
+*/
+nr_double_t imag (const nr_double_t r) {
+  return 0.0;
+}
+
+/*!\brief Compute euclidian norm of real number
+
+   Compute \f$r^2\f$
+   \param[in] r Real number
+   \return Euclidian norm of r
+*/
+nr_double_t norm (const nr_double_t r) {
+  return r * r;
+}
+
+/*!\brief Compute complex modulus of real number
+
+   \param[in] r Real number
+   \return Modulus of r
+*/
+nr_double_t abs (const nr_double_t r) {
+  return std::abs (r);
+}
+
+/*!\brief Conjugate of real number
+
+   \param[in] r Real number
+   \return Conjugate of real r ie r
+*/
+nr_double_t conj (const nr_double_t r) {
+  return r;
+}
+
 
 } // namespace qucs
