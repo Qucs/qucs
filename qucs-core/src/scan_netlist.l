@@ -82,7 +82,7 @@ static double netlist_evaluate_scale (double val, char * scale) {
   case 'a': factor = 1e-18; break;
   case 'd':
     if (scale[1] == 'B') {
-      val = pow (10.0, val / 10.0);
+      val = std::pow (10.0, val / 10.0);
       if (scale[2] == 'm')
 	factor = 1e-03;
       else if (scale[2] == 'u')
