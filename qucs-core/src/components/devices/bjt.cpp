@@ -79,9 +79,9 @@ matrix bjt::calcMatrixY (nr_double_t frequency) {
   // compute influence of excess phase
   nr_double_t phase = rad (Ptf) * Tf * 2 * M_PI * frequency;
 #if NEWSGP
-  nr_complex_t gmf = std::polar (gm, -phase);
+  nr_complex_t gmf = qucs::polar (gm, -phase);
 #else
-  nr_complex_t gmf = std::polar (gm + go, -phase) - go;
+  nr_complex_t gmf = qucs::polar (gm + go, -phase) - go;
 #endif
 
   // build admittance matrix
@@ -144,8 +144,8 @@ matrix bjt::calcMatrixCy (nr_double_t frequency) {
   nr_double_t Fb  = getPropertyDouble ("Fb");
 
   nr_double_t ib = 2 * Ibe * QoverkB / T0 +            // shot noise
-    (Kf * pow (Ibe, Af) / pow (frequency, Ffe) +       // flicker noise
-     Kb * pow (Ibe, Ab) / (1 + sqr (frequency / Fb)))  // burst noise
+    (Kf * qucs::pow (Ibe, Af) / qucs::pow (frequency, Ffe) +       // flicker noise
+     Kb * qucs::pow (Ibe, Ab) / (1 + sqr (frequency / Fb)))  // burst noise
     / kB / T0;
   nr_double_t ic = 2 * Ice * QoverkB / T0;             // shot noise
 
@@ -194,7 +194,7 @@ void bjt::initModel (void) {
   nr_double_t Bf  = getPropertyDouble ("Bf");
   nr_double_t Br  = getPropertyDouble ("Br");
   nr_double_t Xtb = getPropertyDouble ("Xtb");
-  nr_double_t F = std::exp (Xtb * std::log (T2 / T1));
+  nr_double_t F = qucs::exp (Xtb * qucs::log (T2 / T1));
   setScaledProperty ("Bf", Bf * F);
   setScaledProperty ("Br", Br * F);
 
@@ -203,9 +203,9 @@ void bjt::initModel (void) {
   nr_double_t Isc = getPropertyDouble ("Isc");
   nr_double_t Ne  = getPropertyDouble ("Ne");
   nr_double_t Nc  = getPropertyDouble ("Nc");
-  nr_double_t G = std::log (IsT / Is);
-  nr_double_t F1 = std::exp (G / Ne);
-  nr_double_t F2 = std::exp (G / Nc);
+  nr_double_t G = qucs::log (IsT / Is);
+  nr_double_t F1 = qucs::exp (G / Ne);
+  nr_double_t F2 = qucs::exp (G / Nc);
   Ise = Ise / F * F1;
   Isc = Isc / F * F2;
   setScaledProperty ("Ise", Ise * A);
@@ -445,7 +445,7 @@ void bjt::calcDC (void) {
   Q1 = 1 / (1 - Ubc * Vaf - Ube * Var);
   Q2 = If * Ikf + Ir * Ikr;
   nr_double_t SArg = 1.0 + 4.0 * Q2;
-  nr_double_t Sqrt = SArg > 0 ? std::sqrt (SArg) : 1;
+  nr_double_t Sqrt = SArg > 0 ? qucs::sqrt (SArg) : 1;
   Qb = Q1 * (1 + Sqrt) / 2;
   dQbdUbe = Q1 * (Qb * Var + gif * Ikf / Sqrt);
   dQbdUbc = Q1 * (Qb * Vaf + gir * Ikr / Sqrt);
@@ -477,8 +477,8 @@ void bjt::calcDC (void) {
       nr_double_t a, b, z;
       a = (Ibci + Ibcn + Ibei + Iben) / Irb;
       a = MAX (a, NR_TINY); // enforce positive values
-      z = (std::sqrt (1 + 144 / sqr (M_PI) * a) - 1) / 24 * sqr (M_PI) / std::sqrt (a);
-      b = std::tan (z);
+      z = (qucs::sqrt (1 + 144 / sqr (M_PI) * a) - 1) / 24 * sqr (M_PI) / qucs::sqrt (a);
+      b = qucs::tan (z);
       Rbb = Rbm + 3 * (Rb - Rbm) * (b - z) / z / sqr (b);
     }
     else {
@@ -595,7 +595,7 @@ void bjt::calcOperatingPoints (void) {
   if (If != 0.0) {
     nr_double_t e, Tff, dTffdUbe, dTffdUbc, a;
     a = 1 / (1 + Itf / If);
-    e = 2 * std::exp (MIN (Ubc * Vtf, 709));
+    e = 2 * qucs::exp (MIN (Ubc * Vtf, 709));
     Tff = Tf * (1 + Xtf * sqr (a) * e);
     dTffdUbe = Tf * Xtf * 2 * gif * Itf * cubic (a) / sqr (If) * e;
     Cbe += (If * dTffdUbe + Tff * (gif - If / Qb * dQbdUbe)) / Qb;
