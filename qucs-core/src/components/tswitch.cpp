@@ -116,7 +116,7 @@ void tswitch::calcTR (nr_double_t t) {
     // the pattern is repeated continuously. This is acieved by
     // subtracting an integer number of total switching periods
     // from the real time
-    t = t - T * floor (t / T);
+    t = t - T * qucs::floor (t / T);
   }
 
   // Initialise the last switching time to be a full
@@ -176,8 +176,8 @@ void tswitch::calcTR (nr_double_t t) {
   }
 
   // perform the interpolation of the constrained cubic spline
-  r = r_0 + ((3. * s_i * std::pow (tdiff,2.0)) / (duration))
-          + ((-2. * s_i * std::pow (tdiff,3.0)) / std::pow (duration, 2.0));
+  r = r_0 + ((3. * s_i * qucs::pow (tdiff,2.0)) / (duration))
+          + ((-2. * s_i * qucs::pow (tdiff,3.0)) / qucs::pow (duration, 2.0));
 
   setD (VSRC_1, VSRC_1, -r);
 }

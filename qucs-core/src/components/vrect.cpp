@@ -82,7 +82,7 @@ void vrect::calcTR (nr_double_t t) {
 
   if (t > td) { // after delay
     t = t - td;
-    t = t - (th + tl) * floor (t / (th + tl));
+    t = t - (th + tl) * qucs::floor (t / (th + tl));
     if (t < tr) { // rising edge
       ut = + u / tr * t;
     }

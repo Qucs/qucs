@@ -57,7 +57,7 @@ matrix iinoise::calcMatrixCy (nr_double_t frequency) {
   nr_double_t e = getPropertyDouble ("e");
   nr_double_t c = getPropertyDouble ("c");
   nr_double_t a = getPropertyDouble ("a");
-  nr_double_t k = a + c * pow (frequency, e);
+  nr_double_t k = a + c * qucs::pow (frequency, e);
   nr_double_t i1 = getPropertyDouble ("i1") / k / kB / T0;
   nr_double_t i2 = getPropertyDouble ("i2") / k / kB / T0;
   nr_double_t ci = C * std::sqrt (i1 * i2);
