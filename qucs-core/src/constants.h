@@ -90,43 +90,8 @@
 */
 #define GMin       NR_TINY
 
-///*!\brief Square a value
-//   \param[in] x value to square
-//   \return squarred expression
-//   \todo static inline
-//*/
-//#define sqr(x)    ((x) * (x))
-/*!\brief cube function
-   \param[in] x value to put at cube
-   \return Cubed expression
-   \todo static inline
-*/
 #define cubic(x)  ((x) * (x) * (x))
-///*!\brief quad function
-//   \param[in] x function parameter
-//   \return \f$x^4\f$
-//   \todo will be better to implement as static inline
-//   because we could do something like
-//   tmp = sqr(x);
-//   return sqr(tmp);
-//*/
-//#define quadr(x)  (exp (4 * log (fabs (x))))
-///*!\brief hyperbolic cotangent
-//   \todo Better as static inline
-//*/
-//#define coth(x)   (1.0 / tanh (x))
-///*!\brief hyperbolic secant
-//   \todo Better as static inline
-//*/
-//#define sech(x)   (1.0 / cosh (x))
-///*!\brief hyperbolic cosecant
-//   \todo Better as static inline
-//*/
-//#define cosech(x) (1.0 / sinh (x))
-/*!\brief Convert kelvin to celcius
-   \todo Better as static inline
-   \todo Rename as kelvin2celcius
-*/
+
 #define kelvin(x) ((x) - K)
 /*!\brief Convert celcius to kelvin
    \todo Better as static inline
