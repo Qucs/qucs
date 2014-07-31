@@ -23,6 +23,9 @@
 <admst:variable name="module" select="%s"/>
 </admst:for-each>
 
+<!--
+* c:math_h template - applied in analogfunction.xml
+-->
 <admst:template match="c:math_h">
 /* math functions and appropriate derivatives */
 inline double _cos(double arg)             { return  cos(arg); }
@@ -45,6 +48,7 @@ inline double _atan(double arg)            { return  atan(arg); }
 inline double _d0_atan(double arg)         { return (+1.0/(1+arg*arg)); }
 inline double _atanh(double arg)           { return  atanh(arg); }
 inline double _d0_atanh(double arg)        { return (+1.0/(1-arg*arg)); }
+
 inline double _logE(double arg)            { return  log(arg); }
 inline double _d0_logE(double arg)         { return (1.0/arg); }
 inline double _log10(double arg)           { return  log10(arg); }
@@ -53,8 +57,10 @@ inline double _exp(double arg)             { return  exp(arg); }
 inline double _d0_exp(double arg)          { return exp(arg); }
 inline double _sqrt(double arg)            { return  sqrt(arg); }
 inline double _d0_sqrt(double arg)         { return (1.0/sqrt(arg)/2.0); }
-inline double _abs(double arg)             { return fabs(arg); }
+
+inline double _abs(double arg)             { return std::abs(arg); }
 inline double _d0_abs(double arg)          { return (((arg)&gt;=0)?(+1.0):(-1.0)); }
+
 inline int _floor(double arg)              { return  floor(arg); }
 inline int _d0_floor(double)               { return (1.0); }
 
