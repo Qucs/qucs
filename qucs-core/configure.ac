@@ -806,7 +806,7 @@ echo "\nCheck for functions in std:: namespace"
 dnl Definitions at top of <config.h>.
 AH_TOP([
 /* __BEGIN_DECLS should be used at the beginning of your declarations,
-   so that C++ compilers don't mangle their names.  Use __END_DECLS at
+   so that C++ compilers do not mangle their names.  Use __END_DECLS at
    the end of C declarations. */
 #undef __BEGIN_DECLS
 #undef __END_DECLS
@@ -841,4 +841,19 @@ AC_OUTPUT
 dnl Print results.
 AC_MSG_RESULT([])
 AC_MSG_RESULT([ $PACKAGE version $VERSION configured successfully.])
-AC_MSG_RESULT([])
+AC_MSG_RESULT([
+Configure Information:
+  C Compiler        : $CC
+    DEFS            :   $DEFS
+    CPPFLAGS        :   $CPPFLAGS
+    CFLAGS          :   $CFLAGS
+
+  C++ Compiler      : $CXX
+    DEFS            :   $DEFS
+    CPPFLAGS        :   $CPPFLAGS
+    CXXFLAGS        :   $CXXFLAGS
+
+  Linker            : $LD
+    LDFLAGS         :   $LDFLAGS
+    LIBS            :   $LIBS
+])
