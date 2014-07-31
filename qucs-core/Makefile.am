@@ -51,9 +51,21 @@ MAINTAINERCLEANFILES = aclocal.m4 config.h.in configure Makefile.in \
 	stamp-h.in stamp-h[0-9].in
 DISTCLEANFILES = config.cache config.log
 
-# test suite
-TESTS = tests/basic/u=ri/u=ri@dc.net tests/basic/u=ri/u=ri@ac.net tests/basic/u=ri/u=ri@tr.net \
-        tests/basic/voltagediviser/voltagediviser@tr.net
+## Test suite
+#  Run with: make check
+# These tests rely on the assert and bugon functions.
+# The functions are used as equations on the schematic.
+# Fail on these functions will abort the simulation of netlist generated
+# from the schematic.
+#
+# See also qucs-test for another way of testing.
+# https://github.com/Qucs/qucs-test.
+TESTS =                                               \
+  tests/basic/u=ri/u=ri@dc.net                        \
+  tests/basic/u=ri/u=ri@ac.net                        \
+  tests/basic/u=ri/u=ri@tr.net                        \
+  tests/basic/voltagediviser/voltagediviser@tr.net
+
 TEST_EXTENSIONS = .net
 NET_LOG_COMPILER = src/qucsator
 AM_NET_LOG_FLAGS = -i
