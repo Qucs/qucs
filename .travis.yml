@@ -17,6 +17,10 @@ script:
   - uname -a
   - $CXX --version
 
+  # `sudo make install` fail with clang for ADMS, temporary workaround
+  - export CC=`which $CC`
+  - export CXX=`which $CXX`
+
   # Travis has Bison 2.5 --> You need at least version 2.6 of the 'bison' parse generator to use 'api.prefix' definitions.
   - wget http://ftp.gnu.org/gnu/bison/bison-2.6.tar.gz -O /tmp/bison-2.6.tar.gz
   - tar -xzvf /tmp/bison-2.6.tar.gz
@@ -31,14 +35,14 @@ script:
 
   # build Qucs GUI components
   - cd qucs
-  - sh autogen.sh
+  - ./autogen.sh
   - ./configure --enable-maintainer-mode --prefix=/usr
   - make && sudo make install
   - cd ..
 
   # build Qucs-core
   - cd qucs-core
-  - sh bootstrap.sh
+  - ./bootstrap.sh
   - ./configure --enable-maintainer-mode --prefix=/usr --with-mkadms=`which admsXml`
   - make && sudo make install
   - cd ..
