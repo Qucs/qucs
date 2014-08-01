@@ -803,6 +803,40 @@ echo "\nCheck for functions in std:: namespace"
   done
 
 
+dnl Setup Google Test support
+dnl * copy of gtest source into qucs-core/lib/gtest/
+dnl * run configure with --enable-gtest
+dnl * make
+dnl * make check (run all tests including gtest itself)
+dnl * cd tests && make check  (run only Qucs unit tests)
+dnl
+dnl Reason for the nested package
+dnl * gtest better be compiled with the same flags as the project
+dnl * https://code.google.com/p/googletest/wiki/FAQ#Why_is_it_not_recommended_to_install_a_pre-compiled_copy_of_Goog
+
+AC_ARG_ENABLE([gtest],
+  AS_HELP_STRING([--enable-gtest], [Enable compilation of Google Test]))
+
+dnl variable to steer ./Makefile.am to gtest and unit tests
+AM_CONDITIONAL([USE_GTEST], [test "$enable_gtest" = yes])
+
+AS_IF([test "x$enable_gtest" = "xyes"], [
+
+  echo "\nEnabling compilation of Google Test library..."
+
+  AC_CHECK_FILE([lib/gtest/configure], [],
+      [AC_MSG_ERROR([gtest sources not found, cannot --enable-gtest])])
+
+  dnl Set dir into Makefile.am if found
+  GTEST_DIR=lib/gtest
+  AC_SUBST([GTEST_DIR])
+
+  dnl configure nested package
+  AC_CONFIG_SUBDIRS([lib/gtest/])
+
+])
+
+
 dnl Definitions at top of <config.h>.
 AH_TOP([
 /* __BEGIN_DECLS should be used at the beginning of your declarations,
@@ -835,7 +869,9 @@ AC_CONFIG_FILES([Makefile
                  src/components/microstrip/Makefile
                  src/components/devices/Makefile
                  src/components/digital/Makefile
-                 src/components/verilog/Makefile])
+                 src/components/verilog/Makefile
+                 tests/Makefile
+                 ])
 AC_OUTPUT
 
 dnl Print results.

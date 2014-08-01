@@ -38,6 +38,11 @@ endif
 ## to be build first, followed by src, then doc
 SUBDIRS += src doc .
 
+# include subdirs to build gtest and run unit tests
+if USE_GTEST
+SUBDIRS += $(GTEST_DIR) tests
+endif
+
 ACLOCAL_AMFLAGS = -I m4
 
 nodist_pkginclude_HEADERS = qucs_typedefs.h
