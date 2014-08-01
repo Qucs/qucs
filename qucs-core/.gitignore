@@ -26,3 +26,6 @@ Makefile
 cmake_install.cmake
 uninstall.cmake
 install_manifest.txt
+
+lib/
+lib/gtest/
