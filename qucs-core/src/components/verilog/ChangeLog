@@ -1,3 +1,10 @@
+2014-08-08 Guilherme Brondani Torri <guitorri@gmail.com>
+
+	* analogfunction.xml: Add missing standard and transcendental functions.
+	* qucsVersion.xml: Add missing standard and transcendental functions.
+	Target LRM 2.3.1.
+	Derivatives of `ceil`, `atan2` not implemented.
+
 2011-03-12  Stefan Jahn  <stefan@lkcc.org>
 
 	* hicumL0V1p3.va: Added new HICUM L0 v1.3 compact model.

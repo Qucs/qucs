@@ -1000,7 +1000,15 @@
       <admst:variable name="xpq" string="$epq"/>
       <admst:variable name="e" select="d00_$(fname)$index"/>
     </admst:when>
-    <admst:when test="[name='div' or name='pow' or name='hypot' or name='min' or name='max']">
+    <admst:when
+      test="[
+      name='div' or
+      name='pow' or
+      name='hypot' or
+      name='min' or
+      name='max' or
+      name='atan2'
+      ]">
       <admst:assert test="arguments[count(.)=2]" format="%(name): should have two argument exactly\n"/>
       <admst:variable name="index" path="index(./subexpression/expression/function,.)"/>
       <admst:variable name="fname" path="funcname(.)/[name='fname']/value"/>
@@ -1112,7 +1120,15 @@
         </admst:otherwise>
       </admst:choose>
     </admst:when>
-    <admst:when test="[name='div' or name='pow' or name='hypot' or name='min' or name='max']">
+    <admst:when
+      test="[
+      name='div' or
+      name='pow' or
+      name='hypot' or
+      name='min' or
+      name='max' or
+      name='atan2'
+      ]">
       <admst:variable name="index" path="index(./subexpression/expression/function,.)"/>
       <admst:choose>
         <admst:when test="[$xp='0.0' and $yp='0.0']">
@@ -1211,8 +1227,14 @@
       </admst:choose>
     </admst:when>
 
-    <!-- TODO atan2 -->
-    <admst:when test="[name='div' or name='pow' or name='hypot' or name='min' or name='max']">
+    <admst:when
+      test="[
+      name='div' or
+      name='pow' or
+      name='hypot' or
+      name='min' or
+      name='max' or
+      name='atan2']">
       <admst:variable name="index" path="index(./subexpression/expression/function,.)"/>
       <admst:choose>
         <admst:when test="[$xq='0.0' and $yq='0.0']">
@@ -2023,7 +2045,8 @@
 #define m00_hypot(v00,x,y)      v00 = sqrt((x)*(x)+(y)*(y));
 #define m10_hypot(v10,v00,x,y)  v10 = (x)/(v00);
 #define m11_hypot(v11,v00,x,y)  v11 = (y)/(v00);
-//FIXME atan2
+#define m00_atan2(v00,x,y)      v00 = atan2(x,y);
+// TODO atan2 derivatives ?
 #define m00_acosh(v00,x)        v00 = acosh(x);
 #define m10_acosh(v10,v00,x)    v10 = (1.0/(sqrt(x-1)*sqrt(x+1)));
 #define m00_asinh(v00,x)        v00 = asinh(x);
@@ -2053,8 +2076,10 @@
 #define m00_abs(v00,x)          v00 = ((x)&lt;(0)?(-(x)):(x));
 #define m10_abs(v10,v00,x)      v10 = (((x)&gt;=0)?(+1.0):(-1.0));
 #define m00_floor(v00,x)        v00 = floor(x);
-//FIXME #define m10_floor(v00,x)        v00 = 1.0;
-//FIXME ceil
+#define m10_floor(v10,v00,x)    v10 = 1.0;
+
+#define m00_ceil(v00,x)         v00 = ceil(x);
+// TODO ceil derivative, needed?
 
 // analog operator, LRM p.61
 #define m00_limexp(v00,x)       v00 = ((x)&lt;80.0?exp(x):exp(80.0)*(x-79.0));
