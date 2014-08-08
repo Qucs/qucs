@@ -2020,8 +2020,6 @@
 #define m10_asin(v10,v00,x)     v10 = (+1.0/sqrt(1-x*x));
 #define m00_atan(v00,x)         v00 = atan(x);
 #define m10_atan(v10,v00,x)     v10 = (+1.0/(1+x*x));
-#define m00_atanh(v00,x)        v00 = atanh(x);
-#define m10_atanh(v10,v00,x)    v10 = (+1.0/(1-x*x));
 #define m00_hypot(v00,x,y)      v00 = sqrt((x)*(x)+(y)*(y));
 #define m10_hypot(v10,v00,x,y)  v10 = (x)/(v00);
 #define m11_hypot(v11,v00,x,y)  v11 = (y)/(v00);
