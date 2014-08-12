@@ -24,7 +24,6 @@
  */
 
 /*!\file complex.cpp
-
    Implements complex number class and functions
 */
 
@@ -45,8 +44,7 @@
 #include "fspecial.h"
 
 
-namespace qucs
-{
+namespace qucs {
 
 //
 // trigonometric complex
@@ -61,28 +59,27 @@ nr_complex_t cos (const nr_complex_t z) {
 }
 
 
-/*!\brief Compute complex sine
-   \param[in] z complex angle
-   \return sine of z
+/*! \brief Compute complex sine
+    \param[in] z complex angle
+    \return sine of z
 */
 nr_complex_t sin (const nr_complex_t z) {
     return std::sin (z);
 }
 
 
-/*!\brief Compute complex tangent
-   \param[in] z complex angle
-   \return tangent of z
+/*! \brief Compute complex tangent
+    \param[in] z complex angle
+    \return tangent of z
 */
 nr_complex_t tan (const nr_complex_t z) {
     return std::tan (z);
 }
 
 
-/*!\brief Compute complex argument hyperbolic cosine
-
-   \param[in] z complex arc
-   \return arc cosine of z
+/*! \brief Compute complex arc cosine
+    \param[in] z complex arc
+    \return arc cosine of z
 */
 nr_complex_t acos (const nr_complex_t z) {
 #ifdef HAVE_CXX_COMPLEX_ACOS
@@ -98,10 +95,9 @@ nr_complex_t acos (const nr_complex_t z) {
 }
 
 
-/*!\brief Compute complex arc sine
-
-   \param[in] z complex arc
-   \return arc sine of z
+/*! \brief Compute complex arc sine
+    \param[in] z complex arc
+    \return arc sine of z
 */
 nr_complex_t asin (const nr_complex_t z) {
 #ifdef HAVE_CXX_COMPLEX_ASIN
@@ -114,6 +110,10 @@ nr_complex_t asin (const nr_complex_t z) {
 #endif
 }
 
+/*! \brief Compute complex arc tangent
+    \param[in] z complex arc
+    \return arc tangent of z
+*/
 nr_complex_t atan (const nr_complex_t z) {
 #ifdef HAVE_CXX_COMPLEX_ATAN
     return std::atan (z);
@@ -128,39 +128,36 @@ nr_complex_t atan (const nr_complex_t z) {
 // hyperbolic complex
 //
 
-/*!\brief Compute complex hyperbolic cosine
-
-   \param[in] z complex arc
-   \return hyperbolic cosine of z
+/*! \brief Compute complex hyperbolic cosine
+    \param[in] z complex arc
+    \return hyperbolic cosine of z
 */
 nr_complex_t cosh (const nr_complex_t z) {
     return std::cosh (z);
 }
 
 
-/*!\brief Compute complex hyperbolic sine
-
-   \param[in] z complex arc
-   \return hyperbolic sine of z
+/*! \brief Compute complex hyperbolic sine
+    \param[in] z complex arc
+    \return hyperbolic sine of z
 */
 nr_complex_t sinh (const nr_complex_t z) {
     return std::sinh (z);
 }
 
 
-/*!\brief Compute complex hyperbolic tangent
-
-   \param[in] z complex arc
-   \return hyperbolic tangent of z
+/*! \brief Compute complex hyperbolic tangent
+    \param[in] z complex arc
+    \return hyperbolic tangent of z
 */
 nr_complex_t tanh (const nr_complex_t z) {
     return std::tanh (z);
 }
 
 
-/*! \brief Compute complex argument arc hyperbolic cosine
+/*! \brief Compute complex arc hyperbolic cosine
     \param[in] z complex arc
-    \return arc hyperbolic cosinus of z
+    \return arc hyperbolic cosine of z
 */
 nr_complex_t acosh (const nr_complex_t z) {
 #ifdef HAVE_CXX_COMPLEX_ACOSH
@@ -171,7 +168,7 @@ nr_complex_t acosh (const nr_complex_t z) {
 }
 
 
-/*! \brief Compute complex argument arc hyperbolic sine
+/*! \brief Compute complex arc hyperbolic sine
     \param[in] z complex arc
     \return arc hyperbolic sine of z
 */
@@ -184,11 +181,10 @@ nr_complex_t asinh (const nr_complex_t z) {
 }
 
 
-/*! \brief Compute complex argument arc hyperbolic tangent
+/*! \brief Compute complex arc hyperbolic tangent
     \param[in] z complex arc
-    \return arg hyperbolic tangent of z
+    \return arc hyperbolic tangent of z
 */
-
 nr_complex_t atanh (const nr_complex_t z) {
 #ifdef HAVE_CXX_COMPLEX_ATANH
     return std::atanh (z);
@@ -196,8 +192,6 @@ nr_complex_t atanh (const nr_complex_t z) {
     return 0.5 * log ( 2.0 / (1.0 - z) - 1.0);
 #endif
 }
-
-
 
 
 //
@@ -387,12 +381,6 @@ nr_complex_t atan2 (const nr_complex_t y, const nr_complex_t x)
 }
 
 
-
-
-
-
-
-
 //
 // extra math
 //
@@ -500,8 +488,7 @@ nr_double_t xhypot (nr_complex_t a, nr_double_t b)
 
 
 /*!\brief Complex round
-  round is the nearest integral value
-
+  Round is the nearest integral value
   Apply round to real and imaginary part
   \param[in] z complex number
   \return rounded complex number
@@ -518,7 +505,6 @@ nr_complex_t round (const nr_complex_t z)
 
 
 /*!\brief Complex trunc
-
   Apply round to integer, towards zero to real and imaginary part
   \param[in] z complex number
   \return rounded complex number
@@ -535,10 +521,9 @@ nr_complex_t trunc (const nr_complex_t z)
 
 
 /*!\brief Magnitude in dB
-
   Compute \f$10\log_{10} |z|^2=20\log_{10} |z|\f$
   \param[in] z complex number
-   \return Magnitude in dB
+  \return Magnitude in dB
 */
 nr_double_t dB (const nr_complex_t z)
 {
@@ -547,7 +532,6 @@ nr_double_t dB (const nr_complex_t z)
 
 
 /*!\brief Compute limited complex exponential
-
   \param[in] z complex number
   \return limited exponential of z
   \todo Change limexp(real) limexp(complex) file order
@@ -557,7 +541,6 @@ nr_complex_t limexp (const nr_complex_t z)
   nr_double_t mag = qucs::limexp (real (z));
   return nr_complex_t (mag * cos (imag (z)), mag * sin (imag (z)));
 }
-
 
 
 /*!\brief Construct a complex number using polar notation
@@ -574,14 +557,11 @@ nr_complex_t polar (const nr_double_t mag, const nr_double_t ang )
 #endif
 }
 
-// whay this function? can std::polar handle complex inputs?
-
 /*!\brief Extension of polar construction to complex
    \param[in] a Magnitude
    \param[in] p Angle
    \return complex number in rectangular form
    \bug Do not seems holomorph form of real polar
-   \todo Move near real polar
 */
 nr_complex_t polar (const nr_complex_t a, const nr_complex_t p)
 {
@@ -593,10 +573,7 @@ nr_complex_t polar (const nr_complex_t a, const nr_complex_t p)
 }
 
 
-
-
 /*!\brief Converts impedance to reflexion coefficient
-
    \param[in] z impedance
    \param[in] zref normalisation impedance
    \return reflexion coefficient
@@ -923,3 +900,4 @@ bool operator<(const nr_complex_t z1, const nr_complex_t z2)
 }
 
 } // namespace qucs
+

@@ -28,15 +28,13 @@
 
 #include <cmath>
 
-/** It is prefered to add all used funcions into the qucs namespace.
+/**It is prefered to add all used funcions into the qucs namespace.
  * Doing so one is forced do think about compatibility instead of using std directly.
  * Inline is optional at this moment
- * TODO test if inline indeed performace improves (optimization flags should inline them anyway)
- * TODO document header or code? changes in header trigger recompilation.
+ * \todo test if inline indeed performace improves (optimization flags should inline them anyway)
  */
 
 namespace qucs {
-
 
 //
 // trigonometric
@@ -131,7 +129,6 @@ nr_double_t   imag (const nr_double_t);
 nr_double_t   norm (const nr_double_t);
 nr_double_t   conj (const nr_double_t);
 nr_double_t   abs (const nr_double_t);
-
 
 } // namespace qucs
 

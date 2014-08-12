@@ -106,7 +106,7 @@ nr_double_t dB (const nr_complex_t);
 nr_complex_t limexp (const nr_complex_t);
 
 nr_complex_t   polar (const nr_double_t mag, const nr_double_t theta = 0.0);
-// FIXME are these needed/used?
+/// \bug are these needed/used?
 //nr_complex_t   polar (const nr_double_t a, const nr_complex_t p);
 //nr_complex_t   polar (const nr_complex_t a, const nr_double_t p = 0.0);
 nr_complex_t   polar (const nr_complex_t a, const nr_complex_t p = 0.0);
@@ -122,12 +122,9 @@ nr_complex_t floor (const nr_complex_t );
 nr_complex_t  ceil (const nr_complex_t );
 nr_complex_t   fix (const nr_complex_t );
 
-// TODO add to manual
-// why ?? FIXME
+/// \todo add fmod to manual
 nr_complex_t  fmod (const nr_complex_t x, const nr_complex_t y);
-
 nr_complex_t  sqr (const nr_complex_t z);
-
 
 nr_complex_t step (const nr_complex_t);
 
@@ -159,6 +156,5 @@ bool operator >  (const nr_complex_t, const nr_complex_t);
 bool operator <  (const nr_complex_t, const nr_complex_t);
 
 } // namespace qucs
-
 
 #endif /* __COMPLEX_H__ */

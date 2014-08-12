@@ -23,14 +23,23 @@
  */
 
 /*!\file constants.h
-   \brief global natural constant header file
-   \todo Create a material header
+   \brief Global physical constants header file
+   @todo Create a material header
+   @file constants.h
+   @defgroup qucsPhysConstants Qucs Physical Constants
 */
+
 #ifndef __CONSTANTS_H__
 #define __CONSTANTS_H__
 
 #include "consts.h"
 #include "precision.h"
+
+/**
+\addtogroup qucsPhysConstants
+Qucs physical constants
+@{
+*/
 
 /*!\brief speed of light in vacuum (\f$c_0\f$) */
 #define C0   299792458.0
@@ -85,6 +94,8 @@
 /*!\brief Energy gap at 0K in eV of Silicon */
 #define Eg0Si      1.16
 
+/// \todo move these simulator constants and macros elsewhere.
+
 /*!\brief Gmin
    \todo Define and document
 */
@@ -118,5 +129,9 @@
 /*!\brief Minimum of x and y */
 # define MIN(x,y) (((x) < (y)) ? (x) : (y))
 #endif
+
+/**
+@}
+*/
 
 #endif /* __CONSTANTS_H__ */

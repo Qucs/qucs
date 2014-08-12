@@ -39,30 +39,60 @@ namespace qucs {
 //
 // trigonometric
 //
+
+/*! \brief Compute cosine of an angle
+    \param[in] z angle in radians
+    \return cosine of z
+*/
 nr_double_t cos (const nr_double_t arg) {
   return std::cos (arg);
 }
 
+/*! \brief Compute sine of an angle
+    \param[in] z angle in radians
+    \return sine of z
+*/
 nr_double_t sin (const nr_double_t arg) {
   return std::sin (arg);
 }
 
+/*! \brief Compute tangent of an angle
+    \param[in] z angle in radians
+    \return tangent of z
+*/
 nr_double_t  tan (const nr_double_t arg) {
   return std::tan (arg);
 }
 
+/*! \brief Compute arc cosine
+    \param[in] z arc
+    \return arc cosine of z
+*/
 nr_double_t  acos (const nr_double_t arg) {
   return std::acos (arg);
 }
 
+/*! \brief Compute arc sine
+    \param[in] z arc
+    \return arc sine of z
+*/
 nr_double_t  asin (const nr_double_t arg) {
   return std::asin (arg);
 }
 
+/*! \brief Compute arc tangent
+    \param[in] z arc
+    \return arc tangent of z
+*/
 nr_double_t  atan (const nr_double_t arg) {
   return std::atan (arg);
 }
 
+/*! \brief Compute arc tangent with two parameters (fortran like function)
+    \param[in] x proportion of x-coordinate
+    \param[in] y proportion of y-coordinate
+    \return principal value of the arc tangent of y/x, expressed in radians.
+*/
 nr_double_t  atan2 (const nr_double_t x, const nr_double_t y) {
   return std::atan2 (x,y);
 }
@@ -70,18 +100,35 @@ nr_double_t  atan2 (const nr_double_t x, const nr_double_t y) {
 //
 // hyperbolic
 //
+
+/*! \brief Compute hyperbolic cosine
+    \param[in] z arc
+    \return hyperbolic cosine of z
+*/
 nr_double_t  cosh (const nr_double_t arg) {
   return std::cosh (arg);
 }
 
+/*! \brief Compute hyperbolic sine
+    \param[in] z arc
+    \return hyperbolic sine of z
+*/
 nr_double_t  sinh (const nr_double_t arg) {
   return std::sinh (arg);
 }
 
+/*! \brief Compute hyperbolic tangent
+    \param[in] z arc
+    \return hyperbolic tangent of z
+*/
 nr_double_t  tanh (const nr_double_t arg) {
   return std::tanh (arg);
 }
 
+/*! \brief Compute arc hyperbolic cosine
+    \param[in] z arc
+    \return arc hyperbolic cosine of z
+*/
 nr_double_t  acosh (const nr_double_t arg) {
 #ifdef HAVE_STD_ACOSH
   // c++11
@@ -93,6 +140,10 @@ nr_double_t  acosh (const nr_double_t arg) {
 #endif
 }
 
+/*! \brief Compute arc hyperbolic sine
+    \param[in] z arc
+    \return arc hyperbolic sine of z
+*/
 nr_double_t asinh (const nr_double_t arg)
 {
 #ifdef HAVE_STD_ASINH
@@ -105,6 +156,10 @@ nr_double_t asinh (const nr_double_t arg)
 #endif
 }
 
+/*! \brief Compute arc hyperbolic tangent
+    \param[in] z arc
+    \return arc hyperbolic tangent of z
+*/
 nr_double_t atanh (const nr_double_t arg)
 {
 #ifdef HAVE_STD_ATANH
@@ -452,6 +507,5 @@ nr_double_t abs (const nr_double_t r) {
 nr_double_t conj (const nr_double_t r) {
   return r;
 }
-
 
 } // namespace qucs
