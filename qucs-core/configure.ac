@@ -111,10 +111,22 @@ fi
 unset enable_debug
 
 
-# borrowed from http://cgit.freedesktop.org/libreoffice/core/tree/configure.ac
-dnl ===================================================================
 dnl MacOSX build and runtime environment options
-dnl ===================================================================
+dnl   borrowed from http://cgit.freedesktop.org/libreoffice/core/tree/configure.ac
+
+dnl Default-enabled search for SDK
+AC_ARG_ENABLE([sdk],
+  AS_HELP_STRING([--enable-sdk],
+                 [search for Mac OSX SDK @<:@default=yes@:>@. \
+                  Disable this option to set custom compiler flags CXX, CXXFLAGS]),
+  [case "$enableval" in
+   yes) enable_sdk="yes" ;;
+   no)  enable_sdk="no"  ;;
+   *)   enable_sdk="yes"  ;;
+   esac],
+  [enable_sdk="no"])
+
+dnl Specify version of SDK
 AC_ARG_WITH(macosx-sdk,
     AS_HELP_STRING([--with-macosx-sdk],
         [Use a specific SDK for building.])
@@ -210,11 +222,12 @@ case $host_os in
 
   *darwin* )
 
+  dnl ===================================================================
+  dnl Test if search for SDK was disabled
+  AS_IF([test "x$enable_sdk" = "xyes"], [
 
-  # borrowed from http://cgit.freedesktop.org/libreoffice/core/tree/configure.ac
-  dnl ===================================================================
   dnl Check OS X SDK and compiler
-  dnl ===================================================================
+  dnl borrowed from http://cgit.freedesktop.org/libreoffice/core/tree/configure.ac
   AC_MSG_CHECKING([what Mac OS X SDK to use])
 
   bitness=-m64
@@ -486,6 +499,10 @@ case $host_os in
     CFLAGS="$CFLAGS -W -Wall -Wmissing-prototypes"
     CXXFLAGS="$CXXFLAGS -W -Wall"
   fi
+
+  dnl End test for enable_sdk
+  ])
+
   ;;
 
   *mingw* )
