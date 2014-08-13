@@ -41,12 +41,12 @@
 #include "exception.h"
 #include "exceptionstack.h"
 
-// Little helper macro.
+//! Little helper macro.
 #define Swap(type,a,b) { type t; t = a; a = b; b = t; }
 
 namespace qucs {
 
-// Constructor creates an unnamed instance of the eqnsys class.
+//! Constructor creates an unnamed instance of the eqnsys class.
 template <class nr_type_t>
 eqnsys<nr_type_t>::eqnsys () {
   A = V = NULL;
@@ -60,7 +60,7 @@ eqnsys<nr_type_t>::eqnsys () {
   N = 0;
 }
 
-// Destructor deletes the eqnsys class object.
+//! Destructor deletes the eqnsys class object.
 template <class nr_type_t>
 eqnsys<nr_type_t>::~eqnsys () {
   if (R != NULL) delete R;
@@ -74,7 +74,7 @@ eqnsys<nr_type_t>::~eqnsys () {
   if (nPvt != NULL) delete[] nPvt;
 }
 
-/* The copy constructor creates a new instance of the eqnsys class
+/*! The copy constructor creates a new instance of the eqnsys class
    based on the given eqnsys object. */
 template <class nr_type_t>
 eqnsys<nr_type_t>::eqnsys (eqnsys & e) {
@@ -90,7 +90,7 @@ eqnsys<nr_type_t>::eqnsys (eqnsys & e) {
   N = 0;
 }
 
-/* With this function the describing matrices for the equation system
+/*! With this function the describing matrices for the equation system
    is passed to the equation system solver class.  Matrix A is the
    left hand side of the equation system and B the right hand side
    vector.  The reference pointer to the X vector is going to be the
@@ -117,7 +117,7 @@ void eqnsys<nr_type_t>::passEquationSys (tmatrix<nr_type_t> * nA,
   X = refX;
 }
 
-/* Depending on the algorithm applied to the equation system solver
+/*! Depending on the algorithm applied to the equation system solver
    the function stores the solution of the system into the matrix
    pointed to by the X matrix reference. */
 template <class nr_type_t>
@@ -178,7 +178,7 @@ void eqnsys<nr_type_t>::solve (void) {
 #endif
 }
 
-/* Simple matrix inversion is used to solve the equation system. */
+/*! Simple matrix inversion is used to solve the equation system. */
 template <class nr_type_t>
 void eqnsys<nr_type_t>::solve_inverse (void) {
   *X = inverse (*A) * *B;
@@ -188,7 +188,7 @@ void eqnsys<nr_type_t>::solve_inverse (void) {
 #define X_ (*X)
 #define B_ (*B)
 
-/* The function solves the equation system applying Gaussian
+/*! The function solves the equation system applying Gaussian
    elimination with full column pivoting only (no row pivoting). */
 template <class nr_type_t>
 void eqnsys<nr_type_t>::solve_gauss (void) {
@@ -227,7 +227,7 @@ void eqnsys<nr_type_t>::solve_gauss (void) {
   }
 }
 
-/* The function solves the equation system applying a modified
+/*! The function solves the equation system applying a modified
    Gaussian elimination with full column pivoting only (no row
    pivoting). */
 template <class nr_type_t>
@@ -279,7 +279,7 @@ void eqnsys<nr_type_t>::solve_gauss_jordan (void) {
   A_(i, i) = NR_TINY; /* virtual resistance to ground */	  \
   throw_exception (e); }
 
-/* The function uses LU decomposition and the appropriate forward and
+/*! The function uses LU decomposition and the appropriate forward and
    backward substitutions in order to solve the linear equation
    system.  It is very useful when dealing with equation systems where
    the left hand side (the A matrix) does not change but the right
@@ -297,7 +297,7 @@ void eqnsys<nr_type_t>::solve_lu_crout (void) {
   substitute_lu_crout ();
 }
 
-/* The other LU decomposition. */
+/*! The other LU decomposition. */
 template <class nr_type_t>
 void eqnsys<nr_type_t>::solve_lu_doolittle (void) {
 
@@ -311,7 +311,7 @@ void eqnsys<nr_type_t>::solve_lu_doolittle (void) {
   substitute_lu_doolittle ();
 }
 
-/* This function decomposes the left hand matrix into an upper U and
+/*! This function decomposes the left hand matrix into an upper U and
    lower L matrix.  The algorithm is called LU decomposition (Crout's
    definition).  The function performs the actual LU decomposition of
    the matrix A using (implicit) partial row pivoting. */
@@ -377,7 +377,7 @@ void eqnsys<nr_type_t>::factorize_lu_crout (void) {
 #endif
 }
 
-/* This function decomposes the left hand matrix into an upper U and
+/*! This function decomposes the left hand matrix into an upper U and
    lower L matrix.  The algorithm is called LU decomposition
    (Doolittle's definition).  The function performs the actual LU
    decomposition of the matrix A using (implicit) partial row pivoting. */
@@ -449,7 +449,7 @@ void eqnsys<nr_type_t>::factorize_lu_doolittle (void) {
 #endif
 }
 
-/* The function is used in order to run the forward and backward
+/*! The function is used in order to run the forward and backward
    substitutions using the LU decomposed matrix (Crout's definition -
    Uii are ones).  */
 template <class nr_type_t>
@@ -473,7 +473,7 @@ void eqnsys<nr_type_t>::substitute_lu_crout (void) {
   }
 }
 
-/* The function is used in order to run the forward and backward
+/*! The function is used in order to run the forward and backward
    substitutions using the LU decomposed matrix (Doolittle's
    definition - Lii are ones).  This function is here because of
    transposed LU matrices as used in the AC noise analysis. */
@@ -498,7 +498,7 @@ void eqnsys<nr_type_t>::substitute_lu_doolittle (void) {
   }
 }
 
-/* The function solves the equation system using a full-step iterative
+/*! The function solves the equation system using a full-step iterative
    method (called Jacobi's method) or a single-step method (called
    Gauss-Seidel) depending on the given algorithm.  If the current X
    vector (the solution vector) is the solution within a
@@ -590,7 +590,7 @@ void eqnsys<nr_type_t>::solve_iterative (void) {
 #endif
 }
 
-/* The function solves the linear equation system using a single-step
+/*! The function solves the linear equation system using a single-step
    iterative algorithm.  It is a modification of the Gauss-Seidel
    method and is called successive over relaxation.  The function uses
    an adaptive scheme to adjust the relaxation parameter. */
@@ -685,7 +685,7 @@ void eqnsys<nr_type_t>::solve_sor (void) {
 #endif
 }
 
-/* The function computes the convergence criteria for iterative
+/*! The function computes the convergence criteria for iterative
    methods like Jacobi or Gauss-Seidel as defined by Schmidt and
    v.Mises. */
 template <class nr_type_t>
@@ -699,7 +699,7 @@ nr_double_t eqnsys<nr_type_t>::convergence_criteria (void) {
   return sqrt (f);
 }
 
-/* The function tries to ensure that there are non-zero diagonal
+/*! The function tries to ensure that there are non-zero diagonal
    elements in the equation system matrix A.  This is required for
    iterative solution methods. */
 template <class nr_type_t>
@@ -707,7 +707,7 @@ void eqnsys<nr_type_t>::ensure_diagonal (void) {
   ensure_diagonal_MNA ();
 }
 
-/* The function ensures that there are non-zero diagonal elements in
+/*! The function ensures that there are non-zero diagonal elements in
    the equation system matrix A.  It achieves this condition for
    non-singular matrices which have been produced by the modified
    nodal analysis.  It takes advantage of the fact that the zero
@@ -750,7 +750,7 @@ void eqnsys<nr_type_t>::ensure_diagonal_MNA (void) {
   while (restart);
 }
 
-/* Helper function for the above ensure_diagonal_MNA() function.  It
+/*! Helper function for the above ensure_diagonal_MNA() function.  It
    looks for the pairs of 1 and -1 on the given row and column index. */
 template <class nr_type_t>
 int eqnsys<nr_type_t>::countPairs (int i, int& r1, int& r2) {
@@ -770,7 +770,7 @@ int eqnsys<nr_type_t>::countPairs (int i, int& r1, int& r2) {
   return pairs;
 }
 
-/* The function tries to raise the absolute value of diagonal elements
+/*! The function tries to raise the absolute value of diagonal elements
    by swapping rows and thereby make the A matrix diagonally
    dominant. */
 template <class nr_type_t>
@@ -797,7 +797,7 @@ void eqnsys<nr_type_t>::preconditioner (void) {
 #define R_ (*R)
 #define T_ (*T)
 
-/* This function uses the QR decomposition using householder
+/*! This function uses the QR decomposition using householder
    transformations in order to solve the given equation system. */
 template <class nr_type_t>
 void eqnsys<nr_type_t>::solve_qrh (void) {
@@ -805,7 +805,7 @@ void eqnsys<nr_type_t>::solve_qrh (void) {
   substitute_qrh ();
 }
 
-/* This function uses the QR decomposition using householder
+/*! This function uses the QR decomposition using householder
    transformations in order to solve the given equation system. */
 template <class nr_type_t>
 void eqnsys<nr_type_t>::solve_qr (void) {
@@ -813,7 +813,7 @@ void eqnsys<nr_type_t>::solve_qr (void) {
   substitute_qr_householder ();
 }
 
-/* The function uses the QR decomposition using householder
+/*! The function uses the QR decomposition using householder
    transformations in order to solve the given under-determined
    equation system in its minimum norm (least square) sense. */
 template <class nr_type_t>
@@ -823,7 +823,7 @@ void eqnsys<nr_type_t>::solve_qr_ls (void) {
   substitute_qr_householder_ls ();
 }
 
-/* Helper function for the euclidian norm calculators. */
+/*! Helper function for the euclidian norm calculators. */
 static void
 euclidian_update (nr_double_t a, nr_double_t& n, nr_double_t& scale) {
   nr_double_t x, ax;
@@ -841,7 +841,7 @@ euclidian_update (nr_double_t a, nr_double_t& n, nr_double_t& scale) {
   }
 }
 
-/* The following function computes the euclidian norm of the given
+/*! The following function computes the euclidian norm of the given
    column vector of the matrix A starting from the given row. */
 template <class nr_type_t>
 nr_double_t eqnsys<nr_type_t>::euclidian_c (int c, int r) {
@@ -853,7 +853,7 @@ nr_double_t eqnsys<nr_type_t>::euclidian_c (int c, int r) {
   return scale * sqrt (n);
 }
 
-/* The following function computes the euclidian norm of the given
+/*! The following function computes the euclidian norm of the given
    row vector of the matrix A starting from the given column. */
 template <class nr_type_t>
 nr_double_t eqnsys<nr_type_t>::euclidian_r (int r, int c) {
@@ -875,7 +875,7 @@ inline double cond_conj (double t) {
   return t;
 }
 
-/* The function decomposes the matrix A into two matrices, the
+/*! The function decomposes the matrix A into two matrices, the
    orthonormal matrix Q and the upper triangular matrix R.  The
    original matrix is replaced by the householder vectors in the lower
    triangular (including the diagonal) and the upper triangular R
@@ -939,7 +939,7 @@ void eqnsys<nr_type_t>::factorize_qrh (void) {
   }
 }
 
-/* The function decomposes the matrix A into two matrices, the
+/*! The function decomposes the matrix A into two matrices, the
    orthonormal matrix Q and the upper triangular matrix R.  The
    original matrix is replaced by the householder vectors in the lower
    triangular and the upper triangular R matrix (including the
@@ -992,7 +992,7 @@ void eqnsys<nr_type_t>::factorize_qr_householder (void) {
   }
 }
 
-/* The function uses the householder vectors in order to compute Q'B,
+/*! The function uses the householder vectors in order to compute Q'B,
    then the equation system RX = B is solved by backward substitution. */
 template <class nr_type_t>
 void eqnsys<nr_type_t>::substitute_qrh (void) {
@@ -1018,7 +1018,7 @@ void eqnsys<nr_type_t>::substitute_qrh (void) {
   }
 }
 
-/* The function uses the householder vectors in order to compute Q'B,
+/*! The function uses the householder vectors in order to compute Q'B,
    then the equation system RX = B is solved by backward substitution. */
 template <class nr_type_t>
 void eqnsys<nr_type_t>::substitute_qr_householder (void) {
@@ -1046,7 +1046,7 @@ void eqnsys<nr_type_t>::substitute_qr_householder (void) {
   }
 }
 
-/* The function uses the householder vectors in order to the solve the
+/*! The function uses the householder vectors in order to the solve the
    equation system R'X = B by forward substitution, then QX is computed
    to obtain the least square solution of the under-determined equation
    system AX = B. */
@@ -1081,7 +1081,7 @@ void eqnsys<nr_type_t>::substitute_qr_householder_ls (void) {
 
 #define sign_(a) (real (a) < 0 ? -1 : 1)
 
-/* The function creates the left-hand householder vector for a given
+/*! The function creates the left-hand householder vector for a given
    column which eliminates the column except the first element.  The
    householder vector is normalized to have one in the first position.
    The diagonal element is replaced by the applied householder vector
@@ -1109,7 +1109,7 @@ nr_type_t eqnsys<nr_type_t>::householder_create_left (int c) {
   return t;
 }
 
-/* The function computes a Householder vector to zero-out the matrix
+/*! The function computes a Householder vector to zero-out the matrix
    entries in the given column, stores it in the annihilated vector
    space (in a packed form) and applies the transformation to the
    remaining right-hand columns. */
@@ -1124,7 +1124,7 @@ nr_type_t eqnsys<nr_type_t>::householder_left (int c) {
   return t;
 }
 
-/* The function computes a Householder vector to zero-out the matrix
+/*! The function computes a Householder vector to zero-out the matrix
    entries in the given row, stores it in the annihilated vector space
    (in a packed form) and applies the transformation to the remaining
    downward rows. */
@@ -1139,7 +1139,7 @@ nr_type_t eqnsys<nr_type_t>::householder_right (int r) {
   return t;
 }
 
-/* The function creates the right-hand householder vector for a given
+/*! The function creates the right-hand householder vector for a given
    row which eliminates the row except the first element.  The
    householder vector is normalized to have one in the first position.
    The super-diagonal element is replaced by the applied householder
@@ -1167,7 +1167,7 @@ nr_type_t eqnsys<nr_type_t>::householder_create_right (int r) {
   return t;
 }
 
-/* Applies the householder vector stored in the given column to the
+/*! Applies the householder vector stored in the given column to the
    right-hand columns using the given normalization factor. */
 template <class nr_type_t>
 void eqnsys<nr_type_t>::householder_apply_left (int c, nr_type_t t) {
@@ -1184,7 +1184,7 @@ void eqnsys<nr_type_t>::householder_apply_left (int c, nr_type_t t) {
   }
 }
 
-/* Applies the householder vector stored in the given row to the
+/*! Applies the householder vector stored in the given row to the
    downward rows using the given normalization factor. */
 template <class nr_type_t>
 void eqnsys<nr_type_t>::householder_apply_right (int r, nr_type_t t) {
@@ -1207,7 +1207,7 @@ void eqnsys<nr_type_t>::householder_apply_right (int r, nr_type_t t) {
 #define E_ (*E)
 #define U_ (*A)
 
-/* The function does exactly the same as householder_apply_right()
+/*! The function does exactly the same as householder_apply_right()
    except that it applies the householder transformations to another
    matrix. */
 template <class nr_type_t>
@@ -1225,7 +1225,7 @@ void eqnsys<nr_type_t>::householder_apply_right_extern (int r, nr_type_t t) {
   }
 }
 
-/* This function solves the equation system AX = B using the singular
+/*! This function solves the equation system AX = B using the singular
    value decomposition (Golub-Reinsch-SVD). */
 template <class nr_type_t>
 void eqnsys<nr_type_t>::solve_svd (void) {
@@ -1234,7 +1234,7 @@ void eqnsys<nr_type_t>::solve_svd (void) {
   substitute_svd ();
 }
 
-// Annihilates near-zero singular values.
+//! Annihilates near-zero singular values.
 template <class nr_type_t>
 void eqnsys<nr_type_t>::chop_svd (void) {
   int c;
@@ -1245,7 +1245,7 @@ void eqnsys<nr_type_t>::chop_svd (void) {
   for (c = 0; c < N; c++) if (fabs (S_(c)) < Min) S_(c) = 0.0;
 }
 
-/* The function uses the singular value decomposition A = USV' to
+/*! The function uses the singular value decomposition A = USV' to
    solve the equation system AX = B by simple matrix multiplications.
    Remember that the factorization actually computed U, S and V'. */
 template <class nr_type_t>
@@ -1270,7 +1270,7 @@ void eqnsys<nr_type_t>::substitute_svd (void) {
   }
 }
 
-/* The function decomposes the matrix A into three other matrices U, S
+/*! The function decomposes the matrix A into three other matrices U, S
    and V'.  The matrix A is overwritten by the U matrix, S is stored
    in a separate vector and V in a separate matrix. */
 
@@ -1332,7 +1332,7 @@ void eqnsys<nr_type_t>::factorize_svd (void) {
 # define MAX(x,y) (((x) > (y)) ? (x) : (y))
 #endif
 
-// Helper function computes Givens rotation.
+//! Helper function computes Givens rotation.
 static nr_double_t
 givens (nr_double_t a, nr_double_t b, nr_double_t& c, nr_double_t& s) {
   nr_double_t z = xhypot (a, b);
@@ -1363,7 +1363,7 @@ void eqnsys<nr_type_t>::givens_apply_v (int r1, int r2,
   }
 }
 
-/* This function diagonalizes the upper bidiagonal matrix fromed by
+/*! This function diagonalizes the upper bidiagonal matrix fromed by
    the diagonal S and the super-diagonal vector E.  Both vectors are
    real valued.  Thus real valued calculations even when solving a
    complex valued equation systems is possible except for the matrix
