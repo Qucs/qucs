@@ -1394,7 +1394,7 @@ void QucsApp::slotMenuCloseProject()
 bool QucsApp::deleteDirectoryContent(QDir& Dir)
 {
   // removes every file, remove("*") does not work
-  QStringList Files = Dir.entryList("*", QDir::Files);  // all files
+  QStringList Files = Dir.entryList("*", QDir::Files|QDir::Hidden);  // all files
   QStringList::iterator it;
   for(it = Files.begin(); it != Files.end(); it++) {
      if(!Dir.remove(*it)) {
@@ -1466,10 +1466,12 @@ void QucsApp::slotMenuDelProject()
 
   if(s.isEmpty()) return;
 
-  s = s.left(s.length()-1);  // cut off trailing '/'
-  int i = s.findRev('/');
+  if (s.endsWith(QDir::separator())) {
+      s = s.left(s.length()-1);  // cut off trailing '/'
+  }
+  int i = s.findRev(QDir::separator());
   if(i > 0) s = s.mid(i+1);  // cut out the last subdirectory
-  s = s.left(s.length()-4);  // remove "_prj" from name
+  s.chop(4); // remove "_prj" from name
   deleteProject(d, s);
   readProjects();   // re-reads all projects and inserts them into the ListBox
 }
