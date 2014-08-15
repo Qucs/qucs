@@ -28,6 +28,7 @@ The source code is available as a tarball for stable releases and Git repository
 
 The release tarball can be downloaded from: <http://sourceforge.net/projects/qucs/files/qucs/>.
 Compilation and install from tarball is expected to work as follows:
+
     tar xvfz qucs[version].tar.gz
     cd qucs[version]
     ./configure
@@ -91,4 +92,8 @@ Note:
 
  * ADMS can be installed from a released tarball (>= 2.3.0). To use an already available `admsXml` pass the option `--with-mkadms=[path/to/admsXml]` to the `./configure` script
 
+
+## Binary Installation
+
+Some of the platform specific pre-compile binary packages containing installers can be found at <https://sourceforge.net/projects/qucs/files/qucs-binary/>.
 
