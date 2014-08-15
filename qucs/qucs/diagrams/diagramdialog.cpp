@@ -790,16 +790,16 @@ void DiagramDialog::slotTakeVar(QTableWidgetItem* Item)
   if(toTake) GraphInput->setText("");
 
   int     i  = GraphInput->cursorPosition();
-  QString s  = GraphInput->text();
+  //QString s="";
   //QString s1 = Item->text();
   int row = Item->row();
   QString s1 = ChooseVars->item(row, 0)->text();
   QFileInfo Info(defaultDataSet);
   if(ChooseData->currentText() != Info.baseName(true))
     s1 = ChooseData->currentText() + ":" + s1;
-  GraphInput->setText(s.left(i) + s1 + s.right(s.length()-i));
+  GraphInput->setText(s1);
 
-  if(s.isEmpty()) {
+  //if(s.isEmpty()) {
     GraphList->addItem(GraphInput->text());////insertItem(i, GraphInput->text());
     GraphList->setCurrentRow(GraphList->count()-1);
 
@@ -834,7 +834,7 @@ void DiagramDialog::slotTakeVar(QTableWidgetItem* Item)
     Graphs.append(g);
     changed = true;
     toTake  = true;
-  }
+  //}
 
   GraphInput->blockSignals(false);
 
@@ -905,7 +905,18 @@ void DiagramDialog::slotDeleteGraph()
   GraphList->takeItem(i);
   Graphs.remove(i);
 
-  GraphInput->setText("");  // erase input line and back to default values
+  int k=0;
+  if (GraphList->count()!=0) {
+      if (i>(GraphList->count()-1)) {
+          k = GraphList->count()-1;
+      } else {
+          k=i;
+      }
+      GraphInput->setText(GraphList->item(k)->text());
+  } else {
+      GraphInput->setText("");  // erase input line and back to default values
+  }
+
   if(Diag->Name != "Tab") {
     if(Diag->Name != "Truth") {
       ColorButt->setPaletteBackgroundColor(
