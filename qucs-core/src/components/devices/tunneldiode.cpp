@@ -59,18 +59,18 @@ void tunneldiode::calcId (nr_double_t U, nr_double_t& I, nr_double_t& G) {
   U   = Wr - Q_e*U/dv;
   de *= kB * kelvin (getPropertyDouble ("Temp"));
 
-  nr_double_t a = M_PI_2 + atan ( U / dW );
+  nr_double_t a = M_PI_2 + qucs::atan ( U / dW );
 
   nr_double_t e = (eta - U) / de;
   nr_double_t b = e;
   if (e < 15.0)  // avoid numerical overflow
-    b = std::log (1.0 + std::exp ( e ));
+    b = qucs::log (1.0 + qucs::exp ( e ));
 
   // current
   I = b * a;
 
   // derivative
-  G = Q_e / dv / de / (1.0 + std::exp(-e)) * a - b * Q_e / dv / dW / (1.0 + sqr (U/dW));
+  G = Q_e / dv / de / (1.0 + qucs::exp(-e)) * a - b * Q_e / dv / dW / (1.0 + sqr (U/dW));
 }
 
 // Callback for DC analysis.
@@ -99,9 +99,9 @@ void tunneldiode::calcDC (void) {
 
   // thermal-ionic current
   nv *= T / Q_e;
-  nr_double_t c = A * Iv / std::sinh (Vv / nv);
-  Id += c * std::sinh (Ud / nv);
-  gd += c * std::cosh (Ud / nv) / nv;
+  nr_double_t c = A * Iv / qucs::sinh (Vv / nv);
+  Id += c * qucs::sinh (Ud / nv);
+  gd += c * qucs::cosh (Ud / nv) / nv;
 
   nr_double_t Ieq = Id - Ud * gd;
 
@@ -138,8 +138,8 @@ void tunneldiode::calcOperatingPoints (void) {
 
   // depletion capacitance
   nr_double_t c = 1.0 + fabs(Ud) / Vj;
-  Cd = A * Cj0 / pow (c, M);
-  Qd = A * Cj0 * Vj / (1.0-M) * (1.0 - pow (c, 1.0 - M));
+  Cd = A * Cj0 / qucs::pow (c, M);
+  Qd = A * Cj0 * Vj / (1.0-M) * (1.0 - qucs::pow (c, 1.0 - M));
 
   // quantum well (diffusion) capacitance (negative because of NDR region)
   Cd -= te * gd;

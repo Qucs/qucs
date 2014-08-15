@@ -22,6 +22,10 @@
  *
  */
 
+/*!\file matrix.h
+   \brief Dense matrix class header file
+*/
+
 #ifndef __MATRIX_H__
 #define __MATRIX_H__
 
@@ -81,7 +85,10 @@ matrix twoport (matrix, char, char);
 nr_double_t rollet (matrix);
 nr_double_t b1 (matrix);
 
-/*!\brief Dense complex matrix class */
+/*!\class matrix
+ * \brief Dense complex matrix class
+ * This class defines a matrix object with its methods, operators and operations.
+*/
 class matrix
 {
  public:

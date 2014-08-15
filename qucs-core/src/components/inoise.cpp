@@ -48,7 +48,7 @@ void inoise::calcNoiseSP (nr_double_t frequency) {
   nr_double_t e = getPropertyDouble ("e");
   nr_double_t c = getPropertyDouble ("c");
   nr_double_t a = getPropertyDouble ("a");
-  nr_double_t ipsd = i / (a + c * pow (frequency, e)) / kB / T0 * z0;
+  nr_double_t ipsd = i / (a + c * qucs::pow (frequency, e)) / kB / T0 * z0;
   setN (NODE_1, NODE_1, +ipsd); setN (NODE_2, NODE_2, +ipsd);
   setN (NODE_1, NODE_2, -ipsd); setN (NODE_2, NODE_1, -ipsd);
 }
@@ -58,7 +58,7 @@ void inoise::calcNoiseAC (nr_double_t frequency) {
   nr_double_t e = getPropertyDouble ("e");
   nr_double_t c = getPropertyDouble ("c");
   nr_double_t a = getPropertyDouble ("a");
-  nr_double_t ipsd = i / (a + c * pow (frequency, e)) / kB / T0;
+  nr_double_t ipsd = i / (a + c * qucs::pow (frequency, e)) / kB / T0;
   setN (NODE_1, NODE_1, +ipsd); setN (NODE_2, NODE_2, +ipsd);
   setN (NODE_1, NODE_2, -ipsd); setN (NODE_2, NODE_1, -ipsd);
 }

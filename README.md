@@ -2,12 +2,38 @@
 
 ## QUCS - Quite Universal Circuit Simulator
 
-<http://sourceforge.net/projects/qucs>
 
+Qucs is an integrated circuit simulator which means you are able to setup a circuit with a graphical user interface (GUI) and simulate the large-signal, small-signal and noise behaviour of the circuit. After that simulation has finished you can view the simulation results on a presentation page or window.
 
-### Download the source
+## Resources
+  - Website: <http://qucs.sourceforge.net/>
+  - Main repository:   <http://sourceforge.net/p/qucs/git/>
+  - Mirror repository: <https://github.com/Qucs/qucs>
+  - Mailing lists: <http://sourceforge.net/p/qucs/mailman/>
+  - Forum: <http://sourceforge.net/p/qucs/discussion/>
+  - Bug trackers:
+    - <http://sourceforge.net/p/qucs/_list/tickets>
+    - <https://github.com/Qucs/qucs/issues>
+  - Downloads: <http://sourceforge.net/projects/qucs/files/>
 
-Repositories (official and mirror):
+## Currently Supported Platforms
+  - GNU/Linux
+  - Darwin/OS X
+  - FreeBSD
+  - Windows
+
+## Source Download and Compilation
+
+The source code is available as a tarball for stable releases and Git repository clone for development.
+
+The release tarball can be downloaded from: <http://sourceforge.net/projects/qucs/files/qucs/>.
+Compilation and install from tarball is expected to work as follows:
+    tar xvfz qucs[version].tar.gz
+    cd qucs[version]
+    ./configure
+    make install
+
+For the source code clone, use one of the Git repositories (official or mirror):
 
     git clone git://git.code.sf.net/p/qucs/git
     git clone git://github.com/Qucs/qucs.git
@@ -21,7 +47,9 @@ To download the ADMS submodule either:
      * `git submodule init`
      * `git submodule update`
 
-### Compile instructions Linux (Debian/Ubuntu)
+Compilation and installation depends on the operation system. See below for an example.
+
+## Compile instructions Linux (Debian/Ubuntu)
 
 First make sure you have all dependencies installed:
 

@@ -71,7 +71,7 @@ void digisource::calcTR (nr_double_t t) {
   bool lo = !strcmp (init, "low");
   nr_double_t ti = 0;
 
-  t = t - T * floor (t / T);
+  t = t - T * qucs::floor (t / T);
   for (int i = 0; i < values->getSize (); i++) {
     ti += real (values->get (i));
     if (t >= ti) lo = !lo; else break;

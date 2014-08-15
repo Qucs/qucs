@@ -25,7 +25,7 @@
 #ifndef __EQNSYS_H__
 #define __EQNSYS_H__
 
-// Definition of equation system solving algorithms.
+//! Definition of equation system solving algorithms.
 enum algo_type {
   ALGO_INVERSE                    = 0x0001,
   ALGO_GAUSS                      = 0x0002,
@@ -47,7 +47,7 @@ enum algo_type {
   ALGO_QR_DECOMPOSITION_2         = 0x2000,
 };
 
-// Definition of pivoting strategies.
+//! Definition of pivoting strategies.
 enum pivot_type {
   PIVOT_NONE    = 0x01,
   PIVOT_PARTIAL = 0x02,

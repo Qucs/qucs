@@ -22,14 +22,23 @@
  *
  */
 
-/*\file consts.h
-  Global math constant header file
+/**
+ \file consts.h
+ \brief Global math constants header file
+ @file consts.h
+ @defgroup qucsMathConstants Qucs Math Constants
 */
 
 #ifndef __CONSTS_H__
 #define __CONSTS_H__
 
 #include <cmath>
+
+/**
+\addtogroup qucsMathConstants
+Qucs mathematical constants.
+@{
+*/
 
 #ifndef M_PI
 /*!\brief  Archimedes' constant (\f$\pi\f$) */
@@ -89,5 +98,9 @@
 #ifndef M_LIMEXP
 #define M_LIMEXP  80.0
 #endif
+
+/**
+@}
+*/
 
 #endif /* __CONSTS_H__ */

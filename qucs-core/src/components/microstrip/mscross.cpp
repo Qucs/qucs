@@ -87,23 +87,23 @@ nr_double_t mscross::capCorrection (nr_double_t W, nr_double_t f) {
   msline::analyseQuasiStatic (W, h, t, er, SModel, ZlEff, ErEff, WEff);
   msline::analyseDispersion  (W, h, er, ZlEff, ErEff, f, DModel,
                               Zl2, Er2);
-  return Zl1 / Zl2 * std::sqrt (Er2 / Er1);
+  return Zl1 / Zl2 * qucs::sqrt (Er2 / Er1);
 }
 
 nr_double_t mscross::calcCap (nr_double_t W1, nr_double_t h, nr_double_t W2) {
   nr_double_t W1h = W1 / h;
   nr_double_t W2h = W2 / h;
-  nr_double_t X = std::log10 (W1h) * (86.6 * W2h - 30.9 * std::sqrt (W2h) + 367) +
+  nr_double_t X = qucs::log10 (W1h) * (86.6 * W2h - 30.9 * qucs::sqrt (W2h) + 367) +
     cubic (W2h) + 74 * W2h + 130;
-  return 1e-12 * W1 * (0.25 * X * pow (W1h, -1.0 / 3.0) - 60 +
+  return 1e-12 * W1 * (0.25 * X * qucs::pow (W1h, -1.0 / 3.0) - 60 +
 			      1 / W2h / 2 - 0.375 * W1h * (1 - W2h));
  }
 
 nr_double_t mscross::calcInd (nr_double_t W1, nr_double_t h, nr_double_t W2) {
   nr_double_t W1h = W1 / h;
   nr_double_t W2h = W2 / h;
-  nr_double_t Y = 165.6 * W2h + 31.2 * std::sqrt (W2h) - 11.8 * sqr (W2h);
-  return 1e-9 * h * (Y * W1h - 32 * W2h + 3) * pow (W1h, -1.5);
+  nr_double_t Y = 165.6 * W2h + 31.2 * qucs::sqrt (W2h) - 11.8 * sqr (W2h);
+  return 1e-9 * h * (Y * W1h - 32 * W2h + 3) * qucs::pow (W1h, -1.5);
 }
 
 matrix mscross::calcMatrixY (nr_double_t f) {
@@ -128,7 +128,7 @@ matrix mscross::calcMatrixY (nr_double_t f) {
   L3 = calcInd (W3, h, (W4 + W2) / 2);
   L4 = calcInd (W4, h, (W3 + W1) / 2);
 
-  L5 = 1e-9 * h * (5 * W2h * std::cos (M_PI / 2 * (1.5 - W1h)) -
+  L5 = 1e-9 * h * (5 * W2h * qucs::cos (M_PI / 2 * (1.5 - W1h)) -
 		   (1 + 7 / W1h ) / W2h - 337.5);
 
   // center inductance correction

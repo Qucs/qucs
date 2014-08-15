@@ -99,7 +99,7 @@ matrix diode::calcMatrixCy (nr_double_t frequency) {
   // build noise current correlation matrix
   matrix cy (2);
   nr_double_t i = 2 * (Id + 2 * Is) * QoverkB / T0 +    // shot noise
-    Kf * pow (fabs (Id), Af) / pow (frequency, Ffe) / kB / T0; // flicker noise
+    Kf * qucs::pow (fabs (Id), Af) / qucs::pow (frequency, Ffe) / kB / T0; // flicker noise
   cy.set (NODE_C, NODE_C, +i); cy.set (NODE_A, NODE_A, +i);
   cy.set (NODE_A, NODE_C, -i); cy.set (NODE_C, NODE_A, -i);
   return cy;
@@ -235,10 +235,10 @@ void diode::prepareDC (void) {
     else {
       int good = 0;
       tol = 1e-3 * Ibv;
-      Xbv = Bv - Ut * std::log (1 + Ibv / Is);
+      Xbv = Bv - Ut * qucs::log (1 + Ibv / Is);
       for (int i = 0; i < 25 ; i++) {
-	Xbv = Bv - Ut * std::log (Ibv / Is + 1 - Xbv / Ut);
-	Xibv = Is * (std::exp ((Bv - Xbv) / Ut) - 1 + Xbv / Ut);
+	Xbv = Bv - Ut * qucs::log (Ibv / Is + 1 - Xbv / Ut);
+	Xibv = Is * (qucs::exp ((Bv - Xbv) / Ut) - 1 + Xbv / Ut);
 	if (fabs (Xibv - Ibv) < tol) {
 	  Bv = Xbv;
 	  good = 1;
@@ -308,7 +308,7 @@ void diode::calcDC (void) {
     gd = +Is * 3 * a / Ud;
   }
   else { // middle region
-    nr_double_t a = std::exp (-(Bv + Ud) / N / Ut);
+    nr_double_t a = qucs::exp (-(Bv + Ud) / N / Ut);
     Id = -Is * a;
     gd = +Is * a / Ut / N;
   }
@@ -316,8 +316,8 @@ void diode::calcDC (void) {
   // knee current calculations
   if (Ikf != 0.0) {
     nr_double_t a = Ikf / (Ikf + Id);
-    gd *= 0.5 * (2 - Id * a / Ikf) * std::sqrt (a);
-    Id *= std::sqrt (a);
+    gd *= 0.5 * (2 - Id * a / Ikf) * qucs::sqrt (a);
+    Id *= qucs::sqrt (a);
   }
 
   Id += gtiny * Ud;

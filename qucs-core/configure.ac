@@ -111,10 +111,22 @@ fi
 unset enable_debug
 
 
-# borrowed from http://cgit.freedesktop.org/libreoffice/core/tree/configure.ac
-dnl ===================================================================
 dnl MacOSX build and runtime environment options
-dnl ===================================================================
+dnl   borrowed from http://cgit.freedesktop.org/libreoffice/core/tree/configure.ac
+
+dnl Default-enabled search for SDK
+AC_ARG_ENABLE([sdk],
+  AS_HELP_STRING([--enable-sdk],
+                 [search for Mac OSX SDK @<:@default=yes@:>@. \
+                  Disable this option to set custom compiler flags CXX, CXXFLAGS]),
+  [case "$enableval" in
+   yes) enable_sdk="yes" ;;
+   no)  enable_sdk="no"  ;;
+   *)   enable_sdk="yes"  ;;
+   esac],
+  [enable_sdk="yes"])
+
+dnl Specify version of SDK
 AC_ARG_WITH(macosx-sdk,
     AS_HELP_STRING([--with-macosx-sdk],
         [Use a specific SDK for building.])
@@ -166,7 +178,7 @@ AC_ARG_WITH(macosx-version-min-required,
     [
                           Usage:     --with-macosx-version-min-required=<version>
 
-                          e. g.: --with-macos-version-min-required=10.6
+                          e. g.: --with-macosx-version-min-required=10.6
                           see --with-macosx-sdk for more info
     ],
 ,)
@@ -177,7 +189,7 @@ AC_ARG_WITH(macosx-version-max-allowed,
     [
                           Usage:     --with-macosx-version-max-allowed=<version>
 
-                          e. g.: --with-macos-version-max-allowed=10.6
+                          e. g.: --with-macosx-version-max-allowed=10.6
                           see --with-macosx-sdk for more info
     ],
 ,)
@@ -210,11 +222,12 @@ case $host_os in
 
   *darwin* )
 
+  dnl ===================================================================
+  dnl Test if search for SDK was disabled
+  AS_IF([test "x$enable_sdk" = "xyes"], [
 
-  # borrowed from http://cgit.freedesktop.org/libreoffice/core/tree/configure.ac
-  dnl ===================================================================
   dnl Check OS X SDK and compiler
-  dnl ===================================================================
+  dnl borrowed from http://cgit.freedesktop.org/libreoffice/core/tree/configure.ac
   AC_MSG_CHECKING([what Mac OS X SDK to use])
 
   bitness=-m64
@@ -486,6 +499,10 @@ case $host_os in
     CFLAGS="$CFLAGS -W -Wall -Wmissing-prototypes"
     CXXFLAGS="$CXXFLAGS -W -Wall"
   fi
+
+  dnl End test for enable_sdk
+  ])
+
   ;;
 
   *mingw* )
@@ -638,27 +655,209 @@ AC_SUBST(QUCS_DOUBLE_SIZE, $double_size)
 unset double_type
 unset double_size
 
-dnl Checks for library functions.
-AC_CHECK_FUNCS([floor pow exp sqrt log10 log cos sin acos asin tan atan sinh \
-		cosh tanh fabs modf atan2 jn yn erf erfc round trunc acosh \
-		asinh strdup strerror strchr])
+echo "\nCheck functions in the global namespace"
+dnl http://www.cplusplus.com/reference/cmath/
+
+# Trigonometric functions
+AC_CHECK_FUNCS([ \
+cos \
+sin \
+tan \
+acos \
+asin \
+atan \
+atan2 \
+])
+
+#Hyperbolic functions
+AC_CHECK_FUNCS([ \
+cosh \
+sinh \
+tanh \
+acosh \
+asinh \
+atanh \
+])
+
+#Exponential and logarithmic functions
+AC_CHECK_FUNCS([ \
+exp \
+log \
+log10 \
+modf \
+])
+
+#Power functions
+AC_CHECK_FUNCS([ \
+pow \
+sqrt \
+hypot \
+])
+
+#Error and gamma functions
+AC_CHECK_FUNCS([ \
+erf \
+erfc \
+])
+
+# Rounding and remainder functions
+AC_CHECK_FUNCS([ \
+ceil \
+floor \
+fmod \
+trunc \
+round \
+])
+
+# Other functions
+AC_CHECK_FUNCS([ \
+fabs \
+])
+
+# Bessel funcions (libc ?)
+AC_CHECK_FUNCS([ jn yn ])
+
+# C strings
+# \bug strdup not in C++ STL
+AC_CHECK_FUNCS([ strdup strerror strchr])
 
 dnl Checks for complex classes and functions.
 AC_CXX_NAMESPACES
 AC_CXX_HAVE_COMPLEX
 AS_IF([test "X$ac_cv_cxx_have_complex" = "X"],[AC_MSG_ERROR([Qucs needs a templated complex class])])
-AC_CHECK_CXX_COMPLEX_FUNCS([cos cosh exp log log10 sin sinh sqrt tan \
-        tanh acos acosh asin asinh atan atanh log2 norm])
+
+
+echo "\nCheck complex transcendental overload in namespace std"
+dnl http://www.cplusplus.com/reference/complex/
+
+AC_CHECK_CXX_COMPLEX_FUNCS([ \
+  cos \
+  cosh \
+  exp \
+  log \
+  log2 \
+  log10 \
+dnl  pow \ skip, see below
+  sin \
+  sinh \
+  sqrt \
+  tan \
+  tanh \
+dnl C++11
+  acos \
+  acosh \
+  asin \
+  asinh \
+  atan \
+  atanh ])
+
+dnl Check complex values in namespace std
+AC_CHECK_CXX_COMPLEX_FUNCS([ \
+  real \
+  imag \
+  abs \
+  arg \
+  norm \
+  conj \
+dnl  polar \   skip, see below
+dnl C++11
+  proj ])
+
+dnl funcions with gwo arguments
 AC_CHECK_CXX_COMPLEX_POW
 AC_CHECK_CXX_COMPLEX_ATAN2
 AC_CHECK_CXX_COMPLEX_FMOD
 AC_CHECK_CXX_COMPLEX_POLAR
 AC_CHECK_CXX_COMPLEX_POLAR_COMPLEX
 
+
+dnl Depending on the implementation, funcions may or may not be included on the std namespace
+echo "\nCheck for functions in std:: namespace"
+ for f in std::acosh std::asinh std::atanh std::hypot std::trunc std::round std::erf std::erfc; do
+    AC_MSG_CHECKING([for $f])
+    AC_LINK_IFELSE([AC_LANG_SOURCE(
+                                  [[#include <cmath>
+                                  int main() { return $f(0.7) ? 1 : 0; }
+                                  ]])],
+      [AC_MSG_RESULT([yes])
+       if test $f = "std::acosh"; then
+         AC_DEFINE(HAVE_STD_ACOSH, 1,
+		     [Define to 1 if you have the `std::acosh` function.])
+
+       elif test $f = "std::asinh"; then
+         AC_DEFINE(HAVE_STD_ASINH, 1,
+	       [Define to 1 if you have the `std::asinh` function.])
+
+       elif test $f = "std::atanh"; then
+         AC_DEFINE(HAVE_STD_ATANH, 1,
+	       [Define to 1 if you have the `std::atanh` function.])
+
+       elif test $f = "std::hypot"; then
+         AC_DEFINE(HAVE_STD_HYPOT, 1,
+	       [Define to 1 if you have the `std::hypot` function.])
+
+       elif test $f = "std::fmod"; then
+         AC_DEFINE(HAVE_STD_FMOD, 1,
+         [Define to 1 if you have the `std::fmod` function.])
+
+       elif test $f = "std::trund"; then
+         AC_DEFINE(HAVE_STD_TRUNC, 1,
+         [Define to 1 if you have the `std::trunc` function.])
+
+       elif test $f = "std::round"; then
+         AC_DEFINE(HAVE_STD_ROUND, 1,
+		     [Define to 1 if you have the `std::round` function.])
+
+       elif test $f = "std::erf"; then
+         AC_DEFINE(HAVE_STD_ERF, 1,
+	       [Define to 1 if you have the `std::erf` function.])
+
+       elif test $f = "std::erfc"; then
+         AC_DEFINE(HAVE_STD_ERFC, 1,
+	       [Define to 1 if you have the `std::erfc` function.])
+       fi],
+      [AC_MSG_RESULT([no])])
+  done
+
+
+dnl Setup Google Test support
+dnl * copy of gtest source into qucs-core/lib/gtest/
+dnl * run configure with --enable-gtest
+dnl * make
+dnl * make check (run all tests including gtest itself)
+dnl * cd tests && make check  (run only Qucs unit tests)
+dnl
+dnl Reason for the nested package
+dnl * gtest better be compiled with the same flags as the project
+dnl * https://code.google.com/p/googletest/wiki/FAQ#Why_is_it_not_recommended_to_install_a_pre-compiled_copy_of_Goog
+
+AC_ARG_ENABLE([gtest],
+  AS_HELP_STRING([--enable-gtest], [Enable compilation of Google Test]))
+
+dnl variable to steer ./Makefile.am to gtest and unit tests
+AM_CONDITIONAL([USE_GTEST], [test "$enable_gtest" = yes])
+
+AS_IF([test "x$enable_gtest" = "xyes"], [
+
+  echo "\nEnabling compilation of Google Test library..."
+
+  AC_CHECK_FILE([lib/gtest/configure], [],
+      [AC_MSG_ERROR([gtest sources not found, cannot --enable-gtest])])
+
+  dnl Set dir into Makefile.am if found
+  GTEST_DIR=lib/gtest
+  AC_SUBST([GTEST_DIR])
+
+  dnl configure nested package
+  AC_CONFIG_SUBDIRS([lib/gtest/])
+
+])
+
+
 dnl Definitions at top of <config.h>.
 AH_TOP([
 /* __BEGIN_DECLS should be used at the beginning of your declarations,
-   so that C++ compilers don't mangle their names.  Use __END_DECLS at
+   so that C++ compilers do not mangle their names.  Use __END_DECLS at
    the end of C declarations. */
 #undef __BEGIN_DECLS
 #undef __END_DECLS
@@ -687,10 +886,27 @@ AC_CONFIG_FILES([Makefile
                  src/components/microstrip/Makefile
                  src/components/devices/Makefile
                  src/components/digital/Makefile
-                 src/components/verilog/Makefile])
+                 src/components/verilog/Makefile
+                 tests/Makefile
+                 ])
 AC_OUTPUT
 
 dnl Print results.
 AC_MSG_RESULT([])
 AC_MSG_RESULT([ $PACKAGE version $VERSION configured successfully.])
-AC_MSG_RESULT([])
+AC_MSG_RESULT([
+Configure Information:
+  C Compiler        : $CC
+    DEFS            :   $DEFS
+    CPPFLAGS        :   $CPPFLAGS
+    CFLAGS          :   $CFLAGS
+
+  C++ Compiler      : $CXX
+    DEFS            :   $DEFS
+    CPPFLAGS        :   $CPPFLAGS
+    CXXFLAGS        :   $CXXFLAGS
+
+  Linker            : $LD
+    LDFLAGS         :   $LDFLAGS
+    LIBS            :   $LIBS
+])
