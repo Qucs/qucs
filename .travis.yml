@@ -27,10 +27,10 @@ script:
   - cd bison-2.6 && ./configure --prefix=/usr && make && sudo make install && cd ..
   - bison --version
 
-  # Build ADMS from release
-  - wget http://sourceforge.net/projects/mot-adms/files/adms-source/2.3/adms-2.3.2.tar.gz -O /tmp/adms-2.3.2.tar.gz
-  - tar -xzvf /tmp/adms-2.3.2.tar.gz
-  - cd adms-2.3.2 && ./configure --prefix=/usr && make && sudo make install && cd ..
+  # Build ADMS from release (avoid need of Perl and its modules)
+  - wget http://sourceforge.net/projects/mot-adms/files/adms-source/2.3/adms-2.3.3.tar.gz -O /tmp/adms-2.3.3.tar.gz
+  - tar -xzvf /tmp/adms-2.3.3.tar.gz
+  - cd adms-2.3.3 && ./configure --prefix=/usr && make && sudo make install && cd ..
   - admsXml --version
 
   # build Qucs GUI components
