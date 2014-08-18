@@ -157,8 +157,8 @@ inline double _d0_vt(double)               { return 1.3806503e-23/1.602176462e-1
     <admst:when test="adms[datatypename='probe']">
       <admst:fatal format="probe not allowed inside analog functions\n"/>
     </admst:when>
-    <admst:when test="adms[datatypename='variable']">
 
+    <admst:when test="adms[datatypename='variable']">
       <admst:value-of select="name"/>
       <admst:variable name="variable" select="%s"/>
       <admst:return name="x" value="$variable"/>
@@ -177,8 +177,8 @@ inline double _d0_vt(double)               { return 1.3806503e-23/1.602176462e-1
           </admst:otherwise>
         </admst:choose>
       </admst:for-each>
-
     </admst:when>
+
     <admst:when test="adms[datatypename='mapply_unary']">
       <admst:if test="[name='plus']">
         <admst:variable name="op" select="+"/>
@@ -725,6 +725,7 @@ inline double _d0_vt(double)               { return 1.3806503e-23/1.602176462e-1
   </admst:choose>
 </admst:template>
 
+<!-- handle code generation of `analog function` derivatives -->
 <admst:template match="af:print:derivate">
   <admst:choose>
     <admst:when test="adms[datatypename='callfunction']">
@@ -755,7 +756,11 @@ inline double _d0_vt(double)               { return 1.3806503e-23/1.602176462e-1
       </admst:apply-templates>
       <admst:return name="x" value="while($whileblock)\n$while"/>
     </admst:when>
+
     <admst:when test="adms[datatypename='conditional']">
+      <!-- get type of conditional -->
+      <admst:value-of select="./if/tree/adms/datatypename"/>
+      <admst:variable name="TYPE" select="%s"/>
       <admst:apply-templates select="if" match="af:print:expression">
         <admst:value-of select="returned('x')/value"/>
         <admst:variable name="if" select="%s"/>
@@ -770,8 +775,21 @@ inline double _d0_vt(double)               { return 1.3806503e-23/1.602176462e-1
           <admst:variable name="then" select="$(then)else\n%s"/>
         </admst:apply-templates>
       </admst:if>
-      <admst:return name="x" value="if($if)\n$then"/>
+      <!-- put parenthesis in `variable` and `number`, other types already have -->
+      <admst:choose>
+        <admst:when
+          test="[
+            $TYPE='variable' or
+            $TYPE='number'
+            ]">
+          <admst:return name="x" value="if ($if)\n $then"/>
+        </admst:when>
+        <admst:otherwise>
+          <admst:return name="x" value="if $if\n $then"/>
+        </admst:otherwise>
+      </admst:choose>
     </admst:when>
+
     <admst:when test="adms[datatypename='case']">
       <admst:apply-templates select="case" match="af:print:expression">
         <admst:value-of select="returned('x')/value"/>
@@ -863,7 +881,11 @@ inline double _d0_vt(double)               { return 1.3806503e-23/1.602176462e-1
       </admst:apply-templates>
       <admst:return name="x" value="while($whileblock)\n$while"/>
     </admst:when>
+
     <admst:when test="adms[datatypename='conditional']">
+      <!-- get type of conditional -->
+      <admst:value-of select="./if/tree/adms/datatypename"/>
+      <admst:variable name="TYPE" select="%s"/>
       <admst:apply-templates select="if" match="af:print:expression">
         <admst:value-of select="returned('x')/value"/>
         <admst:variable name="if" select="%s"/>
@@ -878,8 +900,21 @@ inline double _d0_vt(double)               { return 1.3806503e-23/1.602176462e-1
           <admst:variable name="then" select="$(then)else\n%s"/>
         </admst:apply-templates>
       </admst:if>
-      <admst:return name="x" value="if($if)\n$then"/>
+      <!-- put parenthesis in `variable` and `number`, other types already have -->
+      <admst:choose>
+        <admst:when
+          test="[
+            $TYPE='variable' or
+            $TYPE='number'
+            ]">
+          <admst:return name="x" value="if ($if)\n $then"/>
+        </admst:when>
+        <admst:otherwise>
+          <admst:return name="x" value="if $if\n $then"/>
+        </admst:otherwise>
+      </admst:choose>
     </admst:when>
+
     <admst:when test="adms[datatypename='case']">
       <admst:apply-templates select="case" match="af:print:expression">
         <admst:value-of select="returned('x')/value"/>
