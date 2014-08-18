@@ -909,6 +909,9 @@
         </admst:otherwise>
       </admst:choose>
     </admst:when>
+    <admst:when test="[name='\$limit']">
+      <admst:fatal format="%(name): function not implemented \n"/>
+    </admst:when>
     <admst:when test="[name='\$temperature']">
       <admst:assert test="[nilled(arguments)]" format="%(name): should not have arguments\n"/>
       <admst:variable name="e" string="_circuit_temp"/>
