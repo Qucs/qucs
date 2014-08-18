@@ -1690,7 +1690,24 @@
   <admst:text select="if[dynamic='yes']" format="#ifdef _DYNAMIC\n"/>
   <admst:text test="if/function" format="{\n"/>
   <admst:apply-templates select="if/function" match="function:precomputation"/>
-  <admst:text format="if\n(%(e(if/tree)))\n"/>
+
+  <!-- avoid extraneous parenthesis `if ((...))` compiler warning.
+       add parenthesis for `variable` or `number`, others already have -->
+  <admst:value-of select="./if/tree/adms/datatypename"/>
+  <admst:variable name="TYPE" select="%s"/>
+  <admst:choose>
+    <admst:when
+      test="[
+        $TYPE='variable' or
+        $TYPE='number'
+        ]">
+      <admst:text format="if\n(%(e(if/tree)))\n"/>
+    </admst:when>
+    <admst:otherwise>
+      <admst:text format="if\n%(e(if/tree))\n"/>
+    </admst:otherwise>
+  </admst:choose>
+
   <admst:text select="then/adms[datatypename!='block']" format="{\n"/>
   <admst:apply-templates select="then" match="%(datatypename)"/>
   <admst:text select="then/adms[datatypename!='block']" format="}\n"/>
