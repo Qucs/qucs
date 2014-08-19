@@ -231,6 +231,16 @@ void bjt::initModel (void) {
 	      "BJT `%s'\n", Nc, getName ());
   }
 
+  /* Originally Vtf was expected to be PROP_POS_RANGE, but there are models
+   * which use negative values. Instead of failing, warn the user.
+   * \todo Provide a way to silece such warnings
+   */
+  nr_double_t Vtf = getPropertyDouble ("Vtf");
+  if (Vtf < 0.0) {
+    logprint (LOG_ERROR, "WARNING: Unphysical model parameter Vtf = %g in "
+	      "BJT `%s'\n", Vtf, getName ());
+  }
+
   // compute Cje, Cjc and Cjs temperature and area dependencies
   nr_double_t Cje = getPropertyDouble ("Cje");
   nr_double_t Cjc = getPropertyDouble ("Cjc");
@@ -788,7 +798,7 @@ PROP_REQ [] = {
   { "Vjs", PROP_REAL, { 0.75, PROP_NO_STR }, PROP_RNGXI (0, 10) },
   { "Mjs", PROP_REAL, { 0, PROP_NO_STR }, PROP_RNGII (0, 1) },
   { "Fc", PROP_REAL, { 0.5, PROP_NO_STR }, PROP_RNGII (0, 1) },
-  { "Vtf", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+  { "Vtf", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE },
   { "Tf", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
   { "Xtf", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
   { "Itf", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
