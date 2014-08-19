@@ -35,6 +35,8 @@
 #include "consts.h"
 #include "precision.h"
 
+namespace qucs {
+
 /**
 \addtogroup qucsPhysConstants
 Qucs physical constants
@@ -133,5 +135,7 @@ Qucs physical constants
 /**
 @}
 */
+
+} // namespace qucs
 
 #endif /* __CONSTANTS_H__ */

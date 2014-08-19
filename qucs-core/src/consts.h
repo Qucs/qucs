@@ -34,6 +34,8 @@
 
 #include <cmath>
 
+namespace qucs {
+
 /**
 \addtogroup qucsMathConstants
 Qucs mathematical constants.
@@ -102,5 +104,7 @@ Qucs mathematical constants.
 /**
 @}
 */
+
+} // namespace qucs
 
 #endif /* __CONSTS_H__ */
