@@ -1,9 +1,9 @@
 
-INCLUDE_DIRECTORIES( ${CMAKE_SOURCE_DIR}
-                     ${CMAKE_CURRENT_SOURCE_DIR}
-                     ${CMAKE_SOURCE_DIR}/src/math
-                     ${CMAKE_SOURCE_DIR}/src/components
-                     ${CMAKE_SOURCE_DIR}/src/components/devices )
+INCLUDE_DIRECTORIES( ${qucs-core_SOURCE_DIR}
+                     ${qucs-core_CURRENT_SOURCE_DIR}
+                     ${qucs-core_SOURCE_DIR}/src/math
+                     ${qucs-core_SOURCE_DIR}/src/components             # component.h
+                     ${qucs-core_SOURCE_DIR}/src/components/devices )   # devices.h
 
 SET( MICROSTRIP_SRC
   bondwire.cpp
@@ -27,5 +27,5 @@ SET( MICROSTRIP_SRC
   substrate.cpp
 )
 
-ADD_LIBRARY(microstrip OBJECT ${MICROSTRIP_SRC} )
+ADD_LIBRARY( coreMicrostrip OBJECT ${MICROSTRIP_SRC} )
 

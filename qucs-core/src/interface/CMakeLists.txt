@@ -1,9 +1,8 @@
 
-INCLUDE_DIRECTORIES( ${CMAKE_SOURCE_DIR}
-                     ${CMAKE_CURRENT_SOURCE_DIR}
-                     ${CMAKE_SOURCE_DIR}/src/math
-                     ${CMAKE_SOURCE_DIR}/src/components )
-
+INCLUDE_DIRECTORIES( ${qucs-core_SOURCE_DIR}
+                     ${qucs-core_CURRENT_SOURCE_DIR}
+                     ${qucs-core_SOURCE_DIR}/src/math
+                     ${qucs-core_SOURCE_DIR}/src/components )  # component.h
 
 SET( INTERFACE_SRC
   qucs_interface.cpp
@@ -14,9 +13,9 @@ SET(HEADERS
   qucs_interface.h
 )
 
-ADD_LIBRARY(interface OBJECT ${INTERFACE_SRC})
+ADD_LIBRARY( coreInterface OBJECT ${INTERFACE_SRC})
 
-ADD_DEPENDENCIES(interface verilog)
+ADD_DEPENDENCIES( coreInterface coreVerilog)
 
 INSTALL(FILES ${HEADERS} DESTINATION include/qucs-core)
 

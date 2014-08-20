@@ -183,7 +183,7 @@ ELSE()
     MESSAGE(WARNING "admsXml was not found! Using distributed submodule in deps/adms.")
     # build internal preconfigured admsXml (release mode)
     ADD_SUBDIRECTORY( deps/adms )
-    SET(ADMSXML ${CMAKE_BINARY_DIR}/deps/adms/admsXml/admsXml)
+    SET(ADMSXML ${qucs-core_BINARY_DIR}/deps/adms/admsXml/admsXml)
   ENDIF()
 ENDIF()
 
@@ -268,7 +268,7 @@ IF (UNIX AND NOT APPLE)
   IF( CMAKE_SYSTEM_PROCESSOR STREQUAL "x86_64" )
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fPIC")
-  ENDIF()  
+  ENDIF()
 ENDIF()
 
 
@@ -287,7 +287,7 @@ configure_file(
     "${CMAKE_CURRENT_BINARY_DIR}/uninstall.cmake"
     IMMEDIATE @ONLY)
 
-add_custom_target(uninstall
+add_custom_target(coreuninstall
     COMMAND ${CMAKE_COMMAND} -P ${CMAKE_CURRENT_BINARY_DIR}/uninstall.cmake)
 
 

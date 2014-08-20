@@ -1,8 +1,8 @@
 
-INCLUDE_DIRECTORIES( ${CMAKE_SOURCE_DIR}
-                     ${CMAKE_CURRENT_SOURCE_DIR}
-                     ${CMAKE_SOURCE_DIR}/src/math
-                     ${CMAKE_SOURCE_DIR}/src/components/devices )
+INCLUDE_DIRECTORIES( ${qucs-core_SOURCE_DIR}
+                     ${qucs-core_CURRENT_SOURCE_DIR}
+                     ${qucs-core_SOURCE_DIR}/src/math
+                     ${qucs-core_SOURCE_DIR}/src/components ) # component.h
 
 SET( DEVICES_SRC
   bjt.cpp
@@ -17,7 +17,7 @@ SET( DEVICES_SRC
   tunneldiode.cpp
 )
 
-ADD_LIBRARY(devices OBJECT ${DEVICES_SRC} )
+ADD_LIBRARY( coreDevices OBJECT ${DEVICES_SRC} )
 
 SET(HEADERS
   device.h

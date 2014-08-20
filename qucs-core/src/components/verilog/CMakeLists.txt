@@ -1,9 +1,9 @@
 
-INCLUDE_DIRECTORIES( ${CMAKE_SOURCE_DIR}
-                     ${CMAKE_CURRENT_SOURCE_DIR}
-                     ${CMAKE_SOURCE_DIR}/src/math
-                     ${CMAKE_SOURCE_DIR}/src/components
-                     ${CMAKE_SOURCE_DIR}/src/components/devices )
+INCLUDE_DIRECTORIES( ${qucs-core_SOURCE_DIR}
+                     ${qucs-core_CURRENT_SOURCE_DIR}
+                     ${qucs-core_SOURCE_DIR}/src/math
+                     ${qucs-core_SOURCE_DIR}/src/components             # component.h
+                     ${qucs-core_SOURCE_DIR}/src/components/devices )   # devices.h
 
 
 # TODO does constants / disciplines need to be generated, or adms creates them as needed?
@@ -122,7 +122,7 @@ ENDFOREACH()
 
 #MESSAGE(STATUS " ==> generated\n " ${generated_SRC})
 
-ADD_LIBRARY( verilog OBJECT ${generated_SRC} )
+ADD_LIBRARY( coreVerilog OBJECT ${generated_SRC} )
 
 
 # TODO install distributable files

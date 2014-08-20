@@ -1,16 +1,6 @@
 
 PROJECT(qucsator CXX C)
 
-INCLUDE_DIRECTORIES( ${CMAKE_SOURCE_DIR}
-                     ${CMAKE_CURRENT_SOURCE_DIR}
-                     ${CMAKE_SOURCE_DIR}/src/math
-                     ${CMAKE_SOURCE_DIR}/src/components
-                     ${CMAKE_SOURCE_DIR}/src/interface
-                     # out of source include, generated code
-                     ${CMAKE_BINARY_DIR} # /generated config.h
-                     ${CMAKE_CURRENT_BINARY_DIR} #/src/gperfapphash.cpp
-                     ${CMAKE_CURRENT_BINARY_DIR}/components #/verilog/*.core.h generated stuff
-                      )
 
 #
 # Checks for libraries.
@@ -154,8 +144,8 @@ SET(QUCS_DOUBLE_SIZE ${DoubleSize})
 # Configure the header qucs_typedefs.h, interpolate above definitions.
 #
 CONFIGURE_FILE (
-    "${CMAKE_SOURCE_DIR}/qucs_typedefs.h.cmake"
-    "${CMAKE_BINARY_DIR}/qucs_typedefs.h"
+    "${qucs-core_SOURCE_DIR}/qucs_typedefs.h.cmake"
+    "${qucs-core_BINARY_DIR}/qucs_typedefs.h"
 )
 
 
@@ -204,7 +194,7 @@ ENDFOREACH()
 #
 TRY_COMPILE( HAVE_NAMESPACES
         ${CMAKE_BINARY_DIR}
-        ${CMAKE_SOURCE_DIR}/cmake/namespaces.cpp
+        ${qucs-core_SOURCE_DIR}/cmake/namespaces.cpp
         OUTPUT_VARIABLE TRY_OUT)
 IF(NOT HAVE_NAMESPACES)
   MESSAGE(SEND_ERROR "${PROJECT_NAME} requires an c++ compiler with namespace HAVE_NAMESPACES failed")# ${TRY_OUT}")
@@ -215,7 +205,7 @@ ENDIF()
 #
 TRY_COMPILE( HAVE_COMPLEX
         ${CMAKE_BINARY_DIR}
-        ${CMAKE_SOURCE_DIR}/cmake/complex.cpp
+        ${qucs-core_SOURCE_DIR}/cmake/complex.cpp
         OUTPUT_VARIABLE TRY_OUT)
 IF(NOT HAVE_COMPLEX)
   MESSAGE(SEND_ERROR "HAVE_COMPLEX failed")# ${TRY_OUT}")
@@ -244,7 +234,7 @@ FOREACH(func ${COMPLEX_FUNCS})
       return 0\;
     }")
 
-  FILE(WRITE ${CMAKE_BINARY_DIR}/cmake/test_${func}.cpp ${code})
+  FILE(WRITE ${qucs-core_SOURCE_DIR}/cmake/test_${func}.cpp ${code})
 
   string(TOUPPER ${func} FNAME)
 
@@ -252,7 +242,7 @@ FOREACH(func ${COMPLEX_FUNCS})
 
   TRY_COMPILE( HAVE_CXX_COMPLEX_${FNAME}
           ${CMAKE_BINARY_DIR}
-          ${CMAKE_BINARY_DIR}/cmake/test_${func}.cpp
+          ${qucs-core_SOURCE_DIR}/cmake/test_${func}.cpp
           OUTPUT_VARIABLE TRY_OUT)
   if(NOT HAVE_CXX_COMPLEX_${FNAME})
     message(STATUS "HAVE_CXX_COMPLEX_${FNAME} failed")# ${TRY_OUT}")
@@ -264,7 +254,7 @@ ENDFOREACH()
 #
 TRY_COMPILE( HAVE_CXX_COMPLEX_POW
         ${CMAKE_BINARY_DIR}
-        ${CMAKE_SOURCE_DIR}/cmake/complex_pow.cpp
+        ${qucs-core_SOURCE_DIR}/cmake/complex_pow.cpp
         COMPILE_DEFINITIONS -DHAVE_NAMESPACES -DHAVE_COMPLEX -DHAVE_TR1_COMPLEX
         OUTPUT_VARIABLE TRY_OUT)
 IF(NOT HAVE_CXX_COMPLEX_POW)
@@ -276,7 +266,7 @@ ENDIF()
 #
 TRY_COMPILE( HAVE_CXX_COMPLEX_ATAN2
         ${CMAKE_BINARY_DIR}
-        ${CMAKE_SOURCE_DIR}/cmake/complex_atan2.cpp
+        ${qucs-core_SOURCE_DIR}/cmake/complex_atan2.cpp
         COMPILE_DEFINITIONS -DHAVE_NAMESPACES -DHAVE_COMPLEX -DHAVE_TR1_COMPLEX
         OUTPUT_VARIABLE TRY_OUT)
 IF(NOT HAVE_CXX_COMPLEX_ATAN2)
@@ -288,7 +278,7 @@ ENDIF()
 #
 TRY_COMPILE( HAVE_CXX_COMPLEX_FMOD
         ${CMAKE_BINARY_DIR}
-        ${CMAKE_SOURCE_DIR}/cmake/complex_fmod.cpp
+        ${qucs-core_SOURCE_DIR}/cmake/complex_fmod.cpp
         COMPILE_DEFINITIONS -DHAVE_NAMESPACES -DHAVE_COMPLEX -DHAVE_TR1_COMPLEX
         OUTPUT_VARIABLE TRY_OUT)
 IF(NOT HAVE_CXX_COMPLEX_FMOD)
@@ -300,7 +290,7 @@ ENDIF()
 #
 TRY_COMPILE( HAVE_CXX_COMPLEX_POLAR
         ${CMAKE_BINARY_DIR}
-        ${CMAKE_SOURCE_DIR}/cmake/complex_polar.cpp
+        ${qucs-core_SOURCE_DIR}/cmake/complex_polar.cpp
         COMPILE_DEFINITIONS -DHAVE_NAMESPACES -DHAVE_COMPLEX -DHAVE_TR1_COMPLEX
         OUTPUT_VARIABLE TRY_OUT)
 IF(NOT HAVE_CXX_COMPLEX_POLAR)
@@ -312,7 +302,7 @@ ENDIF()
 #
 TRY_COMPILE( HAVE_CXX_COMPLEX_POLAR_COMPLEX
         ${CMAKE_BINARY_DIR}
-        ${CMAKE_SOURCE_DIR}/cmake/complex_polar_complex.cpp
+        ${qucs-core_SOURCE_DIR}/cmake/complex_polar_complex.cpp
         COMPILE_DEFINITIONS -DHAVE_NAMESPACES -DHAVE_COMPLEX -DHAVE_TR1_COMPLEX
         OUTPUT_VARIABLE TRY_OUT)
 IF(NOT HAVE_CXX_COMPLEX_POLAR_COMPLEX)
@@ -323,8 +313,8 @@ ENDIF()
 # Configure the header config.h, interpolate above definitions.
 #
 CONFIGURE_FILE (
-    "${CMAKE_SOURCE_DIR}/config.h.cmake"
-    "${CMAKE_BINARY_DIR}/config.h"
+    "${qucs-core_SOURCE_DIR}/config.h.cmake"
+    "${qucs-core_BINARY_DIR}/config.h"
 )
 
 #
@@ -438,8 +428,8 @@ SET(TEMPLATES tmatrix.h tvector.h eqnsys.h nasolver.h states.h tvector.h
 # Include headers to be installed
 #
 SET(HEADERS
-  ${CMAKE_BINARY_DIR}/config.h
-  ${CMAKE_BINARY_DIR}/qucs_typedefs.h
+  ${qucs-core_BINARY_DIR}/config.h
+  ${qucs-core_BINARY_DIR}/qucs_typedefs.h
   circuit.h
   compat.h
   constants.h
@@ -456,6 +446,13 @@ SET(HEADERS
   valuelist.h
   vector.h
 )
+
+INCLUDE_DIRECTORIES( ${qucs-core_SOURCE_DIR}          # generated config.h
+                     ${qucs-core_SOURCE_DIR}/src/math # precision.h
+                     ${qucs-core_SOURCE_DIR}/src/     # compat.h
+                     ${qucs-core_SOURCE_DIR}/src/components # microstrip/substrate.h
+                     ${qucs-core_SOURCE_DIR}/src/interface
+                     )
 
 #
 # Replace 'evaluate::[whatever]' by NULL
@@ -530,8 +527,7 @@ ADD_SUBDIRECTORY( converter )
 #
 # Create qucsator
 #
-
-ADD_EXECUTABLE(qucsator ucs.cpp )
+ADD_EXECUTABLE( qucsator ucs.cpp )
 
 #
 # Build libqucs as SHARED, dynamic library
@@ -539,31 +535,34 @@ ADD_EXECUTABLE(qucsator ucs.cpp )
 # After:
 # - http://stackoverflow.com/questions/11429055/cmake-how-create-a-single-shared-library-from-all-static-libraries-of-subprojec
 #
-ADD_LIBRARY(qucs SHARED
+# use target libqucs to avoid clash with target qucs (GUI) while on release mode
+ADD_LIBRARY( libqucs SHARED
   ${LIBQUCS_SRC}
   ${TEMPLATES}
-  $<TARGET_OBJECTS:math>
-  $<TARGET_OBJECTS:components>
-  $<TARGET_OBJECTS:interface>
-  $<TARGET_OBJECTS:verilog>
-  $<TARGET_OBJECTS:microstrip>
-  $<TARGET_OBJECTS:devices>
-  $<TARGET_OBJECTS:digital>
+  $<TARGET_OBJECTS:coreMath>
+  $<TARGET_OBJECTS:coreComponents>
+  $<TARGET_OBJECTS:coreInterface>
+  $<TARGET_OBJECTS:coreVerilog>
+  $<TARGET_OBJECTS:coreMicrostrip>
+  $<TARGET_OBJECTS:coreDevices>
+  $<TARGET_OBJECTS:coreDigital>
 )
 
-TARGET_LINK_LIBRARIES(qucs ${CMAKE_DL_LIBS})
+# rename the library to let it be libqucs (not liblibqucs)
+SET_TARGET_PROPERTIES( libqucs PROPERTIES OUTPUT_NAME qucs )
+
+TARGET_LINK_LIBRARIES( libqucs ${CMAKE_DL_LIBS} )
 
 #
 # Create target to handle gperfapp dependency
 #
 ADD_CUSTOM_TARGET( equation DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/gperfapphash.cpp equation.cpp )
-ADD_DEPENDENCIES( qucs equation )
+ADD_DEPENDENCIES( libqucs equation )
 
 #
 # Link qucsator and libqucs
 #
-
-TARGET_LINK_LIBRARIES( qucsator qucs )
+TARGET_LINK_LIBRARIES( qucsator libqucs )
 
 #
 # Handle install
@@ -572,7 +571,7 @@ INSTALL(TARGETS qucsator DESTINATION bin)
 
 # set Windows runtime location for libqucs
 # See: http://www.cmake.org/pipermail/cmake/2010-June/037461.html
-INSTALL(TARGETS qucs
+INSTALL(TARGETS libqucs
      RUNTIME DESTINATION bin COMPONENT runtime
      ARCHIVE DESTINATION lib COMPONENT devel
      LIBRARY DESTINATION lib COMPONENT library)

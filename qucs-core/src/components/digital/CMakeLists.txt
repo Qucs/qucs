@@ -1,8 +1,8 @@
 
-INCLUDE_DIRECTORIES( ${CMAKE_SOURCE_DIR}
-                     ${CMAKE_CURRENT_SOURCE_DIR}
-                     ${CMAKE_SOURCE_DIR}/src/math
-                     ${CMAKE_SOURCE_DIR}/src/components/devices )
+INCLUDE_DIRECTORIES( ${qucs-core_SOURCE_DIR}
+                     ${qucs-core_CURRENT_SOURCE_DIR}
+                     ${qucs-core_SOURCE_DIR}/src/math
+                     ${qucs-core_SOURCE_DIR}/src/components ) # component.h
 
 SET( DIGITAL_SRC
   and.cpp
@@ -17,5 +17,5 @@ SET( DIGITAL_SRC
   xor.cpp
 )
 
-ADD_LIBRARY(digital OBJECT ${DIGITAL_SRC} )
+ADD_LIBRARY( coreDigital OBJECT ${DIGITAL_SRC} )
 

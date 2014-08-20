@@ -1,8 +1,7 @@
 
-INCLUDE_DIRECTORIES( ${CMAKE_SOURCE_DIR}
-                     ${CMAKE_CURRENT_SOURCE_DIR}
-                     ${CMAKE_SOURCE_DIR}/src
-                     ${CMAKE_SOURCE_DIR}/src/math )
+INCLUDE_DIRECTORIES( ${qucs-core_SOURCE_DIR}
+                     ${qucs-core_CURRENT_SOURCE_DIR}
+                     ${qucs-core_SOURCE_DIR}/src/math )
 
 SET( COMPONENTS_SRC
   amplifier.cpp
@@ -78,7 +77,7 @@ SET(HEADERS
 )
 
 
-ADD_LIBRARY(components OBJECT ${COMPONENTS_SRC} )
+ADD_LIBRARY( coreComponents OBJECT ${COMPONENTS_SRC} )
 
 INSTALL(FILES ${HEADERS} DESTINATION include/qucs-core)
 

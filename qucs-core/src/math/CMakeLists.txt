@@ -18,7 +18,7 @@ SET(HEADERS
   real.h
 )
 
-ADD_LIBRARY(math OBJECT ${MATH_SRC} )
+ADD_LIBRARY( coreMath OBJECT ${MATH_SRC} )
 
 INSTALL(FILES ${HEADERS} DESTINATION include/qucs-core)
 
