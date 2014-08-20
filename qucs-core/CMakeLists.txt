@@ -1,6 +1,6 @@
 
 ### !!!! EXPERIMENTAL/DEVELOPMENT BUILD SYSTEM
-### !!!! If you need support please use Autotools build system
+### !!!! If you need support please contact the maintainers
 
 ##
 # You can change the install location by
@@ -11,6 +11,7 @@
 ## Notes
 # * By default, the prefix is "/usr/local"
 # * Use -DADMSXML_DIR=[path] to give the path containing admsXml
+# * Use -DUSE_MAINTAINER_MODE=ON to rebuild submodules (ADMS)
 
 
 ## Running with QtCreator
@@ -24,7 +25,7 @@
 
 ## Dependencies
 # * CMake 2.8.8
-# * adms 2.3.0
+# * adms 2.3.0+ (its dependencies if USE_MAINTAINER_MODE)
 # * sed
 # * gperf
 # * flex
@@ -41,6 +42,11 @@
 PROJECT(qucs-core CXX)
 
 CMAKE_MINIMUM_REQUIRED(VERSION 2.8.8)
+
+
+# default is off, assume one is building the released tarball (pre-configured)
+option ( USE_MAINTAINER_MODE "development mode, rebuild ADMS submodule" OFF )
+
 
 #SET(CMAKE_VERBOSE_MAKEFILE ON)
 
@@ -157,16 +163,31 @@ ENDIF()
 #  * Use -DADMSXML_DIR=[path] to give the path containing admsXml
 #  * Try a few othe locations
 #
-FIND_PROGRAM( ADMSXML admsXml
-  HINTS ${ADMSXML_DIR}
-  PATHS /usr/local/bin/ /opt/local/bin/
-  DOC "admsXml application" )
 
-IF(ADMSXML)
-  MESSAGE(STATUS "Found admsXml: " ${ADMSXML})
+# If USE_MAINTAINER_MODE it will build the Git submodule
+# Else, try to use available ADMS (system or used provided), else build included ADMS
+IF(USE_MAINTAINER_MODE)
+  ADD_SUBDIRECTORY( deps/adms )
+  SET(ADMSXML ${CMAKE_BINARY_DIR}/deps/adms/admsXml/admsXml)
 ELSE()
-  MESSAGE(FATAL_ERROR "admsXml was not found!")
+  # TODO check for min version
+  # search for external version of admsXML
+  FIND_PROGRAM( ADMSXML admsXml
+    HINTS ${ADMSXML_DIR}
+    PATHS /usr/local/bin/ /opt/local/bin/ /usr/bin
+    DOC "admsXml application" )
+  IF(ADMSXML)
+    # use external admsXml
+    MESSAGE(STATUS "Found admsXml: " ${ADMSXML})
+  ELSE()
+    MESSAGE(WARNING "admsXml was not found! Using distributed submodule in deps/adms.")
+    # build internal preconfigured admsXml (release mode)
+    ADD_SUBDIRECTORY( deps/adms )
+    SET(ADMSXML ${CMAKE_BINARY_DIR}/deps/adms/admsXml/admsXml)
+  ENDIF()
 ENDIF()
+
+
 
 #
 # Set up RPATH for the project
