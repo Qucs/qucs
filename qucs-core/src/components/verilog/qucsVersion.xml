@@ -96,7 +96,7 @@
       <admst:return name="bname" value="%"/>
     </admst:when>
     <admst:otherwise>
-      <admst:fatal format="variable type unknown\n"/>
+      <admst:fatal format="variable type unknown %(name)\n"/>
     </admst:otherwise>
   </admst:choose>
 </admst:template>
