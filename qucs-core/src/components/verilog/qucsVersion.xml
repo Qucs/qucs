@@ -950,7 +950,13 @@
       <admst:assert test="arguments[count(.)=2]" format="%(name): should have two arguments exactly\n"/>
       <admst:assert test="arguments[2]/adms[datatypename='probe']" format="%(name): second argument is not a probe\n"/>
       <admst:apply-templates select="arguments[1]" match="ddx"/>
+      <!--
+      FIXME what does  not-used is suposed do mean??,
+       partial derivative of a independent variable? if so, return zero...
+
       <admst:variable name="e" select="not-used"/>
+      -->
+      <admst:variable name="e" select="0."/>
     </admst:when>
     <admst:when test="[name='floor']">
       <admst:assert test="arguments[count(.)=1]" format="%(name): should have one argument exactly\n"/>
