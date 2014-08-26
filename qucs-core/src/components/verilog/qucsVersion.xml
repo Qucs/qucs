@@ -92,6 +92,9 @@
     <admst:when test="[name='shiftl']">
       <admst:return name="bname" string="&lt;&lt;"/>
     </admst:when>
+    <admst:when test="[name='multmod']">
+      <admst:return name="bname" value="%"/>
+    </admst:when>
     <admst:otherwise>
       <admst:fatal format="variable type unknown\n"/>
     </admst:otherwise>
