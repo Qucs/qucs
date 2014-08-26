@@ -1264,7 +1264,17 @@
       </admst:choose>
     </admst:when>
     <admst:otherwise>
-      <admst:variable name="eq" select="d_$(fname)($args,$dargs)"/>
+      <!--
+      handle derivatives of builtin or provide analog function
+      -->
+      <admst:choose>
+        <admst:when test="[class='builtin']">
+          <admst:variable name="ep" select="d_$(fname)($args,$dargs)"/>
+        </admst:when>
+        <admst:otherwise>
+          <admst:variable name="ep" select="$(module)_d_$(fname)($args,$dargs)"/>
+        </admst:otherwise>
+      </admst:choose>
     </admst:otherwise>
   </admst:choose>
 
