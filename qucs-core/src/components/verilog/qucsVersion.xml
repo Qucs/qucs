@@ -1316,7 +1316,8 @@
         </admst:otherwise>
       </admst:choose>
     </admst:when>
-    <admst:when test="[name='div' or name='pow' or name='hypot' or name='min' or name='max']">
+    <!-- warn of missing feature -->
+    <admst:when test="[name='div' or name='hypot' or name='min' or name='max']">
       <admst:variable name="epq" string="fixme"/>
       <admst:warning format="%(name): ddx dependency not implemented %(arguments[1]|' '|arguments[2])\n"/>
     </admst:when>
