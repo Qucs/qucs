@@ -499,7 +499,7 @@ static void qucslib_list_device (struct definition_t * def) {
   
   sprintf (txt, "\n<Component %s>\n", def->instance[0] == dev->stype[0] ?
 	   &def->instance[1] : def->instance);
-  fprintf (qucs_out, txt);
+  fprintf (qucs_out, "%s", txt);
   fprintf (qucs_out, "  <Description>\n");
   fprintf (qucs_out, "  </Description>\n");
   fprintf (qucs_out, "  <Model>\n");
