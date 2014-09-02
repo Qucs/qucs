@@ -117,7 +117,12 @@ int main (int argc, char ** argv) {
   for (int i = 1; i < argc; i++) {
     if (!strcmp (argv[i], "-v") || !strcmp (argv[i], "--version")) {
       fprintf (stdout,
+#ifdef GIT
+	"QucsConverter " PACKAGE_VERSION " (" GIT ") \n"
+#else
 	"QucsConverter " PACKAGE_VERSION "\n"
+#endif
+
 	"Copyright (C) 2004, 2005, 2006, 2007 Stefan Jahn <stefan@lkcc.org>\n"
 	"\nThis is free software; see the source for copying "
 	"conditions.  There is NO\n"
