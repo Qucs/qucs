@@ -2,7 +2,11 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ(2.57)
-AC_INIT(qucs-doc,0.0.18,qucs-bugs@lists.sourceforge.net)
+
+dnl Read version from file
+m4_define([QUCS_VERSION], m4_esyscmd([tr -d '\n' < VERSION]))
+
+AC_INIT(qucs-doc, QUCS_VERSION, qucs-bugs@lists.sourceforge.net)
 AC_CONFIG_SRCDIR([technical/technical.tex])
 
 AC_CANONICAL_BUILD
