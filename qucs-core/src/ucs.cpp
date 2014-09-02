@@ -78,7 +78,11 @@ int main (int argc, char ** argv) {
   for (int i = 1; i < argc; i++) {
     if (!strcmp (argv[i], "-v") || !strcmp (argv[i], "--version")) {
       fprintf (stdout,
+#ifdef GIT
+	"Qucsator " PACKAGE_VERSION " (" GIT ") \n"
+#else
 	"Qucsator " PACKAGE_VERSION "\n"
+#endif
 	"Copyright (C) 2003-2009 "
 	"Stefan Jahn <stefan@lkcc.org>\n"
         "Copyright (C) 2006 Helene Parruitte <parruit@enseirb.fr>\n"
