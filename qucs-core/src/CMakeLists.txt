@@ -1,6 +1,6 @@
 
 PROJECT(qucsator CXX C)
-
+cmake_policy(VERSION 2.6)
 
 #
 # Checks for libraries.

@@ -281,3 +281,6 @@
 /* Define to `unsigned int' if <sys/types.h> does not define. */
 #cmakedefine size_t
 
+/* Git last commit short hash */
+#cmakedefine GIT "@GIT@"
+

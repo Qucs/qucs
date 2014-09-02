@@ -40,13 +40,12 @@
 #   * qucsconv
 #
 PROJECT(qucs-core CXX)
+CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
 
-CMAKE_MINIMUM_REQUIRED(VERSION 2.8.8)
-
+cmake_policy(SET CMP0048 OLD)
 
 # default is off, assume one is building the released tarball (pre-configured)
 option ( USE_MAINTAINER_MODE "development mode, rebuild ADMS submodule" OFF )
-
 
 #SET(CMAKE_VERBOSE_MAKEFILE ON)
 
@@ -77,14 +76,32 @@ ADD_DEFINITIONS( -DHAVE_CONFIG_H )
 # -Wmissing-prototypes : Warn if a global function is defined without a previous prototype declaration.
 #
 #
-SET(PROJECT_VERSION_MAJOR "0")
-SET(PROJECT_VERSION_MINOR "0")
-SET(PROJECT_VERSION_PATCH "18")
-SET(PROJECT_VERSION "${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}.${PROJECT_VERSION_PATCH}")
+
+# use top VERSION file
+file (STRINGS ${qucs-core_SOURCE_DIR}/VERSION QUCS_VERSION)
+message(STATUS "Configuring ${PROJECT_NAME}: VERSION ${QUCS_VERSION}")
+
+set(PROJECT_VERSION "${QUCS_VERSION}")
+
 SET(PROJECT_VENDOR "Qucs team. This program is licensed under the GNU GPL")
 SET(PROJECT_COPYRIGHT_YEAR "2013")
 SET(PROJECT_DOMAIN_FIRST "qucs")
 SET(PROJECT_DOMAIN_SECOND "org")
+
+# use last git commit hash along the version
+set(GIT unknown)
+IF(EXISTS ${CMAKE_SOURCE_DIR}/../.git )
+  FIND_PACKAGE(Git)
+  # Get the latest abbreviated commit hash of the working branch
+  execute_process(
+    COMMAND ${GIT_EXECUTABLE} log --pretty=format:%h -n 1u
+    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+    OUTPUT_VARIABLE GIT_COMMIT_HASH
+  )
+  set(GIT ${GIT_COMMIT_HASH})
+  message(STATUS "Found Git repository, last commit hash: ${GIT}")
+ENDIF()
+
 
 #TODO rename the above variables? Project/Package?
 
