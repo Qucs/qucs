@@ -1801,13 +1801,13 @@ void MouseActions::MReleaseZoomIn(Schematic *Doc, QMouseEvent *Event)
   MAy1 = Event->pos().y();
   float DX = float(abs(MAx2));
   float DY = float(abs(MAy2));
+
   if((Doc->Scale * DX) < 6.0) {
     DX = 1.5;    // a simple click zooms by constant factor
     Doc->zoom(DX);
 
-    DX -= 1.0;
-    MAx1 = int(DX * float(Event->pos().x()));
-    MAy1 = int(DX * float(Event->pos().y()));
+    MAx1 = int(0.5 * float(Event->pos().x()));
+    MAy1 = int(0.5 * float(Event->pos().y()));
   }
   else {
     float xScale = float(Doc->visibleWidth())  / DX;
