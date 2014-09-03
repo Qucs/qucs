@@ -1464,8 +1464,7 @@ void MouseActions::MPressMoveText(Schematic *Doc, QMouseEvent*, float fX, float 
 // -----------------------------------------------------------
 void MouseActions::MPressZoomIn(Schematic *Doc, QMouseEvent*, float fX, float fY)
 {
-    qDebug() << "zoom into box";
-  /// \bug the zoom into box is not working
+  qDebug() << "zoom into box";
   MAx1 = int(fX);
   MAy1 = int(fY);
   MAx2 = 0;  // rectangle size
@@ -1812,15 +1811,13 @@ void MouseActions::MReleaseZoomIn(Schematic *Doc, QMouseEvent *Event)
   else {
     float xScale = float(Doc->visibleWidth())  / DX;
     float yScale = float(Doc->visibleHeight()) / DY;
-    if(xScale > yScale) xScale = yScale;
-    yScale  = Doc->Scale;
-    xScale /= yScale;
-    Doc->zoom(xScale);
+    float zoomScale = qMin(xScale, yScale) / Doc->Scale;
+    Doc->zoom(zoomScale);
 
-    if(MAx2 > 0)  MAx1 -= int(float(MAx2)*yScale);
-    if(MAy2 > 0)  MAy1 -= int(float(MAy2)*yScale);
-    MAx1 = int(float(MAx1) * xScale) - Doc->contentsX();
-    MAy1 = int(float(MAy1) * xScale) - Doc->contentsY();
+    if(DX > 0) MAx1 -= DX;
+    if(DY > 0) MAy1 -= DY;
+    MAx1 -= Doc->contentsX();
+    MAy1 -= Doc->contentsY();
   }
   Doc->scrollBy(MAx1, MAy1);
 
