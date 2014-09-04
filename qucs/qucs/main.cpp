@@ -28,6 +28,8 @@
 #include <ctype.h>
 #include <math.h>
 #include <locale.h>
+#include <getopt.h>
+#include <unistd.h>
 
 #include <QApplication>
 #include <QString>
@@ -689,6 +691,17 @@ int doNetlist(QString schematic, QString netlist)
   return 0;
 }
 
+void printHelp(char *argv)
+{
+  fprintf(stdout,
+    "Usage: %s [OPTION]...\n\n"
+    "  -h, --help     display this help and exit\n"
+    "  -v, --version  display version information and exit\n"
+    "  -n, --netlist  convert Qucs schematic into netlist\n"
+    "  -i FILENAME    use file as input schematic\n"
+    "  -o FILENAME    use file as output netlist\n"
+    , argv);
+}
 
 // #########################################################################
 // ##########                                                     ##########
@@ -837,43 +850,80 @@ int main(int argc, char *argv[])
 
   QString schematic;
   QString netlist;
-
   QString operation;
 
-  // simple command line parser
-  for (int i = 1; i < argc; ++i) {
-    if (!strcmp(argv[i], "-h") || !strcmp(argv[i], "--help")) {
-      fprintf(stdout,
-  "Usage: %s [OPTION]...\n\n"
-  "  -h, --help     display this help and exit\n"
-  "  -v, --version  display version information and exit\n"
-  "  -n, --netlist  convert Qucs schematic into netlist\n"
-  "  -i FILENAME    use file as input schematic\n"
-  "  -o FILENAME    use file as output netlist\n"
-  , argv[0]);
-      return 0;
+  // command line parser struct using getopt_long
+  int version_flag = 0;
+  int help_flag = 0;
+
+  struct option long_options[] =
+  {
+    /* flag option */
+    {"version", no_argument, NULL, 'v'},
+    {"help",    no_argument, NULL, 'h'},
+    {0, 0, 0, 0}
+  };
+  int option_index = 0;
+  int c;
+  while(1){
+    c = getopt_long(argc, argv, "hvni:o:", long_options, &option_index);
+    if (c == -1) {
+      break;
     }
-    else if (!strcmp(argv[i], "-v") || !strcmp(argv[i], "--version")) {
+    switch(c) {
+      case 'h':
+      {
+        help_flag = 1;
+        break;
+      }
+      case 'v':
+      {
+        version_flag = 1;
+        break;
+      }
+      case 'n':
+      {
+        operation = "netlist";
+        break;
+      }
+      case 'i':
+      {
+        schematic = optarg;
+        break;
+      }
+      case 'o':
+      {
+        netlist = optarg;
+        break;
+      }
+      case '?':
+      {
+        if (optopt == 'i' or optopt == 'o') {
+          fprintf(stderr, "Error: Option -%c require an argument\n", optopt);
+        } else {
+          fprintf(stderr, "Error: Unknown option: -%c\n", optopt);
+        }
+        printHelp(argv[0]);
+        exit(EXIT_FAILURE);
+      }
+      default: 
+      {
+        printHelp(argv[0]);
+        exit(EXIT_FAILURE);
+      }
+    }
+  }
+
+  if(help_flag){
+    printHelp(argv[0]);
+    exit(EXIT_SUCCESS);
+  } else if (version_flag) {
 #ifdef GIT
       fprintf(stdout, "Qucs " PACKAGE_VERSION " ("GIT")" "\n");
 #else
       fprintf(stdout, "Qucs " PACKAGE_VERSION "\n");
 #endif
-      return 0;
-    }
-    else if (!strcmp(argv[i], "-n") || !strcmp(argv[i], "--netlist")) {
-      operation = "netlist";
-    }
-    else if (!strcmp(argv[i], "-i")) {
-      schematic = argv[++i];
-    }
-    else if (!strcmp(argv[i], "-o")) {
-      netlist = argv[++i];
-    }
-    else {
-      fprintf(stderr, "Error: Unknown option: %s\n", argv[i]);
-      return -1;
-    }
+    exit(EXIT_SUCCESS);
   }
 
   // check operation and its required arguments
