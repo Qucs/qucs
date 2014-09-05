@@ -70,6 +70,8 @@ private slots:
   void slotStepEntered();
   void slotNumberEntered();
 
+  void slotSearchChanged(const QString& Filter);
+
 protected slots:
     void reject();
 
@@ -94,6 +96,7 @@ private:
             *textStep, *textNumber;
   QLineEdit *editParam, *editValues, *editStart, *editStop,
             *editStep, *editNumber;
+  QLineEdit *searchParam;
   QCheckBox *checkSim, *checkParam, *checkValues, *checkStart, *checkStop,
             *checkNumber, *checkType, *showName;
   QComboBox *editSim, *comboType;

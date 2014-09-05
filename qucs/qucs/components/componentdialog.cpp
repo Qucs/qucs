@@ -261,15 +261,26 @@ ComponentDialog::ComponentDialog(Component *c, Schematic *d)
   gp1->addWidget(hTop,1,0);
 
   QGroupBox *PropertyBox = new QGroupBox(tr("Properties"));
+  gp1->addWidget(PropertyBox,2,0);
 
+  // H layout inside the GroupBox
   QHBoxLayout *hProps = new QHBoxLayout;
+  PropertyBox->setLayout(hProps);
 
-  /// \todo add name filter
+  // left pane
+  /// \todo add name filter, at the bottom of left pane
+  QWidget *vboxPropsL = new QWidget;
+  QVBoxLayout *vL = new QVBoxLayout;
+  vboxPropsL->setLayout(vL);
+
   /// \todo column min width
   prop = new QTableWidget(0,4); //initialize
+  vL->addWidget(prop);
   prop->setSelectionBehavior(QAbstractItemView::SelectRows);
   prop->setSelectionMode(QAbstractItemView::SingleSelection);
   prop->setMinimumSize(200, 150);
+//  prop->horizontalHeader()->setStretchLastSection(true);
+  prop->horizontalHeader()->setResizeMode(QHeaderView::Stretch);
 
   QStringList headers;
   headers << tr("Name")
@@ -278,17 +289,24 @@ ComponentDialog::ComponentDialog(Component *c, Schematic *d)
           << tr("Description");
   prop->setHorizontalHeaderLabels(headers);
 
-  hProps->addWidget(prop);
+  searchParam = new QLineEdit();
+//  searchParam->setText('Search');
+  vL->addWidget(searchParam);
 
-  PropertyBox->setLayout(hProps);
-  gp1->addWidget(PropertyBox,2,0);
+  // conecnt searchParam changes with a slot
+  // update matching parameters
+  connect(searchParam, SIGNAL(textChanged(QString)), SLOT(slotSearchChanged(QString)));
 
-  QWidget *vboxProps = new QWidget;
+
+  // right pane
+  QWidget *vboxPropsR = new QWidget;
   QVBoxLayout *v1 = new QVBoxLayout;
-  vboxProps->setLayout(v1);
+  vboxPropsR->setLayout(v1);
+
   v1->setSpacing(3);
 
-  hProps->addWidget(vboxProps);
+  hProps->addWidget(vboxPropsL);
+  hProps->addWidget(vboxPropsR);
 
   Name = new QLabel;
   v1->addWidget(Name);
@@ -1204,4 +1222,26 @@ void ComponentDialog::slotStepEntered()
 void ComponentDialog::slotNumberEntered()
 {
   slotButtOK();
+}
+
+
+/*!
+  As the search filter changes, look for partial matches of parameter names
+
+  \todo add button to clear the search field
+*/
+void ComponentDialog::slotSearchChanged(const QString & Filter)
+{
+
+  for( int i = 0; i < prop->rowCount(); ++i )
+  {
+     bool match = false;
+     QString name  = prop->item(i, 0)->text();
+     if( name.contains(Filter) )
+       {
+         match = true;
+         qDebug() << "match" <<name;
+       }
+     prop->setRowHidden( i, !match );
+  }
 }
