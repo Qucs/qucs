@@ -112,12 +112,26 @@
   </admst:if>
 </admst:template>
 
+<admst:template match=":function">
+  <admst:text format="%(name)"/>
+  <admst:if test="arguments">
+    <admst:text format="("/>
+    <admst:join select="arguments" separator=",">
+      <admst:apply-templates select="." match=":%(adms/datatypename)" required="yes"/>
+    </admst:join>
+    <admst:text format=")"/>
+  </admst:if>
+</admst:template>
+
+
 <admst:template match=":string">
   <admst:text format="&quot;%(value)&quot;"/>
 </admst:template>
 
+<!-- recurse, till it retuns the value of the independent variable -->
 <admst:template match=":variable">
-  <admst:text format="&quot;%(name)&quot;"/>
+  <!-- admst:text format="&quot;%(name)&quot;"/ -->
+  <admst:apply-templates select="default" match=":expression"/>
 </admst:template>
 
 <admst:template match=":range">
@@ -182,6 +196,7 @@
   </admst:choose>
 </admst:template>
 
+
 <admst:template match=":property">
   <!-- name -->
   <admst:value-of select="name"/>
@@ -202,6 +217,7 @@
 
   <!-- default value -->
   <admst:text format=", { "/>
+
   <admst:apply-templates select="default" match=":expression"/>
   <admst:text format=", PROP_NO_STR }, "/>
 
@@ -296,6 +312,7 @@ PROP_REQ [] = {
     </admst:if>
   </admst:if>
 </admst:for-each>
+
 <admst:text format="  PROP_NO_PROP };\n"/>
 // optional properties
 PROP_OPT [] = {
@@ -321,6 +338,7 @@ PROP_OPT [] = {
   <admst:text format=", PROP_NO_STR }, PROP_MIN_VAL (qucs::K) },\n"/>
   </admst:if>
 </admst:if>
+
 <admst:text format="  PROP_NO_PROP };\n"/>
 // device definition
 struct define_t $module::cirdef =
