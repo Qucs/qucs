@@ -99,7 +99,7 @@ private:
   QLineEdit *searchParam;
   QCheckBox *checkSim, *checkParam, *checkValues, *checkStart, *checkStop,
             *checkNumber, *checkType, *showName;
-  QComboBox *editSim, *comboType;
+  QComboBox *comboSim, *comboType;
 };
 
 #endif
