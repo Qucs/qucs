@@ -689,6 +689,64 @@ int doNetlist(QString schematic, QString netlist)
   return 0;
 }
 
+int doPrint(QString schematic, QString printFile)
+{
+  qDebug() << "*** try to load schematic :" << schematic;
+
+  bool fitToPage = true;
+
+  QFile file(schematic);  // save simulator messages
+  if(file.open(QIODevice::ReadOnly)) {
+    file.close();
+  }
+  else {
+    fprintf(stderr, "Error: Could not load schematic %s\n", schematic.ascii());
+    return 1;
+  }
+
+  // populate Modules list
+  Module::registerModules ();
+
+  // new schematic from file
+  Schematic *sch = new Schematic(0, schematic);
+
+  // load schematic file if possible
+  if(!sch->loadDocument()) {
+    fprintf(stderr, "Error: Could not load schematic %s\n", schematic.ascii());
+    delete sch;
+    return 1;
+  }
+  sch->Nodes = &(sch->DocNodes);
+  sch->Wires = &(sch->DocWires);
+  sch->Diagrams = &(sch->DocDiags);
+  sch->Paintings = &(sch->DocPaints);
+  sch->Components = &(sch->DocComps);
+
+  qDebug() << "*** try to print file  :" << printFile;
+
+  //initial printer
+  QPrinter *Printer = new QPrinter(QPrinter::HighResolution);
+#if defined (QT_VERSION) && QT_VERSION > 0x030200
+  Printer->setOptionEnabled(QPrinter::PrintSelection, true);
+  Printer->setOptionEnabled(QPrinter::PrintPageRange, false);
+  Printer->setOptionEnabled(QPrinter::PrintToFile, true);
+#endif
+  Printer->setColorMode(QPrinter::Color);
+  Printer->setFullPage(true);
+
+  Printer->setOutputFileName(printFile);
+
+  QPainter Painter(Printer);
+  if(!Painter.device()) {      // valid device available ?
+    qDebug() << "Error: Printer Error.";
+    return -1;
+  }
+
+  ((QucsDoc *)sch)->print(Printer, &Painter,
+    Printer->printRange() == QPrinter::AllPages, fitToPage);
+  return 0;
+}
+
 
 // #########################################################################
 // ##########                                                     ##########
