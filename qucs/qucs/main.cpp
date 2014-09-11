@@ -617,7 +617,7 @@ bool checkVersion(QString& Line)
 // ##########                                                     ##########
 // #########################################################################
 
-int doNetlist(QString schematic, QString netlist)
+Schematic *openSchematic(QString schematic)
 {
   qDebug() << "*** try to load schematic :" << schematic;
 
@@ -627,7 +627,7 @@ int doNetlist(QString schematic, QString netlist)
   }
   else {
     fprintf(stderr, "Error: Could not load schematic %s\n", schematic.ascii());
-    return 1;
+    return NULL;
   }
 
   // populate Modules list
@@ -640,6 +640,15 @@ int doNetlist(QString schematic, QString netlist)
   if(!sch->loadDocument()) {
     fprintf(stderr, "Error: Could not load schematic %s\n", schematic.ascii());
     delete sch;
+    return NULL;
+  }
+  return sch;
+}
+
+int doNetlist(QString schematic, QString netlist)
+{
+  Schematic *sch = openSchematic(schematic);
+  if (sch == NULL) {
     return 1;
   }
 
@@ -683,6 +692,7 @@ int doNetlist(QString schematic, QString netlist)
   Stream << '\n';
 
   QString SimTime = sch->createNetlist(Stream, SimPorts);
+  delete(sch);
 
   NetlistFile.close();
 
@@ -691,31 +701,11 @@ int doNetlist(QString schematic, QString netlist)
 
 int doPrint(QString schematic, QString printFile)
 {
-  qDebug() << "*** try to load schematic :" << schematic;
-
-  bool fitToPage = true;
-
-  QFile file(schematic);  // save simulator messages
-  if(file.open(QIODevice::ReadOnly)) {
-    file.close();
-  }
-  else {
-    fprintf(stderr, "Error: Could not load schematic %s\n", schematic.ascii());
+  Schematic *sch = openSchematic(schematic);
+  if (sch == NULL) {
     return 1;
   }
 
-  // populate Modules list
-  Module::registerModules ();
-
-  // new schematic from file
-  Schematic *sch = new Schematic(0, schematic);
-
-  // load schematic file if possible
-  if(!sch->loadDocument()) {
-    fprintf(stderr, "Error: Could not load schematic %s\n", schematic.ascii());
-    delete sch;
-    return 1;
-  }
   sch->Nodes = &(sch->DocNodes);
   sch->Wires = &(sch->DocWires);
   sch->Diagrams = &(sch->DocDiags);
@@ -742,6 +732,7 @@ int doPrint(QString schematic, QString printFile)
     return -1;
   }
 
+  bool fitToPage = true;
   ((QucsDoc *)sch)->print(Printer, &Painter,
     Printer->printRange() == QPrinter::AllPages, fitToPage);
   return 0;
