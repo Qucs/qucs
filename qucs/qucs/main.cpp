@@ -930,7 +930,7 @@ int main(int argc, char *argv[])
 
   // check operation and its required arguments
   if (netlist_flag and print_flag) {
-    fprintf(stderr, "Error: --print and --netlist cannot appear together\n");
+    fprintf(stderr, "Error: --print and --netlist cannot be used together\n");
     return -1;
   } else if (netlist_flag or print_flag) {
     if (inputfile.isEmpty()) {
