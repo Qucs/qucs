@@ -75,14 +75,3 @@ TEST_EXTENSIONS = .net
 NET_LOG_COMPILER = src/qucsator
 AM_NET_LOG_FLAGS = -i
 
-
-install-exec-hook:
-	@echo "----------------------------------------------"
-	@echo "                    NOTE                      "
-	@echo "On some systems (e.g. Linux) you may need"
-	@echo "to run sudo ldconfig or reboot before running"
-	@echo "qucsator or trying to use the libraries it"
-	@echo "installs. Otherwise you will receive an error"
-	@echo "about loading the shared libraries."
-	@echo "----------------------------------------------"
-
