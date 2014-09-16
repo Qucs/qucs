@@ -88,6 +88,8 @@ bin_PROGRAMS = qucsator
 
 qucsator_LDADD = libqucs.la
 
+qucsator_LDFLAGS = -Wl,-rpath,$(libdir)
+
 qucsator_SOURCES = ucs.cpp
 
 if MAINTAINER_MODE
