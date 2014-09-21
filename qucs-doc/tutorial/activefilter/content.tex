@@ -1,0 +1,57 @@
+%
+% Tutorial -- Modelling Operational Amplifiers
+%
+% Copyright (C) 2006, 2007 Mike Brinson <mbrin72043@yahoo.co.uk>
+%
+% Permission is granted to copy, distribute and/or modify this document
+% under the terms of the GNU Free Documentation License, Version 1.1
+% or any later version published by the Free Software Foundation.
+%
+
+% redefine subfigure caption
+\renewcommand{\thesubfigure}{\thefigure(\alph{subfigure})}
+\makeatletter
+  \renewcommand{\@thesubfigure}{\thesubfigure:\space}
+  \renewcommand{\p@subfigure}{}
+\makeatother
+
+% redefine subtable caption
+\renewcommand{\thesubtable}{\thetable(\alph{subtable})}
+\makeatletter
+  \renewcommand{\@thesubtable}{\thesubtable:\space}
+  \renewcommand{\p@subtable}{}
+\makeatother
+
+\tutsection{Introduction}
+
+
+\tutsection{End note}
+While writing this tutorial I have tried to demonstrate how practical models of
+operational amplifiers can be constructed using basic electronic concepts and
+the range of Qucs built-in components.  The modular OP AMP macromodel was
+deliberately chosen as the foundation for the tutorial for two reasons; firstly
+Qucs is mature enough to easily simulate such models, and secondly the
+parameters which determine the operation of the macromodel can be be calculated
+directly from information provided on device data sheets. Recent modelling
+development by the Qucs team has concentrated on improving the SPICE to Qucs
+conversion facilities. This work has had a direct impact on Qucs ability to
+import and simulate manufacturers OP AMP models. The tutorial upgrade explains
+how SPICE Boyle type OP AMP macromodels can be converted to work with Qucs. The
+Qucs OP AMP library (OpAmps) has been extended to include models for a range of
+popular 8 pin DIL devices. If you require a model with a specific specification
+that is not 
+modelled by an available macromodel then adding extra functionality may be the
+only way forward.  Two procedures for extending models are outlined in the
+tutorial upgrade. Much work still remains to be done before Qucs can simulate a
+wide range of the macromodels published by device manufacturers.  With the
+recent addition of subcircuit/component equations to Qucs it is now possible to
+write generalised macromodel macros for OP AMPs.  However, before this can be
+done time is required to fully test the features that Stefan and Michael have
+recently added to Qucs release 0.0.11. This topic and the modelling of other OP
+AMP properties such as noise will be the subject of a further OP AMP tutorial
+update sometime in the future.  My thanks to David Faulkner for all his help and
+support during the period we were working on a number of the concepts that form
+part of the basis of this tutorial. Once again a special thanks to Michael
+Margraf and Stefan Jahn for all their help and encouragement over the period
+that I 
+have been writing this tutorial and testing the many examples it includes.
