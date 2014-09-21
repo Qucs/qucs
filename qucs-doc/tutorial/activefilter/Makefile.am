@@ -1,10 +1,10 @@
 ## Process this file with automake to produce Makefile.in
 # 
-# tutorial/Makefile.am
+# tutorial/opamp/Makefile.am
 #
 # Automake input file.
 #
-# Copyright (C) 2005, 2006, 2007 Stefan Jahn <stefan@lkcc.org>
+# Copyright (C) 2006 Stefan Jahn <stefan@lkcc.org>
 #
 # This is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -22,27 +22,21 @@
 # Boston, MA 02110-1301, USA.  
 #
 
-SUBDIRS = dcstatic coupler bjtbias modelbjt poweramp lna digital ffmodels \
-  functions opamp timer555 spicetoqucs getstarted equations textmode RFResModels activefilter
+SUBDIRS = pics
 
-EXTRA_DIST = $(SOURCES) $(TEXFILES)
+EXTRA_DIST = $(SOURCES)
 
-TEXFILES = titlepage.tex basics.tex workbook.tex intro.tex general.tex \
-  datasheet.tex
-TARGETS = workbook.pdf
-PICDIRS = coupler functions
+SOURCES = activefilter.tex content.tex
+TARGETS = activefilter.pdf
 
-tutorial:
-	@for d in $(SUBDIRS); do \
-	  (cd $$d && $(MAKE) $(AM_MAKEFLAGS) tutorial); \
-	done
+activefilter.pdf: $(SOURCES)
 
-pics-book:
-	@for d in $(PICDIRS); do \
-	  (cd $$d && $(MAKE) $(AM_MAKEFLAGS) book); \
-	done
+pics-tutorial:
+	cd pics && $(MAKE) $(AM_MAKEFLAGS) tutorial
 
-book: pics-book $(TARGETS)
+tutorial: pics-tutorial $(TARGETS)
+
+book: pics-tutorial
 
 SUFFIXES = .dvi .tex .pdf .ps
 
@@ -52,22 +46,16 @@ SUFFIXES = .dvi .tex .pdf .ps
 	$(LATEX) -interaction=batchmode $<
 
 .tex.pdf:
-	$(PDFLATEX) $<
-	$(PDFLATEX) $<
-	$(PDFLATEX) -interaction=batchmode $<
-
-.fig.eps:
-	$(FIG2DEV) -L eps $< > $@
-
-.eps.pdf:
-	$(EPSTOPDF) $< -o=$@
+	TEXINPUTS=$$TEXINPUTS:.. $(PDFLATEX) $<
+	TEXINPUTS=$$TEXINPUTS:.. $(PDFLATEX) $<
+	TEXINPUTS=$$TEXINPUTS:.. $(PDFLATEX) -interaction=batchmode $<
 
 .dvi.ps:
 	$(DVIPS) $< -o $@
 
 # installation of documentation
 docdatadir = ${prefix}/share/qucs/docs/tutorial
-docdata_DATA = workbook.pdf
+docdata_DATA = ${TARGETS}
 
 CLEANFILES = *~ *.bak *.aux *.log *.toc *.pdf *.bbl *.blg *.dvi *.brf *.out *.idx
 MAINTAINERCLEANFILES = Makefile.in
