@@ -24,7 +24,9 @@
 
 EXTRA_DIST = $(PNGS)
 
-PNGS = mainwindow.png
+PNGS = mainwindow.png manual-trfunc.png qucs-sk2kHz.png sk-2kHz.png
+
+PDFS = response.pdf
 
 CLEANFILES = *~ *.orig *.rej
 MAINTAINERCLEANFILES = Makefile.in
