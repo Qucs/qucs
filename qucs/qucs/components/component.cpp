@@ -627,6 +627,11 @@ QString Component::netlist()
   return s + '\n';
 }
 
+QString Component::spice_netlist()
+{
+    return QString("\n");
+}
+
 // -------------------------------------------------------
 QString Component::getNetlist()
 {
@@ -645,6 +650,16 @@ QString Component::getNetlist()
     s += "R:" + Name + "." + QString::number(z++) + " " +
          Node1 + " " + pp->Connection->Name + " R=\"0\"\n";
   return s;
+}
+
+QString Component::getSpiceNetlist()
+{
+    switch(isActive) {
+      case COMP_IS_ACTIVE:
+        return spice_netlist();
+      case COMP_IS_OPEN:
+        return QString("");
+    }
 }
 
 // -------------------------------------------------------
