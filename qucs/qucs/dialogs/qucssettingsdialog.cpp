@@ -159,6 +159,12 @@ QucsSettingsDialog::QucsSettingsDialog(QucsApp *parent)
     appSettingsGrid->addWidget(checkShowSchematicDescription,10,1);
     checkShowSchematicDescription->setChecked(QucsSettings.ShowDescriptionProjectTree);
 
+    appSettingsGrid->addWidget(new QLabel(tr("Set custom shortcut:")),11,0);
+    ShortcutButton = new QPushButton(appSettingsTab);
+    //connect(ShortcutButton, SIGNAL(clicked()), SLOT());
+    appSettingsGrid->addWidget(ShortcutButton,11,1);
+
+
 
     t->addTab(appSettingsTab, tr("Settings"));
 
@@ -404,7 +410,7 @@ QucsSettingsDialog::QucsSettingsDialog(QucsApp *parent)
     LargeFontSizeEdit->setText(s);
 
     misc::setPickerColor(BGColorButton, QucsSettings.BGColor);
-
+    ShortcutButton->setText("Custom Shortcut");
     undoNumEdit->setText(QString::number(QucsSettings.maxUndo));
     editorEdit->setText(QucsSettings.Editor);
     checkWiring->setChecked(QucsSettings.NodeWiring);
