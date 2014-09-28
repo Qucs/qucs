@@ -106,15 +106,20 @@ QucsSettingsDialog::QucsSettingsDialog(QucsApp *parent, const char *name)
     editorEdit->setToolTip(tr("Set to qucs, qucsedit or the path to your favorite text editor."));
     appSettingsGrid->addWidget(editorEdit,4,1);
 
-    appSettingsGrid->addWidget(new QLabel(tr("start wiring when clicking open node:"), appSettingsTab) ,5,0);
+    appSettingsGrid->addWidget(new QLabel(tr("start wiring when clicking open node:"), appSettingsTab), 5, 0);
     checkWiring = new QCheckBox(appSettingsTab);
     appSettingsGrid->addWidget(checkWiring,5,1);
 
 
-    appSettingsGrid->addWidget(new QLabel(tr("Load documents from future versions ")));
+    appSettingsGrid->addWidget(new QLabel(tr("Load documents from future versions "), appSettingsTab), 6, 0);
     checkLoadFromFutureVersions = new QCheckBox(appSettingsTab);
     appSettingsGrid->addWidget(checkLoadFromFutureVersions,6,1);
     checkLoadFromFutureVersions->setChecked(QucsSettings.IgnoreFutureVersion);
+
+    appSettingsGrid->addWidget(new QLabel(tr("Set custom shortcut:"), appSettingsTab), 7, 0);
+    ShortcutButton = new QPushButton(appSettingsTab);
+    //connect(ShortcutButton, SIGNAL(clicked()), SLOT());
+    appSettingsGrid->addWidget(ShortcutButton,7,1);
 
     t->addTab(appSettingsTab, tr("Settings"));
 
@@ -349,6 +354,7 @@ QucsSettingsDialog::QucsSettingsDialog(QucsApp *parent, const char *name)
     Font  = QucsSettings.font;
     FontButton->setText(Font.toString());
     BGColorButton->setPaletteBackgroundColor(QucsSettings.BGColor);
+    ShortcutButton->setText("Custom Shortcut");
     undoNumEdit->setText(QString::number(QucsSettings.maxUndo));
     editorEdit->setText(QucsSettings.Editor);
     checkWiring->setChecked(QucsSettings.NodeWiring);

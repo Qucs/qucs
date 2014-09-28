@@ -80,7 +80,7 @@ public:
     QFont Font;
     QCheckBox *checkWiring, *checkLoadFromFutureVersions;
     QComboBox *LanguageCombo;
-    QPushButton *FontButton, *BGColorButton;
+    QPushButton *FontButton, *BGColorButton, *ShortcutButton;
     QLineEdit *undoNumEdit, *editorEdit, *Input_Suffix, *Input_Program,
               *homeEdit, *admsXmlEdit, *ascoEdit, *octaveEdit;
     QTableWidget *fileTypesTableWidget, *pathsTableWidget;
