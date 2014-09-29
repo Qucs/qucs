@@ -79,6 +79,7 @@ public:
   bool showName;
   QString  Model, Name;
   QString  Description;
+  QString  SpiceModel;
 
 protected:
   virtual QString netlist();
