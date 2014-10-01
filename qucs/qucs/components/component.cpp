@@ -629,7 +629,12 @@ QString Component::netlist()
 
 QString Component::spice_netlist()
 {
-    return QString("\n");
+    QString s = SpiceModel+Name;
+
+    // output all node names
+    foreach(Port *p1, Ports)
+      s += " "+p1->Connection->Name;   // node names
+    return s+'\n';
 }
 
 // -------------------------------------------------------
@@ -660,6 +665,15 @@ QString Component::getSpiceNetlist()
       case COMP_IS_OPEN:
         return QString("");
     }
+
+    // Component is shortened.
+    int z=0;
+    QString s;
+    QString Node1 = Ports.first()->Connection->Name;
+    foreach(Port *pp, Ports)
+      s += "R"+Name  + QString::number(z++) + " " +
+           Node1 + " " + pp->Connection->Name + " 0";
+    return s;
 }
 
 // -------------------------------------------------------
@@ -1325,6 +1339,24 @@ GateComponent::GateComponent()
 QString GateComponent::netlist()
 {
   QString s = Model+":"+Name;
+
+  // output all node names
+  foreach(Port *pp, Ports)
+    s += " "+pp->Connection->Name;   // node names
+
+  // output all properties
+  Property *p = Props.at(1);
+  s += " " + p->Name + "=\"" + p->Value + "\"";
+  p = Props.next();
+  s += " " + p->Name + "=\"" + p->Value + "\"";
+  p = Props.next();
+  s += " " + p->Name + "=\"" + p->Value + "\"\n";
+  return s;
+}
+
+QString GateComponent::spice_netlist()
+{
+  QString s = Model+Name;
 
   // output all node names
   foreach(Port *pp, Ports)

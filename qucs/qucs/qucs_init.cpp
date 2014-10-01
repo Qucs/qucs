@@ -608,6 +608,9 @@ void QucsApp::initActions()
 	tr("Show Last Netlist\n\nShows the netlist of the last simulation"));
   connect(showNet, SIGNAL(triggered()), SLOT(slotShowLastNetlist()));
 
+  simSpice = new QAction(tr("Simulate with spice"),this);
+  connect(simSpice,SIGNAL(activated()),SLOT(slotSimulateWithSpice()));
+
   viewToolBar = new QAction(tr("Tool&bar"), this);
   viewToolBar->setCheckable(true);
   viewToolBar->setStatusTip(tr("Enables/disables the toolbar"));
@@ -780,6 +783,7 @@ void QucsApp::initMenuBar()
   simMenu->addAction(dcbias);
   simMenu->addAction(showMsg);
   simMenu->addAction(showNet);
+  simMenu->addAction(simSpice);
 
 
   viewMenu = new QMenu(tr("&View"));  // menuBar entry viewMenu
