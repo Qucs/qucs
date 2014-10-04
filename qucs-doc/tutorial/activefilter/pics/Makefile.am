@@ -1,7 +1,10 @@
+## Process this file with automake to produce Makefile.in
+# 
+# tutorial/bjtbias/pics/Makefile.am
 #
-# qucs.ap - Autodsp input file.
+# Automake input file.
 #
-# Copyright (C) 2005, 2006 Stefan Jahn <stefan@lkcc.org>
+# Copyright (C) 2005 Stefan Jahn <stefan@lkcc.org>
 #
 # This is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -19,20 +22,11 @@
 # Boston, MA 02110-1301, USA.  
 #
 
-OWNER = <4>
-TARGET_TYPE = Project
+EXTRA_DIST = $(PNGS)
 
-# List all projects here.
-PROJECTS = \
-	qucs-help/qucshelp qucs-edit/qucsedit qucs/qucs \
-	qucs/components/libcomponents qucs/diagrams/libdiagrams \
-	qucs/paintings/libpaintings qucs/dialogs/libdialogs \
-	qucs-filter/qucsfilter qucs-transcalc/qucstrans \
-	qucs-transcalc/libtranscalc qucs-lib/qucslib \
-	qucs-attenuator/qucsattenuator \
-	qucsactivefilter/qucsactivefilter
+PNGS = mainwindow.png manual-trfunc.png qucs-sk2kHz.png sk-2kHz.png
 
-# Notify dependencies.
-qucs_DEPENDENCIES = libcomponents libdiagrams libpaintings libdialogs
+PDFS = response.pdf
 
-qucstrans_DEPENDENCIES = libtranscalc
+CLEANFILES = *~ *.orig *.rej
+MAINTAINERCLEANFILES = Makefile.in

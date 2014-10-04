@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Qucs Specific #
 ######################
 */src/qucsator
@@ -174,4 +175,23 @@ qucs/contrib/doxygen/html/
 CMakeLists.txt.user
 
 
+=======
+*.o
+*.cpp~
+*.h~
+qucsactivefilter
+*.pro.user
+Makefile
+moc_*.cpp
+*.sch
+*.sch~
+*.dat
+*.dpl
+qrc_*.cpp
+moc_*.cxx
+qrc_*.cxx
+CMakeFiles
+CMakeCache.txt
+*.cmake
+*.depends
 

@@ -801,6 +801,7 @@ AC_CONFIG_FILES([Makefile
     qucs-help/docs/cs/Makefile
     qucs-help/docs/pt/Makefile
     qucs-filter/Makefile
+    qucs-activefilter/Makefile
     qucs-transcalc/Makefile
     qucs-transcalc/examples/Makefile
     qucs-lib/Makefile

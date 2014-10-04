@@ -29,13 +29,14 @@ endif
 
 SUBDIRS = \
   qucs \
+	qucs-activefilter \
 	qucs-attenuator \
 	qucs-edit \
 	qucs-filter \
 	qucs-help \
 	qucs-lib \
-	qucs-transcalc \
 	qucs-rescodes \
+	qucs-transcalc \
 	contrib \
 	$(FILTERV2) \
 	$(RELEASEDIRS)
@@ -47,6 +48,7 @@ if COND_MACOSX
 app_PROGS = $(top_builddir)/qucs/qucs \
   $(top_builddir)/qucs-attenuator/qucsattenuator \
   $(top_builddir)/qucs-filter/qucsfilter \
+  $(top_builddir)/qucs-activefilter/qucsactivefilter \
   $(top_builddir)/qucs-help/qucshelp \
   $(top_builddir)/qucs-lib/qucslib \
   $(top_builddir)/qucs-edit/qucsedit \
@@ -68,6 +70,7 @@ mac-install-apps:
 	  qucs)		  desc="Qucs";; \
 	  qucsattenuator) desc="Qucs Attenuator";; \
 	  qucsfilter)	  desc="Qucs Filter";; \
+	  qucsactivefilter)	  desc="Qucs Active Filter";; \
 	  qucshelp)	  desc="Qucs Help";; \
 	  qucslib)	  desc="Qucs Library";; \
 	  qucsedit)	  desc="Qucs Editor";; \
