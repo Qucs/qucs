@@ -9,3 +9,17 @@ Makefile.in
 *.ilg
 *.bbl
 *.blg
+
+# figure stuff
+*.eps
+
+# report
+*.out
+
+# document
+*.dvi
+*.ps
+*.pdf
+
+# unknown
+*.ind
