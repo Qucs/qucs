@@ -148,7 +148,7 @@ QucsSettingsDialog::QucsSettingsDialog(QucsApp *parent, const char *name)
 
     appSettingsGrid->addWidget(new QLabel(tr("Set custom shortcut:")));
     ShortcutButton = new QPushButton(appSettingsTab);
-    //connect(ShortcutButton, SIGNAL(clicked()), SLOT());
+    connect(ShortcutButton, SIGNAL(clicked()), SLOT(slotShortcutDialog()));
     appSettingsGrid->addWidget(ShortcutButton,10,1);
 
     t->addTab(appSettingsTab, tr("Settings"));
@@ -631,6 +631,13 @@ void QucsSettingsDialog::slotBGColorDialog()
                    BGColorButton->paletteBackgroundColor(), this);
     if(c.isValid())
         BGColorButton->setPaletteBackgroundColor(c);
+}
+
+// -----------------------------------------------------------
+void QucsSettingsDialog::slotShortcutDialog()
+{
+  QucsShortcutDialog *d = new QucsShortcutDialog(App);
+  d->exec();
 }
 
 // -----------------------------------------------------------
