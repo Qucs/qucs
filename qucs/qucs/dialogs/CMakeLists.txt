@@ -13,7 +13,7 @@ labeldialog.cpp			searchdialog.cpp vtabbutton.cpp
 librarydialog.cpp		settingsdialog.cpp vtabwidget.cpp
 matchdialog.cpp			simmessage.cpp newprojdialog.cpp
 sweepdialog.cpp			exportdialog.cpp loaddialog.cpp
-keysequenceedit.cpp
+qucsshortcutdialog.cpp keysequenceedit.cpp
 )
 
 SET(DIALOGS_MOC_HDRS
@@ -39,6 +39,7 @@ vtabbar.h
 vtabbeddockwidget.h
 vtabbutton.h
 vtabwidget.h
+qucsshortcutdialog.h
 keysequenceedit.h
 )
 

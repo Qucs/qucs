@@ -19,6 +19,7 @@
 #define QUCSSETTINGSDIALOG_H
 
 #include "qucs.h"
+#include "qucsshortcutdialog.h"
 
 #include <QDialog>
 #include <QFont>
@@ -49,6 +50,7 @@ private slots:
     void slotApply();
     void slotFontDialog();
     void slotBGColorDialog();
+    void slotShortcutDialog();
     void slotDefaultValues();
     void slotAddFileType();
     void slotRemoveFileType();
