@@ -799,4 +799,3 @@ int main(int argc, char *argv[])
   //saveApplSettings(QucsMain);
   return result;
 }
-// vim:ts=8:sw=2:noet
