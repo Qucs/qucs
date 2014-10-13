@@ -632,6 +632,8 @@ int main(int argc, char *argv[])
       QucsSettings.QucsOctave.clear();
   }
 
+  setDefaultShortcut();
+
   if(!QucsSettings.BGColor.isValid())
     QucsSettings.BGColor.setRgb(255, 250, 225);
 
