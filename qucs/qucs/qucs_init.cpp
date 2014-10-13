@@ -35,6 +35,139 @@
 #include <QMessageBox>
 #include <QApplication>
 
+void 
+setDefaultShortcut() 
+{
+  QVector<QPair<QString, QMap<QString, QString>* > >* vec = &QucsSettings.Shortcut;
+
+  QMap<QString, QString> *filemap = new QMap<QString, QString>;
+  filemap->insert("New", QString(QKeySequence(Qt::CTRL+Qt::Key_N)));
+  filemap->insert("New Text", QString(QKeySequence(Qt::CTRL+Qt::SHIFT+Qt::Key_V)));
+  filemap->insert("Open", QString(QKeySequence(Qt::CTRL+Qt::Key_O)));
+  filemap->insert("Close", QString(QKeySequence(Qt::CTRL+Qt::Key_W)));
+  filemap->insert("Save", QString(QKeySequence(Qt::CTRL+Qt::Key_S)));
+  filemap->insert("Save All", QString(QKeySequence(Qt::CTRL+Qt::Key_Plus)));
+  filemap->insert("Save as", QString(QKeySequence(Qt::CTRL+Qt::Key_Minus)));
+  filemap->insert("Export as image", QString());
+  filemap->insert("Print", QString(QKeySequence(Qt::CTRL+Qt::Key_P)));
+  filemap->insert("Print Fit to Page", QString(QKeySequence(Qt::CTRL+Qt::SHIFT+Qt::Key_P)));
+  filemap->insert("Examples", QString());
+  filemap->insert("Document Settings", QString(QKeySequence(Qt::CTRL+Qt::Key_Period)));
+  filemap->insert("Edit Circuit Symbol", QString(QKeySequence(Qt::Key_F9)));
+  filemap->insert("Application Settings", QString(QKeySequence(Qt::CTRL+Qt::Key_Comma)));
+  filemap->insert("Refresh Search Path", QString());
+  filemap->insert("Exit", QString(QKeySequence(Qt::CTRL+Qt::Key_Q)));
+  vec->push_back(qMakePair(QString("File"), filemap));
+
+
+  QMap<QString, QString> *editmap = new QMap<QString, QString>;
+  editmap->insert("Undo", QString(QKeySequence(Qt::CTRL+Qt::Key_Z)));
+  editmap->insert("Redo", QString(QKeySequence(Qt::CTRL+Qt::Key_Y)));
+  editmap->insert("Cut", QString(QKeySequence(Qt::CTRL+Qt::Key_X)));
+  editmap->insert("Copy", QString(QKeySequence(Qt::CTRL+Qt::Key_C)));
+  editmap->insert("Paste", QString(QKeySequence(Qt::CTRL+Qt::Key_V)));
+  editmap->insert("Delete", QString(QKeySequence(Qt::Key_Delete)));
+  editmap->insert("Select", QString());
+  editmap->insert("Select All", QString(QKeySequence(Qt::CTRL+Qt::Key_A)));
+  editmap->insert("Select Markers", QString(QKeySequence(Qt::CTRL+Qt::SHIFT+Qt::Key_M)));
+  editmap->insert("Find", QString(QKeySequence(Qt::CTRL+Qt::Key_F)));
+  editmap->insert("Find Again", QString(QKeySequence(Qt::Key_F3)));
+  editmap->insert("Replace", QString(QKeySequence(Qt::Key_F7)));
+  editmap->insert("Rotate", QString(QKeySequence(Qt::CTRL+Qt::Key_R)));
+  editmap->insert("Mirror about X Axis", QString(QKeySequence(Qt::CTRL+Qt::Key_J)));
+  editmap->insert("Mirror about Y Axis", QString(QKeySequence(Qt::CTRL+Qt::Key_M)));
+  editmap->insert("Deactivate Activate", QString(QKeySequence(Qt::CTRL+Qt::Key_D)));
+  editmap->insert("Go into Subcircuit", QString(QKeySequence(Qt::CTRL+Qt::Key_I)));
+  editmap->insert("Pop out", QString(QKeySequence(Qt::CTRL+Qt::Key_H)));
+  vec->push_back(qMakePair(QString("Edit"), editmap));
+
+  QMap<QString, QString> *positionmap = new QMap<QString, QString>;
+  positionmap->insert("Move Component Text", QString(QKeySequence(Qt::CTRL+Qt::Key_K)));
+  positionmap->insert("Set on Grid", QString(QKeySequence(Qt::CTRL+Qt::Key_U)));
+  positionmap->insert("Center horizontally", QString());
+  positionmap->insert("Center vertically", QString());
+  positionmap->insert("Align top", QString(QKeySequence(Qt::CTRL+Qt::Key_T)));
+  positionmap->insert("Align bottom", QString());
+  positionmap->insert("Align left", QString());
+  positionmap->insert("Align right", QString());
+  positionmap->insert("Distribute horizontally", QString());
+  positionmap->insert("Distribute vertically", QString());
+  vec->push_back(qMakePair(QString("Positioning"), positionmap));
+
+  QMap<QString, QString> *insertmap = new QMap<QString, QString>;
+  insertmap->insert("Wire", QString(QKeySequence(Qt::CTRL+Qt::Key_E)));
+  insertmap->insert("Wire Label", QString(QKeySequence(Qt::CTRL+Qt::Key_L)));
+  insertmap->insert("Insert Equation", QString(QKeySequence(Qt::CTRL+Qt::Key_Less)));
+  insertmap->insert("Insert Ground", QString(QKeySequence(Qt::CTRL+Qt::Key_G)));
+  insertmap->insert("Insert Port", QString());
+  insertmap->insert("Set Marker on Graph", QString(QKeySequence(Qt::CTRL+Qt::Key_B)));
+  insertmap->insert("VHDL entity", QString(QKeySequence(Qt::CTRL+Qt::Key_Space)));
+  vec->push_back(qMakePair(QString("Insert"), insertmap));
+
+  QMap<QString, QString> *projectmap = new QMap<QString, QString>;
+  projectmap->insert("New Project", QString(QKeySequence(Qt::CTRL+Qt::SHIFT+Qt::Key_N)));
+  projectmap->insert("Open Project", QString(QKeySequence(Qt::CTRL+Qt::SHIFT+Qt::Key_O)));
+  projectmap->insert("Add Files to Project", QString(QKeySequence(Qt::CTRL+Qt::SHIFT+Qt::Key_A)));
+  projectmap->insert("Close Project", QString(QKeySequence(Qt::CTRL+Qt::SHIFT+Qt::Key_W)));
+  projectmap->insert("Delete Project", QString(QKeySequence(Qt::CTRL+Qt::SHIFT+Qt::Key_D)));
+  projectmap->insert("Create Library", QString(QKeySequence(Qt::CTRL+Qt::SHIFT+Qt::Key_L)));
+  projectmap->insert("Create Package", QString(QKeySequence(Qt::CTRL+Qt::SHIFT+Qt::Key_Z)));
+  projectmap->insert("Extract Package", QString(QKeySequence(Qt::CTRL+Qt::SHIFT+Qt::Key_X)));
+  projectmap->insert("Import Export Data", QString(QKeySequence(Qt::CTRL+Qt::SHIFT+Qt::Key_I)));
+  projectmap->insert("Export to CSV", QString(QKeySequence(Qt::CTRL+Qt::SHIFT+Qt::Key_C)));
+  projectmap->insert("Build Verilog-A module", QString());
+  projectmap->insert("Load Verilog-A module", QString());
+  vec->push_back(qMakePair(QString("Project"), projectmap));
+
+  QMap<QString, QString> *toolmap = new QMap<QString, QString>;
+  toolmap->insert("Text Editor", QString(QKeySequence(Qt::CTRL+Qt::Key_1)));
+  toolmap->insert("Filter synthesis", QString(QKeySequence(Qt::CTRL+Qt::Key_2)));
+  toolmap->insert("Active filter synthesis", QString(QKeySequence(Qt::CTRL+Qt::Key_3)));
+  toolmap->insert("Line calculation", QString(QKeySequence(Qt::CTRL+Qt::Key_4)));
+  toolmap->insert("Component Library", QString(QKeySequence(Qt::CTRL+Qt::Key_5)));
+  toolmap->insert("Matching Circuit", QString(QKeySequence(Qt::CTRL+Qt::Key_6)));
+  toolmap->insert("Attenuator synthesis", QString(QKeySequence(Qt::CTRL+Qt::Key_7)));
+  toolmap->insert("Resistor color codes", QString(QKeySequence(Qt::CTRL+Qt::Key_8)));
+  vec->push_back(qMakePair(QString("Tools"), toolmap));
+
+  QMap<QString, QString> *simulationmap = new QMap<QString, QString>;
+  simulationmap->insert("Simulate", QString(QKeySequence(Qt::Key_F2)));
+  simulationmap->insert("View Data Display Schematic", QString(QKeySequence(Qt::Key_F4)));
+  simulationmap->insert("Calculate DC bias", QString(QKeySequence(Qt::Key_F8)));
+  simulationmap->insert("Show Last Messages", QString(QKeySequence(Qt::Key_F5)));
+  simulationmap->insert("Show Last Netlist", QString(QKeySequence(Qt::Key_F6)));
+  vec->push_back(qMakePair(QString("Simulation"), simulationmap));
+
+  QMap<QString, QString> *viewmap = new QMap<QString, QString>;
+  viewmap->insert("View All", QString(QKeySequence(Qt::Key_0)));
+  viewmap->insert("View 1:1", QString(QKeySequence(Qt::Key_1)));
+  viewmap->insert("Zoom in", QString(QKeySequence(Qt::Key_Plus)));
+  viewmap->insert("Zoom out", QString(QKeySequence(Qt::Key_Minus)));
+  viewmap->insert("Toolbar", QString());
+  viewmap->insert("Statusbar", QString());
+  viewmap->insert("Dock Window", QString());
+  viewmap->insert("Octave Window", QString());
+  vec->push_back(qMakePair(QString("View"), viewmap));
+
+  QMap<QString, QString> *helpmap = new QMap<QString, QString>;
+  helpmap->insert("Help Index", QString(QKeySequence(Qt::Key_F1)));
+  helpmap->insert("Getting Started", QString());
+  helpmap->insert("About Qucs", QString());
+  helpmap->insert("About Qt", QString());
+  vec->push_back(qMakePair(QString("Help"), helpmap));
+}
+
+void
+clearShortcutMap()
+{
+  QVector<QPair<QString, QMap<QString, QString>* > >::const_iterator it = QucsSettings.Shortcut.constBegin();
+  while(it != QucsSettings.Shortcut.constEnd()) {
+    delete it->second;
+    it++;
+  }
+  QucsSettings.Shortcut.clear();
+}
+
 /**
  * @brief QucsApp::initActions Initializes all QActions of the application
  */
