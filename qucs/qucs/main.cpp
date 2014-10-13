@@ -118,6 +118,28 @@ bool loadSettings()
     }
     settings.endArray();
 
+    //load shortcut setting
+    QVector<QPair<QString, QMap<QString, QString>* > > *vec = &QucsSettings.Shortcut;
+    QVector<QPair<QString, QMap<QString, QString>* > >::iterator menu_it = vec->begin();
+
+    settings.beginGroup("Shortcut");
+
+    while(menu_it != vec->end()) {
+      settings.beginGroup(menu_it->first);
+
+      QMap<QString, QString> *submap = menu_it->second;
+      QStringList actionlist = settings.childKeys();
+      foreach(QString actionkey, actionlist) {
+        submap->insert(actionkey, settings.value(actionkey).toString());
+      }
+
+      settings.endGroup();
+
+      menu_it++;
+    }
+
+    settings.endGroup();
+
     QucsSettings.numRecentDocs = 0;
 
     return true;
@@ -174,6 +196,24 @@ bool saveApplSettings(QucsApp *qucs)
          i++;
      }
      settings.endArray();
+
+  //save shortcut settings, also delete all pointer of shortcut map
+  settings.beginGroup("Shortcut");
+  QVector<QPair<QString, QMap<QString, QString>* > >::const_iterator menu_it = QucsSettings.Shortcut.constBegin();
+  while (menu_it != QucsSettings.Shortcut.constEnd()) {
+
+    QMap<QString, QString>::const_iterator action_it = menu_it->second->constBegin();
+
+    settings.beginGroup(menu_it->first);
+    while (action_it != menu_it->second->constEnd()) {
+      settings.setValue(action_it.key(), action_it.value());
+      ++action_it;
+    }
+    settings.endGroup();
+
+    ++menu_it;
+  }
+  settings.endGroup();
 
   return true;
 
@@ -951,6 +991,7 @@ int main(int argc, char *argv[])
       if(octaveExec1.exists()) QucsSettings.OctaveBinDir.setPath(QString("/usr/local/bin/"));
 #endif
   }
+  setDefaultShortcut();
   loadSettings();
 
   if(!QucsSettings.BGColor.isValid())
