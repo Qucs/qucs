@@ -2038,6 +2038,7 @@ void QucsApp::closeEvent(QCloseEvent* Event)
     QucsSettings.dx=size().width();
     QucsSettings.dy=size().height();
     saveApplSettings(this);
+    clearShortcutMap();
 
    if(closeAllFiles()) {
       emit signalKillEmAll();   // kill all subprocesses
