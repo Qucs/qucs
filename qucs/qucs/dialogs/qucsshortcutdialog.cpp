@@ -37,6 +37,12 @@ QucsShortcutDialog::QucsShortcutDialog(QucsApp *parent, const char *name)
 
   menuList = new QListWidget();
   actionList = new QTableWidget();
+  actionList->horizontalHeader()->setStretchLastSection(true);
+  actionList->verticalHeader()->hide();
+  actionList->setColumnCount(2);
+  actionList->setHorizontalHeaderLabels(
+      QStringList() << tr("Action") << tr("Shortcut Key"));
+  actionList->setSelectionBehavior(QAbstractItemView::SelectRows);
 
   sequenceInput = new KeySequenceEdit;
   messageLabel = new QLabel("test message");
@@ -75,6 +81,13 @@ QucsShortcutDialog::QucsShortcutDialog(QucsApp *parent, const char *name)
   all->addLayout(bottomLayout);
 
   this->setLayout(all);
+
+  connect(menuList, SIGNAL(itemClicked(QListWidgetItem*))
+      , this, SLOT(slotChooseMenu()));
+  
+  //fill initial value
+  fillMenu();
+  slotChooseMenu();
 }
 
 QucsShortcutDialog::~QucsShortcutDialog()
@@ -84,6 +97,28 @@ QucsShortcutDialog::~QucsShortcutDialog()
 void
 QucsShortcutDialog::slotChooseMenu()
 {
+  int menurow = menuList->currentRow();
+  actionList->clearContents();
+
+  QMap<QString, QString> *map = QucsSettings.Shortcut.at(menurow).second;
+  QMap<QString, QString>::const_iterator action_it = map->constBegin();
+
+  int row = 0;
+  while(action_it != map->constEnd()) {
+    actionList->setRowCount(map->size());
+
+    QTableWidgetItem *item_0 = new QTableWidgetItem(action_it.key());
+    QTableWidgetItem *item_1 = new QTableWidgetItem(action_it.value());
+
+    item_0->setFlags(item_0->flags() & ~Qt::ItemIsEditable);
+    item_1->setFlags(item_1->flags() & ~Qt::ItemIsEditable);
+    actionList->setItem(row, 0, item_0);
+    actionList->setItem(row, 1, item_1);
+
+    row++;
+    action_it++;
+  }
+  actionList->setCurrentCell(0, 0);
 }
 
 void 
@@ -110,4 +145,14 @@ QucsShortcutDialog::slotOK()
 void
 QucsShortcutDialog::fillMenu()
 {
+  QVector<QPair<QString, QMap<QString, QString>* > >::const_iterator menu_it = QucsSettings.Shortcut.constBegin();
+
+  while(menu_it != QucsSettings.Shortcut.constEnd()) {
+    QListWidgetItem *item = new QListWidgetItem(menu_it->first);
+    menuList->addItem(item);
+
+    menu_it++;
+  }
+
+  menuList->setCurrentRow(0);
 }
