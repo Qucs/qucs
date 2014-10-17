@@ -181,6 +181,7 @@ QucsShortcutDialog::slotDefaultShortcut()
 void 
 QucsShortcutDialog::slotOK() 
 {
+  App->setAllShortcut();
   accept();
 }
 
