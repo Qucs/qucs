@@ -41,7 +41,6 @@ private slots:
 private: 
   void fillMenu();
 private: 
-  int current;
   QucsApp *App;
 
   QListWidget *menuList;
