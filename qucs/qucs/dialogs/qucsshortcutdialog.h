@@ -41,7 +41,11 @@ private slots:
   void slotDefaultShortcut();
   void slotOK();
 
+  void slotCheckKey();
   void slotCheckUnique();
+
+signals:
+  void signalValidKey();
 
 private: 
   void fillMenu();
@@ -50,6 +54,7 @@ private:
   //conflict record
   int conflictAt;
   QString conflictKey;
+  QStringList invalidKeys;
 
   QucsApp *App;
 
