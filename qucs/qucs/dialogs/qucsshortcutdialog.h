@@ -38,10 +38,16 @@ private slots:
   void slotDefaultShortcut();
   void slotOK();
 
+  void slotCheckUnique();
+
 private: 
   void fillMenu();
   void setShortcut(QString);
 private: 
+  //conflict record
+  int conflictAt;
+  QString conflictKey;
+
   QucsApp *App;
 
   QListWidget *menuList;
