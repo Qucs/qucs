@@ -35,6 +35,9 @@ QucsShortcutDialog::QucsShortcutDialog(QucsApp *parent, const char *name)
   App = parent;
   setWindowTitle(tr("Edit Qucs Shortcuts"));
 
+  conflictAt = -1;
+  conflictKey = QString();
+
   menuList = new QListWidget();
   actionList = new QTableWidget();
   actionList->horizontalHeader()->setStretchLastSection(true);
@@ -45,12 +48,13 @@ QucsShortcutDialog::QucsShortcutDialog(QucsApp *parent, const char *name)
   actionList->setSelectionBehavior(QAbstractItemView::SelectRows);
 
   sequenceInput = new KeySequenceEdit;
-  messageLabel = new QLabel("test message");
+  messageLabel = new QLabel();
   setButton = new QPushButton(tr("set shortcut"));
   removeButton = new QPushButton(tr("remove shortcut"));
   defaultButton = new QPushButton(tr("default"));
   okButton = new QPushButton(tr("OK"));
 
+  connect(sequenceInput, SIGNAL(textChanged(QString)), SLOT(slotCheckUnique()));
   connect(setButton, SIGNAL(clicked()), SLOT(slotSetShortcut()));
   connect(removeButton, SIGNAL(clicked()), SLOT(slotRemoveShortcut()));
   connect(defaultButton, SIGNAL(clicked()), SLOT(slotDefaultShortcut()));
@@ -144,10 +148,26 @@ QucsShortcutDialog::setShortcut(QString keySequence)
 {
   int menurow = menuList->currentRow();
   int row = actionList->currentRow();
-  QString key = actionList->item(row, 0)->text();
 
+  //solve conflict
+  if (conflictAt != -1) {
+    if (menurow == conflictAt) {
+      QList<QTableWidgetItem *> conflictItems = actionList->findItems(conflictKey, Qt::MatchExactly);
+      if (conflictItems.size() != 0) {
+        int idx = actionList->row(conflictItems.at(0));
+        actionList->item(idx, 1)->setText(QString());
+      }
+    }
+    QucsSettings.Shortcut.at(conflictAt).second->insert(conflictKey, QString());
+    conflictAt = -1;
+    conflictKey.clear();
+    messageLabel->clear();
+  }
+
+  QString key = actionList->item(row, 0)->text();
   QucsSettings.Shortcut.at(menurow).second->insert(key, keySequence);
   actionList->item(row, 1)->setText(keySequence);
+  sequenceInput->clear();
 }
 
 void 
@@ -162,6 +182,37 @@ void
 QucsShortcutDialog::slotOK() 
 {
   accept();
+}
+
+void
+QucsShortcutDialog::slotCheckUnique()
+{
+  QString keysequence = sequenceInput->text();
+  if (keysequence == QString()) {
+    return;
+  }
+
+  conflictAt = -1;
+  conflictKey = "";
+  messageLabel->clear();
+
+  QVector<QPair<QString, QMap<QString, QString>* > >::const_iterator menu_it = QucsSettings.Shortcut.constBegin();
+
+  while(menu_it != QucsSettings.Shortcut.constEnd()) {
+    QMap<QString, QString>::const_iterator action_it = menu_it->second->constBegin();
+    while(action_it != menu_it->second->constEnd()) {
+      if (keysequence == action_it.value()) {
+        conflictAt = menu_it - QucsSettings.Shortcut.constBegin();
+        conflictKey = action_it.key();
+        QString msg = QString("Conflict With: ") + menu_it->first 
+            + "->" + conflictKey;
+        messageLabel->setText(msg);
+        return;
+      }
+      action_it++;
+    }
+    menu_it++;
+  }
 }
 
 void
