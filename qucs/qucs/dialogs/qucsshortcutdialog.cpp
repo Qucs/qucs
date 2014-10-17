@@ -36,6 +36,7 @@ QucsShortcutDialog::QucsShortcutDialog(QucsApp *parent, const char *name)
   qDebug() << "open shortcut dialog";
   App = parent;
   setWindowTitle(tr("Edit Qucs Shortcuts"));
+  invalidKeys << "Esc";
 
   conflictAt = -1;
   conflictKey = QString();
@@ -56,7 +57,8 @@ QucsShortcutDialog::QucsShortcutDialog(QucsApp *parent, const char *name)
   defaultButton = new QPushButton(tr("default"));
   okButton = new QPushButton(tr("OK"));
 
-  connect(sequenceInput, SIGNAL(textChanged(QString)), SLOT(slotCheckUnique()));
+  connect(sequenceInput, SIGNAL(textChanged(QString)), SLOT(slotCheckKey()));
+  connect(this, SIGNAL(signalValidKey()), SLOT(slotCheckUnique()));
   connect(setButton, SIGNAL(clicked()), SLOT(slotSetShortcut()));
   connect(removeButton, SIGNAL(clicked()), SLOT(slotRemoveShortcut()));
   connect(defaultButton, SIGNAL(clicked()), SLOT(slotDefaultShortcut()));
@@ -185,6 +187,22 @@ QucsShortcutDialog::slotOK()
 {
   App->setAllShortcut();
   accept();
+}
+
+void
+QucsShortcutDialog::slotCheckKey()
+{
+  QString keysequence = sequenceInput->text();
+  foreach(QString invalidKey, invalidKeys) {
+    if (keysequence == invalidKey) {
+      sequenceInput->clear();
+      QString msg = QString("Unable to set shortcut of: ") + invalidKey;
+      messageLabel->setText(msg);
+      return;
+    }
+  }
+
+  emit signalValidKey();
 }
 
 void
