@@ -40,6 +40,7 @@ private slots:
 
 private: 
   void fillMenu();
+  void setShortcut(QString);
 private: 
   QucsApp *App;
 
