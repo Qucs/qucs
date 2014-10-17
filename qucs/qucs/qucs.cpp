@@ -120,6 +120,7 @@ QucsApp::QucsApp()
 
   initView();
   initActions();
+  setAllShortcut();
   initMenuBar();
   initToolBar();
   initStatusBar();
