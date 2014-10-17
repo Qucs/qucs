@@ -51,6 +51,9 @@ QucsShortcutDialog::QucsShortcutDialog(QucsApp *parent, const char *name)
   defaultButton = new QPushButton(tr("default"));
   okButton = new QPushButton(tr("OK"));
 
+  connect(setButton, SIGNAL(clicked()), SLOT(slotSetShortcut()));
+  connect(removeButton, SIGNAL(clicked()), SLOT(slotRemoveShortcut()));
+  connect(defaultButton, SIGNAL(clicked()), SLOT(slotDefaultShortcut()));
   connect(okButton, SIGNAL(clicked()), SLOT(slotOK()));
 
   QHBoxLayout *topLayout = new QHBoxLayout;
@@ -124,16 +127,35 @@ QucsShortcutDialog::slotChooseMenu()
 void 
 QucsShortcutDialog::slotSetShortcut() 
 {
+  if (sequenceInput->text() != QString())
+  {
+    setShortcut(sequenceInput->text());
+  }
 }
 
 void 
 QucsShortcutDialog::slotRemoveShortcut() 
 {
+  setShortcut("");
+}
+
+void
+QucsShortcutDialog::setShortcut(QString keySequence)
+{
+  int menurow = menuList->currentRow();
+  int row = actionList->currentRow();
+  QString key = actionList->item(row, 0)->text();
+
+  QucsSettings.Shortcut.at(menurow).second->insert(key, keySequence);
+  actionList->item(row, 1)->setText(keySequence);
 }
 
 void 
 QucsShortcutDialog::slotDefaultShortcut() 
 {
+  clearShortcutMap();
+  setDefaultShortcut();
+  slotChooseMenu();
 }
 
 void 
