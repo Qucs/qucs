@@ -23,6 +23,20 @@
 \usepackage[section]{placeins}
 \usepackage{listings}
 \usepackage{longtable}
+\usepackage[a4paper,
+	bookmarks,
+	bookmarksopen=true,
+	bookmarksnumbered=true,
+	pdfpagemode=UseOutlines,
+	baseurl=(http://qucs.sourceforge.net),
+	pdfstartview=FitH,
+	colorlinks,
+	linkcolor=black,
+	urlcolor=black,
+	citecolor=black,
+	backref=false,
+	plainpages=false,
+	pagebackref=false]{hyperref}
 
 % Compatibility code for LaTeX and pdfTeX.
 \newif\ifpdf
@@ -42,21 +56,6 @@
 
 % Only evaluated if run using pdfTeX.
 \ifpdf
-\usepackage[pdftex,
-	a4paper,
-	bookmarks,
-	bookmarksopen=true,
-	bookmarksnumbered=true,
-	pdfpagemode=UseOutlines,
-	baseurl=(http://qucs.sourceforge.net),
-	pdfstartview=FitH,
-	colorlinks,
-	linkcolor=black,
-	urlcolor=black,
-	citecolor=black,
-	backref=false,
-	plainpages=false,
-	pagebackref=false]{hyperref}
 \pdfcompresslevel 9
 \pdfinfo {
   /Title   (Qucs)
