@@ -203,6 +203,45 @@ QucsShortcutDialog::slotImport()
 void
 QucsShortcutDialog::slotExport()
 {
+  QString filename;
+
+  QFileDialog *sd = new QFileDialog;
+  sd->setDefaultSuffix("shortcutmap");
+  sd->setDirectory(".");
+  sd->setFilter("Mapfiles (*.shortcutmap)");
+  sd->setAcceptMode(QFileDialog::AcceptSave);
+  int result = sd->exec();
+  if (result == QDialog::Accepted) {
+    QString filename = sd->selectedFiles()[0];
+    qDebug() << filename;
+
+    QFile file(filename);
+    if (!file.open(QIODevice::WriteOnly)) {
+      QMessageBox::critical(this, tr("Unable to open file"),
+          file.errorString());
+      return;
+    }
+    QTextStream stream(&file);
+    stream << "<Qucs Shortcut>\n";
+
+    QVector<QPair<QString, QMap<QString, QString>* > >::const_iterator menu_it = QucsSettings.Shortcut.constBegin();
+    while (menu_it != QucsSettings.Shortcut.constEnd()) {
+      stream << "Menu <" << menu_it->first << ">\n";
+
+      QMap<QString, QString>::const_iterator action_it = menu_it->second->constBegin();
+      while (action_it != menu_it->second->constEnd()) {
+        stream << "Action <" << action_it.key() << "> <" << action_it.value() << ">\n"; 
+        ++action_it;
+      }
+
+      ++menu_it;
+    }
+
+    file.close();
+  } else {
+    qDebug("Cannot get file");
+  }
+  delete sd;
 }
 
 void
