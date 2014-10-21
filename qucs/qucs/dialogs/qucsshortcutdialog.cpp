@@ -198,6 +198,87 @@ QucsShortcutDialog::slotOK()
 void
 QucsShortcutDialog::slotImport()
 {
+  QString filename;
+
+  filename = QFileDialog::getOpenFileName(this, tr("Import Shortcut Map"),
+      ".", "Mapfiles (*.shortcutmap)");
+  if (!filename.isEmpty()) {
+
+    QFile file(filename);
+    if (!file.open(QIODevice::ReadOnly)) {
+      QMessageBox::critical(this, tr("Unable to open file"),
+          file.errorString());
+      return;
+    }
+    QTextStream stream(&file);
+    QString line, action, keySequence;
+
+    do {
+      if (stream.atEnd()) {
+        file.close();
+        return;
+      }
+
+      line = stream.readLine();
+    } while(line.isEmpty());
+
+    //check header
+    if (line != "<Qucs Shortcut>") {
+      file.close();
+      QMessageBox::critical(0, tr("Error"),
+        tr("Wrong document type: "+filename));
+      return;
+    }
+
+    QVector<QPair<QString, QMap<QString, QString>* > >::iterator menu_it = QucsSettings.Shortcut.begin();
+    QVector<QPair<QString, QMap<QString, QString>* > >::iterator end = QucsSettings.Shortcut.end();
+    //we assume shortcut map file save all shortcut
+    //clean all pre-exist map
+    while (menu_it != end) {
+      menu_it->second->clear();
+      menu_it++;
+    }
+
+    int i, j;
+    menu_it = QucsSettings.Shortcut.begin();
+    while (!stream.atEnd()) {
+      line = stream.readLine();
+      line = line.stripWhiteSpace();
+      if (line.isEmpty()) { continue; }
+
+      if (line.startsWith("Menu")) {
+        //get iterator
+        i = line.indexOf("<", 5);
+        j = line.indexOf(">", 5);
+        line = line.mid(i+1, j-i-1);
+        //find the related map
+        qDebug() << line;
+        menu_it = QucsSettings.Shortcut.begin();
+        while(menu_it != end) {
+          if (menu_it->first == line) {
+            qDebug() << "Menu: " << line;
+            break;
+          }
+          menu_it++;
+        }
+      } else if (line.startsWith("Action")) {
+        //read action
+        i = line.indexOf("<", 7);
+        j = line.indexOf(">", 7);
+        action = line.mid(i+1, j-i-1);
+        i = line.indexOf("<", j);
+        j = line.lastIndexOf(">");
+        keySequence = line.mid(i+1, j-i-1);
+        if (menu_it != end) {
+          qDebug() << "Action: " << action << " : " << keySequence;
+          menu_it->second->insert(action, keySequence);
+        }
+      }
+    }
+
+    file.close();
+  }
+  slotChooseMenu();
 }
 
 void
