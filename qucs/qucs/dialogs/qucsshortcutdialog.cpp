@@ -54,6 +54,8 @@ QucsShortcutDialog::QucsShortcutDialog(QucsApp *parent, const char *name)
   removeButton = new QPushButton(tr("remove shortcut"));
   defaultButton = new QPushButton(tr("default"));
   okButton = new QPushButton(tr("OK"));
+  importButton = new QPushButton(tr("Import"));
+  exportButton = new QPushButton(tr("Export"));
 
   connect(sequenceInput, SIGNAL(textChanged(QString)), SLOT(slotCheckKey()));
   connect(this, SIGNAL(signalValidKey()), SLOT(slotCheckUnique()));
@@ -63,6 +65,8 @@ QucsShortcutDialog::QucsShortcutDialog(QucsApp *parent, const char *name)
   connect(removeButton, SIGNAL(clicked()), SLOT(slotRemoveShortcut()));
   connect(defaultButton, SIGNAL(clicked()), SLOT(slotDefaultShortcut()));
   connect(okButton, SIGNAL(clicked()), SLOT(slotOK()));
+  connect(importButton, SIGNAL(clicked()), SLOT(slotImport()));
+  connect(exportButton, SIGNAL(clicked()), SLOT(slotExport()));
 
   QHBoxLayout *topLayout = new QHBoxLayout;
   topLayout->addWidget(menuList);
@@ -83,6 +87,8 @@ QucsShortcutDialog::QucsShortcutDialog(QucsApp *parent, const char *name)
   midLayout->addLayout(btnLayout);
 
   QHBoxLayout *bottomLayout = new QHBoxLayout;
+  bottomLayout->addWidget(importButton);
+  bottomLayout->addWidget(exportButton);
   bottomLayout->addStretch();
   bottomLayout->addWidget(okButton);
 
@@ -187,6 +193,16 @@ QucsShortcutDialog::slotOK()
 {
   App->setAllShortcut();
   accept();
+}
+
+void
+QucsShortcutDialog::slotImport()
+{
+}
+
+void
+QucsShortcutDialog::slotExport()
+{
 }
 
 void

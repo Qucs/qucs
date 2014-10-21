@@ -40,6 +40,8 @@ private slots:
   void slotRemoveShortcut();
   void slotDefaultShortcut();
   void slotOK();
+  void slotImport();
+  void slotExport();
 
   void slotCheckKey();
   void slotCheckUnique();
@@ -63,7 +65,8 @@ private:
   QTableWidget *actionList;
   QLabel *messageLabel;
   KeySequenceEdit *sequenceInput;
-  QPushButton *setButton, *removeButton, *defaultButton, *okButton;
+  QPushButton *setButton, *removeButton, *defaultButton, *okButton,
+    *importButton, *exportButton;
 };
 
 #endif /* end of include guard: QUCSSHORTCUTDIALOG_H_ */
