@@ -57,6 +57,8 @@ QucsShortcutDialog::QucsShortcutDialog(QucsApp *parent, const char *name)
 
   connect(sequenceInput, SIGNAL(textChanged(QString)), SLOT(slotCheckKey()));
   connect(this, SIGNAL(signalValidKey()), SLOT(slotCheckUnique()));
+  connect(actionList, SIGNAL(itemSelectionChanged()), SLOT(slotSetFocus()));
+
   connect(setButton, SIGNAL(clicked()), SLOT(slotSetShortcut()));
   connect(removeButton, SIGNAL(clicked()), SLOT(slotRemoveShortcut()));
   connect(defaultButton, SIGNAL(clicked()), SLOT(slotDefaultShortcut()));
@@ -232,6 +234,12 @@ QucsShortcutDialog::slotCheckUnique()
     }
     menu_it++;
   }
+}
+
+void
+QucsShortcutDialog::slotSetFocus()
+{
+  sequenceInput->setFocus();
 }
 
 void
