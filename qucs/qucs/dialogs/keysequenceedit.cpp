@@ -39,6 +39,7 @@ KeySequenceEdit::KeySequenceEdit(QWidget *parent)
 KeySequenceEdit::KeySequenceEdit(const QKeySequence &keySequence, QWidget *parent)
   : QLineEdit(parent)
 {
+  validKey = false;
   setKeySequence(keySequence);
 }
 
@@ -69,6 +70,7 @@ KeySequenceEdit::keyPressEvent(QKeyEvent *event)
     return; 
   } 
 
+  validKey = true;
   // check for a combination of user clicks 
   // if the keyText is empty than it's a special key like F1, F5, ... 
   Qt::KeyboardModifiers modifiers = event->modifiers(); 
@@ -85,7 +87,10 @@ KeySequenceEdit::keyPressEvent(QKeyEvent *event)
 void
 KeySequenceEdit::keyReleaseEvent(QKeyEvent *event)
 {
-  qDebug() << "Key Release: " << QKeySequence(keyInt).toString(QKeySequence::NativeText);
-  setText(QKeySequence(keyInt).toString(QKeySequence::NativeText));
-  clearFocus();
+  if (validKey) {
+    qDebug() << "Key Release: " << QKeySequence(keyInt).toString(QKeySequence::NativeText);
+    setText(QKeySequence(keyInt).toString(QKeySequence::NativeText));
+    clearFocus();
+    validKey = false;
+  }
 }
