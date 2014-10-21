@@ -43,6 +43,7 @@ private slots:
 
   void slotCheckKey();
   void slotCheckUnique();
+  void slotSetFocus();
 
 signals:
   void signalValidKey();
