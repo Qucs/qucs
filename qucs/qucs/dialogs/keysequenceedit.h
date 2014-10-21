@@ -42,7 +42,7 @@ private slots:
   void setKeySequence(const QKeySequence &);
 private:
   int keyInt;
-  
+  bool validKey;
 };
 
 
