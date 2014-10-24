@@ -42,7 +42,10 @@
 PROJECT(qucs-core CXX)
 CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
 
-cmake_policy(SET CMP0048 OLD)
+# ignore the project() managed VERSION (new in CMake 3.0)
+IF(POLICY CMP0048)
+  cmake_policy(SET CMP0048 OLD)
+ENDIF(POLICY CMP0048)
 
 # default is off, assume one is building the released tarball (pre-configured)
 option ( USE_MAINTAINER_MODE "development mode, rebuild ADMS submodule" OFF )
@@ -283,8 +286,7 @@ endif ()
 #
 IF (UNIX AND NOT APPLE)
   IF( CMAKE_SYSTEM_PROCESSOR STREQUAL "x86_64" )
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")
-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fPIC")
+    SET(CMAKE_POSITION_INDEPENDENT_CODE ON)
   ENDIF()
 ENDIF()
 
