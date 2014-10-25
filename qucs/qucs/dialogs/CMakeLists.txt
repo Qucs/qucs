@@ -13,6 +13,7 @@ labeldialog.cpp			searchdialog.cpp vtabbutton.cpp
 librarydialog.cpp		settingsdialog.cpp vtabwidget.cpp
 matchdialog.cpp			simmessage.cpp newprojdialog.cpp
 sweepdialog.cpp			exportdialog.cpp loaddialog.cpp
+qucsshortcutdialog.cpp keysequenceedit.cpp
 )
 
 SET(DIALOGS_MOC_HDRS
@@ -38,6 +39,8 @@ vtabbar.h
 vtabbeddockwidget.h
 vtabbutton.h
 vtabwidget.h
+qucsshortcutdialog.h
+keysequenceedit.h
 )
 
 QT4_WRAP_CPP( DIALOGS_MOC_SRCS ${DIALOGS_MOC_HDRS} )

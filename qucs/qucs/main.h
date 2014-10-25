@@ -26,6 +26,8 @@
 #include <QColor>
 #include <Q3PtrList>
 #include <QStringList>
+#include <QVector>
+#include <QPair>
 
 #include "wire.h"
 #include "node.h"
@@ -74,8 +76,10 @@ struct tQucsSettings {
   unsigned int numRecentDocs;
   QStringList RecentDocs;
 
-  bool IgnoreFutureVersion;
+  //shortcut
+  QVector<QPair<QString, QMap<QString, QString>* > > Shortcut;
 
+  bool IgnoreFutureVersion;
 };
 
 extern tQucsSettings QucsSettings;  // extern because nearly everywhere used
@@ -83,6 +87,8 @@ extern QucsApp *QucsMain;  // the Qucs application itself
 extern QString lastDir;    // to remember last directory for several dialogs
 extern QStringList qucsPathList;
 
+void setDefaultShortcut();
+void clearShortcutMap();
 bool loadSettings();
 bool saveApplSettings(QucsApp*);
 void qucsMessageOutput(QtMsgType type, const char *msg);
