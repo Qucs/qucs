@@ -322,9 +322,13 @@ void QucsApp::initView()
   CompComps = new QListWidget(this);
   CompComps->setViewMode(QListView::IconMode);
   CompComps->setGridSize(QSize(110,90));
+  CompSearchLabel = new QLabel(this, tr("Search Components:"));
+  CompSearch = new QLineEdit(this);
 
   CompGroupLayout->addWidget(CompChoose);
   CompGroupLayout->addWidget(CompComps);
+  CompGroupLayout->addWidget(CompSearchLabel);
+  CompGroupLayout->addWidget(CompSearch);
   CompGroup->setLayout(CompGroupLayout);
 
   TabView->addTab(CompGroup,tr("Components"));
@@ -613,6 +617,7 @@ void QucsApp::fillComboBox (bool setAll)
       CompChoose->insertItem (it);
     }
   }
+  CompChoose->insertItem(QObject::tr("search components"));
 }
 
 // ----------------------------------------------------------
@@ -623,6 +628,8 @@ void QucsApp::slotSetCompView (int index)
 //  qDebug() << "QucsApp::slotSetCompView (int index)";
 
   editText->setHidden (true); // disable text edit of component property
+  CompSearch->setHidden(true);
+  CompSearchLabel->hide(); //hide the search component
 
   QList<Module *> Comps;
   CompComps->clear ();   // clear the IconView
@@ -674,6 +681,9 @@ void QucsApp::slotSetCompView (int index)
       icon->setToolTip(Name);
       CompComps->addItem(icon);
     }
+  } else if (item == QObject::tr("search components")) {
+    CompSearch->setHidden(false);
+    CompSearchLabel->show(); //show the search component
   }
   else {
     char * File;
