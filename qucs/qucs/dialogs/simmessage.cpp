@@ -386,26 +386,28 @@ void SimMessage::startSimulator()
       if (lib.isEmpty()) lib = "work";
       QString dir = QDir::convertSeparators (QucsSettings.QucsHomeDir.path());
       QDir vhdlDir(dir);
-      if(!vhdlDir.exists("vhdl"))
-	if(!vhdlDir.mkdir("vhdl")) {
-	  ErrText->insert(tr("ERROR: Cannot create VHDL directory \"%1\"!")
-			  .arg(vhdlDir.path()+"/vhdl"));
-	  return;
-	}
+      if(!vhdlDir.exists("vhdl")) {
+        if(!vhdlDir.mkdir("vhdl")) {
+          ErrText->insert(tr("ERROR: Cannot create VHDL directory \"%1\"!")
+              .arg(vhdlDir.path()+"/vhdl"));
+          return;
+        }
+      }
       vhdlDir.setPath(vhdlDir.path()+"/vhdl");
-      if(!vhdlDir.exists(lib))
-	if(!vhdlDir.mkdir(lib)) {
-	  ErrText->insert(tr("ERROR: Cannot create VHDL directory \"%1\"!")
-			  .arg(vhdlDir.path()+"/"+lib));
-	  return;
-	}
+      if(!vhdlDir.exists(lib)) {
+        if(!vhdlDir.mkdir(lib)) {
+          ErrText->insert(tr("ERROR: Cannot create VHDL directory \"%1\"!")
+              .arg(vhdlDir.path()+"/"+lib));
+          return;
+        }
+      }
       vhdlDir.setPath(vhdlDir.path()+"/"+lib);
       QFile destFile;
       destFile.setName(vhdlDir.filePath(entity+".vhdl"));
       if(!destFile.open(QIODevice::WriteOnly)) {
-	ErrText->insert(tr("ERROR: Cannot create \"%1\"!")
-			.arg(destFile.name()));
-	return;
+        ErrText->insert(tr("ERROR: Cannot create \"%1\"!")
+            .arg(destFile.name()));
+        return;
       }
       destFile.writeBlock(text.ascii(), text.length());
       destFile.close();
