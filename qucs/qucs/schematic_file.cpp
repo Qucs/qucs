@@ -1752,7 +1752,7 @@ bool Schematic::createSubNetlist(QTextStream *stream, int& countInit,
 // ---------------------------------------------------
 // Determines the node names and writes subcircuits into netlist file.
 int Schematic::prepareNetlist(QTextStream& stream, QStringList& Collect,
-                              QTextEdit *ErrText)
+                              QTextEdit *ErrText,bool spice)
 {
   if(showBias > 0) showBias = -1;  // do not show DC bias anymore
 
@@ -1812,9 +1812,10 @@ int Schematic::prepareNetlist(QTextStream& stream, QStringList& Collect,
   }
 
   // first line is documentation
-  if(allTypes & isAnalogComponent)
-    stream << "#";
-  else if (isVerilog)
+  if(allTypes & isAnalogComponent) {
+    if (spice) stream << "*";
+    else stream << '#';
+  } else if (isVerilog)
     stream << "//";
   else
     stream << "--";
@@ -1942,7 +1943,7 @@ QString Schematic::createSpiceNetlist(QTextStream& stream, int NumPorts)
     }*/
     QStringList collect;
     QTextEdit *err = new QTextEdit;
-    prepareNetlist(stream,collect,err);
+    prepareNetlist(stream,collect,err,true);
     delete err;
 
     Signals.clear();  // was filled in "giveNodeNames()"
@@ -1982,7 +1983,11 @@ QString Schematic::createSpiceNetlist(QTextStream& stream, int NumPorts)
     }
     qDebug()<<probe_names;
 
-    QString sim;
+    stream<<".control\n"          //execute simulations
+          <<"set filetype=ascii\n"
+          <<"run\n";
+
+    QString sim;                 // see results
     foreach (sim,simulations) {
         QString nod;
         stream<<".print "+sim;
@@ -1991,6 +1996,9 @@ QString Schematic::createSpiceNetlist(QTextStream& stream, int NumPorts)
         }
         stream<<endl;
     }
+
+    stream<<"exit\n"
+          <<".endc\n";
 
     stream<<".END\n";
 

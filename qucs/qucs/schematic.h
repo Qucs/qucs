@@ -258,7 +258,7 @@ public:
   bool createLibNetlist(QTextStream*, QTextEdit*, int);
   bool createSubNetlist(QTextStream *, int&, QStringList&, QTextEdit*, int);
   void createSubNetlistPlain(QTextStream*, QTextEdit*, int);
-  int  prepareNetlist(QTextStream&, QStringList&, QTextEdit*);
+  int  prepareNetlist(QTextStream&, QStringList&, QTextEdit*,bool spice=false);
   QString createNetlist(QTextStream&, int);
   QString createSpiceNetlist(QTextStream&, int);
   bool loadDocument();
