@@ -196,7 +196,7 @@ private:
   QTreeWidgetItem *ConSchematics, *ConSources, *ConDisplays, *ConDatasets,
                   *ConOthers, *ConVerilog, *ConVerilogA, *ConOctave;
 
-
+  QLineEdit       *CompSearch;
   QComboBox       *CompChoose;
 
 // ********** Properties ************************************************

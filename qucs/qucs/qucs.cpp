@@ -316,11 +316,15 @@ void QucsApp::initView()
   QWidget *CompGroup  = new QWidget();
   QVBoxLayout *CompGroupLayout = new QVBoxLayout();
 
+  QLabel *CompSearchLabel = new QLabel(this, tr("Search Components:"));
+  CompSearch = new QLineEdit(this);
   CompChoose = new QComboBox(this);
   CompComps = new QListWidget(this);
   CompComps->setViewMode(QListView::IconMode);
   CompComps->setGridSize(QSize(110,90));
 
+  CompGroupLayout->addWidget(CompSearchLabel);
+  CompGroupLayout->addWidget(CompSearch);
   CompGroupLayout->addWidget(CompChoose);
   CompGroupLayout->addWidget(CompComps);
   CompGroup->setLayout(CompGroupLayout);
