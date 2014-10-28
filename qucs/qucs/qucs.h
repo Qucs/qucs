@@ -121,6 +121,7 @@ public slots:
   void slotZoomOut(); // Zoom out by 2
 
   void slotToPage();
+  void slotSearchComponent(const QString &);
   void slotSelectComponent(QListWidgetItem*);
 
   void slotEditElement();
@@ -196,7 +197,7 @@ private:
   QTreeWidgetItem *ConSchematics, *ConSources, *ConDisplays, *ConDatasets,
                   *ConOthers, *ConVerilog, *ConVerilogA, *ConOctave;
 
-
+  QLineEdit       *CompSearch;
   QComboBox       *CompChoose;
 
 // ********** Properties ************************************************

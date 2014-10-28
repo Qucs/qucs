@@ -316,11 +316,15 @@ void QucsApp::initView()
   QWidget *CompGroup  = new QWidget();
   QVBoxLayout *CompGroupLayout = new QVBoxLayout();
 
+  QLabel *CompSearchLabel = new QLabel(this, tr("Search Components:"));
+  CompSearch = new QLineEdit(this);
   CompChoose = new QComboBox(this);
   CompComps = new QListWidget(this);
   CompComps->setViewMode(QListView::IconMode);
   CompComps->setGridSize(QSize(110,90));
 
+  CompGroupLayout->addWidget(CompSearchLabel);
+  CompGroupLayout->addWidget(CompSearch);
   CompGroupLayout->addWidget(CompChoose);
   CompGroupLayout->addWidget(CompComps);
   CompGroup->setLayout(CompGroupLayout);
@@ -330,6 +334,7 @@ void QucsApp::initView()
   fillComboBox(true);
 
   slotSetCompView(0);
+  connect(CompSearch, SIGNAL(textChanged(const QString &)), this, SLOT(slotSearchComponent(const QString &)));
   connect(CompChoose, SIGNAL(activated(int)), SLOT(slotSetCompView(int)));
   connect(CompComps, SIGNAL(itemActivated(QListWidgetItem*)), SLOT(slotSelectComponent(QListWidgetItem*)));
   connect(CompComps, SIGNAL(itemPressed(QListWidgetItem*)), SLOT(slotSelectComponent(QListWidgetItem*)));
@@ -597,13 +602,13 @@ void QucsApp::fillComboBox (bool setAll)
   //CompChoose->setMaxVisibleItems (13); // Increase this if you add items below.
   CompChoose->clear ();
 
-  QStringList cats = Category::getCategories ();
-  for (QStringList::Iterator it = cats.begin (); it != cats.end (); ++it) {
-    if (setAll)
-      CompChoose->insertItem (*it);
-    else
-      if (*it == QObject::tr("paintings"))
-        CompChoose->insertItem (*it);
+  if (!setAll) {
+    CompChoose->insertItem(QObject::tr("paintings"));
+  } else {
+    QStringList cats = Category::getCategories ();
+    foreach (QString it, cats) {
+      CompChoose->insertItem (it);
+    }
   }
 }
 
@@ -622,27 +627,7 @@ void QucsApp::slotSetCompView (int index)
 
   QString item = CompChoose->text (index);
 
-  /*
-   * The following test is used as only paintings are allowed in
-   * symbol editing mode, previously paintings had to be the last
-   * category in modules.cpp.
-   * Howver, before symbol edit is started it is requested that only
-   * 'paintigs' gets added to the 'compChoose' combobox.
-   * See: QucsApp::fillComboBox
-   *
-   */
-
-  if (item == QObject::tr("paintings"))
-  {
-    // if index beyond count of combobox, assume it is paintings...
-    Comps = Category::getModules (QObject::tr("paintings"));
-  }
-  else
-  {
-    // get list of components, will add the icons to dock
-    Comps = Category::getModules (item);
-  }
-
+  Comps = Category::getModules(item);
   QString Name;
 
   // if something was registered dynamicaly, get and draw icons into dock
@@ -703,6 +688,44 @@ void QucsApp::slotSetCompView (int index)
 }
 
 // ------------------------------------------------------------------
+// When CompSearch is being edited, create a temp page show the
+// search result
+void QucsApp::slotSearchComponent(const QString &searchText)
+{
+  qDebug() << searchText;
+  CompComps->clear ();   // clear the IconView
+  if (searchText.isEmpty()) {
+    slotSetCompView(CompChoose->currentIndex());
+  } else {
+    editText->setHidden (true); // disable text edit of component property
+
+    //traverse all component and match searchText with name
+    QString Name;
+    char * File;
+    Module * Mod;
+    int match;
+    Q3PtrList<Module> Comps;
+
+    QStringList cats = Category::getCategories ();
+    foreach(QString it, cats) {
+      Comps = Category::getModules(it);
+      for (Mod = Comps.first(); Mod; Mod = Comps.next ()) {
+        if (Mod->info) {
+          *(Mod->info) (Name, File, false);
+
+          if((Name.indexOf(searchText, 0, Qt::CaseInsensitive)) != -1) {
+            //match
+            QListWidgetItem *icon = new QListWidgetItem(QPixmap(":/bitmaps/" + QString (File) + ".png"), Name);
+            icon->setToolTip(Name);
+            CompComps->addItem(icon);
+          }
+        }
+      }
+    }
+  }
+}
+
+// ------------------------------------------------------------------
 // Is called when the mouse is clicked within the Component QIconView.
 void QucsApp::slotSelectComponent(QListWidgetItem *item)
 {
@@ -742,14 +765,9 @@ void QucsApp::slotSelectComponent(QListWidgetItem *item)
   Q3PtrList<Module> Comps;
 
   // if symbol mode, only paintings are enabled.
-  if (CompChoose->currentText() == QObject::tr("paintings"))
-    Comps = Category::getModules (QObject::tr("paintings"));
-  else {
-    Comps = Category::getModules (CompChoose->currentText ());
-    qDebug() << "pressed CompComps id" << i;
-    qDebug() << CompComps->item(i)->toolTip(); //Name;
-
-  }
+  Comps = Category::getModules(CompChoose->currentText());
+  qDebug() << "pressed CompComps id" << i;
+  qDebug() << CompComps->item(i)->toolTip(); //Name;
 
   // handle static and dynamic components
   if (CompChoose->currentText() == QObject::tr("verilog-a user devices")){
