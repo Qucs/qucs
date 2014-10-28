@@ -121,6 +121,7 @@ public slots:
   void slotZoomOut(); // Zoom out by 2
 
   void slotToPage();
+  void slotSearchComponent(const QString &);
   void slotSelectComponent(QListWidgetItem*);
 
   void slotEditElement();

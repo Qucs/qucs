@@ -334,6 +334,7 @@ void QucsApp::initView()
   fillComboBox(true);
 
   slotSetCompView(0);
+  connect(CompSearch, SIGNAL(textChanged(const QString &)), this, SLOT(slotSearchComponent(const QString &)));
   connect(CompChoose, SIGNAL(activated(int)), SLOT(slotSetCompView(int)));
   connect(CompComps, SIGNAL(itemActivated(QListWidgetItem*)), SLOT(slotSelectComponent(QListWidgetItem*)));
   connect(CompComps, SIGNAL(itemPressed(QListWidgetItem*)), SLOT(slotSelectComponent(QListWidgetItem*)));
@@ -701,6 +702,44 @@ void QucsApp::slotSetCompView (int index)
         QListWidgetItem *icon = new QListWidgetItem(QPixmap(":/bitmaps/" + QString (File) + ".png"), Name);
         icon->setToolTip(Name);
         CompComps->addItem(icon);
+      }
+    }
+  }
+}
+
+// ------------------------------------------------------------------
+// When CompSearch is being edited, create a temp page show the
+// search result
+void QucsApp::slotSearchComponent(const QString &searchText)
+{
+  qDebug() << searchText;
+  CompComps->clear ();   // clear the IconView
+  if (searchText.isEmpty()) {
+    slotSetCompView(CompChoose->currentIndex());
+  } else {
+    editText->setHidden (true); // disable text edit of component property
+
+    //traverse all component and match searchText with name
+    QString Name;
+    char * File;
+    Module * Mod;
+    int match;
+    Q3PtrList<Module> Comps;
+
+    QStringList cats = Category::getCategories ();
+    foreach(QString it, cats) {
+      Comps = Category::getModules(it);
+      for (Mod = Comps.first(); Mod; Mod = Comps.next ()) {
+        if (Mod->info) {
+          *(Mod->info) (Name, File, false);
+
+          if((Name.indexOf(searchText, 0, Qt::CaseInsensitive)) != -1) {
+            //match
+            QListWidgetItem *icon = new QListWidgetItem(QPixmap(":/bitmaps/" + QString (File) + ".png"), Name);
+            icon->setToolTip(Name);
+            CompComps->addItem(icon);
+          }
+        }
       }
     }
   }
