@@ -11,17 +11,36 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef LC_FILTER_H
-#define LC_FILTER_H
+#ifndef TL_FILTER_H
+#define TL_FILTER_H
 
 #include "filter.h"
 
-// ladder filter containing inductors L and capacitors C
-class LC_Filter : public Filter {
-public:
-  LC_Filter();
+struct tSubstrate {
+  double er;
+  double height;
+  double thickness;
+  double tand;
+  double resistivity;
+  double roughness;
+  double minWidth, maxWidth;
+};
 
-  static QString* createSchematic(tFilter*, bool);
+// transmission line filter
+class TL_Filter : public Filter {
+public:
+  TL_Filter();
+
+protected:
+  static void calcMicrostrip(tSubstrate*, double, double, double&, double&l);
+  static void getMicrostrip(double, double, tSubstrate*, double&, double&);
+  static double getMicrostripOpen(double Wh, double er, double er_eff);
+
+  static double dispersionKirschning(double, double, double, double&, double&);
+  static void getCoupledMicrostrip
+        (double, double, double, tSubstrate*, double&, double&, double&, double&);
+  static void sythesizeCoupledMicrostrip
+        (double, double, double, tSubstrate*, double&, double&, double&);
 };
 
 #endif

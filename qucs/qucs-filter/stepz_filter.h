@@ -11,17 +11,17 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef LC_FILTER_H
-#define LC_FILTER_H
+#ifndef STEPZ_FILTER_H
+#define STEPZ_FILTER_H
 
-#include "filter.h"
+#include "tl_filter.h"
 
-// ladder filter containing inductors L and capacitors C
-class LC_Filter : public Filter {
+// stepped-impedance transmission line filter
+class StepImpedance_Filter : public TL_Filter {
 public:
-  LC_Filter();
+  StepImpedance_Filter();
 
-  static QString* createSchematic(tFilter*, bool);
+  static QString* createSchematic(tFilter*, tSubstrate*, bool);
 };
 
 #endif

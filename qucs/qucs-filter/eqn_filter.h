@@ -11,17 +11,17 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef LC_FILTER_H
-#define LC_FILTER_H
+#ifndef EQN_FILTER_H
+#define EQN_FILTER_H
 
 #include "filter.h"
 
-// ladder filter containing inductors L and capacitors C
-class LC_Filter : public Filter {
+// equaton defined filter
+class Equation_Filter : public Filter {
 public:
-  LC_Filter();
+  Equation_Filter();
 
-  static QString* createSchematic(tFilter*, bool);
+  static QString* createSchematic(tFilter*);
 };
 
 #endif
