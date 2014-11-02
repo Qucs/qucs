@@ -618,7 +618,6 @@ void QucsApp::fillComboBox (bool setAll)
       CompChoose->insertItem (it);
     }
   }
-  CompChoose->insertItem(QObject::tr("search components"));
 }
 
 // ----------------------------------------------------------
@@ -629,8 +628,7 @@ void QucsApp::slotSetCompView (int index)
 //  qDebug() << "QucsApp::slotSetCompView (int index)";
 
   editText->setHidden (true); // disable text edit of component property
-  CompSearch->setHidden(true);
-  CompSearchLabel->hide(); //hide the search component
+  CompSearch->clear();
 
   QList<Module *> Comps;
   CompComps->clear ();   // clear the IconView
@@ -682,9 +680,6 @@ void QucsApp::slotSetCompView (int index)
       icon->setToolTip(Name);
       CompComps->addItem(icon);
     }
-  } else if (item == QObject::tr("search components")) {
-    CompSearch->setHidden(false);
-    CompSearchLabel->show(); //show the search component
   }
   else {
     char * File;
@@ -708,7 +703,9 @@ void QucsApp::slotSearchComponent(const QString &searchText)
 {
   qDebug() << "User search: " << searchText;
   CompComps->clear ();   // clear the IconView
-  if (!searchText.isEmpty()) {
+  if (searchText.isEmpty()) {
+    slotSetCompView(CompChoose->currentIndex());
+  } else {
     editText->setHidden (true); // disable text edit of component property
 
     //traverse all component and match searchText with name
@@ -796,30 +793,28 @@ void QucsApp::slotSelectComponent(QListWidgetItem *item)
       qDebug() <<  " slotSelectComponent, view->selElem" ;
       view->selElem = (*InfosVA) (CompName, CompFile_qstr, true, filename);
     }
-
-  } else if (CompChoose->currentText() == QObject::tr("search components")) {
-    //in search component, search all category to get a component in same name
-    QString CompName;
-    char *CompFile;
-
-    QStringList cats = Category::getCategories();
-    foreach (QString it, cats) {
-      Comps = Category::getModules (it);
-      foreach(Module *mod, Comps) {
-        if (mod->info) {
-          (*mod->info)(CompName, CompFile_cptr, false);
-          if (CompName == name) {
-            view->selElem = (*mod->info) (CompName, CompFile, true);
+  }
+  else {
+    if (!CompSearch->text().isEmpty()) {
+      //comp search is not empty, search all category to get a component in same name
+      QStringList cats = Category::getCategories();
+      foreach (QString it, cats) {
+        Comps = Category::getModules (it);
+        foreach(Module *mod, Comps) {
+          if (mod->info) {
+            (*mod->info)(CompName, CompFile_cptr, false);
+            if (CompName == name) {
+              view->selElem = (*mod->info) (CompName, CompFile_cptr, true);
+            }
           }
         }
       }
-    }
-  }
-  else {
-    Infos = Comps.at(i)->info;
+    } else {
+      Infos = Comps.at(i)->info;
 
-    if (Infos)
-      view->selElem = (*Infos) (CompName, CompFile_cptr, true);
+      if (Infos)
+        view->selElem = (*Infos) (CompName, CompFile_cptr, true);
+    }
   }
 }
 
