@@ -1259,7 +1259,7 @@ void ComponentDialog::slotSearchChanged(const QString & Filter)
   {
      bool match = false;
      QString name  = prop->item(i, 0)->text();
-     if( name.contains(Filter) )
+     if( name.contains(Filter, Qt::CaseInsensitive) )
        {
          match = true;
          qDebug() << "match" <<name;
