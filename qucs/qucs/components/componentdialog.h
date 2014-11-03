@@ -71,6 +71,7 @@ private slots:
   void slotNumberEntered();
 
   void slotSearchChanged(const QString& Filter);
+  void slotClearSearch();
 
 protected slots:
     void reject();
@@ -85,6 +86,7 @@ private:
   QComboBox   *ComboEdit;
   QLabel      *Name, *Description;
   QPushButton *BrowseButt, *EditButt, *ButtAdd, *ButtRem;
+  QPushButton *ButtClearSearch;
   QCheckBox   *disp;
   Component   *Comp;
   Schematic   *Doc;

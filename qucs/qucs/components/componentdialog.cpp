@@ -290,9 +290,22 @@ ComponentDialog::ComponentDialog(Component *c, Schematic *d)
           << tr("Description");
   prop->setHorizontalHeaderLabels(headers);
 
+  QLabel *searchLabel = new QLabel(tr("Filter by name:"));
   searchParam = new QLineEdit();
-//  searchParam->setText('Search');
-  vL->addWidget(searchParam);
+  vL->addWidget(searchLabel);
+
+  QHBoxLayout *searchLayout = new QHBoxLayout;
+
+  searchLayout->addWidget(searchParam);
+
+  ButtClearSearch = new QPushButton(tr("Clear"));
+  ButtClearSearch->setToolTip("Clear search field");
+
+  connect(ButtClearSearch, SIGNAL(pressed()), SLOT(slotClearSearch()));
+
+  searchLayout->addWidget(ButtClearSearch);
+
+  vL->addLayout(searchLayout);
 
   // conecnt searchParam changes with a slot
   // update matching parameters
@@ -1265,5 +1278,14 @@ void ComponentDialog::slotSearchChanged(const QString & Filter)
          qDebug() << "match" <<name;
        }
      prop->setRowHidden( i, !match );
-  }
+    }
+}
+
+/*!
+ * \brief ComponentDialog::slotClearSearch
+ * Clear search field on button press.
+ */
+void ComponentDialog::slotClearSearch()
+{
+  searchParam->clear();
 }
