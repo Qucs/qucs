@@ -15,38 +15,34 @@
  *                                                                         *
  ***************************************************************************/
 #include <QtGui>
-#include "componentdialog.h"
-#include "main.h"
-#include "qucs.h"
-//Added by qt3to4:
-#include <Q3Button>
 #include <QLabel>
-#include <Q3GridLayout>
-#include <Q3VBoxLayout>
-#include "schematic.h"
-
-#include <Q3HBox>
-#include <Q3VBox>
+#include <QGridLayout>
+#include <QHBoxLayout>
+#include <QVBoxLayout>
 #include <QLayout>
-#include <Q3HGroupBox>
 #include <QValidator>
 #include <QTabWidget>
 #include <QFileDialog>
 
+#include "componentdialog.h"
+#include "main.h"
+#include "qucs.h"
+#include "schematic.h"
 #include <math.h>
 
 
 ComponentDialog::ComponentDialog(Component *c, Schematic *d)
 			: QDialog(d, 0, TRUE, Qt::WDestructiveClose)
 {
-  resize(400, 250);
+  resize(600, 250);
   setCaption(tr("Edit Component Properties"));
   Comp  = c;
   Doc   = d;
   QString s;
 
-  all = new Q3VBoxLayout(this); // to provide neccessary size
-  Q3GridLayout *gp1;
+  all = new QVBoxLayout(this); // to provide neccessary size
+  all->setContentsMargins(1,1,1,1);
+  QGridLayout *gp1;
   QWidget *myParent = this;
   ValInteger = new QIntValidator(1, 1000000, this);
 
@@ -57,12 +53,12 @@ ComponentDialog::ComponentDialog(Component *c, Schematic *d)
   Expr.setPattern("[\\w_]+");  // valid expression for property 'NameEdit'
   ValRestrict = new QRegExpValidator(Expr, this);
 
-  checkSim  = 0;  editSim  = 0;  comboType  = 0;  checkParam = 0;
+  checkSim  = 0;  comboSim  = 0;  comboType  = 0;  checkParam = 0;
   editStart = 0;  editStop = 0;  editNumber = 0;
 
   Property *pp = 0;   // last property not to put in ListView
   // ...........................................................
-  // if simulation component
+  // if simulation component: .TR, .AC, .SW, (.SP ?)
   if((Comp->Model[0] == '.') &&
      (Comp->Model != ".DC") && (Comp->Model != ".HB") &&
      (Comp->Model != ".Digi") && (Comp->Model != ".ETR")) {
@@ -71,7 +67,7 @@ ComponentDialog::ComponentDialog(Component *c, Schematic *d)
 
     QWidget *Tab1 = new QWidget(t);
     t->addTab(Tab1, tr("Sweep"));
-    Q3GridLayout *gp = new Q3GridLayout(Tab1, 9,3,5,5);
+    QGridLayout *gp = new QGridLayout(Tab1, 9,3,5,5);
 
     gp->addMultiCellWidget(new QLabel(Comp->Description, Tab1), 0,0,0,1);
 
@@ -80,19 +76,21 @@ ComponentDialog::ComponentDialog(Component *c, Schematic *d)
     editParam->setValidator(ValRestrict);
     connect(editParam, SIGNAL(returnPressed()), SLOT(slotParamEntered()));
     checkParam = new QCheckBox(tr("display in schematic"), Tab1);
+
     if(Comp->Model == ".SW") {   // parameter sweep
       textSim = new QLabel(tr("Simulation:"), Tab1);
       gp->addWidget(textSim, row,0);
-      editSim = new QComboBox(Tab1);
-      editSim->setEditable(true);
-      connect(editSim, SIGNAL(activated(int)), SLOT(slotSimEntered(int)));
-      gp->addWidget(editSim, row,1);
+      comboSim = new QComboBox(Tab1);
+      comboSim->setEditable(true);
+      connect(comboSim, SIGNAL(activated(int)), SLOT(slotSimEntered(int)));
+      gp->addWidget(comboSim, row,1);
       checkSim = new QCheckBox(tr("display in schematic"), Tab1);
       gp->addWidget(checkSim, row++,2);
     }
     else {
       editParam->setReadOnly(true);
       checkParam->setDisabled(true);
+
       if(Comp->Model == ".TR")    // transient simulation ?
         editParam->setText("time");
       else {
@@ -168,8 +166,8 @@ ComponentDialog::ComponentDialog(Component *c, Schematic *d)
       for(pc=Doc->Components->first(); pc!=0; pc=Doc->Components->next())
         if(pc != Comp)
           if(pc->Model[0] == '.')
-            editSim->insertItem(pc->Name);
-      editSim->setCurrentText(Comp->Props.first()->Value);
+            comboSim->insertItem(pc->Name);
+      comboSim->setCurrentText(Comp->Props.first()->Value);
 
       checkSim->setChecked(Comp->Props.current()->display);
       s = Comp->Props.next()->Value;
@@ -231,101 +229,169 @@ ComponentDialog::ComponentDialog(Component *c, Schematic *d)
     connect(checkNumber, SIGNAL(stateChanged(int)), SLOT(slotSetChanged(int)));*/
 
 
-    QWidget *Tab2 = new QWidget(t);
-    t->addTab(Tab2, tr("Properties"));
-    gp1 = new Q3GridLayout(Tab2, 9,2,5,5);
-    myParent = Tab2;
+    QWidget *tabProperties = new QWidget(t);
+    t->addTab(tabProperties, tr("Properties"));
+    gp1 = new QGridLayout(tabProperties, 9,2,5,5);
+    myParent = tabProperties;
   }
   else {   // no simulation component
-    gp1 = new Q3GridLayout(0, 9,2,5,5);
+    gp1 = new QGridLayout(0, 9,2,5,5);
     all->addLayout(gp1);
   }
 
 
   // ...........................................................
-  gp1->addMultiCellWidget(new QLabel(Comp->Description, myParent), 0,0,0,1);
+  gp1->addMultiCellWidget(new QLabel(Comp->Description), 0,0,0,1);
 
-  Q3HBox *h5 = new Q3HBox(myParent);
+  QHBoxLayout *h5 = new QHBoxLayout;
   h5->setSpacing(5);
-  gp1->addWidget(h5, 1,0);
-  new QLabel(tr("Name:"), h5);
-  CompNameEdit = new QLineEdit(h5);
+
+  h5->addWidget(new QLabel(tr("Name:")) );
+
+  CompNameEdit = new QLineEdit;
+  h5->addWidget(CompNameEdit);
+
   CompNameEdit->setValidator(ValRestrict);
   connect(CompNameEdit, SIGNAL(returnPressed()), SLOT(slotButtOK()));
 
-  showName = new QCheckBox(tr("display in schematic"), myParent);
-  gp1->addWidget(showName, 1,1);
+  showName = new QCheckBox(tr("display in schematic"));
+  h5->addWidget(showName);
 
-  Q3HGroupBox *PropertyBox = new Q3HGroupBox(tr("Properties"), myParent);
-  gp1->addMultiCellWidget(PropertyBox, 2,2,0,1);
+  QWidget *hTop = new QWidget;
+  hTop->setLayout(h5);
 
-  prop = new Q3ListView(PropertyBox);
+  gp1->addWidget(hTop,1,0);
+
+  QGroupBox *PropertyBox = new QGroupBox(tr("Properties"));
+  gp1->addWidget(PropertyBox,2,0);
+
+  // H layout inside the GroupBox
+  QHBoxLayout *hProps = new QHBoxLayout;
+  PropertyBox->setLayout(hProps);
+
+  // left pane
+  QWidget *vboxPropsL = new QWidget;
+  QVBoxLayout *vL = new QVBoxLayout;
+  vboxPropsL->setLayout(vL);
+
+  /// \todo column min width
+  prop = new QTableWidget(0,4); //initialize
+  vL->addWidget(prop);
+  prop->setSelectionBehavior(QAbstractItemView::SelectRows);
+  prop->setSelectionMode(QAbstractItemView::SingleSelection);
   prop->setMinimumSize(200, 150);
-  prop->addColumn(tr("Name"));
-  prop->addColumn(tr("Value"));
-  prop->addColumn(tr("display"));
-  prop->addColumn(tr("Description"));
-  prop->setSorting(-1);   // no sorting
+//  prop->horizontalHeader()->setStretchLastSection(true);
+  prop->horizontalHeader()->setResizeMode(QHeaderView::Stretch);
 
-  Q3VBox *v1 = new Q3VBox(PropertyBox);
+  QStringList headers;
+  headers << tr("Name")
+          << tr("Value")
+          << tr("display")
+          << tr("Description");
+  prop->setHorizontalHeaderLabels(headers);
+
+  QLabel *searchLabel = new QLabel(tr("Filter by name:"));
+  searchParam = new QLineEdit();
+  vL->addWidget(searchLabel);
+
+  QHBoxLayout *searchLayout = new QHBoxLayout;
+
+  searchLayout->addWidget(searchParam);
+
+  ButtClearSearch = new QPushButton(tr("Clear"));
+  ButtClearSearch->setToolTip("Clear search field");
+
+  connect(ButtClearSearch, SIGNAL(pressed()), SLOT(slotClearSearch()));
+
+  searchLayout->addWidget(ButtClearSearch);
+
+  vL->addLayout(searchLayout);
+
+  // conecnt searchParam changes with a slot
+  // update matching parameters
+  connect(searchParam, SIGNAL(textChanged(QString)), SLOT(slotSearchChanged(QString)));
+
+
+  // right pane
+  QWidget *vboxPropsR = new QWidget;
+  QVBoxLayout *v1 = new QVBoxLayout;
+  vboxPropsR->setLayout(v1);
+
   v1->setSpacing(3);
 
-  Name = new QLabel(v1);
+  hProps->addWidget(vboxPropsL);
+  hProps->addWidget(vboxPropsR);
 
-  Description = new QLabel(v1);
+  Name = new QLabel;
+  v1->addWidget(Name);
+
+  Description = new QLabel;
+  v1->addWidget(Description);
 
   // hide, because it only replaces 'Description' in some cases
-  NameEdit = new QLineEdit(v1);
+  NameEdit = new QLineEdit;
+  v1->addWidget(NameEdit);
   NameEdit->setShown(false);
   NameEdit->setValidator(ValRestrict);
   connect(NameEdit, SIGNAL(returnPressed()), SLOT(slotApplyPropName()));
 
-  edit = new QLineEdit(v1);
+  edit = new QLineEdit;
+  v1->addWidget(edit);
   edit->setMinimumWidth(150);
   edit->setValidator(Validator2);
   connect(edit, SIGNAL(returnPressed()), SLOT(slotApplyProperty()));
 
   // hide, because it only replaces 'edit' in some cases
-  ComboEdit = new QComboBox(false, v1);
+  ComboEdit = new QComboBox;
+  v1->addWidget(ComboEdit);
   ComboEdit->setShown(false);
   connect(ComboEdit, SIGNAL(activated(const QString&)),
 	  SLOT(slotApplyChange(const QString&)));
 
-  Q3HBox *h3 = new Q3HBox(v1);
-  h3->setStretchFactor(new QWidget(h3),5); // stretchable placeholder
-  EditButt = new QPushButton(tr("Edit"),h3);
+  QHBoxLayout *h3 = new QHBoxLayout(v1);
+
+  EditButt = new QPushButton(tr("Edit"));
+  h3->addWidget(EditButt);
   EditButt->setEnabled(false);
   EditButt->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
   connect(EditButt, SIGNAL(clicked()), SLOT(slotEditFile()));
-  BrowseButt = new QPushButton(tr("Browse"),h3);
+
+  BrowseButt = new QPushButton(tr("Browse"));
+  h3->addWidget(BrowseButt);
   BrowseButt->setEnabled(false);
   BrowseButt->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
   connect(BrowseButt, SIGNAL(clicked()), SLOT(slotBrowseFile()));
 
-  disp = new QCheckBox(tr("display in schematic"), v1);
+  disp = new QCheckBox(tr("display in schematic"));
+  v1->addWidget(disp);
   connect(disp, SIGNAL(stateChanged(int)), SLOT(slotApplyState(int)));
 
-  v1->setStretchFactor(new QWidget(v1),5); // stretchable placeholder
-
-  Q3HBox *h4 = new Q3HBox(v1);
+  QHBoxLayout *h4 = new QHBoxLayout(v1);
   h4->setSpacing(5);
-  ButtAdd = new QPushButton(tr("Add"),h4);
+  ButtAdd = new QPushButton(tr("Add"));
+  h4->addWidget(ButtAdd);
   ButtAdd->setEnabled(false);
-  ButtRem = new QPushButton(tr("Remove"),h4);
+  ButtRem = new QPushButton(tr("Remove"));
+  h4->addWidget(ButtRem);
   ButtRem->setEnabled(false);
   connect(ButtAdd, SIGNAL(clicked()), SLOT(slotButtAdd()));
   connect(ButtRem, SIGNAL(clicked()), SLOT(slotButtRem()));
 
   // ...........................................................
-  Q3HBox *h2 = new Q3HBox(this);
+  QHBoxLayout *h2 = new QHBoxLayout(this);
+  QWidget * hbox2 = new QWidget;
+  hbox2->setLayout(h2);
   h2->setSpacing(5);
-  all->addWidget(h2);
-  connect(new QPushButton(tr("OK"),h2), SIGNAL(clicked()),
-	  SLOT(slotButtOK()));
-  connect(new QPushButton(tr("Apply"),h2), SIGNAL(clicked()),
-	  SLOT(slotApplyInput()));
-  connect(new QPushButton(tr("Cancel"),h2), SIGNAL(clicked()),
-	  SLOT(slotButtCancel()));
+  all->addWidget(hbox2);
+  QPushButton *ok = new QPushButton(tr("OK"));
+  QPushButton *apply = new QPushButton(tr("Apply"));
+  QPushButton *cancel = new QPushButton(tr("Cancel"));
+  h2->addWidget(ok);
+  h2->addWidget(apply);
+  h2->addWidget(cancel);
+  connect(ok,     SIGNAL(clicked()), SLOT(slotButtOK()));
+  connect(apply,  SIGNAL(clicked()), SLOT(slotApplyInput()));
+  connect(cancel, SIGNAL(clicked()), SLOT(slotButtCancel()));
 
   // ------------------------------------------------------------
   CompNameEdit->setText(Comp->Name);
@@ -338,21 +404,51 @@ ComponentDialog::ComponentDialog(Component *c, Schematic *d)
   tmp = Comp->ty+ty_Dist - Comp->y1;
   if((tmp > 0) || (tmp < -6))  ty_Dist = 0;
 
-  // insert all properties into the ListBox
-  for(Property *p = Comp->Props.last(); p != 0; p = Comp->Props.prev()) {
-    if(p == pp)  break;   // do not insert if already on first tab
-    if(p->display) s = tr("yes");
-    else s = tr("no");
-    new Q3ListViewItem(prop, p->Name, p->Value, s, p->Description);
+  /*! Insert all \a Comp properties into the dialog \a prop list */
+  int row=0; // row counter
+//  for(Property *p = Comp->Props.first(); p != 0; p = Comp->Props.next()) {
+  for(Property *p = Comp->Props.at(Comp->Props.find(pp)+1); p != 0; p = Comp->Props.next()) {
+
+    // do not insert if already on first tab
+    // this is the reason it was originally from back to front...
+    // the 'pp' is the lasted property stepped over while filling the Swep tab
+//    if(p == pp)
+//      break;
+    if(p->display)
+      s = tr("yes");
+    else
+      s = tr("no");
+
+    // add Props into TableWidget
+    qDebug() << " Loading Comp->Props :" << p->Name << p->Value << p->display << p->Description ;
+
+    prop->setRowCount(prop->rowCount()+1);
+
+    QTableWidgetItem *cell;
+    cell = new QTableWidgetItem(p->Name);
+    cell->setFlags(cell->flags() ^ Qt::ItemIsEditable);
+    prop->setItem(row, 0, cell);
+    cell = new QTableWidgetItem(p->Value);
+    cell->setFlags(cell->flags() ^ Qt::ItemIsEditable);
+    prop->setItem(row, 1, cell);
+    cell = new QTableWidgetItem(s);
+    cell->setFlags(cell->flags() ^ Qt::ItemIsEditable);
+    prop->setItem(row, 2, cell);
+    cell = new QTableWidgetItem(p->Description);
+    cell->setFlags(cell->flags() ^ Qt::ItemIsEditable);
+    prop->setItem(row, 3, cell);
+
+    row++;
   }
 
-  if(prop->childCount() > 0) {
-    prop->setCurrentItem(prop->firstChild());
-    slotSelectProperty(prop->firstChild());
+  if(prop->rowCount() > 0) {
+      prop->setCurrentItem(prop->item(0,0));
+      slotSelectProperty(prop->item(0,0));
   }
 
-  connect(prop, SIGNAL(clicked(Q3ListViewItem*)),
-	  SLOT(slotSelectProperty(Q3ListViewItem*)));
+  /// \todo add key up/down brose and select prop
+  connect(prop, SIGNAL(itemClicked(QTableWidgetItem*)),
+                SLOT(slotSelectProperty(QTableWidgetItem*)));
 }
 
 ComponentDialog::~ComponentDialog()
@@ -365,17 +461,28 @@ ComponentDialog::~ComponentDialog()
 }
 
 // -------------------------------------------------------------------------
-// Is called if a property is selected. It transfers the values to the right
-// side for editing.
-void ComponentDialog::slotSelectProperty(Q3ListViewItem *item)
+// Is called if a property is selected.
+// Handle the Property editor tab.
+// It transfers the values to the right side for editing.
+void ComponentDialog::slotSelectProperty(QTableWidgetItem *item)
 {
+
   if(item == 0) return;
   item->setSelected(true);  // if called from elsewhere, this was not yet done
 
-  if(item->text(2) == tr("yes")) disp->setChecked(true);
-  else disp->setChecked(false);
+  qDebug() << "row " << item->row(); //<< item->text()
 
-  if(item->text(0) == "File") {
+  QString name  = prop->item(item->row(),0)->text();
+  QString value = prop->item(item->row(),1)->text();
+  QString show  = prop->item(item->row(),2)->text();
+  QString desc  = prop->item(item->row(),3)->text();
+
+  if(show == tr("yes"))
+    disp->setChecked(true);
+  else
+    disp->setChecked(false);
+
+  if(name == "File") {
     EditButt->setEnabled(true);
     BrowseButt->setEnabled(true);
   }
@@ -384,15 +491,16 @@ void ComponentDialog::slotSelectProperty(Q3ListViewItem *item)
     BrowseButt->setEnabled(false);
   }
 
-  QString PropDesc = item->text(3);
-  if(PropDesc.isEmpty()) {
+  /// \todo enable edit of description anyway...
+  /// empy or "-" (no comment from verilog-a)
+  if(desc.isEmpty()) {
     // show two line edit fields (name and value)
     ButtAdd->setEnabled(true);
     ButtRem->setEnabled(true);
 
     Name->setText("");
-    NameEdit->setText(item->text(0));
-    edit->setText(item->text(1));
+    NameEdit->setText(name);
+    edit->setText(value);
 
     edit->setShown(true);
     NameEdit->setShown(true);
@@ -405,38 +513,38 @@ void ComponentDialog::slotSelectProperty(Q3ListViewItem *item)
     ButtAdd->setEnabled(false);
     ButtRem->setEnabled(false);
 
-    Name->setText(item->text(0));
-    edit->setText(item->text(1));
+    Name->setText(name);
+    edit->setText(value);
 
     NameEdit->setShown(false);
-    NameEdit->setText(item->text(0));  // perhaps used for adding properties
+    NameEdit->setText(name); // perhaps used for adding properties
     Description->setShown(true);
 
     // handle special combobox items
     QStringList List;
-    int b = PropDesc.find('[');
-    int e = PropDesc.findRev(']');
+    int b = desc.find('[');
+    int e = desc.findRev(']');
     if (e-b > 2) {
-      QString str = PropDesc.mid(b+1, e-b-1);
+      QString str = desc.mid(b+1, e-b-1);
       str.replace( QRegExp("[^a-zA-Z0-9_,]"), "" );
       List = List.split(',',str);
     }
 
     QFontMetrics  metrics(QucsSettings.font);   // get size of text
-    while(metrics.width(PropDesc) > 270) {  // if description too long, cut it
-      if (PropDesc.findRev(' ') != -1)
-	PropDesc = PropDesc.left(PropDesc.findRev(' ', -1)) + "....";
+    while(metrics.width(desc) > 270) {  // if description too long, cut it
+      if (desc.findRev(' ') != -1)
+        desc = desc.left(desc.findRev(' ', -1)) + "....";
       else
-	PropDesc = PropDesc.left(PropDesc.length()-5) + "....";
+        desc = desc.left(desc.length()-5) + "....";
     }
-    Description->setText(PropDesc);
+    Description->setText(desc);
 
     if(List.count() >= 1) {    // ComboBox with value list or line edit ?
       ComboEdit->clear();
       ComboEdit->insertStringList(List);
 
       for(int i=ComboEdit->count()-1; i>=0; i--)
-       if(item->text(1) == ComboEdit->text(i)) {
+       if(value == ComboEdit->text(i)) {
          ComboEdit->setCurrentItem(i);
 	 break;
        }
@@ -448,68 +556,95 @@ void ComponentDialog::slotSelectProperty(Q3ListViewItem *item)
       ComboEdit->setShown(false);
     }
     edit->setFocus();   // edit QLineEdit
-//    edit->deselect();  // doesn't work ?!?
   }
 }
 
 // -------------------------------------------------------------------------
 void ComponentDialog::slotApplyChange(const QString& Text)
 {
+  /// \bug what if the table have no items?
+  // pick selected row
+  QTableWidgetItem *item = prop->selectedItems()[0];
+
+  int row = item->row();
+
+  qDebug() << Text;
   edit->setText(Text);
-  prop->currentItem()->setText(1, Text);	// apply edit line
+  // apply edit line
+  prop->item(row, 1)->setText(Text);
 
   ComboEdit->setFocus();
-  Q3ListViewItem *item = prop->currentItem()->itemBelow();
-  if(item == 0) return;
 
-  prop->setSelected(item, true);
-  slotSelectProperty(item);   // switch to the next property
+  // step to next item
+  if ( row < prop->rowCount()) {
+    prop->setCurrentItem(prop->item(row+1,0));
+    slotSelectProperty(prop->item(row+1,0));
+  }
 }
 
-// -------------------------------------------------------------------------
-// Is called if the "RETURN"-button is pressed in the "edit" Widget.
+/*!
+ Is called if the "RETURN" key is pressed in the "edit" Widget.
+ The parameter is edited on the right pane.
+ Return key commits the change, and steps to the next parameter in the list.
+*/
 void ComponentDialog::slotApplyProperty()
 {
-  Q3ListViewItem *item = prop->currentItem();
-  if(!item) return;
+  // pick selected row
+  QTableWidgetItem *item = prop->selectedItems()[0];
+
+  int row = item->row();
+
+  QString name  = prop->item(row, 0)->text();
+  QString value = prop->item(row, 1)->text();
+
+  if(!item)
+    return;
 
   if(ComboEdit->isShown())   // take text from ComboBox ?
     edit->setText(ComboEdit->currentText());
 
-  if(item->text(1) != edit->text())
-    item->setText(1, edit->text());    // apply edit line
+  // apply edit line
+  if(value != edit->text()) {
+       prop->item(row, 1)->setText(edit->text());
+    }
 
   if(NameEdit->isShown())	// also apply property name ?
-    if(item->text(0) != NameEdit->text()) {
+    if(name != NameEdit->text()) {
 //      if(NameEdit->text() == "Export")
 //        item->setText(0, "Export_");   // name must not be "Export" !!!
 //      else
-      item->setText(0, NameEdit->text());  // apply property name
+//      item->setText(0, NameEdit->text());  // apply property name
+      prop->item(row, 0)->setText(edit->text());
     }
 
-  item = item->itemBelow();
-  if(!item) {
+  // step to next item
+  if ( row < prop->rowCount()) {
+    prop->setCurrentItem(prop->item(row+1,0));
+    slotSelectProperty(prop->item(row+1,0));
+  }
+  else {
     slotButtOK();   // close dialog, if it was the last property
     return;
   }
-
-  prop->setSelected(item, true);
-  prop->ensureItemVisible(item);
-  slotSelectProperty(item);   // switch to the next property
 }
 
 // -------------------------------------------------------------------------
 // Is called if the "RETURN"-button is pressed in the "NameEdit" Widget.
 void ComponentDialog::slotApplyPropName()
 {
-  Q3ListViewItem *item = prop->currentItem();
-  if(item->text(0) != NameEdit->text()) {
+  // pick selected row
+  QTableWidgetItem *item = prop->selectedItems()[0];
+  int row = item->row();
+
+  QString name  = prop->item(row, 0)->text();
+
+  if(name != NameEdit->text()) {
 //    if(NameEdit->text() == "Export") {
 //	item->setText(0, "Export_");   // name must not be "Export" !!!
 //	NameEdit->setText("Export_");
 //    }
 //      else
-    item->setText(0, NameEdit->text());  // apply property name
+    prop->item(row, 0)->setText(NameEdit->text());
   }
   edit->setFocus();   // cursor into "edit" widget
 }
@@ -518,15 +653,22 @@ void ComponentDialog::slotApplyPropName()
 // Is called if the checkbox is pressed (changed).
 void ComponentDialog::slotApplyState(int State)
 {
-  Q3ListViewItem *item = prop->currentItem();
+  // pick selected row
+  QTableWidgetItem *item = prop->selectedItems()[0];
+  int row = item->row();
+
+  QString disp  = prop->item(row, 2)->text();
+
   if(item == 0) return;
 
   QString ButtonState;
-  if(State) ButtonState = tr("yes");
-  else ButtonState = tr("no");
+  if(State)
+    ButtonState = tr("yes");
+  else
+    ButtonState = tr("no");
 
-  if(item->text(2) != ButtonState) {
-    item->setText(2, ButtonState);
+  if(disp != ButtonState) {
+    prop->item(row, 2)->setText(ButtonState);
   }
 }
 
@@ -557,6 +699,7 @@ void ComponentDialog::reject()
 // Is called, if the "Apply"-button is pressed.
 void ComponentDialog::slotApplyInput()
 {
+  qDebug() << " \n == Apply ";
   if(Comp->showName != showName->isChecked()) {
     Comp->showName = showName->isChecked();
     changed = true;
@@ -577,17 +720,23 @@ void ComponentDialog::slotApplyInput()
     }
   }
 
+  /*! Walk the original Comp->Props and compare with the
+   *  data in the dialog.
+   *  The pointers to the combo, edits,... are set to 0.
+   *  Only check if the widgets were created (pointers checks are 'true')
+   */
   bool display;
   Property *pp = Comp->Props.first();
   // apply all the new property values
-  if(editSim) {
+
+  if(comboSim) {
     display = checkSim->isChecked();
     if(pp->display != display) {
       pp->display = display;
       changed = true;
     }
-    if(pp->Value != editSim->currentText()) {
-      pp->Value = editSim->currentText();
+    if(pp->Value != comboSim->currentText()) {
+      pp->Value = comboSim->currentText();
       changed = true;
     }
     pp = Comp->Props.next();
@@ -658,6 +807,9 @@ void ComponentDialog::slotApplyInput()
         pp->Name  = "Points";
         changed = true;
       }
+      qDebug() << "====> before ad"
+               << pp->Description;
+
       pp = Comp->Props.next();
     }
     else {
@@ -681,55 +833,91 @@ void ComponentDialog::slotApplyInput()
         pp->Name  = "Values";
         changed = true;
       }
+      qDebug() << "====> before ad"
+               << pp;
+
       pp = Comp->Props.next();
     }
   }
 
 
-  Q3ListViewItem *item = prop->firstChild();
- if(item != 0) {
+  // pick selected row
+  QTableWidgetItem *item = 0;
 
-  item = prop->currentItem();
-  if(item->text(1) != edit->text())
-    item->setText(1, edit->text());    // apply edit line
-  if(NameEdit->isShown())	// also apply property name ?
-    if(item->text(0) != NameEdit->text())
-      item->setText(0, NameEdit->text());  // apply property name
+  //  make sure we have one item, take selected
+  if (prop->selectedItems().size()) {
+    item = prop->selectedItems()[0];
+  }
 
+  /*! Walk the dialog list of 'prop'
+   */
+   if(item != 0) {
+     int row = item->row();
+     QString name  = prop->item(row, 0)->text();
+     QString value = prop->item(row, 1)->text();
 
-  // apply all the new property values in the ListView
-  for(item = prop->firstChild(); item != 0; item = item->itemBelow()) {
-    display = (item->text(2) == tr("yes"));
-    if(pp) {
-      if(pp->display != display) {
-        pp->display = display;
-        changed = true;
-      }
-      if(pp->Value != item->text(1)) {
-        pp->Value = item->text(1);
-        changed = true;
-      }
-      if(pp->Name != item->text(0)) {
-        pp->Name = item->text(0);   // override if previous one was removed
-        changed = true;
-      }
-      pp->Description = item->text(3);
-    }
-    else {  // if less properties than in ListView -> create new
-      Comp->Props.append(new
-	  Property(item->text(0), item->text(1), display, item->text(3)));
-      changed = true;
+     // apply edit line
+     if(value != edit->text())
+       prop->item(row, 1)->setText(edit->text());
+
+     // apply property name
+     if(NameEdit->isShown())
+       if(name != NameEdit->text())
+         prop->item(row, 0)->setText(NameEdit->text());
+
+     // apply all the new property values in the ListView
+     for( int row = 0; row < prop->rowCount(); row++ ) {
+
+       QString name  = prop->item(row, 0)->text();
+       QString value = prop->item(row, 1)->text();
+       QString disp = prop->item(row, 2)->text();
+       QString desc = prop->item(row, 3)->text();
+
+       qDebug() << "====>" <<name << value
+                << Comp->Props.count()
+                << prop->rowCount() +1
+                << pp;
+
+       display = (disp == tr("yes"));
+       if( pp ) {
+
+         if(pp->display != display) {
+             pp->display = display;
+             changed = true;
+         }
+         if(pp->Value != value) {
+            pp->Value = value;
+            changed = true;
+         }
+         if(pp->Name != name) {
+           pp->Name = name;   // override if previous one was removed
+           changed = true;
+         }
+         pp->Description = desc;
+         }
+       else {
+          // if properties where added in the dialog
+          // -> create new on the Comp
+         if (Comp->Props.count() < prop->rowCount() +1) {
+             qDebug() << "adding to Comp ";
+             Comp->Props.append(new Property(name, value, display, desc));
+             changed = true;
+         }
     }
     pp = Comp->Props.next();
   }
-  if(pp) {  // if more properties than in ListView -> delete the rest
+
+  // original Comp still has properties? (removed some in the dialog?)
+  // if more properties than in ListView -> delete the rest
+  if(pp) {
     pp = Comp->Props.prev();
     Comp->Props.last();
     while(pp != Comp->Props.current())
       Comp->Props.remove();
     changed = true;
   }
- }
+
+ } // end if (item !=0)
 
   if(changed) {
     int dx, dy;
@@ -746,6 +934,7 @@ void ComponentDialog::slotApplyInput()
     Doc->recreateComponent(Comp);
     Doc->viewport()->repaint();
   }
+
 }
 
 // -------------------------------------------------------------------------
@@ -769,7 +958,8 @@ void ComponentDialog::slotBrowseFile()
        QucsSettings.QucsWorkDir.absPath() == file.dirPath(true)) s = file.fileName();
     edit->setText(s);
   }
-  prop->currentItem()->setText(1, s);
+  /* FIX
+  prop->currentItem()->setText(1, s); */
 }
 
 // -------------------------------------------------------------------------
@@ -778,45 +968,111 @@ void ComponentDialog::slotEditFile()
   Doc->App->editFile(QucsSettings.QucsWorkDir.filePath(edit->text()));
 }
 
-// -------------------------------------------------------------------------
-// Is called if the add button is pressed. This is only possible for some
-// properties.
+/*!
+  Add description if missing.
+  Is called if the add button is pressed. This is only possible for some
+ properties.
+ If desc is empy, ButtAdd is enabled, this slot handles if it is clicked.
+ Used with: Equation, ?
+
+ Original behavior for an Equation block
+  - start with props
+    y=1 (Name, Value)
+    Export=yes
+  - add equation, results
+    y=1
+    y2=1
+    Export=yes
+
+  If Name already exists, set it to focus
+  If new name, insert item before Export
+
+*/
 void ComponentDialog::slotButtAdd()
 {
-  Q3ListViewItem *item;
   // Search if property with this name already exist.
-  for(item = prop->firstChild(); item != 0; item = item->itemBelow())
-    if(item->text(0) == NameEdit->text()) {
-      prop->setSelected(item, true);
-      slotSelectProperty(item);
+  // loop over all items, select if found by name
+  for(int row=0; row < prop->rowCount(); row++) {
+
+    QString name  = prop->item(row, 0)->text();
+    //if found, jump to it
+    if( name == NameEdit->text()) {
+      prop->setCurrentItem(prop->item(row,0));
+      slotSelectProperty(prop->item(row,0));
       return;
     }
+  }
 
-  item = prop->selectedItem();
-  if(item == 0) item = prop->lastItem();
+
+
+  //if nothing selected, select last
+//  prop->setCurrentItem(prop->item(prop->rowCount(),0));
+//  slotSelectProperty(prop->item(prop->rowCount(),0));
 
   QString s = tr("no");
-  if(disp->isChecked()) s = tr("yes");
+  if(disp->isChecked())
+    s = tr("yes");
 
-  prop->setSelected(new Q3ListViewItem(prop, item,
-			NameEdit->text(), edit->text(), s), true);
+
+  // take last row
+  QList<QTableWidgetItem*> rowItems;
+  for (int col = 0; col < prop->columnCount(); ++col)  {
+    rowItems << prop->takeItem(prop->rowCount()-1, col);
+  }
+
+  // set last row with current info in
+  int row = prop->rowCount()-1;
+
+  // append new row
+  QTableWidgetItem *cell;
+  cell = new QTableWidgetItem(NameEdit->text());
+  cell->setFlags(cell->flags() ^ Qt::ItemIsEditable);
+  prop->setItem(row, 0, cell);
+  cell = new QTableWidgetItem(edit->text());
+  cell->setFlags(cell->flags() ^ Qt::ItemIsEditable);
+  prop->setItem(row, 1, cell);
+  cell = new QTableWidgetItem(s);
+  cell->setFlags(cell->flags() ^ Qt::ItemIsEditable);
+  prop->setItem(row, 2, cell);
+  // no description? add empty cell
+  cell = new QTableWidgetItem("");
+  cell->setFlags(cell->flags() ^ Qt::ItemIsEditable);
+  prop->setItem(row, 3, cell);
+
+  // increase list
+  prop->setRowCount(prop->rowCount()+1);
+
+  // add taken item again as last
+  row = prop->rowCount()-1;
+  for (int col = 0; col < prop->columnCount(); ++col)
+  {
+    prop->setItem(row, col, rowItems.at(col));
+  }
 }
 
-// -------------------------------------------------------------------------
-// Is called if the remove button is pressed. This is only possible for
-// some properties.
+/*!
+ Is called if the remove button is pressed. This is only possible for
+ some properties.
+ If desc is empy, ButtRem is enabled, this slot handles if it is clicked.
+ Used with: Equations, ?
+*/
 void ComponentDialog::slotButtRem()
 {
-  if(prop->childCount() < 3) return;  // the last property cannot be removed
-  Q3ListViewItem *item = prop->selectedItem();
-  if(item == 0) return;
+  if(prop->rowCount() < 3)
+    return;  // the last property cannot be removed
 
-  Q3ListViewItem *next_item = item->itemBelow();
-  if(next_item == 0) next_item = item->itemAbove();
-  prop->takeItem(item);     // remove from ListView
-  delete item;              // delete item
+  QTableWidgetItem *item = prop->selectedItems()[0];
+  int row = item->row();
 
-  slotSelectProperty(next_item);
+  if(item == 0)
+    return;
+
+  // peek next, delete current, set next current
+  if ( row < prop->rowCount()) {
+    prop->setCurrentItem(prop->item(row+1,0));
+    slotSelectProperty(prop->item(row+1,0));
+    prop->removeRow(row);
+   }
 }
 
 // -------------------------------------------------------------------------
@@ -1001,4 +1257,35 @@ void ComponentDialog::slotStepEntered()
 void ComponentDialog::slotNumberEntered()
 {
   slotButtOK();
+}
+
+
+/*!
+  As the search filter changes, look for partial matches of parameter names
+
+  \todo add button to clear the search field
+*/
+void ComponentDialog::slotSearchChanged(const QString & Filter)
+{
+
+  for( int i = 0; i < prop->rowCount(); ++i )
+  {
+     bool match = false;
+     QString name  = prop->item(i, 0)->text();
+     if( name.contains(Filter, Qt::CaseInsensitive) )
+       {
+         match = true;
+         qDebug() << "match" <<name;
+       }
+     prop->setRowHidden( i, !match );
+    }
+}
+
+/*!
+ * \brief ComponentDialog::slotClearSearch
+ * Clear search field on button press.
+ */
+void ComponentDialog::slotClearSearch()
+{
+  searchParam->clear();
 }
