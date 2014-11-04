@@ -22,8 +22,12 @@
 #include "schematic.h"
 #include "qucs.h"
 
-#include <math.h>
+#include <QPainter>
+#include <QPushButton>
+#include <QLineEdit>
+#include <QTextEdit>
 
+#include <math.h>
 
 GraphicText::GraphicText()
 {

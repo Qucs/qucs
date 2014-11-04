@@ -14,12 +14,11 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-#include <QtGui>
 #include "graph.h"
 
-#include <math.h>
 #include <stdlib.h>
 
+#include <QPainter>
 
 Graph::Graph(const QString& _Line)
 {

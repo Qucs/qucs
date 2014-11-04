@@ -14,7 +14,6 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-#include <QtGui>
 #include "componentdialog.h"
 #include "main.h"
 #include "qucs.h"
@@ -33,7 +32,6 @@
 #include <QTabWidget>
 #include <QFileDialog>
 
-#include <math.h>
 
 
 ComponentDialog::ComponentDialog(Component *c, Schematic *d)

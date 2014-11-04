@@ -19,8 +19,12 @@
 #include "main.h"
 #include "schematic.h"
 
-#include <math.h>
+#include <QPainter>
+#include <QPushButton>
+#include <QLineEdit>
+#include <QComboBox>
 
+#include <math.h>
 
 EllipseArc::EllipseArc()
 {

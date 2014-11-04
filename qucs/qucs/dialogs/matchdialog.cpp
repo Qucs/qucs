@@ -19,7 +19,6 @@
 # include <config.h>
 #endif
 
-#include <QtGui>
 #include "matchdialog.h"
 #include "main.h"
 #include "qucs.h"
@@ -40,6 +39,8 @@
 #include <QApplication>
 #include <QClipboard>
 #include <QGroupBox>
+
+#include <math.h>
 
 
 MatchDialog::MatchDialog(QWidget *parent)

@@ -14,12 +14,8 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-#include <QtGui>
 #include <stdlib.h>
-
-#include <QPen>
-#include <QString>
-#include <QMessageBox>
+#include <math.h>
 
 #include "components.h"
 #include "node.h"
@@ -28,6 +24,12 @@
 #include "schematic.h"
 #include "viewpainter.h"
 #include "module.h"
+
+#include <QPen>
+#include <QString>
+#include <QMessageBox>
+#include <QPainter>
+
 
 // ***********************************************************************
 // **********                                                   **********

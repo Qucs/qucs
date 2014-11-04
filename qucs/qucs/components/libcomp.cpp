@@ -15,20 +15,17 @@
  *                                                                         *
  ***************************************************************************/
 
-#include <QtGui>
 #include "libcomp.h"
 #include "qucs.h"
 #include "main.h"
 #include "schematic.h"
 
+#include <limits.h>
+
 #include <QTextStream>
 #include <QDir>
 #include <QRegExp>
-
-#include <math.h>
-#include <limits.h>
-
-
+#include <QDebug>
 
 LibComp::LibComp()
 {

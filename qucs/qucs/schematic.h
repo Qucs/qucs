@@ -17,7 +17,6 @@
 
 #ifndef SCHEMATIC_H
 #define SCHEMATIC_H
-#include <QtGui>
 
 #include "wire.h"
 #include "node.h"
@@ -30,6 +29,7 @@
 #include <Q3ScrollView>
 #include <Q3PtrList>
 #include <QStringList>
+#include <QFileInfo>
 
 class QTextStream;
 class QTextEdit;

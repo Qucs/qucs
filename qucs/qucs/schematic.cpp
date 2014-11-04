@@ -18,7 +18,6 @@
 #ifdef HAVE_CONFIG_H
 # include <config.h>
 #endif
-#include <QtGui>
 #include <stdlib.h>
 #include <limits.h>
 
@@ -37,6 +36,11 @@
 #include <QMouseEvent>
 #include <QEvent>
 #include <QWheelEvent>
+#include <QPainter>
+#include <QAction>
+#include <QLineEdit>
+#include <QUrl>
+#include <QListWidget>
 
 #include "qucs.h"
 #include "schematic.h"
