@@ -17,29 +17,25 @@
 
 #ifndef COMPONENTDIALOG_H
 #define COMPONENTDIALOG_H
-#include <QtGui>
+
 #include "component.h"
-#include <QLabel>
+
 #include <QDialog>
-#include <Q3ListView>
-#include <QLineEdit>
-#include <QCheckBox>
-#include <QRegExp>
-#include <QComboBox>
-#include <QPushButton>
-#include <Q3PtrList>
-#include <QDir>
-//Added by qt3to4:
-#include <Q3GridLayout>
-#include <Q3VBoxLayout>
 
 class Schematic;
-class Q3GridLayout;
+
 class QValidator;
-class Q3VBoxLayout;
 class QIntValidator;
 class QRegExpValidator;
-
+class QTableWidget;
+class QTableWidgetItem;
+class QLabel;
+class QLineEdit;
+class QCheckBox;
+class QRegExp;
+class QComboBox;
+class QPushButton;
+class QVBoxLayout;
 
 
 class ComponentDialog : public QDialog {
@@ -51,7 +47,7 @@ public:
 private slots:
   void slotButtOK();
   void slotButtCancel();
-  void slotSelectProperty(Q3ListViewItem *item);
+  void slotSelectProperty(QTableWidgetItem *item);
   void slotApplyInput();
   void slotApplyState(int State);
   void slotBrowseFile();
@@ -79,11 +75,11 @@ protected slots:
     void reject();
 
 private:
-  Q3VBoxLayout *all;   // the mother of all widgets
+  QVBoxLayout *all;   // the mother of all widgets
   QValidator  *Validator, *ValRestrict, *Validator2;
   QRegExp     Expr;
   QIntValidator *ValInteger;
-  Q3ListView   *prop;
+  QTableWidget  *prop;
   QLineEdit   *edit, *NameEdit, *CompNameEdit;
   QComboBox   *ComboEdit;
   QLabel      *Name, *Description;
@@ -101,7 +97,7 @@ private:
             *editStep, *editNumber;
   QCheckBox *checkSim, *checkParam, *checkValues, *checkStart, *checkStop,
             *checkNumber, *checkType, *showName;
-  QComboBox *editSim, *comboType;
+  QComboBox *comboSim, *comboType;
 };
 
 #endif
