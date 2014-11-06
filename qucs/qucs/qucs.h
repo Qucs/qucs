@@ -22,6 +22,7 @@
 #include <QString>
 #include <Q3PtrList>
 #include <QHash>
+#include <QTranslator>
 
 class QucsDoc;
 class Schematic;
@@ -191,8 +192,9 @@ private:
   QTreeWidgetItem *ConSchematics, *ConSources, *ConDisplays, *ConDatasets,
                   *ConOthers, *ConVerilog, *ConVerilogA, *ConOctave;
 
-
   QComboBox       *CompChoose;
+
+  QTranslator     appTranslator;
 
 // ********** Properties ************************************************
   Q3PtrList<QString> HierarchyHistory; // keeps track of "go into subcircuit"
@@ -223,6 +225,7 @@ private:
 
 public:
 
+  void updateLanguage();
   void readProjects();
   void readProjectFiles();
   void updatePathList(void); // update the list of paths, pruning non-existing paths

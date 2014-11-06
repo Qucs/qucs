@@ -90,6 +90,9 @@ QucsApp::QucsApp()
 {
   setCaption("Qucs " PACKAGE_VERSION);
 
+  // set up translation
+  updateLanguage();
+
   spiceExtensions << "*.sp" << "*.cir" << "*.spc" << "*.spi";
 
   QucsFileFilter =
@@ -3017,6 +3020,18 @@ void QucsApp::updateSpiceNameHash(void)
     foreach (QFileInfo spicefile, spicefilesList) {
         spiceNameHash[spicefile.completeBaseName()] = spicefile.absoluteFilePath();
     }
+}
+
+// -----------------------------------------------------------
+// update language
+void
+QucsApp::updateLanguage()
+{
+  QString lang = QucsSettings.Language;
+  if(lang.isEmpty())
+    lang = QTextCodec::locale();
+  appTranslator.load( QString("qucs_") + lang, QucsSettings.LangDir);
+  qApp->installTranslator( &appTranslator );
 }
 
 // -----------------------------------------------------------

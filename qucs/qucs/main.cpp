@@ -985,13 +985,6 @@ int main(int argc, char *argv[])
   QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
   QTextCodec::setCodecForTr(QTextCodec::codecForName("UTF-8"));
 
-  QTranslator tor( 0 );
-  QString lang = QucsSettings.Language;
-  if(lang.isEmpty())
-    lang = QTextCodec::locale();
-  tor.load( QString("qucs_") + lang, QucsSettings.LangDir);
-  a.installTranslator( &tor );
-
   // This seems to be neccessary on a few system to make strtod()
   // work properly !???!
   setlocale (LC_NUMERIC, "C");
@@ -1091,6 +1084,5 @@ int main(int argc, char *argv[])
   qInstallMsgHandler(qucsMessageOutput);
   QucsMain->show();
   int result = a.exec();
-  //saveApplSettings(QucsMain);
   return result;
 }
