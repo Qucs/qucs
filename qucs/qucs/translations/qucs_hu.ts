@@ -4,7 +4,7 @@
 <context>
     <name>ArrowDialog</name>
     <message>
-        <location filename="paintings/arrowdialog.cpp" line="+34"/>
+        <location filename="../paintings/arrowdialog.cpp" line="+33"/>
         <source>Edit Arrow Properties</source>
         <translation>Nyíl tulajdonságainak beállítása</translation>
     </message>
@@ -87,7 +87,7 @@
 <context>
     <name>ChangeDialog</name>
     <message>
-        <location filename="dialogs/changedialog.cpp" line="+42"/>
+        <location filename="../dialogs/changedialog.cpp" line="+41"/>
         <source>Change Component Properties</source>
         <translation>Komponens tulajdonságainak változtatása</translation>
     </message>
@@ -210,32 +210,32 @@
 <context>
     <name>ComponentDialog</name>
     <message>
-        <location filename="components/componentdialog.cpp" line="+43"/>
+        <location filename="../components/componentdialog.cpp" line="+42"/>
         <source>Edit Component Properties</source>
         <translation>Komponens tulajdonságainak beállítása</translation>
     </message>
     <message>
-        <location line="+280"/>
+        <location line="+325"/>
         <source>OK</source>
         <translation>Ok</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+1"/>
         <source>Apply</source>
         <translation>Alkalmaz</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+1"/>
         <source>Cancel</source>
         <translation>Mégsem</translation>
     </message>
     <message>
-        <location line="-76"/>
+        <location line="-117"/>
         <source>Name:</source>
         <translation>Név:</translation>
     </message>
     <message>
-        <location line="+13"/>
+        <location line="+38"/>
         <source>Name</source>
         <translation>Név</translation>
     </message>
@@ -255,56 +255,56 @@
         <translation>Leírás</translation>
     </message>
     <message>
-        <location line="+29"/>
+        <location line="+41"/>
         <source>Edit</source>
         <translation>Szerkesztés</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+6"/>
         <source>Browse</source>
         <translation>Kiválasztás</translation>
     </message>
     <message>
-        <location line="-218"/>
-        <location line="+8"/>
-        <location line="+29"/>
+        <location line="-258"/>
+        <location line="+9"/>
+        <location line="+30"/>
         <location line="+9"/>
         <location line="+9"/>
         <location line="+9"/>
         <location line="+16"/>
-        <location line="+94"/>
-        <location line="+49"/>
+        <location line="+96"/>
+        <location line="+86"/>
         <source>display in schematic</source>
         <translation>Kijelezve a kapcsolási rajzon</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+6"/>
         <source>Add</source>
         <translation>Hozzáadás</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+3"/>
         <source>Remove</source>
         <translation>Eltávolítás</translation>
     </message>
     <message>
-        <location line="+30"/>
-        <location line="+31"/>
-        <location line="+150"/>
-        <location line="+177"/>
-        <location line="+97"/>
+        <location line="+44"/>
+        <location line="+62"/>
+        <location line="+186"/>
+        <location line="+215"/>
+        <location line="+133"/>
         <source>yes</source>
         <translation>igen</translation>
     </message>
     <message>
-        <location line="-454"/>
-        <location line="+181"/>
-        <location line="+272"/>
+        <location line="-594"/>
+        <location line="+248"/>
+        <location line="+344"/>
         <source>no</source>
         <translation>nem</translation>
     </message>
     <message>
-        <location line="-40"/>
+        <location line="-65"/>
         <source>All Files</source>
         <translation>Minden fájl</translation>
     </message>
@@ -322,12 +322,12 @@
         <translation type="obsolete">A szövegszerkesztő (qucsedit) nem indítható!</translation>
     </message>
     <message>
-        <location line="-683"/>
+        <location line="-853"/>
         <source>Sweep</source>
         <translation>Léptetés</translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+12"/>
         <source>Simulation:</source>
         <translation>Szimuláció:</translation>
     </message>
@@ -340,7 +340,7 @@
         <translation type="obsolete">idő</translation>
     </message>
     <message>
-        <location line="+22"/>
+        <location line="+23"/>
         <source>Sweep Parameter:</source>
         <translation>Léptetés paraméter: </translation>
     </message>
@@ -386,29 +386,29 @@
     </message>
     <message>
         <location line="+9"/>
-        <location line="+706"/>
+        <location line="+941"/>
         <location line="+22"/>
         <source>Step:</source>
         <translation>Léptetés:</translation>
     </message>
     <message>
-        <location line="-721"/>
+        <location line="-956"/>
         <source>Number:</source>
         <translation>Lépésszám:</translation>
     </message>
     <message>
         <location line="+79"/>
-        <location line="+24"/>
+        <location line="+31"/>
         <source>Properties</source>
         <translation>Tulajdonságok</translation>
     </message>
     <message>
-        <location line="+594"/>
+        <location line="+822"/>
         <source>Points per decade:</source>
         <translation>Pont per dekád:</translation>
     </message>
     <message>
-        <location line="-94"/>
+        <location line="-161"/>
         <source>Touchstone files</source>
         <translation>Próbakő fájl</translation>
     </message>
@@ -436,7 +436,7 @@
 <context>
     <name>DiagramDialog</name>
     <message>
-        <location filename="diagrams/diagramdialog.cpp" line="+110"/>
+        <location filename="../diagrams/diagramdialog.cpp" line="+114"/>
         <source>Edit Diagram Properties</source>
         <translation>Diagram tulajdonságainak beállítása</translation>
     </message>
@@ -487,24 +487,24 @@
     </message>
     <message>
         <location line="+5"/>
-        <location line="+150"/>
+        <location line="+159"/>
         <source>solid line</source>
         <translation>folytonos vonal</translation>
     </message>
     <message>
-        <location line="-149"/>
-        <location line="+150"/>
+        <location line="-158"/>
+        <location line="+159"/>
         <source>dash line</source>
         <translation>szaggatott vonal</translation>
     </message>
     <message>
-        <location line="-149"/>
-        <location line="+150"/>
+        <location line="-158"/>
+        <location line="+159"/>
         <source>dot line</source>
         <translation>pontokból álló vonal</translation>
     </message>
     <message>
-        <location line="-148"/>
+        <location line="-157"/>
         <source>long dash line</source>
         <translation>hosszú szaggatott vonal</translation>
     </message>
@@ -514,7 +514,7 @@
         <translation>Adatok</translation>
     </message>
     <message>
-        <location line="+18"/>
+        <location line="+27"/>
         <source>Name</source>
         <translation>Név</translation>
     </message>
@@ -611,7 +611,7 @@
         <translation>Mégsem</translation>
     </message>
     <message>
-        <location line="-450"/>
+        <location line="-459"/>
         <source>stars</source>
         <translation>csillagok</translation>
     </message>
@@ -669,7 +669,7 @@
         <translation type="obsolete">logaritmikus rácsozat a jobboldali Y tengelyen</translation>
     </message>
     <message>
-        <location line="+359"/>
+        <location line="+368"/>
         <source>x-Axis</source>
         <translation>X-tengely</translation>
     </message>
@@ -744,7 +744,7 @@
         <translation>Forgatás az Z-tengely körül:</translation>
     </message>
     <message>
-        <location line="-318"/>
+        <location line="-327"/>
         <location line="+3"/>
         <location line="+11"/>
         <source>y-Axis</source>
@@ -756,7 +756,7 @@
         <translation>Z-tengely</translation>
     </message>
     <message>
-        <location line="+186"/>
+        <location line="+195"/>
         <location line="+8"/>
         <source>Label:</source>
         <translation>Cimke:</translation>
@@ -797,7 +797,7 @@
 <context>
     <name>DigiSettingsDialog</name>
     <message>
-        <location filename="dialogs/digisettingsdialog.cpp" line="+40"/>
+        <location filename="../dialogs/digisettingsdialog.cpp" line="+39"/>
         <location line="+94"/>
         <source>Document Settings</source>
         <translation>Dokumentum tulajdonságai</translation>
@@ -851,7 +851,7 @@
 <context>
     <name>DisplayDialog</name>
     <message>
-        <location filename="../qucs-lib/displaydialog.cpp" line="+89"/>
+        <location filename="../../qucs-lib/displaydialog.cpp" line="+89"/>
         <source>Close</source>
         <translation>Bezár</translation>
     </message>
@@ -874,7 +874,7 @@
 <context>
     <name>ExportDialog</name>
     <message>
-        <location filename="dialogs/exportdialog.cpp" line="+24"/>
+        <location filename="../dialogs/exportdialog.cpp" line="+35"/>
         <source>Export graphics</source>
         <translation type="unfinished"></translation>
     </message>
@@ -962,7 +962,7 @@
 <context>
     <name>FillDialog</name>
     <message>
-        <location filename="paintings/filldialog.cpp" line="+46"/>
+        <location filename="../paintings/filldialog.cpp" line="+46"/>
         <source>Line Width: </source>
         <translation>Vonal szélesség:</translation>
     </message>
@@ -1115,7 +1115,7 @@
 <context>
     <name>GraphicTextDialog</name>
     <message>
-        <location filename="paintings/graphictextdialog.cpp" line="+36"/>
+        <location filename="../paintings/graphictextdialog.cpp" line="+36"/>
         <source>Edit Text Properties</source>
         <translation>Szöveg tulajdonságainak beéllítása</translation>
     </message>
@@ -1184,7 +1184,7 @@
 <context>
     <name>HelpDialog</name>
     <message>
-        <location filename="../qucs-filter/helpdialog.cpp" line="+38"/>
+        <location filename="../../qucs-filter/helpdialog.cpp" line="+38"/>
         <source>QucsFilter is a filter synthesis program. To create a filter, simply enter all parameters and press the big button at the bottom of the main window. Immediatly, the schematic of the filter is calculated and put into the clipboard. Now go to Qucs, open an empty schematic and press CTRL-V (paste from clipboard). The filter schematic can now be inserted and  simulated. Have lots of fun!</source>
         <translation>A QucsFilter egy szűrő méretező program. A szűrőkészítéshez egyszerüen csak meg kell adnia a paramétereket, és meg kell nyomni az ablak alján lévő nagy gombot. Azonnal a vágólapra helyezi a kiszámolt szűrő kapcsolási rajzát. Ezután a Qucs-ba beilleszthető a rajz a Szerkesztés / Beillesztés menüben vagy a CTRL-V billenytükombinációval. így a szűrőrajz beillesztkető és szimulálható. Jó szórakozást!</translation>
     </message>
@@ -1194,7 +1194,7 @@
         <translation>Bezár</translation>
     </message>
     <message>
-        <location filename="../qucs-transcalc/helpdialog.cpp" line="+32"/>
+        <location filename="../../qucs-transcalc/helpdialog.cpp" line="+32"/>
         <source>Help</source>
         <translation>Súgó</translation>
     </message>
@@ -1231,17 +1231,17 @@ fizikai tulajdonságait számítja ki.</translation>
 <context>
     <name>ID_Dialog</name>
     <message>
-        <location filename="paintings/id_dialog.cpp" line="+39"/>
+        <location filename="../paintings/id_dialog.cpp" line="+38"/>
         <source>Edit Subcircuit Properties</source>
         <translation>Alkapcsolás tulajdonságainak beéllítása</translation>
     </message>
     <message>
-        <location line="+12"/>
+        <location line="+15"/>
         <source>Prefix:</source>
         <translation>Előtag:</translation>
     </message>
     <message>
-        <location line="+77"/>
+        <location line="+99"/>
         <source>OK</source>
         <translation>Ok</translation>
     </message>
@@ -1251,55 +1251,55 @@ fizikai tulajdonságait számítja ki.</translation>
         <translation>Mégsem</translation>
     </message>
     <message>
-        <location line="-73"/>
+        <location line="-98"/>
         <source>Parameters</source>
         <translation>Paraméterek</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+10"/>
         <source>display</source>
         <translation>Kijelezve</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+0"/>
         <source>Name</source>
         <translation>Név</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+0"/>
         <source>Default</source>
         <translation>Alapértelmezett</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+0"/>
         <source>Description</source>
         <translation>Leírás</translation>
     </message>
     <message>
-        <location line="+7"/>
-        <location line="+89"/>
-        <location line="+31"/>
-        <location line="+29"/>
-        <location line="+57"/>
+        <location line="+10"/>
+        <location line="+115"/>
+        <location line="+32"/>
+        <location line="+37"/>
+        <location line="+61"/>
         <location line="+1"/>
-        <location line="+18"/>
+        <location line="+17"/>
         <source>yes</source>
         <translation>igen</translation>
     </message>
     <message>
-        <location line="-225"/>
-        <location line="+120"/>
-        <location line="+29"/>
+        <location line="-263"/>
+        <location line="+147"/>
+        <location line="+37"/>
         <source>no</source>
         <translation>nem</translation>
     </message>
     <message>
-        <location line="-143"/>
+        <location line="-166"/>
         <source>display in schematic</source>
         <translation>Kijelezve a kapcsolási rajzon</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+9"/>
         <source>Name:</source>
         <translation>Név:</translation>
     </message>
@@ -1314,7 +1314,7 @@ fizikai tulajdonságait számítja ki.</translation>
         <translation>Leírás:</translation>
     </message>
     <message>
-        <location line="+35"/>
+        <location line="+36"/>
         <source>Add</source>
         <translation>Hozzáadás</translation>
     </message>
@@ -1324,7 +1324,7 @@ fizikai tulajdonságait számítja ki.</translation>
         <translation>Eltávolítás</translation>
     </message>
     <message>
-        <location line="+52"/>
+        <location line="+62"/>
         <location line="+8"/>
         <source>Error</source>
         <translation>Hiba</translation>
@@ -1340,12 +1340,12 @@ fizikai tulajdonságait számítja ki.</translation>
         <translation>A &quot;%1&quot; paraméter már szerepel a listában!</translation>
     </message>
     <message>
-        <location line="-118"/>
+        <location line="-148"/>
         <source>Type</source>
         <translation type="unfinished">Típus</translation>
     </message>
     <message>
-        <location line="+21"/>
+        <location line="+40"/>
         <source>Type:</source>
         <translation type="unfinished">Típus:</translation>
     </message>
@@ -1361,7 +1361,7 @@ fizikai tulajdonságait számítja ki.</translation>
         <translation type="obsolete">Fájl import:</translation>
     </message>
     <message>
-        <location filename="dialogs/importdialog.cpp" line="+47"/>
+        <location filename="../dialogs/importdialog.cpp" line="+46"/>
         <source>Browse</source>
         <translation>Kiválasztás</translation>
     </message>
@@ -1424,7 +1424,7 @@ fizikai tulajdonságait számítja ki.</translation>
         <translation>&amp;Nem</translation>
     </message>
     <message>
-        <location line="+37"/>
+        <location line="+43"/>
         <source>ERROR: Unknown file format! Please check file name extension!</source>
         <translation>HIBA: Ismeretlen fájl formátum! Ellenőrizze a fájlnevet és a kiterjesztést!</translation>
     </message>
@@ -1437,17 +1437,17 @@ fizikai tulajdonságait számítja ki.</translation>
         <translation type="obsolete">Fájl importálás sikeres!</translation>
     </message>
     <message>
-        <location line="-117"/>
+        <location line="-123"/>
         <source>Close</source>
         <translation>Bezár</translation>
     </message>
     <message>
-        <location line="+229"/>
+        <location line="+236"/>
         <source>Converter ended with errors!</source>
         <translation>A konvertálás hibával ért véget!</translation>
     </message>
     <message>
-        <location line="-207"/>
+        <location line="-214"/>
         <source>Touchstone files</source>
         <translation>Touchstone fájlok</translation>
     </message>
@@ -1477,12 +1477,12 @@ fizikai tulajdonságait számítja ki.</translation>
         <translation>Megszakít</translation>
     </message>
     <message>
-        <location line="+170"/>
+        <location line="+177"/>
         <source>ERROR: Cannot start converter!</source>
         <translation>HIBA: Konverter nem indítható!</translation>
     </message>
     <message>
-        <location line="-144"/>
+        <location line="-151"/>
         <source>CSV files</source>
         <translation>CSV fájlok</translation>
     </message>
@@ -1547,22 +1547,22 @@ fizikai tulajdonságait számítja ki.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+130"/>
+        <location line="+136"/>
         <source>Running command line:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-189"/>
+        <location line="-195"/>
         <source>Qucs netlist</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+252"/>
+        <location line="+259"/>
         <source>Successfully converted file!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-251"/>
+        <location line="-258"/>
         <source>Matlab</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1570,7 +1570,7 @@ fizikai tulajdonságait számítja ki.</translation>
 <context>
     <name>LabelDialog</name>
     <message>
-        <location filename="dialogs/labeldialog.cpp" line="+31"/>
+        <location filename="../dialogs/labeldialog.cpp" line="+30"/>
         <source>Insert Nodename</source>
         <translation>Csomópont Beadása</translation>
     </message>
@@ -1610,7 +1610,7 @@ fizikai tulajdonságait számítja ki.</translation>
 <context>
     <name>LibraryDialog</name>
     <message>
-        <location filename="dialogs/librarydialog.cpp" line="+51"/>
+        <location filename="../dialogs/librarydialog.cpp" line="+51"/>
         <source>Create Library</source>
         <translation>Alkatrész katalógus létrehozása</translation>
     </message>
@@ -1695,7 +1695,7 @@ fizikai tulajdonságait számítja ki.</translation>
         <location line="+17"/>
         <location line="+16"/>
         <location line="+6"/>
-        <location filename="../qucs-lib/librarydialog.cpp" line="+134"/>
+        <location filename="../../qucs-lib/librarydialog.cpp" line="+134"/>
         <location line="+14"/>
         <location line="+11"/>
         <location line="+6"/>
@@ -1733,19 +1733,19 @@ fizikai tulajdonságait számítja ki.</translation>
     </message>
     <message>
         <location line="+8"/>
-        <location filename="../qucs-lib/librarydialog.cpp" line="-103"/>
+        <location filename="../../qucs-lib/librarydialog.cpp" line="-103"/>
         <source>A system library with this name already exists!</source>
         <translation>A megadott rendszer alkatrész katalógus név már használt!</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location filename="../qucs-lib/librarydialog.cpp" line="+6"/>
+        <location filename="../../qucs-lib/librarydialog.cpp" line="+6"/>
         <source>A library with this name already exists!</source>
         <translation>A megadott alkatrész katalógus név már használt!</translation>
     </message>
     <message>
         <location line="-76"/>
-        <location filename="../qucs-lib/librarydialog.cpp" line="-91"/>
+        <location filename="../../qucs-lib/librarydialog.cpp" line="-91"/>
         <source>Close</source>
         <translation>Bezár</translation>
     </message>
@@ -1802,7 +1802,7 @@ Az alkatrész katalógus létrehozása sikeres.</translation>
         <translation type="obsolete">&quot;%1&quot; leírása:</translation>
     </message>
     <message>
-        <location filename="../qucs-lib/librarydialog.cpp" line="-32"/>
+        <location filename="../../qucs-lib/librarydialog.cpp" line="-32"/>
         <source>Manage User Libraries</source>
         <translation>Felhasználói alkatrész-katalógust kezelő</translation>
     </message>
@@ -1873,7 +1873,7 @@ Az alkatrész katalógus írása sikertelen!</translation>
         <translation>Nincs joga a &quot;%1&quot; alkatrész katalógus törléséhez. </translation>
     </message>
     <message>
-        <location filename="dialogs/librarydialog.cpp" line="+427"/>
+        <location filename="../dialogs/librarydialog.cpp" line="+427"/>
         <source>Successfully created library.</source>
         <translation>Alkatrész-katalógus létrehozása sikeres.</translation>
     </message>
@@ -1888,7 +1888,7 @@ Az alkatrész katalógus írása sikertelen!</translation>
         <translation>Minden kijelölést megszüntet</translation>
     </message>
     <message>
-        <location filename="../qucs-lib/librarydialog.cpp" line="-78"/>
+        <location filename="../../qucs-lib/librarydialog.cpp" line="-78"/>
         <source>Cannot rename library subdirectory!</source>
         <translation>Az alkatrész-katalógus nem nevezhető át!</translation>
     </message>
@@ -1901,7 +1901,7 @@ Az alkatrész katalógus írása sikertelen!</translation>
 <context>
     <name>LoadDialog</name>
     <message>
-        <location filename="dialogs/loaddialog.cpp" line="+45"/>
+        <location filename="../dialogs/loaddialog.cpp" line="+49"/>
         <source>Load Verilog-A symbols</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1980,27 +1980,27 @@ Az alkatrész katalógus írása sikertelen!</translation>
 <context>
     <name>MarkerDialog</name>
     <message>
-        <location filename="diagrams/markerdialog.cpp" line="+33"/>
+        <location filename="../diagrams/markerdialog.cpp" line="+32"/>
         <source>Edit Marker Properties</source>
         <translation>Jelző tulajdonságainak beállítása</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+9"/>
         <source>Precision: </source>
         <translation>Pontosság:</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+17"/>
         <source>Z0: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="-8"/>
         <source>Number Notation: </source>
         <translation>Szám jelzésmód:</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="-5"/>
         <source>real/imaginary</source>
         <translation>valós/képzetes</translation>
     </message>
@@ -2015,12 +2015,12 @@ Az alkatrész katalógus írása sikertelen!</translation>
         <translation>nagyság/szög (radián)</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+15"/>
         <source>transparent</source>
         <translation>átlátszó</translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+5"/>
         <source>OK</source>
         <translation>Ok</translation>
     </message>
@@ -2033,7 +2033,7 @@ Az alkatrész katalógus írása sikertelen!</translation>
 <context>
     <name>MatchDialog</name>
     <message>
-        <location filename="dialogs/matchdialog.cpp" line="+48"/>
+        <location filename="../dialogs/matchdialog.cpp" line="+49"/>
         <source>Create Matching Circuit</source>
         <translation>Illesztő áramkör létrehozása</translation>
     </message>
@@ -2177,7 +2177,7 @@ de %1 !</translation>
 <context>
     <name>MessageDock</name>
     <message>
-        <location filename="messagedock.cpp" line="+49"/>
+        <location filename="../messagedock.cpp" line="+50"/>
         <source>admsXml</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2190,7 +2190,7 @@ de %1 !</translation>
 <context>
     <name>NewProjDialog</name>
     <message>
-        <location filename="dialogs/newprojdialog.cpp" line="+30"/>
+        <location filename="../dialogs/newprojdialog.cpp" line="+30"/>
         <source>Create new project</source>
         <translation>Új projekt létrehozás</translation>
     </message>
@@ -2218,7 +2218,7 @@ de %1 !</translation>
 <context>
     <name>OctaveWindow</name>
     <message>
-        <location filename="octave_window.cpp" line="+126"/>
+        <location filename="../octave_window.cpp" line="+130"/>
         <source>ERROR: Cannot start Octave!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2226,51 +2226,51 @@ de %1 !</translation>
 <context>
     <name>OptimizeDialog</name>
     <message>
-        <location filename="components/optimizedialog.cpp" line="+48"/>
+        <location filename="../components/optimizedialog.cpp" line="+43"/>
         <source>Edit Optimization Properties</source>
         <translation>Az optimizáció tulajdonságainak beállítása</translation>
     </message>
     <message>
-        <location line="+15"/>
-        <location line="+97"/>
-        <location line="+63"/>
+        <location line="+22"/>
+        <location line="+114"/>
+        <location line="+75"/>
         <source>Name:</source>
         <translation>Név:</translation>
     </message>
     <message>
-        <location line="-150"/>
+        <location line="-182"/>
         <source>General</source>
         <translation>Általános</translation>
     </message>
     <message>
-        <location line="+72"/>
-        <location line="+70"/>
+        <location line="+88"/>
+        <location line="+82"/>
         <source>Name</source>
         <translation>Név</translation>
     </message>
     <message>
-        <location line="-69"/>
-        <location line="+19"/>
+        <location line="-82"/>
+        <location line="+12"/>
         <source>active</source>
         <translation>aktív</translation>
     </message>
     <message>
-        <location line="-18"/>
+        <location line="-12"/>
         <source>initial</source>
         <translation>kezdeti</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+0"/>
         <source>min</source>
         <translation>min</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+0"/>
         <source>max</source>
         <translation>max</translation>
     </message>
     <message>
-        <location line="+21"/>
+        <location line="+37"/>
         <source>initial:</source>
         <translation>kezdeti:</translation>
     </message>
@@ -2285,21 +2285,26 @@ de %1 !</translation>
         <translation>max:</translation>
     </message>
     <message>
-        <location line="+31"/>
-        <location line="+50"/>
+        <location line="+17"/>
+        <location line="+60"/>
         <source>Add</source>
         <translation>Hozzáadás</translation>
     </message>
     <message>
-        <location line="-48"/>
-        <location line="+50"/>
+        <location line="-58"/>
+        <location line="+60"/>
         <source>Delete</source>
         <translation>Törlés</translation>
     </message>
     <message>
-        <location line="-47"/>
+        <location line="-48"/>
         <source>Variables</source>
         <translation>Változók</translation>
+    </message>
+    <message>
+        <location line="+229"/>
+        <source>Variable &quot;%1&quot; aleardy in list!</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Set</source>
@@ -2310,12 +2315,12 @@ de %1 !</translation>
         <translation type="obsolete">Eltávolítás</translation>
     </message>
     <message>
-        <location line="+50"/>
+        <location line="-171"/>
         <source>Goals</source>
         <translation>Cél</translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+8"/>
         <source>OK</source>
         <translation>Ok</translation>
     </message>
@@ -2330,18 +2335,18 @@ de %1 !</translation>
         <translation>Mégsem</translation>
     </message>
     <message>
-        <location line="-54"/>
+        <location line="-58"/>
         <source>Value</source>
         <translation>Érték</translation>
     </message>
     <message>
-        <location line="-67"/>
-        <location line="+66"/>
+        <location line="-82"/>
+        <location line="+82"/>
         <source>Type</source>
         <translation>Típus</translation>
     </message>
     <message>
-        <location line="+14"/>
+        <location line="+20"/>
         <source>Value:</source>
         <translation>Érték:</translation>
     </message>
@@ -2354,175 +2359,174 @@ de %1 !</translation>
         <translation type="obsolete">maximum</translation>
     </message>
     <message>
-        <location line="+10"/>
-        <location line="+80"/>
-        <location line="+302"/>
+        <location line="+6"/>
+        <location line="+121"/>
+        <location line="+354"/>
         <source>less</source>
         <translation>kisebb</translation>
     </message>
     <message>
-        <location line="-381"/>
-        <location line="+80"/>
-        <location line="+302"/>
+        <location line="-474"/>
+        <location line="+122"/>
+        <location line="+354"/>
         <source>greater</source>
         <translation>nagyobb</translation>
     </message>
     <message>
-        <location line="-381"/>
-        <location line="+80"/>
-        <location line="+302"/>
+        <location line="-475"/>
+        <location line="+123"/>
+        <location line="+354"/>
         <source>equal</source>
         <translation>egyenlő</translation>
     </message>
     <message>
-        <location line="-316"/>
-        <location line="+48"/>
-        <location line="+28"/>
-        <location line="+30"/>
-        <location line="+180"/>
+        <location line="-398"/>
+        <location line="+87"/>
+        <location line="+34"/>
+        <location line="+37"/>
+        <location line="+195"/>
         <source>yes</source>
         <translation>igen</translation>
     </message>
     <message>
-        <location line="-225"/>
+        <location line="-252"/>
         <location line="+8"/>
-        <location line="+105"/>
+        <location line="+124"/>
         <location line="+8"/>
         <source>Error</source>
         <translation>Hiba</translation>
     </message>
     <message>
-        <location line="-120"/>
-        <location line="+113"/>
+        <location line="-139"/>
+        <location line="+132"/>
         <source>Every text field must be non-empty!</source>
         <translation>Minden szövegmező kitöltendő!</translation>
     </message>
     <message>
-        <location line="-175"/>
-        <location line="+76"/>
-        <location line="+30"/>
+        <location line="-234"/>
+        <location line="+121"/>
+        <location line="+37"/>
         <source>no</source>
         <translation>nem</translation>
     </message>
     <message>
-        <location line="-346"/>
+        <location line="-440"/>
         <source>Simulation:</source>
         <translation>Szimuláció:</translation>
     </message>
     <message>
-        <location line="+310"/>
         <source>Variable &quot;%1&quot; already in list!</source>
-        <translation>A &quot;%1&quot; változó már szerepel a listában!</translation>
+        <translation type="obsolete">A &quot;%1&quot; változó már szerepel a listában!</translation>
     </message>
     <message>
-        <location line="+113"/>
+        <location line="+524"/>
         <source>Goal &quot;%1&quot; already in list!</source>
         <translation>A &quot;%1&quot; cél már szerepel a listában!</translation>
     </message>
     <message>
-        <location line="-412"/>
+        <location line="-500"/>
         <source>Method:</source>
         <translation>Methódus:</translation>
     </message>
     <message>
-        <location line="+14"/>
+        <location line="+6"/>
         <source>Maximum number of iterations:</source>
         <translation>Iterációk maximális száma:</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+6"/>
         <source>Output refresh cycle:</source>
         <translation>Kimenet frissítési ciklusa:</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+6"/>
         <source>Number of parents:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+6"/>
         <source>Constant F:</source>
         <translation>F konstans:</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+6"/>
         <source>Crossing over factor:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+6"/>
         <source>Pseudo random number seed:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+6"/>
         <source>Minimum cost variance:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+6"/>
         <source>Cost objectives:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+6"/>
         <source>Cost constraints:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+3"/>
         <source>Algorithm</source>
         <translation>Algoritmus</translation>
     </message>
     <message>
-        <location line="+55"/>
+        <location line="+75"/>
         <source>Type:</source>
         <translation>Típus:</translation>
     </message>
     <message>
-        <location line="+2"/>
-        <location line="+116"/>
-        <location line="+286"/>
+        <location line="-14"/>
+        <location line="+154"/>
+        <location line="+344"/>
         <source>linear double</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-401"/>
-        <location line="+116"/>
-        <location line="+286"/>
+        <location line="-497"/>
+        <location line="+155"/>
+        <location line="+344"/>
         <source>logarithmic double</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-401"/>
-        <location line="+116"/>
-        <location line="+286"/>
+        <location line="-498"/>
+        <location line="+156"/>
+        <location line="+344"/>
         <source>linear integer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-401"/>
-        <location line="+116"/>
+        <location line="-499"/>
+        <location line="+157"/>
         <source>logarithmic integer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-71"/>
-        <location line="+80"/>
+        <location line="-98"/>
+        <location line="+124"/>
         <source>monitor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-85"/>
-        <location line="+80"/>
-        <location line="+302"/>
+        <location line="-129"/>
+        <location line="+119"/>
+        <location line="+354"/>
         <source>minimize</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-381"/>
-        <location line="+80"/>
-        <location line="+302"/>
+        <location line="-472"/>
+        <location line="+120"/>
+        <location line="+354"/>
         <source>maximize</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2530,7 +2534,7 @@ de %1 !</translation>
 <context>
     <name>OptionsDialog</name>
     <message>
-        <location filename="../qucs-transcalc/optionsdialog.cpp" line="+36"/>
+        <location filename="../../qucs-transcalc/optionsdialog.cpp" line="+36"/>
         <source>Options</source>
         <translation>Opciók</translation>
     </message>
@@ -2573,7 +2577,7 @@ de %1 !</translation>
 <context>
     <name>PackageDialog</name>
     <message>
-        <location filename="dialogs/packagedialog.cpp" line="+61"/>
+        <location filename="../dialogs/packagedialog.cpp" line="+61"/>
         <source>Create Project Package</source>
         <translation>Új projekt csomag létrehozás</translation>
     </message>
@@ -2779,26 +2783,27 @@ de %1 !</translation>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="schematic_file.cpp" line="+860"/>
-        <location filename="../qucs-help/main.cpp" line="+104"/>
+        <location filename="../schematic_file.cpp" line="+860"/>
+        <location filename="../../qucs-help/main.cpp" line="+104"/>
+        <location filename="../../qucs-filter/stepz_filter.cpp" line="+45"/>
         <source>Warning</source>
         <translation>Figyelmeztetés</translation>
     </message>
     <message>
-        <location filename="../qucs-help/main.cpp" line="+1"/>
+        <location filename="../../qucs-help/main.cpp" line="+1"/>
         <source>Cannot save settings !</source>
         <translation>Beállítások nem menthetőek!</translation>
     </message>
     <message>
-        <location filename="schematic.cpp" line="+106"/>
-        <location filename="textdoc.cpp" line="+64"/>
+        <location filename="../schematic.cpp" line="+101"/>
+        <location filename="../textdoc.cpp" line="+63"/>
         <source>untitled</source>
         <translation>cím nélkül</translation>
     </message>
     <message>
-        <location filename="octave_window.cpp" line="-31"/>
-        <location filename="qucs_actions.cpp" line="+1365"/>
-        <location filename="schematic_file.cpp" line="-747"/>
+        <location filename="../octave_window.cpp" line="-31"/>
+        <location filename="../qucs_actions.cpp" line="+1404"/>
+        <location filename="../schematic_file.cpp" line="-747"/>
         <location line="+18"/>
         <location line="+21"/>
         <location line="+24"/>
@@ -2822,11 +2827,11 @@ de %1 !</translation>
         <location line="+8"/>
         <location line="+10"/>
         <location line="+20"/>
-        <location line="+56"/>
-        <location filename="components/component.cpp" line="+1538"/>
+        <location line="+54"/>
+        <location filename="../components/component.cpp" line="+1534"/>
         <location line="+20"/>
         <location line="+8"/>
-        <location filename="components/vacomponent.cpp" line="+298"/>
+        <location filename="../components/vacomponent.cpp" line="+306"/>
         <source>Error</source>
         <translation>Hiba</translation>
     </message>
@@ -2838,7 +2843,7 @@ Set the Octave location on the application settings.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="schematic_file.cpp" line="-792"/>
+        <location filename="../schematic_file.cpp" line="-790"/>
         <location line="+707"/>
         <source>Format Error:
 &apos;Painting&apos; field is not closed!</source>
@@ -2976,29 +2981,29 @@ Helytelen &apos;painting&apos; sor!</translation>
         <translation type="obsolete">Helytelen dokumentum típus!</translation>
     </message>
     <message>
-        <location line="+46"/>
+        <location line="+44"/>
         <source>File Format Error:
 Unknown field!</source>
         <translation>Fájl formátum hiba:
 Ismeretlen mező!</translation>
     </message>
     <message>
-        <location filename="paintings/ellipsearc.cpp" line="+387"/>
+        <location filename="../paintings/ellipsearc.cpp" line="+387"/>
         <source>Edit Arc Properties</source>
         <translation>Körív tulajdonságainak beállítása</translation>
     </message>
     <message>
-        <location filename="paintings/ellipse.cpp" line="+372"/>
+        <location filename="../paintings/ellipse.cpp" line="+373"/>
         <source>Edit Ellipse Properties</source>
         <translation>Elipszis tulajdonságainak beállítása</translation>
     </message>
     <message>
-        <location filename="paintings/graphicline.cpp" line="+328"/>
+        <location filename="../paintings/graphicline.cpp" line="+326"/>
         <source>Edit Line Properties</source>
         <translation>Vonal tulajdonságainak beéllítása</translation>
     </message>
     <message>
-        <location filename="paintings/rectangle.cpp" line="+374"/>
+        <location filename="../paintings/rectangle.cpp" line="+374"/>
         <source>Edit Rectangle Properties</source>
         <translation>Nényszög tulajdonságainak beállítása</translation>
     </message>
@@ -3031,79 +3036,79 @@ Ismeretlen mező!</translation>
         <translation type="obsolete">Túl kevés független adat &quot;</translation>
     </message>
     <message>
-        <location filename="diagrams/marker.cpp" line="+285"/>
-        <location filename="diagrams/tabdiagram.cpp" line="+246"/>
+        <location filename="../diagrams/marker.cpp" line="+282"/>
+        <location filename="../diagrams/tabdiagram.cpp" line="+259"/>
         <source>invalid</source>
         <translation>érvénytelen</translation>
     </message>
     <message>
-        <location filename="components/ac_sim.cpp" line="+24"/>
+        <location filename="../components/ac_sim.cpp" line="+23"/>
         <location line="+48"/>
         <source>ac simulation</source>
         <translation>AC szimuláció</translation>
     </message>
     <message>
         <location line="-23"/>
-        <location filename="components/param_sweep.cpp" line="+46"/>
-        <location filename="components/sp_sim.cpp" line="+48"/>
-        <location filename="components/tr_sim.cpp" line="+44"/>
+        <location filename="../components/param_sweep.cpp" line="+45"/>
+        <location filename="../components/sp_sim.cpp" line="+47"/>
+        <location filename="../components/tr_sim.cpp" line="+43"/>
         <source>sweep type</source>
         <translation>léptetés típus</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/sp_sim.cpp" line="+2"/>
+        <location filename="../components/sp_sim.cpp" line="+2"/>
         <source>start frequency in Hertz</source>
         <translation>kezdő frekvencia Hertz-ben</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/sp_sim.cpp" line="+2"/>
+        <location filename="../components/sp_sim.cpp" line="+2"/>
         <source>stop frequency in Hertz</source>
         <translation>befejező frekvencia Hertz-ben</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/param_sweep.cpp" line="+8"/>
-        <location filename="components/sp_sim.cpp" line="+2"/>
+        <location filename="../components/param_sweep.cpp" line="+8"/>
+        <location filename="../components/sp_sim.cpp" line="+2"/>
         <source>number of simulation steps</source>
         <translation>a szimuláció lépésszáma</translation>
     </message>
     <message>
-        <location filename="components/ampere_ac.cpp" line="+23"/>
+        <location filename="../components/ampere_ac.cpp" line="+23"/>
         <source>ideal ac current source</source>
         <translation>ideális váltóáram AC generátor</translation>
     </message>
     <message>
-        <location filename="components/ampere_dc.cpp" line="+44"/>
+        <location filename="../components/ampere_dc.cpp" line="+44"/>
         <source>current in Ampere</source>
         <translation>áram Amper-ben</translation>
     </message>
     <message>
-        <location filename="components/am_modulator.cpp" line="+54"/>
-        <location filename="components/ampere_ac.cpp" line="+25"/>
-        <location filename="components/hb_sim.cpp" line="+43"/>
-        <location filename="components/pm_modulator.cpp" line="+54"/>
-        <location filename="components/source_ac.cpp" line="+65"/>
-        <location filename="components/volt_ac.cpp" line="+48"/>
+        <location filename="../components/am_modulator.cpp" line="+54"/>
+        <location filename="../components/ampere_ac.cpp" line="+25"/>
+        <location filename="../components/hb_sim.cpp" line="+42"/>
+        <location filename="../components/pm_modulator.cpp" line="+54"/>
+        <location filename="../components/source_ac.cpp" line="+65"/>
+        <location filename="../components/volt_ac.cpp" line="+48"/>
         <source>frequency in Hertz</source>
         <translation>frekvencia Hertz-ben</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/ampere_ac.cpp" line="+2"/>
-        <location filename="components/pm_modulator.cpp" line="+2"/>
-        <location filename="components/volt_ac.cpp" line="+2"/>
+        <location filename="../components/ampere_ac.cpp" line="+2"/>
+        <location filename="../components/pm_modulator.cpp" line="+2"/>
+        <location filename="../components/volt_ac.cpp" line="+2"/>
         <source>initial phase in degrees</source>
         <translation>Kezdő fázis fokban</translation>
     </message>
     <message>
-        <location filename="components/ampere_ac.cpp" line="+18"/>
+        <location filename="../components/ampere_ac.cpp" line="+18"/>
         <source>ac Current Source</source>
         <translation>váltóáram AC generátor</translation>
     </message>
     <message>
-        <location filename="components/ampere_dc.cpp" line="-21"/>
+        <location filename="../components/ampere_dc.cpp" line="-21"/>
         <source>ideal dc current source</source>
         <translation>ideális egyenfeszültség DC forrás</translation>
     </message>
@@ -3113,7 +3118,7 @@ Ismeretlen mező!</translation>
         <translation>egyenáram DC forrás</translation>
     </message>
     <message>
-        <location filename="components/ampere_noise.cpp" line="+23"/>
+        <location filename="../components/ampere_noise.cpp" line="+23"/>
         <source>noise current source</source>
         <translation>zajáram generátor</translation>
     </message>
@@ -3124,28 +3129,28 @@ Ismeretlen mező!</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/noise_ii.cpp" line="+77"/>
-        <location filename="components/noise_iv.cpp" line="+72"/>
-        <location filename="components/noise_vv.cpp" line="+67"/>
-        <location filename="components/volt_noise.cpp" line="+48"/>
+        <location filename="../components/noise_ii.cpp" line="+77"/>
+        <location filename="../components/noise_iv.cpp" line="+72"/>
+        <location filename="../components/noise_vv.cpp" line="+67"/>
+        <location filename="../components/volt_noise.cpp" line="+48"/>
         <source>frequency exponent</source>
         <translation>frekvencia kitevő</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/noise_ii.cpp" line="+2"/>
-        <location filename="components/noise_iv.cpp" line="+2"/>
-        <location filename="components/noise_vv.cpp" line="+2"/>
-        <location filename="components/volt_noise.cpp" line="+2"/>
+        <location filename="../components/noise_ii.cpp" line="+2"/>
+        <location filename="../components/noise_iv.cpp" line="+2"/>
+        <location filename="../components/noise_vv.cpp" line="+2"/>
+        <location filename="../components/volt_noise.cpp" line="+2"/>
         <source>frequency coefficient</source>
         <translation>frekvencia tényező</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/noise_ii.cpp" line="+2"/>
-        <location filename="components/noise_iv.cpp" line="+2"/>
-        <location filename="components/noise_vv.cpp" line="+2"/>
-        <location filename="components/volt_noise.cpp" line="+2"/>
+        <location filename="../components/noise_ii.cpp" line="+2"/>
+        <location filename="../components/noise_iv.cpp" line="+2"/>
+        <location filename="../components/noise_vv.cpp" line="+2"/>
+        <location filename="../components/volt_noise.cpp" line="+2"/>
         <source>additive frequency term</source>
         <translation>járulékos frekvencia idő</translation>
     </message>
@@ -3155,7 +3160,7 @@ Ismeretlen mező!</translation>
         <translation>Zajáram generátor</translation>
     </message>
     <message>
-        <location filename="components/attenuator.cpp" line="+23"/>
+        <location filename="../components/attenuator.cpp" line="+23"/>
         <source>attenuator</source>
         <translation>csillapító</translation>
     </message>
@@ -3166,40 +3171,40 @@ Ismeretlen mező!</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/coupler.cpp" line="+68"/>
-        <location filename="components/gyrator.cpp" line="+57"/>
-        <location filename="components/hybrid.cpp" line="+58"/>
-        <location filename="components/phaseshifter.cpp" line="+49"/>
+        <location filename="../components/coupler.cpp" line="+68"/>
+        <location filename="../components/gyrator.cpp" line="+57"/>
+        <location filename="../components/hybrid.cpp" line="+58"/>
+        <location filename="../components/phaseshifter.cpp" line="+49"/>
         <source>reference impedance</source>
         <translation>névleges impedancia</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/bjtsub.cpp" line="+95"/>
-        <location filename="components/bondwire.cpp" line="+58"/>
-        <location filename="components/coaxialline.cpp" line="+59"/>
-        <location filename="components/ctline.cpp" line="+69"/>
-        <location filename="components/dc_sim.cpp" line="+48"/>
-        <location filename="components/diode.cpp" line="+60"/>
-        <location filename="components/etr_sim.cpp" line="+60"/>
-        <location filename="components/isolator.cpp" line="+53"/>
-        <location filename="components/jfet.cpp" line="+63"/>
-        <location filename="components/mosfet_sub.cpp" line="+118"/>
-        <location filename="components/mscoupled.cpp" line="+70"/>
-        <location filename="components/mslange.cpp" line="+62"/>
-        <location filename="components/msline.cpp" line="+56"/>
-        <location filename="components/msvia.cpp" line="+49"/>
-        <location filename="components/rectline.cpp" line="+64"/>
-        <location filename="components/relais.cpp" line="+68"/>
-        <location filename="components/resistor.cpp" line="+30"/>
-        <location filename="components/rlcg.cpp" line="+65"/>
-        <location filename="components/source_ac.cpp" line="+2"/>
-        <location filename="components/switch.cpp" line="+36"/>
-        <location filename="components/tline.cpp" line="+55"/>
-        <location filename="components/tline_4port.cpp" line="+59"/>
-        <location filename="components/tr_sim.cpp" line="+25"/>
-        <location filename="components/tunneldiode.cpp" line="+52"/>
-        <location filename="components/twistedpair.cpp" line="+75"/>
+        <location filename="../components/bjtsub.cpp" line="+95"/>
+        <location filename="../components/bondwire.cpp" line="+58"/>
+        <location filename="../components/coaxialline.cpp" line="+59"/>
+        <location filename="../components/ctline.cpp" line="+69"/>
+        <location filename="../components/dc_sim.cpp" line="+47"/>
+        <location filename="../components/diode.cpp" line="+60"/>
+        <location filename="../components/etr_sim.cpp" line="+59"/>
+        <location filename="../components/isolator.cpp" line="+53"/>
+        <location filename="../components/jfet.cpp" line="+63"/>
+        <location filename="../components/mosfet_sub.cpp" line="+118"/>
+        <location filename="../components/mscoupled.cpp" line="+70"/>
+        <location filename="../components/mslange.cpp" line="+62"/>
+        <location filename="../components/msline.cpp" line="+56"/>
+        <location filename="../components/msvia.cpp" line="+49"/>
+        <location filename="../components/rectline.cpp" line="+64"/>
+        <location filename="../components/relais.cpp" line="+68"/>
+        <location filename="../components/resistor.cpp" line="+29"/>
+        <location filename="../components/rlcg.cpp" line="+66"/>
+        <location filename="../components/source_ac.cpp" line="+2"/>
+        <location filename="../components/switch.cpp" line="+35"/>
+        <location filename="../components/tline.cpp" line="+55"/>
+        <location filename="../components/tline_4port.cpp" line="+59"/>
+        <location filename="../components/tr_sim.cpp" line="+25"/>
+        <location filename="../components/tunneldiode.cpp" line="+52"/>
+        <location filename="../components/twistedpair.cpp" line="+75"/>
         <source>simulation temperature in degree Celsius</source>
         <translation>Szimulációs hőmérséklet Celziuszfok-ban</translation>
     </message>
@@ -3209,7 +3214,7 @@ Ismeretlen mező!</translation>
         <translation>Csillapító</translation>
     </message>
     <message>
-        <location filename="components/biast.cpp" line="+23"/>
+        <location filename="../components/biast.cpp" line="+23"/>
         <source>bias t</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3219,65 +3224,65 @@ Ismeretlen mező!</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/bjt.cpp" line="+25"/>
+        <location filename="../components/bjt.cpp" line="+25"/>
         <source>bipolar junction transistor</source>
         <translation>bipoláris tranzisztor</translation>
     </message>
     <message>
-        <location filename="components/EKV26MOS.cpp" line="+19"/>
-        <location filename="components/bjtsub.cpp" line="-70"/>
-        <location filename="components/hic0_full.cpp" line="+19"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+19"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+19"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+19"/>
-        <location filename="components/jfet.cpp" line="-36"/>
-        <location filename="components/mosfet_sub.cpp" line="-94"/>
+        <location filename="../components/EKV26MOS.cpp" line="+18"/>
+        <location filename="../components/bjtsub.cpp" line="-70"/>
+        <location filename="../components/hic0_full.cpp" line="+18"/>
+        <location filename="../components/hicumL0V1p2.cpp" line="+18"/>
+        <location filename="../components/hicumL0V1p2g.cpp" line="+18"/>
+        <location filename="../components/hicumL0V1p3.cpp" line="+18"/>
+        <location filename="../components/jfet.cpp" line="-36"/>
+        <location filename="../components/mosfet_sub.cpp" line="-94"/>
         <source>polarity</source>
         <translation>polaritás</translation>
     </message>
     <message>
         <location line="+113"/>
-        <location filename="components/bjtsub.cpp" line="+2"/>
-        <location filename="components/diac.cpp" line="+53"/>
-        <location filename="components/diode.cpp" line="-34"/>
-        <location filename="components/thyristor.cpp" line="+53"/>
-        <location filename="components/triac.cpp" line="+57"/>
+        <location filename="../components/bjtsub.cpp" line="+2"/>
+        <location filename="../components/diac.cpp" line="+53"/>
+        <location filename="../components/diode.cpp" line="-34"/>
+        <location filename="../components/thyristor.cpp" line="+53"/>
+        <location filename="../components/triac.cpp" line="+57"/>
         <source>saturation current</source>
         <translation>szaturációs áram</translation>
     </message>
     <message>
-        <location filename="components/bjtsub.cpp" line="+2"/>
-        <location filename="components/phototransistor.cpp" line="+25"/>
+        <location filename="../components/bjtsub.cpp" line="+2"/>
+        <location filename="../components/phototransistor.cpp" line="+25"/>
         <source>forward emission coefficient</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/phototransistor.cpp" line="+2"/>
+        <location filename="../components/phototransistor.cpp" line="+2"/>
         <source>reverse emission coefficient</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/phototransistor.cpp" line="+30"/>
+        <location filename="../components/phototransistor.cpp" line="+30"/>
         <source>high current corner for forward beta</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/phototransistor.cpp" line="+3"/>
+        <location filename="../components/phototransistor.cpp" line="+3"/>
         <source>high current corner for reverse beta</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/phototransistor.cpp" line="-31"/>
+        <location filename="../components/phototransistor.cpp" line="-31"/>
         <source>forward early voltage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/phototransistor.cpp" line="+3"/>
+        <location filename="../components/phototransistor.cpp" line="+3"/>
         <source>reverse early voltage</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3303,13 +3308,13 @@ Ismeretlen mező!</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/phototransistor.cpp" line="-14"/>
+        <location filename="../components/phototransistor.cpp" line="-14"/>
         <source>forward beta</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/phototransistor.cpp" line="+2"/>
+        <location filename="../components/phototransistor.cpp" line="+2"/>
         <source>reverse beta</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3340,37 +3345,37 @@ Ismeretlen mező!</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/phototransistor.cpp" line="+20"/>
+        <location filename="../components/phototransistor.cpp" line="+20"/>
         <source>base-emitter zero-bias depletion capacitance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/phototransistor.cpp" line="-3"/>
+        <location filename="../components/phototransistor.cpp" line="-3"/>
         <source>base-emitter junction built-in potential</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/phototransistor.cpp" line="-2"/>
+        <location filename="../components/phototransistor.cpp" line="-2"/>
         <source>base-emitter junction exponential factor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/phototransistor.cpp" line="+13"/>
+        <location filename="../components/phototransistor.cpp" line="+13"/>
         <source>base-collector zero-bias depletion capacitance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/phototransistor.cpp" line="-3"/>
+        <location filename="../components/phototransistor.cpp" line="-3"/>
         <source>base-collector junction built-in potential</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/phototransistor.cpp" line="-2"/>
+        <location filename="../components/phototransistor.cpp" line="-2"/>
         <source>base-collector junction exponential factor</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3395,17 +3400,17 @@ Ismeretlen mező!</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/EKV26MOS.cpp" line="+19"/>
-        <location filename="components/MESFET.cpp" line="+66"/>
-        <location filename="components/bjtsub.cpp" line="+2"/>
-        <location filename="components/diode.cpp" line="+10"/>
-        <location filename="components/photodiode.cpp" line="+45"/>
+        <location filename="../components/EKV26MOS.cpp" line="+19"/>
+        <location filename="../components/MESFET.cpp" line="+66"/>
+        <location filename="../components/bjtsub.cpp" line="+2"/>
+        <location filename="../components/diode.cpp" line="+10"/>
+        <location filename="../components/photodiode.cpp" line="+45"/>
         <source>forward-bias depletion capacitance coefficient</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/bjtsub.cpp" line="+2"/>
-        <location filename="components/phototransistor.cpp" line="+11"/>
+        <location filename="../components/bjtsub.cpp" line="+2"/>
+        <location filename="../components/phototransistor.cpp" line="+11"/>
         <source>ideal forward transit time</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3426,45 +3431,45 @@ Ismeretlen mező!</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/phototransistor.cpp" line="-3"/>
+        <location filename="../components/phototransistor.cpp" line="-3"/>
         <source>ideal reverse transit time</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/EKV26MOS.cpp" line="-34"/>
-        <location filename="components/MESFET.cpp" line="+78"/>
-        <location filename="components/bjtsub.cpp" line="+4"/>
-        <location filename="components/diode.cpp" line="+14"/>
-        <location filename="components/hic0_full.cpp" line="+157"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+171"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+171"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+175"/>
-        <location filename="components/jfet.cpp" line="+30"/>
-        <location filename="components/mosfet_sub.cpp" line="+88"/>
-        <location filename="components/photodiode.cpp" line="+24"/>
-        <location filename="components/phototransistor.cpp" line="+21"/>
+        <location filename="../components/EKV26MOS.cpp" line="-34"/>
+        <location filename="../components/MESFET.cpp" line="+78"/>
+        <location filename="../components/bjtsub.cpp" line="+4"/>
+        <location filename="../components/diode.cpp" line="+14"/>
+        <location filename="../components/hic0_full.cpp" line="+157"/>
+        <location filename="../components/hicumL0V1p2.cpp" line="+171"/>
+        <location filename="../components/hicumL0V1p2g.cpp" line="+171"/>
+        <location filename="../components/hicumL0V1p3.cpp" line="+175"/>
+        <location filename="../components/jfet.cpp" line="+30"/>
+        <location filename="../components/mosfet_sub.cpp" line="+88"/>
+        <location filename="../components/photodiode.cpp" line="+24"/>
+        <location filename="../components/phototransistor.cpp" line="+21"/>
         <location line="+2"/>
         <source>flicker noise coefficient</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/MESFET.cpp" line="-2"/>
-        <location filename="components/bjtsub.cpp" line="+2"/>
-        <location filename="components/diode.cpp" line="+2"/>
-        <location filename="components/jfet.cpp" line="+2"/>
-        <location filename="components/mosfet_sub.cpp" line="+2"/>
-        <location filename="components/photodiode.cpp" line="+2"/>
-        <location filename="components/phototransistor.cpp" line="+2"/>
+        <location filename="../components/MESFET.cpp" line="-2"/>
+        <location filename="../components/bjtsub.cpp" line="+2"/>
+        <location filename="../components/diode.cpp" line="+2"/>
+        <location filename="../components/jfet.cpp" line="+2"/>
+        <location filename="../components/mosfet_sub.cpp" line="+2"/>
+        <location filename="../components/photodiode.cpp" line="+2"/>
+        <location filename="../components/phototransistor.cpp" line="+2"/>
         <source>flicker noise exponent</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/bjtsub.cpp" line="+2"/>
-        <location filename="components/diode.cpp" line="+2"/>
-        <location filename="components/jfet.cpp" line="+2"/>
-        <location filename="components/mosfet_sub.cpp" line="+2"/>
-        <location filename="components/photodiode.cpp" line="+2"/>
+        <location filename="../components/bjtsub.cpp" line="+2"/>
+        <location filename="../components/diode.cpp" line="+2"/>
+        <location filename="../components/jfet.cpp" line="+2"/>
+        <location filename="../components/mosfet_sub.cpp" line="+2"/>
+        <location filename="../components/photodiode.cpp" line="+2"/>
         <source>flicker noise frequency exponent</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3489,24 +3494,24 @@ Ismeretlen mező!</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/bjt.cpp" line="+19"/>
-        <location filename="components/bjtsub.cpp" line="+36"/>
+        <location filename="../components/bjt.cpp" line="+19"/>
+        <location filename="../components/bjtsub.cpp" line="+36"/>
         <source>npn transistor</source>
         <translation>npn tranzisztor</translation>
     </message>
     <message>
         <location line="+10"/>
-        <location filename="components/bjtsub.cpp" line="+10"/>
+        <location filename="../components/bjtsub.cpp" line="+10"/>
         <source>pnp transistor</source>
         <translation>pnp tranzisztor</translation>
     </message>
     <message>
-        <location filename="components/bjtsub.cpp" line="-29"/>
+        <location filename="../components/bjtsub.cpp" line="-29"/>
         <source>bipolar junction transistor with substrate</source>
         <translation>bipoláris tranzisztor szubsztrátkivezetéssel</translation>
     </message>
     <message>
-        <location filename="components/capacitor.cpp" line="+23"/>
+        <location filename="../components/capacitor.cpp" line="+23"/>
         <source>capacitor</source>
         <translation>kondenzátor</translation>
     </message>
@@ -3521,40 +3526,40 @@ Ismeretlen mező!</translation>
         <translation>Kondenzátor</translation>
     </message>
     <message>
-        <location filename="components/ccvs.cpp" line="+23"/>
+        <location filename="../components/ccvs.cpp" line="+23"/>
         <source>current controlled voltage source</source>
         <translation>áramvezérelt feszültséggenerátor</translation>
     </message>
     <message>
-        <location filename="components/cccs.cpp" line="+61"/>
-        <location filename="components/ccvs.cpp" line="+39"/>
-        <location filename="components/vcvs.cpp" line="+64"/>
+        <location filename="../components/cccs.cpp" line="+61"/>
+        <location filename="../components/ccvs.cpp" line="+39"/>
+        <location filename="../components/vcvs.cpp" line="+64"/>
         <source>forward transfer factor</source>
         <translation>áttétel</translation>
     </message>
     <message>
         <location line="+1"/>
-        <location filename="components/ccvs.cpp" line="+1"/>
-        <location filename="components/component.cpp" line="-264"/>
-        <location filename="components/d_flipflop.cpp" line="+27"/>
-        <location filename="components/ifile.cpp" line="+60"/>
-        <location filename="components/jk_flipflop.cpp" line="+29"/>
-        <location filename="components/logical_buf.cpp" line="+33"/>
-        <location filename="components/logical_inv.cpp" line="+33"/>
-        <location filename="components/rs_flipflop.cpp" line="+27"/>
-        <location filename="components/vccs.cpp" line="+64"/>
-        <location filename="components/vcvs.cpp" line="+1"/>
-        <location filename="components/vfile.cpp" line="+62"/>
+        <location filename="../components/ccvs.cpp" line="+1"/>
+        <location filename="../components/component.cpp" line="-274"/>
+        <location filename="../components/d_flipflop.cpp" line="+26"/>
+        <location filename="../components/ifile.cpp" line="+59"/>
+        <location filename="../components/jk_flipflop.cpp" line="+28"/>
+        <location filename="../components/logical_buf.cpp" line="+32"/>
+        <location filename="../components/logical_inv.cpp" line="+32"/>
+        <location filename="../components/rs_flipflop.cpp" line="+26"/>
+        <location filename="../components/vccs.cpp" line="+64"/>
+        <location filename="../components/vcvs.cpp" line="+1"/>
+        <location filename="../components/vfile.cpp" line="+61"/>
         <source>delay time</source>
         <translation>késleltetési idő</translation>
     </message>
     <message>
-        <location filename="components/ccvs.cpp" line="+14"/>
+        <location filename="../components/ccvs.cpp" line="+14"/>
         <source>Current Controlled Voltage Source</source>
         <translation>Áramvezérelt feszültség generátor</translation>
     </message>
     <message>
-        <location filename="components/cccs.cpp" line="-39"/>
+        <location filename="../components/cccs.cpp" line="-39"/>
         <source>current controlled current source</source>
         <translation>áramvezérelt áramgenerátor</translation>
     </message>
@@ -3564,7 +3569,7 @@ Ismeretlen mező!</translation>
         <translation>Áramvezérelt áramgenerátor</translation>
     </message>
     <message>
-        <location filename="components/circulator.cpp" line="+24"/>
+        <location filename="../components/circulator.cpp" line="+23"/>
         <source>circulator</source>
         <translation>cirkulátor</translation>
     </message>
@@ -3589,7 +3594,7 @@ Ismeretlen mező!</translation>
         <translation>Cirkulátor</translation>
     </message>
     <message>
-        <location filename="components/component.cpp" line="+237"/>
+        <location filename="../components/component.cpp" line="+247"/>
         <source>Format Error:
 Wrong line start!</source>
         <translation>Formázási hiba:
@@ -3609,50 +3614,50 @@ Wrong &apos;component&apos; line format!</source>
 Helytelen &apos;component&apos; sor!</translation>
     </message>
     <message>
-        <location filename="components/coplanar.cpp" line="+23"/>
+        <location filename="../components/coplanar.cpp" line="+23"/>
         <source>coplanar line</source>
         <translation>sík vonal</translation>
     </message>
     <message>
         <location line="+37"/>
-        <location filename="components/cpwgap.cpp" line="+64"/>
-        <location filename="components/cpwopen.cpp" line="+63"/>
-        <location filename="components/cpwshort.cpp" line="+62"/>
-        <location filename="components/cpwstep.cpp" line="+66"/>
-        <location filename="components/mscoupled.cpp" line="-13"/>
-        <location filename="components/msgap.cpp" line="+51"/>
-        <location filename="components/mslange.cpp" line="-13"/>
-        <location filename="components/msline.cpp" line="-12"/>
-        <location filename="components/msopen.cpp" line="+42"/>
-        <location filename="components/msrstub.cpp" line="+42"/>
+        <location filename="../components/cpwgap.cpp" line="+64"/>
+        <location filename="../components/cpwopen.cpp" line="+63"/>
+        <location filename="../components/cpwshort.cpp" line="+62"/>
+        <location filename="../components/cpwstep.cpp" line="+66"/>
+        <location filename="../components/mscoupled.cpp" line="-13"/>
+        <location filename="../components/msgap.cpp" line="+51"/>
+        <location filename="../components/mslange.cpp" line="-13"/>
+        <location filename="../components/msline.cpp" line="-12"/>
+        <location filename="../components/msopen.cpp" line="+42"/>
+        <location filename="../components/msrstub.cpp" line="+42"/>
         <source>name of substrate definition</source>
         <translation>szubsztrát definició neve</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/cpwgap.cpp" line="+2"/>
-        <location filename="components/cpwopen.cpp" line="+2"/>
-        <location filename="components/cpwshort.cpp" line="+2"/>
-        <location filename="components/mscoupled.cpp" line="+2"/>
-        <location filename="components/mslange.cpp" line="+2"/>
-        <location filename="components/msline.cpp" line="+2"/>
-        <location filename="components/msopen.cpp" line="+2"/>
+        <location filename="../components/cpwgap.cpp" line="+2"/>
+        <location filename="../components/cpwopen.cpp" line="+2"/>
+        <location filename="../components/cpwshort.cpp" line="+2"/>
+        <location filename="../components/mscoupled.cpp" line="+2"/>
+        <location filename="../components/mslange.cpp" line="+2"/>
+        <location filename="../components/msline.cpp" line="+2"/>
+        <location filename="../components/msopen.cpp" line="+2"/>
         <source>width of the line</source>
         <translation>a vonal szélessége</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/cpwgap.cpp" line="+2"/>
-        <location filename="components/cpwopen.cpp" line="+2"/>
-        <location filename="components/cpwshort.cpp" line="+2"/>
+        <location filename="../components/cpwgap.cpp" line="+2"/>
+        <location filename="../components/cpwopen.cpp" line="+2"/>
+        <location filename="../components/cpwshort.cpp" line="+2"/>
         <source>width of a gap</source>
         <translation>a rés szélessége</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/mscoupled.cpp" line="+2"/>
-        <location filename="components/mslange.cpp" line="+2"/>
-        <location filename="components/msline.cpp" line="+2"/>
+        <location filename="../components/mscoupled.cpp" line="+2"/>
+        <location filename="../components/mslange.cpp" line="+2"/>
+        <location filename="../components/msline.cpp" line="+2"/>
         <source>length of the line</source>
         <translation>a vonal hossza</translation>
     </message>
@@ -3662,7 +3667,7 @@ Helytelen &apos;component&apos; sor!</translation>
         <translation>Sík vonal</translation>
     </message>
     <message>
-        <location filename="components/dcblock.cpp" line="+22"/>
+        <location filename="../components/dcblock.cpp" line="+22"/>
         <source>dc block</source>
         <translation>DC blokkoló</translation>
     </message>
@@ -3672,7 +3677,7 @@ Helytelen &apos;component&apos; sor!</translation>
         <translation>DC Blokkoló </translation>
     </message>
     <message>
-        <location filename="components/dcfeed.cpp" line="+23"/>
+        <location filename="../components/dcfeed.cpp" line="+23"/>
         <source>dc feed</source>
         <translation>AC blokkoló</translation>
     </message>
@@ -3682,32 +3687,32 @@ Helytelen &apos;component&apos; sor!</translation>
         <translation>AC Blokkoló</translation>
     </message>
     <message>
-        <location filename="components/dc_sim.cpp" line="-24"/>
+        <location filename="../components/dc_sim.cpp" line="-24"/>
         <location line="+58"/>
         <source>dc simulation</source>
         <translation>DC szimuláció</translation>
     </message>
     <message>
         <location line="-32"/>
-        <location filename="components/etr_sim.cpp" line="-6"/>
-        <location filename="components/hb_sim.cpp" line="+8"/>
-        <location filename="components/tr_sim.cpp" line="-6"/>
+        <location filename="../components/etr_sim.cpp" line="-6"/>
+        <location filename="../components/hb_sim.cpp" line="+8"/>
+        <location filename="../components/tr_sim.cpp" line="-6"/>
         <source>relative tolerance for convergence</source>
         <translation type="unfinished">relatív konvergencia tűrés</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/etr_sim.cpp" line="+2"/>
-        <location filename="components/hb_sim.cpp" line="-4"/>
-        <location filename="components/tr_sim.cpp" line="+2"/>
+        <location filename="../components/etr_sim.cpp" line="+2"/>
+        <location filename="../components/hb_sim.cpp" line="-4"/>
+        <location filename="../components/tr_sim.cpp" line="+2"/>
         <source>absolute tolerance for currents</source>
         <translation>abszolút áram tűrés </translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/etr_sim.cpp" line="+2"/>
-        <location filename="components/hb_sim.cpp" line="+2"/>
-        <location filename="components/tr_sim.cpp" line="+2"/>
+        <location filename="../components/etr_sim.cpp" line="+2"/>
+        <location filename="../components/hb_sim.cpp" line="+2"/>
+        <location filename="../components/tr_sim.cpp" line="+2"/>
         <source>absolute tolerance for voltages</source>
         <translation>abszolút feszültség tűrés</translation>
     </message>
@@ -3718,9 +3723,9 @@ Helytelen &apos;component&apos; sor!</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/etr_sim.cpp" line="-6"/>
-        <location filename="components/hb_sim.cpp" line="+4"/>
-        <location filename="components/tr_sim.cpp" line="-6"/>
+        <location filename="../components/etr_sim.cpp" line="-6"/>
+        <location filename="../components/hb_sim.cpp" line="+4"/>
+        <location filename="../components/tr_sim.cpp" line="-6"/>
         <source>maximum number of iterations until error</source>
         <translation>iterációk maximális száma a hibáig</translation>
     </message>
@@ -3730,45 +3735,45 @@ Helytelen &apos;component&apos; sor!</translation>
         <translation> beágyazott kapcsolás csomopontjainak mentése az adatbeállításba</translation>
     </message>
     <message>
-        <location filename="components/diode.cpp" line="-31"/>
+        <location filename="../components/diode.cpp" line="-31"/>
         <source>diode</source>
         <translation>Dióda</translation>
     </message>
     <message>
-        <location filename="components/EKV26MOS.cpp" line="+11"/>
-        <location filename="components/diac.cpp" line="+2"/>
-        <location filename="components/diode.cpp" line="+5"/>
-        <location filename="components/thyristor.cpp" line="+2"/>
-        <location filename="components/triac.cpp" line="+2"/>
+        <location filename="../components/EKV26MOS.cpp" line="+11"/>
+        <location filename="../components/diac.cpp" line="+2"/>
+        <location filename="../components/diode.cpp" line="+5"/>
+        <location filename="../components/thyristor.cpp" line="+2"/>
+        <location filename="../components/triac.cpp" line="+2"/>
         <source>emission coefficient</source>
         <translation>emissziós együttható</translation>
     </message>
     <message>
         <location line="+14"/>
-        <location filename="components/diode.cpp" line="+2"/>
-        <location filename="components/photodiode.cpp" line="-38"/>
+        <location filename="../components/diode.cpp" line="+2"/>
+        <location filename="../components/photodiode.cpp" line="-38"/>
         <source>zero-bias junction capacitance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/MESFET.cpp" line="-63"/>
-        <location filename="components/diode.cpp" line="+2"/>
-        <location filename="components/photodiode.cpp" line="+3"/>
-        <location filename="components/tunneldiode.cpp" line="-7"/>
+        <location filename="../components/MESFET.cpp" line="-63"/>
+        <location filename="../components/diode.cpp" line="+2"/>
+        <location filename="../components/photodiode.cpp" line="+3"/>
+        <location filename="../components/tunneldiode.cpp" line="-7"/>
         <source>grading coefficient</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="-6"/>
-        <location filename="components/diode.cpp" line="+2"/>
-        <location filename="components/photodiode.cpp" line="-6"/>
-        <location filename="components/tunneldiode.cpp" line="+2"/>
+        <location filename="../components/diode.cpp" line="+2"/>
+        <location filename="../components/photodiode.cpp" line="-6"/>
+        <location filename="../components/tunneldiode.cpp" line="+2"/>
         <source>junction potential</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/diode.cpp" line="+4"/>
+        <location filename="../components/diode.cpp" line="+4"/>
         <source>linear capacitance</source>
         <translation>lineáris kapacitás</translation>
     </message>
@@ -3788,19 +3793,19 @@ Helytelen &apos;component&apos; sor!</translation>
         <translation>ohmikus soros ellenállás</translation>
     </message>
     <message>
-        <location filename="components/EKV26MOS.cpp" line="+12"/>
-        <location filename="components/diode.cpp" line="+2"/>
-        <location filename="components/photodiode.cpp" line="+15"/>
+        <location filename="../components/EKV26MOS.cpp" line="+12"/>
+        <location filename="../components/diode.cpp" line="+2"/>
+        <location filename="../components/photodiode.cpp" line="+15"/>
         <source>transit time</source>
         <translation>átviteli idő</translation>
     </message>
     <message>
-        <location filename="components/diode.cpp" line="+52"/>
+        <location filename="../components/diode.cpp" line="+52"/>
         <source>Diode</source>
         <translation>Dióda</translation>
     </message>
     <message>
-        <location filename="components/equation.cpp" line="+25"/>
+        <location filename="../components/equation.cpp" line="+25"/>
         <source>equation</source>
         <translation>egyenlet</translation>
     </message>
@@ -3817,7 +3822,7 @@ Helytelen &apos;component&apos; sor!</translation>
         <translation>eredmény mentése az adatbeállításba</translation>
     </message>
     <message>
-        <location filename="components/ground.cpp" line="+25"/>
+        <location filename="../components/ground.cpp" line="+25"/>
         <source>ground (reference potential)</source>
         <translation>föld (referencia potenciál)</translation>
     </message>
@@ -3827,7 +3832,7 @@ Helytelen &apos;component&apos; sor!</translation>
         <translation>Föld</translation>
     </message>
     <message>
-        <location filename="components/gyrator.cpp" line="-34"/>
+        <location filename="../components/gyrator.cpp" line="-34"/>
         <source>gyrator (impedance inverter)</source>
         <translation>girátor (impedanciatranszformátor)</translation>
     </message>
@@ -3842,7 +3847,7 @@ Helytelen &apos;component&apos; sor!</translation>
         <translation>Girátor</translation>
     </message>
     <message>
-        <location filename="components/hb_sim.cpp" line="-29"/>
+        <location filename="../components/hb_sim.cpp" line="-29"/>
         <source>Harmonic balance simulation</source>
         <translation>Harmonikus egyensúly szimuláció</translation>
     </message>
@@ -3857,7 +3862,7 @@ Helytelen &apos;component&apos; sor!</translation>
         <translation>Harmonikus egyensúly</translation>
     </message>
     <message>
-        <location filename="components/inductor.cpp" line="+23"/>
+        <location filename="../components/inductor.cpp" line="+23"/>
         <source>inductor</source>
         <translation>tekercs</translation>
     </message>
@@ -3872,7 +3877,7 @@ Helytelen &apos;component&apos; sor!</translation>
         <translation>Tekercs</translation>
     </message>
     <message>
-        <location filename="components/iprobe.cpp" line="+23"/>
+        <location filename="../components/iprobe.cpp" line="+23"/>
         <source>current probe</source>
         <translation>áram próba</translation>
     </message>
@@ -3882,7 +3887,7 @@ Helytelen &apos;component&apos; sor!</translation>
         <translation>Áram próba</translation>
     </message>
     <message>
-        <location filename="components/ipulse.cpp" line="+23"/>
+        <location filename="../components/ipulse.cpp" line="+23"/>
         <source>ideal current pulse source</source>
         <translation>ideális áramimpulzus generátor</translation>
     </message>
@@ -3898,29 +3903,29 @@ Helytelen &apos;component&apos; sor!</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/vpulse.cpp" line="+54"/>
+        <location filename="../components/vpulse.cpp" line="+54"/>
         <source>start time of the pulse</source>
         <translation>impulzus indulási idő</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/vpulse.cpp" line="+2"/>
+        <location filename="../components/vpulse.cpp" line="+2"/>
         <source>ending time of the pulse</source>
         <translation>impulzus befelyezési idő</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/irect.cpp" line="+59"/>
-        <location filename="components/vpulse.cpp" line="+2"/>
-        <location filename="components/vrect.cpp" line="+58"/>
+        <location filename="../components/irect.cpp" line="+59"/>
+        <location filename="../components/vpulse.cpp" line="+2"/>
+        <location filename="../components/vrect.cpp" line="+58"/>
         <source>rise time of the leading edge</source>
         <translation>felfutási idő</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/irect.cpp" line="+2"/>
-        <location filename="components/vpulse.cpp" line="+2"/>
-        <location filename="components/vrect.cpp" line="+2"/>
+        <location filename="../components/irect.cpp" line="+2"/>
+        <location filename="../components/vpulse.cpp" line="+2"/>
+        <location filename="../components/vrect.cpp" line="+2"/>
         <source>fall time of the trailing edge</source>
         <translation>lefutási idő</translation>
     </message>
@@ -3930,7 +3935,7 @@ Helytelen &apos;component&apos; sor!</translation>
         <translation>Áram impulzus</translation>
     </message>
     <message>
-        <location filename="components/irect.cpp" line="-38"/>
+        <location filename="../components/irect.cpp" line="-38"/>
         <source>ideal rectangle current source</source>
         <translation>ideális négyszögáram generátor</translation>
     </message>
@@ -3941,13 +3946,13 @@ Helytelen &apos;component&apos; sor!</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/vrect.cpp" line="-6"/>
+        <location filename="../components/vrect.cpp" line="-6"/>
         <source>duration of high pulses</source>
         <translation>a magas szint szélessége</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/vrect.cpp" line="+2"/>
+        <location filename="../components/vrect.cpp" line="+2"/>
         <source>duration of low pulses</source>
         <translation>az alacsony szint szélessége</translation>
     </message>
@@ -3957,47 +3962,47 @@ Helytelen &apos;component&apos; sor!</translation>
         <translation>Négyszögáram</translation>
     </message>
     <message>
-        <location filename="components/isolator.cpp" line="-30"/>
+        <location filename="../components/isolator.cpp" line="-30"/>
         <source>isolator</source>
         <translation>izolátor</translation>
     </message>
     <message>
-        <location filename="components/amplifier.cpp" line="+46"/>
-        <location filename="components/isolator.cpp" line="+26"/>
+        <location filename="../components/amplifier.cpp" line="+46"/>
+        <location filename="../components/isolator.cpp" line="+26"/>
         <source>reference impedance of input port</source>
         <translation>névleges impedancia a bemeneten</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/isolator.cpp" line="+2"/>
+        <location filename="../components/isolator.cpp" line="+2"/>
         <source>reference impedance of output port</source>
         <translation>névleges impedancia a kimeneten</translation>
     </message>
     <message>
-        <location filename="components/isolator.cpp" line="+16"/>
+        <location filename="../components/isolator.cpp" line="+16"/>
         <source>Isolator</source>
         <translation>Izolátor</translation>
     </message>
     <message>
-        <location filename="components/jfet.cpp" line="-38"/>
+        <location filename="../components/jfet.cpp" line="-38"/>
         <source>junction field-effect transistor</source>
         <translation>JFET</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location filename="components/nigbt.cpp" line="+60"/>
+        <location filename="../components/nigbt.cpp" line="+60"/>
         <source>threshold voltage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/EKV26MOS.cpp" line="-99"/>
-        <location filename="components/MESFET.cpp" line="-56"/>
-        <location filename="components/jfet.cpp" line="+2"/>
+        <location filename="../components/EKV26MOS.cpp" line="-99"/>
+        <location filename="../components/MESFET.cpp" line="-56"/>
+        <location filename="../components/jfet.cpp" line="+2"/>
         <source>transconductance parameter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/jfet.cpp" line="+2"/>
+        <location filename="../components/jfet.cpp" line="+2"/>
         <source>channel-length modulation parameter</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4067,12 +4072,12 @@ Helytelen &apos;component&apos; sor!</translation>
         <translation>p-JFET</translation>
     </message>
     <message>
-        <location filename="components/mosfet.cpp" line="+25"/>
+        <location filename="../components/mosfet.cpp" line="+25"/>
         <source>MOS field-effect transistor</source>
         <translation>MOS térvezérlésű tranzisztor</translation>
     </message>
     <message>
-        <location filename="components/mosfet_sub.cpp" line="-90"/>
+        <location filename="../components/mosfet_sub.cpp" line="-90"/>
         <source>zero-bias threshold voltage</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4257,42 +4262,42 @@ Helytelen &apos;component&apos; sor!</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/mosfet.cpp" line="+20"/>
-        <location filename="components/mosfet_sub.cpp" line="+37"/>
+        <location filename="../components/mosfet.cpp" line="+20"/>
+        <location filename="../components/mosfet_sub.cpp" line="+37"/>
         <source>n-MOSFET</source>
         <translation>n-MOSFET</translation>
     </message>
     <message>
         <location line="+10"/>
-        <location filename="components/mosfet_sub.cpp" line="+11"/>
+        <location filename="../components/mosfet_sub.cpp" line="+11"/>
         <source>p-MOSFET</source>
         <translation>p-MOSFET</translation>
     </message>
     <message>
         <location line="+16"/>
-        <location filename="components/mosfet_sub.cpp" line="+17"/>
+        <location filename="../components/mosfet_sub.cpp" line="+17"/>
         <source>depletion MOSFET</source>
         <translation>kiürítéses MOSFET</translation>
     </message>
     <message>
-        <location filename="components/mscorner.cpp" line="+23"/>
+        <location filename="../components/mscorner.cpp" line="+23"/>
         <source>microstrip corner</source>
         <translation>mikrosztrip sarok</translation>
     </message>
     <message>
-        <location filename="components/bondwire.cpp" line="-2"/>
-        <location filename="components/mscorner.cpp" line="+23"/>
-        <location filename="components/mscross.cpp" line="+29"/>
-        <location filename="components/msmbend.cpp" line="+47"/>
-        <location filename="components/msstep.cpp" line="+50"/>
-        <location filename="components/mstee.cpp" line="+35"/>
-        <location filename="components/msvia.cpp" line="-4"/>
+        <location filename="../components/bondwire.cpp" line="-2"/>
+        <location filename="../components/mscorner.cpp" line="+23"/>
+        <location filename="../components/mscross.cpp" line="+29"/>
+        <location filename="../components/msmbend.cpp" line="+47"/>
+        <location filename="../components/msstep.cpp" line="+50"/>
+        <location filename="../components/mstee.cpp" line="+36"/>
+        <location filename="../components/msvia.cpp" line="-4"/>
         <source>substrate</source>
         <translation>szubsztrát</translation>
     </message>
     <message>
-        <location filename="components/mscorner.cpp" line="+2"/>
-        <location filename="components/msmbend.cpp" line="+2"/>
+        <location filename="../components/mscorner.cpp" line="+2"/>
+        <location filename="../components/msmbend.cpp" line="+2"/>
         <source>width of line</source>
         <translation>vonal szélessége</translation>
     </message>
@@ -4302,31 +4307,31 @@ Helytelen &apos;component&apos; sor!</translation>
         <translation>Mikrosztrip Sarok</translation>
     </message>
     <message>
-        <location filename="components/mscoupled.cpp" line="-38"/>
+        <location filename="../components/mscoupled.cpp" line="-38"/>
         <source>coupled microstrip line</source>
         <translation>páros mikrosztrip vonal</translation>
     </message>
     <message>
         <location line="+40"/>
-        <location filename="components/mslange.cpp" line="+2"/>
+        <location filename="../components/mslange.cpp" line="+2"/>
         <source>spacing between the lines</source>
         <translation>vonalak közötti távolság</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/mslange.cpp" line="+2"/>
+        <location filename="../components/mslange.cpp" line="+2"/>
         <source>microstrip model</source>
         <translation>mikrosztrip modell</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/mscross.cpp" line="+13"/>
-        <location filename="components/msgap.cpp" line="+11"/>
-        <location filename="components/mslange.cpp" line="+2"/>
-        <location filename="components/msline.cpp" line="+5"/>
-        <location filename="components/msopen.cpp" line="+5"/>
-        <location filename="components/msstep.cpp" line="+9"/>
-        <location filename="components/mstee.cpp" line="+11"/>
+        <location filename="../components/mscross.cpp" line="+13"/>
+        <location filename="../components/msgap.cpp" line="+11"/>
+        <location filename="../components/mslange.cpp" line="+2"/>
+        <location filename="../components/msline.cpp" line="+5"/>
+        <location filename="../components/msopen.cpp" line="+5"/>
+        <location filename="../components/msstep.cpp" line="+9"/>
+        <location filename="../components/mstee.cpp" line="+11"/>
         <source>microstrip dispersion model</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4336,27 +4341,27 @@ Helytelen &apos;component&apos; sor!</translation>
         <translation>Páros Mikrosztrip Vonal</translation>
     </message>
     <message>
-        <location filename="components/mscross.cpp" line="-19"/>
+        <location filename="../components/mscross.cpp" line="-19"/>
         <source>microstrip cross</source>
         <translation>mikrosztrip kereszteződés</translation>
     </message>
     <message>
-        <location filename="components/cpwstep.cpp" line="+2"/>
-        <location filename="components/mscross.cpp" line="+8"/>
-        <location filename="components/mstee.cpp" line="-9"/>
+        <location filename="../components/cpwstep.cpp" line="+2"/>
+        <location filename="../components/mscross.cpp" line="+8"/>
+        <location filename="../components/mstee.cpp" line="-9"/>
         <source>width of line 1</source>
         <translation>1-es vonal szélessége</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/mscross.cpp" line="+2"/>
-        <location filename="components/mstee.cpp" line="+2"/>
+        <location filename="../components/mscross.cpp" line="+2"/>
+        <location filename="../components/mstee.cpp" line="+2"/>
         <source>width of line 2</source>
         <translation>2-es vonal szélessége</translation>
     </message>
     <message>
-        <location filename="components/mscross.cpp" line="+2"/>
-        <location filename="components/mstee.cpp" line="+2"/>
+        <location filename="../components/mscross.cpp" line="+2"/>
+        <location filename="../components/mstee.cpp" line="+2"/>
         <source>width of line 3</source>
         <translation>3-es vonal szélessége</translation>
     </message>
@@ -4371,7 +4376,7 @@ Helytelen &apos;component&apos; sor!</translation>
         <translation>Mikrosztrip Kereszteződés</translation>
     </message>
     <message>
-        <location filename="components/msgap.cpp" line="-39"/>
+        <location filename="../components/msgap.cpp" line="-39"/>
         <source>microstrip gap</source>
         <translation>mikrosztrip rés</translation>
     </message>
@@ -4391,22 +4396,22 @@ Helytelen &apos;component&apos; sor!</translation>
         <translation>térköz a mikrosztrip végei között</translation>
     </message>
     <message>
-        <location filename="components/mscross.cpp" line="-23"/>
-        <location filename="components/msgap.cpp" line="+2"/>
-        <location filename="components/msline.cpp" line="-3"/>
-        <location filename="components/msopen.cpp" line="-3"/>
-        <location filename="components/msstep.cpp" line="-3"/>
-        <location filename="components/mstee.cpp" line="+2"/>
+        <location filename="../components/mscross.cpp" line="-23"/>
+        <location filename="../components/msgap.cpp" line="+2"/>
+        <location filename="../components/msline.cpp" line="-3"/>
+        <location filename="../components/msopen.cpp" line="-3"/>
+        <location filename="../components/msstep.cpp" line="-3"/>
+        <location filename="../components/mstee.cpp" line="+2"/>
         <source>quasi-static microstrip model</source>
         <translation>kvázi-sztatikus mikrosztrip modell</translation>
     </message>
     <message>
-        <location filename="components/msgap.cpp" line="+18"/>
+        <location filename="../components/msgap.cpp" line="+18"/>
         <source>Microstrip Gap</source>
         <translation>Mikrosztrip Rés</translation>
     </message>
     <message>
-        <location filename="components/msline.cpp" line="-27"/>
+        <location filename="../components/msline.cpp" line="-27"/>
         <source>microstrip line</source>
         <translation>mikrosztrip vonal</translation>
     </message>
@@ -4416,7 +4421,7 @@ Helytelen &apos;component&apos; sor!</translation>
         <translation>Mikrosztrip Vonal</translation>
     </message>
     <message>
-        <location filename="components/msmbend.cpp" line="-26"/>
+        <location filename="../components/msmbend.cpp" line="-26"/>
         <source>microstrip mitered bend</source>
         <translation>mikrosztrip levágott kanyar</translation>
     </message>
@@ -4426,7 +4431,7 @@ Helytelen &apos;component&apos; sor!</translation>
         <translation>Mikrosztrip Levágott Kanyar</translation>
     </message>
     <message>
-        <location filename="components/msopen.cpp" line="-23"/>
+        <location filename="../components/msopen.cpp" line="-23"/>
         <source>microstrip open</source>
         <translation>nyitott mikrosztrip</translation>
     </message>
@@ -4441,7 +4446,7 @@ Helytelen &apos;component&apos; sor!</translation>
         <translation>Nyitott Mikrosztrip</translation>
     </message>
     <message>
-        <location filename="components/msstep.cpp" line="-33"/>
+        <location filename="../components/msstep.cpp" line="-33"/>
         <source>microstrip impedance step</source>
         <translation>mikrosztrip ellenállás lépés</translation>
     </message>
@@ -4461,7 +4466,7 @@ Helytelen &apos;component&apos; sor!</translation>
         <translation>Mikrosztrip Lépcső</translation>
     </message>
     <message>
-        <location filename="components/mstee.cpp" line="-20"/>
+        <location filename="../components/mstee.cpp" line="-20"/>
         <source>microstrip tee</source>
         <translation>mikrosztrip elágazás</translation>
     </message>
@@ -4471,7 +4476,7 @@ Helytelen &apos;component&apos; sor!</translation>
         <translation>Mikrosztrip Elágazás</translation>
     </message>
     <message>
-        <location filename="components/param_sweep.cpp" line="-30"/>
+        <location filename="../components/param_sweep.cpp" line="-30"/>
         <location line="+44"/>
         <source>Parameter sweep</source>
         <translation>Paraméter léptetés</translation>
@@ -4497,23 +4502,23 @@ Helytelen &apos;component&apos; sor!</translation>
         <translation>befejező érték a léptetéshez</translation>
     </message>
     <message>
-        <location filename="components/phaseshifter.cpp" line="-26"/>
+        <location filename="../components/phaseshifter.cpp" line="-26"/>
         <source>phase shifter</source>
         <translation>fázishasító</translation>
     </message>
     <message>
-        <location filename="components/hybrid.cpp" line="-2"/>
-        <location filename="components/phaseshifter.cpp" line="+24"/>
+        <location filename="../components/hybrid.cpp" line="-2"/>
+        <location filename="../components/phaseshifter.cpp" line="+24"/>
         <source>phase shift in degree</source>
         <translation>fázishasítás szöge</translation>
     </message>
     <message>
-        <location filename="components/phaseshifter.cpp" line="+16"/>
+        <location filename="../components/phaseshifter.cpp" line="+16"/>
         <source>Phase Shifter</source>
         <translation>Fázishasító</translation>
     </message>
     <message>
-        <location filename="components/resistor.cpp" line="-5"/>
+        <location filename="../components/resistor.cpp" line="-5"/>
         <source>resistor</source>
         <translation>ellenállás</translation>
     </message>
@@ -4523,17 +4528,17 @@ Helytelen &apos;component&apos; sor!</translation>
         <translation>Ohmikus ellenállás - Ohm</translation>
     </message>
     <message>
-        <location filename="components/capacitor.cpp" line="-16"/>
-        <location filename="components/component.cpp" line="-259"/>
-        <location filename="components/diode.cpp" line="-16"/>
-        <location filename="components/logical_buf.cpp" line="+6"/>
-        <location filename="components/logical_inv.cpp" line="+6"/>
-        <location filename="components/resistor.cpp" line="+12"/>
+        <location filename="../components/capacitor.cpp" line="-16"/>
+        <location filename="../components/component.cpp" line="-269"/>
+        <location filename="../components/diode.cpp" line="-16"/>
+        <location filename="../components/logical_buf.cpp" line="+6"/>
+        <location filename="../components/logical_inv.cpp" line="+6"/>
+        <location filename="../components/resistor.cpp" line="+12"/>
         <source>schematic symbol</source>
         <translation>Rajzjel</translation>
     </message>
     <message>
-        <location filename="components/resistor.cpp" line="+49"/>
+        <location filename="../components/resistor.cpp" line="+49"/>
         <source>Resistor</source>
         <translation>Ellenállás</translation>
     </message>
@@ -4543,18 +4548,18 @@ Helytelen &apos;component&apos; sor!</translation>
         <translation>Ellenállás US</translation>
     </message>
     <message>
-        <location filename="components/source_ac.cpp" line="-44"/>
+        <location filename="../components/source_ac.cpp" line="-44"/>
         <source>ac power source</source>
         <translation>AC teljesítmény generátor</translation>
     </message>
     <message>
-        <location filename="components/digi_source.cpp" line="+53"/>
-        <location filename="components/source_ac.cpp" line="+36"/>
+        <location filename="../components/digi_source.cpp" line="+52"/>
+        <location filename="../components/source_ac.cpp" line="+36"/>
         <source>number of the port</source>
         <translation>kivezetések száma</translation>
     </message>
     <message>
-        <location filename="components/source_ac.cpp" line="+2"/>
+        <location filename="../components/source_ac.cpp" line="+2"/>
         <source>port impedance</source>
         <translation>kivezetés impedancia</translation>
     </message>
@@ -4568,7 +4573,7 @@ Helytelen &apos;component&apos; sor!</translation>
         <translation>AC teljesítmény generátor</translation>
     </message>
     <message>
-        <location filename="components/sparamfile.cpp" line="+28"/>
+        <location filename="../components/sparamfile.cpp" line="+27"/>
         <source>S parameter file</source>
         <translation>S paraméter fájl</translation>
     </message>
@@ -4583,19 +4588,19 @@ Helytelen &apos;component&apos; sor!</translation>
         <translation>s paraméter fájl neve</translation>
     </message>
     <message>
-        <location filename="components/ifile.cpp" line="-4"/>
-        <location filename="components/sparamfile.cpp" line="+4"/>
-        <location filename="components/vfile.cpp" line="-4"/>
+        <location filename="../components/ifile.cpp" line="-4"/>
+        <location filename="../components/sparamfile.cpp" line="+4"/>
+        <location filename="../components/vfile.cpp" line="-4"/>
         <source>interpolation type</source>
         <translation>interpolációs típus</translation>
     </message>
     <message>
-        <location filename="components/sparamfile.cpp" line="+40"/>
+        <location filename="../components/sparamfile.cpp" line="+40"/>
         <source>1-port S parameter file</source>
         <translation>1-csatlakozós S paraméter fájl</translation>
     </message>
     <message>
-        <location filename="components/sp_sim.cpp" line="-30"/>
+        <location filename="../components/sp_sim.cpp" line="-30"/>
         <source>S parameter simulation</source>
         <translation>S paraméter szimuláció</translation>
     </message>
@@ -4620,7 +4625,7 @@ Helytelen &apos;component&apos; sor!</translation>
         <translation>S-paraméter szimuláció</translation>
     </message>
     <message>
-        <location filename="components/subcircuit.cpp" line="+41"/>
+        <location filename="../components/subcircuit.cpp" line="+34"/>
         <source>subcircuit</source>
         <translation>beágyazott kapcsolás</translation>
     </message>
@@ -4630,7 +4635,7 @@ Helytelen &apos;component&apos; sor!</translation>
         <translation>qucs kapcsolási rajz fájl neve</translation>
     </message>
     <message>
-        <location filename="components/subcirport.cpp" line="+26"/>
+        <location filename="../components/subcirport.cpp" line="+25"/>
         <source>port of a subcircuit</source>
         <translation> kivezetés a beágyazott kapcsoláshoz</translation>
     </message>
@@ -4645,7 +4650,7 @@ Helytelen &apos;component&apos; sor!</translation>
         <translation>Beágyazott kapcsolás kivezetés</translation>
     </message>
     <message>
-        <location filename="components/substrate.cpp" line="+23"/>
+        <location filename="../components/substrate.cpp" line="+23"/>
         <source>substrate definition</source>
         <translation>szubsztrát definició</translation>
     </message>
@@ -4665,15 +4670,15 @@ Helytelen &apos;component&apos; sor!</translation>
         <translation>fémezés vastagsága</translation>
     </message>
     <message>
-        <location filename="components/coaxialline.cpp" line="-2"/>
-        <location filename="components/rectline.cpp" line="-4"/>
-        <location filename="components/substrate.cpp" line="+2"/>
-        <location filename="components/twistedpair.cpp" line="-2"/>
+        <location filename="../components/coaxialline.cpp" line="-2"/>
+        <location filename="../components/rectline.cpp" line="-4"/>
+        <location filename="../components/substrate.cpp" line="+2"/>
+        <location filename="../components/twistedpair.cpp" line="-2"/>
         <source>loss tangent</source>
         <translation>érintő veszteség</translation>
     </message>
     <message>
-        <location filename="components/substrate.cpp" line="+2"/>
+        <location filename="../components/substrate.cpp" line="+2"/>
         <source>specific resistance of metal</source>
         <translation>a fém saját ellenállása</translation>
     </message>
@@ -4688,7 +4693,7 @@ Helytelen &apos;component&apos; sor!</translation>
         <translation>Szubsztrát</translation>
     </message>
     <message>
-        <location filename="components/symtrafo.cpp" line="+23"/>
+        <location filename="../components/symtrafo.cpp" line="+23"/>
         <source>ideal symmetrical transformer</source>
         <translation>ideális szimetrikus transzformátor</translation>
     </message>
@@ -4708,31 +4713,31 @@ Helytelen &apos;component&apos; sor!</translation>
         <translation>szimetrikus transzformátor</translation>
     </message>
     <message>
-        <location filename="components/tline.cpp" line="-32"/>
+        <location filename="../components/tline.cpp" line="-32"/>
         <source>ideal transmission line</source>
         <translation>ideális tápvonal</translation>
     </message>
     <message>
         <location line="+26"/>
-        <location filename="components/tline_4port.cpp" line="-6"/>
+        <location filename="../components/tline_4port.cpp" line="-6"/>
         <source>characteristic impedance</source>
         <translation>karakterisztikus ellenállás</translation>
     </message>
     <message>
-        <location filename="components/ctline.cpp" line="-10"/>
-        <location filename="components/rlcg.cpp" line="-2"/>
-        <location filename="components/tline.cpp" line="+2"/>
-        <location filename="components/tline_4port.cpp" line="+2"/>
+        <location filename="../components/ctline.cpp" line="-10"/>
+        <location filename="../components/rlcg.cpp" line="-2"/>
+        <location filename="../components/tline.cpp" line="+2"/>
+        <location filename="../components/tline_4port.cpp" line="+2"/>
         <source>electrical length of the line</source>
         <translation>a vonal elektromos hossza</translation>
     </message>
     <message>
-        <location filename="components/tline.cpp" line="+18"/>
+        <location filename="../components/tline.cpp" line="+18"/>
         <source>Transmission Line</source>
         <translation>Tápvonal</translation>
     </message>
     <message>
-        <location filename="components/transformer.cpp" line="+23"/>
+        <location filename="../components/transformer.cpp" line="+23"/>
         <source>ideal transformer</source>
         <translation>ideális transzformátor</translation>
     </message>
@@ -4747,7 +4752,7 @@ Helytelen &apos;component&apos; sor!</translation>
         <translation>Transzformátor</translation>
     </message>
     <message>
-        <location filename="components/tr_sim.cpp" line="-37"/>
+        <location filename="../components/tr_sim.cpp" line="-37"/>
         <source>transient simulation</source>
         <translation>Tranziens szimuláció</translation>
     </message>
@@ -4767,49 +4772,49 @@ Helytelen &apos;component&apos; sor!</translation>
         <translation>Lépészsám a szimuláció alatt </translation>
     </message>
     <message>
-        <location filename="components/etr_sim.cpp" line="-28"/>
+        <location filename="../components/etr_sim.cpp" line="-28"/>
         <source>externally driven transient simulation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+19"/>
-        <location filename="components/tr_sim.cpp" line="+2"/>
+        <location filename="../components/tr_sim.cpp" line="+2"/>
         <source>integration method</source>
         <translation>integrációs módszer</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/tr_sim.cpp" line="+3"/>
+        <location filename="../components/tr_sim.cpp" line="+3"/>
         <source>order of integration method</source>
         <translation>integrációs módszer sorrendje</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/tr_sim.cpp" line="+2"/>
+        <location filename="../components/tr_sim.cpp" line="+2"/>
         <source>initial step size in seconds</source>
         <translation>kezdeti lépésméret másodpercekben</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/tr_sim.cpp" line="+2"/>
+        <location filename="../components/tr_sim.cpp" line="+2"/>
         <source>minimum step size in seconds</source>
         <translation>minimum lépésszám másodpercenként</translation>
     </message>
     <message>
         <location line="+12"/>
-        <location filename="components/tr_sim.cpp" line="+12"/>
+        <location filename="../components/tr_sim.cpp" line="+12"/>
         <source>relative tolerance of local truncation error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/tr_sim.cpp" line="+2"/>
+        <location filename="../components/tr_sim.cpp" line="+2"/>
         <source>absolute tolerance of local truncation error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/tr_sim.cpp" line="+2"/>
+        <location filename="../components/tr_sim.cpp" line="+2"/>
         <source>overestimation of local truncation error</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4819,13 +4824,13 @@ Helytelen &apos;component&apos; sor!</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/tr_sim.cpp" line="+23"/>
+        <location filename="../components/tr_sim.cpp" line="+23"/>
         <source>Transient simulation</source>
         <translation>Tranziens szimuláció</translation>
     </message>
     <message>
-        <location filename="components/vcresistor.cpp" line="+23"/>
-        <location filename="components/vcvs.cpp" line="-42"/>
+        <location filename="../components/vcresistor.cpp" line="+23"/>
+        <location filename="../components/vcvs.cpp" line="-42"/>
         <source>voltage controlled voltage source</source>
         <translation>feszültségvezérelt feszültséggenerátor</translation>
     </message>
@@ -4840,12 +4845,12 @@ Helytelen &apos;component&apos; sor!</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/vcvs.cpp" line="+56"/>
+        <location filename="../components/vcvs.cpp" line="+56"/>
         <source>Voltage Controlled Voltage Source</source>
         <translation>Feszültség vezérelt feszültség generátor</translation>
     </message>
     <message>
-        <location filename="components/vccs.cpp" line="-41"/>
+        <location filename="../components/vccs.cpp" line="-41"/>
         <source>voltage controlled current source</source>
         <translation>feszültségvezérelt áramgenerátor</translation>
     </message>
@@ -4860,7 +4865,7 @@ Helytelen &apos;component&apos; sor!</translation>
         <translation>Feszültség vezérelt áramgenerátor</translation>
     </message>
     <message>
-        <location filename="components/volt_ac.cpp" line="-27"/>
+        <location filename="../components/volt_ac.cpp" line="-27"/>
         <source>ideal ac voltage source</source>
         <translation>ideális váltófeszültség AC generátor</translation>
     </message>
@@ -4874,18 +4879,18 @@ Helytelen &apos;component&apos; sor!</translation>
         <translation>váltófeszültség AC generátor</translation>
     </message>
     <message>
-        <location filename="components/volt_dc.cpp" line="+23"/>
+        <location filename="../components/volt_dc.cpp" line="+23"/>
         <source>ideal dc voltage source</source>
         <translation>ideális egyenfeszültség DC forrás</translation>
     </message>
     <message>
-        <location filename="components/ecvs.cpp" line="+23"/>
+        <location filename="../components/ecvs.cpp" line="+22"/>
         <source>externally controlled voltage source</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+45"/>
-        <location filename="components/volt_dc.cpp" line="+22"/>
+        <location filename="../components/volt_dc.cpp" line="+22"/>
         <source>voltage in Volts</source>
         <translation>feszültség Voltban</translation>
     </message>
@@ -4895,12 +4900,12 @@ Helytelen &apos;component&apos; sor!</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/volt_dc.cpp" line="+16"/>
+        <location filename="../components/volt_dc.cpp" line="+16"/>
         <source>dc Voltage Source</source>
         <translation>Egyenfeszültség DC forrás</translation>
     </message>
     <message>
-        <location filename="components/volt_noise.cpp" line="-29"/>
+        <location filename="../components/volt_noise.cpp" line="-29"/>
         <source>noise voltage source</source>
         <translation>zajfeszültség generátor</translation>
     </message>
@@ -4915,7 +4920,7 @@ Helytelen &apos;component&apos; sor!</translation>
         <translation>Zajfeszültség generátor</translation>
     </message>
     <message>
-        <location filename="components/vpulse.cpp" line="-37"/>
+        <location filename="../components/vpulse.cpp" line="-37"/>
         <source>ideal voltage pulse source</source>
         <translation>ideális feszültségimpulzus generátor</translation>
     </message>
@@ -4935,7 +4940,7 @@ Helytelen &apos;component&apos; sor!</translation>
         <translation>Feszültség impulzus</translation>
     </message>
     <message>
-        <location filename="components/vrect.cpp" line="-33"/>
+        <location filename="../components/vrect.cpp" line="-33"/>
         <source>ideal rectangle voltage source</source>
         <translation>ideális négyszögfeszültség generátor</translation>
     </message>
@@ -4970,7 +4975,7 @@ Helytelen &apos;component&apos; sor!</translation>
         <translation type="obsolete">Mégsem</translation>
     </message>
     <message>
-        <location filename="../qucs-edit/main.cpp" line="+76"/>
+        <location filename="../../qucs-edit/main.cpp" line="+76"/>
         <source>Qucs Editor Version </source>
         <translation>Qucs editor verzió</translation>
     </message>
@@ -5040,34 +5045,34 @@ Használat:  qucsedit [-r] fájl
 </translation>
     </message>
     <message>
-        <location filename="schematic_file.cpp" line="-56"/>
+        <location filename="../schematic_file.cpp" line="-54"/>
         <source>Wrong document type: </source>
         <translation>Helytelen dokumentum típus:</translation>
     </message>
     <message>
-        <location filename="diagrams/tabdiagram.cpp" line="-92"/>
-        <location filename="diagrams/timingdiagram.cpp" line="+148"/>
-        <location filename="diagrams/truthdiagram.cpp" line="+77"/>
+        <location filename="../diagrams/tabdiagram.cpp" line="-93"/>
+        <location filename="../diagrams/timingdiagram.cpp" line="+162"/>
+        <location filename="../diagrams/truthdiagram.cpp" line="+91"/>
         <source>no variables</source>
         <translation>nincsenek változók</translation>
     </message>
     <message>
-        <location line="+148"/>
-        <location filename="diagrams/timingdiagram.cpp" line="+14"/>
+        <location line="+149"/>
+        <location filename="../diagrams/timingdiagram.cpp" line="+14"/>
         <location line="+113"/>
-        <location filename="diagrams/truthdiagram.cpp" line="+141"/>
+        <location filename="../diagrams/truthdiagram.cpp" line="+141"/>
         <source>no data</source>
         <translation>nincs adat</translation>
     </message>
     <message>
-        <location filename="components/amplifier.cpp" line="-25"/>
+        <location filename="../components/amplifier.cpp" line="-25"/>
         <source>ideal amplifier</source>
         <translation>ideális erősítő</translation>
     </message>
     <message>
         <location line="+21"/>
-        <location filename="components/opamp.cpp" line="+50"/>
-        <location filename="components/vfile.cpp" line="+3"/>
+        <location filename="../components/opamp.cpp" line="+50"/>
+        <location filename="../components/vfile.cpp" line="+3"/>
         <source>voltage gain</source>
         <translation>feszültség erősítés</translation>
     </message>
@@ -5077,17 +5082,17 @@ Használat:  qucsedit [-r] fájl
         <translation>Erősítő</translation>
     </message>
     <message>
-        <location filename="components/dc_sim.cpp" line="+3"/>
+        <location filename="../components/dc_sim.cpp" line="+3"/>
         <source>preferred convergence algorithm</source>
         <translation>preferált konvergencia algoritmus</translation>
     </message>
     <message>
-        <location filename="components/mosfet_sub.cpp" line="-146"/>
+        <location filename="../components/mosfet_sub.cpp" line="-146"/>
         <source>transconductance coefficient in A/V^2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/msvia.cpp" line="-21"/>
+        <location filename="../components/msvia.cpp" line="-21"/>
         <source>microstrip via</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5102,7 +5107,7 @@ Használat:  qucsedit [-r] fájl
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/opamp.cpp" line="-27"/>
+        <location filename="../components/opamp.cpp" line="-27"/>
         <source>operational amplifier</source>
         <translation>műveleti erősítő</translation>
     </message>
@@ -5117,7 +5122,7 @@ Használat:  qucsedit [-r] fájl
         <translation>Műveleti Erősítő</translation>
     </message>
     <message>
-        <location filename="components/spicefile.cpp" line="+44"/>
+        <location filename="../components/spicefile.cpp" line="+41"/>
         <source>SPICE netlist file</source>
         <translation>SPICE kötéslista fájl</translation>
     </message>
@@ -5127,61 +5132,66 @@ Használat:  qucsedit [-r] fájl
         <translation>spice</translation>
     </message>
     <message>
-        <location line="-35"/>
+        <location line="+336"/>
+        <source>COMP ERROR: Cannot start QucsConv!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-371"/>
         <source>SPICE netlist</source>
         <translation>SPICE kötéslista</translation>
     </message>
     <message>
-        <location filename="components/ac_sim.cpp" line="+2"/>
+        <location filename="../components/ac_sim.cpp" line="+2"/>
         <source>calculate noise voltages</source>
         <translation>zajfeszültség számolás</translation>
     </message>
     <message>
-        <location filename="components/coplanar.cpp" line="-18"/>
-        <location filename="components/cpwopen.cpp" line="+4"/>
-        <location filename="components/cpwshort.cpp" line="+2"/>
-        <location filename="components/cpwstep.cpp" line="+4"/>
+        <location filename="../components/coplanar.cpp" line="-18"/>
+        <location filename="../components/cpwopen.cpp" line="+4"/>
+        <location filename="../components/cpwshort.cpp" line="+2"/>
+        <location filename="../components/cpwstep.cpp" line="+4"/>
         <source>material at the backside of the substrate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/mstee.cpp" line="-19"/>
+        <location filename="../components/mstee.cpp" line="-19"/>
         <source>temperature in degree Celsius</source>
         <translation>Hőmérséklet celziuszfok-ban</translation>
     </message>
     <message>
-        <location filename="../qucs-edit/main.cpp" line="-68"/>
+        <location filename="../../qucs-edit/main.cpp" line="-68"/>
         <source>Copyright (C) 2004, 2005 by Michael Margraf
 </source>
         <translation>Copyright (C) 2004, 2005 by Michael Margraf
 </translation>
     </message>
     <message>
-        <location filename="components/coplanar.cpp" line="+3"/>
+        <location filename="../components/coplanar.cpp" line="+3"/>
         <source>use approximation instead of precise equation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/dc_sim.cpp" line="+3"/>
-        <location filename="components/etr_sim.cpp" line="-21"/>
-        <location filename="components/tr_sim.cpp" line="-21"/>
+        <location filename="../components/dc_sim.cpp" line="+3"/>
+        <location filename="../components/etr_sim.cpp" line="-21"/>
+        <location filename="../components/tr_sim.cpp" line="-21"/>
         <source>method for solving the circuit matrix</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/biast.cpp" line="-16"/>
-        <location filename="components/dcfeed.cpp" line="-14"/>
+        <location filename="../components/biast.cpp" line="-16"/>
+        <location filename="../components/dcfeed.cpp" line="-14"/>
         <source>for transient simulation: inductance in Henry</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/dcblock.cpp" line="-14"/>
+        <location filename="../components/dcblock.cpp" line="-14"/>
         <source>for transient simulation: capacitance in Farad</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/cpwopen.cpp" line="-48"/>
+        <location filename="../components/cpwopen.cpp" line="-48"/>
         <source>coplanar open</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5196,7 +5206,7 @@ Használat:  qucsedit [-r] fájl
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/cpwshort.cpp" line="-45"/>
+        <location filename="../components/cpwshort.cpp" line="-45"/>
         <source>coplanar short</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5206,7 +5216,7 @@ Használat:  qucsedit [-r] fájl
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/cpwgap.cpp" line="-45"/>
+        <location filename="../components/cpwgap.cpp" line="-45"/>
         <source>coplanar gap</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5221,12 +5231,12 @@ Használat:  qucsedit [-r] fájl
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/spicefile.cpp" line="+31"/>
+        <location filename="../components/spicefile.cpp" line="+31"/>
         <source>sim</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/cpwstep.cpp" line="-51"/>
+        <location filename="../components/cpwstep.cpp" line="-51"/>
         <source>coplanar step</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5241,32 +5251,32 @@ Használat:  qucsedit [-r] fájl
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/EKV26MOS.cpp" line="+81"/>
-        <location filename="components/diode.cpp" line="-26"/>
-        <location filename="components/photodiode.cpp" line="-21"/>
+        <location filename="../components/EKV26MOS.cpp" line="+81"/>
+        <location filename="../components/diode.cpp" line="-26"/>
+        <location filename="../components/photodiode.cpp" line="-21"/>
         <source>reverse breakdown voltage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/diode.cpp" line="+2"/>
-        <location filename="components/photodiode.cpp" line="+3"/>
+        <location filename="../components/diode.cpp" line="+2"/>
+        <location filename="../components/photodiode.cpp" line="+3"/>
         <source>current at reverse breakdown voltage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="schematic_file.cpp" line="+337"/>
+        <location filename="../schematic_file.cpp" line="+335"/>
         <source>ERROR: Cannot load subcircuit &quot;%1&quot;.</source>
         <translation>HIBA: A &quot;%1&quot;  beágyazott kapcsolás nem tölthető be.</translation>
     </message>
     <message>
-        <location line="+66"/>
-        <location filename="components/spicefile.cpp" line="+150"/>
+        <location line="+67"/>
+        <location filename="../components/spicefile.cpp" line="+150"/>
         <source>ERROR: No file name in SPICE component &quot;%1&quot;.</source>
         <translation>HIBA: A &quot;%1&quot; SPICE komponensnek nincs fájlneve.</translation>
     </message>
     <message>
-        <location filename="components/libcomp.cpp" line="+41"/>
+        <location filename="../components/libcomp.cpp" line="+33"/>
         <source>Component taken from Qucs library</source>
         <translation>Az alkatrész ki van véve a Qucs katalógusból</translation>
     </message>
@@ -5282,22 +5292,22 @@ Használat:  qucsedit [-r] fájl
         <translation>alkatrész neve az alkatrész-katalógusban</translation>
     </message>
     <message>
-        <location filename="schematic_file.cpp" line="-13"/>
+        <location filename="../schematic_file.cpp" line="-13"/>
         <source>ERROR: Cannot load library component &quot;%1&quot;.</source>
         <translation>HIBA: A &quot;%1&quot; alkatrész nem tölthető be a katalógusból.</translation>
     </message>
     <message>
-        <location filename="diagrams/curvediagram.cpp" line="+245"/>
+        <location filename="../diagrams/curvediagram.cpp" line="+253"/>
         <source>Locus Curve</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="diagrams/polardiagram.cpp" line="+98"/>
+        <location filename="../diagrams/polardiagram.cpp" line="+102"/>
         <source>Polar</source>
         <translation>Poláris</translation>
     </message>
     <message>
-        <location filename="diagrams/psdiagram.cpp" line="+125"/>
+        <location filename="../diagrams/psdiagram.cpp" line="+129"/>
         <source>Polar-Smith Combi</source>
         <translation>Poláris-Smith kombinált</translation>
     </message>
@@ -5307,17 +5317,17 @@ Használat:  qucsedit [-r] fájl
         <translation>Smith-Poláris kombinált</translation>
     </message>
     <message>
-        <location filename="diagrams/rect3ddiagram.cpp" line="+1140"/>
+        <location filename="../diagrams/rect3ddiagram.cpp" line="+1154"/>
         <source>3D-Cartesian</source>
         <translation>3D-Derékszögű</translation>
     </message>
     <message>
-        <location filename="diagrams/rectdiagram.cpp" line="+243"/>
+        <location filename="../diagrams/rectdiagram.cpp" line="+249"/>
         <source>Cartesian</source>
         <translation>Derékszögű</translation>
     </message>
     <message>
-        <location filename="diagrams/smithdiagram.cpp" line="+108"/>
+        <location filename="../diagrams/smithdiagram.cpp" line="+112"/>
         <source>Smith Chart</source>
         <translation>Smith Diagram</translation>
     </message>
@@ -5327,22 +5337,22 @@ Használat:  qucsedit [-r] fájl
         <translation>Belépő Smith</translation>
     </message>
     <message>
-        <location filename="diagrams/tabdiagram.cpp" line="+98"/>
+        <location filename="../diagrams/tabdiagram.cpp" line="+98"/>
         <source>Tabular</source>
         <translation>Táblázatos</translation>
     </message>
     <message>
-        <location filename="paintings/arrow.cpp" line="+137"/>
+        <location filename="../paintings/arrow.cpp" line="+135"/>
         <source>Arrow</source>
         <translation>Nyíl</translation>
     </message>
     <message>
-        <location filename="paintings/ellipsearc.cpp" line="-296"/>
+        <location filename="../paintings/ellipsearc.cpp" line="-296"/>
         <source>Elliptic Arc</source>
         <translation>Körív</translation>
     </message>
     <message>
-        <location filename="paintings/ellipse.cpp" line="-275"/>
+        <location filename="../paintings/ellipse.cpp" line="-275"/>
         <source>Ellipse</source>
         <translation>Elipszis</translation>
     </message>
@@ -5352,17 +5362,17 @@ Használat:  qucsedit [-r] fájl
         <translation>Kitöltött ellipszis</translation>
     </message>
     <message>
-        <location filename="paintings/graphicline.cpp" line="-236"/>
+        <location filename="../paintings/graphicline.cpp" line="-236"/>
         <source>Line</source>
         <translation>Vonal</translation>
     </message>
     <message>
-        <location filename="paintings/graphictext.cpp" line="+131"/>
+        <location filename="../paintings/graphictext.cpp" line="+129"/>
         <source>Text</source>
         <translation>Szöveg</translation>
     </message>
     <message>
-        <location filename="paintings/rectangle.cpp" line="-277"/>
+        <location filename="../paintings/rectangle.cpp" line="-277"/>
         <source>Rectangle</source>
         <translation>Téglalap</translation>
     </message>
@@ -5372,43 +5382,43 @@ Használat:  qucsedit [-r] fájl
         <translation>Kitöltött téglalap</translation>
     </message>
     <message>
-        <location filename="diagrams/tabdiagram.cpp" line="-105"/>
-        <location filename="diagrams/timingdiagram.cpp" line="-80"/>
+        <location filename="../diagrams/tabdiagram.cpp" line="-105"/>
+        <location filename="../diagrams/timingdiagram.cpp" line="-80"/>
         <location line="+89"/>
-        <location filename="diagrams/truthdiagram.cpp" line="-7"/>
+        <location filename="../diagrams/truthdiagram.cpp" line="-7"/>
         <source>wrong dependency</source>
         <translation>rossz függőség</translation>
     </message>
     <message>
-        <location filename="components/mutual2.cpp" line="+23"/>
+        <location filename="../components/mutual2.cpp" line="+23"/>
         <source>three mutual inductors</source>
         <translation>három csatolt tekercs</translation>
     </message>
     <message>
-        <location filename="components/mutual.cpp" line="+58"/>
-        <location filename="components/mutual2.cpp" line="+46"/>
+        <location filename="../components/mutual.cpp" line="+58"/>
+        <location filename="../components/mutual2.cpp" line="+46"/>
         <source>inductance of coil 1</source>
         <translation>1. tekercs induktivitása</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/mutual2.cpp" line="+2"/>
+        <location filename="../components/mutual2.cpp" line="+2"/>
         <source>inductance of coil 2</source>
         <translation>2. tekercs induktivitása</translation>
     </message>
     <message>
-        <location filename="components/mutual2.cpp" line="+2"/>
+        <location filename="../components/mutual2.cpp" line="+2"/>
         <source>inductance of coil 3</source>
         <translation>3. tekercs induktivitása</translation>
     </message>
     <message>
-        <location filename="components/mutual.cpp" line="+2"/>
-        <location filename="components/mutual2.cpp" line="+2"/>
+        <location filename="../components/mutual.cpp" line="+2"/>
+        <location filename="../components/mutual2.cpp" line="+2"/>
         <source>coupling factor between coil 1 and 2</source>
         <translation>1-2 tekercs közötti csatolási tényező</translation>
     </message>
     <message>
-        <location filename="components/mutual2.cpp" line="+2"/>
+        <location filename="../components/mutual2.cpp" line="+2"/>
         <source>coupling factor between coil 1 and 3</source>
         <translation>1-3 tekercs közötti csatolási tényező</translation>
     </message>
@@ -5418,7 +5428,7 @@ Használat:  qucsedit [-r] fájl
         <translation>2-3 tekercs közötti csatolási tényező</translation>
     </message>
     <message>
-        <location filename="components/mutual.cpp" line="-39"/>
+        <location filename="../components/mutual.cpp" line="-39"/>
         <source>two mutual inductors</source>
         <translation>két csatolt tekercs</translation>
     </message>
@@ -5428,20 +5438,20 @@ Használat:  qucsedit [-r] fájl
         <translation>Csatolt tekercs</translation>
     </message>
     <message>
-        <location filename="components/mutual2.cpp" line="+14"/>
+        <location filename="../components/mutual2.cpp" line="+14"/>
         <source>3 Mutual Inductors</source>
         <translation>3 csatolt tekercs</translation>
     </message>
     <message>
-        <location filename="components/noise_ii.cpp" line="-58"/>
-        <location filename="components/noise_iv.cpp" line="-53"/>
-        <location filename="components/noise_vv.cpp" line="-48"/>
+        <location filename="../components/noise_ii.cpp" line="-58"/>
+        <location filename="../components/noise_iv.cpp" line="-53"/>
+        <location filename="../components/noise_vv.cpp" line="-48"/>
         <source>correlated current sources</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+48"/>
-        <location filename="components/noise_iv.cpp" line="+43"/>
+        <location filename="../components/noise_iv.cpp" line="+43"/>
         <source>current power spectral density of source 1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5452,49 +5462,49 @@ Használat:  qucsedit [-r] fájl
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/noise_iv.cpp" line="+4"/>
-        <location filename="components/noise_vv.cpp" line="+42"/>
+        <location filename="../components/noise_iv.cpp" line="+4"/>
+        <location filename="../components/noise_vv.cpp" line="+42"/>
         <source>normalized correlation coefficient</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+20"/>
-        <location filename="components/noise_iv.cpp" line="+20"/>
-        <location filename="components/noise_vv.cpp" line="+20"/>
+        <location filename="../components/noise_iv.cpp" line="+20"/>
+        <location filename="../components/noise_vv.cpp" line="+20"/>
         <source>Correlated Noise Sources</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/noise_iv.cpp" line="-22"/>
-        <location filename="components/noise_vv.cpp" line="-22"/>
+        <location filename="../components/noise_iv.cpp" line="-22"/>
+        <location filename="../components/noise_vv.cpp" line="-22"/>
         <source>voltage power spectral density of source 2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/noise_vv.cpp" line="-2"/>
+        <location filename="../components/noise_vv.cpp" line="-2"/>
         <source>voltage power spectral density of source 1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/logical_or.cpp" line="+22"/>
+        <location filename="../components/logical_or.cpp" line="+22"/>
         <source>logical OR</source>
         <translation>logikai OR</translation>
     </message>
     <message>
-        <location filename="components/component.cpp" line="-10"/>
+        <location filename="../components/component.cpp" line="-10"/>
         <source>number of input ports</source>
         <translation>bemenetek száma</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/digi_source.cpp" line="+6"/>
-        <location filename="components/logical_buf.cpp" line="-8"/>
-        <location filename="components/logical_inv.cpp" line="-8"/>
+        <location filename="../components/digi_source.cpp" line="+6"/>
+        <location filename="../components/logical_buf.cpp" line="-8"/>
+        <location filename="../components/logical_inv.cpp" line="-8"/>
         <source>voltage of high level</source>
         <translation>a magas szint feszültsége</translation>
     </message>
     <message>
-        <location line="+259"/>
+        <location line="+269"/>
         <source>Format Error:
 Unknown component!
 %1
@@ -5503,17 +5513,17 @@ Do you make use of loadable components?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/logical_nor.cpp" line="+22"/>
+        <location filename="../components/logical_nor.cpp" line="+22"/>
         <source>logical NOR</source>
         <translation>logikai NOR</translation>
     </message>
     <message>
-        <location filename="components/logical_or.cpp" line="+23"/>
+        <location filename="../components/logical_or.cpp" line="+23"/>
         <source>n-port OR</source>
         <translation>n-bemenetű OR</translation>
     </message>
     <message>
-        <location filename="components/logical_and.cpp" line="+22"/>
+        <location filename="../components/logical_and.cpp" line="+22"/>
         <source>logical AND</source>
         <translation>logikai AND</translation>
     </message>
@@ -5523,7 +5533,7 @@ Do you make use of loadable components?</source>
         <translation>n-bemenetű AND</translation>
     </message>
     <message>
-        <location filename="components/logical_nand.cpp" line="+22"/>
+        <location filename="../components/logical_nand.cpp" line="+22"/>
         <source>logical NAND</source>
         <translation>logikai NAND</translation>
     </message>
@@ -5533,12 +5543,12 @@ Do you make use of loadable components?</source>
         <translation>n-bemenetű NAND</translation>
     </message>
     <message>
-        <location filename="components/logical_nor.cpp" line="+23"/>
+        <location filename="../components/logical_nor.cpp" line="+23"/>
         <source>n-port NOR</source>
         <translation>n-bemenetű NOR</translation>
     </message>
     <message>
-        <location filename="components/logical_xnor.cpp" line="+22"/>
+        <location filename="../components/logical_xnor.cpp" line="+22"/>
         <source>logical XNOR</source>
         <translation>logikai XNOR</translation>
     </message>
@@ -5548,7 +5558,7 @@ Do you make use of loadable components?</source>
         <translation>n-bemenetű XNOR</translation>
     </message>
     <message>
-        <location filename="components/logical_xor.cpp" line="+22"/>
+        <location filename="../components/logical_xor.cpp" line="+22"/>
         <source>logical XOR</source>
         <translation>logikai XOR</translation>
     </message>
@@ -5558,7 +5568,7 @@ Do you make use of loadable components?</source>
         <translation>n-bemenetű XOR</translation>
     </message>
     <message>
-        <location filename="components/logical_inv.cpp" line="-4"/>
+        <location filename="../components/logical_inv.cpp" line="-4"/>
         <source>logical inverter</source>
         <translation>logikai inverter</translation>
     </message>
@@ -5568,14 +5578,14 @@ Do you make use of loadable components?</source>
         <translation>Inverter</translation>
     </message>
     <message>
-        <location filename="components/digi_sim.cpp" line="+25"/>
+        <location filename="../components/digi_sim.cpp" line="+24"/>
         <location line="+41"/>
         <source>digital simulation</source>
         <translation>
 Digitális szimuláció</translation>
     </message>
     <message>
-        <location filename="components/digi_source.cpp" line="-33"/>
+        <location filename="../components/digi_source.cpp" line="-33"/>
         <location line="+50"/>
         <source>digital source</source>
         <translation>Digitális jelforrás</translation>
@@ -5591,7 +5601,7 @@ Digitális szimuláció</translation>
         <translation>időlista a kimenet váltásához</translation>
     </message>
     <message>
-        <location filename="schematic_file.cpp" line="-103"/>
+        <location filename="../schematic_file.cpp" line="-105"/>
         <source>ERROR: Component &quot;%1&quot; has no analog model.</source>
         <translation>HIBA: &quot;%1&quot; alkatrész nem analóg modell.</translation>
     </message>
@@ -5601,7 +5611,7 @@ Digitális szimuláció</translation>
         <translation>HIBA: &quot;%1&quot; alkatrész nem digitális modell.</translation>
     </message>
     <message>
-        <location line="+284"/>
+        <location line="+286"/>
         <source>WARNING: Ignore simulation component in subcircuit &quot;%1&quot;.</source>
         <translation>FIGYELMEZTETÉS: Mellőzve az alkatrész a &quot;%1&quot; beágyazott kapcsolásban.</translation>
     </message>
@@ -5614,27 +5624,27 @@ Digitális szimuláció</translation>
         <translation type="obsolete">kivezetés típusa</translation>
     </message>
     <message>
-        <location filename="diagrams/timingdiagram.cpp" line="+223"/>
+        <location filename="../diagrams/timingdiagram.cpp" line="+223"/>
         <source>Timing Diagram</source>
         <translation>Idődiagram</translation>
     </message>
     <message>
-        <location filename="components/sparamfile.cpp" line="-42"/>
+        <location filename="../components/sparamfile.cpp" line="-42"/>
         <source>data type</source>
         <translation>adat típus</translation>
     </message>
     <message>
-        <location filename="components/digi_sim.cpp" line="-21"/>
+        <location filename="../components/digi_sim.cpp" line="-21"/>
         <source>type of simulation</source>
         <translation>Szimuláció típusa</translation>
     </message>
     <message>
-        <location filename="diagrams/truthdiagram.cpp" line="+53"/>
+        <location filename="../diagrams/truthdiagram.cpp" line="+53"/>
         <source>Truth Table</source>
         <translation>Igazságtábla</translation>
     </message>
     <message>
-        <location filename="schematic_file.cpp" line="+282"/>
+        <location filename="../schematic_file.cpp" line="+282"/>
         <source>ERROR: Only one digital simulation allowed.</source>
         <translation>HIBA: Csak egy digitális szimáció megengedett.</translation>
     </message>
@@ -5649,7 +5659,7 @@ Digitális szimuláció</translation>
         <translation>HIBA: A digitális szimulációhoz szükséges egy digitális jelforrás.</translation>
     </message>
     <message>
-        <location filename="components/digi_sim.cpp" line="+2"/>
+        <location filename="../components/digi_sim.cpp" line="+2"/>
         <source>duration of TimeList simulation</source>
         <translation>TimeList szimuláció időtartama</translation>
     </message>
@@ -5662,22 +5672,22 @@ Digitális szimuláció</translation>
         <translation type="obsolete">HIBA: Nincs szimulácó megadva ezen az oldalon.</translation>
     </message>
     <message>
-        <location filename="components/EKV26MOS.cpp" line="+18"/>
-        <location filename="components/bjtsub.cpp" line="-13"/>
-        <location filename="components/diode.cpp" line="+4"/>
-        <location filename="components/jfet.cpp" line="-39"/>
-        <location filename="components/photodiode.cpp" line="+21"/>
+        <location filename="../components/EKV26MOS.cpp" line="+18"/>
+        <location filename="../components/bjtsub.cpp" line="-13"/>
+        <location filename="../components/diode.cpp" line="+4"/>
+        <location filename="../components/jfet.cpp" line="-39"/>
+        <location filename="../components/photodiode.cpp" line="+21"/>
         <source>saturation current temperature exponent</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/bjtsub.cpp" line="+2"/>
-        <location filename="components/diode.cpp" line="+2"/>
+        <location filename="../components/bjtsub.cpp" line="+2"/>
+        <location filename="../components/diode.cpp" line="+2"/>
         <source>energy bandgap in eV</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/diode.cpp" line="+2"/>
+        <location filename="../components/diode.cpp" line="+2"/>
         <source>Bv linear temperature coefficient</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5708,20 +5718,20 @@ Digitális szimuláció</translation>
     </message>
     <message>
         <location line="+4"/>
-        <location filename="components/tunneldiode.cpp" line="+7"/>
+        <location filename="../components/tunneldiode.cpp" line="+7"/>
         <source>default area for diode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/bjtsub.cpp" line="-4"/>
+        <location filename="../components/bjtsub.cpp" line="-4"/>
         <source>temperature exponent for forward- and reverse beta</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+6"/>
-        <location filename="components/diode.cpp" line="-2"/>
-        <location filename="components/jfet.cpp" line="+6"/>
-        <location filename="components/resistor.cpp" line="-63"/>
+        <location filename="../components/diode.cpp" line="-2"/>
+        <location filename="../components/jfet.cpp" line="+6"/>
+        <location filename="../components/resistor.cpp" line="-63"/>
         <source>temperature at which parameters were extracted</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5731,7 +5741,7 @@ Digitális szimuláció</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/jfet.cpp" line="-4"/>
+        <location filename="../components/jfet.cpp" line="-4"/>
         <source>Vt0 temperature coefficient</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5746,18 +5756,18 @@ Digitális szimuláció</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/EKV26MOS.cpp" line="+4"/>
-        <location filename="components/MESFET.cpp" line="+125"/>
-        <location filename="components/log_amp.cpp" line="+61"/>
-        <location filename="components/mosfet_sub.cpp" line="+91"/>
-        <location filename="components/nigbt.cpp" line="+6"/>
-        <location filename="components/photodiode.cpp" line="-8"/>
-        <location filename="components/potentiometer.cpp" line="+43"/>
+        <location filename="../components/EKV26MOS.cpp" line="+4"/>
+        <location filename="../components/MESFET.cpp" line="+125"/>
+        <location filename="../components/log_amp.cpp" line="+61"/>
+        <location filename="../components/mosfet_sub.cpp" line="+91"/>
+        <location filename="../components/nigbt.cpp" line="+6"/>
+        <location filename="../components/photodiode.cpp" line="-8"/>
+        <location filename="../components/potentiometer.cpp" line="+43"/>
         <source>parameter measurement temperature</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/coupler.cpp" line="-45"/>
+        <location filename="../components/coupler.cpp" line="-45"/>
         <source>ideal coupler</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5777,57 +5787,57 @@ Digitális szimuláció</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/rs_flipflop.cpp" line="-2"/>
+        <location filename="../components/rs_flipflop.cpp" line="-2"/>
         <source>RS flip flop</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/d_flipflop.cpp" line="-2"/>
+        <location filename="../components/d_flipflop.cpp" line="-2"/>
         <source>D flip flop with asynchron reset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/jk_flipflop.cpp" line="-2"/>
+        <location filename="../components/jk_flipflop.cpp" line="-2"/>
         <source>JK flip flop with asynchron set and reset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/d_flipflop.cpp" line="+92"/>
+        <location filename="../components/d_flipflop.cpp" line="+92"/>
         <source>D-FlipFlop</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/jk_flipflop.cpp" line="+119"/>
+        <location filename="../components/jk_flipflop.cpp" line="+119"/>
         <source>JK-FlipFlop</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/rs_flipflop.cpp" line="+87"/>
+        <location filename="../components/rs_flipflop.cpp" line="+87"/>
         <source>RS-FlipFlop</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="+529"/>
+        <location filename="../main.cpp" line="+532"/>
         <location line="+63"/>
         <source>Error: Wrong time format in &quot;%1&quot;. Use positive number with units</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/coaxialline.cpp" line="-34"/>
+        <location filename="../components/coaxialline.cpp" line="-34"/>
         <source>coaxial transmission line</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+24"/>
-        <location filename="components/rectline.cpp" line="+2"/>
-        <location filename="components/twistedpair.cpp" line="-2"/>
+        <location filename="../components/rectline.cpp" line="+2"/>
+        <location filename="../components/twistedpair.cpp" line="-2"/>
         <source>specific resistance of conductor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/rectline.cpp" line="-4"/>
-        <location filename="components/twistedpair.cpp" line="-2"/>
+        <location filename="../components/rectline.cpp" line="-4"/>
+        <location filename="../components/twistedpair.cpp" line="-2"/>
         <source>relative permeability of conductor</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5838,7 +5848,7 @@ Digitális szimuláció</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/rectline.cpp" line="-4"/>
+        <location filename="../components/rectline.cpp" line="-4"/>
         <source>mechanical length of the line</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5848,17 +5858,17 @@ Digitális szimuláció</translation>
         <translation type="unfinished">Koax kábel</translation>
     </message>
     <message>
-        <location filename="components/ampere_ac.cpp" line="-22"/>
+        <location filename="../components/ampere_ac.cpp" line="-22"/>
         <source>peak current in Ampere</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/coaxialline.cpp" line="-22"/>
+        <location filename="../components/coaxialline.cpp" line="-22"/>
         <source>inner diameter of shield</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/resistor.cpp" line="-4"/>
+        <location filename="../components/resistor.cpp" line="-4"/>
         <source>first order temperature coefficient</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5868,7 +5878,7 @@ Digitális szimuláció</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/sp_sim.cpp" line="-18"/>
+        <location filename="../components/sp_sim.cpp" line="-18"/>
         <source>put characteristic values into dataset</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5878,20 +5888,20 @@ Digitális szimuláció</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/am_modulator.cpp" line="-4"/>
-        <location filename="components/pm_modulator.cpp" line="-4"/>
-        <location filename="components/volt_ac.cpp" line="-22"/>
+        <location filename="../components/am_modulator.cpp" line="-4"/>
+        <location filename="../components/pm_modulator.cpp" line="-4"/>
+        <location filename="../components/volt_ac.cpp" line="-22"/>
         <source>peak voltage in Volts</source>
         <translation>csúcs feszültség [V]</translation>
     </message>
     <message>
-        <location filename="components/coaxialline.cpp" line="-6"/>
-        <location filename="components/rectline.cpp" line="+2"/>
+        <location filename="../components/coaxialline.cpp" line="-6"/>
+        <location filename="../components/rectline.cpp" line="+2"/>
         <source>relative permittivity of dielectric</source>
         <translation>szigetelő relatív permittivitása</translation>
     </message>
     <message>
-        <location filename="components/vprobe.cpp" line="+23"/>
+        <location filename="../components/vprobe.cpp" line="+23"/>
         <source>voltage probe</source>
         <translation>feszültség próba</translation>
     </message>
@@ -5901,13 +5911,13 @@ Digitális szimuláció</translation>
         <translation>Feszültség próba</translation>
     </message>
     <message>
-        <location filename="components/rfedd.cpp" line="+37"/>
-        <location filename="components/sparamfile.cpp" line="+9"/>
+        <location filename="../components/rfedd.cpp" line="+36"/>
+        <location filename="../components/sparamfile.cpp" line="+9"/>
         <source>number of ports</source>
         <translation>kivezetések száma</translation>
     </message>
     <message>
-        <location filename="components/sparamfile.cpp" line="+17"/>
+        <location filename="../components/sparamfile.cpp" line="+17"/>
         <source>n-port S parameter file</source>
         <translation>n-csatlakozós S paraméter fájl</translation>
     </message>
@@ -5917,12 +5927,12 @@ Digitális szimuláció</translation>
         <translation>2-csatlakozós S paraméter fájl</translation>
     </message>
     <message>
-        <location filename="components/subcirport.cpp" line="-61"/>
+        <location filename="../components/subcirport.cpp" line="-61"/>
         <source>type of the port (for digital simulation only)</source>
         <translation>a kivezetés típusa (csak digitális szimulációhoz)</translation>
     </message>
     <message>
-        <location filename="components/am_modulator.cpp" line="-29"/>
+        <location filename="../components/am_modulator.cpp" line="-29"/>
         <source>ac voltage source with amplitude modulator</source>
         <translation>amplitúdó modulált AC feszültség generátor</translation>
     </message>
@@ -5942,13 +5952,13 @@ Digitális szimuláció</translation>
         <translation>AM modulált jelforrás</translation>
     </message>
     <message>
-        <location filename="components/ampere_ac.cpp" line="+6"/>
-        <location filename="components/volt_ac.cpp" line="+6"/>
+        <location filename="../components/ampere_ac.cpp" line="+6"/>
+        <location filename="../components/volt_ac.cpp" line="+6"/>
         <source>damping factor (transient simulation only)</source>
         <translation>csillapítási faktor (csak tranziens szimuláció)</translation>
     </message>
     <message>
-        <location filename="components/pm_modulator.cpp" line="-29"/>
+        <location filename="../components/pm_modulator.cpp" line="-29"/>
         <source>ac voltage source with phase modulator</source>
         <translation>fázis modulált AC feszültség generátor</translation>
     </message>
@@ -5968,7 +5978,7 @@ Digitális szimuláció</translation>
         <translation>PM modulált jelforrás</translation>
     </message>
     <message>
-        <location filename="components/switch.cpp" line="-4"/>
+        <location filename="../components/switch.cpp" line="-4"/>
         <source>resistance of &quot;on&quot; state in ohms</source>
         <translation>ellenállás a bekapcsolt állapotban [Ohm]</translation>
     </message>
@@ -5993,18 +6003,18 @@ Digitális szimuláció</translation>
         <translation>Kapcsoló</translation>
     </message>
     <message>
-        <location filename="components/tline.cpp" line="-16"/>
-        <location filename="components/tline_4port.cpp" line="+2"/>
+        <location filename="../components/tline.cpp" line="-16"/>
+        <location filename="../components/tline_4port.cpp" line="+2"/>
         <source>attenuation factor per length in 1/m</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/switch.cpp" line="-34"/>
+        <location filename="../components/switch.cpp" line="-34"/>
         <source>switch (time controlled)</source>
         <translation>kapcsoló (idő vezérelt)</translation>
     </message>
     <message>
-        <location filename="components/relais.cpp" line="-8"/>
+        <location filename="../components/relais.cpp" line="-8"/>
         <source>threshold voltage in Volts</source>
         <translation>letörési feszültség [V]</translation>
     </message>
@@ -6024,12 +6034,12 @@ Digitális szimuláció</translation>
         <translation>ellenállás a kikapcsolt állapotban [Ohm]</translation>
     </message>
     <message>
-        <location filename="mouseactions.cpp" line="+742"/>
+        <location filename="../mouseactions.cpp" line="+741"/>
         <source>Edit Properties</source>
         <translation>Tulajdonságok beállítása</translation>
     </message>
     <message>
-        <location line="+27"/>
+        <location line="+26"/>
         <source>Export as image</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6050,8 +6060,8 @@ Digitális szimuláció</translation>
     </message>
     <message>
         <location line="+60"/>
-        <location filename="components/spicefile.cpp" line="+103"/>
-        <location line="+87"/>
+        <location filename="../components/spicefile.cpp" line="+103"/>
+        <location line="+94"/>
         <source>Info</source>
         <translation>Infó</translation>
     </message>
@@ -6061,7 +6071,7 @@ Digitális szimuláció</translation>
         <translation>A földpotenciál nem lehet cimke!</translation>
     </message>
     <message>
-        <location filename="components/switch.cpp" line="+5"/>
+        <location filename="../components/switch.cpp" line="+5"/>
         <source>time when state changes (semicolon separated list possible, even numbered lists are repeated)</source>
         <oldsource>time when state changes (semicolon separated list possible)</oldsource>
         <translation type="unfinished">állapot változás ideje (pontosvesszővel elválasztott lisat lehetséges)</translation>
@@ -6075,7 +6085,7 @@ Digitális szimuláció</translation>
         <translation type="obsolete">HIBA: A &quot;%1&quot; VHDL fájl nem nyitható meg.</translation>
     </message>
     <message>
-        <location filename="components/vhdlfile.cpp" line="+33"/>
+        <location filename="../components/vhdlfile.cpp" line="+30"/>
         <location line="+24"/>
         <source>VHDL file</source>
         <translation>VHDL fájl</translation>
@@ -6086,41 +6096,46 @@ Digitális szimuláció</translation>
         <translation>VHDL fájl neve</translation>
     </message>
     <message>
-        <location line="+107"/>
+        <location line="+110"/>
         <source>vhdl</source>
         <translation>vhdl</translation>
     </message>
     <message>
-        <location filename="components/rfedd.cpp" line="+2"/>
-        <location filename="components/rfedd2p.cpp" line="+37"/>
-        <location filename="components/sparamfile.cpp" line="-48"/>
+        <location filename="../components/rfedd.cpp" line="+2"/>
+        <location filename="../components/rfedd2p.cpp" line="+36"/>
+        <location filename="../components/sparamfile.cpp" line="-48"/>
         <source>representation during DC analysis</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/etr_sim.cpp" line="+3"/>
-        <location filename="components/tr_sim.cpp" line="+3"/>
+        <location filename="../components/etr_sim.cpp" line="+3"/>
+        <location filename="../components/tr_sim.cpp" line="+3"/>
         <source>relax time step raster</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/subcircuit.cpp" line="+21"/>
+        <location filename="../components/subcircuit.cpp" line="+21"/>
         <source>Subcircuit</source>
         <translation>beágyazott kapcsolás</translation>
     </message>
     <message>
-        <location filename="qucs_actions.cpp" line="+1"/>
+        <location filename="../qucs_actions.cpp" line="+1"/>
         <source>Cannot create output file!</source>
         <translation>A kimeneti fájl nem hozható létre!</translation>
     </message>
     <message>
-        <location filename="components/mscross.cpp" line="+6"/>
-        <location filename="components/mstee.cpp" line="+2"/>
+        <location line="+154"/>
+        <source>verlog-a user devices</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../components/mscross.cpp" line="+6"/>
+        <location filename="../components/mstee.cpp" line="+2"/>
         <source>show port numbers in symbol or not</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/opt_sim.cpp" line="+31"/>
+        <location filename="../components/opt_sim.cpp" line="+30"/>
         <source>Optimization</source>
         <translation>Optimalizálás</translation>
     </message>
@@ -6130,29 +6145,29 @@ Digitális szimuláció</translation>
         <translation>optimalizálás</translation>
     </message>
     <message>
-        <location filename="components/etr_sim.cpp" line="+2"/>
-        <location filename="components/tr_sim.cpp" line="+2"/>
+        <location filename="../components/etr_sim.cpp" line="+2"/>
+        <location filename="../components/tr_sim.cpp" line="+2"/>
         <source>perform an initial DC analysis</source>
         <translation>kezdeti DC analízis végrehajtása</translation>
     </message>
     <message>
-        <location filename="components/capacitor.cpp" line="-2"/>
+        <location filename="../components/capacitor.cpp" line="-2"/>
         <source>initial voltage for transient simulation</source>
         <translation>kezdeti feszültség tranziens szimulációhoz</translation>
     </message>
     <message>
-        <location filename="components/inductor.cpp" line="-14"/>
+        <location filename="../components/inductor.cpp" line="-14"/>
         <source>initial current for transient simulation</source>
         <translation>kezdeti áram tranziens szimulációhoz</translation>
     </message>
     <message>
-        <location filename="components/etr_sim.cpp" line="+2"/>
-        <location filename="components/tr_sim.cpp" line="+2"/>
+        <location filename="../components/etr_sim.cpp" line="+2"/>
+        <location filename="../components/tr_sim.cpp" line="+2"/>
         <source>maximum step size in seconds</source>
         <translation>maximális lépésköz [mp]</translation>
     </message>
     <message>
-        <location filename="components/relais.cpp" line="-43"/>
+        <location filename="../components/relais.cpp" line="-43"/>
         <source>relay</source>
         <translation>relé</translation>
     </message>
@@ -6162,949 +6177,949 @@ Digitális szimuláció</translation>
         <translation>Relé</translation>
     </message>
     <message>
-        <location filename="components/irect.cpp" line="-16"/>
-        <location filename="components/vrect.cpp" line="-16"/>
+        <location filename="../components/irect.cpp" line="-16"/>
+        <location filename="../components/vrect.cpp" line="-16"/>
         <source>initial delay time</source>
         <translation>kezdeti késleltetési idő</translation>
     </message>
     <message>
-        <location filename="components/hicumL2V2p1.cpp" line="+15"/>
+        <location filename="../components/hicumL2V2p1.cpp" line="+15"/>
         <source>HICUM Level 2 v2.1 verilog device</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/hic2_full.cpp" line="+18"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+18"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+18"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+18"/>
+        <location filename="../components/hic2_full.cpp" line="+18"/>
+        <location filename="../components/hicumL2V2p1.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="+18"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="+18"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="+18"/>
         <source>GICCR constant</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="+3"/>
         <source>Zero-bias hole charge</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="+3"/>
         <source>High-current correction for 2D and 3D effects</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+5"/>
+        <location filename="../components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="+5"/>
         <source>Emitter minority charge weighting factor in HBTs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="+2"/>
         <source>Collector minority charge weighting factor in HBTs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="+2"/>
         <source>B-E depletion charge weighting factor in HBTs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+6"/>
+        <location filename="../components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="+6"/>
         <source>B-C depletion charge weighting factor in HBTs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="+2"/>
         <source>Internal B-E saturation current</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="+3"/>
         <source>Internal B-E current ideality factor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="+2"/>
         <source>Internal B-E recombination saturation current</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="+3"/>
         <source>Internal B-E recombination current ideality factor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="+2"/>
         <source>Peripheral B-E saturation current</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="+3"/>
         <source>Peripheral B-E current ideality factor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="+2"/>
         <source>Peripheral B-E recombination saturation current</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="+3"/>
         <source>Peripheral B-E recombination current ideality factor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="+2"/>
         <source>Non-ideality factor for III-V HBTs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+5"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+5"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+5"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+5"/>
+        <location filename="../components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="+5"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="+5"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="+5"/>
         <source>Internal B-C saturation current</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="+3"/>
         <source>Internal B-C current ideality factor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="+2"/>
         <source>External B-C saturation current</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="+3"/>
         <source>External B-C current ideality factor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="+2"/>
         <source>B-E tunneling saturation current</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="+3"/>
         <source>Exponent factor for tunneling current</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+4"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+4"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+4"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+4"/>
+        <location filename="../components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="+4"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="+4"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="+4"/>
         <source>Avalanche current factor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="+3"/>
         <source>Exponent factor for avalanche current</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="+3"/>
         <source>Relative TC for FAVL</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="+3"/>
         <source>Relative TC for QAVL</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="+3"/>
         <source>Zero bias internal base resistance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/hic0_full.cpp" line="-40"/>
-        <location filename="components/hic2_full.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="-40"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="-40"/>
-        <location filename="components/hicumL0V1p3.cpp" line="-40"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
+        <location filename="../components/hic0_full.cpp" line="-40"/>
+        <location filename="../components/hic2_full.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p2.cpp" line="-40"/>
+        <location filename="../components/hicumL0V1p2g.cpp" line="-40"/>
+        <location filename="../components/hicumL0V1p3.cpp" line="-40"/>
+        <location filename="../components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="+3"/>
         <source>External base series resistance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/hic2_full.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
+        <location filename="../components/hic2_full.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="+3"/>
         <source>Factor for geometry dependence of emitter current crowding</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="+2"/>
         <source>Correction factor for modulation by B-E and B-C space charge layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="+2"/>
         <source>Ratio of HF shunt to total internal capacitance (lateral NQS effect)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="+2"/>
         <source>Ration of internal to total minority charge</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/hic0_full.cpp" line="+3"/>
-        <location filename="components/hic2_full.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
+        <location filename="../components/hic0_full.cpp" line="+3"/>
+        <location filename="../components/hic2_full.cpp" line="+2"/>
+        <location filename="../components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p2g.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p3.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="+2"/>
         <source>Emitter series resistance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hic2_full.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
+        <location filename="../components/hic2_full.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p2g.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p3.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="+3"/>
         <source>External collector series resistance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hic2_full.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
+        <location filename="../components/hic2_full.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p2g.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p3.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="+3"/>
         <source>Substrate transistor transfer saturation current</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/hic2_full.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
+        <location filename="../components/hic2_full.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="+3"/>
         <source>Forward ideality factor of substrate transfer current</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="+2"/>
         <source>C-S diode saturation current</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="+3"/>
         <source>Ideality factor of C-S diode current</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="+2"/>
         <source>Transit time for forward operation of substrate transistor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="+3"/>
         <source>Substrate series resistance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="+3"/>
         <source>Substrate shunt capacitance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="+3"/>
         <source>Internal B-E zero-bias depletion capacitance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="+3"/>
         <source>Internal B-E built-in potential</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="+3"/>
         <source>Internal B-E grading coefficient</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="+2"/>
         <source>Ratio of maximum to zero-bias value of internal B-E capacitance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="+2"/>
         <source>Peripheral B-E zero-bias depletion capacitance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="+3"/>
         <source>Peripheral B-E built-in potential</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="+3"/>
         <source>Peripheral B-E grading coefficient</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="+2"/>
         <source>Ratio of maximum to zero-bias value of peripheral B-E capacitance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="+2"/>
         <source>Internal B-C zero-bias depletion capacitance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="+3"/>
         <source>Internal B-C built-in potential</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="+3"/>
         <source>Internal B-C grading coefficient</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="+2"/>
         <source>Internal B-C punch-through voltage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="+3"/>
         <source>External B-C zero-bias depletion capacitance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="+3"/>
         <source>External B-C built-in potential</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="+3"/>
         <source>External B-C grading coefficient</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="+2"/>
         <source>External B-C punch-through voltage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+7"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+4"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+7"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+7"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+7"/>
+        <location filename="../components/hicumL2V2p1.cpp" line="+4"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="+7"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="+7"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="+7"/>
         <source>C-S zero-bias depletion capacitance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="+3"/>
         <source>C-S built-in potential</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="+3"/>
         <source>C-S grading coefficient</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="+2"/>
         <source>C-S punch-through voltage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="+3"/>
         <source>Low current forward transit time at VBC=0V</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="+3"/>
         <source>Time constant for base and B-C space charge layer width modulation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="+3"/>
         <source>Time constant for modelling carrier jam at low VCE</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+6"/>
+        <location filename="../components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="+6"/>
         <source>Neutral emitter storage time</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="+3"/>
         <source>Exponent factor for current dependence of neutral emitter storage time</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="+2"/>
         <source>Saturation time constant at high current densities</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="+3"/>
         <source>Smoothing factor for current dependence of base and collector transit time</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="+2"/>
         <source>Partitioning factor for base and collector portion</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="+2"/>
         <source>Internal collector resistance at low electric field</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="+3"/>
         <source>Voltage separating ohmic and saturation velocity regime</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="+3"/>
         <source>Internal C-E saturation voltage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="+3"/>
         <source>Collector punch-through voltage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="+3"/>
         <source>Storage time for inverse operation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+13"/>
+        <location filename="../components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="+13"/>
         <source>Total parasitic B-E capacitance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="+3"/>
         <source>Total parasitic B-C capacitance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="+3"/>
         <source>Factor for additional delay time of minority charge</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="+2"/>
         <source>Factor for additional delay time of transfer current</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+4"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+4"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+4"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+4"/>
+        <location filename="../components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="+4"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="+4"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="+4"/>
         <source>Flicker noise coefficient</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="+2"/>
         <source>Flicker noise exponent factor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+4"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+4"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+4"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+4"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+10"/>
+        <location filename="../components/hicumL2V2p1.cpp" line="+4"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="+4"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="+4"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="+10"/>
         <source>Scaling factor for collector minority charge in direction of emitter width</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="+2"/>
         <source>Scaling factor for collector minority charge in direction of emitter length</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="+2"/>
         <source>Bandgap voltage extrapolated to 0 K</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="+3"/>
         <source>First order relative TC of parameter T0</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="+3"/>
         <source>Second order relative TC of parameter T0</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="+2"/>
         <source>Temperature exponent for RCI0</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+16"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+16"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+16"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+16"/>
+        <location filename="../components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="+16"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="+16"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="+16"/>
         <source>Temperature exponent of mobility in substrate transistor transit time</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="-14"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="-14"/>
-        <location filename="components/hicumL2V2p24.cpp" line="-14"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="-14"/>
+        <location filename="../components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="-14"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="-14"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="-14"/>
         <source>Relative TC of saturation drift velocity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="+3"/>
         <source>Relative TC of VCES</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="+3"/>
         <source>Temperature exponent of internal base resistance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="+2"/>
         <source>Temperature exponent of external base resistance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="+2"/>
         <source>Temperature exponent of external collector resistance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="+2"/>
         <source>Temperature exponent of emitter resistance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+21"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+21"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+21"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+21"/>
+        <location filename="../components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="+21"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="+21"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="+21"/>
         <source>Relative TC of forward current gain for V2.1 model</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/hic0_full.cpp" line="+88"/>
-        <location filename="components/hic2_full.cpp" line="+5"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+92"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+90"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+106"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+5"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+5"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+12"/>
+        <location filename="../components/hic0_full.cpp" line="+88"/>
+        <location filename="../components/hic2_full.cpp" line="+5"/>
+        <location filename="../components/hicumL0V1p2.cpp" line="+92"/>
+        <location filename="../components/hicumL0V1p2g.cpp" line="+90"/>
+        <location filename="../components/hicumL0V1p3.cpp" line="+106"/>
+        <location filename="../components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="+5"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="+5"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="+12"/>
         <source>Thermal resistance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/HBT_X.cpp" line="+30"/>
-        <location filename="components/hic0_full.cpp" line="+3"/>
-        <location filename="components/hic2_full.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+5"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+8"/>
+        <location filename="../components/HBT_X.cpp" line="+30"/>
+        <location filename="../components/hic0_full.cpp" line="+3"/>
+        <location filename="../components/hic2_full.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p2g.cpp" line="+5"/>
+        <location filename="../components/hicumL0V1p3.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="+8"/>
         <source>Thermal capacitance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/hic2_full.cpp" line="+5"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+5"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+5"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+5"/>
+        <location filename="../components/hic2_full.cpp" line="+5"/>
+        <location filename="../components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="+5"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="+5"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="+5"/>
         <source>Temperature at which parameters are specified</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="+3"/>
         <source>Temperature change w.r.t. chip temperature for particular transistor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/EKV26MOS.cpp" line="+3"/>
-        <location filename="components/MESFET.cpp" line="+3"/>
-        <location filename="components/bsim3v34nMOS.cpp" line="+832"/>
-        <location filename="components/bsim3v34pMOS.cpp" line="+832"/>
-        <location filename="components/diac.cpp" line="+4"/>
-        <location filename="components/hic0_full.cpp" line="+9"/>
-        <location filename="components/hic2_full.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+9"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+20"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+9"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
-        <location filename="components/log_amp.cpp" line="+3"/>
-        <location filename="components/nigbt.cpp" line="+3"/>
-        <location filename="components/photodiode.cpp" line="+33"/>
-        <location filename="components/phototransistor.cpp" line="+15"/>
-        <location filename="components/potentiometer.cpp" line="+3"/>
-        <location filename="components/thyristor.cpp" line="+6"/>
-        <location filename="components/triac.cpp" line="+6"/>
+        <location filename="../components/EKV26MOS.cpp" line="+3"/>
+        <location filename="../components/MESFET.cpp" line="+3"/>
+        <location filename="../components/bsim3v34nMOS.cpp" line="+832"/>
+        <location filename="../components/bsim3v34pMOS.cpp" line="+832"/>
+        <location filename="../components/diac.cpp" line="+4"/>
+        <location filename="../components/hic0_full.cpp" line="+9"/>
+        <location filename="../components/hic2_full.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p2.cpp" line="+9"/>
+        <location filename="../components/hicumL0V1p2g.cpp" line="+20"/>
+        <location filename="../components/hicumL0V1p3.cpp" line="+9"/>
+        <location filename="../components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="+3"/>
+        <location filename="../components/log_amp.cpp" line="+3"/>
+        <location filename="../components/nigbt.cpp" line="+3"/>
+        <location filename="../components/photodiode.cpp" line="+33"/>
+        <location filename="../components/phototransistor.cpp" line="+15"/>
+        <location filename="../components/potentiometer.cpp" line="+3"/>
+        <location filename="../components/thyristor.cpp" line="+6"/>
+        <location filename="../components/triac.cpp" line="+6"/>
         <source>simulation temperature</source>
         <translation>szimulációs hőmérséklet</translation>
     </message>
     <message>
-        <location filename="components/HBT_X.cpp" line="+203"/>
+        <location filename="../components/HBT_X.cpp" line="+203"/>
         <source>FBH HBT</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7474,7 +7489,7 @@ Digitális szimuláció</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/bondwire.cpp" line="-33"/>
+        <location filename="../components/bondwire.cpp" line="-33"/>
         <source>bond wire</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7514,7 +7529,7 @@ Digitális szimuláció</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/twistedpair.cpp" line="-46"/>
+        <location filename="../components/twistedpair.cpp" line="-46"/>
         <source>twisted pair transmission line</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7549,17 +7564,17 @@ Digitális szimuláció</translation>
         <translation>a vonal fizikai hossza</translation>
     </message>
     <message>
-        <location filename="components/source_ac.cpp" line="-20"/>
+        <location filename="../components/source_ac.cpp" line="-20"/>
         <source>(available) ac power in Watts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/mosfet_sub.cpp" line="+7"/>
+        <location filename="../components/mosfet_sub.cpp" line="+7"/>
         <source>MOS field-effect transistor with substrate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/tline_4port.cpp" line="-34"/>
+        <location filename="../components/tline_4port.cpp" line="-34"/>
         <source>ideal 4-terminal transmission line</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7569,32 +7584,32 @@ Digitális szimuláció</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/HBT_X.cpp" line="-161"/>
+        <location filename="../components/HBT_X.cpp" line="-161"/>
         <source>HBT model by Ferdinand-Braun-Institut (FBH), Berlin</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/hicumL2V2p1.cpp" line="+19"/>
+        <location filename="../components/hicumL2V2p1.cpp" line="+19"/>
         <source>HICUM L2 v2.1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/HBT_X.cpp" line="+85"/>
+        <location filename="../components/HBT_X.cpp" line="+85"/>
         <source>Extrinsic BC diffusion capacitance, F</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/diode.cpp" line="-30"/>
+        <location filename="../components/diode.cpp" line="-30"/>
         <source>high-injection knee current (0=infinity)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/digi_sim.cpp" line="+2"/>
+        <location filename="../components/digi_sim.cpp" line="+2"/>
         <source>netlist format</source>
         <translation>kötéslista formátum</translation>
     </message>
     <message>
-        <location filename="components/verilogfile.cpp" line="+33"/>
+        <location filename="../components/verilogfile.cpp" line="+30"/>
         <location line="+24"/>
         <source>Verilog file</source>
         <translation>Verilog fájl</translation>
@@ -7605,30 +7620,30 @@ Digitális szimuláció</translation>
         <translation>Verilog fájl neve</translation>
     </message>
     <message>
-        <location line="+93"/>
+        <location line="+97"/>
         <source>verilog</source>
         <translation>verilog</translation>
     </message>
     <message>
-        <location filename="schematic_file.cpp" line="-462"/>
-        <location filename="components/verilogfile.cpp" line="+45"/>
-        <location filename="components/vhdlfile.cpp" line="+76"/>
+        <location filename="../schematic_file.cpp" line="-462"/>
+        <location filename="../components/verilogfile.cpp" line="+45"/>
+        <location filename="../components/vhdlfile.cpp" line="+76"/>
         <source>ERROR: No file name in %1 component &quot;%2&quot;.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/verilogfile.cpp" line="+11"/>
-        <location filename="components/vhdlfile.cpp" line="+11"/>
+        <location filename="../components/verilogfile.cpp" line="+11"/>
+        <location filename="../components/vhdlfile.cpp" line="+11"/>
         <source>ERROR: Cannot open %1 file &quot;%2&quot;.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/HBT_X.cpp" line="-8"/>
+        <location filename="../components/HBT_X.cpp" line="-8"/>
         <source>C-E breakdown voltage, V, (0 == disables collector break-down)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/iexp.cpp" line="+23"/>
+        <location filename="../components/iexp.cpp" line="+23"/>
         <source>exponential current source</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7644,13 +7659,13 @@ Digitális szimuláció</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/vexp.cpp" line="+61"/>
+        <location filename="../components/vexp.cpp" line="+61"/>
         <source>start time of the exponentially rising edge</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/vexp.cpp" line="+2"/>
+        <location filename="../components/vexp.cpp" line="+2"/>
         <source>start of exponential decay</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7670,7 +7685,7 @@ Digitális szimuláció</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/vexp.cpp" line="-40"/>
+        <location filename="../components/vexp.cpp" line="-40"/>
         <source>exponential voltage source</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7700,7 +7715,7 @@ Digitális szimuláció</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/hicumL2V2p1.cpp" line="-105"/>
+        <location filename="../components/hicumL2V2p1.cpp" line="-105"/>
         <source>Partitioning factor of parasitic B-C capacitance</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7710,7 +7725,7 @@ Digitális szimuláció</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/eqndefined.cpp" line="+27"/>
+        <location filename="../components/eqndefined.cpp" line="+26"/>
         <source>equation defined device</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7742,17 +7757,16 @@ Digitális szimuláció</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/spicefile.cpp" line="-180"/>
+        <location filename="../components/spicefile.cpp" line="-187"/>
         <source>ERROR: Cannot open SPICE file &quot;%1&quot;.</source>
         <translation>HIBA: A &quot;%1&quot; SPICE fájl nem nyitható meg.</translation>
     </message>
     <message>
-        <location line="+173"/>
         <source>ERROR: Cannot start QucsConv!</source>
-        <translation>HIBA: QucsConv nem indítható!</translation>
+        <translation type="obsolete">HIBA: QucsConv nem indítható!</translation>
     </message>
     <message>
-        <location line="-160"/>
+        <location line="+13"/>
         <source>ERROR: Cannot save converted SPICE file &quot;%1&quot;.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7766,7 +7780,7 @@ Digitális szimuláció</translation>
         <translation type="obsolete">Konvetálás...</translation>
     </message>
     <message>
-        <location filename="dialogs/librarydialog.cpp" line="+206"/>
+        <location filename="../dialogs/librarydialog.cpp" line="+206"/>
         <source>ERROR: Cannot open file &quot;%1&quot;.
 </source>
         <translation type="unfinished"></translation>
@@ -7784,17 +7798,17 @@ Digitális szimuláció</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="schematic_file.cpp" line="-58"/>
+        <location filename="../schematic_file.cpp" line="-58"/>
         <source>WARNING: Skipping library component &quot;%1&quot;.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/spicefile.cpp" line="+153"/>
+        <location filename="../components/spicefile.cpp" line="+160"/>
         <source>Converting SPICE file &quot;%1&quot;.</source>
         <translation type="unfinished">&quot;%1&quot; SPICE fájl konvertásása.</translation>
     </message>
     <message>
-        <location line="-87"/>
+        <location line="-94"/>
         <source>Preprocessing SPICE file &quot;%1&quot;.</source>
         <translation type="unfinished">&quot;%1&quot; SPICE fájl előfeldolgozása.</translation>
     </message>
@@ -7813,29 +7827,29 @@ Digitális szimuláció</translation>
         <translation>HIBA: A &quot;%1&quot; nem futtatható.</translation>
     </message>
     <message>
-        <location filename="components/vfile.cpp" line="-36"/>
+        <location filename="../components/vfile.cpp" line="-36"/>
         <source>file based voltage source</source>
         <translation>fájl bázisú feszültség generátor</translation>
     </message>
     <message>
-        <location filename="components/ifile.cpp" line="-2"/>
-        <location filename="components/vfile.cpp" line="+31"/>
+        <location filename="../components/ifile.cpp" line="-2"/>
+        <location filename="../components/vfile.cpp" line="+31"/>
         <source>name of the sample file</source>
         <translation>Minta fájl neve</translation>
     </message>
     <message>
         <location line="+4"/>
-        <location filename="components/vfile.cpp" line="+4"/>
+        <location filename="../components/vfile.cpp" line="+4"/>
         <source>repeat waveform</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/vfile.cpp" line="+18"/>
+        <location filename="../components/vfile.cpp" line="+18"/>
         <source>File Based Voltage Source</source>
         <translation>Fájl bázisú feszültség generátor</translation>
     </message>
     <message>
-        <location filename="components/ifile.cpp" line="-33"/>
+        <location filename="../components/ifile.cpp" line="-33"/>
         <source>file based current source</source>
         <translation>fájl bázisú áramgenerátor</translation>
     </message>
@@ -7850,7 +7864,7 @@ Digitális szimuláció</translation>
         <translation>Fájl bázisú áramgenerátor</translation>
     </message>
     <message>
-        <location filename="components/mod_amp.cpp" line="+15"/>
+        <location filename="../components/mod_amp.cpp" line="+15"/>
         <source>Modular Operational Amplifier verilog device</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7945,35 +7959,35 @@ Digitális szimuláció</translation>
         <translation>Műveleti erősítő</translation>
     </message>
     <message>
-        <location filename="components/hic2_full.cpp" line="-290"/>
+        <location filename="../components/hic2_full.cpp" line="-290"/>
         <source>HICUM Level 2 v2.22 verilog device</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+4"/>
-        <location filename="components/hicumL2V2p23.cpp" line="-286"/>
-        <location filename="components/hicumL2V2p24.cpp" line="-286"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="-320"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="-286"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="-286"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="-320"/>
         <source>A^2s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
         <location line="+59"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="+3"/>
         <location line="+59"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="+3"/>
         <location line="+59"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="+3"/>
         <location line="+65"/>
         <source>Coul</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/EKV26MOS.cpp" line="-30"/>
+        <location filename="../components/EKV26MOS.cpp" line="-30"/>
         <location line="+6"/>
-        <location filename="components/MESFET.cpp" line="-17"/>
-        <location filename="components/hic0_full.cpp" line="-223"/>
+        <location filename="../components/MESFET.cpp" line="-17"/>
+        <location filename="../components/hic0_full.cpp" line="-223"/>
         <location line="+10"/>
         <location line="+3"/>
         <location line="+3"/>
@@ -7982,7 +7996,7 @@ Digitális szimuláció</translation>
         <location line="+5"/>
         <location line="+93"/>
         <location line="+5"/>
-        <location filename="components/hic2_full.cpp" line="-56"/>
+        <location filename="../components/hic2_full.cpp" line="-56"/>
         <location line="+11"/>
         <location line="+5"/>
         <location line="+5"/>
@@ -7992,7 +8006,7 @@ Digitális szimuláció</translation>
         <location line="+5"/>
         <location line="+39"/>
         <location line="+5"/>
-        <location filename="components/hicumL0V1p2.cpp" line="-241"/>
+        <location filename="../components/hicumL0V1p2.cpp" line="-241"/>
         <location line="+13"/>
         <location line="+5"/>
         <location line="+3"/>
@@ -8001,7 +8015,7 @@ Digitális szimuláció</translation>
         <location line="+5"/>
         <location line="+100"/>
         <location line="+5"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="-252"/>
+        <location filename="../components/hicumL0V1p2g.cpp" line="-252"/>
         <location line="+13"/>
         <location line="+5"/>
         <location line="+3"/>
@@ -8011,7 +8025,7 @@ Digitális szimuláció</translation>
         <location line="+100"/>
         <location line="+5"/>
         <location line="+107"/>
-        <location filename="components/hicumL0V1p3.cpp" line="-259"/>
+        <location filename="../components/hicumL0V1p3.cpp" line="-259"/>
         <location line="+17"/>
         <location line="+5"/>
         <location line="+3"/>
@@ -8020,7 +8034,7 @@ Digitális szimuláció</translation>
         <location line="+5"/>
         <location line="+100"/>
         <location line="+5"/>
-        <location filename="components/hicumL2V2p23.cpp" line="-56"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="-56"/>
         <location line="+11"/>
         <location line="+5"/>
         <location line="+5"/>
@@ -8030,7 +8044,7 @@ Digitális szimuláció</translation>
         <location line="+5"/>
         <location line="+39"/>
         <location line="+5"/>
-        <location filename="components/hicumL2V2p24.cpp" line="-56"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="-56"/>
         <location line="+11"/>
         <location line="+5"/>
         <location line="+5"/>
@@ -8040,7 +8054,7 @@ Digitális szimuláció</translation>
         <location line="+5"/>
         <location line="+39"/>
         <location line="+5"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="-62"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="-62"/>
         <location line="+17"/>
         <location line="+5"/>
         <location line="+5"/>
@@ -8051,52 +8065,52 @@ Digitális szimuláció</translation>
         <location line="+39"/>
         <location line="+5"/>
         <location line="+110"/>
-        <location filename="components/log_amp.cpp" line="-40"/>
+        <location filename="../components/log_amp.cpp" line="-40"/>
         <location line="+3"/>
-        <location filename="components/photodiode.cpp" line="-51"/>
+        <location filename="../components/photodiode.cpp" line="-51"/>
         <location line="+6"/>
-        <location filename="components/phototransistor.cpp" line="-68"/>
+        <location filename="../components/phototransistor.cpp" line="-68"/>
         <location line="+35"/>
         <location line="+3"/>
         <source>A</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/hic2_full.cpp" line="-58"/>
-        <location filename="components/hicumL2V2p23.cpp" line="-58"/>
-        <location filename="components/hicumL2V2p24.cpp" line="-58"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="-168"/>
+        <location filename="../components/hic2_full.cpp" line="-58"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="-58"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="-58"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="-168"/>
         <source>Base current recombination time constant at B-C barrier for high forward injection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/DLS_1ton.cpp" line="+21"/>
-        <location filename="components/DLS_nto1.cpp" line="+22"/>
-        <location filename="components/EKV26MOS.cpp" line="+15"/>
-        <location filename="components/MESFET.cpp" line="-65"/>
-        <location filename="components/andor4x2.cpp" line="+32"/>
-        <location filename="components/andor4x3.cpp" line="+32"/>
-        <location filename="components/andor4x4.cpp" line="+32"/>
-        <location filename="components/binarytogrey4bit.cpp" line="+32"/>
-        <location filename="components/comp_1bit.cpp" line="+32"/>
-        <location filename="components/comp_2bit.cpp" line="+32"/>
-        <location filename="components/comp_4bit.cpp" line="+32"/>
-        <location filename="components/dff_SR.cpp" line="+34"/>
-        <location filename="components/dmux2to4.cpp" line="+32"/>
-        <location filename="components/dmux3to8.cpp" line="+33"/>
-        <location filename="components/dmux4to16.cpp" line="+32"/>
-        <location filename="components/fa1b.cpp" line="+32"/>
-        <location filename="components/fa2b.cpp" line="+32"/>
-        <location filename="components/gatedDlatch.cpp" line="+34"/>
-        <location filename="components/greytobinary4bit.cpp" line="+32"/>
-        <location filename="components/ha1b.cpp" line="+32"/>
-        <location filename="components/hic0_full.cpp" line="-83"/>
+        <location filename="../components/DLS_1ton.cpp" line="+21"/>
+        <location filename="../components/DLS_nto1.cpp" line="+22"/>
+        <location filename="../components/EKV26MOS.cpp" line="+15"/>
+        <location filename="../components/MESFET.cpp" line="-65"/>
+        <location filename="../components/andor4x2.cpp" line="+31"/>
+        <location filename="../components/andor4x3.cpp" line="+31"/>
+        <location filename="../components/andor4x4.cpp" line="+31"/>
+        <location filename="../components/binarytogrey4bit.cpp" line="+31"/>
+        <location filename="../components/comp_1bit.cpp" line="+31"/>
+        <location filename="../components/comp_2bit.cpp" line="+31"/>
+        <location filename="../components/comp_4bit.cpp" line="+31"/>
+        <location filename="../components/dff_SR.cpp" line="+33"/>
+        <location filename="../components/dmux2to4.cpp" line="+31"/>
+        <location filename="../components/dmux3to8.cpp" line="+32"/>
+        <location filename="../components/dmux4to16.cpp" line="+31"/>
+        <location filename="../components/fa1b.cpp" line="+31"/>
+        <location filename="../components/fa2b.cpp" line="+31"/>
+        <location filename="../components/gatedDlatch.cpp" line="+33"/>
+        <location filename="../components/greytobinary4bit.cpp" line="+31"/>
+        <location filename="../components/ha1b.cpp" line="+31"/>
+        <location filename="../components/hic0_full.cpp" line="-83"/>
         <location line="+3"/>
         <location line="+3"/>
         <location line="+3"/>
         <location line="+5"/>
         <location line="+5"/>
-        <location filename="components/hic2_full.cpp" line="+1"/>
+        <location filename="../components/hic2_full.cpp" line="+1"/>
         <location line="+62"/>
         <location line="+66"/>
         <location line="+3"/>
@@ -8104,25 +8118,25 @@ Digitális szimuláció</translation>
         <location line="+3"/>
         <location line="+5"/>
         <location line="+19"/>
-        <location filename="components/hicumL0V1p2.cpp" line="-83"/>
+        <location filename="../components/hicumL0V1p2.cpp" line="-83"/>
         <location line="+3"/>
         <location line="+3"/>
         <location line="+3"/>
         <location line="+5"/>
         <location line="+5"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="-190"/>
+        <location filename="../components/hicumL0V1p2g.cpp" line="-190"/>
         <location line="+3"/>
         <location line="+3"/>
         <location line="+3"/>
         <location line="+5"/>
         <location line="+5"/>
-        <location filename="components/hicumL0V1p3.cpp" line="-83"/>
+        <location filename="../components/hicumL0V1p3.cpp" line="-83"/>
         <location line="+3"/>
         <location line="+3"/>
         <location line="+3"/>
         <location line="+5"/>
         <location line="+5"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+1"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="+1"/>
         <location line="+62"/>
         <location line="+66"/>
         <location line="+3"/>
@@ -8130,7 +8144,7 @@ Digitális szimuláció</translation>
         <location line="+3"/>
         <location line="+5"/>
         <location line="+19"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+1"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="+1"/>
         <location line="+62"/>
         <location line="+66"/>
         <location line="+3"/>
@@ -8138,7 +8152,7 @@ Digitális szimuláció</translation>
         <location line="+3"/>
         <location line="+5"/>
         <location line="+19"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+1"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="+1"/>
         <location line="+62"/>
         <location line="+66"/>
         <location line="+3"/>
@@ -8146,82 +8160,82 @@ Digitális szimuláció</translation>
         <location line="+3"/>
         <location line="+5"/>
         <location line="+19"/>
-        <location filename="components/hpribin4bit.cpp" line="+32"/>
-        <location filename="components/jkff_SR.cpp" line="+34"/>
-        <location filename="components/mux2to1.cpp" line="+32"/>
-        <location filename="components/mux4to1.cpp" line="+32"/>
-        <location filename="components/mux8to1.cpp" line="+32"/>
-        <location filename="components/nigbt.cpp" line="-41"/>
-        <location filename="components/photodiode.cpp" line="+18"/>
-        <location filename="components/phototransistor.cpp" line="-9"/>
+        <location filename="../components/hpribin4bit.cpp" line="+31"/>
+        <location filename="../components/jkff_SR.cpp" line="+33"/>
+        <location filename="../components/mux2to1.cpp" line="+31"/>
+        <location filename="../components/mux4to1.cpp" line="+31"/>
+        <location filename="../components/mux8to1.cpp" line="+31"/>
+        <location filename="../components/nigbt.cpp" line="-41"/>
+        <location filename="../components/photodiode.cpp" line="+18"/>
+        <location filename="../components/phototransistor.cpp" line="-9"/>
         <location line="+3"/>
-        <location filename="components/tff_SR.cpp" line="+34"/>
+        <location filename="../components/tff_SR.cpp" line="+33"/>
         <source>s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/hic2_full.cpp" line="-144"/>
-        <location filename="components/hicumL2V2p23.cpp" line="-144"/>
-        <location filename="components/hicumL2V2p24.cpp" line="-144"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="-144"/>
+        <location filename="../components/hic2_full.cpp" line="-144"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="-144"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="-144"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="-144"/>
         <source>Specifies the base node connection for the tunneling current</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/EKV26MOS.cpp" line="-96"/>
-        <location filename="components/MESFET.cpp" line="-42"/>
+        <location filename="../components/EKV26MOS.cpp" line="-96"/>
+        <location filename="../components/MESFET.cpp" line="-42"/>
         <location line="+3"/>
         <location line="+3"/>
-        <location filename="components/hic2_full.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
-        <location filename="components/nigbt.cpp" line="+30"/>
+        <location filename="../components/hic2_full.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="+3"/>
+        <location filename="../components/nigbt.cpp" line="+30"/>
         <source>1/V</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+28"/>
-        <location filename="components/hic0_full.cpp" line="+113"/>
+        <location filename="../components/hic0_full.cpp" line="+113"/>
         <location line="+12"/>
         <location line="+3"/>
         <location line="+11"/>
         <location line="+3"/>
-        <location filename="components/hic2_full.cpp" line="+6"/>
+        <location filename="../components/hic2_full.cpp" line="+6"/>
         <location line="+3"/>
         <location line="+160"/>
         <location line="+7"/>
         <location line="+3"/>
         <location line="+30"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+113"/>
+        <location filename="../components/hicumL0V1p2.cpp" line="+113"/>
         <location line="+12"/>
         <location line="+3"/>
         <location line="+13"/>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+113"/>
+        <location filename="../components/hicumL0V1p2g.cpp" line="+113"/>
         <location line="+12"/>
         <location line="+3"/>
         <location line="+13"/>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+113"/>
+        <location filename="../components/hicumL0V1p3.cpp" line="+113"/>
         <location line="+12"/>
         <location line="+3"/>
         <location line="+13"/>
         <location line="+3"/>
         <location line="+13"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+6"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="+6"/>
         <location line="+3"/>
         <location line="+160"/>
         <location line="+7"/>
         <location line="+3"/>
         <location line="+30"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+6"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="+6"/>
         <location line="+3"/>
         <location line="+160"/>
         <location line="+7"/>
         <location line="+3"/>
         <location line="+30"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+6"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="+6"/>
         <location line="+3"/>
         <location line="+176"/>
         <location line="+7"/>
@@ -8234,75 +8248,75 @@ Digitális szimuláció</translation>
     <message>
         <location line="+9"/>
         <location line="+3"/>
-        <location filename="components/MESFET.cpp" line="+39"/>
-        <location filename="components/hic0_full.cpp" line="-139"/>
+        <location filename="../components/MESFET.cpp" line="+39"/>
+        <location filename="../components/hic0_full.cpp" line="-139"/>
         <location line="+36"/>
         <location line="+11"/>
         <location line="+3"/>
         <location line="+3"/>
-        <location filename="components/hic2_full.cpp" line="-197"/>
+        <location filename="../components/hic2_full.cpp" line="-197"/>
         <location line="+3"/>
         <location line="+11"/>
         <location line="+3"/>
         <location line="+16"/>
         <location line="+84"/>
-        <location filename="components/hicumL0V1p2.cpp" line="-141"/>
+        <location filename="../components/hicumL0V1p2.cpp" line="-141"/>
         <location line="+36"/>
         <location line="+11"/>
         <location line="+3"/>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="-141"/>
+        <location filename="../components/hicumL0V1p2g.cpp" line="-141"/>
         <location line="+36"/>
         <location line="+11"/>
         <location line="+3"/>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="-154"/>
+        <location filename="../components/hicumL0V1p3.cpp" line="-154"/>
         <location line="+36"/>
         <location line="+11"/>
         <location line="+3"/>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p23.cpp" line="-197"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="-197"/>
         <location line="+3"/>
         <location line="+11"/>
         <location line="+3"/>
         <location line="+16"/>
         <location line="+84"/>
-        <location filename="components/hicumL2V2p24.cpp" line="-197"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="-197"/>
         <location line="+3"/>
         <location line="+11"/>
         <location line="+3"/>
         <location line="+16"/>
         <location line="+84"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="-230"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="-230"/>
         <location line="+3"/>
         <location line="+11"/>
         <location line="+3"/>
         <location line="+16"/>
         <location line="+84"/>
-        <location filename="components/log_amp.cpp" line="+11"/>
+        <location filename="../components/log_amp.cpp" line="+11"/>
         <location line="+6"/>
-        <location filename="components/photodiode.cpp" line="-27"/>
+        <location filename="../components/photodiode.cpp" line="-27"/>
         <location line="+38"/>
-        <location filename="components/phototransistor.cpp" line="+9"/>
+        <location filename="../components/phototransistor.cpp" line="+9"/>
         <location line="+3"/>
         <location line="+3"/>
-        <location filename="components/potentiometer.cpp" line="-27"/>
+        <location filename="../components/potentiometer.cpp" line="-27"/>
         <location line="+19"/>
         <source>Ohm</source>
         <translation type="unfinished">Ohm</translation>
     </message>
     <message>
         <location line="+47"/>
-        <location filename="components/MESFET.cpp" line="+10"/>
+        <location filename="../components/MESFET.cpp" line="+10"/>
         <location line="+3"/>
         <location line="+3"/>
-        <location filename="components/hic0_full.cpp" line="-85"/>
+        <location filename="../components/hic0_full.cpp" line="-85"/>
         <location line="+44"/>
         <location line="+11"/>
         <location line="+43"/>
         <location line="+11"/>
         <location line="+3"/>
-        <location filename="components/hic2_full.cpp" line="-81"/>
+        <location filename="../components/hic2_full.cpp" line="-81"/>
         <location line="+3"/>
         <location line="+10"/>
         <location line="+10"/>
@@ -8310,25 +8324,25 @@ Digitális szimuláció</translation>
         <location line="+15"/>
         <location line="+47"/>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="-92"/>
+        <location filename="../components/hicumL0V1p2.cpp" line="-92"/>
         <location line="+51"/>
         <location line="+11"/>
         <location line="+43"/>
         <location line="+11"/>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="-92"/>
+        <location filename="../components/hicumL0V1p2g.cpp" line="-92"/>
         <location line="+51"/>
         <location line="+11"/>
         <location line="+43"/>
         <location line="+11"/>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="-92"/>
+        <location filename="../components/hicumL0V1p3.cpp" line="-92"/>
         <location line="+51"/>
         <location line="+11"/>
         <location line="+43"/>
         <location line="+11"/>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p23.cpp" line="-81"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="-81"/>
         <location line="+3"/>
         <location line="+10"/>
         <location line="+10"/>
@@ -8336,7 +8350,7 @@ Digitális szimuláció</translation>
         <location line="+15"/>
         <location line="+47"/>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="-81"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="-81"/>
         <location line="+3"/>
         <location line="+10"/>
         <location line="+10"/>
@@ -8344,7 +8358,7 @@ Digitális szimuláció</translation>
         <location line="+15"/>
         <location line="+47"/>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="-81"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="-81"/>
         <location line="+3"/>
         <location line="+10"/>
         <location line="+10"/>
@@ -8352,25 +8366,25 @@ Digitális szimuláció</translation>
         <location line="+15"/>
         <location line="+57"/>
         <location line="+3"/>
-        <location filename="components/photodiode.cpp" line="-23"/>
-        <location filename="components/phototransistor.cpp" line="-29"/>
+        <location filename="../components/photodiode.cpp" line="-23"/>
+        <location filename="../components/phototransistor.cpp" line="-29"/>
         <location line="+8"/>
         <source>F</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/DLS_nto1.cpp" line="-3"/>
-        <location filename="components/EKV26MOS.cpp" line="-99"/>
+        <location filename="../components/DLS_nto1.cpp" line="-3"/>
+        <location filename="../components/EKV26MOS.cpp" line="-99"/>
         <location line="+6"/>
         <location line="+84"/>
         <location line="+6"/>
-        <location filename="components/MESFET.cpp" line="-67"/>
+        <location filename="../components/MESFET.cpp" line="-67"/>
         <location line="+20"/>
         <location line="+3"/>
         <location line="+3"/>
         <location line="+12"/>
         <location line="+3"/>
-        <location filename="components/hic0_full.cpp" line="-141"/>
+        <location filename="../components/hic0_full.cpp" line="-141"/>
         <location line="+32"/>
         <location line="+32"/>
         <location line="+3"/>
@@ -8387,7 +8401,7 @@ Digitális szimuláció</translation>
         <location line="+3"/>
         <location line="+3"/>
         <location line="+3"/>
-        <location filename="components/hic2_full.cpp" line="-93"/>
+        <location filename="../components/hic2_full.cpp" line="-93"/>
         <location line="+10"/>
         <location line="+10"/>
         <location line="+5"/>
@@ -8402,7 +8416,7 @@ Digitális szimuláció</translation>
         <location line="+26"/>
         <location line="+3"/>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="-155"/>
+        <location filename="../components/hicumL0V1p2.cpp" line="-155"/>
         <location line="+3"/>
         <location line="+36"/>
         <location line="+7"/>
@@ -8421,7 +8435,7 @@ Digitális szimuláció</translation>
         <location line="+3"/>
         <location line="+3"/>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="-155"/>
+        <location filename="../components/hicumL0V1p2g.cpp" line="-155"/>
         <location line="+3"/>
         <location line="+36"/>
         <location line="+7"/>
@@ -8440,7 +8454,7 @@ Digitális szimuláció</translation>
         <location line="+3"/>
         <location line="+3"/>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="-157"/>
+        <location filename="../components/hicumL0V1p3.cpp" line="-157"/>
         <location line="+3"/>
         <location line="+38"/>
         <location line="+7"/>
@@ -8459,7 +8473,7 @@ Digitális szimuláció</translation>
         <location line="+3"/>
         <location line="+3"/>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p23.cpp" line="-93"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="-93"/>
         <location line="+10"/>
         <location line="+10"/>
         <location line="+5"/>
@@ -8474,7 +8488,7 @@ Digitális szimuláció</translation>
         <location line="+26"/>
         <location line="+3"/>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="-93"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="-93"/>
         <location line="+10"/>
         <location line="+10"/>
         <location line="+5"/>
@@ -8489,7 +8503,7 @@ Digitális szimuláció</translation>
         <location line="+26"/>
         <location line="+3"/>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="-103"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="-103"/>
         <location line="+10"/>
         <location line="+10"/>
         <location line="+5"/>
@@ -8506,14 +8520,14 @@ Digitális szimuláció</translation>
         <location line="+3"/>
         <location line="+3"/>
         <location line="+14"/>
-        <location filename="components/log_amp.cpp" line="-9"/>
-        <location filename="components/logic_0.cpp" line="+29"/>
-        <location filename="components/logic_1.cpp" line="+29"/>
-        <location filename="components/nigbt.cpp" line="+3"/>
+        <location filename="../components/log_amp.cpp" line="-9"/>
+        <location filename="../components/logic_0.cpp" line="+28"/>
+        <location filename="../components/logic_1.cpp" line="+28"/>
+        <location filename="../components/nigbt.cpp" line="+3"/>
         <location line="+3"/>
-        <location filename="components/photodiode.cpp" line="-9"/>
+        <location filename="../components/photodiode.cpp" line="-9"/>
         <location line="+6"/>
-        <location filename="components/phototransistor.cpp" line="-19"/>
+        <location filename="../components/phototransistor.cpp" line="-19"/>
         <location line="+3"/>
         <location line="+5"/>
         <location line="+8"/>
@@ -8521,170 +8535,170 @@ Digitális szimuláció</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/hic2_full.cpp" line="-106"/>
-        <location filename="components/hicumL2V2p23.cpp" line="-106"/>
-        <location filename="components/hicumL2V2p24.cpp" line="-106"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="-136"/>
+        <location filename="../components/hic2_full.cpp" line="-106"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="-106"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="-106"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="-136"/>
         <source>Partitioning factor of parasitic B-C cap</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="+2"/>
         <source>Partitioning factor of parasitic B-E cap</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+59"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+59"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+59"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+69"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="+59"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="+59"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="+69"/>
         <source>Flag for turning on and off of vertical NQS effect</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+6"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+6"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+6"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+6"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="+6"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="+6"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="+6"/>
         <source>Flag for determining where to tag the flicker noise source</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+32"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+32"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+32"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+38"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="+32"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="+32"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="+38"/>
         <source>Effective emitter bandgap voltage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="+3"/>
         <source>Effective collector bandgap voltage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="+3"/>
         <source>Effective substrate bandgap voltage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="+3"/>
         <source>Coefficient K1 in T-dependent band-gap equation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="+2"/>
         <source>Coefficient K2 in T-dependent band-gap equation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/hic0_full.cpp" line="+14"/>
-        <location filename="components/hic2_full.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+14"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+14"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+14"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
+        <location filename="../components/hic0_full.cpp" line="+14"/>
+        <location filename="../components/hic2_full.cpp" line="+2"/>
+        <location filename="../components/hicumL0V1p2.cpp" line="+14"/>
+        <location filename="../components/hicumL0V1p2g.cpp" line="+14"/>
+        <location filename="../components/hicumL0V1p3.cpp" line="+14"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="+2"/>
         <source>Exponent coefficient in transfer current temperature dependence</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/hic2_full.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
+        <location filename="../components/hic2_full.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="+2"/>
         <source>Exponent coefficient in B-E junction current temperature dependence</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+5"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+5"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+5"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+12"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="+5"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="+5"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="+12"/>
         <source>Flag for turning on and off self-heating effect</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/hic0_full.cpp" line="+29"/>
-        <location filename="components/hic2_full.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+33"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+31"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+47"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
+        <location filename="../components/hic0_full.cpp" line="+29"/>
+        <location filename="../components/hic2_full.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p2.cpp" line="+33"/>
+        <location filename="../components/hicumL0V1p2g.cpp" line="+31"/>
+        <location filename="../components/hicumL0V1p3.cpp" line="+47"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="+3"/>
         <source>K/W</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/hic2_full.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+8"/>
+        <location filename="../components/hic2_full.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="+8"/>
         <source>J/W</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="+2"/>
         <source>Flag for compatibility with v2.1 model (0=v2.1)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/hic0_full.cpp" line="+6"/>
-        <location filename="components/hic2_full.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+6"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+8"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+6"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
+        <location filename="../components/hic0_full.cpp" line="+6"/>
+        <location filename="../components/hic2_full.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p2.cpp" line="+6"/>
+        <location filename="../components/hicumL0V1p2g.cpp" line="+8"/>
+        <location filename="../components/hicumL0V1p3.cpp" line="+6"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="+3"/>
         <source>C</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hic2_full.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
+        <location filename="../components/hic2_full.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p2g.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p3.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="+3"/>
         <source>K</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/hic2_full.cpp" line="+21"/>
+        <location filename="../components/hic2_full.cpp" line="+21"/>
         <source>HICUM L2 v2.22</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/diac.cpp" line="-36"/>
+        <location filename="../components/diac.cpp" line="-36"/>
         <source>diac (bidirectional trigger diode)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+24"/>
-        <location filename="components/triac.cpp" line="-14"/>
+        <location filename="../components/triac.cpp" line="-14"/>
         <source>(bidirectional) breakover voltage</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8695,8 +8709,8 @@ Digitális szimuláció</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/thyristor.cpp" line="-10"/>
-        <location filename="components/triac.cpp" line="+4"/>
+        <location filename="../components/thyristor.cpp" line="-10"/>
+        <location filename="../components/triac.cpp" line="+4"/>
         <source>parasitic capacitance</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8706,7 +8720,7 @@ Digitális szimuláció</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/thyristor.cpp" line="-28"/>
+        <location filename="../components/thyristor.cpp" line="-28"/>
         <source>silicon controlled rectifier (SCR)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8726,7 +8740,7 @@ Digitális szimuláció</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/triac.cpp" line="-32"/>
+        <location filename="../components/triac.cpp" line="-32"/>
         <source>triac (bidirectional thyristor)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8741,14 +8755,14 @@ Digitális szimuláció</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/diac.cpp" line="-12"/>
-        <location filename="components/thyristor.cpp" line="-14"/>
-        <location filename="components/triac.cpp" line="-14"/>
+        <location filename="../components/diac.cpp" line="-12"/>
+        <location filename="../components/thyristor.cpp" line="-14"/>
+        <location filename="../components/triac.cpp" line="-14"/>
         <source>intrinsic junction resistance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/log_amp.cpp" line="-20"/>
+        <location filename="../components/log_amp.cpp" line="-20"/>
         <source>Logarithmic Amplifier verilog device</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8765,8 +8779,8 @@ Digitális szimuláció</translation>
     <message>
         <location line="+1"/>
         <location line="+11"/>
-        <location filename="components/photodiode.cpp" line="+29"/>
-        <location filename="components/potentiometer.cpp" line="-6"/>
+        <location filename="../components/photodiode.cpp" line="+29"/>
+        <location filename="../components/potentiometer.cpp" line="-6"/>
         <location line="+3"/>
         <source>%</source>
         <translation type="unfinished"></translation>
@@ -8788,7 +8802,7 @@ Digitális szimuláció</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/potentiometer.cpp" line="-4"/>
+        <location filename="../components/potentiometer.cpp" line="-4"/>
         <source>conformity error</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8823,16 +8837,16 @@ Digitális szimuláció</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/MESFET.cpp" line="+29"/>
+        <location filename="../components/MESFET.cpp" line="+29"/>
         <location line="+3"/>
         <location line="+3"/>
-        <location filename="components/log_amp.cpp" line="+1"/>
+        <location filename="../components/log_amp.cpp" line="+1"/>
         <location line="+6"/>
         <source>%/Celsius</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/log_amp.cpp" line="-4"/>
+        <location filename="../components/log_amp.cpp" line="-4"/>
         <source>offset temperature coefficient</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8863,58 +8877,58 @@ Digitális szimuláció</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/EKV26MOS.cpp" line="+19"/>
-        <location filename="components/MESFET.cpp" line="+52"/>
-        <location filename="components/log_amp.cpp" line="+4"/>
-        <location filename="components/nigbt.cpp" line="+3"/>
+        <location filename="../components/EKV26MOS.cpp" line="+19"/>
+        <location filename="../components/MESFET.cpp" line="+52"/>
+        <location filename="../components/log_amp.cpp" line="+4"/>
+        <location filename="../components/nigbt.cpp" line="+3"/>
         <location line="+3"/>
-        <location filename="components/photodiode.cpp" line="-19"/>
-        <location filename="components/potentiometer.cpp" line="+13"/>
+        <location filename="../components/photodiode.cpp" line="-19"/>
+        <location filename="../components/potentiometer.cpp" line="+13"/>
         <source>Celsius</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/log_amp.cpp" line="+21"/>
+        <location filename="../components/log_amp.cpp" line="+21"/>
         <source>Logarithmic Amplifier</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/MESFET.cpp" line="-95"/>
-        <location filename="components/log_amp.cpp" line="+20"/>
+        <location filename="../components/MESFET.cpp" line="-95"/>
+        <location filename="../components/log_amp.cpp" line="+20"/>
         <source>I</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/log_amp.cpp" line="+1"/>
+        <location filename="../components/log_amp.cpp" line="+1"/>
         <source>R</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/hic0_full.cpp" line="-227"/>
+        <location filename="../components/hic0_full.cpp" line="-227"/>
         <source>HICUM Level 0 v1.12 verilog device</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+5"/>
-        <location filename="components/hicumL0V1p2.cpp" line="-240"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="-240"/>
-        <location filename="components/hicumL0V1p3.cpp" line="-258"/>
+        <location filename="../components/hicumL0V1p2.cpp" line="-240"/>
+        <location filename="../components/hicumL0V1p2g.cpp" line="-240"/>
+        <location filename="../components/hicumL0V1p3.cpp" line="-258"/>
         <source>(Modified) saturation current</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+5"/>
+        <location filename="../components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p2g.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p3.cpp" line="+5"/>
         <source>Non-ideality coefficient of forward collector current</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+2"/>
+        <location filename="../components/hicumL0V1p2.cpp" line="+2"/>
+        <location filename="../components/hicumL0V1p2g.cpp" line="+2"/>
+        <location filename="../components/hicumL0V1p3.cpp" line="+2"/>
         <source>Non-ideality coefficient of reverse collector current</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8922,13 +8936,13 @@ Digitális szimuláció</translation>
         <location line="+2"/>
         <location line="+100"/>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+2"/>
+        <location filename="../components/hicumL0V1p2.cpp" line="+2"/>
         <location line="+114"/>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+2"/>
+        <location filename="../components/hicumL0V1p2g.cpp" line="+2"/>
         <location line="+114"/>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+2"/>
+        <location filename="../components/hicumL0V1p3.cpp" line="+2"/>
         <location line="+116"/>
         <location line="+3"/>
         <source>forward Early voltage (normalization volt.)</source>
@@ -8936,560 +8950,560 @@ Digitális szimuláció</translation>
     </message>
     <message>
         <location line="-97"/>
-        <location filename="components/hicumL0V1p2.cpp" line="-106"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="-106"/>
-        <location filename="components/hicumL0V1p3.cpp" line="-106"/>
+        <location filename="../components/hicumL0V1p2.cpp" line="-106"/>
+        <location filename="../components/hicumL0V1p2g.cpp" line="-106"/>
+        <location filename="../components/hicumL0V1p3.cpp" line="-106"/>
         <source>inverse d.c. high-injection roll-off current</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p2g.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p3.cpp" line="+3"/>
         <source>high-injection correction current</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p3.cpp" line="+3"/>
         <source>high-injection correction factor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+4"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+7"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+4"/>
+        <location filename="../components/hicumL0V1p2.cpp" line="+4"/>
+        <location filename="../components/hicumL0V1p2g.cpp" line="+7"/>
+        <location filename="../components/hicumL0V1p3.cpp" line="+4"/>
         <source>BE saturation current</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p2g.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p3.cpp" line="+3"/>
         <source>BE non-ideality factor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+2"/>
+        <location filename="../components/hicumL0V1p2.cpp" line="+2"/>
+        <location filename="../components/hicumL0V1p2g.cpp" line="+2"/>
+        <location filename="../components/hicumL0V1p3.cpp" line="+2"/>
         <source>BE recombination saturation current</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p2g.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p3.cpp" line="+3"/>
         <source>BE recombination non-ideality factor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+2"/>
+        <location filename="../components/hicumL0V1p2.cpp" line="+2"/>
+        <location filename="../components/hicumL0V1p2g.cpp" line="+2"/>
+        <location filename="../components/hicumL0V1p3.cpp" line="+2"/>
         <source>BC saturation current</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p2g.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p3.cpp" line="+3"/>
         <source>BC non-ideality factor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+2"/>
+        <location filename="../components/hicumL0V1p2.cpp" line="+2"/>
+        <location filename="../components/hicumL0V1p2g.cpp" line="+2"/>
+        <location filename="../components/hicumL0V1p3.cpp" line="+2"/>
         <source>Zero-bias BE depletion capacitance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p2g.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p3.cpp" line="+3"/>
         <source>BE built-in voltage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p2g.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p3.cpp" line="+3"/>
         <source>BE exponent factor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+2"/>
+        <location filename="../components/hicumL0V1p2.cpp" line="+2"/>
+        <location filename="../components/hicumL0V1p2g.cpp" line="+2"/>
+        <location filename="../components/hicumL0V1p3.cpp" line="+2"/>
         <source>Ratio of maximum to zero-bias value</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+9"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+9"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+9"/>
+        <location filename="../components/hicumL0V1p2.cpp" line="+9"/>
+        <location filename="../components/hicumL0V1p2g.cpp" line="+9"/>
+        <location filename="../components/hicumL0V1p3.cpp" line="+9"/>
         <source>low current transit time at Vbici=0</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+6"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+6"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+6"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+6"/>
+        <location filename="../components/hicumL0V1p2.cpp" line="+6"/>
+        <location filename="../components/hicumL0V1p2g.cpp" line="+6"/>
+        <location filename="../components/hicumL0V1p3.cpp" line="+6"/>
         <source>SCR width modulation contribution</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p2g.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p3.cpp" line="+3"/>
         <source>Storage time in neutral emitter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+5"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+5"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+5"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+5"/>
+        <location filename="../components/hicumL0V1p2.cpp" line="+5"/>
+        <location filename="../components/hicumL0V1p2g.cpp" line="+5"/>
+        <location filename="../components/hicumL0V1p3.cpp" line="+5"/>
         <source>Saturation time at high current densities</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+5"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+5"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+5"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+5"/>
+        <location filename="../components/hicumL0V1p2.cpp" line="+5"/>
+        <location filename="../components/hicumL0V1p2g.cpp" line="+5"/>
+        <location filename="../components/hicumL0V1p3.cpp" line="+5"/>
         <source>Storage time at inverse operation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p2g.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p3.cpp" line="+3"/>
         <source>Low-field collector resistance under emitter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p2g.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p3.cpp" line="+3"/>
         <source>Voltage dividing ohmic and satur.region</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
         <location line="+25"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p2.cpp" line="+3"/>
         <location line="+25"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p2g.cpp" line="+3"/>
         <location line="+25"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p3.cpp" line="+3"/>
         <location line="+25"/>
         <source>Punch-through voltage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="-22"/>
-        <location filename="components/hicumL0V1p2.cpp" line="-22"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="-22"/>
-        <location filename="components/hicumL0V1p3.cpp" line="-22"/>
+        <location filename="../components/hicumL0V1p2.cpp" line="-22"/>
+        <location filename="../components/hicumL0V1p2g.cpp" line="-22"/>
+        <location filename="../components/hicumL0V1p3.cpp" line="-22"/>
         <source>Saturation voltage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p2g.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p3.cpp" line="+3"/>
         <source>Total zero-bias BC depletion capacitance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p2g.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p3.cpp" line="+3"/>
         <source>BC built-in voltage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p2g.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p3.cpp" line="+3"/>
         <source>BC exponent factor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+2"/>
+        <location filename="../components/hicumL0V1p2.cpp" line="+2"/>
+        <location filename="../components/hicumL0V1p2g.cpp" line="+2"/>
+        <location filename="../components/hicumL0V1p3.cpp" line="+2"/>
         <source>Punch-through voltage of BC junction</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p2g.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p3.cpp" line="+3"/>
         <source>Zero-bias external BC depletion capacitance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p2g.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p3.cpp" line="+3"/>
         <source>External BC built-in voltage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p2g.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p3.cpp" line="+3"/>
         <source>External BC exponent factor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+5"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+5"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+5"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+5"/>
+        <location filename="../components/hicumL0V1p2.cpp" line="+5"/>
+        <location filename="../components/hicumL0V1p2g.cpp" line="+5"/>
+        <location filename="../components/hicumL0V1p3.cpp" line="+5"/>
         <source>Split factor = Cjci0/Cjc0</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+2"/>
+        <location filename="../components/hicumL0V1p2.cpp" line="+2"/>
+        <location filename="../components/hicumL0V1p2g.cpp" line="+2"/>
+        <location filename="../components/hicumL0V1p3.cpp" line="+2"/>
         <source>Internal base resistance at zero-bias</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+9"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+9"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+9"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+9"/>
+        <location filename="../components/hicumL0V1p2.cpp" line="+9"/>
+        <location filename="../components/hicumL0V1p2g.cpp" line="+9"/>
+        <location filename="../components/hicumL0V1p3.cpp" line="+9"/>
         <source>Geometry factor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+14"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+14"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+14"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+14"/>
+        <location filename="../components/hicumL0V1p2.cpp" line="+14"/>
+        <location filename="../components/hicumL0V1p2g.cpp" line="+14"/>
+        <location filename="../components/hicumL0V1p3.cpp" line="+14"/>
         <source>Substrate transistor transfer current non-ideality factor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+2"/>
+        <location filename="../components/hicumL0V1p2.cpp" line="+2"/>
+        <location filename="../components/hicumL0V1p2g.cpp" line="+2"/>
+        <location filename="../components/hicumL0V1p3.cpp" line="+2"/>
         <source>SC saturation current</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p2g.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p3.cpp" line="+3"/>
         <source>SC non-ideality factor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+2"/>
+        <location filename="../components/hicumL0V1p2.cpp" line="+2"/>
+        <location filename="../components/hicumL0V1p2g.cpp" line="+2"/>
+        <location filename="../components/hicumL0V1p3.cpp" line="+2"/>
         <source>Zero-bias SC depletion capacitance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p2g.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p3.cpp" line="+3"/>
         <source>SC built-in voltage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p2g.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p3.cpp" line="+3"/>
         <source>External SC exponent factor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+2"/>
+        <location filename="../components/hicumL0V1p2.cpp" line="+2"/>
+        <location filename="../components/hicumL0V1p2g.cpp" line="+2"/>
+        <location filename="../components/hicumL0V1p3.cpp" line="+2"/>
         <source>SC punch-through voltage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p2g.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p3.cpp" line="+3"/>
         <source>Collector-base isolation (overlap) capacitance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p2g.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p3.cpp" line="+3"/>
         <source>Emitter-base oxide capacitance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p2g.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p3.cpp" line="+3"/>
         <source>Exponent factor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+2"/>
+        <location filename="../components/hicumL0V1p2.cpp" line="+2"/>
+        <location filename="../components/hicumL0V1p2g.cpp" line="+2"/>
+        <location filename="../components/hicumL0V1p3.cpp" line="+2"/>
         <source>Prefactor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p2g.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p3.cpp" line="+3"/>
         <source>M^(1-AF)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+2"/>
+        <location filename="../components/hicumL0V1p2.cpp" line="+2"/>
+        <location filename="../components/hicumL0V1p2g.cpp" line="+2"/>
+        <location filename="../components/hicumL0V1p3.cpp" line="+2"/>
         <source>flicker noise exponent factor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+2"/>
+        <location filename="../components/hicumL0V1p2.cpp" line="+2"/>
+        <location filename="../components/hicumL0V1p2g.cpp" line="+2"/>
+        <location filename="../components/hicumL0V1p3.cpp" line="+2"/>
         <source>Bandgap-voltage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p2g.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p3.cpp" line="+3"/>
         <source>Effective emitter bandgap-voltage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p2g.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p3.cpp" line="+3"/>
         <source>Effective collector bandgap-voltage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p2g.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p3.cpp" line="+3"/>
         <source>Effective substrate bandgap-voltage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p2g.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p3.cpp" line="+3"/>
         <source>Coefficient K1 in T-dependent bandgap equation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/EKV26MOS.cpp" line="-82"/>
-        <location filename="components/hic0_full.cpp" line="+1"/>
+        <location filename="../components/EKV26MOS.cpp" line="-82"/>
+        <location filename="../components/hic0_full.cpp" line="+1"/>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+1"/>
+        <location filename="../components/hicumL0V1p2.cpp" line="+1"/>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+1"/>
+        <location filename="../components/hicumL0V1p2g.cpp" line="+1"/>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+1"/>
+        <location filename="../components/hicumL0V1p3.cpp" line="+1"/>
         <location line="+3"/>
         <source>V/K</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/hic0_full.cpp" line="-1"/>
-        <location filename="components/hicumL0V1p2.cpp" line="-1"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="-1"/>
-        <location filename="components/hicumL0V1p3.cpp" line="-1"/>
+        <location filename="../components/hic0_full.cpp" line="-1"/>
+        <location filename="../components/hicumL0V1p2.cpp" line="-1"/>
+        <location filename="../components/hicumL0V1p2g.cpp" line="-1"/>
+        <location filename="../components/hicumL0V1p3.cpp" line="-1"/>
         <source>Coefficient K2 in T-dependent bandgap equation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p2g.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p3.cpp" line="+3"/>
         <source>Frist-order TC of tf0</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p2g.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p3.cpp" line="+3"/>
         <source>Second-order TC of tf0</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+1"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+1"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+1"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+1"/>
+        <location filename="../components/hicumL0V1p2.cpp" line="+1"/>
+        <location filename="../components/hicumL0V1p2g.cpp" line="+1"/>
+        <location filename="../components/hicumL0V1p3.cpp" line="+1"/>
         <location line="+44"/>
         <source>1/K^2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+4"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+4"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+4"/>
-        <location filename="components/hicumL0V1p3.cpp" line="-40"/>
+        <location filename="../components/hicumL0V1p2.cpp" line="+4"/>
+        <location filename="../components/hicumL0V1p2g.cpp" line="+4"/>
+        <location filename="../components/hicumL0V1p3.cpp" line="-40"/>
         <source>Exponent coefficient in BE junction current temperature dependence</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+2"/>
+        <location filename="../components/hicumL0V1p2.cpp" line="+2"/>
+        <location filename="../components/hicumL0V1p2g.cpp" line="+2"/>
+        <location filename="../components/hicumL0V1p3.cpp" line="+2"/>
         <source>TC of epi-collector diffusivity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+2"/>
+        <location filename="../components/hicumL0V1p2.cpp" line="+2"/>
+        <location filename="../components/hicumL0V1p2g.cpp" line="+2"/>
+        <location filename="../components/hicumL0V1p3.cpp" line="+2"/>
         <source>Relative TC of satur.drift velocity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p2g.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p3.cpp" line="+3"/>
         <source>Relative TC of vces</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p2g.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p3.cpp" line="+3"/>
         <source>TC of internal base resistance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+2"/>
+        <location filename="../components/hicumL0V1p2.cpp" line="+2"/>
+        <location filename="../components/hicumL0V1p2g.cpp" line="+2"/>
+        <location filename="../components/hicumL0V1p3.cpp" line="+2"/>
         <source>TC of external base resistance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+2"/>
+        <location filename="../components/hicumL0V1p2.cpp" line="+2"/>
+        <location filename="../components/hicumL0V1p2g.cpp" line="+2"/>
+        <location filename="../components/hicumL0V1p3.cpp" line="+2"/>
         <source>TC of external collector resistance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+2"/>
+        <location filename="../components/hicumL0V1p2.cpp" line="+2"/>
+        <location filename="../components/hicumL0V1p2g.cpp" line="+2"/>
+        <location filename="../components/hicumL0V1p3.cpp" line="+2"/>
         <source>TC of emitter resistances</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+4"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+4"/>
+        <location filename="../components/hicumL0V1p2.cpp" line="+4"/>
+        <location filename="../components/hicumL0V1p3.cpp" line="+4"/>
         <source>TC of avalanche prefactor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p3.cpp" line="+3"/>
         <source>TC of avalanche exponential factor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+5"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+10"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+19"/>
+        <location filename="../components/hicumL0V1p2.cpp" line="+5"/>
+        <location filename="../components/hicumL0V1p2g.cpp" line="+10"/>
+        <location filename="../components/hicumL0V1p3.cpp" line="+19"/>
         <source>Flag for self-heating calculation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+6"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+6"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+8"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+6"/>
+        <location filename="../components/hicumL0V1p2.cpp" line="+6"/>
+        <location filename="../components/hicumL0V1p2g.cpp" line="+8"/>
+        <location filename="../components/hicumL0V1p3.cpp" line="+6"/>
         <source>Ws/K</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+2"/>
+        <location filename="../components/hicumL0V1p2.cpp" line="+2"/>
+        <location filename="../components/hicumL0V1p2g.cpp" line="+2"/>
+        <location filename="../components/hicumL0V1p3.cpp" line="+2"/>
         <source>Temperature for which parameters are valid</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p2g.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p3.cpp" line="+3"/>
         <source>Temperature change for particular transistor</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9505,21 +9519,21 @@ Digitális szimuláció</translation>
     </message>
     <message>
         <location line="-203"/>
-        <location filename="components/hicumL0V1p2.cpp" line="-176"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="-176"/>
-        <location filename="components/hicumL0V1p3.cpp" line="-190"/>
+        <location filename="../components/hicumL0V1p2.cpp" line="-176"/>
+        <location filename="../components/hicumL0V1p2g.cpp" line="-176"/>
+        <location filename="../components/hicumL0V1p3.cpp" line="-190"/>
         <source>Base width modulation contribution</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/MESFET.cpp" line="+61"/>
-        <location filename="components/thyristor.cpp" line="+2"/>
-        <location filename="components/triac.cpp" line="+2"/>
+        <location filename="../components/MESFET.cpp" line="+61"/>
+        <location filename="../components/thyristor.cpp" line="+2"/>
+        <location filename="../components/triac.cpp" line="+2"/>
         <source>gate resistance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/potentiometer.cpp" line="-29"/>
+        <location filename="../components/potentiometer.cpp" line="-29"/>
         <source>Potentiometer verilog device</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9534,14 +9548,14 @@ Digitális szimuláció</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/msrstub.cpp" line="+6"/>
-        <location filename="components/potentiometer.cpp" line="+1"/>
+        <location filename="../components/msrstub.cpp" line="+6"/>
+        <location filename="../components/potentiometer.cpp" line="+1"/>
         <location line="+7"/>
         <source>degrees</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/potentiometer.cpp" line="-5"/>
+        <location filename="../components/potentiometer.cpp" line="-5"/>
         <source>resistive law taper coefficient</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9591,13 +9605,13 @@ Digitális szimuláció</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/rfedd.cpp" line="-11"/>
+        <location filename="../components/rfedd.cpp" line="-11"/>
         <source>equation defined RF device</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+7"/>
-        <location filename="components/rfedd2p.cpp" line="-2"/>
+        <location filename="../components/rfedd2p.cpp" line="-2"/>
         <source>type of parameters</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9609,7 +9623,7 @@ Digitális szimuláció</translation>
         <location line="+81"/>
         <location line="+5"/>
         <location line="+9"/>
-        <location filename="components/rfedd2p.cpp" line="+7"/>
+        <location filename="../components/rfedd2p.cpp" line="+7"/>
         <location line="+2"/>
         <location line="+2"/>
         <location line="+2"/>
@@ -9627,7 +9641,7 @@ Digitális szimuláció</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/rfedd2p.cpp" line="-20"/>
+        <location filename="../components/rfedd2p.cpp" line="-20"/>
         <source>equation defined 2-port RF device</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9637,7 +9651,7 @@ Digitális szimuláció</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/MESFET.cpp" line="-100"/>
+        <location filename="../components/MESFET.cpp" line="-100"/>
         <source>MESFET verilog device</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9753,13 +9767,13 @@ Digitális szimuláció</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/photodiode.cpp" line="+9"/>
+        <location filename="../components/photodiode.cpp" line="+9"/>
         <source>energy gap</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+1"/>
-        <location filename="components/photodiode.cpp" line="+1"/>
+        <location filename="../components/photodiode.cpp" line="+1"/>
         <source>eV</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9895,7 +9909,7 @@ Digitális szimuláció</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/EKV26MOS.cpp" line="-58"/>
+        <location filename="../components/EKV26MOS.cpp" line="-58"/>
         <source>long = 1, short = 2</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9913,7 +9927,7 @@ Digitális szimuláció</translation>
         <location line="+33"/>
         <location line="+13"/>
         <location line="+36"/>
-        <location filename="components/nigbt.cpp" line="-39"/>
+        <location filename="../components/nigbt.cpp" line="-39"/>
         <source>m</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9979,7 +9993,7 @@ Digitális szimuláció</translation>
     </message>
     <message>
         <location line="+4"/>
-        <location filename="components/nigbt.cpp" line="-6"/>
+        <location filename="../components/nigbt.cpp" line="-6"/>
         <source>A/V**2</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10085,7 +10099,7 @@ Digitális szimuláció</translation>
         <location line="+1"/>
         <location line="+3"/>
         <location line="+3"/>
-        <location filename="components/rlcg.cpp" line="-4"/>
+        <location filename="../components/rlcg.cpp" line="-4"/>
         <source>F/m</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10146,7 +10160,7 @@ Digitális szimuláció</translation>
     </message>
     <message>
         <location line="+21"/>
-        <location filename="components/photodiode.cpp" line="-13"/>
+        <location filename="../components/photodiode.cpp" line="-13"/>
         <source>diode relative area</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10161,12 +10175,12 @@ Digitális szimuláció</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/amplifier.cpp" line="-14"/>
+        <location filename="../components/amplifier.cpp" line="-14"/>
         <source>noise figure</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/rectline.cpp" line="-6"/>
+        <location filename="../components/rectline.cpp" line="-6"/>
         <source>widest side</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10182,14 +10196,14 @@ Digitális szimuláció</translation>
         <translation type="unfinished">Szögletes hullámvezető</translation>
     </message>
     <message>
-        <location filename="components/hicumL0V1p2.cpp" line="-68"/>
+        <location filename="../components/hicumL0V1p2.cpp" line="-68"/>
         <source>HICUM Level 0 v1.2 verilog device</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+15"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="-53"/>
-        <location filename="components/hicumL0V1p3.cpp" line="-55"/>
+        <location filename="../components/hicumL0V1p2g.cpp" line="-53"/>
+        <location filename="../components/hicumL0V1p3.cpp" line="-55"/>
         <source>reverse Early voltage (normalization volt.)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10204,12 +10218,12 @@ Digitális szimuláció</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/EKV26MOS.cpp" line="-33"/>
+        <location filename="../components/EKV26MOS.cpp" line="-33"/>
         <source>charge partition parameter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/hicumL2V2p23.cpp" line="-288"/>
+        <location filename="../components/hicumL2V2p23.cpp" line="-288"/>
         <source>HICUM Level 2 v2.23 verilog device</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10219,7 +10233,7 @@ Digitális szimuláció</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/photodiode.cpp" line="-25"/>
+        <location filename="../components/photodiode.cpp" line="-25"/>
         <source>Photodiode verilog device</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10245,7 +10259,7 @@ Digitális szimuláció</translation>
     </message>
     <message>
         <location line="+1"/>
-        <location filename="components/phototransistor.cpp" line="+33"/>
+        <location filename="../components/phototransistor.cpp" line="+33"/>
         <source>A/W</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10280,17 +10294,17 @@ Digitális szimuláció</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/rectline.cpp" line="-15"/>
+        <location filename="../components/rectline.cpp" line="-15"/>
         <source>material parameter for temperature model</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/EKV26MOS.cpp" line="-142"/>
+        <location filename="../components/EKV26MOS.cpp" line="-142"/>
         <source>EPFL-EKV MOS 2.6 verilog device</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/logical_buf.cpp" line="-4"/>
+        <location filename="../components/logical_buf.cpp" line="-4"/>
         <source>logical buffer</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10300,143 +10314,143 @@ Digitális szimuláció</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/hicumL0V1p2.cpp" line="-254"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+6"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+8"/>
+        <location filename="../components/hicumL0V1p2.cpp" line="-254"/>
+        <location filename="../components/hicumL0V1p2g.cpp" line="+6"/>
+        <location filename="../components/hicumL0V1p3.cpp" line="+8"/>
         <source>flag for turning on base related critical current</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+10"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+10"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+10"/>
+        <location filename="../components/hicumL0V1p2g.cpp" line="+10"/>
+        <location filename="../components/hicumL0V1p3.cpp" line="+10"/>
         <source>Smoothing factor for the d.c. injection width</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+27"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+27"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+27"/>
+        <location filename="../components/hicumL0V1p2g.cpp" line="+27"/>
+        <location filename="../components/hicumL0V1p3.cpp" line="+27"/>
         <source>BE charge built-in voltage for d.c. transfer current</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p2g.cpp" line="+3"/>
+        <location filename="../components/hicumL0V1p3.cpp" line="+3"/>
         <source>charge BE exponent factor for d.c. transfer current</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+162"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+162"/>
+        <location filename="../components/hicumL0V1p3.cpp" line="+162"/>
         <source>TC of iqf</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+8"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+175"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+8"/>
+        <location filename="../components/hicumL0V1p2g.cpp" line="+175"/>
+        <location filename="../components/hicumL0V1p3.cpp" line="+8"/>
         <source>Exponent factor for temperature dependent thermal resistance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/hic0_full.cpp" line="+9"/>
-        <location filename="components/hicumL0V1p2.cpp" line="-154"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="-159"/>
-        <location filename="components/hicumL0V1p3.cpp" line="-154"/>
+        <location filename="../components/hic0_full.cpp" line="+9"/>
+        <location filename="../components/hicumL0V1p2.cpp" line="-154"/>
+        <location filename="../components/hicumL0V1p2g.cpp" line="-159"/>
+        <location filename="../components/hicumL0V1p3.cpp" line="-154"/>
         <source>Exponent factor for emitter transit time</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+5"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+5"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+5"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+5"/>
+        <location filename="../components/hicumL0V1p2.cpp" line="+5"/>
+        <location filename="../components/hicumL0V1p2g.cpp" line="+5"/>
+        <location filename="../components/hicumL0V1p3.cpp" line="+5"/>
         <source>Smoothing factor for current dependence</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/MESFET.cpp" line="-57"/>
+        <location filename="../components/MESFET.cpp" line="-57"/>
         <source>Vto temperature coefficient</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/hicumL0V1p2.cpp" line="-19"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="-19"/>
-        <location filename="components/hicumL0V1p3.cpp" line="-19"/>
+        <location filename="../components/hicumL0V1p2.cpp" line="-19"/>
+        <location filename="../components/hicumL0V1p2g.cpp" line="-19"/>
+        <location filename="../components/hicumL0V1p3.cpp" line="-19"/>
         <source>BE capacitance ratio (maximum to zero-bias value) for d.c. transfer current</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/hic0_full.cpp" line="-53"/>
-        <location filename="components/hicumL0V1p2.cpp" line="-45"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="-45"/>
-        <location filename="components/hicumL0V1p3.cpp" line="-45"/>
+        <location filename="../components/hic0_full.cpp" line="-53"/>
+        <location filename="../components/hicumL0V1p2.cpp" line="-45"/>
+        <location filename="../components/hicumL0V1p2g.cpp" line="-45"/>
+        <location filename="../components/hicumL0V1p3.cpp" line="-45"/>
         <source>forward d.c. high-injection roll-off current</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/andor4x2.cpp" line="-1"/>
-        <location filename="components/andor4x3.cpp" line="-1"/>
-        <location filename="components/andor4x4.cpp" line="-1"/>
-        <location filename="components/binarytogrey4bit.cpp" line="-1"/>
-        <location filename="components/comp_1bit.cpp" line="-1"/>
-        <location filename="components/comp_2bit.cpp" line="-1"/>
-        <location filename="components/comp_4bit.cpp" line="-1"/>
-        <location filename="components/dmux2to4.cpp" line="-1"/>
-        <location filename="components/dmux3to8.cpp" line="-1"/>
-        <location filename="components/dmux4to16.cpp" line="-1"/>
-        <location filename="components/fa1b.cpp" line="-1"/>
-        <location filename="components/fa2b.cpp" line="-1"/>
-        <location filename="components/greytobinary4bit.cpp" line="-1"/>
-        <location filename="components/ha1b.cpp" line="-1"/>
-        <location filename="components/hpribin4bit.cpp" line="-1"/>
-        <location filename="components/mux2to1.cpp" line="-1"/>
-        <location filename="components/mux4to1.cpp" line="-1"/>
-        <location filename="components/mux8to1.cpp" line="-1"/>
+        <location filename="../components/andor4x2.cpp" line="-1"/>
+        <location filename="../components/andor4x3.cpp" line="-1"/>
+        <location filename="../components/andor4x4.cpp" line="-1"/>
+        <location filename="../components/binarytogrey4bit.cpp" line="-1"/>
+        <location filename="../components/comp_1bit.cpp" line="-1"/>
+        <location filename="../components/comp_2bit.cpp" line="-1"/>
+        <location filename="../components/comp_4bit.cpp" line="-1"/>
+        <location filename="../components/dmux2to4.cpp" line="-1"/>
+        <location filename="../components/dmux3to8.cpp" line="-1"/>
+        <location filename="../components/dmux4to16.cpp" line="-1"/>
+        <location filename="../components/fa1b.cpp" line="-1"/>
+        <location filename="../components/fa2b.cpp" line="-1"/>
+        <location filename="../components/greytobinary4bit.cpp" line="-1"/>
+        <location filename="../components/ha1b.cpp" line="-1"/>
+        <location filename="../components/hpribin4bit.cpp" line="-1"/>
+        <location filename="../components/mux2to1.cpp" line="-1"/>
+        <location filename="../components/mux4to1.cpp" line="-1"/>
+        <location filename="../components/mux8to1.cpp" line="-1"/>
         <source>output delay</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/dff_SR.cpp" line="-1"/>
-        <location filename="components/gatedDlatch.cpp" line="-1"/>
-        <location filename="components/jkff_SR.cpp" line="-1"/>
-        <location filename="components/tff_SR.cpp" line="-1"/>
+        <location filename="../components/dff_SR.cpp" line="-1"/>
+        <location filename="../components/gatedDlatch.cpp" line="-1"/>
+        <location filename="../components/jkff_SR.cpp" line="-1"/>
+        <location filename="../components/tff_SR.cpp" line="-1"/>
         <source>cross coupled gate delay</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/DLS_1ton.cpp" line="-3"/>
-        <location filename="components/DLS_nto1.cpp" line="-1"/>
+        <location filename="../components/DLS_1ton.cpp" line="-3"/>
+        <location filename="../components/DLS_nto1.cpp" line="-1"/>
         <source>voltage level</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/DLS_nto1.cpp" line="+3"/>
+        <location filename="../components/DLS_nto1.cpp" line="+3"/>
         <source>time delay</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/logic_0.cpp" line="-1"/>
+        <location filename="../components/logic_0.cpp" line="-1"/>
         <source>logic 0 voltage level</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/logic_1.cpp" line="-1"/>
+        <location filename="../components/logic_1.cpp" line="-1"/>
         <source>logic 1 voltage level</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/pad2bit.cpp" line="+22"/>
-        <location filename="components/pad3bit.cpp" line="+22"/>
-        <location filename="components/pad4bit.cpp" line="+22"/>
+        <location filename="../components/pad2bit.cpp" line="+21"/>
+        <location filename="../components/pad3bit.cpp" line="+21"/>
+        <location filename="../components/pad4bit.cpp" line="+21"/>
         <source>pad output value</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/andor4x2.cpp" line="-5"/>
+        <location filename="../components/andor4x2.cpp" line="-5"/>
         <source>4x2 andor verilog device</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10446,7 +10460,7 @@ Digitális szimuláció</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/andor4x3.cpp" line="-5"/>
+        <location filename="../components/andor4x3.cpp" line="-5"/>
         <source>4x3 andor verilog device</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10456,7 +10470,7 @@ Digitális szimuláció</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/andor4x4.cpp" line="-5"/>
+        <location filename="../components/andor4x4.cpp" line="-5"/>
         <source>4x4 andor verilog device</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10466,7 +10480,7 @@ Digitális szimuláció</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/binarytogrey4bit.cpp" line="-5"/>
+        <location filename="../components/binarytogrey4bit.cpp" line="-5"/>
         <source>4bit binary to grey converter verilog device</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10476,7 +10490,7 @@ Digitális szimuláció</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/comp_1bit.cpp" line="-5"/>
+        <location filename="../components/comp_1bit.cpp" line="-5"/>
         <source>1bit comparator verilog device</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10486,7 +10500,7 @@ Digitális szimuláció</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/comp_2bit.cpp" line="-5"/>
+        <location filename="../components/comp_2bit.cpp" line="-5"/>
         <source>2bit comparator verilog device</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10496,7 +10510,7 @@ Digitális szimuláció</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/comp_4bit.cpp" line="-5"/>
+        <location filename="../components/comp_4bit.cpp" line="-5"/>
         <source>4bit comparator verilog device</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10506,7 +10520,7 @@ Digitális szimuláció</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/dff_SR.cpp" line="-7"/>
+        <location filename="../components/dff_SR.cpp" line="-7"/>
         <source>D flip flop with set and reset verilog device</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10516,7 +10530,7 @@ Digitális szimuláció</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/DLS_1ton.cpp" line="-5"/>
+        <location filename="../components/DLS_1ton.cpp" line="-5"/>
         <source>data voltage level shifter (digital to analogue) verilog device</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10526,7 +10540,7 @@ Digitális szimuláció</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/DLS_nto1.cpp" line="-6"/>
+        <location filename="../components/DLS_nto1.cpp" line="-6"/>
         <source>data voltage level shifter (analogue to digital) verilog device</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10536,7 +10550,7 @@ Digitális szimuláció</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/dmux2to4.cpp" line="-5"/>
+        <location filename="../components/dmux2to4.cpp" line="-5"/>
         <source>2to4 demultiplexer verilog device</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10546,7 +10560,7 @@ Digitális szimuláció</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/dmux3to8.cpp" line="-5"/>
+        <location filename="../components/dmux3to8.cpp" line="-5"/>
         <source>3to8 demultiplexer verilog device</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10556,7 +10570,7 @@ Digitális szimuláció</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/dmux4to16.cpp" line="-5"/>
+        <location filename="../components/dmux4to16.cpp" line="-5"/>
         <source>4to16 demultiplexer verilog device</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10566,7 +10580,7 @@ Digitális szimuláció</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/fa1b.cpp" line="-5"/>
+        <location filename="../components/fa1b.cpp" line="-5"/>
         <source>1bit full adder verilog device</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10576,7 +10590,7 @@ Digitális szimuláció</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/fa2b.cpp" line="-5"/>
+        <location filename="../components/fa2b.cpp" line="-5"/>
         <source>2bit full adder verilog device</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10586,7 +10600,7 @@ Digitális szimuláció</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/gatedDlatch.cpp" line="-7"/>
+        <location filename="../components/gatedDlatch.cpp" line="-7"/>
         <source>gated D latch verilog device</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10596,7 +10610,7 @@ Digitális szimuláció</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/greytobinary4bit.cpp" line="-5"/>
+        <location filename="../components/greytobinary4bit.cpp" line="-5"/>
         <source>4bit grey to binary converter verilog device</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10606,7 +10620,7 @@ Digitális szimuláció</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/ha1b.cpp" line="-5"/>
+        <location filename="../components/ha1b.cpp" line="-5"/>
         <source>1bit half adder verilog device</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10616,7 +10630,7 @@ Digitális szimuláció</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/hpribin4bit.cpp" line="-5"/>
+        <location filename="../components/hpribin4bit.cpp" line="-5"/>
         <source>4bit highest priority encoder (binary form) verilog device</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10626,7 +10640,7 @@ Digitális szimuláció</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/jkff_SR.cpp" line="-7"/>
+        <location filename="../components/jkff_SR.cpp" line="-7"/>
         <source>jk flip flop with set and reset verilog device</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10636,7 +10650,7 @@ Digitális szimuláció</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/logic_0.cpp" line="-3"/>
+        <location filename="../components/logic_0.cpp" line="-3"/>
         <source>logic 0 verilog device</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10646,7 +10660,7 @@ Digitális szimuláció</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/logic_1.cpp" line="-3"/>
+        <location filename="../components/logic_1.cpp" line="-3"/>
         <source>logic 1 verilog device</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10656,7 +10670,7 @@ Digitális szimuláció</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/mux2to1.cpp" line="-5"/>
+        <location filename="../components/mux2to1.cpp" line="-5"/>
         <source>2to1 multiplexer verilog device</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10666,7 +10680,7 @@ Digitális szimuláció</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/mux4to1.cpp" line="-5"/>
+        <location filename="../components/mux4to1.cpp" line="-5"/>
         <source>4to1 multiplexer verilog device</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10676,7 +10690,7 @@ Digitális szimuláció</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/mux8to1.cpp" line="-5"/>
+        <location filename="../components/mux8to1.cpp" line="-5"/>
         <source>8to1 multiplexer verilog device</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10686,7 +10700,7 @@ Digitális szimuláció</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/pad2bit.cpp" line="-3"/>
+        <location filename="../components/pad2bit.cpp" line="-3"/>
         <source>2bit pattern generator verilog device</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10696,7 +10710,7 @@ Digitális szimuláció</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/pad3bit.cpp" line="-3"/>
+        <location filename="../components/pad3bit.cpp" line="-3"/>
         <source>3bit pattern generator verilog device</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10706,7 +10720,7 @@ Digitális szimuláció</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/pad4bit.cpp" line="-3"/>
+        <location filename="../components/pad4bit.cpp" line="-3"/>
         <source>4bit pattern generator verilog device</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10716,7 +10730,7 @@ Digitális szimuláció</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/tff_SR.cpp" line="-7"/>
+        <location filename="../components/tff_SR.cpp" line="-7"/>
         <source>T flip flop with set and reset verilog device</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10726,52 +10740,52 @@ Digitális szimuláció</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/andor4x2.cpp" line="-22"/>
-        <location filename="components/andor4x3.cpp" line="-22"/>
-        <location filename="components/andor4x4.cpp" line="-22"/>
-        <location filename="components/comp_1bit.cpp" line="-22"/>
-        <location filename="components/comp_2bit.cpp" line="-22"/>
-        <location filename="components/comp_4bit.cpp" line="-22"/>
-        <location filename="components/dmux2to4.cpp" line="-22"/>
-        <location filename="components/dmux3to8.cpp" line="-22"/>
-        <location filename="components/dmux4to16.cpp" line="-22"/>
-        <location filename="components/fa1b.cpp" line="-22"/>
-        <location filename="components/fa2b.cpp" line="-22"/>
-        <location filename="components/ha1b.cpp" line="-22"/>
-        <location filename="components/mux2to1.cpp" line="-22"/>
-        <location filename="components/mux4to1.cpp" line="-22"/>
-        <location filename="components/mux8to1.cpp" line="-22"/>
+        <location filename="../components/andor4x2.cpp" line="-22"/>
+        <location filename="../components/andor4x3.cpp" line="-22"/>
+        <location filename="../components/andor4x4.cpp" line="-22"/>
+        <location filename="../components/comp_1bit.cpp" line="-22"/>
+        <location filename="../components/comp_2bit.cpp" line="-22"/>
+        <location filename="../components/comp_4bit.cpp" line="-22"/>
+        <location filename="../components/dmux2to4.cpp" line="-22"/>
+        <location filename="../components/dmux3to8.cpp" line="-22"/>
+        <location filename="../components/dmux4to16.cpp" line="-22"/>
+        <location filename="../components/fa1b.cpp" line="-22"/>
+        <location filename="../components/fa2b.cpp" line="-22"/>
+        <location filename="../components/ha1b.cpp" line="-22"/>
+        <location filename="../components/mux2to1.cpp" line="-22"/>
+        <location filename="../components/mux4to1.cpp" line="-22"/>
+        <location filename="../components/mux8to1.cpp" line="-22"/>
         <source>transfer function high scaling factor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/binarytogrey4bit.cpp" line="-22"/>
-        <location filename="components/component.cpp" line="-255"/>
-        <location filename="components/greytobinary4bit.cpp" line="-22"/>
-        <location filename="components/hpribin4bit.cpp" line="-22"/>
-        <location filename="components/logical_buf.cpp" line="-96"/>
-        <location filename="components/logical_inv.cpp" line="-113"/>
+        <location filename="../components/binarytogrey4bit.cpp" line="-22"/>
+        <location filename="../components/component.cpp" line="-265"/>
+        <location filename="../components/greytobinary4bit.cpp" line="-22"/>
+        <location filename="../components/hpribin4bit.cpp" line="-22"/>
+        <location filename="../components/logical_buf.cpp" line="-96"/>
+        <location filename="../components/logical_inv.cpp" line="-113"/>
         <source>transfer function scaling factor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/dff_SR.cpp" line="-24"/>
-        <location filename="components/gatedDlatch.cpp" line="-24"/>
-        <location filename="components/jkff_SR.cpp" line="-24"/>
-        <location filename="components/tff_SR.cpp" line="-24"/>
+        <location filename="../components/dff_SR.cpp" line="-24"/>
+        <location filename="../components/gatedDlatch.cpp" line="-24"/>
+        <location filename="../components/jkff_SR.cpp" line="-24"/>
+        <location filename="../components/tff_SR.cpp" line="-24"/>
         <source>cross coupled gate transfer function high scaling factor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/gatedDlatch.cpp" line="+2"/>
-        <location filename="components/jkff_SR.cpp" line="+2"/>
-        <location filename="components/tff_SR.cpp" line="+2"/>
+        <location filename="../components/gatedDlatch.cpp" line="+2"/>
+        <location filename="../components/jkff_SR.cpp" line="+2"/>
+        <location filename="../components/tff_SR.cpp" line="+2"/>
         <source>cross coupled gate transfer function low scaling factor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/msrstub.cpp" line="-26"/>
+        <location filename="../components/msrstub.cpp" line="-26"/>
         <source>microstrip radial stub</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10796,7 +10810,7 @@ Digitális szimuláció</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/phototransistor.cpp" line="-64"/>
+        <location filename="../components/phototransistor.cpp" line="-64"/>
         <source>Phototransistor verilog device</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10840,7 +10854,7 @@ Digitális szimuláció</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/rlcg.cpp" line="-36"/>
+        <location filename="../components/rlcg.cpp" line="-36"/>
         <source>RLCG transmission line</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10890,18 +10904,18 @@ Digitális szimuláció</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/vhdlfile.cpp" line="-46"/>
+        <location filename="../components/vhdlfile.cpp" line="-46"/>
         <location line="+7"/>
         <source>generic variable</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="schematic_file.cpp" line="+411"/>
+        <location filename="../schematic_file.cpp" line="+411"/>
         <source>WARNING: Equations in &quot;%1&quot; are &apos;time&apos; typed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/nigbt.cpp" line="-10"/>
+        <location filename="../components/nigbt.cpp" line="-10"/>
         <source>NIGBT verilog device</source>
         <translation type="unfinished"></translation>
     </message>
@@ -11019,15 +11033,14 @@ Digitális szimuláció</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="schematic_file.cpp" line="-1438"/>
+        <location filename="../schematic_file.cpp" line="-1437"/>
         <source>Cannot save C++ file &quot;%1&quot;!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="module.cpp" line="+117"/>
-        <location filename="qucs.cpp" line="+655"/>
-        <location line="+106"/>
-        <location filename="qucs_actions.cpp" line="+153"/>
+        <location filename="../module.cpp" line="+116"/>
+        <location filename="../qucs.cpp" line="+625"/>
+        <location line="+101"/>
         <source>verilog-a user devices</source>
         <translation type="unfinished"></translation>
     </message>
@@ -11084,18 +11097,14 @@ Digitális szimuláció</translation>
     <message>
         <location line="+2"/>
         <location line="+2"/>
-        <location filename="qucs.cpp" line="+1708"/>
+        <location filename="../qucs.cpp" line="+1710"/>
         <source>diagrams</source>
         <translation type="unfinished">Diagramok</translation>
     </message>
     <message>
         <location line="+2"/>
         <location line="+2"/>
-        <location filename="qucs.cpp" line="-1858"/>
-        <location line="+30"/>
-        <location line="+3"/>
-        <location line="+107"/>
-        <location line="+1"/>
+        <location filename="../qucs.cpp" line="-1839"/>
         <source>paintings</source>
         <translation type="unfinished">Feliratok, rajzelemek</translation>
     </message>
@@ -11105,7 +11114,7 @@ Digitális szimuláció</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/hicumL2V2p24.cpp" line="-288"/>
+        <location filename="../components/hicumL2V2p24.cpp" line="-288"/>
         <source>HICUM Level 2 v2.24 verilog device</source>
         <translation type="unfinished"></translation>
     </message>
@@ -11115,7 +11124,7 @@ Digitális szimuláció</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/hicumL0V1p2g.cpp" line="+11"/>
+        <location filename="../components/hicumL0V1p2g.cpp" line="+11"/>
         <source>high-injection roll-off current</source>
         <translation type="unfinished"></translation>
     </message>
@@ -11175,7 +11184,7 @@ Digitális szimuláció</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/hybrid.cpp" line="-37"/>
+        <location filename="../components/hybrid.cpp" line="-37"/>
         <source>hybrid (unsymmetrical 3dB coupler)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -11185,7 +11194,7 @@ Digitális szimuláció</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/ctline.cpp" line="-40"/>
+        <location filename="../components/ctline.cpp" line="-40"/>
         <source>coupled transmission lines</source>
         <translation type="unfinished"></translation>
     </message>
@@ -11225,7 +11234,7 @@ Digitális szimuláció</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/tunneldiode.cpp" line="-35"/>
+        <location filename="../components/tunneldiode.cpp" line="-35"/>
         <source>resonance tunnel diode</source>
         <translation type="unfinished"></translation>
     </message>
@@ -11295,7 +11304,7 @@ Digitális szimuláció</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/hicumL0V1p3.cpp" line="-22"/>
+        <location filename="../components/hicumL0V1p3.cpp" line="-22"/>
         <source>HICUM Level 0 v1.3 verilog device</source>
         <translation type="unfinished"></translation>
     </message>
@@ -11350,7 +11359,7 @@ Digitális szimuláció</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/mslange.cpp" line="-36"/>
+        <location filename="../components/mslange.cpp" line="-36"/>
         <source>microstrip lange coupler</source>
         <translation type="unfinished"></translation>
     </message>
@@ -11360,7 +11369,7 @@ Digitális szimuláció</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/bsim3v34nMOS.cpp" line="-817"/>
+        <location filename="../components/bsim3v34nMOS.cpp" line="-817"/>
         <source>bsim3v34nMOS verilog device</source>
         <translation type="unfinished"></translation>
     </message>
@@ -11772,7 +11781,7 @@ Digitális szimuláció</translation>
         <location line="+2"/>
         <location line="+2"/>
         <location line="+2"/>
-        <location filename="components/bsim3v34pMOS.cpp" line="-814"/>
+        <location filename="../components/bsim3v34pMOS.cpp" line="-814"/>
         <location line="+2"/>
         <location line="+2"/>
         <location line="+2"/>
@@ -12179,7 +12188,7 @@ Digitális szimuláció</translation>
         <location line="+2"/>
         <location line="+2"/>
         <location line="+2"/>
-        <location filename="components/bsim4v30nMOS.cpp" line="+19"/>
+        <location filename="../components/bsim4v30nMOS.cpp" line="+19"/>
         <location line="+2"/>
         <location line="+2"/>
         <location line="+2"/>
@@ -12457,7 +12466,7 @@ Digitális szimuláció</translation>
         <location line="+2"/>
         <location line="+2"/>
         <location line="+2"/>
-        <location filename="components/bsim4v30pMOS.cpp" line="+18"/>
+        <location filename="../components/bsim4v30pMOS.cpp" line="+18"/>
         <location line="+2"/>
         <location line="+2"/>
         <location line="+2"/>
@@ -12744,7 +12753,7 @@ Digitális szimuláció</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/bsim3v34pMOS.cpp" line="-815"/>
+        <location filename="../components/bsim3v34pMOS.cpp" line="-815"/>
         <source>bsim3v34pMOS verilog device</source>
         <translation type="unfinished"></translation>
     </message>
@@ -12754,7 +12763,7 @@ Digitális szimuláció</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/bsim4v30nMOS.cpp" line="-558"/>
+        <location filename="../components/bsim4v30nMOS.cpp" line="-558"/>
         <source>bsim4v30nMOS verilog device</source>
         <translation type="unfinished"></translation>
     </message>
@@ -12764,7 +12773,7 @@ Digitális szimuláció</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/bsim4v30pMOS.cpp" line="-557"/>
+        <location filename="../components/bsim4v30pMOS.cpp" line="-557"/>
         <source>bsim4v30pMOS verilog device</source>
         <translation type="unfinished"></translation>
     </message>
@@ -12774,7 +12783,7 @@ Digitális szimuláció</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/hicumL2V2p31n.cpp" line="-322"/>
+        <location filename="../components/hicumL2V2p31n.cpp" line="-322"/>
         <source>hicumL2V2p31n verilog device</source>
         <translation type="unfinished"></translation>
     </message>
@@ -12864,8 +12873,16 @@ Digitális szimuláció</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/vacomponent.cpp" line="+1"/>
+        <location filename="../components/vacomponent.cpp" line="+1"/>
         <source>Symbol file not found: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../qucs-filter/stepz_filter.cpp" line="+1"/>
+        <source>High-impedance is %1 ohms, low-impedance is %2 ohms.
+To get acceptable results it is recommended to use
+a substrate with lower permittivity and larger height.
+</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -12956,7 +12973,7 @@ Felülírjam?</translation>
 <context>
     <name>QucsApp</name>
     <message>
-        <location filename="qucs.cpp" line="-650"/>
+        <location filename="../qucs.cpp" line="-501"/>
         <source>Schematic</source>
         <translation>Kapcsolási rajz</translation>
     </message>
@@ -12972,30 +12989,30 @@ Felülírjam?</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+1554"/>
-        <location filename="qucs_actions.cpp" line="-172"/>
+        <location line="+1525"/>
+        <location filename="../qucs_actions.cpp" line="-173"/>
         <source>Any File</source>
         <translation>Bármelyik fájl</translation>
     </message>
     <message>
-        <location line="-1394"/>
+        <location line="-1369"/>
         <source>New</source>
         <translation>Új</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location line="+525"/>
+        <location line="+500"/>
         <source>Open</source>
         <translation>Megnyitás</translation>
     </message>
     <message>
-        <location line="-523"/>
-        <location line="+535"/>
+        <location line="-498"/>
+        <location line="+510"/>
         <source>Delete</source>
         <translation>Törlés</translation>
     </message>
     <message>
-        <location line="-519"/>
+        <location line="-494"/>
         <source>Projects</source>
         <translation>Projektek</translation>
     </message>
@@ -13005,19 +13022,19 @@ Felülírjam?</translation>
     </message>
     <message>
         <location line="+10"/>
-        <location line="+1087"/>
+        <location line="+1062"/>
         <source>Content of</source>
         <translation>Összetevői</translation>
     </message>
     <message>
-        <location line="-1087"/>
-        <location line="+1022"/>
+        <location line="-1062"/>
+        <location line="+997"/>
         <location line="+65"/>
         <source>Note</source>
         <translation>Megjegyzés</translation>
     </message>
     <message>
-        <location line="-1186"/>
+        <location line="-1159"/>
         <source>Datasets</source>
         <translation>Adatbeállítások</translation>
     </message>
@@ -13028,12 +13045,12 @@ Felülírjam?</translation>
     </message>
     <message>
         <location line="+10"/>
-        <location line="+2373"/>
+        <location line="+2348"/>
         <source>Schematics</source>
         <translation>Kapcsolási rajzok</translation>
     </message>
     <message>
-        <location line="-2276"/>
+        <location line="-2253"/>
         <source>Content</source>
         <translation>Összetevők</translation>
     </message>
@@ -13084,7 +13101,7 @@ Felülírjam?</translation>
         <translation type="obsolete">Feliratok, rajzelemek</translation>
     </message>
     <message>
-        <location line="+470"/>
+        <location line="+445"/>
         <source>Rename</source>
         <translation>Átnevezés</translation>
     </message>
@@ -13093,11 +13110,11 @@ Felülírjam?</translation>
         <translation type="obsolete">Csoport törlés</translation>
     </message>
     <message>
-        <location line="-365"/>
+        <location line="-340"/>
         <location line="+3"/>
         <location line="+62"/>
         <location line="+3"/>
-        <location line="+417"/>
+        <location line="+392"/>
         <location line="+21"/>
         <location line="+22"/>
         <location line="+14"/>
@@ -13105,7 +13122,7 @@ Felülírjam?</translation>
         <location line="+54"/>
         <location line="+31"/>
         <location line="+235"/>
-        <location line="+1139"/>
+        <location line="+1141"/>
         <location line="+28"/>
         <location line="+77"/>
         <location line="+316"/>
@@ -13113,8 +13130,9 @@ Felülírjam?</translation>
         <location line="+7"/>
         <location line="+7"/>
         <location line="+6"/>
-        <location filename="qucs_actions.cpp" line="-681"/>
+        <location filename="../qucs_actions.cpp" line="-712"/>
         <location line="+55"/>
+        <location line="+31"/>
         <location line="+31"/>
         <location line="+33"/>
         <location line="+40"/>
@@ -13133,7 +13151,7 @@ Felülírjam?</translation>
         <translation>Hiba</translation>
     </message>
     <message>
-        <location line="-1954"/>
+        <location line="-1956"/>
         <source>Cannot rename an open file!</source>
         <translation>Nyitott fájlt nem lehet átnevezni!</translation>
     </message>
@@ -13164,12 +13182,12 @@ Felülírjam?</translation>
         <location line="+47"/>
         <location line="+329"/>
         <location line="+246"/>
-        <location line="+630"/>
+        <location line="+632"/>
         <source>Warning</source>
         <translation>Figyelmeztetések</translation>
     </message>
     <message>
-        <location line="-1328"/>
+        <location line="-1330"/>
         <source>This will delete the file permanently! Continue ?</source>
         <translation>A fájl véglegesen törlődik! Folytatja?</translation>
     </message>
@@ -13177,20 +13195,20 @@ Felülírjam?</translation>
         <location line="+1"/>
         <location line="+77"/>
         <location line="+623"/>
-        <location line="+454"/>
+        <location line="+456"/>
         <source>No</source>
         <translation>Nem</translation>
     </message>
     <message>
-        <location line="-1154"/>
+        <location line="-1156"/>
         <location line="+77"/>
         <location line="+623"/>
-        <location line="+454"/>
+        <location line="+456"/>
         <source>Yes</source>
         <translation>Igen</translation>
     </message>
     <message>
-        <location line="-1149"/>
+        <location line="-1151"/>
         <source>Cannot delete schematic: </source>
         <translation>A kapcsolási rajz nem törölhető:</translation>
     </message>
@@ -13214,7 +13232,7 @@ Felülírjam?</translation>
         <translation>A munkakönyvtárat nem tudtam létrehozni!</translation>
     </message>
     <message>
-        <location line="+712"/>
+        <location line="+714"/>
         <source>Closing Qucs document</source>
         <translation>A Qucs dokumentum bezárás</translation>
     </message>
@@ -13226,7 +13244,7 @@ Szeretnéd menteni a változásakat bezárás előtt?
 </translation>
     </message>
     <message>
-        <location line="-319"/>
+        <location line="-321"/>
         <source>Creating new schematic...</source>
         <translation>Új kapcsolási rajz létrehozása...</translation>
     </message>
@@ -13236,7 +13254,7 @@ Szeretnéd menteni a változásakat bezárás előtt?
         <location line="+69"/>
         <location line="+30"/>
         <location line="+5"/>
-        <location line="+127"/>
+        <location line="+129"/>
         <location line="+5"/>
         <location line="+34"/>
         <location line="+49"/>
@@ -13245,16 +13263,16 @@ Szeretnéd menteni a változásakat bezárás előtt?
         <location line="+37"/>
         <location line="+45"/>
         <location line="+22"/>
-        <location filename="qucs_actions.cpp" line="-857"/>
-        <location line="+397"/>
-        <location filename="qucs_init.cpp" line="+942"/>
+        <location filename="../qucs_actions.cpp" line="-888"/>
+        <location line="+428"/>
+        <location filename="../qucs_init.cpp" line="+957"/>
         <source>Ready.</source>
         <translation>Kész.
 </translation>
     </message>
     <message>
-        <location line="-648"/>
-        <location filename="qucs_actions.cpp" line="-406"/>
+        <location line="-650"/>
+        <location filename="../qucs_actions.cpp" line="-437"/>
         <source>Opening file...</source>
         <translation>Fájl nyitása...</translation>
     </message>
@@ -13271,12 +13289,12 @@ Szeretnéd menteni a változásakat bezárás előtt?
     <message>
         <location line="-745"/>
         <location line="+429"/>
-        <location line="+772"/>
+        <location line="+774"/>
         <source>-port</source>
         <translation>-csatlakozás</translation>
     </message>
     <message>
-        <location line="-1220"/>
+        <location line="-1222"/>
         <source>Insert</source>
         <translation type="unfinished"></translation>
     </message>
@@ -13287,12 +13305,12 @@ Szeretnéd menteni a változásakat bezárás előtt?
     </message>
     <message>
         <location line="+6"/>
-        <location line="+132"/>
+        <location line="+134"/>
         <source>Saving aborted</source>
         <translation>Mentés megszakítva</translation>
     </message>
     <message>
-        <location line="-83"/>
+        <location line="-85"/>
         <source>Enter a Document Name</source>
         <translation>Dokumentum neve</translation>
     </message>
@@ -13315,7 +13333,7 @@ Szeretnéd menteni a változásakat bezárás előtt?
     </message>
     <message>
         <location line="+1"/>
-        <location line="+138"/>
+        <location line="+140"/>
         <source>Cancel</source>
         <translation>Mégsem</translation>
     </message>
@@ -13330,8 +13348,8 @@ Szeretnéd menteni a változásakat bezárás előtt?
         <translation type="obsolete">nem fog látszani betöltéskor! Folytatja?</translation>
     </message>
     <message>
-        <location line="-1144"/>
-        <location line="+465"/>
+        <location line="-1141"/>
+        <location line="+460"/>
         <location line="+211"/>
         <location line="+44"/>
         <location line="+17"/>
@@ -13339,13 +13357,13 @@ Szeretnéd menteni a változásakat bezárás előtt?
         <location line="+16"/>
         <location line="+37"/>
         <location line="+211"/>
-        <location filename="qucs_actions.cpp" line="-149"/>
+        <location filename="../qucs_actions.cpp" line="-149"/>
         <location line="+14"/>
         <location line="+14"/>
         <location line="+14"/>
         <location line="+38"/>
         <location line="+14"/>
-        <location line="+799"/>
+        <location line="+830"/>
         <source>Info</source>
         <translation>Infó</translation>
     </message>
@@ -13360,7 +13378,7 @@ Szeretnéd menteni a változásakat bezárás előtt?
         <translation>Nyitott dokumentumot nem lehet felülírni</translation>
     </message>
     <message>
-        <location line="+45"/>
+        <location line="+47"/>
         <source>Saving file under new filename...</source>
         <translation>Fájl mentése, új fájlnévvel...</translation>
     </message>
@@ -13375,8 +13393,8 @@ Szeretnéd menteni a változásakat bezárás előtt?
         <translation>Fájl bezárása...</translation>
     </message>
     <message>
-        <location line="-935"/>
-        <location line="+941"/>
+        <location line="-937"/>
+        <location line="+943"/>
         <source>The document contains unsaved changes!
 </source>
         <translation>A dokumentum tartalmaz mentetlen változásokat!
@@ -13389,19 +13407,19 @@ Szeretnéd menteni a változásakat bezárás előtt?
         <translation>El akarod menteni a változásokat bezárás előtt?</translation>
     </message>
     <message>
-        <location line="-940"/>
-        <location line="+941"/>
-        <location filename="qucs_init.cpp" line="-885"/>
+        <location line="-942"/>
+        <location line="+943"/>
+        <location filename="../qucs_init.cpp" line="-892"/>
         <source>&amp;Save</source>
         <translation>&amp;Mentés</translation>
     </message>
     <message>
-        <location line="-1719"/>
+        <location line="-1692"/>
         <source>Spice Files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+240"/>
+        <location line="+236"/>
         <source>Manage Libraries</source>
         <translation type="unfinished"></translation>
     </message>
@@ -13429,13 +13447,13 @@ Szeretnéd menteni a változásakat bezárás előtt?
         <translation type="unfinished">Alkatrész katalógus hibás.</translation>
     </message>
     <message>
-        <location line="+177"/>
+        <location line="+157"/>
         <source>Default icon not found:
  %1.png</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+116"/>
+        <location line="+111"/>
         <source>Duplicate</source>
         <translation type="unfinished"></translation>
     </message>
@@ -13485,7 +13503,7 @@ Szeretnéd menteni a változásakat bezárás előtt?
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+165"/>
+        <location line="+167"/>
         <source>&amp;Discard</source>
         <translation>&amp;Eldob</translation>
     </message>
@@ -13530,7 +13548,7 @@ Szeretnéd menteni a változásakat bezárás előtt?
         <translation>A kijelölés másolása a vágólapra...</translation>
     </message>
     <message>
-        <location line="+1027"/>
+        <location line="+1026"/>
         <location line="+13"/>
         <location line="+18"/>
         <location line="+6"/>
@@ -13646,7 +13664,7 @@ Hibák:
         <translation type="obsolete">A szövegszerkesztő (qucsedit) nem indítható!</translation>
     </message>
     <message>
-        <location line="-815"/>
+        <location line="-814"/>
         <source>Cannot create </source>
         <translation>Létrehozás nem sikerült</translation>
     </message>
@@ -13656,7 +13674,7 @@ Hibák:
         <translation>Oldal nincs beállítva!</translation>
     </message>
     <message>
-        <location line="-1166"/>
+        <location line="-1168"/>
         <source>Cannot access project directory: </source>
         <translation>Nincs hozzáférés a projekt könyvtárhoz:</translation>
     </message>
@@ -13774,13 +13792,13 @@ Hibák:
     </message>
     <message>
         <location line="+1"/>
-        <location filename="qucs_actions.cpp" line="+2"/>
+        <location filename="../qucs_actions.cpp" line="+2"/>
         <source>&amp;Yes</source>
         <translation>&amp;Igen</translation>
     </message>
     <message>
         <location line="+0"/>
-        <location filename="qucs_actions.cpp" line="+0"/>
+        <location filename="../qucs_actions.cpp" line="+0"/>
         <source>&amp;No</source>
         <translation>&amp;Nem</translation>
     </message>
@@ -13799,7 +13817,7 @@ Hibák:
         <translation>Válassz projekt könyvtárat a törléshez</translation>
     </message>
     <message>
-        <location filename="qucs_actions.cpp" line="-894"/>
+        <location filename="../qucs_actions.cpp" line="-925"/>
         <location line="+14"/>
         <location line="+14"/>
         <location line="+14"/>
@@ -13813,7 +13831,7 @@ Hibák:
         <translation type="obsolete">Áramköri szimbólum szerkesztése</translation>
     </message>
     <message>
-        <location filename="qucs_init.cpp" line="+35"/>
+        <location filename="../qucs_init.cpp" line="+35"/>
         <source>Edits the symbol for this schematic</source>
         <translation>Szerkeszti az áramköri szimbólumot a kapcsoláshoz</translation>
     </message>
@@ -13887,29 +13905,29 @@ Nem indítható a tápvonal tervező program!
         <translation type="obsolete">digitális alkatrészek</translation>
     </message>
     <message>
-        <location filename="qucs.cpp" line="-1265"/>
+        <location filename="../qucs.cpp" line="-1238"/>
         <source>Others</source>
         <translation>Egyebek</translation>
     </message>
     <message>
-        <location line="+2360"/>
+        <location line="+2335"/>
         <source>Cannot start &quot;%1&quot;!</source>
         <translation>&quot;%1&quot; nem indítható!</translation>
     </message>
     <message>
-        <location line="-2454"/>
-        <location line="+1553"/>
+        <location line="-2427"/>
+        <location line="+1524"/>
         <source>VHDL Sources</source>
         <translation>VHDL forrás</translation>
     </message>
     <message>
-        <location line="-1447"/>
-        <location line="+2379"/>
+        <location line="-1420"/>
+        <location line="+2354"/>
         <source>VHDL</source>
         <translation>VHDL</translation>
     </message>
     <message>
-        <location line="-2299"/>
+        <location line="-2276"/>
         <source>content of project directory</source>
         <translation>projekt könyvtár tartalma</translation>
     </message>
@@ -13931,7 +13949,7 @@ Nem indítható a tápvonal tervező program!
         <translation type="obsolete">VHDL forrás nem törölhető:</translation>
     </message>
     <message>
-        <location line="+1206"/>
+        <location line="+1181"/>
         <source>Creating new text editor...</source>
         <translation>Új szövegszerkesztő készítése...</translation>
     </message>
@@ -13940,7 +13958,7 @@ Nem indítható a tápvonal tervező program!
         <translation type="obsolete">Kiválasztás nyomtatása...</translation>
     </message>
     <message>
-        <location line="+1357"/>
+        <location line="+1359"/>
         <source>Could not load S[1,1].</source>
         <translation>S[1,1] nem betölthető.</translation>
     </message>
@@ -13971,7 +13989,7 @@ Nem indítható az alkatrész-katalógus program!
 </translation>
     </message>
     <message>
-        <location filename="qucs_actions.cpp" line="+385"/>
+        <location filename="../qucs_actions.cpp" line="+416"/>
         <source>No project open!</source>
         <translation>Nincs nyitott projekt!</translation>
     </message>
@@ -14031,7 +14049,7 @@ Have you saved the Verilog-A symbols?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qucs_init.cpp" line="-56"/>
+        <location filename="../qucs_init.cpp" line="-56"/>
         <source>&amp;New</source>
         <translation>Ú&amp;j</translation>
     </message>
@@ -15084,7 +15102,7 @@ Starts QucsFilter</source>
 QucsFilter indítása</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+9"/>
         <source>Line calculation</source>
         <translation>Tápvonal számítás</translation>
     </message>
@@ -15377,12 +15395,12 @@ Program névjegy</translation>
     </message>
     <message>
         <location line="+4"/>
-        <location line="+442"/>
+        <location line="+447"/>
         <source>About Qt</source>
         <translation>Qt Névjegy</translation>
     </message>
     <message>
-        <location line="-443"/>
+        <location line="-448"/>
         <source>About Qt...</source>
         <translation>Qt Névjegy...</translation>
     </message>
@@ -15425,7 +15443,7 @@ Qt a Trolltech-től</translation>
         <translation>&amp;Eszközök</translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+12"/>
         <source>&amp;Simulation</source>
         <translation>Sz&amp;imuláció</translation>
     </message>
@@ -15469,7 +15487,7 @@ Qt a Trolltech-től</translation>
         <translation>Qucs verzió</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+5"/>
         <source>Quite Universal Circuit Simulator</source>
         <translation>Univerzális Áramkör Szimuláció</translation>
     </message>
@@ -15569,7 +15587,7 @@ Qt a Trolltech-től</translation>
         <translation>Bús József - Magyar</translation>
     </message>
     <message>
-        <location line="-841"/>
+        <location line="-852"/>
         <source>Find...</source>
         <translation>Keresés...</translation>
     </message>
@@ -15607,7 +15625,7 @@ Searches for the same piece of text again</source>
 Szöveg ismételt keresése</translation>
     </message>
     <message>
-        <location filename="qucs.cpp" line="-583"/>
+        <location filename="../qucs.cpp" line="-583"/>
         <source>The document was modified by another program !</source>
         <translation>A dokumentumot másik program módosította!</translation>
     </message>
@@ -15627,7 +15645,7 @@ Szöveg ismételt keresése</translation>
         <translation>Megtart</translation>
     </message>
     <message>
-        <location filename="qucs_init.cpp" line="-156"/>
+        <location filename="../qucs_init.cpp" line="-156"/>
         <source>&amp;Document Settings...</source>
         <translation>&amp;Dokumentum tulajdonságai...</translation>
     </message>
@@ -15716,12 +15734,29 @@ Kiválasztás aktiválása</translation>
         <translation>VHDL entitás</translation>
     </message>
     <message>
-        <location line="+156"/>
+        <location line="+19"/>
+        <source>Active filter synthesis</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Starts QucsActiveFilter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Active filter synthesis
+
+Starts QucsActiveFilter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+140"/>
         <source>Open Recent</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+136"/>
+        <location line="+137"/>
         <source>&amp;Technical Papers</source>
         <translation type="unfinished"></translation>
     </message>
@@ -15763,7 +15798,7 @@ Kiválasztás aktiválása</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+151"/>
+        <location line="+155"/>
         <source>Qucs Team</source>
         <translation type="unfinished"></translation>
     </message>
@@ -15783,7 +15818,7 @@ Kiválasztás aktiválása</translation>
         <translation>Igor Gorbounov - Orosz</translation>
     </message>
     <message>
-        <location line="-572"/>
+        <location line="-583"/>
         <source>Inserts skeleton of VHDL entity</source>
         <translation>Váz illesztés a VHDL entitáshoz</translation>
     </message>
@@ -15852,12 +15887,12 @@ A kijelölt alkatrész Passziválása/Aktiválása </translation>
         <translation type="obsolete">Igazítás/Elterítés</translation>
     </message>
     <message>
-        <location filename="qucs_actions.cpp" line="-178"/>
+        <location filename="../qucs_actions.cpp" line="-178"/>
         <source>Please open project with subcircuits!</source>
         <translation>Nyisson projektet a beágyazott kapcsoláshoz!</translation>
     </message>
     <message>
-        <location filename="qucs_init.cpp" line="-138"/>
+        <location filename="../qucs_init.cpp" line="-138"/>
         <source>Create &amp;Library...</source>
         <translation>Új alkatrész &amp;katalógus létrehozás...</translation>
     </message>
@@ -15876,7 +15911,7 @@ Create Library from Subcircuits</source>
 Alkatrész-katalógust hoz létre a beágyazott kapcsoláshoz</translation>
     </message>
     <message>
-        <location filename="qucs.cpp" line="-915"/>
+        <location filename="../qucs.cpp" line="-917"/>
         <source>Cannot delete file: </source>
         <translation>Fájl nem törölhető: </translation>
     </message>
@@ -15886,7 +15921,7 @@ Alkatrész-katalógust hoz létre a beágyazott kapcsoláshoz</translation>
         <translation>Nem lehet eltávolítani a könyvtárat: </translation>
     </message>
     <message>
-        <location filename="qucs_actions.cpp" line="+14"/>
+        <location filename="../qucs_actions.cpp" line="+14"/>
         <source>Please open project first!</source>
         <translation>Először nyisson meg egy projektet!</translation>
     </message>
@@ -15906,7 +15941,7 @@ Alkatrész-katalógust hoz létre a beágyazott kapcsoláshoz</translation>
         <translation>Kimemeti fájl név</translation>
     </message>
     <message>
-        <location line="-726"/>
+        <location line="-757"/>
         <source>Opening aborted, file not found.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -15919,6 +15954,7 @@ Alkatrész-katalógust hoz létre a beágyazott kapcsoláshoz</translation>
     </message>
     <message>
         <location line="+56"/>
+        <location line="+31"/>
         <source>Cannot start filter synthesis program! 
 
 %1</source>
@@ -15971,7 +16007,7 @@ Alkatrész-katalógust hoz létre a beágyazott kapcsoláshoz</translation>
         <translation>Felülírás?</translation>
     </message>
     <message>
-        <location filename="qucs_init.cpp" line="-229"/>
+        <location filename="../qucs_init.cpp" line="-229"/>
         <source>Print Fit to Page...</source>
         <translation>Nyomtatás oldalra illesztve...</translation>
     </message>
@@ -16058,7 +16094,7 @@ Convert graph data to CSV file</source>
 Grafikon adatok CVS fájlba konvertálása</translation>
     </message>
     <message>
-        <location line="+255"/>
+        <location line="+261"/>
         <source>&amp;Dock Window</source>
         <translation>&amp;Navigátor ablak</translation>
     </message>
@@ -16077,7 +16113,7 @@ Enables/disables the browse dock window</source>
 Bekapcsolja/Kikapcsolja a navigátor ablakot</translation>
     </message>
     <message>
-        <location filename="qucs.cpp" line="+697"/>
+        <location filename="../qucs.cpp" line="+699"/>
         <source>Printer Error.</source>
         <translation>Nyomtató Hiba.</translation>
     </message>
@@ -16086,7 +16122,7 @@ Bekapcsolja/Kikapcsolja a navigátor ablakot</translation>
         <translation type="obsolete">Csillapító méretező program nem indítható!</translation>
     </message>
     <message>
-        <location filename="qucs_init.cpp" line="-74"/>
+        <location filename="../qucs_init.cpp" line="-74"/>
         <source>Attenuator synthesis</source>
         <translation>Csillapító méretező</translation>
     </message>
@@ -16105,7 +16141,7 @@ Starts attenuator calculation program</source>
 Csillapító méretező program indítása</translation>
     </message>
     <message>
-        <location line="+514"/>
+        <location line="+519"/>
         <source>GUI improvements by Gopala Krishna A</source>
         <translation>GUI tökéletesítés köszönet Gopala Krishna A</translation>
     </message>
@@ -16125,7 +16161,7 @@ Csillapító méretező program indítása</translation>
         <translation>Verilog-AMS interfész, köszönet Helene Parruitte</translation>
     </message>
     <message>
-        <location line="-894"/>
+        <location line="-905"/>
         <source>Center horizontally</source>
         <translation>Függőlegesen egyvonalba</translation>
     </message>
@@ -16164,12 +16200,12 @@ Center vertically selected elements</source>
 A kiválasztott elemeket vízszintesen egyvonalba mozgatja</translation>
     </message>
     <message>
-        <location line="+529"/>
+        <location line="+535"/>
         <source>P&amp;ositioning</source>
         <translation>P&amp;ozicionálás</translation>
     </message>
     <message>
-        <location line="-603"/>
+        <location line="-609"/>
         <source>Print Fit to Page</source>
         <translation>Nyomtatás oldalra illesztve</translation>
     </message>
@@ -16259,14 +16295,14 @@ A kiválasztott elemeket vízszintesen egyvonalba mozgatja</translation>
         <translation type="obsolete">Nyomtatás...</translation>
     </message>
     <message>
-        <location filename="qucs.cpp" line="-2013"/>
-        <location line="+1553"/>
+        <location filename="../qucs.cpp" line="-1986"/>
+        <location line="+1524"/>
         <source>Verilog Sources</source>
         <translation>Verilog forrás</translation>
     </message>
     <message>
-        <location line="-1452"/>
-        <location line="+2385"/>
+        <location line="-1425"/>
+        <location line="+2360"/>
         <source>Verilog</source>
         <translation>Verilog</translation>
     </message>
@@ -16280,7 +16316,7 @@ A kiválasztott elemeket vízszintesen egyvonalba mozgatja</translation>
         <translation type="obsolete">próbák</translation>
     </message>
     <message>
-        <location filename="qucs_init.cpp" line="-137"/>
+        <location filename="../qucs_init.cpp" line="-137"/>
         <source>&amp;Import/Export Data...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -16297,7 +16333,7 @@ Convert data file to various file formats</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+729"/>
+        <location line="+740"/>
         <source>Arabic by Chabane Noureddine</source>
         <translation type="unfinished"></translation>
     </message>
@@ -16307,7 +16343,7 @@ Convert data file to various file formats</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qucs.cpp" line="-1587"/>
+        <location filename="../qucs.cpp" line="-1589"/>
         <source>unknown</source>
         <translation type="unfinished"></translation>
     </message>
@@ -16357,18 +16393,18 @@ Convert data file to various file formats</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-959"/>
-        <location line="+1553"/>
+        <location line="-930"/>
+        <location line="+1524"/>
         <source>Verilog-A Sources</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-1451"/>
+        <location line="-1424"/>
         <source>Verilog-A</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+800"/>
+        <location line="+773"/>
         <source>Verilog-A source</source>
         <translation type="unfinished"></translation>
     </message>
@@ -16383,18 +16419,18 @@ Convert data file to various file formats</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-971"/>
-        <location line="+1553"/>
+        <location line="-942"/>
+        <location line="+1524"/>
         <source>Octave Scripts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-1456"/>
+        <location line="-1429"/>
         <source>Octave</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qucs_init.cpp" line="-461"/>
+        <location filename="../qucs_init.cpp" line="-466"/>
         <source>&amp;Octave Window</source>
         <translation type="unfinished"></translation>
     </message>
@@ -16443,7 +16479,7 @@ Starts standard resistor color code computation program</source>
         <translation type="obsolete">QucsAttenuator (Csillapító méretező) &amp;Névjegy...</translation>
     </message>
     <message>
-        <location filename="../qucs-attenuator/qucsattenuator.cpp" line="+70"/>
+        <location filename="../../qucs-attenuator/qucsattenuator.cpp" line="+70"/>
         <source>About Qt...</source>
         <translation>Qt Névjegy...</translation>
     </message>
@@ -16609,7 +16645,7 @@ Csillapító méretező program
 <context>
     <name>QucsEdit</name>
     <message>
-        <location filename="../qucs-edit/qucsedit.cpp" line="+44"/>
+        <location filename="../../qucs-edit/qucsedit.cpp" line="+44"/>
         <location line="+147"/>
         <source>File: </source>
         <translation>Fájl:</translation>
@@ -16731,7 +16767,7 @@ Egyszerü szövegszerkesztő a Qucs-hoz
 <context>
     <name>QucsFilter</name>
     <message>
-        <location filename="../qucs-filter/qucsfilter.cpp" line="+59"/>
+        <location filename="../../qucs-filter/qucsfilter.cpp" line="+66"/>
         <source>E&amp;xit</source>
         <translation>&amp;Kilépés</translation>
     </message>
@@ -16761,7 +16797,7 @@ Egyszerü szövegszerkesztő a Qucs-hoz
         <translation>&amp;Súgó</translation>
     </message>
     <message>
-        <location line="+29"/>
+        <location line="+53"/>
         <source>Filter type:</source>
         <translation>Szűrő típus:</translation>
     </message>
@@ -16791,7 +16827,7 @@ Egyszerü szövegszerkesztő a Qucs-hoz
     </message>
     <message>
         <location line="+6"/>
-        <location line="+302"/>
+        <location line="+399"/>
         <source>Corner frequency:</source>
         <translation>Törésponti frekvencia:</translation>
     </message>
@@ -16812,13 +16848,13 @@ Egyszerü szövegszerkesztő a Qucs-hoz
         <translation type="obsolete">GHz</translation>
     </message>
     <message>
-        <location line="-289"/>
+        <location line="-386"/>
         <source>Stop frequency:</source>
         <translation>Felső határfrekvencia:</translation>
     </message>
     <message>
         <location line="+26"/>
-        <location line="+275"/>
+        <location line="+372"/>
         <source>Pass band ripple:</source>
         <translation>Lengés:</translation>
     </message>
@@ -16827,7 +16863,7 @@ Egyszerü szövegszerkesztő a Qucs-hoz
         <translation type="obsolete">dB</translation>
     </message>
     <message>
-        <location line="-259"/>
+        <location line="-356"/>
         <source>Impedance:</source>
         <translation>Impedancia:</translation>
     </message>
@@ -16836,12 +16872,12 @@ Egyszerü szövegszerkesztő a Qucs-hoz
         <translation type="obsolete">Ohm</translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+67"/>
         <source>Calculate and put into Clipboard</source>
         <translation>Számolás és vágólapra helyezés</translation>
     </message>
     <message>
-        <location line="+37"/>
+        <location line="+39"/>
         <source>About...</source>
         <translation>Névjegy...</translation>
     </message>
@@ -16871,7 +16907,7 @@ Szűrő méretező program
     </message>
     <message>
         <location line="+13"/>
-        <location line="+101"/>
+        <location line="+138"/>
         <location line="+18"/>
         <source>Result:</source>
         <translation>Eredmény:</translation>
@@ -16892,7 +16928,7 @@ Szűrő méretező program
         <translation>Sikeres</translation>
     </message>
     <message>
-        <location line="-261"/>
+        <location line="-358"/>
         <source>Band pass</source>
         <translation>Sáváteresztő szűrő</translation>
     </message>
@@ -16906,13 +16942,13 @@ Szűrő méretező program
         <translation type="obsolete">Copyright (C) 2005 by</translation>
     </message>
     <message>
-        <location line="+142"/>
+        <location line="+202"/>
         <location line="+1"/>
         <source>Error</source>
         <translation>Hiba</translation>
     </message>
     <message>
-        <location line="+74"/>
+        <location line="+111"/>
         <source>Stop frequency must be greater than start frequency.</source>
         <translation>A felső határfrekvencia nem lehet kisebb mint az alsó.</translation>
     </message>
@@ -16932,18 +16968,58 @@ Szűrő méretező program
         <translation>A Bessel szűrő fokszáma nem lehet nagyobb mint 19.</translation>
     </message>
     <message>
-        <location line="-188"/>
-        <location line="+287"/>
+        <location line="-363"/>
+        <source>Filter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Realization:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+70"/>
+        <location line="+384"/>
         <source>Stop band frequency:</source>
         <translation>Felső sáv határfrekvencia:</translation>
     </message>
     <message>
-        <location line="-266"/>
+        <location line="-363"/>
         <source>Stop band attenuation:</source>
         <translation>Felső sáv csillapítás:</translation>
     </message>
     <message>
-        <location line="+270"/>
+        <location line="+17"/>
+        <source>Microstrip Substrate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Relative permittivity:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+13"/>
+        <source>Substrate height:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>metal thickness:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>minimum width:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>maximum width:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+304"/>
         <source>Pass band frequency:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -16953,7 +17029,7 @@ Szűrő méretező program
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-214"/>
+        <location line="-251"/>
         <source>Copyright (C) 2005, 2006 by</source>
         <translation>Copyright (C) 2005, 2006 by</translation>
     </message>
@@ -16961,7 +17037,7 @@ Szűrő méretező program
 <context>
     <name>QucsHelp</name>
     <message>
-        <location filename="../qucs-help/qucshelp.cpp" line="+50"/>
+        <location filename="../../qucs-help/qucshelp.cpp" line="+50"/>
         <source>Qucs Help System</source>
         <translation>Qucs súgó rendszer</translation>
     </message>
@@ -18385,7 +18461,7 @@ Fájlok másolása a projekt könyvtárba</translation>
         <translation type="obsolete">Kilépés</translation>
     </message>
     <message>
-        <location filename="../qucs-lib/qucslib.cpp" line="+66"/>
+        <location filename="../../qucs-lib/qucslib.cpp" line="+66"/>
         <source>&amp;Quit</source>
         <translation>&amp;Kilépés</translation>
     </message>
@@ -18528,7 +18604,7 @@ Fájlok másolása a projekt könyvtárba</translation>
 <context>
     <name>QucsSettingsDialog</name>
     <message>
-        <location filename="dialogs/qucssettingsdialog.cpp" line="+49"/>
+        <location filename="../dialogs/qucssettingsdialog.cpp" line="+53"/>
         <source>Edit Qucs Properties</source>
         <translation>Qucs tulajdonságainak beéllítása</translation>
     </message>
@@ -18555,6 +18631,11 @@ Fájlok másolása a projekt könyvtárba</translation>
     <message>
         <location line="+10"/>
         <source>Load documents from future versions </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Draw diagrams with anti-aliasing feature</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -18613,7 +18694,7 @@ Fájlok másolása a projekt könyvtárba</translation>
         <translation>Alapértelmezett értékek</translation>
     </message>
     <message>
-        <location line="+365"/>
+        <location line="+371"/>
         <source>Select the admsXml bin directory</source>
         <translation type="unfinished"></translation>
     </message>
@@ -18639,7 +18720,7 @@ Fájlok másolása a projekt könyvtárba</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-551"/>
+        <location line="-557"/>
         <source>Suffix</source>
         <translation>Utótag</translation>
     </message>
@@ -18700,7 +18781,7 @@ a fájlt a megfelelő program nyissa meg.</translation>
         <translation>Ez az utótag már regisztrált!</translation>
     </message>
     <message>
-        <location line="-321"/>
+        <location line="-326"/>
         <source>Language (set after reload):</source>
         <translation>Nyelv (beállítás után újraindítás után):</translation>
     </message>
@@ -18796,7 +18877,7 @@ a fájlt a megfelelő program nyissa meg.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+20"/>
+        <location line="+25"/>
         <source>Colors for Syntax Highlighting:</source>
         <translation>Színek a szintaxis kiemeléshez:</translation>
     </message>
@@ -18840,7 +18921,7 @@ a fájlt a megfelelő program nyissa meg.</translation>
         <translation type="obsolete">VHDL Szerkesztő</translation>
     </message>
     <message>
-        <location line="-72"/>
+        <location line="-77"/>
         <source>Czech</source>
         <translation>Cseh</translation>
     </message>
@@ -18865,7 +18946,7 @@ a fájlt a megfelelő program nyissa meg.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+75"/>
+        <location line="+80"/>
         <source>Directive</source>
         <translation type="unfinished"></translation>
     </message>
@@ -18887,7 +18968,7 @@ a fájlt a megfelelő program nyissa meg.</translation>
         <translation type="obsolete">Betölt</translation>
     </message>
     <message>
-        <location filename="../qucs-transcalc/qucstrans.cpp" line="+264"/>
+        <location filename="../../qucs-transcalc/qucstrans.cpp" line="+264"/>
         <source>&amp;Load</source>
         <translation>&amp;Betölt</translation>
     </message>
@@ -19034,14 +19115,14 @@ a fájlt a megfelelő program nyissa meg.</translation>
     <message>
         <location line="+6"/>
         <location line="+569"/>
-        <location line="+151"/>
+        <location line="+157"/>
         <location line="+19"/>
         <source>Ready.</source>
         <translation>Kész.
 </translation>
     </message>
     <message>
-        <location line="-689"/>
+        <location line="-695"/>
         <location line="+6"/>
         <location line="+6"/>
         <location line="+6"/>
@@ -19314,12 +19395,12 @@ a fájlt a megfelelő program nyissa meg.</translation>
     </message>
     <message>
         <location line="+42"/>
-        <location line="+7"/>
+        <location line="+11"/>
         <source>Values are consistent.</source>
         <translation>Az értékek konzisztensek.</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+7"/>
         <source>Values are inconsistent.</source>
         <translation>Az értékek nem konzisztensek.</translation>
     </message>
@@ -19341,7 +19422,12 @@ a fájlt a megfelelő program nyissa meg.</translation>
         <translation>Fájl név</translation>
     </message>
     <message>
-        <location line="-13"/>
+        <location line="-144"/>
+        <source>Failed to converge!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+131"/>
         <location line="+19"/>
         <source>Error</source>
         <translation>Hiba</translation>
@@ -19382,7 +19468,7 @@ a fájlt a megfelelő program nyissa meg.</translation>
         <translation>Tápvonal típus nem élérhető.</translation>
     </message>
     <message>
-        <location line="-988"/>
+        <location line="-994"/>
         <location line="+6"/>
         <location line="+6"/>
         <location line="+6"/>
@@ -19456,7 +19542,7 @@ a fájlt a megfelelő program nyissa meg.</translation>
 <context>
     <name>SaveDialog</name>
     <message>
-        <location filename="dialogs/savedialog.cpp" line="+58"/>
+        <location filename="../dialogs/savedialog.cpp" line="+60"/>
         <source>Modified Files</source>
         <translation>Módosított fájlok</translation>
     </message>
@@ -19494,7 +19580,7 @@ a fájlt a megfelelő program nyissa meg.</translation>
 <context>
     <name>Schematic</name>
     <message>
-        <location filename="schematic.cpp" line="+9"/>
+        <location filename="../schematic.cpp" line="+9"/>
         <source>Title</source>
         <translation>Cím</translation>
     </message>
@@ -19514,7 +19600,7 @@ a fájlt a megfelelő program nyissa meg.</translation>
         <translation>Ellenőrizve:</translation>
     </message>
     <message>
-        <location filename="schematic_file.cpp" line="+266"/>
+        <location filename="../schematic_file.cpp" line="+266"/>
         <location line="+22"/>
         <source>Error</source>
         <translation type="unfinished">Hiba</translation>
@@ -19532,17 +19618,17 @@ Set the admsXml location on the application settings.</source>
         <translation type="unfinished">Státusz</translation>
     </message>
     <message>
-        <location line="+928"/>
+        <location line="+927"/>
         <source>ERROR: Cannot create library file &quot;%s&quot;.</source>
         <translation>HIBA: A &quot;%1&quot; alkatrész-katalógus fájl nem hozható létre.</translation>
     </message>
     <message>
-        <location filename="schematic.cpp" line="+1299"/>
+        <location filename="../schematic.cpp" line="+1319"/>
         <source>generic</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-1212"/>
+        <location line="-1232"/>
         <source>Edit Text</source>
         <translation type="unfinished"></translation>
     </message>
@@ -19600,7 +19686,7 @@ Szerkeszti az áramköri szimbólumot a kapcsoláshoz</translation>
 <context>
     <name>SearchDialog</name>
     <message>
-        <location filename="../qucs-lib/searchdialog.cpp" line="+49"/>
+        <location filename="../../qucs-lib/searchdialog.cpp" line="+48"/>
         <source>The search result contains all components whose
 name contains the search string. All libraries
 are included in the search.</source>
@@ -19614,13 +19700,13 @@ szerepel a keresésben.</translation>
         <translation>Szöveg keresés:</translation>
     </message>
     <message>
-        <location filename="dialogs/searchdialog.cpp" line="+71"/>
-        <location filename="../qucs-lib/searchdialog.cpp" line="+11"/>
+        <location filename="../dialogs/searchdialog.cpp" line="+71"/>
+        <location filename="../../qucs-lib/searchdialog.cpp" line="+11"/>
         <source>Search</source>
         <translation>Keresés</translation>
     </message>
     <message>
-        <location filename="../qucs-lib/searchdialog.cpp" line="+2"/>
+        <location filename="../../qucs-lib/searchdialog.cpp" line="+2"/>
         <source>Close</source>
         <translation>Bezár</translation>
     </message>
@@ -19631,7 +19717,7 @@ szerepel a keresésben.</translation>
         <translation>Keresés eredménye</translation>
     </message>
     <message>
-        <location filename="dialogs/searchdialog.cpp" line="+23"/>
+        <location filename="../dialogs/searchdialog.cpp" line="+23"/>
         <source>Search Text</source>
         <translation>Keresett szöveg</translation>
     </message>
@@ -19718,7 +19804,7 @@ szerepel a keresésben.</translation>
 <context>
     <name>SettingsDialog</name>
     <message>
-        <location filename="dialogs/settingsdialog.cpp" line="+45"/>
+        <location filename="../dialogs/settingsdialog.cpp" line="+44"/>
         <source>Edit File Properties</source>
         <translation>Fájl tulajdonságainak beéllítása</translation>
     </message>
@@ -19842,7 +19928,7 @@ Rács megjelenítése</translation>
 <context>
     <name>SimMessage</name>
     <message>
-        <location filename="dialogs/simmessage.cpp" line="+52"/>
+        <location filename="../dialogs/simmessage.cpp" line="+54"/>
         <source>Qucs Simulation Messages</source>
         <translation>Qucs szimulációs üzenetek</translation>
     </message>
@@ -19964,12 +20050,11 @@ Hibák:
         <translation>HIBA: Kötéslista fájl nem írható!</translation>
     </message>
     <message>
-        <location line="+94"/>
         <source>ERROR: Cannot start QucsConv!</source>
-        <translation>HIBA: QucsConv nem indítható!</translation>
+        <translation type="obsolete">HIBA: QucsConv nem indítható!</translation>
     </message>
     <message>
-        <location line="-97"/>
+        <location line="-3"/>
         <source>creating netlist... </source>
         <translation>kötéslista készítés...</translation>
     </message>
@@ -19988,7 +20073,12 @@ Hibák:
         <translation>Új szimuláció indul: %1, %2</translation>
     </message>
     <message>
-        <location line="+215"/>
+        <location line="+112"/>
+        <source>SIM ERROR: Cannot start QucsConv!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+103"/>
         <location line="+101"/>
         <source>done.</source>
         <translation>kész.</translation>
@@ -20032,7 +20122,7 @@ Hibák:
         <translation>Megszakítva.</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+6"/>
         <source>Output:
 -------</source>
         <translation>Kimenet:
@@ -20046,7 +20136,7 @@ Hibák:
 -------</translation>
     </message>
     <message>
-        <location line="-315"/>
+        <location line="-314"/>
         <location line="+7"/>
         <source>ERROR: Cannot create VHDL directory &quot;%1&quot;!</source>
         <translation type="unfinished"></translation>
@@ -20065,27 +20155,27 @@ Hibák:
 <context>
     <name>SpiceDialog</name>
     <message>
-        <location filename="components/spicedialog.cpp" line="+66"/>
+        <location filename="../components/spicedialog.cpp" line="+68"/>
         <source>Name:</source>
         <translation>Név:</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+10"/>
         <source>File:</source>
         <translation>Fájl:</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="-3"/>
         <source>Browse</source>
         <translation>Kiválasztás</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+9"/>
         <source>Edit</source>
         <translation>Szerkesztés</translation>
     </message>
     <message>
-        <location line="+35"/>
+        <location line="+42"/>
         <source>Add &gt;&gt;</source>
         <translation>Hozzáadás&gt;&gt;</translation>
     </message>
@@ -20095,27 +20185,27 @@ Hibák:
         <translation>&lt;&lt;Eltávolítás</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="-16"/>
         <source>Component ports:</source>
         <translation>Alkatrész kivezetések:</translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+28"/>
         <source>OK</source>
         <translation>Ok</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+1"/>
         <source>Apply</source>
         <translation>Alkalmaz</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+1"/>
         <source>Cancel</source>
         <translation>Mégsem</translation>
     </message>
     <message>
-        <location line="+129"/>
+        <location line="+142"/>
         <source>All Files</source>
         <translation>Minden fájl</translation>
     </message>
@@ -20125,14 +20215,14 @@ Hibák:
         <translation>Fájl kiválasztás</translation>
     </message>
     <message>
-        <location line="-178"/>
+        <location line="-198"/>
         <source>show file name in schematic</source>
         <translation>fájlnév megjelenítése a kapcsolási rajzon</translation>
     </message>
     <message>
-        <location line="+279"/>
-        <location line="+10"/>
-        <location line="+48"/>
+        <location line="+304"/>
+        <location line="+11"/>
+        <location line="+61"/>
         <source>Error</source>
         <translation>Hiba</translation>
     </message>
@@ -20141,8 +20231,8 @@ Hibák:
         <translation type="obsolete">Nem futtatható</translation>
     </message>
     <message>
-        <location line="-71"/>
-        <location line="+59"/>
+        <location line="-85"/>
+        <location line="+72"/>
         <source>Info</source>
         <translation>Infó</translation>
     </message>
@@ -20151,58 +20241,58 @@ Hibák:
         <translation type="obsolete">Konvetálás...</translation>
     </message>
     <message>
-        <location line="+22"/>
+        <location line="+21"/>
         <source>QucsConv Error</source>
         <translation>QucsConv Hiba</translation>
     </message>
     <message>
-        <location line="-167"/>
+        <location line="-184"/>
         <source>SPICE netlist</source>
         <translation>SPICE kötéslista</translation>
     </message>
     <message>
-        <location line="-217"/>
+        <location line="-236"/>
         <source>Edit SPICE Component Properties</source>
         <translation>SPICE komponens tulajdonságainak beállítása</translation>
     </message>
     <message>
-        <location line="+59"/>
+        <location line="+64"/>
         <source>SPICE net nodes:</source>
         <translation>SPICE háló csomópont:</translation>
     </message>
     <message>
-        <location line="-19"/>
+        <location line="-20"/>
         <source>include SPICE simulations</source>
         <translation>belső SPICE szimuláció</translation>
     </message>
     <message>
-        <location line="+323"/>
+        <location line="+356"/>
         <source>Converting SPICE file &quot;%1&quot;.</source>
         <translation>&quot;%1&quot; SPICE fájl konvertásása.</translation>
     </message>
     <message>
-        <location line="-313"/>
+        <location line="-347"/>
         <source>preprocessor</source>
         <translation>előfeldolgozó</translation>
     </message>
     <message>
-        <location line="+254"/>
+        <location line="+275"/>
         <source>Preprocessing SPICE file &quot;%1&quot;.</source>
         <translation>&quot;%1&quot; SPICE fájl előfeldolgozása.</translation>
     </message>
     <message>
-        <location line="+43"/>
+        <location line="+44"/>
         <source>SPICE Preprocessor Error</source>
         <translation>SPICE előfeldolgozó HIBA</translation>
     </message>
     <message>
-        <location line="-30"/>
+        <location line="-31"/>
         <source>Cannot save preprocessed SPICE file &quot;%1&quot;.</source>
         <translation>Nem menthető az előfeldolgozott &quot;%1&quot; SPICE fájl.</translation>
     </message>
     <message>
-        <location line="+10"/>
-        <location line="+48"/>
+        <location line="+11"/>
+        <location line="+61"/>
         <source>Cannot execute &quot;%1&quot;.</source>
         <translation>&quot;%1&quot; nem futtatható.</translation>
     </message>
@@ -20210,7 +20300,7 @@ Hibák:
 <context>
     <name>SweepDialog</name>
     <message>
-        <location filename="dialogs/sweepdialog.cpp" line="+80"/>
+        <location filename="../dialogs/sweepdialog.cpp" line="+79"/>
         <source>Bias Points</source>
         <translation>Pontok eltolása</translation>
     </message>
@@ -20223,7 +20313,7 @@ Hibák:
 <context>
     <name>SymbolWidget</name>
     <message>
-        <location filename="../qucs-lib/symbolwidget.cpp" line="+45"/>
+        <location filename="../../qucs-lib/symbolwidget.cpp" line="+45"/>
         <source>Symbol:</source>
         <translation>Szimbólum:</translation>
     </message>
@@ -20248,7 +20338,7 @@ Hibák:
         <translation type="obsolete">%1/%2 oldal</translation>
     </message>
     <message>
-        <location filename="textdoc.cpp" line="+178"/>
+        <location filename="../textdoc.cpp" line="+177"/>
         <source>Edit Text Symbol</source>
         <translation type="unfinished"></translation>
     </message>
@@ -20321,7 +20411,7 @@ Inserts the skeleton of a Octave function</source>
 <context>
     <name>VASettingsDialog</name>
     <message>
-        <location filename="dialogs/vasettingsdialog.cpp" line="+43"/>
+        <location filename="../dialogs/vasettingsdialog.cpp" line="+43"/>
         <source>Document Settings</source>
         <translation type="unfinished">Dokumentum tulajdonságai</translation>
     </message>
