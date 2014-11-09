@@ -466,8 +466,11 @@ void QucsSettingsDialog::slotApply()
 
     QucsSettings.font=Font;
 
-    QucsSettings.Language =
-        LanguageCombo->currentText().section('(',1,1).remove(')');
+    if (QucsSettings.Language != LanguageCombo->currentText().section('(', 1, 1).remove(')')) {
+      QucsSettings.Language =
+          LanguageCombo->currentText().section('(',1,1).remove(')');
+      App->updateLanguage();
+    }
 
     if(QucsSettings.Comment != ColorComment->paletteForegroundColor())
     {
