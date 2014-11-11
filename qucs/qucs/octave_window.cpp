@@ -85,7 +85,7 @@ bool OctaveWindow::startOctave()
   if(octProcess.state()==QProcess::Running)
     return true;
 
-  QString OctavePath=QucsSettings.OctaveBinDir.canonicalPath();
+  QString OctavePath=QDir(SETTINGS->get("path", "OctaveBinDir").toString()).canonicalPath();
 
 
   QString Program;

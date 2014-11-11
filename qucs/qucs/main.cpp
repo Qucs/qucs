@@ -968,15 +968,22 @@ int main(int argc, char *argv[])
   var = getenv("OCTAVEBINDIR");
   if(var != NULL)  {
       QucsSettings.OctaveBinDir.setPath(QString(var));
+      SETTINGS->testSet("path", "OctaveBinDir", QString(var));
   }
   else  {
 #ifdef __MINGW32__
-      QucsSettings.OctaveBinDir.setPath(QString("C:/Software/Octave-3.6.4/bin/"));
+      SETTINGS->testSet("path", "OctaveBinDir", QString("C:/Software/Octave-3.6.4/bin/"));
 #else
       QFile octaveExec("/usr/bin/octave");
-      if(octaveExec.exists())QucsSettings.OctaveBinDir.setPath(QString("/usr/bin/"));
+      if(octaveExec.exists()) {
+        SETTINGS->testSet("path", "OctaveBinDir", QString("/usr/bin/"));
+        QucsSettings.OctaveBinDir.setPath(QString("/usr/bin/"));
+      }
       QFile octaveExec1("/usr/local/bin/octave");
-      if(octaveExec1.exists()) QucsSettings.OctaveBinDir.setPath(QString("/usr/local/bin/"));
+      if(octaveExec1.exists()) {
+        SETTINGS->testSet("path", "OctaveBinDir", QString("/usr/local/bin/"));
+        QucsSettings.OctaveBinDir.setPath(QString("/usr/local/bin/"));
+      }
 #endif
   }
   loadSettings();
