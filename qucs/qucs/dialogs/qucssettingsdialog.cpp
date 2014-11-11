@@ -353,7 +353,7 @@ QucsSettingsDialog::QucsSettingsDialog(QucsApp *parent, const char *name)
 
     // ...........................................................
     // fill the fields with the Qucs-Properties
-    Font  = QucsSettings.font;
+    Font = SETTINGS->get("general", "font").value<QFont>();
     FontButton->setText(Font.toString());
     BGColorButton->setPaletteBackgroundColor(SETTINGS->get("color", "BGColor").value<QColor>());
     undoNumEdit->setText(QString::number(QucsSettings.maxUndo));
@@ -464,7 +464,7 @@ void QucsSettingsDialog::slotApply()
       }
     }
 
-    QucsSettings.font=Font;
+    SETTINGS->set("general", "font", Font);
 
     QucsSettings.Language =
         LanguageCombo->currentText().section('(',1,1).remove(')');

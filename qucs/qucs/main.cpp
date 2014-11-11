@@ -986,7 +986,7 @@ int main(int argc, char *argv[])
     QucsSettings.Task = Qt::darkRed;
 
 
-  a.setFont(QucsSettings.font);
+  a.setFont(SETTINGS->get("general", "font").value<QFont>());
 
   // set codecs
   QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));

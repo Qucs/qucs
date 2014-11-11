@@ -34,6 +34,7 @@
 #include "schematic.h"
 #include "main.h"
 #include "qucs.h"
+#include "setting.h"
 
 
 SpiceFile::SpiceFile()
@@ -79,7 +80,7 @@ Element* SpiceFile::info(QString& Name, char* &BitmapFile, bool getNewOne)
 // -------------------------------------------------------
 void SpiceFile::createSymbol()
 {
-  QFontMetrics  metrics(QucsSettings.font);   // get size of text
+  QFontMetrics  metrics(SETTINGS->get("general", "font").value<QFont>());   // get size of text
   int fHeight = metrics.lineSpacing();
 
   int No = 0;

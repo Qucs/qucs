@@ -29,7 +29,7 @@ OctaveWindow::OctaveWindow(QDockWidget *parent_): QWidget()
 {
   QFont font;
   font = QFont("Courier New");
-  font.setPointSize(QucsSettings.font.pointSize()-1);
+  font.setPointSize(SETTINGS->get("general", "font").value<QFont>().pointSize()-1);
   font.setStyleHint(QFont::Courier);
   font.setFixedPitch(true);
   setFont(font);

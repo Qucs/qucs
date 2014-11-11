@@ -937,7 +937,7 @@ void Schematic::paintGrid(ViewPainter *p, int cX, int cY, int Width, int Height)
 // Correction factor for unproportional font scaling.
 float Schematic::textCorr()
 {
-  QFont Font = QucsSettings.font;
+  QFont Font = SETTINGS->get("general", "font").value<QFont>();
   Font.setPointSizeFloat( Scale * float(Font.pointSize()) );
   QFontMetrics  metrics(Font);
   return (Scale / float(metrics.lineSpacing()));

@@ -21,6 +21,7 @@
 #include "graphictextdialog.h"
 #include "schematic.h"
 #include "qucs.h"
+#include "setting.h"
 
 #include <QPainter>
 #include <QPushButton>
@@ -34,7 +35,7 @@ GraphicText::GraphicText()
   Name = "Text ";
   isSelected = false;
   Color = QColor(0,0,0);
-  Font = QucsSettings.font;
+  Font = SETTINGS->get("general", "font").value<QFont>();
   cx = cy = 0;
   x1 = x2 = 0;
   y1 = y2 = 0;
@@ -323,7 +324,7 @@ void GraphicText::mirrorY()
 // If there were changes, it returns 'true'.
 bool GraphicText::Dialog()
 {
-  QFont f(QucsSettings.font);   // to avoid wrong text width
+  QFont f(SETTINGS->get("general", "font").value<QFont>());   // to avoid wrong text width
   bool changed = false;
 
   GraphicTextDialog *d = new GraphicTextDialog();

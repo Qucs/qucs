@@ -36,6 +36,7 @@
 #include "main.h"
 #include "mnemo.h"
 #include "schematic.h"
+#include "setting.h"
 
 #include "rect3ddiagram.h"
 
@@ -1549,7 +1550,7 @@ void Diagram::createSmithChart(Axis *Axis, int Mode)
     Lines.append(new Line(x, dx2+m, x, dx2-y, GridPen));
 
     if(Below)  y = 4;
-    else  y = y2-4-QucsSettings.font.pointSize();
+    else  y = y2-4-SETTINGS->get("general", "font").value<QFont>().pointSize();
     Texts.append(new Text(0, y, StringNum(Axis->up)));
   }
 
@@ -1618,7 +1619,7 @@ void Diagram::createPolarDiagram(Axis *Axis, int Mode)
   if(Below)  len += 16*180;
 
   int phi, tPos;
-  int tHeight = QucsSettings.font.pointSize() + 5;
+  int tHeight = SETTINGS->get("general", "font").value<QFont>().pointSize() + 5;
   if(!Below)  tPos = (y2>>1) + 3;
   else  tPos = (y2>>1) - tHeight + 3;
 

@@ -1222,7 +1222,7 @@ void QucsApp::slotCursorDown()
 void QucsApp::slotApplyCompText()
 {
   QString s;
-  QFont f = QucsSettings.font;
+  QFont f = SETTINGS->get("general", "font").value<QFont>();
   Schematic *Doc = (Schematic*)DocumentTab->currentPage();
   f.setPointSizeFloat( Doc->Scale * float(f.pointSize()) );
   editText->setFont(f);

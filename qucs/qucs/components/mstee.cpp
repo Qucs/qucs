@@ -16,6 +16,7 @@
  ***************************************************************************/
 #include "mstee.h"
 #include "main.h"
+#include "setting.h"
 
 #include <QFontMetrics>
 
@@ -26,7 +27,7 @@ MStee::MStee()
   x1 = -30; y1 = -11;
   x2 =  30; y2 =  30;
 
-  QFontMetrics metrics(QucsSettings.font);   // get size of text
+  QFontMetrics metrics(SETTINGS->get("general", "font").value<QFont>());   // get size of text
   tx = x1+4;
   ty = y1 - 5*metrics.lineSpacing() - 4;
   Model = "MTEE";

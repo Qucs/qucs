@@ -19,6 +19,7 @@
 #include "main.h"
 #include "qucs.h"
 #include "schematic.h"
+#include "setting.h"
 
 #include <cmath>
 
@@ -511,7 +512,7 @@ void ComponentDialog::slotSelectProperty(QTableWidgetItem *item)
       List = List.split(',',str);
     }
 
-    QFontMetrics  metrics(QucsSettings.font);   // get size of text
+    QFontMetrics  metrics(SETTINGS->get("general", "font").value<QFont>());   // get size of text
     while(metrics.width(desc) > 270) {  // if description too long, cut it
       if (desc.findRev(' ') != -1)
         desc = desc.left(desc.findRev(' ', -1)) + "....";

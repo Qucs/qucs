@@ -16,6 +16,7 @@
  ***************************************************************************/
 #include "equation.h"
 #include "main.h"
+#include "setting.h"
 
 #include <QFontMetrics>
 
@@ -24,7 +25,7 @@ Equation::Equation()
   Type = isComponent; // Analogue and digital component.
   Description = QObject::tr("equation");
 
-  QFont f = QucsSettings.font;
+  QFont f = SETTINGS->get("general", "font").value<QFont>();
   f.setWeight(QFont::Light);
   f.setPointSizeFloat(12.0);
   QFontMetrics  metrics(f);

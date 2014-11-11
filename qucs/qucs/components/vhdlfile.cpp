@@ -18,6 +18,7 @@
 #include "qucs.h"
 #include "main.h"
 #include "schematic.h"
+#include "setting.h"
 
 #include <QTextStream>
 #include <QRegExp>
@@ -124,7 +125,7 @@ QString VHDL_File::loadFile()
 // -------------------------------------------------------
 void VHDL_File::createSymbol()
 {
-  QFontMetrics  metrics(QucsSettings.font);   // get size of text
+  QFontMetrics  metrics(SETTINGS->get("general", "font").value<QFont>());   // get size of text
   int fHeight = metrics.lineSpacing();
 
   int No = 0;
