@@ -442,7 +442,7 @@ void LibraryDialog::slotSave()
            << description
            << "\n  </Description>\n";
 
-    Schematic *Doc = new Schematic(0, QucsSettings.QucsWorkDir.filePath(SelectedNames[i]));
+    Schematic *Doc = new Schematic(0, QDir(SETTINGS->get("path", "QucsWorkDir").toString()).filePath(SelectedNames[i]));
     ErrText->insert(tr("Loading subcircuit \"%1\".\n").arg(SelectedNames[i]));
     if(!Doc->loadDocument()) {  // load document if possible
         delete Doc;

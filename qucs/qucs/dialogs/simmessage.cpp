@@ -224,7 +224,7 @@ void SimMessage::nextSPICE()
 
   QFile SpiceFile;
   if(FileName.find(QDir::separator()) < 0)  // add path ?
-    SpiceFile.setName(QucsSettings.QucsWorkDir.path() + QDir::separator() + FileName);
+    SpiceFile.setName(QDir(SETTINGS->get("path", "QucsWorkDir").toString()).path() + QDir::separator() + FileName);
   else
     SpiceFile.setName(FileName);
   if(!SpiceFile.open(QIODevice::ReadOnly)) {
@@ -490,7 +490,7 @@ void SimMessage::startSimulator()
 
 
             // \todo remvoe the command line arguments? use only netlist annotation?
-            //Arguments << "-p" << QucsSettings.QucsWorkDir.absolutePath()
+            //Arguments << "-p" << QDir(SETTINGS->get("path", "QucsWorkDir").toString()).absolutePath()
             //          << "-m" << usedComponents;
             //qDebug() << "Command :" << Program << Arguments.join(" ");
 
@@ -501,7 +501,7 @@ void SimMessage::startSimulator()
             else {
                QTextStream out(&NetlistFile);
                out << "\n";
-               out << "# --path=" << QucsSettings.QucsWorkDir.absolutePath() << "\n";
+               out << "# --path=" << QDir(SETTINGS->get("path", "QucsWorkDir").toString()).absolutePath() << "\n";
                out << "# --module=" << usedComponents.join(" ") << "\n";
 
                NetlistFile.close();

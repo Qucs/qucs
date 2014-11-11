@@ -462,7 +462,7 @@ QString properAbsFileName(const QString& Name)
   {
       // if it's a relative file, look for it relative to the
       // working directory (the qucs home directory)
-      s = QucsSettings.QucsWorkDir.filePath(s);
+      s = QDir(SETTINGS->get("path", "QucsWorkDir").toString()).filePath(s);
   }
   // return the clean path
   return QDir::cleanPath(s);
@@ -911,6 +911,8 @@ int main(int argc, char *argv[])
   SETTINGS->testSet("path", "ExamplesDir", QucsDir.canonicalPath() + "/share/qucs/docs/examples/");
   SETTINGS->testSet("path", "DocDir",      QucsDir.canonicalPath() + "/share/qucs/docs/");
   SETTINGS->testSet("path", "QucsHomeDir", QDir(QDir::homeDirPath()+QDir::convertSeparators("/.qucs")).absolutePath());
+  SETTINGS->testSet("path", "QucsWorkDir", SETTINGS->get("path", "QucsHomeDir"));
+
   QucsSettings.BinDir =      QucsDir.absolutePath() + "/bin/";
   QucsSettings.LangDir =     QucsDir.canonicalPath() + "/share/qucs/lang/";
   QucsSettings.LibDir =      QucsDir.canonicalPath() + "/share/qucs/library/";

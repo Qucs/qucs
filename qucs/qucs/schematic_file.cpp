@@ -439,13 +439,13 @@ int Schematic::saveDocument()
       admsXml = QDir::toNativeSeparators(admsXml+"/"+"admsXml");
 #endif
 
-      QString workDir = QucsSettings.QucsWorkDir.absolutePath();
+      QString workDir = SETTINGS->get("path", "QucsWorkDir").toString();
 
       qDebug() << "App path : " << qApp->applicationDirPath();
       qDebug() << "workdir"  << workDir;
       qDebug() << "homedir"  << QDir(SETTINGS->get("path", "QucsHomeDir").toString()).absolutePath();
 
-      vaFile = QucsSettings.QucsWorkDir.filePath(fileBase()+".va");
+      vaFile = QDir(SETTINGS->get("path", "QucsWorkDir").toString()).filePath(fileBase()+".va");
 
       QStringList Arguments;
       Arguments << QDir::toNativeSeparators(vaFile)
@@ -489,8 +489,8 @@ int Schematic::saveDocument()
       }
 
       // Append _sym.json into _props.json, save into _symbol.json
-      QFile f1(QucsSettings.QucsWorkDir.filePath(fileBase()+"_props.json"));
-      QFile f2(QucsSettings.QucsWorkDir.filePath(fileBase()+"_sym.json"));
+      QFile f1(QDir(SETTINGS->get("path", "QucsWorkDir").toString()).filePath(fileBase()+"_props.json"));
+      QFile f2(QDir(SETTINGS->get("path", "QucsWorkDir").toString()).filePath(fileBase()+"_sym.json"));
       f1.open(QIODevice::ReadOnly | QIODevice::Text);
       f2.open(QIODevice::ReadOnly | QIODevice::Text);
 
@@ -501,7 +501,7 @@ int Schematic::saveDocument()
       // remove joining point
       finalJSON = finalJSON.replace("}{", "");
 
-      QFile f3(QucsSettings.QucsWorkDir.filePath(fileBase()+"_symbol.json"));
+      QFile f3(QDir(SETTINGS->get("path", "QucsWorkDir").toString()).filePath(fileBase()+"_symbol.json"));
       f3.open(QIODevice::WriteOnly | QIODevice::Text);
       QTextStream out(&f3);
       out << finalJSON;

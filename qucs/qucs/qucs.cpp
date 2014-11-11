@@ -165,8 +165,8 @@ QucsApp::QucsApp()
       //} else {
         // get and set absolute path, QucsWorkDir now finds subcircuits
         QFileInfo Info(arg);
-        QucsSettings.QucsWorkDir.setPath(Info.absoluteDir().absolutePath());
-        arg = QucsSettings.QucsWorkDir.filePath(Info.fileName());
+        SETTINGS->set("path", "QucsWorkDir", Info.absoluteDir().absolutePath());
+        arg = QDir(SETTINGS->get("path", "QucsWorkDir").toString()).filePath(Info.fileName());
         gotoPage(arg);
       //}
     }
@@ -642,7 +642,7 @@ void QucsApp::slotSetCompView (int index)
       if (c) delete c;
 
       // check if icon exists, fall back to default
-      QString iconPath = QucsSettings.QucsWorkDir.filePath(vaBitmap+".png");
+      QString iconPath = QDir(SETTINGS->get("path", "QucsWorkDir").toString()).filePath(vaBitmap+".png");
 
       QFile iconFile(iconPath);
       QPixmap vaIcon;
@@ -841,7 +841,7 @@ void QucsApp::slotCMenuCopy()
   if(Item == 0) return;
 
   QString Name = Item->text(0);
-  QString currentPath = QucsSettings.QucsWorkDir.filePath(Name);
+  QString currentPath = QDir(SETTINGS->get("path", "QucsWorkDir").toString()).filePath(Name);
   QString Path = currentPath.section(QDir::separator(), 0, -2);
 
   //check changed file save
@@ -910,7 +910,7 @@ void QucsApp::slotCMenuRename()
   if(!Item) return;
 
   QString Name = Item->text(0);
-  if (findDoc (QucsSettings.QucsWorkDir.filePath(Name))) {
+  if (findDoc (QDir(SETTINGS->get("path", "QucsWorkDir").toString()).filePath(Name))) {
     QMessageBox::critical(this, tr("Error"),
 			        tr("Cannot rename an open file!"));
     return;
@@ -931,7 +931,7 @@ void QucsApp::slotCMenuRename()
     NewName = s;
   else
     NewName = s+"."+Suffix;
-  QDir file(QucsSettings.QucsWorkDir.path());
+  QDir file(QDir(SETTINGS->get("path", "QucsWorkDir").toString()).path());
   if(!file.rename(Name, NewName)) {
     QMessageBox::critical(this, tr("Error"), tr("Cannot rename file: ")+Name);
     return;
@@ -944,7 +944,7 @@ void QucsApp::slotCMenuDelete()
 {
   QTreeWidgetItem *item = Content->currentItem();
   if(item == 0) return;
-  QString FileName = QucsSettings.QucsWorkDir.filePath(item->text(0));
+  QString FileName = QDir(SETTINGS->get("path", "QucsWorkDir").toString()).filePath(item->text(0));
 
   if (findDoc (FileName)) {
     QMessageBox::critical(this, tr("Error"),
@@ -1010,7 +1010,7 @@ void QucsApp::slotCMenuDelGroup ()
   int i;
   for (i = 0; extensions[i] != 0; i++) {
     QString Short = s + "." + extensions[i];
-    QString Name = QucsSettings.QucsWorkDir.filePath (Short);
+    QString Name = QDir(SETTINGS->get("path", "QucsWorkDir").toString()).filePath (Short);
     // search, if files are open
     if (findDoc (Name)) {
       QMessageBox::critical(this, tr("Error"), tr("Cannot delete the open file \"%1\"!").arg(Short));
@@ -1024,7 +1024,7 @@ void QucsApp::slotCMenuDelGroup ()
   QString Str = "\n";
   for (i = 0; extensions[i] != 0; i++) {
     QString Short = s + "." + extensions[i];
-    QString Long = QucsSettings.QucsWorkDir.filePath (Short);
+    QString Long = QDir(SETTINGS->get("path", "QucsWorkDir").toString()).filePath (Short);
     bool exists = QFile::exists (Long);
     if (exists)
       Str += Short + "\n";
@@ -1039,7 +1039,7 @@ void QucsApp::slotCMenuDelGroup ()
   // file removal
   for (i = 0; extensions[i] != 0; i++) {
     QString Short = s + "." + extensions[i];
-    QString Name = QucsSettings.QucsWorkDir.filePath (Short);
+    QString Name = QDir(SETTINGS->get("path", "QucsWorkDir").toString()).filePath (Short);
     bool exists = QFile::exists (Name);
     if (exists) {
       // remove files
@@ -1214,14 +1214,14 @@ void QucsApp::readProjectFiles()
 
   int n;
   // put all files into "Content"-ListView
-  QStringList Elements = QucsSettings.QucsWorkDir.entryList("*", QDir::Files, QDir::Name);
+  QStringList Elements = QDir(SETTINGS->get("path", "QucsWorkDir").toString()).entryList("*", QDir::Files, QDir::Name);
   QStringList::iterator it;
   QString Str;
   ConSchematics->setExpanded(true);
   for(it = Elements.begin(); it != Elements.end(); ++it) {
     Str = QucsDoc::fileSuffix (*it);
     if(Str == "sch") {
-      n = testFile(QucsSettings.QucsWorkDir.filePath((*it).ascii()));
+      n = testFile(QDir(SETTINGS->get("path", "QucsWorkDir").toString()).filePath((*it).ascii()));
       if(n >= 0) {
         if(n > 0) {
           QTreeWidgetItem *temp = new QTreeWidgetItem(ConSchematics);
@@ -1283,7 +1283,7 @@ void QucsApp::openProject(const QString& Path, const QString& Name)
                           tr("Cannot access project directory: ")+Path);
     return;
   }
-  QucsSettings.QucsWorkDir.setPath(ProjDir.path());
+  SETTINGS->set("path", "QucsWorkDir", ProjDir.path());
   octave->adjustDirectory();
 
   QStringList headers;
@@ -1348,7 +1348,7 @@ void QucsApp::slotMenuCloseProject()
 
   slotResetWarnings();
   setCaption("Qucs " PACKAGE_VERSION + tr(" - Project: "));
-  QucsSettings.QucsWorkDir.setPath(QDir::homeDirPath()+QDir::convertSeparators ("/.qucs"));
+  SETTINGS->set("path", "QucsWorkDir", QDir::homeDirPath()+QDir::convertSeparators ("/.qucs"));
   octave->adjustDirectory();
 
   QStringList headers;
@@ -1615,7 +1615,7 @@ bool QucsApp::saveAs()
         if(lastDirOpenSave.isEmpty())  s = QDir::currentDirPath();
         else  s = lastDirOpenSave;
       }
-      else s = QucsSettings.QucsWorkDir.path();
+      else s = QDir(SETTINGS->get("path", "QucsWorkDir").toString()).path();
     }
 
     // list of known file extensions
@@ -1634,7 +1634,7 @@ bool QucsApp::saveAs()
       Filter = QucsFileFilter;
 
     s = QFileDialog::getSaveFileName(this, tr("Enter a Document Name"),
-                                     QucsSettings.QucsWorkDir.absPath(),
+                                     QDir(SETTINGS->get("path", "QucsWorkDir").toString()).absPath(),
                                      Filter);
     if(s.isEmpty())  return false;
     Info.setFile(s);               // try to guess the best extension ...
@@ -1677,7 +1677,7 @@ bool QucsApp::saveAs()
   slotUpdateRecentFiles();
 
   if(intoView) {    // insert new name in Content ListView ?
-    if(Info.dirPath(true) == QucsSettings.QucsWorkDir.absPath())
+    if(Info.dirPath(true) == QDir(SETTINGS->get("path", "QucsWorkDir").toString()).absPath())
       if(!ProjName.isEmpty()) {
         s = Info.fileName();  // remove path from file name
 	QString ext = Info.extension (false);
@@ -2469,16 +2469,16 @@ void QucsApp::slotOpenContent(QTreeWidgetItem *item)
   if(item->parent() == 0) return; // no document, but item "schematic", ...
 
 /*
-  QucsSettings.QucsWorkDir.setPath(QDir(SETTINGS->get("path", "QucsHomeDir").toString()).path());
+  QDir(SETTINGS->get("path", "QucsWorkDir").toString()).setPath(QDir(SETTINGS->get("path", "QucsHomeDir").toString()).path());
   QString p = ProjName+"_prj";
-  if(!QucsSettings.QucsWorkDir.cd(p)) {
+  if(!QDir(SETTINGS->get("path", "QucsWorkDir").toString()).cd(p)) {
     QMessageBox::critical(this, tr("Error"),
 			  tr("Cannot access project directory: ")+
-              QucsSettings.QucsWorkDir.path()+QDir::separator()+p);
+              QDir(SETTINGS->get("path", "QucsWorkDir").toString()).path()+QDir::separator()+p);
     return;
   }*/
 
-  QFileInfo Info(QucsSettings.QucsWorkDir.filePath(item->text(0)));
+  QFileInfo Info(QDir(SETTINGS->get("path", "QucsWorkDir").toString()).filePath(item->text(0)));
   QString Suffix = Info.extension(false);
 
   if (Suffix == "sch" || Suffix == "dpl" || Suffix == "vhdl" ||
@@ -2756,7 +2756,7 @@ void QucsApp::slotSymbolEdit()
 
     // symbol file already loaded?
     int paint_mode = 0;
-    if (!findDoc (QucsSettings.QucsWorkDir.filePath(sym)))
+    if (!findDoc (QDir(SETTINGS->get("path", "QucsWorkDir").toString()).filePath(sym)))
       paint_mode = 1;
 
     // change current page to appropriate symbol file
@@ -2956,7 +2956,7 @@ void QucsApp::updateSchNameHash(void)
     }
 
     // finally check the home/working directory
-    QDir thispath(QucsSettings.QucsWorkDir);
+    QDir thispath(QDir(SETTINGS->get("path", "QucsWorkDir").toString()));
     QFileInfoList schfilesList = thispath.entryInfoList( nameFilter, QDir::Files );
     // put each one in the hash table with the unique key the base name of
     // the file, note this will overwrite the value if the key already exists
@@ -3014,7 +3014,7 @@ void QucsApp::updateSpiceNameHash(void)
     }
 
     // finally check the home/working directory
-    QDir thispath(QucsSettings.QucsWorkDir);
+    QDir thispath(QDir(SETTINGS->get("path", "QucsWorkDir").toString()));
     QFileInfoList spicefilesList = thispath.entryInfoList( spiceExtensions, QDir::Files );
     // put each one in the hash table with the unique key the base name of
     // the file, note this will overwrite the value if the key already exists

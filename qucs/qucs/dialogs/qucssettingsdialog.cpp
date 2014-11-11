@@ -695,7 +695,7 @@ void QucsSettingsDialog::slotPathTableClicked(int row, int col)
 
 void QucsSettingsDialog::slotAddPath()
 {
-    QFileDialog fileDialog( this, tr("Select a directory"), QucsSettings.QucsWorkDir.canonicalPath());
+    QFileDialog fileDialog( this, tr("Select a directory"), QDir(SETTINGS->get("path", "QucsWorkDir").toString()).canonicalPath());
     fileDialog.setAcceptMode(QFileDialog::AcceptOpen);
     fileDialog.setFileMode(QFileDialog::DirectoryOnly);
 
@@ -714,7 +714,7 @@ void QucsSettingsDialog::slotAddPath()
 void QucsSettingsDialog::slotAddPathWithSubFolders()
 {
     // open a file dialog to select the top level directory
-    QFileDialog fileDialog( this, tr("Select a directory"), QucsSettings.QucsWorkDir.canonicalPath());
+    QFileDialog fileDialog( this, tr("Select a directory"), QDir(SETTINGS->get("path", "QucsWorkDir").toString()).canonicalPath());
     fileDialog.setAcceptMode(QFileDialog::AcceptOpen);
     fileDialog.setFileMode(QFileDialog::DirectoryOnly);
 

@@ -139,7 +139,7 @@ bool OctaveWindow::startOctave()
 // ------------------------------------------------------------------------
 void OctaveWindow::adjustDirectory()
 {
-  sendCommand("cd \"" + QucsSettings.QucsWorkDir.absPath() + "\"");
+  sendCommand("cd \"" + QDir(SETTINGS->get("path", "QucsWorkDir").toString()).absPath() + "\"");
 }
 
 // ------------------------------------------------------------------------

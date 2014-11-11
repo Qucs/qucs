@@ -1011,7 +1011,7 @@ void QucsApp::slotAddToProject()
   while(it != FileList.end()) {
     Info.setFile(*it);
     origFile.setName(*it);
-    destFile.setName(QucsSettings.QucsWorkDir.absPath() +
+    destFile.setName(QDir(SETTINGS->get("path", "QucsWorkDir").toString()).absPath() +
                      QDir::separator() + Info.fileName());
 
     if(!origFile.open(QIODevice::ReadOnly)) {
@@ -1508,7 +1508,7 @@ void QucsApp::slotLoadModule()
     // fech list of _symbol.json
     // \todo fetch timestamp of VA, JSON, if VA newer, need to reload.
 
-    QDir projDir = QucsSettings.QucsWorkDir.absolutePath();
+    QDir projDir = QDir(SETTINGS->get("path", "QucsWorkDir").toString()).absolutePath();
 
     QStringList files;
     QString fileSuffix = "*_symbol.json";
@@ -1620,7 +1620,7 @@ void QucsApp::slotBuildModule()
 
     QDir include = QDir(SETTINGS->get("path", "BinDir").toString()+"../include/qucs-core");
 
-    QString workDir = QucsSettings.QucsWorkDir.absolutePath();
+    QString workDir = SETTINGS->get("path", "QucsWorkDir").toString();
 
     // need to cd into project to make sure output is droped there?
     // need to cd - into previous location?
