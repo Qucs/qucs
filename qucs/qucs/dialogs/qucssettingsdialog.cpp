@@ -363,7 +363,7 @@ QucsSettingsDialog::QucsSettingsDialog(QucsApp *parent, const char *name)
     checkAntiAliasing->setChecked(SETTINGS->get("bool", "DrawInAntiAliasing").toBool());
 
     for(int z=LanguageCombo->count()-1; z>=0; z--)
-        if(LanguageCombo->text(z).section('(',1,1).remove(')') == QucsSettings.Language)
+        if(LanguageCombo->text(z).section('(',1,1).remove(')') == SETTINGS->get("general", "language").toString())
             LanguageCombo->setCurrentItem(z);
 
     /*! Load paths from settings */
@@ -466,9 +466,7 @@ void QucsSettingsDialog::slotApply()
 
     SETTINGS->set("general", "font", Font);
 
-    QucsSettings.Language =
-        LanguageCombo->currentText().section('(',1,1).remove(')');
-
+    SETTINGS->set("general", "language", LanguageCombo->currentText().section('(',1,1).remove(')'));
 
     changed |= SETTINGS->set("color", "Comment",   ColorComment->paletteForegroundColor());
     changed |= SETTINGS->set("color", "String",    ColorString->paletteForegroundColor());

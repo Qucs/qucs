@@ -993,7 +993,7 @@ int main(int argc, char *argv[])
   QTextCodec::setCodecForTr(QTextCodec::codecForName("UTF-8"));
 
   QTranslator tor( 0 );
-  QString lang = QucsSettings.Language;
+  QString lang = SETTINGS->get("general", "language").toString();
   if(lang.isEmpty())
     lang = QTextCodec::locale();
   tor.load( QString("qucs_") + lang, QucsSettings.LangDir);
