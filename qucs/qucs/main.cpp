@@ -927,19 +927,22 @@ int main(int argc, char *argv[])
 
   var = getenv("ADMSXMLBINDIR");
   if(var != NULL) {
-      QucsSettings.AdmsXmlBinDir.setPath(QString(var));
+      //QucsSettings.AdmsXmlBinDir.setPath(QString(var));
+      SETTINGS->testSet("path", "AdmsXmlBinDir", QString(var));
   }
   else {
       // default admsXml bindir same as Qucs
       QString admsExec;
 #ifdef __MINGW32__
-      admsExec = QDir::toNativeSeparators(QucsSettings.BinDir+"/"+"admsXml.exe");
+      admsExec = QDir::toNativeSeparators(SETTINGS->get("path", "BinDir").toString()+"/admsXml.exe");
 #else
-      admsExec = QDir::toNativeSeparators(QucsSettings.BinDir+"/"+"admsXml");
+      admsExec = QDir::toNativeSeparators(SETTINGS->get("path", "BinDir").toString()+"/admsXml");
 #endif
       QFile adms(admsExec);
-      if(adms.exists())
-        QucsSettings.AdmsXmlBinDir.setPath(QucsSettings.BinDir);
+      if(adms.exists()) {
+        //QucsSettings.AdmsXmlBinDir.setPath(QucsSettings.BinDir);
+        SETTINGS->testSet("path", "AdmsXmlBinDir", SETTINGS->get("path", "BinDir"));
+      }
   }
 
   var = getenv("ASCOBINDIR");

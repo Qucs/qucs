@@ -369,7 +369,7 @@ QucsSettingsDialog::QucsSettingsDialog(QucsApp *parent, const char *name)
 
     /*! Load paths from settings */
     homeEdit->setText(QDir(SETTINGS->get("path", "QucsHomeDir").toString()).canonicalPath());
-    admsXmlEdit->setText(QucsSettings.AdmsXmlBinDir.canonicalPath());
+    admsXmlEdit->setText(QDir(SETTINGS->get("path", "AdmsXmlBinDir").toString()).canonicalPath());
     ascoEdit->setText(QucsSettings.AscoBinDir.canonicalPath());
     octaveEdit->setText(QucsSettings.OctaveBinDir.canonicalPath());
 
@@ -496,8 +496,8 @@ void QucsSettingsDialog::slotApply()
     SETTINGS->set("general", "FileTypes", FileTypes);
 
     /*! Update QucsSettings, tool paths */
-    QDir(SETTINGS->get("path", "QucsHomeDir").toString()) = homeEdit->text();
-    QucsSettings.AdmsXmlBinDir = admsXmlEdit->text();
+    SETTINGS->set("path", "QucsHomeDir", homeEdit->text());
+    SETTINGS->set("path", "AdmsXmlBinDir", admsXmlEdit->text());
     QucsSettings.AscoBinDir = ascoEdit->text();
     QucsSettings.OctaveBinDir = octaveEdit->text();
 

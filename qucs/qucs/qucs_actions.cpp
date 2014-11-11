@@ -1632,7 +1632,7 @@ void QucsApp::slotBuildModule()
     QucsDoc *Doc = getDoc();
     QString vaModule = Doc->fileBase(Doc->DocName);
 
-    QString admsXml = QucsSettings.AdmsXmlBinDir.canonicalPath();
+    QString admsXml = QDir(SETTINGS->get("path", "AdmsXmlBinDir").toString()).canonicalPath();
 
 #ifdef __MINGW32__
     admsXml = QDir::toNativeSeparators(admsXml+"/"+"admsXml.exe");

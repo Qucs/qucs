@@ -431,7 +431,7 @@ int Schematic::saveDocument()
       QDir include = QDir(SETTINGS->get("path", "BinDir").toString()+"../include/qucs-core");
 
       //pick admsXml from settings
-      QString admsXml = QucsSettings.AdmsXmlBinDir.canonicalPath();
+      QString admsXml = QDir(SETTINGS->get("path", "AdmsXmlBinDir").toString()).canonicalPath();
 
 #ifdef __MINGW32__
       admsXml = QDir::toNativeSeparators(admsXml+"/"+"admsXml.exe");
