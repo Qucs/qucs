@@ -687,14 +687,14 @@ void QucsApp::editFile(const QString& File)
 // Is called to show the output messages of the last simulation.
 void QucsApp::slotShowLastMsg()
 {
-  editFile(QucsSettings.QucsHomeDir.filePath("log.txt"));
+  editFile(QDir(SETTINGS->get("path", "QucsHomeDir").toString()).filePath("log.txt"));
 }
 
 // ------------------------------------------------------------------------
 // Is called to show the netlist of the last simulation.
 void QucsApp::slotShowLastNetlist()
 {
-  editFile(QucsSettings.QucsHomeDir.filePath("netlist.txt"));
+  editFile(QDir(SETTINGS->get("path", "QucsHomeDir").toString()).filePath("netlist.txt"));
 }
 
 // ------------------------------------------------------------------------

@@ -443,7 +443,7 @@ int Schematic::saveDocument()
 
       qDebug() << "App path : " << qApp->applicationDirPath();
       qDebug() << "workdir"  << workDir;
-      qDebug() << "homedir"  << QucsSettings.QucsHomeDir.absolutePath();
+      qDebug() << "homedir"  << QDir(SETTINGS->get("path", "QucsHomeDir").toString()).absolutePath();
 
       vaFile = QucsSettings.QucsWorkDir.filePath(fileBase()+".va");
 

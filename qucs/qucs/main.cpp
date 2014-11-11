@@ -910,6 +910,7 @@ int main(int argc, char *argv[])
   SETTINGS->testSet("path", "OctaveDir",   QucsDir.canonicalPath() + "/share/qucs/octave/");
   SETTINGS->testSet("path", "ExamplesDir", QucsDir.canonicalPath() + "/share/qucs/docs/examples/");
   SETTINGS->testSet("path", "DocDir",      QucsDir.canonicalPath() + "/share/qucs/docs/");
+  SETTINGS->testSet("path", "QucsHomeDir", QDir(QDir::homeDirPath()+QDir::convertSeparators("/.qucs")).absolutePath());
   QucsSettings.BinDir =      QucsDir.absolutePath() + "/bin/";
   QucsSettings.LangDir =     QucsDir.canonicalPath() + "/share/qucs/lang/";
   QucsSettings.LibDir =      QucsDir.canonicalPath() + "/share/qucs/library/";

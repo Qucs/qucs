@@ -259,7 +259,7 @@ void LibraryDialog::slotCreateNext()
     return;
   }
 
-  LibDir = QDir(QucsSettings.QucsHomeDir);
+  LibDir = QDir(SETTINGS->get("path", "QucsHomeDir").toString());
   if(!LibDir.cd("user_lib")) { // user library directory exists ?
     if(!LibDir.mkdir("user_lib")) { // no, then create it
       QMessageBox::warning(this, tr("Warning"),
