@@ -296,7 +296,7 @@ void Schematic::setChanged(bool c, bool fillStack, char Op)
     if(!App->undo->isEnabled()) App->undo->setEnabled(true);
     if(App->redo->isEnabled())  App->redo->setEnabled(false);
 
-    while(UndoSymbol.count() > QucsSettings.maxUndo) { // "while..." because
+    while(UndoSymbol.count() > SETTINGS->get("general", "maxUndo").toUInt()) { // "while..." because
       UndoSymbol.removeFirst();    // "maxUndo" could be decreased meanwhile
       UndoSymbol.last();
     }
@@ -318,7 +318,7 @@ void Schematic::setChanged(bool c, bool fillStack, char Op)
   if(!App->undo->isEnabled()) App->undo->setEnabled(true);
   if(App->redo->isEnabled())  App->redo->setEnabled(false);
 
-  while(UndoStack.count() > QucsSettings.maxUndo) { // "while..." because
+  while(UndoStack.count() > SETTINGS->get("general", "maxUndo").toUInt()) { // "while..." because
     UndoStack.removeFirst();    // "maxUndo" could be decreased meanwhile
     UndoStack.last();
   }

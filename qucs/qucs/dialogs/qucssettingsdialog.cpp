@@ -356,7 +356,7 @@ QucsSettingsDialog::QucsSettingsDialog(QucsApp *parent, const char *name)
     Font = SETTINGS->get("general", "font").value<QFont>();
     FontButton->setText(Font.toString());
     BGColorButton->setPaletteBackgroundColor(SETTINGS->get("color", "BGColor").value<QColor>());
-    undoNumEdit->setText(QString::number(QucsSettings.maxUndo));
+    undoNumEdit->setText(QString::number(SETTINGS->get("general", "maxUndo").toUInt()));
     editorEdit->setText(QucsSettings.Editor);
     checkWiring->setChecked(SETTINGS->get("bool", "NodeWiring").toBool());
     checkLoadFromFutureVersions->setChecked(SETTINGS->get("bool", "IgnoreFutureVersion").toBool());
@@ -480,12 +480,7 @@ void QucsSettingsDialog::slotApply()
     changed |= SETTINGS->set("color", "Directive", ColorDirective->paletteForegroundColor());
     changed |= SETTINGS->set("color", "Task",      ColorTask->paletteForegroundColor());
 
-    bool ok;
-    if(QucsSettings.maxUndo != undoNumEdit->text().toUInt(&ok))
-    {
-        QucsSettings.maxUndo = undoNumEdit->text().toInt(&ok);
-        changed = true;
-    }
+    changed |= SETTINGS->set("general", "maxUndo", undoNumEdit->text().toUInt());
     if(QucsSettings.Editor != editorEdit->text())
     {
         QucsSettings.Editor = editorEdit->text();
