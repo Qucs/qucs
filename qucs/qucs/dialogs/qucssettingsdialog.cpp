@@ -357,7 +357,7 @@ QucsSettingsDialog::QucsSettingsDialog(QucsApp *parent, const char *name)
     FontButton->setText(Font.toString());
     BGColorButton->setPaletteBackgroundColor(SETTINGS->get("color", "BGColor").value<QColor>());
     undoNumEdit->setText(QString::number(SETTINGS->get("general", "maxUndo").toUInt()));
-    editorEdit->setText(QucsSettings.Editor);
+    editorEdit->setText(SETTINGS->get("general", "Editor").toString());
     checkWiring->setChecked(SETTINGS->get("bool", "NodeWiring").toBool());
     checkLoadFromFutureVersions->setChecked(SETTINGS->get("bool", "IgnoreFutureVersion").toBool());
     checkAntiAliasing->setChecked(SETTINGS->get("bool", "DrawInAntiAliasing").toBool());
@@ -481,11 +481,7 @@ void QucsSettingsDialog::slotApply()
     changed |= SETTINGS->set("color", "Task",      ColorTask->paletteForegroundColor());
 
     changed |= SETTINGS->set("general", "maxUndo", undoNumEdit->text().toUInt());
-    if(QucsSettings.Editor != editorEdit->text())
-    {
-        QucsSettings.Editor = editorEdit->text();
-        changed = true;
-    }
+    changed |= SETTINGS->set("general", "Editor", editorEdit->text());
 
     changed |= SETTINGS->set("bool", "NodeWiring", checkWiring->isChecked());
     SETTINGS->set("bool", "IgnoreFutureVersion", checkLoadFromFutureVersions->isChecked());

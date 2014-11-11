@@ -611,7 +611,7 @@ extern QString lastDirOpenSave; // to remember last directory and file
 // component edit dialog.
 void QucsApp::editFile(const QString& File)
 {
-    if (QucsSettings.Editor.toLower() == "qucs" | QucsSettings.Editor.isEmpty())
+    if (SETTINGS->get("general", "Editor").toString().toLower() == "qucs" | SETTINGS->get("general", "Editor").toString().isEmpty())
     {
         // The Editor is 'qucs' or empty, open a net document tab
         if (File.isEmpty()) {
@@ -640,7 +640,7 @@ void QucsApp::editFile(const QString& File)
       QString prog;
       QStringList args;
 
-      if (QucsSettings.Editor.toLower().contains("qucsedit")) {
+      if (SETTINGS->get("general", "Editor").toString().toLower().contains("qucsedit")) {
 
 #ifdef __MINGW32__
   prog = "qucsedit.exe";
@@ -654,7 +654,7 @@ void QucsApp::editFile(const QString& File)
         prog = QDir::toNativeSeparators(editor.canonicalFilePath());
       }
       else { // user defined editor
-          QFileInfo editor(QucsSettings.Editor);
+          QFileInfo editor(SETTINGS->get("general", "Editor").toString());
           prog = QDir::toNativeSeparators(editor.canonicalFilePath());
       }
 
