@@ -33,6 +33,9 @@ public:
 
   QVariant get(const QString &section, const QString &key);
   bool set(const QString &section, const QString &key, const QVariant &value);
+  bool testSet(const QString &section, const QString &key, const QVariant &value);
+
+  void setDefault();
 private:
   Settings();
 
