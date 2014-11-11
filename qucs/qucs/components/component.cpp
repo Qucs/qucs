@@ -316,7 +316,7 @@ void Component::paintScheme(Schematic *p)
 
     float Scale =
           ((Schematic*)QucsMain->DocumentTab->currentPage())->Scale;
-    newFont.setPointSizeFloat(float(Scale) * QucsSettings.largeFontSize);
+    newFont.setPointSizeFloat(float(Scale) * SETTINGS->get("general", "largeFontSize").toFloat());
     newFont.setWeight(QFont::DemiBold);
     QFontMetrics  metrics(newFont);
 

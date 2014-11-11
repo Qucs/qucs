@@ -16,6 +16,7 @@
  ***************************************************************************/
 #include "sp_sim.h"
 #include "main.h"
+#include "setting.h"
 
 
 SP_Sim::SP_Sim()
@@ -30,9 +31,9 @@ SP_Sim::SP_Sim()
   }
   if (b != -1) s[b] = '\n';
 
-  Texts.append(new Text(0, 0, s.left(b), Qt::darkBlue, QucsSettings.largeFontSize));
+  Texts.append(new Text(0, 0, s.left(b), Qt::darkBlue, SETTINGS->get("general", "largeFontSize").toFloat()));
   if (b != -1)
-    Texts.append(new Text(0, 0, s.mid(b+1), Qt::darkBlue, QucsSettings.largeFontSize));
+    Texts.append(new Text(0, 0, s.mid(b+1), Qt::darkBlue, SETTINGS->get("general", "largeFontSize").toFloat()));
 
   x1 = -10; y1 = -9;
   x2 = x1+121; y2 = y1+59;

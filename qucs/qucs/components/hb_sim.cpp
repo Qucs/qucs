@@ -16,6 +16,7 @@
  ***************************************************************************/
 #include "hb_sim.h"
 #include "main.h"
+#include "setting.h"
 
 
 HB_Sim::HB_Sim()
@@ -26,9 +27,9 @@ HB_Sim::HB_Sim()
   int a = s.findRev(" ");
   if (a != -1) s[a] = '\n';    // break line before the word "simulation"
 
-  Texts.append(new Text(0, 0, s.left(a), Qt::darkBlue, QucsSettings.largeFontSize));
+  Texts.append(new Text(0, 0, s.left(a), Qt::darkBlue, SETTINGS->get("general", "largeFontSize").toFloat()));
   if (a != -1)
-    Texts.append(new Text(0, 0, s.mid(a+1), Qt::darkBlue, QucsSettings.largeFontSize));
+    Texts.append(new Text(0, 0, s.mid(a+1), Qt::darkBlue, SETTINGS->get("general", "largeFontSize").toFloat()));
 
   x1 = -10; y1 = -9;
   x2 = x1+163; y2 = y1+59;
