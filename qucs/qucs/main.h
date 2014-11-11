@@ -39,51 +39,10 @@ class Component;
 #define M_PI     3.1415926535897932384626433832795029
 #endif
 
-struct tQucsSettings {
-  int x, y, dx, dy;    // position and size of main window
-  QFont font;
-  float largeFontSize;
-  QColor BGColor;      // background color of view area
-  QString Language;
-
-  // syntax highlighting
-  QColor Comment, String, Integer, Real, Character, Type,
-    Attribute, Directive, Task;
-
-  unsigned int maxUndo;    // size of undo stack
-  QString Editor;
-  QString BinDir;
-  QString LangDir;
-  QString LibDir;
-  QString OctaveDir;  // m-files location
-  QString ExamplesDir;
-  QString DocDir;
-
-  unsigned int NodeWiring;
-  QDir QucsWorkDir;
-  QDir QucsHomeDir;
-  QDir AdmsXmlBinDir;  // dir of admsXml executable
-  QDir AscoBinDir;     // dir of asco executable
-  QDir OctaveBinDir;   // dir of octave executable
-
-  // registered filename extensions with program to open the file
-  QStringList FileTypes;
-
-  unsigned int numRecentDocs;
-  QStringList RecentDocs;
-
-  bool IgnoreFutureVersion;
-  bool DrawInAntiAliasing;
-
-};
-
-extern tQucsSettings QucsSettings;  // extern because nearly everywhere used
 extern QucsApp *QucsMain;  // the Qucs application itself
 extern QString lastDir;    // to remember last directory for several dialogs
 extern QStringList qucsPathList;
 
-bool loadSettings();
-bool saveApplSettings(QucsApp*);
 void qucsMessageOutput(QtMsgType type, const char *msg);
 
 QString complexRect(double, double, int Precision=3);

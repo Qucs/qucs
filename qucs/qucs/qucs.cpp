@@ -2130,7 +2130,6 @@ void QucsApp::closeEvent(QCloseEvent* Event)
     SETTINGS->set("general", "y", pos().y());
     SETTINGS->set("general", "dx", size().width());
     SETTINGS->set("general", "dx", size().height());
-    saveApplSettings(this);
 
    if(closeAllFiles()) {
       emit signalKillEmAll();   // kill all subprocesses

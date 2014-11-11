@@ -501,8 +501,6 @@ void QucsSettingsDialog::slotApply()
     SETTINGS->set("path", "AscoBinDir", ascoEdit->text());
     SETTINGS->set("path", "OctaveBinDir", octaveEdit->text());
 
-    saveApplSettings(App);  // also sets the small and large font
-
     if(changed)
     {
         App->readProjects();
