@@ -43,6 +43,7 @@
 
 #include "schematic.h"
 #include "module.h"
+#include "setting.h"
 
 #ifdef _WIN32
 #include <Windows.h>  //for OutputDebugString
@@ -858,6 +859,11 @@ int doPrint(QString schematic, QString printFile,
 // #########################################################################
 int main(int argc, char *argv[])
 {
+  // setup setting
+  Settings::init();
+  SETTINGS->load();
+  SETTINGS->setDefault();
+
   // apply default settings
   QucsSettings.font = QFont("Helvetica", 12);
   QucsSettings.largeFontSize = 16.0;

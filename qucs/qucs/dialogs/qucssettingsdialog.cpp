@@ -25,6 +25,7 @@
 #include "main.h"
 #include "textdoc.h"
 #include "schematic.h"
+#include "setting.h"
 
 #include <QWidget>
 #include <QLabel>
@@ -114,16 +115,13 @@ QucsSettingsDialog::QucsSettingsDialog(QucsApp *parent, const char *name)
     checkWiring = new QCheckBox(appSettingsTab);
     appSettingsGrid->addWidget(checkWiring,5,1);
 
-
     appSettingsGrid->addWidget(new QLabel(tr("Load documents from future versions ")));
     checkLoadFromFutureVersions = new QCheckBox(appSettingsTab);
     appSettingsGrid->addWidget(checkLoadFromFutureVersions,6,1);
-    checkLoadFromFutureVersions->setChecked(QucsSettings.IgnoreFutureVersion);
 
     appSettingsGrid->addWidget(new QLabel(tr("Draw diagrams with anti-aliasing feature")));
     checkAntiAliasing = new QCheckBox(appSettingsTab);
     appSettingsGrid->addWidget(checkAntiAliasing,7,1);
-    checkAntiAliasing->setChecked(QucsSettings.DrawInAntiAliasing);
 
     t->addTab(appSettingsTab, tr("Settings"));
 
@@ -360,7 +358,9 @@ QucsSettingsDialog::QucsSettingsDialog(QucsApp *parent, const char *name)
     BGColorButton->setPaletteBackgroundColor(QucsSettings.BGColor);
     undoNumEdit->setText(QString::number(QucsSettings.maxUndo));
     editorEdit->setText(QucsSettings.Editor);
-    checkWiring->setChecked(QucsSettings.NodeWiring);
+    checkWiring->setChecked(SETTINGS->get("bool", "NodeWiring").toBool());
+    checkLoadFromFutureVersions->setChecked(SETTINGS->get("bool", "IgnoreFutureVersion").toBool());
+    checkAntiAliasing->setChecked(SETTINGS->get("bool", "DrawInAntiAliasing").toBool());
 
     for(int z=LanguageCombo->count()-1; z>=0; z--)
         if(LanguageCombo->text(z).section('(',1,1).remove(')') == QucsSettings.Language)
@@ -526,11 +526,10 @@ void QucsSettingsDialog::slotApply()
         QucsSettings.Editor = editorEdit->text();
         changed = true;
     }
-    if(QucsSettings.NodeWiring != (unsigned)checkWiring->isChecked())
-    {
-        QucsSettings.NodeWiring = checkWiring->isChecked();
-        changed = true;
-    }
+
+    changed |= SETTINGS->set("bool", "NodeWiring", checkWiring->isChecked());
+    SETTINGS->set("bool", "IgnoreFutureVersion", checkLoadFromFutureVersions->isChecked());
+    changed |= SETTINGS->set("bool", "DrawInAntiAliasing", checkAntiAliasing->isChecked());
 
     QucsSettings.FileTypes.clear();
     for (int row=0; row < fileTypesTableWidget->rowCount(); row++)
@@ -545,14 +544,6 @@ void QucsSettingsDialog::slotApply()
     QucsSettings.AdmsXmlBinDir = admsXmlEdit->text();
     QucsSettings.AscoBinDir = ascoEdit->text();
     QucsSettings.OctaveBinDir = octaveEdit->text();
-
-    QucsSettings.IgnoreFutureVersion = checkLoadFromFutureVersions->isChecked();
-
-    if(QucsSettings.DrawInAntiAliasing != checkAntiAliasing->isChecked())
-    {
-      QucsSettings.DrawInAntiAliasing = checkAntiAliasing->isChecked();
-      changed = true;
-    }
 
     saveApplSettings(App);  // also sets the small and large font
 

@@ -54,6 +54,7 @@
 #include "components/vhdlfile.h"
 #include "components/verilogfile.h"
 #include "components/vafile.h"
+#include "setting.h"
 
 // just dummies for empty lists
 Q3PtrList<Wire>      SymbolWires;
@@ -414,7 +415,7 @@ void Schematic::drawContents(QPainter *p, int, int, int, int)
 {
   ViewPainter Painter;
   Painter.init(p, Scale, -ViewX1, -ViewY1, contentsX(),
-	       contentsY(), QucsSettings.DrawInAntiAliasing);
+	       contentsY(), SETTINGS->get("bool", "DrawInAntiAliasing").toBool());
 
   paintGrid(&Painter, contentsX(), contentsY(),
             visibleWidth(), visibleHeight());
@@ -639,7 +640,7 @@ void Schematic::print(QPrinter*, QPainter *Painter, bool printAll, bool fitToPag
 #endif
   p.init(Painter, PrintScale * PrintRatio,
          -StartX, -StartY, -marginX, -marginY,
-         PrintScale, PrintRatio, QucsSettings.DrawInAntiAliasing);
+         PrintScale, PrintRatio, SETTINGS->get("bool", "DrawInAntiAliasing").toBool());
 
   if(!symbolMode)
     paintFrame(&p);

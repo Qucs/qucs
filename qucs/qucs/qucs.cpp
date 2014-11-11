@@ -53,6 +53,7 @@
 #include "dialogs/exportdialog.h"
 #include "octave_window.h"
 #include "../qucs-lib/qucslib_common.h"
+#include "setting.h"
 
 extern const char *empty_xpm[];
 
@@ -1152,7 +1153,7 @@ int QucsApp::testFile(const QString& DocName)
 
   Line = Line.mid(16, Line.length()-17);
   if(!checkVersion(Line)) { // wrong version number ?
-      if (!QucsSettings.IgnoreFutureVersion) {
+      if (!(SETTINGS->get("bool", "IgnoreFutureVersion").toBool())) {
           file.close();
           return -4;
       }

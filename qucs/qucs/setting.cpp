@@ -42,7 +42,7 @@ Settings::init()
 void
 Settings::load()
 {
-  m_Settings = new QSettings("qucs", "qucs");
+  m_Settings = new QSettings("qucs", "qucs-new");
 }
 
 Settings::Settings()
