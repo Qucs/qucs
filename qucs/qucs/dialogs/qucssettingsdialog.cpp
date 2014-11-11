@@ -217,8 +217,9 @@ QucsSettingsDialog::QucsSettingsDialog(QucsApp *parent, const char *name)
     fileTypesGrid->addWidget(fileTypesTableWidget,1,0,3,1);
 
     // fill listview with already registered file extensions
-    QStringList::Iterator it = QucsSettings.FileTypes.begin();
-    while(it != QucsSettings.FileTypes.end())
+    FileTypes = SETTINGS->get("general", "FileTypes").toStringList();
+    QStringList::Iterator it = FileTypes.begin();
+    while(it != FileTypes.end())
     {
         int row = fileTypesTableWidget->rowCount();
         fileTypesTableWidget->setRowCount(row+1);
@@ -485,13 +486,14 @@ void QucsSettingsDialog::slotApply()
     SETTINGS->set("bool", "IgnoreFutureVersion", checkLoadFromFutureVersions->isChecked());
     changed |= SETTINGS->set("bool", "DrawInAntiAliasing", checkAntiAliasing->isChecked());
 
-    QucsSettings.FileTypes.clear();
+    FileTypes.clear();
     for (int row=0; row < fileTypesTableWidget->rowCount(); row++)
     {
-        QucsSettings.FileTypes.append(fileTypesTableWidget->item(row,0)->text()
-                                      +"/"+
-                                      fileTypesTableWidget->item(row,1)->text());
+        FileTypes.append(fileTypesTableWidget->item(row,0)->text()
+            +"/"+
+            fileTypesTableWidget->item(row,1)->text());
     }
+    SETTINGS->set("general", "FileTypes", FileTypes);
 
     /*! Update QucsSettings, tool paths */
     QucsSettings.QucsHomeDir = homeEdit->text();

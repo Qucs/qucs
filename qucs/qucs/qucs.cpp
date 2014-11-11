@@ -2510,8 +2510,9 @@ void QucsApp::slotOpenContent(QTreeWidgetItem *item)
   // File is no Qucs file, so go through list and search a user
   // defined program to open it.
   QStringList com;
-  QStringList::Iterator it = QucsSettings.FileTypes.begin();
-  while(it != QucsSettings.FileTypes.end()) {
+  QStringList filetypes = SETTINGS->get("general", "FileTypes").toStringList();
+  QStringList::Iterator it = filetypes.begin();
+  while(it != filetypes.end()) {
     if(Suffix == (*it).section('/',0,0)) {
       com = QStringList::split(" ", (*it).section('/',1,1));
       com << Info.absFilePath();

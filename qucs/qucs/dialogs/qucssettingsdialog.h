@@ -34,6 +34,7 @@ class QIntValidator;
 class QRegExpValidator;
 class QStandardItemModel;
 class QTableWidget;
+class QStringList;
 
 class QucsSettingsDialog : public QDialog
 {
@@ -76,6 +77,7 @@ public:
     QucsApp *App;
 
     QFont Font;
+    QStringList FileTypes;
     QCheckBox *checkWiring, *checkLoadFromFutureVersions,
               *checkAntiAliasing;
     QComboBox *LanguageCombo;
