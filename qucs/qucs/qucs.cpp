@@ -119,6 +119,8 @@ QucsApp::QucsApp()
   MouseReleaseAction = 0;
   MouseDoubleClickAction = 0;
 
+  RecentDocs = SETTINGS->get("general", "RecentDocs").toStringList();
+
   initView();
   initActions();
   initMenuBar();
@@ -1544,10 +1546,6 @@ void QucsApp::slotFileOpen()
   if(s.isEmpty())
     statusBar()->message(tr("Opening aborted"), 2000);
   else {
-
-
-
-
     updateRecentFilesList(s);
     slotUpdateRecentFiles();
 
@@ -3058,20 +3056,17 @@ void QucsApp::updatePathList(QStringList newPathList)
 
 void QucsApp::updateRecentFilesList(QString s)
 {
-    QSettings* settings = new QSettings("qucs","qucs");
-    QucsSettings.numRecentDocs++;
-    if (!QucsSettings.RecentDocs.contains(s)) {
-        QucsSettings.RecentDocs.append(s);
+    if (!RecentDocs.contains(s)) {
+        RecentDocs.append(s);
     } else {
-        QucsSettings.RecentDocs.remove(s);
-        QucsSettings.RecentDocs.append(s);
+        RecentDocs.remove(s);
+        RecentDocs.append(s);
     }
-    if (QucsSettings.RecentDocs.count()>8) {
-        QucsSettings.RecentDocs.removeFirst();
+    if (RecentDocs.count()>8) {
+        RecentDocs.removeFirst();
     }
 
-    settings->setValue("RecentDocs",QucsSettings.RecentDocs.join("*"));
-    delete settings;
+    SETTINGS->set("general", "RecentDocs", RecentDocs);
 }
 
 void QucsApp::slotSaveDiagramToGraphicsFile()
