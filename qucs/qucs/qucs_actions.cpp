@@ -49,6 +49,7 @@
 #include "dialogs/importdialog.h"
 #include "dialogs/packagedialog.h"
 #include "module.h"
+#include "setting.h"
 
 // for editing component name on schematic
 QRegExp  Expr_CompProp;
@@ -1319,7 +1320,7 @@ void QucsApp::slotApplyCompText()
   z = editText->fontMetrics().lineSpacing();
   view->MAy2 += n*z;
   editText->setText(s);
-  editText->setPaletteBackgroundColor(QucsSettings.BGColor);
+  editText->setPaletteBackgroundColor(SETTINGS->get("color", "BGColor").value<QColor>());
   editText->setFocus();
   editText->selectAll();
   editText->reparent(Doc->viewport(), 0, QPoint(view->MAx2, view->MAy2), true);

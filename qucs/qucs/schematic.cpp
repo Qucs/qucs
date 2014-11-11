@@ -115,7 +115,7 @@ Schematic::Schematic(QucsApp *App_, const QString& Name_)
 
     setVScrollBarMode(Q3ScrollView::AlwaysOn);
     setHScrollBarMode(Q3ScrollView::AlwaysOn);
-    viewport()->setPaletteBackgroundColor(QucsSettings.BGColor);
+    viewport()->setPaletteBackgroundColor(SETTINGS->get("color", "BGColor").value<QColor>());
     viewport()->setMouseTracking(true);
     viewport()->setAcceptDrops(true);  // enable drag'n drop
 // FIXME #warning removed those signals, crashes on it...

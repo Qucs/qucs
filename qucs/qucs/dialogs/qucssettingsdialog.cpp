@@ -133,56 +133,56 @@ QucsSettingsDialog::QucsSettingsDialog(QucsApp *parent, const char *name)
     editorGrid->addMultiCellWidget(new QLabel(tr("Colors for Syntax Highlighting:"), editorTab), 0,0,0,1);
 
     ColorComment = new QPushButton(tr("Comment"), editorTab);
-    ColorComment->setPaletteForegroundColor(QucsSettings.Comment);
-    ColorComment->setPaletteBackgroundColor(QucsSettings.BGColor);
+    ColorComment->setPaletteForegroundColor(SETTINGS->get("color", "Comment").value<QColor>());
+    ColorComment->setPaletteBackgroundColor(SETTINGS->get("color", "BGColor").value<QColor>());
     connect(ColorComment, SIGNAL(clicked()), SLOT(slotColorComment()));
     editorGrid->addWidget(ColorComment,1,0);
 
     ColorString = new QPushButton(tr("String"), editorTab);
-    ColorString->setPaletteForegroundColor(QucsSettings.String);
-    ColorString->setPaletteBackgroundColor(QucsSettings.BGColor);
+    ColorString->setPaletteForegroundColor(SETTINGS->get("color", "String").value<QColor>());
+    ColorString->setPaletteBackgroundColor(SETTINGS->get("color", "BGColor").value<QColor>());
     connect(ColorString, SIGNAL(clicked()), SLOT(slotColorString()));
     editorGrid->addWidget(ColorString,1,1);
 
     ColorInteger = new QPushButton(tr("Integer Number"), editorTab);
-    ColorInteger->setPaletteForegroundColor(QucsSettings.Integer);
-    ColorInteger->setPaletteBackgroundColor(QucsSettings.BGColor);
+    ColorInteger->setPaletteForegroundColor(SETTINGS->get("color", "Integer").value<QColor>());
+    ColorInteger->setPaletteBackgroundColor(SETTINGS->get("color", "BGColor").value<QColor>());
     connect(ColorInteger, SIGNAL(clicked()), SLOT(slotColorInteger()));
     editorGrid->addWidget(ColorInteger,1,2);
 
     ColorReal = new QPushButton(tr("Real Number"), editorTab);
-    ColorReal->setPaletteForegroundColor(QucsSettings.Real);
-    ColorReal->setPaletteBackgroundColor(QucsSettings.BGColor);
+    ColorReal->setPaletteForegroundColor(SETTINGS->get("color", "Real").value<QColor>());
+    ColorReal->setPaletteBackgroundColor(SETTINGS->get("color", "BGColor").value<QColor>());
     connect(ColorReal, SIGNAL(clicked()), SLOT(slotColorReal()));
     editorGrid->addWidget(ColorReal,2,0);
 
     ColorCharacter = new QPushButton(tr("Character"), editorTab);
-    ColorCharacter->setPaletteForegroundColor(QucsSettings.Character);
-    ColorCharacter->setPaletteBackgroundColor(QucsSettings.BGColor);
+    ColorCharacter->setPaletteForegroundColor(SETTINGS->get("color", "Character").value<QColor>());
+    ColorCharacter->setPaletteBackgroundColor(SETTINGS->get("color", "BGColor").value<QColor>());
     connect(ColorCharacter, SIGNAL(clicked()), SLOT(slotColorCharacter()));
     editorGrid->addWidget(ColorCharacter,2,1);
 
     ColorDataType = new QPushButton(tr("Data Type"), editorTab);
-    ColorDataType->setPaletteForegroundColor(QucsSettings.Type);
-    ColorDataType->setPaletteBackgroundColor(QucsSettings.BGColor);
+    ColorDataType->setPaletteForegroundColor(SETTINGS->get("color", "Type").value<QColor>());
+    ColorDataType->setPaletteBackgroundColor(SETTINGS->get("color", "BGColor").value<QColor>());
     connect(ColorDataType, SIGNAL(clicked()), SLOT(slotColorDataType()));
     editorGrid->addWidget(ColorDataType,2,2);
 
     ColorAttribute = new QPushButton(tr("Attribute"), editorTab);
-    ColorAttribute->setPaletteForegroundColor(QucsSettings.Attribute);
-    ColorAttribute->setPaletteBackgroundColor(QucsSettings.BGColor);
+    ColorAttribute->setPaletteForegroundColor(SETTINGS->get("color", "Attribute").value<QColor>());
+    ColorAttribute->setPaletteBackgroundColor(SETTINGS->get("color", "BGColor").value<QColor>());
     connect(ColorAttribute, SIGNAL(clicked()), SLOT(slotColorAttribute()));
     editorGrid->addWidget(ColorAttribute,3,0);
 
     ColorDirective = new QPushButton(tr("Directive"), editorTab);
-    ColorDirective->setPaletteForegroundColor(QucsSettings.Directive);
-    ColorDirective->setPaletteBackgroundColor(QucsSettings.BGColor);
+    ColorDirective->setPaletteForegroundColor(SETTINGS->get("color", "Directive").value<QColor>());
+    ColorDirective->setPaletteBackgroundColor(SETTINGS->get("color", "BGColor").value<QColor>());
     connect(ColorDirective, SIGNAL(clicked()), SLOT(slotColorDirective()));
     editorGrid->addWidget(ColorDirective,3,1);
 
     ColorTask = new QPushButton(tr("Task"), editorTab);
-    ColorTask->setPaletteForegroundColor(QucsSettings.Task);
-    ColorTask->setPaletteBackgroundColor(QucsSettings.BGColor);
+    ColorTask->setPaletteForegroundColor(SETTINGS->get("color", "Task").value<QColor>());
+    ColorTask->setPaletteBackgroundColor(SETTINGS->get("color", "BGColor").value<QColor>());
     connect(ColorTask, SIGNAL(clicked()), SLOT(slotColorTask()));
     editorGrid->addWidget(ColorTask,3,2);
 
@@ -355,7 +355,7 @@ QucsSettingsDialog::QucsSettingsDialog(QucsApp *parent, const char *name)
     // fill the fields with the Qucs-Properties
     Font  = QucsSettings.font;
     FontButton->setText(Font.toString());
-    BGColorButton->setPaletteBackgroundColor(QucsSettings.BGColor);
+    BGColorButton->setPaletteBackgroundColor(SETTINGS->get("color", "BGColor").value<QColor>());
     undoNumEdit->setText(QString::number(QucsSettings.maxUndo));
     editorEdit->setText(QucsSettings.Editor);
     checkWiring->setChecked(SETTINGS->get("bool", "NodeWiring").toBool());
@@ -448,20 +448,20 @@ void QucsSettingsDialog::slotApply()
 {
     bool changed = false;
 
-    if(QucsSettings.BGColor != BGColorButton->paletteBackgroundColor())
-    {
-        QucsSettings.BGColor = BGColorButton->paletteBackgroundColor();
-
-        int No=0;
-        QWidget *w;
-        while((w=App->DocumentTab->page(No++)) != 0)
-            if(w->inherits("QTextEdit"))
-                ((TextDoc*)w)->viewport()->setPaletteBackgroundColor(
-                    QucsSettings.BGColor);
-            else
-                ((Schematic*)w)->viewport()->setPaletteBackgroundColor(
-                    QucsSettings.BGColor);
-        changed = true;
+    changed |= SETTINGS->set("color", "BGColor", BGColorButton->paletteBackgroundColor());
+    if (changed) {
+      int No=0;
+      QWidget *w;
+      while((w=App->DocumentTab->page(No++)) != 0) {
+        if(w->inherits("QTextEdit")) {
+          ((TextDoc*)w)->viewport()->setPaletteBackgroundColor(
+              BGColorButton->paletteBackgroundColor());
+        }
+        else {
+          ((Schematic*)w)->viewport()->setPaletteBackgroundColor(
+              BGColorButton->paletteBackgroundColor());
+        }
+      }
     }
 
     QucsSettings.font=Font;
@@ -469,51 +469,16 @@ void QucsSettingsDialog::slotApply()
     QucsSettings.Language =
         LanguageCombo->currentText().section('(',1,1).remove(')');
 
-    if(QucsSettings.Comment != ColorComment->paletteForegroundColor())
-    {
-        QucsSettings.Comment = ColorComment->paletteForegroundColor();
-        changed = true;
-    }
-    if(QucsSettings.String != ColorString->paletteForegroundColor())
-    {
-        QucsSettings.String = ColorString->paletteForegroundColor();
-        changed = true;
-    }
-    if(QucsSettings.Integer != ColorInteger->paletteForegroundColor())
-    {
-        QucsSettings.Integer = ColorInteger->paletteForegroundColor();
-        changed = true;
-    }
-    if(QucsSettings.Real != ColorReal->paletteForegroundColor())
-    {
-        QucsSettings.Real = ColorReal->paletteForegroundColor();
-        changed = true;
-    }
-    if(QucsSettings.Character != ColorCharacter->paletteForegroundColor())
-    {
-        QucsSettings.Character = ColorCharacter->paletteForegroundColor();
-        changed = true;
-    }
-    if(QucsSettings.Type != ColorDataType->paletteForegroundColor())
-    {
-        QucsSettings.Type = ColorDataType->paletteForegroundColor();
-        changed = true;
-    }
-    if(QucsSettings.Attribute != ColorAttribute->paletteForegroundColor())
-    {
-        QucsSettings.Attribute = ColorAttribute->paletteForegroundColor();
-        changed = true;
-    }
-    if(QucsSettings.Directive != ColorDirective->paletteForegroundColor())
-    {
-        QucsSettings.Directive = ColorDirective->paletteForegroundColor();
-        changed = true;
-    }
-    if(QucsSettings.Task != ColorTask->paletteForegroundColor())
-    {
-        QucsSettings.Task = ColorTask->paletteForegroundColor();
-        changed = true;
-    }
+
+    changed |= SETTINGS->set("color", "Comment",   ColorComment->paletteForegroundColor());
+    changed |= SETTINGS->set("color", "String",    ColorString->paletteForegroundColor());
+    changed |= SETTINGS->set("color", "Integer",   ColorInteger->paletteForegroundColor());
+    changed |= SETTINGS->set("color", "Real",      ColorReal->paletteForegroundColor());
+    changed |= SETTINGS->set("color", "Character", ColorCharacter->paletteForegroundColor());
+    changed |= SETTINGS->set("color", "Type",      ColorDataType->paletteForegroundColor());
+    changed |= SETTINGS->set("color", "Attribute", ColorAttribute->paletteForegroundColor());
+    changed |= SETTINGS->set("color", "Directive", ColorDirective->paletteForegroundColor());
+    changed |= SETTINGS->set("color", "Task",      ColorTask->paletteForegroundColor());
 
     bool ok;
     if(QucsSettings.maxUndo != undoNumEdit->text().toUInt(&ok))

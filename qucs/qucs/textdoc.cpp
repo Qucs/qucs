@@ -27,6 +27,7 @@ Copyright (C) 2014 by Guilherme Brondani Torri <guitorri@gmail.com>
 #include "components/vhdlfile.h"
 #include "components/verilogfile.h"
 #include "components/vafile.h"
+#include "setting.h"
 
 /*!
  * \file textdoc.cpp
@@ -70,7 +71,7 @@ TextDoc::TextDoc(QucsApp *App_, const QString& Name_) : QPlainTextEdit(), QucsDo
     viewport()->setFocus();
 
     setWordWrapMode(QTextOption::NoWrap);
-    setPaletteBackgroundColor(QucsSettings.BGColor);
+    setPaletteBackgroundColor(SETTINGS->get("color", "BGColor").value<QColor>());
     connect(this, SIGNAL(textChanged()), SLOT(slotSetChanged()));
     connect(this, SIGNAL(cursorPositionChanged()),
             SLOT(slotCursorPosChanged()));

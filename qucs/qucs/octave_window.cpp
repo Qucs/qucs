@@ -4,6 +4,7 @@
  ***************************************************************************/
 #include "octave_window.h"
 #include "main.h"
+#include "setting.h"
 
 #include <QSize>
 #include <QColor>
@@ -41,7 +42,7 @@ OctaveWindow::OctaveWindow(QDockWidget *parent_): QWidget()
   output->setUndoRedoEnabled(false);
   output->setTextFormat(Qt::LogText);
   output->setLineWrapMode(QTextEdit::NoWrap);
-  output->setPaletteBackgroundColor(QucsSettings.BGColor);
+  output->setPaletteBackgroundColor(SETTINGS->get("color", "BGColor").value<QColor>());
   allLayout->addWidget(output);
 
   input = new QLineEdit(this);

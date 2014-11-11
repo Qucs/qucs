@@ -247,7 +247,7 @@ void QucsApp::initView()
   editText = new QLineEdit(this);  // for editing component properties
   editText->setFrame(false);
   editText->setHidden(true);
-  editText->setPaletteBackgroundColor(QucsSettings.BGColor);
+  editText->setPaletteBackgroundColor(SETTINGS->get("color", "BGColor").value<QColor>());
   connect(editText, SIGNAL(returnPressed()), SLOT(slotApplyCompText()));
   connect(editText, SIGNAL(textChanged(const QString&)),
           SLOT(slotResizePropEdit(const QString&)));
