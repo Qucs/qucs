@@ -1840,28 +1840,28 @@ bool QucsApp::closeAllFiles()
 void QucsApp::slotFileExamples()
 {
   statusBar()->message(tr("Open examples directory..."));
-  QString path = QDir::toNativeSeparators(QucsSettings.ExamplesDir);
+  QString path = QDir::toNativeSeparators(SETTINGS->get("path", "ExamplesDir").toString());
   QDesktopServices::openUrl(QUrl("file:///" + path.replace("\\","/")));
   statusBar()->message(tr("Ready."));
 }
 
 void QucsApp::slotHelpTutorial()
 {
-  QString path = QDir::toNativeSeparators(QucsSettings.DocDir);
+  QString path = QDir::toNativeSeparators(SETTINGS->get("path", "DocDir").toString());
   QUrl url = QUrl("file:///" + path.replace("\\","/") + "tutorial/" + QObject::sender()->objectName());
   QDesktopServices::openUrl(url);
 }
 
 void QucsApp::slotHelpTechnical()
 {
-  QString path = QDir::toNativeSeparators(QucsSettings.DocDir);
+  QString path = QDir::toNativeSeparators(SETTINGS->get("path", "DocDir").toString());
   QUrl url = QUrl("file:///" + path.replace("\\","/") + "technical/" + QObject::sender()->objectName());
   QDesktopServices::openUrl(url);
 }
 
 void QucsApp::slotHelpReport()
 {
-  QString path = QDir::toNativeSeparators(QucsSettings.DocDir);
+  QString path = QDir::toNativeSeparators(SETTINGS->get("path", "DocDir").toString());
   QUrl url = QUrl("file:///" + path.replace("\\","/") + "report/" + QObject::sender()->objectName());
   QDesktopServices::openUrl(url);
 }

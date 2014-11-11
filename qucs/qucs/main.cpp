@@ -908,6 +908,8 @@ int main(int argc, char *argv[])
   SETTINGS->testSet("path", "LangDir",     QucsDir.canonicalPath() + "/share/qucs/lang/");
   SETTINGS->testSet("path", "LibDir",      QucsDir.canonicalPath() + "/share/qucs/library/");
   SETTINGS->testSet("path", "OctaveDir",   QucsDir.canonicalPath() + "/share/qucs/octave/");
+  SETTINGS->testSet("path", "ExamplesDir", QucsDir.canonicalPath() + "/share/qucs/docs/examples/");
+  SETTINGS->testSet("path", "DocDir",      QucsDir.canonicalPath() + "/share/qucs/docs/");
   QucsSettings.BinDir =      QucsDir.absolutePath() + "/bin/";
   QucsSettings.LangDir =     QucsDir.canonicalPath() + "/share/qucs/lang/";
   QucsSettings.LibDir =      QucsDir.canonicalPath() + "/share/qucs/library/";
