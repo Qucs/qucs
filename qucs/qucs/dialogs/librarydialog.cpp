@@ -41,6 +41,7 @@
 #include "qucs.h"
 #include "main.h"
 #include "schematic.h"
+#include "setting.h"
 
 extern SubMap FileList;
 
@@ -268,7 +269,7 @@ void LibraryDialog::slotCreateNext()
     LibDir.cd("user_lib");
   }
 
-  LibFile.setName(QucsSettings.LibDir + NameEdit->text() + ".lib");
+  LibFile.setName(SETTINGS->get("path", "LibDir").toString() + NameEdit->text() + ".lib");
   if(LibFile.exists()) {
     QMessageBox::critical(this, tr("Error"), tr("A system library with this name already exists!"));
     return;

@@ -105,7 +105,7 @@ bool OctaveWindow::startOctave()
 
   Program = OctavePath;
   Arguments << "--no-history" << "-i" << "-f" << "-p"
-            << QDir::toNativeSeparators(QucsSettings.OctaveDir); // m-files location
+            << QDir::toNativeSeparators(SETTINGS->get("path", "OctaveDir").toString()); // m-files location
 
   disconnect(&octProcess, 0, 0, 0);
   connect(&octProcess, SIGNAL(readyReadStandardError()), SLOT(slotDisplayErr()));

@@ -905,6 +905,9 @@ int main(int argc, char *argv[])
   }
 
   SETTINGS->testSet("path", "BinDir",      QucsDir.absolutePath() + "/bin/");
+  SETTINGS->testSet("path", "LangDir",     QucsDir.canonicalPath() + "/share/qucs/lang/");
+  SETTINGS->testSet("path", "LibDir",      QucsDir.canonicalPath() + "/share/qucs/library/");
+  SETTINGS->testSet("path", "OctaveDir",   QucsDir.canonicalPath() + "/share/qucs/octave/");
   QucsSettings.BinDir =      QucsDir.absolutePath() + "/bin/";
   QucsSettings.LangDir =     QucsDir.canonicalPath() + "/share/qucs/lang/";
   QucsSettings.LibDir =      QucsDir.canonicalPath() + "/share/qucs/library/";
@@ -1001,7 +1004,7 @@ int main(int argc, char *argv[])
   QString lang = SETTINGS->get("general", "language").toString();
   if(lang.isEmpty())
     lang = QTextCodec::locale();
-  tor.load( QString("qucs_") + lang, QucsSettings.LangDir);
+  tor.load( QString("qucs_") + lang, SETTINGS->get("path", "LangDir").toString());
   a.installTranslator( &tor );
 
   // This seems to be neccessary on a few system to make strtod()

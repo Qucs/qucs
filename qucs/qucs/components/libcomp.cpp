@@ -19,6 +19,7 @@
 #include "qucs.h"
 #include "main.h"
 #include "schematic.h"
+#include "setting.h"
 
 #include <limits.h>
 
@@ -84,7 +85,7 @@ void LibComp::createSymbol()
 int LibComp::loadSection(const QString& Name, QString& Section,
 			 QStringList *Includes)
 {
-  QDir Directory(QucsSettings.LibDir);
+  QDir Directory(SETTINGS->get("path", "LibDir").toString());
   QFile file(Directory.absFilePath(Props.first()->Value + ".lib"));
   if(!file.open(QIODevice::ReadOnly))
     return -1;
@@ -211,7 +212,7 @@ int LibComp::loadSymbol()
 // -------------------------------------------------------
 QString LibComp::getSubcircuitFile()
 {
-  QDir Directory(QucsSettings.LibDir);
+  QDir Directory(SETTINGS->get("path", "LibDir").toString());
   QString FileName = Directory.absFilePath(Props.first()->Value);
   return properAbsFileName(FileName);
 }

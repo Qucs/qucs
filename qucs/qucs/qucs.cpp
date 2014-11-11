@@ -412,7 +412,7 @@ void QucsApp::fillLibrariesTreeView ()
 //    newitem->setBackground
     topitems.append (newitem);
 
-    QDir LibDir(QucsSettings.LibDir);
+    QDir LibDir(SETTINGS->get("path", "LibDir").toString());
     LibFiles = LibDir.entryList(QStringList("*.lib"), QDir::Files, QDir::Name);
 
     // create top level library itmes, base on the library names
@@ -420,10 +420,10 @@ void QucsApp::fillLibrariesTreeView ()
     {
         ComponentLibrary parsedlibrary;
 
-        int result = parseComponentLibrary (QucsSettings.LibDir + *it , parsedlibrary);
+        int result = parseComponentLibrary (SETTINGS->get("path", "LibDir").toString() + *it , parsedlibrary);
         QStringList nameAndFileName;
         nameAndFileName.append (parsedlibrary.name);
-        nameAndFileName.append (QucsSettings.LibDir + *it);
+        nameAndFileName.append (SETTINGS->get("path", "LibDir").toString() + *it);
 
         QTreeWidgetItem* newlibitem = new QTreeWidgetItem((QTreeWidget*)0, nameAndFileName);
 
