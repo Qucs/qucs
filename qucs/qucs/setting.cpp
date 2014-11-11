@@ -93,6 +93,12 @@ Settings::setDefault()
   testSet("general", "largeFontSize", 16.0);
   testSet("general", "maxUndo", 20);
   testSet("general", "Editor", "qucs");
+  //testSet("general", "x", int);
+  //testSet("general", "y", int);
+  //testSet("general", "dx", int);
+  //testSet("general", "dy", int);
+  //testSet("general", "FileTypes", QStringList);
+  //testSet("general", "language", QString);
 
   // color
   testSet("color", "BGColor",   QColor(255, 250, 225));

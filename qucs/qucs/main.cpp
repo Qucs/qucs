@@ -879,6 +879,10 @@ int main(int argc, char *argv[])
   QucsSettings.y = h/8;
   QucsSettings.dx = w*3/4;
   QucsSettings.dy = h*3/4;
+  SETTINGS->testSet("general", "x", w/8);
+  SETTINGS->testSet("general", "y", h/8);
+  SETTINGS->testSet("general", "dx", w*3/4);
+  SETTINGS->testSet("general", "dy", h*3/4);
 
   // check for relocation env variable
   char* var = getenv("QUCSDIR");

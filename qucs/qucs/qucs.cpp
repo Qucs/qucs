@@ -109,8 +109,10 @@ QucsApp::QucsApp()
   updateSchNameHash();
   updateSpiceNameHash();
 
-  move  (QucsSettings.x,  QucsSettings.y);
-  resize(QucsSettings.dx, QucsSettings.dy);
+  move(SETTINGS->get("general", "x").toInt(), 
+       SETTINGS->get("general", "y").toInt());
+  resize(SETTINGS->get("general", "dx").toInt(), 
+       SETTINGS->get("general", "dy").toInt());
 
   MouseMoveAction = 0;
   MousePressAction = 0;
@@ -2126,10 +2128,10 @@ void QucsApp::closeEvent(QCloseEvent* Event)
 {
     qDebug()<<"x"<<pos().x()<<" ,y"<<pos().y();
     qDebug()<<"dx"<<size().width()<<" ,dy"<<size().height();
-    QucsSettings.x=pos().x();
-    QucsSettings.y=pos().y();
-    QucsSettings.dx=size().width();
-    QucsSettings.dy=size().height();
+    SETTINGS->set("general", "x", pos().x());
+    SETTINGS->set("general", "y", pos().y());
+    SETTINGS->set("general", "dx", size().width());
+    SETTINGS->set("general", "dx", size().height());
     saveApplSettings(this);
 
    if(closeAllFiles()) {
