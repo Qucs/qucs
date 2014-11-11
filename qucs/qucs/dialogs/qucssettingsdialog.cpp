@@ -370,7 +370,7 @@ QucsSettingsDialog::QucsSettingsDialog(QucsApp *parent, const char *name)
     /*! Load paths from settings */
     homeEdit->setText(QDir(SETTINGS->get("path", "QucsHomeDir").toString()).canonicalPath());
     admsXmlEdit->setText(QDir(SETTINGS->get("path", "AdmsXmlBinDir").toString()).canonicalPath());
-    ascoEdit->setText(QucsSettings.AscoBinDir.canonicalPath());
+    ascoEdit->setText(QDir(SETTINGS->get("path", "AscoBinDir").toString()).canonicalPath());
     octaveEdit->setText(QucsSettings.OctaveBinDir.canonicalPath());
 
 
@@ -498,7 +498,7 @@ void QucsSettingsDialog::slotApply()
     /*! Update QucsSettings, tool paths */
     SETTINGS->set("path", "QucsHomeDir", homeEdit->text());
     SETTINGS->set("path", "AdmsXmlBinDir", admsXmlEdit->text());
-    QucsSettings.AscoBinDir = ascoEdit->text();
+    SETTINGS->set("path", "AscoBinDir", ascoEdit->text());
     QucsSettings.OctaveBinDir = octaveEdit->text();
 
     saveApplSettings(App);  // also sets the small and large font

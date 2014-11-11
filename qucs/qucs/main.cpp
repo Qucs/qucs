@@ -947,19 +947,22 @@ int main(int argc, char *argv[])
 
   var = getenv("ASCOBINDIR");
   if(var != NULL)  {
-      QucsSettings.AscoBinDir.setPath(QString(var));
+      //QucsSettings.AscoBinDir.setPath(QString(var));
+      SETTINGS->testSet("path", "AscoBinDir", QString(var));
   }
   else  {
       // default ASCO bindir same as Qucs
       QString ascoExec;
 #ifdef __MINGW32__
-      ascoExec = QDir::toNativeSeparators(QucsSettings.BinDir+"/"+"asco.exe");
+      ascoExec = QDir::toNativeSeparators(SETTINGS->get("path", "BinDir").toString()+"/asco.exe");
 #else
-      ascoExec = QDir::toNativeSeparators(QucsSettings.BinDir+"/"+"asco");
+      ascoExec = QDir::toNativeSeparators(SETTINGS->get("path", "BinDir").toString()+"/asco");
 #endif
       QFile asco(ascoExec);
-      if(asco.exists())
-        QucsSettings.AscoBinDir.setPath(QucsSettings.BinDir);
+      if(asco.exists()) {
+        //QucsSettings.AscoBinDir.setPath(QucsSettings.BinDir);
+        SETTINGS->testSet("path", "AscoBinDir", SETTINGS->get("path", "BinDir"));
+      }
   }
 
   var = getenv("OCTAVEBINDIR");
