@@ -40,6 +40,7 @@ using namespace std;
 #include "schematic.h"
 #include "components/opt_sim.h"
 #include "components/vhdlfile.h"
+#include "setting.h"
 
 #ifdef __MINGW32__
 #define executableSuffix ".exe"
@@ -216,7 +217,7 @@ void SimMessage::nextSPICE()
 
   QString prog;
   QStringList com;
-  prog = QucsSettings.BinDir + "qucsconv" + executableSuffix;
+  prog = SETTINGS->get("path", "BinDir").toString() + "qucsconv" + executableSuffix;
   if(makeSubcircuit)
     com << "-g" << "_ref";
   com << "-if" << "spice" << "-of" << "qucs";
@@ -374,10 +375,10 @@ void SimMessage::startSimulator()
         libs = "-c,-l" + libs;
       }
 #endif
-      Program = pathName(QucsSettings.BinDir + QucsDigi);
+      Program = pathName(SETTINGS->get("path", "BinDir").toString() + QucsDigi);
       Arguments  << QucsSettings.QucsHomeDir.filePath("netlist.txt")
                  << DataSet << SimTime << pathName(SimPath)
-                 << pathName(QucsSettings.BinDir) << libs;
+                 << pathName(SETTINGS->get("path", "BinDir").toString()) << libs;
     }
     // Module.
     else {
@@ -411,7 +412,7 @@ void SimMessage::startSimulator()
       }
       destFile.writeBlock(text.ascii(), text.length());
       destFile.close();
-      Program = pathName(QucsSettings.BinDir + QucsDigiLib);
+      Program = pathName(SETTINGS->get("path", "BinDir").toString() + QucsDigiLib);
       Arguments << QucsSettings.QucsHomeDir.filePath("netlist.txt")
                 << pathName(SimPath)
                 << entity
@@ -516,7 +517,7 @@ void SimMessage::startSimulator()
                   << "-o" << "asco_out";
       }
       else {
-        Program = QucsSettings.BinDir + "qucsator" + executableSuffix;
+        Program = SETTINGS->get("path", "BinDir").toString() + "qucsator" + executableSuffix;
         Arguments << "-b" << "-g" << "-i"
                   << QucsSettings.QucsHomeDir.filePath("netlist.txt")
                   << "-o" << DataSet;
@@ -524,27 +525,27 @@ void SimMessage::startSimulator()
     }
     else {
       if (isVerilog) {
-          Program = QDir::toNativeSeparators(QucsSettings.BinDir + QucsVeri);
+          Program = QDir::toNativeSeparators(SETTINGS->get("path", "BinDir").toString() + QucsVeri);
           Arguments << QDir::toNativeSeparators(QucsSettings.QucsHomeDir.filePath("netlist.txt"))
                     << DataSet
                     << SimTime
                     << QDir::toNativeSeparators(SimPath)
-                    << QDir::toNativeSeparators(QucsSettings.BinDir)
+                    << QDir::toNativeSeparators(SETTINGS->get("path", "BinDir").toString())
                     << "-c";
       } else {
 /// \todo \bug error: unrecognized command line option '-Wl'
 #ifdef __MINGW32__
-    Program = QDir::toNativeSeparators(pathName(QucsSettings.BinDir + QucsDigi));
+    Program = QDir::toNativeSeparators(pathName(SETTINGS->get("path", "BinDir").toString() + QucsDigi));
     Arguments << QDir::toNativeSeparators(QucsSettings.QucsHomeDir.filePath("netlist.txt"))
               << DataSet
               << SimTime
               << QDir::toNativeSeparators(SimPath)
-              << QDir::toNativeSeparators(QucsSettings.BinDir) << "-Wall" << "-c";
+              << QDir::toNativeSeparators(SETTINGS->get("path", "BinDir").toString()) << "-Wall" << "-c";
 #else
-    Program = QDir::toNativeSeparators(pathName(QucsSettings.BinDir + QucsDigi));
+    Program = QDir::toNativeSeparators(pathName(SETTINGS->get("path", "BinDir").toString() + QucsDigi));
     Arguments << QucsSettings.QucsHomeDir.filePath("netlist.txt")
               << DataSet << SimTime << pathName(SimPath)
-		      << pathName(QucsSettings.BinDir) << "-Wall" << "-c";
+		      << pathName(SETTINGS->get("path", "BinDir").toString()) << "-Wall" << "-c";
 
 #endif
       }
@@ -572,7 +573,7 @@ void SimMessage::startSimulator()
   // append process PATH
   QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
   // insert Qucs bin dir, so ASCO can find qucsator
-  env.insert("PATH", env.value("PATH") + sep + QucsSettings.BinDir );
+  env.insert("PATH", env.value("PATH") + sep + SETTINGS->get("path", "BinDir").toString() );
   SimProcess.setProcessEnvironment(env);
   QFile file(Program);
   if ( !file.exists() ){

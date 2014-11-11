@@ -119,7 +119,7 @@ bool OctaveWindow::startOctave()
 
   // append process PATH, othewise Octave does not find gnuplot
   QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
-  env.insert("PATH", env.value("PATH") + sep + QucsSettings.BinDir );
+  env.insert("PATH", env.value("PATH") + sep + SETTINGS->get("path", "BinDir").toString() );
   octProcess.setProcessEnvironment(env);
   output->clear();
 

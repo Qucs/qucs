@@ -40,6 +40,7 @@
 #include "components/verilogfile.h"
 #include "components/libcomp.h"
 #include "module.h"
+#include "setting.h"
 
 
 // Here the subcircuits, SPICE components etc are collected. It must be
@@ -425,9 +426,9 @@ int Schematic::saveDocument()
 
       QString vaFile;
 
-//      QDir prefix = QDir(QucsSettings.BinDir);
+//      QDir prefix = QDir(SETTINGS->get("path", "BinDir").toString());
 
-      QDir include = QDir(QucsSettings.BinDir+"../include/qucs-core");
+      QDir include = QDir(SETTINGS->get("path", "BinDir").toString()+"../include/qucs-core");
 
       //pick admsXml from settings
       QString admsXml = QucsSettings.AdmsXmlBinDir.canonicalPath();

@@ -403,7 +403,7 @@ bool SpiceFile::recreateSubNetlist(QString *SpiceFile, QString *FileName)
   // begin command line construction
   QString prog;
   QStringList com;
-  prog =  QucsSettings.BinDir + "qucsconv"  + executableSuffix;
+  prog =  SETTINGS->get("path", "BinDir").toString() + "qucsconv"  + executableSuffix;
 
   if(makeSubcircuit) com << "-g" << "_ref";
   com << "-if" << "spice" << "-of" << "qucs";

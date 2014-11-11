@@ -904,6 +904,7 @@ int main(int argc, char *argv[])
 
   }
 
+  SETTINGS->testSet("path", "BinDir",      QucsDir.absolutePath() + "/bin/");
   QucsSettings.BinDir =      QucsDir.absolutePath() + "/bin/";
   QucsSettings.LangDir =     QucsDir.canonicalPath() + "/share/qucs/lang/";
   QucsSettings.LibDir =      QucsDir.canonicalPath() + "/share/qucs/library/";

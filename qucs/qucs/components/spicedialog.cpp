@@ -19,6 +19,7 @@
 #include "main.h"
 #include "qucs.h"
 #include "schematic.h"
+#include "setting.h"
 
 #include <QLabel>
 #include <QHBoxLayout>
@@ -348,7 +349,7 @@ bool SpiceDialog::loadSpiceNetList(const QString& s)
       script = "spiceprm";
       piping = false;
     }
-    script = QucsSettings.BinDir + script;
+    script = SETTINGS->get("path", "BinDir").toString() + script;
     QString spiceCommand;
     SpicePrep = new QProcess(this);
     spiceCommand+=interpreter + " ";
@@ -432,7 +433,7 @@ bool SpiceDialog::loadSpiceNetList(const QString& s)
 
   QString Program;
   QStringList Arguments;
-  Program = QucsSettings.BinDir + "qucsconv" + executableSuffix;
+  Program = SETTINGS->get("path", "BinDir").toString() + "qucsconv" + executableSuffix;
   Arguments << "-if" << "spice"
             << "-of" <<  "qucs"
             << "-i" << FileInfo.filePath();
@@ -457,7 +458,7 @@ bool SpiceDialog::loadSpiceNetList(const QString& s)
   if(!QucsConv->Running)
   {
     QMessageBox::critical(this, tr("Error"),
-                          tr("Cannot execute \"%1\".").arg(QucsSettings.BinDir + "qucsconv" + executableSuffix));
+                          tr("Cannot execute \"%1\".").arg(SETTINGS->get("path", "BinDir").toString() + "qucsconv" + executableSuffix));
     return false;
   }
 

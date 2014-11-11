@@ -28,6 +28,7 @@
 #include "importdialog.h"
 #include "main.h"
 #include "qucs.h"
+#include "setting.h"
 
 
 ImportDialog::ImportDialog(QWidget *parent)
@@ -186,7 +187,7 @@ void ImportDialog::slotImport()
   executableSuffix = ".exe";
 #endif
 
-  Program = QucsSettings.BinDir + "qucsconv" + executableSuffix;
+  Program = SETTINGS->get("path", "BinDir").toString() + "qucsconv" + executableSuffix;
   CommandLine  << "-if";
   
   if((Suffix == "citi") || (Suffix == "cit"))

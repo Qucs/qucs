@@ -650,7 +650,7 @@ void QucsApp::editFile(const QString& File)
   prog = "qucsedit";
 #endif
 
-        QFileInfo editor(QucsSettings.BinDir + prog);
+        QFileInfo editor(SETTINGS->get("path", "BinDir").toString() + prog);
         prog = QDir::toNativeSeparators(editor.canonicalFilePath());
       }
       else { // user defined editor
@@ -720,10 +720,10 @@ void QucsApp::slotCallFilter()
 
   QProcess *QucsFilter = new QProcess();
 
-  QucsFilter->setWorkingDirectory(QucsSettings.BinDir);
+  QucsFilter->setWorkingDirectory(SETTINGS->get("path", "BinDir").toString());
   QucsFilter->start(prog);
 
-  prog = QDir::toNativeSeparators(QucsSettings.BinDir+prog);
+  prog = QDir::toNativeSeparators(SETTINGS->get("path", "BinDir").toString()+prog);
   qDebug() << "Command :" << prog;
 
   if( !QucsFilter->waitForStarted(1000) ) {
@@ -751,10 +751,10 @@ void QucsApp::slotCallActiveFilter()
 
     QProcess *QucsActiveFilter = new QProcess();
 
-    QucsActiveFilter->setWorkingDirectory(QucsSettings.BinDir);
+    QucsActiveFilter->setWorkingDirectory(SETTINGS->get("path", "BinDir").toString());
     QucsActiveFilter->start(prog);
 
-    prog = QDir::toNativeSeparators(QucsSettings.BinDir+prog);
+    prog = QDir::toNativeSeparators(SETTINGS->get("path", "BinDir").toString()+prog);
     qDebug() << "Command :" << prog;
 
     if( !QucsActiveFilter->waitForStarted(1000) ) {
@@ -782,10 +782,10 @@ void QucsApp::slotCallLine()
 #endif
   QProcess *QucsLine = new QProcess();
 
-  QucsLine->setWorkingDirectory(QucsSettings.BinDir);
+  QucsLine->setWorkingDirectory(SETTINGS->get("path", "BinDir").toString());
   QucsLine->start(prog);
 
-  prog = QDir::toNativeSeparators(QucsSettings.BinDir+prog);
+  prog = QDir::toNativeSeparators(SETTINGS->get("path", "BinDir").toString()+prog);
   qDebug() << "Command :" << prog;
 
   if( !QucsLine->waitForStarted(1000) ) {
@@ -814,10 +814,10 @@ void QucsApp::slotCallLibrary()
 
   QProcess *QucsLibrary = new QProcess();
 
-  QucsLibrary->setWorkingDirectory(QucsSettings.BinDir);
+  QucsLibrary->setWorkingDirectory(SETTINGS->get("path", "BinDir").toString());
   QucsLibrary->start(prog);
 
-  prog = QDir::toNativeSeparators(QucsSettings.BinDir+prog);
+  prog = QDir::toNativeSeparators(SETTINGS->get("path", "BinDir").toString()+prog);
   qDebug() << "Command :" << prog;
 
   if( !QucsLibrary->waitForStarted(1000) ) {
@@ -855,10 +855,10 @@ void QucsApp::slotCallAtt()
 
   QProcess *QucsAtt = new QProcess();
 
-  QucsAtt->setWorkingDirectory(QucsSettings.BinDir);
+  QucsAtt->setWorkingDirectory(SETTINGS->get("path", "BinDir").toString());
   QucsAtt->start(prog);
 
-  prog = QDir::toNativeSeparators(QucsSettings.BinDir+prog);
+  prog = QDir::toNativeSeparators(SETTINGS->get("path", "BinDir").toString()+prog);
   qDebug() << "Command :" << prog;
 
   if( !QucsAtt->waitForStarted(1000) ) {
@@ -886,10 +886,10 @@ void QucsApp::slotCallRes()
 
   QProcess *QucsRes = new QProcess();
 
-  QucsRes->setWorkingDirectory(QucsSettings.BinDir);
+  QucsRes->setWorkingDirectory(SETTINGS->get("path", "BinDir").toString());
   QucsRes->start(prog);
 
-  prog = QDir::toNativeSeparators(QucsSettings.BinDir+prog);
+  prog = QDir::toNativeSeparators(SETTINGS->get("path", "BinDir").toString()+prog);
   qDebug() << "Command :" << prog;
 
   if( !QucsRes->waitForStarted(1000) ) {
@@ -932,7 +932,7 @@ void QucsApp::showHTML(const QString& Page)
 
   QProcess *QucsHelp = new QProcess();
 
-  QucsHelp->setWorkingDirectory(QucsSettings.BinDir);
+  QucsHelp->setWorkingDirectory(SETTINGS->get("path", "BinDir").toString());
   QucsHelp->start(com.join(" "));
 
   qDebug() << "Command :" << com.join(" ");
@@ -1616,9 +1616,9 @@ void QucsApp::slotBuildModule()
     make = "make";                // must be on the path!
 #endif
 
-    QDir prefix = QDir(QucsSettings.BinDir+"../");
+    QDir prefix = QDir(SETTINGS->get("path", "BinDir").toString()+"../");
 
-    QDir include = QDir(QucsSettings.BinDir+"../include/qucs-core");
+    QDir include = QDir(SETTINGS->get("path", "BinDir").toString()+"../include/qucs-core");
 
     QString workDir = QucsSettings.QucsWorkDir.absolutePath();
 

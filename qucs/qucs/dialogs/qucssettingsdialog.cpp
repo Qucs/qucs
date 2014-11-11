@@ -558,7 +558,7 @@ void QucsSettingsDialog::slotDefaultValues()
     ColorTask->setPaletteForegroundColor(Qt::darkRed);
 
     undoNumEdit->setText("20");
-    editorEdit->setText(QucsSettings.BinDir + "qucs");
+    editorEdit->setText(SETTINGS->get("path", "BinDir").toString() + "qucs");
     checkWiring->setChecked(false);
 }
 
