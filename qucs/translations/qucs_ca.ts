@@ -4,148 +4,148 @@
 <context>
     <name>ArrowDialog</name>
     <message>
-        <location filename="paintings/arrowdialog.cpp" line="+34"/>
+        <location filename="../qucs/paintings/arrowdialog.cpp" line="+33"/>
         <source>Edit Arrow Properties</source>
-        <translation>プロパティー編集</translation>
+        <translation>Editar les propietats de la fletxa</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Head Length: </source>
-        <translation>長さ:</translation>
+        <translation>Longitud de la punta:</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>      Head Width: </source>
-        <translation>幅 :</translation>
+        <translation>      Amplada de la punta:</translation>
     </message>
     <message>
         <location line="+44"/>
         <source>OK</source>
-        <translation>OK</translation>
+        <translation>Acceptar</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Cancel</source>
-        <translation>キャンセル</translation>
+        <translation>Cancel·lar</translation>
     </message>
     <message>
         <location line="-39"/>
         <source>Line color: </source>
-        <translation>線色 :</translation>
+        <translation>Color de línea:</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>      Line Width: </source>
-        <translation>線幅 :</translation>
+        <translation>      Amplada de línea:</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Line style: </source>
-        <translation>線種 :</translation>
+        <translation>Estil de línea:</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>solid line</source>
-        <translation>ソリッド</translation>
+        <translation>línea contínua</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>dash line</source>
-        <translation>ダッシュ</translation>
+        <translation>línea a ratlles</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>dot line</source>
-        <translation>ドット</translation>
+        <translation>línea puntejada</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>dash dot line</source>
-        <translation>ダッシュドット</translation>
+        <translation>línea ratlla-punt</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>dash dot dot line</source>
-        <translation>ダッシュドットドット</translation>
+        <translation>línea ratlla-punt-punt</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Arrow head: </source>
-        <translation>矢印:</translation>
+        <translation>Punta de fletxa:</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>two lines</source>
-        <translation>2ライン</translation>
+        <translation>dues línees</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>filled</source>
-        <translation>塗りつぶし</translation>
+        <translation>ple</translation>
     </message>
 </context>
 <context>
     <name>ChangeDialog</name>
     <message>
-        <location filename="dialogs/changedialog.cpp" line="+42"/>
+        <location filename="../qucs/dialogs/changedialog.cpp" line="+41"/>
         <source>Change Component Properties</source>
-        <translation>部品プロパティー変更</translation>
+        <translation>Cambiar les Propietats del Component</translation>
     </message>
     <message>
         <location line="+12"/>
         <source>Components:</source>
-        <translation> 部品:</translation>
+        <translation>Components:</translation>
     </message>
     <message>
         <location line="+9"/>
         <source>Component Names:</source>
-        <translation>部品名:</translation>
+        <translation>Noms dels Components:</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Property Name:</source>
-        <translation>プロパティー名:</translation>
+        <translation>Nom de la Propietat:</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>New Value:</source>
-        <translation>新しい値:</translation>
+        <translation>Valor nou:</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Replace</source>
-        <translation>置換</translation>
+        <translation>Reemplaçar</translation>
     </message>
     <message>
         <location line="+1"/>
         <location line="+70"/>
         <source>Cancel</source>
-        <translation>キャンセル</translation>
+        <translation>Cancel·lar</translation>
     </message>
     <message>
         <location line="-103"/>
         <source>all components</source>
-        <translation>全ての部品</translation>
+        <translation>tots els components</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>resistors</source>
-        <translation>抵抗</translation>
+        <translation>resistències</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>capacitors</source>
-        <translation>コンデンサ</translation>
+        <translation>condensadors</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>transistors</source>
-        <translation>トランジスタ</translation>
+        <translation>transistors</translation>
     </message>
     <message>
         <location line="+74"/>
         <source>Error</source>
-        <translation type="unfinished">エラー</translation>
+        <translation type="unfinished">Error</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -155,696 +155,696 @@
     <message>
         <location line="+6"/>
         <source>Found Components</source>
-        <translation>部品検索</translation>
+        <translation>Components Trobats</translation>
     </message>
     <message>
         <location line="+11"/>
         <source>Change properties of
 </source>
-        <translation>プロパティー変更-&gt;</translation>
+        <translation>Cambiar les propietas de</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>these components ?</source>
-        <translation>これらの部品でよろしいですか?</translation>
+        <translation>aquests components?</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Yes</source>
-        <translation>はい</translation>
+        <translation>Si</translation>
     </message>
     <message>
         <location line="-99"/>
         <source>inductors</source>
-        <translation>コイル</translation>
+        <translation>Bobines</translation>
     </message>
     <message>
         <source>No match found!</source>
-        <translation type="obsolete">合致するものがありません!</translation>
+        <translation type="obsolete">No hi ha coincidències!</translation>
     </message>
 </context>
 <context>
     <name>CloseMessageBox</name>
     <message>
         <source>Save</source>
-        <translation type="obsolete">保存</translation>
+        <translation type="obsolete">Guardar</translation>
     </message>
     <message>
         <source>Save all</source>
-        <translation type="obsolete">全て保存</translation>
+        <translation type="obsolete">Guardar tot</translation>
     </message>
     <message>
         <source>Discard</source>
-        <translation type="obsolete">破棄</translation>
+        <translation type="obsolete">Descartar</translation>
     </message>
     <message>
         <source>Discard all</source>
-        <translation type="obsolete">全て破棄</translation>
+        <translation type="obsolete">Descartar tot</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="obsolete">キャンセル</translation>
+        <translation type="obsolete">Cancel·lar</translation>
     </message>
 </context>
 <context>
     <name>ComponentDialog</name>
     <message>
-        <location filename="components/componentdialog.cpp" line="+43"/>
+        <location filename="../qucs/components/componentdialog.cpp" line="+42"/>
         <source>Edit Component Properties</source>
-        <translation>部品プロパティー編集</translation>
+        <translation>Editar les propietats del component</translation>
     </message>
     <message>
-        <location line="+280"/>
+        <location line="+325"/>
         <source>OK</source>
-        <translation>OK</translation>
+        <translation>Acceptar</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+1"/>
         <source>Apply</source>
-        <translation>適用</translation>
+        <translation>Aplicar</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+1"/>
         <source>Cancel</source>
-        <translation>キャンセル</translation>
+        <translation>Cancel·lar</translation>
     </message>
     <message>
-        <location line="-76"/>
+        <location line="-117"/>
         <source>Name:</source>
-        <translation>名前 :</translation>
+        <translation>Nom:</translation>
     </message>
     <message>
-        <location line="+13"/>
+        <location line="+38"/>
         <source>Name</source>
-        <translation>名前</translation>
+        <translation>Nom</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Value</source>
-        <translation>値</translation>
+        <translation>Valor</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>display</source>
-        <translation>表示</translation>
+        <translation>mostrar</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Description</source>
-        <translation>説明</translation>
+        <translation>Descripció</translation>
     </message>
     <message>
-        <location line="+29"/>
+        <location line="+41"/>
         <source>Edit</source>
-        <translation>編集</translation>
+        <translation>Editar</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+6"/>
         <source>Browse</source>
-        <translation>参照</translation>
+        <translation>Examinar</translation>
     </message>
     <message>
-        <location line="-218"/>
-        <location line="+8"/>
-        <location line="+29"/>
+        <location line="-258"/>
+        <location line="+9"/>
+        <location line="+30"/>
         <location line="+9"/>
         <location line="+9"/>
         <location line="+9"/>
         <location line="+16"/>
-        <location line="+94"/>
-        <location line="+49"/>
+        <location line="+96"/>
+        <location line="+86"/>
         <source>display in schematic</source>
-        <translation>回路図に表示</translation>
+        <translation>mostrar a l&apos;esquema</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+6"/>
         <source>Add</source>
-        <translation>追加</translation>
+        <translation>Afegir</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+3"/>
         <source>Remove</source>
-        <translation>削除</translation>
+        <translation>Borrar</translation>
     </message>
     <message>
-        <location line="+30"/>
-        <location line="+31"/>
-        <location line="+150"/>
-        <location line="+177"/>
-        <location line="+97"/>
+        <location line="+44"/>
+        <location line="+62"/>
+        <location line="+186"/>
+        <location line="+215"/>
+        <location line="+133"/>
         <source>yes</source>
-        <translation>はい</translation>
+        <translation>Si</translation>
     </message>
     <message>
-        <location line="-454"/>
-        <location line="+181"/>
-        <location line="+272"/>
+        <location line="-594"/>
+        <location line="+248"/>
+        <location line="+344"/>
         <source>no</source>
-        <translation>いいえ</translation>
+        <translation>no</translation>
     </message>
     <message>
-        <location line="-40"/>
+        <location line="-65"/>
         <source>All Files</source>
-        <translation>全てのファイル</translation>
+        <translation>Tots els Fitxers</translation>
     </message>
     <message>
         <location line="-2"/>
         <source>Select a file</source>
-        <translation>選択されたファイル</translation>
+        <translation>Seleccionar un fitxer</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="obsolete">エラー</translation>
+        <translation type="obsolete">Error</translation>
     </message>
     <message>
         <source>Cannot start text editor!</source>
-        <translation type="obsolete">テキストエディタを開けません !</translation>
+        <translation type="obsolete">No puc arrancar l&apos;editor de texts!</translation>
     </message>
     <message>
-        <location line="-683"/>
+        <location line="-853"/>
         <source>Sweep</source>
-        <translation>スイープ</translation>
+        <translation>Escombrat</translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+12"/>
         <source>Simulation:</source>
-        <translation>シミュレーション:</translation>
+        <translation>Simulació:</translation>
     </message>
     <message>
         <source>frequency</source>
-        <translation type="obsolete">周波数</translation>
+        <translation type="obsolete">freqüència</translation>
     </message>
     <message>
         <source>time</source>
-        <translation type="obsolete">時間</translation>
+        <translation type="obsolete">temps</translation>
     </message>
     <message>
-        <location line="+22"/>
+        <location line="+23"/>
         <source>Sweep Parameter:</source>
-        <translation>スイープパラメータ:</translation>
+        <translation>Paràmetre d&apos;Escombrat:</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Type:</source>
-        <translation>タイプ:</translation>
+        <translation>Tipus:</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>linear</source>
-        <translation>リニア</translation>
+        <translation>lineal</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>logarithmic</source>
-        <translation>ログ</translation>
+        <translation>logarítmic</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>list</source>
-        <translation>リスト</translation>
+        <translation>llista</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>constant</source>
-        <translation>コンスタント</translation>
+        <translation>constant</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Values:</source>
-        <translation>値:</translation>
+        <translation>Valors:</translation>
     </message>
     <message>
         <location line="+9"/>
         <source>Start:</source>
-        <translation>スタート:</translation>
+        <translation>Inici:</translation>
     </message>
     <message>
         <location line="+9"/>
         <source>Stop:</source>
-        <translation>ストップ:</translation>
+        <translation>Parar:</translation>
     </message>
     <message>
         <location line="+9"/>
-        <location line="+706"/>
+        <location line="+941"/>
         <location line="+22"/>
         <source>Step:</source>
-        <translation>ステップ:</translation>
+        <translation>Pas:</translation>
     </message>
     <message>
-        <location line="-721"/>
+        <location line="-956"/>
         <source>Number:</source>
-        <translation>ステップ数:</translation>
+        <translation>Número:</translation>
     </message>
     <message>
         <location line="+79"/>
-        <location line="+24"/>
+        <location line="+31"/>
         <source>Properties</source>
-        <translation>プロパティー</translation>
+        <translation>Propietats</translation>
     </message>
     <message>
-        <location line="+594"/>
+        <location line="+822"/>
         <source>Points per decade:</source>
-        <translation>ポイント数:</translation>
+        <translation>Punts por dècada:</translation>
     </message>
     <message>
-        <location line="-94"/>
+        <location line="-161"/>
         <source>Touchstone files</source>
-        <translation>Toluchstoneファイル</translation>
+        <translation></translation>
     </message>
     <message>
         <location line="+2"/>
         <source>SPICE files</source>
-        <translation>SPICEファイル</translation>
+        <translation>fitxers SPICE</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>VHDL files</source>
-        <translation>VHDLファイル</translation>
+        <translation>fitxers VHDL</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Verilog files</source>
-        <translation>Verilog ファイル</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="-3"/>
         <source>CSV files</source>
-        <translation>CSV　ファイル</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>DiagramDialog</name>
     <message>
-        <location filename="diagrams/diagramdialog.cpp" line="+110"/>
+        <location filename="../qucs/diagrams/diagramdialog.cpp" line="+114"/>
         <source>Edit Diagram Properties</source>
-        <translation>グラフプロパティー編集</translation>
+        <translation>Editar les propietats del diagrama</translation>
     </message>
     <message>
         <location line="+53"/>
         <source>Graph Input</source>
-        <translation>グラフの入力</translation>
+        <translation>Entrada del gràfic</translation>
     </message>
     <message>
         <location line="+15"/>
         <source>Number Notation: </source>
-        <translation>数字表記法 :</translation>
+        <translation>Notació numérica:</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>real/imaginary</source>
-        <translation>実数/虚数</translation>
+        <translation>real/imaginari</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>magnitude/angle (degree)</source>
-        <translation>絶対角(ディグリー)</translation>
+        <translation>mòdul/àngle (graus)</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>magnitude/angle (radian)</source>
-        <translation>絶対角(ラジアン)</translation>
+        <translation>mòdul/àngle (radians)</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Precision:</source>
-        <translation>精度 :</translation>
+        <translation>Precisió:</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Color:</source>
-        <translation>色 :</translation>
+        <translation>Color:</translation>
     </message>
     <message>
         <location line="+27"/>
         <source>Thickness:</source>
-        <translation>細さ :</translation>
+        <translation>Gruix:</translation>
     </message>
     <message>
         <location line="-18"/>
         <source>Style:</source>
-        <translation>線種 :</translation>
+        <translation>Estil:</translation>
     </message>
     <message>
         <location line="+5"/>
-        <location line="+150"/>
+        <location line="+159"/>
         <source>solid line</source>
-        <translation>ソリッド</translation>
+        <translation>línea continua</translation>
     </message>
     <message>
-        <location line="-149"/>
-        <location line="+150"/>
+        <location line="-158"/>
+        <location line="+159"/>
         <source>dash line</source>
-        <translation>ダッシュ</translation>
+        <translation>linea a ratlles</translation>
     </message>
     <message>
-        <location line="-149"/>
-        <location line="+150"/>
+        <location line="-158"/>
+        <location line="+159"/>
         <source>dot line</source>
-        <translation>ドット</translation>
+        <translation>línea a punts</translation>
     </message>
     <message>
-        <location line="-148"/>
+        <location line="-157"/>
         <source>long dash line</source>
-        <translation>長いダッシュ</translation>
+        <translation>línea amb ratlles llarges</translation>
     </message>
     <message>
         <location line="+54"/>
         <source>Dataset</source>
-        <translation>データセット</translation>
+        <translation>Conjunt de Dades</translation>
     </message>
     <message>
-        <location line="+18"/>
+        <location line="+27"/>
         <source>Name</source>
-        <translation>名前</translation>
+        <translation>Nom</translation>
     </message>
     <message>
         <source>Status</source>
-        <translation type="obsolete">状態</translation>
+        <translation type="obsolete">Estat</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Size</source>
-        <translation>サイズ</translation>
+        <translation>Tamany</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Graph</source>
-        <translation>グラフ</translation>
+        <translation>Gràfic</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>New Graph</source>
-        <translation>新しいグラフ</translation>
+        <translation>Gràfic Nou</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Delete Graph</source>
-        <translation>グラフ削除</translation>
+        <translation>Eliminar Gràfic</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Data</source>
-        <translation>データ</translation>
+        <translation>Dades</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>x-Axis Label:</source>
-        <translation>x軸ラベル :</translation>
+        <translation>Etiqueta Eix x:</translation>
     </message>
     <message>
         <source>y-Axis Label:</source>
-        <translation type="obsolete">y軸ラベル :</translation>
+        <translation type="obsolete">Etiqueta Eix y:</translation>
     </message>
     <message>
         <location line="+28"/>
         <source>show Grid</source>
-        <translation>グリッド表示</translation>
+        <translation>Mostrar Reixeta</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Grid Color:</source>
-        <translation>グリッド色 :</translation>
+        <translation>Color de la Reixeta:</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Grid Style: </source>
-        <translation>グリッドスタイル :</translation>
+        <translation>Estil de Reixeta:</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>dash dot line</source>
-        <translation>ダッシュドット</translation>
+        <translation>línea ratlla-punt</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>dash dot dot line</source>
-        <translation>ダッシュドットドット</translation>
+        <translation>línea ratlla-punt-punt</translation>
     </message>
     <message>
         <location line="+21"/>
         <source>logarithmical X Axis Grid</source>
-        <translation>x軸 LOG表示</translation>
+        <translation>Reixeta d&apos;eix x logarítmic</translation>
     </message>
     <message>
         <source>logarithmical Y Axis Grid</source>
-        <translation type="obsolete">y軸 LOG表示</translation>
+        <translation type="obsolete">Reixeta d&apos;eix y logarítmic</translation>
     </message>
     <message>
         <location line="+88"/>
         <source>Properties</source>
-        <translation>プロパティー</translation>
+        <translation>Propietats</translation>
     </message>
     <message>
         <location line="+186"/>
         <source>OK</source>
-        <translation>OK</translation>
+        <translation>Acceptar</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Apply</source>
-        <translation>適用</translation>
+        <translation>Aplicar</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Cancel</source>
-        <translation>キャンセル</translation>
+        <translation>Cancel·lar</translation>
     </message>
     <message>
-        <location line="-425"/>
+        <location line="-434"/>
         <source>y-Axis:</source>
-        <translation>Y軸:</translation>
+        <translation>Eix Y:</translation>
     </message>
     <message>
-        <location line="-111"/>
+        <location line="-121"/>
+        <source>left Axis</source>
+        <translation>Eix esquerre</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>right Axis</source>
+        <translation>Eix dret</translation>
+    </message>
+    <message>
+        <source>left y-Axis Label:</source>
+        <translation type="obsolete">Etiqueta del Eix Y esquerre:</translation>
+    </message>
+    <message>
+        <source>right y-Axis Label:</source>
+        <translation type="obsolete">Etiqueta del Eix Y dret:</translation>
+    </message>
+    <message>
+        <source>logarithmical left Y Axis Grid</source>
+        <translation type="obsolete">Reixeta del Eix Y esquerre logarítmic</translation>
+    </message>
+    <message>
+        <source>logarithmical right Y Axis Grid</source>
+        <translation type="obsolete">Reixeta del Eix Y dret logarítmic</translation>
+    </message>
+    <message>
+        <location line="+9"/>
         <location line="+5"/>
         <source>smith Axis</source>
-        <translation>スミス軸</translation>
+        <translation>Eix smith</translation>
     </message>
     <message>
         <location line="-4"/>
         <location line="+3"/>
         <source>polar Axis</source>
-        <translation>極座標</translation>
+        <translation>Eix polar</translation>
     </message>
     <message>
-        <location line="-14"/>
-        <source>left Axis</source>
-        <translation>左軸</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>right Axis</source>
-        <translation>右軸</translation>
-    </message>
-    <message>
-        <source>left y-Axis Label:</source>
-        <translation type="obsolete">左のY軸ラベル:</translation>
-    </message>
-    <message>
-        <source>right y-Axis Label:</source>
-        <translation type="obsolete">右のY軸ラベル:</translation>
-    </message>
-    <message>
-        <source>logarithmical left Y Axis Grid</source>
-        <translation type="obsolete">対数 Y軸グリッド(左)</translation>
-    </message>
-    <message>
-        <source>logarithmical right Y Axis Grid</source>
-        <translation type="obsolete">対数 Y軸グリッド(右)</translation>
-    </message>
-    <message>
-        <location line="+359"/>
+        <location line="+355"/>
         <source>x-Axis</source>
-        <translation>X軸</translation>
+        <translation>Eix X</translation>
     </message>
     <message>
         <location line="+8"/>
         <location line="+42"/>
         <location line="+44"/>
         <source>manual</source>
-        <translation>マニュアル</translation>
+        <translation>manual</translation>
     </message>
     <message>
-        <location line="-78"/>
+        <source>left y-Axis</source>
+        <translation type="obsolete">Eix Y esquerre</translation>
+    </message>
+    <message>
+        <source>right y-Axis</source>
+        <translation type="obsolete">Eix Y dret</translation>
+    </message>
+    <message>
+        <location line="+39"/>
+        <source>Limits</source>
+        <translation>Límits</translation>
+    </message>
+    <message>
+        <location line="-117"/>
         <location line="+42"/>
         <location line="+44"/>
         <source>start</source>
-        <translation>スタート</translation>
+        <translation>inici</translation>
     </message>
     <message>
         <location line="-77"/>
         <location line="+44"/>
         <location line="+43"/>
         <source>step</source>
-        <translation>ステップ</translation>
+        <translation>pas</translation>
     </message>
     <message>
         <location line="-78"/>
         <location line="+44"/>
         <location line="+43"/>
         <source>stop</source>
-        <translation>ストップ</translation>
+        <translation>parada</translation>
     </message>
     <message>
         <source>Smith Axis</source>
-        <translation type="obsolete">スミス軸</translation>
+        <translation type="obsolete">Eix Smith</translation>
     </message>
     <message>
         <source>Polar Axis</source>
-        <translation type="obsolete">極座標</translation>
+        <translation type="obsolete">Eix Polar</translation>
     </message>
     <message>
-        <source>left y-Axis</source>
-        <translation type="obsolete">左 Y軸</translation>
-    </message>
-    <message>
-        <source>right y-Axis</source>
-        <translation type="obsolete">右 Y軸</translation>
-    </message>
-    <message>
-        <location line="+12"/>
-        <source>Limits</source>
-        <translation>リミット</translation>
-    </message>
-    <message>
-        <location line="-65"/>
+        <location line="-53"/>
         <location line="+43"/>
         <source>number</source>
-        <translation>数</translation>
+        <translation>número</translation>
     </message>
     <message>
-        <location line="-375"/>
+        <location line="-384"/>
         <source>stars</source>
-        <translation>星</translation>
+        <translation>estrelles</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>circles</source>
-        <translation>円</translation>
+        <translation>cercles</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>arrows</source>
-        <translation>矢</translation>
+        <translation>fletxes</translation>
     </message>
     <message>
-        <location line="+208"/>
+        <location line="+217"/>
         <source>Rotation around y-Axis:</source>
-        <translation>Y軸中心に回転:</translation>
+        <translation>Rotació al voltant del Eix-y:</translation>
     </message>
     <message>
         <location line="+16"/>
         <source>Rotation around z-Axis:</source>
-        <translation>Z軸中心に回転:</translation>
+        <translation>Rotació al voltant del Eix-z:</translation>
     </message>
     <message>
         <location line="-32"/>
         <source>Rotation around x-Axis:</source>
-        <translation>X軸中心に回転:</translation>
+        <translation>Rotació al voltant del Eix-x:</translation>
     </message>
     <message>
-        <location line="-286"/>
+        <location line="-295"/>
         <location line="+3"/>
         <location line="+11"/>
         <source>y-Axis</source>
-        <translation>Y軸</translation>
+        <translation>Eix-y</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>z-Axis</source>
-        <translation>Z軸</translation>
+        <translation>Eix-z</translation>
     </message>
     <message>
-        <location line="+186"/>
+        <location line="+195"/>
         <location line="+8"/>
         <source>Label:</source>
-        <translation>ラベル:</translation>
+        <translation>Etiqueta:</translation>
     </message>
     <message>
         <location line="+57"/>
         <location line="+4"/>
         <source>logarithmical</source>
-        <translation>対数</translation>
+        <translation>logarítmic</translation>
     </message>
     <message>
         <location line="-4"/>
         <location line="+4"/>
         <source>Grid</source>
-        <translation>グリッド</translation>
+        <translation>Reixeta</translation>
     </message>
     <message>
         <location line="-53"/>
         <source>&lt;b&gt;Label text&lt;/b&gt;: Use LaTeX style for special characters, e.g. \tau</source>
-        <translation></translation>
+        <translation>&lt;b&gt;Text etiqueta&lt;/b&gt;: Empreu l&apos;estil LaTeX per els caràcters especials, p. ex. \tau</translation>
     </message>
     <message>
         <location line="+117"/>
         <source>2D-projection:</source>
-        <translation>2D投影:</translation>
+        <translation>Projecció-2D:</translation>
     </message>
     <message>
         <location line="-171"/>
         <source>Type</source>
-        <translation>タイプ</translation>
+        <translation>Tipus</translation>
     </message>
     <message>
         <location line="+119"/>
         <source>hide invisible lines</source>
-        <translation>線を隠す</translation>
+        <translation>amagar línees invisibles</translation>
     </message>
 </context>
 <context>
     <name>DigiSettingsDialog</name>
     <message>
-        <location filename="dialogs/digisettingsdialog.cpp" line="+40"/>
+        <location filename="../qucs/dialogs/digisettingsdialog.cpp" line="+39"/>
         <location line="+94"/>
         <source>Document Settings</source>
-        <translation>ドキュメント セッティング</translation>
+        <translation>Propietats del document</translation>
     </message>
     <message>
         <location line="-73"/>
         <source>Duration of Simulation:</source>
-        <translation>シミュレーション時間:</translation>
+        <translation>Durada de la Simulació:</translation>
     </message>
     <message>
         <location line="+38"/>
         <source>Ok</source>
-        <translation>OK</translation>
+        <translation>Acceptar</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Cancel</source>
-        <translation>キャンセル</translation>
+        <translation>Cancel·lar</translation>
     </message>
     <message>
         <location line="+35"/>
         <source>Error</source>
-        <translation>エラー</translation>
+        <translation>Error</translation>
     </message>
     <message>
         <location line="-87"/>
         <source>Digital Simulation Settings</source>
-        <translation>ディジタルシミュレーション設定</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Simulation</source>
-        <translation>シミュレーション</translation>
+        <translation type="unfinished">Simulació</translation>
     </message>
     <message>
         <location line="+15"/>
         <source>Precompile Module</source>
-        <translation>モジュールをプリコンパイル</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+19"/>
         <source>Libraries:</source>
-        <translation>ライブラリ:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="-11"/>
         <source>Library Name:</source>
-        <translation>ライブラリ名:</translation>
+        <translation type="unfinished">Nom de la Biblioteca:</translation>
     </message>
 </context>
 <context>
@@ -852,28 +852,28 @@
     <message>
         <location filename="../qucs-lib/displaydialog.cpp" line="+89"/>
         <source>Close</source>
-        <translation>閉じる</translation>
+        <translation>Tancar</translation>
     </message>
     <message>
         <location line="-35"/>
         <source>VHDL</source>
-        <translation>VHDL</translation>
+        <translation type="unfinished">VHDL</translation>
     </message>
     <message>
         <location line="+15"/>
         <source>Verilog</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="-30"/>
         <source>Analogue</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>ExportDialog</name>
     <message>
-        <location filename="dialogs/exportdialog.cpp" line="+24"/>
+        <location filename="../qucs/dialogs/exportdialog.cpp" line="+35"/>
         <source>Export graphics</source>
         <translation type="unfinished"></translation>
     </message>
@@ -910,7 +910,7 @@
     <message>
         <location line="+2"/>
         <source>Cancel</source>
-        <translation type="unfinished">キャンセル</translation>
+        <translation type="unfinished">Cancel·lar</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -961,188 +961,188 @@
 <context>
     <name>FillDialog</name>
     <message>
-        <location filename="paintings/filldialog.cpp" line="+46"/>
+        <location filename="../qucs/paintings/filldialog.cpp" line="+46"/>
         <source>Line Width: </source>
-        <translation>線幅 :</translation>
+        <translation>Amplada de línea:</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Line Color: </source>
-        <translation>線色 :</translation>
+        <translation>Color de línea:</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Line Style: </source>
-        <translation>線種 :</translation>
+        <translation>Estil de línea:</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>solid line</source>
-        <translation>ソリッド</translation>
+        <translation>línea continua</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>dash line</source>
-        <translation>ダッシュ</translation>
+        <translation>línea a ratlles</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>dot line</source>
-        <translation>ドット</translation>
+        <translation>línea a punts</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>dash dot line</source>
-        <translation>ダッシュドット</translation>
+        <translation>línea ratlla-punt</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>dash dot dot line</source>
-        <translation>ダッシュドットドット</translation>
+        <translation>línea ratlla-punt-punt</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Line Style</source>
-        <translation>線種</translation>
+        <translation>Estil de línea</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>enable filling</source>
-        <translation>塗りつぶし</translation>
+        <translation>permetre emplenat</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Fill Color: </source>
-        <translation>塗色 :</translation>
+        <translation>Color d&apos;emplenat:</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Fill Style: </source>
-        <translation>塗種 :</translation>
+        <translation>Estil d&apos;emplenat:</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>no filling</source>
-        <translation>塗りつぶし無し</translation>
+        <translation> sense emplenat</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>solid</source>
-        <translation>ソリッド</translation>
+        <translation>sòlid</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>dense 1 (densest)</source>
-        <translation>濃さ 1 (一番濃い)</translation>
+        <translation>densitat 1 (el més dens)</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>dense 2</source>
-        <translation>濃さ 2</translation>
+        <translation>densitat 2</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>dense 3</source>
-        <translation>濃さ 3</translation>
+        <translation>densitat 3</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>dense 4</source>
-        <translation>濃さ 4</translation>
+        <translation>densitat 4</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>dense 5</source>
-        <translation>濃さ 5</translation>
+        <translation>densitat 5</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>dense 6</source>
-        <translation>濃さ 6</translation>
+        <translation>densitat 6</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>dense 7 (least dense)</source>
-        <translation>濃さ 7 (一番薄い)</translation>
+        <translation>densitat 7 (el menys dens)</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>horizontal line</source>
-        <translation>水平線</translation>
+        <translation>línea horitzontal</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>vertical line</source>
-        <translation>垂直線</translation>
+        <translation>línea vertical</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>crossed lines</source>
-        <translation>十字格子</translation>
+        <translation>línees creuades</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>hatched backwards</source>
-        <translation>斜線(右上がり)</translation>
+        <translation>tramat enrera</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>hatched forwards</source>
-        <translation>斜線(右下がり)</translation>
+        <translation>tramat endavant</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>diagonal crossed</source>
-        <translation>斜線格子</translation>
+        <translation>creuaments diagonals</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Filling Style</source>
-        <translation>塗りつぶし種</translation>
+        <translation>Estil d&apos;emplenat</translation>
     </message>
     <message>
         <location line="+9"/>
         <source>OK</source>
-        <translation>OK</translation>
+        <translation>Acceptar</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Cancel</source>
-        <translation>キャンセル</translation>
+        <translation>Cancel·lar</translation>
     </message>
 </context>
 <context>
     <name>GraphicTextDialog</name>
     <message>
-        <location filename="paintings/graphictextdialog.cpp" line="+36"/>
+        <location filename="../qucs/paintings/graphictextdialog.cpp" line="+36"/>
         <source>Edit Text Properties</source>
-        <translation>テキストプロパティー編集</translation>
+        <translation>Editar les propietats del text</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation type="obsolete">OK</translation>
+        <translation type="obsolete">Acceptar</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="obsolete">キャンセル</translation>
+        <translation type="obsolete">Cancel·lar</translation>
     </message>
     <message>
         <location line="+38"/>
         <source>Text color: </source>
-        <translation>テキスト色 :</translation>
+        <translation>Color del text:</translation>
     </message>
     <message>
         <source>Text size: </source>
-        <translation type="obsolete">テキストサイズ :</translation>
+        <translation type="obsolete">Tamany del text:</translation>
     </message>
     <message>
         <source>Rotation angle: </source>
-        <translation type="obsolete">回転角度 :</translation>
+        <translation type="obsolete">Angle de rotació:</translation>
     </message>
     <message>
         <location line="-31"/>
         <source>Use LaTeX style for special characters, e.g. \tau</source>
-        <translation>LaTeXスタイル使用 (例 /tau)</translation>
+        <translation>Empreu l&apos;estil LaTex per caràters especials, p. ex. \tau</translation>
     </message>
     <message>
         <location line="+42"/>
@@ -1157,27 +1157,27 @@
     <message>
         <location line="+29"/>
         <source>Error</source>
-        <translation>エラー</translation>
+        <translation type="unfinished">Error</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>The text must not be empty!</source>
-        <translation>テキストを埋めてください!</translation>
+        <translation type="unfinished">El text no pot estar buit</translation>
     </message>
     <message>
         <location line="-78"/>
         <source>Use _{..} and ^{..} for sub- and super-positions.</source>
-        <translation>sub- and super-positions の為に　_{..} 　と　 ^{..}　を使用してください.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+22"/>
         <source>&amp;OK</source>
-        <translation>&amp;OK</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
         <source>&amp;Cancel</source>
-        <translation>キャンセル(&amp;C)</translation>
+        <translation type="unfinished">&amp;Cancel·lar</translation>
     </message>
 </context>
 <context>
@@ -1185,380 +1185,386 @@
     <message>
         <location filename="../qucs-filter/helpdialog.cpp" line="+38"/>
         <source>QucsFilter is a filter synthesis program. To create a filter, simply enter all parameters and press the big button at the bottom of the main window. Immediatly, the schematic of the filter is calculated and put into the clipboard. Now go to Qucs, open an empty schematic and press CTRL-V (paste from clipboard). The filter schematic can now be inserted and  simulated. Have lots of fun!</source>
-        <translation>QucsFilterはフィルタ回路生成プログラムです。使い方は簡単です。全てのパラメータを入力して、ダイアログの下にある大きなボタンを押します。フィルタ回路は計算されてクリップボードにコピーされます。ここでQucsの空のスケマチック画面にCTRL-Vを押し貼付けます。これで回路図は入力されシミュレートする事ができます。Have lots of fun!</translation>
+        <translation>QucsFilter és un programari de sintesi de filtres. Per crear un filtre només heu d&apos;introduïr tots el paràmetres i premer el botó gran de la part inferior de la finestra principal. To seguit es calcularà l&apos;esquema del filtre i es colocarà al portapapers. Despés, aneu a Qucs, obriu un esquema i polseu CTRL-V (pegar desde el portapapers). L&apos;esquema del filtre s&apos;insertarà i es simularà. Divertiu-vos!</translation>
     </message>
     <message>
         <location line="+29"/>
+        <location filename="../qucs-rescodes/helpdialog.cpp" line="+62"/>
         <source>Close</source>
-        <translation>閉じる</translation>
+        <translation>Tancar</translation>
     </message>
     <message>
         <location filename="../qucs-transcalc/helpdialog.cpp" line="+32"/>
         <source>Help</source>
-        <translation>ヘルプ</translation>
+        <translation>Ajuda</translation>
     </message>
     <message>
         <source>Available transmission lines are: Microstrip, Rectangular Waveguide, Coaxial Line and Coupled Microstrips.</source>
-        <translation type="obsolete">有効なトランスミッションラインは: マイクロストリップ, 導波管, 同軸線路, カップルドマイクロストリップです。</translation>
+        <translation type="obsolete">Les línees de transmissió disponibles son: Microstrip, Guiaones rectangular, Línea coaxial i Microstrips acoplades</translation>
     </message>
     <message>
         <location line="+26"/>
         <source>Dismiss</source>
-        <translation>破棄</translation>
+        <translation>Descartar</translation>
     </message>
     <message>
         <location line="-23"/>
         <source>QucsTranscalc is an analysis and synthesis tool for calculating the electrical and physical properties of different kinds of RF and microwave transmission lines.</source>
-        <translation>QucsTranscalcはRF、マイクロウェーブのトランスミッションラインを分析、生成するツールです。</translation>
+        <translation>QucsTranscalc és una eina d&apos;anàlisi i síntesi per calcular les propietats elèctriques de diferents línees de transmissió de microones i radiofreqüència.</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>For each type of transmission line, using dialog boxes, you can enter values for the various parameters, and either calculate its electrical properties, or use the given electrical requirements to synthesize physical parameters of the required transmission line.</source>
-        <translation>それぞれのトランスミッションラインをダイアログボックスを使い、変数に値を入力する事によって、電気的な項目を計算する事が出来ます。もしくは、電気的な項目を入力する事にてトランスミッションラインに必要な物理的項目を生成します。</translation>
+        <translation>Per cada tipus de línea de transmissió, emprant quadres de diàleg, podeu introduir valors per els diferents paràmetres, i calcular les seves propietats elèctriques, o emprar els requeriments elèctrics per sintetitzar paràmetres físics de la línea de transmissió demanada.</translation>
     </message>
     <message>
         <source>QucsAttenuator is an attenuator synthesis program. To create a attenuator, simply enter all the input parameters and press the calculation button. Immediatly, the schematic of the attenuator is calculated and put into the clipboard. Now go to Qucs, open an schematic and press CTRL-V (paste from clipboard). The attenuator schematic can now be inserted. Have lots of fun!</source>
-        <translation type="obsolete">QucsAttenuatorはアッテネータを生成するプログラムです。アッテネータを生成するには、全てのパラメータを入力し計算ボタンを押すだけです。するとアッテネータの回路が計算されクリップボードに入力されます。Qucs本体に移動してペースト（CTRL-V)すればアッテネータ回路が追加できるでしょう。Have lots of fun!</translation>
+        <translation type="obsolete">QucsAttenuator és un programari de síntesi d&apos;atenuadors. Per crear un atenuador només necessiteu introduir els paràmetres d&apos;entrada i polsar el botó de càlcul. El circuit del atenuador és calculat i possat al portapapers. Fet aquest pas, aneu a Qucs, obriu un esquema i polseu CTRL-V (pegar des del portapapers). L&apos;esquema de l&apos;atenuador quedarà incrustat. Divertiu-vos!</translation>
     </message>
     <message>
         <source>Qucs Attenuator Help</source>
-        <translation type="obsolete">Qucs Attenuator ヘルプ</translation>
+        <translation type="obsolete">Ajuda Atenuador Qucs</translation>
+    </message>
+    <message>
+        <location filename="../qucs-rescodes/helpdialog.cpp" line="-27"/>
+        <source>A program to compute color codes for resistors and resistance values for color codes. To obtain the color codes, simply enter the resistance and tolerance values and press the &quot;To Colors&quot; button. Alternatively to obtain the resistance, select the appropriate color bands and press the &quot;To Resistance&quot; button. The program computes the closest standard resistor value. You can paste the computed resistor in the schematic (by pressing ctrl+v). Have fun!</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>ID_Dialog</name>
     <message>
-        <location filename="paintings/id_dialog.cpp" line="+39"/>
+        <location filename="../qucs/paintings/id_dialog.cpp" line="+38"/>
         <source>Edit Subcircuit Properties</source>
-        <translation>サブサーキットプロパティー編集</translation>
+        <translation>Editar les propietats del subcircuit</translation>
     </message>
     <message>
-        <location line="+12"/>
+        <location line="+15"/>
         <source>Prefix:</source>
-        <translation>サブサーキット名 :</translation>
+        <translation>Prefix:</translation>
     </message>
     <message>
-        <location line="+77"/>
+        <location line="+99"/>
         <source>OK</source>
-        <translation>OK</translation>
+        <translation>Acceptar</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Cancel</source>
-        <translation>キャンセル</translation>
+        <translation>Cancel·lar</translation>
     </message>
     <message>
-        <location line="-73"/>
+        <location line="-98"/>
         <source>Parameters</source>
-        <translation>パラメータ</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+10"/>
         <source>display</source>
-        <translation>表示</translation>
+        <translation type="unfinished">mostrar</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+0"/>
         <source>Name</source>
-        <translation>名前</translation>
+        <translation type="unfinished">Nom</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+0"/>
         <source>Default</source>
-        <translation>デフォルト</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+0"/>
         <source>Description</source>
-        <translation>説明</translation>
+        <translation type="unfinished">Descripció</translation>
     </message>
     <message>
-        <location line="+7"/>
-        <location line="+89"/>
-        <location line="+31"/>
-        <location line="+29"/>
-        <location line="+57"/>
+        <location line="+10"/>
+        <location line="+115"/>
+        <location line="+32"/>
+        <location line="+37"/>
+        <location line="+61"/>
         <location line="+1"/>
-        <location line="+18"/>
+        <location line="+17"/>
         <source>yes</source>
-        <translation>はい</translation>
+        <translation type="unfinished">Si</translation>
     </message>
     <message>
-        <location line="-225"/>
-        <location line="+120"/>
-        <location line="+29"/>
+        <location line="-263"/>
+        <location line="+147"/>
+        <location line="+37"/>
         <source>no</source>
-        <translation>いいえ</translation>
+        <translation type="unfinished">no</translation>
     </message>
     <message>
-        <location line="-143"/>
+        <location line="-166"/>
         <source>display in schematic</source>
-        <translation>回路図に表示</translation>
+        <translation type="unfinished">mostrar a l&apos;esquema</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+9"/>
         <source>Name:</source>
-        <translation>名前 :</translation>
+        <translation type="unfinished">Nom:</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Default Value:</source>
-        <translation>デフォルト値:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Description:</source>
-        <translation>説明:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+35"/>
+        <location line="+36"/>
         <source>Add</source>
-        <translation>追加</translation>
+        <translation type="unfinished">Afegir</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Remove</source>
-        <translation>削除</translation>
+        <translation type="unfinished">Borrar</translation>
     </message>
     <message>
-        <location line="+52"/>
+        <location line="+62"/>
         <location line="+8"/>
         <source>Error</source>
-        <translation>エラー</translation>
+        <translation type="unfinished">Error</translation>
     </message>
     <message>
         <location line="-7"/>
         <source>Parameter must not be named &quot;File&quot;!</source>
-        <translation>&quot;File&quot;というパラメータ名は使えません!</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Parameter &quot;%1&quot; already in list!</source>
-        <translation>&quot;%1&quot;パラメータはすでにリストにあります!</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-118"/>
+        <location line="-148"/>
         <source>Type</source>
-        <translation type="unfinished">タイプ</translation>
+        <translation type="unfinished">Tipus</translation>
     </message>
     <message>
-        <location line="+21"/>
+        <location line="+40"/>
         <source>Type:</source>
-        <translation type="unfinished">タイプ:</translation>
+        <translation type="unfinished">Tipus:</translation>
     </message>
 </context>
 <context>
     <name>ImportDialog</name>
     <message>
         <source>Import Data File...</source>
-        <translation type="obsolete">データファイルのインポート...</translation>
+        <translation type="obsolete">Importar Fitxer de dades...</translation>
     </message>
     <message>
         <source>Import File:</source>
-        <translation type="obsolete">インポートファイル:</translation>
+        <translation type="obsolete">Fitxer a importar:</translation>
     </message>
     <message>
-        <location filename="dialogs/importdialog.cpp" line="+47"/>
+        <location filename="../qucs/dialogs/importdialog.cpp" line="+46"/>
         <source>Browse</source>
-        <translation>参照</translation>
+        <translation>Examinar</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Output File:</source>
-        <translation>出力ファイル:</translation>
+        <translation>Fitxer de Sortida:</translation>
     </message>
     <message>
         <location line="+22"/>
         <source>Messages</source>
-        <translation>メッセージ</translation>
+        <translation>Missatjes</translation>
     </message>
     <message>
         <source>Import</source>
-        <translation type="obsolete">インポート</translation>
+        <translation type="obsolete">Importar</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="obsolete">キャンセル</translation>
+        <translation type="obsolete">Cancel·lar</translation>
     </message>
     <message>
         <location line="+41"/>
         <source>All known</source>
-        <translation>既知</translation>
+        <translation>Tots els coneguts</translation>
     </message>
     <message>
         <source>Any File</source>
-        <translation type="obsolete">いずれかのファイル</translation>
+        <translation type="obsolete">Qualsevol Fitxer</translation>
     </message>
     <message>
         <location line="+11"/>
         <source>Enter a Data File Name</source>
-        <translation>データファイル名を入力</translation>
+        <translation>Introduiu un nom d&apos;Fitxer de Dades</translation>
     </message>
     <message>
         <location line="+47"/>
         <source>Info</source>
-        <translation>情報</translation>
+        <translation>Informació</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Output file already exists!</source>
-        <translation>出力ファイルはすでに存在します!</translation>
+        <translation>El fitxer de Sortida ja existeix!</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Overwrite it?</source>
-        <translation>上書きしますか?</translation>
+        <translation>Sobreescriure&apos;l?</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>&amp;Yes</source>
-        <translation>はい(&amp;Y)</translation>
+        <translation>&amp;Si</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>&amp;No</source>
-        <translation>いいえ(&amp;N)</translation>
+        <translation>&amp;No</translation>
     </message>
     <message>
-        <location line="+37"/>
+        <location line="+43"/>
         <source>ERROR: Unknown file format! Please check file name extension!</source>
-        <translation>エラー; 未知のファイルフォーマットです！拡張子を確認してください!</translation>
+        <translation>ERROR: Format de fitxer desconegut. Comproveu l&apos;extensió del nom del fitxer!</translation>
     </message>
     <message>
         <source>ERROR: Cannot start simulator!</source>
-        <translation type="obsolete">エラー:シミュレータを開始できません!</translation>
+        <translation type="obsolete">ERROR: No puc arrancar el simulador!</translation>
     </message>
     <message>
         <source>Successfully imported file!</source>
-        <translation type="obsolete">インポート成功!</translation>
+        <translation type="obsolete">Fitxer de simulació importat correctament!</translation>
     </message>
     <message>
-        <location line="-117"/>
+        <location line="-123"/>
         <source>Close</source>
-        <translation>閉じる</translation>
+        <translation>Tancar</translation>
     </message>
     <message>
-        <location line="+229"/>
+        <location line="+236"/>
         <source>Converter ended with errors!</source>
-        <translation>コンバータはエラーにより終了しました!</translation>
+        <translation>Conversió finalitzada amb errors!</translation>
     </message>
     <message>
-        <location line="-207"/>
+        <location line="-214"/>
         <source>Touchstone files</source>
-        <translation>Toluchstoneファイル</translation>
+        <translation>Fitxers Touchstone</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>CITI files</source>
-        <translation>CITIファイル</translation>
+        <translation>Fitxers CITI</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>ZVR ASCII files</source>
-        <translation>ZVR ASCII　ファイル</translation>
+        <translation>Fitxers ZVR ASCII</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>VCD files</source>
-        <translation>VCDファイル</translation>
+        <translation>Fitxers VCD</translation>
     </message>
     <message>
         <location line="-1"/>
         <source>IC-CAP model files</source>
-        <translation>IC-CAP　モデルファイル</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="-29"/>
         <source>Abort</source>
-        <translation>中断</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+170"/>
+        <location line="+177"/>
         <source>ERROR: Cannot start converter!</source>
-        <translation>エラー;　コンバータを開始出来ません!</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-144"/>
+        <location line="-151"/>
         <source>CSV files</source>
-        <translation>CSVファイル</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="-79"/>
         <source>Convert Data File...</source>
-        <translation>変換するデータファイル...</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+4"/>
         <source>File specification</source>
-        <translation>ファイル詳細</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Input File:</source>
-        <translation>入力ファイル:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+9"/>
         <source>Output Data:</source>
-        <translation>出力ファイル:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Qucs dataset</source>
-        <translation>Qucsデータセット</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Touchstone</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+1"/>
         <source>CSV</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Qucs library</source>
-        <translation>Qucsライブラリ</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+25"/>
         <source>Convert</source>
-        <translation>変換</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+33"/>
         <source>Qucs dataset files</source>
-        <translation>Qucsデータセットファイル</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+1"/>
         <source>SPICE files</source>
-        <translation>SPICEファイル</translation>
+        <translation type="unfinished">fitxers SPICE</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Any file</source>
-        <translation>その他ファイル</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+130"/>
+        <location line="+136"/>
         <source>Running command line:</source>
-        <translation>コマンドライン実行中:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-189"/>
+        <location line="-195"/>
         <source>Qucs netlist</source>
-        <translation>Qucsネットリスト</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+252"/>
+        <location line="+259"/>
         <source>Successfully converted file!</source>
-        <translation>ファイル変換成功!</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-251"/>
+        <location line="-258"/>
         <source>Matlab</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1566,60 +1572,60 @@
 <context>
     <name>LabelDialog</name>
     <message>
-        <location filename="dialogs/labeldialog.cpp" line="+70"/>
+        <location filename="../qucs/dialogs/labeldialog.cpp" line="+69"/>
         <location line="+29"/>
         <source>More...</source>
-        <translation>さらに...</translation>
+        <translation>Més...</translation>
     </message>
     <message>
         <location line="-40"/>
         <location line="+35"/>
         <source>Less...</source>
-        <translation>省略...</translation>
+        <translation>Menys...</translation>
     </message>
     <message>
         <location line="-63"/>
         <source>Insert Nodename</source>
-        <translation>ノード名追加</translation>
+        <translation>Insertar nom del node</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Enter the label:</source>
-        <translation>ラベル入力 :</translation>
+        <translation>Escriu l&apos;etiqueta:</translation>
     </message>
     <message>
         <location line="+11"/>
         <source>Initial node voltage:</source>
-        <translation>初期ノード電圧:</translation>
+        <translation>Tensió inicial del node:</translation>
     </message>
     <message>
         <location line="+9"/>
         <source>Ok</source>
-        <translation>OK</translation>
+        <translation>Acceptar</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Cancel</source>
-        <translation>キャンセル</translation>
+        <translation>Cancel·lar</translation>
     </message>
 </context>
 <context>
     <name>LibraryDialog</name>
     <message>
-        <location filename="dialogs/librarydialog.cpp" line="+51"/>
+        <location filename="../qucs/dialogs/librarydialog.cpp" line="+51"/>
         <source>Create Library</source>
-        <translation>ライブラリ作成</translation>
+        <translation>Crear Biblioteca</translation>
     </message>
     <message>
         <location line="+27"/>
         <location line="+108"/>
         <source>Library Name:</source>
-        <translation>ライブラリ名:</translation>
+        <translation>Nom de la Biblioteca:</translation>
     </message>
     <message>
         <location line="-101"/>
         <source>Choose subcircuits:</source>
-        <translation>サブサーキットを選択:</translation>
+        <translation>Escollir subcircuits:</translation>
     </message>
     <message>
         <location line="+19"/>
@@ -1634,7 +1640,7 @@
     <message>
         <location line="+6"/>
         <source>Description:</source>
-        <translation type="unfinished">説明:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+13"/>
@@ -1645,7 +1651,7 @@
         <location line="+12"/>
         <location line="+193"/>
         <source>Create</source>
-        <translation>作成</translation>
+        <translation>Crear</translation>
     </message>
     <message>
         <location line="+97"/>
@@ -1680,11 +1686,11 @@
         <location line="-465"/>
         <location line="+47"/>
         <source>Cancel</source>
-        <translation>キャンセル</translation>
+        <translation>Cancel·lar</translation>
     </message>
     <message>
         <source>No subcircuits!</source>
-        <translation type="obsolete">サブサーキットがありません!</translation>
+        <translation type="obsolete">Sense subcircuits!</translation>
     </message>
     <message>
         <location line="+73"/>
@@ -1705,45 +1711,45 @@
         <location line="+8"/>
         <location line="+13"/>
         <source>Error</source>
-        <translation>エラー</translation>
+        <translation>Error</translation>
     </message>
     <message>
         <location line="-39"/>
         <source>Please insert a library name!</source>
-        <translation>ライブラリ名を入力してください!</translation>
+        <translation>¡Introduzca un nombre de biblioteca!</translation>
     </message>
     <message>
         <location line="+17"/>
         <source>Please choose at least one subcircuit!</source>
-        <translation>ひとつ以上のサブサーキットを選択してください!</translation>
+        <translation>¡Escoja al menys un subcircuit!</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Warning</source>
-        <translation>注意</translation>
+        <translation>Aviso</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Cannot create user library directory !</source>
-        <translation>ユーザライブラリディレクトリを作成できません!</translation>
+        <translation>¡ No puedo crear el directorio de la biblioteca del usuario!</translation>
     </message>
     <message>
         <location line="+8"/>
         <location filename="../qucs-lib/librarydialog.cpp" line="-103"/>
         <source>A system library with this name already exists!</source>
-        <translation>システムライブラリにこの名前が存在します!</translation>
+        <translation>¡Ya hay una biblioteca del sistema amb este nombre!</translation>
     </message>
     <message>
         <location line="+6"/>
         <location filename="../qucs-lib/librarydialog.cpp" line="+6"/>
         <source>A library with this name already exists!</source>
-        <translation>ライブラリ名がすでに存在します!</translation>
+        <translation>¡ Ya hay una biblioteca amb este nombre!</translation>
     </message>
     <message>
         <location line="-76"/>
         <location filename="../qucs-lib/librarydialog.cpp" line="-91"/>
         <source>Close</source>
-        <translation>閉じる</translation>
+        <translation>Tancar</translation>
     </message>
     <message>
         <location line="-12"/>
@@ -1753,7 +1759,7 @@
     <message>
         <location line="+33"/>
         <source>No projects!</source>
-        <translation type="unfinished">プロジェクトがありません!</translation>
+        <translation type="unfinished">¡Sin proyectos!</translation>
     </message>
     <message>
         <location line="+142"/>
@@ -1768,7 +1774,7 @@
     <message>
         <location line="+3"/>
         <source>Error: Cannot create library!</source>
-        <translation>エラー: ライブラリが作成できません!</translation>
+        <translation>ERROR: ¡No se pudo crear la biblioteca!</translation>
     </message>
     <message>
         <location line="+26"/>
@@ -1779,118 +1785,124 @@
     <message>
         <location line="+3"/>
         <source>Error: Cannot load subcircuit &quot;%1&quot;.</source>
-        <translation>エラー:サブサーキット&quot;%1&quot;が読み込みできません.</translation>
+        <translation>Error: No se pudo cargar el subcircuit &quot;%1&quot;.</translation>
+    </message>
+    <message>
+        <source>
+Successfully created library.</source>
+        <translation type="obsolete">
+Biblioteca creada amb éxito.</translation>
     </message>
     <message>
         <location line="-325"/>
         <location line="+39"/>
         <source>Next &gt;&gt;</source>
-        <translation>次へ&gt;&gt;</translation>
+        <translation>Siguiente &gt;&gt;</translation>
     </message>
     <message>
         <source>Enter description for &quot;%1&quot;:</source>
-        <translation type="obsolete">&quot;%1&quot;の説明を入力:</translation>
+        <translation type="obsolete">Introduzca la descripción para &quot;%1&quot;:</translation>
     </message>
     <message>
         <location filename="../qucs-lib/librarydialog.cpp" line="-32"/>
         <source>Manage User Libraries</source>
-        <translation>ユーザライブラリを管理</translation>
+        <translation>Gestionar les Bibliotecas del usuario</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Choose library:</source>
-        <translation>ライブラリ選択:</translation>
+        <translation>Elija Biblioteca:</translation>
     </message>
     <message>
         <location line="+9"/>
         <source>New Name:</source>
-        <translation>新しい名前:</translation>
+        <translation>Nou nombre:</translation>
     </message>
     <message>
         <location line="+9"/>
         <source>Delete</source>
-        <translation>削除</translation>
+        <translation>Borrar</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Rename</source>
-        <translation>名前変更</translation>
+        <translation>Renombrar</translation>
     </message>
     <message>
         <source>No user library!</source>
-        <translation type="obsolete">ユーザライブラリがありません!</translation>
+        <translation type="obsolete">¡No hay biblioteca de usuario!</translation>
     </message>
     <message>
         <location line="+62"/>
         <source>Please insert a new library name!</source>
-        <translation>新しいライブラリ名を入力してください!</translation>
+        <translation>¡Introduzca un nuevo nombre de biblioteca!</translation>
     </message>
     <message>
         <location line="+14"/>
         <location line="+93"/>
         <source>Please choose a library!</source>
-        <translation>ライブラリを選択してください!</translation>
+        <translation>¡Elija una biblioteca!</translation>
     </message>
     <message>
         <location line="-63"/>
         <source>Cannot open library!</source>
-        <translation>ライブラリが開けません!</translation>
+        <translation>¡No se pudo abrir la biblioteca!</translation>
     </message>
     <message>
         <location line="+20"/>
         <source>No permission to modify library!</source>
-        <translation>ライブラリを修正する権限がありません!</translation>
+        <translation>¡Sin permisos para modificar la biblioteca!</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Writing new library not successful!</source>
-        <translation>新しいライブラリの書き込みに失敗しました!</translation>
+        <translation>¡No se pudo escribir la nueva biblioteca!</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Cannot delete old library.</source>
-        <translation>古いライブラリを削除できません.</translation>
+        <translation>No se pudo borrar la vieja biblioteca.</translation>
     </message>
     <message>
         <location line="+11"/>
         <source>Library file is corrupt!</source>
-        <translation>ライブラリファイルが壊れています!</translation>
+        <translation>¡El fitxer de la biblioteca está corrupto!</translation>
     </message>
     <message>
         <location line="+26"/>
         <source>No permission to delete library &quot;%1&quot;.</source>
-        <translation>&quot;%1&quot;ファイルを削除する権限がありません.</translation>
+        <translation>Sin permisos para borrar la biblioteca &quot;%1&quot;.</translation>
     </message>
     <message>
-        <location filename="dialogs/librarydialog.cpp" line="+427"/>
+        <location filename="../qucs/dialogs/librarydialog.cpp" line="+427"/>
         <source>Successfully created library.</source>
-        <translation>ライブラリを生成しました.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="-476"/>
         <source>Select All</source>
-        <translation>全て選択</translation>
+        <translation type="unfinished">Seleccionar todo</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Deselect All</source>
-        <translation>全て選択解除</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qucs-lib/librarydialog.cpp" line="-78"/>
         <source>Cannot rename library subdirectory!</source>
-        <translation>ライブラリサブディレクトリの名前変更できません!</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+91"/>
         <source>No permission to delete library subdirectory &quot;%1&quot;.</source>
-        <translation>ライブラリサブディレクトリ&quot;%1&quot;を削除する権限がありません.</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>LoadDialog</name>
     <message>
-        <location filename="dialogs/loaddialog.cpp" line="+45"/>
+        <location filename="../qucs/dialogs/loaddialog.cpp" line="+49"/>
         <source>Load Verilog-A symbols</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1902,22 +1914,22 @@
     <message>
         <location line="+19"/>
         <source>Select All</source>
-        <translation type="unfinished">全て選択</translation>
+        <translation type="unfinished">Seleccionar todo</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Deselect All</source>
-        <translation type="unfinished">全て選択解除</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Cancel</source>
-        <translation type="unfinished">キャンセル</translation>
+        <translation type="unfinished">Cancel·lar</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Ok</source>
-        <translation type="unfinished">OK</translation>
+        <translation type="unfinished">Acceptar</translation>
     </message>
     <message>
         <location line="+21"/>
@@ -1937,7 +1949,7 @@
     <message>
         <location line="+83"/>
         <source>Info</source>
-        <translation type="unfinished">情報</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+1"/>
@@ -1948,7 +1960,7 @@
     <message>
         <location line="+47"/>
         <source>Open File</source>
-        <translation type="unfinished">ファイルを開く</translation>
+        <translation type="unfinished">Abrir Fitxer</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -1958,7 +1970,7 @@
     <message>
         <location line="+18"/>
         <source>Error</source>
-        <translation type="unfinished">エラー</translation>
+        <translation type="unfinished">Error</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -1969,196 +1981,200 @@
 <context>
     <name>MarkerDialog</name>
     <message>
-        <location filename="diagrams/markerdialog.cpp" line="+33"/>
+        <location filename="../qucs/diagrams/markerdialog.cpp" line="+32"/>
         <source>Edit Marker Properties</source>
-        <translation>マーカプロパティー編集</translation>
+        <translation>Editar propietats de marcado</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+9"/>
         <source>Precision: </source>
-        <translation>精度 :</translation>
+        <translation>Precisión:</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+17"/>
         <source>Z0: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="-8"/>
         <source>Number Notation: </source>
-        <translation>数字表記法 :</translation>
+        <translation>Notación numérica:</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="-5"/>
         <source>real/imaginary</source>
-        <translation>実数/虚数</translation>
+        <translation>real/imaginaria</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>magnitude/angle (degree)</source>
-        <translation>絶対角(ディグリー)</translation>
+        <translation>módulo/ángulo (grados)</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>magnitude/angle (radian)</source>
-        <translation>絶対角(ラジアン)</translation>
+        <translation>módulo/ángulo (radianes)</translation>
     </message>
     <message>
-        <location line="+4"/>
-        <source>transparent</source>
-        <translation>透明</translation>
-    </message>
-    <message>
-        <location line="+11"/>
+        <location line="+20"/>
         <source>OK</source>
-        <translation>OK</translation>
+        <translation>Acceptar</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Cancel</source>
-        <translation>キャンセル</translation>
+        <translation>Cancel·lar</translation>
+    </message>
+    <message>
+        <location line="-8"/>
+        <source>transparent</source>
+        <translation>transparente</translation>
     </message>
 </context>
 <context>
     <name>MatchDialog</name>
     <message>
-        <location filename="dialogs/matchdialog.cpp" line="+48"/>
+        <location filename="../qucs/dialogs/matchdialog.cpp" line="+49"/>
         <source>Create Matching Circuit</source>
-        <translation>マッチング回路作成</translation>
+        <translation>Crear Circuito Equivalente</translation>
     </message>
     <message>
         <location line="+136"/>
         <source>Frequency:</source>
-        <translation>周波数:</translation>
+        <translation>Frecuencia:</translation>
+    </message>
+    <message>
+        <source>Impedance:</source>
+        <translation type="obsolete">Impedancia:</translation>
     </message>
     <message>
         <location line="+19"/>
         <source>Create</source>
-        <translation>作成</translation>
+        <translation>Crear</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Cancel</source>
-        <translation>キャンセル</translation>
+        <translation>Cancel·lar</translation>
     </message>
     <message>
         <location line="+274"/>
         <source>Error</source>
-        <translation>エラー</translation>
+        <translation>Error</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Real part of impedance must be greater zero,
 but is %1 !</source>
-        <translation>実数部インピーダンスは0以上でなければなりません。
-%1!</translation>
+        <translation>La parte real de la impedancia debe ser mayor de cero,
+pero es %1!</translation>
     </message>
     <message>
         <location line="-426"/>
         <source>calculate two-port matching</source>
-        <translation>2ポートマッチング計算</translation>
+        <translation>calcular adaptación en dos-puertos</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Reference Impedance</source>
-        <translation>リファレンスインピーダンス</translation>
+        <translation>Impedancia de Referencia</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Port 1</source>
-        <translation></translation>
+        <translation>Puerto 1</translation>
     </message>
     <message>
         <location line="+3"/>
         <location line="+6"/>
         <source>ohms</source>
-        <translation>オーム</translation>
+        <translation>ohms</translation>
     </message>
     <message>
         <location line="-3"/>
         <source>Port 2</source>
-        <translation></translation>
+        <translation>Puerto 2</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>S Parameter</source>
-        <translation>Sパラメータ</translation>
+        <translation>Paràmetre S</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Input format</source>
-        <translation>インプットフォーマット</translation>
+        <translation>Formato de Entrada</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>real/imag</source>
-        <translation>リアル/イマジナリ(実数部/虚数部)</translation>
+        <translation>real/imag</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>mag/deg</source>
-        <translation>マグニチュード/度</translation>
+        <translation>mód/grados</translation>
     </message>
     <message>
         <location line="+9"/>
         <location line="+134"/>
         <source>S11</source>
-        <translation></translation>
+        <translation>S11</translation>
     </message>
     <message>
         <location line="-133"/>
         <location line="+134"/>
         <source>S21</source>
-        <translation></translation>
+        <translation>S21</translation>
     </message>
     <message>
         <location line="-100"/>
         <source>S12</source>
-        <translation></translation>
+        <translation>S12</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>S22</source>
-        <translation></translation>
+        <translation>S22</translation>
     </message>
     <message>
         <location line="+117"/>
         <source>Reflexion Coefficient</source>
-        <translation>反射係数</translation>
+        <translation>Coeficiente de Reflexión</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Impedance (ohms)</source>
-        <translation>インピーダンス(オーム)</translation>
+        <translation>Impedancia (ohms)</translation>
     </message>
 </context>
 <context>
     <name>MessageBox</name>
     <message>
         <source>Save</source>
-        <translation type="obsolete">保存</translation>
+        <translation type="obsolete">Guardar</translation>
     </message>
     <message>
         <source>Save all</source>
-        <translation type="obsolete">全て保存</translation>
+        <translation type="obsolete">Guardar todo</translation>
     </message>
     <message>
         <source>Discard</source>
-        <translation type="obsolete">破棄</translation>
+        <translation type="obsolete">Descartar</translation>
     </message>
     <message>
         <source>Discard all</source>
-        <translation type="obsolete">全て破棄</translation>
+        <translation type="obsolete">Descartar todo</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="obsolete">キャンセル</translation>
+        <translation type="obsolete">Cancel·lar</translation>
     </message>
 </context>
 <context>
     <name>MessageDock</name>
     <message>
-        <location filename="messagedock.cpp" line="+49"/>
+        <location filename="../qucs/messagedock.cpp" line="+50"/>
         <source>admsXml</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2169,37 +2185,92 @@ but is %1 !</source>
     </message>
 </context>
 <context>
+    <name>MyWidget</name>
+    <message>
+        <location filename="../qucs-rescodes/main.cpp" line="+58"/>
+        <source>E&amp;xit</source>
+        <translation type="unfinished">&amp;Salir</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>&amp;File</source>
+        <translation type="unfinished">&amp;Fitxer</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Help...</source>
+        <translation type="unfinished">Ajuda....</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>&amp;About ResistorCodes...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>&amp;About Qt...</source>
+        <translation type="unfinished">&amp;Acerca de Qt...</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>&amp;Help</source>
+        <translation type="unfinished">&amp;Ajuda</translation>
+    </message>
+    <message>
+        <location line="+64"/>
+        <source>About...</source>
+        <translation type="unfinished">Acerca de...</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>
+Resistor color code computation program
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Copyright (c) 2012 by</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>About Qt</source>
+        <translation type="unfinished">Acerca de Qt</translation>
+    </message>
+</context>
+<context>
     <name>NewProjDialog</name>
     <message>
-        <location filename="dialogs/newprojdialog.cpp" line="+30"/>
+        <location filename="../qucs/dialogs/newprojdialog.cpp" line="+30"/>
         <source>Create new project</source>
-        <translation>新規プロジェクトを作成</translation>
+        <translation>Crear proyecto nuevo</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Project name:</source>
-        <translation>プロジェクト名:</translation>
+        <translation>Nom del Proyecto:</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>open new project</source>
-        <translation>新しいプロジェクトを開く</translation>
+        <translation>abrir proyecto nuevo</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Create</source>
-        <translation>作成</translation>
+        <translation>Crear</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Cancel</source>
-        <translation>キャンセル</translation>
+        <translation>Cancel·lar</translation>
     </message>
 </context>
 <context>
     <name>OctaveWindow</name>
     <message>
-        <location filename="octave_window.cpp" line="+126"/>
+        <location filename="../qucs/octave_window.cpp" line="+130"/>
         <source>ERROR: Cannot start Octave!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2207,297 +2278,297 @@ but is %1 !</source>
 <context>
     <name>OptimizeDialog</name>
     <message>
-        <location filename="components/optimizedialog.cpp" line="+48"/>
+        <location filename="../qucs/components/optimizedialog.cpp" line="+43"/>
         <source>Edit Optimization Properties</source>
-        <translation>最適化プロパティーを編集</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+15"/>
-        <location line="+97"/>
-        <location line="+63"/>
+        <location line="+22"/>
+        <location line="+114"/>
+        <location line="+75"/>
         <source>Name:</source>
-        <translation>名前 :</translation>
+        <translation type="unfinished">Nom:</translation>
     </message>
     <message>
-        <location line="-150"/>
+        <location line="-182"/>
         <source>General</source>
-        <translation>全般</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+72"/>
-        <location line="+70"/>
+        <location line="+88"/>
+        <location line="+82"/>
         <source>Name</source>
-        <translation>名前</translation>
+        <translation type="unfinished">Nom</translation>
     </message>
     <message>
-        <location line="-69"/>
-        <location line="+19"/>
+        <location line="-82"/>
+        <location line="+12"/>
         <source>active</source>
-        <translation>アクティブ</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-18"/>
+        <location line="-12"/>
         <source>initial</source>
-        <translation>初期値</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+0"/>
         <source>min</source>
-        <translation>最小</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+0"/>
         <source>max</source>
-        <translation>最大</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+21"/>
+        <location line="+37"/>
         <source>initial:</source>
-        <translation>初期値:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+1"/>
         <source>min:</source>
-        <translation>最小:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+1"/>
         <source>max:</source>
-        <translation>最大:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+31"/>
-        <location line="+50"/>
+        <location line="+17"/>
+        <location line="+60"/>
         <source>Add</source>
-        <translation>追加</translation>
+        <translation type="unfinished">Afegir</translation>
+    </message>
+    <message>
+        <location line="-58"/>
+        <location line="+60"/>
+        <source>Delete</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="-48"/>
-        <location line="+50"/>
-        <source>Delete</source>
-        <translation>削除</translation>
+        <source>Variables</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-47"/>
-        <source>Variables</source>
-        <translation>変数</translation>
+        <location line="+229"/>
+        <source>Variable &quot;%1&quot; aleardy in list!</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Set</source>
-        <translation type="obsolete">セット</translation>
+        <translation type="obsolete">Fijar</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation type="obsolete">削除</translation>
+        <translation type="obsolete">Borrar</translation>
     </message>
     <message>
-        <location line="+50"/>
+        <location line="-171"/>
         <source>Goals</source>
-        <translation>ゴール値</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+8"/>
         <source>OK</source>
-        <translation>OK</translation>
+        <translation type="unfinished">Acceptar</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Apply</source>
-        <translation>適用</translation>
+        <translation type="unfinished">Aplicar</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Cancel</source>
-        <translation>キャンセル</translation>
+        <translation type="unfinished">Cancel·lar</translation>
     </message>
     <message>
-        <location line="-54"/>
+        <location line="-58"/>
         <source>Value</source>
-        <translation>値</translation>
+        <translation type="unfinished">Valor</translation>
     </message>
     <message>
-        <location line="-67"/>
-        <location line="+66"/>
+        <location line="-82"/>
+        <location line="+82"/>
         <source>Type</source>
-        <translation>タイプ</translation>
+        <translation type="unfinished">Tipus</translation>
     </message>
     <message>
-        <location line="+14"/>
+        <location line="+20"/>
         <source>Value:</source>
-        <translation>値:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+10"/>
-        <location line="+80"/>
-        <location line="+302"/>
+        <location line="+6"/>
+        <location line="+121"/>
+        <location line="+354"/>
         <source>less</source>
-        <translation>以下</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-381"/>
-        <location line="+80"/>
-        <location line="+302"/>
+        <location line="-474"/>
+        <location line="+122"/>
+        <location line="+354"/>
         <source>greater</source>
-        <translation>以上</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-381"/>
-        <location line="+80"/>
-        <location line="+302"/>
+        <location line="-475"/>
+        <location line="+123"/>
+        <location line="+354"/>
         <source>equal</source>
-        <translation>等しい</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-316"/>
-        <location line="+48"/>
-        <location line="+28"/>
-        <location line="+30"/>
-        <location line="+180"/>
+        <location line="-398"/>
+        <location line="+87"/>
+        <location line="+34"/>
+        <location line="+37"/>
+        <location line="+195"/>
         <source>yes</source>
-        <translation>はい</translation>
+        <translation type="unfinished">Si</translation>
     </message>
     <message>
-        <location line="-225"/>
+        <location line="-252"/>
         <location line="+8"/>
-        <location line="+105"/>
+        <location line="+124"/>
         <location line="+8"/>
         <source>Error</source>
-        <translation>エラー</translation>
+        <translation type="unfinished">Error</translation>
     </message>
     <message>
-        <location line="-120"/>
-        <location line="+113"/>
+        <location line="-139"/>
+        <location line="+132"/>
         <source>Every text field must be non-empty!</source>
-        <translation>各テキストフィールドは埋めて下さい!</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-175"/>
-        <location line="+76"/>
-        <location line="+30"/>
+        <location line="-234"/>
+        <location line="+121"/>
+        <location line="+37"/>
         <source>no</source>
-        <translation>いいえ</translation>
+        <translation type="unfinished">no</translation>
     </message>
     <message>
-        <location line="-346"/>
+        <location line="-440"/>
         <source>Simulation:</source>
-        <translation>シミュレーション:</translation>
+        <translation type="unfinished">Simulació:</translation>
     </message>
     <message>
-        <location line="+310"/>
-        <source>Variable &quot;%1&quot; already in list!</source>
-        <translation>変数&quot;%1&quot;はすでにリストに存在します!</translation>
-    </message>
-    <message>
-        <location line="+113"/>
+        <location line="+524"/>
         <source>Goal &quot;%1&quot; already in list!</source>
-        <translation>ゴール値&quot;%1&quot;はすでにリストに存在します!</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-412"/>
+        <location line="-500"/>
         <source>Method:</source>
-        <translation>方式:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+14"/>
+        <location line="+6"/>
         <source>Maximum number of iterations:</source>
-        <translation>最大繰り返し回数:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+6"/>
         <source>Output refresh cycle:</source>
-        <translation>リフレッシュサイクル出力:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+6"/>
         <source>Number of parents:</source>
-        <translation>元の数:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+6"/>
         <source>Constant F:</source>
-        <translation>定数F:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+6"/>
         <source>Crossing over factor:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+6"/>
         <source>Pseudo random number seed:</source>
-        <translation>擬似ランダム数の種（コンピュータならでは…）:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+6"/>
         <source>Minimum cost variance:</source>
-        <translation>最小変化量:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+6"/>
         <source>Cost objectives:</source>
-        <translation type="unfinished">目的値:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+6"/>
         <source>Cost constraints:</source>
-        <translation type="unfinished">規制量:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+3"/>
         <source>Algorithm</source>
-        <translation>アルゴリズム</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+55"/>
+        <location line="+75"/>
         <source>Type:</source>
-        <translation>タイプ:</translation>
+        <translation type="unfinished">Tipus:</translation>
     </message>
     <message>
-        <location line="+2"/>
-        <location line="+116"/>
-        <location line="+286"/>
+        <location line="-14"/>
+        <location line="+154"/>
+        <location line="+344"/>
         <source>linear double</source>
-        <translation>リニア　DOUBLE</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-401"/>
-        <location line="+116"/>
-        <location line="+286"/>
+        <location line="-497"/>
+        <location line="+155"/>
+        <location line="+344"/>
         <source>logarithmic double</source>
-        <translation>対数 Double</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-401"/>
-        <location line="+116"/>
-        <location line="+286"/>
+        <location line="-498"/>
+        <location line="+156"/>
+        <location line="+344"/>
         <source>linear integer</source>
-        <translation>リニア整数</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-401"/>
-        <location line="+116"/>
+        <location line="-499"/>
+        <location line="+157"/>
         <source>logarithmic integer</source>
-        <translation>ログ整数</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-71"/>
-        <location line="+80"/>
+        <location line="-98"/>
+        <location line="+124"/>
         <source>monitor</source>
-        <translation>モニタ</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-85"/>
-        <location line="+80"/>
-        <location line="+302"/>
+        <location line="-129"/>
+        <location line="+119"/>
+        <location line="+354"/>
         <source>minimize</source>
-        <translation>最小化</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-381"/>
-        <location line="+80"/>
-        <location line="+302"/>
+        <location line="-472"/>
+        <location line="+120"/>
+        <location line="+354"/>
         <source>maximize</source>
-        <translation>最大化</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2505,113 +2576,113 @@ but is %1 !</source>
     <message>
         <location filename="../qucs-transcalc/optionsdialog.cpp" line="+36"/>
         <source>Options</source>
-        <translation>オプション</translation>
+        <translation>Opciones</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Units</source>
-        <translation>単位</translation>
+        <translation>Unidades</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Frequency</source>
-        <translation>周波数</translation>
+        <translation>Frecuencia</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Length</source>
-        <translation>長さ</translation>
+        <translation>Longitud</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Resistance</source>
-        <translation>抵抗値</translation>
+        <translation>Resistencia</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Angle</source>
-        <translation>角度</translation>
+        <translation>Angle</translation>
     </message>
     <message>
         <location line="+25"/>
         <source>Save as Default</source>
-        <translation>デフォルトとして保存</translation>
+        <translation>Guardar como predeterminada</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Dismiss</source>
-        <translation>破棄</translation>
+        <translation>Descartar</translation>
     </message>
 </context>
 <context>
     <name>PackageDialog</name>
     <message>
-        <location filename="dialogs/packagedialog.cpp" line="+61"/>
+        <location filename="../qucs/dialogs/packagedialog.cpp" line="+61"/>
         <source>Create Project Package</source>
-        <translation>プロジェクトパッケージ作成</translation>
+        <translation>Crear Paquete de proyectos</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Package:</source>
-        <translation>パッケージ:</translation>
+        <translation>Paquete:</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Browse</source>
-        <translation>参照</translation>
+        <translation>Examinar</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>include user libraries</source>
-        <translation>ユーザライブラリを含める</translation>
+        <translation>incluir bibliotecas de usuario</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Choose projects:</source>
-        <translation>プロジェクト選択:</translation>
+        <translation>Elegir proyectos:</translation>
     </message>
     <message>
         <location line="+18"/>
         <source>Create</source>
-        <translation>作成</translation>
+        <translation>Crear</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Cancel</source>
-        <translation>キャンセル</translation>
+        <translation>Cancel·lar</translation>
     </message>
     <message>
         <location line="+20"/>
         <source>No projects!</source>
-        <translation>プロジェクトがありません!</translation>
+        <translation>¡Sin proyectos!</translation>
     </message>
     <message>
         <location line="+9"/>
         <source>Extract Project Package</source>
-        <translation>プロジェクトパッケージを抽出</translation>
+        <translation>Extraer paquete de proyectos</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Close</source>
-        <translation>閉じる</translation>
+        <translation>Tancar</translation>
     </message>
     <message>
         <location line="+19"/>
         <location line="+186"/>
         <source>Qucs Packages</source>
-        <translation>Qucsパッケージ</translation>
+        <translation>Paquetes Qucs</translation>
     </message>
     <message>
         <location line="-185"/>
         <location line="+186"/>
         <source>Any File</source>
-        <translation>いずれかのファイル</translation>
+        <translation>Qualsevol Fitxer</translation>
     </message>
     <message>
         <location line="-185"/>
         <location line="+186"/>
         <source>Enter a Package File Name</source>
-        <translation>パッケージファイル名を入力</translation>
+        <translation>Introduzca un nombre del fitxer de Paquete</translation>
     </message>
     <message>
         <location line="-165"/>
@@ -2619,158 +2690,160 @@ but is %1 !</source>
         <location line="+15"/>
         <location line="+19"/>
         <source>Error</source>
-        <translation>エラー</translation>
+        <translation>Error</translation>
     </message>
     <message>
         <location line="-102"/>
         <source>Cannot open &quot;%1&quot;!</source>
-        <translation>&quot;%1&quot;を開けません!</translation>
+        <translation>¡ No puedo abrir &quot;%1&quot;!</translation>
     </message>
     <message>
         <location line="+68"/>
         <source>Please insert a package name!</source>
-        <translation>パッケージ名を入力してください!</translation>
+        <translation>¡Introduzca un nombre de paquete!</translation>
     </message>
     <message>
         <location line="+15"/>
         <source>Please choose at least one project!</source>
-        <translation>ひとつ以上のプロジェクトを選択してください!</translation>
+        <translation>¡Escoja al menys un proyecto!</translation>
     </message>
     <message>
         <location line="+13"/>
         <location line="+51"/>
         <source>Info</source>
-        <translation>情報</translation>
+        <translation>Información</translation>
     </message>
     <message>
         <location line="-50"/>
         <source>Output file already exists!</source>
-        <translation>出力ファイルはすでに存在します!</translation>
+        <translation>¡El fitxer de salida ya existe!</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Overwrite it?</source>
-        <translation>上書きしますか?</translation>
+        <translation>¿Sobreescribirlo?</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>&amp;Yes</source>
-        <translation>はい(&amp;Y)</translation>
+        <translation>&amp;Si</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>&amp;No</source>
-        <translation>いいえ(&amp;N)</translation>
+        <translation>&amp;No</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Cannot create package!</source>
-        <translation>パッケージを作成できません!</translation>
+        <translation>¡No se pudo crear el paquete!</translation>
     </message>
     <message>
         <location line="+46"/>
         <source>Successfully created Qucs package!</source>
-        <translation>Qucsパッケージを作成しました!</translation>
+        <translation>
+¡Paquete Qucs creado amb éxito!</translation>
     </message>
     <message>
         <location line="+31"/>
         <source>ERROR: Cannot open package!</source>
-        <translation>エラー;　パッケージを開けません!</translation>
+        <translation>ERROR: ¡No se pudo abrir el paquete!</translation>
     </message>
     <message>
         <location line="+15"/>
         <source>ERROR: File contains wrong header!</source>
-        <translation>エラー;　ファイルに誤ったヘッダーが含まれています!</translation>
+        <translation>ERROR: ¡El fitxer contiene encabezados erróneos!</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>ERROR: Wrong version number!</source>
-        <translation>エラー;　誤ったバージョンナンバです!</translation>
+        <translation>ERROR: ¡Versión incorrecta!</translation>
     </message>
     <message>
         <location line="+9"/>
         <source>ERROR: Checksum mismatch!</source>
-        <translation>エラー;　チェックサム不整合です!</translation>
+        <translation>ERROR: ¡Fitxer corrupto!</translation>
     </message>
     <message>
         <location line="+17"/>
         <source>Leave directory &quot;%1&quot;</source>
-        <translation>¨%1¨ディレクトリを閉じます。</translation>
+        <translation>Salir del directorio  &quot;%1&quot;</translation>
     </message>
     <message>
         <location line="+12"/>
         <source>ERROR: Package is corrupt!</source>
-        <translation>エラー;　パッケージが壊れています!</translation>
+        <translation>ERROR: ¡El paquete está corrupto!</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Successfully extracted package!</source>
-        <translation>パッケージ抽出に成功しました!</translation>
+        <translation>¡Paquete extraido amb éxito!</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>ERROR: Project directory &quot;%1&quot; already exists!</source>
-        <translation>エラー;　プロジェクトディレクトリ&quot;%1&quot;はすでに存在します!</translation>
+        <translation>ERROR: ¡Ya existe el directorio del proyecto &quot;%1&quot;!</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>ERROR: Cannot create directory &quot;%1&quot;!</source>
-        <translation>エラー;　&quot;%1&quot;ディレクトリを作成できません!</translation>
+        <translation>ERROR: ¡No se pudo crear el directorio &quot;%1&quot;!</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Create and enter directory &quot;%1&quot;</source>
-        <translation>&quot;%1&quot;ディレクトリを作成、入ります</translation>
+        <translation>Crear y entrar en el directorio &quot;%1&quot;</translation>
     </message>
     <message>
         <location line="+17"/>
         <source>ERROR: Cannot create file &quot;%1&quot;!</source>
-        <translation>エラー;　&quot;%1&quot;ファイルを作成できません!</translation>
+        <translation>ERROR: ¡No se pudo crear el fitxer &quot;%1&quot;!</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Create file &quot;%1&quot;</source>
-        <translation>&quot;%1&quot;ファイルを作成</translation>
+        <translation>Crear fitxer &quot;%1&quot;</translation>
     </message>
     <message>
         <location line="+16"/>
         <source>ERROR: User library &quot;%1&quot; already exists!</source>
-        <translation>エラー;　ユーザライブラリ&quot;%1&quot;　は既に存在します!</translation>
+        <translation>ERROR: ¡Ya existe la biblioteca de usuario &quot;%1&quot;!</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>ERROR: Cannot create library &quot;%1&quot;!</source>
-        <translation>エラー;　ライブラリ&quot;%1&quot;を作成できません!</translation>
+        <translation>ERROR: ¡No se pudo crear la biblioteca &quot;%1&quot;!</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Create library &quot;%1&quot;</source>
-        <translation>&quot;%1&quot;ライブラリを作成</translation>
+        <translation>Crear biblioteca &quot;%1&quot;</translation>
     </message>
 </context>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="schematic_file.cpp" line="+860"/>
+        <location filename="../qucs/schematic_file.cpp" line="+860"/>
         <location filename="../qucs-help/main.cpp" line="+104"/>
+        <location filename="../qucs-filter/stepz_filter.cpp" line="+45"/>
         <source>Warning</source>
-        <translation>注意</translation>
+        <translation>Aviso</translation>
     </message>
     <message>
         <location filename="../qucs-help/main.cpp" line="+1"/>
         <source>Cannot save settings !</source>
-        <translation>セッティングを保存できません !</translation>
+        <translation>¡No puedo guardar la configuración!</translation>
     </message>
     <message>
-        <location filename="schematic.cpp" line="+106"/>
-        <location filename="textdoc.cpp" line="+64"/>
+        <location filename="../qucs/schematic.cpp" line="+101"/>
+        <location filename="../qucs/textdoc.cpp" line="+63"/>
         <source>untitled</source>
-        <translation>タイトル無し</translation>
+        <translation>sinTítulo</translation>
     </message>
     <message>
-        <location filename="octave_window.cpp" line="-31"/>
-        <location filename="qucs_actions.cpp" line="+1365"/>
-        <location filename="schematic_file.cpp" line="-747"/>
+        <location filename="../qucs/octave_window.cpp" line="-31"/>
+        <location filename="../qucs/qucs_actions.cpp" line="+1404"/>
+        <location filename="../qucs/schematic_file.cpp" line="-747"/>
         <location line="+18"/>
         <location line="+21"/>
         <location line="+24"/>
@@ -2794,13 +2867,13 @@ but is %1 !</source>
         <location line="+8"/>
         <location line="+10"/>
         <location line="+20"/>
-        <location line="+56"/>
-        <location filename="components/component.cpp" line="+1538"/>
+        <location line="+54"/>
+        <location filename="../qucs/components/component.cpp" line="+1534"/>
         <location line="+20"/>
         <location line="+8"/>
-        <location filename="components/vacomponent.cpp" line="+298"/>
+        <location filename="../qucs/components/vacomponent.cpp" line="+306"/>
         <source>Error</source>
-        <translation>エラー</translation>
+        <translation>Error</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -2810,25 +2883,25 @@ Set the Octave location on the application settings.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="schematic_file.cpp" line="-792"/>
+        <location filename="../qucs/schematic_file.cpp" line="-790"/>
         <location line="+707"/>
         <source>Format Error:
 &apos;Painting&apos; field is not closed!</source>
-        <translation>フォーマットエラー:
-&apos;Painting’ フィールドが閉じられていません!</translation>
+        <translation>Error de Formato:
+¡El campo &apos;Painting&apos; no está cerrado!</translation>
     </message>
     <message>
         <location line="-689"/>
         <source>Wrong document version: </source>
-        <translation>ドキュメントのバージョンが違います:</translation>
+        <translation>Versión equivocada del document:</translation>
     </message>
     <message>
         <location line="+21"/>
         <location line="+24"/>
         <source>Clipboard Format Error:
 Unknown field!</source>
-        <translation>クリップボードフォーマットエラー:
-不明のフィールドです!</translation>
+        <translation>Error de formato del portapapeles:
+¡Campo desconocido!</translation>
     </message>
     <message>
         <location line="+89"/>
@@ -2838,104 +2911,104 @@ Unknown field!</source>
     <message>
         <location line="+78"/>
         <source>Cannot save document!</source>
-        <translation>ドキュメントをセーブできません!</translation>
+        <translation>¡No puedo guardar el document!</translation>
     </message>
     <message>
         <location line="+189"/>
         <location line="+5"/>
         <source>Format Error:
 Wrong property field limiter!</source>
-        <translation>フォーマットエラー:
-誤ったプロパティーフィールドリミットです!</translation>
+        <translation>Error de Formato:
+¡limitador de campo amb propiedad equivocada!</translation>
     </message>
     <message>
         <location line="+37"/>
         <source>Format Error:
 Unknown property: </source>
-        <translation>フォーマットエラー:
-未知のプロパティーです:</translation>
+        <translation>Error de Formato:
+Propiedad desconocida:</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Format Error:
 Number expected in property field!</source>
-        <translation>フォーマットエラー:
-プロパティーフィールドに数値が入ると思われます!</translation>
+        <translation>Error de Formato:
+¡La propiedad del campo esperaba un número!</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Format Error:
 &apos;Property&apos; field is not closed!</source>
-        <translation>フォーマットエラー:
-&apos;Property’フィールドが閉じられていません!</translation>
+        <translation>Error de Formato:
+¡El campo &apos;Property&apos; no está cerrado! </translation>
     </message>
     <message>
         <location line="+68"/>
         <source>Format Error:
 &apos;Component&apos; field is not closed!</source>
-        <translation>フォーマットエラー :
-&apos;Component&apos; フィールドが閉じられていません!</translation>
+        <translation>Error de Formato:
+¡El campo &apos;Component&apos; no está cerrado!</translation>
     </message>
     <message>
         <location line="+59"/>
         <source>Format Error:
 Wrong &apos;wire&apos; line format!</source>
-        <translation>フォーマットエラー:
-誤った &apos;wire&apos; ラインフォーマットです!</translation>
+        <translation>Error de Formato:
+¡Formato de línea &apos;wire&apos; equivocado!</translation>
     </message>
     <message>
         <location line="+18"/>
         <source>Format Error:
 &apos;Wire&apos; field is not closed!</source>
-        <translation>フォーマットエラー:
-&apos;ワイヤ&apos; フィールドが閉じられていません!</translation>
+        <translation>Error de Formato:
+¡El campo &apos;Wire&apos; no está cerrado!</translation>
     </message>
     <message>
         <location line="+29"/>
         <source>Format Error:
 Unknown diagram!</source>
-        <translation>フォーマットエラー:
-未知のグラフです!</translation>
+        <translation>Error de Formato:
+¡Diagrama equivocado!</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Format Error:
 Wrong &apos;diagram&apos; line format!</source>
-        <translation>フォーマットエラー:
-誤った &apos;diagram&apos; ラインフォーマットです!</translation>
+        <translation>Error de Formato:
+¡Formato de la línea &apos;diagram&apos; equivocado!</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Format Error:
 &apos;Diagram&apos; field is not closed!</source>
-        <translation>フォーマットエラー:
-&apos;Diagram’ フィールドが閉じられていません!</translation>
+        <translation>Error de Formato:
+¡El campo &apos;Diagram&apos; no está cerrado!</translation>
     </message>
     <message>
         <location line="+17"/>
         <source>Format Error:
 Wrong &apos;painting&apos; line delimiter!</source>
-        <translation>フォーマットエラー:
-誤った &apos;painting&apos; ライン区切りです!</translation>
+        <translation>Error de Formato:
+¡Delimitador de línea &apos;painting&apos; equivocado!</translation>
     </message>
     <message>
         <location line="+16"/>
         <source>Format Error:
 Unknown painting!</source>
-        <translation>フォーマットエラー:
-未知の図形描画です!</translation>
+        <translation>Error de Formato:
+¡Pintura desconocida!</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Format Error:
 Wrong &apos;painting&apos; line format!</source>
-        <translation>フォーマットエラー:
-誤った &apos;painting&apos; ラインフォーマットです!</translation>
+        <translation>Error de Formato:
+¡Formato de línea de &apos;painting&apos; equivocado!</translation>
     </message>
     <message>
         <location line="+18"/>
         <source>Cannot load document: </source>
-        <translation>ドキュメントを読み込みできません:</translation>
+        <translation>No puedo cargar el document:</translation>
     </message>
     <message>
         <location line="+30"/>
@@ -2945,1876 +3018,1822 @@ Wrong &apos;painting&apos; line format!</source>
     </message>
     <message>
         <source>Wrong document type!</source>
-        <translation type="obsolete">誤ったドキュメントタイプです!</translation>
+        <translation type="obsolete">¡Tipus de document equivocado!</translation>
     </message>
     <message>
-        <location line="+46"/>
+        <location line="+44"/>
         <source>File Format Error:
 Unknown field!</source>
-        <translation>ファイルフォーマットエラー:
-未知のフィールドです!</translation>
+        <translation>Error de formato de fitxer: ¡Campo desconocido!</translation>
     </message>
     <message>
-        <location filename="paintings/ellipse.cpp" line="+372"/>
+        <location filename="../qucs/paintings/ellipse.cpp" line="+373"/>
         <source>Edit Ellipse Properties</source>
-        <translation>楕円プロパティー編集</translation>
+        <translation>Editar les propietats de la Elipse</translation>
     </message>
     <message>
-        <location filename="paintings/ellipsearc.cpp" line="+387"/>
+        <location filename="../qucs/paintings/ellipsearc.cpp" line="+387"/>
         <source>Edit Arc Properties</source>
-        <translation>弧プロパティー編集</translation>
+        <translation>Editar les propietats del Arco</translation>
     </message>
     <message>
-        <location filename="paintings/graphicline.cpp" line="+328"/>
+        <location filename="../qucs/paintings/graphicline.cpp" line="+326"/>
         <source>Edit Line Properties</source>
-        <translation>線プロパティー編集</translation>
+        <translation>Editar les propietats de la Línea</translation>
     </message>
     <message>
-        <location filename="paintings/rectangle.cpp" line="+374"/>
+        <location filename="../qucs/paintings/rectangle.cpp" line="+374"/>
         <source>Edit Rectangle Properties</source>
-        <translation>長方形プロパティー編集</translation>
-    </message>
-    <message>
-        <source> &lt;invalid&gt;</source>
-        <translation type="obsolete">&lt;無効&gt;</translation>
+        <translation>Editar les propietats del Rectángulo</translation>
     </message>
     <message>
         <source>Cannot load dataset: </source>
-        <translation type="obsolete">データセットをロードできません:</translation>
+        <translation type="obsolete">No puedo cargar el conjunto de dades:</translation>
     </message>
     <message>
         <source>Cannot get size of independent data &quot;</source>
-        <translation type="obsolete">ファイルサイズが取得できません</translation>
+        <translation type="obsolete">No puedo averiguar el tamaño de els dades independientes &quot;</translation>
     </message>
     <message>
         <source>Too few dependent data &quot;</source>
-        <translation type="obsolete">データが少なすぎます</translation>
+        <translation type="obsolete">Dades dependientes muy excasos &quot;</translation>
     </message>
     <message>
         <source>Independent data &quot;</source>
-        <translation type="obsolete">データ”</translation>
+        <translation type="obsolete">Dades independientes &quot;</translation>
     </message>
     <message>
         <source>&quot; not found</source>
-        <translation type="obsolete">”が見つかりません</translation>
+        <translation type="obsolete">&quot; no encontrado</translation>
     </message>
     <message>
         <source>Too few independent data &quot;</source>
-        <translation type="obsolete">データが少なすぎます”</translation>
+        <translation type="obsolete">Dades independientes muy excasos &quot;</translation>
     </message>
     <message>
-        <location filename="diagrams/marker.cpp" line="+285"/>
-        <location filename="diagrams/tabdiagram.cpp" line="+246"/>
+        <location filename="../qucs/diagrams/marker.cpp" line="+282"/>
+        <location filename="../qucs/diagrams/tabdiagram.cpp" line="+259"/>
         <source>invalid</source>
-        <translation>無効</translation>
+        <translation>inválido</translation>
     </message>
     <message>
-        <location filename="components/ac_sim.cpp" line="+24"/>
+        <location filename="../qucs/components/ac_sim.cpp" line="+23"/>
         <location line="+48"/>
         <source>ac simulation</source>
-        <translation>ACシミュレーション</translation>
+        <translation>simulación ac</translation>
     </message>
     <message>
         <location line="-23"/>
-        <location filename="components/param_sweep.cpp" line="+46"/>
-        <location filename="components/sp_sim.cpp" line="+48"/>
-        <location filename="components/tr_sim.cpp" line="+44"/>
+        <location filename="../qucs/components/param_sweep.cpp" line="+45"/>
+        <location filename="../qucs/components/sp_sim.cpp" line="+47"/>
+        <location filename="../qucs/components/tr_sim.cpp" line="+43"/>
         <source>sweep type</source>
-        <translation>スィープタイプ</translation>
+        <translation>tipo de barrido</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/sp_sim.cpp" line="+2"/>
+        <location filename="../qucs/components/sp_sim.cpp" line="+2"/>
         <source>start frequency in Hertz</source>
-        <translation>スタート周波数(Hz)</translation>
+        <translation>freqüència de inici en Hertzios</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/sp_sim.cpp" line="+2"/>
+        <location filename="../qucs/components/sp_sim.cpp" line="+2"/>
         <source>stop frequency in Hertz</source>
-        <translation>ストップ周波数(Hz)</translation>
+        <translation>freqüència de parada en Hertzios</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/param_sweep.cpp" line="+8"/>
-        <location filename="components/sp_sim.cpp" line="+2"/>
+        <location filename="../qucs/components/param_sweep.cpp" line="+8"/>
+        <location filename="../qucs/components/sp_sim.cpp" line="+2"/>
         <source>number of simulation steps</source>
-        <translation>シミュレーションステップ数</translation>
+        <translation>número de pasos en la simulación</translation>
     </message>
     <message>
-        <location filename="components/ampere_ac.cpp" line="+23"/>
+        <location filename="../qucs/components/ampere_ac.cpp" line="+23"/>
         <source>ideal ac current source</source>
-        <translation>理想AC電流源</translation>
+        <translation>fuente de intensidad ac ideal</translation>
     </message>
     <message>
-        <location filename="components/ampere_dc.cpp" line="+44"/>
+        <location filename="../qucs/components/ampere_dc.cpp" line="+44"/>
         <source>current in Ampere</source>
-        <translation>電流(A)</translation>
+        <translation>intensidad en Amperios</translation>
     </message>
     <message>
-        <location filename="components/am_modulator.cpp" line="+54"/>
-        <location filename="components/ampere_ac.cpp" line="+25"/>
-        <location filename="components/hb_sim.cpp" line="+43"/>
-        <location filename="components/pm_modulator.cpp" line="+54"/>
-        <location filename="components/source_ac.cpp" line="+65"/>
-        <location filename="components/volt_ac.cpp" line="+48"/>
+        <location filename="../qucs/components/am_modulator.cpp" line="+54"/>
+        <location filename="../qucs/components/ampere_ac.cpp" line="+25"/>
+        <location filename="../qucs/components/hb_sim.cpp" line="+42"/>
+        <location filename="../qucs/components/pm_modulator.cpp" line="+54"/>
+        <location filename="../qucs/components/source_ac.cpp" line="+65"/>
+        <location filename="../qucs/components/volt_ac.cpp" line="+48"/>
         <source>frequency in Hertz</source>
-        <translation>周波数(Hz)</translation>
+        <translation>freqüència en Hertzios</translation>
     </message>
     <message>
-        <location line="+2"/>
-        <location filename="components/ampere_ac.cpp" line="+2"/>
-        <location filename="components/pm_modulator.cpp" line="+2"/>
-        <location filename="components/volt_ac.cpp" line="+2"/>
-        <source>initial phase in degrees</source>
-        <translation>開始位相(°)</translation>
-    </message>
-    <message>
-        <location filename="components/ampere_ac.cpp" line="+18"/>
+        <location filename="../qucs/components/ampere_ac.cpp" line="+20"/>
         <source>ac Current Source</source>
-        <translation>AC電流源</translation>
+        <translation>Fuente de intensidad ac</translation>
     </message>
     <message>
-        <location filename="components/ampere_dc.cpp" line="-21"/>
+        <location filename="../qucs/components/ampere_dc.cpp" line="-21"/>
         <source>ideal dc current source</source>
-        <translation>理想DC電流源</translation>
+        <translation>fuente de intensidad dc ideal</translation>
     </message>
     <message>
         <location line="+37"/>
         <source>dc Current Source</source>
-        <translation>DC電流源</translation>
+        <translation>Fuente de intensidad dc</translation>
     </message>
     <message>
-        <location filename="components/ampere_noise.cpp" line="+23"/>
+        <location filename="../qucs/components/ampere_noise.cpp" line="+23"/>
         <source>noise current source</source>
-        <translation>ノイズ電流源</translation>
+        <translation>fuente de intensidad de ruido</translation>
     </message>
     <message>
         <location line="+28"/>
         <source>current power spectral density in A^2/Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>densitat de potencia espectral actual en A^2/Hz</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/noise_ii.cpp" line="+77"/>
-        <location filename="components/noise_iv.cpp" line="+72"/>
-        <location filename="components/noise_vv.cpp" line="+67"/>
-        <location filename="components/volt_noise.cpp" line="+48"/>
+        <location filename="../qucs/components/noise_ii.cpp" line="+77"/>
+        <location filename="../qucs/components/noise_iv.cpp" line="+72"/>
+        <location filename="../qucs/components/noise_vv.cpp" line="+67"/>
+        <location filename="../qucs/components/volt_noise.cpp" line="+48"/>
         <source>frequency exponent</source>
-        <translation>周波数 指数</translation>
+        <translation>exponente de freqüència</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/noise_ii.cpp" line="+2"/>
-        <location filename="components/noise_iv.cpp" line="+2"/>
-        <location filename="components/noise_vv.cpp" line="+2"/>
-        <location filename="components/volt_noise.cpp" line="+2"/>
+        <location filename="../qucs/components/noise_ii.cpp" line="+2"/>
+        <location filename="../qucs/components/noise_iv.cpp" line="+2"/>
+        <location filename="../qucs/components/noise_vv.cpp" line="+2"/>
+        <location filename="../qucs/components/volt_noise.cpp" line="+2"/>
         <source>frequency coefficient</source>
-        <translation>周波数 係数</translation>
+        <translation>coeficiente de freqüència</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/noise_ii.cpp" line="+2"/>
-        <location filename="components/noise_iv.cpp" line="+2"/>
-        <location filename="components/noise_vv.cpp" line="+2"/>
-        <location filename="components/volt_noise.cpp" line="+2"/>
+        <location filename="../qucs/components/noise_ii.cpp" line="+2"/>
+        <location filename="../qucs/components/noise_iv.cpp" line="+2"/>
+        <location filename="../qucs/components/noise_vv.cpp" line="+2"/>
+        <location filename="../qucs/components/volt_noise.cpp" line="+2"/>
         <source>additive frequency term</source>
-        <translation>周波数付加</translation>
+        <translation>termino sumatorio de freqüència</translation>
     </message>
     <message>
         <location line="+16"/>
         <source>Noise Current Source</source>
-        <translation>ノイズ電流源</translation>
+        <translation>Fuente de Intensidad de Ruido</translation>
     </message>
     <message>
-        <location filename="components/attenuator.cpp" line="+23"/>
+        <location filename="../qucs/components/attenuator.cpp" line="+23"/>
         <source>attenuator</source>
-        <translation>アッテネータ</translation>
+        <translation>atenuador</translation>
     </message>
     <message>
         <location line="+29"/>
         <source>power attenuation</source>
-        <translation>パワーアッテネーション</translation>
+        <translation>atenuación de potencia</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/coupler.cpp" line="+68"/>
-        <location filename="components/gyrator.cpp" line="+57"/>
-        <location filename="components/hybrid.cpp" line="+58"/>
-        <location filename="components/phaseshifter.cpp" line="+49"/>
+        <location filename="../qucs/components/coupler.cpp" line="+68"/>
+        <location filename="../qucs/components/gyrator.cpp" line="+57"/>
+        <location filename="../qucs/components/hybrid.cpp" line="+58"/>
+        <location filename="../qucs/components/phaseshifter.cpp" line="+49"/>
         <source>reference impedance</source>
-        <translation>インピーダンス</translation>
+        <translation>impedancia de referencia</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/bjtsub.cpp" line="+95"/>
-        <location filename="components/bondwire.cpp" line="+58"/>
-        <location filename="components/coaxialline.cpp" line="+59"/>
-        <location filename="components/ctline.cpp" line="+69"/>
-        <location filename="components/dc_sim.cpp" line="+48"/>
-        <location filename="components/diode.cpp" line="+60"/>
-        <location filename="components/etr_sim.cpp" line="+60"/>
-        <location filename="components/isolator.cpp" line="+53"/>
-        <location filename="components/jfet.cpp" line="+63"/>
-        <location filename="components/mosfet_sub.cpp" line="+118"/>
-        <location filename="components/mscoupled.cpp" line="+70"/>
-        <location filename="components/mslange.cpp" line="+62"/>
-        <location filename="components/msline.cpp" line="+56"/>
-        <location filename="components/msvia.cpp" line="+49"/>
-        <location filename="components/rectline.cpp" line="+64"/>
-        <location filename="components/relais.cpp" line="+68"/>
-        <location filename="components/resistor.cpp" line="+30"/>
-        <location filename="components/rlcg.cpp" line="+65"/>
-        <location filename="components/source_ac.cpp" line="+2"/>
-        <location filename="components/switch.cpp" line="+36"/>
-        <location filename="components/tline.cpp" line="+55"/>
-        <location filename="components/tline_4port.cpp" line="+59"/>
-        <location filename="components/tr_sim.cpp" line="+25"/>
-        <location filename="components/tunneldiode.cpp" line="+52"/>
-        <location filename="components/twistedpair.cpp" line="+75"/>
+        <location filename="../qucs/components/bjtsub.cpp" line="+95"/>
+        <location filename="../qucs/components/bondwire.cpp" line="+58"/>
+        <location filename="../qucs/components/coaxialline.cpp" line="+59"/>
+        <location filename="../qucs/components/ctline.cpp" line="+69"/>
+        <location filename="../qucs/components/dc_sim.cpp" line="+47"/>
+        <location filename="../qucs/components/diode.cpp" line="+60"/>
+        <location filename="../qucs/components/etr_sim.cpp" line="+59"/>
+        <location filename="../qucs/components/isolator.cpp" line="+53"/>
+        <location filename="../qucs/components/jfet.cpp" line="+63"/>
+        <location filename="../qucs/components/mosfet_sub.cpp" line="+118"/>
+        <location filename="../qucs/components/mscoupled.cpp" line="+70"/>
+        <location filename="../qucs/components/mslange.cpp" line="+62"/>
+        <location filename="../qucs/components/msline.cpp" line="+56"/>
+        <location filename="../qucs/components/msvia.cpp" line="+49"/>
+        <location filename="../qucs/components/rectline.cpp" line="+64"/>
+        <location filename="../qucs/components/relais.cpp" line="+68"/>
+        <location filename="../qucs/components/resistor.cpp" line="+29"/>
+        <location filename="../qucs/components/rlcg.cpp" line="+66"/>
+        <location filename="../qucs/components/source_ac.cpp" line="+2"/>
+        <location filename="../qucs/components/switch.cpp" line="+35"/>
+        <location filename="../qucs/components/tline.cpp" line="+55"/>
+        <location filename="../qucs/components/tline_4port.cpp" line="+59"/>
+        <location filename="../qucs/components/tr_sim.cpp" line="+25"/>
+        <location filename="../qucs/components/tunneldiode.cpp" line="+52"/>
+        <location filename="../qucs/components/twistedpair.cpp" line="+75"/>
         <source>simulation temperature in degree Celsius</source>
-        <translation>シミュレーション温度(°C)</translation>
+        <translation>temperatura de simulación en grados Celsius</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>Attenuator</source>
-        <translation>アッテネータ</translation>
+        <translation>Atenuador</translation>
     </message>
     <message>
-        <location filename="components/biast.cpp" line="+23"/>
+        <location filename="../qucs/components/biast.cpp" line="+23"/>
         <source>bias t</source>
-        <translation>バイアスティー</translation>
+        <translation>polarización t</translation>
     </message>
     <message>
         <location line="+49"/>
         <source>Bias T</source>
-        <translation>バイアスティー</translation>
+        <translation>Polarización T</translation>
     </message>
     <message>
-        <location filename="components/bjt.cpp" line="+25"/>
+        <location filename="../qucs/components/bjt.cpp" line="+25"/>
         <source>bipolar junction transistor</source>
-        <translation>バイポーラジャンクショントランジスタ</translation>
+        <translation>transistor de unión bipolar</translation>
     </message>
     <message>
-        <location filename="components/EKV26MOS.cpp" line="+19"/>
-        <location filename="components/bjtsub.cpp" line="-70"/>
-        <location filename="components/hic0_full.cpp" line="+19"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+19"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+19"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+19"/>
-        <location filename="components/jfet.cpp" line="-36"/>
-        <location filename="components/mosfet_sub.cpp" line="-94"/>
+        <location filename="../qucs/components/EKV26MOS.cpp" line="+18"/>
+        <location filename="../qucs/components/bjtsub.cpp" line="-70"/>
+        <location filename="../qucs/components/hic0_full.cpp" line="+18"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+18"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+18"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+18"/>
+        <location filename="../qucs/components/jfet.cpp" line="-36"/>
+        <location filename="../qucs/components/mosfet_sub.cpp" line="-94"/>
         <source>polarity</source>
-        <translation>極性</translation>
+        <translation>polaridad</translation>
     </message>
     <message>
         <location line="+113"/>
-        <location filename="components/bjtsub.cpp" line="+2"/>
-        <location filename="components/diac.cpp" line="+53"/>
-        <location filename="components/diode.cpp" line="-34"/>
-        <location filename="components/thyristor.cpp" line="+53"/>
-        <location filename="components/triac.cpp" line="+57"/>
+        <location filename="../qucs/components/bjtsub.cpp" line="+2"/>
+        <location filename="../qucs/components/diac.cpp" line="+53"/>
+        <location filename="../qucs/components/diode.cpp" line="-34"/>
+        <location filename="../qucs/components/thyristor.cpp" line="+53"/>
+        <location filename="../qucs/components/triac.cpp" line="+57"/>
         <source>saturation current</source>
-        <translation>飽和電流</translation>
+        <translation>corriente de saturación</translation>
     </message>
     <message>
-        <location filename="components/bjtsub.cpp" line="+2"/>
-        <location filename="components/phototransistor.cpp" line="+25"/>
+        <location filename="../qucs/components/bjtsub.cpp" line="+2"/>
+        <location filename="../qucs/components/phototransistor.cpp" line="+25"/>
         <source>forward emission coefficient</source>
-        <translation>順放射係数</translation>
+        <translation>coeficiente de emisión directa</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/phototransistor.cpp" line="+2"/>
+        <location filename="../qucs/components/phototransistor.cpp" line="+2"/>
         <source>reverse emission coefficient</source>
-        <translation>逆放射係数</translation>
+        <translation>coeficiente de emisión inversa</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/phototransistor.cpp" line="+30"/>
+        <location filename="../qucs/components/phototransistor.cpp" line="+30"/>
         <source>high current corner for forward beta</source>
-        <translation>高電流順方向ベータ降下点</translation>
+        <translation>pico de corriente elevada para beta directa</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/phototransistor.cpp" line="+3"/>
+        <location filename="../qucs/components/phototransistor.cpp" line="+3"/>
         <source>high current corner for reverse beta</source>
-        <translation>高電流逆方向ベータ降下点</translation>
+        <translation>pico de corriente elevada para beta inversa</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/phototransistor.cpp" line="-31"/>
+        <location filename="../qucs/components/phototransistor.cpp" line="-31"/>
         <source>forward early voltage</source>
-        <translation>順初期電圧</translation>
+        <translation>tensión temprana directa</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/phototransistor.cpp" line="+3"/>
+        <location filename="../qucs/components/phototransistor.cpp" line="+3"/>
         <source>reverse early voltage</source>
-        <translation>逆初期電圧</translation>
+        <translation>tensión temprana inversa</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>base-emitter leakage saturation current</source>
-        <translation>ベースエミッタ間 洩れ飽和電流</translation>
+        <translation>intensidad de saturación base-emisor</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>base-emitter leakage emission coefficient</source>
-        <translation>ベースエミッタ間 洩れ放射係数</translation>
+        <translation>coeficiente de emisión de fugas base-emisor</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>base-collector leakage saturation current</source>
-        <translation>ベースコレクタ間 洩れ飽和電流</translation>
+        <translation>intensidad de saturación  base-colector</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>base-collector leakage emission coefficient</source>
-        <translation>ベースコレクタ間 洩れ放射係数</translation>
+        <translation>coeficiente de emisión de fugas base-colector</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/phototransistor.cpp" line="-14"/>
+        <location filename="../qucs/components/phototransistor.cpp" line="-14"/>
         <source>forward beta</source>
-        <translation>順方向ベータ</translation>
+        <translation>ganancia (beta) directa</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/phototransistor.cpp" line="+2"/>
+        <location filename="../qucs/components/phototransistor.cpp" line="+2"/>
         <source>reverse beta</source>
-        <translation>逆方向ベータ</translation>
+        <translation>ganancia (beta) inversa</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>minimum base resistance for high currents</source>
-        <translation>高電流時の最小ベース抵抗</translation>
+        <translation>resistencia mínima de la base amb corrientes altas</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>current for base resistance midpoint</source>
-        <translation>ベース抵抗中点時の電流</translation>
+        <translation>corriente en la base para punt de resistencia media</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>collector ohmic resistance</source>
-        <translation>コレクタ抵抗</translation>
+        <translation>resistencia óhmica del colector</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>emitter ohmic resistance</source>
-        <translation>エミッタ抵抗</translation>
+        <translation>resistencia óhmica del emisor</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>zero-bias base resistance (may be high-current dependent)</source>
-        <translation>ゼロバイアス ベース抵抗 (恐らく大電流に依存)</translation>
+        <translation>resistencia  de polarización de la base (puede depender de les corrientes altas)</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/phototransistor.cpp" line="+20"/>
+        <location filename="../qucs/components/phototransistor.cpp" line="+20"/>
         <source>base-emitter zero-bias depletion capacitance</source>
-        <translation>ベースエミッタ間 ゼロバイアス 空乏容量</translation>
+        <translation>capacidad de pérdidas en la polarización base-emisor</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/phototransistor.cpp" line="-3"/>
+        <location filename="../qucs/components/phototransistor.cpp" line="-3"/>
         <source>base-emitter junction built-in potential</source>
-        <translation>ベースエミッタ間 電位</translation>
+        <translation>potencial de la unión base-emisor</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/phototransistor.cpp" line="-2"/>
+        <location filename="../qucs/components/phototransistor.cpp" line="-2"/>
         <source>base-emitter junction exponential factor</source>
-        <translation>ベースエミッタ間接合指数係数</translation>
+        <translation>factor exponencial de la unión base-emisor</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/phototransistor.cpp" line="+13"/>
+        <location filename="../qucs/components/phototransistor.cpp" line="+13"/>
         <source>base-collector zero-bias depletion capacitance</source>
-        <translation>ベースコレクタ間ゼロバイアス空乏容量</translation>
+        <translation>capacidad de pérdidas en la polarización base-colector</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/phototransistor.cpp" line="-3"/>
+        <location filename="../qucs/components/phototransistor.cpp" line="-3"/>
         <source>base-collector junction built-in potential</source>
-        <translation>ベースコレクタ間接合電位</translation>
+        <translation>potencial de  la unión base-colector</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/phototransistor.cpp" line="-2"/>
+        <location filename="../qucs/components/phototransistor.cpp" line="-2"/>
         <source>base-collector junction exponential factor</source>
-        <translation>ベースコレクタ間接合指数係数</translation>
+        <translation>factor exponencial de la unión base colector</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>fraction of Cjc that goes to internal base pin</source>
-        <translation>内部ベースノードにつながるB-C空乏層容量の割合　</translation>
+        <translation>fracción de Cjc que va al conector interno de la base</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>zero-bias collector-substrate capacitance</source>
-        <translation>ゼロバイアス時のコレクタと基板の容量</translation>
+        <translation>capacidad de la polarización colector-sustrato</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>substrate junction built-in potential</source>
-        <translation>基板との接合電位</translation>
+        <translation>potencial interno de  la unión-sustrato</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>substrate junction exponential factor</source>
-        <translation>基板との接合指数係数</translation>
+        <translation>factor exponencial unión-sustrato</translation>
     </message>
     <message>
-        <location filename="components/EKV26MOS.cpp" line="+19"/>
-        <location filename="components/MESFET.cpp" line="+66"/>
-        <location filename="components/bjtsub.cpp" line="+2"/>
-        <location filename="components/diode.cpp" line="+10"/>
-        <location filename="components/photodiode.cpp" line="+45"/>
+        <location filename="../qucs/components/EKV26MOS.cpp" line="+19"/>
+        <location filename="../qucs/components/MESFET.cpp" line="+66"/>
+        <location filename="../qucs/components/bjtsub.cpp" line="+2"/>
+        <location filename="../qucs/components/diode.cpp" line="+10"/>
+        <location filename="../qucs/components/photodiode.cpp" line="+45"/>
         <source>forward-bias depletion capacitance coefficient</source>
-        <translation>順バイアス空乏層容量係数</translation>
+        <translation>coeficiente de pérdida de capacidad en polarización directa</translation>
     </message>
     <message>
-        <location filename="components/bjtsub.cpp" line="+2"/>
-        <location filename="components/phototransistor.cpp" line="+11"/>
+        <location filename="../qucs/components/bjtsub.cpp" line="+2"/>
+        <location filename="../qucs/components/phototransistor.cpp" line="+11"/>
         <source>ideal forward transit time</source>
-        <translation>理想的な順通過時間</translation>
+        <translation>temps ideal de tránsito en directa </translation>
     </message>
     <message>
         <location line="+2"/>
         <source>coefficient of bias-dependence for Tf</source>
-        <translation>Tfに依存するバイアスの係数</translation>
+        <translation>coeficiente de dependencia de la  polarización para Tf (Tiempo de tránsito base polar directa)</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>voltage dependence of Tf on base-collector voltage</source>
-        <translation>ベースコレクタ間電圧に於けるTfの電圧依存</translation>
+        <translation>dependencia de tensión de Tf en la tensión base-colector</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>high-current effect on Tf</source>
-        <translation>Tfに於ける大電流効果</translation>
+        <translation>efecto de les corrientes altas en Tf (Tiempo de tránsito base polar directa)</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/phototransistor.cpp" line="-3"/>
+        <location filename="../qucs/components/phototransistor.cpp" line="-3"/>
         <source>ideal reverse transit time</source>
-        <translation>理想逆通過時間</translation>
+        <translation>temps de tránsito ideal en inversa</translation>
     </message>
     <message>
-        <location filename="components/EKV26MOS.cpp" line="-34"/>
-        <location filename="components/MESFET.cpp" line="+78"/>
-        <location filename="components/bjtsub.cpp" line="+4"/>
-        <location filename="components/diode.cpp" line="+14"/>
-        <location filename="components/hic0_full.cpp" line="+157"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+171"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+171"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+175"/>
-        <location filename="components/jfet.cpp" line="+30"/>
-        <location filename="components/mosfet_sub.cpp" line="+88"/>
-        <location filename="components/photodiode.cpp" line="+24"/>
-        <location filename="components/phototransistor.cpp" line="+21"/>
+        <location filename="../qucs/components/EKV26MOS.cpp" line="-34"/>
+        <location filename="../qucs/components/MESFET.cpp" line="+78"/>
+        <location filename="../qucs/components/bjtsub.cpp" line="+4"/>
+        <location filename="../qucs/components/diode.cpp" line="+14"/>
+        <location filename="../qucs/components/hic0_full.cpp" line="+157"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+171"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+171"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+175"/>
+        <location filename="../qucs/components/jfet.cpp" line="+30"/>
+        <location filename="../qucs/components/mosfet_sub.cpp" line="+88"/>
+        <location filename="../qucs/components/photodiode.cpp" line="+24"/>
+        <location filename="../qucs/components/phototransistor.cpp" line="+21"/>
         <location line="+2"/>
         <source>flicker noise coefficient</source>
-        <translation>フリッカーノイズ係数</translation>
+        <translation>coeficiente de ruido térmico</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/MESFET.cpp" line="-2"/>
-        <location filename="components/bjtsub.cpp" line="+2"/>
-        <location filename="components/diode.cpp" line="+2"/>
-        <location filename="components/jfet.cpp" line="+2"/>
-        <location filename="components/mosfet_sub.cpp" line="+2"/>
-        <location filename="components/photodiode.cpp" line="+2"/>
-        <location filename="components/phototransistor.cpp" line="+2"/>
+        <location filename="../qucs/components/MESFET.cpp" line="-2"/>
+        <location filename="../qucs/components/bjtsub.cpp" line="+2"/>
+        <location filename="../qucs/components/diode.cpp" line="+2"/>
+        <location filename="../qucs/components/jfet.cpp" line="+2"/>
+        <location filename="../qucs/components/mosfet_sub.cpp" line="+2"/>
+        <location filename="../qucs/components/photodiode.cpp" line="+2"/>
+        <location filename="../qucs/components/phototransistor.cpp" line="+2"/>
         <source>flicker noise exponent</source>
-        <translation>フリッカーノイズ指数</translation>
+        <translation>exponente de ruido térmico</translation>
     </message>
     <message>
-        <location filename="components/bjtsub.cpp" line="+2"/>
-        <location filename="components/diode.cpp" line="+2"/>
-        <location filename="components/jfet.cpp" line="+2"/>
-        <location filename="components/mosfet_sub.cpp" line="+2"/>
-        <location filename="components/photodiode.cpp" line="+2"/>
+        <location filename="../qucs/components/bjtsub.cpp" line="+2"/>
+        <location filename="../qucs/components/diode.cpp" line="+2"/>
+        <location filename="../qucs/components/jfet.cpp" line="+2"/>
+        <location filename="../qucs/components/mosfet_sub.cpp" line="+2"/>
+        <location filename="../qucs/components/photodiode.cpp" line="+2"/>
         <source>flicker noise frequency exponent</source>
-        <translation>フリッカーノイズ指数</translation>
+        <translation>exponente de freqüència de ruido térmico</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>burst noise coefficient</source>
-        <translation>バーストノイズ係数</translation>
+        <translation>coeficiente de ruido a ráfagas</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>burst noise exponent</source>
-        <translation>バーストノイズ指数</translation>
+        <translation>exponente de ruido a ráfagas</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>burst noise corner frequency in Hertz</source>
-        <translation>バーストノイズのコーナー周波数（Hz)</translation>
+        <translation>freqüència de esquina del ruido a ráfagas en Hertzios</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>excess phase in degrees</source>
-        <translation>超過位相（°）</translation>
+        <translation>exceso de fase en grados</translation>
     </message>
     <message>
-        <location filename="components/bjt.cpp" line="+19"/>
-        <location filename="components/bjtsub.cpp" line="+36"/>
+        <location filename="../qucs/components/bjt.cpp" line="+19"/>
+        <location filename="../qucs/components/bjtsub.cpp" line="+36"/>
         <source>npn transistor</source>
-        <translation>NPNトランジスタ</translation>
+        <translation>transitor npn</translation>
     </message>
     <message>
         <location line="+10"/>
-        <location filename="components/bjtsub.cpp" line="+10"/>
+        <location filename="../qucs/components/bjtsub.cpp" line="+10"/>
         <source>pnp transistor</source>
-        <translation>PNPトランジスタ</translation>
+        <translation>transistor pnp</translation>
     </message>
     <message>
-        <location filename="components/bjtsub.cpp" line="-29"/>
+        <location filename="../qucs/components/bjtsub.cpp" line="-29"/>
         <source>bipolar junction transistor with substrate</source>
-        <translation>BJT(基板情報含む)</translation>
+        <translation>transistor de unión bipolar amb substrato</translation>
     </message>
     <message>
-        <location filename="components/capacitor.cpp" line="+23"/>
+        <location filename="../qucs/components/capacitor.cpp" line="+23"/>
         <source>capacitor</source>
-        <translation>コンデンサ</translation>
+        <translation>condensador</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>capacitance in Farad</source>
-        <translation>容量(F)</translation>
+        <translation>capacidad en Faradios</translation>
     </message>
     <message>
         <location line="+20"/>
         <source>Capacitor</source>
-        <translation>コンデンサ</translation>
+        <translation>Condensador</translation>
     </message>
     <message>
-        <location filename="components/cccs.cpp" line="+23"/>
+        <location filename="../qucs/components/cccs.cpp" line="+23"/>
         <source>current controlled current source</source>
-        <translation>電流制御電流源</translation>
+        <translation>fuente de intensidad controlada por intensidad</translation>
     </message>
     <message>
         <location line="+38"/>
-        <location filename="components/ccvs.cpp" line="+62"/>
-        <location filename="components/vcvs.cpp" line="+64"/>
+        <location filename="../qucs/components/ccvs.cpp" line="+62"/>
+        <location filename="../qucs/components/vcvs.cpp" line="+64"/>
         <source>forward transfer factor</source>
-        <translation type="unfinished">順方向 伝送要因</translation>
+        <translation>factor de transferencia directa</translation>
     </message>
     <message>
         <location line="+1"/>
-        <location filename="components/ccvs.cpp" line="+1"/>
-        <location filename="components/component.cpp" line="-264"/>
-        <location filename="components/d_flipflop.cpp" line="+27"/>
-        <location filename="components/ifile.cpp" line="+60"/>
-        <location filename="components/jk_flipflop.cpp" line="+29"/>
-        <location filename="components/logical_buf.cpp" line="+33"/>
-        <location filename="components/logical_inv.cpp" line="+33"/>
-        <location filename="components/rs_flipflop.cpp" line="+27"/>
-        <location filename="components/vccs.cpp" line="+64"/>
-        <location filename="components/vcvs.cpp" line="+1"/>
-        <location filename="components/vfile.cpp" line="+62"/>
+        <location filename="../qucs/components/ccvs.cpp" line="+1"/>
+        <location filename="../qucs/components/component.cpp" line="-274"/>
+        <location filename="../qucs/components/d_flipflop.cpp" line="+26"/>
+        <location filename="../qucs/components/ifile.cpp" line="+59"/>
+        <location filename="../qucs/components/jk_flipflop.cpp" line="+28"/>
+        <location filename="../qucs/components/logical_buf.cpp" line="+32"/>
+        <location filename="../qucs/components/logical_inv.cpp" line="+32"/>
+        <location filename="../qucs/components/rs_flipflop.cpp" line="+26"/>
+        <location filename="../qucs/components/vccs.cpp" line="+64"/>
+        <location filename="../qucs/components/vcvs.cpp" line="+1"/>
+        <location filename="../qucs/components/vfile.cpp" line="+61"/>
         <source>delay time</source>
-        <translation>遅延時間</translation>
+        <translation>temps de retardo</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>Current Controlled Current Source</source>
-        <translation>電流制御電流源</translation>
+        <translation>Fuene de Intensidad Controlada por Intensidad</translation>
     </message>
     <message>
-        <location filename="components/ccvs.cpp" line="-40"/>
+        <location filename="../qucs/components/ccvs.cpp" line="-40"/>
         <source>current controlled voltage source</source>
-        <translation>電流制御電圧源</translation>
+        <translation>fuente de tensión controlada por intensidad</translation>
     </message>
     <message>
         <location line="+54"/>
         <source>Current Controlled Voltage Source</source>
-        <translation>電流制御電圧源</translation>
+        <translation>Fuente de Tensión Controlada por Intensidad</translation>
     </message>
     <message>
-        <location filename="components/circulator.cpp" line="+24"/>
+        <location filename="../qucs/components/circulator.cpp" line="+23"/>
         <source>circulator</source>
-        <translation>サーキュレータ</translation>
+        <translation>circulador</translation>
     </message>
     <message>
         <location line="+26"/>
         <source>reference impedance of port 1</source>
-        <translation>ポート1のインピーダンス</translation>
+        <translation>impedancia de referencia de la conexión 1</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>reference impedance of port 2</source>
-        <translation>ポート2のインピーダンス</translation>
+        <translation>impedancia de referencia de la conexión 2</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>reference impedance of port 3</source>
-        <translation>ポート3のインピーダンス</translation>
+        <translation>impedancia de referencia de la conexión 3</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>Circulator</source>
-        <translation>サーキュレータ</translation>
+        <translation>Circulador</translation>
     </message>
     <message>
-        <location filename="components/component.cpp" line="+237"/>
+        <location filename="../qucs/components/component.cpp" line="+247"/>
         <source>Format Error:
 Wrong line start!</source>
-        <translation>フォーマットエラー:
-誤ったライン開始です!</translation>
+        <translation>Error de Formato:
+¡Comienzo de línea equivocado!</translation>
     </message>
     <message>
         <source>Format Error:
 Unknown component!</source>
-        <translation type="obsolete">フォーマットエラー:
-未知のコンポーネントです!</translation>
+        <translation type="obsolete">Error de Formato:
+¡Componente desconocido!</translation>
     </message>
     <message>
         <location line="+28"/>
         <source>Format Error:
 Wrong &apos;component&apos; line format!</source>
-        <translation>フォーマットエラー:
-誤った &apos;component&apos; 線フォーマットです!</translation>
+        <translation>Error de Formato:
+¡Formato de línea &apos;component&apos; equivocado!</translation>
     </message>
     <message>
-        <location filename="components/coplanar.cpp" line="+23"/>
+        <location filename="../qucs/components/coplanar.cpp" line="+23"/>
         <source>coplanar line</source>
-        <translation>コプレーナライン</translation>
+        <translation>línea coplanar</translation>
     </message>
     <message>
         <location line="+37"/>
-        <location filename="components/cpwgap.cpp" line="+64"/>
-        <location filename="components/cpwopen.cpp" line="+63"/>
-        <location filename="components/cpwshort.cpp" line="+62"/>
-        <location filename="components/cpwstep.cpp" line="+66"/>
-        <location filename="components/mscoupled.cpp" line="-13"/>
-        <location filename="components/msgap.cpp" line="+51"/>
-        <location filename="components/mslange.cpp" line="-13"/>
-        <location filename="components/msline.cpp" line="-12"/>
-        <location filename="components/msopen.cpp" line="+42"/>
-        <location filename="components/msrstub.cpp" line="+42"/>
+        <location filename="../qucs/components/cpwgap.cpp" line="+64"/>
+        <location filename="../qucs/components/cpwopen.cpp" line="+63"/>
+        <location filename="../qucs/components/cpwshort.cpp" line="+62"/>
+        <location filename="../qucs/components/cpwstep.cpp" line="+66"/>
+        <location filename="../qucs/components/mscoupled.cpp" line="-13"/>
+        <location filename="../qucs/components/msgap.cpp" line="+51"/>
+        <location filename="../qucs/components/mslange.cpp" line="-13"/>
+        <location filename="../qucs/components/msline.cpp" line="-12"/>
+        <location filename="../qucs/components/msopen.cpp" line="+42"/>
+        <location filename="../qucs/components/msrstub.cpp" line="+42"/>
         <source>name of substrate definition</source>
-        <translation>基材定義名</translation>
+        <translation>nombre de la definición del sustrato</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/cpwgap.cpp" line="+2"/>
-        <location filename="components/cpwopen.cpp" line="+2"/>
-        <location filename="components/cpwshort.cpp" line="+2"/>
-        <location filename="components/mscoupled.cpp" line="+2"/>
-        <location filename="components/mslange.cpp" line="+2"/>
-        <location filename="components/msline.cpp" line="+2"/>
-        <location filename="components/msopen.cpp" line="+2"/>
+        <location filename="../qucs/components/cpwgap.cpp" line="+2"/>
+        <location filename="../qucs/components/cpwopen.cpp" line="+2"/>
+        <location filename="../qucs/components/cpwshort.cpp" line="+2"/>
+        <location filename="../qucs/components/mscoupled.cpp" line="+2"/>
+        <location filename="../qucs/components/mslange.cpp" line="+2"/>
+        <location filename="../qucs/components/msline.cpp" line="+2"/>
+        <location filename="../qucs/components/msopen.cpp" line="+2"/>
         <source>width of the line</source>
-        <translation>線路の幅</translation>
+        <translation>ancho de la línea</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/cpwgap.cpp" line="+2"/>
-        <location filename="components/cpwopen.cpp" line="+2"/>
-        <location filename="components/cpwshort.cpp" line="+2"/>
+        <location filename="../qucs/components/cpwgap.cpp" line="+2"/>
+        <location filename="../qucs/components/cpwopen.cpp" line="+2"/>
+        <location filename="../qucs/components/cpwshort.cpp" line="+2"/>
         <source>width of a gap</source>
-        <translation>間隔の幅</translation>
+        <translation>ancho del gap</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/mscoupled.cpp" line="+2"/>
-        <location filename="components/mslange.cpp" line="+2"/>
-        <location filename="components/msline.cpp" line="+2"/>
+        <location filename="../qucs/components/mscoupled.cpp" line="+2"/>
+        <location filename="../qucs/components/mslange.cpp" line="+2"/>
+        <location filename="../qucs/components/msline.cpp" line="+2"/>
         <source>length of the line</source>
-        <translation>線路の長さ</translation>
+        <translation>longitud de la línea</translation>
     </message>
     <message>
         <location line="+20"/>
         <source>Coplanar Line</source>
-        <translation>コプレーナライン</translation>
+        <translation>Línea Coplanar</translation>
     </message>
     <message>
-        <location filename="components/dc_sim.cpp" line="-24"/>
+        <location filename="../qucs/components/dc_sim.cpp" line="-24"/>
         <location line="+58"/>
         <source>dc simulation</source>
-        <translation>DCシミュレーション</translation>
+        <translation>simulación dc</translation>
     </message>
     <message>
         <location line="-32"/>
-        <location filename="components/etr_sim.cpp" line="-6"/>
-        <location filename="components/hb_sim.cpp" line="+8"/>
-        <location filename="components/tr_sim.cpp" line="-6"/>
+        <location filename="../qucs/components/etr_sim.cpp" line="-6"/>
+        <location filename="../qucs/components/hb_sim.cpp" line="+8"/>
+        <location filename="../qucs/components/tr_sim.cpp" line="-6"/>
         <source>relative tolerance for convergence</source>
-        <translation>収束公差</translation>
+        <translation>tolerancia relativa para converger</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/etr_sim.cpp" line="+2"/>
-        <location filename="components/hb_sim.cpp" line="-4"/>
-        <location filename="components/tr_sim.cpp" line="+2"/>
+        <location filename="../qucs/components/etr_sim.cpp" line="+2"/>
+        <location filename="../qucs/components/hb_sim.cpp" line="-4"/>
+        <location filename="../qucs/components/tr_sim.cpp" line="+2"/>
         <source>absolute tolerance for currents</source>
-        <translation>電流絶対公差</translation>
+        <translation>tolerancia absoluta para les intensidades</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/etr_sim.cpp" line="+2"/>
-        <location filename="components/hb_sim.cpp" line="+2"/>
-        <location filename="components/tr_sim.cpp" line="+2"/>
+        <location filename="../qucs/components/etr_sim.cpp" line="+2"/>
+        <location filename="../qucs/components/hb_sim.cpp" line="+2"/>
+        <location filename="../qucs/components/tr_sim.cpp" line="+2"/>
         <source>absolute tolerance for voltages</source>
-        <translation>電圧絶対公差</translation>
+        <translation>tolerancia absoluta para les tensiones</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>put operating points into dataset</source>
-        <translation>オペレーティングポイントをデータセットに入力</translation>
+        <translation>poner els punts de operación en el conjunto de dades</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/etr_sim.cpp" line="-6"/>
-        <location filename="components/hb_sim.cpp" line="+4"/>
-        <location filename="components/tr_sim.cpp" line="-6"/>
+        <location filename="../qucs/components/etr_sim.cpp" line="-6"/>
+        <location filename="../qucs/components/hb_sim.cpp" line="+4"/>
+        <location filename="../qucs/components/tr_sim.cpp" line="-6"/>
         <source>maximum number of iterations until error</source>
-        <translation>エラーになるまでの最大繰り返し数</translation>
+        <translation>numero máximo de les iteraciones antes de un error</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>save subcircuit nodes into dataset</source>
-        <translation>サブサーキットノードをデータセットに保存</translation>
+        <translation>grabar els nodos del subcircuit en el conjunto de dades</translation>
     </message>
     <message>
-        <location filename="components/dcblock.cpp" line="+22"/>
+        <location filename="../qucs/components/dcblock.cpp" line="+22"/>
         <source>dc block</source>
-        <translation>DCブロック</translation>
+        <translation>bloque dc</translation>
     </message>
     <message>
         <location line="+38"/>
         <source>dc Block</source>
-        <translation>DCブロック</translation>
+        <translation>Bloque dc</translation>
     </message>
     <message>
-        <location filename="components/dcfeed.cpp" line="+23"/>
+        <location filename="../qucs/components/dcfeed.cpp" line="+23"/>
         <source>dc feed</source>
-        <translation>電圧付加</translation>
+        <translation>alimentación dc</translation>
     </message>
     <message>
         <location line="+39"/>
         <source>dc Feed</source>
-        <translation>電圧付加</translation>
+        <translation>Alimentación dc</translation>
     </message>
     <message>
-        <location filename="components/diode.cpp" line="-31"/>
+        <location filename="../qucs/components/diode.cpp" line="-31"/>
         <source>diode</source>
-        <translation>ダイオード</translation>
+        <translation>diodo</translation>
     </message>
     <message>
-        <location filename="components/EKV26MOS.cpp" line="+11"/>
-        <location filename="components/diac.cpp" line="+2"/>
-        <location filename="components/diode.cpp" line="+5"/>
-        <location filename="components/thyristor.cpp" line="+2"/>
-        <location filename="components/triac.cpp" line="+2"/>
+        <location filename="../qucs/components/EKV26MOS.cpp" line="+11"/>
+        <location filename="../qucs/components/diac.cpp" line="+2"/>
+        <location filename="../qucs/components/diode.cpp" line="+5"/>
+        <location filename="../qucs/components/thyristor.cpp" line="+2"/>
+        <location filename="../qucs/components/triac.cpp" line="+2"/>
         <source>emission coefficient</source>
-        <translation>放射係数</translation>
+        <translation>coeficiente de emisión</translation>
     </message>
     <message>
         <location line="+14"/>
-        <location filename="components/diode.cpp" line="+2"/>
-        <location filename="components/photodiode.cpp" line="-38"/>
+        <location filename="../qucs/components/diode.cpp" line="+2"/>
+        <location filename="../qucs/components/photodiode.cpp" line="-38"/>
         <source>zero-bias junction capacitance</source>
-        <translation>ゼロバイアスジャンクション容量</translation>
+        <translation>capacidad de polarización de la unión</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/MESFET.cpp" line="-63"/>
-        <location filename="components/diode.cpp" line="+2"/>
-        <location filename="components/photodiode.cpp" line="+3"/>
-        <location filename="components/tunneldiode.cpp" line="-7"/>
+        <location filename="../qucs/components/MESFET.cpp" line="-63"/>
+        <location filename="../qucs/components/diode.cpp" line="+2"/>
+        <location filename="../qucs/components/photodiode.cpp" line="+3"/>
+        <location filename="../qucs/components/tunneldiode.cpp" line="-7"/>
         <source>grading coefficient</source>
-        <translation>等級係数</translation>
+        <translation>coeficiente de graduación</translation>
     </message>
     <message>
         <location line="-6"/>
-        <location filename="components/diode.cpp" line="+2"/>
-        <location filename="components/photodiode.cpp" line="-6"/>
-        <location filename="components/tunneldiode.cpp" line="+2"/>
+        <location filename="../qucs/components/diode.cpp" line="+2"/>
+        <location filename="../qucs/components/photodiode.cpp" line="-6"/>
+        <location filename="../qucs/components/tunneldiode.cpp" line="+2"/>
         <source>junction potential</source>
-        <translation>ジャンクション電位</translation>
+        <translation>potencial de la unión</translation>
     </message>
     <message>
-        <location filename="components/diode.cpp" line="+4"/>
+        <location filename="../qucs/components/diode.cpp" line="+4"/>
         <source>linear capacitance</source>
-        <translation>線形容量</translation>
+        <translation>capacidad lineal</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>recombination current parameter</source>
-        <translation type="unfinished"></translation>
+        <translation>parámetro de recombinación de la corriente</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>emission coefficient for Isr</source>
-        <translation type="unfinished"></translation>
+        <translation>coeficiente de emisión para lsr</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>ohmic series resistance</source>
-        <translation>直列抵抗</translation>
+        <translation>resistencia serie en óhmios</translation>
     </message>
     <message>
-        <location filename="components/EKV26MOS.cpp" line="+12"/>
-        <location filename="components/diode.cpp" line="+2"/>
-        <location filename="components/photodiode.cpp" line="+15"/>
+        <location filename="../qucs/components/EKV26MOS.cpp" line="+12"/>
+        <location filename="../qucs/components/diode.cpp" line="+2"/>
+        <location filename="../qucs/components/photodiode.cpp" line="+15"/>
         <source>transit time</source>
-        <translation>推移時間</translation>
+        <translation>temps de tránsito</translation>
     </message>
     <message>
-        <location filename="components/diode.cpp" line="+52"/>
+        <location filename="../qucs/components/diode.cpp" line="+52"/>
         <source>Diode</source>
-        <translation>ダイオード</translation>
+        <translation>Diodo</translation>
     </message>
     <message>
-        <location filename="components/equation.cpp" line="+25"/>
+        <location filename="../qucs/components/equation.cpp" line="+25"/>
         <source>equation</source>
-        <translation>方程式</translation>
+        <translation>ecuación</translation>
     </message>
     <message>
         <location line="+6"/>
         <location line="+6"/>
         <location line="+49"/>
         <source>Equation</source>
-        <translation>方程式</translation>
+        <translation>Ecuación</translation>
     </message>
     <message>
         <location line="-36"/>
         <source>put result into dataset</source>
-        <translation>結果をデータセットに入力</translation>
+        <translation>poner els resultados en el conjunto de dades</translation>
     </message>
     <message>
-        <location filename="components/ground.cpp" line="+25"/>
+        <location filename="../qucs/components/ground.cpp" line="+25"/>
         <source>ground (reference potential)</source>
-        <translation>グラウンド(リファレンス電位)</translation>
+        <translation>tierra (potencial de referencia)</translation>
     </message>
     <message>
         <location line="+30"/>
         <source>Ground</source>
-        <translation>グラウンド</translation>
+        <translation>Tierra</translation>
     </message>
     <message>
-        <location filename="components/gyrator.cpp" line="-34"/>
+        <location filename="../qucs/components/gyrator.cpp" line="-34"/>
         <source>gyrator (impedance inverter)</source>
-        <translation>ジャイレータ(インピーダンス変換)</translation>
+        <translation>girador (inversor de impendancia)</translation>
     </message>
     <message>
         <location line="+32"/>
         <source>gyrator ratio</source>
-        <translation>ジャイレータ比率</translation>
+        <translation>porcentaje de girador</translation>
     </message>
     <message>
         <location line="+16"/>
         <source>Gyrator</source>
-        <translation>ジャイレータ</translation>
+        <translation>Girador</translation>
     </message>
     <message>
-        <location filename="components/hb_sim.cpp" line="-29"/>
+        <location filename="../qucs/components/hb_sim.cpp" line="-29"/>
         <source>Harmonic balance simulation</source>
-        <translation>ハーモニックバランスシミュレーション</translation>
+        <translation>Simulació de equilibrio armónico</translation>
     </message>
     <message>
         <location line="+21"/>
         <source>number of harmonics</source>
-        <translation>ハーモニクス数</translation>
+        <translation>número de armónicos</translation>
     </message>
     <message>
         <location line="+22"/>
         <source>Harmonic balance</source>
-        <translation>ハーモニックバランス</translation>
+        <translation>Equilibrio armónico</translation>
     </message>
     <message>
-        <location filename="components/inductor.cpp" line="+23"/>
+        <location filename="../qucs/components/inductor.cpp" line="+23"/>
         <source>inductor</source>
-        <translation>インダクタ</translation>
+        <translation>bobina</translation>
     </message>
     <message>
         <location line="+20"/>
         <source>inductance in Henry</source>
-        <translation>インダクタンス(H)</translation>
+        <translation>inductancia en Henrios</translation>
     </message>
     <message>
         <location line="+16"/>
         <source>Inductor</source>
-        <translation>インダクタ</translation>
+        <translation>Bobina</translation>
     </message>
     <message>
-        <location filename="components/iprobe.cpp" line="+23"/>
+        <location filename="../qucs/components/iprobe.cpp" line="+23"/>
         <source>current probe</source>
-        <translation>電流計</translation>
+        <translation>sonda de corriente</translation>
     </message>
     <message>
         <location line="+44"/>
         <source>Current Probe</source>
-        <translation>電流計</translation>
+        <translation>Sonda de Corriente</translation>
     </message>
     <message>
-        <location filename="components/ipulse.cpp" line="+23"/>
+        <location filename="../qucs/components/ipulse.cpp" line="+23"/>
         <source>ideal current pulse source</source>
-        <translation>理想電流パルス源</translation>
+        <translation>fuente ideal de pulsos de intensidad</translation>
     </message>
     <message>
         <location line="+28"/>
         <source>current before and after the pulse</source>
-        <translation>パルスの前後電流</translation>
+        <translation>intensidad antes y después del pulso</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>current of the pulse</source>
-        <translation>パルス電流</translation>
+        <translation>intensidad del pulso</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/vpulse.cpp" line="+54"/>
+        <location filename="../qucs/components/vpulse.cpp" line="+54"/>
         <source>start time of the pulse</source>
-        <translation>パルスの開始時間</translation>
+        <translation>momento de inici del pulso</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/vpulse.cpp" line="+2"/>
+        <location filename="../qucs/components/vpulse.cpp" line="+2"/>
         <source>ending time of the pulse</source>
-        <translation>パルスの終了時間</translation>
+        <translation>temps de fin del pulso</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/irect.cpp" line="+59"/>
-        <location filename="components/vpulse.cpp" line="+2"/>
-        <location filename="components/vrect.cpp" line="+58"/>
+        <location filename="../qucs/components/irect.cpp" line="+59"/>
+        <location filename="../qucs/components/vpulse.cpp" line="+2"/>
+        <location filename="../qucs/components/vrect.cpp" line="+58"/>
         <source>rise time of the leading edge</source>
-        <translation>立上り時間</translation>
+        <translation>temps de ascenso del flanco de subida</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/irect.cpp" line="+2"/>
-        <location filename="components/vpulse.cpp" line="+2"/>
-        <location filename="components/vrect.cpp" line="+2"/>
+        <location filename="../qucs/components/irect.cpp" line="+2"/>
+        <location filename="../qucs/components/vpulse.cpp" line="+2"/>
+        <location filename="../qucs/components/vrect.cpp" line="+2"/>
         <source>fall time of the trailing edge</source>
-        <translation>立下がり時間</translation>
+        <translation>temps de caida del flanco de bajada</translation>
     </message>
     <message>
         <location line="+16"/>
         <source>Current Pulse</source>
-        <translation>電流パルス</translation>
+        <translation>Pulso de Intensidad</translation>
     </message>
     <message>
-        <location filename="components/irect.cpp" line="-38"/>
-        <source>ideal rectangle current source</source>
-        <translation>理想矩形電流源</translation>
-    </message>
-    <message>
-        <location line="+30"/>
-        <source>current at high pulse</source>
-        <translation>ハイパルス時の電流</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="components/vrect.cpp" line="-6"/>
-        <source>duration of high pulses</source>
-        <translation>ハイパルス持続時間</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="components/vrect.cpp" line="+2"/>
-        <source>duration of low pulses</source>
-        <translation>ローパルス持続時間</translation>
-    </message>
-    <message>
-        <location line="+22"/>
-        <source>Rectangle Current</source>
-        <translation>矩形波電流</translation>
-    </message>
-    <message>
-        <location filename="components/isolator.cpp" line="-30"/>
+        <location filename="../qucs/components/isolator.cpp" line="-30"/>
         <source>isolator</source>
-        <translation>アイソレータ</translation>
+        <translation>aislante</translation>
     </message>
     <message>
-        <location filename="components/amplifier.cpp" line="+46"/>
-        <location filename="components/isolator.cpp" line="+26"/>
+        <location filename="../qucs/components/amplifier.cpp" line="+46"/>
+        <location filename="../qucs/components/isolator.cpp" line="+26"/>
         <source>reference impedance of input port</source>
-        <translation>入力ポートインピーダンス</translation>
+        <translation>impedancia de referencia del conector de entrada</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/isolator.cpp" line="+2"/>
+        <location filename="../qucs/components/isolator.cpp" line="+2"/>
         <source>reference impedance of output port</source>
-        <translation>出力ポートインピーダンス</translation>
+        <translation>impedancia de referencia del conector de salida</translation>
     </message>
     <message>
-        <location filename="components/isolator.cpp" line="+16"/>
+        <location filename="../qucs/components/isolator.cpp" line="+16"/>
         <source>Isolator</source>
-        <translation>アイソレータ</translation>
+        <translation>Aislante</translation>
     </message>
     <message>
-        <location filename="components/jfet.cpp" line="-38"/>
+        <location filename="../qucs/components/jfet.cpp" line="-38"/>
         <source>junction field-effect transistor</source>
-        <translation>ジャンクションフィールドエフェクトトランジスタ</translation>
+        <translation>transistor de unión de efecto de campo</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location filename="components/nigbt.cpp" line="+60"/>
+        <location filename="../qucs/components/nigbt.cpp" line="+60"/>
         <source>threshold voltage</source>
-        <translation>スレッショルド電圧</translation>
+        <translation>tensión umbral</translation>
     </message>
     <message>
-        <location filename="components/EKV26MOS.cpp" line="-99"/>
-        <location filename="components/MESFET.cpp" line="-56"/>
-        <location filename="components/jfet.cpp" line="+2"/>
+        <location filename="../qucs/components/EKV26MOS.cpp" line="-99"/>
+        <location filename="../qucs/components/MESFET.cpp" line="-56"/>
+        <location filename="../qucs/components/jfet.cpp" line="+2"/>
         <source>transconductance parameter</source>
-        <translation>伝導パラメータ</translation>
+        <translation>parámetro de transconductancia</translation>
     </message>
     <message>
-        <location filename="components/jfet.cpp" line="+2"/>
+        <location filename="../qucs/components/jfet.cpp" line="+2"/>
         <source>channel-length modulation parameter</source>
-        <translation type="unfinished">チャネル長　変調パラメータ</translation>
+        <translation>parámetro de modulación de la longitud del canal</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>parasitic drain resistance</source>
-        <translation>ドレイン寄生抵抗</translation>
+        <translation>resistencia de drenador parásita</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>parasitic source resistance</source>
-        <translation>ソース寄生抵抗</translation>
+        <translation>resistencia de surtidor parásita</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>gate-junction saturation current</source>
-        <translation>ゲート接合飽和電流</translation>
+        <translation>corriente de saturación de la puerta</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>gate-junction emission coefficient</source>
-        <translation>ゲート接合放射係数</translation>
+        <translation>coeficente de emisión de la puerta</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>gate-junction recombination current parameter</source>
-        <translation>ゲート接合組み替え電流パラメータ</translation>
+        <translation>parámetro de corriente de recombinación de la puerta</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Isr emission coefficient</source>
-        <translation>Isr放射係数</translation>
+        <translation>coeficiente de emisión lsr</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>zero-bias gate-source junction capacitance</source>
-        <translation>ゼロバイアス　ゲートソース間ジャンクション容量</translation>
+        <translation>capacidad de la polarización puerta-surtidor</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>zero-bias gate-drain junction capacitance</source>
-        <translation>ゼロバイアス　ゲートドレイン間ジャンクション容量</translation>
+        <translation>capacidad de la polarización puerta-drenador</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>gate-junction potential</source>
-        <translation>ゲートジャンクション電位</translation>
+        <translation>potencial de la puerta</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>forward-bias junction capacitance coefficient</source>
-        <translation>順バイアス空乏層容量係数</translation>
+        <translation>coeficiente de polarizacación directa de la  unión</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>gate P-N grading coefficient</source>
-        <translation>ゲートP-N等級係数</translation>
+        <translation>coeficiente de graduación P-N</translation>
     </message>
     <message>
         <location line="+39"/>
         <source>n-JFET</source>
-        <translation>n-JFET</translation>
+        <translation>JFET-n</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>p-JFET</source>
-        <translation>p-JFET</translation>
+        <translation>JFET-p</translation>
     </message>
     <message>
-        <location filename="components/mosfet.cpp" line="+25"/>
+        <location filename="../qucs/components/mosfet.cpp" line="+25"/>
         <source>MOS field-effect transistor</source>
-        <translation>MOS-FET</translation>
+        <translation>transistor de efecto de campo MOS</translation>
     </message>
     <message>
-        <location filename="components/mosfet_sub.cpp" line="-90"/>
+        <location filename="../qucs/components/mosfet_sub.cpp" line="-90"/>
         <source>zero-bias threshold voltage</source>
-        <translation>ゼロバイアス スレッショルド電圧</translation>
+        <translation>tensión umbral de polarización</translation>
+    </message>
+    <message>
+        <source>transconductance coefficient in A/m^2</source>
+        <translation type="obsolete">coeficiente de trasnconductancia en A/m²</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>bulk threshold in sqrt(V)</source>
-        <translation>√バルクしきい値(V)</translation>
+        <translation>sustrato umbral en raiz cuadrada de V</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>surface potential</source>
-        <translation>面電位</translation>
+        <translation>potencial de la superficie</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>channel-length modulation parameter in 1/V</source>
-        <translation>チャネル長変調</translation>
+        <translation>parámetro de modulación de la longitud del canal en 1/V</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>drain ohmic resistance</source>
-        <translation>ドレイン抵抗</translation>
+        <translation>resistencia del drenador</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>source ohmic resistance</source>
-        <translation>ソース抵抗</translation>
+        <translation>resistencia del surtidor</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>gate ohmic resistance</source>
-        <translation>ゲート抵抗</translation>
+        <translation>resistencia de la puerta</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>bulk junction saturation current</source>
-        <translation>バルクpn飽和電流</translation>
+        <translation>corriente de saturación unión-sustrato</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>bulk junction emission coefficient</source>
-        <translation>バルク接合放射係数</translation>
+        <translation>coeficiente de emisión de la unión del sustrato</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>channel width</source>
-        <translation>チャネル幅</translation>
+        <translation>ancho del canal</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>channel length</source>
-        <translation>チャネル長</translation>
+        <translation>longitud del canal</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>lateral diffusion length</source>
-        <translation>ラテラル拡散（長さ）</translation>
+        <translation>longitud de difusión lateral</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>oxide thickness</source>
-        <translation>酸化膜厚み</translation>
+        <translation>grosor del óxido</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>gate-source overlap capacitance per meter of channel width in F/m</source>
-        <translation>ゲート-ソース間j重なり容量/チャネル幅（F/m）</translation>
+        <translation>capacidad sobrepuesta de la puerta-surtidor por metro de la anchura del canal en F/m</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>gate-drain overlap capacitance per meter of channel width in F/m</source>
-        <translation>ゲート-ドレイン間重なり容量/チャネル間（F/m）</translation>
+        <translation>capacidad sobrepuesta de la puerta-drenador por metro de la anchura del canal en F/m</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>gate-bulk overlap capacitance per meter of channel length in F/m</source>
-        <translation>ゲート-バルク間重なり容量/チャネル間（F/m）</translation>
+        <translation>capacidad sobrepuesta puerta-sustrato por metro de longitud del canal en F/m</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>zero-bias bulk-drain junction capacitance</source>
-        <translation>バルク-ドレイン間ゼロバイアス接合容量</translation>
+        <translation>capacidad de la polarización de la unión sustrato-drenador</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>zero-bias bulk-source junction capacitance</source>
-        <translation>バルク-ソース間ゼロバイアス接合容量</translation>
+        <translation>capacidad de la polarización de la unión sustrato-surtidor</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>bulk junction potential</source>
-        <translation>バルク接合電位</translation>
+        <translation>potencial unión-sustrato</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>bulk junction bottom grading coefficient</source>
-        <translation>バルク底面接合傾斜係数</translation>
+        <translation>Parámetero de difusión del substrato</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>bulk junction forward-bias depletion capacitance coefficient</source>
-        <translation>バルク順方向バイアス時容量係数</translation>
+        <translation>bulk junction forward-bias depletion capacitance coefficient</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>zero-bias bulk junction periphery capacitance per meter of junction perimeter in F/m</source>
-        <translation>バルク接合ゼロバイアス時周辺容量/長さ（F/m）</translation>
+        <translation>zero-bias bulk junction periphery capacitance per meter of junction perimeter in F/m</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>bulk junction periphery grading coefficient</source>
-        <translation>バルク側壁接合傾斜係数</translation>
+        <translation>bulk junction periphery grading coefficient</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>bulk transit time</source>
-        <translation>バルク通過時間</translation>
+        <translation>temps de tránsito del sustrato</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>substrate bulk doping density in 1/cm^3</source>
-        <translation>基板不純物濃度</translation>
+        <translation></translation>
     </message>
     <message>
         <location line="+2"/>
         <source>surface state density in 1/cm^2</source>
-        <translation>表面状態密度</translation>
+        <translation>densitat del estado de la superficie en 1/cm²</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>gate material type: 0 = alumina; -1 = same as bulk; 1 = opposite to bulk</source>
-        <translation>ゲートの材料:0 = アルミナ; -1 = バルクと同様; 1 = バルクと相対する材料</translation>
+        <translation>tipo de material de la puerta: 0 = aluminio; -1=igual que el sustrato; 1=contrario al sustrato</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>surface mobility in cm^2/Vs</source>
-        <translation>移動度低下臨界電界</translation>
+        <translation>movilidad de la superficie en cm²/Vs</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>drain and source diffusion sheet resistance in Ohms/square</source>
-        <translation>ドレイン-ソース間拡散広がり抵抗</translation>
+        <translation>hoja de difusión del surtidor y drenador amb la resistencia en Ohms/cuadrado</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>number of equivalent drain squares</source>
-        <translation type="unfinished"></translation>
+        <translation>número de cuadrados de drenador equivalentes</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>number of equivalent source squares</source>
-        <translation type="unfinished"></translation>
+        <translation>número de cuadrados de surtidor equivalentes</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>zero-bias bulk junction bottom capacitance per square meter of junction area in F/m^2</source>
-        <translation>バルク接合ゼロバイアス時底面容量/面積（F/m^2）</translation>
+        <translation>capaicidad de la polarización de la unión inferior del sustrato por metro cuadrado de área de  unión en F/m²</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>bulk junction saturation current per square meter of junction area in A/m^2</source>
-        <translation>バルク接合飽和電流/面積（A/m^2）</translation>
+        <translation>corriente de saturación del sustrato por metro cuadrado del área de la unión en A/m²</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>drain diffusion area in m^2</source>
-        <translation>ドレイン拡散面積（m^2）</translation>
+        <translation>área de difusión del drenador en m²</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>source diffusion area in m^2</source>
-        <translation>ソース拡散面積（m^2）</translation>
+        <translation>área de difusión del surtidor en m²</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>drain junction perimeter</source>
-        <translation>ドレイン接合周囲長</translation>
+        <translation>perímetro de la unión del drenador</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>source junction perimeter</source>
-        <translation>ソース接合周囲長</translation>
+        <translation>perímetro de la unión del surtidor</translation>
     </message>
     <message>
-        <location filename="components/mosfet.cpp" line="+20"/>
-        <location filename="components/mosfet_sub.cpp" line="+37"/>
+        <location filename="../qucs/components/mosfet.cpp" line="+20"/>
+        <location filename="../qucs/components/mosfet_sub.cpp" line="+37"/>
         <source>n-MOSFET</source>
-        <translation></translation>
+        <translation>MOSFET-n</translation>
     </message>
     <message>
         <location line="+10"/>
-        <location filename="components/mosfet_sub.cpp" line="+11"/>
+        <location filename="../qucs/components/mosfet_sub.cpp" line="+11"/>
         <source>p-MOSFET</source>
-        <translation></translation>
+        <translation>MOSFET-p</translation>
     </message>
     <message>
         <location line="+16"/>
-        <location filename="components/mosfet_sub.cpp" line="+17"/>
+        <location filename="../qucs/components/mosfet_sub.cpp" line="+17"/>
         <source>depletion MOSFET</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
-        <location filename="components/mscorner.cpp" line="+23"/>
+        <location filename="../qucs/components/mscorner.cpp" line="+23"/>
         <source>microstrip corner</source>
-        <translation>マイクロストリップコーナー</translation>
+        <translation></translation>
     </message>
     <message>
-        <location filename="components/bondwire.cpp" line="-2"/>
-        <location filename="components/mscorner.cpp" line="+23"/>
-        <location filename="components/mscross.cpp" line="+29"/>
-        <location filename="components/msmbend.cpp" line="+47"/>
-        <location filename="components/msstep.cpp" line="+50"/>
-        <location filename="components/mstee.cpp" line="+35"/>
-        <location filename="components/msvia.cpp" line="-4"/>
+        <location filename="../qucs/components/bondwire.cpp" line="-2"/>
+        <location filename="../qucs/components/mscorner.cpp" line="+23"/>
+        <location filename="../qucs/components/mscross.cpp" line="+29"/>
+        <location filename="../qucs/components/msmbend.cpp" line="+47"/>
+        <location filename="../qucs/components/msstep.cpp" line="+50"/>
+        <location filename="../qucs/components/mstee.cpp" line="+36"/>
+        <location filename="../qucs/components/msvia.cpp" line="-4"/>
         <source>substrate</source>
-        <translation>基板</translation>
+        <translation>sustrato</translation>
     </message>
     <message>
-        <location filename="components/mscorner.cpp" line="+2"/>
-        <location filename="components/msmbend.cpp" line="+2"/>
+        <location filename="../qucs/components/mscorner.cpp" line="+2"/>
+        <location filename="../qucs/components/msmbend.cpp" line="+2"/>
         <source>width of line</source>
-        <translation>線幅</translation>
+        <translation>ancho de línea</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>Microstrip Corner</source>
-        <translation>マイクロストリップコーナー</translation>
+        <translation>Esquina Microstrip</translation>
     </message>
     <message>
-        <location filename="components/mscoupled.cpp" line="-38"/>
+        <location filename="../qucs/components/mscoupled.cpp" line="-38"/>
         <source>coupled microstrip line</source>
-        <translation>カップルドマイクロストリップライン</translation>
+        <translation>línea microstrip acoplada</translation>
     </message>
     <message>
         <location line="+40"/>
-        <location filename="components/mslange.cpp" line="+2"/>
+        <location filename="../qucs/components/mslange.cpp" line="+2"/>
         <source>spacing between the lines</source>
-        <translation>線間幅</translation>
+        <translation>espaciado entre les línees</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/mslange.cpp" line="+2"/>
+        <location filename="../qucs/components/mslange.cpp" line="+2"/>
         <source>microstrip model</source>
-        <translation>マイクロストリップモデル</translation>
+        <translation>modelo microstrip</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/mscross.cpp" line="+13"/>
-        <location filename="components/msgap.cpp" line="+11"/>
-        <location filename="components/mslange.cpp" line="+2"/>
-        <location filename="components/msline.cpp" line="+5"/>
-        <location filename="components/msopen.cpp" line="+5"/>
-        <location filename="components/msstep.cpp" line="+9"/>
-        <location filename="components/mstee.cpp" line="+11"/>
+        <location filename="../qucs/components/mscross.cpp" line="+13"/>
+        <location filename="../qucs/components/msgap.cpp" line="+11"/>
+        <location filename="../qucs/components/mslange.cpp" line="+2"/>
+        <location filename="../qucs/components/msline.cpp" line="+5"/>
+        <location filename="../qucs/components/msopen.cpp" line="+5"/>
+        <location filename="../qucs/components/msstep.cpp" line="+9"/>
+        <location filename="../qucs/components/mstee.cpp" line="+11"/>
         <source>microstrip dispersion model</source>
-        <translation>マイクロストリップ分散モデル</translation>
+        <translation>modelo de dispersión microstrip</translation>
     </message>
     <message>
         <location line="+17"/>
         <source>Coupled Microstrip Line</source>
-        <translation>カップルドマイクロストリップライン</translation>
+        <translation>Línea Microstrip Acoplada</translation>
     </message>
     <message>
-        <location filename="components/mscross.cpp" line="-19"/>
+        <location filename="../qucs/components/mscross.cpp" line="-19"/>
         <source>microstrip cross</source>
-        <translation>マイクロストリップクロス</translation>
+        <translation>cruce microstrip</translation>
     </message>
     <message>
-        <location filename="components/cpwstep.cpp" line="+2"/>
-        <location filename="components/mscross.cpp" line="+8"/>
-        <location filename="components/mstee.cpp" line="-9"/>
+        <location filename="../qucs/components/cpwstep.cpp" line="+2"/>
+        <location filename="../qucs/components/mscross.cpp" line="+8"/>
+        <location filename="../qucs/components/mstee.cpp" line="-9"/>
         <source>width of line 1</source>
-        <translation>線幅1</translation>
+        <translation>ancho de la línea 1</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/mscross.cpp" line="+2"/>
-        <location filename="components/mstee.cpp" line="+2"/>
+        <location filename="../qucs/components/mscross.cpp" line="+2"/>
+        <location filename="../qucs/components/mstee.cpp" line="+2"/>
         <source>width of line 2</source>
-        <translation>線幅2</translation>
+        <translation>ancho de la línea 2</translation>
     </message>
     <message>
-        <location filename="components/mscross.cpp" line="+2"/>
-        <location filename="components/mstee.cpp" line="+2"/>
+        <location filename="../qucs/components/mscross.cpp" line="+2"/>
+        <location filename="../qucs/components/mstee.cpp" line="+2"/>
         <source>width of line 3</source>
-        <translation>線幅3</translation>
+        <translation>ancho de la línea 3</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>width of line 4</source>
-        <translation>線幅4</translation>
+        <translation>ancho de la línea 4</translation>
     </message>
     <message>
         <location line="+25"/>
         <source>Microstrip Cross</source>
-        <translation>マイクロストリップクロス</translation>
+        <translation>Cruce Microstrip</translation>
     </message>
     <message>
-        <location filename="components/msgap.cpp" line="-39"/>
+        <location filename="../qucs/components/msgap.cpp" line="-39"/>
         <source>microstrip gap</source>
-        <translation>マイクロストリップギャップ</translation>
+        <translation>gap microstrip</translation>
     </message>
     <message>
         <location line="+30"/>
         <source>width of the line 1</source>
-        <translation>線幅1</translation>
+        <translation>ancho de la línea 1</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>width of the line 2</source>
-        <translation>線幅2</translation>
+        <translation>ancho de la línea 2</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>spacing between the microstrip ends</source>
-        <translation>マイクロストリップ端の間隔</translation>
+        <translation>espacio entre els finales del microstrip</translation>
     </message>
     <message>
-        <location filename="components/mscross.cpp" line="-23"/>
-        <location filename="components/msgap.cpp" line="+2"/>
-        <location filename="components/msline.cpp" line="-3"/>
-        <location filename="components/msopen.cpp" line="-3"/>
-        <location filename="components/msstep.cpp" line="-3"/>
-        <location filename="components/mstee.cpp" line="+2"/>
+        <location filename="../qucs/components/mscross.cpp" line="-23"/>
+        <location filename="../qucs/components/msgap.cpp" line="+2"/>
+        <location filename="../qucs/components/msline.cpp" line="-3"/>
+        <location filename="../qucs/components/msopen.cpp" line="-3"/>
+        <location filename="../qucs/components/msstep.cpp" line="-3"/>
+        <location filename="../qucs/components/mstee.cpp" line="+2"/>
         <source>quasi-static microstrip model</source>
-        <translation type="unfinished">quasi-static　マイクロストリップモデル</translation>
+        <translation>modelo microstrip cuasi-estático</translation>
     </message>
     <message>
-        <location filename="components/msgap.cpp" line="+18"/>
+        <location filename="../qucs/components/msgap.cpp" line="+18"/>
         <source>Microstrip Gap</source>
-        <translation>マイクロストリップギャップ</translation>
+        <translation>Gap Microstrip</translation>
     </message>
     <message>
-        <location filename="components/msline.cpp" line="-27"/>
+        <location filename="../qucs/components/msline.cpp" line="-27"/>
         <source>microstrip line</source>
-        <translation>マイクロストリップライン</translation>
+        <translation>línea microstrip</translation>
     </message>
     <message>
         <location line="+47"/>
         <source>Microstrip Line</source>
-        <translation>マイクロストリップライン</translation>
+        <translation>Línea Microstrip</translation>
     </message>
     <message>
-        <location filename="components/msmbend.cpp" line="-26"/>
+        <location filename="../qucs/components/msmbend.cpp" line="-26"/>
         <source>microstrip mitered bend</source>
-        <translation>マイクロストリップマイターベンド</translation>
+        <translation>microstrip en esquina biselada</translation>
     </message>
     <message>
         <location line="+40"/>
         <source>Microstrip Mitered Bend</source>
-        <translation>マイクロストリップマイターベンド</translation>
+        <translation>Microstrip en Esquina Biselada</translation>
     </message>
     <message>
-        <location filename="components/msopen.cpp" line="-23"/>
+        <location filename="../qucs/components/msopen.cpp" line="-23"/>
         <source>microstrip open</source>
-        <translation>マイクロストリップオープン</translation>
+        <translation>apertura microstrip</translation>
     </message>
     <message>
         <location line="+29"/>
         <source>microstrip open end model</source>
-        <translation>マイクロストリップオープンエンドモデル</translation>
+        <translation>modelo del final de la apertura microstrip</translation>
     </message>
     <message>
         <location line="+15"/>
         <source>Microstrip Open</source>
-        <translation>マイクロストリップオープン</translation>
+        <translation>Apertura Microstrip</translation>
     </message>
     <message>
-        <location filename="components/msstep.cpp" line="-33"/>
+        <location filename="../qucs/components/msstep.cpp" line="-33"/>
         <source>microstrip impedance step</source>
-        <translation>マイクロストリップインピーダンスステップ</translation>
+        <translation>pas de impedancia microstrip</translation>
     </message>
     <message>
         <location line="+29"/>
         <source>width 1 of the line</source>
-        <translation>線幅1</translation>
+        <translation>ancho 1 de la línea</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>width 2 of the line</source>
-        <translation>線幅2</translation>
+        <translation>ancho 2 de la línea</translation>
     </message>
     <message>
         <location line="+20"/>
         <source>Microstrip Step</source>
-        <translation>マイクロストリップステップ</translation>
+        <translation>Paso Microstrip</translation>
     </message>
     <message>
-        <location filename="components/mstee.cpp" line="-20"/>
+        <location filename="../qucs/components/mstee.cpp" line="-20"/>
         <source>microstrip tee</source>
-        <translation>マイクロストリップティージャンクション</translation>
+        <translation>punt de partida microstrip</translation>
     </message>
     <message>
         <location line="+45"/>
         <source>Microstrip Tee</source>
-        <translation>マイクロストリップティージャンクション</translation>
+        <translation>Punto de Partida Microstrip</translation>
     </message>
     <message>
-        <location filename="components/param_sweep.cpp" line="-30"/>
+        <location filename="../qucs/components/param_sweep.cpp" line="-30"/>
         <location line="+44"/>
         <source>Parameter sweep</source>
-        <translation>パラメータスイープ</translation>
+        <translation>Paràmetre de barrido</translation>
     </message>
     <message>
         <location line="-24"/>
         <source>simulation to perform parameter sweep on</source>
-        <translation>パラメータスイープ シミュレーション</translation>
+        <translation>simulación a realizar antes de activar el parámetro de barrido</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>parameter to sweep</source>
-        <translation>スイープパラメータ</translation>
+        <translation>parámetro para el barrido</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>start value for sweep</source>
-        <translation>スイープ開始値</translation>
+        <translation>valor de inici para el barrido</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>stop value for sweep</source>
-        <translation>スイープ終了値</translation>
+        <translation>valor final para el barrido</translation>
     </message>
     <message>
-        <location filename="components/phaseshifter.cpp" line="-26"/>
+        <location filename="../qucs/components/phaseshifter.cpp" line="-26"/>
         <source>phase shifter</source>
-        <translation>フェーズシフタ</translation>
+        <translation>desplazador de fase</translation>
     </message>
     <message>
-        <location filename="components/hybrid.cpp" line="-2"/>
-        <location filename="components/phaseshifter.cpp" line="+24"/>
+        <location filename="../qucs/components/hybrid.cpp" line="-2"/>
+        <location filename="../qucs/components/phaseshifter.cpp" line="+24"/>
         <source>phase shift in degree</source>
-        <translation>位相シフト(°)</translation>
+        <translation>desplazamiento de fase en grados</translation>
     </message>
     <message>
-        <location filename="components/phaseshifter.cpp" line="+16"/>
+        <location filename="../qucs/components/phaseshifter.cpp" line="+16"/>
         <source>Phase Shifter</source>
-        <translation>フェーズシフタ</translation>
+        <translation>Desplazador de Fase</translation>
     </message>
     <message>
-        <location filename="components/resistor.cpp" line="-5"/>
+        <location filename="../qucs/components/resistor.cpp" line="-5"/>
         <source>resistor</source>
-        <translation>抵抗</translation>
+        <translation>resistencia</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>ohmic resistance in Ohms</source>
-        <translation>抵抗(オーム)</translation>
+        <translation>resistencia en Ohmios</translation>
     </message>
     <message>
-        <location filename="components/capacitor.cpp" line="-16"/>
-        <location filename="components/component.cpp" line="-259"/>
-        <location filename="components/diode.cpp" line="-16"/>
-        <location filename="components/logical_buf.cpp" line="+6"/>
-        <location filename="components/logical_inv.cpp" line="+6"/>
-        <location filename="components/resistor.cpp" line="+12"/>
+        <location filename="../qucs/components/capacitor.cpp" line="-16"/>
+        <location filename="../qucs/components/component.cpp" line="-269"/>
+        <location filename="../qucs/components/diode.cpp" line="-16"/>
+        <location filename="../qucs/components/logical_buf.cpp" line="+6"/>
+        <location filename="../qucs/components/logical_inv.cpp" line="+6"/>
+        <location filename="../qucs/components/resistor.cpp" line="+12"/>
         <source>schematic symbol</source>
-        <translation>回路シンボル</translation>
+        <translation>símbolo de esquema</translation>
     </message>
     <message>
-        <location filename="components/resistor.cpp" line="+49"/>
+        <location filename="../qucs/components/resistor.cpp" line="+49"/>
         <source>Resistor</source>
-        <translation>抵抗</translation>
+        <translation>Resistencia</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Resistor US</source>
-        <translation>抵抗(US)</translation>
+        <translation>Resistencia US</translation>
     </message>
     <message>
-        <location filename="components/source_ac.cpp" line="-44"/>
+        <location filename="../qucs/components/source_ac.cpp" line="-44"/>
         <source>ac power source</source>
-        <translation>交流電力源</translation>
+        <translation>fuente de alimentación ac</translation>
     </message>
     <message>
-        <location filename="components/digi_source.cpp" line="+53"/>
-        <location filename="components/source_ac.cpp" line="+36"/>
+        <location filename="../qucs/components/digi_source.cpp" line="+52"/>
+        <location filename="../qucs/components/source_ac.cpp" line="+36"/>
         <source>number of the port</source>
-        <translation>ポートナンバ</translation>
+        <translation>número de la conexión</translation>
     </message>
     <message>
-        <location filename="components/source_ac.cpp" line="+2"/>
+        <location filename="../qucs/components/source_ac.cpp" line="+2"/>
         <source>port impedance</source>
-        <translation>ポートインピーダンス</translation>
+        <translation>impedancia de la conexión</translation>
     </message>
     <message>
         <source>ac power in Watts</source>
-        <translation type="obsolete">ACパワー(W)</translation>
+        <translation type="obsolete">potencia ac en Vatios</translation>
     </message>
     <message>
         <location line="+22"/>
         <source>Power Source</source>
-        <translation>パワーソース</translation>
+        <translation>Fuente de Alimentación</translation>
     </message>
     <message>
-        <location filename="components/sp_sim.cpp" line="-30"/>
+        <location filename="../qucs/components/sp_sim.cpp" line="-30"/>
         <source>S parameter simulation</source>
-        <translation>Sパラメータシミュレーション</translation>
+        <translation>simulación del parámetro S</translation>
     </message>
     <message>
         <location line="+32"/>
         <source>calculate noise parameters</source>
-        <translation>ノイズパラメータ計算</translation>
+        <translation>parámetros para calcular el ruido</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>input port for noise figure</source>
-        <translation>入力ポート ノイズフィギュア</translation>
+        <translation>conexión de entrada para la figura de ruido</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>output port for noise figure</source>
-        <translation>出力ポート ノイズフィギュア</translation>
+        <translation>conexión de salida para la figura de ruido</translation>
     </message>
     <message>
         <location line="+20"/>
         <source>S-parameter simulation</source>
-        <translation>Sパラメータシミュレーション</translation>
+        <translation>simulación del parámetro S</translation>
     </message>
     <message>
-        <location filename="components/sparamfile.cpp" line="+28"/>
+        <location filename="../qucs/components/sparamfile.cpp" line="+27"/>
         <source>S parameter file</source>
-        <translation>Sパラメータファイル</translation>
+        <translation>fitxer del parámetro S</translation>
     </message>
     <message>
         <location line="+127"/>
         <source>file</source>
-        <translation>ファイル</translation>
+        <translation>fitxer</translation>
     </message>
     <message>
         <location line="-120"/>
         <source>name of the s parameter file</source>
-        <translation>Sパラメータファイルの名前</translation>
+        <translation>nombre del fitxer del parámetro s</translation>
     </message>
     <message>
-        <location filename="components/ifile.cpp" line="-4"/>
-        <location filename="components/sparamfile.cpp" line="+4"/>
-        <location filename="components/vfile.cpp" line="-4"/>
+        <location filename="../qucs/components/ifile.cpp" line="-4"/>
+        <location filename="../qucs/components/sparamfile.cpp" line="+4"/>
+        <location filename="../qucs/components/vfile.cpp" line="-4"/>
         <source>interpolation type</source>
-        <translation>インターポレーションタイプ</translation>
+        <translation>tipo de interpolación</translation>
     </message>
     <message>
-        <location filename="components/sparamfile.cpp" line="+40"/>
+        <location filename="../qucs/components/sparamfile.cpp" line="+40"/>
         <source>1-port S parameter file</source>
-        <translation>1ポートSパラメータファイル</translation>
+        <translation>fitxer de parámetros S de 1-conexión</translation>
     </message>
     <message>
-        <location filename="components/subcircuit.cpp" line="+41"/>
+        <location filename="../qucs/components/subcircuit.cpp" line="+34"/>
         <source>subcircuit</source>
-        <translation>サブサーキット</translation>
+        <translation>subcircuit</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>name of qucs schematic file</source>
-        <translation>Qucs回路図ファイル名</translation>
+        <translation>nombre del fitxer del esquema qucs</translation>
     </message>
     <message>
-        <location filename="components/subcirport.cpp" line="+26"/>
+        <location filename="../qucs/components/subcirport.cpp" line="+25"/>
         <source>port of a subcircuit</source>
-        <translation>サブサーキットのポート</translation>
+        <translation>conexión de un subcircuit</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>number of the port within the subcircuit</source>
-        <translation>サブサーキットのポート数</translation>
+        <translation>número de la conexión dentro del subcircuit</translation>
     </message>
     <message>
         <location line="+64"/>
         <source>Subcircuit Port</source>
-        <translation>サブサーキットポート</translation>
+        <translation>Conexión de Subcircuito</translation>
     </message>
     <message>
-        <location filename="components/substrate.cpp" line="+23"/>
+        <location filename="../qucs/components/substrate.cpp" line="+23"/>
         <source>substrate definition</source>
-        <translation>基板定義</translation>
+        <translation>definición de sustrato</translation>
     </message>
     <message>
         <location line="+36"/>
         <source>relative permittivity</source>
-        <translation>誘電率</translation>
+        <translation>permitividad relativa</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>thickness in meters</source>
-        <translation>厚さ(m)</translation>
+        <translation>grosor en metros</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>thickness of metalization</source>
-        <translation>導体厚み</translation>
+        <translation>grosor de metalización</translation>
     </message>
     <message>
-        <location filename="components/coaxialline.cpp" line="-2"/>
-        <location filename="components/rectline.cpp" line="-4"/>
-        <location filename="components/substrate.cpp" line="+2"/>
-        <location filename="components/twistedpair.cpp" line="-2"/>
+        <location filename="../qucs/components/coaxialline.cpp" line="-2"/>
+        <location filename="../qucs/components/rectline.cpp" line="-4"/>
+        <location filename="../qucs/components/substrate.cpp" line="+2"/>
+        <location filename="../qucs/components/twistedpair.cpp" line="-2"/>
         <source>loss tangent</source>
-        <translation>誘電正接</translation>
+        <translation>tangente de perdidas</translation>
     </message>
     <message>
-        <location filename="components/substrate.cpp" line="+2"/>
+        <location filename="../qucs/components/substrate.cpp" line="+2"/>
         <source>specific resistance of metal</source>
-        <translation>導体抵抗率</translation>
+        <translation>resistencia específica del metal</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>rms substrate roughness</source>
-        <translation>基板粗さ(rms)</translation>
+        <translation>rudeza eficaz del sustrato</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>Substrate</source>
-        <translation>基板</translation>
+        <translation>Sustrato</translation>
     </message>
     <message>
-        <location filename="components/symtrafo.cpp" line="+23"/>
+        <location filename="../qucs/components/symtrafo.cpp" line="+23"/>
         <source>ideal symmetrical transformer</source>
-        <translation>理想対称トランス</translation>
+        <translation>transformador ideal simétrico</translation>
     </message>
     <message>
         <location line="+52"/>
         <source>voltage transformation ratio of coil 1</source>
-        <translation type="unfinished"></translation>
+        <translation>coeficiente de transformación de tensión de la bobina 1</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>voltage transformation ratio of coil 2</source>
-        <translation type="unfinished"></translation>
+        <translation>coeficiente de transformación de tensión de la bobina 2</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>symmetric Transformer</source>
-        <translation>対称トランス</translation>
+        <translation>Transformador simétrico</translation>
     </message>
     <message>
-        <location filename="components/tline.cpp" line="-32"/>
+        <location filename="../qucs/components/tline.cpp" line="-32"/>
         <source>ideal transmission line</source>
-        <translation>理想トランスミッションライン</translation>
+        <translation>línea de transmisión ideal</translation>
     </message>
     <message>
         <location line="+26"/>
-        <location filename="components/tline_4port.cpp" line="-6"/>
+        <location filename="../qucs/components/tline_4port.cpp" line="-6"/>
         <source>characteristic impedance</source>
-        <translation>インピーダンス特性</translation>
+        <translation>impedancia característica</translation>
     </message>
     <message>
-        <location filename="components/ctline.cpp" line="-10"/>
-        <location filename="components/rlcg.cpp" line="-2"/>
-        <location filename="components/tline.cpp" line="+2"/>
-        <location filename="components/tline_4port.cpp" line="+2"/>
+        <location filename="../qucs/components/ctline.cpp" line="-10"/>
+        <location filename="../qucs/components/rlcg.cpp" line="-2"/>
+        <location filename="../qucs/components/tline.cpp" line="+2"/>
+        <location filename="../qucs/components/tline_4port.cpp" line="+2"/>
         <source>electrical length of the line</source>
-        <translation>電気長</translation>
+        <translation>longitud eléctrica de la línea</translation>
     </message>
     <message>
-        <location filename="components/tline.cpp" line="+18"/>
+        <location filename="../qucs/components/tline.cpp" line="+18"/>
         <source>Transmission Line</source>
-        <translation>トランスミッションライン</translation>
+        <translation>Línea de Transmisión</translation>
     </message>
     <message>
-        <location filename="components/tr_sim.cpp" line="-37"/>
+        <location filename="../qucs/components/tr_sim.cpp" line="-37"/>
         <source>transient simulation</source>
-        <translation>トランジェント解析</translation>
+        <translation>simulación transitoria</translation>
     </message>
     <message>
         <location line="+22"/>
         <source>start time in seconds</source>
-        <translation>開始時間(s)</translation>
+        <translation>temps de inici en segundos</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>stop time in seconds</source>
-        <translation>終了時間(s)</translation>
+        <translation>temps de paro en segundos</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>number of simulation time steps</source>
-        <translation>シミュレーションステップ数</translation>
+        <translation>número de pasos de temps de la simulación</translation>
     </message>
     <message>
-        <location filename="components/etr_sim.cpp" line="-28"/>
+        <location filename="../qucs/components/etr_sim.cpp" line="-28"/>
         <source>externally driven transient simulation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+19"/>
-        <location filename="components/tr_sim.cpp" line="+2"/>
+        <location filename="../qucs/components/tr_sim.cpp" line="+2"/>
         <source>integration method</source>
-        <translation type="unfinished"></translation>
+        <translation>método de integración</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/tr_sim.cpp" line="+3"/>
+        <location filename="../qucs/components/tr_sim.cpp" line="+3"/>
         <source>order of integration method</source>
-        <translation type="unfinished"></translation>
+        <translation>orden del método de integración</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/tr_sim.cpp" line="+2"/>
+        <location filename="../qucs/components/tr_sim.cpp" line="+2"/>
         <source>initial step size in seconds</source>
-        <translation>初期ステップサイズ(s)</translation>
+        <translation>tamaño del pas inicial en segundos</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/tr_sim.cpp" line="+2"/>
+        <location filename="../qucs/components/tr_sim.cpp" line="+2"/>
         <source>minimum step size in seconds</source>
-        <translation>最小ステップサイズ(s)</translation>
+        <translation>tamaño del pas mínimo en segundos</translation>
     </message>
     <message>
-        <location line="+12"/>
-        <location filename="components/tr_sim.cpp" line="+12"/>
-        <source>relative tolerance of local truncation error</source>
-        <translation>局所端面 相対公差エラー</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="components/tr_sim.cpp" line="+2"/>
-        <source>absolute tolerance of local truncation error</source>
-        <translation>局所端面 絶対公差エラー</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="components/tr_sim.cpp" line="+2"/>
-        <source>overestimation of local truncation error</source>
-        <translation>局所端面の過大評価エラー</translation>
-    </message>
-    <message>
-        <location line="+23"/>
+        <location line="+39"/>
         <source>External transient simulation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/tr_sim.cpp" line="+23"/>
+        <location filename="../qucs/components/tr_sim.cpp" line="+39"/>
         <source>Transient simulation</source>
-        <translation>トランジェント解析</translation>
+        <translation>Simulació transitoria</translation>
     </message>
     <message>
-        <location filename="components/transformer.cpp" line="+23"/>
+        <location filename="../qucs/components/transformer.cpp" line="+23"/>
         <source>ideal transformer</source>
-        <translation>理想トランス</translation>
+        <translation>transformador ideal</translation>
     </message>
     <message>
         <location line="+38"/>
         <source>voltage transformation ratio</source>
-        <translation>電圧変換比</translation>
+        <translation>coeficiente de transformación de tensión</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>Transformer</source>
-        <translation>トランス</translation>
+        <translation>Transformador</translation>
     </message>
     <message>
-        <location filename="components/vccs.cpp" line="-41"/>
+        <location filename="../qucs/components/vccs.cpp" line="-41"/>
         <source>voltage controlled current source</source>
-        <translation>電圧制御電流源</translation>
+        <translation>Fuente de corriente controlada por tensión</translation>
     </message>
     <message>
         <location line="+40"/>
         <source>forward transconductance</source>
-        <translation>順方向トランスコンダクタンス</translation>
+        <translation>transconductancia directa</translation>
     </message>
     <message>
         <location line="+15"/>
         <source>Voltage Controlled Current Source</source>
-        <translation>電流制御電圧源</translation>
+        <translation>Fuente de Corriente Controlada por Tensión</translation>
     </message>
     <message>
-        <location filename="components/vcresistor.cpp" line="+23"/>
-        <location filename="components/vcvs.cpp" line="-42"/>
+        <location filename="../qucs/components/vcresistor.cpp" line="+23"/>
+        <location filename="../qucs/components/vcvs.cpp" line="-42"/>
         <source>voltage controlled voltage source</source>
-        <translation>電圧制御電圧源</translation>
+        <translation>fuente de tensión controlada por tensión</translation>
     </message>
     <message>
         <location line="+47"/>
@@ -4827,39 +4846,39 @@ Wrong &apos;component&apos; line format!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/vcvs.cpp" line="+56"/>
+        <location filename="../qucs/components/vcvs.cpp" line="+56"/>
         <source>Voltage Controlled Voltage Source</source>
-        <translation>電圧制御電圧源</translation>
+        <translation>Fuente de Tensión Controlada por Tensión</translation>
     </message>
     <message>
-        <location filename="components/volt_ac.cpp" line="-27"/>
+        <location filename="../qucs/components/volt_ac.cpp" line="-25"/>
         <source>ideal ac voltage source</source>
-        <translation>理想AC電圧源</translation>
+        <translation>fuente de tensión ac ideal</translation>
     </message>
     <message>
         <source>rms voltage in Volts</source>
-        <translation type="obsolete">実効電圧(V)</translation>
+        <translation type="obsolete">tensión eficaz en Voltios</translation>
     </message>
     <message>
         <location line="+45"/>
         <source>ac Voltage Source</source>
-        <translation>AC電圧源</translation>
+        <translation>Fuente de tensión ac</translation>
     </message>
     <message>
-        <location filename="components/volt_dc.cpp" line="+23"/>
+        <location filename="../qucs/components/volt_dc.cpp" line="+23"/>
         <source>ideal dc voltage source</source>
-        <translation>理想DC電圧源</translation>
+        <translation>fuente de tensión dc ideal</translation>
     </message>
     <message>
-        <location filename="components/ecvs.cpp" line="+23"/>
+        <location filename="../qucs/components/ecvs.cpp" line="+22"/>
         <source>externally controlled voltage source</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+45"/>
-        <location filename="components/volt_dc.cpp" line="+22"/>
+        <location filename="../qucs/components/volt_dc.cpp" line="+22"/>
         <source>voltage in Volts</source>
-        <translation>電圧(V)</translation>
+        <translation>tensión en Voltios</translation>
     </message>
     <message>
         <location line="+18"/>
@@ -4867,206 +4886,295 @@ Wrong &apos;component&apos; line format!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/volt_dc.cpp" line="+16"/>
+        <location filename="../qucs/components/volt_dc.cpp" line="+16"/>
         <source>dc Voltage Source</source>
-        <translation>DC電圧源</translation>
+        <translation>Fuente de Tensión dc</translation>
     </message>
     <message>
-        <location filename="components/volt_noise.cpp" line="-29"/>
+        <location filename="../qucs/components/volt_noise.cpp" line="-29"/>
         <source>noise voltage source</source>
-        <translation>ノイズ電圧源</translation>
+        <translation>fuente de tensión de ruido</translation>
     </message>
     <message>
         <location line="+23"/>
         <source>voltage power spectral density in V^2/Hz</source>
-        <translation>電圧スペクトラル密度(V^2/Hz)</translation>
+        <translation>densitat espectral de potencia en V²/Hz</translation>
     </message>
     <message>
         <location line="+22"/>
         <source>Noise Voltage Source</source>
-        <translation>ノイズ電圧源</translation>
+        <translation>Fuente de Tensión de Ruido</translation>
     </message>
     <message>
-        <location filename="components/vpulse.cpp" line="-37"/>
+        <location filename="../qucs/components/vpulse.cpp" line="-37"/>
         <source>ideal voltage pulse source</source>
-        <translation>理想電圧パルス源</translation>
+        <translation>fuente ideal de pulsos de tensión</translation>
     </message>
     <message>
         <location line="+27"/>
         <source>voltage before and after the pulse</source>
-        <translation type="unfinished">パルス前後の電圧</translation>
+        <translation>tensión antes y después del pulso</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>voltage of the pulse</source>
-        <translation>パルスの電圧</translation>
+        <translation>tensión del pulso</translation>
     </message>
     <message>
         <location line="+24"/>
         <source>Voltage Pulse</source>
-        <translation>電圧パルス</translation>
-    </message>
-    <message>
-        <location filename="components/vrect.cpp" line="-33"/>
-        <source>ideal rectangle voltage source</source>
-        <translation>矩形電圧源</translation>
-    </message>
-    <message>
-        <location line="+29"/>
-        <source>voltage of high signal</source>
-        <translation>HI信号電圧</translation>
-    </message>
-    <message>
-        <location line="+26"/>
-        <source>Rectangle Voltage</source>
-        <translation>矩形電圧</translation>
+        <translation>Pulso de Tensión</translation>
     </message>
     <message>
         <source>Create new project</source>
-        <translation type="obsolete">新規プロジェクトを作成</translation>
+        <translation type="obsolete">Crear proyecto nuevo</translation>
     </message>
     <message>
         <source>Project name:</source>
-        <translation type="obsolete">プロジェクト名:</translation>
+        <translation type="obsolete">Nom del Proyecto:</translation>
     </message>
     <message>
         <source>open new project</source>
-        <translation type="obsolete">新しいプロジェクトを開く</translation>
+        <translation type="obsolete">abrir proyecto nuevo</translation>
     </message>
     <message>
         <source>Create</source>
-        <translation type="obsolete">作成</translation>
+        <translation type="obsolete">Crear</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="obsolete">キャンセル</translation>
+        <translation type="obsolete">Cancel·lar</translation>
     </message>
     <message>
         <location filename="../qucs-edit/main.cpp" line="+76"/>
         <source>Qucs Editor Version </source>
-        <translation></translation>
+        <translation>Versión del Editor Qucs </translation>
     </message>
     <message>
-        <location line="+1"/>
         <source>
-Very simple text editor for Qucs
+very simple text editor for Qucs
 </source>
-        <translation>とてもシンプルなQucsの為のテキストエディタ</translation>
+        <translation type="obsolete">
+editor de text muy simple para Qucs
+</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <source>Copyright (C) 2004 by Michael Margraf
+</source>
+        <translation type="obsolete">Copyright (C) 2004 por Michael Margraf
+</translation>
+    </message>
+    <message>
         <source>
-Usage:  qucsedit [-r] file
+Usage:  qucsedit [-r] filename
 </source>
-        <translation>使い方:qucsedit [-r] file</translation>
+        <translation type="obsolete">
+Úselo:  qucsedit [-r] nombre_del_fitxer</translation>
     </message>
     <message>
-        <location line="+1"/>
-        <source>    -h  display this help and exit
-</source>
-        <translation>-h このヘルプを表示して終了します</translation>
-    </message>
-    <message>
-        <location line="+1"/>
+        <location line="+5"/>
         <source>    -r  open file read-only
 </source>
-        <translation type="unfinished">-r 読み込み専用として開きます</translation>
+        <translation>    -r  abrir fitxer para sólo lectura</translation>
     </message>
     <message>
         <location line="+48"/>
         <source>Too long command line argument!
 
 </source>
-        <translation>コマンドラインの引数が長すぎます!</translation>
+        <translation>¡Línea de comandos demasiado larga!
+
+</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Wrong command line argument!
 
 </source>
-        <translation>コマンドラインの引数が不正です!</translation>
+        <translation>¡Línea de comandos equivocada!
+
+</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Only one filename allowed!
 
 </source>
-        <translation>一つのファイルネームのみ許可されています!</translation>
+        <translation>¡Sólo está permitido el nombre de un fitxer!
+
+</translation>
     </message>
     <message>
-        <location filename="schematic_file.cpp" line="-56"/>
-        <source>Wrong document type: </source>
-        <translation>不正なドキュメントタイプ:</translation>
+        <location line="-69"/>
+        <source>
+Very simple text editor for Qucs
+</source>
+        <translation>
+Editor de text muy simple para Qucs
+</translation>
     </message>
     <message>
-        <location filename="components/amplifier.cpp" line="-25"/>
+        <location line="+2"/>
+        <source>
+Usage:  qucsedit [-r] file
+</source>
+        <translation>
+Use:  qucsedit [-r] fitxer
+</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>    -h  display this help and exit
+</source>
+        <translation>    -h  muestra esta ayuda y sale
+</translation>
+    </message>
+    <message>
+        <location filename="../qucs/components/irect.cpp" line="-38"/>
+        <source>ideal rectangle current source</source>
+        <translation>fuente de corriente cuadrada ideal</translation>
+    </message>
+    <message>
+        <location line="+30"/>
+        <source>current at high pulse</source>
+        <translation>corriente en el pulso superior</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <location filename="../qucs/components/vrect.cpp" line="-6"/>
+        <source>duration of high pulses</source>
+        <translation>duración de els pulsos superiores</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <location filename="../qucs/components/vrect.cpp" line="+2"/>
+        <source>duration of low pulses</source>
+        <translation>duración de els pulsos inferiores</translation>
+    </message>
+    <message>
+        <location line="+22"/>
+        <source>Rectangle Current</source>
+        <translation>Corriente Cuadrada</translation>
+    </message>
+    <message>
+        <location filename="../qucs/components/vrect.cpp" line="-33"/>
+        <source>ideal rectangle voltage source</source>
+        <translation>fuente de tensión cuadrada ideal</translation>
+    </message>
+    <message>
+        <location line="+29"/>
+        <source>voltage of high signal</source>
+        <translation>tensión de la señal superior</translation>
+    </message>
+    <message>
+        <location line="+26"/>
+        <source>Rectangle Voltage</source>
+        <translation>Tensión Cuadrada</translation>
+    </message>
+    <message>
+        <source> &lt;invalid&gt;</source>
+        <translation type="obsolete">&lt;inválido&gt;</translation>
+    </message>
+    <message>
+        <location filename="../qucs/components/am_modulator.cpp" line="+2"/>
+        <location filename="../qucs/components/ampere_ac.cpp" line="-18"/>
+        <location filename="../qucs/components/pm_modulator.cpp" line="+2"/>
+        <location filename="../qucs/components/volt_ac.cpp" line="-18"/>
+        <source>initial phase in degrees</source>
+        <translation>fase inicial en grados</translation>
+    </message>
+    <message>
+        <location filename="../qucs/components/etr_sim.cpp" line="-27"/>
+        <location filename="../qucs/components/tr_sim.cpp" line="-27"/>
+        <source>relative tolerance of local truncation error</source>
+        <translation>tolerancia relativa del error de redondeo local</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <location filename="../qucs/components/tr_sim.cpp" line="+2"/>
+        <source>absolute tolerance of local truncation error</source>
+        <translation>tolerancia absoluta del error de redondeo local</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <location filename="../qucs/components/tr_sim.cpp" line="+2"/>
+        <source>overestimation of local truncation error</source>
+        <translation>sobrestimación del error de redondeo local</translation>
+    </message>
+    <message>
+        <location filename="../qucs/components/amplifier.cpp" line="-25"/>
         <source>ideal amplifier</source>
-        <translation>理想アンプ</translation>
+        <translation>amplificador ideal</translation>
     </message>
     <message>
         <location line="+21"/>
-        <location filename="components/opamp.cpp" line="+50"/>
-        <location filename="components/vfile.cpp" line="+3"/>
+        <location filename="../qucs/components/opamp.cpp" line="+50"/>
+        <location filename="../qucs/components/vfile.cpp" line="+3"/>
         <source>voltage gain</source>
-        <translation>電圧ゲイン</translation>
+        <translation>ganancia de tensión</translation>
     </message>
     <message>
         <location line="+20"/>
         <source>Amplifier</source>
-        <translation>アンプ</translation>
+        <translation>Amplificador</translation>
     </message>
     <message>
-        <location filename="components/mosfet_sub.cpp" line="-146"/>
-        <source>transconductance coefficient in A/V^2</source>
-        <translation>トランスコンダクタンス(A/V^2)</translation>
-    </message>
-    <message>
-        <location filename="components/msvia.cpp" line="-21"/>
+        <location filename="../qucs/components/msvia.cpp" line="-21"/>
         <source>microstrip via</source>
-        <translation>マイクロストリップ ビア</translation>
+        <translation>via microstrip</translation>
     </message>
     <message>
         <location line="+23"/>
         <source>diameter of round via conductor</source>
-        <translation>ビアの直径</translation>
+        <translation>díametro del conductor de vía redondeado</translation>
     </message>
     <message>
         <location line="+18"/>
         <source>Microstrip Via</source>
-        <translation>マイクロストリップ ビア</translation>
+        <translation>Via Microstrip</translation>
     </message>
     <message>
-        <location filename="components/opamp.cpp" line="-27"/>
+        <location filename="../qucs/components/mosfet_sub.cpp" line="-146"/>
+        <source>transconductance coefficient in A/V^2</source>
+        <translation>coeficiente de transconductancia en A/V^2</translation>
+    </message>
+    <message>
+        <location filename="../qucs/components/opamp.cpp" line="-27"/>
         <source>operational amplifier</source>
-        <translation>オペアンプ</translation>
+        <translation>amplificador operacional</translation>
     </message>
     <message>
-        <location line="+29"/>
-        <source>absolute value of maximum and minimum output voltage</source>
-        <translation>最大最小出力電圧限界値</translation>
-    </message>
-    <message>
-        <location line="+14"/>
+        <location line="+43"/>
         <source>OpAmp</source>
-        <translation>オペアンプ</translation>
+        <translation>AmpOp</translation>
+    </message>
+    <message>
+        <location line="-14"/>
+        <source>absolute value of maximum and minimum output voltage</source>
+        <translation>valor absoluto del voltaje máximo y mínimo de salida</translation>
+    </message>
+    <message>
+        <location filename="../qucs/schematic_file.cpp" line="-54"/>
+        <source>Wrong document type: </source>
+        <translation>Tipus de document equivocado:</translation>
     </message>
     <message>
         <source>Insert Nodename</source>
-        <translation type="obsolete">ノード名追加</translation>
+        <translation type="obsolete">Insertar nombre del nodo</translation>
     </message>
     <message>
         <source>Enter the label:</source>
-        <translation type="obsolete">ラベル入力 :</translation>
+        <translation type="obsolete">Escribe la etiqueta:</translation>
     </message>
     <message>
-        <location filename="components/dc_sim.cpp" line="+3"/>
+        <location filename="../qucs/components/dc_sim.cpp" line="+3"/>
         <source>preferred convergence algorithm</source>
-        <translation>優先収束アルゴリズム</translation>
+        <translation>algoritmo de convergencia preferido</translation>
     </message>
     <message>
-        <location filename="components/spicefile.cpp" line="+44"/>
+        <location filename="../qucs/components/spicefile.cpp" line="+41"/>
         <source>SPICE netlist file</source>
-        <translation>SPICEネットリストファイル</translation>
+        <translation>fitxer netlist SPICE</translation>
     </message>
     <message>
         <location line="+62"/>
@@ -5074,387 +5182,393 @@ Usage:  qucsedit [-r] file
         <translation>spice</translation>
     </message>
     <message>
-        <location line="-35"/>
+        <location line="+336"/>
+        <source>COMP ERROR: Cannot start QucsConv!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-371"/>
         <source>SPICE netlist</source>
-        <translation>SPICEネットリスト</translation>
+        <translation>netlist SPICE</translation>
     </message>
     <message>
-        <location filename="diagrams/tabdiagram.cpp" line="-92"/>
-        <location filename="diagrams/timingdiagram.cpp" line="+148"/>
-        <location filename="diagrams/truthdiagram.cpp" line="+77"/>
+        <location filename="../qucs/diagrams/tabdiagram.cpp" line="-93"/>
+        <location filename="../qucs/diagrams/timingdiagram.cpp" line="+162"/>
+        <location filename="../qucs/diagrams/truthdiagram.cpp" line="+91"/>
         <source>no variables</source>
-        <translation>変数無し</translation>
+        <translation> sense variables</translation>
     </message>
     <message>
-        <location line="+148"/>
-        <location filename="diagrams/timingdiagram.cpp" line="+14"/>
+        <location line="+149"/>
+        <location filename="../qucs/diagrams/timingdiagram.cpp" line="+14"/>
         <location line="+113"/>
-        <location filename="diagrams/truthdiagram.cpp" line="+141"/>
+        <location filename="../qucs/diagrams/truthdiagram.cpp" line="+141"/>
         <source>no data</source>
-        <translation>データ無し</translation>
+        <translation> sense dades</translation>
     </message>
     <message>
-        <location filename="components/ac_sim.cpp" line="+2"/>
+        <location filename="../qucs/components/ac_sim.cpp" line="+2"/>
         <source>calculate noise voltages</source>
-        <translation>ノイズ電圧計算</translation>
+        <translation>calcular tensiones de ruido</translation>
     </message>
     <message>
-        <location filename="components/coplanar.cpp" line="-18"/>
-        <location filename="components/cpwopen.cpp" line="+4"/>
-        <location filename="components/cpwshort.cpp" line="+2"/>
-        <location filename="components/cpwstep.cpp" line="+4"/>
+        <location filename="../qucs/components/coplanar.cpp" line="-18"/>
+        <location filename="../qucs/components/cpwopen.cpp" line="+4"/>
+        <location filename="../qucs/components/cpwshort.cpp" line="+2"/>
+        <location filename="../qucs/components/cpwstep.cpp" line="+4"/>
         <source>material at the backside of the substrate</source>
-        <translation>基板背面の材料</translation>
+        <translation>material de la parte trasera del sustrato</translation>
     </message>
     <message>
-        <location filename="components/mstee.cpp" line="-19"/>
+        <location filename="../qucs/components/mstee.cpp" line="-19"/>
         <source>temperature in degree Celsius</source>
-        <translation>温度(°C)</translation>
+        <translation>temperatura en grados Celsius</translation>
     </message>
     <message>
-        <location filename="../qucs-edit/main.cpp" line="-68"/>
+        <location filename="../qucs-edit/main.cpp" line="-2"/>
         <source>Copyright (C) 2004, 2005 by Michael Margraf
 </source>
-        <translation>Copyright (C) 2004, 2005 by Michael Margraf</translation>
+        <translation>Copyright (C) 2004, 2005 por Michael Margraf
+</translation>
     </message>
     <message>
-        <location filename="components/coplanar.cpp" line="+3"/>
+        <location filename="../qucs/components/coplanar.cpp" line="+3"/>
         <source>use approximation instead of precise equation</source>
-        <translation>正確な方程式の代わりに近似値を使う</translation>
+        <translation>usa aproximación en lugar de ecuación exacta</translation>
     </message>
     <message>
-        <location filename="components/dc_sim.cpp" line="+3"/>
-        <location filename="components/etr_sim.cpp" line="-21"/>
-        <location filename="components/tr_sim.cpp" line="-21"/>
+        <location filename="../qucs/components/dc_sim.cpp" line="+3"/>
+        <location filename="../qucs/components/etr_sim.cpp" line="+2"/>
+        <location filename="../qucs/components/tr_sim.cpp" line="+2"/>
         <source>method for solving the circuit matrix</source>
-        <translation>回路行列を解くための方式</translation>
+        <translation>método para resolver la matriz del circuito</translation>
     </message>
     <message>
-        <location filename="components/biast.cpp" line="-16"/>
-        <location filename="components/dcfeed.cpp" line="-14"/>
+        <location filename="../qucs/components/biast.cpp" line="-16"/>
+        <location filename="../qucs/components/dcfeed.cpp" line="-14"/>
         <source>for transient simulation: inductance in Henry</source>
-        <translation>トランジェントシミュレーション:インダクタンス(H)</translation>
+        <translation>para simulación transitoria: inductancia en Henrios</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/dcblock.cpp" line="-14"/>
+        <location filename="../qucs/components/dcblock.cpp" line="-14"/>
         <source>for transient simulation: capacitance in Farad</source>
-        <translation>トランジェントシミュレーション:容量(F)</translation>
+        <translation>para simulación transitoria: capacidad en Faradios</translation>
     </message>
     <message>
-        <location filename="components/cpwopen.cpp" line="-48"/>
+        <location filename="../qucs/components/cpwopen.cpp" line="-48"/>
         <source>coplanar open</source>
-        <translation>コプレーナオープン</translation>
+        <translation>coplanar abierto</translation>
     </message>
     <message>
         <location line="+46"/>
         <source>width of gap at end of line</source>
-        <translation>最終端からのギャップ幅</translation>
+        <translation>ancho del gap al final de la línea</translation>
     </message>
     <message>
         <location line="+17"/>
         <source>Coplanar Open</source>
-        <translation>コプレーナオープン</translation>
+        <translation>Coplanar Abierto</translation>
     </message>
     <message>
-        <location filename="components/cpwshort.cpp" line="-45"/>
+        <location filename="../qucs/components/cpwshort.cpp" line="-45"/>
         <source>coplanar short</source>
-        <translation>コプレーナショート</translation>
+        <translation>coplanar corto</translation>
     </message>
     <message>
         <location line="+60"/>
         <source>Coplanar Short</source>
-        <translation>コプレーナショート</translation>
+        <translation>Coplanar Corto</translation>
     </message>
     <message>
-        <location filename="components/cpwgap.cpp" line="-45"/>
+        <location filename="../qucs/components/cpwgap.cpp" line="-45"/>
         <source>coplanar gap</source>
-        <translation>コプレーナギャップ</translation>
+        <translation>gap coplanar</translation>
     </message>
     <message>
         <location line="+47"/>
         <source>width of gap between the two lines</source>
-        <translation>2線間のギャップ幅</translation>
+        <translation>ancho del gap entre les dos línees</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>Coplanar Gap</source>
-        <translation>コプレーナギャップ</translation>
+        <translation>Gap Coplanar</translation>
     </message>
     <message>
-        <location filename="components/spicefile.cpp" line="+31"/>
+        <location filename="../qucs/components/spicefile.cpp" line="+31"/>
         <source>sim</source>
-        <translation type="unfinished"></translation>
+        <translation>sim</translation>
     </message>
     <message>
-        <location filename="components/cpwstep.cpp" line="-51"/>
+        <location filename="../qucs/components/cpwstep.cpp" line="-51"/>
         <source>coplanar step</source>
-        <translation>コプレーナステップ</translation>
+        <translation>pas coplanar</translation>
     </message>
     <message>
         <location line="+49"/>
         <source>distance between ground planes</source>
-        <translation>グラウンドとの距離</translation>
+        <translation>distancia entre planos de tierra</translation>
     </message>
     <message>
         <location line="+17"/>
         <source>Coplanar Step</source>
-        <translation>コプレーナステップ</translation>
+        <translation>Paso Coplanar</translation>
     </message>
     <message>
-        <location filename="components/EKV26MOS.cpp" line="+81"/>
-        <location filename="components/diode.cpp" line="-26"/>
-        <location filename="components/photodiode.cpp" line="-21"/>
+        <location filename="../qucs/components/EKV26MOS.cpp" line="+81"/>
+        <location filename="../qucs/components/diode.cpp" line="-26"/>
+        <location filename="../qucs/components/photodiode.cpp" line="-21"/>
         <source>reverse breakdown voltage</source>
-        <translation>逆ブレークダウン電圧</translation>
+        <translation>tensión de ruptura inversa</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/diode.cpp" line="+2"/>
-        <location filename="components/photodiode.cpp" line="+3"/>
+        <location filename="../qucs/components/diode.cpp" line="+2"/>
+        <location filename="../qucs/components/photodiode.cpp" line="+3"/>
         <source>current at reverse breakdown voltage</source>
-        <translation>逆ブレークダウン電圧時の電流</translation>
+        <translation>corriente en la tensión de ruptura inversa</translation>
     </message>
     <message>
-        <location filename="schematic_file.cpp" line="+337"/>
+        <location filename="../qucs/schematic_file.cpp" line="+335"/>
         <source>ERROR: Cannot load subcircuit &quot;%1&quot;.</source>
-        <translation>エラー:サブサーキット&quot;%1&quot;が読み込みできません.</translation>
+        <translation>ERROR: No puedo cargar el subcircuit &quot;%1&quot;.</translation>
     </message>
     <message>
-        <location line="+66"/>
-        <location filename="components/spicefile.cpp" line="+150"/>
+        <location line="+67"/>
+        <location filename="../qucs/components/spicefile.cpp" line="+150"/>
         <source>ERROR: No file name in SPICE component &quot;%1&quot;.</source>
-        <translation>エラー:SPICE部品&quot;%1&quot;というファイル名がありません.</translation>
+        <translation>ERROR: Sin nombre de fitxer en el componente SPICE &quot;%1&quot;.</translation>
     </message>
     <message>
-        <location filename="components/libcomp.cpp" line="+41"/>
+        <location filename="../qucs/components/libcomp.cpp" line="+33"/>
         <source>Component taken from Qucs library</source>
-        <translation>Qucsライブラリからの部品</translation>
+        <translation>Componente tomado de la librería de Qucs</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>name of qucs library file</source>
-        <translation>Qucsライブラリファイル名</translation>
+        <translation>nombre del fitxer librería de qucs</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>name of component in library</source>
-        <translation>ライブラリでの部品名</translation>
+        <translation>nombre del componente en la librería</translation>
     </message>
     <message>
-        <location filename="schematic_file.cpp" line="-13"/>
+        <location filename="../qucs/schematic_file.cpp" line="-13"/>
         <source>ERROR: Cannot load library component &quot;%1&quot;.</source>
-        <translation>エラー:ライブラリ部品&quot;%1&quot;が読み込みできません.</translation>
+        <translation>ERROR: No puedo cargar el componente de la librería &quot;%1&quot;.</translation>
     </message>
     <message>
-        <location filename="diagrams/curvediagram.cpp" line="+245"/>
+        <location filename="../qucs/diagrams/curvediagram.cpp" line="+253"/>
         <source>Locus Curve</source>
-        <translation>ルーカスカーブ</translation>
+        <translation>Curva Locus</translation>
     </message>
     <message>
-        <location filename="diagrams/polardiagram.cpp" line="+98"/>
+        <location filename="../qucs/diagrams/polardiagram.cpp" line="+102"/>
         <source>Polar</source>
-        <translation>極座標</translation>
+        <translation>Polar</translation>
     </message>
     <message>
-        <location filename="diagrams/psdiagram.cpp" line="+125"/>
+        <location filename="../qucs/diagrams/psdiagram.cpp" line="+129"/>
         <source>Polar-Smith Combi</source>
-        <translation>極座標-スミス混合</translation>
+        <translation>Combi Polar-Smith</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Smith-Polar Combi</source>
-        <translation>スミス-極座標混合</translation>
+        <translation>Combi Smith-Polar</translation>
     </message>
     <message>
-        <location filename="diagrams/rect3ddiagram.cpp" line="+1140"/>
+        <location filename="../qucs/diagrams/rect3ddiagram.cpp" line="+1154"/>
         <source>3D-Cartesian</source>
-        <translation>3D-直交座標</translation>
+        <translation>Cartesiano 3D</translation>
     </message>
     <message>
-        <location filename="diagrams/rectdiagram.cpp" line="+243"/>
+        <location filename="../qucs/diagrams/rectdiagram.cpp" line="+249"/>
         <source>Cartesian</source>
-        <translation>直交座標</translation>
+        <translation>Cartesiano</translation>
     </message>
     <message>
-        <location filename="diagrams/smithdiagram.cpp" line="+108"/>
+        <location filename="../qucs/diagrams/smithdiagram.cpp" line="+112"/>
         <source>Smith Chart</source>
-        <translation>スミスチャート</translation>
+        <translation>Carta de Smith</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Admittance Smith</source>
-        <translation>アドミッタンスチャート</translation>
+        <translation>Admitancia Smith</translation>
     </message>
     <message>
-        <location filename="diagrams/tabdiagram.cpp" line="+98"/>
+        <location filename="../qucs/diagrams/tabdiagram.cpp" line="+98"/>
         <source>Tabular</source>
-        <translation>表</translation>
+        <translation>Tabular</translation>
     </message>
     <message>
-        <location filename="paintings/arrow.cpp" line="+137"/>
+        <location filename="../qucs/paintings/arrow.cpp" line="+135"/>
         <source>Arrow</source>
-        <translation>矢印</translation>
+        <translation>Flecha</translation>
     </message>
     <message>
-        <location filename="paintings/ellipsearc.cpp" line="-296"/>
+        <location filename="../qucs/paintings/ellipsearc.cpp" line="-296"/>
         <source>Elliptic Arc</source>
-        <translation>弧</translation>
+        <translation>Arco elíptico</translation>
     </message>
     <message>
-        <location filename="paintings/ellipse.cpp" line="-275"/>
+        <location filename="../qucs/paintings/ellipse.cpp" line="-275"/>
         <source>Ellipse</source>
-        <translation>楕円</translation>
+        <translation>Elipse</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>filled Ellipse</source>
-        <translation>塗りつぶし楕円</translation>
+        <translation>Elipse rellena</translation>
     </message>
     <message>
-        <location filename="paintings/graphicline.cpp" line="-236"/>
+        <location filename="../qucs/paintings/graphicline.cpp" line="-236"/>
         <source>Line</source>
-        <translation>線</translation>
+        <translation>Línea</translation>
     </message>
     <message>
-        <location filename="paintings/graphictext.cpp" line="+131"/>
+        <location filename="../qucs/paintings/graphictext.cpp" line="+129"/>
         <source>Text</source>
-        <translation>テキスト</translation>
+        <translation>Texto</translation>
     </message>
     <message>
-        <location filename="paintings/rectangle.cpp" line="-277"/>
+        <location filename="../qucs/paintings/rectangle.cpp" line="-277"/>
         <source>Rectangle</source>
-        <translation>長方形</translation>
+        <translation>Rectángulo</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>filled Rectangle</source>
-        <translation>塗りつぶし長方形</translation>
+        <translation>Rectángulo relleno</translation>
     </message>
     <message>
-        <location filename="diagrams/tabdiagram.cpp" line="-105"/>
-        <location filename="diagrams/timingdiagram.cpp" line="-80"/>
+        <location filename="../qucs/diagrams/tabdiagram.cpp" line="-105"/>
+        <location filename="../qucs/diagrams/timingdiagram.cpp" line="-80"/>
         <location line="+89"/>
-        <location filename="diagrams/truthdiagram.cpp" line="-7"/>
+        <location filename="../qucs/diagrams/truthdiagram.cpp" line="-7"/>
         <source>wrong dependency</source>
-        <translation>誤った属性です</translation>
+        <translation>dependencia incorrecta</translation>
     </message>
     <message>
-        <location filename="components/mutual2.cpp" line="+23"/>
+        <location filename="../qucs/components/mutual2.cpp" line="+23"/>
         <source>three mutual inductors</source>
-        <translation type="unfinished"></translation>
+        <translation>tres bobinas mutuas</translation>
     </message>
     <message>
-        <location filename="components/mutual.cpp" line="+58"/>
-        <location filename="components/mutual2.cpp" line="+46"/>
+        <location filename="../qucs/components/mutual.cpp" line="+58"/>
+        <location filename="../qucs/components/mutual2.cpp" line="+46"/>
         <source>inductance of coil 1</source>
-        <translation>コイル1のインダクタンス</translation>
+        <translation>inductancia de la bobina 1</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/mutual2.cpp" line="+2"/>
+        <location filename="../qucs/components/mutual2.cpp" line="+2"/>
         <source>inductance of coil 2</source>
-        <translation>コイル2のインダクタンス</translation>
+        <translation>inductancia de la bobina 2</translation>
     </message>
     <message>
-        <location filename="components/mutual2.cpp" line="+2"/>
+        <location filename="../qucs/components/mutual2.cpp" line="+2"/>
         <source>inductance of coil 3</source>
-        <translation>コイル3のインダクタンス</translation>
+        <translation>inductancia de la bobina 3</translation>
     </message>
     <message>
-        <location filename="components/mutual.cpp" line="+2"/>
-        <location filename="components/mutual2.cpp" line="+2"/>
+        <location filename="../qucs/components/mutual.cpp" line="+2"/>
+        <location filename="../qucs/components/mutual2.cpp" line="+2"/>
         <source>coupling factor between coil 1 and 2</source>
-        <translation>コイル1とコイル2間の結合係数</translation>
+        <translation>Inductancia mutua entre la bobina 1 y 2</translation>
     </message>
     <message>
-        <location filename="components/mutual2.cpp" line="+2"/>
+        <location filename="../qucs/components/mutual2.cpp" line="+2"/>
         <source>coupling factor between coil 1 and 3</source>
-        <translation>コイル1とコイル3間の結合係数</translation>
+        <translation>Inductancia mutua entre la bobina 1 y 3</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>coupling factor between coil 2 and 3</source>
-        <translation>コイル2とコイル3間の結合係数</translation>
+        <translation>Inductancia mutua entre la bobina 2 y 3</translation>
     </message>
     <message>
-        <location filename="components/mutual.cpp" line="-39"/>
+        <location filename="../qucs/components/mutual.cpp" line="-39"/>
         <source>two mutual inductors</source>
-        <translation type="unfinished"></translation>
+        <translation>dos bobinas acopladas</translation>
     </message>
     <message>
         <location line="+53"/>
         <source>Mutual Inductors</source>
-        <translation type="unfinished"></translation>
+        <translation>Bobinas acopladas</translation>
     </message>
     <message>
-        <location filename="components/mutual2.cpp" line="+14"/>
+        <location filename="../qucs/components/mutual2.cpp" line="+14"/>
         <source>3 Mutual Inductors</source>
-        <translation type="unfinished"></translation>
+        <translation>3 Bobinas Acopladas</translation>
     </message>
     <message>
-        <location filename="components/noise_ii.cpp" line="-58"/>
-        <location filename="components/noise_iv.cpp" line="-53"/>
-        <location filename="components/noise_vv.cpp" line="-48"/>
+        <location filename="../qucs/components/noise_ii.cpp" line="-58"/>
+        <location filename="../qucs/components/noise_iv.cpp" line="-53"/>
+        <location filename="../qucs/components/noise_vv.cpp" line="-48"/>
         <source>correlated current sources</source>
-        <translation>相互電流源</translation>
+        <translation>fuentes de corriente correlacionadas</translation>
     </message>
     <message>
         <location line="+48"/>
-        <location filename="components/noise_iv.cpp" line="+43"/>
+        <location filename="../qucs/components/noise_iv.cpp" line="+43"/>
         <source>current power spectral density of source 1</source>
-        <translation>ソース1の電流スペクトラル密度</translation>
+        <translation>densitat espectral del generador de corriente 1</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>current power spectral density of source 2</source>
-        <translation>ソース2の電流スペクトラル密度</translation>
+        <translation>densitat espectral del generador de corriente 2</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/noise_iv.cpp" line="+4"/>
-        <location filename="components/noise_vv.cpp" line="+42"/>
+        <location filename="../qucs/components/noise_iv.cpp" line="+4"/>
+        <location filename="../qucs/components/noise_vv.cpp" line="+42"/>
         <source>normalized correlation coefficient</source>
-        <translation>標準相関係数</translation>
+        <translation>coeficiente normalizado de correlación</translation>
     </message>
     <message>
         <location line="+20"/>
-        <location filename="components/noise_iv.cpp" line="+20"/>
-        <location filename="components/noise_vv.cpp" line="+20"/>
+        <location filename="../qucs/components/noise_iv.cpp" line="+20"/>
+        <location filename="../qucs/components/noise_vv.cpp" line="+20"/>
         <source>Correlated Noise Sources</source>
-        <translation>相関ノイズ源</translation>
+        <translation>Fuentes de Ruido correlacionadas</translation>
     </message>
     <message>
-        <location filename="components/noise_iv.cpp" line="-22"/>
-        <location filename="components/noise_vv.cpp" line="-22"/>
+        <location filename="../qucs/components/noise_iv.cpp" line="-22"/>
+        <location filename="../qucs/components/noise_vv.cpp" line="-22"/>
         <source>voltage power spectral density of source 2</source>
-        <translation>ソース2の電圧スペクトラル密度</translation>
+        <translation>densitat espectral de la fuente de tensión 2</translation>
     </message>
     <message>
-        <location filename="components/noise_vv.cpp" line="-2"/>
+        <location filename="../qucs/components/noise_vv.cpp" line="-2"/>
         <source>voltage power spectral density of source 1</source>
-        <translation>ソース1の電圧スペクトラル密度</translation>
+        <translation>densitat espectral de la fuente de tensión 1</translation>
     </message>
     <message>
-        <location filename="components/logical_or.cpp" line="+22"/>
+        <location filename="../qucs/components/logical_or.cpp" line="+22"/>
         <source>logical OR</source>
-        <translation>論理OR</translation>
+        <translation>OR lógico</translation>
     </message>
     <message>
-        <location filename="components/component.cpp" line="-10"/>
+        <location filename="../qucs/components/component.cpp" line="-10"/>
         <source>number of input ports</source>
-        <translation>入力ポート数</translation>
+        <translation>número de puertos de entrada</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/digi_source.cpp" line="+6"/>
-        <location filename="components/logical_buf.cpp" line="-8"/>
-        <location filename="components/logical_inv.cpp" line="-8"/>
+        <location filename="../qucs/components/digi_source.cpp" line="+6"/>
+        <location filename="../qucs/components/logical_buf.cpp" line="-8"/>
+        <location filename="../qucs/components/logical_inv.cpp" line="-8"/>
         <source>voltage of high level</source>
-        <translation>HI信号レベル</translation>
+        <translation>tensión de alto nivel</translation>
     </message>
     <message>
-        <location line="+259"/>
+        <location line="+269"/>
         <source>Format Error:
 Unknown component!
 %1
@@ -5463,415 +5577,415 @@ Do you make use of loadable components?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/logical_nor.cpp" line="+22"/>
+        <location filename="../qucs/components/logical_nor.cpp" line="+22"/>
         <source>logical NOR</source>
-        <translation>論理NOR</translation>
+        <translation>NOR lógico</translation>
     </message>
     <message>
-        <location filename="components/logical_or.cpp" line="+23"/>
+        <location filename="../qucs/components/logical_or.cpp" line="+23"/>
         <source>n-port OR</source>
-        <translation>nポートOR</translation>
+        <translation>puerto-n OR</translation>
     </message>
     <message>
-        <location filename="components/logical_and.cpp" line="+22"/>
+        <location filename="../qucs/components/logical_and.cpp" line="+22"/>
         <source>logical AND</source>
-        <translation>論理AND</translation>
+        <translation>AND lógico</translation>
     </message>
     <message>
         <location line="+23"/>
         <source>n-port AND</source>
-        <translation>nポートAND</translation>
+        <translation>puerto-n AND</translation>
     </message>
     <message>
-        <location filename="components/logical_nand.cpp" line="+22"/>
+        <location filename="../qucs/components/logical_nand.cpp" line="+22"/>
         <source>logical NAND</source>
-        <translation>論理NAND</translation>
+        <translation>NAND lógico</translation>
     </message>
     <message>
         <location line="+23"/>
         <source>n-port NAND</source>
-        <translation>nポートNAND</translation>
+        <translation>puerto-n NAND</translation>
     </message>
     <message>
-        <location filename="components/logical_nor.cpp" line="+23"/>
+        <location filename="../qucs/components/logical_nor.cpp" line="+23"/>
         <source>n-port NOR</source>
-        <translation>nポートNOR</translation>
+        <translation>puerto-n NOR</translation>
     </message>
     <message>
-        <location filename="components/logical_xnor.cpp" line="+22"/>
+        <location filename="../qucs/components/logical_xnor.cpp" line="+22"/>
         <source>logical XNOR</source>
-        <translation>論理XNOR</translation>
+        <translation>XNOR lógico</translation>
     </message>
     <message>
         <location line="+23"/>
         <source>n-port XNOR</source>
-        <translation>nポートXNOR</translation>
+        <translation>puerto-n XNOR</translation>
     </message>
     <message>
-        <location filename="components/logical_xor.cpp" line="+22"/>
+        <location filename="../qucs/components/logical_xor.cpp" line="+22"/>
         <source>logical XOR</source>
-        <translation>論理XOR</translation>
+        <translation>XOR lógico</translation>
     </message>
     <message>
         <location line="+23"/>
         <source>n-port XOR</source>
-        <translation>nポートXOR</translation>
+        <translation>puerto-n XOR</translation>
     </message>
     <message>
-        <location filename="components/logical_inv.cpp" line="-4"/>
+        <location filename="../qucs/components/logical_inv.cpp" line="-4"/>
         <source>logical inverter</source>
-        <translation>論理インバータ</translation>
+        <translation>inversor lógico</translation>
     </message>
     <message>
         <location line="+121"/>
         <source>Inverter</source>
-        <translation>インバータ</translation>
+        <translation>Inversor</translation>
     </message>
     <message>
-        <location filename="components/digi_sim.cpp" line="+25"/>
+        <location filename="../qucs/components/digi_sim.cpp" line="+24"/>
         <location line="+41"/>
         <source>digital simulation</source>
-        <translation>デジタルシミュレーション</translation>
+        <translation>simulación digital</translation>
     </message>
     <message>
-        <location filename="components/digi_source.cpp" line="-33"/>
+        <location filename="../qucs/components/digi_source.cpp" line="-33"/>
         <location line="+50"/>
         <source>digital source</source>
-        <translation>デジタルソース</translation>
+        <translation>fuente digital</translation>
     </message>
     <message>
         <location line="-21"/>
         <source>initial output value</source>
-        <translation>初期出力値</translation>
+        <translation>valor inicial de salida</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>list of times for changing output value</source>
-        <translation>出力値変更数</translation>
+        <translation>llista de veces que se cambia el valor de salida</translation>
     </message>
     <message>
-        <location filename="schematic_file.cpp" line="-103"/>
+        <location filename="../qucs/schematic_file.cpp" line="-105"/>
         <source>ERROR: Component &quot;%1&quot; has no analog model.</source>
-        <translation>エラー:部品&quot;%1&quot;はアナログモデルがありません.</translation>
+        <translation>ERROR: El componente &quot;%1&quot; no tiene modelo analógico.</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>ERROR: Component &quot;%1&quot; has no digital model.</source>
-        <translation>エラー:部品&quot;%1&quot;はデジタルモデルがありません.</translation>
+        <translation>ERROR: El componente &quot;%1&quot; no tiene modelo digital.</translation>
     </message>
     <message>
-        <location line="+284"/>
+        <location line="+286"/>
         <source>WARNING: Ignore simulation component in subcircuit &quot;%1&quot;.</source>
-        <translation>警告:サブサーキット中の部品&quot;%1&quot;のシミュレーションは無視されます.</translation>
+        <translation>AVISO: Ignora simulación de componente en el subcircuit &quot;%1&quot;.</translation>
     </message>
     <message>
         <source>WARNING: Ignore equation in subcircuit &quot;%1&quot;.</source>
-        <translation type="obsolete">警告:サブサーキット&quot;%1&quot;中の方程式は無視されます.</translation>
+        <translation type="obsolete">AVISO: Ignora ecuación en subcircuit &quot;%1&quot;.</translation>
     </message>
     <message>
-        <location filename="diagrams/timingdiagram.cpp" line="+223"/>
+        <location filename="../qucs/diagrams/timingdiagram.cpp" line="+223"/>
         <source>Timing Diagram</source>
-        <translation>タイミングダイアグラム</translation>
+        <translation>Diagrama de Tiempos</translation>
     </message>
     <message>
-        <location filename="components/sparamfile.cpp" line="-42"/>
+        <location filename="../qucs/components/sparamfile.cpp" line="-42"/>
         <source>data type</source>
-        <translation>データタイプ</translation>
+        <translation>tipo de dades</translation>
     </message>
     <message>
-        <location filename="components/digi_sim.cpp" line="-21"/>
+        <location filename="../qucs/components/digi_sim.cpp" line="-21"/>
         <source>type of simulation</source>
-        <translation>シミュレーションのタイプ</translation>
+        <translation>tipo de simulación</translation>
     </message>
     <message>
-        <location filename="main.cpp" line="+529"/>
-        <location line="+63"/>
-        <source>Error: Wrong time format in &quot;%1&quot;. Use positive number with units</source>
-        <translation>エラー:&quot;%1&quot;中の時間フォーマットが間違っています。正の数を使ってください</translation>
+        <location filename="../qucs/diagrams/truthdiagram.cpp" line="+53"/>
+        <source>Truth Table</source>
+        <translation>Tabla de Verdad</translation>
     </message>
     <message>
-        <location filename="schematic_file.cpp" line="+282"/>
+        <location filename="../qucs/schematic_file.cpp" line="+282"/>
         <source>ERROR: Only one digital simulation allowed.</source>
-        <translation>エラー:ディジタルシミュレーションのみ許可されています.</translation>
+        <translation>ERROR: Sólo está permitida una simulación digital.</translation>
     </message>
     <message>
         <location line="+13"/>
         <source>ERROR: Analog and digital simulations cannot be mixed.</source>
-        <translation>エラー：アナログとデジタルシミュレーションは混在できません.</translation>
+        <translation>ERROR: No se pueden mezclar simulaciones digitales y analógicas.</translation>
     </message>
     <message>
         <location line="+19"/>
         <source>ERROR: Digital simulation needs at least one digital source.</source>
-        <translation>エラー:ディジタルシミュレーションは最低1つディジタルソースが必要です。</translation>
+        <translation>ERROR: La simulación digital necesita al menys una fuente digital.</translation>
     </message>
     <message>
-        <location filename="diagrams/truthdiagram.cpp" line="+53"/>
-        <source>Truth Table</source>
-        <translation>真値テーブル</translation>
-    </message>
-    <message>
-        <location filename="components/bjtsub.cpp" line="-15"/>
-        <source>temperature exponent for forward- and reverse beta</source>
-        <translation>順方向、逆方向ベータ温度指数</translation>
-    </message>
-    <message>
-        <location filename="components/EKV26MOS.cpp" line="+18"/>
-        <location filename="components/bjtsub.cpp" line="+2"/>
-        <location filename="components/diode.cpp" line="+4"/>
-        <location filename="components/jfet.cpp" line="-39"/>
-        <location filename="components/photodiode.cpp" line="+21"/>
-        <source>saturation current temperature exponent</source>
-        <translation>飽和電流温度指数</translation>
-    </message>
-    <message>
-        <location filename="components/bjtsub.cpp" line="+2"/>
-        <location filename="components/diode.cpp" line="+2"/>
-        <source>energy bandgap in eV</source>
-        <translation>バンド幅電圧(eV)</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="components/diode.cpp" line="+14"/>
-        <location filename="components/jfet.cpp" line="+6"/>
-        <location filename="components/resistor.cpp" line="-63"/>
-        <source>temperature at which parameters were extracted</source>
-        <translation>パラメータが抽出された温度</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>default area for bipolar transistor</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="components/coupler.cpp" line="-45"/>
-        <source>ideal coupler</source>
-        <translation>理想カップラ</translation>
-    </message>
-    <message>
-        <location line="+41"/>
-        <source>coupling factor</source>
-        <translation>カップリング係数</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>phase shift of coupling path in degree</source>
-        <translation>カップリング位相ずれ(°)</translation>
-    </message>
-    <message>
-        <location line="+16"/>
-        <source>Coupler</source>
-        <translation>カップラ</translation>
-    </message>
-    <message>
-        <location filename="components/d_flipflop.cpp" line="-2"/>
-        <source>D flip flop with asynchron reset</source>
-        <translation>Dフリップフロップ（非同期リセット）</translation>
-    </message>
-    <message>
-        <location line="+92"/>
-        <source>D-FlipFlop</source>
-        <translation>Dフリップフロップ</translation>
-    </message>
-    <message>
-        <location filename="components/digi_sim.cpp" line="+2"/>
+        <location filename="../qucs/components/digi_sim.cpp" line="+2"/>
         <source>duration of TimeList simulation</source>
-        <translation type="unfinished">タイムリスト　シミュレーション時間</translation>
+        <translation>duración de la simulación de la Lista de Tiempos</translation>
     </message>
     <message>
-        <location filename="components/diode.cpp" line="-12"/>
+        <location filename="../qucs/components/EKV26MOS.cpp" line="+18"/>
+        <location filename="../qucs/components/bjtsub.cpp" line="-13"/>
+        <location filename="../qucs/components/diode.cpp" line="+4"/>
+        <location filename="../qucs/components/jfet.cpp" line="-39"/>
+        <location filename="../qucs/components/photodiode.cpp" line="+21"/>
+        <source>saturation current temperature exponent</source>
+        <translation>exponente de temperatura de la corriente de saturación</translation>
+    </message>
+    <message>
+        <location filename="../qucs/components/bjtsub.cpp" line="+2"/>
+        <location filename="../qucs/components/diode.cpp" line="+2"/>
+        <source>energy bandgap in eV</source>
+        <translation>Amplada del salto de energía en eV</translation>
+    </message>
+    <message>
+        <location filename="../qucs/components/diode.cpp" line="+2"/>
         <source>Bv linear temperature coefficient</source>
-        <translation>Bvリニア温度係数</translation>
+        <translation>coeficiente de temperatura lineal Bv</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Rs linear temperature coefficient</source>
-        <translation>Rsリニア温度係数</translation>
+        <translation>coeficiente de temperatura lineal Rs</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Tt linear temperature coefficient</source>
-        <translation>Ttリニア温度係数</translation>
+        <translation>coeficiente de temperatura lineal Tt</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Tt quadratic temperature coefficient</source>
-        <translation>Tt2次温度計数</translation>
+        <translation>coeficiente de temperatura cuadrático Tt</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>M linear temperature coefficient</source>
-        <translation>Mリニア温度計数</translation>
+        <translation>coeficiente de temperatura lineal M</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>M quadratic temperature coefficient</source>
-        <translation>M二次温度計数</translation>
+        <translation>coeficiente de temperatura cuadrático M</translation>
     </message>
     <message>
         <location line="+4"/>
-        <location filename="components/tunneldiode.cpp" line="+7"/>
+        <location filename="../qucs/components/tunneldiode.cpp" line="+7"/>
         <source>default area for diode</source>
-        <translation type="unfinished"></translation>
+        <translation>area predeterminada para el diodo</translation>
     </message>
     <message>
-        <location filename="components/jfet.cpp" line="-4"/>
+        <location filename="../qucs/components/bjtsub.cpp" line="-4"/>
+        <source>temperature exponent for forward- and reverse beta</source>
+        <translation>exponente de temperatura para la beta inversa y directa</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <location filename="../qucs/components/diode.cpp" line="-2"/>
+        <location filename="../qucs/components/jfet.cpp" line="+6"/>
+        <location filename="../qucs/components/resistor.cpp" line="-63"/>
+        <source>temperature at which parameters were extracted</source>
+        <translation>temperatura a la que se extraen els parámetros</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>default area for bipolar transistor</source>
+        <translation>area predeterminada para el transistor bipolar</translation>
+    </message>
+    <message>
+        <location filename="../qucs/components/jfet.cpp" line="-4"/>
         <source>Vt0 temperature coefficient</source>
-        <translation>Vt0温度係数</translation>
+        <translation>coeficiente de temperatura Vt0</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Beta exponential temperature coefficient</source>
-        <translation>ベータ指数温度係数</translation>
+        <translation>coeficiente de temperatura exponencial Beta</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>default area for JFET</source>
-        <translation type="unfinished"></translation>
+        <translation>area predeterminada para JFET</translation>
     </message>
     <message>
-        <location filename="components/jk_flipflop.cpp" line="-2"/>
-        <source>JK flip flop with asynchron set and reset</source>
-        <translation>JKフリップフロップ(非同期セット、非同期リセット)</translation>
-    </message>
-    <message>
-        <location line="+119"/>
-        <source>JK-FlipFlop</source>
-        <translation>JKフリップフロップ</translation>
-    </message>
-    <message>
-        <location filename="components/EKV26MOS.cpp" line="+4"/>
-        <location filename="components/MESFET.cpp" line="+125"/>
-        <location filename="components/log_amp.cpp" line="+61"/>
-        <location filename="components/mosfet_sub.cpp" line="+91"/>
-        <location filename="components/nigbt.cpp" line="+6"/>
-        <location filename="components/photodiode.cpp" line="-8"/>
-        <location filename="components/potentiometer.cpp" line="+43"/>
+        <location filename="../qucs/components/EKV26MOS.cpp" line="+4"/>
+        <location filename="../qucs/components/MESFET.cpp" line="+125"/>
+        <location filename="../qucs/components/log_amp.cpp" line="+61"/>
+        <location filename="../qucs/components/mosfet_sub.cpp" line="+91"/>
+        <location filename="../qucs/components/nigbt.cpp" line="+6"/>
+        <location filename="../qucs/components/photodiode.cpp" line="-8"/>
+        <location filename="../qucs/components/potentiometer.cpp" line="+43"/>
         <source>parameter measurement temperature</source>
-        <translation>測定温度パラメータ</translation>
+        <translation>temperatura de medida del parámetro</translation>
     </message>
     <message>
-        <location filename="components/rs_flipflop.cpp" line="-2"/>
-        <source>RS flip flop</source>
-        <translation>RSフリップフロップ</translation>
+        <location filename="../qucs/components/coupler.cpp" line="-45"/>
+        <source>ideal coupler</source>
+        <translation>acoplador ideal</translation>
     </message>
     <message>
-        <location line="+87"/>
-        <source>RS-FlipFlop</source>
-        <translation>RSフリップフロップ</translation>
-    </message>
-    <message>
-        <location filename="components/coaxialline.cpp" line="-34"/>
-        <source>coaxial transmission line</source>
-        <translation>同軸伝送線路</translation>
-    </message>
-    <message>
-        <location line="+24"/>
-        <location filename="components/rectline.cpp" line="+2"/>
-        <location filename="components/twistedpair.cpp" line="-2"/>
-        <source>specific resistance of conductor</source>
-        <translation>導体抵抗率</translation>
+        <location line="+41"/>
+        <source>coupling factor</source>
+        <translation>factor de acoplamiento</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/rectline.cpp" line="-4"/>
-        <location filename="components/twistedpair.cpp" line="-2"/>
+        <source>phase shift of coupling path in degree</source>
+        <translation>desplazamiento de fase en grados</translation>
+    </message>
+    <message>
+        <location line="+16"/>
+        <source>Coupler</source>
+        <translation>Acoplador</translation>
+    </message>
+    <message>
+        <location filename="../qucs/components/rs_flipflop.cpp" line="-2"/>
+        <source>RS flip flop</source>
+        <translation>Biestable RS</translation>
+    </message>
+    <message>
+        <location filename="../qucs/components/d_flipflop.cpp" line="-2"/>
+        <source>D flip flop with asynchron reset</source>
+        <translation>Biestable D amb reset asíncrono</translation>
+    </message>
+    <message>
+        <location filename="../qucs/components/jk_flipflop.cpp" line="-2"/>
+        <source>JK flip flop with asynchron set and reset</source>
+        <translation>Biestable JK amb set y reset asíncronos</translation>
+    </message>
+    <message>
+        <location filename="../qucs/components/d_flipflop.cpp" line="+92"/>
+        <source>D-FlipFlop</source>
+        <translation>Biestable-D</translation>
+    </message>
+    <message>
+        <location filename="../qucs/components/jk_flipflop.cpp" line="+119"/>
+        <source>JK-FlipFlop</source>
+        <translation>Biestable JK</translation>
+    </message>
+    <message>
+        <location filename="../qucs/components/rs_flipflop.cpp" line="+87"/>
+        <source>RS-FlipFlop</source>
+        <translation>Biestable RS</translation>
+    </message>
+    <message>
+        <location filename="../qucs/main.cpp" line="+532"/>
+        <location line="+63"/>
+        <source>Error: Wrong time format in &quot;%1&quot;. Use positive number with units</source>
+        <translation>Error: Formato incorrecto de fecha en &quot;%1&quot;. Usa números positivos amb unidades</translation>
+    </message>
+    <message>
+        <location filename="../qucs/components/coaxialline.cpp" line="-34"/>
+        <source>coaxial transmission line</source>
+        <translation>línea de transmisión coaxial</translation>
+    </message>
+    <message>
+        <location line="+24"/>
+        <location filename="../qucs/components/rectline.cpp" line="+2"/>
+        <location filename="../qucs/components/twistedpair.cpp" line="-2"/>
+        <source>specific resistance of conductor</source>
+        <translation>resistencia específica del conductor</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <location filename="../qucs/components/rectline.cpp" line="-4"/>
+        <location filename="../qucs/components/twistedpair.cpp" line="-2"/>
         <source>relative permeability of conductor</source>
-        <translation>導体相関透磁率</translation>
+        <translation>permeabilidad relativa del conductor</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>diameter of inner conductor</source>
-        <translation>内部導体直径</translation>
+        <translation>diámetro del conductor interior</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/rectline.cpp" line="-4"/>
+        <location filename="../qucs/components/rectline.cpp" line="-4"/>
         <source>mechanical length of the line</source>
-        <translation>線の物理長</translation>
+        <translation>longitud mecánica de la línea</translation>
     </message>
     <message>
         <location line="+18"/>
         <source>Coaxial Line</source>
-        <translation>同軸線路</translation>
+        <translation>Línea coaxial</translation>
     </message>
     <message>
-        <location filename="components/ampere_ac.cpp" line="-22"/>
+        <location filename="../qucs/components/ampere_ac.cpp" line="-4"/>
         <source>peak current in Ampere</source>
-        <translation>ピーク電流(A)</translation>
+        <translation>corriente de pico en Amperios</translation>
     </message>
     <message>
-        <location filename="components/coaxialline.cpp" line="-22"/>
+        <location filename="../qucs/components/coaxialline.cpp" line="-22"/>
         <source>inner diameter of shield</source>
-        <translation>シールドの内径</translation>
+        <translation>diámetro interior de la pantalla</translation>
     </message>
     <message>
-        <location filename="components/resistor.cpp" line="-4"/>
+        <location filename="../qucs/components/resistor.cpp" line="-4"/>
         <source>first order temperature coefficient</source>
-        <translation>一次温度係数</translation>
+        <translation>coeficiente de temperatura de primer orden</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>second order temperature coefficient</source>
-        <translation>二次温度係数</translation>
+        <translation>coeficiente de temperatura de segundo orden</translation>
     </message>
     <message>
-        <location filename="components/sp_sim.cpp" line="-18"/>
+        <location filename="../qucs/components/sp_sim.cpp" line="-18"/>
         <source>put characteristic values into dataset</source>
-        <translation>データセットに特性値を入力</translation>
+        <translation>poner els valores característicos en la hoja de dades</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>save subcircuit characteristic values into dataset</source>
-        <translation>データセットにサブサーキット特性値を保存</translation>
+        <translation>guardar els valores característicos del subcircuit en la hoja de dades</translation>
     </message>
     <message>
-        <location filename="components/am_modulator.cpp" line="-4"/>
-        <location filename="components/pm_modulator.cpp" line="-4"/>
-        <location filename="components/volt_ac.cpp" line="-22"/>
+        <location filename="../qucs/components/am_modulator.cpp" line="-4"/>
+        <location filename="../qucs/components/pm_modulator.cpp" line="-4"/>
+        <location filename="../qucs/components/volt_ac.cpp" line="-4"/>
         <source>peak voltage in Volts</source>
-        <translation>ピーク電圧(V)</translation>
+        <translation>tensión de pico en Voltios</translation>
     </message>
     <message>
-        <location filename="components/coaxialline.cpp" line="-6"/>
-        <location filename="components/rectline.cpp" line="+2"/>
+        <location filename="../qucs/components/coaxialline.cpp" line="-6"/>
+        <location filename="../qucs/components/rectline.cpp" line="+2"/>
         <source>relative permittivity of dielectric</source>
-        <translation>相関誘電率</translation>
+        <translation>permitividad relativa del dieléctrico</translation>
     </message>
     <message>
-        <location filename="components/vprobe.cpp" line="+23"/>
+        <location filename="../qucs/components/vprobe.cpp" line="+23"/>
         <source>voltage probe</source>
-        <translation>電圧プローブ</translation>
+        <translation>sonda de tensión</translation>
     </message>
     <message>
         <location line="+44"/>
         <source>Voltage Probe</source>
-        <translation>電圧プローブ</translation>
+        <translation>Sonda de Tensión</translation>
     </message>
     <message>
-        <location filename="components/rfedd.cpp" line="+37"/>
-        <location filename="components/sparamfile.cpp" line="+9"/>
+        <location filename="../qucs/components/rfedd.cpp" line="+36"/>
+        <location filename="../qucs/components/sparamfile.cpp" line="+9"/>
         <source>number of ports</source>
-        <translation>ポート数</translation>
+        <translation>número de conexiones</translation>
     </message>
     <message>
-        <location filename="components/sparamfile.cpp" line="+17"/>
+        <location filename="../qucs/components/sparamfile.cpp" line="+17"/>
         <source>n-port S parameter file</source>
-        <translation>nポートSパラメータファイル</translation>
+        <translation>fitxer de parámetros S de n-conexiones</translation>
     </message>
     <message>
         <location line="+26"/>
         <source>2-port S parameter file</source>
-        <translation>2-ポート Sパラメータファイル</translation>
+        <translation>fitxer de parámetros S de 2-conexiones</translation>
     </message>
     <message>
-        <location filename="components/subcirport.cpp" line="-61"/>
+        <location filename="../qucs/components/subcirport.cpp" line="-61"/>
         <source>type of the port (for digital simulation only)</source>
-        <translation>ポートタイプ（ディジタルシミュレーションのみ）</translation>
+        <translation>tipo de conexión (sólo para simulación digital)</translation>
     </message>
     <message>
-        <location filename="components/am_modulator.cpp" line="-29"/>
+        <location filename="../qucs/components/am_modulator.cpp" line="-29"/>
         <source>ac voltage source with amplitude modulator</source>
-        <translation>交流電圧ソース（振幅変調付き）</translation>
+        <translation>fuente de tensión ac amb modulador de amplitud</translation>
     </message>
     <message>
         <location line="+14"/>
@@ -5881,61 +5995,61 @@ Do you make use of loadable components?</source>
     <message>
         <location line="+21"/>
         <source>modulation level</source>
-        <translation>モジュレーションレベル</translation>
+        <translation>nivel de modulación</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>AM modulated Source</source>
-        <translation>AM変調ソース</translation>
+        <translation>Fuente modulada AM</translation>
     </message>
     <message>
-        <location filename="components/ampere_ac.cpp" line="+6"/>
-        <location filename="components/volt_ac.cpp" line="+6"/>
+        <location filename="../qucs/components/ampere_ac.cpp" line="+6"/>
+        <location filename="../qucs/components/volt_ac.cpp" line="+6"/>
         <source>damping factor (transient simulation only)</source>
-        <translation>ダンピングファクター（トランジェント解析のみ）</translation>
+        <translation>Factor de damping (sólo para simulación de transitorio)</translation>
     </message>
     <message>
-        <location filename="components/pm_modulator.cpp" line="-29"/>
+        <location filename="../qucs/components/pm_modulator.cpp" line="-29"/>
         <source>ac voltage source with phase modulator</source>
-        <translation>交流電圧源（位相変調付き）</translation>
+        <translation>fuente de tensión ac amb modulador de fase</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>PM</source>
-        <translation type="unfinished">PM（位相変調）</translation>
+        <translation>PM</translation>
     </message>
     <message>
         <location line="+21"/>
         <source>modulation index</source>
-        <translation>変調指数</translation>
+        <translation>índice de modulación</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>PM modulated Source</source>
-        <translation>PM変調源</translation>
+        <translation>Fuente modulada PM</translation>
     </message>
     <message>
         <source>relais</source>
-        <translation type="obsolete">リレー</translation>
+        <translation type="obsolete">relé</translation>
     </message>
     <message>
-        <location filename="components/switch.cpp" line="-4"/>
+        <location filename="../qucs/components/switch.cpp" line="-4"/>
         <source>resistance of &quot;on&quot; state in ohms</source>
-        <translation>&quot;ON&quot;時の抵抗値（オーム）</translation>
+        <translation>resistencia del estado &quot;on&quot; en ohmios</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>resistance of &quot;off&quot; state in ohms</source>
-        <translation>&quot;OFF&quot;時の抵抗値（オーム）</translation>
+        <translation>resistencia del estado &quot;off&quot; en ohmios</translation>
     </message>
     <message>
         <source>Relais</source>
-        <translation type="obsolete">リレー</translation>
+        <translation type="obsolete">Relés</translation>
     </message>
     <message>
         <location line="-6"/>
         <source>initial state</source>
-        <translation>初期値</translation>
+        <translation>estado inicial</translation>
     </message>
     <message>
         <location line="+10"/>
@@ -5945,1141 +6059,229 @@ Do you make use of loadable components?</source>
     <message>
         <location line="+21"/>
         <source>Switch</source>
-        <translation>スイッチ</translation>
+        <translation>Conmutador</translation>
     </message>
     <message>
-        <location filename="components/tline.cpp" line="-16"/>
-        <location filename="components/tline_4port.cpp" line="+2"/>
+        <location filename="../qucs/components/tline.cpp" line="-16"/>
+        <location filename="../qucs/components/tline_4port.cpp" line="+2"/>
         <source>attenuation factor per length in 1/m</source>
-        <translation>長さによる減衰値（1/m）</translation>
+        <translation>factor de atenuación por longitud en 1/m</translation>
     </message>
     <message>
-        <location filename="components/switch.cpp" line="-34"/>
+        <location filename="../qucs/components/switch.cpp" line="-34"/>
         <source>switch (time controlled)</source>
-        <translation>スイッチ（時間制御）</translation>
+        <translation>conmutador (controlado por temps)</translation>
     </message>
     <message>
-        <location filename="components/relais.cpp" line="-8"/>
+        <location filename="../qucs/components/relais.cpp" line="-8"/>
         <source>threshold voltage in Volts</source>
-        <translation>しきい電圧値(V)</translation>
+        <translation>límite de tensión en Voltios</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>hysteresis voltage in Volts</source>
-        <translation>ヒステリシス電圧(V)</translation>
+        <translation>hísteresis de tensión en Voltios</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>resistance of &quot;on&quot; state in Ohms</source>
-        <translation>&quot;ON&quot;時の抵抗値（オーム）</translation>
+        <translation>resistencia del estado &quot;on&quot; en Ohmios</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>resistance of &quot;off&quot; state in Ohms</source>
-        <translation>&quot;OFF&quot;時の抵抗値（オーム）</translation>
+        <translation>resistencia del estado &quot;off&quot; en Ohmios</translation>
     </message>
     <message>
-        <location filename="mouseactions.cpp" line="+742"/>
+        <location filename="../qucs/mouseactions.cpp" line="+741"/>
         <source>Edit Properties</source>
-        <translation>プロパティ編集</translation>
+        <translation>Editar Propietats</translation>
     </message>
     <message>
-        <location line="+27"/>
+        <location line="+26"/>
         <source>Export as image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+11"/>
         <source>power matching</source>
-        <translation>電力マッチング</translation>
+        <translation>adaptación de potencia</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>noise matching</source>
-        <translation>ノイズマッチング</translation>
+        <translation>adaptación de ruido</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>2-port matching</source>
-        <translation>2-portマッチング</translation>
+        <translation>adaptación de 2 conexiones</translation>
     </message>
     <message>
         <location line="+60"/>
-        <location filename="components/spicefile.cpp" line="+103"/>
-        <location line="+87"/>
+        <location filename="../qucs/components/spicefile.cpp" line="+103"/>
+        <location line="+94"/>
         <source>Info</source>
-        <translation>情報</translation>
+        <translation>Información</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>The ground potential cannot be labeled!</source>
-        <translation>グラウンドにはラベルを付けられません !</translation>
+        <translation>¡El potencial de tierra no se puede etiquetar!</translation>
     </message>
     <message>
-        <location filename="components/switch.cpp" line="+5"/>
+        <location filename="../qucs/components/switch.cpp" line="+5"/>
         <source>time when state changes (semicolon separated list possible, even numbered lists are repeated)</source>
         <oldsource>time when state changes (semicolon separated list possible)</oldsource>
-        <translation type="unfinished">状態変化時間（セミコロンで仕切って登録できます）</translation>
+        <translation type="unfinished">momento en el que cambia el estado (puede usarse una llista separada por punt y comas)</translation>
     </message>
     <message>
         <source>ERROR: No file name in VHDL component &quot;%1&quot;.</source>
-        <translation type="obsolete">エラー:VHDL部品&quot;%1&quot;というファイル名がありません.</translation>
+        <translation type="obsolete">ERROR: No hay nombre de fitxer en el componente VHDL &quot;%1&quot;.</translation>
     </message>
     <message>
         <source>ERROR: Cannot open VHDL file &quot;%1&quot;.</source>
-        <translation type="obsolete">エラー:VHDLファイル&quot;%1&quot;が開けません.</translation>
+        <translation type="obsolete">ERROR: No se puede abrir el fitxer VHDL &quot;%1&quot;.</translation>
     </message>
     <message>
-        <location filename="components/vhdlfile.cpp" line="+33"/>
+        <location filename="../qucs/components/vhdlfile.cpp" line="+30"/>
         <location line="+24"/>
         <source>VHDL file</source>
-        <translation>VHDLファイル</translation>
+        <translation>Fitxer VHDL</translation>
     </message>
     <message>
         <location line="-21"/>
         <source>Name of VHDL file</source>
-        <translation>VHDLファイル名</translation>
+        <translation>Nom del fitxer VHDL</translation>
     </message>
     <message>
-        <location line="+107"/>
+        <location line="+110"/>
         <source>vhdl</source>
         <translation>vhdl</translation>
     </message>
     <message>
-        <location filename="components/rfedd.cpp" line="+2"/>
-        <location filename="components/rfedd2p.cpp" line="+37"/>
-        <location filename="components/sparamfile.cpp" line="-48"/>
+        <location filename="../qucs/components/rfedd.cpp" line="+2"/>
+        <location filename="../qucs/components/rfedd2p.cpp" line="+36"/>
+        <location filename="../qucs/components/sparamfile.cpp" line="-48"/>
         <source>representation during DC analysis</source>
-        <translation>DC解析中の表示</translation>
+        <translation>representación durante el análisis DC</translation>
     </message>
     <message>
-        <location filename="components/etr_sim.cpp" line="+3"/>
-        <location filename="components/tr_sim.cpp" line="+3"/>
+        <location filename="../qucs/components/etr_sim.cpp" line="+3"/>
+        <location filename="../qucs/components/tr_sim.cpp" line="+3"/>
         <source>relax time step raster</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../qucs/components/subcircuit.cpp" line="+21"/>
+        <source>Subcircuit</source>
+        <translation>Subcircuito</translation>
+    </message>
+    <message>
+        <location filename="../qucs/qucs_actions.cpp" line="+1"/>
+        <source>Cannot create output file!</source>
+        <translation>¡No se pudo crear el fitxer de salida!</translation>
+    </message>
+    <message>
+        <location line="+154"/>
+        <source>verlog-a user devices</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/subcircuit.cpp" line="+21"/>
-        <source>Subcircuit</source>
-        <translation>サブサーキット</translation>
-    </message>
-    <message>
-        <location filename="qucs_actions.cpp" line="+1"/>
-        <source>Cannot create output file!</source>
-        <translation>出力ファイルを作成できません!</translation>
-    </message>
-    <message>
-        <location filename="components/mscross.cpp" line="+6"/>
-        <location filename="components/mstee.cpp" line="+2"/>
+        <location filename="../qucs/components/mscross.cpp" line="+6"/>
+        <location filename="../qucs/components/mstee.cpp" line="+2"/>
         <source>show port numbers in symbol or not</source>
-        <translation>ポートナンバを表示、非表示</translation>
+        <translation>mostrar o no els números de els puertos en el símbolo</translation>
     </message>
     <message>
-        <location filename="components/opt_sim.cpp" line="+31"/>
+        <location filename="../qucs/components/opt_sim.cpp" line="+30"/>
         <source>Optimization</source>
-        <translation>最適化</translation>
+        <translation>Optimización</translation>
     </message>
     <message>
         <location line="+27"/>
         <source>optimization</source>
-        <translation>最適化</translation>
+        <translation>optimización</translation>
     </message>
     <message>
-        <location filename="components/etr_sim.cpp" line="+2"/>
-        <location filename="components/tr_sim.cpp" line="+2"/>
+        <location filename="../qucs/components/etr_sim.cpp" line="+2"/>
+        <location filename="../qucs/components/tr_sim.cpp" line="+2"/>
         <source>perform an initial DC analysis</source>
-        <translation type="unfinished">初期DC解析の実行</translation>
+        <translation>realizar un análisis DC inicial</translation>
     </message>
     <message>
-        <location filename="components/capacitor.cpp" line="-2"/>
+        <location filename="../qucs/components/capacitor.cpp" line="-2"/>
         <source>initial voltage for transient simulation</source>
-        <translation>トランジェント初期電圧</translation>
+        <translation>tensión inicial para la simulación de transitorio</translation>
     </message>
     <message>
-        <location filename="components/inductor.cpp" line="-14"/>
+        <location filename="../qucs/components/inductor.cpp" line="-14"/>
         <source>initial current for transient simulation</source>
-        <translation>トランジェントシミュレーション初期電流</translation>
+        <translation></translation>
     </message>
     <message>
-        <location filename="components/etr_sim.cpp" line="+2"/>
-        <location filename="components/tr_sim.cpp" line="+2"/>
+        <location filename="../qucs/components/etr_sim.cpp" line="+2"/>
+        <location filename="../qucs/components/tr_sim.cpp" line="+2"/>
         <source>maximum step size in seconds</source>
-        <translation>最大ステップサイズ(s)</translation>
-    </message>
-    <message>
-        <location filename="components/relais.cpp" line="-43"/>
-        <source>relay</source>
-        <translation>リレー</translation>
-    </message>
-    <message>
-        <location line="+59"/>
-        <source>Relay</source>
-        <translation>リレー</translation>
-    </message>
-    <message>
-        <location filename="components/irect.cpp" line="-16"/>
-        <location filename="components/vrect.cpp" line="-16"/>
-        <source>initial delay time</source>
-        <translation>初期遅延時間</translation>
-    </message>
-    <message>
-        <location filename="components/hicumL2V2p1.cpp" line="+15"/>
-        <source>HICUM Level 2 v2.1 verilog device</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="components/hic2_full.cpp" line="+18"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+18"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+18"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+18"/>
-        <source>GICCR constant</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
-        <source>Zero-bias hole charge</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
-        <source>High-current correction for 2D and 3D effects</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+5"/>
-        <source>Emitter minority charge weighting factor in HBTs</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
-        <source>Collector minority charge weighting factor in HBTs</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
-        <source>B-E depletion charge weighting factor in HBTs</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+6"/>
-        <source>B-C depletion charge weighting factor in HBTs</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
-        <source>Internal B-E saturation current</source>
-        <translation>内部ベースエミッタ間飽和電流</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
-        <source>Internal B-E current ideality factor</source>
-        <translation>内部ベースエミッタ間理想要素</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
-        <source>Internal B-E recombination saturation current</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
-        <source>Internal B-E recombination current ideality factor</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
-        <source>Peripheral B-E saturation current</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
-        <source>Peripheral B-E current ideality factor</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
-        <source>Peripheral B-E recombination saturation current</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
-        <source>Peripheral B-E recombination current ideality factor</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
-        <source>Non-ideality factor for III-V HBTs</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+5"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+5"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+5"/>
-        <source>Internal B-C saturation current</source>
-        <translation>初期ベースコレクタ間飽和電流</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
-        <source>Internal B-C current ideality factor</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
-        <source>External B-C saturation current</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
-        <source>External B-C current ideality factor</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
-        <source>B-E tunneling saturation current</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
-        <source>Exponent factor for tunneling current</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+4"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+4"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+4"/>
-        <source>Avalanche current factor</source>
-        <translation>なだれ電流ファクター</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
-        <source>Exponent factor for avalanche current</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
-        <source>Relative TC for FAVL</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
-        <source>Relative TC for QAVL</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
-        <source>Zero bias internal base resistance</source>
-        <translation type="unfinished">ゼロバイアス初期ベース抵抗</translation>
-    </message>
-    <message>
-        <location filename="components/hic0_full.cpp" line="-40"/>
-        <location filename="components/hic2_full.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="-40"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="-40"/>
-        <location filename="components/hicumL0V1p3.cpp" line="-40"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
-        <source>External base series resistance</source>
-        <translation type="unfinished">外部ベース直列抵抗</translation>
-    </message>
-    <message>
-        <location filename="components/hic2_full.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
-        <source>Factor for geometry dependence of emitter current crowding</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
-        <source>Correction factor for modulation by B-E and B-C space charge layer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
-        <source>Ratio of HF shunt to total internal capacitance (lateral NQS effect)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
-        <source>Ration of internal to total minority charge</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="components/hic0_full.cpp" line="+3"/>
-        <location filename="components/hic2_full.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
-        <source>Emitter series resistance</source>
-        <translation type="unfinished">エミッタ直列抵抗</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="components/hic2_full.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
-        <source>External collector series resistance</source>
-        <translation type="unfinished">外部コレクタ直列抵抗</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="components/hic2_full.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
-        <source>Substrate transistor transfer saturation current</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="components/hic2_full.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
-        <source>Forward ideality factor of substrate transfer current</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
-        <source>C-S diode saturation current</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
-        <source>Ideality factor of C-S diode current</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
-        <source>Transit time for forward operation of substrate transistor</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
-        <source>Substrate series resistance</source>
-        <translation type="unfinished">基材直列抵抗</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
-        <source>Substrate shunt capacitance</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
-        <source>Internal B-E zero-bias depletion capacitance</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
-        <source>Internal B-E built-in potential</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
-        <source>Internal B-E grading coefficient</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
-        <source>Ratio of maximum to zero-bias value of internal B-E capacitance</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
-        <source>Peripheral B-E zero-bias depletion capacitance</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
-        <source>Peripheral B-E built-in potential</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
-        <source>Peripheral B-E grading coefficient</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
-        <source>Ratio of maximum to zero-bias value of peripheral B-E capacitance</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
-        <source>Internal B-C zero-bias depletion capacitance</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
-        <source>Internal B-C built-in potential</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
-        <source>Internal B-C grading coefficient</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
-        <source>Internal B-C punch-through voltage</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
-        <source>External B-C zero-bias depletion capacitance</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
-        <source>External B-C built-in potential</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
-        <source>External B-C grading coefficient</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
-        <source>External B-C punch-through voltage</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+4"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+7"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+7"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+7"/>
-        <source>C-S zero-bias depletion capacitance</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
-        <source>C-S built-in potential</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
-        <source>C-S grading coefficient</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
-        <source>C-S punch-through voltage</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
-        <source>Low current forward transit time at VBC=0V</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
-        <source>Time constant for base and B-C space charge layer width modulation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <source>Time constant for modelling carrier jam at low VCE</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+6"/>
-        <source>Neutral emitter storage time</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
-        <source>Exponent factor for current dependence of neutral emitter storage time</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
-        <source>Saturation time constant at high current densities</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
-        <source>Smoothing factor for current dependence of base and collector transit time</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
-        <source>Partitioning factor for base and collector portion</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
-        <source>Internal collector resistance at low electric field</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
-        <source>Voltage separating ohmic and saturation velocity regime</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
-        <source>Internal C-E saturation voltage</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
-        <source>Collector punch-through voltage</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
-        <source>Storage time for inverse operation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+13"/>
-        <source>Total parasitic B-E capacitance</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
-        <source>Total parasitic B-C capacitance</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
-        <source>Factor for additional delay time of minority charge</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
-        <source>Factor for additional delay time of transfer current</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+4"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+4"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+4"/>
-        <source>Flicker noise coefficient</source>
-        <translation type="unfinished">フリッカノイズ係数</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
-        <source>Flicker noise exponent factor</source>
-        <translation type="unfinished">フリッカーノイズ指数要因</translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+4"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+4"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+4"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+10"/>
-        <source>Scaling factor for collector minority charge in direction of emitter width</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
-        <source>Scaling factor for collector minority charge in direction of emitter length</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
-        <source>Bandgap voltage extrapolated to 0 K</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
-        <source>First order relative TC of parameter T0</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
-        <source>Second order relative TC of parameter T0</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
-        <source>Temperature exponent for RCI0</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+16"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+16"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+16"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+16"/>
-        <source>Temperature exponent of mobility in substrate transistor transit time</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-14"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="-14"/>
-        <location filename="components/hicumL2V2p24.cpp" line="-14"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="-14"/>
-        <source>Relative TC of saturation drift velocity</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
-        <source>Relative TC of VCES</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
-        <source>Temperature exponent of internal base resistance</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
-        <source>Temperature exponent of external base resistance</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
-        <source>Temperature exponent of external collector resistance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+2"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
-        <source>Temperature exponent of emitter resistance</source>
+        <location filename="../qucs/components/bondwire.cpp" line="-33"/>
+        <source>bond wire</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+21"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+21"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+21"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+21"/>
-        <source>Relative TC of forward current gain for V2.1 model</source>
+        <source>length of the wire</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/hic0_full.cpp" line="+88"/>
-        <location filename="components/hic2_full.cpp" line="+5"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+92"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+90"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+106"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+5"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+5"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+12"/>
-        <source>Thermal resistance</source>
-        <translation>熱抵抗</translation>
-    </message>
-    <message>
-        <location filename="components/HBT_X.cpp" line="+30"/>
-        <location filename="components/hic0_full.cpp" line="+3"/>
-        <location filename="components/hic2_full.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+5"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+8"/>
-        <source>Thermal capacitance</source>
-        <translation>熱容量</translation>
-    </message>
-    <message>
-        <location filename="components/hic2_full.cpp" line="+5"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+5"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+5"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+5"/>
-        <source>Temperature at which parameters are specified</source>
-        <translation>パラメータ設定時の温度</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
-        <source>Temperature change w.r.t. chip temperature for particular transistor</source>
+        <location line="+2"/>
+        <source>diameter of the wire</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/EKV26MOS.cpp" line="+3"/>
-        <location filename="components/MESFET.cpp" line="+3"/>
-        <location filename="components/bsim3v34nMOS.cpp" line="+832"/>
-        <location filename="components/bsim3v34pMOS.cpp" line="+832"/>
-        <location filename="components/diac.cpp" line="+4"/>
-        <location filename="components/hic0_full.cpp" line="+9"/>
-        <location filename="components/hic2_full.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+9"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+20"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+9"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
-        <location filename="components/log_amp.cpp" line="+3"/>
-        <location filename="components/nigbt.cpp" line="+3"/>
-        <location filename="components/photodiode.cpp" line="+33"/>
-        <location filename="components/phototransistor.cpp" line="+15"/>
-        <location filename="components/potentiometer.cpp" line="+3"/>
-        <location filename="components/thyristor.cpp" line="+6"/>
-        <location filename="components/triac.cpp" line="+6"/>
-        <source>simulation temperature</source>
-        <translation>シミュレータ時の温度</translation>
-    </message>
-    <message>
-        <location filename="components/HBT_X.cpp" line="+203"/>
-        <source>FBH HBT</source>
+        <location line="+2"/>
+        <source>height above ground plane</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-215"/>
+        <location line="+2"/>
+        <source>specific resistance of the metal</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>relative permeability of the metal</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>bond wire model</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+14"/>
+        <source>Bond Wire</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qucs/components/HBT_X.cpp" line="+18"/>
         <location line="+2"/>
         <location line="+2"/>
         <location line="+2"/>
         <source>Ignored</source>
-        <translation>無視</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Device operating temperature, Celsius</source>
-        <translation type="unfinished">デバイス動作時の温度[℃]</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Thermal resistance, K/W</source>
-        <translation>熱抵抗[K/W]</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+4"/>
@@ -7104,7 +6306,7 @@ Do you make use of loadable components?</source>
     <message>
         <location line="+2"/>
         <source>Forward current emission coefficient</source>
-        <translation type="unfinished">順電流放射係数</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
@@ -7159,7 +6361,7 @@ Do you make use of loadable components?</source>
     <message>
         <location line="+2"/>
         <source>Reverse current emission coefficient</source>
-        <translation type="unfinished">逆電流放射係数</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
@@ -7248,17 +6450,17 @@ Do you make use of loadable components?</source>
     <message>
         <location line="+2"/>
         <source>Ideal reverse transit time, s</source>
-        <translation>理想逆通過時間[s]</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Ideal forward transit time, s</source>
-        <translation>理想的な順通過時間[s]</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Temperature coefficient of forward transit time</source>
-        <translation type="unfinished">順通過時間の温度</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
@@ -7303,7 +6505,7 @@ Do you make use of loadable components?</source>
     <message>
         <location line="+2"/>
         <source>not used</source>
-        <translation>使用しない</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
@@ -7363,17 +6565,17 @@ Do you make use of loadable components?</source>
     <message>
         <location line="+2"/>
         <source>Collector inductance, H</source>
-        <translation>コレクタインダクタンス[H]</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Emitter inductance, H</source>
-        <translation>エミッタインダクタンス[H]</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Base inductance, H</source>
-        <translation>ベースインダクタンス[H]</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
@@ -7394,230 +6596,1147 @@ Do you make use of loadable components?</source>
         <location line="+2"/>
         <location line="+12"/>
         <source>Flicker-noise coefficient</source>
-        <translation type="unfinished">フリッカーノイズ係数</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="-10"/>
         <location line="+12"/>
         <source>Flicker-noise exponent</source>
-        <translation type="unfinished">フリッカーノイズ指数</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="-10"/>
         <location line="+12"/>
         <source>Flicker-noise frequency exponent</source>
-        <translation type="unfinished">フリッカーノイズ周波数指数</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="-10"/>
         <source>Burst noise coefficient</source>
-        <translation type="unfinished">バーストノイズ係数</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Burst noise exponent</source>
-        <translation type="unfinished">バーストノイズ指数</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Burst noise corner frequency, Hz</source>
-        <translation type="unfinished">バーストノイズコーナー周波数</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Ambient temperature at which the parameters were determined</source>
-        <translation type="unfinished">パラメータを測定（決定）したときの周囲温度</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/bondwire.cpp" line="-33"/>
-        <source>bond wire</source>
-        <translation>ボンドワイア</translation>
+        <location line="+57"/>
+        <source>FBH HBT</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+15"/>
+        <source>HICUM Level 2 v2.1 verilog device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qucs/components/hic2_full.cpp" line="+18"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+18"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+18"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+18"/>
+        <source>GICCR constant</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
+        <source>Zero-bias hole charge</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
+        <source>High-current correction for 2D and 3D effects</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+5"/>
+        <source>Emitter minority charge weighting factor in HBTs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
+        <source>Collector minority charge weighting factor in HBTs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
+        <source>B-E depletion charge weighting factor in HBTs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+6"/>
+        <source>B-C depletion charge weighting factor in HBTs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
+        <source>Internal B-E saturation current</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
+        <source>Internal B-E current ideality factor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
+        <source>Internal B-E recombination saturation current</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
+        <source>Internal B-E recombination current ideality factor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
+        <source>Peripheral B-E saturation current</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
+        <source>Peripheral B-E current ideality factor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
+        <source>Peripheral B-E recombination saturation current</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
+        <source>Peripheral B-E recombination current ideality factor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
+        <source>Non-ideality factor for III-V HBTs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+5"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+5"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+5"/>
+        <source>Internal B-C saturation current</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
+        <source>Internal B-C current ideality factor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
+        <source>External B-C saturation current</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
+        <source>External B-C current ideality factor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
+        <source>B-E tunneling saturation current</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
+        <source>Exponent factor for tunneling current</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+4"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+4"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+4"/>
+        <source>Avalanche current factor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
+        <source>Exponent factor for avalanche current</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
+        <source>Relative TC for FAVL</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
+        <source>Relative TC for QAVL</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
+        <source>Zero bias internal base resistance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qucs/components/hic0_full.cpp" line="-40"/>
+        <location filename="../qucs/components/hic2_full.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="-40"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="-40"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="-40"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
+        <source>External base series resistance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qucs/components/hic2_full.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
+        <source>Factor for geometry dependence of emitter current crowding</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
+        <source>Correction factor for modulation by B-E and B-C space charge layer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
+        <source>Ratio of HF shunt to total internal capacitance (lateral NQS effect)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
+        <source>Ration of internal to total minority charge</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qucs/components/hic0_full.cpp" line="+3"/>
+        <location filename="../qucs/components/hic2_full.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
+        <source>Emitter series resistance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <location filename="../qucs/components/hic2_full.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
+        <source>External collector series resistance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <location filename="../qucs/components/hic2_full.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
+        <source>Substrate transistor transfer saturation current</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qucs/components/hic2_full.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
+        <source>Forward ideality factor of substrate transfer current</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
+        <source>C-S diode saturation current</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
+        <source>Ideality factor of C-S diode current</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
+        <source>Transit time for forward operation of substrate transistor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
+        <source>Substrate series resistance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
+        <source>Substrate shunt capacitance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
+        <source>Internal B-E zero-bias depletion capacitance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
+        <source>Internal B-E built-in potential</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
+        <source>Internal B-E grading coefficient</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
+        <source>Ratio of maximum to zero-bias value of internal B-E capacitance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
+        <source>Peripheral B-E zero-bias depletion capacitance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
+        <source>Peripheral B-E built-in potential</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
+        <source>Peripheral B-E grading coefficient</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
+        <source>Ratio of maximum to zero-bias value of peripheral B-E capacitance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
+        <source>Internal B-C zero-bias depletion capacitance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
+        <source>Internal B-C built-in potential</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
+        <source>Internal B-C grading coefficient</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
+        <source>Internal B-C punch-through voltage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
+        <source>External B-C zero-bias depletion capacitance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
+        <source>External B-C built-in potential</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
+        <source>External B-C grading coefficient</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
+        <source>External B-C punch-through voltage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+4"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+7"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+7"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+7"/>
+        <source>C-S zero-bias depletion capacitance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
+        <source>C-S built-in potential</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
+        <source>C-S grading coefficient</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
+        <source>C-S punch-through voltage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
+        <source>Low current forward transit time at VBC=0V</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
+        <source>Time constant for base and B-C space charge layer width modulation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
+        <source>Time constant for modelling carrier jam at low VCE</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+6"/>
+        <source>Neutral emitter storage time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
+        <source>Exponent factor for current dependence of neutral emitter storage time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
+        <source>Saturation time constant at high current densities</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
+        <source>Smoothing factor for current dependence of base and collector transit time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
+        <source>Partitioning factor for base and collector portion</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
+        <source>Internal collector resistance at low electric field</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
+        <source>Voltage separating ohmic and saturation velocity regime</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
+        <source>Internal C-E saturation voltage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
+        <source>Collector punch-through voltage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
+        <source>Storage time for inverse operation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+13"/>
+        <source>Total parasitic B-E capacitance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
+        <source>Total parasitic B-C capacitance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
+        <source>Factor for additional delay time of minority charge</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
+        <source>Factor for additional delay time of transfer current</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+4"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+4"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+4"/>
+        <source>Flicker noise coefficient</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
+        <source>Flicker noise exponent factor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+4"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+4"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+4"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+10"/>
+        <source>Scaling factor for collector minority charge in direction of emitter width</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
+        <source>Scaling factor for collector minority charge in direction of emitter length</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
+        <source>Bandgap voltage extrapolated to 0 K</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
+        <source>First order relative TC of parameter T0</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
+        <source>Second order relative TC of parameter T0</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
+        <source>Temperature exponent for RCI0</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+16"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+16"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+16"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+16"/>
+        <source>Temperature exponent of mobility in substrate transistor transit time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-14"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="-14"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="-14"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="-14"/>
+        <source>Relative TC of saturation drift velocity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
+        <source>Relative TC of VCES</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
+        <source>Temperature exponent of internal base resistance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
+        <source>Temperature exponent of external base resistance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
+        <source>Temperature exponent of external collector resistance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
+        <source>Temperature exponent of emitter resistance</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+21"/>
-        <source>length of the wire</source>
-        <translation>ワイア長</translation>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+21"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+21"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+21"/>
+        <source>Relative TC of forward current gain for V2.1 model</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+2"/>
-        <source>diameter of the wire</source>
-        <translation>ワイア径</translation>
+        <location filename="../qucs/components/hic0_full.cpp" line="+88"/>
+        <location filename="../qucs/components/hic2_full.cpp" line="+5"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+92"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+90"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+106"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+5"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+5"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+12"/>
+        <source>Thermal resistance</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+2"/>
-        <source>height above ground plane</source>
-        <translation>グラウンドプレーンからの高さ</translation>
+        <location filename="../qucs/components/HBT_X.cpp" line="-203"/>
+        <location filename="../qucs/components/hic0_full.cpp" line="+3"/>
+        <location filename="../qucs/components/hic2_full.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+5"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+8"/>
+        <source>Thermal capacitance</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+2"/>
-        <source>specific resistance of the metal</source>
-        <translation>導体抵抗</translation>
+        <location filename="../qucs/components/hic2_full.cpp" line="+5"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+5"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+5"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+5"/>
+        <source>Temperature at which parameters are specified</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+2"/>
-        <source>relative permeability of the metal</source>
-        <translation type="unfinished">導体相関透磁率</translation>
+        <location line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
+        <source>Temperature change w.r.t. chip temperature for particular transistor</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+2"/>
-        <source>bond wire model</source>
-        <translation>ボンドワイアモデル</translation>
+        <location filename="../qucs/components/EKV26MOS.cpp" line="+3"/>
+        <location filename="../qucs/components/MESFET.cpp" line="+3"/>
+        <location filename="../qucs/components/bsim3v34nMOS.cpp" line="+832"/>
+        <location filename="../qucs/components/bsim3v34pMOS.cpp" line="+832"/>
+        <location filename="../qucs/components/diac.cpp" line="+4"/>
+        <location filename="../qucs/components/hic0_full.cpp" line="+9"/>
+        <location filename="../qucs/components/hic2_full.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+9"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+20"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+9"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
+        <location filename="../qucs/components/log_amp.cpp" line="+3"/>
+        <location filename="../qucs/components/nigbt.cpp" line="+3"/>
+        <location filename="../qucs/components/photodiode.cpp" line="+33"/>
+        <location filename="../qucs/components/phototransistor.cpp" line="+15"/>
+        <location filename="../qucs/components/potentiometer.cpp" line="+3"/>
+        <location filename="../qucs/components/thyristor.cpp" line="+6"/>
+        <location filename="../qucs/components/triac.cpp" line="+6"/>
+        <source>simulation temperature</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+14"/>
-        <source>Bond Wire</source>
-        <translation>ボンドワイア</translation>
+        <location filename="../qucs/components/irect.cpp" line="-16"/>
+        <location filename="../qucs/components/vrect.cpp" line="-16"/>
+        <source>initial delay time</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/twistedpair.cpp" line="-46"/>
-        <source>twisted pair transmission line</source>
-        <translation>ツイストペア伝送線路</translation>
-    </message>
-    <message>
-        <location line="+36"/>
-        <source>diameter of conductor</source>
-        <translation>導体径</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>diameter of wire (conductor and insulator)</source>
-        <translation>ワイア径（導体及び絶縁体を含む）</translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>dielectric constant of insulator</source>
-        <translation>絶縁体の誘電率</translation>
-    </message>
-    <message>
-        <location line="-2"/>
-        <source>twists per length in 1/m</source>
-        <translation type="unfinished">撚り線間隔[1/m]</translation>
-    </message>
-    <message>
-        <location line="+24"/>
-        <source>Twisted-Pair</source>
-        <translation>ツイストペア</translation>
-    </message>
-    <message>
-        <location line="-26"/>
-        <source>physical length of the line</source>
-        <translation>線の物理長</translation>
-    </message>
-    <message>
-        <location filename="components/source_ac.cpp" line="-20"/>
-        <source>(available) ac power in Watts</source>
-        <translation>(有効)交流電力[W]</translation>
-    </message>
-    <message>
-        <location filename="components/mosfet_sub.cpp" line="+7"/>
+        <location filename="../qucs/components/mosfet_sub.cpp" line="+7"/>
         <source>MOS field-effect transistor with substrate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/tline_4port.cpp" line="-34"/>
+        <location filename="../qucs/components/relais.cpp" line="-43"/>
+        <source>relay</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+59"/>
+        <source>Relay</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qucs/components/source_ac.cpp" line="-20"/>
+        <source>(available) ac power in Watts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qucs/components/tline_4port.cpp" line="-34"/>
         <source>ideal 4-terminal transmission line</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+50"/>
         <source>4-Terminal Transmission Line</source>
-        <translation>4端子トランスミッションライン</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/HBT_X.cpp" line="-161"/>
+        <location filename="../qucs/components/twistedpair.cpp" line="-46"/>
+        <source>twisted pair transmission line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+36"/>
+        <source>diameter of conductor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>diameter of wire (conductor and insulator)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>dielectric constant of insulator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-2"/>
+        <source>twists per length in 1/m</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-2"/>
+        <source>physical length of the line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+26"/>
+        <source>Twisted-Pair</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qucs/components/HBT_X.cpp" line="-15"/>
         <source>HBT model by Ferdinand-Braun-Institut (FBH), Berlin</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/hicumL2V2p1.cpp" line="+19"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+19"/>
         <source>HICUM L2 v2.1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/HBT_X.cpp" line="+85"/>
+        <location filename="../qucs/components/HBT_X.cpp" line="+85"/>
         <source>Extrinsic BC diffusion capacitance, F</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/diode.cpp" line="-32"/>
+        <location filename="../qucs/components/diode.cpp" line="-30"/>
         <source>high-injection knee current (0=infinity)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/digi_sim.cpp" line="+2"/>
+        <location filename="../qucs/components/digi_sim.cpp" line="+2"/>
         <source>netlist format</source>
-        <translation>ネットリストファイル</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/verilogfile.cpp" line="+33"/>
+        <location filename="../qucs/components/verilogfile.cpp" line="+30"/>
         <location line="+24"/>
         <source>Verilog file</source>
-        <translation>Verilogファイル</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="-21"/>
         <source>Name of Verilog file</source>
-        <translation>Verilogファイル名</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+93"/>
+        <location line="+97"/>
         <source>verilog</source>
-        <translation>verilog</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="schematic_file.cpp" line="-462"/>
-        <location filename="components/verilogfile.cpp" line="+45"/>
-        <location filename="components/vhdlfile.cpp" line="+76"/>
+        <location filename="../qucs/schematic_file.cpp" line="-462"/>
+        <location filename="../qucs/components/verilogfile.cpp" line="+45"/>
+        <location filename="../qucs/components/vhdlfile.cpp" line="+76"/>
         <source>ERROR: No file name in %1 component &quot;%2&quot;.</source>
-        <translation>エラー:%1に部品¨%2¨というファイル名がありません.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/verilogfile.cpp" line="+11"/>
-        <location filename="components/vhdlfile.cpp" line="+11"/>
+        <location filename="../qucs/components/verilogfile.cpp" line="+11"/>
+        <location filename="../qucs/components/vhdlfile.cpp" line="+11"/>
         <source>ERROR: Cannot open %1 file &quot;%2&quot;.</source>
-        <translation>エラー:ファイル&quot;%2&quot;の%1を開けません.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/HBT_X.cpp" line="-8"/>
+        <location filename="../qucs/components/HBT_X.cpp" line="-8"/>
         <source>C-E breakdown voltage, V, (0 == disables collector break-down)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/iexp.cpp" line="+23"/>
+        <location filename="../qucs/components/iexp.cpp" line="+23"/>
         <source>exponential current source</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+34"/>
         <source>current before rising edge</source>
-        <translation type="unfinished">立ち上がりエッジ前の電流</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
         <source>maximum current of the pulse</source>
-        <translation>パルスの最大電流</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/vexp.cpp" line="+61"/>
+        <location filename="../qucs/components/vexp.cpp" line="+61"/>
         <source>start time of the exponentially rising edge</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/vexp.cpp" line="+2"/>
+        <location filename="../qucs/components/vexp.cpp" line="+2"/>
         <source>start of exponential decay</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
         <source>time constant of the rising edge</source>
-        <translation type="unfinished">立上りエッジの時定数</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
         <source>time constant of the falling edge</source>
-        <translation type="unfinished">立下がりエッジの時定数</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+16"/>
@@ -7625,29 +7744,29 @@ Do you make use of loadable components?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/vexp.cpp" line="-40"/>
+        <location filename="../qucs/components/vexp.cpp" line="-40"/>
         <source>exponential voltage source</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+34"/>
         <source>voltage before rising edge</source>
-        <translation type="unfinished">立下がりエッジ前の電圧</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
         <source>maximum voltage of the pulse</source>
-        <translation>パルスの最大電圧</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+6"/>
         <source>rise time of the rising edge</source>
-        <translation>立ち下がりエッジの降下時間</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
         <source>fall time of the falling edge</source>
-        <translation>立上りエッジの上昇時間</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+16"/>
@@ -7655,24 +7774,24 @@ Do you make use of loadable components?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/hicumL2V2p1.cpp" line="-105"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="-105"/>
         <source>Partitioning factor of parasitic B-C capacitance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+48"/>
         <source>Noise factor for internal base resistance</source>
-        <translation type="unfinished">内部ベース抵抗のノイズファクター</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/eqndefined.cpp" line="+27"/>
+        <location filename="../qucs/components/eqndefined.cpp" line="+26"/>
         <source>equation defined device</source>
-        <translation type="unfinished">デバイスの方程式</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+7"/>
         <source>type of equations</source>
-        <translation>方程式の種類</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
@@ -7683,7 +7802,7 @@ Do you make use of loadable components?</source>
         <location line="+4"/>
         <location line="+74"/>
         <source>current equation</source>
-        <translation type="unfinished">電流方程式</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="-72"/>
@@ -7694,200 +7813,199 @@ Do you make use of loadable components?</source>
     <message>
         <location line="-56"/>
         <source>Equation Defined Device</source>
-        <translation>方程式定義済デバイス</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/spicefile.cpp" line="-180"/>
+        <location filename="../qucs/components/spicefile.cpp" line="-187"/>
         <source>ERROR: Cannot open SPICE file &quot;%1&quot;.</source>
-        <translation>エラー;　スパイスファイル&quot;%1&quot;が開けません.</translation>
+        <translation type="unfinished">ERROR: No se pudo abrir el fitxer SPICE &quot;%1&quot;.</translation>
     </message>
     <message>
-        <location line="+173"/>
         <source>ERROR: Cannot start QucsConv!</source>
-        <translation>エラー:QucsConvを起動できません!</translation>
+        <translation type="obsolete">ERROR: ¡No puedo arrancar QucsConv!</translation>
     </message>
     <message>
-        <location line="-160"/>
+        <location line="+13"/>
         <source>ERROR: Cannot save converted SPICE file &quot;%1&quot;.</source>
-        <translation>エラー;　変換したスパイスファイル&quot;%1&quot;を保存できません.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+15"/>
         <source>ERROR: Cannot open converted SPICE file &quot;%1&quot;.</source>
-        <translation>エラー;　変換済みスパイスファイル&quot;%1&quot;を開けません.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Converting ...</source>
-        <translation type="obsolete">変換中...</translation>
+        <translation type="obsolete">Convirtiendo...</translation>
     </message>
     <message>
-        <location filename="dialogs/librarydialog.cpp" line="+206"/>
+        <location filename="../qucs/dialogs/librarydialog.cpp" line="+206"/>
         <source>ERROR: Cannot open file &quot;%1&quot;.
 </source>
-        <translation>エラー;　ファイル&quot;%1&quot;を開けません.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+13"/>
         <source>ERROR: Cannot create user library subdirectory !
 </source>
-        <translation>エラー;　ユーザライブラリサブディレクトリを作成できません!</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+12"/>
         <source>ERROR: Cannot create file &quot;%1&quot;.
 </source>
-        <translation>エラー;　ファイル&quot;%1&quot;を作成できません.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="schematic_file.cpp" line="-58"/>
+        <location filename="../qucs/schematic_file.cpp" line="-58"/>
         <source>WARNING: Skipping library component &quot;%1&quot;.</source>
-        <translation>警告:　ライブラリ部品&quot;%1&quot;をスキップしています.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/spicefile.cpp" line="+153"/>
+        <location filename="../qucs/components/spicefile.cpp" line="+160"/>
         <source>Converting SPICE file &quot;%1&quot;.</source>
-        <translation>スパイスファイル&quot;%1&quot;を変換しています.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-87"/>
+        <location line="-94"/>
         <source>Preprocessing SPICE file &quot;%1&quot;.</source>
-        <translation>スパイスファイル&quot;%1&quot;を前処理しています.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+10"/>
         <source>ERROR: Cannot save preprocessed SPICE file &quot;%1&quot;.</source>
-        <translation>エラー;　前処理されたSPICEファイル&quot;%1&quot;を保存できません.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Cannot execute</source>
-        <translation type="obsolete">実行できません</translation>
+        <translation type="obsolete">No se puede ejecutar</translation>
     </message>
     <message>
         <location line="+15"/>
         <source>ERROR: Cannot execute &quot;%1&quot;.</source>
-        <translation>エラー;　　&quot;%1&quot;を実行できません.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/vfile.cpp" line="-36"/>
+        <location filename="../qucs/components/vfile.cpp" line="-36"/>
         <source>file based voltage source</source>
-        <translation>ファイルによる電圧源</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/ifile.cpp" line="-2"/>
-        <location filename="components/vfile.cpp" line="+31"/>
+        <location filename="../qucs/components/ifile.cpp" line="-2"/>
+        <location filename="../qucs/components/vfile.cpp" line="+31"/>
         <source>name of the sample file</source>
-        <translation>サンプルファイル名</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+4"/>
-        <location filename="components/vfile.cpp" line="+4"/>
+        <location filename="../qucs/components/vfile.cpp" line="+4"/>
         <source>repeat waveform</source>
-        <translation>繰り返し波形</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/vfile.cpp" line="+18"/>
+        <location filename="../qucs/components/vfile.cpp" line="+18"/>
         <source>File Based Voltage Source</source>
-        <translation>ファイルによる電圧源</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/ifile.cpp" line="-33"/>
+        <location filename="../qucs/components/ifile.cpp" line="-33"/>
         <source>file based current source</source>
-        <translation>ファイルによる電流源</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+34"/>
         <source>current gain</source>
-        <translation>電流ゲイン</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+17"/>
         <source>File Based Current Source</source>
-        <translation>ファイルによる電流源</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/mod_amp.cpp" line="+15"/>
+        <location filename="../qucs/components/mod_amp.cpp" line="+15"/>
         <source>Modular Operational Amplifier verilog device</source>
-        <translation type="unfinished">オペアンプモジュール　Verilogデバイス</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Gain bandwidth product (Hz)</source>
-        <translation type="unfinished">ゲイン帯域幅（Hｚ）</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Open-loop differential gain at DC (dB)</source>
-        <translation>DC時のオープンループ差動ゲイン(dB)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Second pole frequency (Hz)</source>
-        <translation type="unfinished">二番目の極周波数(Hz)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Output resistance (Ohm)</source>
-        <translation>出力抵抗値(Ohm)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Differential input capacitance (F)</source>
-        <translation>差動入力容量(F)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Differential input resistance (Ohm)</source>
-        <translation>差動入力抵抗値(Ohm)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Input offset current (A)</source>
-        <translation>入力オフセット電流(A)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Input bias current (A)</source>
-        <translation>入力バイアス電流(A)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Input offset voltage (V)</source>
-        <translation>入力オフセット電圧(V)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Common-mode rejection ratio at DC (dB)</source>
-        <translation>DCでのコモンモード除去比(dB)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Common-mode zero corner frequency (Hz)</source>
-        <translation type="unfinished">コモンモード　ゼロコーナー周波数(Hz)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Positive slew rate (V/s)</source>
-        <translation>ポジティブスルーレート(V/s)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Negative slew rate (V/s)</source>
-        <translation>ネガティブスルーレート(V/s)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Positive output voltage limit (V)</source>
-        <translation>正出力電圧限界(V)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Negative output voltage limit (V)</source>
-        <translation>不出力電圧限界(V)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Maximum DC output current (A)</source>
-        <translation>最大DC出力電流(A)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
@@ -7897,134 +8015,134 @@ Do you make use of loadable components?</source>
     <message>
         <location line="+18"/>
         <source>Modular OpAmp</source>
-        <translation>オペアンプモジュール</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/hic2_full.cpp" line="-290"/>
+        <location filename="../qucs/components/hic2_full.cpp" line="-290"/>
         <source>HICUM Level 2 v2.22 verilog device</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+42"/>
-        <location filename="components/hicumL2V2p23.cpp" line="-248"/>
-        <location filename="components/hicumL2V2p24.cpp" line="-248"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="-276"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="-248"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="-248"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="-276"/>
         <source>Base current recombination time constant at B-C barrier for high forward injection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+18"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+18"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+18"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+18"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+18"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+18"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+18"/>
         <source>Specifies the base node connection for the tunneling current</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+95"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+95"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+95"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+95"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+95"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+95"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+95"/>
         <source>Partitioning factor of parasitic B-C cap</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
         <source>Partitioning factor of parasitic B-E cap</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+59"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+59"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+59"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+69"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+59"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+59"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+69"/>
         <source>Flag for turning on and off of vertical NQS effect</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+6"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+6"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+6"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+6"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+6"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+6"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+6"/>
         <source>Flag for determining where to tag the flicker noise source</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+32"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+32"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+32"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+38"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+32"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+32"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+38"/>
         <source>Effective emitter bandgap voltage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
         <source>Effective collector bandgap voltage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
         <source>Effective substrate bandgap voltage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
         <source>Coefficient K1 in T-dependent band-gap equation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
         <source>Coefficient K2 in T-dependent band-gap equation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/hic0_full.cpp" line="-40"/>
-        <location filename="components/hic2_full.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p2.cpp" line="-44"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="-55"/>
-        <location filename="components/hicumL0V1p3.cpp" line="-58"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
+        <location filename="../qucs/components/hic0_full.cpp" line="-40"/>
+        <location filename="../qucs/components/hic2_full.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="-44"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="-55"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="-58"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
         <source>Exponent coefficient in transfer current temperature dependence</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/hic2_full.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
+        <location filename="../qucs/components/hic2_full.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
         <source>Exponent coefficient in B-E junction current temperature dependence</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+5"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+5"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+5"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+12"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+5"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+5"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+12"/>
         <source>Flag for turning on and off self-heating effect</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+8"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+8"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+8"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+13"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+8"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+8"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+13"/>
         <source>Flag for compatibility with v2.1 model (0=v2.1)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8035,29 +8153,29 @@ Do you make use of loadable components?</source>
     </message>
     <message>
         <location line="-305"/>
-        <location filename="components/hicumL2V2p23.cpp" line="-278"/>
-        <location filename="components/hicumL2V2p24.cpp" line="-278"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="-312"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="-278"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="-278"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="-312"/>
         <source>A^2s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
         <location line="+59"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
         <location line="+59"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
         <location line="+59"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
         <location line="+65"/>
         <source>Coul</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/EKV26MOS.cpp" line="-30"/>
+        <location filename="../qucs/components/EKV26MOS.cpp" line="-30"/>
         <location line="+6"/>
-        <location filename="components/MESFET.cpp" line="-17"/>
-        <location filename="components/hic0_full.cpp" line="-183"/>
+        <location filename="../qucs/components/MESFET.cpp" line="-17"/>
+        <location filename="../qucs/components/hic0_full.cpp" line="-183"/>
         <location line="+10"/>
         <location line="+3"/>
         <location line="+3"/>
@@ -8066,7 +8184,7 @@ Do you make use of loadable components?</source>
         <location line="+5"/>
         <location line="+93"/>
         <location line="+5"/>
-        <location filename="components/hic2_full.cpp" line="-56"/>
+        <location filename="../qucs/components/hic2_full.cpp" line="-56"/>
         <location line="+11"/>
         <location line="+5"/>
         <location line="+5"/>
@@ -8076,7 +8194,7 @@ Do you make use of loadable components?</source>
         <location line="+5"/>
         <location line="+39"/>
         <location line="+5"/>
-        <location filename="components/hicumL0V1p2.cpp" line="-197"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="-197"/>
         <location line="+13"/>
         <location line="+5"/>
         <location line="+3"/>
@@ -8085,7 +8203,7 @@ Do you make use of loadable components?</source>
         <location line="+5"/>
         <location line="+100"/>
         <location line="+5"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="-197"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="-197"/>
         <location line="+13"/>
         <location line="+5"/>
         <location line="+3"/>
@@ -8095,7 +8213,7 @@ Do you make use of loadable components?</source>
         <location line="+100"/>
         <location line="+5"/>
         <location line="+107"/>
-        <location filename="components/hicumL0V1p3.cpp" line="-201"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="-201"/>
         <location line="+17"/>
         <location line="+5"/>
         <location line="+3"/>
@@ -8104,7 +8222,7 @@ Do you make use of loadable components?</source>
         <location line="+5"/>
         <location line="+100"/>
         <location line="+5"/>
-        <location filename="components/hicumL2V2p23.cpp" line="-56"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="-56"/>
         <location line="+11"/>
         <location line="+5"/>
         <location line="+5"/>
@@ -8114,7 +8232,7 @@ Do you make use of loadable components?</source>
         <location line="+5"/>
         <location line="+39"/>
         <location line="+5"/>
-        <location filename="components/hicumL2V2p24.cpp" line="-56"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="-56"/>
         <location line="+11"/>
         <location line="+5"/>
         <location line="+5"/>
@@ -8124,7 +8242,7 @@ Do you make use of loadable components?</source>
         <location line="+5"/>
         <location line="+39"/>
         <location line="+5"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="-62"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="-62"/>
         <location line="+17"/>
         <location line="+5"/>
         <location line="+5"/>
@@ -8135,44 +8253,44 @@ Do you make use of loadable components?</source>
         <location line="+39"/>
         <location line="+5"/>
         <location line="+110"/>
-        <location filename="components/log_amp.cpp" line="-40"/>
+        <location filename="../qucs/components/log_amp.cpp" line="-40"/>
         <location line="+3"/>
-        <location filename="components/photodiode.cpp" line="-51"/>
+        <location filename="../qucs/components/photodiode.cpp" line="-51"/>
         <location line="+6"/>
-        <location filename="components/phototransistor.cpp" line="-68"/>
+        <location filename="../qucs/components/phototransistor.cpp" line="-68"/>
         <location line="+35"/>
         <location line="+3"/>
         <source>A</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/DLS_1ton.cpp" line="+21"/>
-        <location filename="components/DLS_nto1.cpp" line="+22"/>
-        <location filename="components/EKV26MOS.cpp" line="+15"/>
-        <location filename="components/MESFET.cpp" line="-65"/>
-        <location filename="components/andor4x2.cpp" line="+32"/>
-        <location filename="components/andor4x3.cpp" line="+32"/>
-        <location filename="components/andor4x4.cpp" line="+32"/>
-        <location filename="components/binarytogrey4bit.cpp" line="+32"/>
-        <location filename="components/comp_1bit.cpp" line="+32"/>
-        <location filename="components/comp_2bit.cpp" line="+32"/>
-        <location filename="components/comp_4bit.cpp" line="+32"/>
-        <location filename="components/dff_SR.cpp" line="+34"/>
-        <location filename="components/dmux2to4.cpp" line="+32"/>
-        <location filename="components/dmux3to8.cpp" line="+33"/>
-        <location filename="components/dmux4to16.cpp" line="+32"/>
-        <location filename="components/fa1b.cpp" line="+32"/>
-        <location filename="components/fa2b.cpp" line="+32"/>
-        <location filename="components/gatedDlatch.cpp" line="+34"/>
-        <location filename="components/greytobinary4bit.cpp" line="+32"/>
-        <location filename="components/ha1b.cpp" line="+32"/>
-        <location filename="components/hic0_full.cpp" line="-83"/>
+        <location filename="../qucs/components/DLS_1ton.cpp" line="+21"/>
+        <location filename="../qucs/components/DLS_nto1.cpp" line="+22"/>
+        <location filename="../qucs/components/EKV26MOS.cpp" line="+15"/>
+        <location filename="../qucs/components/MESFET.cpp" line="-65"/>
+        <location filename="../qucs/components/andor4x2.cpp" line="+31"/>
+        <location filename="../qucs/components/andor4x3.cpp" line="+31"/>
+        <location filename="../qucs/components/andor4x4.cpp" line="+31"/>
+        <location filename="../qucs/components/binarytogrey4bit.cpp" line="+31"/>
+        <location filename="../qucs/components/comp_1bit.cpp" line="+31"/>
+        <location filename="../qucs/components/comp_2bit.cpp" line="+31"/>
+        <location filename="../qucs/components/comp_4bit.cpp" line="+31"/>
+        <location filename="../qucs/components/dff_SR.cpp" line="+33"/>
+        <location filename="../qucs/components/dmux2to4.cpp" line="+31"/>
+        <location filename="../qucs/components/dmux3to8.cpp" line="+32"/>
+        <location filename="../qucs/components/dmux4to16.cpp" line="+31"/>
+        <location filename="../qucs/components/fa1b.cpp" line="+31"/>
+        <location filename="../qucs/components/fa2b.cpp" line="+31"/>
+        <location filename="../qucs/components/gatedDlatch.cpp" line="+33"/>
+        <location filename="../qucs/components/greytobinary4bit.cpp" line="+31"/>
+        <location filename="../qucs/components/ha1b.cpp" line="+31"/>
+        <location filename="../qucs/components/hic0_full.cpp" line="-83"/>
         <location line="+3"/>
         <location line="+3"/>
         <location line="+3"/>
         <location line="+5"/>
         <location line="+5"/>
-        <location filename="components/hic2_full.cpp" line="-57"/>
+        <location filename="../qucs/components/hic2_full.cpp" line="-57"/>
         <location line="+62"/>
         <location line="+66"/>
         <location line="+3"/>
@@ -8180,25 +8298,25 @@ Do you make use of loadable components?</source>
         <location line="+3"/>
         <location line="+5"/>
         <location line="+19"/>
-        <location filename="components/hicumL0V1p2.cpp" line="-83"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="-83"/>
         <location line="+3"/>
         <location line="+3"/>
         <location line="+3"/>
         <location line="+5"/>
         <location line="+5"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="-190"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="-190"/>
         <location line="+3"/>
         <location line="+3"/>
         <location line="+3"/>
         <location line="+5"/>
         <location line="+5"/>
-        <location filename="components/hicumL0V1p3.cpp" line="-83"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="-83"/>
         <location line="+3"/>
         <location line="+3"/>
         <location line="+3"/>
         <location line="+5"/>
         <location line="+5"/>
-        <location filename="components/hicumL2V2p23.cpp" line="-57"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="-57"/>
         <location line="+62"/>
         <location line="+66"/>
         <location line="+3"/>
@@ -8206,7 +8324,7 @@ Do you make use of loadable components?</source>
         <location line="+3"/>
         <location line="+5"/>
         <location line="+19"/>
-        <location filename="components/hicumL2V2p24.cpp" line="-57"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="-57"/>
         <location line="+62"/>
         <location line="+66"/>
         <location line="+3"/>
@@ -8214,7 +8332,7 @@ Do you make use of loadable components?</source>
         <location line="+3"/>
         <location line="+5"/>
         <location line="+19"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="-167"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="-167"/>
         <location line="+62"/>
         <location line="+66"/>
         <location line="+3"/>
@@ -8222,74 +8340,74 @@ Do you make use of loadable components?</source>
         <location line="+3"/>
         <location line="+5"/>
         <location line="+19"/>
-        <location filename="components/hpribin4bit.cpp" line="+32"/>
-        <location filename="components/jkff_SR.cpp" line="+34"/>
-        <location filename="components/mux2to1.cpp" line="+32"/>
-        <location filename="components/mux4to1.cpp" line="+32"/>
-        <location filename="components/mux8to1.cpp" line="+32"/>
-        <location filename="components/nigbt.cpp" line="-41"/>
-        <location filename="components/photodiode.cpp" line="+18"/>
-        <location filename="components/phototransistor.cpp" line="-9"/>
+        <location filename="../qucs/components/hpribin4bit.cpp" line="+31"/>
+        <location filename="../qucs/components/jkff_SR.cpp" line="+33"/>
+        <location filename="../qucs/components/mux2to1.cpp" line="+31"/>
+        <location filename="../qucs/components/mux4to1.cpp" line="+31"/>
+        <location filename="../qucs/components/mux8to1.cpp" line="+31"/>
+        <location filename="../qucs/components/nigbt.cpp" line="-41"/>
+        <location filename="../qucs/components/photodiode.cpp" line="+18"/>
+        <location filename="../qucs/components/phototransistor.cpp" line="-9"/>
         <location line="+3"/>
-        <location filename="components/tff_SR.cpp" line="+34"/>
+        <location filename="../qucs/components/tff_SR.cpp" line="+33"/>
         <source>s</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/EKV26MOS.cpp" line="-96"/>
-        <location filename="components/MESFET.cpp" line="-42"/>
+        <location filename="../qucs/components/EKV26MOS.cpp" line="-96"/>
+        <location filename="../qucs/components/MESFET.cpp" line="-42"/>
         <location line="+3"/>
         <location line="+3"/>
-        <location filename="components/hic2_full.cpp" line="-141"/>
-        <location filename="components/hicumL2V2p23.cpp" line="-141"/>
-        <location filename="components/hicumL2V2p24.cpp" line="-141"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="-141"/>
-        <location filename="components/nigbt.cpp" line="+30"/>
+        <location filename="../qucs/components/hic2_full.cpp" line="-141"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="-141"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="-141"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="-141"/>
+        <location filename="../qucs/components/nigbt.cpp" line="+30"/>
         <source>1/V</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+28"/>
-        <location filename="components/hic0_full.cpp" line="+113"/>
+        <location filename="../qucs/components/hic0_full.cpp" line="+113"/>
         <location line="+12"/>
         <location line="+3"/>
         <location line="+11"/>
         <location line="+3"/>
-        <location filename="components/hic2_full.cpp" line="+6"/>
+        <location filename="../qucs/components/hic2_full.cpp" line="+6"/>
         <location line="+3"/>
         <location line="+160"/>
         <location line="+7"/>
         <location line="+3"/>
         <location line="+30"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+113"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+113"/>
         <location line="+12"/>
         <location line="+3"/>
         <location line="+13"/>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+113"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+113"/>
         <location line="+12"/>
         <location line="+3"/>
         <location line="+13"/>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+113"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+113"/>
         <location line="+12"/>
         <location line="+3"/>
         <location line="+13"/>
         <location line="+3"/>
         <location line="+13"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+6"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+6"/>
         <location line="+3"/>
         <location line="+160"/>
         <location line="+7"/>
         <location line="+3"/>
         <location line="+30"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+6"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+6"/>
         <location line="+3"/>
         <location line="+160"/>
         <location line="+7"/>
         <location line="+3"/>
         <location line="+30"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+6"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+6"/>
         <location line="+3"/>
         <location line="+176"/>
         <location line="+7"/>
@@ -8297,80 +8415,80 @@ Do you make use of loadable components?</source>
         <location line="+30"/>
         <location line="+17"/>
         <source>1/K</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+9"/>
         <location line="+3"/>
-        <location filename="components/MESFET.cpp" line="+39"/>
-        <location filename="components/hic0_full.cpp" line="-139"/>
+        <location filename="../qucs/components/MESFET.cpp" line="+39"/>
+        <location filename="../qucs/components/hic0_full.cpp" line="-139"/>
         <location line="+36"/>
         <location line="+11"/>
         <location line="+3"/>
         <location line="+3"/>
-        <location filename="components/hic2_full.cpp" line="-197"/>
+        <location filename="../qucs/components/hic2_full.cpp" line="-197"/>
         <location line="+3"/>
         <location line="+11"/>
         <location line="+3"/>
         <location line="+16"/>
         <location line="+84"/>
-        <location filename="components/hicumL0V1p2.cpp" line="-141"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="-141"/>
         <location line="+36"/>
         <location line="+11"/>
         <location line="+3"/>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="-141"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="-141"/>
         <location line="+36"/>
         <location line="+11"/>
         <location line="+3"/>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="-154"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="-154"/>
         <location line="+36"/>
         <location line="+11"/>
         <location line="+3"/>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p23.cpp" line="-197"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="-197"/>
         <location line="+3"/>
         <location line="+11"/>
         <location line="+3"/>
         <location line="+16"/>
         <location line="+84"/>
-        <location filename="components/hicumL2V2p24.cpp" line="-197"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="-197"/>
         <location line="+3"/>
         <location line="+11"/>
         <location line="+3"/>
         <location line="+16"/>
         <location line="+84"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="-230"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="-230"/>
         <location line="+3"/>
         <location line="+11"/>
         <location line="+3"/>
         <location line="+16"/>
         <location line="+84"/>
-        <location filename="components/log_amp.cpp" line="+11"/>
+        <location filename="../qucs/components/log_amp.cpp" line="+11"/>
         <location line="+6"/>
-        <location filename="components/photodiode.cpp" line="-27"/>
+        <location filename="../qucs/components/photodiode.cpp" line="-27"/>
         <location line="+38"/>
-        <location filename="components/phototransistor.cpp" line="+9"/>
+        <location filename="../qucs/components/phototransistor.cpp" line="+9"/>
         <location line="+3"/>
         <location line="+3"/>
-        <location filename="components/potentiometer.cpp" line="-27"/>
+        <location filename="../qucs/components/potentiometer.cpp" line="-27"/>
         <location line="+19"/>
         <source>Ohm</source>
-        <translation></translation>
+        <translation type="unfinished">Ohm</translation>
     </message>
     <message>
         <location line="+47"/>
-        <location filename="components/MESFET.cpp" line="+10"/>
+        <location filename="../qucs/components/MESFET.cpp" line="+10"/>
         <location line="+3"/>
         <location line="+3"/>
-        <location filename="components/hic0_full.cpp" line="-85"/>
+        <location filename="../qucs/components/hic0_full.cpp" line="-85"/>
         <location line="+44"/>
         <location line="+11"/>
         <location line="+43"/>
         <location line="+11"/>
         <location line="+3"/>
-        <location filename="components/hic2_full.cpp" line="-81"/>
+        <location filename="../qucs/components/hic2_full.cpp" line="-81"/>
         <location line="+3"/>
         <location line="+10"/>
         <location line="+10"/>
@@ -8378,25 +8496,25 @@ Do you make use of loadable components?</source>
         <location line="+15"/>
         <location line="+47"/>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="-92"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="-92"/>
         <location line="+51"/>
         <location line="+11"/>
         <location line="+43"/>
         <location line="+11"/>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="-92"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="-92"/>
         <location line="+51"/>
         <location line="+11"/>
         <location line="+43"/>
         <location line="+11"/>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="-92"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="-92"/>
         <location line="+51"/>
         <location line="+11"/>
         <location line="+43"/>
         <location line="+11"/>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p23.cpp" line="-81"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="-81"/>
         <location line="+3"/>
         <location line="+10"/>
         <location line="+10"/>
@@ -8404,7 +8522,7 @@ Do you make use of loadable components?</source>
         <location line="+15"/>
         <location line="+47"/>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="-81"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="-81"/>
         <location line="+3"/>
         <location line="+10"/>
         <location line="+10"/>
@@ -8412,7 +8530,7 @@ Do you make use of loadable components?</source>
         <location line="+15"/>
         <location line="+47"/>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="-81"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="-81"/>
         <location line="+3"/>
         <location line="+10"/>
         <location line="+10"/>
@@ -8420,25 +8538,25 @@ Do you make use of loadable components?</source>
         <location line="+15"/>
         <location line="+57"/>
         <location line="+3"/>
-        <location filename="components/photodiode.cpp" line="-23"/>
-        <location filename="components/phototransistor.cpp" line="-29"/>
+        <location filename="../qucs/components/photodiode.cpp" line="-23"/>
+        <location filename="../qucs/components/phototransistor.cpp" line="-29"/>
         <location line="+8"/>
         <source>F</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/DLS_nto1.cpp" line="-3"/>
-        <location filename="components/EKV26MOS.cpp" line="-99"/>
+        <location filename="../qucs/components/DLS_nto1.cpp" line="-3"/>
+        <location filename="../qucs/components/EKV26MOS.cpp" line="-99"/>
         <location line="+6"/>
         <location line="+84"/>
         <location line="+6"/>
-        <location filename="components/MESFET.cpp" line="-67"/>
+        <location filename="../qucs/components/MESFET.cpp" line="-67"/>
         <location line="+20"/>
         <location line="+3"/>
         <location line="+3"/>
         <location line="+12"/>
         <location line="+3"/>
-        <location filename="components/hic0_full.cpp" line="-141"/>
+        <location filename="../qucs/components/hic0_full.cpp" line="-141"/>
         <location line="+32"/>
         <location line="+32"/>
         <location line="+3"/>
@@ -8455,7 +8573,7 @@ Do you make use of loadable components?</source>
         <location line="+3"/>
         <location line="+3"/>
         <location line="+3"/>
-        <location filename="components/hic2_full.cpp" line="-93"/>
+        <location filename="../qucs/components/hic2_full.cpp" line="-93"/>
         <location line="+10"/>
         <location line="+10"/>
         <location line="+5"/>
@@ -8470,7 +8588,7 @@ Do you make use of loadable components?</source>
         <location line="+26"/>
         <location line="+3"/>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="-155"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="-155"/>
         <location line="+3"/>
         <location line="+36"/>
         <location line="+7"/>
@@ -8489,7 +8607,7 @@ Do you make use of loadable components?</source>
         <location line="+3"/>
         <location line="+3"/>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="-155"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="-155"/>
         <location line="+3"/>
         <location line="+36"/>
         <location line="+7"/>
@@ -8508,7 +8626,7 @@ Do you make use of loadable components?</source>
         <location line="+3"/>
         <location line="+3"/>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="-157"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="-157"/>
         <location line="+3"/>
         <location line="+38"/>
         <location line="+7"/>
@@ -8527,7 +8645,7 @@ Do you make use of loadable components?</source>
         <location line="+3"/>
         <location line="+3"/>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p23.cpp" line="-93"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="-93"/>
         <location line="+10"/>
         <location line="+10"/>
         <location line="+5"/>
@@ -8542,7 +8660,7 @@ Do you make use of loadable components?</source>
         <location line="+26"/>
         <location line="+3"/>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="-93"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="-93"/>
         <location line="+10"/>
         <location line="+10"/>
         <location line="+5"/>
@@ -8557,7 +8675,7 @@ Do you make use of loadable components?</source>
         <location line="+26"/>
         <location line="+3"/>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="-103"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="-103"/>
         <location line="+10"/>
         <location line="+10"/>
         <location line="+5"/>
@@ -8574,72 +8692,72 @@ Do you make use of loadable components?</source>
         <location line="+3"/>
         <location line="+3"/>
         <location line="+14"/>
-        <location filename="components/log_amp.cpp" line="-9"/>
-        <location filename="components/logic_0.cpp" line="+29"/>
-        <location filename="components/logic_1.cpp" line="+29"/>
-        <location filename="components/nigbt.cpp" line="+3"/>
+        <location filename="../qucs/components/log_amp.cpp" line="-9"/>
+        <location filename="../qucs/components/logic_0.cpp" line="+28"/>
+        <location filename="../qucs/components/logic_1.cpp" line="+28"/>
+        <location filename="../qucs/components/nigbt.cpp" line="+3"/>
         <location line="+3"/>
-        <location filename="components/photodiode.cpp" line="-9"/>
+        <location filename="../qucs/components/photodiode.cpp" line="-9"/>
         <location line="+6"/>
-        <location filename="components/phototransistor.cpp" line="-19"/>
+        <location filename="../qucs/components/phototransistor.cpp" line="-19"/>
         <location line="+3"/>
         <location line="+5"/>
         <location line="+8"/>
         <source>V</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/hic0_full.cpp" line="+43"/>
-        <location filename="components/hic2_full.cpp" line="+16"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+47"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+45"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+61"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+16"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+16"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+9"/>
+        <location filename="../qucs/components/hic0_full.cpp" line="+43"/>
+        <location filename="../qucs/components/hic2_full.cpp" line="+16"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+47"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+45"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+61"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+16"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+16"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+9"/>
         <source>K/W</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/hic2_full.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+8"/>
+        <location filename="../qucs/components/hic2_full.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+8"/>
         <source>J/W</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/hic0_full.cpp" line="+6"/>
-        <location filename="components/hic2_full.cpp" line="+5"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+6"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+8"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+6"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+5"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+5"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+5"/>
+        <location filename="../qucs/components/hic0_full.cpp" line="+6"/>
+        <location filename="../qucs/components/hic2_full.cpp" line="+5"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+6"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+8"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+6"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+5"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+5"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+5"/>
         <source>C</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hic2_full.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
+        <location filename="../qucs/components/hic2_full.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
         <source>K</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/diac.cpp" line="-36"/>
+        <location filename="../qucs/components/diac.cpp" line="-36"/>
         <source>diac (bidirectional trigger diode)</source>
-        <translation>ダイアック(双方向トリガダイオード)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+24"/>
-        <location filename="components/triac.cpp" line="-14"/>
+        <location filename="../qucs/components/triac.cpp" line="-14"/>
         <source>(bidirectional) breakover voltage</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8650,20 +8768,20 @@ Do you make use of loadable components?</source>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/thyristor.cpp" line="-10"/>
-        <location filename="components/triac.cpp" line="+4"/>
+        <location filename="../qucs/components/thyristor.cpp" line="-10"/>
+        <location filename="../qucs/components/triac.cpp" line="+4"/>
         <source>parasitic capacitance</source>
-        <translation>寄生容量</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+18"/>
         <source>Diac</source>
-        <translation>ダイアック</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/thyristor.cpp" line="-28"/>
+        <location filename="../qucs/components/thyristor.cpp" line="-28"/>
         <source>silicon controlled rectifier (SCR)</source>
-        <translation>サイリスタ(SCR)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+24"/>
@@ -8673,39 +8791,39 @@ Do you make use of loadable components?</source>
     <message>
         <location line="+2"/>
         <source>gate trigger current</source>
-        <translation>ゲートトリガ電流</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+22"/>
         <source>Thyristor</source>
-        <translation>サイリスタ</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/triac.cpp" line="-32"/>
+        <location filename="../qucs/components/triac.cpp" line="-32"/>
         <source>triac (bidirectional thyristor)</source>
-        <translation>トライアック(双方向サイリスタ)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+30"/>
         <source>(bidirectional) gate trigger current</source>
-        <translation>(双方向)ゲートトリガ電流</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+22"/>
         <source>Triac</source>
-        <translation>トライアック</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/diac.cpp" line="-12"/>
-        <location filename="components/thyristor.cpp" line="-14"/>
-        <location filename="components/triac.cpp" line="-14"/>
+        <location filename="../qucs/components/diac.cpp" line="-12"/>
+        <location filename="../qucs/components/thyristor.cpp" line="-14"/>
+        <location filename="../qucs/components/triac.cpp" line="-14"/>
         <source>intrinsic junction resistance</source>
-        <translation>固有ジャンクション抵抗</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/log_amp.cpp" line="-20"/>
+        <location filename="../qucs/components/log_amp.cpp" line="-20"/>
         <source>Logarithmic Amplifier verilog device</source>
-        <translation type="unfinished">ログアンプ　Verilogデバイス</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
@@ -8720,11 +8838,11 @@ Do you make use of loadable components?</source>
     <message>
         <location line="+1"/>
         <location line="+11"/>
-        <location filename="components/photodiode.cpp" line="+29"/>
-        <location filename="components/potentiometer.cpp" line="-6"/>
+        <location filename="../qucs/components/photodiode.cpp" line="+29"/>
+        <location filename="../qucs/components/potentiometer.cpp" line="-6"/>
         <location line="+3"/>
         <source>%</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="-9"/>
@@ -8743,58 +8861,58 @@ Do you make use of loadable components?</source>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/potentiometer.cpp" line="-4"/>
+        <location filename="../qucs/components/potentiometer.cpp" line="-4"/>
         <source>conformity error</source>
-        <translation>不一致エラー</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
         <source>output offset error</source>
-        <translation>出力オフセットエラー</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
         <source>amplifier input resistance</source>
-        <translation>増幅器入力抵抗</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
         <source>amplifier 3dB frequency</source>
-        <translation type="unfinished">増幅3dBコーナー周波数</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Hz</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
         <source>amplifier output resistance</source>
-        <translation>増幅器出力抵抗</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
         <source>conformity error temperature coefficient</source>
-        <translation>温度係数不一致エラー</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/MESFET.cpp" line="+29"/>
+        <location filename="../qucs/components/MESFET.cpp" line="+29"/>
         <location line="+3"/>
         <location line="+3"/>
-        <location filename="components/log_amp.cpp" line="+1"/>
+        <location filename="../qucs/components/log_amp.cpp" line="+1"/>
         <location line="+6"/>
         <source>%/Celsius</source>
-        <translation>%/℃</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/log_amp.cpp" line="-4"/>
+        <location filename="../qucs/components/log_amp.cpp" line="-4"/>
         <source>offset temperature coefficient</source>
-        <translation type="unfinished">オフセット温度係数</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+1"/>
         <source>V/Celsius</source>
-        <translation>V/℃</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
@@ -8810,7 +8928,7 @@ Do you make use of loadable components?</source>
         <location line="+1"/>
         <location line="+3"/>
         <source>A/Celsius</source>
-        <translation>A/℃</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="-1"/>
@@ -8818,72 +8936,72 @@ Do you make use of loadable components?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/EKV26MOS.cpp" line="+19"/>
-        <location filename="components/MESFET.cpp" line="+52"/>
-        <location filename="components/log_amp.cpp" line="+4"/>
-        <location filename="components/nigbt.cpp" line="+3"/>
+        <location filename="../qucs/components/EKV26MOS.cpp" line="+19"/>
+        <location filename="../qucs/components/MESFET.cpp" line="+52"/>
+        <location filename="../qucs/components/log_amp.cpp" line="+4"/>
+        <location filename="../qucs/components/nigbt.cpp" line="+3"/>
         <location line="+3"/>
-        <location filename="components/photodiode.cpp" line="-19"/>
-        <location filename="components/potentiometer.cpp" line="+13"/>
+        <location filename="../qucs/components/photodiode.cpp" line="-19"/>
+        <location filename="../qucs/components/potentiometer.cpp" line="+13"/>
         <source>Celsius</source>
-        <translation>℃</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/log_amp.cpp" line="+21"/>
+        <location filename="../qucs/components/log_amp.cpp" line="+21"/>
         <source>Logarithmic Amplifier</source>
-        <translation>ログアンプ</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/MESFET.cpp" line="-95"/>
-        <location filename="components/log_amp.cpp" line="+20"/>
+        <location filename="../qucs/components/MESFET.cpp" line="-95"/>
+        <location filename="../qucs/components/log_amp.cpp" line="+20"/>
         <source>I</source>
-        <translation>電流</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/log_amp.cpp" line="+1"/>
+        <location filename="../qucs/components/log_amp.cpp" line="+1"/>
         <source>R</source>
-        <translation>抵抗</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/hic0_full.cpp" line="-227"/>
+        <location filename="../qucs/components/hic0_full.cpp" line="-227"/>
         <source>HICUM Level 0 v1.12 verilog device</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+5"/>
-        <location filename="components/hicumL0V1p2.cpp" line="-240"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="-240"/>
-        <location filename="components/hicumL0V1p3.cpp" line="-258"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="-240"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="-240"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="-258"/>
         <source>(Modified) saturation current</source>
-        <translation>（変更）飽和電流</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+5"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+5"/>
         <source>Non-ideality coefficient of forward collector current</source>
-        <translation>順コレクタ電流の非理想係数</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+2"/>
         <source>Non-ideality coefficient of reverse collector current</source>
-        <translation>逆コレクタ電流の非理想係数</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
         <location line="+100"/>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+2"/>
         <location line="+114"/>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+2"/>
         <location line="+114"/>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+2"/>
         <location line="+116"/>
         <location line="+3"/>
         <source>forward Early voltage (normalization volt.)</source>
@@ -8891,560 +9009,560 @@ Do you make use of loadable components?</source>
     </message>
     <message>
         <location line="-97"/>
-        <location filename="components/hicumL0V1p2.cpp" line="-106"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="-106"/>
-        <location filename="components/hicumL0V1p3.cpp" line="-106"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="-106"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="-106"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="-106"/>
         <source>inverse d.c. high-injection roll-off current</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
         <source>high-injection correction current</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
         <source>high-injection correction factor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+4"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+7"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+4"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+4"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+7"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+4"/>
         <source>BE saturation current</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
         <source>BE non-ideality factor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+2"/>
         <source>BE recombination saturation current</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
         <source>BE recombination non-ideality factor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+2"/>
         <source>BC saturation current</source>
-        <translation>BC　飽和電流</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
         <source>BC non-ideality factor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+2"/>
         <source>Zero-bias BE depletion capacitance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
         <source>BE built-in voltage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
         <source>BE exponent factor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+2"/>
         <source>Ratio of maximum to zero-bias value</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+9"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+9"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+9"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+9"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+9"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+9"/>
         <source>low current transit time at Vbici=0</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+6"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+6"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+6"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+6"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+6"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+6"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+6"/>
         <source>SCR width modulation contribution</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
         <source>Storage time in neutral emitter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+5"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+5"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+5"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+5"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+5"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+5"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+5"/>
         <source>Saturation time at high current densities</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+5"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+5"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+5"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+5"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+5"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+5"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+5"/>
         <source>Storage time at inverse operation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
         <source>Low-field collector resistance under emitter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
         <source>Voltage dividing ohmic and satur.region</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
         <location line="+25"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
         <location line="+25"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
         <location line="+25"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
         <location line="+25"/>
         <source>Punch-through voltage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="-22"/>
-        <location filename="components/hicumL0V1p2.cpp" line="-22"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="-22"/>
-        <location filename="components/hicumL0V1p3.cpp" line="-22"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="-22"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="-22"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="-22"/>
         <source>Saturation voltage</source>
-        <translation>飽和電圧</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
         <source>Total zero-bias BC depletion capacitance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
         <source>BC built-in voltage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
         <source>BC exponent factor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+2"/>
         <source>Punch-through voltage of BC junction</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
         <source>Zero-bias external BC depletion capacitance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
         <source>External BC built-in voltage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
         <source>External BC exponent factor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+5"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+5"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+5"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+5"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+5"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+5"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+5"/>
         <source>Split factor = Cjci0/Cjc0</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+2"/>
         <source>Internal base resistance at zero-bias</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+9"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+9"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+9"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+9"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+9"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+9"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+9"/>
         <source>Geometry factor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+14"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+14"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+14"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+14"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+14"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+14"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+14"/>
         <source>Substrate transistor transfer current non-ideality factor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+2"/>
         <source>SC saturation current</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
         <source>SC non-ideality factor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+2"/>
         <source>Zero-bias SC depletion capacitance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
         <source>SC built-in voltage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
         <source>External SC exponent factor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+2"/>
         <source>SC punch-through voltage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
         <source>Collector-base isolation (overlap) capacitance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
         <source>Emitter-base oxide capacitance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
         <source>Exponent factor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+2"/>
         <source>Prefactor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
         <source>M^(1-AF)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+2"/>
         <source>flicker noise exponent factor</source>
-        <translation type="unfinished">フリッカーノイズ要因</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+2"/>
         <source>Bandgap-voltage</source>
-        <translation>バンドギャップ電圧</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
         <source>Effective emitter bandgap-voltage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
         <source>Effective collector bandgap-voltage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
         <source>Effective substrate bandgap-voltage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
         <source>Coefficient K1 in T-dependent bandgap equation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/EKV26MOS.cpp" line="-82"/>
-        <location filename="components/hic0_full.cpp" line="+1"/>
+        <location filename="../qucs/components/EKV26MOS.cpp" line="-82"/>
+        <location filename="../qucs/components/hic0_full.cpp" line="+1"/>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+1"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+1"/>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+1"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+1"/>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+1"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+1"/>
         <location line="+3"/>
         <source>V/K</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/hic0_full.cpp" line="-1"/>
-        <location filename="components/hicumL0V1p2.cpp" line="-1"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="-1"/>
-        <location filename="components/hicumL0V1p3.cpp" line="-1"/>
+        <location filename="../qucs/components/hic0_full.cpp" line="-1"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="-1"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="-1"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="-1"/>
         <source>Coefficient K2 in T-dependent bandgap equation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
         <source>Frist-order TC of tf0</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
         <source>Second-order TC of tf0</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+1"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+1"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+1"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+1"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+1"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+1"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+1"/>
         <location line="+44"/>
         <source>1/K^2</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+4"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+4"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+4"/>
-        <location filename="components/hicumL0V1p3.cpp" line="-40"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+4"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+4"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="-40"/>
         <source>Exponent coefficient in BE junction current temperature dependence</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+2"/>
         <source>TC of epi-collector diffusivity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+2"/>
         <source>Relative TC of satur.drift velocity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
         <source>Relative TC of vces</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
         <source>TC of internal base resistance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+2"/>
         <source>TC of external base resistance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+2"/>
         <source>TC of external collector resistance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+2"/>
         <source>TC of emitter resistances</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+4"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+4"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+4"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+4"/>
         <source>TC of avalanche prefactor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
         <source>TC of avalanche exponential factor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+5"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+10"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+19"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+5"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+10"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+19"/>
         <source>Flag for self-heating calculation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+6"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+6"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+8"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+6"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+6"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+8"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+6"/>
         <source>Ws/K</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+2"/>
         <source>Temperature for which parameters are valid</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
         <source>Temperature change for particular transistor</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9460,101 +9578,101 @@ Do you make use of loadable components?</source>
     </message>
     <message>
         <location line="-203"/>
-        <location filename="components/hicumL0V1p2.cpp" line="-176"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="-176"/>
-        <location filename="components/hicumL0V1p3.cpp" line="-190"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="-176"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="-176"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="-190"/>
         <source>Base width modulation contribution</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/MESFET.cpp" line="+61"/>
-        <location filename="components/thyristor.cpp" line="+2"/>
-        <location filename="components/triac.cpp" line="+2"/>
+        <location filename="../qucs/components/MESFET.cpp" line="+61"/>
+        <location filename="../qucs/components/thyristor.cpp" line="+2"/>
+        <location filename="../qucs/components/triac.cpp" line="+2"/>
         <source>gate resistance</source>
-        <translation>ゲート抵抗</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/potentiometer.cpp" line="-29"/>
+        <location filename="../qucs/components/potentiometer.cpp" line="-29"/>
         <source>Potentiometer verilog device</source>
-        <translation>ポテンショメータVerilogデバイス</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
         <source>nominal device resistance</source>
-        <translation type="unfinished">デバイス抵抗値</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
         <source>shaft/wiper arm rotation</source>
-        <translation type="unfinished">シャフト/ワイパ軸回転</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/msrstub.cpp" line="+6"/>
-        <location filename="components/potentiometer.cpp" line="+1"/>
+        <location filename="../qucs/components/msrstub.cpp" line="+6"/>
+        <location filename="../qucs/components/potentiometer.cpp" line="+1"/>
         <location line="+7"/>
         <source>degrees</source>
-        <translation>°</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/potentiometer.cpp" line="-5"/>
+        <location filename="../qucs/components/potentiometer.cpp" line="-5"/>
         <source>resistive law taper coefficient</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
         <source>device type selector</source>
-        <translation type="unfinished">デバイス種類セレクタ</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
         <source>maximum shaft/wiper rotation</source>
-        <translation type="unfinished">最大シャフト/ワイパ回転</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+6"/>
         <source>linearity error</source>
-        <translation type="unfinished">リニアリティエラー</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
         <source>wiper arm contact resistance</source>
-        <translation>ワイパアームコンタクト抵抗</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
         <source>resistance temperature coefficient</source>
-        <translation>抵抗温度係数</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+1"/>
         <source>PPM/Celsius</source>
-        <translation>PPM/℃</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+24"/>
         <source>Potentiometer</source>
-        <translation>ポテンショメータ</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+34"/>
         <source>B</source>
-        <translation>B</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+1"/>
         <source>T</source>
-        <translation>T</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/rfedd.cpp" line="-11"/>
+        <location filename="../qucs/components/rfedd.cpp" line="-11"/>
         <source>equation defined RF device</source>
-        <translation>方程式の定義されたRFデバイス</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+7"/>
-        <location filename="components/rfedd2p.cpp" line="-2"/>
+        <location filename="../qucs/components/rfedd2p.cpp" line="-2"/>
         <source>type of parameters</source>
-        <translation>パラメータタイプ</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+9"/>
@@ -9564,62 +9682,62 @@ Do you make use of loadable components?</source>
         <location line="+81"/>
         <location line="+5"/>
         <location line="+9"/>
-        <location filename="components/rfedd2p.cpp" line="+7"/>
+        <location filename="../qucs/components/rfedd2p.cpp" line="+7"/>
         <location line="+2"/>
         <location line="+2"/>
         <location line="+2"/>
         <source>parameter equation</source>
-        <translation>パラメータ方程式</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="-77"/>
         <source>Equation Defined RF Device</source>
-        <translation>方程式の定義されたRFデバイス</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+90"/>
         <source>RF</source>
-        <translation>RF</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/rfedd2p.cpp" line="-20"/>
+        <location filename="../qucs/components/rfedd2p.cpp" line="-20"/>
         <source>equation defined 2-port RF device</source>
-        <translation>方程式の定義された2ポートRFデバイス</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+37"/>
         <source>Equation Defined 2-port RF Device</source>
-        <translation>方程式の定義された2ポートRFデバイス</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/MESFET.cpp" line="-100"/>
+        <location filename="../qucs/components/MESFET.cpp" line="-100"/>
         <source>MESFET verilog device</source>
-        <translation>MESFET verilogデバイス</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
         <source>model selector</source>
-        <translation>モデルセレクタ</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
         <source>pinch-off voltage</source>
-        <translation>ピンチオフ電圧</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+4"/>
         <source>A/(V*V)</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
         <source>saturation voltage parameter</source>
-        <translation>飽和電圧パラメータ</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
         <source>channel length modulation parameter</source>
-        <translation type="unfinished">チャネル長変調パラメータ</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
@@ -9639,7 +9757,7 @@ Do you make use of loadable components?</source>
     <message>
         <location line="+1"/>
         <source>1/W</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
@@ -9669,12 +9787,12 @@ Do you make use of loadable components?</source>
     <message>
         <location line="+2"/>
         <source>diode saturation current</source>
-        <translation>ダイオード飽和電流</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
         <source>diode emission coefficient</source>
-        <translation type="unfinished">ダイオード放射係数</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
@@ -9694,12 +9812,12 @@ Do you make use of loadable components?</source>
     <message>
         <location line="+4"/>
         <source>transit time under gate</source>
-        <translation type="unfinished">ゲート通過時間</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
         <source>channel resistance</source>
-        <translation>チャネル抵抗</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
@@ -9708,45 +9826,45 @@ Do you make use of loadable components?</source>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/photodiode.cpp" line="+9"/>
+        <location filename="../qucs/components/photodiode.cpp" line="+9"/>
         <source>energy gap</source>
-        <translation>エネルギーギャップ</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+1"/>
-        <location filename="components/photodiode.cpp" line="+1"/>
+        <location filename="../qucs/components/photodiode.cpp" line="+1"/>
         <source>eV</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+4"/>
         <source>zero bias gate-drain junction capacitance</source>
-        <translation>ゼロバイアス　ゲートドレイン間ジャンクション容量</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
         <source>zero bias gate-source junction capacitance</source>
-        <translation>ゼロバイアス　ゲートソース間ジャンクション容量</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
         <source>zero bias drain-source junction capacitance</source>
-        <translation>ゼロバイアス　ドレインソース間ジャンクション容量</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Beta temperature coefficient</source>
-        <translation>ベータ温度係数</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Alpha temperature coefficient</source>
-        <translation>アルファ温度係数</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Gamma temperature coefficient</source>
-        <translation>ガンマ温度係数</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
@@ -9790,39 +9908,39 @@ Do you make use of loadable components?</source>
         <location line="+15"/>
         <location line="+3"/>
         <source>Ohms</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="-22"/>
         <source>drain resistance</source>
-        <translation>ドレイン抵抗</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
         <source>source resistance</source>
-        <translation>ソース抵抗</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
         <source>gate resistance temperature coefficient</source>
-        <translation>ゲート抵抗温度係数</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+1"/>
         <location line="+3"/>
         <location line="+3"/>
         <source>1/Celsius</source>
-        <translation>1/℃</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="-4"/>
         <source>drain resistance temperature coefficient</source>
-        <translation>ドレイン抵抗温度係数</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
         <source>source resistance temperature coefficient</source>
-        <translation>ソース抵抗温度係数</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
@@ -9842,22 +9960,22 @@ Do you make use of loadable components?</source>
     <message>
         <location line="+7"/>
         <source>shot noise coefficient</source>
-        <translation>ショットノイズ係数</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+24"/>
         <source>MESFET</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/EKV26MOS.cpp" line="-58"/>
+        <location filename="../qucs/components/EKV26MOS.cpp" line="-58"/>
         <source>long = 1, short = 2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
         <source>length parameter</source>
-        <translation type="unfinished">長さパラメータ</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+1"/>
@@ -9868,24 +9986,24 @@ Do you make use of loadable components?</source>
         <location line="+33"/>
         <location line="+13"/>
         <location line="+36"/>
-        <location filename="components/nigbt.cpp" line="-39"/>
+        <location filename="../qucs/components/nigbt.cpp" line="-39"/>
         <source>m</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="-99"/>
         <source>Width parameter</source>
-        <translation type="unfinished">幅パラメータ</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
         <source>parallel multiple device number</source>
-        <translation type="unfinished">並列デバイス数</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
         <source>series multiple device number</source>
-        <translation type="unfinished">直列デバイス数</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
@@ -9895,7 +10013,7 @@ Do you make use of loadable components?</source>
     <message>
         <location line="+1"/>
         <source>F/m**2</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
@@ -9905,12 +10023,12 @@ Do you make use of loadable components?</source>
     <message>
         <location line="+3"/>
         <source>channel width correction</source>
-        <translation type="unfinished">チャネル幅補正</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
         <source>channel length correction</source>
-        <translation type="unfinished">チャネル長補正</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
@@ -9925,7 +10043,7 @@ Do you make use of loadable components?</source>
     <message>
         <location line="+1"/>
         <source>V**(1/2)</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
@@ -9934,9 +10052,9 @@ Do you make use of loadable components?</source>
     </message>
     <message>
         <location line="+4"/>
-        <location filename="components/nigbt.cpp" line="-6"/>
+        <location filename="../qucs/components/nigbt.cpp" line="-6"/>
         <source>A/V**2</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
@@ -9953,7 +10071,7 @@ Do you make use of loadable components?</source>
         <location line="+3"/>
         <location line="+49"/>
         <source>V/m</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="-50"/>
@@ -9979,17 +10097,17 @@ Do you make use of loadable components?</source>
     <message>
         <location line="+1"/>
         <source>A*s/m**2</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
         <source>characteristic length</source>
-        <translation type="unfinished">特有長</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
         <source>threshold voltage temperature coefficient</source>
-        <translation>しきい値電圧温度係数</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
@@ -10019,17 +10137,17 @@ Do you make use of loadable components?</source>
     <message>
         <location line="+1"/>
         <source>Ohm/square</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
         <source>source contact resistance</source>
-        <translation>ソース接触抵抗</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
         <source>drain contact resistance</source>
-        <translation>ドレイン接触抵抗</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
@@ -10040,9 +10158,9 @@ Do you make use of loadable components?</source>
         <location line="+1"/>
         <location line="+3"/>
         <location line="+3"/>
-        <location filename="components/rlcg.cpp" line="-4"/>
+        <location filename="../qucs/components/rlcg.cpp" line="-4"/>
         <source>F/m</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="-4"/>
@@ -10062,7 +10180,7 @@ Do you make use of loadable components?</source>
     <message>
         <location line="+1"/>
         <source>1/m</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
@@ -10082,7 +10200,7 @@ Do you make use of loadable components?</source>
     <message>
         <location line="+1"/>
         <source>V*m</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
@@ -10097,11 +10215,11 @@ Do you make use of loadable components?</source>
     <message>
         <location line="+1"/>
         <source>sqrt(V)*m</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+21"/>
-        <location filename="components/photodiode.cpp" line="-13"/>
+        <location filename="../qucs/components/photodiode.cpp" line="-13"/>
         <source>diode relative area</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10116,35 +10234,35 @@ Do you make use of loadable components?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/amplifier.cpp" line="-14"/>
+        <location filename="../qucs/components/amplifier.cpp" line="-14"/>
         <source>noise figure</source>
-        <translation>ノイズフィギュア</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/rectline.cpp" line="-6"/>
+        <location filename="../qucs/components/rectline.cpp" line="-6"/>
         <source>widest side</source>
-        <translation type="unfinished">最大幅側</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
         <source>shortest side</source>
-        <translation type="unfinished">最小幅側</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="-30"/>
         <location line="+59"/>
         <source>Rectangular Waveguide</source>
-        <translation>角ウェーブガイド</translation>
+        <translation type="unfinished">Guiaondas rectángular</translation>
     </message>
     <message>
-        <location filename="components/hicumL0V1p2.cpp" line="-68"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="-68"/>
         <source>HICUM Level 0 v1.2 verilog device</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+15"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="-53"/>
-        <location filename="components/hicumL0V1p3.cpp" line="-55"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="-53"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="-55"/>
         <source>reverse Early voltage (normalization volt.)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10159,12 +10277,12 @@ Do you make use of loadable components?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/EKV26MOS.cpp" line="-33"/>
+        <location filename="../qucs/components/EKV26MOS.cpp" line="-33"/>
         <source>charge partition parameter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/hicumL2V2p23.cpp" line="-288"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="-288"/>
         <source>HICUM Level 2 v2.23 verilog device</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10174,19 +10292,19 @@ Do you make use of loadable components?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/photodiode.cpp" line="-25"/>
+        <location filename="../qucs/components/photodiode.cpp" line="-25"/>
         <source>Photodiode verilog device</source>
-        <translation>フォトダイオードverilogデバイス</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
         <source>photodiode emission coefficient</source>
-        <translation type="unfinished">フォトダイオード放射係数</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
         <source>series lead resistance</source>
-        <translation type="unfinished">直列リード抵抗</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
@@ -10196,564 +10314,564 @@ Do you make use of loadable components?</source>
     <message>
         <location line="+32"/>
         <source>responsivity</source>
-        <translation type="unfinished">感度</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+1"/>
-        <location filename="components/phototransistor.cpp" line="+33"/>
+        <location filename="../qucs/components/phototransistor.cpp" line="+33"/>
         <source>A/W</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
         <source>shunt resistance</source>
-        <translation>シャント抵抗</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
         <source>quantum efficiency</source>
-        <translation>量子効率</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
         <source>light wavelength</source>
-        <translation>光波長</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+1"/>
         <source>nm</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
         <source>responsivity calculator selector</source>
-        <translation type="unfinished">感度計算機セレクタ</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+27"/>
         <source>Photodiode</source>
-        <translation>フォトダイオード</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/rectline.cpp" line="-15"/>
+        <location filename="../qucs/components/rectline.cpp" line="-15"/>
         <source>material parameter for temperature model</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/EKV26MOS.cpp" line="-142"/>
+        <location filename="../qucs/components/EKV26MOS.cpp" line="-142"/>
         <source>EPFL-EKV MOS 2.6 verilog device</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/logical_buf.cpp" line="-4"/>
+        <location filename="../qucs/components/logical_buf.cpp" line="-4"/>
         <source>logical buffer</source>
-        <translation>論理バッファ</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+104"/>
         <source>Buffer</source>
-        <translation>バッファ</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/hicumL0V1p2.cpp" line="-254"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+6"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+8"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="-254"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+6"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+8"/>
         <source>flag for turning on base related critical current</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+10"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+10"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+10"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+10"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+10"/>
         <source>Smoothing factor for the d.c. injection width</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+27"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+27"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+27"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+27"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+27"/>
         <source>BE charge built-in voltage for d.c. transfer current</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
         <source>charge BE exponent factor for d.c. transfer current</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+162"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+162"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+162"/>
         <source>TC of iqf</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+8"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+175"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+8"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+175"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+8"/>
         <source>Exponent factor for temperature dependent thermal resistance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/hic0_full.cpp" line="+9"/>
-        <location filename="components/hicumL0V1p2.cpp" line="-154"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="-159"/>
-        <location filename="components/hicumL0V1p3.cpp" line="-154"/>
+        <location filename="../qucs/components/hic0_full.cpp" line="+9"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="-154"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="-159"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="-154"/>
         <source>Exponent factor for emitter transit time</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+5"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+5"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+5"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+5"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+5"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+5"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+5"/>
         <source>Smoothing factor for current dependence</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/MESFET.cpp" line="-57"/>
+        <location filename="../qucs/components/MESFET.cpp" line="-57"/>
         <source>Vto temperature coefficient</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/hicumL0V1p2.cpp" line="-19"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="-19"/>
-        <location filename="components/hicumL0V1p3.cpp" line="-19"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="-19"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="-19"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="-19"/>
         <source>BE capacitance ratio (maximum to zero-bias value) for d.c. transfer current</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/hic0_full.cpp" line="-53"/>
-        <location filename="components/hicumL0V1p2.cpp" line="-45"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="-45"/>
-        <location filename="components/hicumL0V1p3.cpp" line="-45"/>
+        <location filename="../qucs/components/hic0_full.cpp" line="-53"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="-45"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="-45"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="-45"/>
         <source>forward d.c. high-injection roll-off current</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/andor4x2.cpp" line="-1"/>
-        <location filename="components/andor4x3.cpp" line="-1"/>
-        <location filename="components/andor4x4.cpp" line="-1"/>
-        <location filename="components/binarytogrey4bit.cpp" line="-1"/>
-        <location filename="components/comp_1bit.cpp" line="-1"/>
-        <location filename="components/comp_2bit.cpp" line="-1"/>
-        <location filename="components/comp_4bit.cpp" line="-1"/>
-        <location filename="components/dmux2to4.cpp" line="-1"/>
-        <location filename="components/dmux3to8.cpp" line="-1"/>
-        <location filename="components/dmux4to16.cpp" line="-1"/>
-        <location filename="components/fa1b.cpp" line="-1"/>
-        <location filename="components/fa2b.cpp" line="-1"/>
-        <location filename="components/greytobinary4bit.cpp" line="-1"/>
-        <location filename="components/ha1b.cpp" line="-1"/>
-        <location filename="components/hpribin4bit.cpp" line="-1"/>
-        <location filename="components/mux2to1.cpp" line="-1"/>
-        <location filename="components/mux4to1.cpp" line="-1"/>
-        <location filename="components/mux8to1.cpp" line="-1"/>
+        <location filename="../qucs/components/andor4x2.cpp" line="-1"/>
+        <location filename="../qucs/components/andor4x3.cpp" line="-1"/>
+        <location filename="../qucs/components/andor4x4.cpp" line="-1"/>
+        <location filename="../qucs/components/binarytogrey4bit.cpp" line="-1"/>
+        <location filename="../qucs/components/comp_1bit.cpp" line="-1"/>
+        <location filename="../qucs/components/comp_2bit.cpp" line="-1"/>
+        <location filename="../qucs/components/comp_4bit.cpp" line="-1"/>
+        <location filename="../qucs/components/dmux2to4.cpp" line="-1"/>
+        <location filename="../qucs/components/dmux3to8.cpp" line="-1"/>
+        <location filename="../qucs/components/dmux4to16.cpp" line="-1"/>
+        <location filename="../qucs/components/fa1b.cpp" line="-1"/>
+        <location filename="../qucs/components/fa2b.cpp" line="-1"/>
+        <location filename="../qucs/components/greytobinary4bit.cpp" line="-1"/>
+        <location filename="../qucs/components/ha1b.cpp" line="-1"/>
+        <location filename="../qucs/components/hpribin4bit.cpp" line="-1"/>
+        <location filename="../qucs/components/mux2to1.cpp" line="-1"/>
+        <location filename="../qucs/components/mux4to1.cpp" line="-1"/>
+        <location filename="../qucs/components/mux8to1.cpp" line="-1"/>
         <source>output delay</source>
-        <translation>出力遅延</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/dff_SR.cpp" line="-1"/>
-        <location filename="components/gatedDlatch.cpp" line="-1"/>
-        <location filename="components/jkff_SR.cpp" line="-1"/>
-        <location filename="components/tff_SR.cpp" line="-1"/>
+        <location filename="../qucs/components/dff_SR.cpp" line="-1"/>
+        <location filename="../qucs/components/gatedDlatch.cpp" line="-1"/>
+        <location filename="../qucs/components/jkff_SR.cpp" line="-1"/>
+        <location filename="../qucs/components/tff_SR.cpp" line="-1"/>
         <source>cross coupled gate delay</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/DLS_1ton.cpp" line="-3"/>
-        <location filename="components/DLS_nto1.cpp" line="-1"/>
+        <location filename="../qucs/components/DLS_1ton.cpp" line="-3"/>
+        <location filename="../qucs/components/DLS_nto1.cpp" line="-1"/>
         <source>voltage level</source>
-        <translation>電圧レベル</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/DLS_nto1.cpp" line="+3"/>
+        <location filename="../qucs/components/DLS_nto1.cpp" line="+3"/>
         <source>time delay</source>
-        <translation>遅延時間</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/logic_0.cpp" line="-1"/>
+        <location filename="../qucs/components/logic_0.cpp" line="-1"/>
         <source>logic 0 voltage level</source>
-        <translation>ロジック0電圧レベル</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/logic_1.cpp" line="-1"/>
+        <location filename="../qucs/components/logic_1.cpp" line="-1"/>
         <source>logic 1 voltage level</source>
-        <translation>ロジック1電圧レベル</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/pad2bit.cpp" line="+22"/>
-        <location filename="components/pad3bit.cpp" line="+22"/>
-        <location filename="components/pad4bit.cpp" line="+22"/>
+        <location filename="../qucs/components/pad2bit.cpp" line="+21"/>
+        <location filename="../qucs/components/pad3bit.cpp" line="+21"/>
+        <location filename="../qucs/components/pad4bit.cpp" line="+21"/>
         <source>pad output value</source>
-        <translation>パッド出力値</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/andor4x2.cpp" line="-5"/>
+        <location filename="../qucs/components/andor4x2.cpp" line="-5"/>
         <source>4x2 andor verilog device</source>
-        <translation>4x2 andor verilogデバイス</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+25"/>
         <source>4x2 AndOr</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/andor4x3.cpp" line="-5"/>
+        <location filename="../qucs/components/andor4x3.cpp" line="-5"/>
         <source>4x3 andor verilog device</source>
-        <translation>4x3 andor verilogデバイス</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+25"/>
         <source>4x3 AndOr</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/andor4x4.cpp" line="-5"/>
+        <location filename="../qucs/components/andor4x4.cpp" line="-5"/>
         <source>4x4 andor verilog device</source>
-        <translation>4x4 andor verilogデバイス</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+25"/>
         <source>4x4 AndOr</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/binarytogrey4bit.cpp" line="-5"/>
+        <location filename="../qucs/components/binarytogrey4bit.cpp" line="-5"/>
         <source>4bit binary to grey converter verilog device</source>
-        <translation>4bit binary to grey 変換 verilogデバイス</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+25"/>
         <source>4Bit Bin2Grey</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/comp_1bit.cpp" line="-5"/>
+        <location filename="../qucs/components/comp_1bit.cpp" line="-5"/>
         <source>1bit comparator verilog device</source>
-        <translation>1bit コンパレータ verilogデバイス</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+25"/>
         <source>1Bit Comparator</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/comp_2bit.cpp" line="-5"/>
+        <location filename="../qucs/components/comp_2bit.cpp" line="-5"/>
         <source>2bit comparator verilog device</source>
-        <translation>2bit コンパレータ verilogデバイス</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+25"/>
         <source>2Bit Comparator</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/comp_4bit.cpp" line="-5"/>
+        <location filename="../qucs/components/comp_4bit.cpp" line="-5"/>
         <source>4bit comparator verilog device</source>
-        <translation>4bit コンパレータ verilogデバイス</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+25"/>
         <source>4Bit Comparator</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/dff_SR.cpp" line="-7"/>
+        <location filename="../qucs/components/dff_SR.cpp" line="-7"/>
         <source>D flip flop with set and reset verilog device</source>
-        <translation>セットリセット有りDフリップフロップ verilogデバイス</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+27"/>
         <source>D-FlipFlop w/ SR</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/DLS_1ton.cpp" line="-5"/>
+        <location filename="../qucs/components/DLS_1ton.cpp" line="-5"/>
         <source>data voltage level shifter (digital to analogue) verilog device</source>
-        <translation>データ電圧レベルシフタ（デジタルからアナログ）verilogデバイス</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+25"/>
         <source>D2A Level Shifter</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/DLS_nto1.cpp" line="-6"/>
+        <location filename="../qucs/components/DLS_nto1.cpp" line="-6"/>
         <source>data voltage level shifter (analogue to digital) verilog device</source>
-        <translation>データ電圧レベルシフタ（アナログからデジタル）verilogデバイス</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+26"/>
         <source>A2D Level Shifter</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/dmux2to4.cpp" line="-5"/>
+        <location filename="../qucs/components/dmux2to4.cpp" line="-5"/>
         <source>2to4 demultiplexer verilog device</source>
-        <translation>2to4 デマルチプレクサ verilogデバイス</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+25"/>
         <source>2to4 Demux</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/dmux3to8.cpp" line="-5"/>
+        <location filename="../qucs/components/dmux3to8.cpp" line="-5"/>
         <source>3to8 demultiplexer verilog device</source>
-        <translation>3to8 デマルチプレクサ verilogデバイス</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+25"/>
         <source>3to8 Demux</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/dmux4to16.cpp" line="-5"/>
+        <location filename="../qucs/components/dmux4to16.cpp" line="-5"/>
         <source>4to16 demultiplexer verilog device</source>
-        <translation>4to16 デマルチプレクサ verilogデバイス</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+25"/>
         <source>4to16 Demux</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/fa1b.cpp" line="-5"/>
+        <location filename="../qucs/components/fa1b.cpp" line="-5"/>
         <source>1bit full adder verilog device</source>
-        <translation>1bit フルアダー verilogデバイス</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+25"/>
         <source>1Bit FullAdder</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/fa2b.cpp" line="-5"/>
+        <location filename="../qucs/components/fa2b.cpp" line="-5"/>
         <source>2bit full adder verilog device</source>
-        <translation>2bit フルアダー verilogデバイス</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+25"/>
         <source>2Bit FullAdder</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/gatedDlatch.cpp" line="-7"/>
+        <location filename="../qucs/components/gatedDlatch.cpp" line="-7"/>
         <source>gated D latch verilog device</source>
-        <translation>ゲーテッドDラッチ verilogデバイス</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+27"/>
         <source>Gated D-Latch</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/greytobinary4bit.cpp" line="-5"/>
+        <location filename="../qucs/components/greytobinary4bit.cpp" line="-5"/>
         <source>4bit grey to binary converter verilog device</source>
-        <translation>4bit grey to binary変換 verilogデバイス</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+25"/>
         <source>4Bit Grey2Bin</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/ha1b.cpp" line="-5"/>
+        <location filename="../qucs/components/ha1b.cpp" line="-5"/>
         <source>1bit half adder verilog device</source>
-        <translation>1bit ハーフアダー verilogデバイス</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+25"/>
         <source>1Bit HalfAdder</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/hpribin4bit.cpp" line="-5"/>
+        <location filename="../qucs/components/hpribin4bit.cpp" line="-5"/>
         <source>4bit highest priority encoder (binary form) verilog device</source>
-        <translation>4bit highest プライオリティエンコーダ (binary form) verilogデバイス</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+25"/>
         <source>4Bit HPRI-Bin</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/jkff_SR.cpp" line="-7"/>
+        <location filename="../qucs/components/jkff_SR.cpp" line="-7"/>
         <source>jk flip flop with set and reset verilog device</source>
-        <translation>セットリセット有りJKフリップフロップ verilogデバイス</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+27"/>
         <source>JK-FlipFlop w/ SR</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/logic_0.cpp" line="-3"/>
+        <location filename="../qucs/components/logic_0.cpp" line="-3"/>
         <source>logic 0 verilog device</source>
-        <translation>ロジック0 verilogデバイス</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+23"/>
         <source>Logic 0</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/logic_1.cpp" line="-3"/>
+        <location filename="../qucs/components/logic_1.cpp" line="-3"/>
         <source>logic 1 verilog device</source>
-        <translation>ロジック1 verilogデバイス</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+23"/>
         <source>Logic 1</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/mux2to1.cpp" line="-5"/>
+        <location filename="../qucs/components/mux2to1.cpp" line="-5"/>
         <source>2to1 multiplexer verilog device</source>
-        <translation>2to1 マルチプレクサ verilogデバイス</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+25"/>
         <source>2to1 Mux</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/mux4to1.cpp" line="-5"/>
+        <location filename="../qucs/components/mux4to1.cpp" line="-5"/>
         <source>4to1 multiplexer verilog device</source>
-        <translation>4to1 マルチプレクサ verilogデバイス</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+25"/>
         <source>4to1 Mux</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/mux8to1.cpp" line="-5"/>
+        <location filename="../qucs/components/mux8to1.cpp" line="-5"/>
         <source>8to1 multiplexer verilog device</source>
-        <translation>8to1 マルチプレクサ verilogデバイス</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+25"/>
         <source>8to1 Mux</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/pad2bit.cpp" line="-3"/>
+        <location filename="../qucs/components/pad2bit.cpp" line="-3"/>
         <source>2bit pattern generator verilog device</source>
-        <translation>2bit パターンジェネレータ verilogデバイス</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+22"/>
         <source>2Bit Pattern</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/pad3bit.cpp" line="-3"/>
+        <location filename="../qucs/components/pad3bit.cpp" line="-3"/>
         <source>3bit pattern generator verilog device</source>
-        <translation>3bit パターンジェネレータ verilogデバイス</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+22"/>
         <source>3Bit Pattern</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/pad4bit.cpp" line="-3"/>
+        <location filename="../qucs/components/pad4bit.cpp" line="-3"/>
         <source>4bit pattern generator verilog device</source>
-        <translation>4bit パターンジェネレータ verilogデバイス</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+22"/>
         <source>4Bit Pattern</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/tff_SR.cpp" line="-7"/>
+        <location filename="../qucs/components/tff_SR.cpp" line="-7"/>
         <source>T flip flop with set and reset verilog device</source>
-        <translation>セットリセット有りTフリップフロップ verilogデバイス</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+27"/>
         <source>T-FlipFlop w/ SR</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/andor4x2.cpp" line="-22"/>
-        <location filename="components/andor4x3.cpp" line="-22"/>
-        <location filename="components/andor4x4.cpp" line="-22"/>
-        <location filename="components/comp_1bit.cpp" line="-22"/>
-        <location filename="components/comp_2bit.cpp" line="-22"/>
-        <location filename="components/comp_4bit.cpp" line="-22"/>
-        <location filename="components/dmux2to4.cpp" line="-22"/>
-        <location filename="components/dmux3to8.cpp" line="-22"/>
-        <location filename="components/dmux4to16.cpp" line="-22"/>
-        <location filename="components/fa1b.cpp" line="-22"/>
-        <location filename="components/fa2b.cpp" line="-22"/>
-        <location filename="components/ha1b.cpp" line="-22"/>
-        <location filename="components/mux2to1.cpp" line="-22"/>
-        <location filename="components/mux4to1.cpp" line="-22"/>
-        <location filename="components/mux8to1.cpp" line="-22"/>
+        <location filename="../qucs/components/andor4x2.cpp" line="-22"/>
+        <location filename="../qucs/components/andor4x3.cpp" line="-22"/>
+        <location filename="../qucs/components/andor4x4.cpp" line="-22"/>
+        <location filename="../qucs/components/comp_1bit.cpp" line="-22"/>
+        <location filename="../qucs/components/comp_2bit.cpp" line="-22"/>
+        <location filename="../qucs/components/comp_4bit.cpp" line="-22"/>
+        <location filename="../qucs/components/dmux2to4.cpp" line="-22"/>
+        <location filename="../qucs/components/dmux3to8.cpp" line="-22"/>
+        <location filename="../qucs/components/dmux4to16.cpp" line="-22"/>
+        <location filename="../qucs/components/fa1b.cpp" line="-22"/>
+        <location filename="../qucs/components/fa2b.cpp" line="-22"/>
+        <location filename="../qucs/components/ha1b.cpp" line="-22"/>
+        <location filename="../qucs/components/mux2to1.cpp" line="-22"/>
+        <location filename="../qucs/components/mux4to1.cpp" line="-22"/>
+        <location filename="../qucs/components/mux8to1.cpp" line="-22"/>
         <source>transfer function high scaling factor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/binarytogrey4bit.cpp" line="-22"/>
-        <location filename="components/component.cpp" line="-255"/>
-        <location filename="components/greytobinary4bit.cpp" line="-22"/>
-        <location filename="components/hpribin4bit.cpp" line="-22"/>
-        <location filename="components/logical_buf.cpp" line="-96"/>
-        <location filename="components/logical_inv.cpp" line="-113"/>
+        <location filename="../qucs/components/binarytogrey4bit.cpp" line="-22"/>
+        <location filename="../qucs/components/component.cpp" line="-265"/>
+        <location filename="../qucs/components/greytobinary4bit.cpp" line="-22"/>
+        <location filename="../qucs/components/hpribin4bit.cpp" line="-22"/>
+        <location filename="../qucs/components/logical_buf.cpp" line="-96"/>
+        <location filename="../qucs/components/logical_inv.cpp" line="-113"/>
         <source>transfer function scaling factor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/dff_SR.cpp" line="-24"/>
-        <location filename="components/gatedDlatch.cpp" line="-24"/>
-        <location filename="components/jkff_SR.cpp" line="-24"/>
-        <location filename="components/tff_SR.cpp" line="-24"/>
+        <location filename="../qucs/components/dff_SR.cpp" line="-24"/>
+        <location filename="../qucs/components/gatedDlatch.cpp" line="-24"/>
+        <location filename="../qucs/components/jkff_SR.cpp" line="-24"/>
+        <location filename="../qucs/components/tff_SR.cpp" line="-24"/>
         <source>cross coupled gate transfer function high scaling factor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/gatedDlatch.cpp" line="+2"/>
-        <location filename="components/jkff_SR.cpp" line="+2"/>
-        <location filename="components/tff_SR.cpp" line="+2"/>
+        <location filename="../qucs/components/gatedDlatch.cpp" line="+2"/>
+        <location filename="../qucs/components/jkff_SR.cpp" line="+2"/>
+        <location filename="../qucs/components/tff_SR.cpp" line="+2"/>
         <source>cross coupled gate transfer function low scaling factor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/msrstub.cpp" line="-26"/>
+        <location filename="../qucs/components/msrstub.cpp" line="-26"/>
         <source>microstrip radial stub</source>
-        <translation>マイクロストリップ ラジアルスタブ</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+22"/>
         <source>inner radius</source>
-        <translation>内部半径</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
         <source>outer radius</source>
-        <translation>外部半径</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
         <source>stub angle</source>
-        <translation>スタブ角度</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+14"/>
         <source>Microstrip Radial Stub</source>
-        <translation>マイクロストリップ ラジアルスタブ</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/phototransistor.cpp" line="-64"/>
+        <location filename="../qucs/components/phototransistor.cpp" line="-64"/>
         <source>Phototransistor verilog device</source>
-        <translation>フォトトランジスタ verilogデバイス</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+7"/>
@@ -10763,17 +10881,17 @@ Do you make use of loadable components?</source>
     <message>
         <location line="+41"/>
         <source>collector series resistance</source>
-        <translation>コレクタ直列抵抗</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
         <source>emitter series resistance</source>
-        <translation>エミッタ直列抵抗</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
         <source>base series resistance</source>
-        <translation>ベース直列抵抗</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+9"/>
@@ -10792,71 +10910,71 @@ Do you make use of loadable components?</source>
     <message>
         <location line="+21"/>
         <source>Phototransistor</source>
-        <translation>フォトトランジスタ</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/rlcg.cpp" line="-36"/>
+        <location filename="../qucs/components/rlcg.cpp" line="-36"/>
         <source>RLCG transmission line</source>
-        <translation>RLCGトランスミッションライン</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+16"/>
         <source>RLCG</source>
-        <translation>RLCG</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+16"/>
         <source>resistive load</source>
-        <translation type="unfinished">抵抗性負荷</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Ohm/m</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
         <source>inductive load</source>
-        <translation type="unfinished">誘導性負荷</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+0"/>
         <source>H/m</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
         <source>capacitive load</source>
-        <translation type="unfinished">容量性負荷</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
         <source>conductive load</source>
-        <translation type="unfinished">導体負荷</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+0"/>
         <source>S/m</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+18"/>
         <source>RLCG Transmission Line</source>
-        <translation>RLCGトランスミッションライン</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/vhdlfile.cpp" line="-46"/>
+        <location filename="../qucs/components/vhdlfile.cpp" line="-46"/>
         <location line="+7"/>
         <source>generic variable</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="schematic_file.cpp" line="+411"/>
+        <location filename="../qucs/schematic_file.cpp" line="+411"/>
         <source>WARNING: Equations in &quot;%1&quot; are &apos;time&apos; typed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/nigbt.cpp" line="-10"/>
+        <location filename="../qucs/components/nigbt.cpp" line="-10"/>
         <source>NIGBT verilog device</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10974,15 +11092,14 @@ Do you make use of loadable components?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="schematic_file.cpp" line="-1438"/>
+        <location filename="../qucs/schematic_file.cpp" line="-1437"/>
         <source>Cannot save C++ file &quot;%1&quot;!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="module.cpp" line="+117"/>
-        <location filename="qucs.cpp" line="+655"/>
-        <location line="+106"/>
-        <location filename="qucs_actions.cpp" line="+153"/>
+        <location filename="../qucs/module.cpp" line="+116"/>
+        <location filename="../qucs/qucs.cpp" line="+625"/>
+        <location line="+101"/>
         <source>verilog-a user devices</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10990,69 +11107,65 @@ Do you make use of loadable components?</source>
         <location line="+65"/>
         <location line="+2"/>
         <source>lumped components</source>
-        <translation type="unfinished">集中定数部品</translation>
+        <translation type="unfinished">componentes sueltos</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>sources</source>
-        <translation type="unfinished">ソース源部品</translation>
+        <translation type="unfinished">fuentes</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>probes</source>
-        <translation type="unfinished">プローブ</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
         <source>transmission lines</source>
-        <translation type="unfinished">伝送線路部品</translation>
+        <translation type="unfinished">línees de transmisión</translation>
     </message>
     <message>
         <location line="+2"/>
         <location line="+2"/>
         <location line="+2"/>
         <source>nonlinear components</source>
-        <translation type="unfinished">非線形部品</translation>
+        <translation type="unfinished">componentes no líneales</translation>
     </message>
     <message>
         <location line="+2"/>
         <location line="+2"/>
         <source>verilog-a devices</source>
-        <translation type="unfinished">Verilog-a　デバイス</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
         <source>digital components</source>
-        <translation type="unfinished">デジタル部品</translation>
+        <translation type="unfinished">componentes digitales</translation>
     </message>
     <message>
         <location line="+2"/>
         <location line="+2"/>
         <source>file components</source>
-        <translation type="unfinished">ファイル部品</translation>
+        <translation type="unfinished">componentes del fitxer</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>simulations</source>
-        <translation type="unfinished">シミュレーション部品</translation>
+        <translation type="unfinished">simulaciones</translation>
     </message>
     <message>
         <location line="+2"/>
         <location line="+2"/>
-        <location filename="qucs.cpp" line="+1708"/>
+        <location filename="../qucs/qucs.cpp" line="+1710"/>
         <source>diagrams</source>
-        <translation type="unfinished">図表部品</translation>
+        <translation type="unfinished">diagramas</translation>
     </message>
     <message>
         <location line="+2"/>
         <location line="+2"/>
-        <location filename="qucs.cpp" line="-1858"/>
-        <location line="+30"/>
-        <location line="+3"/>
-        <location line="+107"/>
-        <location line="+1"/>
+        <location filename="../qucs/qucs.cpp" line="-1839"/>
         <source>paintings</source>
-        <translation type="unfinished">図形描画部品</translation>
+        <translation type="unfinished">pinturas</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -11060,7 +11173,7 @@ Do you make use of loadable components?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/hicumL2V2p24.cpp" line="-288"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="-288"/>
         <source>HICUM Level 2 v2.24 verilog device</source>
         <translation type="unfinished"></translation>
     </message>
@@ -11070,7 +11183,7 @@ Do you make use of loadable components?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/hicumL0V1p2g.cpp" line="+11"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+11"/>
         <source>high-injection roll-off current</source>
         <translation type="unfinished"></translation>
     </message>
@@ -11130,7 +11243,7 @@ Do you make use of loadable components?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/hybrid.cpp" line="-37"/>
+        <location filename="../qucs/components/hybrid.cpp" line="-37"/>
         <source>hybrid (unsymmetrical 3dB coupler)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -11140,7 +11253,7 @@ Do you make use of loadable components?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/ctline.cpp" line="-40"/>
+        <location filename="../qucs/components/ctline.cpp" line="-40"/>
         <source>coupled transmission lines</source>
         <translation type="unfinished"></translation>
     </message>
@@ -11180,7 +11293,7 @@ Do you make use of loadable components?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/tunneldiode.cpp" line="-35"/>
+        <location filename="../qucs/components/tunneldiode.cpp" line="-35"/>
         <source>resonance tunnel diode</source>
         <translation type="unfinished"></translation>
     </message>
@@ -11250,7 +11363,7 @@ Do you make use of loadable components?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/hicumL0V1p3.cpp" line="-22"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="-22"/>
         <source>HICUM Level 0 v1.3 verilog device</source>
         <translation type="unfinished"></translation>
     </message>
@@ -11305,7 +11418,7 @@ Do you make use of loadable components?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/mslange.cpp" line="-36"/>
+        <location filename="../qucs/components/mslange.cpp" line="-36"/>
         <source>microstrip lange coupler</source>
         <translation type="unfinished"></translation>
     </message>
@@ -11315,7 +11428,7 @@ Do you make use of loadable components?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/bsim3v34nMOS.cpp" line="-817"/>
+        <location filename="../qucs/components/bsim3v34nMOS.cpp" line="-817"/>
         <source>bsim3v34nMOS verilog device</source>
         <translation type="unfinished"></translation>
     </message>
@@ -11727,7 +11840,7 @@ Do you make use of loadable components?</source>
         <location line="+2"/>
         <location line="+2"/>
         <location line="+2"/>
-        <location filename="components/bsim3v34pMOS.cpp" line="-814"/>
+        <location filename="../qucs/components/bsim3v34pMOS.cpp" line="-814"/>
         <location line="+2"/>
         <location line="+2"/>
         <location line="+2"/>
@@ -12134,7 +12247,7 @@ Do you make use of loadable components?</source>
         <location line="+2"/>
         <location line="+2"/>
         <location line="+2"/>
-        <location filename="components/bsim4v30nMOS.cpp" line="+19"/>
+        <location filename="../qucs/components/bsim4v30nMOS.cpp" line="+19"/>
         <location line="+2"/>
         <location line="+2"/>
         <location line="+2"/>
@@ -12412,7 +12525,7 @@ Do you make use of loadable components?</source>
         <location line="+2"/>
         <location line="+2"/>
         <location line="+2"/>
-        <location filename="components/bsim4v30pMOS.cpp" line="+18"/>
+        <location filename="../qucs/components/bsim4v30pMOS.cpp" line="+18"/>
         <location line="+2"/>
         <location line="+2"/>
         <location line="+2"/>
@@ -12699,7 +12812,7 @@ Do you make use of loadable components?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/bsim3v34pMOS.cpp" line="-815"/>
+        <location filename="../qucs/components/bsim3v34pMOS.cpp" line="-815"/>
         <source>bsim3v34pMOS verilog device</source>
         <translation type="unfinished"></translation>
     </message>
@@ -12709,7 +12822,7 @@ Do you make use of loadable components?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/bsim4v30nMOS.cpp" line="-558"/>
+        <location filename="../qucs/components/bsim4v30nMOS.cpp" line="-558"/>
         <source>bsim4v30nMOS verilog device</source>
         <translation type="unfinished"></translation>
     </message>
@@ -12719,7 +12832,7 @@ Do you make use of loadable components?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/bsim4v30pMOS.cpp" line="-557"/>
+        <location filename="../qucs/components/bsim4v30pMOS.cpp" line="-557"/>
         <source>bsim4v30pMOS verilog device</source>
         <translation type="unfinished"></translation>
     </message>
@@ -12729,7 +12842,7 @@ Do you make use of loadable components?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/hicumL2V2p31n.cpp" line="-322"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="-322"/>
         <source>hicumL2V2p31n verilog device</source>
         <translation type="unfinished"></translation>
     </message>
@@ -12819,8 +12932,16 @@ Do you make use of loadable components?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/vacomponent.cpp" line="+1"/>
+        <location filename="../qucs/components/vacomponent.cpp" line="+1"/>
         <source>Symbol file not found: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qucs-filter/stepz_filter.cpp" line="+1"/>
+        <source>High-impedance is %1 ohms, low-impedance is %2 ohms.
+To get acceptable results it is recommended to use
+a substrate with lower permittivity and larger height.
+</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -12828,182 +12949,182 @@ Do you make use of loadable components?</source>
     <name>QucsActions</name>
     <message>
         <source>Info</source>
-        <translation type="obsolete">情報</translation>
+        <translation type="obsolete">Información</translation>
     </message>
     <message>
         <source>At least two elements must be selected !</source>
-        <translation type="obsolete">少なくとも二つ以上の要素を選択してください!</translation>
+        <translation type="obsolete">¡Al menys deben seleccionarse dos elementos!</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="obsolete">エラー</translation>
+        <translation type="obsolete">Error</translation>
     </message>
     <message>
         <source>Cannot start text editor!</source>
-        <translation type="obsolete">テキストエディタを起動できません!</translation>
+        <translation type="obsolete">¡No puedo arrancar el editor de texts!</translation>
     </message>
     <message>
         <source>Cannot start filter synthesis program!</source>
-        <translation type="obsolete">フィルタ作成プログラムを起動できません!</translation>
+        <translation type="obsolete">No puedo arrancar el programa de síntexis de filtros!</translation>
     </message>
     <message>
         <source>Cannot start line calculation program!</source>
-        <translation type="obsolete">伝送線路計算プログラムを起動できません!</translation>
+        <translation type="obsolete">No puedo arrancar el programa de cálculo de línees!</translation>
     </message>
     <message>
         <source>Cannot start qucshelp!</source>
-        <translation type="obsolete">Qucsヘルプを開けません!</translation>
+        <translation type="obsolete">¡No puedo arrancar la ayuda!</translation>
     </message>
     <message>
         <source>Cannot start library program!</source>
-        <translation type="obsolete">ライブラリプログラムを起動できません!</translation>
+        <translation type="obsolete">No puedo arrancar el programa de librería!</translation>
     </message>
 </context>
 <context>
     <name>QucsApp</name>
     <message>
-        <location filename="qucs.cpp" line="-650"/>
+        <location filename="../qucs/qucs.cpp" line="-501"/>
         <source>Schematic</source>
-        <translation>回路図</translation>
+        <translation>Esquema</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Data Display</source>
-        <translation>データ表示</translation>
+        <translation>Vista de dades</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Qucs Documents</source>
-        <translation>Qucs ドキュメント</translation>
+        <translation>Documentos Qucs</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+1554"/>
-        <location filename="qucs_actions.cpp" line="-172"/>
+        <location line="+1525"/>
+        <location filename="../qucs/qucs_actions.cpp" line="-173"/>
         <source>Any File</source>
-        <translation>いずれかのファイル</translation>
+        <translation>Qualsevol Fitxer</translation>
     </message>
     <message>
-        <location line="-1394"/>
+        <location line="-1369"/>
         <source>New</source>
-        <translation>新規</translation>
+        <translation>Nou</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location line="+525"/>
+        <location line="+500"/>
         <source>Open</source>
-        <translation>開く</translation>
+        <translation>Abrir</translation>
     </message>
     <message>
-        <location line="-523"/>
-        <location line="+535"/>
+        <location line="-498"/>
+        <location line="+510"/>
         <source>Delete</source>
-        <translation>削除</translation>
+        <translation>Borrar</translation>
     </message>
     <message>
-        <location line="-519"/>
+        <location line="-494"/>
         <source>Projects</source>
-        <translation>プロジェクト</translation>
+        <translation>Proyectos</translation>
     </message>
     <message>
         <source>content of the project directory</source>
-        <translation type="obsolete">プロジェクトディレクトリの内容</translation>
+        <translation type="obsolete">contenido del directorio de proyecto</translation>
     </message>
     <message>
         <location line="+10"/>
-        <location line="+1087"/>
+        <location line="+1062"/>
         <source>Content of</source>
-        <translation>内容</translation>
+        <translation>Contenido de</translation>
     </message>
     <message>
-        <location line="-1087"/>
-        <location line="+1022"/>
+        <location line="-1062"/>
+        <location line="+997"/>
         <location line="+65"/>
         <source>Note</source>
-        <translation>ノート</translation>
+        <translation>Nota</translation>
     </message>
     <message>
-        <location line="-1186"/>
+        <location line="-1159"/>
         <source>Datasets</source>
-        <translation>データセット</translation>
+        <translation>Conjunts de dades</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Data Displays</source>
-        <translation>データ表示</translation>
+        <translation>Vistas de dades</translation>
     </message>
     <message>
         <location line="+10"/>
-        <location line="+2373"/>
+        <location line="+2348"/>
         <source>Schematics</source>
-        <translation>回路図</translation>
+        <translation>Esquemas</translation>
     </message>
     <message>
-        <location line="-2276"/>
+        <location line="-2253"/>
         <source>Content</source>
-        <translation>内容</translation>
+        <translation>Contenido</translation>
     </message>
     <message>
         <source>content of the open project</source>
-        <translation type="obsolete">プロジェクトの内容</translation>
+        <translation type="obsolete">contenido del proyecto abierto</translation>
     </message>
     <message>
         <location line="+24"/>
         <source>Components</source>
-        <translation>部品</translation>
+        <translation>Componentes</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>components and diagrams</source>
-        <translation>部品と図表</translation>
+        <translation>componentes y diagramas</translation>
     </message>
     <message>
         <source>lumped components</source>
-        <translation type="obsolete">集中定数部品</translation>
+        <translation type="obsolete">componentes sueltos</translation>
     </message>
     <message>
         <source>sources</source>
-        <translation type="obsolete">ソース源部品</translation>
+        <translation type="obsolete">fuentes</translation>
     </message>
     <message>
         <source>transmission lines</source>
-        <translation type="obsolete">伝送線路部品</translation>
+        <translation type="obsolete">línees de transmisión</translation>
     </message>
     <message>
         <source>nonlinear components</source>
-        <translation type="obsolete">非線形部品</translation>
+        <translation type="obsolete">componentes no líneales</translation>
     </message>
     <message>
         <source>file data</source>
-        <translation type="obsolete">ファイルデータ部品</translation>
+        <translation type="obsolete">fitxer de dades</translation>
     </message>
     <message>
         <source>simulations</source>
-        <translation type="obsolete">シミュレーション部品</translation>
+        <translation type="obsolete">simulaciones</translation>
     </message>
     <message>
         <source>diagrams</source>
-        <translation type="obsolete">図表部品</translation>
+        <translation type="obsolete">diagramas</translation>
     </message>
     <message>
         <source>paintings</source>
-        <translation type="obsolete">図形描画部品</translation>
+        <translation type="obsolete">pinturas</translation>
     </message>
     <message>
-        <location line="+470"/>
+        <location line="+445"/>
         <source>Rename</source>
-        <translation>名前変更</translation>
+        <translation>Renombrar</translation>
     </message>
     <message>
         <source>Delete Group</source>
-        <translation type="obsolete">グループ削除</translation>
+        <translation type="obsolete">Eliminar grupo</translation>
     </message>
     <message>
-        <location line="-365"/>
+        <location line="-340"/>
         <location line="+3"/>
         <location line="+62"/>
         <location line="+3"/>
-        <location line="+417"/>
+        <location line="+392"/>
         <location line="+21"/>
         <location line="+22"/>
         <location line="+14"/>
@@ -13011,7 +13132,7 @@ Do you make use of loadable components?</source>
         <location line="+54"/>
         <location line="+31"/>
         <location line="+235"/>
-        <location line="+1139"/>
+        <location line="+1141"/>
         <location line="+28"/>
         <location line="+77"/>
         <location line="+316"/>
@@ -13019,8 +13140,9 @@ Do you make use of loadable components?</source>
         <location line="+7"/>
         <location line="+7"/>
         <location line="+6"/>
-        <location filename="qucs_actions.cpp" line="-681"/>
+        <location filename="../qucs/qucs_actions.cpp" line="-712"/>
         <location line="+55"/>
+        <location line="+31"/>
         <location line="+31"/>
         <location line="+33"/>
         <location line="+40"/>
@@ -13036,33 +13158,33 @@ Do you make use of loadable components?</source>
         <location line="+19"/>
         <location line="+144"/>
         <source>Error</source>
-        <translation>エラー</translation>
+        <translation>Error</translation>
     </message>
     <message>
-        <location line="-1954"/>
+        <location line="-1956"/>
         <source>Cannot rename an open file!</source>
-        <translation>名前変更できません!</translation>
+        <translation>¡No puedo renombrar un fitxer abierto!</translation>
     </message>
     <message>
         <location line="+9"/>
         <source>Rename file</source>
-        <translation>ファイル名変更</translation>
+        <translation>Renombrar fitxer</translation>
     </message>
     <message>
         <location line="-49"/>
         <location line="+49"/>
         <source>Enter new name:</source>
-        <translation>新しい名前入力:</translation>
+        <translation>Escriba un nuevo nombre:</translation>
     </message>
     <message>
         <location line="+12"/>
         <source>Cannot rename file: </source>
-        <translation>ファイル名を変更できません:</translation>
+        <translation>No puedo renombrar el fitxer:</translation>
     </message>
     <message>
         <location line="+15"/>
         <source>Cannot delete an open file!</source>
-        <translation>ファイルを削除できません!</translation>
+        <translation>¡No puedo eliminar un fitxer abierto!</translation>
     </message>
     <message>
         <location line="+5"/>
@@ -13070,69 +13192,72 @@ Do you make use of loadable components?</source>
         <location line="+47"/>
         <location line="+329"/>
         <location line="+246"/>
-        <location line="+630"/>
+        <location line="+632"/>
         <source>Warning</source>
-        <translation>注意</translation>
+        <translation>Aviso</translation>
     </message>
     <message>
-        <location line="-1328"/>
+        <location line="-1330"/>
         <source>This will delete the file permanently! Continue ?</source>
-        <translation>完全にファイルを削除します!  続けますか?</translation>
+        <translation>¡Esto eliminará el fitxer para siempre! ¿Continuo?</translation>
     </message>
     <message>
         <location line="+1"/>
         <location line="+77"/>
         <location line="+623"/>
-        <location line="+454"/>
+        <location line="+456"/>
         <source>No</source>
-        <translation>いいえ</translation>
+        <translation>No</translation>
     </message>
     <message>
-        <location line="-1154"/>
+        <location line="-1156"/>
         <location line="+77"/>
         <location line="+623"/>
-        <location line="+454"/>
+        <location line="+456"/>
         <source>Yes</source>
-        <translation>はい</translation>
+        <translation>Si</translation>
     </message>
     <message>
-        <location line="-1149"/>
+        <location line="-1151"/>
         <source>Cannot delete schematic: </source>
-        <translation>回路図を削除できません:</translation>
+        <translation>No puedo eliminar el esquema:</translation>
     </message>
     <message>
         <source>Cannot delete the open file: </source>
-        <translation type="obsolete">ファイルを削除できません:</translation>
+        <translation type="obsolete">No puedo eliminar el fitxer abierto:</translation>
     </message>
     <message>
         <source>This will delete the files
 </source>
-        <translation type="obsolete">ファイルを完全に削除します</translation>
+        <translation type="obsolete">Esto eliminará els fitxers
+</translation>
     </message>
     <message>
         <source>permanently! Continue ?</source>
-        <translation type="obsolete">続けますか?</translation>
+        <translation type="obsolete">permanentemente! ¿Continuar?</translation>
     </message>
     <message>
         <location line="+118"/>
         <source>Cannot create work directory !</source>
-        <translation>ワークディレクトリを作成できません !</translation>
+        <translation>¡No puedo crear el directorio de trabajo!</translation>
     </message>
     <message>
-        <location line="+712"/>
+        <location line="+714"/>
         <source>Closing Qucs document</source>
-        <translation>Qucsドキュメントを閉じます</translation>
+        <translation>Cerrando el document Qucs</translation>
     </message>
     <message>
         <source>This document contains unsaved changes!
 Do you want to save the changes before closing?</source>
-        <translation type="obsolete">このドキュメントは変更されています!
-閉じる前に保存しますか?</translation>
+        <translation type="obsolete">¡Este document contiene cambios  no guardados!
+¿Desea guardar els cambios antes de salir?
+
+</translation>
     </message>
     <message>
-        <location line="-319"/>
+        <location line="-321"/>
         <source>Creating new schematic...</source>
-        <translation>新しい回路図を作成しています...</translation>
+        <translation>Creando un nuevo esquema...</translation>
     </message>
     <message>
         <location line="+5"/>
@@ -13140,7 +13265,7 @@ Do you want to save the changes before closing?</source>
         <location line="+69"/>
         <location line="+30"/>
         <location line="+5"/>
-        <location line="+127"/>
+        <location line="+129"/>
         <location line="+5"/>
         <location line="+34"/>
         <location line="+49"/>
@@ -13149,90 +13274,92 @@ Do you want to save the changes before closing?</source>
         <location line="+37"/>
         <location line="+45"/>
         <location line="+22"/>
-        <location filename="qucs_actions.cpp" line="-857"/>
-        <location line="+397"/>
-        <location filename="qucs_init.cpp" line="+942"/>
+        <location filename="../qucs/qucs_actions.cpp" line="-888"/>
+        <location line="+428"/>
+        <location filename="../qucs/qucs_init.cpp" line="+957"/>
         <source>Ready.</source>
-        <translation>準備完了.</translation>
+        <translation>Listo.</translation>
     </message>
     <message>
-        <location line="-648"/>
-        <location filename="qucs_actions.cpp" line="-406"/>
+        <location line="-650"/>
+        <location filename="../qucs/qucs_actions.cpp" line="-437"/>
         <source>Opening file...</source>
-        <translation>ファイルを開いています...</translation>
+        <translation>Abriendo fitxer...</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Enter a Schematic Name</source>
-        <translation>回路図名を入力</translation>
+        <translation>Escriba un nombre del Esquema</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Opening aborted</source>
-        <translation>開くのを中断しました</translation>
+        <translation>Apertura interrumpida</translation>
     </message>
     <message>
         <location line="-745"/>
         <location line="+429"/>
-        <location line="+772"/>
+        <location line="+774"/>
         <source>-port</source>
-        <translation>-port</translation>
+        <translation>-conexiones</translation>
     </message>
     <message>
-        <location line="-1220"/>
+        <location line="-1222"/>
         <source>Insert</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+800"/>
         <source>Saving file...</source>
-        <translation>ファイルを保存しています...</translation>
+        <translation>Guardando fitxer...</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+132"/>
+        <location line="+134"/>
         <source>Saving aborted</source>
-        <translation>保存を中断しました</translation>
+        <translation>Guardado interrumpido</translation>
     </message>
     <message>
-        <location line="-83"/>
+        <location line="-85"/>
         <source>Enter a Document Name</source>
-        <translation>ドキュメント名を入力</translation>
+        <translation>Escriba un nombre del document</translation>
     </message>
     <message>
         <location line="+20"/>
         <source>The file &apos;</source>
-        <translation>ファイル &apos;</translation>
+        <translation>El fitxer &apos;</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>&apos; already exists!
 </source>
-        <translation>&apos; は既に存在しています!</translation>
+        <translation>&apos; ya existe!
+</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Saving will overwrite the old one! Continue?</source>
-        <translation>古いファイルを上書きしてしまいます ! 続けますか?</translation>
+        <translation>¡Al guardarlo sobreescribirá el antiguo! ¿Continuo?</translation>
     </message>
     <message>
         <location line="+1"/>
-        <location line="+138"/>
+        <location line="+140"/>
         <source>Cancel</source>
-        <translation>キャンセル</translation>
+        <translation>Cancel·lar</translation>
     </message>
     <message>
         <source>Only the extensions &apos;.sch&apos; and &apos;.dpl&apos;
 </source>
-        <translation type="obsolete">拡張子は&apos;.sch&apos; と &apos;.dpl&apos; のみです</translation>
+        <translation type="obsolete">Sólo les extensiones &apos;.sch&apos; y &apos;.dpl&apos;
+</translation>
     </message>
     <message>
         <source>will appear in the content browser! Continue?</source>
-        <translation type="obsolete">コンテントブラウザに表われます! 続けますか?</translation>
+        <translation type="obsolete">aparecerá en el explorador de contenidos! ¿Continuo?</translation>
     </message>
     <message>
-        <location line="-1144"/>
-        <location line="+465"/>
+        <location line="-1141"/>
+        <location line="+460"/>
         <location line="+211"/>
         <location line="+44"/>
         <location line="+17"/>
@@ -13240,15 +13367,15 @@ Do you want to save the changes before closing?</source>
         <location line="+16"/>
         <location line="+37"/>
         <location line="+211"/>
-        <location filename="qucs_actions.cpp" line="-149"/>
+        <location filename="../qucs/qucs_actions.cpp" line="-149"/>
         <location line="+14"/>
         <location line="+14"/>
         <location line="+14"/>
         <location line="+38"/>
         <location line="+14"/>
-        <location line="+799"/>
+        <location line="+830"/>
         <source>Info</source>
-        <translation>情報</translation>
+        <translation>Información</translation>
     </message>
     <message>
         <location line="-377"/>
@@ -13258,49 +13385,51 @@ Do you want to save the changes before closing?</source>
     <message>
         <location line="+378"/>
         <source>Cannot overwrite an open document</source>
-        <translation>上書きできません</translation>
+        <translation>No puedo sobreescribir un document abierto</translation>
     </message>
     <message>
-        <location line="+45"/>
+        <location line="+47"/>
         <source>Saving file under new filename...</source>
-        <translation>新しい名前で保存しています...</translation>
+        <translation>Guardando fitxer amb un nombre nuevo...</translation>
     </message>
     <message>
         <location line="+26"/>
         <source>Saving all files...</source>
-        <translation>全てのファイルを保存しています...</translation>
+        <translation>Guardando todos els fitxers...</translation>
     </message>
     <message>
         <location line="+49"/>
         <source>Closing file...</source>
-        <translation>ファイルを閉じています...</translation>
+        <translation>Cerrando el fitxer...</translation>
     </message>
     <message>
-        <location line="-935"/>
-        <location line="+941"/>
+        <location line="-937"/>
+        <location line="+943"/>
         <source>The document contains unsaved changes!
 </source>
-        <translation>ドキュメントに保存されていない変更があります!</translation>
+        <translation>¡El document contiene cambios  no guardados!
+
+</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Do you want to save the changes before closing?</source>
-        <translation>閉じる前に変更を保存しますか?</translation>
+        <translation>¿Desea guardar els cambios antes de salir?</translation>
     </message>
     <message>
-        <location line="-940"/>
-        <location line="+941"/>
-        <location filename="qucs_init.cpp" line="-885"/>
+        <location line="-942"/>
+        <location line="+943"/>
+        <location filename="../qucs/qucs_init.cpp" line="-892"/>
         <source>&amp;Save</source>
-        <translation>保存(&amp;S)</translation>
+        <translation>&amp;Guardar</translation>
     </message>
     <message>
-        <location line="-1719"/>
+        <location line="-1692"/>
         <source>Spice Files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+240"/>
+        <location line="+236"/>
         <source>Manage Libraries</source>
         <translation type="unfinished"></translation>
     </message>
@@ -13319,22 +13448,22 @@ Do you want to save the changes before closing?</source>
         <location line="+69"/>
         <location line="+65"/>
         <source>Cannot open &quot;%1&quot;.</source>
-        <translation type="unfinished">開けません&quot;%1&quot;.</translation>
+        <translation type="unfinished">No puedo abrir &quot;%1&quot;.</translation>
     </message>
     <message>
         <location line="-62"/>
         <location line="+65"/>
         <source>Library is corrupt.</source>
-        <translation type="unfinished">ライブラリが壊れています.</translation>
+        <translation type="unfinished">La librería está corrupta.</translation>
     </message>
     <message>
-        <location line="+177"/>
+        <location line="+157"/>
         <source>Default icon not found:
  %1.png</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+116"/>
+        <location line="+111"/>
         <source>Duplicate</source>
         <translation type="unfinished"></translation>
     </message>
@@ -13384,9 +13513,9 @@ Do you want to save the changes before closing?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+165"/>
+        <location line="+167"/>
         <source>&amp;Discard</source>
-        <translation>破棄(&amp;D)</translation>
+        <translation>&amp;Descartar</translation>
     </message>
     <message>
         <location line="+44"/>
@@ -13396,7 +13525,7 @@ Do you want to save the changes before closing?</source>
     <message>
         <location line="+204"/>
         <source>Printing...</source>
-        <translation>印刷中...</translation>
+        <translation>Imprimiendo...</translation>
     </message>
     <message>
         <location line="+9"/>
@@ -13406,30 +13535,30 @@ Do you want to save the changes before closing?</source>
     <message>
         <location line="+54"/>
         <source>Exiting application...</source>
-        <translation>アプリケーションを終了しています...</translation>
+        <translation>Saliendo de la aplicación...</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Quit...</source>
-        <translation>終了...</translation>
+        <translation>Salir...</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Do you really want to quit?</source>
-        <translation>本当に終了しますか?</translation>
+        <translation>¿Seguro que desea salir?</translation>
     </message>
     <message>
         <location line="+36"/>
         <source>Cutting selection...</source>
-        <translation>選択を切り取っています...</translation>
+        <translation>Cortando la selección...</translation>
     </message>
     <message>
         <location line="+24"/>
         <source>Copying selection to clipboard...</source>
-        <translation>選択をクリップボードにコピーしています...</translation>
+        <translation>Copiando la selección al portapapeles...</translation>
     </message>
     <message>
-        <location line="+1027"/>
+        <location line="+1026"/>
         <location line="+13"/>
         <location line="+18"/>
         <location line="+6"/>
@@ -13459,413 +13588,457 @@ Use PNG, JPEG or SVG graphics!</source>
     </message>
     <message>
         <source>Cannot start qucshelp!</source>
-        <translation type="obsolete">Qucsヘルプを開けません!</translation>
+        <translation type="obsolete">¡No puedo arrancar la ayuda!</translation>
     </message>
     <message>
         <source>Starting new simulation on </source>
-        <translation type="obsolete">新しいシミュレーションを始めています</translation>
+        <translation type="obsolete">Iniciando una nueva simulación </translation>
     </message>
     <message>
         <source> at </source>
-        <translation type="obsolete">at</translation>
+        <translation type="obsolete"> en </translation>
     </message>
     <message>
         <source>creating netlist ....</source>
-        <translation type="obsolete">ネットリストを作成中...</translation>
+        <translation type="obsolete">creando llista de conexiones...</translation>
     </message>
     <message>
         <source>ERROR: Cannot create netlist file!
 Aborted.</source>
-        <translation type="obsolete">エラー:ネットリストファイルを作成できません!
-中断しました.</translation>
+        <translation type="obsolete">ERROR: ¡No pude crear el fitxer de la llista de conexiones!
+Abortado.</translation>
     </message>
     <message>
         <source>done.
 </source>
-        <translation type="obsolete">完了.</translation>
+        <translation type="obsolete">hecho.
+</translation>
     </message>
     <message>
         <source>ERROR: Cannot start simulator!</source>
-        <translation type="obsolete">エラー:シミュレータを開始できません!</translation>
+        <translation type="obsolete">ERROR: ¡No puedo arrancar el simulador!</translation>
     </message>
     <message>
         <source>
 Simulation ended on </source>
-        <translation type="obsolete">シミュレーション完了</translation>
+        <translation type="obsolete">
+La simulación ha finalizado </translation>
     </message>
     <message>
         <source>Ready.
 </source>
-        <translation type="obsolete">準備完了.
+        <translation type="obsolete">Listo.
 </translation>
     </message>
     <message>
         <source>
 Errors occured during simulation on </source>
-        <translation type="obsolete">シミュレーションでのエラー</translation>
+        <translation type="obsolete">
+Han ocurrido errores durante la simulación </translation>
     </message>
     <message>
         <source>Aborted.
 </source>
-        <translation type="obsolete">中断しました.</translation>
+        <translation type="obsolete">Abortado.
+</translation>
+    </message>
+    <message>
+        <source>Output:
+----------
+
+</source>
+        <translation type="obsolete">Sortida:
+----------
+
+</translation>
+    </message>
+    <message>
+        <source>
+
+
+Errors:
+--------
+
+</source>
+        <translation type="obsolete">
+
+
+Errores:
+-----------
+
+</translation>
     </message>
     <message>
         <source>Cannot start text editor!</source>
-        <translation type="obsolete">テキストエディタを開始できません!</translation>
+        <translation type="obsolete">¡No puedo arrancar el editor de texts!</translation>
     </message>
     <message>
-        <location line="-815"/>
+        <location line="-814"/>
         <source>Cannot create </source>
-        <translation>作成できません</translation>
+        <translation>No puedo crear</translation>
     </message>
     <message>
         <location line="+28"/>
         <source>No page set !</source>
-        <translation>ページがセットされていません!</translation>
+        <translation>¡No se  ha puesto una página!</translation>
     </message>
     <message>
-        <location line="-1166"/>
+        <location line="-1168"/>
         <source>Cannot access project directory: </source>
-        <translation>プロジェクトディレクトリにアクセスできません:</translation>
+        <translation>No puedo acceder al directorio del proyecto:</translation>
     </message>
     <message>
         <location line="+16"/>
         <location line="+51"/>
         <source> - Project: </source>
-        <translation>-Project:</translation>
+        <translation> - Proyecto: </translation>
     </message>
     <message>
         <location line="-44"/>
         <source>Choose Project Directory for Opening</source>
-        <translation>開始時のプロジェクトディレクトリを選択</translation>
+        <translation>Elija el directorio de proyecto a abrir</translation>
+    </message>
+    <message>
+        <source>Content of &apos;</source>
+        <translation type="obsolete">Contenido de &apos;</translation>
+    </message>
+    <message>
+        <source>&apos;</source>
+        <translation type="obsolete">&apos;</translation>
     </message>
     <message>
         <location line="-188"/>
         <source>Cannot create project directory !</source>
-        <translation>プロジェクトディレクトリを作成できません !</translation>
+        <translation>¡No puedo crear el directorio del proyecto!</translation>
     </message>
     <message>
         <source>Line</source>
-        <translation type="obsolete">線</translation>
+        <translation type="obsolete">Línea</translation>
     </message>
     <message>
         <source>Elliptic Arc</source>
-        <translation type="obsolete">弧</translation>
+        <translation type="obsolete">Arco elíptico</translation>
     </message>
     <message>
         <source>Arrow</source>
-        <translation type="obsolete">矢印</translation>
+        <translation type="obsolete">Flecha</translation>
     </message>
     <message>
         <source>Text</source>
-        <translation type="obsolete">テキスト</translation>
+        <translation type="obsolete">Texto</translation>
     </message>
     <message>
         <source>Ellipse</source>
-        <translation type="obsolete">楕円</translation>
+        <translation type="obsolete">Elipse</translation>
     </message>
     <message>
         <source>Rectangle</source>
-        <translation type="obsolete">長方形</translation>
+        <translation type="obsolete">Rectángulo</translation>
     </message>
     <message>
         <source>filled Ellipse</source>
-        <translation type="obsolete">塗りつぶし楕円</translation>
+        <translation type="obsolete">Elipse rellena</translation>
     </message>
     <message>
         <source>filled Rectangle</source>
-        <translation type="obsolete">塗りつぶし長方形</translation>
+        <translation type="obsolete">Rectángulo relleno</translation>
     </message>
     <message>
         <source>1-port S parameter file</source>
-        <translation type="obsolete">1-ポート Sパラメータファイル</translation>
+        <translation type="obsolete">fitxer de parámetros S de 1-conexión</translation>
     </message>
     <message>
         <source>2-port S parameter file</source>
-        <translation type="obsolete">2-ポート Sパラメータファイル</translation>
+        <translation type="obsolete">fitxer de parámetros S de 2-conexiones</translation>
     </message>
     <message>
         <source>3-port S parameter file</source>
-        <translation type="obsolete">3-ポート Sパラメータファイル</translation>
+        <translation type="obsolete">fitxer de parámetros S de 3-conexiones</translation>
     </message>
     <message>
         <source>4-port S parameter file</source>
-        <translation type="obsolete">4-ポート Sパラメータファイル</translation>
+        <translation type="obsolete">fitxer de parámetros S de 4-conexiones</translation>
     </message>
     <message>
         <source>5-port S parameter file</source>
-        <translation type="obsolete">5-ポート Sパラメータファイル</translation>
+        <translation type="obsolete">fitxer de parámetros S de 5-conexiones</translation>
     </message>
     <message>
         <source>6-port S parameter file</source>
-        <translation type="obsolete">6-ポート Sパラメータファイル</translation>
+        <translation type="obsolete">fitxer de parámetros S de 6-conexiones</translation>
     </message>
     <message>
         <source>Cartesian</source>
-        <translation type="obsolete">直交座標</translation>
+        <translation type="obsolete">Cartesiano</translation>
     </message>
     <message>
         <source>Polar</source>
-        <translation type="obsolete">極座標</translation>
+        <translation type="obsolete">Polar</translation>
     </message>
     <message>
         <source>Tabular</source>
-        <translation type="obsolete">表</translation>
+        <translation type="obsolete">Tabular</translation>
     </message>
     <message>
         <source>Smith Chart</source>
-        <translation type="obsolete">スミスチャート</translation>
+        <translation type="obsolete">Carta de Smith</translation>
     </message>
     <message>
         <location line="+211"/>
         <location line="+128"/>
         <source>No project is selected !</source>
-        <translation>プロジェクトが選択されていません!</translation>
+        <translation>¡No se ha seleccionado un proyecto!</translation>
     </message>
     <message>
         <location line="-53"/>
         <source>Cannot delete an open project !</source>
-        <translation>プロジェクトを削除できません!</translation>
+        <translation>¡No puedo eliminar un proyecto abierto!</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>This will destroy all the project files permanently ! Continue ?</source>
-        <translation>プロジェクトファイルが完全に壊れます! 続けますか?</translation>
+        <translation>¡Esto destruirá els fitxers de proyecto para siempre! ¿Continuo?</translation>
     </message>
     <message>
         <location line="+1"/>
-        <location filename="qucs_actions.cpp" line="+2"/>
+        <location filename="../qucs/qucs_actions.cpp" line="+2"/>
         <source>&amp;Yes</source>
-        <translation>はい(&amp;Y)</translation>
+        <translation>&amp;Si</translation>
     </message>
     <message>
         <location line="+0"/>
-        <location filename="qucs_actions.cpp" line="+0"/>
+        <location filename="../qucs/qucs_actions.cpp" line="+0"/>
         <source>&amp;No</source>
-        <translation>いいえ(&amp;N)</translation>
+        <translation>&amp;No</translation>
     </message>
     <message>
         <source>Cannot remove project file: </source>
-        <translation type="obsolete">プロジェクトファイルを除去できません:</translation>
+        <translation type="obsolete">No puedo borrar el fitxer de proyecto:</translation>
     </message>
     <message>
         <location line="+9"/>
         <source>Cannot remove project directory !</source>
-        <translation>プロジェクトディレクトリを除去できません!</translation>
+        <translation>¡No puedo borrar el directorio del proyecto!</translation>
     </message>
     <message>
         <location line="+12"/>
         <source>Choose Project Directory for Deleting</source>
-        <translation>削除するプロジェクトディレクトリを選択</translation>
+        <translation>Elija el directorio de proyecto a eliminar</translation>
     </message>
     <message>
-        <location filename="qucs_actions.cpp" line="-894"/>
+        <location filename="../qucs/qucs_actions.cpp" line="-925"/>
         <location line="+14"/>
         <location line="+14"/>
         <location line="+14"/>
         <location line="+38"/>
         <location line="+14"/>
         <source>At least two elements must be selected !</source>
-        <translation>少なくとも二つ以上の要素を選択してください!</translation>
+        <translation>¡Al menys deben seleccionarse dos elementos!</translation>
     </message>
     <message>
         <source>Edit Circuit Symbol</source>
-        <translation type="obsolete">回路シンボルを編集</translation>
+        <translation type="obsolete">Editar Símbolo del circuito</translation>
     </message>
     <message>
-        <location filename="qucs_init.cpp" line="+35"/>
+        <source>Edit Schematic</source>
+        <translation type="obsolete">Editar Esquema</translation>
+    </message>
+    <message>
+        <location filename="../qucs/qucs_init.cpp" line="+35"/>
         <source>Edits the symbol for this schematic</source>
-        <translation>この回路図の為のシンボルを編集</translation>
+        <translation>Edita els símboels de este esquema</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Edit Circuit Symbol
 
 Edits the symbol for this schematic</source>
-        <translation>回路シンボルを編集
+        <translation>Editar Símbolo del circuito
 
-この回路図の為のシンボルを編集</translation>
-    </message>
-    <message>
-        <source>Edit Schematic</source>
-        <translation type="obsolete">回路図編集</translation>
+Edita els símboels de este esquema</translation>
     </message>
     <message>
         <source>Edits the schematic</source>
-        <translation type="obsolete">回路図を編集します</translation>
+        <translation type="obsolete">Edita el esquema</translation>
     </message>
     <message>
         <source>Edit Schematic
 
 Edits the schematic</source>
-        <translation type="obsolete">回路図を編集
+        <translation type="obsolete">Editar Esquema
 
-回路図を編集します</translation>
-    </message>
-    <message>
-        <source>Admittance Smith</source>
-        <translation type="obsolete">アドミッタンスチャート</translation>
+Edita el esquema</translation>
     </message>
     <message>
         <source>Polar-Smith Combi</source>
-        <translation type="obsolete">極座標-スミス混合</translation>
+        <translation type="obsolete">Combi Polar-Smith</translation>
     </message>
     <message>
         <source>Smith-Polar Combi</source>
-        <translation type="obsolete">スミス-極座標混合</translation>
+        <translation type="obsolete">Combi Smith-Polar</translation>
+    </message>
+    <message>
+        <source>Admittance Smith</source>
+        <translation type="obsolete">Admitancia Smith</translation>
     </message>
     <message>
         <source>SPICE netlist</source>
-        <translation type="obsolete">SPICEネットリスト</translation>
+        <translation type="obsolete">netlist SPICE</translation>
     </message>
     <message>
         <source>Edit Properties</source>
-        <translation type="obsolete">プロパティ編集</translation>
+        <translation type="obsolete">Editar Propietats</translation>
+    </message>
+    <message>
+        <location line="+848"/>
+        <location line="+41"/>
+        <source>no warnings</source>
+        <translation> sense avisos</translation>
     </message>
     <message>
         <source>file components</source>
-        <translation type="obsolete">ファイル部品</translation>
+        <translation type="obsolete">componentes del fitxer</translation>
     </message>
     <message>
         <source>digital components</source>
-        <translation type="obsolete">デジタル部品</translation>
+        <translation type="obsolete">componentes digitales</translation>
     </message>
     <message>
-        <location filename="qucs.cpp" line="-1265"/>
+        <location filename="../qucs/qucs.cpp" line="-1238"/>
         <source>Others</source>
-        <translation>その他</translation>
+        <translation>Otros</translation>
     </message>
     <message>
-        <location line="+2360"/>
+        <location line="+2335"/>
         <source>Cannot start &quot;%1&quot;!</source>
-        <translation>&quot;%1&quot; を開始できません!</translation>
+        <translation>¡No puedo arrancar &quot;%1&quot;!</translation>
     </message>
     <message>
-        <location line="-2454"/>
-        <location line="+1553"/>
+        <location line="-2427"/>
+        <location line="+1524"/>
         <source>VHDL Sources</source>
-        <translation>VHDLソース</translation>
+        <translation>Fuentes VHDL</translation>
     </message>
     <message>
-        <location line="-1447"/>
-        <location line="+2379"/>
+        <location line="-1420"/>
+        <location line="+2354"/>
         <source>VHDL</source>
         <translation>VHDL</translation>
     </message>
     <message>
-        <location line="-2299"/>
+        <location line="-2276"/>
         <source>content of project directory</source>
-        <translation>プロジェクトディレクトリの内容</translation>
+        <translation>contenido del directorio del proyecto</translation>
     </message>
     <message>
         <location line="+20"/>
         <source>content of current project</source>
-        <translation>現在のプロジェクトの内容</translation>
+        <translation>contenido del proyecto actual</translation>
     </message>
     <message>
         <source>Cannot delete data display: </source>
-        <translation type="obsolete">データディスプレーを削除できません:</translation>
+        <translation type="obsolete">No puedo borrar la vista de dades: </translation>
     </message>
     <message>
         <source>Cannot delete data file: </source>
-        <translation type="obsolete">データファイルを削除できません:</translation>
+        <translation type="obsolete">No puedo borrar el fitxer de dades: </translation>
     </message>
     <message>
         <source>Cannot delete VHDL source: </source>
-        <translation type="obsolete">VHDLソースを削除できません:</translation>
+        <translation type="obsolete">No puedo borrar la fuente VHDL: </translation>
     </message>
     <message>
-        <location line="+1206"/>
+        <location line="+1181"/>
         <source>Creating new text editor...</source>
-        <translation>新しいテキストエディタを作成しています...</translation>
+        <translation>Creando un nuevo editor de texts...</translation>
     </message>
     <message>
         <source>Printing selected...</source>
-        <translation type="obsolete">選択されたものを印刷中...</translation>
+        <translation type="obsolete">Seleccionada impresión...</translation>
     </message>
     <message>
-        <location line="+1357"/>
+        <location line="+1359"/>
         <source>Could not load S[1,1].</source>
-        <translation>S[1,1]がロードできません.</translation>
+        <translation>No pude cargar S[1,1].</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Could not load S[1,2].</source>
-        <translation>S[1,2]がロードできません.</translation>
+        <translation>No pude cargar S[1,2].</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Could not load S[2,1].</source>
-        <translation>S[2,1]がロードできません.</translation>
+        <translation>No pude cargar S[2,1].</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Could not load S[2,2].</source>
-        <translation>S[2,2]がロードできません.</translation>
+        <translation>No pude cargar S[2,2].</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Wrong dependency!</source>
-        <translation>誤った属性です!</translation>
+        <translation>¡Dependencia incorrecta!</translation>
     </message>
     <message>
         <source>Cannot start filter synthesis program!</source>
-        <translation type="obsolete">フィルタ作成プログラムを起動できません!</translation>
+        <translation type="obsolete">No puedo arrancar el programa de síntexis de filtros!</translation>
     </message>
     <message>
         <source>Cannot start line calculation program!</source>
-        <translation type="obsolete">伝送線路計算プログラムを起動できません!</translation>
+        <translation type="obsolete">No puedo arrancar el programa de cálculo de línees!</translation>
     </message>
     <message>
         <source>Cannot start library program!</source>
-        <translation type="obsolete">ライブラリプログラムを起動できません!</translation>
+        <translation type="obsolete">No puedo arrancar el programa de librería!</translation>
     </message>
     <message>
-        <location filename="qucs_actions.cpp" line="+385"/>
+        <location filename="../qucs/qucs_actions.cpp" line="+416"/>
         <source>No project open!</source>
-        <translation>プロジェクトが開かれていません!</translation>
+        <translation>¡No hay un proyecto abierto!</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Select files to copy</source>
-        <translation>選択されたファイルをコピー</translation>
+        <translation>Selecciona els fitxers a copiar</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>No files copied.</source>
-        <translation>ファイルはコピーされませんでした。</translation>
+        <translation>No se han copiado fitxers.</translation>
     </message>
     <message>
         <location line="+23"/>
         <source>Cannot open &quot;%1&quot; !</source>
-        <translation>&quot;%1&quot;を開けませんでした!</translation>
+        <translation>¡ No puedo abrir &quot;%1&quot;!</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Overwrite</source>
-        <translation>上書き</translation>
+        <translation>Sobreescribir</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>File &quot;%1&quot; already exists.
 Overwrite ?</source>
-        <translation>ファイル&quot;%1&quot;は既に存在します。
-上書きしますか?</translation>
+        <translation>El fitxer &quot;%1&quot; ya existe.
+¿Lo sobreescribo?</translation>
     </message>
     <message>
         <location line="+9"/>
         <source>Cannot create &quot;%1&quot; !</source>
-        <translation>&quot;%1&quot;を作成できません!</translation>
+        <translation>¡No puedo crear &quot;%1&quot;!</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Cannot read &quot;%1&quot; !</source>
-        <translation>&quot;%1&quot;を読み込みできません!</translation>
+        <translation>¡No puedo leer &quot;%1&quot;!</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Cannot write &quot;%1&quot; !</source>
-        <translation>&quot;%1&quot;を書き込みできません!</translation>
+        <translation>¡No puedo escribir &quot;%1&quot;!</translation>
     </message>
     <message>
         <location line="+438"/>
@@ -13881,251 +14054,251 @@ Have you saved the Verilog-A symbols?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qucs_init.cpp" line="-56"/>
+        <location filename="../qucs/qucs_init.cpp" line="-945"/>
         <source>&amp;New</source>
-        <translation>新規(&amp;N)</translation>
+        <translation>&amp;Nou</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Creates a new document</source>
-        <translation>新しいドキュメントを作成</translation>
+        <translation>Crea un nuevo document</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>New
 
 Creates a new schematic or data display document</source>
-        <translation>新規
+        <translation>Nou
 
-新しい回路図かデータ表示を作成</translation>
+Crea un document de esquema o para mostrar dades</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>New &amp;Text</source>
-        <translation>新しいテキスト(&amp;T)</translation>
+        <translation>Nou &amp;Texto</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Creates a new text document</source>
-        <translation>新規テキストドキュメント作成</translation>
+        <translation>Crea un nuevo document de text</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>New Text
 
 Creates a new text document</source>
-        <translation>新しいテキスト
+        <translation>Nou Texto
 
-新規テキストドキュメント作成</translation>
+Crea un nuevo document de text</translation>
     </message>
     <message>
         <source>Open File</source>
-        <translation type="obsolete">ファイルを開く</translation>
+        <translation type="obsolete">Abrir Fitxer</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>&amp;Open...</source>
-        <translation>開く(&amp;O)...</translation>
+        <translation>&amp;Abrir...</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Opens an existing document</source>
-        <translation>既存のドキュメントを開く</translation>
+        <translation>Abre un document existente</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Open File
 
 Opens an existing document</source>
-        <translation>ファイルを開く
+        <translation>Abrir Fitxer
 
-既存のドキュメントを開きます</translation>
+Abre un document existente</translation>
     </message>
     <message>
         <source>Save File</source>
-        <translation type="obsolete">ファイルを保存</translation>
+        <translation type="obsolete">Guardar Fitxer</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Saves the current document</source>
-        <translation>現在のドキュメントを保存</translation>
+        <translation>Guarda el document actual</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Save File
 
 Saves the current document</source>
-        <translation>ファイルを保存
+        <translation>Guardar Fitxer
 
-現在のドキュメントを保存現在のドキュメントを保存</translation>
+Guarda el document actual</translation>
     </message>
     <message>
         <source>Save File As</source>
-        <translation type="obsolete">別名で保存</translation>
+        <translation type="obsolete">Guardar como</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Save as...</source>
-        <translation>別名で保存...</translation>
+        <translation>Guardar como...</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Saves the current document under a new filename</source>
-        <translation>現在のドキュメントを新しい名前で保存</translation>
+        <translation>Guarda el document actual amb un nombre nuevo</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Save As
 
 Saves the current document under a new filename</source>
-        <translation>別名で保存
+        <translation>Guardar como
 
-現在のドキュメントを新しい名前で保存</translation>
+Guarda el document actual amb un nombre nuevo</translation>
     </message>
     <message>
         <source>Save All Files</source>
-        <translation type="obsolete">全てのファイルを保存</translation>
+        <translation type="obsolete">Guardar Tots els Fitxers</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Save &amp;All</source>
-        <translation>全て保存(&amp;A)</translation>
+        <translation>Guardar &amp;Todo</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Saves all open documents</source>
-        <translation>開かれた全てのドキュメントを保存</translation>
+        <translation>Guarda todos els documents abiertos</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Save All Files
 
 Saves all open documents</source>
-        <translation>全てのファイルを保存
+        <translation>Guardar todos els fitxers
 
-開かれた全てのドキュメントを保存</translation>
+Guarda todos els documents abiertos</translation>
     </message>
     <message>
         <source>Close File</source>
-        <translation type="obsolete">ファイルを閉じる</translation>
+        <translation type="obsolete">Tancar fitxer</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>&amp;Close</source>
-        <translation>閉じる(&amp;C)</translation>
+        <translation>&amp;Tancar</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Closes the current document</source>
-        <translation>現在のドキュメントを閉じる</translation>
+        <translation>Cierra el document actual</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Close File
 
 Closes the current document</source>
-        <translation>ファイルを閉じる
+        <translation>Tancar Fitxer
 
-現在のファイルを閉じる</translation>
+Cierra el document actual</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>&amp;Edit Circuit Symbol</source>
-        <translation>回路シンボルを編集(&amp;E)</translation>
+        <translation>&amp;Editar el Símbolo del Circuito</translation>
     </message>
     <message>
         <source>Document Settings...</source>
-        <translation type="obsolete">ドキュメント セッティング...</translation>
+        <translation type="obsolete">Propietats del document...</translation>
     </message>
     <message>
         <location line="+9"/>
         <source>Document Settings</source>
-        <translation>ドキュメント セッティング</translation>
+        <translation type="unfinished">Propietats del document</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Settings
 
 Sets properties of the file</source>
-        <translation>セッティング
+        <translation>Propietats
 
-ファイルのプロパティーのセッティング</translation>
+Fija les propietats del fitxer</translation>
     </message>
     <message>
         <source>Print File</source>
-        <translation type="obsolete">ファイルを印刷</translation>
+        <translation type="obsolete">Imprimir fitxer</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>&amp;Print...</source>
-        <translation>印刷(&amp;P)...</translation>
+        <translation>&amp;Imprimir...</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Prints the current document</source>
-        <translation>現在のドキュメントを印刷</translation>
+        <translation>Imprime el document actual</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Print File
 
 Prints the current document</source>
-        <translation>ファイルを印刷
+        <translation>Imprimir fitxer
 
-現在のドキュメントを印刷</translation>
+Imprime el document actual</translation>
     </message>
     <message>
         <source>Print Selected Elements</source>
-        <translation type="obsolete">選択された要素を印刷</translation>
+        <translation type="obsolete">Imprimir els elementos seleccionados</translation>
     </message>
     <message>
         <source>Print Selection...</source>
-        <translation type="obsolete">選択された物を印刷...</translation>
+        <translation type="obsolete">Imprimir selección...</translation>
     </message>
     <message>
         <source>Prints Selected Elements</source>
-        <translation type="obsolete">選択された要素を印刷</translation>
+        <translation type="obsolete">Imprimir els elementos seleccionados</translation>
     </message>
     <message>
         <source>Print Selected Elements
 
 Prints selected elements of the current document</source>
-        <translation type="obsolete">選択された要素を印刷
+        <translation type="obsolete">Imprimir els elementos seleccionados
 
-現在のドキュメントの選択された要素を印刷</translation>
+Imprime els elementos seleccionados en el document actual</translation>
     </message>
     <message>
         <source>Exit</source>
-        <translation type="obsolete">終了</translation>
+        <translation type="obsolete">Salir</translation>
     </message>
     <message>
         <location line="+11"/>
         <source>E&amp;xit</source>
-        <translation>終了(&amp;x)</translation>
+        <translation>&amp;Salir</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Quits the application</source>
-        <translation>アプリケーションを終了</translation>
+        <translation>Sale de la aplicación</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Exit
 
 Quits the application</source>
-        <translation>終了
+        <translation>Salir
 
-アプリケーションを終了</translation>
+Sale de la aplicación</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Application Settings</source>
-        <translation>アプリケーションの設定</translation>
+        <translation type="unfinished">Configuración de la aplicación</translation>
     </message>
     <message>
         <location line="-2"/>
         <source>Application Settings...</source>
-        <translation>アプリケーションの設定...</translation>
+        <translation>Configuración de la aplicación...</translation>
     </message>
     <message>
         <location line="-40"/>
@@ -14149,9 +14322,9 @@ Opens a file explorer with example documents</source>
         <source>Qucs Settings
 
 Sets properties of the application</source>
-        <translation>Qucsの設定
+        <translation>Configurar Qucs
 
-このアプリケーションの設定</translation>
+Configurar les propietats de la aplicación</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -14178,1331 +14351,1313 @@ Rechecks the list of paths for files.</oldsource>
     <message>
         <location line="+3"/>
         <source>Align top</source>
-        <translation>上に整列</translation>
+        <translation>Alinear arriba</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Align top selected elements</source>
-        <translation>選択された要素を上部に整列</translation>
+        <translation>Alinear arriba els elementos seleccionados</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Align top
 
 Align selected elements to their upper edge</source>
-        <translation>上端に整列
+        <translation>Alinear arriba
 
-選択された要素をそれらの上端に整列</translation>
+Alinear arriba els elementos seleccionados</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Align bottom</source>
-        <translation>下に整列</translation>
+        <translation>Alinear abajo</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Align bottom selected elements</source>
-        <translation>選択された要素を下に整列</translation>
+        <translation>Alinear abajo els elementos seleccionados</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Align bottom
 
 Align selected elements to their lower edge</source>
-        <translation>下端に整列
+        <translation>Alinear abajo
 
-選択された要素をそれらの下端に整列</translation>
+Alinear abajo els elementos seleccionados</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Align left</source>
-        <translation>左に整列</translation>
+        <translation>Alinear a la izquierda</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Align left selected elements</source>
-        <translation>選択された要素を左に整列</translation>
+        <translation>Alinear a la izquierda els elementos seleccionados</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Align left
 
 Align selected elements to their left edge</source>
-        <translation>左端に整列
+        <translation>Alinear a la izquierda
 
-選択された要素をそれらの左端に整列</translation>
+Alinear a la izquierda els elementos seleccionados</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Align right</source>
-        <translation>右に整列</translation>
+        <translation>Alinear a la derecha</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Align right selected elements</source>
-        <translation>選択された要素を右に整列</translation>
+        <translation>Alinear a la derecha els elementos seleccionados</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Align right
 
 Align selected elements to their right edge</source>
-        <translation>右端に整列
+        <translation>Alinear a la derecha
 
-選択された要素をそれらの右端に整列</translation>
+Alinear a la derecha els elementos seleccionados</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Distribute horizontally</source>
-        <translation>水平方向に配置</translation>
+        <translation>Distribuir horizontalmente</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Distribute equally horizontally</source>
-        <translation>均等に水平に分割</translation>
+        <translation>Distribuir uniformemente de forma horitzontal</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Distribute horizontally
 
 Distribute horizontally selected elements</source>
-        <translation>水平に分割
+        <translation>Distribuir horizontalmente
 
-選択された要素を水平に分割</translation>
+Distribuir uniformemente de forma horitzontal</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Distribute vertically</source>
-        <translation>垂直方向に分割</translation>
+        <translation>Distribuir verticalmente</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Distribute equally vertically</source>
-        <translation>均等に垂直に分割</translation>
+        <translation>Distribuir uniformemente de forma vertical</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Distribute vertically
 
 Distribute vertically selected elements</source>
-        <translation>垂直に分割
+        <translation>Distribuir verticalmente
 
-選択された要素を垂直に配置</translation>
+Distribuir uniformemente de forma horitzontal</translation>
     </message>
     <message>
         <location line="+16"/>
         <source>Set on Grid</source>
-        <translation>グリッドに合わせる</translation>
+        <translation>Fijar a la rejilla</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Set on Grid
 
 Sets selected elements on grid</source>
-        <translation>グリッドに合わせる
+        <translation>Fijar a la rejilla
 
-選択された要素をグリッドに合わせる
-</translation>
+Fija els elementos seleccionados en la rejilla</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Move Component Text</source>
-        <translation>部品のテキストを移動</translation>
+        <translation>Mover Texto del Componente</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Move Component Text
 
 Moves the property text of components</source>
-        <translation>部品のテキストを移動
+        <translation>Mover Texto del componente
 
-部品のプロパティテキストを移動</translation>
-    </message>
-    <message>
-        <source>Change Property Values...</source>
-        <translation type="obsolete">プロパティー変更...</translation>
-    </message>
-    <message>
-        <source>Change Property Values</source>
-        <translation type="obsolete">プロパティー変更</translation>
-    </message>
-    <message>
-        <source>Change Property Values
-
-Change Property Value of Components</source>
-        <translation type="obsolete">プロパティー変更
-
-プロパティー値変更</translation>
+Mueve la propiedad text de els componentes</translation>
     </message>
     <message>
         <source>Cut</source>
-        <translation type="obsolete">切り取り</translation>
+        <translation type="obsolete">Cortar</translation>
     </message>
     <message>
         <location line="+11"/>
         <source>Cu&amp;t</source>
-        <translation>切り取り(&amp;t)</translation>
+        <translation>Cor&amp;tar</translation>
     </message>
     <message>
         <source>Cuts the selected section and puts it to the clipboard</source>
-        <translation type="obsolete">選択された部分を切り取り、クリップボードにいれます</translation>
+        <translation type="obsolete">Corta la sección seleccionada y la pasa al portapapeles</translation>
     </message>
     <message>
         <source>Cut
 
 Cuts the selected section and puts it to the clipboard</source>
-        <translation type="obsolete">切り取り
+        <translation type="obsolete">Cortar
 
-選択された部分を切り取り、クリップボードにいれます</translation>
+Corta la sección seleccionada y la pasa al portapapeles</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation type="obsolete">コピー</translation>
+        <translation type="obsolete">Copiar</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>&amp;Copy</source>
-        <translation>コピー(&amp;C)</translation>
+        <translation>&amp;Copiar</translation>
     </message>
     <message>
         <source>Copies the selected section to the clipboard</source>
-        <translation type="obsolete">選択された部分をクリップボードにコピーします</translation>
+        <translation type="obsolete">Copia la sección seleccionada al portapapeles</translation>
     </message>
     <message>
         <source>Copy
 
 Copies the selected section to the clipboard</source>
-        <translation type="obsolete">コピー
+        <translation type="obsolete">Copiar
 
-選択された部分をクリップボードにコピーします</translation>
+Copia la sección seleccionada al portapapeles</translation>
     </message>
     <message>
         <source>Paste</source>
-        <translation type="obsolete">貼付け</translation>
+        <translation type="obsolete">Pegar</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>&amp;Paste</source>
-        <translation>貼付け(&amp;P)</translation>
+        <translation>&amp;Pegar</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Pastes the clipboard contents to the cursor position</source>
-        <translation>クリップボードの内容をカーソル位置に貼付けます</translation>
+        <translation>Pega el contenido del portapapeles a la posición del cursor</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Paste
 
 Pastes the clipboard contents to the cursor position</source>
-        <translation>貼付け
+        <translation>Pegar
 
-クリップボードの内容をカーソル位置に貼付けます</translation>
+Pega el contenido del portapapeles a la posición del cursor</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>&amp;Delete</source>
-        <translation>削除(&amp;D)</translation>
+        <translation>&amp;Eliminar</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Deletes the selected components</source>
-        <translation>選択された部品を削除します</translation>
+        <translation>Elimina els componentes seleccionados</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Delete
 
 Deletes the selected components</source>
-        <translation>削除
+        <translation>Eliminar
 
-選択された部品を削除します</translation>
+Elimina els componentes seleccionados</translation>
     </message>
     <message>
         <source>Undo</source>
-        <translation type="obsolete">やり直し</translation>
+        <translation type="obsolete">Deshacer</translation>
     </message>
     <message>
         <location line="+52"/>
         <source>&amp;Undo</source>
-        <translation>やり直し(&amp;U)</translation>
+        <translation>&amp;Deshacer</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Undoes the last command</source>
-        <translation>最後のコマンドをやり直しします</translation>
+        <translation>Deshace la última acción</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Undo
 
 Makes the last action undone</source>
-        <translation>やり直し
+        <translation>Deshacer
 
-最後のアクションをやり直します</translation>
+Deshace la última acción realizada</translation>
     </message>
     <message>
         <source>Redo</source>
-        <translation type="obsolete">元に戻す</translation>
+        <translation type="obsolete">Rehacer</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>&amp;Redo</source>
-        <translation>元に戻す(&amp;R)</translation>
+        <translation>&amp;Rehacer</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Redoes the last command</source>
-        <translation>最後のコマンドを元に戻します</translation>
+        <translation>Rehace la última acción</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Redo
 
 Repeats the last action once more</source>
-        <translation>元に戻す
+        <translation>Rehacer
 
-最後のアクションをもう一度繰り返します</translation>
+Repite la última acción una vez més</translation>
     </message>
     <message>
         <source>New Project</source>
-        <translation type="obsolete">新規プロジェクト</translation>
+        <translation type="obsolete">Nou Proyecto</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>&amp;New Project...</source>
-        <translation>新規プロジェクト(&amp;N)...</translation>
+        <translation>&amp;Nou Proyecto...</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Creates a new project</source>
-        <translation>新プロジェクトを作成します</translation>
+        <translation>Crea un nuevo proyecto</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>New Project
 
 Creates a new project</source>
-        <translation>新規プロジェクト
+        <translation>Nou Proyecto
 
-新プロジェクトを作成します</translation>
+Crea un proyecto nuevo</translation>
     </message>
     <message>
         <source>Open Project</source>
-        <translation type="obsolete">プロジェクトを開く</translation>
+        <translation type="obsolete">Abrir Proyecto</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>&amp;Open Project...</source>
-        <translation>プロジェクトを開く(&amp;O)...</translation>
+        <translation>&amp;Abrir Proyecto...</translation>
     </message>
     <message>
         <source>Opens a project</source>
-        <translation type="obsolete">プロジェクトを開きます</translation>
+        <translation type="obsolete">Abrir un proyecto</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Open Project
 
 Opens an existing project</source>
-        <translation>プロジェクトを開く
+        <translation>Abrir Proyecto
 
-既存のプロジェクトを開きます</translation>
+Abre un proyecto existente</translation>
     </message>
     <message>
         <source>Delete Project</source>
-        <translation type="obsolete">プロジェクトを削除</translation>
+        <translation type="obsolete">Eliminar Proyecto</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>&amp;Delete Project...</source>
-        <translation>プロジェクトを削除(&amp;D)...</translation>
+        <translation>&amp;Eliminar Proyecto...</translation>
     </message>
     <message>
         <source>Deletes a project</source>
-        <translation type="obsolete">プロジェクトを削除します</translation>
+        <translation type="obsolete">Eliminar un proyecto</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Delete Project
 
 Deletes an existing project</source>
-        <translation>プロジェクトを削除
+        <translation>Eliminar Proyecto
 
-既存のプロジェクトを削除します</translation>
+Elimina un proyecto existente</translation>
     </message>
     <message>
         <source>Close Project</source>
-        <translation type="obsolete">プロジェクトを閉じる</translation>
+        <translation type="obsolete">Tancar Proyecto</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>&amp;Close Project</source>
-        <translation>プロジェクトを閉じる(&amp;C)</translation>
+        <translation>&amp;Tancar Proyecto</translation>
     </message>
     <message>
         <source>Close current project</source>
-        <translation type="obsolete">現在のプロジェクトを閉じる</translation>
+        <translation type="obsolete">Cierra el proyecto actual</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Close Project
 
 Closes the current project</source>
-        <translation>プロジェクトを閉じる
+        <translation>Tancar Proyecto
 
-現在のプロジェクトを閉じます</translation>
+Cierra el proyecto actual</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>&amp;Add Files to Project...</source>
-        <translation>プロジェクトにファイルを追加(&amp;A)...</translation>
+        <translation>&amp;Añade Fitxers al Proyecto...</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Copies files to project directory</source>
-        <translation>プロジェクトディレクトリにファイルをコピー</translation>
+        <translation>Copia fitxers al directorio del proyecto</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Add Files to Project
 
 Copies files to project directory</source>
-        <translation>プロジェクトにファイルを追加
+        <translation>Afegir Fitxers al Proyecto
 
-プロジェクトディレクトリにファイルをコピー</translation>
+Copia fitxers al directorio del proyecto</translation>
     </message>
     <message>
         <location line="+48"/>
         <source>View All</source>
-        <translation>全体を見る</translation>
+        <translation>Ver Todo</translation>
     </message>
     <message>
         <source>Views the whole page</source>
-        <translation type="obsolete">ページ全体を見ます</translation>
+        <translation type="obsolete">Ver la página completa</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>View All
 
 Shows the whole page content</source>
-        <translation>全体を見る
+        <translation>Ver Todo
 
-ページ全体の内容を見ます</translation>
+Muestra el contenido completo de la página</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>View 1:1</source>
-        <translation>1:1のスケールで見る</translation>
+        <translation>Vista 1:1</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Views without magnification</source>
-        <translation>拡大しないで見る</translation>
+        <translation>Ver  sense ampliación</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>View 1:1
 
 Shows the page content without magnification</source>
-        <translation>1:1のスケールで見る
+        <translation>Vista 1:1
 
-ページの内容を拡大しないで見る</translation>
+Muestra el contenido de la página  sense ampliar</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Zoom in</source>
-        <translation>ズームイン</translation>
+        <translation>Ampliar</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Zooms into the current view</source>
-        <translation>現在のビューを拡大</translation>
+        <translation>Amplía la vista actual</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Zoom in
 
 Zooms the current view</source>
-        <translation>ズームイン
+        <translation>Ampliar
 
-現在のビューを拡大</translation>
+Amplia la vista actual</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Zoom out</source>
-        <translation>ズームアウト</translation>
+        <translation>Reducir</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Zooms out the current view</source>
-        <translation>現在のビューを縮小</translation>
+        <translation>Reduce la vista actual</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Zoom out
 
 Zooms out the current view</source>
-        <translation>ズームアウト
+        <translation>Reducir
 
-現在のビューを縮小</translation>
+Reduce la vista actual</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Select</source>
-        <translation>選択</translation>
+        <translation>Seleccionar</translation>
     </message>
     <message>
         <source>Select mode</source>
-        <translation type="obsolete">選択モード</translation>
+        <translation type="obsolete">Modo de selección</translation>
     </message>
     <message>
         <source>Select
 
 Select mode</source>
-        <translation type="obsolete">選択
+        <translation type="obsolete">Seleccionar
 
-選択モード</translation>
+Modo de selección</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Select All</source>
-        <translation>全て選択</translation>
+        <translation>Seleccionar todo</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Selects all elements</source>
-        <translation>全ての要素を選択</translation>
+        <translation>Selecciona todos els documents</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Select All
 
 Selects all elements of the document</source>
-        <translation>全て選択
+        <translation>Seleccionar todo
 
-ドキュメント全ての要素を選択</translation>
+Selecciona todos els elementos del document</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Rotate</source>
-        <translation>回転</translation>
+        <translation>Rotar</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Rotates the selected component by 90°</source>
-        <translation>選択された部品を90°回転</translation>
+        <translation>Rota el elemento seleccionado 90º</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Rotate
 
 Rotates the selected component by 90° counter-clockwise</source>
-        <translation>回転
+        <translation>Rotar
 
-選択された部品を時計周りに90°回転</translation>
+Rota el elemento seleccionado 90º en el sentido de les agujas del reloj</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Mirror about X Axis</source>
-        <translation>X軸で反転</translation>
+        <translation>Reflejar sobre el eje x</translation>
     </message>
     <message>
         <source>Mirrors the selected item about X axis</source>
-        <translation type="obsolete">選択されたアイテムをX軸で反転</translation>
+        <translation type="obsolete">Refleja el elemento seleccionado sobre el eje x</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Mirror about X Axis
 
 Mirrors the selected item about X Axis</source>
-        <translation>X軸で反転
+        <translation>Reflejar sobre el eje x
 
-選択されたアイテムをX軸で反転</translation>
+Refleja el elemento seleccionado sobre el eje x</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Mirror about Y Axis</source>
-        <translation>Y軸で反転</translation>
+        <translation>Reflejar sobre el eje y</translation>
     </message>
     <message>
         <source>Mirrors the selected item about Y axis</source>
-        <translation type="obsolete">選択されたアイテムをY軸で反転</translation>
+        <translation type="obsolete">Refleja el elemento seleccionado sobre el eje y</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Mirror about Y Axis
 
 Mirrors the selected item about Y Axis</source>
-        <translation>Y軸で反転
+        <translation>Reflejar sobre el eje y
 
-選択されたアイテムをY軸で反転</translation>
+Refleja el elemento seleccionado sobre el eje y</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Go into Subcircuit</source>
-        <translation>サブサーキットに入る</translation>
+        <translation>Entrar en el subcircuit</translation>
     </message>
     <message>
         <source>Goes inside subcircuit</source>
-        <translation type="obsolete">サブサーキット内部に行く</translation>
+        <translation type="obsolete">Entra en el subcircuit</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Go into Subcircuit
 
 Goes inside the selected subcircuit</source>
-        <translation>サブサーキットに入る
+        <translation>Entrar en Subcircuito
 
-選択去れたサブサーキット内部に行く</translation>
+Entra en el subcircuit seleccionado</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Pop out</source>
-        <translation>出る</translation>
+        <translation>Ascender</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Pop outside subcircuit</source>
-        <translation>サブサーキットから出る</translation>
+        <translation>Salir fuera del subcircuit</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Pop out
 
 Goes up one hierarchy level, i.e. leaves subcircuit</source>
-        <translation>出る
+        <translation>Ascender
 
-一つ上の階層に上がる   サブサーキットを抜ける</translation>
+Asciende un nivel de jerarquía, es decir, abandona el subcircuit</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Deactivate/Activate</source>
-        <translation>無効にする/有効にする</translation>
+        <translation>Desactivar/Activar</translation>
     </message>
     <message>
         <source>Deactivate/Activate the selected item</source>
-        <translation type="obsolete">選択されたアイテムを無効/有効にする</translation>
+        <translation type="obsolete">Desactiva/Activa el elemento seleccionado</translation>
     </message>
     <message>
         <source>Deactivate/Activate
 
 Deactivate/Activate the selected item</source>
-        <translation type="obsolete">無効にする/有効にする
+        <translation type="obsolete">Desactivar/Activar
 
-選択されたアイテムを無効/有効にする</translation>
+Desactiva/Activa el elemento seleccionado</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Insert Equation</source>
-        <translation>方程式を挿入</translation>
+        <translation>Insertar Ecuación</translation>
     </message>
     <message>
         <source>Inserts equation</source>
-        <translation type="obsolete">方程式を挿入</translation>
+        <translation type="obsolete">Inserta una ecuación</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Insert Equation
 
 Inserts a user defined equation</source>
-        <translation>方程式を挿入
+        <translation>Insertar Ecuación
 
-ユーザが定義した方程式を挿入</translation>
+Inserta una ecuación definida por el usuario</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Insert Ground</source>
-        <translation>グラウンドを挿入</translation>
+        <translation>Insertar Tierra</translation>
     </message>
     <message>
         <source>Inserts ground</source>
-        <translation type="obsolete">グラウンドを挿入</translation>
+        <translation type="obsolete">Inserta tierra</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Insert Ground
 
 Inserts a ground symbol</source>
-        <translation>グラウンドを挿入
+        <translation>Insertar Tierra
 
-グラウンドシンボルを挿入</translation>
+Inserta un símbolo de tierra</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Insert Port</source>
-        <translation>ポートを挿入</translation>
+        <translation>Insertar Conexión</translation>
     </message>
     <message>
         <source>Inserts port</source>
-        <translation type="obsolete">ポートを挿入</translation>
+        <translation type="obsolete">Inserta conexión</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Insert Port
 
 Inserts a port symbol</source>
-        <translation>ポートを挿入
+        <translation>Insertar Conexión
 
-ポートシンボルを挿入</translation>
+Inserta un símbolo de conexión</translation>
     </message>
     <message>
         <source>Insert Wire</source>
-        <translation type="obsolete">ワイアを挿入</translation>
+        <translation type="obsolete">Inserta un cable</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Wire</source>
-        <translation>ワイア</translation>
+        <translation>Cable</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Inserts a wire</source>
-        <translation>ワイアを挿入</translation>
+        <translation type="unfinished">Inserta un cable</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Wire
 
 Inserts a wire</source>
-        <translation>ワイア
+        <translation>Cable
 
-ワイアを挿入</translation>
+Inserta un cable</translation>
     </message>
     <message>
         <source>Insert Wire/Pin Label</source>
-        <translation type="obsolete">ワイア/ピン ラベルを挿入</translation>
+        <translation type="obsolete">Insertar Cable/Etiqueta de conexión</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Wire Label</source>
-        <translation>ワイアラベル</translation>
+        <translation>Etiqueta del cable</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Inserts a wire or pin label</source>
-        <translation>ワイアかピンのラベルを挿入</translation>
+        <translation>Inserta un cable o la etiqueta de una conexión</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Wire Label
 
 Inserts a wire or pin label</source>
-        <translation>ワイアラベル
+        <translation>Etiqueta del cable
 
-ワイアかピンのラベルを挿入</translation>
+Inserta la etiqueta de un cable o una conexión</translation>
     </message>
     <message>
         <source>Text editor</source>
-        <translation type="obsolete">テキストエディタ</translation>
+        <translation type="obsolete">Editor de text</translation>
     </message>
     <message>
         <location line="+11"/>
         <source>Text Editor</source>
-        <translation>テキストエディタ</translation>
+        <translation>Editor de text</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Starts the Qucs text editor</source>
-        <translation>Qucsテキストエディタを起動</translation>
+        <translation>Arrancar el editor de text de Qucs</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Text editor
 
 Starts the Qucs text editor</source>
-        <translation>テキストエディタ
+        <translation>Editor de text
 
-Qucsテキストエディタを起動</translation>
+Arranca el editor de text de Qucs</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Filter synthesis</source>
-        <translation>フィルタ生成</translation>
+        <translation>Síntexis de Filtros</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Starts QucsFilter</source>
-        <translation>QucsFilterを起動</translation>
+        <translation>Arranca QucsFilter</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Filter synthesis
 
 Starts QucsFilter</source>
-        <translation>フィルタ生成
+        <translation>Síntexis de filtros
 
-QucsFilterを起動</translation>
+Arranca QucsFilter</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+9"/>
         <source>Line calculation</source>
-        <translation>伝送線路計算</translation>
+        <translation>Cálculo de Líneas</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Starts QucsTrans</source>
-        <translation>QucsTransを起動</translation>
+        <translation>Arranca QucsTrans</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Line calculation
 
 Starts transmission line calculator</source>
-        <translation>伝送線路計算
+        <translation>Cálculo de línees
 
-伝送線路計算プログラムを起動</translation>
+Arranca el calculador de línees de transmisión</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Component Library</source>
-        <translation>部品ライブラリ</translation>
+        <translation>Librería de componentes</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Starts QucsLib</source>
-        <translation>QucsLibを起動</translation>
+        <translation>Arranca QucsLib</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Component Library
 
 Starts component library program</source>
-        <translation>部品ライブラリ
+        <translation>Librería de componentes
 
-部品ライブラリプログラムを起動</translation>
+Arranca el programa de librería de componentes</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Matching Circuit</source>
-        <translation>マッチング回路</translation>
+        <translation>Circuito de Adaptación</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Creates Matching Circuit</source>
-        <translation>マッチング回路作成</translation>
+        <translation>Crea un circuito de Adaptación</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Matching Circuit
 
 Dialog for Creating Matching Circuit</source>
-        <translation>マッチング回路
+        <translation>Circuito de Adaptación
 
-マッチング回路作成ダイアログ</translation>
+Diálogo para crear un circuito de adaptación</translation>
     </message>
     <message>
         <location line="+17"/>
         <source>Simulate</source>
-        <translation>シミュレート</translation>
+        <translation>Simular</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Simulates the current schematic</source>
-        <translation>現在の回路図をシミュレートする</translation>
+        <translation>Simula el esquema actual</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Simulate
 
 Simulates the current schematic</source>
-        <translation>シミュレート
+        <translation>Simular
 
-現在の回路をシミュレートする</translation>
+Simula el esquema actual</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>View Data Display/Schematic</source>
-        <translation>データディスプレー/回路図 を見る</translation>
+        <translation>Ver la vista de dades/Esquema</translation>
     </message>
     <message>
         <location line="+2"/>
         <location line="+3"/>
         <source>Changes to data display or schematic page</source>
-        <translation>データディスプレーと回路図を切替えます</translation>
+        <translation>Cambios a la vista de dades o la página del esquema</translation>
     </message>
     <message>
         <location line="-1"/>
         <source>View Data Display/Schematic
 
 </source>
-        <translation>データディスプレー/回路図 を見る
+        <translation>Ver la vista de dades/Esquema
+
 </translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Calculate DC bias</source>
-        <translation>DCバイアス計算</translation>
+        <translation>Calcula la polaridad DC</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Calculates DC bias and shows it</source>
-        <translation>DCバイアス計算</translation>
+        <translation>Calcula la polaridad DC y la muestra</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Calculate DC bias
 
 Calculates DC bias and shows it</source>
-        <translation>DCバイアス計算
+        <translation>Calcula la polaridad DC
 
-DCバイアス計算</translation>
+Calcula la polaridad DC y la muestra</translation>
     </message>
     <message>
         <source>Set Marker</source>
-        <translation type="obsolete">マーカセット</translation>
+        <translation type="obsolete">Poner Marcas</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Set Marker on Graph</source>
-        <translation>グラフにマーカをセットします</translation>
+        <translation>Poner Marcas en el gráfico</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Sets a marker on a diagram&apos;s graph</source>
-        <translation>グラフ上にマーカをセットします</translation>
+        <translation>Pone marcas de medida en un gráfico o diagrama</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Set Marker
 
 Sets a marker on a diagram&apos;s graph</source>
-        <translation>マーカセット
+        <translation>Poner Marcas
 
-グラフ上にマーカをセットします</translation>
+Pone marcas de medida en un gráfico o diagrama</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Show Last Messages</source>
-        <translation>最後のメッセージを見る</translation>
+        <translation>Mostrar els últimos mensajes</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Shows last simulation messages</source>
-        <translation>最後のシミュレーションメッセージを見る</translation>
+        <translation>Muestra els mensajes de la última simulación</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Show Last Messages
 
 Shows the messages of the last simulation</source>
-        <translation>最後のメッセージを見る
+        <translation>Mostrar els últimos  mensajes
 
-最後のシミュレーションのメッセージを見る</translation>
+Muestra els mensajes de la última simulación</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Show Last Netlist</source>
-        <translation>最後のネットリストを見る</translation>
+        <translation>Mostrar última Lista de Conexiones</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Shows last simulation netlist</source>
-        <translation>最後のシミュレーションネットリストを見る</translation>
+        <translation>Muestra la Lista de Conexiones de la última simulación</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Show Last Netlist
 
 Shows the netlist of the last simulation</source>
-        <translation>最後のネットリストを見る
+        <translation>Mostrar última Lista de Conexiones
 
-最後のシミュレーションのネットリストを見る</translation>
+Muestra la Lista de Conexiones de la última simulación</translation>
     </message>
     <message>
         <source>Toolbar</source>
-        <translation type="obsolete">ツールバー</translation>
+        <translation type="obsolete">Barra de herramientas</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Tool&amp;bar</source>
-        <translation>ツールバー(&amp;b)</translation>
+        <translation>Barra de &amp;herramientas</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Enables/disables the toolbar</source>
-        <translation>ツールバーを有効/無効にする</translation>
+        <translation>Habilita/deshabilita la barra de herramientas</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Toolbar
 
 Enables/disables the toolbar</source>
-        <translation>ツールバー
+        <translation>Barra de herramientas
 
-ツールバーを有効／無効にする</translation>
+Habilita/deshabilita la barra de herramientas</translation>
     </message>
     <message>
         <source>Statusbar</source>
-        <translation type="obsolete">ステータスバー</translation>
+        <translation type="obsolete">Barra de estado</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>&amp;Statusbar</source>
-        <translation>ステータスバー(&amp;S)</translation>
+        <translation>&amp;Barra de estado</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Enables/disables the statusbar</source>
-        <translation>ステータスバーを有効／無効にする</translation>
+        <translation>Habilita/deshabilita la barra de estado</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Statusbar
 
 Enables/disables the statusbar</source>
-        <translation>ステータスバー
+        <translation>Barra de estado
 
-ステータスバーを有効／無効にする</translation>
+Habilita/deshabilita la barra de estado</translation>
     </message>
     <message>
         <source>Help Index</source>
-        <translation type="obsolete">ヘルプ目次</translation>
+        <translation type="obsolete">Índice de la Ajuda</translation>
     </message>
     <message>
         <location line="+17"/>
         <source>Help Index...</source>
-        <translation>ヘルプ目次...</translation>
+        <translation>Índice de la Ajuda...</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Index of Qucs Help</source>
-        <translation>Qucsヘルプ目次</translation>
+        <translation>Índice de la Ajuda de Qucs</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Help Index
 
 Index of intern Qucs help</source>
-        <translation>ヘルプ目次
+        <translation>Índice de la ayuda
 
-Qucsヘルプ目次</translation>
+Índice de la ayuda interna de Qucs</translation>
     </message>
     <message>
         <source>Getting Started</source>
-        <translation type="obsolete">はじめに</translation>
+        <translation type="obsolete">Empezando</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Getting Started...</source>
-        <translation>はじめに...</translation>
+        <translation>Empezando...</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Getting Started with Qucs</source>
-        <translation>はじめに</translation>
+        <translation>Empezando amb Qucs</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Getting Started
 
 Short introduction into Qucs</source>
-        <translation>はじめに
+        <translation>Empezando
 
-簡単なQucsの紹介</translation>
+Breve introducción a Qucs</translation>
     </message>
     <message>
         <source>About</source>
-        <translation type="obsolete">About</translation>
+        <translation type="obsolete">Acerca de</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>&amp;About Qucs...</source>
-        <translation>&amp;About Qucs...</translation>
+        <translation>&amp;Acerca de Qucs...</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>About the application</source>
-        <translation>このアプリケーションについて</translation>
+        <translation type="unfinished">Acerca de la aplicación</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>About
 
 About the application</source>
-        <translation>About
+        <translation>Acerca de
 
-このアプリケーションについて</translation>
+Acerca de la aplicación</translation>
     </message>
     <message>
         <location line="+4"/>
-        <location line="+442"/>
+        <location line="+447"/>
         <source>About Qt</source>
-        <translation>Qtについて</translation>
+        <translation>Acerca de Qt</translation>
     </message>
     <message>
-        <location line="-443"/>
+        <location line="-448"/>
         <source>About Qt...</source>
-        <translation>Qtについて...</translation>
+        <translation>Acerca de Qt...</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>About Qt
 
 About Qt by Trolltech</source>
-        <translation>Qtについて
+        <translation>Acerca de Qt
 
-TrolltechによるQtについて</translation>
+Acerca de Qt por Trolltech</translation>
     </message>
     <message>
         <source>Align</source>
-        <translation type="obsolete">整列</translation>
+        <translation type="obsolete">Alinear</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>&amp;File</source>
-        <translation>ファイル(&amp;F)</translation>
+        <translation>&amp;Fitxer</translation>
     </message>
     <message>
         <location line="+28"/>
         <source>&amp;Edit</source>
-        <translation>編集(&amp;E)</translation>
+        <translation>&amp;Edición</translation>
     </message>
     <message>
         <location line="+42"/>
         <source>&amp;Insert</source>
-        <translation>挿入(&amp;I)</translation>
+        <translation>&amp;Insertar</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>&amp;Project</source>
-        <translation>プロジェクト(&amp;P)</translation>
+        <translation>&amp;Proyecto</translation>
     </message>
     <message>
         <location line="+18"/>
         <source>&amp;Tools</source>
-        <translation>ツール(&amp;T)</translation>
+        <translation>&amp;Herramientas</translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+12"/>
         <source>&amp;Simulation</source>
-        <translation>シミュレーション(&amp;S)</translation>
+        <translation>&amp;Simulació</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>&amp;View</source>
-        <translation>ビュー(&amp;V)</translation>
+        <translation>&amp;Ver</translation>
     </message>
     <message>
         <location line="+13"/>
         <source>&amp;Help</source>
-        <translation>ヘルプ(&amp;H)</translation>
+        <translation>&amp;Ajuda</translation>
     </message>
     <message>
         <location line="+163"/>
         <source>Warnings in last simulation! Press F5</source>
-        <translation>最後に行ったシミュレーションに警告があります。F5キーで確認してください</translation>
-    </message>
-    <message>
-        <location line="-19"/>
-        <location line="+41"/>
-        <source>no warnings</source>
-        <translation>警告無し</translation>
+        <translation>Avisos en la última simulación! Pulsa F5</translation>
     </message>
     <message>
         <source>Toggle toolbar...</source>
-        <translation type="obsolete">ツールバー切替え...</translation>
+        <translation type="obsolete">Habilitar/deshabilitar Barra de herramientas...</translation>
     </message>
     <message>
         <source>Toggle statusbar...</source>
-        <translation type="obsolete">ステータスバー切替え...</translation>
+        <translation type="obsolete">Habilitar/deshabilitar Barra de estado...</translation>
     </message>
     <message>
-        <location line="+79"/>
+        <location line="+101"/>
         <source>About...</source>
-        <translation>...について...</translation>
+        <translation>Acerca de...</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Qucs Version</source>
-        <translation>Qucsバージョン</translation>
+        <translation>Versión de Qucs</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+5"/>
         <source>Quite Universal Circuit Simulator</source>
-        <translation></translation>
+        <translation>Quite Universal Circuit Simulator</translation>
     </message>
     <message>
         <location line="+1"/>
         <location line="+2"/>
         <source>Copyright (C)</source>
-        <translation></translation>
+        <translation>Copyright (C)</translation>
     </message>
     <message>
         <location line="-1"/>
         <source>by Michael Margraf</source>
-        <translation></translation>
+        <translation>por Michael Margraf</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Simulator by Stefan Jahn</source>
-        <translation></translation>
+        <translation>Simulador por Stefan Jahn</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>VHDL simulator &apos;FreeHDL&apos; by Edwin Naroska and Marius Vollmer</source>
-        <translation></translation>
+        <translation>Simulador VHDL &apos;FreeHDL&apos; por Edwin Naroska y Marius Vollmer</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Special thanks to Jens Flucke and Raimund Jacob</source>
-        <translation></translation>
+        <translation>Agradecimiento especial a Jens Flucke y Raimund Jacob</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Many thanks to Mike Brinson for correcting the VHDL output</source>
-        <translation></translation>
+        <translation>Muchas gracias a Mike Brinson por corregir la salida VHDL</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Translations:</source>
-        <translation>翻訳:</translation>
+        <translation>Traducciones:</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>German by Stefan Jahn</source>
-        <translation></translation>
+        <translation>Alemán por Stefan Jahn</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Polish by Dariusz Pienkowski</source>
-        <translation></translation>
+        <translation>Polaco por Dariusz Pienkowski</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Romanian by Radu Circa</source>
-        <translation></translation>
+        <translation>Rumano por Radu Circa</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>French by Vincent Habchi, F5RCS</source>
-        <translation></translation>
+        <translation>Francés por Vincent Habchi, F5RC</translation>
+    </message>
+    <message>
+        <source>Portuguese by Luciano Franca</source>
+        <translation type="obsolete">Portugués por Luciano Franca</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Spanish by Jose L. Redrejo Rodriguez</source>
-        <translation></translation>
+        <translation>Español por José L. Redrejo Rodríguez</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Japanese by Toyoyuki Ishikawa</source>
-        <translation></translation>
+        <translation>Japonés por Toyoyuki Ishikawa</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Italian by Giorgio Luparia and Claudio Girardi</source>
-        <translation></translation>
+        <translation>Italiano por Giorgio Luparia y Claudio Girardi</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Hebrew by Dotan Nahum</source>
-        <translation></translation>
+        <translation>Hebreo por Dotan Nahum</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Swedish by Peter Landgren</source>
-        <translation></translation>
+        <translation>Sueco por Peter Landgren</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Turkish by Onur and Ozgur Cobanoglu</source>
-        <translation></translation>
+        <translation>Turco por Onur y Ozgur Cobanoglu</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Hungarian by Jozsef Bus</source>
-        <translation></translation>
+        <translation>Húngaro por Jozsef Bus</translation>
     </message>
     <message>
-        <location line="-841"/>
+        <location line="-852"/>
         <source>Find...</source>
-        <translation>検索...</translation>
+        <translation>Encontrar...</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Find a piece of text</source>
-        <translation>テキストの一部を検索</translation>
+        <translation>Encontrar un trozo de text</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Find
 
 Searches for a piece of text</source>
-        <translation>検索
+        <translation>Encontrar
 
-テキストの一部を検索</translation>
+Busca un trozo de text</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Find Again</source>
-        <translation>再度検索</translation>
+        <translation>Encontrar otra vez</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Find same text again</source>
-        <translation>再度同じテキストを検索</translation>
+        <translation>Busca otra vez el mismo text</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Find
 
 Searches for the same piece of text again</source>
-        <translation>検索
+        <translation>Encontrar
 
-再度同じテキストの一部を検索</translation>
+Busca otra vez el mismo trozo de text</translation>
     </message>
     <message>
-        <location filename="qucs.cpp" line="-583"/>
+        <location filename="../qucs/qucs.cpp" line="-583"/>
         <source>The document was modified by another program !</source>
-        <translation>このドキュメントは他のプログラムによって変更されています!</translation>
+        <translation>¡ Otro programa ha modificado el document !</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Do you want to reload or keep this version ?</source>
-        <translation>再読み込みしますか?それともそのままがよろしいですか?</translation>
+        <translation>¿ Quieres recargarlo o mantener esta versión ?</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Reload</source>
-        <translation>再読み込み</translation>
+        <translation>Recargar</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Keep it</source>
-        <translation>そのまま</translation>
+        <translation>Mantenerlo</translation>
     </message>
     <message>
-        <location filename="qucs_init.cpp" line="-156"/>
+        <location filename="../qucs/qucs_init.cpp" line="-156"/>
         <source>&amp;Document Settings...</source>
-        <translation>ドキュメント設定(&amp;D)...</translation>
+        <translation>Configuración del &amp;Documento...</translation>
     </message>
     <message>
         <location line="+117"/>
         <source>Cuts out the selection and puts it into the clipboard</source>
-        <translation>選択を切取り、クリップボードに入れる</translation>
+        <translation>Corta la selección y la pasa al portapapeles</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Cut
 
 Cuts out the selection and puts it into the clipboard</source>
-        <translation>切取り
+        <translation>Cortar
 
-選択を切取り、クリップボードに入れる</translation>
+Corta la selección y la pasa al portapapeles</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Copies the selection into the clipboard</source>
-        <translation>選択部をクリップボードにコピー</translation>
+        <translation>Copia la selección al portapapeles</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Copy
 
 Copies the selection into the clipboard</source>
-        <translation>コピー
+        <translation>Copiar
 
-選択部をクリップボードにコピー</translation>
+Copia la selección al portapapeles</translation>
     </message>
     <message>
         <location line="+145"/>
@@ -15539,34 +15694,51 @@ Let the user select and load symbols</source>
     <message>
         <location line="+5"/>
         <source>Show the whole page</source>
-        <translation>ページ全体を見る</translation>
+        <translation>Muestra la página completa</translation>
     </message>
     <message>
         <location line="+29"/>
         <source>Activate select mode</source>
-        <translation>選択モードを有効にする</translation>
+        <translation>Activa el modo selección</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Select
 
 Activates select mode</source>
-        <translation>選択
+        <translation>Seleccionar
 
-選択モードを有効にします</translation>
+Activa el modo selección</translation>
     </message>
     <message>
         <location line="+100"/>
         <source>VHDL entity</source>
-        <translation>VHDL入力</translation>
+        <translation>Entidad VHDL</translation>
     </message>
     <message>
-        <location line="+156"/>
+        <location line="+19"/>
+        <source>Active filter synthesis</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Starts QucsActiveFilter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Active filter synthesis
+
+Starts QucsActiveFilter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+140"/>
         <source>Open Recent</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+136"/>
+        <location line="+137"/>
         <source>&amp;Technical Papers</source>
         <translation type="unfinished"></translation>
     </message>
@@ -15595,7 +15767,7 @@ Activates select mode</source>
     <message>
         <location line="+12"/>
         <source>Edit</source>
-        <translation type="unfinished">編集</translation>
+        <translation type="unfinished">Editar</translation>
     </message>
     <message>
         <location line="+11"/>
@@ -15608,7 +15780,7 @@ Activates select mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+151"/>
+        <location line="+155"/>
         <source>Qucs Team</source>
         <translation type="unfinished"></translation>
     </message>
@@ -15625,24 +15797,26 @@ Activates select mode</source>
     <message>
         <location line="+8"/>
         <source>Russian by Igor Gorbounov</source>
-        <translation></translation>
+        <translation>Ruso por Igor Gorbounov</translation>
     </message>
     <message>
-        <location line="-572"/>
+        <location line="-583"/>
         <source>Inserts skeleton of VHDL entity</source>
-        <translation>VHDL入力のスケルトンを挿入</translation>
+        <translation>Inserta esqueleto de la entidad VHDL</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>VHDL entity
 
 Inserts the skeleton of a VHDL entity</source>
-        <translation></translation>
+        <translation>Entidad VHDL
+
+Inserta esqueleto de la entidad VHDL</translation>
     </message>
     <message>
         <location line="-311"/>
         <source>Replace...</source>
-        <translation>置換...</translation>
+        <translation>Reemplazar...</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -15651,101 +15825,105 @@ Inserts the skeleton of a VHDL entity</source>
 Change component properties
 or
 text in VHDL code</source>
-        <translation>置換
+        <translation>Reemplazar
 
-コンポーネントのプロパティー変更
-もしくは
-テキストでのVHDLコード</translation>
+Cambia les propietats del componente
+o
+el text en el código VHDL</translation>
     </message>
     <message>
-        <location line="+214"/>
-        <source>Select Markers</source>
-        <translation>マーカ選択</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Selects all markers</source>
-        <translation>全てのマーカ選択</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Select Markers
-
-Selects all diagram markers of the document</source>
-        <translation>マーカ選択
-
-ドキュメントの表の全てのマーカを選択</translation>
-    </message>
-    <message>
-        <location line="+44"/>
+        <location line="+262"/>
         <source>Deactivate/Activate selected components</source>
-        <translation>選択された部品を無効/有効にする</translation>
+        <translation>Desactiva/Activa els componentes seleccionados</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Deactivate/Activate
 
 Deactivate/Activate the selected components</source>
-        <translation>無効/有効
+        <translation>Desactivar/Activar
 
-選択された部品を無効/有効にする</translation>
+Desactiva/Activa els componentes seleccionados</translation>
     </message>
     <message>
-        <location filename="qucs_actions.cpp" line="-178"/>
+        <location line="-50"/>
+        <source>Select Markers</source>
+        <translation>Seleccionar Marcadores</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Selects all markers</source>
+        <translation>Seleccionar todos els marcadores</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Select Markers
+
+Selects all diagram markers of the document</source>
+        <translation>Seleccionar Marcadores
+
+Selecciona todos els marcadores del document</translation>
+    </message>
+    <message>
+        <source>Align/Distribute</source>
+        <translation type="obsolete">Alinear/Distribuir</translation>
+    </message>
+    <message>
+        <location filename="../qucs/qucs_actions.cpp" line="-178"/>
         <source>Please open project with subcircuits!</source>
-        <translation>サブサーキットと共にプロジェクトを開いてください!</translation>
+        <translation>¡Abra un proyecto amb subcircuits!</translation>
     </message>
     <message>
-        <location filename="qucs_init.cpp" line="-138"/>
+        <location filename="../qucs/qucs_init.cpp" line="-92"/>
         <source>Create &amp;Library...</source>
-        <translation>ライブラリ作成(&amp;L)...</translation>
+        <translation>Crear &amp;Biblioteca...</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Create Library from Subcircuits</source>
-        <translation>サブサーキットよりライブラリ作成</translation>
+        <translation>Crear Biblioteca a partir de Subcircuitos</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Create Library
 
 Create Library from Subcircuits</source>
-        <translation>ライブラリr作成
+        <translation>Crear Biblioteca
 
-サブサーキットよりライブラリ作成</translation>
+Crear Biblioteca a partir de Subcircuitos</translation>
     </message>
     <message>
-        <location filename="qucs.cpp" line="-915"/>
+        <location filename="../qucs/qucs.cpp" line="-917"/>
         <source>Cannot delete file: </source>
-        <translation>ファイルを削除できません: </translation>
+        <translation>No se pudo borrar el fitxer: </translation>
     </message>
     <message>
         <location line="+17"/>
         <source>Cannot remove directory: </source>
-        <translation>ディレクトリを削除できません: </translation>
+        <translation>No se pudo eliminar el directorio: </translation>
     </message>
     <message>
-        <location filename="qucs_actions.cpp" line="+14"/>
+        <location filename="../qucs/qucs_actions.cpp" line="+14"/>
         <source>Please open project first!</source>
-        <translation>プロジェクトファイルを先に開いてください!</translation>
+        <translation>¡Abra antes un proyecto!</translation>
     </message>
     <message>
         <location line="+19"/>
         <source>Please select a diagram graph!</source>
-        <translation>表を先に選択してください!</translation>
+        <translation>¡Seleccione un gráfico de diagramas!</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>CSV file</source>
-        <translation>CSV　ファイル</translation>
+        <translation>Fitxer CSV</translation>
     </message>
     <message>
         <location line="-1"/>
         <source>Enter an Output File Name</source>
-        <translation>出力ファイル名を入力</translation>
+        <translation>Introduzca un nombre para el fitxer de salida</translation>
     </message>
     <message>
-        <location line="-726"/>
+        <location line="-757"/>
         <source>Opening aborted, file not found.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -15758,6 +15936,7 @@ Create Library from Subcircuits</source>
     </message>
     <message>
         <location line="+56"/>
+        <location line="+31"/>
         <source>Cannot start filter synthesis program! 
 
 %1</source>
@@ -15801,231 +15980,225 @@ Create Library from Subcircuits</source>
     <message>
         <location line="+460"/>
         <source>Output file already exists!</source>
-        <translation>出力ファイルは既に存在します!</translation>
+        <translation>¡El fitxer de salida ya existe!</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Overwrite it?</source>
-        <translation>上書きしますか?</translation>
+        <translation>¿Sobreescribirlo?</translation>
     </message>
     <message>
-        <location filename="qucs_init.cpp" line="-229"/>
+        <location filename="../qucs/qucs_init.cpp" line="-229"/>
         <source>Print Fit to Page...</source>
-        <translation>ページに合わせて印刷...</translation>
+        <translation>Imprimir ajustándose a la página...</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Print Fit to Page
 
 Print and fit content to the page size</source>
-        <translation>ページに合わせて印刷
+        <translation>Imprimir ajustándose a la página
 
-ページサイズに合わせて印刷</translation>
+Imprime y ajusta el contenido al tamaño de la página</translation>
     </message>
     <message>
         <location line="+228"/>
         <source>Create &amp;Package...</source>
-        <translation>パッケージを作成(&amp;P)...</translation>
+        <translation>Crear &amp;Paquete...</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Create compressed Package from Projects</source>
-        <translation>プロジェクトから圧縮されたパッケージを作成</translation>
+        <translation>Crear Paquete comprimido a partir de Proyectos</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Create Package
 
 Create compressed Package from complete Projects</source>
-        <translation>パッケージ作成
+        <translation>Crear Paquete
 
-完成されたプロジェクトから圧縮されたパッケージを作成</translation>
+Crea un paquete comprimido a partir de proyectos completos</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>E&amp;xtract Package...</source>
-        <translation>パッケージ展開(&amp;x)...</translation>
+        <translation>E&amp;xtraer Paquete...</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Install Content of a Package</source>
-        <translation>パッケージ内容をインストール</translation>
+        <translation>Instalar el contenido de un Paquete</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Extract Package
 
 Install Content of a Package</source>
-        <translation>パッケージ展開
+        <translation>Extraer Paquete
 
-パッケージ内容をインストール
-
-</translation>
+Instalar el contenido de un Paquete</translation>
     </message>
     <message>
         <source>&amp;Import Data...</source>
-        <translation type="obsolete">データインポート(&amp;I)...</translation>
+        <translation type="obsolete">&amp;Importar Dades...</translation>
     </message>
     <message>
         <source>Convert file to Qucs data file</source>
-        <translation type="obsolete">Qucsデータファイルに変換</translation>
+        <translation type="obsolete">Convertir fitxer a fitxer de dades de Qucs</translation>
     </message>
     <message>
         <source>Import Data
 
 Convert data file to Qucs data file</source>
-        <translation type="obsolete">データインポート
+        <translation type="obsolete">Importar Dades
 
-データファイルをQucsデータファイルに変換</translation>
+Convertir fitxer de dades a fitxer de dades de Qucs</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Export to &amp;CSV...</source>
-        <translation>CSVファイルに変換(&amp;C)...</translation>
+        <translation>Exportar a &amp;CSV...</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Convert graph data to CSV file</source>
-        <translation>グラフデータをCSVファイルに変換</translation>
+        <translation>Convertir dades de gráficos en un fitxer CSV</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Export to CSV
 
 Convert graph data to CSV file</source>
-        <translation>CSVファイルに変換
+        <translation>Exportar a CSV
 
-グラフデータをCSVファイルに変換</translation>
+Convertir dades de gráficos en un fitxer CSV</translation>
     </message>
     <message>
-        <location line="+255"/>
+        <location line="+261"/>
         <source>&amp;Dock Window</source>
-        <translation>ウィンドウをドッキングする(&amp;D)</translation>
+        <translation>Ventana &amp;Fija</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Enables/disables the browse dock window</source>
-        <translation>ブラウズドックウィンドウの有効/無効</translation>
+        <translation>Habilita/Deshabilita la ventana fija de exploración</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Browse Window
 
 Enables/disables the browse dock window</source>
-        <translation>ブラウズウィンドウ
+        <translation>Ventana de Exploración
 
-ブラウズドックウィンドウの有効/向こう</translation>
+Habilita/Deshabilita la ventana fija de exploración</translation>
     </message>
     <message>
-        <location filename="qucs.cpp" line="+697"/>
+        <location filename="../qucs/qucs.cpp" line="+699"/>
         <source>Printer Error.</source>
-        <translation>プリンタエラー.</translation>
+        <translation>Error de impresora.</translation>
     </message>
     <message>
         <source>Cannot start attenuator calculation program!</source>
-        <translation type="obsolete">アッテネータ計算プログラムが開始出来ません!</translation>
+        <translation type="obsolete">¡No se pudo arrancar el programa de cálculo de atenuadores!</translation>
     </message>
     <message>
-        <location filename="qucs_init.cpp" line="-74"/>
+        <location filename="../qucs/qucs_init.cpp" line="-74"/>
         <source>Attenuator synthesis</source>
-        <translation>アッテネータ生成</translation>
+        <translation>Síntesis de atenuadores</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Starts QucsAttenuator</source>
-        <translation>QucsAttenuatorを開始</translation>
+        <translation>Arrancar QucsAttenuator</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Attenuator synthesis
 
 Starts attenuator calculation program</source>
-        <translation>アッテネータを生成
+        <translation>Síntesis de atenuadores
 
-アッテネータ計算プログラムを開始</translation>
+Arranca el programa de cálculo de atenuadores</translation>
     </message>
     <message>
-        <location line="+514"/>
+        <location line="+519"/>
         <source>GUI improvements by Gopala Krishna A</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+17"/>
         <source>Czech by Marek Straka</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+1"/>
-        <source>Catalan by Antoni Subirats</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location line="-17"/>
-        <source>Verilog-AMS interface by Helene Parruitte</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location line="-894"/>
+        <location line="-921"/>
         <source>Center horizontally</source>
-        <translation>水平中心</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Center horizontally selected elements</source>
-        <translation>選択した要素を水平中心に移動</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Center horizontally
 
 Center horizontally selected elements</source>
-        <translation>水平中心
-
-選択した要素を水平中心に移動</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Center vertically</source>
-        <translation>垂直中心</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Center vertically selected elements</source>
-        <translation>選択した要素を垂直中心に移動</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Center vertically
 
 Center vertically selected elements</source>
-        <translation>垂直中心
-
-選択した要素を垂直中心に移動</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+529"/>
+        <location line="+535"/>
         <source>P&amp;ositioning</source>
-        <translation>位置(&amp;o)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-603"/>
+        <location line="+361"/>
+        <source>Verilog-AMS interface by Helene Parruitte</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+17"/>
+        <source>Catalan by Antoni Subirats</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-987"/>
         <source>Print Fit to Page</source>
-        <translation>ページにフィットして印刷</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+79"/>
         <source>Sets selected elements on grid</source>
-        <translation>選択した要素をグリッド上に合わせる</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Moves the property text of components</source>
-        <translation>コンポーネントのプロパティーテキストを移動</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Replace component properties or VHDL code</source>
-        <translation>VHDLコードや部品のプロパティーを置換</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+55"/>
@@ -16035,113 +16208,87 @@ Center vertically selected elements</source>
     <message>
         <location line="+50"/>
         <source>Opens an existing project</source>
-        <translation>既存のドキュメントを開く</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Deletes an existing project</source>
-        <translation>既存のプロジェクトを削除</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Closes the current project</source>
-        <translation>現在のプロジェクトを閉じる</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+116"/>
         <source>Mirrors the selected item about X Axis</source>
-        <translation>選択したアイテムをX軸で反転</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Mirrors the selected item about Y Axis</source>
-        <translation>選択されたアイテムをY軸で反転</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Goes inside the selected subcircuit</source>
-        <translation>選択したサブサーキットに入る</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+23"/>
         <source>Inserts an equation</source>
-        <translation>方程式を挿入</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Inserts a ground symbol</source>
-        <translation>グラウンドを挿入</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Inserts a port symbol</source>
-        <translation>ポートを挿入</translation>
-    </message>
-    <message>
-        <source>New Text</source>
-        <translation type="obsolete">新しいテキスト</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Save</source>
-        <translation type="obsolete">保存</translation>
-    </message>
-    <message>
-        <source>Save All</source>
-        <translation type="obsolete">全て保存</translation>
+        <translation type="obsolete">Guardar</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation type="obsolete">閉じる</translation>
+        <translation type="obsolete">Tancar</translation>
     </message>
     <message>
-        <source>Print...</source>
-        <translation type="obsolete">印刷...</translation>
-    </message>
-    <message>
-        <location filename="qucs.cpp" line="-2013"/>
-        <location line="+1553"/>
+        <location filename="../qucs/qucs.cpp" line="-1986"/>
+        <location line="+1524"/>
         <source>Verilog Sources</source>
-        <translation>Verilogソース</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-1452"/>
-        <location line="+2385"/>
+        <location line="-1425"/>
+        <location line="+2360"/>
         <source>Verilog</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cannot delete Verilog source: </source>
-        <translation type="obsolete">Verilogソースを削除できません:　</translation>
-    </message>
-    <message>
-        <source>probes</source>
-        <translation type="obsolete">プローブ</translation>
-    </message>
-    <message>
-        <source>verilog-a devices</source>
-        <translation type="obsolete">Verilog-a　デバイス</translation>
-    </message>
-    <message>
-        <location filename="qucs_init.cpp" line="-137"/>
+        <location filename="../qucs/qucs_init.cpp" line="-137"/>
         <source>&amp;Import/Export Data...</source>
-        <translation>データインポート/エクスポート(&amp;I)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Convert data file</source>
-        <translation>データファイル変換</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Import/Export Data
 
 Convert data file to various file formats</source>
-        <translation>データインポート/エクスポート
-
-データファイルをいろいろなファイルにインポート/エクスポート</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+729"/>
+        <location line="+740"/>
         <source>Arabic by Chabane Noureddine</source>
         <translation type="unfinished"></translation>
     </message>
@@ -16151,7 +16298,7 @@ Convert data file to various file formats</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qucs.cpp" line="-1587"/>
+        <location filename="../qucs/qucs.cpp" line="-1589"/>
         <source>unknown</source>
         <translation type="unfinished"></translation>
     </message>
@@ -16201,18 +16348,18 @@ Convert data file to various file formats</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-959"/>
-        <location line="+1553"/>
+        <location line="-930"/>
+        <location line="+1524"/>
         <source>Verilog-A Sources</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-1451"/>
+        <location line="-1424"/>
         <source>Verilog-A</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+800"/>
+        <location line="+773"/>
         <source>Verilog-A source</source>
         <translation type="unfinished"></translation>
     </message>
@@ -16227,18 +16374,18 @@ Convert data file to various file formats</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-971"/>
-        <location line="+1553"/>
+        <location line="-942"/>
+        <location line="+1524"/>
         <source>Octave Scripts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-1456"/>
+        <location line="-1429"/>
         <source>Octave</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qucs_init.cpp" line="-461"/>
+        <location filename="../qucs/qucs_init.cpp" line="-466"/>
         <source>&amp;Octave Window</source>
         <translation type="unfinished"></translation>
     </message>
@@ -16276,36 +16423,36 @@ Starts standard resistor color code computation program</source>
     <name>QucsAttenuator</name>
     <message>
         <source>E&amp;xit</source>
-        <translation type="obsolete">終了(&amp;x)</translation>
+        <translation type="obsolete">&amp;Salir</translation>
     </message>
     <message>
         <source>Help...</source>
-        <translation type="obsolete">ヘルプ...</translation>
+        <translation type="obsolete">Ajuda....</translation>
     </message>
     <message>
         <source>&amp;About QucsAttenuator...</source>
-        <translation type="obsolete">QucsAttenuatorについて(&amp;A)...</translation>
+        <translation type="obsolete">&amp;Acerca de QucsAttenuator...</translation>
     </message>
     <message>
         <location filename="../qucs-attenuator/qucsattenuator.cpp" line="+70"/>
         <source>About Qt...</source>
-        <translation>Qtについて...</translation>
+        <translation>Acerca de Qt...</translation>
     </message>
     <message>
         <location line="-22"/>
         <source>&amp;File</source>
-        <translation>ファイル(&amp;F)</translation>
+        <translation>&amp;Fitxer</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>&amp;Quit</source>
-        <translation type="unfinished">閉じる(&amp;Q)</translation>
+        <translation type="unfinished">&amp;Salir</translation>
     </message>
     <message>
         <location line="+6"/>
         <location line="+2"/>
         <source>&amp;Help</source>
-        <translation>ヘルプ(&amp;H)</translation>
+        <translation>&amp;Ajuda</translation>
     </message>
     <message>
         <location line="+5"/>
@@ -16315,38 +16462,38 @@ Starts standard resistor color code computation program</source>
     <message>
         <location line="+49"/>
         <source>Attenuation:</source>
-        <translation>減衰値:</translation>
+        <translation>Atenuación:</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>1</source>
-        <translation></translation>
+        <translation>1</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>dB</source>
-        <translation></translation>
+        <translation>dB</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Zin:</source>
-        <translation>Zin:</translation>
+        <translation>Zentrada:</translation>
     </message>
     <message>
         <location line="+2"/>
         <location line="+11"/>
         <source>50</source>
-        <translation></translation>
+        <translation>50</translation>
     </message>
     <message>
         <location line="-2"/>
         <source>Zout:</source>
-        <translation>Zout:</translation>
+        <translation>Zsalida:</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>Calculate and put into Clipboard</source>
-        <translation>計算してクリップボードにコピー</translation>
+        <translation>Calcular y poner en el Portapapeles</translation>
     </message>
     <message>
         <location line="+9"/>
@@ -16372,7 +16519,7 @@ Starts standard resistor color code computation program</source>
         <location line="+7"/>
         <location line="+7"/>
         <source>Ohm</source>
-        <translation></translation>
+        <translation>Ohm</translation>
     </message>
     <message>
         <location line="-11"/>
@@ -16388,27 +16535,27 @@ Starts standard resistor color code computation program</source>
         <location line="+16"/>
         <location line="+125"/>
         <source>Result:</source>
-        <translation>結果:</translation>
+        <translation>Resultado:</translation>
     </message>
     <message>
         <location line="-107"/>
         <source>Qucs Attenuator Help</source>
-        <translation type="unfinished">Qucs Attenuator ヘルプ</translation>
+        <translation type="unfinished">Ajuda Atenuador Qucs</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>QucsAttenuator is an attenuator synthesis program. To create a attenuator, simply enter all the input parameters and press the calculation button. Immediatly, the schematic of the attenuator is calculated and put into the clipboard. Now go to Qucs, open an schematic and press CTRL-V (paste from clipboard). The attenuator schematic can now be inserted. Have lots of fun!</source>
-        <translation type="unfinished">QucsAttenuatorはアッテネータを生成するプログラムです。アッテネータを生成するには、全てのパラメータを入力し計算ボタンを押すだけです。するとアッテネータの回路が計算されクリップボードに入力されます。Qucs本体に移動してペースト（CTRL-V)すればアッテネータ回路が追加できるでしょう。Have lots of fun!</translation>
+        <translation type="unfinished">QucsAttenuator és un programari de síntesi d&apos;atenuadors. Per crear un atenuador només necessiteu introduir els paràmetres d&apos;entrada i polsar el botó de càlcul. El circuit del atenuador és calculat i possat al portapapers. Fet aquest pas, aneu a Qucs, obriu un esquema i polseu CTRL-V (pegar des del portapapers). L&apos;esquema de l&apos;atenuador quedarà incrustat. Divertiu-vos!</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>About Qt</source>
-        <translation>Qtについて</translation>
+        <translation>Acerca de Qt</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>About...</source>
-        <translation>About...</translation>
+        <translation>Acerca de...</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -16416,38 +16563,38 @@ Starts standard resistor color code computation program</source>
 Attenuator synthesis program
 </source>
         <translation>
-アッテネータ生成プログラム
+Programa de síntesis de atenuadores
 </translation>
     </message>
     <message>
         <location line="+1"/>
         <location line="+2"/>
         <source>Copyright (C) 2006 by</source>
-        <translation></translation>
+        <translation>Copyright (C) 2006 por</translation>
     </message>
     <message>
         <location line="-145"/>
         <source>Topology</source>
-        <translation>型</translation>
+        <translation>Topología</translation>
     </message>
     <message>
         <location line="+23"/>
         <source>Input</source>
-        <translation>入力</translation>
+        <translation>Entrada</translation>
     </message>
     <message>
         <location line="+45"/>
         <source>Output</source>
-        <translation>出力</translation>
+        <translation>Sortida</translation>
     </message>
     <message>
         <location line="+159"/>
         <source>Success!</source>
-        <translation>成功!</translation>
+        <translation>¡Conseguido!</translation>
     </message>
     <message>
         <source>Error: Set Attenuation more than %1 dB</source>
-        <translation type="obsolete">エラー:　%1 dB以上に減衰量を設定してください</translation>
+        <translation type="obsolete">Error: Fije la atenuación en més de %1 dB</translation>
     </message>
 </context>
 <context>
@@ -16456,288 +16603,357 @@ Attenuator synthesis program
         <location filename="../qucs-edit/qucsedit.cpp" line="+44"/>
         <location line="+147"/>
         <source>File: </source>
-        <translation>ファイル:</translation>
+        <translation>Fitxer:</translation>
     </message>
     <message>
         <location line="-134"/>
         <source>About</source>
-        <translation></translation>
+        <translation>Acerca de</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Quit</source>
-        <translation>閉じる</translation>
+        <translation>Salir</translation>
     </message>
     <message>
         <location line="+50"/>
         <source>About...</source>
-        <translation>このソフトウェアについて...</translation>
+        <translation>Acerca de...</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <source>Qucs Editor Version </source>
+        <translation type="obsolete">Versión del Editor Qucs </translation>
+    </message>
+    <message>
         <source>
-Very simple text editor for Qucs
+very simple text editor for Qucs
 </source>
-        <translation></translation>
+        <translation type="obsolete">
+editor de text muy simple para Qucs
+</translation>
     </message>
     <message>
-        <location line="+11"/>
+        <source>Copyright (C) 2004 by Michael Margraf
+</source>
+        <translation type="obsolete">Copyright (C) 2004 por Michael Margraf
+</translation>
+    </message>
+    <message>
+        <location line="+13"/>
         <source>Enter a Filename</source>
-        <translation>ファイル名入力</translation>
+        <translation>Escriba un nombre de fitxer</translation>
     </message>
     <message>
         <location line="+19"/>
         <location line="+39"/>
         <source>Error</source>
-        <translation>エラー</translation>
+        <translation>Error</translation>
     </message>
     <message>
         <location line="-38"/>
         <source>Cannot write file: </source>
-        <translation>ファイルを書き込みできません:</translation>
+        <translation>No se pudo escribir el fitxer:</translation>
     </message>
     <message>
         <location line="+39"/>
         <source>Cannot read file: </source>
-        <translation>ファイルを読み込みできません:</translation>
+        <translation>No se pudo leer el fitxer:</translation>
     </message>
     <message>
         <location line="+18"/>
         <source>Closing document</source>
-        <translation>ドキュメントを閉じます</translation>
+        <translation>Cerrando el document</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>The text contains unsaved changes!
 </source>
-        <translation>セーブされていないテキストが含まれています!</translation>
+        <translation>¡El text contiene cambios  no guardados!
+</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Do you want to save the changes?</source>
-        <translation>変更されたものを保存しますか?</translation>
+        <translation>¿Desea guardar els cambios?</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>&amp;Save</source>
-        <translation>保存(&amp;S)</translation>
+        <translation>&amp;Guardar</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>&amp;Discard</source>
-        <translation>破棄(&amp;D)</translation>
+        <translation>&amp;Descartar</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="obsolete">キャンセル</translation>
+        <translation type="obsolete">Cancel·lar</translation>
     </message>
     <message>
-        <location line="-90"/>
+        <location line="-91"/>
+        <source>
+Very simple text editor for Qucs
+</source>
+        <translation>
+Editor de text muy simple para Qucs
+</translation>
+    </message>
+    <message>
+        <location line="+1"/>
         <source>Copyright (C) 2004, 2005 by Michael Margraf
 </source>
-        <translation>Copyright (C) 2004, 2005 by Michael Margraf</translation>
+        <translation>Copyright (C) 2004, 2005 por Michael Margraf
+</translation>
     </message>
     <message>
         <location line="+22"/>
         <source>Enter a Document Name</source>
-        <translation>ドキュメント名を入力</translation>
+        <translation>Escriba un nombre del document</translation>
     </message>
     <message>
         <location line="+68"/>
         <source>&amp;Cancel</source>
-        <translation>キャンセル(&amp;C)</translation>
+        <translation>&amp;Cancel·lar</translation>
     </message>
     <message>
         <location line="-148"/>
         <location line="+49"/>
         <source>Line: %1  -  Column: %2</source>
-        <translation>Line: %1  -  Column: %2</translation>
+        <translation>Línea: %1  -  Columna: %2</translation>
     </message>
 </context>
 <context>
     <name>QucsFilter</name>
     <message>
-        <location filename="../qucs-filter/qucsfilter.cpp" line="+59"/>
+        <location filename="../qucs-filter/qucsfilter.cpp" line="+66"/>
         <source>E&amp;xit</source>
-        <translation>終了(&amp;x)</translation>
+        <translation>&amp;Salir</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Help...</source>
-        <translation>ヘルプ...</translation>
+        <translation>Ajuda....</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>&amp;About QucsFilter...</source>
-        <translation>QucsFilterについて(&amp;A)...</translation>
+        <translation>&amp;Acerca de QucsFilter...</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>About Qt...</source>
-        <translation>Qtについて...</translation>
+        <translation>Acerca de Qt...</translation>
     </message>
     <message>
         <location line="-17"/>
         <source>&amp;File</source>
-        <translation>ファイル(&amp;F)</translation>
+        <translation>&amp;Fitxer</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>&amp;Help</source>
-        <translation>ヘルプ(&amp;H)</translation>
+        <translation>&amp;Ajuda</translation>
     </message>
     <message>
-        <location line="+29"/>
+        <location line="+30"/>
+        <source>Filter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Realization:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+15"/>
         <source>Filter type:</source>
-        <translation>フィルタタイプ:</translation>
+        <translation>Tipus de filtro:</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Filter class:</source>
-        <translation>フィルタの種類:</translation>
+        <translation>Clase de Filtro:</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Low pass</source>
-        <translation>ローパス</translation>
+        <translation>Paso bajo</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>High pass</source>
-        <translation>ハイパス</translation>
+        <translation>Paso alto</translation>
     </message>
     <message>
         <location line="+9"/>
         <source>Order:</source>
-        <translation>段数:</translation>
+        <translation>Orden:</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+302"/>
+        <location line="+399"/>
         <source>Corner frequency:</source>
-        <translation>コーナー周波数:</translation>
+        <translation>Frecuencia de esquina:</translation>
     </message>
     <message>
-        <location line="-289"/>
+        <location line="-386"/>
         <source>Stop frequency:</source>
-        <translation>ストップ周波数:</translation>
+        <translation>Frecuencia de  paro:</translation>
     </message>
     <message>
         <location line="+26"/>
-        <location line="+275"/>
+        <location line="+372"/>
         <source>Pass band ripple:</source>
-        <translation>通過帯域リップル:</translation>
+        <translation>Rizado del pas banda:</translation>
     </message>
     <message>
-        <location line="-259"/>
+        <location line="-356"/>
         <source>Impedance:</source>
-        <translation>インピーダンス:</translation>
+        <translation>Impedancia:</translation>
     </message>
     <message>
         <location line="+9"/>
-        <source>Calculate and put into Clipboard</source>
-        <translation>計算してクリップボードにコピー</translation>
+        <source>Microstrip Substrate</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+37"/>
+        <location line="+9"/>
+        <source>Relative permittivity:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+13"/>
+        <source>Substrate height:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>metal thickness:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>minimum width:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>maximum width:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+12"/>
+        <source>Calculate and put into Clipboard</source>
+        <translation>Calcular y poner en el Portapapeles</translation>
+    </message>
+    <message>
+        <location line="+39"/>
         <source>About...</source>
-        <translation>About...</translation>
+        <translation>Acerca de...</translation>
     </message>
     <message>
         <source>QucsFilter Version </source>
-        <translation type="obsolete">QucsFilter バージョン</translation>
+        <translation type="obsolete">Versión de QucsFilter</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>
 Filter synthesis program
 </source>
-        <translation>フィルタ生成プログラム</translation>
+        <translation>
+Programa de síntexis de filtros</translation>
+    </message>
+    <message>
+        <source>Copyright (C) 2005 by Toyoyuki Ishikawa and Michael Margraf
+</source>
+        <translation type="obsolete">Copyright (C) 2005 by Toyoyuki Ishikawa and Michael Margraf
+</translation>
     </message>
     <message>
         <location line="+12"/>
         <source>About Qt</source>
-        <translation>Qtについて</translation>
+        <translation>Acerca de Qt</translation>
     </message>
     <message>
         <location line="+13"/>
-        <location line="+101"/>
+        <location line="+138"/>
         <location line="+18"/>
         <source>Result:</source>
-        <translation>結果:</translation>
+        <translation>Resultado:</translation>
     </message>
     <message>
         <location line="-9"/>
         <source>Result: --</source>
-        <translation>結果:--</translation>
+        <translation>Resultado: --</translation>
     </message>
     <message>
         <location line="-8"/>
         <location line="+17"/>
         <source>Successful</source>
-        <translation>成功</translation>
+        <translation>Con éxito</translation>
     </message>
     <message>
-        <location line="-261"/>
+        <location line="-358"/>
         <source>Band pass</source>
-        <translation>バンドパス</translation>
+        <translation>Banda de pas</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Band stop</source>
-        <translation>バンドストップ</translation>
+        <translation>Banda de parada</translation>
     </message>
     <message>
-        <location line="+142"/>
+        <location line="+202"/>
         <location line="+1"/>
         <source>Error</source>
-        <translation>エラー</translation>
+        <translation>Error</translation>
     </message>
     <message>
-        <location line="+74"/>
+        <location line="+111"/>
         <source>Stop frequency must be greater than start frequency.</source>
-        <translation>ストップ周波数はスタート周波数より大きくなければなりません.</translation>
+        <translation>La freqüència final debe ser mayor que la freqüència inicial.</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Filter order must not be less than two.</source>
-        <translation>フィルタ段数は２以上でなければなりません.</translation>
+        <translation>El orden del filtro no debe ser menor de 2.</translation>
     </message>
     <message>
         <location line="+99"/>
         <source>Start frequency:</source>
-        <translation>スタート周波数:</translation>
+        <translation>Frecuencia inicial:</translation>
     </message>
     <message>
-        <location line="-283"/>
-        <location line="+287"/>
-        <source>Stop band frequency:</source>
-        <translation>ストップバンド周波数:</translation>
-    </message>
-    <message>
-        <location line="-266"/>
-        <source>Stop band attenuation:</source>
-        <translation>ストップバンド減衰量:</translation>
-    </message>
-    <message>
-        <location line="+167"/>
+        <location line="-95"/>
         <source>Bessel filter order must not be greater than 19.</source>
-        <translation>ベッセル関数フィルタは19段以内でなければなりません.</translation>
+        <translation>El orden del filtro Bessel no debe ser mayor de 19.</translation>
     </message>
     <message>
-        <location line="+103"/>
+        <location line="-285"/>
+        <location line="+384"/>
+        <source>Stop band frequency:</source>
+        <translation>Frecuencia de la banda de parada:</translation>
+    </message>
+    <message>
+        <location line="-363"/>
+        <source>Stop band attenuation:</source>
+        <translation>Atenuación de la banda de parada:</translation>
+    </message>
+    <message>
+        <location line="+367"/>
         <source>Pass band frequency:</source>
-        <translation>通過帯域周波数:</translation>
+        <translation>Frecuencia de la banda de pas:</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Pass band attenuation:</source>
-        <translation>通過帯域減衰量:</translation>
+        <translation>Atenuación de la banda de pas:</translation>
     </message>
     <message>
-        <location line="-214"/>
+        <location line="-251"/>
         <source>Copyright (C) 2005, 2006 by</source>
-        <translation></translation>
+        <translation>Copyright (C) 2005, 2006 por</translation>
     </message>
 </context>
 <context>
@@ -16745,1423 +16961,1474 @@ Filter synthesis program
     <message>
         <location filename="../qucs-help/qucshelp.cpp" line="+50"/>
         <source>Qucs Help System</source>
-        <translation>Qucsヘルプシステム</translation>
+        <translation>Sistema de Ajuda de Qucs</translation>
     </message>
     <message>
         <source>Help Index</source>
-        <translation type="obsolete">ヘルプ目次</translation>
+        <translation type="obsolete">Índice de la Ajuda</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation type="obsolete">閉じる</translation>
+        <translation type="obsolete">Tancar</translation>
     </message>
     <message>
         <location line="+29"/>
         <source>&amp;Quit</source>
-        <translation>閉じる(&amp;Q)</translation>
+        <translation type="unfinished">&amp;Salir</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>&amp;Back</source>
-        <translation>戻る(&amp;B)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
         <source>&amp;Forward</source>
-        <translation>進む(&amp;F)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
         <source>&amp;Home</source>
-        <translation>ホーム(&amp;H)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+1"/>
         <source>&amp;Previous</source>
-        <translation>以前(&amp;P)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
         <source>&amp;Next</source>
-        <translation>次(&amp;N)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+70"/>
         <source>Home</source>
-        <translation>ホーム</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="-69"/>
         <source>&amp;Table of Contents</source>
-        <translation>目次(&amp;T)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Enables/disables the table of contents</source>
-        <translation>目次を有効/無効</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Table of Contents
 
 Enables/disables the table of contents</source>
-        <translation>目次
-
-目次を有効/無効</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+40"/>
         <source>&amp;About Qt</source>
-        <translation>Qtについて(&amp;A)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
         <source>&amp;File</source>
-        <translation>ファイル(&amp;F)</translation>
+        <translation type="unfinished">&amp;Fitxer</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>&amp;View</source>
-        <translation>ビュー(&amp;V)</translation>
+        <translation type="unfinished">&amp;Ver</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>&amp;Help</source>
-        <translation>ヘルプ(&amp;H)</translation>
+        <translation type="unfinished">&amp;Ajuda</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Contents</source>
-        <translation>内容</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>QucsInit</name>
     <message>
         <source>New</source>
-        <translation type="obsolete">新規</translation>
+        <translation type="obsolete">Nou</translation>
     </message>
     <message>
         <source>&amp;New</source>
-        <translation type="obsolete">新規(&amp;N)</translation>
+        <translation type="obsolete">&amp;Nou</translation>
     </message>
     <message>
         <source>Creates a new document</source>
-        <translation type="obsolete">新しいドキュメントを作成</translation>
+        <translation type="obsolete">Crea un nuevo document</translation>
     </message>
     <message>
         <source>New
 
 Creates a new schematic or data display document</source>
-        <translation type="obsolete">新規
+        <translation type="obsolete">Nou
 
-新しい回路図かデータ表示を作成</translation>
+Crea un document de esquema o para mostrar dades</translation>
     </message>
     <message>
         <source>Open File</source>
-        <translation type="obsolete">ファイルを開く</translation>
+        <translation type="obsolete">Abrir Fitxer</translation>
     </message>
     <message>
         <source>&amp;Open...</source>
-        <translation type="obsolete">開く(&amp;O)...</translation>
+        <translation type="obsolete">&amp;Abrir...</translation>
     </message>
     <message>
         <source>Opens an existing document</source>
-        <translation type="obsolete">既存のドキュメントを開く</translation>
+        <translation type="obsolete">Abre un document existente</translation>
     </message>
     <message>
         <source>Open File
 
 Opens an existing document</source>
-        <translation type="obsolete">既存のドキュメントを開きます</translation>
+        <translation type="obsolete">Abrir Fitxer
+
+Abre un document existente</translation>
     </message>
     <message>
         <source>Save File</source>
-        <translation type="obsolete">ファイルを保存</translation>
+        <translation type="obsolete">Guardar Fitxer</translation>
     </message>
     <message>
         <source>&amp;Save</source>
-        <translation type="obsolete">保存(&amp;S)</translation>
+        <translation type="obsolete">&amp;Guardar</translation>
     </message>
     <message>
         <source>Saves the current document</source>
-        <translation type="obsolete">現在のドキュメントを保存</translation>
+        <translation type="obsolete">Guarda el document actual</translation>
     </message>
     <message>
         <source>Save File
 
 Saves the current document</source>
-        <translation type="obsolete">現在のドキュメントを保存現在のドキュメントを保存</translation>
+        <translation type="obsolete">Guardar Fitxer
+
+Guarda el document actual</translation>
     </message>
     <message>
         <source>Save File As</source>
-        <translation type="obsolete">別名で保存</translation>
+        <translation type="obsolete">Guardar como</translation>
     </message>
     <message>
         <source>Save &amp;as...</source>
-        <translation type="obsolete">別名で保存 (&amp;a)...</translation>
+        <translation type="obsolete">Guardar &amp;como...</translation>
     </message>
     <message>
         <source>Saves the current document under a new filename</source>
-        <translation type="obsolete">現在のドキュメントを新しい名前で保存</translation>
+        <translation type="obsolete">Guarda el document actual amb un nombre nuevo</translation>
     </message>
     <message>
         <source>Save As
 
 Saves the current document under a new filename</source>
-        <translation type="obsolete">別名で保存
+        <translation type="obsolete">Guardar como
 
-現在のドキュメントを新しい名前で保存</translation>
+Guarda el document actual amb un nombre nuevo</translation>
     </message>
     <message>
         <source>Save All Files</source>
-        <translation type="obsolete">全てのファイルを保存</translation>
+        <translation type="obsolete">Guardar Tots els Fitxers</translation>
     </message>
     <message>
         <source>Save &amp;All</source>
-        <translation type="obsolete">全て保存(&amp;A)</translation>
+        <translation type="obsolete">Guardar &amp;Todo</translation>
     </message>
     <message>
         <source>Saves all open documents</source>
-        <translation type="obsolete">開かれた全てのドキュメントを保存</translation>
+        <translation type="obsolete">Guarda todos els documents abiertos</translation>
     </message>
     <message>
         <source>Save All Files
 
 Saves all open documents</source>
-        <translation type="obsolete">全てのファイルを保存
+        <translation type="obsolete">Guardar todos els fitxers
 
-開かれた全てのドキュメントを保存</translation>
+Guarda todos els documents abiertos</translation>
     </message>
     <message>
         <source>Close File</source>
-        <translation type="obsolete">ファイルを閉じる</translation>
+        <translation type="obsolete">Tancar fitxer</translation>
     </message>
     <message>
         <source>&amp;Close</source>
-        <translation type="obsolete">閉じる(&amp;C)</translation>
+        <translation type="obsolete">&amp;Tancar</translation>
     </message>
     <message>
         <source>Closes the current document</source>
-        <translation type="obsolete">現在のドキュメントを閉じる</translation>
+        <translation type="obsolete">Cierra el document actual</translation>
     </message>
     <message>
         <source>Close File
 
 Closes the current document</source>
-        <translation type="obsolete">ファイルを閉じる
+        <translation type="obsolete">Tancar Fitxer
 
-現在のファイルを閉じる</translation>
+Cierra el document actual</translation>
     </message>
     <message>
         <source>Edit Circuit Symbol</source>
-        <translation type="obsolete">回路シンボルを編集</translation>
+        <translation type="obsolete">Editar Símbolo del circuito</translation>
     </message>
     <message>
         <source>Edits the symbol for this schematic</source>
-        <translation type="obsolete">回路図のシンボルを編集</translation>
+        <translation type="obsolete">Edita els símboels de este esquema</translation>
     </message>
     <message>
         <source>Edit Circuit Symbol
 
 Edits the symbol for this schematic</source>
-        <translation type="obsolete">回路シンボルを編集
+        <translation type="obsolete">Editar Símbolo del circuito
 
-この回路図の為のシンボルを編集</translation>
+Edita els símboels de este esquema</translation>
     </message>
     <message>
         <source>Document Settings</source>
-        <translation type="obsolete">ドキュメント セッティング</translation>
+        <translation type="obsolete">Propietats del document</translation>
     </message>
     <message>
         <source>Document Settings...</source>
-        <translation type="obsolete">ドキュメント セッティング...</translation>
+        <translation type="obsolete">Propietats del document...</translation>
     </message>
     <message>
         <source>Settings
 
 Sets properties of the file</source>
-        <translation type="obsolete">セッティング
+        <translation type="obsolete">Propietats
 
-ファイルのプロパティーのセッティング</translation>
+Fija les propietats del fitxer</translation>
     </message>
     <message>
         <source>Print File</source>
-        <translation type="obsolete">ファイルを印刷</translation>
+        <translation type="obsolete">Imprimir fitxer</translation>
     </message>
     <message>
         <source>&amp;Print...</source>
-        <translation type="obsolete">印刷(&amp;P)...</translation>
+        <translation type="obsolete">&amp;Imprimir...</translation>
     </message>
     <message>
         <source>Prints the current document</source>
-        <translation type="obsolete">現在のドキュメントを印刷</translation>
+        <translation type="obsolete">Imprime el document actual</translation>
     </message>
     <message>
         <source>Print File
 
 Prints the current document</source>
-        <translation type="obsolete">ファイルを印刷
+        <translation type="obsolete">Imprimir fitxer
 
-現在のドキュメントを印刷</translation>
+Imprime el document actual</translation>
     </message>
     <message>
         <source>Print Selected Elements</source>
-        <translation type="obsolete">選択された要素を印刷</translation>
+        <translation type="obsolete">Imprimir els elementos seleccionados</translation>
     </message>
     <message>
         <source>Print Selection...</source>
-        <translation type="obsolete">選択された物を印刷...</translation>
+        <translation type="obsolete">Imprimir selección...</translation>
     </message>
     <message>
         <source>Prints Selected Elements</source>
-        <translation type="obsolete">選択された要素を印刷</translation>
+        <translation type="obsolete">Imprimir els elementos seleccionados</translation>
     </message>
     <message>
         <source>Print Selected Elements
 
 Prints selected elements of the current document</source>
-        <translation type="obsolete">選択された要素を印刷
+        <translation type="obsolete">Imprimir els elementos seleccionados
 
-現在のドキュメントの選択された要素を印刷</translation>
+Imprime els elementos seleccionados en el document actual</translation>
     </message>
     <message>
         <source>Exit</source>
-        <translation type="obsolete">終了</translation>
+        <translation type="obsolete">Salir</translation>
     </message>
     <message>
         <source>E&amp;xit</source>
-        <translation type="obsolete">終了(&amp;x)</translation>
+        <translation type="obsolete">&amp;Salir</translation>
     </message>
     <message>
         <source>Quits the application</source>
-        <translation type="obsolete">アプリケーションを終了</translation>
+        <translation type="obsolete">Sale de la aplicación</translation>
     </message>
     <message>
         <source>Exit
 
 Quits the application</source>
-        <translation type="obsolete">アプリケーションを終了</translation>
+        <translation type="obsolete">Salir
+
+Sale de la aplicación</translation>
     </message>
     <message>
         <source>Application Settings</source>
-        <translation type="obsolete">アプリケーションの設定</translation>
+        <translation type="obsolete">Configuración de la aplicación</translation>
     </message>
     <message>
         <source>Application Settings...</source>
-        <translation type="obsolete">アプリケーションの設定...</translation>
+        <translation type="obsolete">Configuración de la aplicación...</translation>
     </message>
     <message>
         <source>Qucs Settings
 
 Sets properties of the application</source>
-        <translation type="obsolete">Qucsの設定
+        <translation type="obsolete">Configurar Qucs
 
-このアプリケーションの設定</translation>
+Configurar les propietats de la aplicación</translation>
     </message>
     <message>
         <source>Align top</source>
-        <translation type="obsolete">上に整列</translation>
+        <translation type="obsolete">Alinear arriba</translation>
     </message>
     <message>
         <source>Align top selected elements</source>
-        <translation type="obsolete">選択された要素を上部に整列</translation>
+        <translation type="obsolete">Alinear arriba els elementos seleccionados</translation>
     </message>
     <message>
         <source>Align top
 
 Align selected elements to their upper edge</source>
-        <translation type="obsolete">選択された要素をそれらの上端に整列</translation>
+        <translation type="obsolete">Alinear arriba
+
+Alinear arriba els elementos seleccionados</translation>
     </message>
     <message>
         <source>Align bottom</source>
-        <translation type="obsolete">下に整列</translation>
+        <translation type="obsolete">Alinear abajo</translation>
     </message>
     <message>
         <source>Align bottom selected elements</source>
-        <translation type="obsolete">選択された要素を下に整列</translation>
+        <translation type="obsolete">Alinear abajo els elementos seleccionados</translation>
     </message>
     <message>
         <source>Align bottom
 
 Align selected elements to their lower edge</source>
-        <translation type="obsolete">選択された要素をそれらの下端に整列</translation>
+        <translation type="obsolete">Alinear abajo
+
+Alinear abajo els elementos seleccionados</translation>
     </message>
     <message>
         <source>Align left</source>
-        <translation type="obsolete">左に整列</translation>
+        <translation type="obsolete">Alinear a la izquierda</translation>
     </message>
     <message>
         <source>Align left selected elements</source>
-        <translation type="obsolete">選択された要素を左に整列</translation>
+        <translation type="obsolete">Alinear a la izquierda els elementos seleccionados</translation>
     </message>
     <message>
         <source>Align left
 
 Align selected elements to their left edge</source>
-        <translation type="obsolete">選択された要素をそれらの左端に整列</translation>
+        <translation type="obsolete">Alinear a la izquierda
+
+Alinear a la izquierda els elementos seleccionados</translation>
     </message>
     <message>
         <source>Align right</source>
-        <translation type="obsolete">右に整列</translation>
+        <translation type="obsolete">Alinear a la derecha</translation>
     </message>
     <message>
         <source>Align right selected elements</source>
-        <translation type="obsolete">選択された要素を右に整列</translation>
+        <translation type="obsolete">Alinear a la derecha els elementos seleccionados</translation>
     </message>
     <message>
         <source>Align right
 
 Align selected elements to their right edge</source>
-        <translation type="obsolete">選択された要素をそれらの右端に整列</translation>
+        <translation type="obsolete">Alinear a la derecha
+
+Alinear a la derecha els elementos seleccionados</translation>
     </message>
     <message>
         <source>Distribute horizontally</source>
-        <translation type="obsolete">水平方向に配置</translation>
+        <translation type="obsolete">Distribuir horizontalmente</translation>
     </message>
     <message>
         <source>Distribute equally horizontally</source>
-        <translation type="obsolete">均等に水平に配置</translation>
+        <translation type="obsolete">Distribuir uniformemente de forma horitzontal</translation>
     </message>
     <message>
         <source>Distribute horizontally
 
 Distribute horizontally selected elements</source>
-        <translation type="obsolete">水平に分割
+        <translation type="obsolete">Distribuir horizontalmente
 
-選択された要素を水平に配置</translation>
+Distribuir uniformemente de forma horitzontal</translation>
     </message>
     <message>
         <source>Distribute vertically</source>
-        <translation type="obsolete">垂直方向に配置</translation>
+        <translation type="obsolete">Distribuir verticalmente</translation>
     </message>
     <message>
         <source>Distribute equally vertically</source>
-        <translation type="obsolete">均等に垂直に配置</translation>
+        <translation type="obsolete">Distribuir uniformemente de forma vertical</translation>
     </message>
     <message>
         <source>Distribute vertically
 
 Distribute vertically selected elements</source>
-        <translation type="obsolete">選択された要素を垂直に配置</translation>
+        <translation type="obsolete">Distribuir verticalmente
+
+Distribuir uniformemente de forma horitzontal</translation>
     </message>
     <message>
         <source>Set on Grid</source>
-        <translation type="obsolete">グリッドに合わせる</translation>
+        <translation type="obsolete">Fijar a la rejilla</translation>
     </message>
     <message>
         <source>Set on Grid
 
 Sets selected elements on grid</source>
-        <translation type="obsolete">グリッドに合わせる
+        <translation type="obsolete">Fijar a la rejilla
 
-選択された要素をグリッドに合わせる
-</translation>
-    </message>
-    <message>
-        <source>Move Component Text</source>
-        <translation type="obsolete">部品のテキストを移動</translation>
-    </message>
-    <message>
-        <source>Move Component Text
-
-Moves the property text of components</source>
-        <translation type="obsolete">部品のテキストを移動
-
-部品のプロパティテキストを移動</translation>
+Fija els elementos seleccionados en la rejilla</translation>
     </message>
     <message>
         <source>Cut</source>
-        <translation type="obsolete">切り取り</translation>
+        <translation type="obsolete">Cortar</translation>
     </message>
     <message>
         <source>Cu&amp;t</source>
-        <translation type="obsolete">切り取り(&amp;t)</translation>
+        <translation type="obsolete">Cor&amp;tar</translation>
     </message>
     <message>
         <source>Cuts the selected section and puts it to the clipboard</source>
-        <translation type="obsolete">選択された部分を切り取り、クリップボードにいれます</translation>
+        <translation type="obsolete">Corta la sección seleccionada y la pasa al portapapeles</translation>
     </message>
     <message>
         <source>Cut
 
 Cuts the selected section and puts it to the clipboard</source>
-        <translation type="obsolete">切り取り
+        <translation type="obsolete">Cortar
 
-選択された部分を切り取り、クリップボードにいれます</translation>
+Corta la sección seleccionada y la pasa al portapapeles</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation type="obsolete">コピー</translation>
+        <translation type="obsolete">Copiar</translation>
     </message>
     <message>
         <source>&amp;Copy</source>
-        <translation type="obsolete">コピー(&amp;C)</translation>
+        <translation type="obsolete">&amp;Copiar</translation>
     </message>
     <message>
         <source>Copies the selected section to the clipboard</source>
-        <translation type="obsolete">選択された部分をクリップボードにコピーします</translation>
+        <translation type="obsolete">Copia la sección seleccionada al portapapeles</translation>
     </message>
     <message>
         <source>Copy
 
 Copies the selected section to the clipboard</source>
-        <translation type="obsolete">コピー
+        <translation type="obsolete">Copiar
 
-選択された部分をクリップボードにコピーします</translation>
+Copia la sección seleccionada al portapapeles</translation>
     </message>
     <message>
         <source>Paste</source>
-        <translation type="obsolete">貼付け</translation>
+        <translation type="obsolete">Pegar</translation>
     </message>
     <message>
         <source>&amp;Paste</source>
-        <translation type="obsolete">貼付け(&amp;P)</translation>
+        <translation type="obsolete">&amp;Pegar</translation>
     </message>
     <message>
         <source>Pastes the clipboard contents to the cursor position</source>
-        <translation type="obsolete">クリップボードの内容をカーソル位置に貼付けます</translation>
+        <translation type="obsolete">Pega el contenido del portapapeles a la posición del cursor</translation>
     </message>
     <message>
         <source>Paste
 
 Pastes the clipboard contents to the cursor position</source>
-        <translation type="obsolete">貼付け
+        <translation type="obsolete">Pegar
 
-クリップボードの内容をカーソル位置に貼付けます</translation>
+Pega el contenido del portapapeles a la posición del cursor</translation>
     </message>
     <message>
         <source>Delete</source>
-        <translation type="obsolete">削除</translation>
+        <translation type="obsolete">Eliminar</translation>
     </message>
     <message>
         <source>&amp;Delete</source>
-        <translation type="obsolete">削除(&amp;D)</translation>
+        <translation type="obsolete">&amp;Eliminar</translation>
     </message>
     <message>
         <source>Deletes the selected components</source>
-        <translation type="obsolete">選択された部品を削除します</translation>
+        <translation type="obsolete">Elimina els componentes seleccionados</translation>
     </message>
     <message>
         <source>Delete
 
 Deletes the selected components</source>
-        <translation type="obsolete">削除
+        <translation type="obsolete">Eliminar
 
-選択された部品を削除します</translation>
+Elimina els componentes seleccionados</translation>
     </message>
     <message>
         <source>Undo</source>
-        <translation type="obsolete">やり直し</translation>
+        <translation type="obsolete">Deshacer</translation>
     </message>
     <message>
         <source>&amp;Undo</source>
-        <translation type="obsolete">やり直し(&amp;U)</translation>
+        <translation type="obsolete">&amp;Deshacer</translation>
     </message>
     <message>
         <source>Undoes the last command</source>
-        <translation type="obsolete">最後のコマンドをやり直しします</translation>
+        <translation type="obsolete">Deshace la última acción</translation>
     </message>
     <message>
         <source>Undo
 
 Makes the last action undone</source>
-        <translation type="obsolete">やり直し
+        <translation type="obsolete">Deshacer
 
-最後のアクションをやり直します</translation>
+Deshace la última acción realizada</translation>
     </message>
     <message>
         <source>Redo</source>
-        <translation type="obsolete">元に戻す</translation>
+        <translation type="obsolete">Rehacer</translation>
     </message>
     <message>
         <source>&amp;Redo</source>
-        <translation type="obsolete">元に戻す(&amp;R)</translation>
+        <translation type="obsolete">&amp;Rehacer</translation>
     </message>
     <message>
         <source>Redoes the last command</source>
-        <translation type="obsolete">最後のコマンドを元に戻します</translation>
+        <translation type="obsolete">Rehace la última acción</translation>
     </message>
     <message>
         <source>Redo
 
 Repeats the last action once more</source>
-        <translation type="obsolete">元に戻す
+        <translation type="obsolete">Rehacer
 
-最後のアクションをもう一度繰り返します</translation>
+Repite la última acción una vez més</translation>
     </message>
     <message>
         <source>New Project</source>
-        <translation type="obsolete">新規プロジェクト</translation>
+        <translation type="obsolete">Nou Proyecto</translation>
     </message>
     <message>
         <source>&amp;New Project...</source>
-        <translation type="obsolete">新規プロジェクト(&amp;N)...</translation>
+        <translation type="obsolete">&amp;Nou Proyecto...</translation>
     </message>
     <message>
         <source>Creates a new project</source>
-        <translation type="obsolete">新プロジェクトを作成します</translation>
+        <translation type="obsolete">Crea un nuevo proyecto</translation>
     </message>
     <message>
         <source>New Project
 
 Creates a new project</source>
-        <translation type="obsolete">新規プロジェクト
+        <translation type="obsolete">Nou Proyecto
 
-新プロジェクトを作成します</translation>
+Crea un proyecto nuevo</translation>
     </message>
     <message>
         <source>Open Project</source>
-        <translation type="obsolete">プロジェクトを開く</translation>
+        <translation type="obsolete">Abrir Proyecto</translation>
     </message>
     <message>
         <source>&amp;Open Project...</source>
-        <translation type="obsolete">プロジェクトを開く(&amp;O)...</translation>
+        <translation type="obsolete">&amp;Abrir Proyecto...</translation>
     </message>
     <message>
         <source>Opens a project</source>
-        <translation type="obsolete">プロジェクトを開きます</translation>
+        <translation type="obsolete">Abrir un proyecto</translation>
     </message>
     <message>
         <source>Open Project
 
 Opens an existing project</source>
-        <translation type="obsolete">プロジェクトを開く
+        <translation type="obsolete">Abrir Proyecto
 
-既存のプロジェクトを開きます</translation>
+Abre un proyecto existente</translation>
     </message>
     <message>
         <source>Delete Project</source>
-        <translation type="obsolete">プロジェクトを削除</translation>
+        <translation type="obsolete">Eliminar Proyecto</translation>
     </message>
     <message>
         <source>&amp;Delete Project...</source>
-        <translation type="obsolete">プロジェクトを削除(&amp;D)...</translation>
+        <translation type="obsolete">&amp;Eliminar Proyecto...</translation>
     </message>
     <message>
         <source>Deletes a project</source>
-        <translation type="obsolete">プロジェクトを削除します</translation>
+        <translation type="obsolete">Eliminar un proyecto</translation>
     </message>
     <message>
         <source>Delete Project
 
 Deletes an existing project</source>
-        <translation type="obsolete">プロジェクトを削除
+        <translation type="obsolete">Eliminar Proyecto
 
-既存のプロジェクトを削除します</translation>
+Elimina un proyecto existente</translation>
     </message>
     <message>
         <source>Close Project</source>
-        <translation type="obsolete">プロジェクトを閉じる</translation>
+        <translation type="obsolete">Tancar Proyecto</translation>
     </message>
     <message>
         <source>&amp;Close Project</source>
-        <translation type="obsolete">プロジェクトを閉じる(&amp;C)</translation>
+        <translation type="obsolete">&amp;Tancar Proyecto</translation>
     </message>
     <message>
         <source>Close current project</source>
-        <translation type="obsolete">現在のプロジェクトを閉じる</translation>
+        <translation type="obsolete">Cierra el proyecto actual</translation>
     </message>
     <message>
         <source>Close Project
 
 Closes the current project</source>
-        <translation type="obsolete">プロジェクトを閉じる
+        <translation type="obsolete">Tancar Proyecto
 
-現在のプロジェクトを閉じます</translation>
+Cierra el proyecto actual</translation>
     </message>
     <message>
         <source>View All</source>
-        <translation type="obsolete">全体を見る</translation>
+        <translation type="obsolete">Ver Todo</translation>
     </message>
     <message>
         <source>Views the whole page</source>
-        <translation type="obsolete">ページ全体を見ます</translation>
+        <translation type="obsolete">Ver la página completa</translation>
     </message>
     <message>
         <source>View All
 
 Shows the whole page content</source>
-        <translation type="obsolete">全体を見る
+        <translation type="obsolete">Ver Todo
 
-ページ全体の内容を見ます</translation>
+Muestra el contenido completo de la página</translation>
     </message>
     <message>
         <source>View 1:1</source>
-        <translation type="obsolete">1:1のスケールで見る</translation>
+        <translation type="obsolete">Vista 1:1</translation>
     </message>
     <message>
         <source>Views without magnification</source>
-        <translation type="obsolete">拡大しないで見る</translation>
+        <translation type="obsolete">Ver  sense ampliación</translation>
     </message>
     <message>
         <source>View 1:1
 
 Shows the page content without magnification</source>
-        <translation type="obsolete">ページの内容を拡大しないで見る</translation>
+        <translation type="obsolete">Vista 1:1
+
+Muestra el contenido de la página  sense ampliar</translation>
     </message>
     <message>
         <source>Zoom in</source>
-        <translation type="obsolete">ズームイン</translation>
+        <translation type="obsolete">Ampliar</translation>
     </message>
     <message>
         <source>Zooms into the current view</source>
-        <translation type="obsolete">現在のビューを拡大</translation>
+        <translation type="obsolete">Amplía la vista actual</translation>
     </message>
     <message>
         <source>Zoom in
 
 Zooms the current view</source>
-        <translation type="obsolete">ズームイン
+        <translation type="obsolete">Ampliar
 
-現在のビューを拡大</translation>
+Amplia la vista actual</translation>
     </message>
     <message>
         <source>Zoom out</source>
-        <translation type="obsolete">ズームアウト</translation>
+        <translation type="obsolete">Reducir</translation>
     </message>
     <message>
         <source>Zooms out the current view</source>
-        <translation type="obsolete">現在のビューを拡小</translation>
+        <translation type="obsolete">Reduce la vista actual</translation>
     </message>
     <message>
         <source>Reduce
 
 Zooms out the current view</source>
-        <translation type="obsolete">縮小
+        <translation type="obsolete">Reducir
 
-現在のビューを拡小</translation>
+Disminuye la ampliación de la vista actual</translation>
     </message>
     <message>
         <source>Select</source>
-        <translation type="obsolete">選択</translation>
+        <translation type="obsolete">Seleccionar</translation>
     </message>
     <message>
         <source>Select mode</source>
-        <translation type="obsolete">選択モード</translation>
+        <translation type="obsolete">Modo de selección</translation>
     </message>
     <message>
         <source>Select
 
 Select mode</source>
-        <translation type="obsolete">選択
+        <translation type="obsolete">Seleccionar
 
-選択モード</translation>
+Modo de selección</translation>
     </message>
     <message>
         <source>Select All</source>
-        <translation type="obsolete">全て選択</translation>
+        <translation type="obsolete">Seleccionar todo</translation>
     </message>
     <message>
         <source>Selects all elements</source>
-        <translation type="obsolete">全ての要素を選択</translation>
+        <translation type="obsolete">Selecciona todos els documents</translation>
     </message>
     <message>
         <source>Select All
 
 Selects all elements of the document</source>
-        <translation type="obsolete">全て選択
+        <translation type="obsolete">Seleccionar todo
 
-ドキュメント全ての要素を選択</translation>
+Selecciona todos els elementos del document</translation>
     </message>
     <message>
         <source>Rotate</source>
-        <translation type="obsolete">回転</translation>
+        <translation type="obsolete">Rotar</translation>
     </message>
     <message>
         <source>Rotates the selected component by 90°</source>
-        <translation type="obsolete">選択された部品を90°回転</translation>
+        <translation type="obsolete">Rota el elemento seleccionado 90º</translation>
     </message>
     <message>
         <source>Rotate
 
 Rotates the selected component by 90° counter-clockwise</source>
-        <translation type="obsolete">回転
+        <translation type="obsolete">Rotar
 
-選択された部品を時計周りに90°回転</translation>
+Rota el elemento seleccionado 90º en el sentido de les agujas del reloj</translation>
     </message>
     <message>
         <source>Mirror about X Axis</source>
-        <translation type="obsolete">X軸で反転</translation>
+        <translation type="obsolete">Reflejar sobre el eje x</translation>
     </message>
     <message>
         <source>Mirrors the selected item about X axis</source>
-        <translation type="obsolete">選択されたアイテムをX軸で反転</translation>
+        <translation type="obsolete">Refleja el elemento seleccionado sobre el eje x</translation>
     </message>
     <message>
         <source>Mirror about X Axis
 
 Mirrors the selected item about X Axis</source>
-        <translation type="obsolete">X軸で反転
+        <translation type="obsolete">Reflejar sobre el eje x
 
-選択されたアイテムをX軸で反転</translation>
+Refleja el elemento seleccionado sobre el eje x</translation>
     </message>
     <message>
         <source>Mirror about Y Axis</source>
-        <translation type="obsolete">Y軸で反転</translation>
+        <translation type="obsolete">Reflejar sobre el eje y</translation>
     </message>
     <message>
         <source>Mirrors the selected item about Y axis</source>
-        <translation type="obsolete">選択されたアイテムをY軸で反転</translation>
+        <translation type="obsolete">Refleja el elemento seleccionado sobre el eje y</translation>
     </message>
     <message>
         <source>Mirror about Y Axis
 
 Mirrors the selected item about Y Axis</source>
-        <translation type="obsolete">Y軸で反転
+        <translation type="obsolete">Reflejar sobre el eje y
 
-選択されたアイテムをY軸で反転</translation>
+Refleja el elemento seleccionado sobre el eje y</translation>
     </message>
     <message>
         <source>Go into Subcircuit</source>
-        <translation type="obsolete">サブサーキットに入る</translation>
+        <translation type="obsolete">Entrar en el subcircuit</translation>
     </message>
     <message>
         <source>Goes inside subcircuit</source>
-        <translation type="obsolete">サブサーキット内部に行く</translation>
+        <translation type="obsolete">Entra en el subcircuit</translation>
     </message>
     <message>
         <source>Go into Subcircuit
 
 Goes inside the selected subcircuit</source>
-        <translation type="obsolete">サブサーキットに入る
+        <translation type="obsolete">Entrar en Subcircuito
 
-選択去れたサブサーキット内部に行く</translation>
+Entra en el subcircuit seleccionado</translation>
     </message>
     <message>
         <source>Pop out</source>
-        <translation type="obsolete">出る</translation>
+        <translation type="obsolete">Ascender</translation>
     </message>
     <message>
         <source>Pop outside subcircuit</source>
-        <translation type="obsolete">サブサーキットから出る</translation>
+        <translation type="obsolete">Salir fuera del subcircuit</translation>
     </message>
     <message>
         <source>Pop out
 
 Goes up one hierarchy level, i.e. leaves subcircuit</source>
-        <translation type="obsolete">出る
+        <translation type="obsolete">Ascender
 
-一つ上の階層に上がる   サブサーキットを抜ける</translation>
+Asciende un nivel de jerarquía, es decir, abandona el subcircuit</translation>
     </message>
     <message>
         <source>Deactivate/Activate</source>
-        <translation type="obsolete">無効にする/有効にする</translation>
+        <translation type="obsolete">Desactivar/Activar</translation>
     </message>
     <message>
         <source>Deactivate/Activate the selected item</source>
-        <translation type="obsolete">選択されたアイテムを無効/有効にする</translation>
+        <translation type="obsolete">Desactiva/Activa el elemento seleccionado</translation>
     </message>
     <message>
         <source>Deactivate/Activate
 
 Deactivate/Activate the selected item</source>
-        <translation type="obsolete">無効にする/有効にする
+        <translation type="obsolete">Desactivar/Activar
 
-選択されたアイテムを無効/有効にする</translation>
+Desactiva/Activa el elemento seleccionado</translation>
     </message>
     <message>
         <source>Insert Equation</source>
-        <translation type="obsolete">方程式を挿入</translation>
+        <translation type="obsolete">Insertar Ecuación</translation>
     </message>
     <message>
         <source>Inserts equation</source>
-        <translation type="obsolete">方程式を挿入</translation>
+        <translation type="obsolete">Inserta una ecuación</translation>
     </message>
     <message>
         <source>Insert Equation
 
 Inserts a user defined equation</source>
-        <translation type="obsolete">方程式を挿入
+        <translation type="obsolete">Insertar Ecuación
 
-ユーザが定義した方程式を挿入</translation>
+Inserta una ecuación definida por el usuario</translation>
     </message>
     <message>
         <source>Insert Ground</source>
-        <translation type="obsolete">グラウンドを挿入</translation>
+        <translation type="obsolete">Insertar Tierra</translation>
     </message>
     <message>
         <source>Inserts ground</source>
-        <translation type="obsolete">グラウンドを挿入</translation>
+        <translation type="obsolete">Inserta tierra</translation>
     </message>
     <message>
         <source>Insert Ground
 
 Inserts a ground symbol</source>
-        <translation type="obsolete">グラウンドを挿入
+        <translation type="obsolete">Insertar Tierra
 
-グラウンドシンボルを挿入</translation>
+Inserta un símbolo de tierra</translation>
     </message>
     <message>
         <source>Insert Port</source>
-        <translation type="obsolete">ポートを挿入</translation>
+        <translation type="obsolete">Insertar Conexión</translation>
     </message>
     <message>
         <source>Inserts port</source>
-        <translation type="obsolete">ポートを挿入</translation>
+        <translation type="obsolete">Inserta conexión</translation>
     </message>
     <message>
         <source>Insert Port
 
 Inserts a port symbol</source>
-        <translation type="obsolete">ポートを挿入
+        <translation type="obsolete">Insertar Conexión
 
-ポートシンボルを挿入</translation>
+Inserta un símbolo de conexión</translation>
     </message>
     <message>
         <source>Insert Wire</source>
-        <translation type="obsolete">ワイアを挿入</translation>
+        <translation type="obsolete">Inserta un cable</translation>
     </message>
     <message>
         <source>Wire</source>
-        <translation type="obsolete">ワイア</translation>
+        <translation type="obsolete">Cable</translation>
     </message>
     <message>
         <source>Inserts a wire</source>
-        <translation type="obsolete">ワイアを挿入</translation>
+        <translation type="obsolete">Inserta un cable</translation>
     </message>
     <message>
         <source>Wire
 
 Inserts a wire</source>
-        <translation type="obsolete">ワイア
+        <translation type="obsolete">Cable
 
-ワイアを挿入</translation>
+Inserta un cable</translation>
     </message>
     <message>
         <source>Insert Wire/Pin Label</source>
-        <translation type="obsolete">ワイア/ピン ラベルを挿入</translation>
+        <translation type="obsolete">Insertar Cable/Etiqueta de conexión</translation>
     </message>
     <message>
         <source>Wire Label</source>
-        <translation type="obsolete">ワイアラベル</translation>
+        <translation type="obsolete">Etiqueta del cable</translation>
     </message>
     <message>
         <source>Inserts a wire or pin label</source>
-        <translation type="obsolete">ワイアかピンのラベルを挿入</translation>
+        <translation type="obsolete">Inserta un cable o la etiqueta de una conexión</translation>
     </message>
     <message>
         <source>Wire Label
 
 Inserts a wire or pin label</source>
-        <translation type="obsolete">ワイアラベル
+        <translation type="obsolete">Etiqueta del cable
 
-ワイアかピンのラベルを挿入</translation>
+Inserta la etiqueta de un cable o una conexión</translation>
     </message>
     <message>
         <source>Simulate</source>
-        <translation type="obsolete">シミュレート</translation>
+        <translation type="obsolete">Simular</translation>
     </message>
     <message>
         <source>Simulates the current schematic</source>
-        <translation type="obsolete">現在の回路図をシミュレートする</translation>
+        <translation type="obsolete">Simula el esquema actual</translation>
     </message>
     <message>
         <source>Simulate
 
 Simulates the current schematic</source>
-        <translation type="obsolete">シミュレート
+        <translation type="obsolete">Simular
 
-現在の回路をシミュレートする</translation>
+Simula el esquema actual</translation>
     </message>
     <message>
         <source>View Data Display/Schematic</source>
-        <translation type="obsolete">データディスプレー/回路図 を見る</translation>
+        <translation type="obsolete">Ver la vista de dades/Esquema</translation>
     </message>
     <message>
         <source>Changes to data display or schematic page</source>
-        <translation type="obsolete">データディスプレーと回路図を切替えます</translation>
+        <translation type="obsolete">Cambios a la vista de dades o la página del esquema</translation>
     </message>
     <message>
         <source>View Data Display/Schematic
 
 </source>
-        <translation type="obsolete">データディスプレー/回路図 を見る
+        <translation type="obsolete">Ver la vista de dades/Esquema
+
 </translation>
     </message>
     <message>
         <source>Set Marker</source>
-        <translation type="obsolete">マーカセット</translation>
+        <translation type="obsolete">Poner Marcas</translation>
     </message>
     <message>
         <source>Set Marker on Graph</source>
-        <translation type="obsolete">グラフにマーカをセットします</translation>
+        <translation type="obsolete">Poner Marcas en el gráfico</translation>
     </message>
     <message>
         <source>Sets a marker on a diagram&apos;s graph</source>
-        <translation type="obsolete">グラフ上にマーカをセットします</translation>
+        <translation type="obsolete">Pone marcas de medida en un gráfico o diagrama</translation>
     </message>
     <message>
         <source>Set Marker
 
 Sets a marker on a diagram&apos;s graph</source>
-        <translation type="obsolete">マーカセット
+        <translation type="obsolete">Poner Marcas
 
-グラフ上にマーカをセットします</translation>
+Pone marcas de medida en un gráfico o diagrama</translation>
     </message>
     <message>
         <source>Show Last Messages</source>
-        <translation type="obsolete">最後のメッセージを見る</translation>
+        <translation type="obsolete">Mostrar els últimos mensajes</translation>
     </message>
     <message>
         <source>Shows last simulation messages</source>
-        <translation type="obsolete">最後のシミュレーションメッセージを見る</translation>
+        <translation type="obsolete">Muestra els mensajes de la última simulación</translation>
     </message>
     <message>
         <source>Show Last Messages
 
 Shows the messages of the last simulation</source>
-        <translation type="obsolete">最後のメッセージを見る
+        <translation type="obsolete">Mostrar els últimos  mensajes
 
-最後のシミュレーションのメッセージを見る</translation>
+Muestra els mensajes de la última simulación</translation>
     </message>
     <message>
         <source>Show Last Netlist</source>
-        <translation type="obsolete">最後のネットリストを見る</translation>
+        <translation type="obsolete">Mostrar última Lista de Conexiones</translation>
     </message>
     <message>
         <source>Shows last simulation netlist</source>
-        <translation type="obsolete">最後のシミュレーションネットリストを見る</translation>
+        <translation type="obsolete">Muestra la Lista de Conexiones de la última simulación</translation>
     </message>
     <message>
         <source>Show Last Netlist
 
 Shows the netlist of the last simulation</source>
-        <translation type="obsolete">最後のネットリストを見る
+        <translation type="obsolete">Mostrar última Lista de Conexiones
 
-最後のシミュレーションのネットリストを見る</translation>
+Muestra la Lista de Conexiones de la última simulación</translation>
     </message>
     <message>
         <source>Toolbar</source>
-        <translation type="obsolete">ツールバー</translation>
+        <translation type="obsolete">Barra de herramientas</translation>
     </message>
     <message>
         <source>Tool&amp;bar</source>
-        <translation type="obsolete">ツールバー(&amp;b)</translation>
+        <translation type="obsolete">Barra de &amp;herramientas</translation>
     </message>
     <message>
         <source>Enables/disables the toolbar</source>
-        <translation type="obsolete">ツールバーを有効/無効にする</translation>
+        <translation type="obsolete">Habilita/deshabilita la barra de herramientas</translation>
     </message>
     <message>
         <source>Toolbar
 
 Enables/disables the toolbar</source>
-        <translation type="obsolete">ツールバー
+        <translation type="obsolete">Barra de herramientas
 
-ツールバーを有効／無効にする</translation>
+Habilita/deshabilita la barra de herramientas</translation>
     </message>
     <message>
         <source>Statusbar</source>
-        <translation type="obsolete">ステータスバー</translation>
+        <translation type="obsolete">Barra de estado</translation>
     </message>
     <message>
         <source>&amp;Statusbar</source>
-        <translation type="obsolete">ステータスバー(&amp;S)</translation>
+        <translation type="obsolete">&amp;Barra de estado</translation>
     </message>
     <message>
         <source>Enables/disables the statusbar</source>
-        <translation type="obsolete">ステータスバーを有効／無効にする</translation>
+        <translation type="obsolete">Habilita/deshabilita la barra de estado</translation>
     </message>
     <message>
         <source>Statusbar
 
 Enables/disables the statusbar</source>
-        <translation type="obsolete">ステータスバー
+        <translation type="obsolete">Barra de estado
 
-ステータスバーを有効／無効にする</translation>
+Habilita/deshabilita la barra de estado</translation>
     </message>
     <message>
         <source>Help Index</source>
-        <translation type="obsolete">ヘルプ目次</translation>
+        <translation type="obsolete">Índice de la Ajuda</translation>
     </message>
     <message>
         <source>Help Index...</source>
-        <translation type="obsolete">ヘルプ目次...</translation>
+        <translation type="obsolete">Índice de la Ajuda...</translation>
     </message>
     <message>
         <source>Index of Qucs Help</source>
-        <translation type="obsolete">Qucsヘルプ目次</translation>
+        <translation type="obsolete">Índice de la Ajuda de Qucs</translation>
     </message>
     <message>
         <source>Help Index
 
 Index of intern Qucs help</source>
-        <translation type="obsolete">ヘルプ目次
+        <translation type="obsolete">Índice de la ayuda
 
-Qucsヘルプ目次</translation>
+Índice de la ayuda interna de Qucs</translation>
     </message>
     <message>
         <source>Getting Started</source>
-        <translation type="obsolete">はじめに</translation>
+        <translation type="obsolete">Empezando</translation>
     </message>
     <message>
         <source>Getting Started...</source>
-        <translation type="obsolete">はじめに...</translation>
+        <translation type="obsolete">Empezando...</translation>
     </message>
     <message>
         <source>Getting Started with Qucs</source>
-        <translation type="obsolete">はじめに</translation>
+        <translation type="obsolete">Empezando amb Qucs</translation>
     </message>
     <message>
         <source>Getting Started
 
 Short introduction into Qucs</source>
-        <translation type="obsolete">はじめに
+        <translation type="obsolete">Empezando
 
-短いQucsの紹介</translation>
+Breve introducción a Qucs</translation>
     </message>
     <message>
         <source>About</source>
-        <translation type="obsolete">About</translation>
+        <translation type="obsolete">Acerca de</translation>
     </message>
     <message>
         <source>&amp;About Qucs...</source>
-        <translation type="obsolete">&amp;About Qucs...</translation>
+        <translation type="obsolete">&amp;Acerca de Qucs...</translation>
     </message>
     <message>
         <source>About the application</source>
-        <translation type="obsolete">このアプリケーションについて</translation>
+        <translation type="obsolete">Acerca de la aplicación</translation>
     </message>
     <message>
         <source>About
 
 About the application</source>
-        <translation type="obsolete">About
+        <translation type="obsolete">Acerca de
 
-このアプリケーションについて</translation>
+Acerca de la aplicación</translation>
     </message>
     <message>
         <source>About Qt</source>
-        <translation type="obsolete">Qtについて</translation>
+        <translation type="obsolete">Acerca de Qt</translation>
     </message>
     <message>
         <source>&amp;About Qt...</source>
-        <translation type="obsolete">&amp;About Qt...</translation>
+        <translation type="obsolete">&amp;Acerca de Qt...</translation>
+    </message>
+    <message>
+        <source>About Qt
+
+About Qt by Trolltech</source>
+        <translation type="obsolete">Acerca de Qt
+
+Acerca de Qt por Trolltech</translation>
     </message>
     <message>
         <source>Align</source>
-        <translation type="obsolete">整列</translation>
+        <translation type="obsolete">Alinear</translation>
     </message>
     <message>
         <source>&amp;File</source>
-        <translation type="obsolete">ファイル(&amp;F)</translation>
+        <translation type="obsolete">&amp;Fitxer</translation>
     </message>
     <message>
         <source>&amp;Edit</source>
-        <translation type="obsolete">編集(&amp;E)</translation>
+        <translation type="obsolete">&amp;Edición</translation>
     </message>
     <message>
         <source>&amp;Insert</source>
-        <translation type="obsolete">挿入(&amp;I)</translation>
+        <translation type="obsolete">&amp;Insertar</translation>
     </message>
     <message>
         <source>&amp;Project</source>
-        <translation type="obsolete">プロジェクト(&amp;P)</translation>
+        <translation type="obsolete">&amp;Proyecto</translation>
     </message>
     <message>
         <source>&amp;Simulation</source>
-        <translation type="obsolete">シミュレーション(&amp;S)</translation>
+        <translation type="obsolete">&amp;Simulació</translation>
     </message>
     <message>
         <source>&amp;View</source>
-        <translation type="obsolete">ビュー(&amp;V)</translation>
+        <translation type="obsolete">&amp;Ver</translation>
     </message>
     <message>
         <source>&amp;Help</source>
-        <translation type="obsolete">ヘルプ(&amp;H)</translation>
+        <translation type="obsolete">&amp;Ajuda</translation>
     </message>
     <message>
         <source>Ready.</source>
-        <translation type="obsolete">Ready.</translation>
+        <translation type="obsolete">Listo.
+</translation>
     </message>
     <message>
         <source>Toggle toolbar...</source>
-        <translation type="obsolete">ツールバー切替え...</translation>
+        <translation type="obsolete">Habilitar/deshabilitar Barra de herramientas...</translation>
     </message>
     <message>
         <source>Toggle statusbar...</source>
-        <translation type="obsolete">ステータスバー切替え...</translation>
+        <translation type="obsolete">Habilitar/deshabilitar Barra de estado...</translation>
     </message>
     <message>
         <source>About...</source>
-        <translation type="obsolete">About...</translation>
+        <translation type="obsolete">Acerca de...</translation>
     </message>
     <message>
         <source>Qucs Version </source>
-        <translation type="obsolete">Qucs Version</translation>
+        <translation type="obsolete">Versión de Qucs </translation>
     </message>
     <message>
         <source>Copyright (C) 2003,2004 by Michael Margraf
 </source>
-        <translation type="obsolete">Copyright (C) 2003,2004 by Michael Margraf</translation>
+        <translation type="obsolete">Copyright (C) 2003,2004 por Michael Margraf
+</translation>
     </message>
     <message>
         <source>Simulator by Stefan Jahn
 </source>
-        <translation type="obsolete">Simulator by Stefan Jahn</translation>
+        <translation type="obsolete">Simulador por Stefan Jahn
+</translation>
     </message>
     <message>
         <source>Special thanks to Jens Flucke
 
 </source>
-        <translation type="obsolete">Special thanks to Jens Flucke
+        <translation type="obsolete">Agradecimiento especial a Jens Flucke
 
 </translation>
     </message>
     <message>
         <source>Translations:
 </source>
-        <translation type="obsolete">Traslations:
+        <translation type="obsolete">Traducciones:
 </translation>
     </message>
     <message>
         <source>German by Stefan Jahn
 </source>
-        <translation type="obsolete">German by Stefan Jahn
+        <translation type="obsolete">Alemán por Stefan Jahn
 </translation>
     </message>
     <message>
         <source>Polish by Dariusz Pienkowski
 </source>
-        <translation type="obsolete">Polish by Dariusz Pienkowski
+        <translation type="obsolete">Polaco por Dariusz Pienkowski
 </translation>
     </message>
     <message>
         <source>Romanian by Radu Circa
 </source>
-        <translation type="obsolete">Romanian by Radu Circa
+        <translation type="obsolete">Rumano por Radu Circa
 </translation>
     </message>
     <message>
         <source>French by Eric Marzolf
 </source>
-        <translation type="obsolete">French by Eric Marzolf
+        <translation type="obsolete">Francés por Eric Marzolf
 </translation>
     </message>
     <message>
         <source>Portuguese by Luciano Franca
 </source>
-        <translation type="obsolete">Portuguese by Luciano Franca
-</translation>
-    </message>
-    <message>
-        <source>Spanish by Jose L. Redrejo Rodriguez
-</source>
-        <translation type="obsolete">Spanish by Jose L. Redrejo Rodriguez
+        <translation type="obsolete">Portugués por Luciano Franca
 </translation>
     </message>
     <message>
         <source>Italian by Giorgio Luparia</source>
-        <translation type="obsolete">Italian by Giorgio Luparia</translation>
+        <translation type="obsolete">Italiano por Giorgio Luparia</translation>
+    </message>
+    <message>
+        <source>Spanish by Jose L. Redrejo Rodriguez
+</source>
+        <translation type="obsolete">Español por José L. Redrejo Rodríguez
+</translation>
+    </message>
+    <message>
+        <source>Move Component Text</source>
+        <translation type="obsolete">Mover Texto del Componente</translation>
+    </message>
+    <message>
+        <source>Move Component Text
+
+Moves the property text of components</source>
+        <translation type="obsolete">Mover Texto del componente
+
+Mueve la propiedad text de els componentes</translation>
+    </message>
+    <message>
+        <source>French by Vincent Habchi, F5RCS
+</source>
+        <translation type="obsolete">Francés por Vincent Habchi, F5RCS
+</translation>
+    </message>
+    <message>
+        <source>Japanese by Toyoyuki ISHIKAWA
+</source>
+        <translation type="obsolete">Japonés por Toyoyuki ISHIKAWA
+</translation>
+    </message>
+    <message>
+        <source>Italian by Giorgio Luparia
+</source>
+        <translation type="obsolete">Italiano por Giorgio Luparia
+</translation>
+    </message>
+    <message>
+        <source>Hungarian by Jozsef Bus</source>
+        <translation type="obsolete">Húngaro por Jozsef Bus</translation>
     </message>
     <message>
         <source>Copyright (C) 2003, 2004, 2005 by Michael Margraf
 </source>
-        <translation type="obsolete">Copyright (C) 2003, 2004, 2005 by Michael Margraf</translation>
+        <translation type="obsolete">Copyright (C) 2003, 2004, 2005 por Michael Margraf
+</translation>
+    </message>
+    <message>
+        <source>Special thanks to Jens Flucke and Raimund Jacob
+
+</source>
+        <translation type="obsolete">Agradecimiento especial a Jens Flucke y Raimund Jacob
+</translation>
+    </message>
+    <message>
+        <source>Japanese by Toyoyuki Ishikawa
+</source>
+        <translation type="obsolete">Japonés por Toyoyuki Ishikawa
+</translation>
+    </message>
+    <message>
+        <source>Hebrew by Dotan Nahum
+</source>
+        <translation type="obsolete">Hebreo por Dotan Nahum
+</translation>
     </message>
     <message>
         <source>About Qt...</source>
-        <translation type="obsolete">Qtについて...</translation>
+        <translation type="obsolete">Acerca de Qt...</translation>
     </message>
     <message>
         <source>Text editor</source>
-        <translation type="obsolete">テキストエディタ</translation>
+        <translation type="obsolete">Editor de text</translation>
     </message>
     <message>
         <source>Text Editor</source>
-        <translation type="obsolete">テキストエディタ</translation>
+        <translation type="obsolete">Editor de text</translation>
     </message>
     <message>
         <source>Starts the Qucs text editor</source>
-        <translation type="obsolete">Qucsテキストエディタを起動</translation>
+        <translation type="obsolete">Arrancar el editor de text de Qucs</translation>
     </message>
     <message>
         <source>Text editor
 
 Starts the Qucs text editor</source>
-        <translation type="obsolete">テキストエディタ
+        <translation type="obsolete">Editor de text
 
-Qucsテキストエディタを起動</translation>
+Arranca el editor de text de Qucs</translation>
     </message>
     <message>
         <source>Filter synthesis</source>
-        <translation type="obsolete">フィルタ生成</translation>
+        <translation type="obsolete">Síntexis de Filtros</translation>
     </message>
     <message>
         <source>Starts QucsFilter</source>
-        <translation type="obsolete">QucsFilterを起動</translation>
+        <translation type="obsolete">Arranca QucsFilter</translation>
     </message>
     <message>
         <source>Filter synthesis
 
 Starts QucsFilter</source>
-        <translation type="obsolete">フィルタ生成
+        <translation type="obsolete">Síntexis de filtros
 
-QucsFilterを起動</translation>
+Arranca QucsFilter</translation>
     </message>
     <message>
         <source>&amp;Tools</source>
-        <translation type="obsolete">ツール(&amp;T)</translation>
+        <translation type="obsolete">&amp;Herramientas</translation>
     </message>
     <message>
         <source>Line calculation</source>
-        <translation type="obsolete">伝送線路計算</translation>
+        <translation type="obsolete">Cálculo de Líneas</translation>
     </message>
     <message>
         <source>Starts QucsTrans</source>
-        <translation type="obsolete">QucsTransを起動</translation>
+        <translation type="obsolete">Arranca QucsTrans</translation>
     </message>
     <message>
         <source>Line calculation
 
 Starts transmission line calculator</source>
-        <translation type="obsolete">伝送線路計算
+        <translation type="obsolete">Cálculo de línees
 
-伝送線路計算プログラムを起動</translation>
+Arranca el calculador de línees de transmisión</translation>
+    </message>
+    <message>
+        <source>Swedish by Markus Gothe
+</source>
+        <translation type="obsolete">Sueco por Markus Gothe
+</translation>
     </message>
     <message>
         <source>Component Library</source>
-        <translation type="obsolete">部品ライブラリ</translation>
+        <translation type="obsolete">Librería de componentes</translation>
     </message>
     <message>
         <source>Starts QucsLib</source>
-        <translation type="obsolete">QucsLibを起動</translation>
+        <translation type="obsolete">Arranca QucsLib</translation>
     </message>
     <message>
         <source>Component Library
 
 Starts component library program</source>
-        <translation type="obsolete">部品ライブラリ
+        <translation type="obsolete">Librería de componentes
 
-部品ライブラリプログラムを起動</translation>
+Arranca el programa de librería de componentes</translation>
     </message>
     <message>
-        <source>Change Property Values</source>
-        <translation type="obsolete">プロパティー変更</translation>
+        <source>no warnings</source>
+        <translation type="obsolete"> sense avisos</translation>
     </message>
     <message>
-        <source>Change Property Values
-
-Change Property Value of Components</source>
-        <translation type="obsolete">プロパティー変更
-
-プロパティー値変更</translation>
+        <source>Warnings in last simulation! Press F5</source>
+        <translation type="obsolete">Avisos en la última simulación! Pulsa F5</translation>
     </message>
     <message>
-        <source>Matching Circuit</source>
-        <translation type="obsolete">マッチング回路</translation>
+        <source>
+Quite Universal Circuit Simulator
+</source>
+        <translation type="obsolete">
+Quite Universal Circuit Simulator
+</translation>
     </message>
     <message>
-        <source>Creates Matching Circuit</source>
-        <translation type="obsolete">マッチング回路作成</translation>
-    </message>
-    <message>
-        <source>Matching Circuit
-
-Dialog for Creating Matching Circuit</source>
-        <translation type="obsolete">マッチング回路
-
-マッチング回路作成ダイアログ</translation>
-    </message>
-    <message>
-        <source>Change Property Values...</source>
-        <translation type="obsolete">プロパティー変更...</translation>
-    </message>
-    <message>
-        <source>Calculates DC bias and shows it</source>
-        <translation type="obsolete">DCバイアス計算</translation>
-    </message>
-    <message>
-        <source>Calculate DC bias</source>
-        <translation type="obsolete">DCバイアス計算</translation>
-    </message>
-    <message>
-        <source>Calculate DC bias
-
-Calculates DC bias and shows it</source>
-        <translation type="obsolete">DCバイアス計算
-
-DCバイアス計算</translation>
+        <source>Copyright (C) 2003, 2004, 2005, 2006 by Michael Margraf
+</source>
+        <translation type="obsolete">Copyright (C) 2003, 2004, 2005, 2006 por Michael Margraf
+</translation>
     </message>
 </context>
 <context>
     <name>QucsLib</name>
     <message>
         <source>Quit</source>
-        <translation type="obsolete">閉じる</translation>
+        <translation type="obsolete">Salir</translation>
     </message>
     <message>
         <location filename="../qucs-lib/qucslib.cpp" line="+66"/>
         <source>&amp;Quit</source>
-        <translation>閉じる(&amp;Q)</translation>
+        <translation>&amp;Salir</translation>
     </message>
     <message>
         <source>Help</source>
-        <translation type="obsolete">ヘルプ</translation>
+        <translation type="obsolete">Ajuda</translation>
     </message>
     <message>
         <location line="+10"/>
         <location line="+2"/>
         <source>&amp;Help</source>
-        <translation>ヘルプ(&amp;H)</translation>
+        <translation>&amp;Ajuda</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>About</source>
-        <translation>About</translation>
+        <translation>Acerca de</translation>
     </message>
     <message>
         <location line="-23"/>
         <source>&amp;File</source>
-        <translation>ファイル(&amp;F)</translation>
+        <translation>&amp;Fitxer</translation>
     </message>
     <message>
         <location line="+42"/>
         <source>Component Selection</source>
-        <translation>部品選択</translation>
+        <translation>Selección de Componente</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Search...</source>
-        <translation>サーチ...</translation>
+        <translation>Buscar...</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Component</source>
-        <translation>部品</translation>
+        <translation>Componente</translation>
     </message>
     <message>
         <location line="+12"/>
         <source>Copy to clipboard</source>
-        <translation>クリップボードにコピー</translation>
+        <translation>Copiar al portapapeles</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Show Model</source>
-        <translation>モデル表示</translation>
+        <translation>Mostrar modelo</translation>
     </message>
     <message>
         <location line="+69"/>
         <source>About...</source>
-        <translation>About...</translation>
+        <translation>Acerca de...</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Library Manager for Qucs
 </source>
-        <translation>Qucsライブラリマネージャ</translation>
+        <translation>Gestor de librería para Qucs
+</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Copyright (C) 2005 by Michael Margraf
 </source>
-        <translation>Copyright (C) 2005 by Michael Margraf</translation>
+        <translation>Copyright (C) 2005 por Michael Margraf
+</translation>
     </message>
     <message>
         <location line="+42"/>
         <source>QucsLib is a program to manage Qucs component libraries. On the left side of the application window the available libraries can be browsed to find the wanted component. By clicking on the component name its description can be seen on the right side. The selected component is transported to the Qucs application by clicking on the button &quot;Copy to Clipboard&quot;. Being back in the schematic window the component can be inserted by pressing CTRL-V  (paste from clipboard).</source>
-        <translation>QucsLibはQucs部品ライブラリプログラムです。左のウィンドウで希望の部品を検索できます。部品名をクリックする事で右ウィンドウで説明を見る事ができます。選択された部品はクリップボードにコピーされますので回路入力画面に戻って張り付けコマンド(CTRL-Vなど)を使用します.</translation>
+        <translation>QucsLib es un programa para gestionar les librerías de componentes de Qucs. En el lado esquerre de la ventana de la aplicación se pueden explorar les librerías disponibles para buscar el componente desado. Pulsando en el nombre del componente se verá su descripción en el lado dret. El componente seleccionado se lleva a la aplicación de Qucs pulsando en el botón &quot;Copiar al portapapeles&quot;. Volviendo a la ventana de esquemas se puede insertar el componente pulsando CTRL-V  (pegar desde el portapapeles).</translation>
     </message>
     <message>
         <location line="+82"/>
@@ -18172,12 +18439,12 @@ DCバイアス計算</translation>
         <location line="+7"/>
         <location line="+7"/>
         <source>Error</source>
-        <translation>エラー</translation>
+        <translation>Error</translation>
     </message>
     <message>
         <location line="-83"/>
         <source>Cannot open &quot;%1&quot;.</source>
-        <translation>開けません&quot;%1&quot;.</translation>
+        <translation>No puedo abrir &quot;%1&quot;.</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -18187,75 +18454,75 @@ DCバイアス計算</translation>
         <location line="+7"/>
         <location line="+7"/>
         <source>Library is corrupt.</source>
-        <translation>ライブラリが壊れています.</translation>
+        <translation>La librería está corrupta.</translation>
     </message>
     <message>
         <location line="-122"/>
         <source>Search result</source>
-        <translation>結果を検索</translation>
+        <translation>Resultado de la búsqueda</translation>
     </message>
     <message>
         <location line="+69"/>
         <source>Result</source>
-        <translation>結果</translation>
+        <translation>Resultado</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>No appropriate component found.</source>
-        <translation>当てはまる部品がありません.</translation>
+        <translation>No se ha encontrado el componente apropiado.</translation>
     </message>
     <message>
         <location line="-298"/>
         <source>Manage User &amp;Libraries...</source>
-        <translation>ユーザライブラリを管理(&amp;L)...</translation>
+        <translation>Gestionar les &amp;Bibliotecas de usuario... </translation>
     </message>
     <message>
         <location line="+194"/>
         <source>A more comfortable way: The component can also be placed onto the schematic by using Drag n&apos;Drop.</source>
-        <translation>使いやすい方法は...:部品はドラッグアンドドロップで配置することが出来ます.</translation>
+        <translation>Un modo més cómodo: El componente también se puede colocar en el estema arrastrando y soltándolo.</translation>
     </message>
     <message>
         <location line="-10"/>
         <source>QucsLib Help</source>
-        <translation>QucsLib　ヘルプ</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+32"/>
         <source>Model</source>
-        <translation>モデル</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+79"/>
         <source>Search Library Component</source>
-        <translation>ライブラリ部品検索</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>QucsSettingsDialog</name>
     <message>
-        <location filename="dialogs/qucssettingsdialog.cpp" line="+49"/>
+        <location filename="../qucs/dialogs/qucssettingsdialog.cpp" line="+53"/>
         <source>Edit Qucs Properties</source>
-        <translation>Qucsプロパティー編集</translation>
+        <translation>Editar les propietats de Qucs</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>Font (set after reload):</source>
-        <translation>フォント (再起動時に有効):</translation>
+        <translation>Fuente (se activará al recargar):</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Document Background Color:</source>
-        <translation>バックグラウンド色 :</translation>
+        <translation>Color de fondo del document:</translation>
     </message>
     <message>
         <location line="+31"/>
         <source>maximum undo operations:</source>
-        <translation>最大やり直し数 :</translation>
+        <translation>Nº máximo de operaciones de deshacer:</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>text editor:</source>
-        <translation>テキストエディタ :</translation>
+        <translation>editor de text:</translation>
     </message>
     <message>
         <location line="+10"/>
@@ -18264,8 +18531,13 @@ DCバイアス計算</translation>
     </message>
     <message>
         <location line="+5"/>
+        <source>Draw diagrams with anti-aliasing feature</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
         <source>Settings</source>
-        <translation>設定</translation>
+        <translation>Configuración</translation>
     </message>
     <message>
         <location line="+136"/>
@@ -18278,32 +18550,47 @@ DCバイアス計算</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+62"/>
+        <location line="+7"/>
+        <source>AdmsXml Path:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>ASCO Path:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Octave Path:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+41"/>
         <source>Locations</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+10"/>
         <source>OK</source>
-        <translation>OK</translation>
+        <translation>Acceptar</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Apply</source>
-        <translation>適用</translation>
+        <translation>Aplicar</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Cancel</source>
-        <translation>キャンセル</translation>
+        <translation>Cancel·lar</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Default Values</source>
-        <translation>デフォルトに戻す</translation>
+        <translation>Valors predeterminados</translation>
     </message>
     <message>
-        <location line="+365"/>
+        <location line="+371"/>
         <source>Select the admsXml bin directory</source>
         <translation type="unfinished"></translation>
     </message>
@@ -18329,151 +18616,141 @@ DCバイアス計算</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-564"/>
-        <source>Register filename extensions here in order to
-open files with an appropriate program.</source>
-        <translation>適切なプログラムでファイルを開くためには拡張子を登録してください.</translation>
-    </message>
-    <message>
-        <location line="+13"/>
+        <location line="-557"/>
         <source>Suffix</source>
-        <translation>サフィックス</translation>
+        <translation>Sufijo</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Program</source>
-        <translation>プログラム</translation>
+        <translation>Programa</translation>
     </message>
     <message>
         <location line="+22"/>
         <source>Suffix:</source>
-        <translation>サフィックス:</translation>
+        <translation>Sufijo:</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Program:</source>
-        <translation>プログラム:</translation>
+        <translation>Programa:</translation>
     </message>
     <message>
-        <location line="+5"/>
-        <source>Set</source>
-        <translation>セット</translation>
+        <source>Add</source>
+        <translation type="obsolete">Afegir</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+8"/>
         <source>Remove</source>
-        <translation>削除</translation>
+        <translation>Borrar</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>File Types</source>
-        <translation>ファイルタイプ</translation>
+        <translation>Tipus de Arxiu</translation>
     </message>
     <message>
-        <location line="+18"/>
-        <source>AdmsXml Path:</source>
-        <translation type="unfinished"></translation>
+        <location line="-56"/>
+        <source>Register filename extensions here in order to
+open files with an appropriate program.</source>
+        <translation>Registrar aquí les extensiones de els fitxers para
+abrir els fitxers amb el programa apropiado.</translation>
     </message>
     <message>
-        <location line="+7"/>
-        <source>ASCO Path:</source>
-        <translation type="unfinished"></translation>
+        <location line="+48"/>
+        <source>Set</source>
+        <translation>Fijar</translation>
     </message>
     <message>
-        <location line="+7"/>
-        <source>Octave Path:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+16"/>
+        <location line="+56"/>
         <source>Subcircuit Search Path List</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+98"/>
         <source>Error</source>
-        <translation>エラー</translation>
+        <translation>Error</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>This suffix is already registered!</source>
-        <translation>このサフィックスは既に登録されています!</translation>
+        <translation>¡Ya está registrado este sufijo!</translation>
     </message>
     <message>
-        <location line="-321"/>
+        <location line="-326"/>
         <source>Language (set after reload):</source>
-        <translation>言語(再起動後に有効になります）:</translation>
+        <translation>Idioma (usado después de recargar):</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>system language</source>
-        <translation>システム言語</translation>
+        <translation>Idioma del sistema</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>English</source>
-        <translation></translation>
+        <translation>Inglés</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>German</source>
-        <translation></translation>
+        <translation>Alemán</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>French</source>
-        <translation></translation>
+        <translation>Francés</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Spanish</source>
-        <translation></translation>
+        <translation>Español</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Italian</source>
-        <translation></translation>
+        <translation>Italiano</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Polish</source>
-        <translation></translation>
+        <translation>Polaco</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Japanese</source>
-        <translation>日本語</translation>
+        <translation>Japonés</translation>
     </message>
     <message>
         <location line="-1"/>
         <source>Romanian</source>
-        <translation></translation>
+        <translation>Rumano</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Hebrew</source>
-        <translation></translation>
+        <translation>Hebreo</translation>
     </message>
     <message>
         <location line="-2"/>
         <source>Swedish</source>
-        <translation></translation>
+        <translation>Sueco</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Turkish</source>
-        <translation></translation>
+        <translation>Turco</translation>
     </message>
     <message>
         <location line="-4"/>
         <source>Hungarian</source>
-        <translation></translation>
+        <translation>Húngaro</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Portuguese-BR</source>
         <oldsource>Portuguese</oldsource>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Portugués</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -18483,12 +18760,12 @@ open files with an appropriate program.</source>
     <message>
         <location line="+2"/>
         <source>Ukrainian</source>
-        <translation></translation>
+        <translation>Ucraniano</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Russian</source>
-        <translation></translation>
+        <translation>Ruso</translation>
     </message>
     <message>
         <location line="+15"/>
@@ -18496,68 +18773,68 @@ open files with an appropriate program.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+20"/>
+        <location line="+25"/>
         <source>Colors for Syntax Highlighting:</source>
-        <translation>構文ハイライト色:</translation>
+        <translation>Colores para el resaltado de sintáxis:</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Comment</source>
-        <translation>コメント</translation>
+        <translation>Comentario</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>String</source>
-        <translation>文字列</translation>
+        <translation>Texto</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Integer Number</source>
-        <translation>整数</translation>
+        <translation>Número Entero</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Real Number</source>
-        <translation>実数</translation>
+        <translation>Número Real</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Character</source>
-        <translation>文字</translation>
+        <translation>Carácter</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Data Type</source>
-        <translation>データタイプ</translation>
+        <translation>Tipus de dades</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Attribute</source>
-        <translation>属性</translation>
+        <translation>Atributo</translation>
     </message>
     <message>
         <source>VHDL Editor</source>
-        <translation type="obsolete">VHDLエディタ</translation>
+        <translation type="obsolete">Editor VHDL</translation>
     </message>
     <message>
-        <location line="-72"/>
+        <location line="-77"/>
         <source>Czech</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Catalan</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+16"/>
         <source>start wiring when clicking open node:</source>
-        <translation type="unfinished">開放されたノードからワイア開始:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="-15"/>
         <source>Arabic</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+1"/>
@@ -18565,7 +18842,7 @@ open files with an appropriate program.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+75"/>
+        <location line="+80"/>
         <source>Directive</source>
         <translation type="unfinished"></translation>
     </message>
@@ -18584,169 +18861,169 @@ open files with an appropriate program.</source>
     <name>QucsTranscalc</name>
     <message>
         <source>Load</source>
-        <translation type="obsolete">読み込み</translation>
+        <translation type="obsolete">Cargar</translation>
     </message>
     <message>
         <location filename="../qucs-transcalc/qucstrans.cpp" line="+264"/>
         <source>&amp;Load</source>
-        <translation>読み込み(&amp;L)</translation>
+        <translation>&amp;Cargar</translation>
     </message>
     <message>
         <source>Save</source>
-        <translation type="obsolete">保存</translation>
+        <translation type="obsolete">Guardar</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>&amp;Save</source>
-        <translation>保存(&amp;S)</translation>
+        <translation>&amp;Guardar</translation>
     </message>
     <message>
         <source>Options</source>
-        <translation type="obsolete">オプション</translation>
+        <translation type="obsolete">Opciones</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>&amp;Options</source>
-        <translation>オプション(&amp;O)</translation>
+        <translation>&amp;Opciones</translation>
     </message>
     <message>
         <source>Quit</source>
-        <translation type="obsolete">閉じる</translation>
+        <translation type="obsolete">Salir</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>&amp;Quit</source>
-        <translation>閉じる(&amp;Q)</translation>
+        <translation>&amp;Salir</translation>
     </message>
     <message>
         <source>Copy to Clipboard</source>
-        <translation type="obsolete">クリップボードにコピー</translation>
+        <translation type="obsolete">Copiar al portapapeles</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>&amp;Copy to Clipboard</source>
-        <translation>クリップボードにコピー(&amp;C)</translation>
+        <translation>&amp;Copiar al portapapeles</translation>
     </message>
     <message>
         <location line="+92"/>
         <source>Analyze</source>
-        <translation>解析</translation>
+        <translation>Analizar</translation>
     </message>
     <message>
         <location line="-87"/>
         <source>&amp;Analyze</source>
-        <translation>解析(&amp;A)</translation>
+        <translation>&amp;Analizar</translation>
     </message>
     <message>
         <location line="+92"/>
         <source>Synthesize</source>
-        <translation>生成</translation>
+        <translation>Sintetizar</translation>
     </message>
     <message>
         <location line="-87"/>
         <source>&amp;Synthesize</source>
-        <translation>生成(&amp;S)</translation>
+        <translation>&amp;Sintetizar</translation>
     </message>
     <message>
         <source>Help</source>
-        <translation type="obsolete">ヘルプ</translation>
+        <translation type="obsolete">Ajuda</translation>
     </message>
     <message>
         <location line="+6"/>
         <location line="+1"/>
         <source>&amp;Help</source>
-        <translation>ヘルプ(&amp;H)</translation>
+        <translation>&amp;Ajuda</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>About</source>
-        <translation>About</translation>
+        <translation>Acerca de</translation>
     </message>
     <message>
         <location line="-51"/>
         <source>&amp;File</source>
-        <translation>ファイル(&amp;F)</translation>
+        <translation>&amp;Fitxer</translation>
     </message>
     <message>
         <location line="+27"/>
         <source>&amp;Execute</source>
-        <translation>実行(&amp;E)</translation>
+        <translation>&amp;Ejecutar</translation>
     </message>
     <message>
         <location line="+39"/>
         <source>Transmission Line Type</source>
-        <translation>伝送線路タイプ</translation>
+        <translation>Tipus de línea de transmisión</translation>
     </message>
     <message>
         <source>Microstrip</source>
-        <translation type="obsolete">マイクロストリップ</translation>
+        <translation type="obsolete">Microstrip</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Rectangular Waveguide</source>
-        <translation>角ウェーブガイド</translation>
+        <translation>Guiaondas rectángular</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Coaxial Line</source>
-        <translation>同軸線路</translation>
+        <translation>Línea coaxial</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Coupled Microstrip</source>
-        <translation>カップルドマイクロストリップライン</translation>
+        <translation>Microstrip acoplado</translation>
     </message>
     <message>
         <location line="+25"/>
         <source>Substrate Parameters</source>
-        <translation>基板パラメータ</translation>
+        <translation>Paràmetres del sustrato</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Component Parameters</source>
-        <translation>部品パラメータ</translation>
+        <translation>Paràmetres del componente</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Physical Parameters</source>
-        <translation>物理パラメータ</translation>
+        <translation>Paràmetres Físicos</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Derive Electrical Parameters</source>
-        <translation>誘電率パラメータ</translation>
+        <translation>Paràmetres de deriva eléctrica</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Compute Physical Parameters</source>
-        <translation>物理パラメータ計算</translation>
+        <translation>Paràmetres de cálculo físico</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Electrical Parameters</source>
-        <translation>電気的パラメータ</translation>
+        <translation>Paràmetres eléctricos</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Calculated Results</source>
-        <translation>計算結果</translation>
+        <translation>Resultados Calculados</translation>
     </message>
     <message>
         <location line="+6"/>
         <location line="+569"/>
-        <location line="+151"/>
+        <location line="+157"/>
         <location line="+19"/>
         <source>Ready.</source>
-        <translation>Ready.</translation>
+        <translation>Listo.</translation>
     </message>
     <message>
-        <location line="-689"/>
+        <location line="-695"/>
         <location line="+6"/>
         <location line="+6"/>
         <location line="+6"/>
         <location line="+6"/>
         <source>Conductor Losses</source>
-        <translation>導体抵抗</translation>
+        <translation>Pérdidas del conductor</translation>
     </message>
     <message>
         <location line="-23"/>
@@ -18755,7 +19032,7 @@ open files with an appropriate program.</source>
         <location line="+6"/>
         <location line="+6"/>
         <source>Dielectric Losses</source>
-        <translation>誘電抵抗</translation>
+        <translation>Pérdidas dieléctricas</translation>
     </message>
     <message>
         <location line="-23"/>
@@ -18763,39 +19040,39 @@ open files with an appropriate program.</source>
         <location line="+6"/>
         <location line="+22"/>
         <source>Skin Depth</source>
-        <translation>表面素材の厚み</translation>
+        <translation>Profundidad de piel</translation>
     </message>
     <message>
         <location line="-16"/>
         <location line="+6"/>
         <source>TE-Modes</source>
-        <translation>TEモード</translation>
+        <translation>Modos TE</translation>
     </message>
     <message>
         <location line="-5"/>
         <location line="+6"/>
         <source>TM-Modes</source>
-        <translation>TMモード</translation>
+        <translation>Modos TM</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Conductor Losses Even</source>
-        <translation type="unfinished">導体抵抗（偶数）</translation>
+        <translation>Pérdidas del conductor par</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Conductor Losses Odd</source>
-        <translation type="unfinished">導体抵抗（奇数）</translation>
+        <translation>Pérdidas del conductor impar</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Dielectric Losses Even</source>
-        <translation type="unfinished">誘電損失（偶数）</translation>
+        <translation>Pérdidas del dieléctrico par</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Dielectric Losses Odd</source>
-        <translation type="unfinished">誘電抵抗（偶数）</translation>
+        <translation>Perdidas del dieléctrico impar</translation>
     </message>
     <message>
         <location line="+5"/>
@@ -18805,7 +19082,7 @@ open files with an appropriate program.</source>
         <location line="+13"/>
         <location line="+12"/>
         <source>Relative Permittivity</source>
-        <translation>誘電率</translation>
+        <translation>Permitividad relativa</translation>
     </message>
     <message>
         <location line="-65"/>
@@ -18813,7 +19090,7 @@ open files with an appropriate program.</source>
         <location line="+13"/>
         <location line="+12"/>
         <source>Relative Permeability</source>
-        <translation>誘電率</translation>
+        <translation>Permeabilidad relativa</translation>
     </message>
     <message>
         <location line="-65"/>
@@ -18821,13 +19098,13 @@ open files with an appropriate program.</source>
         <location line="+13"/>
         <location line="+39"/>
         <source>Height of Substrate</source>
-        <translation>基板厚み</translation>
+        <translation>Altura del sustrato</translation>
     </message>
     <message>
         <location line="-65"/>
         <location line="+66"/>
         <source>Height of Box Top</source>
-        <translation>基板厚み</translation>
+        <translation>Altura de la caja superior</translation>
     </message>
     <message>
         <location line="-65"/>
@@ -18835,7 +19112,7 @@ open files with an appropriate program.</source>
         <location line="+13"/>
         <location line="+40"/>
         <source>Strip Thickness</source>
-        <translation>ストリップ厚み</translation>
+        <translation>Grosor del strip</translation>
     </message>
     <message>
         <location line="-65"/>
@@ -18843,7 +19120,7 @@ open files with an appropriate program.</source>
         <location line="+13"/>
         <location line="+40"/>
         <source>Strip Conductivity</source>
-        <translation type="unfinished">ストリップ 伝導率</translation>
+        <translation>Conductividad del strip</translation>
     </message>
     <message>
         <location line="-65"/>
@@ -18853,13 +19130,13 @@ open files with an appropriate program.</source>
         <location line="+12"/>
         <location line="+16"/>
         <source>Dielectric Loss Tangent</source>
-        <translation type="unfinished">誘電損失(tan)</translation>
+        <translation>Pérdidas dieléctricas tangenciales</translation>
     </message>
     <message>
         <location line="-65"/>
         <location line="+66"/>
         <source>Conductor Roughness</source>
-        <translation>導体粗さ</translation>
+        <translation>Rugosidad del conductor</translation>
     </message>
     <message>
         <location line="-65"/>
@@ -18869,7 +19146,7 @@ open files with an appropriate program.</source>
         <location line="+12"/>
         <location line="+16"/>
         <source>Frequency</source>
-        <translation>周波数</translation>
+        <translation>Frecuencia</translation>
     </message>
     <message>
         <location line="-65"/>
@@ -18877,14 +19154,14 @@ open files with an appropriate program.</source>
         <location line="+13"/>
         <location line="+41"/>
         <source>Line Width</source>
-        <translation>線路幅</translation>
+        <translation>Amplada de la línea</translation>
     </message>
     <message>
         <location line="-65"/>
         <location line="+13"/>
         <location line="+13"/>
         <source>Line Length</source>
-        <translation>線路長さ</translation>
+        <translation>Longitud de la línea</translation>
     </message>
     <message>
         <location line="-25"/>
@@ -18893,7 +19170,7 @@ open files with an appropriate program.</source>
         <location line="+13"/>
         <location line="+12"/>
         <source>Characteristic Impedance</source>
-        <translation>インピーダンス特性</translation>
+        <translation>Impedancia característica</translation>
     </message>
     <message>
         <location line="-50"/>
@@ -18903,327 +19180,317 @@ open files with an appropriate program.</source>
         <location line="+12"/>
         <location line="+17"/>
         <source>Electrical Length</source>
-        <translation>電気長</translation>
+        <translation>Longitud eléctrica</translation>
     </message>
     <message>
         <location line="-37"/>
         <location line="+14"/>
         <source>Conductivity of Metal</source>
-        <translation type="unfinished">メタルの伝導率</translation>
+        <translation>Conductividad del metal</translation>
     </message>
     <message>
         <location line="-12"/>
         <source>Magnetic Loss Tangent</source>
-        <translation type="unfinished"></translation>
+        <translation>Pérdidas magnéticas tangenciales</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Width of Waveguide</source>
-        <translation>ウェーブガイド幅</translation>
+        <translation>Amplada del guiaondas</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Height of Waveguide</source>
-        <translation>ウェーブガイド高さ</translation>
+        <translation>Alto del guiaondas</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Waveguide Length</source>
-        <translation>ウェーブガイド長さ</translation>
+        <translation>Longitud del guiaondas</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Inner Diameter</source>
-        <translation>内部直径</translation>
+        <translation>Diámetro interior</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Outer Diameter</source>
-        <translation>外部直径</translation>
+        <translation>Diámetro exterior</translation>
     </message>
     <message>
         <location line="+1"/>
         <location line="+16"/>
         <source>Length</source>
-        <translation>長さ</translation>
+        <translation>Longitud</translation>
     </message>
     <message>
         <location line="-55"/>
         <location line="+13"/>
         <location line="+41"/>
         <source>Gap Width</source>
-        <translation>ギャップ幅</translation>
+        <translation>Amplada del gap</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Even-Mode Impedance</source>
-        <translation>偶次モードインピーダンス</translation>
+        <translation>Impedancia en modo-par</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Odd-Mode Impedance</source>
-        <translation>奇数時モードインピーダンス</translation>
+        <translation>Impedancia en modo impar</translation>
     </message>
     <message>
         <location line="+138"/>
         <source>Selected for Calculation</source>
-        <translation>選択されたものを計算</translation>
+        <translation>Seleccionado para el cálculo</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Check item for Calculation</source>
-        <translation>選択されたアイテムを計算</translation>
+        <translation>Selecciona elemento para el cálculo</translation>
     </message>
     <message>
         <location line="+217"/>
         <source>About...</source>
-        <translation>About...</translation>
+        <translation>Acerca de...</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Transmission Line Calculator for Qucs
 </source>
-        <translation>伝送線路計算 for Qucs</translation>
+        <translation>Calculador de línees de transmisión para Qucs
+</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Copyright (C) 2001 by Gopal Narayanan
 </source>
-        <translation></translation>
+        <translation>Copyright (C) 2001 by Gopal Narayanan
+</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Copyright (C) 2002 by Claudio Girardi
 </source>
-        <translation></translation>
+        <translation>Copyright (C) 2002 by Claudio Girardi
+</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Copyright (C) 2005 by Stefan Jahn
 </source>
-        <translation></translation>
+        <translation>Copyright (C) 2005 by Stefan Jahn
+</translation>
     </message>
     <message>
         <location line="+42"/>
-        <location line="+7"/>
+        <location line="+11"/>
         <source>Values are consistent.</source>
-        <translation>値は一致してます。</translation>
+        <translation>Los valores son consistentes.</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Failed to converge!</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Values are inconsistent.</source>
-        <translation>値は一致していません。</translation>
+        <translation>Los valores no son consistentes.</translation>
     </message>
     <message>
         <location line="+118"/>
         <source>Loading file...</source>
-        <translation>ファイルを読み込んでいます...</translation>
+        <translation>Cargando fitxer...</translation>
     </message>
     <message>
         <location line="+4"/>
         <location line="+19"/>
         <source>Transcalc File</source>
-        <translation></translation>
+        <translation>Fitxer transcalc</translation>
     </message>
     <message>
         <location line="-21"/>
         <location line="+19"/>
         <source>Enter a Filename</source>
-        <translation>ファイル名入力</translation>
+        <translation>Escriba un nombre de fitxer</translation>
     </message>
     <message>
         <location line="-13"/>
         <location line="+19"/>
         <source>Error</source>
-        <translation>エラー</translation>
+        <translation>Error</translation>
     </message>
     <message>
         <location line="-18"/>
         <source>Cannot load file:</source>
-        <translation>ファイルを読み込みできません:</translation>
+        <translation>No se pudo cargar el fitxer:</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Loading aborted.</source>
-        <translation>開くのを中断しました.</translation>
+        <translation>Carga abortada.</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Saving file...</source>
-        <translation>ファイルを保存しています...</translation>
+        <translation>Guardando fitxer...</translation>
     </message>
     <message>
         <location line="+9"/>
         <source>Cannot save file:</source>
-        <translation>ファイルを保存できません:</translation>
+        <translation>No se pudo guardar el fitxer:</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Saving aborted.</source>
-        <translation>保存を中断しました.</translation>
+        <translation>Abortado.</translation>
     </message>
     <message>
         <location line="+298"/>
         <source>Schematic copied into clipboard.</source>
-        <translation>回路をクリップボードにコピーしました.</translation>
+        <translation>Esquema copiado en el portapapeles.</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Transmission line type not available.</source>
-        <translation>利用できない伝送線路タイプです.</translation>
+        <translation>No disponible ese tipo de línea de transmisión.</translation>
     </message>
     <message>
-        <location line="-988"/>
+        <location line="-994"/>
         <location line="+6"/>
         <location line="+6"/>
         <location line="+6"/>
         <source>ErEff</source>
-        <translation></translation>
+        <translation>ErEff</translation>
     </message>
     <message>
         <location line="+13"/>
         <source>ErEff Even</source>
-        <translation></translation>
+        <translation>ErEff par</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>ErEff Odd</source>
-        <translation></translation>
+        <translation>ErEff impar</translation>
     </message>
     <message>
         <location line="-156"/>
         <source>Microstrip Line</source>
-        <translation>マイクロストリップライン</translation>
+        <translation type="unfinished">Línea Microstrip</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Coplanar Waveguide</source>
-        <translation>コプレーナウェーブガイド</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Grounded Coplanar</source>
-        <translation>グラウンデッドコプレーナ</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+608"/>
         <source>Copyright (C) 2008 by Michael Margraf
 </source>
-        <translation>Copyright (C) 2008 by Michael Margraf</translation>
+        <translation type="unfinished">Copyright (C) 2008 por Michael Margraf
+</translation>
     </message>
 </context>
 <context>
     <name>QucsView</name>
     <message>
         <source>Insert Nodename</source>
-        <translation type="obsolete">ノード名追加</translation>
+        <translation type="obsolete">Insertar nombre del nodo</translation>
     </message>
     <message>
         <source>Enter the label:</source>
-        <translation type="obsolete">ラベル入力 :</translation>
+        <translation type="obsolete">Escribe la etiqueta:</translation>
     </message>
     <message>
         <source>Info</source>
-        <translation type="obsolete">情報</translation>
+        <translation type="obsolete">Información</translation>
     </message>
     <message>
         <source>The ground potential cannot be labeled!</source>
-        <translation type="obsolete">グラウンドにはラベルを付けられません !</translation>
+        <translation type="obsolete">¡El potencial de tierra no se puede etiquetar!</translation>
     </message>
     <message>
         <source>Edit Properties</source>
-        <translation type="obsolete">プロパティ編集</translation>
+        <translation type="obsolete">Editar Propietats</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="obsolete">エラー</translation>
-    </message>
-    <message>
-        <source>2-port matching</source>
-        <translation type="obsolete">2-portマッチング</translation>
-    </message>
-    <message>
-        <source>Could not load S[1,1].</source>
-        <translation type="obsolete">S11がロードできません.</translation>
-    </message>
-    <message>
-        <source>Could not load S[1,2].</source>
-        <translation type="obsolete">S12がロードできません.</translation>
-    </message>
-    <message>
-        <source>Could not load S[2,1].</source>
-        <translation type="obsolete">S21がロードできません.</translation>
-    </message>
-    <message>
-        <source>Could not load S[2,2].</source>
-        <translation type="obsolete">S22がロードできません.</translation>
+        <translation type="obsolete">Error</translation>
     </message>
 </context>
 <context>
     <name>SaveDialog</name>
     <message>
-        <location filename="dialogs/savedialog.cpp" line="+58"/>
+        <location filename="../qucs/dialogs/savedialog.cpp" line="+60"/>
         <source>Modified Files</source>
-        <translation>変更されたファイル</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+34"/>
         <source>Untitled</source>
-        <translation>タイトルなし</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="-56"/>
         <source>Save the modified files</source>
-        <translation>変更されたファイルを保存</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+19"/>
         <source>Select files to be saved</source>
-        <translation>選択されたファイルは保存されました</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+13"/>
         <source>Abort Closing</source>
-        <translation>閉じるのを中断</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+8"/>
-        <source>Save Selected</source>
-        <translation>選択された物を保存</translation>
-    </message>
-    <message>
-        <location line="-3"/>
+        <location line="+5"/>
         <source>Don&apos;t Save</source>
-        <translation>保存しない</translation>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Save Selected</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>Schematic</name>
     <message>
-        <location filename="schematic.cpp" line="+9"/>
+        <location filename="../qucs/schematic.cpp" line="+9"/>
         <source>Title</source>
-        <translation>タイトル</translation>
+        <translation>Título</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Drawn By:</source>
-        <translation>作者:</translation>
+        <translation>Dibujado por:</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Date:</source>
-        <translation>日付:</translation>
+        <translation>Fecha:</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Revision:</source>
-        <translation>リビジョン:</translation>
+        <translation>Revisión:</translation>
     </message>
     <message>
-        <location filename="schematic_file.cpp" line="+266"/>
+        <location filename="../qucs/schematic_file.cpp" line="+266"/>
         <location line="+22"/>
         <source>Error</source>
-        <translation type="unfinished">エラー</translation>
+        <translation type="unfinished">Error</translation>
     </message>
     <message>
         <location line="-21"/>
@@ -19235,20 +19502,20 @@ Set the admsXml location on the application settings.</source>
     <message>
         <location line="+26"/>
         <source>Status</source>
-        <translation type="unfinished">状態</translation>
+        <translation type="unfinished">Estat</translation>
     </message>
     <message>
-        <location line="+928"/>
+        <location line="+927"/>
         <source>ERROR: Cannot create library file &quot;%s&quot;.</source>
-        <translation>エラー;　ライブラリ&quot;%s&quot;を作成できません.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="schematic.cpp" line="+1299"/>
+        <location filename="../qucs/schematic.cpp" line="+1319"/>
         <source>generic</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-1212"/>
+        <location line="-1232"/>
         <source>Edit Text</source>
         <translation type="unfinished"></translation>
     </message>
@@ -19267,269 +19534,264 @@ Edits the text file</source>
     <message>
         <location line="+3"/>
         <source>Edit Schematic</source>
-        <translation type="unfinished">回路図編集</translation>
+        <translation type="unfinished">Editar Esquema</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Edits the schematic</source>
-        <translation type="unfinished">回路図を編集します</translation>
+        <translation type="unfinished">Edita el esquema</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Edit Schematic
 
 Edits the schematic</source>
-        <translation type="unfinished">回路図を編集
+        <translation type="unfinished">Editar Esquema
 
-回路図を編集します</translation>
+Edita el esquema</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Edit Circuit Symbol</source>
-        <translation type="unfinished">回路シンボルを編集</translation>
+        <translation type="unfinished">Editar Símbolo del circuito</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Edits the symbol for this schematic</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Edita els símboels de este esquema</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Edit Circuit Symbol
 
 Edits the symbol for this schematic</source>
-        <translation type="unfinished">回路シンボルを編集
+        <translation type="unfinished">Editar Símbolo del circuito
 
-この回路図の為のシンボルを編集</translation>
+Edita els símboels de este esquema</translation>
     </message>
 </context>
 <context>
     <name>SearchDialog</name>
     <message>
-        <location filename="../qucs-lib/searchdialog.cpp" line="+49"/>
+        <location filename="../qucs-lib/searchdialog.cpp" line="+48"/>
         <source>The search result contains all components whose
 name contains the search string. All libraries
 are included in the search.</source>
-        <translation>検索結果は検索文字列を含む全ての部品を含んでいます。全てのライブラリが検索対象です.</translation>
+        <translation>Los resultados de la búsqueda contienen todos los
+componentes cuyos nombres tienen la cadena
+de búsqueda. Todas les librerías están incluidas
+en la búsqueda.</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Search string:</source>
-        <translation>検索文字列:</translation>
+        <translation>Cadena de búsqueda:</translation>
     </message>
     <message>
-        <location filename="dialogs/searchdialog.cpp" line="+71"/>
+        <location filename="../qucs/dialogs/searchdialog.cpp" line="+71"/>
         <location filename="../qucs-lib/searchdialog.cpp" line="+11"/>
         <source>Search</source>
-        <translation>検索</translation>
+        <translation>Buscar</translation>
     </message>
     <message>
         <location filename="../qucs-lib/searchdialog.cpp" line="+2"/>
         <source>Close</source>
-        <translation>閉じる</translation>
+        <translation>Tancar</translation>
     </message>
     <message>
         <location line="+89"/>
         <location line="+1"/>
         <source>Search result</source>
-        <translation>検索結果</translation>
+        <translation>Resultado de la búsqueda</translation>
     </message>
     <message>
-        <location filename="dialogs/searchdialog.cpp" line="+23"/>
+        <location filename="../qucs/dialogs/searchdialog.cpp" line="+23"/>
         <source>Search Text</source>
-        <translation>テキスト検索</translation>
-    </message>
-    <message>
-        <source>Text to search for:</source>
-        <translation type="obsolete">テキストを検索:</translation>
+        <translation>Texto de Búsqueda</translation>
     </message>
     <message>
         <location line="-34"/>
         <source>From cursor position</source>
-        <translation>このカーソル位置から</translation>
+        <translation>Desde la posición del cursor</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Case sensitive</source>
-        <translation type="unfinished">感度</translation>
+        <translation>Distingue mayúsculas</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Whole words only</source>
-        <translation>全文一致のみ</translation>
+        <translation>Sólo palabras completas</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Search backwards</source>
-        <translation>前方向に検索</translation>
+        <translation>Búsqueda inversa</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Cancel</source>
-        <translation>キャンセル</translation>
+        <translation>Cancel·lar</translation>
     </message>
     <message>
         <location line="+90"/>
         <source>Search...</source>
-        <translation>サーチ...</translation>
-    </message>
-    <message>
-        <source>Could not find search string!</source>
-        <translation type="obsolete">一致する文字列を検索できませんでした!</translation>
+        <translation>Buscar...</translation>
     </message>
     <message>
         <location line="-122"/>
         <source>Text to search for</source>
-        <translation>テキストを検索</translation>
+        <translation>Texto de búsqueda</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Text to replace with</source>
-        <translation>テキストを置換</translation>
+        <translation>Texto a reemplazar</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Ask before replacing</source>
-        <translation>問い合わせてから置換</translation>
+        <translation>Preguntar antes de reemplazar</translation>
     </message>
     <message>
         <location line="+32"/>
         <source>Replace Text</source>
-        <translation>置換テキスト</translation>
+        <translation>Texto de reemplazo</translation>
     </message>
     <message>
         <location line="+56"/>
         <location line="+23"/>
         <source>Replace...</source>
-        <translation>置換...</translation>
+        <translation>Reemplazar...</translation>
     </message>
     <message>
         <location line="-23"/>
         <source>Replace occurrence ?</source>
-        <translation type="unfinished"></translation>
+        <translation>¿Reemplazar ocurrencia?</translation>
     </message>
     <message>
         <location line="+19"/>
         <source>Search string not found!</source>
-        <translation>検索文字は見つかりませんでした!</translation>
+        <translation>¡Cadena de búsqueda no encontrada!</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Replaced %1 occurrences!</source>
-        <translation>%1 箇所を置換しました!</translation>
+        <translation>¡Reemplazadas %1 ocurrencias!</translation>
     </message>
 </context>
 <context>
     <name>SettingsDialog</name>
     <message>
-        <location filename="dialogs/settingsdialog.cpp" line="+45"/>
+        <location filename="../qucs/dialogs/settingsdialog.cpp" line="+44"/>
         <source>Edit File Properties</source>
-        <translation>ファイルプロパティー編集</translation>
+        <translation>Editar les propietats del fitxer</translation>
     </message>
     <message>
         <location line="+16"/>
         <source>Data Display:</source>
-        <translation>回路図 :</translation>
+        <translation>Pantalla de Dades:</translation>
     </message>
     <message>
         <location line="-5"/>
         <source>Data Set:</source>
-        <translation>データ セット :</translation>
+        <translation>Conjunt de Dades:</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>open data display after simulation</source>
-        <translation>シミュレーション後データ表示する</translation>
+        <translation>abrir la pantalla de dades después de la simulación</translation>
     </message>
     <message>
         <location line="+13"/>
         <source>Simulation</source>
-        <translation>シミュレーション</translation>
+        <translation>Simulació</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>show Grid</source>
-        <translation>グリッド表示</translation>
+        <translation>mostrar Reixeta</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>horizontal Grid:</source>
-        <translation>水平グリッド :</translation>
+        <translation>Reixeta horitzontal:</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>vertical Grid:</source>
-        <translation>垂直グリッド :</translation>
+        <translation>Reixeta vertical:</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Grid</source>
-        <translation>グリッド</translation>
+        <translation>Reixeta</translation>
     </message>
     <message>
         <location line="+39"/>
         <source>OK</source>
-        <translation>OK</translation>
+        <translation>Acceptar</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Apply</source>
-        <translation>適用</translation>
+        <translation>Aplicar</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Cancel</source>
-        <translation>キャンセル</translation>
+        <translation>Cancel·lar</translation>
     </message>
     <message>
         <location line="-15"/>
         <source>Frame</source>
-        <translation>フレーム</translation>
+        <translation>Cuadro</translation>
     </message>
     <message>
         <location line="-24"/>
         <source>no Frame</source>
-        <translation>フレームなし</translation>
+        <translation> sense Cuadro</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>DIN A5 landscape</source>
-        <translation>DIN A5 横</translation>
+        <translation>DIN A5 apaisado</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>DIN A5 portrait</source>
-        <translation>DIN A5 縦</translation>
+        <translation>DIN A5 vertical</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>DIN A4 landscape</source>
-        <translation>DIN A4 横</translation>
+        <translation>DIN A4 apaisado</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>DIN A4 portrait</source>
-        <translation>DIN A4 縦</translation>
+        <translation>DIN A4 vertical</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>DIN A3 landscape</source>
-        <translation>DIN A3 横</translation>
+        <translation>DIN A3 apaisado</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>DIN A3 portrait</source>
-        <translation>DIN A3 縦</translation>
+        <translation>DIN A3 vertical</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Letter landscape</source>
-        <translation>Letter 横</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Letter portrait</source>
-        <translation>Letter 縦</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="-45"/>
@@ -19545,100 +19807,102 @@ are included in the search.</source>
 <context>
     <name>SimMessage</name>
     <message>
-        <location filename="dialogs/simmessage.cpp" line="+52"/>
+        <location filename="../qucs/dialogs/simmessage.cpp" line="+54"/>
         <source>Qucs Simulation Messages</source>
-        <translation>Qucs シミュレーション メッセージ</translation>
+        <translation>Missatjes de simulación de Qucs</translation>
     </message>
     <message>
         <location line="+21"/>
         <location line="+18"/>
         <source>Progress:</source>
-        <translation>進捗 :</translation>
+        <translation>Progreso:</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Errors and Warnings:</source>
-        <translation>エラーと注意 :</translation>
+        <translation>Errores y Avisos:</translation>
     </message>
     <message>
         <location line="+15"/>
         <source>Goto display page</source>
-        <translation>表示ページへ</translation>
+        <translation>Ir a la página</translation>
     </message>
     <message>
         <location line="+5"/>
         <location line="+15"/>
         <source>Abort simulation</source>
-        <translation>シミュレーション中止</translation>
+        <translation>Interrumpir simulación</translation>
     </message>
     <message>
         <location line="+546"/>
         <source>Close window</source>
-        <translation>ウィンドウを閉じる</translation>
+        <translation>Tancar ventana</translation>
     </message>
     <message>
         <source>Starting new simulation on </source>
-        <translation type="obsolete">新しいシミュレーションを始めています</translation>
+        <translation type="obsolete">Iniciando una nueva simulación </translation>
     </message>
     <message>
         <source> at </source>
-        <translation type="obsolete"> at</translation>
+        <translation type="obsolete"> en </translation>
     </message>
     <message>
         <source>creating netlist ....</source>
-        <translation type="obsolete">ネットリストを作成中...</translation>
+        <translation type="obsolete">creando llista de conexiones...</translation>
     </message>
     <message>
         <source>ERROR: Cannot create netlist file!
 Aborted.</source>
-        <translation type="obsolete">エラー:ネットリストファイルを作成できません!
-中断しました.</translation>
+        <translation type="obsolete">ERROR: ¡No pude crear el fitxer de la llista de conexiones!
+Abortado.</translation>
     </message>
     <message>
         <source>done.
 </source>
-        <translation type="obsolete">完了.</translation>
+        <translation type="obsolete">hecho.
+</translation>
     </message>
     <message>
         <location line="-534"/>
         <source>ERROR: Simulator is still running!</source>
-        <translation>エラー:シミュレーション中です!</translation>
+        <translation>ERROR: ¡El simulador todavía está corriendo!</translation>
     </message>
     <message>
         <location line="+443"/>
         <source>ERROR: Cannot start simulator!</source>
-        <translation>エラー:シミュレータを開始できません!</translation>
+        <translation>ERROR: ¡No puedo arrancar el simulador!</translation>
     </message>
     <message>
         <source>
 Simulation ended on </source>
         <translation type="obsolete">
-シミュレーション完了 </translation>
+La simulación ha finalizado </translation>
     </message>
     <message>
         <source>Ready.
 </source>
-        <translation type="obsolete">準備完了.
+        <translation type="obsolete">Listo.
 </translation>
     </message>
     <message>
         <source>
 Errors occured during simulation on </source>
         <translation type="obsolete">
-シミュレーションでのエラー </translation>
+Han ocurrido errores durante la simulación </translation>
     </message>
     <message>
         <source>Aborted.
 </source>
-        <translation type="obsolete">中断しました.</translation>
+        <translation type="obsolete">Abortado.
+</translation>
     </message>
     <message>
         <source>Output:
 ----------
 
 </source>
-        <translation type="obsolete">出力:
-------
+        <translation type="obsolete">Sortida:
+----------
 
 </translation>
     </message>
@@ -19653,59 +19917,55 @@ Errors:
         <translation type="obsolete">
 
 
-エラー:
----------
+Errores:
+-----------
 
 </translation>
     </message>
     <message>
         <location line="-434"/>
         <source>ERROR: Cannot write netlist file!</source>
-        <translation>エラー:ネットリストファイルを書き込み出来ません!</translation>
+        <translation>ERROR: ¡No puedo escribir el fitxer netlist!</translation>
     </message>
     <message>
-        <location line="+94"/>
         <source>ERROR: Cannot start QucsConv!</source>
-        <translation>エラー:QucsConvを起動できません!</translation>
+        <translation type="obsolete">ERROR: ¡No puedo arrancar QucsConv!</translation>
     </message>
     <message>
-        <source>ERROR: No time for simulation specified!</source>
-        <translation type="obsolete">エラー:No time for simulation specified!</translation>
-    </message>
-    <message>
-        <source>ERROR: Forgotten the digital simulation component?</source>
-        <translation type="obsolete">エラー:ディジタルシミュレーション部品を忘れていませんか?</translation>
-    </message>
-    <message>
-        <location line="-97"/>
+        <location line="-3"/>
         <source>creating netlist... </source>
-        <translation>ネットリストを作成中...</translation>
+        <translation>creando netlist... </translation>
     </message>
     <message>
         <source>ERROR: Cannot copy &quot;%1&quot; !</source>
-        <translation type="obsolete">エラー:&quot;%1&quot;をコピーできません!</translation>
+        <translation type="obsolete">ERROR: ¡No puedo copiar &quot;%1&quot;!</translation>
     </message>
     <message>
         <location line="+77"/>
         <source>ERROR: Cannot open SPICE file &quot;%1&quot;.</source>
-        <translation>エラー;　スパイスファイル&quot;%1&quot;が開けません.</translation>
+        <translation>ERROR: No se pudo abrir el fitxer SPICE &quot;%1&quot;.</translation>
     </message>
     <message>
         <location line="-92"/>
         <source>Starting new simulation on %1 at %2</source>
-        <translation>新しいシミュレーションを始めています　%1 at %2 </translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+215"/>
+        <location line="+112"/>
+        <source>SIM ERROR: Cannot start QucsConv!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+103"/>
         <location line="+101"/>
         <source>done.</source>
-        <translation>完了.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+20"/>
         <location line="+24"/>
         <source>Error</source>
-        <translation type="unfinished">エラー</translation>
+        <translation type="unfinished">Error</translation>
     </message>
     <message>
         <location line="-24"/>
@@ -19721,37 +19981,37 @@ Errors:
     <message>
         <location line="+110"/>
         <source>Simulation ended on %1 at %2</source>
-        <translation>シミュレーション完了　%1 at %2</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Ready.</source>
-        <translation>準備完了.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Errors occurred during simulation on %1 at %2</source>
-        <translation>シミュレーションでのエラー %1 at %2</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Aborted.</source>
-        <translation>中断しました.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+6"/>
         <source>Output:
 -------</source>
-        <translation>出力:------</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Errors:
 -------</source>
-        <translation>エラー:---------</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-315"/>
+        <location line="-314"/>
         <location line="+7"/>
         <source>ERROR: Cannot create VHDL directory &quot;%1&quot;!</source>
         <translation type="unfinished"></translation>
@@ -19770,159 +20030,159 @@ Errors:
 <context>
     <name>SpiceDialog</name>
     <message>
-        <location filename="components/spicedialog.cpp" line="+66"/>
+        <location filename="../qucs/components/spicedialog.cpp" line="+68"/>
         <source>Name:</source>
-        <translation>名前 :</translation>
+        <translation>Nom:</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+10"/>
         <source>File:</source>
-        <translation>ファイル:</translation>
+        <translation>Fitxer:</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="-3"/>
         <source>Browse</source>
-        <translation>参照</translation>
+        <translation>Examinar</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+9"/>
         <source>Edit</source>
-        <translation>編集</translation>
+        <translation>Editar</translation>
     </message>
     <message>
-        <location line="+35"/>
+        <location line="+42"/>
         <source>Add &gt;&gt;</source>
-        <translation>追加 &gt;&gt;</translation>
+        <translation>Afegir &gt;&gt;</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>&lt;&lt; Remove</source>
-        <translation>&lt;&lt; 削除</translation>
+        <translation>&lt;&lt; Quitar</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="-16"/>
         <source>Component ports:</source>
-        <translation>部品 ポート:</translation>
+        <translation>Puertos del componente:</translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+28"/>
         <source>OK</source>
-        <translation>OK</translation>
+        <translation>Acceptar</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+1"/>
         <source>Apply</source>
-        <translation>適用</translation>
+        <translation>Aplicar</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+1"/>
         <source>Cancel</source>
-        <translation>キャンセル</translation>
+        <translation>Cancel·lar</translation>
     </message>
     <message>
-        <location line="+129"/>
+        <location line="+142"/>
         <source>All Files</source>
-        <translation>全てのファイル</translation>
+        <translation>Tots els Fitxers</translation>
     </message>
     <message>
         <location line="-3"/>
         <source>Select a file</source>
-        <translation>選択されたファイル</translation>
+        <translation>Seleccionar un fitxer</translation>
     </message>
     <message>
-        <location line="-178"/>
+        <location line="-198"/>
         <source>show file name in schematic</source>
-        <translation>回路図にファイル名を表示</translation>
+        <translation>mostar el nombre del fitxer en el esquema</translation>
     </message>
     <message>
-        <location line="+279"/>
-        <location line="+10"/>
-        <location line="+48"/>
+        <location line="+304"/>
+        <location line="+11"/>
+        <location line="+61"/>
         <source>Error</source>
-        <translation>エラー</translation>
+        <translation>Error</translation>
     </message>
     <message>
         <source>Cannot execute</source>
-        <translation type="obsolete">実行できません</translation>
+        <translation type="obsolete">No se puede ejecutar</translation>
     </message>
     <message>
-        <location line="-71"/>
-        <location line="+59"/>
+        <location line="-85"/>
+        <location line="+72"/>
         <source>Info</source>
-        <translation>情報</translation>
+        <translation>Información</translation>
     </message>
     <message>
         <source>Converting ...</source>
-        <translation type="obsolete">変換中...</translation>
+        <translation type="obsolete">Convirtiendo...</translation>
     </message>
     <message>
-        <location line="+22"/>
+        <location line="+21"/>
         <source>QucsConv Error</source>
-        <translation>QucsConv エラー</translation>
+        <translation>Error de QucsConv</translation>
     </message>
     <message>
-        <location line="-167"/>
+        <location line="-184"/>
         <source>SPICE netlist</source>
-        <translation>SPICEネットリスト</translation>
+        <translation>netlist SPICE</translation>
     </message>
     <message>
-        <location line="-217"/>
+        <location line="-236"/>
         <source>Edit SPICE Component Properties</source>
-        <translation>SPICE部品プロパティー編集</translation>
+        <translation>Editar les propietats del componente SPICE</translation>
     </message>
     <message>
-        <location line="+59"/>
+        <location line="+64"/>
         <source>SPICE net nodes:</source>
-        <translation>SPICE ネットノード:</translation>
+        <translation>Nodos de red SPICE:</translation>
     </message>
     <message>
-        <location line="-19"/>
+        <location line="-20"/>
         <source>include SPICE simulations</source>
-        <translation>SPICEシミュレーションを含める</translation>
+        <translation>incluir simulaciones SPICE</translation>
     </message>
     <message>
-        <location line="+323"/>
+        <location line="+356"/>
         <source>Converting SPICE file &quot;%1&quot;.</source>
-        <translation>スパイスファイル&quot;%1&quot;を変換しています.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-313"/>
+        <location line="-347"/>
         <source>preprocessor</source>
-        <translation>プリプロセッサ</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+254"/>
+        <location line="+275"/>
         <source>Preprocessing SPICE file &quot;%1&quot;.</source>
-        <translation>スパイスファイル&quot;%1&quot;を前処理しています.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+43"/>
+        <location line="+44"/>
         <source>SPICE Preprocessor Error</source>
-        <translation>SPICEプリプロセッサエラー</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-30"/>
+        <location line="-31"/>
         <source>Cannot save preprocessed SPICE file &quot;%1&quot;.</source>
-        <translation>前処理されたSPICEファイル&quot;%1&quot;を保存できません.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+10"/>
-        <location line="+48"/>
+        <location line="+11"/>
+        <location line="+61"/>
         <source>Cannot execute &quot;%1&quot;.</source>
-        <translation>&quot;%1&quot;　を実行できません.</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>SweepDialog</name>
     <message>
-        <location filename="dialogs/sweepdialog.cpp" line="+80"/>
+        <location filename="../qucs/dialogs/sweepdialog.cpp" line="+79"/>
         <source>Bias Points</source>
-        <translation>バイアスポイント</translation>
+        <translation>Puntos de Polarización</translation>
     </message>
     <message>
         <location line="+30"/>
         <source>Close</source>
-        <translation>閉じる</translation>
+        <translation>Tancar</translation>
     </message>
 </context>
 <context>
@@ -19930,30 +20190,30 @@ Errors:
     <message>
         <location filename="../qucs-lib/symbolwidget.cpp" line="+45"/>
         <source>Symbol:</source>
-        <translation>シンボル:</translation>
+        <translation>Símbolo:</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>! Drag n&apos;Drop me !</source>
-        <translation>! 私をドラッグアンドドロップしてください !</translation>
+        <translation>¡ Arrástrame y suéltame !</translation>
     </message>
 </context>
 <context>
     <name>TextDoc</name>
     <message>
         <source>Error</source>
-        <translation type="obsolete">エラー</translation>
+        <translation type="obsolete">Error</translation>
     </message>
     <message>
         <source>There is no selection!</source>
-        <translation type="obsolete">選択されていません!</translation>
+        <translation type="obsolete">¡No hay selección!</translation>
     </message>
     <message>
         <source>Page %1 of %2</source>
-        <translation type="obsolete">ページ %1 から %2</translation>
+        <translation type="obsolete">Página %1 de %2</translation>
     </message>
     <message>
-        <location filename="textdoc.cpp" line="+178"/>
+        <location filename="../qucs/textdoc.cpp" line="+177"/>
         <source>Edit Text Symbol</source>
         <translation type="unfinished"></translation>
     </message>
@@ -19972,19 +20232,21 @@ Edits the symbol for this text document</source>
     <message>
         <location line="+3"/>
         <source>VHDL entity</source>
-        <translation type="unfinished">VHDL入力</translation>
+        <translation type="unfinished">Entidad VHDL</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Inserts skeleton of VHDL entity</source>
-        <translation type="unfinished">VHDL入力のスケルトンを挿入</translation>
+        <translation type="unfinished">Inserta esqueleto de la entidad VHDL</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>VHDL entity
 
 Inserts the skeleton of a VHDL entity</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Entidad VHDL
+
+Inserta esqueleto de la entidad VHDL</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -20024,47 +20286,35 @@ Inserts the skeleton of a Octave function</source>
 <context>
     <name>VASettingsDialog</name>
     <message>
-        <location filename="dialogs/vasettingsdialog.cpp" line="+43"/>
+        <location filename="../qucs/dialogs/vasettingsdialog.cpp" line="+43"/>
         <source>Document Settings</source>
-        <translation type="unfinished">ドキュメント セッティング</translation>
-    </message>
-    <message>
-        <source>Digital Simulation Settings</source>
-        <translation type="obsolete">ディジタルシミュレーション設定</translation>
+        <translation type="unfinished">Propietats del document</translation>
     </message>
     <message>
         <source>Simulation</source>
-        <translation type="obsolete">シミュレーション</translation>
+        <translation type="obsolete">Simulació</translation>
     </message>
     <message>
         <source>Duration of Simulation:</source>
-        <translation type="obsolete">シミュレーション時間:</translation>
-    </message>
-    <message>
-        <source>Precompile Module</source>
-        <translation type="obsolete">モジュールをプリコンパイル</translation>
+        <translation type="obsolete">Durada de la Simulació:</translation>
     </message>
     <message>
         <source>Library Name:</source>
-        <translation type="obsolete">ライブラリ名:</translation>
-    </message>
-    <message>
-        <source>Libraries:</source>
-        <translation type="obsolete">ライブラリ:</translation>
+        <translation type="obsolete">Nom de la Biblioteca:</translation>
     </message>
     <message>
         <location line="+107"/>
         <source>Ok</source>
-        <translation type="unfinished">OK</translation>
+        <translation type="unfinished">Acceptar</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Cancel</source>
-        <translation type="unfinished">キャンセル</translation>
+        <translation type="unfinished">Cancel·lar</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="obsolete">エラー</translation>
+        <translation type="obsolete">Error</translation>
     </message>
     <message>
         <location line="-100"/>
@@ -20074,7 +20324,7 @@ Inserts the skeleton of a Octave function</source>
     <message>
         <location line="+21"/>
         <source>Browse</source>
-        <translation type="unfinished">参照</translation>
+        <translation type="unfinished">Examinar</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -20094,7 +20344,7 @@ Inserts the skeleton of a Octave function</source>
     <message>
         <location line="+10"/>
         <source>Description:</source>
-        <translation type="unfinished">説明:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+9"/>
@@ -20134,7 +20384,7 @@ Inserts the skeleton of a Octave function</source>
     <message>
         <location line="+1"/>
         <source>Any file</source>
-        <translation type="unfinished">その他ファイル</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+1"/>

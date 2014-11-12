@@ -4,153 +4,153 @@
 <context>
     <name>ArrowDialog</name>
     <message>
-        <location filename="paintings/arrowdialog.cpp" line="+34"/>
+        <location filename="../qucs/paintings/arrowdialog.cpp" line="+33"/>
         <source>Edit Arrow Properties</source>
-        <translation>Бағыттауыш қасиетін өзгерту</translation>
+        <translation>تحرير السهم للعقارات</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Head Length: </source>
-        <translation>Бағыттауыш бітетін ұзындық:</translation>
+        <translation>رئيس الطول :</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>      Head Width: </source>
-        <translation>Бағыттауыш бітетін ені:</translation>
+        <translation>رئيس العرض :</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Line color: </source>
-        <translation>Сызықтың түсі:</translation>
+        <translation>لون الخط :</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>      Line Width: </source>
-        <translation>Сызықтың қалыңдығы: </translation>
+        <translation>خط العرض :</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Line style: </source>
-        <translation>Сызықтың стилі: </translation>
+        <translation>نمط الخط :</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>solid line</source>
-        <translation>тұтас сызық</translation>
+        <translation>خط الصلبة</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>dash line</source>
-        <translation>штрихталған сызық</translation>
+        <translation>اندفاعة خط</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>dot line</source>
-        <translation>пунктирленген сызық</translation>
+        <translation>خط نقطة</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>dash dot line</source>
-        <translation>штрих және пунктирленеген сызық</translation>
+        <translation>اندفاعة خط نقطة</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>dash dot dot line</source>
-        <translation>екі нүктесі бар штрих және пунктирленген сызық</translation>
+        <translation>اندفاعة نقطة نقطة خط</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Arrow head: </source>
-        <translation>Бағыттауыш бітетін орны:</translation>
+        <translation>رأس السهم :</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>two lines</source>
-        <translation>екі сызық</translation>
+        <translation>سطرين</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>filled</source>
-        <translation>толтырылған</translation>
+        <translation>شغل</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>OK</source>
-        <translation>ИЯ</translation>
+        <translation>موافق</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Cancel</source>
-        <translation>Жоқ</translation>
+        <translation>إلغاء</translation>
     </message>
 </context>
 <context>
     <name>ChangeDialog</name>
     <message>
-        <location filename="dialogs/changedialog.cpp" line="+42"/>
+        <location filename="../qucs/dialogs/changedialog.cpp" line="+41"/>
         <source>Change Component Properties</source>
-        <translation>Компоненттер қасиетін өзгерту</translation>
+        <translation>تغيير خصائص عنصر</translation>
     </message>
     <message>
         <location line="+12"/>
         <source>Components:</source>
-        <translation>Компоненттер:</translation>
+        <translation>عناصر :</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>all components</source>
-        <translation>барлық компоненттер</translation>
+        <translation>جميع مكونات</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>resistors</source>
-        <translation>резисторлар</translation>
+        <translation>المقاومة</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>capacitors</source>
-        <translation>конденсаторлар</translation>
+        <translation>المكثفات</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>inductors</source>
-        <translation>индуктивтілік</translation>
+        <translation>أدواة الحث</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>transistors</source>
-        <translation>транзисторлар</translation>
+        <translation>الترنزستورات</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Component Names:</source>
-        <translation>Компонент аттары:</translation>
+        <translation>:العنصر الأسماء</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Property Name:</source>
-        <translation>Қасиетінің аты:</translation>
+        <translation>ملكية الاسم :</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>New Value:</source>
-        <translation>Жаңа мән:</translation>
+        <translation>القيمة الجديدة :</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Replace</source>
-        <translation>Ауыстыру</translation>
+        <translation>استبدال</translation>
     </message>
     <message>
         <location line="+1"/>
         <location line="+70"/>
         <source>Cancel</source>
-        <translation>Жоқ</translation>
+        <translation>إلغاء</translation>
     </message>
     <message>
         <location line="-25"/>
         <source>Error</source>
-        <translation type="unfinished">Қате</translation>
+        <translation type="unfinished">خطأ</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -160,608 +160,608 @@
     <message>
         <location line="+6"/>
         <source>Found Components</source>
-        <translation>Табылған компоненттер</translation>
+        <translation>العثور على مكونات</translation>
     </message>
     <message>
         <location line="+11"/>
         <source>Change properties of
 </source>
-        <translation>Қасиеттерін өзгерту</translation>
+        <translation>تغيير خصائص </translation>
     </message>
     <message>
         <location line="+1"/>
         <source>these components ?</source>
-        <translation>осы компоненттердің ба?</translation>
+        <translation>هذه العناصر؟</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Yes</source>
-        <translation>ИЯ</translation>
+        <translation>نعم</translation>
     </message>
     <message>
         <source>No match found!</source>
-        <translation type="obsolete">Сәйкессіздік!</translation>
+        <translation type="obsolete">العثور على أي مباراة!</translation>
     </message>
 </context>
 <context>
     <name>ComponentDialog</name>
     <message>
-        <location filename="components/componentdialog.cpp" line="+43"/>
+        <location filename="../qucs/components/componentdialog.cpp" line="+42"/>
         <source>Edit Component Properties</source>
-        <translation>Компоненттердің қасиетін өзгерту</translation>
+        <translation>تحرير خصائص العنصر</translation>
     </message>
     <message>
-        <location line="+30"/>
+        <location line="+31"/>
         <source>Sweep</source>
-        <translation>бұрап ашу</translation>
+        <translation>الاجتياح</translation>
     </message>
     <message>
         <location line="+9"/>
-        <location line="+8"/>
-        <location line="+29"/>
+        <location line="+9"/>
+        <location line="+30"/>
         <location line="+9"/>
         <location line="+9"/>
         <location line="+9"/>
         <location line="+16"/>
-        <location line="+94"/>
-        <location line="+49"/>
+        <location line="+96"/>
+        <location line="+86"/>
         <source>display in schematic</source>
-        <translation>сұлбада көрсету</translation>
+        <translation>العرض التخطيطي</translation>
     </message>
     <message>
-        <location line="-221"/>
+        <location line="-261"/>
         <source>Simulation:</source>
-        <translation>Моделдеу:</translation>
+        <translation>المحاكاة :</translation>
     </message>
     <message>
-        <location line="+22"/>
+        <location line="+23"/>
         <source>Sweep Parameter:</source>
-        <translation>Бұрап ашу параметрлері:</translation>
+        <translation>الاجتياح المعلم :</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Type:</source>
-        <translation>Тип:</translation>
+        <translation>النوع :</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>linear</source>
-        <translation>сызықтық</translation>
+        <translation>خطية</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>logarithmic</source>
-        <translation>логарифмдік</translation>
+        <translation>لوغاريتمي</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>list</source>
-        <translation>мәндер тізімі</translation>
+        <translation>قائمة</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>constant</source>
-        <translation>тұрақты</translation>
+        <translation>ثابت</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Values:</source>
-        <translation>Мағыналар:</translation>
+        <translation>القيم :</translation>
     </message>
     <message>
         <location line="+9"/>
         <source>Start:</source>
-        <translation>Бастау:</translation>
+        <translation>بداية :</translation>
     </message>
     <message>
         <location line="+9"/>
         <source>Stop:</source>
-        <translation>Тоқта:</translation>
+        <translation>التوقف :</translation>
     </message>
     <message>
         <location line="+9"/>
-        <location line="+706"/>
+        <location line="+941"/>
         <location line="+22"/>
         <source>Step:</source>
-        <translation>Қадам:</translation>
+        <translation>خطوة :</translation>
     </message>
     <message>
-        <location line="-721"/>
+        <location line="-956"/>
         <source>Number:</source>
-        <translation>Сан:</translation>
+        <translation>العدد :</translation>
     </message>
     <message>
         <location line="+79"/>
-        <location line="+24"/>
+        <location line="+31"/>
         <source>Properties</source>
-        <translation>Қасиеті</translation>
+        <translation>الخصائص :</translation>
     </message>
     <message>
-        <location line="-8"/>
+        <location line="-16"/>
         <source>Name:</source>
-        <translation>Аты:</translation>
+        <translation>الاسم :</translation>
     </message>
     <message>
-        <location line="+13"/>
+        <location line="+38"/>
         <source>Name</source>
-        <translation>Аты</translation>
+        <translation>الاسم </translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Value</source>
-        <translation>Мағына</translation>
+        <translation>القيمة </translation>
     </message>
     <message>
         <location line="+1"/>
         <source>display</source>
-        <translation>көрсету</translation>
+        <translation>يعرض</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Description</source>
-        <translation>бейнелеу</translation>
+        <translation>وصف</translation>
     </message>
     <message>
-        <location line="+29"/>
+        <location line="+41"/>
         <source>Edit</source>
-        <translation>Өзгерту</translation>
+        <translation>تحرير</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+6"/>
         <source>Browse</source>
-        <translation>Көріп шығу</translation>
+        <translation>تصفح</translation>
     </message>
     <message>
         <location line="+12"/>
         <source>Add</source>
-        <translation>Қосу</translation>
+        <translation>إضافة</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+3"/>
         <source>Remove</source>
-        <translation>Жою</translation>
+        <translation>يزيل</translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+12"/>
         <source>OK</source>
-        <translation>ИЯ</translation>
+        <translation>موافق</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+1"/>
         <source>Apply</source>
-        <translation>Қолдану</translation>
+        <translation>ينطبق</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+1"/>
         <source>Cancel</source>
-        <translation>Жоқ</translation>
+        <translation>إلغاء</translation>
     </message>
     <message>
-        <location line="+17"/>
-        <location line="+31"/>
-        <location line="+150"/>
-        <location line="+177"/>
-        <location line="+97"/>
+        <location line="+30"/>
+        <location line="+62"/>
+        <location line="+186"/>
+        <location line="+215"/>
+        <location line="+133"/>
         <source>yes</source>
-        <translation>ия</translation>
+        <translation>نعم</translation>
     </message>
     <message>
-        <location line="-454"/>
-        <location line="+181"/>
-        <location line="+272"/>
+        <location line="-594"/>
+        <location line="+248"/>
+        <location line="+344"/>
         <source>no</source>
-        <translation>жоқ</translation>
+        <translation>لا</translation>
     </message>
     <message>
-        <location line="-40"/>
+        <location line="-65"/>
         <source>All Files</source>
-        <translation>Барлық файлдар</translation>
+        <translation>جميع الملفات</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Touchstone files</source>
-        <translation>Touchstone файлдары</translation>
+        <translation>المحك ملفات</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>CSV files</source>
-        <translation>CVS файлдары</translation>
+        <translation>ملفات CSV</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>SPICE files</source>
-        <translation>SPICE файлдары</translation>
+        <translation>ملفات SPICE</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>VHDL files</source>
-        <translation>VHDL файлдары</translation>
+        <translation>ملفات VHDL</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Verilog files</source>
-        <translation>Verilog файлдары</translation>
+        <translation>فيريلوج ملفات</translation>
     </message>
     <message>
         <location line="-7"/>
         <source>Select a file</source>
-        <translation>Файлды таңдау</translation>
+        <translation>تحديد ملف</translation>
     </message>
     <message>
-        <location line="+97"/>
+        <location line="+164"/>
         <source>Points per decade:</source>
-        <translation>Бір ондыққа шақ келетін нүктелер саны:</translation>
+        <translation>نقطة لكل عقد من الزمن :</translation>
     </message>
 </context>
 <context>
     <name>DiagramDialog</name>
     <message>
-        <location filename="diagrams/diagramdialog.cpp" line="+110"/>
+        <location filename="../qucs/diagrams/diagramdialog.cpp" line="+114"/>
         <source>Edit Diagram Properties</source>
-        <translation>Диаграмма қасиетін өзгерту</translation>
+        <translation>تعديل خصائص الشكل البياني</translation>
     </message>
     <message>
         <location line="+12"/>
         <source>left Axis</source>
-        <translation>сол жақтағы ось</translation>
+        <translation>محور اليسار</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>right Axis</source>
-        <translation>оң жақтағы ось</translation>
+        <translation>الحق في محور</translation>
     </message>
     <message>
         <location line="+3"/>
         <location line="+3"/>
         <location line="+11"/>
         <source>y-Axis</source>
-        <translation>y-осі</translation>
+        <translation>العمودي</translation>
     </message>
     <message>
         <location line="-8"/>
         <location line="+5"/>
         <source>smith Axis</source>
-        <translation>Смит диаграммасының осі</translation>
+        <translation>محور سميث</translation>
     </message>
     <message>
         <location line="-4"/>
         <location line="+3"/>
         <source>polar Axis</source>
-        <translation>полярлы диаграмма осі</translation>
+        <translation>المحور القطبي</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>z-Axis</source>
-        <translation>z-осі</translation>
+        <translation>ض آكسيس</translation>
     </message>
     <message>
         <location line="+22"/>
         <source>Graph Input</source>
-        <translation>Қисықтың берілгені</translation>
+        <translation>الرسم البياني المدخلات</translation>
     </message>
     <message>
         <location line="+15"/>
         <source>Number Notation: </source>
-        <translation>Сандарды бейнелеу:</translation>
+        <translation>عدد التأشير :</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>real/imaginary</source>
-        <translation>нақты/жорамал бөліктер</translation>
+        <translation>حقيقية / خيالية</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>magnitude/angle (degree)</source>
-        <translation>бұрыштық/өлшем (градуста)</translation>
+        <translation>حجم / زاوية - درجة</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>magnitude/angle (radian)</source>
-        <translation>бұрыштық/өлшем (радианда)</translation>
+        <translation>حجم / زاوية (نصف قطر ية</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Precision:</source>
-        <translation>Нақтылық:</translation>
+        <translation>الدقة :</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Color:</source>
-        <translation>Түс:</translation>
+        <translation>اللون :</translation>
     </message>
     <message>
         <location line="+9"/>
         <source>Style:</source>
-        <translation>Тур-бейнесі:</translation>
+        <translation>النمط :</translation>
     </message>
     <message>
         <location line="+5"/>
-        <location line="+150"/>
+        <location line="+159"/>
         <source>solid line</source>
-        <translation>тұтас сызық</translation>
+        <translation>خط الصلبة</translation>
     </message>
     <message>
-        <location line="-149"/>
-        <location line="+150"/>
+        <location line="-158"/>
+        <location line="+159"/>
         <source>dash line</source>
-        <translation>штрихталған сызық</translation>
+        <translation>اندفاعة خط</translation>
     </message>
     <message>
-        <location line="-149"/>
-        <location line="+150"/>
+        <location line="-158"/>
+        <location line="+159"/>
         <source>dot line</source>
-        <translation>пунктирленген сызық</translation>
+        <translation>خط نقطة</translation>
     </message>
     <message>
-        <location line="-148"/>
+        <location line="-157"/>
         <source>long dash line</source>
-        <translation>штрихтары ұзын сызық</translation>
+        <translation>اندفاعة خط</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>stars</source>
-        <translation>жұлдыздар</translation>
+        <translation>بداية </translation>
     </message>
     <message>
         <location line="+1"/>
         <source>circles</source>
-        <translation>шеңберлер</translation>
+        <translation>الدوائر</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>arrows</source>
-        <translation>бағыттауыштар</translation>
+        <translation>سهام</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Thickness:</source>
-        <translation>қалыңдығы:</translation>
+        <translation>السمك :</translation>
     </message>
     <message>
         <location line="+17"/>
         <source>y-Axis:</source>
-        <translation>y-осі:</translation>
+        <translation>العمودي :</translation>
     </message>
     <message>
         <location line="+28"/>
         <source>Dataset</source>
-        <translation>Мәліметтерді теру</translation>
+        <translation>بيانات</translation>
     </message>
     <message>
-        <location line="+18"/>
+        <location line="+27"/>
         <source>Name</source>
-        <translation>Аты</translation>
+        <translation>الاسم </translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Type</source>
-        <translation>Тип</translation>
+        <translation>النوع </translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Size</source>
-        <translation>Өлшем</translation>
+        <translation>حجم</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Graph</source>
-        <translation>Қисық</translation>
+        <translation>الرسم البياني</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>New Graph</source>
-        <translation>Жаңа қисық</translation>
+        <translation>الرسم الجديد</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Delete Graph</source>
-        <translation>Қисықты жою</translation>
+        <translation>حذف الرسم البياني</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Data</source>
-        <translation>Мәлімет</translation>
+        <translation>بيانات</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>x-Axis Label:</source>
-        <translation>x осінің туртпесі:</translation>
+        <translation>المحور السيني العلامة :</translation>
     </message>
     <message>
         <location line="+7"/>
         <location line="+8"/>
         <source>Label:</source>
-        <translation>Туртпе:</translation>
+        <translation>العلامة :</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>&lt;b&gt;Label text&lt;/b&gt;: Use LaTeX style for special characters, e.g. \tau</source>
-        <translation>&lt;b&gt;Мәтін түртпесі&lt;/b&gt;: LaTeX тәрізді қоданылатын арнайы белгілер, мысалы \tau</translation>
+        <translation>&lt;b&gt;Label text&lt;/b&gt;: Use LaTeX style for special characters, e.g. \tau</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>show Grid</source>
-        <translation>Торды көрсету</translation>
+        <translation>وتظهر الشبكة</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Grid Color:</source>
-        <translation>Тордың түсі:</translation>
+        <translation>لون الشبكة :</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Grid Style: </source>
-        <translation>Тордың стилі:</translation>
+        <translation>على غرار الشبكة :</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>dash dot line</source>
-        <translation>штрих және пунктирленеген сызық</translation>
+        <translation>اندفاعة خط نقطة</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>dash dot dot line</source>
-        <translation>екі нүктесі бар штрих және пунктирленген сызық</translation>
+        <translation>اندفاعة نقطة نقطة خط</translation>
     </message>
     <message>
         <location line="+21"/>
         <source>logarithmical X Axis Grid</source>
-        <translation>Х осінің логарифмдік түртпесі</translation>
+        <translation>المحور العاشر وغاريثمية الشبكة</translation>
     </message>
     <message>
         <location line="+4"/>
         <location line="+4"/>
         <source>logarithmical</source>
-        <translation>логарифмдік</translation>
+        <translation>لوغاريتمي</translation>
     </message>
     <message>
         <location line="-4"/>
         <location line="+4"/>
         <source>Grid</source>
-        <translation>Тор</translation>
+        <translation>الشبكة</translation>
     </message>
     <message>
         <location line="+12"/>
         <source>hide invisible lines</source>
-        <translation>жасырын сызықты көрсету</translation>
+        <translation>إخفاء خطوط غير مرئية</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Rotation around x-Axis:</source>
-        <translation>Х осі жанында айнала қозғалу:</translation>
+        <translation>استدارة حول المحور السيني :</translation>
     </message>
     <message>
         <location line="+16"/>
         <source>Rotation around y-Axis:</source>
-        <translation>У осі жанында айнала қозғалу:</translation>
+        <translation>استدارة حول العمودي :</translation>
     </message>
     <message>
         <location line="+16"/>
         <source>Rotation around z-Axis:</source>
-        <translation>Z осі жанында айнала қозғалу:</translation>
+        <translation>استدارة حول محور - ض :</translation>
     </message>
     <message>
         <location line="+16"/>
         <source>2D-projection:</source>
-        <translation>2D-проекциясы:</translation>
+        <translation>2D - الإسقاط :</translation>
     </message>
     <message>
         <location line="+16"/>
         <source>Properties</source>
-        <translation>Қасиеттер</translation>
+        <translation>الخصائص </translation>
     </message>
     <message>
         <location line="+6"/>
         <source>x-Axis</source>
-        <translation>х-осі</translation>
+        <translation>المحور السيني</translation>
     </message>
     <message>
         <location line="+8"/>
         <location line="+42"/>
         <location line="+44"/>
         <source>manual</source>
-        <translation>қолмен өзгерту</translation>
+        <translation>دليل</translation>
     </message>
     <message>
         <location line="-78"/>
         <location line="+42"/>
         <location line="+44"/>
         <source>start</source>
-        <translation>бастау</translation>
+        <translation>بداية </translation>
     </message>
     <message>
         <location line="-77"/>
         <location line="+44"/>
         <location line="+43"/>
         <source>step</source>
-        <translation>қадам</translation>
+        <translation>خطوة </translation>
     </message>
     <message>
         <location line="-78"/>
         <location line="+44"/>
         <location line="+43"/>
         <source>stop</source>
-        <translation>тоқта</translation>
+        <translation>التوقف </translation>
     </message>
     <message>
         <location line="-53"/>
         <location line="+43"/>
         <source>number</source>
-        <translation>сан</translation>
+        <translation>العدد </translation>
     </message>
     <message>
         <location line="+22"/>
         <source>Limits</source>
-        <translation>Шектеулер</translation>
+        <translation>حدود</translation>
     </message>
     <message>
         <location line="+47"/>
         <source>OK</source>
-        <translation>ИЯ</translation>
+        <translation>موافق</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Apply</source>
-        <translation>Қолдану</translation>
+        <translation>ينطبق</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Cancel</source>
-        <translation>Жоқ</translation>
+        <translation>إلغاء</translation>
     </message>
 </context>
 <context>
     <name>DigiSettingsDialog</name>
     <message>
-        <location filename="dialogs/digisettingsdialog.cpp" line="+40"/>
+        <location filename="../qucs/dialogs/digisettingsdialog.cpp" line="+39"/>
         <location line="+94"/>
         <source>Document Settings</source>
-        <translation>Құжат реттемесі</translation>
+        <translation>ضبط وثائق</translation>
     </message>
     <message>
         <location line="-86"/>
         <source>Digital Simulation Settings</source>
-        <translation>Цифрлық моделдеу реттемесі</translation>
+        <translation>المحاكاة الرقمية إعدادات</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Simulation</source>
-        <translation>Моделдеу</translation>
+        <translation>المحاكاة </translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Duration of Simulation:</source>
-        <translation>Моделдеу ұзақтығы:</translation>
+        <translation>مدة المحاكاة :</translation>
     </message>
     <message>
         <location line="+9"/>
         <source>Precompile Module</source>
-        <translation>Компиляциялық модуль</translation>
+        <translation>Precompile نميطة</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Library Name:</source>
-        <translation>Кітапхана аты:</translation>
+        <translation>مكتبة الاسم :</translation>
     </message>
     <message>
         <location line="+11"/>
         <source>Libraries:</source>
-        <translation>Кітапханалар:</translation>
+        <translation>مكتبات :</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Ok</source>
-        <translation>ИЯ</translation>
+        <translation>موافق</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Cancel</source>
-        <translation>Артқа қайтару</translation>
+        <translation>إلغاء</translation>
     </message>
     <message>
         <location line="+35"/>
         <source>Error</source>
-        <translation>Қате</translation>
+        <translation>خطأ</translation>
     </message>
 </context>
 <context>
@@ -769,7 +769,7 @@
     <message>
         <location filename="../qucs-lib/displaydialog.cpp" line="+39"/>
         <source>Analogue</source>
-        <translation>Аналогтық</translation>
+        <translation>التناظرية</translation>
     </message>
     <message>
         <location line="+15"/>
@@ -779,18 +779,18 @@
     <message>
         <location line="+15"/>
         <source>Verilog</source>
-        <translation>Verilog</translation>
+        <translation>فيريلوج </translation>
     </message>
     <message>
         <location line="+20"/>
         <source>Close</source>
-        <translation>Жабу</translation>
+        <translation>غلق</translation>
     </message>
 </context>
 <context>
     <name>ExportDialog</name>
     <message>
-        <location filename="dialogs/exportdialog.cpp" line="+24"/>
+        <location filename="../qucs/dialogs/exportdialog.cpp" line="+35"/>
         <source>Export graphics</source>
         <translation type="unfinished"></translation>
     </message>
@@ -827,7 +827,7 @@
     <message>
         <location line="+2"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">إلغاء</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -878,187 +878,187 @@
 <context>
     <name>FillDialog</name>
     <message>
-        <location filename="paintings/filldialog.cpp" line="+46"/>
+        <location filename="../qucs/paintings/filldialog.cpp" line="+46"/>
         <source>Line Width: </source>
-        <translation>Сызықтың ені:</translation>
+        <translation>خط العرض :</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Line Color: </source>
-        <translation>Сызықтың түсі:</translation>
+        <translation>لون الخط :</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Line Style: </source>
-        <translation>Сызықтың стилі:</translation>
+        <translation>نمط الخط :</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>solid line</source>
-        <translation>тұтас сызық</translation>
+        <translation>خط الصلبة</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>dash line</source>
-        <translation>штрихталған сызық</translation>
+        <translation>اندفاعة خط</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>dot line</source>
-        <translation>пунктирленген сызық</translation>
+        <translation>خط نقطة</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>dash dot line</source>
-        <translation>штрих және пунктирленген сызық</translation>
+        <translation>اندفاعة خط نقطة</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>dash dot dot line</source>
-        <translation>екі нүктесі бар штрих және пунктирленген сызық</translation>
+        <translation>اندفاعة نقطة نقطة خط</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Line Style</source>
-        <translation>Сызықтың стилі</translation>
+        <translation>نمط الخط </translation>
     </message>
     <message>
         <location line="+7"/>
         <source>enable filling</source>
-        <translation>толтырумен</translation>
+        <translation>يمكن ملء</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Fill Color: </source>
-        <translation>Толтыру түсі:</translation>
+        <translation>ملء اللون :</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Fill Style: </source>
-        <translation>Толтыру стилі:</translation>
+        <translation>ملء نمط :</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>no filling</source>
-        <translation>толтырусыз</translation>
+        <translation>لا سد</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>solid</source>
-        <translation>тұтас</translation>
+        <translation>الصلبة</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>dense 1 (densest)</source>
-        <translation>тығыздық 1 (ең үлкен)</translation>
+        <translation>الكثيفة 1 (كثافة</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>dense 2</source>
-        <translation>тығыздық 2</translation>
+        <translation>الكثيفة 2</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>dense 3</source>
-        <translation>тығыздық 3</translation>
+        <translation>الكثيفة 3</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>dense 4</source>
-        <translation>тығыздық 4</translation>
+        <translation>الكثيفة 4</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>dense 5</source>
-        <translation>тығыздық 5</translation>
+        <translation>الكثيفة 5</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>dense 6</source>
-        <translation>тығыздық 6</translation>
+        <translation>الكثيفة 6</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>dense 7 (least dense)</source>
-        <translation>тығыздық 7 (ең кіші)</translation>
+        <translation>الكثيفة 7 (أقل كثافة</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>horizontal line</source>
-        <translation>жатық сызық</translation>
+        <translation>خط أفقي</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>vertical line</source>
-        <translation>вертикалды сызық</translation>
+        <translation>خط عمودي</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>crossed lines</source>
-        <translation>қиылысқан сызықтар</translation>
+        <translation>عبرت خط</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>hatched backwards</source>
-        <translation>оңға қарай штрихталған</translation>
+        <translation>دبرت الوراء</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>hatched forwards</source>
-        <translation>солға қарай штрихталған</translation>
+        <translation>دبرت الأمام</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>diagonal crossed</source>
-        <translation>диагоналды қиылысқан</translation>
+        <translation>عبرت قطري</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Filling Style</source>
-        <translation>Толтырылған стил</translation>
+        <translation>أسلوب سد</translation>
     </message>
     <message>
         <location line="+9"/>
         <source>OK</source>
-        <translation>ИЯ</translation>
+        <translation>موافق</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Cancel</source>
-        <translation>Артқа қайтару</translation>
+        <translation>إلغاء</translation>
     </message>
 </context>
 <context>
     <name>GraphicTextDialog</name>
     <message>
-        <location filename="paintings/graphictextdialog.cpp" line="+36"/>
+        <location filename="../qucs/paintings/graphictextdialog.cpp" line="+36"/>
         <source>Edit Text Properties</source>
-        <translation>Мәтін қасиеттерін өзгерту</translation>
+        <translation>تعديل نص عقارات</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Use LaTeX style for special characters, e.g. \tau</source>
-        <translation>LaTeX стилін арнайы белгілер үшін қолданыңыз, мысалы \tau</translation>
+        <translation>Use LaTeX style for special characters, e.g. \tau</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Use _{..} and ^{..} for sub- and super-positions.</source>
-        <translation> sub және super позициялар үшін келесі белгілерді қолданыңыз_{..} {..}.</translation>
+        <translation>Use _{..} and ^{..} for sub- and super-positions.</translation>
     </message>
     <message>
         <location line="+22"/>
         <source>&amp;OK</source>
-        <translation>&amp;ИЯ</translation>
+        <translation>موافق</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>&amp;Cancel</source>
-        <translation>&amp;Артқа қайтару</translation>
+        <translation>إلغاء</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Text color: </source>
-        <translation>Мәтіннің түсі:</translation>
+        <translation>لون الخط :</translation>
     </message>
     <message>
         <location line="+11"/>
@@ -1072,21 +1072,21 @@
     </message>
     <message>
         <source>Text size: </source>
-        <translation type="obsolete">Мәтіннің өлшемі:</translation>
+        <translation type="obsolete">حجم:</translation>
     </message>
     <message>
         <source>Rotation angle: </source>
-        <translation type="obsolete">Бұрылу бұрышы:</translation>
+        <translation type="obsolete">عدد التأشير :</translation>
     </message>
     <message>
         <location line="+29"/>
         <source>Error</source>
-        <translation>Қате</translation>
+        <translation>خطأ</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>The text must not be empty!</source>
-        <translation>Мәтін бос болмауы керек!</translation>
+        <translation>النص يجب ألا تكون فارغة!</translation>
     </message>
 </context>
 <context>
@@ -1094,348 +1094,374 @@
     <message>
         <location filename="../qucs-filter/helpdialog.cpp" line="+38"/>
         <source>QucsFilter is a filter synthesis program. To create a filter, simply enter all parameters and press the big button at the bottom of the main window. Immediatly, the schematic of the filter is calculated and put into the clipboard. Now go to Qucs, open an empty schematic and press CTRL-V (paste from clipboard). The filter schematic can now be inserted and  simulated. Have lots of fun!</source>
-        <translation>QucsFilter - бұл сүзгілерді синтездейтін бағдарлама. Сүзгіні құру үшін барлық керекті параметрлерді енгізіп негізгі терезенің төмен жағында орналасқан батырманы басыңыз. Осыдан кейін сүзгі есептеліп алмастыру буферіне жіберіледі. Содан кейін Qucs-қа өтіп, таза құжатты ашып CTRL-V (алмастыру буферінен қою) пернесін басыңыз. Енді сіздің сұлбаңызға сүзгіні енгізіп, өзгертіп және моделдеуге болады. Іске сәт!</translation>
+        <translation>QucsFilter is a filter synthesis program. To create a filter, simply enter all parameters and press the big button at the bottom of the main window. Immediatly, the schematic of the filter is calculated and put into the clipboard. Now go to Qucs, open an empty schematic and press CTRL-V (paste from clipboard). The filter schematic can now be inserted and  simulated. Have lots of fun!</translation>
     </message>
     <message>
         <location line="+29"/>
+        <location filename="../qucs-rescodes/helpdialog.cpp" line="+62"/>
         <source>Close</source>
-        <translation>Жабу</translation>
+        <translation>غلق</translation>
     </message>
     <message>
         <location filename="../qucs-transcalc/helpdialog.cpp" line="+32"/>
         <source>Help</source>
-        <translation>Көмек</translation>
+        <translation>مساعدة</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>QucsTranscalc is an analysis and synthesis tool for calculating the electrical and physical properties of different kinds of RF and microwave transmission lines.</source>
-        <translation>QucsTranscalc - бұл әр түрлі типті беріліс арнасының физикалық және электрлік қасиеттерін анализ және синтездеу үшін қолданылатын жабдықтық қамтама болып табылады.</translation>
+        <translation>QucsTranscalc is an analysis and synthesis tool for calculating the electrical and physical properties of different kinds of RF and microwave transmission lines.</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>For each type of transmission line, using dialog boxes, you can enter values for the various parameters, and either calculate its electrical properties, or use the given electrical requirements to synthesize physical parameters of the required transmission line.</source>
-        <translation>Беріліс арнасының әрбір типі үшін диалогтық қамтама арқылы параметрлері әртүрлі мәндерді енгізуге болады немесе оның электрлік қасиеттерін есептеуге, немесе сол алынған электрлік параметрлерді таңдалған беріліс арнасының физикалық параметрлерін анализдеуге қолданамыз.</translation>
+        <translation>For each type of transmission line, using dialog boxes, you can enter values for the various parameters, and either calculate its electrical properties, or use the given electrical requirements to synthesize physical parameters of the required transmission line.</translation>
     </message>
     <message>
         <location line="+19"/>
         <source>Dismiss</source>
-        <translation>Дайын</translation>
+        <translation>فصل</translation>
     </message>
     <message>
         <source>Qucs Attenuator Help</source>
-        <translation type="obsolete">Qucs Attenuator жайлы анықтама</translation>
+        <translation type="obsolete">مساعدة Qucs المخفف</translation>
     </message>
     <message>
         <source>QucsAttenuator is an attenuator synthesis program. To create a attenuator, simply enter all the input parameters and press the calculation button. Immediatly, the schematic of the attenuator is calculated and put into the clipboard. Now go to Qucs, open an schematic and press CTRL-V (paste from clipboard). The attenuator schematic can now be inserted. Have lots of fun!</source>
-        <translation type="obsolete">QucsAttenuator - бұл аттеньюаторларды синтездейтін бағдарлама. Аттеньюаторларды құру үшін барлық керекті параметрлерді енгізіп негізгі терезенің төмен жағында орналасқан батырманы басыңыз. Осыдан кейін аттеньюатор есептеліп алмастыру буферіне жіберіледі. Содан кейін Qucs-қа өтіп, таза құжатты ашып CTRL-V (алмастыру буферінен қою) пернесін басыңыз. Енді сіздің сұлбаңызға аттеньюаторды енгізіп, өзгертіп және моделдеуге болады. Іске сәт!</translation>
+        <translation type="obsolete">QucsAttenuator is an attenuator synthesis program. To create a attenuator, simply enter all the input parameters and press the calculation button. Immediatly, the schematic of the attenuator is calculated and put into the clipboard. Now go to Qucs, open an schematic and press CTRL-V (paste from clipboard). The attenuator schematic can now be inserted. Have lots of fun!</translation>
+    </message>
+    <message>
+        <location filename="../qucs-rescodes/helpdialog.cpp" line="-27"/>
+        <source>A program to compute color codes for resistors and resistance values for color codes. To obtain the color codes, simply enter the resistance and tolerance values and press the &quot;To Colors&quot; button. Alternatively to obtain the resistance, select the appropriate color bands and press the &quot;To Resistance&quot; button. The program computes the closest standard resistor value. You can paste the computed resistor in the schematic (by pressing ctrl+v). Have fun!</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>ID_Dialog</name>
     <message>
-        <location filename="paintings/id_dialog.cpp" line="+39"/>
+        <location filename="../qucs/paintings/id_dialog.cpp" line="+38"/>
         <source>Edit Subcircuit Properties</source>
-        <translation>Модулдің қасиеттерін өзгерту</translation>
+        <translation>تحرير Subcircuit للعقارات</translation>
     </message>
     <message>
-        <location line="+12"/>
+        <location line="+15"/>
         <source>Prefix:</source>
-        <translation>Префикс:</translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>Parameters</source>
-        <translation>Параметрлер</translation>
+        <translation></translation>
     </message>
     <message>
         <location line="+3"/>
+        <source>Parameters</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+10"/>
         <source>display</source>
-        <translation>көрсету</translation>
+        <translation>يعرض</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+0"/>
         <source>Name</source>
-        <translation>Аты</translation>
+        <translation>الاسم </translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+0"/>
         <source>Default</source>
-        <translation>Үндестік бойынша</translation>
+        <translation>افتراضي</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+0"/>
         <source>Description</source>
-        <translation>Бейнелеу</translation>
+        <translation>وصف</translation>
     </message>
     <message>
+        <location line="+10"/>
+        <location line="+115"/>
+        <location line="+32"/>
+        <location line="+37"/>
+        <location line="+61"/>
         <location line="+1"/>
-        <source>Type</source>
-        <translation>Тип</translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <location line="+89"/>
-        <location line="+31"/>
-        <location line="+29"/>
-        <location line="+57"/>
-        <location line="+1"/>
-        <location line="+18"/>
+        <location line="+17"/>
         <source>yes</source>
-        <translation>ия</translation>
+        <translation>نعم</translation>
     </message>
     <message>
-        <location line="-225"/>
-        <location line="+120"/>
-        <location line="+29"/>
+        <location line="-263"/>
+        <location line="+147"/>
+        <location line="+37"/>
         <source>no</source>
-        <translation>жоқ</translation>
+        <translation>لا</translation>
     </message>
     <message>
-        <location line="-143"/>
+        <location line="-166"/>
         <source>display in schematic</source>
-        <translation>сұлбада көрсету</translation>
+        <translation>العرض التخطيطي</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+9"/>
         <source>Name:</source>
-        <translation>Аты:</translation>
+        <translation>الاسم :</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Default Value:</source>
-        <translation>Үндестік бойынша берілген мән:</translation>
+        <translation>القيمة الافتراضية :</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Description:</source>
-        <translation>Бейнелеу:</translation>
+        <translation>وصف:</translation>
     </message>
     <message>
-        <location line="+1"/>
-        <source>Type:</source>
-        <translation>Тип:</translation>
-    </message>
-    <message>
-        <location line="+34"/>
+        <location line="+36"/>
         <source>Add</source>
-        <translation>Қосу</translation>
+        <translation>إضافة</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Remove</source>
-        <translation>Жою</translation>
+        <translation>يزيل</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+9"/>
         <source>OK</source>
-        <translation>ИЯ</translation>
+        <translation>موافق</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Cancel</source>
-        <translation>Артқа қайтару</translation>
+        <translation>إلغاء</translation>
     </message>
     <message>
-        <location line="+43"/>
+        <location line="+51"/>
         <location line="+8"/>
         <source>Error</source>
-        <translation>Қате</translation>
+        <translation>خطأ</translation>
     </message>
     <message>
         <location line="-7"/>
         <source>Parameter must not be named &quot;File&quot;!</source>
-        <translation>Параметр &quot;File&quot; деген атқа ие бола алмайды!</translation>
+        <translation></translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Parameter &quot;%1&quot; already in list!</source>
-        <translation>Параметр &quot;%1&quot; тізімге енгізілген!</translation>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="-148"/>
+        <source>Type</source>
+        <translation type="unfinished">النوع </translation>
+    </message>
+    <message>
+        <location line="+40"/>
+        <source>Type:</source>
+        <translation type="unfinished">النوع :</translation>
     </message>
 </context>
 <context>
     <name>ImportDialog</name>
     <message>
-        <location filename="dialogs/importdialog.cpp" line="+37"/>
-        <source>Convert Data File...</source>
-        <translation>Мәліметтер файлын түрлендіру...</translation>
+        <source>Import Data File...</source>
+        <translation type="obsolete">استيراد ملف بيانات...</translation>
     </message>
     <message>
-        <location line="+4"/>
-        <source>File specification</source>
-        <translation>Файл ерекшелігі</translation>
+        <source>Import File:</source>
+        <translation type="obsolete">استيراد ملف:</translation>
     </message>
     <message>
-        <location line="+3"/>
-        <source>Input File:</source>
-        <translation>Кіріс файлы:</translation>
-    </message>
-    <message>
-        <location line="+3"/>
+        <location filename="../qucs/dialogs/importdialog.cpp" line="+46"/>
         <source>Browse</source>
-        <translation>Көріп шығу</translation>
+        <translation>تصفح</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Output File:</source>
-        <translation>Шығыс файлы:</translation>
+        <translation>الناتج الملف :</translation>
     </message>
     <message>
-        <location line="+3"/>
-        <source>Output Data:</source>
-        <translation>Шығатын мәліметтер:</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Qucs dataset</source>
-        <translation>Qucs мәліметтерді теру</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Touchstone</source>
-        <translation>Touchstone</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>CSV</source>
-        <translation>CSV</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Qucs library</source>
-        <translation>Qucs кітапханасы</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Qucs netlist</source>
-        <translation>Qucs желі тізімі</translation>
-    </message>
-    <message>
-        <location line="+8"/>
+        <location line="+22"/>
         <source>Messages</source>
-        <translation>Хабарлар</translation>
+        <translation>رسائل</translation>
     </message>
     <message>
-        <location line="+16"/>
-        <source>Convert</source>
-        <translation>Түрлендіру</translation>
+        <source>Import</source>
+        <translation type="obsolete">استيراد</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+18"/>
         <source>Abort</source>
-        <translation>Үзіліс</translation>
+        <translation>إحباط</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Close</source>
-        <translation>Жабу</translation>
+        <translation>غلق</translation>
     </message>
     <message>
         <location line="+20"/>
         <source>All known</source>
-        <translation>Бәріне мәлім</translation>
+        <translation>يعرف جميع</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Touchstone files</source>
-        <translation>Touchstone файлдары</translation>
+        <translation>المحك ملفات</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>CSV files</source>
-        <translation>CVS файлдары</translation>
+        <translation>ملفات CSV</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>CITI files</source>
-        <translation>СІТІ файлдары</translation>
+        <translation>CITI ملفات</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>ZVR ASCII files</source>
-        <translation>ZVR ASCII файлдары</translation>
+        <translation>ZVR ASCII ملفات</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>IC-CAP model files</source>
-        <translation>IC-CAP моделді файлдар</translation>
+        <translation>IC-CAP موديل ملفات</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>VCD files</source>
-        <translation>VCD файлдары</translation>
+        <translation>VCD ملفات</translation>
     </message>
     <message>
-        <location line="+1"/>
-        <source>Qucs dataset files</source>
-        <translation>Qucs мәліметтерді теру файлдары</translation>
+        <source>Any File</source>
+        <translation type="obsolete">أية ملفات</translation>
     </message>
     <message>
-        <location line="+1"/>
-        <source>SPICE files</source>
-        <translation>SPICE файлдары</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Any file</source>
-        <translation>Басқа файлдар</translation>
-    </message>
-    <message>
-        <location line="+1"/>
+        <location line="+4"/>
         <source>Enter a Data File Name</source>
-        <translation>Файл атының енгізілген уақыты</translation>
+        <translation>إدخال البيانات اسم الملف</translation>
     </message>
     <message>
         <location line="+47"/>
         <source>Info</source>
-        <translation>Ақпарат</translation>
+        <translation>معلومات</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Output file already exists!</source>
-        <translation>Шығатын файл бар, басқа ат беріп көріңіз!</translation>
+        <translation>الناتج الملف موجود بالفعل!</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Overwrite it?</source>
-        <translation>Осыны қайта жазу керек па?</translation>
+        <translation>فوق ذلك؟</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>&amp;Yes</source>
-        <translation>&amp;ИЯ</translation>
+        <translation>نعم</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>&amp;No</source>
-        <translation>&amp;Жоқ</translation>
-    </message>
-    <message>
-        <location line="+37"/>
-        <source>ERROR: Unknown file format! Please check file name extension!</source>
-        <translation>Қате: Файлдың пішімі белгісіз! Файл атының кеңейтілуін тексеріңіз!</translation>
+        <translation>موافق</translation>
     </message>
     <message>
         <location line="+43"/>
-        <source>Running command line:</source>
-        <translation>Бұйрықты іске асыру:</translation>
+        <source>ERROR: Unknown file format! Please check file name extension!</source>
+        <translation>...خطأ : تنسيق ملف غير معروف! يرجى التحقق من اسم الملف تمديد!</translation>
+    </message>
+    <message>
+        <location line="+51"/>
+        <source>ERROR: Cannot start converter!</source>
+        <translation>خطأ : لا يمكن بدء المحول!</translation>
+    </message>
+    <message>
+        <source>Successfully imported file!</source>
+        <translation type="obsolete">استيراد الملف بنجاح!</translation>
+    </message>
+    <message>
+        <location line="+62"/>
+        <source>Converter ended with errors!</source>
+        <translation>المحول انتهت الأخطاء!</translation>
+    </message>
+    <message>
+        <location line="-292"/>
+        <source>Convert Data File...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>File specification</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Input File:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Output Data:</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+7"/>
-        <source>ERROR: Cannot start converter!</source>
-        <translation>Қате: Түрлендірушіні іске қосу мүмкін емес!</translation>
+        <source>Qucs dataset</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+56"/>
+        <location line="+1"/>
+        <source>Touchstone</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>CSV</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Qucs library</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Qucs netlist</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+24"/>
+        <source>Convert</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+33"/>
+        <source>Qucs dataset files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>SPICE files</source>
+        <translation type="unfinished">ملفات SPICE</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Any file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+136"/>
+        <source>Running command line:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+64"/>
         <source>Successfully converted file!</source>
-        <translation>Файл түрленді!</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+6"/>
-        <source>Converter ended with errors!</source>
-        <translation>Түрлендіруші жұмысын қателермен аяқтады!</translation>
-    </message>
-    <message>
-        <location line="-257"/>
+        <location line="-258"/>
         <source>Matlab</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1443,60 +1469,60 @@
 <context>
     <name>LabelDialog</name>
     <message>
-        <location filename="dialogs/labeldialog.cpp" line="+31"/>
+        <location filename="../qucs/dialogs/labeldialog.cpp" line="+30"/>
         <source>Insert Nodename</source>
-        <translation>Түйін атын енгізу</translation>
+        <translation>تضاف Nodename</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Enter the label:</source>
-        <translation>Түртпені енгізіңіз:</translation>
+        <translation>دخول العلامة :</translation>
     </message>
     <message>
         <location line="+11"/>
         <source>Initial node voltage:</source>
-        <translation>Түйіннің бастапқы кернеулері:</translation>
+        <translation>العقدة الجهد الأولي :</translation>
     </message>
     <message>
         <location line="+7"/>
         <location line="+35"/>
         <source>Less...</source>
-        <translation>Азырақ...</translation>
+        <translation>أقل...</translation>
     </message>
     <message>
         <location line="-33"/>
         <source>Ok</source>
-        <translation>ИЯ</translation>
+        <translation>موافق</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Cancel</source>
-        <translation>Артқа қайтару</translation>
+        <translation>إلغاء</translation>
     </message>
     <message>
         <location line="+7"/>
         <location line="+29"/>
         <source>More...</source>
-        <translation>Көбірек...</translation>
+        <translation>المزيد...</translation>
     </message>
 </context>
 <context>
     <name>LibraryDialog</name>
     <message>
-        <location filename="dialogs/librarydialog.cpp" line="+51"/>
+        <location filename="../qucs/dialogs/librarydialog.cpp" line="+51"/>
         <source>Create Library</source>
-        <translation>Кітапхананы құру</translation>
+        <translation>إنشاء مكتبة</translation>
     </message>
     <message>
         <location line="+27"/>
         <location line="+108"/>
         <source>Library Name:</source>
-        <translation>Кітапхана аты:</translation>
+        <translation>مكتبة الاسم :</translation>
     </message>
     <message>
         <location line="-101"/>
         <source>Choose subcircuits:</source>
-        <translation>Ішіндегі сұлбаны таңдау:</translation>
+        <translation>اختيار subcircuits :</translation>
     </message>
     <message>
         <location line="+19"/>
@@ -1506,24 +1532,24 @@
     <message>
         <location line="+9"/>
         <source>Select All</source>
-        <translation>Бәрін таңдау</translation>
+        <translation>اختيار الكل</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Deselect All</source>
-        <translation>Бәрін таңдауды қайтару</translation>
+        <translation>إلغاء جميع</translation>
     </message>
     <message>
         <location line="+4"/>
         <location line="+47"/>
         <source>Cancel</source>
-        <translation>Артқа қайтару</translation>
+        <translation>إلغاء</translation>
     </message>
     <message>
         <location line="-44"/>
         <location line="+39"/>
         <source>Next &gt;&gt;</source>
-        <translation>Келесі&gt;&gt;</translation>
+        <translation>التالي&gt;&gt;</translation>
     </message>
     <message>
         <location line="-23"/>
@@ -1533,7 +1559,7 @@
     <message>
         <location line="+6"/>
         <source>Description:</source>
-        <translation type="unfinished">Бейнелеу:</translation>
+        <translation type="unfinished">وصف:</translation>
     </message>
     <message>
         <location line="+13"/>
@@ -1542,7 +1568,7 @@
     </message>
     <message>
         <source>No subcircuits!</source>
-        <translation type="obsolete">Сұлба жоқ!</translation>
+        <translation type="obsolete">لا SUBCIRCUITS!</translation>
     </message>
     <message>
         <location line="+82"/>
@@ -1563,49 +1589,49 @@
         <location line="+8"/>
         <location line="+13"/>
         <source>Error</source>
-        <translation>Қате</translation>
+        <translation>خطأ</translation>
     </message>
     <message>
         <location line="-39"/>
         <source>Please insert a library name!</source>
-        <translation>Кітапхана атын енгізіңіз!</translation>
+        <translation>الرجاء إدخال اسم المكتبة!</translation>
     </message>
     <message>
         <location line="+17"/>
         <source>Please choose at least one subcircuit!</source>
-        <translation>Кем дегенде бір сұлбаны таңдаңыз!</translation>
+        <translation>الرجاء اختيار واحدة على الأقل subcircuit!</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Warning</source>
-        <translation>Ескерту</translation>
+        <translation>تحذير</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Cannot create user library directory !</source>
-        <translation>Тұтынушыға арналған папка құрылған жоқ !</translation>
+        <translation>لا يمكن إنشاء مكتبة دليل المستخدم!</translation>
     </message>
     <message>
         <location line="+8"/>
         <location filename="../qucs-lib/librarydialog.cpp" line="-103"/>
         <source>A system library with this name already exists!</source>
-        <translation>Жүйеде бұндай аты бар кітапхана бар!</translation>
+        <translation>نظام المكتبة بهذا الاسم موجود بالفعل!</translation>
     </message>
     <message>
         <location line="+6"/>
         <location filename="../qucs-lib/librarydialog.cpp" line="+6"/>
         <source>A library with this name already exists!</source>
-        <translation>Осындай аты бар кітапхана әлбетте бар!</translation>
+        <translation>وهناك مكتبة بهذا الاسم موجود بالفعل!</translation>
     </message>
     <message>
         <source>Enter description for &quot;%1&quot;:</source>
-        <translation type="obsolete">&quot;%1&quot; үшін анықтама енгізіңіз: </translation>
+        <translation type="obsolete">وصفا لدخول &quot;٪ 1&quot; :</translation>
     </message>
     <message>
         <location line="-109"/>
         <location line="+193"/>
         <source>Create</source>
-        <translation>Құру</translation>
+        <translation>إنشاء</translation>
     </message>
     <message>
         <location line="-172"/>
@@ -1616,12 +1642,12 @@
         <location line="+12"/>
         <location filename="../qucs-lib/librarydialog.cpp" line="-91"/>
         <source>Close</source>
-        <translation>Жабу</translation>
+        <translation>غلق</translation>
     </message>
     <message>
         <location line="+21"/>
         <source>No projects!</source>
-        <translation type="unfinished">Проекттер жоқ!</translation>
+        <translation type="unfinished">لا مشاريع!</translation>
     </message>
     <message>
         <location line="+142"/>
@@ -1636,7 +1662,7 @@
     <message>
         <location line="+3"/>
         <source>Error: Cannot create library!</source>
-        <translation>Қате: Кітапхананы құру мүмкін емес!</translation>
+        <translation>خطأ : لا يمكن إنشاء مكتبة!</translation>
     </message>
     <message>
         <location line="+26"/>
@@ -1647,7 +1673,7 @@
     <message>
         <location line="+3"/>
         <source>Error: Cannot load subcircuit &quot;%1&quot;.</source>
-        <translation>Қате: Сұлбаны енгізу&quot;%1&quot; мүмкін емес.</translation>
+        <translation>خطأ : لا يمكن تحميل subcircuit &quot;٪ 1&quot;.</translation>
     </message>
     <message>
         <location line="+12"/>
@@ -1681,93 +1707,93 @@
     <message>
         <location line="+4"/>
         <source>Successfully created library.</source>
-        <translation>Кітапхана сәтті құрылды.</translation>
+        <translation>نجحت في انشاء مكتبة.</translation>
     </message>
     <message>
         <location filename="../qucs-lib/librarydialog.cpp" line="-32"/>
         <source>Manage User Libraries</source>
-        <translation>Тұтынушы кітапханаларын басқару</translation>
+        <translation>إدارة المكتبات المستخدم</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Choose library:</source>
-        <translation>Кітапхананы таңдау:</translation>
+        <translation>اختيار المكتبة :</translation>
     </message>
     <message>
         <location line="+9"/>
         <source>New Name:</source>
-        <translation>Жаңа ат:</translation>
+        <translation>اسم جديد :</translation>
     </message>
     <message>
         <location line="+9"/>
         <source>Delete</source>
-        <translation>Өшіру</translation>
+        <translation>حذف </translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Rename</source>
-        <translation>Атын өзгерту</translation>
+        <translation>إعادة تسمية</translation>
     </message>
     <message>
         <source>No user library!</source>
-        <translation type="obsolete">Тұтынушы кітапханасы жоқ!</translation>
+        <translation type="obsolete">أي مستخدم للمكتبة!</translation>
     </message>
     <message>
         <location line="+62"/>
         <source>Please insert a new library name!</source>
-        <translation>Кітапханаға жаңа ат беріңіз!</translation>
+        <translation>الرجاء إدخال اسم جديد للمكتبة!</translation>
     </message>
     <message>
         <location line="+14"/>
         <location line="+93"/>
         <source>Please choose a library!</source>
-        <translation>Кітапхананы таңдаңыз!</translation>
+        <translation>الرجاء اختيار مكتبة!</translation>
     </message>
     <message>
         <location line="-69"/>
         <source>Cannot rename library subdirectory!</source>
-        <translation>Кіріктірілген каталогтың атын өзгерту мүмкін емес!</translation>
+        <translation>لا يمكن تغيير اسم مكتبة دليل فرعي!</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Cannot open library!</source>
-        <translation>Кітапхана ашылмады!</translation>
+        <translation>لا نستطيع فتح المكتبة!</translation>
     </message>
     <message>
         <location line="+20"/>
         <source>No permission to modify library!</source>
-        <translation>Кітапхананы өзгертуге құқыңыз жоқ!</translation>
+        <translation>أي إذن لتعديل مكتبة!</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Writing new library not successful!</source>
-        <translation>Жаңа кітапхананы жазу сәтсіз аяқталды!</translation>
+        <translation>مكتبة كتابة جديدة لم تنجح!</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Cannot delete old library.</source>
-        <translation>Ескі кітапхананы жою мүмкін емес.</translation>
+        <translation>لا يمكن حذف المكتبة القديمة.</translation>
     </message>
     <message>
         <location line="+11"/>
         <source>Library file is corrupt!</source>
-        <translation>Кітапхана файлы бұзылған!</translation>
+        <translation>ملف مكتبة فاسدة!</translation>
     </message>
     <message>
         <location line="+26"/>
         <source>No permission to delete library &quot;%1&quot;.</source>
-        <translation>Кітапхананы жоюға құқыңыз жоқ&quot;%1&quot;.</translation>
+        <translation>أي إذن حذف مكتبة &quot;٪ 1&quot;.</translation>
     </message>
     <message>
         <location line="+13"/>
         <source>No permission to delete library subdirectory &quot;%1&quot;.</source>
-        <translation>Кітапханадағы каталогты өшіруге құқыңыз жоқ&quot;%1&quot;.</translation>
+        <translation>إذن لا دليل فرعي المكتبة حذف &quot;٪ 1&quot;.</translation>
     </message>
 </context>
 <context>
     <name>LoadDialog</name>
     <message>
-        <location filename="dialogs/loaddialog.cpp" line="+45"/>
+        <location filename="../qucs/dialogs/loaddialog.cpp" line="+49"/>
         <source>Load Verilog-A symbols</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1779,22 +1805,22 @@
     <message>
         <location line="+19"/>
         <source>Select All</source>
-        <translation type="unfinished">Бәрін таңдау</translation>
+        <translation type="unfinished">اختيار الكل</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Deselect All</source>
-        <translation type="unfinished">Бәрін таңдауды қайтару</translation>
+        <translation type="unfinished">إلغاء جميع</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">إلغاء</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Ok</source>
-        <translation type="unfinished">ИЯ</translation>
+        <translation type="unfinished">موافق</translation>
     </message>
     <message>
         <location line="+21"/>
@@ -1814,7 +1840,7 @@
     <message>
         <location line="+83"/>
         <source>Info</source>
-        <translation type="unfinished">Ақпарат</translation>
+        <translation type="unfinished">معلومات</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -1835,7 +1861,7 @@
     <message>
         <location line="+18"/>
         <source>Error</source>
-        <translation type="unfinished">Қате</translation>
+        <translation type="unfinished">خطأ</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -1846,172 +1872,172 @@
 <context>
     <name>MarkerDialog</name>
     <message>
-        <location filename="diagrams/markerdialog.cpp" line="+33"/>
+        <location filename="../qucs/diagrams/markerdialog.cpp" line="+32"/>
         <source>Edit Marker Properties</source>
-        <translation>Маркер қасиеттерін өзгерту</translation>
+        <translation>تعديل خصائص ماركر</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+9"/>
         <source>Precision: </source>
-        <translation>Нақтылық:</translation>
+        <translation>الدقة :</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+17"/>
         <source>Z0: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="-8"/>
         <source>Number Notation: </source>
-        <translation>Сандарды бейнелеу:</translation>
+        <translation>عدد التأشير :</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="-5"/>
         <source>real/imaginary</source>
-        <translation>нақты/жорамал бөліктер</translation>
+        <translation>حقيقية / خيالية</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>magnitude/angle (degree)</source>
-        <translation>бұрыштық/өлшем (градуста)</translation>
+        <translation>حجم / زاوية - درجة</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>magnitude/angle (radian)</source>
-        <translation>бұрыштық/өлшем (радианда)</translation>
+        <translation>حجم / زاوية (نصف قطر ية</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+15"/>
         <source>transparent</source>
-        <translation>көрінеді</translation>
+        <translation>شفافية</translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+5"/>
         <source>OK</source>
-        <translation>ИЯ</translation>
+        <translation>موافق</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Cancel</source>
-        <translation>Артқа қайтару</translation>
+        <translation>إلغاء</translation>
     </message>
 </context>
 <context>
     <name>MatchDialog</name>
     <message>
-        <location filename="dialogs/matchdialog.cpp" line="+48"/>
+        <location filename="../qucs/dialogs/matchdialog.cpp" line="+49"/>
         <source>Create Matching Circuit</source>
-        <translation>Тұйықталған тізбекті құру</translation>
+        <translation>إنشاء دائرة مطابقة</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>calculate two-port matching</source>
-        <translation>Тұйықталған төрт полюсті есептеу</translation>
+        <translation>حساب اثنين الميناء مطابقة</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Reference Impedance</source>
-        <translation>Толық тірек кедергісі</translation>
+        <translation>إشارة المعاوقة الكهربائية</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Port 1</source>
-        <translation>1 порт</translation>
+        <translation>الميناء 1</translation>
     </message>
     <message>
         <location line="+3"/>
         <location line="+6"/>
         <source>ohms</source>
-        <translation>Ом</translation>
+        <translation>ohms</translation>
     </message>
     <message>
         <location line="-3"/>
         <source>Port 2</source>
-        <translation>2 порт</translation>
+        <translation>الميناء 2</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>S Parameter</source>
-        <translation>S-параметрі</translation>
+        <translation>S معلمة</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Input format</source>
-        <translation>Кіріс пішімі</translation>
+        <translation>شكل مدخلات</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>real/imag</source>
-        <translation>нақты/жорамал бөліктер</translation>
+        <translation>صورة / الحقيقية </translation>
     </message>
     <message>
         <location line="+1"/>
         <source>mag/deg</source>
-        <translation>өлшем/бұрыш</translation>
+        <translation>mag/deg</translation>
     </message>
     <message>
         <location line="+9"/>
         <location line="+134"/>
         <source>S11</source>
-        <translation>S11</translation>
+        <translation>س11</translation>
     </message>
     <message>
         <location line="-133"/>
         <location line="+134"/>
         <source>S21</source>
-        <translation>S21</translation>
+        <translation>س21</translation>
     </message>
     <message>
         <location line="-100"/>
         <source>S12</source>
-        <translation>S12</translation>
+        <translation>س12</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>S22</source>
-        <translation>S22</translation>
+        <translation>س22</translation>
     </message>
     <message>
         <location line="+45"/>
         <source>Frequency:</source>
-        <translation>Жиілік:</translation>
+        <translation>تردد:</translation>
     </message>
     <message>
         <location line="+19"/>
         <source>Create</source>
-        <translation>Құру</translation>
+        <translation>إنشاء</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Cancel</source>
-        <translation>Артқа қайтару</translation>
+        <translation>إلغاء</translation>
     </message>
     <message>
         <location line="+52"/>
         <source>Reflexion Coefficient</source>
-        <translation>Кері қайтару коэффициенті</translation>
+        <translation>منعكس المعامل</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Impedance (ohms)</source>
-        <translation>Тізбектің толық кедергісі(Ом)</translation>
+        <translation>مقاومة -اوم</translation>
     </message>
     <message>
         <location line="+221"/>
         <source>Error</source>
-        <translation>Қате</translation>
+        <translation>خطأ</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Real part of impedance must be greater zero,
 but is %1 !</source>
-        <translation>Тізбектің толық кедергісінің нақты бөлігі нөлден улкен болуы керек %1 !</translation>
+        <translation>جزء من مقاومة حقيقية يجب أن تكون أكبر من الصفر ,ولكن ٪ 1!</translation>
     </message>
 </context>
 <context>
     <name>MessageDock</name>
     <message>
-        <location filename="messagedock.cpp" line="+49"/>
+        <location filename="../qucs/messagedock.cpp" line="+50"/>
         <source>admsXml</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2022,37 +2048,92 @@ but is %1 !</source>
     </message>
 </context>
 <context>
+    <name>MyWidget</name>
+    <message>
+        <location filename="../qucs-rescodes/main.cpp" line="+58"/>
+        <source>E&amp;xit</source>
+        <translation type="unfinished">&amp;خروج</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>&amp;File</source>
+        <translation type="unfinished">‏‏&amp;ملف</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Help...</source>
+        <translation type="unfinished">مساعدة...</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>&amp;About ResistorCodes...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>&amp;About Qt...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>&amp;Help</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+64"/>
+        <source>About...</source>
+        <translation type="unfinished">حول...</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>
+Resistor color code computation program
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Copyright (c) 2012 by</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>About Qt</source>
+        <translation type="unfinished">عن كيو تي</translation>
+    </message>
+</context>
+<context>
     <name>NewProjDialog</name>
     <message>
-        <location filename="dialogs/newprojdialog.cpp" line="+30"/>
+        <location filename="../qucs/dialogs/newprojdialog.cpp" line="+30"/>
         <source>Create new project</source>
-        <translation>Жаңа проект құру</translation>
+        <translation>إنشاء مشروع جديد</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Project name:</source>
-        <translation>Проекттің аты:</translation>
+        <translation>اسم المشروع :</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>open new project</source>
-        <translation>жаңа поректті ашу</translation>
+        <translation>افتتاح مشروع جديد</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Create</source>
-        <translation>Құру</translation>
+        <translation>إنشاء</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Cancel</source>
-        <translation>Артқа қайтару</translation>
+        <translation>إلغاء</translation>
     </message>
 </context>
 <context>
     <name>OctaveWindow</name>
     <message>
-        <location filename="octave_window.cpp" line="+126"/>
+        <location filename="../qucs/octave_window.cpp" line="+130"/>
         <source>ERROR: Cannot start Octave!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2060,289 +2141,293 @@ but is %1 !</source>
 <context>
     <name>OptimizeDialog</name>
     <message>
-        <location filename="components/optimizedialog.cpp" line="+48"/>
+        <location filename="../qucs/components/optimizedialog.cpp" line="+43"/>
         <source>Edit Optimization Properties</source>
-        <translation>Оптимизация қасиетін өзгерту</translation>
+        <translation>تحرير التحسين للخصائص</translation>
     </message>
     <message>
-        <location line="+15"/>
-        <location line="+97"/>
-        <location line="+63"/>
+        <location line="+22"/>
+        <location line="+114"/>
+        <location line="+75"/>
         <source>Name:</source>
-        <translation>Аты:</translation>
+        <translation>الاسم :</translation>
     </message>
     <message>
-        <location line="-155"/>
+        <location line="-187"/>
         <source>Simulation:</source>
-        <translation>Моделдеу:</translation>
+        <translation>المحاكاة :</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>General</source>
-        <translation>Ортақ</translation>
+        <translation>العامة</translation>
+    </message>
+    <message>
+        <location line="+19"/>
+        <source>Method:</source>
+        <translation>الطريقة:</translation>
     </message>
     <message>
         <location line="+6"/>
-        <source>Method:</source>
-        <translation>Әдіс:</translation>
-    </message>
-    <message>
-        <location line="+14"/>
         <source>Maximum number of iterations:</source>
-        <translation>Итерациялардың максималды саны:</translation>
+        <translation>الحد الأقصى لعدد المتكررة :</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+6"/>
         <source>Output refresh cycle:</source>
-        <translation>Шығыстың жаңару циклы:</translation>
+        <translation>دورة تجديد الانتاج :</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+6"/>
         <source>Number of parents:</source>
-        <translation>Қорек көзінің саны:</translation>
+        <translation>عدد من الآباء والأمهات :</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+6"/>
         <source>Constant F:</source>
-        <translation>Ғ тұрақтысы:</translation>
+        <translation>ثابت ف :</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+6"/>
         <source>Crossing over factor:</source>
-        <translation>Қиылысу факторы:</translation>
+        <translation>عبور أكثر من عامل :</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+6"/>
         <source>Pseudo random number seed:</source>
-        <translation>Кездейсоқ сандардың генераторы үшін бастапқы сан:</translation>
+        <translation>عدد البذور الزائفة عشوائية :</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+6"/>
         <source>Minimum cost variance:</source>
-        <translation>Бағаның минималды түрленуі:</translation>
+        <translation>الحد الأدنى لتكاليف الفرق :</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+6"/>
         <source>Cost objectives:</source>
-        <translation>Бағалық мақсаттар:</translation>
+        <translation>تكلفة الأهداف :</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+6"/>
         <source>Cost constraints:</source>
-        <translation>Бағалық шектеулер:</translation>
+        <translation>التكاليف والقيود :</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+3"/>
         <source>Algorithm</source>
-        <translation>Алгоритм</translation>
+        <translation>خوارزمية</translation>
     </message>
     <message>
-        <location line="+7"/>
-        <location line="+70"/>
+        <location line="+12"/>
+        <location line="+82"/>
         <source>Name</source>
-        <translation>Аты</translation>
+        <translation>الاسم </translation>
     </message>
     <message>
-        <location line="-69"/>
-        <location line="+19"/>
+        <location line="-82"/>
+        <location line="+12"/>
         <source>active</source>
-        <translation>беделді</translation>
+        <translation>نشطة</translation>
     </message>
     <message>
-        <location line="-18"/>
+        <location line="-12"/>
         <source>initial</source>
-        <translation>бастапқы</translation>
+        <translation>الأولي</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+0"/>
         <source>min</source>
-        <translation>мин</translation>
+        <translation>الصغرى</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+0"/>
         <source>max</source>
-        <translation>макс</translation>
+        <translation>الكبرى</translation>
     </message>
     <message>
-        <location line="+1"/>
-        <location line="+66"/>
+        <location line="+0"/>
+        <location line="+82"/>
         <source>Type</source>
-        <translation>Тип</translation>
+        <translation>النوع </translation>
     </message>
     <message>
-        <location line="-46"/>
+        <location line="-45"/>
         <source>initial:</source>
-        <translation>бастапқы:</translation>
+        <translation>الأولي:</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>min:</source>
-        <translation>мин:</translation>
+        <translation>الصغرى:</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>max:</source>
-        <translation>макс:</translation>
+        <translation>الكبرى:</translation>
     </message>
     <message>
-        <location line="+21"/>
+        <location line="+24"/>
         <source>Type:</source>
-        <translation>Тип:</translation>
+        <translation>النوع :</translation>
     </message>
     <message>
-        <location line="+2"/>
-        <location line="+116"/>
-        <location line="+286"/>
+        <location line="+236"/>
+        <source>Variable &quot;%1&quot; aleardy in list!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-250"/>
+        <location line="+154"/>
+        <location line="+344"/>
         <source>linear double</source>
-        <translation>сызықтық затты тип</translation>
+        <translation>خطية مزدوجة</translation>
     </message>
     <message>
-        <location line="-401"/>
-        <location line="+116"/>
-        <location line="+286"/>
+        <location line="-497"/>
+        <location line="+155"/>
+        <location line="+344"/>
         <source>logarithmic double</source>
-        <translation>логарифмдік заттық тип</translation>
+        <translation>المزدوج لوغاريتمي</translation>
     </message>
     <message>
-        <location line="-401"/>
-        <location line="+116"/>
-        <location line="+286"/>
+        <location line="-498"/>
+        <location line="+156"/>
+        <location line="+344"/>
         <source>linear integer</source>
-        <translation>сызықтық бүтін тип</translation>
+        <translation>الخطي العددي</translation>
     </message>
     <message>
-        <location line="-401"/>
-        <location line="+116"/>
+        <location line="-499"/>
+        <location line="+157"/>
         <source>logarithmic integer</source>
-        <translation>логарифмдік бүтін тип</translation>
+        <translation>لوغاريتمي العددي</translation>
     </message>
     <message>
-        <location line="-111"/>
-        <location line="+50"/>
+        <location line="-153"/>
+        <location line="+60"/>
         <source>Add</source>
-        <translation>Қосу</translation>
+        <translation>إضافة</translation>
+    </message>
+    <message>
+        <location line="-58"/>
+        <location line="+60"/>
+        <source>Delete</source>
+        <translation>حذف </translation>
     </message>
     <message>
         <location line="-48"/>
-        <location line="+50"/>
-        <source>Delete</source>
-        <translation>Өшіру</translation>
-    </message>
-    <message>
-        <location line="-47"/>
         <source>Variables</source>
-        <translation>Айнымалылар</translation>
+        <translation>المتغيرات</translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+12"/>
         <source>Value</source>
-        <translation>Мағына</translation>
+        <translation>القيمة </translation>
     </message>
     <message>
-        <location line="+13"/>
+        <location line="+20"/>
         <source>Value:</source>
-        <translation>Мағына:</translation>
+        <translation>القيمة :</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <location line="+119"/>
+        <location line="+354"/>
+        <source>minimize</source>
+        <translation>الحد الأدنى</translation>
+    </message>
+    <message>
+        <location line="-472"/>
+        <location line="+120"/>
+        <location line="+354"/>
+        <source>maximize</source>
+        <translation>الحد الأقصى</translation>
+    </message>
+    <message>
+        <location line="-473"/>
+        <location line="+121"/>
+        <location line="+354"/>
+        <source>less</source>
+        <translation>أقل</translation>
+    </message>
+    <message>
+        <location line="-474"/>
+        <location line="+122"/>
+        <location line="+354"/>
+        <source>greater</source>
+        <translation>أكبر</translation>
+    </message>
+    <message>
+        <location line="-475"/>
+        <location line="+123"/>
+        <location line="+354"/>
+        <source>equal</source>
+        <translation>تساوي</translation>
+    </message>
+    <message>
+        <location line="-476"/>
+        <location line="+124"/>
+        <source>monitor</source>
+        <translation>رصد</translation>
+    </message>
+    <message>
+        <location line="-107"/>
+        <source>Goals</source>
+        <translation>الأهداف</translation>
     </message>
     <message>
         <location line="+8"/>
-        <location line="+80"/>
-        <location line="+302"/>
-        <source>minimize</source>
-        <translation>минимум</translation>
-    </message>
-    <message>
-        <location line="-381"/>
-        <location line="+80"/>
-        <location line="+302"/>
-        <source>maximize</source>
-        <translation>максимум</translation>
-    </message>
-    <message>
-        <location line="-381"/>
-        <location line="+80"/>
-        <location line="+302"/>
-        <source>less</source>
-        <translation>Азырақ</translation>
-    </message>
-    <message>
-        <location line="-381"/>
-        <location line="+80"/>
-        <location line="+302"/>
-        <source>greater</source>
-        <translation>көбірек</translation>
-    </message>
-    <message>
-        <location line="-381"/>
-        <location line="+80"/>
-        <location line="+302"/>
-        <source>equal</source>
-        <translation>бірдей</translation>
-    </message>
-    <message>
-        <location line="-381"/>
-        <location line="+80"/>
-        <source>monitor</source>
-        <translation>бақылау</translation>
-    </message>
-    <message>
-        <location line="-65"/>
-        <source>Goals</source>
-        <translation>Мақсаттар</translation>
-    </message>
-    <message>
-        <location line="+9"/>
         <source>OK</source>
-        <translation>ИЯ</translation>
+        <translation>موافق</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Apply</source>
-        <translation>Қолдану</translation>
+        <translation>ينطبق</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Cancel</source>
-        <translation>Артқа қайтару</translation>
+        <translation>إلغاء</translation>
     </message>
     <message>
+        <location line="+49"/>
+        <location line="+87"/>
+        <location line="+34"/>
         <location line="+37"/>
-        <location line="+48"/>
-        <location line="+28"/>
-        <location line="+30"/>
-        <location line="+180"/>
+        <location line="+195"/>
         <source>yes</source>
-        <translation>ия</translation>
+        <translation>نعم</translation>
     </message>
     <message>
-        <location line="-286"/>
-        <location line="+76"/>
-        <location line="+30"/>
+        <location line="-353"/>
+        <location line="+121"/>
+        <location line="+37"/>
         <source>no</source>
-        <translation>жоқ</translation>
+        <translation>لا</translation>
     </message>
     <message>
-        <location line="-45"/>
+        <location line="-57"/>
         <location line="+8"/>
-        <location line="+105"/>
+        <location line="+124"/>
         <location line="+8"/>
         <source>Error</source>
-        <translation>Қате</translation>
+        <translation>خطأ</translation>
     </message>
     <message>
-        <location line="-120"/>
-        <location line="+113"/>
+        <location line="-139"/>
+        <location line="+132"/>
         <source>Every text field must be non-empty!</source>
-        <translation>Барлық мәтіндік өрістер бос болмауы керек!</translation>
+        <translation>كل حقل النص يجب أن يكون شغله !</translation>
     </message>
     <message>
-        <location line="-105"/>
         <source>Variable &quot;%1&quot; already in list!</source>
-        <translation>Айнымалы тізімде бар&quot;%1&quot;!</translation>
+        <translation type="obsolete">المتغير &quot;٪ 1&quot; في قائمة بالفعل !</translation>
     </message>
     <message>
-        <location line="+113"/>
+        <location line="+8"/>
         <source>Goal &quot;%1&quot; already in list!</source>
-        <translation>Мақсат тізімде бар&quot;%1!</translation>
+        <translation>الهدف &quot;٪ 1&quot; في قائمة  !</translation>
     </message>
 </context>
 <context>
@@ -2350,113 +2435,113 @@ but is %1 !</source>
     <message>
         <location filename="../qucs-transcalc/optionsdialog.cpp" line="+36"/>
         <source>Options</source>
-        <translation>Реттеулер</translation>
+        <translation>خيارات</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Units</source>
-        <translation>Бірліктер</translation>
+        <translation>الوحدات</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Frequency</source>
-        <translation>Жиілік</translation>
+        <translation>تردد</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Length</source>
-        <translation>Ұзындығы</translation>
+        <translation>طول</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Resistance</source>
-        <translation>Кедергі</translation>
+        <translation>المقاومة</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Angle</source>
-        <translation>Бұрыш</translation>
+        <translation>الزاوية</translation>
     </message>
     <message>
         <location line="+25"/>
         <source>Save as Default</source>
-        <translation>Үндестік бойынша сақтау</translation>
+        <translation>وباستثناء ما الافتراضي</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Dismiss</source>
-        <translation>Дайын</translation>
+        <translation>فصل</translation>
     </message>
 </context>
 <context>
     <name>PackageDialog</name>
     <message>
-        <location filename="dialogs/packagedialog.cpp" line="+61"/>
+        <location filename="../qucs/dialogs/packagedialog.cpp" line="+61"/>
         <source>Create Project Package</source>
-        <translation>Проект пакетін құру</translation>
+        <translation>إنشاء المجلد</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Package:</source>
-        <translation>Пакет:</translation>
+        <translation>المجلد:</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Browse</source>
-        <translation>Көріп шығу</translation>
+        <translation>تصفح</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>include user libraries</source>
-        <translation>Тұтынушы кітапханасын іске қосу</translation>
+        <translation>تشمل المستخدم والمكتبات</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Choose projects:</source>
-        <translation>Проектті таңдау:</translation>
+        <translation>اختيار المشاريع :</translation>
     </message>
     <message>
         <location line="+18"/>
         <source>Create</source>
-        <translation>Құру</translation>
+        <translation>إنشاء</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Cancel</source>
-        <translation>Артқа қайтару</translation>
+        <translation>إلغاء</translation>
     </message>
     <message>
         <location line="+20"/>
         <source>No projects!</source>
-        <translation>Проекттер жоқ!</translation>
+        <translation>لا مشاريع!</translation>
     </message>
     <message>
         <location line="+9"/>
         <source>Extract Project Package</source>
-        <translation>Проект пакетін сыртқа шығару</translation>
+        <translation>استخراج مجلد</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Close</source>
-        <translation>Жабу</translation>
+        <translation>غلق</translation>
     </message>
     <message>
         <location line="+19"/>
         <location line="+186"/>
         <source>Qucs Packages</source>
-        <translation>Qucs пакеттері</translation>
+        <translation>مجلد Qucs</translation>
     </message>
     <message>
         <location line="-185"/>
         <location line="+186"/>
         <source>Any File</source>
-        <translation>Басқа файл</translation>
+        <translation>أية ملفات</translation>
     </message>
     <message>
         <location line="-185"/>
         <location line="+186"/>
         <source>Enter a Package File Name</source>
-        <translation>Файл пакетінің атын енгізіңіз</translation>
+        <translation>أدخل اسم المجلد</translation>
     </message>
     <message>
         <location line="-165"/>
@@ -2464,195 +2549,196 @@ but is %1 !</source>
         <location line="+15"/>
         <location line="+19"/>
         <source>Error</source>
-        <translation>Қате</translation>
+        <translation>خطأ</translation>
     </message>
     <message>
         <location line="-102"/>
         <source>Cannot open &quot;%1&quot;!</source>
-        <translation>Ашу мүмкін емес &quot;%1&quot;!</translation>
+        <translation>لا نستطيع فتح &quot;%1!</translation>
     </message>
     <message>
         <location line="+68"/>
         <source>Please insert a package name!</source>
-        <translation>Пакеттің атын енгізіңіз!</translation>
+        <translation>أدخل اسم المجلد!</translation>
     </message>
     <message>
         <location line="+15"/>
         <source>Please choose at least one project!</source>
-        <translation>Кем дегенде бір проектті таңдаңыз!</translation>
+        <translation>اختيار مشروع واحد على الأقل !</translation>
     </message>
     <message>
         <location line="+13"/>
         <location line="+51"/>
         <source>Info</source>
-        <translation>Ақпарат</translation>
+        <translation>معلومات</translation>
     </message>
     <message>
         <location line="-50"/>
         <source>Output file already exists!</source>
-        <translation>Шығатын файл бар, басқа ат беріп көріңіз!</translation>
+        <translation>الناتج الملف موجود بالفعل!</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Overwrite it?</source>
-        <translation>Осыны қайта жазу керек па?</translation>
+        <translation>فوق ذلك؟</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>&amp;Yes</source>
-        <translation>&amp;ИЯ</translation>
+        <translation>‏&amp;نعم</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>&amp;No</source>
-        <translation>&amp;Жоқ</translation>
+        <translation>‏&amp;موافق</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Cannot create package!</source>
-        <translation>Пакет құру мүмкін емес!</translation>
+        <translation>غير قادر على إنشاء المجلد!</translation>
     </message>
     <message>
         <location line="+46"/>
         <source>Successfully created Qucs package!</source>
-        <translation>Qucs пакетін құру сәтті аяқталды!</translation>
+        <translation>نجحت في انشاء المجلد!</translation>
     </message>
     <message>
         <location line="+31"/>
         <source>ERROR: Cannot open package!</source>
-        <translation>Қате: Пакетті ашу мүмкін емес!</translation>
+        <translation>خطأ : لا يمكن فتح المجلد!</translation>
     </message>
     <message>
         <location line="+15"/>
         <source>ERROR: File contains wrong header!</source>
-        <translation>Қате: Файл құрамында қате бастама бар!</translation>
+        <translation>خطأ : ملف يحتوي على خطأ في البداية!</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>ERROR: Wrong version number!</source>
-        <translation>Қате: Нұсқаның номері дұрыс көрсетілмеген!</translation>
+        <translation>خطأ : رقم الإصدار غير صحيح!</translation>
     </message>
     <message>
         <location line="+9"/>
         <source>ERROR: Checksum mismatch!</source>
-        <translation>Қате: Қорытқы сомма сәйкес келмейді!</translation>
+        <translation>خطأ : تأكد من المبلغ!</translation>
     </message>
     <message>
         <location line="+17"/>
         <source>Leave directory &quot;%1&quot;</source>
-        <translation>Папкадан шығу &quot;%1&quot;</translation>
+        <translation>خروج الدليل &quot;%&quot;1&quot;</translation>
     </message>
     <message>
         <location line="+12"/>
         <source>ERROR: Package is corrupt!</source>
-        <translation>Қате: Пакет бұзылған!</translation>
+        <translation>خطأ : المجلد معطل!</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Successfully extracted package!</source>
-        <translation>Проект пакетін сыртқа шығару сәтті аяқталды!</translation>
+        <translation>انتزعت المجموعة بنجاح!</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>ERROR: Project directory &quot;%1&quot; already exists!</source>
-        <translation>Қате: Проект папкасы &quot;%1&quot; әлбетте бар!</translation>
+        <translation>خطأ : مشروع الدليل &quot;٪ 1&quot; موجود من قبل!</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>ERROR: Cannot create directory &quot;%1&quot;!</source>
-        <translation>Қате: Папканы құру &quot;%1&quot; мүмкін емес!</translation>
+        <translation>خطأ : تعذر إنشاء الدليل &quot;٪ 1&quot; ا!</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Create and enter directory &quot;%1&quot;</source>
-        <translation>&quot;%1&quot; Папканы құрып ішіне кіріңіз</translation>
+        <translation>خلق وفتح الدليل &quot;٪ 1&quot;</translation>
     </message>
     <message>
         <location line="+17"/>
         <source>ERROR: Cannot create file &quot;%1&quot;!</source>
-        <translation>Қате:Файл құру&quot;%1&quot; мүмкін емес!</translation>
+        <translation>خطأ : لا يمكن إنشاء الملف &quot;٪ 1&quot;!</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Create file &quot;%1&quot;</source>
-        <translation>Файлды құру &quot;%1&quot;</translation>
+        <translation>يخلق الملف &quot;٪ 1&quot;</translation>
     </message>
     <message>
         <location line="+16"/>
         <source>ERROR: User library &quot;%1&quot; already exists!</source>
-        <translation>Қате:Тұтынушы кітапханасы &quot;%1&quot; әлбетте бар!</translation>
+        <translation>خطأ : مكتبة المستخدم &quot;٪ 1&quot; موجود بالفعل!</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>ERROR: Cannot create library &quot;%1&quot;!</source>
-        <translation>Қате: Кітапхананы құру мүмкін емес&quot;%1&quot;!</translation>
+        <translation>خطأ : تعذر إنشاء مكتبة &quot;٪ 1&quot;!</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Create library &quot;%1&quot;</source>
-        <translation>Кітапхананы құру&quot;%1&quot;</translation>
+        <translation>إنشاء مكتبة &quot;٪ 1&quot;</translation>
     </message>
 </context>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="schematic_file.cpp" line="+860"/>
+        <location filename="../qucs/schematic_file.cpp" line="+860"/>
         <location filename="../qucs-help/main.cpp" line="+104"/>
+        <location filename="../qucs-filter/stepz_filter.cpp" line="+45"/>
         <source>Warning</source>
-        <translation>Ескерту</translation>
+        <translation>تحذير</translation>
     </message>
     <message>
         <location filename="../qucs-help/main.cpp" line="+1"/>
         <source>Cannot save settings !</source>
-        <translation>Реттемелерді сақтау мүмкін емес !</translation>
+        <translation>لا يمكن حفظ الإعدادات!</translation>
     </message>
     <message>
-        <location filename="main.cpp" line="+529"/>
+        <location filename="../qucs/main.cpp" line="+532"/>
         <location line="+63"/>
         <source>Error: Wrong time format in &quot;%1&quot;. Use positive number with units</source>
-        <translation>Қате: Уақыттың пішімі белгісіз &quot;%1&quot;. Өлшем бірліктермен қоса оң сандарды қолданыңыз</translation>
+        <translation>خطأ : الوقت غير ملائم في شكل&quot;%1&quot;. استخدامالإجابي لعدد الوحدات</translation>
     </message>
     <message>
-        <location filename="mouseactions.cpp" line="+742"/>
+        <location filename="../qucs/mouseactions.cpp" line="+741"/>
         <source>Edit Properties</source>
-        <translation>Қасиеттерін Өзгерту</translation>
+        <translation>تعديل خصائص</translation>
     </message>
     <message>
-        <location line="+27"/>
+        <location line="+26"/>
         <source>Export as image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+11"/>
         <source>power matching</source>
-        <translation>қуатты сәйкестендіру</translation>
+        <translation>مطابقة الإشعال</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>noise matching</source>
-        <translation>шуды сәйкестендіру</translation>
+        <translation>مطابقة الضوضاء </translation>
     </message>
     <message>
         <location line="+3"/>
         <source>2-port matching</source>
-        <translation>төрт полюсті сәйкестендіру</translation>
+        <translation> مطابقة2-port  </translation>
     </message>
     <message>
         <location line="+60"/>
-        <location filename="components/spicefile.cpp" line="+355"/>
-        <location line="+87"/>
+        <location filename="../qucs/components/spicefile.cpp" line="+352"/>
+        <location line="+94"/>
         <source>Info</source>
-        <translation>Ақпарат</translation>
+        <translation>معلومات</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>The ground potential cannot be labeled!</source>
-        <translation>Жердің потенциалында түртпе болу мүмкін емес!!</translation>
+        <translation>المحتملة في الميدان لا يمكن أن توصف!</translation>
     </message>
     <message>
-        <location filename="octave_window.cpp" line="-31"/>
-        <location filename="qucs_actions.cpp" line="+1365"/>
-        <location filename="schematic_file.cpp" line="-747"/>
+        <location filename="../qucs/octave_window.cpp" line="-31"/>
+        <location filename="../qucs/qucs_actions.cpp" line="+1404"/>
+        <location filename="../qucs/schematic_file.cpp" line="-747"/>
         <location line="+18"/>
         <location line="+21"/>
         <location line="+24"/>
@@ -2676,13 +2762,13 @@ but is %1 !</source>
         <location line="+8"/>
         <location line="+10"/>
         <location line="+20"/>
-        <location line="+56"/>
-        <location filename="components/component.cpp" line="+1538"/>
+        <location line="+54"/>
+        <location filename="../qucs/components/component.cpp" line="+1534"/>
         <location line="+20"/>
         <location line="+8"/>
-        <location filename="components/vacomponent.cpp" line="+298"/>
+        <location filename="../qucs/components/vacomponent.cpp" line="+306"/>
         <source>Error</source>
-        <translation>Қате</translation>
+        <translation>خطأ</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -2692,36 +2778,41 @@ Set the Octave location on the application settings.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qucs_actions.cpp" line="+1"/>
+        <location filename="../qucs/qucs_actions.cpp" line="+1"/>
         <source>Cannot create output file!</source>
-        <translation>Шығатын файлды құру мүмкін емес !</translation>
+        <translation>لا يمكن إنشاء ملف الانتاج!</translation>
     </message>
     <message>
-        <location filename="schematic.cpp" line="+106"/>
-        <location filename="textdoc.cpp" line="+64"/>
+        <location line="+154"/>
+        <source>verlog-a user devices</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qucs/schematic.cpp" line="+101"/>
+        <location filename="../qucs/textdoc.cpp" line="+63"/>
         <source>untitled</source>
-        <translation>аты жоқ</translation>
+        <translation>بدون عنوان</translation>
     </message>
     <message>
-        <location filename="schematic_file.cpp" line="-792"/>
+        <location filename="../qucs/schematic_file.cpp" line="-790"/>
         <location line="+707"/>
         <source>Format Error:
 &apos;Painting&apos; field is not closed!</source>
-        <translation>Пішімде қате бар:
-&apos;Painting&apos; өрісі жабық емес!</translation>
+        <translation>خطأ في الشكل :
+الطلاء الميدانية ليست مغلقة!</translation>
     </message>
     <message>
         <location line="-689"/>
         <source>Wrong document version: </source>
-        <translation>Құжаттың нұсқасы дұрыс емес:</translation>
+        <translation>  الخطأ في إصدار الوثيقة :</translation>
     </message>
     <message>
         <location line="+21"/>
         <location line="+24"/>
         <source>Clipboard Format Error:
 Unknown field!</source>
-        <translation>Алмастыру буферінің пішімінде қате бар:
-белгісіз өріс!</translation>
+        <translation> خطأ  في شكل الحافظة:
+ميدان مجهول!</translation>
     </message>
     <message>
         <location line="+89"/>
@@ -2731,109 +2822,109 @@ Unknown field!</source>
     <message>
         <location line="+78"/>
         <source>Cannot save document!</source>
-        <translation>Құжатты сақтау мүмкін емес!</translation>
+        <translation>لا يمكن حفظ الوثيقة!</translation>
     </message>
     <message>
         <location line="+189"/>
         <location line="+5"/>
         <source>Format Error:
 Wrong property field limiter!</source>
-        <translation>Пішімде қате бар:
-Өріс шектеуінің қасиеті дұрыс емес!</translation>
+        <translation>خطأ في الشكل :
+خطأ مجال الملكية المحدد!</translation>
     </message>
     <message>
         <location line="+37"/>
         <source>Format Error:
 Unknown property: </source>
-        <translation>Пішімде қате бар:
-Қасиеті белгісіз:</translation>
+        <translation>خطأ في الشكل :
+خصائص غير معروف :</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Format Error:
 Number expected in property field!</source>
-        <translation>Пішімде қате бар:
-Қасиет өрісінде сан күтілді!</translation>
+        <translation>خطأ في الشكل :
+العدد المتوقع في مجال الملكية!</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Format Error:
 &apos;Property&apos; field is not closed!</source>
-        <translation>Пішімде қате бар:
-&apos;Property&apos; өрісі жабық емес!</translation>
+        <translation>خطأ في الشكل :
+الخصائص الميدانية ليست مغلقة!</translation>
     </message>
     <message>
         <location line="+68"/>
         <source>Format Error:
 &apos;Component&apos; field is not closed!</source>
-        <translation>Пішімде қате бар:
-&apos;Component&apos; өрісі жабық емес!</translation>
+        <translation>خطأ في الشكل :
+الطلاء الميدانية ليست مغلقة!</translation>
     </message>
     <message>
         <location line="+59"/>
         <source>Format Error:
 Wrong &apos;wire&apos; line format!</source>
-        <translation>Пішімде қате бар:
-&apos;wire&apos; жолының пішімі дұрыс емес!</translation>
+        <translation>خطأ في الشكل :
+خطأ شكل الخط &apos;سلك&apos; !</translation>
     </message>
     <message>
         <location line="+18"/>
         <source>Format Error:
 &apos;Wire&apos; field is not closed!</source>
-        <translation>Пішімде қате бар:
-&apos;Wire&apos; өрісі жабық емес!</translation>
+        <translation>خطأ في الشكل :
+ الحقل&apos;&apos;سلك الميدانية ليس مغلق!</translation>
     </message>
     <message>
         <location line="+29"/>
         <source>Format Error:
 Unknown diagram!</source>
-        <translation>Пішімде қате бар:
-Белгісіз диаграмма!</translation>
+        <translation>خطأ في الشكل :
+رسم بياني غير معروفة!</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Format Error:
 Wrong &apos;diagram&apos; line format!</source>
-        <translation>Пішімде қате бар:
-&apos;diagram&apos; жолының пішімі дұрыс емес!</translation>
+        <translation>خطأ في الشكل :
+خطأ  في شكل خط &apos;الرسم البياني&apos;  !</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Format Error:
 &apos;Diagram&apos; field is not closed!</source>
-        <translation>Пішімде қате бар:
-&apos;Diagram&apos; өрісі жабық емес!</translation>
+        <translation>خطأ في الشكل :
+ حقل &apos;الرسم البياني&apos; ليس مغلق!</translation>
     </message>
     <message>
         <location line="+17"/>
         <source>Format Error:
 Wrong &apos;painting&apos; line delimiter!</source>
-        <translation>Пішімде қате бар:
-&apos;painting&apos;жолындағы шектеу дұрыс емес !</translation>
+        <translation>خطأ في الشكل :
+خطأ &apos;لوحة&apos; خط محدد!</translation>
     </message>
     <message>
         <location line="+16"/>
         <source>Format Error:
 Unknown painting!</source>
-        <translation>Пішімде қате бар:
-Белгісіз бейне!</translation>
+        <translation>خطأ في الشكل :
+لوحة غير معروفة!</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Format Error:
 Wrong &apos;painting&apos; line format!</source>
-        <translation>Пішімде қате бар:
-&apos;painting&apos;жолындағы пішім дұрыс емес !</translation>
+        <translation>خطأ في الشكل :
+خطأ &apos;لوحة&apos; خط محدد!</translation>
     </message>
     <message>
         <location line="+18"/>
         <source>Cannot load document: </source>
-        <translation>Құжатты енгізу мүмкін емес:</translation>
+        <translation>لا يمكن تحميل الوثيقة :</translation>
     </message>
     <message>
         <location line="+20"/>
         <source>Wrong document type: </source>
-        <translation>Құжаттың типі дұрыс емес:</translation>
+        <translation>خطأ نوع الوثيقة :</translation>
     </message>
     <message>
         <location line="+10"/>
@@ -2842,1236 +2933,1026 @@ Wrong &apos;painting&apos; line format!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+46"/>
+        <location line="+44"/>
         <source>File Format Error:
 Unknown field!</source>
-        <translation>Файл пішімінде қате бар: Белгісіз өріс!</translation>
+        <translation>خطأ في تنسيق ملف :حقل مجهول!</translation>
     </message>
     <message>
-        <location line="+231"/>
+        <location line="+230"/>
         <source>ERROR: Component &quot;%1&quot; has no analog model.</source>
-        <translation>ҚАТЕ: &quot;%1&quot; компонентінің аналогтық моделі жоқ.</translation>
+        <translation>خطأ : العنصر &quot;٪ 1&quot; ليس لديها نموذج التناظرية.</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>ERROR: Component &quot;%1&quot; has no digital model.</source>
-        <translation>ҚАТЕ: &quot;%1&quot; компонентінің цифрлық моделі жоқ.</translation>
+        <translation>خطأ : العنصر &quot;٪ 1&quot; ليس لديها نموذج رقمي.</translation>
     </message>
     <message>
-        <location line="+45"/>
+        <location line="+46"/>
         <source>ERROR: Cannot load subcircuit &quot;%1&quot;.</source>
-        <translation>Қате:Сұлбаны енгізу&quot;%1&quot; мүмкін емес.</translation>
+        <translation>خطأ : لا يمكن تحميل subcircuit &quot;٪ 1&quot;.</translation>
     </message>
     <message>
-        <location line="+33"/>
+        <location line="+34"/>
         <source>WARNING: Skipping library component &quot;%1&quot;.</source>
-        <translation>ЕСКЕРТУ:&quot;%1&quot; кітапхананың компонентасы жетіспейді.</translation>
+        <translation>تحذير : مكتبة تخطي عنصر &quot;٪ 1&quot;.</translation>
     </message>
     <message>
         <location line="+20"/>
         <source>ERROR: Cannot load library component &quot;%1&quot;.</source>
-        <translation>Қате: Кітапхана компонентасын енгізу&quot;%1&quot; мүмкін емес.</translation>
+        <translation>خطأ : لا يمكن تحميل مكتبة عنصر &quot;٪ 1&quot;.</translation>
     </message>
     <message>
         <location line="+13"/>
-        <location filename="components/spicefile.cpp" line="-190"/>
+        <location filename="../qucs/components/spicefile.cpp" line="-197"/>
         <source>ERROR: No file name in SPICE component &quot;%1&quot;.</source>
-        <translation>ҚАТЕ: &quot;%1&quot;SPICE компонентінің аты жоқ.</translation>
+        <translation>خطأ : لا يوجد اسم الملف في عنصر SPICE  في &quot;٪ 1&quot;.</translation>
     </message>
     <message>
         <location line="+25"/>
-        <location filename="components/verilogfile.cpp" line="+174"/>
-        <location filename="components/vhdlfile.cpp" line="+219"/>
+        <location filename="../qucs/components/verilogfile.cpp" line="+175"/>
+        <location filename="../qucs/components/vhdlfile.cpp" line="+219"/>
         <source>ERROR: No file name in %1 component &quot;%2&quot;.</source>
-        <translation>ҚАТЕ: &quot;%1&quot;және&quot;%2&quot; компоненттерінің аты жоқ.</translation>
+        <translation>خطأ : لايوجد اسم الملف من %1  العنصر &quot;٪ 2&quot;.</translation>
     </message>
     <message>
         <location line="+148"/>
         <source>WARNING: Ignore simulation component in subcircuit &quot;%1&quot;.</source>
-        <translation>ЕСКЕРТУ:&quot;%1&quot; сұлбадағы моделдеу компонентасы қабылданбайды.</translation>
+        <translation>تحذير : تجاهل عنصر المحاكاة في subcircuit &quot;٪ 1&quot;.</translation>
     </message>
     <message>
         <location line="+282"/>
         <source>ERROR: Only one digital simulation allowed.</source>
-        <translation>ҚАТЕ: Тек қана бір цифрлық моделдеуге рұқсат етіледі.</translation>
+        <translation>خطأ : واحد فقط يسمح المحاكاة الرقمية.</translation>
     </message>
     <message>
         <location line="+13"/>
         <source>ERROR: Analog and digital simulations cannot be mixed.</source>
-        <translation>ҚАТЕ: Аналогтық және цифрлық моделдеу араласпауы керек.</translation>
+        <translation>خطأ : النظير والمحاكاة الرقمية لا يمكن أن تكون مختلطة.</translation>
     </message>
     <message>
         <location line="+19"/>
         <source>ERROR: Digital simulation needs at least one digital source.</source>
-        <translation>ҚАТЕ: Цифрлық симуляция кем дегенде бір цифрлық қорек көзін қажет етеді.</translation>
+        <translation>خطأ : المحاكاة الرقمية للاحتياجات واحد على الأقل الرقمية المصدر.</translation>
     </message>
     <message>
-        <location filename="paintings/arrow.cpp" line="+137"/>
+        <location filename="../qucs/paintings/arrow.cpp" line="+135"/>
         <source>Arrow</source>
-        <translation>Бағыттауыш</translation>
+        <translation>السهم</translation>
     </message>
     <message>
-        <location filename="paintings/ellipsearc.cpp" line="+91"/>
+        <location filename="../qucs/paintings/ellipsearc.cpp" line="+91"/>
         <source>Elliptic Arc</source>
-        <translation>Эллиптік доға</translation>
+        <translation>Elliptic Arc</translation>
     </message>
     <message>
         <location line="+296"/>
         <source>Edit Arc Properties</source>
-        <translation>Доғаның қасиетін өзгерту</translation>
+        <translation>تعديل خصائص القوس</translation>
     </message>
     <message>
-        <location filename="paintings/ellipse.cpp" line="+97"/>
+        <location filename="../qucs/paintings/ellipse.cpp" line="+98"/>
         <source>Ellipse</source>
-        <translation>Эллипс</translation>
+        <translation>القطع الناقص</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>filled Ellipse</source>
-        <translation>іші толтырылған эллипс</translation>
+        <translation>شغل القطع الناقص</translation>
     </message>
     <message>
         <location line="+265"/>
         <source>Edit Ellipse Properties</source>
-        <translation>Эллипс қасиеттерін өзгерту</translation>
+        <translation>تعديل خصائص القطع الناقص</translation>
     </message>
     <message>
-        <location filename="paintings/graphicline.cpp" line="+92"/>
+        <location filename="../qucs/paintings/graphicline.cpp" line="+90"/>
         <source>Line</source>
-        <translation>Сызық</translation>
+        <translation>الخط</translation>
     </message>
     <message>
         <location line="+236"/>
         <source>Edit Line Properties</source>
-        <translation>Сызық қасиетін өзгерту</translation>
+        <translation>تعديل خصائص الخط</translation>
     </message>
     <message>
-        <location filename="paintings/graphictext.cpp" line="+131"/>
+        <location filename="../qucs/paintings/graphictext.cpp" line="+129"/>
         <source>Text</source>
-        <translation>Мәтін</translation>
+        <translation>النص</translation>
     </message>
     <message>
-        <location filename="paintings/rectangle.cpp" line="+97"/>
+        <location filename="../qucs/paintings/rectangle.cpp" line="+97"/>
         <source>Rectangle</source>
-        <translation>Тіктөртбұрыш</translation>
+        <translation>المستطيل</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>filled Rectangle</source>
-        <translation>іші толтырылған тіктөртбұрыш</translation>
+        <translation>شغل مستطيل</translation>
     </message>
     <message>
         <location line="+267"/>
         <source>Edit Rectangle Properties</source>
-        <translation>Тіктөртбұрыш қасиеттерін өзгерту</translation>
+        <translation>تعديل خصائص مستطيل</translation>
     </message>
     <message>
-        <location filename="diagrams/curvediagram.cpp" line="+245"/>
+        <location filename="../qucs/diagrams/curvediagram.cpp" line="+253"/>
         <source>Locus Curve</source>
-        <translation>Шеңберлік диаграмма</translation>
+        <translation>المكان المنحن</translation>
     </message>
     <message>
-        <location filename="diagrams/marker.cpp" line="+285"/>
-        <location filename="diagrams/tabdiagram.cpp" line="+246"/>
+        <location filename="../qucs/diagrams/marker.cpp" line="+282"/>
+        <location filename="../qucs/diagrams/tabdiagram.cpp" line="+259"/>
         <source>invalid</source>
-        <translation>дұрыс емес</translation>
+        <translation>غير صحيح</translation>
     </message>
     <message>
-        <location filename="diagrams/polardiagram.cpp" line="+98"/>
+        <location filename="../qucs/diagrams/polardiagram.cpp" line="+102"/>
         <source>Polar</source>
-        <translation>Полярлы</translation>
+        <translation>القطبي</translation>
     </message>
     <message>
-        <location filename="diagrams/psdiagram.cpp" line="+125"/>
+        <location filename="../qucs/diagrams/psdiagram.cpp" line="+129"/>
         <source>Polar-Smith Combi</source>
-        <translation>Араласқан Смит поляры</translation>
+        <translation>Polar-Smith Combi</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Smith-Polar Combi</source>
-        <translation>Смит поляры араласқан</translation>
+        <translation>Smith-Polar Combi</translation>
     </message>
     <message>
-        <location filename="diagrams/rect3ddiagram.cpp" line="+1140"/>
+        <location filename="../qucs/diagrams/rect3ddiagram.cpp" line="+1154"/>
         <source>3D-Cartesian</source>
-        <translation>Үш өлшемді декарттық</translation>
+        <translation>3D - ديكارت</translation>
     </message>
     <message>
-        <location filename="diagrams/rectdiagram.cpp" line="+243"/>
+        <location filename="../qucs/diagrams/rectdiagram.cpp" line="+249"/>
         <source>Cartesian</source>
-        <translation>Декарттық</translation>
+        <translation>ديكارت</translation>
     </message>
     <message>
-        <location filename="diagrams/smithdiagram.cpp" line="+108"/>
+        <location filename="../qucs/diagrams/smithdiagram.cpp" line="+112"/>
         <source>Smith Chart</source>
-        <translation>Смит диаграммасы</translation>
+        <translation>سميث الرسم البياني</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Admittance Smith</source>
-        <translation>Смит диаграммасы (өткізгіштік)</translation>
+        <translation>القبول سميث</translation>
     </message>
     <message>
-        <location filename="diagrams/tabdiagram.cpp" line="-92"/>
-        <location filename="diagrams/timingdiagram.cpp" line="+148"/>
-        <location filename="diagrams/truthdiagram.cpp" line="+77"/>
+        <location filename="../qucs/diagrams/tabdiagram.cpp" line="-93"/>
+        <location filename="../qucs/diagrams/timingdiagram.cpp" line="+162"/>
+        <location filename="../qucs/diagrams/truthdiagram.cpp" line="+91"/>
         <source>no variables</source>
-        <translation>айнымалылар жоқ</translation>
+        <translation>لا متغيرات</translation>
     </message>
     <message>
-        <location line="+141"/>
-        <location filename="diagrams/timingdiagram.cpp" line="+47"/>
+        <location line="+142"/>
+        <location filename="../qucs/diagrams/timingdiagram.cpp" line="+47"/>
         <location line="+89"/>
-        <location filename="diagrams/truthdiagram.cpp" line="+134"/>
+        <location filename="../qucs/diagrams/truthdiagram.cpp" line="+134"/>
         <source>wrong dependency</source>
-        <translation>қате тәуелділік</translation>
+        <translation>من الخطأ الاعتماد</translation>
     </message>
     <message>
         <location line="+7"/>
-        <location filename="diagrams/timingdiagram.cpp" line="-122"/>
+        <location filename="../qucs/diagrams/timingdiagram.cpp" line="-122"/>
         <location line="+113"/>
-        <location filename="diagrams/truthdiagram.cpp" line="+7"/>
+        <location filename="../qucs/diagrams/truthdiagram.cpp" line="+7"/>
         <source>no data</source>
-        <translation>мәліметтер жоқ</translation>
+        <translation>لا توجد بيانات</translation>
     </message>
     <message>
         <location line="+98"/>
         <source>Tabular</source>
-        <translation>Кестелік</translation>
+        <translation>مجدول</translation>
     </message>
     <message>
-        <location filename="diagrams/timingdiagram.cpp" line="+232"/>
+        <location filename="../qucs/diagrams/timingdiagram.cpp" line="+232"/>
         <source>Timing Diagram</source>
-        <translation>Уақыттық диаграмма</translation>
+        <translation>توقيت الشكل البياني</translation>
     </message>
     <message>
-        <location filename="diagrams/truthdiagram.cpp" line="+46"/>
+        <location filename="../qucs/diagrams/truthdiagram.cpp" line="+46"/>
         <source>Truth Table</source>
-        <translation>Ақиқаттық кесте</translation>
+        <translation>الجدول الحقيقة </translation>
     </message>
     <message>
-        <location filename="components/ac_sim.cpp" line="+24"/>
+        <location filename="../qucs/components/ac_sim.cpp" line="+23"/>
         <location line="+48"/>
         <source>ac simulation</source>
-        <translation>айнымалы тоқта моделдеу</translation>
+        <translation>تمثيل خاص بالمنحنى</translation>
     </message>
     <message>
         <location line="-23"/>
-        <location filename="components/param_sweep.cpp" line="+46"/>
-        <location filename="components/sp_sim.cpp" line="+48"/>
-        <location filename="components/tr_sim.cpp" line="+44"/>
+        <location filename="../qucs/components/param_sweep.cpp" line="+45"/>
+        <location filename="../qucs/components/sp_sim.cpp" line="+47"/>
+        <location filename="../qucs/components/tr_sim.cpp" line="+43"/>
         <source>sweep type</source>
-        <translation>бұрмалау типі</translation>
+        <translation>حملة من النوع</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/sp_sim.cpp" line="+2"/>
+        <location filename="../qucs/components/sp_sim.cpp" line="+2"/>
         <source>start frequency in Hertz</source>
-        <translation>Жиілікті бастау Герцпен</translation>
+        <translation>بداية تردد   هيرتز</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/sp_sim.cpp" line="+2"/>
+        <location filename="../qucs/components/sp_sim.cpp" line="+2"/>
         <source>stop frequency in Hertz</source>
-        <translation>Жиілікті тоқтату Герцпен</translation>
+        <translation>بهاية تردد   هيرتز</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/param_sweep.cpp" line="+8"/>
-        <location filename="components/sp_sim.cpp" line="+2"/>
+        <location filename="../qucs/components/param_sweep.cpp" line="+8"/>
+        <location filename="../qucs/components/sp_sim.cpp" line="+2"/>
         <source>number of simulation steps</source>
-        <translation>моделдеу қадамының нөмірі</translation>
+        <translation>عدد مرات التمثيل</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>calculate noise voltages</source>
-        <translation>шу кернеуін есептеу</translation>
+        <translation>حساب ضوضاء الفولتية </translation>
     </message>
     <message>
-        <location filename="components/am_modulator.cpp" line="+23"/>
+        <location filename="../qucs/components/am_modulator.cpp" line="+23"/>
         <source>ac voltage source with amplitude modulator</source>
-        <translation>фазалық модуляторы бар айнымалы токтың қорек көзі</translation>
+        <translation>مصدر السعة المغير في الموجة الكهرومغناطيسية</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>AM</source>
-        <translation>АМ</translation>
+        <translation>AM</translation>
     </message>
     <message>
         <location line="+15"/>
-        <location filename="components/pm_modulator.cpp" line="+52"/>
-        <location filename="components/volt_ac.cpp" line="+46"/>
+        <location filename="../qucs/components/pm_modulator.cpp" line="+52"/>
+        <location filename="../qucs/components/volt_ac.cpp" line="+46"/>
         <source>peak voltage in Volts</source>
-        <translation>шыңдық кернеу вольтпен</translation>
+        <translation>ذروة الجهد فولت</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/ampere_ac.cpp" line="+48"/>
-        <location filename="components/hb_sim.cpp" line="+43"/>
-        <location filename="components/pm_modulator.cpp" line="+2"/>
-        <location filename="components/source_ac.cpp" line="+65"/>
-        <location filename="components/volt_ac.cpp" line="+2"/>
+        <location filename="../qucs/components/ampere_ac.cpp" line="+48"/>
+        <location filename="../qucs/components/hb_sim.cpp" line="+42"/>
+        <location filename="../qucs/components/pm_modulator.cpp" line="+2"/>
+        <location filename="../qucs/components/source_ac.cpp" line="+65"/>
+        <location filename="../qucs/components/volt_ac.cpp" line="+2"/>
         <source>frequency in Hertz</source>
-        <translation>жиілік Герцпен</translation>
+        <translation>تردد في هيرتز</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/ampere_ac.cpp" line="+2"/>
-        <location filename="components/pm_modulator.cpp" line="+2"/>
-        <location filename="components/volt_ac.cpp" line="+2"/>
+        <location filename="../qucs/components/ampere_ac.cpp" line="+2"/>
+        <location filename="../qucs/components/pm_modulator.cpp" line="+2"/>
+        <location filename="../qucs/components/volt_ac.cpp" line="+2"/>
         <source>initial phase in degrees</source>
-        <translation>бастапқы фаза градуспен</translation>
+        <translation>المرحلة الأولى في درجات</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>modulation level</source>
-        <translation>модуляция деңгейі</translation>
+        <translation>تعديل المستوى</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>AM modulated Source</source>
-        <translation>АМ модуляцияның қорек көзі</translation>
+        <translation>المصدر AM التضمي</translation>
     </message>
     <message>
-        <location filename="components/ampere_ac.cpp" line="-27"/>
+        <location filename="../qucs/components/ampere_ac.cpp" line="-27"/>
         <source>ideal ac current source</source>
-        <translation>айнымалы тоқтың идеалды қорек көзі</translation>
+        <translation>مصدر  المنحنى المثالي الحالي</translation>
     </message>
     <message>
         <location line="+23"/>
         <source>peak current in Ampere</source>
-        <translation>шыңдық ток Ампермен</translation>
+        <translation>ذروة الحالية لأمبير</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location filename="components/volt_ac.cpp" line="+2"/>
+        <location filename="../qucs/components/volt_ac.cpp" line="+2"/>
         <source>damping factor (transient simulation only)</source>
-        <translation>өшу коэффициенті (тек қана өтпелі моделдеу үшін)</translation>
+        <translation>التخميد عامل (المحاكاة عابرة فقط) ق</translation>
     </message>
     <message>
         <location line="+16"/>
         <source>ac Current Source</source>
-        <translation>айнымалы тоқтың қорек көзі</translation>
+        <translation>مصدر المنحنى الحالي</translation>
     </message>
     <message>
-        <location filename="components/ampere_dc.cpp" line="+23"/>
+        <location filename="../qucs/components/ampere_dc.cpp" line="+23"/>
         <source>ideal dc current source</source>
-        <translation>тұрақты тоқтың идеалды қорек көзі</translation>
+        <translation> دس  المثالي المصدر الحالية</translation>
     </message>
     <message>
         <location line="+21"/>
         <source>current in Ampere</source>
-        <translation>тоқ Ампермен</translation>
+        <translation>الحالي في أمبير</translation>
     </message>
     <message>
         <location line="+16"/>
         <source>dc Current Source</source>
-        <translation>тұрақты тоқтың қорек көзі</translation>
+        <translation>مصدر دس  الحالي</translation>
     </message>
     <message>
-        <location filename="components/ampere_noise.cpp" line="+23"/>
+        <location filename="../qucs/components/ampere_noise.cpp" line="+23"/>
         <source>noise current source</source>
-        <translation>токтың қорек көзіндегі шу</translation>
+        <translation>مصدر الضجيج الحال</translation>
     </message>
     <message>
         <location line="+28"/>
         <source>current power spectral density in A^2/Hz</source>
-        <translation>тоқ күшінің спектралды тығыздығы A^2/Hz</translation>
+        <translation>السلطة الحالية في الكثافة في  A^2/Hz</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/noise_ii.cpp" line="+77"/>
-        <location filename="components/noise_iv.cpp" line="+72"/>
-        <location filename="components/noise_vv.cpp" line="+67"/>
-        <location filename="components/volt_noise.cpp" line="+48"/>
+        <location filename="../qucs/components/noise_ii.cpp" line="+77"/>
+        <location filename="../qucs/components/noise_iv.cpp" line="+72"/>
+        <location filename="../qucs/components/noise_vv.cpp" line="+67"/>
+        <location filename="../qucs/components/volt_noise.cpp" line="+48"/>
         <source>frequency exponent</source>
-        <translation>жиілік экспонентасы</translation>
+        <translation>تردد الأس</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/noise_ii.cpp" line="+2"/>
-        <location filename="components/noise_iv.cpp" line="+2"/>
-        <location filename="components/noise_vv.cpp" line="+2"/>
-        <location filename="components/volt_noise.cpp" line="+2"/>
+        <location filename="../qucs/components/noise_ii.cpp" line="+2"/>
+        <location filename="../qucs/components/noise_iv.cpp" line="+2"/>
+        <location filename="../qucs/components/noise_vv.cpp" line="+2"/>
+        <location filename="../qucs/components/volt_noise.cpp" line="+2"/>
         <source>frequency coefficient</source>
-        <translation>жиілік коэффициенті</translation>
+        <translation>معامل التردد </translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/noise_ii.cpp" line="+2"/>
-        <location filename="components/noise_iv.cpp" line="+2"/>
-        <location filename="components/noise_vv.cpp" line="+2"/>
-        <location filename="components/volt_noise.cpp" line="+2"/>
+        <location filename="../qucs/components/noise_ii.cpp" line="+2"/>
+        <location filename="../qucs/components/noise_iv.cpp" line="+2"/>
+        <location filename="../qucs/components/noise_vv.cpp" line="+2"/>
+        <location filename="../qucs/components/volt_noise.cpp" line="+2"/>
         <source>additive frequency term</source>
-        <translation>қосылмалы жиілік периоды</translation>
+        <translation>تردد مصطلح المضافة</translation>
     </message>
     <message>
         <location line="+16"/>
         <source>Noise Current Source</source>
-        <translation>Токтың қорек көзіндегі шуы</translation>
+        <translation>مصدر الضجيج الحال</translation>
     </message>
     <message>
-        <location filename="components/amplifier.cpp" line="+23"/>
+        <location filename="../qucs/components/amplifier.cpp" line="+23"/>
         <source>ideal amplifier</source>
-        <translation>әмбебап күшейткіш</translation>
+        <translation>مثالية مكبر للصوت</translation>
     </message>
     <message>
         <location line="+21"/>
-        <location filename="components/opamp.cpp" line="+50"/>
-        <location filename="components/vfile.cpp" line="+61"/>
+        <location filename="../qucs/components/opamp.cpp" line="+50"/>
+        <location filename="../qucs/components/vfile.cpp" line="+60"/>
         <source>voltage gain</source>
-        <translation>кернеу өсімшесі</translation>
+        <translation> كسب الفولت</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/isolator.cpp" line="+49"/>
+        <location filename="../qucs/components/isolator.cpp" line="+49"/>
         <source>reference impedance of input port</source>
-        <translation>кіріс портының толық тірек кедергісі</translation>
+        <translation>إشارة المقاومة لمنفذ المدخلات</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/isolator.cpp" line="+2"/>
+        <location filename="../qucs/components/isolator.cpp" line="+2"/>
         <source>reference impedance of output port</source>
-        <translation>шығыс портының толық тірек кедергісі</translation>
+        <translation>إشارة المقاومة لمنفذ النتائج</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>noise figure</source>
-        <translation>шудың саны</translation>
+        <translation> شكل التشويش</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>Amplifier</source>
-        <translation>Күшейткіш</translation>
+        <translation>المكبر</translation>
     </message>
     <message>
-        <location filename="components/andor4x2.cpp" line="+26"/>
-        <source>4x2 andor verilog device</source>
-        <translation>4х2 және-немесе логикалық құрылғысы</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="components/andor4x3.cpp" line="+29"/>
-        <location filename="components/andor4x4.cpp" line="+29"/>
-        <location filename="components/comp_1bit.cpp" line="+29"/>
-        <location filename="components/comp_2bit.cpp" line="+29"/>
-        <location filename="components/comp_4bit.cpp" line="+29"/>
-        <location filename="components/dmux2to4.cpp" line="+29"/>
-        <location filename="components/dmux3to8.cpp" line="+30"/>
-        <location filename="components/dmux4to16.cpp" line="+29"/>
-        <location filename="components/fa1b.cpp" line="+29"/>
-        <location filename="components/fa2b.cpp" line="+29"/>
-        <location filename="components/ha1b.cpp" line="+29"/>
-        <location filename="components/mux2to1.cpp" line="+29"/>
-        <location filename="components/mux4to1.cpp" line="+29"/>
-        <location filename="components/mux8to1.cpp" line="+29"/>
-        <source>transfer function high scaling factor</source>
-        <translation>жоғары масштаб коэффициентінің беріліс функциясы</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="components/andor4x3.cpp" line="+2"/>
-        <location filename="components/andor4x4.cpp" line="+2"/>
-        <location filename="components/binarytogrey4bit.cpp" line="+31"/>
-        <location filename="components/comp_1bit.cpp" line="+2"/>
-        <location filename="components/comp_2bit.cpp" line="+2"/>
-        <location filename="components/comp_4bit.cpp" line="+2"/>
-        <location filename="components/dmux2to4.cpp" line="+2"/>
-        <location filename="components/dmux3to8.cpp" line="+2"/>
-        <location filename="components/dmux4to16.cpp" line="+2"/>
-        <location filename="components/fa1b.cpp" line="+2"/>
-        <location filename="components/fa2b.cpp" line="+2"/>
-        <location filename="components/greytobinary4bit.cpp" line="+31"/>
-        <location filename="components/ha1b.cpp" line="+2"/>
-        <location filename="components/hpribin4bit.cpp" line="+31"/>
-        <location filename="components/mux2to1.cpp" line="+2"/>
-        <location filename="components/mux4to1.cpp" line="+2"/>
-        <location filename="components/mux8to1.cpp" line="+2"/>
-        <source>output delay</source>
-        <translation>шығысындағы кідіріс</translation>
-    </message>
-    <message>
-        <location filename="components/DLS_1ton.cpp" line="+21"/>
-        <location filename="components/DLS_nto1.cpp" line="+22"/>
-        <location filename="components/EKV26MOS.cpp" line="+154"/>
-        <location filename="components/MESFET.cpp" line="+69"/>
-        <location filename="components/andor4x2.cpp" line="+1"/>
-        <location filename="components/andor4x3.cpp" line="+1"/>
-        <location filename="components/andor4x4.cpp" line="+1"/>
-        <location filename="components/binarytogrey4bit.cpp" line="+1"/>
-        <location filename="components/comp_1bit.cpp" line="+1"/>
-        <location filename="components/comp_2bit.cpp" line="+1"/>
-        <location filename="components/comp_4bit.cpp" line="+1"/>
-        <location filename="components/dff_SR.cpp" line="+34"/>
-        <location filename="components/dmux2to4.cpp" line="+1"/>
-        <location filename="components/dmux3to8.cpp" line="+1"/>
-        <location filename="components/dmux4to16.cpp" line="+1"/>
-        <location filename="components/fa1b.cpp" line="+1"/>
-        <location filename="components/fa2b.cpp" line="+1"/>
-        <location filename="components/gatedDlatch.cpp" line="+34"/>
-        <location filename="components/greytobinary4bit.cpp" line="+1"/>
-        <location filename="components/ha1b.cpp" line="+1"/>
-        <location filename="components/hic0_full.cpp" line="+68"/>
-        <location line="+3"/>
-        <location line="+3"/>
-        <location line="+3"/>
-        <location line="+5"/>
-        <location line="+5"/>
-        <location filename="components/hic2_full.cpp" line="+58"/>
-        <location line="+62"/>
-        <location line="+66"/>
-        <location line="+3"/>
-        <location line="+3"/>
-        <location line="+3"/>
-        <location line="+5"/>
-        <location line="+19"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+82"/>
-        <location line="+3"/>
-        <location line="+3"/>
-        <location line="+3"/>
-        <location line="+5"/>
-        <location line="+5"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+82"/>
-        <location line="+3"/>
-        <location line="+3"/>
-        <location line="+3"/>
-        <location line="+5"/>
-        <location line="+5"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+86"/>
-        <location line="+3"/>
-        <location line="+3"/>
-        <location line="+3"/>
-        <location line="+5"/>
-        <location line="+5"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+58"/>
-        <location line="+62"/>
-        <location line="+66"/>
-        <location line="+3"/>
-        <location line="+3"/>
-        <location line="+3"/>
-        <location line="+5"/>
-        <location line="+19"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+58"/>
-        <location line="+62"/>
-        <location line="+66"/>
-        <location line="+3"/>
-        <location line="+3"/>
-        <location line="+3"/>
-        <location line="+5"/>
-        <location line="+19"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+64"/>
-        <location line="+62"/>
-        <location line="+66"/>
-        <location line="+3"/>
-        <location line="+3"/>
-        <location line="+3"/>
-        <location line="+5"/>
-        <location line="+19"/>
-        <location filename="components/hpribin4bit.cpp" line="+1"/>
-        <location filename="components/jkff_SR.cpp" line="+34"/>
-        <location filename="components/mux2to1.cpp" line="+1"/>
-        <location filename="components/mux4to1.cpp" line="+1"/>
-        <location filename="components/mux8to1.cpp" line="+1"/>
-        <location filename="components/nigbt.cpp" line="+28"/>
-        <location filename="components/photodiode.cpp" line="+48"/>
-        <location filename="components/phototransistor.cpp" line="+52"/>
-        <location line="+3"/>
-        <location filename="components/tff_SR.cpp" line="+34"/>
-        <source>s</source>
-        <translation>s</translation>
-    </message>
-    <message>
-        <location filename="components/andor4x2.cpp" line="+19"/>
-        <source>4x2 AndOr</source>
-        <translation>4х2 Және-Немесе</translation>
-    </message>
-    <message>
-        <location filename="components/andor4x3.cpp" line="-6"/>
-        <source>4x3 andor verilog device</source>
-        <translation>4х3 және-немесе логикалық құрылғысы</translation>
-    </message>
-    <message>
-        <location line="+25"/>
-        <source>4x3 AndOr</source>
-        <translation>4х3 Және-Немесе</translation>
-    </message>
-    <message>
-        <location filename="components/andor4x4.cpp" line="-6"/>
-        <source>4x4 andor verilog device</source>
-        <translation>4х4 және-немесе логикалық құрылғысы</translation>
-    </message>
-    <message>
-        <location line="+25"/>
-        <source>4x4 AndOr</source>
-        <translation>4х4 Және-Немесе</translation>
-    </message>
-    <message>
-        <location filename="components/attenuator.cpp" line="+23"/>
+        <location filename="../qucs/components/attenuator.cpp" line="+23"/>
         <source>attenuator</source>
-        <translation>аттеньюатор</translation>
+        <translation>المخفف</translation>
     </message>
     <message>
         <location line="+29"/>
         <source>power attenuation</source>
-        <translation>қуат аттеньюаторы</translation>
+        <translation>شدة التخفيف</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/coupler.cpp" line="+68"/>
-        <location filename="components/gyrator.cpp" line="+57"/>
-        <location filename="components/hybrid.cpp" line="+58"/>
-        <location filename="components/phaseshifter.cpp" line="+49"/>
+        <location filename="../qucs/components/coupler.cpp" line="+68"/>
+        <location filename="../qucs/components/gyrator.cpp" line="+57"/>
+        <location filename="../qucs/components/hybrid.cpp" line="+58"/>
+        <location filename="../qucs/components/phaseshifter.cpp" line="+49"/>
         <source>reference impedance</source>
-        <translation>толық тірек кедергісі</translation>
+        <translation>إشارة المعاوقة الكهربائية</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/bjtsub.cpp" line="+95"/>
-        <location filename="components/bondwire.cpp" line="+58"/>
-        <location filename="components/coaxialline.cpp" line="+59"/>
-        <location filename="components/ctline.cpp" line="+69"/>
-        <location filename="components/dc_sim.cpp" line="+48"/>
-        <location filename="components/diode.cpp" line="+60"/>
-        <location filename="components/etr_sim.cpp" line="+60"/>
-        <location filename="components/isolator.cpp" line="+2"/>
-        <location filename="components/jfet.cpp" line="+63"/>
-        <location filename="components/mosfet_sub.cpp" line="+118"/>
-        <location filename="components/mscoupled.cpp" line="+70"/>
-        <location filename="components/mslange.cpp" line="+62"/>
-        <location filename="components/msline.cpp" line="+56"/>
-        <location filename="components/msvia.cpp" line="+49"/>
-        <location filename="components/rectline.cpp" line="+64"/>
-        <location filename="components/relais.cpp" line="+68"/>
-        <location filename="components/resistor.cpp" line="+30"/>
-        <location filename="components/rlcg.cpp" line="+65"/>
-        <location filename="components/source_ac.cpp" line="+2"/>
-        <location filename="components/switch.cpp" line="+36"/>
-        <location filename="components/tline.cpp" line="+55"/>
-        <location filename="components/tline_4port.cpp" line="+59"/>
-        <location filename="components/tr_sim.cpp" line="+25"/>
-        <location filename="components/tunneldiode.cpp" line="+52"/>
-        <location filename="components/twistedpair.cpp" line="+75"/>
+        <location filename="../qucs/components/bjtsub.cpp" line="+95"/>
+        <location filename="../qucs/components/bondwire.cpp" line="+58"/>
+        <location filename="../qucs/components/coaxialline.cpp" line="+59"/>
+        <location filename="../qucs/components/ctline.cpp" line="+69"/>
+        <location filename="../qucs/components/dc_sim.cpp" line="+47"/>
+        <location filename="../qucs/components/diode.cpp" line="+60"/>
+        <location filename="../qucs/components/etr_sim.cpp" line="+59"/>
+        <location filename="../qucs/components/isolator.cpp" line="+2"/>
+        <location filename="../qucs/components/jfet.cpp" line="+63"/>
+        <location filename="../qucs/components/mosfet_sub.cpp" line="+118"/>
+        <location filename="../qucs/components/mscoupled.cpp" line="+70"/>
+        <location filename="../qucs/components/mslange.cpp" line="+62"/>
+        <location filename="../qucs/components/msline.cpp" line="+56"/>
+        <location filename="../qucs/components/msvia.cpp" line="+49"/>
+        <location filename="../qucs/components/rectline.cpp" line="+64"/>
+        <location filename="../qucs/components/relais.cpp" line="+68"/>
+        <location filename="../qucs/components/resistor.cpp" line="+29"/>
+        <location filename="../qucs/components/rlcg.cpp" line="+66"/>
+        <location filename="../qucs/components/source_ac.cpp" line="+2"/>
+        <location filename="../qucs/components/switch.cpp" line="+35"/>
+        <location filename="../qucs/components/tline.cpp" line="+55"/>
+        <location filename="../qucs/components/tline_4port.cpp" line="+59"/>
+        <location filename="../qucs/components/tr_sim.cpp" line="+25"/>
+        <location filename="../qucs/components/tunneldiode.cpp" line="+52"/>
+        <location filename="../qucs/components/twistedpair.cpp" line="+75"/>
         <source>simulation temperature in degree Celsius</source>
-        <translation>температуны Цельсий шкаласымен моделдеу</translation>
+        <translation>محاكاة درجات الحرارة في درجة مئوية تحت الصفر</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>Attenuator</source>
-        <translation>Аттеньюатор</translation>
+        <translation>المخفف</translation>
     </message>
     <message>
-        <location filename="components/biast.cpp" line="+23"/>
+        <location filename="../qucs/components/biast.cpp" line="+23"/>
         <source>bias t</source>
-        <translation>t ығысу</translation>
+        <translation>إنحياز  ت</translation>
     </message>
     <message>
         <location line="+33"/>
-        <location filename="components/dcfeed.cpp" line="+48"/>
+        <location filename="../qucs/components/dcfeed.cpp" line="+48"/>
         <source>for transient simulation: inductance in Henry</source>
-        <translation>өтпелі процестерді моделдеу үшін: индуктивтілікті генримен өлшеу</translation>
+        <translation>للمحاكات الزائلة: تأثير هنرى </translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/dcblock.cpp" line="+46"/>
+        <location filename="../qucs/components/dcblock.cpp" line="+46"/>
         <source>for transient simulation: capacitance in Farad</source>
-        <translation>өтпелі процестерді моделдеу үшін: сыйымдылықты фарадпен өлшеу</translation>
+        <translation>للمحاكات الزائلة: سعة المكثف فاراد </translation>
     </message>
     <message>
         <location line="+14"/>
         <source>Bias T</source>
-        <translation>Т ығысу</translation>
+        <translation>إنحياز  ت</translation>
     </message>
     <message>
-        <location filename="components/binarytogrey4bit.cpp" line="-6"/>
-        <source>4bit binary to grey converter verilog device</source>
-        <translation>4 битті бинарлық пішінді grey түрлендіргіш логикалық құрылғысы</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="components/component.cpp" line="-262"/>
-        <location filename="components/greytobinary4bit.cpp" line="-3"/>
-        <location filename="components/hpribin4bit.cpp" line="-3"/>
-        <location filename="components/logical_buf.cpp" line="+35"/>
-        <location filename="components/logical_inv.cpp" line="+35"/>
-        <source>transfer function scaling factor</source>
-        <translation>масштаб коэффициентінің беріліс функциясы</translation>
-    </message>
-    <message>
-        <location line="+22"/>
-        <source>4Bit Bin2Grey</source>
-        <translation>4 биттік Bin2Grey</translation>
-    </message>
-    <message>
-        <location filename="components/bjt.cpp" line="+25"/>
+        <location filename="../qucs/components/bjt.cpp" line="+25"/>
         <source>bipolar junction transistor</source>
-        <translation>биполярлы транзистор</translation>
+        <translation>القطب تقاطع ترانزستور </translation>
     </message>
     <message>
         <location line="+19"/>
-        <location filename="components/bjtsub.cpp" line="+50"/>
+        <location filename="../qucs/components/bjtsub.cpp" line="+50"/>
         <source>npn transistor</source>
-        <translation>npn транзистор</translation>
+        <translation>npn ترانزستور </translation>
     </message>
     <message>
         <location line="+10"/>
-        <location filename="components/bjtsub.cpp" line="+10"/>
+        <location filename="../qucs/components/bjtsub.cpp" line="+10"/>
         <source>pnp transistor</source>
-        <translation>pnp транзистор</translation>
+        <translation>pnp ترانزستور </translation>
     </message>
     <message>
-        <location filename="components/EKV26MOS.cpp" line="-135"/>
-        <location filename="components/bjtsub.cpp" line="-130"/>
-        <location filename="components/hic0_full.cpp" line="-68"/>
-        <location filename="components/hicumL0V1p2.cpp" line="-82"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="-82"/>
-        <location filename="components/hicumL0V1p3.cpp" line="-86"/>
-        <location filename="components/jfet.cpp" line="-36"/>
-        <location filename="components/mosfet_sub.cpp" line="-94"/>
+        <location filename="../qucs/components/EKV26MOS.cpp" line="+18"/>
+        <location filename="../qucs/components/bjtsub.cpp" line="-130"/>
+        <location filename="../qucs/components/hic0_full.cpp" line="+18"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+18"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+18"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+18"/>
+        <location filename="../qucs/components/jfet.cpp" line="-36"/>
+        <location filename="../qucs/components/mosfet_sub.cpp" line="-94"/>
         <source>polarity</source>
-        <translation>полярлану</translation>
+        <translation>قطبية </translation>
     </message>
     <message>
         <location line="+113"/>
-        <location filename="components/bjtsub.cpp" line="+2"/>
-        <location filename="components/diac.cpp" line="+53"/>
-        <location filename="components/diode.cpp" line="-34"/>
-        <location filename="components/thyristor.cpp" line="+53"/>
-        <location filename="components/triac.cpp" line="+57"/>
+        <location filename="../qucs/components/bjtsub.cpp" line="+2"/>
+        <location filename="../qucs/components/diac.cpp" line="+53"/>
+        <location filename="../qucs/components/diode.cpp" line="-34"/>
+        <location filename="../qucs/components/thyristor.cpp" line="+53"/>
+        <location filename="../qucs/components/triac.cpp" line="+57"/>
         <source>saturation current</source>
-        <translation>қаныққан ағын</translation>
+        <translation>التشبع  الحالي</translation>
     </message>
     <message>
-        <location filename="components/bjtsub.cpp" line="+2"/>
-        <location filename="components/phototransistor.cpp" line="-30"/>
+        <location filename="../qucs/components/bjtsub.cpp" line="+2"/>
+        <location filename="../qucs/components/phototransistor.cpp" line="+25"/>
         <source>forward emission coefficient</source>
-        <translation>эмиссияның өткізу коэффициенті</translation>
+        <translation>تقدم معامل إرتباط </translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/phototransistor.cpp" line="+2"/>
+        <location filename="../qucs/components/phototransistor.cpp" line="+2"/>
         <source>reverse emission coefficient</source>
-        <translation>кері эмиссияның коэффициенті</translation>
+        <translation>إنعكاس معامل إرتباط</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/phototransistor.cpp" line="+30"/>
+        <location filename="../qucs/components/phototransistor.cpp" line="+30"/>
         <source>high current corner for forward beta</source>
-        <translation>бета коэффициент берілісі үшін үлкен токтың бұрышы</translation>
+        <translation>الركن الحالي مرتفع  إلى الأمام &quot;بيتا&quot;</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/phototransistor.cpp" line="+3"/>
+        <location filename="../qucs/components/phototransistor.cpp" line="+3"/>
         <source>high current corner for reverse beta</source>
-        <translation>бета кері коэффициент үшін үлкен токтың бұрышы</translation>
+        <translation>الركن الحالي مرتفع  إلى العكس &quot;بيتا&quot;</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/phototransistor.cpp" line="-31"/>
+        <location filename="../qucs/components/phototransistor.cpp" line="-31"/>
         <source>forward early voltage</source>
-        <translation>тура қосқандағы бастапқы кернеу</translation>
+        <translation>تقدم أولي للتيار الكهربائي</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/phototransistor.cpp" line="+3"/>
+        <location filename="../qucs/components/phototransistor.cpp" line="+3"/>
         <source>reverse early voltage</source>
-        <translation>кері қосқандағы бастапқы кернеу</translation>
+        <translation>إنعكاس للتيار الكهربائي</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>base-emitter leakage saturation current</source>
-        <translation>база-эмиттер қаныққан тоқ ағынының шығыны</translation>
+        <translation>الأساس مصدر للانبعاثات تشبع التسرب الحالي</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>base-emitter leakage emission coefficient</source>
-        <translation>база-эмиттер эмиссиялық шығын коэффициенті</translation>
+        <translation>الأساس مصدر للانبعاثات تسرب الانبعاثات المعامل</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>base-collector leakage saturation current</source>
-        <translation>база-коллектор қаныққан тоқ ағынының шығыны</translation>
+        <translation>الأساس المجمع تشبع التسرب الحالي</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>base-collector leakage emission coefficient</source>
-        <translation>база-коллектор эмиссиялық шығын коэффициенті</translation>
+        <translation>الأساس المجمع تسرب الانبعاثات المعامل</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/phototransistor.cpp" line="-14"/>
+        <location filename="../qucs/components/phototransistor.cpp" line="-14"/>
         <source>forward beta</source>
-        <translation>тура бета</translation>
+        <translation>إلى الأمام بيتا</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/phototransistor.cpp" line="+2"/>
+        <location filename="../qucs/components/phototransistor.cpp" line="+2"/>
         <source>reverse beta</source>
-        <translation>кері бета</translation>
+        <translation>إلى الخلف بيتا</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>minimum base resistance for high currents</source>
-        <translation>үлкен токтар үшін база кедергі минимумы</translation>
+        <translation>قاعدة الحد الأدنى لمقاومة التيارات عالية</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>current for base resistance midpoint</source>
-        <translation>базаның орташа кедергісі үшін ток ағыны</translation>
+        <translation>الحالية للقاعدة المقاومة نقطة الوسط</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>collector ohmic resistance</source>
-        <translation>коллектор кедергісі оммен</translation>
+        <translation> مجمع المقاومةohmic </translation>
     </message>
     <message>
         <location line="+2"/>
         <source>emitter ohmic resistance</source>
-        <translation>эмиттер кедергісі оммен</translation>
+        <translation>مصدر للانبعاثات ohmic المقاومة</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>zero-bias base resistance (may be high-current dependent)</source>
-        <translation>базаның нөлдік ығысу кедергісі (үлкен токтарға тәуелді болуы мүмкін)</translation>
+        <translation> التحيز معدوم كقاعدة للمقاومة (قد تكون عالية الحالية التي تعتمد)</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/phototransistor.cpp" line="+20"/>
+        <location filename="../qucs/components/phototransistor.cpp" line="+20"/>
         <source>base-emitter zero-bias depletion capacitance</source>
-        <translation>нөлдік ығысу кезінде база-эмиттердің меншікті сыйымдылығы</translation>
+        <translation>باعث الأساس الصفري التحيز استنزاف مواسعة</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/phototransistor.cpp" line="-3"/>
+        <location filename="../qucs/components/phototransistor.cpp" line="-3"/>
         <source>base-emitter junction built-in potential</source>
-        <translation>база-эмиттер үшін потенциалдар айырымы</translation>
+        <translation>باعث تقاطع الأساس في البناء المحتملة</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/phototransistor.cpp" line="-2"/>
+        <location filename="../qucs/components/phototransistor.cpp" line="-2"/>
         <source>base-emitter junction exponential factor</source>
-        <translation>база-эмиттер үшін экспоненталы фактор</translation>
+        <translation>الأساس عامل باعث تقاطع الأسي</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/phototransistor.cpp" line="+13"/>
+        <location filename="../qucs/components/phototransistor.cpp" line="+13"/>
         <source>base-collector zero-bias depletion capacitance</source>
-        <translation>нөлдік ығысу кезінде база-коллектордың меншікті сыйымдылығы</translation>
+        <translation>قاعدة الجمع بين الصفر التحيز استنزاف مواسعة</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/phototransistor.cpp" line="-3"/>
+        <location filename="../qucs/components/phototransistor.cpp" line="-3"/>
         <source>base-collector junction built-in potential</source>
-        <translation>база-коллектор үшін потенциалдар айырымы</translation>
+        <translation>قاعدة الجمع بين مفرق مدمجة  المحتملة</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/phototransistor.cpp" line="-2"/>
+        <location filename="../qucs/components/phototransistor.cpp" line="-2"/>
         <source>base-collector junction exponential factor</source>
-        <translation>база-коллектор үшін экспоненталы фактор</translation>
+        <translation>قاعدة الجمع بين مفرق عامل الأسي </translation>
     </message>
     <message>
         <location line="+2"/>
         <source>fraction of Cjc that goes to internal base pin</source>
-        <translation>базаның ішкі шығысына келетін Cjc үлесі</translation>
+        <translation>جزء من س ج س الداخلي الذي يذهب الى قاعدة دبوس </translation>
     </message>
     <message>
         <location line="+2"/>
         <source>zero-bias collector-substrate capacitance</source>
-        <translation>нөлдік ығысу кезінде коллектордағы салымшасы бар сыйымдылық</translation>
+        <translation>التحيز صفر بين الجمع  الركازة مواسعة</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>substrate junction built-in potential</source>
-        <translation>салымшасы бар өсімшенің потенциалдар айырмасы</translation>
+        <translation>الركازة تقاطع المدمج في المحتملة</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>substrate junction exponential factor</source>
-        <translation>салымшасы бар өсімшенің экспоненталық факторы</translation>
+        <translation>الركازة عامل مفرق الأسي</translation>
     </message>
     <message>
-        <location filename="components/EKV26MOS.cpp" line="+19"/>
-        <location filename="components/MESFET.cpp" line="-3"/>
-        <location filename="components/bjtsub.cpp" line="+2"/>
-        <location filename="components/diode.cpp" line="+10"/>
-        <location filename="components/photodiode.cpp" line="-3"/>
+        <location filename="../qucs/components/EKV26MOS.cpp" line="+19"/>
+        <location filename="../qucs/components/MESFET.cpp" line="+66"/>
+        <location filename="../qucs/components/bjtsub.cpp" line="+2"/>
+        <location filename="../qucs/components/diode.cpp" line="+10"/>
+        <location filename="../qucs/components/photodiode.cpp" line="+45"/>
         <source>forward-bias depletion capacitance coefficient</source>
-        <translation>тура ығысудың меншікті сыйымдылық коэффициенті</translation>
+        <translation>إلى الأمام التحيز معامل استنفاد مواسعة</translation>
     </message>
     <message>
-        <location filename="components/bjtsub.cpp" line="+2"/>
-        <location filename="components/phototransistor.cpp" line="+11"/>
+        <location filename="../qucs/components/bjtsub.cpp" line="+2"/>
+        <location filename="../qucs/components/phototransistor.cpp" line="+11"/>
         <source>ideal forward transit time</source>
-        <translation>тура өтудің идеалды уақыты</translation>
+        <translation>وقت عبور مثالية للمضي قدما</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>coefficient of bias-dependence for Tf</source>
-        <translation>Tf диоды үшін ығысуға тәуелді коэффициенті</translation>
+        <translation>معامل التحيز الاعتماد لTf</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>voltage dependence of Tf on base-collector voltage</source>
-        <translation>Tf база-коллектор кернеуінің кернеулік тәуелділігі</translation>
+        <translation>Tf من الجهد والاعتماد على قاعدة الجمع بين الجهد</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>high-current effect on Tf</source>
-        <translation>Tf диоды үшін улкен ток ағынының әсері</translation>
+        <translation>العالية الحالية تأثير على Tf</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/phototransistor.cpp" line="-3"/>
+        <location filename="../qucs/components/phototransistor.cpp" line="-3"/>
         <source>ideal reverse transit time</source>
-        <translation>кері өтпелі идеалды уақыт</translation>
+        <translation>عكس المثل وقت العبور</translation>
     </message>
     <message>
-        <location filename="components/EKV26MOS.cpp" line="-34"/>
-        <location filename="components/MESFET.cpp" line="+78"/>
-        <location filename="components/bjtsub.cpp" line="+4"/>
-        <location filename="components/diode.cpp" line="+14"/>
-        <location filename="components/hic0_full.cpp" line="+157"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+171"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+171"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+175"/>
-        <location filename="components/jfet.cpp" line="+30"/>
-        <location filename="components/mosfet_sub.cpp" line="+88"/>
-        <location filename="components/photodiode.cpp" line="+24"/>
-        <location filename="components/phototransistor.cpp" line="+21"/>
+        <location filename="../qucs/components/EKV26MOS.cpp" line="-34"/>
+        <location filename="../qucs/components/MESFET.cpp" line="+78"/>
+        <location filename="../qucs/components/bjtsub.cpp" line="+4"/>
+        <location filename="../qucs/components/diode.cpp" line="+14"/>
+        <location filename="../qucs/components/hic0_full.cpp" line="+157"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+171"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+171"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+175"/>
+        <location filename="../qucs/components/jfet.cpp" line="+30"/>
+        <location filename="../qucs/components/mosfet_sub.cpp" line="+88"/>
+        <location filename="../qucs/components/photodiode.cpp" line="+24"/>
+        <location filename="../qucs/components/phototransistor.cpp" line="+21"/>
         <location line="+2"/>
         <source>flicker noise coefficient</source>
-        <translation>шудың жанып-өшу коэфиценті</translation>
+        <translation>خفق  معامل التشويش</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/MESFET.cpp" line="-2"/>
-        <location filename="components/bjtsub.cpp" line="+2"/>
-        <location filename="components/diode.cpp" line="+2"/>
-        <location filename="components/jfet.cpp" line="+2"/>
-        <location filename="components/mosfet_sub.cpp" line="+2"/>
-        <location filename="components/photodiode.cpp" line="+2"/>
-        <location filename="components/phototransistor.cpp" line="+2"/>
+        <location filename="../qucs/components/MESFET.cpp" line="-2"/>
+        <location filename="../qucs/components/bjtsub.cpp" line="+2"/>
+        <location filename="../qucs/components/diode.cpp" line="+2"/>
+        <location filename="../qucs/components/jfet.cpp" line="+2"/>
+        <location filename="../qucs/components/mosfet_sub.cpp" line="+2"/>
+        <location filename="../qucs/components/photodiode.cpp" line="+2"/>
+        <location filename="../qucs/components/phototransistor.cpp" line="+2"/>
         <source>flicker noise exponent</source>
-        <translation>шудың жанып-өшу экспонентасы</translation>
+        <translation>خفق  معامل الأسي</translation>
     </message>
     <message>
-        <location filename="components/bjtsub.cpp" line="+2"/>
-        <location filename="components/diode.cpp" line="+2"/>
-        <location filename="components/jfet.cpp" line="+2"/>
-        <location filename="components/mosfet_sub.cpp" line="+2"/>
-        <location filename="components/photodiode.cpp" line="+2"/>
+        <location filename="../qucs/components/bjtsub.cpp" line="+2"/>
+        <location filename="../qucs/components/diode.cpp" line="+2"/>
+        <location filename="../qucs/components/jfet.cpp" line="+2"/>
+        <location filename="../qucs/components/mosfet_sub.cpp" line="+2"/>
+        <location filename="../qucs/components/photodiode.cpp" line="+2"/>
         <source>flicker noise frequency exponent</source>
-        <translation>шудың жанып-өшу жиілігінің экспонентасы</translation>
+        <translation>خفق  معامل التردد الأسي</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>burst noise coefficient</source>
-        <translation>бөлшектік шу коэффициенті</translation>
+        <translation>تفريق  معامل التشويش</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>burst noise exponent</source>
-        <translation>шудың жарылыс экспонентасы</translation>
+        <translation>تفريق  تشويش الأسي</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>burst noise corner frequency in Hertz</source>
-        <translation>бөлшектік шу үшін шекаралық жиілік Герцпен есептегенде</translation>
+        <translation>تفريق  تشويش التردد في الزاوية هيرتز</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>excess phase in degrees</source>
-        <translation>градуспен өлшегенде фаза ұлғаюы</translation>
+        <translation>المرحلة التي تتجاوز درجات</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>temperature exponent for forward- and reverse beta</source>
-        <translation>тура және кері бета үшін температура экспонентасы</translation>
+        <translation>الأس لدرجة الحرارة الى الامام وعكس بيتا</translation>
     </message>
     <message>
-        <location filename="components/EKV26MOS.cpp" line="+37"/>
-        <location filename="components/bjtsub.cpp" line="+2"/>
-        <location filename="components/diode.cpp" line="+8"/>
-        <location filename="components/jfet.cpp" line="+4"/>
-        <location filename="components/photodiode.cpp" line="-23"/>
+        <location filename="../qucs/components/EKV26MOS.cpp" line="+37"/>
+        <location filename="../qucs/components/bjtsub.cpp" line="+2"/>
+        <location filename="../qucs/components/diode.cpp" line="+8"/>
+        <location filename="../qucs/components/jfet.cpp" line="+4"/>
+        <location filename="../qucs/components/photodiode.cpp" line="-23"/>
         <source>saturation current temperature exponent</source>
-        <translation>қаныққан ток ағынының температуралық экспонентасы</translation>
+        <translation>التشبع درجة الحرارة الحالية الأس</translation>
     </message>
     <message>
-        <location filename="components/bjtsub.cpp" line="+2"/>
-        <location filename="components/diode.cpp" line="+2"/>
+        <location filename="../qucs/components/bjtsub.cpp" line="+2"/>
+        <location filename="../qucs/components/diode.cpp" line="+2"/>
         <source>energy bandgap in eV</source>
-        <translation>eV шектелген аймақтың ені</translation>
+        <translation>فرق في الطاقة eV</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/diode.cpp" line="+14"/>
-        <location filename="components/jfet.cpp" line="+6"/>
-        <location filename="components/resistor.cpp" line="+6"/>
+        <location filename="../qucs/components/diode.cpp" line="+14"/>
+        <location filename="../qucs/components/jfet.cpp" line="+6"/>
+        <location filename="../qucs/components/resistor.cpp" line="+6"/>
         <source>temperature at which parameters were extracted</source>
-        <translation>шығарылған параметрлердің температурасы</translation>
+        <translation>درجة الحرارة التي قد انتزعت البارامترات</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>default area for bipolar transistor</source>
-        <translation>биполяр транзистор үшін үндестік бойынша аймақ</translation>
+        <translation>الافتراضي لمنطقة القطبين الترانزستور</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>bipolar junction transistor with substrate</source>
-        <translation>салымшасы және биполяр өтпелі бар транзистор</translation>
+        <translation>الترانزستور الثنائي القطب تقاطع مع الركازة</translation>
     </message>
     <message>
-        <location filename="components/bondwire.cpp" line="-35"/>
+        <location filename="../qucs/components/bondwire.cpp" line="-35"/>
         <source>bond wire</source>
-        <translation>қосылған сым</translation>
+        <translation>وصلة السلك</translation>
     </message>
     <message>
         <location line="+21"/>
         <source>length of the wire</source>
-        <translation>сымның ұзындығы</translation>
+        <translation>طول السلك</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>diameter of the wire</source>
-        <translation>сымның диаметрі</translation>
+        <translation>قطر السلك</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>height above ground plane</source>
-        <translation>жермен салыстырғандағы биіктігі</translation>
+        <translation>ارتفاع  فوق سطح الأرض</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>specific resistance of the metal</source>
-        <translation>металдың шектік кедергісі</translation>
+        <translation>المقاومة المحددة للمعدن</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>relative permeability of the metal</source>
-        <translation>металдың өткізгіштік қасиеті</translation>
+        <translation>النفاذية النسبية للمعدن</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>bond wire model</source>
-        <translation>қосылған сым моделі</translation>
+        <translation>نموذج وصلة السلك</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/mscorner.cpp" line="+46"/>
-        <location filename="components/mscross.cpp" line="+29"/>
-        <location filename="components/msmbend.cpp" line="+47"/>
-        <location filename="components/msstep.cpp" line="+50"/>
-        <location filename="components/mstee.cpp" line="+35"/>
-        <location filename="components/msvia.cpp" line="-4"/>
+        <location filename="../qucs/components/mscorner.cpp" line="+46"/>
+        <location filename="../qucs/components/mscross.cpp" line="+29"/>
+        <location filename="../qucs/components/msmbend.cpp" line="+47"/>
+        <location filename="../qucs/components/msstep.cpp" line="+50"/>
+        <location filename="../qucs/components/mstee.cpp" line="+36"/>
+        <location filename="../qucs/components/msvia.cpp" line="-4"/>
         <source>substrate</source>
-        <translation>салымша</translation>
+        <translation>مادة </translation>
     </message>
     <message>
         <location line="+12"/>
         <source>Bond Wire</source>
-        <translation>Қосылған Сым</translation>
+        <translation>وصلة السلك</translation>
     </message>
     <message>
-        <location filename="components/capacitor.cpp" line="+23"/>
+        <location filename="../qucs/components/capacitor.cpp" line="+23"/>
         <source>capacitor</source>
-        <translation>конденсатор</translation>
+        <translation>مكثف </translation>
     </message>
     <message>
         <location line="+3"/>
         <source>capacitance in Farad</source>
-        <translation>сыйымдылық Фарадпен өлшегенде</translation>
+        <translation>مواسعة في الفاراد</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>initial voltage for transient simulation</source>
-        <translation>өтпелі процесті моделдеу үшін бастапқы кедергі</translation>
+        <translation>لجهد الأولي لمحاكاة عابرة</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/component.cpp" line="+4"/>
-        <location filename="components/diode.cpp" line="+4"/>
-        <location filename="components/logical_buf.cpp" line="+4"/>
-        <location filename="components/logical_inv.cpp" line="+4"/>
-        <location filename="components/resistor.cpp" line="+4"/>
+        <location filename="../qucs/components/component.cpp" line="-268"/>
+        <location filename="../qucs/components/diode.cpp" line="+4"/>
+        <location filename="../qucs/components/logical_buf.cpp" line="+38"/>
+        <location filename="../qucs/components/logical_inv.cpp" line="+38"/>
+        <location filename="../qucs/components/resistor.cpp" line="+4"/>
         <source>schematic symbol</source>
-        <translation>сұлбадағы белгі</translation>
+        <translation>الرمز التخطيطي</translation>
     </message>
     <message>
         <location line="+16"/>
         <source>Capacitor</source>
-        <translation>Конденсатор</translation>
+        <translation>مكثف </translation>
     </message>
     <message>
-        <location filename="components/cccs.cpp" line="+23"/>
+        <location filename="../qucs/components/cccs.cpp" line="+23"/>
         <source>current controlled current source</source>
-        <translation>ток ағынын бақылайтын ток көзінің қорегі</translation>
+        <translation> تسيطر  المنبع الحالي</translation>
     </message>
     <message>
         <location line="+38"/>
-        <location filename="components/ccvs.cpp" line="+62"/>
-        <location filename="components/vcvs.cpp" line="+64"/>
+        <location filename="../qucs/components/ccvs.cpp" line="+62"/>
+        <location filename="../qucs/components/vcvs.cpp" line="+64"/>
         <source>forward transfer factor</source>
-        <translation>тура өткізу факторы</translation>
+        <translation>نقل العامل الى الامام</translation>
     </message>
     <message>
         <location line="+1"/>
-        <location filename="components/ccvs.cpp" line="+1"/>
-        <location filename="components/component.cpp" line="-6"/>
-        <location filename="components/d_flipflop.cpp" line="+27"/>
-        <location filename="components/ifile.cpp" line="+60"/>
-        <location filename="components/jk_flipflop.cpp" line="+29"/>
-        <location filename="components/logical_buf.cpp" line="-6"/>
-        <location filename="components/logical_inv.cpp" line="-6"/>
-        <location filename="components/rs_flipflop.cpp" line="+27"/>
-        <location filename="components/vccs.cpp" line="+64"/>
-        <location filename="components/vcvs.cpp" line="+1"/>
-        <location filename="components/vfile.cpp" line="+1"/>
+        <location filename="../qucs/components/ccvs.cpp" line="+1"/>
+        <location filename="../qucs/components/component.cpp" line="-6"/>
+        <location filename="../qucs/components/d_flipflop.cpp" line="+26"/>
+        <location filename="../qucs/components/ifile.cpp" line="+59"/>
+        <location filename="../qucs/components/jk_flipflop.cpp" line="+28"/>
+        <location filename="../qucs/components/logical_buf.cpp" line="-6"/>
+        <location filename="../qucs/components/logical_inv.cpp" line="-6"/>
+        <location filename="../qucs/components/rs_flipflop.cpp" line="+26"/>
+        <location filename="../qucs/components/vccs.cpp" line="+64"/>
+        <location filename="../qucs/components/vcvs.cpp" line="+1"/>
+        <location filename="../qucs/components/vfile.cpp" line="+1"/>
         <source>delay time</source>
-        <translation>кідіріс уақыты</translation>
+        <translation>تأخر الوقت</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>Current Controlled Current Source</source>
-        <translation>Ток ағынын бақылайтын ток көзінің қорегі</translation>
+        <translation> تسيطر  المنبع الحالي</translation>
     </message>
     <message>
-        <location filename="components/ccvs.cpp" line="-40"/>
+        <location filename="../qucs/components/ccvs.cpp" line="-40"/>
         <source>current controlled voltage source</source>
-        <translation>ток ағынын бақылайтын кернеу көзінің қорегі</translation>
+        <translation>تسيطر  منبع الفولتاج</translation>
     </message>
     <message>
         <location line="+54"/>
         <source>Current Controlled Voltage Source</source>
-        <translation>Ток ағынын бақылайтын кернеу көзінің қорегі</translation>
+        <translation>تسيطر  منبع الفولتاج</translation>
     </message>
     <message>
-        <location filename="components/circulator.cpp" line="+24"/>
+        <location filename="../qucs/components/circulator.cpp" line="+23"/>
         <source>circulator</source>
-        <translation>циркулятор</translation>
+        <translation>شكل دائري</translation>
     </message>
     <message>
         <location line="+26"/>
         <source>reference impedance of port 1</source>
-        <translation>1 порттың толық тірек кедергісі</translation>
+        <translation>إشارة المقاومة لمنفذ 1</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>reference impedance of port 2</source>
-        <translation>2 порттың толық тірек кедергісі</translation>
+        <translation>إشارة المقاومة لمنفذ 2</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>reference impedance of port 3</source>
-        <translation>3 порттың толық тірек кедергісі</translation>
+        <translation>إشارة المقاومة لمنفذ 3</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>Circulator</source>
-        <translation>Циркулятор</translation>
+        <translation>شكل دائري</translation>
     </message>
     <message>
-        <location filename="components/coaxialline.cpp" line="-36"/>
+        <location filename="../qucs/components/coaxialline.cpp" line="-36"/>
         <source>coaxial transmission line</source>
-        <translation>коаксальды өткізу арнасы</translation>
+        <translation>خط الإرسال كواكسيال</translation>
     </message>
     <message>
         <location line="+22"/>
-        <location filename="components/rectline.cpp" line="-8"/>
+        <location filename="../qucs/components/rectline.cpp" line="-8"/>
         <source>relative permittivity of dielectric</source>
-        <translation>диэлектриктің салыстырмалы өтімділігі</translation>
+        <translation>النفاذية النسبية للعازل كهربائي </translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/rectline.cpp" line="+6"/>
-        <location filename="components/twistedpair.cpp" line="-4"/>
+        <location filename="../qucs/components/rectline.cpp" line="+6"/>
+        <location filename="../qucs/components/twistedpair.cpp" line="-4"/>
         <source>specific resistance of conductor</source>
-        <translation>өткізгіштің арнайы кедергісі</translation>
+        <translation>المقاومة المحددة للموصل </translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/rectline.cpp" line="-4"/>
-        <location filename="components/twistedpair.cpp" line="-2"/>
+        <location filename="../qucs/components/rectline.cpp" line="-4"/>
+        <location filename="../qucs/components/twistedpair.cpp" line="-2"/>
         <source>relative permeability of conductor</source>
-        <translation>конденсатордың өткізгіштік қасиеті</translation>
+        <translation>النفاذية النسبية للموصل </translation>
     </message>
     <message>
         <location line="+2"/>
         <source>inner diameter of shield</source>
-        <translation>экранның ішкі диаметрі</translation>
+        <translation>القطر الداخلي للواقي </translation>
     </message>
     <message>
         <location line="+2"/>
         <source>diameter of inner conductor</source>
-        <translation>ішкі өткізгіштің диаметрі</translation>
+        <translation>  قطر الموصل الداخلي</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/rectline.cpp" line="-4"/>
+        <location filename="../qucs/components/rectline.cpp" line="-4"/>
         <source>mechanical length of the line</source>
-        <translation>арнаның механикалық ұзындығы</translation>
+        <translation>الطول المكانيكي للخط</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/rectline.cpp" line="+6"/>
-        <location filename="components/substrate.cpp" line="+65"/>
-        <location filename="components/twistedpair.cpp" line="+4"/>
+        <location filename="../qucs/components/rectline.cpp" line="+6"/>
+        <location filename="../qucs/components/substrate.cpp" line="+65"/>
+        <location filename="../qucs/components/twistedpair.cpp" line="+4"/>
         <source>loss tangent</source>
-        <translation>диэлектрлік шығындардың тангенстік бұрышы</translation>
+        <translation>فقدان الظل</translation>
     </message>
     <message>
         <location line="+16"/>
         <source>Coaxial Line</source>
-        <translation>Коаксальды сызық</translation>
+        <translation>متحد المحور الخط</translation>
     </message>
     <message>
-        <location filename="components/comp_1bit.cpp" line="-6"/>
-        <source>1bit comparator verilog device</source>
-        <translation>1-битті логикалық компаратор құрылғысы</translation>
-    </message>
-    <message>
-        <location line="+25"/>
-        <source>1Bit Comparator</source>
-        <translation>1 Битті компаратор</translation>
-    </message>
-    <message>
-        <location filename="components/comp_2bit.cpp" line="-6"/>
-        <source>2bit comparator verilog device</source>
-        <translation>2-битті логикалық компаратор құрылғысы</translation>
-    </message>
-    <message>
-        <location line="+25"/>
-        <source>2Bit Comparator</source>
-        <translation>2 Битті компаратор</translation>
-    </message>
-    <message>
-        <location filename="components/comp_4bit.cpp" line="-6"/>
-        <source>4bit comparator verilog device</source>
-        <translation>4 битті логикалық компаратор құрылғысы</translation>
-    </message>
-    <message>
-        <location line="+25"/>
-        <source>4Bit Comparator</source>
-        <translation>4 Битті компаратор</translation>
-    </message>
-    <message>
-        <location filename="components/component.cpp" line="-4"/>
+        <location filename="../qucs/components/component.cpp" line="-4"/>
         <source>number of input ports</source>
-        <translation>кіріс порттарының саны</translation>
+        <translation>عدد منافذ الدخول</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/digi_source.cpp" line="+59"/>
-        <location filename="components/logical_buf.cpp" line="-2"/>
-        <location filename="components/logical_inv.cpp" line="-2"/>
+        <location filename="../qucs/components/digi_source.cpp" line="+58"/>
+        <location filename="../qucs/components/logical_buf.cpp" line="-2"/>
+        <location filename="../qucs/components/logical_inv.cpp" line="-2"/>
         <source>voltage of high level</source>
-        <translation>жоғары деңгейдегі кернеу</translation>
+        <translation>المستوى العالي للفولتاج</translation>
     </message>
     <message>
-        <location line="+239"/>
+        <location line="+249"/>
         <source>Format Error:
 Wrong line start!</source>
-        <translation>Пішімде қате бар: Жолды бастау дұрыс емес!</translation>
+        <translation>خطأ في الشكل :
+خطأ في خط البداية&apos; !</translation>
     </message>
     <message>
         <location line="+20"/>
@@ -4085,761 +3966,503 @@ Do you make use of loadable components?</source>
     <message>
         <source>Format Error:
 Unknown component!</source>
-        <translation type="obsolete">Пішімде қате бар:
-Белгісіз компонент!</translation>
+        <translation type="obsolete">خطأ في الشكل :
+عنصر غير معروف !</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Format Error:
 Wrong &apos;component&apos; line format!</source>
-        <translation>Пішімде қате бар:
-&apos;component&apos; жолындағы пішім дұрыс емес!</translation>
+        <translation>خطأ في الشكل :
+خطأ في العنصر شكل الخط!</translation>
     </message>
     <message>
-        <location filename="components/coplanar.cpp" line="+23"/>
+        <location filename="../qucs/components/coplanar.cpp" line="+23"/>
         <source>coplanar line</source>
-        <translation>компланар сызық</translation>
+        <translation>خط متحد المستوى</translation>
     </message>
     <message>
         <location line="+37"/>
-        <location filename="components/cpwgap.cpp" line="+64"/>
-        <location filename="components/cpwopen.cpp" line="+63"/>
-        <location filename="components/cpwshort.cpp" line="+62"/>
-        <location filename="components/cpwstep.cpp" line="+66"/>
-        <location filename="components/mscoupled.cpp" line="-13"/>
-        <location filename="components/msgap.cpp" line="+51"/>
-        <location filename="components/mslange.cpp" line="-13"/>
-        <location filename="components/msline.cpp" line="-12"/>
-        <location filename="components/msopen.cpp" line="+42"/>
-        <location filename="components/msrstub.cpp" line="+42"/>
+        <location filename="../qucs/components/cpwgap.cpp" line="+64"/>
+        <location filename="../qucs/components/cpwopen.cpp" line="+63"/>
+        <location filename="../qucs/components/cpwshort.cpp" line="+62"/>
+        <location filename="../qucs/components/cpwstep.cpp" line="+66"/>
+        <location filename="../qucs/components/mscoupled.cpp" line="-13"/>
+        <location filename="../qucs/components/msgap.cpp" line="+51"/>
+        <location filename="../qucs/components/mslange.cpp" line="-13"/>
+        <location filename="../qucs/components/msline.cpp" line="-12"/>
+        <location filename="../qucs/components/msopen.cpp" line="+42"/>
+        <location filename="../qucs/components/msrstub.cpp" line="+42"/>
         <source>name of substrate definition</source>
-        <translation>әр түрлі салымшалардың аттары</translation>
+        <translation>تعريف اسم  المادة</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/cpwgap.cpp" line="+2"/>
-        <location filename="components/cpwopen.cpp" line="+2"/>
-        <location filename="components/cpwshort.cpp" line="+2"/>
-        <location filename="components/mscoupled.cpp" line="+2"/>
-        <location filename="components/mslange.cpp" line="+2"/>
-        <location filename="components/msline.cpp" line="+2"/>
-        <location filename="components/msopen.cpp" line="+2"/>
+        <location filename="../qucs/components/cpwgap.cpp" line="+2"/>
+        <location filename="../qucs/components/cpwopen.cpp" line="+2"/>
+        <location filename="../qucs/components/cpwshort.cpp" line="+2"/>
+        <location filename="../qucs/components/mscoupled.cpp" line="+2"/>
+        <location filename="../qucs/components/mslange.cpp" line="+2"/>
+        <location filename="../qucs/components/msline.cpp" line="+2"/>
+        <location filename="../qucs/components/msopen.cpp" line="+2"/>
         <source>width of the line</source>
-        <translation>сызықтың ені</translation>
+        <translation>عرض الخط</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/cpwgap.cpp" line="+2"/>
-        <location filename="components/cpwopen.cpp" line="+2"/>
-        <location filename="components/cpwshort.cpp" line="+2"/>
+        <location filename="../qucs/components/cpwgap.cpp" line="+2"/>
+        <location filename="../qucs/components/cpwopen.cpp" line="+2"/>
+        <location filename="../qucs/components/cpwshort.cpp" line="+2"/>
         <source>width of a gap</source>
-        <translation>интервал ені</translation>
+        <translation>عرض الفجوة</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/mscoupled.cpp" line="+2"/>
-        <location filename="components/mslange.cpp" line="+2"/>
-        <location filename="components/msline.cpp" line="+2"/>
+        <location filename="../qucs/components/mscoupled.cpp" line="+2"/>
+        <location filename="../qucs/components/mslange.cpp" line="+2"/>
+        <location filename="../qucs/components/msline.cpp" line="+2"/>
         <source>length of the line</source>
-        <translation>сызықтың ені</translation>
+        <translation>طول الخط</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/cpwopen.cpp" line="+4"/>
-        <location filename="components/cpwshort.cpp" line="+2"/>
-        <location filename="components/cpwstep.cpp" line="+8"/>
+        <location filename="../qucs/components/cpwopen.cpp" line="+4"/>
+        <location filename="../qucs/components/cpwshort.cpp" line="+2"/>
+        <location filename="../qucs/components/cpwstep.cpp" line="+8"/>
         <source>material at the backside of the substrate</source>
-        <translation>салымшаның артындағы материалы</translation>
+        <translation>لوازم في تأخر المادة</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>use approximation instead of precise equation</source>
-        <translation>нуктелік басқару орнына жақындату әдісін қолдану</translation>
+        <translation>استخدام التقريب بدلا من المعادلة الدقيقة</translation>
     </message>
     <message>
         <location line="+15"/>
         <source>Coplanar Line</source>
-        <translation>Компланар сызық</translation>
+        <translation>خط متحد المستوى</translation>
     </message>
     <message>
-        <location filename="components/coupler.cpp" line="-45"/>
+        <location filename="../qucs/components/coupler.cpp" line="-45"/>
         <source>ideal coupler</source>
-        <translation>әмбебап байланыс құрылғысы</translation>
+        <translation>الرابط المثالي</translation>
     </message>
     <message>
         <location line="+41"/>
         <source>coupling factor</source>
-        <translation>байланыс коэффициенті</translation>
+        <translation>عامل الربط</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>phase shift of coupling path in degree</source>
-        <translation>байланыс жолының фазалық ығысуы градуспен өлшегенде</translation>
+        <translation>مرحلة تحول في مسار درجة اقتران</translation>
     </message>
     <message>
         <location line="+16"/>
         <source>Coupler</source>
-        <translation>Байланыс құрылғысы</translation>
+        <translation>الرابط</translation>
     </message>
     <message>
-        <location filename="components/cpwgap.cpp" line="-45"/>
+        <location filename="../qucs/components/cpwgap.cpp" line="-45"/>
         <source>coplanar gap</source>
-        <translation>компланар сымдағы үзіліс</translation>
+        <translation>متحد المستوى الفجوة</translation>
     </message>
     <message>
         <location line="+47"/>
         <source>width of gap between the two lines</source>
-        <translation>екі арна арасындағы үзіліс ені</translation>
+        <translation>عرض الفجوة بين خطين</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>Coplanar Gap</source>
-        <translation>Компланар сымдағы үзіліс</translation>
+        <translation>متحد المستوى الفجوة</translation>
     </message>
     <message>
-        <location filename="components/cpwopen.cpp" line="-48"/>
+        <location filename="../qucs/components/cpwopen.cpp" line="-48"/>
         <source>coplanar open</source>
-        <translation>тұйықталмаған компланарлы арна</translation>
+        <translation>متحد المستوى المفتوح</translation>
     </message>
     <message>
         <location line="+46"/>
         <source>width of gap at end of line</source>
-        <translation>арнаның соңындағы үзіліс ені</translation>
+        <translation>عرض الفجوةفي نهاية الخط</translation>
     </message>
     <message>
         <location line="+17"/>
         <source>Coplanar Open</source>
-        <translation>Тұйықталмаған компланарлы арна</translation>
+        <translation>متحد المستوى المفتوح</translation>
     </message>
     <message>
-        <location filename="components/cpwshort.cpp" line="-45"/>
+        <location filename="../qucs/components/cpwshort.cpp" line="-45"/>
         <source>coplanar short</source>
-        <translation>тұйықталған компланарлы арна</translation>
+        <translation> متحد المستوى صغير</translation>
     </message>
     <message>
         <location line="+60"/>
         <source>Coplanar Short</source>
-        <translation>Тұйықталған компланарлы арна</translation>
+        <translation>متحد المستوى صغير</translation>
     </message>
     <message>
-        <location filename="components/cpwstep.cpp" line="-51"/>
+        <location filename="../qucs/components/cpwstep.cpp" line="-51"/>
         <source>coplanar step</source>
-        <translation>компланарлы арна енінің ауытқуы</translation>
+        <translation>خطوة متحد المستوى </translation>
     </message>
     <message>
         <location line="+45"/>
-        <location filename="components/mscross.cpp" line="+2"/>
-        <location filename="components/mstee.cpp" line="+2"/>
+        <location filename="../qucs/components/mscross.cpp" line="+2"/>
+        <location filename="../qucs/components/mstee.cpp" line="+2"/>
         <source>width of line 1</source>
-        <translation>1 арнаның ені</translation>
+        <translation>عرض الخط 1</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/mscross.cpp" line="+2"/>
-        <location filename="components/mstee.cpp" line="+2"/>
+        <location filename="../qucs/components/mscross.cpp" line="+2"/>
+        <location filename="../qucs/components/mstee.cpp" line="+2"/>
         <source>width of line 2</source>
-        <translation>2 арнаның ені</translation>
+        <translation>عرض الخط 2</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>distance between ground planes</source>
-        <translation>жер қабаты арасындағы қашықтық</translation>
+        <translation>المسافة بين سطح المستويات</translation>
     </message>
     <message>
         <location line="+17"/>
         <source>Coplanar Step</source>
-        <translation>Компланарлы арна енінің ауытқуы</translation>
+        <translation>خطوة متحد المستوى </translation>
     </message>
     <message>
-        <location filename="components/dcblock.cpp" line="-24"/>
+        <location filename="../qucs/components/dcblock.cpp" line="-24"/>
         <source>dc block</source>
-        <translation>тұрақты тоқтағы бөгет</translation>
+        <translation>فك</translation>
     </message>
     <message>
         <location line="+38"/>
         <source>dc Block</source>
-        <translation>Тұрақты тоқтағы жол айырымы</translation>
+        <translation>فك</translation>
     </message>
     <message>
-        <location filename="components/dcfeed.cpp" line="-25"/>
+        <location filename="../qucs/components/dcfeed.cpp" line="-25"/>
         <source>dc feed</source>
-        <translation>тұрақты токты қамтамасыз ету</translation>
+        <translation>وصول مستمر</translation>
     </message>
     <message>
         <location line="+39"/>
         <source>dc Feed</source>
-        <translation>Тұрақты токты қамтамасыз ету</translation>
+        <translation>وصول مستمر</translation>
     </message>
     <message>
-        <location filename="components/dc_sim.cpp" line="-24"/>
+        <location filename="../qucs/components/dc_sim.cpp" line="-24"/>
         <location line="+58"/>
         <source>dc simulation</source>
-        <translation>тұрақты токтағы моделдеу</translation>
+        <translation>محاكاة نقطة التشغيل </translation>
     </message>
     <message>
         <location line="-32"/>
-        <location filename="components/etr_sim.cpp" line="-6"/>
-        <location filename="components/hb_sim.cpp" line="+8"/>
-        <location filename="components/tr_sim.cpp" line="-6"/>
+        <location filename="../qucs/components/etr_sim.cpp" line="-6"/>
+        <location filename="../qucs/components/hb_sim.cpp" line="+8"/>
+        <location filename="../qucs/components/tr_sim.cpp" line="-6"/>
         <source>relative tolerance for convergence</source>
-        <translation>конвергенция үшін салыстымалы рұқсат алу</translation>
+        <translation>التسامح النسبي للتلاقي</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/etr_sim.cpp" line="+2"/>
-        <location filename="components/hb_sim.cpp" line="-4"/>
-        <location filename="components/tr_sim.cpp" line="+2"/>
+        <location filename="../qucs/components/etr_sim.cpp" line="+2"/>
+        <location filename="../qucs/components/hb_sim.cpp" line="-4"/>
+        <location filename="../qucs/components/tr_sim.cpp" line="+2"/>
         <source>absolute tolerance for currents</source>
-        <translation>ток үшін абсалютті рұқсат алу</translation>
+        <translation>التسامح المطلق لتيارات</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/etr_sim.cpp" line="+2"/>
-        <location filename="components/hb_sim.cpp" line="+2"/>
-        <location filename="components/tr_sim.cpp" line="+2"/>
+        <location filename="../qucs/components/etr_sim.cpp" line="+2"/>
+        <location filename="../qucs/components/hb_sim.cpp" line="+2"/>
+        <location filename="../qucs/components/tr_sim.cpp" line="+2"/>
         <source>absolute tolerance for voltages</source>
-        <translation>кернеу үшін абсалютті рұқсат алу</translation>
+        <translation>التسامح المطلق لالفولتية</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>put operating points into dataset</source>
-        <translation>жұмыс нүктелерін мәліметтер жинағына енгізу (ия,жоқ)</translation>
+        <translation>وضع التشغيل إلى نقاط البيانات</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/etr_sim.cpp" line="-6"/>
-        <location filename="components/hb_sim.cpp" line="+4"/>
-        <location filename="components/tr_sim.cpp" line="-6"/>
+        <location filename="../qucs/components/etr_sim.cpp" line="-6"/>
+        <location filename="../qucs/components/hb_sim.cpp" line="+4"/>
+        <location filename="../qucs/components/tr_sim.cpp" line="-6"/>
         <source>maximum number of iterations until error</source>
-        <translation>қате пайда болғанға дейін итерациялардың максималды саны</translation>
+        <translation>الحد الأقصى لعدد التكرار حتى الخطأ </translation>
     </message>
     <message>
         <location line="+2"/>
         <source>save subcircuit nodes into dataset</source>
-        <translation>моделдеу және жұмыс нүктелерінің нәтижелерін мәлімет жинағында сақтау</translation>
+        <translation>حفظ عقد سوب سركوي    في البيانات</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>preferred convergence algorithm</source>
-        <translation>ең ыңғайлы ұқсастық алгоритм</translation>
+        <translation>خوارزمية التقارب المفضلة</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/etr_sim.cpp" line="+16"/>
-        <location filename="components/tr_sim.cpp" line="+16"/>
+        <location filename="../qucs/components/etr_sim.cpp" line="+16"/>
+        <location filename="../qucs/components/tr_sim.cpp" line="+16"/>
         <source>method for solving the circuit matrix</source>
-        <translation>сұлбадағы матрицаны шешетін әдіс</translation>
+        <translation>الطريقة حل مصفوفة  الدارة </translation>
     </message>
     <message>
-        <location filename="components/dff_SR.cpp" line="-8"/>
-        <source>D flip flop with set and reset verilog device</source>
-        <translation>Д-триггердің жазу/өшіруі бар логикалық құрылғы</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="components/gatedDlatch.cpp" line="-5"/>
-        <location filename="components/jkff_SR.cpp" line="-5"/>
-        <location filename="components/tff_SR.cpp" line="-5"/>
-        <source>cross coupled gate transfer function high scaling factor</source>
-        <translation>жоғары масштабтың байланыс коэффициентінің беріліс функциясы</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="components/gatedDlatch.cpp" line="+2"/>
-        <location filename="components/jkff_SR.cpp" line="+2"/>
-        <location filename="components/tff_SR.cpp" line="+2"/>
-        <source>cross coupled gate transfer function low scaling factor</source>
-        <translation>төменгі масштабтың байланыс коэффициентінің беріліс функциясы</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="components/gatedDlatch.cpp" line="+2"/>
-        <location filename="components/jkff_SR.cpp" line="+2"/>
-        <location filename="components/tff_SR.cpp" line="+2"/>
-        <source>cross coupled gate delay</source>
-        <translation>қиылысқан байланыстың уақыттық кідірісі</translation>
-    </message>
-    <message>
-        <location line="+20"/>
-        <source>D-FlipFlop w/ SR</source>
-        <translation>Д-триггері сым/SR</translation>
-    </message>
-    <message>
-        <location filename="components/d_flipflop.cpp" line="-2"/>
+        <location filename="../qucs/components/d_flipflop.cpp" line="-2"/>
         <source>D flip flop with asynchron reset</source>
-        <translation>Асинхронды өшіруі бар Д-триггері</translation>
+        <translation>D flip flop with asynchron reset</translation>
     </message>
     <message>
         <location line="+92"/>
         <source>D-FlipFlop</source>
-        <translation>Д-триггері</translation>
+        <translation>D-FlipFlop</translation>
     </message>
     <message>
-        <location filename="components/diac.cpp" line="-30"/>
+        <location filename="../qucs/components/diac.cpp" line="-30"/>
         <source>diac (bidirectional trigger diode)</source>
-        <translation>диак (екі бағытты триггерлік диод)</translation>
+        <translation>diac (bidirectional trigger diode)</translation>
     </message>
     <message>
         <location line="+24"/>
-        <location filename="components/triac.cpp" line="-6"/>
+        <location filename="../qucs/components/triac.cpp" line="-6"/>
         <source>(bidirectional) breakover voltage</source>
-        <translation>(екі бағытты) өтпелі кернеу</translation>
+        <translation>(ثنائي الاتجاه) جهد breakover</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>(bidirectional) breakover current</source>
-        <translation>(екі бағытты) өтпелі ток ағыны</translation>
+        <translation>(ثنائي الاتجاه) breakover الحالي</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/thyristor.cpp" line="-2"/>
-        <location filename="components/triac.cpp" line="+4"/>
+        <location filename="../qucs/components/thyristor.cpp" line="-2"/>
+        <location filename="../qucs/components/triac.cpp" line="+4"/>
         <source>parasitic capacitance</source>
-        <translation>паразиттік сыйымдылық</translation>
+        <translation>سعة المكثف تشويش</translation>
     </message>
     <message>
-        <location filename="components/EKV26MOS.cpp" line="-26"/>
-        <location filename="components/diac.cpp" line="+4"/>
-        <location filename="components/diode.cpp" line="-54"/>
-        <location filename="components/thyristor.cpp" line="+4"/>
-        <location filename="components/triac.cpp" line="+4"/>
+        <location filename="../qucs/components/EKV26MOS.cpp" line="-26"/>
+        <location filename="../qucs/components/diac.cpp" line="+4"/>
+        <location filename="../qucs/components/diode.cpp" line="-54"/>
+        <location filename="../qucs/components/thyristor.cpp" line="+4"/>
+        <location filename="../qucs/components/triac.cpp" line="+4"/>
         <source>emission coefficient</source>
-        <translation>эмиссия коэффициенті</translation>
+        <translation>معامل الانبعاث</translation>
     </message>
     <message>
-        <location filename="components/diac.cpp" line="+2"/>
-        <location filename="components/thyristor.cpp" line="+2"/>
-        <location filename="components/triac.cpp" line="+2"/>
+        <location filename="../qucs/components/diac.cpp" line="+2"/>
+        <location filename="../qucs/components/thyristor.cpp" line="+2"/>
+        <location filename="../qucs/components/triac.cpp" line="+2"/>
         <source>intrinsic junction resistance</source>
-        <translation>нақты ішкі кедергі</translation>
+        <translation>مفرق المقاومة الجوهرية </translation>
     </message>
     <message>
-        <location filename="components/EKV26MOS.cpp" line="+33"/>
-        <location filename="components/MESFET.cpp" line="+9"/>
-        <location filename="components/bsim3v34nMOS.cpp" line="+832"/>
-        <location filename="components/bsim3v34pMOS.cpp" line="+832"/>
-        <location filename="components/diac.cpp" line="+2"/>
-        <location filename="components/hic0_full.cpp" line="+69"/>
-        <location filename="components/hic2_full.cpp" line="+86"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+73"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+84"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+87"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+218"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+86"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+86"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+114"/>
-        <location filename="components/log_amp.cpp" line="+64"/>
-        <location filename="components/nigbt.cpp" line="+41"/>
-        <location filename="components/photodiode.cpp" line="+25"/>
-        <location filename="components/phototransistor.cpp" line="+15"/>
-        <location filename="components/potentiometer.cpp" line="+46"/>
-        <location filename="components/thyristor.cpp" line="+4"/>
-        <location filename="components/triac.cpp" line="+4"/>
+        <location filename="../qucs/components/EKV26MOS.cpp" line="+33"/>
+        <location filename="../qucs/components/MESFET.cpp" line="+9"/>
+        <location filename="../qucs/components/bsim3v34nMOS.cpp" line="+832"/>
+        <location filename="../qucs/components/bsim3v34pMOS.cpp" line="+832"/>
+        <location filename="../qucs/components/diac.cpp" line="+2"/>
+        <location filename="../qucs/components/hic0_full.cpp" line="+69"/>
+        <location filename="../qucs/components/hic2_full.cpp" line="+305"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+73"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+84"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+87"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+218"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+305"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+305"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+339"/>
+        <location filename="../qucs/components/log_amp.cpp" line="+64"/>
+        <location filename="../qucs/components/nigbt.cpp" line="+69"/>
+        <location filename="../qucs/components/photodiode.cpp" line="+25"/>
+        <location filename="../qucs/components/phototransistor.cpp" line="+15"/>
+        <location filename="../qucs/components/potentiometer.cpp" line="+46"/>
+        <location filename="../qucs/components/thyristor.cpp" line="+4"/>
+        <location filename="../qucs/components/triac.cpp" line="+4"/>
         <source>simulation temperature</source>
-        <translation>моделдеу температурасы</translation>
+        <translation>محاكاة الحرارة</translation>
     </message>
     <message>
-        <location filename="components/diac.cpp" line="+10"/>
+        <location filename="../qucs/components/diac.cpp" line="+10"/>
         <source>Diac</source>
-        <translation>Диак</translation>
+        <translation>Diac</translation>
     </message>
     <message>
-        <location filename="components/digi_sim.cpp" line="+25"/>
+        <location filename="../qucs/components/digi_sim.cpp" line="+24"/>
         <location line="+41"/>
         <source>digital simulation</source>
-        <translation>цифрлық моделдеу</translation>
+        <translation>المحاكاة الرقمية </translation>
     </message>
     <message>
         <location line="-21"/>
         <source>type of simulation</source>
-        <translation>моделдеу типі</translation>
+        <translation>نوع المحاكات</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>duration of TimeList simulation</source>
-        <translation>уақыттық кесте моделінің реттемесі</translation>
+        <translation> TimeList مدة المحاكاة</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>netlist format</source>
-        <translation>сұлба пішімі</translation>
+        <translation> شكل netlist</translation>
     </message>
     <message>
-        <location filename="components/digi_source.cpp" line="-33"/>
+        <location filename="../qucs/components/digi_source.cpp" line="-33"/>
         <location line="+50"/>
         <source>digital source</source>
-        <translation>цифрлық қорек көзі</translation>
+        <translation>مصدر الرقمية</translation>
     </message>
     <message>
         <location line="-23"/>
-        <location filename="components/source_ac.cpp" line="-8"/>
+        <location filename="../qucs/components/source_ac.cpp" line="-8"/>
         <source>number of the port</source>
-        <translation>порттар саны</translation>
+        <translation>عدد المنفذ </translation>
     </message>
     <message>
         <location line="+2"/>
         <source>initial output value</source>
-        <translation>шығысындағы бастапқы мәні</translation>
+        <translation>قيمة الانتاج الأولي</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>list of times for changing output value</source>
-        <translation>шығыс мәнінің өзгеруі үшін уақыттық кесте</translation>
+        <translation>قائمة مرات لتغيير قيمة الانتاج</translation>
     </message>
     <message>
-        <location filename="components/diode.cpp" line="-5"/>
+        <location filename="../qucs/components/diode.cpp" line="-5"/>
         <source>diode</source>
-        <translation>диод</translation>
+        <translation>صمام ثنائي </translation>
     </message>
     <message>
-        <location filename="components/EKV26MOS.cpp" line="-19"/>
-        <location filename="components/diode.cpp" line="+7"/>
-        <location filename="components/photodiode.cpp" line="-40"/>
+        <location filename="../qucs/components/EKV26MOS.cpp" line="-19"/>
+        <location filename="../qucs/components/diode.cpp" line="+7"/>
+        <location filename="../qucs/components/photodiode.cpp" line="-40"/>
         <source>zero-bias junction capacitance</source>
-        <translation>нөлдік ығысу кезіндегі меншікті сыйымдылық</translation>
+        <translation>قدرة ملتقى التحيز عند مستوى الصفر</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/MESFET.cpp" line="-72"/>
-        <location filename="components/diode.cpp" line="+2"/>
-        <location filename="components/photodiode.cpp" line="+3"/>
-        <location filename="components/tunneldiode.cpp" line="-7"/>
+        <location filename="../qucs/components/MESFET.cpp" line="-72"/>
+        <location filename="../qucs/components/diode.cpp" line="+2"/>
+        <location filename="../qucs/components/photodiode.cpp" line="+3"/>
+        <location filename="../qucs/components/tunneldiode.cpp" line="-7"/>
         <source>grading coefficient</source>
-        <translation>әмбебап емес коэффициент</translation>
+        <translation>درجات المعامل</translation>
     </message>
     <message>
         <location line="-6"/>
-        <location filename="components/diode.cpp" line="+2"/>
-        <location filename="components/photodiode.cpp" line="-6"/>
-        <location filename="components/tunneldiode.cpp" line="+2"/>
+        <location filename="../qucs/components/diode.cpp" line="+2"/>
+        <location filename="../qucs/components/photodiode.cpp" line="-6"/>
+        <location filename="../qucs/components/tunneldiode.cpp" line="+2"/>
         <source>junction potential</source>
-        <translation>өтпелі потенциал</translation>
+        <translation>تقاطع الجهد</translation>
     </message>
     <message>
-        <location filename="components/diode.cpp" line="+4"/>
+        <location filename="../qucs/components/diode.cpp" line="+4"/>
         <source>linear capacitance</source>
-        <translation>сызықтық сыйымдылық</translation>
+        <translation>سعة المكثف الخطي</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>recombination current parameter</source>
-        <translation>рекомбинациялық ток</translation>
+        <translation>إعادة  الخاصية الحالية</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>emission coefficient for Isr</source>
-        <translation>Isr диоды үшін идеалдылық эмиссия коэффициенті</translation>
+        <translation>معامل الانبعاث لIsr</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>ohmic series resistance</source>
-        <translation>тізбектелген кедергі</translation>
+        <translation> ohmicسلسلة المقاومة</translation>
     </message>
     <message>
-        <location filename="components/EKV26MOS.cpp" line="+12"/>
-        <location filename="components/diode.cpp" line="+2"/>
-        <location filename="components/photodiode.cpp" line="+15"/>
+        <location filename="../qucs/components/EKV26MOS.cpp" line="+12"/>
+        <location filename="../qucs/components/diode.cpp" line="+2"/>
+        <location filename="../qucs/components/photodiode.cpp" line="+15"/>
         <source>transit time</source>
-        <translation>өту уақыты</translation>
+        <translation>زمن العبور</translation>
     </message>
     <message>
-        <location filename="components/diode.cpp" line="+2"/>
+        <location filename="../qucs/components/diode.cpp" line="+2"/>
         <source>high-injection knee current (0=infinity)</source>
-        <translation>Жоғары инжекция кезіндегі шекаралық ток (0=шексіздік)</translation>
+        <translation>high-injection knee current (0=infinity)</translation>
     </message>
     <message>
-        <location filename="components/EKV26MOS.cpp" line="-18"/>
-        <location filename="components/diode.cpp" line="+8"/>
-        <location filename="components/photodiode.cpp" line="-21"/>
+        <location filename="../qucs/components/EKV26MOS.cpp" line="-18"/>
+        <location filename="../qucs/components/diode.cpp" line="+8"/>
+        <location filename="../qucs/components/photodiode.cpp" line="-21"/>
         <source>reverse breakdown voltage</source>
-        <translation>кері кемімелі кернеу</translation>
+        <translation>عكس انهيار الجهد</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/diode.cpp" line="+2"/>
-        <location filename="components/photodiode.cpp" line="+3"/>
+        <location filename="../qucs/components/diode.cpp" line="+2"/>
+        <location filename="../qucs/components/photodiode.cpp" line="+3"/>
         <source>current at reverse breakdown voltage</source>
-        <translation>кері кемімелі кернеудің ағыны</translation>
+        <translation>عكس اتجاه الانهيار الحالي في الجهد</translation>
     </message>
     <message>
-        <location filename="components/diode.cpp" line="+8"/>
+        <location filename="../qucs/components/diode.cpp" line="+8"/>
         <source>Bv linear temperature coefficient</source>
-        <translation>Bv сызықтық температуралық коэффициент</translation>
+        <translation>  Bvالمعامل الخطي لدرجة الحرارة</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Rs linear temperature coefficient</source>
-        <translation>Rs сызықтық температуралық коэффициент</translation>
+        <translation>  Rs المعامل الخطي لدرجة الحرارة</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Tt linear temperature coefficient</source>
-        <translation>Tt сызықтық температуралық коэффицент</translation>
+        <translation> Tt المعامل الخطي لدرجة الحرارة</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Tt quadratic temperature coefficient</source>
-        <translation>Tt квадраттық температуралық коэффицент</translation>
+        <translation>التربيعية معامل لدرجة الحرارة Tt</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>M linear temperature coefficient</source>
-        <translation>М сызықтық температуралық коэффициент</translation>
+        <translation> M المعامل الخطي لدرجة الحرارة</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>M quadratic temperature coefficient</source>
-        <translation>М квадраттық температуралық коэффициент</translation>
+        <translation>لتربيعية معامل لدرجة الحرارة M</translation>
     </message>
     <message>
         <location line="+4"/>
-        <location filename="components/tunneldiode.cpp" line="+7"/>
+        <location filename="../qucs/components/tunneldiode.cpp" line="+7"/>
         <source>default area for diode</source>
-        <translation>Диод үшін үндестік бойынша берілген аумақ</translation>
+        <translation> المنطقة الافتراضية للصمام الثنائي</translation>
     </message>
     <message>
         <location line="+18"/>
         <source>Diode</source>
-        <translation>Диод</translation>
+        <translation>صمام ثنائي </translation>
     </message>
     <message>
-        <location filename="components/DLS_1ton.cpp" line="-6"/>
-        <source>data voltage level shifter (digital to analogue) verilog device</source>
-        <translation>кернеу мәліметтерінің деңгейінің ауытқу логикалық құрылғысы (цифрлықтан аналогқа өту)</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="components/DLS_nto1.cpp" line="-4"/>
-        <source>voltage level</source>
-        <translation>кернеу деңгейі</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="components/DLS_nto1.cpp" line="+3"/>
-        <source>time delay</source>
-        <translation>кідіріс уақыты</translation>
-    </message>
-    <message>
-        <location line="+20"/>
-        <source>D2A Level Shifter</source>
-        <translation>D2A Деңгей ауытқуы</translation>
-    </message>
-    <message>
-        <location filename="components/DLS_nto1.cpp" line="-6"/>
-        <source>data voltage level shifter (analogue to digital) verilog device</source>
-        <translation>кернеу мәліметтерінің деңгейінің ауытқу логикалық құрылғысы (аналогтан цифрлыққа өту)</translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <location filename="components/EKV26MOS.cpp" line="-92"/>
-        <location line="+6"/>
-        <location line="+84"/>
-        <location line="+6"/>
-        <location filename="components/MESFET.cpp" line="-58"/>
-        <location line="+20"/>
-        <location line="+3"/>
-        <location line="+3"/>
-        <location line="+12"/>
-        <location line="+3"/>
-        <location filename="components/hic0_full.cpp" line="-216"/>
-        <location line="+32"/>
-        <location line="+32"/>
-        <location line="+3"/>
-        <location line="+3"/>
-        <location line="+6"/>
-        <location line="+5"/>
-        <location line="+6"/>
-        <location line="+5"/>
-        <location line="+8"/>
-        <location line="+3"/>
-        <location line="+27"/>
-        <location line="+5"/>
-        <location line="+18"/>
-        <location line="+3"/>
-        <location line="+3"/>
-        <location line="+3"/>
-        <location filename="components/hic2_full.cpp" line="-173"/>
-        <location line="+10"/>
-        <location line="+10"/>
-        <location line="+5"/>
-        <location line="+6"/>
-        <location line="+5"/>
-        <location line="+10"/>
-        <location line="+5"/>
-        <location line="+27"/>
-        <location line="+3"/>
-        <location line="+3"/>
-        <location line="+28"/>
-        <location line="+26"/>
-        <location line="+3"/>
-        <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="-234"/>
-        <location line="+3"/>
-        <location line="+36"/>
-        <location line="+7"/>
-        <location line="+32"/>
-        <location line="+3"/>
-        <location line="+3"/>
-        <location line="+6"/>
-        <location line="+5"/>
-        <location line="+6"/>
-        <location line="+5"/>
-        <location line="+8"/>
-        <location line="+3"/>
-        <location line="+27"/>
-        <location line="+5"/>
-        <location line="+18"/>
-        <location line="+3"/>
-        <location line="+3"/>
-        <location line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="-245"/>
-        <location line="+3"/>
-        <location line="+36"/>
-        <location line="+7"/>
-        <location line="+32"/>
-        <location line="+3"/>
-        <location line="+3"/>
-        <location line="+6"/>
-        <location line="+5"/>
-        <location line="+6"/>
-        <location line="+5"/>
-        <location line="+8"/>
-        <location line="+3"/>
-        <location line="+27"/>
-        <location line="+5"/>
-        <location line="+18"/>
-        <location line="+3"/>
-        <location line="+3"/>
-        <location line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="-250"/>
-        <location line="+3"/>
-        <location line="+38"/>
-        <location line="+7"/>
-        <location line="+32"/>
-        <location line="+3"/>
-        <location line="+3"/>
-        <location line="+6"/>
-        <location line="+5"/>
-        <location line="+6"/>
-        <location line="+5"/>
-        <location line="+8"/>
-        <location line="+3"/>
-        <location line="+27"/>
-        <location line="+5"/>
-        <location line="+18"/>
-        <location line="+3"/>
-        <location line="+3"/>
-        <location line="+3"/>
-        <location filename="components/hicumL2V2p23.cpp" line="-173"/>
-        <location line="+10"/>
-        <location line="+10"/>
-        <location line="+5"/>
-        <location line="+6"/>
-        <location line="+5"/>
-        <location line="+10"/>
-        <location line="+5"/>
-        <location line="+27"/>
-        <location line="+3"/>
-        <location line="+3"/>
-        <location line="+28"/>
-        <location line="+26"/>
-        <location line="+3"/>
-        <location line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="-173"/>
-        <location line="+10"/>
-        <location line="+10"/>
-        <location line="+5"/>
-        <location line="+6"/>
-        <location line="+5"/>
-        <location line="+10"/>
-        <location line="+5"/>
-        <location line="+27"/>
-        <location line="+3"/>
-        <location line="+3"/>
-        <location line="+28"/>
-        <location line="+26"/>
-        <location line="+3"/>
-        <location line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="-201"/>
-        <location line="+10"/>
-        <location line="+10"/>
-        <location line="+5"/>
-        <location line="+6"/>
-        <location line="+5"/>
-        <location line="+10"/>
-        <location line="+5"/>
-        <location line="+27"/>
-        <location line="+3"/>
-        <location line="+3"/>
-        <location line="+6"/>
-        <location line="+38"/>
-        <location line="+26"/>
-        <location line="+3"/>
-        <location line="+3"/>
-        <location line="+14"/>
-        <location filename="components/log_amp.cpp" line="-29"/>
-        <location filename="components/logic_0.cpp" line="+29"/>
-        <location filename="components/logic_1.cpp" line="+29"/>
-        <location filename="components/nigbt.cpp" line="-8"/>
-        <location line="+3"/>
-        <location filename="components/photodiode.cpp" line="-2"/>
-        <location line="+6"/>
-        <location filename="components/phototransistor.cpp" line="-61"/>
-        <location line="+3"/>
-        <location line="+5"/>
-        <location line="+8"/>
-        <source>V</source>
-        <translation>Вольт</translation>
-    </message>
-    <message>
-        <location line="+22"/>
-        <source>A2D Level Shifter</source>
-        <translation>A2D деңгей ауытқуы</translation>
-    </message>
-    <message>
-        <location filename="components/dmux2to4.cpp" line="-6"/>
-        <source>2to4 demultiplexer verilog device</source>
-        <translation>2- де 4 демультиплексор логикалық құрылғысы</translation>
-    </message>
-    <message>
-        <location line="+25"/>
-        <source>2to4 Demux</source>
-        <translation>2- де 4 демультиплексор</translation>
-    </message>
-    <message>
-        <location filename="components/dmux3to8.cpp" line="-6"/>
-        <source>3to8 demultiplexer verilog device</source>
-        <translation>3- те 8 демультиплексор логикалық құрылғысы</translation>
-    </message>
-    <message>
-        <location line="+25"/>
-        <source>3to8 Demux</source>
-        <translation>3- де 8 демультиплексор</translation>
-    </message>
-    <message>
-        <location filename="components/dmux4to16.cpp" line="-6"/>
-        <source>4to16 demultiplexer verilog device</source>
-        <translation>4-те 16 демультиплексор логикалық құрылғысы</translation>
-    </message>
-    <message>
-        <location line="+25"/>
-        <source>4to16 Demux</source>
-        <translation>4-те 16 демультиплексор</translation>
-    </message>
-    <message>
-        <location filename="components/EKV26MOS.cpp" line="-126"/>
+        <location filename="../qucs/components/EKV26MOS.cpp" line="-122"/>
         <source>EPFL-EKV MOS 2.6 verilog device</source>
-        <translation>EPFL-EKV MOS 2.6 логикалық құрылғы</translation>
+        <translation>أجهزة فيريلوج EPFL-EKV MOS 2.6</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>long = 1, short = 2</source>
-        <translation>ұзын = 1, қысқа = 2</translation>
+        <translation>long = 1, short = 2</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>length parameter</source>
-        <translation>жолдың параметрі</translation>
+        <translation>طول المعلم</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -4850,219 +4473,381 @@ Wrong &apos;component&apos; line format!</source>
         <location line="+33"/>
         <location line="+13"/>
         <location line="+36"/>
-        <location filename="components/nigbt.cpp" line="-33"/>
+        <location filename="../qucs/components/nigbt.cpp" line="-38"/>
         <source>m</source>
-        <translation>м</translation>
+        <translation>m</translation>
     </message>
     <message>
         <location line="-99"/>
         <source>Width parameter</source>
-        <translation>енінің параметрі</translation>
+        <translation>عرض المعلم</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>parallel multiple device number</source>
-        <translation>параллель қосқыш құрылғы саны</translation>
+        <translation>عدد الأجهزة الموازية المتعددة</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>series multiple device number</source>
-        <translation>қосқыш құрылғылар саны</translation>
+        <translation>سلسلة رقم الجهاز متعددة</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>gate oxide capacitance per unit area</source>
-        <translation>түйектің бірлік ауданға шаққан меншікті сыйымдылығы</translation>
+        <translation>بوابة أكسيد سعة المكثف  في وحدة المساحة</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>F/m**2</source>
-        <translation>Ф/м²</translation>
+        <translation>F/m**2</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>metallurgical junction depth</source>
-        <translation>металлургиялық тереңдік</translation>
+        <translation>تقاطع عمق المعدنية</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>channel width correction</source>
-        <translation>арна енін коррекциялау</translation>
+        <translation> عرض قناة التصحيح</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>channel length correction</source>
-        <translation>арна ұзындығын коррекциялау</translation>
+        <translation>طول قناة التصحيح</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>long channel threshold voltage</source>
-        <translation>ұзақ арнаның табалдырық кернеуі</translation>
+        <translation>طول قناة  عتبة الجهد</translation>
     </message>
     <message>
+        <location filename="../qucs/components/DLS_nto1.cpp" line="+19"/>
+        <location filename="../qucs/components/EKV26MOS.cpp" line="+1"/>
+        <location line="+6"/>
+        <location line="+84"/>
+        <location line="+6"/>
+        <location filename="../qucs/components/MESFET.cpp" line="-58"/>
+        <location line="+20"/>
         <location line="+3"/>
+        <location line="+3"/>
+        <location line="+12"/>
+        <location line="+3"/>
+        <location filename="../qucs/components/hic0_full.cpp" line="-216"/>
+        <location line="+32"/>
+        <location line="+32"/>
+        <location line="+3"/>
+        <location line="+3"/>
+        <location line="+6"/>
+        <location line="+5"/>
+        <location line="+6"/>
+        <location line="+5"/>
+        <location line="+8"/>
+        <location line="+3"/>
+        <location line="+27"/>
+        <location line="+5"/>
+        <location line="+18"/>
+        <location line="+3"/>
+        <location line="+3"/>
+        <location line="+3"/>
+        <location filename="../qucs/components/hic2_full.cpp" line="-173"/>
+        <location line="+10"/>
+        <location line="+10"/>
+        <location line="+5"/>
+        <location line="+6"/>
+        <location line="+5"/>
+        <location line="+10"/>
+        <location line="+5"/>
+        <location line="+27"/>
+        <location line="+3"/>
+        <location line="+3"/>
+        <location line="+28"/>
+        <location line="+26"/>
+        <location line="+3"/>
+        <location line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="-234"/>
+        <location line="+3"/>
+        <location line="+36"/>
+        <location line="+7"/>
+        <location line="+32"/>
+        <location line="+3"/>
+        <location line="+3"/>
+        <location line="+6"/>
+        <location line="+5"/>
+        <location line="+6"/>
+        <location line="+5"/>
+        <location line="+8"/>
+        <location line="+3"/>
+        <location line="+27"/>
+        <location line="+5"/>
+        <location line="+18"/>
+        <location line="+3"/>
+        <location line="+3"/>
+        <location line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="-245"/>
+        <location line="+3"/>
+        <location line="+36"/>
+        <location line="+7"/>
+        <location line="+32"/>
+        <location line="+3"/>
+        <location line="+3"/>
+        <location line="+6"/>
+        <location line="+5"/>
+        <location line="+6"/>
+        <location line="+5"/>
+        <location line="+8"/>
+        <location line="+3"/>
+        <location line="+27"/>
+        <location line="+5"/>
+        <location line="+18"/>
+        <location line="+3"/>
+        <location line="+3"/>
+        <location line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="-250"/>
+        <location line="+3"/>
+        <location line="+38"/>
+        <location line="+7"/>
+        <location line="+32"/>
+        <location line="+3"/>
+        <location line="+3"/>
+        <location line="+6"/>
+        <location line="+5"/>
+        <location line="+6"/>
+        <location line="+5"/>
+        <location line="+8"/>
+        <location line="+3"/>
+        <location line="+27"/>
+        <location line="+5"/>
+        <location line="+18"/>
+        <location line="+3"/>
+        <location line="+3"/>
+        <location line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="-173"/>
+        <location line="+10"/>
+        <location line="+10"/>
+        <location line="+5"/>
+        <location line="+6"/>
+        <location line="+5"/>
+        <location line="+10"/>
+        <location line="+5"/>
+        <location line="+27"/>
+        <location line="+3"/>
+        <location line="+3"/>
+        <location line="+28"/>
+        <location line="+26"/>
+        <location line="+3"/>
+        <location line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="-173"/>
+        <location line="+10"/>
+        <location line="+10"/>
+        <location line="+5"/>
+        <location line="+6"/>
+        <location line="+5"/>
+        <location line="+10"/>
+        <location line="+5"/>
+        <location line="+27"/>
+        <location line="+3"/>
+        <location line="+3"/>
+        <location line="+28"/>
+        <location line="+26"/>
+        <location line="+3"/>
+        <location line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="-201"/>
+        <location line="+10"/>
+        <location line="+10"/>
+        <location line="+5"/>
+        <location line="+6"/>
+        <location line="+5"/>
+        <location line="+10"/>
+        <location line="+5"/>
+        <location line="+27"/>
+        <location line="+3"/>
+        <location line="+3"/>
+        <location line="+6"/>
+        <location line="+38"/>
+        <location line="+26"/>
+        <location line="+3"/>
+        <location line="+3"/>
+        <location line="+14"/>
+        <location filename="../qucs/components/log_amp.cpp" line="-29"/>
+        <location filename="../qucs/components/logic_0.cpp" line="+28"/>
+        <location filename="../qucs/components/logic_1.cpp" line="+28"/>
+        <location filename="../qucs/components/nigbt.cpp" line="+30"/>
+        <location line="+3"/>
+        <location filename="../qucs/components/photodiode.cpp" line="-2"/>
+        <location line="+6"/>
+        <location filename="../qucs/components/phototransistor.cpp" line="-61"/>
+        <location line="+3"/>
+        <location line="+5"/>
+        <location line="+8"/>
+        <source>V</source>
+        <translation>V</translation>
+    </message>
+    <message>
+        <location filename="../qucs/components/EKV26MOS.cpp" line="-94"/>
         <source>body effect parameter</source>
-        <translation>денеге әсер етуші параметр</translation>
+        <translation>هيئة أثر المعلم</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>V**(1/2)</source>
-        <translation>В**(1/2)</translation>
+        <translation>V**(1/2)</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>bulk Fermi potential</source>
-        <translation>Ферми потенциалының өлшемі</translation>
+        <translation>الجزء الأكبر المحتملة فيرمي</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/MESFET.cpp" line="-39"/>
-        <location filename="components/jfet.cpp" line="-40"/>
+        <location filename="../qucs/components/MESFET.cpp" line="-39"/>
+        <location filename="../qucs/components/jfet.cpp" line="-40"/>
         <source>transconductance parameter</source>
-        <translation>аралық өткізгіштің параметрі</translation>
+        <translation>transconductance معلم </translation>
     </message>
     <message>
         <location line="+1"/>
-        <location filename="components/nigbt.cpp" line="-6"/>
+        <location filename="../qucs/components/nigbt.cpp" line="-39"/>
         <source>A/V**2</source>
-        <translation>А/В²</translation>
+        <translation>A/V**2</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>mobility reduction coefficient</source>
-        <translation>мобилді редукциялық коэффициент</translation>
+        <translation> التحرك معامل  للحد</translation>
     </message>
     <message>
         <location line="+1"/>
-        <location filename="components/MESFET.cpp" line="+4"/>
+        <location filename="../qucs/components/MESFET.cpp" line="+4"/>
         <location line="+3"/>
         <location line="+3"/>
-        <location filename="components/hic2_full.cpp" line="-198"/>
-        <location filename="components/hicumL2V2p23.cpp" line="-198"/>
-        <location filename="components/hicumL2V2p24.cpp" line="-198"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="-228"/>
-        <location filename="components/nigbt.cpp" line="+33"/>
+        <location filename="../qucs/components/hic2_full.cpp" line="-198"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="-198"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="-198"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="-228"/>
+        <location filename="../qucs/components/nigbt.cpp" line="+33"/>
         <source>1/V</source>
-        <translation>1/В</translation>
+        <translation>التحرك</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>mobility coefficient</source>
-        <translation>мобилді коэффициент</translation>
+        <translation> معامل الإنتشار </translation>
     </message>
     <message>
         <location line="+1"/>
         <location line="+3"/>
         <location line="+49"/>
         <source>V/m</source>
-        <translation>В/м</translation>
+        <translation>V/m</translation>
     </message>
     <message>
         <location line="-50"/>
         <location line="+7"/>
         <source>longitudinal critical field</source>
-        <translation>критикалық облыстың ұзақтығы</translation>
+        <translation>طول الحقل الرئيسي</translation>
     </message>
     <message>
         <location line="-4"/>
         <source>depletion length coefficient</source>
-        <translation>кедейлену коэффициентінің ұзындығы</translation>
+        <translation>نفاد طول المعامل</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>narrow-channel effect coefficient</source>
-        <translation>арна ұзындығын модуляциялайтын параметр</translation>
+        <translation>معامل تأثير القنوات الضيقة </translation>
     </message>
     <message>
         <location line="+4"/>
         <source>reverse short channel charge density</source>
-        <translation>кері қосудағы қысқа арна зарядының тығыздығы</translation>
+        <translation>كثافة تهمة القناة قصيرة عكسية</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>A*s/m**2</source>
-        <translation>A*s/м²</translation>
+        <translation>كثافة تهمة القناة قصيرة عكسية</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>characteristic length</source>
-        <translation>қасиет ұзындығы</translation>
+        <translation>خصائص الطول</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>threshold voltage temperature coefficient</source>
-        <translation>Табалдырықтық кернеудің температуралық коэффициенті</translation>
+        <translation>معامل درجة حرارة عتبة الجهد </translation>
     </message>
     <message>
         <location line="+1"/>
-        <location filename="components/hic0_full.cpp" line="+3"/>
+        <location filename="../qucs/components/hic0_full.cpp" line="+3"/>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
         <location line="+3"/>
         <source>V/K</source>
-        <translation>В/K</translation>
+        <translation>V/K</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>mobility temperature coefficient</source>
-        <translation>қозғалмалы температуралық коэффициент</translation>
+        <translation> معامل إنتشار  الحرارة</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Longitudinal critical field temperature exponent</source>
-        <translation>Критикалық облыс ұзақтығының температуралық көрсеткіші</translation>
+        <translation>درجة الحرارة الحرجة طولية مجال الأس</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Ibb temperature coefficient</source>
-        <translation>Ibb температуралық коэффициент</translation>
+        <translation> معامل درجة الحرارةIbb</translation>
     </message>
     <message>
         <location line="+1"/>
-        <location filename="components/hic0_full.cpp" line="+3"/>
+        <location filename="../qucs/components/hic0_full.cpp" line="+3"/>
         <location line="+12"/>
         <location line="+3"/>
         <location line="+11"/>
         <location line="+3"/>
-        <location filename="components/hic2_full.cpp" line="+6"/>
+        <location filename="../qucs/components/hic2_full.cpp" line="+6"/>
         <location line="+3"/>
         <location line="+160"/>
         <location line="+7"/>
         <location line="+3"/>
         <location line="+30"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
         <location line="+12"/>
         <location line="+3"/>
         <location line="+13"/>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
         <location line="+12"/>
         <location line="+3"/>
         <location line="+13"/>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
         <location line="+12"/>
         <location line="+3"/>
         <location line="+13"/>
         <location line="+3"/>
         <location line="+13"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+6"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+6"/>
         <location line="+3"/>
         <location line="+160"/>
         <location line="+7"/>
         <location line="+3"/>
         <location line="+30"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+6"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+6"/>
         <location line="+3"/>
         <location line="+160"/>
         <location line="+7"/>
         <location line="+3"/>
         <location line="+30"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+6"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+6"/>
         <location line="+3"/>
         <location line="+176"/>
         <location line="+7"/>
@@ -5070,166 +4855,166 @@ Wrong &apos;component&apos; line format!</source>
         <location line="+30"/>
         <location line="+17"/>
         <source>1/K</source>
-        <translation>1/К</translation>
+        <translation>1/K</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>heavily doped diffusion length</source>
-        <translation>ауырлық күшейтілген диффузия ұзындығы</translation>
+        <translation> قوة مخدر  طول النشر </translation>
     </message>
     <message>
         <location line="+3"/>
         <source>drain/source diffusion sheet resistance</source>
-        <translation>құйма/бастаудың беттік диффузионды кедергілері</translation>
+        <translation>استنزاف / المصدر  نشر ورقة المقاومة</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Ohm/square</source>
-        <translation>Ом/шаршы метр</translation>
+        <translation>الأوم / مربع</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>source contact resistance</source>
-        <translation>бастаудың контактылы кедергісі</translation>
+        <translation>مصدر الاتصال المقاومة</translation>
     </message>
     <message>
         <location line="+1"/>
         <location line="+3"/>
-        <location filename="components/MESFET.cpp" line="+39"/>
-        <location filename="components/hic0_full.cpp" line="-139"/>
+        <location filename="../qucs/components/MESFET.cpp" line="+39"/>
+        <location filename="../qucs/components/hic0_full.cpp" line="-139"/>
         <location line="+36"/>
         <location line="+11"/>
         <location line="+3"/>
         <location line="+3"/>
-        <location filename="components/hic2_full.cpp" line="-197"/>
+        <location filename="../qucs/components/hic2_full.cpp" line="-197"/>
         <location line="+3"/>
         <location line="+11"/>
         <location line="+3"/>
         <location line="+16"/>
         <location line="+84"/>
-        <location filename="components/hicumL0V1p2.cpp" line="-141"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="-141"/>
         <location line="+36"/>
         <location line="+11"/>
         <location line="+3"/>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="-141"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="-141"/>
         <location line="+36"/>
         <location line="+11"/>
         <location line="+3"/>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="-154"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="-154"/>
         <location line="+36"/>
         <location line="+11"/>
         <location line="+3"/>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p23.cpp" line="-197"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="-197"/>
         <location line="+3"/>
         <location line="+11"/>
         <location line="+3"/>
         <location line="+16"/>
         <location line="+84"/>
-        <location filename="components/hicumL2V2p24.cpp" line="-197"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="-197"/>
         <location line="+3"/>
         <location line="+11"/>
         <location line="+3"/>
         <location line="+16"/>
         <location line="+84"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="-230"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="-230"/>
         <location line="+3"/>
         <location line="+11"/>
         <location line="+3"/>
         <location line="+16"/>
         <location line="+84"/>
-        <location filename="components/log_amp.cpp" line="+3"/>
+        <location filename="../qucs/components/log_amp.cpp" line="+3"/>
         <location line="+6"/>
-        <location filename="components/photodiode.cpp" line="-12"/>
+        <location filename="../qucs/components/photodiode.cpp" line="-12"/>
         <location line="+38"/>
-        <location filename="components/phototransistor.cpp" line="+18"/>
+        <location filename="../qucs/components/phototransistor.cpp" line="+18"/>
         <location line="+3"/>
         <location line="+3"/>
-        <location filename="components/potentiometer.cpp" line="-27"/>
+        <location filename="../qucs/components/potentiometer.cpp" line="-27"/>
         <location line="+19"/>
         <source>Ohm</source>
-        <translation>Ом</translation>
+        <translation>Ω</translation>
     </message>
     <message>
         <location line="-1"/>
         <source>drain contact resistance</source>
-        <translation>құйманың контактылы кедергісі</translation>
+        <translation> استنزاف مقاومة الاتصال</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>gate to source overlap capacitance</source>
-        <translation>түйектегі бастаудың жабу сыйымдылығы</translation>
+        <translation>بوابة لمصدر التداخل لسعة المكيف</translation>
     </message>
     <message>
         <location line="+1"/>
         <location line="+3"/>
         <location line="+3"/>
-        <location filename="components/rlcg.cpp" line="-6"/>
+        <location filename="../qucs/components/rlcg.cpp" line="-6"/>
         <source>F/m</source>
-        <translation>Ф/м</translation>
+        <translation>F/m</translation>
     </message>
     <message>
         <location line="-4"/>
         <source>gate to drain overlap capacitance</source>
-        <translation>түйектегі құйманың жабу сыйымдылығы</translation>
+        <translation>بوابة لمصدر التداخل لسعة المكثف</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>gate to bulk overlap capacitance</source>
-        <translation>түйектегі салымшның жабу сыйымдылығы</translation>
+        <translation>بوابة لمعظم التداخل لسعة المكثف </translation>
     </message>
     <message>
         <location line="+3"/>
         <source>first impact ionization coefficient</source>
-        <translation>бірінші ретті ионизациялау коэффициенті</translation>
+        <translation>أول أثر معامل التأين</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>1/m</source>
-        <translation>1/м</translation>
+        <translation>1/m</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>second impact ionization coefficient</source>
-        <translation>әсері екінші деңгейлі ионизация коэффициенті</translation>
+        <translation>الأثر الثاني لمعامل التأين</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>saturation voltage factor for impact ionization</source>
-        <translation>ішкі ионизация үшін қаныққан кернеудің коэффициенті</translation>
+        <translation>عامل الشبع الجهد على  تأثير التأين</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>area related theshold voltage mismatch parameter</source>
-        <translation>табалдырықтық кернеудің аумақтық жетіспейтін параметрі</translation>
+        <translation>منطقة ذات الصلة  بعتبة عدم التوافق معلم الفولتاج</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>V*m</source>
-        <translation>В*м</translation>
+        <translation>V*m</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>area related gain mismatch parameter</source>
-        <translation>күшейткіштің аумақтық жетіспейтін параметрі</translation>
+        <translation>منطقة ذات الصلة الحصول على معلم عدم التوافق</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>area related body effect mismatch parameter</source>
-        <translation>денеге әсер етудің аумақтық жетіспейтін параметрі</translation>
+        <translation>منطقة ذات الصلة تأثير عدم التوافق  المعلم</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>sqrt(V)*m</source>
-        <translation>√V*м</translation>
+        <translation>sqrt(V)*m</translation>
     </message>
     <message>
         <location line="+5"/>
         <location line="+6"/>
-        <location filename="components/MESFET.cpp" line="+62"/>
-        <location filename="components/hic0_full.cpp" line="-121"/>
+        <location filename="../qucs/components/MESFET.cpp" line="+62"/>
+        <location filename="../qucs/components/hic0_full.cpp" line="-121"/>
         <location line="+10"/>
         <location line="+3"/>
         <location line="+3"/>
@@ -5238,7 +5023,7 @@ Wrong &apos;component&apos; line format!</source>
         <location line="+5"/>
         <location line="+93"/>
         <location line="+5"/>
-        <location filename="components/hic2_full.cpp" line="-182"/>
+        <location filename="../qucs/components/hic2_full.cpp" line="-182"/>
         <location line="+11"/>
         <location line="+5"/>
         <location line="+5"/>
@@ -5248,7 +5033,7 @@ Wrong &apos;component&apos; line format!</source>
         <location line="+5"/>
         <location line="+39"/>
         <location line="+5"/>
-        <location filename="components/hicumL0V1p2.cpp" line="-135"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="-135"/>
         <location line="+13"/>
         <location line="+5"/>
         <location line="+3"/>
@@ -5257,7 +5042,7 @@ Wrong &apos;component&apos; line format!</source>
         <location line="+5"/>
         <location line="+100"/>
         <location line="+5"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="-135"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="-135"/>
         <location line="+13"/>
         <location line="+5"/>
         <location line="+3"/>
@@ -5267,7 +5052,7 @@ Wrong &apos;component&apos; line format!</source>
         <location line="+100"/>
         <location line="+5"/>
         <location line="+107"/>
-        <location filename="components/hicumL0V1p3.cpp" line="-139"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="-139"/>
         <location line="+17"/>
         <location line="+5"/>
         <location line="+3"/>
@@ -5276,7 +5061,7 @@ Wrong &apos;component&apos; line format!</source>
         <location line="+5"/>
         <location line="+100"/>
         <location line="+5"/>
-        <location filename="components/hicumL2V2p23.cpp" line="-182"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="-182"/>
         <location line="+11"/>
         <location line="+5"/>
         <location line="+5"/>
@@ -5286,7 +5071,7 @@ Wrong &apos;component&apos; line format!</source>
         <location line="+5"/>
         <location line="+39"/>
         <location line="+5"/>
-        <location filename="components/hicumL2V2p24.cpp" line="-182"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="-182"/>
         <location line="+11"/>
         <location line="+5"/>
         <location line="+5"/>
@@ -5296,7 +5081,7 @@ Wrong &apos;component&apos; line format!</source>
         <location line="+5"/>
         <location line="+39"/>
         <location line="+5"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="-188"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="-188"/>
         <location line="+17"/>
         <location line="+5"/>
         <location line="+5"/>
@@ -5307,28 +5092,28 @@ Wrong &apos;component&apos; line format!</source>
         <location line="+39"/>
         <location line="+5"/>
         <location line="+110"/>
-        <location filename="components/log_amp.cpp" line="-20"/>
+        <location filename="../qucs/components/log_amp.cpp" line="-20"/>
         <location line="+3"/>
-        <location filename="components/photodiode.cpp" line="-35"/>
+        <location filename="../qucs/components/photodiode.cpp" line="-35"/>
         <location line="+6"/>
-        <location filename="components/phototransistor.cpp" line="-47"/>
+        <location filename="../qucs/components/phototransistor.cpp" line="-47"/>
         <location line="+35"/>
         <location line="+3"/>
         <source>A</source>
-        <translation>А</translation>
+        <translation>A</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location filename="components/MESFET.cpp" line="-52"/>
+        <location filename="../qucs/components/MESFET.cpp" line="-52"/>
         <location line="+3"/>
         <location line="+3"/>
-        <location filename="components/hic0_full.cpp" line="-93"/>
+        <location filename="../qucs/components/hic0_full.cpp" line="-93"/>
         <location line="+44"/>
         <location line="+11"/>
         <location line="+43"/>
         <location line="+11"/>
         <location line="+3"/>
-        <location filename="components/hic2_full.cpp" line="+11"/>
+        <location filename="../qucs/components/hic2_full.cpp" line="+11"/>
         <location line="+3"/>
         <location line="+10"/>
         <location line="+10"/>
@@ -5336,25 +5121,25 @@ Wrong &apos;component&apos; line format!</source>
         <location line="+15"/>
         <location line="+47"/>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="-100"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="-100"/>
         <location line="+51"/>
         <location line="+11"/>
         <location line="+43"/>
         <location line="+11"/>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="-207"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="-207"/>
         <location line="+51"/>
         <location line="+11"/>
         <location line="+43"/>
         <location line="+11"/>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="-100"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="-100"/>
         <location line="+51"/>
         <location line="+11"/>
         <location line="+43"/>
         <location line="+11"/>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+11"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+11"/>
         <location line="+3"/>
         <location line="+10"/>
         <location line="+10"/>
@@ -5362,7 +5147,7 @@ Wrong &apos;component&apos; line format!</source>
         <location line="+15"/>
         <location line="+47"/>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+11"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+11"/>
         <location line="+3"/>
         <location line="+10"/>
         <location line="+10"/>
@@ -5370,7 +5155,7 @@ Wrong &apos;component&apos; line format!</source>
         <location line="+15"/>
         <location line="+47"/>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="-99"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="-99"/>
         <location line="+3"/>
         <location line="+10"/>
         <location line="+10"/>
@@ -5378,198 +5163,242 @@ Wrong &apos;component&apos; line format!</source>
         <location line="+15"/>
         <location line="+57"/>
         <location line="+3"/>
-        <location filename="components/photodiode.cpp" line="+6"/>
-        <location filename="components/phototransistor.cpp" line="-20"/>
+        <location filename="../qucs/components/photodiode.cpp" line="+6"/>
+        <location filename="../qucs/components/phototransistor.cpp" line="-20"/>
         <location line="+8"/>
         <source>F</source>
-        <translation>Ф</translation>
+        <translation>F</translation>
     </message>
     <message>
         <location line="+4"/>
-        <location filename="components/photodiode.cpp" line="+4"/>
+        <location filename="../qucs/components/photodiode.cpp" line="+4"/>
         <source>diode relative area</source>
-        <translation>диодтағы салыстырмалы аумақ</translation>
+        <translation>منطقة الصمام الثنائي النسبية</translation>
     </message>
     <message>
-        <location line="+9"/>
+        <source>forward-bias depletion capcitance coefficient</source>
+        <translation type="obsolete"> تحيز معامل السعة </translation>
+    </message>
+    <message>
+        <location filename="../qucs/components/DLS_1ton.cpp" line="+21"/>
+        <location filename="../qucs/components/DLS_nto1.cpp" line="+3"/>
+        <location filename="../qucs/components/EKV26MOS.cpp" line="+5"/>
+        <location filename="../qucs/components/MESFET.cpp" line="-19"/>
+        <location filename="../qucs/components/andor4x2.cpp" line="+31"/>
+        <location filename="../qucs/components/andor4x3.cpp" line="+31"/>
+        <location filename="../qucs/components/andor4x4.cpp" line="+31"/>
+        <location filename="../qucs/components/binarytogrey4bit.cpp" line="+31"/>
+        <location filename="../qucs/components/comp_1bit.cpp" line="+31"/>
+        <location filename="../qucs/components/comp_2bit.cpp" line="+31"/>
+        <location filename="../qucs/components/comp_4bit.cpp" line="+31"/>
+        <location filename="../qucs/components/dff_SR.cpp" line="+33"/>
+        <location filename="../qucs/components/dmux2to4.cpp" line="+31"/>
+        <location filename="../qucs/components/dmux3to8.cpp" line="+32"/>
+        <location filename="../qucs/components/dmux4to16.cpp" line="+31"/>
+        <location filename="../qucs/components/fa1b.cpp" line="+31"/>
+        <location filename="../qucs/components/fa2b.cpp" line="+31"/>
+        <location filename="../qucs/components/gatedDlatch.cpp" line="+33"/>
+        <location filename="../qucs/components/greytobinary4bit.cpp" line="+31"/>
+        <location filename="../qucs/components/ha1b.cpp" line="+31"/>
+        <location filename="../qucs/components/hic0_full.cpp" line="-102"/>
+        <location line="+3"/>
+        <location line="+3"/>
+        <location line="+3"/>
+        <location line="+5"/>
+        <location line="+5"/>
+        <location filename="../qucs/components/hic2_full.cpp" line="-167"/>
+        <location line="+62"/>
+        <location line="+66"/>
+        <location line="+3"/>
+        <location line="+3"/>
+        <location line="+3"/>
+        <location line="+5"/>
+        <location line="+19"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="-102"/>
+        <location line="+3"/>
+        <location line="+3"/>
+        <location line="+3"/>
+        <location line="+5"/>
+        <location line="+5"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="-102"/>
+        <location line="+3"/>
+        <location line="+3"/>
+        <location line="+3"/>
+        <location line="+5"/>
+        <location line="+5"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="-102"/>
+        <location line="+3"/>
+        <location line="+3"/>
+        <location line="+3"/>
+        <location line="+5"/>
+        <location line="+5"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="-167"/>
+        <location line="+62"/>
+        <location line="+66"/>
+        <location line="+3"/>
+        <location line="+3"/>
+        <location line="+3"/>
+        <location line="+5"/>
+        <location line="+19"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="-167"/>
+        <location line="+62"/>
+        <location line="+66"/>
+        <location line="+3"/>
+        <location line="+3"/>
+        <location line="+3"/>
+        <location line="+5"/>
+        <location line="+19"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="-177"/>
+        <location line="+62"/>
+        <location line="+66"/>
+        <location line="+3"/>
+        <location line="+3"/>
+        <location line="+3"/>
+        <location line="+5"/>
+        <location line="+19"/>
+        <location filename="../qucs/components/hpribin4bit.cpp" line="+31"/>
+        <location filename="../qucs/components/jkff_SR.cpp" line="+33"/>
+        <location filename="../qucs/components/mux2to1.cpp" line="+31"/>
+        <location filename="../qucs/components/mux4to1.cpp" line="+31"/>
+        <location filename="../qucs/components/mux8to1.cpp" line="+31"/>
+        <location filename="../qucs/components/nigbt.cpp" line="-30"/>
+        <location filename="../qucs/components/photodiode.cpp" line="+8"/>
+        <location filename="../qucs/components/phototransistor.cpp" line="+3"/>
+        <location line="+3"/>
+        <location filename="../qucs/components/tff_SR.cpp" line="+33"/>
+        <source>s</source>
+        <translation>s</translation>
+    </message>
+    <message>
+        <location filename="../qucs/components/EKV26MOS.cpp" line="+4"/>
         <source>charge partition parameter</source>
-        <translation>зарядталған бөлшектің параметрі</translation>
+        <translation>شحن  معلم التقسيم</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/MESFET.cpp" line="+60"/>
-        <location filename="components/log_amp.cpp" line="+34"/>
-        <location filename="components/mosfet_sub.cpp" line="+4"/>
-        <location filename="components/nigbt.cpp" line="+8"/>
-        <location filename="components/photodiode.cpp" line="+2"/>
-        <location filename="components/potentiometer.cpp" line="+5"/>
+        <location filename="../qucs/components/MESFET.cpp" line="+79"/>
+        <location filename="../qucs/components/log_amp.cpp" line="+34"/>
+        <location filename="../qucs/components/mosfet_sub.cpp" line="+4"/>
+        <location filename="../qucs/components/nigbt.cpp" line="+38"/>
+        <location filename="../qucs/components/photodiode.cpp" line="-6"/>
+        <location filename="../qucs/components/potentiometer.cpp" line="+5"/>
         <source>parameter measurement temperature</source>
-        <translation>моделдің параметрлері өлшенген температура</translation>
+        <translation>وسيط لقياس درجة الحرارة</translation>
     </message>
     <message>
         <location line="+1"/>
-        <location filename="components/MESFET.cpp" line="+1"/>
-        <location filename="components/log_amp.cpp" line="+1"/>
-        <location filename="components/nigbt.cpp" line="+1"/>
+        <location filename="../qucs/components/MESFET.cpp" line="+1"/>
+        <location filename="../qucs/components/log_amp.cpp" line="+1"/>
+        <location filename="../qucs/components/nigbt.cpp" line="+1"/>
         <location line="+3"/>
-        <location filename="components/photodiode.cpp" line="+1"/>
-        <location filename="components/potentiometer.cpp" line="+1"/>
+        <location filename="../qucs/components/photodiode.cpp" line="+1"/>
+        <location filename="../qucs/components/potentiometer.cpp" line="+1"/>
         <source>Celsius</source>
-        <translation>Цельсий</translation>
+        <translation>مئوية</translation>
     </message>
     <message>
         <location line="+21"/>
         <source>EPFL-EKV NMOS 2.6</source>
-        <translation>EPFL-EKV NMOS 2.6 диоды</translation>
+        <translation>EPFL-EKV NMOS 2.6</translation>
     </message>
     <message>
         <location line="+9"/>
         <source>EPFL-EKV PMOS 2.6</source>
-        <translation>EPFL-EKV РMOS 2.6 диоды</translation>
+        <translation>EPFL-EKV PMOS 2.6</translation>
     </message>
     <message>
-        <location filename="components/eqndefined.cpp" line="+27"/>
+        <location filename="../qucs/components/eqndefined.cpp" line="+26"/>
         <source>equation defined device</source>
-        <translation>математикалық теңдіктіі анықтайтын құрылғы</translation>
+        <translation> جهاز تحديد المعادلة</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>type of equations</source>
-        <translation>теңдіктің түрі</translation>
+        <translation>نوع المعادلة</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>number of branches</source>
-        <translation>бұтақтар саны</translation>
+        <translation>عدد الفروع</translation>
     </message>
     <message>
         <location line="+4"/>
         <location line="+74"/>
         <source>current equation</source>
-        <translation>ағынның теңдігі</translation>
+        <translation>المعادلة الحالية</translation>
     </message>
     <message>
         <location line="-72"/>
         <location line="+74"/>
         <source>charge equation</source>
-        <translation>теңдік заряд</translation>
+        <translation>شحن المعادلة</translation>
     </message>
     <message>
         <location line="-56"/>
         <source>Equation Defined Device</source>
-        <translation>Математикалық теңдеуді анықтайтын құрылғы</translation>
+        <translation>جهاز تحديد المعادلة</translation>
     </message>
     <message>
-        <location filename="components/equation.cpp" line="+25"/>
+        <location filename="../qucs/components/equation.cpp" line="+25"/>
         <source>equation</source>
-        <translation>теңдік</translation>
+        <translation>المعادلة</translation>
     </message>
     <message>
         <location line="+6"/>
         <location line="+6"/>
         <location line="+49"/>
         <source>Equation</source>
-        <translation>Теңдік</translation>
+        <translation>المعادلة</translation>
     </message>
     <message>
         <location line="-36"/>
         <source>put result into dataset</source>
-        <translation>мәліметтер қорынан нәтижені алу</translation>
+        <translation> وضع  نتيجة في جدول  البيانات </translation>
     </message>
     <message>
-        <location filename="components/fa1b.cpp" line="-6"/>
-        <source>1bit full adder verilog device</source>
-        <translation>1-битті сумматор логикалық құрылғысы</translation>
-    </message>
-    <message>
-        <location line="+25"/>
-        <source>1Bit FullAdder</source>
-        <translation>1 Битті Сумматор</translation>
-    </message>
-    <message>
-        <location filename="components/fa2b.cpp" line="-6"/>
-        <source>2bit full adder verilog device</source>
-        <translation>2-битті сумматор логикалық құрылғысы</translation>
-    </message>
-    <message>
-        <location line="+25"/>
-        <source>2Bit FullAdder</source>
-        <translation>2 Битті Сумматор</translation>
-    </message>
-    <message>
-        <location filename="components/gatedDlatch.cpp" line="-7"/>
-        <source>gated D latch verilog device</source>
-        <translation>D-Latch түйек verilog құрылғысы</translation>
-    </message>
-    <message>
-        <location line="+27"/>
-        <source>Gated D-Latch</source>
-        <translation>D-Latch түйегі</translation>
-    </message>
-    <message>
-        <location filename="components/greytobinary4bit.cpp" line="-3"/>
-        <source>4bit grey to binary converter verilog device</source>
-        <translation>4 битті grey түрлендіргіш логикалық құрылғысы</translation>
-    </message>
-    <message>
-        <location line="+25"/>
-        <source>4Bit Grey2Bin</source>
-        <translation>4 биттік Bin2Bin</translation>
-    </message>
-    <message>
-        <location filename="components/ground.cpp" line="+25"/>
+        <location filename="../qucs/components/ground.cpp" line="+25"/>
         <source>ground (reference potential)</source>
-        <translation>жер (тірек потенциалы)</translation>
+        <translation>السطح (إشارة مختلفة)ـ</translation>
     </message>
     <message>
         <location line="+30"/>
         <source>Ground</source>
-        <translation>Жер</translation>
+        <translation>السطح</translation>
     </message>
     <message>
-        <location filename="components/gyrator.cpp" line="-34"/>
+        <location filename="../qucs/components/gyrator.cpp" line="-34"/>
         <source>gyrator (impedance inverter)</source>
-        <translation>Гиратор (толық кедергі түрлендіргіші)</translation>
+        <translation>مَلْفُوف(مقاومة العاكس)ـ</translation>
     </message>
     <message>
         <location line="+32"/>
         <source>gyrator ratio</source>
-        <translation>Гирация коэффициенті</translation>
+        <translation>نسبة الملفوف</translation>
     </message>
     <message>
         <location line="+16"/>
         <source>Gyrator</source>
-        <translation>Гиратор</translation>
+        <translation>الملفوف</translation>
     </message>
     <message>
-        <location filename="components/ha1b.cpp" line="-6"/>
-        <source>1bit half adder verilog device</source>
-        <translation>1-битті жартылай-қосқыш логикалық құрылғысы</translation>
-    </message>
-    <message>
-        <location line="+25"/>
-        <source>1Bit HalfAdder</source>
-        <translation>1 Битті жартылай қосқыш</translation>
-    </message>
-    <message>
-        <location filename="components/hb_sim.cpp" line="-29"/>
+        <location filename="../qucs/components/hb_sim.cpp" line="-29"/>
         <source>Harmonic balance simulation</source>
-        <translation>Гармоникалық баланстың моделі</translation>
+        <translation>محاكاة توازن المتناسق </translation>
     </message>
     <message>
         <location line="+21"/>
         <source>number of harmonics</source>
-        <translation>гармоника саны</translation>
+        <translation>عدد التوافقيات</translation>
     </message>
     <message>
         <location line="+22"/>
         <source>Harmonic balance</source>
-        <translation>Гармоникалық баланс</translation>
+        <translation>توازن متناسق</translation>
     </message>
     <message>
-        <location filename="components/HBT_X.cpp" line="+15"/>
+        <location filename="../qucs/components/HBT_X.cpp" line="+15"/>
         <source>HBT model by Ferdinand-Braun-Institut (FBH), Berlin</source>
-        <translation>Фердинанд - Браун - Институттың HBT моделі (FBH), Берлин</translation>
+        <translation>HBT model by Ferdinand-Braun-Institut (FBH), Berlin</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -5577,2505 +5406,2480 @@ Wrong &apos;component&apos; line format!</source>
         <location line="+2"/>
         <location line="+2"/>
         <source>Ignored</source>
-        <translation>Ескерілген жоқ</translation>
+        <translation>تَجَاهَلَ </translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Device operating temperature, Celsius</source>
-        <translation>Температураны есептейтін құрылғы Цельсий шкаласымен</translation>
+        <translation>جهاز التشغيل في درجات الحرارة ، درجة مئوية</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Thermal resistance, K/W</source>
-        <translation>Жылулық кедергі, К/В</translation>
+        <translation> K/W , المقاومة الحرارية </translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hic0_full.cpp" line="+66"/>
-        <location filename="components/hic2_full.cpp" line="+69"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+70"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+70"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+84"/>
-        <location filename="components/hicumL2V2p1.cpp" line="-6"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+69"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+69"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+87"/>
+        <location filename="../qucs/components/hic0_full.cpp" line="+149"/>
+        <location filename="../qucs/components/hic2_full.cpp" line="+75"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+153"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+153"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+167"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="-6"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+75"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+75"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+103"/>
         <source>Thermal capacitance</source>
-        <translation>Жылулық сыйымдылық</translation>
+        <translation>سعة حرارية</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Scaling factor, number of emitter fingers</source>
-        <translation>Масштабтық коэффициент, эмиттер зоналарының саны</translation>
+        <translation></translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Length of emitter finger, m</source>
-        <translation>Эмиттер зонасының ұзындығы, м</translation>
+        <translation> ,mطول اصبع الباعث</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Width of emitter finger, m</source>
-        <translation>Эмиттер зонасының ені, м</translation>
+        <translation> ,mعرض اصبع الباعث</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Forward saturation current density, A/um^2</source>
-        <translation>Қаныққан тура бағыттағы токтың тығыздығы, А/мкм²</translation>
+        <translation>,A/um^2تشبع أمامي للكثافة الحالية </translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Forward current emission coefficient</source>
-        <translation>тура бағыттағы токтың эмиссия коэффициенті</translation>
+        <translation> تقدم معامل الانبعاثات الحالي</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Forward thermal activation energy, V, (0 == disables temperature dependence)</source>
-        <translation>Тура қосудағы белсендірілген жылулық энергиясы,(0 == температуралық тәүелділікті өшіру)</translation>
+        <translation>الطاقة الحرارية بصورة مباشرة النشاط  ,V,(0== عَطَّلَ الإعتماد درجة حرارة)</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>B-E leakage saturation current density, A/um^2</source>
-        <translation>Б-Э шығын тогының қаныққан режимдегі тығыздығы, А/мкм²</translation>
+        <translation>التشبع عتبة كثافة التسرب الحاليB-E (A.µm⁻²)</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>B-E leakage emission coefficient</source>
-        <translation>Б-Э эмиссиялық шығын коэффициенті</translation>
+        <translation>معامل تسرب الانبعاثات B-E  </translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Limiting resistor of B-E leakage diode, Ohm</source>
-        <translation>Б-Э диоды үшін шектейтін резистор, Ом</translation>
+        <translation>   حد  المقاومة من التسربB-E  الصمام الثنائي ، الأوم</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>B-E leakage thermal activation energy, V, (0 == disables temperature dependence)</source>
-        <translation>Б-Э-дағы шығын тогының жылулық энергиясы, В, (0 == температуралық тәуелділікті өшіреді)</translation>
+        <translation> B-E نفعيل تسرب الطاقة الحرارية ل,V,(0== عَطَّلَ الإعتماد درجة حرارة)</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>2nd B-E leakage saturation current density, A/um^2</source>
-        <translation>екінші ретті Б-Э шығын тогының қаныққан режимдегі тығыздығы, А/мкм²</translation>
+        <translation>التشبع الثاني عتبة كثافة التسرب الحاليB-E (A.µm⁻²)</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>2nd B-E leakage emission coefficient</source>
-        <translation>екінші ретті Б-Э эмиссиялық шығын коэффициенті</translation>
+        <translation>معامل الثاني لتسرب الانبعاثات B-E  </translation>
     </message>
     <message>
         <location line="+2"/>
         <source>2nd Limiting resistor of B-E leakage diode, Ohm</source>
-        <translation>екінші ретті Б-Э диоды үшін шектейтін резистор, Ом</translation>
+        <translation>   حد  المقاومة الثاني من التسربB-E  الصمام الثنائي ، الأوم</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>2nd B-E leakage thermal activation energy, V, (0 == disables temperature dependence)</source>
-        <translation>екінші ретті Б-Э - дағы шығын тогының жылулық энергиясы, В, (0 == температуралық тәуелділікті өшіреді)</translation>
+        <translation> B-E النفعيل الثاني تسرب الطاقة الحرارية ,V,(0== عَطَّلَ الإعتماد درجة حرارة)</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Reverse saturation current density, A/um^2</source>
-        <translation>Қаныққан кері токтың тығыздығы, А/мкм²</translation>
+        <translation>,A/um^2إنعكاس للكثافة الحالية </translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Reverse current emission coefficient</source>
-        <translation>кері токтың эмиссия коэффициенті</translation>
+        <translation> إنعكاس معامل الانبعاثات الحالي</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Reverse thermal activation energy, V, (0 == disables temperature dependence)</source>
-        <translation>Кері қосудағы белсендірілген жылулық энергиясы,(0 == температуралық тәуелділікті өшіру)</translation>
+        <translation>إنعكاس تفعيل الطاقة الحرارية   ,V,(0== عَطَّلَ الإعتماد درجة حرارة)</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Fraction of Cjc that goes to internal base node</source>
-        <translation>Базаның ішкі шығысына келетін Cjc үлесі</translation>
+        <translation>جزء من س ج س الداخلي الذي يذهب الى قاعدة العقدة </translation>
     </message>
     <message>
         <location line="+2"/>
         <source>B-C leakage saturation current density, A/um^2 (0. switches off diode)</source>
-        <translation>Б-К тогы үшін қанығу режимінде шығын тогының тығыздығы , А/мкм² (0. диодты өшіреді)</translation>
+        <translation>التشبع عتبة كثافة التسرب الحاليB-C ,A/µm⁻² (0.تطفئ الصمام الثنائي)</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>B-C leakage emission coefficient (0. switches off diode)</source>
-        <translation>Б-К тогы үшін эмиссия коэффициенті (0. диодты өшіреді)</translation>
+        <translation>معامل تسرب الانبعاثات B-E   (0.تطفئ الصمام الثنائي)</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Limiting resistor of B-C leakage diode, Ohm</source>
-        <translation>Б-К диоды үшін шектейтін резистор, Ом</translation>
+        <translation>   حد  المقاومة من التسربB-C  الصمام الثنائي ، الأوم</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>B-C leakage thermal activation energy, V, (0 == disables temperature dependence)</source>
-        <translation>Б-К-дағы шығын тогының жылулық энергиясы, В, (0 == температуралық тәуелділікті өшіреді)</translation>
+        <translation> B-C نفعيل تسرب الطاقة الحرارية ل,V,(0== عَطَّلَ الإعتماد درجة حرارة)</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Ideal forward beta</source>
-        <translation>Өтпелі токтың тура әмбебап коэффициенті</translation>
+        <translation>بيتا مثاليا للمضي قدما</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Temperature coefficient of forward current gain, -1/K,  (0 == disables temperature dependence)</source>
-        <translation>Тура қосу кезіндегі күшейтілген токтың температуралық коэффициенті, -1/К,  (0 == температуралық коэффициентті өшіру)</translation>
+        <translation>,K-/1,معامل درجة الحرارة للربح الحالي  (0== عَطَّلَ الإعتماد درجة حرارة)</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Ideal reverse beta</source>
-        <translation>Әмбебап кері бета</translation>
+        <translation>بيتا عكس المثل </translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Forward Early voltage, V,  (0 == disables Early Effect)</source>
-        <translation>Эрли тура бағыттағы кернеуі, В,  (0 == Эрли эффектісін өшіру )</translation>
+        <translation>تقدم مبكر للفولتاج , V,(0== عطل مبكر للأثر)</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Reverse Early voltage, V, (0 == disables Early Effect)</source>
-        <translation>Эрли кері кернеуі, В,  (0 == Эрли эффектісін өшіру )</translation>
+        <translation>تأخر مبكر للفولتاج , V,(0== عطل مبكر للأثر)</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Forward high-injection knee current, A, (0 == disables Webster Effect)</source>
-        <translation>Жоғары инжекция үшін шекаралық тура бағыттағы ток, А, (0 == Вебстер эффектін өшіру)</translation>
+        <translation>,أ, (0==لايوجد أثر ل وابستر)  العتبة الحالية قوية الحقن المباشر</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Reverse high-injection knee current, A, (0 == disables Webster Effect)</source>
-        <translation>Жоғары инжекция үшін шекаралық кері ток, А, (0 == Вебстер эффектін өшіру)</translation>
+        <translation> العتبة الحالية حقن عكسية قويةأ, (0==لايوجد أثر ل وابستر) </translation>
     </message>
     <message>
         <location line="+2"/>
         <source>C-E breakdown exponent, (0 == disables collector break-down)</source>
-        <translation>К-Э тесілу көрсеткіші , (0 == коллектордың тесілуін өшіреді)</translation>
+        <translation>C-E breakdown exponent, (0 == disables collector break-down)</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>C-E breakdown voltage, V, (0 == disables collector break-down)</source>
-        <translation>К-Э тесілу кернеуі , (0 == коллектордың тесілуін өшіреді)</translation>
+        <translation>C-E breakdown voltage, V, (0 == disables collector break-down)</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>C-E breakdown factor, (0 == disables collector break-down)</source>
-        <translation>К-Э тесілу факторы , (0 == коллектордың тесілуін өшіреді)</translation>
+        <translation>C-E breakdown factor, (0 == disables collector break-down)</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>B-E breakdown voltage, V, (0 == disables emitter break-down)</source>
-        <translation>Б-Э үшін тесу кернеуі, В (0 == эмиттердің тесу ығысуы)</translation>
+        <translation>B-E breakdown voltage, V, (0 == disables emitter break-down)</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Ideal reverse transit time, s</source>
-        <translation>Әмбебап кері өту уақыты, с</translation>
+        <translation>,س الإنعكاس المثالي لوقت العبور</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Extrinsic BC diffusion capacitance, F</source>
-        <translation>Коллектордың сыртқы диффузионды сыйымдылығы, Ф</translation>
+        <translation>القوة الخارجية للنشرBC </translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Ideal forward transit time, s</source>
-        <translation>тура қосу кезінде ұшып-өтудің әмбебап уақыты, сек</translation>
+        <translation>,س التقدم المثالي لوقت العبور</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Temperature coefficient of forward transit time</source>
-        <translation>Ұшып өту кезіндегі тура қосудың температуралық коэффициенті</translation>
+        <translation>درجة الحرارة معامل وقت عبور إلى الأمام</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Excess transit time coefficient at base push-out</source>
-        <translation>Базаның кеңеюі кезінде ұшып өтудің қосымша уақыт коэффициенті</translation>
+        <translation>فائض في وقت العبور معامل قاعدة دفع بها</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Smoothing parameter for Thcs</source>
-        <translation>Thcs үшін тегістендіретін параметр</translation>
+        <translation>تمهيد لمعلمة Thcs</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>B-E zero-bias depletion capacitance, F/um^2</source>
-        <translation>Б-Э нөлдік ығысу кезіндегі сыйымдылық, Ф/мкм²</translation>
+        <translation>B-E zero-bias depletion capacitance, F/um^2</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>B-E junction exponential factor</source>
-        <translation>Б-Э үшін көбейткіш экспонента</translation>
+        <translation>B-Eتقاطع العامل الأسي </translation>
     </message>
     <message>
         <location line="+2"/>
         <source>B-E junction built-in potential, V</source>
-        <translation>Б-Э потенциалдарының контактылы айырымы, В</translation>
+        <translation>B-Eتقاطع المحتملة في البناءl, V</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>B-C zero-bias depletion capacitance, F/um^2</source>
-        <translation>Б-К нөлдік ығысу кезіндегі сыйымдылық, Ф/мкм²</translation>
+        <translation>B-C zero-bias depletion capacitance, F/um^2</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>B-C junction exponential factor</source>
-        <translation>Б-К үшін көбейткіш экспонента</translation>
+        <translation>B-C عامل مفرق الأسي</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>B-C junction built-in potential, V</source>
-        <translation>Б-К потенциалдарының контактылы айырымы, В</translation>
+        <translation>B-Cتقاطع المحتملة في البناءl, V</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>not used</source>
-        <translation>қолданылмайды</translation>
+        <translation>لا تستخدم</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Minimum B-C depletion capacitance (Vbc dependence), F/um^2</source>
-        <translation>Б-К үшін минималды сыйымдылық (Vbc - тәуелділік), Ф/мкм²</translation>
+        <translation>Minimum B-C depletion capacitance (Vbc dependence), F/um^2</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Collector current where Cbc reaches Cmin, A/um^2 (0 == disables Cbc reduction)</source>
-        <translation>Коллектор тогы, Cbc мәні Cmin-ге тең болғанда, А/мкм² (0 == Cbc азайтуды өшіру)</translation>
+        <translation>Collector current where Cbc reaches Cmin, A/um^2 (0 == disables Cbc reduction)</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Fraction of Cmin, lower limit of BC capacitance (Ic dependence)</source>
-        <translation>Б-К үшін төменгі шектік сыйымдылық Cmin улесімен (Іc - тәуелділік бойынша)</translation>
+        <translation>Fraction of Cmin, lower limit of BC capacitance (Ic dependence)</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Onset of base push-out at low voltages, Ohm*um^2 (0 == disables base push-out)</source>
-        <translation>Төменгі кернеуде базаның ұлғаюының бастамасы, Ом*мкм² (0 == баспа қосылуын өшіру)</translation>
+        <translation>Onset of base push-out at low voltages, Ohm*um^2 (0 == disables base push-out)</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Onset of base push-out at high voltages, A/um^2, (0 == disables base push-out)</source>
-        <translation>Жоғарғы кернеуде базаның ұлғаюының бастамасы, А/мкм² (0 == баспа қосылуын өшіру)</translation>
+        <translation>Onset of base push-out at high voltages, A/um^2, (0 == disables base push-out)</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Slope of Jk at high currents , Ohm*um^2</source>
-        <translation>Үлкен токтар үшін Jk ауытқуы, Ом*мкм² өлшем бірлігімен</translation>
+        <translation>Slope of Jk at high currents , Ohm*um^2</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Voltage shift of base push-out onset, V</source>
-        <translation>База кеңеюі кезінде кернеудің ығысуы, В</translation>
+        <translation>Voltage shift of base push-out onset, V</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Collector resistance, Ohm/finger</source>
-        <translation>Коллектор кедергісі, Ом/сызықша өлшем бірлігімен</translation>
+        <translation>جمع المقاومة الأوم / المؤشر</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Emitter resistance, Ohm/finger</source>
-        <translation>Эмиттер кедергісі, Ом/сызықша өлшем бірлігімен</translation>
+        <translation>باعث المقاومة الأوم / المؤشر</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Extrinsic base resistance, Ohm/finger</source>
-        <translation>Базаның сыртқы омдық кедергісі, Ом/сызықша</translation>
+        <translation>قاعدة المقاومة خارجي ، الأوم /  المؤشر</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Inner Base ohmic resistance, Ohm/finger</source>
-        <translation>Базаның ішкі омдық кедергісі, Ом/сызықша</translation>
+        <translation>قاعدة أوم المقاومة الداخلية ، الأوم / المؤشر</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Collector inductance, H</source>
-        <translation>Коллектор индуктивтілігі , Гн</translation>
+        <translation>H, محاثة المجمع</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Emitter inductance, H</source>
-        <translation>Эмиттер индуктивтілігі , Гн</translation>
+        <translation>H,محاثة المرسل</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Base inductance, H</source>
-        <translation>База индуктивтілігі Гн</translation>
+        <translation>H, قاعدة المحاثة</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Extrinsic B-C capacitance, F</source>
-        <translation>Б-К үшін сыртқы сыйымдылық, Ф</translation>
+        <translation>القوة الخارجية B-C </translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Extrinsic base capacitance, F</source>
-        <translation>База үшін сыртқы сыйымдылық, Ф</translation>
+        <translation>القوة القاعدية  الخارجية , ف</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Extrinsic collector capacitance, F</source>
-        <translation>Коллектордың сыртқы сыйымдылығы, Ф</translation>
+        <translation>القوة الجمع  الخارجية , ف</translation>
     </message>
     <message>
         <location line="+2"/>
         <location line="+12"/>
         <source>Flicker-noise coefficient</source>
-        <translation>1/f-шудың коэффициенті</translation>
+        <translation>خفق  معامل التشويش</translation>
     </message>
     <message>
         <location line="-10"/>
         <location line="+12"/>
         <source>Flicker-noise exponent</source>
-        <translation>1/f-шудың деңгей көрсеткіші</translation>
+        <translation>خفق  التشويش الأسي</translation>
     </message>
     <message>
         <location line="-10"/>
         <location line="+12"/>
         <source>Flicker-noise frequency exponent</source>
-        <translation>1/f-шудың жиіліктік тәуелділігі</translation>
+        <translation>خفق  معامل التردد الأسي</translation>
     </message>
     <message>
         <location line="-10"/>
         <source>Burst noise coefficient</source>
-        <translation>Бөлшектік шу коэффициенті</translation>
+        <translation>تفريق  معامل التشويش</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Burst noise exponent</source>
-        <translation>Бөлшектік шудың деңгейін көрсететін экспонентасы</translation>
+        <translation>الدليل تفريق  تشويش  </translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Burst noise corner frequency, Hz</source>
-        <translation>Бөлшектік шу үшін шекаралық жиілік, Гц</translation>
+        <translation>تفريق  تشويش التردد في الزاوية هيرتز</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Ambient temperature at which the parameters were determined</source>
-        <translation>Моделдің параметрлері анықталған қоршаған ортаның температурасы</translation>
+        <translation>درجة الحرارة المحيطة التي تتحدد معالم</translation>
     </message>
     <message>
         <location line="+57"/>
         <source>FBH HBT</source>
-        <translation>FBH ГБТ</translation>
+        <translation>FBH HBT</translation>
     </message>
     <message>
-        <location filename="components/hic0_full.cpp" line="-220"/>
+        <location filename="../qucs/components/hic0_full.cpp" line="-220"/>
         <source>HICUM Level 0 v1.12 verilog device</source>
-        <translation>HICUM Level 0 v1.12 Verilog-моделі</translation>
+        <translation>أجهزة فيريلوج HICUM 0 v1.12</translation>
     </message>
     <message>
         <location line="+5"/>
-        <location filename="components/hicumL0V1p2.cpp" line="-233"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="-233"/>
-        <location filename="components/hicumL0V1p3.cpp" line="-251"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="-233"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="-233"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="-251"/>
         <source>(Modified) saturation current</source>
-        <translation>(Өзгертілген) қаныққан ток ағыны</translation>
+        <translation>-التشبع  الحالي -معدلة</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+5"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+5"/>
         <source>Non-ideality coefficient of forward collector current</source>
-        <translation>Коллектор өткеліндегі тура тоқ ағынының әмбебап емес коэффициенті</translation>
+        <translation>Non-ideality معامل التجميع الحالي إلى الأمام</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+2"/>
         <source>Non-ideality coefficient of reverse collector current</source>
-        <translation>Коллектор өткеліндегі кері тоқ ағынының әмбебап емес коэффициенті</translation>
+        <translation>Non-ideality  معامل عكس جمع الحالية</translation>
     </message>
     <message>
         <location line="+2"/>
         <location line="+100"/>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+2"/>
         <location line="+114"/>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+2"/>
         <location line="+114"/>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+2"/>
         <location line="+116"/>
         <location line="+3"/>
         <source>forward Early voltage (normalization volt.)</source>
-        <translation>Эрли тура бағыттағы кернеуі (тұрақталған кернеу)</translation>
+        <translation>تقدم أولي للتيار الكهربائي</translation>
     </message>
     <message>
-        <location line="-100"/>
-        <location filename="components/hicumL0V1p2.cpp" line="-111"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="-111"/>
-        <location filename="components/hicumL0V1p3.cpp" line="-111"/>
-        <source>forward d.c. high-injection roll-off current</source>
-        <translation>тура тұрақты ағында жоғары инжекция кезіндегі шеңберлік емес ток</translation>
+        <source>forward d.c. high-injection toll-off current</source>
+        <translation type="obsolete">forward d.c. high-injection toll-off current</translation>
     </message>
     <message>
-        <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+5"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+5"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+5"/>
+        <location line="-97"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="-106"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="-106"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="-106"/>
         <source>inverse d.c. high-injection roll-off current</source>
-        <translation>кері тұрақты ағында жоғары инжекция кезіндегі шеңберлік емес ток</translation>
+        <translation>inverse d.c. high-injection roll-off current</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
         <source>high-injection correction current</source>
-        <translation>Жоғары инжекция кезіндегі түзетуші ток ағыны</translation>
+        <translation>الحقن العالي التصحيح الحالي </translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
         <source>high-injection correction factor</source>
-        <translation>Жоғары инжекция кезіндегі түзетуші фактор</translation>
+        <translation>الحقن العالي التصحيح العامل </translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+4"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+7"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+4"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+4"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+7"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+4"/>
         <source>BE saturation current</source>
-        <translation>БЭ үшін қаныққан ток ағыны</translation>
+        <translation>BEالتشبع  الحالي</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
         <source>BE non-ideality factor</source>
-        <translation>Б-Э үшін әмбебап емес коэффициент</translation>
+        <translation>BE non-ideality factor</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+2"/>
         <source>BE recombination saturation current</source>
-        <translation>БЭ үшін рекомбинациялық қаныққан ток</translation>
+        <translation>BEإعادة تشبع الحالي</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
         <source>BE recombination non-ideality factor</source>
-        <translation>БЭ үшін рекомбинациялық әмбебап емес коэффициент</translation>
+        <translation>BE recombination non-ideality factor</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+2"/>
         <source>BC saturation current</source>
-        <translation>Б-К үшін қаныққан ток ағыны</translation>
+        <translation>BCالتشبع  الحالي</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
         <source>BC non-ideality factor</source>
-        <translation>Б-К үшін әмбебап емес коэффициент</translation>
+        <translation>BC non-ideality factor</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+2"/>
         <source>Zero-bias BE depletion capacitance</source>
-        <translation>Нөлдік ығысу кезіндегі Б-Э өткелінің меншікті сыйымдылығы</translation>
+        <translation>Zero-bias BE depletion capacitance</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
         <source>BE built-in voltage</source>
-        <translation>БЭ үшін потенциалдар айырымы</translation>
+        <translation>  BE  مدمجة في الجهد</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
         <source>BE exponent factor</source>
-        <translation>Б-Э экспоненталық коэффициенті</translation>
+        <translation>BE الدليل عامل  </translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+2"/>
         <source>Ratio of maximum to zero-bias value</source>
-        <translation>Нөлдік ығысу кезіндегі максималды мәннің ішкі сыйымдылыққа қатынасы</translation>
+        <translation>الحد الأقصى لنسبة الصفر قيمة الانحياز</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+9"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+9"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+9"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+9"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+9"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+9"/>
         <source>low current transit time at Vbici=0</source>
-        <translation>Төменгі токта ұшып өту уақыты Vбс=0</translation>
+        <translation>منخفضة في الوقت الحالي لعبور Vbici = 0</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
         <source>Base width modulation contribution</source>
-        <translation>База енінің модуляциясы</translation>
+        <translation>تعديل عرض قاعدة مساهمة</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
         <source>SCR width modulation contribution</source>
-        <translation>Силиконмен басқарылатын түзеткіш енінің модуляциясы</translation>
+        <translation>عرض تعديل المساهمة SCR</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
         <source>Storage time in neutral emitter</source>
-        <translation>Нейтралды эмиттерді сақтау уақыты</translation>
+        <translation>باعث تخزينها في الوقت محايدة </translation>
     </message>
     <message>
-        <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
-        <source>Exponent factor for emitter transit time</source>
-        <translation>Эмиттер өту уақыты үшін экспоненталы фактор</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+2"/>
-        <source>Saturation time at high current densities</source>
-        <translation>Токтың жоғарғы тығыздығы үшін қанығу уақыты</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
-        <source>Smoothing factor for current dependence</source>
-        <translation>Ток ағынының тәуелділігі үшін тегістейтін фактор</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+2"/>
-        <source>Storage time at inverse operation</source>
-        <translation>Инверсті режимде сақтау уақыты</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
-        <source>Low-field collector resistance under emitter</source>
-        <translation>Кіші электр өрісіндегі коллектор үстіндегі эмиттердің кедергісі</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
-        <source>Voltage dividing ohmic and satur.region</source>
-        <translation>Қанығу облысымен омдық режимді бөлетін кернеу</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location line="+25"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location line="+25"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
-        <location line="+25"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
-        <location line="+25"/>
-        <source>Punch-through voltage</source>
-        <translation>Тесіп-өту кернеуі</translation>
-    </message>
-    <message>
-        <location line="-22"/>
-        <location filename="components/hicumL0V1p2.cpp" line="-22"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="-22"/>
-        <location filename="components/hicumL0V1p3.cpp" line="-22"/>
-        <source>Saturation voltage</source>
-        <translation>Қаныққан кернеу</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
-        <source>Total zero-bias BC depletion capacitance</source>
-        <translation>толық нөлдік ығысу кезінде база-коллектордың меншікті сыйымдылығы</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
-        <source>BC built-in voltage</source>
-        <translation>БК үшін потенциалдар айырымы</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
-        <source>BC exponent factor</source>
-        <translation>Б-К экспоненталық коэффициенті</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+2"/>
-        <source>Punch-through voltage of BC junction</source>
-        <translation>Б-К өткеліндегі тесіп-өту кернеуі</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
-        <source>Zero-bias external BC depletion capacitance</source>
-        <translation>нөлдік ығысу кезінде база - коллектор меншікті сыйымдылығы</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
-        <source>External BC built-in voltage</source>
-        <translation>Сыртқы Б-К үшін потенциалдарының контактылы айырымы</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
-        <source>External BC exponent factor</source>
-        <translation>Б-К сыртқы экспоненталық коэффициенті</translation>
+        <source>Exponent factor for emmiter transit time</source>
+        <translation type="obsolete">  دليل عامل  لباعث الزمن</translation>
     </message>
     <message>
         <location line="+5"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+5"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+5"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+5"/>
-        <source>Split factor = Cjci0/Cjc0</source>
-        <translation>Сплит факторы = Cjci0/Cjc0</translation>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+5"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+5"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+5"/>
+        <source>Saturation time at high current densities</source>
+        <translation>التشبع في الوقت الحالي عالية الكثافة</translation>
+    </message>
+    <message>
+        <source>Smoothing facor for current dependence</source>
+        <translation type="obsolete">تمهيد من عوامل الاعتماد الحالي</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+5"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+5"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+5"/>
+        <source>Storage time at inverse operation</source>
+        <translation>التخزين في وقت العملية العكسية</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
+        <source>Low-field collector resistance under emitter</source>
+        <translation>منخفضة ميدان المقاومة في ظل وجمع باعث</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
+        <source>Voltage dividing ohmic and satur.region</source>
+        <translation>ohmic تقسيم الجهد وsatur.region</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <location line="+25"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
+        <location line="+25"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
+        <location line="+25"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
+        <location line="+25"/>
+        <source>Punch-through voltage</source>
+        <translation>نخس من خلال الفولت</translation>
+    </message>
+    <message>
+        <location line="-22"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="-22"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="-22"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="-22"/>
+        <source>Saturation voltage</source>
+        <translation>التشبع الجهد</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
+        <source>Total zero-bias BC depletion capacitance</source>
+        <translation>Total zero-bias BC depletion capacitance</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
+        <source>BC built-in voltage</source>
+        <translation>  BC  مدمجة في الجهد</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
+        <source>BC exponent factor</source>
+        <translation>BC دليل عامل   </translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+2"/>
+        <source>Punch-through voltage of BC junction</source>
+        <translation>Punch-through voltage of BC junction</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
+        <source>Zero-bias external BC depletion capacitance</source>
+        <translation>Zero-bias external BC depletion capacitance</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
+        <source>External BC built-in voltage</source>
+        <translation> الخارجي  في  الفولت BC   </translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
+        <source>External BC exponent factor</source>
+        <translation>BC الخارجي لعامل العنصر</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+5"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+5"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+5"/>
+        <source>Split factor = Cjci0/Cjc0</source>
+        <translation>Split factor = Cjci0/Cjc0</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+2"/>
         <source>Internal base resistance at zero-bias</source>
-        <translation>Нөлдік ығысу кезіндегі базаның ішкі кедергісі</translation>
+        <translation>  القاعدة الداخلية للمقاومة معدومة</translation>
     </message>
     <message>
         <location line="+9"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+9"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+9"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+9"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+9"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+9"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+9"/>
         <source>Geometry factor</source>
-        <translation>Геометриялық көрсеткіш</translation>
+        <translation>العامل الهندسي </translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hic2_full.cpp" line="-202"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p1.cpp" line="-140"/>
-        <location filename="components/hicumL2V2p23.cpp" line="-202"/>
-        <location filename="components/hicumL2V2p24.cpp" line="-202"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="-230"/>
+        <location filename="../qucs/components/hic2_full.cpp" line="-202"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="-140"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="-202"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="-202"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="-230"/>
         <source>External base series resistance</source>
-        <translation>Базаның сыртқы тізбектік кедергісі</translation>
+        <translation>القاعدة الخارجية لسلسلة المقاومة</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hic2_full.cpp" line="+11"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+10"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+11"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+11"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+11"/>
+        <location filename="../qucs/components/hic2_full.cpp" line="+11"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+10"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+11"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+11"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+11"/>
         <source>Emitter series resistance</source>
-        <translation>Эмиттер кедергісі</translation>
+        <translation>باعث لسلسلة المقاومة</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hic2_full.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
+        <location filename="../qucs/components/hic2_full.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
         <source>External collector series resistance</source>
-        <translation>Коллектордың сыртқы тізбектік кедергісі</translation>
+        <translation> جمع سلسلة المقاومة الخارجية</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hic2_full.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
+        <location filename="../qucs/components/hic2_full.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
         <source>Substrate transistor transfer saturation current</source>
-        <translation>Транзистор салымша өткеліндегі қаныққан тоқ ағыны</translation>
+        <translation>الركازة الترانزستور الحالي نقل التشبع</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
         <source>Substrate transistor transfer current non-ideality factor</source>
-        <translation>Транзистор-салымша өткеліндегі тоқ ағынының әмбебап емес коэффициенті</translation>
+        <translation>لنقل  الترانزستور الحالي   non-idealityعامل </translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+2"/>
         <source>SC saturation current</source>
-        <translation>SC қаныққан ток ағыны</translation>
+        <translation>SCالتشبع  الحالي</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
         <source>SC non-ideality factor</source>
-        <translation>SC әмбебап емес коэффициент</translation>
+        <translation>SC non-ideality factor</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+2"/>
         <source>Zero-bias SC depletion capacitance</source>
-        <translation>Нөлдік ығысу кезіндегі К-П өткелінің меншікті сыйымдылығы</translation>
+        <translation>SCتفخيض السعة كهربائية إلى الصفر</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
         <source>SC built-in voltage</source>
-        <translation>SC кернеумен құру</translation>
+        <translation>  SC  مدمجة في الفولت</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
         <source>External SC exponent factor</source>
-        <translation>Б-К экспоненталық коэффициенті</translation>
+        <translation>SC الخارجي لعامل العنصر</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+2"/>
         <source>SC punch-through voltage</source>
-        <translation>SC тесіп өту кернеуі</translation>
+        <translation>نخس من خلال الفولت SC</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
         <source>Collector-base isolation (overlap) capacitance</source>
-        <translation>Коллектор-базаның оқшауланған (жартылай жабылған) меншікті сыйымдылығы</translation>
+        <translation>جمع قاعدة العزلة (تداخل) مواسعة</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
         <source>Emitter-base oxide capacitance</source>
-        <translation>Эмиттер-базаның қышқылдық сыйымдылығы</translation>
+        <translation>انبعاثات أكسيد قاعدة مواسعة</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
         <source>Exponent factor</source>
-        <translation>Көрсеткіштік фактор</translation>
+        <translation>عامل الأس  </translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+2"/>
         <source>Prefactor</source>
-        <translation>Префактор</translation>
+        <translation>Prefactor</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
         <source>M^(1-AF)</source>
-        <translation>M^(1-AЖ)</translation>
+        <translation>M^(1-AF)</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+2"/>
         <source>flicker noise exponent factor</source>
-        <translation>1/f-шудың деңгей көрсеткіші</translation>
+        <translation>خفق  التشويش الأسي</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+2"/>
         <source>Bandgap-voltage</source>
-        <translation>Тұрақтандырғыш кернеу</translation>
+        <translation>فرق الفولت</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
         <source>Effective emitter bandgap-voltage</source>
-        <translation>Тұрақтандырғыш-кернеудің эмиттердегі әсері</translation>
+        <translation>المصدر الحقيقي فرق الفولت</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
         <source>Effective collector bandgap-voltage</source>
-        <translation>Тұрақтандырғыш-кернеудің коллектордағы әсері</translation>
+        <translation>المجمع  الحقيقي فرق الفولت</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
         <source>Effective substrate bandgap-voltage</source>
-        <translation>Тұрақтандырғыш-кернеудің салымшадағы әсері</translation>
+        <translation>الركازة الحقيقي فرق الفولت</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
         <source>Coefficient K1 in T-dependent bandgap equation</source>
-        <translation>Т-тәуелді тұрақтандырғыш теңдеудегі К1 коэффициенті</translation>
+        <translation>Coefficient K1 in T-dependent bandgap equation</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
         <source>Coefficient K2 in T-dependent bandgap equation</source>
-        <translation>Т-тәуелді тұрақтандырғыш теңдеудегі К2 коэффициенті</translation>
+        <translation>Coefficient K2 in T-dependent bandgap equation</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
         <source>Frist-order TC of tf0</source>
-        <translation>Бірінші ретті ТС температуралық коэффициент tf0</translation>
+        <translation>Frist-order TC of tf0</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
         <source>Second-order TC of tf0</source>
-        <translation>екінші ретті ТС-те tf0</translation>
+        <translation>Second-order TC of tf0</translation>
     </message>
     <message>
         <location line="+1"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+1"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+1"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+1"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+1"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+1"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+1"/>
         <location line="+44"/>
         <source>1/K^2</source>
-        <translation>1/шаршы К</translation>
+        <translation>1/K^2</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hic2_full.cpp" line="+173"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p3.cpp" line="-42"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+173"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+173"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+189"/>
+        <location filename="../qucs/components/hic2_full.cpp" line="+173"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="-42"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+173"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+173"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+189"/>
         <source>Exponent coefficient in transfer current temperature dependence</source>
-        <translation>Өтпелі токтың температураға тәуелді көрсеткіштік факторы</translation>
+        <translation>معامل الأس  في نقل درجة الحرارة  الاعتماد الحالية</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+2"/>
         <source>Exponent coefficient in BE junction current temperature dependence</source>
-        <translation>БЭ тогының температураға тәуелді көрсеткіштік факторы</translation>
+        <translation> BEمعامل الأس  في  وصلة درجة الحرارة  الاعتماد الحالية</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+2"/>
         <source>TC of epi-collector diffusivity</source>
-        <translation>Эпи-коллектордың диффузиялық температуралық тұрақтысы</translation>
+        <translation>TC of epi-collector diffusivity</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+2"/>
         <source>Relative TC of satur.drift velocity</source>
-        <translation>Дрейф қанығу жылдамдығының салыстырмалы температуралық коэффициенті</translation>
+        <translation>Relative TC of satur.drift velocity</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
         <source>Relative TC of vces</source>
-        <translation>vces салыстырмалы температуралық коэффициент</translation>
+        <translation>Relative TC of vces</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
         <source>TC of internal base resistance</source>
-        <translation>Базаның ішкі тізбектік кедергісінің температуралық тұрақтысы</translation>
+        <translation>TC قاعدة المقاومة الداخلية </translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+2"/>
         <source>TC of external base resistance</source>
-        <translation>Базаның сыртқы тізбектік кедергісінің температуралық тұрақтысы</translation>
+        <translation>TC قاعدة المقاومة الخارجية </translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+2"/>
         <source>TC of external collector resistance</source>
-        <translation>Коллектордың сыртқы тізбектік кедергісінің температуралық тұрақтысы</translation>
+        <translation>TC مجمع  المقاومة الخارجية </translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+2"/>
         <source>TC of emitter resistances</source>
-        <translation>Эмиттер кедергісінің температуралық тұрақтысы</translation>
+        <translation>TC باعث  المقاومة  </translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+4"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+4"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+4"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+4"/>
         <source>TC of avalanche prefactor</source>
-        <translation>Тасқындық ток факторының температуралық тұрақтысы</translation>
+        <translation>TC of avalanche prefactor</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
         <source>TC of avalanche exponential factor</source>
-        <translation>Тасқындық ток ағынының көрсеткіштік факторының температуралық тұрақтысы</translation>
+        <translation>TC of avalanche exponential factor</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+5"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+10"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+19"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+5"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+10"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+19"/>
         <source>Flag for self-heating calculation</source>
-        <translation>жеке жылулықты есептеу үшін жалауша бағыттауышы</translation>
+        <translation>راية لحساب التسخين الذاتي</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hic2_full.cpp" line="+9"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+124"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+9"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+9"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+16"/>
+        <location filename="../qucs/components/hic2_full.cpp" line="+9"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+124"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+9"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+9"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+16"/>
         <source>Thermal resistance</source>
-        <translation>Жылулық кедергі</translation>
+        <translation> المقاومة الحرارية </translation>
     </message>
     <message>
         <location line="+1"/>
-        <location filename="components/hic2_full.cpp" line="+1"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+1"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+1"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+1"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+1"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+1"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+1"/>
+        <location filename="../qucs/components/hic2_full.cpp" line="+1"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+1"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+1"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+1"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+1"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+1"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+1"/>
         <source>K/W</source>
-        <translation>К/Вт</translation>
+        <translation>K/W</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+5"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+5"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
         <source>Ws/K</source>
-        <translation>Втс/К</translation>
+        <translation>Ws/K</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+2"/>
         <source>Temperature for which parameters are valid</source>
-        <translation>Дұрыс параметрлер үшін температура</translation>
+        <translation>درجة الحرارة التي البارامترات صالحة</translation>
     </message>
     <message>
         <location line="+1"/>
-        <location filename="components/hic2_full.cpp" line="+8"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+1"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+1"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+1"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+8"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+8"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+13"/>
+        <location filename="../qucs/components/hic2_full.cpp" line="+8"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+1"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+1"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+1"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+8"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+8"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+13"/>
         <source>C</source>
-        <translation>Сыйымдылық</translation>
+        <translation>C</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+2"/>
         <source>Temperature change for particular transistor</source>
-        <translation>Белгілі транзистор температурасының өзгеруі</translation>
+        <translation>لتغير درجات حرارة  الترانزستور الخاصة </translation>
     </message>
     <message>
         <location line="+1"/>
-        <location filename="components/hic2_full.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p2.cpp" line="+1"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+1"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+1"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
+        <location filename="../qucs/components/hic2_full.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+1"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+1"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+1"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
         <source>K</source>
-        <translation>К</translation>
+        <translation>K</translation>
     </message>
     <message>
         <location line="+21"/>
         <source>npn HICUM L0 v1.12</source>
-        <translation>npn типті HICUM L0 1.12 нұсқасы</translation>
+        <translation>npn HICUM L0 v1.12</translation>
     </message>
     <message>
         <location line="+9"/>
         <source>pnp HICUM L0 v1.12</source>
-        <translation>pnp типті HICUM L0 1.12 нұсқасы</translation>
+        <translation>pnp HICUM L0 v1.12</translation>
     </message>
     <message>
-        <location filename="components/hic2_full.cpp" line="-288"/>
+        <location filename="../qucs/components/hic2_full.cpp" line="-288"/>
         <source>HICUM Level 2 v2.22 verilog device</source>
-        <translation>HICUM Level 2 v2.22 Verilog-моделі</translation>
+        <translation>أجهزة فيريلوج HICUM 2 v2.22</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="-192"/>
-        <location filename="components/hicumL2V2p23.cpp" line="-285"/>
-        <location filename="components/hicumL2V2p24.cpp" line="-285"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="-319"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="-192"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="-285"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="-285"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="-319"/>
         <source>GICCR constant</source>
-        <translation>GICCR тұрақтысы</translation>
+        <translation>ثابت GICCR </translation>
     </message>
     <message>
         <location line="+1"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+1"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+1"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+1"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+1"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+1"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+1"/>
         <source>A^2s</source>
-        <translation>А^2c</translation>
+        <translation>A^2s</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
         <source>Zero-bias hole charge</source>
-        <translation>Нөлдік ығысу кезіндегі тесіктердің заряды</translation>
+        <translation>الشحنة  عند مستوى الصفر</translation>
     </message>
     <message>
         <location line="+1"/>
         <location line="+59"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+1"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+1"/>
         <location line="+59"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+1"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+1"/>
         <location line="+59"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+1"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+1"/>
         <location line="+65"/>
         <source>Coul</source>
-        <translation>Коул</translation>
+        <translation>Coul</translation>
     </message>
     <message>
         <location line="-57"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="-57"/>
-        <location filename="components/hicumL2V2p24.cpp" line="-57"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="-63"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="-57"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="-57"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="-63"/>
         <source>High-current correction for 2D and 3D effects</source>
-        <translation>2D және 3D әсерлері үшін улкен токтардағы түзетулер</translation>
+        <translation>التصحيح الحالي العالي لأثار 2D و 3D</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+5"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+5"/>
         <source>Emitter minority charge weighting factor in HBTs</source>
-        <translation>ГБТ-да эмиттердегі негізгі емес заряд тасушылардың ауырлық коэффициенті</translation>
+        <translation>HBTs باعث الأقلية تهمة عامل الترج</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
         <source>Collector minority charge weighting factor in HBTs</source>
-        <translation>ГБТ-да коллектордағы негізгі емес заряд тасушылардың ауырлық коэффициенті</translation>
+        <translation>HBTs مجمع الأقلية تهمة عامل الترج</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
         <source>B-E depletion charge weighting factor in HBTs</source>
-        <translation>ГБТ-да Б-Э заряд тасушылардың ауырлық коэффициенті</translation>
+        <translation>HBTs  عامل تفخيض شحنة الترجيح لقاعدة الإرسال في</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+6"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+6"/>
         <source>B-C depletion charge weighting factor in HBTs</source>
-        <translation>ГБТ-да Б-К заряд тасушылардың ауырлық коэффициенті</translation>
+        <translation>HBTs  عامل تفخيض شحنة الترجيح فيB-E</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
         <source>Internal B-E saturation current</source>
-        <translation>Б-Э үшін ішкі қаныққан ток ағыны</translation>
+        <translation>التشبع التيار الداخلي لقاعدة الإرسال</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
         <source>Internal B-E current ideality factor</source>
-        <translation>Б-Э үшін ішкі токтың әмбебап коэффициенті</translation>
+        <translation>عامل المثاليةللتيار الداخلي لقاعدة الإرسال</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
         <source>Internal B-E recombination saturation current</source>
-        <translation>Б-Э үшін ішкі рекомбинациялық қаныққан ток</translation>
+        <translation>إعادة تشبع التيار الداخلي لقاعدة الإرسال</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
         <source>Internal B-E recombination current ideality factor</source>
-        <translation>Б-Э үшін ішкі рекомбинациялық токтың әмбебап коэффициенті</translation>
+        <translation> معامل المثالي لإعادة تشبع التيار الداخلي لقاعدة الإرسال</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
         <source>Peripheral B-E saturation current</source>
-        <translation>Б-Э үшін перифириялық қаныққан ток</translation>
+        <translation> التشبع التيار الخارجي لقاعدة الإرسال</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
         <source>Peripheral B-E current ideality factor</source>
-        <translation>Перифириялық Б-Э үшін токтың әмбебап коэффициенті</translation>
+        <translation> معامل التيار المثالي  الخارجي لقاعدة الإرسال</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
         <source>Peripheral B-E recombination saturation current</source>
-        <translation>Перифириялық Б-Э үшін рекомбинациялық қаныққан ток</translation>
+        <translation>إعادة تشبع التيار الخارجي لقاعدة الإرسال</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
         <source>Peripheral B-E recombination current ideality factor</source>
-        <translation>Перифириялық Б-Э үшін рекомбинациялық токтың әмбебап коэффициенті</translation>
+        <translation> معامل المثالي لإعادة تشبع التيار الخارجي لقاعدة الإرسال</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
         <source>Non-ideality factor for III-V HBTs</source>
-        <translation>III-V ГБТ үшін әмбебап емес коэффициент</translation>
+        <translation>III-V HBTs ل Non-idealityمعامل </translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
         <source>Base current recombination time constant at B-C barrier for high forward injection</source>
-        <translation>Б-К өткеліндегі жоғары инжекция үшін рекомбинациялық тура бағыттағы токтың уақыттық тұрақтысы</translation>
+        <translation>لأجل الحقن العالي  B-C الوقت الثابت لإعادة قاعدة التيار  عند سقف</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
         <source>Internal B-C saturation current</source>
-        <translation>Ішкі Б-К үшін қаныққан ток ағыны</translation>
+        <translation>التشبع التيار الداخلي B-C</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
         <source>Internal B-C current ideality factor</source>
-        <translation>Б-К үшін ішкі токтың әмбебап коэффициенті</translation>
+        <translation>عامل المثاليةللتيار الداخلي لقاعدة الإرسالB-C</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
         <source>External B-C saturation current</source>
-        <translation>Б-К үшін сыртқы қаныққан ток ағыны</translation>
+        <translation> التشبع التيار الخارجيB-C</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
         <source>External B-C current ideality factor</source>
-        <translation>Б-К үшін сыртқы токтың әмбебап коэффициенті</translation>
+        <translation> معامل التيار المثالي  الخارجي B-C</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
         <source>B-E tunneling saturation current</source>
-        <translation>БЭ үшін туннелдік қаныққан ток</translation>
+        <translation>نفق التشبع التيار  لقاعدة الإرسال</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
         <source>Exponent factor for tunneling current</source>
-        <translation>Туннелдік ток ағынының көрсеткіштік факторы</translation>
+        <translation>معامل الأسلنفق التيار</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
         <source>Specifies the base node connection for the tunneling current</source>
-        <translation>Туннелдік ток үшін базалық байланыстың спецификациясы</translation>
+        <translation>تحديد قاعدة عقدة الإتصال لنفق التيار</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
         <source>Avalanche current factor</source>
-        <translation>Ағындық токтың факторы</translation>
+        <translation>معامل انهيار التيار</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
         <source>Exponent factor for avalanche current</source>
-        <translation>Тасқындық ток ағынының көрсеткіштік факторы</translation>
+        <translation>معامل الأس لانهيار التيار</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
         <source>Relative TC for FAVL</source>
-        <translation>FAVL салыстырмалы температуралық коэффициенті</translation>
+        <translation>FAVL نسبي لأجل  TC </translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
         <source>Relative TC for QAVL</source>
-        <translation>QAVL салыстырмалы температуралық коэффициенті</translation>
+        <translation>QAVL نسبي لأجل  TC </translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
         <source>Zero bias internal base resistance</source>
-        <translation>Нөлдік ығысу кезіндегі базаның ішкі кедергісі</translation>
+        <translation>  القاعدة الداخلية للمقاومة معدومة</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+4"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+6"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+6"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+6"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+4"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+6"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+6"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+6"/>
         <source>Factor for geometry dependence of emitter current crowding</source>
-        <translation>Эмиттерлік токты ығыстырып шығаратын геометриялық тәуелділік факторы</translation>
+        <translation>معامل الإرتباط الهندسي لإرسال تيار مزدحم</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
         <source>Correction factor for modulation by B-E and B-C space charge layer</source>
-        <translation>Б-Э және Б-К кеңістік зарядының деңгей модуляциясы үшін түзету коэффициенті</translation>
+        <translation> مساحة طبقة التشحين B-Cعامل التصحيح للمعدل عن طريق قاعدة الإرسال و </translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
         <source>Ratio of HF shunt to total internal capacitance (lateral NQS effect)</source>
-        <translation>ЖЖ толық ішкі сыйымдылықтың шунтирлеуге қатынасы (сыртқы квазистатикалық емес әсер)</translation>
+        <translation>لجمع السيعة الداخلية (آثار  الجانبية)ا HFنسبة تحويل </translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
         <source>Ration of internal to total minority charge</source>
-        <translation>Негізгі емес тасымалдаушы ішкі зарядтың толық қатынасы</translation>
+        <translation>نسبة لمجموع الشحن الأقلية الداخلية</translation>
     </message>
     <message>
         <location line="+11"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+8"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+11"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+11"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+11"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+8"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+11"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+11"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+11"/>
         <source>Forward ideality factor of substrate transfer current</source>
-        <translation>Салымша өткеліндегі тура тоқ ағынының әмбебап коэффициенті</translation>
+        <translation>معامل تقدم المثالي لقوام تحويل التيار</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
         <source>C-S diode saturation current</source>
-        <translation>К-П өткеліндегі қанығу тогы</translation>
+        <translation>تشبع التيار في الصمام الثنائي C-S</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
         <source>Ideality factor of C-S diode current</source>
-        <translation>К-П диоды үшін өтпелі токтың әмбебап коэффициенті</translation>
+        <translation> التيار في الصمام الثنائي C-Sمعامل المثالي ل </translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
         <source>Transit time for forward operation of substrate transistor</source>
-        <translation>Тура бағыттағы транзистор салымшасы үшін беріліс уақыты</translation>
+        <translation>وقت مرورللعملية المباشرة لقوام الترانزستور </translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
         <source>Substrate series resistance</source>
-        <translation>Салымшаның тізбектік кедергісі</translation>
+        <translation>قوام تسلسل المقاومة</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
         <source>Substrate shunt capacitance</source>
-        <translation>Салымшаның шунттық сыйымдылығы</translation>
+        <translation>قوام إصال السعة</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
         <source>Internal B-E zero-bias depletion capacitance</source>
-        <translation>Б-Э нөлдік ығысу кезіндегі меншікті сыйымдылық</translation>
+        <translation>قاعدة الإرسال الداخلية لتخفيض السعة معدومة</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
         <source>Internal B-E built-in potential</source>
-        <translation>Ішкі Б-Э үшін потенциалдарының контактылы айырымы</translation>
+        <translation>قاعدة الإرسال الداخلية لبناء طاقة قصوى </translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
         <source>Internal B-E grading coefficient</source>
-        <translation>Б-Э үшін ішкі әмбебап емес коэффициент</translation>
+        <translation>  معامل درجات قاعدة الإرسال الداخلية</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
         <source>Ratio of maximum to zero-bias value of internal B-E capacitance</source>
-        <translation>Нөлдік ығысу кезіндегі максималды мәннің ішкі сыйымдылығының Б-Э өлшеміне қатынасы</translation>
+        <translation>النسبة القصوى لسعة قاعدة الإرسال معدومة</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
         <source>Peripheral B-E zero-bias depletion capacitance</source>
-        <translation>Б-Э нөлдік ығысу кезіндегі перифириялық сыйымдылық</translation>
+        <translation>تفخيض السعة  الخارجية لقاعدة الإرسال إلى الصفر</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
         <source>Peripheral B-E built-in potential</source>
-        <translation>Перифириялы Б-Э потенциалдарының контактылы айырымы</translation>
+        <translation>إدماج التيار العالي  لقاعدة الإرسال الخارجية </translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
         <source>Peripheral B-E grading coefficient</source>
-        <translation>Перифириялық Б-Э үшін әмбебап емес коэффициент</translation>
+        <translation>معامل الدرجات لقاعدة الإرسال الخارجية </translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
         <source>Ratio of maximum to zero-bias value of peripheral B-E capacitance</source>
-        <translation>Нөлдік ығысу кезіндегі максималды мәннің перифириялық сыйымдылықтың Б-Э өлшеміне қатынасы</translation>
+        <translation>النسبة العالية  لسعة  قاعدة الإرسال الخارجية  معدومة</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
         <source>Internal B-C zero-bias depletion capacitance</source>
-        <translation>Ішкі Б-К нөлдік ығысу кезіндегі меншікті сыйымдылық</translation>
+        <translation> الداخلية لتخفيض السعة معدومةB-C</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
         <source>Internal B-C built-in potential</source>
-        <translation>Ішкі Б-К үшін потенциалдарының контактылы айырымы</translation>
+        <translation>الخارجية B-Cإدماج التيار العالي  ل </translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
         <source>Internal B-C grading coefficient</source>
-        <translation>Б-К үшін ішкі әмбебап емес коэффициент</translation>
+        <translation>الداخلية  B-C الداخليةمعامل درجات قاعدة الإرسال ل</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
         <source>Internal B-C punch-through voltage</source>
-        <translation>Ішкі Б-К өткеліндегі тесіп-өту кернеуі</translation>
+        <translation>الداخلي punch-through B-C ضغط </translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
         <source>External B-C zero-bias depletion capacitance</source>
-        <translation>нөлдік ығысу кезінде база-коллектордың сыртқы сыйымдылығы</translation>
+        <translation> الخاجية الى الصفرB-C تخفيض السعة</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
         <source>External B-C built-in potential</source>
-        <translation>Сыртқы Б-К үшін потенциалдарының контактылы айырымы</translation>
+        <translation>الخارجية B-Cإدماج التيار العالي  ل </translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
         <source>External B-C grading coefficient</source>
-        <translation>Б-К үшін сыртқы әмбебап емес коэффициент</translation>
+        <translation>الخارجية  B-C الداخليةمعامل درجات قاعدة الإرسال ل</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
         <source>External B-C punch-through voltage</source>
-        <translation>Б-К өткеліндегі сыртқы тесіп-өту кернеуі</translation>
+        <translation>الخارجي punch-through B-C ضغط </translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
         <source>Partitioning factor of parasitic B-C cap</source>
-        <translation>Б-К паразиттік сыйымдылығы үшін бөлгіш фактор</translation>
+        <translation> B-Cمعامل التقسيم  لسقف التشويش</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
         <source>Partitioning factor of parasitic B-E cap</source>
-        <translation>Б-Э паразиттік сыйымдылығы үшін бөлгіш фактор</translation>
+        <translation> B-Cمعامل التقسيم  لسقف التشويش</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+4"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+4"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
         <source>C-S zero-bias depletion capacitance</source>
-        <translation>Нөлдік ығысу кезіндегі К-П өткелінің меншікті сыйымдылығы</translation>
+        <translation> إلى الصفر C-S  تخفيض سعة</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
         <source>C-S built-in potential</source>
-        <translation>К-П контактылы потенциалдар айырымы</translation>
+        <translation> C-S  إدماج التيار العالي ل</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
         <source>C-S grading coefficient</source>
-        <translation>К-П өткеліндегі әмбебап емес коэффициент</translation>
+        <translation>C-S معامل الدرجات </translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
         <source>C-S punch-through voltage</source>
-        <translation>К-П өткеліндегі тесіп-өту кернеуі</translation>
+        <translation> punch-through C-S ضغط </translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
         <source>Low current forward transit time at VBC=0V</source>
-        <translation>Тура бағыттағы төменгі токта ұшып өту уақыты VBC=0 В</translation>
+        <translation> VBC=0Vإنخفاض وقت عبور  التيار المباشر عند </translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
         <source>Time constant for base and B-C space charge layer width modulation</source>
-        <translation>Б-К үшін базаның кеңістіктегі зарядының енінің деңгейін модуляциялағандағы уақыттық тұрақтысы</translation>
+        <translation> مع التعديل  B-C قاعدة الوقت الثابت و شحن طبقة السطح</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
         <source>Time constant for modelling carrier jam at low VCE</source>
-        <translation>Төменгі VCE кезіндегі тасымалдауыштарды жабуды моделдегендегі уақыт тұрақтысы</translation>
+        <translation>منخفض VCE الوقت الثابت لتصميم إنسداد الناقل عند</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+6"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+6"/>
         <source>Neutral emitter storage time</source>
-        <translation>Нейтралды эмиттерді сақтау уақыты</translation>
+        <translation>وقت تخزين المرسل المحايذ</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
         <source>Exponent factor for current dependence of neutral emitter storage time</source>
-        <translation>Токтың нейтралды эмиттердің сақтау уақытына тәуелді көрсеткіштік факторы</translation>
+        <translation>معامل الدليل للتيار المستقل من وقت تخزين المرسل المحايذ</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
         <source>Saturation time constant at high current densities</source>
-        <translation>Токтың жоғарғы тығыздығы үшін қанығу уақытының тұрақтысы</translation>
+        <translation>ثابت وقت التشبع عند كثافة التيار العالي</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
         <source>Smoothing factor for current dependence of base and collector transit time</source>
-        <translation>База және коллектор ағынының өту уақытына тәуелді тегістеу факторы</translation>
+        <translation>معامل التمهيد للتيار المستقل من القاعدة و مجمع وقت العبور</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
         <source>Partitioning factor for base and collector portion</source>
-        <translation>Базалық және коллекторлық бөліктер үшін бөлгіш фактор</translation>
+        <translation>معامل التقسيم للقاعدة وجزء من المجمع</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
         <source>Internal collector resistance at low electric field</source>
-        <translation>Кіші электр өрісіндегі коллектордың ішкі кедергісі</translation>
+        <translation>مجمع المقاومة الداخلي عند حقل الكهربائي المنخفض</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
         <source>Voltage separating ohmic and saturation velocity regime</source>
-        <translation>Қанығу жылдамдығы режимі мен омдық режимді бөлетін кернеу</translation>
+        <translation>ضغط التبديل بين  نظام السرعة الأومي و التشبع</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
         <source>Internal C-E saturation voltage</source>
-        <translation>К-Э үшін ішкі қаныққан кернеу</translation>
+        <translation>الداخلي C-E ضغط التشبع </translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
         <source>Collector punch-through voltage</source>
-        <translation>Коллектордағы тесіп-өту кернеуі</translation>
+        <translation> punch-through ضغط المجمع </translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
         <source>Storage time for inverse operation</source>
-        <translation>Инверсті режимде сақтау уақыты</translation>
+        <translation>وقت التخزين للعملية العكسية</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+13"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+13"/>
         <source>Total parasitic B-E capacitance</source>
-        <translation>Б-Э үшін толық паразиттік сыйымдылық</translation>
+        <translation>B-E مجموع التشويش في سعة </translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
         <source>Total parasitic B-C capacitance</source>
-        <translation>Б-К үшін толық паразиттік сыйымдылық</translation>
+        <translation>B-C مجموع التشويش في سعة </translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
         <source>Factor for additional delay time of minority charge</source>
-        <translation>Негізгі емес заряд тасымалдаушыларды қосымша уақытқа кідіртетін фактор</translation>
+        <translation>معامل وقت الإنتضار للشحنة الأقلية</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
         <source>Factor for additional delay time of transfer current</source>
-        <translation>Өтпелі токты қосымша уақыт кідіртетін фактор</translation>
+        <translation>معامل وقت الإنتضار لتيار التحويل</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
         <source>Flag for turning on and off of vertical NQS effect</source>
-        <translation>Өшіру және қосу кезіндегі вертикалды NQS әсері үшін бағыттаушы жалауша</translation>
+        <translation>العمودي NQS راية لتشغيل و توقيف لآثار </translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
         <source>Flicker noise coefficient</source>
-        <translation>1/f-шудың коэффициенті</translation>
+        <translation>معامل ومضة التشويش</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
         <source>Flicker noise exponent factor</source>
-        <translation>1/f-шудың деңгей көрсеткіші</translation>
+        <translation>عامل دليل ومضة التشويش</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
         <source>Flag for determining where to tag the flicker noise source</source>
-        <translation>Жанып-өшудің шуының қорек көзін анықтайтын жалауша</translation>
+        <translation>راية لتحديد مصدر ومضة التشويش</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+4"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+8"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+4"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+8"/>
         <source>Scaling factor for collector minority charge in direction of emitter width</source>
-        <translation>Эмиттердің ені бағытында коллектордың негізгі емес тасушыларының масштабтық үлкейткіші</translation>
+        <translation>معامل سلم المجمع الشحنة الأقلية في إتجاه عرض المرسل</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
         <source>Scaling factor for collector minority charge in direction of emitter length</source>
-        <translation>Эмиттердің ұзындығы бағытында коллектордың негізгі емес тасушыларының масштабтық үлкейткіші</translation>
+        <translation>معامل سلم المجمع الشحنة الأقلية في إتجاه طول المرسل</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
         <source>Bandgap voltage extrapolated to 0 K</source>
-        <translation>Тұрақтандырғыш кернеуі 0 К мәніне экстраполирленген</translation>
+        <translation>Kاستقراء فرق الضغط عند 0  </translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
         <source>First order relative TC of parameter T0</source>
-        <translation>ТС-нің Т0 параметріне байланысты бірінші реті</translation>
+        <translation>T0الاعتماد الحرارية من الدرجة الأولى ب</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
         <source>Second order relative TC of parameter T0</source>
-        <translation>ТС-нің Т0 параметріне байланысты екінші реті</translation>
+        <translation>T0الاعتماد الحرارية من الدرجة الثانية ب</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
         <source>Temperature exponent for RCI0</source>
-        <translation>RCI0 үшін температуралық көрсеткіш</translation>
+        <translation> RCI0دليل الدرجة الحرارية ل</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+4"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+4"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
         <source>Relative TC of saturation drift velocity</source>
-        <translation>Дрейф қанығу жылдамдығының салыстырмалы температуралық коэффициенті</translation>
+        <translation>الاعتماد الحراري  على سرعة الانحراف التشبع</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
         <source>Relative TC of VCES</source>
-        <translation>VCES салыстырмалы температуралық коэффициент</translation>
+        <translation>VCESالاعتماد الحراري  على</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
         <source>Temperature exponent of internal base resistance</source>
-        <translation>Базаның ішкі кедергісінің температуралық көрсеткіші</translation>
+        <translation>دليل الحرارة لقاعدة المقاومة الداخلي</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
         <source>Temperature exponent of external base resistance</source>
-        <translation>Базаның сыртқы кедергісінің температуралық көрсеткіші</translation>
+        <translation>دليل الحرارة لقاعدة المقاومة الخارجي</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
         <source>Temperature exponent of external collector resistance</source>
-        <translation>Коллектордың сыртқы кедергісінің температуралық көрсеткіші</translation>
+        <translation>دليل الحرارة لقاعدة المجمع  الخارجي</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
         <source>Temperature exponent of emitter resistance</source>
-        <translation>Эмиттер кедергісінің температуралық көрсеткіші</translation>
+        <translation>دليل الحرارة لمرسل المقاومة </translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL2V2p1.cpp" line="-12"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="-12"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
         <source>Temperature exponent of mobility in substrate transistor transit time</source>
-        <translation>Салымша транзисторының ұшып өтү уақытында температуралық қозғалмалы коэффициент</translation>
+        <translation>دليل الحرارة لتحرك في وقت عبور قوام الترنزستور </translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
         <source>Effective emitter bandgap voltage</source>
-        <translation>Тұрақтандырғыш кернеудің эмиттердегі әсері</translation>
+        <translation>المرسل الحقيقي لفرق الضغط</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
         <source>Effective collector bandgap voltage</source>
-        <translation>Тұрақтандырғыш кернеудің коллектордағы әсері</translation>
+        <translation>المجمع الحقيقي لفرق الضغط</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
         <source>Effective substrate bandgap voltage</source>
-        <translation>Тұрақтандырғыш кернеудің салымшадағы әсері</translation>
+        <translation>القوام الحقيقي لفرق الضغط</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
         <source>Coefficient K1 in T-dependent band-gap equation</source>
-        <translation>Т-тәуелді тұрақтандырғыш теңдеудегі К1 коэффициенті</translation>
+        <translation>Coefficient K1 in T-dependent band-gap equation</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
         <source>Coefficient K2 in T-dependent band-gap equation</source>
-        <translation>Т-тәуелді тұрақтандырғыш теңдеудегі К2 коэффициенті</translation>
+        <translation>Coefficient K2 in T-dependent band-gap equation</translation>
     </message>
     <message>
         <location line="+4"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+4"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+4"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+4"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+4"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+4"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+4"/>
         <source>Exponent coefficient in B-E junction current temperature dependence</source>
-        <translation>Б-Э тогының температураға тәуелді көрсеткіштік факторы</translation>
+        <translation>دليل معامل في قاعدة الإرسال وصلة إعتماد الحراري للتيار</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+14"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+14"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
         <source>Relative TC of forward current gain for V2.1 model</source>
-        <translation>V2.1 моделі үшін тура режимдегі күшейтілген токтың салыстырмалы температуралық коэффициенті</translation>
+        <translation>V2.1الاعتماد الحراري  على ربح التيار المباشر لنوع </translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+10"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+10"/>
         <source>Flag for turning on and off self-heating effect</source>
-        <translation>Өшіру және қосу кезіндегі жылулық әсер үшін бағыттаушы жалауша</translation>
+        <translation>راية لتشغيل أو توقيف آثار التسخين الذاتية </translation>
     </message>
     <message>
         <location line="+6"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+6"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+6"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+11"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+6"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+6"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+11"/>
         <source>J/W</source>
-        <translation>J/Вт</translation>
+        <translation>J/W</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
         <source>Flag for compatibility with v2.1 model (0=v2.1)</source>
-        <translation>Сәйкестік жалаушасы v2.1-моделі (0=v2.1)</translation>
+        <translation>(0=v2.1) v2.1 راية التوافق مع نوع </translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+6"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+6"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+2"/>
         <source>Temperature at which parameters are specified</source>
-        <translation>Моделдің параметрлері берілетін температура</translation>
+        <translation>درجة الحرارة عند أي متغير  محدد</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL2V2p1.cpp" line="+2"/>
-        <location filename="components/hicumL2V2p23.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p24.cpp" line="+3"/>
-        <location filename="components/hicumL2V2p31n.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="+2"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="+3"/>
         <source>Temperature change w.r.t. chip temperature for particular transistor</source>
-        <translation>Белгілі транзистор үшін оның кристалының температурасына байланысты температураның өзгеруі</translation>
+        <translation>الانحراف الحراري للترانزستور بسبب التسخين الكلي للرقائق</translation>
     </message>
     <message>
         <location line="+22"/>
         <source>HICUM L2 v2.22</source>
-        <translation>HICUM L2 v2.22 нұсқасы</translation>
+        <translation>HICUM L2 v2.22</translation>
     </message>
     <message>
-        <location filename="components/hicumL0V1p2.cpp" line="-245"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="-245"/>
         <source>HICUM Level 0 v1.2 verilog device</source>
-        <translation>HICUM Level 0 v1.2 Verilog-моделі</translation>
+        <translation></translation>
     </message>
     <message>
         <location line="+15"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="-230"/>
-        <location filename="components/hicumL0V1p3.cpp" line="-246"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="-230"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="-246"/>
         <source>reverse Early voltage (normalization volt.)</source>
-        <translation>Эрли кері кернеуі (тұрақталған кернеу)</translation>
+        <translation>ضغط الإنعكاس فقط (تسوية فولت)ـ</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+6"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+8"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+6"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+8"/>
         <source>flag for turning on base related critical current</source>
-        <translation>базаның критикалық ағыны үшін бағыттаушы жалауша</translation>
+        <translation>راية لتشغيل  قاعدة الإتصال الكهربائي</translation>
     </message>
     <message>
         <location line="+10"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+10"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+10"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+10"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+10"/>
         <source>Smoothing factor for the d.c. injection width</source>
-        <translation>тұрақты токтағы инжекция енінің тегістейтін параметрі</translation>
+        <translation>d.c. عوامل تمهيد من عرض حقن </translation>
     </message>
     <message>
         <location line="+27"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+27"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+27"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+27"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+27"/>
         <source>BE charge built-in voltage for d.c. transfer current</source>
-        <translation>БЭ үшін тұрақты ток кезінде өтпелі кернеудің потенциалдар айырымы</translation>
+        <translation>d.c. ضغط بناء شحنة  قاعدة الإرسال لتيار التحويل </translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+3"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+3"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+3"/>
         <source>charge BE exponent factor for d.c. transfer current</source>
-        <translation>БЭ үшін тұрақты ток кезінде өтпелі ағынның көрсеткіштік фактор</translation>
+        <translation>d.c. معامل دليل شحن  قاعدة الإرسال لتيار التحويل</translation>
     </message>
     <message>
-        <location line="+2"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+2"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+2"/>
-        <source>BE capacitance ratio (maximum to zero-bias value) for d.c. transfer current</source>
-        <translation>Өтпелі тұрақты ток кезіндегі (нөлдік ығысу кезіндегі максималды мән) Б-Э үшін сыйымдылық</translation>
+        <source>BE capacitance ratio Ratio maximum to zero-bias value for d.c. transfer current</source>
+        <translation type="obsolete">d.c. نسبة سعة قاعدة الإرسال النسبة القصوى معدومة القيمة لتيار التحويل </translation>
     </message>
     <message>
-        <location line="+160"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+160"/>
+        <location line="+162"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+162"/>
         <source>TC of iqf</source>
-        <translation>iqf температура тұрақтысы</translation>
+        <translation>TC of iqf</translation>
     </message>
     <message>
         <location line="+8"/>
-        <location filename="components/hicumL0V1p2g.cpp" line="+173"/>
-        <location filename="components/hicumL0V1p3.cpp" line="+8"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+175"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+8"/>
         <source>Exponent factor for temperature dependent thermal resistance</source>
-        <translation>Жылулық кедергінің температураға тәуелді көрсеткіштік факторы</translation>
+        <translation></translation>
     </message>
     <message>
         <location line="+35"/>
         <source>npn HICUM L0 v1.2</source>
-        <translation>npn типті HICUM L0 1.2 нұсқасы</translation>
+        <translation>npn HICUM L0 v1.2</translation>
     </message>
     <message>
         <location line="+9"/>
         <source>pnp HICUM L0 v1.2</source>
-        <translation>pnp типті HICUM L0 1.2 нұсқасы</translation>
+        <translation>pnp HICUM L0 v1.2</translation>
     </message>
     <message>
-        <location filename="components/hicumL2V2p1.cpp" line="-201"/>
+        <location filename="../qucs/components/hicumL2V2p1.cpp" line="-201"/>
         <source>HICUM Level 2 v2.1 verilog device</source>
-        <translation>HICUM Level 2 v2.21 Verilog-моделі</translation>
+        <translation>أجهزة فيريلوج  v2.21 2 HICUM </translation>
     </message>
     <message>
         <location line="+117"/>
         <source>Partitioning factor of parasitic B-C capacitance</source>
-        <translation>Б-К паразиттік сыйымдылығы үшін бөлгіш фактор</translation>
+        <translation>B-C  معامل تقسيم سعة تشويش في </translation>
     </message>
     <message>
         <location line="+48"/>
         <source>Noise factor for internal base resistance</source>
-        <translation>Базаның ішкі кедергісі үшін шу коэффициенті</translation>
+        <translation>معامل التشويش لقاعدة المقاومة الداخلية</translation>
     </message>
     <message>
         <location line="+57"/>
         <source>HICUM L2 v2.1</source>
-        <translation>HICUM L2 v2.1 нұсқасы</translation>
+        <translation>HICUM L2 v2.1</translation>
     </message>
     <message>
-        <location filename="components/hicumL2V2p23.cpp" line="-287"/>
+        <location filename="../qucs/components/hicumL2V2p23.cpp" line="-287"/>
         <source>HICUM Level 2 v2.23 verilog device</source>
-        <translation>HICUM Level 2 v2.23 Verilog-моделі</translation>
+        <translation>أجهزة فيريلوج  v2.23 2 HICUM </translation>
     </message>
     <message>
         <location line="+309"/>
         <source>HICUM L2 v2.23</source>
-        <translation>HICUM L2 v2.23 нұсқасы</translation>
+        <translation>HICUM L2 v2.23</translation>
     </message>
     <message>
-        <location filename="components/hpribin4bit.cpp" line="-3"/>
-        <source>4bit highest priority encoder (binary form) verilog device</source>
-        <translation>4 биттік жоғары приоритетті шифратор логикалық құрылғысы (бинарлық пішінде)</translation>
-    </message>
-    <message>
-        <location line="+25"/>
-        <source>4Bit HPRI-Bin</source>
-        <translation>4 биттік HPRI-Bin моделі</translation>
-    </message>
-    <message>
-        <location filename="components/iexp.cpp" line="+23"/>
+        <location filename="../qucs/components/iexp.cpp" line="+23"/>
         <source>exponential current source</source>
-        <translation>көрсеткіштік токтың қорек көзі</translation>
+        <translation> المصدر الأسي الحالي</translation>
     </message>
     <message>
         <location line="+34"/>
         <source>current before rising edge</source>
-        <translation>өсу фронтына дейінгі ток ағыны</translation>
+        <translation>قبل أن يرتفع الحد الحالي</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>maximum current of the pulse</source>
-        <translation>импульс кезіндегі максималды ток ағыны</translation>
+        <translation>الحد الأقصى للنبض التيار  </translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/vexp.cpp" line="+61"/>
+        <location filename="../qucs/components/vexp.cpp" line="+61"/>
         <source>start time of the exponentially rising edge</source>
-        <translation>экспоненталы өсу фронтының бастапқы уақыты</translation>
+        <translation>بدأ تضاعف إرتفاع الحد </translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/vexp.cpp" line="+2"/>
+        <location filename="../qucs/components/vexp.cpp" line="+2"/>
         <source>start of exponential decay</source>
-        <translation>экспоненталы төмендеудің бастамасы</translation>
+        <translation> بدأ تضاعف التدهور</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>time constant of the rising edge</source>
-        <translation>өсу фронтының уақыт тұрақтысы</translation>
+        <translation>الوقت الثابت لرتفاع الحد</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>time constant of the falling edge</source>
-        <translation>кему фронтының уақыт тұрақтысы</translation>
+        <translation>الوقت الثابت لإنخفاض الحد</translation>
     </message>
     <message>
         <location line="+16"/>
         <source>Exponential Current Pulse</source>
-        <translation>импульстік токтың көрсеткіші</translation>
+        <translation>تضاعف نبض التيار </translation>
     </message>
     <message>
-        <location filename="components/ifile.cpp" line="-35"/>
+        <location filename="../qucs/components/ifile.cpp" line="-35"/>
         <source>file based current source</source>
-        <translation>ток қорек көзінің базалық файлы</translation>
+        <translation>ملف مصدر التيار</translation>
     </message>
     <message>
         <location line="+29"/>
-        <location filename="components/vfile.cpp" line="-6"/>
+        <location filename="../qucs/components/vfile.cpp" line="-6"/>
         <source>name of the sample file</source>
-        <translation>қарапайым файлдың аты</translation>
+        <translation>اسم الملف العينة</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/sparamfile.cpp" line="+39"/>
-        <location filename="components/vfile.cpp" line="+2"/>
+        <location filename="../qucs/components/sparamfile.cpp" line="+38"/>
+        <location filename="../qucs/components/vfile.cpp" line="+2"/>
         <source>interpolation type</source>
-        <translation>интерполяция типі</translation>
+        <translation>نوع التوليد</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/vfile.cpp" line="+2"/>
+        <location filename="../qucs/components/vfile.cpp" line="+2"/>
         <source>repeat waveform</source>
-        <translation>толқындық қалыпты қайталау</translation>
+        <translation>تكرار الموجي</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>current gain</source>
-        <translation>ток күшейткіші</translation>
+        <translation>الربح الحالي</translation>
     </message>
     <message>
         <location line="+17"/>
         <source>File Based Current Source</source>
-        <translation>Ток қорек көзінің базалық файлы</translation>
+        <translation>ملف مصدر التيار</translation>
     </message>
     <message>
-        <location filename="components/inductor.cpp" line="+23"/>
+        <location filename="../qucs/components/inductor.cpp" line="+23"/>
         <source>inductor</source>
-        <translation>индуктивтілік катушка</translation>
+        <translation> أداة الحث</translation>
     </message>
     <message>
         <location line="+20"/>
         <source>inductance in Henry</source>
-        <translation>индуктивтілік Гн өлшем бірлігімен</translation>
+        <translation>محاثة في هنري  </translation>
     </message>
     <message>
         <location line="+2"/>
         <source>initial current for transient simulation</source>
-        <translation>өтпелі процесті моделдеу үшін бастапқы ток</translation>
+        <translation> التيار الأولي عابرة للمحاكاة</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>Inductor</source>
-        <translation>Индуктивтілік катушка</translation>
+        <translation> أداة الحث</translation>
     </message>
     <message>
-        <location filename="components/iprobe.cpp" line="+23"/>
+        <location filename="../qucs/components/iprobe.cpp" line="+23"/>
         <source>current probe</source>
-        <translation>ток өлшеуіші</translation>
+        <translation>مسار التيار</translation>
     </message>
     <message>
         <location line="+44"/>
         <source>Current Probe</source>
-        <translation>Ток өлшеуіші</translation>
+        <translation>مسار التيار</translation>
     </message>
     <message>
-        <location filename="components/ipulse.cpp" line="+23"/>
+        <location filename="../qucs/components/ipulse.cpp" line="+23"/>
         <source>ideal current pulse source</source>
-        <translation>тұрақты токтың әмбебап қорек көзі</translation>
+        <translation>المصدر المثالي لذبذبة التيار </translation>
     </message>
     <message>
         <location line="+28"/>
         <source>current before and after the pulse</source>
-        <translation>импульсқа дейін және кейін токтың мәні</translation>
+        <translation>التيار قبل و بعد الذبذبة</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>current of the pulse</source>
-        <translation>импульс кезіндегі ток</translation>
+        <translation>ذبذبة التيار</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/vpulse.cpp" line="+54"/>
+        <location filename="../qucs/components/vpulse.cpp" line="+54"/>
         <source>start time of the pulse</source>
-        <translation>импульстың бастапқы уақыты</translation>
+        <translation>بداية الذبذبة</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/vpulse.cpp" line="+2"/>
+        <location filename="../qucs/components/vpulse.cpp" line="+2"/>
         <source>ending time of the pulse</source>
-        <translation>импульстің соңғы уақыты</translation>
+        <translation>نهاية الذبذبة</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/irect.cpp" line="+59"/>
-        <location filename="components/vpulse.cpp" line="+2"/>
-        <location filename="components/vrect.cpp" line="+58"/>
+        <location filename="../qucs/components/irect.cpp" line="+59"/>
+        <location filename="../qucs/components/vpulse.cpp" line="+2"/>
+        <location filename="../qucs/components/vrect.cpp" line="+58"/>
         <source>rise time of the leading edge</source>
-        <translation>импульс фронтының өсу уақыты</translation>
+        <translation>  ارتفاع وقت الحد الأمامي</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/irect.cpp" line="+2"/>
-        <location filename="components/vpulse.cpp" line="+2"/>
-        <location filename="components/vrect.cpp" line="+2"/>
+        <location filename="../qucs/components/irect.cpp" line="+2"/>
+        <location filename="../qucs/components/vpulse.cpp" line="+2"/>
+        <location filename="../qucs/components/vrect.cpp" line="+2"/>
         <source>fall time of the trailing edge</source>
-        <translation>импульс кесіндісінің құлау уақыты</translation>
+        <translation>إنتهاء الوقت لمتابعة الحد</translation>
     </message>
     <message>
         <location line="+16"/>
         <source>Current Pulse</source>
-        <translation>Импульстік токтың қорек көзі</translation>
+        <translation>ذبذبة التيار</translation>
     </message>
     <message>
-        <location filename="components/irect.cpp" line="-38"/>
+        <location filename="../qucs/components/irect.cpp" line="-38"/>
         <source>ideal rectangle current source</source>
-        <translation>тікбұрышты қалыптағы токтың әмбебап қорек көзі</translation>
+        <translation>المصدر المثالي لذبذبة التيار </translation>
     </message>
     <message>
         <location line="+30"/>
         <source>current at high pulse</source>
-        <translation>импульс шыңындағы токтың мәні</translation>
+        <translation> التيار على ذبذبة عالية</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/vrect.cpp" line="-6"/>
+        <location filename="../qucs/components/vrect.cpp" line="-6"/>
         <source>duration of high pulses</source>
-        <translation>импульс шыңының ұзақтығы</translation>
+        <translation>مدة الذبذابات العاليات</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/vrect.cpp" line="+2"/>
+        <location filename="../qucs/components/vrect.cpp" line="+2"/>
         <source>duration of low pulses</source>
-        <translation>импульстің төменгі деңгейінің ұзақтығы</translation>
+        <translation>مدة الذبذابات المنخفضات</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location filename="components/vrect.cpp" line="+6"/>
+        <location filename="../qucs/components/vrect.cpp" line="+6"/>
         <source>initial delay time</source>
-        <translation>бастапқы кідіріс уақыты</translation>
+        <translation>بداية وقت  التأخير</translation>
     </message>
     <message>
         <location line="+16"/>
         <source>Rectangle Current</source>
-        <translation>Тікбұрышты формалы ток көзі</translation>
+        <translation>التيار المستطيل</translation>
     </message>
     <message>
-        <location filename="components/isolator.cpp" line="-30"/>
+        <location filename="../qucs/components/isolator.cpp" line="-30"/>
         <source>isolator</source>
-        <translation>оқшаулағыш</translation>
+        <translation>عازل</translation>
     </message>
     <message>
         <location line="+44"/>
         <source>Isolator</source>
-        <translation>Оқшаулағыш</translation>
+        <translation>العازل</translation>
     </message>
     <message>
-        <location filename="components/jfet.cpp" line="-8"/>
+        <location filename="../qucs/components/jfet.cpp" line="-8"/>
         <source>junction field-effect transistor</source>
-        <translation>pn-өткелі бар өрістік транзистор</translation>
+        <translation>تقاطع  آثار مجال الترانزستور</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location filename="components/nigbt.cpp" line="-10"/>
+        <location filename="../qucs/components/nigbt.cpp" line="-10"/>
         <source>threshold voltage</source>
-        <translation>табалдырықтық кернеу</translation>
+        <translation>عتبة الفولت</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>channel-length modulation parameter</source>
-        <translation>арна ұзындығын модуляциялайтын параметр</translation>
+        <translation>تعديل متغير  طول القناة  </translation>
     </message>
     <message>
         <location line="+2"/>
         <source>parasitic drain resistance</source>
-        <translation>құйманың паразиттік кедергісі</translation>
+        <translation>تفريغ التشويش من المقاومة</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>parasitic source resistance</source>
-        <translation>бастаудың паразиттік кедергісі</translation>
+        <translation>مصدر التشويش في المقاومة</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>gate-junction saturation current</source>
-        <translation>түйектің қаныққан тогы</translation>
+        <translation>بوابة تقاطع بين تشبع التيار</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>gate-junction emission coefficient</source>
-        <translation>түйектің эмиссия коэффициенті</translation>
+        <translation>بوابة تقاطع معامل الانبعاث</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>gate-junction recombination current parameter</source>
-        <translation>p-n өткелін басқаратын рекомбинациялық ток</translation>
+        <translation>بوابة تقاطع متغير إعادة التيار</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Isr emission coefficient</source>
-        <translation>Isr диоды үшін эмиссия коэфиценті</translation>
+        <translation>Isrمعامل الانبعاث ل</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>zero-bias gate-source junction capacitance</source>
-        <translation>түйек-бастау үшін нөлдік ығысу кезіндегі сыйымдылық</translation>
+        <translation>مصدر بوابة تقاطع  السعة كهربائية معدومة</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>zero-bias gate-drain junction capacitance</source>
-        <translation>түйек-құйма үшін нөлдік ығысу кезіндегі сыйымдылық</translation>
+        <translation>مصرف بوابة تقاطع  السعة كهربائية معدومة</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>gate-junction potential</source>
-        <translation>түйек потенциалы</translation>
+        <translation>بوابة تقاطع القوة</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>forward-bias junction capacitance coefficient</source>
-        <translation>тура ығысудың меншікті сыйымдылық коэффициенті</translation>
+        <translation>الانحياز المباشر لمعامل تقاطع السعة</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>gate P-N grading coefficient</source>
-        <translation>p-n өткелі бар түйектің әмбебап емес коэффициенті</translation>
+        <translation>P-N معامل بوابة</translation>
     </message>
     <message>
         <location line="+12"/>
         <source>Vt0 temperature coefficient</source>
-        <translation>Vt0 температуралық коэффицент</translation>
+        <translation>Vt0 معامل الحرارة </translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Beta exponential temperature coefficient</source>
-        <translation>Beta экспоненциалды температуралық коэффициент</translation>
+        <translation>βمعامل دليل الحرارة </translation>
     </message>
     <message>
         <location line="+4"/>
         <source>default area for JFET</source>
-        <translation>п-н өткелімен басқарылатын өрістік транзистор үшін үндестік бойынша берілген аумақ</translation>
+        <translation>JFETالسطح الإفتراضي ل </translation>
     </message>
     <message>
         <location line="+21"/>
@@ -8085,63 +7889,53 @@ Wrong &apos;component&apos; line format!</source>
     <message>
         <location line="+10"/>
         <source>p-JFET</source>
-        <translation>p-арнасы бар өрістік транзистор</translation>
+        <translation>p-JFET</translation>
     </message>
     <message>
-        <location filename="components/jkff_SR.cpp" line="-7"/>
-        <source>jk flip flop with set and reset verilog device</source>
-        <translation>асинхронды кірісі және өшіруі бар JK-триггер verilog құрылғысы</translation>
-    </message>
-    <message>
-        <location line="+27"/>
-        <source>JK-FlipFlop w/ SR</source>
-        <translation>JK-триггер вт/SR</translation>
-    </message>
-    <message>
-        <location filename="components/jk_flipflop.cpp" line="-2"/>
+        <location filename="../qucs/components/jk_flipflop.cpp" line="-2"/>
         <source>JK flip flop with asynchron set and reset</source>
-        <translation>асинхронды кірісі және өшіруі бар JK-триггер</translation>
+        <translation>JK flip flop with asynchron set and reset</translation>
     </message>
     <message>
         <location line="+119"/>
         <source>JK-FlipFlop</source>
-        <translation>JK-триггер</translation>
+        <translation>JK-FlipFlop</translation>
     </message>
     <message>
-        <location filename="components/libcomp.cpp" line="+41"/>
+        <location filename="../qucs/components/libcomp.cpp" line="+33"/>
         <source>Component taken from Qucs library</source>
-        <translation>Компонент Qucs кітапханасынан алынды</translation>
+        <translation> Qucs العنصر مأخوذ من مكتبة </translation>
     </message>
     <message>
         <location line="+8"/>
         <source>name of qucs library file</source>
-        <translation>qucs кітапханасы файлының аты</translation>
+        <translation> Qucs إسم ملف لمكتبة </translation>
     </message>
     <message>
         <location line="+2"/>
         <source>name of component in library</source>
-        <translation>кітапханадағы компоненттің аты</translation>
+        <translation>إسم العنصر في المكتبة</translation>
     </message>
     <message>
-        <location filename="components/log_amp.cpp" line="-47"/>
+        <location filename="../qucs/components/log_amp.cpp" line="-47"/>
         <source>Logarithmic Amplifier verilog device</source>
-        <translation>Логарифмдік күшейткіш verilog құрылғысы</translation>
+        <translation>جهاز فيريلوج للوغاريتم التكبير</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>scale factor</source>
-        <translation>масштабтық коэффициент</translation>
+        <translation>عامل المقياس </translation>
     </message>
     <message>
         <location line="+2"/>
         <source>scale factor error</source>
-        <translation>масштабтық коэффициенттің қатесі</translation>
+        <translation>خطأ في عامل المقياس </translation>
     </message>
     <message>
         <location line="+1"/>
         <location line="+11"/>
-        <location filename="components/photodiode.cpp" line="+19"/>
-        <location filename="components/potentiometer.cpp" line="-12"/>
+        <location filename="../qucs/components/photodiode.cpp" line="+19"/>
+        <location filename="../qucs/components/potentiometer.cpp" line="-12"/>
         <location line="+3"/>
         <source>%</source>
         <translation>%</translation>
@@ -8149,423 +7943,392 @@ Wrong &apos;component&apos; line format!</source>
     <message>
         <location line="-9"/>
         <source>input I1 bias current</source>
-        <translation>кірістегі І1 ығысу тогы</translation>
+        <translation> I1 تيار الدخول </translation>
     </message>
     <message>
         <location line="+3"/>
         <source>input reference bias current</source>
-        <translation>кірістегі ығысу ток ағыны</translation>
+        <translation>مرجع تيار الدخول </translation>
     </message>
     <message>
         <location line="+3"/>
         <source>number of decades</source>
-        <translation>ондықтар саны</translation>
+        <translation>عدد العقود</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/potentiometer.cpp" line="-4"/>
+        <location filename="../qucs/components/potentiometer.cpp" line="-4"/>
         <source>conformity error</source>
-        <translation>Сәйкестік қате</translation>
+        <translation>مطابق للخطأ</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>output offset error</source>
-        <translation>шығыстағы орнатылмаған қате</translation>
+        <translation> خطأ في الإخراج </translation>
     </message>
     <message>
         <location line="+3"/>
         <source>amplifier input resistance</source>
-        <translation>ішкі кедергінің күшейткіші</translation>
+        <translation>مدخل مكبر المقاومة </translation>
     </message>
     <message>
         <location line="+3"/>
         <source>amplifier 3dB frequency</source>
-        <translation>3 дБ жиіліктегі күшейткіш</translation>
+        <translation>3dB تردد مكبر </translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Hz</source>
-        <translation>Гц</translation>
+        <translation>هرتز</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>amplifier output resistance</source>
-        <translation>сыртқы кедергінің күшейткіші</translation>
+        <translation>منفذ مكبر المقاومة </translation>
     </message>
     <message>
         <location line="+3"/>
         <source>conformity error temperature coefficient</source>
-        <translation>Сәйкестік қатенің температуралық коэффициенті</translation>
+        <translation>معامل الحرارة المطابق للخطأ</translation>
     </message>
     <message>
-        <location filename="components/MESFET.cpp" line="-58"/>
+        <location filename="../qucs/components/MESFET.cpp" line="-58"/>
         <location line="+3"/>
         <location line="+3"/>
-        <location filename="components/log_amp.cpp" line="+1"/>
+        <location filename="../qucs/components/log_amp.cpp" line="+1"/>
         <location line="+6"/>
         <source>%/Celsius</source>
-        <translation>%/Цельсий</translation>
+        <translation>%مئوية</translation>
     </message>
     <message>
-        <location filename="components/log_amp.cpp" line="-4"/>
+        <location filename="../qucs/components/log_amp.cpp" line="-4"/>
         <source>offset temperature coefficient</source>
-        <translation>температуралық коэффициентті қайта орнату</translation>
+        <translation>تغير معامل الحرارة</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>V/Celsius</source>
-        <translation>В/Цельсий</translation>
+        <translation>V/مئوية</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>scale factor error temperature coefficient</source>
-        <translation>масштабтық үлкейткіштің температуралық коэффициентінің қатесі</translation>
+        <translation>خطأ في معامل مقياس درجة الحرارة</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>input I1 bias current temperature coefficient</source>
-        <translation>кірістегі І1 ығысу тогының температуралық коэффициенті</translation>
+        <translation>  I1 معامل درجة حرارة تيار الدخول </translation>
     </message>
     <message>
         <location line="+1"/>
         <location line="+3"/>
         <source>A/Celsius</source>
-        <translation>А/Цельсий</translation>
+        <translation>A/مئوية</translation>
     </message>
     <message>
         <location line="-1"/>
         <source>input reference bias current temperature coefficient</source>
-        <translation>кірістегі ығысу тогының температуралық коэффициенті</translation>
+        <translation>معامل درجة الحرارة التيار للمرجع الدخول</translation>
     </message>
     <message>
         <location line="+25"/>
         <source>Logarithmic Amplifier</source>
-        <translation>Логарифмдік күшейткіш</translation>
+        <translation>مكبر الصوت لوغاريتمي</translation>
     </message>
     <message>
-        <location filename="components/MESFET.cpp" line="-43"/>
-        <location filename="components/log_amp.cpp" line="+20"/>
+        <location filename="../qucs/components/MESFET.cpp" line="-43"/>
+        <location filename="../qucs/components/log_amp.cpp" line="+20"/>
         <source>I</source>
-        <translation>1</translation>
+        <translation>I</translation>
     </message>
     <message>
-        <location filename="components/log_amp.cpp" line="+1"/>
+        <location filename="../qucs/components/log_amp.cpp" line="+1"/>
         <source>R</source>
-        <translation>кедергі</translation>
+        <translation>R</translation>
     </message>
     <message>
-        <location filename="components/logic_0.cpp" line="-4"/>
-        <source>logic 0 verilog device</source>
-        <translation>логикалық 0 verilog құрылғысы</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>logic 0 voltage level</source>
-        <translation>логикалық 0 кернеу деңгейі</translation>
-    </message>
-    <message>
-        <location line="+20"/>
-        <source>Logic 0</source>
-        <translation>логикалық 0</translation>
-    </message>
-    <message>
-        <location filename="components/logic_1.cpp" line="-4"/>
-        <source>logic 1 verilog device</source>
-        <translation>логикалық 1 verilog құрылғысы</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>logic 1 voltage level</source>
-        <translation>логикалық 1 кернеу деңгейі</translation>
-    </message>
-    <message>
-        <location line="+20"/>
-        <source>Logic 1</source>
-        <translation>логикалық 1</translation>
-    </message>
-    <message>
-        <location filename="components/logical_and.cpp" line="+22"/>
+        <location filename="../qucs/components/logical_and.cpp" line="+22"/>
         <source>logical AND</source>
-        <translation>логикалық ЖӘНЕ</translation>
+        <translation> المنطقي AND </translation>
     </message>
     <message>
         <location line="+23"/>
         <source>n-port AND</source>
-        <translation>n-кірісті ЖӘНЕ</translation>
+        <translation> n منفذ AND</translation>
     </message>
     <message>
-        <location filename="components/logical_buf.cpp" line="-4"/>
+        <location filename="../qucs/components/logical_buf.cpp" line="-4"/>
         <source>logical buffer</source>
-        <translation>логикалық буффер</translation>
+        <translation>حافظ المنطقي</translation>
     </message>
     <message>
         <location line="+104"/>
         <source>Buffer</source>
-        <translation>Буффер</translation>
+        <translation>الحافظ</translation>
     </message>
     <message>
-        <location filename="components/logical_inv.cpp" line="-4"/>
+        <location filename="../qucs/components/logical_inv.cpp" line="-4"/>
         <source>logical inverter</source>
-        <translation>логикалық түрлендіруші</translation>
+        <translation>العاكس المنطقي</translation>
     </message>
     <message>
         <location line="+121"/>
         <source>Inverter</source>
-        <translation>Инвертор</translation>
+        <translation>العاكس</translation>
     </message>
     <message>
-        <location filename="components/logical_nand.cpp" line="+22"/>
+        <location filename="../qucs/components/logical_nand.cpp" line="+22"/>
         <source>logical NAND</source>
-        <translation>логикалық ЖӘНЕ ЕМЕС</translation>
+        <translation>المنطقي NAND </translation>
     </message>
     <message>
         <location line="+23"/>
         <source>n-port NAND</source>
-        <translation>n-кірісті ЖӘНЕ ЕМЕС</translation>
+        <translation> n منفذ NAND</translation>
     </message>
     <message>
-        <location filename="components/logical_nor.cpp" line="+22"/>
+        <location filename="../qucs/components/logical_nor.cpp" line="+22"/>
         <source>logical NOR</source>
-        <translation>логикалық НЕМЕСЕ ЕМЕС</translation>
+        <translation>المنطقي NOR </translation>
     </message>
     <message>
         <location line="+23"/>
         <source>n-port NOR</source>
-        <translation>n-кірісті НЕМЕСЕ ЕМЕС</translation>
+        <translation> n منفذ NOR</translation>
     </message>
     <message>
-        <location filename="components/logical_or.cpp" line="+22"/>
+        <location filename="../qucs/components/logical_or.cpp" line="+22"/>
         <source>logical OR</source>
-        <translation>логикалық НЕМЕСЕ</translation>
+        <translation>المنطقي OR </translation>
     </message>
     <message>
         <location line="+23"/>
         <source>n-port OR</source>
-        <translation>n-кірісті НЕМЕСЕ</translation>
+        <translation> n منفذ OR</translation>
     </message>
     <message>
-        <location filename="components/logical_xnor.cpp" line="+22"/>
+        <location filename="../qucs/components/logical_xnor.cpp" line="+22"/>
         <source>logical XNOR</source>
-        <translation>логикалық ЕСКЕРІЛМЕЙТІН НЕМЕСЕ ЕМЕС</translation>
+        <translation>المنطقي XNOR </translation>
     </message>
     <message>
         <location line="+23"/>
         <source>n-port XNOR</source>
-        <translation>n-кірісті ЕСКЕРМЕЙТІН НЕМЕСЕ ЕМЕС</translation>
+        <translation> n منفذ XNOR</translation>
     </message>
     <message>
-        <location filename="components/logical_xor.cpp" line="+22"/>
+        <location filename="../qucs/components/logical_xor.cpp" line="+22"/>
         <source>logical XOR</source>
-        <translation>логикалық ЕСКЕРІЛМЕЙТІН НЕМЕСЕ</translation>
+        <translation>المنطقي XOR </translation>
     </message>
     <message>
         <location line="+23"/>
         <source>n-port XOR</source>
-        <translation>n-кірісті ЕСКЕРМЕЙТІН НЕМЕСЕ</translation>
+        <translation> n منفذ XOR</translation>
     </message>
     <message>
-        <location filename="components/MESFET.cpp" line="-39"/>
+        <location filename="../qucs/components/MESFET.cpp" line="-39"/>
         <source>MESFET verilog device</source>
-        <translation>МОС verilog құрылғысы</translation>
+        <translation> أجهزة فيريلوج MESFET</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>model selector</source>
-        <translation>моделді таңдаушы</translation>
+        <translation>النموذج المنتق</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>pinch-off voltage</source>
-        <translation>кернеу қысуын өшіру</translation>
+        <translation>pinch-off voltage</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>A/(V*V)</source>
-        <translation>A/В²</translation>
+        <translation>A/(V*V)</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>saturation voltage parameter</source>
-        <translation>қаныққан кернеудің параметрі</translation>
+        <translation>متغير  التشبع فولت</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>channel length modulation parameter</source>
-        <translation>арна ұзындығын модуляциялайтын параметр</translation>
+        <translation>متغير طول قناة  التعديل </translation>
     </message>
     <message>
         <location line="+3"/>
         <source>doping profile parameter</source>
-        <translation>күшейтуші профилдік параметр</translation>
+        <translation> متغير مظهرالمخدير</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>power law exponent parameter</source>
-        <translation>қорек көзін төмендететін параметрлік көрсеткіш</translation>
+        <translation>متغير دليل قانون القوة</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>power feedback parameter</source>
-        <translation>қорек көзін төмендететін параметр</translation>
+        <translation>متغير نتائج القوة</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>1/W</source>
-        <translation>1/Вт</translation>
+        <translation>1/W</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>maximum junction voltage limit before capacitance limiting</source>
-        <translation>шектік меншікті сыйымдылыққа дейін максимум мәніндегі кернеу</translation>
+        <translation>حد الأقصى لضغط الوصلة قبل حد السعة</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>capacitance saturation transition voltage</source>
-        <translation>өтпелі қаныққан кернеудің сыйымдылығы</translation>
+        <translation> تشبع السعة لتيار التحويل</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>capacitance threshold transition voltage</source>
-        <translation>өтпелі табалдырықтық кернеудің сыйымдылығы</translation>
+        <translation> عتبة سعة تيار التحويل</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>dc drain pull coefficient</source>
-        <translation>тұрақты токтағы құйманың тарту коэффициенті</translation>
+        <translation>معامل  جذب الكفاءات  dc </translation>
     </message>
     <message>
         <location line="+2"/>
         <source>subthreshold conductance parameter</source>
-        <translation>табалдырықтық кернеудің өткізгіштік параметрі</translation>
+        <translation>متغير  تحت عتبة المواصلة</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>diode saturation current</source>
-        <translation>диодтағы қаныққан ағын</translation>
+        <translation> تيار تشبع  الصمام الثنائي</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>diode emission coefficient</source>
-        <translation>диодтағы эмиссия коэффициенті</translation>
+        <translation>تيار إنبعاث  الصمام الثنائي</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>built-in gate potential</source>
-        <translation>Табалдырықтық потенциалдар айырымы</translation>
+        <translation> إدماج بوابة  التيار العال</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>gate-drain junction reverse bias breakdown voltage</source>
-        <translation>түйек және құймадағы кері ығысу кезіндегі кемімелі кернеу</translation>
+        <translation>  إستنزاف  بوابة إنعكاس تقاطع نحو انهيار الجهد</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>diode saturation current temperature coefficient</source>
-        <translation>диодтағы қаныққан ағынның температуралық коэффиценті</translation>
+        <translation>معامل حرارة تشبع تيار  الصمام الثنائي</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>transit time under gate</source>
-        <translation>күшейту кезіндегі беріліс уақыты</translation>
+        <translation>وقت عبور تحت البوابة</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>channel resistance</source>
-        <translation>арна кедергісі</translation>
+        <translation>قناة المقاومة</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>area factor</source>
-        <translation>масштабтық коэффициент</translation>
+        <translation>عامل السطح</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/photodiode.cpp" line="-10"/>
+        <location filename="../qucs/components/photodiode.cpp" line="-10"/>
         <source>energy gap</source>
-        <translation>энергетикалық интервал</translation>
+        <translation>طاقة الفجوة</translation>
     </message>
     <message>
         <location line="+1"/>
-        <location filename="components/photodiode.cpp" line="+1"/>
+        <location filename="../qucs/components/photodiode.cpp" line="+1"/>
         <source>eV</source>
-        <translation>электрон Вольт</translation>
+        <translation>eV</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>zero bias gate-drain junction capacitance</source>
-        <translation>түйек-құйма үшін нөлдік ығысу кезіндегі сыйымдылық</translation>
+        <translation>مصرف بوابة تقاطع  السعة كهربائية معدومة</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>zero bias gate-source junction capacitance</source>
-        <translation>түйек-бастау үшін нөлдік ығысу кезіндегі сыйымдылық</translation>
+        <translation>مصدر بوابة تقاطع  السعة كهربائية معدومة</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>zero bias drain-source junction capacitance</source>
-        <translation>құйма-бастау үшін нөлдік ығысу кезіндегі сыйымдылық</translation>
+        <translation>مصدر بوابة تقاطع  السعة كهربائية معدومة</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Beta temperature coefficient</source>
-        <translation>Beta температуралық коэффициенті</translation>
+        <translation>معامل درجة الحرارة بيتا</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Alpha temperature coefficient</source>
-        <translation>Альфа температуралық коэффициенті</translation>
+        <translation>معامل درجة الحرارة ألفا</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Gamma temperature coefficient</source>
-        <translation>Гамма температуралық коэффициенті</translation>
+        <translation>معامل درجة الحرارة قاما</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Subthreshold slope gate parameter</source>
-        <translation>Табалдырықтық кернеудің күшейту параметрі</translation>
+        <translation>متغير  تحت عتبة منحدر البوابة</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>subthreshold drain pull parameter</source>
-        <translation>табалдырықтық құйманың тартылыс параметрі</translation>
+        <translation>متغير  تحت عتبة منحدر البوابة</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>gate-source current equation selector</source>
-        <translation>түйек-бастаудағы ток ағының теңдеуін таңдау</translation>
+        <translation>مصدر بوابة إختيار معادلة التيار</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>gate-drain current equation selector</source>
-        <translation>түйек-құймадағы ток ағының теңдеуін таңдау</translation>
+        <translation>بوابة استنزاف  معادلة التيار المختارة</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>gate-source charge equation selector</source>
-        <translation>түйек-бастаудағы заряд ағының теңдеуін таңдау</translation>
+        <translation>مصدر بوابة معادلة الشحنة المختارة</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>gate-drain charge equation selector</source>
-        <translation>түйек-құймадағы заряд теңдеуін таңдау</translation>
+        <translation>بوابة استنزاف  معادلة الشحنة المختارة</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>drain-source charge equation selector</source>
-        <translation>түйек-бастаудағы заряд ағынының теңдеуін таңдау</translation>
+        <translation>مصدر استنزاف  معادلة الشحنة المختارة</translation>
     </message>
     <message>
-        <location line="+2"/>
-        <source>Vto temperature coefficient</source>
-        <translation>Vtо температуралық коэффицент</translation>
+        <source>Vto temperature  coefficient</source>
+        <translation type="obsolete">Vto معامل درجة الحرارة </translation>
     </message>
     <message>
-        <location line="+2"/>
-        <location filename="components/thyristor.cpp" line="-2"/>
-        <location filename="components/triac.cpp" line="-2"/>
+        <location line="+4"/>
+        <location filename="../qucs/components/thyristor.cpp" line="-2"/>
+        <location filename="../qucs/components/triac.cpp" line="-2"/>
         <source>gate resistance</source>
-        <translation>түйек кедергісі</translation>
+        <translation>بوابة المقاومة</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -8574,1125 +8337,989 @@ Wrong &apos;component&apos; line format!</source>
         <location line="+15"/>
         <location line="+3"/>
         <source>Ohms</source>
-        <translation>Омдар</translation>
+        <translation>Ω</translation>
     </message>
     <message>
         <location line="-22"/>
         <source>drain resistance</source>
-        <translation>құйма кедергісі</translation>
+        <translation>استنزف المقاومة</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>source resistance</source>
-        <translation>бастау кедергісі</translation>
+        <translation>مصدر المقاومة</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>gate resistance temperature coefficient</source>
-        <translation>түйек кедергісінің температуралық коэффициенті</translation>
+        <translation>معامل الحرارة لبوابة المقاومة</translation>
     </message>
     <message>
         <location line="+1"/>
         <location line="+3"/>
         <location line="+3"/>
         <source>1/Celsius</source>
-        <translation>1/Цельсий</translation>
+        <translation>1/مئوية</translation>
     </message>
     <message>
         <location line="-4"/>
         <source>drain resistance temperature coefficient</source>
-        <translation>құйма кедергісінің температуралық коэффициенті</translation>
+        <translation>معامل إستنزاف درجة حرارة المقاومة</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>source resistance temperature coefficient</source>
-        <translation>бастау кедергісінің температуралық коэффициенті</translation>
+        <translation>معامل مصدر درجة حرارة المقاومة</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>gate reverse breakdown currrent</source>
-        <translation>түйектегі кері кемімелі токтың ағыны</translation>
+        <translation>بوابة عكس انهيار التيار</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>forward bias slope resistance</source>
-        <translation>Тура ығысу кезіндегі ішкі кедергісі</translation>
+        <translation>الانحياز المباشر لمنحدر المقاومة</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>breakdown slope resistance</source>
-        <translation>төменгі кедергі(бүкірейген пішінді)</translation>
+        <translation>انهيار  منحدر المقاومة</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>shot noise coefficient</source>
-        <translation>қысқа шудың коэффициенті</translation>
+        <translation>معامل جرعة من التشويش</translation>
     </message>
     <message>
         <location line="+24"/>
         <source>MESFET</source>
-        <translation>МОС</translation>
+        <translation>MESFET</translation>
     </message>
     <message>
-        <location filename="components/mod_amp.cpp" line="+15"/>
+        <location filename="../qucs/components/mod_amp.cpp" line="+15"/>
         <source>Modular Operational Amplifier verilog device</source>
-        <translation>Амплитудалық модуляцияны есептейтін құрал</translation>
+        <translation>وحدات مكبر التنفيذي لجهاز  فيريلوج </translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Gain bandwidth product (Hz)</source>
-        <translation>Түйек ені біріктірілген құрал (Гц)</translation>
+        <translation>كسب باندوتز المنتج (هرتز)ـ</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Open-loop differential gain at DC (dB)</source>
-        <translation>Тұрақты токтағы әр түрлі күшейткіш ашық түйін (дБ)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Second pole frequency (Hz)</source>
-        <translation>Екінші ретті жиілік (Гц)</translation>
+        <translation>(تردد قطب الثنائي (هرتز</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Output resistance (Ohm)</source>
-        <translation>Сыртқы кедергі (Ом)</translation>
+        <translation>(Ω) الناتج المقاومة </translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Differential input capacitance (F)</source>
-        <translation>Өзгермелі ішкі меншікті сыйымдылық (Ф)</translation>
+        <translation>  -الفارق مدخلات مواسعة -ف</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Differential input resistance (Ohm)</source>
-        <translation>Өзгермелі ішкі кедергі (Ом)</translation>
+        <translation>(Ω) الفارق مدخلات المقاومة </translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Input offset current (A)</source>
-        <translation>Кірістегі сыртқы ток ағыны (А)</translation>
+        <translation>مدخل التيار المتكافئ (أ)ـ</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Input bias current (A)</source>
-        <translation>Кірістегі ығысу ток ағыны (А)</translation>
+        <translation>إنحياز التيار الداخل(أ)ـ</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Input offset voltage (V)</source>
-        <translation>Кірістегі сыртқы кернеу (В)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Common-mode rejection ratio at DC (dB)</source>
-        <translation>Кірістегі тұрақты ағындағы режекциялық токтың пропорциясы (дБ)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Common-mode zero corner frequency (Hz)</source>
-        <translation>Кірістегі нөлдік бұрыш үшін жиілік Герцпен есептегенде</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Positive slew rate (V/s)</source>
-        <translation>Оң кернеудің шегінің жылдамдығы (В/с)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Negative slew rate (V/s)</source>
-        <translation>Кері кернеудің шегінің жылдамдығы (В/с)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Positive output voltage limit (V)</source>
-        <translation>шығатын оң кернеудің шегі (В)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Negative output voltage limit (V)</source>
-        <translation>шығысындағы теріс кернеуінің шегі (В)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Maximum DC output current (A)</source>
-        <translation>Тұрақты токтағы сыртқы ток ағынының максимумы (А)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Current limit scale factor</source>
-        <translation>Ток ағынының масштабын шектейтін коэффициент</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+18"/>
         <source>Modular OpAmp</source>
-        <translation>Амплитудалық модуляция</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/mosfet.cpp" line="+25"/>
+        <location filename="../qucs/components/mosfet.cpp" line="+25"/>
         <source>MOS field-effect transistor</source>
-        <translation>МОП өрістік транзистор</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+20"/>
-        <location filename="components/mosfet_sub.cpp" line="+27"/>
+        <location filename="../qucs/components/mosfet_sub.cpp" line="+27"/>
         <source>n-MOSFET</source>
-        <translation>n-МОП</translation>
+        <translation>n-MOSFET</translation>
     </message>
     <message>
         <location line="+10"/>
-        <location filename="components/mosfet_sub.cpp" line="+11"/>
+        <location filename="../qucs/components/mosfet_sub.cpp" line="+11"/>
         <source>p-MOSFET</source>
-        <translation>МОП p-арнасы бар өрістік транзистор</translation>
+        <translation>p-MOSFET</translation>
     </message>
     <message>
         <location line="+16"/>
-        <location filename="components/mosfet_sub.cpp" line="+17"/>
+        <location filename="../qucs/components/mosfet_sub.cpp" line="+17"/>
         <source>depletion MOSFET</source>
-        <translation>МОП кедейленген өрістік транзистор типі</translation>
+        <translation>depletion MOSFET</translation>
     </message>
     <message>
-        <location filename="components/mosfet_sub.cpp" line="-149"/>
+        <location filename="../qucs/components/mosfet_sub.cpp" line="-149"/>
         <source>zero-bias threshold voltage</source>
-        <translation>нөлдік ығысу кезіндегі табалдырықтық кернеу</translation>
+        <translation>عتبة الفولت معدومة</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>transconductance coefficient in A/V^2</source>
-        <translation>беріліс коэффициенті А/В² өлшем бірлікпен</translation>
+        <translation>transconductance coefficient in A/V^2</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>bulk threshold in sqrt(V)</source>
-        <translation>салымшаның табалдырық кернеуінің параметрі sqrt(В)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
         <source>surface potential</source>
-        <translation>Беттік потенциал</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
         <source>channel-length modulation parameter in 1/V</source>
-        <translation>1/В есептегенде арна ұзындығын модуляциялайтын параметр</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
         <source>drain ohmic resistance</source>
-        <translation>құйманың тізбектелген кедергісі</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
         <source>source ohmic resistance</source>
-        <translation>бастау кедергісі</translation>
+        <translation>مصدر المقاومة الأومي</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>gate ohmic resistance</source>
-        <translation>түйек кедергісі</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
         <source>bulk junction saturation current</source>
-        <translation>салымшаның қаныққан ток ағыны</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
         <source>bulk junction emission coefficient</source>
-        <translation>салымшаға өту кезіндегі әмбебап коэффициент</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
         <source>channel width</source>
-        <translation>арнаның ені</translation>
+        <translation>عرض القناة</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>channel length</source>
-        <translation>арнаның ұзындығы</translation>
+        <translation>طول القناة</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>lateral diffusion length</source>
-        <translation>негізгі емес диффузия ұзындығы</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
         <source>oxide thickness</source>
-        <translation>қышқыл қалыңдығы</translation>
+        <translation>سمك الأكسيد </translation>
     </message>
     <message>
         <location line="+2"/>
         <source>gate-source overlap capacitance per meter of channel width in F/m</source>
-        <translation>Түйек және бастау арнасының 1 метр еніне сай келетін жабу сыйымдылығы Ф/м өлшем бірлігімен</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
         <source>gate-drain overlap capacitance per meter of channel width in F/m</source>
-        <translation>Түйек және құйма арнасының 1 метр еніне сай келетін жабу сыйымдылығы Ф/м өлшем бірлігімен</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
         <source>gate-bulk overlap capacitance per meter of channel length in F/m</source>
-        <translation>Түйек және салымша арнасының 1 метр еніне сай келетін жабу сыйымдылығы Ф/м өлшем бірлігімен</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
         <source>zero-bias bulk-drain junction capacitance</source>
-        <translation>түйек-құйма үшін нөлдік ығысу кезіндегі сыйымдылық</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
         <source>zero-bias bulk-source junction capacitance</source>
-        <translation>түйек-бастау үшін нөлдік ығысу кезіндегі сыйымдылық</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
         <source>bulk junction potential</source>
-        <translation>салымша-өткел потенциалдарының контактылы айырымы</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
         <source>bulk junction bottom grading coefficient</source>
-        <translation>салымшаның төменгі облысындағы әмбебап емес коэффициент</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
         <source>bulk junction forward-bias depletion capacitance coefficient</source>
-        <translation>салымша-өткел тура ығысудың бөгеүіш сыйымдылық коэффициенті</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
         <source>zero-bias bulk junction periphery capacitance per meter of junction perimeter in F/m</source>
-        <translation>нөлдік ығысу кезіндегі салымшаның перифириялық облысының сыйымдылығы 1 метр өткелге Ф/м өлшем бірлік</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
         <source>bulk junction periphery grading coefficient</source>
-        <translation>салымшаның перифириялық облысындағы әмбебап емес коэффициенті</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
         <source>bulk transit time</source>
-        <translation>салымша үшін өту уақыты</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
         <source>substrate bulk doping density in 1/cm^3</source>
-        <translation>салымшаның легирлеу тығыздығы 1/см³ өлшем бірлікпен</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
         <source>surface state density in 1/cm^2</source>
-        <translation>Заряд беті тығыздығының коэффициенті 1/см²</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
         <source>gate material type: 0 = alumina; -1 = same as bulk; 1 = opposite to bulk</source>
-        <translation>түйек материалы: 0 = алюминий; -1 = салымшаға ұқсас; 1 = салымшаға қарама-қарсы</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
         <source>surface mobility in cm^2/Vs</source>
-        <translation>беттік қозғалмалылық см²/Вс</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
         <source>drain and source diffusion sheet resistance in Ohms/square</source>
-        <translation>құйма және бастаудың беттік диффузионды кедергілері в Ом/квадрат</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
         <source>number of equivalent drain squares</source>
-        <translation>құйманың эквивалентті квадраттар саны</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
         <source>number of equivalent source squares</source>
-        <translation>бастаудың эквивалентті квадраттар саны</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
         <source>zero-bias bulk junction bottom capacitance per square meter of junction area in F/m^2</source>
-        <translation>нөлдік ығысу кезіндегі салымшаның төменгі деңгейінің сыйымдылығы 1 шаршы метр өткелге Ф/м² өлшем бірлік</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
         <source>bulk junction saturation current per square meter of junction area in A/m^2</source>
-        <translation>салымша-өткел қаныққан ток ағынының 1 шаршы метрге 1 А/м² аудан сәйкес келеді</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
         <source>drain diffusion area in m^2</source>
-        <translation>құйманың диффузионды беттік ауданы м² өлшем бірлігімен</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
         <source>source diffusion area in m^2</source>
-        <translation>бастаудың диффузионды беттік ауданы м² өлшем бірлігімен</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
         <source>drain junction perimeter</source>
-        <translation>құйма өткелінің периметрі</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
         <source>source junction perimeter</source>
-        <translation>бастау өткелінің периметрі</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+17"/>
         <source>MOS field-effect transistor with substrate</source>
-        <translation>МОП салымшасы бар өрістік транзистор</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/mscorner.cpp" line="-23"/>
+        <location filename="../qucs/components/mscorner.cpp" line="-23"/>
         <source>microstrip corner</source>
-        <translation>микросызықтық арнаның бұрышы</translation>
+        <translation> Microstrip ركن </translation>
     </message>
     <message>
         <location line="+25"/>
-        <location filename="components/msmbend.cpp" line="+2"/>
+        <location filename="../qucs/components/msmbend.cpp" line="+2"/>
         <source>width of line</source>
-        <translation>арнаның ені</translation>
+        <translation>عرض الخط</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>Microstrip Corner</source>
-        <translation>Микросызықтық арнаның бұрышы</translation>
+        <translation> Microstripركن </translation>
     </message>
     <message>
-        <location filename="components/mscoupled.cpp" line="-38"/>
+        <location filename="../qucs/components/mscoupled.cpp" line="-38"/>
         <source>coupled microstrip line</source>
-        <translation>жалғасқан микросызықша</translation>
+        <translation>  microstripمقرون خط </translation>
     </message>
     <message>
         <location line="+40"/>
-        <location filename="components/mslange.cpp" line="+2"/>
+        <location filename="../qucs/components/mslange.cpp" line="+2"/>
         <source>spacing between the lines</source>
-        <translation>сызықтар арасындағы қашықтық</translation>
+        <translation>المباعدة بين السطور</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/mslange.cpp" line="+2"/>
+        <location filename="../qucs/components/mslange.cpp" line="+2"/>
         <source>microstrip model</source>
-        <translation>микросызықтық арнаның моделі</translation>
+        <translation> Microstrip نوع</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/mscross.cpp" line="+9"/>
-        <location filename="components/msgap.cpp" line="+11"/>
-        <location filename="components/mslange.cpp" line="+2"/>
-        <location filename="components/msline.cpp" line="+5"/>
-        <location filename="components/msopen.cpp" line="+5"/>
-        <location filename="components/msstep.cpp" line="+9"/>
-        <location filename="components/mstee.cpp" line="+7"/>
+        <location filename="../qucs/components/mscross.cpp" line="+9"/>
+        <location filename="../qucs/components/msgap.cpp" line="+11"/>
+        <location filename="../qucs/components/mslange.cpp" line="+2"/>
+        <location filename="../qucs/components/msline.cpp" line="+5"/>
+        <location filename="../qucs/components/msopen.cpp" line="+5"/>
+        <location filename="../qucs/components/msstep.cpp" line="+9"/>
+        <location filename="../qucs/components/mstee.cpp" line="+7"/>
         <source>microstrip dispersion model</source>
-        <translation>микросызықтық арнаның дисперсиялы моделі</translation>
+        <translation>microstrip نوع  تشتت </translation>
     </message>
     <message>
         <location line="+17"/>
         <source>Coupled Microstrip Line</source>
-        <translation>Жалғасқан микросызықша</translation>
+        <translation>  microstripمقرون خط </translation>
     </message>
     <message>
-        <location filename="components/mscross.cpp" line="-19"/>
+        <location filename="../qucs/components/mscross.cpp" line="-19"/>
         <source>microstrip cross</source>
-        <translation>Микросызықтық арнаның қиылысы</translation>
+        <translation>microstrip تقاطع</translation>
     </message>
     <message>
         <location line="+12"/>
-        <location filename="components/mstee.cpp" line="-5"/>
+        <location filename="../qucs/components/mstee.cpp" line="-5"/>
         <source>width of line 3</source>
-        <translation>3 арнаның ені</translation>
+        <translation>عرض الخط 3</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>width of line 4</source>
-        <translation>4 арнаның ені</translation>
+        <translation>عرض الخط 4</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/msgap.cpp" line="-3"/>
-        <location filename="components/msline.cpp" line="-3"/>
-        <location filename="components/msopen.cpp" line="-3"/>
-        <location filename="components/msstep.cpp" line="-3"/>
-        <location filename="components/mstee.cpp" line="+2"/>
+        <location filename="../qucs/components/msgap.cpp" line="-3"/>
+        <location filename="../qucs/components/msline.cpp" line="-3"/>
+        <location filename="../qucs/components/msopen.cpp" line="-3"/>
+        <location filename="../qucs/components/msstep.cpp" line="-3"/>
+        <location filename="../qucs/components/mstee.cpp" line="+2"/>
         <source>quasi-static microstrip model</source>
-        <translation>микросызықтық арнаның квази-статикалық моделі</translation>
+        <translation>شبه جامد microstrip نوع  </translation>
     </message>
     <message>
         <location line="+6"/>
-        <location filename="components/mstee.cpp" line="+8"/>
+        <location filename="../qucs/components/mstee.cpp" line="+8"/>
         <source>show port numbers in symbol or not</source>
-        <translation>шығыс порттардың номерін белгімен көрсету немесе көрсетпеу</translation>
+        <translation>إضهار رقم المنفذ في الرمز أو لا</translation>
     </message>
     <message>
         <location line="+17"/>
         <source>Microstrip Cross</source>
-        <translation>микросызықтық арнаның қиылысы</translation>
+        <translation>microstrip تقاطع</translation>
     </message>
     <message>
-        <location filename="components/msgap.cpp" line="-36"/>
+        <location filename="../qucs/components/msgap.cpp" line="-36"/>
         <source>microstrip gap</source>
-        <translation>микросызықтық арнаның үзілісі</translation>
+        <translation>microstrip فجوة</translation>
     </message>
     <message>
         <location line="+30"/>
         <source>width of the line 1</source>
-        <translation>1 арнаның ені</translation>
+        <translation>عرض الخط 1</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>width of the line 2</source>
-        <translation>2 арнаның ені</translation>
+        <translation>عرض الخط 2</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>spacing between the microstrip ends</source>
-        <translation>микросызық ұштарының арасындағы қашықтық</translation>
+        <translation>microstrip المباعدة بين نهاية  </translation>
     </message>
     <message>
         <location line="+20"/>
         <source>Microstrip Gap</source>
-        <translation>Микросызықтық арнаның үзілісі</translation>
+        <translation>microstrip فجوة</translation>
     </message>
     <message>
-        <location filename="components/msline.cpp" line="-27"/>
+        <location filename="../qucs/components/msline.cpp" line="-27"/>
         <source>microstrip line</source>
-        <translation>микросызықтық арна</translation>
+        <translation>Microstrip خط </translation>
     </message>
     <message>
         <location line="+47"/>
         <source>Microstrip Line</source>
-        <translation>Микросызықтық арна</translation>
+        <translation>Microstrip خط </translation>
     </message>
     <message>
-        <location filename="components/msmbend.cpp" line="-26"/>
+        <location filename="../qucs/components/msmbend.cpp" line="-26"/>
         <source>microstrip mitered bend</source>
-        <translation>түзетілген бүкір микросызықтық арна</translation>
+        <translation>متوج منحنى microstrip</translation>
     </message>
     <message>
         <location line="+40"/>
         <source>Microstrip Mitered Bend</source>
-        <translation>Түзетілген бүкір микросызықтық арна</translation>
+        <translation>متوج منحنى microstrip</translation>
     </message>
     <message>
-        <location filename="components/msopen.cpp" line="-23"/>
+        <location filename="../qucs/components/msopen.cpp" line="-23"/>
         <source>microstrip open</source>
-        <translation>тұйықталмаған микросызықтық арна</translation>
+        <translation>الشريط الصغير مفتوح</translation>
     </message>
     <message>
         <location line="+29"/>
         <source>microstrip open end model</source>
-        <translation>микросызықтық арнаның соңы ашылған моделі</translation>
+        <translation>الشريط الصغير مفتوح نهاية النموذج</translation>
     </message>
     <message>
         <location line="+15"/>
         <source>Microstrip Open</source>
-        <translation>Тұйықталмаған микросызықтық арна</translation>
+        <translation>الشريط الصغير مفتوح</translation>
     </message>
     <message>
-        <location filename="components/msrstub.cpp" line="-20"/>
-        <source>microstrip radial stub</source>
-        <translation>микросызықшаның радиалды сыну бұрышы</translation>
-    </message>
-    <message>
-        <location line="+22"/>
-        <source>inner radius</source>
-        <translation>ішкі радиус</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>outer radius</source>
-        <translation>сыртқы радиус</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>stub angle</source>
-        <translation>сыну бұрышы</translation>
-    </message>
-    <message>
-        <location line="+0"/>
-        <location filename="components/potentiometer.cpp" line="-9"/>
-        <location line="+7"/>
-        <source>degrees</source>
-        <translation>градус</translation>
-    </message>
-    <message>
-        <location line="+14"/>
-        <source>Microstrip Radial Stub</source>
-        <translation>Микросызықшаның радиалды сыну бұрышы</translation>
-    </message>
-    <message>
-        <location filename="components/msstep.cpp" line="-33"/>
+        <location filename="../qucs/components/msstep.cpp" line="-33"/>
         <source>microstrip impedance step</source>
-        <translation>микросызықтық арнаның толық кедергісінің секірісі</translation>
+        <translation> مرحلة مقاومة الشريط الصغير</translation>
     </message>
     <message>
         <location line="+29"/>
         <source>width 1 of the line</source>
-        <translation>арнаның ені 1</translation>
+        <translation>عرض1 للخط </translation>
     </message>
     <message>
         <location line="+2"/>
         <source>width 2 of the line</source>
-        <translation>арнаның ені 2</translation>
+        <translation>عرض2 للخط </translation>
     </message>
     <message>
         <location line="+20"/>
         <source>Microstrip Step</source>
-        <translation>микросызықтық арна енінің секірісі</translation>
+        <translation>Microstrip خطوة</translation>
     </message>
     <message>
-        <location filename="components/mstee.cpp" line="-28"/>
+        <location filename="../qucs/components/mstee.cpp" line="-28"/>
         <source>microstrip tee</source>
-        <translation>үштік микросызықтық арна</translation>
+        <translation>microstrip كوم </translation>
     </message>
     <message>
         <location line="+26"/>
         <source>temperature in degree Celsius</source>
-        <translation>температура °C шкаласымен</translation>
+        <translation>  الحرارة عند الدرجة المئوية</translation>
     </message>
     <message>
         <location line="+19"/>
         <source>Microstrip Tee</source>
-        <translation>Үштік микросызықтық арна</translation>
+        <translation>microstrip كوم </translation>
     </message>
     <message>
-        <location filename="components/msvia.cpp" line="-21"/>
+        <location filename="../qucs/components/msvia.cpp" line="-21"/>
         <source>microstrip via</source>
-        <translation>микросызықтық өтпелі арнаның тесігі</translation>
+        <translation>microstrip بواسطة</translation>
     </message>
     <message>
         <location line="+23"/>
         <source>diameter of round via conductor</source>
-        <translation>домалақ өтпелі тесіктің диаметрі</translation>
+        <translation>قطر الدائرة للموصل</translation>
     </message>
     <message>
         <location line="+18"/>
         <source>Microstrip Via</source>
-        <translation>Микросызықтық өтпелі арнаның тесігі</translation>
+        <translation>microstrip بواسطة</translation>
     </message>
     <message>
-        <location filename="components/mutual2.cpp" line="+23"/>
+        <location filename="../qucs/components/mutual2.cpp" line="+23"/>
         <source>three mutual inductors</source>
-        <translation>үш индуктивті байланысқан орама</translation>
+        <translation>ثلاثة أدواة الحث المتبادل</translation>
     </message>
     <message>
-        <location filename="components/mutual.cpp" line="+58"/>
-        <location filename="components/mutual2.cpp" line="+46"/>
+        <location filename="../qucs/components/mutual.cpp" line="+58"/>
+        <location filename="../qucs/components/mutual2.cpp" line="+46"/>
         <source>inductance of coil 1</source>
-        <translation>орама индуктивтілігі 1</translation>
+        <translation>محاثة من اللفة 1</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/mutual2.cpp" line="+2"/>
+        <location filename="../qucs/components/mutual2.cpp" line="+2"/>
         <source>inductance of coil 2</source>
-        <translation>орама индуктивтілігі 2</translation>
+        <translation>محاثة من اللفة 2</translation>
     </message>
     <message>
-        <location filename="components/mutual2.cpp" line="+2"/>
+        <location filename="../qucs/components/mutual2.cpp" line="+2"/>
         <source>inductance of coil 3</source>
-        <translation>орама индуктивтілігі 3</translation>
+        <translation>محاثة من اللفة 3</translation>
     </message>
     <message>
-        <location filename="components/mutual.cpp" line="+2"/>
-        <location filename="components/mutual2.cpp" line="+2"/>
+        <location filename="../qucs/components/mutual.cpp" line="+2"/>
+        <location filename="../qucs/components/mutual2.cpp" line="+2"/>
         <source>coupling factor between coil 1 and 2</source>
-        <translation>1 және 2 орамасы үшін байланыс коэффициенті</translation>
+        <translation>عامل الاقتران بين اللفة 1 و 2</translation>
     </message>
     <message>
-        <location filename="components/mutual2.cpp" line="+2"/>
+        <location filename="../qucs/components/mutual2.cpp" line="+2"/>
         <source>coupling factor between coil 1 and 3</source>
-        <translation>1 және 3 орамасы үшін байланыс коэффициенті</translation>
+        <translation>عامل الاقتران بين اللفة 1 و 3</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>coupling factor between coil 2 and 3</source>
-        <translation>2 және 3 орамасы үшін байланыс коэффициенті</translation>
+        <translation>عامل الاقتران بين اللفة 2 و 3</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>3 Mutual Inductors</source>
-        <translation>3 орамалық индуктивті катушка</translation>
+        <translation>أدواة الحث المتبادل3  </translation>
     </message>
     <message>
-        <location filename="components/mutual.cpp" line="-39"/>
+        <location filename="../qucs/components/mutual.cpp" line="-39"/>
         <source>two mutual inductors</source>
-        <translation>екі индуктивті байланысқан орама</translation>
+        <translation>أدواة الحث المتبادل2</translation>
     </message>
     <message>
         <location line="+53"/>
         <source>Mutual Inductors</source>
-        <translation>Индуктивті байланысқан катушка</translation>
+        <translation>أدواة الحث المتبادل</translation>
     </message>
     <message>
-        <location filename="components/mux2to1.cpp" line="-6"/>
-        <source>2to1 multiplexer verilog device</source>
-        <translation>2 кірісті мультиплексор логикалық құрылғысы</translation>
-    </message>
-    <message>
-        <location line="+25"/>
-        <source>2to1 Mux</source>
-        <translation>2 кірісті мультиплексор</translation>
-    </message>
-    <message>
-        <location filename="components/mux4to1.cpp" line="-6"/>
-        <source>4to1 multiplexer verilog device</source>
-        <translation>4 кірісті мультиплексор логикалық құрылғысы</translation>
-    </message>
-    <message>
-        <location line="+25"/>
-        <source>4to1 Mux</source>
-        <translation>4 кірісті мультиплексор</translation>
-    </message>
-    <message>
-        <location filename="components/mux8to1.cpp" line="-6"/>
-        <source>8to1 multiplexer verilog device</source>
-        <translation>8 кірісті мультиплексор логикалық құрылғысы</translation>
-    </message>
-    <message>
-        <location line="+25"/>
-        <source>8to1 Mux</source>
-        <translation>8 кірісті мультиплексор</translation>
-    </message>
-    <message>
-        <location filename="components/noise_ii.cpp" line="-58"/>
-        <location filename="components/noise_iv.cpp" line="-53"/>
-        <location filename="components/noise_vv.cpp" line="-48"/>
+        <location filename="../qucs/components/noise_ii.cpp" line="-58"/>
+        <location filename="../qucs/components/noise_iv.cpp" line="-53"/>
+        <location filename="../qucs/components/noise_vv.cpp" line="-48"/>
         <source>correlated current sources</source>
-        <translation>корреляцияланған токтың қорек көздері</translation>
+        <translation>مصادر الارتباط الحالي</translation>
     </message>
     <message>
         <location line="+48"/>
-        <location filename="components/noise_iv.cpp" line="+43"/>
+        <location filename="../qucs/components/noise_iv.cpp" line="+43"/>
         <source>current power spectral density of source 1</source>
-        <translation>Ток көзі қуатының спектралды тығыздығы 1</translation>
+        <translation>كثافة قوة التيار الطيفي  للمصدر 1</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>current power spectral density of source 2</source>
-        <translation>Ток көзі қуатының спектралды тығыздығы 2</translation>
+        <translation>كثافة قوة التيار الطيفي  للمصدر 2</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/noise_iv.cpp" line="+4"/>
-        <location filename="components/noise_vv.cpp" line="+42"/>
+        <location filename="../qucs/components/noise_iv.cpp" line="+4"/>
+        <location filename="../qucs/components/noise_vv.cpp" line="+42"/>
         <source>normalized correlation coefficient</source>
-        <translation>нормаланған коррелляция коэффициенті</translation>
+        <translation>تطبيع معامل الارتباط</translation>
     </message>
     <message>
         <location line="+20"/>
-        <location filename="components/noise_iv.cpp" line="+20"/>
-        <location filename="components/noise_vv.cpp" line="+20"/>
+        <location filename="../qucs/components/noise_iv.cpp" line="+20"/>
+        <location filename="../qucs/components/noise_vv.cpp" line="+20"/>
         <source>Correlated Noise Sources</source>
-        <translation>Корреляцияланған шудың қорек көздері</translation>
+        <translation>ارتباط مصادر التشويش</translation>
     </message>
     <message>
-        <location filename="components/noise_iv.cpp" line="-22"/>
-        <location filename="components/noise_vv.cpp" line="-22"/>
+        <location filename="../qucs/components/noise_iv.cpp" line="-22"/>
+        <location filename="../qucs/components/noise_vv.cpp" line="-22"/>
         <source>voltage power spectral density of source 2</source>
-        <translation>кернеу көзі шуы қуатының спектральды тығыздығы 2</translation>
+        <translation>كثافة التيار الطاقة الطيفية من  مصدر 2</translation>
     </message>
     <message>
-        <location filename="components/noise_vv.cpp" line="-2"/>
+        <location filename="../qucs/components/noise_vv.cpp" line="-2"/>
         <source>voltage power spectral density of source 1</source>
-        <translation>кернеу көзі шуы қуатының спектральды тығыздығы 1</translation>
+        <translation>كثافة التيار الطاقة الطيفية من  مصدر 1</translation>
     </message>
     <message>
-        <location filename="components/opamp.cpp" line="-27"/>
+        <location filename="../qucs/components/opamp.cpp" line="-27"/>
         <source>operational amplifier</source>
-        <translation>операционды күшейткіш</translation>
+        <translation>مضخم التنفيذي</translation>
     </message>
     <message>
         <location line="+29"/>
         <source>absolute value of maximum and minimum output voltage</source>
-        <translation>шығыс кернеудегі максимум және минимумның абсолютті мәндері</translation>
+        <translation>القيمة المطلقة للحد الأقصى  و للحد الأدنى</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>OpAmp</source>
-        <translation>ОК</translation>
+        <translation>OpAmp</translation>
     </message>
     <message>
-        <location filename="components/opt_sim.cpp" line="+31"/>
+        <location filename="../qucs/components/opt_sim.cpp" line="+30"/>
         <source>Optimization</source>
-        <translation>Оптимизация</translation>
+        <translation>التحسين</translation>
     </message>
     <message>
         <location line="+27"/>
         <source>optimization</source>
-        <translation>оптимизация</translation>
+        <translation>التحسين</translation>
     </message>
     <message>
-        <location filename="components/pad2bit.cpp" line="+19"/>
-        <source>2bit pattern generator verilog device</source>
-        <translation>2 битті логикалық генератор құрылғысының моделі</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location filename="components/pad3bit.cpp" line="+22"/>
-        <location filename="components/pad4bit.cpp" line="+22"/>
-        <source>pad output value</source>
-        <translation>салымшаның шығыс мәні</translation>
-    </message>
-    <message>
-        <location line="+19"/>
-        <source>2Bit Pattern</source>
-        <translation>2 Битті модель</translation>
-    </message>
-    <message>
-        <location filename="components/pad3bit.cpp" line="-3"/>
-        <source>3bit pattern generator verilog device</source>
-        <translation>3 битті логикалық генератор құрылғысының моделі</translation>
-    </message>
-    <message>
-        <location line="+22"/>
-        <source>3Bit Pattern</source>
-        <translation>3 Битті модель</translation>
-    </message>
-    <message>
-        <location filename="components/pad4bit.cpp" line="-3"/>
-        <source>4bit pattern generator verilog device</source>
-        <translation>4 битті логикалық генератор құрылғысы</translation>
-    </message>
-    <message>
-        <location line="+22"/>
-        <source>4Bit Pattern</source>
-        <translation>4 Битті модель</translation>
-    </message>
-    <message>
-        <location filename="components/param_sweep.cpp" line="-30"/>
+        <location filename="../qucs/components/param_sweep.cpp" line="-30"/>
         <location line="+44"/>
         <source>Parameter sweep</source>
-        <translation>Бұрап ашу параметрлері</translation>
+        <translation>متغير الاجتياح</translation>
     </message>
     <message>
         <location line="-24"/>
         <source>simulation to perform parameter sweep on</source>
-        <translation>параметрді варияциялау үшін моделдеу</translation>
+        <translation>المحاكاة التي تطبق على تغيير المتغير</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>parameter to sweep</source>
-        <translation>бұрап ашу параметрі</translation>
+        <translation>متغير الاجتياح</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>start value for sweep</source>
-        <translation>бұраманың бастапқы мәні</translation>
+        <translation>بدء قيمة الإجتياح</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>stop value for sweep</source>
-        <translation>бұраманың нәтижелік мәні</translation>
+        <translation>توقف قيمة الإجتياح</translation>
     </message>
     <message>
-        <location filename="components/phaseshifter.cpp" line="-26"/>
+        <location filename="../qucs/components/phaseshifter.cpp" line="-26"/>
         <source>phase shifter</source>
-        <translation>фазалық ығысу</translation>
+        <translation>مرحلة شيفتر</translation>
     </message>
     <message>
-        <location filename="components/hybrid.cpp" line="-2"/>
-        <location filename="components/phaseshifter.cpp" line="+24"/>
+        <location filename="../qucs/components/hybrid.cpp" line="-2"/>
+        <location filename="../qucs/components/phaseshifter.cpp" line="+24"/>
         <source>phase shift in degree</source>
-        <translation>градуспен өлшегенде фаза ығысуы</translation>
+        <translation>مرحلة تحول بالدرجة</translation>
     </message>
     <message>
-        <location filename="components/phaseshifter.cpp" line="+16"/>
+        <location filename="../qucs/components/phaseshifter.cpp" line="+16"/>
         <source>Phase Shifter</source>
-        <translation>Фазалық ығысу</translation>
+        <translation>المرحلة شيفتر</translation>
     </message>
     <message>
-        <location filename="components/photodiode.cpp" line="-38"/>
+        <location filename="../qucs/components/photodiode.cpp" line="-38"/>
         <source>Photodiode verilog device</source>
-        <translation>Фотодиод verilog құрылғысы</translation>
+        <translation>جهاز فيريلوج لصمام الثنائي الضوئي</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>photodiode emission coefficient</source>
-        <translation>фотодиодтағы эмиссия коэффициенті</translation>
+        <translation>معامل إنبعاث الصمام الثنائي الضوئي</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>series lead resistance</source>
-        <translation>тізбектелген кедергісі</translation>
+        <translation> مقاومة سلسلة سلك التوصيل   </translation>
     </message>
     <message>
         <location line="+3"/>
         <source>diode dark current</source>
-        <translation>диодтағы ток ағыны (қараңғы ағын)</translation>
+        <translation> تيار مظلم الصمام الثنائي</translation>
     </message>
     <message>
         <location line="+32"/>
         <source>responsivity</source>
-        <translation>анықтауыш</translation>
+        <translation>responsivity</translation>
     </message>
     <message>
         <location line="+1"/>
-        <location filename="components/phototransistor.cpp" line="+30"/>
+        <location filename="../qucs/components/phototransistor.cpp" line="+24"/>
         <source>A/W</source>
-        <translation>А/Вт</translation>
+        <translation>A/W</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>shunt resistance</source>
-        <translation>шунттық кедергі</translation>
+        <translation>ناور المقاومة</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>quantum efficiency</source>
-        <translation>кванттық әсер</translation>
+        <translation>مقدار الكفاءة</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>light wavelength</source>
-        <translation>жарықтың толқындық ұзындығы</translation>
+        <translation>طول الموجة الخفيفة</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>nm</source>
-        <translation>нано-метр</translation>
+        <translation>nm</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>responsivity calculator selector</source>
-        <translation>анықтауыштық калькулятор таңдауышы</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+27"/>
         <source>Photodiode</source>
-        <translation>Фотодиод</translation>
+        <translation>Photodiode</translation>
     </message>
     <message>
-        <location filename="components/phototransistor.cpp" line="-64"/>
-        <source>Phototransistor verilog device</source>
-        <translation>Фототранзистор verilog құрылғысы</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>dark current</source>
-        <translation>ток ағыны (қараңғы ағын)</translation>
-    </message>
-    <message>
-        <location line="+41"/>
-        <source>collector series resistance</source>
-        <translation>коллектор кедергісі</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>emitter series resistance</source>
-        <translation>эмиттер кедергісі</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>base series resistance</source>
-        <translation>базаның тізбектелген кедергісі</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>responsivity at relative selectivity=100%</source>
-        <translation>байланысқан таңдау анықтауышы=100 пайыз</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <location line="+2"/>
-        <source>relative selectivity polynomial coefficient</source>
-        <translation>таңдаудың полиномиалды салыстырмалы коэффициенті</translation>
-    </message>
-    <message>
-        <location line="+21"/>
-        <source>Phototransistor</source>
-        <translation>Фототранзистор</translation>
-    </message>
-    <message>
-        <location filename="components/pm_modulator.cpp" line="-33"/>
+        <location filename="../qucs/components/pm_modulator.cpp" line="-33"/>
         <source>ac voltage source with phase modulator</source>
-        <translation>фазалық модуляторы бар айнымалы токтың қорек көзі</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+14"/>
         <source>PM</source>
-        <translation>ИМ</translation>
+        <translation>PM</translation>
     </message>
     <message>
         <location line="+21"/>
         <source>modulation index</source>
-        <translation>модуляция индексі</translation>
+        <translation>تعديل المؤشر</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>PM modulated Source</source>
-        <translation>ИМ импульстік модуляциясы бар қорек көзі</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/potentiometer.cpp" line="-14"/>
+        <location filename="../qucs/components/potentiometer.cpp" line="-16"/>
         <source>Potentiometer verilog device</source>
-        <translation>Кернеу өлшеуіш құрылғы</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
         <source>nominal device resistance</source>
-        <translation>құрылғының номиналды кедергісі</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
         <source>shaft/wiper arm rotation</source>
-        <translation>өстік/сызықтық қолмен бұру</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location filename="../qucs/components/msrstub.cpp" line="+6"/>
+        <location filename="../qucs/components/potentiometer.cpp" line="+1"/>
+        <location line="+7"/>
+        <source>degrees</source>
+        <translation>درجات</translation>
+    </message>
+    <message>
+        <location filename="../qucs/components/potentiometer.cpp" line="-5"/>
         <source>resistive law taper coefficient</source>
-        <translation>кедергінің төменгі типті коэффициенті</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
         <source>device type selector</source>
-        <translation>құрылғы типін таңдау</translation>
+        <translation>نوع جهاز المنتق</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>maximum shaft/wiper rotation</source>
-        <translation>бұрап айландырудың максималды саны</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+6"/>
         <source>linearity error</source>
-        <translation>сызықтық қате</translation>
+        <translation>خطأ خطي</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>wiper arm contact resistance</source>
-        <translation>сызықтық қолданбалы контактылы кедергі</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
         <source>resistance temperature coefficient</source>
-        <translation>кедергінің температуралық коэффициенті</translation>
+        <translation>معامل درجة حرارة المقاومة</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>PPM/Celsius</source>
-        <translation>Ппм/Цельсий</translation>
+        <translation>PPM/Celsius</translation>
     </message>
     <message>
         <location line="+24"/>
         <source>Potentiometer</source>
-        <translation>Кернеу өлшеуіш</translation>
+        <translation>مقياس الجهد</translation>
     </message>
     <message>
         <location line="+34"/>
         <source>B</source>
-        <translation>В</translation>
+        <translation>B</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>T</source>
-        <translation>Т триггері</translation>
+        <translation>T</translation>
     </message>
     <message>
-        <location filename="components/rectline.cpp" line="-38"/>
+        <location filename="../qucs/components/rectline.cpp" line="-38"/>
         <location line="+59"/>
         <source>Rectangular Waveguide</source>
-        <translation>Тікбұрышты толқын тудырушы құрылғы</translation>
+        <translation>الدليل الموجي المستطيل</translation>
     </message>
     <message>
         <location line="-31"/>
         <source>widest side</source>
-        <translation>Vt0 температуралық коэффициент </translation>
+        <translation> أوسع نطاق في الجانب</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>shortest side</source>
-        <translation>қысқарған жақ</translation>
+        <translation>أقصر جانب</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>material parameter for temperature model</source>
-        <translation>температуралық модел үшін материалдық параметрлер</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/relais.cpp" line="-45"/>
+        <location filename="../qucs/components/relais.cpp" line="-45"/>
         <source>relay</source>
-        <translation>реле</translation>
+        <translation>التتابع</translation>
     </message>
     <message>
         <location line="+37"/>
         <source>threshold voltage in Volts</source>
-        <translation>табалдырықтық кернеу Вольт өлшем бірлігімен</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
         <source>hysteresis voltage in Volts</source>
-        <translation>гистерезис кернеуі Вольт өлшем бірлігімен</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
         <source>resistance of &quot;on&quot; state in Ohms</source>
-        <translation>кедергі &quot;on&quot;-Омдағы күйде</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
         <source>resistance of &quot;off&quot; state in Ohms</source>
-        <translation>кедергі &quot;off&quot;-Омдағы күйде</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+16"/>
         <source>Relay</source>
-        <translation>Реле</translation>
+        <translation>تكرار</translation>
     </message>
     <message>
-        <location filename="components/resistor.cpp" line="-15"/>
+        <location filename="../qucs/components/resistor.cpp" line="-15"/>
         <source>resistor</source>
-        <translation>резистор</translation>
+        <translation>المقاومة</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>ohmic resistance in Ohms</source>
-        <translation>тізбектің кедергісі Ом өлшем бірлігімен</translation>
+        <translation>المقاومة بالأوم ohmic</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>first order temperature coefficient</source>
-        <translation>бірінші ретті температуралық коэффицbент</translation>
+        <translation> معامل لدرجة الحرارة الدرجة الأولى</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>second order temperature coefficient</source>
-        <translation>екінші ретті температуралық коэффицент</translation>
+        <translation>معامل لدرجة الحرارة الدرجة الثانية</translation>
     </message>
     <message>
         <location line="+55"/>
         <source>Resistor</source>
-        <translation>Резистор</translation>
+        <translation>المقاومة</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Resistor US</source>
-        <translation>Резистор US</translation>
+        <translation>US المقاومة</translation>
     </message>
     <message>
-        <location filename="components/rfedd2p.cpp" line="+28"/>
+        <location filename="../qucs/components/rfedd2p.cpp" line="+27"/>
         <source>equation defined 2-port RF device</source>
-        <translation>екі порты бар RF құрылғысы үшін әртүрлі теңдеулер</translation>
+        <translation> RF تحديد معادلة منفذ-2 لجهاز</translation>
     </message>
     <message>
-        <location filename="components/rfedd.cpp" line="+35"/>
-        <location filename="components/rfedd2p.cpp" line="+7"/>
+        <location filename="../qucs/components/rfedd.cpp" line="+34"/>
+        <location filename="../qucs/components/rfedd2p.cpp" line="+7"/>
         <source>type of parameters</source>
-        <translation>параметрлер типі</translation>
+        <translation>نوع المتغيرات</translation>
     </message>
     <message>
         <location line="+4"/>
-        <location filename="components/rfedd2p.cpp" line="+2"/>
-        <location filename="components/sparamfile.cpp" line="+2"/>
+        <location filename="../qucs/components/rfedd2p.cpp" line="+2"/>
+        <location filename="../qucs/components/sparamfile.cpp" line="+2"/>
         <source>representation during DC analysis</source>
-        <translation>тұрақты токты анализдегендегі бейне</translation>
+        <translation>التمثيل عند حساب نقطة التشغيل </translation>
     </message>
     <message>
         <location line="+5"/>
@@ -9702,33 +9329,33 @@ Wrong &apos;component&apos; line format!</source>
         <location line="+81"/>
         <location line="+5"/>
         <location line="+9"/>
-        <location filename="components/rfedd2p.cpp" line="+5"/>
+        <location filename="../qucs/components/rfedd2p.cpp" line="+5"/>
         <location line="+2"/>
         <location line="+2"/>
         <location line="+2"/>
         <source>parameter equation</source>
-        <translation>параметрлік теңдеу</translation>
+        <translation>متغير المعادلة</translation>
     </message>
     <message>
-        <location filename="components/rfedd2p.cpp" line="+17"/>
+        <location filename="../qucs/components/rfedd2p.cpp" line="+17"/>
         <source>Equation Defined 2-port RF Device</source>
-        <translation>Екі порты бар RF құрылғысы үшін әртүрлі теңдеулер</translation>
+        <translation> RF تحديد معادلة منفذ-2 لجهاز</translation>
     </message>
     <message>
-        <location filename="components/rfedd.cpp" line="-117"/>
+        <location filename="../qucs/components/rfedd.cpp" line="-117"/>
         <source>equation defined RF device</source>
-        <translation>RF құрылғысы үшін әртүрлі теңдеулер</translation>
+        <translation> RF تحديد معادلة لجهاز</translation>
     </message>
     <message>
         <location line="+9"/>
-        <location filename="components/sparamfile.cpp" line="+5"/>
+        <location filename="../qucs/components/sparamfile.cpp" line="+5"/>
         <source>number of ports</source>
-        <translation>порттар саны</translation>
+        <translation>عدد المنافذ </translation>
     </message>
     <message>
         <location line="+31"/>
         <source>Equation Defined RF Device</source>
-        <translation>RF құрылғысы үшін әртүрлі теңдеулер</translation>
+        <translation> RF تحديد معادلة لجهاز</translation>
     </message>
     <message>
         <location line="+90"/>
@@ -9736,318 +9363,264 @@ Wrong &apos;component&apos; line format!</source>
         <translation>RF</translation>
     </message>
     <message>
-        <location filename="components/rlcg.cpp" line="-36"/>
-        <source>RLCG transmission line</source>
-        <translation>RLCG беріліс арнасы</translation>
-    </message>
-    <message>
-        <location line="+16"/>
-        <source>RLCG</source>
-        <translation>RLCG</translation>
-    </message>
-    <message>
-        <location line="+16"/>
-        <source>resistive load</source>
-        <translation>кедергіні енгізу</translation>
-    </message>
-    <message>
-        <location line="+0"/>
-        <source>Ohm/m</source>
-        <translation>Ом/м</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>inductive load</source>
-        <translation>индуктивті енгізу</translation>
-    </message>
-    <message>
-        <location line="+0"/>
-        <source>H/m</source>
-        <translation>Г/м</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>capacitive load</source>
-        <translation>сыйымдылықты енгізу</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>conductive load</source>
-        <translation>өткізгішті енгізу</translation>
-    </message>
-    <message>
-        <location line="+0"/>
-        <source>S/m</source>
-        <translation>S/м</translation>
-    </message>
-    <message>
-        <location filename="components/ctline.cpp" line="-10"/>
-        <location filename="components/rlcg.cpp" line="+2"/>
-        <location filename="components/tline.cpp" line="-4"/>
-        <location filename="components/tline_4port.cpp" line="-4"/>
-        <source>electrical length of the line</source>
-        <translation>сызықтың электрлік ұзындығы</translation>
-    </message>
-    <message>
-        <location filename="components/rlcg.cpp" line="+16"/>
-        <source>RLCG Transmission Line</source>
-        <translation>RLCG беріліс арнасы</translation>
-    </message>
-    <message>
-        <location filename="components/rs_flipflop.cpp" line="-2"/>
+        <location filename="../qucs/components/rs_flipflop.cpp" line="-2"/>
         <source>RS flip flop</source>
-        <translation>RS-триггер</translation>
+        <translation>RS إرجوحة  </translation>
     </message>
     <message>
         <location line="+87"/>
         <source>RS-FlipFlop</source>
-        <translation>RS-триггер</translation>
+        <translation>RS-إرجوحة  </translation>
     </message>
     <message>
-        <location filename="components/source_ac.cpp" line="-36"/>
+        <location filename="../qucs/components/source_ac.cpp" line="-36"/>
         <source>ac power source</source>
-        <translation>айнымалы тоқ кезінде қуаттың қорек көзі</translation>
+        <translation>مصدر متناوب</translation>
     </message>
     <message>
         <location line="+38"/>
         <source>port impedance</source>
-        <translation>порттың толық кедергісі</translation>
+        <translation>منفذ المقاومة</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>(available) ac power in Watts</source>
-        <translation>(қол жетерлік) айнымалы токтағы қуат ватпен өлшегенде</translation>
+        <translation>متاحة) القوة  المتناوبة بالوات)</translation>
     </message>
     <message>
         <location line="+20"/>
         <source>Power Source</source>
-        <translation>Қорек көзі</translation>
+        <translation>مصدر التشغيل</translation>
     </message>
     <message>
-        <location filename="components/sparamfile.cpp" line="-18"/>
+        <location filename="../qucs/components/sparamfile.cpp" line="-18"/>
         <source>S parameter file</source>
-        <translation>S-параметрлері бар файл</translation>
+        <translation>S ملف المتغير </translation>
     </message>
     <message>
         <location line="+7"/>
         <source>name of the s parameter file</source>
-        <translation>параметрлік файлдың аты</translation>
+        <translation>S إسم ملف المتغير </translation>
     </message>
     <message>
         <location line="+2"/>
         <source>data type</source>
-        <translation>мәліметтер типі</translation>
+        <translation>نوع البيانات</translation>
     </message>
     <message>
         <location line="+26"/>
         <source>n-port S parameter file</source>
-        <translation>S-параметрлі файл n-портты құрылғы</translation>
+        <translation>S ملف المتغير n-منفذ</translation>
     </message>
     <message>
         <location line="+16"/>
         <source>1-port S parameter file</source>
-        <translation>S-параметрлі файл 1-портты құрылғы</translation>
+        <translation>S  منفذ-1 ملف المتغير</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>2-port S parameter file</source>
-        <translation>2 портты S-параметрлері бар файл</translation>
+        <translation>S  منفذ-2 ملف المتغير</translation>
     </message>
     <message>
         <location line="+66"/>
         <source>file</source>
-        <translation>файл</translation>
+        <translation>الملف</translation>
     </message>
     <message>
-        <location filename="components/spicefile.cpp" line="-208"/>
+        <location filename="../qucs/components/spicefile.cpp" line="-208"/>
         <source>SPICE netlist file</source>
-        <translation>SPICE сұлбасының файлы</translation>
+        <translation>SPICE ملف وثيقة</translation>
     </message>
     <message>
         <location line="+27"/>
         <source>SPICE netlist</source>
-        <translation>SPICE сұлбасы</translation>
+        <translation>SPICE وثيقة </translation>
     </message>
     <message>
         <location line="+31"/>
         <source>sim</source>
-        <translation>сим</translation>
+        <translation>sim</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>spice</source>
-        <translation>SPICE</translation>
+        <translation>spice</translation>
     </message>
     <message>
         <location line="+156"/>
         <source>ERROR: Cannot open SPICE file &quot;%1&quot;.</source>
-        <translation>ҚАТЕ: SPICE-файлды &quot;%1&quot; ашу мүмкін емес.</translation>
+        <translation>.خطأ : لا يمكن فتح  ملف سبيس&quot;%1&quot;ء</translation>
     </message>
     <message>
         <location line="+13"/>
         <source>ERROR: Cannot save converted SPICE file &quot;%1&quot;.</source>
-        <translation>Қате: Түрлендірілген SPICE &quot;%1&quot; файлды сақтау мүмкін емес .</translation>
+        <translation>.خطأ : لا يمكن حفظ ملف سبيس&quot;%1&quot;ء</translation>
     </message>
     <message>
         <location line="+15"/>
         <source>ERROR: Cannot open converted SPICE file &quot;%1&quot;.</source>
-        <translation>Қате: Түрлендірілген SPICE &quot;%1&quot; файлды ашу мүмкін емес .</translation>
+        <translation>.خطأ : لا يمكن فتح  ملف سبيس&quot;%1&quot;ء</translation>
     </message>
     <message>
         <location line="+66"/>
         <source>Preprocessing SPICE file &quot;%1&quot;.</source>
-        <translation>SPICE файл &quot;%1&quot;өңделуде.</translation>
+        <translation type="unfinished">تجهيز ملف  SPICE &quot;&quot;%1 .</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>ERROR: Cannot save preprocessed SPICE file &quot;%1&quot;.</source>
-        <translation>Қате: Өңделген SPICE &quot;%1&quot; файлды сақтау мүмкін емес .</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+15"/>
         <source>ERROR: Cannot execute &quot;%1&quot;.</source>
-        <translation>ҚАТЕ: Файлды &quot;%1&quot; қолдану мүмкін емес.</translation>
+        <translation>&quot;خطأ : لا يمكن تنفيذ &quot;1٪ـ</translation>
     </message>
     <message>
-        <location line="+54"/>
+        <location line="+61"/>
+        <source>COMP ERROR: Cannot start QucsConv!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>ERROR: Cannot start QucsConv!</source>
-        <translation>ҚАТЕ: QucsConv іске қосу мүмкін емес!</translation>
+        <translation type="obsolete">! QucsConv خطأ : لايمكن بدأ </translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Converting SPICE file &quot;%1&quot;.</source>
-        <translation>SPICE файл &quot;%1&quot;түрленді.</translation>
+        <translation>.&quot;%1&quot; SPICE تحويل ملف  </translation>
     </message>
     <message>
-        <location filename="components/sp_sim.cpp" line="-30"/>
+        <location filename="../qucs/components/sp_sim.cpp" line="-30"/>
         <source>S parameter simulation</source>
-        <translation>S-параметрлерін моделдеу</translation>
+        <translation>متغير المحاكاة S </translation>
     </message>
     <message>
         <location line="+32"/>
         <source>calculate noise parameters</source>
-        <translation>шу параметрлерін есептеу</translation>
+        <translation>حساب متغيرات التشويش</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>input port for noise figure</source>
-        <translation>шу факторы үшін кіріс порты</translation>
+        <translation>منفذ الدخول لمظهر التشويش</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>output port for noise figure</source>
-        <translation>шу факторы үшін шығыс порты</translation>
+        <translation>منفذ الخروج لمظهر التشويش</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>put characteristic values into dataset</source>
-        <translation>қасиеттік мәндерін мәліметтер термесіне кіргізу</translation>
+        <translation>ضع خصائص القيم في نقاط البيانات</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>save subcircuit characteristic values into dataset</source>
-        <translation>сұлбаның қасиеттік мәндерін мәліметтер термесінде сақтау</translation>
+        <translation>إحفظ خصائص القيم  للدارة الفرعية في نقاط البيانات</translation>
     </message>
     <message>
         <location line="+15"/>
         <source>S-parameter simulation</source>
-        <translation>S-параметрлерді моделдеу</translation>
+        <translation>متغير المحاكاة-S </translation>
     </message>
     <message>
-        <location filename="components/subcircuit.cpp" line="+41"/>
+        <location filename="../qucs/components/subcircuit.cpp" line="+34"/>
         <source>subcircuit</source>
-        <translation>сұлба</translation>
+        <translation>فرع الدائرة الكهربائية</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>name of qucs schematic file</source>
-        <translation>qucs сұлба файлының аты</translation>
+        <translation> اسم الملف في المخطط</translation>
     </message>
     <message>
         <location line="+21"/>
         <source>Subcircuit</source>
-        <translation>Сұлба</translation>
+        <translation>فرع الدائرة الكهربائية</translation>
     </message>
     <message>
-        <location filename="components/subcirport.cpp" line="+26"/>
+        <location filename="../qucs/components/subcirport.cpp" line="+25"/>
         <source>port of a subcircuit</source>
-        <translation>сұлбаның порты</translation>
+        <translation> منفذ لفرع الدائرة كهربائية</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>number of the port within the subcircuit</source>
-        <translation>сұлбадағы порттың нөмірі</translation>
+        <translation>عدد المنافذ في فرع الدائرة الكهربائية</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>type of the port (for digital simulation only)</source>
-        <translation>порттың типі (тек қана цифрлық моделдеу үшін)</translation>
+        <translation> (نوع المنفذ (للمحاكاة الرقمية فقط</translation>
     </message>
     <message>
         <location line="+61"/>
         <source>Subcircuit Port</source>
-        <translation>Сұлбаның порты</translation>
+        <translation>منفذ فرع الدائرة الكهربائية</translation>
     </message>
     <message>
-        <location filename="components/substrate.cpp" line="-42"/>
+        <location filename="../qucs/components/substrate.cpp" line="-42"/>
         <source>substrate definition</source>
-        <translation>салымша параметрі</translation>
+        <translation>تعريف المادة </translation>
     </message>
     <message>
         <location line="+36"/>
         <source>relative permittivity</source>
-        <translation>салыстырмалы диэлектрлік өтімділік</translation>
+        <translation>النسبية Permittivity</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>thickness in meters</source>
-        <translation>метрмен есептегендегі қалыңдық</translation>
+        <translation>سمك بلمتر</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>thickness of metalization</source>
-        <translation>металлизация қалыңдығы</translation>
+        <translation>سمك المعدن</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>specific resistance of metal</source>
-        <translation>металдың шектік кедергісі</translation>
+        <translation>خصوصية مقاومة المعدن</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>rms substrate roughness</source>
-        <translation>салымша тегістігінің орта квадраттық мәні</translation>
+        <translation> خشونة القوامrms</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>Substrate</source>
-        <translation>Салымша</translation>
+        <translation>المادة </translation>
     </message>
     <message>
-        <location filename="components/switch.cpp" line="-11"/>
+        <location filename="../qucs/components/switch.cpp" line="-11"/>
         <source>switch (time controlled)</source>
-        <translation>ауыстырып-қосқыш (уақытпен басқарылады)</translation>
+        <translation>التحول (الوقت التسيطر)ا</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>initial state</source>
-        <translation>бастапқы жағдай</translation>
+        <translation>المرحلة الأولية</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>time when state changes (semicolon separated list possible, even numbered lists are repeated)</source>
         <oldsource>time when state changes (semicolon separated list possible)</oldsource>
-        <translation type="unfinished">күй өзгеретін уақыт (екі нүктесі бар тізімге рұқсат )</translation>
+        <translation type="unfinished">(الوقت أين تتغير المراحل(علامة وقف لفصل القائمة ممكنة</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>resistance of &quot;on&quot; state in ohms</source>
-        <translation>кедергі &quot;on&quot;-омдағы күйде</translation>
+        <translation>المقاومة لمرحلة التشغيل بلأوم</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>resistance of &quot;off&quot; state in ohms</source>
-        <translation>кедергі &quot;off&quot;-омдағы күйде</translation>
+        <translation>المقاومة لمرحلة التوقيف بلأوم</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -10057,204 +9630,202 @@ Wrong &apos;component&apos; line format!</source>
     <message>
         <location line="+21"/>
         <source>Switch</source>
-        <translation>Ауыстырып-қосқыш</translation>
+        <translation>مفتاح كهربائي</translation>
     </message>
     <message>
-        <location filename="components/symtrafo.cpp" line="+23"/>
+        <location filename="../qucs/components/symtrafo.cpp" line="+23"/>
         <source>ideal symmetrical transformer</source>
-        <translation>әмбебап симметриялы трансформатор</translation>
+        <translation>التحول المثالي التناضري</translation>
     </message>
     <message>
         <location line="+52"/>
         <source>voltage transformation ratio of coil 1</source>
-        <translation>кернеу орамасының трансформация коэффициенті 1</translation>
+        <translation>نسبة تحول الفولت  للفة 1</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>voltage transformation ratio of coil 2</source>
-        <translation>кернеу орамасының трансформация коэффициенті 2</translation>
+        <translation>نسبة تحول الفولت  للفة 2</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>symmetric Transformer</source>
-        <translation>симметриялы трансформатор</translation>
+        <translation>التحول  التناضري</translation>
     </message>
     <message>
-        <location filename="components/tff_SR.cpp" line="-7"/>
-        <source>T flip flop with set and reset verilog device</source>
-        <translation>Т триггердің жазу/өшіру операциялары бар логикалық құрылғы</translation>
-    </message>
-    <message>
-        <location line="+27"/>
-        <source>T-FlipFlop w/ SR</source>
-        <translation>Т-триггері сым/SR</translation>
-    </message>
-    <message>
-        <location filename="components/thyristor.cpp" line="-36"/>
+        <location filename="../qucs/components/thyristor.cpp" line="-36"/>
         <source>silicon controlled rectifier (SCR)</source>
-        <translation>силиконмен басқарылатын түзеткіш (СБТ)</translation>
+        <translation>(SCR)معدل تحكم السيليكون  </translation>
     </message>
     <message>
         <location line="+24"/>
         <source>breakover voltage</source>
-        <translation>тесіп-өту кернеуі</translation>
+        <translation>فولتاج التعطيل</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>gate trigger current</source>
-        <translation>түйек триггеріндегі ток</translation>
+        <translation>إطلاق ممر  التيار</translation>
     </message>
     <message>
         <location line="+22"/>
         <source>Thyristor</source>
-        <translation>Тиристор</translation>
+        <translation>الثايرستور</translation>
     </message>
     <message>
-        <location filename="components/tline_4port.cpp" line="-32"/>
+        <location filename="../qucs/components/tline_4port.cpp" line="-36"/>
         <source>ideal 4-terminal transmission line</source>
-        <translation>4-шығысы бар әмбебап беріліс арнасы</translation>
+        <translation>محطات-4  خط نقل مثالي</translation>
     </message>
     <message>
-        <location filename="components/tline.cpp" line="-2"/>
-        <location filename="components/tline_4port.cpp" line="+30"/>
+        <location filename="../qucs/components/tline.cpp" line="-6"/>
+        <location filename="../qucs/components/tline_4port.cpp" line="+30"/>
         <source>characteristic impedance</source>
-        <translation>толық сипаттамалық кедергі</translation>
+        <translation>خصائص المقاومة</translation>
     </message>
     <message>
-        <location line="+4"/>
-        <location filename="components/tline_4port.cpp" line="+4"/>
+        <location filename="../qucs/components/ctline.cpp" line="-10"/>
+        <location filename="../qucs/components/rlcg.cpp" line="+4"/>
+        <location filename="../qucs/components/tline.cpp" line="+2"/>
+        <location filename="../qucs/components/tline_4port.cpp" line="+2"/>
+        <source>electrical length of the line</source>
+        <translation>الطول الكهربائى للخط</translation>
+    </message>
+    <message>
+        <location filename="../qucs/components/tline.cpp" line="+2"/>
+        <location filename="../qucs/components/tline_4port.cpp" line="+2"/>
         <source>attenuation factor per length in 1/m</source>
-        <translation>1/м өлшем бірлігіндегі бәсеңдеу коэффициенті</translation>
+        <translation>عامل التخفيف وفقا للطول في 1 / م</translation>
     </message>
     <message>
-        <location filename="components/tline_4port.cpp" line="+16"/>
+        <location filename="../qucs/components/tline_4port.cpp" line="+16"/>
         <source>4-Terminal Transmission Line</source>
-        <translation>4-шығысы бар беріліс арнасы</translation>
+        <translation>محطات-4  خط نقل</translation>
     </message>
     <message>
-        <location filename="components/tline.cpp" line="-30"/>
+        <location filename="../qucs/components/tline.cpp" line="-30"/>
         <source>ideal transmission line</source>
-        <translation>әмбебап беріліс арнасы</translation>
+        <translation>خط الإنتقال المثالي </translation>
     </message>
     <message>
         <location line="+46"/>
         <source>Transmission Line</source>
-        <translation>Мәліметтерді беру арнасы</translation>
+        <translation> خط الانتقال</translation>
     </message>
     <message>
-        <location filename="components/transformer.cpp" line="+23"/>
+        <location filename="../qucs/components/transformer.cpp" line="+23"/>
         <source>ideal transformer</source>
-        <translation>әмбебап трансформатор</translation>
+        <translation>التحول المثالي</translation>
     </message>
     <message>
         <location line="+38"/>
         <source>voltage transformation ratio</source>
-        <translation>кернеудің трансформация коэффициенті</translation>
+        <translation>نسبة تحول الفولت</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>Transformer</source>
-        <translation>Трансформатор</translation>
+        <translation>محول التيار</translation>
     </message>
     <message>
-        <location filename="components/triac.cpp" line="-40"/>
+        <location filename="../qucs/components/triac.cpp" line="-40"/>
         <source>triac (bidirectional thyristor)</source>
-        <translation>триак (екі бағытты тиристор)</translation>
+        <translation>(  الثايرستور ثنائي الاتجاه) Triac </translation>
     </message>
     <message>
         <location line="+30"/>
         <source>(bidirectional) gate trigger current</source>
-        <translation>(Екі бағытты) қақпалық триггер ағыны</translation>
+        <translation>ثنائي الاتجاه) بوابة إندلاع التيار )</translation>
     </message>
     <message>
         <location line="+22"/>
         <source>Triac</source>
-        <translation>Триак</translation>
+        <translation>صمام تحكم كهربائي</translation>
     </message>
     <message>
-        <location filename="components/tr_sim.cpp" line="-53"/>
+        <location filename="../qucs/components/tr_sim.cpp" line="-53"/>
         <source>transient simulation</source>
-        <translation>өтпелі процесті моделдеу</translation>
+        <translation>المحاكاة الوقتي</translation>
     </message>
     <message>
         <location line="+22"/>
         <source>start time in seconds</source>
-        <translation>бастапқы уақыт секунд өлшем бірлігінде</translation>
+        <translation>بداية الوقت بالثواني</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>stop time in seconds</source>
-        <translation>нәтижелік уақыт секунд өлшем бірлігінде</translation>
+        <translation>نهاية  الوقت بالثواني</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>number of simulation time steps</source>
-        <translation>моделдеу уақытының қадамдар саны</translation>
+        <translation>عدد مرات المحاكاة</translation>
     </message>
     <message>
-        <location filename="components/etr_sim.cpp" line="-44"/>
+        <location filename="../qucs/components/etr_sim.cpp" line="-44"/>
         <source>externally driven transient simulation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+19"/>
-        <location filename="components/tr_sim.cpp" line="+2"/>
+        <location filename="../qucs/components/tr_sim.cpp" line="+2"/>
         <source>integration method</source>
-        <translation>интегрирлеу әдісі</translation>
+        <translation>الطريقة الإندماجية</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="components/tr_sim.cpp" line="+3"/>
+        <location filename="../qucs/components/tr_sim.cpp" line="+3"/>
         <source>order of integration method</source>
-        <translation>интегрирлеу әдісінің реті</translation>
+        <translation>ترتيب الطريقة الإندماجية</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/tr_sim.cpp" line="+2"/>
+        <location filename="../qucs/components/tr_sim.cpp" line="+2"/>
         <source>initial step size in seconds</source>
-        <translation>секундпен шаққанда бастапқы қадам өлшемі</translation>
+        <translation>حجم الخطوة أولية بالثواني</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/tr_sim.cpp" line="+2"/>
+        <location filename="../qucs/components/tr_sim.cpp" line="+2"/>
         <source>minimum step size in seconds</source>
-        <translation>секундпен шаққанда минималды қадам өлшемі</translation>
+        <translation>حجم الخطوة الأدنى بالثواني</translation>
     </message>
     <message>
         <location line="+12"/>
-        <location filename="components/tr_sim.cpp" line="+12"/>
+        <location filename="../qucs/components/tr_sim.cpp" line="+12"/>
         <source>relative tolerance of local truncation error</source>
-        <translation>жергілікті қысқарту қателеріне салыстырмалы рұқсат</translation>
+        <translation>خطأ قي التسامح النسبي للبتر المحلي  </translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/tr_sim.cpp" line="+2"/>
+        <location filename="../qucs/components/tr_sim.cpp" line="+2"/>
         <source>absolute tolerance of local truncation error</source>
-        <translation>жергілікті қысқарту қателеріне абсолютті рұқсат</translation>
+        <translation>خطأ قي التسامح المطلق للبتر المحلي  </translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/tr_sim.cpp" line="+2"/>
+        <location filename="../qucs/components/tr_sim.cpp" line="+2"/>
         <source>overestimation of local truncation error</source>
-        <translation>қысқару қателерін бағалаудағы жоғарғы шегі</translation>
+        <translation> خطأ قي التسامح المبالغ للبتر المحلي  </translation>
     </message>
     <message>
         <location line="+5"/>
-        <location filename="components/tr_sim.cpp" line="+5"/>
+        <location filename="../qucs/components/tr_sim.cpp" line="+5"/>
         <source>relax time step raster</source>
-        <translation>уақыттық қадамдарда рұқсат етілген қателіктер</translation>
+        <translation>مرحلة إسترخاء خطوط المسح</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/tr_sim.cpp" line="+2"/>
+        <location filename="../qucs/components/tr_sim.cpp" line="+2"/>
         <source>perform an initial DC analysis</source>
-        <translation>бастапқы анализді тұрақты токта орындау</translation>
+        <translation>تؤدي الحساب الأولي لمرحلة التشغيل</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="components/tr_sim.cpp" line="+2"/>
+        <location filename="../qucs/components/tr_sim.cpp" line="+2"/>
         <source>maximum step size in seconds</source>
-        <translation>секундпен шаққанда максималды қадам өлшемі</translation>
+        <translation>حجم الخطوة  بثواني</translation>
     </message>
     <message>
         <location line="+14"/>
@@ -10262,65 +9833,65 @@ Wrong &apos;component&apos; line format!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/tr_sim.cpp" line="+14"/>
+        <location filename="../qucs/components/tr_sim.cpp" line="+14"/>
         <source>Transient simulation</source>
-        <translation>Өтпелі процесті моделдеу</translation>
+        <translation>المحاكاة الوقتي</translation>
     </message>
     <message>
-        <location filename="components/twistedpair.cpp" line="-50"/>
+        <location filename="../qucs/components/twistedpair.cpp" line="-50"/>
         <source>twisted pair transmission line</source>
-        <translation>орама жұптық беріліс арнасы</translation>
+        <translation>خط الإتصال للزوج الملتوي</translation>
     </message>
     <message>
         <location line="+36"/>
         <source>diameter of conductor</source>
-        <translation>өткізгіш диаметрі</translation>
+        <translation>قطر الناقل</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>diameter of wire (conductor and insulator)</source>
-        <translation>сымның диаметрі (өткізгіш пен оқшаулағыш)</translation>
+        <translation>قطر السلك(الناقل و العازل)ـ</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>physical length of the line</source>
-        <translation>арнаның физикалық ұзындығы</translation>
+        <translation>طول الفيزيائى للخيط</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>twists per length in 1/m</source>
-        <translation>1 метрге орама саны</translation>
+        <translation>طول اللفة ب 1/م</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>dielectric constant of insulator</source>
-        <translation>оқшаулағыштың диэлектрлік тұрақтысы</translation>
+        <translation>ثابت العازل الكهربائي من العازل</translation>
     </message>
     <message>
         <location line="+22"/>
         <source>Twisted-Pair</source>
-        <translation>Орама жұбы</translation>
+        <translation>زوج الملتوي</translation>
     </message>
     <message>
-        <location filename="components/vccs.cpp" line="-41"/>
+        <location filename="../qucs/components/vccs.cpp" line="-41"/>
         <source>voltage controlled current source</source>
-        <translation>ток ағынын бақылайтын кернеу көзінің қорегі</translation>
+        <translation>مصدر التيار مسيطر الفولت  </translation>
     </message>
     <message>
         <location line="+40"/>
         <source>forward transconductance</source>
-        <translation>тура өтпелі өткізгіштік</translation>
+        <translation> transconductance أرسل </translation>
     </message>
     <message>
         <location line="+15"/>
         <source>Voltage Controlled Current Source</source>
-        <translation>Ток ағынын бақылайтын кернеу көзінің қорегі</translation>
+        <translation>مصدر التيار مسيطر الفولت  </translation>
     </message>
     <message>
-        <location filename="components/vcresistor.cpp" line="+23"/>
-        <location filename="components/vcvs.cpp" line="-42"/>
+        <location filename="../qucs/components/vcresistor.cpp" line="+23"/>
+        <location filename="../qucs/components/vcvs.cpp" line="-42"/>
         <source>voltage controlled voltage source</source>
-        <translation>кернеумен басқарылатын кернеу көзі</translation>
+        <translation>مصدر الفولت مسيطر الفولت  </translation>
     </message>
     <message>
         <location line="+47"/>
@@ -10333,119 +9904,113 @@ Wrong &apos;component&apos; line format!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/vcvs.cpp" line="+56"/>
+        <location filename="../qucs/components/vcvs.cpp" line="+56"/>
         <source>Voltage Controlled Voltage Source</source>
-        <translation>Кернеумен басқарылатын кернеу көзі</translation>
+        <translation>مصدر الفولت مسيطر الفولت  </translation>
     </message>
     <message>
-        <location filename="components/verilogfile.cpp" line="-141"/>
+        <location filename="../qucs/components/verilogfile.cpp" line="-145"/>
         <location line="+24"/>
         <source>Verilog file</source>
-        <translation>Verilog файлы</translation>
+        <translation>ملف فيريلوج </translation>
     </message>
     <message>
         <location line="-21"/>
         <source>Name of Verilog file</source>
-        <translation>Verilog файлдың аты</translation>
+        <translation> إسم ملف فيريلوج </translation>
     </message>
     <message>
-        <location line="+93"/>
+        <location line="+97"/>
         <source>verilog</source>
-        <translation>Verilog</translation>
+        <translation>فيريلوج </translation>
     </message>
     <message>
         <location line="+56"/>
-        <location filename="components/vhdlfile.cpp" line="+11"/>
+        <location filename="../qucs/components/vhdlfile.cpp" line="+11"/>
         <source>ERROR: Cannot open %1 file &quot;%2&quot;.</source>
-        <translation>ҚАТЕ: &quot;%1&quot; және &quot;%2&quot;файлдарын ашу мүмкін емес.</translation>
+        <translation>.خطأ : لا يمكن إنشاء ٪ 1 الملف &quot;%2&quot;ـ</translation>
     </message>
     <message>
-        <location filename="components/vexp.cpp" line="-40"/>
+        <location filename="../qucs/components/vexp.cpp" line="-40"/>
         <source>exponential voltage source</source>
-        <translation>көрсеткіштік кернеуінің қорек көзі</translation>
+        <translation>تضاعف مصدر الفولت </translation>
     </message>
     <message>
         <location line="+34"/>
         <source>voltage before rising edge</source>
-        <translation>өсу фронтына дейінгі кернеу</translation>
+        <translation>قبل أن يرتفع الحد الحالي للفولت</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>maximum voltage of the pulse</source>
-        <translation>импульс кезіндегі максималды кернеу</translation>
+        <translation>الحد الأقصى للنبض الفولت  </translation>
     </message>
     <message>
         <location line="+6"/>
         <source>rise time of the rising edge</source>
-        <translation>өсу фронтының өсу уақыты</translation>
+        <translation>  ارتفاع وقت الحد الأمامي</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>fall time of the falling edge</source>
-        <translation>құлау кесіндісінің құлау уақыты</translation>
+        <translation>إنتهاء الوقت لمتابعة الحد</translation>
     </message>
     <message>
         <location line="+16"/>
         <source>Exponential Voltage Pulse</source>
-        <translation>импульстік кернеудің көрсеткіші</translation>
+        <translation>تضاعف نبض الفولت </translation>
     </message>
     <message>
-        <location filename="components/vfile.cpp" line="-35"/>
+        <location filename="../qucs/components/vfile.cpp" line="-35"/>
         <source>file based voltage source</source>
-        <translation>кернеу қорек көзінің базалық файлы</translation>
+        <translation>ملف مصدر الفولت</translation>
     </message>
     <message>
         <location line="+53"/>
         <source>File Based Voltage Source</source>
-        <translation>Кернеу қорек көзінің базалық файлы</translation>
+        <translation>ملف مصدر الفولت</translation>
     </message>
     <message>
-        <location filename="components/vhdlfile.cpp" line="-197"/>
+        <location filename="../qucs/components/vhdlfile.cpp" line="-200"/>
         <location line="+24"/>
         <source>VHDL file</source>
-        <translation>VHDL файлы</translation>
+        <translation>VHDLملف </translation>
     </message>
     <message>
         <location line="-21"/>
         <source>Name of VHDL file</source>
-        <translation>VHDL файлдың аты</translation>
+        <translation>VHDLإسم ملف </translation>
     </message>
     <message>
-        <location line="+107"/>
+        <location line="+110"/>
         <source>vhdl</source>
-        <translation>VHDL</translation>
+        <translation>vhdl</translation>
     </message>
     <message>
-        <location line="+41"/>
-        <location line="+7"/>
-        <source>generic variable</source>
-        <translation>айнымалыларды генерирлеу</translation>
-    </message>
-    <message>
-        <location filename="components/volt_ac.cpp" line="-29"/>
+        <location filename="../qucs/components/volt_ac.cpp" line="-29"/>
         <source>ideal ac voltage source</source>
-        <translation>айнымалы токтың әмбебап қорек көзі</translation>
+        <translation>مصدر خاص بالمنحنى المثالي</translation>
     </message>
     <message>
         <location line="+45"/>
         <source>ac Voltage Source</source>
-        <translation>айнымалы тоқта кернеудің қорек көзі</translation>
+        <translation>مصدر خاص بالمنحنى </translation>
     </message>
     <message>
-        <location filename="components/volt_dc.cpp" line="+23"/>
+        <location filename="../qucs/components/volt_dc.cpp" line="+23"/>
         <source>ideal dc voltage source</source>
-        <translation>тұрақты кернеудің әмбебап қорек көзі</translation>
+        <translation>مصدر التيار المستمر المثالي</translation>
     </message>
     <message>
-        <location filename="components/ecvs.cpp" line="+23"/>
+        <location filename="../qucs/components/ecvs.cpp" line="+22"/>
         <source>externally controlled voltage source</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+45"/>
-        <location filename="components/volt_dc.cpp" line="+22"/>
+        <location filename="../qucs/components/volt_dc.cpp" line="+22"/>
         <source>voltage in Volts</source>
-        <translation>кернеу Вольтпен</translation>
+        <translation>الفولتاج بالفولت</translation>
     </message>
     <message>
         <location line="+18"/>
@@ -10453,105 +10018,109 @@ Wrong &apos;component&apos; line format!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/volt_dc.cpp" line="+16"/>
+        <location filename="../qucs/components/volt_dc.cpp" line="+16"/>
         <source>dc Voltage Source</source>
-        <translation>Тұрақты токтағы кернеудің қорек көзі</translation>
+        <translation>مصدر الفولتاج لتيار المستمر</translation>
     </message>
     <message>
-        <location filename="components/volt_noise.cpp" line="-29"/>
+        <location filename="../qucs/components/volt_noise.cpp" line="-29"/>
         <source>noise voltage source</source>
-        <translation>шу кернеуінің қорек көзі</translation>
+        <translation>مصدر  التشويش في الفولت  </translation>
     </message>
     <message>
         <location line="+23"/>
         <source>voltage power spectral density in V^2/Hz</source>
-        <translation>кернеу көзі шуы қуатының спектральды тығыздығы В²/Гц</translation>
+        <translation>V^2/Hz الكثافة الطيفية قوة الفولتاج  في  </translation>
     </message>
     <message>
         <location line="+22"/>
         <source>Noise Voltage Source</source>
-        <translation>Шу кернеуінің қорек көзі</translation>
+        <translation>مصدر  التشويش في الفولت  </translation>
     </message>
     <message>
-        <location filename="components/vprobe.cpp" line="+23"/>
+        <location filename="../qucs/components/vprobe.cpp" line="+23"/>
         <source>voltage probe</source>
-        <translation>кернеу өлшеуіш</translation>
+        <translation>تحقيق الضغط</translation>
     </message>
     <message>
         <location line="+44"/>
         <source>Voltage Probe</source>
-        <translation>Кернеу өлшеуіш</translation>
+        <translation>تحقيق الضغط</translation>
     </message>
     <message>
-        <location filename="components/vpulse.cpp" line="-37"/>
+        <location filename="../qucs/components/vpulse.cpp" line="-37"/>
         <source>ideal voltage pulse source</source>
-        <translation>импульстік кернеуінің әмбебап қорек көзі</translation>
+        <translation>مصدر ذبذبات الضغط المثالي</translation>
     </message>
     <message>
         <location line="+27"/>
         <source>voltage before and after the pulse</source>
-        <translation>импульсқа дейін және кейін кернеудің мәні</translation>
+        <translation>الفولتاج قبل و بعد الذبذبة</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>voltage of the pulse</source>
-        <translation>импульс кезіндегі кернеу</translation>
+        <translation>الفولتاج لذبذبة</translation>
     </message>
     <message>
         <location line="+24"/>
         <source>Voltage Pulse</source>
-        <translation>Импульстік кернеудің қорек көзі</translation>
+        <translation>ذبذبة الفولتاج</translation>
     </message>
     <message>
-        <location filename="components/vrect.cpp" line="-39"/>
+        <location filename="../qucs/components/vrect.cpp" line="-39"/>
         <source>ideal rectangle voltage source</source>
-        <translation>тікбұрышты қалыптағы кернеудің әмбебап қорек көзі</translation>
+        <translation>المصدر المثالي لذبذبة التيار </translation>
     </message>
     <message>
         <location line="+29"/>
         <source>voltage of high signal</source>
-        <translation>Импульс шыңындағы кернеу</translation>
+        <translation>فولتاج للإشارة العالية</translation>
     </message>
     <message>
         <location line="+26"/>
         <source>Rectangle Voltage</source>
-        <translation>Тікбұрышты формалы кернеу көзі</translation>
+        <translation>فولتاج المستطيل</translation>
     </message>
     <message>
-        <location filename="dialogs/librarydialog.cpp" line="-267"/>
+        <location filename="../qucs/dialogs/librarydialog.cpp" line="-267"/>
         <source>ERROR: Cannot open file &quot;%1&quot;.
 </source>
-        <translation>ҚАТЕ: Файлды &quot;%1&quot; ашу мүмкін емес.</translation>
+        <translation>&quot;خطأ : لا يمكن إنشاء الملف &quot;٪ 1.
+‏</translation>
     </message>
     <message>
         <location line="+13"/>
         <source>ERROR: Cannot create user library subdirectory !
 </source>
-        <translation>ҚАТЕ:Тұтынушыға арналған папка құрылған жоқ!</translation>
+        <translation> خطأ : لا يمكن إنشاء دليل فرعي لمستخدم المكتبة !</translation>
     </message>
     <message>
         <location line="+12"/>
         <source>ERROR: Cannot create file &quot;%1&quot;.
 </source>
-        <translation>Қате:Файл құру&quot;%1&quot; мүмкін емес.</translation>
+        <translation>&quot;خطأ : لا يمكن إنشاء الملف &quot;٪ 1.
+</translation>
     </message>
     <message>
         <location filename="../qucs-edit/main.cpp" line="+76"/>
         <source>Qucs Editor Version </source>
-        <translation>Qucs редакторының нұсқасы</translation>
+        <translation>Qucs محرر النسخة </translation>
     </message>
     <message>
         <location line="+1"/>
         <source>
 Very simple text editor for Qucs
 </source>
-        <translation>Qucs үшін өте қарапайым мәтіндік редактор</translation>
+        <translation>
+Qucsمحرر نصوص بسيط جدا ل</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Copyright (C) 2004, 2005 by Michael Margraf
 </source>
-        <translation>Copyright (C) 2004, 2005 by Michael Margraf</translation>
+        <translation>حقوق الطبع محفوظة (جيم) 2004 ، و 2005 من قبل مايكل مرغراف
+</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -10559,21 +10128,21 @@ Very simple text editor for Qucs
 Usage:  qucsedit [-r] file
 </source>
         <translation>
-Қолдану: qucsedit [-r] файл
+qucsedit [-r] file :إستعمال 
 </translation>
     </message>
     <message>
         <location line="+1"/>
         <source>    -h  display this help and exit
 </source>
-        <translation>    -h  осы анықтаманы көрсетіп кейін шығу
+        <translation>إضهار هذه المساعدة و الخروج h-
 </translation>
     </message>
     <message>
         <location line="+1"/>
         <source>    -r  open file read-only
 </source>
-        <translation>    -r  файл тек оқу үшін ашылды
+        <translation>فتح الملف للقراءة فقط r- 
 </translation>
     </message>
     <message>
@@ -10581,16 +10150,16 @@ Usage:  qucsedit [-r] file
         <source>Too long command line argument!
 
 </source>
-        <translation>Басқару жолының аргументі өте ұзын!
+        <translation>كذلك طول متغير السطر!
 
-</translation>
+ </translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Wrong command line argument!
 
 </source>
-        <translation>Басқару жолының аргументі дұрыс емес!
+        <translation>خطأ في معامل  الأمِر!
 
 </translation>
     </message>
@@ -10599,17 +10168,572 @@ Usage:  qucsedit [-r] file
         <source>Only one filename allowed!
 
 </source>
-        <translation>Тек қана бір файлдың аты рұқсат етіледі!
+        <translation> اسم الملف واحد فقط سمحت!
 
 </translation>
     </message>
     <message>
-        <location filename="schematic_file.cpp" line="-109"/>
+        <location filename="../qucs/components/andor4x2.cpp" line="-6"/>
+        <source>4x2 andor verilog device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <location filename="../qucs/components/andor4x3.cpp" line="-3"/>
+        <location filename="../qucs/components/andor4x4.cpp" line="-3"/>
+        <location filename="../qucs/components/comp_1bit.cpp" line="-3"/>
+        <location filename="../qucs/components/comp_2bit.cpp" line="-3"/>
+        <location filename="../qucs/components/comp_4bit.cpp" line="-3"/>
+        <location filename="../qucs/components/dmux2to4.cpp" line="-3"/>
+        <location filename="../qucs/components/dmux3to8.cpp" line="-3"/>
+        <location filename="../qucs/components/dmux4to16.cpp" line="-3"/>
+        <location filename="../qucs/components/fa1b.cpp" line="-3"/>
+        <location filename="../qucs/components/fa2b.cpp" line="-3"/>
+        <location filename="../qucs/components/ha1b.cpp" line="-3"/>
+        <location filename="../qucs/components/mux2to1.cpp" line="-3"/>
+        <location filename="../qucs/components/mux4to1.cpp" line="-3"/>
+        <location filename="../qucs/components/mux8to1.cpp" line="-3"/>
+        <source>transfer function high scaling factor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <location filename="../qucs/components/andor4x3.cpp" line="+2"/>
+        <location filename="../qucs/components/andor4x4.cpp" line="+2"/>
+        <location filename="../qucs/components/binarytogrey4bit.cpp" line="-1"/>
+        <location filename="../qucs/components/comp_1bit.cpp" line="+2"/>
+        <location filename="../qucs/components/comp_2bit.cpp" line="+2"/>
+        <location filename="../qucs/components/comp_4bit.cpp" line="+2"/>
+        <location filename="../qucs/components/dmux2to4.cpp" line="+2"/>
+        <location filename="../qucs/components/dmux3to8.cpp" line="+2"/>
+        <location filename="../qucs/components/dmux4to16.cpp" line="+2"/>
+        <location filename="../qucs/components/fa1b.cpp" line="+2"/>
+        <location filename="../qucs/components/fa2b.cpp" line="+2"/>
+        <location filename="../qucs/components/greytobinary4bit.cpp" line="-1"/>
+        <location filename="../qucs/components/ha1b.cpp" line="+2"/>
+        <location filename="../qucs/components/hpribin4bit.cpp" line="-1"/>
+        <location filename="../qucs/components/mux2to1.cpp" line="+2"/>
+        <location filename="../qucs/components/mux4to1.cpp" line="+2"/>
+        <location filename="../qucs/components/mux8to1.cpp" line="+2"/>
+        <source>output delay</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+20"/>
+        <source>4x2 AndOr</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qucs/components/andor4x3.cpp" line="-5"/>
+        <source>4x3 andor verilog device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+25"/>
+        <source>4x3 AndOr</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qucs/components/andor4x4.cpp" line="-5"/>
+        <source>4x4 andor verilog device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+25"/>
+        <source>4x4 AndOr</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qucs/components/binarytogrey4bit.cpp" line="-5"/>
+        <source>4bit binary to grey converter verilog device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <location filename="../qucs/components/component.cpp" line="-273"/>
+        <location filename="../qucs/components/greytobinary4bit.cpp" line="-2"/>
+        <location filename="../qucs/components/hpribin4bit.cpp" line="-2"/>
+        <location filename="../qucs/components/logical_buf.cpp" line="-96"/>
+        <location filename="../qucs/components/logical_inv.cpp" line="-113"/>
+        <source>transfer function scaling factor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+22"/>
+        <source>4Bit Bin2Grey</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qucs/components/comp_1bit.cpp" line="-5"/>
+        <source>1bit comparator verilog device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+25"/>
+        <source>1Bit Comparator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qucs/components/comp_2bit.cpp" line="-5"/>
+        <source>2bit comparator verilog device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+25"/>
+        <source>2Bit Comparator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qucs/components/comp_4bit.cpp" line="-5"/>
+        <source>4bit comparator verilog device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+25"/>
+        <source>4Bit Comparator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qucs/components/dff_SR.cpp" line="-8"/>
+        <source>D flip flop with set and reset verilog device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <location filename="../qucs/components/gatedDlatch.cpp" line="-5"/>
+        <location filename="../qucs/components/jkff_SR.cpp" line="-5"/>
+        <location filename="../qucs/components/tff_SR.cpp" line="-5"/>
+        <source>cross coupled gate transfer function high scaling factor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <location filename="../qucs/components/gatedDlatch.cpp" line="+2"/>
+        <location filename="../qucs/components/jkff_SR.cpp" line="+2"/>
+        <location filename="../qucs/components/tff_SR.cpp" line="+2"/>
+        <source>cross coupled gate transfer function low scaling factor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <location filename="../qucs/components/gatedDlatch.cpp" line="+2"/>
+        <location filename="../qucs/components/jkff_SR.cpp" line="+2"/>
+        <location filename="../qucs/components/tff_SR.cpp" line="+2"/>
+        <source>cross coupled gate delay</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+20"/>
+        <source>D-FlipFlop w/ SR</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qucs/components/DLS_1ton.cpp" line="-6"/>
+        <source>data voltage level shifter (digital to analogue) verilog device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <location filename="../qucs/components/DLS_nto1.cpp" line="-4"/>
+        <source>voltage level</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <location filename="../qucs/components/DLS_nto1.cpp" line="+3"/>
+        <source>time delay</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+20"/>
+        <source>D2A Level Shifter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qucs/components/DLS_nto1.cpp" line="-6"/>
+        <source>data voltage level shifter (analogue to digital) verilog device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+26"/>
+        <source>A2D Level Shifter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qucs/components/dmux2to4.cpp" line="-5"/>
+        <source>2to4 demultiplexer verilog device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+25"/>
+        <source>2to4 Demux</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qucs/components/dmux3to8.cpp" line="-5"/>
+        <source>3to8 demultiplexer verilog device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+25"/>
+        <source>3to8 Demux</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qucs/components/dmux4to16.cpp" line="-5"/>
+        <source>4to16 demultiplexer verilog device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+25"/>
+        <source>4to16 Demux</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qucs/components/fa1b.cpp" line="-5"/>
+        <source>1bit full adder verilog device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+25"/>
+        <source>1Bit FullAdder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qucs/components/fa2b.cpp" line="-5"/>
+        <source>2bit full adder verilog device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+25"/>
+        <source>2Bit FullAdder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qucs/components/gatedDlatch.cpp" line="-7"/>
+        <source>gated D latch verilog device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+27"/>
+        <source>Gated D-Latch</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qucs/components/greytobinary4bit.cpp" line="-3"/>
+        <source>4bit grey to binary converter verilog device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+25"/>
+        <source>4Bit Grey2Bin</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qucs/components/ha1b.cpp" line="-5"/>
+        <source>1bit half adder verilog device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+25"/>
+        <source>1Bit HalfAdder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qucs/components/hic0_full.cpp" line="-242"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="-257"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="-218"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="-213"/>
+        <source>forward d.c. high-injection roll-off current</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+48"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+59"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+59"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+59"/>
+        <source>Exponent factor for emitter transit time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="+5"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="+5"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+5"/>
+        <source>Smoothing factor for current dependence</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qucs/components/hicumL0V1p2.cpp" line="-19"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="-19"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="-19"/>
+        <source>BE capacitance ratio (maximum to zero-bias value) for d.c. transfer current</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qucs/components/hpribin4bit.cpp" line="-3"/>
+        <source>4bit highest priority encoder (binary form) verilog device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+25"/>
+        <source>4Bit HPRI-Bin</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qucs/components/jkff_SR.cpp" line="-7"/>
+        <source>jk flip flop with set and reset verilog device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+27"/>
+        <source>JK-FlipFlop w/ SR</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qucs/components/logic_0.cpp" line="-4"/>
+        <source>logic 0 verilog device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>logic 0 voltage level</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+20"/>
+        <source>Logic 0</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qucs/components/logic_1.cpp" line="-4"/>
+        <source>logic 1 verilog device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>logic 1 voltage level</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+20"/>
+        <source>Logic 1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qucs/components/MESFET.cpp" line="-57"/>
+        <source>Vto temperature coefficient</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qucs/components/msrstub.cpp" line="-26"/>
+        <source>microstrip radial stub</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+22"/>
+        <source>inner radius</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>outer radius</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>stub angle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+14"/>
+        <source>Microstrip Radial Stub</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qucs/components/mux2to1.cpp" line="-5"/>
+        <source>2to1 multiplexer verilog device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+25"/>
+        <source>2to1 Mux</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qucs/components/mux4to1.cpp" line="-5"/>
+        <source>4to1 multiplexer verilog device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+25"/>
+        <source>4to1 Mux</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qucs/components/mux8to1.cpp" line="-5"/>
+        <source>8to1 multiplexer verilog device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+25"/>
+        <source>8to1 Mux</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qucs/components/pad2bit.cpp" line="+18"/>
+        <source>2bit pattern generator verilog device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <location filename="../qucs/components/pad3bit.cpp" line="+21"/>
+        <location filename="../qucs/components/pad4bit.cpp" line="+21"/>
+        <source>pad output value</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+19"/>
+        <source>2Bit Pattern</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qucs/components/pad3bit.cpp" line="-3"/>
+        <source>3bit pattern generator verilog device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+22"/>
+        <source>3Bit Pattern</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qucs/components/pad4bit.cpp" line="-3"/>
+        <source>4bit pattern generator verilog device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+22"/>
+        <source>4Bit Pattern</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qucs/components/phototransistor.cpp" line="-64"/>
+        <source>Phototransistor verilog device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>dark current</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+41"/>
+        <source>collector series resistance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>emitter series resistance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>base series resistance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>responsivity at relative selectivity=100%</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <location line="+2"/>
+        <location line="+2"/>
+        <location line="+2"/>
+        <location line="+2"/>
+        <source>relative selectivity polynomial coefficient</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+21"/>
+        <source>Phototransistor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qucs/components/rlcg.cpp" line="-40"/>
+        <source>RLCG transmission line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+16"/>
+        <source>RLCG</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+16"/>
+        <source>resistive load</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>Ohm/m</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>inductive load</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>H/m</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>capacitive load</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>conductive load</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>S/m</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+18"/>
+        <source>RLCG Transmission Line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qucs/components/tff_SR.cpp" line="-7"/>
+        <source>T flip flop with set and reset verilog device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+27"/>
+        <source>T-FlipFlop w/ SR</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qucs/components/vhdlfile.cpp" line="+41"/>
+        <location line="+7"/>
+        <source>generic variable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qucs/schematic_file.cpp" line="-109"/>
         <source>WARNING: Equations in &quot;%1&quot; are &apos;time&apos; typed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/nigbt.cpp" line="-45"/>
+        <location filename="../qucs/components/nigbt.cpp" line="-45"/>
         <source>NIGBT verilog device</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10727,15 +10851,14 @@ Usage:  qucsedit [-r] file
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="schematic_file.cpp" line="-1438"/>
+        <location filename="../qucs/schematic_file.cpp" line="-1437"/>
         <source>Cannot save C++ file &quot;%1&quot;!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="module.cpp" line="+117"/>
-        <location filename="qucs.cpp" line="+655"/>
-        <location line="+106"/>
-        <location filename="qucs_actions.cpp" line="+153"/>
+        <location filename="../qucs/module.cpp" line="+116"/>
+        <location filename="../qucs/qucs.cpp" line="+625"/>
+        <location line="+101"/>
         <source>verilog-a user devices</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10743,69 +10866,65 @@ Usage:  qucsedit [-r] file
         <location line="+65"/>
         <location line="+2"/>
         <source>lumped components</source>
-        <translation type="unfinished">дискреттік компоненттер</translation>
+        <translation type="unfinished">صنف العناصر</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>sources</source>
-        <translation type="unfinished">қорек көздері</translation>
+        <translation type="unfinished">المصادر</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>probes</source>
-        <translation type="unfinished">тестілеу</translation>
+        <translation type="unfinished">تحقيقات</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>transmission lines</source>
-        <translation type="unfinished">мәліметтерді беру арнасы</translation>
+        <translation type="unfinished">انتقال الخط</translation>
     </message>
     <message>
         <location line="+2"/>
         <location line="+2"/>
         <location line="+2"/>
         <source>nonlinear components</source>
-        <translation type="unfinished">сызықтық емес компоненттер</translation>
+        <translation type="unfinished">العناصر غير الخطية</translation>
     </message>
     <message>
         <location line="+2"/>
         <location line="+2"/>
         <source>verilog-a devices</source>
-        <translation type="unfinished">verilog құрылғылары</translation>
+        <translation type="unfinished">أجهزة فيريلوج</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>digital components</source>
-        <translation type="unfinished">цифрлық компоненттер</translation>
+        <translation type="unfinished">عناصر الرقمية</translation>
     </message>
     <message>
         <location line="+2"/>
         <location line="+2"/>
         <source>file components</source>
-        <translation type="unfinished">файл компоненттері</translation>
+        <translation type="unfinished">عناصر الملفات</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>simulations</source>
-        <translation type="unfinished">Моделдеу түрлері</translation>
+        <translation type="unfinished">المحاكاة </translation>
     </message>
     <message>
         <location line="+2"/>
         <location line="+2"/>
-        <location filename="qucs.cpp" line="+1708"/>
+        <location filename="../qucs/qucs.cpp" line="+1710"/>
         <source>diagrams</source>
-        <translation type="unfinished">диаграммалар</translation>
+        <translation type="unfinished">رسوم بيانية</translation>
     </message>
     <message>
         <location line="+2"/>
         <location line="+2"/>
-        <location filename="qucs.cpp" line="-1858"/>
-        <location line="+30"/>
-        <location line="+3"/>
-        <location line="+107"/>
-        <location line="+1"/>
+        <location filename="../qucs/qucs.cpp" line="-1839"/>
         <source>paintings</source>
-        <translation type="unfinished">суреттер</translation>
+        <translation type="unfinished">لوحات</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -10813,22 +10932,22 @@ Usage:  qucsedit [-r] file
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/hicumL2V2p24.cpp" line="-287"/>
+        <location filename="../qucs/components/hicumL2V2p24.cpp" line="-287"/>
         <source>HICUM Level 2 v2.24 verilog device</source>
-        <translation type="unfinished">HICUM Level 2 v2.24 Verilog-моделі</translation>
+        <translation type="unfinished">أجهزة فيريلوج  v2.23 2 HICUM  {2.24?}</translation>
     </message>
     <message>
         <location line="+309"/>
         <source>HICUM L2 v2.24</source>
-        <translation type="unfinished">HICUM L2 v2.24 нұсқасы</translation>
+        <translation type="unfinished">HICUM L2 v2.24</translation>
     </message>
     <message>
-        <location filename="components/hicumL0V1p3.cpp" line="-235"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="-67"/>
         <source>HICUM Level 0 v1.3 verilog device</source>
-        <translation type="unfinished">HICUM Level 0 v1.3 Verilog-моделі</translation>
+        <translation type="unfinished">أجهزة فيريلوج  v2.23 0 HICUM  {1.3?}</translation>
     </message>
     <message>
-        <location filename="components/hicumL0V1p2g.cpp" line="-207"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="-34"/>
         <source>high-injection roll-off current</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10853,17 +10972,17 @@ Usage:  qucsedit [-r] file
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/hicumL0V1p3.cpp" line="+284"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="+284"/>
         <source>npn HICUM L0 v1.3</source>
-        <translation type="unfinished">npn типті HICUM L0 1.3 нұсқасы {0?}</translation>
+        <translation type="unfinished">npn HICUM L0 v1.3</translation>
     </message>
     <message>
         <location line="+9"/>
         <source>pnp HICUM L0 v1.3</source>
-        <translation type="unfinished">pnp типті HICUM L0 1.3 нұсқасы {0?}</translation>
+        <translation type="unfinished">pnp HICUM L0 v1.3</translation>
     </message>
     <message>
-        <location filename="components/hicumL0V1p2g.cpp" line="-255"/>
+        <location filename="../qucs/components/hicumL0V1p2g.cpp" line="-255"/>
         <source>HICUM Level 0 v1.2g verilog device</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10890,15 +11009,15 @@ Usage:  qucsedit [-r] file
     <message>
         <location line="+24"/>
         <source>npn HICUM L0 v1.2g</source>
-        <translation type="unfinished">npn типті HICUM L0 1.2g нұсқасы {0 ?}</translation>
+        <translation type="unfinished">npn HICUM L0 v1.2g {0 ?}</translation>
     </message>
     <message>
         <location line="+9"/>
         <source>pnp HICUM L0 v1.2g</source>
-        <translation type="unfinished">pnp типті HICUM L0 1.2g нұсқасы {0 ?}</translation>
+        <translation type="unfinished">pnp HICUM L0 v1.2g {0 ?}</translation>
     </message>
     <message>
-        <location filename="components/hybrid.cpp" line="-37"/>
+        <location filename="../qucs/components/hybrid.cpp" line="-37"/>
         <source>hybrid (unsymmetrical 3dB coupler)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10908,7 +11027,7 @@ Usage:  qucsedit [-r] file
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/ctline.cpp" line="-40"/>
+        <location filename="../qucs/components/ctline.cpp" line="-40"/>
         <source>coupled transmission lines</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10948,7 +11067,7 @@ Usage:  qucsedit [-r] file
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/tunneldiode.cpp" line="-35"/>
+        <location filename="../qucs/components/tunneldiode.cpp" line="-35"/>
         <source>resonance tunnel diode</source>
         <translation type="unfinished"></translation>
     </message>
@@ -11018,7 +11137,7 @@ Usage:  qucsedit [-r] file
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/hicumL0V1p3.cpp" line="-285"/>
+        <location filename="../qucs/components/hicumL0V1p3.cpp" line="-285"/>
         <source>Flag for using third order solution for transfer current</source>
         <translation type="unfinished"></translation>
     </message>
@@ -11058,7 +11177,7 @@ Usage:  qucsedit [-r] file
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/mslange.cpp" line="-36"/>
+        <location filename="../qucs/components/mslange.cpp" line="-36"/>
         <source>microstrip lange coupler</source>
         <translation type="unfinished"></translation>
     </message>
@@ -11068,7 +11187,7 @@ Usage:  qucsedit [-r] file
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/bsim3v34nMOS.cpp" line="-817"/>
+        <location filename="../qucs/components/bsim3v34nMOS.cpp" line="-817"/>
         <source>bsim3v34nMOS verilog device</source>
         <translation type="unfinished"></translation>
     </message>
@@ -11480,7 +11599,7 @@ Usage:  qucsedit [-r] file
         <location line="+2"/>
         <location line="+2"/>
         <location line="+2"/>
-        <location filename="components/bsim3v34pMOS.cpp" line="-814"/>
+        <location filename="../qucs/components/bsim3v34pMOS.cpp" line="-814"/>
         <location line="+2"/>
         <location line="+2"/>
         <location line="+2"/>
@@ -11887,7 +12006,7 @@ Usage:  qucsedit [-r] file
         <location line="+2"/>
         <location line="+2"/>
         <location line="+2"/>
-        <location filename="components/bsim4v30nMOS.cpp" line="+19"/>
+        <location filename="../qucs/components/bsim4v30nMOS.cpp" line="+19"/>
         <location line="+2"/>
         <location line="+2"/>
         <location line="+2"/>
@@ -12165,7 +12284,7 @@ Usage:  qucsedit [-r] file
         <location line="+2"/>
         <location line="+2"/>
         <location line="+2"/>
-        <location filename="components/bsim4v30pMOS.cpp" line="+18"/>
+        <location filename="../qucs/components/bsim4v30pMOS.cpp" line="+18"/>
         <location line="+2"/>
         <location line="+2"/>
         <location line="+2"/>
@@ -12452,7 +12571,7 @@ Usage:  qucsedit [-r] file
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/bsim3v34pMOS.cpp" line="-815"/>
+        <location filename="../qucs/components/bsim3v34pMOS.cpp" line="-815"/>
         <source>bsim3v34pMOS verilog device</source>
         <translation type="unfinished"></translation>
     </message>
@@ -12462,7 +12581,7 @@ Usage:  qucsedit [-r] file
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/bsim4v30nMOS.cpp" line="-558"/>
+        <location filename="../qucs/components/bsim4v30nMOS.cpp" line="-558"/>
         <source>bsim4v30nMOS verilog device</source>
         <translation type="unfinished"></translation>
     </message>
@@ -12472,7 +12591,7 @@ Usage:  qucsedit [-r] file
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/bsim4v30pMOS.cpp" line="-557"/>
+        <location filename="../qucs/components/bsim4v30pMOS.cpp" line="-557"/>
         <source>bsim4v30pMOS verilog device</source>
         <translation type="unfinished"></translation>
     </message>
@@ -12482,7 +12601,7 @@ Usage:  qucsedit [-r] file
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/hicumL2V2p31n.cpp" line="-321"/>
+        <location filename="../qucs/components/hicumL2V2p31n.cpp" line="-321"/>
         <source>hicumL2V2p31n verilog device</source>
         <translation type="unfinished"></translation>
     </message>
@@ -12572,16 +12691,24 @@ Usage:  qucsedit [-r] file
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="components/vacomponent.cpp" line="+1"/>
+        <location filename="../qucs/components/vacomponent.cpp" line="+1"/>
         <source>Symbol file not found: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qucs-filter/stepz_filter.cpp" line="+1"/>
+        <source>High-impedance is %1 ohms, low-impedance is %2 ohms.
+To get acceptable results it is recommended to use
+a substrate with lower permittivity and larger height.
+</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>QucsApp</name>
     <message>
-        <location filename="qucs.cpp" line="-68"/>
-        <location line="+465"/>
+        <location filename="../qucs/qucs.cpp" line="+57"/>
+        <location line="+460"/>
         <location line="+211"/>
         <location line="+44"/>
         <location line="+17"/>
@@ -12589,32 +12716,32 @@ Usage:  qucsedit [-r] file
         <location line="+16"/>
         <location line="+37"/>
         <location line="+211"/>
-        <location filename="qucs_actions.cpp" line="-1053"/>
+        <location filename="../qucs/qucs_actions.cpp" line="-1085"/>
         <location line="+14"/>
         <location line="+14"/>
         <location line="+14"/>
         <location line="+38"/>
         <location line="+14"/>
-        <location line="+799"/>
+        <location line="+830"/>
         <source>Info</source>
-        <translation>Ақпарат</translation>
+        <translation>معلومات</translation>
     </message>
     <message>
-        <location filename="qucs_actions.cpp" line="-892"/>
+        <location filename="../qucs/qucs_actions.cpp" line="-923"/>
         <location line="+14"/>
         <location line="+14"/>
         <location line="+14"/>
         <location line="+38"/>
         <location line="+14"/>
         <source>At least two elements must be selected !</source>
-        <translation>Кем дегенде екі элемент таңдалуы тиіс !</translation>
+        <translation>يجب إختيار إثنين علي الأقل !</translation>
     </message>
     <message>
-        <location filename="qucs.cpp" line="-1259"/>
+        <location filename="../qucs/qucs.cpp" line="-1234"/>
         <location line="+3"/>
         <location line="+62"/>
         <location line="+3"/>
-        <location line="+417"/>
+        <location line="+392"/>
         <location line="+21"/>
         <location line="+22"/>
         <location line="+14"/>
@@ -12622,7 +12749,7 @@ Usage:  qucsedit [-r] file
         <location line="+54"/>
         <location line="+31"/>
         <location line="+235"/>
-        <location line="+1139"/>
+        <location line="+1141"/>
         <location line="+28"/>
         <location line="+77"/>
         <location line="+316"/>
@@ -12630,8 +12757,9 @@ Usage:  qucsedit [-r] file
         <location line="+7"/>
         <location line="+7"/>
         <location line="+6"/>
-        <location filename="qucs_actions.cpp" line="+105"/>
+        <location filename="../qucs/qucs_actions.cpp" line="+105"/>
         <location line="+55"/>
+        <location line="+31"/>
         <location line="+31"/>
         <location line="+33"/>
         <location line="+40"/>
@@ -12647,36 +12775,36 @@ Usage:  qucsedit [-r] file
         <location line="+19"/>
         <location line="+144"/>
         <source>Error</source>
-        <translation>Қате</translation>
+        <translation>خطأ</translation>
     </message>
     <message>
-        <location filename="qucs_actions.cpp" line="-861"/>
+        <location filename="../qucs/qucs_actions.cpp" line="-892"/>
         <source>Opening aborted, file not found.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Cannot start text editor!</source>
-        <translation type="obsolete">Мәтіндік редакторды іске қосу мүмкін емес!</translation>
+        <translation type="obsolete">لا يمكن بدء محرر نصوص !</translation>
     </message>
     <message>
         <source>Cannot start filter synthesis program!</source>
-        <translation type="obsolete">Сүзгілер синтезін есептейтін бағдарламаны іске қосу мүмкін емес!</translation>
+        <translation type="obsolete">لا يمكن بدء برنامج فلتر للتوليف!</translation>
     </message>
     <message>
         <source>Cannot start line calculation program!</source>
-        <translation type="obsolete">Беріліс арнаны есептейтін бағдарламаны іске қосу мүмкін емес!</translation>
+        <translation type="obsolete">لا يمكن بدء برنامج حساب الخط!</translation>
     </message>
     <message>
         <source>Cannot start library program!</source>
-        <translation type="obsolete">Кітапханалық бағдарламаны іске қосу мүмкін емес!</translation>
+        <translation type="obsolete">لا يمكن أن يبدأ برنامج المكتبة!</translation>
     </message>
     <message>
         <source>Cannot start attenuator calculation program!</source>
-        <translation type="obsolete">Аттеньюаторларды есептейтін бағдарламаны іске қосу мүмкін емес!</translation>
+        <translation type="obsolete">لا يمكن أن يبدأ برنامج  الحساب المخفف!</translation>
     </message>
     <message>
         <source>Cannot start qucshelp!</source>
-        <translation type="obsolete">qucshelp бағдарламасын іске қосу мүмкін емес!</translation>
+        <translation type="obsolete">لا يمكن أن يبدأ qucshelp!</translation>
     </message>
     <message>
         <location line="+46"/>
@@ -12687,6 +12815,7 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <location line="+56"/>
+        <location line="+31"/>
         <source>Cannot start filter synthesis program! 
 
 %1</source>
@@ -12730,48 +12859,49 @@ Usage:  qucsedit [-r] file
     <message>
         <location line="+46"/>
         <source>No project open!</source>
-        <translation>Ашық проект жоқ !</translation>
+        <translation>لا يوجد مشروع مفتوح !</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Select files to copy</source>
-        <translation>Файлды көшіру үшін таңдау</translation>
+        <translation>اختر  الملفات لنسخ</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>No files copied.</source>
-        <translation>Файлдар көшірілген жоқ.</translation>
+        <translation>لم تنسخ الملفات.</translation>
     </message>
     <message>
         <location line="+23"/>
         <source>Cannot open &quot;%1&quot; !</source>
-        <translation>&quot;%1&quot; ашылмады !</translation>
+        <translation>‏لا يمكن فتح &quot; 1٪&quot;!‏</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Overwrite</source>
-        <translation>Қайта жазу</translation>
+        <translation>فوق</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>File &quot;%1&quot; already exists.
 Overwrite ?</source>
-        <translation>&quot;%1&quot; файлы әлбетте бар. Ауыстыру керек па?</translation>
+        <translation>الملف &quot;٪ 1&quot; موجود بالفعل ?
+</translation>
     </message>
     <message>
         <location line="+9"/>
         <source>Cannot create &quot;%1&quot; !</source>
-        <translation>Құру мүмкін емес&quot;%1&quot;!</translation>
+        <translation>لا نستطيع تنفيذ  &quot;%1!</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Cannot read &quot;%1&quot; !</source>
-        <translation>&quot;%1&quot; оқу мүмкін емес !</translation>
+        <translation>لا يمكن قراءة &quot;٪ 1&quot;!</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Cannot write &quot;%1&quot; !</source>
-        <translation>Жазу мүмкін емес&quot;%1&quot;!</translation>
+        <translation>لا تستطيع كتابة &quot;٪ 1&quot;!</translation>
     </message>
     <message>
         <location line="+438"/>
@@ -12787,12 +12917,12 @@ Have you saved the Verilog-A symbols?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qucs.cpp" line="-1390"/>
+        <location filename="../qucs/qucs.cpp" line="-1392"/>
         <location line="+10"/>
         <location line="+69"/>
         <location line="+30"/>
         <location line="+5"/>
-        <location line="+127"/>
+        <location line="+129"/>
         <location line="+5"/>
         <location line="+34"/>
         <location line="+49"/>
@@ -12801,264 +12931,264 @@ Have you saved the Verilog-A symbols?</source>
         <location line="+37"/>
         <location line="+45"/>
         <location line="+22"/>
-        <location filename="qucs_actions.cpp" line="-858"/>
-        <location line="+397"/>
-        <location filename="qucs_init.cpp" line="+942"/>
+        <location filename="../qucs/qucs_actions.cpp" line="-889"/>
+        <location line="+428"/>
+        <location filename="../qucs/qucs_init.cpp" line="+957"/>
         <source>Ready.</source>
-        <translation>Дайын.</translation>
+        <translation>جاهز.</translation>
     </message>
     <message>
-        <location filename="qucs_actions.cpp" line="+283"/>
+        <location filename="../qucs/qucs_actions.cpp" line="+283"/>
         <source>Please open project with subcircuits!</source>
-        <translation>Сұлбасы бар проектті ашыңыз!</translation>
+        <translation>!يرجى فتح المشروع الدارة الفرعية </translation>
     </message>
     <message>
         <location line="+14"/>
         <source>Please open project first!</source>
-        <translation>Алдымен проектті ашыңыз!</translation>
+        <translation>افتح أولا مشروع من فضلك!</translation>
     </message>
     <message>
         <location line="+19"/>
         <source>Please select a diagram graph!</source>
-        <translation>Диаграмма графигін таңдаңыз!</translation>
+        <translation>الرجاء اختيار الرسم  البياني!</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>CSV file</source>
-        <translation>CSV файлы</translation>
+        <translation>ملفات CSV</translation>
     </message>
     <message>
-        <location filename="qucs.cpp" line="-2109"/>
-        <location line="+1554"/>
-        <location filename="qucs_actions.cpp" line="+0"/>
+        <location filename="../qucs/qucs.cpp" line="-2082"/>
+        <location line="+1525"/>
+        <location filename="../qucs/qucs_actions.cpp" line="+0"/>
         <source>Any File</source>
-        <translation>Басқа файл</translation>
+        <translation>أية ملفات</translation>
     </message>
     <message>
-        <location filename="qucs_actions.cpp" line="-1"/>
+        <location filename="../qucs/qucs_actions.cpp" line="-1"/>
         <source>Enter an Output File Name</source>
-        <translation>Шығатын файл атын енгізіңіз</translation>
+        <translation>إدخال اسم الملف</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>Output file already exists!</source>
-        <translation>Шығатын файл әлбетте бар!</translation>
+        <translation>الناتج الملف موجود بالفعل!</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Overwrite it?</source>
-        <translation>Осыны қайта жазу керек па?</translation>
+        <translation>فوق ذلك؟</translation>
     </message>
     <message>
-        <location filename="qucs.cpp" line="-221"/>
-        <location filename="qucs_actions.cpp" line="+1"/>
+        <location filename="../qucs/qucs.cpp" line="-221"/>
+        <location filename="../qucs/qucs_actions.cpp" line="+1"/>
         <source>&amp;Yes</source>
-        <translation>&amp;ИЯ</translation>
+        <translation>&amp;نعم</translation>
     </message>
     <message>
         <location line="+0"/>
-        <location filename="qucs_actions.cpp" line="+0"/>
+        <location filename="../qucs/qucs_actions.cpp" line="+0"/>
         <source>&amp;No</source>
-        <translation>&amp;Жоқ</translation>
+        <translation>&amp;موافق</translation>
     </message>
     <message>
-        <location line="-1341"/>
+        <location line="-1312"/>
         <source>Schematic</source>
-        <translation>Сұлба</translation>
+        <translation>تخطيطي</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Data Display</source>
-        <translation>Мәліметтерді көру терезесі</translation>
+        <translation>عرض البيانات </translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Qucs Documents</source>
-        <translation>Qucs құжаттары</translation>
+        <translation>وثائق Qucs</translation>
     </message>
     <message>
         <location line="+1"/>
-        <location line="+1553"/>
+        <location line="+1524"/>
         <source>VHDL Sources</source>
-        <translation>VHDL қорек көздері</translation>
+        <translation>مصادر VHDL</translation>
     </message>
     <message>
-        <location line="-1552"/>
-        <location line="+1553"/>
+        <location line="-1523"/>
+        <location line="+1524"/>
         <source>Verilog Sources</source>
-        <translation>Verilog қорек көздері</translation>
+        <translation>مصادر verilog</translation>
     </message>
     <message>
-        <location line="-1460"/>
+        <location line="-1433"/>
         <source>Others</source>
-        <translation>Басқалар</translation>
+        <translation>الآخرين</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Datasets</source>
-        <translation>Терілген мәліметтер</translation>
+        <translation>بيانات</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Data Displays</source>
-        <translation>Мәліметтерді көру терезелері</translation>
+        <translation>عرض البيانات </translation>
     </message>
     <message>
         <location line="+4"/>
-        <location line="+2385"/>
+        <location line="+2360"/>
         <source>Verilog</source>
-        <translation>Verilog</translation>
+        <translation>فيريلوج </translation>
     </message>
     <message>
-        <location line="-2381"/>
-        <location line="+2379"/>
+        <location line="-2356"/>
+        <location line="+2354"/>
         <source>VHDL</source>
         <translation>VHDL</translation>
     </message>
     <message>
-        <location line="-2377"/>
-        <location line="+2373"/>
+        <location line="-2352"/>
+        <location line="+2348"/>
         <source>Schematics</source>
-        <translation>Сұлбалар</translation>
+        <translation>الخطط</translation>
     </message>
     <message>
-        <location line="-2316"/>
+        <location line="-2293"/>
         <source>New</source>
-        <translation>Құру</translation>
+        <translation>جديد</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location line="+525"/>
+        <location line="+500"/>
         <source>Open</source>
-        <translation>Ашу</translation>
+        <translation>‏يفتح</translation>
     </message>
     <message>
-        <location line="-523"/>
-        <location line="+535"/>
+        <location line="-498"/>
+        <location line="+510"/>
         <source>Delete</source>
-        <translation>Өшіру</translation>
+        <translation>حذف </translation>
     </message>
     <message>
-        <location line="-519"/>
+        <location line="-494"/>
         <source>Projects</source>
-        <translation>Проекттер</translation>
+        <translation> مشاريع</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>content of project directory</source>
-        <translation>проект папкасының құрамы</translation>
+        <translation>مضمون مشروع الدليل</translation>
     </message>
     <message>
         <location line="+9"/>
-        <location line="+1087"/>
+        <location line="+1062"/>
         <source>Content of</source>
-        <translation>Мазмұны</translation>
+        <translation>محتوى</translation>
     </message>
     <message>
-        <location line="-1087"/>
-        <location line="+1022"/>
+        <location line="-1062"/>
+        <location line="+997"/>
         <location line="+65"/>
         <source>Note</source>
-        <translation>Ескерту</translation>
+        <translation>علما</translation>
     </message>
     <message>
-        <location line="-1077"/>
+        <location line="-1052"/>
         <source>Content</source>
-        <translation>Мазмұны</translation>
+        <translation>محتوى</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>content of current project</source>
-        <translation>қолданыстағы проекттің мазмұны</translation>
+        <translation>مضمون المشروع الحالي</translation>
     </message>
     <message>
         <location line="+23"/>
         <source>Components</source>
-        <translation>Компоненттер</translation>
+        <translation>عناصر </translation>
     </message>
     <message>
         <location line="+1"/>
         <source>components and diagrams</source>
-        <translation>компоненттер мен диаграммалар</translation>
+        <translation>المكونات ورسوم بيانية</translation>
     </message>
     <message>
         <source>lumped components</source>
-        <translation type="obsolete">дискреттік компоненттер</translation>
+        <translation type="obsolete">صنف العناصر</translation>
     </message>
     <message>
         <source>sources</source>
-        <translation type="obsolete">қорек көздері</translation>
+        <translation type="obsolete">المصادر</translation>
     </message>
     <message>
         <source>probes</source>
-        <translation type="obsolete">тестілеу</translation>
+        <translation type="obsolete">تحقيقات</translation>
     </message>
     <message>
         <source>transmission lines</source>
-        <translation type="obsolete">мәліметтерді беру арнасы</translation>
+        <translation type="obsolete">انتقال الخط</translation>
     </message>
     <message>
         <source>nonlinear components</source>
-        <translation type="obsolete">сызықтық емес компоненттер</translation>
+        <translation type="obsolete">العناصر غير الخطية</translation>
     </message>
     <message>
         <source>verilog-a devices</source>
-        <translation type="obsolete">verilog құрылғылары</translation>
+        <translation type="obsolete">أجهزة فيريلوج</translation>
     </message>
     <message>
         <source>digital components</source>
-        <translation type="obsolete">цифрлық компоненттер</translation>
+        <translation type="obsolete">عناصر الرقمية</translation>
     </message>
     <message>
         <source>file components</source>
-        <translation type="obsolete">файл компоненттері</translation>
+        <translation type="obsolete">عناصر الملفات</translation>
     </message>
     <message>
         <source>simulations</source>
-        <translation type="obsolete">Моделдеу түрлері</translation>
+        <translation type="obsolete">المحاكاة </translation>
     </message>
     <message>
         <source>diagrams</source>
-        <translation type="obsolete">диаграммалар</translation>
+        <translation type="obsolete">رسوم بيانية</translation>
     </message>
     <message>
         <source>paintings</source>
-        <translation type="obsolete">суреттер</translation>
+        <translation type="obsolete">لوحات</translation>
     </message>
     <message>
-        <location line="+470"/>
+        <location line="+445"/>
         <source>Rename</source>
-        <translation>Атын өзгерту</translation>
+        <translation>إعادة تسمية</translation>
     </message>
     <message>
         <source>Delete Group</source>
-        <translation type="obsolete">Группаны жою</translation>
+        <translation type="obsolete">حذف المجموعة</translation>
     </message>
     <message>
         <location line="+142"/>
         <source>Cannot rename an open file!</source>
-        <translation>Ашық файлдың атын өзгерту мүмкін емес!</translation>
+        <translation>لا يمكن إعادة تسمية الملف المفتوح!</translation>
     </message>
     <message>
         <location line="+9"/>
         <source>Rename file</source>
-        <translation>Файл атын өзгерту</translation>
+        <translation>إعادة تسمية الملف</translation>
     </message>
     <message>
         <location line="-49"/>
         <location line="+49"/>
         <source>Enter new name:</source>
-        <translation>Жаңа файл атын енгізіңіз:</translation>
+        <translation>أدخل الاسم الجديد :</translation>
     </message>
     <message>
         <location line="+12"/>
         <source>Cannot rename file: </source>
-        <translation>Файлдың атын өзгерту мүмкін емес:</translation>
+        <translation>لا يمكن إعادة تسمية الملف :</translation>
     </message>
     <message>
         <location line="+15"/>
         <source>Cannot delete an open file!</source>
-        <translation>Ашық файлды жою мүмкін емес!</translation>
+        <translation>لا يمكن حذف ملف مفتوح!</translation>
     </message>
     <message>
         <location line="+5"/>
@@ -13066,91 +13196,91 @@ Have you saved the Verilog-A symbols?</source>
         <location line="+47"/>
         <location line="+329"/>
         <location line="+246"/>
-        <location line="+630"/>
+        <location line="+632"/>
         <source>Warning</source>
-        <translation>Ескерту</translation>
+        <translation>تحذير</translation>
     </message>
     <message>
-        <location line="-1328"/>
+        <location line="-1330"/>
         <source>This will delete the file permanently! Continue ?</source>
-        <translation>Файлды жою қайтарылмайды! Жалғастырасыз ба?</translation>
+        <translation>حذف هذا الملف نهائيا! الاستمرار؟</translation>
     </message>
     <message>
         <location line="+1"/>
         <location line="+77"/>
         <location line="+623"/>
-        <location line="+454"/>
+        <location line="+456"/>
         <source>No</source>
-        <translation>Жоқ</translation>
+        <translation>لا</translation>
     </message>
     <message>
-        <location line="-1154"/>
+        <location line="-1156"/>
         <location line="+77"/>
         <location line="+623"/>
-        <location line="+454"/>
+        <location line="+456"/>
         <source>Yes</source>
-        <translation>ИЯ</translation>
+        <translation>نعم</translation>
     </message>
     <message>
-        <location line="-1149"/>
+        <location line="-1151"/>
         <source>Cannot delete schematic: </source>
-        <translation>Сұлбаны жою мүмкін емес:</translation>
+        <translation>لا يمكن حذف التخطيطي :</translation>
     </message>
     <message>
         <source>Cannot delete the open file: </source>
-        <translation type="obsolete">Ашық файлды жою мүмкін емес:</translation>
+        <translation type="obsolete">لا يمكن حذف ملف مفتوح:</translation>
     </message>
     <message>
         <source>This will delete the files
 </source>
-        <translation type="obsolete">Бұл файлдың өшуіне әкеп соғады
+        <translation type="obsolete">هذا من شأنه حذف الملفات
 </translation>
     </message>
     <message>
         <source>permanently! Continue ?</source>
-        <translation type="obsolete">қайтарылмайды! Жалғастырасыз ба?</translation>
+        <translation type="obsolete">بشكل دائم! الاستمرار؟</translation>
     </message>
     <message>
         <source>Cannot delete data display: </source>
-        <translation type="obsolete">Мәліметтерді шолуды жою мүмкін емес:</translation>
+        <translation type="obsolete">لا يمكن حذف بيانات العرض :</translation>
     </message>
     <message>
         <source>Cannot delete data file: </source>
-        <translation type="obsolete">Мәліметтер файлын жою мүмкін емес:</translation>
+        <translation type="obsolete">لا يمكن حذف ملف بيانات :</translation>
     </message>
     <message>
         <source>Cannot delete VHDL source: </source>
-        <translation type="obsolete">VHDL бастапқы мәтінді жою мүмкін емес:</translation>
+        <translation type="obsolete">لا يمكن حذف مصدر VHDL  :</translation>
     </message>
     <message>
         <source>Cannot delete Verilog source: </source>
-        <translation type="obsolete">Verilog көзін жою мүмкін емес:</translation>
+        <translation type="obsolete">لا يمكن حذف مصدر فيريلوج  :</translation>
     </message>
     <message>
         <location line="+118"/>
         <source>Cannot create work directory !</source>
-        <translation>Жұмыс папкасы құрылмады !</translation>
+        <translation>لا يمكن إنشاء دليل عمل!</translation>
     </message>
     <message>
         <location line="+37"/>
         <source>Cannot create project directory !</source>
-        <translation>Проект папкасын құру мүмкін емес !</translation>
+        <translation>لا يمكن إنشاء دليل للمشروع!</translation>
     </message>
     <message>
         <location line="-318"/>
         <location line="+429"/>
-        <location line="+772"/>
+        <location line="+774"/>
         <source>-port</source>
-        <translation>-порттық</translation>
+        <translation>-الميناء </translation>
     </message>
     <message>
-        <location line="-718"/>
+        <location line="-720"/>
         <source>Cannot access project directory: </source>
-        <translation>Проект папкасына рұқсат алу мумкін емес:</translation>
+        <translation>لا يمكن الوصول إلى مشروع الدليل :</translation>
     </message>
     <message>
         <source>Content of &apos;</source>
-        <translation type="obsolete">Мазмұны &apos;</translation>
+        <translation type="obsolete">محتوى &apos;</translation>
     </message>
     <message>
         <source>&apos;</source>
@@ -13165,166 +13295,166 @@ Have you saved the Verilog-A symbols?</source>
         <location line="+9"/>
         <location line="+51"/>
         <source> - Project: </source>
-        <translation> - Проект: </translation>
+        <translation>-المشروع :</translation>
     </message>
     <message>
         <location line="-44"/>
         <source>Choose Project Directory for Opening</source>
-        <translation>Ашу үшін проекттің бір папкасын таңдаңыз</translation>
+        <translation>اختيار مشروع دليل لافتتاح</translation>
     </message>
     <message>
         <location line="+23"/>
         <location line="+128"/>
         <source>No project is selected !</source>
-        <translation>Проект таңдалған жоқ !</translation>
+        <translation>لم يتم اختيار المشروع!</translation>
     </message>
     <message>
         <location line="-84"/>
         <source>Cannot delete file: </source>
-        <translation>Файлды жою мүмкін емес:</translation>
+        <translation>لا يمكن حذف الملف :</translation>
     </message>
     <message>
         <location line="+17"/>
         <source>Cannot remove directory: </source>
-        <translation>Папканы жою мумкін емес:</translation>
+        <translation>لا يمكن إزالة الدليل :</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>Cannot delete an open project !</source>
-        <translation>Ашық проектті жою мүмкін емес!</translation>
+        <translation>لا يمكن حذف هذا المشروع مفتوح!</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>This will destroy all the project files permanently ! Continue ?</source>
-        <translation>Проекттің барлық файлдарын жою, қайтарылмайды! Жалғастырасыз ба?</translation>
+        <translation>وهذا من شأنه تدمير كل ملفات المشاريع بشكل دائم! الاستمرار؟</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Cannot remove project directory !</source>
-        <translation>Проект папкасын жою мүмкін емес !</translation>
+        <translation>لا يمكن إزالة هذا المشروع دليل!</translation>
     </message>
     <message>
         <location line="+12"/>
         <source>Choose Project Directory for Deleting</source>
-        <translation>Жою үшін проекттің бір папкасын таңдаңыз</translation>
+        <translation>دليل اختيار المشروع للحذف</translation>
     </message>
     <message>
         <location line="+42"/>
         <source>Creating new schematic...</source>
-        <translation>Жаңа сұлбаны құру...</translation>
+        <translation>تخطيطية جديدة...</translation>
     </message>
     <message>
         <location line="+11"/>
         <source>Creating new text editor...</source>
-        <translation>Жаңа мәтіндік редакторды құру...</translation>
+        <translation>محرر نصوص جديدة...</translation>
     </message>
     <message>
         <location line="+54"/>
-        <location filename="qucs_actions.cpp" line="-746"/>
+        <location filename="../qucs/qucs_actions.cpp" line="-777"/>
         <source>Opening file...</source>
-        <translation>Файлды ашу...</translation>
+        <translation>فتح الملف...</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Enter a Schematic Name</source>
-        <translation>Сұлба атын енгізіңіз</translation>
+        <translation>أدخل اسم تخطيطي</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Opening aborted</source>
-        <translation>Ашу үзілді</translation>
+        <translation>أجهض الفتح </translation>
     </message>
     <message>
         <location line="+36"/>
         <source>Saving file...</source>
-        <translation>Файлды сақтау...</translation>
+        <translation>حفظ الملف...</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+132"/>
+        <location line="+134"/>
         <source>Saving aborted</source>
-        <translation>Сақтауды үзү</translation>
+        <translation>إجهاض الحفظ</translation>
     </message>
     <message>
-        <location line="-83"/>
+        <location line="-85"/>
         <source>Enter a Document Name</source>
-        <translation>Құжат атын енгізіңіз</translation>
+        <translation>إدخال الاسم وثيقة</translation>
     </message>
     <message>
         <location line="+20"/>
         <source>The file &apos;</source>
-        <translation>Файл &apos;</translation>
+        <translation>الملف &apos;</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>&apos; already exists!
 </source>
-        <translation>&apos; әлбетте бар !
+        <translation>&apos;موجود بالفعل!
 </translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Saving will overwrite the old one! Continue?</source>
-        <translation>Сақтау бұрынғы файлды өзгертуге әкеп соғады! Жалғастырасыз ба?</translation>
+        <translation>إنقاذ الإرادة فوق القديم! الاستمرار؟</translation>
     </message>
     <message>
         <location line="+1"/>
-        <location line="+138"/>
+        <location line="+140"/>
         <source>Cancel</source>
-        <translation>Артқа қайтару</translation>
+        <translation>إلغاء</translation>
     </message>
     <message>
-        <location line="-128"/>
+        <location line="-130"/>
         <source>Cannot overwrite an open document</source>
-        <translation>Ашық құжатқа қайта жазу мүмкін емес</translation>
+        <translation>لا يمكن الكتابة فوق مفتوحة وثيقة</translation>
     </message>
     <message>
-        <location line="+45"/>
+        <location line="+47"/>
         <source>Saving file under new filename...</source>
-        <translation>Файлды басқа атпен сақтау...</translation>
+        <translation>إنقاذ ملف جديد تحت اسم الملف...</translation>
     </message>
     <message>
         <location line="+26"/>
         <source>Saving all files...</source>
-        <translation>Барлық файлдарды сақтау...</translation>
+        <translation>حفظ الملف...</translation>
     </message>
     <message>
         <location line="+49"/>
         <source>Closing file...</source>
-        <translation>Файлды жабу...</translation>
+        <translation>إغلاق ملف...</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Closing Qucs document</source>
-        <translation>Qucs құжатын жабу</translation>
+        <translation>الوثيقة الختامية Qucs</translation>
     </message>
     <message>
-        <location line="-940"/>
-        <location line="+941"/>
+        <location line="-942"/>
+        <location line="+943"/>
         <source>The document contains unsaved changes!
 </source>
-        <translation>Құжатта сақталмаған өзгертулер бар!
+        <translation>وتتضمن هذه الوثيقة التغييرات غير المحفوظة!
 </translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Do you want to save the changes before closing?</source>
-        <translation>Бағдарламаны жабу алдында сақтау керек па?</translation>
+        <translation>هل تريد حفظ التغييرات قبل اقفال؟</translation>
     </message>
     <message>
-        <location line="-940"/>
-        <location line="+941"/>
-        <location filename="qucs_init.cpp" line="-885"/>
+        <location line="-942"/>
+        <location line="+943"/>
+        <location filename="../qucs/qucs_init.cpp" line="-892"/>
         <source>&amp;Save</source>
-        <translation>&amp;Сақтау</translation>
+        <translation>&amp; حفظ</translation>
     </message>
     <message>
-        <location line="-1719"/>
+        <location line="-1692"/>
         <source>Spice Files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+240"/>
+        <location line="+236"/>
         <source>Manage Libraries</source>
         <translation type="unfinished"></translation>
     </message>
@@ -13343,22 +13473,22 @@ Have you saved the Verilog-A symbols?</source>
         <location line="+69"/>
         <location line="+65"/>
         <source>Cannot open &quot;%1&quot;.</source>
-        <translation type="unfinished">Ашуға мүмкіндік болмады&quot;%1&quot;.</translation>
+        <translation type="unfinished">لا نستطيع فتح &quot;%1.</translation>
     </message>
     <message>
         <location line="-62"/>
         <location line="+65"/>
         <source>Library is corrupt.</source>
-        <translation type="unfinished">Кітапхана бұзылған.</translation>
+        <translation type="unfinished">المكتبة فاسدة.</translation>
     </message>
     <message>
-        <location line="+177"/>
+        <location line="+157"/>
         <source>Default icon not found:
  %1.png</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+116"/>
+        <location line="+111"/>
         <source>Duplicate</source>
         <translation type="unfinished"></translation>
     </message>
@@ -13408,9 +13538,9 @@ Have you saved the Verilog-A symbols?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+165"/>
+        <location line="+167"/>
         <source>&amp;Discard</source>
-        <translation>&amp;Сақтаусыз жабу</translation>
+        <translation>&amp; تجاهل</translation>
     </message>
     <message>
         <location line="+44"/>
@@ -13420,7 +13550,7 @@ Have you saved the Verilog-A symbols?</source>
     <message>
         <location line="+204"/>
         <source>Printing...</source>
-        <translation>Баспа...</translation>
+        <translation>الطباعة...</translation>
     </message>
     <message>
         <location line="+9"/>
@@ -13430,70 +13560,70 @@ Have you saved the Verilog-A symbols?</source>
     <message>
         <location line="+34"/>
         <source>Printer Error.</source>
-        <translation>Баспа қатесі.</translation>
+        <translation>خطأ في الطباعة.</translation>
     </message>
     <message>
         <location line="+20"/>
         <source>Exiting application...</source>
-        <translation>Қамтамадан шығу...</translation>
+        <translation>تغادرها تطبيق...</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Quit...</source>
-        <translation>Шығу...</translation>
+        <translation>استقال...</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Do you really want to quit?</source>
-        <translation>Бағдарламалық қамтамадан шыққыңыз келеді ма?</translation>
+        <translation>هل تريد حقا الانسحاب؟</translation>
     </message>
     <message>
         <location line="+36"/>
         <source>Cutting selection...</source>
-        <translation>Ерекшеленгенді кесіп алу...</translation>
+        <translation>قطع اختيار...</translation>
     </message>
     <message>
         <location line="+24"/>
         <source>Copying selection to clipboard...</source>
-        <translation>Ерекшеленген аумақты алмастыру буферіне көшіру...</translation>
+        <translation>نسخ إلى الحافظة اختيار...</translation>
     </message>
     <message>
         <location line="+115"/>
         <source>The document was modified by another program !</source>
-        <translation>Бұл құжат басқа бағдарламалық қамтамамен өзгертілген!</translation>
+        <translation>الوثيقة التي تم تعديلها من خلال برنامج آخر!</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Do you want to reload or keep this version ?</source>
-        <translation>Бұл нұсқаны қалдырып немесе қайтадан орнатасыз ба?</translation>
+        <translation>هل تريد إعادة تحميل أو الإبقاء على هذه الصيغة؟</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Reload</source>
-        <translation>Қайтадан қосу</translation>
+        <translation>إعادة تحميل</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Keep it</source>
-        <translation>Қалдыру</translation>
+        <translation>يبقيها</translation>
     </message>
     <message>
         <location line="+133"/>
         <source>Cannot create </source>
-        <translation>Құру мүмкін емес</translation>
+        <translation>لا نستطيع تنفيذ</translation>
     </message>
     <message>
         <location line="+28"/>
         <source>No page set !</source>
-        <translation>Парақ реттелген жоқ !</translation>
+        <translation>اي صفحة!</translation>
     </message>
     <message>
         <location line="+78"/>
         <source>Cannot start &quot;%1&quot;!</source>
-        <translation>Файлды бастау&quot;%1&quot; мүмкін емес!</translation>
+        <translation>لا يمكن ان تبدأ &quot;٪ 1&quot;!</translation>
     </message>
     <message>
-        <location line="+671"/>
+        <location line="+670"/>
         <location line="+13"/>
         <location line="+18"/>
         <location line="+6"/>
@@ -13523,206 +13653,206 @@ Use PNG, JPEG or SVG graphics!</source>
     </message>
     <message>
         <source>Edit Circuit Symbol</source>
-        <translation type="obsolete">Cұлбаның белгісін өзгерту</translation>
+        <translation type="obsolete">تحرير دائرة الرمز</translation>
     </message>
     <message>
-        <location filename="qucs_init.cpp" line="+35"/>
+        <location filename="../qucs/qucs_init.cpp" line="+35"/>
         <source>Edits the symbol for this schematic</source>
-        <translation>Бұл сұлба үшін белгіні өзгерту</translation>
+        <translation>تعديلات لهذا الرمز التخطيطي</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Edit Circuit Symbol
 
 Edits the symbol for this schematic</source>
-        <translation>Сұлбаның белгісін өзгерту
+        <translation>تحرير دائرة الرمز ذ
 
-Бұл сұлбаның белгісін өзгерту</translation>
+تعديلات لهذا الرمز التخطيطي</translation>
     </message>
     <message>
         <source>Edit Schematic</source>
-        <translation type="obsolete">Сұлбаны өзгерту</translation>
+        <translation type="obsolete">تحرير تخطيطي</translation>
     </message>
     <message>
         <source>Edits the schematic</source>
-        <translation type="obsolete">Сұлбаны өзгерту</translation>
+        <translation type="obsolete">تعديلات التخطيطي</translation>
     </message>
     <message>
         <source>Edit Schematic
 
 Edits the schematic</source>
-        <translation type="obsolete">Сұлбаны өзгерту
+        <translation type="obsolete">تحرير تخطيطي 
 
-Сұлбаны реттеу</translation>
+تعديلات التخطيطي</translation>
     </message>
     <message>
-        <location filename="qucs.cpp" line="-394"/>
+        <location filename="../qucs/qucs.cpp" line="-393"/>
         <source>Could not load S[1,1].</source>
-        <translation>S[1,1] элементін енгізу мүмкін емес.</translation>
+        <translation>لا يمكن تحميل S[1,1].</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Could not load S[1,2].</source>
-        <translation>S[1,2] элементін енгізу мүмкін емес.</translation>
+        <translation>لا يمكن تحميل S[1,2].</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Could not load S[2,1].</source>
-        <translation>S[2,1] элементін енгізу мүмкін емес.</translation>
+        <translation>لا يمكن تحميل S[2,1].</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Could not load S[2,2].</source>
-        <translation>S[2,2] элементін енгізу мүмкін емес.</translation>
+        <translation>لا يمكن تحميل S[2,2].</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Wrong dependency!</source>
-        <translation>Тәуелділік дұрыс емес!</translation>
+        <translation>من الخطأ الاعتماد!</translation>
     </message>
     <message>
-        <location filename="qucs_init.cpp" line="-56"/>
+        <location filename="../qucs/qucs_init.cpp" line="-56"/>
         <source>&amp;New</source>
-        <translation>&amp;Құру</translation>
+        <translation>&amp;عرض</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Creates a new document</source>
-        <translation>Жаңа құжатты құру</translation>
+        <translation>يخلق وثيقة جديدة</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>New
 
 Creates a new schematic or data display document</source>
-        <translation>Құру
+        <translation>جديد 
 
-Мәліметтерді қарау үшін жаңа сұлба немесе құжатты құрады</translation>
+يخلق جديد التخطيطي عرض وثيقة من وثائق أو بيانات</translation>
     </message>
     <message>
         <source>New Text</source>
-        <translation type="obsolete">Жаңа мәтін</translation>
+        <translation type="obsolete">النص الجديد</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>New &amp;Text</source>
-        <translation>Жаңа &amp;мәтін</translation>
+        <translation>النص &amp;الجديد</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Creates a new text document</source>
-        <translation>Жаңа мәтіндік құжатты құру</translation>
+        <translation>يوجد نص وثيقة جديدة</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>New Text
 
 Creates a new text document</source>
-        <translation>Жаңа мәтін
+        <translation>النص الجديد 
 
-Жаңа мәтіндік құжатты құру</translation>
+يوجد نص وثيقة جديدة</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>&amp;Open...</source>
-        <translation>&amp;Ашу...</translation>
+        <translation>&amp;فتح...</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Opens an existing document</source>
-        <translation>Әлбетте бар құжатты ашу</translation>
+        <translation>يفتح وجود وثيقة من وثائق</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Open File
 
 Opens an existing document</source>
-        <translation>Файлды ашу
+        <translation>فتح الملف 
 
-Әлбетте бар құжатты ашады</translation>
+يفتح وجود وثيقة من وثائق</translation>
     </message>
     <message>
         <source>Save</source>
-        <translation type="obsolete">Сақтау</translation>
+        <translation type="obsolete"> ‏حفظ</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Saves the current document</source>
-        <translation>Қолданыстағы құжатты сақтайды</translation>
+        <translation>يوفر الوثيقة الحالية</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Save File
 
 Saves the current document</source>
-        <translation>Файлды сақтау
+        <translation>حفظ الملف 
 
-Құжатты сақтайды</translation>
+يوفر الوثيقة الحالية</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Save as...</source>
-        <translation>Қалай сақтау...</translation>
+        <translation>‏حفظ في...</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Saves the current document under a new filename</source>
-        <translation>Құжатты басқа атпен сақтайды</translation>
+        <translation>تحفظ هذه الوثيقة تحت اسم ملف جديد</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Save As
 
 Saves the current document under a new filename</source>
-        <translation>Қалай сақтау
+        <translation>حفظ باسم 
 
-Құжатты басқа атпен сақтайды</translation>
+تحفظ هذه الوثيقة تحت اسم ملف جديد</translation>
     </message>
     <message>
         <source>Save All</source>
-        <translation type="obsolete">Бәрін сақтау</translation>
+        <translation type="obsolete">حفظ كل</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Save &amp;All</source>
-        <translation>Бәрін &amp;сақтау</translation>
+        <translation>حفظ &amp;كل</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Saves all open documents</source>
-        <translation>Ашық құжаттардың барлығын сақтайды</translation>
+        <translation>حفظ جميع الوثائق المفتوحة</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Save All Files
 
 Saves all open documents</source>
-        <translation>Барлық файлдарды сақтау
+        <translation>حفظ كل الملفات
 
-Ашық құжаттардың барлығын сақтайды</translation>
+حفظ جميع الوثائق المفتوحة</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation type="obsolete">Жабу</translation>
+        <translation type="obsolete">غلق</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>&amp;Close</source>
-        <translation>&amp;Жабу</translation>
+        <translation>&amp;غلق</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Closes the current document</source>
-        <translation>Қолданыстағы құжатты жабады</translation>
+        <translation>يغلق الوثيقة الحالية</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Close File
 
 Closes the current document</source>
-        <translation>Файлды жабу
+        <translation>إغلاق الملف 
 
-Ашық құжатты жабады</translation>
+يغلق الوثيقة الحالية</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -13744,106 +13874,106 @@ Opens a file explorer with example documents</source>
     <message>
         <location line="+4"/>
         <source>&amp;Edit Circuit Symbol</source>
-        <translation>&amp;Cұлбаның белгісін өзгерту</translation>
+        <translation>&amp;تحرير  رمز الدائرة‏‏</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>&amp;Document Settings...</source>
-        <translation>&amp;Құжат реттемесі...</translation>
+        <translation>&amp;ضبط وثائق...</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Document Settings</source>
-        <translation>Құжат реттемесі</translation>
+        <translation>ضبط وثائق</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Settings
 
 Sets properties of the file</source>
-        <translation>Реттеулер
+        <translation>إعدادات 
 
-Файл қасиеттерін реттейді</translation>
+يحدد خصائص الملف</translation>
     </message>
     <message>
         <source>Print...</source>
-        <translation type="obsolete">Баспа...</translation>
+        <translation type="obsolete">طباعة...</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>&amp;Print...</source>
-        <translation>&amp;Баспа...</translation>
+        <translation>&amp;الطباعة...</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Prints the current document</source>
-        <translation>Құжатты басып шығару</translation>
+        <translation>طباعة الوثيقة الحالية</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Print File
 
 Prints the current document</source>
-        <translation>Файлды басу
+        <translation>طباعة الملف 
 
-Құжатты баспаға шығарады</translation>
+طباعة الوثيقة الحالية</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Print Fit to Page...</source>
-        <translation>Парақ өлшемі бойынша баспаға шығару...</translation>
+        <translation>صالح لطباعة الصفحة...</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Print Fit to Page</source>
-        <translation>Парақ өлшемі бойынша баспаға шығару</translation>
+        <translation>صالح لطباعة الصفحة</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Print Fit to Page
 
 Print and fit content to the page size</source>
-        <translation>Парақ өлшемі бойынша баспаға шығару
+        <translation>صالح لطباعة الصفحة
 
-Парақ өлшемі бойынша баспаға шығарып және сәйкестендіру</translation>
+طباعة ومحتوى مناسبا لحجم الصفحة</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>E&amp;xit</source>
-        <translation>Ш&amp;ығу</translation>
+        <translation>&amp;خروج</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Quits the application</source>
-        <translation>Қамтама жұмысын аяқтайды</translation>
+        <translation>برنامج Quits</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Exit
 
 Quits the application</source>
-        <translation>Шығу
+        <translation>خروج 
 
-Қамтама жұмысын аяқтайды</translation>
+برنامج Quits</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Application Settings...</source>
-        <translation>Бағдарлама реттеулері...</translation>
+        <translation>تطبيق الإعدادات...</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Application Settings</source>
-        <translation>Бағдарлама реттеулері</translation>
+        <translation>تطبيق الإعدادات</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Qucs Settings
 
 Sets properties of the application</source>
-        <translation>Qucs реттемелері
+        <translation>إعدادات Qucs
 
-Қамтама параметрлерін реттейді</translation>
+تحدد خصائص الطلب</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -13870,202 +14000,202 @@ Rechecks the list of paths for files.</oldsource>
     <message>
         <location line="+3"/>
         <source>Align top</source>
-        <translation>Жоғарғы шекарамен</translation>
+        <translation>محاذاة أعلى</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Align top selected elements</source>
-        <translation>Ерекшеленген элементтерді жоғарғы шекарамен реттеу</translation>
+        <translation>محاذاة أعلى العناصر المختارة</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Align top
 
 Align selected elements to their upper edge</source>
-        <translation>Жоғарғы шекарамен
+        <translation>محاذاة أعلى
 
-Ерекшеленген элементтерді жоғарғы шекарамен реттеу</translation>
+التوفيق بين العناصر المختارة إلى الحافة العليا‏</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Align bottom</source>
-        <translation>Төменмен</translation>
+        <translation>محاذاة  أسفل</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Align bottom selected elements</source>
-        <translation>Ерекшеленген элементтерді төменгі шекарамен реттеу</translation>
+        <translation>محاذاة أسفل العناصر المختارة</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Align bottom
 
 Align selected elements to their lower edge</source>
-        <translation>Төменмен
+        <translation>محاذاة  أسفل
 
-Ерекшеленген элементтерді төменгі шекарамен реттеу</translation>
+تؤيد اختيار العناصر الحافة السفلى</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Align left</source>
-        <translation>Сол жақ шекарамен</translation>
+        <translation>محاذاة إلى اليسار</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Align left selected elements</source>
-        <translation>Ерекшеленген элементтерді сол жақ шекарамен реттеу</translation>
+        <translation>محاذاة إلى اليسار  العناصر المختارة</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Align left
 
 Align selected elements to their left edge</source>
-        <translation>Сол жақ шекарамен
+        <translation>محاذاة إلى اليسار
 
-Ерекшеленген элементтерді сол жақ шекарамен реттеу</translation>
+التوفيق بين العناصر المختارة إلى الحافة اليسرى</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Align right</source>
-        <translation>Оң жақ шекарамен</translation>
+        <translation>محاذاة إلى اليمين</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Align right selected elements</source>
-        <translation>Ерекшеленген элементтерді оң жақ шекарамен реттеу</translation>
+        <translation>محاذاة إلى اليمين العناصر المختارة</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Align right
 
 Align selected elements to their right edge</source>
-        <translation>Оң жақ шекарамен
+        <translation>محاذاة إلى اليمين
 
-Ерекшеленген элементтерді оң жақ шекарамен реттеу</translation>
+التوفيق بين العناصر المختارة إلى الحافة اليمنة</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Distribute horizontally</source>
-        <translation>Горизонтал бойынша үлестіру</translation>
+        <translation>توزيع أفقي</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Distribute equally horizontally</source>
-        <translation>Горизонтал бойынша бірқалыпты үлестіру</translation>
+        <translation>توزع بالتساوي أفقيا</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Distribute horizontally
 
 Distribute horizontally selected elements</source>
-        <translation>Горизонтал бойынша үлестіру
+        <translation>توزيع أفقي
 
-Ерекшеленген элементтерді горизонтал бойынша үлестіру</translation>
+ توزيع العناصر المختارة أفقيا</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Distribute vertically</source>
-        <translation>Вертикал бойынша үлестіру</translation>
+        <translation>توزيع عمودي</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Distribute equally vertically</source>
-        <translation>Вертикал бойынша бірқалыпты үлестіру</translation>
+        <translation>توزع بالتساوي  عمودي</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Distribute vertically
 
 Distribute vertically selected elements</source>
-        <translation>Вертикал бойынша үлестіру
+        <translation>توزيع عمودي
 
-Ерекшеленген элементтерді вертикал бойынша үлестіру</translation>
+توزيع العناصر المختارة عموديا</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Center horizontally</source>
-        <translation>Горизонтал бойынша центрлеу</translation>
+        <translation>وَسَط أفقي</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Center horizontally selected elements</source>
-        <translation>Ерекшеленген элементтерді горизонтал бойынша центрлеу</translation>
+        <translation>وَسَط أفقي للعناصر المختارة</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Center horizontally
 
 Center horizontally selected elements</source>
-        <translation>Горизонтал бойынша центрлеу
+        <translation>وَسَط أفقي
 
-Ерекшеленген элементтерді горизонтал бойынша центрлеу</translation>
+وَسَط أفقي للعناصر المختارة</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Center vertically</source>
-        <translation>Вертикал бойынша центрлеу</translation>
+        <translation>وَسَط عمودي</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Center vertically selected elements</source>
-        <translation>Ерекшеленген элементтерді вертикал бойынша центрлеу</translation>
+        <translation>وَسَط عمودي  العناصر المختارة</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Center vertically
 
 Center vertically selected elements</source>
-        <translation>Вертикал бойынша центрлеу
+        <translation>وَسَط عمودي
 
-Ерекшеленген элементтерді вертикал бойынша центрлеу</translation>
+وَسَط عمودي  العناصر المختارة</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Set on Grid</source>
-        <translation>Тор бойынша тузетеді</translation>
+        <translation>حدد على الشبكة</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Sets selected elements on grid</source>
-        <translation>Ерекшеленген элементтерді торға байлайды</translation>
+        <translation>مجموعات مختارة من عناصر الشبكة</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Set on Grid
 
 Sets selected elements on grid</source>
-        <translation>Торға байлау
+        <translation>حدد على الشبكة
 
-Ерекшеленген элементтерді торға байлайды</translation>
+مجموعات مختارة من عناصر الشبكة</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Move Component Text</source>
-        <translation>Компонент мәтінінің орнын ауыстыру</translation>
+        <translation>تحريك خاصية العنصر </translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Moves the property text of components</source>
-        <translation>Компонент қасиеті мәтінінің орнын ауыстыру</translation>
+        <translation>تحريك رمز العنصر </translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Move Component Text
 
 Moves the property text of components</source>
-        <translation>Компонент мәтінінің орнын ауыстыру
+        <translation>تحريك خاصية العنصر 
 
-Компонент қасиеті мәтінінің орнын ауыстыру</translation>
+تحريك رمز العنصر </translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Replace...</source>
-        <translation>Алмастыру...</translation>
+        <translation>استبدال...</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Replace component properties or VHDL code</source>
-        <translation>Компонент қасиетін немесе VHDL қамтаманың мәтінін өзгерту</translation>
+        <translation>استبدال خاصية العنصر أوVHDL</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -14074,381 +14204,370 @@ Moves the property text of components</source>
 Change component properties
 or
 text in VHDL code</source>
-        <translation>Алмастыру
+        <translation>استبدال 
 
-Компонент қасиетін өзгерту
-немесе
-VHDL қамтаманың мәтінін</translation>
+تغيير خصائص عنصر
+أو
+ VHDLالنص في </translation>
     </message>
     <message>
         <source>Cut</source>
-        <translation type="obsolete">Кесіп алу</translation>
+        <translation type="obsolete">قص</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Cu&amp;t</source>
-        <translation>Кесіп &amp;алу</translation>
+        <translation>ق&amp;ص</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Cuts out the selection and puts it into the clipboard</source>
-        <translation>Ерекшеленгенді кесіп алып, алмастыру буферіне енгізеді</translation>
+        <translation>قص الإختيار و ضعها في الحافظة</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Cut
 
 Cuts out the selection and puts it into the clipboard</source>
-        <translation>Кесіп алу
+        <translation>قص
 
-Ерекшеленгенді кесіп алып, алмастыру буферіне енгізеді
-</translation>
+قص الإختيار و ضعها في الحافظة</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation type="obsolete">көшіру</translation>
+        <translation type="obsolete">نسخة</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>&amp;Copy</source>
-        <translation>&amp;көшіру</translation>
+        <translation>&amp;نسخة</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Copies the selection into the clipboard</source>
-        <translation>Ерекшеленген аумақты алмастыру буферіне көшіру</translation>
+        <translation>إنسخ الإختيار  في الحافظة</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Copy
 
 Copies the selection into the clipboard</source>
-        <translation>Көшіру
+        <translation>نسخة
 
-Ерекшеленген аумақты алмастыру буферіне көшіреді</translation>
+إنسخ الإختيار  في الحافظة</translation>
     </message>
     <message>
         <source>Paste</source>
-        <translation type="obsolete">Қою</translation>
+        <translation type="obsolete">لصق</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>&amp;Paste</source>
-        <translation>&amp;Қою</translation>
+        <translation>&amp;لصق</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Pastes the clipboard contents to the cursor position</source>
-        <translation>Курсор позициясына алмастыру буферінің құрамын қояды</translation>
+        <translation>لصق محتوى الحافظة في موضع المؤشر </translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Paste
 
 Pastes the clipboard contents to the cursor position</source>
-        <translation>Қою
+        <translation>لصق
 
-Курсор позициясына алмастыру буферінің құрамын қояды</translation>
+لصق محتوى الحافظة في موضع المؤشر </translation>
     </message>
     <message>
         <location line="+4"/>
         <source>&amp;Delete</source>
-        <translation>&amp;Өшіру</translation>
+        <translation>حذف&amp;</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Deletes the selected components</source>
-        <translation>Ерекшеленген компоненттерді жояды</translation>
+        <translation>حذف العناصر المختارة</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Delete
 
 Deletes the selected components</source>
-        <translation>Өшіру
+        <translation>
 
-Ерекшеленген компоненттерді өшіреді</translation>
+حذف العناصر المختارة</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Find...</source>
-        <translation>Іздеу...</translation>
+        <translation>العثور على...</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Find a piece of text</source>
-        <translation>Мәтінді табу</translation>
+        <translation>االعثور على قطعة من النص</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Find
 
 Searches for a piece of text</source>
-        <translation>Іздеу
+        <translation>العثور على
 
-Мәтінді іздеу</translation>
+ابحث عن قطعة من النص</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Find Again</source>
-        <translation>Келесісін табу</translation>
+        <translation> أجد مرة أخرى</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Find same text again</source>
-        <translation>Ұқсас мәтінді қайта іздеу</translation>
+        <translation>العثور على النص نفسه من جديد</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Find
 
 Searches for the same piece of text again</source>
-        <translation>Іздеу
+        <translation>العثور على
 
-Сол мәтінді тағы іздеу</translation>
+ابحث عن قطعة من النص من جديد</translation>
     </message>
     <message>
         <source>Undo</source>
-        <translation type="obsolete">Кері қайтару</translation>
+        <translation type="obsolete">تراجع</translation>
     </message>
     <message>
         <location line="+38"/>
         <source>&amp;Undo</source>
-        <translation>&amp;Кері қайтару</translation>
+        <translation>&amp;تراجع</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Undoes the last command</source>
-        <translation>Соңғы қадамды кері қайтарады</translation>
+        <translation>إبطال آخر تعليمة</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Undo
 
 Makes the last action undone</source>
-        <translation>Кері қайтару
+        <translation>تراجع
 
-Соңғы қадамды кері қайтарады
-
-</translation>
+يجعل التراجع عن آخر إجراء</translation>
     </message>
     <message>
         <source>Redo</source>
-        <translation type="obsolete">Қайтару</translation>
+        <translation type="obsolete">الإعادة</translation>
     </message>
     <message>
-        <location line="-33"/>
-        <source>Export as image</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+36"/>
+        <location line="+3"/>
         <source>&amp;Redo</source>
-        <translation>&amp;Қайтару</translation>
+        <translation>&amp;الإعادة</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Redoes the last command</source>
-        <translation>Соңғы қадамды қайталайды</translation>
+        <translation> إعادة آخر تعليمة</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Redo
 
 Repeats the last action once more</source>
-        <translation>Қайтару
+        <translation>الإعادة
 
-Соңғы қадамды тағы да қайталайды</translation>
+يكرر آخر عمل مرة أخرى</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>&amp;New Project...</source>
-        <translation>&amp;Жаңа проект...</translation>
+        <translation>&amp;مشروع جديد...</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Creates a new project</source>
-        <translation>Жаңа проект құру</translation>
+        <translation>إنشاء مشروع جديد</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>New Project
 
 Creates a new project</source>
-        <translation>Жаңа проект
+        <translation>مشروع جديد
 
-Жаңа проект құру</translation>
+إنشاء مشروع جديد</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>&amp;Open Project...</source>
-        <translation>&amp;Проектті ашу...</translation>
+        <translation>&amp;افتح مشروع جديد...</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Opens an existing project</source>
-        <translation>Әлбетте бар проектті ашу</translation>
+        <translation>إفتح مشروع موجودة</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Open Project
 
 Opens an existing project</source>
-        <translation>Проектті ашу
+        <translation>افتح مشروع
 
-Әлбетте бар проектті ашады</translation>
+إفتح مشروع موجودة</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>&amp;Delete Project...</source>
-        <translation>&amp;Проектті жою...</translation>
+        <translation>&amp;حذف المشروع...</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Deletes an existing project</source>
-        <translation>Әлбетте бар проектті жояды</translation>
+        <translation>حذف مشروع موجودة</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Delete Project
 
 Deletes an existing project</source>
-        <translation>Проектті жою
+        <translation>حذف المشروع
 
-Әлбетте бар проектті жою</translation>
+حذف مشروع موجودة</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>&amp;Close Project</source>
-        <translation>&amp;Проектті жабу</translation>
+        <translation>&amp;إغلق المشروع </translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Closes the current project</source>
-        <translation>Қолданыстағы проектті жабады</translation>
+        <translation>إغلق المشروع  الحالي</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Close Project
 
 Closes the current project</source>
-        <translation>Проектті жабу
+        <translation>إغلق المشروع 
 
-Ашық проектті жабады</translation>
+إغلق المشروع  الحالي</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>&amp;Add Files to Project...</source>
-        <translation>&amp;Проектіге файлдарды қосу...</translation>
+        <translation>أضف  ملفات إلى المشروع...</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Copies files to project directory</source>
-        <translation>Проект папкасына файлдарды көшіреді</translation>
+        <translation>نسخ الملفات إلى دليل المشروع</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Add Files to Project
 
 Copies files to project directory</source>
-        <translation>Проектіге файлды қосу
+        <translation>أضف  ملفات إلى المشروع
 
-Файлдарды проект папкасына көшіреді</translation>
+نسخ الملفات إلى دليل المشروع</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Create &amp;Library...</source>
-        <translation>Кітапхананы &amp;құру...</translation>
+        <translation>إنشاء &amp;المكتبة...</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Create Library from Subcircuits</source>
-        <translation>Сұлбалардан кітапхананы құру</translation>
+        <translation>إنشاء مكتبة من Subcircuits</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Create Library
 
 Create Library from Subcircuits</source>
-        <translation>Кітапхананы құру
+        <translation>
 
-Сұлбалардан кітапхананы құру</translation>
+إنشاء مكتبة من Subcircuits</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Create &amp;Package...</source>
-        <translation>Пакетті &amp;құру...</translation>
+        <translation>إنشاء &amp;المجلد...</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Create compressed Package from Projects</source>
-        <translation>Проекттерден өлшемі кішірейтілген пакет құру</translation>
+        <translation>إنشاء مجلد  مضغوط من المشاريع</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Create Package
 
 Create compressed Package from complete Projects</source>
-        <translation>Пакетті құру
+        <translation>إنشاء المجلد
 
-Аяқталған проекттерден өлшемі кішірейтілген пакет құру</translation>
+‏إنشاء مجلد  مضغوط من المشاريع</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>E&amp;xtract Package...</source>
-        <translation>Пакетті &amp;ашу...</translation>
+        <translation>اس&amp;تخراج المجلد...</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Install Content of a Package</source>
-        <translation>Пакеттің құрамын орнату</translation>
+        <translation>تثبيت محتوى المجلد  </translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Extract Package
 
 Install Content of a Package</source>
-        <translation>Пакетті ашу
+        <translation>استخراج  المجلد
 
-Пакеттің құрамын орнату</translation>
+تثبيت محتوى المجلد  </translation>
     </message>
     <message>
-        <location line="+3"/>
-        <source>&amp;Import/Export Data...</source>
-        <translation>&amp;Мәліметтерді импорттау/экспорттау ...</translation>
+        <source>&amp;Import Data...</source>
+        <translation type="obsolete">&amp;استيراد  بيانات...</translation>
     </message>
     <message>
-        <location line="+2"/>
-        <source>Convert data file</source>
-        <translation>Мәліметтер файлын түрлендіру</translation>
+        <source>Convert file to Qucs data file</source>
+        <translation type="obsolete">تحويل الملف إلى ملف بيانات Qucs</translation>
     </message>
     <message>
-        <location line="+2"/>
-        <source>Import/Export Data
+        <source>Import Data
 
-Convert data file to various file formats</source>
-        <translation>Мәліметтерді импорттау/экспорттау
+Convert data file to Qucs data file</source>
+        <translation type="obsolete">استيراد  بيانات
 
-Мәліметтер файлын Qucs мәліметтер файлына түрлендіру</translation>
+تحويل الملف إلى ملف بيانات Qucs</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+10"/>
         <source>Export to &amp;CSV...</source>
-        <translation>&amp;CSV-ға экспорттау...</translation>
+        <translation>تصدير إلى &amp;CSV...</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Convert graph data to CSV file</source>
-        <translation>График мәліметтерін CSV файлға түрлендіру</translation>
+        <translation>تحويل الرسم البياني  إلى ملف CSV</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Export to CSV
 
 Convert graph data to CSV file</source>
-        <translation>CSV-ға экспорттау
+        <translation>تصدير إلى CSV
 
-Графиктің берілгендерін CSV файлына түрлендіру</translation>
+تحويل الرسم البياني  إلى ملف CSV</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -14485,731 +14604,746 @@ Let the user select and load symbols</source>
     <message>
         <location line="+3"/>
         <source>View All</source>
-        <translation>Бәрін көрсету</translation>
+        <translation>عرض الكل</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Show the whole page</source>
-        <translation>Барлық парақты көрсету</translation>
+        <translation>إظهار صفحة كاملة</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>View All
 
 Shows the whole page content</source>
-        <translation>Бәрін көрсету
+        <translation>عرض الكل
 
-Парақ құрамын бәрін көрсету</translation>
+إظهار صفحة كاملة</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>View 1:1</source>
-        <translation>Масштаб 1:1</translation>
+        <translation>عرض 1:1</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Views without magnification</source>
-        <translation>Үлкейтусіз көрсетеді</translation>
+        <translation>عرض بدون تفخيم</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>View 1:1
 
 Shows the page content without magnification</source>
-        <translation>Масштаб 1:1
+        <translation>عرض 1:1
 
-Парақ құрамын улкейтусіз көрсетеді</translation>
+عرض محتوى الصفحة بدون تفخيم</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Zoom in</source>
-        <translation>Масштабты үлкейту</translation>
+        <translation>تكبير</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Zooms into the current view</source>
-        <translation>Қолданыстағы бейнені үлкейтеді</translation>
+        <translation>تكبير في العرض الحالي</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Zoom in
 
 Zooms the current view</source>
-        <translation>Масштабты үлкейту
+        <translation>تكبير
 
-Қолданыстағы бейнені үлкейтеді</translation>
+تكبير في العرض الحالي</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Zoom out</source>
-        <translation>Масштабты кішірейту</translation>
+        <translation>تصغير</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Zooms out the current view</source>
-        <translation>Қолданыстағы бейнені кішірейтеді</translation>
+        <translation>تصغير في العرض الحالي</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Zoom out
 
 Zooms out the current view</source>
-        <translation>Масштабты кішірейту
+        <translation>تصغير
 
-Қолданыстағы бейнені кішірейтеді</translation>
+تصغير في العرض الحالي</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Select</source>
-        <translation>Таңдау</translation>
+        <translation>اختيار </translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Activate select mode</source>
-        <translation>Ерекшелеу режимін іске қосу</translation>
+        <translation>اختيار طريقة تفعيل</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Select
 
 Activates select mode</source>
-        <translation>Ерекшелеу
+        <translation>
 
-Ерекшелеу режимін іске қосады</translation>
+اختيار طريقة تفعيل</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Select All</source>
-        <translation>Бәрін таңдау</translation>
+        <translation>اختيار الكل</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Selects all elements</source>
-        <translation>Балық элементтерді ерекшелейді</translation>
+        <translation>اختيار كل  العناصر</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Select All
 
 Selects all elements of the document</source>
-        <translation>Бәрін таңдау
+        <translation>اختيار الكل
 
-Құжаттың барлық элементін таңдайды</translation>
+اختيار كل عناصر الوثيقة</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Select Markers</source>
-        <translation>Маркерді таңдау</translation>
+        <translation>اختيار علامات</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Selects all markers</source>
-        <translation>Балық маркерлерді ерекшелейді</translation>
+        <translation>اختيار  كل العلامات</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Select Markers
 
 Selects all diagram markers of the document</source>
-        <translation>Маркерді таңдау
+        <translation>
 
-Құжаттың барлық диаграммалық маркерлерін таңдайды</translation>
+اختيار  كل العلامات</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Rotate</source>
-        <translation>Бұру</translation>
+        <translation>الدوران</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Rotates the selected component by 90°</source>
-        <translation>Ерекшеленген компонентті сағат тіліне қарсы 90°-қа бұрады</translation>
+        <translation>دوران العنصر المختار ب° 90</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Rotate
 
 Rotates the selected component by 90° counter-clockwise</source>
-        <translation>Бұру
+        <translation>
 
-Ерекшеленген компонентті сағат тіліне қарсы 90°-қа бұрады</translation>
+دوران العنصر المختار ب° 90</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Mirror about X Axis</source>
-        <translation>X өсіне байланысты бейнелеу</translation>
+        <translation>مرآة المحور ْX </translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Mirrors the selected item about X Axis</source>
-        <translation>Ерекшеленген объектті X өсіне байланысты бейнелейді</translation>
+        <translation>X  اختيار هذا البند يعكس المحور  </translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Mirror about X Axis
 
 Mirrors the selected item about X Axis</source>
-        <translation>X өсіне байланысты бейнелеу
+        <translation>مرآة المحور ْX 
 
-Ерекшеленген объектті X өсіне байланысты бейнелейді</translation>
+X  اختيار هذا البند يعكس المحور  </translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Mirror about Y Axis</source>
-        <translation>Y өсіне байланысты бейнелеу</translation>
+        <translation>مرآة المحور ْY </translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Mirrors the selected item about Y Axis</source>
-        <translation>Ерекшеленген объектті Y өсіне байланысты бейнелейді</translation>
+        <translation>Y  اختيار هذا البند يعكس المحور  </translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Mirror about Y Axis
 
 Mirrors the selected item about Y Axis</source>
-        <translation>Y өсіне байланысты бейнелеу
+        <translation>
 
-Ерекшеленген объектті Y өсіне байланысты бейнелейді</translation>
+Y  اختيار هذا البند يعكس المحور  </translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Go into Subcircuit</source>
-        <translation>Сұлбаның ішіне кіру</translation>
+        <translation>إذهب إلى  Subcircuit</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Goes inside the selected subcircuit</source>
-        <translation>Ерекшеленген сұлбаның ішіне кіру</translation>
+        <translation>إداخل اختيار subcircuit</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Go into Subcircuit
 
 Goes inside the selected subcircuit</source>
-        <translation>Сұлбаның ішіне кіру
+        <translation>إذهب إلى  Subcircuit
 
-Ерекшеленген сұлбаның ішіне кіру</translation>
+إداخل اختيار subcircuit</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Pop out</source>
-        <translation>Шығу</translation>
+        <translation>جحظ</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Pop outside subcircuit</source>
-        <translation>Сұлбадан шығу</translation>
+        <translation>البوب خارج subcircuit</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Pop out
 
 Goes up one hierarchy level, i.e. leaves subcircuit</source>
-        <translation>Шығу
+        <translation>جحظ
 
-Иерархияны бір деңгейге жоғары көтереді, яғни сұлбадан шығады</translation>
+تسلسل هرمي يصل مستوى واحد ، أي أن يترك subcircuit</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Deactivate/Activate</source>
-        <translation>Өшіру/Қосу</translation>
+        <translation>تعطيل / تفعيل</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Deactivate/Activate selected components</source>
-        <translation>Өшіру/Қосу ерекшеленген компоненттер</translation>
+        <translation>تعطيل / تفعيل العنصر المختار</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Deactivate/Activate
 
 Deactivate/Activate the selected components</source>
-        <translation>Өшіру/Қосу
+        <translation>تعطيل / تفعيل
 
-Өшіру/Қосу ерекшеленген компоненттер</translation>
+تعطيل / تفعيل العنصر المختار</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Insert Equation</source>
-        <translation>Теңдеуді енгізу</translation>
+        <translation>إضافة المعادلة</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Inserts an equation</source>
-        <translation>Теңдеуді енгізу</translation>
+        <translation>إضافات في المعادلة</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Insert Equation
 
 Inserts a user defined equation</source>
-        <translation>Теңдеуді енгізу
+        <translation>إضافة المعادلة
 
-Тұтынушы анықтаған теңдеуді енгізеді</translation>
+إدراجات المعادلة المعرفة من قبل  المستخدم  </translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Insert Ground</source>
-        <translation>Жерді енгізу</translation>
+        <translation>إضافة  السطح</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Inserts a ground symbol</source>
-        <translation>Жердің белгісін енгізеді</translation>
+        <translation>إضافة رمز السطح</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Insert Ground
 
 Inserts a ground symbol</source>
-        <translation>Жерді енгізу
+        <translation>
 
-Жердің белгісін енгізеді</translation>
+إضافة رمز السطح</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Insert Port</source>
-        <translation>Шығысын енгізу</translation>
+        <translation> إضافة الميناء </translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Inserts a port symbol</source>
-        <translation>Шығыс порттың белгісін енгізеді</translation>
+        <translation> إضافة  رمز الميناء </translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Insert Port
 
 Inserts a port symbol</source>
-        <translation>Шығысын енгізу
+        <translation>إضافة الميناء 
 
-Шығыс порттың белгісін енгізеді</translation>
+ إضافة  رمز الميناء </translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Wire</source>
-        <translation>Өткізгіш</translation>
+        <translation>سلك</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Inserts a wire</source>
-        <translation>Өткізгішті енгізеді</translation>
+        <translation>إضافة  السلك</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Wire
 
 Inserts a wire</source>
-        <translation>Өткізгіш
+        <translation>سلك
 
-Өткізгішті енгізеді</translation>
+إضافة  السلك</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Wire Label</source>
-        <translation>Өткізгіш түртпесі</translation>
+        <translation>علامة السلك</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Inserts a wire or pin label</source>
-        <translation>Шығыс немесе өткізгіш түртпесін қояды</translation>
+        <translation>إضافة  السلك أو  علامة الدبوس</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Wire Label
 
 Inserts a wire or pin label</source>
-        <translation>Өткізгіш түртпесі
+        <translation>علامة السلك
 
-Шығысқа немесе өткізгішке түртпе қояды</translation>
+إضافة  السلك أو  علامة الدبوس</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>VHDL entity</source>
-        <translation>VHDL объектісі</translation>
+        <translation>قيمة VHDL </translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Inserts skeleton of VHDL entity</source>
-        <translation>VHDL объектінің негізін енгізеді</translation>
+        <translation>إضافة هيكل قيمة VHDL    </translation>
     </message>
     <message>
         <location line="+2"/>
         <source>VHDL entity
 
 Inserts the skeleton of a VHDL entity</source>
-        <translation>VHDL объектісі
+        <translation>قيمة VHDL 
 
-VHDL объектісінің негізін қояды</translation>
+إضافة هيكل قيمة VHDL</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Text Editor</source>
-        <translation>Мәтіндік редактор</translation>
+        <translation>محرر نصوص </translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Starts the Qucs text editor</source>
-        <translation>Qucs мәтіндік редакторды іске қосу</translation>
+        <translation>بدأ محرر نصوص Qucs</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Text editor
 
 Starts the Qucs text editor</source>
-        <translation>Мәтіндік редактор
+        <translation>
 
-Qucs мәтіндік редакторды іске қосу</translation>
+بدأ محرر نصوص Qucs</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Filter synthesis</source>
-        <translation>Сүзгіні синтездеу</translation>
+        <translation> فلتر التوليف </translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Starts QucsFilter</source>
-        <translation>QucsFilter қамтамасын іске қосу</translation>
+        <translation>بدأ QucsFilter</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Filter synthesis
 
 Starts QucsFilter</source>
-        <translation>Сүзгі синтезі
+        <translation>
 
-QucsFilter қамтамасын іске қосады</translation>
+بدأ QucsFilter</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Active filter synthesis</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Starts QucsActiveFilter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Active filter synthesis
+
+Starts QucsActiveFilter</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Line calculation</source>
-        <translation>Арнаны есептеу</translation>
+        <translation>حساب الخط</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Starts QucsTrans</source>
-        <translation>QucsTrans қамтамасын іске қосу</translation>
+        <translation>بدء QucsTrans</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Line calculation
 
 Starts transmission line calculator</source>
-        <translation>Арнаны есептеу
+        <translation>حساب الخط
 
-Арнаның өтімділігін есептейтін бағдарламалық қамтаманы іске қосады</translation>
+بدأ نقل خط  الحساب</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Component Library</source>
-        <translation>Кітапхана компоненті</translation>
+        <translation>مكتبة العنصر</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Starts QucsLib</source>
-        <translation>QucsLib қамтамасын іске қосу</translation>
+        <translation>بدء QucsLib</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Component Library
 
 Starts component library program</source>
-        <translation>Компоненттер кітапханасы
+        <translation>مكتبة العنصر
 
-Компоненттер кітапханасын жүргізетін бағдарламаны іске қосады</translation>
+بدأ  برنامج مكتبة العنصر</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Matching Circuit</source>
-        <translation>Сәйкестелген желі</translation>
+        <translation>الدائرة مطابقة</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Creates Matching Circuit</source>
-        <translation>Сәйкестелген желіні құру</translation>
+        <translation>إنشاء دائرة مطابقة</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Matching Circuit
 
 Dialog for Creating Matching Circuit</source>
-        <translation>Сәйкестелген желі
+        <translation>الدائرة مطابقة
 
-Сәйкестелген желіні құру диалогы</translation>
+إنشاء دائرة مطابقة</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Attenuator synthesis</source>
-        <translation>Аттеньюаторлар синтезі </translation>
+        <translation>مخفف التوليف</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Starts QucsAttenuator</source>
-        <translation>QucsAttenuator қамтамасын іске қосу</translation>
+        <translation>بدأ QucsAttenuator</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Attenuator synthesis
 
 Starts attenuator calculation program</source>
-        <translation>Аттеньюаторлар синтезі 
+        <translation>مخفف التوليف
 
-Аттеньюаторларды есептейтін бағдарламаны іске қосады</translation>
+بدأ حساب البرنامج المخفف</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Simulate</source>
-        <translation>Модельдеу</translation>
+        <translation>محاكاة</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Simulates the current schematic</source>
-        <translation>Қоданыстағы сұлбаны моделдейді</translation>
+        <translation>تمثيل  التخطيط الحالي</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Simulate
 
 Simulates the current schematic</source>
-        <translation>Моделдеу
+        <translation>محاكاة
 
-Қоданыстағы сұлбаны моделдейді</translation>
+تمثيل  التخطيط الحالي</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>View Data Display/Schematic</source>
-        <translation>Мәліметтерді/сұлбаларды көру</translation>
+        <translation>نظرا لعرض البيانات / تخطيطي</translation>
     </message>
     <message>
         <location line="+2"/>
         <location line="+3"/>
         <source>Changes to data display or schematic page</source>
-        <translation>Мәліметтерге шолу немесе сұлбаны қарау арасындағы өткел</translation>
+        <translation>تغييرات في البيانات أو العرض التخطيطي الصفحة</translation>
     </message>
     <message>
         <location line="-1"/>
         <source>View Data Display/Schematic
 
 </source>
-        <translation>Мәліметтерді/сұлбаларды көру
+        <translation>نظرا لعرض البيانات / تخطيطي
 
 </translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Calculate DC bias</source>
-        <translation>Тұрақты ток бойынша жұмыс нүктесін есептеу</translation>
+        <translation>حساب DC bias</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Calculates DC bias and shows it</source>
-        <translation>Тұрақты ток бойынша жұмыс нүктесін есептеп көрсетеді</translation>
+        <translation>حسابات DC bias و إظهاره</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Calculate DC bias
 
 Calculates DC bias and shows it</source>
-        <translation>Тұрақты ток бойынша жұмыс нүктесін есептеу
+        <translation>حساب DC bias
 
-Тұрақты ток бойынша жұмыс нүктесін есептеп көрсетеді</translation>
+حسابات DC bias و إظهاره</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Set Marker on Graph</source>
-        <translation>Диаграммада маркерді орналастыру</translation>
+        <translation>مجموعة ماركر على الرسم البياني</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Sets a marker on a diagram&apos;s graph</source>
-        <translation>Диаграмма графигінде маркерді орналастырады</translation>
+        <translation>وضع علامة على الرسم البياني</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Set Marker
 
 Sets a marker on a diagram&apos;s graph</source>
-        <translation>Маркерді орналастыру
+        <translation>
 
-Диаграмма графигінде маркерді орналастырады</translation>
+وضع علامة على الرسم البياني</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Show Last Messages</source>
-        <translation>Соңғы хабарды көрсету</translation>
+        <translation>إظهار آخر الرسائل</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Shows last simulation messages</source>
-        <translation>Соңғы моделдеу хабарын көрсету</translation>
+        <translation>إظهار آخر رسائل التمثيل</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Show Last Messages
 
 Shows the messages of the last simulation</source>
-        <translation>Соңғы хабарды көрсету
+        <translation>
 
-Соңғы моделдеу кезіндегі хабарды көрсетеді</translation>
+إظهار رسائل التمثيل</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Show Last Netlist</source>
-        <translation>Соңғы сұлбаны көрсетеді</translation>
+        <translation>إظهار آخر Netlist</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Shows last simulation netlist</source>
-        <translation>Соңғы моделдеу сұлбасын көрсету</translation>
+        <translation>إظهار آخر رسائل التمثيل</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Show Last Netlist
 
 Shows the netlist of the last simulation</source>
-        <translation>Соңғы сұлбаны көрсетеді
+        <translation>
 
-Соңғы моделденген сұлбаны көрсетеді</translation>
+إظهار آخر رسائل التمثيل</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Tool&amp;bar</source>
-        <translation>Құралдар&amp;панелі</translation>
+        <translation>شريط &amp;الأدوات</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Enables/disables the toolbar</source>
-        <translation>Құрал панелін қосу/өшіру</translation>
+        <translation>ويتيح / لتعطيل شريط الأدوات</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Toolbar
 
 Enables/disables the toolbar</source>
-        <translation>Құралдар панелі
+        <translation>
 
-Құрал панелін қосу/өшіру</translation>
+ويتيح / لتعطيل شريط الأدوات</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>&amp;Statusbar</source>
-        <translation>&amp;Жағдай көрсеткіші</translation>
+        <translation>&amp;شريط الحالة</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Enables/disables the statusbar</source>
-        <translation>Жағдай көрінісін қосу/өшіру</translation>
+        <translation>ويتيح / لتعطيل شريط الحالة</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Statusbar
 
 Enables/disables the statusbar</source>
-        <translation>Жағдай көрсеткіші
+        <translation>شريط الحالة
 
-Жағдай көрсеткішін қосу/өшіру</translation>
+ويتيح / لتعطيل شريط الحالة</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>&amp;Dock Window</source>
-        <translation>&amp;Терезені бекіту</translation>
+        <translation>‏&amp;‏قفص النافذة </translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Enables/disables the browse dock window</source>
-        <translation>Бекітілген шолу терезесін қосады/өшіреді</translation>
+        <translation>ويتيح / لتعطيل قفص النافذة</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Browse Window
 
 Enables/disables the browse dock window</source>
-        <translation>Шолу терезесі
+        <translation>نافذة تصفح
 
-Бекітілген шолу терезелерін қосу/өшіру</translation>
+ويتيح / لتعطيل قفص النافذة</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Help Index...</source>
-        <translation>Анықтама мазмұны...</translation>
+        <translation>مؤشر المساعدة ...</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Index of Qucs Help</source>
-        <translation>Qucs анықтамасының мазмұны</translation>
+        <translation> مؤشر Qucs Help</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Help Index
 
 Index of intern Qucs help</source>
-        <translation>Анықтама мазмұны
+        <translation>مؤشر المساعدة
 
-Qucs-тағы кіріктірілген анықтаманың мазмұны</translation>
+مؤشر يساعد المتدرب Qucs</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Getting Started...</source>
-        <translation>Тез бастау...</translation>
+        <translation>الابتداء...</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Getting Started with Qucs</source>
-        <translation>Qucs-ті тез бастау</translation>
+        <translation>الابتداء مع Qucs</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Getting Started
 
 Short introduction into Qucs</source>
-        <translation>Тез бастау
+        <translation>
 
-Qucs-қа қысқаша шолу</translation>
+الابتداء مع Qucs</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>&amp;About Qucs...</source>
-        <translation>&amp; Qucs жайлы...</translation>
+        <translation>&amp; حول Qucs...</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>About the application</source>
-        <translation>Бағдарлама жайлы</translation>
+        <translation>عن طلبا</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>About
 
 About the application</source>
-        <translation>Жайлы
-
-Бағдарлама жайлы</translation>
+        <translation>عن طلبا</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>About Qt...</source>
-        <translation>Qt жайлы...</translation>
+        <translation>عن كيو تي...</translation>
     </message>
     <message>
         <location line="+1"/>
-        <location line="+442"/>
+        <location line="+447"/>
         <source>About Qt</source>
-        <translation>Qt жайлы</translation>
+        <translation>عن كيو تي</translation>
     </message>
     <message>
-        <location line="-441"/>
+        <location line="-446"/>
         <source>About Qt
 
 About Qt by Trolltech</source>
-        <translation>Qt жайлы
+        <translation>عن كيو تي
 
-Trolltech Qt жайлы</translation>
+عن كيو تي من Trolltech</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>&amp;File</source>
-        <translation>&amp;Файл</translation>
+        <translation>‏‏&amp;ملف</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -15219,42 +15353,42 @@ Trolltech Qt жайлы</translation>
     <message>
         <location line="+22"/>
         <source>&amp;Edit</source>
-        <translation>&amp;Өзгерту</translation>
+        <translation>‏&amp;تحرير</translation>
     </message>
     <message>
         <location line="+25"/>
         <source>P&amp;ositioning</source>
-        <translation>Қойылған &amp;орны</translation>
+        <translation>ال&amp;‏مواقع</translation>
     </message>
     <message>
         <location line="+17"/>
         <source>&amp;Insert</source>
-        <translation>&amp;Енгізу</translation>
+        <translation>‏&amp;إضافة ‏</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>&amp;Project</source>
-        <translation>&amp;Проект</translation>
+        <translation>&amp;مشروع</translation>
     </message>
     <message>
         <location line="+18"/>
         <source>&amp;Tools</source>
-        <translation>&amp;Құралдар</translation>
+        <translation>&amp;أدوات</translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+12"/>
         <source>&amp;Simulation</source>
-        <translation>&amp;Моделдеу</translation>
+        <translation>‏&amp;‏المحاكاة </translation>
     </message>
     <message>
         <location line="+8"/>
         <source>&amp;View</source>
-        <translation>&amp;Түр</translation>
+        <translation>&amp;عرض</translation>
     </message>
     <message>
         <location line="+13"/>
         <source>&amp;Help</source>
-        <translation>&amp;Көмек</translation>
+        <translation>‏&amp;‏مساعدة‏</translation>
     </message>
     <message>
         <location line="+12"/>
@@ -15286,7 +15420,7 @@ Trolltech Qt жайлы</translation>
     <message>
         <location line="+12"/>
         <source>Edit</source>
-        <translation type="unfinished">Өзгерту</translation>
+        <translation type="unfinished">تحرير</translation>
     </message>
     <message>
         <location line="+11"/>
@@ -15302,38 +15436,38 @@ Trolltech Qt жайлы</translation>
         <location line="+25"/>
         <location line="+41"/>
         <source>no warnings</source>
-        <translation>ескертулер жоқ</translation>
+        <translation>لاتوجد تحذيرات  </translation>
     </message>
     <message>
         <location line="-22"/>
         <source>Warnings in last simulation! Press F5</source>
-        <translation>Соңғы моделдеу кезіндегі ескерту! F5-ті басыңыз</translation>
+        <translation>تحذيرات في التمثيل السابق! اضغط على F5</translation>
     </message>
     <message>
         <location line="+101"/>
         <source>About...</source>
-        <translation>Жайлы...</translation>
+        <translation>حول...</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Qucs Version</source>
-        <translation>Qucs нұсқасы</translation>
+        <translation>qucsالنسخة  ‏</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+5"/>
         <source>Quite Universal Circuit Simulator</source>
-        <translation>Тізбектердің әмбебап симуляторы</translation>
+        <translation>Quite Universal Circuit Simulator</translation>
     </message>
     <message>
         <location line="+1"/>
         <location line="+2"/>
         <source>Copyright (C)</source>
-        <translation>Copyright (C)</translation>
+        <translation>حقوق الطبع محفوظة </translation>
     </message>
     <message>
         <location line="-1"/>
         <source>by Michael Margraf</source>
-        <translation>by Michael Margraf</translation>
+        <translation> من قبل مايكل مرغراف</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -15343,32 +15477,32 @@ Trolltech Qt жайлы</translation>
     <message>
         <location line="+4"/>
         <source>Simulator by Stefan Jahn</source>
-        <translation>Штефан Ян (Stefan Jahn) симуляторы</translation>
+        <translation>التمثيل من قبل ستيفان جون</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>VHDL simulator &apos;FreeHDL&apos; by Edwin Naroska and Marius Vollmer</source>
-        <translation>VHDL симуляторы &apos;FreeHDL&apos; Эдвин Нароска (Edwin Naroska) және Мариус Вольмер (Marius Vollmer)</translation>
+        <translation>من قبل VHDL  ل FreeHDL&apos;  تمثيل  Edwin Naroska and Marius Vollmer</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Special thanks to Jens Flucke and Raimund Jacob</source>
-        <translation>Ерекше алғысымызды Йенс Флюкке (Jens Flucke) және Раймунд Джакоб (Raimund Jacob) білдіреміз</translation>
+        <translation>شكر خاص ل  Jens Flucke and Raimund Jacob</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Many thanks to Mike Brinson for correcting the VHDL output</source>
-        <translation>VHDL-дегі қорытқы түзетулерді енгізгені үшін Майк Бринсонға (Mike Brinson) үлкен алғысымызды білдіреміз</translation>
+        <translation>شكرا جزيلا لMike Brinson لتصحيح  إظهار VHDL</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>GUI improvements by Gopala Krishna A</source>
-        <translation>Графикалық интерфейсін өзгерткен-Gopala Krishna A</translation>
+        <translation>إدخال تحسينات على واجهة المستخدم من قبل  Gopala Krishna A</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Verilog-AMS interface by Helene Parruitte</source>
-        <translation>Verilog-AMS интерфейсі: Helene Parruitte</translation>
+        <translation>واجهة المستخدم ل Verilog-AMS من قبل</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -15378,27 +15512,27 @@ Trolltech Qt жайлы</translation>
     <message>
         <location line="+1"/>
         <source>Translations:</source>
-        <translation>Аудармалар:</translation>
+        <translation>ترجمات :</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>German by Stefan Jahn</source>
-        <translation>Немісше-Stefan Jahn</translation>
+        <translation>من جانب الألماني ستيفان جون</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Polish by Dariusz Pienkowski</source>
-        <translation>Польша тіліне-Dariusz Pienkowski</translation>
+        <translation>البولندي من قبل داريوس  Pienkowski</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Romanian by Radu Circa</source>
-        <translation>Румынша-Radu Circa</translation>
+        <translation>الرومانية من قبل رادو  سركا</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>French by Vincent Habchi, F5RCS</source>
-        <translation>Французша-Vincent Habchi, F5RCS</translation>
+        <translation>الفرنسية من قبل فانسان Habchi ، F5RCS</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -15406,63 +15540,85 @@ Trolltech Qt жайлы</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Portuguese by Luciano Franca and Helio de Sousa</source>
-        <translation type="obsolete">Португалдық тілге-Luciano Franca</translation>
+        <source>Portuguese by Luciano Franca</source>
+        <translation type="obsolete">البرتغالية من قبل لوتشيانو فرانكا</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Spanish by Jose L. Redrejo Rodriguez</source>
-        <translation>Испан тілінде - Jose L. Redrejo Rodriguez</translation>
+        <translation>الاسبانية من قبل خوسيه رودريغيز ل  Redrejo</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Japanese by Toyoyuki Ishikawa</source>
-        <translation>Жапон тіліне-Toyoyuki Ishikawa</translation>
+        <translation>اليابانية من قبل Toyoyuki إيشيكاوا</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Italian by Giorgio Luparia and Claudio Girardi</source>
-        <translation>Итальян тіліне-Giorgio Luparia және Claudio Girardi</translation>
+        <translation>الايطالية  من قبل جورجيو Luparia وكلاوديو Girardi</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Hebrew by Dotan Nahum</source>
-        <translation>Еврей тіліне аударған-Dotan Nahum</translation>
+        <translation> العبرية من قبل  ناحوم دوتان</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Swedish by Peter Landgren</source>
-        <translation>Швед тілінде - Peter Landgren</translation>
+        <translation>السويدية من قبل  بيتر Landgren</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Turkish by Onur and Ozgur Cobanoglu</source>
-        <translation>Түрік тіліне-Onur және Ozgur Cobanoglu</translation>
+        <translation>التركية من قبل  وأوزغور Cobanoglu</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Hungarian by Jozsef Bus</source>
-        <translation>Венгер тіліне - Jozsef Bus</translation>
+        <translation>الهنغارية من قبل Jozsef Bus </translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Russian by Igor Gorbounov</source>
-        <translation>Орысша-Игорь Горбунов</translation>
+        <translation>الروسية من قبل ايغور Gorbounov</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Czech by Marek Straka</source>
-        <translation>Чех тілінде-Marek Straka</translation>
+        <translation>التشيكية من قبل ماريك بها Straka</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Catalan by Antoni Subirats</source>
-        <translation>Каталанша-Antoni Subirats</translation>
+        <translation>الكاتالوينية من قبل انتوني سوبيراتز</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="-743"/>
+        <source>&amp;Import/Export Data...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-94"/>
+        <source>Export as image</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+96"/>
+        <source>Convert data file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Import/Export Data
+
+Convert data file to various file formats</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+740"/>
         <source>Arabic by Chabane Noureddine</source>
-        <translation>Арабша Chabane Noureddine</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+1"/>
@@ -15470,7 +15626,7 @@ Trolltech Qt жайлы</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qucs.cpp" line="-1896"/>
+        <location filename="../qucs/qucs.cpp" line="-1898"/>
         <source>unknown</source>
         <translation type="unfinished"></translation>
     </message>
@@ -15520,18 +15676,18 @@ Trolltech Qt жайлы</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-959"/>
-        <location line="+1553"/>
+        <location line="-930"/>
+        <location line="+1524"/>
         <source>Verilog-A Sources</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-1451"/>
+        <location line="-1424"/>
         <source>Verilog-A</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+604"/>
+        <location line="+577"/>
         <source>Insert</source>
         <translation type="unfinished"></translation>
     </message>
@@ -15551,18 +15707,18 @@ Trolltech Qt жайлы</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-971"/>
-        <location line="+1553"/>
+        <location line="-942"/>
+        <location line="+1524"/>
         <source>Octave Scripts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-1456"/>
+        <location line="-1429"/>
         <source>Octave</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qucs_init.cpp" line="-461"/>
+        <location filename="../qucs/qucs_init.cpp" line="-466"/>
         <source>&amp;Octave Window</source>
         <translation type="unfinished"></translation>
     </message>
@@ -15600,36 +15756,36 @@ Starts standard resistor color code computation program</source>
     <name>QucsAttenuator</name>
     <message>
         <source>E&amp;xit</source>
-        <translation type="obsolete">Ш&amp;ығу</translation>
+        <translation type="obsolete">&amp;خروج</translation>
     </message>
     <message>
         <source>Help...</source>
-        <translation type="obsolete">Көмек...</translation>
+        <translation type="obsolete">مساعدة...</translation>
     </message>
     <message>
         <source>&amp;About QucsAttenuator...</source>
-        <translation type="obsolete">&amp;Qucs Attenuator жайлы анықтама...</translation>
+        <translation type="obsolete">&amp; حول QucsAttenuator...</translation>
     </message>
     <message>
         <location filename="../qucs-attenuator/qucsattenuator.cpp" line="+70"/>
         <source>About Qt...</source>
-        <translation>Qt жайлы...</translation>
+        <translation>عن كيو تي...</translation>
     </message>
     <message>
         <location line="-22"/>
         <source>&amp;File</source>
-        <translation>&amp;Файл</translation>
+        <translation>‏‏&amp;ملف</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>&amp;Quit</source>
-        <translation type="unfinished">&amp;Шығу</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+6"/>
         <location line="+2"/>
         <source>&amp;Help</source>
-        <translation>&amp;Көмек</translation>
+        <translation>مساعدة‏&amp;‏</translation>
     </message>
     <message>
         <location line="+5"/>
@@ -15639,17 +15795,17 @@ Starts standard resistor color code computation program</source>
     <message>
         <location line="+19"/>
         <source>Topology</source>
-        <translation>Топология</translation>
+        <translation>طوبولوجيا</translation>
     </message>
     <message>
         <location line="+23"/>
         <source>Input</source>
-        <translation>Кіріс</translation>
+        <translation>مدخلات</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Attenuation:</source>
-        <translation>Бәсеңдеу:</translation>
+        <translation>تخفيف :</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -15659,7 +15815,7 @@ Starts standard resistor color code computation program</source>
     <message>
         <location line="+3"/>
         <source>dB</source>
-        <translation>дБ</translation>
+        <translation>dB</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -15679,7 +15835,7 @@ Starts standard resistor color code computation program</source>
         <location line="+7"/>
         <location line="+7"/>
         <source>Ohm</source>
-        <translation>Ом</translation>
+        <translation>Ω</translation>
     </message>
     <message>
         <location line="-41"/>
@@ -15689,17 +15845,17 @@ Starts standard resistor color code computation program</source>
     <message>
         <location line="+14"/>
         <source>Calculate and put into Clipboard</source>
-        <translation>Алмастыру буферіне есептеу және енгізу</translation>
+        <translation>حساب و وضعه في  الحافظة</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Output</source>
-        <translation>Шығыс</translation>
+        <translation>يحرر</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>R1:</source>
-        <translation>R1:</translation>
+        <translation>R1 :</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -15711,7 +15867,7 @@ Starts standard resistor color code computation program</source>
     <message>
         <location line="-9"/>
         <source>R2:</source>
-        <translation>R2:</translation>
+        <translation>R2 :</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -15722,27 +15878,27 @@ Starts standard resistor color code computation program</source>
         <location line="+16"/>
         <location line="+125"/>
         <source>Result:</source>
-        <translation>Нәтиже:</translation>
+        <translation>النتيجة :</translation>
     </message>
     <message>
         <location line="-107"/>
         <source>Qucs Attenuator Help</source>
-        <translation type="unfinished">Qucs Attenuator жайлы анықтама</translation>
+        <translation type="unfinished">مساعدة Qucs المخفف</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>QucsAttenuator is an attenuator synthesis program. To create a attenuator, simply enter all the input parameters and press the calculation button. Immediatly, the schematic of the attenuator is calculated and put into the clipboard. Now go to Qucs, open an schematic and press CTRL-V (paste from clipboard). The attenuator schematic can now be inserted. Have lots of fun!</source>
-        <translation type="unfinished">QucsAttenuator - бұл аттеньюаторларды синтездейтін бағдарлама. Аттеньюаторларды құру үшін барлық керекті параметрлерді енгізіп негізгі терезенің төмен жағында орналасқан батырманы басыңыз. Осыдан кейін аттеньюатор есептеліп алмастыру буферіне жіберіледі. Содан кейін Qucs-қа өтіп, таза құжатты ашып CTRL-V (алмастыру буферінен қою) пернесін басыңыз. Енді сіздің сұлбаңызға аттеньюаторды енгізіп, өзгертіп және моделдеуге болады. Іске сәт!</translation>
+        <translation type="unfinished">QucsAttenuator is an attenuator synthesis program. To create a attenuator, simply enter all the input parameters and press the calculation button. Immediatly, the schematic of the attenuator is calculated and put into the clipboard. Now go to Qucs, open an schematic and press CTRL-V (paste from clipboard). The attenuator schematic can now be inserted. Have lots of fun!</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>About Qt</source>
-        <translation>Qt жайлы</translation>
+        <translation>عن كيو تي</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>About...</source>
-        <translation>Жайлы...</translation>
+        <translation>حول...</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -15750,19 +15906,19 @@ Starts standard resistor color code computation program</source>
 Attenuator synthesis program
 </source>
         <translation>
-Аттеньюаторларды синтездейтін қамтама
+توليف البرنامج المخفف
 </translation>
     </message>
     <message>
         <location line="+1"/>
         <location line="+2"/>
         <source>Copyright (C) 2006 by</source>
-        <translation>Copyright (C) 2006 by</translation>
+        <translation>حقوق الطبع محفوظة 2006  من قبل </translation>
     </message>
     <message>
         <location line="+82"/>
         <source>Success!</source>
-        <translation>Сәтті!</translation>
+        <translation> العملية تمت بنجاح!</translation>
     </message>
     <message>
         <location line="+14"/>
@@ -15771,7 +15927,7 @@ Attenuator synthesis program
     </message>
     <message>
         <source>Error: Set Attenuation more than %1 dB</source>
-        <translation type="obsolete">Қате: Бәсеңдетуді %1 дБ-ден арттырыңыз</translation>
+        <translation type="obsolete">‏خطأ : مجموعة تخفيف أكثر من %1 ديسيبل‏</translation>
     </message>
 </context>
 <context>
@@ -15780,209 +15936,250 @@ Attenuator synthesis program
         <location filename="../qucs-edit/qucsedit.cpp" line="+44"/>
         <location line="+147"/>
         <source>File: </source>
-        <translation>Файл:</translation>
+        <translation>‏‏ملف‏:</translation>
     </message>
     <message>
         <location line="-136"/>
         <location line="+49"/>
         <source>Line: %1  -  Column: %2</source>
-        <translation>Жол: %1-баған: %2</translation>
+        <translation>‏‏خط  ٪1 - عمود : ‏2٪ ‏</translation>
     </message>
     <message>
         <location line="-47"/>
         <source>About</source>
-        <translation>Жайлы</translation>
+        <translation>حول</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Quit</source>
-        <translation>Шығу</translation>
+        <translation>استقال</translation>
     </message>
     <message>
         <location line="+50"/>
         <source>About...</source>
-        <translation>Жайлы...</translation>
+        <translation>حول...</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>
 Very simple text editor for Qucs
 </source>
-        <translation>Qucs үшін өте қарапайым мәтіндік редактор</translation>
+        <translation>محرر نصوص بسيط جدا لQucs</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Copyright (C) 2004, 2005 by Michael Margraf
 </source>
-        <translation>Copyright (C) 2004, 2005 by Michael Margraf</translation>
+        <translation>حقوق الطبع محفوظة (جيم) 2004 ، و 2005 من قبل مايكل مرغراف</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Enter a Filename</source>
-        <translation>Файл атын енгізіңіз</translation>
+        <translation>أدخل اسم الملف</translation>
     </message>
     <message>
         <location line="+12"/>
         <source>Enter a Document Name</source>
-        <translation>Құжат атын енгізіңіз</translation>
+        <translation>إدخال الاسم وثيقة</translation>
     </message>
     <message>
         <location line="+7"/>
         <location line="+39"/>
         <source>Error</source>
-        <translation>Қате</translation>
+        <translation>خطأ</translation>
     </message>
     <message>
         <location line="-38"/>
         <source>Cannot write file: </source>
-        <translation>Файлды жазу мүмкін емес:</translation>
+        <translation>لا يمكن كتابة ملف :</translation>
     </message>
     <message>
         <location line="+39"/>
         <source>Cannot read file: </source>
-        <translation>Файлды оқу мүмкін емес:</translation>
+        <translation>لا يمكن قراءة الملف :</translation>
     </message>
     <message>
         <location line="+18"/>
         <source>Closing document</source>
-        <translation>Құжатты жабу</translation>
+        <translation>الوثيقة الختامية</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>The text contains unsaved changes!
 </source>
-        <translation>Мәтін құрамында сақталмаған өзгерістер бар!</translation>
+        <translation>ويتضمن النص التغييرات غير المحفوظة!
+</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Do you want to save the changes?</source>
-        <translation>Сіз өзгерістерді сақтағыңыз келеді ма?</translation>
+        <translation>هل تريد حفظ التغييرات؟</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>&amp;Save</source>
-        <translation>&amp;Сақтау</translation>
+        <translation>&amp; حفظ</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>&amp;Discard</source>
-        <translation>&amp;Сақтаусыз жабу</translation>
+        <translation>&amp; تجاهل</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>&amp;Cancel</source>
-        <translation>&amp;Артқа қайтару</translation>
+        <translation>&amp;إلغاء‏</translation>
     </message>
 </context>
 <context>
     <name>QucsFilter</name>
     <message>
-        <location filename="../qucs-filter/qucsfilter.cpp" line="+59"/>
+        <location filename="../qucs-filter/qucsfilter.cpp" line="+66"/>
         <source>E&amp;xit</source>
-        <translation>Ш&amp;ығу</translation>
+        <translation>&amp;خروج</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Help...</source>
-        <translation>Көмек...</translation>
+        <translation>مساعدة...</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>&amp;About QucsFilter...</source>
-        <translation>&amp;Qucs сүзгілері жайлы...</translation>
+        <translation>&amp; حول QucsFilter...</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>About Qt...</source>
-        <translation>Qt жайлы...</translation>
+        <translation>كيو تي حول...</translation>
     </message>
     <message>
         <location line="-17"/>
         <source>&amp;File</source>
-        <translation>&amp;Файл</translation>
+        <translation>‏‏&amp;ملف</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>&amp;Help</source>
-        <translation>&amp;Көмек</translation>
+        <translation>&amp;‏مساعدة</translation>
     </message>
     <message>
-        <location line="+29"/>
+        <location line="+30"/>
+        <source>Filter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Realization:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+15"/>
         <source>Filter type:</source>
-        <translation>Сүзгі типі:</translation>
+        <translation>مرشح من نوع :</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Filter class:</source>
-        <translation>Сүзгі сыныбы:</translation>
+        <translation>فلتر الطبقة :</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Low pass</source>
-        <translation>Төменгі жиілікті</translation>
+        <translation>المنخفضة</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>High pass</source>
-        <translation>Жоғары жиілікті</translation>
+        <translation>ارتفاع المرور</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Band pass</source>
-        <translation>Сызықтық</translation>
+        <translation>شريط تمرير</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Band stop</source>
-        <translation>Режекторлы</translation>
+        <translation>الفرقة وقف</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Order:</source>
-        <translation>Рет:</translation>
+        <translation>من أجل :</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+302"/>
+        <location line="+399"/>
         <source>Corner frequency:</source>
-        <translation>Кесу жиілігі:</translation>
+        <translation>ركن تردد :</translation>
     </message>
     <message>
-        <location line="-289"/>
+        <location line="-386"/>
         <source>Stop frequency:</source>
-        <translation>Жиілікті тоқтату:</translation>
+        <translation>وقف تردد :</translation>
     </message>
     <message>
         <location line="+13"/>
-        <location line="+287"/>
+        <location line="+384"/>
         <source>Stop band frequency:</source>
-        <translation>Режекторлы сүзгінің жиілігі:</translation>
+        <translation>توقف الفرقة تردد :</translation>
     </message>
     <message>
-        <location line="-274"/>
-        <location line="+275"/>
+        <location line="-371"/>
+        <location line="+372"/>
         <source>Pass band ripple:</source>
-        <translation>Өткізу деңгейіндегі әр өлшемділік:</translation>
+        <translation>شريط تمرير متتالية :</translation>
     </message>
     <message>
-        <location line="-267"/>
+        <location line="-364"/>
         <source>Stop band attenuation:</source>
-        <translation>Режекторлы сүзгіні басып тастау:</translation>
+        <translation>وقف تخفيف الفرقة :</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Impedance:</source>
-        <translation>Толық кедергі:</translation>
+        <translation>مقاومة :</translation>
     </message>
     <message>
         <location line="+9"/>
-        <source>Calculate and put into Clipboard</source>
-        <translation>Алмастыру буферіне есептеу және енгізу</translation>
+        <source>Microstrip Substrate</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+37"/>
+        <location line="+9"/>
+        <source>Relative permittivity:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+13"/>
+        <source>Substrate height:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>metal thickness:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>minimum width:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>maximum width:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+12"/>
+        <source>Calculate and put into Clipboard</source>
+        <translation>حساب و وضعه في  الحافظة</translation>
+    </message>
+    <message>
+        <location line="+39"/>
         <source>About...</source>
-        <translation>Жайлы...</translation>
+        <translation>حول...</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -15990,72 +16187,72 @@ Very simple text editor for Qucs
 Filter synthesis program
 </source>
         <translation>
-Сүзгіні синтездейтін қамтама
+توليف برنامج فلتر
 </translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Copyright (C) 2005, 2006 by</source>
-        <translation>Copyright (C) 2005, 2006 by</translation>
+        <translation>حقوق الطبع محفوظة (جيم) 2004 ،  2005 من قبل </translation>
     </message>
     <message>
         <location line="+11"/>
         <source>About Qt</source>
-        <translation>Qt жайлы</translation>
+        <translation>عن كيو تي</translation>
     </message>
     <message>
         <location line="+13"/>
-        <location line="+101"/>
+        <location line="+138"/>
         <location line="+18"/>
         <source>Result:</source>
-        <translation>Нәтиже:</translation>
+        <translation>النتيجة :</translation>
     </message>
     <message>
-        <location line="-118"/>
+        <location line="-155"/>
         <location line="+1"/>
         <source>Error</source>
-        <translation>Қате</translation>
+        <translation>خطأ</translation>
     </message>
     <message>
-        <location line="+74"/>
+        <location line="+111"/>
         <source>Stop frequency must be greater than start frequency.</source>
-        <translation>Соңғы жиілік бастапқыдан үлкен болуы тиіс.</translation>
+        <translation>ولا بد من وقف تردد أكبر منتردد البدء.</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Filter order must not be less than two.</source>
-        <translation>Сүзгі реті екіден кем болмауы керек.</translation>
+        <translation>ترتيب فلتر  يجب أن يكون اثنين على الأقل.</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Bessel filter order must not be greater than 19.</source>
-        <translation>Бессель сүзгілерінің реті 19-дан аспауы керек.</translation>
+        <translation>بسل فلتر يجب ألا يزيد عن 19.</translation>
     </message>
     <message>
         <location line="+16"/>
         <location line="+17"/>
         <source>Successful</source>
-        <translation>Сәтті</translation>
+        <translation>ناجح</translation>
     </message>
     <message>
         <location line="-9"/>
         <source>Result: --</source>
-        <translation>Нәтиже: --</translation>
+        <translation>النتيجة :--</translation>
     </message>
     <message>
         <location line="+71"/>
         <source>Start frequency:</source>
-        <translation>Бастапқы жиілік:</translation>
+        <translation>بدء تردد :</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Pass band frequency:</source>
-        <translation>Сызықтық сүзгінің жиілігі:</translation>
+        <translation>تمرير النطاق الترددي :</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Pass band attenuation:</source>
-        <translation>Сызықтық сүзгінің бәсеңдеуі:</translation>
+        <translation>تمر تخفيف الفرقة :</translation>
     </message>
 </context>
 <context>
@@ -16063,86 +16260,84 @@ Filter synthesis program
     <message>
         <location filename="../qucs-help/qucshelp.cpp" line="+50"/>
         <source>Qucs Help System</source>
-        <translation>Qucs көмек жүйесі</translation>
+        <translation>مساعدة نظام Qucs</translation>
     </message>
     <message>
         <location line="+29"/>
         <source>&amp;Quit</source>
-        <translation>&amp;Шығу</translation>
+        <translation>‏&amp;استقال</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>&amp;Back</source>
-        <translation>&amp;Артқа</translation>
+        <translation>‏&amp;خلف</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>&amp;Forward</source>
-        <translation>&amp;Алдына</translation>
+        <translation>‏&amp;للأمام</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>&amp;Home</source>
-        <translation>&amp;Үйге</translation>
+        <translation>‏&amp;منزل</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>&amp;Previous</source>
-        <translation>&amp;Алдынғы</translation>
+        <translation>‏&amp;السابق</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>&amp;Next</source>
-        <translation>&amp;Келесі</translation>
+        <translation>‏&amp;التالي</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>&amp;Table of Contents</source>
-        <translation>&amp;Тақырыбы</translation>
+        <translation>‏&amp;قائمة المحتويات</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Enables/disables the table of contents</source>
-        <translation>тақырыбын қосу/өшіру</translation>
+        <translation>ويتيح / لتعطيل جدول المحتويات</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Table of Contents
 
 Enables/disables the table of contents</source>
-        <translation>Тақырыбы
-
-тақырыбын қосу/өшіру</translation>
+        <translation>قائمة المحتوياتويتيح / لتعطيل جدول المحتويات</translation>
     </message>
     <message>
         <location line="+40"/>
         <source>&amp;About Qt</source>
-        <translation>&amp;Qt жайлы</translation>
+        <translation>‏&amp;عن كيو تي</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>&amp;File</source>
-        <translation>&amp;Файл</translation>
+        <translation>‏‏&amp;ملف</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>&amp;View</source>
-        <translation>&amp;Түр</translation>
+        <translation>‏&amp;عرض</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>&amp;Help</source>
-        <translation>&amp;Көмек</translation>
+        <translation>‏&amp;مساعدة</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Contents</source>
-        <translation>Мазмұны</translation>
+        <translation>محتويات</translation>
     </message>
     <message>
         <location line="+15"/>
         <source>Home</source>
-        <translation>Үйге</translation>
+        <translation>منزل</translation>
     </message>
 </context>
 <context>
@@ -16150,99 +16345,101 @@ Enables/disables the table of contents</source>
     <message>
         <location filename="../qucs-lib/qucslib.cpp" line="+62"/>
         <source>Manage User &amp;Libraries...</source>
-        <translation>Тұтынушы кітапханаларын &amp; басқару...</translation>
+        <translation type="unfinished">...‏إدارة &amp;‏المكتبات المستخدم</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>&amp;Quit</source>
-        <translation>&amp;Шығу</translation>
+        <translation>&amp;نهاية</translation>
     </message>
     <message>
         <source>Help</source>
-        <translation type="obsolete">Көмек</translation>
+        <translation type="obsolete">مساعدة</translation>
     </message>
     <message>
         <location line="+10"/>
         <location line="+2"/>
         <source>&amp;Help</source>
-        <translation>&amp;Көмек</translation>
+        <translation>‏&amp;مساعدة</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>About</source>
-        <translation>Жайлы</translation>
+        <translation>حول</translation>
     </message>
     <message>
         <location line="-23"/>
         <source>&amp;File</source>
-        <translation>&amp;Файл</translation>
+        <translation>‏‏&amp;ملف</translation>
     </message>
     <message>
         <location line="+42"/>
         <source>Component Selection</source>
-        <translation>Компонентті ерекшелеу</translation>
+        <translation>اختيار العنصر</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Search...</source>
-        <translation>Іздеу...</translation>
+        <translation>البحث عن...</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Component</source>
-        <translation>Компонент</translation>
+        <translation>العنصر</translation>
     </message>
     <message>
         <location line="+12"/>
         <source>Copy to clipboard</source>
-        <translation>Алмастыру буферіне көшіру</translation>
+        <translation>نسخة إلى الحافظة</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Show Model</source>
-        <translation>Моделін көрсету</translation>
+        <translation>إظهر نموذج</translation>
     </message>
     <message>
         <location line="+69"/>
         <source>About...</source>
-        <translation>Жайлы...</translation>
+        <translation>حول...</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Library Manager for Qucs
 </source>
-        <translation>Qucs үшін тұтынушы кітапханалары</translation>
+        <translation>مكتبة Qucs
+</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Copyright (C) 2005 by Michael Margraf
 </source>
-        <translation>Copyright (C) 2005 by Michael Margraf</translation>
+        <translation>حقوق الطبع محفوظة  2005 من قبل مايكل مرغراف
+</translation>
     </message>
     <message>
         <location line="+41"/>
         <source>QucsLib Help</source>
-        <translation>Qucs кітапхана көмегі</translation>
+        <translation>مساعدة QucsLib</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>QucsLib is a program to manage Qucs component libraries. On the left side of the application window the available libraries can be browsed to find the wanted component. By clicking on the component name its description can be seen on the right side. The selected component is transported to the Qucs application by clicking on the button &quot;Copy to Clipboard&quot;. Being back in the schematic window the component can be inserted by pressing CTRL-V  (paste from clipboard).</source>
-        <translation>QucsLib -бұл қамтама Qucs кітапханасын басқаруға арналған. Қамтаманың сол жағында кітапхана түрлерін көре отырып, керекті компонентті таба аласыз. Тышқанның сол пернесін басу арқылы компонент сипаттамасын оң жақ терезеден көруге болады. Ерекшеленген компонентті Qucs қамтамасына жіберуге болады, ол үшін &quot;алммастыру буферіне көшіру&quot; пернесін басыңыз. Егер сұлбаны редакторлеу режиміне өтсеңіз, онда бұл компонентті CTRL-V батырмасын басып (алмастыру буферінен қою) қоюға болады.</translation>
+        <translation>‎‫QucsLib هو برنامج وتحتفظ مكتبة المكونات. على الجهة اليسرى من النافذة المتاحة يمكن تصفحها والمكتبات بحثا عن العناصر المكونة. اضغط على عرض عناصر وصفها (اليمين). مرة واحدة في العنصر المختار، ومن نسخ إلى الحافظة من خلال زر &quot;نسخ إلى الحافظة&quot;. في نافذة البرنامج ، ببساطة صقها بكتابة السيطرة الخامس (نسخة).</translation>
     </message>
     <message>
         <location line="+9"/>
         <source>A more comfortable way: The component can also be placed onto the schematic by using Drag n&apos;Drop.</source>
-        <translation>Ең қолайлы әдіс: Компонентті сұлбаға жай ғана тарту арқылы енгізуге болады.</translation>
+        <translation>وهناك طريقة أكثر راحة : العنصر ويمكن أيضا تقديم الطلبات على التخطيطي باستخدام اسحب n&apos;Drop.</translation>
     </message>
     <message>
         <location line="+22"/>
         <source>Model</source>
-        <translation>Модел</translation>
+        <translation>النموذج</translation>
     </message>
     <message>
         <location line="+12"/>
         <source>Search result</source>
-        <translation>Іздеу нәтижесі</translation>
+        <translation>نتيجة البحث</translation>
     </message>
     <message>
         <location line="+39"/>
@@ -16253,12 +16450,12 @@ Enables/disables the table of contents</source>
         <location line="+7"/>
         <location line="+7"/>
         <source>Error</source>
-        <translation>Қате</translation>
+        <translation>خطأ</translation>
     </message>
     <message>
         <location line="-83"/>
         <source>Cannot open &quot;%1&quot;.</source>
-        <translation>Ашуға мүмкіндік болмады&quot;%1&quot;.</translation>
+        <translation>لا نستطيع فتح &quot;%1.</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -16268,111 +16465,111 @@ Enables/disables the table of contents</source>
         <location line="+7"/>
         <location line="+7"/>
         <source>Library is corrupt.</source>
-        <translation>Кітапхана бұзылған.</translation>
+        <translation>المكتبة فاسدة.</translation>
     </message>
     <message>
         <location line="-55"/>
         <source>Search Library Component</source>
-        <translation>Кітапхана компонентін іздеу</translation>
+        <translation>البحث في مكتبة العنصر</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Result</source>
-        <translation>Нәтиже</translation>
+        <translation>النتيجة </translation>
     </message>
     <message>
         <location line="+1"/>
         <source>No appropriate component found.</source>
-        <translation>Сәйкес компонент табылған жоқ.</translation>
+        <translation>العثور على أي عنصر مناسب.</translation>
     </message>
 </context>
 <context>
     <name>QucsSettingsDialog</name>
     <message>
-        <location filename="dialogs/qucssettingsdialog.cpp" line="+49"/>
+        <location filename="../qucs/dialogs/qucssettingsdialog.cpp" line="+53"/>
         <source>Edit Qucs Properties</source>
-        <translation>Qucs қасиеттерін өзгерту</translation>
+        <translation>تحرير خصائص كوكس</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>Font (set after reload):</source>
-        <translation>Шрифт (қайта қосудан кейін іске қосылады):</translation>
+        <translation>فونت (بعد إعادة تحميل ) :</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Document Background Color:</source>
-        <translation>Құжат фонының түсі:</translation>
+        <translation>لون الخلفي للوثيقة :</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Language (set after reload):</source>
-        <translation>Тіл (қайта қосудан кейін іске қосылады):</translation>
+        <translation>اللغة (بعد إعادة تحميل ) :</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>system language</source>
-        <translation>жүйелік тіл</translation>
+        <translation>لغة النظام</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>English</source>
-        <translation>Ағылшынша</translation>
+        <translation>إنجليزي</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>German</source>
-        <translation>Немісше</translation>
+        <translation>الألمانية</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>French</source>
-        <translation>Французша</translation>
+        <translation>فرنسي</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Spanish</source>
-        <translation>Испандық</translation>
+        <translation>الأسبانية</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Italian</source>
-        <translation>Италиандық</translation>
+        <translation>الايطالية</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Polish</source>
-        <translation>Польшалық</translation>
+        <translation>البولندية</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Romanian</source>
-        <translation>Румынша</translation>
+        <translation>الرومانية</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Japanese</source>
-        <translation>Жапондық</translation>
+        <translation>اليابانية</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Swedish</source>
-        <translation>Шведтық</translation>
+        <translation>السويدية</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Hungarian</source>
-        <translation>Венгерлік</translation>
+        <translation>الهنغارية</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Hebrew</source>
-        <translation>Івріттік</translation>
+        <translation>العبرية</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Portuguese-BR</source>
         <oldsource>Portuguese</oldsource>
-        <translation type="unfinished">Португалдық</translation>
+        <translation type="unfinished">البرتغالية</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -16382,42 +16579,37 @@ Enables/disables the table of contents</source>
     <message>
         <location line="+1"/>
         <source>Turkish</source>
-        <translation>Түрікше</translation>
+        <translation>التركية</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Ukrainian</source>
-        <translation>Украиндық</translation>
+        <translation>الأوكرانية</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Russian</source>
-        <translation>Орысша</translation>
+        <translation>الروسية</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Czech</source>
-        <translation>Чехтық</translation>
+        <translation>التشيكية</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Catalan</source>
-        <translation>Каталондық</translation>
+        <translation>الكاتالوينية</translation>
     </message>
     <message>
-        <location line="+1"/>
-        <source>Arabic</source>
-        <translation>Арабша</translation>
-    </message>
-    <message>
-        <location line="+5"/>
+        <location line="+6"/>
         <source>maximum undo operations:</source>
-        <translation>қайтару операцияларының максимумы:</translation>
+        <translation>أقصى قدر من التراجع عن العمليات :</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>text editor:</source>
-        <translation>мәтіндік редактор:</translation>
+        <translation>محرر نصوص :</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -16427,7 +16619,7 @@ Enables/disables the table of contents</source>
     <message>
         <location line="+3"/>
         <source>start wiring when clicking open node:</source>
-        <translation>түйін ашылған кезде байланыстыруды бастау:</translation>
+        <translation>عند النقر على بدء الأسلاك مفتوحة العقدة :</translation>
     </message>
     <message>
         <location line="+5"/>
@@ -16436,48 +16628,53 @@ Enables/disables the table of contents</source>
     </message>
     <message>
         <location line="+5"/>
+        <source>Draw diagrams with anti-aliasing feature</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
         <source>Settings</source>
-        <translation>Реттемелер</translation>
+        <translation>إعدادات</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Colors for Syntax Highlighting:</source>
-        <translation>Синтаксистік шрифт үшін түс таңдау:</translation>
+        <translation>ألوان لتسليط الضوء على النحو :</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Comment</source>
-        <translation>Комментарий</translation>
+        <translation>التعليق</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>String</source>
-        <translation>Жол</translation>
+        <translation>سلسلة</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Integer Number</source>
-        <translation>Бүтін сан</translation>
+        <translation>Integer Number</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Real Number</source>
-        <translation>Нақты сан</translation>
+        <translation>Real Number</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Character</source>
-        <translation>Белгі</translation>
+        <translation>Character</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Data Type</source>
-        <translation>Мәліметтер типі</translation>
+        <translation>نوع البيانات</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Attribute</source>
-        <translation>Аттрибут</translation>
+        <translation> خاصِّيَّة</translation>
     </message>
     <message>
         <location line="+101"/>
@@ -16500,7 +16697,7 @@ Enables/disables the table of contents</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+409"/>
+        <location line="+415"/>
         <source>Select the admsXml bin directory</source>
         <translation type="unfinished"></translation>
     </message>
@@ -16527,48 +16724,49 @@ Enables/disables the table of contents</source>
     </message>
     <message>
         <source>VHDL Editor</source>
-        <translation type="obsolete">VHDL редакторы</translation>
+        <translation type="obsolete">ملفات VHDL</translation>
     </message>
     <message>
-        <location line="-564"/>
+        <location line="-570"/>
         <source>Register filename extensions here in order to
 open files with an appropriate program.</source>
-        <translation>Файлдар сәйкес бағдарламалық қамтамамен ашылу үшін файл атының кеңейтілуін тіркеңіз.</translation>
+        <translation>تسجيل اسم الملف تمديد هنا ل 
+فتح ملفات برنامج مناسب.</translation>
     </message>
     <message>
         <location line="+13"/>
         <source>Suffix</source>
-        <translation>Кеңейту</translation>
+        <translation>لاحقة</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Program</source>
-        <translation>Бағдарлама</translation>
+        <translation>البرنامج</translation>
     </message>
     <message>
         <location line="+22"/>
         <source>Suffix:</source>
-        <translation>Кеңейту:</translation>
+        <translation>لاحقة :</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Program:</source>
-        <translation>Бағдарлама:</translation>
+        <translation>البرنامج :</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Set</source>
-        <translation>Қолдану</translation>
+        <translation>يعين</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Remove</source>
-        <translation>Жою</translation>
+        <translation>يزيل</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>File Types</source>
-        <translation>Файл типтері</translation>
+        <translation>نوع الملف</translation>
     </message>
     <message>
         <location line="+8"/>
@@ -16588,40 +16786,45 @@ open files with an appropriate program.</source>
     <message>
         <location line="+10"/>
         <source>OK</source>
-        <translation>ИЯ</translation>
+        <translation>موافق</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Apply</source>
-        <translation>Қолдану</translation>
+        <translation>طبق</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Cancel</source>
-        <translation>Артқа қайтару</translation>
+        <translation>إلغاء</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Default Values</source>
-        <translation>Үндестік бойынша берілген мән</translation>
+        <translation>القيمة الافتراضية </translation>
     </message>
     <message>
         <location line="+54"/>
         <source>Error</source>
-        <translation>Қате</translation>
+        <translation>خطأ</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>This suffix is already registered!</source>
-        <translation>Бұл кеңейту тіркелген!</translation>
+        <translation>هذه الاحقة سجلت من قبل!</translation>
     </message>
     <message>
-        <location line="-299"/>
+        <location line="-305"/>
+        <source>Arabic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
         <source>Kazakh</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+75"/>
+        <location line="+80"/>
         <source>Directive</source>
         <translation type="unfinished"></translation>
     </message>
@@ -16640,179 +16843,179 @@ open files with an appropriate program.</source>
     <name>QucsTranscalc</name>
     <message>
         <source>Load</source>
-        <translation type="obsolete">Енгізу</translation>
+        <translation type="obsolete">حمل</translation>
     </message>
     <message>
         <location filename="../qucs-transcalc/qucstrans.cpp" line="+264"/>
         <source>&amp;Load</source>
-        <translation>&amp;Енгізу</translation>
+        <translation>&amp;حمل</translation>
     </message>
     <message>
         <source>Save</source>
-        <translation type="obsolete">Сақтау</translation>
+        <translation type="obsolete"> حفظ</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>&amp;Save</source>
-        <translation>&amp;Сақтау</translation>
+        <translation>&amp; حفظ</translation>
     </message>
     <message>
         <source>Options</source>
-        <translation type="obsolete">Реттеулер</translation>
+        <translation type="obsolete">خيارات</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>&amp;Options</source>
-        <translation>&amp;Реттеулер</translation>
+        <translation>&amp;خيارات</translation>
     </message>
     <message>
         <source>Quit</source>
-        <translation type="obsolete">Шығу</translation>
+        <translation type="obsolete">خروج</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>&amp;Quit</source>
-        <translation>&amp;Шығу</translation>
+        <translation>خروج&amp;</translation>
     </message>
     <message>
         <source>Copy to Clipboard</source>
-        <translation type="obsolete">Алмастыру буферіне көшіру</translation>
+        <translation type="obsolete">نسخة إلى الحافظة</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>&amp;Copy to Clipboard</source>
-        <translation>&amp;Алмастыру буферіне көшіру</translation>
+        <translation>نسخة إلى الحافظة&amp;</translation>
     </message>
     <message>
         <location line="+92"/>
         <source>Analyze</source>
-        <translation>Анализ</translation>
+        <translation>تحليل</translation>
     </message>
     <message>
         <location line="-87"/>
         <source>&amp;Analyze</source>
-        <translation>&amp;Анализ</translation>
+        <translation>تحليل&amp;</translation>
     </message>
     <message>
         <location line="+92"/>
         <source>Synthesize</source>
-        <translation>Синтез</translation>
+        <translation>توليف</translation>
     </message>
     <message>
         <location line="-87"/>
         <source>&amp;Synthesize</source>
-        <translation>&amp;Синтез</translation>
+        <translation>توليف&amp;</translation>
     </message>
     <message>
         <source>Help</source>
-        <translation type="obsolete">Көмек</translation>
+        <translation type="obsolete">مساعدة</translation>
     </message>
     <message>
         <location line="+6"/>
         <location line="+1"/>
         <source>&amp;Help</source>
-        <translation>&amp;Көмек</translation>
+        <translation>مساعدة&amp;</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>About</source>
-        <translation>Жайлы</translation>
+        <translation>حول</translation>
     </message>
     <message>
         <location line="-51"/>
         <source>&amp;File</source>
-        <translation>&amp;Файл</translation>
+        <translation>‏‏&amp;ملف</translation>
     </message>
     <message>
         <location line="+27"/>
         <source>&amp;Execute</source>
-        <translation>&amp;орындау</translation>
+        <translation>تنفيذ&amp;</translation>
     </message>
     <message>
         <location line="+39"/>
         <source>Transmission Line Type</source>
-        <translation>Беріліс арнаның типі</translation>
+        <translation>انتقال نوع الخط</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Microstrip Line</source>
-        <translation>микросызық</translation>
+        <translation>خط Microstrip</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Coplanar Waveguide</source>
-        <translation>Компланар толқын</translation>
+        <translation>متحد المستوى الدليل الموجي</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Grounded Coplanar</source>
-        <translation>Жерленген компланар</translation>
+        <translation>أسس متحد المستوى</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Rectangular Waveguide</source>
-        <translation>Тікбұрышты толқын</translation>
+        <translation>الدليل الموجي مستطيلة</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Coaxial Line</source>
-        <translation>Коаксальды сызық</translation>
+        <translation>متحد المحور الخط</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Coupled Microstrip</source>
-        <translation>Байланысқан микросызық</translation>
+        <translation>إلى جانب Microstrip</translation>
     </message>
     <message>
         <location line="+25"/>
         <source>Substrate Parameters</source>
-        <translation>Салымша параметрі</translation>
+        <translation>الركازة المعلمات</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Component Parameters</source>
-        <translation>Компонент параметрлері</translation>
+        <translation> خصائص العنصر</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Physical Parameters</source>
-        <translation>Физикалық параметрлер</translation>
+        <translation>خصائص الفزيائية</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Derive Electrical Parameters</source>
-        <translation>Электрлік параметрлерді есептеу</translation>
+        <translation>خصائص مَمَرّ الكهربائية </translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Compute Physical Parameters</source>
-        <translation>Физикалық параметрлерді есептеу</translation>
+        <translation>خصائص الحسابات الفيزائية</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Electrical Parameters</source>
-        <translation>Электрлік параметрлер</translation>
+        <translation>خصائص الكهربائية</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Calculated Results</source>
-        <translation>Есептеу нәтижелері</translation>
+        <translation>حساب النتائج</translation>
     </message>
     <message>
         <location line="+6"/>
         <location line="+569"/>
-        <location line="+151"/>
+        <location line="+157"/>
         <location line="+19"/>
         <source>Ready.</source>
-        <translation>Дайын.</translation>
+        <translation>جاهز.</translation>
     </message>
     <message>
-        <location line="-690"/>
+        <location line="-696"/>
         <location line="+6"/>
         <location line="+6"/>
         <location line="+6"/>
         <source>ErEff</source>
-        <translation>Er эффектісі</translation>
+        <translation>ErEff</translation>
     </message>
     <message>
         <location line="-17"/>
@@ -16821,7 +17024,7 @@ open files with an appropriate program.</source>
         <location line="+6"/>
         <location line="+6"/>
         <source>Conductor Losses</source>
-        <translation>Өткізгіштегі шығын</translation>
+        <translation>خسائر الموصل </translation>
     </message>
     <message>
         <location line="-23"/>
@@ -16830,7 +17033,7 @@ open files with an appropriate program.</source>
         <location line="+6"/>
         <location line="+6"/>
         <source>Dielectric Losses</source>
-        <translation>Диэлектриктегі шығындар</translation>
+        <translation>خسائر العازلة</translation>
     </message>
     <message>
         <location line="-23"/>
@@ -16838,49 +17041,49 @@ open files with an appropriate program.</source>
         <location line="+6"/>
         <location line="+22"/>
         <source>Skin Depth</source>
-        <translation>Скин-қабатының қалыңдығы</translation>
+        <translation> عمق السَطِيحَة</translation>
     </message>
     <message>
         <location line="-16"/>
         <location line="+6"/>
         <source>TE-Modes</source>
-        <translation>қарама-қарсы электрлік модалар</translation>
+        <translation>TE-Modes</translation>
     </message>
     <message>
         <location line="-5"/>
         <location line="+6"/>
         <source>TM-Modes</source>
-        <translation>қарама-қарсы магниттік модалар</translation>
+        <translation>TM-Modes</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>ErEff Even</source>
-        <translation>Жұп модасы үшін Er эффектісі</translation>
+        <translation>ErEff Even</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>ErEff Odd</source>
-        <translation>Тақ модасы үшін Er эффектісі</translation>
+        <translation>ErEff Odd</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Conductor Losses Even</source>
-        <translation>Жұп мода үшін Омдық шығын</translation>
+        <translation>حدث خسائر الموصل </translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Conductor Losses Odd</source>
-        <translation>Тақ мода үшін Омдық шығын</translation>
+        <translation>خسائر الموصل شاذ</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Dielectric Losses Even</source>
-        <translation>Жұп мода үшін диэлектрлік шығындар</translation>
+        <translation>حدث خسائر العازلة </translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Dielectric Losses Odd</source>
-        <translation>Тақ мода үшін диэлектрлік шығындар</translation>
+        <translation>خسائر العازلة شاذ </translation>
     </message>
     <message>
         <location line="+5"/>
@@ -16890,7 +17093,7 @@ open files with an appropriate program.</source>
         <location line="+13"/>
         <location line="+12"/>
         <source>Relative Permittivity</source>
-        <translation>Салыстырмалы диэлектрлік өтімділік</translation>
+        <translation>النسبية Permittivity</translation>
     </message>
     <message>
         <location line="-65"/>
@@ -16898,7 +17101,7 @@ open files with an appropriate program.</source>
         <location line="+13"/>
         <location line="+12"/>
         <source>Relative Permeability</source>
-        <translation>Салыстырмалы өтімділік</translation>
+        <translation>النفاذية النسبية</translation>
     </message>
     <message>
         <location line="-65"/>
@@ -16906,13 +17109,13 @@ open files with an appropriate program.</source>
         <location line="+13"/>
         <location line="+39"/>
         <source>Height of Substrate</source>
-        <translation>Салымша биіктігі</translation>
+        <translation>ذروة الركيزة</translation>
     </message>
     <message>
         <location line="-65"/>
         <location line="+66"/>
         <source>Height of Box Top</source>
-        <translation>Қақпақ биіктігі</translation>
+        <translation>ذروة أعلى مربع</translation>
     </message>
     <message>
         <location line="-65"/>
@@ -16920,7 +17123,7 @@ open files with an appropriate program.</source>
         <location line="+13"/>
         <location line="+40"/>
         <source>Strip Thickness</source>
-        <translation>Сымның қалыңдығы</translation>
+        <translation>سمك الشريط </translation>
     </message>
     <message>
         <location line="-65"/>
@@ -16928,7 +17131,7 @@ open files with an appropriate program.</source>
         <location line="+13"/>
         <location line="+40"/>
         <source>Strip Conductivity</source>
-        <translation>Сымның өткізгіштігі</translation>
+        <translation>سمك الموصل </translation>
     </message>
     <message>
         <location line="-65"/>
@@ -16938,13 +17141,13 @@ open files with an appropriate program.</source>
         <location line="+12"/>
         <location line="+16"/>
         <source>Dielectric Loss Tangent</source>
-        <translation>Диэлектриктегі шығындардың тангенстік бұрышы</translation>
+        <translation>خسائر العازلة المتلامس</translation>
     </message>
     <message>
         <location line="-65"/>
         <location line="+66"/>
         <source>Conductor Roughness</source>
-        <translation>Өткізгіштің тегіс еместігі</translation>
+        <translation>خشونة الموصل </translation>
     </message>
     <message>
         <location line="-65"/>
@@ -16954,7 +17157,7 @@ open files with an appropriate program.</source>
         <location line="+12"/>
         <location line="+16"/>
         <source>Frequency</source>
-        <translation>Жиілік</translation>
+        <translation>تردد</translation>
     </message>
     <message>
         <location line="-65"/>
@@ -16962,14 +17165,14 @@ open files with an appropriate program.</source>
         <location line="+13"/>
         <location line="+41"/>
         <source>Line Width</source>
-        <translation>Сызықтың ені</translation>
+        <translation>خط العرض </translation>
     </message>
     <message>
         <location line="-65"/>
         <location line="+13"/>
         <location line="+13"/>
         <source>Line Length</source>
-        <translation>Сызықтың ұзындығы</translation>
+        <translation>طول الخط </translation>
     </message>
     <message>
         <location line="-25"/>
@@ -16978,7 +17181,7 @@ open files with an appropriate program.</source>
         <location line="+13"/>
         <location line="+12"/>
         <source>Characteristic Impedance</source>
-        <translation>Толық сипаттамалық кедергі</translation>
+        <translation>خصائص المقاومة</translation>
     </message>
     <message>
         <location line="-50"/>
@@ -16988,247 +17191,257 @@ open files with an appropriate program.</source>
         <location line="+12"/>
         <location line="+17"/>
         <source>Electrical Length</source>
-        <translation>Электрлік ұзындық</translation>
+        <translation>طول الكهربائي</translation>
     </message>
     <message>
         <location line="-58"/>
         <location line="+13"/>
         <location line="+41"/>
         <source>Gap Width</source>
-        <translation>Өлшемнің ені</translation>
+        <translation>عرض الفجوة </translation>
     </message>
     <message>
         <location line="-33"/>
         <location line="+14"/>
         <source>Conductivity of Metal</source>
-        <translation>Метал өткізгіштігі</translation>
+        <translation>التوصيل للمعادن</translation>
     </message>
     <message>
         <location line="-12"/>
         <source>Magnetic Loss Tangent</source>
-        <translation>Магниттік шығынның тангенстік бұрышы</translation>
+        <translation>فقدان المغناطيسية الظل</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Width of Waveguide</source>
-        <translation>Толқын ені</translation>
+        <translation>عرض الدليل الموجي</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Height of Waveguide</source>
-        <translation>Толқын биіктігі</translation>
+        <translation>ذروة الدليل الموجي</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Waveguide Length</source>
-        <translation>Толқын ұзындығы</translation>
+        <translation>طول الدليل الموجي </translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Inner Diameter</source>
-        <translation>Ішкі диаметр</translation>
+        <translation>القطر الداخلي</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Outer Diameter</source>
-        <translation>Сыртқы диаметр</translation>
+        <translation>القطر الخارجي</translation>
     </message>
     <message>
         <location line="+1"/>
         <location line="+16"/>
         <source>Length</source>
-        <translation>Ұзындығы</translation>
+        <translation>الطول</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Even-Mode Impedance</source>
-        <translation>Жұп мода үшін толық кедергі</translation>
+        <translation> حدث المقاومة</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Odd-Mode Impedance</source>
-        <translation>Толық кедергі</translation>
+        <translation>الأسلوب الفردي للمقاومة</translation>
     </message>
     <message>
         <location line="+138"/>
         <source>Selected for Calculation</source>
-        <translation>Есептеу үшін таңдалынған</translation>
+        <translation>اختيرت للحساب</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Check item for Calculation</source>
-        <translation>Есептеу үшін белгілеңіз</translation>
+        <translation>مراجعة لحساب هذا البند</translation>
     </message>
     <message>
         <location line="+217"/>
         <source>About...</source>
-        <translation>Жайлы...</translation>
+        <translation>حول...</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Transmission Line Calculator for Qucs
 </source>
-        <translation>Qucs үшін беріліс арнаны есептейтін калькулятор</translation>
+        <translation>نقل الخط حاسبة لQucs
+</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Copyright (C) 2001 by Gopal Narayanan
 </source>
-        <translation>Copyright (C) 2001 Gopal Narayanan</translation>
+        <translation>حقوق الطبع محفوظة 2001 من قبل قوبال نارايانان 
+</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Copyright (C) 2002 by Claudio Girardi
 </source>
-        <translation>Copyright (C) 2002 Claudio Girardi</translation>
+        <translation>حقوق الطبع محفوظة 2006  من قبل كلوديو جراردي
+</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Copyright (C) 2005 by Stefan Jahn
 </source>
-        <translation>Copyright (C) 2005 Stefan Jahn</translation>
+        <translation>حقوق الطبع محفوظة  2005 من قبل ستيفان جاهن 
+</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Copyright (C) 2008 by Michael Margraf
 </source>
-        <translation>Copyright (C) 2008 by Michael Margraf</translation>
+        <translation>حقوق الطبع محفوظة  2008 من قبل مايكل مرغراف
+</translation>
     </message>
     <message>
         <location line="+41"/>
-        <location line="+7"/>
+        <location line="+11"/>
         <source>Values are consistent.</source>
-        <translation>Мәндері сәйкес.</translation>
+        <translation>قيم ثابتة.</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Failed to converge!</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Values are inconsistent.</source>
-        <translation>Мәндері сәйкес емес.</translation>
+        <translation>قيم  غير ثابتة.</translation>
     </message>
     <message>
         <location line="+118"/>
         <source>Loading file...</source>
-        <translation>Файлды енгізу...</translation>
+        <translation>تحميل الملف ...</translation>
     </message>
     <message>
         <location line="+4"/>
         <location line="+19"/>
         <source>Transcalc File</source>
-        <translation>Transcalc файлы</translation>
+        <translation>ملف Transcalc</translation>
     </message>
     <message>
         <location line="-21"/>
         <location line="+19"/>
         <source>Enter a Filename</source>
-        <translation>Файл атын енгізіңіз</translation>
+        <translation>أدخل اسم الملف</translation>
     </message>
     <message>
         <location line="-13"/>
         <location line="+19"/>
         <source>Error</source>
-        <translation>Қате</translation>
+        <translation>خطأ</translation>
     </message>
     <message>
         <location line="-18"/>
         <source>Cannot load file:</source>
-        <translation>Файлды енгізу мүмкін емес:</translation>
+        <translation>لا يمكن تحميل الملف :</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Loading aborted.</source>
-        <translation>Енгізу үзілді.</translation>
+        <translation>إجهاض التحميل.</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Saving file...</source>
-        <translation>Файлды сақтау...</translation>
+        <translation>حفظ الملف...</translation>
     </message>
     <message>
         <location line="+9"/>
         <source>Cannot save file:</source>
-        <translation>Файлды сақтау мүмкін емес:</translation>
+        <translation>لا يمكن حفظ الملف... :</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Saving aborted.</source>
-        <translation>Сақтау үзілді.</translation>
+        <translation>إجهاض الحفظ.</translation>
     </message>
     <message>
         <location line="+298"/>
         <source>Schematic copied into clipboard.</source>
-        <translation>Сұлба алмастыру буферіне көшірілген.</translation>
+        <translation>نسخة إلى الحافظة تخطيطي.</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Transmission line type not available.</source>
-        <translation>Беріліс арнаның типі қол жеткісіз.</translation>
+        <translation>خط نقل من نوع غير متوفرة.</translation>
     </message>
 </context>
 <context>
     <name>SaveDialog</name>
     <message>
-        <location filename="dialogs/savedialog.cpp" line="+58"/>
+        <location filename="../qucs/dialogs/savedialog.cpp" line="+60"/>
         <source>Modified Files</source>
-        <translation>Өзгертілген файлдар</translation>
+        <translation>تعديل ملفات</translation>
     </message>
     <message>
         <location line="+34"/>
         <source>Untitled</source>
-        <translation>Аты жоқ</translation>
+        <translation>بدون عنوان</translation>
     </message>
     <message>
         <location line="-56"/>
         <source>Save the modified files</source>
-        <translation>Өзгертілген файлдарды сақтау</translation>
+        <translation>انقاذ تعديل الملفات</translation>
     </message>
     <message>
         <location line="+19"/>
         <source>Select files to be saved</source>
-        <translation>Файлдарды сақтау үшін таңдау</translation>
+        <translation>اختر صورة لإنقاذ</translation>
     </message>
     <message>
         <location line="+13"/>
         <source>Abort Closing</source>
-        <translation>Жабуды тоқтату</translation>
+        <translation>إحباط الختامي</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Don&apos;t Save</source>
-        <translation>Сақтамау</translation>
+        <translation>لا لإنقاذ</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Save Selected</source>
-        <translation>Ерекшеленгендерді сақтау</translation>
+        <translation>إنقاذ مختارة</translation>
     </message>
 </context>
 <context>
     <name>Schematic</name>
     <message>
-        <location filename="schematic.cpp" line="+9"/>
+        <location filename="../qucs/schematic.cpp" line="+9"/>
         <source>Title</source>
-        <translation>Аты</translation>
+        <translation>العنوان</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Drawn By:</source>
-        <translation>Сызған:</translation>
+        <translation>تعادل :</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Date:</source>
-        <translation>Күні:</translation>
+        <translation>التاريخ :</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Revision:</source>
-        <translation>Тексерген:</translation>
+        <translation>مراجعة :</translation>
     </message>
     <message>
-        <location filename="schematic_file.cpp" line="+266"/>
+        <location filename="../qucs/schematic_file.cpp" line="+266"/>
         <location line="+22"/>
         <source>Error</source>
-        <translation type="unfinished">Қате</translation>
+        <translation type="unfinished">خطأ</translation>
     </message>
     <message>
         <location line="-21"/>
@@ -17243,17 +17456,17 @@ Set the admsXml location on the application settings.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+928"/>
+        <location line="+927"/>
         <source>ERROR: Cannot create library file &quot;%s&quot;.</source>
-        <translation>ҚАТЕ:&quot;%s&quot; кітапханалық файлды құру мүмкін емес.</translation>
+        <translation>ERROR: Cannot create library file &quot;%s&quot;.</translation>
     </message>
     <message>
-        <location filename="schematic.cpp" line="+1299"/>
+        <location filename="../qucs/schematic.cpp" line="+1319"/>
         <source>generic</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-1212"/>
+        <location line="-1232"/>
         <source>Edit Text</source>
         <translation type="unfinished"></translation>
     </message>
@@ -17272,261 +17485,263 @@ Edits the text file</source>
     <message>
         <location line="+3"/>
         <source>Edit Schematic</source>
-        <translation type="unfinished">Сұлбаны өзгерту</translation>
+        <translation type="unfinished">تحرير تخطيطي</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Edits the schematic</source>
-        <translation type="unfinished">Сұлбаны өзгерту</translation>
+        <translation type="unfinished">تعديلات التخطيطي</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Edit Schematic
 
 Edits the schematic</source>
-        <translation type="unfinished">Сұлбаны өзгерту
+        <translation type="unfinished">تحرير تخطيطي 
 
-Сұлбаны реттеу</translation>
+تعديلات التخطيطي</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Edit Circuit Symbol</source>
-        <translation type="unfinished">Cұлбаның белгісін өзгерту</translation>
+        <translation type="unfinished">تحرير دائرة الرمز</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Edits the symbol for this schematic</source>
-        <translation type="unfinished">Бұл сұлба үшін белгіні өзгерту</translation>
+        <translation type="unfinished">تعديلات لهذا الرمز التخطيطي</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Edit Circuit Symbol
 
 Edits the symbol for this schematic</source>
-        <translation type="unfinished">Сұлбаның белгісін өзгерту
+        <translation type="unfinished">تحرير دائرة الرمز ذ
 
-Бұл сұлбаның белгісін өзгерту</translation>
+تعديلات لهذا الرمز التخطيطي</translation>
     </message>
 </context>
 <context>
     <name>SearchDialog</name>
     <message>
-        <location filename="dialogs/searchdialog.cpp" line="+41"/>
+        <location filename="../qucs/dialogs/searchdialog.cpp" line="+41"/>
         <source>Text to search for</source>
-        <translation>Іздеу</translation>
+        <translation>للبحث عن نص</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Text to replace with</source>
-        <translation>Алмастыру</translation>
+        <translation>ليحل محل النص مع</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Ask before replacing</source>
-        <translation>Алмастыру алдында сұрау</translation>
+        <translation>نسأل قبل ان يحل محل</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>From cursor position</source>
-        <translation>Курсор позициясынан</translation>
+        <translation>من موضع المؤشر</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Case sensitive</source>
-        <translation>Регистрді ескеру</translation>
+        <translation>القضية الحساسة</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Whole words only</source>
-        <translation>Тек қана тұтас сөздер</translation>
+        <translation>كلمات فقط لكامل</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Search backwards</source>
-        <translation>Кері іздеу</translation>
+        <translation>البحث الوراء</translation>
     </message>
     <message>
         <location line="+5"/>
-        <location filename="../qucs-lib/searchdialog.cpp" line="+64"/>
+        <location filename="../qucs-lib/searchdialog.cpp" line="+63"/>
         <source>Search</source>
-        <translation>Іздеу</translation>
+        <translation>البحث</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Cancel</source>
-        <translation>Артқа қайтару</translation>
+        <translation>إلغاء</translation>
     </message>
     <message>
         <location line="+16"/>
         <source>Replace Text</source>
-        <translation>Мәтінді алмастыру</translation>
+        <translation>استبدال النص</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Search Text</source>
-        <translation>Мәтінді іздеу</translation>
+        <translation>البحث عن النص</translation>
     </message>
     <message>
         <location line="+51"/>
         <location line="+23"/>
         <source>Replace...</source>
-        <translation>Алмастыру...</translation>
+        <translation>استبدال...</translation>
     </message>
     <message>
         <location line="-23"/>
         <source>Replace occurrence ?</source>
-        <translation>Алмастыру орындалды ма?</translation>
+        <translation> استبدال الموجود? </translation>
     </message>
     <message>
         <location line="+18"/>
         <source>Search...</source>
-        <translation>Іздеу...</translation>
+        <translation>البحث عن...</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Search string not found!</source>
-        <translation>Ізделінген жол табылмады!</translation>
+        <translation>بحث سلسلة غير موجود!</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Replaced %1 occurrences!</source>
-        <translation>Алмастыру %1 рет орындалды!</translation>
+        <translation> استبدال %1  الموجود!</translation>
     </message>
     <message>
         <location filename="../qucs-lib/searchdialog.cpp" line="-15"/>
         <source>The search result contains all components whose
 name contains the search string. All libraries
 are included in the search.</source>
-        <translation>Ізделінді жолы бар барлық компоненттер іздеу нәтижесі құрамында бар. Барлық кітапханалар енгізілді.</translation>
+        <translation>نتيجة البحث تعطي جميع مكونات 
+اسم يتضمن النص المطلوب. البحث 
+ليشمل جميع المكتبات.</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Search string:</source>
-        <translation>Іздеу жолы:</translation>
+        <translation>كلمة البحث :</translation>
     </message>
     <message>
         <location line="+13"/>
         <source>Close</source>
-        <translation>Жабу</translation>
+        <translation>غلق</translation>
     </message>
     <message>
         <location line="+89"/>
         <location line="+1"/>
         <source>Search result</source>
-        <translation>Іздеу нәтижесі</translation>
+        <translation>نتيجة البحث</translation>
     </message>
 </context>
 <context>
     <name>SettingsDialog</name>
     <message>
-        <location filename="dialogs/settingsdialog.cpp" line="+45"/>
+        <location filename="../qucs/dialogs/settingsdialog.cpp" line="+44"/>
         <source>Edit File Properties</source>
-        <translation>Файл қасиеттерін өзгерту</translation>
+        <translation>تعديل خصائص الملف</translation>
     </message>
     <message>
         <location line="+16"/>
         <source>Data Display:</source>
-        <translation>Мәліметтерді көру:</translation>
+        <translation>عرض البيانات :</translation>
     </message>
     <message>
         <location line="-5"/>
         <source>Data Set:</source>
-        <translation>Мәліметтерді теру:</translation>
+        <translation>مجموعة من البيانات :</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>open data display after simulation</source>
-        <translation>моделдеуден кейін мәліметтерді көруді ашу</translation>
+        <translation>عرض البيانات المفتوحة بعد المحاكاة</translation>
     </message>
     <message>
         <location line="+13"/>
         <source>Simulation</source>
-        <translation>Моделдеу</translation>
+        <translation>المحاكاة </translation>
     </message>
     <message>
         <location line="+5"/>
         <source>show Grid</source>
-        <translation>Торды көрсету</translation>
+        <translation>إظهر الشبكة</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>horizontal Grid:</source>
-        <translation>Жатық тор:</translation>
+        <translation>  الشبكة أفقية :</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>vertical Grid:</source>
-        <translation>вертикалды тор:</translation>
+        <translation>شبكة العمودية :</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Grid</source>
-        <translation>Тор</translation>
+        <translation>الشبكة</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>no Frame</source>
-        <translation>Қоршауы жоқ</translation>
+        <translation>الإطار غير موجود</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>DIN A5 landscape</source>
-        <translation>A5 ландшафт</translation>
+        <translation>DIN A5 landscape</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>DIN A5 portrait</source>
-        <translation>A5 портрет</translation>
+        <translation>DIN A5 portrait</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>DIN A4 landscape</source>
-        <translation>A4 ландшафт</translation>
+        <translation>DIN A4 landscape</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>DIN A4 portrait</source>
-        <translation>А4 портрет</translation>
+        <translation>DIN A4 portrait</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>DIN A3 landscape</source>
-        <translation>А3 ландшафт</translation>
+        <translation>DIN A3 landscape</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>DIN A3 portrait</source>
-        <translation>А3 портрет</translation>
+        <translation>DIN A3 portrait</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Letter landscape</source>
-        <translation>ландшафт әріп</translation>
+        <translation>Letter landscape</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Letter portrait</source>
-        <translation>портрет әріп</translation>
+        <translation>Letter portrait</translation>
     </message>
     <message>
         <location line="+16"/>
         <source>Frame</source>
-        <translation>Қоршау</translation>
+        <translation>الإطار</translation>
     </message>
     <message>
         <location line="+9"/>
         <source>OK</source>
-        <translation>ИЯ</translation>
+        <translation>موافق</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Apply</source>
-        <translation>Қолдану</translation>
+        <translation>طبق</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Cancel</source>
-        <translation>Артқа қайтару</translation>
+        <translation>إلغاء</translation>
     </message>
     <message>
         <location line="-76"/>
@@ -17542,73 +17757,72 @@ are included in the search.</source>
 <context>
     <name>SimMessage</name>
     <message>
-        <location filename="dialogs/simmessage.cpp" line="+52"/>
+        <location filename="../qucs/dialogs/simmessage.cpp" line="+54"/>
         <source>Qucs Simulation Messages</source>
-        <translation>Qucs моделдеу хабары</translation>
+        <translation>محاكاة Qucs رسائل</translation>
     </message>
     <message>
         <location line="+21"/>
         <location line="+18"/>
         <source>Progress:</source>
-        <translation>Прогресс:</translation>
+        <translation>تقدم :</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Errors and Warnings:</source>
-        <translation>Қателер және ескертулер:</translation>
+        <translation>الاخطاء والانذارات :</translation>
     </message>
     <message>
         <location line="+15"/>
         <source>Goto display page</source>
-        <translation>Көрініс парағына өту</translation>
+        <translation>عرض صفحة</translation>
     </message>
     <message>
         <location line="+5"/>
         <location line="+15"/>
         <source>Abort simulation</source>
-        <translation>Моделдеуді тоқтату</translation>
+        <translation>إحباط المحاكاة</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Starting new simulation on %1 at %2</source>
-        <translation>Жаңа моделдеуді %1 %2 ден бастау</translation>
+        <translation>المحاكاة الجديدة ابتداء من 1 في المئة عن 2 ٪</translation>
     </message>
     <message>
         <location line="+9"/>
         <source>ERROR: Simulator is still running!</source>
-        <translation>ҚАТЕ: Симулятор әлі жұмыс істеп тұр!</translation>
+        <translation>خطأ : لا يزال يركض المحاكاة!</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>creating netlist... </source>
-        <translation>сұлбаны құру...</translation>
+        <translation>إنشاء netlist...</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>ERROR: Cannot write netlist file!</source>
-        <translation>ҚАТЕ: Сұлбалық файлды жазу мүмкін емес!</translation>
+        <translation>خطأ : لا يمكن الكتابة netlist الملف!</translation>
     </message>
     <message>
         <location line="+74"/>
         <source>ERROR: Cannot open SPICE file &quot;%1&quot;.</source>
-        <translation>ҚАТЕ: SPICE-файлды &quot;%1&quot; ашу мүмкін емес.</translation>
+        <translation>خطأ : لا يمكن فتح التوابل الملف &quot;٪ 1&quot;.</translation>
     </message>
     <message>
-        <location line="+20"/>
         <source>ERROR: Cannot start QucsConv!</source>
-        <translation>ҚАТЕ: QucsConv іске қосу мүмкін емес!</translation>
+        <translation type="obsolete">! QucsConv خطأ : لايمكن بدأ </translation>
     </message>
     <message>
-        <location line="+103"/>
+        <location line="+123"/>
         <location line="+101"/>
         <source>done.</source>
-        <translation>дайын.</translation>
+        <translation>فعل.</translation>
     </message>
     <message>
         <location line="+20"/>
         <location line="+24"/>
         <source>Error</source>
-        <translation type="unfinished">Қате</translation>
+        <translation type="unfinished">خطأ</translation>
     </message>
     <message>
         <location line="-24"/>
@@ -17624,53 +17838,58 @@ are included in the search.</source>
     <message>
         <location line="+11"/>
         <source>ERROR: Cannot start simulator!</source>
-        <translation>ҚАТЕ: Симуляторды іске қосу мүмкін емес!</translation>
+        <translation>خطأ : لا يمكن البدء في محاكاة!</translation>
     </message>
     <message>
         <location line="+91"/>
         <source>Close window</source>
-        <translation>Терезені жабу</translation>
+        <translation>إغلاق النافذة</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Simulation ended on %1 at %2</source>
-        <translation>Моделдеуді %1 %2 де аяқтау</translation>
+        <translation>المحاكاة وانتهت في 1 ٪ 2 ٪</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Ready.</source>
-        <translation>Дайын.</translation>
+        <translation>جاهز.</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Errors occurred during simulation on %1 at %2</source>
-        <translation>Моделдеу кезінде %1 %2 де қате кетті</translation>
+        <translation>الأخطاء التي وقعت خلال المحاكاة على ٪ 1 في ٪ 2</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Aborted.</source>
-        <translation>Үзілді.</translation>
+        <translation>أجهضت.</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+6"/>
         <source>Output:
 -------</source>
-        <translation>Нәтиже: ---------</translation>
+        <translation>يحرر:------</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Errors:
 -------</source>
-        <translation>Қателер: --------</translation>
+        <translation>خطأ:-------</translation>
     </message>
     <message>
-        <location line="-315"/>
+        <location line="-314"/>
         <location line="+7"/>
         <source>ERROR: Cannot create VHDL directory &quot;%1&quot;!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="-150"/>
+        <source>SIM ERROR: Cannot start QucsConv!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+158"/>
         <source>ERROR: Cannot create &quot;%1&quot;!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -17683,151 +17902,151 @@ are included in the search.</source>
 <context>
     <name>SpiceDialog</name>
     <message>
-        <location filename="components/spicedialog.cpp" line="+49"/>
+        <location filename="../qucs/components/spicedialog.cpp" line="+47"/>
         <source>Edit SPICE Component Properties</source>
-        <translation>Spice компонентінің қасиеттерін өзгерту</translation>
+        <translation>تغيير خصائص عنصر من  Spice</translation>
     </message>
     <message>
-        <location line="+17"/>
+        <location line="+21"/>
         <source>Name:</source>
-        <translation>Аты:</translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>File:</source>
-        <translation>Файл:</translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>Browse</source>
-        <translation>Көріп шығу</translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Edit</source>
-        <translation>Өзгерту</translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>show file name in schematic</source>
-        <translation>файл атын сұлбада көрсету</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>include SPICE simulations</source>
-        <translation>Spice моделі құрамында бар</translation>
+        <translation>الاسم :</translation>
     </message>
     <message>
         <location line="+10"/>
+        <source>File:</source>
+        <translation>ملف:</translation>
+    </message>
+    <message>
+        <location line="-3"/>
+        <source>Browse</source>
+        <translation>تصفح</translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Edit</source>
+        <translation>تحرير</translation>
+    </message>
+    <message>
+        <location line="-1"/>
+        <source>show file name in schematic</source>
+        <translation>عرض اسم الملف في المخطط</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>include SPICE simulations</source>
+        <translation>تشمل عمليات Spice</translation>
+    </message>
+    <message>
+        <location line="+9"/>
         <source>preprocessor</source>
-        <translation>процессор алды</translation>
+        <translation>معد</translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+11"/>
         <source>SPICE net nodes:</source>
-        <translation>SPICE тізбегінің түйіндері:</translation>
+        <translation>Spice عقدة  :</translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+15"/>
         <source>Add &gt;&gt;</source>
-        <translation>Қосу &gt;&gt;</translation>
+        <translation>إضافة&gt;&gt;</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>&lt;&lt; Remove</source>
-        <translation>&lt;&lt; Жою</translation>
+        <translation>&lt;&lt;إزالة</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="-16"/>
         <source>Component ports:</source>
-        <translation>Компонент порттары:</translation>
+        <translation>العنصر الموانئ :</translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+28"/>
         <source>OK</source>
-        <translation>ИЯ</translation>
+        <translation>موافق</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+1"/>
         <source>Apply</source>
-        <translation>Қолдану</translation>
+        <translation>طبق</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+1"/>
         <source>Cancel</source>
-        <translation>Жоқ</translation>
+        <translation>إلغاء</translation>
     </message>
     <message>
-        <location line="+128"/>
+        <location line="+141"/>
         <source>SPICE netlist</source>
-        <translation>SPICE сұлбасы</translation>
+        <translation>SPICE netlist</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>All Files</source>
-        <translation>Барлық файлдар</translation>
+        <translation>جميع الملفات</translation>
     </message>
     <message>
         <location line="-3"/>
         <source>Select a file</source>
-        <translation>Файлды таңдау</translation>
+        <translation>إختر ملف</translation>
     </message>
     <message>
-        <location line="+88"/>
-        <location line="+59"/>
+        <location line="+93"/>
+        <location line="+72"/>
         <source>Info</source>
-        <translation>Ақпарат</translation>
+        <translation>معلومات</translation>
     </message>
     <message>
-        <location line="-58"/>
+        <location line="-71"/>
         <source>Preprocessing SPICE file &quot;%1&quot;.</source>
-        <translation>SPICE файл &quot;%1&quot;өңделді.</translation>
+        <translation>تجهيز ملف  SPICE &quot;&quot;%1 .</translation>
     </message>
     <message>
         <location line="+12"/>
-        <location line="+10"/>
-        <location line="+48"/>
+        <location line="+11"/>
+        <location line="+61"/>
         <source>Error</source>
-        <translation>Қате</translation>
+        <translation>خطأ</translation>
     </message>
     <message>
-        <location line="-57"/>
+        <location line="-71"/>
         <source>Cannot save preprocessed SPICE file &quot;%1&quot;.</source>
-        <translation>Өңделген SPICE &quot;%1&quot; файлды сақтау мүмкін емес .</translation>
+        <translation>تجهيز ملف  SPICE &quot;&quot;%1 .</translation>
     </message>
     <message>
-        <location line="+10"/>
-        <location line="+48"/>
+        <location line="+11"/>
+        <location line="+61"/>
         <source>Cannot execute &quot;%1&quot;.</source>
-        <translation>Орындалған жоқ&quot;%1&quot;.</translation>
+        <translation>لا نستطيع تنفيذ  &quot;%1.</translation>
     </message>
     <message>
-        <location line="-28"/>
+        <location line="-41"/>
         <source>SPICE Preprocessor Error</source>
-        <translation>SPICE препроцесс қатесі</translation>
+        <translation>SPICE Preprocessor Error</translation>
     </message>
     <message>
-        <location line="+16"/>
+        <location line="+28"/>
         <source>Converting SPICE file &quot;%1&quot;.</source>
-        <translation>SPICE файл &quot;%1&quot;түрленді.</translation>
+        <translation>تحويل ملف  SPICE &quot;1%&quot;.</translation>
     </message>
     <message>
-        <location line="+21"/>
+        <location line="+20"/>
         <source>QucsConv Error</source>
-        <translation>Qucs түрлендірушінің қатесі</translation>
+        <translation>خطأ QucsConv</translation>
     </message>
 </context>
 <context>
     <name>SweepDialog</name>
     <message>
-        <location filename="dialogs/sweepdialog.cpp" line="+80"/>
+        <location filename="../qucs/dialogs/sweepdialog.cpp" line="+79"/>
         <source>Bias Points</source>
-        <translation>Жұмыс нуктелері</translation>
+        <translation>التحيز نقطة</translation>
     </message>
     <message>
         <location line="+30"/>
         <source>Close</source>
-        <translation>Жабу</translation>
+        <translation>غلق</translation>
     </message>
 </context>
 <context>
@@ -17835,30 +18054,30 @@ are included in the search.</source>
     <message>
         <location filename="../qucs-lib/symbolwidget.cpp" line="+45"/>
         <source>Symbol:</source>
-        <translation>Белгі:</translation>
+        <translation>رمز :</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>! Drag n&apos;Drop me !</source>
-        <translation>Менің орнымды ауыстыр !</translation>
+        <translation>! Drag n&apos;Drop me !</translation>
     </message>
 </context>
 <context>
     <name>TextDoc</name>
     <message>
         <source>Error</source>
-        <translation type="obsolete">Қате</translation>
+        <translation type="obsolete">خطأ</translation>
     </message>
     <message>
         <source>There is no selection!</source>
-        <translation type="obsolete">Ерекшелеу жоқ!</translation>
+        <translation type="obsolete">ليس هناك اختيار!</translation>
     </message>
     <message>
         <source>Page %1 of %2</source>
-        <translation type="obsolete">%2 ішінде %1 парақ</translation>
+        <translation type="obsolete">صفحة ٪ 1 من 2 ٪</translation>
     </message>
     <message>
-        <location filename="textdoc.cpp" line="+178"/>
+        <location filename="../qucs/textdoc.cpp" line="+177"/>
         <source>Edit Text Symbol</source>
         <translation type="unfinished"></translation>
     </message>
@@ -17877,21 +18096,21 @@ Edits the symbol for this text document</source>
     <message>
         <location line="+3"/>
         <source>VHDL entity</source>
-        <translation type="unfinished">VHDL объектісі</translation>
+        <translation type="unfinished">قيمة VHDL </translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Inserts skeleton of VHDL entity</source>
-        <translation type="unfinished">VHDL объектінің негізін енгізеді</translation>
+        <translation type="unfinished">إضافة هيكل قيمة VHDL    </translation>
     </message>
     <message>
         <location line="+2"/>
         <source>VHDL entity
 
 Inserts the skeleton of a VHDL entity</source>
-        <translation type="unfinished">VHDL объектісі
+        <translation type="unfinished">قيمة VHDL 
 
-VHDL объектісінің негізін қояды</translation>
+إضافة هيكل قيمة VHDL</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -17931,47 +18150,47 @@ Inserts the skeleton of a Octave function</source>
 <context>
     <name>VASettingsDialog</name>
     <message>
-        <location filename="dialogs/vasettingsdialog.cpp" line="+43"/>
+        <location filename="../qucs/dialogs/vasettingsdialog.cpp" line="+43"/>
         <source>Document Settings</source>
-        <translation type="unfinished">Құжат реттемесі</translation>
+        <translation type="unfinished">ضبط وثائق</translation>
     </message>
     <message>
         <source>Digital Simulation Settings</source>
-        <translation type="obsolete">Цифрлық моделдеу реттемесі</translation>
+        <translation type="obsolete">المحاكاة الرقمية إعدادات</translation>
     </message>
     <message>
         <source>Simulation</source>
-        <translation type="obsolete">Моделдеу</translation>
+        <translation type="obsolete">المحاكاة </translation>
     </message>
     <message>
         <source>Duration of Simulation:</source>
-        <translation type="obsolete">Моделдеу ұзақтығы:</translation>
+        <translation type="obsolete">مدة المحاكاة :</translation>
     </message>
     <message>
         <source>Precompile Module</source>
-        <translation type="obsolete">Компиляциялық модуль</translation>
+        <translation type="obsolete">Precompile نميطة</translation>
     </message>
     <message>
         <source>Library Name:</source>
-        <translation type="obsolete">Кітапхана аты:</translation>
+        <translation type="obsolete">مكتبة الاسم :</translation>
     </message>
     <message>
         <source>Libraries:</source>
-        <translation type="obsolete">Кітапханалар:</translation>
+        <translation type="obsolete">مكتبات :</translation>
     </message>
     <message>
         <location line="+107"/>
         <source>Ok</source>
-        <translation type="unfinished">ИЯ</translation>
+        <translation type="unfinished">موافق</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">إلغاء</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="obsolete">Қате</translation>
+        <translation type="obsolete">خطأ</translation>
     </message>
     <message>
         <location line="-100"/>
@@ -17981,7 +18200,7 @@ Inserts the skeleton of a Octave function</source>
     <message>
         <location line="+21"/>
         <source>Browse</source>
-        <translation type="unfinished">Көріп шығу</translation>
+        <translation type="unfinished">تصفح</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -18001,7 +18220,7 @@ Inserts the skeleton of a Octave function</source>
     <message>
         <location line="+10"/>
         <source>Description:</source>
-        <translation type="unfinished">Бейнелеу:</translation>
+        <translation type="unfinished">وصف:</translation>
     </message>
     <message>
         <location line="+9"/>
@@ -18041,7 +18260,7 @@ Inserts the skeleton of a Octave function</source>
     <message>
         <location line="+1"/>
         <source>Any file</source>
-        <translation type="unfinished">Басқа файлдар</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+1"/>

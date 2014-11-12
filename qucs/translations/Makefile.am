@@ -1,6 +1,6 @@
 ## Process this file with automake to produce Makefile.in
 #
-# qucs/diagrams/Makefile.am
+# translations/Makefile.am
 #
 # Automake input file.
 #
@@ -27,22 +27,31 @@ TRANSLATIONS = qucs_de.ts qucs_pl.ts qucs_fr.ts qucs_it.ts qucs_ro.ts \
   qucs_pt_BR.ts qucs_pt_PT.ts qucs_es.ts qucs_jp.ts qucs_hu.ts qucs_he.ts \
   qucs_sv.ts qucs_tr.ts qucs_uk.ts qucs_ru.ts qucs_cs.ts qucs_ca.ts \
   qucs_ar.ts qucs_kk.ts
+
 GENTRANSLATIONS = qtgeneric_untranslated.ts qtgeneric_de.ts qtgeneric_fr.ts \
   qtgeneric_es.ts qtgeneric_ro.ts qtgeneric_jp.ts qtgeneric_hu.ts \
   qtgeneric_it.ts qtgeneric_he.ts qtgeneric_sv.ts qtgeneric_pl.ts \
   qtgeneric_tr.ts qtgeneric_uk.ts qtgeneric_ru.ts qtgeneric_cs.ts \
   qtgeneric_ca.ts qtgeneric_ar.ts qtgeneric_kk.ts
+
 TRANSFILES = $(TRANSLATIONS:.ts=.qm)
 
 qucs_.ts: $(qucs_SOURCES)
 	@echo "Updating translations...";
 	@list='$(TRANSLATIONS)'; for file in $$list; do \
-	  $(LUPDATE) `$(PATHXFORM) $(srcdir)/*.cpp $(srcdir)/paintings/*.cpp \
-	  $(srcdir)/diagrams/*.cpp $(srcdir)/components/*.cpp \
-	  $(srcdir)/dialogs/*.cpp  $(top_srcdir)/qucs-help/*.cpp \
-	  $(top_srcdir)/qucs-edit/*.cpp $(top_srcdir)/qucs-filter/*.cpp \
-	  $(top_srcdir)/qucs-transcalc/*.cpp $(top_srcdir)/qucs-lib/*.cpp \
-	  $(top_srcdir)/qucs-attenuator/*.cpp` \
+	  $(LUPDATE) `$(PATHXFORM) \
+	  $(top_srcdir)/qucs/*.cpp \
+	  $(top_srcdir)/qucs/paintings/*.cpp \
+	  $(top_srcdir)/qucs/diagrams/*.cpp \
+	  $(top_srcdir)/qucs/components/*.cpp \
+	  $(top_srcdir)/qucs/dialogs/*.cpp  \
+	  $(top_srcdir)/qucs-help/*.cpp \
+	  $(top_srcdir)/qucs-edit/*.cpp \
+	  $(top_srcdir)/qucs-filter/*.cpp \
+	  $(top_srcdir)/qucs-transcalc/*.cpp \
+	  $(top_srcdir)/qucs-lib/*.cpp \
+	  $(top_srcdir)/qucs-attenuator/*.cpp \
+	  $(top_srcdir)/qucs-rescodes/*.cpp` \
 	  -locations relative -ts $(srcdir)/$$file; \
 	done
 
