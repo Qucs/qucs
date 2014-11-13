@@ -18,6 +18,7 @@
 #include "qucs.h"
 #include "main.h"
 #include "schematic.h"
+#include "setting.h"
 
 #include <QTextStream>
 #include <QRegExp>
@@ -92,7 +93,7 @@ QString Verilog_File::loadFile()
   QString s, File(Props.getFirst()->Value);
   QFileInfo Info(File);
   if(Info.isRelative())
-    File = QucsSettings.QucsWorkDir.filePath(File);
+    File = QDir(SETTINGS->get("path", "QucsWorkDir").toString()).filePath(File);
 
   QFile f(File);
   if(!f.open(QIODevice::ReadOnly))
@@ -111,7 +112,7 @@ QString Verilog_File::loadFile()
 // -------------------------------------------------------
 void Verilog_File::createSymbol()
 {
-  QFontMetrics  metrics(QucsSettings.font);   // get size of text
+  QFontMetrics  metrics(SETTINGS->get("general", "font").value<QFont>());   // get size of text
   int fHeight = metrics.lineSpacing();
 
   int No = 0;

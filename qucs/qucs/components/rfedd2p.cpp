@@ -17,6 +17,7 @@
 #include "rfedd2p.h"
 #include "main.h"
 #include "schematic.h"
+#include "setting.h"
 
 #include <QFileInfo>
 
@@ -106,7 +107,7 @@ QString RFedd2P::netlist()
 // -------------------------------------------------------
 void RFedd2P::createSymbol()
 {
-  QFontMetrics  metrics(QucsSettings.font);   // get size of text
+  QFontMetrics  metrics(SETTINGS->get("general", "font").value<QFont>());   // get size of text
   int fHeight = metrics.lineSpacing();
   int w, i;
   QString tmp;

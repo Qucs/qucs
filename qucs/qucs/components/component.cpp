@@ -24,6 +24,7 @@
 #include "schematic.h"
 #include "viewpainter.h"
 #include "module.h"
+#include "setting.h"
 
 #include <QPen>
 #include <QString>
@@ -142,7 +143,7 @@ int Component::getTextSelected(int x_, int y_, float Corr)
   x_ -= tx;
   y_ -= ty;
   int w, dy = int(float(y_) * Corr);  // correction for font scaling
-  QFontMetrics  metrics(QucsSettings.font);
+  QFontMetrics  metrics(SETTINGS->get("general", "font").value<QFont>());
   if(showName) {
     w  = metrics.width(Name);
     if(dy < 1) {
@@ -315,7 +316,7 @@ void Component::paintScheme(Schematic *p)
 
     float Scale =
           ((Schematic*)QucsMain->DocumentTab->currentPage())->Scale;
-    newFont.setPointSizeFloat(float(Scale) * QucsSettings.largeFontSize);
+    newFont.setPointSizeFloat(float(Scale) * SETTINGS->get("general", "largeFontSize").toFloat());
     newFont.setWeight(QFont::DemiBold);
     QFontMetrics  metrics(newFont);
 
@@ -450,7 +451,7 @@ void Component::rotate()
   tmp = -tx;    // rotate text position
   tx  = ty;
   ty  = tmp;
-  QFontMetrics  metrics(QucsSettings.font);   // get size of text
+  QFontMetrics  metrics(SETTINGS->get("general", "font").value<QFont>());   // get size of text
   dx = dy = 0;
   if(showName) {
     dx = metrics.width(Name);
@@ -507,7 +508,7 @@ void Component::mirrorX()
   foreach(Area *pa, Ellips)
     pa->y = -pa->y - pa->h;
 
-  QFont f = QucsSettings.font;
+  QFont f = SETTINGS->get("general", "font").value<QFont>();
   // mirror all text
   foreach(Text *pt, Texts) {
     f.setPointSizeFloat(pt->Size);
@@ -519,7 +520,7 @@ void Component::mirrorX()
   int tmp = y1;
   y1  = -y2; y2 = -tmp;   // mirror boundings
 
-  QFontMetrics  metrics(QucsSettings.font);   // get size of text
+  QFontMetrics  metrics(SETTINGS->get("general", "font").value<QFont>());   // get size of text
   int dy = 0;
   if(showName)
     dy = metrics.lineSpacing();   // for "Name"
@@ -567,7 +568,7 @@ void Component::mirrorY()
     pa->x = -pa->x - pa->w;
 
   int tmp;
-  QFont f = QucsSettings.font;
+  QFont f = SETTINGS->get("general", "font").value<QFont>();
   // mirror all text
   foreach(Text *pt, Texts) {
     f.setPointSizeFloat(pt->Size);
@@ -579,7 +580,7 @@ void Component::mirrorY()
   tmp = x1;
   x1  = -x2; x2 = -tmp;   // mirror boundings
 
-  QFontMetrics  metrics(QucsSettings.font);   // get size of text
+  QFontMetrics  metrics(SETTINGS->get("general", "font").value<QFont>());   // get size of text
   int dx = 0;
   if(showName)
     dx = metrics.width(Name);
@@ -1073,7 +1074,7 @@ int Component::analyseLine(const QString& Row, int numProps)
                           float(cos(float(i4)*M_PI/180.0)),
                           float(sin(float(i4)*M_PI/180.0))));
 
-    QFont Font(QucsSettings.font);
+    QFont Font(SETTINGS->get("general", "font").value<QFont>());
     Font.setPointSizeFloat(float(i3));
     QFontMetrics  metrics(Font);
     QSize r = metrics.size(0, s);    // get size of text

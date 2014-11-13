@@ -33,6 +33,7 @@
 #include "diagrams/tabdiagram.h"
 #include "diagrams/timingdiagram.h"
 #include "dialogs/labeldialog.h"
+#include "setting.h"
 
 #include <QTextStream>
 #include <Q3PtrList>
@@ -993,7 +994,7 @@ void MouseActions::MPressSelect(Schematic *Doc, QMouseEvent *Event, float fX, fl
       return;
 
     case isNode:
-      if (QucsSettings.NodeWiring)
+      if (SETTINGS->get("bool", "NodeWiring").toBool())
       {
         MAx1 = 0;   // paint wire corner first up, then left/right
         MAx3 = focusElement->cx;  // works even if node is not on grid

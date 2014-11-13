@@ -19,6 +19,7 @@
 #include "main.h"
 #include "qucs.h"
 #include "schematic.h"
+#include "setting.h"
 
 #include <cmath>
 
@@ -511,7 +512,7 @@ void ComponentDialog::slotSelectProperty(QTableWidgetItem *item)
       List = List.split(',',str);
     }
 
-    QFontMetrics  metrics(QucsSettings.font);   // get size of text
+    QFontMetrics  metrics(SETTINGS->get("general", "font").value<QFont>());   // get size of text
     while(metrics.width(desc) > 270) {  // if description too long, cut it
       if (desc.findRev(' ') != -1)
         desc = desc.left(desc.findRev(' ', -1)) + "....";
@@ -924,7 +925,7 @@ void ComponentDialog::slotBrowseFile()
   QString s = QFileDialog::getOpenFileName (
           this,
           tr("Select a file"),
-          QucsSettings.QucsWorkDir.path(),
+          QDir(SETTINGS->get("path", "QucsWorkDir").toString()).path(),
           tr("All Files")+" (*.*);;"
             + tr("Touchstone files") + " (*.s?p);;"
             + tr("CSV files") + " (*.csv);;"
@@ -935,8 +936,8 @@ void ComponentDialog::slotBrowseFile()
   if(!s.isEmpty()) {
     // snip path if file in current directory
     QFileInfo file(s);
-    if(QucsSettings.QucsWorkDir.exists(file.fileName()) &&
-       QucsSettings.QucsWorkDir.absPath() == file.dirPath(true)) s = file.fileName();
+    if(QDir(SETTINGS->get("path", "QucsWorkDir").toString()).exists(file.fileName()) &&
+       QDir(SETTINGS->get("path", "QucsWorkDir").toString()).absPath() == file.dirPath(true)) s = file.fileName();
     edit->setText(s);
   }
   /* FIX
@@ -946,7 +947,7 @@ void ComponentDialog::slotBrowseFile()
 // -------------------------------------------------------------------------
 void ComponentDialog::slotEditFile()
 {
-  Doc->App->editFile(QucsSettings.QucsWorkDir.filePath(edit->text()));
+  Doc->App->editFile(QDir(SETTINGS->get("path", "QucsWorkDir").toString()).filePath(edit->text()));
 }
 
 /*!

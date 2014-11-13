@@ -22,6 +22,7 @@
 #include "main.h"
 #include "qucs.h"
 #include "octave_window.h"
+#include "setting.h"
 
 #include <QAction>
 #include <QShortcut>
@@ -811,7 +812,7 @@ void QucsApp::initMenuBar()
 
 
   //Fill submenu's with filenames of PDF documents
-  QDir TechnicalDir = QDir(QucsSettings.DocDir.replace('\\','/'));
+  QDir TechnicalDir = QDir(SETTINGS->get("path", "DocDir").toString().replace('\\','/'));
 
   if(TechnicalDir.cd("technical"))
   {
@@ -832,7 +833,7 @@ void QucsApp::initMenuBar()
   }
 
 //Fill submenu's with filenames of PDF documents
-  QDir ReportDir = QDir(QucsSettings.DocDir.replace('\\','/'));
+  QDir ReportDir = QDir(SETTINGS->get("path", "DocDir").toString().replace('\\','/'));
   if(ReportDir.cd("report"))
   {
     helpReport = new QMenu(tr("Technical &Reports"));
@@ -851,7 +852,7 @@ void QucsApp::initMenuBar()
   }
 
 //Fill submenu's with filenames of PDF documents
-  QDir TutorialDir = QDir(QucsSettings.DocDir.replace('\\','/'));
+  QDir TutorialDir = QDir(SETTINGS->get("path", "DocDir").toString().replace('\\','/'));
   if(TutorialDir.cd("tutorial"))
   {
     helpTutorial = new QMenu(tr("T&utorials"));

@@ -40,6 +40,7 @@ using namespace std;
 #include "schematic.h"
 #include "components/opt_sim.h"
 #include "components/vhdlfile.h"
+#include "setting.h"
 
 #ifdef __MINGW32__
 #define executableSuffix ".exe"
@@ -151,7 +152,7 @@ bool SimMessage::startProcess()
 
   Collect.clear();  // clear list for NodeSets, SPICE components etc.
   ProgText->insert(tr("creating netlist... "));
-  NetlistFile.setName(QucsSettings.QucsHomeDir.filePath("netlist.txt"));
+  NetlistFile.setName(QDir(SETTINGS->get("path", "QucsHomeDir").toString()).filePath("netlist.txt"));
    if(!NetlistFile.open(QIODevice::WriteOnly)) {
     ErrText->insert(tr("ERROR: Cannot write netlist file!"));
     FinishSimulation(-1);
@@ -216,14 +217,14 @@ void SimMessage::nextSPICE()
 
   QString prog;
   QStringList com;
-  prog = QucsSettings.BinDir + "qucsconv" + executableSuffix;
+  prog = SETTINGS->get("path", "BinDir").toString() + "qucsconv" + executableSuffix;
   if(makeSubcircuit)
     com << "-g" << "_ref";
   com << "-if" << "spice" << "-of" << "qucs";
 
   QFile SpiceFile;
   if(FileName.find(QDir::separator()) < 0)  // add path ?
-    SpiceFile.setName(QucsSettings.QucsWorkDir.path() + QDir::separator() + FileName);
+    SpiceFile.setName(QDir(SETTINGS->get("path", "QucsWorkDir").toString()).path() + QDir::separator() + FileName);
   else
     SpiceFile.setName(FileName);
   if(!SpiceFile.open(QIODevice::ReadOnly)) {
@@ -329,7 +330,8 @@ void SimMessage::startSimulator()
   QString SimTime;
   QString Program;
   QStringList Arguments;
-  QString SimPath = QDir::convertSeparators (QucsSettings.QucsHomeDir.absPath());
+  QString SimPath = QDir::convertSeparators(
+      QDir(SETTINGS->get("path", "QucsHomeDir").toString()).absolutePath());
 #ifdef __MINGW32__
   QString QucsDigiLib = "qucsdigilib.bat";
   QString QucsDigi = "qucsdigi.bat";
@@ -374,10 +376,10 @@ void SimMessage::startSimulator()
         libs = "-c,-l" + libs;
       }
 #endif
-      Program = pathName(QucsSettings.BinDir + QucsDigi);
-      Arguments  << QucsSettings.QucsHomeDir.filePath("netlist.txt")
+      Program = pathName(SETTINGS->get("path", "BinDir").toString() + QucsDigi);
+      Arguments  << QDir(SETTINGS->get("path", "QucsHomeDir").toString()).filePath("netlist.txt")
                  << DataSet << SimTime << pathName(SimPath)
-                 << pathName(QucsSettings.BinDir) << libs;
+                 << pathName(SETTINGS->get("path", "BinDir").toString()) << libs;
     }
     // Module.
     else {
@@ -386,7 +388,7 @@ void SimMessage::startSimulator()
       QString entity = VInfo.EntityName.lower();
       QString lib = Doc->Library.lower();
       if (lib.isEmpty()) lib = "work";
-      QString dir = QDir::convertSeparators (QucsSettings.QucsHomeDir.path());
+      QString dir = QDir::convertSeparators (QDir(SETTINGS->get("path", "QucsHomeDir").toString()).path());
       QDir vhdlDir(dir);
       if(!vhdlDir.exists("vhdl"))
 	if(!vhdlDir.mkdir("vhdl")) {
@@ -411,8 +413,8 @@ void SimMessage::startSimulator()
       }
       destFile.writeBlock(text.ascii(), text.length());
       destFile.close();
-      Program = pathName(QucsSettings.BinDir + QucsDigiLib);
-      Arguments << QucsSettings.QucsHomeDir.filePath("netlist.txt")
+      Program = pathName(SETTINGS->get("path", "BinDir").toString() + QucsDigiLib);
+      Arguments << QDir(SETTINGS->get("path", "QucsHomeDir").toString()).filePath("netlist.txt")
                 << pathName(SimPath)
                 << entity
                 << lib;
@@ -488,7 +490,7 @@ void SimMessage::startSimulator()
 
 
             // \todo remvoe the command line arguments? use only netlist annotation?
-            //Arguments << "-p" << QucsSettings.QucsWorkDir.absolutePath()
+            //Arguments << "-p" << QDir(SETTINGS->get("path", "QucsWorkDir").toString()).absolutePath()
             //          << "-m" << usedComponents;
             //qDebug() << "Command :" << Program << Arguments.join(" ");
 
@@ -499,7 +501,7 @@ void SimMessage::startSimulator()
             else {
                QTextStream out(&NetlistFile);
                out << "\n";
-               out << "# --path=" << QucsSettings.QucsWorkDir.absolutePath() << "\n";
+               out << "# --path=" << QDir(SETTINGS->get("path", "QucsWorkDir").toString()).absolutePath() << "\n";
                out << "# --module=" << usedComponents.join(" ") << "\n";
 
                NetlistFile.close();
@@ -510,41 +512,41 @@ void SimMessage::startSimulator()
       if((SimOpt = findOptimization((Schematic*)DocWidget))) {
 	    ((Optimize_Sim*)SimOpt)->createASCOnetlist();
 
-        Program = QucsSettings.AscoBinDir.canonicalPath();
-        Program = QDir::toNativeSeparators(Program+"/"+"asco"+QString(executableSuffix));
-        Arguments << "-qucs" << QucsSettings.QucsHomeDir.filePath("asco_netlist.txt")
+        Program = QDir(SETTINGS->get("path", "AscoBinDir").toString()).canonicalPath();
+        Program = QDir::toNativeSeparators(Program+"/asco"+QString(executableSuffix));
+        Arguments << "-qucs" << QDir(SETTINGS->get("path", "QucsHomeDir").toString()).filePath("asco_netlist.txt")
                   << "-o" << "asco_out";
       }
       else {
-        Program = QucsSettings.BinDir + "qucsator" + executableSuffix;
+        Program = SETTINGS->get("path", "BinDir").toString() + "qucsator" + executableSuffix;
         Arguments << "-b" << "-g" << "-i"
-                  << QucsSettings.QucsHomeDir.filePath("netlist.txt")
+                  << QDir(SETTINGS->get("path", "QucsHomeDir").toString()).filePath("netlist.txt")
                   << "-o" << DataSet;
       }
     }
     else {
       if (isVerilog) {
-          Program = QDir::toNativeSeparators(QucsSettings.BinDir + QucsVeri);
-          Arguments << QDir::toNativeSeparators(QucsSettings.QucsHomeDir.filePath("netlist.txt"))
+          Program = QDir::toNativeSeparators(SETTINGS->get("path", "BinDir").toString() + QucsVeri);
+          Arguments << QDir::toNativeSeparators(QDir(SETTINGS->get("path", "QucsHomeDir").toString()).filePath("netlist.txt"))
                     << DataSet
                     << SimTime
                     << QDir::toNativeSeparators(SimPath)
-                    << QDir::toNativeSeparators(QucsSettings.BinDir)
+                    << QDir::toNativeSeparators(SETTINGS->get("path", "BinDir").toString())
                     << "-c";
       } else {
 /// \todo \bug error: unrecognized command line option '-Wl'
 #ifdef __MINGW32__
-    Program = QDir::toNativeSeparators(pathName(QucsSettings.BinDir + QucsDigi));
-    Arguments << QDir::toNativeSeparators(QucsSettings.QucsHomeDir.filePath("netlist.txt"))
+    Program = QDir::toNativeSeparators(pathName(SETTINGS->get("path", "BinDir").toString() + QucsDigi));
+    Arguments << QDir::toNativeSeparators(QDir(SETTINGS->get("path", "QucsHomeDir").toString()).filePath("netlist.txt"))
               << DataSet
               << SimTime
               << QDir::toNativeSeparators(SimPath)
-              << QDir::toNativeSeparators(QucsSettings.BinDir) << "-Wall" << "-c";
+              << QDir::toNativeSeparators(SETTINGS->get("path", "BinDir").toString()) << "-Wall" << "-c";
 #else
-    Program = QDir::toNativeSeparators(pathName(QucsSettings.BinDir + QucsDigi));
-    Arguments << QucsSettings.QucsHomeDir.filePath("netlist.txt")
+    Program = QDir::toNativeSeparators(pathName(SETTINGS->get("path", "BinDir").toString() + QucsDigi));
+    Arguments << QDir(SETTINGS->get("path", "QucsHomeDir").toString()).filePath("netlist.txt")
               << DataSet << SimTime << pathName(SimPath)
-		      << pathName(QucsSettings.BinDir) << "-Wall" << "-c";
+		      << pathName(SETTINGS->get("path", "BinDir").toString()) << "-Wall" << "-c";
 
 #endif
       }
@@ -572,7 +574,7 @@ void SimMessage::startSimulator()
   // append process PATH
   QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
   // insert Qucs bin dir, so ASCO can find qucsator
-  env.insert("PATH", env.value("PATH") + sep + QucsSettings.BinDir );
+  env.insert("PATH", env.value("PATH") + sep + SETTINGS->get("path", "BinDir").toString() );
   SimProcess.setProcessEnvironment(env);
   QFile file(Program);
   if ( !file.exists() ){
@@ -698,7 +700,7 @@ void SimMessage::FinishSimulation(int Status)
     ProgText->insert("\n" + txt + "\n" + tr("Aborted.") + "\n");
   }
 
-  QFile file(QucsSettings.QucsHomeDir.filePath("log.txt"));  // save simulator messages
+  QFile file(QDir(SETTINGS->get("path", "QucsHomeDir").toString()).filePath("log.txt"));  // save simulator messages
   if(file.open(QIODevice::WriteOnly)) {
     QTextStream stream(&file);
     stream << tr("Output:\n-------") << "\n\n";
@@ -712,7 +714,7 @@ void SimMessage::FinishSimulation(int Status)
 
   if(Status == 0) {
     if(SimOpt) { // save optimization data
-      QFile ifile(QucsSettings.QucsHomeDir.filePath("asco_out.dat"));
+      QFile ifile(QDir(SETTINGS->get("path", "QucsHomeDir").toString()).filePath("asco_out.dat"));
       QFile ofile(DataSet);
       if(ifile.open(QIODevice::ReadOnly)) {
 	if(ofile.open(QIODevice::WriteOnly)) {

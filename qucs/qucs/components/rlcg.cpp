@@ -16,6 +16,7 @@
  ***************************************************************************/
 #include "main.h"
 #include "rlcg.h"
+#include "setting.h"
 
 #include <QFontMetrics>
 
@@ -35,7 +36,7 @@ RLCG::RLCG()
   Lines.append(new Line( 14, 14, 21,  7,QPen(Qt::darkBlue,2)));
   Lines.append(new Line( 21, 14, 28,  7,QPen(Qt::darkBlue,2)));
 
-  QFontMetrics  metrics(QucsSettings.font);
+  QFontMetrics  metrics(SETTINGS->get("general", "font").value<QFont>());
   int fHeight = metrics.lineSpacing();
   QString tmp = QObject::tr("RLCG");
   int w = metrics.width(tmp);

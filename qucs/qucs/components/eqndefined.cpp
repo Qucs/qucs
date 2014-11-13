@@ -17,6 +17,7 @@
 #include "eqndefined.h"
 #include "main.h"
 #include "schematic.h"
+#include "setting.h"
 
 #include <QFileInfo>
 
@@ -163,7 +164,7 @@ void EqnDefined::createSymbol()
   x1 = -30; y1 = -h-2;
   x2 =  30; y2 =  h+2;
 
-  QFontMetrics  metrics(QucsSettings.font);   // get size of text
+  QFontMetrics  metrics(SETTINGS->get("general", "font").value<QFont>());   // get size of text
   tx = x1+4;
   ty = y1 - 2*metrics.lineSpacing() - 4;
 }

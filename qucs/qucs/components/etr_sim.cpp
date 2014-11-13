@@ -16,6 +16,7 @@
  ***************************************************************************/
 #include "etr_sim.h"
 #include "main.h"
+#include "setting.h"
 
 
 ETR_Sim::ETR_Sim()
@@ -26,9 +27,9 @@ ETR_Sim::ETR_Sim()
   int a = 17;
   s[a] = '\n';
 
-  Texts.append(new Text(0, 0, s.left(a), Qt::darkBlue, QucsSettings.largeFontSize));
+  Texts.append(new Text(0, 0, s.left(a), Qt::darkBlue, SETTINGS->get("general", "largeFontSize").toFloat()));
   if (a != -1)
-    Texts.append(new Text(0, 0, s.mid(a+1), Qt::darkBlue, QucsSettings.largeFontSize));
+    Texts.append(new Text(0, 0, s.mid(a+1), Qt::darkBlue, SETTINGS->get("general", "largeFontSize").toFloat()));
 
   x1 = -10; y1 = -9;
   x2 = x1+130; y2 = y1+59;

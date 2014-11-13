@@ -49,6 +49,7 @@
 #include "dialogs/importdialog.h"
 #include "dialogs/packagedialog.h"
 #include "module.h"
+#include "setting.h"
 
 // for editing component name on schematic
 QRegExp  Expr_CompProp;
@@ -610,7 +611,7 @@ extern QString lastDirOpenSave; // to remember last directory and file
 // component edit dialog.
 void QucsApp::editFile(const QString& File)
 {
-    if (QucsSettings.Editor.toLower() == "qucs" | QucsSettings.Editor.isEmpty())
+    if (SETTINGS->get("general", "Editor").toString().toLower() == "qucs" | SETTINGS->get("general", "Editor").toString().isEmpty())
     {
         // The Editor is 'qucs' or empty, open a net document tab
         if (File.isEmpty()) {
@@ -639,7 +640,7 @@ void QucsApp::editFile(const QString& File)
       QString prog;
       QStringList args;
 
-      if (QucsSettings.Editor.toLower().contains("qucsedit")) {
+      if (SETTINGS->get("general", "Editor").toString().toLower().contains("qucsedit")) {
 
 #ifdef __MINGW32__
   prog = "qucsedit.exe";
@@ -649,11 +650,11 @@ void QucsApp::editFile(const QString& File)
   prog = "qucsedit";
 #endif
 
-        QFileInfo editor(QucsSettings.BinDir + prog);
+        QFileInfo editor(SETTINGS->get("path", "BinDir").toString() + prog);
         prog = QDir::toNativeSeparators(editor.canonicalFilePath());
       }
       else { // user defined editor
-          QFileInfo editor(QucsSettings.Editor);
+          QFileInfo editor(SETTINGS->get("general", "Editor").toString());
           prog = QDir::toNativeSeparators(editor.canonicalFilePath());
       }
 
@@ -686,14 +687,14 @@ void QucsApp::editFile(const QString& File)
 // Is called to show the output messages of the last simulation.
 void QucsApp::slotShowLastMsg()
 {
-  editFile(QucsSettings.QucsHomeDir.filePath("log.txt"));
+  editFile(QDir(SETTINGS->get("path", "QucsHomeDir").toString()).filePath("log.txt"));
 }
 
 // ------------------------------------------------------------------------
 // Is called to show the netlist of the last simulation.
 void QucsApp::slotShowLastNetlist()
 {
-  editFile(QucsSettings.QucsHomeDir.filePath("netlist.txt"));
+  editFile(QDir(SETTINGS->get("path", "QucsHomeDir").toString()).filePath("netlist.txt"));
 }
 
 // ------------------------------------------------------------------------
@@ -719,10 +720,10 @@ void QucsApp::slotCallFilter()
 
   QProcess *QucsFilter = new QProcess();
 
-  QucsFilter->setWorkingDirectory(QucsSettings.BinDir);
+  QucsFilter->setWorkingDirectory(SETTINGS->get("path", "BinDir").toString());
   QucsFilter->start(prog);
 
-  prog = QDir::toNativeSeparators(QucsSettings.BinDir+prog);
+  prog = QDir::toNativeSeparators(SETTINGS->get("path", "BinDir").toString()+prog);
   qDebug() << "Command :" << prog;
 
   if( !QucsFilter->waitForStarted(1000) ) {
@@ -750,10 +751,10 @@ void QucsApp::slotCallActiveFilter()
 
     QProcess *QucsActiveFilter = new QProcess();
 
-    QucsActiveFilter->setWorkingDirectory(QucsSettings.BinDir);
+    QucsActiveFilter->setWorkingDirectory(SETTINGS->get("path", "BinDir").toString());
     QucsActiveFilter->start(prog);
 
-    prog = QDir::toNativeSeparators(QucsSettings.BinDir+prog);
+    prog = QDir::toNativeSeparators(SETTINGS->get("path", "BinDir").toString()+prog);
     qDebug() << "Command :" << prog;
 
     if( !QucsActiveFilter->waitForStarted(1000) ) {
@@ -781,10 +782,10 @@ void QucsApp::slotCallLine()
 #endif
   QProcess *QucsLine = new QProcess();
 
-  QucsLine->setWorkingDirectory(QucsSettings.BinDir);
+  QucsLine->setWorkingDirectory(SETTINGS->get("path", "BinDir").toString());
   QucsLine->start(prog);
 
-  prog = QDir::toNativeSeparators(QucsSettings.BinDir+prog);
+  prog = QDir::toNativeSeparators(SETTINGS->get("path", "BinDir").toString()+prog);
   qDebug() << "Command :" << prog;
 
   if( !QucsLine->waitForStarted(1000) ) {
@@ -813,10 +814,10 @@ void QucsApp::slotCallLibrary()
 
   QProcess *QucsLibrary = new QProcess();
 
-  QucsLibrary->setWorkingDirectory(QucsSettings.BinDir);
+  QucsLibrary->setWorkingDirectory(SETTINGS->get("path", "BinDir").toString());
   QucsLibrary->start(prog);
 
-  prog = QDir::toNativeSeparators(QucsSettings.BinDir+prog);
+  prog = QDir::toNativeSeparators(SETTINGS->get("path", "BinDir").toString()+prog);
   qDebug() << "Command :" << prog;
 
   if( !QucsLibrary->waitForStarted(1000) ) {
@@ -854,10 +855,10 @@ void QucsApp::slotCallAtt()
 
   QProcess *QucsAtt = new QProcess();
 
-  QucsAtt->setWorkingDirectory(QucsSettings.BinDir);
+  QucsAtt->setWorkingDirectory(SETTINGS->get("path", "BinDir").toString());
   QucsAtt->start(prog);
 
-  prog = QDir::toNativeSeparators(QucsSettings.BinDir+prog);
+  prog = QDir::toNativeSeparators(SETTINGS->get("path", "BinDir").toString()+prog);
   qDebug() << "Command :" << prog;
 
   if( !QucsAtt->waitForStarted(1000) ) {
@@ -885,10 +886,10 @@ void QucsApp::slotCallRes()
 
   QProcess *QucsRes = new QProcess();
 
-  QucsRes->setWorkingDirectory(QucsSettings.BinDir);
+  QucsRes->setWorkingDirectory(SETTINGS->get("path", "BinDir").toString());
   QucsRes->start(prog);
 
-  prog = QDir::toNativeSeparators(QucsSettings.BinDir+prog);
+  prog = QDir::toNativeSeparators(SETTINGS->get("path", "BinDir").toString()+prog);
   qDebug() << "Command :" << prog;
 
   if( !QucsRes->waitForStarted(1000) ) {
@@ -931,7 +932,7 @@ void QucsApp::showHTML(const QString& Page)
 
   QProcess *QucsHelp = new QProcess();
 
-  QucsHelp->setWorkingDirectory(QucsSettings.BinDir);
+  QucsHelp->setWorkingDirectory(SETTINGS->get("path", "BinDir").toString());
   QucsHelp->start(com.join(" "));
 
   qDebug() << "Command :" << com.join(" ");
@@ -1010,7 +1011,7 @@ void QucsApp::slotAddToProject()
   while(it != FileList.end()) {
     Info.setFile(*it);
     origFile.setName(*it);
-    destFile.setName(QucsSettings.QucsWorkDir.absPath() +
+    destFile.setName(QDir(SETTINGS->get("path", "QucsWorkDir").toString()).absPath() +
                      QDir::separator() + Info.fileName());
 
     if(!origFile.open(QIODevice::ReadOnly)) {
@@ -1221,7 +1222,7 @@ void QucsApp::slotCursorDown()
 void QucsApp::slotApplyCompText()
 {
   QString s;
-  QFont f = QucsSettings.font;
+  QFont f = SETTINGS->get("general", "font").value<QFont>();
   Schematic *Doc = (Schematic*)DocumentTab->currentPage();
   f.setPointSizeFloat( Doc->Scale * float(f.pointSize()) );
   editText->setFont(f);
@@ -1319,7 +1320,7 @@ void QucsApp::slotApplyCompText()
   z = editText->fontMetrics().lineSpacing();
   view->MAy2 += n*z;
   editText->setText(s);
-  editText->setPaletteBackgroundColor(QucsSettings.BGColor);
+  editText->setPaletteBackgroundColor(SETTINGS->get("color", "BGColor").value<QColor>());
   editText->setFocus();
   editText->selectAll();
   editText->reparent(Doc->viewport(), 0, QPoint(view->MAx2, view->MAy2), true);
@@ -1456,20 +1457,18 @@ void QucsApp::slotExtractPackage()
 void QucsApp::slotOpenRecent(int num)
 {
     //qDebug()<<QucsSettings.RecentDocs.at(num);
-    gotoPage(QucsSettings.RecentDocs.at(num));
-    updateRecentFilesList(QucsSettings.RecentDocs.at(num));
+    gotoPage(RecentDocs.at(num));
+    updateRecentFilesList(RecentDocs.at(num));
     slotUpdateRecentFiles();
 }
 
 void QucsApp::slotUpdateRecentFiles()
 {
-
-
     QSignalMapper* mapper = new QSignalMapper(this);
     QList<QAction*> recent_docs;
 
     QString file;
-    foreach (file,QucsSettings.RecentDocs) {
+    foreach (file,RecentDocs) {
         recent_docs.prepend(new QAction(file,this));
         connect(recent_docs.first(),SIGNAL(triggered()),mapper,SLOT(map()));
     }
@@ -1485,11 +1484,12 @@ void QucsApp::slotUpdateRecentFiles()
     recentfilesMenu->insertSeparator();
     recentfilesMenu->addAction(tr("Clear list"),this,SLOT(slotClearRecentFiles()));
 
+    SETTINGS->set("general", "RecentDocs", RecentDocs);
 }
 
 void QucsApp::slotClearRecentFiles()
 {
-    QucsSettings.RecentDocs.clear();
+    RecentDocs.clear();
     slotUpdateRecentFiles();
 }
 
@@ -1507,7 +1507,7 @@ void QucsApp::slotLoadModule()
     // fech list of _symbol.json
     // \todo fetch timestamp of VA, JSON, if VA newer, need to reload.
 
-    QDir projDir = QucsSettings.QucsWorkDir.absolutePath();
+    QDir projDir = QDir(SETTINGS->get("path", "QucsWorkDir").toString()).absolutePath();
 
     QStringList files;
     QString fileSuffix = "*_symbol.json";
@@ -1615,11 +1615,11 @@ void QucsApp::slotBuildModule()
     make = "make";                // must be on the path!
 #endif
 
-    QDir prefix = QDir(QucsSettings.BinDir+"../");
+    QDir prefix = QDir(SETTINGS->get("path", "BinDir").toString()+"../");
 
-    QDir include = QDir(QucsSettings.BinDir+"../include/qucs-core");
+    QDir include = QDir(SETTINGS->get("path", "BinDir").toString()+"../include/qucs-core");
 
-    QString workDir = QucsSettings.QucsWorkDir.absolutePath();
+    QString workDir = SETTINGS->get("path", "QucsWorkDir").toString();
 
     // need to cd into project to make sure output is droped there?
     // need to cd - into previous location?
@@ -1631,7 +1631,7 @@ void QucsApp::slotBuildModule()
     QucsDoc *Doc = getDoc();
     QString vaModule = Doc->fileBase(Doc->DocName);
 
-    QString admsXml = QucsSettings.AdmsXmlBinDir.canonicalPath();
+    QString admsXml = QDir(SETTINGS->get("path", "AdmsXmlBinDir").toString()).canonicalPath();
 
 #ifdef __MINGW32__
     admsXml = QDir::toNativeSeparators(admsXml+"/"+"admsXml.exe");

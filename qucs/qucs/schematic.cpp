@@ -54,6 +54,7 @@
 #include "components/vhdlfile.h"
 #include "components/verilogfile.h"
 #include "components/vafile.h"
+#include "setting.h"
 
 // just dummies for empty lists
 Q3PtrList<Wire>      SymbolWires;
@@ -114,7 +115,7 @@ Schematic::Schematic(QucsApp *App_, const QString& Name_)
 
     setVScrollBarMode(Q3ScrollView::AlwaysOn);
     setHScrollBarMode(Q3ScrollView::AlwaysOn);
-    viewport()->setPaletteBackgroundColor(QucsSettings.BGColor);
+    viewport()->setPaletteBackgroundColor(SETTINGS->get("color", "BGColor").value<QColor>());
     viewport()->setMouseTracking(true);
     viewport()->setAcceptDrops(true);  // enable drag'n drop
 // FIXME #warning removed those signals, crashes on it...
@@ -295,7 +296,7 @@ void Schematic::setChanged(bool c, bool fillStack, char Op)
     if(!App->undo->isEnabled()) App->undo->setEnabled(true);
     if(App->redo->isEnabled())  App->redo->setEnabled(false);
 
-    while(UndoSymbol.count() > QucsSettings.maxUndo) { // "while..." because
+    while(UndoSymbol.count() > SETTINGS->get("general", "maxUndo").toUInt()) { // "while..." because
       UndoSymbol.removeFirst();    // "maxUndo" could be decreased meanwhile
       UndoSymbol.last();
     }
@@ -317,7 +318,7 @@ void Schematic::setChanged(bool c, bool fillStack, char Op)
   if(!App->undo->isEnabled()) App->undo->setEnabled(true);
   if(App->redo->isEnabled())  App->redo->setEnabled(false);
 
-  while(UndoStack.count() > QucsSettings.maxUndo) { // "while..." because
+  while(UndoStack.count() > SETTINGS->get("general", "maxUndo").toUInt()) { // "while..." because
     UndoStack.removeFirst();    // "maxUndo" could be decreased meanwhile
     UndoStack.last();
   }
@@ -414,7 +415,7 @@ void Schematic::drawContents(QPainter *p, int, int, int, int)
 {
   ViewPainter Painter;
   Painter.init(p, Scale, -ViewX1, -ViewY1, contentsX(),
-	       contentsY(), QucsSettings.DrawInAntiAliasing);
+	       contentsY(), SETTINGS->get("bool", "DrawInAntiAliasing").toBool());
 
   paintGrid(&Painter, contentsX(), contentsY(),
             visibleWidth(), visibleHeight());
@@ -639,7 +640,7 @@ void Schematic::print(QPrinter*, QPainter *Painter, bool printAll, bool fitToPag
 #endif
   p.init(Painter, PrintScale * PrintRatio,
          -StartX, -StartY, -marginX, -marginY,
-         PrintScale, PrintRatio, QucsSettings.DrawInAntiAliasing);
+         PrintScale, PrintRatio, SETTINGS->get("bool", "DrawInAntiAliasing").toBool());
 
   if(!symbolMode)
     paintFrame(&p);
@@ -936,7 +937,7 @@ void Schematic::paintGrid(ViewPainter *p, int cX, int cY, int Width, int Height)
 // Correction factor for unproportional font scaling.
 float Schematic::textCorr()
 {
-  QFont Font = QucsSettings.font;
+  QFont Font = SETTINGS->get("general", "font").value<QFont>();
   Font.setPointSizeFloat( Scale * float(Font.pointSize()) );
   QFontMetrics  metrics(Font);
   return (Scale / float(metrics.lineSpacing()));

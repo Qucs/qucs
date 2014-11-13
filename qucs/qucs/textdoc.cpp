@@ -27,6 +27,7 @@ Copyright (C) 2014 by Guilherme Brondani Torri <guitorri@gmail.com>
 #include "components/vhdlfile.h"
 #include "components/verilogfile.h"
 #include "components/vafile.h"
+#include "setting.h"
 
 /*!
  * \file textdoc.cpp
@@ -41,7 +42,7 @@ Copyright (C) 2014 by Guilherme Brondani Torri <guitorri@gmail.com>
 TextDoc::TextDoc(QucsApp *App_, const QString& Name_) : QPlainTextEdit(), QucsDoc(App_, Name_)
 {
   TextFont = QFont("Courier New");
-  TextFont.setPointSize(QucsSettings.font.pointSize()-1);
+  TextFont.setPointSize(SETTINGS->get("general", "font").value<QFont>().pointSize()-1);
   TextFont.setStyleHint(QFont::Courier);
   TextFont.setFixedPitch(true);
   document()->setDefaultFont(TextFont);
@@ -70,7 +71,7 @@ TextDoc::TextDoc(QucsApp *App_, const QString& Name_) : QPlainTextEdit(), QucsDo
     viewport()->setFocus();
 
     setWordWrapMode(QTextOption::NoWrap);
-    setPaletteBackgroundColor(QucsSettings.BGColor);
+    setPaletteBackgroundColor(SETTINGS->get("color", "BGColor").value<QColor>());
     connect(this, SIGNAL(textChanged()), SLOT(slotSetChanged()));
     connect(this, SIGNAL(cursorPositionChanged()),
             SLOT(slotCursorPosChanged()));
@@ -395,7 +396,7 @@ float TextDoc::zoomBy(float s)
 void TextDoc::showNoZoom()
 {
   TextFont = QFont("Courier New");
-  TextFont.setPointSize(QucsSettings.font.pointSize()-1);
+  TextFont.setPointSize(SETTINGS->get("general", "font").value<QFont>().pointSize()-1);
   TextFont.setStyleHint(QFont::Courier);
   TextFont.setFixedPitch(true);
   document()->setDefaultFont(TextFont);

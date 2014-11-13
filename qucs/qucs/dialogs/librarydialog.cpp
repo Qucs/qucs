@@ -41,6 +41,7 @@
 #include "qucs.h"
 #include "main.h"
 #include "schematic.h"
+#include "setting.h"
 
 extern SubMap FileList;
 
@@ -258,7 +259,7 @@ void LibraryDialog::slotCreateNext()
     return;
   }
 
-  LibDir = QDir(QucsSettings.QucsHomeDir);
+  LibDir = QDir(SETTINGS->get("path", "QucsHomeDir").toString());
   if(!LibDir.cd("user_lib")) { // user library directory exists ?
     if(!LibDir.mkdir("user_lib")) { // no, then create it
       QMessageBox::warning(this, tr("Warning"),
@@ -268,7 +269,7 @@ void LibraryDialog::slotCreateNext()
     LibDir.cd("user_lib");
   }
 
-  LibFile.setName(QucsSettings.LibDir + NameEdit->text() + ".lib");
+  LibFile.setName(SETTINGS->get("path", "LibDir").toString() + NameEdit->text() + ".lib");
   if(LibFile.exists()) {
     QMessageBox::critical(this, tr("Error"), tr("A system library with this name already exists!"));
     return;
@@ -441,7 +442,7 @@ void LibraryDialog::slotSave()
            << description
            << "\n  </Description>\n";
 
-    Schematic *Doc = new Schematic(0, QucsSettings.QucsWorkDir.filePath(SelectedNames[i]));
+    Schematic *Doc = new Schematic(0, QDir(SETTINGS->get("path", "QucsWorkDir").toString()).filePath(SelectedNames[i]));
     ErrText->insert(tr("Loading subcircuit \"%1\".\n").arg(SelectedNames[i]));
     if(!Doc->loadDocument()) {  // load document if possible
         delete Doc;

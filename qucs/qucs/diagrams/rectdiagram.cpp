@@ -33,6 +33,7 @@
 #include "main.h"
 #include "qucs.h"
 #include "schematic.h"
+#include "setting.h"
 
 
 RectDiagram::RectDiagram(int _cx, int _cy) : Diagram(_cx, _cy)
@@ -131,7 +132,7 @@ int RectDiagram::calcDiagram()
     font = ((Schematic*)QucsMain->DocumentTab->currentPage())->font();
   }
   QFontMetrics  metrics(font);   // get size of text
-  y1 = QucsSettings.font.pointSize() + 6;
+  y1 = SETTINGS->get("general", "font").value<QFont>().pointSize() + 6;
 
   x1 = 10;      // position of label text
   x3 = x2 + 7;

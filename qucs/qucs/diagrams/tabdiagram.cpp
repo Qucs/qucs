@@ -133,7 +133,6 @@ int TabDiagram::calcDiagram()
     font = ((Schematic*)QucsMain->DocumentTab->currentPage())->font();
   }
   QFontMetrics  metrics(font);   // get size of text
-  //qDebug("QucsSettings.font %i", QucsSettings.font.pointSize());
   int tHeight = metrics.lineSpacing();
   QString Str;
   int colWidth=0, x=8, y;

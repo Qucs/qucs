@@ -197,6 +197,7 @@ private:
 // ********** Properties ************************************************
   Q3PtrList<QString> HierarchyHistory; // keeps track of "go into subcircuit"
   QString  QucsFileFilter;
+  QStringList RecentDocs;
 
 // ********** Methods ***************************************************
   void initView();
