@@ -189,8 +189,9 @@ QucsApp::QucsApp()
   SearchDia = new SearchDialog(this);
 
   // creates a document called "untitled"
-  // it configures itself and get appended to App->DocumentTab
-  new Schematic(this, "");
+  Schematic *d = new Schematic(this, "");
+  int i = DocumentTab->addTab(d, QPixmap(empty_xpm), QObject::tr("untitled"));
+  DocumentTab->setCurrentIndex(i);
 
   select->setChecked(true);  // switch on the 'select' action
   switchSchematicDoc(true);  // "untitled" document is schematic
@@ -1386,7 +1387,10 @@ void QucsApp::openProject(const QString& Path)
   Name.remove("_prj");
 
   if(!closeAllFiles()) return;   // close files and ask for saving them
-  new Schematic(this, "");
+  Schematic *d = new Schematic(this, "");
+  i = DocumentTab->addTab(d, QPixmap(empty_xpm), QObject::tr("untitled"));
+  DocumentTab->setCurrentIndex(i);
+
   view->drawn = false;
 
   slotResetWarnings();
@@ -1456,7 +1460,9 @@ void QucsApp::slotMenuProjClose()
   editText->setHidden(true); // disable text edit of component property
 
   if(!closeAllFiles()) return;   // close files and ask for saving them
-  new Schematic(this, "");
+  Schematic *d = new Schematic(this, "");
+  int i = DocumentTab->addTab(d, QPixmap(empty_xpm), QObject::tr("untitled"));
+  DocumentTab->setCurrentIndex(i);
   view->drawn = false;
 
   slotResetWarnings();
@@ -1579,7 +1585,9 @@ void QucsApp::slotFileNew()
   statusBar()->message(tr("Creating new schematic..."));
   editText->setHidden(true); // disable text edit of component property
 
-  new Schematic(this, "");
+  Schematic *d = new Schematic(this, "");
+  int i = DocumentTab->addTab(d, QPixmap(empty_xpm), QObject::tr("untitled"));
+  DocumentTab->setCurrentIndex(i);
 
   statusBar()->message(tr("Ready."));
 }
@@ -1589,7 +1597,9 @@ void QucsApp::slotTextNew()
 {
   statusBar()->message(tr("Creating new text editor..."));
   editText->setHidden(true); // disable text edit of component property
-  new TextDoc(this, "");
+  TextDoc *d = new TextDoc(this, "");
+  int i = DocumentTab->addTab(d, QPixmap(empty_xpm), QObject::tr("untitled"));
+  DocumentTab->setCurrentIndex(i);
 
   statusBar()->message(tr("Ready."));
 }
@@ -1612,10 +1622,15 @@ bool QucsApp::gotoPage(const QString& Name)
 
   QFileInfo Info(Name);
   if(Info.extension(false) == "sch" || Info.extension(false) == "dpl" ||
-     Info.extension(false) == "sym")
+     Info.extension(false) == "sym") {
     d = new Schematic(this, Name);
-  else
+    i = DocumentTab->addTab((Schematic *)d, QPixmap(empty_xpm), Info.fileName()); 
+  }
+  else {
     d = new TextDoc(this, Name);
+    i = DocumentTab->addTab((TextDoc *)d, QPixmap(empty_xpm), Info.fileName());
+  }
+  DocumentTab->setCurrentIndex(i);
 
   if(!d->load()) {    // load document if possible
     delete d;
@@ -1909,8 +1924,11 @@ void QucsApp::closeFile(int index)
 
     delete Doc;
 
-    if(DocumentTab->count() < 1)  // if no document left, create an untitled
-      new Schematic(this, "");
+    if(DocumentTab->count() < 1) { // if no document left, create an untitled
+      Schematic *d = new Schematic(this, "");
+      DocumentTab->addTab(d, QPixmap(empty_xpm), QObject::tr("untitled")); 
+      DocumentTab->setCurrentIndex(0);
+    }
 
     statusBar()->message(tr("Ready."));
 }
@@ -2412,11 +2430,18 @@ void QucsApp::slotChangePage(QString& DocName, QString& DataDisplay)
     DocumentTab->setCurrentPage(z);
   else {   // no open page found ?
     QString ext = QucsDoc::fileSuffix (DataDisplay);
+
+    int i = 0;
     if (ext != "vhd" && ext != "vhdl" && ext != "v" && ext != "va" &&
-	ext != "oct" && ext != "m")
-      d = new Schematic (this, Name);
-    else
-      d = new TextDoc (this, Name);
+	ext != "oct" && ext != "m") {
+      d = new Schematic(this, Name);
+      i = DocumentTab->addTab((Schematic *)d, QPixmap(empty_xpm), Info.fileName()); 
+    }
+    else {
+      d = new TextDoc(this, Name);
+      i = DocumentTab->addTab((TextDoc *)d, QPixmap(empty_xpm), Info.fileName());
+    }
+    DocumentTab->setCurrentIndex(i);
 
     QFile file(Name);
     if(file.open(QIODevice::ReadOnly)) {      // try to load document
