@@ -743,6 +743,9 @@ void MouseActions::rightPressMenu(Schematic *Doc, QMouseEvent *Event, float fX, 
       if((focusElement->Type & isComponent) == 0) break;
     }
     else {
+#pragma message "exchange like this"
+      //ComponentMenu->addAction(QucsMain->symEdit);
+      //to QucsMain->symEdit->addTo(ComponentMenu);
       QucsMain->symEdit->addTo(ComponentMenu);
       QucsMain->fileSettings->addTo(ComponentMenu);
     }

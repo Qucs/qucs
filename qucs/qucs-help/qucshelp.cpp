@@ -109,26 +109,45 @@ void QucsHelp::setupActions()
   connect(nextAction,SIGNAL(activated()),this,SLOT(nextLink()));
   connect(viewBrowseDock, SIGNAL(toggled(bool)), SLOT(slotToggleSidebar(bool)));
 
-  backAction->addTo(toolbar);
-  forwardAction->addTo(toolbar);
+  //backAction->addTo(toolbar);
+    toolbar->addAction(backAction);
+  //forwardAction->addTo(toolbar);
+    toolbar->addAction(forwardAction);
   toolbar->addSeparator();
-  homeAction->addTo(toolbar);
-  previousAction->addTo(toolbar);
-  nextAction->addTo(toolbar);
+  //homeAction->addTo(toolbar);
+    toolbar->addAction(homeAction);
+  //previousAction->addTo(toolbar);
+    toolbar->addAction(previousAction);
+  //nextAction->addTo(toolbar);
+    toolbar->addAction(nextAction);
   toolbar->addSeparator();
-  quitAction->addTo(toolbar);
+  //quitAction->addTo(toolbar);
+    toolbar->addAction(quitAction);
 
   QMenu *fileMenu = new QMenu(this);
-  quitAction->addTo(fileMenu);
+  //quitAction->addTo(fileMenu);
+    fileMenu->addAction(quitAction);
 
   QMenu *viewMenu = new QMenu(this);
-  backAction->addTo(viewMenu);
-  forwardAction->addTo(viewMenu);
-  homeAction->addTo(viewMenu);
-  previousAction->addTo(viewMenu);
-  nextAction->addTo(viewMenu);
-  viewMenu->insertSeparator();
-  viewBrowseDock->addTo(viewMenu);
+  //backAction->addTo(viewMenu);
+    viewMenu->addAction(backAction);
+  //forwardAction->addTo(viewMenu);
+    viewMenu->addAction(forwardAction);
+
+  //homeAction->addTo(viewMenu);
+    viewMenu->addAction(homeAction);
+
+  //previousAction->addTo(viewMenu);
+    viewMenu->addAction(previousAction);
+
+  //nextAction->addTo(viewMenu);
+    viewMenu->addAction(nextAction);
+
+  //viewMenu->insertSeparator();
+    viewMenu->addSeparator();
+
+  //viewBrowseDock->addTo(viewMenu);
+    
 
   QMenu *helpMenu = new QMenu(this);
   helpMenu->insertItem(tr("&About Qt"),qApp,SLOT(aboutQt()));
