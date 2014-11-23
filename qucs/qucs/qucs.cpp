@@ -2814,7 +2814,7 @@ void QucsApp::slot2PortMatching()
 
   QString DataSet;
   Schematic *Doc = (Schematic*)DocumentTab->currentPage();
-  int z = pm->pGraph->Var.find(':');
+  int z = pm->pGraph->Var.indexOf(':');
   if(z <= 0)  DataSet = Doc->DataSet;
   else  DataSet = pm->pGraph->Var.mid(z+1);
   double Freq = pm->VarPos[0];

@@ -354,10 +354,10 @@ void str2num(const QString& s_, double& Number, QString& Unit, double& Factor)
   }*/
 
   QRegExp Expr( QRegExp("[^0-9\\x2E\\x2D\\x2B]") );
-  int i = str.find( Expr );
+  int i = str.indexOf( Expr );
   if(i >= 0)
     if((str.at(i).toLatin1() | 0x20) == 'e') {
-      int j = str.find( Expr , ++i);
+      int j = str.indexOf( Expr , ++i);
       if(j == i)  j--;
       i = j;
     }
@@ -428,7 +428,7 @@ void convert2Unicode(QString& Text)
   int i = 0;
   QString n;
   unsigned short ch;
-  while((i=Text.find("\\x", i)) >= 0) {
+  while((i=Text.indexOf("\\x", i)) >= 0) {
     n = Text.mid(i, 6);
     ch = n.mid(2).toUShort(&ok, 16);
     if(ok)  Text.replace(n, QChar(ch));

@@ -303,9 +303,9 @@ void LibraryDialog::slotCreateNext()
 void LibraryDialog::intoStream(QTextStream &Stream, QString &tmp,
 			       const char *sec)
 {
-  int i = tmp.find("TOP LEVEL MARK");
+  int i = tmp.indexOf("TOP LEVEL MARK");
   if(i >= 0) {
-    i = tmp.find('\n',i) + 1;
+    i = tmp.indexOf('\n',i) + 1;
     tmp = tmp.mid(i);
   }
   Stream << "  <" << sec << ">";

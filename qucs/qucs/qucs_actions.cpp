@@ -1125,9 +1125,9 @@ void QucsApp::slotCursorUp()
     if(view->MAx3 == 0) return;  // edit component namen ?
     Component *pc = (Component*)view->focusElement;
     Property *pp = pc->Props.at(view->MAx3-1);  // current property
-    int Begin = pp->Description.find('[');
+    int Begin = pp->Description.indexOf('[');
     if(Begin < 0) return;  // no selection list ?
-    int End = pp->Description.find(editText->text(), Begin); // current
+    int End = pp->Description.indexOf(editText->text(), Begin); // current
     if(End < 0) return;  // should never happen
     End = pp->Description.findRev(',', End);
     if(End < Begin) return;  // was first item ?
@@ -1172,17 +1172,17 @@ void QucsApp::slotCursorDown()
     if(view->MAx3 == 0) return;  // edit component namen ?
     Component *pc = (Component*)view->focusElement;
     Property *pp = pc->Props.at(view->MAx3-1);  // current property
-    int Pos = pp->Description.find('[');
+    int Pos = pp->Description.indexOf('[');
     if(Pos < 0) return;  // no selection list ?
-    Pos = pp->Description.find(editText->text(), Pos); // current list item
+    Pos = pp->Description.indexOf(editText->text(), Pos); // current list item
     if(Pos < 0) return;  // should never happen
-    Pos = pp->Description.find(',', Pos);
+    Pos = pp->Description.indexOf(',', Pos);
     if(Pos < 0) return;  // was last item ?
     Pos++;
     if(pp->Description.at(Pos) == ' ') Pos++; // remove leading space
-    int End = pp->Description.find(',', Pos);
+    int End = pp->Description.indexOf(',', Pos);
     if(End < 0) {  // is last item ?
-      End = pp->Description.find(']', Pos);
+      End = pp->Description.indexOf(']', Pos);
       if(End < 0) return;  // should never happen
     }
     editText->setText(pp->Description.mid(Pos, End-Pos));
@@ -1306,7 +1306,7 @@ void QucsApp::slotApplyCompText()
   if(pp) {  // is it a property ?
     s = pp->Value;
     view->MAx2 += editText->fontMetrics().width(pp->Name+"=");
-    if(pp->Description.find('[') >= 0)  // is selection list ?
+    if(pp->Description.indexOf('[') >= 0)  // is selection list ?
       editText->setReadOnly(true);
     Expr_CompProp.setPattern("[^\"]*");
     if(!pc->showName) n--;

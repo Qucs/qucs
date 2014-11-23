@@ -494,7 +494,7 @@ void SpiceFile::slotGetNetlist()
   QString s;
   NetLine += QString(QucsConv->readAllStandardOutput());
 
-  while((i = NetLine.find('\n')) >= 0) {
+  while((i = NetLine.indexOf('\n')) >= 0) {
     s = NetLine.left(i);
     NetLine.remove(0, i+1);
     s = s.stripWhiteSpace();

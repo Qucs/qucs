@@ -1064,7 +1064,7 @@ int Component::analyseLine(const QString& Row, int numProps)
     Color.setNamedColor(Row.section(' ',4,4));
     if(!Color.isValid()) return -1;
 
-    s = Row.mid(Row.find('"')+1);    // Text (can contain " !!!)
+    s = Row.mid(Row.indexOf('"')+1);    // Text (can contain " !!!)
     s = s.left(s.length()-1);
     if(s.isEmpty()) return -1;
     convert2Unicode(s);

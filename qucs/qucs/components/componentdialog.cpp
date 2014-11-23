@@ -503,7 +503,7 @@ void ComponentDialog::slotSelectProperty(QTableWidgetItem *item)
 
     // handle special combobox items
     QStringList List;
-    int b = desc.find('[');
+    int b = desc.indexOf('[');
     int e = desc.findRev(']');
     if (e-b > 2) {
       QString str = desc.mid(b+1, e-b-1);

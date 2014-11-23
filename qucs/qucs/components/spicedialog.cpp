@@ -532,7 +532,7 @@ void SpiceDialog::slotGetNetlist()
   QString s;
   Line += QString(QucsConv->readAllStandardOutput ());
 
-  while((i = Line.find('\n')) >= 0)
+  while((i = Line.indexOf('\n')) >= 0)
   {
     s = Line.left(i);
     Line.remove(0, i+1);

@@ -335,18 +335,18 @@ QStringList HtmlDataFetcher::fetchChapterTexts(const QString &indexFile)
     if(inText == false)
     {
       txt = "";
-      int index = line.find("href=\"");
+      int index = line.indexOf("href=\"");
       if(index == -1  || line.contains("http") || line.contains("mailto"))
         continue;
       index += 6;
-      index = line.find('>',index);
+      index = line.indexOf('>',index);
       if(index == -1)
       {
         qWarning("HtmlDataFetcher::fetchChapterTexts() : Parse error");
         return retVal;
       }
       ++index;
-      int end = line.find("</a>",index);
+      int end = line.indexOf("</a>",index);
       if(end != -1)
       {
         txt = line.mid(index,end-index);
@@ -362,7 +362,7 @@ QStringList HtmlDataFetcher::fetchChapterTexts(const QString &indexFile)
     }
     else
     {
-      int end = line.find("</a>");
+      int end = line.indexOf("</a>");
       if(end == -1)
         txt += line + ' ';
       else
@@ -397,11 +397,11 @@ QStringList HtmlDataFetcher::fetchLinksToFiles(const QString &indexFile)
     line = str.readLine();
     if(line.contains("http") || line.contains("mailto"))
       continue;
-    index = line.find("href=\"");//find link to other file
+    index = line.indexOf("href=\"");//find link to other file
     if(index != -1)
     {
       index += 6;
-      end = line.find('"',index);
+      end = line.indexOf('"',index);
       if(end == -1)
       {
         qWarning("HtmlDataFetcher::fetchLinksToFiles() : Can't find end quote. May be HTML error");
@@ -422,10 +422,10 @@ void HtmlDataFetcher::formatAndReplace(QString &txt)
   
   while(1)
   {
-    st = txt.find('&');
+    st = txt.indexOf('&');
     if(st == -1)
       return;
-    end = txt.find(';',st);
+    end = txt.indexOf(';',st);
     if(end == -1)
     {
       qWarning("HtmlDataFetcher::formatAndReplace() : Can't find ';'");

@@ -222,7 +222,7 @@ void SimMessage::nextSPICE()
   com << "-if" << "spice" << "-of" << "qucs";
 
   QFile SpiceFile;
-  if(FileName.find(QDir::separator()) < 0)  // add path ?
+  if(FileName.indexOf(QDir::separator()) < 0)  // add path ?
     SpiceFile.setName(QucsSettings.QucsWorkDir.path() + QDir::separator() + FileName);
   else
     SpiceFile.setName(FileName);
@@ -274,7 +274,7 @@ void SimMessage::slotReadSpiceNetlist()
   QString s;
   ProgressText += QString(SimProcess.readAllStandardOutput());
 
-  while((i = ProgressText.find('\n')) >= 0) {
+  while((i = ProgressText.indexOf('\n')) >= 0) {
 
     s = ProgressText.left(i);
     ProgressText.remove(0, i+1);
@@ -634,7 +634,7 @@ void SimMessage::slotDisplayMsg()
       return;
   }
   else {
-    i = ProgressText.find('\t');
+    i = ProgressText.indexOf('\t');
     if(i >= 0) {
       wasLF = true;
       ProgText->insert(ProgressText.left(i));

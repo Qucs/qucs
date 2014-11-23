@@ -751,13 +751,13 @@ void DiagramDialog::slotReadVars(int)
   ChooseVars->setSortingEnabled(false);
   ChooseVars->clearContents();
   int i=0, j=0;
-  i = FileString.find('<')+1;
+  i = FileString.indexOf('<')+1;
   if(i > 0)
   do {
-    j = FileString.find('>', i);
+    j = FileString.indexOf('>', i);
     for(int k=0;k<j-i;k++) Line[k]=FileString[k+i];
     Line.truncate(j-i);
-    i = FileString.find('<', j)+1;
+    i = FileString.indexOf('<', j)+1;
 
     Var = Line.section(' ', 1, 1).remove('>');
     if(Var.length()>0)

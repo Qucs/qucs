@@ -48,7 +48,7 @@ bool loadSettings()
 {
   bool result = true;
 
-  QFile file(QDir::homeDirPath()+QDir::convertSeparators ("/.qucs/helprc"));
+  QFile file(QDir::homePath()+QDir::convertSeparators ("/.qucs/helprc"));
   if(!file.open(QIODevice::ReadOnly))
     result = false; // settings file doesn't exist
   else {
@@ -195,7 +195,7 @@ int main(int argc, char *argv[])
 
   QucsHelpDir = QucsSettings.DocDir + locale;
   if (!QucsHelpDir.exists () || !QucsHelpDir.isReadable ()) {
-    int p = locale.find ('_');
+    int p = locale.indexOf ('_');
     if (p != -1) {
        QucsHelpDir = QucsSettings.DocDir + locale.left (p);
       if (!QucsHelpDir.exists () || !QucsHelpDir.isReadable ()) {

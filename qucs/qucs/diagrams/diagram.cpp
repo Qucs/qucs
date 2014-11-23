@@ -837,9 +837,9 @@ int Diagram::loadVarData(const QString& fileName, Graph *g)
   QString Variable;
   QFileInfo Info(fileName);
 
-  int pos = g->Var.find(':');
+  int pos = g->Var.indexOf(':');
 //  if(g->Var.right(3) == "].X")  // e.g. stdl[8:0].X
-//    if(pos > g->Var.find('['))
+//    if(pos > g->Var.indexOf('['))
 //      pos = -1;
 
   /* WORK-AROUND: A bug in SCIM (libscim) which Qt is linked to causes
@@ -1088,7 +1088,7 @@ int Diagram::loadIndepVarData(const QString& Variable,
   pFile = pPos+1;
   char *pEnd;
   if(!isIndep) {           // dependent variable can also be used...
-    if(Line.find(' ') >= 0)  return -1; // ...if only one dependency
+    if(Line.indexOf(' ') >= 0)  return -1; // ...if only one dependency
     Line = "<indep "+Line+" ";
     pPos = strstr(FileString, Line.toLatin1());
     if(!pPos)  return -1;
