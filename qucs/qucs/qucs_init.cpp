@@ -1040,7 +1040,7 @@ void QucsApp::slotViewBrowseDock(bool toggle)
 void QucsApp::slotToggleDock(bool on)
 {
   viewBrowseDock->blockSignals(true);
-  viewBrowseDock->setOn(on);
+  viewBrowseDock->setChecked(on);
   viewBrowseDock->blockSignals(false);
 }
 
@@ -1060,7 +1060,7 @@ void QucsApp::slotViewOctaveDock(bool toggle)
 void QucsApp::slotToggleOctave(bool on)
 {
   viewOctaveDock->blockSignals(true);
-  viewOctaveDock->setOn(on);
+  viewOctaveDock->setChecked(on);
   viewOctaveDock->blockSignals(false);
 }
 

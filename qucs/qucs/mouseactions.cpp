@@ -1011,11 +1011,11 @@ void MouseActions::MPressSelect(Schematic *Doc, QMouseEvent *Event, float fX, fl
         QucsMain->activeAction = QucsMain->insWire;
 
         QucsMain->select->blockSignals(true);
-        QucsMain->select->setOn(false);
+        QucsMain->select->setChecked(false);
         QucsMain->select->blockSignals(false);
 
         QucsMain->insWire->blockSignals(true);
-        QucsMain->insWire->setOn(true);
+        QucsMain->insWire->setChecked(true);
         QucsMain->insWire->blockSignals(false);
         // Update matching wire label highlighting
         Doc->highlightWireLabels ();
@@ -1357,7 +1357,7 @@ void MouseActions::MPressWire2(Schematic *Doc, QMouseEvent *Event, float fX, flo
       // if last port is connected, then...
       if(formerAction) {
         // ...restore old action
-        QucsMain->select->setOn(true);
+        QucsMain->select->setChecked(true);
       }
       else {
         // ...start a new wire
@@ -1980,7 +1980,7 @@ void MouseActions::MDoubleClickWire2(Schematic *Doc, QMouseEvent *Event)
   MPressWire2(Doc, Event, DOC_X_FPOS, DOC_Y_FPOS);
 
   if(formerAction)
-    QucsMain->select->setOn(true);  // restore old action
+    QucsMain->select->setChecked(true);  // restore old action
   else {
     QucsMain->MouseMoveAction = &MouseActions::MMoveWire1;
     QucsMain->MousePressAction = &MouseActions::MPressWire1;

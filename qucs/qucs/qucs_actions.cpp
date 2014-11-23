@@ -74,7 +74,7 @@ bool QucsApp::performToggleAction(bool on, QAction *Action,
   do {
     if(Function) if((Doc->*Function)()) {
       Action->blockSignals(true);
-      Action->setOn(false);  // release toolbar button
+      Action->setChecked(false);  // release toolbar button
       Action->blockSignals(false);
       Doc->viewport()->update();
       break;
@@ -82,7 +82,7 @@ bool QucsApp::performToggleAction(bool on, QAction *Action,
 
     if(activeAction) {
       activeAction->blockSignals(true); // do not call toggle slot
-      activeAction->setOn(false);       // set last toolbar button off
+      activeAction->setChecked(false);       // set last toolbar button off
       activeAction->blockSignals(false);
     }
     activeAction = Action;
@@ -163,7 +163,7 @@ void QucsApp::slotEditDelete(bool on)
     Doc->textCursor().deleteChar();
 
     editDelete->blockSignals(true);
-    editDelete->setOn(false);  // release toolbar button
+    editDelete->setChecked(false);  // release toolbar button
     editDelete->blockSignals(false);
   }
   else
@@ -209,7 +209,7 @@ void QucsApp::slotZoomIn(bool on)
   if(Doc->inherits("QPlainTextEdit")) {
     Doc->zoomBy(1.5f);
     magPlus->blockSignals(true);
-    magPlus->setOn(false);
+    magPlus->setChecked(false);
     magPlus->blockSignals(false);
   }
   else
@@ -231,7 +231,7 @@ void QucsApp::slotSelect(bool on)
   if(w->inherits("QPlainTextEdit")) {
     ((TextDoc*)w)->viewport()->setFocus();
       select->blockSignals(true);
-      select->setOn(true);
+      select->setChecked(true);
       select->blockSignals(false);
     return;
   }
@@ -245,7 +245,7 @@ void QucsApp::slotSelect(bool on)
     view->drawn = false;
 
     select->blockSignals(true);
-    select->setOn(false);
+    select->setChecked(false);
     select->blockSignals(false);
     return;
   }
@@ -270,7 +270,7 @@ void QucsApp::slotEditPaste(bool on)
     ((TextDoc*)Doc)->paste();
 
     editPaste->blockSignals(true);
-    editPaste->setOn(false);  // release toolbar button
+    editPaste->setChecked(false);  // release toolbar button
     editPaste->blockSignals(false);
     return;
   }
@@ -292,7 +292,7 @@ void QucsApp::slotEditPaste(bool on)
   if(!view->pasteElements(Doc))
   {
     editPaste->blockSignals(true); // do not call toggle slot
-    editPaste->setOn(false);       // set toolbar button off
+    editPaste->setChecked(false);       // set toolbar button off
     editPaste->blockSignals(false);
     return;   // if clipboard empty
   }
@@ -300,7 +300,7 @@ void QucsApp::slotEditPaste(bool on)
   if(activeAction)
   {
     activeAction->blockSignals(true); // do not call toggle slot
-    activeAction->setOn(false);       // set last toolbar button off
+    activeAction->setChecked(false);       // set last toolbar button off
     activeAction->blockSignals(false);
   }
   activeAction = editPaste;
@@ -344,7 +344,7 @@ void QucsApp::slotInsertEquation(bool on)
   }
   if(activeAction) {
     activeAction->blockSignals(true); // do not call toggle slot
-    activeAction->setOn(false);       // set last toolbar button off
+    activeAction->setChecked(false);       // set last toolbar button off
     activeAction->blockSignals(false);
   }
   activeAction = insEquation;
@@ -377,7 +377,7 @@ void QucsApp::slotInsertGround(bool on)
   }
   if(activeAction) {
     activeAction->blockSignals(true); // do not call toggle slot
-    activeAction->setOn(false);       // set last toolbar button off
+    activeAction->setChecked(false);       // set last toolbar button off
     activeAction->blockSignals(false);
   }
   activeAction = insGround;
@@ -410,7 +410,7 @@ void QucsApp::slotInsertPort(bool on)
   }
   if(activeAction) {
     activeAction->blockSignals(true); // do not call toggle slot
-    activeAction->setOn(false);       // set last toolbar button off
+    activeAction->setChecked(false);       // set last toolbar button off
     activeAction->blockSignals(false);
   }
   activeAction = insPort;

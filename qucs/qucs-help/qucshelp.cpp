@@ -103,7 +103,7 @@ void QucsHelp::setupActions()
   viewBrowseDock = new QAction(tr("&Table of Contents"), this);
     
   viewBrowseDock->setToggleAction(true);
-  viewBrowseDock->setOn(true);
+  viewBrowseDock->setChecked(true);
   viewBrowseDock->setStatusTip(tr("Enables/disables the table of contents"));
   viewBrowseDock->setWhatsThis(tr("Table of Contents\n\nEnables/disables the table of contents"));
 
@@ -282,6 +282,6 @@ void QucsHelp::slotToggleSidebar(bool b)
 void QucsHelp::slotToggleSidebarAction(bool b)
 {
   viewBrowseDock->blockSignals(true);
-  viewBrowseDock->setOn(b);
+  viewBrowseDock->setChecked(b);
   viewBrowseDock->blockSignals(false);
 }

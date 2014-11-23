@@ -121,9 +121,9 @@ QucsApp::QucsApp()
   initMenuBar();
   initToolBar();
   initStatusBar();
-  viewToolBar->setOn(true);
-  viewStatusBar->setOn(true);
-  viewBrowseDock->setOn(true);
+  viewToolBar->setChecked(true);
+  viewStatusBar->setChecked(true);
+  viewBrowseDock->setChecked(true);
   slotViewOctaveDock(false);
   initCursorMenu();
   Module::registerModules ();
@@ -143,7 +143,7 @@ QucsApp::QucsApp()
   // it configures itself and get appended to App->DocumentTab
   new Schematic(this, "");
 
-  select->setOn(true);  // switch on the 'select' action
+  select->setChecked(true);  // switch on the 'select' action
   switchSchematicDoc(true);  // "untitled" document is schematic
 
   lastExportFilename = QDir::homePath() + QDir::separator() + "export.png";
@@ -699,7 +699,7 @@ void QucsApp::slotSelectComponent(QListWidgetItem *item)
   // toggle last toolbar button off
   if(activeAction) {
     activeAction->blockSignals(true); // do not call toggle slot
-    activeAction->setOn(false);       // set last toolbar button off
+    activeAction->setChecked(false);       // set last toolbar button off
     activeAction->blockSignals(false);
   }
   activeAction = 0;
@@ -2478,7 +2478,7 @@ void QucsApp::slotOpenContent(QTreeWidgetItem *item)
       if(Suffix == "sch") return;
 
     select->blockSignals(true);  // switch on the 'select' action ...
-    select->setOn(true);
+    select->setChecked(true);
     select->blockSignals(false);
 
     activeAction = select;
@@ -2557,7 +2557,7 @@ void QucsApp::slotSelectSubcircuit(QTreeWidgetItem *item)
   // toggle last toolbar button off
   if(activeAction) {
     activeAction->blockSignals(true); // do not call toggle slot
-    activeAction->setOn(false);       // set last toolbar button off
+    activeAction->setChecked(false);       // set last toolbar button off
     activeAction->blockSignals(false);
   }
   activeAction = 0;
@@ -2708,7 +2708,7 @@ void QucsApp::changeSchematicSymbolMode(Schematic *Doc)
 {
   if(Doc->symbolMode) {
     // go into select modus to avoid placing a forbidden element
-    select->setOn(true);
+    select->setChecked(true);
 
     switchEditMode(false);
   }
