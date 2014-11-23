@@ -88,7 +88,7 @@ protected:
 
 QucsApp::QucsApp()
 {
-  setCaption("Qucs " PACKAGE_VERSION);
+  setWindowTitle("Qucs " PACKAGE_VERSION);
 
   spiceExtensions << "*.sp" << "*.cir" << "*.spc" << "*.spi";
 
@@ -121,9 +121,9 @@ QucsApp::QucsApp()
   initMenuBar();
   initToolBar();
   initStatusBar();
-  viewToolBar->setOn(true);
-  viewStatusBar->setOn(true);
-  viewBrowseDock->setOn(true);
+  viewToolBar->setChecked(true);
+  viewStatusBar->setChecked(true);
+  viewBrowseDock->setChecked(true);
   slotViewOctaveDock(false);
   initCursorMenu();
   Module::registerModules ();
@@ -143,7 +143,7 @@ QucsApp::QucsApp()
   // it configures itself and get appended to App->DocumentTab
   new Schematic(this, "");
 
-  select->setOn(true);  // switch on the 'select' action
+  select->setChecked(true);  // switch on the 'select' action
   switchSchematicDoc(true);  // "untitled" document is schematic
 
   lastExportFilename = QDir::homePath() + QDir::separator() + "export.png";
@@ -699,7 +699,7 @@ void QucsApp::slotSelectComponent(QListWidgetItem *item)
   // toggle last toolbar button off
   if(activeAction) {
     activeAction->blockSignals(true); // do not call toggle slot
-    activeAction->setOn(false);       // set last toolbar button off
+    activeAction->setChecked(false);       // set last toolbar button off
     activeAction->blockSignals(false);
   }
   activeAction = 0;
@@ -1141,7 +1141,7 @@ int QucsApp::testFile(const QString& DocName)
       return -2;
     }
     Line = stream.readLine();
-    Line = Line.stripWhiteSpace();
+    Line = Line.trimmed();
   } while(Line.isEmpty());
 
   if(Line.left(16) != "<Qucs Schematic ") {  // wrong file type ?
@@ -1173,7 +1173,7 @@ int QucsApp::testFile(const QString& DocName)
       return z;       // return number of ports
     }
 
-    Line = Line.stripWhiteSpace();
+    Line = Line.trimmed();
     QString s = Line.section(' ',0,0);    // component type
     if(s == "<Port") z++;
   }
@@ -1292,7 +1292,7 @@ void QucsApp::openProject(const QString& Path, const QString& Name)
   ProjName = Name;   // remember the name of project
 
   // show name in title of main window
-  setCaption("Qucs " PACKAGE_VERSION + tr(" - Project: ")+Name);
+  setWindowTitle("Qucs " PACKAGE_VERSION + tr(" - Project: ")+Name);
 }
 
 // ----------------------------------------------------------
@@ -1343,7 +1343,7 @@ void QucsApp::slotMenuCloseProject()
   view->drawn = false;
 
   slotResetWarnings();
-  setCaption("Qucs " PACKAGE_VERSION + tr(" - Project: "));
+  setWindowTitle("Qucs " PACKAGE_VERSION + tr(" - Project: "));
   QucsSettings.QucsWorkDir.setPath(QDir::homeDirPath()+QDir::convertSeparators ("/.qucs"));
   octave->adjustDirectory();
 
@@ -2478,7 +2478,7 @@ void QucsApp::slotOpenContent(QTreeWidgetItem *item)
       if(Suffix == "sch") return;
 
     select->blockSignals(true);  // switch on the 'select' action ...
-    select->setOn(true);
+    select->setChecked(true);
     select->blockSignals(false);
 
     activeAction = select;
@@ -2557,7 +2557,7 @@ void QucsApp::slotSelectSubcircuit(QTreeWidgetItem *item)
   // toggle last toolbar button off
   if(activeAction) {
     activeAction->blockSignals(true); // do not call toggle slot
-    activeAction->setOn(false);       // set last toolbar button off
+    activeAction->setChecked(false);       // set last toolbar button off
     activeAction->blockSignals(false);
   }
   activeAction = 0;
@@ -2708,7 +2708,7 @@ void QucsApp::changeSchematicSymbolMode(Schematic *Doc)
 {
   if(Doc->symbolMode) {
     // go into select modus to avoid placing a forbidden element
-    select->setOn(true);
+    select->setChecked(true);
 
     switchEditMode(false);
   }
@@ -2814,7 +2814,7 @@ void QucsApp::slot2PortMatching()
 
   QString DataSet;
   Schematic *Doc = (Schematic*)DocumentTab->currentPage();
-  int z = pm->pGraph->Var.find(':');
+  int z = pm->pGraph->Var.indexOf(':');
   if(z <= 0)  DataSet = Doc->DataSet;
   else  DataSet = pm->pGraph->Var.mid(z+1);
   double Freq = pm->VarPos[0];
