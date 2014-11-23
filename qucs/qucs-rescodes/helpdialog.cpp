@@ -26,7 +26,7 @@ email                : sudhakar.m.kumar@gmail.com
 
 
 HelpDialog::HelpDialog(QWidget *parent)
-: QDialog(parent, 0, false, Qt::WDestructiveClose)
+: QDialog(parent/*, 0, false, Qt::WDestructiveClose*/)
 {
 	setWindowTitle("Resistance color codes help");
 
@@ -51,7 +51,11 @@ HelpDialog::HelpDialog(QWidget *parent)
 	vLayout = new QVBoxLayout(this);
 
 	Text = new QTextEdit(s, this);
-	Text->setTextFormat(Qt::PlainText);
+    
+#pragma message "Do this way?"
+    Text->setAcceptRichText(false);
+	//Text->setTextFormat(Qt::PlainText);
+    
 	Text->setReadOnly(true);
 	Text->setMinimumSize(200,200);
 	vLayout->addWidget(Text);

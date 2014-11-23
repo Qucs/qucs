@@ -45,7 +45,7 @@
 //------------------------class member declarations for MyWidget---------------------------------//
 
 MyWidget::MyWidget( QWidget *parent, const char *name )
-: QWidget( parent, name )
+: QWidget( parent/*, name */)
 {
 	setWindowTitle("Color Codes");
 
@@ -96,13 +96,19 @@ MyWidget::MyWidget( QWidget *parent, const char *name )
 	//-------------------paste the configuration to clipboard--------------------------------------------//
 	connect(res, SIGNAL(valueModified(QResistor*)),this,SLOT(slotConfiguration()));
 	//-------------------switching buttons ui--------------------------------------//
-  QPushButton *calcColor = new QPushButton(QPixmap(":/bitmaps/next.png")," To Colors", this, "calcColor" );
+  QPushButton *calcColor = new QPushButton(QPixmap(":/bitmaps/next.png")," To Colors", this );
+    calcColor->setObjectName("calcColor");
+    
 	connect(calcColor, SIGNAL(clicked()),this,SLOT(setResistanceValue()));
 
-	QPushButton *calcResistance = new QPushButton(QPixmap(":/bitmaps/previous.png")," To Resistance", this, "calcResistance" );
+	QPushButton *calcResistance = new QPushButton(QPixmap(":/bitmaps/previous.png")," To Resistance", this);
+    calcColor->setObjectName( "calcResistance" );
+    
 	connect(calcResistance, SIGNAL(clicked()),this,SLOT(setColorValue()));
 
-	QPushButton *quit = new QPushButton( "Quit", this, "quit" );
+	QPushButton *quit = new QPushButton( "Quit", this );
+    calcColor->setObjectName("quit");
+    
 	connect( quit, SIGNAL(clicked()), qApp, SLOT(quit()) );
 
   QHBoxLayout *buttonBox = new QHBoxLayout;
@@ -186,7 +192,7 @@ int main( int argc, char **argv )
 	QApplication a( argc, argv );
 
 	MyWidget w;
-	a.setMainWidget( &w );
+	//a.setMainWidget( &w );
 	w.show();
 	return a.exec();
 }

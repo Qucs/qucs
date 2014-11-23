@@ -522,7 +522,7 @@ void ComponentDialog::slotSelectProperty(QTableWidgetItem *item)
 
     if(List.count() >= 1) {    // ComboBox with value list or line edit ?
       ComboEdit->clear();
-      ComboEdit->insertStringList(List);
+      ComboEdit->insertItems(0,List);
 
       for(int i=ComboEdit->count()-1; i>=0; i--)
        if(value == ComboEdit->text(i)) {
