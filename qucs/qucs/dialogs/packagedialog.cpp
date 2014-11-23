@@ -182,7 +182,7 @@ int PackageDialog::insertFile(const QString& FileName, QFile& File,
 
   Q_ULONG Count = File.size();
   char *p = (char*)malloc(Count+FileName.length()+2);
-  strcpy(p, FileName.latin1());
+  strcpy(p, FileName.toLatin1());
   File.readBlock(p+FileName.length()+1, Count);
   File.close();
 
@@ -216,7 +216,7 @@ int PackageDialog::insertDirectory(const QString& DirName,
   Entries.pop_front();  // delete "." from list
   Entries.pop_front();  // delete ".." from list
   for(it = Entries.begin(); it != Entries.end(); ++it) {
-    Stream << Q_UINT32(CODE_DIR) << (*it).latin1();
+    Stream << Q_UINT32(CODE_DIR) << (*it).toLatin1();
     if(insertDirectory(myDir.absPath()+QDir::separator()+(*it), Stream) < 0)
       return -1;
     Stream << Q_UINT32(CODE_DIR_END) << Q_UINT32(0);
@@ -296,7 +296,7 @@ void PackageDialog::slotCreate()
     p = i.next();  
     if(p->isChecked()) {
       s = p->text() + "_prj";
-      Stream << Q_UINT32(CODE_DIR) << s.latin1();
+      Stream << Q_UINT32(CODE_DIR) << s.toLatin1();
       s = QucsSettings.QucsHomeDir.absPath() + QDir::separator() + s;
       if(insertDirectory(s, Stream) < 0) {
         PkgFile.close();

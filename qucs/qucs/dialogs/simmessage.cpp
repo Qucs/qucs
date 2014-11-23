@@ -615,8 +615,8 @@ void SimMessage::slotDisplayMsg()
     i = ProgressText.findRev('\r');
     if(i > 1) {
 #ifdef SPEEDUP_PROGRESSBAR
-      iProgress = 10*int(ProgressText.at(i-2).latin1()-'0') +
-                     int(ProgressText.at(i-1).latin1()-'0');
+      iProgress = 10*int(ProgressText.at(i-2).toLatin1()-'0') +
+                     int(ProgressText.at(i-1).toLatin1()-'0');
       if(!waitForUpdate) {
         QTimer::singleShot(20, this, SLOT(slotUpdateProgressBar()));
         waitForUpdate = true;
@@ -624,13 +624,13 @@ void SimMessage::slotDisplayMsg()
 #else
       SimProgress->setMaximum(100);
       SimProgress->setValue(
-         10*int(ProgressText.at(i-2).latin1()-'0') +
-            int(ProgressText.at(i-1).latin1()-'0'));
+         10*int(ProgressText.at(i-2).toLatin1()-'0') +
+            int(ProgressText.at(i-1).toLatin1()-'0'));
 #endif
       ProgressText.remove(0, i+1);
     }
 
-    if(ProgressText.size()>0&&ProgressText.at(0).latin1() <= '\t')
+    if(ProgressText.size()>0&&ProgressText.at(0).toLatin1() <= '\t')
       return;
   }
   else {

@@ -565,7 +565,7 @@ bool Schematic::loadProperties(QTextStream *stream)
 		if(nstr.toInt(&ok) == 0) SimRunScript = false;
 		else SimRunScript = true;
     else if(cstr == "showFrame")
-		showFrame = nstr.at(0).latin1() - '0';
+		showFrame = nstr.at(0).toLatin1() - '0';
     else if(cstr == "FrameText0") convert2Unicode(Frame_Text0 = nstr);
     else if(cstr == "FrameText1") convert2Unicode(Frame_Text1 = nstr);
     else if(cstr == "FrameText2") convert2Unicode(Frame_Text2 = nstr);
@@ -1449,7 +1449,7 @@ int NumPorts)
       if(!isAnalog) {
         if (isVerilog) {
           Signals.erase(*it_name); // remove node name
-          switch(pc->Props.at(1)->Value.at(0).latin1()) {
+          switch(pc->Props.at(1)->Value.at(0).toLatin1()) {
             case 'a':
               InOutPorts.append(*it_name);
               break;
@@ -1463,7 +1463,7 @@ int NumPorts)
         else {
           // remove node name of output port
           Signals.erase(*it_name);
-          switch(pc->Props.at(1)->Value.at(0).latin1()) {
+          switch(pc->Props.at(1)->Value.at(0).toLatin1()) {
             case 'a':
               (*it_name) += " : inout"; // attribute "analog" is "inout"
               break;

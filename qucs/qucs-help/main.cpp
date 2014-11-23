@@ -68,7 +68,7 @@ bool loadSettings()
     file.close();
   }
 
-  file.setName(QDir::homeDirPath()+QDir::convertSeparators ("/.qucs/qucsrc"));
+  file.setName(QDir::homePath()+QDir::convertSeparators ("/.qucs/qucsrc"));
   if(!file.open(QIODevice::ReadOnly))
     result = true; // qucs settings not necessary
   else {
@@ -99,7 +99,7 @@ bool saveApplSettings(QucsHelp *qucs)
 	  return true;   // nothing has changed
 
 
-  QFile file(QDir::homeDirPath()+QDir::convertSeparators ("/.qucs/helprc"));
+  QFile file(QDir::homePath()+QDir::convertSeparators ("/.qucs/helprc"));
   if(!file.open(QIODevice::WriteOnly)) {
     QMessageBox::warning(0, QObject::tr("Warning"),
 			QObject::tr("Cannot save settings !"));
