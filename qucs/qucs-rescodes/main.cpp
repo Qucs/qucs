@@ -80,7 +80,7 @@ MyWidget::MyWidget( QWidget *parent, const char *name )
 
   QMenuBar *menuBar = new QMenuBar(this);
 	menuBar->addMenu(fileMenu);
-	menuBar->insertSeparator();
+	menuBar->addSeparator();
 	menuBar->addMenu(helpMenu);
 
 	res= new QResistor();

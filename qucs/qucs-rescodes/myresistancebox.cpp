@@ -19,6 +19,7 @@
 #include "qresistor.h"
 
 #include <QValidator>
+#include <QDoubleValidator>
 #include <QLabel>
 #include <QComboBox>
 #include <QLineEdit>
@@ -71,7 +72,7 @@ float MyResistanceBox::enteredValue()
 {
 	bool ok;
 	float f;
-	int i=resUnit->currentItem();
+	int i=resUnit->currentIndex();
 	f=(resValueEdit->text()).toFloat(&ok);
 	f=f*(pow(10,3*i));
 
