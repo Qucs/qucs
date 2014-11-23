@@ -164,12 +164,12 @@ void QucsHelp::setupActions()
     
 
   QMenu *helpMenu = new QMenu(this);
-  helpMenu->insertItem(tr("&About Qt"),qApp,SLOT(aboutQt()));
+  helpMenu->addAction(tr("&About Qt"),qApp,SLOT(aboutQt()));
 
-  bar->insertItem(tr("&File"), fileMenu );
-  bar->insertItem(tr("&View"),viewMenu);
-  bar->insertSeparator();
-  bar->insertItem(tr("&Help"),helpMenu);
+  bar->addMenu(new QMenu(tr("&File"), fileMenu));
+  bar->addMenu(new QMenu(tr("&View"),viewMenu));
+  bar->addSeparator();
+  bar->addMenu(new QMenu(tr("&Help"),helpMenu));
 }
 
 void QucsHelp::createSidebar()
