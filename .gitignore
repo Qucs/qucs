@@ -204,3 +204,5 @@ Debug
 #Others
 CMakeScripts
 *.cxx_parameters
+shadow
+
