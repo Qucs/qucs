@@ -67,7 +67,7 @@ QucsHelp::~QucsHelp()
 
 void QucsHelp::setupActions()
 {
-  QToolBar *toolbar = new QToolBar(this,"main_toolbar");
+  QToolBar *toolbar = new QToolBar("main_toolbar",this);
 
   this->addToolBar(toolbar);
 
@@ -76,18 +76,32 @@ void QucsHelp::setupActions()
   const QKeySequence ks = QKeySequence();
 
   QAction *quitAction = new QAction(QIcon((":/bitmaps/quit.png")),
-                                    tr("&Quit"), (const QKeySequence&)Qt::CTRL+Qt::Key_Q, this,"");
+                                    tr("&Quit"), this);
+    quitAction->setShortcut((const QKeySequence&)Qt::CTRL+Qt::Key_Q);
+    
   QAction *backAction = new QAction(QIcon((":/bitmaps/back.png")),
-                                    tr("&Back"), Qt::ALT+Qt::Key_Left, this,"");
+                                    tr("&Back"), this);
+    backAction->setShortcut( Qt::ALT+Qt::Key_Left);
+ 
+    
   QAction *forwardAction = new QAction(QIcon((":/bitmaps/forward.png")),
-                                       tr("&Forward"), Qt::ALT+Qt::Key_Right, this,"");
+                                       tr("&Forward"),  this);
+   forwardAction->setShortcut(Qt::ALT+Qt::Key_Right);
+    
   QAction *homeAction = new QAction(QIcon((":/bitmaps/home.png")),
-                                    tr("&Home"),Qt::CTRL+Qt::Key_H,this,"");
+                                    tr("&Home"),this);
+   homeAction->setShortcut(Qt::CTRL+Qt::Key_H);
+    
   previousAction = new QAction(QIcon((":/bitmaps/previous.png")),tr("&Previous"),
-                               ks, this,"");
+                               this);
+   previousAction->setShortcut( ks);
+    
   nextAction = new QAction(QIcon((":/bitmaps/next.png")),
-                           tr("&Next"), ks, this,"");
-  viewBrowseDock = new QAction(tr("&Table of Contents"), 0, this,"");
+                           tr("&Next"), this);
+   nextAction->setShortcut( ks);
+    
+  viewBrowseDock = new QAction(tr("&Table of Contents"), this);
+    
   viewBrowseDock->setToggleAction(true);
   viewBrowseDock->setOn(true);
   viewBrowseDock->setStatusTip(tr("Enables/disables the table of contents"));
