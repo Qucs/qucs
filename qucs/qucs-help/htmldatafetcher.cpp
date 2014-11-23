@@ -317,7 +317,7 @@ QStringList HtmlDataFetcher::fetchChapterTexts(const QString &indexFile)
   QFile file(indexFile);
   if(!file.open(QIODevice::ReadOnly))
   {
-    qWarning("HtmlDataFetcher::fetchChapterTexts() : Can't open file %s",indexFile.toLatin1());
+    qWarning("HtmlDataFetcher::fetchChapterTexts() : Can't open file %s",indexFile.toLatin1().data());
     return retVal;
   }
 
