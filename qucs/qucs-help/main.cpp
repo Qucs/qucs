@@ -68,7 +68,7 @@ bool loadSettings()
     file.close();
   }
 
-  file.setName(QDir::homePath()+QDir::convertSeparators ("/.qucs/qucsrc"));
+  file.setFileName(QDir::homePath()+QDir::convertSeparators ("/.qucs/qucsrc"));
   if(!file.open(QIODevice::ReadOnly))
     result = true; // qucs settings not necessary
   else {

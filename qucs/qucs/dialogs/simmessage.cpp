@@ -151,7 +151,7 @@ bool SimMessage::startProcess()
 
   Collect.clear();  // clear list for NodeSets, SPICE components etc.
   ProgText->insert(tr("creating netlist... "));
-  NetlistFile.setName(QucsSettings.QucsHomeDir.filePath("netlist.txt"));
+  NetlistFile.setFileName(QucsSettings.QucsHomeDir.filePath("netlist.txt"));
    if(!NetlistFile.open(QIODevice::WriteOnly)) {
     ErrText->insert(tr("ERROR: Cannot write netlist file!"));
     FinishSimulation(-1);
@@ -223,9 +223,9 @@ void SimMessage::nextSPICE()
 
   QFile SpiceFile;
   if(FileName.indexOf(QDir::separator()) < 0)  // add path ?
-    SpiceFile.setName(QucsSettings.QucsWorkDir.path() + QDir::separator() + FileName);
+    SpiceFile.setFileName(QucsSettings.QucsWorkDir.path() + QDir::separator() + FileName);
   else
-    SpiceFile.setName(FileName);
+    SpiceFile.setFileName(FileName);
   if(!SpiceFile.open(QIODevice::ReadOnly)) {
     ErrText->insert(tr("ERROR: Cannot open SPICE file \"%1\".").arg(FileName));
     FinishSimulation(-1);
@@ -403,7 +403,7 @@ void SimMessage::startSimulator()
 	}
       vhdlDir.setPath(vhdlDir.path()+"/"+lib);
       QFile destFile;
-      destFile.setName(vhdlDir.filePath(entity+".vhdl"));
+      destFile.setFileName(vhdlDir.filePath(entity+".vhdl"));
       if(!destFile.open(QIODevice::WriteOnly)) {
 	ErrText->insert(tr("ERROR: Cannot create \"%1\"!")
 			.arg(destFile.name()));

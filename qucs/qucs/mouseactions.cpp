@@ -746,6 +746,7 @@ void MouseActions::rightPressMenu(Schematic *Doc, QMouseEvent *Event, float fX, 
 #pragma message "exchange like this"
       //ComponentMenu->addAction(QucsMain->symEdit);
       //to QucsMain->symEdit->addTo(ComponentMenu);
+      // see http://qt-project.org/doc/qt-4.8/qaction-qt3.html#addTo
       QucsMain->symEdit->addTo(ComponentMenu);
       QucsMain->fileSettings->addTo(ComponentMenu);
     }

@@ -1009,8 +1009,8 @@ void QucsApp::slotAddToProject()
   QFile origFile, destFile;
   while(it != FileList.end()) {
     Info.setFile(*it);
-    origFile.setName(*it);
-    destFile.setName(QucsSettings.QucsWorkDir.absPath() +
+    origFile.setFileName(*it);
+    destFile.setFileName(QucsSettings.QucsWorkDir.absPath() +
                      QDir::separator() + Info.fileName());
 
     if(!origFile.open(QIODevice::ReadOnly)) {

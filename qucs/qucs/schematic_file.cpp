@@ -1409,7 +1409,7 @@ int NumPorts)
   QFile ofile;
   if(creatingLib) {
     QString f = properAbsFileName(DocName) + ".lst";
-    ofile.setName(f);
+    ofile.setFileName(f);
     if(!ofile.open(IO_WriteOnly)) {
       ErrText->insert(tr("ERROR: Cannot create library file \"%s\".").arg(f));
       return;

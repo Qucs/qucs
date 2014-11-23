@@ -847,11 +847,11 @@ int Diagram::loadVarData(const QString& fileName, Graph *g)
   setlocale (LC_NUMERIC, "C");
 
   if(pos <= 0) {
-    file.setName(fileName);
+    file.setFileName(fileName);
     Variable = g->Var;
   }
   else {
-    file.setName(Info.dirPath()+QDir::separator() + g->Var.left(pos)+".dat");
+    file.setFileName(Info.dirPath()+QDir::separator() + g->Var.left(pos)+".dat");
     Variable = g->Var.mid(pos+1);
   }
 

@@ -21,6 +21,7 @@
 #include <QMimeData>
 #include <QTextStream>
 #include <QDebug>
+#include <QTextCodec>
 
 HtmlDataFetcher::HtmlDataFetcher()
 {

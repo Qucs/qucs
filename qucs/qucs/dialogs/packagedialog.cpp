@@ -205,7 +205,7 @@ int PackageDialog::insertDirectory(const QString& DirName,
   QStringList Entries = myDir.entryList("*", QDir::Files, QDir::Name);
   QStringList::iterator it;
   for(it = Entries.begin(); it != Entries.end(); ++it) {
-    File.setName(myDir.absFilePath(*it));
+    File.setFileName(myDir.absFilePath(*it));
     Stream << Q_UINT32(CODE_FILE);
     if(insertFile(*it, File, Stream) < 0)
       return -1;
@@ -232,7 +232,7 @@ int PackageDialog::insertLibraries(QDataStream& Stream)
   QStringList Entries = myDir.entryList("*", QDir::Files, QDir::Name);
   QStringList::iterator it;
   for(it = Entries.begin(); it != Entries.end(); ++it) {
-    File.setName(myDir.absFilePath(*it));
+    File.setFileName(myDir.absFilePath(*it));
     Stream << Q_UINT32(CODE_LIBRARY);
     if(insertFile(*it, File, Stream) < 0)
       return -1;
@@ -353,7 +353,7 @@ void PackageDialog::extractPackage()
   QFile PkgFile(s);
   if(!PkgFile.open(QIODevice::ReadOnly)) {
     if(Info.extension().isEmpty()) s += ".qucs";
-    PkgFile.setName(s);
+    PkgFile.setFileName(s);
     if(!PkgFile.open(QIODevice::ReadOnly)) {
       MsgText->append(tr("ERROR: Cannot open package!"));
       ButtClose->setDisabled(false);

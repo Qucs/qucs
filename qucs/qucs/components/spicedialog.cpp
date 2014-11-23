@@ -381,7 +381,7 @@ bool SpiceDialog::loadSpiceNetList(const QString& s)
 
     if (piping)
     {
-      PrepFile.setName(PrepName);
+      PrepFile.setFileName(PrepName);
       if(!PrepFile.open(QIODevice::WriteOnly))
       {
         QMessageBox::critical(this, tr("Error"),
