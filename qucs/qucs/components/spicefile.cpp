@@ -497,7 +497,7 @@ void SpiceFile::slotGetNetlist()
   while((i = NetLine.indexOf('\n')) >= 0) {
     s = NetLine.left(i);
     NetLine.remove(0, i+1);
-    s = s.stripWhiteSpace();
+    s = s.trimmed();
     if(s.size()>0&&s.at(0) == '#') {
       continue;
     } else if(s.isEmpty()) {

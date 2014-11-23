@@ -536,7 +536,7 @@ void SpiceDialog::slotGetNetlist()
   {
     s = Line.left(i);
     Line.remove(0, i+1);
-    s = s.stripWhiteSpace();
+    s = s.trimmed();
     if (!s.isEmpty ())
     {
       if (s.at(0) == '.')

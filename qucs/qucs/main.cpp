@@ -336,7 +336,7 @@ QString StringNiceNum(double num)
 // #########################################################################
 void str2num(const QString& s_, double& Number, QString& Unit, double& Factor)
 {
-  QString str = s_.stripWhiteSpace();
+  QString str = s_.trimmed();
 
 /*  int i=0;
   bool neg = false;
@@ -363,7 +363,7 @@ void str2num(const QString& s_, double& Number, QString& Unit, double& Factor)
     }
 
   Number = str.left(i).toDouble();
-  Unit   = str.mid(i).stripWhiteSpace();
+  Unit   = str.mid(i).trimmed();
   if(Unit.length()>0)
   {
     switch(Unit.at(0).toLatin1()) {

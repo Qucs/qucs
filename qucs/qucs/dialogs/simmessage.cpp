@@ -280,7 +280,7 @@ void SimMessage::slotReadSpiceNetlist()
     ProgressText.remove(0, i+1);
 
 
-    s = s.stripWhiteSpace();
+    s = s.trimmed();
     if(s.isEmpty()) continue;
     if(s.at(0) == '#') continue;
     if(s.at(0) == '.') if(s.left(5) != ".Def:") { // insert simulations later

@@ -193,7 +193,7 @@ int LibComp::loadSymbol()
   QTextStream stream(&FileString, QIODevice::ReadOnly);
   while(!stream.atEnd()) {
     Line = stream.readLine();
-    Line = Line.stripWhiteSpace();
+    Line = Line.trimmed();
     if(Line.isEmpty())  continue;
     if(Line.at(0) != '<') return -11;
     if(Line.at(Line.length()-1) != '>') return -12;

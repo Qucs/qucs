@@ -525,7 +525,7 @@ bool Schematic::loadProperties(QTextStream *stream)
   while(!stream->atEnd()) {
     Line = stream->readLine();
     if(Line.at(0) == '<') if(Line.at(1) == '/') return true;  // field end ?
-    Line = Line.stripWhiteSpace();
+    Line = Line.trimmed();
     if(Line.isEmpty()) continue;
 
     if(Line.at(0) != '<') {
@@ -633,7 +633,7 @@ bool Schematic::loadComponents(QTextStream *stream, Q3PtrList<Component> *List)
   while(!stream->atEnd()) {
     Line = stream->readLine();
     if(Line.at(0) == '<') if(Line.at(1) == '/') return true;
-    Line = Line.stripWhiteSpace();
+    Line = Line.trimmed();
     if(Line.isEmpty()) continue;
 
     /// \todo enable user to load partial schematic, skip unknown components
@@ -703,7 +703,7 @@ bool Schematic::loadWires(QTextStream *stream, Q3PtrList<Element> *List)
   while(!stream->atEnd()) {
     Line = stream->readLine();
     if(Line.at(0) == '<') if(Line.at(1) == '/') return true;
-    Line = Line.stripWhiteSpace();
+    Line = Line.trimmed();
     if(Line.isEmpty()) continue;
 
     // (Node*)4 =  move all ports (later on)
@@ -740,7 +740,7 @@ bool Schematic::loadDiagrams(QTextStream *stream, Q3PtrList<Diagram> *List)
   while(!stream->atEnd()) {
     Line = stream->readLine();
     if(Line.at(0) == '<') if(Line.at(1) == '/') return true;
-    Line = Line.stripWhiteSpace();
+    Line = Line.trimmed();
     if(Line.isEmpty()) continue;
 
     cstr = Line.section(' ',0,0);    // diagram type
@@ -784,7 +784,7 @@ bool Schematic::loadPaintings(QTextStream *stream, Q3PtrList<Painting> *List)
     Line = stream->readLine();
     if(Line.at(0) == '<') if(Line.at(1) == '/') return true;
 
-    Line = Line.stripWhiteSpace();
+    Line = Line.trimmed();
     if(Line.isEmpty()) continue;
     if( (Line.at(0) != '<') || (Line.at(Line.length()-1) != '>')) {
       QMessageBox::critical(0, QObject::tr("Error"),
@@ -875,7 +875,7 @@ bool Schematic::loadDocument()
   // read content *************************
   while(!stream.atEnd()) {
     Line = stream.readLine();
-    Line = Line.stripWhiteSpace();
+    Line = Line.trimmed();
     if(Line.isEmpty()) continue;
 
     if(Line == "<Symbol>") {

@@ -1369,7 +1369,7 @@ bool Diagram::load(const QString& Line, QTextStream *stream)
   // load graphs of the diagram
   while(!stream->atEnd()) {
     s = stream->readLine();
-    s = s.stripWhiteSpace();
+    s = s.trimmed();
     if(s.isEmpty()) continue;
 
     if(s == ("</"+Name+">")) return true;  // found end tag ?

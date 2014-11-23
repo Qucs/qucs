@@ -77,7 +77,7 @@ bool loadSettings()
     while(!stream.atEnd()) {
       Line = stream.readLine();
       Setting = Line.section('=',0,0);
-      Line = Line.section('=',1,1).stripWhiteSpace();
+      Line = Line.section('=',1,1).trimmed();
       if(Setting == "Font")
 	QucsSettings.font.fromString(Line);
       else if(Setting == "Language")

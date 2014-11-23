@@ -1141,7 +1141,7 @@ int QucsApp::testFile(const QString& DocName)
       return -2;
     }
     Line = stream.readLine();
-    Line = Line.stripWhiteSpace();
+    Line = Line.trimmed();
   } while(Line.isEmpty());
 
   if(Line.left(16) != "<Qucs Schematic ") {  // wrong file type ?
@@ -1173,7 +1173,7 @@ int QucsApp::testFile(const QString& DocName)
       return z;       // return number of ports
     }
 
-    Line = Line.stripWhiteSpace();
+    Line = Line.trimmed();
     QString s = Line.section(' ',0,0);    // component type
     if(s == "<Port") z++;
   }

@@ -1063,9 +1063,9 @@ void ComponentDialog::slotSimTypeChange(int Type)
     if(!editNumber->isEnabled()) {  // was the other mode before ?
       // this text change, did not emit the textChange signal !??!
       editStart->setText(
-	editValues->text().section(';', 0, 0).stripWhiteSpace());
+	editValues->text().section(';', 0, 0).trimmed());
       editStop->setText(
-	editValues->text().section(';', -1, -1).stripWhiteSpace());
+	editValues->text().section(';', -1, -1).trimmed());
       editNumber->setText("2");
       slotNumberChanged(0);
 

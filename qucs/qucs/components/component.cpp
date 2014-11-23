@@ -1529,7 +1529,7 @@ Component* getComponentFromName(QString& Line, Schematic* p)
 {
   Component *c = 0;
 
-  Line = Line.stripWhiteSpace();
+  Line = Line.trimmed();
   if(Line.at(0) != '<') {
     QMessageBox::critical(0, QObject::tr("Error"),
 			QObject::tr("Format Error:\nWrong line start!"));
