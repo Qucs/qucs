@@ -216,7 +216,7 @@ void QucsHelp::slotSourceChanged(const QUrl & _str)
 {
   QString str = _str.toString();
   // Remove '#*' chars in link since we don't check '#top,etc' while tracking previous actions
-  int hashPos = str.findRev('#');
+  int hashPos = str.lastIndexOf('#');
   if(hashPos != -1)
     str = str.left(hashPos);
   // Don't do anything if accessing same page

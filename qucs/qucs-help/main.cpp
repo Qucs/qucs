@@ -188,7 +188,8 @@ int main(int argc, char *argv[])
   QTranslator tor( 0 );
   QString locale = QucsSettings.Language;
   if(locale.isEmpty())
-    locale = QTextCodec::locale();
+    //locale = QTextCodec::locale();
+      QLocale::languageToString ((new QLocale)->language());
 
   tor.load( QString("qucs_") + locale, QucsSettings.LangDir);
   a.installTranslator( &tor );
@@ -211,7 +212,7 @@ int main(int argc, char *argv[])
   qInstallMsgHandler(qucsMessageOutput);
 
   QucsHelp *qucs = new QucsHelp(Page);
-  a.setMainWidget(qucs);
+  //a.setMainWidget(qucs);
   qucs->resize(QucsSettings.dx, QucsSettings.dy); // size and position ...
   qucs->move(QucsSettings.x, QucsSettings.y);     // ... before "show" !!!
   qucs->show();
