@@ -525,7 +525,7 @@ bool Schematic::loadProperties(QTextStream *stream)
   while(!stream->atEnd()) {
     Line = stream->readLine();
     if(Line.at(0) == '<') if(Line.at(1) == '/') return true;  // field end ?
-    Line = Line.stripWhiteSpace();
+    Line = Line.trimmed();
     if(Line.isEmpty()) continue;
 
     if(Line.at(0) != '<') {
@@ -565,7 +565,7 @@ bool Schematic::loadProperties(QTextStream *stream)
 		if(nstr.toInt(&ok) == 0) SimRunScript = false;
 		else SimRunScript = true;
     else if(cstr == "showFrame")
-		showFrame = nstr.at(0).latin1() - '0';
+		showFrame = nstr.at(0).toLatin1() - '0';
     else if(cstr == "FrameText0") convert2Unicode(Frame_Text0 = nstr);
     else if(cstr == "FrameText1") convert2Unicode(Frame_Text1 = nstr);
     else if(cstr == "FrameText2") convert2Unicode(Frame_Text2 = nstr);
@@ -633,7 +633,7 @@ bool Schematic::loadComponents(QTextStream *stream, Q3PtrList<Component> *List)
   while(!stream->atEnd()) {
     Line = stream->readLine();
     if(Line.at(0) == '<') if(Line.at(1) == '/') return true;
-    Line = Line.stripWhiteSpace();
+    Line = Line.trimmed();
     if(Line.isEmpty()) continue;
 
     /// \todo enable user to load partial schematic, skip unknown components
@@ -703,7 +703,7 @@ bool Schematic::loadWires(QTextStream *stream, Q3PtrList<Element> *List)
   while(!stream->atEnd()) {
     Line = stream->readLine();
     if(Line.at(0) == '<') if(Line.at(1) == '/') return true;
-    Line = Line.stripWhiteSpace();
+    Line = Line.trimmed();
     if(Line.isEmpty()) continue;
 
     // (Node*)4 =  move all ports (later on)
@@ -740,7 +740,7 @@ bool Schematic::loadDiagrams(QTextStream *stream, Q3PtrList<Diagram> *List)
   while(!stream->atEnd()) {
     Line = stream->readLine();
     if(Line.at(0) == '<') if(Line.at(1) == '/') return true;
-    Line = Line.stripWhiteSpace();
+    Line = Line.trimmed();
     if(Line.isEmpty()) continue;
 
     cstr = Line.section(' ',0,0);    // diagram type
@@ -784,7 +784,7 @@ bool Schematic::loadPaintings(QTextStream *stream, Q3PtrList<Painting> *List)
     Line = stream->readLine();
     if(Line.at(0) == '<') if(Line.at(1) == '/') return true;
 
-    Line = Line.stripWhiteSpace();
+    Line = Line.trimmed();
     if(Line.isEmpty()) continue;
     if( (Line.at(0) != '<') || (Line.at(Line.length()-1) != '>')) {
       QMessageBox::critical(0, QObject::tr("Error"),
@@ -875,7 +875,7 @@ bool Schematic::loadDocument()
   // read content *************************
   while(!stream.atEnd()) {
     Line = stream.readLine();
-    Line = Line.stripWhiteSpace();
+    Line = Line.trimmed();
     if(Line.isEmpty()) continue;
 
     if(Line == "<Symbol>") {
@@ -1409,7 +1409,7 @@ int NumPorts)
   QFile ofile;
   if(creatingLib) {
     QString f = properAbsFileName(DocName) + ".lst";
-    ofile.setName(f);
+    ofile.setFileName(f);
     if(!ofile.open(IO_WriteOnly)) {
       ErrText->insert(tr("ERROR: Cannot create library file \"%s\".").arg(f));
       return;
@@ -1449,7 +1449,7 @@ int NumPorts)
       if(!isAnalog) {
         if (isVerilog) {
           Signals.erase(*it_name); // remove node name
-          switch(pc->Props.at(1)->Value.at(0).latin1()) {
+          switch(pc->Props.at(1)->Value.at(0).toLatin1()) {
             case 'a':
               InOutPorts.append(*it_name);
               break;
@@ -1463,7 +1463,7 @@ int NumPorts)
         else {
           // remove node name of output port
           Signals.erase(*it_name);
-          switch(pc->Props.at(1)->Value.at(0).latin1()) {
+          switch(pc->Props.at(1)->Value.at(0).toLatin1()) {
             case 'a':
               (*it_name) += " : inout"; // attribute "analog" is "inout"
               break;
