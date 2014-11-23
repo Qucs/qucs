@@ -47,7 +47,7 @@ QucsHelp::QucsHelp(const QString& page)
 #ifndef __APPLE__
   setWindowIcon (QPixmap(":/bitmaps/big.qucs.xpm"));
 #endif
-  setCaption(tr("Qucs Help System"));
+  setWindowTitle(tr("Qucs Help System"));
 
   textBrowser = new TextBrowser(this);
   textBrowser->setMinimumSize(400,200);
@@ -252,7 +252,7 @@ void QucsHelp::slotSourceChanged(const QUrl & _str)
   {
     textBrowser->setSource(QucsHelpDir.filePath(links[0]));
     currentSource = QucsHelpDir.filePath(links[0]);
-    qDebug("QucsHelp::slotSourceChanged():  Link mismatch \n Link: %s",str.ascii());
+    qDebug("QucsHelp::slotSourceChanged():  Link mismatch \n Link: %s",str.toAscii().data());
   }
   else
     currentSource = str;

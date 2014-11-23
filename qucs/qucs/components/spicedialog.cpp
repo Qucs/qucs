@@ -44,7 +44,7 @@ SpiceDialog::SpiceDialog(QucsApp* App_, SpiceFile *c, Schematic *d)
   App = App_; // pointer to main application
 
   resize(400, 250);
-  setCaption(tr("Edit SPICE Component Properties"));
+  setWindowTitle(tr("Edit SPICE Component Properties"));
   Comp = c;
   Doc  = d;
 

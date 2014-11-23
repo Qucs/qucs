@@ -111,7 +111,7 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
   Graphs.setAutoDelete(true);
   copyDiagramGraphs();   // make a copy of all graphs
   defaultDataSet = _DataSet;
-  setCaption(tr("Edit Diagram Properties"));
+  setWindowTitle(tr("Edit Diagram Properties"));
   changed = false;
   transfer = false;  // have changes be applied ? (used by "Cancel")
   toTake = false;   // double-clicked variable be inserted into graph list ?

@@ -28,7 +28,7 @@ email                : sudhakar.m.kumar@gmail.com
 HelpDialog::HelpDialog(QWidget *parent)
 : QDialog(parent, 0, false, Qt::WDestructiveClose)
 {
-	setCaption("Resistance color codes help");
+	setWindowTitle("Resistance color codes help");
 
 
 	// --------  set help text into dialog  ------------

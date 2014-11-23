@@ -39,7 +39,7 @@ ComponentDialog::ComponentDialog(Component *c, Schematic *d)
 			: QDialog(d, 0, TRUE, Qt::WDestructiveClose)
 {
   resize(600, 250);
-  setCaption(tr("Edit Component Properties"));
+  setWindowTitle(tr("Edit Component Properties"));
   Comp  = c;
   Doc   = d;
   QString s;

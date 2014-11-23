@@ -88,7 +88,7 @@ protected:
 
 QucsApp::QucsApp()
 {
-  setCaption("Qucs " PACKAGE_VERSION);
+  setWindowTitle("Qucs " PACKAGE_VERSION);
 
   spiceExtensions << "*.sp" << "*.cir" << "*.spc" << "*.spi";
 
@@ -1292,7 +1292,7 @@ void QucsApp::openProject(const QString& Path, const QString& Name)
   ProjName = Name;   // remember the name of project
 
   // show name in title of main window
-  setCaption("Qucs " PACKAGE_VERSION + tr(" - Project: ")+Name);
+  setWindowTitle("Qucs " PACKAGE_VERSION + tr(" - Project: ")+Name);
 }
 
 // ----------------------------------------------------------
@@ -1343,7 +1343,7 @@ void QucsApp::slotMenuCloseProject()
   view->drawn = false;
 
   slotResetWarnings();
-  setCaption("Qucs " PACKAGE_VERSION + tr(" - Project: "));
+  setWindowTitle("Qucs " PACKAGE_VERSION + tr(" - Project: "));
   QucsSettings.QucsWorkDir.setPath(QDir::homeDirPath()+QDir::convertSeparators ("/.qucs"));
   octave->adjustDirectory();
 

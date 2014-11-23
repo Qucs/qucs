@@ -137,7 +137,7 @@ void ChangeDialog::slotButtReplace()
 
   // create dialog showing all found components
   QDialog *Dia = new QDialog(this);
-  Dia->setCaption(tr("Found Components"));
+  Dia->setWindowTitle(tr("Found Components"));
   QVBoxLayout *Dia_All = new QVBoxLayout(Dia);
   Dia_All->setSpacing(3);
   Dia_All->setMargin(5);

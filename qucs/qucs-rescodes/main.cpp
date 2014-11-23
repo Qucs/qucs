@@ -47,7 +47,7 @@
 MyWidget::MyWidget( QWidget *parent, const char *name )
 : QWidget( parent, name )
 {
-	setCaption("Color Codes");
+	setWindowTitle("Color Codes");
 
   // icons are handled differently on OSX
 #ifndef __APPLE__
