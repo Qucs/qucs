@@ -1064,7 +1064,7 @@ int Component::analyseLine(const QString& Row, int numProps)
     Color.setNamedColor(Row.section(' ',4,4));
     if(!Color.isValid()) return -1;
 
-    s = Row.mid(Row.find('"')+1);    // Text (can contain " !!!)
+    s = Row.mid(Row.indexOf('"')+1);    // Text (can contain " !!!)
     s = s.left(s.length()-1);
     if(s.isEmpty()) return -1;
     convert2Unicode(s);
@@ -1529,7 +1529,7 @@ Component* getComponentFromName(QString& Line, Schematic* p)
 {
   Component *c = 0;
 
-  Line = Line.stripWhiteSpace();
+  Line = Line.trimmed();
   if(Line.at(0) != '<') {
     QMessageBox::critical(0, QObject::tr("Error"),
 			QObject::tr("Format Error:\nWrong line start!"));
