@@ -49,7 +49,7 @@
 
 
 PackageDialog::PackageDialog(QWidget *parent_, bool create_)
-			: QDialog(parent_) //, 0, TRUE, Qt::WDestructiveClose)
+			: QDialog(parent_) 
 {
   all = new QVBoxLayout(this);
   all->setMargin(5);
