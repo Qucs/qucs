@@ -49,7 +49,7 @@
 
 
 PackageDialog::PackageDialog(QWidget *parent_, bool create_)
-			: QDialog(parent_) //, 0, TRUE, Qt::WDestructiveClose)
+			: QDialog(parent_) 
 {
   all = new QVBoxLayout(this);
   all->setMargin(5);
@@ -182,7 +182,7 @@ int PackageDialog::insertFile(const QString& FileName, QFile& File,
 
   Q_ULONG Count = File.size();
   char *p = (char*)malloc(Count+FileName.length()+2);
-  strcpy(p, FileName.latin1());
+  strcpy(p, FileName.toLatin1());
   File.readBlock(p+FileName.length()+1, Count);
   File.close();
 
@@ -205,7 +205,7 @@ int PackageDialog::insertDirectory(const QString& DirName,
   QStringList Entries = myDir.entryList("*", QDir::Files, QDir::Name);
   QStringList::iterator it;
   for(it = Entries.begin(); it != Entries.end(); ++it) {
-    File.setName(myDir.absFilePath(*it));
+    File.setFileName(myDir.absFilePath(*it));
     Stream << Q_UINT32(CODE_FILE);
     if(insertFile(*it, File, Stream) < 0)
       return -1;
@@ -216,7 +216,7 @@ int PackageDialog::insertDirectory(const QString& DirName,
   Entries.pop_front();  // delete "." from list
   Entries.pop_front();  // delete ".." from list
   for(it = Entries.begin(); it != Entries.end(); ++it) {
-    Stream << Q_UINT32(CODE_DIR) << (*it).latin1();
+    Stream << Q_UINT32(CODE_DIR) << (*it).toLatin1();
     if(insertDirectory(myDir.absPath()+QDir::separator()+(*it), Stream) < 0)
       return -1;
     Stream << Q_UINT32(CODE_DIR_END) << Q_UINT32(0);
@@ -232,7 +232,7 @@ int PackageDialog::insertLibraries(QDataStream& Stream)
   QStringList Entries = myDir.entryList("*", QDir::Files, QDir::Name);
   QStringList::iterator it;
   for(it = Entries.begin(); it != Entries.end(); ++it) {
-    File.setName(myDir.absFilePath(*it));
+    File.setFileName(myDir.absFilePath(*it));
     Stream << Q_UINT32(CODE_LIBRARY);
     if(insertFile(*it, File, Stream) < 0)
       return -1;
@@ -296,7 +296,7 @@ void PackageDialog::slotCreate()
     p = i.next();  
     if(p->isChecked()) {
       s = p->text() + "_prj";
-      Stream << Q_UINT32(CODE_DIR) << s.latin1();
+      Stream << Q_UINT32(CODE_DIR) << s.toLatin1();
       s = QucsSettings.QucsHomeDir.absPath() + QDir::separator() + s;
       if(insertDirectory(s, Stream) < 0) {
         PkgFile.close();
@@ -353,7 +353,7 @@ void PackageDialog::extractPackage()
   QFile PkgFile(s);
   if(!PkgFile.open(QIODevice::ReadOnly)) {
     if(Info.extension().isEmpty()) s += ".qucs";
-    PkgFile.setName(s);
+    PkgFile.setFileName(s);
     if(!PkgFile.open(QIODevice::ReadOnly)) {
       MsgText->append(tr("ERROR: Cannot open package!"));
       ButtClose->setDisabled(false);

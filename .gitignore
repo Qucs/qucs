@@ -195,3 +195,14 @@ CMakeCache.txt
 *.cmake
 *.depends
 
+# Xcode
+DerivedData
+*.build
+Debug
+*.xcodeproj
+
+#Others
+CMakeScripts
+*.cxx_parameters
+shadow
+

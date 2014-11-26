@@ -33,7 +33,7 @@
 
 
 DigiSettingsDialog::DigiSettingsDialog(TextDoc *Doc_)
-                  : QDialog(Doc_) //, 0, true, Qt::WDestructiveClose)
+                  : QDialog(Doc_) 
 {
   Doc = Doc_;
   setWindowTitle(tr("Document Settings"));
@@ -151,7 +151,7 @@ void DigiSettingsDialog::slotOk()
     changed = true;
   }
   if(Doc->Library != NameEdit->text()) {
-    QString lib = NameEdit->text().stripWhiteSpace();
+    QString lib = NameEdit->text().trimmed();
     Doc->Library = lib;
     changed = true;
   }
