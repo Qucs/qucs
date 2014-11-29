@@ -481,7 +481,14 @@ bool Arrow::Dialog()
   ArrowDialog *d = new ArrowDialog();
   d->HeadWidth->setText(QString::number(Width));
   d->HeadLength->setText(QString::number(Height));
-  d->ColorButt->setPaletteBackgroundColor(Pen.color());
+    
+  QPixmap pixmap(35, 10);
+  pixmap.fill(Pen.color());
+  QIcon ButtonIcon(pixmap);
+  d->ColorButt->setIcon(ButtonIcon);
+  d->ColorButt->setIconSize(pixmap.rect().size());
+  d->Color = new QColor(Pen.color());
+    
   d->LineWidth->setText(QString::number(Pen.width()));
   d->SetComboBox(Pen.style());
   d->ArrowStyleBox->setCurrentItem(Style);
@@ -499,10 +506,12 @@ bool Arrow::Dialog()
     Height = d->HeadLength->text().toDouble();
     changed = true;
   }
-  if(Pen.color() != d->ColorButt->paletteBackgroundColor()) {
-    Pen.setColor(d->ColorButt->paletteBackgroundColor());
+ 
+  if(Pen.color() != *d->Color) {
+    Pen.setColor(*d->Color);
     changed = true;
   }
+    
   if(Pen.width() != d->LineWidth->text().toInt()) {
     Pen.setWidth(d->LineWidth->text().toInt());
     changed = true;

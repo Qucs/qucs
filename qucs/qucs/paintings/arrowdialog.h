@@ -42,6 +42,7 @@ private slots:
 public:
   // TODO: I'm not sure whether declaring all this as public is really a good idea :-(
   // data encapsulation => make this stuff private & provide getter & setter methods...
+  QColor       *Color;
   QLineEdit    *LineWidth, *HeadWidth, *HeadLength;
   QPushButton  *ColorButt;
   QComboBox    *StyleBox, *ArrowStyleBox;
