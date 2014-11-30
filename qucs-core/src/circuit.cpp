@@ -654,7 +654,7 @@ void circuit::setMatrixS (matrix s) {
 matrix circuit::getMatrixS (void) {
   matrix res (size);
   for(unsigned int i=0; i < size; ++i)
-    for(unsigned int j=0; i < size; ++j)
+    for(unsigned int j=0; j < size; ++j)
       res(i,j) = MatrixS[i*size + j];
   return res;
 }
@@ -675,7 +675,7 @@ void circuit::setMatrixN (matrix n) {
 matrix circuit::getMatrixN (void) {
   matrix res (size);
   for(unsigned int i=0; i < size; ++i)
-    for(unsigned int j=0; i < size; ++j)
+    for(unsigned int j=0; j < size; ++j)
       res(i,j) = MatrixN[i*size + j];
   return res;
 }
@@ -696,7 +696,7 @@ void circuit::setMatrixY (matrix y) {
 matrix circuit::getMatrixY (void) {
   matrix res (size);
   for(unsigned int i=0; i < size; ++i)
-    for(unsigned int j=0; i < size; ++j)
+    for(unsigned int j=0; j < size; ++j)
       res(i,j) = MatrixY[i*size + j];
   return res;
 }
