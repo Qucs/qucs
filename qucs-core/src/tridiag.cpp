@@ -243,7 +243,7 @@ template <class nr_type_t>
 void tridiag<nr_type_t>::solve_s (void) {
   d = al = diag->getData ();
   f = ga = offdiag->getData ();
-  b = z = x = b = rhs->getData ();
+  b = z = x = c = rhs->getData ();
   nr_type_t t;
   int i, n = diag->getSize ();
   de = new nr_type_t[n];
