@@ -45,10 +45,11 @@ int matlab_symbols = 1;   // convert data names to have valid Matlab identifier
 int nr_bigendian = 0;     // endianness
 
 // Test endianness.
+// http://www.geeksforgeeks.org/little-and-big-endian-mystery/
 static void initendian (void) {
-  unsigned char EndianTest[2] = { 1, 0 };
-  nr_int16_t x = * (nr_int16_t *) EndianTest;
-  nr_bigendian = (x == 1) ? 0 : 1;
+  unsigned int i = 1;
+  char *c = (char*)&i;
+  nr_bigendian = (*c == 1) ? 0 : 1;
 }
 
 // Writes a Matlab v4 header.
