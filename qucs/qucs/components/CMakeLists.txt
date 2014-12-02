@@ -237,6 +237,7 @@ volt_noise.h
 vprobe.h
 vpulse.h
 vrect.h
+mutualx.h
 )
 
 
