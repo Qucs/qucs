@@ -452,6 +452,9 @@ INCLUDE_DIRECTORIES( ${qucs-core_SOURCE_DIR}          # generated config.h
                      ${qucs-core_SOURCE_DIR}/src/     # compat.h
                      ${qucs-core_SOURCE_DIR}/src/components # microstrip/substrate.h
                      ${qucs-core_SOURCE_DIR}/src/interface
+                     ${qucs-core_BINARY_DIR}          # cmake generated config.h
+                     ${qucs-core_BINARY_DIR}/src      # cmake generated gperfapphash.h
+                     ${qucs-core_BINARY_DIR}/src/components   # generated verilog/[].core.h
                      )
 
 #

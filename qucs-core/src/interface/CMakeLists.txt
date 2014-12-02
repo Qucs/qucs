@@ -2,7 +2,9 @@
 INCLUDE_DIRECTORIES( ${qucs-core_SOURCE_DIR}
                      ${qucs-core_CURRENT_SOURCE_DIR}
                      ${qucs-core_SOURCE_DIR}/src/math
-                     ${qucs-core_SOURCE_DIR}/src/components )  # component.h
+                     ${qucs-core_SOURCE_DIR}/src/components   # component.h
+                     ${qucs-core_BINARY_DIR}/src/components   # generated verilog/[].core.h
+                     )
 
 SET( INTERFACE_SRC
   qucs_interface.cpp
