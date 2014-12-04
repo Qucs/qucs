@@ -52,6 +52,8 @@
 #include "dialogs/simmessage.h"
 #include "dialogs/exportdialog.h"
 #include "octave_window.h"
+#include "printerwriter.h"
+#include "imagewriter.h"
 #include "../qucs-lib/qucslib_common.h"
 #include "misc.h"
 
@@ -129,14 +131,6 @@ QucsApp::QucsApp()
   initCursorMenu();
   Module::registerModules ();
 
-  // default settings of the printer
-  Printer = new QPrinter(QPrinter::HighResolution);
-  Printer->setOptionEnabled(QPrinter::PrintSelection, true);
-  Printer->setOptionEnabled(QPrinter::PrintPageRange, false);
-  Printer->setOptionEnabled(QPrinter::PrintToFile, true);
-  Printer->setColorMode(QPrinter::Color);
-  Printer->setFullPage(true);
-
   // instance of small text search dialog
   SearchDia = new SearchDialog(this);
 
@@ -173,7 +167,6 @@ QucsApp::QucsApp()
 QucsApp::~QucsApp()
 {
   Module::unregisterModules ();
-  delete Printer;
 }
 
 
@@ -2034,53 +2027,19 @@ void QucsApp::updatePortNumber(QucsDoc *currDoc, int No)
 
 
 // --------------------------------------------------------------
-// TODO -> in case of textdocument, cast to QPlainTextEdit & print
+// printCurrentDocument: call printerwriter to print document
 void QucsApp::printCurrentDocument(bool fitToPage)
 {
   statusBar()->message(tr("Printing..."));
   editText->setHidden(true); // disable text edit of component property
 
-  if(isTextDocument (DocumentTab->currentPage())) {
-    QWidget *w;
-    w = DocumentTab->currentPage();
-    QPlainTextEdit *temp =  (QPlainTextEdit*)w;
+  PrinterWriter *writer = new PrinterWriter();
+  writer->setFitToPage(fitToPage);
+  writer->print(DocumentTab->currentPage());
+  delete writer;
 
-    QPrintDialog *dialog = new QPrintDialog(Printer, this);
-    dialog->setWindowTitle(tr("Print Document"));
-    dialog->addEnabledOption(QAbstractPrintDialog::PrintSelection);
-     if (dialog->exec() == QDialog::Accepted)
-         temp->print(Printer);
-
-  }
-    //Printer->setOrientation(QPrinter::Portrait);
-  else {
-    Printer->setOrientation(QPrinter::Landscape);
-
-  //Printer->setPrintRange(QPrinter::AllPages);
-
-  if(Printer->setup(this)) {   // printer dialog
-
-    QPainter Painter(Printer);
-    if(!Painter.device())      // valid device available ?
-      goto Error;
-
-    for(int z=Printer->numCopies(); z>0 ; z--) {
-      if(Printer->aborted())
-        break;
-
-      getDoc()->print(Printer, &Painter,
-              Printer->printRange() == QPrinter::AllPages, fitToPage);
-      if(z > 1)
-        if(!Printer->newPage())
-          goto Error;
-    }
-  }
-  }
   statusBar()->message(tr("Ready."));
   return;
-
-Error:
-  statusBar()->message(tr("Printer Error."));
 }
 
 // --------------------------------------------------------------
@@ -3061,168 +3020,13 @@ void QucsApp::updateRecentFilesList(QString s)
 
 void QucsApp::slotSaveDiagramToGraphicsFile()
 {
-    slotSaveSchematicToGraphicsFile(true);
+  slotSaveSchematicToGraphicsFile(true);
 }
 
 void QucsApp::slotSaveSchematicToGraphicsFile(bool diagram)
 {
-    Schematic *sch = (Schematic*)DocumentTab->currentPage();
-
-    const int bourder = 30;
-
-    int w,h,wsel,hsel,
-        xmin, ymin, xmin_sel, ymin_sel;
-
-    sch->getSchWidthAndHeight(w, h, xmin, ymin);
-    sch->getSelAreaWidthAndHeight(wsel, hsel, xmin_sel, ymin_sel);
-    w += bourder;
-    h += bourder;
-    wsel += bourder;
-    hsel += bourder;
-
-    bool noselect;
-    if ((wsel==(bourder+1))&&(hsel==(bourder+1))) noselect = true;
-    else noselect = false;
-
-    ExportDialog* dlg = new ExportDialog(w,h,wsel,hsel,lastExportFilename,noselect,this);
-
-    if (diagram) dlg->setDiagram();
-
-    if (dlg->exec()) {
-
-        QString filename = dlg->FileToSave();
-        lastExportFilename = filename;
-
-        bool exportAll;
-        if (dlg->isExportSelected()) {
-            exportAll = false;
-            w=wsel;
-            h=hsel;
-            xmin = xmin_sel;
-            ymin = ymin_sel;
-        } else {
-            exportAll = true;
-        }
-
-        float scal;
-        if (!dlg->isOriginalSize()) {
-            scal = (float) dlg->Xpixels()/w;
-            w = round(w*scal);
-            h = round(h*scal);
-        } else {
-            scal = 1.0;
-        }
-
-        if (dlg->isValidFilename()) {
-            if (!dlg->isSvg()) {
-
-                QImage* img;
-
-                switch (dlg->getImgFormat()) {
-                case ExportDialog::Coloured : img = new QImage(w,h,QImage::Format_RGB888);
-                    break;
-                case ExportDialog::Monochrome : img = new QImage(w,h,QImage::Format_Mono);
-                    break;
-                default : break;
-                }
-
-                QPainter* p = new QPainter(img);
-                p->fillRect(0,0,w,h,Qt::white);
-                ViewPainter* vp = new ViewPainter(p);
-                vp->init(p,scal,0,0,xmin*scal-bourder/2,ymin*scal-bourder/2,scal,scal);
-
-                sch->paintSchToViewpainter(vp,exportAll,true);
-
-                img->save(filename);
-
-                delete vp;
-                delete p;
-                delete img;
-            } else {
-                QSvgGenerator* svg1 = new QSvgGenerator();
-                svg1->setResolution(this->physicalDpiX());
-
-                if (dlg->needsInkscape()) {
-                    svg1->setFileName(filename+".tmp.svg");
-                } else {
-                    svg1->setFileName(filename);
-                }
-
-                //svg1->setSize(QSize(1.12*w,1.1*h));
-                svg1->setSize(QSize(1.12*w,h));
-                QPainter *p = new QPainter(svg1);
-                p->fillRect(0,0,svg1->size().width(),svg1->size().height(),Qt::white);
-                ViewPainter *vp = new ViewPainter(p);
-                vp->init(p,1.0,0,0,xmin-bourder/2,ymin-bourder/2,1.0,1.0);
-
-                sch->paintSchToViewpainter(vp,exportAll,true);
-
-                delete vp;
-                delete p;
-                delete svg1;
-
-                if (dlg->needsInkscape()) {
-                    QString cmd = "inkscape -z -D --file=";
-                    cmd += filename+".tmp.svg ";
-
-                    if (dlg->isPdf_Tex()) {
-                        QString tmp = filename;
-                        tmp.chop(4);
-                        cmd = cmd + "--export-pdf="+ tmp + " --export-latex";
-                    }
-
-                    if (dlg->isPdf()) {
-                        cmd = cmd + "--export-pdf=" + filename;
-                    }
-
-                    if (dlg->isEps()) {
-                        cmd = cmd + "--export-eps=" + filename;
-                    }
-
-                    int result = QProcess::execute(cmd);
-
-                    if (result!=0) {
-                        QMessageBox* msg =  new QMessageBox(QMessageBox::Critical,tr("Export to image"),
-                                                            tr("Inkscape start error!"),
-                                                            QMessageBox::Ok);
-                        msg->exec();
-                        delete msg;
-                    }
-                    QFile::remove(filename+".tmp.svg");
-                }
-            }
-
-            successExportMessages(QFile::exists(filename));
-
-        } else {
-            QMessageBox* msg =  new QMessageBox(QMessageBox::Critical,tr("Export to image"),
-                                                tr("Unsupported format of graphics file. \n"
-                                                "Use PNG, JPEG or SVG graphics!"),
-                                                QMessageBox::Ok);
-            msg->exec();
-            delete msg;
-        }
-
-
-    }
-
-}
-
-
-
-void QucsApp::successExportMessages(bool ok)
-{
-    if (ok) {
-        QMessageBox* msg =  new QMessageBox(QMessageBox::Information,tr("Export to image"),
-                                        tr("Sucessfully exported!"),
-                                        QMessageBox::Ok);
-        msg->exec();
-        delete msg;
-    } else {
-        QMessageBox* msg =  new QMessageBox(QMessageBox::Critical,tr("Export to image"),
-                                        tr("Disk write error!"),
-                                        QMessageBox::Ok);
-        msg->exec();
-        delete msg;
-    }
+  ImageWriter *writer = new ImageWriter();
+  writer->setDiagram(diagram);
+  writer->print(DocumentTab->currentPage());
+  delete writer;
 }
