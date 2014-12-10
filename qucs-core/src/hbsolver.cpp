@@ -1081,13 +1081,15 @@ void hbsolver::loadMatrices (void) {
 }
 
 /* The following function transforms a vector using a Fast Fourier
-   Transformation from the time domain to the frequency domain. */
+   Transformation from the time domain to the frequency domain. 
+   \todo rewrite ugly sould die
+*/
 void hbsolver::VectorFFT (tvector<nr_complex_t> * V, int isign) {
   int i, k, r;
   int n = nlfreqs;
   int nd = dfreqs.getSize ();
   int nodes = V->getSize () / n;
-  nr_double_t * d = (nr_double_t *) V->getData ();
+  nr_double_t * d = (double *)V->getData ();
 
   if (nd == 1) {
     // for each node a single 1d-FFT

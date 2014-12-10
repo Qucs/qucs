@@ -25,6 +25,7 @@
 #ifndef __TVECTOR_H__
 #define __TVECTOR_H__
 
+#include <vector>
 #include <assert.h>
 
 #include <limits>
@@ -82,9 +83,8 @@ class tvector
   void set (nr_type_t);
   void set (nr_type_t, int, int);
   void set (tvector, int, int);
-  int  getSize (void) { return size; }
-  nr_type_t * getData (void) { return data; }
-  void setData (nr_type_t *, int);
+  int  getSize (void) { return (int)data->size (); }
+  nr_type_t * getData (void) { return data->data(); }
   void add (nr_type_t);
   void clear (void);
   void drop (int);
@@ -133,15 +133,13 @@ class tvector
 
   // easy accessor operators
   nr_type_t  operator () (int i) const {
-    assert (i >= 0 && i < size); return data[i]; }
+    assert (i >= 0 && i < (int)data->size ()); return (*data)[i]; }
   nr_type_t& operator () (int i) {
-    assert (i >= 0 && i < size); return data[i]; }
+    assert (i >= 0 && i < (int)data->size ()); return (*data)[i]; }
 
  private:
-  int external;
-  int size;
-  int capacity;
-  nr_type_t * data;
+  std::vector<nr_type_t> * data;
+
 };
 
 } // namespace qucs
