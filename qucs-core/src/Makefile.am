@@ -80,7 +80,7 @@ libqucs_la_SOURCES = dataset.cpp check_dataset.cpp parse_dataset.cpp      \
 	analysis.cpp spsolver.cpp dcsolver.cpp nodelist.cpp environment.cpp  \
 	parasweep.cpp equation.cpp evaluate.cpp acsolver.cpp                 \
 	trsolver.cpp transient.cpp integrator.cpp nodeset.cpp hbsolver.cpp   \
-	spline.cpp fourier.cpp pair.cpp characteristic.cpp history.cpp       \
+	spline.cpp fourier.cpp characteristic.cpp history.cpp       \
 	range.cpp devstates.cpp differentiate.cpp module.cpp receiver.cpp    \
 	interpolator.cpp
 

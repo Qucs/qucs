@@ -408,7 +408,6 @@ SET(LIBQUCS_SRC
   nodeset.cpp
   object.cpp
   operatingpoint.cpp
-  pair.cpp
   receiver.cpp
   spsolver.cpp
   sweep.cpp

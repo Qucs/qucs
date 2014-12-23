@@ -25,25 +25,44 @@
 #ifndef __PAIR_H__
 #define __PAIR_H__
 
+#include <utility>
+#include <string>
+
 namespace qucs {
 
 class pair
 {
  public:
-  pair ();
-  pair (const char *);
-  pair (const char *, nr_double_t);
-  pair (const pair &);
-  ~pair ();
+  pair () :
+    p(std::string(),0.0)
+  {};
 
-  void setName (char *);
-  char * getName (void);
-  nr_double_t getValue (void) { return value; }
-  void setValue (nr_double_t val) { value = val; }
+  pair (const char * const s) :
+  p(s != nullptr ? std::string(s) : std::string(),0.0)
+  {};
+
+  pair (const char * const s, nr_double_t v) :
+    p(s != nullptr ? std::string(s) : std::string(),v)
+  {} ;
+
+  void setName (const char * const s) {
+    p.first = s != nullptr ? std::string(s) : std::string();
+  };
+
+  const char * getName (void) const {
+    return p.first.c_str();
+  };
+
+  nr_double_t getValue (void) const {
+    return p.second;
+  }
+
+  void setValue (const nr_double_t val) {
+    p.second = val;
+  }
 
  private:
-  char * name;
-  nr_double_t value;
+  std::pair<std::string,nr_double_t> p;
 };
 
 } // namespace qucs
