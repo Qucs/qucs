@@ -27,6 +27,8 @@
 # include <config.h>
 #endif
 
+#include <limits>
+
 #include "component.h"
 #include "substrate.h"
 #include "cpwline.h"
@@ -48,12 +50,12 @@ cpwline::cpwline () : circuit (2) {
 void cpwline::ellipke (nr_double_t arg, nr_double_t &k, nr_double_t &e) {
   int iMax = 16;
   if (arg == 1.0) {
-    k = NR_INF; // infinite
+    k = std::numeric_limits<nr_double_t>::infinity();
     e = 0;
   }
   else if (std::isinf (arg) && arg < 0) {
     k = 0;
-    e = NR_INF; // infinite
+    e = std::numeric_limits<nr_double_t>::infinity();
   }
   else {
     nr_double_t a, b, c, f, s, fk = 1, fe = 1, t, da = arg;

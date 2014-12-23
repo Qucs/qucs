@@ -36,18 +36,20 @@
 #include "constants.h"
 #include "fspecial.h"
 
+#include <limits>
+
 /* The function computes the complete elliptic integral of first kind
    K() and the second kind E() using the arithmetic-geometric mean
    algorithm (AGM) by Abramowitz and Stegun. */
 void fspecial::ellip_ke (nr_double_t arg, nr_double_t &k, nr_double_t &e) {
   int iMax = 16;
   if (arg == 1.0) {
-    k = NR_INF; // infinite
+    k = std::numeric_limits<nr_double_t>::infinity();
     e = 0;
   }
   else if (std::isinf (arg) && arg < 0) {
     k = 0;
-    e = NR_INF; // infinite
+    e = std::numeric_limits<nr_double_t>::infinity();
   }
   else {
     nr_double_t a, b, c, f, s, fk = 1, fe = 1, t, da = arg;
@@ -547,27 +549,27 @@ nr_double_t fspecial::ltqnorm (nr_double_t x) {
     q = x - 0.5;
     r = q * q;
     z = (((((a[0]*r+a[1])*r+a[2])*r+a[3])*r+a[4])*r+a[5])*q/
-        (((((b[0]*r+b[1])*r+b[2])*r+b[3])*r+b[4])*r+1);
+	(((((b[0]*r+b[1])*r+b[2])*r+b[3])*r+b[4])*r+1);
   }
   // Rational approximation for lower region:
   else if (0.0 < x && x < pl) {
     q = sqrt(-2*log(x));
     z = (((((c[0]*q+c[1])*q+c[2])*q+c[3])*q+c[4])*q+c[5])/
-         ((((d[0]*q+d[1])*q+d[2])*q+d[3])*q+1);
+	 ((((d[0]*q+d[1])*q+d[2])*q+d[3])*q+1);
   }
   // Rational approximation for upper region:
   else if (ph < x && x < 1.0) {
     q = sqrt(-2*log(1-x));
     z = -(((((c[0]*q+c[1])*q+c[2])*q+c[3])*q+c[4])*q+c[5])/
-          ((((d[0]*q+d[1])*q+d[2])*q+d[3])*q+1);
+	  ((((d[0]*q+d[1])*q+d[2])*q+d[3])*q+1);
   }
   // Case when X = 0:
   else if (x == 0.0) {
-    z = -NR_INF;
+    z = -std::numeric_limits<nr_double_t>::infinity();
   }
   // Case when X = 1:
   else if (x == 1.0) {
-    z = +NR_INF;
+    z = +std::numeric_limits<nr_double_t>::infinity();
   }
   // Cases when output will be NaN:
   else if (x < 0.0 || x > 1.0 || std::isnan (x)) {
@@ -589,4 +591,3 @@ nr_double_t fspecial::ltqnorm (nr_double_t x) {
 nr_double_t fspecial::erfcinv (nr_double_t x) {
   return -ltqnorm (x / 2.0) / M_SQRT2;
 }
-

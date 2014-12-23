@@ -110,12 +110,10 @@
 
 #endif
 
-#define NR_INF nr_inf
 #define NR_NAN nr_nan
 
 __BEGIN_DECLS
 
-extern nr_double_t nr_inf;
 extern nr_double_t nr_nan;
 
 void precinit (void);

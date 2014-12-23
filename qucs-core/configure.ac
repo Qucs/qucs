@@ -727,8 +727,18 @@ AC_CHECK_FUNCS([ strdup strerror strchr])
 
 dnl Checks for complex classes and functions.
 AC_CXX_NAMESPACES
+AX_CXX_NAMESPACES
+AS_VAR_IF([ax_cv_cxx_namespaces],[yes],
+         [],
+         [AC_MSG_ERROR([require a c++ namespace])])
+AX_CXX_HAVE_NUMERIC_LIMITS
+AS_VAR_IF([ax_cv_cxx_have_numeric_limits],[yes],
+         [],
+         [AC_MSG_ERROR([require a c++ std::numeric_limits<> class])])
+
 AC_CXX_HAVE_COMPLEX
 AS_IF([test "X$ac_cv_cxx_have_complex" = "X"],[AC_MSG_ERROR([Qucs needs a templated complex class])])
+
 
 
 echo "\nCheck complex transcendental overload in namespace std"

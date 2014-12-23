@@ -30,25 +30,9 @@
 
 #include "precision.h"
 
-nr_double_t nr_inf; /* the core's idea of infinity */
 nr_double_t nr_nan; /* the core's idea of NaN */
 
 void precinit (void) {
-  /* Inf */
-#ifdef INFINITY
-  nr_inf = INFINITY;
-#elif NR_INF_TESTED
-  nr_inf = -log (0.0);
-#else
-  nr_double_t t = 1e+10;
-  nr_inf = t;
-  for (;;) {
-    nr_inf *= 1e+10;
-    if (nr_inf == t) break;
-    t = nr_inf;
-  }
-#endif
-
   /* NaN */
   nr_nan = -log (-1.0);
 }
