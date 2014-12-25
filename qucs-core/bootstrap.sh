@@ -61,3 +61,5 @@ echo "done."
 echo -n "Creating configure... "
 autoconf
 echo "done."
+autoreconf -f -i
+echo "done"
