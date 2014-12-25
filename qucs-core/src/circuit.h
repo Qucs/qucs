@@ -31,6 +31,9 @@
 #ifndef __CIRCUIT_H__
 #define __CIRCUIT_H__
 
+#include "characteristic.h"
+#include "operatingpoint.h"
+
 #define NODE_1 0
 #define NODE_2 1
 #define NODE_3 2
@@ -73,8 +76,6 @@ enum circuit_flag {
 class node;
 class property;
 class substrate;
-class operatingpoint;
-class characteristic;
 class matrix;
 class net;
 class environment;

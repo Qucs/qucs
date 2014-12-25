@@ -28,10 +28,13 @@
  * Contains the environment class definition.
  */
 
-#include "equation.h"
-
 #ifndef __ENVIRONMENT_H__
 #define __ENVIRONMENT_H__
+
+#include <list>
+#include <string>
+
+#include "equation.h"
 
 namespace qucs {
 
@@ -39,7 +42,7 @@ class variable;
 class checker;
 class solver;
 class dataset;
-template <class type_t> class ptrlist;
+
 
 /*! \class environment
  * \brief Houses the settings for netlist evaluation.
@@ -52,12 +55,11 @@ class environment
 {
  public:
   environment ();
-  environment (const char *);
+  environment (const std::string & p_name);
   environment (const environment &);
   virtual ~environment ();
   void copy (const environment &);
-  void setName (char *);
-  char * getName (void);
+  void setName (char *) = delete;
   void print (bool all = false);
   void setDefinitions (struct definition_t * d) { defs = d; }
   struct definition_t * getDefinitions (void) { return defs; }
@@ -93,16 +95,32 @@ class environment
   void setValue (char *, eqn::constant *);
   void saveResults (void);
 
-  // children functionality
-  void delChild (environment *);
-  void addChild (environment *);
+  /*! Adds a child to the environment. */
+  inline void push_front_Child (environment * child) {
+    children.push_front (child);
+  }
+
+  /*! Removes a child from the environment. */
+  void remove_Child (environment * child) {
+    children.remove (child);
+  }
+
+  /*! set the name */
+  void setName (const std::string p_name) {
+    this->name = p_name;
+  }
+
+  /*! Returns the name of the environment. */
+  std::string getName(void) {
+    return this->name;
+  }
 
  private:
-  char * name;
+  std::string name;
   variable * root;
   eqn::checker * checkee;
   eqn::solver * solvee;
-  ptrlist<environment> * children;
+  std::list<environment *> children;
   bool iscopy;
   struct definition_t * defs;
 };

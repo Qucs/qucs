@@ -26,6 +26,8 @@
 # include <config.h>
 #endif
 
+#include <list>
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -33,7 +35,6 @@
 #include "complex.h"
 #include "variable.h"
 #include "equation.h"
-#include "ptrlist.h"
 #include "logging.h"
 #include "environment.h"
 
@@ -42,57 +43,57 @@ using namespace qucs::eqn;
 namespace qucs {
 
 // Constructor creates an unnamed instance of the environment class.
-environment::environment () {
-  name = NULL;
+environment::environment () : 
+  children(),
+  name() 
+{
   root = NULL;
   solvee = NULL;
   checkee = NULL;
   defs = NULL;
   iscopy = false;
-  children = new ptrlist<environment>;
 }
 
+
 // Constructor creates a named instance of the environment class.
-environment::environment (const char * n) {
-  name = n ? strdup (n) : NULL;
+environment::environment (const std::string & p_name) : 
+  children(),
+  name(p_name)
+{
   root = NULL;
   solvee = NULL;
   checkee = NULL;
   defs = NULL;
   iscopy = false;
-  children = new ptrlist<environment>;
 }
 
 /* The copy constructor creates a new instance of the environment
    class based on the given environment object. */
-environment::environment (const environment & e) {
-  name = e.name ? strdup (e.name) : NULL;
+environment::environment (const environment & e)  {
+  this->name = e.name;
   copyVariables (e.root);
   solvee = e.solvee;
   checkee = e.checkee;
   defs = e.defs;
   iscopy = true;
-  children = new ptrlist<environment>;
+  children = std::list<environment *>();
 }
 
 /* Very alike the copy constructor the function copies the content of
    the given environment into the calling environment. */
 void environment::copy (const environment & e) {
-  if (name) free (name);
-  name = e.name ? strdup (e.name) : NULL;
+  this->name = e.name;
   deleteVariables ();
   copyVariables (e.root);
   solvee = e.solvee;
   checkee = e.checkee;
   defs = e.defs;
-  delete children;
   iscopy = true;
-  children = new ptrlist<environment>;
+  children = std::list<environment *>();
 }
 
 // Destructor deletes the environment object.
 environment::~environment () {
-  if (name) free (name);
   deleteVariables ();
   // delete solver and checker if this is not just a reference
   if (!iscopy) {
@@ -104,22 +105,12 @@ environment::~environment () {
     }
   }
   // delete children
-  for (ptrlistiterator<environment> it (*children); *it; ++it) {
-    delete (*it);
+  for (auto it = children.begin(); it != children.end(); ++it) {
+    environment * etmp = *it;
+    delete etmp;
   }
-  delete children;
 }
 
-// Sets the name of the environment.
-void environment::setName (char * n) {
-  if (name) free (name);
-  name = n ? strdup (n) : NULL;
-}
-
-// Returns the name of the environment.
-char * environment::getName (void) {
-  return name;
-}
 
 /* This function copies all variables in the given variable list into
    an environment. */
@@ -216,15 +207,6 @@ void environment::equationSolver (void) {
   checkee->setEquations (solvee->getEquations ());
 }
 
-// Adds a child to the environment.
-void environment::addChild (environment * child) {
-  children->add (child);
-}
-
-// Removes a child from the environment.
-void environment::delChild (environment * child) {
-  children->del (child);
-}
 
 /* The function solves the equations of the current environment object
    as well as these of its children, updates the variables and passes
@@ -237,7 +219,7 @@ int environment::runSolver (void) {
   fetchConstants ();
 
   // cycle through children
-  for (ptrlistiterator<environment> it (*children); *it; ++it) {
+  for(auto it = children.begin(); it != children.end(); ++it) {
     // pass constants to solver
     (*it)->passConstants ();
     // pass references
@@ -420,16 +402,15 @@ void environment::setDoubleReference (char * ident, char * val) {
 
 // Prints the environment.
 void environment::print (bool all) {
-  ptrlistiterator<environment> it;
-  logprint (LOG_STATUS, "environment %s\n", getName () ? getName () : "?env?");
+  logprint (LOG_STATUS, "environment %s\n",this->name.c_str());
   for (variable * var = root; var != NULL; var = var->getNext ()) {
     logprint (LOG_STATUS, "  %s [%s]\n", var->getName (), var->toString ());
   }
-  for (it = ptrlistiterator<environment> (*children); *it; ++it) {
-    logprint (LOG_STATUS, "  %s\n", (*it)->getName ());
+  for (auto it = children.begin(); it != children.end() ; ++it) {
+    logprint (LOG_STATUS, "  %s\n", (*it)->name.c_str ());
   }
   if (all) {
-    for (it = ptrlistiterator<environment> (*children); *it; ++it)
+    for (auto it = children.begin(); it != children.end() ; ++it)
       (*it)->print ();
   }
 }

@@ -397,10 +397,10 @@ void dataset::printData (vector * v, FILE * f) {
   for (int i = 0; i < v->getSize (); i++) {
     nr_complex_t c = v->get (i);
     if (imag (c) == 0.0) {
-      fprintf (f, "  %+." NR_DECS "e\n", (double) real (c));
+      fprintf (f, "  %+." "20" "e\n", (double) real (c));
     }
     else {
-      fprintf (f, "  %+." NR_DECS "e%cj%." NR_DECS "e\n", (double) real (c),
+      fprintf (f, "  %+." "20" "e%cj%." "20" "e\n", (double) real (c), 
 	       imag (c) >= 0.0 ? '+' : '-', (double) fabs (imag (c)));
     }
   }

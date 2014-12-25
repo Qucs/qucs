@@ -48,7 +48,7 @@ pkginclude_HEADERS = compat.h logging.h object.h vector.h consts.h node.h \
   net.h circuit.h integrator.h states.h states.cpp valuelist.h valuelist.cpp \
   constants.h netdefs.h
 
-noinst_TEMPLATES = ptrlist.cpp tridiag.cpp hash.cpp \
+noinst_TEMPLATES = tridiag.cpp hash.cpp \
 	tmatrix.cpp tvector.cpp eqnsys.cpp states.cpp \
 	nasolver.cpp nasolution.cpp valuelist.cpp
 
@@ -75,12 +75,12 @@ libqucs_la_SOURCES = dataset.cpp check_dataset.cpp parse_dataset.cpp      \
 	matvec.cpp parse_citi.cpp                                            \
 	scan_citi.cpp check_citi.cpp parse_zvr.cpp scan_zvr.cpp sweep.cpp    \
 	check_zvr.cpp parse_mdl.cpp scan_mdl.cpp check_mdl.cpp check_csv.cpp \
-	parse_csv.cpp scan_csv.cpp circuit.cpp check_netlist.cpp operatingpoint.cpp  \
+	parse_csv.cpp scan_csv.cpp circuit.cpp check_netlist.cpp \
 	parse_netlist.cpp scan_netlist.cpp node.cpp net.cpp input.cpp        \
 	analysis.cpp spsolver.cpp dcsolver.cpp nodelist.cpp environment.cpp  \
 	parasweep.cpp equation.cpp evaluate.cpp acsolver.cpp                 \
 	trsolver.cpp transient.cpp integrator.cpp nodeset.cpp hbsolver.cpp   \
-	spline.cpp fourier.cpp pair.cpp characteristic.cpp history.cpp       \
+	spline.cpp fourier.cpp history.cpp       \
 	range.cpp devstates.cpp differentiate.cpp module.cpp receiver.cpp    \
 	interpolator.cpp
 

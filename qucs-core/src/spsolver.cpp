@@ -1078,7 +1078,7 @@ char * spsolver::createSP (int i, int j) {
 
 /* Create an appropriate variable name for characteristic values.  The
    caller is responsible to free() the returned string. */
-char * spsolver::createCV (char * c, char * n) {
+char * spsolver::createCV (const char * const c, const char * const n) {
   char * text = (char *) malloc (strlen (c) + strlen (n) + 2);
   sprintf (text, "%s.%s", c, n);
   return text;

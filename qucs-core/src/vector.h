@@ -26,6 +26,8 @@
 #ifndef __VECTOR_H__
 #define __VECTOR_H__
 
+#include <limits>
+
 #include "consts.h"
 #include "precision.h"
 #include "complex.h"
@@ -69,7 +71,7 @@ class vector : public object
   void setDependencies (strlist *);
   void setOrigin (char *);
   char * getOrigin (void);
-  int contains (nr_complex_t, nr_double_t eps = NR_EPSI);
+  int contains (nr_complex_t, nr_double_t eps = std::numeric_limits<nr_double_t>::epsilon());
   void sort (bool ascending = true);
   void print (void);
 

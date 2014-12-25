@@ -36,7 +36,7 @@
 
 //#include <stdio.h>
 //#include <stdlib.h>
-//#include <string.h>
+#include <string.h>
 
 #include "object.h"
 #include "complex.h"
@@ -92,13 +92,15 @@ analysis::analysis (analysis & a) : object (a) {
    associated with the current analysis object. */
 void analysis::addAnalysis (analysis * a) {
   if (!actions) actions = new ptrlist<analysis> ();
-  actions->add (a);
+  actions->push_front (a);
 }
 
 /* This function deletes the given analysis from the actions being
    associated with the current analysis object. */
 void analysis::delAnalysis (analysis * a) {
-  if (actions) actions->del (a);
+  if (actions != nullptr) {
+    actions->remove (a);
+  }
 }
 
 /* The following function creates a sweep object depending on the

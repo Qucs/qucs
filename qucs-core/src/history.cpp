@@ -162,7 +162,7 @@ nr_double_t history::nearest (nr_double_t tval, bool interpolate) {
     int l = leftidx ();
     int r = t->getSize () - 1;
     int i = -1;
-    nr_double_t diff = NR_MAX;
+    nr_double_t diff = std::numeric_limits<nr_double_t>::max();
     sign = true;
     i = seek (tval, l, r, diff, i);
     i = i - l;

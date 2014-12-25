@@ -642,14 +642,10 @@ AC_ARG_ENABLE([double],
      double_size=4
      ;;
    *)
-     double_type="none"
-     double_size=0
+     AC_MSG_ERROR([valid types are double, float and ldouble.])
      ;;
    esac],
   [double_type="double"; double_size=8])
-if test "$double_type" = none; then
-  AC_MSG_ERROR([valid types are double, float and ldouble.])
-fi
 AC_DEFINE_UNQUOTED(nr_double_t, $double_type,
   [The global type of double representation.])
 AC_SUBST(QUCS_DOUBLE_TYPE, $double_type)
@@ -727,8 +723,18 @@ AC_CHECK_FUNCS([ strdup strerror strchr])
 
 dnl Checks for complex classes and functions.
 AC_CXX_NAMESPACES
+AX_CXX_NAMESPACES
+AS_VAR_IF([ax_cv_cxx_namespaces],[yes],
+         [],
+         [AC_MSG_ERROR([require a c++ namespace])])
+AX_CXX_HAVE_NUMERIC_LIMITS
+AS_VAR_IF([ax_cv_cxx_have_numeric_limits],[yes],
+         [],
+         [AC_MSG_ERROR([require a c++ std::numeric_limits<> class])])
+
 AC_CXX_HAVE_COMPLEX
 AS_IF([test "X$ac_cv_cxx_have_complex" = "X"],[AC_MSG_ERROR([Qucs needs a templated complex class])])
+
 
 
 echo "\nCheck complex transcendental overload in namespace std"

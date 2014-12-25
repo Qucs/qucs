@@ -27,6 +27,8 @@
 # include <config.h>
 #endif
 
+#include <limits>
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -207,7 +209,7 @@ int vector::checkSizes (vector v1, vector v2) {
 // complex numbers in the 2. and 3. quadrant are counted as "-abs(c)".
 nr_double_t vector::maximum (void) {
   nr_complex_t c;
-  nr_double_t d, max_D = -NR_MAX;
+  nr_double_t d, max_D = -std::numeric_limits<nr_double_t>::max();
   for (int i = 0; i < getSize (); i++) {
     c = data[i];
     d = fabs (arg (c)) < M_PI_2 ? abs (c) : -abs (c);
@@ -221,7 +223,7 @@ nr_double_t vector::maximum (void) {
 // complex numbers in the 2. and 3. quadrant are counted as "-abs(c)".
 nr_double_t vector::minimum (void) {
   nr_complex_t c;
-  nr_double_t d, min_D = +NR_MAX;
+  nr_double_t d, min_D = +std::numeric_limits<nr_double_t>::max();
   for (int i = 0; i < getSize (); i++) {
     c = data[i];
     d = fabs (arg (c)) < M_PI_2 ? abs (c) : -abs (c);
@@ -952,7 +954,7 @@ vector linspace (nr_double_t start, nr_double_t stop, int points) {
   nr_double_t val, step = (stop - start) / (points - 1);
   for (int i = 0; i < points; i++) {
     val = start + (i * step);
-    if (i != 0 && fabs (val) < fabs (step) / 4 && fabs (val) < NR_EPSI)
+    if (i != 0 && fabs (val) < fabs (step) / 4 && fabs (val) < std::numeric_limits<nr_double_t>::epsilon())
       val = 0.0;
     result.set (val, i);
   }

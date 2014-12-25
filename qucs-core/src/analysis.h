@@ -32,6 +32,7 @@
 #define __ANALYSIS_H__
 
 #include "object.h"
+#include "ptrlist.h"
 
 #define SAVE_OPS 1 // save operating points
 #define SAVE_ALL 2 // also save subcircuit nodes and operating points
@@ -50,7 +51,6 @@ class net;
 class environment;
 class sweep;
 class vector;
-template <class type_t> class ptrlist;
 
 /*! \enum analysis_type
  * \brief enumerates the analysis types available.
