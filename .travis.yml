@@ -50,7 +50,7 @@ script:
   - cd qucs-core
   - ./bootstrap.sh
   - ./configure --enable-maintainer-mode --prefix=/usr --with-mkadms=`which admsXml`
-  - make && sudo make install
+  - make && sudo make install && make check
   - cd ..
 
   # test installation
