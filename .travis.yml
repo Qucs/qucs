@@ -12,7 +12,7 @@ before_install:
   - sudo apt-get update -qq
   - sudo apt-get install build-essential
   - sudo apt-get install libqt4-dev libqt4-qt3support
-  - sudo apt-get install automake libtool gperf flex #bison
+  - sudo apt-get install automake libtool gperf flex bison
   - sudo apt-get install -qq gcc-4.8 g++-4.8
   # We want to compile with g++ 4.8 when rather than the default g++
   - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.8 90
@@ -32,9 +32,9 @@ script:
   - export CXX=`which $CXX`
 
   # Travis has Bison 2.5 --> You need at least version 2.6 of the 'bison' parse generator to use 'api.prefix' definitions.
-  - wget http://ftp.gnu.org/gnu/bison/bison-2.6.tar.gz -O /tmp/bison-2.6.tar.gz
-  - tar -xzvf /tmp/bison-2.6.tar.gz
-  - cd bison-2.6 && ./configure --prefix=/usr && make && sudo make install && cd ..
+  # - wget http://ftp.gnu.org/gnu/bison/bison-2.6.tar.gz -O /tmp/bison-2.6.tar.gz
+  # - tar -xzvf /tmp/bison-2.6.tar.gz
+  # - cd bison-2.6 && ./configure --prefix=/usr && make && sudo make install && cd ..
   - bison --version
 
   # Build ADMS from release (avoid need of Perl and its modules)
