@@ -24,6 +24,8 @@ before_install:
 script:
   - uname -a
   - $CXX --version
+  - autoconf --version
+  - automake --version
 
   # `sudo make install` fail with clang for ADMS, temporary workaround
   - export CC=`which $CC`
