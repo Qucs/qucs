@@ -37,7 +37,6 @@ namespace qucs {
 // Constructor creates an instance of the strlist class.
 strlist::strlist () {
   root = NULL;
-  txt = NULL;
 }
 
 /* This copy constructor creates a instance of the strlist class based
@@ -45,8 +44,8 @@ strlist::strlist () {
 strlist::strlist (const strlist & o) {
   struct strlist_t * s;
   root = NULL;
-  txt = NULL;
-  for (s = o.root; s != NULL; s = s->next) append (s->str);
+  for (s = o.root; s != NULL; s = s->next)
+    append (s->str);
 }
 
 // Destructor deletes an instance of the strlist class.
@@ -58,7 +57,6 @@ strlist::~strlist () {
     free (root);
     root = next;
   }
-  if (txt) free (txt);
 }
 
 // This function adds a string to the list.
@@ -174,19 +172,13 @@ strlist * strlist::join (strlist * pre, strlist * post) {
 
 /* The function returns a space seperated string representation of the
    string list instance. */
-char * strlist::toString (const char * concat) {
-  if (txt) { free (txt); txt = NULL; }
-  int size = 0;
+const char * strlist::toString (const char * const concat) {
+  std::string txt;
   for (struct strlist_t * s = root; s != NULL; s = s->next) {
     char * t = s->str ? s->str : (char *) "(null)";
-    int len = strlen (t);
-    size += len + strlen (concat) + 1;
-    txt = (char *) (txt ? realloc (txt, size) : malloc (size));
-    txt = (s == root) ? strcpy (txt, t) : strcat (txt, t);
-    txt = strcat (txt, concat);
+    txt += std::string(t)+std::string(concat);
   }
-  if (txt) txt[strlen (txt) - 1] = '\0';
-  return txt ? txt : (char *) "";
+  return txt.c_str();
 }
 
 // Constructor for string list iterator.

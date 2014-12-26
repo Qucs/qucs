@@ -1298,8 +1298,8 @@ static void checker_xlat_subcircuit_nodes (struct definition_t * type,
 /* The function creates a subcircuit node name consisting of the given
    arguments.  If the given 'instances' is NULL it is left out.  The
    caller is responsible to free() the returned string. */
-static char * checker_subcircuit_node (char * type, char * instances,
-                                       char * instance, char * node)
+static char * checker_subcircuit_node (char * type, const char * instances,
+                                       const char * instance, char * node)
 {
     char * txt = (char *)
                  calloc (1, strlen (type) + strlen (instance) + strlen (node) +
@@ -1334,7 +1334,7 @@ checker_copy_subcircuit_nodes (struct definition_t * type,
                                struct definition_t * inst,
                                struct definition_t * sub,
                                struct definition_t * copy,
-                               char * instances)
+                               const char * instances)
 {
     struct node_t * n, * ncopy, * root = NULL;
 
@@ -1409,7 +1409,7 @@ checker_copy_circuit_nodes (struct definition_t * type,
                             struct definition_t * inst,
                             struct definition_t * sub,
                             struct definition_t * copy,
-                            char * instances)
+                            const char * instances)
 {
     struct node_t * n, * ncopy;
 
@@ -1460,7 +1460,7 @@ checker_find_last_definition (struct definition_t * root)
 
 /* Based upon the the given subcircuit instance identifier list the
    function returns a "." - concatenated string or NULL. */
-static char * checker_subcircuit_instance_list (strlist * instances)
+static const char * checker_subcircuit_instance_list (strlist * instances)
 {
     if (instances && instances->length () > 0)
         return instances->toString (".");
@@ -1470,8 +1470,8 @@ static char * checker_subcircuit_instance_list (strlist * instances)
 /* The function creates a subcircuit instance name consisting of the
    given arguments.  If the given 'instances' is NULL it is left out.
    The caller is responsible to free() the returned string. */
-static char * checker_subcircuit_instance (char * type, char * instances,
-        char * instance, char * base)
+static char * checker_subcircuit_instance (char * type, const char * instances,
+        const char * instance, char * base)
 {
     char * txt = (char *)
                  calloc (1, strlen (type) + strlen (instance) + strlen (base) +
@@ -1496,7 +1496,7 @@ checker_copy_subcircuits (struct definition_t * type,
     struct definition_t * def, * copy;
     struct definition_t * root = NULL;
     strlist * instcopy;
-    char * list;
+    const char * list;
 
     // create environment for subcircuit instance
     environment * child = new environment (*(type->env));
