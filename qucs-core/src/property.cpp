@@ -53,8 +53,8 @@ property::property () : name() {
 }
 
 // Constructor creates a named instance of the property class.
-property::property (const char * const n) :
-  name (n == nullptr ? std::string() : std::string(n))
+property::property (const std::string &n) :
+  name (n)
   {
   type = PROPERTY_UNKNOWN;
   value = 0.0;
@@ -67,8 +67,8 @@ property::property (const char * const n) :
 
 /* This full qualified constructor creates an instance of the property
    class containing both the key and the value of the property. */
-property::property (const char * const n, const char * val) :
-  name (n == nullptr ? std::string() : std::string(n))
+property::property (const std::string &n, const char * val) :
+    name (n)
 {
   type = PROPERTY_STR;
   str = val ? strdup (val) : NULL;
@@ -81,11 +81,10 @@ property::property (const char * const n, const char * val) :
 
 /* This full qualified constructor creates an instance of the property
    class containing both the key and the value of the property. */
-property::property (const char * const n, nr_double_t val) :
-  name (n == nullptr ? std::string() : std::string(n))
-  {
+property::property (const std::string &n, nr_double_t val) :
+  name (n)
+{
   type = PROPERTY_DOUBLE;
-  name = n ? strdup (n) : NULL;
   value = val;
   str = NULL;
   txt = NULL;
@@ -96,8 +95,8 @@ property::property (const char * const n, nr_double_t val) :
 
 /* This full qualified constructor creates an instance of the property
    class containing both the key and the value of the property. */
-property::property (const char * const n, variable * val) :
-  name (n == nullptr ? std::string() : std::string(n)) {
+property::property (const std::string &n, variable * val) :
+  name (n) {
   type = PROPERTY_VAR;
   var = val;
   value = 0.0;
@@ -139,11 +138,10 @@ property::~property () {
    property matching the given key and returns its value if possible.
    If there is no such property the function returns NULL. */
 property * property::findProperty (const char * const n) {
-  std::string tmp = std::string(n);
-  for (property * p = this; p != NULL; p = p->getNext ()) {
-    if (!strcmp(p->getName (), n))
+  const std::string tmp = std::string(n);
+  for (property * p = this; p != NULL; p = p->getNext ())
+    if (p->getName() == n)
       return p;
-  }
   return NULL;
 }
 

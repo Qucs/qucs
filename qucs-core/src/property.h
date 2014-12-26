@@ -44,23 +44,23 @@ class property
 {
  public:
   property ();
-  property (const char * const);
-  property (const char * const, const char *);
-  property (const char * const, nr_double_t);
-  property (const char * const, variable *);
+  property (const std::string &);
+  property (const std::string &, const char *);
+  property (const std::string &, nr_double_t);
+  property (const std::string &, variable *);
   property (const property &);
   virtual ~property ();
   property * getNext (void) { return next; }
   void setNext (property * p) { next = p; }
 
   //! Sets the name of the property.
-  void setName (const char * const n) {
-    this->name = std::string(n);
+  void setName (const std::string &n) {
+    this->name = n;
   };
 
   //! Returns the name of the property.
-  const char * getName (void) const {
-    return this->name.empty() ? nullptr : this->name.c_str();
+  std::string getName (void) const {
+    return this->name;
   }
 
   qucs::vector * getVector (void);
