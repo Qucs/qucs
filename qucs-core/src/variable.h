@@ -67,28 +67,30 @@ class variable
   void setName (const char * const n) {
     name = n ? std::string(n) : std::string();
   };
+
   //! Returns the name of the variable.
-  const char * getName (void) {
+  const char * getName (void) const {
     return this->name.c_str();
   };
-  void setNext (variable * v) { next = v; }
-  variable * getNext (void) { return next; }
+  void setNext (variable * const v) { next = v; }
+  variable * getNext (void) const { return next; }
 
-  void setType (int t) { type = t; }
-  int getType (void) { return type; }
-  void setConstant (eqn::constant * c) { type = VAR_CONSTANT; value.c = c; }
-  eqn::constant * getConstant (void) { return value.c; }
-  void setReference (eqn::reference * r) { type = VAR_REFERENCE; value.r = r; }
-  eqn::reference * getReference (void) { return value.r; }
-  void setSubstrate (substrate * s) { type = VAR_SUBSTRATE; value.s = s; }
+  void setType (const int t) { type = t; }
+  int getType (void) const { return type; }
+
+  void setConstant (eqn::constant * const c) { type = VAR_CONSTANT; value.c = c; }
+  eqn::constant * getConstant (void) const { return value.c; }
+  void setReference (eqn::reference * const r) { type = VAR_REFERENCE; value.r = r; }
+  eqn::reference * getReference (void) const { return value.r; }
+  void setSubstrate (substrate * const s) { type = VAR_SUBSTRATE; value.s = s; }
   substrate * getSubstrate (void) { return value.s; }
-  void setValue (eqn::constant * v) { type = VAR_VALUE; value.v = v; }
+  void setValue (eqn::constant * const v) { type = VAR_VALUE; value.v = v; }
   eqn::constant * getValue (void) { return value.v; }
-  void setAnalysis (analysis * a) { type = VAR_ANALYSIS; value.a = a; }
-  analysis * getAnalysis (void) { return value.a; }
+  void setAnalysis (analysis * const a) { type = VAR_ANALYSIS; value.a = a; }
+  analysis * getAnalysis (void) const { return this->value.a; }
   const char * toString (void);
-  void setPassing (bool p) { pass = p; }
-  bool getPassing (void) { return pass; }
+  void setPassing (const bool p) { this->pass = p; }
+  bool getPassing (void) const { return this->pass; }
 
  private:
   std::string name;

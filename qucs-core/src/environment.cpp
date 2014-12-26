@@ -43,9 +43,9 @@ using namespace qucs::eqn;
 namespace qucs {
 
 // Constructor creates an unnamed instance of the environment class.
-environment::environment () : 
-  children(),
-  name() 
+environment::environment () :
+  name(),
+  children()
 {
   root = NULL;
   solvee = NULL;
@@ -56,9 +56,9 @@ environment::environment () :
 
 
 // Constructor creates a named instance of the environment class.
-environment::environment (const std::string & p_name) : 
-  children(),
-  name(p_name)
+environment::environment (const std::string & p_name) :
+  name(p_name),
+  children()
 {
   root = NULL;
   solvee = NULL;
