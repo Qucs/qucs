@@ -165,9 +165,10 @@ char * object::getPropertyString (const char * n) {
 
 /* Returns the requested property reference variable name.  If there
    is no such property the function returns NULL. */
-char * object::getPropertyReference (const char * n) {
+const char * object::getPropertyReference (const char * n) const {
   property * p = prop->findProperty (n);
-  if (p != NULL) return p->getReference ();
+  if (p != NULL)
+    return p->getReference ();
   return NULL;
 }
 

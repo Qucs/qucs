@@ -81,11 +81,11 @@ class environment
   void equationSolver (void);
 
   // subcircuit specific
-  qucs::vector getVector (char *);
+  qucs::vector getVector (const char * const) const ;
   void setDoubleConstant (char *, nr_double_t);
   nr_double_t getDoubleConstant (char *);
-  void setDouble (char *, nr_double_t);
-  nr_double_t getDouble (char *);
+  void setDouble (const char * const , nr_double_t);
+  nr_double_t getDouble (const char * const) const;
   void setDoubleReference (char *, char *);
   char * getDoubleReference (char *);
   void updateReferences (environment *);

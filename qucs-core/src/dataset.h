@@ -50,7 +50,7 @@ class dataset : public object
   void delDependency (qucs::vector *);
   void delVariable (qucs::vector *);
 
-  void assignDependency (char *, char *);
+  void assignDependency (const char *const, const char * const);
   char * getFile (void);
   void setFile (const char *);
   void print (void);

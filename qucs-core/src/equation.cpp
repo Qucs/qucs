@@ -1667,18 +1667,19 @@ int checker::findDuplicate (void)
 /* The function returns the equation resulting in the passed variable
    or NULL if there is no such equation.  The function looks through
    the passed equation root. */
-node * checker::findEquation (node * root, char * n)
+node * checker::findEquation (node * root, const char * const n)
 {
     for (node * eqn = root; eqn != NULL; eqn = eqn->getNext ())
     {
-        if (!strcmp (A(eqn)->result, n)) return eqn;
+        if (!strcmp (A(eqn)->result, n))
+	  return eqn;
     }
     return NULL;
 }
 
 /* The function returns the equation resulting in the passed variable
    or NULL if there is no such equation. */
-node * checker::findEquation (char * n)
+node * checker::findEquation (const char * const n) const
 {
     foreach_equation (eqn)
     {
@@ -2583,7 +2584,7 @@ node * checker::createReference (const char * type, const char * ident,
 /* The functions looks through the set of equations for a real valued
    result and returns it.  If there is no such assignment, zero is
    returned. */
-nr_double_t checker::getDouble (char * ident)
+nr_double_t checker::getDouble (const char * const ident) const
 {
     foreach_equation (eqn)
     {
@@ -2597,7 +2598,7 @@ nr_double_t checker::getDouble (char * ident)
 
 /* The function goes through the equation set and looks for the
    specified assignment.  If found the given value is set. */
-void checker::setDouble (char * ident, nr_double_t val)
+void checker::setDouble (const char * const ident, nr_double_t val)
 {
     foreach_equation (eqn)
     {
@@ -2615,7 +2616,7 @@ void checker::setDouble (char * ident, nr_double_t val)
 /* The functions looks through the set of equations for a vector
    result and returns it.  If there is no such assignment, an empty
    vector is returned. */
-qucs::vector checker::getVector (char * ident)
+qucs::vector checker::getVector (const char * const ident) const
 {
     foreach_equation (eqn)
     {

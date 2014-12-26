@@ -67,7 +67,7 @@ class property
   nr_double_t getDouble (void);
   int getInteger (void);
   char * getString (void);
-  char * getReference (void);
+  const char * getReference (void) const;
   void set (nr_double_t);
   void set (int);
   void set (char *);

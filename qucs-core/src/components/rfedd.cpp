@@ -139,7 +139,8 @@ nr_complex_t rfedd::getResult (void * eqn) {
 // Initializes the equation defined device.
 void rfedd::initModel (void) {
   int i, j, k, ports = getSize ();
-  char * type, * pn, * sn, * snold, * fn, * fnold, * vr;
+  char * type, * pn, * sn, * snold, * fn, * fnold;
+  const char * vr;
   eqn::node * pvalue;
 
   // allocate space for equation pointers

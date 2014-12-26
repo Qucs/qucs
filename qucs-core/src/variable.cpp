@@ -39,8 +39,7 @@
 namespace qucs {
 
 // Constructor creates an unnamed instance of the variable class.
-variable::variable () {
-  name = NULL;
+variable::variable () : name() {
   text = NULL;
   next = NULL;
   type = VAR_UNKNOWN;
@@ -48,8 +47,8 @@ variable::variable () {
 }
 
 // This constructor creates a named instance of the variable class.
-variable::variable (char * n) {
-  name = n ? strdup (n) : NULL;
+variable::variable (const char * const n) {
+  name = n ? std::string(n) : std::string();
   text = NULL;
   next = NULL;
   type = VAR_UNKNOWN;
@@ -59,7 +58,7 @@ variable::variable (char * n) {
 /* This copy constructor creates a instance of the variable class based
    on the given variable. */
 variable::variable (const variable & o) {
-  name = o.name ? strdup (o.name) : NULL;
+  this->name = o.name;
   text = o.text ? strdup (o.text) : NULL;
   type = o.type;
   next = o.next;
@@ -69,20 +68,9 @@ variable::variable (const variable & o) {
 
 /// Destructor deletes an instance of the variable class.
 variable::~variable () {
-  if (name) free (name);
   if (text) free (text);
 }
 
-// Sets the name of the variable.
-void variable::setName (char * n) {
-  if (name) free (name);
-  name = n ? strdup (n) : NULL;
-}
-
-// Returns the name of the variable.
-char * variable::getName (void) {
-  return name;
-}
 
 // Creates textual representation of a variable.
 char * variable::toString (void) {

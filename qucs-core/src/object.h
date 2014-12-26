@@ -73,7 +73,7 @@ class object
   void setProperty (const char *, variable *);
   vector * getPropertyVector (const char *);
   char * getPropertyString (const char *);
-  char * getPropertyReference (const char *);
+  const char * getPropertyReference (const char *) const;
   nr_double_t getPropertyDouble (const char *);
   nr_double_t getScaledProperty (const char *);
   int  getPropertyInteger (const char *);

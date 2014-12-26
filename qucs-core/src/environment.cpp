@@ -335,17 +335,17 @@ void environment::updateReferences (environment * up) {
 }
 
 // Returns vector of an assignment in the equation checker.
-qucs::vector environment::getVector (char * ident) {
+qucs::vector environment::getVector (const char * const ident) const {
   return checkee->getVector (ident);
 }
 
 // Returns double value of an assignment in the equation checker.
-nr_double_t environment::getDouble (char * ident) {
+nr_double_t environment::getDouble (const char * const ident) const {
   return checkee->getDouble (ident);
 }
 
 // Sets the double value of an assignment in the equation checker.
-void environment::setDouble (char * ident, nr_double_t val) {
+void environment::setDouble (const char * const ident, nr_double_t val) {
   checkee->setDouble (ident, val);
 }
 

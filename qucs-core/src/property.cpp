@@ -170,7 +170,7 @@ char * property::getString (void) {
 }
 
 // Returns the property's reference if it is a variable.
-char * property::getReference (void) {
+const char * property::getReference (void) const {
   if (var != NULL)
     return var->getName ();
   return str;

@@ -25,9 +25,13 @@
 #ifndef __VARIABLE_H__
 #define __VARIABLE_H__
 
+#include <string>
+
 #include "components/microstrip/substrate.h"
 #include "analysis.h"
 #include "equation.h"
+
+
 
 //using namespace qucs::eqn;
 namespace qucs {
@@ -55,11 +59,18 @@ class variable
 {
  public:
   variable ();
-  variable (char *);
+  variable (const char * const n);
   variable (const variable &);
   virtual ~variable ();
-  void setName (char *);
-  char * getName (void);
+
+  //! Sets the name of the variable
+  void setName (const char * const n) {
+    name = n ? std::string(n) : std::string();
+  };
+  //! Returns the name of the variable.
+  const char * getName (void) {
+    return this->name.c_str();
+  };
   void setNext (variable * v) { next = v; }
   variable * getNext (void) { return next; }
 
@@ -80,7 +91,7 @@ class variable
   bool getPassing (void) { return pass; }
 
  private:
-  char * name;
+  std::string name;
   char * text;
   bool pass;
   int type;
