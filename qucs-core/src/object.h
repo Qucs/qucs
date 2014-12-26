@@ -81,14 +81,13 @@ class object
   void copyProperties (property *);
   void deleteProperties (void);
   int  countProperties (void);
-  char * propertyList (void);
+  const char * propertyList (void) const;
 
  private:
   char * name;
   object * next;
   object * prev;
   property * prop;
-  char * ptxt;
 };
 
 } // namespace qucs

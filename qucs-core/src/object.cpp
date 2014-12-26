@@ -44,7 +44,6 @@ object::object () {
   name = NULL;
   prev = next = NULL;
   prop = NULL;
-  ptxt = NULL;
 }
 
 // This constructor creates a named instance of the object class.
@@ -54,7 +53,6 @@ object::object (const char * n) {
   name = strdup (n);
   prev = next = NULL;
   prop = NULL;
-  ptxt = NULL;
 }
 
 /* This copy constructor creates a instance of the object class based
@@ -63,14 +61,12 @@ object::object (const object & o) {
   name = o.name ? strdup (o.name) : NULL;
   next = o.next;
   prev = o.prev;
-  ptxt = o.ptxt ? strdup (o.ptxt) : NULL;
   copyProperties (o.prop);
 }
 
 // Destructor deletes an instance of the object class.
 object::~object () {
   if (name) free (name);
-  if (ptxt) free (ptxt);
   deleteProperties ();
 }
 
@@ -248,22 +244,17 @@ int object::countProperties (void) {
 }
 
 // This function returns a text representation of the objects properties.
-char * object::propertyList (void) {
-  if (ptxt) free (ptxt);
-  int len = countProperties () + 1;
-  ptxt = (char *) malloc (len); ptxt[0] = '\0';
+const char * object::propertyList (void) const {
+  std::string ptxt;
   for (property * p = prop; p != NULL; p = p->getNext ()) {
-    const char * n = p->getName ();
-    char * val = p->toString ();
-    char * text = (char *) malloc (strlen (n) + strlen (val) + 4);
-    sprintf (text, "%s=\"%s\"", n, val);
-    len += strlen (text);
-    ptxt = (char *) realloc (ptxt, len);
-    strcat (ptxt, text);
-    if (p->getNext () != NULL) strcat (ptxt, " ");
-    free (text);
+    std::string n = std::string(p->getName ());    
+    std::string val = std::string(p->toString ());
+    std::string text = n+"=\""+val+"\"";
+    ptxt += text;
+    if (p->getNext () != NULL)
+      ptxt += " ";
   }
-  return ptxt;
+  return ptxt.c_str();
 }
 
 } // namespace qucs
