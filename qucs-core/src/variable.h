@@ -61,7 +61,7 @@ class variable
   variable ();
   variable (const char * const n);
   variable (const variable &);
-  virtual ~variable ();
+  virtual ~variable () = default;
 
   //! Sets the name of the variable
   void setName (const char * const n) {
@@ -86,13 +86,12 @@ class variable
   eqn::constant * getValue (void) { return value.v; }
   void setAnalysis (analysis * a) { type = VAR_ANALYSIS; value.a = a; }
   analysis * getAnalysis (void) { return value.a; }
-  char * toString (void);
+  const char * toString (void);
   void setPassing (bool p) { pass = p; }
   bool getPassing (void) { return pass; }
 
  private:
   std::string name;
-  char * text;
   bool pass;
   int type;
   union value_t {
