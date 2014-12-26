@@ -106,12 +106,12 @@ class environment
   }
 
   /*! set the name */
-  void setName (const std::string p_name) {
+  void setName (const std::string &p_name) {
     this->name = p_name;
   }
 
   /*! Returns the name of the environment. */
-  std::string getName(void) {
+  const std::string & getName(void) const {
     return this->name;
   }
 
