@@ -56,32 +56,33 @@ class object
   object (const char *);
   object (const object &);
   virtual ~object ();
-  object * getNext (void) { return next; }
-  void setNext (object * o) { next = o; }
-  object * getPrev (void) { return prev; }
-  void setPrev (object * o) { prev = o; }
-  void setName (const char *);
-  char * getName (void);
-  void addProperty (property *);
-  property * addProperty (const char *, const char *);
-  property * addProperty (const char *, nr_double_t);
-  property * addProperty (const char *, variable *);
-  void setProperty (const char *, char *);
-  void setProperty (const char *, nr_double_t);
-  void setScaledProperty (const char *, nr_double_t);
-  void setProperty (const char *, variable *);
-  vector * getPropertyVector (const char *);
-  char * getPropertyString (const char *);
-  const char * getPropertyReference (const char *) const;
-  nr_double_t getPropertyDouble (const char *);
-  nr_double_t getScaledProperty (const char *);
-  int  getPropertyInteger (const char *);
-  bool hasProperty (const char *);
-  bool isPropertyGiven (const char *);
+  object * getNext (void) const { return this->next; }
+  void setNext (object * const o) { this->next = o; }
+  object * getPrev (void) const { return prev; }
+  void setPrev (object * const o) { this->prev = o; }
+  void setName (const char * const);
+  char * getName (void) const { return this->name; };
+  void addProperty (property * const);
+  property * addProperty (const char * const, const char * const);
+  property * addProperty (const char * const, const nr_double_t);
+  property * addProperty (const char * const, variable * const);
+  void setProperty (const char * const, char * const);
+  void setProperty (const char * const, nr_double_t);
+  void setScaledProperty (const char * const, const nr_double_t);
+  void setProperty (const char * const, variable * const);
+  vector * getPropertyVector (const char * const) const;
+  char * getPropertyString (const char * const) const;
+  const char * getPropertyReference (const char * const) const;
+  nr_double_t getPropertyDouble (const char * const) const;
+  nr_double_t getScaledProperty (const char * const) const;
+  int  getPropertyInteger (const char * const) const;
+  bool hasProperty (const char * const) const ;
+  bool isPropertyGiven (const char * const) const;
   void copyProperties (property *);
   void deleteProperties (void);
-  int  countProperties (void);
-  const char * propertyList (void) const;
+  int  countProperties (void) const;
+  const char *
+    propertyList (void) const;
 
  private:
   char * name;
