@@ -69,6 +69,9 @@ TESTS =                                               \
   tests/basic/u=ri/u=ri@dc.net                        \
   tests/basic/u=ri/u=ri@ac.net                        \
   tests/basic/u=ri/u=ri@tr.net                        \
+  tests/basic/u=ri/u=ri@dc+sweep.net                  \
+  tests/basic/u=ri/u=ri@ac+sweep.net                  \
+  tests/basic/u=ri/u=ri@tr+sweep.net                  \
   tests/basic/voltagediviser/voltagediviser@tr.net
 
 TEST_EXTENSIONS = .net
