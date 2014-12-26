@@ -31,6 +31,7 @@
 #include <string.h>
 #include <ctype.h>
 #include <cmath>
+#include <string>
 
 #include "complex.h"
 #include "variable.h"
@@ -41,9 +42,8 @@ namespace qucs {
 using namespace eqn;
 
 // Constructor creates an unnamed instance of the property class.
-property::property () {
+property::property () : name() {
   type = PROPERTY_UNKNOWN;
-  name = NULL;
   value = 0.0;
   str = NULL;
   txt = NULL;
@@ -53,9 +53,10 @@ property::property () {
 }
 
 // Constructor creates a named instance of the property class.
-property::property (const char * n) {
+property::property (const char * const n) :
+  name (n == nullptr ? std::string() : std::string(n))
+  {
   type = PROPERTY_UNKNOWN;
-  name = n ? strdup (n) : NULL;
   value = 0.0;
   str = NULL;
   txt = NULL;
@@ -66,9 +67,10 @@ property::property (const char * n) {
 
 /* This full qualified constructor creates an instance of the property
    class containing both the key and the value of the property. */
-property::property (const char * n, const char * val) {
+property::property (const char * const n, const char * val) :
+  name (n == nullptr ? std::string() : std::string(n))
+{
   type = PROPERTY_STR;
-  name = n ? strdup (n) : NULL;
   str = val ? strdup (val) : NULL;
   value = 0.0;
   txt = NULL;
@@ -79,7 +81,9 @@ property::property (const char * n, const char * val) {
 
 /* This full qualified constructor creates an instance of the property
    class containing both the key and the value of the property. */
-property::property (const char * n, nr_double_t val) {
+property::property (const char * const n, nr_double_t val) :
+  name (n == nullptr ? std::string() : std::string(n))
+  {
   type = PROPERTY_DOUBLE;
   name = n ? strdup (n) : NULL;
   value = val;
@@ -92,9 +96,9 @@ property::property (const char * n, nr_double_t val) {
 
 /* This full qualified constructor creates an instance of the property
    class containing both the key and the value of the property. */
-property::property (const char * n, variable * val) {
+property::property (const char * const n, variable * val) :
+  name (n == nullptr ? std::string() : std::string(n)) {
   type = PROPERTY_VAR;
-  name = n ? strdup (n) : NULL;
   var = val;
   value = 0.0;
   txt = NULL;
@@ -107,7 +111,7 @@ property::property (const char * n, variable * val) {
    based on the given property object. */
 property::property (const property & p) {
   type = p.type;
-  name = p.name ? strdup (p.name) : NULL;
+  this->name = p.name;
   str = p.str ? strdup (p.str) : NULL;
   value = p.value;
   txt = p.txt ? strdup (p.txt) : NULL;
@@ -127,28 +131,18 @@ property::~property () {
     }
   }
 #endif
-  if (name) free (name);
   if (str) free (str);
   if (txt) free (txt);
-}
-
-// Sets the name of the property.
-void property::setName (char * n) {
-  if (name) free (name);
-  name = n ? strdup (n) : NULL;
-}
-
-// Returns the name of the property.
-char * property::getName (void) {
-  return name;
 }
 
 /* Goes through the chained list of the properties and looks for a
    property matching the given key and returns its value if possible.
    If there is no such property the function returns NULL. */
-property * property::findProperty (const char * n) {
+property * property::findProperty (const char * const n) {
+  std::string tmp = std::string(n);
   for (property * p = this; p != NULL; p = p->getNext ()) {
-    if (!strcmp (p->getName (), n)) return p;
+    if (!strcmp(p->getName (), n))
+      return p;
   }
   return NULL;
 }
@@ -177,7 +171,8 @@ char * property::getString (void) {
 
 // Returns the property's reference if it is a variable.
 char * property::getReference (void) {
-  if (var != NULL) return var->getName ();
+  if (var != NULL)
+    return var->getName ();
   return str;
 }
 

@@ -31,6 +31,8 @@
 #ifndef __OBJECT_H__
 #define __OBJECT_H__
 
+#include "property.h"
+
 #define MCREATOR(val) \
   val (); \
   static struct define_t miscdef; \
@@ -38,7 +40,6 @@
 
 namespace qucs {
 
-class property;
 class variable;
 class vector;
 

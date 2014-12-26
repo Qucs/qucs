@@ -25,6 +25,8 @@
 #ifndef __PROPERTY_H__
 #define __PROPERTY_H__
 
+#include <string>
+
 namespace qucs {
 
 class variable;
@@ -42,16 +44,25 @@ class property
 {
  public:
   property ();
-  property (const char *);
-  property (const char *, const char *);
-  property (const char *, nr_double_t);
-  property (const char *, variable *);
+  property (const char * const);
+  property (const char * const, const char *);
+  property (const char * const, nr_double_t);
+  property (const char * const, variable *);
   property (const property &);
   virtual ~property ();
   property * getNext (void) { return next; }
   void setNext (property * p) { next = p; }
-  void setName (char *);
-  char * getName (void);
+
+  //! Sets the name of the property.
+  void setName (const char * const n) {
+    this->name = std::string(n);
+  };
+
+  //! Returns the name of the property.
+  const char * getName (void) const {
+    return this->name.empty() ? nullptr : this->name.c_str();
+  }
+
   qucs::vector * getVector (void);
   nr_double_t getDouble (void);
   int getInteger (void);
@@ -61,7 +72,7 @@ class property
   void set (int);
   void set (char *);
   void set (variable *);
-  property * findProperty (const char *);
+  property * findProperty (const char * const);
   char * toString (void);
   bool isDefault (void) { return def; }
   void setDefault (bool d) { def = d; }
@@ -69,7 +80,7 @@ class property
  private:
   bool def;
   int type;
-  char * name;
+  std::string name;
   char * str;
   char * txt;
   nr_double_t value;

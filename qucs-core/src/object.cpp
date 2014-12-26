@@ -158,7 +158,8 @@ qucs::vector * object::getPropertyVector (const char * n) {
    function returns NULL. */
 char * object::getPropertyString (const char * n) {
   property * p = prop->findProperty (n);
-  if (p != NULL) return p->getString ();
+  if (p != NULL)
+    return p->getString ();
   return NULL;
 }
 
@@ -251,7 +252,7 @@ char * object::propertyList (void) {
   int len = countProperties () + 1;
   ptxt = (char *) malloc (len); ptxt[0] = '\0';
   for (property * p = prop; p != NULL; p = p->getNext ()) {
-    char * n = p->getName ();
+    const char * n = p->getName ();
     char * val = p->toString ();
     char * text = (char *) malloc (strlen (n) + strlen (val) + 4);
     sprintf (text, "%s=\"%s\"", n, val);
