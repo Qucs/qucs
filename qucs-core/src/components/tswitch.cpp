@@ -39,7 +39,7 @@ tswitch::tswitch () : circuit (2) {
 }
 
 nr_double_t tswitch::initState (void) {
-  char * init = getPropertyString ("init");
+  const char * const init = getPropertyString ("init");
   bool on = !strcmp (init, "on");
   return on ? getPropertyDouble ("Ron") : getPropertyDouble ("Roff");
 }
@@ -100,7 +100,7 @@ void tswitch::initTR (void) {
 }
 
 void tswitch::calcTR (nr_double_t t) {
-  char * init = getPropertyString ("init");
+  const char * const init = getPropertyString ("init");
   nr_double_t ron = getPropertyDouble ("Ron");
   nr_double_t roff = getPropertyDouble ("Roff");
   nr_double_t r = 0;

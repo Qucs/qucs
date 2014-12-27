@@ -176,7 +176,7 @@ int trsolver::solve (void)
 {
     nr_double_t time, saveCurrent;
     int error = 0, convError = 0;
-    char * solver = getPropertyString ("Solver");
+    const char * const solver = getPropertyString ("Solver");
     relaxTSR = !strcmp (getPropertyString ("relaxTSR"), "yes") ? true : false;
     initialDC = !strcmp (getPropertyString ("initialDC"), "yes") ? true : false;
 
@@ -766,7 +766,7 @@ void trsolver::initDC (void)
    function. */
 void trsolver::initTR (void)
 {
-    char * IMethod = getPropertyString ("IntegrationMethod");
+    const char * const IMethod = getPropertyString ("IntegrationMethod");
     nr_double_t start = getPropertyDouble ("Start");
     nr_double_t stop = getPropertyDouble ("Stop");
     nr_double_t points = getPropertyDouble ("Points");

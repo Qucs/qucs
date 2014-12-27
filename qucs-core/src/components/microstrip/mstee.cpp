@@ -107,8 +107,8 @@ void mstee::calcSP (nr_double_t frequency) {
 
 void mstee::calcPropagation (nr_double_t f) {
 
-  char * SModel = getPropertyString ("MSModel");
-  char * DModel = getPropertyString ("MSDispModel");
+  const char * SModel = getPropertyString ("MSModel");
+  const char * DModel = getPropertyString ("MSDispModel");
   substrate * subst = getSubstrate ();
   nr_double_t er = subst->getPropertyDouble ("er");
   nr_double_t h  = subst->getPropertyDouble ("h");

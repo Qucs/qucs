@@ -927,12 +927,9 @@ nr_double_t circuit::getHistoryTFromIndex (int idx)
 /* This function should be used to apply the time vector history to
    the value histories of a circuit. */
 void circuit::applyHistory (history * h) {
-
-  tvector<nr_double_t> * t = h->getTvector ();
-
   for (int i = 0; i < nHistories; i++)
   {
-      histories[i].setTvector (t);
+    histories[i].apply(*h);
   }
 
 }

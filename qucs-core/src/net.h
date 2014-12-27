@@ -67,11 +67,11 @@ class net : public object
   void setReduced (int r) { reduced = r; }
   int  getVoltageSources (void) { return nSources; }
   void setVoltageSources (int n) { nSources = n; }
-  analysis * findAnalysis (char *);
+  analysis * findAnalysis (const char * const) const;
   analysis * findAnalysis (int);
   analysis * findSecondOrder (void);
   analysis * getChildAnalysis (analysis *);
-  char * getChild (analysis *);
+  const char * getChild (analysis *) const;
   void orderAnalysis (void);
   analysis * findLastOrder (analysis *);
   ptrlist<analysis> * findLastOrderChildren (analysis *);

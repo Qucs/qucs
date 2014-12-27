@@ -60,7 +60,7 @@ rectline::rectline () : circuit (2) {
   type = CIR_RECTANGULAR;
 }
 
-void rectline::calcResistivity (char * Mat, nr_double_t T) {
+void rectline::calcResistivity (const char * const Mat, nr_double_t T) {
   if (!strcmp (Mat, "Copper")) {
     if (T < 7) {
       rho = 2e-11;

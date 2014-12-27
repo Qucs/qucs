@@ -179,7 +179,7 @@ void jfet::initDC (void) {
   restartDC ();
 
   // apply polarity of JFET
-  char * type = getPropertyString ("Type");
+  const char * const type = getPropertyString ("Type");
   pol = !strcmp (type, "pfet") ? -1 : 1;
 
   // get device temperature

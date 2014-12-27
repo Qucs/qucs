@@ -25,6 +25,8 @@
 #ifndef __PROPERTY_H__
 #define __PROPERTY_H__
 
+#include <string>
+
 namespace qucs {
 
 class variable;
@@ -42,36 +44,44 @@ class property
 {
  public:
   property ();
-  property (const char *);
-  property (const char *, const char *);
-  property (const char *, nr_double_t);
-  property (const char *, variable *);
+  property (const std::string &);
+  property (const std::string &, const std::string &);
+  property (const std::string &, nr_double_t);
+  property (const std::string &, variable *);
   property (const property &);
   virtual ~property ();
-  property * getNext (void) { return next; }
+  property * getNext (void) const { return next; }
   void setNext (property * p) { next = p; }
-  void setName (char *);
-  char * getName (void);
-  qucs::vector * getVector (void);
-  nr_double_t getDouble (void);
-  int getInteger (void);
-  char * getString (void);
-  char * getReference (void);
-  void set (nr_double_t);
+
+  //! Sets the name of the property.
+  void setName (const std::string &n) {
+    this->name = n;
+  };
+
+  //! Returns the name of the property.
+  std::string getName (void) const {
+    return this->name;
+  }
+
+  qucs::vector * getVector (void) const;
+  nr_double_t getDouble (void) const;
+  int getInteger (void) const;
+  const char * getString (void) const;
+  const char * getReference (void) const;
+  void set (const nr_double_t);
   void set (int);
-  void set (char *);
+  void set (const std::string &);
   void set (variable *);
-  property * findProperty (const char *);
-  char * toString (void);
-  bool isDefault (void) { return def; }
+  property * findProperty (const char * const);
+  std::string toString (void) const;
+  bool isDefault (void) const { return def; }
   void setDefault (bool d) { def = d; }
 
  private:
   bool def;
   int type;
-  char * name;
-  char * str;
-  char * txt;
+  std::string name;
+  std::string str;
   nr_double_t value;
   variable * var;
   property * next;

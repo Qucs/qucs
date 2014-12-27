@@ -51,8 +51,8 @@ void msline::calcPropagation (nr_double_t frequency) {
 
   /* how to get properties of this component, e.g. L, W */
   nr_double_t W = getPropertyDouble ("W");
-  char * SModel = getPropertyString ("Model");
-  char * DModel = getPropertyString ("DispModel");
+  const char * SModel = getPropertyString ("Model");
+  const char * DModel = getPropertyString ("DispModel");
 
   /* how to get properties of the substrate, e.g. Er, H */
   substrate * subst = getSubstrate ();
@@ -113,7 +113,7 @@ void msline::saveCharacteristics (nr_double_t) {
    effective width due to the finite conductor thickness for the given
    microstrip line and substrate properties. */
 void msline::analyseQuasiStatic (nr_double_t W, nr_double_t h, nr_double_t t,
-				 nr_double_t er, char * Model,
+				 nr_double_t er, const char * const Model,
 				 nr_double_t& ZlEff, nr_double_t& ErEff,
 				 nr_double_t& WEff) {
 
@@ -228,7 +228,7 @@ void msline::analyseQuasiStatic (nr_double_t W, nr_double_t h, nr_double_t t,
    the given frequency. */
 void msline::analyseDispersion (nr_double_t W, nr_double_t h, nr_double_t er,
 				nr_double_t ZlEff, nr_double_t ErEff,
-				nr_double_t frequency, char * Model,
+				nr_double_t frequency, const char * const Model,
 				nr_double_t& ZlEffFreq,
 				nr_double_t& ErEffFreq) {
 

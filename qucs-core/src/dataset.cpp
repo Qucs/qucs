@@ -242,7 +242,7 @@ vector * dataset::findOrigin (char * n) {
 
 /* This function assigns dependency entries to variable vectors which
    do have the specified origin. */
-void dataset::assignDependency (char * origin, char * depvar) {
+void dataset::assignDependency (const char * const origin, const char * const depvar) {
   for (vector * v = variables; v != NULL; v = (vector *) v->getNext ()) {
     char * n = v->getOrigin ();
     if (n != NULL && origin != NULL && !strcmp (origin, n)) {

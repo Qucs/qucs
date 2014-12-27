@@ -37,7 +37,6 @@ namespace qucs {
 // Constructor creates an instance of the strlist class.
 strlist::strlist () {
   root = NULL;
-  txt = NULL;
 }
 
 /* This copy constructor creates a instance of the strlist class based
@@ -45,8 +44,8 @@ strlist::strlist () {
 strlist::strlist (const strlist & o) {
   struct strlist_t * s;
   root = NULL;
-  txt = NULL;
-  for (s = o.root; s != NULL; s = s->next) append (s->str);
+  for (s = o.root; s != NULL; s = s->next)
+    append (s->str);
 }
 
 // Destructor deletes an instance of the strlist class.
@@ -58,11 +57,10 @@ strlist::~strlist () {
     free (root);
     root = next;
   }
-  if (txt) free (txt);
 }
 
 // This function adds a string to the list.
-void strlist::add (char * str) {
+void strlist::add (const char * const str) {
   struct strlist_t * s;
   s = (struct strlist_t *) calloc (sizeof (struct strlist_t), 1);
   s->next = root;
@@ -71,17 +69,20 @@ void strlist::add (char * str) {
 }
 
 // The function adds the given string list to the list.
-void strlist::add (strlist * lst) {
-  if (lst) for (int i = lst->length () - 1; i >= 0; i--) add (lst->get (i));
+void strlist::add (const strlist * const lst) {
+  if (lst)
+    for (int i = lst->length () - 1; i >= 0; i--)
+      add (lst->get (i));
 }
 
 // The function apends the given string list to the list.
-void strlist::append (strlist * lst) {
-  if (lst) for (int i = 0; i < lst->length (); i++) append (lst->get (i));
+void strlist::append (const strlist * const lst) {
+  if (lst) for (int i = 0; i < lst->length (); i++)
+	     append (lst->get (i));
 }
 
 // This function append a string to the list.
-void strlist::append (char * str) {
+void strlist::append (const char * const str) {
   struct strlist_t * s;
   s = (struct strlist_t *) calloc (sizeof (struct strlist_t), 1);
   s->next = NULL;
@@ -97,14 +98,14 @@ void strlist::append (char * str) {
 }
 
 // This function counts the string in the list.
-int strlist::length (void) {
+int strlist::length (void) const {
   int res = 0;
   for (struct strlist_t * s = root; s != NULL; s = s->next) res++;
   return res;
 }
 
 // This function finds the specified string in the list.
-int strlist::contains (char * str) {
+int strlist::contains (const char * const str) const {
   int res = 0;
   for (struct strlist_t * s = root; s != NULL; s = s->next) {
     if (s->str != NULL && str != NULL && !strcmp (s->str, str))
@@ -126,7 +127,7 @@ int strlist::index (char * str) {
 
 /* This function returns the string positioned at the specified
    location in the string list. */
-char * strlist::get (int pos) {
+char * strlist::get (int pos) const {
   struct strlist_t * s = root;
   for (int i = 0; i < pos && s != NULL; s = s->next, i++) ;
   return s ? s->str : NULL;
@@ -134,7 +135,7 @@ char * strlist::get (int pos) {
 
 /* This function returns the string positioned at the end of the
    string list. */
-char * strlist::last (void) {
+char * strlist::last (void) const {
   struct strlist_t * s;
   for (s = root; s != NULL && s->next != NULL; s = s->next) ;
   return s ? s->str : NULL;
@@ -142,7 +143,7 @@ char * strlist::last (void) {
 
 /* This function returns the string positioned at the beginning of the
    string list. */
-char * strlist::first (void) {
+char * strlist::first (void) const {
   struct strlist_t * s = root;
   return s ? s->str : NULL;
 }
@@ -174,19 +175,13 @@ strlist * strlist::join (strlist * pre, strlist * post) {
 
 /* The function returns a space seperated string representation of the
    string list instance. */
-char * strlist::toString (const char * concat) {
-  if (txt) { free (txt); txt = NULL; }
-  int size = 0;
+const char * strlist::toString (const char * const concat) {
+  std::string txt;
   for (struct strlist_t * s = root; s != NULL; s = s->next) {
     char * t = s->str ? s->str : (char *) "(null)";
-    int len = strlen (t);
-    size += len + strlen (concat) + 1;
-    txt = (char *) (txt ? realloc (txt, size) : malloc (size));
-    txt = (s == root) ? strcpy (txt, t) : strcat (txt, t);
-    txt = strcat (txt, concat);
+    txt += std::string(t)+std::string(concat);
   }
-  if (txt) txt[strlen (txt) - 1] = '\0';
-  return txt ? txt : (char *) "";
+  return txt.c_str();
 }
 
 // Constructor for string list iterator.

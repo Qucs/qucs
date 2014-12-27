@@ -43,9 +43,9 @@ using namespace qucs::eqn;
 namespace qucs {
 
 // Constructor creates an unnamed instance of the environment class.
-environment::environment () : 
-  children(),
-  name() 
+environment::environment () :
+  name(),
+  children()
 {
   root = NULL;
   solvee = NULL;
@@ -56,9 +56,9 @@ environment::environment () :
 
 
 // Constructor creates a named instance of the environment class.
-environment::environment (const std::string & p_name) : 
-  children(),
-  name(p_name)
+environment::environment (const std::string & p_name) :
+  name(p_name),
+  children()
 {
   root = NULL;
   solvee = NULL;
@@ -165,15 +165,15 @@ void environment::deleteVariables (void) {
 }
 
 /* This function adds a variable to the environment. */
-void environment::addVariable (variable * var, bool pass) {
+void environment::addVariable (variable * const var, const bool pass) {
   var->setNext (root);
   var->setPassing (pass);
-  root = var;
+  this->root = var;
 }
 
 /* This function looks for the variable name in the environment and
    returns it if possible.  Otherwise the function returns NULL. */
-variable * environment::getVariable (char * n) {
+variable * environment::getVariable (const char * const n) const {
   for (variable * var = root; var != NULL; var = var->getNext ()) {
     if (var->getType () != VAR_VALUE)
       if (!strcmp (var->getName (), n))
@@ -183,13 +183,13 @@ variable * environment::getVariable (char * n) {
 }
 
 // The function runs the equation checker for this environment.
-int environment::equationChecker (int noundefined) {
+int environment::equationChecker (const int noundefined) const {
   checkee->setDefinitions (defs);
   return checkee->check (noundefined);
 }
 
 // The function runs the equation solver for this environment.
-int environment::equationSolver (dataset * data) {
+int environment::equationSolver (dataset * const data) {
   checkee->setDefinitions (defs);
   solvee->setEquations (checkee->getEquations ());
   int err = solvee->solve (data);
@@ -335,22 +335,22 @@ void environment::updateReferences (environment * up) {
 }
 
 // Returns vector of an assignment in the equation checker.
-qucs::vector environment::getVector (char * ident) {
+qucs::vector environment::getVector (const char * const ident) const {
   return checkee->getVector (ident);
 }
 
 // Returns double value of an assignment in the equation checker.
-nr_double_t environment::getDouble (char * ident) {
+nr_double_t environment::getDouble (const char * const ident) const {
   return checkee->getDouble (ident);
 }
 
 // Sets the double value of an assignment in the equation checker.
-void environment::setDouble (char * ident, nr_double_t val) {
+void environment::setDouble (const char * const ident, const nr_double_t val) {
   checkee->setDouble (ident, val);
 }
 
 // Return double value of a variable in the environment.
-nr_double_t environment::getDoubleConstant (char * ident) {
+nr_double_t environment::getDoubleConstant (const char * const ident) const {
   variable * var = getVariable (ident);
   if (var != NULL && var->getType () == VAR_CONSTANT) {
     constant * c = var->getConstant ();
@@ -360,7 +360,7 @@ nr_double_t environment::getDoubleConstant (char * ident) {
 }
 
 // Sets the double value of a variable in the environment.
-void environment::setDoubleConstant (char * ident, nr_double_t val) {
+void environment::setDoubleConstant (const char * const ident, nr_double_t val) {
   variable * var = getVariable (ident);
   if (var != NULL && var->getType () == VAR_CONSTANT) {
     constant * c = var->getConstant ();
@@ -369,7 +369,7 @@ void environment::setDoubleConstant (char * ident, nr_double_t val) {
 }
 
 // Returns the referenced value of a variable in the environment.
-char * environment::getDoubleReference (char * ident) {
+char * environment::getDoubleReference (const char * const ident) const {
   variable * var = getVariable (ident);
   if (var != NULL &&  var->getType () == VAR_REFERENCE) {
     reference * r = var->getReference ();
@@ -379,7 +379,7 @@ char * environment::getDoubleReference (char * ident) {
 }
 
 // Sets the referenced value of a variable in the environment.
-void environment::setDoubleReference (char * ident, char * val) {
+void environment::setDoubleReference (const char * const ident, char * val) {
   variable * var = getVariable (ident);
   if (var != NULL) {
     if (var->getType () == VAR_CONSTANT) {
@@ -400,8 +400,8 @@ void environment::setDoubleReference (char * ident, char * val) {
   }
 }
 
-// Prints the environment.
-void environment::print (bool all) {
+//! Prints the environment.
+void environment::print (const bool all) const {
   logprint (LOG_STATUS, "environment %s\n",this->name.c_str());
   for (variable * var = root; var != NULL; var = var->getNext ()) {
     logprint (LOG_STATUS, "  %s [%s]\n", var->getName (), var->toString ());

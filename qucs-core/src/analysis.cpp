@@ -109,7 +109,7 @@ void analysis::delAnalysis (analysis * a) {
 sweep * analysis::createSweep (const char * n) {
   sweep * swp = NULL;
   // get type of sweep
-  char * type = getPropertyString ("Type");
+  const char * const type = getPropertyString ("Type");
 
   // linearly or logarithmically stepped sweeps
   if (!strcmp (type, "lin") || !strcmp (type, "log")) {

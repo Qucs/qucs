@@ -55,27 +55,27 @@ vfile::~vfile () {
 void vfile::prepare (void) {
 
   // check type of interpolator
-  char * type = getPropertyString ("Interpolator");
-  if (!strcmp (type, "linear")) {
+  const char * itype = getPropertyString ("Interpolator");
+  if (!strcmp (itype, "linear")) {
     interpolType = INTERPOL_LINEAR;
-  } else if (!strcmp (type, "cubic")) {
+  } else if (!strcmp (itype, "cubic")) {
     interpolType = INTERPOL_CUBIC;
-  } else if (!strcmp (type, "hold")) {
+  } else if (!strcmp (itype, "hold")) {
     interpolType = INTERPOL_HOLD;
   }
 
   // check type of repetition
-  type = getPropertyString ("Repeat");
-  if (!strcmp (type, "no")) {
+  const char * rtype = getPropertyString ("Repeat");
+  if (!strcmp (rtype, "no")) {
     // rectangular data
     dataType = REPEAT_NO;
-  } else if (!strcmp (type, "yes")) {
+  } else if (!strcmp (rtype, "yes")) {
     // polar data
     dataType = REPEAT_YES;
   }
 
   // load file with samples
-  char * file = getPropertyString ("File");
+  const char * file = getPropertyString ("File");
   if (data == NULL) {
     if (strlen (file) > 4 && !strcasecmp (&file[strlen (file) - 4], ".dat"))
       data = dataset::load (file);

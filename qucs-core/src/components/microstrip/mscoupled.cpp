@@ -42,8 +42,8 @@ void mscoupled::calcPropagation (nr_double_t frequency) {
   // fetch line properties
   nr_double_t W = getPropertyDouble ("W");
   nr_double_t s = getPropertyDouble ("S");
-  char * SModel = getPropertyString ("Model");
-  char * DModel = getPropertyString ("DispModel");
+  const char * SModel = getPropertyString ("Model");
+  const char * DModel = getPropertyString ("DispModel");
 
   // fetch substrate properties
   substrate * subst = getSubstrate ();
@@ -137,7 +137,7 @@ void mscoupled::calcNoiseSP (nr_double_t) {
    lines. */
 void mscoupled::analysQuasiStatic (nr_double_t W, nr_double_t h, nr_double_t s,
 				   nr_double_t t, nr_double_t er,
-				   char * SModel, nr_double_t& Zle,
+				   const char * const SModel, nr_double_t& Zle,
 				   nr_double_t& Zlo, nr_double_t& ErEffe,
 				   nr_double_t& ErEffo) {
   // initialize default return values
@@ -270,7 +270,7 @@ void mscoupled::analyseDispersion (nr_double_t W, nr_double_t h, nr_double_t s,
 				   nr_double_t er, nr_double_t Zle,
 				   nr_double_t Zlo, nr_double_t ErEffe,
 				   nr_double_t ErEffo, nr_double_t frequency,
-				   char * DModel, nr_double_t& ZleFreq,
+				   const char * const DModel, nr_double_t& ZleFreq,
 				   nr_double_t& ZloFreq,
 				   nr_double_t& ErEffeFreq,
 				   nr_double_t& ErEffoFreq) {
