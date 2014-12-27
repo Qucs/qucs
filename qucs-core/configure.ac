@@ -863,6 +863,12 @@ AS_IF([test "x$enable_gtest" = "xyes"], [
 
 ])
 
+# enable extra test
+AC_ARG_ENABLE([qucs-test],
+  AS_HELP_STRING([--enable-qucs-test], [Enable running qucs test project]))
+
+dnl variable to steer ./Makefile.am to gtest and unit tests
+AM_CONDITIONAL([USE_QUCS_TEST], [test "$enable_qucs_test" = yes])
 
 dnl Definitions at top of <config.h>.
 AH_TOP([
