@@ -316,16 +316,19 @@ void net::orderAnalysis (void) {
       child = getChildAnalysis (parent);
       removeAnalysis (child);
       // apply sub-analysis to each parent analysis if any
-      for (auto *a: *actions) {
-	const char * cn = getChild (a);
-	if (cn != NULL && !strcmp (cn, child->getName ())) {
-	  a->addAnalysis (child);
-	  // apply DC analysis if necessary
-	  if (child->getType () != ANALYSIS_DC &&
-	      child->getType () != ANALYSIS_SWEEP && dc != NULL) {
-	    if (!dcApplied) removeAnalysis (dc);
-	    a->addAnalysis (dc);
-	    dcApplied++;
+      if (actions != nullptr) {
+	for (auto *a: *actions) {
+	  const char * cn = getChild (a);
+	  if (cn != NULL && !strcmp (cn, child->getName ())) {
+	    a->addAnalysis (child);
+	    // apply DC analysis if necessary
+	    if (child->getType () != ANALYSIS_DC &&
+		child->getType () != ANALYSIS_SWEEP && dc != NULL) {
+	      if (!dcApplied)
+		removeAnalysis (dc);
+	      a->addAnalysis (dc);
+	      dcApplied++;
+	    }
 	  }
 	}
       }
@@ -347,11 +350,13 @@ void net::orderAnalysis (void) {
 // This function sorts the analyses of the given parent analysis.
 void net::sortChildAnalyses (analysis * parent) {
   ptrlist<analysis> * alist = parent->getAnalysis ();
-  for (auto *a: *alist) {
-    if (a->getType () == ANALYSIS_DC
-	|| containsAnalysis (a, ANALYSIS_DC)) {
-      parent->delAnalysis (a);
-      parent->addAnalysis (a);
+  if (alist != nullptr) {
+    for (auto *a: *alist) {
+      if (a->getType () == ANALYSIS_DC
+	  || containsAnalysis (a, ANALYSIS_DC)) {
+	parent->delAnalysis (a);
+	parent->addAnalysis (a);
+      }
     }
   }
 }
