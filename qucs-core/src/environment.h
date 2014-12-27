@@ -60,14 +60,14 @@ class environment
   virtual ~environment ();
   void copy (const environment &);
   void setName (char *) = delete;
-  void print (bool all = false);
-  void setDefinitions (struct definition_t * d) { defs = d; }
-  struct definition_t * getDefinitions (void) { return defs; }
+  void print (const bool all = false) const;
+  void setDefinitions (struct definition_t * const d) { defs = d; }
+  struct definition_t * getDefinitions (void) const { return defs; }
 
   // variable specific functionality
   void copyVariables (variable *);
   void deleteVariables (void);
-  void addVariable (variable *, bool pass = true);
+  void addVariable (variable * const, const bool pass = true);
   variable * getVariable (const char * const) const;
 
   // equation specific functionality
@@ -75,19 +75,19 @@ class environment
   eqn::checker * getChecker (void) { return checkee; }
   void setSolver (eqn::solver * s) { solvee = s; }
   eqn::solver * getSolver (void) { return solvee; }
-  int equationChecker (int noundefined = 1);
-  int equationSolver (dataset *);
+  int equationChecker (const int noundefined = 1) const;
+  int equationSolver (dataset * const);
   int runSolver (void);
   void equationSolver (void);
 
   // subcircuit specific
   qucs::vector getVector (const char * const) const ;
-  void setDoubleConstant (const char * const, nr_double_t);
-  nr_double_t getDoubleConstant (char *);
+  void setDoubleConstant (const char * const, const nr_double_t);
+  nr_double_t getDoubleConstant (const char * const) const;
   void setDouble (const char * const , nr_double_t);
   nr_double_t getDouble (const char * const) const;
-  void setDoubleReference (char *, char *);
-  char * getDoubleReference (char *);
+  void setDoubleReference (const char * const, char *);
+  char * getDoubleReference (const char * const) const;
   void updateReferences (environment *);
   void passConstants (void);
   void fetchConstants (void);
