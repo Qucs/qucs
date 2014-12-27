@@ -50,7 +50,7 @@ rfedd::~rfedd () {
 void rfedd::initDC (void) {
 
   // get appropriate property value
-  char * dc = getPropertyString ("duringDC");
+  const char * const dc = getPropertyString ("duringDC");
 
   // a short during DC
   if (!strcmp (dc, "short")) {
@@ -139,7 +139,7 @@ nr_complex_t rfedd::getResult (void * eqn) {
 // Initializes the equation defined device.
 void rfedd::initModel (void) {
   int i, j, k, ports = getSize ();
-  char * type, * pn, * sn, * snold, * fn, * fnold;
+  char * pn, * sn, * snold, * fn, * fnold;
   const char * vr;
   eqn::node * pvalue;
 
@@ -157,7 +157,7 @@ void rfedd::initModel (void) {
   A(feqn)->evalType (); A(feqn)->skip = 1;
 
   // obtain type of parameters
-  type = getPropertyString ("Type");
+  const char * const type = getPropertyString ("Type");
 
   // prepare device equations
   for (k = 0, i = 0; i < ports; i++) {
@@ -212,7 +212,7 @@ void rfedd::calcDC (void) {
 // Initializes MNA representation depending on parameter type.
 void rfedd::initMNA (void) {
   int i, ports = getSize ();
-  char * type = getPropertyString ("Type");
+  const char * const type = getPropertyString ("Type");
   switch (type[0]) {
   case 'Y':
     setVoltageSources (0);
@@ -255,7 +255,7 @@ void rfedd::initMNA (void) {
 
 // Calculates MNA representation depending on parameter type.
 void rfedd::calcMNA (nr_double_t frequency) {
-  char * type = getPropertyString ("Type");
+  const char * const type = getPropertyString ("Type");
   int r, c, ports = getSize ();
   matrix p = calcMatrix (frequency);
   switch (type[0]) {
@@ -350,7 +350,7 @@ void rfedd::initSP (void) {
 
 // Callback for S-parameter analysis.
 void rfedd::calcSP (nr_double_t frequency) {
-  char * type = getPropertyString ("Type");
+  const char * const type = getPropertyString ("Type");
   matrix p = calcMatrix (frequency);
   switch (type[0]) {
   case 'Y':

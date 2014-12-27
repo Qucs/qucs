@@ -195,7 +195,7 @@ void mosfet::initModel (void) {
   nr_double_t T1 = kelvin (getPropertyDouble ("Tnom"));
 
   // apply polarity of MOSFET
-  char * type = getPropertyString ("Type");
+  const char * const type = getPropertyString ("Type");
   pol = !strcmp (type, "pfet") ? -1 : 1;
 
   // calculate effective channel length

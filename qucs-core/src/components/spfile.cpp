@@ -287,27 +287,27 @@ matrix spfile::shrinkNoiseMatrix (matrix n, matrix s) {
 void spfile::prepare (void) {
 
   // check type of data
-  char * type = getPropertyString ("Data");
-  if (!strcmp (type, "rectangular")) {
+  const char * const dtype = getPropertyString ("Data");
+  if (!strcmp (dtype, "rectangular")) {
     // rectangular data
     dataType = DATA_RECTANGULAR;
   }
-  else if (!strcmp (type, "polar")) {
+  else if (!strcmp (dtype, "polar")) {
     // polar data
     dataType = DATA_POLAR;
   }
 
   // check type of interpolator
-  type = getPropertyString ("Interpolator");
-  if (!strcmp (type, "linear")) {
+  const char * const itype = getPropertyString ("Interpolator");
+  if (!strcmp (itype, "linear")) {
     interpolType = INTERPOL_LINEAR;
   }
-  else if (!strcmp (type, "cubic")) {
+  else if (!strcmp (itype, "cubic")) {
     interpolType = INTERPOL_CUBIC;
   }
 
   // load S-parameter file
-  char * file = getPropertyString ("File");
+  const char * file = getPropertyString ("File");
   if (data == NULL) data = dataset::load_touchstone (file);
   if (data != NULL) {
     // determine the number of ports defined by that file
@@ -452,7 +452,7 @@ nr_double_t spfile::noiseFigure (matrix s, matrix c, nr_double_t& Fmin,
 
 void spfile::initDC (void) {
   // get appropriate property value
-  char * dc = getPropertyString ("duringDC");
+  const char * const dc = getPropertyString ("duringDC");
 
   // a short during DC including the reference node
   if (!strcmp (dc, "shortall")) {

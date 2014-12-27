@@ -92,7 +92,7 @@ property * object::addProperty (const char * const n, const char * const val) {
 
 /* This function sets the specified property consisting of a key and a
    string value in the object. */
-void object::setProperty (const char * const n, char * const val) {
+void object::setProperty (const char * const n, const char * const val) {
   property * p = prop->findProperty (n);
   if (p != NULL)
     p->set (val);
@@ -139,16 +139,17 @@ property * object::addProperty (const char * n, variable * const val) {
    added as its vector representation.  If there is no such property
    the function returns NULL. */
 qucs::vector * object::getPropertyVector (const char * const n) const {
-  property * p = prop->findProperty (n);
-  if (p != NULL) return p->getVector ();
+  const property * p = prop->findProperty (n);
+  if (p != NULL)
+    return p->getVector ();
   return NULL;
 }
 
 /* Returns the requested property value which has been previously
    added as its text representation.  If there is no such property the
    function returns NULL. */
-char * object::getPropertyString (const char * const n) const {
-  property * p = prop->findProperty (n);
+const char * object::getPropertyString (const char * const n) const {
+  const property * p = prop->findProperty (n);
   if (p != NULL)
     return p->getString ();
   return NULL;
@@ -157,7 +158,7 @@ char * object::getPropertyString (const char * const n) const {
 /* Returns the requested property reference variable name.  If there
    is no such property the function returns NULL. */
 const char * object::getPropertyReference (const char * const n) const {
-  property * p = prop->findProperty (n);
+  const property * p = prop->findProperty (n);
   if (p != NULL)
     return p->getReference ();
   return NULL;
@@ -167,8 +168,9 @@ const char * object::getPropertyReference (const char * const n) const {
    added as its double representation.  If there is no such property
    the function returns zero. */
 nr_double_t object::getPropertyDouble (const char * const n) const {
-  property * p = prop->findProperty (n);
-  if (p != NULL) return p->getDouble ();
+  const property * p = prop->findProperty (n);
+  if (p != NULL)
+    return p->getDouble ();
   return 0.0;
 }
 
@@ -179,8 +181,9 @@ nr_double_t object::getScaledProperty (const char * const n) const{
   char txt[64];
   sprintf (txt, "Scaled:%s", n);
   // try to find scaled property
-  property * p = prop->findProperty (txt);
-  if (p != NULL) return p->getDouble ();
+  const property * p = prop->findProperty (txt);
+  if (p != NULL)
+    return p->getDouble ();
   // default to standard property
   return getPropertyDouble (n);
 }
@@ -189,8 +192,9 @@ nr_double_t object::getScaledProperty (const char * const n) const{
    added as its integer representation.  If there is no such property
    the function returns zero. */
 int object::getPropertyInteger (const char * const n) const {
-  property * p = prop->findProperty (n);
-  if (p != NULL) return p->getInteger ();
+  const property * p = prop->findProperty (n);
+  if (p != NULL)
+    return p->getInteger ();
   return 0;
 }
 
@@ -205,8 +209,9 @@ bool object::hasProperty (const char * const n) const {
    otherwise it returns zero. */
 bool object::isPropertyGiven (const char * const n) const {
   if (prop != NULL) {
-    property * p = prop->findProperty (n);
-    if (p != NULL && !p->isDefault ()) return true;
+    const property * p = prop->findProperty (n);
+    if (p != NULL && !p->isDefault ())
+      return true;
   }
   return false;
 }

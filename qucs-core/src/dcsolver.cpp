@@ -69,7 +69,7 @@ int dcsolver::solve (void) {
   // fetch simulation properties
   saveOPs |= !strcmp (getPropertyString ("saveOPs"), "yes") ? SAVE_OPS : 0;
   saveOPs |= !strcmp (getPropertyString ("saveAll"), "yes") ? SAVE_ALL : 0;
-  char * solver = getPropertyString ("Solver");
+  const char * const solver = getPropertyString ("Solver");
 
   // initialize node voltages, first guess for non-linear circuits and
   // generate extra circuits if necessary
@@ -102,7 +102,7 @@ int dcsolver::solve (void) {
     -1 };
 
   // is a certain convergence helper requested?
-  char * helper = getPropertyString ("convHelper");
+  const char * const helper = getPropertyString ("convHelper");
   convHelper = CONV_None;
   if (!strcmp (helper, "LineSearch")) {
     convHelper = CONV_LineSearch;

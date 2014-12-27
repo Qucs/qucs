@@ -102,7 +102,7 @@ void bondwire::getProperties (void) {
   mur = getPropertyDouble ("mur");
 
   /* model used */
-  char * Model  = getPropertyString ("Model");
+  const char * Model  = getPropertyString ("Model");
   if (Model == NULL) {
     model = FREESPACE;
     logprint (LOG_STATUS, "Model is not specified force FREESPACE\n");

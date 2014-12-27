@@ -82,11 +82,10 @@ parasweep::parasweep (parasweep & p) : analysis (p) {
 
 /* Initializes the parameter sweep. */
 int parasweep::initialize (void) {
-  char * n;
   constant * val;
 
   // get fixed simulation properties
-  n = getPropertyString ("Param");
+  const char * const n = getPropertyString ("Param");
 
   // create sweep if necessary
   if (swp == NULL) {
@@ -142,11 +141,10 @@ int parasweep::cleanup (void) {
 /* This is the parameter sweep solver. */
 int parasweep::solve (void) {
   int err = 0;
-  char * n;
   runs++;
 
   // get fixed simulation properties
-  n = getPropertyString ("Param");
+  const char * const n = getPropertyString ("Param");
 
   // run the parameter sweep
   swp->reset ();

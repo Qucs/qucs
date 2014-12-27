@@ -198,7 +198,7 @@ void net::removeAnalysis (analysis * a) {
 /* The function returns the analysis associated with the netlist
    object specified by the given instance name and returns NULL if
    there is no such analysis. */
-analysis * net::findAnalysis (char * n) {
+analysis * net::findAnalysis (const char * const n) const {
   if (n == NULL) return NULL;
   for (auto *a : *actions) {
     if (!strcmp (a->getName (), n))
@@ -317,7 +317,7 @@ void net::orderAnalysis (void) {
       removeAnalysis (child);
       // apply sub-analysis to each parent analysis if any
       for (auto *a: *actions) {
-	char * cn = getChild (a);
+	const char * cn = getChild (a);
 	if (cn != NULL && !strcmp (cn, child->getName ())) {
 	  a->addAnalysis (child);
 	  // apply DC analysis if necessary
@@ -357,8 +357,8 @@ void net::sortChildAnalyses (analysis * parent) {
 }
 
 // Returns the instance name of the given parents child analysis.
-char * net::getChild (analysis * parent) {
-  char * child = NULL;
+const char * net::getChild (analysis * parent) const {
+  const char * child = NULL;
   if (parent != NULL && parent->getType () == ANALYSIS_SWEEP)
     child = parent->getPropertyString ("Sim");
   return child;

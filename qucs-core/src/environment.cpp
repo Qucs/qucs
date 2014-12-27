@@ -173,7 +173,7 @@ void environment::addVariable (variable * var, bool pass) {
 
 /* This function looks for the variable name in the environment and
    returns it if possible.  Otherwise the function returns NULL. */
-variable * environment::getVariable (char * n) {
+variable * environment::getVariable (const char * const n) const {
   for (variable * var = root; var != NULL; var = var->getNext ()) {
     if (var->getType () != VAR_VALUE)
       if (!strcmp (var->getName (), n))
@@ -360,7 +360,7 @@ nr_double_t environment::getDoubleConstant (char * ident) {
 }
 
 // Sets the double value of a variable in the environment.
-void environment::setDoubleConstant (char * ident, nr_double_t val) {
+void environment::setDoubleConstant (const char * const ident, nr_double_t val) {
   variable * var = getVariable (ident);
   if (var != NULL && var->getType () == VAR_CONSTANT) {
     constant * c = var->getConstant ();

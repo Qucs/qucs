@@ -77,8 +77,8 @@ nr_double_t mscross::capCorrection (nr_double_t W, nr_double_t f) {
   nr_double_t er = subst->getPropertyDouble ("er");
   nr_double_t h  = subst->getPropertyDouble ("h");
   nr_double_t t  = subst->getPropertyDouble ("t");
-  char * SModel = getPropertyString ("MSModel");
-  char * DModel = getPropertyString ("MSDispModel");
+  const char * SModel = getPropertyString ("MSModel");
+  const char * DModel = getPropertyString ("MSDispModel");
   nr_double_t Zl1, Er1, Zl2, Er2;
   nr_double_t ZlEff, ErEff, WEff;
   msline::analyseQuasiStatic (W, h, t, 9.9, SModel, ZlEff, ErEff, WEff);

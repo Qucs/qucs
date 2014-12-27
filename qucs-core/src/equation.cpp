@@ -2431,7 +2431,7 @@ strlist * checker::variables (void)
 }
 
 // Checks if the given variable name is an equation.
-bool checker::containsVariable (char * ident)
+bool checker::containsVariable (const char * const ident) const
 {
     foreach_equation (eqn)
     {

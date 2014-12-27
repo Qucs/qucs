@@ -288,7 +288,7 @@ void bjt::initDC (void) {
   initModel ();
 
   // apply polarity of BJT
-  char * type = getPropertyString ("Type");
+  const char * const type = getPropertyString ("Type");
   pol = !strcmp (type, "pnp") ? -1 : 1;
 
   // get simulation temperature

@@ -66,12 +66,12 @@ class object
   property * addProperty (const char * const, const char * const);
   property * addProperty (const char * const, const nr_double_t);
   property * addProperty (const char * const, variable * const);
-  void setProperty (const char * const, char * const);
+  void setProperty (const char * const, const char * const);
   void setProperty (const char * const, nr_double_t);
   void setScaledProperty (const char * const, const nr_double_t);
   void setProperty (const char * const, variable * const);
   vector * getPropertyVector (const char * const) const;
-  char * getPropertyString (const char * const) const;
+  const char * getPropertyString (const char * const) const;
   const char * getPropertyReference (const char * const) const;
   nr_double_t getPropertyDouble (const char * const) const;
   nr_double_t getScaledProperty (const char * const) const;

@@ -48,8 +48,8 @@ matrix msgap::calcMatrixY (nr_double_t frequency) {
   nr_double_t W1 = getPropertyDouble ("W1");
   nr_double_t W2 = getPropertyDouble ("W2");
   nr_double_t s  = getPropertyDouble ("S");
-  char * SModel  = getPropertyString ("MSModel");
-  char * DModel  = getPropertyString ("MSDispModel");
+  const char * SModel  = getPropertyString ("MSModel");
+  const char * DModel  = getPropertyString ("MSDispModel");
 
   /* how to get properties of the substrate, e.g. Er, H */
   substrate * subst = getSubstrate ();

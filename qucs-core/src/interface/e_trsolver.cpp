@@ -183,7 +183,7 @@ int e_trsolver::init (nr_double_t start, nr_double_t firstdelta, int mode)
     this->getEnv()->runSolver();
 
     int error = 0;
-    char * solver = getPropertyString ("Solver");
+    const char * const solver = getPropertyString ("Solver");
     relaxTSR = !strcmp (getPropertyString ("relaxTSR"), "yes") ? true : false;
     initialDC = !strcmp (getPropertyString ("initialDC"), "yes") ? true : false;
     // fetch simulation properties
@@ -291,7 +291,7 @@ void e_trsolver::fillLastSolution (tvector<nr_double_t> * s)
    function. */
 void e_trsolver::initETR (nr_double_t start, nr_double_t firstdelta, int mode)
 {
-    char * IMethod = getPropertyString ("IntegrationMethod");
+    const char * const IMethod = getPropertyString ("IntegrationMethod");
     //nr_double_t start = getPropertyDouble ("Start");
     //nr_double_t stop = start + firstdelta;
     //nr_double_t points = 1.0;

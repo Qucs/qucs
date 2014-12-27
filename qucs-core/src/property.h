@@ -45,12 +45,12 @@ class property
  public:
   property ();
   property (const std::string &);
-  property (const std::string &, const char *);
+  property (const std::string &, const std::string &);
   property (const std::string &, nr_double_t);
   property (const std::string &, variable *);
   property (const property &);
   virtual ~property ();
-  property * getNext (void) { return next; }
+  property * getNext (void) const { return next; }
   void setNext (property * p) { next = p; }
 
   //! Sets the name of the property.
@@ -63,26 +63,25 @@ class property
     return this->name;
   }
 
-  qucs::vector * getVector (void);
-  nr_double_t getDouble (void);
-  int getInteger (void);
-  char * getString (void);
+  qucs::vector * getVector (void) const;
+  nr_double_t getDouble (void) const;
+  int getInteger (void) const;
+  const char * getString (void) const;
   const char * getReference (void) const;
-  void set (nr_double_t);
+  void set (const nr_double_t);
   void set (int);
-  void set (char *);
+  void set (const std::string &);
   void set (variable *);
   property * findProperty (const char * const);
-  char * toString (void);
-  bool isDefault (void) { return def; }
+  std::string toString (void) const;
+  bool isDefault (void) const { return def; }
   void setDefault (bool d) { def = d; }
 
  private:
   bool def;
   int type;
   std::string name;
-  char * str;
-  char * txt;
+  std::string str;
   nr_double_t value;
   variable * var;
   property * next;

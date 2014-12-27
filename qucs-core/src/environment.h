@@ -68,7 +68,7 @@ class environment
   void copyVariables (variable *);
   void deleteVariables (void);
   void addVariable (variable *, bool pass = true);
-  variable * getVariable (char *);
+  variable * getVariable (const char * const) const;
 
   // equation specific functionality
   void setChecker (eqn::checker * c) { checkee = c; }
@@ -82,7 +82,7 @@ class environment
 
   // subcircuit specific
   qucs::vector getVector (const char * const) const ;
-  void setDoubleConstant (char *, nr_double_t);
+  void setDoubleConstant (const char * const, nr_double_t);
   nr_double_t getDoubleConstant (char *);
   void setDouble (const char * const , nr_double_t);
   nr_double_t getDouble (const char * const) const;

@@ -304,7 +304,7 @@ public:
   void addEquation (node *);
   node * findEquation (const char *
 		       const) const;
-  bool containsVariable (char *);
+  bool containsVariable (const char * const) const;
   nr_double_t getDouble (const char *const) const;
   void setDouble (const char *const, nr_double_t);
   qucs::vector getVector (const char * const) const;

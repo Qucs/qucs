@@ -42,11 +42,12 @@ namespace qucs {
 using namespace eqn;
 
 // Constructor creates an unnamed instance of the property class.
-property::property () : name() {
+property::property () :
+  name(),
+  str()
+{
   type = PROPERTY_UNKNOWN;
   value = 0.0;
-  str = NULL;
-  txt = NULL;
   var = NULL;
   next = NULL;
   def = false;
@@ -54,12 +55,11 @@ property::property () : name() {
 
 // Constructor creates a named instance of the property class.
 property::property (const std::string &n) :
-  name (n)
+  name (n),
+  str ()
   {
   type = PROPERTY_UNKNOWN;
   value = 0.0;
-  str = NULL;
-  txt = NULL;
   var = NULL;
   next = NULL;
   def = false;
@@ -67,13 +67,12 @@ property::property (const std::string &n) :
 
 /* This full qualified constructor creates an instance of the property
    class containing both the key and the value of the property. */
-property::property (const std::string &n, const char * val) :
-    name (n)
+property::property (const std::string &n, const std::string &val) :
+  name (n),
+  str(val)
 {
   type = PROPERTY_STR;
-  str = val ? strdup (val) : NULL;
   value = 0.0;
-  txt = NULL;
   var = NULL;
   next = NULL;
   def = false;
@@ -82,12 +81,11 @@ property::property (const std::string &n, const char * val) :
 /* This full qualified constructor creates an instance of the property
    class containing both the key and the value of the property. */
 property::property (const std::string &n, nr_double_t val) :
-  name (n)
+  name (n),
+  str()
 {
   type = PROPERTY_DOUBLE;
   value = val;
-  str = NULL;
-  txt = NULL;
   var = NULL;
   next = NULL;
   def = false;
@@ -96,12 +94,12 @@ property::property (const std::string &n, nr_double_t val) :
 /* This full qualified constructor creates an instance of the property
    class containing both the key and the value of the property. */
 property::property (const std::string &n, variable * val) :
-  name (n) {
+  name (n),
+  str ()
+{
   type = PROPERTY_VAR;
   var = val;
   value = 0.0;
-  txt = NULL;
-  str = NULL;
   next = NULL;
   def = false;
 }
@@ -111,9 +109,8 @@ property::property (const std::string &n, variable * val) :
 property::property (const property & p) {
   type = p.type;
   this->name = p.name;
-  str = p.str ? strdup (p.str) : NULL;
+  this->str = p.str;
   value = p.value;
-  txt = p.txt ? strdup (p.txt) : NULL;
   next = p.next;
   var = p.var;
   def = p.def;
@@ -130,8 +127,6 @@ property::~property () {
     }
   }
 #endif
-  if (str) free (str);
-  if (txt) free (txt);
 }
 
 /* Goes through the chained list of the properties and looks for a
@@ -151,7 +146,7 @@ property * property::findProperty (const char * const n) {
 #define V(con) ((constant *) (con))->v
 
 // Returns the property's value as vector.
-qucs::vector * property::getVector (void) {
+qucs::vector * property::getVector (void) const {
   if (var != NULL) {
     if (var->getType () == VAR_CONSTANT)
       return V (var->getConstant ());
@@ -162,20 +157,21 @@ qucs::vector * property::getVector (void) {
 }
 
 // Returns the property's value as string.
-char * property::getString (void) {
-  if (var != NULL) return S (var->getConstant ());
-  return str;
+const char * property::getString (void) const {
+  if (var != NULL)
+    return S (var->getConstant ());
+  return str.c_str();
 }
 
 // Returns the property's reference if it is a variable.
 const char * property::getReference (void) const {
   if (var != NULL)
     return var->getName ();
-  return str;
+  return str.c_str();
 }
 
 // Returns the property's value as double.
-nr_double_t property::getDouble (void) {
+nr_double_t property::getDouble (void) const {
   if (var != NULL) {
     if (var->getType () == VAR_CONSTANT)
       return D (var->getConstant ());
@@ -186,61 +182,55 @@ nr_double_t property::getDouble (void) {
 }
 
 // Returns the property's value as integer.
-int property::getInteger (void) {
+int property::getInteger (void) const {
   if (var != NULL) return (int) std::floor (D (var->getConstant ()));
   return (int) std::floor (value);
 }
 
 // Sets the property's value being a double.
-void property::set (nr_double_t val) {
+void property::set (const nr_double_t val) {
   type = PROPERTY_DOUBLE;
   value = val;
 }
 
 // Sets the property's value being an integer.
-void property::set (int val) {
+void property::set (const int val) {
   type = PROPERTY_INT;
   value = val;
 }
 
 // Sets the property's value being a variable.
-void property::set (variable * val) {
+void property::set (variable * const val) {
   type = PROPERTY_VAR;
   var = val;
 }
 
 // Sets the property's value being a string.
-void property::set (char * val) {
+void property::set (const std::string &val) {
   type = PROPERTY_STR;
-  if (str) free (str);
-  str = val ? strdup (val) : NULL;
+  this->str = val;
 }
 
 // This function returns a text representation of the property object.
-char * property::toString (void) {
-  char text[256];
-  if (txt) free (txt);
+std::string property::toString (void) const {
   switch (type) {
   case PROPERTY_UNKNOWN:
-    txt = strdup ("(no such type)");
+    return "(no such type)";
     break;
   case PROPERTY_INT:
-    sprintf (text, "%d", (int) std::floor (value));
-    txt = strdup (text);
+    return std::to_string(std::floor(value));
     break;
   case PROPERTY_STR:
-    txt = strdup (str);
+    return std::string(this->str);
     break;
   case PROPERTY_DOUBLE:
-    sprintf (text, "%g", (double) value);
-    txt = strdup (text);
+    return std::to_string(value);
     break;
   case PROPERTY_VAR:
-    sprintf (text, "%s", var->getName ());
-    txt = strdup (text);
+    return var->getName();
     break;
   }
-  return txt;
+  return "";
 }
 
 } // namespace qucs
