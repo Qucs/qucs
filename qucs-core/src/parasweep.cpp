@@ -114,9 +114,11 @@ int parasweep::initialize (void) {
   env->setDouble (n, v);
 
   // also run initialize functionality for all children
-  for (auto *a : *actions) {
-    a->initialize ();
-    a->setProgress (false);
+  if (actions != nullptr) {
+    for (auto *a : *actions) {
+      a->initialize ();
+      a->setProgress (false);
+    }
   }
   return 0;
 }
@@ -132,8 +134,9 @@ int parasweep::cleanup (void) {
   }
 
   // also run cleanup functionality for all children
-  for (auto *a : *actions)
-    a->cleanup ();
+  if( actions != nullptr)
+    for (auto *a : *actions)
+      a->cleanup ();
 
   return 0;
 }

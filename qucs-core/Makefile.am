@@ -65,6 +65,10 @@ DISTCLEANFILES = config.cache config.log
 #
 # See also qucs-test for another way of testing.
 # https://github.com/Qucs/qucs-test.
+TEST_EXTENSIONS = .net .txt
+NET_LOG_COMPILER = src/qucsator
+AM_NET_LOG_FLAGS = -i
+
 TESTS =                                               \
   tests/basic/u=ri/u=ri@dc.net                        \
   tests/basic/u=ri/u=ri@ac.net                        \
@@ -74,7 +78,14 @@ TESTS =                                               \
   tests/basic/u=ri/u=ri@tr+sweep.net                  \
   tests/basic/voltagediviser/voltagediviser@tr.net
 
-TEST_EXTENSIONS = .net
-NET_LOG_COMPILER = src/qucsator
-AM_NET_LOG_FLAGS = -i
-
+if USE_QUCS_TEST
+    TXT_LOG_COMPILER = src/qucsator
+    AM_TXT_LOG_FLAGS = -i
+    TESTS +=  tests/qucs-test/testsuite/DC_SW_bridge_prj/netlist.txt \
+              tests/qucs-test/testsuite/DC_SW_bsim4v30nMOS_Ids_Vgs_prj/netlist.txt \
+              tests/qucs-test/testsuite/DC_SW_bsim4v30pMOS_Ids_Vgs_prj/netlist.txt \
+              tests/qucs-test/testsuite/DC_SW_charac_prj/netlist.txt \
+              tests/qucs-test/testsuite/DC_SW_diff1_prj/netlist.txt
+# do not test yet return 255
+#              tests/qucs-test/testsuite/DC_TR_SW_spice_BFR520_prj/netlist.txt
+endif
