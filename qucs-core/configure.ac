@@ -910,17 +910,9 @@ dnl variable to steer ./Makefile.am to enable qucs_test
 AM_CONDITIONAL([USE_QUCS_TEST], [test "$enable_qucs_test" = yes])
 
 # enable gcov
-AC_ARG_ENABLE([gcov],
-  [AS_HELP_STRING([--enable-gcov],
-    [use Gcov to test the test suite])],
-    [],
-    [enable_gcov=no])
-AM_CONDITIONAL([USE_GCOV],[test '!' "$enable_gcov" = no])
-AS_IF([test "x$enable_gcov" = "xyes"],
-      [dnl
-      dnl do not inline function
-      dnl TODO remove optimisation in case of coverage
-      AX_APPEND_COMPILE_FLAGS([--coverage],CFLAGS)
+AX_CODE_COVERAGE
+AS_IF([ test "$enable_code_coverage" = "yes" ],
+      [AX_APPEND_COMPILE_FLAGS([--coverage],CFLAGS)
       AX_APPEND_COMPILE_FLAGS([-fno-inline],CFLAGS)
       AX_APPEND_COMPILE_FLAGS([--coverage],CXXFLAGS)
       AX_APPEND_COMPILE_FLAGS([-fno-inline],CXXFLAGS)
