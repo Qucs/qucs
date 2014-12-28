@@ -249,7 +249,7 @@ case $host_os in
 
   dnl Set Clang
   AS_IF([test "x$ax_cv_cxx_compiler_vendor" = "xclang"],
-        [CFLAGS="$CFLAGS -pipe"
+	[CFLAGS="$CFLAGS -pipe"
 	 CXXFLAGS="$CXXFLAGS -pipe -fno-exceptions -ldl -D__STRICT_ANSI__"
 	 use_CLANG="yes"],[])
 
@@ -673,7 +673,7 @@ AC_SUBST(QUCS_DOUBLE_SIZE, $double_size)
 unset double_type
 unset double_size
 
-echo "\nCheck functions in the global namespace"
+AC_MSG_NOTICE([Check functions in the global namespace])
 dnl http://www.cplusplus.com/reference/cmath/
 
 # Trigonometric functions
@@ -753,8 +753,7 @@ AC_CXX_HAVE_COMPLEX
 AS_IF([test "X$ac_cv_cxx_have_complex" = "X"],[AC_MSG_ERROR([Qucs needs a templated complex class])])
 
 
-
-echo "\nCheck complex transcendental overload in namespace std"
+AC_MSG_NOTICE([Check complex transcendental overload in namespace std])
 dnl http://www.cplusplus.com/reference/complex/
 
 AC_CHECK_CXX_COMPLEX_FUNCS([ \
@@ -799,7 +798,7 @@ AC_CHECK_CXX_COMPLEX_POLAR_COMPLEX
 
 
 dnl Depending on the implementation, funcions may or may not be included on the std namespace
-echo "\nCheck for functions in std:: namespace"
+AC_MSG_NOTICE([Check for functions in std:: namespace])
  for f in std::acosh std::asinh std::atanh std::hypot std::trunc std::round std::erf std::erfc; do
     AC_MSG_CHECKING([for $f])
     AC_LINK_IFELSE([AC_LANG_SOURCE(
@@ -866,8 +865,6 @@ AM_CONDITIONAL([USE_GTEST], [test "$enable_gtest" = yes])
 
 AS_IF([test "x$enable_gtest" = "xyes"], [
 
-  echo "\nEnabling compilation of Google Test library..."
-
   AC_CHECK_FILE([lib/gtest/configure], [],
       [AC_MSG_ERROR([gtest sources not found, cannot --enable-gtest])])
 
@@ -877,7 +874,8 @@ AS_IF([test "x$enable_gtest" = "xyes"], [
 
   dnl configure nested package
   AC_CONFIG_SUBDIRS([lib/gtest/])
-
+  AC_MSG_CHECKING([wether enabling Google Test library...])
+  AC_MSG_RESULT([$enable_gtest])
 ])
 
 # enable extra test
@@ -937,13 +935,15 @@ AC_CONFIG_FILES([Makefile
 
 dnl Check for Git short SHA to tag version
 dnl The release package should also keep it on the config.h
-GIT="unknown"
-if test -d "../.git"; then
-  m4_define([GIT_REVISION], m4_esyscmd([git log --pretty=format:'%h' -n 1u]))
-  AC_DEFINE([GIT], ["GIT_REVISION"], [Git short revision hash.])
-  GIT=GIT_REVISION
-  echo "\nFound Git clone... $GIT"
-fi
+AC_PATH_PROG([GITPROG],[git],[git])
+AS_IF([test -d "../.git"],
+      [AS_IF([test X"GITPROG" = "X"],
+             [],
+             [AC_MSG_CHECKING([for git tree revision])
+	      m4_define([GIT_REVISION], m4_esyscmd([git log --pretty=format:'%h' -n 1u]))
+	      GIT=GIT_REVISION
+	      AC_DEFINE([GIT], ["GIT_REVISION"], [Git short revision hash.])
+	      AC_MSG_RESULT($GIT)])])
 
 AC_OUTPUT
 
