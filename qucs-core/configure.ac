@@ -762,7 +762,6 @@ AC_CHECK_FUNCS([ jn yn ])
 AC_CHECK_FUNCS([ strdup strerror strchr])
 
 dnl Checks for complex classes and functions.
-AC_CXX_NAMESPACES
 AX_CXX_NAMESPACES
 AS_VAR_IF([ax_cv_cxx_namespaces],[yes],
 	 [],
