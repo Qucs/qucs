@@ -77,28 +77,6 @@ CHECK_TYPE_SIZE("long double"  SIZEOF_LONG_DOUBLE)
 #MESSAGE(STATUS "long double ${SIZEOF_LONG_DOUBLE}" )
 
 #
-# Check C-type for 32-bit integers.
-#
-IF( ${SIZEOF_SHORT} EQUAL 4)
-  SET( nr_int32_t "short")
-ELSEIF( ${SIZEOF_INT} EQUAL 4)
-  SET( nr_int32_t "int")
-ELSEIF( ${SIZEOF_long} EQUAL 4)
-  SET( nr_int32_t "long")
-ENDIF()
-
-#
-# Check C-type for 16-bit integers.
-#
-IF( ${SIZEOF_SHORT} EQUAL 2)
-  SET( nr_int16_t "short")
-ELSEIF( ${SIZEOF_INT} EQUAL 2)
-  SET( nr_int16_t "int")
-ELSEIF( ${SIZEOF_long} EQUAL 2)
-  SET( nr_int16_t "long")
-ENDIF()
-
-#
 # Check for double type.
 #  * valid types are: double, float and long double.
 #  * defines: nr_double_t,  The global type of double representation.

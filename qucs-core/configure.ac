@@ -640,28 +640,6 @@ dnl Check for type sizes.
 AC_CHECK_SIZEOF([short])
 AC_CHECK_SIZEOF([int])
 AC_CHECK_SIZEOF([long])
-type32="int"
-if test $ac_cv_sizeof_short -eq 4; then
-  type32=short
-elif test $ac_cv_sizeof_int -eq 4; then
-  type32=int
-elif test $ac_cv_sizeof_long -eq 4; then
-  type32=long
-fi
-AC_DEFINE_UNQUOTED(nr_int32_t, $type32, [C-type for 32-bit integers.])
-AC_SUBST(QUCS_INT32_TYPE, $type32)
-unset type32
-type16="short"
-if test $ac_cv_sizeof_short -eq 2; then
-  type16=short
-elif test $ac_cv_sizeof_int -eq 2; then
-  type16=int
-elif test $ac_cv_sizeof_long -eq 2; then
-  type16=long
-fi
-AC_DEFINE_UNQUOTED(nr_int16_t, $type16, [C-type for 16-bit integers.])
-AC_SUBST(QUCS_INT16_TYPE, $type16)
-unset type16
 
 dnl Check for double type.
 AC_ARG_ENABLE([double],
