@@ -61,5 +61,6 @@ echo "done."
 echo -n "Creating configure... "
 autoconf
 echo "done."
-autoreconf -f -i
+autoreconf -f -i --no-recursive
 echo "done"
+
