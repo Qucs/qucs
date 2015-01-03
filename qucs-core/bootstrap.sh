@@ -59,8 +59,6 @@ echo -n "Creating Makefile.in(s)... "
 ${AUTOMAKE:-automake} -a -f -c
 echo "done."
 echo -n "Creating configure... "
-autoconf
-echo "done."
 autoreconf -f -i --no-recursive
 echo "done"
 
