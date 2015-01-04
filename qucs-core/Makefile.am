@@ -87,7 +87,6 @@ if USE_QUCS_TEST
               tests/qucs-test/testsuite/DC_SW_bsim4v30nMOS_Ids_Vgs_prj/netlist.txt \
               tests/qucs-test/testsuite/DC_SW_bsim4v30pMOS_Ids_Vgs_prj/netlist.txt \
               tests/qucs-test/testsuite/DC_SW_charac_prj/netlist.txt \
-              tests/qucs-test/testsuite/DC_SW_diff1_prj/netlist.txt
-# do not test yet return 255
-#              tests/qucs-test/testsuite/DC_TR_SW_spice_BFR520_prj/netlist.txt
+              tests/qucs-test/testsuite/DC_SW_diff1_prj/netlist.txt \
+              tests/qucs-test/testsuite/DC_TR_SW_spice_BFR520_prj/netlist.txt
 endif
