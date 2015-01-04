@@ -40,8 +40,7 @@
 namespace qucs {
 
 // Constructor creates an unnamed instance of the object class.
-object::object () {
-  name = NULL;
+object::object (): name() {
   prev = next = NULL;
   prop = NULL;
 }
@@ -50,7 +49,7 @@ object::object () {
 object::object (const char * n) {
   // create a copy of the character array pointed to by n
   // and get a pointer to the copy using strdup
-  name = strdup (n);
+  name = std::string(n);
   prev = next = NULL;
   prop = NULL;
 }
@@ -58,7 +57,7 @@ object::object (const char * n) {
 /* This copy constructor creates a instance of the object class based
    on the given object. */
 object::object (const object & o) {
-  name = o.name ? strdup (o.name) : NULL;
+  name = o.name;
   next = o.next;
   prev = o.prev;
   copyProperties (o.prop);
@@ -66,15 +65,9 @@ object::object (const object & o) {
 
 // Destructor deletes an instance of the object class.
 object::~object () {
-  if (name) free (name);
   deleteProperties ();
 }
 
-// Sets the name of the object.
-void object::setName (const char * const n) {
-  if (name) free (name);
-  name = n ? strdup (n) : NULL;
-}
 
 // The function adds a complete property to the object property list.
 void object::addProperty (property * const p) {

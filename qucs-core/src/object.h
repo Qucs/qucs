@@ -31,6 +31,8 @@
 #ifndef __OBJECT_H__
 #define __OBJECT_H__
 
+#include <string>
+
 #define MCREATOR(val) \
   val (); \
   static struct define_t miscdef; \
@@ -60,8 +62,10 @@ class object
   void setNext (object * const o) { this->next = o; }
   object * getPrev (void) const { return prev; }
   void setPrev (object * const o) { this->prev = o; }
-  void setName (const char * const);
-  const char * getName (void) const { return this->name; };
+  //! Sets the name of the object.
+  void setName (const char * const n) { this->name = std::string(n); };
+  //! Get the name of the object.
+  const char * getName (void) const { return this->name.c_str(); };
   void addProperty (property * const);
   property * addProperty (const char * const, const char * const);
   property * addProperty (const char * const, const nr_double_t);
@@ -85,7 +89,7 @@ class object
     propertyList (void) const;
 
  private:
-  char * name;
+  std::string name;
   object * next;
   object * prev;
   property * prop;
