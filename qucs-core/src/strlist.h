@@ -25,8 +25,6 @@
 #ifndef __STRLIST_H__
 #define __STRLIST_H__
 
-#include <string>
-
 namespace qucs {
 
 /* String list entry. */
@@ -56,10 +54,11 @@ class strlist
   int index (char *);
   static strlist * join (strlist *, strlist *);
   void del (strlist *);
-  const char * toString (const char * const concat = " ");
+  char * toString (const char * concat = " ");
 
  private:
   struct strlist_t * root;
+  char * txt;
 };
 
 /* String list iterator. */
