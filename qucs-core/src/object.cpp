@@ -39,21 +39,6 @@
 
 namespace qucs {
 
-// Constructor creates an unnamed instance of the object class.
-object::object (): name() {
-  prev = next = NULL;
-  prop = NULL;
-}
-
-// This constructor creates a named instance of the object class.
-object::object (const char * n) {
-  // create a copy of the character array pointed to by n
-  // and get a pointer to the copy using strdup
-  name = std::string(n);
-  prev = next = NULL;
-  prop = NULL;
-}
-
 /* This copy constructor creates a instance of the object class based
    on the given object. */
 object::object (const object & o) {

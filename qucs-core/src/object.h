@@ -54,8 +54,10 @@ class property;
 class object
 {
  public:
-  object ();
-  object (const char *);
+  //! Constructor creates an unnamed instance of the object class.
+  object () : name(), next(nullptr), prev(nullptr), prop(nullptr) {} ;
+  //! This constructor creates a named instance of the object class.
+  object (const std::string &n) : name(n), next(nullptr), prev(nullptr), prop(nullptr) {} ;
   object (const object &);
   virtual ~object ();
   object * getNext (void) const { return this->next; }
@@ -63,7 +65,7 @@ class object
   object * getPrev (void) const { return prev; }
   void setPrev (object * const o) { this->prev = o; }
   //! Sets the name of the object.
-  void setName (const char * const n) { this->name = std::string(n); };
+  void setName (const std::string &n) { this->name = n; };
   //! Get the name of the object.
   const char * getName (void) const { return this->name.c_str(); };
   void addProperty (property * const);
@@ -82,13 +84,13 @@ class object
   int  getPropertyInteger (const char * const) const;
   bool hasProperty (const char * const) const ;
   bool isPropertyGiven (const char * const) const;
-  void copyProperties (property *);
   void deleteProperties (void);
   int  countProperties (void) const;
   const char *
     propertyList (void) const;
 
  private:
+  void copyProperties (property *);
   std::string name;
   object * next;
   object * prev;
