@@ -62,10 +62,10 @@ void object::addProperty (property * const p) {
 
 /* This function adds a property consisting of a key and a string
    value to the object. */
-property * object::addProperty (const char * const n, const char * const val) {
+void object::addProperty (const char * const n, const char * const val, const bool def) {
   property * p = new property (n, val);
-  addProperty (p);
-  return p;
+  p->setDefault(def);
+  this->addProperty (p);
 }
 
 /* This function sets the specified property consisting of a key and a
@@ -80,10 +80,10 @@ void object::setProperty (const char * const n, const char * const val) {
 
 /* This function adds a property consisting of a key and a double
    value to the object. */
-property * object::addProperty (const char * const n, const nr_double_t val) {
+void object::addProperty (const char * const n, const nr_double_t val, const bool def) {
   property * p = new property (n, val);
+  p->setDefault(def);
   addProperty (p);
-  return p;
 }
 
 /* This function sets the specified property consisting of a key and a
@@ -107,10 +107,10 @@ void object::setScaledProperty (const char * const n, const nr_double_t val) {
 
 /* This function adds a property consisting of a key and a variable
    value to the object. */
-property * object::addProperty (const char * n, variable * const val) {
+void object::addProperty (const char * n, variable * const val, const bool def) {
   property * p = new property (n, val);
+  p->setDefault(def);
   addProperty (p);
-  return p;
 }
 
 /* Returns the requested property value which has been previously

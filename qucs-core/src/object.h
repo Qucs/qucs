@@ -69,9 +69,9 @@ class object
   //! Get the name of the object.
   const char * getName (void) const { return this->name.c_str(); };
   void addProperty (property * const);
-  property * addProperty (const char * const, const char * const);
-  property * addProperty (const char * const, const nr_double_t);
-  property * addProperty (const char * const, variable * const);
+  void addProperty (const char * const n, const char * const val, const bool def = false);
+  void addProperty (const char * const, const nr_double_t, const bool def = false);
+  void addProperty (const char * const, variable * const, const bool def = false);
   void setProperty (const char * const, const char * const);
   void setProperty (const char * const, nr_double_t);
   void setScaledProperty (const char * const, const nr_double_t);

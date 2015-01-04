@@ -308,18 +308,15 @@ void input::assignDefaultProperties (object * obj, struct define_t * def) {
   for (int i = 0; PROP_IS_PROP (def->optional[i]); i++) {
     // is the property already assigned ?
     if (!obj->hasProperty (def->optional[i].key)) {
-      property * p;
       if (PROP_IS_VAL (def->optional[i])) {
 	// add double property
-	p = obj->addProperty (def->optional[i].key,
-			      def->optional[i].defaultval.d);
-	p->setDefault (true);
+	obj->addProperty (def->optional[i].key,
+			  def->optional[i].defaultval.d,true);
       }
       else {
 	// add string property
-	p = obj->addProperty (def->optional[i].key,
-			      def->optional[i].defaultval.s);
-	p->setDefault (true);
+	obj->addProperty (def->optional[i].key,
+	    	          def->optional[i].defaultval.s,true);
       }
     }
   }
