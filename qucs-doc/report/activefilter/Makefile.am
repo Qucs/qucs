@@ -29,6 +29,8 @@ EXTRA_DIST = $(SOURCES)
 SOURCES = activefilter.tex content.tex
 TARGETS = activefilter.pdf
 
+activefilter.pdf: $(SOURCES)
+
 pics-report:
 	cd pics && $(MAKE) $(AM_MAKEFLAGS) report
 
@@ -45,6 +47,7 @@ SUFFIXES = .tex .dvi .ps
 
 .tex.pdf:
 	TEXINPUTS=$$TEXINPUTS:.. $(PDFLATEX) --shell-escape $<
+	bibtex $*
 	TEXINPUTS=$$TEXINPUTS:.. $(PDFLATEX) --shell-escape $<
 	TEXINPUTS=$$TEXINPUTS:.. $(PDFLATEX) -interaction=batchmode --shell-escape $<
 
