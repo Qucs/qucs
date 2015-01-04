@@ -380,7 +380,6 @@ SET(LIBQUCS_SRC
   matvec.cpp
   module.cpp
   net.cpp
-  node.cpp
   nodelist.cpp
   nodeset.cpp
   object.cpp
