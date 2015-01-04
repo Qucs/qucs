@@ -88,7 +88,7 @@ void rfedd::initDC (void) {
 
 // Creates a parameter variable name from the given arguments.
 char * rfedd::createVariable (const char * base, int r, int c, bool pfx) {
-  char * str = strchr (getName (), '.');
+  const char * str = strchr (getName (), '.');
   if (str != NULL)
     str = strrchr (str, '.') + 1;
   else
@@ -103,7 +103,7 @@ char * rfedd::createVariable (const char * base, int r, int c, bool pfx) {
 
 // Creates a variable name from the given arguments.
 char * rfedd::createVariable (const char * base, bool pfx) {
-  char * str = strchr (getName (), '.');
+  const char * str = strchr (getName (), '.');
   if (str != NULL)
     str = strrchr (str, '.') + 1;
   else

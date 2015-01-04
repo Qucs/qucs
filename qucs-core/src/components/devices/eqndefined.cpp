@@ -75,7 +75,7 @@ void eqndefined::initDC (void) {
 
 // Creates a variable name from the given arguments.
 char * eqndefined::createVariable (const char * base, int n, bool pfx) {
-  char * str = strchr (getName (), '.');
+  const char * str = strchr (getName (), '.');
   if (str != NULL)
     str = strrchr (str, '.') + 1;
   else
@@ -90,7 +90,7 @@ char * eqndefined::createVariable (const char * base, int n, bool pfx) {
 
 // Creates also a variable name from the given arguments.
 char * eqndefined::createVariable (const char * base, int r, int c, bool pfx) {
-  char * str = strchr (getName (), '.');
+  const char * str = strchr (getName (), '.');
   if (str != NULL)
     str = strrchr (str, '.') + 1;
   else

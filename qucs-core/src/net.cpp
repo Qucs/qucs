@@ -424,7 +424,7 @@ void net::deleteUnusedCircuits (nodelist * nodes) {
    node) the function returns NULL. */
 node * net::findConnectedCircuitNode (node * n) {
 
-  char * _name = n->getName ();
+  const char * _name = n->getName ();
   node * _node;
 
   // through the list of circuit objects
@@ -449,7 +449,7 @@ node * net::findConnectedCircuitNode (node * n) {
    (unconnected node) the function returns NULL. */
 node * net::findConnectedNode (node * n) {
 
-  char * _name = n->getName ();
+  const char * _name = n->getName ();
   node * _node;
 
   for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ()) {

@@ -67,7 +67,7 @@ variable::variable (const variable & o) {
 // Creates textual representation of a variable.
 const char * variable::toString (void) {
   std::string text;
-  char * str = NULL;
+  const char * str = NULL;
   char * val = NULL;
   switch (type) {
   case VAR_UNKNOWN:

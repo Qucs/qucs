@@ -55,7 +55,7 @@ static void initendian (void) {
 }
 
 // Writes a Matlab v4 header.
-static void matlab_header (int32_t rows, int32_t cols, char * name) {
+static void matlab_header (int32_t rows, int32_t cols, const char * name) {
 
   // MOPT
   char mopt[4];
@@ -80,16 +80,17 @@ static void matlab_header (int32_t rows, int32_t cols, char * name) {
   int32_t len = strlen (name) + 1;
   fwrite (&len, sizeof (int32_t), 1, matlab_out);
 
+  char * p = strdup(name);
   // data name
   if (matlab_symbols) {
-    char * p = name;
     // convert to valid Matlab identifiers
     for (unsigned int i = 0; i < strlen (name); i++, p++) {
       if (!isalnum (*p) && *p != '_')
 	*p = '_';
     }
   }
-  fwrite (name, 1, len, matlab_out);
+  fwrite (p, 1, len, matlab_out);
+  free(p);
 }
 
 // Writes a Matlab v4 vector.
@@ -132,7 +133,7 @@ static void matlab_matrix (matrix * m) {
 static void matlab_save (::vector * v) {
   int r, c;
   char * n, * sn;
-  char * vn = v->getName ();
+  const char * vn = v->getName ();
   matvec * mv = NULL;
   matrix m;
 

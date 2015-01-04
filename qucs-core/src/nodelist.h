@@ -47,12 +47,12 @@ class nodelist
   nodelist (net *);
   nodelist (const nodelist &);
   ~nodelist ();
-  void add (char *, int intern = 0);
-  void append (char *, int intern = 0);
+  void add (const char *, int intern = 0);
+  void append (const char *, int intern = 0);
   struct nodelist_t * getRoot (void) { return root; }
   int length (void);
-  int contains (char *);
-  int getNodeNr (char *);
+  int contains (const char *);
+  int getNodeNr (const char *);
   char * get (int);
   int isInternal (int);
   void addCircuitNode (struct nodelist_t *, node *);
@@ -69,12 +69,12 @@ class nodelist
   void remove (char *);
   void remove (struct nodelist_t *, int keep = 0);
   void remove (circuit *);
-  struct nodelist_t * create (char *, int);
+  struct nodelist_t * create (const char *, int);
   void insert (struct nodelist_t *);
   void insert (circuit *);
   void delCircuitNode (struct nodelist_t *, node *);
   void sortedNodes (node **, node **);
-  struct nodelist_t * getNode (char *);
+  struct nodelist_t * getNode (const char *);
 
  private:
   struct nodelist_t ** narray;

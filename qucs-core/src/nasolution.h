@@ -36,7 +36,7 @@ class naentry
  public:
   naentry ();
   naentry (const naentry &);
-  naentry (char *, nr_type_t, int);
+  naentry (const char *, nr_type_t, int);
   ~naentry ();
 
  public:
@@ -54,8 +54,8 @@ class nasolution
   ~nasolution ();
   nasolution (const nasolution &);
 
-  void add (char *, nr_type_t, int);
-  naentry<nr_type_t> * find (char *, int);
+  void add (const char *, nr_type_t, int);
+  naentry<nr_type_t> * find (const char *, int);
   void clear (void);
 
  private:

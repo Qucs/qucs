@@ -61,7 +61,7 @@ class object
   object * getPrev (void) const { return prev; }
   void setPrev (object * const o) { this->prev = o; }
   void setName (const char * const);
-  char * getName (void) const { return this->name; };
+  const char * getName (void) const { return this->name; };
   void addProperty (property * const);
   property * addProperty (const char * const, const char * const);
   property * addProperty (const char * const, const nr_double_t);

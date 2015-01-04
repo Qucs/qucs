@@ -49,8 +49,8 @@ class spsolver : public analysis
   int  solve (void);
   void insertConnections (void);
   void insertDifferentialPorts (void);
-  void insertTee (node **, char *);
-  void insertCross (node **, char *);
+  void insertTee (node **, const char *);
+  void insertCross (node **, const char *);
   void insertConnectors (node *);
   void insertOpen (node *);
   void insertGround (node *);
