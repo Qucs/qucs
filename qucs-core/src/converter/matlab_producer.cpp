@@ -37,6 +37,8 @@
 #include "matvec.h"
 #include "constants.h"
 
+#include <cstdint>
+
 using namespace qucs;
 
 /* Global variables. */
@@ -53,7 +55,7 @@ static void initendian (void) {
 }
 
 // Writes a Matlab v4 header.
-static void matlab_header (nr_int32_t rows, nr_int32_t cols, char * name) {
+static void matlab_header (int32_t rows, int32_t cols, char * name) {
 
   // MOPT
   char mopt[4];
@@ -67,16 +69,16 @@ static void matlab_header (nr_int32_t rows, nr_int32_t cols, char * name) {
   fwrite (mopt, sizeof (mopt), 1, matlab_out);
 
   // dimension
-  fwrite (&rows, sizeof (nr_int32_t), 1, matlab_out);
-  fwrite (&cols, sizeof (nr_int32_t), 1, matlab_out);
+  fwrite (&rows, sizeof (int32_t), 1, matlab_out);
+  fwrite (&cols, sizeof (int32_t), 1, matlab_out);
 
   // imaginary flag
-  nr_int32_t imag = 1;
-  fwrite (&imag, sizeof (nr_int32_t), 1, matlab_out);
+  int32_t imag = 1;
+  fwrite (&imag, sizeof (int32_t), 1, matlab_out);
 
   // data name length
-  nr_int32_t len = strlen (name) + 1;
-  fwrite (&len, sizeof (nr_int32_t), 1, matlab_out);
+  int32_t len = strlen (name) + 1;
+  fwrite (&len, sizeof (int32_t), 1, matlab_out);
 
   // data name
   if (matlab_symbols) {

@@ -22,6 +22,8 @@
 # Boston, MA 02110-1301, USA.
 #
 
+@CODE_COVERAGE_RULES@
+
 ## if maintainer mode we may build adms
 if MAINTAINER_MODE
 ## Test if an internal adms has been requested
