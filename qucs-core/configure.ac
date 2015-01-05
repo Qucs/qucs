@@ -893,7 +893,7 @@ AS_IF([ test "$enable_code_coverage" = "yes" ],
       AX_APPEND_COMPILE_FLAGS([--coverage],CXXFLAGS)
       AX_APPEND_COMPILE_FLAGS([-fno-inline],CXXFLAGS)
       AX_APPEND_LINK_FLAGS([--coverage],LDFLAGS)
-      AX_APPEND_LINK_FLAGS([-lgcov],LDFLAGS)
+      AX_APPEND_LINK_FLAGS([-fprofile-arcs],LDFLAGS)
       ],[])
 
 dnl Definitions at top of <config.h>.
