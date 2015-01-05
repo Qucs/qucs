@@ -132,7 +132,7 @@ property::~property () {
 /* Goes through the chained list of the properties and looks for a
    property matching the given key and returns its value if possible.
    If there is no such property the function returns NULL. */
-property * property::findProperty (const char * const n) {
+property * property::findProperty (const std::string &n) {
   const std::string tmp = std::string(n);
   for (property * p = this; p != NULL; p = p->getNext ())
     if (p->getName() == n)

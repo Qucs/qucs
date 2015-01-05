@@ -72,7 +72,7 @@ class property
   void set (int);
   void set (const std::string &);
   void set (variable *);
-  property * findProperty (const char * const);
+  property * findProperty (const std::string &n);
   std::string toString (void) const;
   bool isDefault (void) const { return def; }
   void setDefault (bool d) { def = d; }
