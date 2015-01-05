@@ -893,7 +893,21 @@ AS_IF([ test "$enable_code_coverage" = "yes" ],
       AX_APPEND_COMPILE_FLAGS([--coverage],CXXFLAGS)
       AX_APPEND_COMPILE_FLAGS([-fno-inline],CXXFLAGS)
       AX_APPEND_LINK_FLAGS([--coverage],LDFLAGS)
-      AX_APPEND_LINK_FLAGS([-lgcov],LDFLAGS)
+      AX_APPEND_LINK_FLAGS([-fprofile-arcs],LDFLAGS)
+
+      # allow to override gcov location
+      AC_ARG_WITH([gcov],
+        [AS_HELP_STRING([--with-gcov[=GCOV]], [use given GCOV for coverage (GCOV=gcov).])],
+        [GCOV=$with_gcov],
+        [GCOV=gcov])
+
+      AC_CHECK_PROG([GCOVPROG], [$GCOV], [$GCOV], [false])
+      AC_SUBST([GCOVPROG])
+
+      if test GCOVPROG = "false"; then
+        AC_MSG_ERROR([gcov is needed to do coverage])
+      fi
+
       ],[])
 
 dnl Definitions at top of <config.h>.
@@ -966,3 +980,7 @@ Configure Information:
     LDFLAGS         :   $LDFLAGS
     LIBS            :   $LIBS
 ])
+
+AS_IF([ test "$enable_code_coverage" = "yes" ],
+  [AC_MSG_RESULT([  GCOV coverage     : $GCOV ])],
+  [])
