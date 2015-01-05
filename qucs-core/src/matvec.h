@@ -81,7 +81,7 @@ class matvec
   matrix get (int);
   static char * createMatrixString (const char *, int, int);
   static char * createMatrixString (char, int, int);
-  static char * isMatrixVector (char *, int&, int&);
+  static char * isMatrixVector (const char *, int&, int&);
   static matvec * getMatrixVector (qucs::vector *, char *);
   static void getMatrixVectorSize (qucs::vector *, char *, int&, int&, int&);
 

@@ -123,12 +123,12 @@ struct nodelist_t * nodelist::copy (struct nodelist_t * n) {
 }
 
 // This function adds a node name to the list and saves the internal flag.
-void nodelist::add (char * str, int intern) {
+void nodelist::add (const char * str, int intern) {
   add (create (str, intern));
 }
 
 // The function creates a node based upon the given arguments.
-struct nodelist_t * nodelist::create (char * str, int intern) {
+struct nodelist_t * nodelist::create (const char * str, int intern) {
   struct nodelist_t * n;
   n = (struct nodelist_t *) calloc (sizeof (struct nodelist_t), 1);
   n->internal = intern;
@@ -144,7 +144,7 @@ void nodelist::add (struct nodelist_t * n) {
 }
 
 // This function appends a node name to the list.
-void nodelist::append (char * str, int intern) {
+void nodelist::append (const char * str, int intern) {
   append (create (str, intern));
 }
 
@@ -197,7 +197,7 @@ int nodelist::length (void) {
 }
 
 // This function finds the specified node name in the list.
-int nodelist::contains (char * str) {
+int nodelist::contains (const char * str) {
   int res = 0;
   for (struct nodelist_t * n = root; n != NULL; n = n->next) {
     if (n->name != NULL && str != NULL && !strcmp (n->name, str))
@@ -207,7 +207,7 @@ int nodelist::contains (char * str) {
 }
 
 // Returns the node number of the given node name.
-int nodelist::getNodeNr (char * str) {
+int nodelist::getNodeNr (const char * str) {
   for (struct nodelist_t * n = root; n != NULL; n = n->next) {
     if (n->name != NULL && str != NULL && !strcmp (n->name, str))
       return n->n;
@@ -236,7 +236,7 @@ struct nodelist_t * nodelist::getNode (int nr) {
 
 /* The function returns the nodelist structure with the given name in
    the node name list.  It returns NULL if there is no such node. */
-struct nodelist_t * nodelist::getNode (char * name) {
+struct nodelist_t * nodelist::getNode (const char * name) {
   for (struct nodelist_t * n = root; n != NULL; n = n->next)
     if (!strcmp (name, n->name)) return n;
   return NULL;
@@ -252,7 +252,7 @@ char * nodelist::getNodeString (int nr) {
   int len = (n->nNodes - 1) + 1;
   txt = (char *) malloc (len); txt[0] = '\0';
   for (int i = 0; i < n->nNodes; i++) {
-    char * str = n->nodes[i]->getCircuit()->getName ();
+    const char * str = n->nodes[i]->getCircuit()->getName ();
     len += strlen (str);
     txt = (char *) realloc (txt, len);
     strcat (txt, str);

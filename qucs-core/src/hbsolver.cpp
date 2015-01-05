@@ -456,7 +456,7 @@ strlist * hbsolver::circuitNodes (ptrlist<circuit> circuits) {
   strlist * nodes = new strlist ();
   for (auto * c : circuits) {
     for (int i = 0; i < c->getSize (); i++) {
-      char * n = c->getNode(i)->getName ();
+      const char * n = c->getNode(i)->getName ();
       if (strcmp (n, "gnd")) {
 	if (!nodes->contains (n)) nodes->add (n);
       }

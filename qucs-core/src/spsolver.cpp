@@ -636,7 +636,7 @@ void spsolver::insertConnectors (node * n) {
 
   int count = 0;
   node * nodes[4], * _node;
-  char * _name = n->getName ();
+  const char * _name = n->getName ();
   circuit * root = subnet->getRoot ();
 
 #if USE_GROUNDS
@@ -683,7 +683,7 @@ void spsolver::insertConnectors (node * n) {
 /* The following function creates a tee circuit with the given nodes
    and the node name.  The tee's node names are adjusted to be
    internal nodes. */
-void spsolver::insertTee (node ** nodes, char * name) {
+void spsolver::insertTee (node ** nodes, const char * name) {
   circuit * result;
   // create a tee and assign its node names
   result = new tee ();
@@ -710,7 +710,7 @@ void spsolver::insertTee (node ** nodes, char * name) {
 /* The following function creates a cross circuit with the given nodes
    and the node name.  The cross's node names are adjusted to be
    internal nodes. */
-void spsolver::insertCross (node ** nodes, char * name) {
+void spsolver::insertCross (node ** nodes, const char * name) {
   circuit * result;
   // create a cross and assign its node names
   result = new cross ();
@@ -743,7 +743,7 @@ void spsolver::insertCross (node ** nodes, char * name) {
 void spsolver::dropTee (circuit * c) {
   node * n;
   if (c->getType () == CIR_TEE) {
-    char * name = c->getNode(0)->getName ();
+    const char * name = c->getNode(0)->getName ();
     n = subnet->findConnectedNode (c->getNode (1)); n->setName (name);
     n = subnet->findConnectedNode (c->getNode (2)); n->setName (name);
     c->setOriginal (0);
@@ -756,7 +756,7 @@ void spsolver::dropTee (circuit * c) {
 void spsolver::dropCross (circuit * c) {
   node * n;
   if (c->getType () == CIR_CROSS) {
-    char * name = c->getNode(0)->getName ();
+    const char * name = c->getNode(0)->getName ();
     n = subnet->findConnectedNode (c->getNode (1)); n->setName (name);
     n = subnet->findConnectedNode (c->getNode (2)); n->setName (name);
     n = subnet->findConnectedNode (c->getNode (3)); n->setName (name);

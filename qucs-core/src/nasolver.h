@@ -84,7 +84,7 @@ protected:
     void savePreviousIteration (void);
     void restorePreviousIteration (void);
     int  countNodes (void);
-    int  getNodeNr (char *);
+    int  getNodeNr (const char *);
     int  findAssignedNode (circuit *, int);
     int  countVoltageSources (void);
     void saveSolution (void);

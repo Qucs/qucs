@@ -356,14 +356,16 @@ void spfile::createVector (int r, int c) {
    frequency vector.  It also tries to find the noise parameter
    data. */
 void spfile::createIndex (void) {
-  qucs::vector * v; int s = getSize (); char * n;
+  qucs::vector * v; int s = getSize ();
+  char * n;
+  const char *name;
   int r, c, i;
 
   // go through list of dependency vectors and find frequency vectors
   for (v = data->getDependencies (); v != NULL; v = (::vector *) v->getNext ()) {
-    if ((n = v->getName ()) != NULL) {
-      if (!strcmp (n, "frequency")) sfreq = v;
-      else if (!strcmp (n, "nfreq")) nfreq = v;
+    if ((name = v->getName ()) != NULL) {
+      if (!strcmp (name, "frequency")) sfreq = v;
+      else if (!strcmp (name, "nfreq")) nfreq = v;
     }
   }
 
@@ -381,17 +383,17 @@ void spfile::createIndex (void) {
       paraType = n[0];  // save type of touchstone data
       free (n);
     }
-    if ((n = v->getName ()) != NULL) {
+    if ((name = v->getName ()) != NULL) {
       // find noise parameter vectors
-      if (!strcmp (n, "Rn")) {
+      if (!strcmp (name, "Rn")) {
 	RN = new spfile_vector ();
 	RN->prepare (v, nfreq, true, interpolType, dataType);
       }
-      else if (!strcmp (n, "Fmin")) {
+      else if (!strcmp (name, "Fmin")) {
 	FMIN = new spfile_vector ();
 	FMIN->prepare (v, nfreq, true, interpolType, dataType);
       }
-      else if (!strcmp (n, "Sopt")) {
+      else if (!strcmp (name, "Sopt")) {
 	SOPT = new spfile_vector ();
 	SOPT->prepare (v, nfreq, false, interpolType, dataType);
       }

@@ -69,7 +69,7 @@ class vector : public object
   void reverse (void);
   strlist * getDependencies (void);
   void setDependencies (strlist *);
-  void setOrigin (char *);
+  void setOrigin (const char *);
   char * getOrigin (void);
   int contains (nr_complex_t, nr_double_t eps = std::numeric_limits<nr_double_t>::epsilon());
   void sort (bool ascending = true);

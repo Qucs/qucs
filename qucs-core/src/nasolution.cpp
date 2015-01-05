@@ -57,14 +57,14 @@ void nasolution<nr_type_t>::clear (void) {
 
 // Adds a new solution entry into the nasolution list.
 template <class nr_type_t>
-void nasolution<nr_type_t>::add (char * n, nr_type_t value, int current) {
+void nasolution<nr_type_t>::add (const char * n, nr_type_t value, int current) {
   naentry<nr_type_t> * entry = new naentry<nr_type_t> (n, value, current);
   entries.add (n, entry);
 }
 
 // Finds the given nasolution entry in the list.
 template <class nr_type_t>
-naentry<nr_type_t> * nasolution<nr_type_t>::find (char * n, int current) {
+naentry<nr_type_t> * nasolution<nr_type_t>::find (const char * n, int current) {
   for (valuelistiterator< naentry<nr_type_t> > it (entries); *it; ++it) {
     naentry<nr_type_t> * na = it.currentVal ();
     if (na->current == current) {
@@ -85,7 +85,7 @@ naentry<nr_type_t>::naentry () {
 
 // Constructor creates an instance of the naentry class.
 template <class nr_type_t>
-naentry<nr_type_t>::naentry (char * na, nr_type_t val, int cur) {
+naentry<nr_type_t>::naentry (const char * na, nr_type_t val, int cur) {
   value = val;
   n = na ? strdup (na) : NULL;
   current = cur;

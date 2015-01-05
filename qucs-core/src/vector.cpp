@@ -912,7 +912,7 @@ void vector::reverse (void) {
 }
 
 // Sets the origin (the analysis) of the vector.
-void vector::setOrigin (char * n) {
+void vector::setOrigin (const char * n) {
   if (origin) free (origin);
   origin = n ? strdup (n) : NULL;
 }

@@ -917,7 +917,7 @@ int nasolver<nr_type_t>::countNodes (void)
 
 // Returns the node number of the give node name.
 template <class nr_type_t>
-int nasolver<nr_type_t>::getNodeNr (char * str)
+int nasolver<nr_type_t>::getNodeNr (const char * str)
 {
     return nlist->getNodeNr (str);
 }
@@ -1421,7 +1421,7 @@ char * nasolver<nr_type_t>::createI (int n, const char * amps, int saveOPs)
         return NULL;
 
     // create appropriate current name for single/multiple voltage sources
-    char * name = vs->getName ();
+    const char * name = vs->getName ();
     char * text = (char *) malloc (strlen (name) + 4 + strlen (amps));
     if (vs->getVoltageSources () > 1)
         sprintf (text, "%s.%s%d", name, amps, n - vs->getVoltageSource () + 1);

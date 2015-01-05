@@ -179,7 +179,9 @@ void touchstone_print (void) {
    into the global Touchstone structure. */
 void touchstone_find_data (dataset * data, const char * name) {
   qucs::vector * v;
-  char * n, * vn, * vd = NULL, * vf = NULL;
+  char * n;
+  const char * vn;
+  char * vd = NULL, * vf = NULL;
   strlist * deps;
   int r, c, rs = -1, cs  = -1, s = 0;
 
