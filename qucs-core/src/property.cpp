@@ -43,78 +43,14 @@ using namespace eqn;
 
 // Constructor creates an unnamed instance of the property class.
 property::property () :
-  name(),
   str()
 {
   type = PROPERTY_UNKNOWN;
   value = 0.0;
   var = NULL;
-  next = NULL;
   def = false;
 }
 
-// Constructor creates a named instance of the property class.
-property::property (const std::string &n) :
-  name (n),
-  str ()
-  {
-  type = PROPERTY_UNKNOWN;
-  value = 0.0;
-  var = NULL;
-  next = NULL;
-  def = false;
-}
-
-/* This full qualified constructor creates an instance of the property
-   class containing both the key and the value of the property. */
-property::property (const std::string &n, const std::string &val) :
-  name (n),
-  str(val)
-{
-  type = PROPERTY_STR;
-  value = 0.0;
-  var = NULL;
-  next = NULL;
-  def = false;
-}
-
-/* This full qualified constructor creates an instance of the property
-   class containing both the key and the value of the property. */
-property::property (const std::string &n, nr_double_t val) :
-  name (n),
-  str()
-{
-  type = PROPERTY_DOUBLE;
-  value = val;
-  var = NULL;
-  next = NULL;
-  def = false;
-}
-
-/* This full qualified constructor creates an instance of the property
-   class containing both the key and the value of the property. */
-property::property (const std::string &n, variable * val) :
-  name (n),
-  str ()
-{
-  type = PROPERTY_VAR;
-  var = val;
-  value = 0.0;
-  next = NULL;
-  def = false;
-}
-
-/* The copy constructor creates a new instance of the property class
-   based on the given property object. */
-property::property (const property & p) {
-  type = p.type;
-  this->name = p.name;
-  this->str = p.str;
-  value = p.value;
-  next = p.next;
-  var = p.var;
-  def = p.def;
-}
 
 // Destructor deletes the property object.
 property::~property () {
@@ -129,16 +65,6 @@ property::~property () {
 #endif
 }
 
-/* Goes through the chained list of the properties and looks for a
-   property matching the given key and returns its value if possible.
-   If there is no such property the function returns NULL. */
-property * property::findProperty (const std::string &n) {
-  const std::string tmp = std::string(n);
-  for (property * p = this; p != NULL; p = p->getNext ())
-    if (p->getName() == n)
-      return p;
-  return NULL;
-}
 
 // Short macro in order to obtain the correct constant value.
 #define D(con) ((constant *) (con))->d

@@ -30,6 +30,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <assert.h>
+#include <utility>
 
 #include "logging.h"
 #include "complex.h"
@@ -45,7 +46,7 @@ object::object (const object & o) {
   name = o.name;
   next = o.next;
   prev = o.prev;
-  copyProperties (o.prop);
+  props = o.props;
 }
 
 // Destructor deletes an instance of the object class.
@@ -57,43 +58,43 @@ object::~object () {
 // The function adds a complete property to the object property list.
 void object::addProperty (const std::string &n, property * const p) {
   // for now
-  (void) n;
-  p->setNext (prop);
-  prop = p;
+  props.insert({{n,*p}});
 }
 
 /* This function adds a property consisting of a key and a string
    value to the object. */
 void object::addProperty (const std::string &n, const char * const val, const bool def) {
-  property * p = new property (n, val);
-  p->setDefault(def);
-  this->addProperty (n, p);
+  property p;
+  p.set(val);
+  p.setDefault(def);
+  props.insert({{n,p}});
 }
 
 /* This function sets the specified property consisting of a key and a
    string value in the object. */
   void object::setProperty (const std::string &n, const char * const val) {
-  property * p = prop->findProperty (n);
-  if (p != NULL)
-    p->set (val);
-  else
-    addProperty (n, val);
+    auto it = props.find(n);
+    if(it != props.end())
+      props[n].set(val);
+    else
+      addProperty (n, val);
 }
 
 /* This function adds a property consisting of a key and a double
    value to the object. */
 void object::addProperty (const std::string &n, const nr_double_t val, const bool def) {
-  property * p = new property (n, val);
-  p->setDefault(def);
-  addProperty (n, p);
+  property p;
+  p.set(val);
+  p.setDefault(def);
+  props.insert({{n,p}});
 }
 
 /* This function sets the specified property consisting of a key and a
    double value in the object. */
 void object::setProperty (const std::string &n, const nr_double_t val) {
-  property * p = prop->findProperty (n);
-  if (p != NULL)
-    p->set (val);
+  auto it = props.find(n);
+  if(it != props.end())
+    props[n].set(val);
   else
     addProperty (n, val);
 }
@@ -108,48 +109,53 @@ void object::setScaledProperty (const std::string &n, const nr_double_t val) {
 /* This function adds a property consisting of a key and a variable
    value to the object. */
 void object::addProperty (const std::string &n, variable * const val, const bool def) {
-  property * p = new property (n, val);
-  p->setDefault(def);
-  addProperty (n,p);
+  property p;
+  p.set(val);
+  p.setDefault(def);
+  props.insert({{n,p}});
 }
 
 /* Returns the requested property value which has been previously
    added as its vector representation.  If there is no such property
    the function returns NULL. */
 qucs::vector * object::getPropertyVector (const std::string &n) const {
-  const property * p = prop->findProperty (n);
-  if (p != NULL)
-    return p->getVector ();
-  return NULL;
+  const auto &it = props.find(n);
+  if(it != props.end())
+    return props.at(n).getVector();
+  else
+    return NULL;
 }
 
 /* Returns the requested property value which has been previously
    added as its text representation.  If there is no such property the
    function returns NULL. */
 const char * object::getPropertyString (const std::string &n) const {
-  const property * p = prop->findProperty (n);
-  if (p != NULL)
-    return p->getString ();
-  return NULL;
+  const auto &it = props.find(n);
+  if(it != props.end())
+    return props.at(n).getString();
+  else
+    return NULL;
 }
 
 /* Returns the requested property reference variable name.  If there
    is no such property the function returns NULL. */
 const char * object::getPropertyReference (const std::string &n) const {
-  const property * p = prop->findProperty (n);
-  if (p != NULL)
-    return p->getReference ();
-  return NULL;
+  const auto &it = props.find(n);
+  if(it != props.end())
+    return props.at(n).getReference();
+  else
+    return NULL;
 }
 
 /* Returns the requested property value which has been previously
    added as its double representation.  If there is no such property
    the function returns zero. */
 nr_double_t object::getPropertyDouble (const std::string &n) const {
-  const property * p = prop->findProperty (n);
-  if (p != NULL)
-    return p->getDouble ();
-  return 0.0;
+  const auto &it = props.find(n);
+  if(it != props.end())
+    return props.at(n).getDouble();
+  else
+    return 0.0;
 }
 
 /* The functions returns the requested (scalability) property value
@@ -157,79 +163,61 @@ nr_double_t object::getPropertyDouble (const std::string &n) const {
    property the function returns the standard property or zero. */
 nr_double_t object::getScaledProperty (const std::string &n) const{
   std::string txt = "Scaled:"+n;
-  // try to find scaled property
-  const property * p = prop->findProperty (txt);
-  if (p != NULL)
-    return p->getDouble ();
-  // default to standard property
-  return getPropertyDouble (n);
+  const auto &it = props.find(txt);
+  if(it != props.end())
+    return props.at(n).getDouble();
+  else
+    return this->getPropertyDouble(n);
 }
 
 /* Returns the requested property value which has been previously
    added as its integer representation.  If there is no such property
    the function returns zero. */
 int object::getPropertyInteger (const std::string &n) const {
-  const property * p = prop->findProperty (n);
-  if (p != NULL)
-    return p->getInteger ();
-  return 0;
+  const auto &it = props.find(n);
+  if(it != props.end())
+    return props.at(n).getInteger();
+  else
+    return 0;
 }
 
 /* The function checks whether the object has got a certain property
    value.  If so it returns non-zero, otherwise it returns zero. */
 bool object::hasProperty (const std::string &n) const {
-  return (prop && prop->findProperty (n)) ? true : false;
+  return props.find(n) !=  props.end();
 }
 
 /* The function checks whether the object has got a certain property
    value and if this has its default value.  If so it returns  non-zero,
    otherwise it returns zero. */
 bool object::isPropertyGiven (const std::string &n) const {
-  if (prop != NULL) {
-    const property * p = prop->findProperty (n);
-    if (p != NULL && !p->isDefault ())
-      return true;
-  }
-  return false;
+  const auto &it = props.find(n);
+  if(it != props.end())
+    return !props.at(n).isDefault();
+  else
+    return false;
 }
 
-/* This function copies all properties in the given property list into
-   an object. */
-void object::copyProperties (property * org) {
-  prop = NULL;
-  while (org != NULL) {
-    addProperty (org->getName(),new property (*org));
-    org = org->getNext ();
-  }
-}
+
 
 // Deletes all properties of an object.
 void object::deleteProperties (void) {
-  property * n;
-  for (property * p = prop; p != NULL; p = n) {
-    n = p->getNext ();
-    delete p;
-  }
-  prop = NULL;
+  props.clear();
 }
 
 // The function returns the number of properties in the object.
 int object::countProperties (void) const {
-  int res = 0;
-  for (property * p = prop; p != NULL; p = p->getNext ()) res++;
-  return res;
+  return props.size();
 }
 
 // This function returns a text representation of the objects properties.
 const char * object::propertyList (void) const {
   std::string ptxt;
-  for (property * p = prop; p != NULL; p = p->getNext ()) {
-    std::string n = std::string(p->getName ());    
-    std::string val = std::string(p->toString ());
+  for(auto it = props.cbegin(); it != props.cend(); ++it) {      
+    std::string n = it->first;    
+    std::string val = it->second.toString ();
     std::string text = n+"=\""+val+"\"";
     ptxt += text;
-    if (p->getNext () != NULL)
-      ptxt += " ";
   }
   return ptxt.c_str();
 }

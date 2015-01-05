@@ -32,6 +32,7 @@
 #define __OBJECT_H__
 
 #include <string>
+#include "property.h"
 
 #define MCREATOR(val) \
   val (); \
@@ -55,9 +56,9 @@ class object
 {
  public:
   //! Constructor creates an unnamed instance of the object class.
-  object () : name(), next(nullptr), prev(nullptr), prop(nullptr) {} ;
+  object () : name(), next(nullptr), prev(nullptr), props() {} ;
   //! This constructor creates a named instance of the object class.
-  object (const std::string &n) : name(n), next(nullptr), prev(nullptr), prop(nullptr) {} ;
+  object (const std::string &n) : name(n), next(nullptr), prev(nullptr), props() {} ;
   object (const object &);
   virtual ~object ();
   object * getNext (void) const { return this->next; }
@@ -90,11 +91,10 @@ class object
     propertyList (void) const;
 
  private:
-  void copyProperties (property *);
   std::string name;
   object * next;
   object * prev;
-  property * prop;
+  properties props;
 };
 
 } // namespace qucs

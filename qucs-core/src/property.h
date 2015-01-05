@@ -26,6 +26,8 @@
 #define __PROPERTY_H__
 
 #include <string>
+#include <unordered_map>
+#include <utility>
 
 namespace qucs {
 
@@ -44,24 +46,7 @@ class property
 {
  public:
   property ();
-  property (const std::string &);
-  property (const std::string &, const std::string &);
-  property (const std::string &, nr_double_t);
-  property (const std::string &, variable *);
-  property (const property &);
   virtual ~property ();
-  property * getNext (void) const { return next; }
-  void setNext (property * p) { next = p; }
-
-  //! Sets the name of the property.
-  void setName (const std::string &n) {
-    this->name = n;
-  };
-
-  //! Returns the name of the property.
-  std::string getName (void) const {
-    return this->name;
-  }
 
   qucs::vector * getVector (void) const;
   nr_double_t getDouble (void) const;
@@ -72,7 +57,6 @@ class property
   void set (int);
   void set (const std::string &);
   void set (variable *);
-  property * findProperty (const std::string &n);
   std::string toString (void) const;
   bool isDefault (void) const { return def; }
   void setDefault (bool d) { def = d; }
@@ -80,13 +64,13 @@ class property
  private:
   bool def;
   int type;
-  std::string name;
   std::string str;
   nr_double_t value;
   variable * var;
-  property * next;
 };
 
+typedef std::unordered_map<std::string, property> properties;
+ 
 } // namespace qucs
 
 #endif /* __PROPERTY_H__ */
