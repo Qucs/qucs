@@ -47,6 +47,9 @@ class QTreeWidget;
 class QTreeWidgetItem;
 class QListWidget;
 class QShortcut;
+class QListView;
+class QFileSystemModel;
+class QModelIndex;
 
 typedef bool (Schematic::*pToggleFunc) ();
 typedef void (MouseActions::*pMouseFunc) (Schematic*, QMouseEvent*);
@@ -59,7 +62,6 @@ public:
  ~QucsApp();
   QSettings *qucsSettings;
   bool closeAllFiles();
-  static int testFile(const QString&);
   bool gotoPage(const QString&);   // to load a document
   QucsDoc *getDoc(int No=-1);
   QucsDoc* findDoc (QString, int * Pos = 0);
@@ -102,8 +104,6 @@ public slots:
   void slotFilePrint();   // print the current file
   void slotFilePrintFit();// Print and fit to page
   void slotFileQuit();    // exits the application
-  void slotEditCut();     // put marked object into clipboard and delete it
-  void slotEditCopy();    // put the marked object into the clipboard
   void slotApplSettings();// open dialog to change application settings
   void slotRefreshSchPath(); // refresh the schematic path hash
 
@@ -131,17 +131,17 @@ public slots:
   void slotCMenuInsert();
 
 private slots:
-  void slotMenuOpenProject();
-  void slotOpenProject(QListWidgetItem*);
-  void slotMenuCloseProject();
+  void slotMenuProjOpen();
+  void slotMenuProjClose();
+  void slotMenuProjDel();
+  void slotListProjOpen(const QModelIndex &);
   void slotSelectSubcircuit(QTreeWidgetItem*);
   void slotSelectLibComponent(QTreeWidgetItem*);
   void slotOpenContent(QTreeWidgetItem*);
   void slotSetCompView(int);
-  void slotProjNewButt();
-  void slotProjOpenButt();
-  void slotProjDelButt();
-  void slotMenuDelProject();
+  void slotButtonProjNew();
+  void slotButtonProjOpen();
+  void slotButtonProjDel();
   void slotChangeView(QWidget*);
   void slotSimulate();
   void slotAfterSimulation(int, SimMessage*);
@@ -182,7 +182,7 @@ private:
   OctaveWindow    *octave;
   MessageDock     *messageDock;
 
-  QListWidget     *Projects;
+  QListView       *Projects;
   QTreeWidget     *Content;
   QTreeWidgetItem *ConSchematics, *ConSources, *ConDisplays, *ConDatasets,
                   *ConOthers, *ConVerilog, *ConVerilogA, *ConOctave;
@@ -193,6 +193,8 @@ private:
 // ********** Properties ************************************************
   QStack<QString> HierarchyHistory; // keeps track of "go into subcircuit"
   QString  QucsFileFilter;
+  QFileSystemModel *m_homeDirModel;
+  QFileSystemModel *m_projModel;
 
 // ********** Methods ***************************************************
   void initView();
@@ -202,14 +204,14 @@ private:
   void printCurrentDocument(bool);
   bool saveFile(QucsDoc *Doc=0);
   bool saveAs();
-  void openProject(const QString&, const QString&);
-  bool deleteProject(const QString&, const QString&);
+  void openProject(const QString &);
+  bool deleteProject(const QString &);
   void updatePortNumber(QucsDoc*, int);
   void fillComboBox(bool);
   void switchSchematicDoc(bool);
   void switchEditMode(bool);
   void changeSchematicSymbolMode(Schematic*);
-  bool deleteDirectoryContent(QDir& Dir);
+  bool recurRemove(const QString &);
   bool isTextDocument(QWidget *);
   void closeFile(int);
 
@@ -294,6 +296,8 @@ public slots:
   void slotEditRotate(bool);  // rotate the selected items
   void slotEditMirrorX(bool); // mirror the selected items about X axis
   void slotEditMirrorY(bool); // mirror the selected items about Y axis
+  void slotEditCut();         // put marked object into clipboard and delete it
+  void slotEditCopy();        // put the marked object into the clipboard
   void slotEditPaste(bool);   // paste the clipboard into the document
   void slotEditDelete(bool);  // delete the selected items
   void slotInsertEquation(bool);

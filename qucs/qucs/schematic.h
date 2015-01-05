@@ -98,7 +98,8 @@ public:
   void  reloadGraphs();
   bool  createSubcircuitSymbol();
 
-  QString copySelected(bool);
+  void    cut();
+  void    copy();
   bool    paste(QTextStream*, Q3PtrList<Element>*);
   bool    load();
   int     save();
@@ -253,6 +254,7 @@ private:
    ******************************************************************** */
 
 public:
+  static int testFile(const QString &);
   bool createLibNetlist(QTextStream*, QTextEdit*, int);
   bool createSubNetlist(QTextStream *, int&, QStringList&, QTextEdit*, int);
   void createSubNetlistPlain(QTextStream*, QTextEdit*, int);
