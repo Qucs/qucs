@@ -59,8 +59,6 @@ class object
   object () : name(), next(nullptr), prev(nullptr), props() {} ;
   //! This constructor creates a named instance of the object class.
   object (const std::string &n) : name(n), next(nullptr), prev(nullptr), props() {} ;
-  object (const object &);
-  virtual ~object ();
   object * getNext (void) const { return this->next; }
   void setNext (object * const o) { this->next = o; }
   object * getPrev (void) const { return prev; }

@@ -40,21 +40,6 @@
 
 namespace qucs {
 
-/* This copy constructor creates a instance of the object class based
-   on the given object. */
-object::object (const object & o) {
-  name = o.name;
-  next = o.next;
-  prev = o.prev;
-  props = o.props;
-}
-
-// Destructor deletes an instance of the object class.
-object::~object () {
-  deleteProperties ();
-}
-
-
 // The function adds a complete property to the object property list.
 void object::addProperty (const std::string &n, property * const p) {
   // for now
