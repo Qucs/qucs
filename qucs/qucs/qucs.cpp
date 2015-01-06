@@ -134,7 +134,7 @@ QucsApp::QucsApp()
 
   initView();
   initActions();
-  setAllShortcut();
+  slotSetAllShortcut();
   initMenuBar();
   initToolBar();
   initStatusBar();

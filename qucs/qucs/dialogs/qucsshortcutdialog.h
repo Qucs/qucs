@@ -20,8 +20,6 @@
 
 #include <QDialog>
 
-#include "qucs.h"
-
 class QListWidget;
 class QTableWidget;
 class QLabel;
@@ -32,7 +30,7 @@ class QucsShortcutDialog : public QDialog
 {
   Q_OBJECT
 public:
-  QucsShortcutDialog(QucsApp *parent = 0, const char *name = 0);
+  QucsShortcutDialog(QWidget *parent = 0);
   virtual ~QucsShortcutDialog ();
 private slots:
   void slotChooseMenu();
@@ -58,8 +56,6 @@ private:
   int conflictAt;
   QString conflictKey;
   QStringList invalidKeys;
-
-  QucsApp *App;
 
   QListWidget *menuList;
   QTableWidget *actionList;

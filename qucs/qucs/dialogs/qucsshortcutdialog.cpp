@@ -15,8 +15,6 @@
  *                                                                         *
  ***************************************************************************/
 
-#include <QtGui>
-
 #include "qucsshortcutdialog.h"
 #include "keysequenceedit.h"
 #include "main.h"
@@ -25,14 +23,19 @@
 #include <QHBoxLayout>
 #include <QWidget>
 #include <QLabel>
+#include <QPushButton>
+#include <QTableWidget>
+#include <QListWidget>
+#include <QFileDialog>
+#include <QMessageBox>
+#include <QHeaderView>
 
 #include <QDebug>
 
-QucsShortcutDialog::QucsShortcutDialog(QucsApp *parent, const char *name)
-  : QDialog(parent, name)
+QucsShortcutDialog::QucsShortcutDialog(QWidget *parent)
+  : QDialog(parent)
 {
   qDebug() << "open shortcut dialog";
-  App = parent;
   setWindowTitle(tr("Edit Qucs Shortcuts"));
   invalidKeys << "Esc";
 
@@ -99,8 +102,9 @@ QucsShortcutDialog::QucsShortcutDialog(QucsApp *parent, const char *name)
 
   this->setLayout(all);
 
-  connect(menuList, SIGNAL(itemClicked(QListWidgetItem*))
-      , this, SLOT(slotChooseMenu()));
+  connect(menuList, SIGNAL(itemClicked(QListWidgetItem*)),
+      this, SLOT(slotChooseMenu()));
+  connect(this, SIGNAL(accepted()), parent, SLOT(slotSetAllShortcut()));
   
   //fill initial value
   fillMenu();
@@ -191,7 +195,6 @@ QucsShortcutDialog::slotDefaultShortcut()
 void 
 QucsShortcutDialog::slotOK() 
 {
-  App->setAllShortcut();
   accept();
 }
 
