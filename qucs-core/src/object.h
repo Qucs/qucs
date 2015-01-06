@@ -67,7 +67,6 @@ class object
   void setName (const std::string &n) { this->name = n; };
   //! Get the name of the object.
   const char * getName (void) const { return this->name.c_str(); };
-  void addProperty (const std::string &n, property * const p);
   void addProperty (const std::string &n, const char * const val, const bool def = false);
   void addProperty (const std::string &n, const nr_double_t, const bool def = false);
   void addProperty (const std::string &n, variable * const, const bool def = false);
@@ -83,7 +82,6 @@ class object
   int  getPropertyInteger (const std::string &n) const;
   bool hasProperty (const std::string &n) const ;
   bool isPropertyGiven (const std::string &n) const;
-  void deleteProperties (void);
   int  countProperties (void) const;
   const char *
     propertyList (void) const;

@@ -40,12 +40,6 @@
 
 namespace qucs {
 
-// The function adds a complete property to the object property list.
-void object::addProperty (const std::string &n, property * const p) {
-  // for now
-  props.insert({{n,*p}});
-}
-
 /* This function adds a property consisting of a key and a string
    value to the object. */
 void object::addProperty (const std::string &n, const char * const val, const bool def) {
@@ -57,10 +51,10 @@ void object::addProperty (const std::string &n, const char * const val, const bo
 
 /* This function sets the specified property consisting of a key and a
    string value in the object. */
-  void object::setProperty (const std::string &n, const char * const val) {
+void object::setProperty (const std::string &n, const char * const val) {
     auto it = props.find(n);
     if(it != props.end())
-      props[n].set(val);
+      (*it).second.set(val);
     else
       addProperty (n, val);
 }
@@ -79,7 +73,7 @@ void object::addProperty (const std::string &n, const nr_double_t val, const boo
 void object::setProperty (const std::string &n, const nr_double_t val) {
   auto it = props.find(n);
   if(it != props.end())
-    props[n].set(val);
+    (*it).second.set(val);
   else
     addProperty (n, val);
 }
@@ -106,7 +100,7 @@ void object::addProperty (const std::string &n, variable * const val, const bool
 qucs::vector * object::getPropertyVector (const std::string &n) const {
   const auto &it = props.find(n);
   if(it != props.end())
-    return props.at(n).getVector();
+    return (*it).second.getVector();
   else
     return NULL;
 }
@@ -117,7 +111,7 @@ qucs::vector * object::getPropertyVector (const std::string &n) const {
 const char * object::getPropertyString (const std::string &n) const {
   const auto &it = props.find(n);
   if(it != props.end())
-    return props.at(n).getString();
+    return (*it).second.getString();
   else
     return NULL;
 }
@@ -127,7 +121,7 @@ const char * object::getPropertyString (const std::string &n) const {
 const char * object::getPropertyReference (const std::string &n) const {
   const auto &it = props.find(n);
   if(it != props.end())
-    return props.at(n).getReference();
+    return (*it).second.getReference();
   else
     return NULL;
 }
@@ -138,7 +132,7 @@ const char * object::getPropertyReference (const std::string &n) const {
 nr_double_t object::getPropertyDouble (const std::string &n) const {
   const auto &it = props.find(n);
   if(it != props.end())
-    return props.at(n).getDouble();
+    return (*it).second.getDouble();
   else
     return 0.0;
 }
@@ -150,7 +144,7 @@ nr_double_t object::getScaledProperty (const std::string &n) const{
   std::string txt = "Scaled:"+n;
   const auto &it = props.find(txt);
   if(it != props.end())
-    return props.at(n).getDouble();
+    return (*it).second.getDouble();
   else
     return this->getPropertyDouble(n);
 }
@@ -161,7 +155,7 @@ nr_double_t object::getScaledProperty (const std::string &n) const{
 int object::getPropertyInteger (const std::string &n) const {
   const auto &it = props.find(n);
   if(it != props.end())
-    return props.at(n).getInteger();
+    return (*it).second.getInteger();
   else
     return 0;
 }
@@ -178,16 +172,9 @@ bool object::hasProperty (const std::string &n) const {
 bool object::isPropertyGiven (const std::string &n) const {
   const auto &it = props.find(n);
   if(it != props.end())
-    return !props.at(n).isDefault();
+    return !(*it).second.isDefault();
   else
     return false;
-}
-
-
-
-// Deletes all properties of an object.
-void object::deleteProperties (void) {
-  props.clear();
 }
 
 // The function returns the number of properties in the object.
