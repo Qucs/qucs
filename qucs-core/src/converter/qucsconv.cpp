@@ -116,8 +116,8 @@ int main (int argc, char ** argv) {
   for (int i = 1; i < argc; i++) {
     if (!strcmp (argv[i], "-v") || !strcmp (argv[i], "--version")) {
       fprintf (stdout,
-#ifdef GIT
-	"QucsConverter " PACKAGE_VERSION " (" GIT ") \n"
+#ifdef GIT_REVISION
+	"QucsConverter " PACKAGE_VERSION " (" GIT_REVISION ") \n"
 #else
 	"QucsConverter " PACKAGE_VERSION "\n"
 #endif

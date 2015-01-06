@@ -935,21 +935,19 @@ AC_CONFIG_FILES([Makefile
 
 dnl Check for Git short SHA to tag version
 dnl The release package should also keep it on the config.h
-AC_PATH_PROG([GITPROG],[git],[git])
+AC_PATH_PROG([GIT],[git],[git])
 AS_IF([test -d "../.git"],
-      [AS_IF([test X"GITPROG" = "X"],
-             [],
+      [AS_IF([test X"$GIT" != "X"],
              [AC_MSG_CHECKING([for git tree revision])
-	      m4_define([GIT_REVISION], m4_esyscmd([git log --pretty=format:'%h' -n 1u]))
-	      GIT=GIT_REVISION
-	      AC_DEFINE([GIT], ["GIT_REVISION"], [Git short revision hash.])
-	      AC_MSG_RESULT($GIT)])])
+	      GIT_REVISION=`git log --pretty=format:'%h' -n 1u`
+	      AC_DEFINE([GIT_REVISION], ["GIT_REVISION"], [Git short revision hash.])
+	      AC_MSG_RESULT($GIT_REVISION)])])
 
 AC_OUTPUT
 
 dnl Print results.
 AC_MSG_RESULT([])
-AC_MSG_RESULT([ $PACKAGE version $VERSION ($GIT) configured successfully.])
+AC_MSG_RESULT([ $PACKAGE version $VERSION ($GIT_REVISION) configured successfully.])
 AC_MSG_RESULT([
 Configure Information:
   C Compiler        : $CC
