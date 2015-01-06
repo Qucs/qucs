@@ -1,5 +1,9 @@
 language: cpp
 
+os:
+  - linux
+  - osx
+
 compiler:
   - gcc
   - clang
@@ -9,27 +13,75 @@ python:
 virtualenv:
   system_site_packages: true
 
+matrix:
+  exclude:
+    - os: osx
+      compiler: gcc
+
 before_install:
-  # We need this line to have g++4.8 available in apt
-  - sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
-  # try newer gnu package
-  - sudo add-apt-repository -y ppa:dns/gnu
-  - sudo apt-get update -qq
-  - sudo apt-get install build-essential
-  - sudo apt-get install libqt4-dev libqt4-qt3support
-  - sudo apt-get install automake libtool gperf flex bison
-  - sudo apt-get install -qq gcc-4.8 g++-4.8
-  # We want to compile with g++ 4.8 when rather than the default g++
-  - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.8 90
+
+  # Set variables for readability.
+  - if [[ $TRAVIS_OS_NAME == linux ]]; then LINUX=true; fi
+  - if [[ $TRAVIS_OS_NAME == osx ]]; then OSX=true; fi
+  - if [[ $CC == gcc ]]; then GCC=true; fi
+  - if [[ $CC == clang ]]; then CLANG=true; fi
 
   # Set xvfb for headless qucs GUI test
   - "export DISPLAY=:99.0"
-  - "sh -e /etc/init.d/xvfb start"
+  -  if [[ $LINUX ]]; then sh -e /etc/init.d/xvfb start; fi
+
+install:
+  # Setup Linux
+  # Set package repository for g++4.8, newer GNU tools
+  - if [[ $LINUX ]]; then
+      sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test;
+      sudo add-apt-repository -y ppa:dns/gnu;
+    fi
+
+  # Install dependencies
+  - if [[ $LINUX ]]; then
+      sudo apt-get update -qq;
+      sudo apt-get install build-essential;
+      sudo apt-get install libqt4-dev libqt4-qt3support;
+      sudo apt-get install automake libtool gperf flex bison;
+    fi
+
+  # We want to compile with g++ 4.8 when rather than the default g++
+  - if [[ $LINUX && $GCC ]]; then
+      sudo apt-get install -qq gcc-4.8 g++-4.8;
+      sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.8 90;
+    fi
 
   # Qucs-Test uses Numpy to compare results
-  - sudo apt-get install -qq python-numpy
+  - if [[ $LINUX ]]; then sudo apt-get install -qq python-numpy; fi
 
-  # grab tip of Qucs-Test
+  # Setup OSX
+  # Installed already: autoconf automake libtool pkg-config
+  - if [[ $OSX ]]; then
+      brew update;
+      brew install flex;
+      brew link --force flex;
+      brew install bison;
+      brew link --force bison;
+    fi
+
+  # Use tap for ADMS
+  - if [[ $OSX ]]; then
+      brew tap guitorri/tap;
+      brew install adms;
+    fi
+
+  # Install official Qt (184MB)
+  # Homebrew Qt binary has no Qt3Support (build from souce takes hours)
+  - if [[ $OSX ]]; then
+      QT_VERSION=4.8.6-1 ;
+      curl -L -O http://download.qt.io/archive/qt/4.8/4.8.6/qt-opensource-mac-${QT_VERSION}.dmg ;
+      hdiutil mount qt-opensource-mac-${QT_VERSION}.dmg ;
+      sudo installer -pkg /Volumes/Qt\ 4.8.6/Qt.mpkg -target / ;
+      hdiutil unmount /Volumes/Qt\ 4.8.6 ;
+    fi
+
+  # Grab tip of Qucs-Test
   - git clone --depth=1 --branch=master git://github.com/Qucs/qucs-test.git qucs-test
 
 script:
@@ -37,45 +89,43 @@ script:
   - $CXX --version
   - autoconf --version
   - automake --version
+  - which flex  && flex --version
+  - which bison && bison --version
   - python --version
   - python -c "import numpy; print numpy.__version__"
   - pwd
   - ls
 
-  # `sudo make install` fail with clang for ADMS, temporary workaround
-  - export CC=`which $CC`
-  - export CXX=`which $CXX`
-
-  # Travis has Bison 2.5 --> You need at least version 2.6 of the 'bison' parse generator to use 'api.prefix' definitions.
-  # - wget http://ftp.gnu.org/gnu/bison/bison-2.6.tar.gz -O /tmp/bison-2.6.tar.gz
-  # - tar -xzvf /tmp/bison-2.6.tar.gz
-  # - cd bison-2.6 && ./configure --prefix=/usr && make && sudo make install && cd ..
-  - bison --version
-
   # Build ADMS from release (avoid need of Perl and its modules)
-  - wget http://sourceforge.net/projects/mot-adms/files/adms-source/2.3/adms-2.3.4.tar.gz -O /tmp/adms-2.3.4.tar.gz
-  - tar -xzvf /tmp/adms-2.3.4.tar.gz
-  - cd adms-2.3.4 && ./configure --prefix=/usr && make && sudo make install && cd ..
-  - admsXml --version
+  - if [[ $LINUX ]]; then
+      wget http://sourceforge.net/projects/mot-adms/files/adms-source/2.3/adms-2.3.4.tar.gz -O /tmp/adms-2.3.4.tar.gz;
+      tar -xzvf /tmp/adms-2.3.4.tar.gz;
+      cd adms-2.3.4 && ./configure --prefix=/usr && make && sudo make install && cd ..;
+    fi
 
-  # build Qucs GUI components
+  # Check ADMS
+  - which admsXml && admsXml --version
+
+  # Build Qucs GUI components
   - cd qucs
   - ./autogen.sh
-  - ./configure --enable-maintainer-mode --prefix=/usr
+  - ./configure --enable-maintainer-mode --prefix=/usr --disable-dependency-tracking
   - make && sudo make install
   - cd ..
 
-  # build Qucs-core
+  # Test qucs installation
+  - qucs -v
+
+  # Build Qucs-core
   - cd qucs-core
   - ./bootstrap.sh
-  - ./configure --enable-maintainer-mode --prefix=/usr --with-mkadms=`which admsXml`
+  - ./configure --enable-maintainer-mode --prefix=/usr --with-mkadms=`which admsXml` --disable-dependency-tracking
   - make && sudo make install && make check
   - cd ..
 
-  # test installation
-  - qucs -v
+  # Test qucsator installation
   - qucsator -v
 
-  # run Qucs-Test suite
-  # need to be on `script` section to raise error as failure
+  # Run Qucs-Test suite
+  # Need to be on `script` section to raise error as failure
   - cd qucs-test && ./run.py --prefix /usr/bin/ --qucsator --skip skip.txt && cd ..
