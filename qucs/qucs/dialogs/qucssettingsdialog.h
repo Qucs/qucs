@@ -27,6 +27,8 @@
 #include <QRegExp>
 #include <QVBoxLayout>
 
+class QucsShortcutDialog;
+
 class QLineEdit;
 class QCheckBox;
 class QVBoxLayout;
@@ -100,6 +102,7 @@ public:
     QRegExp Expr;
     QRegExpValidator *Validator;
 
+    QucsShortcutDialog *shortcutDialog;
 private:
     QStringList currentPaths;
     
