@@ -172,7 +172,7 @@ clearShortcutMap()
 
 // set Shortcut value to each action
 void
-QucsApp::setAllShortcut()
+QucsApp::slotSetAllShortcut()
 {
   QVector<QPair<QString, QMap<QString, QString>* > >* vec = &QucsSettings.Shortcut;
   QMap<QString, QString> *map = NULL;
