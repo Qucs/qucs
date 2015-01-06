@@ -93,6 +93,15 @@ class history;
 class circuit : public object, public integrator
 {
  public:
+  circuit * getNext (void) const { return this->next; }
+  void setNext (circuit * const o) { this->next = o; }
+  circuit * getPrev (void) const { return prev; }
+  void setPrev (circuit * const o) { this->prev = o; }
+ private:
+  circuit * next;
+  circuit * prev;
+  
+ public:
   // constructor and destructor set
   circuit ();
   circuit (int);

@@ -49,6 +49,15 @@ qucs::vector runavg (const nr_complex_t, const int);
 class vector : public object
 {
  public:
+  vector * getNext (void) const { return this->next; }
+  void setNext (vector * const o) { this->next = o; }
+  vector * getPrev (void) const { return prev; }
+  void setPrev (vector * const o) { this->prev = o; }
+ private:
+  vector * next;
+  vector * prev;
+
+ public:
   vector ();
   vector (const char *);
   vector (int);

@@ -53,6 +53,7 @@ vector::vector () : object () {
   dependencies = NULL;
   origin = NULL;
   requested = 0;
+  next = prev = nullptr;
 }
 
 /* Constructor creates an unnamed instance of the vector class with a
@@ -65,6 +66,7 @@ vector::vector (int s) : object () {
   dependencies = NULL;
   origin = NULL;
   requested = 0;
+  next = prev = nullptr;
 }
 
 /* Constructor creates an unnamed instance of the vector class with a
@@ -78,6 +80,7 @@ vector::vector (int s, nr_complex_t val) : object () {
   dependencies = NULL;
   origin = NULL;
   requested = 0;
+  next = prev = nullptr;
 }
 
 // Constructor creates an named instance of the vector class.
@@ -87,6 +90,7 @@ vector::vector (const char * n) : object (n) {
   dependencies = NULL;
   origin = NULL;
   requested = 0;
+  next = prev = nullptr;
 }
 
 /* This constructor creates a named instance of the vector class with
@@ -99,6 +103,7 @@ vector::vector (const char * n, int s) : object (n) {
   dependencies = NULL;
   origin = NULL;
   requested = 0;
+  next = prev = nullptr;
 }
 
 /* The copy constructor creates a new instance based on the given
@@ -111,6 +116,8 @@ vector::vector (const vector & v) : object (v) {
   dependencies = v.dependencies ? new strlist (*v.dependencies) : NULL;
   origin = v.origin ? strdup (v.origin) : NULL;
   requested = v.requested;
+  next = v.next;
+  prev = v.prev;
 }
 
 /* The assignment copy constructor creates a new instance based on the
