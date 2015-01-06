@@ -1,6 +1,6 @@
 ## Process this file with automake to produce Makefile.in
 # 
-# report/StoQ_test1/pics/Makefile.am
+# report/activefilter/pics/Makefile.am
 #
 # Automake input file.
 #
