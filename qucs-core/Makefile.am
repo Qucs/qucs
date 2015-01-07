@@ -77,14 +77,25 @@ TEST_EXTENSIONS = .net .txt
 NET_LOG_COMPILER = $(top_srcdir)/tests/runqucsator.sh
 AM_NET_LOG_FLAGS = $(abs_top_srcdir)/src/qucsator
 
-TESTS =                                               \
+TESTS =
+
+# U=RI variation
+TESTS +=                                               \
   tests/basic/u=ri/u=ri@dc.net                        \
   tests/basic/u=ri/u=ri@ac.net                        \
   tests/basic/u=ri/u=ri@tr.net                        \
   tests/basic/u=ri/u=ri@dc+sweep.net                  \
   tests/basic/u=ri/u=ri@ac+sweep.net                  \
   tests/basic/u=ri/u=ri@tr+sweep.net                  \
+  tests/basic/u=ri/u=ri@sp.net
+
+# voltage diviser
+TESTS += \
   tests/basic/voltagediviser/voltagediviser@tr.net
+
+# component
+TESTS += \
+  tests/basic/components/spfile/spfile@sp.net
 
 if USE_QUCS_TEST
     TXT_LOG_COMPILER = src/qucsator
