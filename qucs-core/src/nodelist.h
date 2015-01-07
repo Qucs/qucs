@@ -33,13 +33,14 @@ class node;
 class net;
 
 struct nodelist_t {
+public:
   int n;
   char * name;
   node ** nodes;
   int nNodes;
   int nAlloc;
   int internal;
-  struct nodelist_t * next;
+  nodelist_t * next;
 };
 
 class nodelist
@@ -61,7 +62,6 @@ class nodelist
   void assignNodes (void);
   void print (void);
   struct nodelist_t * getNode (int);
-  struct nodelist_t * getLastNode (void);
   char * getNodeString (int);
   void sort (void);
   struct nodelist_t * copy (struct nodelist_t *);

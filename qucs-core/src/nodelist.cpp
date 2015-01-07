@@ -258,11 +258,6 @@ char * nodelist::getNodeString (int nr) {
   return txt;
 }
 
-/* The function returns the nodelist structure at the end of the node
-   name list. */
-struct nodelist_t * nodelist::getLastNode (void) {
-  return last;
-}
 
 // This function enumerates the nodes in the node name list.
 void nodelist::assignNodes (void) {
@@ -468,7 +463,7 @@ void nodelist::sort (void) {
 
   // store sorted node list in current object
   root = nodes->getRoot ();
-  last = nodes->getLastNode ();
+  last = nodes->last;
   nodes->root = NULL;
   sorting = 1;
 
