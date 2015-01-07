@@ -52,6 +52,13 @@ install:
       sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.8 90;
     fi
 
+  # Set up for Coveralls for GCC (LINUX) only
+  # lcov is required by configure, only gcov really needed thou
+  - if [[ $GCC ]]; then
+      sudo apt-get install lcov ;
+      sudo pip install cpp-coveralls ;
+    fi
+
   # Qucs-Test uses Numpy to compare results
   - if [[ $LINUX ]]; then sudo apt-get install -qq python-numpy; fi
 
@@ -91,6 +98,9 @@ script:
   - automake --version
   - which flex  && flex --version
   - which bison && bison --version
+  # use gcov matched to GCC
+  - if [[ $GCC ]]; then which gcov-4.8 && gcov-4.8 --version; fi
+  - if [[ $GCC ]]; then  lcov --version; fi
   - python --version
   - python -c "import numpy; print numpy.__version__"
   - pwd
@@ -119,13 +129,30 @@ script:
   # Build Qucs-core
   - cd qucs-core
   - ./bootstrap.sh
-  - ./configure --enable-maintainer-mode --prefix=/usr --with-mkadms=`which admsXml` --disable-dependency-tracking
-  - make && sudo make install && make check
+
+  # Only collect coverage for GCC (LINUX)
+  # `make check-code-coverage` is failing due to old lcov
+  - if [[ $GCC ]]; then
+      ./configure --enable-maintainer-mode --prefix=/usr --with-mkadms=`which admsXml` --disable-dependency-tracking --enable-debug --enable-code-coverage  --with-gcov=gcov-4.8;
+      make && sudo make install && make check;
+    fi
+
+  - if [[ $CLANG ]]; then
+      ./configure --enable-maintainer-mode --prefix=/usr --with-mkadms=`which admsXml` --disable-dependency-tracking;
+      make && sudo make install && make check;
+    fi
   - cd ..
 
   # Test qucsator installation
   - qucsator -v
 
-  # Run Qucs-Test suite
+  # Run Qucs-Test suite and collect coverage
   # Need to be on `script` section to raise error as failure
-  - cd qucs-test && ./run.py --prefix /usr/bin/ --qucsator --skip skip.txt && cd ..
+  # Use qucsator in-tree to generate gcov coverage for GCC (LINUX)
+  - cd qucs-test && ./run.py --prefix $HOME/build/Qucs/qucs/qucs-core/src/ --qucsator --skip skip.txt && cd -
+
+after_success:
+  # Send coverage data to Coveralls
+  - if [[ $GCC ]]; then
+      coveralls --exclude examples --exclude qucs --exclude qucs-doc --exclude adms-2.3.4 --gcov-options '\-lp' --gcov gcov-4.8;
+    fi
