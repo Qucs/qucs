@@ -25,6 +25,8 @@
 #ifndef __NODELIST_H__
 #define __NODELIST_H__
 
+#include <vector>
+
 namespace qucs {
 
 class node;
@@ -77,7 +79,7 @@ class nodelist
   struct nodelist_t * getNode (const char *);
 
  private:
-  struct nodelist_t ** narray;
+  std::vector<nodelist_t *> narray;
   struct nodelist_t * root;
   struct nodelist_t * last;
   char * txt;

@@ -42,9 +42,8 @@
 namespace qucs {
 
 // Constructor creates an instance of the nodelist class.
-nodelist::nodelist () {
+  nodelist::nodelist () : narray() {
   root = last = NULL;
-  narray = NULL;
   txt = NULL;
   sorting = 0;
 }
@@ -56,7 +55,6 @@ nodelist::nodelist () {
    connected to. */
 nodelist::nodelist (net * subnet) {
   root = last = NULL;
-  narray = NULL;
   txt = NULL;
   sorting = 0;
 
@@ -89,8 +87,8 @@ nodelist::nodelist (net * subnet) {
 nodelist::nodelist (const nodelist & o) {
   struct nodelist_t * n;
   root = last = NULL;
-  narray = NULL;
-  for (n = o.root; n != NULL; n = n->next) append (copy (n));
+  for (n = o.root; n != NULL; n = n->next)
+    append (copy (n));
   txt = o.txt ? strdup (o.txt) : NULL;
   sorting = o.sorting;
 }
@@ -104,7 +102,6 @@ nodelist::~nodelist () {
     root = next;
   }
   if (txt) free (txt);
-  if (narray) free (narray);
 }
 
 // The function copies the given node with all its properties.
@@ -272,9 +269,8 @@ void nodelist::assignNodes (void) {
   int i = 1;
 
   // create fast array access possibility
-  if (narray) free (narray);
-  narray = (struct nodelist_t **)
-    malloc (sizeof (struct nodelist_t *) * length ());
+  narray.clear();
+  narray.reserve(this->length());
 
   for (struct nodelist_t * n = root; n != NULL; n = n->next) {
     // ground node gets a zero counter
