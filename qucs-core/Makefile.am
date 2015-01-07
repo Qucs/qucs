@@ -74,8 +74,8 @@ MOSTLYCLEANFILES = \
 # See also qucs-test for another way of testing.
 # https://github.com/Qucs/qucs-test.
 TEST_EXTENSIONS = .net .txt
-NET_LOG_COMPILER = src/qucsator
-AM_NET_LOG_FLAGS = -i
+NET_LOG_COMPILER = $(top_srcdir)/tests/runqucsator.sh
+AM_NET_LOG_FLAGS = $(abs_top_srcdir)/src/qucsator
 
 TESTS =                                               \
   tests/basic/u=ri/u=ri@dc.net                        \
