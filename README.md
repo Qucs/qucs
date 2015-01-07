@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/Qucs/qucs.svg?branch=master)](https://travis-ci.org/Qucs/qucs)
+[![Coverage Status](https://img.shields.io/coveralls/Qucs/qucs.svg)](https://coveralls.io/r/Qucs/qucs?branch=master)
 
 ## QUCS - Quite Universal Circuit Simulator
 
@@ -7,7 +8,7 @@ Qucs is an integrated circuit simulator which means you are able to setup a circ
 
 ## Resources
   - Website: <http://qucs.sourceforge.net/>
-  - Main repository:   <http://sourceforge.net/p/qucs/git/>
+  - Main repository: <http://sourceforge.net/p/qucs/git/>
   - Mirror repository: <https://github.com/Qucs/qucs>
   - Mailing lists: <http://sourceforge.net/p/qucs/mailman/>
   - Forum: <http://sourceforge.net/p/qucs/discussion/>
@@ -97,3 +98,6 @@ Note:
 
 Some of the platform specific pre-compile binary packages containing installers can be found at <https://sourceforge.net/projects/qucs/files/qucs-binary/>.
 
+## License
+
+Qucs is under GNU General Public License, version 2.0+. See COPYING file.
