@@ -260,7 +260,7 @@ of
 \begin{equation}
  N_{sec}=\lfloor N/2\rfloor+N\mod 2 \label{order-sections}
 \end{equation}
-total 2-nd order nad 1-st order sections.
+total 2-nd order and 1-st order sections.
 
 So, transfer function can be represented as product of the each filter section
 transfer functions.
@@ -342,7 +342,7 @@ complex conjugated pairs of zeros and $N/2$ complex conjugated pairs of poles.
 Odd order physical active filter transfer function has additional real pole.
 
 We need to solve numerator of $i$-th factor (\ref{2ord1}) equals zeros to find
-$i$=th zero pair location:
+$i$-th zero pair location:
 
 \begin{equation}
  s^2+A_i=0
@@ -362,7 +362,7 @@ And we can find coefficient $A_i$ by known $i$-th zero pair imaginary part
 \end{equation}
 
 Zeros of the physical active filter transfer function have no real part.
-Using this equation (\ref{Ai})we can find $A_i$ coefficients by known zeros
+Using this equation (\ref{Ai}) we can find $A_i$ coefficients by known zeros
 location. Zeros location (and real and imaginary part) could be found using
 transfer function approximation (Butterworth, Chebyshev, etc.).
 
@@ -408,12 +408,12 @@ Solution gives:
  p_N =\sigma_N = -C_N
 \end{equation}
 
-And we can find $C_N$ coefficient by known real part of $N-th$ real pole:
+And we can find $C_N$ coefficient by known real part of $N$-th real pole:
 \begin{equation}
  C_N=-\sigma_N \label{CN-1ord}
 \end{equation}
 
-Using poles and zeros location and equation (\ref{Ai}, (\ref{Bi}) and
+Using poles and zeros location and equation (\ref{Ai}), (\ref{Bi}) and
 (\ref{Ci}) we can find $A_i$, $B_i$, $C_i$ coefficients, factorize transfer
 function to (\ref{trfunc-quad}) form and find filter RC-elements values.
 
@@ -438,10 +438,7 @@ form:
    \draw[-latex] (0,0) -- (7,0) node [anchor=west] {$\omega$};
    \draw[-latex] (0,0) -- (0,5) node [anchor=south]
     {$|H(j\omega)|$};
-%      \draw [ y=4cm, x=3cm,,smooth,name path=MR,
-%      declare function={K(\w)=1/((1+\w^8.0)^0.5);}] plot [domain=0:2]
-%  (\x,{K(\x)});
-     \draw[domain=0:2,y=4cm, x=3cm,smooth,name path=MR] plot
+    \draw[domain=0:2,y=4cm, x=3cm,smooth,name path=MR] plot
            function{1/(1+x**8)**0.5};
     \path [name path=Fc] (0,3.5) -- (5,3.5);
     \path [name path=Fs] (0,1) -- (5,1);
@@ -516,10 +513,10 @@ and at least $A_s$ attenuation at stopband frequency $\omega_s$.
 
 \subsection{Transfer function}
 
-Chebyshev filters provide more sufficient more sharp transition from pass band
-to stop band than Butterworth filter. But it has ripple in passband $R_p$ up to
-3dB.
-Passband magnitude response of the Chebyshev filter is not flat. 
+Chebyshev filters provide more sharp transition from pass band
+to stop band than Butterworth filter.  Passband magnitude response 
+of the Chebyshev filter is not flat. It has ripple in passband $R_p$ up to
+3dB. 
 
 Magnitude response of the $N-th$ order Chebyshev Type-I filter is determined by
 equation:
@@ -550,9 +547,6 @@ $\varepsilon=0$.
    \draw[-latex] (0,0) -- (7,0) node [anchor=west] {$\omega$};
    \draw[-latex] (0,0) -- (0,5) node [anchor=south]
     {$|H(j\omega)|$};
-%     \draw [very thick, y=4cm, x=3cm,
-%     declare function={K(\w)=1/((1+\w^8.0)^0.5);}] plot [domain=0:2]
-% (\x,{K(\x)});
     \draw[domain=0:2,y=4cm, x=3cm,samples=200,name path=MR,smooth] plot
           function{1/(sqrt(1+0.5**2*((cos(4*acos(x)))**2)))};
     \path [name path=Fc] (0,3.5) -- (5,3.5);
@@ -641,9 +635,6 @@ in the Figure \ref{fig:cheb2}.
    \draw[-latex] (0,0) -- (7,0) node [anchor=west] {$\omega$};
    \draw[-latex] (0,0) -- (0,5) node [anchor=south]
     {$|H(j\omega)|$};
-%     \draw [very thick, y=4cm, x=3cm,
-%     declare function={K(\w)=1/((1+\w^8.0)^0.5);}] plot [domain=0:2]
-% (\x,{K(\x)});
     \draw[domain=0:2,y=4cm, x=3cm,samples=200,name path=MR] plot
 function{1/(sqrt(1+1/(0.25**2*((cos(4*acos(1/x)))**2))))};
     \path [name path=Fc] (0,3.5) -- (5,3.5);
@@ -702,7 +693,7 @@ equation. We assume $A_s=R_s$.
 \end{equation}
 
 It's need to
-know stopband attenuation $A_s$ (dB), passband ripple $R_p$ (dB), cutoff
+know stopband attenuation $A_s$ (dB), cutoff
 frequency $\omega_c$, and stopband frequency $\omega_s$.
 \verb|Filter::calcInvChebyshev()| function performs such estimation. See
 \verb|filter.cpp| for source code.
@@ -730,9 +721,6 @@ Typical magnitude response is shown in the Figure \ref{fig:cauer}.
    \draw[-latex] (0,0) -- (7,0) node [anchor=west] {$\omega$};
    \draw[-latex] (0,0) -- (0,5) node [anchor=south]
     {$|H(j\omega)|$};
-%     \draw [very thick, y=4cm, x=3cm,
-%     declare function={K(\w)=1/((1+\w^8.0)^0.5);}] plot [domain=0:2]
-% (\x,{K(\x)});
     \draw[domain=0:2,y=4cm, x=3cm,samples=200,name path=MR] plot function{1/((0.25*((1.846*(1.305*x**2-1)**2)/(1-0.695*x**2)**2-1)**2)/(1-(.153*(1.305*x**2-1)**2)/(1-0.695*x**2)**2)**2+1)**0.5};
     \path [name path=Fc] (0,3.5) -- (5,3.5);
     \path [name path=Fs] (0,1) -- (5,1);
@@ -872,7 +860,7 @@ algorithm. These functions are called together. See \verb|filter.cpp|.
 
 For all considered filter transfer approximations magnitude response was 
 considered. Phase response was not taken into account. Bessel filter belongs to 
-filtes with normalized phase delay $\tau_p$ (\ref{eq:ph_delay}). Phase response 
+filters with normalized phase delay $\tau_p$ (\ref{eq:ph_delay}). Phase response 
 of such filter is linear-dependent on frequency
 
 \begin{equation}
@@ -903,7 +891,7 @@ For example for 5-th order Bessel polynomial:
 \end{equation}
 
 Poles of Bessel transfer function could not be evaluated symbolically. 
-Qucs-activefilter uses precalculated poles tables for Bessel filters up to 
+Qucsactivefilter uses precalculated poles tables for Bessel filters up to 
 20-th order. See header \verb|bessel.h| and Octave script \verb|bessel-poles.m|
 
 Bessel filter transfer function has no zeros. 
@@ -925,8 +913,7 @@ source code.
 
 High-pass filters calculation uses low-pass filter prototype. Then you can use
 low-pass prototype to determine filter order and poles/zeros.
-High-pass transfer function can be transformed to low-pass prototype filter
-transfer function.
+
 
 High-pass filter transfer function $H(s)$ could be mapped to low-pass prototype
 filter transfer function $H_{LPF}(s')$. The following transform should be used:
@@ -1072,7 +1059,7 @@ filter, equation (\ref{cauer-order}) for Cauer filter.
 \item \textbf{Step 3:} Evaluate poles and zeros of the transfer function using
 order value from previous step. Qucsactivefilter stores poles and zeros as
 complex numbers using \verb|std::complex| class. You can access human-readable
-poles and zeros list using \verb|Filter::cratePolesZerosList()|.
+poles and zeros list using \verb|Filter::createPolesZerosList()|.
 
 \item \textbf{Step 4:} Calculate number of 2-nd order sections and 1-st order
 sections using equation (\ref{order-sections}). Even order filters contain only
@@ -1248,7 +1235,7 @@ Then we can evaluate resistors values:
  R_4=K_v(R_1+R_2)
 \end{equation}
 
-For unity gain $K_v=1$ R3 should be removed and R4 should be shorted.
+For unity gain $K_v=1$, R3 should be removed and R4 should be shorted.
 \verb|SallenKey| class implements these evaluations and builds Sallen-Key
 circuit. See \verb|sallenkey.cpp|.
 
@@ -1256,7 +1243,7 @@ circuit. See \verb|sallenkey.cpp|.
 \subsection{High pass filters}
 
 Sallen-Key topology of high-pass filter is shown in the Figure
-\ref{fig:sk-lpf}. This is second order section.
+\ref{fig:sk-hpf}. This is second order section.
 
 \begin{figure}[!ht]
   \centering
@@ -1295,13 +1282,13 @@ Then we can evaluate resistors values:
 \end{equation}
 
 
-For unity gain $K_v=1$ R3 should be removed and R4 should be shorted.
+For unity gain $K_v=1$, R3 should be removed and R4 should be shorted.
 \verb|SallenKey| class implements these evaluations and builds Sallen-Key
 circuit. See \verb|sallenkey.cpp|.
 
 \subsection{Band pass filter}
 
-Sallen-Key topology of abnd-pass filter is shown in the Figure
+Sallen-Key topology of band-pass filter is shown in the Figure
 \ref{fig:sk-bpf}. Two such section should be connected in series to implement
 2-nd order section of band-pass filter.
 
@@ -1485,7 +1472,7 @@ Multifeedback (MFB) circuit of low-pass filter is shown in the Figure
 \begin{figure}[!ht]
   \centering
   \includegraphics[width=0.6\linewidth]{pics/mfb-hpf}
-  \caption{Low-pass multifeedback active filter section}
+  \caption{High-pass multifeedback active filter section}
   \label{fig:mfb-hpf}
 \end{figure}
 % \FloatBarrier
@@ -1646,7 +1633,7 @@ Transfer function of such section has the following form:
 
 
 At first we need to determine $A_i$, $B_i$, $C_i$ coefficients set (\ref{Ai}), 
-(\ref{Bi}), and (\ref{Ci}) for every section of the filter. Qucs-activefilter 
+(\ref{Bi}), and (\ref{Ci}) for every section of the filter. Qucsactivefilter 
 build schematic only for even order prototype of Cauer band-pass filters. If 
 low-pass prototype has odd order, then order is expanded to nearest even order.
 
@@ -1669,7 +1656,7 @@ the low-pass prototype:
  D=\frac{F+\sqrt{F^2-4}}{2}
 \end{equation}
 
-Let $\mu$ be $\mu=2.0$.
+Let $\mu$ be $\mu=2.0$ \cite{johnson}.
 
 Second order section of low-pass prototype corresponds two second-order 
 sections of band-pass filter. Capacitors values for these sections are equals. 
