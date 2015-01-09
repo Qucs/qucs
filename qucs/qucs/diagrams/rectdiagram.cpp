@@ -25,7 +25,7 @@
 #if HAVE_CONFIG_H
 # include <config.h>
 #endif
-#include <math.h>
+#include <cmath>
 #include <float.h>
 #if HAVE_IEEEFP_H
 # include <ieeefp.h>
@@ -78,8 +78,8 @@ void RectDiagram::calcCoordinate(double* &xD, double* &yD, double* &,
     *py = float((yr-pa->low)/(pa->up-pa->low)*double(y2));
   }
 
-  if(!isfinite(*px))  *px = 0.0;
-  if(!isfinite(*py))  *py = 0.0;
+  if(!std::isfinite(*px))  *px = 0.0;
+  if(!std::isfinite(*py))  *py = 0.0;
 }
 
 // --------------------------------------------------------------

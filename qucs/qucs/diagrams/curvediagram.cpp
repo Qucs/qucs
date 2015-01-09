@@ -23,7 +23,7 @@
 #if HAVE_CONFIG_H
 # include <config.h>
 #endif
-#include <math.h>
+#include <cmath>
 #include <float.h>
 #if HAVE_IEEEFP_H
 # include <ieeefp.h>
@@ -66,8 +66,8 @@ void CurveDiagram::calcCoordinate(double* &, double* &yD, double* &,
 		*double(y2));
   else  *py = float((yi-pa->low)/(pa->up-pa->low)*double(y2));
 
-  if(isfinite(*px))
-    if(isfinite(*py))
+  if(std::isfinite(*px))
+    if(std::isfinite(*py))
       return;
 
   *px = *py = 0.0;
