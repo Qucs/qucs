@@ -192,13 +192,15 @@ ENDIF()
 #
 # Check for list of complex functions.
 #
-SET(COMPLEX_FUNCS acos acosh asin asinh atan atanh cos cosh
-                  exp log log10 sin sinh sqrt tan tanh log2 norm )
+SET(COMPLEX_FUNCS_GRP1 acos acosh asin asinh atan atanh cos cosh
+                   exp log log10 sin sinh sqrt tan tanh log2 norm )
+SET(COMPLEX_FUNCS_GRP2 pow atan2 fmod polar polar_complex )
 
 #
+# test complex function group 1
 # code inlined to easily replace '${func}'
-# TODO any better way to scape the ";" ?
-FOREACH(func ${COMPLEX_FUNCS})
+#
+FOREACH(func ${COMPLEX_FUNCS_GRP1})
   SET(code
     " #include <complex>
       using namespace std\;
@@ -225,67 +227,28 @@ FOREACH(func ${COMPLEX_FUNCS})
   if(NOT HAVE_CXX_COMPLEX_${FNAME})
     message(STATUS "HAVE_CXX_COMPLEX_${FNAME} failed")# ${TRY_OUT}")
   ENDIF()
+
+  FILE(REMOVE ${qucs-core_SOURCE_DIR}/cmake/test_${func}.cpp ${code})
 ENDFOREACH()
 
 #
-# Check whether you have the complex pow function.
+# test complex function group 2
+# use prepared source file. 
 #
-TRY_COMPILE( HAVE_CXX_COMPLEX_POW
-        ${CMAKE_BINARY_DIR}
-        ${qucs-core_SOURCE_DIR}/cmake/complex_pow.cpp
-        COMPILE_DEFINITIONS -DHAVE_NAMESPACES -DHAVE_COMPLEX -DHAVE_TR1_COMPLEX
-        OUTPUT_VARIABLE TRY_OUT)
-IF(NOT HAVE_CXX_COMPLEX_POW)
-  MESSAGE(SEND_ERROR "HAVE_CXX_COMPLEX_POW failed")# ${TRY_OUT}")
-ENDIF()
+FOREACH(func ${COMPLEX_FUNCS_GRP2})
+  string(TOUPPER ${func} FNAME)
 
-#
-# Check whether you have the complex atan2 function.
-#
-TRY_COMPILE( HAVE_CXX_COMPLEX_ATAN2
-        ${CMAKE_BINARY_DIR}
-        ${qucs-core_SOURCE_DIR}/cmake/complex_atan2.cpp
-        COMPILE_DEFINITIONS -DHAVE_NAMESPACES -DHAVE_COMPLEX -DHAVE_TR1_COMPLEX
-        OUTPUT_VARIABLE TRY_OUT)
-IF(NOT HAVE_CXX_COMPLEX_ATAN2)
-  MESSAGE(STATUS "HAVE_CXX_COMPLEX_ATAN2 failed ") #${TRY_OUT}")
-ENDIF()
+  message(STATUS "Checking HAVE_CXX_COMPLEX_${FNAME}")
 
-#
-# Check wheter you have the complex fmod function.
-#
-TRY_COMPILE( HAVE_CXX_COMPLEX_FMOD
-        ${CMAKE_BINARY_DIR}
-        ${qucs-core_SOURCE_DIR}/cmake/complex_fmod.cpp
-        COMPILE_DEFINITIONS -DHAVE_NAMESPACES -DHAVE_COMPLEX -DHAVE_TR1_COMPLEX
-        OUTPUT_VARIABLE TRY_OUT)
-IF(NOT HAVE_CXX_COMPLEX_FMOD)
-  MESSAGE(STATUS "HAVE_CXX_COMPLEX_FMOD failed ") #${TRY_OUT}")
-ENDIF()
-
-#
-# Check whether you have the complex polar (double, double) function.
-#
-TRY_COMPILE( HAVE_CXX_COMPLEX_POLAR
-        ${CMAKE_BINARY_DIR}
-        ${qucs-core_SOURCE_DIR}/cmake/complex_polar.cpp
-        COMPILE_DEFINITIONS -DHAVE_NAMESPACES -DHAVE_COMPLEX -DHAVE_TR1_COMPLEX
-        OUTPUT_VARIABLE TRY_OUT)
-IF(NOT HAVE_CXX_COMPLEX_POLAR)
-  MESSAGE(STATUS "HAVE_CXX_COMPLEX_POLAR failed ") #${TRY_OUT}")
-ENDIF()
-
-#
-# Check wheter you have the complex polar (complex, complex) function.
-#
-TRY_COMPILE( HAVE_CXX_COMPLEX_POLAR_COMPLEX
-        ${CMAKE_BINARY_DIR}
-        ${qucs-core_SOURCE_DIR}/cmake/complex_polar_complex.cpp
-        COMPILE_DEFINITIONS -DHAVE_NAMESPACES -DHAVE_COMPLEX -DHAVE_TR1_COMPLEX
-        OUTPUT_VARIABLE TRY_OUT)
-IF(NOT HAVE_CXX_COMPLEX_POLAR_COMPLEX)
-  MESSAGE(STATUS "HAVE_CXX_COMPLEX_POLAR_COMPLEX failed ") #${TRY_OUT}")
-ENDIF()
+  TRY_COMPILE( HAVE_CXX_COMPLEX_${FNAME}
+          ${CMAKE_BINARY_DIR}
+          ${qucs-core_SOURCE_DIR}/cmake/complex_${func}.cpp
+          COMPILE_DEFINITIONS -DHAVE_NAMESPACES -DHAVE_COMPLEX -DHAVE_TR1_COMPLEX
+          OUTPUT_VARIABLE TRY_OUT)
+  if(NOT HAVE_CXX_COMPLEX_${FNAME})
+    message(STATUS "HAVE_CXX_COMPLEX_${FNAME} failed")# ${TRY_OUT}")
+  ENDIF()
+ENDFOREACH()
 
 #
 # Configure the header config.h, interpolate above definitions.
@@ -299,13 +262,7 @@ CONFIGURE_FILE (
 # List of lexer/parsers type names
 #
 SET(ParserTypes
-	csv
-  citi
-  dataset
-  mdl
-  netlist
-  touchstone
-  zvr
+	csv citi dataset mdl netlist touchstone zvr
 )
 
 # Flex/Bison generated code, example:
