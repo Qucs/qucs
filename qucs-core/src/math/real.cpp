@@ -263,7 +263,7 @@ nr_double_t fmod( nr_double_t arg) {
 
 nr_double_t trunc( nr_double_t arg) {
 #ifdef HAVE_STD_TRUNC
-  return qucs::trunc(arg);
+  return std::trunc(arg);
 #elif HAVE_TRUNC
   return ::trunc (arg);
 #else
@@ -272,7 +272,7 @@ nr_double_t trunc( nr_double_t arg) {
 }
 nr_double_t round( nr_double_t arg) {
 #ifdef HAVE_STD_ROUND
-  return qucs::round(arg);
+  return std::round(arg);
 #elif HAVE_ROUND
   return ::round (arg);
 #else
