@@ -50,6 +50,7 @@ class QShortcut;
 class QListView;
 class QFileSystemModel;
 class QModelIndex;
+class QPushButton;
 
 typedef bool (Schematic::*pToggleFunc) ();
 typedef void (MouseActions::*pMouseFunc) (Schematic*, QMouseEvent*);
@@ -116,6 +117,8 @@ public slots:
 
   void slotToPage();
   void slotSelectComponent(QListWidgetItem*);
+  void slotSearchComponent(const QString &);
+  void slotSearchClear();
 
   void slotEditElement();
   void slotPowerMatching();
@@ -187,7 +190,8 @@ private:
   QTreeWidgetItem *ConSchematics, *ConSources, *ConDisplays, *ConDatasets,
                   *ConOthers, *ConVerilog, *ConVerilogA, *ConOctave;
 
-
+  QLineEdit       *CompSearch;
+  QPushButton     *CompSearchClear;
   QComboBox       *CompChoose;
 
 // ********** Properties ************************************************

@@ -317,14 +317,22 @@ void QucsApp::initView()
   // "Component" Tab of the left QTabWidget
   QWidget *CompGroup  = new QWidget();
   QVBoxLayout *CompGroupLayout = new QVBoxLayout();
+  QHBoxLayout *CompSearchLayout = new QHBoxLayout();
 
   CompChoose = new QComboBox(this);
   CompComps = new QListWidget(this);
   CompComps->setViewMode(QListView::IconMode);
   CompComps->setGridSize(QSize(110,90));
+  CompSearch = new QLineEdit(this);
+  CompSearch->setPlaceholderText(tr("Search Components"));
+  CompSearchClear = new QPushButton(tr("Clear"));
 
+  CompGroupLayout->setSpacing(5);
   CompGroupLayout->addWidget(CompChoose);
   CompGroupLayout->addWidget(CompComps);
+  CompGroupLayout->addLayout(CompSearchLayout);
+  CompSearchLayout->addWidget(CompSearch);
+  CompSearchLayout->addWidget(CompSearchClear);
   CompGroup->setLayout(CompGroupLayout);
 
   TabView->addTab(CompGroup,tr("Components"));
@@ -335,6 +343,8 @@ void QucsApp::initView()
   connect(CompChoose, SIGNAL(activated(int)), SLOT(slotSetCompView(int)));
   connect(CompComps, SIGNAL(itemActivated(QListWidgetItem*)), SLOT(slotSelectComponent(QListWidgetItem*)));
   connect(CompComps, SIGNAL(itemPressed(QListWidgetItem*)), SLOT(slotSelectComponent(QListWidgetItem*)));
+  connect(CompSearch, SIGNAL(textEdited(const QString &)), SLOT(slotSearchComponent(const QString &)));
+  connect(CompSearchClear, SIGNAL(clicked()), SLOT(slotSearchClear()));
 
   // ----------------------------------------------------------
   // "Libraries" Tab of the left QTabWidget
@@ -625,6 +635,7 @@ void QucsApp::slotSetCompView (int index)
 //  qDebug() << "QucsApp::slotSetCompView (int index)";
 
   editText->setHidden (true); // disable text edit of component property
+  CompSearch->clear();
 
   QList<Module *> Comps;
   CompComps->clear ();   // clear the IconView
@@ -693,6 +704,85 @@ void QucsApp::slotSetCompView (int index)
 }
 
 // ------------------------------------------------------------------
+// When CompSearch is being edited, create a temp page show the
+// search result
+void QucsApp::slotSearchComponent(const QString &searchText)
+{
+  qDebug() << "User search: " << searchText;
+  CompComps->clear ();   // clear the IconView
+  if (searchText.isEmpty()) {
+    slotSetCompView(CompChoose->currentIndex());
+  } else {
+    editText->setHidden (true); // disable text edit of component property
+
+    //traverse all component and match searchText with name
+    QString Name;
+    char * File;
+    Module * Mod;
+    QList<Module *> Comps;
+
+    QStringList cats = Category::getCategories ();
+    foreach(QString it, cats) {
+      Comps = Category::getModules(it);
+      QList<Module *>::const_iterator modit;
+      for (modit = Comps.constBegin(); modit != Comps.constEnd(); modit++) {
+        if ((*modit)->info) {
+          *((*modit)->info) (Name, File, false);
+
+          if((Name.indexOf(searchText, 0, Qt::CaseInsensitive)) != -1) {
+            //match
+            QListWidgetItem *icon = new QListWidgetItem(QPixmap(":/bitmaps/" + QString (File) + ".png"), Name);
+            icon->setToolTip(it + ": " + Name);
+            CompComps->addItem(icon);
+          }
+        }
+      }
+    }
+    QMapIterator<QString, QString> i(Module::vaComponents);
+    while (i.hasNext()) {
+      i.next();
+
+      // Just need path to bitmap, do not create an object
+      QString Name, vaBitmap;
+      vacomponent::info (Name, vaBitmap, false, i.value());
+
+      if((Name.indexOf(searchText, 0, Qt::CaseInsensitive)) != -1) {
+        //match
+
+        // check if icon exists, fall back to default
+        QString iconPath = QucsSettings.QucsWorkDir.filePath(vaBitmap+".png");
+
+        QFile iconFile(iconPath);
+        QPixmap vaIcon;
+
+        if(iconFile.exists())
+        {
+          // load bitmap defined on the JSON symbol file
+          vaIcon = QPixmap(iconPath);
+        }
+        else
+        {
+          // default icon
+          vaIcon = QPixmap(":/bitmaps/editdelete.png");
+        }
+
+        // Add icon an name tag to dock
+        QListWidgetItem *icon = new QListWidgetItem(vaIcon, Name);
+        icon->setToolTip("verilog-a user devices: " + Name);
+        CompComps->addItem(icon);
+      }
+    }
+  }
+}
+
+// ------------------------------------------------------------------
+void QucsApp::slotSearchClear()
+{
+  CompSearch->clear();
+  slotSetCompView(CompChoose->currentIndex());
+}
+
+// ------------------------------------------------------------------
 // Is called when the mouse is clicked within the Component QIconView.
 void QucsApp::slotSelectComponent(QListWidgetItem *item)
 {
@@ -725,7 +815,6 @@ void QucsApp::slotSelectComponent(QListWidgetItem *item)
   MouseDoubleClickAction = 0;
 
   pInfoFunc Infos = 0;
-
   pInfoVAFunc InfosVA = 0;
 
   int i = CompComps->row(item);
@@ -734,31 +823,64 @@ void QucsApp::slotSelectComponent(QListWidgetItem *item)
   // if symbol mode, only paintings are enabled.
   Comps = Category::getModules(CompChoose->currentText());
   qDebug() << "pressed CompComps id" << i;
-  qDebug() << CompComps->item(i)->toolTip(); //Name;
+  qDebug() << CompComps->item(i)->text(); //Name;
 
-  // handle static and dynamic components
-  if (CompChoose->currentText() == QObject::tr("verilog-a user devices")){
-    InfosVA = Comps.at(i)->infoVA;
+  QString name = CompComps->item(i)->text();
+  QString CompName;
+  QString CompFile_qstr;
+  char *CompFile_cptr;
 
-    // get JSON file out of item name on toolTip
-    QString name = CompComps->item(i)->toolTip();
-    QString filename = Module::vaComponents[name];
-
-    QString Dummy1;
-    QString Dummy2;
-    if (InfosVA) {
-      qDebug() <<  " slotSelectComponent, view->selElem" ;
-      view->selElem = (*InfosVA) (Dummy1, Dummy2, true, filename);
+  if (!CompSearch->text().isEmpty()) {
+    //comp search is not empty, search all category to get a component in same name
+    QStringList cats = Category::getCategories();
+    int i = 0;
+    //search normal component
+    foreach (QString it, cats) {
+      Comps = Category::getModules (it);
+      foreach(Module *mod, Comps) {
+        if (mod->info) {
+          (*mod->info)(CompName, CompFile_cptr, false);
+          if (CompName == name) {
+            CompChoose->setCurrentIndex(i);
+            view->selElem = (*mod->info) (CompName, CompFile_cptr, true);
+          }
+        }
+      }
+      i++;
     }
+    //search verilog-a component
+    i = CompChoose->findText(QObject::tr("verilog-a user devices"));
+    QMapIterator<QString, QString> it(Module::vaComponents);
+    while (it.hasNext()) {
+      it.next();
 
-  }
-  else {
-    Infos = Comps.at(i)->info;
+      // Just need vacomponent name, do not create an object
+      QString Name, vaBitmap;
+      vacomponent::info (Name, vaBitmap, false, it.value());
 
-    char * Dummy2;
-    QString Dummy1;
-    if (Infos)
-      view->selElem = (*Infos) (Dummy1, Dummy2, true);
+      if (Name == name) {
+        view->selElem = vacomponent::info(CompName, CompFile_qstr, true, it.value());
+      }
+    }
+  } else {
+    // handle static and dynamic components
+    if (CompChoose->currentText() == QObject::tr("verilog-a user devices")){
+      InfosVA = Comps.at(i)->infoVA;
+
+      // get JSON file out of item name on widgetitem
+      QString filename = Module::vaComponents[name];
+
+      if (InfosVA) {
+        qDebug() <<  " slotSelectComponent, view->selElem" ;
+        view->selElem = (*InfosVA) (CompName, CompFile_qstr, true, filename);
+      }
+    }
+    else {
+      Infos = Comps.at(i)->info;
+
+      if (Infos)
+        view->selElem = (*Infos) (CompName, CompFile_cptr, true);
+    }
   }
 }
 
