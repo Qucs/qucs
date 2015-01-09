@@ -57,53 +57,24 @@ void nasolution<nr_type_t>::clear (void) {
 
 // Adds a new solution entry into the nasolution list.
 template <class nr_type_t>
-void nasolution<nr_type_t>::add (const char * n, nr_type_t value, int current) {
-  naentry<nr_type_t> * entry = new naentry<nr_type_t> (n, value, current);
-  entries.add (n, entry);
+void nasolution<nr_type_t>::add (const std::string &n, nr_type_t value, int current) {
+  naentry<nr_type_t> entry(n, value, current);
+  entries.insert ({{n, entry}});
 }
 
 // Finds the given nasolution entry in the list.
 template <class nr_type_t>
-naentry<nr_type_t> * nasolution<nr_type_t>::find (const char * n, int current) {
-  for (valuelistiterator< naentry<nr_type_t> > it (entries); *it; ++it) {
-    naentry<nr_type_t> * na = it.currentVal ();
-    if (na->current == current) {
-      if (na->n && n && !strcmp (na->n, n))
-	return na;
+naentry<nr_type_t> * nasolution<nr_type_t>::find (const std::string &name, int current) {
+  for (auto & nait : entries) {
+    if (nait.second.current == current) {
+      if (nait.second.n == name)
+	return &(nait.second);
     }
   }
   return NULL;
 }
 
-// Constructor creates an instance of the naentry class.
-template <class nr_type_t>
-naentry<nr_type_t>::naentry () {
-  value = 0;
-  n = NULL;
-  current = -1;
-}
 
-// Constructor creates an instance of the naentry class.
-template <class nr_type_t>
-naentry<nr_type_t>::naentry (const char * na, nr_type_t val, int cur) {
-  value = val;
-  n = na ? strdup (na) : NULL;
-  current = cur;
-}
 
-/* This copy constructor creates a instance of the naentry class based
-   on the given naentry. */
-template <class nr_type_t>
-naentry<nr_type_t>::naentry (const naentry<nr_type_t> & o) {
-  value = o.value;
-  n = o.n ? strdup (o.n) : NULL;
-  current = o.current;
-}
-
-// Destructor deletes a naentry object.
-template <class nr_type_t>
-naentry<nr_type_t>::~naentry () {
-  if (n) free (n);
-}
 
 } // namespace qucs

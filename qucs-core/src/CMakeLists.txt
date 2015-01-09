@@ -373,7 +373,6 @@ SET(HEADERS
   object.h
   states.cpp
   states.h
-  valuelist.cpp
   valuelist.h
   vector.h
 )

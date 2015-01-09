@@ -1093,11 +1093,10 @@ void spsolver::saveCharacteristics (nr_double_t freq) {
     c->saveCharacteristics (freq);
     if (c->getSubcircuit () && !(saveCVs & SAVE_ALL)) continue;
     c->calcCharacteristics (freq);
-    valuelistiterator<characteristic> it (c->getCharacteristics ());
-    for (; *it; ++it) {
-      characteristic * p = it.currentVal ();
-      n = createCV (c->getName (), p->getName ());
-      saveVariable (n, p->getValue (), f);
+    for (auto ps: c->getCharacteristics ()) {
+      characteristic &p = ps.second;
+      n = createCV (c->getName (), p.getName ());
+      saveVariable (n, p.getValue (), f);
     }
   }
 }

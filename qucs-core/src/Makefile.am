@@ -45,12 +45,12 @@ libqucs_la_LIBADD = math/libqucsmath.la   \
 libqucs_la_LDFLAGS = -shared -no-undefined
 
 pkginclude_HEADERS = compat.h logging.h object.h vector.h consts.h node.h \
-  net.h circuit.h integrator.h states.h states.cpp valuelist.h valuelist.cpp \
+  net.h circuit.h integrator.h states.h states.cpp valuelist.h \
   constants.h netdefs.h
 
 noinst_TEMPLATES = tridiag.cpp hash.cpp \
 	tmatrix.cpp tvector.cpp eqnsys.cpp states.cpp \
-	nasolver.cpp nasolution.cpp valuelist.cpp
+	nasolver.cpp nasolution.cpp
 
 noinst_HEADERS = $(noinst_TEMPLATES)            \
 	tokens_netlist.h tokens_dataset.h check_dataset.h tokens_touchstone.h       \

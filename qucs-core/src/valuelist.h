@@ -25,81 +25,12 @@
 #ifndef __VALUELIST_H__
 #define __VALUELIST_H__
 
+#include <unordered_map>
+#include <string>
+
 namespace qucs {
-
-template <class type_t> class valentry;
-template <class type_t> class valuelist;
-template <class type_t> class valuelistiterator;
-
-/* Value list entry. */
-template <class type_t>
-class valentry
-{
-  friend class valuelistiterator<type_t>;
-  friend class valuelist<type_t>;
-
- public:
-  ~valentry () { free (key); delete value; }
-  char * key;
-  type_t * value;
-  valentry * next;
-  valentry * prev;
-};
-
-/* The value list class. */
-template <class type_t>
-class valuelist
-{
-  friend class valuelistiterator<type_t>;
-
- public:
-  valuelist ();
-  ~valuelist ();
-  valuelist (const valuelist &);
-  void add (const char *, type_t *);
-  void append (char *, type_t *);
-  void append (valuelist *);
-  void del (char *);
-  int  length (void);
-  int  contains (char *);
-  type_t * get (const char *);
-  void clear (void);
-
- private:
-  int size;
-  valentry<type_t> * root;
-  valentry<type_t> * last;
-};
-
-/* Value list iterator. */
-template <class type_t>
-class valuelistiterator
-{
- public:
-  valuelistiterator (valuelist<type_t> &);
-  ~valuelistiterator ();
-
-  int count (void);
-  char * toFirst (void);
-  char * toLast (void);
-  char * operator++ (void);
-  char * operator-- (void);
-  char * operator * (void) { return current (); }
-  char * current (void);
-  char * currentKey (void);
-  type_t * currentVal (void);
-  char * first (void);
-  char * last (void);
-
- private:
-  valuelist<type_t> * _valuelist;
-  valentry<type_t> * _first;
-  valentry<type_t> * _last;
-  valentry<type_t> * _current;
-};
-
-} // namespace qucs
-
-#include "valuelist.cpp"
+  template <typename T>
+    using  valuelist= std::unordered_map<std::string,T>;
+}
 
 #endif /* __VALUELIST_H__ */

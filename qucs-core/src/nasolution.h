@@ -25,6 +25,7 @@
 #ifndef __NASOLUTION_H__
 #define __NASOLUTION_H__
 
+#include <string>
 #include "valuelist.h"
 
 namespace qucs {
@@ -34,13 +35,14 @@ template <class nr_type_t>
 class naentry
 {
  public:
-  naentry ();
-  naentry (const naentry &);
-  naentry (const char *, nr_type_t, int);
-  ~naentry ();
+  naentry () = default;
+  naentry (const naentry &) = default;
+  naentry (const std::string &name, nr_type_t v, int c):
+  n(name), current(c), value(v) {};
+  ~naentry () = default;
 
  public:
-  char * n;
+  std::string n;
   int current;
   nr_type_t value;
 };
@@ -54,8 +56,8 @@ class nasolution
   ~nasolution ();
   nasolution (const nasolution &);
 
-  void add (const char *, nr_type_t, int);
-  naentry<nr_type_t> * find (const char *, int);
+  void add (const std::string &name, nr_type_t, int);
+  naentry<nr_type_t> * find (const std::string &name, int);
   void clear (void);
 
  private:

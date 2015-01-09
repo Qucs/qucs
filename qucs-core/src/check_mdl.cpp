@@ -290,7 +290,7 @@ valuelist<int> * mdl_find_depdataset (struct mdl_link_t * link,
 	  nof = mdl_helement_ivalue (link, hyptab->data, "# of Points");
 	  step = mdl_helement_dvalue (link, hyptab->data, "Step Size");
 	  if (nof <= 0) nof = (int) fabs ((stop - start) / step) + 1;
-	  deps->append (name, new int (order));
+	  deps->insert({{name,order}});
 	  linsweep * sw = new linsweep ();
 	  sw->create (start, stop, nof);
 	  mdl_create_depdataset (sw, name);
@@ -313,7 +313,7 @@ valuelist<int> * mdl_find_depdataset (struct mdl_link_t * link,
 	    if (start == 0.0) start = 1.0;
 	    if (stop  == 0.0) stop  = 1.0;
 	  }
-	  deps->append (name, new int (order));
+	  deps->insert({{name,order}});
 	  logsweep * sw = new logsweep ();
 	  sw->create (start, stop, nof);
 	  mdl_create_depdataset (sw, name);
@@ -323,7 +323,7 @@ valuelist<int> * mdl_find_depdataset (struct mdl_link_t * link,
 	  // list sweep
 	  order = mdl_helement_ivalue (link, hyptab->data, "Sweep Order");
 	  nof = mdl_helement_ivalue (link, hyptab->data, "# of Values");
-	  deps->append (name, new int (order));
+	  deps->insert({{name,order}});
 	}
 	else if (!strcmp (stype, "SYNC")) {
 	  // sync sweep
@@ -371,15 +371,17 @@ static char * mdl_create_linkname (char * base, char * name) {
 static void mdl_find_deplink (struct mdl_link_t * link, char * name,
 			      valuelist<int> * deps) {
   struct mdl_lcontent_t * root;
-  valuelist<int> * d;
+  const valuelist<int> * d;
   // go through link content
   for (root = link->content; root != NULL; root = root->next) {
     // independent data vector
     if (root->type == t_DATA) {
       d = mdl_find_depdataset (link, root->data->content, name);
       if (d != NULL) {
-	deps->append (d);
+	valuelist<int> copy = *d;
 	delete d;
+	copy.insert(deps->begin(),deps->end());
+	*deps=copy;
       }
     }
     // link to independent data vector
@@ -416,10 +418,10 @@ static void mdl_find_varlink (struct mdl_link_t * link, char * name,
 // Sorts a dependency list according to their sweep order.
 static strlist * mdl_sort_deps (valuelist<int> * d) {
   strlist * deps = new strlist ();
-  for (int i = 0; i < d->length (); i++) {
-    for (valuelistiterator<int> it (*d); *it; ++it) {
-      if (*(it.currentVal ()) == i + 1) {
-	deps->append (it.currentKey ());
+  for (int i = 0; i < d->size(); i++) {
+    for (auto &val: *d) {
+      if (val.second == i + 1) {
+	deps->append (val.first.c_str());
       }
     }
   }

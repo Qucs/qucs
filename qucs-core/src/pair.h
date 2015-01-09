@@ -45,6 +45,8 @@ class pair
     p(s != nullptr ? std::string(s) : std::string(),v)
   {} ;
 
+  pair(const std::string s, nr_double_t v) : p(s,v) {};
+
   void setName (const char * const s) {
     p.first = s != nullptr ? std::string(s) : std::string();
   };

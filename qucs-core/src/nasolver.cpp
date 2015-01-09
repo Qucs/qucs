@@ -1365,12 +1365,11 @@ void nasolver<nr_type_t>::saveResults (const char * volts, const char * amps,
             if (!c->isNonLinear ()) continue;
             if (c->getSubcircuit () && !(saveOPs & SAVE_ALL)) continue;
             c->calcOperatingPoints ();
-            valuelistiterator<operatingpoint> it (c->getOperatingPoints ());
-            for (; *it; ++it)
+            for (auto ops: c->getOperatingPoints ())
             {
-                operatingpoint * p = it.currentVal ();
-                n = createOP (c->getName (), p->getName ());
-                saveVariable (n, p->getValue (), f);
+                operatingpoint &p = ops.second;
+                n = createOP (c->getName (), p.getName ());
+                saveVariable (n, p.getValue (), f);
                 free (n);
             }
         }

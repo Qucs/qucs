@@ -291,17 +291,17 @@ class circuit : public object, public integrator
   void addI (int, nr_double_t);
 
   // operating point functionality
-  void        addOperatingPoint (const char *, nr_double_t);
-  nr_double_t getOperatingPoint (const char *);
-  void        setOperatingPoint (const char *, nr_double_t);
-  int         hasOperatingPoint (char *);
+  void        addOperatingPoint (const std::string &name, nr_double_t);
+  nr_double_t getOperatingPoint (const std::string &name);
+  void        setOperatingPoint (const std::string &name, nr_double_t);
+  int         hasOperatingPoint (const std::string &name);
   valuelist<operatingpoint> & getOperatingPoints (void) { return oper; }
 
   // characteristics functionality
-  void        addCharacteristic (const char *, nr_double_t);
-  nr_double_t getCharacteristic (char *);
-  void        setCharacteristic (const char *, nr_double_t);
-  int         hasCharacteristic (char *);
+  void        addCharacteristic (const std::string &name, nr_double_t);
+  nr_double_t getCharacteristic (const std::string &name);
+  void        setCharacteristic (const std::string &name, nr_double_t);
+  int         hasCharacteristic (const std::string &name);
   valuelist<characteristic> & getCharacteristics (void) { return charac; }
 
   // differentiate between linear and non-linear circuits

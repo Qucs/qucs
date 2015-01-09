@@ -518,26 +518,27 @@ void circuit::setCV (int port, nr_complex_t cv) {
 
 /* This function adds a operating point consisting of a key and a
    value to the circuit. */
-void circuit::addOperatingPoint (const char * n, nr_double_t val) {
-  operatingpoint * p = new operatingpoint (n, val);
-  oper.add (n, p);
+void circuit::addOperatingPoint (const std::string &n, nr_double_t val) {
+  operatingpoint p(n, val);
+  oper.insert ({{n,p}});
 }
 
 /* Returns the requested operating point value which has been
    previously added as its double representation.  If there is no such
    operating point the function returns zero. */
-nr_double_t circuit::getOperatingPoint (const char * n) {
-  operatingpoint * p = oper.get (n);
-  if (p != NULL) return p->getValue ();
+nr_double_t circuit::getOperatingPoint (const std::string &n) {
+  const auto it = oper.find(n);
+  if (it != oper.end())
+    return (*it).second.getValue();
   return 0.0;
 }
 
 /* This function sets the operating point specified by the given name
    to the value passed to the function. */
-void circuit::setOperatingPoint (const char * n, nr_double_t val) {
-  operatingpoint * p = oper.get (n);
-  if (p != NULL)
-    p->setValue (val);
+void circuit::setOperatingPoint (const std::string& n, nr_double_t val) {
+  auto it = oper.find(n);
+  if (it != oper.end())
+    (*it).second.setValue (val);
   else
     addOperatingPoint (n, val);
 }
@@ -545,32 +546,33 @@ void circuit::setOperatingPoint (const char * n, nr_double_t val) {
 /* The function checks whether the circuit has got a certain operating
    point value.  If so it returns non-zero, otherwise it returns
    zero. */
-int circuit::hasOperatingPoint (char * n) {
-  return (oper.get (n)) ? 1 : 0;
+int circuit::hasOperatingPoint (const std::string& n) {
+  return oper.find(n) != oper.end();
 }
 
 /* This function adds a characteristic point consisting of a key and a
    value to the circuit. */
-void circuit::addCharacteristic (const char * n, nr_double_t val) {
-  characteristic * p = new characteristic (n, val);
-  charac.add (n, p);
+void circuit::addCharacteristic (const std::string &n, nr_double_t val) {
+  characteristic p(n, val);
+  charac.insert({{n, p}});
 }
 
 /* Returns the requested characteristic value which has been
    previously added as its double representation.  If there is no such
    characteristic value the function returns zero. */
-nr_double_t circuit::getCharacteristic (char * n) {
-  characteristic * p = charac.get (n);
-  if (p != NULL) return p->getValue ();
+nr_double_t circuit::getCharacteristic (const std::string &n) {
+  const auto it = charac.find(n);
+  if (it != charac.end())
+    return (*it).second.getValue ();
   return 0.0;
 }
 
 /* This function sets the characteristic value specified by the given
    name to the value passed to the function. */
-void circuit::setCharacteristic (const char * n, nr_double_t val) {
-  characteristic * p = charac.get (n);
-  if (p != NULL)
-    p->setValue (val);
+void circuit::setCharacteristic (const std::string &n, nr_double_t val) {
+  auto it = charac.find(n);
+  if (it != charac.end())
+    (*it).second.setValue (val);
   else
     addCharacteristic (n, val);
 }
@@ -578,8 +580,8 @@ void circuit::setCharacteristic (const char * n, nr_double_t val) {
 /* The function checks whether the circuit has got a certain
    characteristic value.  If so it returns non-zero, otherwise it
    returns zero. */
-int circuit::hasCharacteristic (char * n) {
-  return (charac.get (n)) ? 1 : 0;
+int circuit::hasCharacteristic (const std::string & n) {
+  return charac.find (n) != charac.end();
 }
 
 // Returns the S-parameter at the given matrix position.
