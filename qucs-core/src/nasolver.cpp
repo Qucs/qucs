@@ -167,8 +167,8 @@ int nasolver<nr_type_t>::solve_once (void)
         else
         {
             e->setText ("circuit admittance matrix in %s solver is singular at "
-                        "node `%s' connected to [%s]", desc.c_str(), nlist->get (d),
-                        nlist->getNodeString (d));
+                        "node `%s' connected to [%s]", desc.c_str(), nlist->get (d).c_str(),
+                        nlist->getNodeString (d).c_str());
         }
         throw_exception (e);
         error++;
@@ -181,8 +181,8 @@ int nasolver<nr_type_t>::solve_once (void)
             if (d < countNodes ())
             {
                 logprint (LOG_ERROR, "WARNING: %s: inserted virtual resistance at "
-                          "node `%s' connected to [%s]\n", getName (), nlist->get (d),
-                          nlist->getNodeString (d));
+                          "node `%s' connected to [%s]\n", getName (), nlist->get (d).c_str(),
+                          nlist->getNodeString (d).c_str());
             }
         }
         while (top_exception() != NULL &&

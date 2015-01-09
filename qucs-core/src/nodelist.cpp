@@ -44,7 +44,6 @@ namespace qucs {
 // Constructor creates an instance of the nodelist class.
   nodelist::nodelist () : narray() {
   root = last = NULL;
-  txt = NULL;
   sorting = 0;
 }
 
@@ -55,7 +54,6 @@ namespace qucs {
    connected to. */
 nodelist::nodelist (net * subnet) {
   root = last = NULL;
-  txt = NULL;
   sorting = 0;
 
   circuit * c;
@@ -72,9 +70,8 @@ nodelist::nodelist (net * subnet) {
   for (struct nodelist_t * n = getRoot (); n != NULL; n = n->next) {
     for (c = subnet->getRoot (); c != NULL; c = (circuit *) c->getNext ()) {
       for (int i = 0; i < c->getSize (); i++) {
-	assert (n->name != NULL);
 	assert (c->getNode(i)->getName () != NULL);
-	if (!strcmp (n->name, c->getNode(i)->getName ())) {
+	if (n->name == c->getNode(i)->getName ()) {
 	  addCircuitNode (n, c->getNode (i));
 	}
       }
@@ -89,7 +86,6 @@ nodelist::nodelist (const nodelist & o) {
   root = last = NULL;
   for (n = o.root; n != NULL; n = n->next)
     append (copy (n));
-  txt = o.txt ? strdup (o.txt) : NULL;
   sorting = o.sorting;
 }
 
@@ -98,10 +94,9 @@ nodelist::~nodelist () {
   struct nodelist_t * next;
   while (root) {
     next = root->next;
-    release (root);
+    delete root;
     root = next;
   }
-  if (txt) free (txt);
 }
 
 // The function copies the given node with all its properties.
@@ -120,16 +115,16 @@ struct nodelist_t * nodelist::copy (struct nodelist_t * n) {
 }
 
 // This function adds a node name to the list and saves the internal flag.
-void nodelist::add (const char * str, int intern) {
+  void nodelist::add (const std::string &str, int intern) {
   add (create (str, intern));
 }
 
 // The function creates a node based upon the given arguments.
-struct nodelist_t * nodelist::create (const char * str, int intern) {
+struct nodelist_t * nodelist::create (const std::string &str, int intern) {
   struct nodelist_t * n;
-  n = (struct nodelist_t *) calloc (sizeof (struct nodelist_t), 1);
+  n = new nodelist_t;;
   n->internal = intern;
-  n->name = str ? strdup (str) : NULL;
+  n->name = str;
   return n;
 }
 
@@ -141,7 +136,7 @@ void nodelist::add (struct nodelist_t * n) {
 }
 
 // This function appends a node name to the list.
-void nodelist::append (const char * str, int intern) {
+void nodelist::append (const std::string &str, int intern) {
   append (create (str, intern));
 }
 
@@ -156,7 +151,7 @@ void nodelist::append (struct nodelist_t * n) {
 }
 
 // This function removes the node with the given name from the list.
-void nodelist::remove (char * name) {
+void nodelist::remove (const std::string &name) {
   remove (getNode (name));
 }
 
@@ -181,7 +176,6 @@ void nodelist::remove (struct nodelist_t * del, int keep) {
 
 // This function free()'s the given node.
 void nodelist::release (struct nodelist_t * n) {
-  if (n->name) free (n->name);
   if (n->nodes) free (n->nodes);
   free (n);
 }
@@ -194,10 +188,10 @@ int nodelist::length (void) {
 }
 
 // This function finds the specified node name in the list.
-int nodelist::contains (const char * str) {
+int nodelist::contains (const std::string &str) {
   int res = 0;
   for (struct nodelist_t * n = root; n != NULL; n = n->next) {
-    if (n->name != NULL && str != NULL && !strcmp (n->name, str))
+    if (n->name==str)
       res++;
   }
   return res;
@@ -214,7 +208,7 @@ int nodelist::getNodeNr (const std::string &str) {
 
 /* This function returns the node name positioned at the specified
    location in the node name list. */
-char * nodelist::get (int nr) {
+std::string nodelist::get (int nr) {
   return narray[nr + 1]->name;
 }
 
@@ -233,27 +227,25 @@ struct nodelist_t * nodelist::getNode (int nr) {
 
 /* The function returns the nodelist structure with the given name in
    the node name list.  It returns NULL if there is no such node. */
-struct nodelist_t * nodelist::getNode (const char * name) {
+struct nodelist_t * nodelist::getNode (const std::string &name) {
   for (struct nodelist_t * n = root; n != NULL; n = n->next)
-    if (!strcmp (name, n->name)) return n;
+    if (name==n->name)
+      return n;
   return NULL;
 }
 
 /* Returns a comma separated list of the circuits connected to the
    node specified by the given number. */
-char * nodelist::getNodeString (int nr) {
-  if (txt) free (txt); txt = NULL;
+std::string nodelist::getNodeString (int nr) {
+  std::string txt;
   // find the specified node
   struct nodelist_t * n = getNode (nr);
   // append circuit names connected to the node
-  int len = (n->nNodes - 1) + 1;
-  txt = (char *) malloc (len); txt[0] = '\0';
   for (int i = 0; i < n->nNodes; i++) {
-    const char * str = n->nodes[i]->getCircuit()->getName ();
-    len += strlen (str);
-    txt = (char *) realloc (txt, len);
-    strcat (txt, str);
-    if (i != n->nNodes - 1) strcat (txt, ",");
+    const std::string str = n->nodes[i]->getCircuit()->getName ();
+    txt+=str;
+    if (i != n->nNodes - 1)
+      txt+=",";
   }
   return txt;
 }
@@ -269,7 +261,7 @@ void nodelist::assignNodes (void) {
 
   for (struct nodelist_t * n = root; n != NULL; n = n->next) {
     // ground node gets a zero counter
-    if (!strcmp (n->name, "gnd")) {
+    if (n->name=="gnd") {
       n->n = 0;
       narray[0] = n;
     }
@@ -482,7 +474,7 @@ void nodelist::sortedNodes (node ** node1, node ** node2) {
 // Debug function: Prints the entire nodelist.
 void nodelist::print (void) {
   for (struct nodelist_t * n = root; n != NULL; n = n->next) {
-    logprint (LOG_STATUS, "DEBUG: node %s-%d [", n->name, n->n);
+    logprint (LOG_STATUS, "DEBUG: node %s-%d [", n->name.c_str(), n->n);
     for (int i = 0; i < n->nNodes; i++) {
       logprint (LOG_STATUS, "%s", n->nodes[i]->getCircuit()->getName ());
       if (i != n->nNodes - 1) logprint (LOG_STATUS, ",");

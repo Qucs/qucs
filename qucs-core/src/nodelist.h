@@ -34,8 +34,9 @@ class net;
 
 struct nodelist_t {
 public:
+nodelist_t() : n(0), name(), nodes(nullptr), nNodes(0), nAlloc(0), internal(0), next(nullptr) {} ;
   int n;
-  char * name;
+  std::string name;
   node ** nodes;
   int nNodes;
   int nAlloc;
@@ -50,39 +51,38 @@ class nodelist
   nodelist (net *);
   nodelist (const nodelist &);
   ~nodelist ();
-  void add (const char *, int intern = 0);
-  void append (const char *, int intern = 0);
+  void add (const std::string &, int intern = 0);
+  void append (const std::string &, int intern = 0);
   struct nodelist_t * getRoot (void) { return root; }
   int length (void);
-  int contains (const char *);
+  int contains (const std::string &);
   int getNodeNr (const std::string &);
-  char * get (int);
+  std::string get (int);
   int isInternal (int);
   void addCircuitNode (struct nodelist_t *, node *);
   void assignNodes (void);
   void print (void);
   struct nodelist_t * getNode (int);
-  char * getNodeString (int);
+  std::string getNodeString (int);
   void sort (void);
   struct nodelist_t * copy (struct nodelist_t *);
   void add (struct nodelist_t *);
   void append (struct nodelist_t *);
   void release (struct nodelist_t *);
-  void remove (char *);
+  void remove (const std::string &);
   void remove (struct nodelist_t *, int keep = 0);
   void remove (circuit *);
-  struct nodelist_t * create (const char *, int);
+  struct nodelist_t * create (const std::string&, int);
   void insert (struct nodelist_t *);
   void insert (circuit *);
   void delCircuitNode (struct nodelist_t *, node *);
   void sortedNodes (node **, node **);
-  struct nodelist_t * getNode (const char *);
+  struct nodelist_t * getNode (const std::string &);
 
  private:
   std::vector<nodelist_t *> narray;
   struct nodelist_t * root;
   struct nodelist_t * last;
-  char * txt;
   int sorting;
 };
 
