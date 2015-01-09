@@ -84,7 +84,7 @@ vector::vector (int s, nr_complex_t val) : object () {
 }
 
 // Constructor creates an named instance of the vector class.
-vector::vector (const char * n) : object (n) {
+vector::vector (const std::string &n) : object (n) {
   capacity = size = 0;
   data = NULL;
   dependencies = NULL;
@@ -95,7 +95,7 @@ vector::vector (const char * n) : object (n) {
 
 /* This constructor creates a named instance of the vector class with
    a given initial size. */
-vector::vector (const char * n, int s) : object (n) {
+  vector::vector (const std::string &n, int s) : object (n) {
   assert (s >= 0);
   capacity = size = s;
   data = s > 0 ? (nr_complex_t *)

@@ -59,10 +59,10 @@ class vector : public object
 
  public:
   vector ();
-  vector (const char *);
+  vector (const std::string &);
   vector (int);
   vector (int, nr_complex_t);
-  vector (const char *, int);
+  vector (const std::string &, int);
   vector (const vector &);
   const vector& operator = (const vector &);
   ~vector ();

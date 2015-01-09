@@ -150,7 +150,7 @@ sweep * analysis::createSweep (const char * n) {
 
 /* Saves the given variable into the dataset.  Creates the dataset
    vector if necessary. */
-void analysis::saveVariable (const char * n, nr_complex_t z, vector * f) {
+  void analysis::saveVariable (const std::string &n, nr_complex_t z, vector * f) {
   vector * d;
   if ((d = data->findVariable (n)) == NULL) {
     d = new vector (n);

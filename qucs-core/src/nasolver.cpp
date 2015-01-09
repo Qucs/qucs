@@ -915,7 +915,7 @@ int nasolver<nr_type_t>::countNodes (void)
 
 // Returns the node number of the give node name.
 template <class nr_type_t>
-int nasolver<nr_type_t>::getNodeNr (const char * str)
+int nasolver<nr_type_t>::getNodeNr (const std::string &str)
 {
     return nlist->getNodeNr (str);
 }
@@ -1312,53 +1312,51 @@ void nasolver<nr_type_t>::recallSolution (void)
 /* This function saves the results of a single solve() functionality
    into the output dataset. */
 template <class nr_type_t>
-void nasolver<nr_type_t>::saveResults (const char * volts, const char * amps,
+void nasolver<nr_type_t>::saveResults (const std::string &volts, const std::string &amps,
                                        int saveOPs, qucs::vector * f)
 {
     int N = countNodes ();
     int M = countVoltageSources ();
-    char * n;
 
     // add node voltage variables
-    if (volts)
+    if (!volts.empty())
     {
         for (int r = 0; r < N; r++)
         {
-            if ((n = createV (r, volts, saveOPs)) != NULL)
-            {
+	  std::string n = createV (r, volts, saveOPs);
+	  if(!n.empty())
+	    {
                 saveVariable (n, x->get (r), f);
-                free (n);
             }
         }
     }
 
     // add branch current variables
-    if (amps)
+    if (!amps.empty())
     {
         for (int r = 0; r < M; r++)
         {
-            if ((n = createI (r, amps, saveOPs)) != NULL)
+	  std::string n = createI (r, amps, saveOPs);
+	  if (!n.empty())
             {
                 saveVariable (n, x->get (r + N), f);
-                free (n);
             }
         }
     }
 
     // add voltage probe data
-    if (volts)
+    if (!volts.empty())
     {
         circuit * root = subnet->getRoot ();
         for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ())
         {
             if (!c->isProbe ()) continue;
             if (c->getSubcircuit () && !(saveOPs & SAVE_ALL)) continue;
-            if (strcmp (volts, "vn"))
-                c->saveOperatingPoints ();
-            n = createOP (c->getName (), volts);
+            if (volts != "vn")
+                c->saveOperatingPoints ();	    
+	    std::string n = createOP (c->getName (), volts);
             saveVariable (n, nr_complex_t (c->getOperatingPoint ("Vr"),
                                    c->getOperatingPoint ("Vi")), f);
-            free (n);
         }
     }
 
@@ -1374,9 +1372,8 @@ void nasolver<nr_type_t>::saveResults (const char * volts, const char * amps,
             for (auto ops: c->getOperatingPoints ())
             {
                 operatingpoint &p = ops.second;
-                n = createOP (c->getName (), p.getName ());
+		std::string n = createOP (c->getName (), p.getName ());
                 saveVariable (n, p.getValue (), f);
-                free (n);
             }
         }
     }
@@ -1385,54 +1382,51 @@ void nasolver<nr_type_t>::saveResults (const char * volts, const char * amps,
 /* Create an appropriate variable name for operating points.  The
    caller is responsible to free() the returned string. */
 template <class nr_type_t>
-char * nasolver<nr_type_t>::createOP (const char * c, const char * n)
+std::string nasolver<nr_type_t>::createOP (const std::string &c, const std::string &n)
 {
-    char * text = (char *) malloc (strlen (c) + strlen (n) + 2);
-    sprintf (text, "%s.%s", c, n);
-    return text;
+    return c+"."+n;
 }
 
 /* Creates an appropriate variable name for voltages.  The caller is
    responsible to free() the returned string. */
 template <class nr_type_t>
-char * nasolver<nr_type_t>::createV (int n, const char * volts, int saveOPs)
+std::string nasolver<nr_type_t>::createV (int n, const std::string &volts, int saveOPs)
 {
-    if (nlist->isInternal (n)) return NULL;
-    char * node = nlist->get (n);
-    if (strchr (node, '.') && !(saveOPs & SAVE_ALL)) return NULL;
-    char * text = (char *) malloc (strlen (node) + 2 + strlen (volts));
-    sprintf (text, "%s.%s", node, volts);
-    return text;
+    if (nlist->isInternal (n))
+      return std::string();
+    std::string node = nlist->get (n);
+    if(node.find('.')!=std::string::npos && !(saveOPs & SAVE_ALL))
+      return std::string();
+    std::string ret = node+"."+volts;
+    return ret;
 }
 
 /* Create an appropriate variable name for currents.  The caller is
    responsible to free() the returned string. */
 template <class nr_type_t>
-char * nasolver<nr_type_t>::createI (int n, const char * amps, int saveOPs)
+std::string nasolver<nr_type_t>::createI (int n, const std::string &amps, int saveOPs)
 {
     circuit * vs = findVoltageSource (n);
 
     // don't output internal (helper) voltage sources
     if (vs->isInternalVoltageSource ())
-        return NULL;
+      return std::string();
 
     /* save only current through real voltage sources and explicit
        current probes */
     if (!vs->isVSource () && !(saveOPs & SAVE_OPS))
-        return NULL;
+      return std::string();
 
     // don't output subcircuit components if not requested
     if (vs->getSubcircuit () && !(saveOPs & SAVE_ALL))
-        return NULL;
+      return std::string();
 
     // create appropriate current name for single/multiple voltage sources
-    const char * name = vs->getName ();
-    char * text = (char *) malloc (strlen (name) + 4 + strlen (amps));
+    std::string name = vs->getName ();
     if (vs->getVoltageSources () > 1)
-        sprintf (text, "%s.%s%d", name, amps, n - vs->getVoltageSource () + 1);
+      return name+"."+amps+std::to_string(n - vs->getVoltageSource () + 1);
     else
-        sprintf (text, "%s.%s", name, amps);
-    return text;
+      return name+"."+amps;
 }
 
 

@@ -244,7 +244,7 @@ public:
      * Saves the given variable into the dataset associated with the
      * analysis.  Creates the dataset vector if necessary.
      */
-     void saveVariable (const char *, nr_complex_t, qucs::vector *);
+    void saveVariable (const std::string &, nr_complex_t, qucs::vector *);
 
     /*! \fn getProgress
      * \brief get

@@ -204,9 +204,9 @@ int nodelist::contains (const char * str) {
 }
 
 // Returns the node number of the given node name.
-int nodelist::getNodeNr (const char * str) {
+int nodelist::getNodeNr (const std::string &str) {
   for (struct nodelist_t * n = root; n != NULL; n = n->next) {
-    if (n->name != NULL && str != NULL && !strcmp (n->name, str))
+    if (n->name == str)
       return n->n;
   }
   return -1;

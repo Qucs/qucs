@@ -55,7 +55,7 @@ class nodelist
   struct nodelist_t * getRoot (void) { return root; }
   int length (void);
   int contains (const char *);
-  int getNodeNr (const char *);
+  int getNodeNr (const std::string &);
   char * get (int);
   int isInternal (int);
   void addCircuitNode (struct nodelist_t *, node *);

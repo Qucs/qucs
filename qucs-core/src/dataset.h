@@ -58,7 +58,7 @@ class dataset : public object
   void printDependency (qucs::vector *, FILE *);
   void printVariable (qucs::vector *, FILE *);
   qucs::vector * findDependency (const char *);
-  qucs::vector * findVariable (const char *);
+  qucs::vector * findVariable (const std::string &);
   qucs::vector * getDependencies (void) { return dependencies; }
   qucs::vector * getVariables (void) { return variables; }
   int isDependency (qucs::vector *);
