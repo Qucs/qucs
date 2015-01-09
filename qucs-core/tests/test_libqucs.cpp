@@ -53,6 +53,13 @@ TEST(real, sqrt) {
   //ASSERT_EQ (-1, qucs::sqrt(-22.0)); //error NaN (depending on implementation)
 }
 
+TEST(real, round) {
+  ASSERT_EQ (1.0, qucs::round (1.4));
+}
+TEST(real, trunc) {
+  ASSERT_EQ (2.0, qucs::round (2.3));
+}
+
 TEST(real, jn_BesselFistKind) {
   // FIXME not in qucs::
   EXPECT_NEAR ( 0.44, jn (1, 1), 0.0001);
