@@ -85,6 +85,8 @@ AC_CONFIG_FILES([Makefile
 		 doxygen/Makefile
 		 technical/Makefile
 		 report/Makefile
+		 report/activefilter/Makefile
+		 report/activefilter/pics/Makefile
 		 report/verilog/Makefile
 		 report/verilog/pics/Makefile
 		 report/StoQ_test1/Makefile
