@@ -1267,14 +1267,18 @@ void nasolver<nr_type_t>::storeSolution (void)
     for (r = 0; r < N; r++)
     {
         struct nodelist_t * n = nlist->getNode (r);
-        solution.add (n->name, x->get (r), 0);
+	nr_type_t gr = x->get (r);
+	qucs::naentry<nr_type_t> entry(gr, 0);
+        solution.insert({{n->name, entry }});
     }
     // store all branch currents of voltage sources
     for (r = 0; r < M; r++)
     {
         circuit * vs = findVoltageSource (r);
         int vn = r - vs->getVoltageSource () + 1;
-        solution.add (vs->getName (), x->get (r + N), vn);
+	nr_type_t xg = x->get (r + N);
+	qucs::naentry<nr_type_t> entry(xg, vn);
+        solution.insert({{vs->getName (), entry}});
     }
 }
 
@@ -1290,16 +1294,20 @@ void nasolver<nr_type_t>::recallSolution (void)
     for (r = 0; r < N; r++)
     {
         struct nodelist_t * n = nlist->getNode (r);
-        if ((na = solution.find (n->name, 0)) != NULL)
-            x->set (r, na->value);
+	auto na = solution.find(n->name);
+	if (na != solution.end())
+	  if ((*na).second.current == 0)
+            x->set (r, (*na).second.value);
     }
     // store all branch currents of voltage sources
     for (r = 0; r < M; r++)
     {
         circuit * vs = findVoltageSource (r);
         int vn = r - vs->getVoltageSource () + 1;
-        if ((na = solution.find (vs->getName (), vn)) != NULL)
-            x->set (r + N, na->value);
+	auto na = solution.find(vs->getName ());
+	if (na != solution.end())
+	  if ((*na).second.current == vn)
+            x->set (r + N, (*na).second.value);
     }
 }
 

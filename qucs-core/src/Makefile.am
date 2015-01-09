@@ -50,7 +50,7 @@ pkginclude_HEADERS = compat.h logging.h object.h vector.h consts.h node.h \
 
 noinst_TEMPLATES = tridiag.cpp hash.cpp \
 	tmatrix.cpp tvector.cpp eqnsys.cpp states.cpp \
-	nasolver.cpp nasolution.cpp
+	nasolver.cpp
 
 noinst_HEADERS = $(noinst_TEMPLATES)            \
 	tokens_netlist.h tokens_dataset.h check_dataset.h tokens_touchstone.h       \
