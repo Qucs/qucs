@@ -233,7 +233,7 @@ public:
      * Supported sweep types are: linear, logarithmic, lists and constants.
      *
      */
-    sweep * createSweep (const char *);
+    sweep * createSweep (const std::string &);
 
     /*! \fn saveVariable
      * \brief Save variable into analysis dataset.

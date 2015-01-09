@@ -106,7 +106,7 @@ void analysis::delAnalysis (analysis * a) {
 /* The following function creates a sweep object depending on the
    analysis's properties.  Supported sweep types are: linear,
    logarithmic, lists and constants. */
-sweep * analysis::createSweep (const char * n) {
+sweep * analysis::createSweep (const std::string& n) {
   sweep * swp = NULL;
   // get type of sweep
   const char * const type = getPropertyString ("Type");

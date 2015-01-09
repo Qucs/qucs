@@ -49,7 +49,7 @@ sweep::sweep () : object () {
 }
 
 // Constructor creates a named instance of the sweep class.
-sweep::sweep (const char * n) : object (n) {
+sweep::sweep (const std::string &n) : object (n) {
   type = SWEEP_UNKNOWN;
   data = NULL;
   size = 0;
@@ -159,7 +159,7 @@ linsweep::linsweep () : sweep () {
 }
 
 // Constructor creates a named instance of the linsweep class.
-linsweep::linsweep (const char * n) : sweep (n) {
+linsweep::linsweep (const std::string &n) : sweep (n) {
   type = SWEEP_LINEAR;
 }
 
@@ -182,7 +182,7 @@ logsweep::logsweep () : sweep () {
 }
 
 // Constructor creates a named instance of the logsweep class.
-logsweep::logsweep (const char * n) : sweep (n) {
+logsweep::logsweep (const std::string &n) : sweep (n) {
   type = SWEEP_LOGARITHMIC;
 }
 
@@ -205,7 +205,7 @@ consweep::consweep () : sweep () {
 }
 
 // Constructor creates a named instance of the consweep class.
-consweep::consweep (const char * n) : sweep (n) {
+  consweep::consweep (const std::string &n) : sweep (n) {
   type = SWEEP_CONSTANT;
 }
 
@@ -226,7 +226,7 @@ lstsweep::lstsweep () : sweep () {
 }
 
 // Constructor creates a named instance of the lstsweep class.
-lstsweep::lstsweep (const char * n) : sweep (n) {
+lstsweep::lstsweep (const std::string& n) : sweep (n) {
   type = SWEEP_LIST;
 }
 
