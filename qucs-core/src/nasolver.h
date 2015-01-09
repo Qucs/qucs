@@ -52,7 +52,7 @@ class nasolver : public analysis
 {
 public:
     nasolver ();
-    nasolver (char *);
+    nasolver (const std::string&);
     nasolver (nasolver &);
     ~nasolver ();
     int  solve_once (void);
@@ -62,8 +62,8 @@ public:
     int  solve_linear (void);
     void solve_pre (void);
     void solve_post (void);
-    void setDescription (const char * n) { desc = n; }
-    const char * getDescription (void) { return desc; }
+    void setDescription (const std::string &n) { desc = n; }
+    std::string getDescription (void) { return desc; }
     void saveResults (const char *, const char *, int, qucs::vector * f = NULL);
     typedef void (* calculate_func_t) (nasolver<nr_type_t> *);
     void setCalculation (calculate_func_t f) { calculate_func = f; }
@@ -130,7 +130,7 @@ protected:
     int eqnAlgo;
     int updateMatrix;
     nr_double_t gMin, srcFactor;
-    const char * desc;
+    std::string desc;
     nodelist * nlist;
 
 private:

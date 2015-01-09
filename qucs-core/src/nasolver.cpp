@@ -67,7 +67,6 @@ nasolver<nr_type_t>::nasolver () : analysis ()
     A = C = NULL;
     z = x = xprev = zprev = NULL;
     reltol = abstol = vntol = 0;
-    desc = NULL;
     calculate_func = NULL;
     convHelper = fixpoint = 0;
     eqnAlgo = ALGO_LU_DECOMPOSITION;
@@ -78,13 +77,12 @@ nasolver<nr_type_t>::nasolver () : analysis ()
 
 // Constructor creates a named instance of the nasolver class.
 template <class nr_type_t>
-nasolver<nr_type_t>::nasolver (char * n) : analysis (n)
+nasolver<nr_type_t>::nasolver (const std::string &n) : analysis (n)
 {
     nlist = NULL;
     A = C = NULL;
     z = x = xprev = zprev = NULL;
     reltol = abstol = vntol = 0;
-    desc = NULL;
     calculate_func = NULL;
     convHelper = fixpoint = 0;
     eqnAlgo = ALGO_LU_DECOMPOSITION;
@@ -169,7 +167,7 @@ int nasolver<nr_type_t>::solve_once (void)
         else
         {
             e->setText ("circuit admittance matrix in %s solver is singular at "
-                        "node `%s' connected to [%s]", desc, nlist->get (d),
+                        "node `%s' connected to [%s]", desc.c_str(), nlist->get (d),
                         nlist->getNodeString (d));
         }
         throw_exception (e);
@@ -216,7 +214,7 @@ void nasolver<nr_type_t>::solve_pre (void)
     // create node list, enumerate nodes and voltage sources
 #if DEBUG
     logprint (LOG_STATUS, "NOTIFY: %s: creating node list for %s analysis\n",
-              getName (), desc);
+              getName (), desc.c_str());
 #endif
     nlist = new nodelist (subnet);
     nlist->assignNodes ();
@@ -236,7 +234,7 @@ void nasolver<nr_type_t>::solve_pre (void)
     x = new tvector<nr_type_t> (N + M);
 
 #if DEBUG
-    logprint (LOG_STATUS, "NOTIFY: %s: solving %s netlist\n", getName (), desc);
+    logprint (LOG_STATUS, "NOTIFY: %s: solving %s netlist\n", getName (), desc.c_str());
 #endif
 }
 
@@ -318,7 +316,7 @@ int nasolver<nr_type_t>::solve_nonlinear_continuation_gMin (void)
                 error = 1;
                 e = new qucs::exception (EXCEPTION_NO_CONVERGENCE);
                 e->setText ("no convergence in %s analysis after %d gMinStepping "
-                            "iterations", desc, iterations);
+                            "iterations", desc.c_str(), iterations);
                 throw_exception (e);
                 break;
             }
@@ -392,7 +390,7 @@ int nasolver<nr_type_t>::solve_nonlinear_continuation_Source (void)
                 error = 1;
                 e = new qucs::exception (EXCEPTION_NO_CONVERGENCE);
                 e->setText ("no convergence in %s analysis after %d sourceStepping "
-                            "iterations", desc, iterations);
+                            "iterations", desc.c_str(), iterations);
                 throw_exception (e);
                 break;
             }
@@ -512,7 +510,7 @@ int nasolver<nr_type_t>::solve_nonlinear (void)
     {
         e = new qucs::exception (EXCEPTION_NO_CONVERGENCE);
         e->setText ("no convergence in %s analysis after %d iterations",
-                    desc, run);
+                    desc.c_str(), run);
         throw_exception (e);
         error++;
     }

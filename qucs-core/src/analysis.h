@@ -95,7 +95,7 @@ public:
     *
     * Constructor. Creates a named instance of the analysis class.
     */
-    analysis (char *);
+    analysis (const std::string &);
 
     /*! \fn analysis
     * \brief Copy Constructor

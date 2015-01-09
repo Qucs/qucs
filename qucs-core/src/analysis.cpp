@@ -61,7 +61,7 @@ analysis::analysis () : object () {
 }
 
 // Constructor creates a named instance of the analysis class.
-analysis::analysis (char * n) : object (n) {
+analysis::analysis (const std::string &n) : object (n) {
   data = NULL;
   subnet = NULL;
   env = NULL;
