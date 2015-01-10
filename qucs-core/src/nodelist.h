@@ -108,16 +108,12 @@ class nodelist
   int getNodeNr (const std::string &) const ;
   std::string get (int) const ;
   bool isInternal (int) const ;
-  void addCircuitNode (struct nodelist_t *, node *);
   void assignNodes (void);
   void print (void) const;
   std::string getNodeString (int) const;
   void sort (void);
   void remove (circuit *);
-  void remove (struct nodelist_t *n) { this->remove(n,0); }
-  void insert (struct nodelist_t *);
   void insert (circuit *);
-  void delCircuitNode (struct nodelist_t *, node *);
   void sortedNodes (node **, node **);
   struct nodelist_t * getNode (const std::string &) const;
   struct nodelist_t * getNode (int nr) const {
@@ -132,7 +128,8 @@ class nodelist
   std::list<nodelist_t *> root;
   int sorting;
   bool contains (const std::string &) const;
-  void remove (struct nodelist_t *, int keep);
+  void insert (struct nodelist_t *);
+  void addCircuitNode (struct nodelist_t *, node *);
 };
 
 } // namespace qucs

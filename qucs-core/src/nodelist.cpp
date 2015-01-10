@@ -79,13 +79,6 @@ nodelist::~nodelist () {
   }
 }
 
-// The function removes the given node from the list.
-void nodelist::remove (struct nodelist_t * del, int keep) {
-  // go through the list
-  root.erase(std::remove(root.begin(), root.end(), del), root.end());
-  if(!keep)
-    delete del;
-}
 
 // This function counts the node names in the list.
 int nodelist::length (void) const {
@@ -182,11 +175,6 @@ void nodelist::addCircuitNode (struct nodelist_t * nl, node * n) {
   if (n->getInternal ()) nl->internal = n->getInternal ();
 }
 
-/* This function deletes the given node from the nodelist
-   structure. */
-void nodelist::delCircuitNode (struct nodelist_t * nl, node * n) {
-  nl->erase(std::remove(nl->begin(), nl->end(), n), nl->end()); 
-}
 
 /* This function is used as sorting criteria for the S-parameter
    analysis.  It returns the number of nodes a join of the two
@@ -249,16 +237,17 @@ void nodelist::remove (circuit * c) {
   for (int i = 0; i < c->getSize (); i++) {
     node * n = c->getNode (i);
     struct nodelist_t * nl;
-    if ((nl = getNode (n->getName ())) != NULL) {
+    if ((nl = this->getNode (n->getName ())) != NULL) {
       // remove node from node structure
-      delCircuitNode (nl, n);
+      nl->erase(std::remove(nl->begin(), nl->end(), n), nl->end());
       if (nl->empty()) {
 	// completely remove the node structure
-	remove (nl);
+	root.erase(std::remove(root.begin(), root.end(), nl), root.end());
+	delete nl;
       }
       else if (sorting && sortfunc (nl) > 0) {
 	// rearrange sorting
-	remove (nl, 1);
+	root.erase(std::remove(root.begin(), root.end(), nl), root.end());
 	insert (nl);
       }
     }
@@ -292,7 +281,7 @@ void nodelist::insert (circuit * c) {
 	addCircuitNode (nl, n);
 	if (sorting && sortfunc (nl) > 0) {
 	  // rearrange sorting
-	  remove (nl, 1);
+	  root.erase(std::remove(root.begin(), root.end(), nl), root.end());
 	  insert (nl);
 	}
       }
@@ -321,7 +310,7 @@ void nodelist::sort (void) {
       if (ports == -1) break;
     }
     // add last order node
-    remove (cand, 1);
+    root.erase(std::remove(root.begin(), root.end(), cand), root.end());
     nodes->root.push_front (cand);
   }
 
