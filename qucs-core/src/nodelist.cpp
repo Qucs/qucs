@@ -87,7 +87,7 @@ nodelist::nodelist (const nodelist & o) {
   struct nodelist_t * n;
   root = last = NULL;
   for (n = o.root; n != NULL; n = n->next)
-    append (copy (n));
+    append (new nodelist_t(*n));
   sorting = o.sorting;
 }
 
@@ -99,13 +99,6 @@ nodelist::~nodelist () {
     delete root;
     root = next;
   }
-}
-
-// The function copies the given node with all its properties.
-struct nodelist_t * nodelist::copy (struct nodelist_t * n) {
-  struct nodelist_t * copy = new nodelist_t(n->name, n->internal);
-  *copy = *n;
-  return copy;
 }
  
 // This function adds a node name to the list and saves the internal flag.

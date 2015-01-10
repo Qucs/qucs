@@ -42,6 +42,8 @@ public:
   nodelist_t(const std::string &n="", bool intern = false) :
     n(0), name(n), internal(intern), next(nullptr), nodes() {}
 
+  nodelist_t(nodelist_t &c) = default;
+
   typedef detail::nodevector::value_type value_type;
   typedef detail::nodevector::iterator iterator;
   typedef detail::nodevector::const_iterator const_iterator;
@@ -107,7 +109,6 @@ class nodelist
   void print (void);
   std::string getNodeString (int);
   void sort (void);
-  struct nodelist_t * copy (struct nodelist_t *);
   void add (struct nodelist_t *);
   void append (struct nodelist_t *);
   void release (struct nodelist_t *);
