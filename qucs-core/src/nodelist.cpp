@@ -103,24 +103,17 @@ nodelist::~nodelist () {
 
 // The function copies the given node with all its properties.
 struct nodelist_t * nodelist::copy (struct nodelist_t * n) {
-  struct nodelist_t * copy = create (n->name, n->internal);
+  struct nodelist_t * copy = new nodelist_t(n->name, n->internal);
   *copy = *n;
   return copy;
 }
-
+ 
 // This function adds a node name to the list and saves the internal flag.
-  void nodelist::add (const std::string &str, int intern) {
-  add (create (str, intern));
+void nodelist::add (const std::string &str, bool intern) {
+    nodelist_t * n = new nodelist_t(str,intern);
+    add (n);
 }
 
-// The function creates a node based upon the given arguments.
-struct nodelist_t * nodelist::create (const std::string &str, int intern) {
-  struct nodelist_t * n;
-  n = new nodelist_t;;
-  n->internal = intern;
-  n->name = str;
-  return n;
-}
 
 // This function adds a node to the list.
 void nodelist::add (struct nodelist_t * n) {
@@ -130,8 +123,9 @@ void nodelist::add (struct nodelist_t * n) {
 }
 
 // This function appends a node name to the list.
-void nodelist::append (const std::string &str, int intern) {
-  append (create (str, intern));
+void nodelist::append (const std::string &str, bool intern) {
+  nodelist_t * n = new nodelist_t(str,intern);
+  append (n);
 }
 
 // This function appends the given node to the list.
@@ -208,7 +202,7 @@ std::string nodelist::get (int nr) {
 /* This function returns non-zero if the node positioned at the
    specified location in the node name list is marked internal and
    zero otherwise. */
-int nodelist::isInternal (int nr) {
+bool nodelist::isInternal (int nr) {
   return narray[nr + 1]->internal;
 }
 
@@ -369,7 +363,7 @@ void nodelist::insert (circuit * c) {
     // is this node already in the nodelist?
     if (contains (n->getName ()) == 0) {
       // no, create new node and put it into the list
-      nl = create (n->getName (), n->getInternal ());
+      nl = new nodelist_t(n->getName (), n->getInternal ());
       addCircuitNode (nl, n);
       if (sorting) {
 	if (c->getPort ())

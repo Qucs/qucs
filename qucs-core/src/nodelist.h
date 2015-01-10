@@ -39,18 +39,19 @@ namespace detail {
 
 struct nodelist_t {
 public:
-  nodelist_t() : n(0), name(),
-		 internal(0),
-		 next(nullptr), nodes() {} ;
+  nodelist_t(const std::string &n="", bool intern = false) :
+    n(0), name(n), internal(intern), next(nullptr), nodes() {}
 
   typedef detail::nodevector::value_type value_type;
   typedef detail::nodevector::iterator iterator;
   typedef detail::nodevector::const_iterator const_iterator;
   typedef detail::nodevector::size_type size_type;
 
-  int n;
+  /*! alias node number */
+  std::size_t n;
+  /*! name of node */
   std::string name;
-  int internal;
+  bool internal;
   nodelist_t * next;
 
   value_type &operator[](std::size_t i) {
@@ -93,14 +94,14 @@ class nodelist
   nodelist (net *);
   nodelist (const nodelist &);
   ~nodelist ();
-  void add (const std::string &, int intern = 0);
-  void append (const std::string &, int intern = 0);
+  void add (const std::string &, bool intern = false);
+  void append (const std::string &, bool intern = false);
   struct nodelist_t * getRoot (void) { return root; }
   int length (void);
   int contains (const std::string &);
   int getNodeNr (const std::string &);
   std::string get (int);
-  int isInternal (int);
+  bool isInternal (int);
   void addCircuitNode (struct nodelist_t *, node *);
   void assignNodes (void);
   void print (void);
@@ -113,7 +114,6 @@ class nodelist
   void remove (const std::string &);
   void remove (struct nodelist_t *, int keep = 0);
   void remove (circuit *);
-  struct nodelist_t * create (const std::string&, int);
   void insert (struct nodelist_t *);
   void insert (circuit *);
   void delCircuitNode (struct nodelist_t *, node *);
