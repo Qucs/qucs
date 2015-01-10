@@ -118,7 +118,6 @@ class nodelist
   void sort (void);
   void add (struct nodelist_t *);
   void append (struct nodelist_t *);
-  void release (struct nodelist_t *);
   void remove (const std::string &);
   void remove (struct nodelist_t *, int keep = 0);
   void remove (circuit *);

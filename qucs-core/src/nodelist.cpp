@@ -27,11 +27,7 @@
 #endif
 
 #include <algorithm>
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <assert.h>
+#include <cassert>
 
 #include "logging.h"
 #include "object.h"
@@ -149,15 +145,11 @@ void nodelist::remove (struct nodelist_t * del, int keep) {
 	prev->next = n->next;
       if (n == last) last = prev;
       // delete node if requested and return
-      if (!keep) release (n);
+      if (!keep)
+	delete n;
       return;
     }
   }
-}
-
-// This function free()'s the given node.
-void nodelist::release (struct nodelist_t * n) {
-  free (n);
 }
 
 // This function counts the node names in the list.
