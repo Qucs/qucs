@@ -26,22 +26,64 @@
 #define __NODELIST_H__
 
 #include <vector>
+#include <memory>
 
 namespace qucs {
 
 class node;
 class net;
 
+namespace detail {
+  typedef std::vector<node *> nodevector;
+}
+
 struct nodelist_t {
 public:
-nodelist_t() : n(0), name(), nodes(nullptr), nNodes(0), nAlloc(0), internal(0), next(nullptr) {} ;
+  nodelist_t() : n(0), name(),
+		 internal(0),
+		 next(nullptr), nodes() {} ;
+
+  typedef detail::nodevector::value_type value_type;
+  typedef detail::nodevector::iterator iterator;
+  typedef detail::nodevector::const_iterator const_iterator;
+  typedef detail::nodevector::size_type size_type;
+
   int n;
   std::string name;
-  node ** nodes;
-  int nNodes;
-  int nAlloc;
   int internal;
   nodelist_t * next;
+
+  value_type &operator[](std::size_t i) {
+    return (this->nodes[i]);
+  }
+  size_type size() const noexcept {
+    return nodes.size();
+  }
+
+  void push_back(const value_type &val) {
+    this->nodes.push_back(val);
+  }
+  iterator begin() noexcept {
+    return nodes.begin();
+  }
+  const_iterator begin() const noexcept {
+    return nodes.begin();
+  }
+  iterator end() noexcept {
+    return nodes.end();
+  }
+  const_iterator end() const noexcept {
+    return nodes.end();
+  }
+  iterator erase (const_iterator position)
+  { return nodes.erase(position); };
+  iterator erase (const_iterator first, const_iterator last)
+  { return nodes.erase(first,last); };
+  bool empty() const noexcept {
+    return nodes.empty();
+  }
+private:
+  std::vector<value_type> nodes;
 };
 
 class nodelist
@@ -62,7 +104,6 @@ class nodelist
   void addCircuitNode (struct nodelist_t *, node *);
   void assignNodes (void);
   void print (void);
-  struct nodelist_t * getNode (int);
   std::string getNodeString (int);
   void sort (void);
   struct nodelist_t * copy (struct nodelist_t *);
@@ -78,7 +119,12 @@ class nodelist
   void delCircuitNode (struct nodelist_t *, node *);
   void sortedNodes (node **, node **);
   struct nodelist_t * getNode (const std::string &);
-
+  struct nodelist_t * getNode (int nr) {
+    return narray[nr + 1];
+  }
+  nodelist_t &operator[](int nr) {
+    return *narray[nr + 1];
+  }
  private:
   std::vector<nodelist_t *> narray;
   struct nodelist_t * root;

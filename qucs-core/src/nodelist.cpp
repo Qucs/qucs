@@ -26,6 +26,8 @@
 # include <config.h>
 #endif
 
+#include <algorithm>
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -42,7 +44,7 @@
 namespace qucs {
 
 // Constructor creates an instance of the nodelist class.
-  nodelist::nodelist () : narray() {
+nodelist::nodelist () : narray() {
   root = last = NULL;
   sorting = 0;
 }
@@ -102,15 +104,7 @@ nodelist::~nodelist () {
 // The function copies the given node with all its properties.
 struct nodelist_t * nodelist::copy (struct nodelist_t * n) {
   struct nodelist_t * copy = create (n->name, n->internal);
-  copy->n = n->n;
-  copy->nNodes = n->nNodes;
-  copy->nAlloc = n->nAlloc;
-  if (copy->nAlloc) {
-    copy->nodes = (node **) malloc (sizeof (node *) * n->nAlloc);
-    if (copy->nNodes) {
-      memcpy (copy->nodes, n->nodes, sizeof (node *) * n->nNodes);
-    }
-  }
+  *copy = *n;
   return copy;
 }
 
@@ -176,7 +170,6 @@ void nodelist::remove (struct nodelist_t * del, int keep) {
 
 // This function free()'s the given node.
 void nodelist::release (struct nodelist_t * n) {
-  if (n->nodes) free (n->nodes);
   free (n);
 }
 
@@ -219,12 +212,6 @@ int nodelist::isInternal (int nr) {
   return narray[nr + 1]->internal;
 }
 
-/* The function returns the nodelist structure at the specified
-   location in the node name list. */
-struct nodelist_t * nodelist::getNode (int nr) {
-  return narray[nr + 1];
-}
-
 /* The function returns the nodelist structure with the given name in
    the node name list.  It returns NULL if there is no such node. */
 struct nodelist_t * nodelist::getNode (const std::string &name) {
@@ -241,11 +228,13 @@ std::string nodelist::getNodeString (int nr) {
   // find the specified node
   struct nodelist_t * n = getNode (nr);
   // append circuit names connected to the node
-  for (int i = 0; i < n->nNodes; i++) {
-    const std::string str = n->nodes[i]->getCircuit()->getName ();
+  std::size_t i=0;
+  for (auto &currentn: *n) {
+    const std::string str = currentn->getCircuit()->getName ();
     txt+=str;
-    if (i != n->nNodes - 1)
+    if (i != n->size() - 1)
       txt+=",";
+    ++i;
   }
   return txt;
 }
@@ -276,39 +265,14 @@ void nodelist::assignNodes (void) {
 /* The function appends a node pointer to the given nodelist
    structure. */
 void nodelist::addCircuitNode (struct nodelist_t * nl, node * n) {
-  if (nl->nNodes >= nl->nAlloc) { // ensure capacity
-    if (nl->nAlloc == 0) {
-      nl->nAlloc = 2;
-      nl->nodes = (node **) malloc (sizeof (node *) * nl->nAlloc);
-    }
-    else {
-      nl->nAlloc *= 2;
-      nl->nodes = (node **) realloc (nl->nodes, sizeof (node *) * nl->nAlloc);
-    }
-  }
-  nl->nodes[nl->nNodes++] = n;
+  (*nl).push_back(n);
   if (n->getInternal ()) nl->internal = n->getInternal ();
 }
 
 /* This function deletes the given node from the nodelist
    structure. */
 void nodelist::delCircuitNode (struct nodelist_t * nl, node * n) {
-  assert (nl->nNodes > 0);
-  if (nl->nNodes > 1) {
-    int i, j;
-    // copy nodelist except the given one
-    for (j = i = 0; j < nl->nNodes - 1; i++, j++) {
-      if (nl->nodes[i] == n) i++;
-      nl->nodes[j] = nl->nodes[i];
-    }
-  }
-  else {
-    // no more nodes in the list
-    free (nl->nodes);
-    nl->nodes = NULL;
-    nl->nAlloc = 0;
-  }
-  nl->nNodes--;
+  nl->erase(std::remove(nl->begin(), nl->end(), n), nl->end()); 
 }
 
 /* This function is used as sorting criteria for the S-parameter
@@ -316,8 +280,8 @@ void nodelist::delCircuitNode (struct nodelist_t * nl, node * n) {
    circuits connected to the given node would yield. */
 static int sortfunc (struct nodelist_t * n) {
   int p;
-  circuit * c1 = n->nodes[0]->getCircuit ();
-  circuit * c2 = n->nNodes > 1 ? n->nodes[1]->getCircuit () : NULL;
+  circuit * c1 = (*n)[0]->getCircuit ();
+  circuit * c2 = (*n).size() > 1 ? (*n)[1]->getCircuit () : nullptr;
   if (c1->getPort () || (c2 && c2->getPort ())) return -1;
   if (c1 == c2) { // interconnect
     p = c1->getSize () - 2;
@@ -381,7 +345,7 @@ void nodelist::remove (circuit * c) {
     if ((nl = getNode (n->getName ())) != NULL) {
       // remove node from node structure
       delCircuitNode (nl, n);
-      if (nl->nNodes <= 0) {
+      if (nl->empty()) {
 	// completely remove the node structure
 	remove (nl);
       }
@@ -465,9 +429,9 @@ void nodelist::sort (void) {
 
 // The function returns the first two nodes of the sorted list.
 void nodelist::sortedNodes (node ** node1, node ** node2) {
-  assert (root->nNodes == 2);
-  *node1 = root->nodes[0];
-  *node2 = root->nodes[1];
+  assert (root->size() == 2);
+  *node1 = (*root)[0];
+  *node2 = (*root)[1];
 }
 
 #if DEBUG
@@ -475,9 +439,11 @@ void nodelist::sortedNodes (node ** node1, node ** node2) {
 void nodelist::print (void) {
   for (struct nodelist_t * n = root; n != NULL; n = n->next) {
     logprint (LOG_STATUS, "DEBUG: node %s-%d [", n->name.c_str(), n->n);
-    for (int i = 0; i < n->nNodes; i++) {
-      logprint (LOG_STATUS, "%s", n->nodes[i]->getCircuit()->getName ());
-      if (i != n->nNodes - 1) logprint (LOG_STATUS, ",");
+    std::size_t i=0;
+    for (const auto &currentnode : *n) {
+      logprint (LOG_STATUS, "%s", currentnode->getCircuit()->getName ());
+      if (i != n->size() - 1) logprint (LOG_STATUS, ",");
+      ++i;
     }
     logprint (LOG_STATUS, "]\n");
   }

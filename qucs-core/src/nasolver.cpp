@@ -613,12 +613,12 @@ void nasolver<nr_type_t>::createBMatrix (void)
         {
             val = 0.0;
             n = nlist->getNode (r);
-            for (int i = 0; i < n->nNodes; i++)
+            for (auto &current : *n)
             {
                 // is voltage source connected to node ?
-                if (n->nodes[i]->getCircuit () == vs)
+	      if (current->getCircuit () == vs)
                 {
-                    val += MatVal (vs->getB (n->nodes[i]->getPort (), c));
+		  val += MatVal (vs->getB (current->getPort (), c));
                 }
             }
             // put value into B matrix
@@ -653,12 +653,12 @@ void nasolver<nr_type_t>::createCMatrix (void)
         {
             val = 0.0;
             n = nlist->getNode (c);
-            for (int i = 0; i < n->nNodes; i++)
+            for (auto &current: *n)
             {
                 // is voltage source connected to node ?
-                if (n->nodes[i]->getCircuit () == vs)
+	      if (current->getCircuit () == vs)
                 {
-                    val += MatVal (vs->getC (r, n->nodes[i]->getPort ()));
+		  val += MatVal (vs->getC (r, current->getPort ()));
                 }
             }
             // put value into C matrix
@@ -719,15 +719,15 @@ void nasolver<nr_type_t>::createGMatrix (void)
             nr = nlist->getNode (r);
             g = 0.0;
             // sum up the conductance of each connected circuit
-            for (int a = 0; a < nc->nNodes; a++)
-                for (int b = 0; b < nr->nNodes; b++)
-                    if (nc->nodes[a]->getCircuit () == nr->nodes[b]->getCircuit ())
-                    {
-                        ct = nc->nodes[a]->getCircuit ();
-                        pc = nc->nodes[a]->getPort ();
-                        pr = nr->nodes[b]->getPort ();
-                        g += MatVal (ct->getY (pr, pc));
-                    }
+            for (auto & currentnc  : *nc)
+	      for (auto & currentnr: *nr)
+		if (currentnc->getCircuit () == currentnr->getCircuit ())
+		  {
+		    ct = currentnc->getCircuit ();
+		    pc = currentnc->getPort ();
+		    pr = currentnr->getPort ();
+		    g += MatVal (ct->getY (pr, pc));
+		  }
             // put value into G matrix
             A->set (r, c, g);
         }
@@ -761,13 +761,15 @@ void nasolver<nr_type_t>::createNoiseMatrix (void)
             nr = nlist->getNode (r);
             val = 0.0;
             // sum up the noise-correlation of each connected circuit
-            for (a = 0; a < nc->nNodes; a++)
-                for (b = 0; b < nr->nNodes; b++)
-                    if (nc->nodes[a]->getCircuit () == nr->nodes[b]->getCircuit ())
+            for (auto & currentnc: *nc)
+		/* a = 0; a < nc->size(); a++ */
+	      for (auto &currentnr : *nr)
+		/* b = 0; b < nr->size(); b++) */
+                    if (currentnc->getCircuit () == currentnr->getCircuit ())
                     {
-                        ct = nc->nodes[a]->getCircuit ();
-                        pc = nc->nodes[a]->getPort ();
-                        pr = nr->nodes[b]->getPort ();
+                        ct = currentnc->getCircuit ();
+                        pc = currentnc->getPort ();
+                        pr = currentnr->getPort ();
                         val += MatVal (ct->getN (pr, pc));
                     }
             // put value into Cy matrix
@@ -804,13 +806,14 @@ void nasolver<nr_type_t>::createNoiseMatrix (void)
         {
             val = 0.0;
             n = nlist->getNode (c);
-            for (i = 0; i < n->nNodes; i++)
+            for (auto &currentn: *n)
+	      /*i = 0; i < n->size(); i++ )*/
             {
                 // is voltage source connected to node ?
-                if (n->nodes[i]->getCircuit () == vsr)
+                if (currentn->getCircuit () == vsr)
                 {
                     ri = vsr->getSize () + r - vsr->getVoltageSource ();
-                    ci = n->nodes[i]->getPort ();
+                    ci = currentn->getPort ();
                     val += MatVal (vsr->getN (ri, ci));
                 }
             }
@@ -828,13 +831,13 @@ void nasolver<nr_type_t>::createNoiseMatrix (void)
         {
             val = 0.0;
             n = nlist->getNode (r);
-            for (i = 0; i < n->nNodes; i++)
+            for (auto & currentn: *n)/*i = 0; i < n->size(); i++)*/
             {
                 // is voltage source connected to node ?
-                if (n->nodes[i]->getCircuit () == vsc)
+                if (currentn->getCircuit () == vsc)
                 {
                     ci = vsc->getSize () + c - vsc->getVoltageSource ();
-                    ri = n->nodes[i]->getPort ();
+                    ri = currentn->getPort ();
                     val += MatVal (vsc->getN (ri, ci));
                 }
             }
@@ -864,13 +867,13 @@ void nasolver<nr_type_t>::createIVector (void)
         val = 0.0;
         n = nlist->getNode (r);
         // go through each circuit connected to the node
-        for (int i = 0; i < n->nNodes; i++)
+        for (auto &currentn: *n)/* int i = 0; i < n->size(); i++)*/
         {
-            is = n->nodes[i]->getCircuit ();
-            // is this a current source ?
-            if (is->isISource () || is->isNonLinear ())
-            {
-                val += MatVal (is->getI (n->nodes[i]->getPort ()));
+	  is = currentn->getCircuit ();
+	  // is this a current source ?
+	  if (is->isISource () || is->isNonLinear ())
+	    {
+	      val += MatVal (is->getI (currentn->getPort ()));
             }
         }
         // put value into i vector
@@ -930,9 +933,9 @@ int nasolver<nr_type_t>::findAssignedNode (circuit * c, int port)
     for (int r = 0; r < N; r++)
     {
         n = nlist->getNode (r);
-        for (int i = 0; i < n->nNodes; i++)
-            if (c == n->nodes[i]->getCircuit ())
-                if (port == n->nodes[i]->getPort ())
+        for (auto &currentn : *n) /*int i = 0; i < n->size(); i++)*/
+            if (c == currentn->getCircuit ())
+                if (port == currentn->getPort ())
                     return r;
     }
     return -1;
@@ -1214,17 +1217,16 @@ void nasolver<nr_type_t>::saveNodeVoltages (void)
     for (int r = 0; r < N; r++)
     {
         n = nlist->getNode (r);
-        for (int i = 0; i < n->nNodes; i++)
+        /* for (int i = 0; i < n->size(); i++)*/
+	for(auto &currentn: *n)
         {
-            n->nodes[i]->getCircuit()->setV (n->nodes[i]->getPort (), x->get (r));
+	  currentn->getCircuit()->setV (currentn->getPort (), x->get (r));
         }
     }
     // save reference node
     n = nlist->getNode (-1);
-    for (int i = 0; i < n->nNodes; i++)
-    {
-        n->nodes[i]->getCircuit()->setV (n->nodes[i]->getPort (), 0.0);
-    }
+    for(auto &currentn: *n)
+      currentn->getCircuit()->setV (currentn->getPort (), 0.0);
 }
 
 /* This function goes through solution (the x vector) and saves the
