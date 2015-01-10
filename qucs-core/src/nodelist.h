@@ -104,7 +104,6 @@ class nodelist
   }
   nodelist (net *);
   ~nodelist ();
-  void add (const std::string &, bool intern = false);
   int length (void) const ;
   int getNodeNr (const std::string &) const ;
   std::string get (int) const ;

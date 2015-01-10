@@ -55,7 +55,7 @@ nodelist::nodelist (net * subnet) {
     for (int i = 0; i < c->getSize (); i++) {
       node * n = c->getNode (i);
       if (contains (n->getName ()) == 0) {
-	add (n->getName (), n->getInternal ());
+	root.push_front(new nodelist_t(n->getName (), n->getInternal ()));;
       }
     }
   }
@@ -77,12 +77,6 @@ nodelist::~nodelist () {
   for (auto &n: root) {
     delete n;
   }
-}
- 
-// This function adds a node name to the list and saves the internal flag.
-void nodelist::add (const std::string &str, bool intern) {
-    nodelist_t * n = new nodelist_t(str,intern);
-    root.push_front(n);
 }
 
 // The function removes the given node from the list.
