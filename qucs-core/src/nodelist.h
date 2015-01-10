@@ -105,7 +105,6 @@ class nodelist
   nodelist (net *);
   ~nodelist ();
   void add (const std::string &, bool intern = false);
-  struct nodelist_t * getRoot (void) const { return *root.begin(); }
   int length (void) const ;
   int getNodeNr (const std::string &) const ;
   std::string get (int) const ;
@@ -116,8 +115,8 @@ class nodelist
   std::string getNodeString (int) const;
   void sort (void);
   void add (struct nodelist_t *);
-  void remove (struct nodelist_t *, int keep = 0);
   void remove (circuit *);
+  void remove (struct nodelist_t *n) { this->remove(n,0); }
   void insert (struct nodelist_t *);
   void insert (circuit *);
   void delCircuitNode (struct nodelist_t *, node *);
@@ -134,6 +133,7 @@ class nodelist
   std::list<nodelist_t *> root;
   int sorting;
   bool contains (const std::string &) const;
+  void remove (struct nodelist_t *, int keep);
 };
 
 } // namespace qucs
