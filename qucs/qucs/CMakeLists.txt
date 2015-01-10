@@ -27,21 +27,6 @@ set(PROJECT_DOMAIN_SECOND "org")
 #
 SET(CMAKE_BUILD_TYPE Debug)
 
-# If Git hash not defined, try to define it
-IF(NOT GIT)
-  IF(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/../../.git )
-    FIND_PACKAGE(Git)
-    # Get the latest abbreviated commit hash of the working branch
-    execute_process(
-      COMMAND ${GIT_EXECUTABLE} log --pretty=format:%h -n 1u
-      WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
-      OUTPUT_VARIABLE GIT_COMMIT_HASH
-    )
-    set(GIT ${GIT_COMMIT_HASH})
-    message(STATUS "Found Git repository, last commit hash: ${GIT}")
-  ENDIF()
-ENDIF()
-
 if(UNIX AND NOT APPLE)
   #string(TOLOWER ${PROJECT_NAME} PROJECT_NAME_LOWERCASE)
   #set(BIN_INSTALL_DIR "bin")
@@ -93,12 +78,8 @@ INCLUDE_DIRECTORIES("${PROJECT_BINARY_DIR}")
 INCLUDE_DIRECTORIES( ${CMAKE_SOURCE_DIR} )
 
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall ") # enable warning level
+SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-deprecated-register ") # disable deprecated register warning
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x ") # enable C++11
-
-# flag not available in mingw 4.8.2, MSVC10
-IF(NOT WIN32)
-  SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-deprecated-register ")
-ENDIF()
 
 # For some reason, on Windows QT_LIBRARIES point to static(?) .a libs
 # which do not provide the needed symbols. They are found on
@@ -122,6 +103,7 @@ ADD_SUBDIRECTORY( dialogs )
 ADD_SUBDIRECTORY( octave )
 ADD_SUBDIRECTORY( python )
 ADD_SUBDIRECTORY( paintings )
+ADD_SUBDIRECTORY( extsimkernels )
 
 SET(QUCS_SRCS
   element.cpp	octave_window.cpp	qucsdoc.cpp
@@ -243,7 +225,7 @@ ADD_EXECUTABLE( qucs MACOSX_BUNDLE WIN32
 #
 # Tell CMake which libraries we need to link our executable against.
 #
-TARGET_LINK_LIBRARIES( qucs  components diagrams dialogs paintings ${QT_LIBRARIES} )
+TARGET_LINK_LIBRARIES( qucs  components diagrams dialogs paintings extsimkernels ${QT_LIBRARIES} )
 
 #
 # Prepare the installation
