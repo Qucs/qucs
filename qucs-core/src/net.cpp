@@ -66,7 +66,7 @@ net::net () : object () {
 }
 
 // Constructor creates a named instance of the net class.
-net::net (const char * n) : object (n) {
+net::net (const std::string &n) : object (n) {
   root = drop = NULL;
   nPorts = nCircuits = nSources = 0;
   insertedNodes = inserted = reduced = 0;
@@ -198,10 +198,9 @@ void net::removeAnalysis (analysis * a) {
 /* The function returns the analysis associated with the netlist
    object specified by the given instance name and returns NULL if
    there is no such analysis. */
-analysis * net::findAnalysis (const char * const n) const {
-  if (n == NULL) return NULL;
+analysis * net::findAnalysis (const std::string &n) const {
   for (auto *a : *actions) {
-    if (!strcmp (a->getName (), n))
+    if (a->getName ()== n)
       return a;
   }
   return NULL;
