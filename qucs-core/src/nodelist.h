@@ -26,6 +26,7 @@
 #define __NODELIST_H__
 
 #include <vector>
+#include <list>
 #include <memory>
 
 namespace qucs {
@@ -40,7 +41,7 @@ namespace detail {
 struct nodelist_t {
 public:
   nodelist_t(const std::string &n="", bool intern = false) :
-    n(0), name(n), internal(intern), next(nullptr), nodes() {}
+    n(0), name(n), internal(intern), nodes() {}
 
   nodelist_t(nodelist_t &c) = default;
 
@@ -56,7 +57,6 @@ public:
   /*! name of node */
   std::string name;
   bool internal;
-  nodelist_t * next;
 
   reference operator[] (size_type n) {
     return (this->nodes[n]);
@@ -99,13 +99,15 @@ private:
 class nodelist
 {
  public:
-  nodelist ();
+  // Constructor creates an instance of the nodelist class.
+  nodelist () :  narray(), sorting(0) {
+  }
   nodelist (net *);
   nodelist (const nodelist &);
   ~nodelist ();
   void add (const std::string &, bool intern = false);
   void append (const std::string &, bool intern = false);
-  struct nodelist_t * getRoot (void) { return root; }
+  struct nodelist_t * getRoot (void) { return *root.begin(); }
   int length (void);
   int contains (const std::string &);
   int getNodeNr (const std::string &);
@@ -134,8 +136,7 @@ class nodelist
   }
  private:
   std::vector<nodelist_t *> narray;
-  struct nodelist_t * root;
-  struct nodelist_t * last;
+  std::list<nodelist_t *> root;
   int sorting;
 };
 

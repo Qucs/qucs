@@ -39,11 +39,7 @@
 
 namespace qucs {
 
-// Constructor creates an instance of the nodelist class.
-nodelist::nodelist () : narray() {
-  root = last = NULL;
-  sorting = 0;
-}
+
 
 /* The function creates a nodelist for the given netlist.  The
    nodelist is based on the circuit list and consists of unique nodes
@@ -51,7 +47,6 @@ nodelist::nodelist () : narray() {
    to their actual circuit nodes and thereby to the circuits it is
    connected to. */
 nodelist::nodelist (net * subnet) {
-  root = last = NULL;
   sorting = 0;
 
   circuit * c;
@@ -65,12 +60,12 @@ nodelist::nodelist (net * subnet) {
     }
   }
   // add circuit nodes to each unique node in the list
-  for (struct nodelist_t * n = getRoot (); n != NULL; n = n->next) {
+  for (auto &n : this->root) {
     for (c = subnet->getRoot (); c != NULL; c = (circuit *) c->getNext ()) {
       for (int i = 0; i < c->getSize (); i++) {
 	assert (c->getNode(i)->getName () != NULL);
 	if (n->name == c->getNode(i)->getName ()) {
-	  addCircuitNode (n, c->getNode (i));
+	  addCircuitNode(n, c->getNode (i));
 	}
       }
     }
@@ -80,20 +75,15 @@ nodelist::nodelist (net * subnet) {
 /* This copy constructor creates a instance of the nodelist class
    based on the given nodelist. */
 nodelist::nodelist (const nodelist & o) {
-  struct nodelist_t * n;
-  root = last = NULL;
-  for (n = o.root; n != NULL; n = n->next)
+  for (auto &n: this->root) 
     append (new nodelist_t(*n));
   sorting = o.sorting;
 }
 
 // Destructor deletes an instance of the nodelist class.
 nodelist::~nodelist () {
-  struct nodelist_t * next;
-  while (root) {
-    next = root->next;
-    delete root;
-    root = next;
+  for (auto &n: root) {
+    delete n;
   }
 }
  
@@ -106,9 +96,7 @@ void nodelist::add (const std::string &str, bool intern) {
 
 // This function adds a node to the list.
 void nodelist::add (struct nodelist_t * n) {
-  n->next = root;
-  if (root == NULL) last = n;
-  root = n;
+  root.push_front(n);
 }
 
 // This function appends a node name to the list.
@@ -119,12 +107,7 @@ void nodelist::append (const std::string &str, bool intern) {
 
 // This function appends the given node to the list.
 void nodelist::append (struct nodelist_t * n) {
-  n->next = NULL;
-  if (root)
-    last->next = n;
-  else
-    root = n;
-  last = n;
+  root.push_back(n);
 }
 
 // This function removes the node with the given name from the list.
@@ -134,48 +117,28 @@ void nodelist::remove (const std::string &name) {
 
 // The function removes the given node from the list.
 void nodelist::remove (struct nodelist_t * del, int keep) {
-  struct nodelist_t * prev, * n;
   // go through the list
-  for (prev = NULL, n = root; n != NULL; prev = n, n = n->next) {
-    if (n == del) {
-      // adjust the chain properly
-      if (prev == NULL)
-	root = n->next;
-      else
-	prev->next = n->next;
-      if (n == last) last = prev;
-      // delete node if requested and return
-      if (!keep)
-	delete n;
-      return;
-    }
-  }
+  root.erase(std::remove(root.begin(), root.end(), del), root.end());
+  if(!keep)
+    delete del;
 }
 
 // This function counts the node names in the list.
 int nodelist::length (void) {
-  int res = 0;
-  for (struct nodelist_t * n = root; n != NULL; n = n->next) res++;
-  return res;
+  return root.size();
 }
 
 // This function finds the specified node name in the list.
 int nodelist::contains (const std::string &str) {
-  int res = 0;
-  for (struct nodelist_t * n = root; n != NULL; n = n->next) {
-    if (n->name==str)
-      res++;
-  }
-  return res;
+  return std::count_if(root.begin(),root.end(),[str](nodelist_t *n) { return n->name == str; });
 }
 
 // Returns the node number of the given node name.
 int nodelist::getNodeNr (const std::string &str) {
-  for (struct nodelist_t * n = root; n != NULL; n = n->next) {
-    if (n->name == str)
-      return n->n;
-  }
-  return -1;
+  auto it = std::find_if(root.begin(),root.end(),[str](nodelist_t *n) { return n->name == str; });
+  if(it == root.end())
+    return -1;
+  return (*it)->n;
 }
 
 /* This function returns the node name positioned at the specified
@@ -193,11 +156,11 @@ bool nodelist::isInternal (int nr) {
 
 /* The function returns the nodelist structure with the given name in
    the node name list.  It returns NULL if there is no such node. */
-struct nodelist_t * nodelist::getNode (const std::string &name) {
-  for (struct nodelist_t * n = root; n != NULL; n = n->next)
-    if (name==n->name)
-      return n;
-  return NULL;
+struct nodelist_t * nodelist::getNode (const std::string &str) {
+  auto it = std::find_if(root.begin(),root.end(),[str](nodelist_t *n) { return n->name == str; });
+  if(it != root.end())
+    return *it;
+  return nullptr;
 }
 
 /* Returns a comma separated list of the circuits connected to the
@@ -227,7 +190,7 @@ void nodelist::assignNodes (void) {
   narray.clear();
   narray.reserve(this->length());
 
-  for (struct nodelist_t * n = root; n != NULL; n = n->next) {
+  for (auto n: root) {
     // ground node gets a zero counter
     if (n->name=="gnd") {
       n->n = 0;
@@ -283,29 +246,23 @@ static int insfunc (struct nodelist_t * n1, struct nodelist_t * n2) {
    position. */
 void nodelist::insert (struct nodelist_t * n) {
   // first node at all
-  if (root == NULL) {
-    last = root = n;
+  if (root.empty()) {
+    root.push_front(n);
     return;
   }
 
   // sorted node list
   if (sorting) {
     int added = 0;
-    struct nodelist_t * nl, * prev;
-    for (prev = NULL, nl = root; nl != NULL; prev = nl, nl = nl->next) {
-      if (insfunc (n, nl)) {
-	if (prev == NULL) {
-	  n->next = root;
-	  root = n;
-	} else {
-	  n->next = nl;
-	  prev->next = n;
-	}
+    for (auto it = root.begin();it != root.end();it++) {
+      if (insfunc (n, *it)) {
+	root.insert(it,n);
 	added++;
 	break;
       }
     }
-    if (!added) append (n);
+    if (!added)
+      root.push_back (n);
     return;
   }
 
@@ -313,7 +270,7 @@ void nodelist::insert (struct nodelist_t * n) {
   add (n);
 }
 
-/* This function removes the nodes associated with the given circuit
+/* This function removes the nodes associated with the given circuits
    from the node list.  If the node list is sorted then the order gets
    rearranged properly. */
 void nodelist::remove (circuit * c) {
@@ -376,17 +333,18 @@ void nodelist::insert (circuit * c) {
    keeps being sorted when removing or inserting new circuits. */
 void nodelist::sort (void) {
   nodelist * nodes = new nodelist ();
-  struct nodelist_t * nl, * cand;
-  int p, i, ports, MaxPorts, len = length ();
+  struct nodelist_t * cand;
+  int i, ports, MaxPorts, len = length ();
 
   // go through the list until there is no node left
   for (i = 0; i < len; i++) {
     // find last order node
     cand = NULL;
-    for (MaxPorts = -1, p = 0, nl = root; nl != NULL; nl = nl->next) {
-      ports = sortfunc (nl);
+    auto nl =  root.begin();
+    for (MaxPorts = -1, nl = root.begin(); nl != root.end(); nl++) {
+      ports = sortfunc (*nl);
       if (ports > MaxPorts || MaxPorts < 0 || ports == -1) {
-	cand = nl;
+	cand = *nl;
 	MaxPorts = ports;
       }
       if (ports == -1) break;
@@ -397,26 +355,25 @@ void nodelist::sort (void) {
   }
 
   // store sorted node list in current object
-  root = nodes->getRoot ();
-  last = nodes->last;
-  nodes->root = NULL;
+  root = nodes->root;
   sorting = 1;
 
-  // delete temporary node list
+  // delete temporary node list: UGLY todo proper lifetime
+  nodes->root.clear();
   delete nodes;
 }
 
 // The function returns the first two nodes of the sorted list.
 void nodelist::sortedNodes (node ** node1, node ** node2) {
-  assert (root->size() == 2);
-  *node1 = (*root)[0];
-  *node2 = (*root)[1];
+  assert ((*root.begin())->size() == 2);
+  *node1 = (**(root.begin()))[0];
+  *node2 = (**(root.begin()))[1];
 }
 
 #if DEBUG
 // Debug function: Prints the entire nodelist.
 void nodelist::print (void) {
-  for (struct nodelist_t * n = root; n != NULL; n = n->next) {
+  for (auto n: root) {
     logprint (LOG_STATUS, "DEBUG: node %s-%d [", n->name.c_str(), n->n);
     std::size_t i=0;
     for (const auto &currentnode : *n) {
