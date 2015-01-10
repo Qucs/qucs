@@ -103,6 +103,7 @@ ADD_SUBDIRECTORY( dialogs )
 ADD_SUBDIRECTORY( octave )
 ADD_SUBDIRECTORY( python )
 ADD_SUBDIRECTORY( paintings )
+ADD_SUBDIRECTORY( extsimkernels )
 
 SET(QUCS_SRCS
   element.cpp	octave_window.cpp	qucsdoc.cpp
@@ -224,7 +225,7 @@ ADD_EXECUTABLE( qucs MACOSX_BUNDLE WIN32
 #
 # Tell CMake which libraries we need to link our executable against.
 #
-TARGET_LINK_LIBRARIES( qucs  components diagrams dialogs paintings ${QT_LIBRARIES} )
+TARGET_LINK_LIBRARIES( qucs  components diagrams dialogs paintings extsimkernels ${QT_LIBRARIES} )
 
 #
 # Prepare the installation

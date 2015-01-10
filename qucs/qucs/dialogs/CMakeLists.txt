@@ -35,7 +35,6 @@ importdialog.cpp		savedialog.cpp labeldialog.cpp
 searchdialog.cpp     librarydialog.cpp settingsdialog.cpp
 matchdialog.cpp			simmessage.cpp newprojdialog.cpp
 sweepdialog.cpp			exportdialog.cpp loaddialog.cpp
-ngspicesimdialog.cpp
 )
 
 SET(DIALOGS_MOC_HDRS
@@ -49,7 +48,6 @@ loaddialog.h
 matchdialog.h
 newprojdialog.h
 packagedialog.h
-ngspicesimdialog.h
 qucssettingsdialog.h
 savedialog.h
 searchdialog.h
