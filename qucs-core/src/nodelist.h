@@ -103,10 +103,8 @@ class nodelist
   nodelist () :  narray(), sorting(0) {
   }
   nodelist (net *);
-  nodelist (const nodelist &);
   ~nodelist ();
   void add (const std::string &, bool intern = false);
-  void append (const std::string &, bool intern = false);
   struct nodelist_t * getRoot (void) { return *root.begin(); }
   int length (void);
   int contains (const std::string &);
@@ -119,8 +117,6 @@ class nodelist
   std::string getNodeString (int);
   void sort (void);
   void add (struct nodelist_t *);
-  void append (struct nodelist_t *);
-  void remove (const std::string &);
   void remove (struct nodelist_t *, int keep = 0);
   void remove (circuit *);
   void insert (struct nodelist_t *);

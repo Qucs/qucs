@@ -72,14 +72,6 @@ nodelist::nodelist (net * subnet) {
   }
 }
 
-/* This copy constructor creates a instance of the nodelist class
-   based on the given nodelist. */
-nodelist::nodelist (const nodelist & o) {
-  for (auto &n: this->root) 
-    append (new nodelist_t(*n));
-  sorting = o.sorting;
-}
-
 // Destructor deletes an instance of the nodelist class.
 nodelist::~nodelist () {
   for (auto &n: root) {
@@ -97,22 +89,6 @@ void nodelist::add (const std::string &str, bool intern) {
 // This function adds a node to the list.
 void nodelist::add (struct nodelist_t * n) {
   root.push_front(n);
-}
-
-// This function appends a node name to the list.
-void nodelist::append (const std::string &str, bool intern) {
-  nodelist_t * n = new nodelist_t(str,intern);
-  append (n);
-}
-
-// This function appends the given node to the list.
-void nodelist::append (struct nodelist_t * n) {
-  root.push_back(n);
-}
-
-// This function removes the node with the given name from the list.
-void nodelist::remove (const std::string &name) {
-  remove (getNode (name));
 }
 
 // The function removes the given node from the list.
@@ -309,7 +285,7 @@ void nodelist::insert (circuit * c) {
       addCircuitNode (nl, n);
       if (sorting) {
 	if (c->getPort ())
-	  append (nl);
+	  root.push_back (nl);
 	else
 	  insert (nl);
       }
