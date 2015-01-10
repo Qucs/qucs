@@ -36,17 +36,6 @@ class node : public object
   node () : object (), nNode(0), port(0), internal(0), _circuit(nullptr) {};
   //! Constructor creates a named instance of the node class.
   node (char * const n) : object (n), nNode(0), port(0), internal(0), _circuit(nullptr) {};
-  /* The copy constructor creates a new instance 
-     of the node class based on the given node object. 
-     \todo circuit lifetime
-     \todo why not use default ?
-   */
-  node (const node &n) : object (n) {
-    internal = n.internal;
-    port = n.port;
-    nNode = n.nNode;
-    _circuit = n._circuit;
-  }
   //! Sets the unique number of this node
   void setNode (const int n) { this->nNode = n ; };
   //! Returns the unique number of this node.
