@@ -48,6 +48,8 @@ public:
   typedef detail::nodevector::iterator iterator;
   typedef detail::nodevector::const_iterator const_iterator;
   typedef detail::nodevector::size_type size_type;
+  typedef detail::nodevector::reference reference;
+  typedef detail::nodevector::const_reference const_reference;
 
   /*! alias node number */
   std::size_t n;
@@ -56,9 +58,13 @@ public:
   bool internal;
   nodelist_t * next;
 
-  value_type &operator[](std::size_t i) {
-    return (this->nodes[i]);
+  reference operator[] (size_type n) {
+    return (this->nodes[n]);
   }
+  const_reference operator[] (size_type n) const {
+    return (this->nodes[n]);
+  }
+
   size_type size() const noexcept {
     return nodes.size();
   }
@@ -66,6 +72,7 @@ public:
   void push_back(const value_type &val) {
     this->nodes.push_back(val);
   }
+
   iterator begin() noexcept {
     return nodes.begin();
   }
