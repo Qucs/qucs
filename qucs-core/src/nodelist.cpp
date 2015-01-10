@@ -82,13 +82,7 @@ nodelist::~nodelist () {
 // This function adds a node name to the list and saves the internal flag.
 void nodelist::add (const std::string &str, bool intern) {
     nodelist_t * n = new nodelist_t(str,intern);
-    add (n);
-}
-
-
-// This function adds a node to the list.
-void nodelist::add (struct nodelist_t * n) {
-  root.push_front(n);
+    root.push_front(n);
 }
 
 // The function removes the given node from the list.
@@ -250,7 +244,7 @@ void nodelist::insert (struct nodelist_t * n) {
   }
 
   // unsorted node list
-  add (n);
+  root.push_front(n);
 }
 
 /* This function removes the nodes associated with the given circuits
@@ -296,7 +290,7 @@ void nodelist::insert (circuit * c) {
 	else
 	  insert (nl);
       }
-      else add (nl);
+      else root.push_front (nl);
     }
     else {
       // yes, put additional node into nodelist structure
@@ -334,7 +328,7 @@ void nodelist::sort (void) {
     }
     // add last order node
     remove (cand, 1);
-    nodes->add (cand);
+    nodes->root.push_front (cand);
   }
 
   // store sorted node list in current object

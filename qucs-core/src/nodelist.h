@@ -114,7 +114,6 @@ class nodelist
   void print (void) const;
   std::string getNodeString (int) const;
   void sort (void);
-  void add (struct nodelist_t *);
   void remove (circuit *);
   void remove (struct nodelist_t *n) { this->remove(n,0); }
   void insert (struct nodelist_t *);
@@ -128,6 +127,7 @@ class nodelist
   nodelist_t &operator[](int nr) const {
     return *narray[nr + 1];
   }
+
  private:
   std::vector<nodelist_t *> narray;
   std::list<nodelist_t *> root;
