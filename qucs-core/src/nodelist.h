@@ -105,16 +105,15 @@ class nodelist
   nodelist (net *);
   ~nodelist ();
   void add (const std::string &, bool intern = false);
-  struct nodelist_t * getRoot (void) { return *root.begin(); }
-  int length (void);
-  int contains (const std::string &);
-  int getNodeNr (const std::string &);
-  std::string get (int);
-  bool isInternal (int);
+  struct nodelist_t * getRoot (void) const { return *root.begin(); }
+  int length (void) const ;
+  int getNodeNr (const std::string &) const ;
+  std::string get (int) const ;
+  bool isInternal (int) const ;
   void addCircuitNode (struct nodelist_t *, node *);
   void assignNodes (void);
-  void print (void);
-  std::string getNodeString (int);
+  void print (void) const;
+  std::string getNodeString (int) const;
   void sort (void);
   void add (struct nodelist_t *);
   void remove (struct nodelist_t *, int keep = 0);
@@ -123,17 +122,18 @@ class nodelist
   void insert (circuit *);
   void delCircuitNode (struct nodelist_t *, node *);
   void sortedNodes (node **, node **);
-  struct nodelist_t * getNode (const std::string &);
-  struct nodelist_t * getNode (int nr) {
+  struct nodelist_t * getNode (const std::string &) const;
+  struct nodelist_t * getNode (int nr) const {
     return narray[nr + 1];
   }
-  nodelist_t &operator[](int nr) {
+  nodelist_t &operator[](int nr) const {
     return *narray[nr + 1];
   }
  private:
   std::vector<nodelist_t *> narray;
   std::list<nodelist_t *> root;
   int sorting;
+  bool contains (const std::string &) const;
 };
 
 } // namespace qucs

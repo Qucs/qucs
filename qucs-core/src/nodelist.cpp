@@ -100,17 +100,24 @@ void nodelist::remove (struct nodelist_t * del, int keep) {
 }
 
 // This function counts the node names in the list.
-int nodelist::length (void) {
+int nodelist::length (void) const {
   return root.size();
 }
 
 // This function finds the specified node name in the list.
-int nodelist::contains (const std::string &str) {
-  return std::count_if(root.begin(),root.end(),[str](nodelist_t *n) { return n->name == str; });
+bool nodelist::contains (const std::string &str) const {
+  return std::find_if(root.begin(),root.end(),[str](nodelist_t *n) { return n->name == str; }) != root.end();
 }
 
 // Returns the node number of the given node name.
-int nodelist::getNodeNr (const std::string &str) {
+int nodelist::getNodeNr (const std::string &str) const {
+  
+  if(sorting) {
+    auto it = std::find_if(narray.begin(),narray.end(),[str](nodelist_t *n) { return n->name == str; });
+    if(it == narray.end())
+      return -1;
+    return (*it)->n;
+  }
   auto it = std::find_if(root.begin(),root.end(),[str](nodelist_t *n) { return n->name == str; });
   if(it == root.end())
     return -1;
@@ -119,20 +126,20 @@ int nodelist::getNodeNr (const std::string &str) {
 
 /* This function returns the node name positioned at the specified
    location in the node name list. */
-std::string nodelist::get (int nr) {
+std::string nodelist::get (int nr) const {
   return narray[nr + 1]->name;
 }
 
 /* This function returns non-zero if the node positioned at the
    specified location in the node name list is marked internal and
    zero otherwise. */
-bool nodelist::isInternal (int nr) {
+bool nodelist::isInternal (int nr) const {
   return narray[nr + 1]->internal;
 }
 
 /* The function returns the nodelist structure with the given name in
    the node name list.  It returns NULL if there is no such node. */
-struct nodelist_t * nodelist::getNode (const std::string &str) {
+struct nodelist_t * nodelist::getNode (const std::string &str) const {
   auto it = std::find_if(root.begin(),root.end(),[str](nodelist_t *n) { return n->name == str; });
   if(it != root.end())
     return *it;
@@ -141,7 +148,7 @@ struct nodelist_t * nodelist::getNode (const std::string &str) {
 
 /* Returns a comma separated list of the circuits connected to the
    node specified by the given number. */
-std::string nodelist::getNodeString (int nr) {
+std::string nodelist::getNodeString (int nr) const {
   std::string txt;
   // find the specified node
   struct nodelist_t * n = getNode (nr);
@@ -348,7 +355,7 @@ void nodelist::sortedNodes (node ** node1, node ** node2) {
 
 #if DEBUG
 // Debug function: Prints the entire nodelist.
-void nodelist::print (void) {
+void nodelist::print (void) const {
   for (auto n: root) {
     logprint (LOG_STATUS, "DEBUG: node %s-%d [", n->name.c_str(), n->n);
     std::size_t i=0;
