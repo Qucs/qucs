@@ -28,6 +28,7 @@
 #include <vector>
 #include <list>
 #include <memory>
+#include <algorithm>
 
 namespace qucs {
 
