@@ -128,7 +128,7 @@ void net::insertCircuit (circuit * c) {
 
   /* handle AC power sources as s-parameter ports if it is not part of
      a subcircuit */
-  if (c->getType () == CIR_PAC && c->getSubcircuit () == NULL) {
+  if (c->getType () == CIR_PAC && c->getSubcircuit ().empty()) {
     nPorts++;
     if (!c->getPort ()) c->setPort (c->getPropertyInteger ("Num"));
   }

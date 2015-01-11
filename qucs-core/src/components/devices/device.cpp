@@ -58,14 +58,12 @@ circuit * device::splitResistor (circuit * base, circuit * res,
 				 int internal) {
   if (res == NULL) {
     res = new resistor ();
-    char * name = circuit::createInternal (c, base->getName ());
-    char * node = circuit::createInternal (n, base->getName ());
+    const std::string &name = circuit::createInternal (c, base->getName ());
+    const std::string &node = circuit::createInternal (n, base->getName ());
     res->setName (name);
     res->setNode (0, base->getNode(internal)->getName ());
     res->setNode (1, node, 1);
     base->getNet()->insertCircuit (res);
-    free (name);
-    free (node);
   }
   base->setNode (internal, res->getNode(1)->getName (), 1);
   return res;
@@ -89,11 +87,10 @@ circuit * device::splitCapacitor (circuit * base, circuit * cap,
 				  const char * c, node * n1, node * n2) {
   if (cap == NULL) {
     cap = new capacitor ();
-    char * name = circuit::createInternal (c, base->getName ());
+    const std::string &name = circuit::createInternal (c, base->getName ());
     cap->setName (name);
     cap->setNode (0, n1->getName ());
     cap->setNode (1, n2->getName ());
-    free (name);
   }
   base->getNet()->insertCircuit (cap);
   return cap;

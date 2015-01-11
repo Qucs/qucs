@@ -69,7 +69,7 @@ circuit::circuit () : object (), integrator () {
   vsources = 0;
   nsources = 0;
   inserted = -1;
-  subcircuit = NULL;
+  subcircuit = std::string();
   subnet = NULL;
   deltas = NULL;
   histories = NULL;
@@ -97,7 +97,7 @@ circuit::circuit (int s) : object (), integrator () {
   vsources = 0;
   nsources = 0;
   inserted = -1;
-  subcircuit = NULL;
+  subcircuit = std::string();
   subnet = NULL;
   deltas = NULL;
   histories = NULL;
@@ -124,7 +124,7 @@ circuit::circuit (const circuit & c) : object (c), integrator (c) {
   deltas = c.deltas;
   nHistories = c.nHistories;
   histories = NULL;
-  subcircuit = c.subcircuit ? strdup (c.subcircuit) : NULL;
+  subcircuit = c.subcircuit;
 
   if (size > 0) {
     // copy each node and set its circuit to the current circuit object
@@ -189,7 +189,6 @@ circuit::~circuit () {
     freeMatrixHB ();
     delete[] nodes;
   }
-  if (subcircuit) free (subcircuit);
   deleteHistory ();
 }
 
@@ -300,7 +299,7 @@ void circuit::freeMatrixMNA (void) {
    nodes.  It also tells the appropriate node about the circuit it
    belongs to.  The optional 'intern' argument is used to mark a node
    to be for internal use only. */
-void circuit::setNode (int i, const char * n, int intern) {
+void circuit::setNode (int i, const std::string &n, int intern) {
   nodes[i].setName (n);
   nodes[i].setCircuit (this);
   nodes[i].setPort (i);
@@ -313,9 +312,8 @@ node * circuit::getNode (int i) {
 }
 
 // Sets the subcircuit reference for the circuit object.
-void circuit::setSubcircuit (char * n) {
-  if (subcircuit) free (subcircuit);
-  subcircuit = n ? strdup (n) : NULL;
+void circuit::setSubcircuit (const std::string &n) {
+  subcircuit = n;
 }
 
 #if DEBUG
@@ -629,19 +627,16 @@ void circuit::setNoiseSources (int s) {
 /* The function returns an internal node or circuit name with the
    given prefix and based on the given circuits name.  The caller is
    responsible to free() the returned string. */
-char * circuit::createInternal (const char * prefix, const char * obj) {
-  char * n = (char *) malloc (strlen (prefix) + strlen (obj) + 3);
-  sprintf (n, "_%s#%s", prefix, obj);
-  return n;
+std::string circuit::createInternal (const std::string &prefix, const std::string &obj) {
+  return "_"+prefix+"#"+obj;
 }
 
 /* Creates an internal node given the node number as well as the name
    suffix.  An appropriate node name is constructed from the circuits
    name and the suffix. */
-void circuit::setInternalNode (int node, const char * suffix) {
-  char * n = createInternal (getName (), suffix);
+void circuit::setInternalNode (int node, const std::string &suffix) {
+  const std::string &n = createInternal (getName (), suffix);
   setNode (node, n, 1);
-  free (n);
 }
 
 /* This function copies the matrix elements inside the given matrix to

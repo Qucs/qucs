@@ -1353,7 +1353,7 @@ void nasolver<nr_type_t>::saveResults (const std::string &volts, const std::stri
         for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ())
         {
             if (!c->isProbe ()) continue;
-            if (c->getSubcircuit () && !(saveOPs & SAVE_ALL)) continue;
+            if (!c->getSubcircuit().empty() && !(saveOPs & SAVE_ALL)) continue;
             if (volts != "vn")
                 c->saveOperatingPoints ();	    
 	    std::string n = createOP (c->getName (), volts);
@@ -1369,7 +1369,7 @@ void nasolver<nr_type_t>::saveResults (const std::string &volts, const std::stri
         for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ())
         {
             if (!c->isNonLinear ()) continue;
-            if (c->getSubcircuit () && !(saveOPs & SAVE_ALL)) continue;
+            if (!c->getSubcircuit ().empty() && !(saveOPs & SAVE_ALL)) continue;
             c->calcOperatingPoints ();
             for (auto ops: c->getOperatingPoints ())
             {
@@ -1420,7 +1420,7 @@ std::string nasolver<nr_type_t>::createI (int n, const std::string &amps, int sa
       return std::string();
 
     // don't output subcircuit components if not requested
-    if (vs->getSubcircuit () && !(saveOPs & SAVE_ALL))
+    if (!vs->getSubcircuit ().empty() && !(saveOPs & SAVE_ALL))
       return std::string();
 
     // create appropriate current name for single/multiple voltage sources

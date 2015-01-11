@@ -191,14 +191,12 @@ circuit * splitMicrostrip (circuit * base, circuit * line, net * subnet,
 			   const char * c, const char * n, int internal) {
   if (line == NULL) {
     line = new msline ();
-    char * name = circuit::createInternal (c, base->getName ());
-    char * node = circuit::createInternal (n, base->getName ());
+    const std::string &name = circuit::createInternal (c, base->getName ());
+    const std::string &node = circuit::createInternal (n, base->getName ());
     line->setName (name);
     line->setNode (0, base->getNode(internal)->getName ());
     line->setNode (1, node, 1);
     subnet->insertCircuit (line);
-    free (name);
-    free (node);
   }
   base->setNode (internal, line->getNode(1)->getName (), 1);
   return line;

@@ -1091,7 +1091,7 @@ void spsolver::saveCharacteristics (nr_double_t freq) {
   vector * f = data->findDependency ("frequency");
   for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ()) {
     c->saveCharacteristics (freq);
-    if (c->getSubcircuit () && !(saveCVs & SAVE_ALL)) continue;
+    if (!c->getSubcircuit ().empty() && !(saveCVs & SAVE_ALL)) continue;
     c->calcCharacteristics (freq);
     for (auto ps: c->getCharacteristics ()) {
       characteristic &p = ps.second;
