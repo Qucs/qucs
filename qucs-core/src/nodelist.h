@@ -52,6 +52,7 @@ public:
   typedef detail::nodevector::size_type size_type;
   typedef detail::nodevector::reference reference;
   typedef detail::nodevector::const_reference const_reference;
+  typedef autoconfigured_erase_iterator erase_iterator;
 
   /*! alias node number */
   std::size_t n;
@@ -86,10 +87,11 @@ public:
   const_iterator end() const noexcept {
     return nodes.end();
   }
-  iterator erase (const_iterator position)
+  iterator erase (erase_iterator position)
   { return nodes.erase(position); };
-  iterator erase (const_iterator first, const_iterator last)
+  iterator erase (erase_iterator first, erase_iterator last)
   { return nodes.erase(first,last); };
+
   bool empty() const noexcept {
     return nodes.empty();
   }

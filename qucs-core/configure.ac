@@ -752,6 +752,8 @@ AS_VAR_IF([ax_cv_cxx_have_numeric_limits],[yes],
 AC_CXX_HAVE_COMPLEX
 AS_IF([test "X$ac_cv_cxx_have_complex" = "X"],[AC_MSG_ERROR([Qucs needs a templated complex class])])
 
+AX_CXX_ERASE_ITERATOR_TYPE
+
 
 AC_MSG_NOTICE([Check complex transcendental overload in namespace std])
 dnl http://www.cplusplus.com/reference/complex/
