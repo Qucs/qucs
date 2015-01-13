@@ -95,7 +95,7 @@ public:
     *
     * Constructor. Creates a named instance of the analysis class.
     */
-    analysis (char *);
+    analysis (const std::string &);
 
     /*! \fn analysis
     * \brief Copy Constructor
@@ -233,7 +233,7 @@ public:
      * Supported sweep types are: linear, logarithmic, lists and constants.
      *
      */
-    sweep * createSweep (const char *);
+    sweep * createSweep (const std::string &);
 
     /*! \fn saveVariable
      * \brief Save variable into analysis dataset.
@@ -244,7 +244,7 @@ public:
      * Saves the given variable into the dataset associated with the
      * analysis.  Creates the dataset vector if necessary.
      */
-     void saveVariable (const char *, nr_complex_t, qucs::vector *);
+    void saveVariable (const std::string &, nr_complex_t, qucs::vector *);
 
     /*! \fn getProgress
      * \brief get

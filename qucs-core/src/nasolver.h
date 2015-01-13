@@ -52,7 +52,7 @@ class nasolver : public analysis
 {
 public:
     nasolver ();
-    nasolver (char *);
+    nasolver (const std::string&);
     nasolver (nasolver &);
     ~nasolver ();
     int  solve_once (void);
@@ -62,9 +62,9 @@ public:
     int  solve_linear (void);
     void solve_pre (void);
     void solve_post (void);
-    void setDescription (const char * n) { desc = n; }
-    const char * getDescription (void) { return desc; }
-    void saveResults (const char *, const char *, int, qucs::vector * f = NULL);
+    void setDescription (const std::string &n) { desc = n; }
+    std::string getDescription (void) const { return desc; }
+    void saveResults (const std::string &, const std::string &, int, qucs::vector * f = NULL);
     typedef void (* calculate_func_t) (nasolver<nr_type_t> *);
     void setCalculation (calculate_func_t f) { calculate_func = f; }
     void calculate (void)
@@ -84,7 +84,7 @@ protected:
     void savePreviousIteration (void);
     void restorePreviousIteration (void);
     int  countNodes (void);
-    int  getNodeNr (const char *);
+    int  getNodeNr (const std::string &);
     int  findAssignedNode (circuit *, int);
     int  countVoltageSources (void);
     void saveSolution (void);
@@ -109,9 +109,9 @@ private:
     void applyAttenuation (void);
     void lineSearch (void);
     void steepestDescent (void);
-    char * createV (int, const char *, int);
-    char * createI (int, const char *, int);
-    char * createOP (const char *, const char *);
+    std::string createV (int, const std::string&, int);
+    std::string createI (int, const std::string&, int);
+    std::string createOP (const std::string&, const std::string &);
     void saveNodeVoltages (void);
     void saveBranchCurrents (void);
     nr_type_t MatValX (nr_complex_t, nr_complex_t *);
@@ -130,7 +130,7 @@ protected:
     int eqnAlgo;
     int updateMatrix;
     nr_double_t gMin, srcFactor;
-    const char * desc;
+    std::string desc;
     nodelist * nlist;
 
 private:

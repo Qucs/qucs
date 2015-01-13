@@ -74,7 +74,7 @@ trsolver::trsolver ()
 }
 
 // Constructor creates a named instance of the trsolver class.
-trsolver::trsolver (char * n)
+trsolver::trsolver (const std::string &n)
     : nasolver<nr_double_t> (n), states<nr_double_t> ()
 {
     swp = NULL;
@@ -143,7 +143,7 @@ int trsolver::dcAnalysis (void)
         pop_exception ();
         convHelper = CONV_LineSearch;
         logprint (LOG_ERROR, "WARNING: %s: %s analysis failed, using line search "
-                  "fallback\n", getName (), getDescription ());
+                  "fallback\n", getName (), getDescription ().c_str());
         applyNodeset ();
         restart ();
         error = solve_nonlinear ();
@@ -165,7 +165,7 @@ int trsolver::dcAnalysis (void)
     if (error)
     {
         logprint (LOG_ERROR, "ERROR: %s: %s analysis failed\n",
-                  getName (), getDescription ());
+                  getName (), getDescription ().c_str());
     }
     return error;
 }
@@ -330,7 +330,7 @@ int trsolver::solve (void)
             {
                 logprint (LOG_ERROR, "ERROR: %s: Jacobian singular at t = %.3e, "
                           "aborting %s analysis\n", getName (), (double) current,
-                          getDescription ());
+                          getDescription ().c_str());
                 return -1;
             }
 

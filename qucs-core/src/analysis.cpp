@@ -61,7 +61,7 @@ analysis::analysis () : object () {
 }
 
 // Constructor creates a named instance of the analysis class.
-analysis::analysis (char * n) : object (n) {
+analysis::analysis (const std::string &n) : object (n) {
   data = NULL;
   subnet = NULL;
   env = NULL;
@@ -106,7 +106,7 @@ void analysis::delAnalysis (analysis * a) {
 /* The following function creates a sweep object depending on the
    analysis's properties.  Supported sweep types are: linear,
    logarithmic, lists and constants. */
-sweep * analysis::createSweep (const char * n) {
+sweep * analysis::createSweep (const std::string& n) {
   sweep * swp = NULL;
   // get type of sweep
   const char * const type = getPropertyString ("Type");
@@ -150,7 +150,7 @@ sweep * analysis::createSweep (const char * n) {
 
 /* Saves the given variable into the dataset.  Creates the dataset
    vector if necessary. */
-void analysis::saveVariable (const char * n, nr_complex_t z, vector * f) {
+  void analysis::saveVariable (const std::string &n, nr_complex_t z, vector * f) {
   vector * d;
   if ((d = data->findVariable (n)) == NULL) {
     d = new vector (n);

@@ -166,8 +166,8 @@ void e_trsolver::debug()
     {
         messagefcn (0, c->getName() );
 
-        if (c->getSubcircuit ()) {
-            printf ("subcircuit Name %s\n", c->getSubcircuit ());
+        if (!c->getSubcircuit ().empty()) {
+	  printf ("subcircuit Name %s\n", c->getSubcircuit ().c_str());
         }
     }
 
@@ -732,7 +732,7 @@ int e_trsolver::stepsolve_async(nr_double_t steptime)
         {
             messagefcn (LOG_ERROR, "ERROR: %s: Jacobian singular at t = %.3e, "
                       "aborting %s analysis\n", getName (), (double) current,
-                      getDescription ());
+			getDescription ().c_str());
             return -1;
         }
 
@@ -918,7 +918,7 @@ int e_trsolver::getVProbeV (char * probename, nr_double_t& probeV)
                 // Subcircuit elements top level name is the
                 // subcircuit type (the base name of the subcircuit
                 // file)
-                if (c->getSubcircuit ())
+                if (!c->getSubcircuit ().empty())
                 {
                     fullname.append (c->getSubcircuit ());
                     fullname.append (".");
@@ -964,7 +964,7 @@ int e_trsolver::getIProbeI (char * probename, nr_double_t& probeI)
                 // Subcircuit elements top level name is the
                 // subcircuit type (the base name of the subcircuit
                 // file)
-                if (c->getSubcircuit ())
+                if (!c->getSubcircuit ().empty())
                 {
                     fullname.append (c->getSubcircuit ());
                     fullname.append (".");
@@ -1006,7 +1006,7 @@ int e_trsolver::setECVSVoltage(char * ecvsname, nr_double_t V)
                 // Subcircuit elements top level name is the
                 // subcircuit type (the base name of the subcircuit
                 // file)
-                if (c->getSubcircuit ())
+                if (!c->getSubcircuit ().empty())
                 {
                     fullname.append (c->getSubcircuit ());
                     fullname.append (".");

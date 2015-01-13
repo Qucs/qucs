@@ -56,6 +56,8 @@
   static struct define_t * definition (void) { return &cirdef; }
 
 #include <map>
+#include <string>
+
 #include "integrator.h"
 #include "valuelist.h"
 
@@ -92,6 +94,15 @@ class history;
  */
 class circuit : public object, public integrator
 {
+ public:
+  circuit * getNext (void) const { return this->next; }
+  void setNext (circuit * const o) { this->next = o; }
+  circuit * getPrev (void) const { return prev; }
+  void setPrev (circuit * const o) { this->prev = o; }
+ private:
+  circuit * next;
+  circuit * prev;
+  
  public:
   // constructor and destructor set
   circuit ();
@@ -132,7 +143,7 @@ class circuit : public object, public integrator
   virtual void saveCharacteristics (nr_double_t) { }
 
   // basic circuit element functionality
-  void   setNode (int, const char *, int intern = 0);
+  void   setNode (int, const std::string&, int intern = 0);
   node * getNode (int);
   void   setType (int t) { type = t; }
   int    getType (void) { return type; }
@@ -174,8 +185,8 @@ class circuit : public object, public integrator
   net *  getNet (void) { return subnet; }
 
   // subcircuitry
-  char * getSubcircuit (void) { return subcircuit; }
-  void   setSubcircuit (char *);
+  std::string getSubcircuit (void) { return subcircuit; }
+  void   setSubcircuit (const std::string &);
 
   // environment specific
   environment * getEnv (void) { return env; }
@@ -282,17 +293,17 @@ class circuit : public object, public integrator
   void addI (int, nr_double_t);
 
   // operating point functionality
-  void        addOperatingPoint (const char *, nr_double_t);
-  nr_double_t getOperatingPoint (const char *);
-  void        setOperatingPoint (const char *, nr_double_t);
-  int         hasOperatingPoint (char *);
+  void        addOperatingPoint (const std::string &name, nr_double_t);
+  nr_double_t getOperatingPoint (const std::string &name);
+  void        setOperatingPoint (const std::string &name, nr_double_t);
+  int         hasOperatingPoint (const std::string &name);
   valuelist<operatingpoint> & getOperatingPoints (void) { return oper; }
 
   // characteristics functionality
-  void        addCharacteristic (const char *, nr_double_t);
-  nr_double_t getCharacteristic (char *);
-  void        setCharacteristic (const char *, nr_double_t);
-  int         hasCharacteristic (char *);
+  void        addCharacteristic (const std::string &name, nr_double_t);
+  nr_double_t getCharacteristic (const std::string &name);
+  void        setCharacteristic (const std::string &name, nr_double_t);
+  int         hasCharacteristic (const std::string &name);
   valuelist<characteristic> & getCharacteristics (void) { return charac; }
 
   // differentiate between linear and non-linear circuits
@@ -301,8 +312,8 @@ class circuit : public object, public integrator
 
   // miscellaneous functionality
   void print (void);
-  static char * createInternal (const char *, const char *);
-  void setInternalNode (int, const char *);
+  static std::string createInternal (const std::string &, const std::string &);
+  void setInternalNode (int, const std::string &);
 
   // matrix operations
   void   allocMatrixS (void);
@@ -346,7 +357,7 @@ class circuit : public object, public integrator
   nr_complex_t * MatrixQV;
   nr_complex_t * VectorGV;
   nr_complex_t * VectorCV;
-  char * subcircuit;
+  std::string subcircuit;
   node * nodes;
   substrate * subst;
   valuelist<operatingpoint> oper;

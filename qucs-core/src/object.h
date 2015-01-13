@@ -56,18 +56,13 @@ class object
 {
  public:
   //! Constructor creates an unnamed instance of the object class.
-  object () : name(), next(nullptr), prev(nullptr), props() {} ;
+  object () : name(), props() {} ;
   //! This constructor creates a named instance of the object class.
-  object (const std::string &n) : name(n), next(nullptr), prev(nullptr), props() {} ;
-  object * getNext (void) const { return this->next; }
-  void setNext (object * const o) { this->next = o; }
-  object * getPrev (void) const { return prev; }
-  void setPrev (object * const o) { this->prev = o; }
+  object (const std::string &n) : name(n), props() {} ;
   //! Sets the name of the object.
   void setName (const std::string &n) { this->name = n; };
   //! Get the name of the object.
   const char * getName (void) const { return this->name.c_str(); };
-  void addProperty (const std::string &n, property * const p);
   void addProperty (const std::string &n, const char * const val, const bool def = false);
   void addProperty (const std::string &n, const nr_double_t, const bool def = false);
   void addProperty (const std::string &n, variable * const, const bool def = false);
@@ -83,15 +78,12 @@ class object
   int  getPropertyInteger (const std::string &n) const;
   bool hasProperty (const std::string &n) const ;
   bool isPropertyGiven (const std::string &n) const;
-  void deleteProperties (void);
   int  countProperties (void) const;
   const char *
     propertyList (void) const;
 
  private:
   std::string name;
-  object * next;
-  object * prev;
   properties props;
 };
 

@@ -239,7 +239,7 @@ void input::factory (void) {
       o = (object *) c;
       c->setName (def->instance);
       c->setNonLinear (def->nonlinear != 0);
-      c->setSubcircuit (def->subcircuit);
+      c->setSubcircuit (def->subcircuit == nullptr ? "" : def->subcircuit);
 
       // change size (number of ports) of variable sized components
       if (c->isVariableSized ()) {

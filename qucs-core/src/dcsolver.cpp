@@ -144,7 +144,7 @@ int dcsolver::solve (void) {
       convHelper = helpers[fallback++];
       if (convHelper != -1) {
 	logprint (LOG_ERROR, "WARNING: %s: %s analysis failed, using fallback "
-		  "#%d (%s)\n", getName (), getDescription (), fallback,
+		  "#%d (%s)\n", getName (), getDescription ().c_str(), fallback,
 		  getHelperDescription ());
 	retry++;
 	restart ();

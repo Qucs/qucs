@@ -25,6 +25,7 @@
 #ifndef __NET_H__
 #define __NET_H__
 
+#include <string>
 #include "ptrlist.h"
 
 namespace qucs {
@@ -42,7 +43,7 @@ class net : public object
 {
  public:
   net ();
-  net (const char *);
+  net (const std::string &);
   net (net &);
   ~net ();
   circuit * getRoot (void) { return root; }
@@ -67,7 +68,7 @@ class net : public object
   void setReduced (int r) { reduced = r; }
   int  getVoltageSources (void) { return nSources; }
   void setVoltageSources (int n) { nSources = n; }
-  analysis * findAnalysis (const char * const) const;
+  analysis * findAnalysis (const std::string &) const;
   analysis * findAnalysis (int);
   analysis * findSecondOrder (void);
   analysis * getChildAnalysis (analysis *);

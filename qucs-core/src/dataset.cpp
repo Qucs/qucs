@@ -289,9 +289,9 @@ vector * dataset::findDependency (const char * n) {
 /* The function goes through the list of variables in the dataset and
    returns the vector specified by the given name.  If there is no
    such variable registered the function returns NULL. */
-vector * dataset::findVariable (const char * n) {
+vector * dataset::findVariable (const std::string &name) {
   for (vector * v = variables; v != NULL; v = (vector *) v->getNext ()) {
-    if (!strcmp (v->getName (), n))
+    if (!strcmp (v->getName (), name.c_str()))
       return v;
   }
   return NULL;

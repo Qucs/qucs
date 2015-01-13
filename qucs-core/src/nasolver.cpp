@@ -67,7 +67,6 @@ nasolver<nr_type_t>::nasolver () : analysis ()
     A = C = NULL;
     z = x = xprev = zprev = NULL;
     reltol = abstol = vntol = 0;
-    desc = NULL;
     calculate_func = NULL;
     convHelper = fixpoint = 0;
     eqnAlgo = ALGO_LU_DECOMPOSITION;
@@ -78,13 +77,12 @@ nasolver<nr_type_t>::nasolver () : analysis ()
 
 // Constructor creates a named instance of the nasolver class.
 template <class nr_type_t>
-nasolver<nr_type_t>::nasolver (char * n) : analysis (n)
+nasolver<nr_type_t>::nasolver (const std::string &n) : analysis (n)
 {
     nlist = NULL;
     A = C = NULL;
     z = x = xprev = zprev = NULL;
     reltol = abstol = vntol = 0;
-    desc = NULL;
     calculate_func = NULL;
     convHelper = fixpoint = 0;
     eqnAlgo = ALGO_LU_DECOMPOSITION;
@@ -169,8 +167,8 @@ int nasolver<nr_type_t>::solve_once (void)
         else
         {
             e->setText ("circuit admittance matrix in %s solver is singular at "
-                        "node `%s' connected to [%s]", desc, nlist->get (d),
-                        nlist->getNodeString (d));
+                        "node `%s' connected to [%s]", desc.c_str(), nlist->get (d).c_str(),
+                        nlist->getNodeString (d).c_str());
         }
         throw_exception (e);
         error++;
@@ -183,8 +181,8 @@ int nasolver<nr_type_t>::solve_once (void)
             if (d < countNodes ())
             {
                 logprint (LOG_ERROR, "WARNING: %s: inserted virtual resistance at "
-                          "node `%s' connected to [%s]\n", getName (), nlist->get (d),
-                          nlist->getNodeString (d));
+                          "node `%s' connected to [%s]\n", getName (), nlist->get (d).c_str(),
+                          nlist->getNodeString (d).c_str());
             }
         }
         while (top_exception() != NULL &&
@@ -216,7 +214,7 @@ void nasolver<nr_type_t>::solve_pre (void)
     // create node list, enumerate nodes and voltage sources
 #if DEBUG
     logprint (LOG_STATUS, "NOTIFY: %s: creating node list for %s analysis\n",
-              getName (), desc);
+              getName (), desc.c_str());
 #endif
     nlist = new nodelist (subnet);
     nlist->assignNodes ();
@@ -236,7 +234,7 @@ void nasolver<nr_type_t>::solve_pre (void)
     x = new tvector<nr_type_t> (N + M);
 
 #if DEBUG
-    logprint (LOG_STATUS, "NOTIFY: %s: solving %s netlist\n", getName (), desc);
+    logprint (LOG_STATUS, "NOTIFY: %s: solving %s netlist\n", getName (), desc.c_str());
 #endif
 }
 
@@ -318,7 +316,7 @@ int nasolver<nr_type_t>::solve_nonlinear_continuation_gMin (void)
                 error = 1;
                 e = new qucs::exception (EXCEPTION_NO_CONVERGENCE);
                 e->setText ("no convergence in %s analysis after %d gMinStepping "
-                            "iterations", desc, iterations);
+                            "iterations", desc.c_str(), iterations);
                 throw_exception (e);
                 break;
             }
@@ -392,7 +390,7 @@ int nasolver<nr_type_t>::solve_nonlinear_continuation_Source (void)
                 error = 1;
                 e = new qucs::exception (EXCEPTION_NO_CONVERGENCE);
                 e->setText ("no convergence in %s analysis after %d sourceStepping "
-                            "iterations", desc, iterations);
+                            "iterations", desc.c_str(), iterations);
                 throw_exception (e);
                 break;
             }
@@ -512,7 +510,7 @@ int nasolver<nr_type_t>::solve_nonlinear (void)
     {
         e = new qucs::exception (EXCEPTION_NO_CONVERGENCE);
         e->setText ("no convergence in %s analysis after %d iterations",
-                    desc, run);
+                    desc.c_str(), run);
         throw_exception (e);
         error++;
     }
@@ -615,12 +613,12 @@ void nasolver<nr_type_t>::createBMatrix (void)
         {
             val = 0.0;
             n = nlist->getNode (r);
-            for (int i = 0; i < n->nNodes; i++)
+            for (auto &current : *n)
             {
                 // is voltage source connected to node ?
-                if (n->nodes[i]->getCircuit () == vs)
+	      if (current->getCircuit () == vs)
                 {
-                    val += MatVal (vs->getB (n->nodes[i]->getPort (), c));
+		  val += MatVal (vs->getB (current->getPort (), c));
                 }
             }
             // put value into B matrix
@@ -655,12 +653,12 @@ void nasolver<nr_type_t>::createCMatrix (void)
         {
             val = 0.0;
             n = nlist->getNode (c);
-            for (int i = 0; i < n->nNodes; i++)
+            for (auto &current: *n)
             {
                 // is voltage source connected to node ?
-                if (n->nodes[i]->getCircuit () == vs)
+	      if (current->getCircuit () == vs)
                 {
-                    val += MatVal (vs->getC (r, n->nodes[i]->getPort ()));
+		  val += MatVal (vs->getC (r, current->getPort ()));
                 }
             }
             // put value into C matrix
@@ -721,15 +719,15 @@ void nasolver<nr_type_t>::createGMatrix (void)
             nr = nlist->getNode (r);
             g = 0.0;
             // sum up the conductance of each connected circuit
-            for (int a = 0; a < nc->nNodes; a++)
-                for (int b = 0; b < nr->nNodes; b++)
-                    if (nc->nodes[a]->getCircuit () == nr->nodes[b]->getCircuit ())
-                    {
-                        ct = nc->nodes[a]->getCircuit ();
-                        pc = nc->nodes[a]->getPort ();
-                        pr = nr->nodes[b]->getPort ();
-                        g += MatVal (ct->getY (pr, pc));
-                    }
+            for (auto & currentnc  : *nc)
+	      for (auto & currentnr: *nr)
+		if (currentnc->getCircuit () == currentnr->getCircuit ())
+		  {
+		    ct = currentnc->getCircuit ();
+		    pc = currentnc->getPort ();
+		    pr = currentnr->getPort ();
+		    g += MatVal (ct->getY (pr, pc));
+		  }
             // put value into G matrix
             A->set (r, c, g);
         }
@@ -763,13 +761,15 @@ void nasolver<nr_type_t>::createNoiseMatrix (void)
             nr = nlist->getNode (r);
             val = 0.0;
             // sum up the noise-correlation of each connected circuit
-            for (a = 0; a < nc->nNodes; a++)
-                for (b = 0; b < nr->nNodes; b++)
-                    if (nc->nodes[a]->getCircuit () == nr->nodes[b]->getCircuit ())
+            for (auto & currentnc: *nc)
+		/* a = 0; a < nc->size(); a++ */
+	      for (auto &currentnr : *nr)
+		/* b = 0; b < nr->size(); b++) */
+                    if (currentnc->getCircuit () == currentnr->getCircuit ())
                     {
-                        ct = nc->nodes[a]->getCircuit ();
-                        pc = nc->nodes[a]->getPort ();
-                        pr = nr->nodes[b]->getPort ();
+                        ct = currentnc->getCircuit ();
+                        pc = currentnc->getPort ();
+                        pr = currentnr->getPort ();
                         val += MatVal (ct->getN (pr, pc));
                     }
             // put value into Cy matrix
@@ -806,13 +806,14 @@ void nasolver<nr_type_t>::createNoiseMatrix (void)
         {
             val = 0.0;
             n = nlist->getNode (c);
-            for (i = 0; i < n->nNodes; i++)
+            for (auto &currentn: *n)
+	      /*i = 0; i < n->size(); i++ )*/
             {
                 // is voltage source connected to node ?
-                if (n->nodes[i]->getCircuit () == vsr)
+                if (currentn->getCircuit () == vsr)
                 {
                     ri = vsr->getSize () + r - vsr->getVoltageSource ();
-                    ci = n->nodes[i]->getPort ();
+                    ci = currentn->getPort ();
                     val += MatVal (vsr->getN (ri, ci));
                 }
             }
@@ -830,13 +831,13 @@ void nasolver<nr_type_t>::createNoiseMatrix (void)
         {
             val = 0.0;
             n = nlist->getNode (r);
-            for (i = 0; i < n->nNodes; i++)
+            for (auto & currentn: *n)/*i = 0; i < n->size(); i++)*/
             {
                 // is voltage source connected to node ?
-                if (n->nodes[i]->getCircuit () == vsc)
+                if (currentn->getCircuit () == vsc)
                 {
                     ci = vsc->getSize () + c - vsc->getVoltageSource ();
-                    ri = n->nodes[i]->getPort ();
+                    ri = currentn->getPort ();
                     val += MatVal (vsc->getN (ri, ci));
                 }
             }
@@ -866,13 +867,13 @@ void nasolver<nr_type_t>::createIVector (void)
         val = 0.0;
         n = nlist->getNode (r);
         // go through each circuit connected to the node
-        for (int i = 0; i < n->nNodes; i++)
+        for (auto &currentn: *n)/* int i = 0; i < n->size(); i++)*/
         {
-            is = n->nodes[i]->getCircuit ();
-            // is this a current source ?
-            if (is->isISource () || is->isNonLinear ())
-            {
-                val += MatVal (is->getI (n->nodes[i]->getPort ()));
+	  is = currentn->getCircuit ();
+	  // is this a current source ?
+	  if (is->isISource () || is->isNonLinear ())
+	    {
+	      val += MatVal (is->getI (currentn->getPort ()));
             }
         }
         // put value into i vector
@@ -917,7 +918,7 @@ int nasolver<nr_type_t>::countNodes (void)
 
 // Returns the node number of the give node name.
 template <class nr_type_t>
-int nasolver<nr_type_t>::getNodeNr (const char * str)
+int nasolver<nr_type_t>::getNodeNr (const std::string &str)
 {
     return nlist->getNodeNr (str);
 }
@@ -932,9 +933,9 @@ int nasolver<nr_type_t>::findAssignedNode (circuit * c, int port)
     for (int r = 0; r < N; r++)
     {
         n = nlist->getNode (r);
-        for (int i = 0; i < n->nNodes; i++)
-            if (c == n->nodes[i]->getCircuit ())
-                if (port == n->nodes[i]->getPort ())
+        for (auto &currentn : *n) /*int i = 0; i < n->size(); i++)*/
+            if (c == currentn->getCircuit ())
+                if (port == currentn->getPort ())
                     return r;
     }
     return -1;
@@ -1216,17 +1217,16 @@ void nasolver<nr_type_t>::saveNodeVoltages (void)
     for (int r = 0; r < N; r++)
     {
         n = nlist->getNode (r);
-        for (int i = 0; i < n->nNodes; i++)
+        /* for (int i = 0; i < n->size(); i++)*/
+	for(auto &currentn: *n)
         {
-            n->nodes[i]->getCircuit()->setV (n->nodes[i]->getPort (), x->get (r));
+	  currentn->getCircuit()->setV (currentn->getPort (), x->get (r));
         }
     }
     // save reference node
     n = nlist->getNode (-1);
-    for (int i = 0; i < n->nNodes; i++)
-    {
-        n->nodes[i]->getCircuit()->setV (n->nodes[i]->getPort (), 0.0);
-    }
+    for(auto &currentn: *n)
+      currentn->getCircuit()->setV (currentn->getPort (), 0.0);
 }
 
 /* This function goes through solution (the x vector) and saves the
@@ -1267,14 +1267,18 @@ void nasolver<nr_type_t>::storeSolution (void)
     for (r = 0; r < N; r++)
     {
         struct nodelist_t * n = nlist->getNode (r);
-        solution.add (n->name, x->get (r), 0);
+	nr_type_t gr = x->get (r);
+	qucs::naentry<nr_type_t> entry(gr, 0);
+        solution.insert({{n->name, entry }});
     }
     // store all branch currents of voltage sources
     for (r = 0; r < M; r++)
     {
         circuit * vs = findVoltageSource (r);
         int vn = r - vs->getVoltageSource () + 1;
-        solution.add (vs->getName (), x->get (r + N), vn);
+	nr_type_t xg = x->get (r + N);
+	qucs::naentry<nr_type_t> entry(xg, vn);
+        solution.insert({{vs->getName (), entry}});
     }
 }
 
@@ -1290,69 +1294,71 @@ void nasolver<nr_type_t>::recallSolution (void)
     for (r = 0; r < N; r++)
     {
         struct nodelist_t * n = nlist->getNode (r);
-        if ((na = solution.find (n->name, 0)) != NULL)
-            x->set (r, na->value);
+	auto na = solution.find(n->name);
+	if (na != solution.end())
+	  if ((*na).second.current == 0)
+            x->set (r, (*na).second.value);
     }
     // store all branch currents of voltage sources
     for (r = 0; r < M; r++)
     {
         circuit * vs = findVoltageSource (r);
         int vn = r - vs->getVoltageSource () + 1;
-        if ((na = solution.find (vs->getName (), vn)) != NULL)
-            x->set (r + N, na->value);
+	auto na = solution.find(vs->getName ());
+	if (na != solution.end())
+	  if ((*na).second.current == vn)
+            x->set (r + N, (*na).second.value);
     }
 }
 
 /* This function saves the results of a single solve() functionality
    into the output dataset. */
 template <class nr_type_t>
-void nasolver<nr_type_t>::saveResults (const char * volts, const char * amps,
+void nasolver<nr_type_t>::saveResults (const std::string &volts, const std::string &amps,
                                        int saveOPs, qucs::vector * f)
 {
     int N = countNodes ();
     int M = countVoltageSources ();
-    char * n;
 
     // add node voltage variables
-    if (volts)
+    if (!volts.empty())
     {
         for (int r = 0; r < N; r++)
         {
-            if ((n = createV (r, volts, saveOPs)) != NULL)
-            {
+	  std::string n = createV (r, volts, saveOPs);
+	  if(!n.empty())
+	    {
                 saveVariable (n, x->get (r), f);
-                free (n);
             }
         }
     }
 
     // add branch current variables
-    if (amps)
+    if (!amps.empty())
     {
         for (int r = 0; r < M; r++)
         {
-            if ((n = createI (r, amps, saveOPs)) != NULL)
+	  std::string n = createI (r, amps, saveOPs);
+	  if (!n.empty())
             {
                 saveVariable (n, x->get (r + N), f);
-                free (n);
             }
         }
     }
 
     // add voltage probe data
-    if (volts)
+    if (!volts.empty())
     {
         circuit * root = subnet->getRoot ();
         for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ())
         {
             if (!c->isProbe ()) continue;
-            if (c->getSubcircuit () && !(saveOPs & SAVE_ALL)) continue;
-            if (strcmp (volts, "vn"))
-                c->saveOperatingPoints ();
-            n = createOP (c->getName (), volts);
+            if (!c->getSubcircuit().empty() && !(saveOPs & SAVE_ALL)) continue;
+            if (volts != "vn")
+                c->saveOperatingPoints ();	    
+	    std::string n = createOP (c->getName (), volts);
             saveVariable (n, nr_complex_t (c->getOperatingPoint ("Vr"),
                                    c->getOperatingPoint ("Vi")), f);
-            free (n);
         }
     }
 
@@ -1363,15 +1369,13 @@ void nasolver<nr_type_t>::saveResults (const char * volts, const char * amps,
         for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ())
         {
             if (!c->isNonLinear ()) continue;
-            if (c->getSubcircuit () && !(saveOPs & SAVE_ALL)) continue;
+            if (!c->getSubcircuit ().empty() && !(saveOPs & SAVE_ALL)) continue;
             c->calcOperatingPoints ();
-            valuelistiterator<operatingpoint> it (c->getOperatingPoints ());
-            for (; *it; ++it)
+            for (auto ops: c->getOperatingPoints ())
             {
-                operatingpoint * p = it.currentVal ();
-                n = createOP (c->getName (), p->getName ());
-                saveVariable (n, p->getValue (), f);
-                free (n);
+                operatingpoint &p = ops.second;
+		std::string n = createOP (c->getName (), p.getName ());
+                saveVariable (n, p.getValue (), f);
             }
         }
     }
@@ -1380,54 +1384,51 @@ void nasolver<nr_type_t>::saveResults (const char * volts, const char * amps,
 /* Create an appropriate variable name for operating points.  The
    caller is responsible to free() the returned string. */
 template <class nr_type_t>
-char * nasolver<nr_type_t>::createOP (const char * c, const char * n)
+std::string nasolver<nr_type_t>::createOP (const std::string &c, const std::string &n)
 {
-    char * text = (char *) malloc (strlen (c) + strlen (n) + 2);
-    sprintf (text, "%s.%s", c, n);
-    return text;
+    return c+"."+n;
 }
 
 /* Creates an appropriate variable name for voltages.  The caller is
    responsible to free() the returned string. */
 template <class nr_type_t>
-char * nasolver<nr_type_t>::createV (int n, const char * volts, int saveOPs)
+std::string nasolver<nr_type_t>::createV (int n, const std::string &volts, int saveOPs)
 {
-    if (nlist->isInternal (n)) return NULL;
-    char * node = nlist->get (n);
-    if (strchr (node, '.') && !(saveOPs & SAVE_ALL)) return NULL;
-    char * text = (char *) malloc (strlen (node) + 2 + strlen (volts));
-    sprintf (text, "%s.%s", node, volts);
-    return text;
+    if (nlist->isInternal (n))
+      return std::string();
+    std::string node = nlist->get (n);
+    if(node.find('.')!=std::string::npos && !(saveOPs & SAVE_ALL))
+      return std::string();
+    std::string ret = node+"."+volts;
+    return ret;
 }
 
 /* Create an appropriate variable name for currents.  The caller is
    responsible to free() the returned string. */
 template <class nr_type_t>
-char * nasolver<nr_type_t>::createI (int n, const char * amps, int saveOPs)
+std::string nasolver<nr_type_t>::createI (int n, const std::string &amps, int saveOPs)
 {
     circuit * vs = findVoltageSource (n);
 
     // don't output internal (helper) voltage sources
     if (vs->isInternalVoltageSource ())
-        return NULL;
+      return std::string();
 
     /* save only current through real voltage sources and explicit
        current probes */
     if (!vs->isVSource () && !(saveOPs & SAVE_OPS))
-        return NULL;
+      return std::string();
 
     // don't output subcircuit components if not requested
-    if (vs->getSubcircuit () && !(saveOPs & SAVE_ALL))
-        return NULL;
+    if (!vs->getSubcircuit ().empty() && !(saveOPs & SAVE_ALL))
+      return std::string();
 
     // create appropriate current name for single/multiple voltage sources
-    const char * name = vs->getName ();
-    char * text = (char *) malloc (strlen (name) + 4 + strlen (amps));
+    std::string name = vs->getName ();
     if (vs->getVoltageSources () > 1)
-        sprintf (text, "%s.%s%d", name, amps, n - vs->getVoltageSource () + 1);
+      return name+"."+amps+std::to_string(n - vs->getVoltageSource () + 1);
     else
-        sprintf (text, "%s.%s", name, amps);
-    return text;
+      return name+"."+amps;
 }
 
 

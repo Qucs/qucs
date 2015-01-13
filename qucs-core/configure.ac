@@ -752,6 +752,8 @@ AS_VAR_IF([ax_cv_cxx_have_numeric_limits],[yes],
 AC_CXX_HAVE_COMPLEX
 AS_IF([test "X$ac_cv_cxx_have_complex" = "X"],[AC_MSG_ERROR([Qucs needs a templated complex class])])
 
+AX_CXX_ERASE_ITERATOR_TYPE
+
 
 AC_MSG_NOTICE([Check complex transcendental overload in namespace std])
 dnl http://www.cplusplus.com/reference/complex/
@@ -935,21 +937,19 @@ AC_CONFIG_FILES([Makefile
 
 dnl Check for Git short SHA to tag version
 dnl The release package should also keep it on the config.h
-AC_PATH_PROG([GITPROG],[git],[git])
+AC_PATH_PROG([GIT],[git],[git])
 AS_IF([test -d "../.git"],
-      [AS_IF([test X"GITPROG" = "X"],
-             [],
+      [AS_IF([test X"$GIT" != "X"],
              [AC_MSG_CHECKING([for git tree revision])
-	      m4_define([GIT_REVISION], m4_esyscmd([git log --pretty=format:'%h' -n 1u]))
-	      GIT=GIT_REVISION
-	      AC_DEFINE([GIT], ["GIT_REVISION"], [Git short revision hash.])
-	      AC_MSG_RESULT($GIT)])])
+	      GIT_REVISION=`git log --pretty=format:'%h' -n 1u`
+	      AC_DEFINE([GIT_REVISION], ["GIT_REVISION"], [Git short revision hash.])
+	      AC_MSG_RESULT($GIT_REVISION)])])
 
 AC_OUTPUT
 
 dnl Print results.
 AC_MSG_RESULT([])
-AC_MSG_RESULT([ $PACKAGE version $VERSION ($GIT) configured successfully.])
+AC_MSG_RESULT([ $PACKAGE version $VERSION ($GIT_REVISION) configured successfully.])
 AC_MSG_RESULT([
 Configure Information:
   C Compiler        : $CC

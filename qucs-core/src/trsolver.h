@@ -38,7 +38,7 @@ class trsolver : public nasolver<nr_double_t>, public states<nr_double_t>
 {
 public:
     ACREATOR (trsolver);
-    trsolver (char *);
+    trsolver (const std::string  &name);
     trsolver (trsolver &);
     ~trsolver ();
     int  solve (void);

@@ -78,8 +78,8 @@ int main (int argc, char ** argv) {
   for (int i = 1; i < argc; i++) {
     if (!strcmp (argv[i], "-v") || !strcmp (argv[i], "--version")) {
       fprintf (stdout,
-#ifdef GIT
-	"Qucsator " PACKAGE_VERSION " (" GIT ") \n"
+#ifdef GIT_REVISION
+	"Qucsator " PACKAGE_VERSION " (" GIT_REVISION ") \n"
 #else
 	"Qucsator " PACKAGE_VERSION "\n"
 #endif
