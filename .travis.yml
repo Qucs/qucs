@@ -149,7 +149,12 @@ script:
   # Run Qucs-Test suite and collect coverage
   # Need to be on `script` section to raise error as failure
   # Use qucsator in-tree to generate gcov coverage for GCC (LINUX)
-  - cd qucs-test && ./run.py --prefix $HOME/build/Qucs/qucs/qucs-core/src/ --qucsator --skip skip.txt && cd -
+
+  # Testsuite
+  - cd qucs-test && python run.py --prefix $HOME/build/Qucs/qucs/qucs-core/src/ --qucsator --skip skip.txt && cd -
+
+  # Qucs equation system
+  - cd qucs-test && python run_equations.py --prefix $HOME/build/Qucs/qucs/qucs-core/src/ && cd -
 
 after_success:
   # Send coverage data to Coveralls
