@@ -2806,7 +2806,7 @@ void QucsApp::slotSimulateWithSpice()
 {
     Schematic *sch = (Schematic*)DocumentTab->currentPage();
 
-    NgspiceSimDialog *SimDlg = new NgspiceSimDialog(sch);
+    ExternSimDialog *SimDlg = new ExternSimDialog(sch);
     SimDlg->exec();
     delete SimDlg;
 }
