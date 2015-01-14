@@ -95,7 +95,11 @@ TESTS += \
 
 # component
 TESTS += \
+  tests/basic/components/capacitor/capacitor@dc.net \
+  tests/basic/components/capacitor/capacitor@ac.net \
+  tests/basic/components/capacitor/capacitor@tr.net \
   tests/basic/components/spfile/spfile@sp.net
+
 
 if USE_QUCS_TEST
     TXT_LOG_COMPILER = src/qucsator
