@@ -2,6 +2,7 @@
  * constants.h - global natural constant header file
  *
  * Copyright (C) 2004, 2005 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2015 Guilherme Brondani Torri <guitorri@gmail.com>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -44,64 +45,64 @@ Qucs physical constants
 */
 
 /*!\brief speed of light in vacuum (\f$c_0\f$) */
-#define C0   299792458.0
+const double C0   = 299792458.0;
 /*!\brief magnetic constant of vacuum (\f$\mu_0=4\pi\times10^{-7}\f$) */
-#define MU0  12.566370614e-7
+const double  MU0 = 12.566370614e-7;
 /*!\brief Electric constant of vacuum \f$\varepsilon_0\f$*/
-#define E0   8.854187817e-12
+const double E0   = 8.854187817e-12;
 /*!\brief Wave impedance in vacuum (\f$Z_0=\sqrt{\frac{\mu_0}{\varepsilon_0}}\f$)*/
-#define Z0   376.73031346958504364963
+const double Z0   = 376.73031346958504364963;
 /*!\brief Planck constant (\f$h\f$)
    \todo Add h bar (\f$h/(2\pi)\f$)
 */
-#define Hp    6.626069311e-34
+const double Hp   = 6.626069311e-34;
 /*!\brief Absolute 0 in centigrade  */
-#define K    -273.15
+const double K    = -273.15;
 /*!\brief standard temperature      */
-#define T0   290
+const double T0   = 290;
 
 /*!\brief Boltzmann constant (\f$k_B\f$) */
-#define kB   1.380650524e-23
+const double kB      = 1.380650524e-23;
 /*!\brief Elementary charge (\f$q_e\f$)  */
-#define Q_e    1.6021765314e-19
+const double Q_e     = 1.6021765314e-19;
 /*!\brief Boltzmann constant over Elementary charge (\f$k_B/q_e\f$)*/
-#define kBoverQ    0.86173433260414314916e-4
+const double kBoverQ = 0.86173433260414314916e-4;
 /*!\brief Elementary charge over Boltzmann constant (\f$q_e/k_B\f$)*/
-#define QoverkB    1.16045045690360379713e+4
+const double QoverkB = 1.16045045690360379713e+4;
 
 /*!\brief Relative permittivity of Silicon dioxide (Silica) */
-#define ESiO2      3.9
+const double ESiO2     = 3.9;
 /*!\brief Relative permittivity of Silicon */
-#define ESi        11.7
+const double ESi       = 11.7;
 /*!\brief relative permittivity of Germanium */
-#define EGe        15.8
+const double EGe       = 15.8;
 /*!\brief Relative permittivity of Gallium(III) arsenide */
-#define EGaAs      13.1
+const double EGaAs     = 13.1;
 /*!\brief Intrinsic carrier concentration in 1/m^3 of Silicon */
-#define NiSi       1.45e16
+const double NiSi      = 1.45e16;
 /*!\brief Intrinsic carrier concentration in 1/m^3 of Germanium */
-#define NiGe       2.40e19
+const double NiGe      = 2.40e19;
 /*!\brief Intrinsic carrier concentration in 1/m^3 of Gallium(III) arsenide */
-#define NiGaAs     9.00e12
+const double NiGaAs    = 9.00e12;
 /*!\brief Energy gap at 300K in eV of Silicon */
-#define EgSi       1.11
+const double EgSi      = 1.11;
 /*!\brief Energy gap at 300K in eV of Schottky
   \todo What kind of metal (ideal, real, gold)?
 */
-#define EgSchottky 0.69
+const double EgSchottky = 0.69;
 /*!\brief Energy gap at 300K in eV of Germanium */
-#define EgGe       0.67
+const double EgGe       = 0.67;
 /*!\brief Energy gap at 300K in eV of Gallium(III) arsenide */
-#define EgGaAs     1.43
+const double EgGaAs     = 1.43;
 /*!\brief Energy gap at 0K in eV of Silicon */
-#define Eg0Si      1.16
+const double Eg0Si      = 1.16;
 
 /// \todo move these simulator constants and macros elsewhere.
 
 /*!\brief Gmin
    \todo Define and document
 */
-#define GMin       NR_TINY
+const double GMin = NR_TINY;
 
 #define cubic(x)  ((x) * (x) * (x))
 
