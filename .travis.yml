@@ -1,3 +1,19 @@
+
+# This script sets up Travis CI with the following matrix:
+#
+# linux: gcc  , make check, qucs-test, gcov, coveralls integration
+# linux: clang, make check, qucs-test, doxygen deploy
+# osx:   clang, make check, qucs-test
+#
+# Try matrix tries to balance the run time of the instances instead of
+# creating new instances for shorter jobs.
+#
+# Most time consuming tasks:
+# - setup of gcc
+# - gcov data collection
+# - install Qt on OSX
+# - doxygen build (master only)
+
 language: cpp
 
 os:
@@ -18,7 +34,13 @@ matrix:
     - os: osx
       compiler: gcc
 
+# Set secure environment with encrypted string containing GIT_NAME, GIT_EMAIL and GH_TOKEN
+env:
+  global:
+    - secure: "HfplEtCmFfgmKIKWfwe/Pw+BZcciFiIfw5gP/nF7IRVDSIjxOzwBHC+E/TyayR1iRmp3dHs6/fOrLFFNWJZzzH/qdmxGybrvECkgp5oF2ho6paAa3zcdTXan6r0+ye4JV20n6pqBtOM5IS3eQv1eFc81lTa80hzBiPQfEp3tW9w="
+
 before_install:
+  - echo $GIT_NAME;
 
   # Set variables for readability.
   - if [[ $TRAVIS_OS_NAME == linux ]]; then LINUX=true; fi
@@ -57,6 +79,11 @@ install:
   - if [[ $GCC ]]; then
       sudo apt-get install lcov ;
       sudo pip install cpp-coveralls ;
+    fi
+
+  # Set up for Doxygen
+  - if [[ $LINUX && $CLANG ]]; then
+      sudo apt-get install -qq doxygen texlive graphviz ;
     fi
 
   # Qucs-Test uses Numpy to compare results
@@ -156,8 +183,43 @@ script:
   # Qucs equation system
   - cd qucs-test && python run_equations.py --prefix $HOME/build/Qucs/qucs/qucs-core/src/ && cd -
 
+  # Run Doxygen for qucs-GUI and qucs-core
+  - if [[ $LINUX && $CLANG && $TRAVIS_BRANCH == master ]]; then
+      TOP=`pwd`;
+
+      cd qucs/contrib/doxygen/;
+      VERSION=$(cat ../../VERSION);
+      sed "s/0\.\0\.18/${VERSION}/g" doxygen.cfg  > temp;
+      mv temp doxygen.cfg;
+      doxygen doxygen.cfg;
+      cd ${TOP};
+
+      cd qucs-doc;
+      ./autogen.sh;
+      cd doxygen;
+      make doxygen;
+      cd ${TOP};
+    fi
+
 after_success:
   # Send coverage data to Coveralls
   - if [[ $GCC ]]; then
       coveralls --exclude examples --exclude qucs --exclude qucs-doc --exclude adms-2.3.4 --gcov-options '\-lp' --gcov gcov-4.8;
+    fi
+
+  # Publish HTML into Qucs/qucs-doxygen repo
+  # See: http://awestruct.org/auto-deploy-to-github-pages/
+  # Clone repo, put the html pages on its gh_pages branch
+  # Credentials taken from the secure environment variables GIT_NAME, GIT_EMAIL and GH_TOKEN
+  - if [[ $LINUX && $CLANG && $TRAVIS_BRANCH == master]]; then
+      git config --global user.name ${GIT_NAME} ;
+      git config --global user.email ${GIT_EMAIL} ;
+      git clone https://github.com/Qucs/qucs-doxygen.git qucs-doxygen ;
+      cd qucs-doxygen ;
+      git checkout gh-pages ;
+      mv ../qucs/contrib/doxygen/html/ qucs/ ;
+      mv ../qucs-doc/doxygen/html/ qucs-core/ ;
+      git add --all . ;
+      git commit -m "Auto-updating Doxygen developer documentation" ;
+      git push https://${GH_TOKEN}@github.com/Qucs/qucs-doxygen gh-pages ;
     fi
