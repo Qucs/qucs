@@ -198,17 +198,17 @@
 	_flicker_pwr[n1][n2] += pwr;\\
 	_flicker_exp[n1][n2] += exp;
 #define _load_whitenoise2(n1,n2,pwr)\\
-	cy (n1,n2) -= pwr/kB/T0; cy (n2,n1) -= pwr/kB/T0;\\
-	cy (n1,n1) += pwr/kB/T0; cy (n2,n2) += pwr/kB/T0;
+	cy (n1,n2) -= pwr/qucs::kB/qucs::T0; cy (n2,n1) -= pwr/qucs::kB/qucs::T0;\\
+	cy (n1,n1) += pwr/qucs::kB/qucs::T0; cy (n2,n2) += pwr/qucs::kB/qucs::T0;
 #define _load_whitenoise1(n1,pwr)\\
-	cy (n1,n1) += pwr/kB/T0;
+	cy (n1,n1) += pwr/qucs::kB/qucs::T0;
 #define _load_flickernoise2(n1,n2,pwr,exp)\\
-	cy (n1,n2) -= pwr*pow(_freq,-exp)/kB/T0;\\
-	cy (n2,n1) -= pwr*pow(_freq,-exp)/kB/T0;\\
-	cy (n1,n1) += pwr*pow(_freq,-exp)/kB/T0;\\
-	cy (n2,n2) += pwr*pow(_freq,-exp)/kB/T0;
+	cy (n1,n2) -= pwr*pow(_freq,-exp)/qucs::kB/qucs::T0;\\
+	cy (n2,n1) -= pwr*pow(_freq,-exp)/qucs::kB/qucs::T0;\\
+	cy (n1,n1) += pwr*pow(_freq,-exp)/qucs::kB/qucs::T0;\\
+	cy (n2,n2) += pwr*pow(_freq,-exp)/qucs::kB/qucs::T0;
 #define _load_flickernoise1(n1,pwr,exp)\\
-	cy (n1,n1) += pwr*pow(_freq,-exp)/kB/T0;
+	cy (n1,n1) += pwr*pow(_freq,-exp)/qucs::kB/qucs::T0;
 
 <!--
 * apply qucsVersion.xml c:math_h macro
@@ -225,7 +225,7 @@
 #define _param_given(p)		(isPropertyGiven(p)?1:0)
 
 <admst:text format="\n\n// \$vt and \$vt() functions"/>
-#define _vt_nom                 (kBoverQ*_circuit_temp)
+#define _vt_nom                 (qucs::kBoverQ*_circuit_temp)
 
 using namespace qucs::device;
 using qucs::matrix;

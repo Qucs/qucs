@@ -2106,8 +2106,8 @@
 #define m10_limexp(v10,v00,x)   v10 = ((x)&lt;80.0?(v00):exp(80.0));
 
 // analog kernel parameter system functions, LRM p.215
-#define m00_vt(x)               (kBoverQ*(x))
-#define m10_vt(x)               (kBoverQ)
+#define m00_vt(x)               (qucs::kBoverQ*(x))
+#define m10_vt(x)               (qucs::kBoverQ)
 
 // extra functions (?)
 #define m00_div(v00,v10,x,y)    double v10=1/(y); double v00=(x)*v10;

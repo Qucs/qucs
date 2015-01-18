@@ -228,7 +228,7 @@ PROP_OPT [] = {
     </admst:when>
     <admst:otherwise><admst:text format="26.85"/></admst:otherwise>
   </admst:choose>
-  <admst:text format=", PROP_NO_STR }, PROP_MIN_VAL (K) },\n"/>
+  <admst:text format=", PROP_NO_STR }, PROP_MIN_VAL (qucs::K) },\n"/>
   </admst:if>
 </admst:if>
 <admst:text format="  PROP_NO_PROP };\n"/>
