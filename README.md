@@ -15,6 +15,9 @@ Qucs is an integrated circuit simulator which means you are able to setup a circ
   - Bug trackers:
     - <http://sourceforge.net/p/qucs/_list/tickets>
     - <https://github.com/Qucs/qucs/issues>
+  - Source code documentation:
+    - <http://qucs.github.io/qucs-doxygen/qucs/index.html>
+    - <http://qucs.github.io/qucs-doxygen/qucs-core/index.html>
   - Downloads: <http://sourceforge.net/projects/qucs/files/>
 
 ## Currently Supported Platforms
