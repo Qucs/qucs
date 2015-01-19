@@ -57,7 +57,7 @@ void tline::calcNoiseSP (nr_double_t) {
   a = std::log (a) / 2;
   a = std::exp (a * l);
   nr_double_t r = (z - z0) / (z + z0);
-  nr_double_t f = (a - 1) * (r * r - 1) / sqr (a - r * r) * kelvin (T) / T0;
+  nr_double_t f = (a - 1) * (r * r - 1) / sqr (a - r * r) * celsius2kelvin (T) / T0;
   nr_double_t n11 = -f * (r * r + a);
   nr_double_t n21 = +f * 2 * r * std::sqrt (a);
   setN (NODE_1, NODE_1, n11); setN (NODE_2, NODE_2, n11);
@@ -72,7 +72,7 @@ void tline::calcNoiseAC (nr_double_t) {
   a = std::log (a) / 2;
   if (a * l != 0.0) {
     a = std::exp (a * l);
-    nr_double_t f = 4.0 * kelvin (T) / T0 / z / (a - 1);
+    nr_double_t f = 4.0 * celsius2kelvin (T) / T0 / z / (a - 1);
     nr_double_t n11 = +f * (a + 1);
     nr_double_t n21 = -f * 2 * std::sqrt (a);
     setN (NODE_1, NODE_1, n11); setN (NODE_2, NODE_2, n11);

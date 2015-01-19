@@ -77,7 +77,7 @@ void diac::calcTheModel (bool last) {
   nr_double_t Ut, Ieq, Vd;
 
   if (isOn)
-    Ut = N * kelvin (T) * kBoverQ;
+    Ut = N * celsius2kelvin (T) * kBoverQ;
   else
     Ut  = Ubo / std::log (Ibo / Is);
 

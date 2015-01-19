@@ -71,7 +71,7 @@ void thyristor::calcTheModel (bool last) {
 
   nr_double_t Ut, Ud_bo, Ieq, Vd;
 
-  Ut = N * kelvin (T) * kBoverQ;
+  Ut = N * celsius2kelvin (T) * kBoverQ;
   Ud_bo = std::log (Ibo / Is + 1.0);
 
   Vd = Ud = real (getV (NODE_IN) - getV (NODE_A2));

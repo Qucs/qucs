@@ -403,7 +403,7 @@ void bondwire::calcAC (const nr_double_t frequency) {
 void bondwire::calcNoiseSP (nr_double_t) {
   // calculate noise correlation matrix
   nr_double_t T = getPropertyDouble ("Temp");
-  nr_double_t f = kelvin (T) * 4.0 * R * z0 / norm (4.0 * z0 + R) / T0;
+  nr_double_t f = celsius2kelvin (T) * 4.0 * R * z0 / norm (4.0 * z0 + R) / T0;
   setN (NODE_1, NODE_1, +f); setN (NODE_2, NODE_2, +f);
   setN (NODE_1, NODE_2, -f); setN (NODE_2, NODE_1, -f);
 }
@@ -412,7 +412,7 @@ void bondwire::calcNoiseAC (nr_double_t) {
   // calculate noise current correlation matrix
   nr_double_t y = 1 / R;
   nr_double_t T = getPropertyDouble ("Temp");
-  nr_double_t f = kelvin (T) / T0 * 4.0 * y;
+  nr_double_t f = celsius2kelvin (T) / T0 * 4.0 * y;
   setN (NODE_1, NODE_1, +f); setN (NODE_2, NODE_2, +f);
   setN (NODE_1, NODE_2, -f); setN (NODE_2, NODE_1, -f);
 }

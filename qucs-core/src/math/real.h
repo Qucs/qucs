@@ -114,14 +114,14 @@ nr_double_t  quadr (const nr_double_t );
 /*!\brief Compute the third power of input */
 static inline nr_double_t cubic (const nr_double_t x)  { return (x * x * x); }
 
-/*!\brief Convert Celcius to Kelvin
-   \todo Rename as celcius2kelvin
+/*!\brief Convert celsius to Kelvin
+   \todo Rename as celsius2kelvin
 */
-static inline nr_double_t kelvin (const nr_double_t x)  { return (x - K); }
+static inline nr_double_t celsius2kelvin (const nr_double_t x)  { return (x - K); }
 
 
-/*!\brief Convert Celcius to Kelvin
-   \todo Rename as celcius2kelvin
+/*!\brief Convert celsius to Kelvin
+   \todo Rename as celsius2kelvin
 */
 static inline nr_double_t degree (const nr_double_t x)  { return (x + K); }
 

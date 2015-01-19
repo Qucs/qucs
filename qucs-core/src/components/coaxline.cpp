@@ -69,7 +69,7 @@ void coaxline::calcNoiseSP (nr_double_t) {
   nr_double_t T = getPropertyDouble ("Temp");
   matrix s = getMatrixS ();
   matrix e = eye (getSize ());
-  setMatrixN (kelvin (T) / T0 * (e - s * transpose (conj (s))));
+  setMatrixN (celsius2kelvin (T) / T0 * (e - s * transpose (conj (s))));
 }
 
 void coaxline::initCheck (void) {
@@ -164,7 +164,7 @@ void coaxline::calcNoiseAC (nr_double_t) {
   if (l < 0) return;
   // calculate noise using Bosma's theorem
   nr_double_t T = getPropertyDouble ("Temp");
-  setMatrixN (4 * kelvin (T) / T0 * real (getMatrixY ()));
+  setMatrixN (4 * celsius2kelvin (T) / T0 * real (getMatrixY ()));
 }
 
 // properties

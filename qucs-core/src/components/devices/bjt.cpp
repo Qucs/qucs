@@ -173,8 +173,8 @@ void bjt::initModel (void) {
   nr_double_t Xti = getPropertyDouble ("Xti");
   nr_double_t Eg  = getPropertyDouble ("Eg");
   nr_double_t T1, T2, IsT;
-  T2 = kelvin (T);
-  T1 = kelvin (Tn);
+  T2 = celsius2kelvin (T);
+  T1 = celsius2kelvin (Tn);
   IsT = pnCurrent_T (T1, T2, Is, Eg, 1, Xti);
   setScaledProperty ("Is", IsT * A);
 
@@ -394,7 +394,7 @@ void bjt::calcDC (void) {
   Vaf = Vaf > 0 ? 1.0 / Vaf : 0;
   Var = Var > 0 ? 1.0 / Var : 0;
 
-  T = kelvin (T);
+  T = celsius2kelvin (T);
   Ut = T * kBoverQ;
   Ube = real (getV (NODE_B) - getV (NODE_E)) * pol;
   Ubc = real (getV (NODE_B) - getV (NODE_C)) * pol;

@@ -249,7 +249,7 @@ matrix spfile::expandNoiseMatrix (matrix n, matrix s) {
 
   // expand noise correlation matrix
   matrix res (ports);
-  res = (k * n * adjoint (k) - kelvin (T) / T0 * fabs (1 - norm (g)) *
+  res = (k * n * adjoint (k) - celsius2kelvin (T) / T0 * fabs (1 - norm (g)) *
 	 d * adjoint (d)) * norm (1 / (1 - g));
   return res;
 }
@@ -279,7 +279,7 @@ matrix spfile::shrinkNoiseMatrix (matrix n, matrix s) {
 
   // shrink noise correlation matrix
   matrix res (ports - 1);
-  res = k * n * adjoint (k) + kelvin (T) / T0 * fabs (1.0 - norm (g)) /
+  res = k * n * adjoint (k) + celsius2kelvin (T) / T0 * fabs (1.0 - norm (g)) /
     norm (1.0 - g * s.get (ports - 1, ports - 1)) * d * adjoint (d);
   return res;
 }

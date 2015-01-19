@@ -57,7 +57,7 @@ void tunneldiode::calcId (nr_double_t U, nr_double_t& I, nr_double_t& G) {
   nr_double_t dW   = getPropertyDouble ("dW");
 
   U   = Wr - Q_e*U/dv;
-  de *= kB * kelvin (getPropertyDouble ("Temp"));
+  de *= kB * celsius2kelvin (getPropertyDouble ("Temp"));
 
   nr_double_t a = M_PI_2 + qucs::atan ( U / dW );
 
@@ -84,7 +84,7 @@ void tunneldiode::calcDC (void) {
   nr_double_t Iv   = getPropertyDouble ("Iv");
   nr_double_t Vv   = getPropertyDouble ("Vv");
   nr_double_t nv   = getPropertyDouble ("nv");
-  nr_double_t T    = kB * kelvin (getPropertyDouble ("Temp"));
+  nr_double_t T    = kB * celsius2kelvin (getPropertyDouble ("Temp"));
 
   // diode voltage
   Ud = real (getV (NODE_A1) - getV (NODE_A2));

@@ -206,7 +206,7 @@ void rectline::calcNoiseSP (nr_double_t) {
   nr_double_t T = getPropertyDouble ("Temp");
   matrix s = getMatrixS ();
   matrix e = eye (getSize ());
-  setMatrixN (kelvin (T) / T0 * (e - s * transpose (conj (s))));
+  setMatrixN (celsius2kelvin (T) / T0 * (e - s * transpose (conj (s))));
 }
 
 /*! Check validity of parameter and compute cutoff frequencies
@@ -228,7 +228,7 @@ void rectline::initCheck (void) {
   // calculation of resistivity
   rho  = getPropertyDouble ("rho");
   nr_double_t T = getPropertyDouble ("Temp");
-  calcResistivity (getPropertyString ("Material"), kelvin (T));
+  calcResistivity (getPropertyString ("Material"), celsius2kelvin (T));
 }
 
 void rectline::saveCharacteristics (nr_complex_t) {
@@ -297,7 +297,7 @@ void rectline::calcNoiseAC (nr_double_t) {
   if (l < 0) return;
   // calculate noise using Bosma's theorem
   nr_double_t T = getPropertyDouble ("Temp");
-  setMatrixN (4.0 * kelvin (T) / T0 * real (getMatrixY ()));
+  setMatrixN (4.0 * celsius2kelvin (T) / T0 * real (getMatrixY ()));
 }
 
 // properties

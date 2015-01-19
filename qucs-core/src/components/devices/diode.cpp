@@ -118,8 +118,8 @@ void diode::initModel (void) {
   nr_double_t Xti = getPropertyDouble ("Xti");
   nr_double_t Eg  = getPropertyDouble ("Eg");
   nr_double_t T1, T2;
-  T2 = kelvin (T);
-  T1 = kelvin (Tn);
+  T2 = celsius2kelvin (T);
+  T1 = celsius2kelvin (Tn);
   Is = pnCurrent_T (T1, T2, Is, Eg, N, Xti);
   setScaledProperty ("Is", Is * A);
 
@@ -223,7 +223,7 @@ void diode::prepareDC (void) {
     nr_double_t Ibv, Is, tol, Ut, Xbv, Xibv;
     Ibv = getPropertyDouble ("Ibv");
     Is = getScaledProperty ("Is");
-    Ut = kelvin (T) * kBoverQ;
+    Ut = celsius2kelvin (T) * kBoverQ;
     // adjust very small breakdown currents
     if (Ibv < Is * Bv / Ut) {
       Ibv = Is * Bv / Ut;
@@ -278,7 +278,7 @@ void diode::calcDC (void) {
 
   nr_double_t Ut, Ieq, Ucrit, gtiny;
 
-  T = kelvin (T);
+  T = celsius2kelvin (T);
   Ut = T * kBoverQ;
   Ud = real (getV (NODE_A) - getV (NODE_C));
 
