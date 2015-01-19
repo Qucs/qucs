@@ -460,7 +460,7 @@ ADD_SUBDIRECTORY( converter )
 #
 # Create qucsator
 #
-ADD_EXECUTABLE( qucsator ucs.cpp )
+ADD_EXECUTABLE( qucsator ucs.cpp ${PUBLIC_HEADERS} ${TEMPLATES})
 
 #
 # Build libqucs as SHARED, dynamic library
