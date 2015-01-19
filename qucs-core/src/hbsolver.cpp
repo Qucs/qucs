@@ -339,25 +339,25 @@ void hbsolver::expandFrequencies (nr_double_t f, int n) {
     // frequency expansion for full frequency sets
     for (i = 0; i <= n + 1; i++) {
       for (k = 0; k < len; k++) {
-	negfreqs.add (i * f + nfreqs.get (k));
+	negfreqs.push_back (i * f + nfreqs.get (k));
       }
     }
     for (i = -n; i < 0; i++) {
       for (k = 0; k < len; k++) {
-	negfreqs.add (i * f + nfreqs.get (k));
+	negfreqs.push_back (i * f + nfreqs.get (k));
       }
     }
     for (i = 0; i <= 2 * n + 1; i++) {
       for (k = 0; k < len; k++) {
-	posfreqs.add (i * f + pfreqs.get (k));
+	posfreqs.push_back (i * f + pfreqs.get (k));
       }
     }
   }
   else {
     // first frequency
-    for (i = 0; i <= n + 1; i++) negfreqs.add (i * f);
-    for (i = -n; i < 0; i++) negfreqs.add (i * f);
-    for (i = 0; i <= 2 * n + 1; i++) posfreqs.add (i * f);
+    for (i = 0; i <= n + 1; i++) negfreqs.push_back (i * f);
+    for (i = -n; i < 0; i++) negfreqs.push_back (i * f);
+    for (i = 0; i <= 2 * n + 1; i++) posfreqs.push_back (i * f);
   }
 }
 
@@ -389,7 +389,7 @@ void hbsolver::collectFrequencies (void) {
     if (c->getType () != CIR_VDC) { // no extra DC sources
       if ((f = c->getPropertyDouble ("f")) != 0.0) {
 	if (!dfreqs.contains (f)) { // no double frequencies
-	  dfreqs.add (f);
+	  dfreqs.push_back (f);
 	  expandFrequencies (f, n);
 	}
       }
@@ -400,7 +400,7 @@ void hbsolver::collectFrequencies (void) {
   if (negfreqs.size () == 0) {
     // use specified frequency
     f = getPropertyDouble ("f");
-    dfreqs.add (f);
+    dfreqs.push_back (f);
     expandFrequencies (f, n);
   }
 
@@ -421,7 +421,7 @@ void hbsolver::collectFrequencies (void) {
   // build list of positive frequencies including DC
   for (n = 0; n < negfreqs.size (); n++) {
     if ((f = negfreqs (n)) < 0.0) continue;
-    rfreqs.add (f);
+    rfreqs.push_back (f);
   }
   lnfreqs = rfreqs.size ();
   nlfreqs = negfreqs.size ();

@@ -84,7 +84,7 @@ class tvector
   void set (tvector, int, int);
   std::size_t  size (void) const { return data.size (); }
   nr_type_t * getData (void) { return data.data(); }
-  void add (nr_type_t);
+  void push_back(nr_type_t);
   void clear (void);
   void drop (int);
   void truncate (int);
@@ -149,6 +149,7 @@ class tvector
 };
 
 } // namespace qucs
+
 
 #include "tvector.cpp"
 

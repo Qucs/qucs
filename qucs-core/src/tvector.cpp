@@ -66,7 +66,7 @@ void tvector<nr_type_t>::set (nr_type_t z, int start, int stop) {
 
 // Appends the given value to the tvector.
 template <class nr_type_t>
-void tvector<nr_type_t>::add (nr_type_t z) {
+void tvector<nr_type_t>::push_back (nr_type_t z) {
   data.push_back (z);
 }
 
