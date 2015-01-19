@@ -118,8 +118,8 @@ void spline::vectors (::std::vector<nr_double_t> y, ::std::vector<nr_double_t> t
 
 // Pass interpolation datapoints as tvectors.
 void spline::vectors (tvector<nr_double_t> y, tvector<nr_double_t> t) {
-  int i = t.getSize ();
-  assert (y.getSize () == i && i >= 3);
+  int i = t.size ();
+  assert (y.size () == i && i >= 3);
 
   // create local copy of f(x)
   realloc (i);

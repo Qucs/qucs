@@ -82,7 +82,7 @@ class tvector
   void set (nr_type_t);
   void set (nr_type_t, int, int);
   void set (tvector, int, int);
-  std::size_t  getSize (void) { return data.size (); }
+  std::size_t  size (void) const { return data.size (); }
   nr_type_t * getData (void) { return data.data(); }
   void add (nr_type_t);
   void clear (void);

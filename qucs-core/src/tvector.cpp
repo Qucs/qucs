@@ -123,8 +123,8 @@ void tvector<nr_type_t>::exchangeRows (int r1, int r2) {
 // Addition.
 template <class nr_type_t>
 tvector<nr_type_t> operator + (tvector<nr_type_t> a, tvector<nr_type_t> b) {
-  assert (a.getSize () == b.getSize ());
-  int n = a.getSize ();
+  assert (a.size () == b.size ());
+  int n = a.size ();
   tvector<nr_type_t> res (n);
   for (int i = 0; i < n; i++) res.set (i, a.get (i) + b.get (i));
   return res;
@@ -143,8 +143,8 @@ tvector<nr_type_t> tvector<nr_type_t>::operator += (tvector<nr_type_t> a) {
 // Subtraction.
 template <class nr_type_t>
 tvector<nr_type_t> operator - (tvector<nr_type_t> a, tvector<nr_type_t> b) {
-  assert (a.getSize () == b.getSize ());
-  int n = a.getSize ();
+  assert (a.size () == b.size ());
+  int n = a.size ();
   tvector<nr_type_t> res (n);
   for (int i = 0; i < n; i++) res.set (i, a.get (i) - b.get (i));
   return res;
@@ -153,7 +153,7 @@ tvector<nr_type_t> operator - (tvector<nr_type_t> a, tvector<nr_type_t> b) {
 // Intrinsic vector subtraction.
 template <class nr_type_t>
 tvector<nr_type_t> tvector<nr_type_t>::operator -= (tvector<nr_type_t> a) {
-  assert (a.getSize () == (int)data.size ());
+  assert (a.size () == (int)data.size ());
   std::vector<nr_type_t> * src = a.getData ();
   std::vector<nr_type_t> * dst = data;
   for (int i = 0; i < (int)data.size (); i++) (*dst)[i] -= (*src)[i];
@@ -179,7 +179,7 @@ tvector<nr_type_t> tvector<nr_type_t>::operator /= (nr_double_t s) {
 // Scalar multiplication.
 template <class nr_type_t>
 tvector<nr_type_t> operator * (nr_double_t s, tvector<nr_type_t> a) {
-  int n = a.getSize ();
+  int n = a.size ();
   tvector<nr_type_t> res (n);
   for (int i = 0; i < n; i++) res.set (i, s * a.get (i));
   return res;
@@ -193,8 +193,8 @@ tvector<nr_type_t> operator * (tvector<nr_type_t> a, nr_double_t s) {
 // Vector multiplication (element by element).
 template <class nr_type_t>
 tvector<nr_type_t> operator * (tvector<nr_type_t> a, tvector<nr_type_t> b) {
-  assert (a.getSize () == b.getSize ());
-  int n = a.getSize ();
+  assert (a.size () == b.size ());
+  int n = a.size ();
   tvector<nr_type_t> res (n);
   for (int i = 0; i < n; i++) res.set (i, a.get (i) * b.get (i));
   return res;
@@ -203,9 +203,9 @@ tvector<nr_type_t> operator * (tvector<nr_type_t> a, tvector<nr_type_t> b) {
 // Computes the scalar product of two vectors.
 template <class nr_type_t>
 nr_type_t scalar (tvector<nr_type_t> a, tvector<nr_type_t> b) {
-  assert (a.getSize () == b.getSize ());
+  assert (a.size () == b.size ());
   nr_type_t n = 0;
-  for (int i = 0; i < a.getSize (); i++) n += a.get (i) * b.get (i);
+  for (int i = 0; i < a.size (); i++) n += a.get (i) * b.get (i);
   return n;
 }
 
@@ -220,14 +220,14 @@ tvector<nr_type_t> tvector<nr_type_t>::operator = (const nr_type_t val) {
 template <class nr_type_t>
 nr_type_t sum (tvector<nr_type_t> a) {
   nr_type_t res = 0;
-  for (int i = 0; i < a.getSize (); i++) res += a.get (i);
+  for (int i = 0; i < a.size (); i++) res += a.get (i);
   return res;
 }
 
 // Vector negation.
 template <class nr_type_t>
 tvector<nr_type_t> operator - (tvector<nr_type_t> a) {
-  int n = a.getSize ();
+  int n = a.size ();
   tvector<nr_type_t> res (n);
   for (int i = 0; i < n; i++) res.set (i, -a.get (i));
   return res;
@@ -236,8 +236,8 @@ tvector<nr_type_t> operator - (tvector<nr_type_t> a) {
 // Vector less comparison.
 template <class nr_type_t>
 bool operator < (tvector<nr_type_t> a, tvector<nr_type_t> b) {
-  assert (a.getSize () == b.getSize ());
-  int n = a.getSize ();
+  assert (a.size () == b.size ());
+  int n = a.size ();
   for (int i = 0; i < n; i++) if (a.get (i) >= b.get (i)) return false;
   return true;
 }
@@ -245,8 +245,8 @@ bool operator < (tvector<nr_type_t> a, tvector<nr_type_t> b) {
 // Vector greater comparison.
 template <class nr_type_t>
 bool operator > (tvector<nr_type_t> a, tvector<nr_type_t> b) {
-  assert (a.getSize () == b.getSize ());
-  int n = a.getSize ();
+  assert (a.size () == b.size ());
+  int n = a.size ();
   for (int i = 0; i < n; i++) if (a.get (i) <= b.get (i)) return false;
   return true;
 }
@@ -254,7 +254,7 @@ bool operator > (tvector<nr_type_t> a, tvector<nr_type_t> b) {
 // Scalar addition.
 template <class nr_type_t>
 tvector<nr_type_t> operator + (nr_type_t s, tvector<nr_type_t> a) {
-  int n = a.getSize ();
+  int n = a.size ();
   tvector<nr_type_t> res (n);
   for (int i = 0; i < n; i++) res.set (i, s + a.get (i));
   return res;
@@ -270,11 +270,11 @@ template <class nr_type_t>
 nr_double_t norm (tvector<nr_type_t> a) {
 #if 0
   nr_double_t k = 0;
-  for (int i = 0; i < a.getSize (); i++) k += norm (a.get (i));
+  for (int i = 0; i < a.size (); i++) k += norm (a.get (i));
   return n;
 #else
   nr_double_t scale = 0, n = 1, x, ax;
-  for (int i = 0; i < a.getSize (); i++) {
+  for (int i = 0; i < a.size (); i++) {
     if ((x = real (a (i))) != 0) {
       ax = fabs (x);
       if (scale < ax) {
@@ -308,7 +308,7 @@ nr_double_t norm (tvector<nr_type_t> a) {
 template <class nr_type_t>
 nr_double_t maxnorm (tvector<nr_type_t> a) {
   nr_double_t nMax = 0, n;
-  for (int i = 0; i < a.getSize (); i++) {
+  for (int i = 0; i < a.size (); i++) {
     n = norm (a.get (i));
     if (n > nMax) nMax = n;
   }
@@ -318,7 +318,7 @@ nr_double_t maxnorm (tvector<nr_type_t> a) {
 // Conjugate vector.
 template <class nr_type_t>
 tvector<nr_type_t> conj (tvector<nr_type_t> a) {
-  int n = a.getSize ();
+  int n = a.size ();
   tvector<nr_type_t> res (n);
   for (int i = 0; i < n; i++) res.set (i, conj (a.get (i)));
   return res;

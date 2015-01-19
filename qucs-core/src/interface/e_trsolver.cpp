@@ -371,7 +371,7 @@ void e_trsolver::printx()
 {
     char buf [1024];
 
-    for (int r = 0; r < x->getSize(); r++) {
+    for (int r = 0; r < x->size(); r++) {
         buf[0] = '\0';
         //sprintf (buf, "%+.2e%+.2ei", (double) real (x->get (r)), (double) imag (x->get (r)));
 
@@ -828,9 +828,9 @@ void e_trsolver::copySolution (tvector<nr_double_t> * src[8], tvector<nr_double_
     for (int i = 0; i < 8; i++)
     {
         // check sizes are the same
-        assert (src[i]->getSize () == dest[i]->getSize ());
+        assert (src[i]->size () == dest[i]->size ());
         // copy over the data values
-        for (int j = 0; j < src[i]->getSize (); j++)
+        for (int j = 0; j < src[i]->size (); j++)
         {
             dest[i]->set (j, src[i]->get (j));
         }
