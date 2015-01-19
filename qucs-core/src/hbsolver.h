@@ -129,7 +129,7 @@ class hbsolver : public analysis
   int nlfreqs;
   int nnlvsrcs;
   int nlnvsrcs;
-  int nlnnodes;
+  //int nlnnodes;
   int nnanodes;
   int nexnodes;
   int nbanodes;
