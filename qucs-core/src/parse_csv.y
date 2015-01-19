@@ -49,7 +49,7 @@ using namespace qucs;
 
 %}
 
-%name-prefix="csv_"
+%name-prefix "csv_"
 
 %token InvalidCharacter
 %token Float

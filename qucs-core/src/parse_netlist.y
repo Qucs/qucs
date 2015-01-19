@@ -46,7 +46,7 @@ using namespace qucs;
 
 %}
 
-%name-prefix="netlist_"
+%name-prefix "netlist_"
 
 %token InvalidCharacter
 %token Identifier

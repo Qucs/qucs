@@ -49,7 +49,7 @@ using namespace qucs;
 
 %}
 
-%name-prefix="dataset_"
+%name-prefix "dataset_"
 
 %token InvalidCharacter
 %token Identifier

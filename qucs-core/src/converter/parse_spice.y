@@ -128,7 +128,7 @@ static struct value_t * spice_append_val_values (struct value_t * values,
 
 %}
 
-%name-prefix="spice_"
+%name-prefix "spice_"
 
 %token TitleLine InvalidCharacter End Eol
 %token Identifier Digits Floats Nodes Options Function
