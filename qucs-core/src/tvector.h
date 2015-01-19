@@ -73,18 +73,17 @@ template <class nr_type_t>
 class tvector
 {
  public:
-  tvector ();
-  tvector (int);
-  tvector (const tvector &);
-  const tvector& operator = (const tvector &);
-  ~tvector ();
+  tvector () = default;
+  tvector (const std::size_t i) : data(i) {};
+  tvector (const tvector &) = default;
+  ~tvector () = default;
   nr_type_t get (int);
   void set (int, nr_type_t);
   void set (nr_type_t);
   void set (nr_type_t, int, int);
   void set (tvector, int, int);
-  int  getSize (void) { return (int)data->size (); }
-  nr_type_t * getData (void) { return data->data(); }
+  std::size_t  getSize (void) { return data.size (); }
+  nr_type_t * getData (void) { return data.data(); }
   void add (nr_type_t);
   void clear (void);
   void drop (int);
@@ -133,12 +132,19 @@ class tvector
 
   // easy accessor operators
   nr_type_t  operator () (int i) const {
-    assert (i >= 0 && i < (int)data->size ()); return (*data)[i]; }
+    return data.at(i);
+  }
   nr_type_t& operator () (int i) {
-    assert (i >= 0 && i < (int)data->size ()); return (*data)[i]; }
+    return data.at(i); }
+   nr_type_t  operator [] (int i) const {
+    return data[i];
+  }
+  nr_type_t& operator [] (int i) {
+    return data[i];
+  }
 
  private:
-  std::vector<nr_type_t> * data;
+  std::vector<nr_type_t> data;
 
 };
 
