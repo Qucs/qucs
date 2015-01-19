@@ -108,7 +108,7 @@ class circuit : public object, public integrator
   circuit ();
   circuit (int);
   circuit (const circuit &);
-  ~circuit ();
+  virtual ~circuit ();
 
   // functionality to be overloaded by real, derived circuit element
   // implementations

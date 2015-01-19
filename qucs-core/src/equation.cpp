@@ -776,6 +776,12 @@ void application::evalTypeArgs (void)
     }
 }
 
+
+// gperfapphash has register inside, ignore warning
+#if defined(__clang__)
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-register"
+#endif
 #include "gperfapphash.cpp"
 
 /* The function creates a hash key for the given type of
