@@ -239,13 +239,6 @@ ENDIF()
 #http://stackoverflow.com/questions/10984442/how-to-detect-c11-support-of-a-compiler-with-cmake/20165220#20165220
 
 # Initialize CXXFLAGS.
-IF(UNIX AND NOT APPLE)
-  SET(CMAKE_CXX_FLAGS                "-std=c++11")
-ENDIF()
-# CMake defaults to clang++, use proper library
-IF(APPLE)
-  SET(CMAKE_CXX_FLAGS                "-stdlib=libc++")
-ENDIF()
 
 # \todo fix headers and use standard C++ methods
 # * strdup is not C or C++ standart, it is POSIX
@@ -255,13 +248,12 @@ ENDIF()
 #   -U__STRICT_ANSI__. Could use -std=gnu++0x
 IF(WIN32)
   SET(CMAKE_CXX_FLAGS                "-Wall -std=c++0x -fpermissive -U__STRICT_ANSI__")
+ELSE()
+  SET(CMAKE_CXX_FLAGS                "-Wall -std=c++11 -fpermissive -U__STRICT_ANSI__")
 ENDIF()
 
 # indiscriminate copy/paste from:
 #http://stackoverflow.com/questions/10984442/how-to-detect-c11-support-of-a-compiler-with-cmake/20165220#20165220
-
-# Initialize CXXFLAGS.
-set(CMAKE_CXX_FLAGS                "-Wall -std=c++0x -fpermissive -U__STRICT_ANSI__")
 set(CMAKE_CXX_FLAGS_DEBUG          "-O0 -g")
 set(CMAKE_CXX_FLAGS_MINSIZEREL     "-Os -DNDEBUG")
 set(CMAKE_CXX_FLAGS_RELEASE        "-O4 -DNDEBUG")
