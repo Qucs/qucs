@@ -249,7 +249,7 @@ ENDIF()
 IF(WIN32)
   SET(CMAKE_CXX_FLAGS                "-Wall -std=c++0x -fpermissive -U__STRICT_ANSI__")
 ELSE()
-  SET(CMAKE_CXX_FLAGS                "-Wall -std=c++11 -fpermissive -U__STRICT_ANSI__")
+  SET(CMAKE_CXX_FLAGS                "-Wall -std=c++11")
 ENDIF()
 
 # indiscriminate copy/paste from:

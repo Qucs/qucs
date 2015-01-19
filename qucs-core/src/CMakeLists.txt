@@ -371,7 +371,6 @@ SET(PUBLIC_HEADERS
   netdefs.h
   node.h
   object.h
-  states.cpp
   states.h
   valuelist.h
   vector.h
