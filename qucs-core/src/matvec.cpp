@@ -684,15 +684,15 @@ qucs::vector b1 (matvec m) {
   return res;
 }
 
-matvec deg (matvec a) {
+matvec rad2deg (matvec a) {
   matvec res (a.getSize (), a.getRows (), a.getCols ());
-  for (int i = 0; i < a.getSize (); i++) res.set (deg (a.get (i)), i);
+  for (int i = 0; i < a.getSize (); i++) res.set (rad2deg (a.get (i)), i);
   return res;
 }
 
-matvec rad (matvec a) {
+matvec deg2rad (matvec a) {
   matvec res (a.getSize (), a.getRows (), a.getCols ());
-  for (int i = 0; i < a.getSize (); i++) res.set (rad (a.get (i)), i);
+  for (int i = 0; i < a.getSize (); i++) res.set (deg2rad (a.get (i)), i);
   return res;
 }
 

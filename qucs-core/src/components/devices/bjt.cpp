@@ -77,7 +77,7 @@ matrix bjt::calcMatrixY (nr_double_t frequency) {
   nr_complex_t Ybebc = nr_complex_t (0.0, 2.0 * M_PI * frequency * dQbedUbc);
 
   // compute influence of excess phase
-  nr_double_t phase = rad (Ptf) * Tf * 2 * M_PI * frequency;
+  nr_double_t phase = deg2rad (Ptf) * Tf * 2 * M_PI * frequency;
 #if NEWSGP
   nr_complex_t gmf = qucs::polar (gm, -phase);
 #else
@@ -744,7 +744,7 @@ void bjt::excessPhase (int istate, nr_double_t& i, nr_double_t& g) {
   // fetch device properties
   nr_double_t Ptf = getPropertyDouble ("Ptf");
   nr_double_t Tf = getPropertyDouble ("Tf");
-  nr_double_t td = rad (Ptf) * Tf;
+  nr_double_t td = deg2rad (Ptf) * Tf;
 
   // return if nothing todo
   if (td == 0.0) return;

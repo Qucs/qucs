@@ -508,11 +508,21 @@ nr_double_t conj (const nr_double_t r) {
   return r;
 }
 
-
-nr_double_t deg (const nr_double_t x) {
+/*!
+ * \brief rad2deg Convert radian to degree
+ * \param x input
+ * \return input in radian
+ */
+nr_double_t rad2deg (const nr_double_t x) {
   return (180.0 * (x) / M_PI); 
 }
-nr_double_t rad (const nr_double_t x) {
+
+/*!
+ * \brief deg2rad Convert radian to degree
+ * \param x input
+ * \return input in radian
+ */
+nr_double_t deg2rad (const nr_double_t x) {
   return (M_PI * (x) / 180.0); 
 }
 

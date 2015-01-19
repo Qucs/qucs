@@ -54,7 +54,7 @@ void vac::initAC (void) {
   initDC ();
   nr_double_t a = getPropertyDouble ("U");
   nr_double_t p = getPropertyDouble ("Phase");
-  setE (VSRC_1, qucs::polar (a, rad (p)));
+  setE (VSRC_1, qucs::polar (a, deg2rad (p)));
 }
 
 void vac::initTR (void) {
@@ -69,7 +69,7 @@ void vac::calcTR (nr_double_t t) {
   nr_double_t s = getNet()->getSrcFactor ();
   nr_double_t o = 2 * M_PI * f;
   nr_double_t T = p / f / 360;
-  nr_double_t u = s * a * std::exp (-(t + T) * d * f) * std::sin (o * t + rad (p));
+  nr_double_t u = s * a * std::exp (-(t + T) * d * f) * std::sin (o * t + deg2rad (p));
   setE (VSRC_1, u);
 }
 
@@ -84,7 +84,7 @@ void vac::calcHB (nr_double_t frequency) {
   if (f == frequency) {
     nr_double_t a = getPropertyDouble ("U");
     nr_double_t p = getPropertyDouble ("Phase");
-    setE (VSRC_1, qucs::polar (a, rad (p)));
+    setE (VSRC_1, qucs::polar (a, deg2rad (p)));
   }
   else {
     setE (VSRC_1, 0);

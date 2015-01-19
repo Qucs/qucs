@@ -901,11 +901,11 @@ bool operator<(const nr_complex_t z1, const nr_complex_t z2)
 
 
 
-nr_double_t deg (const nr_complex_t x) {
-  return deg (real(x));
+nr_double_t rad2deg (const nr_complex_t x) {
+  return rad2deg (real(x));
 }
-nr_double_t rad (const nr_complex_t x) {
-  return rad (real(x));
+nr_double_t deg2rad (const nr_complex_t x) {
+  return deg2rad (real(x));
 }
 
 } // namespace qucs

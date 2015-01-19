@@ -104,12 +104,11 @@ nr_double_t cosech (const nr_double_t );
 // Qucs extra math functions
 //
 nr_double_t  sqr (const nr_double_t );
-
 unsigned int sqr (unsigned int);
-
-
 nr_double_t  quadr (const nr_double_t );
 
+nr_double_t rad2deg (const nr_double_t );
+nr_double_t deg2rad (const nr_double_t x );
 
 /*!\brief Compute the third power of input */
 static inline nr_double_t cubic (const nr_double_t x)  { return (x * x * x); }
@@ -117,22 +116,9 @@ static inline nr_double_t cubic (const nr_double_t x)  { return (x * x * x); }
 /*!\brief Convert Celsius to Kelvin */
 static inline nr_double_t celsius2kelvin (const nr_double_t x)  { return (x - K); }
 
-
 /*!\brief Convert Kelvin to Celsius */
 static inline nr_double_t kelvin2celsius (const nr_double_t x)  { return (x + K); }
 
-
-/*!\brief Convert radian to degree
-   \todo Rename as rad2deg
-*/
-//inline nr_double_t deg (const nr_double_t x)  { return (180.0 * (x) / M_PI); }
-nr_double_t deg (const nr_double_t );
-
-/*!\brief Convert degree to radian
-   \todo Rename as deg2rad
-*/
-//inline nr_double_t rad (const nr_double_t x)  { return (M_PI * (x) / 180.0); }
-nr_double_t rad (const nr_double_t x );
 
 //
 // extra math functions

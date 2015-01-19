@@ -42,7 +42,7 @@ nr_double_t msrstub::calcReactance (nr_double_t r1, nr_double_t r2,
 				    nr_double_t h, nr_double_t frequency) {
 
   nr_double_t l0 = C0 / frequency;
-  nr_double_t W = (r1 + (r2 - r1) / 2) * rad (alpha);
+  nr_double_t W = (r1 + (r2 - r1) / 2) * deg2rad (alpha);
   nr_double_t ereff = (er + 1.0) / 2 + (er - 1.0) /
     (2.0 * qucs::sqrt (1 + 10.0 * h / W));
   nr_double_t k = 2.0 * M_PI * qucs::sqrt (ereff) / l0;

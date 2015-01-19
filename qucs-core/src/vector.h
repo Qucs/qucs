@@ -176,8 +176,8 @@ class vector : public object
   friend vector erfc    (vector);
   friend vector erfinv  (vector);
   friend vector erfcinv (vector);
-  friend vector deg     (vector);
-  friend vector rad     (vector);
+  friend vector rad2deg     (vector);
+  friend vector deg2rad     (vector);
 
   // operator functions
   friend vector operator + (vector, vector);
@@ -328,8 +328,8 @@ vector erf     (vector);
 vector erfc    (vector);
 vector erfinv  (vector);
 vector erfcinv (vector);
-vector deg     (vector);
-vector rad     (vector);
+vector rad2deg     (vector);
+vector deg2rad     (vector);
 
 } // namespace qucs
 

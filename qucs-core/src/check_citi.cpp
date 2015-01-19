@@ -100,14 +100,14 @@ static qucs::vector * citi_create_vector (struct citi_package_t * p, int i,
   if (!strcmp (type, "MAGANGLE")) {
     for (int i = 0; i < vec->getSize (); i++) {
       nr_complex_t val = vec->get (i);
-      val = std::polar (real (val), rad (imag (val)));
+      val = std::polar (real (val), deg2rad (imag (val)));
       vec->set (val, i);
     }
   }
   else if (!strcmp (type, "DBANGLE")) {
     for (int i = 0; i < vec->getSize (); i++) {
       nr_complex_t val = vec->get (i);
-      val = std::polar (std::pow (10.0, real (val) / 20.0), rad (imag (val)));
+      val = std::polar (std::pow (10.0, real (val) / 20.0), deg2rad (imag (val)));
       vec->set (val, i);
     }
   }

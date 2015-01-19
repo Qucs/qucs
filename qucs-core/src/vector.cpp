@@ -1114,15 +1114,15 @@ vector erfcinv (vector v) {
   return result;
 }
 
-vector deg (vector v) {
+vector rad2deg (vector v) {
   vector result (v);
-  for (int i = 0; i < v.getSize (); i++) result.set (deg (v.get (i)), i);
+  for (int i = 0; i < v.getSize (); i++) result.set (rad2deg (v.get (i)), i);
   return result;
 }
 
-vector rad (vector v) {
+vector deg2rad (vector v) {
   vector result (v);
-  for (int i = 0; i < v.getSize (); i++) result.set (rad (v.get (i)), i);
+  for (int i = 0; i < v.getSize (); i++) result.set (deg2rad (v.get (i)), i);
   return result;
 }
 

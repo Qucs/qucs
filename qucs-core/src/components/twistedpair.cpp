@@ -156,7 +156,7 @@ void twistedpair::calcPropagation (nr_double_t frequency) {
   ereff = 1.0 + q * (er - 1.0);
   zl = Z0 / M_PI / qucs::sqrt (ereff) * qucs::acosh (D / d);
   beta = 2 * M_PI * frequency / C0 * qucs::sqrt (ereff);
-  angle = deg (p);
+  angle = rad2deg (p);
   alpha = calcLoss (frequency);
 }
 

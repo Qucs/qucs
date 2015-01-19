@@ -41,7 +41,7 @@ hybrid::hybrid () : circuit (4) {
 
 void hybrid::initSP (void) {
 
-  nr_complex_t p = qucs::polar (1.0, rad (getPropertyDouble ("phi")));
+  nr_complex_t p = qucs::polar (1.0, deg2rad (getPropertyDouble ("phi")));
   //nr_double_t  k = std::sqrt(1-pow((1/M_SQRT2),2));
   nr_double_t  k = (1/M_SQRT2); //last line reduces to this for 1/std::sqrt(2)
 
@@ -72,9 +72,9 @@ void hybrid::initAC (void) {
 
     nr_double_t  k = 1 / M_SQRT2;
     nr_complex_t y;
-    nr_complex_t A = k*k*(nr_complex_t(1,0)+qucs::polar(1.0, 2.0*rad (getPropertyDouble ("phi"))));
+    nr_complex_t A = k*k*(nr_complex_t(1,0)+qucs::polar(1.0, 2.0*deg2rad (getPropertyDouble ("phi"))));
     nr_double_t B  = 2 * std::sqrt(1-(k*k));
-    nr_complex_t C = qucs::polar (2*k, rad (getPropertyDouble ("phi")));
+    nr_complex_t C = qucs::polar (2*k, deg2rad (getPropertyDouble ("phi")));
     nr_complex_t D = getPropertyDouble ("Zref") * ((A*A)-(C*C));
 
     setVoltageSources (0);

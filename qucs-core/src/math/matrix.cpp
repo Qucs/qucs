@@ -1868,19 +1868,19 @@ nr_double_t b1 (matrix m) {
 }
 
 
-matrix deg (matrix a) {
+matrix rad2deg (matrix a) {
   matrix res (a.getRows (), a.getCols ());
   for (int r = 0; r < a.getRows (); r++)
     for (int c = 0; c < a.getCols (); c++)
-      res.set (r, c, deg (a.get (r, c)));
+      res.set (r, c, rad2deg (a.get (r, c)));
   return res;
 }
 
-matrix rad (matrix a) {
+matrix deg2rad (matrix a) {
   matrix res (a.getRows (), a.getCols ());
   for (int r = 0; r < a.getRows (); r++)
     for (int c = 0; c < a.getCols (); c++)
-      res.set (r, c, rad (a.get (r, c)));
+      res.set (r, c, deg2rad (a.get (r, c)));
   return res;
 }
 

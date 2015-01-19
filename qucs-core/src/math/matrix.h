@@ -84,8 +84,8 @@ matrix cstocz (matrix, matrix);
 matrix twoport (matrix, char, char);
 nr_double_t rollet (matrix);
 nr_double_t b1 (matrix);
-matrix deg     (matrix);
-matrix rad     (matrix);
+matrix rad2deg     (matrix);
+matrix deg2rad     (matrix);
 
 
 /*!\class matrix
@@ -186,8 +186,8 @@ class matrix
   friend nr_double_t rollet (matrix);
   friend nr_double_t b1 (matrix);
 
-  friend matrix deg    (matrix);
-  friend matrix rad    (matrix);
+  friend matrix rad2deg    (matrix);
+  friend matrix deg2rad    (matrix);
 
   /*! \brief Read access operator
       \param[in] r: row number (from 0 like usually in C)
