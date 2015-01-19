@@ -826,7 +826,7 @@ void eqnsys<nr_type_t>::solve_qr_ls (void) {
 }
 
 /*! Helper function for the euclidian norm calculators. */
-static void
+static inline void
 euclidian_update (nr_double_t a, nr_double_t& n, nr_double_t& scale) {
   nr_double_t x, ax;
   if ((x = a) != 0) {
