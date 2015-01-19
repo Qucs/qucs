@@ -83,8 +83,8 @@ void cpwline::ellipke (nr_double_t arg, nr_double_t &k, nr_double_t &e) {
       k = 0; e = 0;
     }
     else {
-      k = M_PI_2 / a;
-      e = M_PI_2 * (1 - s) / a;
+      k = pi_over_2 / a;
+      e = pi_over_2 * (1 - s) / a;
       if (arg < 0) {
 	k *= fk;
 	e *= fe;
@@ -104,12 +104,12 @@ nr_double_t cpwline::ellipk (nr_double_t k) {
    publications dealing with coplanar components. */
 nr_double_t cpwline::ellipa (nr_double_t k) {
   nr_double_t r, kp;
-  if (k < M_SQRT1_2) {
+  if (k < sqrt1_2) {
     kp = qucs::sqrt (1 - k * k);
-    r = M_PI / qucs::log (2 * (1 + qucs::sqrt (kp)) / (1 - qucs::sqrt (kp)));
+    r = pi / qucs::log (2 * (1 + qucs::sqrt (kp)) / (1 - qucs::sqrt (kp)));
   }
   else {
-    r = qucs::log (2 * (1 + qucs::sqrt (k)) / (1 - qucs::sqrt (k))) / M_PI;
+    r = qucs::log (2 * (1 + qucs::sqrt (k)) / (1 - qucs::sqrt (k))) / pi;
   }
   return r;
 }
@@ -151,7 +151,7 @@ void cpwline::initPropagation (void) {
 
   // backside is metal
   if (backMetal) {
-    k3  = qucs::tanh ((M_PI / 4) * (W / h)) / qucs::tanh ((M_PI / 4) * (W + s + s) / h);
+    k3  = qucs::tanh ((pi / 4) * (W / h)) / qucs::tanh ((pi / 4) * (W + s + s) / h);
     if (approx) {
       q3 = ellipa (k3);
     } else {
@@ -163,7 +163,7 @@ void cpwline::initPropagation (void) {
   }
   // backside is air
   else {
-    k2  = qucs::sinh ((M_PI / 4) * (W / h)) / qucs::sinh ((M_PI / 4) * (W + s + s) / h);
+    k2  = qucs::sinh ((pi / 4) * (W / h)) / qucs::sinh ((pi / 4) * (W + s + s) / h);
     if (approx) {
       q2 = ellipa (k2);
     } else {
@@ -176,7 +176,7 @@ void cpwline::initPropagation (void) {
   // adds effect of strip thickness
   if (t > 0) {
     nr_double_t d, se, We, ke, qe;
-    d  = (t * 1.25 / M_PI) * (1 + qucs::log (4 * M_PI * W / t));
+    d  = (t * 1.25 / pi) * (1 + qucs::log (4 * pi * W / t));
     se = s - d;
     We = W + d;
 
@@ -219,16 +219,16 @@ void cpwline::initPropagation (void) {
   nr_double_t ac = 0;
   if (t > 0) {
     // equations by GHIONE
-    nr_double_t n  = (1 - k1) * 8 * M_PI / (t * (1 + k1));
+    nr_double_t n  = (1 - k1) * 8 * pi / (t * (1 + k1));
     nr_double_t a  = W / 2;
     nr_double_t b  = a + s;
-    ac = (M_PI + qucs::log (n * a)) / a + (M_PI + qucs::log (n * b)) / b;
+    ac = (pi + qucs::log (n * a)) / a + (pi + qucs::log (n * b)) / b;
   }
   ac_factor  = ac / (4 * Z0 * kk1 * kpk1 * (1 - k1 * k1));
-  ac_factor *= qucs::sqrt (M_PI * MU0 * rho); // Rs factor
-  ad_factor  = (er / (er - 1)) * tand * M_PI / C0;
+  ac_factor *= qucs::sqrt (pi * MU0 * rho); // Rs factor
+  ad_factor  = (er / (er - 1)) * tand * pi / C0;
 
-  bt_factor  = 2 * M_PI / C0;
+  bt_factor  = 2 * pi / C0;
 }
 
 void cpwline::calcAB (nr_double_t f, nr_double_t& zl, nr_double_t& al,
@@ -302,7 +302,7 @@ void cpwline::analyseQuasiStatic (nr_double_t W, nr_double_t s, nr_double_t h,
 
   // backside is metal
   if (backMetal) {
-    k3  = qucs::tanh ((M_PI / 4) * (W / h)) / qucs::tanh ((M_PI / 4) * (W + s + s) / h);
+    k3  = qucs::tanh ((pi / 4) * (W / h)) / qucs::tanh ((pi / 4) * (W + s + s) / h);
     q3 = ellipk (k3) / ellipk (qucs::sqrt (1 - k3 * k3));
     qz  = 1 / (q1 + q3);
     ErEff = 1 + q3 * qz * (er - 1);
@@ -310,7 +310,7 @@ void cpwline::analyseQuasiStatic (nr_double_t W, nr_double_t s, nr_double_t h,
   }
   // backside is air
   else {
-    k2  = qucs::sinh ((M_PI / 4) * (W / h)) / qucs::sinh ((M_PI / 4) * (W + s + s) / h);
+    k2  = qucs::sinh ((pi / 4) * (W / h)) / qucs::sinh ((pi / 4) * (W + s + s) / h);
     q2 = ellipk (k2) / ellipk (qucs::sqrt (1 - k2 * k2));
     ErEff = 1 + (er - 1) / 2 * q2 / q1;
     ZlEff = Z0 / 4 / q1;
@@ -319,7 +319,7 @@ void cpwline::analyseQuasiStatic (nr_double_t W, nr_double_t s, nr_double_t h,
   // adds effect of strip thickness
   if (t > 0) {
     nr_double_t d, se, We, ke, qe;
-    d  = (t * 1.25 / M_PI) * (1 + qucs::log (4 * M_PI * W / t));
+    d  = (t * 1.25 / pi) * (1 + qucs::log (4 * pi * W / t));
     se = s - d;
     We = W + d;
 

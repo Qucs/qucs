@@ -93,7 +93,7 @@ nr_complex_t msopen::calcY (nr_double_t frequency) {
 
   /* local variables */
   nr_complex_t y;
-  nr_double_t o = 2 * M_PI * frequency;
+  nr_double_t o = 2 * pi * frequency;
 
   /* Alexopoulos and Wu */
   if (!strcmp (Model, "Alexopoulos")) {

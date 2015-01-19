@@ -170,8 +170,8 @@ void rectline::calcPropagation (nr_double_t frequency) {
 	      "<= %g\n", frequency, fc_low, fc_high, fc_low);
   }
   // calculate wave number
-  k0 = (2.0 * M_PI * frequency * std::sqrt (er * mur)) / C0;
-  kc = M_PI / a;
+  k0 = (2.0 * pi * frequency * std::sqrt (er * mur)) / C0;
+  kc = pi / a;
 
   // calculate losses only for propagative mode
   if (frequency >= fc_low) {
@@ -181,8 +181,8 @@ void rectline::calcPropagation (nr_double_t frequency) {
     // dielectric
     ad = (sqr(k0) * tand) / (2.0 * beta);
     // resistive
-    rs = std::sqrt (M_PI * frequency * mur * MU0 * rho);
-    ac = rs * (2.0 * b * sqr (M_PI) + cubic (a) * sqr (k0)) /
+    rs = std::sqrt (pi * frequency * mur * MU0 * rho);
+    ac = rs * (2.0 * b * sqr (pi) + cubic (a) * sqr (k0)) /
       (cubic (a) * b * beta * k0 *  Z0);
     alpha = (ad + ac);
 

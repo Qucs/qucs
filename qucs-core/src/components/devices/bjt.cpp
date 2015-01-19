@@ -69,15 +69,15 @@ matrix bjt::calcMatrixY (nr_double_t frequency) {
   nr_double_t Tf   = getPropertyDouble ("Tf");
 
   // compute admittance matrix entries
-  nr_complex_t Ybe = nr_complex_t (gbe, 2.0 * M_PI * frequency * Cbe);
-  nr_complex_t Ybc = nr_complex_t (gbc, 2.0 * M_PI * frequency * Cbci);
-  nr_complex_t Ycs = nr_complex_t (0.0, 2.0 * M_PI * frequency * Ccs);
+  nr_complex_t Ybe = nr_complex_t (gbe, 2.0 * pi * frequency * Cbe);
+  nr_complex_t Ybc = nr_complex_t (gbc, 2.0 * pi * frequency * Cbci);
+  nr_complex_t Ycs = nr_complex_t (0.0, 2.0 * pi * frequency * Ccs);
 
   // admittance matrix entries for "transcapacitance"
-  nr_complex_t Ybebc = nr_complex_t (0.0, 2.0 * M_PI * frequency * dQbedUbc);
+  nr_complex_t Ybebc = nr_complex_t (0.0, 2.0 * pi * frequency * dQbedUbc);
 
   // compute influence of excess phase
-  nr_double_t phase = deg2rad (Ptf) * Tf * 2 * M_PI * frequency;
+  nr_double_t phase = deg2rad (Ptf) * Tf * 2 * pi * frequency;
 #if NEWSGP
   nr_complex_t gmf = qucs::polar (gm, -phase);
 #else
@@ -487,7 +487,7 @@ void bjt::calcDC (void) {
       nr_double_t a, b, z;
       a = (Ibci + Ibcn + Ibei + Iben) / Irb;
       a = std::max (a, NR_TINY); // enforce positive values
-      z = (qucs::sqrt (1 + 144 / sqr (M_PI) * a) - 1) / 24 * sqr (M_PI) / qucs::sqrt (a);
+      z = (qucs::sqrt (1 + 144 / sqr (pi) * a) - 1) / 24 * sqr (pi) / qucs::sqrt (a);
       b = qucs::tan (z);
       Rbb = Rbm + 3 * (Rb - Rbm) * (b - z) / z / sqr (b);
     }

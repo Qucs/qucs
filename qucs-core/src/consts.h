@@ -42,64 +42,49 @@ Qucs mathematical constants.
 @{
 */
 
-#ifndef M_PI
+
 /*!\brief  Archimedes' constant (\f$\pi\f$) */
-#define M_PI      3.1415926535897932384626433832795029
-#endif
+static const double  pi    = 3.1415926535897932384626433832795029;
+
 /*!\brief Half of Archimedes' constant (\f$\pi/2\f$) */
-#ifndef M_PI_2
-#define M_PI_2    1.5707963267948966192313216916397514
-#endif
+static const double  pi_over_2  = 1.5707963267948966192313216916397514;
+
 /*!\brief A quarter of Archimedes' constant (\f$\pi/4\f$) */
-#ifndef M_PI_4
-#define M_PI_4    0.7853981633974483096156608458198757
-#endif
+static const double  pi_over_4  = 0.7853981633974483096156608458198757;
+
 /*!\brief Inverse of Archimedes' constant (\f$1/\pi\f$) */
-#ifndef M_1_PI
-#define M_1_PI    0.3183098861837906715377675267450287
-#endif
+static const double  one_over_pi  = 0.3183098861837906715377675267450287;
+
 /*\brief Twice the inverse of Archimedes' constant (\f$2/\pi\f$) */
-#ifndef M_2_PI
-#define M_2_PI    0.6366197723675813430755350534900574
-#endif
+static const double  two_over_pi  = 0.6366197723675813430755350534900574;
+
 /*!\brief Square root of Archimedes' constant (\f$\sqrt{\pi}\f$) */
-#ifndef M_SQRTPI
-#define M_SQRTPI  1.77245385090551602729816748334
-#endif
+static const double  sqrt_pi = 1.77245385090551602729816748334;
+
 /*!\brief  Euler's constant (\f$e=\sum_{n=0}^\infty \frac{1}{n!}\f$) */
-#ifndef M_E
-#define M_E       2.7182818284590452353602874713526625
-#endif
+static const double  e     = 2.7182818284590452353602874713526625;
+
 /*!\brief Decimal logartihm of Euler's constant (\f$\log_{10} (e)\f$) */
-#ifndef M_LOG10E
-#define M_LOG10E  0.4342944819032518276511289189166051
-#endif
+static const double  log10e = 0.4342944819032518276511289189166051;
+
 /*!\brief Binary logartihm of Euler's constant (\f$\log_{2} (e)\f$)*/
-#ifndef M_LOG2E
-#define M_LOG2E   1.4426950408889634073599246810018922
-#endif
+static const double  log2e = 1.4426950408889634073599246810018922;
+
 /*!\brief Natural logarithm of 2 (\f$\ln 2\f$) */
-#ifndef M_LN2
-#define M_LN2     0.6931471805599453094172321214581766
-#endif
+static const double  ln2   = 0.6931471805599453094172321214581766;
+
 /*!\brief Natural logarithm of 10 (\f$\ln 10\f$) */
-#ifndef M_LN10
-#define M_LN10    2.3025850929940456840179914546843642
-#endif
+static const double  ln10  = 2.3025850929940456840179914546843642;
+
 /*!\brief Square root of 2 (\f$\sqrt{2}\f$) */
-#ifndef M_SQRT2
-#define M_SQRT2   1.4142135623730950488016887242096981
-#endif
+static const double  sqrt2 = 1.4142135623730950488016887242096981;
+
 /*!\brief Inverse of Square root of 2 (\f$1/\sqrt{2}\f$) */
-#ifndef M_SQRT1_2
-#define M_SQRT1_2 0.7071067811865475244008443621048490
-#endif
-/*!\brief LIMEXP
-  \todo What is it?
-*/
-#ifndef M_LIMEXP
-#define M_LIMEXP  80.0
-#endif
+static const double  sqrt1_2=0.7071067811865475244008443621048490;
+
+/*!\brief Limiting exponetial factor  */
+static const double  limitexp = 80.0;
+
 
 /**
 @}

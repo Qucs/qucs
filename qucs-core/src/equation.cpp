@@ -2451,8 +2451,8 @@ struct pconstant
 // List of global constant variables.
 static struct pconstant pconstants[] =
 {
-    { "pi", M_PI },
-    { "e",  M_E  },
+    { "pi", pi },
+    { "e",  e  },
     { "kB", kB   },
     { "q",  Q_e    },
     { NULL, 0    }

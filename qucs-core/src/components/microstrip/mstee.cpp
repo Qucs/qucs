@@ -165,9 +165,9 @@ void mstee::calcPropagation (nr_double_t f) {
   L2 = 0.5 * std::max (Wa, Wb) - d2;
 
   // turn ratio of transformers in main arms
-  Ta2 = 1 - M_PI * sqr (f / fpa) *
+  Ta2 = 1 - pi * sqr (f / fpa) *
         (sqr (Zla / Zl2) / 12 + sqr (0.5 - d2 / Da));
-  Tb2 = 1 - M_PI * sqr (f / fpb) *
+  Tb2 = 1 - pi * sqr (f / fpb) *
         (sqr (Zlb / Zl2) / 12 + sqr (0.5 - d2 / Db));
   Ta2 = std::max (Ta2, NR_TINY);
   Tb2 = std::max (Tb2, NR_TINY);

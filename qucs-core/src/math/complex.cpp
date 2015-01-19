@@ -225,7 +225,7 @@ nr_complex_t log (const nr_complex_t z)
 nr_complex_t log10 (const nr_complex_t z)
 {
     nr_double_t phi = arg (z);
-    return nr_complex_t (log10 (abs (z)), phi * M_LOG10E);
+    return nr_complex_t (log10 (abs (z)), phi * log10e);
 }
 
 
@@ -394,7 +394,7 @@ nr_complex_t log2 (const nr_complex_t z)
 {
 #ifndef HAVE_CXX_COMPLEX_LOG2
     nr_double_t phi = std::arg (z);
-    return nr_complex_t (std::log (std::abs (z)) * M_LOG2E, phi * M_LOG2E);
+    return nr_complex_t (std::log (std::abs (z)) * log2e, phi * log2e);
 #else
     return std::log2 (z);
 #endif

@@ -67,7 +67,7 @@ void vac::calcTR (nr_double_t t) {
   nr_double_t d = getPropertyDouble ("Theta");
   nr_double_t a = getPropertyDouble ("U");
   nr_double_t s = getNet()->getSrcFactor ();
-  nr_double_t o = 2 * M_PI * f;
+  nr_double_t o = 2 * pi * f;
   nr_double_t T = p / f / 360;
   nr_double_t u = s * a * std::exp (-(t + T) * d * f) * std::sin (o * t + deg2rad (p));
   setE (VSRC_1, u);

@@ -204,7 +204,7 @@ static double mdl_variable_value (struct mdl_link_t * link, char * txt) {
       if (!mdl_resolve_variable (link, txt, val)) {
 	// special variables
 	if (!strcmp (txt, "PI")) {
-	  val = M_PI;
+	  val = pi;
 	}
 	// no resolvable (probably equation)
 	else {

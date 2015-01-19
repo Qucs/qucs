@@ -100,7 +100,7 @@ void coupler::initTR (void) {
 
 // properties
 PROP_REQ [] = {
-  { "k", PROP_REAL, { M_SQRT1_2, PROP_NO_STR }, PROP_NO_RANGE },
+  { "k", PROP_REAL, { sqrt1_2, PROP_NO_STR }, PROP_NO_RANGE },
   { "phi", PROP_REAL, { 0, PROP_NO_STR }, PROP_RNGII (-180, +180) },
   PROP_NO_PROP };
 PROP_OPT [] = {

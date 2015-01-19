@@ -55,7 +55,7 @@ diode::diode () : circuit (2) {
 void diode::calcSP (nr_double_t frequency) {
   nr_double_t gd = getOperatingPoint ("gd");
   nr_double_t Cd = getOperatingPoint ("Cd");
-  nr_complex_t y = 2 * z0 * nr_complex_t (gd, Cd * 2.0 * M_PI * frequency);
+  nr_complex_t y = 2 * z0 * nr_complex_t (gd, Cd * 2.0 * pi * frequency);
   setS (NODE_C, NODE_C, 1.0 / (1.0 + y));
   setS (NODE_A, NODE_A, 1.0 / (1.0 + y));
   setS (NODE_C, NODE_A, y / (1.0 + y));
@@ -74,7 +74,7 @@ void diode::calcNoiseSP (nr_double_t frequency) {
   nr_double_t gd = getOperatingPoint ("gd");
   nr_double_t Cd = getOperatingPoint ("Cd");
 
-  nr_complex_t y = rect (gd, Cd * 2.0 * M_PI * frequency);
+  nr_complex_t y = rect (gd, Cd * 2.0 * pi * frequency);
   nr_complex_t f = 2 * z0 * (Id + 2 * Is) / norm (2 * z0 * y + 1) * QoverkB / T0;
   setN (NODE_C, NODE_C, +f); setN (NODE_A, NODE_A, +f);
   setN (NODE_C, NODE_A, -f); setN (NODE_A, NODE_C, -f);
@@ -302,7 +302,7 @@ void diode::calcDC (void) {
     Id = pnCurrent (Ud, Is, Ut * N) + pnCurrent (Ud, Isr, Ut * Nr);
   }
   else if (Bv == 0 || Ud >= -Bv) { // reverse region
-    nr_double_t a = 3 * N * Ut / (Ud * M_E);
+    nr_double_t a = 3 * N * Ut / (Ud * e);
     a = cubic (a);
     Id = -Is * (1 + a);
     gd = +Is * 3 * a / Ud;
@@ -388,7 +388,7 @@ void diode::initAC (void) {
 void diode::calcAC (nr_double_t frequency) {
   nr_double_t gd = getOperatingPoint ("gd");
   nr_double_t Cd = getOperatingPoint ("Cd");
-  nr_complex_t y = nr_complex_t (gd, Cd * 2.0 * M_PI * frequency);
+  nr_complex_t y = nr_complex_t (gd, Cd * 2.0 * pi * frequency);
   setY (NODE_C, NODE_C, +y); setY (NODE_A, NODE_A, +y);
   setY (NODE_C, NODE_A, -y); setY (NODE_A, NODE_C, -y);
 }

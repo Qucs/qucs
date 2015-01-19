@@ -359,7 +359,7 @@ void eqndefined::calcAC (nr_double_t frequency) {
 matrix eqndefined::calcMatrixY (nr_double_t frequency) {
   int i, j, k, branches = getSize () / 2;
   matrix y (2 * branches);
-  nr_double_t o = 2 * M_PI * frequency;
+  nr_double_t o = 2 * pi * frequency;
 
   // merge conductances and capacitances
   for (k = 0, i = 0; i < branches; i++) {

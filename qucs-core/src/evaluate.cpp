@@ -1278,7 +1278,7 @@ constant * evaluate::phase_mv (constant * args) {
 constant * evaluate::arg_d (constant * args) {
   _ARD0 (d1);
   _DEFD ();
-  _RETD (d1 < 0.0 ? M_PI : 0.0);
+  _RETD (d1 < 0.0 ? pi : 0.0);
 }
 
 constant * evaluate::arg_c (constant * args) {
@@ -1423,7 +1423,7 @@ constant * evaluate::ln_d (constant * args) {
   _ARD0 (d1);
   _DEFC ();
   if (d1 < 0.0)
-    res->c = new nr_complex_t (std::log (-d1), M_PI);
+    res->c = new nr_complex_t (std::log (-d1), pi);
   else
     res->c = new nr_complex_t (std::log (d1));
   return res;
@@ -1446,7 +1446,7 @@ constant * evaluate::log10_d (constant * args) {
   _ARD0 (d1);
   _DEFC ();
   if (d1 < 0.0)
-    res->c = new nr_complex_t (std::log10 (-d1), M_PI * M_LOG10E);
+    res->c = new nr_complex_t (std::log10 (-d1), pi * log10e);
   else
     res->c = new nr_complex_t (std::log10 (d1));
   return res;
@@ -1469,9 +1469,9 @@ constant * evaluate::log2_d (constant * args) {
   _ARD0 (d1);
   _DEFC ();
   if (d1 < 0.0)
-    res->c = new nr_complex_t (std::log (-d1) * M_LOG2E, M_PI * M_LOG2E);
+    res->c = new nr_complex_t (std::log (-d1) * log2e, pi * log2e);
   else
-    res->c = new nr_complex_t (std::log (d1) * M_LOG2E);
+    res->c = new nr_complex_t (std::log (d1) * log2e);
   return res;
 }
 
@@ -1567,7 +1567,7 @@ constant * evaluate::cot_v (constant * args) {
 constant * evaluate::arccot_d (constant * args) {
   _ARD0 (d1);
   _DEFD ();
-  _RETD (M_PI_2 - std::atan (d1));
+  _RETD (pi_over_2 - std::atan (d1));
 }
 
 constant * evaluate::arccot_c (constant * args) {
@@ -1880,7 +1880,7 @@ constant * evaluate::max_d (constant * args) {
 constant * evaluate::max_c (constant * args) {
   _ARC0 (c1);
   _DEFD ();
-  if (fabs (arg (*c1)) < M_PI_2)
+  if (fabs (arg (*c1)) < pi_over_2)
     res->d = abs (*c1);
   else
     res->d = -abs (*c1);
@@ -1905,7 +1905,7 @@ constant * evaluate::max_d_c (constant * args) {
   _ARC1 (c2);
   _DEFC ();
   nr_double_t a = d1;
-  nr_double_t b = fabs (arg (*c2)) < M_PI_2 ? abs (*c2) : -abs (*c2);
+  nr_double_t b = fabs (arg (*c2)) < pi_over_2 ? abs (*c2) : -abs (*c2);
   nr_complex_t r = a > b ? d1 : *c2;
   _RETC (r);
 }
@@ -1914,8 +1914,8 @@ constant * evaluate::max_c_c (constant * args) {
   _ARC0 (c1);
   _ARC1 (c2);
   _DEFC ();
-  nr_double_t a = fabs (arg (*c1)) < M_PI_2 ? abs (*c1) : -abs (*c1);
-  nr_double_t b = fabs (arg (*c2)) < M_PI_2 ? abs (*c2) : -abs (*c2);
+  nr_double_t a = fabs (arg (*c1)) < pi_over_2 ? abs (*c1) : -abs (*c1);
+  nr_double_t b = fabs (arg (*c2)) < pi_over_2 ? abs (*c2) : -abs (*c2);
   nr_complex_t r = a > b ? *c1 : *c2;
   _RETC (r);
 }
@@ -1924,7 +1924,7 @@ constant * evaluate::max_c_d (constant * args) {
   _ARC0 (c1);
   _ARD1 (d2);
   _DEFC ();
-  nr_double_t a = fabs (arg (*c1)) < M_PI_2 ? abs (*c1) : -abs (*c1);
+  nr_double_t a = fabs (arg (*c1)) < pi_over_2 ? abs (*c1) : -abs (*c1);
   nr_double_t b = d2;
   nr_complex_t r = a > b ? *c1 : d2;
   _RETC (r);
@@ -1940,7 +1940,7 @@ constant * evaluate::min_d (constant * args) {
 constant * evaluate::min_c (constant * args) {
   _ARC0 (c1);
   _DEFD ();
-  if (fabs (arg (*c1)) < M_PI_2)
+  if (fabs (arg (*c1)) < pi_over_2)
     res->d = abs (*c1);
   else
     res->d = -abs (*c1);
@@ -1965,7 +1965,7 @@ constant * evaluate::min_d_c (constant * args) {
   _ARC1 (c2);
   _DEFC ();
   nr_double_t a = d1;
-  nr_double_t b = fabs (arg (*c2)) < M_PI_2 ? abs (*c2) : -abs (*c2);
+  nr_double_t b = fabs (arg (*c2)) < pi_over_2 ? abs (*c2) : -abs (*c2);
   nr_complex_t r = a < b ? d1 : *c2;
   _RETC (r);
 }
@@ -1974,8 +1974,8 @@ constant * evaluate::min_c_c (constant * args) {
   _ARC0 (c1);
   _ARC1 (c2);
   _DEFC ();
-  nr_double_t a = fabs (arg (*c1)) < M_PI_2 ? abs (*c1) : -abs (*c1);
-  nr_double_t b = fabs (arg (*c2)) < M_PI_2 ? abs (*c2) : -abs (*c2);
+  nr_double_t a = fabs (arg (*c1)) < pi_over_2 ? abs (*c1) : -abs (*c1);
+  nr_double_t b = fabs (arg (*c2)) < pi_over_2 ? abs (*c2) : -abs (*c2);
   nr_complex_t r = a < b ? *c1 : *c2;
   _RETC (r);
 }
@@ -1984,7 +1984,7 @@ constant * evaluate::min_c_d (constant * args) {
   _ARC0 (c1);
   _ARD1 (d2);
   _DEFC ();
-  nr_double_t a = fabs (arg (*c1)) < M_PI_2 ? abs (*c1) : -abs (*c1);
+  nr_double_t a = fabs (arg (*c1)) < pi_over_2 ? abs (*c1) : -abs (*c1);
   nr_double_t b = d2;
   nr_complex_t r = a < b ? *c1 : d2;
   _RETC (r);
@@ -3255,7 +3255,7 @@ constant * evaluate::max_r (constant * args) {
   for (int i = 0; i < indep->getSize (); i++) {
     if (r->inside (real (indep->get (i)))) {
       c = v->get (i);
-      d = fabs (arg (c)) < M_PI_2 ? abs (c) : -abs (c);
+      d = fabs (arg (c)) < pi_over_2 ? abs (c) : -abs (c);
       if (d > M) M = d;
     }
   }
@@ -3277,7 +3277,7 @@ constant * evaluate::min_r (constant * args) {
   for (int i = 0; i < indep->getSize (); i++) {
     if (r->inside (real (indep->get (i)))) {
       c = v->get (i);
-      d = fabs (arg (c)) < M_PI_2 ? abs (c) : -abs (c);
+      d = fabs (arg (c)) < pi_over_2 ? abs (c) : -abs (c);
       if (d < M) M = d;
     }
   }
@@ -3589,7 +3589,7 @@ constant * evaluate::arctan2_d_d (constant * args) {
   _DEFD ();
   if ((x == 0) && (y == 0)) {
     THROW_MATH_EXCEPTION ("arctan2: not defined for (0,0)");
-    _RETD (-M_PI / 2);
+    _RETD (-pi / 2);
   }
   _RETD (std::atan2 (y, x));
 }
@@ -3816,11 +3816,11 @@ constant * evaluate::kbd_d_d (constant * args) {
   }
   qucs::vector v (size);
   for (i = 0; i < size / 2; i++) {
-    sval += fspecial::i0 (M_PI * alpha * std::sqrt (1.0 - sqr (4.0 * i / size - 1.0)));
+    sval += fspecial::i0 (pi * alpha * std::sqrt (1.0 - sqr (4.0 * i / size - 1.0)));
     v (i) = sval;
   }
   // need to add one more value to the normalization factor at size/2
-  sval += fspecial::i0 (M_PI * alpha * std::sqrt (1.0 - sqr (4.0 * (size / 2) / size - 1.0)));
+  sval += fspecial::i0 (pi * alpha * std::sqrt (1.0 - sqr (4.0 * (size / 2) / size - 1.0)));
   // normalize the window and fill in the righthand side of the window
   for (i = 0; i < size / 2; i++) {
     v (i) = std::sqrt (v (i) / sval);

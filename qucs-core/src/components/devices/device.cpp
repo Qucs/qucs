@@ -156,7 +156,7 @@ void device::pnJunctionMOS (nr_double_t Upn, nr_double_t Iss, nr_double_t Ute,
 void device::pnJunctionBIP (nr_double_t Upn, nr_double_t Iss, nr_double_t Ute,
 			    nr_double_t& I, nr_double_t& g) {
   if (Upn < -3 * Ute) {
-    nr_double_t a = 3 * Ute / (Upn * M_E);
+    nr_double_t a = 3 * Ute / (Upn * e);
     a = cubic (a);
     I = -Iss * (1 + a);
     g = +Iss * 3 * a / Upn;
@@ -251,7 +251,7 @@ nr_double_t device::pnCharge (nr_double_t Uj, nr_double_t Cj, nr_double_t Vj,
 
 // Compute critical voltage of pn-junction.
 nr_double_t device::pnCriticalVoltage (nr_double_t Iss, nr_double_t Ute) {
-  return Ute * log (Ute / M_SQRT2 / Iss);
+  return Ute * log (Ute / sqrt2 / Iss);
 }
 
 /* The function limits the forward fet-voltage for each DC iteration

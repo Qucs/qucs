@@ -63,10 +63,10 @@ void vpm::initTR (void) {
 void vpm::calcTR (nr_double_t t) {
   nr_double_t f = getPropertyDouble ("f");
   nr_double_t p = getPropertyDouble ("Phase");
-  nr_double_t d = getPropertyDouble ("M") * 2 * M_PI;
+  nr_double_t d = getPropertyDouble ("M") * 2 * pi;
   nr_double_t a = getPropertyDouble ("U");
   nr_double_t v = real (getV  (NODE_3));
-  nr_double_t b = 2 * M_PI * f * t + deg2rad (p) + v * d;
+  nr_double_t b = 2 * pi * f * t + deg2rad (p) + v * d;
   nr_double_t u = a * std::sin (b);
   nr_double_t g = a * std::cos (b) * d;
   setE (VSRC_1, g * v - u);

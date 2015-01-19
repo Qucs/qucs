@@ -43,7 +43,7 @@ void ctline::calcSP (nr_double_t frequency) {
   nr_double_t ero = getPropertyDouble ("Ero");
   nr_double_t ae  = getPropertyDouble ("Ae");
   nr_double_t ao  = getPropertyDouble ("Ao");
-  nr_double_t o   = 2.0 * M_PI * frequency;
+  nr_double_t o   = 2.0 * pi * frequency;
 
   nr_complex_t ge = nr_complex_t (std::log (ae) / 2, o / C0 * std::sqrt (ere)) * l;
   nr_complex_t go = nr_complex_t (std::log (ao) / 2, o / C0 * std::sqrt (ero)) * l;
@@ -110,7 +110,7 @@ void ctline::calcAC (nr_double_t frequency) {
   nr_double_t ero = getPropertyDouble ("Ero");
   nr_double_t ae  = getPropertyDouble ("Ae");
   nr_double_t ao  = getPropertyDouble ("Ao");
-  nr_double_t o   = 2.0 * M_PI * frequency;
+  nr_double_t o   = 2.0 * pi * frequency;
 
   if (l != 0.0) {
     nr_complex_t y11, y12, y13, y14;

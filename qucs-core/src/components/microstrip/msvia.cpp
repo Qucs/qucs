@@ -76,7 +76,7 @@ nr_complex_t msvia::calcImpedance (nr_double_t frequency) {
   }
 
   // create Z-parameter
-  nr_double_t fs  = M_PI * MU0 * sqr (t) / rho;
+  nr_double_t fs  = pi * MU0 * sqr (t) / rho;
   nr_double_t res = R * std::sqrt (1 + frequency * fs);
   nr_double_t a   = std::sqrt (sqr (r) + sqr (h));
   nr_double_t ind = MU0 * (h * std::log ((h + a) / r) + 1.5 * (r - a));
@@ -90,7 +90,7 @@ nr_double_t msvia::calcResistance (void) {
   nr_double_t t   = subst->getPropertyDouble ("t");
   nr_double_t rho = subst->getPropertyDouble ("rho");
   nr_double_t r   = getPropertyDouble ("D") / 2;
-  nr_double_t v   = h / M_PI / (sqr (r) - sqr (r - t));
+  nr_double_t v   = h / pi / (sqr (r) - sqr (r - t));
   return R = rho * v;
 }
 

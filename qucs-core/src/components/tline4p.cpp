@@ -39,7 +39,7 @@ void tline4p::calcSP (nr_double_t frequency) {
   nr_double_t l = getPropertyDouble ("L");
   nr_double_t z = getPropertyDouble ("Z");
   nr_double_t a = getPropertyDouble ("Alpha");
-  nr_double_t b = 2 * M_PI * frequency / C0;
+  nr_double_t b = 2 * pi * frequency / C0;
   a = std::log (a) / 2;
 
   nr_complex_t g = nr_complex_t (a, b);
@@ -104,7 +104,7 @@ void tline4p::calcAC (nr_double_t frequency) {
   nr_double_t l = getPropertyDouble ("L");
   nr_double_t z = getPropertyDouble ("Z");
   nr_double_t a = getPropertyDouble ("Alpha");
-  nr_double_t b = 2 * M_PI * frequency / C0;
+  nr_double_t b = 2 * pi * frequency / C0;
   a = std::log (a) / 2;
   if (l != 0.0) {
     nr_complex_t g = nr_complex_t (a, b);

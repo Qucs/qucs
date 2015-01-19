@@ -71,7 +71,7 @@ void mscoupled::calcPropagation (nr_double_t frequency) {
 		       frequency, "Hammerstad", aco, ado);
 
   // compute propagation constants for even and odd mode
-  nr_double_t k0 = 2 * M_PI * frequency / C0;
+  nr_double_t k0 = 2 * pi * frequency / C0;
   ae = ace + ade;
   ao = aco + ado;
   be = qucs::sqrt (ErEffeFreq) * k0;
@@ -173,10 +173,10 @@ void mscoupled::analysQuasiStatic (nr_double_t W, nr_double_t h, nr_double_t s,
     // further modifying equations
     r = 1 + 0.15 * (1 - qucs::exp (1 - sqr (er - 1) / 8.2) / (1 + qucs::pow (g, -6.)));
     fo1 = 1 - qucs::exp (-0.179 * qucs::pow (g, 0.15) -
-		   0.328 * qucs::pow (g, r) / qucs::log (M_E + qucs::pow (g / 7, 2.8)));
+		   0.328 * qucs::pow (g, r) / qucs::log (e + qucs::pow (g / 7, 2.8)));
     q = qucs::exp (-1.366 - g);
     p = qucs::exp (-0.745 * qucs::pow (g, 0.295)) / qucs::cosh (qucs::pow (g, 0.68));
-    fo = fo1 * qucs::exp (p * qucs::log (u) + q * qucs::sin (M_PI * qucs::log10 (u)));
+    fo = fo1 * qucs::exp (p * qucs::log (u) + q * qucs::sin (pi * qucs::log10 (u)));
 
     Mu = g * qucs::exp (-g) + u * (20 + sqr (g)) / (10 + sqr (g));
     msline::Hammerstad_ab (Mu, er, a, b);
@@ -212,10 +212,10 @@ void mscoupled::analysQuasiStatic (nr_double_t W, nr_double_t h, nr_double_t s,
     if (t != 0 && s > 10 * (2 * t)) {
       nr_double_t dW = 0;
       // SCHNEIDER, referred by JANSEN
-      if (u >= M_1_PI / 2 && M_1_PI / 2 > 2 * t / h)
-	dW = t * (1 + qucs::log (2 * h / t)) / M_PI;
+      if (u >= one_over_pi / 2 && one_over_pi / 2 > 2 * t / h)
+	dW = t * (1 + qucs::log (2 * h / t)) / pi;
       else if (W > 2 * t)
-	dW = t * (1 + qucs::log (4 * M_PI * W / t)) / M_PI;
+	dW = t * (1 + qucs::log (4 * pi * W / t)) / pi;
       // JANSEN
       nr_double_t dt = 2 * t * h / s / er;
       nr_double_t We = W + dW * (1 - 0.5 * qucs::exp (-0.69 * dW / dt));

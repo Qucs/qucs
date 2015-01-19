@@ -52,14 +52,14 @@ void coaxline::calcPropagation (nr_double_t frequency) {
   }
 
   // calculate losses
-  ad = M_PI / C0 * frequency * std::sqrt (er) * tand;
-  rs = std::sqrt (M_PI * frequency * mur * MU0 * rho);
+  ad = pi / C0 * frequency * std::sqrt (er) * tand;
+  rs = std::sqrt (pi * frequency * mur * MU0 * rho);
   ac = std::sqrt (er) * (1 / d + 1 / D) / std::log (D / d) * rs / Z0;
 
   // calculate propagation constants and reference impedance
   alpha = ac + ad;
-  beta  = std::sqrt (er * mur) * 2 * M_PI * frequency / C0;
-  zl = Z0 / 2 / M_PI / std::sqrt (er) * std::log (D / d);
+  beta  = std::sqrt (er * mur) * 2 * pi * frequency / C0;
+  zl = Z0 / 2 / pi / std::sqrt (er) * std::log (D / d);
 }
 
 void coaxline::calcNoiseSP (nr_double_t) {
@@ -85,7 +85,7 @@ void coaxline::initCheck (void) {
   }
   nr_double_t f1, f2, cl;
   cl = C0 / std::sqrt (mur * er);
-  f1 = cl / (M_PI_2 * (D + d)); // TE_11
+  f1 = cl / (pi_over_2 * (D + d)); // TE_11
   f2 = cl / (1 * (D - d));      // TM_N1
   fc = std::min (f1, f2);
 }
@@ -124,7 +124,7 @@ void coaxline::initDC (void) {
 
   if (d != 0.0 && rho != 0.0 && l != 0.0) {
     // a tiny resistance
-    nr_double_t g = M_PI * sqr (d / 2) / rho / l;
+    nr_double_t g = pi * sqr (d / 2) / rho / l;
     setVoltageSources (0);
     allocMatrixMNA ();
     setY (NODE_1, NODE_1, +g); setY (NODE_2, NODE_2, +g);
