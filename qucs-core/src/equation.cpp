@@ -520,7 +520,7 @@ void assignment::mul (assignment * f)
     else if (isOne (factor))
     {
         delete factor;
-        body = body;
+        //body = body;
     }
     else
     {
@@ -548,7 +548,7 @@ void assignment::mulref (assignment * f)
     }
     else if (isOne (factor))
     {
-        body = body;
+        //body = body;
     }
     else
     {
@@ -572,12 +572,12 @@ void assignment::add (assignment * f)
     else if (isZero (body))
     {
         delete body;
-        body = factor;
+        //body = factor;
     }
     else if (isZero (factor))
     {
         delete factor;
-        body = body;
+        //body = body;
     }
     else
     {
