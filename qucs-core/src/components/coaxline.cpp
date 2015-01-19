@@ -87,7 +87,7 @@ void coaxline::initCheck (void) {
   cl = C0 / std::sqrt (mur * er);
   f1 = cl / (M_PI_2 * (D + d)); // TE_11
   f2 = cl / (1 * (D - d));      // TM_N1
-  fc = MIN (f1, f2);
+  fc = std::min (f1, f2);
 }
 
 void coaxline::saveCharacteristics (nr_double_t) {

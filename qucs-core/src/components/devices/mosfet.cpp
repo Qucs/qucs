@@ -447,7 +447,7 @@ void mosfet::calcDC (void) {
   else {
     // taylor series of "sqrt (x - 1)" -> continual at Ubs/Ubd = 0
     Sarg = Sphi - Upn / Sphi / 2;
-    Sarg = MAX (Sarg, 0);
+    Sarg = std::max (Sarg, 0.0);
   }
 
   // calculate bias-dependent threshold voltage
@@ -480,7 +480,7 @@ void mosfet::calcDC (void) {
     }
     gmb = gm * arg;
   }
-  Udsat = pol * MAX (Utst, 0);
+  Udsat = pol * std::max (Utst, 0.0);
   Ids = MOSdir * Ids;
   Uon = pol * Uon;
 

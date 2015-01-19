@@ -26,6 +26,8 @@
 # include <config.h>
 #endif
 
+#include <algorithm>
+
 #include "component.h"
 #include "substrate.h"
 #include "device.h"
@@ -160,15 +162,15 @@ void mstee::calcPropagation (nr_double_t f) {
   q = sqr (f) / fpa / fpb;
   d2 = std::sqrt (Da * Db) * (0.5 - r * (0.05 + 0.7 * std::exp (-1.6 * r) +
 				    0.25 * r * q - 0.17 * std::log (r)));
-  L2 = 0.5 * MAX (Wa, Wb) - d2;
+  L2 = 0.5 * std::max (Wa, Wb) - d2;
 
   // turn ratio of transformers in main arms
   Ta2 = 1 - M_PI * sqr (f / fpa) *
         (sqr (Zla / Zl2) / 12 + sqr (0.5 - d2 / Da));
   Tb2 = 1 - M_PI * sqr (f / fpb) *
         (sqr (Zlb / Zl2) / 12 + sqr (0.5 - d2 / Db));
-  Ta2 = MAX (Ta2, NR_TINY);
-  Tb2 = MAX (Tb2, NR_TINY);
+  Ta2 = std::max (Ta2, NR_TINY);
+  Tb2 = std::max (Tb2, NR_TINY);
 
   // shunt susceptance
   Bt = 5.5 * std::sqrt (Da * Db / lda / ldb) * (er + 2) / er /

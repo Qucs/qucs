@@ -29,6 +29,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <cmath>
+#include <algorithm>
 
 #include "complex.h"
 #include "object.h"
@@ -145,7 +146,7 @@ void device::pnJunctionMOS (nr_double_t Upn, nr_double_t Iss, nr_double_t Ute,
     I = g * Upn;
   }
   else {
-    nr_double_t e = exp (MIN (Upn / Ute, 709));
+    nr_double_t e = exp (std::min (Upn / Ute, 709.0));
     I = Iss * (e - 1);
     g = Iss * e / Ute;
   }
@@ -161,7 +162,7 @@ void device::pnJunctionBIP (nr_double_t Upn, nr_double_t Iss, nr_double_t Ute,
     g = +Iss * 3 * a / Upn;
   }
   else {
-    nr_double_t e = exp (MIN (Upn / Ute, 709));
+    nr_double_t e = exp (std::min (Upn / Ute, 709.0));
     I = Iss * (e - 1);
     g = Iss * e / Ute;
   }
@@ -170,13 +171,13 @@ void device::pnJunctionBIP (nr_double_t Upn, nr_double_t Iss, nr_double_t Ute,
 // The function computes the exponential pn-junction current.
 nr_double_t
 device::pnCurrent (nr_double_t Upn, nr_double_t Iss, nr_double_t Ute) {
-  return Iss * (exp (MIN (Upn / Ute, 709)) - 1);
+  return Iss * (exp (std::min (Upn / Ute, 709.0)) - 1);
 }
 
 // The function computes the exponential pn-junction current's derivative.
 nr_double_t
 device::pnConductance (nr_double_t Upn, nr_double_t Iss, nr_double_t Ute) {
-  return Iss * exp (MIN (Upn / Ute, 709)) / Ute;
+  return Iss * exp (std::min (Upn / Ute, 709.0)) / Ute;
 }
 
 // Computes pn-junction depletion capacitance.
@@ -271,7 +272,7 @@ device::fetVoltage (nr_double_t Ufet, nr_double_t Uold, nr_double_t Uth) {
 	    Ufet = Uold - Utstlo;
 	  }
 	} else {
-	  Ufet = MAX (Ufet, Uth + 2);
+	  Ufet = std::max (Ufet, Uth + 2);
 	}
       } else { /* staying on */
 	if (DeltaU >= Utsthi) {
@@ -280,9 +281,9 @@ device::fetVoltage (nr_double_t Ufet, nr_double_t Uold, nr_double_t Uth) {
       }
     } else { /* middle region */
       if (DeltaU <= 0) { /* decreasing */
-	Ufet = MAX (Ufet, Uth - 0.5);
+	Ufet = std::max (Ufet, Uth - 0.5);
       } else { /* increasing */
-	Ufet = MIN (Ufet, Uth + 4);
+	Ufet = std::min (Ufet, Uth + 4);
       }
     }
   } else { /* FET is off */
@@ -309,15 +310,15 @@ device::fetVoltage (nr_double_t Ufet, nr_double_t Uold, nr_double_t Uth) {
 nr_double_t device::fetVoltageDS (nr_double_t Ufet, nr_double_t Uold) {
   if (Uold >= 3.5) {
     if (Ufet > Uold) {
-      Ufet = MIN (Ufet, 3 * Uold + 2);
+      Ufet = std::min (Ufet, 3 * Uold + 2);
     } else if (Ufet < 3.5) {
-      Ufet = MAX (Ufet, 2);
+      Ufet = std::max (Ufet, 2.0);
     }
   } else {
     if (Ufet > Uold) {
-      Ufet = MIN (Ufet, 4);
+      Ufet = std::min (Ufet, 4.0);
     } else {
-      Ufet = MAX (Ufet, -0.5);
+      Ufet = std::max (Ufet, -0.5);
     }
   }
   return Ufet;

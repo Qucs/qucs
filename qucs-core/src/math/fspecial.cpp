@@ -31,6 +31,7 @@
 #include <string.h>
 #include <cmath>
 #include <float.h>
+#include <algorithm>
 
 #include "compat.h"
 #include "constants.h"
@@ -117,7 +118,7 @@ nr_double_t fspecial::ellip_rf (nr_double_t x, nr_double_t y, nr_double_t z) {
     dy = (av - yt) / av;
     dz = (av - zt) / av;
   }
-  while (MAX (MAX (fabs (dx), fabs (dy)), fabs (dz)) > K_ERR);
+  while (std::max (std::max (fabs (dx), fabs (dy)), fabs (dz)) > K_ERR);
 
   e2 = dx * dy - dz * dz;
   e3 = dx * dy * dz;

@@ -47,6 +47,8 @@ matvec arg       (matvec);
 matvec adjoint   (matvec);
 vector rollet    (matvec);
 vector b1        (matvec);
+matvec deg       (matvec);
+matvec rad       (matvec);
 matvec stos (matvec, nr_complex_t, nr_complex_t z0 = 50.0);
 matvec stos (matvec, nr_double_t, nr_double_t z0 = 50.0);
 matvec stos (matvec, vector, nr_complex_t z0 = 50.0);
@@ -139,6 +141,8 @@ class matvec
   friend matvec adjoint   (matvec);
   friend qucs::vector rollet    (matvec);
   friend qucs::vector b1        (matvec);
+  friend matvec deg       (matvec);
+  friend matvec rad       (matvec);
 
   friend matvec stos (matvec, nr_complex_t, nr_complex_t);
   friend matvec stos (matvec, nr_double_t, nr_double_t);

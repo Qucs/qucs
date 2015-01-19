@@ -1114,6 +1114,18 @@ vector erfcinv (vector v) {
   return result;
 }
 
+vector deg (vector v) {
+  vector result (v);
+  for (int i = 0; i < v.getSize (); i++) result.set (deg (v.get (i)), i);
+  return result;
+}
+
+vector rad (vector v) {
+  vector result (v);
+  for (int i = 0; i < v.getSize (); i++) result.set (rad (v.get (i)), i);
+  return result;
+}
+
 vector i0 (vector v) {
   vector result (v);
   for (int i = 0; i < v.getSize (); i++) result.set (i0 (v.get (i)), i);

@@ -899,5 +899,14 @@ bool operator<(const nr_complex_t z1, const nr_complex_t z2)
     return norm (z1) < norm (z2);
 }
 
+
+
+nr_double_t deg (const nr_complex_t x) {
+  return deg (real(x));
+}
+nr_double_t rad (const nr_complex_t x) {
+  return rad (real(x));
+}
+
 } // namespace qucs
 

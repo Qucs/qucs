@@ -97,41 +97,10 @@ const double EgGaAs     = 1.43;
 /*!\brief Energy gap at 0K in eV of Silicon */
 const double Eg0Si      = 1.16;
 
-/// \todo move these simulator constants and macros elsewhere.
-
 /*!\brief Gmin
    \todo Define and document
 */
 const double GMin = NR_TINY;
-
-#define cubic(x)  ((x) * (x) * (x))
-
-#define kelvin(x) ((x) - K)
-/*!\brief Convert celcius to kelvin
-   \todo Better as static inline
-   \todo Rename as celcius2kelvin
-*/
-#define degree(x) (K + (x))
-/*!\brief Convert degree to radian
-   \todo Better as static inline
-   \todo Rename as deg2rad
-*/
-#define rad(x)    (M_PI * (x) / 180.0)
-/*!\brief Convert radian to degree
-   \todo Better as static inline
-   \todo Rename as rad2deg
-*/
-#define deg(x)    (180.0 * (x) / M_PI)
-
-#ifndef MAX
-/*!\brief Maximum of x and y */
-# define MAX(x,y) (((x) > (y)) ? (x) : (y))
-#endif
-
-#ifndef MIN
-/*!\brief Minimum of x and y */
-# define MIN(x,y) (((x) < (y)) ? (x) : (y))
-#endif
 
 /**
 @}

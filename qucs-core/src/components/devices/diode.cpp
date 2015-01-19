@@ -284,7 +284,7 @@ void diode::calcDC (void) {
 
   // critical voltage necessary for bad start values
   Ucrit = pnCriticalVoltage (Is, N * Ut);
-  if (Bv != 0 && Ud < MIN (0, -Bv + 10 * N * Ut)) {
+  if (Bv != 0 && Ud < std::min (0.0, -Bv + 10 * N * Ut)) {
     nr_double_t V = -(Ud + Bv);
     V = pnVoltage (V, -(UdPrev + Bv), Ut * N, Ucrit);
     Ud = -(V + Bv);

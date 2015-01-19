@@ -486,7 +486,7 @@ void bjt::calcDC (void) {
     if (Irb != 0.0) {
       nr_double_t a, b, z;
       a = (Ibci + Ibcn + Ibei + Iben) / Irb;
-      a = MAX (a, NR_TINY); // enforce positive values
+      a = std::max (a, NR_TINY); // enforce positive values
       z = (qucs::sqrt (1 + 144 / sqr (M_PI) * a) - 1) / 24 * sqr (M_PI) / qucs::sqrt (a);
       b = qucs::tan (z);
       Rbb = Rbm + 3 * (Rb - Rbm) * (b - z) / z / sqr (b);
@@ -605,7 +605,7 @@ void bjt::calcOperatingPoints (void) {
   if (If != 0.0) {
     nr_double_t e, Tff, dTffdUbe, dTffdUbc, a;
     a = 1 / (1 + Itf / If);
-    e = 2 * qucs::exp (MIN (Ubc * Vtf, 709));
+    e = 2 * qucs::exp (std::min (Ubc * Vtf, 709.0));
     Tff = Tf * (1 + Xtf * sqr (a) * e);
     dTffdUbe = Tf * Xtf * 2 * gif * Itf * cubic (a) / sqr (If) * e;
     Cbe += (If * dTffdUbe + Tff * (gif - If / Qb * dQbdUbe)) / Qb;

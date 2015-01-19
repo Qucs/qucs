@@ -30,6 +30,7 @@
 #include <string.h>
 #include <math.h>
 #include <float.h>
+#include <algorithm>
 
 #include "compat.h"
 #include "object.h"
@@ -783,11 +784,11 @@ void trsolver::initTR (void)
     deltaMin = getPropertyDouble ("MinStep");
     deltaMax = getPropertyDouble ("MaxStep");
     if (deltaMax == 0.0)
-        deltaMax = MIN ((stop - start) / (points - 1), stop / 200);
+        deltaMax = std::min ((stop - start) / (points - 1), stop / 200);
     if (deltaMin == 0.0)
         deltaMin = NR_TINY * 10 * deltaMax;
     if (delta == 0.0)
-        delta = MIN (stop / 200, deltaMax) / 10;
+        delta = std::min (stop / 200, deltaMax) / 10;
     if (delta < deltaMin) delta = deltaMin;
     if (delta > deltaMax) delta = deltaMax;
 
@@ -904,14 +905,14 @@ nr_double_t trsolver::checkDelta (void)
             tol = LTEreltol * rel + LTEabstol;
             lte = LTEfactor * (cec / (pec - cec)) * dif;
             q =  delta * exp (log (fabs (tol / lte)) / (corrOrder + 1));
-            n = MIN (n, q);
+            n = std::min (n, q);
         }
     }
 #if STEPDEBUG
     logprint (LOG_STATUS, "DEBUG: delta according to local truncation "
               "error h = %.3e\n", (double) n);
 #endif
-    delta = MIN ((n > 1.9 * delta) ? 2 * delta : delta, n);
+    delta = std::min ((n > 1.9 * delta) ? 2 * delta : delta, n);
     return delta;
 }
 

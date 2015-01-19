@@ -224,7 +224,7 @@ void rectline::initCheck (void) {
   nr_double_t c = std::sqrt (epsr * mur);
   fc_low =  C0 / (2.0 * a * c);
   /* min of second TE mode and first TM mode */
-  fc_high = MIN (C0 / (a * c),  C0 / (2.0  * b * c));
+  fc_high = std::min (C0 / (a * c),  C0 / (2.0  * b * c));
   // calculation of resistivity
   rho  = getPropertyDouble ("rho");
   nr_double_t T = getPropertyDouble ("Temp");
