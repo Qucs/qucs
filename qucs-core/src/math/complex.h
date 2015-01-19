@@ -142,14 +142,8 @@ nr_complex_t  erfinv (const nr_complex_t); //see fspecial
 nr_complex_t erfcinv (const nr_complex_t); //see fspecial
 
 
-//rad to degree FIXME
-//nr_double_t deg (const nr_complex_t x)  { return deg( real(x) ); }
 nr_double_t rad2deg (const nr_complex_t );
-//degree to rad FIXME
-//nr_double_t rad (const nr_complex_t x)  { return rad( real(x) ); }
 nr_double_t deg2rad (const nr_complex_t );
-
-
 
 // modulo operators
 nr_complex_t operator % (const nr_complex_t, const nr_complex_t);

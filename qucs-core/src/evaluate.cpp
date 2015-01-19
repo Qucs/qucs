@@ -1259,19 +1259,19 @@ constant * evaluate::phase_c (constant * args) {
 constant * evaluate::phase_v (constant * args) {
   _ARV0 (v1);
   _DEFV ();
-  _RETV (qucs::rad2deg (arg (*v1)));
+  _RETV (rad2deg (arg (*v1)));
 }
 
 constant * evaluate::phase_m (constant * args) {
   _ARM0 (m1);
   _DEFM ();
-  _RETM (qucs::rad2deg (arg (*m1)));
+  _RETM (rad2deg (arg (*m1)));
 }
 
 constant * evaluate::phase_mv (constant * args) {
   _ARMV0 (v1);
   _DEFMV ();
-  _RETMV (qucs::rad2deg (arg (*v1)));
+  _RETMV (rad2deg (arg (*v1)));
 }
 
 // ********** phase in radians *****************
@@ -1331,22 +1331,19 @@ constant * evaluate::unwrap_v_3 (constant * args) {
 constant * evaluate::deg2rad_d (constant * args) {
   _ARD0 (d1);
   _DEFD ();
-  _RETD (qucs::deg2rad (d1));
+  _RETD (deg2rad (d1));
 }
 
 constant * evaluate::deg2rad_c (constant * args) {
   _ARC0 (c1);
   _DEFD ();
-  _RETD (qucs::deg2rad (real (*c1)));
+  _RETD (deg2rad (*c1));
 }
 
 constant * evaluate::deg2rad_v (constant * args) {
   _ARV0 (v1);
   _DEFV ();
-  qucs::vector * v = new qucs::vector ();
-  for (int i = 0; i < v1->getSize (); i++) v->add (deg2rad (real (v1->get (i))));
-  res->v = v;
-  return res;
+  _RETV (deg2rad (*v1));
 }
 
 constant * evaluate::rad2deg_d (constant * args) {
@@ -1358,16 +1355,13 @@ constant * evaluate::rad2deg_d (constant * args) {
 constant * evaluate::rad2deg_c (constant * args) {
   _ARC0 (c1);
   _DEFD ();
-  _RETD (rad2deg (real (*c1)));
+  _RETD (rad2deg (*c1));
 }
 
 constant * evaluate::rad2deg_v (constant * args) {
   _ARV0 (v1);
   _DEFV ();
-  qucs::vector * v = new qucs::vector ();
-  for (int i = 0; i < v1->getSize (); i++) v->add (rad2deg (real (v1->get (i))));
-  res->v = v;
-  return res;
+  _RETV (rad2deg (*v1));
 }
 
 // ********** voltage decibel *****************
@@ -2906,7 +2900,7 @@ constant * evaluate::stab_circle_l_v (constant * args) {
   int a, d, i; nr_complex_t v;
   for (i = 0, d = 0; i < S->getSize (); i++) {
     for (a = 0; a < arc->getSize (); a++, d++) {
-      v = C.get (i) + R.get (i) * exp (nr_complex_t (0, 1) * qucs::deg2rad (arc->get (a)));
+      v = C.get (i) + R.get (i) * exp (nr_complex_t (0, 1) * deg2rad (arc->get (a)));
       circle->set (v, d);
     }
   }
@@ -2937,7 +2931,7 @@ constant * evaluate::stab_circle_s_v (constant * args) {
   int a, d, i; nr_complex_t v;
   for (i = 0, d = 0; i < S->getSize (); i++) {
     for (a = 0; a < arc->getSize (); a++, d++) {
-      v = C.get (i) + R.get (i) * exp (nr_complex_t (0, 1) * qucs::deg2rad (arc->get (a)));
+      v = C.get (i) + R.get (i) * exp (nr_complex_t (0, 1) * deg2rad (arc->get (a)));
       circle->set (v, d);
     }
   }
@@ -2977,7 +2971,7 @@ constant * evaluate::ga_circle_d_v (constant * args) {
   int i, a, j; nr_complex_t v;
   for (i = 0, j = 0; i < C.getSize (); i++) {
     for (a = 0; a < arc->getSize (); a++, j++) {
-      v = C.get (i) + R.get (i) * exp (nr_complex_t (0, 1) * qucs::deg2rad (arc->get (a)));
+      v = C.get (i) + R.get (i) * exp (nr_complex_t (0, 1) * deg2rad (arc->get (a)));
       circle->set (v, j);
     }
   }
@@ -3017,7 +3011,7 @@ constant * evaluate::ga_circle_v_v (constant * args) {
     R = sqrt (1 - 2 * k * g * abs (s) + g * g * norm (s)) / abs (d);
     for (i = 0; i < C.getSize (); i++) {
       for (a = 0; a < arc->getSize (); a++) {
-	v = C.get (i) + R.get (i) * exp (nr_complex_t (0, 1) * qucs::deg2rad (arc->get (a)));
+        v = C.get (i) + R.get (i) * exp (nr_complex_t (0, 1) * deg2rad (arc->get (a)));
 	j = i * G->getSize () * arc->getSize () + f * arc->getSize () + a;
 	circle->set (v, j);
       }
@@ -3062,7 +3056,7 @@ constant * evaluate::gp_circle_d_v (constant * args) {
   int i, a, j; nr_complex_t v;
   for (i = 0, j = 0; i < C.getSize (); i++) {
     for (a = 0; a < arc->getSize (); a++, j++) {
-      v = C.get (i) + R.get (i) * exp (nr_complex_t (0, 1) * qucs::deg2rad (arc->get (a)));
+      v = C.get (i) + R.get (i) * exp (nr_complex_t (0, 1) * deg2rad (arc->get (a)));
       circle->set (v, j);
     }
   }
@@ -3102,7 +3096,7 @@ constant * evaluate::gp_circle_v_v (constant * args) {
     R = sqrt (1 - 2 * k * g * abs (s) + g * g * norm (s)) / abs (d);
     for (i = 0; i < C.getSize (); i++) {
       for (a = 0; a < arc->getSize (); a++) {
-	v = C.get (i) + R.get (i) * exp (nr_complex_t (0, 1) * qucs::deg2rad (arc->get (a)));
+        v = C.get (i) + R.get (i) * exp (nr_complex_t (0, 1) * deg2rad (arc->get (a)));
 	j = i * G->getSize () * arc->getSize () + f * arc->getSize () + a;
 	circle->set (v, j);
       }
@@ -3527,14 +3521,14 @@ constant * evaluate::polar_d_d (constant * args) {
   _ARD0 (a);
   _ARD1 (p);
   _DEFC ();
-  _RETC (std::polar (a, qucs::deg2rad (p)));
+  _RETC (std::polar (a, deg2rad (p)));
 }
 
 constant * evaluate::polar_c_d (constant * args) {
   _ARC0 (a);
   _ARD1 (p);
   _DEFC ();
-  _RETC (qucs::polar (*a, nr_complex_t (qucs::deg2rad (p), 0)));
+  _RETC (qucs::polar (*a, nr_complex_t (deg2rad (p), 0)));
 }
 
 constant * evaluate::polar_d_c (constant * args) {
@@ -3542,7 +3536,7 @@ constant * evaluate::polar_d_c (constant * args) {
   _ARC1 (p);
   _DEFC ();
   /// FIXME is this right?
-  _RETC (qucs::polar (nr_complex_t (a, 0), nr_complex_t (qucs::deg2rad (*p),0)));
+  _RETC (qucs::polar (nr_complex_t (a, 0), nr_complex_t (deg2rad (*p),0)));
 }
 
 constant * evaluate::polar_c_c (constant * args) {
@@ -3550,42 +3544,42 @@ constant * evaluate::polar_c_c (constant * args) {
   _ARC1 (p);
   _DEFC ();
   /// FIXME is this right?
-  _RETC (qucs::polar (*a, nr_complex_t (qucs::deg2rad (*p), 0)));
+  _RETC (qucs::polar (*a, nr_complex_t (deg2rad (*p), 0)));
 }
 
 constant * evaluate::polar_d_v (constant * args) {
   _ARD0 (a);
   _ARV1 (v);
   _DEFV ();
-  _RETV (polar (nr_complex_t (a, 0), qucs::deg2rad (*v)));
+  _RETV (polar (nr_complex_t (a, 0), deg2rad (*v)));
 }
 
 constant * evaluate::polar_c_v (constant * args) {
   _ARC0 (a);
   _ARV1 (v);
   _DEFV ();
-  _RETV (polar (*a, qucs::deg2rad (*v)));
+  _RETV (polar (*a, deg2rad (*v)));
 }
 
 constant * evaluate::polar_v_d (constant * args) {
   _ARV0 (v);
   _ARD1 (p);
   _DEFV ();
-  _RETV (polar (*v, nr_complex_t (qucs::deg2rad (p), 0)));
+  _RETV (polar (*v, nr_complex_t (deg2rad (p), 0)));
 }
 
 constant * evaluate::polar_v_c (constant * args) {
   _ARV0 (v);
   _ARC1 (p);
   _DEFV ();
-  _RETV (polar (*v, nr_complex_t (qucs::deg2rad (*p),0)));
+  _RETV (polar (*v, nr_complex_t (deg2rad (*p),0)));
 }
 
 constant * evaluate::polar_v_v (constant * args) {
   _ARV0 (a);
   _ARV1 (p);
   _DEFV ();
-  _RETV (polar (*a, qucs::deg2rad (*p)));
+  _RETV (polar (*a, deg2rad (*p)));
 }
 
 // ******************* arctan2 *********************

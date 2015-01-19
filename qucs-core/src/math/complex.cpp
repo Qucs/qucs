@@ -899,11 +899,20 @@ bool operator<(const nr_complex_t z1, const nr_complex_t z2)
     return norm (z1) < norm (z2);
 }
 
-
-
+/*!
+ * \brief rad2deg Convert radian to degree
+ * \param x input
+ * \return real(x)*180/pi
+ */
 nr_double_t rad2deg (const nr_complex_t x) {
   return rad2deg (real(x));
 }
+
+/*!
+ * \brief rad2deg Convert radian to degree
+ * \param x input
+ * \return real(x)*pi/180
+ */
 nr_double_t deg2rad (const nr_complex_t x) {
   return deg2rad (real(x));
 }
