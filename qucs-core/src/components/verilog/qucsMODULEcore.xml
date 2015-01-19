@@ -804,11 +804,19 @@ class $(module) : public qucs::circuit
   nr_double_t _chs[$nbr_nodes];
   nr_double_t _jstat[$nbr_nodes][$nbr_nodes];
   nr_double_t _jdyna[$nbr_nodes][$nbr_nodes];
-  nr_double_t _white_pwr[$nbr_nodes][$nbr_nodes];
-  nr_double_t _flicker_pwr[$nbr_nodes][$nbr_nodes];
-  nr_double_t _flicker_exp[$nbr_nodes][$nbr_nodes];
   nr_double_t _charges[$nbr_nodes][$nbr_nodes];
   nr_double_t _caps[$nbr_nodes][$nbr_nodes][$nbr_nodes][$nbr_nodes];
+
+<!-- add noise storage if needed -->
+<admst:if test="[$(nbr_sources_whitenoise) != 0]">
+<admst:text format="  nr_double_t _white_pwr[$nbr_nodes][$nbr_nodes]; \n"/>
+</admst:if>
+
+<!-- add flicker storage if needed -->
+<admst:if test="[$(nbr_sources_flickernoise) != 0]">
+<admst:text format="  nr_double_t _flicker_pwr[$nbr_nodes][$nbr_nodes];\n"/>
+<admst:text format="  nr_double_t _flicker_exp[$nbr_nodes][$nbr_nodes];\n"/>
+</admst:if>
 
 <admst:text format="\n  // device model parameters\n"/>
 <admst:for-each select="variable">
