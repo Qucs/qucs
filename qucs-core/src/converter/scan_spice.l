@@ -139,7 +139,7 @@ POLY     [pP][oO][lL][yY]
 %x COMMENT IVREF DEVPROP LREF MODREF1 MODREF2 IGNORE FUNREF FILEREF VREF
 %x STARTUP VSINGLE ISWITCH VSWITCH CONTROL GEVALS INLINE SUBCKT TLPROP RLCPROP
 %x FHVALS
-%option yylineno noyywrap nounput prefix="spice_"
+%option yylineno noyywrap nounput noinput prefix="spice_"
 
 %%
 

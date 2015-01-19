@@ -72,7 +72,7 @@ FLOAT2   [+-]?{DIGIT}*"."{DIGIT}+({EXPONENT})?
 SPACE    [ \t]
 
 %x COMMENT IDENT
-%option yylineno noyywrap nounput prefix="csv_"
+%option yylineno noyywrap nounput noinput prefix="csv_"
 
 %%
 

@@ -72,7 +72,7 @@ IDENT    [a-zA-Z_][a-zA-Z0-9_.-]*
 %x COMMENT SCALE SCOPE IGNORE VAR VAR2 VAR3 VAR4 DUMP TIMESTAMP CHANGE
 %x BIN FLOAT
 
-%option yylineno noyywrap nounput prefix="vcd_"
+%option yylineno noyywrap nounput noinput prefix="vcd_"
 
 %%
 

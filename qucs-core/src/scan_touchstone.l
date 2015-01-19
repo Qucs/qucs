@@ -69,7 +69,7 @@ FLOAT2   [+-]?{DIGIT}*"."{DIGIT}+({EXPONENT})?
 SPACE    [ \t]
 
 %x COMMENT
-%option yylineno noyywrap nounput prefix="touchstone_"
+%option yylineno noyywrap nounput noinput prefix="touchstone_"
 
 %%
 

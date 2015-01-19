@@ -71,7 +71,7 @@ DIDENT   [A-Z]({DIGIT}{1,2})?
 
 %x VERSION
 
-%option yylineno noyywrap nounput prefix="zvr_"
+%option yylineno noyywrap nounput noinput prefix="zvr_"
 
 %%
 

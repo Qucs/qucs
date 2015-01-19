@@ -74,7 +74,7 @@ LINKS    "MODEL"|"CIRC"|"PS"|"DUT"|"DPS"|"DAT"|"OUT"|"SWEEP"|"XFORM"|"MACRO"|"TC
 %x VERSION BLKEDIT BLKEDIT1 CIRCUIT CIRCUIT1 PLINK PLIST PMEMBER
 %x TABDATA TABDATA1
 
-%option yylineno noyywrap nounput prefix="mdl_"
+%option yylineno noyywrap nounput noinput prefix="mdl_"
 
 %%
 

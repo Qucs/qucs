@@ -70,7 +70,7 @@ SPACE    [ \t]
 EOL      \r?\n
 
 %x COMMENTS FLOATS LISTS DATAS VALUES
-%option yylineno noyywrap nounput prefix="citi_"
+%option yylineno noyywrap nounput noinput prefix="citi_"
 
 %%
 

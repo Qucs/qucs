@@ -147,7 +147,7 @@ UCOMPLEX {UCREAL}{UCIMAG}
 
 
 %x COMMENT STR EQN
-%option yylineno noyywrap nounput prefix="netlist_"
+%option yylineno noyywrap nounput noinput prefix="netlist_"
 
 %%
 

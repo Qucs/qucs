@@ -88,7 +88,7 @@ IEND     "/indep"
 
 
 %x COMMENT DESCRIPTION
-%option yylineno noyywrap nounput prefix="dataset_"
+%option yylineno noyywrap nounput noinput prefix="dataset_"
 
 %%
 
