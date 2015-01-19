@@ -358,7 +358,7 @@ SET(TEMPLATES tmatrix.h tvector.h eqnsys.h nasolver.h states.h tvector.h
 #
 # Include headers to be installed
 #
-SET(HEADERS
+SET(PUBLIC_HEADERS
   ${qucs-core_BINARY_DIR}/config.h
   ${qucs-core_BINARY_DIR}/qucs_typedefs.h
   circuit.h
@@ -509,4 +509,4 @@ INSTALL(TARGETS libqucs
      ARCHIVE DESTINATION lib COMPONENT devel
      LIBRARY DESTINATION lib COMPONENT library)
 
-INSTALL(FILES ${HEADERS} DESTINATION include/qucs-core)
+INSTALL(FILES ${PUBLIC_HEADERS} DESTINATION include/qucs-core)
