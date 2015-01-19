@@ -189,6 +189,22 @@ IF(NOT HAVE_COMPLEX)
   MESSAGE(SEND_ERROR "HAVE_COMPLEX failed")# ${TRY_OUT}")
 ENDIF()
 
+
+#
+# Check std::vector::erase iterator type [const_iterator | iterator]
+#
+MESSAGE(STATUS "Checking HAVE_ERASE_CONSTANT_ITERATOR")
+TRY_COMPILE( HAVE_ERASE_CONSTANT_ITERATOR
+        ${CMAKE_BINARY_DIR}
+        ${qucs-core_SOURCE_DIR}/cmake/erase_iterator_type.cpp
+        OUTPUT_VARIABLE TRY_OUT)
+IF(HAVE_ERASE_CONSTANT_ITERATOR)
+  MESSAGE(STATUS "Using std::vector:erase iterator type : const_iterator")
+ELSE()
+  MESSAGE(STATUS "Using std::vector:erase iterator type : iterator")
+ENDIF()
+
+
 #
 # Check for list of complex functions.
 #

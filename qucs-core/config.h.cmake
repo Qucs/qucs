@@ -43,6 +43,9 @@
 /* Define to 1 if the compiler has complex<T>. */
 #cmakedefine HAVE_COMPLEX 1
 
+/* Define to 1 if the compiler has std::vector::erase [const_iterator|iterator] */
+#cmakedefine HAVE_ERASE_CONSTANT_ITERATOR 1
+
 /* Define to 1 if you have the `cos' function. */
 #cmakedefine HAVE_COS 1
 
