@@ -743,7 +743,7 @@ void nasolver<nr_type_t>::createNoiseMatrix (void)
     int M = countVoltageSources ();
     struct nodelist_t * n;
     nr_type_t val;
-    int r, c, a, b, ri, ci, i;
+    int r, c, ri, ci;
     struct nodelist_t * nr, * nc;
     circuit * ct;
 
@@ -1289,7 +1289,6 @@ void nasolver<nr_type_t>::recallSolution (void)
     int r;
     int N = countNodes ();
     int M = countVoltageSources ();
-    naentry<nr_type_t> * na;
     // store all nodes except reference node
     for (r = 0; r < N; r++)
     {
