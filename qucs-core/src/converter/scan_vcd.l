@@ -26,6 +26,11 @@
  *
  */
 
+#if defined(__clang__)
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-register"
+#endif
+
 #if HAVE_CONFIG_H
 # include <config.h>
 #endif
