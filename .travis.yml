@@ -218,8 +218,10 @@ after_success:
       git clone https://github.com/Qucs/qucs-doxygen.git qucs-doxygen ;
       cd qucs-doxygen ;
       git checkout gh-pages ;
-      cp -r ../qucs/contrib/doxygen/html/ qucs/ ;
-      cp -r ../qucs-doc/doxygen/html/ qucs-core/ ;
+      rm -rf qucs/
+      mv ../qucs/contrib/doxygen/html/ qucs/ ;
+      rm -rf qucs-core/
+      mv ../qucs-doc/doxygen/html/ qucs-core/ ;
       git add --all . ;
       git commit -m "Auto-updating Doxygen developer documentation" ;
       git push https://${GH_TOKEN}@github.com/Qucs/qucs-doxygen gh-pages ;
