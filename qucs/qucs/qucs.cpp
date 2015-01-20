@@ -474,10 +474,12 @@ void QucsApp::fillLibrariesTreeView ()
                   "</Components>\n";
 
             compNameAndDefinition.append (s);
-            // The following may produce a warning from the compiler about
-            // unused variable newcompitem, ignore it, we pass the pointer
-            // to the parent item in the constructor
+
             QTreeWidgetItem* newcompitem = new QTreeWidgetItem(newlibitem, compNameAndDefinition);
+
+            // Silence warning from the compiler about unused variable newcompitem
+            // we pass the pointer to the parent item in the constructor
+            Q_UNUSED( newcompitem )
         }
 
         topitems.append (newlibitem);
@@ -539,10 +541,13 @@ void QucsApp::fillLibrariesTreeView ()
                           "</Components>\n";
 
                     compNameAndDefinition.append (s);
-                    // The following may produce a warning from the compiler about
-                    // unused variable newcompitem, ignore it, we pass the pointer
-                    // to the parent item in the constructor
+
+
                     QTreeWidgetItem* newcompitem = new QTreeWidgetItem(newlibitem, compNameAndDefinition);
+
+                    // Silence warning from the compiler about unused variable newcompitem
+                    // we pass the pointer to the parent item in the constructor
+                    Q_UNUSED( newcompitem )
                 }
 
                 topitems.append (newlibitem);
@@ -695,6 +700,7 @@ void QucsApp::slotSetCompView (int index)
     QList<Module *>::const_iterator it;
     for (it = Comps.constBegin(); it != Comps.constEnd(); it++) {
       if ((*it)->info) {
+        /// \todo warning: expression result unused, can we rewrite this?
         *((*it)->info) (Name, File, false);
         QListWidgetItem *icon = new QListWidgetItem(QPixmap(":/bitmaps/" + QString (File) + ".png"), Name);
         icon->setToolTip(Name);
@@ -719,7 +725,6 @@ void QucsApp::slotSearchComponent(const QString &searchText)
     //traverse all component and match searchText with name
     QString Name;
     char * File;
-    Module * Mod;
     QList<Module *> Comps;
 
     QStringList cats = Category::getCategories ();
@@ -728,6 +733,7 @@ void QucsApp::slotSearchComponent(const QString &searchText)
       QList<Module *>::const_iterator modit;
       for (modit = Comps.constBegin(); modit != Comps.constEnd(); modit++) {
         if ((*modit)->info) {
+          /// \todo warning: expression result unused, can we rewrite this?
           *((*modit)->info) (Name, File, false);
 
           if((Name.indexOf(searchText, 0, Qt::CaseInsensitive)) != -1) {
@@ -2154,7 +2160,7 @@ void QucsApp::closeEvent(QCloseEvent* Event)
     QucsSettings.y=pos().y();
     QucsSettings.dx=size().width();
     QucsSettings.dy=size().height();
-    saveApplSettings(this);
+    saveApplSettings();
 
    if(closeAllFiles()) {
       emit signalKillEmAll();   // kill all subprocesses
@@ -2307,6 +2313,9 @@ void QucsApp::slotAfterSimulation(int Status, SimMessage *sim)
     sim->slotClose();   // close and delete simulation window
     if(w) {  // schematic still open ?
       SweepDialog *Dia = new SweepDialog((Schematic*)sim->DocWidget);
+
+      // silence warning about unused variable.
+      Q_UNUSED(Dia)
     }
   }
   else {

@@ -45,19 +45,34 @@ INCLUDE( ${QT_USE_FILE} )
 ADD_DEFINITIONS(${QT_DEFINITIONS})
 
 SET(QUCS-FILTER_SRCS
+  cline_filter.cpp
   eqn_filter.cpp
   filter.cpp
   helpdialog.cpp
   lc_filter.cpp
   line_filter.cpp
+  main.cpp
   qf_cauer.cpp
   qf_filter.cpp
+  qf_poly.cpp
   qucsfilter.cpp
   stepz_filter.cpp
   tl_filter.cpp
-  cline_filter.cpp
-  main.cpp
-  qf_poly.cpp
+)
+
+SET(QUCS-FILTER_HDRS
+  cline_filter.h
+  eqn_filter.h
+  filter.h
+  lc_filter.h
+  line_filter.h
+  material_props.h
+  qf_cauer.h
+  qf_filter.h
+  qf_matrix.h
+  qf_poly.h
+  stepz_filter.h
+  tl_filter.h
 )
 
 SET(QUCS-FILTER_MOC_HDRS
@@ -91,6 +106,7 @@ ENDIF(APPLE)
 
 ADD_EXECUTABLE(qucsfilter MACOSX_BUNDLE WIN32
   ${QUCS-FILTER_SRCS}
+  ${QUCS-FILTER_HDRS}
   ${QUCS-FILTER_MOC_SRCS}
   ${RESOURCES_SRCS} )
 

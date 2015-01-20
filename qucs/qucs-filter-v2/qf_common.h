@@ -18,6 +18,14 @@
 #include <typeinfo>
 #include <Q3TextStream>
 
+
+static const double pi   = 3.1415926535897932384626433832795029;  /* pi   */
+static const double pi_over_2 = pi/2.0;                              /* pi/2 */
+static const double one_over_pi = 0.3183098861837906715377675267450287;
+static const double ln2  = 0.6931471805599453094172321214581766;
+static const double one_over_sqrt2 =   0.707106781186547524400844362104849039;  /* 1/sqrt(2)      */
+
+
 using namespace std;
 
 typedef double			  qf_double_t;

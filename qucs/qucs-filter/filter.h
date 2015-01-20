@@ -24,17 +24,24 @@
 #define TYPE_CHEBYSHEV   2
 #define TYPE_CAUER       3
 
-#define LIGHTSPEED 299792458.0
-#define Z_FIELD    376.73031346958504364963
-
 #include <cmath>
 
-#define atanh(x) (0.5 * log((1.0 + (x)) / (1.0 - (x))))
-#define asinh(x) log((x) + sqrt((x) * (x) + 1.0))
-#define acosh(x) log((x) + sqrt((x) * (x) - 1.0))
-#define coth(x)  (1.0 + 2.0 / (exp(2.0*(x)) - 1.0))
-#define sech(x)  (2.0 / (exp(x) + exp(-(x))))
+static const double pi          = 3.1415926535897932384626433832795029;  /* pi       */
+static const double one_over_pi = 0.3183098861837906715377675267450287;  /* 1/pi     */
+static const double ln2         = 0.6931471805599453094172321214581766;  /* log_e(2) */
 
+static const double LIGHTSPEED = 299792458.0;
+static const double Z_FIELD = 376.73031346958504364963;
+
+/*! coth function */
+static inline double coth(const double x) {
+  return (1.0 + 2.0 / (exp(2.0*(x)) - 1.0));
+}
+
+/*! sech function */
+static inline double sech(const double x) {
+  return  (2.0 / (exp(x) + exp(-(x))));
+}
 
 struct tFilter {
   int Type;

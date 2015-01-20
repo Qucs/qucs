@@ -17,16 +17,6 @@
 
 // Elliptic (Cauer) filters, odd order
 
-#ifndef M_1_PI
-#define M_1_PI    0.3183098861837906715377675267450287
-#endif
-#ifndef M_LN2
-#define M_LN2     0.6931471805599453094172321214581766
-#endif
-#ifndef M_PI
-#define M_PI      3.1415926535897932384626433832795029
-#endif
-
 #undef	_QF_CAUER_DEBUG
 
 #include "qf_common.h"
@@ -45,7 +35,7 @@ static const qf_double_t hugedbl = numeric_limits <qf_double_t>::max ();
 
 // Arc sin in degrees
 inline qf_double_t ASIND (qf_double_t ang) {
-  return 180 * asin (ang) / M_PI;
+  return 180 * asin (ang) / pi;
 }
 
 // Computes elliptic jacobi functions K and sn
@@ -64,7 +54,7 @@ static qf_double_t K (qf_double_t k)
     a = 0.5 * (a + b);
     b = sqrt (temp * b);
   }
-  return M_PI / (2 * a);
+  return pi / (2 * a);
 }
 
 // sn (u, m) by descending Landen transforms
@@ -92,7 +82,7 @@ static qf_double_t Kp (qf_double_t k) {
   qf_double_t  f1 = 1, f2, w = 1;
   qf_double_t  kb = 1;
 
-  Kp = f2 = 2 * M_LN2 - log (k);	  // K' = ln (4 / k')
+  Kp = f2 = 2 * ln2 - log (k);	  // K' = ln (4 / k')
   while (kb > K_ERR) {
     kb *= k * k;
     f1 *= (w / (w + 1));
@@ -382,7 +372,7 @@ bool  qf_cauer::synth_even (void) {
     if (!Pspec -> dual) {
       // Shunt cap (to ground)
       lcmp. insert (new qf_cap (trp. v, true, true));
-      // Serial L || C (direct)
+      // Serial L || C (direct)
       lcmp. insert (new qf_plc (trp. w1, trp. w2, false, false));
     }
 
@@ -577,7 +567,7 @@ bool qf_cauer::synth_odd (void) {
     if (!Pspec -> dual) {
       // Shunt cap (to ground)
       lcmp. insert (new qf_cap (trp. v, true, true));
-      // Serial L || C
+      // Serial L || C
       lcmp. insert (new qf_plc (trp. w1, trp. w2, false, false));
     }
     else {

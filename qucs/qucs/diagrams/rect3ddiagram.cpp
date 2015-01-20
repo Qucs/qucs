@@ -62,9 +62,9 @@ Rect3DDiagram::~Rect3DDiagram()
 // Calculates the coefficients for 3D -> 2D transformation
 void Rect3DDiagram::calcCoefficients()
 {
-  double rX = double(rotX) * M_PI/180.0;
-  double rY = double(rotY) * M_PI/180.0;
-  double rZ = double(rotZ) * M_PI/180.0;
+  double rX = double(rotX) * pi/180.0;
+  double rY = double(rotY) * pi/180.0;
+  double rZ = double(rotZ) * pi/180.0;
   
   cxy = sin(rZ);  cxx = cos(rZ);
   cxz = sin(rY);  rY  = cos(rY);
@@ -627,10 +627,11 @@ void Rect3DDiagram::calcLimits()
 }
 
 // --------------------------------------------------------------
-/// \todo check Right unused parameter
 int Rect3DDiagram::calcAxis(Axis *Axis, int x, int y,
                             double xD, double phi, bool Right)
 {
+  Q_UNUSED(Right);
+
   double GridStep, corr, yD, stepD, GridNum, Expo;
   double xstepD, ystepD;
 
@@ -640,8 +641,8 @@ int Rect3DDiagram::calcAxis(Axis *Axis, int x, int y,
   int maxWidth = 0;
   int count, gx, gy, w;
 
-  if(phi > 0.0)  Expo = phi - M_PI/2.0;
-  else  Expo = phi + M_PI/2.0;
+  if(phi > 0.0)  Expo = phi - pi/2.0;
+  else  Expo = phi + pi/2.0;
   gx = int(5.4 * cos(Expo) + 0.5);  // short grid marker lines
   gy = int(5.4 * sin(Expo) + 0.5);
 
@@ -654,7 +655,7 @@ int Rect3DDiagram::calcAxis(Axis *Axis, int x, int y,
     if(yD > 1.5*stepD)  yD = 10.0*stepD;  // always start at power of 10
     if(back) {
       upD  = Axis->low;
-      phi += M_PI;
+      phi += pi;
       xD   = 0.0;
     }
 
@@ -719,10 +720,11 @@ int Rect3DDiagram::calcAxis(Axis *Axis, int x, int y,
 }
 
 // --------------------------------------------------------------
-/// \todo check Right unused parameter
 void Rect3DDiagram::createAxis(Axis *Axis, bool Right,
                                int x1_, int y1_, int x2_, int y2_)
 {
+  Q_UNUSED(Right);
+
   DataX *pD;
   double phi, cos_phi, sin_phi;
   int x, y, z, w, valid, Index = 0;
@@ -742,7 +744,7 @@ void Rect3DDiagram::createAxis(Axis *Axis, bool Right,
   cos_phi = cos(phi);
   sin_phi = sin(phi);
 
-  if(fabs(phi-1e-5) > M_PI/2.0) {
+  if(fabs(phi-1e-5) > pi/2.0) {
     x1_ = x2_;  cos_phi *= -1;
     y1_ = y2_;  sin_phi *= -1;
   }
