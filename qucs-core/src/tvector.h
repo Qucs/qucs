@@ -176,7 +176,20 @@ template <class nr_type_t> class tvectorv {
   nr_type_t& operator [] (int i) {
     return data[i];
   }
-
+  std::size_t  size (void) const { return data.size (); }
+  nr_type_t get (int n) {
+    return data[n];
+  }
+  tvectorv () = default;
+  tvectorv (const std::size_t i) : data(i) {};
+  tvectorv (const tvectorv &) = default;
+  ~tvectorv () = default;
+  void clear (void) { data.clear(); };
+  int  contains (nr_type_t val, nr_double_t eps = std::numeric_limits<nr_double_t>::epsilon()) {
+    int count = 0;
+    for (int i = 0; i < (int)data.size (); i++) if (abs ((data)[i] - val) <= eps) count++;
+    return count;
+  }
 protected:
   std::vector<nr_type_t> data;
 };
