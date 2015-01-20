@@ -205,7 +205,7 @@ script:
 after_success:
   # Send coverage data to Coveralls
   - if [[ $GCC ]]; then
-      coveralls --exclude examples --exclude qucs --exclude qucs-doc --exclude adms-2.3.4 --gcov-options '\-lp' --gcov gcov-4.8;
+      coveralls --exclude qucs-core/src/components/verilog --exclude examples --exclude qucs --exclude qucs-doc --exclude adms-2.3.4 --gcov-options '\-lp' --gcov gcov-4.8;
     fi
 
   # Publish HTML into Qucs/qucs-doxygen repo
