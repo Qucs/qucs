@@ -49,7 +49,7 @@ using namespace qucs;
 
 %}
 
-%name-prefix="touchstone_"
+%name-prefix "touchstone_"
 
 %token InvalidCharacter
 %token Float

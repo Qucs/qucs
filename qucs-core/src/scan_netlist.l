@@ -25,6 +25,11 @@
  *
  */
 
+#if defined(__clang__)
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-register"
+#endif
+
 #if HAVE_CONFIG_H
 # include <config.h>
 #endif
@@ -142,7 +147,7 @@ UCOMPLEX {UCREAL}{UCIMAG}
 
 
 %x COMMENT STR EQN
-%option yylineno noyywrap nounput prefix="netlist_"
+%option yylineno noyywrap nounput noinput prefix="netlist_"
 
 %%
 

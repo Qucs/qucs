@@ -43,7 +43,7 @@
 
 %}
 
-%name-prefix="vcd_"
+%name-prefix "vcd_"
 
 %token t_END
 %token t_COMMENT

@@ -1867,4 +1867,21 @@ nr_double_t b1 (matrix m) {
   return res;
 }
 
+
+matrix rad2deg (matrix a) {
+  matrix res (a.getRows (), a.getCols ());
+  for (int r = 0; r < a.getRows (); r++)
+    for (int c = 0; c < a.getCols (); c++)
+      res.set (r, c, rad2deg (a.get (r, c)));
+  return res;
+}
+
+matrix deg2rad (matrix a) {
+  matrix res (a.getRows (), a.getCols ());
+  for (int r = 0; r < a.getRows (); r++)
+    for (int c = 0; c < a.getCols (); c++)
+      res.set (r, c, deg2rad (a.get (r, c)));
+  return res;
+}
+
 } // namespace qucs

@@ -219,7 +219,7 @@ nr_double_t vector::maximum (void) {
   nr_double_t d, max_D = -std::numeric_limits<nr_double_t>::max();
   for (int i = 0; i < getSize (); i++) {
     c = data[i];
-    d = fabs (arg (c)) < M_PI_2 ? abs (c) : -abs (c);
+    d = fabs (arg (c)) < pi_over_2 ? abs (c) : -abs (c);
     if (d > max_D) max_D = d;
   }
   return max_D;
@@ -233,7 +233,7 @@ nr_double_t vector::minimum (void) {
   nr_double_t d, min_D = +std::numeric_limits<nr_double_t>::max();
   for (int i = 0; i < getSize (); i++) {
     c = data[i];
-    d = fabs (arg (c)) < M_PI_2 ? abs (c) : -abs (c);
+    d = fabs (arg (c)) < pi_over_2 ? abs (c) : -abs (c);
     if (d < min_D) min_D = d;
   }
   return min_D;
@@ -1111,6 +1111,18 @@ vector erfinv (vector v) {
 vector erfcinv (vector v) {
   vector result (v);
   for (int i = 0; i < v.getSize (); i++) result.set (erfcinv (v.get (i)), i);
+  return result;
+}
+
+vector rad2deg (vector v) {
+  vector result (v);
+  for (int i = 0; i < v.getSize (); i++) result.set (rad2deg (v.get (i)), i);
+  return result;
+}
+
+vector deg2rad (vector v) {
+  vector result (v);
+  for (int i = 0; i < v.getSize (); i++) result.set (deg2rad (v.get (i)), i);
   return result;
 }
 

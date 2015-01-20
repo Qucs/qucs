@@ -110,7 +110,7 @@ public:
     *
     * Destructor. Destroys an analysis object.
     */
-    ~analysis ();
+    virtual ~analysis ();
 
     /*! \fn solve
     * \brief placehoder for solution function

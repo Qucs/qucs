@@ -52,7 +52,11 @@ public:
   typedef detail::nodevector::size_type size_type;
   typedef detail::nodevector::reference reference;
   typedef detail::nodevector::const_reference const_reference;
-  typedef autoconfigured_erase_iterator erase_iterator;
+#ifdef HAVE_ERASE_CONSTANT_ITERATOR
+  typedef detail::nodevector::const_iterator erase_iterator;
+#else
+  typedef detail::nodevector::iterator erase_iterator;
+#endif
 
   /*! alias node number */
   std::size_t n;

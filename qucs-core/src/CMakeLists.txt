@@ -189,6 +189,22 @@ IF(NOT HAVE_COMPLEX)
   MESSAGE(SEND_ERROR "HAVE_COMPLEX failed")# ${TRY_OUT}")
 ENDIF()
 
+
+#
+# Check std::vector::erase iterator type [const_iterator | iterator]
+#
+MESSAGE(STATUS "Checking HAVE_ERASE_CONSTANT_ITERATOR")
+TRY_COMPILE( HAVE_ERASE_CONSTANT_ITERATOR
+        ${CMAKE_BINARY_DIR}
+        ${qucs-core_SOURCE_DIR}/cmake/erase_iterator_type.cpp
+        OUTPUT_VARIABLE TRY_OUT)
+IF(HAVE_ERASE_CONSTANT_ITERATOR)
+  MESSAGE(STATUS "Using std::vector:erase iterator type : const_iterator")
+ELSE()
+  MESSAGE(STATUS "Using std::vector:erase iterator type : iterator")
+ENDIF()
+
+
 #
 # Check for list of complex functions.
 #
@@ -358,7 +374,7 @@ SET(TEMPLATES tmatrix.h tvector.h eqnsys.h nasolver.h states.h tvector.h
 #
 # Include headers to be installed
 #
-SET(HEADERS
+SET(PUBLIC_HEADERS
   ${qucs-core_BINARY_DIR}/config.h
   ${qucs-core_BINARY_DIR}/qucs_typedefs.h
   circuit.h
@@ -371,7 +387,6 @@ SET(HEADERS
   netdefs.h
   node.h
   object.h
-  states.cpp
   states.h
   valuelist.h
   vector.h
@@ -460,7 +475,7 @@ ADD_SUBDIRECTORY( converter )
 #
 # Create qucsator
 #
-ADD_EXECUTABLE( qucsator ucs.cpp )
+ADD_EXECUTABLE( qucsator ucs.cpp ${PUBLIC_HEADERS} ${TEMPLATES})
 
 #
 # Build libqucs as SHARED, dynamic library
@@ -509,4 +524,4 @@ INSTALL(TARGETS libqucs
      ARCHIVE DESTINATION lib COMPONENT devel
      LIBRARY DESTINATION lib COMPONENT library)
 
-INSTALL(FILES ${HEADERS} DESTINATION include/qucs-core)
+INSTALL(FILES ${PUBLIC_HEADERS} DESTINATION include/qucs-core)

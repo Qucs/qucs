@@ -341,14 +341,14 @@ nr_double_t  quadr (const nr_double_t r) {
    \end{cases}
    \f]
 
-   #M_LIMEXP is a constant
+   #limitexp is a constant
    \param[in] r real number
    \return limited exponential of r
    \todo Change limexp(real) limexp(complex) file order
-   \todo Document #M_LIMEXP
+   \todo Document #limitexp
 */
 nr_double_t limexp (const nr_double_t r) {
-  return r < M_LIMEXP ? exp (r) : exp (M_LIMEXP) * (1.0 + (r - M_LIMEXP));
+  return r < limitexp ? exp (r) : exp (limitexp) * (1.0 + (r - limitexp));
 }
 
 /*!\brief real signum function
@@ -507,5 +507,25 @@ nr_double_t abs (const nr_double_t r) {
 nr_double_t conj (const nr_double_t r) {
   return r;
 }
+
+/*!
+ * \brief rad2deg Convert radian to degree
+ * \param x input
+ * \return input in degree (x)*180/pi
+ */
+nr_double_t rad2deg (const nr_double_t x) {
+  return (180.0 * (x) / pi); 
+}
+
+/*!
+ * \brief deg2rad Convert radian to degree
+ * \param x input
+ * \return input in radian (x)*pi/180
+ */
+nr_double_t deg2rad (const nr_double_t x) {
+  return (pi * (x) / 180.0); 
+}
+
+
 
 } // namespace qucs

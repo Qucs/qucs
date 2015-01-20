@@ -108,7 +108,7 @@ class circuit : public object, public integrator
   circuit ();
   circuit (int);
   circuit (const circuit &);
-  ~circuit ();
+  virtual ~circuit ();
 
   // functionality to be overloaded by real, derived circuit element
   // implementations
@@ -141,6 +141,7 @@ class circuit : public object, public integrator
   virtual void saveOperatingPoints (void) { }
   virtual void calcCharacteristics (nr_double_t) { }
   virtual void saveCharacteristics (nr_double_t) { }
+  virtual void saveCharacteristics (nr_complex_t) { }
 
   // basic circuit element functionality
   void   setNode (int, const std::string&, int intern = 0);

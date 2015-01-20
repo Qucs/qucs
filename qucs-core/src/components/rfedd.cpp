@@ -197,7 +197,7 @@ void rfedd::prepareModel (void) {
 void rfedd::updateLocals (nr_double_t frequency) {
 
   // update frequency variables for equations
-  setResult (seqn, nr_complex_t (0, 2 * M_PI * frequency));
+  setResult (seqn, nr_complex_t (0, 2 * pi * frequency));
   setResult (feqn, frequency);
 
   // get local subcircuit values

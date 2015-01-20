@@ -49,7 +49,7 @@ using namespace qucs;
 
 %}
 
-%name-prefix="citi_"
+%name-prefix "citi_"
 
 %token InvalidCharacter
 %token Float

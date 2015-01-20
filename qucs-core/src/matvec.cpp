@@ -684,4 +684,16 @@ qucs::vector b1 (matvec m) {
   return res;
 }
 
+matvec rad2deg (matvec a) {
+  matvec res (a.getSize (), a.getRows (), a.getCols ());
+  for (int i = 0; i < a.getSize (); i++) res.set (rad2deg (a.get (i)), i);
+  return res;
+}
+
+matvec deg2rad (matvec a) {
+  matvec res (a.getSize (), a.getRows (), a.getCols ());
+  for (int i = 0; i < a.getSize (); i++) res.set (deg2rad (a.get (i)), i);
+  return res;
+}
+
 } // namespace qucs

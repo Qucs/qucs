@@ -176,6 +176,8 @@ class vector : public object
   friend vector erfc    (vector);
   friend vector erfinv  (vector);
   friend vector erfcinv (vector);
+  friend vector rad2deg     (vector);
+  friend vector deg2rad     (vector);
 
   // operator functions
   friend vector operator + (vector, vector);
@@ -272,7 +274,7 @@ vector rtoz   (vector, nr_complex_t zref = 50.0);
 vector ytor   (vector, nr_complex_t zref = 50.0);
 vector rtoy   (vector, nr_complex_t zref = 50.0);
 vector diff   (vector, vector, int n = 1);
-vector unwrap (vector, nr_double_t tol = M_PI, nr_double_t step = 2 * M_PI);
+vector unwrap (vector, nr_double_t tol = pi, nr_double_t step = 2 * pi);
 vector polar   (vector, const nr_complex_t);
 vector polar   (const nr_complex_t, vector);
 vector polar   (vector, vector);
@@ -326,6 +328,8 @@ vector erf     (vector);
 vector erfc    (vector);
 vector erfinv  (vector);
 vector erfcinv (vector);
+vector rad2deg     (vector);
+vector deg2rad     (vector);
 
 } // namespace qucs
 

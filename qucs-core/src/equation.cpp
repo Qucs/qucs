@@ -520,7 +520,7 @@ void assignment::mul (assignment * f)
     else if (isOne (factor))
     {
         delete factor;
-        body = body;
+        //body = body;
     }
     else
     {
@@ -548,7 +548,7 @@ void assignment::mulref (assignment * f)
     }
     else if (isOne (factor))
     {
-        body = body;
+        //body = body;
     }
     else
     {
@@ -572,12 +572,12 @@ void assignment::add (assignment * f)
     else if (isZero (body))
     {
         delete body;
-        body = factor;
+        //body = factor;
     }
     else if (isZero (factor))
     {
         delete factor;
-        body = body;
+        //body = body;
     }
     else
     {
@@ -776,6 +776,12 @@ void application::evalTypeArgs (void)
     }
 }
 
+
+// gperfapphash has register inside, ignore warning
+#if defined(__clang__)
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-register"
+#endif
 #include "gperfapphash.cpp"
 
 /* The function creates a hash key for the given type of
@@ -2451,8 +2457,8 @@ struct pconstant
 // List of global constant variables.
 static struct pconstant pconstants[] =
 {
-    { "pi", M_PI },
-    { "e",  M_E  },
+    { "pi", pi },
+    { "e",  e  },
     { "kB", kB   },
     { "q",  Q_e    },
     { NULL, 0    }

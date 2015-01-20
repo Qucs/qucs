@@ -31,12 +31,17 @@
 #include <string.h>
 #include <cmath>
 #include <float.h>
+#include <algorithm>
 
 #include "compat.h"
 #include "constants.h"
 #include "fspecial.h"
 
 #include <limits>
+
+using qucs::pi_over_2;
+using qucs::sqrt_pi;
+using qucs::sqrt2;
 
 /* The function computes the complete elliptic integral of first kind
    K() and the second kind E() using the arithmetic-geometric mean
@@ -77,8 +82,8 @@ void fspecial::ellip_ke (nr_double_t arg, nr_double_t &k, nr_double_t &e) {
       k = 0; e = 0;
     }
     else {
-      k = M_PI_2 / a;
-      e = M_PI_2 * (1 - s) / a;
+      k = pi_over_2 / a;
+      e = pi_over_2 * (1 - s) / a;
       if (arg < 0) {
 	k *= fk;
 	e *= fe;
@@ -117,7 +122,7 @@ nr_double_t fspecial::ellip_rf (nr_double_t x, nr_double_t y, nr_double_t z) {
     dy = (av - yt) / av;
     dz = (av - zt) / av;
   }
-  while (MAX (MAX (fabs (dx), fabs (dy)), fabs (dz)) > K_ERR);
+  while (std::max (std::max (fabs (dx), fabs (dy)), fabs (dz)) > K_ERR);
 
   e2 = dx * dy - dz * dz;
   e3 = dx * dy * dz;
@@ -370,7 +375,7 @@ static nr_double_t erfseries (nr_double_t x) {
     d  = c / (2.0 * k + 1.0);
     e += d;
   }
-  return 2.0 / M_SQRTPI * e;
+  return 2.0 / sqrt_pi * e;
 }
 
 nr_double_t fspecial::erf (nr_double_t x) {
@@ -420,8 +425,8 @@ nr_double_t fspecial::erfinv (nr_double_t y) {
     }
 
     // Two steps of Newton-Raphson correction to full accuracy.
-    x = x - (erf (x) - y) / (2.0 / M_SQRTPI * exp (-x * x));
-    x = x - (erf (x) - y) / (2.0 / M_SQRTPI * exp (-x * x));
+    x = x - (erf (x) - y) / (2.0 / sqrt_pi * exp (-x * x));
+    x = x - (erf (x) - y) / (2.0 / sqrt_pi * exp (-x * x));
   }
   return x;
 }
@@ -580,8 +585,8 @@ nr_double_t fspecial::ltqnorm (nr_double_t x) {
   // than 1.15e-9.  One iteration of Halley's rational method (third
   // order) gives full machine precision.
   if (0.0 < x && x < 1.0) {
-    e = 0.5 * erfc (-z / M_SQRT2) - x;            // error
-    u = e * M_SQRT2 * M_SQRTPI * exp (z * z / 2); // f(z)/df(z)
+    e = 0.5 * erfc (-z / sqrt2) - x;            // error
+    u = e * sqrt2 * sqrt_pi * exp (z * z / 2); // f(z)/df(z)
     z = z - u / (1 + z * u / 2);                  // Halley's method
   }
   return z;
@@ -589,5 +594,5 @@ nr_double_t fspecial::ltqnorm (nr_double_t x) {
 
 // Inverse of the error function erfc().
 nr_double_t fspecial::erfcinv (nr_double_t x) {
-  return -ltqnorm (x / 2.0) / M_SQRT2;
+  return -ltqnorm (x / 2.0) / sqrt2;
 }

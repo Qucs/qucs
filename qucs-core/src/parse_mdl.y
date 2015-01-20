@@ -49,7 +49,7 @@ using namespace qucs;
 
 %}
 
-%name-prefix="mdl_"
+%name-prefix "mdl_"
 
 %token LINK
 %token Identifier

@@ -56,7 +56,7 @@ void tswitch::initSP (void) {
 void tswitch::calcNoiseSP (nr_double_t) {
   nr_double_t T = getPropertyDouble ("Temp");
   nr_double_t r = initState ();
-  nr_double_t f = kelvin (T) * 4.0 * r * z0 / sqr (2.0 * z0 + r) / T0;
+  nr_double_t f = celsius2kelvin (T) * 4.0 * r * z0 / sqr (2.0 * z0 + r) / T0;
   setN (NODE_1, NODE_1, +f); setN (NODE_2, NODE_2, +f);
   setN (NODE_1, NODE_2, -f); setN (NODE_2, NODE_1, -f);
 }
@@ -65,7 +65,7 @@ void tswitch::calcNoiseAC (nr_double_t) {
   nr_double_t r = initState ();
   if (r > 0.0 || r < 0.0) {
     nr_double_t T = getPropertyDouble ("Temp");
-    nr_double_t f = kelvin (T) / T0 * 4.0 / r;
+    nr_double_t f = celsius2kelvin (T) / T0 * 4.0 / r;
     setN (NODE_1, NODE_1, +f); setN (NODE_2, NODE_2, +f);
     setN (NODE_1, NODE_2, -f); setN (NODE_2, NODE_1, -f);
   }

@@ -394,18 +394,18 @@ int nasolver<nr_type_t>::solve_nonlinear_continuation_Source (void)
                 throw_exception (e);
                 break;
             }
-            srcFactor = MIN (sPrev + sStep, 1);
+            srcFactor = std::min (sPrev + sStep, 1.0);
         }
         // converged, increased the source-step
         else if (run < MaxIterations / 4)
         {
             sPrev = srcFactor;
-            srcFactor = MIN (srcFactor + sStep, 1);
+            srcFactor = std::min (srcFactor + sStep, 1.0);
             sStep *= 1.5;
         }
         else
         {
-            srcFactor = MIN (srcFactor + sStep, 1);
+            srcFactor = std::min (srcFactor + sStep, 1.0);
         }
     }
     // continue until no source factor is necessary
@@ -743,7 +743,7 @@ void nasolver<nr_type_t>::createNoiseMatrix (void)
     int M = countVoltageSources ();
     struct nodelist_t * n;
     nr_type_t val;
-    int r, c, a, b, ri, ci, i;
+    int r, c, ri, ci;
     struct nodelist_t * nr, * nc;
     circuit * ct;
 
@@ -1028,7 +1028,7 @@ void nasolver<nr_type_t>::applyAttenuation (void)
     if (nMax > 0.0)
     {
         nr_double_t g = 1.0;
-        alpha = MIN (0.9, g / nMax);
+        alpha = std::min (0.9, g / nMax);
         if (alpha < 0.1) alpha = 0.1;
     }
 
@@ -1289,7 +1289,6 @@ void nasolver<nr_type_t>::recallSolution (void)
     int r;
     int N = countNodes ();
     int M = countVoltageSources ();
-    naentry<nr_type_t> * na;
     // store all nodes except reference node
     for (r = 0; r < N; r++)
     {

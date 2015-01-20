@@ -186,7 +186,7 @@ static void zvr_conversion (struct zvr_data_t * root) {
       for (n = 0; n < var->getSize (); n++) {
 	nr_double_t r = real (var->get (n));
 	nr_double_t i = imag (var->get (n));
-	var->set (std::polar (std::pow (10.0, r / 20.0), rad (i)), n);
+	var->set (std::polar (std::pow (10.0, r / 20.0), deg2rad (i)), n);
       }
     }
     // magnitude in [dB]
@@ -201,7 +201,7 @@ static void zvr_conversion (struct zvr_data_t * root) {
       for (n = 0; n < var->getSize (); n++) {
 	nr_double_t r = real (var->get (n));
 	nr_double_t i = imag (var->get (n));
-	var->set (std::polar (r, rad (i)), n);
+	var->set (std::polar (r, deg2rad (i)), n);
       }
     }
     // magnitude in [dB] and angle in [degree]
@@ -209,7 +209,7 @@ static void zvr_conversion (struct zvr_data_t * root) {
       for (n = 0; n < var->getSize (); n++) {
 	nr_double_t r = real (var->get (n));
 	nr_double_t i = imag (var->get (n));
-	var->set (std::polar (std::pow (10.0, r / 20.0), rad (i)), n);
+	var->set (std::polar (std::pow (10.0, r / 20.0), deg2rad (i)), n);
       }
     }
   }

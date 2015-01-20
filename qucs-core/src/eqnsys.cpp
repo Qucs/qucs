@@ -826,7 +826,7 @@ void eqnsys<nr_type_t>::solve_qr_ls (void) {
 }
 
 /*! Helper function for the euclidian norm calculators. */
-static void
+static inline void
 euclidian_update (nr_double_t a, nr_double_t& n, nr_double_t& scale) {
   nr_double_t x, ax;
   if ((x = a) != 0) {
@@ -1335,7 +1335,7 @@ void eqnsys<nr_type_t>::factorize_svd (void) {
 #endif
 
 //! Helper function computes Givens rotation.
-static nr_double_t
+static inline nr_double_t
 givens (nr_double_t a, nr_double_t b, nr_double_t& c, nr_double_t& s) {
   nr_double_t z = xhypot (a, b);
   c = a / z;

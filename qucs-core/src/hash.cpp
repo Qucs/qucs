@@ -37,7 +37,7 @@ using namespace qucs;
 
 /* Calculate the hash code for a given string. This is the standard
    callback for any newly created hash table.  */
-static int hash_code (char * key) {
+static inline int hash_code (char * key) {
   int code = 0;
   char * p = key;
   while (*p) { code = (code << 1) ^ *p; p++; }
@@ -47,7 +47,7 @@ static int hash_code (char * key) {
 /* This is the default callback for any newly created hash for
    determining two keys being equal.  Return zero if both strings are
    equal, otherwise non-zero.  */
-static int hash_key_equals (char * key1, char * key2) {
+static inline int hash_key_equals (char * key1, char * key2) {
   char * p1, * p2;
   if (key1 == key2) return 0;
   p1 = key1;
@@ -62,7 +62,7 @@ static int hash_key_equals (char * key1, char * key2) {
 
 /* This is the default routine for determining the actual hash table
    key length of the given key.  */
-static unsigned hash_key_length (char * key) {
+static inline unsigned hash_key_length (char * key) {
   unsigned len = 0;
   while (*key++) len++;
   len++;
