@@ -339,17 +339,17 @@ void hbsolver::expandFrequencies (nr_double_t f, int n) {
     // frequency expansion for full frequency sets
     for (i = 0; i <= n + 1; i++) {
       for (k = 0; k < len; k++) {
-	negfreqs.push_back (i * f + nfreqs.get (k));
+	negfreqs.push_back (i * f + nfreqs[k]);
       }
     }
     for (i = -n; i < 0; i++) {
       for (k = 0; k < len; k++) {
-	negfreqs.push_back (i * f + nfreqs.get (k));
+	negfreqs.push_back (i * f + nfreqs[k]);
       }
     }
     for (i = 0; i <= 2 * n + 1; i++) {
       for (k = 0; k < len; k++) {
-	posfreqs.push_back (i * f + pfreqs.get (k));
+	posfreqs.push_back (i * f + pfreqs[k]);
       }
     }
   }
@@ -420,7 +420,7 @@ void hbsolver::collectFrequencies (void) {
 
   // build list of positive frequencies including DC
   for (n = 0; n < negfreqs.size (); n++) {
-    if ((f = negfreqs (n)) < 0.0) continue;
+    if ((f = negfreqs[n]) < 0.0) continue;
     rfreqs.push_back (f);
   }
   lnfreqs = rfreqs.size ();
@@ -429,7 +429,7 @@ void hbsolver::collectFrequencies (void) {
   // pre-calculate the j[O] vector
   OM = new tvector<nr_complex_t> (nlfreqs);
   for (n = i = 0; n < nlfreqs; n++, i++)
-    OM_(n) = nr_complex_t (0, 2 * pi * negfreqs (i));
+    OM_(n) = nr_complex_t (0, 2 * M_PI * negfreqs[i]);
 }
 
 // Split netlist into excitation, linear and non-linear part.
@@ -568,7 +568,7 @@ void hbsolver::createMatrixLinearA (void) {
 
   // through each frequency
   for (int i = 0; i < rfreqs.size (); i++) {
-    freq = rfreqs (i);
+    freq = rfreqs[i];
     // calculate components' MNA matrix for the given frequency
     for (auto *lc : lincircuits)
       lc->calcHB (freq);
@@ -874,7 +874,7 @@ void hbsolver::calcConstantCurrent (void) {
     vs->initHB ();
     vs->setVoltageSource (0);
     for (int f = 0; f < rfreqs.size (); f++) { // for each frequency
-      nr_double_t freq = rfreqs (f);
+      nr_double_t freq = rfreqs[f];
       vs->calcHB (freq);
       VC (vsrc * lnfreqs + f) = vs->getE (VSRC_1);
     }
@@ -1318,7 +1318,7 @@ void hbsolver::fillMatrixLinearExtended (tmatrix<nr_complex_t> * Y,
     int nnode = vs->getNode(NODE_2)->getNode ();
     for (int f = 0; f < lnfreqs; f++, sc++) { // for each frequency
       // fill right hand side vector
-      nr_double_t freq = rfreqs (f);
+      nr_double_t freq = rfreqs[f];
       vs->calcHB (freq);
       I_(sc) = vs->getE (VSRC_1);
       // fill MNA entries
@@ -1392,7 +1392,7 @@ void hbsolver::saveResults (void) {
   }
   // save frequency vector
   if (runs == 1) {
-    for (int i = 0; i < lnfreqs; i++) f->add (rfreqs (i));
+    for (int i = 0; i < lnfreqs; i++) f->add (rfreqs[i]);
   }
   // save node voltage vectors
   int nanode = 0;

@@ -164,22 +164,13 @@ template <class nr_type_t> class tvectorv {
     }
     else this->data.clear (); //size = 0;
   }
-   // easy accessor operators
-  nr_type_t  operator () (int i) const {
-    return data.at(i);
-  }
-  nr_type_t& operator () (int i) {
-    return data.at(i); }
-   nr_type_t  operator [] (int i) const {
+  nr_type_t  operator [] (int i) const {
     return data[i];
   }
   nr_type_t& operator [] (int i) {
     return data[i];
   }
   std::size_t  size (void) const { return data.size (); }
-  nr_type_t get (int n) {
-    return data[n];
-  }
   tvectorv () = default;
   tvectorv (const std::size_t i) : data(i) {};
   tvectorv (const tvectorv &) = default;
