@@ -151,12 +151,6 @@ template <class nr_type_t> class tvectorv {
   void push_back(nr_type_t d) {
     this->data.push_back(d);
   }
-  void drop(const int n) {
-    if (n < (int)this->data.size ()) {
-      this->data.erase (this->data.begin(),this->data.begin()+n);
-    }
-    else this->data.clear (); //size = 0;
-  }
   void resize (int n) {
     data.resize(n);
   }
