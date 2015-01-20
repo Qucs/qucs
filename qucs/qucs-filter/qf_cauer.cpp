@@ -152,7 +152,7 @@ qf_double_t qf_cauer::Kp (qf_double_t k) {
   qf_double_t f1 = 1, f2, w = 1;
   qf_double_t kb = 1;
 
-  Kp = f2 = 2 * M_LN2 - log (k);	// K' = ln (4 / k')
+  Kp = f2 = 2 * ln2 - log (k);	// K' = ln (4 / k')
   while (kb > K_ERR2) {
     kb *= k * k;
     f1 *= (w / (w + 1));
