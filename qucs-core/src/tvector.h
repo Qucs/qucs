@@ -84,10 +84,7 @@ class tvector
   void set (tvector, int, int);
   std::size_t  size (void) const { return data.size (); }
   nr_type_t * getData (void) { return data.data(); }
-  void push_back(nr_type_t);
   void clear (void);
-  void drop (int);
-  void truncate (int);
   void exchangeRows (int, int);
   int  isFinite (void);
   void print (void);
@@ -143,14 +140,49 @@ class tvector
     return data[i];
   }
 
- private:
+ protected:
   std::vector<nr_type_t> data;
 
 };
 
+/* this class is only for std::vector behavior: a collection of number */
+template <class nr_type_t> class tvectorv {
+ public:
+  void push_back(nr_type_t d) {
+    this->data.push_back(d);
+  }
+  void drop(const int n) {
+    if (n < (int)this->data.size ()) {
+      this->data.erase (this->data.begin(),this->data.begin()+n);
+    }
+    else this->data.clear (); //size = 0;
+  }
+  void truncate (int n) {
+    if (n < (int) this->data.size ()) {
+      //size -= n;
+      this->data.erase (this->data.end()-n,this->data.end());
+    }
+    else this->data.clear (); //size = 0;
+  }
+   // easy accessor operators
+  nr_type_t  operator () (int i) const {
+    return data.at(i);
+  }
+  nr_type_t& operator () (int i) {
+    return data.at(i); }
+   nr_type_t  operator [] (int i) const {
+    return data[i];
+  }
+  nr_type_t& operator [] (int i) {
+    return data[i];
+  }
+
+protected:
+  std::vector<nr_type_t> data;
+};
+  
 } // namespace qucs
-
-
+  
 #include "tvector.cpp"
 
 #endif /* __TVECTOR_H__ */

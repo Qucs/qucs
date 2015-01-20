@@ -330,8 +330,8 @@ bool hbsolver::isExcitation (circuit * c) {
 
 // Expands the frequency array using the given frequency and the order.
 void hbsolver::expandFrequencies (nr_double_t f, int n) {
-  tvector<nr_double_t> nfreqs = negfreqs;
-  tvector<nr_double_t> pfreqs = posfreqs;
+  auto nfreqs = negfreqs;
+  auto pfreqs = posfreqs;
   int i, k, len = nfreqs.size ();
   negfreqs.clear ();
   posfreqs.clear ();

@@ -64,31 +64,6 @@ void tvector<nr_type_t>::set (nr_type_t z, int start, int stop) {
     data[i] = z;
 }
 
-// Appends the given value to the tvector.
-template <class nr_type_t>
-void tvector<nr_type_t>::push_back (nr_type_t z) {
-  data.push_back (z);
-}
-
-// Rejects the given number of values from the start of the tvector.
-template <class nr_type_t>
-void tvector<nr_type_t>::drop (int n) {
-  if (n < (int)data.size ()) {
-    data.erase (data.begin(),data.begin()+n);
-  }
-  else data.clear (); //size = 0;
-}
-
-// Rejects the given number of values from the end of the tvector.
-template <class nr_type_t>
-void tvector<nr_type_t>::truncate (int n) {
-  if (n < (int) data.size ()) {
-    //size -= n;
-    data.erase (data.end()-n,data.end());
-  }
-  else data.clear (); //size = 0;
-}
-
 // Sets size to zero.  Does not reduce the capacity.
 template <class nr_type_t>
 void tvector<nr_type_t>::clear (void) {
