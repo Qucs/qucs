@@ -157,12 +157,8 @@ template <class nr_type_t> class tvectorv {
     }
     else this->data.clear (); //size = 0;
   }
-  void truncate (int n) {
-    if (n < (int) this->data.size ()) {
-      //size -= n;
-      this->data.erase (this->data.end()-n,this->data.end());
-    }
-    else this->data.clear (); //size = 0;
+  void resize (int n) {
+    data.resize(n);
   }
   nr_type_t  operator [] (int i) const {
     return data[i];
