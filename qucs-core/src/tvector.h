@@ -145,35 +145,14 @@ class tvector
 
 };
 
-/* this class is only for std::vector behavior: a collection of number */
-template <class nr_type_t> class tvectorv {
- public:
-  void push_back(nr_type_t d) {
-    this->data.push_back(d);
-  }
-  void resize (int n) {
-    data.resize(n);
-  }
-  nr_type_t  operator [] (int i) const {
-    return data[i];
-  }
-  nr_type_t& operator [] (int i) {
-    return data[i];
-  }
-  std::size_t  size (void) const { return data.size (); }
-  tvectorv () = default;
-  tvectorv (const std::size_t i) : data(i) {};
-  tvectorv (const tvectorv &) = default;
-  ~tvectorv () = default;
-  void clear (void) { data.clear(); };
+  /*
   int  contains (nr_type_t val, nr_double_t eps = std::numeric_limits<nr_double_t>::epsilon()) {
     int count = 0;
     for (int i = 0; i < (int)data.size (); i++) if (abs ((data)[i] - val) <= eps) count++;
     return count;
-  }
-protected:
-  std::vector<nr_type_t> data;
-};
+    }*/
+
+
   
 } // namespace qucs
   

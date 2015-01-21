@@ -26,6 +26,8 @@
 # include <config.h>
 #endif
 
+#include<algorithm>
+
 #include <stdio.h>
 
 #include "object.h"
@@ -388,7 +390,14 @@ void hbsolver::collectFrequencies (void) {
   for (auto * c : excitations) {
     if (c->getType () != CIR_VDC) { // no extra DC sources
       if ((f = c->getPropertyDouble ("f")) != 0.0) {
-	if (!dfreqs.contains (f)) { // no double frequencies
+	const auto epsilon = std::numeric_limits<nr_double_t>::epsilon();
+        auto found =
+	  std::find_if(dfreqs.cbegin(),dfreqs.cend(),
+		       [f,epsilon](decltype(*dfreqs.cbegin()) x) {
+			 return (std::abs(x-f) < epsilon);
+		       })
+	  ;
+	if (found == dfreqs.cend()) { // no double frequencies
 	  dfreqs.push_back (f);
 	  expandFrequencies (f, n);
 	}
