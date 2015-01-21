@@ -5,6 +5,7 @@
 # Run this script in preparation for running configure and make.
 #
 # Copyright (C) 2013 Richard Crozier <richard.crozier@yahoo.co.uk.org>
+# Copyright (C) 2015 Guilherme Brondani Torri <guitorri@gmail.com>
 #
 # This is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -25,20 +26,21 @@
 here=`pwd`
 cd `dirname $0`
 
-if [ -d "./deps/adms" ]; then
-# if present, run bootstrap on the adms subproject
-  if [ -e "./deps/adms/bootstrap.sh" ]; then
-    echo "running adms bootstrap.sh ..."
-    ./deps/adms/bootstrap.sh "$@"
-  elif [ -e "./deps/adms/autogen.sh" ]; then
-    echo "running autogen.sh for the adms sources ..."
-    ./deps/adms/autogen.sh "$@";
-  else
-    echo "Could not locate adms autogen script in ./adms, you may use configure with --disable-adms to use installed version"
-    exit
-  fi
+if [ -e "./deps/adms/bootstrap.sh" ]; then
+  echo "running ADMS bootstrap.sh ..."
+  ./deps/adms/bootstrap.sh "$@"
 else
-  echo "No local adms source folder found (you may need to use the configure --diable-adms option to build with installed version)"
+  echo "+------------------------------------------------------------+"
+  echo "| Warning: Could not bootstrap ADMS git submodule.           |"
+  echo "|          Script not found: ./deps/adms/bootstrap.sh        |"
+  echo "|                                                            |"
+  echo "| To download the ADMS git submodule you may use:            |"
+  echo "|   $ git submodule init                                     |"
+  echo "|   $ git submodule update                                   |"
+  echo "|                                                            |"
+  echo "| To use an already installed version of ADMS (> 2.3.0)      |"
+  echo "| use the configure option '--with-mkadms=[path/to/admsXml]' |"
+  echo "+------------------------------------------------------------+"
 fi
 
 echo "bootstrapping the qucs-core sources..."
