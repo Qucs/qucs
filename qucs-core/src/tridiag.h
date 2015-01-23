@@ -25,7 +25,8 @@
 #ifndef __TRIDIAG_H__
 #define __TRIDIAG_H__
 
-#include "tvector.h"
+#include <vector>
+//#include "tvector.h"
 
 namespace qucs {
 
@@ -47,11 +48,11 @@ class tridiag
   const tridiag& operator = (const tridiag &);
   ~tridiag ();
 
-  void setDiagonal (tvector<nr_type_t> *);
-  void setOffDiagonal (tvector<nr_type_t> *);
-  void setA (tvector<nr_type_t> *);
-  void setB (tvector<nr_type_t> *);
-  void setRHS (tvector<nr_type_t> *);
+  void setDiagonal (::std::vector<nr_type_t> *);
+  void setOffDiagonal (std::vector<nr_type_t> *);
+  void setA (::std::vector<nr_type_t> *);
+  void setB (::std::vector<nr_type_t> *);
+  void setRHS (::std::vector<nr_type_t> *);
   void setType (int t) { type = t; }
 
   void solve (void);
@@ -61,11 +62,11 @@ class tridiag
   void solve_s_cyc (void);
 
  private:
-  tvector<nr_type_t> * abov;
-  tvector<nr_type_t> * belo;
-  tvector<nr_type_t> * diag;
-  tvector<nr_type_t> * offdiag;
-  tvector<nr_type_t> * rhs;
+  ::std::vector<nr_type_t> * abov;
+  ::std::vector<nr_type_t> * belo;
+  ::std::vector<nr_type_t> * diag;
+  ::std::vector<nr_type_t> * offdiag;
+  ::std::vector<nr_type_t> * rhs;
 
   nr_type_t * d;
   nr_type_t * e;

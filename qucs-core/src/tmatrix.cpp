@@ -289,7 +289,7 @@ tmatrix<nr_type_t> operator * (tmatrix<nr_type_t> a, tmatrix<nr_type_t> b) {
 // Multiplication of matrix and vector.
 template <class nr_type_t>
 tvector<nr_type_t> operator * (tmatrix<nr_type_t> a, tvector<nr_type_t> b) {
-  assert (a.getCols () == b.getSize ());
+  assert (a.getCols () == b.size ());
   int r, c, n = a.getCols ();
   nr_type_t z;
   tvector<nr_type_t> res (n);
@@ -304,7 +304,7 @@ tvector<nr_type_t> operator * (tmatrix<nr_type_t> a, tvector<nr_type_t> b) {
 // Multiplication of vector (transposed) and matrix.
 template <class nr_type_t>
 tvector<nr_type_t> operator * (tvector<nr_type_t> a, tmatrix<nr_type_t> b) {
-  assert (a.getSize () == b.getRows ());
+  assert (a.size () == b.getRows ());
   int r, c, n = b.getRows ();
   nr_type_t z;
   tvector<nr_type_t> res (n);

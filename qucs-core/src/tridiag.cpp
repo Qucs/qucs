@@ -31,10 +31,11 @@
 #include <stdlib.h>
 #include <string.h>
 #include <cmath>
+#include <vector>
 
 #include "compat.h"
 #include "complex.h"
-#include "tvector.h"
+//#include "tvector.h"
 
 namespace qucs {
 
@@ -80,31 +81,31 @@ tridiag<nr_type_t>::~tridiag () {
 
 // Set the diagonal vector of the tridiagonal matrix.
 template <class nr_type_t>
-void tridiag<nr_type_t>::setDiagonal (tvector<nr_type_t> * v) {
+void tridiag<nr_type_t>::setDiagonal (::std::vector<nr_type_t> * v) {
   diag = v;
 }
 
 // Set the off-diagonal vector of the tridiagonal matrix.
 template <class nr_type_t>
-void tridiag<nr_type_t>::setOffDiagonal (tvector<nr_type_t> * v) {
+void tridiag<nr_type_t>::setOffDiagonal (::std::vector<nr_type_t> * v) {
   abov = belo = offdiag = v;
 }
 
 // Set the above off-diagonal vector of the tridiagonal matrix.
 template <class nr_type_t>
-void tridiag<nr_type_t>::setA (tvector<nr_type_t> * v) {
+void tridiag<nr_type_t>::setA (::std::vector<nr_type_t> * v) {
   abov = v;
 }
 
 // Set the below off-diagonal vector of the tridiagonal matrix.
 template <class nr_type_t>
-void tridiag<nr_type_t>::setB (tvector<nr_type_t> * v) {
+void tridiag<nr_type_t>::setB (::std::vector<nr_type_t> * v) {
   belo = v;
 }
 
 // Set the right hand side vector of the equation system.
 template <class nr_type_t>
-void tridiag<nr_type_t>::setRHS (tvector<nr_type_t> * v) {
+void tridiag<nr_type_t>::setRHS (::std::vector<nr_type_t> * v) {
   rhs = v;
 }
 
@@ -138,11 +139,11 @@ void tridiag<nr_type_t>::solve (void) {
 */
 template <class nr_type_t>
 void tridiag<nr_type_t>::solve_ns (void) {
-  d = al = diag->getData ();
-  f = ga = abov->getData ();
-  e = belo->getData ();
-  b = c = x = rhs->getData ();
-  int i, n = diag->getSize ();
+  d = al = &diag->front(); //diag->getData ();
+  f = ga = &abov->front (); //abov->getData ();
+  e = &belo->front(); // belo->getData ();
+  b = c = x = &rhs->front(); //rhs->getData ();
+  int i, n = (int)diag->size(); //diag->getSize ();
 
   // factorize A = LU
   al[0] = d[0];
@@ -177,11 +178,11 @@ void tridiag<nr_type_t>::solve_ns (void) {
 */
 template <class nr_type_t>
 void tridiag<nr_type_t>::solve_ns_cyc (void) {
-  d = al = diag->getData ();
-  f = ga = abov->getData ();
-  e = be = belo->getData ();
-  b = x = c = rhs->getData ();
-  int i, n = diag->getSize ();
+  d = al = &diag->front(); //diag->getData ();
+  f = ga = &abov->front (); //abov->getData ();
+  e = be = &belo->front(); // belo->getData ();
+  b = x = c = &rhs->front(); //rhs->getData ();
+  int i, n = (int)diag->size(); //diag->getSize ();
   de = new nr_type_t[n];
   ep = new nr_type_t[n];
 
@@ -241,11 +242,11 @@ void tridiag<nr_type_t>::solve_ns_cyc (void) {
 */
 template <class nr_type_t>
 void tridiag<nr_type_t>::solve_s (void) {
-  d = al = diag->getData ();
-  f = ga = offdiag->getData ();
-  b = z = x = c = rhs->getData ();
+  d = al = &diag->front(); //diag->getData ();
+  f = ga = &offdiag->front (); //offdiag->getData ();
+  b = z = x = c = &rhs->front(); //rhs->getData ();
   nr_type_t t;
-  int i, n = diag->getSize ();
+  int i, n = (int)diag->size(); //diag->getSize ();
   de = new nr_type_t[n];
 
   // factorize A = LDL'
@@ -288,11 +289,11 @@ void tridiag<nr_type_t>::solve_s (void) {
 */
 template <class nr_type_t>
 void tridiag<nr_type_t>::solve_s_cyc (void) {
-  d = al = diag->getData ();
-  f = ga = offdiag->getData ();
-  b = c = z  = x = rhs->getData ();
+  d = al = &diag->front(); //diag->getData ();
+  f = ga = &offdiag->front (); //offdiag->getData ();
+  b = c = z  = x = &rhs->front(); //rhs->getData ();
   nr_type_t t;
-  int i, n = diag->getSize ();
+  int i, n = (int)diag->size(); //diag->getSize ();
   de = new nr_type_t[n];
 
   // factorize A = LDL'

@@ -26,6 +26,8 @@
 # include <config.h>
 #endif
 
+#include<algorithm>
+
 #include <stdio.h>
 
 #include "object.h"
@@ -330,34 +332,34 @@ bool hbsolver::isExcitation (circuit * c) {
 
 // Expands the frequency array using the given frequency and the order.
 void hbsolver::expandFrequencies (nr_double_t f, int n) {
-  tvector<nr_double_t> nfreqs = negfreqs;
-  tvector<nr_double_t> pfreqs = posfreqs;
-  int i, k, len = nfreqs.getSize ();
+  auto nfreqs = negfreqs;
+  auto pfreqs = posfreqs;
+  int i, k, len = nfreqs.size ();
   negfreqs.clear ();
   posfreqs.clear ();
   if (len > 0) {
     // frequency expansion for full frequency sets
     for (i = 0; i <= n + 1; i++) {
       for (k = 0; k < len; k++) {
-	negfreqs.add (i * f + nfreqs.get (k));
+	negfreqs.push_back (i * f + nfreqs[k]);
       }
     }
     for (i = -n; i < 0; i++) {
       for (k = 0; k < len; k++) {
-	negfreqs.add (i * f + nfreqs.get (k));
+	negfreqs.push_back (i * f + nfreqs[k]);
       }
     }
     for (i = 0; i <= 2 * n + 1; i++) {
       for (k = 0; k < len; k++) {
-	posfreqs.add (i * f + pfreqs.get (k));
+	posfreqs.push_back (i * f + pfreqs[k]);
       }
     }
   }
   else {
     // first frequency
-    for (i = 0; i <= n + 1; i++) negfreqs.add (i * f);
-    for (i = -n; i < 0; i++) negfreqs.add (i * f);
-    for (i = 0; i <= 2 * n + 1; i++) posfreqs.add (i * f);
+    for (i = 0; i <= n + 1; i++) negfreqs.push_back (i * f);
+    for (i = -n; i < 0; i++) negfreqs.push_back (i * f);
+    for (i = 0; i <= 2 * n + 1; i++) posfreqs.push_back (i * f);
   }
 }
 
@@ -388,8 +390,15 @@ void hbsolver::collectFrequencies (void) {
   for (auto * c : excitations) {
     if (c->getType () != CIR_VDC) { // no extra DC sources
       if ((f = c->getPropertyDouble ("f")) != 0.0) {
-	if (!dfreqs.contains (f)) { // no double frequencies
-	  dfreqs.add (f);
+	const auto epsilon = std::numeric_limits<nr_double_t>::epsilon();
+        auto found =
+	  std::find_if(dfreqs.cbegin(),dfreqs.cend(),
+		       [f,epsilon](decltype(*dfreqs.cbegin()) x) {
+			 return (std::abs(x-f) < epsilon);
+		       })
+	  ;
+	if (found == dfreqs.cend()) { // no double frequencies
+	  dfreqs.push_back (f);
 	  expandFrequencies (f, n);
 	}
       }
@@ -397,16 +406,16 @@ void hbsolver::collectFrequencies (void) {
   }
 
   // no excitations
-  if (negfreqs.getSize () == 0) {
+  if (negfreqs.size () == 0) {
     // use specified frequency
     f = getPropertyDouble ("f");
-    dfreqs.add (f);
+    dfreqs.push_back (f);
     expandFrequencies (f, n);
   }
 
   // build frequency dimension lengths
-  ndfreqs = new int[dfreqs.getSize ()];
-  for (i = 0; i < dfreqs.getSize (); i++) {
+  ndfreqs = new int[dfreqs.size ()];
+  for (i = 0; i < dfreqs.size (); i++) {
     ndfreqs[i] = (n + 1) * 2;
   }
 
@@ -419,17 +428,17 @@ void hbsolver::collectFrequencies (void) {
 #endif /* HB_DEBUG */
 
   // build list of positive frequencies including DC
-  for (n = 0; n < negfreqs.getSize (); n++) {
-    if ((f = negfreqs (n)) < 0.0) continue;
-    rfreqs.add (f);
+  for (n = 0; n < negfreqs.size (); n++) {
+    if ((f = negfreqs[n]) < 0.0) continue;
+    rfreqs.push_back (f);
   }
-  lnfreqs = rfreqs.getSize ();
-  nlfreqs = negfreqs.getSize ();
+  lnfreqs = rfreqs.size ();
+  nlfreqs = negfreqs.size ();
 
   // pre-calculate the j[O] vector
   OM = new tvector<nr_complex_t> (nlfreqs);
   for (n = i = 0; n < nlfreqs; n++, i++)
-    OM_(n) = nr_complex_t (0, 2 * pi * negfreqs (i));
+    OM_(n) = nr_complex_t (0, 2 * M_PI * negfreqs[i]);
 }
 
 // Split netlist into excitation, linear and non-linear part.
@@ -567,8 +576,8 @@ void hbsolver::createMatrixLinearA (void) {
   A = new tmatrix<nr_complex_t> ((N + M) * lnfreqs);
 
   // through each frequency
-  for (int i = 0; i < rfreqs.getSize (); i++) {
-    freq = rfreqs (i);
+  for (int i = 0; i < rfreqs.size (); i++) {
+    freq = rfreqs[i];
     // calculate components' MNA matrix for the given frequency
     for (auto *lc : lincircuits)
       lc->calcHB (freq);
@@ -873,8 +882,8 @@ void hbsolver::calcConstantCurrent (void) {
     circuit * vs = *it;
     vs->initHB ();
     vs->setVoltageSource (0);
-    for (int f = 0; f < rfreqs.getSize (); f++) { // for each frequency
-      nr_double_t freq = rfreqs (f);
+    for (int f = 0; f < rfreqs.size (); f++) { // for each frequency
+      nr_double_t freq = rfreqs[f];
       vs->calcHB (freq);
       VC (vsrc * lnfreqs + f) = vs->getE (VSRC_1);
     }
@@ -920,7 +929,7 @@ int hbsolver::checkBalance (void) {
   nr_double_t iabstol = getPropertyDouble ("iabstol");
   nr_double_t vabstol = getPropertyDouble ("vabstol");
   nr_double_t reltol = getPropertyDouble ("reltol");
-  int n, len = FV->getSize ();
+  int n, len = FV->size ();
   for (n = 0; n < len; n++) {
     // check iteration voltages
     nr_double_t v_abs = abs (VS->get (n) - VP->get (n));
@@ -1081,13 +1090,15 @@ void hbsolver::loadMatrices (void) {
 }
 
 /* The following function transforms a vector using a Fast Fourier
-   Transformation from the time domain to the frequency domain. */
+   Transformation from the time domain to the frequency domain. 
+   \todo rewrite ugly sould die
+*/
 void hbsolver::VectorFFT (tvector<nr_complex_t> * V, int isign) {
   int i, k, r;
   int n = nlfreqs;
-  int nd = dfreqs.getSize ();
-  int nodes = V->getSize () / n;
-  nr_double_t * d = (nr_double_t *) V->getData ();
+  int nd = dfreqs.size ();
+  int nodes = V->size () / n;
+  nr_double_t * d = (double *)V->getData ();
 
   if (nd == 1) {
     // for each node a single 1d-FFT
@@ -1316,7 +1327,7 @@ void hbsolver::fillMatrixLinearExtended (tmatrix<nr_complex_t> * Y,
     int nnode = vs->getNode(NODE_2)->getNode ();
     for (int f = 0; f < lnfreqs; f++, sc++) { // for each frequency
       // fill right hand side vector
-      nr_double_t freq = rfreqs (f);
+      nr_double_t freq = rfreqs[f];
       vs->calcHB (freq);
       I_(sc) = vs->getE (VSRC_1);
       // fill MNA entries
@@ -1390,7 +1401,7 @@ void hbsolver::saveResults (void) {
   }
   // save frequency vector
   if (runs == 1) {
-    for (int i = 0; i < lnfreqs; i++) f->add (rfreqs (i));
+    for (int i = 0; i < lnfreqs; i++) f->add (rfreqs[i]);
   }
   // save node voltage vectors
   int nanode = 0;
