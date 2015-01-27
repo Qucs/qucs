@@ -1184,7 +1184,7 @@ void Schematic::propagateNode(QStringList& Collect,
 // Goes through all schematic components and allows special component
 // handling, e.g. like subcircuit netlisting.
 bool Schematic::throughAllComps(QTextStream *stream, int& countInit,
-                   QStringList& Collect, QTextEdit *ErrText, int NumPorts)
+                   QStringList& Collect, QTextEdit *ErrText, int NumPorts, bool spice)
 {
   bool r;
   QString s;
@@ -1294,9 +1294,10 @@ bool Schematic::throughAllComps(QTextStream *stream, int& countInit,
         continue;   // insert each library subcircuit just one time
       FileList.insert(s, SubFile("LIB", s));
 
-      if(isAnalog)
-	r = ((LibComp*)pc)->createSubNetlist(stream, Collect, 1);
-      else {
+      if(isAnalog) {
+          if (spice) r = ((LibComp*)pc)->createSubNetlist(stream, Collect, 8);
+          else r = ((LibComp*)pc)->createSubNetlist(stream, Collect, 1);
+      } else {
 	if(isVerilog)
 	  r = ((LibComp*)pc)->createSubNetlist(stream, Collect, 4);
 	else
@@ -1377,7 +1378,7 @@ bool Schematic::throughAllComps(QTextStream *stream, int& countInit,
 // each component. Output into "stream", NodeSets are collected in
 // "Collect" and counted with "countInit".
 bool Schematic::giveNodeNames(QTextStream *stream, int& countInit,
-                   QStringList& Collect, QTextEdit *ErrText, int NumPorts)
+                   QStringList& Collect, QTextEdit *ErrText, int NumPorts,bool spice)
 {
   // delete the node names
   for(Node *pn = DocNodes.first(); pn != 0; pn = DocNodes.next()) {
@@ -1401,7 +1402,7 @@ bool Schematic::giveNodeNames(QTextStream *stream, int& countInit,
     }
 
   // go through components
-  if(!throughAllComps(stream, countInit, Collect, ErrText, NumPorts))
+  if(!throughAllComps(stream, countInit, Collect, ErrText, NumPorts,spice))
     return false;
 
   // work on named nodes first in order to preserve the user given names
@@ -1827,7 +1828,7 @@ int Schematic::prepareNetlist(QTextStream& stream, QStringList& Collect,
   }
 
   int countInit = 0;  // counts the nodesets to give them unique names
-  if(!giveNodeNames(&stream, countInit, Collect, ErrText, NumPorts))
+  if(!giveNodeNames(&stream, countInit, Collect, ErrText, NumPorts,spice))
     return -10;
 
   if(allTypes & isAnalogComponent)
