@@ -390,6 +390,11 @@ SET(PUBLIC_HEADERS
   states.h
   valuelist.h
   vector.h
+  property.h
+  ptrlist.h
+  characteristic.h
+  pair.h
+  operatingpoint.h
 )
 
 INCLUDE_DIRECTORIES( ${qucs-core_SOURCE_DIR}          # generated config.h
