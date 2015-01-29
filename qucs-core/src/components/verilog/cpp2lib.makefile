@@ -30,7 +30,7 @@ LIBS=-lqucs
 ifeq ($(OS),Windows_NT)
   DLLEXT=.dll
   CXX=g++
-  CXXFLAGS=-shared -DHAVE_CONFIG_H -I./  -I$(INC)
+  CXXFLAGS=-std=gnu++11 -shared -DHAVE_CONFIG_H -I./  -I$(INC)
   
   # handle deletion if Windows cmd.exe or MinGW MSYS terminal
   RM=del
@@ -43,7 +43,7 @@ else
   ifeq ($(UNAME_S),Linux)
     DLLEXT=.so
     CXX=g++
-    CXXFLAGS=-fPIC -shared -rdynamic -DHAVE_CONFIG_H -I./  -I$(INC)
+    CXXFLAGS=-std=gnu++11 -fPIC -shared -rdynamic -DHAVE_CONFIG_H -I./  -I$(INC)
 	  CXXFLAGS:=$(CXXFLAGS) -Wl,-soname,$(MODEL)$(DLLEXT)
   endif
   
