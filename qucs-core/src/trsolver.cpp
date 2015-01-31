@@ -403,7 +403,7 @@ void trsolver::initHistory (nr_double_t t)
 {
     // initialize time vector
     tHistory = new history ();
-    tHistory->append (t);
+    tHistory->push_back(t);
     tHistory->self ();
     // initialize circuit histories
     nr_double_t age = 0.0;
@@ -431,7 +431,7 @@ void trsolver::updateHistory (nr_double_t t)
     if (t > tHistory->last ())
     {
         // update time vector
-        tHistory->append (t);
+        tHistory->push_back (t);
         // update circuit histories
         circuit * root = subnet->getRoot ();
         for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ())
