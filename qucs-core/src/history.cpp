@@ -61,16 +61,21 @@ void history::truncate (const nr_double_t tcut)
 /* This function drops those values in the history which are older
    than the specified age of the history instance. */
 void history::drop (void) {
+  if(this->values->empty())
+    return;
   nr_double_t f = this->first ();
   nr_double_t l = this->last ();
   if (age > 0.0 && l - f > age) {
-    unsigned int r;
-    unsigned int i = this->leftidx ();
+    std::size_t r;
+    std::size_t i = this->leftidx ();
     for (r = 0; i < this->t->size (); r++, i++)
       if (l - (*this->t)[i] < age)
 	break;
     // keep 2 values being older than specified age
-    r += this->unused () - 2;
+    r += this->unused ();
+    if (r >= 2)
+      r -= 2;
+    r = std::max(r,this->values->size());
     if (r > 127)
       /* erase the first r value */
       this->values->erase(this->values->begin(),this->values->begin()+r);
@@ -102,7 +107,7 @@ nr_double_t history::interpol (nr_double_t tval, int idx, bool left) {
    the otional parameter is true then additionally cubic spline
    interpolation is used. */
 nr_double_t history::nearest (nr_double_t tval, bool interpolate) {
-  if (t == NULL)
+  if (t->empty())
     return 0.0;
 
   int l = this->leftidx ();
