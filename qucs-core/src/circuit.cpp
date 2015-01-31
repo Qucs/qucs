@@ -905,7 +905,7 @@ void circuit::truncateHistory (nr_double_t tcut) {
 
 // Appends a history value.
 void circuit::appendHistory (int n, nr_double_t val) {
-  histories[n].append (val);
+  histories[n].push_back (val);
 }
 
 // Returns the required age of the history.

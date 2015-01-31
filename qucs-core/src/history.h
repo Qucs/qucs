@@ -28,7 +28,6 @@
 #include <memory>
 #include <vector>
 #include <utility>
-#include <tvector.h>
 
 namespace qucs {
 
@@ -53,7 +52,7 @@ public:
   }
 
   /*! The function appends the given value to the history. */
-  void append (const nr_double_t val) {
+  void push_back (const nr_double_t val) {
     this->values->push_back(val);
     if (this->values != this->t) 
       this->drop ();
