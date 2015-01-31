@@ -1038,7 +1038,7 @@ void e_trsolver::updateExternalInterpTime(nr_double_t t)
         if (c->getType () == CIR_ECVS) {
             // Set the voltage to the desired value
             c->setProperty ("Tnext", t);
-            if (tHistory != NULL && tHistory->getSize () > 0)
+            if (tHistory != NULL && tHistory->size () > 0)
             {
               c->setHistoryAge ( t - tHistory->last () + 0.1 * (t - tHistory->last ()) );
             }

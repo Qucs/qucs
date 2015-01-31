@@ -27,13 +27,14 @@
 
 #include <memory>
 #include <vector>
+#include <utility>
 #include <tvector.h>
 
 namespace qucs {
 
 class history
 {
- public:
+public:
   /*! default constructor */
   history ():
     sign(false),
@@ -59,15 +60,16 @@ class history
   }
 
   /* This function drops the most recent n values in the history. */
-  void truncate (const int n)
+  void truncate (const std::size_t n) = delete;
+  void resize(const std::size_t n)
   {
     this->t->resize (n);
     this->values->resize (n);
   }
 
-  int getSize (void) const
+  std::size_t size (void) const
   {
-    return this->t == NULL ? 0.0 : t->size ();
+    return t->size ();
   }
 
   void setAge (const nr_double_t a) { this->age = a; }
@@ -97,7 +99,7 @@ class history
 
   /*! Returns number of unused values (time value vector shorter than
    value vector). */
-  int unused (void) {
+  std::size_t unused (void) {
     int ts = t->size ();
     int vs = values->size ();
     return vs - ts > 0 ? vs - ts : 0;

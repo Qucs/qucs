@@ -44,8 +44,8 @@ namespace qucs {
    than the specified time. */
 void history::truncate (const nr_double_t tcut)
 {
-    int i;
-    int ts = this->t->size ();
+    std::size_t i;
+    std::size_t ts = this->t->size ();
 
     for (i = this->leftidx (); i < ts; i++)
     {
@@ -54,7 +54,7 @@ void history::truncate (const nr_double_t tcut)
 	break;
       }
     }
-    this->truncate (ts - i);
+    this->resize (ts - i);
 }
 
 

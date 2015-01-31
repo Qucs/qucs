@@ -916,7 +916,7 @@ nr_double_t circuit::getHistoryAge (void) {
 
 // Returns size of the history
 int circuit::getHistorySize (void) {
-  return histories[0].getSize ();
+  return histories[0].size ();
 }
 
 // Returns the time with the specified index
