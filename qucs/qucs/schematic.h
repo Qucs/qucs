@@ -262,6 +262,7 @@ public:
   QString createNetlist(QTextStream&, int);
   bool loadDocument();
   void highlightWireLabels (void);
+  void clearSignalsAndFileList();
 
 private:
   int  saveDocument();
