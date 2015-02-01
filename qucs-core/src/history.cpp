@@ -75,7 +75,7 @@ void history::drop (void) {
     r += this->unused ();
     if (r >= 2)
       r -= 2;
-    r = std::max(r,this->values->size());
+    r = std::min(r,this->values->size());
     if (r > 127)
       /* erase the first r value */
       this->values->erase(this->values->begin(),this->values->begin()+r);
