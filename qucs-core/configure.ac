@@ -942,7 +942,7 @@ AS_IF([test -d "../.git"],
       [AS_IF([test X"$GIT" != "X"],
              [AC_MSG_CHECKING([for git tree revision])
 	      GIT_REVISION=`git log --pretty=format:'%h' -n 1u`
-	      AC_DEFINE([GIT_REVISION], ["GIT_REVISION"], [Git short revision hash.])
+	      AC_DEFINE_UNQUOTED([GIT_REVISION], ["$GIT_REVISION"], [Git short revision hash.])
 	      AC_MSG_RESULT($GIT_REVISION)])])
 
 AC_OUTPUT
