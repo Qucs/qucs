@@ -64,7 +64,7 @@ QRegExpValidator Val_CompProp(Expr_CompProp, 0);
 bool QucsApp::performToggleAction(bool on, QAction *Action,
 	pToggleFunc Function, pMouseFunc MouseMove, pMouseFunc2 MousePress)
 {
-  editText->setHidden(true); // disable text edit of component property
+  slotHideEdit(); // disable text edit of component property
 
   if(!on) {
     MouseMoveAction = 0;
@@ -105,7 +105,7 @@ bool QucsApp::performToggleAction(bool on, QAction *Action,
 }
 
 // -----------------------------------------------------------------------
-// Is called, when "set on grid" action is activated.
+// Is called, when "set on grid" action is triggered.
 void QucsApp::slotOnGrid(bool on)
 {
   performToggleAction(on, onGrid, &Schematic::elementsOnGrid,
@@ -162,7 +162,7 @@ void QucsApp::slotEditActivate (bool on)
 void QucsApp::slotEditDelete(bool on)
 {
   TextDoc *Doc = (TextDoc*)DocumentTab->currentPage();
-  if(Doc->inherits("QPlainTextEdit")) {
+  if(isTextDocument(Doc)) {
     Doc->viewport()->setFocus();
     //Doc->del();
     Doc->textCursor().deleteChar();
@@ -199,7 +199,7 @@ void QucsApp::slotSetMarker(bool on)
 }
 
 // -----------------------------------------------------------------------
-// Is called, when "move component text" action is activated.
+// Is called, when "move component text" action is triggered.
 void QucsApp::slotMoveText(bool on)
 {
   performToggleAction(on, moveText, 0,
@@ -207,11 +207,11 @@ void QucsApp::slotMoveText(bool on)
 }
 
 // -----------------------------------------------------------------------
-// Is called, when "Zoom in" action is activated.
+// Is called, when "Zoom in" action is triggered.
 void QucsApp::slotZoomIn(bool on)
 {
   TextDoc *Doc = (TextDoc*)DocumentTab->currentPage();
-  if(Doc->inherits("QPlainTextEdit")) {
+  if(isTextDocument(Doc)) {
     Doc->zoomBy(1.5f);
     magPlus->blockSignals(true);
     magPlus->setChecked(false);
@@ -234,7 +234,7 @@ void QucsApp::slotEscape()
 void QucsApp::slotSelect(bool on)
 {
   QWidget *w = DocumentTab->currentPage();
-  if(w->inherits("QPlainTextEdit")) {
+  if(isTextDocument(w)) {
     ((TextDoc*)w)->viewport()->setFocus();
       select->blockSignals(true);
       select->setChecked(true);
@@ -266,7 +266,7 @@ void QucsApp::slotSelect(bool on)
 void QucsApp::slotEditCut()
 {
   statusBar()->message(tr("Cutting selection..."));
-  editText->setHidden(true); // disable text edit of component property
+  slotHideEdit(); // disable text edit of component property
 
   QWidget *Doc = DocumentTab->currentPage();
   if(isTextDocument (Doc)) {
@@ -313,7 +313,7 @@ void QucsApp::slotEditPaste(bool on)
   else {
     // if it's not a text doc, prevent the user from editing
     // while we perform the paste operation
-    editText->setHidden(true);
+    slotHideEdit();
 
     if(!on)
     {
@@ -372,7 +372,7 @@ void QucsApp::slotInsertEntity ()
 // Is called when the mouse is clicked upon the equation toolbar button.
 void QucsApp::slotInsertEquation(bool on)
 {
-  editText->setHidden(true); // disable text edit of component property
+  slotHideEdit(); // disable text edit of component property
   MouseReleaseAction = 0;
   MouseDoubleClickAction = 0;
 
@@ -405,7 +405,7 @@ void QucsApp::slotInsertEquation(bool on)
 // Is called when the mouse is clicked upon the ground toolbar button.
 void QucsApp::slotInsertGround(bool on)
 {
-  editText->setHidden(true); // disable text edit of component property
+  slotHideEdit(); // disable text edit of component property
   MouseReleaseAction = 0;
   MouseDoubleClickAction = 0;
 
@@ -438,7 +438,7 @@ void QucsApp::slotInsertGround(bool on)
 // Is called when the mouse is clicked upon the port toolbar button.
 void QucsApp::slotInsertPort(bool on)
 {
-  editText->setHidden(true); // disable text edit of component property
+  slotHideEdit(); // disable text edit of component property
   MouseReleaseAction = 0;
   MouseDoubleClickAction = 0;
 
@@ -472,13 +472,13 @@ void QucsApp::slotInsertPort(bool on)
 void QucsApp::slotEditUndo()
 {
   Schematic *Doc = (Schematic*)DocumentTab->currentPage();
-  if(Doc->inherits("QPlainTextEdit")) {
+  if(isTextDocument(Doc)) {
     ((TextDoc*)Doc)->viewport()->setFocus();
     ((TextDoc*)Doc)->undo();
     return;
   }
 
-  editText->setHidden(true); // disable text edit of component property
+  slotHideEdit(); // disable text edit of component property
 
   Doc->undo();
   Doc->viewport()->update();
@@ -490,13 +490,13 @@ void QucsApp::slotEditUndo()
 void QucsApp::slotEditRedo()
 {
   Schematic *Doc = (Schematic*)DocumentTab->currentPage();
-  if(Doc->inherits("QPlainTextEdit")) {
+  if(isTextDocument(Doc)) {
     ((TextDoc*)Doc)->viewport()->setFocus();
     ((TextDoc*)Doc)->redo();
     return;
   }
 
-  editText->setHidden(true); // disable text edit of component property
+  slotHideEdit(); // disable text edit of component property
 
   Doc->redo();
   Doc->viewport()->update();
@@ -504,10 +504,10 @@ void QucsApp::slotEditRedo()
 }
 
 // --------------------------------------------------------------
-// Is called, when "Align top" action is activated.
+// Is called, when "Align top" action is triggered.
 void QucsApp::slotAlignTop()
 {
-  editText->setHidden(true); // disable text edit of component property
+  slotHideEdit(); // disable text edit of component property
 
   Schematic *Doc = (Schematic*)DocumentTab->currentPage();
   if(!Doc->aligning(0))
@@ -518,10 +518,10 @@ void QucsApp::slotAlignTop()
 }
 
 // --------------------------------------------------------------
-// Is called, when "Align bottom" action is activated.
+// Is called, when "Align bottom" action is triggered.
 void QucsApp::slotAlignBottom()
 {
-  editText->setHidden(true); // disable text edit of component property
+  slotHideEdit(); // disable text edit of component property
 
   Schematic *Doc = (Schematic*)DocumentTab->currentPage();
   if(!Doc->aligning(1))
@@ -532,10 +532,10 @@ void QucsApp::slotAlignBottom()
 }
 
 // --------------------------------------------------------------
-// Is called, when "Align left" action is activated.
+// Is called, when "Align left" action is triggered.
 void QucsApp::slotAlignLeft()
 {
-  editText->setHidden(true); // disable text edit of component property
+  slotHideEdit(); // disable text edit of component property
 
   Schematic *Doc = (Schematic*)DocumentTab->currentPage();
   if(!Doc->aligning(2))
@@ -546,10 +546,10 @@ void QucsApp::slotAlignLeft()
 }
 
 // --------------------------------------------------------------
-// Is called, when "Align right" action is activated.
+// Is called, when "Align right" action is triggered.
 void QucsApp::slotAlignRight()
 {
-  editText->setHidden(true); // disable text edit of component property
+  slotHideEdit(); // disable text edit of component property
 
   Schematic *Doc = (Schematic*)DocumentTab->currentPage();
   if(!Doc->aligning(3))
@@ -560,10 +560,10 @@ void QucsApp::slotAlignRight()
 }
 
 // --------------------------------------------------------------
-// Is called, when "Distribute horizontally" action is activated.
+// Is called, when "Distribute horizontally" action is triggered.
 void QucsApp::slotDistribHoriz()
 {
-  editText->setHidden(true); // disable text edit of component property
+  slotHideEdit(); // disable text edit of component property
 
   Schematic *Doc = (Schematic*)DocumentTab->currentPage();
   Doc->distributeHorizontal();
@@ -572,10 +572,10 @@ void QucsApp::slotDistribHoriz()
 }
 
 // --------------------------------------------------------------
-// Is called, when "Distribute vertically" action is activated.
+// Is called, when "Distribute vertically" action is triggered.
 void QucsApp::slotDistribVert()
 {
-  editText->setHidden(true); // disable text edit of component property
+  slotHideEdit(); // disable text edit of component property
 
   Schematic *Doc = (Schematic*)DocumentTab->currentPage();
   Doc->distributeVertical();
@@ -584,10 +584,10 @@ void QucsApp::slotDistribVert()
 }
 
 // --------------------------------------------------------------
-// Is called, when "Center horizontally" action is activated.
+// Is called, when "Center horizontally" action is triggered.
 void QucsApp::slotCenterHorizontal()
 {
-  editText->setHidden(true); // disable text edit of component property
+  slotHideEdit(); // disable text edit of component property
 
   Schematic *Doc = (Schematic*)DocumentTab->currentPage();
   if(!Doc->aligning(4))
@@ -598,10 +598,10 @@ void QucsApp::slotCenterHorizontal()
 }
 
 // --------------------------------------------------------------
-// Is called, when "Center vertically" action is activated.
+// Is called, when "Center vertically" action is triggered.
 void QucsApp::slotCenterVertical()
 {
-  editText->setHidden(true); // disable text edit of component property
+  slotHideEdit(); // disable text edit of component property
 
   Schematic *Doc = (Schematic*)DocumentTab->currentPage();
   if(!Doc->aligning(5))
@@ -612,13 +612,13 @@ void QucsApp::slotCenterVertical()
 }
 
 // ---------------------------------------------------------------------
-// Is called when the "select all" action is activated.
+// Is called when the "select all" action is triggered.
 void QucsApp::slotSelectAll()
 {
-  editText->setHidden(true); // disable text edit of component property
+  slotHideEdit(); // disable text edit of component property
 
   QWidget *Doc = DocumentTab->currentPage();
-  if(Doc->inherits("QPlainTextEdit")) {
+  if(isTextDocument(Doc)) {
     ((TextDoc*)Doc)->viewport()->setFocus();
     //((TextDoc*)Doc)->selectAll(true);
     ((TextDoc*)Doc)->selectAll();
@@ -631,10 +631,10 @@ void QucsApp::slotSelectAll()
 }
 
 // ---------------------------------------------------------------------
-// Is called when the "select markers" action is activated.
+// Is called when the "select markers" action is triggered.
 void QucsApp::slotSelectMarker()
 {
-  editText->setHidden(true); // disable text edit of component property
+  slotHideEdit(); // disable text edit of component property
 
   Schematic *Doc = (Schematic*)DocumentTab->currentPage();
   Doc->selectMarkers();
@@ -658,7 +658,7 @@ void QucsApp::editFile(const QString& File)
         }
         else
         {
-            editText->setHidden(true); // disable text edit of component property
+            slotHideEdit(); // disable text edit of component property
 
             statusBar()->message(tr("Opening file..."));
 
@@ -844,7 +844,7 @@ void QucsApp::showHTML(const QString& Page)
 }
 
 // ---------------------------------------------------------------------
-// Is called when the find action is activated.
+// Is called when the find action is triggered.
 void QucsApp::slotEditFind()
 {
   SearchDia->initSearch(DocumentTab->currentPage(),
@@ -855,7 +855,7 @@ void QucsApp::slotEditFind()
 void QucsApp::slotChangeProps()
 {
   QWidget *Doc = DocumentTab->currentPage();
-  if(Doc->inherits("QPlainTextEdit")) {
+  if(isTextDocument(Doc)) {
     ((TextDoc*)Doc)->viewport()->setFocus();
 
     SearchDia->initSearch(Doc,
@@ -873,7 +873,7 @@ void QucsApp::slotChangeProps()
 // --------------------------------------------------------------
 void QucsApp::slotAddToProject()
 {
-  editText->setHidden(true); // disable text edit of component property
+  slotHideEdit(); // disable text edit of component property
 
   if(ProjName.isEmpty()) {
     QMessageBox::critical(this, tr("Error"), tr("No project open!"));
@@ -1130,7 +1130,7 @@ void QucsApp::slotApplyCompText()
   pp = pc->Props.first();
   for(z=view->MAx3; z>0; z--) {  // calculate "n"
     if(!pp) {  // should never happen
-      editText->setHidden(true);
+      slotHideEdit();
       return;
     }
     if(pp->display) n++;   // is visible ?
@@ -1172,7 +1172,7 @@ void QucsApp::slotApplyCompText()
     view->drawn = false;
 
     if(!pp) {     // was already last property ?
-      editText->setHidden(true);
+      slotHideEdit();
       return;
     }
 
@@ -1181,7 +1181,7 @@ void QucsApp::slotApplyCompText()
       (view->MAx3)++;  // next property
       pp = pc->Props.next();
       if(!pp) {     // was already last property ?
-        editText->setHidden(true);
+        slotHideEdit();
         return;
       }
     }
@@ -1231,7 +1231,7 @@ void QucsApp::slotResizePropEdit(const QString& t)
 // -----------------------------------------------------------
 void QucsApp::slotCreateLib()
 {
-  editText->setHidden(true); // disable text edit of component property
+  slotHideEdit(); // disable text edit of component property
 
   if(ProjName.isEmpty()) {
     QMessageBox::critical(this, tr("Error"), tr("Please open project with subcircuits!"));
@@ -1245,7 +1245,7 @@ void QucsApp::slotCreateLib()
 // -----------------------------------------------------------
 void QucsApp::slotImportData()
 {
-  editText->setHidden(true); // disable text edit of component property
+  slotHideEdit(); // disable text edit of component property
 
   if(ProjName.isEmpty()) {
     QMessageBox::critical(this, tr("Error"), tr("Please open project first!"));
@@ -1260,7 +1260,7 @@ void QucsApp::slotImportData()
 // -----------------------------------------------------------
 void QucsApp::slotExportGraphAsCsv()
 {
-  editText->setHidden(true); // disable text edit of component property
+  slotHideEdit(); // disable text edit of component property
 
   for(;;) {
     if(view->focusElement)
@@ -1331,7 +1331,7 @@ void QucsApp::slotExportGraphAsCsv()
 // ----------------------------------------------------------
 void QucsApp::slotCreatePackage()
 {
-  editText->setHidden(true); // disable text edit of component property
+  slotHideEdit(); // disable text edit of component property
 
   PackageDialog *d = new PackageDialog(this, true);
   d->exec();
@@ -1340,7 +1340,7 @@ void QucsApp::slotCreatePackage()
 // ----------------------------------------------------------
 void QucsApp::slotExtractPackage()
 {
-  editText->setHidden(true); // disable text edit of component property
+  slotHideEdit(); // disable text edit of component property
   PackageDialog *d = new PackageDialog(this, false);
   d->show();
   d->extractPackage();

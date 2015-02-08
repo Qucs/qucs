@@ -61,7 +61,6 @@ class QucsApp : public QMainWindow {
 public:
   QucsApp();
  ~QucsApp();
-  QSettings *qucsSettings;
   bool closeAllFiles();
   bool gotoPage(const QString&);   // to load a document
   QucsDoc *getDoc(int No=-1);
@@ -69,10 +68,8 @@ public:
   QString fileType (const QString&);
 
   QString ProjName;   // name of the project, that is open
-  //QList<QString> qucsPathList; // the qucs path list for subcircuits and spice files
   QHash<QString,QString> schNameHash; // QHash for the schematic files lookup
   QStringList spiceExtensions; // List of extensions used for spice files
-  QString getSpiceFileFilter (void); // generate file filter string for spice files
   QHash<QString,QString> spiceNameHash; // QHash for the spice files lookup
 
   QLineEdit *editText;  // for edit component properties on schematic
@@ -150,7 +147,6 @@ private slots:
   void slotAfterSimulation(int, SimMessage*);
   void slotDCbias();
   void slotChangePage(QString&, QString&);
-  void slotNextTab();
   void slotHideEdit();
 signals:
   void signalKillEmAll();
@@ -250,7 +246,6 @@ private slots:
   void slotToggleOctave(bool);
   void slotToggleDock(bool);
   void slotHelpAbout();     // shows an about dialog
-  void slotHelpAboutQt();   // shows the standard about dialog for Qt
 
 private:
   void initActions();    // initializes all QActions of the application

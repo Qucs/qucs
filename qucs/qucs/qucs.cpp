@@ -74,36 +74,6 @@
 
 extern const char *empty_xpm[];
 
-
-// IconView without dragging icon bitmap
-/*
-class myIconView : public Q3IconView
-{
-public:
-  myIconView(QWidget* parent_) : Q3IconView(parent_, 0, 0) {};
- ~myIconView() {};
-
-protected:
-  Q3DragObject *dragObject() {
-    Q3IconViewItem *Item = currentItem();
-    if(!Item) return 0;
-
-    // no picture during dragging, but bounding rectangles in QListView
-    Q3IconDrag *DragPic = new Q3IconDrag( viewport() );
-    DragPic->setPixmap( QPixmap(empty_xpm), QPoint(0, 0) );
-    DragPic->append( Q3IconDragItem(),
-        QRect( Item->pixmapRect().width() / -2,
-               Item->pixmapRect().height() / -2,
-               Item->pixmapRect().width(), Item->pixmapRect().height() ),
-        QRect( Item->textRect().width() / -2,
-               Item->pixmapRect().height() / 2 + 5,
-               Item->textRect().width(), Item->textRect().height() ) );
-    return DragPic;
-  };
-};
-*/
-
-
 QucsApp::QucsApp()
 {
   setWindowTitle("Qucs " PACKAGE_VERSION);
@@ -118,7 +88,7 @@ QucsApp::QucsApp()
     tr("Verilog Sources") + " (*.v);;" +
     tr("Verilog-A Sources") + " (*.va);;" +
     tr("Octave Scripts") + " (*.m *.oct);;" +
-    tr("Spice Files") + getSpiceFileFilter() +
+    tr("Spice Files") + QString(" (") + spiceExtensions.join(" ") + QString(");;") +
     tr("Any File")+" (*)";
 
   updateSchNameHash();
@@ -161,19 +131,10 @@ QucsApp::QucsApp()
   for(int z=1; z<qApp->argc(); z++) {
     QString arg = qApp->argv()[z];
     if(*(arg) != '-') {
-      // allow uri's: file:/home/linuxuser/Desktop/example.sch
-      //TODO
-      //if(arg.contains(":/")) {
-        //QString f = QDir::convertSeparators(Q3UriDrag::uriToLocalFile(arg));
-      //  if(f.isEmpty()) f = arg;
-      //  gotoPage(f);
-      //} else {
-        // get and set absolute path, QucsWorkDir now finds subcircuits
-        QFileInfo Info(arg);
-        QucsSettings.QucsWorkDir.setPath(Info.absoluteDir().absolutePath());
-        arg = QucsSettings.QucsWorkDir.filePath(Info.fileName());
-        gotoPage(arg);
-      //}
+      QFileInfo Info(arg);
+      QucsSettings.QucsWorkDir.setPath(Info.absoluteDir().absolutePath());
+      arg = QucsSettings.QucsWorkDir.filePath(Info.fileName());
+      gotoPage(arg);
     }
   }
 }
@@ -191,7 +152,6 @@ QucsApp::~QucsApp()
 // #######################################################################
 void QucsApp::initContentListView()
 {
-
   Content->clear();
 
   ConOthers = new QTreeWidgetItem(Content);
@@ -793,7 +753,7 @@ void QucsApp::slotSearchClear()
 // Is called when the mouse is clicked within the Component QIconView.
 void QucsApp::slotSelectComponent(QListWidgetItem *item)
 {
-  editText->setHidden(true); // disable text edit of component property
+  slotHideEdit(); // disable text edit of component property
 
   // delete previously selected elements
   if(view->selElem != 0)  delete view->selElem;
@@ -1036,8 +996,7 @@ void QucsApp::slotCMenuCopy()
   //TODO: maybe require disable edit here
 
   // refresh the schematic file path
-  this->updateSchNameHash();
-  this->updateSpiceNameHash();
+  slotRefreshSchPath();
 
   if(!ProjName.isEmpty())
     readProjectFiles();  // re-read the content ListView
@@ -1234,7 +1193,7 @@ void QucsApp::readProjects()
 // Is called, when "Create New Project" button is pressed.
 void QucsApp::slotButtonProjNew()
 {
-  editText->setHidden(true); // disable text edit of component property
+  slotHideEdit(); // disable text edit of component property
 
   NewProjDialog *d = new NewProjDialog(this);
   if(d->exec() != QDialog::Accepted) return;
@@ -1261,26 +1220,6 @@ void QucsApp::slotButtonProjNew()
 // content ListView
 void QucsApp::readProjectFiles()
 {
-  // Delete the content files, but don't delete the parent items !!!
-/* TODO
-  while(ConSchematics->firstChild())
-    delete ConSchematics->firstChild();
-  while(ConDisplays->firstChild())
-    delete ConDisplays->firstChild();
-  while(ConDatasets->firstChild())
-    delete ConDatasets->firstChild();
-  while(ConSources->firstChild())
-    delete ConSources->firstChild();
-  while(ConVerilog->firstChild())
-    delete ConVerilog->firstChild();
-  while(ConVerilogA->firstChild())
-    delete ConVerilogA->firstChild();
-  while(ConOthers->firstChild())
-    delete ConOthers->firstChild();
-  while(ConOctave->firstChild())
-    delete ConOctave->firstChild();
-*/
-
   //Is this OK instead of the above??
   initContentListView();
 
@@ -1341,7 +1280,7 @@ void QucsApp::readProjectFiles()
 // Opens an existing project.
 void QucsApp::openProject(const QString& Path)
 {
-  editText->setHidden(true); // disable text edit of component property
+  slotHideEdit(); // disable text edit of component property
 
   QString Name = Path;
   if (Name.endsWith(QDir::separator())) {
@@ -1419,7 +1358,7 @@ void QucsApp::slotListProjOpen(const QModelIndex &idx)
 // Is called when the close project menu is called.
 void QucsApp::slotMenuProjClose()
 {
-  editText->setHidden(true); // disable text edit of component property
+  slotHideEdit(); // disable text edit of component property
 
   if(!closeAllFiles()) return;   // close files and ask for saving them
   new Schematic(this, "");
@@ -1543,7 +1482,7 @@ void QucsApp::slotButtonProjDel()
 void QucsApp::slotFileNew()
 {
   statusBar()->message(tr("Creating new schematic..."));
-  editText->setHidden(true); // disable text edit of component property
+  slotHideEdit(); // disable text edit of component property
 
   new Schematic(this, "");
 
@@ -1554,7 +1493,7 @@ void QucsApp::slotFileNew()
 void QucsApp::slotTextNew()
 {
   statusBar()->message(tr("Creating new text editor..."));
-  editText->setHidden(true); // disable text edit of component property
+  slotHideEdit(); // disable text edit of component property
   new TextDoc(this, "");
 
   statusBar()->message(tr("Ready."));
@@ -1605,7 +1544,7 @@ QString lastDirOpenSave; // to remember last directory and file
 // --------------------------------------------------------------
 void QucsApp::slotFileOpen()
 {
-  editText->setHidden(true); // disable text edit of component property
+  slotHideEdit(); // disable text edit of component property
 
   statusBar()->message(tr("Opening file..."));
 
@@ -1619,7 +1558,6 @@ void QucsApp::slotFileOpen()
 
     gotoPage(s);
     lastDirOpenSave = s;   // remember last directory and file
-
 
     statusBar()->message(tr("Ready."));
   }
@@ -1646,7 +1584,7 @@ void QucsApp::slotFileSave()
 {
   statusBar()->message(tr("Saving file..."));
   DocumentTab->blockSignals(true);   // no user interaction during that time
-  editText->setHidden(true); // disable text edit of component property
+  slotHideEdit(); // disable text edit of component property
 
   if(!saveFile()) {
     DocumentTab->blockSignals(false);
@@ -1741,32 +1679,6 @@ bool QucsApp::saveAs()
   lastDirOpenSave = Info.dirPath(true);  // remember last directory and file
   updateRecentFilesList(s);
 
-  if(intoView) {    // insert new name in Content ListView ?
-    if(Info.dirPath(true) == QucsSettings.QucsWorkDir.absPath())
-      if(!ProjName.isEmpty()) {
-        s = Info.fileName();  // remove path from file name
-	QString ext = Info.extension (false);
-  /*
-        if(ext == "sch")
-          Content->setSelected(new Q3ListViewItem(ConSchematics, s), true);
-        else if(ext == "dpl")
-          Content->setSelected(new Q3ListViewItem(ConDisplays, s), true);
-        else if(ext == "dat")
-          Content->setSelected(new Q3ListViewItem(ConDatasets, s), true);
-        else if((ext == "vhdl") || (ext == "vhd"))
-          Content->setSelected(new Q3ListViewItem(ConSources, s), true);
-        else if(ext == "v")
-          Content->setSelected(new Q3ListViewItem(ConVerilog, s), true);
-        else if(ext == "va")
-          Content->setSelected(new Q3ListViewItem(ConVerilogA, s), true);
-        else if(ext == "m" || ext == "oct")
-          Content->setSelected(new Q3ListViewItem(ConOctave, s), true);
-        else
-          Content->setSelected(new Q3ListViewItem(ConOthers, s), true);
-*/
-      }
-  }
-
   n = Doc->save();   // SAVE
   if(n < 0)  return false;
 
@@ -1779,7 +1691,7 @@ void QucsApp::slotFileSaveAs()
 {
   statusBar()->message(tr("Saving file under new filename..."));
   DocumentTab->blockSignals(true);   // no user interaction during the time
-  editText->setHidden(true); // disable text edit of component property
+  slotHideEdit(); // disable text edit of component property
 
   if(!saveAs()) {
     DocumentTab->blockSignals(false);
@@ -1792,8 +1704,7 @@ void QucsApp::slotFileSaveAs()
   statusBar()->message(tr("Ready."));
 
   // refresh the schematic file path
-  this->updateSchNameHash();
-  this->updateSpiceNameHash();
+  slotRefreshSchPath();
 
   if(!ProjName.isEmpty())
     readProjectFiles();  // re-read the content ListView
@@ -1804,7 +1715,7 @@ void QucsApp::slotFileSaveAs()
 void QucsApp::slotFileSaveAll()
 {
   statusBar()->message(tr("Saving all files..."));
-  editText->setHidden(true); // disable text edit of component property
+  slotHideEdit(); // disable text edit of component property
   DocumentTab->blockSignals(true);   // no user interaction during the time
 
   int No=0;
@@ -1826,8 +1737,7 @@ void QucsApp::slotFileSaveAll()
   statusBar()->message(tr("Ready."));
 
   // refresh the schematic file path
-  this->updateSchNameHash();
-  this->updateSpiceNameHash();
+  slotRefreshSchPath();
 }
 
 // --------------------------------------------------------------
@@ -1853,7 +1763,7 @@ void QucsApp::slotFileClose(int index)
 void QucsApp::closeFile(int index)
 {
     statusBar()->message(tr("Closing file..."));
-    editText->setHidden(true); // disable text edit of component property
+    slotHideEdit(); // disable text edit of component property
 
     QucsDoc *Doc = getDoc(index);
     if(Doc->DocChanged) {
@@ -1975,19 +1885,6 @@ void QucsApp::slotChangeView(QWidget *w)
 }
 
 // --------------------------------------------------------------
-// Changes to the next document in the TabBar.
-void QucsApp::slotNextTab()
-{
-  int No = DocumentTab->currentPageIndex() + 1;
-  if(No >= DocumentTab->count())
-    No = 0;
-
-  // make new document the current (calls "slotChangeView(int)" indirectly)
-  DocumentTab->setCurrentPage(No);
-  view->drawn = false;
-}
-
-// --------------------------------------------------------------
 void QucsApp::slotFileSettings ()
 {
   editText->setHidden (true); // disable text edit of component property
@@ -2021,13 +1918,12 @@ void QucsApp::slotFileSettings ()
 // --------------------------------------------------------------
 void QucsApp::slotApplSettings()
 {
-  editText->setHidden(true); // disable text edit of component property
+  slotHideEdit(); // disable text edit of component property
 
   QucsSettingsDialog *d = new QucsSettingsDialog(this);
   d->exec();
   view->drawn = false;
 }
-
 
 // --------------------------------------------------------------
 void QucsApp::slotRefreshSchPath()
@@ -2035,11 +1931,9 @@ void QucsApp::slotRefreshSchPath()
   this->updateSchNameHash();
   this->updateSpiceNameHash();
 
-  QMessageBox msgBox;
-  msgBox.setText("The schematic file path has been refreshed.");
-  msgBox.exec();
+  int exit = QMessageBox::information(this, tr("Update schematic path"),
+      tr("The schematic file path has been refreshed."), tr("OK"));
 }
-
 
 // --------------------------------------------------------------
 void QucsApp::updatePortNumber(QucsDoc *currDoc, int No)
@@ -2106,7 +2000,7 @@ void QucsApp::updatePortNumber(QucsDoc *currDoc, int No)
 void QucsApp::printCurrentDocument(bool fitToPage)
 {
   statusBar()->message(tr("Printing..."));
-  editText->setHidden(true); // disable text edit of component property
+  slotHideEdit(); // disable text edit of component property
 
   PrinterWriter *writer = new PrinterWriter();
   writer->setFitToPage(fitToPage);
@@ -2135,7 +2029,7 @@ void QucsApp::slotFilePrintFit()
 void QucsApp::slotFileQuit()
 {
   statusBar()->message(tr("Exiting application..."));
-  editText->setHidden(true); // disable text edit of component property
+  slotHideEdit(); // disable text edit of component property
 
   int exit = QMessageBox::information(this,
       tr("Quit..."), tr("Do you really want to quit?"),
@@ -2175,7 +2069,7 @@ void QucsApp::closeEvent(QCloseEvent* Event)
 // Is called when the toolbar button is pressed to go into a subcircuit.
 void QucsApp::slotIntoHierarchy()
 {
-  editText->setHidden(true); // disable text edit of component property
+  slotHideEdit(); // disable text edit of component property
 
   Schematic *Doc = (Schematic*)DocumentTab->currentPage();
   Component *pc = Doc->searchSelSubcircuit();
@@ -2192,7 +2086,7 @@ void QucsApp::slotIntoHierarchy()
 // Is called when the toolbar button is pressed to leave a subcircuit.
 void QucsApp::slotPopHierarchy()
 {
-  editText->setHidden(true); // disable text edit of component property
+  slotHideEdit(); // disable text edit of component property
 
   if(HierarchyHistory.size() == 0) return;
 
@@ -2211,7 +2105,7 @@ void QucsApp::slotPopHierarchy()
 // --------------------------------------------------------------
 void QucsApp::slotShowAll()
 {
-  editText->setHidden(true); // disable text edit of component property
+  slotHideEdit(); // disable text edit of component property
   getDoc()->showAll();
 }
 
@@ -2219,14 +2113,14 @@ void QucsApp::slotShowAll()
 // Sets the scale factor to 1.
 void QucsApp::slotShowOne()
 {
-  editText->setHidden(true); // disable text edit of component property
+  slotHideEdit(); // disable text edit of component property
   getDoc()->showNoZoom();
 }
 
 // -----------------------------------------------------------
 void QucsApp::slotZoomOut()
 {
-  editText->setHidden(true); // disable text edit of component property
+  slotHideEdit(); // disable text edit of component property
   getDoc()->zoomBy(0.5f);
 }
 
@@ -2237,7 +2131,7 @@ void QucsApp::slotZoomOut()
  */
 void QucsApp::slotSimulate()
 {
-  editText->setHidden(true); // disable text edit of component property
+  slotHideEdit(); // disable text edit of component property
 
   QucsDoc *Doc;
   QWidget *w = DocumentTab->currentPage();
@@ -2441,7 +2335,7 @@ void QucsApp::slotToPage()
 // Is called when a double-click is made in the content ListView.
 void QucsApp::slotOpenContent(QTreeWidgetItem *item)
 {
-  editText->setHidden(true); // disable text edit of component property
+  slotHideEdit(); // disable text edit of component property
 
   if(item == 0) return;   // no item was double clicked
   if(item->parent() == 0) return; // no document, but item "schematic", ...
@@ -2519,7 +2413,7 @@ void QucsApp::slotOpenContent(QTreeWidgetItem *item)
 // Is called when the mouse is clicked within the Content QListView.
 void QucsApp::slotSelectSubcircuit(QTreeWidgetItem *item)
 {
-  editText->setHidden(true); // disable text edit of component property
+  slotHideEdit(); // disable text edit of component property
 
   if(item == 0) {   // mouse button pressed not over an item ?
     Content->clearSelection();  // deselect component in ListView
@@ -2582,7 +2476,7 @@ void QucsApp::slotSelectLibComponent(QTreeWidgetItem *item)
     Schematic *Doc = (Schematic*)DocumentTab->currentPage();
 
     // if the current document is a schematic activate the paste
-    if(!Doc->inherits("QPlainTextEdit"))
+    if(!isTextDocument(Doc))
     {
 
         if(item == 0)
@@ -2708,9 +2602,7 @@ void QucsApp::changeSchematicSymbolMode(Schematic *Doc)
 
 // ---------------------------------------------------------
 bool QucsApp::isTextDocument(QWidget *w) {
-  if (w->inherits("QPlainTextEdit"))
-    return true;
-  return false;
+  return w->inherits("QPlainTextEdit");
 }
 
 // ---------------------------------------------------------
@@ -2759,7 +2651,7 @@ void QucsApp::slotSymbolEdit()
     }
     // in a normal schematic
     else {
-      editText->setHidden(true); // disable text edit of component property
+      slotHideEdit(); // disable text edit of component property
       SDoc->switchPaintMode();   // twist the view coordinates
       changeSchematicSymbolMode(SDoc);
       SDoc->becomeCurrent(true);
@@ -2938,23 +2830,6 @@ void QucsApp::updateSchNameHash(void)
     foreach (QFileInfo schfile, schfilesList) {
         schNameHash[schfile.completeBaseName()] = schfile.absoluteFilePath();
     }
-}
-
-// --------------------------------------------------------
-// Produces a name filter suitible for file dialogs from the
-// list of recognised spice extensions
-QString QucsApp::getSpiceFileFilter (void)
-{
-    QString spexts = " (";
-
-    for (int i = 0; i < spiceExtensions.count (); i++)
-    {
-        spexts += "*" + spiceExtensions[i] + " ";
-    }
-
-    spexts += ");;";
-
-    return spexts;
 }
 
 // -----------------------------------------------------------
