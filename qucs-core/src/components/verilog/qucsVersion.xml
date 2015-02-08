@@ -2079,7 +2079,7 @@
 #define m00_logE(v00,x)         v00 = log(x);
 #define m10_logE(v10,v00,x)     v10 = (1.0/x);
 #define m00_log10(v00,x)        v00 = log10(x);
-#define m10_log10(v10,v00,x)    v10 = (1.0/x/M_LN10);
+#define m10_log10(v10,v00,x)    v10 = (1.0/x/qucs::ln10);
 #define m00_exp(v00,x)          v00 = exp(x);
 #define m10_exp(v10,v00,x)      v10 = v00;
 #define m00_sqrt(v00,x)         v00 = sqrt(x);
