@@ -156,7 +156,7 @@ void device::pnJunctionMOS (nr_double_t Upn, nr_double_t Iss, nr_double_t Ute,
 void device::pnJunctionBIP (nr_double_t Upn, nr_double_t Iss, nr_double_t Ute,
 			    nr_double_t& I, nr_double_t& g) {
   if (Upn < -3 * Ute) {
-    nr_double_t a = 3 * Ute / (Upn * e);
+    nr_double_t a = 3 * Ute / (Upn * euler);
     a = cubic (a);
     I = -Iss * (1 + a);
     g = +Iss * 3 * a / Upn;

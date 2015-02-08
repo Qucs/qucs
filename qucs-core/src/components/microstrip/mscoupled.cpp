@@ -173,7 +173,7 @@ void mscoupled::analysQuasiStatic (nr_double_t W, nr_double_t h, nr_double_t s,
     // further modifying equations
     r = 1 + 0.15 * (1 - qucs::exp (1 - sqr (er - 1) / 8.2) / (1 + qucs::pow (g, -6.)));
     fo1 = 1 - qucs::exp (-0.179 * qucs::pow (g, 0.15) -
-		   0.328 * qucs::pow (g, r) / qucs::log (e + qucs::pow (g / 7, 2.8)));
+		   0.328 * qucs::pow (g, r) / qucs::log (euler + qucs::pow (g / 7, 2.8)));
     q = qucs::exp (-1.366 - g);
     p = qucs::exp (-0.745 * qucs::pow (g, 0.295)) / qucs::cosh (qucs::pow (g, 0.68));
     fo = fo1 * qucs::exp (p * qucs::log (u) + q * qucs::sin (pi * qucs::log10 (u)));
