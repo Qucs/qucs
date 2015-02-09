@@ -849,36 +849,54 @@ AC_MSG_NOTICE([Check for functions in std:: namespace])
 
 
 dnl Setup Google Test support
-dnl * copy of gtest source into qucs-core/lib/gtest/
-dnl * run configure with --enable-gtest
-dnl * make
-dnl * make check (run all tests including gtest itself)
-dnl * cd tests && make check  (run only Qucs unit tests)
-dnl
-dnl Reason for the nested package
-dnl * gtest better be compiled with the same flags as the project
-dnl * https://code.google.com/p/googletest/wiki/FAQ#Why_is_it_not_recommended_to_install_a_pre-compiled_copy_of_Goog
+dnl See: https://github.com/broune/mathicgb/blob/master/configure.ac
+AC_ARG_WITH([gtest], AS_HELP_STRING(
+    [--with-gtest], [use gtest, which is required for running the unit tests
+      with make check. The value download, which is the default, downloads
+      gtest if a gtest source directory cannot be found. Per the recommendation
+      of the gtest documentation, gtest is compiled with the tests, so an
+      installed gtest is not usable - you need the gtest source. GTEST_PATH
+      indicates where to look for gtest and it is also where gtest
+      will be downloaded to if not found. The default path is srcdir/libs so
+      that gtest needs to be at srcdir/libs/gtest/ where srcdir is the
+      base of the directory being configured from.]
+))
 
-AC_ARG_ENABLE([gtest],
-  AS_HELP_STRING([--enable-gtest], [Enable compilation of Google Test]))
+AC_MSG_CHECKING([for gtest])
+AS_IF([test "x$GTEST_PATH" == "x"], [GTEST_PATH="$srcdir/libs"])
+AS_IF([test "x$GTEST_VERSION" == "x"], [GTEST_VERSION="1.7.0"])
+AS_IF([test "x$with_gtest" == "xyes"], [with_gtest="download"])
 
-dnl variable to steer ./Makefile.am to gtest and unit tests
-AM_CONDITIONAL([USE_GTEST], [test "$enable_gtest" = yes])
-
-AS_IF([test "x$enable_gtest" = "xyes"], [
-
-  AC_CHECK_FILE([lib/gtest/configure], [],
-      [AC_MSG_ERROR([gtest sources not found, cannot --enable-gtest])])
-
-  dnl Set dir into Makefile.am if found
-  GTEST_DIR=lib/gtest
-  AC_SUBST([GTEST_DIR])
-
-  dnl configure nested package
-  AC_CONFIG_SUBDIRS([lib/gtest/])
-  AC_MSG_CHECKING([wether enabling Google Test library...])
-  AC_MSG_RESULT([$enable_gtest])
-])
+AS_IF([test "x$with_gtest" == "xdownload"],
+  [with_gtest="yes"; AC_CHECK_FILE([$GTEST_PATH/gtest/src/gtest-all.cc], [], [
+    mkdir -p "$GTEST_PATH";
+    (
+      cd $GTEST_PATH;
+      rm -rf gtest-$GTEST_VERSION.zip
+      wget https://googletest.googlecode.com/files/gtest-$GTEST_VERSION.zip;
+      unzip gtest-$GTEST_VERSION.zip;
+      rm gtest-$GTEST_VERSION.zip
+      rm -rf gtest/
+      mv gtest-$GTEST_VERSION/ gtest/
+    );
+    if test ! -e "$GTEST_PATH/gtest/src/gtest-all.cc"; then
+      AC_MSG_WARN([Failed to download or extract gtest.]);
+      with_gtest="no";
+    else
+      with_gtest="yes";
+    fi
+  ])],
+  [test "x$with_gtest" == "xyes"], [
+    AC_CHECK_FILE([$GTEST_PATH/gtest/src/gtest-all.cc], [], [
+      AC_MSG_ERROR([could not find gtest source at path $GTEST_PATH.])
+    ])
+  ],
+  [test "x$with_gtest" == "xno"], [],
+  [AC_MSG_ERROR([invalid value $with_gtest for with_gtest.])]
+)
+AS_IF([test "x$with_gtest" == "xyes"],
+  [GTEST_CFLAGS="-I`cd $GTEST_PATH/gtest/include; echo $PWD` -I`cd $GTEST_PATH/gtest/; echo $PWD`"]);
+AM_CONDITIONAL(USE_GTEST, test "x$with_gtest" == "xyes")
 
 # enable extra test
 AC_ARG_ENABLE([qucs-test],
