@@ -1,5 +1,5 @@
 /*
- * testMain.cpp - Setup and run unit tests
+ * testDefine.h - Constants used across the tests.
  *
  * Copyright (C) 2015 Guilherme Brondani Torri <guitorri@gmail.com>
  *
@@ -20,14 +20,6 @@
  *
  */
 
-// Include all files from gtest
-// Compiled with the same flags as qucs-core
-#include "src/gtest-all.cc"
+// tolerance used on numeric comparison
+const double tol = 1e-5;
 
-#include <gtest/gtest.h>
-
-int main(int argc, char **argv) {
-
-  ::testing::InitGoogleTest(&argc, argv);
-  return RUN_ALL_TESTS();
-}

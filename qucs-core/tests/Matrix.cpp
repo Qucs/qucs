@@ -1,5 +1,5 @@
 /*
- * testMain.cpp - Setup and run unit tests
+ * Matrix.cpp - Unit test for matrix operations
  *
  * Copyright (C) 2015 Guilherme Brondani Torri <guitorri@gmail.com>
  *
@@ -20,14 +20,15 @@
  *
  */
 
-// Include all files from gtest
-// Compiled with the same flags as qucs-core
-#include "src/gtest-all.cc"
+#include "qucs_typedefs.h"
+#include "real.h"
+#include "complex.h"
+#include "matrix.h"
 
-#include <gtest/gtest.h>
+#include "gtest/gtest.h"  // Google Test
 
-int main(int argc, char **argv) {
-
-  ::testing::InitGoogleTest(&argc, argv);
-  return RUN_ALL_TESTS();
+TEST (matrix, getCols) {
+    qucs::matrix data =  qucs::eye(3,3);
+    EXPECT_EQ ( 3 , data.getCols() );
 }
+

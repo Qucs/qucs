@@ -1,5 +1,5 @@
 /*
- * testMain.cpp - Setup and run unit tests
+ * Vector.cpp - Unit test for vector operations
  *
  * Copyright (C) 2015 Guilherme Brondani Torri <guitorri@gmail.com>
  *
@@ -20,14 +20,16 @@
  *
  */
 
-// Include all files from gtest
-// Compiled with the same flags as qucs-core
-#include "src/gtest-all.cc"
+#include "qucs_typedefs.h"
+#include "object.h"
+#include "vector.h"
 
-#include <gtest/gtest.h>
+#include "gtest/gtest.h"  // Google Test
 
-int main(int argc, char **argv) {
-
-  ::testing::InitGoogleTest(&argc, argv);
-  return RUN_ALL_TESTS();
+TEST (vector, sum) {
+  qucs::vector vec = qucs::vector(3);
+  EXPECT_EQ ( 3 , vec.getSize() );
+  for (int k = 0; k < vec.getSize(); k++)
+    vec.set(1, k);
+  EXPECT_EQ ( 3.0 , qucs::sum(vec) );
 }

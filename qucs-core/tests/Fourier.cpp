@@ -1,5 +1,5 @@
 /*
- * testMain.cpp - Setup and run unit tests
+ * Fourier.cpp - Unit test for operations in Fourier namespace
  *
  * Copyright (C) 2015 Guilherme Brondani Torri <guitorri@gmail.com>
  *
@@ -20,14 +20,27 @@
  *
  */
 
-// Include all files from gtest
-// Compiled with the same flags as qucs-core
-#include "src/gtest-all.cc"
+#include "qucs_typedefs.h"
+#include "object.h"
+#include "vector.h"
+#include "fourier.h"
 
-#include <gtest/gtest.h>
+#include "gtest/gtest.h"  // Google Test
 
-int main(int argc, char **argv) {
+TEST (fourier, fft) {
+  // fft of a DC vector
+  // in   [1, 1, 1, 1, 1, 1, 1, 1]
+  // out  [8, 0, 0, 0, 0, 0, 0, 0]
+  qucs::vector vec = qucs::vector(8);
 
-  ::testing::InitGoogleTest(&argc, argv);
-  return RUN_ALL_TESTS();
+  for (int k = 0; k < vec.getSize(); k++)
+    vec.set(1, k);
+
+  qucs::vector vdif  = qucs::fourier::fft_1d ( vec ) ;
+
+  for (int k = 0; k < vec.getSize(); k++)
+    if (k==0)
+      EXPECT_EQ ( 8 , vdif.get(k).real() );
+    else
+      EXPECT_EQ ( 0 , vdif.get(k).real() );
 }

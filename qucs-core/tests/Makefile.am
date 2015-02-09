@@ -40,7 +40,11 @@ TESTS =
 check_PROGRAMS =
 
 # Test libqucs
-TESTS += test_libqucs
-check_PROGRAMS += test_libqucs
-test_libqucs_SOURCES = testMain.cpp \
-  test_libqucs.cpp
+TESTS += libqucsUnitTest
+check_PROGRAMS += libqucsUnitTest
+libqucsUnitTest_SOURCES = testMain.cpp \
+  test_libqucs.cpp \
+	Fourier.cpp \
+	Math.cpp \
+	Matrix.cpp \
+	Vector.cpp
