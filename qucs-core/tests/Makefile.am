@@ -48,3 +48,6 @@ libqucsUnitTest_SOURCES = testMain.cpp \
 	Math.cpp \
 	Matrix.cpp \
 	Vector.cpp
+
+libqucsUnitTest_CXXFLAGS = "-DGTEST_HAS_PTHREAD=0"
+
