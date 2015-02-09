@@ -62,7 +62,7 @@ static const double two_over_pi = 0.6366197723675813430755350534900574;
 static const double sqrt_pi = 1.77245385090551602729816748334;
 
 /*!\brief  Euler's constant (\f$e=\sum_{n=0}^\infty \frac{1}{n!}\f$) */
-static const double e = 2.7182818284590452353602874713526625;
+static const double euler = 2.7182818284590452353602874713526625;
 
 /*!\brief Decimal logartihm of Euler's constant (\f$\log_{10} (e)\f$) */
 static const double log10e = 0.4342944819032518276511289189166051;
@@ -82,7 +82,7 @@ static const double sqrt2 = 1.4142135623730950488016887242096981;
 /*!\brief Inverse of Square root of 2 (\f$1/\sqrt{2}\f$) */
 static const double sqrt1_2 = 0.7071067811865475244008443621048490;
 
-/*!\brief Limiting exponetial factor  */
+/*!\brief Limiting exponetial factor */
 static const double limitexp = 80.0;
 
 /**

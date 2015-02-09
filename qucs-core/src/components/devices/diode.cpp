@@ -302,7 +302,7 @@ void diode::calcDC (void) {
     Id = pnCurrent (Ud, Is, Ut * N) + pnCurrent (Ud, Isr, Ut * Nr);
   }
   else if (Bv == 0 || Ud >= -Bv) { // reverse region
-    nr_double_t a = 3 * N * Ut / (Ud * e);
+    nr_double_t a = 3 * N * Ut / (Ud * euler);
     a = cubic (a);
     Id = -Is * (1 + a);
     gd = +Is * 3 * a / Ud;

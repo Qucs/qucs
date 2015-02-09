@@ -2458,7 +2458,7 @@ struct pconstant
 static struct pconstant pconstants[] =
 {
     { "pi", pi },
-    { "e",  e  },
+    { "e",  euler  },
     { "kB", kB   },
     { "q",  Q_e    },
     { NULL, 0    }

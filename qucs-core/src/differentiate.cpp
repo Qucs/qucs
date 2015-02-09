@@ -53,7 +53,7 @@ using namespace qucs::eqn;
 #define isZero(n)  (isConst(n) && D(n) == 0.0)
 #define isOne(n)   (isConst(n) && D(n) == 1.0)
 #define isNeg(n)   (isConst(n) && D(n) == -1.0)
-#define isEuler(n) ((isConst(n) && D(n) == e) || isRef(n,"e"))
+#define isEuler(n) ((isConst(n) && D(n) == euler) || isRef(n,"e"))
 #define isval(n,v) (isConst(n) && D(n) == v)
 
 #define isVar(v)   ((v)->getTag()==REFERENCE)

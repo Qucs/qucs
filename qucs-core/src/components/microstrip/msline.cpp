@@ -130,7 +130,7 @@ void msline::analyseQuasiStatic (nr_double_t W, nr_double_t h, nr_double_t t,
 
     // compute strip thickness effect
     if (t != 0) {
-      dW1 = t / pi * qucs::log (4 * e / qucs::sqrt (sqr (t / h) +
+      dW1 = t / pi * qucs::log (4 * euler / qucs::sqrt (sqr (t / h) +
 					    sqr (one_over_pi / (W / t + 1.10))));
     }
     else dW1 = 0;
@@ -197,7 +197,7 @@ void msline::analyseQuasiStatic (nr_double_t W, nr_double_t h, nr_double_t t,
 
     // compute strip thickness effect
     if (t != 0) {
-      du1 = t / pi * qucs::log (1 + 4 * e / t / sqr (coth (qucs::sqrt (6.517 * u))));
+      du1 = t / pi * qucs::log (1 + 4 * euler / t / sqr (coth (qucs::sqrt (6.517 * u))));
     }
     else du1 = 0;
     du = du1 * (1 + sech (qucs::sqrt (er - 1))) / 2;
