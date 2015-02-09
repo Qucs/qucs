@@ -46,7 +46,7 @@ SUBDIRS += src doc .
 
 # include subdirs to build gtest and run unit tests
 if USE_GTEST
-SUBDIRS += $(GTEST_DIR) tests
+SUBDIRS += tests
 endif
 
 ACLOCAL_AMFLAGS = -I m4
