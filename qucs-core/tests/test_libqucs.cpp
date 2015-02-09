@@ -150,24 +150,24 @@ TEST (tridiag, solve_s_cyc) {
 */
 
   int n = 5;
-  tvector<nr_double_t> x (n);
-  x(0) = 8.21428571;
-  x(1) = 3.85714286;
-  x(2) = 1.5;
-  x(3) = 2.14285714;
-  x(4) = 6.78571429;
+  std::vector<nr_double_t> x (n);
+  x[0] = 8.21428571;
+  x[1] = 3.85714286;
+  x[2] = 1.5;
+  x[3] = 2.14285714;
+  x[4] = 6.78571429;
 
   tridiag<nr_double_t> sys;
-  tvector<nr_double_t> o (n);
-  tvector<nr_double_t> d (n);
-  tvector<nr_double_t> b (n);
+  std::vector<nr_double_t> o (n);
+  std::vector<nr_double_t> d (n);
+  std::vector<nr_double_t> b (n);
 
   for (int i = 0; i < n; i++) {
-    d(i) = -2.;
-    o(i) =  1.;
-    b(i) = i+1.;
+    d[i] = -2.;
+    o[i] =  1.;
+    b[i] = i+1.;
   }
-  o(n-1) = 2.;
+  o[n-1] = 2.;
 
   /*
   for (int i = 0; i < n; i++) {
@@ -195,6 +195,6 @@ TEST (tridiag, solve_s_cyc) {
   //}
   //
   for (int i = 0; i < n; i++) {
-    EXPECT_NEAR (x(i), b(i),tol);
+    EXPECT_NEAR (x[i], b[i],tol);
   }
 }
