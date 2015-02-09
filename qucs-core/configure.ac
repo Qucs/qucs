@@ -892,7 +892,7 @@ AS_IF([test "x$with_gtest" == "xdownload"],
     ])
   ],
   [test "x$with_gtest" == "xno"], [],
-  [AC_MSG_ERROR([invalid value $with_gtest for with_gtest.])]
+  [AC_MSG_NOTICE([gtest disabled])]
 )
 AS_IF([test "x$with_gtest" == "xyes"],
   [GTEST_CFLAGS="-I`cd $GTEST_PATH/gtest/include; echo $PWD` -I`cd $GTEST_PATH/gtest/; echo $PWD`"]);
