@@ -22,6 +22,15 @@
  *
  */
 
+/*!
+ * \file tswitch.cpp
+ * \brief time controlled switch class implementation
+ *
+ * \todo add a property to allow choosing the resistance profile
+ * (cubic spline, linear, abrupt)
+ */
+
+
 #if HAVE_CONFIG_H
 # include <config.h>
 #endif
@@ -86,12 +95,12 @@ void tswitch::initTR (void) {
   qucs::vector * values = getPropertyVector ("time");
   // Find the total time of the switching periods
   T = real (sum (*values));
-  // if the user enters an even number of switchng times
+  // if the user enters an even number of switching times
   // the pattern is repeated continuously
   repeat = (values->getSize () % 2) == 0 ? true : false;
   // make the time taken to go from fully on to fully off
   // the smallest switching time / 100, or the smallest possible
-  // number, but no bogger than the max specified duration
+  // number, but no bigger than the max specified duration
   nr_double_t maxduration = getPropertyDouble("MaxDuration");
   duration = std::min ( std::max (10*NR_TINY, values->minimum() / 100),
                         maxduration );
@@ -112,16 +121,17 @@ void tswitch::calcTR (nr_double_t t) {
   nr_double_t ti = 0;
 
   if (repeat) {
-    // if the user enters an even number of switchng times
-    // the pattern is repeated continuously. This is acieved by
+    // if the user enters an even number of switching times
+    // the pattern is repeated continuously. This is achieved by
     // subtracting an integer number of total switching periods
     // from the real time
     t = t - T * qucs::floor (t / T);
   }
 
-  // Initialise the last switching time to be a full
-  // switching duration
-  nr_double_t ts = t - duration;
+  // Initialise the last switching time to be well in the past
+  // to avoid having the switch even partially in a transition
+  // state (due to inaccurately computed time differences)
+  nr_double_t ts = -2*duration;
 
   // here we determine whether a switching event should occur
   // by looping through the list of switching times and comparing
@@ -145,7 +155,7 @@ void tswitch::calcTR (nr_double_t t) {
       break;
     }
   }
-  // calculate the time since the last switch occured
+  // calculate the time since the last switch occurred
   nr_double_t tdiff = std::max(NR_TINY, t - ts);
 
   // set the time difference to be no more than the max switch
@@ -164,7 +174,7 @@ void tswitch::calcTR (nr_double_t t) {
 
     rdiff = ron - roff;
 
-    s_i = (rdiff) / (duration);
+    //    s_i = (rdiff) / (duration);
   }
   else
   {
@@ -172,12 +182,18 @@ void tswitch::calcTR (nr_double_t t) {
 
     rdiff = roff - ron;
 
-    s_i = (rdiff) / (duration);
+    //  s_i = (rdiff) / (duration);
   }
 
   // perform the interpolation of the constrained cubic spline
-  r = r_0 + ((3. * s_i * qucs::pow (tdiff,2.0)) / (duration))
-          + ((-2. * s_i * qucs::pow (tdiff,3.0)) / qucs::pow (duration, 2.0));
+  //r = r_0 + ((3. * s_i * qucs::pow (tdiff,2.0)) / (duration))
+  //        + ((-2. * s_i * qucs::pow (tdiff,3.0)) / qucs::pow (duration, 2.0));
+  // use Horner's rule to reduce the numerical errors
+  r = r_0 + (((-2. * rdiff * tdiff / duration) + 3. * rdiff) * qucs::pow(tdiff/duration, 2.0));
+
+  // check for (numerical) errors
+  assert(r >= ron);
+  assert(r <= roff);
 
   setD (VSRC_1, VSRC_1, -r);
 }
