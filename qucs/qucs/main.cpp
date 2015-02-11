@@ -46,6 +46,8 @@
 #include "schematic.h"
 #include "module.h"
 
+#include "components/components.h"
+
 #ifdef _WIN32
 #include <Windows.h>  //for OutputDebugString
 #endif
@@ -335,6 +337,282 @@ int doPrint(QString schematic, QString printFile,
   return 0;
 }
 
+/*!
+ * \brief createIcons Create component icons (png) from command line.
+ */
+void createIcons() {
+
+  int nCats = 0, nComps = 0;
+
+  if(!QDir("./bitmaps_generated").exists()){
+    QDir().mkdir("bitmaps_generated");
+  }
+  Module::registerModules ();
+  QStringList cats = Category::getCategories ();
+
+  foreach(QString category, cats) {
+
+    QList<Module *> Comps;
+    Comps = Category::getModules(category);
+
+    // crash with diagrams, skip
+    if(category == "diagrams") break;
+
+    char * File;
+    QString Name;
+
+    foreach (Module *Mod, Comps) {
+      if (Mod->info) {
+
+        Element *e = (Mod->info) (Name, File, true);
+
+        Component *c = (Component* ) e;
+
+        QList<Line *> Lines      = c->Lines;
+        QList<struct Arc *> Arcs = c-> Arcs;
+        QList<Area *> Rects      = c-> Rects;
+        QList<Area *> Ellips     = c-> Ellips;
+        QList<Port *> Ports      = c->Ports;
+        QList<Text*> Texts       = c->Texts;
+
+        QGraphicsScene *scene = new QGraphicsScene();
+
+        foreach (Line *l, Lines) {
+          scene->addLine(l->x1, l->y1, l->x2, l->y2, l->style);
+        }
+
+        foreach(Arc *a, Arcs) {
+          // we need an open item here; QGraphisEllipseItem draws a filled ellipse and doesn't do the job here...
+          QPainterPath *path = new QPainterPath();
+          // the components do not contain the angles in degrees but in 1/16th degrees -> conversion needed
+          path->arcMoveTo(a->x,a->y,a->w,a->h,a->angle/16);
+          path->arcTo(a->x,a->y,a->w,a->h,a->angle/16,a->arclen/16);
+          scene->addPath(*path);
+        }
+
+        foreach(Area *a, Rects) {
+          scene->addRect(a->x, a->y, a->w, a->h, a->Pen, a->Brush);
+        }
+
+        foreach(Area *a, Ellips) {
+          scene->addEllipse(a->x, a->y, a->w, a->h, a->Pen, a->Brush);
+        }
+
+        foreach(Port *p, Ports) {
+          scene->addEllipse(p->x-4, p->y-4, 8, 8, QPen(Qt::red));
+        }
+
+        foreach(Text *t, Texts) {
+          QFont myFont;
+          myFont.setPointSize(10);
+          QGraphicsTextItem* item  = new QGraphicsTextItem(t->s);
+          item->setX(t->x);
+          item->setY(t->y);
+          item->setFont(myFont);
+
+          scene->addItem(item);
+        }
+
+        // this uses the size of the component as icon size
+        // Qt bug ? The returned sceneRect() is often 1 px short on bottom
+        //   and right sides without anti-aliasing. 1 px more missing on top
+        //   and left when anti-aliasing is used
+        QRectF rScene = scene->sceneRect().adjusted(-1,-1,1,1);
+        // image and scene need to be the same size, since render()
+        //   will fill the entire image, otherwise the scaling will
+        //   introduce artifacts
+        QSize sImage = rScene.size().toSize(); // rounding seems not to be an issue
+        // ARGB32_Premultiplied is faster (Qt docs)
+        //QImage image(sImage.toSize(), QImage::Format_ARGB32);
+        QImage image(sImage, QImage::Format_ARGB32_Premultiplied);
+        // this uses a fixed size for the icon (32 x 32)
+        //QImage image(32, 32, QImage::Format_ARGB32);
+        image.fill(Qt::transparent);
+
+        QPainter painter(&image);
+        QPainter::RenderHints hints = 0;
+        // Ask to antialias drawings if requested
+        if (QucsSettings.GraphAntiAliasing) hints |= QPainter::Antialiasing;
+        // Ask to antialias text if requested
+        if (QucsSettings.TextAntiAliasing) hints |= QPainter::TextAntialiasing;
+        painter.setRenderHints(hints);
+
+        // pass target and source size eplicitly, otherwise sceneRect() is used
+        //   for the source size, which is often wrong (see comment above)
+        scene->render(&painter, image.rect(), rScene);
+
+        image.save("./bitmaps_generated/" + QString(File) + ".png");
+
+        fprintf(stdout, "[%s] %s\n", category.toAscii().data(), File);
+      }
+      nComps++;
+    } // module
+    nCats++;
+  } // category
+  fprintf(stdout, "Created %i component icons from %i categories\n", nComps, nCats);
+}
+
+/*!
+ * \brief createDocData Create data used for documentation.
+ *
+ * It creates the following:
+ *  - list of categories: categories.txt
+ *  - category directory, ex.: ./lumped components/
+ *    - CSV with component data fields. Ex [component#]_data.csv
+ *    - CSV with component properties. Ex [component#]_props.csv
+ */
+void createDocData() {
+
+  QMap<int, QString> typeMap;
+  typeMap.insert(0x30000, "Component");
+  typeMap.insert(0x30002, "ComponentText");
+  typeMap.insert(0x10000, "AnalogComponent");
+  typeMap.insert(0x20000, "DigitalComponent") ;
+
+  Module::registerModules ();
+  QStringList cats = Category::getCategories ();
+  int nCats = cats.size();
+
+  QStringList catHeader;
+  catHeader << "# Note: auto-generated file (changes will be lost on update)";
+  QFile file("categories.txt");
+  if (!file.open(QFile::WriteOnly | QFile::Text)) return;
+  QTextStream out(&file);
+  out << cats.join("\n");
+  file.close();
+
+  int nComps = 0;
+
+  // table for quick reference, schematic and netlist entry
+  foreach(QString category, cats) {
+
+    QList<Module *> Comps;
+    Comps = Category::getModules(category);
+
+    // \fixme, crash with diagrams, skip
+    if(category == "diagrams") break;
+
+    // one dir per category
+    QString curDir = "./"+category+"/";
+    qDebug() << "Creating dir:" << curDir;
+    if(!QDir(curDir).exists()){
+        QDir().mkdir(curDir);
+    }
+
+    char * File;
+    QString Name;
+
+    int num = 0; // compoment id inside category
+
+    foreach (Module *Mod, Comps) {
+        num += 1;
+
+        nComps += 1;
+
+        Element *e = (Mod->info) (Name, File, true);
+        Component *c = (Component* ) e;
+
+        // object info
+        QStringList compData;
+
+        compData << "# Note: auto-generated file (changes will be lost on update)";
+        compData << "Caption; "           + Name;
+        compData << "Description; "       + c->Description;
+        compData << "Identifier; ``"      + c->Model + "``"; // backticks for reST verbatim
+        compData << "Default name; ``"    + c->Name  + "``";
+        compData << "Type; "              + typeMap.value(c->Type);
+        compData << "Bitmap file; "       + QString(File);
+        compData << "Properties; "        + QString::number(c->Props.count());
+        compData << "Category; "          + category;
+
+        // 001_data.csv - CSV file with component data
+        QString ID = QString("%1").arg(num,3,'d',0,'0');
+        QString objDataFile;
+        objDataFile = QString("%1_data.csv").arg( ID  ) ;
+
+        QFile file(curDir + objDataFile);
+        if (!file.open(QFile::WriteOnly | QFile::Text)) return;
+        QTextStream out(&file);
+        out << compData.join("\n");
+        file.close();
+        fprintf(stdout, "[%s] %s %s \n", category.toAscii().data(), c->Model.toAscii().data(), file.name().toAscii().data());
+
+        QStringList compProps;
+        compProps << "# Note: auto-generated file (changes will be lost on update)";
+        compProps << QString("# %1; %2; %3; %4").arg(  "Name", "Value", "Display", "Description");
+        foreach(Property *prop, c->Props) {
+          compProps << QString("%1; \"%2\"; %3; \"%4\"").arg(
+                         prop->Name,
+                         prop->Value,
+                         prop->display?"yes":"no",
+                         prop->Description.replace("\"","\"\"")); // escape quote in quote
+        }
+
+        // 001_props.csv - CSV file with component properties
+        QString objPropFile = QString("%1_prop.csv").arg( ID ) ;
+
+        QFile fileProps(curDir + objPropFile );
+        if (!fileProps.open(QFile::WriteOnly | QFile::Text)) return;
+        QTextStream outProps(&fileProps);
+        outProps << compProps.join("\n");
+        compProps.clear();
+        file.close();
+        fprintf(stdout, "[%s] %s %s \n", category.toAscii().data(), c->Model.toAscii().data(), fileProps.name().toAscii().data());
+    } // module
+  } // category
+  fprintf(stdout, "Created data for %i components from %i categories\n", nComps, nCats);
+}
+
+/*!
+ * \brief createListNetEntry prints to stdout the available netlist formats
+ *
+ * Prints the default component entries format for:
+ *  - Qucs schematic
+ *  - Qucsator netlist
+ */
+void createListComponentEntry(){
+
+  Module::registerModules ();
+  QStringList cats = Category::getCategories ();
+  // table for quick reference, schematic and netlist entry
+  foreach(QString category, cats) {
+
+    QList<Module *> Comps;
+    Comps = Category::getModules(category);
+
+    // \fixme, crash with diagrams, skip
+    if(category == "diagrams") break;
+
+    char * File;
+    QString Name;
+
+    foreach (Module *Mod, Comps) {
+      Element *e = (Mod->info) (Name, File, true);
+      Component *c = (Component* ) e;
+
+      QString qucsEntry = c->save();
+      fprintf(stdout, "%s; qucs    ; %s\n", c->Model.toAscii().data(), qucsEntry.toAscii().data());
+
+      // add dummy ports/wires, avoid segfault
+      int port = 0;
+      foreach (Port *p, c->Ports) {
+        Node *n = new Node(0,0);
+        n->Name="_net"+QString::number(port);
+        p->Connection = n;
+        port +=1;
+      }
+
+      // skip Subcircuit, segfault, there is nothing to netlist
+      if (c->Model == "Sub" or c->Model == ".Opt") {
+        fprintf(stdout, "WARNING, qucsator netlist not generated for %s\n\n", c->Model.toAscii().data());
+        continue;
+      }
+
+      QString qucsatorEntry = c->getNetlist();
+      fprintf(stdout, "%s; qucsator; %s\n", c->Model.toAscii().data(), qucsatorEntry.toAscii().data());
+      } // module
+    } // category
+}
 
 // #########################################################################
 // ##########                                                     ##########
@@ -509,6 +787,13 @@ int main(int argc, char *argv[])
   "    --orin [portraid|landscape]  set orientation (default portraid)\n"
   "  -i FILENAME    use file as input schematic\n"
   "  -o FILENAME    use file as output netlist\n"
+  "  -icons         create component icons under ./bitmaps_generated\n"
+  "  -doc           dump data for documentation:\n"
+  "                 * file with of categories: categories.txt\n"
+  "                 * one directory per category (e.g. ./lumped components/)\n"
+  "                   - CSV file with component data ([comp#]_data.csv)\n"
+  "                   - CSV file with component properties. ([comp#]_props.csv)\n"
+  "  -list-entries  list component entry formats for schematic and netlist\n"
   , argv[0]);
       return 0;
     }
@@ -543,6 +828,18 @@ int main(int argc, char *argv[])
     }
     else if (!strcmp(argv[i], "-o")) {
       outputfile = argv[++i];
+    }
+    else if(!strcmp(argv[i], "-icons")) {
+      createIcons();
+      return 0;
+    }
+    else if(!strcmp(argv[i], "-doc")) {
+      createDocData();
+      return 0;
+    }
+    else if(!strcmp(argv[i], "-list-entries")) {
+      createListComponentEntry();
+      return 0;
     }
     else {
       fprintf(stderr, "Error: Unknown option: %s\n", argv[i]);
