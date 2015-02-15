@@ -719,6 +719,16 @@ QString Component::getSpiceNetlist(bool isXyce)
     return s;
 }
 
+QString Component::getExpression(bool isXyce)
+{
+    return QString("");
+}
+
+QString Component::getProbeVariable(bool isXyce)
+{
+    return QString("");
+}
+
 // -------------------------------------------------------
 QString Component::verilogCode(int)
 {
