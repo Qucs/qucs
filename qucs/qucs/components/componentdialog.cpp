@@ -377,6 +377,17 @@ ComponentDialog::ComponentDialog(Component *c, Schematic *d)
   connect(ButtAdd, SIGNAL(clicked()), SLOT(slotButtAdd()));
   connect(ButtRem, SIGNAL(clicked()), SLOT(slotButtRem()));
 
+  // Buttons to move equations up/down on the list
+  QHBoxLayout *hUpDown = new QHBoxLayout;
+  v1->addLayout(hUpDown);
+  ButtUp = new QPushButton(tr("Move Up"));
+  hUpDown->addWidget(ButtUp);
+  ButtDown = new QPushButton(tr("Move Down"));
+  hUpDown->addWidget(ButtDown);
+  connect(ButtUp,   SIGNAL(clicked()), SLOT(slotButtUp()));
+  connect(ButtDown, SIGNAL(clicked()), SLOT(slotButtDown()));
+
+
   // ...........................................................
   QHBoxLayout *h2 = new QHBoxLayout;
   QWidget * hbox2 = new QWidget;
@@ -565,6 +576,14 @@ void ComponentDialog::slotSelectProperty(QTableWidgetItem *item)
     ButtAdd->setEnabled(true);
     ButtRem->setEnabled(true);
 
+    if (Comp->Description == "equation") {
+      ButtUp->setEnabled(true);
+      ButtDown->setEnabled(true);
+    }
+    else {
+      ButtUp->setEnabled(false);
+      ButtDown->setEnabled(false);
+    }
     Name->setText("");
     NameEdit->setText(name);
     edit->setText(value);
@@ -579,6 +598,8 @@ void ComponentDialog::slotSelectProperty(QTableWidgetItem *item)
   else {  // show standard line edit (description and value)
     ButtAdd->setEnabled(false);
     ButtRem->setEnabled(false);
+    ButtUp->setEnabled(false);
+    ButtDown->setEnabled(false);
 
     Name->setText(name);
     edit->setText(value);
@@ -1057,18 +1078,16 @@ void ComponentDialog::slotEditFile()
     y2=1
     Export=yes
 
-  If Name already exists, set it to focus
-  If new name, insert item before Export
+  Behavior:
+   If Name already exists, set it to focus
+   If new name, insert item after selected, set it to focus
 
 */
 void ComponentDialog::slotButtAdd()
 {
-  // Search if property with this name already exist.
-  // loop over all items, select if found by name
+  // Set existing equation into focus, return
   for(int row=0; row < prop->rowCount(); row++) {
-
     QString name  = prop->item(row, 0)->text();
-    //if found, jump to it
     if( name == NameEdit->text()) {
       prop->setCurrentItem(prop->item(row,0));
       slotSelectProperty(prop->item(row,0));
@@ -1076,51 +1095,36 @@ void ComponentDialog::slotButtAdd()
     }
   }
 
-
-
-  //if nothing selected, select last
-//  prop->setCurrentItem(prop->item(prop->rowCount(),0));
-//  slotSelectProperty(prop->item(prop->rowCount(),0));
-
+  // toggle display flag
   QString s = tr("no");
   if(disp->isChecked())
     s = tr("yes");
 
+  // get number for selected row
+  int curRow = prop->currentRow();
 
-  // take last row
-  QList<QTableWidgetItem*> rowItems;
-  for (int col = 0; col < prop->columnCount(); ++col)  {
-    rowItems << prop->takeItem(prop->rowCount()-1, col);
-  }
-
-  // set last row with current info in
-  int row = prop->rowCount()-1;
+  // insert new row under current
+  int insRow = curRow+1;
+  prop->insertRow(insRow);
 
   // append new row
   QTableWidgetItem *cell;
   cell = new QTableWidgetItem(NameEdit->text());
   cell->setFlags(cell->flags() ^ Qt::ItemIsEditable);
-  prop->setItem(row, 0, cell);
+  prop->setItem(insRow, 0, cell);
   cell = new QTableWidgetItem(edit->text());
   cell->setFlags(cell->flags() ^ Qt::ItemIsEditable);
-  prop->setItem(row, 1, cell);
+  prop->setItem(insRow, 1, cell);
   cell = new QTableWidgetItem(s);
   cell->setFlags(cell->flags() ^ Qt::ItemIsEditable);
-  prop->setItem(row, 2, cell);
+  prop->setItem(insRow, 2, cell);
   // no description? add empty cell
   cell = new QTableWidgetItem("");
   cell->setFlags(cell->flags() ^ Qt::ItemIsEditable);
-  prop->setItem(row, 3, cell);
+  prop->setItem(insRow, 3, cell);
 
-  // increase list
-  prop->setRowCount(prop->rowCount()+1);
-
-  // add taken item again as last
-  row = prop->rowCount()-1;
-  for (int col = 0; col < prop->columnCount(); ++col)
-  {
-    prop->setItem(row, col, rowItems.at(col));
-  }
+  // select new row
+  prop->selectRow(insRow);
 }
 
 /*!
@@ -1145,7 +1149,52 @@ void ComponentDialog::slotButtRem()
     prop->setCurrentItem(prop->item(row+1,0));
     slotSelectProperty(prop->item(row+1,0));
     prop->removeRow(row);
-   }
+    }
+}
+
+/*!
+ * \brief ComponentDialog::slotButtUp
+ * Move a table item up. Enabled for Equation component.
+ */
+void ComponentDialog::slotButtUp()
+{
+  qDebug() << "slotButtUp" << prop->currentRow() << prop->rowCount();
+
+  int curRow = prop->currentRow();
+  if (curRow == 0)
+    return;
+
+  // swap current and row above it
+  QTableWidgetItem *source = prop->takeItem(curRow  ,0);
+  QTableWidgetItem *target = prop->takeItem(curRow-1,0);
+  prop->setItem(curRow-1, 0, source);
+  prop->setItem(curRow, 0, target);
+
+  // select moved row
+  prop->selectRow(curRow-1);
+}
+
+/*!
+ * \brief ComponentDialog::slotButtDown
+ * Move a table item down. Enabled for Equation component.
+ */
+void ComponentDialog::slotButtDown()
+{
+  qDebug() << "slotButtDown" << prop->currentRow() << prop->rowCount();
+
+  int curRow = prop->currentRow();
+  // Leave Export as last
+  if (curRow == prop->rowCount()-2)
+    return;
+
+  // swap current and row below it
+  QTableWidgetItem *source = prop->takeItem(curRow,0);
+  QTableWidgetItem *target = prop->takeItem(curRow+1,0);
+  prop->setItem(curRow+1, 0, source);
+  prop->setItem(curRow, 0, target);
+
+  // select moved row
+  prop->selectRow(curRow+1);
 }
 
 // -------------------------------------------------------------------------
