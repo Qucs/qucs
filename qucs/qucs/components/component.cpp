@@ -1405,7 +1405,7 @@ QString GateComponent::netlist()
   return s;
 }
 
-QString GateComponent::spice_netlist()
+QString GateComponent::spice_netlist(bool)
 {
   QString s = Model+Name;
 
