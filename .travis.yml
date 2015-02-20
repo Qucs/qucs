@@ -191,7 +191,7 @@ script:
 
   # Qucs equation system
   # disabled, need fix on matrix parser
-  # cd qucs-test && python run_equations.py --prefix $HOME/build/Qucs/qucs/qucs-core/src/ && cd -
+  - cd qucs-test && python run_equations.py --prefix $HOME/build/Qucs/qucs/qucs-core/src/ && cd -
 
   # Run Doxygen for qucs-GUI and qucs-core
   - if [[ $LINUX && $CLANG && $MASTER ]]; then
