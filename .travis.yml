@@ -182,11 +182,11 @@ script:
 
   # Testsuite
   - if [[ $LINUX ]]; then
-      cd qucs-test && python run.py --prefix $HOME/build/Qucs/qucs/qucs-core/src/ --qucsator --exclude skip.txt && cd -
+      cd qucs-test && python run.py --prefix $HOME/build/Qucs/qucs/qucs-core/src/ --qucsator --exclude skip.txt && cd -;
     fi
 
   - if [[ $OSX ]]; then
-      cd qucs-test && python run.py --prefix $HOME/build/Qucs/qucs/qucs-core/src/ --qucsator --exclude skip_OSX.txt && cd -
+      cd qucs-test && python run.py --prefix $HOME/build/Qucs/qucs/qucs-core/src/ --qucsator --exclude skip_OSX.txt && cd -;
     fi
 
   # Qucs equation system
