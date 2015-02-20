@@ -99,7 +99,7 @@ install:
       brew link --force flex;
       brew install bison;
       brew link --force bison;
-      brew install matplotlib;
+      pip install matplotlib;
     fi
 
   # Use tap for ADMS
