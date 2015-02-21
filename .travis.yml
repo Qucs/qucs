@@ -119,7 +119,7 @@ install:
     fi
 
   # Grab tip of Qucs-Test
-  - git clone --depth=1 --branch=refactor git://github.com/Qucs/qucs-test.git qucs-test
+  - git clone --depth=1 --branch=master git://github.com/Qucs/qucs-test.git qucs-test
 
 script:
   - uname -a
