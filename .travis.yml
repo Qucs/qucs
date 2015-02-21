@@ -89,6 +89,7 @@ install:
 
   # Qucs-Test uses Numpy to compare results
   - if [[ $LINUX ]]; then sudo apt-get install -qq python-numpy; fi
+  - if [[ $LINUX ]]; then sudo apt-get install -qq python-matplotlib; fi
 
   # Setup OSX
   # Installed already: autoconf automake libtool pkg-config
@@ -98,6 +99,7 @@ install:
       brew link --force flex;
       brew install bison;
       brew link --force bison;
+      pip install matplotlib;
     fi
 
   # Use tap for ADMS
@@ -179,9 +181,16 @@ script:
   # Use qucsator in-tree to generate gcov coverage for GCC (LINUX)
 
   # Testsuite
-  - cd qucs-test && python run.py --prefix $HOME/build/Qucs/qucs/qucs-core/src/ --qucsator --skip skip.txt && cd -
+  - if [[ $LINUX ]]; then
+      cd qucs-test && python run.py --prefix $HOME/build/Qucs/qucs/qucs-core/src/ --qucsator --exclude skip.txt && cd -;
+    fi
+
+  - if [[ $OSX ]]; then
+      cd qucs-test && python run.py --prefix $HOME/build/Qucs/qucs/qucs-core/src/ --qucsator --exclude skip_OSX.txt && cd -;
+    fi
 
   # Qucs equation system
+  # disabled, need fix on matrix parser
   - cd qucs-test && python run_equations.py --prefix $HOME/build/Qucs/qucs/qucs-core/src/ && cd -
 
   # Run Doxygen for qucs-GUI and qucs-core
