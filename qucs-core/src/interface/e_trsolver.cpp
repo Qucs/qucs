@@ -430,7 +430,7 @@ int e_trsolver::stepsolve_sync(nr_double_t synctime)
     error += predictor ();
 
     // restart Newton iteration
-    restart (); // restart non-linear devices
+    restartNR (); // restart non-linear devices
 
     // Attempt to solve the circuit with the given delta
     try_running () // #defined as:    do {
@@ -677,7 +677,7 @@ int e_trsolver::stepsolve_async(nr_double_t steptime)
         // restart Newton iteration
         if (rejected)
         {
-            restart ();      // restart non-linear devices
+            restartNR ();      // restart non-linear devices
             rejected = 0;
         }
 

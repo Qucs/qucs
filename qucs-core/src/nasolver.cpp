@@ -268,6 +268,8 @@ void nasolver<nr_type_t>::applyNodeset (bool nokeep)
     }
     if (xprev != NULL) *xprev = *x;
     saveSolution ();
+    // propagate the solution to the non-linear circuits
+    restartNR ();
 }
 
 /* The following function uses the gMin-stepping algorithm in order to
