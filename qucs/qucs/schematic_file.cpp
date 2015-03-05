@@ -1571,6 +1571,7 @@ int NumPorts, bool spice)
 
   Painting *pi;
   if (!spice) {
+
       if(isAnalog) {
           // ..... analog subcircuit ...................................
           (*tstream) << "\n.Def:" << Type << " " << SubcircuitPortNames.join(" ");
