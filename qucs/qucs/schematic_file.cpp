@@ -1571,6 +1571,8 @@ int NumPorts, bool spice)
 
   Painting *pi;
 
+
+
   if (!spice) {
 
         if(isAnalog) {
