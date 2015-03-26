@@ -137,7 +137,9 @@ noinst_HEADERS = HBT_X.analogfunction.h HBT_X.defs.h HBT_X.core.h \
 	hpribin4bit.analogfunction.h hpribin4bit.defs.h hpribin4bit.core.h \
 	vcresistor.analogfunction.h vcresistor.defs.h vcresistor.core.h
 
-VERILOG_FILES = constants.vams disciplines.vams \
+VERILOGdir=$(pkgdatadir)/verilog
+
+VERILOG_DATA = constants.vams disciplines.vams \
   fbh_hbt-2_2a.va hicumL2V2p11.va mod_amp.va hicumL2V2p22.va log_amp.va \
   hicumL0V1p12.va potentiometer.va MESFET.va hicumL0V1p2.va hicumL2V2p23.va \
   photodiode.va EKV26MOS.va bsim3v34nMOS.va  bsim3v34pMOS.va bsim4v30nMOS.va bsim4v30pMOS.va \
@@ -164,7 +166,7 @@ MAKE_FILES = cpp2lib.makefile\
 
 VA_INCLUDES = constants.vams disciplines.vams
 
-EXTRA_DIST = $(VERILOG_FILES) $(XML_FILES) $(MAKE_FILES)
+EXTRA_DIST = $(VERILOG_DATA) $(XML_FILES) $(MAKE_FILES)
 
 AM_CPPFLAGS = -I$(top_srcdir)/src -I$(top_srcdir)/src/math \
   -I$(top_srcdir)/src/components -I$(top_srcdir)/src/components/devices \
