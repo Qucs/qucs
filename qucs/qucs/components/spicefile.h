@@ -36,6 +36,7 @@ public:
 
   bool withSim;
   bool createSubNetlist(QTextStream *);
+  bool createSpiceSubckt(QTextStream * stream);
   QString getErrorText() { return ErrText; }
   QString getSubcircuitFile();
 
@@ -52,6 +53,9 @@ private:
 protected:
   QString netlist();
   void createSymbol();
+  QString getSubcktName();
+  QStringList getSubcktPorts();
+  QString spice_netlist(bool isXyce);
 
 private slots:
   void slotGetNetlist();

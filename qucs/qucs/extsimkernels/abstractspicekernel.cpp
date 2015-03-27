@@ -308,7 +308,7 @@ void AbstractSpiceKernel::parseSTEPOutput(QString ngspice_file,
                 QList<double> sim_point;
                 bool ok = false;
                 qDebug()<<lin;
-                QRegExp dataline_patter("^[0-9]+[ \t]+.*");
+                QRegExp dataline_patter("^ *[0-9]+[ \t]+.*");
                 if (!dataline_patter.exactMatch(lin)) continue;
                 double indep_val = lin.split(sep,QString::SkipEmptyParts).at(1).toDouble(&ok); // only real indep vars
                 if (!ok) continue;
@@ -359,7 +359,7 @@ void AbstractSpiceKernel::parseResFile(QString resfile, QString &var, QStringLis
     }
 }
 
-void AbstractSpiceKernel::convertToQucsData(const QString &qucs_dataset)
+void AbstractSpiceKernel::convertToQucsData(const QString &qucs_dataset, bool xyce)
 {
     QFile dataset(qucs_dataset);
     if (dataset.open(QFile::WriteOnly)) {
@@ -391,8 +391,11 @@ void AbstractSpiceKernel::convertToQucsData(const QString &qucs_dataset)
                 QString simstr = full_outfile;
                 simstr.remove("_swp.txt");
                 simstr = simstr.split('_').last();
-                QString res_file = QDir::convertSeparators(workdir + QDir::separator()
-                                                           + "spice4qucs." + simstr + ".cir.res");
+                QString res_file;
+                if (xyce) res_file = QDir::convertSeparators(workdir + QDir::separator()
+                                                        + "spice4qucs." + simstr + ".cir.res");
+                else res_file = QDir::convertSeparators(workdir + QDir::separator()
+                                                        + "spice4qucs.cir.res");
                 qDebug()<<res_file;
                 parseResFile(res_file,swp_var,swp_var_val);
 
