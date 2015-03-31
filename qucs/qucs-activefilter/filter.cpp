@@ -416,7 +416,7 @@ bool Filter::calcButterworth()
 
     order = Poles.count();
 
-    return false;
+    return true;
 }
 
 bool Filter::calcInvChebyshev() // Chebyshev Type-II filter
