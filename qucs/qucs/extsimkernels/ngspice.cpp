@@ -47,7 +47,7 @@ void Ngspice::createNetlist(QTextStream &stream, int NumPorts,
            if (sim_typ==".TR") simulations.append("tran");
            if ((sim_typ==".SW")&&
                (pc->Props.at(0)->Value.startsWith("DC"))) simulations.append("dc");
-           stream<<s;
+           // stream<<s;
        }
     }
 
@@ -74,12 +74,6 @@ void Ngspice::createNetlist(QTextStream &stream, int NumPorts,
                 vars.append(var_pr);
             }
         }
-        /*if (pc->isEquation) {
-            Equation *eq = (Equation *)pc;
-            QStringList vars_eq;
-            eq->getDepVars(vars_eq);
-            vars.append(vars_eq);
-        }*/
     }
     vars.sort();
     qDebug()<<vars;
@@ -87,53 +81,89 @@ void Ngspice::createNetlist(QTextStream &stream, int NumPorts,
     stream<<".control\n"          //execute simulations
           <<"set filetype=ascii\n";
 
-    bool hasParSWP = false;
+    QString sim;
+    outputs.clear();
+
     for(Component *pc = Sch->DocComps.first(); pc != 0; pc = Sch->DocComps.next()) {
-        if (pc->Model==".SW") {
-            if (!pc->Props.at(0)->Value.startsWith("DC")) {
+        if (pc->Model=="Eqn") {
+            Equation *eq = (Equation *)pc;
+            stream<<eq->getNgspiceScript();
+        }
+    }
+
+    foreach(sim, simulations) {
+
+        bool hasParSWP = false;
+
+        for(Component *pc = Sch->DocComps.first(); pc != 0; pc = Sch->DocComps.next()) {
+            QString sim_typ = pc->Model;
+            if (sim_typ==".SW") {
+                QString SwpSim = pc->Props.at(0)->Value;
                 Param_Sweep *ParSWP = (Param_Sweep *)pc;
-                stream<<ParSWP->getNgspiceBeforeSim();
-                hasParSWP = true;
+                QString s = ParSWP->getNgspiceBeforeSim();
+                if (SwpSim.startsWith("AC")&&(sim=="ac")) {
+                    stream<<s;
+                    hasParSWP = true;
+                } else if (SwpSim.startsWith("TR")&&(sim=="tran")) {
+                    stream<<s;
+                    hasParSWP = true;
+                } else if (SwpSim.startsWith("SW")&&(sim=="dc")) {
+                    for(Component *pc1 = Sch->DocComps.first(); pc1 != 0; pc1 = Sch->DocComps.next()) {
+                        if ((pc1->Name==SwpSim)&&(pc1->Props.at(0)->Value.startsWith("DC"))) {
+                            stream<<s;
+                            hasParSWP = true;
+                        }
+                    }
+                }
             }
         }
-    }
 
-    stream<<"run\n";
 
-    QStringList vars_eq;
-    QStringList Eqns;
-    Eqns.clear();
-    for(Component *pc = Sch->DocComps.first(); pc != 0; pc = Sch->DocComps.next()) {
-        if (pc->isEquation) {
-            Equation *eq = (Equation *)pc;
-            QString s_eq = eq->getEquations();
-            stream<< s_eq;
-            Eqns.append(s_eq.split("\n"));
-            QStringList v1;
-            eq->getDepVars(v1);
-            vars_eq.append(v1);
+        for(Component *pc = Sch->DocComps.first(); pc != 0; pc = Sch->DocComps.next()) {
+           if(pc->isSimulation) {
+               QString sim_typ = pc->Model;
+               QString s = pc->getSpiceNetlist();
+               if ((sim_typ==".AC")&&(sim=="ac")) stream<<s;
+               if ((sim_typ==".TR")&&(sim=="tran")) stream<<s;
+               if (sim_typ==".SW") {
+                   QString SwpSim = pc->Props.at(0)->Value;
+                   if (SwpSim.startsWith("DC")&&(sim=="dc")) stream<<s;
+               }
+           }
         }
-    }
 
 
-    QFileInfo inf(Sch->DocName);
-    QString basenam = inf.baseName();
+        QStringList vars_eq;
+        vars_eq.clear();
+        QStringList Eqns;
+        Eqns.clear();
+        for(Component *pc = Sch->DocComps.first(); pc != 0; pc = Sch->DocComps.next()) {
+            if (pc->Model == "Eqn") {
+                Equation *eq = (Equation *)pc;
+                QStringList v1;
+                QString s_eq = eq->getEquations(sim,v1);
+                stream<< s_eq;
+                Eqns.append(s_eq.split("\n"));
+                vars_eq.append(v1);
+            }
+        }
 
-    QString sim;                 // see results
-    outputs.clear();
-    foreach (sim,simulations) {
+
+        QFileInfo inf(Sch->DocName);
+        QString basenam = inf.baseName();
+
         QString nod;
         QString nods;
         nods.clear();
         foreach (nod,vars) {
             if (!nod.endsWith("#branch")) {
-                nods += QString("%1.v(%2) ").arg(sim).arg(nod);
+                nods += QString("v(%1) ").arg(nod);
             } else {
-                nods += QString("%1.%2 ").arg(sim).arg(nod);
+                nods += QString("%1 ").arg(nod);
             }
         }
-        for (int i=0;i<Eqns.count();i++) {
-            if (Eqns.at(i).contains(sim+".")) nods += " " + vars_eq.at(i);
+        for (QStringList::iterator it = vars_eq.begin();it != vars_eq.end(); it++) {
+            nods += " " + *it;
         }
 
         QString filename;
@@ -143,15 +173,26 @@ void Ngspice::createNetlist(QTextStream &stream, int NumPorts,
         QString write_str = QString("write %1 %2\n").arg(filename).arg(nods);
         stream<<write_str;
         outputs.append(filename);
-    }
 
-    for(Component *pc = Sch->DocComps.first(); pc != 0; pc = Sch->DocComps.next()) {
-        if (pc->Model==".SW") {
-            if (!pc->Props.at(0)->Value.startsWith("DC")) {
+        for(Component *pc = Sch->DocComps.first(); pc != 0; pc = Sch->DocComps.next()) {
+            QString sim_typ = pc->Model;
+            if (sim_typ==".SW") {
                 Param_Sweep *ParSWP = (Param_Sweep *)pc;
-                stream<<ParSWP->getNgspiceAfterSim();
+                QString s = ParSWP->getNgspiceAfterSim();
+                QString SwpSim = pc->Props.at(0)->Value;
+                if (SwpSim.startsWith("AC")&&(sim=="ac")) stream<<s;
+                else if (SwpSim.startsWith("TR")&&(sim=="tran")) stream<<s;
+                else if (SwpSim.startsWith("SW")&&(sim=="dc")) {
+                    for(Component *pc1 = Sch->DocComps.first(); pc1 != 0; pc1 = Sch->DocComps.next()) {
+                        if ((pc1->Name==SwpSim)&&(pc1->Props.at(0)->Value.startsWith("DC"))) {
+                             stream<<s;
+                        }
+                    }
+               }
             }
         }
+
+        stream<<"destroy all\n";
     }
 
     stream<<"exit\n"
