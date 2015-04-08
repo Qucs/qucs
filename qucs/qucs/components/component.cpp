@@ -787,7 +787,9 @@ QString Component::save()
   el.setAttribute ("rotate", rotated);
 
   for (Property *pr = Props.first(); pr != 0; pr = Props.next()) {
-    el.setAttribute (pr->Name, (pr->display ? "1@" : "0@") + pr->Value);
+    QString val = pr->Value;
+    val.replace("\n","\\n");
+    el.setAttribute (pr->Name, (pr->display ? "1@" : "0@") + val);
   }
   qDebug (doc.toString());
 #endif
@@ -809,9 +811,11 @@ QString Component::save()
 
   // write all properties
   for(Property *p1 = Props.first(); p1 != 0; p1 = Props.next()) {
-    if(p1->Description.isEmpty())
-      s += " \""+p1->Name+"="+p1->Value+"\"";   // e.g. for equations
-    else s += " \""+p1->Value+"\"";
+      QString val = p1->Value; // enable newline in properties
+      val.replace("\n","\\n");
+      if(p1->Description.isEmpty()||(p1->Description=="Expression"))
+      s += " \""+p1->Name+"="+val+"\"";   // e.g. for equations
+    else s += " \""+val+"\"";
     if(p1->display) s += " 1";
     else s += " 0";
   }
@@ -898,6 +902,7 @@ bool Component::load(const QString& _s)
   for(p1 = Props.first(); p1 != 0; p1 = Props.next()) {
     z++;
     n = s.section('"',z,z);    // property value
+    n.replace("\\n","\n");
     z++;
     // not all properties have to be mentioned (backward compatible)
     if(z > counts) {
