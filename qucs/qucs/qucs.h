@@ -39,6 +39,7 @@ class OctaveWindow;
 class MessageDock;
 class ProjectView;
 class ContextMenuTabWidget;
+class tunerElement;
 class VersionTriplet;
 class QucsApp;
 
@@ -62,6 +63,7 @@ class QListView;
 class QFileSystemModel;
 class QModelIndex;
 class QPushButton;
+class tuner; //forward declaration
 
 #ifdef __MINGW32__
 #define executableSuffix ".exe"
@@ -155,6 +157,7 @@ public:
 
   QLineEdit *editText;  // for edit component properties on schematic
   SearchDialog *SearchDia;  // global in order to keep values
+  tuner *tunerDia;
 
   // current mouse methods
   void (MouseActions::*MouseMoveAction) (Schematic*, QMouseEvent*);
@@ -232,6 +235,7 @@ private slots:
   void slotButtonProjOpen();
   void slotButtonProjDel();
   void slotChangeView(QWidget*);
+  void slotTune();
   void slotSimulate();
   void slotAfterSimulation(int, SimMessage*);
   void slotDCbias();
@@ -258,7 +262,7 @@ public:
           *fileCloseAll, *fileExamples, *fileSettings, *filePrint, *fileQuit,
           *projNew, *projOpen, *projDel, *projClose, *applSettings, *refreshSchPath,
           *editCut, *editCopy, *magAll, *magOne, *magMinus, *filePrintFit,
-          *symEdit, *intoH, *popH, *simulate, *dpl_sch, *undo, *redo, *dcbias;
+          *symEdit, *intoH, *popH, *simulate, *tune, *dpl_sch, *undo, *redo, *dcbias;
 
   QAction *exportAsImage;
 

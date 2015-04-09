@@ -67,6 +67,7 @@
 #include "dialogs/matchdialog.h"
 #include "dialogs/simmessage.h"
 #include "dialogs/exportdialog.h"
+#include "dialogs/tuner.h"
 #include "octave_window.h"
 #include "printerwriter.h"
 #include "imagewriter.h"
@@ -133,6 +134,9 @@ QucsApp::QucsApp()
 
   // instance of small text search dialog
   SearchDia = new SearchDialog(this);
+
+  // instance of tuner
+  tunerDia = new tuner(0);
 
   // creates a document called "untitled"
   DocumentTab->createEmptySchematic("");
@@ -958,7 +962,7 @@ void QucsApp::slotCMenuCopy()
   QucsDoc *d = findDoc(file, &z);
   if (d != NULL && d->DocChanged) {
     DocumentTab->setCurrentIndex(z);
-    int ret = QMessageBox::question(this, tr("Copying Qucs document"), 
+    int ret = QMessageBox::question(this, tr("Copying Qucs document"),
         tr("The document contains unsaved changes!\n") + 
         tr("Do you want to save the changes before copying?"),
         tr("&Ignore"), tr("&Save"), 0, 1);
@@ -1240,7 +1244,7 @@ bool QucsApp::recurRemove(const QString &Path)
   QDir projDir = QDir(Path);
 
   if (projDir.exists(Path)) {
-    Q_FOREACH(QFileInfo info, 
+    Q_FOREACH(QFileInfo info,
         projDir.entryInfoList(
             QDir::AllDirs | QDir::NoDotAndDotDot | QDir::Hidden | QDir::AllEntries, QDir::DirsFirst)) {
       if (info.isDir()) {
@@ -2058,6 +2062,30 @@ void QucsApp::slotZoomOut()
   getDoc()->zoomBy(0.5f);
 }
 
+/*!
+ * \brief QucsApp::slotTune
+ *  is called when the tune toolbar button is pressed.
+ */
+void QucsApp::slotTune()
+{
+    slotHideEdit();
+
+    QucsDoc *Doc;
+    QWidget *w = DocumentTab->currentPage();
+    if (isTextDocument(w))
+    {
+        //Probably digital Simulation. Tuning is limited to S-Parameter for now
+        QMessageBox *msg = new QMessageBox(QMessageBox::Warning, "Not implemented",
+                                           "Currently tuning is only supported by S-Parameter simulation", QMessageBox::Ok);
+        return;
+    }
+    else
+        Doc = (QucsDoc*)((Schematic*)w);
+    MousePressAction = &MouseActions::MPressTune;
+    MouseReleaseAction = 0; //While Tune is active release is not needed. This puts Press Action back to normal select
+
+    tunerDia->show();
+}
 
 /*!
  * \brief QucsApp::slotSimulate
