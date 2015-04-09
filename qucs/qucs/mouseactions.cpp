@@ -33,6 +33,7 @@
 #include "diagrams/tabdiagram.h"
 #include "diagrams/timingdiagram.h"
 #include "dialogs/labeldialog.h"
+#include "dialogs/tuner.h"
 
 #include <QTextStream>
 #include <Q3PtrList>
@@ -1051,6 +1052,39 @@ void MouseActions::MPressSelect(Schematic *Doc, QMouseEvent *Event, float fX, fl
   Doc->highlightWireLabels ();
 }
 
+void MouseActions::MPressTune(Schematic *Doc, QMouseEvent *Event, float fX, float fY)
+{
+    int No=0;
+    MAx1 = int(fX);
+    MAy1 = int(fY);
+    focusElement = Doc->selectElement(fX, fY, false, &No);
+    isMoveEqual = false;   // moving not neccessarily square
+
+
+
+    if(focusElement)
+      // print define value in hex, see element.h
+      qDebug() << "MPressTune: focusElement->Type" <<  QString("0x%1").arg(focusElement->Type, 0, 16);
+    else
+      qDebug() << "MPressTune";
+
+    if(focusElement)
+    {
+        switch(focusElement->Type)
+        {
+        case isComponentText:  // property text of component ?
+            focusElement->Type &= (~isComponentText) | isComponent;
+            Component *pc = (Component*)focusElement;
+            if(!pc) return;  // should never happen
+            Property *prop = pc->Props.at(No);
+            if (prop->display == false)
+                return; //Hidden property, don't add
+            tunerElement *tune = new tunerElement(App->tunerDia, pc, No);
+            App->tunerDia->addTunerElement(tune);
+            return;
+        }
+    }
+}
 // -----------------------------------------------------------
 void MouseActions::MPressDelete(Schematic *Doc, QMouseEvent*, float fX, float fY)
 {
