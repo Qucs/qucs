@@ -23,19 +23,24 @@ class tunerElement : public QWidget
         tunerElement(QWidget *parent, Component*, int);
         Property* getElementProperty();
         virtual ~tunerElement();
+    signals:
+        void elementValueUpdated();
     protected:
     private:
         Property* prop;
         QString originalValue;
+        QString unit;
         QSlider *slider;
         QTextEdit *maximum;
         QTextEdit *minimum;
         QTextEdit *value;
+        QTextEdit *step;
     private slots:
         void slotSliderValueChanged(int);
         void slotMinValueChanged();
         void slotMaxValueChanged();
-
+        void slotStepChanged();
+        void slotValueChanged();
 };
 
 class tuner : public QDialog
@@ -58,7 +63,7 @@ private:
     void closeEvent(QCloseEvent *event);
 
 private slots:
-
+    void slotElementValueUpdated();
 };
 
 #endif // TUNER_H

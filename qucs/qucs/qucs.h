@@ -219,6 +219,9 @@ public slots:
   void slotCMenuDelete();
   void slotCMenuInsert();
 
+  //Moved slot simulate to Public so that tunerDialog can access
+  void slotSimulate();
+
   void slotUpdateTreeview();
 
   void slotMenuProjClose();
@@ -236,7 +239,7 @@ private slots:
   void slotButtonProjDel();
   void slotChangeView(QWidget*);
   void slotTune();
-  void slotSimulate();
+
   void slotAfterSimulation(int, SimMessage*);
   void slotDCbias();
   void slotChangePage(QString&, QString&);
