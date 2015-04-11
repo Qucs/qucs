@@ -32,6 +32,7 @@ tunerElement::tunerElement(QWidget *parent, Component *component, int selectedPr
 {
 
     //ctor
+
     prop = component->Props.at(selectedPropertyId);
     QGridLayout *gbox = new QGridLayout();
     this->setLayout(gbox);
@@ -52,7 +53,7 @@ tunerElement::tunerElement(QWidget *parent, Component *component, int selectedPr
     gbox->addWidget(Label1);
     value = new QTextEdit();
 
-    originalValue = prop->Value;
+    originalValue = prop->Value.copy();
     gbox->addWidget(value);
 
     QLabel *Label2 = new QLabel(tr("Minimum"));
@@ -68,12 +69,11 @@ tunerElement::tunerElement(QWidget *parent, Component *component, int selectedPr
     QStringList lst = prop->Value.split(' ');
     unit = lst.last();
 
-
     if (lst.count() == 1)
     {
         // Probably a value without unit (like Epsilon r)
         // or a value with unit but without space
-
+        // needs to be handled
     }
 
     int nextColumn = gbox->columnCount();
@@ -108,6 +108,18 @@ tunerElement::tunerElement(QWidget *parent, Component *component, int selectedPr
 Property* tunerElement::getElementProperty()
 {
     return prop;
+}
+
+void tunerElement::resetValue()
+{
+    prop->Value = originalValue;
+
+    value->setText(originalValue.split(' ').first());
+}
+
+void tunerElement::updateProperty(double v)
+{
+    prop->Value = QString::number(v).append(tr(" ") + unit);
 }
 
 void tunerElement::slotSliderValueChanged(int v)
@@ -149,6 +161,7 @@ void tunerElement::slotValueChanged()
         return;
 
     slider->setValue(v*10);
+    updateProperty(v);
 }
 
 tunerElement::~tunerElement()
@@ -166,7 +179,7 @@ tuner::tuner(QWidget *parent) :
     gbox = new QGridLayout();
     this->setLayout(gbox);
 
-    currentProps = new Q3PtrList<Property>();
+    currentElements = new Q3PtrList<tunerElement>();
 
     closeButton = new QPushButton("Close", this);
     QPushButton *updateValues = new QPushButton("Update Values", this);
@@ -176,6 +189,7 @@ tuner::tuner(QWidget *parent) :
     gbox->addWidget(closeButton);
 
     connect(closeButton, SIGNAL(released()), this, SLOT(close()));
+    connect(resetValues, SIGNAL(released()),this, SLOT(slotResetValues()));
 
 }
 void tuner::addTunerElement(tunerElement *element)
@@ -186,11 +200,11 @@ void tuner::addTunerElement(tunerElement *element)
     connect(element, SIGNAL(elementValueUpdated()), this, SLOT(slotElementValueUpdated()));
 
     int column = gbox->columnCount();
-    Property *prop = element->getElementProperty();
-    if (!currentProps->contains(prop))
+
+    if (!currentElements->contains(element))
     {
         gbox->addWidget(element, 0, column, 1, 1);
-        currentProps->append(prop);
+        currentElements->append(element);
     }
     else
     {
@@ -200,22 +214,37 @@ void tuner::addTunerElement(tunerElement *element)
           if (reply == QMessageBox::Yes)
           {
               removeTunerElement(element);
-              this->update();
           }
     }
 
 }
+
+void tuner::removeTunerElement(tunerElement* element)
+{
+    currentElements->remove(element);
+    delete element;
+    this->update();
+}
+
+/*
+ * Private Slots
+ */
 
 void tuner::slotElementValueUpdated()
 {
     QucsMain->slotSimulate();
 }
 
-void tuner::removeTunerElement(tunerElement* element)
+void tuner::slotResetValues()
 {
-    currentProps->remove(element->getElementProperty());
-    delete element;
+    for (int i = 0; i < currentElements->count(); i++)
+    {
+        currentElements->at(i)->resetValue();
+    }
 }
+
+void tuner::slotUpdateValues()
+{}
 
 void tuner::closeEvent(QCloseEvent *event)
 {
