@@ -97,53 +97,37 @@ ENDIF(WIN32)
 ADD_DEFINITIONS(${QT_DEFINITIONS})
 
 #ADD_SUBDIRECTORY( bitmaps ) -> added as resources
-ADD_SUBDIRECTORY( components )
-ADD_SUBDIRECTORY( diagrams )
+#ADD_SUBDIRECTORY( components )
+#ADD_SUBDIRECTORY( diagrams )
 ADD_SUBDIRECTORY( dialogs )
-ADD_SUBDIRECTORY( octave )
-ADD_SUBDIRECTORY( python )
-ADD_SUBDIRECTORY( paintings )
+#ADD_SUBDIRECTORY( octave )
+#ADD_SUBDIRECTORY( python )
+#ADD_SUBDIRECTORY( paintings )
 
 SET(QUCS_SRCS
-  element.cpp	octave_window.cpp	qucsdoc.cpp
-  textdoc.cpp  main.cpp	schematic.cpp
-  mnemo.cpp	qucs.cpp	viewpainter.cpp
-  module.cpp	schematic_element.cpp	wire.cpp
-  mouseactions.cpp qucs_actions.cpp	schematic_file.cpp
-  wirelabel.cpp node.cpp qucs_init.cpp
-  syntax.cpp misc.cpp messagedock.cpp
-  imagewriter.cpp printerwriter.cpp projectView.cpp
+  qucsdoc.cpp textdoc.cpp main.cpp
+  mnemo.cpp qucs.cpp qucs_actions.cpp
+  qucs_init.cpp
+  syntax.cpp misc.cpp
+  projectView.cpp
 )
 
 SET(QUCS_HDRS
-element.h
 main.h
-messagedock.h
 misc.h
 mnemo.h
-module.h
-mouseactions.h
-node.h
-octave_window.h
 qucs.h
 qucsdoc.h
-schematic.h
 syntax.h
 textdoc.h
-viewpainter.h
-wire.h
-wirelabel.h
 )
 
 #
 # files that have Q_OBJECT need to be MOC'ed
 #
 SET(QUCS_MOC_HDRS
-  octave_window.h
   qucs.h
-  schematic.h
   textdoc.h
-  messagedock.h
 )
 
 #
@@ -224,7 +208,7 @@ ADD_EXECUTABLE( qucs MACOSX_BUNDLE WIN32
 #
 # Tell CMake which libraries we need to link our executable against.
 #
-TARGET_LINK_LIBRARIES( qucs  components diagrams dialogs paintings ${QT_LIBRARIES} )
+TARGET_LINK_LIBRARIES( qucs dialogs ${QT_LIBRARIES} )
 
 #
 # Prepare the installation

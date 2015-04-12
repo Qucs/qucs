@@ -24,10 +24,9 @@
 
 noinst_LIBRARIES = libdialogs.a
 
-MOCHEADERS = settingsdialog.h simmessage.h qucssettingsdialog.h      \
-     labeldialog.h changedialog.h matchdialog.h digisettingsdialog.h \
-     sweepdialog.h searchdialog.h librarydialog.h importdialog.h     \
-     packagedialog.h savedialog.h vasettingsdialog.h                 \
+MOCHEADERS = settingsdialog.h      \
+     labeldialog.h changedialog.h digisettingsdialog.h \
+     searchdialog.h savedialog.h \
      exportdialog.h loaddialog.h newprojdialog.h
 
 MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
@@ -37,11 +36,9 @@ UICFILES = ui_searchdialog.h
 BUILT_SOURCES = $(UICFILES)
 
 libdialogs_a_SOURCES = settingsdialog.cpp newprojdialog.cpp \
-     simmessage.cpp qucssettingsdialog.cpp labeldialog.cpp changedialog.cpp \
-     matchdialog.cpp sweepdialog.cpp digisettingsdialog.cpp searchdialog.cpp \
-     librarydialog.cpp importdialog.cpp packagedialog.cpp \
-     savedialog.cpp vasettingsdialog.cpp \
-     exportdialog.cpp loaddialog.cpp
+     labeldialog.cpp changedialog.cpp \
+     digisettingsdialog.cpp searchdialog.cpp \
+     savedialog.cpp exportdialog.cpp loaddialog.cpp
 
 nodist_libdialogs_a_SOURCES = $(MOCFILES)
 

@@ -143,21 +143,6 @@ void misc::str2num(const QString& s_, double& Number, QString& Unit, double& Fac
 {
   QString str = s_.stripWhiteSpace();
 
-/*  int i=0;
-  bool neg = false;
-  if(str[0] == '-') {      // check sign
-    neg = true;
-    i++;
-  }
-  else if(str[0] == '+')  i++;
-
-  double num = 0.0;
-  for(;;) {
-    if(str[i] >= '0')  if(str[i] <= '9') {
-      num = 10.0*num + double(str[i]-'0');
-    }
-  }*/
-
   QRegExp Expr( QRegExp("[^0-9\\x2E\\x2D\\x2B]") );
   int i = str.find( Expr );
   if(i >= 0)
@@ -270,9 +255,6 @@ QString misc::properAbsFileName(const QString& Name)
 
   if(Info.isRelative())
   {
-      // if it's a relative file, look for it relative to the
-      // working directory (the qucs home directory)
-      s = QucsSettings.QucsWorkDir.filePath(s);
   }
   // return the clean path
   return QDir::cleanPath(s);

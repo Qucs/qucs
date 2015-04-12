@@ -28,8 +28,8 @@ MOCHEADERS = diagramdialog.h markerdialog.h
 MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
 
 libdiagrams_a_SOURCES = tabdiagram.cpp smithdiagram.cpp rectdiagram.cpp \
-  polardiagram.cpp graph.cpp diagramdialog.cpp diagram.cpp marker.cpp   \
-  markerdialog.cpp psdiagram.cpp rect3ddiagram.cpp curvediagram.cpp     \
+  polardiagram.cpp graph.cpp   \
+  markerdialog.cpp psdiagram.cpp rect3ddiagram.cpp      \
   timingdiagram.cpp truthdiagram.cpp
 
 nodist_libdiagrams_a_SOURCES = $(MOCFILES)

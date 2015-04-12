@@ -24,11 +24,8 @@
 #include <QStack>
 
 class QucsDoc;
-class Schematic;
 class SimMessage;
-class MouseActions;
 class SearchDialog;
-class OctaveWindow;
 class MessageDock;
 class ProjectView;
 
@@ -53,10 +50,6 @@ class QFileSystemModel;
 class QModelIndex;
 class QPushButton;
 
-typedef bool (Schematic::*pToggleFunc) ();
-typedef void (MouseActions::*pMouseFunc) (Schematic*, QMouseEvent*);
-typedef void (MouseActions::*pMouseFunc2) (Schematic*, QMouseEvent*, float, float);
-
 class QucsApp : public QMainWindow {
   Q_OBJECT
 public:
@@ -75,12 +68,6 @@ public:
 
   QLineEdit *editText;  // for edit component properties on schematic
   SearchDialog *SearchDia;  // global in order to keep values
-
-  // current mouse methods
-  void (MouseActions::*MouseMoveAction) (Schematic*, QMouseEvent*);
-  void (MouseActions::*MousePressAction) (Schematic*, QMouseEvent*, float, float);
-  void (MouseActions::*MouseDoubleClickAction) (Schematic*, QMouseEvent*);
-  void (MouseActions::*MouseReleaseAction) (Schematic*, QMouseEvent*);
 
 protected:
   void closeEvent(QCloseEvent*);
@@ -155,7 +142,6 @@ signals:
   void signalKillEmAll();
 
 public:
-  MouseActions *view;
   QTabWidget *DocumentTab;
   QListWidget *CompComps;
   QTreeWidget *libTreeWidget;
@@ -181,7 +167,6 @@ private:
   QDockWidget     *dock;
   QTabWidget      *TabView;
   QDockWidget     *octDock;
-  OctaveWindow    *octave;
   MessageDock     *messageDock;
 
   QListView       *Projects;
@@ -210,7 +195,7 @@ private:
   void fillComboBox(bool);
   void switchSchematicDoc(bool);
   void switchEditMode(bool);
-  void changeSchematicSymbolMode(Schematic*);
+  void changeSchematicSymbolMode();
   bool recurRemove(const QString &);
   bool isTextDocument(QWidget *);
   void closeFile(int);
@@ -366,7 +351,6 @@ private slots:
 
 private:
   void showHTML(const QString&);
-  bool performToggleAction(bool, QAction*, pToggleFunc, pMouseFunc, pMouseFunc2);
   void launchTool(const QString&, const QString&, const QString& = ""); // tool, description and args
   friend class SaveDialog;
   QString lastExportFilename;

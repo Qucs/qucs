@@ -22,7 +22,8 @@
 # Boston, MA 02110-1301, USA.
 #
 
-SUBDIRS = components diagrams paintings dialogs octave
+SUBDIRS = dialogs octave
+# SUBDIRS = components diagrams paintings dialogs octave
 
 if COND_WIN32
 bin_SCRIPTS = qucsdigi.bat qucsveri.bat qucsdigilib.bat
@@ -32,15 +33,14 @@ endif
 
 bin_PROGRAMS = qucs
 
-MOCHEADERS = qucs.h schematic.h textdoc.h octave_window.h messagedock.h
+MOCHEADERS = qucs.h textdoc.h
 MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
 
-qucs_SOURCES = node.cpp element.cpp qucsdoc.cpp wire.cpp mouseactions.cpp   \
-  qucs.cpp main.cpp wirelabel.cpp qucs_init.cpp qucs_actions.cpp            \
-  viewpainter.cpp mnemo.cpp schematic.cpp schematic_element.cpp textdoc.cpp \
-  schematic_file.cpp syntax.cpp module.cpp octave_window.cpp qrc_qucs.cpp   \
-  messagedock.cpp misc.cpp imagewriter.cpp printerwriter.cpp \
-	projectView.cpp
+qucs_SOURCES = qucsdoc.cpp \
+  qucs.cpp main.cpp qucs_init.cpp qucs_actions.cpp            \
+  mnemo.cpp textdoc.cpp \
+  syntax.cpp qrc_qucs.cpp   \
+  misc.cpp projectView.cpp
 
 qrc_qucs.cpp: qucs.qrc
 	$(RCC) -o $@ $<
@@ -49,9 +49,7 @@ nodist_qucs_SOURCES = $(MOCFILES)
 
 AM_CPPFLAGS = $(X11_INCLUDES) $(QT_INCLUDES) -I$(top_srcdir)/qucs-lib
 qucs_LDFLAGS = $(X11_LDFLAGS) $(QT_LDFLAGS)
-qucs_LDADD = components/libcomponents.a diagrams/libdiagrams.a \
-  paintings/libpaintings.a dialogs/libdialogs.a \
-  $(X11_LIBS) $(QT_LIBS)
+qucs_LDADD =  dialogs/libdialogs.a $(X11_LIBS) $(QT_LIBS)
 
 noinst_HEADERS = $(MOCHEADERS) main.h wire.h qucsdoc.h element.h node.h \
   wirelabel.h viewpainter.h mnemo.h mouseactions.h syntax.h module.h misc.h

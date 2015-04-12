@@ -18,16 +18,15 @@ Copyright (C) 2014 by Guilherme Brondani Torri <guitorri@gmail.com>
 #ifdef HAVE_CONFIG_H
 # include <config.h>
 #endif
-#include <QAction>
 #include <QMessageBox>
+#include <QFileInfo>
+#include <QTextStream>
+#include <QAction>
 
 #include "main.h"
 #include "qucs.h"
 #include "textdoc.h"
 #include "syntax.h"
-#include "components/vhdlfile.h"
-#include "components/verilogfile.h"
-#include "components/vafile.h"
 
 /*!
  * \file textdoc.cpp
@@ -42,7 +41,8 @@ Copyright (C) 2014 by Guilherme Brondani Torri <guitorri@gmail.com>
 TextDoc::TextDoc(QucsApp *App_, const QString& Name_) : QPlainTextEdit(), QucsDoc(App_, Name_)
 {
   TextFont = QFont("Courier New");
-  TextFont.setPointSize(QucsSettings.font.pointSize()-1);
+#warning change to setting
+  TextFont.setPointSize(12);
   TextFont.setStyleHint(QFont::Courier);
   TextFont.setFixedPitch(true);
   document()->setDefaultFont(TextFont);
@@ -60,7 +60,8 @@ TextDoc::TextDoc(QucsApp *App_, const QString& Name_) : QPlainTextEdit(), QucsDo
   viewport()->setFocus();
 
   setWordWrapMode(QTextOption::NoWrap);
-  setPaletteBackgroundColor(QucsSettings.BGColor);
+#warning change to setting
+  setPaletteBackgroundColor(QColor("black"));
   connect(this, SIGNAL(textChanged()), SLOT(slotSetChanged()));
   connect(this, SIGNAL(cursorPositionChanged()),
           SLOT(slotCursorPosChanged()));
@@ -443,7 +444,7 @@ float TextDoc::zoomBy(float s)
 void TextDoc::showNoZoom()
 {
   TextFont = QFont("Courier New");
-  TextFont.setPointSize(QucsSettings.font.pointSize()-1);
+  TextFont.setPointSize(12);
   TextFont.setStyleHint(QFont::Courier);
   TextFont.setFixedPitch(true);
   document()->setDefaultFont(TextFont);
@@ -544,18 +545,12 @@ QString TextDoc::getModuleName (void)
   switch (language) {
   case LANG_VHDL:
     {
-      VHDL_File_Info VInfo (toPlainText());
-      return VInfo.EntityName;
     }
   case LANG_VERILOG:
     {
-      Verilog_File_Info VInfo (toPlainText());
-      return VInfo.ModuleName;
     }
   case LANG_VERILOGA:
     {
-      VerilogA_File_Info VInfo (toPlainText());
-      return VInfo.ModuleName;
     }
   case LANG_OCTAVE:
     {

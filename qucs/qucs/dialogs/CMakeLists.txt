@@ -10,52 +10,35 @@ SET(DIALOGS_HDRS
 changedialog.h
 digisettingsdialog.h
 exportdialog.h
-importdialog.h
 labeldialog.h
-librarydialog.h
 loaddialog.h
-matchdialog.h
 newprojdialog.h
-packagedialog.h
-qucssettingsdialog.h
 savedialog.h
 searchdialog.h
 settingsdialog.h
-simmessage.h
-sweepdialog.h
-vasettingsdialog.h
 )
 
 
 
 SET(DIALOGS_SRCS
-changedialog.cpp		packagedialog.cpp vasettingsdialog.cpp
-digisettingsdialog.cpp		qucssettingsdialog.cpp
-importdialog.cpp		savedialog.cpp labeldialog.cpp
-searchdialog.cpp     librarydialog.cpp settingsdialog.cpp
-matchdialog.cpp			simmessage.cpp newprojdialog.cpp
-sweepdialog.cpp			exportdialog.cpp loaddialog.cpp
+changedialog.cpp
+digisettingsdialog.cpp
+savedialog.cpp labeldialog.cpp
+searchdialog.cpp     settingsdialog.cpp
+newprojdialog.cpp
+exportdialog.cpp loaddialog.cpp
 )
 
 SET(DIALOGS_MOC_HDRS
 changedialog.h
 digisettingsdialog.h
 exportdialog.h
-importdialog.h
 labeldialog.h
-librarydialog.h
 loaddialog.h
-matchdialog.h
 newprojdialog.h
-packagedialog.h
-qucssettingsdialog.h
 savedialog.h
 searchdialog.h
 settingsdialog.h
-simmessage.h
-sweepdialog.h
-sweepdialog.h
-vasettingsdialog.h
 )
 
 SET(DIALOGS_UIC_HDRS
