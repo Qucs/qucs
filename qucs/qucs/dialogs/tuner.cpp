@@ -28,7 +28,7 @@
 #include <QDebug>
 
 tunerElement::tunerElement(QWidget *parent, Component *component, int selectedPropertyId)
-    : QWidget()
+    : QWidget(parent)
 {
 
     //ctor
@@ -66,6 +66,9 @@ tunerElement::tunerElement(QWidget *parent, Component *component, int selectedPr
     maximum = new QTextEdit();
     gbox->addWidget(maximum);
 
+    QPushButton *remove = new QPushButton(tr("Remove"), this);
+    gbox->addWidget(remove);
+
     QStringList lst = prop->Value.split(' ');
     unit = lst.last();
 
@@ -77,7 +80,7 @@ tunerElement::tunerElement(QWidget *parent, Component *component, int selectedPr
     }
 
     int nextColumn = gbox->columnCount();
-    for (int i=gbox->rowCount()-1; i > gbox->rowCount() - 6; i = i-2 )
+    for (int i=gbox->rowCount()-2; i > gbox->rowCount() - 6; i = i-2 )
     {
         QLabel *label = new QLabel(unit);
         gbox->addWidget(label, i, nextColumn);
@@ -103,6 +106,7 @@ tunerElement::tunerElement(QWidget *parent, Component *component, int selectedPr
     connect(minimum, SIGNAL(textChanged()), this, SLOT(slotMinValueChanged()));
     connect(step, SIGNAL(textChanged()), this, SLOT(slotStepChanged()));
     connect(value, SIGNAL(textChanged()), this, SLOT(slotValueChanged()));
+    connect(remove, SIGNAL(released()), this, SLOT(slotDelete()));
 }
 
 Property* tunerElement::getElementProperty()
@@ -164,6 +168,12 @@ void tunerElement::slotValueChanged()
     updateProperty(v);
 }
 
+void tunerElement::slotDelete()
+{
+    this->setVisible(false);
+    emit removeElement(this);
+}
+
 tunerElement::~tunerElement()
 {
     //dtor
@@ -171,7 +181,7 @@ tunerElement::~tunerElement()
 
 //Tuner dialog class
 
-tuner::tuner(QWidget *parent) :
+TunerDialog::TunerDialog(QWidget *parent) :
     QDialog(parent)
 {
     this->setName("Tuner");
@@ -179,7 +189,8 @@ tuner::tuner(QWidget *parent) :
     gbox = new QGridLayout();
     this->setLayout(gbox);
 
-    currentElements = new Q3PtrList<tunerElement>();
+    currentElements = new QList<tunerElement*>();
+    currentProps = new QList<Property*>();
 
     closeButton = new QPushButton("Close", this);
     QPushButton *updateValues = new QPushButton("Update Values", this);
@@ -192,50 +203,55 @@ tuner::tuner(QWidget *parent) :
     connect(resetValues, SIGNAL(released()),this, SLOT(slotResetValues()));
 
 }
-void tuner::addTunerElement(tunerElement *element)
+
+bool TunerDialog::containsProperty(Property* prop)
+{
+    if (currentProps->contains(prop))
+        return true;
+    else
+        return false;
+}
+
+void TunerDialog::addTunerElement(tunerElement *element)
 {
     if (!element)
         return;
 
     connect(element, SIGNAL(elementValueUpdated()), this, SLOT(slotElementValueUpdated()));
+    connect(element, SIGNAL(removeElement(tunerElement*)), this, SLOT(slotRemoveTunerElement(tunerElement*)));
 
     int column = gbox->columnCount();
 
-    if (!currentElements->contains(element))
+    if (!currentProps->contains(element->getElementProperty()))
     {
-        gbox->addWidget(element, 0, column, 1, 1);
-        currentElements->append(element);
+        gbox->addWidget(element, 0, column, gbox->rowCount(), 1);
+        currentProps->append(element->getElementProperty());
     }
     else
     {
-        QMessageBox::StandardButton reply;
-          reply = QMessageBox::question(this, "Remove tuner Element", "Delete?",
-                                        QMessageBox::Yes|QMessageBox::No);
-          if (reply == QMessageBox::Yes)
-          {
-              removeTunerElement(element);
-          }
+        QMessageBox::message("Already Found", "Already tuning this element", "OK");
     }
 
 }
 
-void tuner::removeTunerElement(tunerElement* element)
+void TunerDialog::slotRemoveTunerElement(tunerElement *e)
 {
-    currentElements->remove(element);
-    delete element;
+    currentProps->removeAll(e->getElementProperty());
+    delete e;
     this->update();
+
 }
 
 /*
  * Private Slots
  */
 
-void tuner::slotElementValueUpdated()
+void TunerDialog::slotElementValueUpdated()
 {
     QucsMain->slotSimulate();
 }
 
-void tuner::slotResetValues()
+void TunerDialog::slotResetValues()
 {
     for (int i = 0; i < currentElements->count(); i++)
     {
@@ -243,10 +259,10 @@ void tuner::slotResetValues()
     }
 }
 
-void tuner::slotUpdateValues()
+void TunerDialog::slotUpdateValues()
 {}
 
-void tuner::closeEvent(QCloseEvent *event)
+void TunerDialog::closeEvent(QCloseEvent *event)
 {
     //Undo changes to mouse actions when closing tuner window
     QucsMain->MousePressAction = &MouseActions::MPressSelect;
@@ -254,7 +270,7 @@ void tuner::closeEvent(QCloseEvent *event)
     event->accept();
 }
 
-tuner::~tuner()
+TunerDialog::~TunerDialog()
 {
 
 }

@@ -160,7 +160,7 @@ QucsApp::QucsApp()
   SearchDia = new SearchDialog(this);
 
   // instance of tuner
-  tunerDia = new tuner(0);
+  tunerDia = new TunerDialog(0);
 
   // creates a document called "untitled"
   Schematic *d = new Schematic(this, "");
@@ -2088,7 +2088,7 @@ void QucsApp::slotSimulate()
   connect(sim, SIGNAL(displayDataPage(QString&, QString&)),
 		this, SLOT(slotChangePage(QString&, QString&)));
 
-  if (!tunerDia->isVisible())//We're tuning, don't need 20 Windows
+  if (!tunerDia->isVisible())// We're tuning, don't need 20 Windows
     sim->show();
 
   if(!sim->startProcess()) return;
