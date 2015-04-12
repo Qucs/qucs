@@ -42,6 +42,8 @@ class tunerElement : public QWidget
         virtual ~tunerElement();
     signals:
         void elementValueUpdated();
+        void removeElement(tunerElement*);
+
     protected:
     private:
         Property* prop;
@@ -60,16 +62,18 @@ class tunerElement : public QWidget
         void slotMaxValueChanged();
         void slotStepChanged();
         void slotValueChanged();
+        void slotDelete();
 
 };
 
-class tuner : public QDialog
+class TunerDialog : public QDialog
 {
     Q_OBJECT
 public:
-    explicit tuner(QWidget *parent = 0);
-    virtual ~tuner();
+    explicit TunerDialog(QWidget *parent = 0);
+    virtual ~TunerDialog();
     void addTunerElement(tunerElement *element);
+    bool containsProperty(Property *prop);
 
 signals:
     void addTunerElement(Element *e);
@@ -78,12 +82,13 @@ public slots:
 private:
     QPushButton *closeButton;
     QGridLayout *gbox;
-    Q3PtrList<tunerElement> *currentElements;
-    void removeTunerElement(tunerElement *element);
+    QList<tunerElement*> *currentElements;
+    QList<Property*> *currentProps;
     void closeEvent(QCloseEvent *event);
 
 private slots:
     void slotElementValueUpdated();
+    void slotRemoveTunerElement(tunerElement*);
     void slotUpdateValues();
     void slotResetValues();
 };

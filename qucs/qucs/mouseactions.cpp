@@ -1100,7 +1100,7 @@ void MouseActions::MPressTune(Schematic *Doc, QMouseEvent *Event, float fX, floa
     focusElement = Doc->selectElement(fX, fY, false, &No);
     isMoveEqual = false;   // moving not neccessarily square
 
-
+    MAx3 = No;
 
     if(focusElement)
       // print define value in hex, see element.h
@@ -1115,12 +1115,33 @@ void MouseActions::MPressTune(Schematic *Doc, QMouseEvent *Event, float fX, floa
         case isComponentText:  // property text of component ?
             focusElement->Type &= (~isComponentText) | isComponent;
             Component *pc = (Component*)focusElement;
+            Property *pp = 0;
             if(!pc) return;  // should never happen
-            Property *prop = pc->Props.at(No);
-            if (prop->display == false)
-                return; //Hidden property, don't add
-            tunerElement *tune = new tunerElement(App->tunerDia, pc, No);
-            App->tunerDia->addTunerElement(tune);
+            this->MAx1 = pc->cx + pc->tx;
+            this->MAy1 = pc->cy + pc->ty;
+
+            int z, n=0;  // "n" is number of property on screen
+            pp = pc->Props.first();
+            for(z=this->MAx3; z>0; z--) {  // calculate "n"
+              if(!pp) {  // should never happen
+                return;
+              }
+              if(pp->display) n++;   // is visible ?
+              pp = pc->Props.next();
+            }
+
+            pp = 0;
+            if(this->MAx3 > 0)  pp = pc->Props.at(this->MAx3-1); // current property
+            //else s = pc->Name;
+
+            /*Property *prop = pc->Props.at(No);
+            if (pp->display == false)
+                return; // Hidden property, don't add*/
+            if (! App->tunerDia->containsProperty(pp) )
+            {
+                tunerElement *tune = new tunerElement(App->tunerDia, pc, No);
+                App->tunerDia->addTunerElement(tune);
+            }
             return;
         }
     }

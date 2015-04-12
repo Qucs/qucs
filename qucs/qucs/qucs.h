@@ -39,7 +39,7 @@ class OctaveWindow;
 class MessageDock;
 class ProjectView;
 class ContextMenuTabWidget;
-class tuner; //forward declaration
+class TunerDialog;
 class tunerElement;
 class VersionTriplet;
 class QucsApp;
@@ -157,7 +157,7 @@ public:
 
   QLineEdit *editText;  // for edit component properties on schematic
   SearchDialog *SearchDia;  // global in order to keep values
-  tuner *tunerDia;
+  TunerDialog *tunerDia;
 
   // current mouse methods
   void (MouseActions::*MouseMoveAction) (Schematic*, QMouseEvent*);
