@@ -36,7 +36,9 @@
 #include <QMenu>
 #include <QComboBox>
 #include <QDockWidget>
+#include <QTreeWidgetItem>
 
+#include "projectView.h"
 #include "main.h"
 #include "qucs.h"
 #include "schematic.h"
@@ -950,7 +952,7 @@ void QucsApp::slotAddToProject()
   }
 
   free(Buffer);
-  readProjectFiles();  // re-read the content ListView
+  slotUpdateTreeview();
   statusBar()->message(tr("Ready."));
 }
 
@@ -1238,7 +1240,8 @@ void QucsApp::slotCreateLib()
     return;
   }
 
-  LibraryDialog *d = new LibraryDialog(this, ConSchematics);
+  LibraryDialog *d = new LibraryDialog(this);
+  d->fillSchematicList(Content->exportSchematic());
   d->exec();
 }
 
@@ -1254,7 +1257,7 @@ void QucsApp::slotImportData()
 
   ImportDialog *d = new ImportDialog(this);
   if(d->exec() == QDialog::Accepted)
-    readProjectFiles();  // re-read all project files
+    slotUpdateTreeview();
 }
 
 // -----------------------------------------------------------

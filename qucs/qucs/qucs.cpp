@@ -51,6 +51,7 @@
 #include "messagedock.h"
 #include "wire.h"
 #include "module.h"
+#include "projectView.h"
 #include "components/components.h"
 #include "paintings/paintings.h"
 #include "diagrams/diagrams.h"
@@ -192,29 +193,6 @@ QucsApp::~QucsApp()
 // ##########     Creates the working area (QTabWidget etc.)    ##########
 // ##########                                                   ##########
 // #######################################################################
-void QucsApp::initContentListView()
-{
-  Content->clear();
-
-  ConOthers = new QTreeWidgetItem(Content);
-  ConOthers->setText(0, tr("Others"));
-  ConDatasets = new QTreeWidgetItem(Content);
-  ConDatasets->setText(0, tr("Datasets"));
-  ConDisplays = new QTreeWidgetItem(Content);
-  ConDisplays->setText(0, tr("Data Displays"));
-  ConOctave = new QTreeWidgetItem(Content);
-  ConOctave->setText(0, tr("Octave"));
-  ConVerilog = new QTreeWidgetItem(Content);
-  ConVerilog->setText(0, tr("Verilog"));
-  ConVerilogA = new QTreeWidgetItem(Content);
-  ConVerilogA->setText(0, tr("Verilog-A"));
-  ConSources = new QTreeWidgetItem(Content);
-  ConSources->setText(0, tr("VHDL"));
-  ConSchematics = new QTreeWidgetItem(Content);
-  ConSchematics->setText(0, tr("Schematics"));
-
-}
-
 /**
  * @brief QucsApp::initView Setup the layour of all widgets
  */
@@ -294,27 +272,17 @@ void QucsApp::initView()
 
   // ----------------------------------------------------------
   // "Content" Tab of the left QTabWidget
-  Content = new QTreeWidget(this);
-  Content->setColumnCount(2);
-  QStringList headers;
-  headers << tr("Content of") << tr("Note");
-  Content->setHeaderLabels(headers);
-  Content->setSortingEnabled(false);
-  Content->setColumnWidth(0,150);
-
-  // allow for a custom context menu
+  Content = new ProjectView(this);
   Content->setContextMenuPolicy(Qt::CustomContextMenu);
 
-  initContentListView();
-
-  TabView->addTab(Content,tr("Content"));
+  TabView->addTab(Content, tr("Content"));
   TabView->setTabToolTip(TabView->indexOf(Content), tr("content of current project"));
 
-  connect(Content, SIGNAL(itemDoubleClicked(QTreeWidgetItem*, int)),
-		   SLOT(slotOpenContent(QTreeWidgetItem*)));
+  connect(Content, SIGNAL(clicked(const QModelIndex &)), 
+          SLOT(slotSelectSubcircuit(const QModelIndex &)));
 
-  connect(Content, SIGNAL(itemPressed(QTreeWidgetItem*, int)),
-           SLOT(slotSelectSubcircuit(QTreeWidgetItem*)));
+  connect(Content, SIGNAL(doubleClicked(const QModelIndex &)),
+          SLOT(slotOpenContent(const QModelIndex &)));
 
   // ----------------------------------------------------------
   // "Component" Tab of the left QTabWidget
@@ -367,6 +335,7 @@ void QucsApp::initView()
 
   libTreeWidget = new QTreeWidget (this);
   libTreeWidget->setColumnCount (1);
+  QStringList headers;
   headers.clear ();
   headers << tr ("Libraries");
   libTreeWidget->setHeaderLabels (headers);
@@ -900,212 +869,35 @@ void QucsApp::slotSelectComponent(QListWidgetItem *item)
 
 void QucsApp::initCursorMenu()
 {
-
-  // TODO -> The contentmenu is also shown when the user right-clicks on a category...
   ContentMenu = new QMenu(this);
+#define APPEND_MENU(action, slot, text) \
+  { \
+  action = new QAction(tr(text), ContentMenu); \
+  connect(action, SIGNAL(triggered()), SLOT(slot())); \
+  ContentMenu->addAction(action); \
+  }
+  
+  APPEND_MENU(ActionCMenuOpen, slotCMenuOpen, "Open")
+  APPEND_MENU(ActionCMenuCopy, slotCMenuCopy, "Duplicate")
+  APPEND_MENU(ActionCMenuRename, slotCMenuRename, "Rename")
+  APPEND_MENU(ActionCMenuDelete, slotCMenuDelete, "Delete")
+  APPEND_MENU(ActionCMenuInsert, slotCMenuInsert, "Insert")
 
-  ActionCMenuOpen = new QAction(tr("Open"), ContentMenu);
-  connect(ActionCMenuOpen, SIGNAL(triggered()), this, SLOT(slotCMenuOpen()));
-  ContentMenu->addAction(ActionCMenuOpen);
-
-  ActionCMenuCopy = new QAction(tr("Duplicate"), ContentMenu);
-  connect(ActionCMenuCopy, SIGNAL(triggered()), this, SLOT(slotCMenuCopy()));
-  ContentMenu->addAction(ActionCMenuCopy);
-
-  ActionCMenuRename = new QAction(tr("Rename"), ContentMenu);
-  connect(ActionCMenuRename, SIGNAL(triggered()), this, SLOT(slotCMenuRename()));
-  ContentMenu->addAction(ActionCMenuRename);
-
-  ActionCMenuDelete = new QAction(tr("Delete"), ContentMenu);
-  connect(ActionCMenuDelete, SIGNAL(triggered()), this, SLOT(slotCMenuDelete()));
-  ContentMenu->addAction(ActionCMenuDelete);
-
-  ActionCMenuInsert = new QAction(tr("Insert"), ContentMenu);
-  connect(ActionCMenuInsert, SIGNAL(triggered()), this, SLOT(slotCMenuInsert()));
-  ContentMenu->addAction(ActionCMenuInsert);
-
-
-  // TODO -> not implemented yet...
-  //ActionCMenuDelGroup = new QAction(tr("Delete Group"), ContentMenu);
-  //connect(ActionCMenuDelGroup, SIGNAL(triggered()), this, SLOT(slotCMenuDelGroup()));
-  //Content->addAction(ActionCMenuDelGroup);
-
-
+#undef APPEND_MENU
   connect(Content, SIGNAL(customContextMenuRequested(const QPoint&)), SLOT(slotShowContentMenu(const QPoint&)));
 }
 
 // ----------------------------------------------------------
 // Shows the menu.
-void QucsApp::slotShowContentMenu(const QPoint& pos) {
-
-  QTreeWidgetItem *item = Content->currentItem();
-  if(item->text(1  ).contains(tr("-port")))
-  {
-      ActionCMenuInsert->setVisible(true);
-  }
-  else
-  {
-      ActionCMenuInsert->setVisible(false);
-  }
-
-  // only show contentmenu when child is selected...
-  if(item->parent()!= 0) {
+void QucsApp::slotShowContentMenu(const QPoint& pos) 
+{
+  QModelIndex idx = Content->indexAt(pos);
+  if (idx.isValid() && idx.parent().isValid()) {
+    ActionCMenuInsert->setVisible(
+        idx.sibling(idx.row(), 1).data().toString().contains(tr("-port"))
+    );
     ContentMenu->popup(Content->mapToGlobal(pos));
-  }
-
-}
-/* OLD Version
-void QucsApp::slotShowContentMenu(Q3ListViewItem *item, const QPoint& point, int)
-{
-  if(item)
-    if(item->parent() != 0) {   // no component, but item "schematic", ...
-      if(item->parent()->nextSibling()) // "Others" section in listview ?
-        ContentMenu->setItemEnabled(ContentMenu->idAt(3), true);
-      else
-        ContentMenu->setItemEnabled(ContentMenu->idAt(3), false);
-      ContentMenu->popup(point);
-    }
-}
-*/
-// ----------------------------------------------------------
-void QucsApp::slotCMenuOpen()
-{
-  QTreeWidgetItem *Item = Content->currentItem();
-  if(Item == 0) return;
-
-  slotOpenContent(Item);
-}
-
-// ----------------------------------------------------------
-void QucsApp::slotCMenuCopy()
-{
-  QTreeWidgetItem *Item = Content->currentItem();
-  if(Item == 0) return;
-
-  QString Name = Item->text(0);
-  QString currentPath = QucsSettings.QucsWorkDir.filePath(Name);
-  QString Path = currentPath.section(QDir::separator(), 0, -2);
-
-  //check changed file save
-  int z = 0; //search if the doc is loaded
-  QucsDoc *d = findDoc(currentPath, &z);
-  if (d != NULL && d->DocChanged) {
-    DocumentTab->setCurrentPage(z);
-    int ret = QMessageBox::question(this, tr("Copying Qucs document"), 
-          tr("The document contains unsaved changes!\n") + 
-          tr("Do you want to save the changes before copying?"),
-          tr("&Ignore"), tr("&Save"), 0, 1);
-    if (ret == 1) {
-      d->save();
-    }
-  }
-
-  QString Suffix = Name.section('.',-1);   // remember suffix
-  QString Base   = Name.section('.',0,-2);
-  if(Base.isEmpty()) Base = Name;
-
-  bool exists = true;   //generate unique name
-  int i = 0;
-  QString defaultName;
-  while (exists) {
-    ++i;
-    defaultName = Base + "_copy" + QString::number(i) + "." + Suffix;
-    exists = QFile::exists (Path + QDir::separator() + defaultName);
-  }
-
-  bool ok;
-  QString s = QInputDialog::getText(tr("Copy file"), tr("Enter new name:"),
-		QLineEdit::Normal, defaultName, &ok, this);
-  if(!ok) return;
-  if(s.isEmpty()) return;
-
-  QString NewName;
-  if(s.contains('.'))
-    NewName = s;
-  else
-    NewName = s+"."+Suffix;
-
-  if (QFile::exists(Path + QDir::separator() + NewName)) {  //check New Name exists
-    QMessageBox::critical(this, tr("error"), tr("Cannot copy file to identical name: ") + Name);
-    return;
-  }
-
-  if (!QFile::copy(Path + QDir::separator() + Name,
-      Path + QDir::separator() + NewName)) {
-    QMessageBox::critical(this, tr("Error"), tr("Cannot copy schematic: ")+Name);
-    return;
-  }
-  //TODO: maybe require disable edit here
-
-  // refresh the schematic file path
-  slotRefreshSchPath();
-
-  if(!ProjName.isEmpty())
-    readProjectFiles();  // re-read the content ListView
-}
-
-// ----------------------------------------------------------
-void QucsApp::slotCMenuRename()
-{
-  QTreeWidgetItem *Item = Content->currentItem();
-  if(!Item) return;
-
-  QString Name = Item->text(0);
-  if (findDoc (QucsSettings.QucsWorkDir.filePath(Name))) {
-    QMessageBox::critical(this, tr("Error"),
-			        tr("Cannot rename an open file!"));
-    return;
-  }
-
-  QString Suffix = Name.section('.',-1);   // remember suffix
-  QString Base   = Name.section('.',0,-2);
-  if(Base.isEmpty()) Base = Name;
-
-  bool ok;
-  QString s = QInputDialog::getText(tr("Rename file"), tr("Enter new name:"),
-		QLineEdit::Normal, Base, &ok, this);
-  if(!ok) return;
-  if(s.isEmpty()) return;
-
-  QString NewName;
-  if(s.contains('.'))
-    NewName = s;
-  else
-    NewName = s+"."+Suffix;
-  QDir file(QucsSettings.QucsWorkDir.path());
-  if(!file.rename(Name, NewName)) {
-    QMessageBox::critical(this, tr("Error"), tr("Cannot rename file: ")+Name);
-    return;
-  }
-  Item->setText(0, NewName);
-}
-
-// ----------------------------------------------------------
-void QucsApp::slotCMenuDelete()
-{
-  QTreeWidgetItem *item = Content->currentItem();
-  if(item == 0) return;
-  QString FileName = QucsSettings.QucsWorkDir.filePath(item->text(0));
-
-  if (findDoc (FileName)) {
-    QMessageBox::critical(this, tr("Error"),
-			        tr("Cannot delete an open file!"));
-    return;
-  }
-
-  int No;
-  No = QMessageBox::warning(this, tr("Warning"),
-             tr("This will delete the file permanently! Continue ?"),
-             tr("No"), tr("Yes"));
-  if(No != 1) return;
-
-  if(!QFile::remove(FileName)) {
-    QMessageBox::critical(this, tr("Error"),
-		tr("Cannot delete schematic: ")+item->text(0));
-    return;
-  }
-
-  delete item;
+  }    
 }
 
 // ----------------------------------------------------------
@@ -1133,79 +925,152 @@ QString QucsApp::fileType (const QString& Ext)
   return Type;
 }
 
-// ----------------------------------------------------------
-// TODO -> not implemented yet
-// Deletes all files with that name (and suffix sch, dpl, dat, vhdl, etc.).
-void QucsApp::slotCMenuDelGroup ()
+void QucsApp::slotCMenuOpen()
 {
-  QTreeWidgetItem *item = Content->currentItem();
-  if (item == 0)
+  slotOpenContent(Content->currentIndex());
+}
+
+void QucsApp::slotCMenuCopy()
+{
+  QModelIndex idx = Content->currentIndex();
+
+  //test the item is valid
+  if (!idx.isValid() || !idx.parent().isValid()) { return; }
+
+  QString filename = idx.sibling(idx.row(), 0).data().toString();
+  QDir dir(QucsSettings.QucsWorkDir);
+  QString file(dir.filePath(filename));
+  QFileInfo fileinfo(file);
+
+  //check changed file save
+  int z = 0; //search if the doc is loaded
+  QucsDoc *d = findDoc(file, &z);
+  if (d != NULL && d->DocChanged) {
+    DocumentTab->setCurrentPage(z);
+    int ret = QMessageBox::question(this, tr("Copying Qucs document"), 
+        tr("The document contains unsaved changes!\n") + 
+        tr("Do you want to save the changes before copying?"),
+        tr("&Ignore"), tr("&Save"), 0, 1);
+    if (ret == 1) {
+      d->save();
+    }
+  }
+
+  QString suffix = fileinfo.completeSuffix();
+  QString base = fileinfo.baseName();
+  if(base.isEmpty()) {
+    base = filename;
+  }
+
+  bool exists = true;   //generate unique name
+  int i = 0;
+  QString defaultName;
+  while (exists) {
+    ++i;
+    defaultName = base + "_copy" + QString::number(i) + "." + suffix;
+    exists = QFile::exists(dir.filePath(defaultName));
+  }
+
+  bool ok;
+  QString s = QInputDialog::getText(tr("Copy file"), tr("Enter new name:"),
+      QLineEdit::Normal, defaultName, &ok, this);
+  if(ok && !s.isEmpty()) {
+    if (!s.endsWith(suffix)) {
+      s += QString(".") + suffix;
+    }
+
+    if (QFile::exists(dir.filePath(s))) {  //check New Name exists
+      QMessageBox::critical(this, tr("error"), tr("Cannot copy file to identical name: %1").arg(filename));
+      return;
+    }
+
+    if (!QFile::copy(dir.filePath(filename), dir.filePath(s))) {
+      QMessageBox::critical(this, tr("Error"), tr("Cannot copy schematic: %1").arg(filename));
+      return;
+    }
+    //TODO: maybe require disable edit here
+
+    // refresh the schematic file path
+    this->updateSchNameHash();
+    this->updateSpiceNameHash();
+
+    slotUpdateTreeview();
+  }
+}
+
+void QucsApp::slotCMenuRename()
+{
+  QModelIndex idx = Content->currentIndex();
+
+  //test the item is valid
+  if (!idx.isValid() || !idx.parent().isValid()) { return; }
+
+  QString filename = idx.sibling(idx.row(), 0).data().toString();
+  QString file(QucsSettings.QucsWorkDir.filePath(filename));
+  QFileInfo fileinfo(file);
+
+  if (findDoc(file)) {
+    QMessageBox::critical(this, tr("Error"),
+        tr("Cannot rename an open file!"));
     return;
-  QString s = item->text (0);
-  s = QucsDoc::fileBase (s); // cut off suffix from file name
+  }
 
-  const char * extensions[] =
-    { "sch", "dpl", "dat", "vhdl", "vhd", "v", "sym",
-      "vhdl.cfg", "vhd.cfg", "va", 0 };
+  QString suffix = fileinfo.completeSuffix();
+  QString base = fileinfo.baseName();
+  if(base.isEmpty()) {
+    base = filename;
+  }
 
-  int i;
-  for (i = 0; extensions[i] != 0; i++) {
-    QString Short = s + "." + extensions[i];
-    QString Name = QucsSettings.QucsWorkDir.filePath (Short);
-    // search, if files are open
-    if (findDoc (Name)) {
-      QMessageBox::critical(this, tr("Error"), tr("Cannot delete the open file \"%1\"!").arg(Short));
+  bool ok;
+  QString s = QInputDialog::getText(tr("Rename file"), tr("Enter new filename:"),
+		QLineEdit::Normal, base, &ok, this);
+  if(ok && !s.isEmpty()) { 
+    if (!s.endsWith(suffix)) {
+      s += QString(".") + suffix;
+    }
+    QDir dir(QucsSettings.QucsWorkDir.path());
+    if(!dir.rename(filename, s)) {
+      QMessageBox::critical(this, tr("Error"), tr("Cannot rename file: %1").arg(filename));
+      return;
+    }
+
+    slotUpdateTreeview();
+  }
+}
+
+void QucsApp::slotCMenuDelete()
+{
+  QModelIndex idx = Content->currentIndex();
+
+  //test the item is valid
+  if (!idx.isValid() || !idx.parent().isValid()) { return; }
+
+  QString filename = idx.sibling(idx.row(), 0).data().toString();
+  QString file(QucsSettings.QucsWorkDir.filePath(filename));
+
+  if (findDoc (file)) {
+    QMessageBox::critical(this, tr("Error"), tr("Cannot delete an open file!"));
+    return;
+  }
+
+  int No;
+  No = QMessageBox::warning(this, tr("Warning"),
+      tr("This will delete the file permanently! Continue ?"),
+      tr("No"), tr("Yes"));
+  if(No == 1) {
+    if(!QFile::remove(file)) {
+      QMessageBox::critical(this, tr("Error"),
+      tr("Cannot delete file: %1").arg(filename));
       return;
     }
   }
 
-
-
-  // check existence of files
-  QString Str = "\n";
-  for (i = 0; extensions[i] != 0; i++) {
-    QString Short = s + "." + extensions[i];
-    QString Long = QucsSettings.QucsWorkDir.filePath (Short);
-    bool exists = QFile::exists (Long);
-    if (exists)
-      Str += Short + "\n";
-  }
-  int No;
-  No = QMessageBox::warning (this, tr("Warning"),
-	tr("This will delete the files%1permanently! Continue ?").arg(Str),
-	tr("No"), tr("Yes"));
-  if (No != 1)
-    return;
-
-  // file removal
-  for (i = 0; extensions[i] != 0; i++) {
-    QString Short = s + "." + extensions[i];
-    QString Name = QucsSettings.QucsWorkDir.filePath (Short);
-    bool exists = QFile::exists (Name);
-    if (exists) {
-      // remove files
-      if (!QFile::remove (Name)) {
-	       QMessageBox::critical(this, tr("Error"),	tr("Cannot delete %1: \"%2\"!").arg(fileType (extensions[i])).
-	        arg(Short));
-	       continue;
-      }
-      // remove items from listview
-      //item = Content->findItem (Short, 0);
-      if (item) {
-	     // TODO???
-       //item->parent()->takeItem (item);
-	     delete item;
-      }
-    }
-  }
+  slotUpdateTreeview();
 }
 
-
-// ----------------------------------------------------------
-// Inserts the selected subschematic in the schematic
-void QucsApp::slotCMenuInsert ()
+void QucsApp::slotCMenuInsert()
 {
-    slotSelectSubcircuit(Content->currentItem());
+  slotSelectSubcircuit(Content->currentIndex());
 }
 
 // ################################################################
@@ -1258,67 +1123,6 @@ void QucsApp::slotButtonProjNew()
 }
 
 // ----------------------------------------------------------
-// Reads all files in the project directory and sort them into the
-// content ListView
-void QucsApp::readProjectFiles()
-{
-  //Is this OK instead of the above??
-  initContentListView();
-
-  int n;
-  // put all files into "Content"-ListView
-  QStringList Elements = QucsSettings.QucsWorkDir.entryList("*", QDir::Files, QDir::Name);
-  QStringList::iterator it;
-  QString Str;
-  ConSchematics->setExpanded(true);
-  for(it = Elements.begin(); it != Elements.end(); ++it) {
-    Str = QucsDoc::fileSuffix (*it);
-    if(Str == "sch") {
-      n = Schematic::testFile(QucsSettings.QucsWorkDir.filePath((*it).toAscii()));
-      if(n >= 0) {
-        if(n > 0) {
-          QTreeWidgetItem *temp = new QTreeWidgetItem(ConSchematics);
-          temp->setText(0, (*it).ascii());
-          temp->setText(1, QString::number(n)+tr("-port"));
-        }
-        else {
-          QTreeWidgetItem *temp = new QTreeWidgetItem(ConSchematics);
-          temp->setText(0, (*it).ascii());
-        }
-      }
-    }
-    else if(Str == "dpl") {
-      QTreeWidgetItem *temp = new QTreeWidgetItem(ConDisplays);
-      temp->setText(0, (*it).ascii());
-    }
-    else if(Str == "dat") {
-      QTreeWidgetItem *temp = new QTreeWidgetItem(ConDatasets);
-      temp->setText(0, (*it).ascii());
-    }
-    else if((Str == "vhdl") || (Str == "vhd")) {
-      QTreeWidgetItem *temp = new QTreeWidgetItem(ConSources);
-      temp->setText(0, (*it).ascii());
-    }
-    else if(Str == "v") {
-      QTreeWidgetItem *temp = new QTreeWidgetItem(ConVerilog);
-      temp->setText(0, (*it).ascii());
-    }
-    else if(Str == "va") {
-      QTreeWidgetItem *temp = new QTreeWidgetItem(ConVerilogA);
-      temp->setText(0, (*it).ascii());
-    }
-    else if((Str == "m") || (Str == "oct")) {
-      QTreeWidgetItem *temp = new QTreeWidgetItem(ConOctave);
-      temp->setText(0, (*it).ascii());
-    }
-    else {
-      QTreeWidgetItem *temp = new QTreeWidgetItem(ConOthers);
-      temp->setText(0, (*it).ascii());
-    }
-  }
-}
-
-// ----------------------------------------------------------
 // Opens an existing project.
 void QucsApp::openProject(const QString& Path)
 {
@@ -1350,11 +1154,7 @@ void QucsApp::openProject(const QString& Path)
   QucsSettings.QucsWorkDir.setPath(ProjDir.path());
   octave->adjustDirectory();
 
-  QStringList headers;
-  headers << tr("Content of ") + Name << tr("Note");
-  Content->setHeaderLabels(headers);
-
-  readProjectFiles();
+  Content->setProjPath(QucsSettings.QucsWorkDir.absolutePath());
 
   TabView->setCurrentPage(1);   // switch to "Content"-Tab
   ProjName = Name;   // remember the name of project
@@ -1417,11 +1217,7 @@ void QucsApp::slotMenuProjClose()
   QucsSettings.QucsWorkDir.setPath(QDir::homeDirPath()+QDir::convertSeparators ("/.qucs"));
   octave->adjustDirectory();
 
-  QStringList headers;
-  headers << tr("Content of") << tr("Note");
-  Content->setHeaderLabels(headers);
-
-  initContentListView();
+  Content->setProjPath("");
 
   TabView->setCurrentPage(0);   // switch to "Projects"-Tab
   ProjName = "";
@@ -1633,6 +1429,7 @@ bool QucsApp::saveFile(QucsDoc *Doc)
   if(Result < 0)  return false;
 
   updatePortNumber(Doc, Result);
+  slotUpdateTreeview();
   return true;
 }
 
@@ -1654,7 +1451,7 @@ void QucsApp::slotFileSave()
   statusBar()->message(tr("Ready."));
 
   if(!ProjName.isEmpty())
-    readProjectFiles();  // re-read the content ListView
+    slotUpdateTreeview();
 }
 
 // --------------------------------------------------------------
@@ -1741,6 +1538,7 @@ bool QucsApp::saveAs()
   if(n < 0)  return false;
 
   updatePortNumber(Doc, n);
+  slotUpdateTreeview();
   return true;
 }
 
@@ -1765,7 +1563,7 @@ void QucsApp::slotFileSaveAs()
   slotRefreshSchPath();
 
   if(!ProjName.isEmpty())
-    readProjectFiles();  // re-read the content ListView
+    slotUpdateTreeview();
 }
 
 
@@ -1796,6 +1594,7 @@ void QucsApp::slotFileSaveAll()
 
   // refresh the schematic file path
   slotRefreshSchPath();
+  slotUpdateTreeview();
 }
 
 // --------------------------------------------------------------
@@ -2011,19 +1810,6 @@ void QucsApp::updatePortNumber(QucsDoc *currDoc, int No)
 
   if (ext == "sch") {
     Model = "Sub";
-
-    // enter new port number into ListView
-    // TODO I'm not sure if I do things correctly here -> RECHECK!!!
-    QTreeWidgetItem *p;
-    //for(p = ConSchematics->firstChild(); p!=0; p = p->nextSibling()) {
-    for(int i=0; i<ConSchematics->childCount(); i++) {
-      p = ConSchematics->child(i);
-      if(p->text(0) == Name) {
-        if(No == 0) p->setText(1,"");
-        else p->setText(1,QString::number(No)+tr("-port"));
-        break;
-      }
-    }
   }
   else if (ext == "vhdl" || ext == "vhd") {
     Model = "VHDL";
@@ -2302,10 +2088,6 @@ void QucsApp::slotAfterSimulation(int Status, SimMessage *sim)
   if(!isTextDocument (sim->DocWidget))
     ((Schematic*)sim->DocWidget)->viewport()->update();
 
-  // put all dataset files into "Content"-ListView (update)
-/*  QStringList Elements = ProjDir.entryList("*.dat", QDir::Files, QDir::Name);
-  for(it = Elements.begin(); it != Elements.end(); ++it)
-    new QListViewItem(ConDatasets, (*it).ascii());*/
 }
 
 // ------------------------------------------------------------------------
@@ -2357,10 +2139,8 @@ void QucsApp::slotChangePage(QString& DocName, QString& DataDisplay)
     }
     else {
       if(file.open(QIODevice::ReadWrite)) {  // if document doesn't exist, create
-        //TODO RECHECK!! new Q3ListViewItem(ConDisplays, DataDisplay); // add new name
-        QTreeWidgetItem *temp = new QTreeWidgetItem(ConDisplays);
-        temp->setText(0,DataDisplay);
         d->DataDisplay = Info.fileName();
+        slotUpdateTreeview();
       }
       else {
         QMessageBox::critical(this, tr("Error"), tr("Cannot create ")+Name);
@@ -2403,35 +2183,29 @@ void QucsApp::slotToPage()
 }
 
 // -------------------------------------------------------------------
-// Is called when a double-click is made in the content ListView.
-void QucsApp::slotOpenContent(QTreeWidgetItem *item)
+// Changes to the data display of current page.
+void QucsApp::slotOpenContent(const QModelIndex &idx)
 {
-  slotHideEdit(); // disable text edit of component property
+  editText->setHidden(true); // disable text edit of component property
 
-  if(item == 0) return;   // no item was double clicked
-  if(item->parent() == 0) return; // no document, but item "schematic", ...
+  //test the item is valid
+  if (!idx.isValid()) { return; }
+  if (!idx.parent().isValid()) { return; }
 
-/*
-  QucsSettings.QucsWorkDir.setPath(QucsSettings.QucsHomeDir.path());
-  QString p = ProjName+"_prj";
-  if(!QucsSettings.QucsWorkDir.cd(p)) {
-    QMessageBox::critical(this, tr("Error"),
-			  tr("Cannot access project directory: ")+
-              QucsSettings.QucsWorkDir.path()+QDir::separator()+p);
-    return;
-  }*/
+  QString filename = idx.sibling(idx.row(), 0).data().toString();
+  QString note = idx.sibling(idx.row(), 1).data().toString();
+  QFileInfo Info(QucsSettings.QucsWorkDir.filePath(filename));
+  QString extName = Info.completeSuffix();
 
-  QFileInfo Info(QucsSettings.QucsWorkDir.filePath(item->text(0)));
-  QString Suffix = Info.extension(false);
-
-  if (Suffix == "sch" || Suffix == "dpl" || Suffix == "vhdl" ||
-      Suffix == "vhd" || Suffix == "v" || Suffix == "va" ||
-      Suffix == "m" || Suffix == "oct") {
+  if (extName == "sch" || extName == "dpl" || extName == "vhdl" ||
+      extName == "vhd" || extName == "v" || extName == "va" ||
+      extName == "m" || extName == "oct") {
     gotoPage(Info.absFilePath());
     updateRecentFilesList(Info.absFilePath());
+    slotUpdateRecentFiles();
 
-    if(item->text(1).isEmpty())     // is subcircuit ?
-      if(Suffix == "sch") return;
+    if(note.isEmpty())     // is subcircuit ?
+      if(extName == "sch") return;
 
     select->blockSignals(true);  // switch on the 'select' action ...
     select->setChecked(true);
@@ -2445,20 +2219,20 @@ void QucsApp::slotOpenContent(QTreeWidgetItem *item)
     return;
   }
 
-  if(Suffix == "dat") {
+  if(extName == "dat") {
     editFile(Info.absFilePath());  // open datasets with text editor
     return;
   }
 
-
   // File is no Qucs file, so go through list and search a user
   // defined program to open it.
   QStringList com;
-  QStringList::Iterator it = QucsSettings.FileTypes.begin();
-  while(it != QucsSettings.FileTypes.end()) {
-    if(Suffix == (*it).section('/',0,0)) {
+  QStringList::const_iterator it = QucsSettings.FileTypes.constBegin();
+  while(it != QucsSettings.FileTypes.constEnd()) {
+    if(extName == (*it).section('/',0,0)) {
       com = QStringList::split(" ", (*it).section('/',1,1));
       com << Info.absFilePath();
+
       QProcess *Program = new QProcess();
       //Program->setCommunication(0);
       QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
@@ -2482,29 +2256,35 @@ void QucsApp::slotOpenContent(QTreeWidgetItem *item)
 
 // ---------------------------------------------------------
 // Is called when the mouse is clicked within the Content QListView.
-void QucsApp::slotSelectSubcircuit(QTreeWidgetItem *item)
+void QucsApp::slotSelectSubcircuit(const QModelIndex &idx)
 {
-  slotHideEdit(); // disable text edit of component property
+  editText->setHidden(true); // disable text edit of component property
 
-  if(item == 0) {   // mouse button pressed not over an item ?
+  if(!idx.isValid()) {   // mouse button pressed not over an item ?
     Content->clearSelection();  // deselect component in ListView
     return;
   }
 
-
   bool isVHDL = false;
   bool isVerilog = false;
-  if(item->parent() == 0) return;
-  if(item->parent()->text(0) == tr("Schematics")) {
-    if(item->text(1).isEmpty())
+  QModelIndex parentIdx = idx.parent();
+  if(!parentIdx.isValid()) { return; }
+
+  QString category = parentIdx.data().toString();
+
+  if(category == tr("Schematics")) {
+    if(idx.sibling(idx.row(), 1).data().toString().isEmpty())
       return;   // return, if not a subcircuit
   }
-  else if(item->parent()->text(0) == tr("VHDL"))
+  else if(category == tr("VHDL"))
     isVHDL = true;
-  else if(item->parent()->text(0) == tr("Verilog"))
+  else if(category == tr("Verilog"))
     isVerilog = true;
   else
     return;
+
+  QString filename = idx.sibling(idx.row(), 0).data().toString();
+  QString note = idx.sibling(idx.row(), 1).data().toString();
 
   // delete previously selected elements
   if(view->selElem != 0)  delete view->selElem;
@@ -2525,7 +2305,7 @@ void QucsApp::slotSelectSubcircuit(QTreeWidgetItem *item)
     Comp = new Verilog_File();
   else
     Comp = new Subcircuit();
-  Comp->Props.first()->Value = item->text(0);
+  Comp->Props.first()->Value = idx.sibling(idx.row(), 0).data().toString();
   Comp->recreate(0);
   view->selElem = Comp;
 
@@ -2538,7 +2318,6 @@ void QucsApp::slotSelectSubcircuit(QTreeWidgetItem *item)
   MouseDoubleClickAction = 0;
 }
 
-
 // ---------------------------------------------------------
 // Is called when the mouse is clicked within the Content QListView.
 void QucsApp::slotSelectLibComponent(QTreeWidgetItem *item)
@@ -2549,18 +2328,9 @@ void QucsApp::slotSelectLibComponent(QTreeWidgetItem *item)
     // if the current document is a schematic activate the paste
     if(!isTextDocument(Doc))
     {
-
-        if(item == 0)
-        {
-            // mouse button pressed not over an item ?
-            Content->clearSelection();  // deselect component in ListView
-            return;
-        }
-
         // if theres not a higher level item, this is a top level item,
         // not a component item so return
         if(item->parent() == 0) return;
-
         if(item->text(1).isEmpty()) return;   // return, if not a subcircuit
 
         // copy the subcircuit schematic to the clipboard
@@ -2866,6 +2636,14 @@ void QucsApp::slotFileChanged(bool changed)
 {
   DocumentTab->setTabIcon(DocumentTab->currentIndex(),
       QPixmap((changed)? smallsave_xpm : empty_xpm));
+}
+
+// -----------------------------------------------------------
+// Update project view by call refresh function
+// looses the focus.
+void QucsApp::slotUpdateTreeview()
+{
+  Content->refresh();
 }
 
 // -----------------------------------------------------------

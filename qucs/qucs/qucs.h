@@ -30,6 +30,7 @@ class MouseActions;
 class SearchDialog;
 class OctaveWindow;
 class MessageDock;
+class ProjectView;
 
 class QLabel;
 class QAction;
@@ -123,21 +124,22 @@ public slots:
 
   // for menu that appears by right click in content ListView
   void slotShowContentMenu(const QPoint &);
+
   void slotCMenuOpen();
   void slotCMenuCopy();
   void slotCMenuRename();
   void slotCMenuDelete();
-  void slotCMenuDelGroup();
   void slotCMenuInsert();
 
+  void slotUpdateTreeview();
 private slots:
   void slotMenuProjOpen();
   void slotMenuProjClose();
   void slotMenuProjDel();
   void slotListProjOpen(const QModelIndex &);
-  void slotSelectSubcircuit(QTreeWidgetItem*);
+  void slotSelectSubcircuit(const QModelIndex &);
   void slotSelectLibComponent(QTreeWidgetItem*);
-  void slotOpenContent(QTreeWidgetItem*);
+  void slotOpenContent(const QModelIndex &);
   void slotSetCompView(int);
   void slotButtonProjNew();
   void slotButtonProjOpen();
@@ -162,7 +164,7 @@ public:
   QMenu *ContentMenu;
 
   // corresponding actions
-  QAction *ActionCMenuOpen, *ActionCMenuCopy, *ActionCMenuRename, *ActionCMenuDelete, *ActionCMenuDelGroup, *ActionCMenuInsert;
+  QAction *ActionCMenuOpen, *ActionCMenuCopy, *ActionCMenuRename, *ActionCMenuDelete, *ActionCMenuInsert;
 
   QAction *fileNew, *textNew, *fileNewDpl, *fileOpen, *fileSave, *fileSaveAs,
           *fileSaveAll, *fileClose, *fileExamples, *fileSettings, *filePrint, *fileQuit,
@@ -183,9 +185,7 @@ private:
   MessageDock     *messageDock;
 
   QListView       *Projects;
-  QTreeWidget     *Content;
-  QTreeWidgetItem *ConSchematics, *ConSources, *ConDisplays, *ConDatasets,
-                  *ConOthers, *ConVerilog, *ConVerilogA, *ConOctave;
+  ProjectView     *Content;
 
   QLineEdit       *CompSearch;
   QPushButton     *CompSearchClear;
@@ -200,7 +200,6 @@ private:
 // ********** Methods ***************************************************
   void initView();
   void initCursorMenu();
-  void initContentListView();
 
   void printCurrentDocument(bool);
   bool saveFile(QucsDoc *Doc=0);
@@ -223,7 +222,6 @@ private:
 public:
 
   void readProjects();
-  void readProjectFiles();
   void updatePathList(void); // update the list of paths, pruning non-existing paths
   void updatePathList(QStringList);
   void updateSchNameHash(void); // maps all schematic files in the path list
