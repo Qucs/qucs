@@ -155,6 +155,7 @@ SET(QUCS_SRCS
   imagewriter.cpp printerwriter.cpp projectView.cpp
   frame.cpp
   mousecursor.cpp
+  schematicscene.cpp
 )
 
 SET(QUCS_HDRS
@@ -185,6 +186,7 @@ SET(QUCS_MOC_HDRS
   octave_window.h
   qucs.h
   schematic.h
+  schematicscene.h
   textdoc.h
   messagedock.h
   projectView.h
@@ -362,10 +364,5 @@ INSTALL( FILES ${SCRIPTS} DESTINATION bin/ )
 # And then there's ways to customize this as well
 #set(CPACK_BINARY_DRAGNDROP ON)
 #include(CPack)
-
-
-
-
-
 
 
