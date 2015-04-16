@@ -109,7 +109,7 @@ SET(QUCS_SRCS
   mnemo.cpp qucs.cpp qucs_actions.cpp
   qucs_init.cpp
   syntax.cpp misc.cpp
-  projectView.cpp
+  projectView.cpp schematicview.cpp
 )
 
 SET(QUCS_HDRS
@@ -120,6 +120,7 @@ qucs.h
 qucsdoc.h
 syntax.h
 textdoc.h
+schematicview.h
 )
 
 #
@@ -128,6 +129,7 @@ textdoc.h
 SET(QUCS_MOC_HDRS
   qucs.h
   textdoc.h
+  schematicview.h
 )
 
 #
