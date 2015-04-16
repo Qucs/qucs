@@ -33,7 +33,7 @@ endif
 
 bin_PROGRAMS = qucs
 
-MOCHEADERS = qucs.h textdoc.h schematicview.h
+MOCHEADERS = qucs.h textdoc.h schematicview.h schematicscene.h
 MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
 
 qucs_SOURCES = qucsdoc.cpp \
@@ -41,7 +41,7 @@ qucs_SOURCES = qucsdoc.cpp \
   mnemo.cpp textdoc.cpp \
   syntax.cpp qrc_qucs.cpp   \
   misc.cpp projectView.cpp \
-	schematicview.cpp
+	schematicview.cpp schematicscene.cpp
 
 qrc_qucs.cpp: qucs.qrc
 	$(RCC) -o $@ $<

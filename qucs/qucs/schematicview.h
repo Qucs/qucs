@@ -26,6 +26,7 @@
 #include <QGraphicsView>
 #include <QString>
 
+#include "schematicscene.h"
 #include "qucsdoc.h"
 
 class QucsApp;
@@ -56,6 +57,7 @@ signals:
 
 protected slots:
 private:
+  SchematicScene *m_scene;
 };
 
 #endif /* SCHEMATICVIEW_H_ */

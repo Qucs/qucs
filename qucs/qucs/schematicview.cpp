@@ -29,6 +29,7 @@
 SchematicView::SchematicView(QucsApp *App_, const QString &Name_)
   : QGraphicsView(App_), QucsDoc(App_, Name_)
 {
+  m_scene = new SchematicScene(this);
 }
 
 SchematicView::~SchematicView()
@@ -73,7 +74,6 @@ void SchematicView::setName (const QString& Name_)
 {
   DocName = Name_;
   QFileInfo Info (DocName);
-  if (App) App->DocumentTab->setTabText(App->DocumentTab->indexOf(this), Info.fileName());
   QString base = Info.completeBaseName ();
   QString ext = Info.suffix();
   DataSet = base + ".dat";
