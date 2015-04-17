@@ -31,6 +31,13 @@ public:
   SchematicScene (QObject *);
   virtual ~SchematicScene ();
 
+protected:
+  virtual void mousePressEvent(QGraphicsSceneMouseEvent* event);
+  virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent* event);
+  virtual void mouseMoveEvent(QGraphicsSceneMouseEvent* event);
+  virtual void mouseDoubleClickEvent(QGraphicsSceneMouseEvent* event);
+  virtual void keyPressEvent(QKeyEvent* event);
+
 private:
 };
 

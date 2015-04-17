@@ -56,6 +56,12 @@ signals:
   void signalCursorPosChanged(int, int);
 
 protected slots:
+
+protected:
+  virtual void wheelEvent(QWheelEvent* event);
+  virtual void keyPressEvent(QKeyEvent* event);
+  virtual void resizeEvent(QResizeEvent* event);
+
 private:
   SchematicScene *m_scene;
 };

@@ -30,6 +30,12 @@ SchematicView::SchematicView(QucsApp *App_, const QString &Name_)
   : QGraphicsView(App_), QucsDoc(App_, Name_)
 {
   m_scene = new SchematicScene(this);
+  m_scene->setBackgroundBrush(QColor("white"));
+  m_scene->setSceneRect(0, 0, 800, 800);
+  setScene(m_scene);
+
+  setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+  setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
 }
 
 SchematicView::~SchematicView()
@@ -108,4 +114,19 @@ void SchematicView::showAll()
 
 void SchematicView::showNoZoom()
 {
+}
+
+void SchematicView::wheelEvent(QWheelEvent *event)
+{
+  QGraphicsView::wheelEvent(event);
+}
+
+void SchematicView::keyPressEvent(QKeyEvent *event)
+{
+  QGraphicsView::keyPressEvent(event);
+}
+
+void SchematicView::resizeEvent(QResizeEvent *event)
+{
+  QGraphicsView::resizeEvent(event);
 }

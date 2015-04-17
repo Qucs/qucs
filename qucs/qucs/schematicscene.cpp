@@ -32,3 +32,32 @@ SchematicScene::~SchematicScene()
 {
 }
 
+void
+SchematicScene::mousePressEvent(QGraphicsSceneMouseEvent* event)
+{
+  QGraphicsScene::mousePressEvent(event);
+}
+
+void
+SchematicScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
+{
+  QGraphicsScene::mouseReleaseEvent(event);
+}
+
+void
+SchematicScene::mouseMoveEvent(QGraphicsSceneMouseEvent* event)
+{
+  QGraphicsScene::mouseMoveEvent(event);
+}
+
+void
+SchematicScene::mouseDoubleClickEvent(QGraphicsSceneMouseEvent* event)
+{
+  QGraphicsScene::mouseDoubleClickEvent(event);
+}
+
+void
+SchematicScene::keyPressEvent(QKeyEvent* event)
+{
+  QGraphicsScene::keyPressEvent(event);
+}
