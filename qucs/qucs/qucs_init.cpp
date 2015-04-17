@@ -50,7 +50,7 @@ void QucsApp::initActions()
   fileNew->setStatusTip(tr("Creates a new document"));
   fileNew->setWhatsThis(
 	        tr("New\n\nCreates a new schematic or data display document"));
-  connect(fileNew, SIGNAL(triggered()), SLOT(slotFileNew()));
+  connect(fileNew, SIGNAL(triggered()), SLOT(slotSchematicNew()));
 
   textNew = new QAction(QIcon((":/bitmaps/textnew.png")), tr("New &Text"), this);
   textNew->setShortcut(Qt::CTRL+Qt::SHIFT+Qt::Key_V);

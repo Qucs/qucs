@@ -73,7 +73,7 @@ protected:
   void closeEvent(QCloseEvent*);
 
 public slots:
-  void slotFileNew();     // generate a new schematic in the view TabBar
+  void slotSchematicNew();// generate a new schematic in the view TabBar
   void slotTextNew();     // generate a new text editor in the view TabBar
   void slotFileOpen();    // open a document
   void slotFileSave();    // save a document

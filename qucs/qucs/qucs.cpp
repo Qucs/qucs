@@ -47,6 +47,7 @@
 #include "qucsdoc.h"
 #include "projectView.h"
 #include "textdoc.h"
+#include "schematicview.h"
 #include "dialogs/savedialog.h"
 #include "dialogs/newprojdialog.h"
 #include "dialogs/settingsdialog.h"
@@ -605,12 +606,15 @@ void QucsApp::slotButtonProjDel()
 // #####  documents.                                          #####
 // ################################################################
 
-void QucsApp::slotFileNew()
+void QucsApp::slotSchematicNew()
 {
   statusBar()->message(tr("Creating new schematic..."));
   slotHideEdit(); // disable text edit of component property
 
   statusBar()->message(tr("Ready."));
+  SchematicView *d = new SchematicView(this, "");
+  int i = DocumentTab->addTab(d, QPixmap(empty_xpm), QObject::tr("untitled"));
+  DocumentTab->setCurrentIndex(i);
 }
 
 // --------------------------------------------------------------
