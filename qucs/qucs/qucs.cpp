@@ -2765,11 +2765,14 @@ void QucsApp::updatePathList(QStringList newPathList)
 
 void QucsApp::updateRecentFilesList(QString s)
 {
+  QSettings* settings = new QSettings("qucs","qucs");
   QucsSettings.RecentDocs.removeAll(s);
-  QucsSettings.RecentDocs.append(s);
+  QucsSettings.RecentDocs.prepend(s);
   if (QucsSettings.RecentDocs.size() > MaxRecentFiles) {
-    QucsSettings.RecentDocs.removeFirst();
+    QucsSettings.RecentDocs.removeLast();
   }
+  settings->setValue("RecentDocs",QucsSettings.RecentDocs.join("*"));
+  delete settings;
   slotUpdateRecentFiles();
 }
 
@@ -2780,8 +2783,9 @@ void QucsApp::slotSaveDiagramToGraphicsFile()
 
 void QucsApp::slotSaveSchematicToGraphicsFile(bool diagram)
 {
-  ImageWriter *writer = new ImageWriter();
+  ImageWriter *writer = new ImageWriter(lastExportFilename);
   writer->setDiagram(diagram);
   writer->print(DocumentTab->currentPage());
+  lastExportFilename = writer->getLastSavedFile();
   delete writer;
 }
