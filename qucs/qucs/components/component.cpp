@@ -661,7 +661,7 @@ QString Component::form_spice_param_list(QStringList& ignore_list, QStringList& 
     return par_str;
 }
 
-QString Component::spice_netlist(bool isXyce)
+QString Component::spice_netlist(bool)
 {
     return QString("\n"); // ignore if not implemented
 }
@@ -711,12 +711,12 @@ QString Component::getSpiceNetlist(bool isXyce)
     return s;
 }
 
-QString Component::getExpression(bool isXyce)
+QString Component::getExpression(bool)
 {
     return QString("");
 }
 
-QString Component::getProbeVariable(bool isXyce)
+QString Component::getProbeVariable(bool)
 {
     return QString("");
 }
