@@ -2767,9 +2767,9 @@ void QucsApp::updateRecentFilesList(QString s)
 {
   QSettings* settings = new QSettings("qucs","qucs");
   QucsSettings.RecentDocs.removeAll(s);
-  QucsSettings.RecentDocs.append(s);
+  QucsSettings.RecentDocs.prepend(s);
   if (QucsSettings.RecentDocs.size() > MaxRecentFiles) {
-    QucsSettings.RecentDocs.removeFirst();
+    QucsSettings.RecentDocs.removeLast();
   }
   settings->setValue("RecentDocs",QucsSettings.RecentDocs.join("*"));
   delete settings;

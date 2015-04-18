@@ -1367,11 +1367,11 @@ void QucsApp::slotUpdateRecentFiles()
         it.remove();
     }
   }
-  int docs_cnt = QucsSettings.RecentDocs.size();
+
   for (int i = 0; i < MaxRecentFiles; ++i) {
-    if (i < docs_cnt) {
-      fileRecentAction[i]->setText(QucsSettings.RecentDocs[docs_cnt-1-i]);
-      fileRecentAction[i]->setData(QucsSettings.RecentDocs[docs_cnt-1-i]);
+    if (i < QucsSettings.RecentDocs.size()) {
+      fileRecentAction[i]->setText(QucsSettings.RecentDocs[i]);
+      fileRecentAction[i]->setData(QucsSettings.RecentDocs[i]);
       fileRecentAction[i]->setVisible(true);
     } else {
       fileRecentAction[i]->setVisible(false);
