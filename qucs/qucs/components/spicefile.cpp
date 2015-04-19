@@ -569,7 +569,7 @@ QString SpiceFile::getSubcktName()
     if (sub_file.open(QIODevice::ReadOnly)) {
         QStringList lst = QString(sub_file.readAll()).split("\n");
         foreach (QString str, lst) {
-            QRegExp subckt_header("^\\s*\\.SUBCKT\\s.*");
+            QRegExp subckt_header("^\\s*\\.(S|s)(U|u)(B|b)(C|c)(K|k)(T|t)\\s.*");
             if (subckt_header.exactMatch(str)) {
                 QRegExp sep("\\s");
                 s = str.section(sep,1,1,QString::SectionSkipEmpty);
@@ -589,7 +589,7 @@ QStringList SpiceFile::getSubcktPorts()
     if (sub_file.open(QIODevice::ReadOnly)) {
         QStringList lst1 = QString(sub_file.readAll()).split("\n");
         foreach (QString str, lst1) {
-            QRegExp subckt_header("^\\s*\\.SUBCKT\\s.*");
+            QRegExp subckt_header("^\\s*\\.(S|s)(U|u)(B|b)(C|c)(K|k)(T|t)\\s.*");
             if (subckt_header.exactMatch(str)) {
                 QRegExp sep("\\s");
                 QStringList lst2 = str.split(sep,QString::SkipEmptyParts);
