@@ -983,4 +983,6 @@ Configure Information:
   Linker            : $LD
     LDFLAGS         :   $LDFLAGS
     LIBS            :   $LIBS
+
+    Prefix          : $prefix
 ])
