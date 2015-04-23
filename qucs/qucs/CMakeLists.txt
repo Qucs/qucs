@@ -50,6 +50,12 @@ SET(LANGUAGEDIR "${CMAKE_INSTALL_PREFIX}/share/qucs/lang/")
 
 
 FIND_PACKAGE( Qt4 4.6.3 REQUIRED QtCore QtGui Qt3Support QtSvg QtXml QtScript)
+
+# Fix MSVC10 unresolved _WinMain@16 symbol
+if(MSVC10)
+  SET(QT_USE_QTMAIN TRUE)
+endif()
+
 INCLUDE( ${QT_USE_FILE} )
 
 #MESSAGE("QT_INCLUDES=[${QT_INCLUDES}]")
