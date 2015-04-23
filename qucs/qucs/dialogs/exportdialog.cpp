@@ -16,6 +16,7 @@
  ***************************************************************************/
 #include <cmath>
 #include "exportdialog.h"
+#include "misc.h"
 
 #include <QValidator>
 #include <QLabel>

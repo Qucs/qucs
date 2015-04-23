@@ -54,4 +54,10 @@ namespace std{
            arg != -std::numeric_limits<T>::infinity();
   }
 }
+
+// round also missing?
+inline double round(double d)
+{
+  return floor(d + 0.5);
+}
 #endif
