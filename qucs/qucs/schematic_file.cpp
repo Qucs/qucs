@@ -1541,8 +1541,8 @@ int NumPorts)
             default:
               (*it_name) += " : " + pc->Props.at(1)->Value;
           }
-          (*it_name) += " " + ((*it_type).isEmpty() ?
-          VHDL_SIGNAL_TYPE : (*it_type));
+          (*it_name) += " ";
+          (*it_name) += ((*it_type).isEmpty() ? VHDL_SIGNAL_TYPE : (*it_type));
         }
       }
     }
