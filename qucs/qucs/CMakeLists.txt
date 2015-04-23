@@ -87,7 +87,7 @@ ENDIF()
 # For some reason, on Windows QT_LIBRARIES point to static(?) .a libs
 # which do not provide the needed symbols. They are found on
 # the .dll libraries.
-IF(WIN32)
+IF(MINGW)
   LINK_DIRECTORIES("${QT_BINARY_DIR}")
 
   if(CMAKE_BUILD_TYPE STREQUAL "Debug")
@@ -95,7 +95,7 @@ IF(WIN32)
   else()
     set(QT_LIBRARIES QtCore4 QtGui4 Qt3Support4 QtSvg4 QtXml4 QtScript4)
   ENDIF()
-ENDIF(WIN32)
+ENDIF()
 
 ADD_DEFINITIONS(${QT_DEFINITIONS})
 
