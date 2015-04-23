@@ -145,7 +145,7 @@ void MutualX::createSymbol()
   oldNumProps = Props.count();
   NumProps = Num + Num * (Num - 1) / 2 + 1;
   if (oldNumProps!=NumProps) { // Coils count was changed
-    int oldCoils = rint(0.5*(sqrt((double) 8*oldNumProps-7)-1.0)); // calculate old number of coils
+    int oldCoils = ceil(0.5*(sqrt((double) 8*oldNumProps-7)-1.0)); // calculate old number of coils
     // we need to solve quadratic equation
     int dCoils = abs(oldCoils - Num);          // how many coils were added/removed?
 
