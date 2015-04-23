@@ -30,6 +30,7 @@
 #endif
 
 #include "polardiagram.h"
+#include "misc.h"
 
 
 PolarDiagram::PolarDiagram(int _cx, int _cy) : Diagram(_cx, _cy)

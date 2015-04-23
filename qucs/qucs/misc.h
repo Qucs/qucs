@@ -41,3 +41,17 @@ namespace misc {
   QString Verilog_Param(const QString);
   bool    checkVersion(QString&);
 }
+
+
+
+// Fix Visual Studio 2010 lack of std::isfinite
+// https://gist.github.com/ennetws/fb4d02dbf476557a3c71
+#if (_MSC_VER == 1600)
+namespace std{
+  template<typename T> bool isfinite(T arg){
+    return arg == arg &&
+           arg != std::numeric_limits<T>::infinity() &&
+           arg != -std::numeric_limits<T>::infinity();
+  }
+}
+#endif

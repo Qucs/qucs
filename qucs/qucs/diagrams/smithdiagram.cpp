@@ -30,6 +30,7 @@
 #endif
 
 #include "smithdiagram.h"
+#include "misc.h"
 
 
 SmithDiagram::SmithDiagram(int _cx, int _cy, bool ImpMode) : Diagram(_cx, _cy)
