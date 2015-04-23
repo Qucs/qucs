@@ -23,6 +23,7 @@
 #include "schematic.h"
 #include "imagewriter.h"
 #include "dialogs/exportdialog.h"
+#include "misc.h"
 
 #include <QtSvg>
 
