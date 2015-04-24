@@ -1448,5 +1448,5 @@ void ComponentDialog::slotHHeaderClicked(int headerIdx)
     cell = prop->item(row, 2);
     cell->setText(s);
   }
-  setAllVisible = not setAllVisible; // toggle visibility for the next double-click
+  setAllVisible = ! setAllVisible; // toggle visibility for the next double-click
 }
