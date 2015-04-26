@@ -1625,6 +1625,9 @@ void QucsApp::slotFileClose(int index)
 {
     // Call closeFile with a specific tab index
     closeFile(index);
+
+    // Reset Tunerdialog
+    tunerDia->slotResetTunerDialog();
 }
 
 // Close all documents except the current one
