@@ -351,8 +351,13 @@ void MouseActions::MMoveWire1(Schematic *Doc, QMouseEvent *Event)
   MAx2  = DOC_X_POS(Doc->viewport()->width());
   MAy2  = DOC_Y_POS(Doc->viewport()->height());
 
-  Doc->PostPaintEvent (_Line, Doc->ViewX1, MAy3, MAx2, MAy3);
-  Doc->PostPaintEvent (_Line, MAx3, Doc->ViewY1, MAx3, MAy2);
+  //Doc->PostPaintEvent (_Line, Doc->ViewX1, MAy3, MAx2, MAy3);
+  //Doc->PostPaintEvent (_Line, MAx3, Doc->ViewY1, MAx3, MAy2);
+  
+  //nvdl
+  Doc->PostPaintEvent (_Line, MAx3 - 25, MAy3, MAx3 + 25, MAy3);
+  Doc->PostPaintEvent (_Line, MAx3, MAy3 - 25, MAx3, MAy3 + 25);
+  
   Doc->viewport()->update();
 }
 
@@ -658,6 +663,39 @@ void MouseActions::MMoveOnGrid(Schematic *Doc, QMouseEvent *Event)
   Doc->PostPaintEvent (_Line, MAx3+21, MAy3, MAx3+21, MAy3+15);
 }
 
+void MouseActions::MMoveFreely(Schematic *Doc, QMouseEvent *Event) {
+
+	//qDebug() << "MMoveFreely";
+
+	MAx3  = DOC_X_POS(Event->pos().x());
+	MAy3  = DOC_Y_POS(Event->pos().y());
+
+	Doc->setOnGrid(MAx3, MAy3);
+
+	Node *pn;
+	bool found = false;
+	int snapDistance = 5;
+
+	Schematic *sch = (Schematic *) QucsMain->getDoc(-1);
+
+	for (pn = sch->Nodes->first(); pn != 0; pn = sch->Nodes->next()) {
+		  if(abs(pn->cx - MAx3) <= snapDistance && abs(pn->cy - MAy3) <= snapDistance) {
+			  found = true;
+			  break;
+		  }
+	}
+
+	if (found) {
+		//qDebug() << "Found node";
+		Doc->PostPaintEvent (_Line, MAx3 - 20, MAy3 - 20, MAx3 + 20, MAy3 + 20);
+		Doc->PostPaintEvent (_Line, MAx3 - 20, MAy3 + 20, MAx3 + 20, MAy3 - 20);
+	} else {
+		Doc->PostPaintEvent (_Line, MAx3 - 20, MAy3, MAx3 + 20, MAy3);
+		Doc->PostPaintEvent (_Line, MAx3, MAy3 - 20, MAx3, MAy3 + 20);
+	}
+
+	//qDebug() << "Mouse move ";
+}
 
 /**
  * @brief MouseActions::MMoveMoveTextB Paints mouse symbol for "move component text" mode.
@@ -1303,8 +1341,13 @@ void MouseActions::MPressWire1(Schematic *Doc, QMouseEvent*, float fX, float fY)
   //Doc->PostPaintEvent (_DotLine);
   //Doc->PostPaintEvent (_NotRop);
   //if(drawn) {
-    Doc->PostPaintEvent (_Line, 0, MAy3, MAx2, MAy3); // erase old mouse cross
-    Doc->PostPaintEvent (_Line, MAx3, 0, MAx3, MAy2);
+  
+  	// nvdl
+    //Doc->PostPaintEvent (_Line, 0, MAy3, MAx2, MAy3); // erase old mouse cross
+    //Doc->PostPaintEvent (_Line, MAx3, 0, MAx3, MAy2);
+    
+  Doc->PostPaintEvent (_Line, MAx3 - 25, MAy3, MAx3 + 25, MAy3);
+  Doc->PostPaintEvent (_Line, MAx3, MAy3 - 25, MAx3, MAy3 + 25);
   //}
   //drawn = false;
 
@@ -1503,7 +1546,7 @@ void MouseActions::MReleaseSelect(Schematic *Doc, QMouseEvent *Event)
   QucsMain->MousePressAction = &MouseActions::MPressSelect;
   QucsMain->MouseReleaseAction = &MouseActions::MReleaseSelect;
   QucsMain->MouseDoubleClickAction = &MouseActions::MDoubleClickSelect;
-  QucsMain->MouseMoveAction = 0;   // no element moving
+  QucsMain->MouseMoveAction = &MouseActions::MMoveFreely;   // no element moving
   Doc->highlightWireLabels ();
   Doc->viewport()->update();
   drawn = false;
@@ -1523,7 +1566,7 @@ void MouseActions::MReleaseSelect2(Schematic *Doc, QMouseEvent *Event)
   Doc->selectElements(MAx1, MAy1, MAx1+MAx2, MAy1+MAy2, Ctrl);
 
   Doc->releaseKeyboard();  // allow keyboard inputs again
-  QucsMain->MouseMoveAction = 0;
+  QucsMain->MouseMoveAction = &MouseActions::MMoveFreely;
   QucsMain->MousePressAction = &MouseActions::MPressSelect;
   QucsMain->MouseReleaseAction = &MouseActions::MReleaseSelect;
   QucsMain->MouseDoubleClickAction = &MouseActions::MDoubleClickSelect;
@@ -1558,7 +1601,7 @@ void MouseActions::MReleaseMoving(Schematic *Doc, QMouseEvent*)
   endElementMoving(Doc, &movingElements);
   Doc->releaseKeyboard();  // allow keyboard inputs again
 
-  QucsMain->MouseMoveAction = 0;
+  QucsMain->MouseMoveAction = &MouseActions::MMoveFreely;
   QucsMain->MousePressAction = &MouseActions::MPressSelect;
   QucsMain->MouseReleaseAction = &MouseActions::MReleaseSelect;
   QucsMain->MouseDoubleClickAction = &MouseActions::MDoubleClickSelect;
@@ -1606,7 +1649,7 @@ void MouseActions::MReleaseResizeDiagram(Schematic *Doc, QMouseEvent *Event)
   pd->Bounding(x1, x2, y1, y2);
   Doc->enlargeView(x1, x2, y1, y2);
 
-  QucsMain->MouseMoveAction = 0;
+  QucsMain->MouseMoveAction = &MouseActions::MMoveFreely;
   QucsMain->MousePressAction = &MouseActions::MPressSelect;
   QucsMain->MouseReleaseAction = &MouseActions::MReleaseSelect;
   QucsMain->MouseDoubleClickAction = &MouseActions::MDoubleClickSelect;
@@ -1622,7 +1665,7 @@ void MouseActions::MReleaseResizePainting(Schematic *Doc, QMouseEvent *Event)
 {
   if(Event->button() != Qt::LeftButton) return;
 
-  QucsMain->MouseMoveAction = 0;
+  QucsMain->MouseMoveAction = &MouseActions::MMoveFreely;
   QucsMain->MousePressAction = &MouseActions::MPressSelect;
   QucsMain->MouseReleaseAction = &MouseActions::MReleaseSelect;
   QucsMain->MouseDoubleClickAction = &MouseActions::MDoubleClickSelect;

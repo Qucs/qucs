@@ -75,6 +75,7 @@ public:
   void MMoveRotate(Schematic*, QMouseEvent*);
   void MMoveActivate(Schematic*, QMouseEvent*);
   void MMoveOnGrid(Schematic*, QMouseEvent*);
+  void MMoveFreely(Schematic*, QMouseEvent*);
   void MMoveResizePainting(Schematic*, QMouseEvent*);
   void MMoveMoveText(Schematic*, QMouseEvent*);
   void MMoveMoveTextB(Schematic*, QMouseEvent*);
