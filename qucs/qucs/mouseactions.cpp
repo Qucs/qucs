@@ -910,7 +910,7 @@ void MouseActions::MPressSelect(Schematic *Doc, QMouseEvent *Event, float fX, fl
 
   if(focusElement)
     // print define value in hex, see element.h
-    qDebug() << "MPressSelect: focusElement->Type" <<  QString("0x%1").arg(focusElement->Type, 0, 16);
+    qDebug() << "MPressSelect: focusElement->Type" <<  QString("0x%1").arg(focusElement->Type, 0, 16) << ", No " << No;
   else
     qDebug() << "MPressSelect";
 
@@ -1060,8 +1060,6 @@ void MouseActions::MPressTune(Schematic *Doc, QMouseEvent *Event, float fX, floa
     focusElement = Doc->selectElement(fX, fY, false, &No);
     isMoveEqual = false;   // moving not neccessarily square
 
-    MAx3 = No;
-
     if(focusElement)
       // print define value in hex, see element.h
       qDebug() << "MPressTune: focusElement->Type" <<  QString("0x%1").arg(focusElement->Type, 0, 16);
@@ -1077,26 +1075,13 @@ void MouseActions::MPressTune(Schematic *Doc, QMouseEvent *Event, float fX, floa
             Component *pc = (Component*)focusElement;
             Property *pp = 0;
             if(!pc) return;  // should never happen
-            this->MAx1 = pc->cx + pc->tx;
-            this->MAy1 = pc->cy + pc->ty;
 
-            int z, n=0;  // "n" is number of property on screen
-            pp = pc->Props.first();
-            for(z=this->MAx3; z>0; z--) {  // calculate "n"
-              if(!pp) {  // should never happen
-                return;
-              }
-              if(pp->display) n++;   // is visible ?
-              pp = pc->Props.next();
+            // current property
+            if (No > 0) {
+                No--;// No counts also the on/screen component Name, so subtract 1 to get the actual property number
+                pp = pc->Props.at(No);
             }
 
-            pp = 0;
-            if(this->MAx3 > 0)  pp = pc->Props.at(this->MAx3-1); // current property
-            //else s = pc->Name;
-
-            /*Property *prop = pc->Props.at(No);
-            if (pp->display == false)
-                return; // Hidden property, don't add*/
             if (! App->tunerDia->containsProperty(pp) )
             {
                 tunerElement *tune = new tunerElement(App->tunerDia, pc, No);

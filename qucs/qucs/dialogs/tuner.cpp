@@ -81,17 +81,13 @@ tunerElement::tunerElement(QWidget *parent, Component *component, int selectedPr
 
     index = gbox->indexOf(value);
     gbox->getItemPosition(index, &row, &column, &rowSpan, &colSpan);
-    for (int i = 0; i < 3; i++)
-    {
-        QLabel *unitLabel = new QLabel(unit, this);
-        gbox->addWidget(unitLabel, row+i, column+1, 1, 1); // Value
-    }
+    QLabel *unitLabel = new QLabel(unit, this);
+    gbox->addWidget(unitLabel, row, column+1, 1, 1); // Value
 
-    int nextColumn = gbox->columnCount();
     QPushButton *up = new QPushButton(tr("Up"), this);
-    gbox->addWidget(up, 1, nextColumn, gbox->rowCount()/2, 1);
+    gbox->addWidget(up, 1, gbox->columnCount() -1, 1, 1);
     QPushButton *down = new QPushButton(tr("Down"), this);
-    gbox->addWidget(down, 2, nextColumn, gbox->rowCount()/2, 1);
+    gbox->addWidget(down, 2, gbox->columnCount() - 1, 1, 1);
 
     double numericValue = lst.first().toDouble();
     double maxValue = numericValue + (numericValue * 0.10);
