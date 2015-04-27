@@ -287,7 +287,7 @@ void MouseActions::MMoveElement(Schematic *Doc, QMouseEvent *Event)
   //QPainter painter(Doc->viewport());
   setPainter(Doc);
 
-  if(selElem->Type == isPainting) {
+  if (selElem->Type == isPainting) {
     Doc->PostPaintEvent (_NotRop, 0,0,0,0);
     x -= Doc->contentsX();
     y -= Doc->contentsY();
@@ -300,7 +300,7 @@ void MouseActions::MMoveElement(Schematic *Doc, QMouseEvent *Event)
 
 
   // ********** it is a component or diagram
-  if(drawn) selElem->paintScheme(Doc); // erase old scheme
+  if (drawn) selElem->paintScheme(Doc); // erase old scheme
   drawn = true;
 
 //  Component *comp = (Component*)selElem;
@@ -308,6 +308,7 @@ void MouseActions::MMoveElement(Schematic *Doc, QMouseEvent *Event)
 
   selElem->setCenter(gx, gy);
   selElem->paintScheme(Doc); // paint scheme at new position
+
   Doc->viewport()->update();
 }
 
@@ -346,6 +347,7 @@ void MouseActions::MMoveWire1(Schematic *Doc, QMouseEvent *Event)
 {
   MAx3 = DOC_X_POS(Event->pos().x());
   MAy3 = DOC_Y_POS(Event->pos().y());
+
   Doc->setOnGrid(MAx3, MAy3);
 
   MAx2  = DOC_X_POS(Doc->viewport()->width());
@@ -354,9 +356,11 @@ void MouseActions::MMoveWire1(Schematic *Doc, QMouseEvent *Event)
   //Doc->PostPaintEvent (_Line, Doc->ViewX1, MAy3, MAx2, MAy3);
   //Doc->PostPaintEvent (_Line, MAx3, Doc->ViewY1, MAx3, MAy2);
   
-  //nvdl
-  Doc->PostPaintEvent (_Line, MAx3 - 25, MAy3, MAx3 + 25, MAy3);
-  Doc->PostPaintEvent (_Line, MAx3, MAy3 - 25, MAx3, MAy3 + 25);
+  if (!MCloseToNode(Doc, Event)) {
+	  //nvdl: todo: Make the cross size and color user configurable
+	  Doc->PostPaintEvent (_Line, MAx3 - 25, MAy3, MAx3 + 25, MAy3);
+	  Doc->PostPaintEvent (_Line, MAx3, MAy3 - 25, MAx3, MAy3 + 25);
+  }
   
   Doc->viewport()->update();
 }
@@ -380,6 +384,8 @@ void MouseActions::MMoveSelect(Schematic *Doc, QMouseEvent *Event)
   }
 
   Doc->PostPaintEvent (_Rect, MAx1, MAy1, MAx2, MAy2);
+
+  Doc->viewport()->update();
 }
 
 // -----------------------------------------------------------
@@ -409,7 +415,7 @@ void MouseActions::MMoveMoving(Schematic *Doc, QMouseEvent *Event)
 
   movingElements.clear();
   Doc->copySelectedElements(&movingElements);
-  Doc->viewport()->repaint();
+  //Doc->viewport()->repaint();
 
   Wire *pw;
   // Changes the position of all moving elements by dx/dy
@@ -444,6 +450,7 @@ void MouseActions::MMoveMoving(Schematic *Doc, QMouseEvent *Event)
   QucsMain->MouseMoveAction = &MouseActions::MMoveMoving2;
   QucsMain->MouseReleaseAction = &MouseActions::MReleaseMoving;
 
+  Doc->viewport()->update();
 }
 
 // -----------------------------------------------------------
@@ -464,8 +471,11 @@ void MouseActions::MMoveMoving2(Schematic *Doc, QMouseEvent *Event)
 //          ((Wire*)pe)->Label->paintScheme(&painter);
 
   drawn = true;
-  if((Event->state() & Qt::ControlModifier) == 0)
+
+  if ((Event->state() & Qt::ControlModifier) == 0) {
     Doc->setOnGrid(MAx2, MAy2);  // use grid only if CTRL key not pressed
+  }
+
   MAx1 = MAx2 - MAx1;
   MAy1 = MAy2 - MAy1;
   MAx3 += MAx1;  MAy3 += MAy1;   // keep track of the complete movement
@@ -481,6 +491,8 @@ void MouseActions::MMoveMoving2(Schematic *Doc, QMouseEvent *Event)
 
   MAx1 = MAx2;
   MAy1 = MAy2;
+
+  Doc->viewport()->update();
 }
 
 
@@ -499,6 +511,8 @@ void MouseActions::MMovePaste(Schematic *Doc, QMouseEvent *Event)
   drawn = true;
   QucsMain->MouseMoveAction = &MouseActions::MMoveMoving2;
   QucsMain->MouseReleaseAction = &MouseActions::MReleasePaste;
+
+  Doc->viewport()->update();
 }
 
 // -----------------------------------------------------------
@@ -537,6 +551,8 @@ void MouseActions::MMoveDelete(Schematic *Doc, QMouseEvent *Event)
   // cannot draw on the viewport, it is displaced by the size of dock and toolbar
   Doc->PostPaintEvent (_Line, MAx3-15, MAy3-15, MAx3+15, MAy3+15,0,0,false);
   Doc->PostPaintEvent (_Line, MAx3-15, MAy3+15, MAx3+15, MAy3-15,0,0,false);
+
+  Doc->viewport()->update();
 }
 
 
@@ -559,6 +575,8 @@ void MouseActions::MMoveLabel(Schematic *Doc, QMouseEvent *Event)
   Doc->PostPaintEvent (_Line, MAx3+12, MAy3-12, MAx3+15, MAy3-23);
   Doc->PostPaintEvent (_Line, MAx3+14, MAy3-17, MAx3+17, MAy3-17);
   Doc->PostPaintEvent (_Line, MAx3+19, MAy3-12, MAx3+16, MAy3-23);
+
+  Doc->viewport()->update();
 }
 
 
@@ -575,6 +593,8 @@ void MouseActions::MMoveMarker(Schematic *Doc, QMouseEvent *Event)
   Doc->PostPaintEvent (_Line, MAx3, MAy3-2, MAx3-8, MAy3-10);
   Doc->PostPaintEvent (_Line, MAx3+1, MAy3-3, MAx3+8, MAy3-10);
   Doc->PostPaintEvent (_Line, MAx3-7, MAy3-10, MAx3+7, MAy3-10);
+
+  Doc->viewport()->update();
 }
 
 
@@ -593,6 +613,8 @@ void MouseActions::MMoveMirrorY(Schematic *Doc, QMouseEvent *Event)
   Doc->PostPaintEvent (_Line, MAx3+11, MAy3-4, MAx3+9, MAy3-9);
   Doc->PostPaintEvent (_Line, MAx3+11, MAy3-3, MAx3+6, MAy3-3);
   Doc->PostPaintEvent (_Arc, MAx3-10, MAy3-8, 21, 10, 16*20, 16*140,false);
+
+  Doc->viewport()->update();
 }
 
 
@@ -611,6 +633,8 @@ void MouseActions::MMoveMirrorX(Schematic *Doc, QMouseEvent *Event)
   Doc->PostPaintEvent (_Line, MAx3-4, MAy3+11, MAx3-9, MAy3+9);
   Doc->PostPaintEvent (_Line, MAx3-3, MAy3+11, MAx3-3, MAy3+6);
   Doc->PostPaintEvent (_Arc, MAx3-8, MAy3-10, 10, 21, 16*110, 16*140,false);
+
+  Doc->viewport()->update();
 }
 
 /**
@@ -626,6 +650,8 @@ void MouseActions::MMoveRotate(Schematic *Doc, QMouseEvent *Event)
   Doc->PostPaintEvent (_Line, MAx3-6, MAy3+8, MAx3-6, MAy3+1);
   Doc->PostPaintEvent (_Line, MAx3-7, MAy3+8, MAx3-12, MAy3+8);
   Doc->PostPaintEvent (_Arc, MAx3-10, MAy3-10, 21, 21, -16*20, 16*240,false);
+
+  Doc->viewport()->update();
 }
 
 
@@ -642,6 +668,8 @@ void MouseActions::MMoveActivate(Schematic *Doc, QMouseEvent *Event)
   Doc->PostPaintEvent (_Rect, MAx3, MAy3-9, 14, 10);
   Doc->PostPaintEvent (_Line, MAx3, MAy3-9, MAx3+13, MAy3);
   Doc->PostPaintEvent (_Line, MAx3, MAy3, MAx3+13, MAy3-9);
+
+  Doc->viewport()->update();
 }
 
 
@@ -661,40 +689,68 @@ void MouseActions::MMoveOnGrid(Schematic *Doc, QMouseEvent *Event)
   Doc->PostPaintEvent (_Line, MAx3+13, MAy3, MAx3+13, MAy3+15);
   Doc->PostPaintEvent (_Line, MAx3+17, MAy3, MAx3+17, MAy3+15);
   Doc->PostPaintEvent (_Line, MAx3+21, MAy3, MAx3+21, MAy3+15);
+
+  Doc->viewport()->update();
 }
 
+/**
+ * @brief MouseActions::MMoveFreely Called when there is no active operation.
+ * @param Doc
+ * @param Event
+ */
 void MouseActions::MMoveFreely(Schematic *Doc, QMouseEvent *Event) {
 
 	//qDebug() << "MMoveFreely";
 
-	MAx3  = DOC_X_POS(Event->pos().x());
-	MAy3  = DOC_Y_POS(Event->pos().y());
+	if (MCloseToNode(Doc, Event)) {
+		qDebug() << "Close to node";
+	}
 
-	Doc->setOnGrid(MAx3, MAy3);
+
+	//Doc->viewport()->repaint();
+    Doc->viewport()->update();
+}
+
+/**
+ * @brief MouseActions::MCloseToNode Checks for near by node.
+ * @param Doc
+ * @param Event
+ */
+bool MouseActions::MCloseToNode(Schematic *Doc, QMouseEvent *Event) {
+
+	int x, y;
+
+	//MAx3  = DOC_X_POS(Event->pos().x());
+	//MAy3  = DOC_Y_POS(Event->pos().y());
+
+	x = DOC_X_POS(Event->pos().x());
+	y = DOC_Y_POS(Event->pos().y());
+
+	//Doc->setOnGrid(MAx3, MAy3);
 
 	Node *pn;
-	bool found = false;
-	int snapDistance = 5;
+	bool nodeFound = false;
+	int snapDistance = 5; // nvdl: todo: Add to configuration
 
 	Schematic *sch = (Schematic *) QucsMain->getDoc(-1);
 
 	for (pn = sch->Nodes->first(); pn != 0; pn = sch->Nodes->next()) {
 		  if(abs(pn->cx - MAx3) <= snapDistance && abs(pn->cy - MAy3) <= snapDistance) {
-			  found = true;
+			  nodeFound = true;
 			  break;
 		  }
 	}
 
-	if (found) {
-		//qDebug() << "Found node";
+	if (nodeFound) {
+		qDebug() << "Found a node";
 		Doc->PostPaintEvent (_Line, MAx3 - 20, MAy3 - 20, MAx3 + 20, MAy3 + 20);
 		Doc->PostPaintEvent (_Line, MAx3 - 20, MAy3 + 20, MAx3 + 20, MAy3 - 20);
+		return true;
 	} else {
-		Doc->PostPaintEvent (_Line, MAx3 - 20, MAy3, MAx3 + 20, MAy3);
-		Doc->PostPaintEvent (_Line, MAx3, MAy3 - 20, MAx3, MAy3 + 20);
+		//Doc->PostPaintEvent (_Line, MAx3 - 20, MAy3, MAx3 + 20, MAy3);
+		//Doc->PostPaintEvent (_Line, MAx3, MAy3 - 20, MAx3, MAy3 + 20);
+		return false;
 	}
-
-	//qDebug() << "Mouse move ";
 }
 
 /**
@@ -715,6 +771,8 @@ void MouseActions::MMoveMoveTextB(Schematic *Doc, QMouseEvent *Event)
   Doc->PostPaintEvent (_Line, MAx3+23, MAy3+10, MAx3+25, MAy3+10);
   Doc->PostPaintEvent (_Line, MAx3+26, MAy3   , MAx3+26, MAy3+ 3);
   Doc->PostPaintEvent (_Line, MAx3+26, MAy3+ 7, MAx3+26, MAy3+10);
+
+  Doc->viewport()->update();
 }
 
 
@@ -733,6 +791,8 @@ void MouseActions::MMoveMoveText(Schematic *Doc, QMouseEvent *Event)
   MAy3  = newY;
 
   Doc->PostPaintEvent (_Rect, MAx1, MAy1, MAx2, MAy2);
+
+  Doc->viewport()->update();
 }
 
 
@@ -749,6 +809,7 @@ void MouseActions::MMoveZoomIn(Schematic *Doc, QMouseEvent *Event)
   Doc->PostPaintEvent (_Line, MAx3+14, MAy3   , MAx3+22, MAy3);
   Doc->PostPaintEvent (_Line, MAx3+18, MAy3-4 , MAx3+18, MAy3+4);
   Doc->PostPaintEvent (_Ellipse, MAx3+12, MAy3-6, 13, 13,0,0,false);
+
   Doc->viewport()->update();
 }
 
@@ -859,8 +920,9 @@ void MouseActions::rightPressMenu(Schematic *Doc, QMouseEvent *Event, float fX, 
 
   *focusMEvent = *Event;  // remember event for "edit component" action
   ComponentMenu->popup(Event->globalPos());
-  Doc->viewport()->update();
   drawn = false;
+
+  Doc->viewport()->update();
 }
 
 // -----------------------------------------------------------
@@ -996,6 +1058,7 @@ void MouseActions::MPressSelect(Schematic *Doc, QMouseEvent *Event, float fX, fl
 
     case isDiagramHScroll:  // scroll in tabular ?
       MAy1 = MAx1;
+      //nvdl: todo: Is break needed?
 
     case isDiagramVScroll:
       focusElement->Type = isDiagram;
@@ -1117,8 +1180,9 @@ void MouseActions::MPressActivate(Schematic *Doc, QMouseEvent*, float fX, float 
     QucsMain->MouseReleaseAction = &MouseActions::MReleaseActivate;
     QucsMain->MouseMoveAction = &MouseActions::MMoveSelect;
   }
-  Doc->viewport()->update();
+
   drawn = false;
+  Doc->viewport()->update();
 }
 
 // -----------------------------------------------------------
@@ -1376,8 +1440,10 @@ void MouseActions::MPressWire2(Schematic *Doc, QMouseEvent *Event, float fX, flo
 {
 
   int set1 = 0, set2 = 0;
+
   switch(Event->button()) {
-  case Qt::LeftButton :
+
+  case Qt::LeftButton:
     if(MAx1 == 0) { // which wire direction first ?
       if(MAy2 != MAy3)
         set1 = Doc->insertWire(new Wire(MAx3, MAy3, MAx3, MAy2));
@@ -1409,7 +1475,7 @@ void MouseActions::MPressWire2(Schematic *Doc, QMouseEvent *Event, float fX, flo
       }
     }
 
-    Doc->viewport()->update();
+    //Doc->viewport()->update();
     drawn = false;
     if(set1 | set2) Doc->setChanged(true, true);
     MAx3 = MAx2;
@@ -1417,7 +1483,7 @@ void MouseActions::MPressWire2(Schematic *Doc, QMouseEvent *Event, float fX, flo
     break;
 
    /// \todo document right mouse button changes the wire corner
-  case Qt::RightButton :
+  case Qt::RightButton:
     if(MAx1 == 0) {
       Doc->PostPaintEvent (_Line, MAx3, MAy3, MAx3, MAy2); // erase old
       Doc->PostPaintEvent (_Line, MAx3, MAy2, MAx2, MAy2); // erase old
@@ -1426,6 +1492,8 @@ void MouseActions::MPressWire2(Schematic *Doc, QMouseEvent *Event, float fX, flo
       Doc->PostPaintEvent (_Line, MAx3, MAy3, MAx2, MAy3); // erase old
       Doc->PostPaintEvent (_Line, MAx2, MAy3, MAx2, MAy2); // erase old
     }
+
+    Doc->viewport()->repaint();
 
     MAx2  = int(fX);
     MAy2  = int(fY);
@@ -1440,10 +1508,12 @@ void MouseActions::MPressWire2(Schematic *Doc, QMouseEvent *Event, float fX, flo
       Doc->PostPaintEvent (_Line, MAx3, MAy3, MAx2, MAy3); // paint
       Doc->PostPaintEvent (_Line, MAx2, MAy3, MAx2, MAy2); // paint
     }
+
     break;
 
   default: ;    // avoids compiler warnings
   }
+
   Doc->viewport()->update();
 }
 

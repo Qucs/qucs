@@ -76,6 +76,7 @@ public:
   void MMoveActivate(Schematic*, QMouseEvent*);
   void MMoveOnGrid(Schematic*, QMouseEvent*);
   void MMoveFreely(Schematic*, QMouseEvent*);
+  bool MCloseToNode(Schematic*, QMouseEvent*);
   void MMoveResizePainting(Schematic*, QMouseEvent*);
   void MMoveMoveText(Schematic*, QMouseEvent*);
   void MMoveMoveTextB(Schematic*, QMouseEvent*);
