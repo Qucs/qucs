@@ -171,13 +171,17 @@ void WireLabel::paint(ViewPainter *p)
   }
 
   if(initValue.isEmpty())
-    p->Painter->setPen(QPen(Qt::darkMagenta,0));
+    //p->Painter->setPen(QPen(Qt::darkMagenta,0));
+	p->Painter->setPen(QPen(Qt::blue,2));
   else
-    p->Painter->setPen(QPen(Qt::red,0));
+    p->Painter->setPen(QPen(Qt::red,2));
 
   if(phi)  p->drawArc(cx-4, cy-4, 8, 8, phi, 16*255);
+
   p->Painter->drawLine(a, b, c, b);
   p->Painter->drawLine(a, b, a, d);
+  //p->Painter->drawLine(c, b, c, d); // nvdl: todo: Find the text size and draw a box
+  //p->Painter->drawLine(a, d, c, d);
   p->Painter->drawLine(xpaint, ypaint, a, b);
 
   x2 = int(double(x2) / p->Scale);
