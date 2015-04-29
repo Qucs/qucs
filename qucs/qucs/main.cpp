@@ -778,39 +778,63 @@ int main(int argc, char *argv[])
 
   bool netlist_flag = false;
   bool print_flag = false;
+  bool printHelp = false;
   QString page = "A4";
-  int dpi = 96;
+  int dpi = 96, start;
   QString color = "RGB";
   QString orientation = "portraid";
 
-  // simple command line parser
-  for (int i = 1; i < argc; ++i) {
-    if (!strcmp(argv[i], "-h") || !strcmp(argv[i], "--help")) {
-      fprintf(stdout,
-  "Usage: %s [-hv] \n"
-  "       qucs -n -i FILENAME -o FILENAME\n"
-  "       qucs -p -i FILENAME -o FILENAME.[pdf|png|svg|eps] \n\n"
-  "  -h, --help     display this help and exit\n"
-  "  -v, --version  display version information and exit\n"
-  "  -n, --netlist  convert Qucs schematic into netlist\n"
-  "  -p, --print    print Qucs schematic to file (eps needs inkscape)\n"
-  "    --page [A4|A3|B4|B5]         set print page size (default A4)\n"
-  "    --dpi NUMBER                 set dpi value (default 96)\n"
-  "    --color [RGB|RGB]            set color mode (default RGB)\n"
-  "    --orin [portraid|landscape]  set orientation (default portraid)\n"
-  "  -i FILENAME    use file as input schematic\n"
-  "  -o FILENAME    use file as output netlist\n"
-  "  -icons         create component icons under ./bitmaps_generated\n"
-  "  -doc           dump data for documentation:\n"
-  "                 * file with of categories: categories.txt\n"
-  "                 * one directory per category (e.g. ./lumped components/)\n"
-  "                   - CSV file with component data ([comp#]_data.csv)\n"
-  "                   - CSV file with component properties. ([comp#]_props.csv)\n"
-  "  -list-entries  list component entry formats for schematic and netlist\n"
-  , argv[0]);
-      return 0;
+  if (argc == 2) {
+    QFile schFile(argv[1]);
+    if (schFile.exists()) { // nvdl: todo: Add some extra checks for validation of the file
+      inputfile = argv[1];
     }
-    else if (!strcmp(argv[i], "-v") || !strcmp(argv[i], "--version")) {
+  }
+
+  for (int i = 1; i < argc; i ++) {
+    if (!strcmp(argv[i], "-h") || !strcmp(argv[i], "--help")) {
+      printHelp = true;
+      break;
+    }
+  }
+
+  if (printHelp) {
+    fprintf(stdout,
+    "Usage: %s [-hv] \n"
+    "       qucs -n -i FILENAME -o FILENAME\n"
+    "       qucs -p -i FILENAME -o FILENAME.[pdf|png|svg|eps] \n\n"
+    "  -h, --help     display this help and exit\n"
+    "  -v, --version  display version information and exit\n"
+    "  -n, --netlist  convert Qucs schematic into netlist\n"
+    "  -p, --print    print Qucs schematic to file (eps needs inkscape)\n"
+    "    --page [A4|A3|B4|B5]         set print page size (default A4)\n"
+    "    --dpi NUMBER                 set dpi value (default 96)\n"
+    "    --color [RGB|RGB]            set color mode (default RGB)\n"
+    "    --orin [portraid|landscape]  set orientation (default portraid)\n"
+    "  -i FILENAME    use file as input schematic\n"
+    "  -o FILENAME    use file as output netlist\n"
+    "  -icons         create component icons under ./bitmaps_generated\n"
+    "  -doc           dump data for documentation:\n"
+    "                 * file with of categories: categories.txt\n"
+    "                 * one directory per category (e.g. ./lumped components/)\n"
+    "                   - CSV file with component data ([comp#]_data.csv)\n"
+    "                   - CSV file with component properties. ([comp#]_props.csv)\n"
+    "  -list-entries  list component entry formats for schematic and netlist\n"
+    , argv[0]);
+
+    return 0;
+  }
+
+  // simple command line parser
+
+  if (!inputfile.isEmpty()) {
+    start = 2;
+  } else {
+    start = 1;
+  }
+
+  for (int i = start; i < argc; ++i) {
+    if (!strcmp(argv[i], "-v") || !strcmp(argv[i], "--version")) {
 #ifdef GIT
       fprintf(stdout, "Qucs " PACKAGE_VERSION " (" GIT ")" "\n");
 #else
