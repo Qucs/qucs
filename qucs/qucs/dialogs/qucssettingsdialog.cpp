@@ -146,6 +146,11 @@ QucsSettingsDialog::QucsSettingsDialog(QucsApp *parent, const char *name)
     appSettingsGrid->addWidget(checkTextAntiAliasing,9,1);
     checkTextAntiAliasing->setChecked(QucsSettings.TextAntiAliasing);
 
+    appSettingsGrid->addWidget(new QLabel(tr("Set custom shortcut:")));
+    ShortcutButton = new QPushButton(appSettingsTab);
+    connect(ShortcutButton, SIGNAL(clicked()), SLOT(slotShortcutDialog()));
+    appSettingsGrid->addWidget(ShortcutButton,10,1);
+
     t->addTab(appSettingsTab, tr("Settings"));
 
     // ...........................................................
@@ -381,6 +386,7 @@ QucsSettingsDialog::QucsSettingsDialog(QucsApp *parent, const char *name)
     QString s = QString::number(QucsSettings.largeFontSize, 'f', 1);
     LargeFontSizeEdit->setText(s);
     BGColorButton->setPaletteBackgroundColor(QucsSettings.BGColor);
+    ShortcutButton->setText("Custom Shortcut");
     undoNumEdit->setText(QString::number(QucsSettings.maxUndo));
     editorEdit->setText(QucsSettings.Editor);
     checkWiring->setChecked(QucsSettings.NodeWiring);
@@ -395,6 +401,7 @@ QucsSettingsDialog::QucsSettingsDialog(QucsApp *parent, const char *name)
     ascoEdit->setText(QucsSettings.AscoBinDir.canonicalPath());
     octaveEdit->setText(QucsSettings.OctaveBinDir.canonicalPath());
 
+    shortcutDialog = NULL;
 
     resize(300, 200);
 }
@@ -627,6 +634,15 @@ void QucsSettingsDialog::slotBGColorDialog()
                    BGColorButton->paletteBackgroundColor(), this);
     if(c.isValid())
         BGColorButton->setPaletteBackgroundColor(c);
+}
+
+// -----------------------------------------------------------
+void QucsSettingsDialog::slotShortcutDialog()
+{
+  if (!shortcutDialog) {
+    shortcutDialog = new QucsShortcutDialog(App);
+  }
+  shortcutDialog->exec();
 }
 
 // -----------------------------------------------------------

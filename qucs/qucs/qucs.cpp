@@ -146,6 +146,7 @@ QucsApp::QucsApp()
 
   initView();
   initActions();
+  slotSetAllShortcut();
   initMenuBar();
   initToolBar();
   initStatusBar();
@@ -1904,7 +1905,8 @@ void QucsApp::closeEvent(QCloseEvent* Event)
     QucsSettings.y=pos().y();
     QucsSettings.dx=size().width();
     QucsSettings.dy=size().height();
-    saveApplSettings();
+    saveApplSettings(this);
+    clearShortcutMap();
 
    if(closeAllFiles()) {
       emit signalKillEmAll();   // kill all subprocesses

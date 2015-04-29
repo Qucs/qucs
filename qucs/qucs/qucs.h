@@ -233,6 +233,7 @@ public:
    ************************************************** */
 
 public slots:
+  void slotSetAllShortcut();
   void slotShowWarnings();
   void slotResetWarnings();
   void printCursorPosition(int, int);
