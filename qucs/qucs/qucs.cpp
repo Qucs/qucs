@@ -1621,6 +1621,7 @@ void QucsApp::slotFileClose(int index)
 void QucsApp::closeFile(int index)
 {
     statusBar()->message(tr("Closing file..."));
+
     slotHideEdit(); // disable text edit of component property
 
     QucsDoc *Doc = getDoc(index);
@@ -1634,8 +1635,6 @@ void QucsApp::closeFile(int index)
         case 2 : return;
       }
     }
-    editText->move(QPoint(0, 0));
-    editText->hide();
 
     DocumentTab->removeTab(index);
     delete Doc;
@@ -2122,11 +2121,11 @@ void QucsApp::slotChangePage(QString& DocName, QString& DataDisplay)
     if (ext != "vhd" && ext != "vhdl" && ext != "v" && ext != "va" &&
 	ext != "oct" && ext != "m") {
       d = new Schematic(this, Name);
-      i = DocumentTab->addTab((Schematic *)d, QPixmap(empty_xpm), Info.fileName()); 
+      i = DocumentTab->addTab((Schematic *)d, QPixmap(empty_xpm), DataDisplay);
     }
     else {
       d = new TextDoc(this, Name);
-      i = DocumentTab->addTab((TextDoc *)d, QPixmap(empty_xpm), Info.fileName());
+      i = DocumentTab->addTab((TextDoc *)d, QPixmap(empty_xpm), DataDisplay);
     }
     DocumentTab->setCurrentIndex(i);
 
@@ -2629,6 +2628,7 @@ void QucsApp::slotEditElement()
 // looses the focus.
 void QucsApp::slotHideEdit()
 {
+  editText->setParent(this, 0);
   editText->setHidden(true);
 }
 
