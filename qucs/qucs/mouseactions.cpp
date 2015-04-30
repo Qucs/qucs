@@ -1938,7 +1938,11 @@ void MouseActions::MReleasePaste(Schematic *Doc, QMouseEvent *Event)
     // keep rotation sticky for pasted elements
     rot = movingRotated;
     x1 = y1 = 0;
-    while(rot--) rotateElements(Doc,x1,y1);
+
+    while(rot--)
+      rotateElements(Doc,x1,y1);
+
+    //Doc->viewport()->repaint();
 
     QucsMain->MouseMoveAction = &MouseActions::MMovePaste;
     QucsMain->MousePressAction = 0;
@@ -1960,7 +1964,10 @@ void MouseActions::MReleasePaste(Schematic *Doc, QMouseEvent *Event)
 
     x1 = DOC_X_POS(Event->pos().x());
     y1 = DOC_Y_POS(Event->pos().y());
+
     rotateElements(Doc,x1,y1);
+    Doc->viewport()->repaint();
+
     paintElementsScheme(Doc);
     // save rotation
     movingRotated++;
