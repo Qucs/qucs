@@ -1965,8 +1965,8 @@ void MouseActions::MReleasePaste(Schematic *Doc, QMouseEvent *Event)
     x1 = DOC_X_POS(Event->pos().x());
     y1 = DOC_Y_POS(Event->pos().y());
 
-    rotateElements(Doc,x1,y1);
     Doc->viewport()->repaint();
+    rotateElements(Doc,x1,y1);
 
     paintElementsScheme(Doc);
     // save rotation
