@@ -2,8 +2,8 @@
 <Properties>
   <View=0,-137,1087,721,1,0,240>
   <Grid=10,10,1>
-  <DataSet=irfz44_test.dat>
-  <DataDisplay=irfz44_test.dpl>
+  <DataSet=irfz44_switch.dat>
+  <DataDisplay=irfz44_switch.dpl>
   <OpenDisplay=1>
   <Script=irfz44_test.m>
   <RunScript=0>

@@ -2,8 +2,8 @@
 <Properties>
   <View=0,-66,1022,1497,1,0,0>
   <Grid=10,10,1>
-  <DataSet=ngsp-RCL.dat>
-  <DataDisplay=ngsp-RCL.dpl>
+  <DataSet=RCL.dat>
+  <DataDisplay=RCL.dpl>
   <OpenDisplay=1>
   <Script=ngsp-RCL.m>
   <RunScript=0>
