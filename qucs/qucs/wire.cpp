@@ -17,6 +17,7 @@
 #include "wire.h"
 
 #include <QPainter>
+#include <QDebug>
 
 Wire::Wire(int _x1, int _y1, int _x2, int _y2, Node *n1, Node *n2)
 {
@@ -97,7 +98,11 @@ bool Wire::getSelected(int x_, int y_)
 // ----------------------------------------------------------------
 void Wire::paintScheme(QPainter *p)
 {
+  p->setPen(QPen(Qt::blue,2));
   p->drawLine(x1, y1, x2, y2);
+
+  qDebug() << "Wire::paintScheme()";
+
 //  if(Label)
 //    if((Label->Type == isHWireLabel) || (Label->Type == isHWireLabel))
 //    if(Label->Type == isHWireLabel)
@@ -109,15 +114,13 @@ void Wire::paint(ViewPainter *p)
 {
   if(isSelected) {
     //p->Painter->setPen(QPen(Qt::darkGray,6));
-	p->Painter->setPen(QPen(Qt::red,2));
-    p->drawLine(x1, y1, x2, y2);
-    //p->Painter->setPen(QPen(Qt::lightGray,2));
-    //p->drawLine(x1, y1, x2, y2);
+    p->Painter->setPen(QPen(Qt::blue,2));
   } else {
-	//p->Painter->setPen(QPen(Qt::darkBlue,2));
-	p->Painter->setPen(QPen(Qt::black,2));
-	p->drawLine(x1, y1, x2, y2);
+    //p->Painter->setPen(QPen(Qt::darkBlue,2));
+    p->Painter->setPen(QPen(Qt::black,2));
   }
+
+  p->drawLine(x1, y1, x2, y2);
 }
 
 // ----------------------------------------------------------------
