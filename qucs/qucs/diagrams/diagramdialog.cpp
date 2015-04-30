@@ -1484,10 +1484,10 @@ void DiagramDialog::slotSelectSimulatorDataset()
     if (new_idx>-1) {
         ChooseData->setCurrentIndex(new_idx);
         slotReadVars(ChooseData->currentIndex());
-    } else {
+    } /* else {
         ChooseSimulator->setCurrentIndex(0); // revert default if not exists
-    }
-    slotSetSimulator();
+    }*/
+    //slotSetSimulator();
 }
 
 void DiagramDialog::slotSetSimulator()
