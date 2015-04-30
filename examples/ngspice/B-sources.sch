@@ -2,8 +2,8 @@
 <Properties>
   <View=0,0,909,800,1,0,0>
   <Grid=10,10,1>
-  <DataSet=4.dat>
-  <DataDisplay=4.dpl>
+  <DataSet=B-sources.dat>
+  <DataDisplay=B-sources.dpl>
   <OpenDisplay=1>
   <Script=4.m>
   <RunScript=0>
