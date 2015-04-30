@@ -530,13 +530,14 @@ void Schematic::contentsMouseMoveEvent(QMouseEvent *Event)
 void Schematic::contentsMousePressEvent(QMouseEvent *Event)
 {
   App->editText->setHidden(true); // disable text edit of component property
+
   if(App->MouseReleaseAction == &MouseActions::MReleasePaste)
     return;
 
   float x = float(Event->pos().x())/Scale + float(ViewX1);
   float y = float(Event->pos().y())/Scale + float(ViewY1);
 
-  if(Event->button() != Qt::LeftButton)
+  /*if(Event->button() != Qt::LeftButton)
     if(App->MousePressAction != &MouseActions::MPressElement)
       if(App->MousePressAction != &MouseActions::MPressWire2) {
         // show menu on right mouse button
@@ -546,6 +547,7 @@ void Schematic::contentsMousePressEvent(QMouseEvent *Event)
           (App->view->*(App->MouseReleaseAction))(this, Event);
         return;
       }
+   */
 
   if(App->MousePressAction)
     (App->view->*(App->MousePressAction))(this, Event, x, y);
@@ -554,6 +556,16 @@ void Schematic::contentsMousePressEvent(QMouseEvent *Event)
 // -----------------------------------------------------------
 void Schematic::contentsMouseReleaseEvent(QMouseEvent *Event)
 {
+
+  float x = float(Event->pos().x())/Scale + float(ViewX1);
+  float y = float(Event->pos().y())/Scale + float(ViewY1);
+
+  // Show menu on right mouse button release
+  if (Event->button() == Qt::RightButton) {
+    App->view->rightPressMenu(this, Event, x, y);
+    return;
+  }
+
   if(App->MouseReleaseAction)
     (App->view->*(App->MouseReleaseAction))(this, Event);
 }
