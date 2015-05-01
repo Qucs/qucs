@@ -134,7 +134,8 @@ void WireLabel::paint(ViewPainter *p)
   int c, d;
   int a = int(double(x2) / p->Scale) >> 1;
   int b = int(double(y2) / p->Scale) >> 1;
-  if(cx < x1+a) {    // where should frame be painted ?
+
+  if (cx < x1+a) {    // where should frame be painted ?
     if(cy < y1+b) {
       if(phi == 16*50)  phi += 16*180;
       p->map(x1-3, y1-2, a, b);    // low right
@@ -170,25 +171,27 @@ void WireLabel::paint(ViewPainter *p)
     }
   }
 
-  if(initValue.isEmpty())
-    //p->Painter->setPen(QPen(Qt::darkMagenta,0));
-	p->Painter->setPen(QPen(Qt::blue,2));
-  else
+  if (initValue.isEmpty()) {
+    p->Painter->setPen(QPen(Qt::darkMagenta,2));
+  } else {
     p->Painter->setPen(QPen(Qt::red,2));
+  }
 
-  if(phi)  p->drawArc(cx-4, cy-4, 8, 8, phi, 16*255);
+  if (phi) {
+    p->drawArc(cx-4, cy-4, 8, 8, phi, 16*255);
+  }
 
   p->Painter->drawLine(a, b, c, b);
   p->Painter->drawLine(a, b, a, d);
-  //p->Painter->drawLine(c, b, c, d); // nvdl: todo: Find the text size and draw a box
+  // nvdl: todo: Find the text size and draw a box or circle around text
+  //p->Painter->drawLine(c, b, c, d);
   //p->Painter->drawLine(a, d, c, d);
   p->Painter->drawLine(xpaint, ypaint, a, b);
 
   x2 = int(double(x2) / p->Scale);
   y2 = int(double(y2) / p->Scale);
 
-  if(isSelected)
-  {
+  if (isSelected) {
     p->Painter->setPen(QPen(Qt::darkGray,3));
     p->drawRoundRect(x1-2, y1-2, x2+6, y2+5);
   }
