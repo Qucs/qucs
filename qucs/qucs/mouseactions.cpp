@@ -336,9 +336,9 @@ void MouseActions::MMoveWire2(Schematic *Doc, QMouseEvent *Event)
 
   drawWire(Doc, true); // Draw wire outline
 
-  MCloseToNode(Doc, Event); // Draw node cross if close
+  MCloseToNode(Doc, Event); // Draw cross if close to a node
 
-  QucsMain->MouseDoubleClickAction = &MouseActions::MDoubleClickWire2;
+  //QucsMain->MouseDoubleClickAction = &MouseActions::MDoubleClickWire2;
   Doc->viewport()->update();
 }
 
@@ -462,8 +462,10 @@ void MouseActions::MMoveMoving(Schematic *Doc, QMouseEvent *Event)
 
   Wire *pw;
   // Changes the position of all moving elements by dx/dy
-  for(Element *pe=movingElements.first(); pe!=0; pe=movingElements.next()) {
-    if(pe->Type == isWire) {
+
+  for (Element *pe=movingElements.first(); pe!=0; pe=movingElements.next()) {
+
+    if (pe->Type == isWire) {
       pw = (Wire*)pe;   // connecting wires are not moved completely
 
       if(((unsigned long)pw->Port1) > 3) { pw->x1 += MAx1;  pw->y1 += MAy1; }
@@ -481,10 +483,12 @@ void MouseActions::MMoveMoving(Schematic *Doc, QMouseEvent *Event)
         if(pw->Label->cy > pw->y2) pw->Label->cy = pw->y2;
       }
 
+    } else {
+      pe->setCenter(MAx1, MAy1, true);
     }
-    else pe->setCenter(MAx1, MAy1, true);
 
-  pe->paintScheme(Doc);
+    pe->paintScheme(Doc);
+    qDebug() << "MMoveMoving: paintScheme";
   }
 
   drawn = true;
@@ -528,11 +532,14 @@ void MouseActions::MMoveMoving2(Schematic *Doc, QMouseEvent *Event)
 
   moveElements(&movingElements, MAx1, MAy1);  // moves elements by MAx1/MAy1
 
-  //Doc->viewport()->repaint();
-
   // paint afterwards to avoid conflict between wire and label painting
   for (pe = movingElements.first(); pe != 0; pe = movingElements.next()) {
-    pe->paintScheme(Doc);
+    if (pe->Type == isWire) {
+      // nvdl: todo: Temporary fix until "paintScheme" of wire is fixed
+      Doc->PostPaintEvent(_Line, pe->x1, pe->y1, pe->x2, pe->y2, 0, 0, false);
+    } else {
+      pe->paintScheme(Doc);
+    }
   }
 
   //if(pe->Type == isWire)  if(((Wire*)pe)->Label)
@@ -757,16 +764,14 @@ void MouseActions::MMoveFreely(Schematic *Doc, QMouseEvent *Event) {
 	//qDebug() << "MMoveFreely";
 
 	if (MCloseToNode(Doc, Event)) {
-		qDebug() << "Close to node";
+		//qDebug() << "Close to node";
 	}
 
-
-	//Doc->viewport()->repaint();
-    Doc->viewport()->update();
+	Doc->viewport()->update();
 }
 
 /**
- * @brief MouseActions::MCloseToNode Checks for near-by node.
+ * @brief MouseActions::MCloseToNode Checks for a near-by node.
  * @param Doc
  * @param Event
  */
@@ -776,8 +781,6 @@ bool MouseActions::MCloseToNode(Schematic *Doc, QMouseEvent *Event) {
 	bool nodeFound = false;
 	int snapDistance = 5; // nvdl: todo: Add to configuration
 
-	//Schematic *sch = (Schematic *) QucsMain->getDoc(-1);
-
 	for (pn = Doc->Nodes->first(); pn != 0; pn = Doc->Nodes->next()) {
 		  if(abs(pn->cx - MAx2) <= snapDistance && abs(pn->cy - MAy2) <= snapDistance) {
 			  nodeFound = true;
@@ -786,13 +789,11 @@ bool MouseActions::MCloseToNode(Schematic *Doc, QMouseEvent *Event) {
 	}
 
 	if (nodeFound) {
-		qDebug() << "MCloseToNode: Found a node";
+		//qDebug() << "MCloseToNode: Found a node";
 		Doc->PostPaintEvent (_Line, MAx2 - 20, MAy2 - 20, MAx2 + 20, MAy2 + 20);
 		Doc->PostPaintEvent (_Line, MAx2 - 20, MAy2 + 20, MAx2 + 20, MAy2 - 20);
 		return true;
 	} else {
-		//Doc->PostPaintEvent (_Line, MAx3 - 20, MAy3, MAx3 + 20, MAy3);
-		//Doc->PostPaintEvent (_Line, MAx3, MAy3 - 20, MAx3, MAy3 + 20);
 		return false;
 	}
 }
@@ -1238,14 +1239,15 @@ void MouseActions::MPressSelect(Schematic *Doc, QMouseEvent *Event, float fX, fl
         QucsMain->MouseMoveAction = &MouseActions::MMoveSelect;
         QucsMain->MousePressAction = 0;
         QucsMain->MouseDoubleClickAction = 0;
+
         Doc->grabKeyboard(); // no keyboard inputs during move actions
         // Update matching wire label highlighting
         Doc->highlightWireLabels ();
+
         break;
 
       case isDiagramHScroll:  // scroll in tabular ?
         MAy1 = MAx1;
-        //nvdl: todo: Is break needed?
 
       case isDiagramVScroll:
         focusElement->Type = isDiagram;
@@ -1287,13 +1289,15 @@ void MouseActions::MPressSelect(Schematic *Doc, QMouseEvent *Event, float fX, fl
       case isNode:
         if (QucsSettings.NodeWiring)
         {
-          MAx1 = 0;   // paint wire corner first up, then left/right
-          MAx3 = focusElement->cx;  // works even if node is not on grid
+          toggleWireOrientation = false;
+          //MAx1 = 0;   // paint wire corner first up, then left/right
+
+          /*MAx3 = focusElement->cx;  // works even if node is not on grid
           MAy3 = focusElement->cy;
           QucsMain->MouseMoveAction = &MouseActions::MMoveWire2;
           QucsMain->MousePressAction = &MouseActions::MPressWire2;
           QucsMain->MouseReleaseAction = 0; // if function is called from elsewhere
-          QucsMain->MouseDoubleClickAction = 0;
+          QucsMain->MouseDoubleClickAction = 0;*/
 
           formerAction = QucsMain->select; // to restore action afterwards
           QucsMain->activeAction = QucsMain->insWire;
@@ -1307,8 +1311,12 @@ void MouseActions::MPressSelect(Schematic *Doc, QMouseEvent *Event, float fX, fl
           QucsMain->insWire->blockSignals(false);
           // Update matching wire label highlighting
           Doc->highlightWireLabels ();
+
+          MPressWire1(Doc, Event, fX, fY);
+
           break;
         }
+
         break;
 
       case isWire:
@@ -1323,10 +1331,10 @@ void MouseActions::MPressSelect(Schematic *Doc, QMouseEvent *Event, float fX, fl
   }
 
   //if (!drawn) {
-    QucsMain->MousePressAction = 0;
-    QucsMain->MouseDoubleClickAction = 0;
-    Doc->grabKeyboard();  // no keyboard inputs during move actions
-    Doc->viewport()->update();
+    //QucsMain->MousePressAction = 0;
+    //QucsMain->MouseDoubleClickAction = 0;
+    //Doc->grabKeyboard();  // no keyboard inputs during move actions
+    //Doc->viewport()->update();
   //}
 
   if (focusElement == 0) {
@@ -1351,6 +1359,8 @@ void MouseActions::MPressSelect(Schematic *Doc, QMouseEvent *Event, float fX, fl
 
   // Update matching wire label highlighting
   Doc->highlightWireLabels();
+
+  Doc->viewport()->update();
 }
 
 // -----------------------------------------------------------
@@ -1625,22 +1635,7 @@ void MouseActions::MPressWire1(Schematic *Doc, QMouseEvent*, float fX, float fY)
 
   qDebug() << "MPressWire1";
 
-  //Doc->PostPaintEvent (_DotLine);
-  //Doc->PostPaintEvent (_NotRop);
-  //if(drawn) {
-  
-  	// nvdl
-    //Doc->PostPaintEvent (_Line, 0, MAy3, MAx2, MAy3); // erase old mouse cross
-    //Doc->PostPaintEvent (_Line, MAx3, 0, MAx3, MAy2);
-
-  //Doc->PostPaintEvent (_Line, MAx3 - 25, MAy3, MAx3 + 25, MAy3);
-  //Doc->PostPaintEvent (_Line, MAx3, MAy3 - 25, MAx3, MAy3 + 25);
-
-
-  //}
-  //drawn = false;
-
-  MAx1 = 0; // No flip in draw order
+  toggleWireOrientation = false;
 
   MAx3 = int(fX);
   MAy3 = int(fY);
@@ -1649,6 +1644,8 @@ void MouseActions::MPressWire1(Schematic *Doc, QMouseEvent*, float fX, float fY)
   formerAction = 0; // keep wire action active after first wire finished
   QucsMain->MouseMoveAction = &MouseActions::MMoveWire2;
   QucsMain->MousePressAction = &MouseActions::MPressWire2;
+  QucsMain->MouseReleaseAction = 0;
+  QucsMain->MouseDoubleClickAction = &MouseActions::MDoubleClickWire2;
 
   // Double-click action is set in "MMoveWire2" to not initiate it
   // during "Wire1" actions.
@@ -1675,7 +1672,7 @@ void MouseActions::MPressWire2(Schematic *Doc, QMouseEvent *Event, float fX, flo
   switch (Event->button()) {
 
   case Qt::LeftButton:
-    drawWire(Doc, false); // Draw wires
+    drawWire(Doc, false); // Draw real wires
     break;
 
    /// \todo document right mouse button changes the wire corner
@@ -1688,8 +1685,9 @@ void MouseActions::MPressWire2(Schematic *Doc, QMouseEvent *Event, float fX, flo
     MAy2 = int(fY);
     Doc->setOnGrid(MAx2, MAy2);*/
 
-    MAx1 ^= 1;    // change the painting direction of wire corner
-    drawWire(Doc, true);
+    //MAx1 ^= 1; // Change the direction of wire corner
+    toggleWireOrientation = not toggleWireOrientation;
+    drawWire(Doc, true); // Draw the new outline
 
     break;
 
@@ -1700,11 +1698,18 @@ void MouseActions::MPressWire2(Schematic *Doc, QMouseEvent *Event, float fX, flo
 }
 
 // -----------------------------------------------------------
+/**
+ * @brief MouseActions::drawWire Draws an actual wire or its outline
+ * @param Doc
+ * @param Event
+ * @param fX
+ * @param fY
+ */
 void MouseActions::drawWire(Schematic* Doc, bool outline) {
 
-  int dx, dy;
+  int dx, dy, xIntersect, yIntersect, xLen, yLen;
   int set1 = 0, set2 = 0;
-  bool drawVerHor;
+  bool drawVerHor, wireFinished;
 
   dx = abs(MAx3 - MAx2);
   dy = abs(MAy3 - MAy2);
@@ -1715,37 +1720,66 @@ void MouseActions::drawWire(Schematic* Doc, bool outline) {
     drawVerHor = true;
   }
 
-  if (MAx1) drawVerHor = not drawVerHor; // Toggle order
+  if (toggleWireOrientation) drawVerHor = not drawVerHor; // Toggle order
 
-  if (outline) {
-    if (drawVerHor) {
-      Doc->PostPaintEvent (_Line, MAx2, MAy2, MAx2, MAy3);
-      Doc->PostPaintEvent (_Line, MAx2, MAy3, MAx3, MAy3);
-    } else {
-      Doc->PostPaintEvent (_Line, MAx2, MAy2, MAx3, MAy2);
-      Doc->PostPaintEvent (_Line, MAx3, MAy2, MAx3, MAy3);
-    }
+  //qDebug() << "drawVerHor: " << drawVerHor;
+  //qDebug() << "toggleWireOrientation: " << toggleWireOrientation;
+
+  if (drawVerHor) {
+    xIntersect = MAx3;
+    yIntersect = MAy2;
+  } else {
+    xIntersect = MAx2;
+    yIntersect = MAy3;
+  }
+
+  if (outline) { // Draw wire(s) outlines(s)
+    Doc->PostPaintEvent (_Line, MAx3, MAy3, xIntersect, yIntersect);
+    Doc->PostPaintEvent (_Line, xIntersect, yIntersect, MAx2, MAy2);
 
   } else { // Draw actual wire(s)
+    xLen = abs(MAx3 - MAx2);
+    yLen = abs(MAy3 - MAy2);
 
     if (drawVerHor) {
-      if (MAy2 != MAy3) {
+      if (xLen > 0) {
+        set1 = Doc->insertWire(new Wire(xIntersect, yIntersect, MAx2, MAy2));
+      }
+
+      if (yLen > 0) {
+        set2 = set1;
+        set1 = Doc->insertWire(new Wire(MAx3, MAy3, xIntersect, yIntersect));
+      }
+
+    } else {
+      if (xLen > 0) {
+        set1 = Doc->insertWire(new Wire(MAx3, MAy3, xIntersect, yIntersect));
+      }
+
+      if (yLen > 0) {
+        set2 = set1;
+        set1 = Doc->insertWire(new Wire(xIntersect, yIntersect, MAx2, MAy2));
+      }
+    }
+
+    /*if (drawVerHor) {
+      if (yLen > 0) {
         set1 = Doc->insertWire(new Wire(MAx2, MAy2, MAx2, MAy3));
       }
-      if (MAx2 != MAx3) {
+      if (xLen > 0) {
         set2 = set1;
         set1 = Doc->insertWire(new Wire(MAx2, MAy3, MAx3, MAy3));
       }
 
     } else {
-      if (MAx2 != MAx3) {
+      if (xLen > 0) {
         set1 = Doc->insertWire(new Wire(MAx2, MAy2, MAx3, MAy2));
       }
-      if (MAy2 != MAy3) {
+      if (yLen > 0) {
         set2 = set1;
         set1 = Doc->insertWire(new Wire(MAx3, MAy2, MAx3, MAy3));
       }
-    }
+    }*/
 
     QString s1 = QString("0x%1").arg(set1, 0, 16);
     QString s2 = QString("0x%1").arg(set2, 0, 16);
@@ -1753,8 +1787,21 @@ void MouseActions::drawWire(Schematic* Doc, bool outline) {
     qDebug() << "set1: " << s1;
     qDebug() << "set2: " << s2;
 
+    wireFinished = false;
+
+    // nvdl: todo: More testing as "set1" and "set2" values are not well understood
+    if (set2 == 0) { // Only a vertical or horizontal wire was drawn
+      if ((set1 & 0x3) == 0x3) {
+        wireFinished = true;
+      }
+    } else {
+      if ((set1 & 0x3) == 0x3 && (set2 & 0x2) == 0x2) {
+        wireFinished = true;
+      }
+    }
+
     //if ((set1 & 0x3) == 0x3 || (set2 & 0x3) == 0x3) { // if(set1 & 2) {
-    if (set2 != 0) {
+    if (!wireFinished) {
       // if last port is connected, then...
       if (formerAction) {
         // Restore old action
@@ -1768,10 +1815,12 @@ void MouseActions::drawWire(Schematic* Doc, bool outline) {
         QucsMain->MousePressAction = &MouseActions::MPressWire2;
         QucsMain->MouseDoubleClickAction = 0;
 
-        qDebug() << "drawWire: New wire started";
+        qDebug() << "drawWire: Continuing same wire";
       }
 
     } else {
+      qDebug() << "drawWire: Wire finished";
+
       QucsMain->MouseMoveAction = &MouseActions::MMoveWire1;
       QucsMain->MousePressAction = &MouseActions::MPressWire1;
       QucsMain->MouseDoubleClickAction = 0;
@@ -1781,6 +1830,8 @@ void MouseActions::drawWire(Schematic* Doc, bool outline) {
     if (set1 | set2) Doc->setChanged(true, true);
     MAx3 = MAx2;
     MAy3 = MAy2;
+
+    toggleWireOrientation = false;
   }
 }
 // -----------------------------------------------------------

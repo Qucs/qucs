@@ -98,9 +98,10 @@ bool Wire::getSelected(int x_, int y_)
 // ----------------------------------------------------------------
 void Wire::paintScheme(QPainter *p)
 {
-  p->setPen(QPen(Qt::blue,2));
-  p->drawLine(x1, y1, x2, y2);
+  //p->setPen(QPen(Qt::blue,2));
+  //p->Painter->setPen(QPen(Qt::darkBlue,2));
 
+  p->drawLine(x1, y1, x2, y2);
   qDebug() << "Wire::paintScheme()";
 
 //  if(Label)
@@ -114,10 +115,10 @@ void Wire::paint(ViewPainter *p)
 {
   if(isSelected) {
     //p->Painter->setPen(QPen(Qt::darkGray,6));
-    p->Painter->setPen(QPen(Qt::blue,2));
+    p->Painter->setPen(QPen(Qt::blue,3));
   } else {
-    //p->Painter->setPen(QPen(Qt::darkBlue,2));
-    p->Painter->setPen(QPen(Qt::black,2));
+    p->Painter->setPen(QPen(Qt::darkBlue,2));
+    //p->Painter->setPen(QPen(Qt::black,2));
   }
 
   p->drawLine(x1, y1, x2, y2);
