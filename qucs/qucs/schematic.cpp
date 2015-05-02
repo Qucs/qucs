@@ -766,12 +766,14 @@ float Schematic::zoom(float s)
   // to hidden. This causes some flicker, but it is still nicer.
   viewport()->setHidden(true);
 //  setHidden(true);
+
   resizeContents(int(Scale*float(ViewX2 - ViewX1)),
                  int(Scale*float(ViewY2 - ViewY1)));
-//  setHidden(false);
-  viewport()->setHidden(false);
 
+  //  setHidden(false);
+  viewport()->setHidden(false);
   viewport()->update();
+
   App->view->drawn = false;
   return Scale;
 }
@@ -1889,6 +1891,9 @@ void Schematic::switchPaintMode()
 // *********************************************************************
 void Schematic::contentsWheelEvent(QWheelEvent *Event)
 {
+  int mouseX;
+  int mouseY;
+
   App->editText->setHidden(true);  // disable edit of component property
   int delta = Event->delta() >> 1;     // use smaller steps
 
@@ -1902,13 +1907,79 @@ void Schematic::contentsWheelEvent(QWheelEvent *Event)
   }
   // ...................................................................
   else if(Event->modifiers() & Qt::ControlModifier) {  // use mouse wheel to zoom ?
-      float Scaling;
-      if(delta < 0) Scaling = float(delta)/-60.0/1.1;
-      else Scaling = 1.1*60.0/float(delta);
-      zoom(Scaling);
-      Scaling -= 1.0;
-      scrollBy( int(Scaling * float(Event->pos().x())),
-                int(Scaling * float(Event->pos().y())) );
+
+    if (UsedX1 == 0 && UsedX2 == 0 && UsedY1 == 0 && UsedY2 == 0) {
+      UsedX1 = UsedY1 = INT_MAX;
+      UsedX2 = UsedY2 = INT_MIN;
+      return;
+    }
+
+    if (delta > 0) {
+      //Scaling = (1.1 * 60.0) / float(delta);
+      if (Scale < 10) {
+        Scale += 0.1 * Scale;
+      } else {
+        return;
+      }
+
+    } else {
+      //Scaling = -1 * float(delta) / (60.0 * 1.1);
+      if (Scale > 0.1) {
+        Scale -= 0.1 * Scale;
+      } else {
+        return;
+      }
+    }
+
+    //int viewWidth = ViewX2 - ViewX1;
+    //int viewHeight = ViewY2 - ViewY1;
+    //int contX;
+    //int contY;
+
+    mouseX = Event->pos().x();
+    mouseY = Event->pos().y();
+
+    //contX = contentsX();
+    //contY = contentsY();
+
+    qDebug() << "contentsWheelEvent: delta" << delta;
+    qDebug() << "contentsWheelEvent: Scale" << Scale;
+    qDebug() << "contentsWheelEvent: mouseX" << mouseX;
+    qDebug() << "contentsWheelEvent: mouseY" << mouseY;
+    qDebug() << "contentsWheelEvent: ViewX1" << ViewX1;
+    qDebug() << "contentsWheelEvent: ViewY1" << ViewY1;
+    qDebug() << "contentsWheelEvent: ViewX2" << ViewX2;
+    qDebug() << "contentsWheelEvent: ViewY2" << ViewY2;
+    qDebug() << "\n";
+
+    //float scrollX = (1.0 * mouseX) / (Scale * 5);
+    //float scrollY = (1.0 * mouseY) / (Scale * 5);
+
+    float scrollX = (1.0 * mouseX * Scale / 10.0);
+    float scrollY = (1.0 * mouseY * Scale / 10.0);
+
+    /*if (delta > 0) {
+      ViewX1 += scrollX;
+      ViewY1 += scrollY;
+    } else {
+      ViewX1 -= scrollX;
+      ViewY1 -= scrollY;
+    }*/
+
+    resizeContents(int(Scale*float(ViewX2 - ViewX1)), int(Scale*float(ViewY2 - ViewY1)));
+    //scrollBy( int((Scale - 1) * float(contentsX()+visibleWidth()/2)), int((Scale - 1) * float(contentsY()+visibleHeight()/2)) );
+    //scrollBy( int(Scaling * float(Event->pos().x())), int(Scaling * float(Event->pos().y())) );
+    scrollBy(scrollX, scrollY);
+
+    //scrollBy(Scale * mouseX2, Scale * mouseY2);
+
+    viewport()->update();
+    App->view->drawn = false;
+
+    //zoom(Scaling);
+    //Scaling -= 1.0;
+    //scrollBy( int(Scaling * float(Event->pos().x())),
+    //            int(Scaling * float(Event->pos().y())) );
   }
   // ...................................................................
   else {     // scroll vertically !
