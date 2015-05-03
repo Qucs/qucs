@@ -901,21 +901,149 @@ void MouseActions::MMovePanning(Schematic *Doc, QMouseEvent *Event)
   QucsMain->MouseReleaseAction = 0;
   Doc->releaseKeyboard();  // allow keyboard inputs again*/
 
-  float xShift = 0;
-  float yShift = 0;
+  float xShift;
+  float yShift;
+
+  //MAx2 = SCR_X_POS(Event->pos().x());
+  //MAy2 = SCR_Y_POS(Event->pos().y());
 
   MAx2 = Event->pos().x();
   MAy2 = Event->pos().y();
 
-  xShift = MAx1 - MAx2;
-  yShift = MAy1 - MAy2;
+  xShift = (MAx2 - MAx1) / Doc->Scale;
+  yShift = (MAy2 - MAy1) / Doc->Scale;
+
+  qDebug() << "MMovePanning: ViewX1: " << Doc->ViewX1;
+  qDebug() << "MMovePanning: ViewX2: " << Doc->ViewX2;
+  qDebug() << "MMovePanning: ViewY1: " << Doc->ViewY1;
+  qDebug() << "MMovePanning: ViewY2: " << Doc->ViewY2;
+
+  qDebug() << "MMovePanning: MAx1: " << MAx1;
+  qDebug() << "MMovePanning: MAy1: " << MAy1;
+  qDebug() << "MMovePanning: MAx2: " << MAx2;
+  qDebug() << "MMovePanning: MAy2: " << MAy2;
+
+  qDebug() << "MMovePanning: xShift: " << xShift;
+  qDebug() << "MMovePanning: yShift: " << yShift;
+
+  /*if (xShift > 0) xShift = 5;
+  if (xShift < 0) xShift = -5;
+
+  if (yShift > 0) yShift = 5;
+  if (yShift < 0) yShift = -5;*/
 
   MAx1 = MAx2;
   MAy1 = MAy2;
 
-  if (abs(xShift) > 2 || abs(yShift > 2))
-    Doc->scrollBy(xShift, yShift);
-    panningDone = true;
+  //MAx1 = SCR_X_POS(Event->pos().x());
+  //MAy1 = SCR_Y_POS(Event->pos().y());
+
+  //if (abs(xShift) > 2 || abs(yShift > 2))
+  //Doc->scrollBy(xShift, yShift);
+
+  int diff;
+
+  if (xShift > 0) { // Move right
+    diff = Doc->contentsX() - xShift;
+    //diff = -xShift;
+
+    qDebug() << "MMovePanning: moving right: diff: " << diff;
+
+    if (diff < 0) {     // scroll outside the active area ?  (to the left)
+      //Doc->resizeContents(Doc->contentsWidth()-diff, Doc->contentsHeight());
+      Doc->ViewX1 += diff;
+      Doc->scrollBy(diff, 0);
+    } else {
+      diff = Doc->ViewX2 - Doc->UsedX2 - 20;    // keep border of 20
+      if(diff > 0) {      // make active area smaller ?
+        if(xShift < diff) diff = xShift;
+        //Doc->resizeContents(Doc->contentsWidth()-diff, Doc->contentsHeight());
+        Doc->ViewX2 -= diff;
+      }
+    }
+
+  } else { // Move left
+    //diff = Doc->contentsWidth() - Doc->contentsX() - Doc->visibleWidth() + xShift;
+    diff = Doc->contentsWidth() - Doc->contentsX() + xShift;
+    //diff = xShift;
+
+    qDebug() << "MMovePanning: moving left: diff: " << diff;
+
+    if (diff < 0) {     // scroll outside the active area ?  (to the right)
+      //Doc->resizeContents(Doc->contentsWidth() - diff, Doc->contentsHeight());
+      //Doc->ViewX2 -= diff;
+      Doc->ViewX1 -= diff;
+      //Doc->scrollBy(-xShift, 0);
+      Doc->scrollBy(-diff, 0);
+    } else {
+      diff = Doc->ViewX1 - Doc->UsedX1 + 20;    // keep border of 20
+      if(diff < 0) {      // make active area smaller ?
+        if(xShift > diff) diff = xShift;
+        //Doc->resizeContents(Doc->contentsWidth() + diff, Doc->contentsHeight());
+        Doc->ViewX1 -= diff;
+      }
+    }
+  }
+//===============================================
+  if (yShift > 0) { // Move down
+    diff = Doc->contentsY() - yShift;
+
+    qDebug() << "MMovePanning: moving down: diff: " << diff;
+
+    if (diff < 0) {     // scroll outside the active area ?  (to the left)
+      //Doc->resizeContents(Doc->contentsWidth()-diff, Doc->contentsHeight());
+      Doc->ViewY1 += diff;
+      Doc->scrollBy(0, diff);
+    } else {
+      diff = Doc->ViewY2 - Doc->UsedY2 - 20;    // keep border of 20
+      if(diff > 0) {      // make active area smaller ?
+        if(yShift < diff) diff = yShift;
+        //Doc->resizeContents(Doc->contentsWidth()-diff, Doc->contentsHeight());
+        Doc->ViewY2 -= diff;
+      }
+    }
+
+  } else { // Move up
+    //diff = Doc->contentsWidth() - Doc->contentsX() - Doc->visibleWidth() + xShift;
+    diff = Doc->contentsHeight() - Doc->contentsY() + yShift;
+    //diff = xShift;
+
+    qDebug() << "MMovePanning: moving up: diff: " << diff;
+
+    if (diff < 0) {     // scroll outside the active area ?  (to the right)
+      //Doc->resizeContents(Doc->contentsWidth() - diff, Doc->contentsHeight());
+      //Doc->ViewX2 -= diff;
+      Doc->ViewY1 -= diff;
+      //Doc->scrollBy(-xShift, 0);
+      Doc->scrollBy(0, -diff);
+    } else {
+      diff = Doc->ViewY1 - Doc->UsedY1 + 20;    // keep border of 20
+      if(diff < 0) {      // make active area smaller ?
+        if(yShift > diff) diff = yShift;
+        //Doc->resizeContents(Doc->contentsWidth() + diff, Doc->contentsHeight());
+        Doc->ViewY1 -= diff;
+      }
+    }
+  }
+
+  /*if (xShift > 0) {
+    Doc->scrollLeft(-xShift);
+  } else {
+    Doc->scrollLeft(xShift);
+  }*/
+
+  //Doc->scrollLeft(xShift);
+
+
+  //MAx1 = SCR_X_POS(Event->pos().x());
+  //MAy1 = SCR_Y_POS(Event->pos().y());
+
+  MAx1 = Event->pos().x();
+  MAy1 = Event->pos().y();
+
+  panningDone = true;
+
+  Doc->viewport()->update();
 }
 
 /**
@@ -968,6 +1096,8 @@ void MouseActions::rightPressMenu(Schematic *Doc, QMouseEvent *Event, float fX, 
   } else if (QucsMain->MouseMoveAction == &MouseActions::MMovePanning) {
     MReleasePanning(Doc, Event); // No panning happened, switch mouse call-backs to normal
   }
+
+  qDebug() << "rightPressMenu: Opening menu";
 
   MAx1 = int(fX);
   MAy1 = int(fY);
@@ -1159,13 +1289,16 @@ void MouseActions::MPressSelect(Schematic *Doc, QMouseEvent *Event, float fX, fl
 
     qDebug() << "MPressSelect: Right mouse press";
 
-    if (QucsMain->MouseMoveAction == &MouseActions::MMoveFreely) {
+    if (QucsMain->MouseMoveAction == 0 || QucsMain->MouseMoveAction == &MouseActions::MMoveFreely) {
       QucsMain->MouseMoveAction = &MouseActions::MMovePanning;
       QucsMain->MouseReleaseAction = &MouseActions::MReleasePanning;
       QucsMain->MousePressAction = 0;
       QucsMain->MouseDoubleClickAction = 0;
 
       Doc->grabKeyboard();
+
+      MAx1 = Event->pos().x();
+      MAy1 = Event->pos().y();
     }
 
     panningDone = false;
