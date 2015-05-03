@@ -522,8 +522,9 @@ void MouseActions::MMoveMoving2(Schematic *Doc, QMouseEvent *Event)
 
   //drawn = true;
 
+  // Use grid when CTRL key is not pressed
   if ((Event->state() & Qt::ControlModifier) == 0) {
-    Doc->setOnGrid(MAx2, MAy2);  // use grid when CTRL key is not pressed
+    Doc->setOnGrid(MAx2, MAy2);
   }
 
   MAx1 = MAx2 - MAx1;
@@ -531,16 +532,17 @@ void MouseActions::MMoveMoving2(Schematic *Doc, QMouseEvent *Event)
   MAx3 += MAx1;  MAy3 += MAy1; // keep track of the complete movement
 
   moveElements(&movingElements, MAx1, MAy1);  // moves elements by MAx1/MAy1
+  paintElementsScheme(Doc);
 
   // paint afterwards to avoid conflict between wire and label painting
-  for (pe = movingElements.first(); pe != 0; pe = movingElements.next()) {
+  /*for (pe = movingElements.first(); pe != 0; pe = movingElements.next()) {
     if (pe->Type == isWire) {
       // nvdl: todo: Temporary fix until "paintScheme" of wire is fixed
       Doc->PostPaintEvent(_Line, pe->x1, pe->y1, pe->x2, pe->y2, 0, 0, false);
     } else {
       pe->paintScheme(Doc);
     }
-  }
+  }*/
 
   //if(pe->Type == isWire)  if(((Wire*)pe)->Label)
   //if(!((Wire*)pe)->Label->isSelected)
@@ -771,7 +773,7 @@ void MouseActions::MMoveFreely(Schematic *Doc, QMouseEvent *Event) {
 }
 
 /**
- * @brief MouseActions::MCloseToNode Checks for a near-by node.
+ * @brief MouseActions::MCloseToNode Checks for a near-by node and draws a cross if a node is found.
  * @param Doc
  * @param Event
  */
@@ -1076,6 +1078,8 @@ void MouseActions::MReleasePanning(Schematic *Doc, QMouseEvent *Event)
 void MouseActions::rightPressMenu(Schematic *Doc, QMouseEvent *Event, float fX, float fY)
 {
 
+  int x1, y1;
+
   qDebug() << "rightPressMenu";
 
   if (panningDone && QucsMain->MouseMoveAction == &MouseActions::MMovePanning) {
@@ -1083,8 +1087,13 @@ void MouseActions::rightPressMenu(Schematic *Doc, QMouseEvent *Event, float fX, 
     MReleasePanning(Doc, Event); // Switch mouse call-backs to normal
     return;
 
-  } else if (QucsMain->MouseMoveAction == &MouseActions::MMoveMoving2) {
-    //MPressElement(Doc, Event, fX, fY);
+  } else if (QucsMain->MouseMoveAction == &MouseActions::MMoveMoving2) { // Rotation
+    x1 = DOC_X_POS(Event->pos().x());
+    y1 = DOC_Y_POS(Event->pos().y());
+    rotateElements(Doc, x1, y1);
+    paintElementsScheme(Doc);
+    //Doc->viewport()->update();
+
     return;
 
   } else if (QucsMain->MousePressAction == &MouseActions::MPressElement) {
@@ -1405,7 +1414,7 @@ void MouseActions::MPressSelect(Schematic *Doc, QMouseEvent *Event, float fX, fl
             break;
         }
         // Update matching wire label highlighting
-        Doc->highlightWireLabels ();
+        Doc->highlightWireLabels();
         Doc->viewport()->update();
         drawn = false;
         break;
@@ -1416,7 +1425,7 @@ void MouseActions::MPressSelect(Schematic *Doc, QMouseEvent *Event, float fX, fl
         MAx3 = No;
         QucsMain->slotApplyCompText();
         // Update matching wire label highlighting
-        Doc->highlightWireLabels ();
+        Doc->highlightWireLabels();
         break;
 
       case isNode:
@@ -1624,6 +1633,7 @@ void MouseActions::MPressRotate(Schematic *Doc, QMouseEvent*, float fX, float fY
       qDebug() << "MPressRotate: Unknown element";
       return;
   }
+
   Doc->viewport()->update();
   drawn = false;
   Doc->setChanged(true, true);
@@ -1895,25 +1905,6 @@ void MouseActions::drawWire(Schematic* Doc, bool outline) {
       }
     }
 
-    /*if (drawVerHor) {
-      if (yLen > 0) {
-        set1 = Doc->insertWire(new Wire(MAx2, MAy2, MAx2, MAy3));
-      }
-      if (xLen > 0) {
-        set2 = set1;
-        set1 = Doc->insertWire(new Wire(MAx2, MAy3, MAx3, MAy3));
-      }
-
-    } else {
-      if (xLen > 0) {
-        set1 = Doc->insertWire(new Wire(MAx2, MAy2, MAx3, MAy2));
-      }
-      if (yLen > 0) {
-        set2 = set1;
-        set1 = Doc->insertWire(new Wire(MAx3, MAy2, MAx3, MAy3));
-      }
-    }*/
-
     QString s1 = QString("0x%1").arg(set1, 0, 16);
     QString s2 = QString("0x%1").arg(set2, 0, 16);
 
@@ -1964,7 +1955,7 @@ void MouseActions::drawWire(Schematic* Doc, bool outline) {
     MAx3 = MAx2;
     MAy3 = MAy2;
 
-    toggleWireOrientation = false;
+    //toggleWireOrientation = false;
   }
 }
 // -----------------------------------------------------------
@@ -2216,11 +2207,18 @@ void MouseActions::MReleaseResizePainting(Schematic *Doc, QMouseEvent *Event)
 }
 
 // -----------------------------------------------------------
-void MouseActions::paintElementsScheme(Schematic *p)
+void MouseActions::paintElementsScheme(Schematic *Doc)
 {
   Element *pe;
-  for(pe = movingElements.first(); pe != 0; pe = movingElements.next())
-    pe->paintScheme(p);
+
+  for (pe = movingElements.first(); pe != 0; pe = movingElements.next()) {
+    if (pe->Type == isWire) {
+      // nvdl: todo: Temporary fix until "paintScheme" of wire is fixed
+      Doc->PostPaintEvent(_Line, pe->x1, pe->y1, pe->x2, pe->y2, 0, 0, false);
+    } else {
+      pe->paintScheme(Doc);
+    }
+  }
 }
 
 // -----------------------------------------------------------
@@ -2242,16 +2240,24 @@ void MouseActions::moveElements(Schematic *Doc, int& x1, int& y1)
 // -----------------------------------------------------------
 void MouseActions::rotateElements(Schematic *Doc, int& x1, int& y1)
 {
+
+  qDebug() << "rotateElements";
+
   int x2, y2;
   Element *pe;
   Doc->setOnGrid(x1, y1);
+
+  // nvdl: todo: Update the values so that the component does not go off the grid.
+  // It can happen if there is select->rotate->move situation.
+  MAx1 = x1;
+  MAy1 = y1;
 
   for(pe = movingElements.first(); pe != 0; pe = movingElements.next()) {
     switch(pe->Type) {
     case isComponent:
     case isAnalogComponent:
     case isDigitalComponent:
-      ((Component*)pe)->rotate(); // rotate !before! rotating the center
+      ((Component*)pe)->rotate(); // rotate !before! setting the center
       x2 = x1 - pe->cx;
       pe->setCenter(pe->cy - y1 + x1, x2 + y1);
       break;
@@ -2264,7 +2270,7 @@ void MouseActions::rotateElements(Schematic *Doc, int& x1, int& y1)
       pe->y2 = x1 - x2 + y1;
       break;
     case isPainting:
-      ((Painting*)pe)->rotate(); // rotate !before! rotating the center
+      ((Painting*)pe)->rotate(); // rotate !before! setting the center
       ((Painting*)pe)->getCenter(x2, y2);
       pe->setCenter(y2 - y1 + x1, x1 - x2 + y1);
           break;
@@ -2334,6 +2340,7 @@ void MouseActions::MReleasePaste(Schematic *Doc, QMouseEvent *Event)
       rotateElements(Doc,x1,y1);
 
     //Doc->viewport()->repaint();
+    paintElementsScheme(Doc);
 
     QucsMain->MouseMoveAction = &MouseActions::MMovePaste;
     QucsMain->MousePressAction = 0;
@@ -2349,17 +2356,16 @@ void MouseActions::MReleasePaste(Schematic *Doc, QMouseEvent *Event)
   case Qt::RightButton :  // right button rotates the elements
     //setPainter(Doc, &painter);
 
-    if(drawn) // erase old scheme
+    /*if(drawn) // erase old scheme // nvdl: todo: Possibly not needed (legacy)
       paintElementsScheme(Doc);
 
-    drawn = true;
+    drawn = true;*/
 
     x1 = DOC_X_POS(Event->pos().x());
     y1 = DOC_Y_POS(Event->pos().y());
 
-    Doc->viewport()->repaint();
+    //Doc->viewport()->repaint();
     rotateElements(Doc,x1,y1);
-
     paintElementsScheme(Doc);
     // save rotation
     movingRotated++;
@@ -2368,6 +2374,8 @@ void MouseActions::MReleasePaste(Schematic *Doc, QMouseEvent *Event)
 
   default: ;    // avoids compiler warnings
   }
+
+  Doc->viewport()->update();
 }
 
 // -----------------------------------------------------------
