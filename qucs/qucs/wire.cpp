@@ -101,6 +101,7 @@ void Wire::paintScheme(QPainter *p)
   //p->setPen(QPen(Qt::blue,2));
   //p->Painter->setPen(QPen(Qt::darkBlue,2));
 
+  // nvdl: todo: Find out why it is not called during move operation
   p->drawLine(x1, y1, x2, y2);
   qDebug() << "Wire::paintScheme()";
 
