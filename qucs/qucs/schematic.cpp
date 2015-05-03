@@ -1991,8 +1991,33 @@ void Schematic::contentsWheelEvent(QWheelEvent *Event)
 
   Event->accept();   // QScrollView must not handle this event
 }
+//=================================================================================================
+/**
+ * @brief Schematic::keyPressEvent Captures keyboard press events.
+ * @param Doc
+ * @param Event
+ */
+void Schematic::keyPressEvent(QKeyEvent *event) {
 
-// -----------------------------------------------------------
+  //qDebug() << "Schematic::keyPressEvent:" << event->key();
+
+  App->view->keyPressEvent(this, event);
+  event->accept(); // Steal it from the parent. ;)
+}
+//=================================================================================================
+/**
+ * @brief Schematic::keyReleaseEvent Captures keyboard release events.
+ * @param Doc
+ * @param Event
+ */
+void Schematic::keyReleaseEvent(QKeyEvent *event) {
+
+  //qDebug() << "Schematic::keyReleaseEvent:" << event->key();
+
+  App->view->keyReleaseEvent(this, event);
+  event->accept(); // Steal it from the parent. ;)
+}
+//=================================================================================================
 // Scrolls the visible area upwards and enlarges or reduces the view
 // area accordingly.
 bool Schematic::scrollUp(int step)

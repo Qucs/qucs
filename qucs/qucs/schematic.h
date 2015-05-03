@@ -175,6 +175,8 @@ protected:
   void contentsMouseDoubleClickEvent(QMouseEvent*);
   void contentsMouseReleaseEvent(QMouseEvent*);
   void contentsWheelEvent(QWheelEvent*);
+  void keyPressEvent(QKeyEvent*);
+  void keyReleaseEvent(QKeyEvent*);
   void contentsDropEvent(QDropEvent*);
   void contentsDragEnterEvent(QDragEnterEvent*);
   void contentsDragLeaveEvent(QDragLeaveEvent*);
