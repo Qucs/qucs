@@ -18,6 +18,7 @@
 
 #include <QPainter>
 #include <QDebug>
+#include "main.h"
 
 Wire::Wire(int _x1, int _y1, int _x2, int _y2, Node *n1, Node *n2)
 {
@@ -114,12 +115,13 @@ void Wire::paintScheme(QPainter *p)
 // ----------------------------------------------------------------
 void Wire::paint(ViewPainter *p)
 {
-  if(isSelected) {
+  if (isSelected) {
     //p->Painter->setPen(QPen(Qt::darkGray,6));
-    p->Painter->setPen(QPen(Qt::blue,3));
+    p->Painter->setPen(QPen(QucsSettings.selectedWireColor, QucsSettings.selectedWireThickness));
+
   } else {
-    p->Painter->setPen(QPen(Qt::darkBlue,2));
-    //p->Painter->setPen(QPen(Qt::black,2));
+    //p->Painter->setPen(QPen(Qt::darkBlue,2));
+    p->Painter->setPen(QPen(QucsSettings.wireColor, QucsSettings.wireThickness));
   }
 
   p->drawLine(x1, y1, x2, y2);

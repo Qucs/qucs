@@ -125,6 +125,9 @@ public:
   void endElementMoving(Schematic*, Q3PtrList<Element>*);
   void rightPressMenu(Schematic*, QMouseEvent*, float, float);
   void drawWire(Schematic*, bool);
+
+  void keyPressEvent(Schematic*, QKeyEvent*);
+  void keyReleaseEvent(Schematic*, QKeyEvent*);
 };
 
 #endif

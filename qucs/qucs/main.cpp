@@ -70,6 +70,8 @@ bool loadSettings()
 {
   QSettings settings("qucs","qucs");
 
+  qDebug() << "loadSettings: settings.fileName():" << settings.fileName();
+
   if(settings.contains("x"))QucsSettings.x=settings.value("x").toInt();
   if(settings.contains("y"))QucsSettings.y=settings.value("y").toInt();
   if(settings.contains("dx"))QucsSettings.dx=settings.value("dx").toInt();
@@ -148,6 +150,26 @@ bool loadSettings()
 
   settings.endGroup();
 
+  if (settings.contains("wireColor"))
+    QucsSettings.wireColor.setNamedColor(settings.value("wireColor").toString());
+  else
+    QucsSettings.wireColor.setNamedColor("#0000cd");
+
+  if (settings.contains("selectedWireColor"))
+    QucsSettings.selectedWireColor.setNamedColor(settings.value("selectedWireColor").toString());
+  else
+    QucsSettings.selectedWireColor.setNamedColor("#0000ff");
+
+  if (settings.contains("wireThickness"))
+    QucsSettings.wireThickness = settings.value("wireThickness").toInt();
+  else
+    QucsSettings.wireThickness = 2;
+
+  if (settings.contains("selectedWireThickness"))
+    QucsSettings.selectedWireThickness = settings.value("selectedWireThickness").toInt();
+  else
+    QucsSettings.selectedWireThickness = 2;
+
   QucsSettings.numRecentDocs = 0;
 
   return true;
@@ -222,6 +244,11 @@ bool saveApplSettings()
     ++menu_it;
   }
   settings.endGroup();
+
+  settings.setValue("wireThickness", QucsSettings.wireThickness);
+  settings.setValue("wireColor", QucsSettings.wireColor.name());
+  settings.setValue("selectedWireThickness", QucsSettings.selectedWireThickness);
+  settings.setValue("selectedWireColor", QucsSettings.selectedWireColor.name());
 
   return true;
 
