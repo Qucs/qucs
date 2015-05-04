@@ -239,34 +239,47 @@ void MouseActions::moveElements(Q3PtrList<Element> *movElements, int x, int y)
 
   Wire *pw;
   Element *pe;
-  for(pe = movElements->first(); pe != 0; pe = movElements->next()) {
-    if(pe->Type == isWire) {
-      pw = (Wire*)pe;   // connected wires are not moved completely
 
-      if(((unsigned long)pw->Port1) > 3) {
-	pw->x1 += x;  pw->y1 += y;
-	if(pw->Label) { pw->Label->cx += x;  pw->Label->cy += y; }
+  for (pe = movElements->first(); pe != 0; pe = movElements->next()) {
+    if (pe->Type == isWire) {
+      pw = (Wire*) pe;   // connected wires are not moved completely
+
+      if (((unsigned long)pw->Port1) > 3) {
+        pw->x1 += x;  pw->y1 += y;
+
+        if (pw->Label) {
+          pw->Label->cx += x;  pw->Label->cy += y;
+        }
+
+      } else {
+        if (long(pw->Port1) & 1) {
+          pw->x1 += x;
+        }
+
+        if (long(pw->Port1) & 2) {
+          pw->y1 += y;
+        }
       }
-      else {  if(long(pw->Port1) & 1) { pw->x1 += x; }
-              if(long(pw->Port1) & 2) { pw->y1 += y; } }
 
-      if(((unsigned long)pw->Port2) > 3) { pw->x2 += x;  pw->y2 += y; }
-      else {  if(long(pw->Port2) & 1) pw->x2 += x;
-              if(long(pw->Port2) & 2) pw->y2 += y; }
-
-      if(pw->Label) {      // root of node label must lie on wire
-        if(pw->Label->cx < pw->x1) pw->Label->cx = pw->x1;
-        if(pw->Label->cy < pw->y1) pw->Label->cy = pw->y1;
-        if(pw->Label->cx > pw->x2) pw->Label->cx = pw->x2;
-        if(pw->Label->cy > pw->y2) pw->Label->cy = pw->y2;
+      if (((unsigned long) pw->Port2) > 3) {
+        pw->x2 += x;  pw->y2 += y;
+      } else {
+        if (long(pw->Port2) & 1) pw->x2 += x;
+        if (long(pw->Port2) & 2) pw->y2 += y;
       }
 
+      if (pw->Label) {      // root of node label must lie on wire
+        if (pw->Label->cx < pw->x1) pw->Label->cx = pw->x1;
+        if (pw->Label->cy < pw->y1) pw->Label->cy = pw->y1;
+        if (pw->Label->cx > pw->x2) pw->Label->cx = pw->x2;
+        if (pw->Label->cy > pw->y2) pw->Label->cy = pw->y2;
+      }
+
+    } else {
+      pe->setCenter(x, y, true);
     }
-    else pe->setCenter(x, y, true);
   }
 }
-
-
 // ***********************************************************************
 // **********                                                   **********
 // **********       Functions for serving mouse moving          **********
@@ -335,9 +348,8 @@ void MouseActions::MMoveWire2(Schematic *Doc, QMouseEvent *Event)
   if (Event != 0) { // If not just called for the wire orientation toggle update
     MAx2 = DOC_X_POS(Event->pos().x());
     MAy2 = DOC_Y_POS(Event->pos().y());
+    Doc->setOnGrid(MAx2, MAy2);
   }
-
-  Doc->setOnGrid(MAx2, MAy2);
 
   drawWire(Doc, true); // Draw wire outline
 
@@ -379,7 +391,7 @@ void MouseActions::MMoveWire1(Schematic *Doc, QMouseEvent *Event)
 
 
 /**
- * @brief MouseActions::MMoveSelect Paints a rectangle for select area.
+ * @brief MouseActions::MMoveSelect Paints a selection rectangle
  * @param Doc
  * @param Event
  */
@@ -387,10 +399,25 @@ void MouseActions::MMoveSelect(Schematic *Doc, QMouseEvent *Event)
 {
 
   int x1, y1, width, height;
+  //int xMin = 10000, xMax = 0, yMin = 10000, yMax = 0;
+  //Element *pe;
 
   if (focusElement) {
     // print define value in hex, see element.h
     qDebug() << "MMoveSelect: focusElement->Type" <<  QString("0x%1").arg(focusElement->Type, 0, 16);
+
+    /*for (pe=movingElements.first(); pe!=0; pe=movingElements.next()) {
+        if (pe->x1 < xMin) xMin = pe->x1;
+        if (pe->y1 < yMin) yMin = pe->y1;
+        if (pe->x2 > xMax) xMax = pe->x2;
+        if (pe->y2 > yMax) yMax = pe->y2;
+    }
+
+    width = xMax - xMin;
+    height = yMax - yMin;
+
+    Doc->PostPaintEvent(_Rect, x1, y1, width, height);*/
+
   } else {
     qDebug() << "MMoveSelect: Nothing under the mouse";
 
@@ -444,9 +471,11 @@ void MouseActions::MMoveResizePainting(Schematic *Doc, QMouseEvent *Event)
   Doc->setOnGrid(MAx1, MAy1);
   ((Painting*)focusElement)->MouseResizeMoving(MAx1, MAy1, Doc);
 }
-
-// -----------------------------------------------------------
-// Moves components by keeping the mouse button pressed.
+/**
+ * @brief MouseActions::MMoveMoving Moves components while the mouse button is kept pressed
+ * @param Doc
+ * @param Event
+ */
 void MouseActions::MMoveMoving(Schematic *Doc, QMouseEvent *Event)
 {
 
@@ -518,8 +547,6 @@ void MouseActions::MMoveMoving2(Schematic *Doc, QMouseEvent *Event)
   MAx2 = DOC_X_POS(Event->pos().x());
   MAy2 = DOC_Y_POS(Event->pos().y());
 
-  Element *pe;
-
   Doc->grabKeyboard();
 
   //if(drawn) // erase old scheme
@@ -542,16 +569,6 @@ void MouseActions::MMoveMoving2(Schematic *Doc, QMouseEvent *Event)
 
   moveElements(&movingElements, MAx1, MAy1);  // moves elements by MAx1/MAy1
   paintElementsScheme(Doc);
-
-  // paint afterwards to avoid conflict between wire and label painting
-  /*for (pe = movingElements.first(); pe != 0; pe = movingElements.next()) {
-    if (pe->Type == isWire) {
-      // nvdl: todo: Temporary fix until "paintScheme" of wire is fixed
-      Doc->PostPaintEvent(_Line, pe->x1, pe->y1, pe->x2, pe->y2, 0, 0, false);
-    } else {
-      pe->paintScheme(Doc);
-    }
-  }*/
 
   //if(pe->Type == isWire)  if(((Wire*)pe)->Label)
   //if(!((Wire*)pe)->Label->isSelected)
@@ -1332,7 +1349,7 @@ void MouseActions::MPressSelect(Schematic *Doc, QMouseEvent *Event, float fX, fl
   if(Event->state() & Qt::ControlModifier) Ctrl = true;
   else Ctrl = false;
 
-  int No=0;
+  int No = 0;
 
   focusElement = Doc->selectElement(fX, fY, Ctrl, &No);
   isMoveEqual = false;   // moving not neccessarily square
@@ -1379,13 +1396,16 @@ void MouseActions::MPressSelect(Schematic *Doc, QMouseEvent *Event, float fX, fl
         focusElement->Type = isDiagram;
         MAx1 = focusElement->cx;
         MAx2 = focusElement->x2;
-        if(((Diagram*)focusElement)->State & 1) {
+
+        if (((Diagram*)focusElement)->State & 1) {
           MAx1 += MAx2;
           MAx2 *= -1;
         }
+
         MAy1 =  focusElement->cy;
         MAy2 = -focusElement->y2;
-        if(((Diagram*)focusElement)->State & 2) {
+
+        if (((Diagram*)focusElement)->State & 2) {
           MAy1 += MAy2;
           MAy2 *= -1;
         }
@@ -2233,9 +2253,11 @@ void MouseActions::MReleaseResizePainting(Schematic *Doc, QMouseEvent *Event)
  * @brief MouseActions::paintElementsScheme Draws the outline of all selected elements
  * @param Doc
  */
-void MouseActions::paintElementsScheme(Schematic *Doc)
-{
+void MouseActions::paintElementsScheme(Schematic *Doc) {
+
   Element *pe;
+  int x1, y1, width, height;
+  int xMin = INT_MAX, xMax = INT_MIN, yMin = INT_MAX, yMax = INT_MIN;
 
   for (pe = movingElements.first(); pe != 0; pe = movingElements.next()) {
     if (pe->Type == isWire) {
@@ -2244,9 +2266,40 @@ void MouseActions::paintElementsScheme(Schematic *Doc)
     } else {
       pe->paintScheme(Doc);
     }
-  }
-}
 
+    // nvdl: todo: Skip elements that are causing issues
+    if (pe->Type & 0x4000 || pe->Type & 0x8000) {
+      continue;
+    }
+
+    if (pe->cx + pe->x1 < xMin) xMin = pe->cx + pe->x1;
+    if (pe->cy + pe->y1 < yMin) yMin = pe->cy + pe->y1;
+    if (pe->cx + pe->x2 > xMax) xMax = pe->cx + pe->x2;
+    if (pe->cy + pe->y2 > yMax) yMax = pe->cy + pe->y2;
+  }
+
+  /*for (pe = movingElements.first(); pe != 0; pe = movingElements.next()) {
+      qDebug() << "xMin:" << xMin;
+      qDebug() << "yMin:" << yMin;
+      qDebug() << "xMax:" << xMax;
+      qDebug() << "yMax:" << yMax;
+
+      qDebug() << "pe-cx:" << pe->cx;
+      qDebug() << "pe-cy:" << pe->cy;
+      qDebug() << "pe-x1:" << pe->x1;
+      qDebug() << "pe-y1:" << pe->y1;
+      qDebug() << "pe-x2:" << pe->x2;
+      qDebug() << "pe-y2:" << pe->y2;
+      qDebug() << "pe-Type:" << pe->Type << endl;
+  }*/
+
+  xMin -= 25; yMin -= 25; xMax += 25; yMax += 25;
+
+  width = xMax - xMin;
+  height = yMax - yMin;
+
+  Doc->PostPaintEvent(_Rect, xMin, yMin, width, height);
+}
 // -----------------------------------------------------------
 void MouseActions::moveElements(Schematic *Doc, int& x1, int& y1)
 {
