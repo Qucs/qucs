@@ -150,6 +150,32 @@ bool loadSettings()
 
   settings.endGroup();
 
+  if (settings.contains("wireColor"))
+    QucsSettings.wireColor.setNamedColor(settings.value("wireColor").toString());
+  else
+    QucsSettings.wireColor = Qt::darkBlue;
+
+  if (settings.contains("wireThickness"))
+    QucsSettings.wireThickness = settings.value("wireThickness").toInt();
+  else
+    QucsSettings.wireThickness = 2;
+
+  if (settings.contains("selectedWireColor"))
+    QucsSettings.selectedWireColor.setNamedColor(settings.value("selectedWireColor").toString());
+  else
+    QucsSettings.selectedWireColor = Qt::darkGray;
+
+  if (settings.contains("selectedWireThickness"))
+    QucsSettings.selectedWireThickness = settings.value("selectedWireThickness").toInt();
+  else
+    QucsSettings.selectedWireThickness = 6;
+
+  // nvdl: todo: Add more settings
+  /*if (settings.contains("wireLabelLineThickness"))
+    QucsSettings.wireLabelLineThickness = settings.value("wireLabelLineThickness").toInt();
+  else
+    QucsSettings.wireLabelLineThickness = 2;*/
+
   QucsSettings.numRecentDocs = 0;
 
   return true;
