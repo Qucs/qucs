@@ -1817,11 +1817,17 @@ void MouseActions::MPressWire1(Schematic *Doc, QMouseEvent*, float fX, float fY)
 
   toggleWireOrientation = false;
 
-  Doc->grabKeyboard();
+  Doc->grabKeyboard(); // To capture keyboard shortcuts
 
   MAx3 = int(fX);
   MAy3 = int(fY);
   Doc->setOnGrid(MAx3, MAy3);
+
+  // No previous wire to follow the orientation
+  prevWireX1 = 0;
+  prevWireY1 = 0;
+  prevWireX2 = 0;
+  prevWireY2 = 0;
 
   formerAction = 0; // keep wire action active after first wire finished
   QucsMain->MouseMoveAction = &MouseActions::MMoveWire2;
@@ -1851,10 +1857,12 @@ void MouseActions::MPressWire2(Schematic *Doc, QMouseEvent *Event, float fX, flo
   MAy2 = int(fY);
   Doc->setOnGrid(MAx2, MAy2);
 
+  Doc->releaseKeyboard();
+
   switch (Event->button()) {
 
   case Qt::LeftButton:
-    drawWire(Doc, false); // Draw real wires
+    drawWire(Doc, false); // Draw real wire(s)
     break;
 
    /// \todo document right mouse button changes the wire corner
@@ -1892,20 +1900,45 @@ void MouseActions::drawWire(Schematic* Doc, bool outline) {
   int dx, dy, xIntersect, yIntersect, xLen, yLen;
   int set1 = 0, set2 = 0;
   bool drawVerHor, wireFinished;
+  bool prevWireExists, prevWireVertical;
 
-  dx = abs(MAx3 - MAx2);
-  dy = abs(MAy3 - MAy2);
+  dx = abs(prevWireX2 - prevWireX1);
+  dy = abs(prevWireY2 - prevWireY1);
 
-  if (dx > dy) {
-    drawVerHor = false;
+  if (dx == 0 && dy == 0) { // No previous wire, follow the mouse pointer
+    dx = abs(MAx3 - MAx2);
+    dy = abs(MAy3 - MAy2);
+    //qDebug() << "drawWire: No previous wire to follow";
+    prevWireExists = false;
   } else {
+    prevWireExists = true;
+    if (dy > dx) {
+      prevWireVertical = true;
+    } else {
+      prevWireVertical = false;
+    }
+  }
+
+  if (dy > dx) {
     drawVerHor = true;
+    //qDebug() << "drawWire: Vertical wire";
+  } else {
+    drawVerHor = false;
+    //qDebug() << "drawWire: Horizontal wire";
   }
 
   if (toggleWireOrientation) drawVerHor = not drawVerHor; // Toggle order
 
-  //qDebug() << "drawVerHor: " << drawVerHor;
-  //qDebug() << "toggleWireOrientation: " << toggleWireOrientation;
+  // Force order to avoid "go-back" on the same wire
+  if (prevWireExists) {
+    if (prevWireVertical) {
+      if (prevWireY2 < prevWireY1 && MAy2 > prevWireY2) drawVerHor = false;
+      if (prevWireY2 > prevWireY1 && MAy2 < prevWireY2) drawVerHor = false;
+    } else {
+      if (prevWireX2 < prevWireX1 && MAx2 > prevWireX2) drawVerHor = true;
+      if (prevWireX2 > prevWireX1 && MAx2 < prevWireX2) drawVerHor = true;
+    }
+  }
 
   if (drawVerHor) {
     xIntersect = MAx3;
@@ -1944,6 +1977,16 @@ void MouseActions::drawWire(Schematic* Doc, bool outline) {
       }
     }
 
+    prevWireX1 = xIntersect;
+    prevWireY1 = yIntersect;
+    prevWireX2 = MAx2;
+    prevWireY2 = MAy2;
+
+    /*qDebug() << "prevWireX1:" << prevWireX1;
+    qDebug() << "prevWireY1:" << prevWireY1;
+    qDebug() << "prevWireX2:" << prevWireX2;
+    qDebug() << "prevWireY2:" << prevWireY2;*/
+
     QString s1 = QString("0x%1").arg(set1, 0, 16);
     QString s2 = QString("0x%1").arg(set2, 0, 16);
 
@@ -1966,7 +2009,7 @@ void MouseActions::drawWire(Schematic* Doc, bool outline) {
     //if ((set1 & 0x3) == 0x3 || (set2 & 0x3) == 0x3) { // if(set1 & 2) {
     if (!wireFinished) {
       // if last port is connected, then...
-      if (formerAction) {
+      if (formerAction) { // nvdl: todo: Make more sense of it
         // Restore old action
         QucsMain->select->setChecked(true);
 
@@ -1989,7 +2032,7 @@ void MouseActions::drawWire(Schematic* Doc, bool outline) {
       QucsMain->MouseDoubleClickAction = 0;
     }
 
-    drawn = false;
+    //drawn = false; // nvdl: todo: Legacy?
     if (set1 | set2) Doc->setChanged(true, true);
     MAx3 = MAx2;
     MAy3 = MAy2;
@@ -2704,12 +2747,12 @@ void MouseActions::keyPressEvent(Schematic *doc, QKeyEvent *event) {
  */
 void MouseActions::keyReleaseEvent(Schematic *doc, QKeyEvent *event) {
 
-  qDebug() << "keyReleaseEvent";
+  qDebug() << "keyReleaseEvent: event->key()" << event->key();
 
   switch (event->key()) {
 
   // nvdl: todo: Keys will come from the shortcut manager
-  case 32: // Space key
+  case Qt::Key_Space:
 
     if (QucsMain->MouseMoveAction == &MouseActions::MMoveMoving2) { // Rotation
       //x1 = DOC_X_POS(Event->pos().x());
@@ -2733,6 +2776,10 @@ void MouseActions::keyReleaseEvent(Schematic *doc, QKeyEvent *event) {
       }
     }
 
+    break;
+
+  case Qt::Key_Escape:
+    doc->releaseKeyboard(); // Due to "MPressSelect()" capture
     break;
 
   default:

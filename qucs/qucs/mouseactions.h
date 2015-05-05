@@ -61,6 +61,7 @@ private:
   // Is true when right mouse button panning is done (used to control right menu display)
   bool panningDone;
   bool toggleWireOrientation; // Used to decide if the wire draw order will be flipped or not
+  int prevWireX1, prevWireY1, prevWireX2, prevWireY2;
 
 // -------------------------------------------------------------------
 public:
