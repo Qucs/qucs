@@ -70,6 +70,8 @@ bool loadSettings()
 {
   QSettings settings("qucs","qucs");
 
+  qDebug() << "loadSettings: settings.fileName():" << settings.fileName();
+
   if(settings.contains("x"))QucsSettings.x=settings.value("x").toInt();
   if(settings.contains("y"))QucsSettings.y=settings.value("y").toInt();
   if(settings.contains("dx"))QucsSettings.dx=settings.value("dx").toInt();
@@ -148,6 +150,42 @@ bool loadSettings()
 
   settings.endGroup();
 
+  if (settings.contains("wireColor"))
+    QucsSettings.wireColor.setNamedColor(settings.value("wireColor").toString());
+  else
+    QucsSettings.wireColor = Qt::darkBlue;
+
+  if (settings.contains("wireThickness"))
+    QucsSettings.wireThickness = settings.value("wireThickness").toInt();
+  else
+    QucsSettings.wireThickness = 2;
+
+  if (settings.contains("selectedWireColor"))
+    QucsSettings.selectedWireColor.setNamedColor(settings.value("selectedWireColor").toString());
+  else
+    QucsSettings.selectedWireColor = Qt::darkGray;
+
+  if (settings.contains("selectedWireThickness"))
+    QucsSettings.selectedWireThickness = settings.value("selectedWireThickness").toInt();
+  else
+    QucsSettings.selectedWireThickness = 6;
+
+  if (settings.contains("GraphAntiAliasing"))
+    QucsSettings.GraphAntiAliasing = settings.value("GraphAntiAliasing").toBool();
+  else
+    QucsSettings.GraphAntiAliasing = false;
+
+  if (settings.contains("TextAntiAliasing"))
+    QucsSettings.TextAntiAliasing = settings.value("TextAntiAliasing").toBool();
+  else
+    QucsSettings.TextAntiAliasing = false;
+
+  // nvdl: todo: Add more settings
+  /*if (settings.contains("wireLabelLineThickness"))
+    QucsSettings.wireLabelLineThickness = settings.value("wireLabelLineThickness").toInt();
+  else
+    QucsSettings.wireLabelLineThickness = 2;*/
+
   QucsSettings.numRecentDocs = 0;
 
   return true;
@@ -222,6 +260,14 @@ bool saveApplSettings()
     ++menu_it;
   }
   settings.endGroup();
+
+  settings.setValue("wireThickness", QucsSettings.wireThickness);
+  settings.setValue("wireColor", QucsSettings.wireColor.name());
+  settings.setValue("selectedWireThickness", QucsSettings.selectedWireThickness);
+  settings.setValue("selectedWireColor", QucsSettings.selectedWireColor.name());
+
+  settings.setValue("GraphAntiAliasing", QucsSettings.GraphAntiAliasing);
+  settings.setValue("TextAntiAliasing", QucsSettings.TextAntiAliasing);
 
   return true;
 
@@ -813,7 +859,7 @@ int main(int argc, char *argv[])
   QString page = "A4";
   int dpi = 96, start;
   QString color = "RGB";
-  QString orientation = "portraid";
+  QString orientation = "portrait";
 
   if (argc == 2) {
     QFile schFile(argv[1]);
@@ -841,7 +887,7 @@ int main(int argc, char *argv[])
     "    --page [A4|A3|B4|B5]         set print page size (default A4)\n"
     "    --dpi NUMBER                 set dpi value (default 96)\n"
     "    --color [RGB|RGB]            set color mode (default RGB)\n"
-    "    --orin [portraid|landscape]  set orientation (default portraid)\n"
+    "    --orin [portrait|landscape]  set orientation (default portrait)\n"
     "  -i FILENAME    use file as input schematic\n"
     "  -o FILENAME    use file as output netlist\n"
     "  -icons         create component icons under ./bitmaps_generated\n"
