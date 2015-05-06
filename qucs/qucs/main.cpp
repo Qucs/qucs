@@ -846,7 +846,7 @@ int main(int argc, char *argv[])
   QString page = "A4";
   int dpi = 96, start;
   QString color = "RGB";
-  QString orientation = "portraid";
+  QString orientation = "portrait";
 
   if (argc == 2) {
     QFile schFile(argv[1]);
@@ -874,7 +874,7 @@ int main(int argc, char *argv[])
     "    --page [A4|A3|B4|B5]         set print page size (default A4)\n"
     "    --dpi NUMBER                 set dpi value (default 96)\n"
     "    --color [RGB|RGB]            set color mode (default RGB)\n"
-    "    --orin [portraid|landscape]  set orientation (default portraid)\n"
+    "    --orin [portrait|landscape]  set orientation (default portrait)\n"
     "  -i FILENAME    use file as input schematic\n"
     "  -o FILENAME    use file as output netlist\n"
     "  -icons         create component icons under ./bitmaps_generated\n"
