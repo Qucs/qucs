@@ -1893,6 +1893,7 @@ void Schematic::contentsWheelEvent(QWheelEvent *Event)
 {
   int mouseX;
   int mouseY;
+  float scaleDiff;
 
   App->editText->setHidden(true);  // disable edit of component property
   int delta = Event->delta() >> 1;     // use smaller steps
@@ -1915,29 +1916,32 @@ void Schematic::contentsWheelEvent(QWheelEvent *Event)
     }
 
     if (delta > 0) {
-      //Scaling = (1.1 * 60.0) / float(delta);
       if (Scale < 10) {
-        Scale += 0.1 * Scale;
+        scaleDiff = (0.1 * delta) / 60;
       } else {
         return;
       }
 
     } else {
-      //Scaling = -1 * float(delta) / (60.0 * 1.1);
       if (Scale > 0.1) {
-        Scale -= 0.1 * Scale;
+        scaleDiff = (0.1 * delta) / 60;
       } else {
         return;
       }
     }
 
-    //int viewWidth = ViewX2 - ViewX1;
-    //int viewHeight = ViewY2 - ViewY1;
-    //int contX;
-    //int contY;
+    Scale += scaleDiff;
+
+    //mouseX = Event->pos().x() - contentsX();
+    //mouseY = Event->pos().y() - contentsY();
 
     mouseX = Event->pos().x();
     mouseY = Event->pos().y();
+
+    int cx, cy;
+    int vx, vy;
+
+    contentsToViewport(mouseX, mouseY, vx, vy);
 
     //contX = contentsX();
     //contY = contentsY();
@@ -1955,8 +1959,8 @@ void Schematic::contentsWheelEvent(QWheelEvent *Event)
     //float scrollX = (1.0 * mouseX) / (Scale * 5);
     //float scrollY = (1.0 * mouseY) / (Scale * 5);
 
-    float scrollX = (1.0 * mouseX * Scale / 10.0);
-    float scrollY = (1.0 * mouseY * Scale / 10.0);
+    float scrollX = (1.0 * mouseX * scaleDiff);
+    float scrollY = (1.0 * mouseY * scaleDiff);
 
     /*if (delta > 0) {
       ViewX1 += scrollX;
@@ -1969,7 +1973,11 @@ void Schematic::contentsWheelEvent(QWheelEvent *Event)
     resizeContents(int(Scale*float(ViewX2 - ViewX1)), int(Scale*float(ViewY2 - ViewY1)));
     //scrollBy( int((Scale - 1) * float(contentsX()+visibleWidth()/2)), int((Scale - 1) * float(contentsY()+visibleHeight()/2)) );
     //scrollBy( int(Scaling * float(Event->pos().x())), int(Scaling * float(Event->pos().y())) );
-    scrollBy(scrollX, scrollY);
+
+
+    //scrollBy(scrollX, scrollY);
+    //setContentsPos(mouseX / Scale, mouseY / Scale);
+    setContentsPos(vx, vy);
 
     //scrollBy(Scale * mouseX2, Scale * mouseY2);
 
