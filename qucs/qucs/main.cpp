@@ -170,6 +170,16 @@ bool loadSettings()
   else
     QucsSettings.selectedWireThickness = 6;
 
+  if (settings.contains("GraphAntiAliasing"))
+    QucsSettings.GraphAntiAliasing = settings.value("GraphAntiAliasing").toBool();
+  else
+    QucsSettings.GraphAntiAliasing = false;
+
+  if (settings.contains("TextAntiAliasing"))
+    QucsSettings.TextAntiAliasing = settings.value("TextAntiAliasing").toBool();
+  else
+    QucsSettings.TextAntiAliasing = false;
+
   // nvdl: todo: Add more settings
   /*if (settings.contains("wireLabelLineThickness"))
     QucsSettings.wireLabelLineThickness = settings.value("wireLabelLineThickness").toInt();
@@ -255,6 +265,9 @@ bool saveApplSettings()
   settings.setValue("wireColor", QucsSettings.wireColor.name());
   settings.setValue("selectedWireThickness", QucsSettings.selectedWireThickness);
   settings.setValue("selectedWireColor", QucsSettings.selectedWireColor.name());
+
+  settings.setValue("GraphAntiAliasing", QucsSettings.GraphAntiAliasing);
+  settings.setValue("TextAntiAliasing", QucsSettings.TextAntiAliasing);
 
   return true;
 
