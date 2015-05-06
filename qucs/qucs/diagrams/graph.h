@@ -59,6 +59,7 @@ class Marker;
 class ViewPainter;
 
 
+#if 0
 struct DataX {
   DataX(const QString& Var_, double *Points_=0, int count_=0)
        : Var(Var_), Points(Points_), count(count_), Min(INFINITY), Max(-INFINITY) {};
@@ -143,6 +144,7 @@ private: // limits on "y"-axis (ordinate)
   double Min;
   double Max;
 };
+#endif
 
 struct Axis;
 
