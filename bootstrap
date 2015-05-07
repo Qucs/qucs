@@ -22,6 +22,8 @@
 # Boston, MA 02110-1301, USA.
 #
 
+LIBTOOLIZE=${LIBTOOLIZE:-libtoolize}
+
 echo -n "Creating aclocal.m4... "
 ${ACLOCAL:-aclocal} -I m4
 echo "done."
@@ -29,6 +31,8 @@ echo -n "Creating config.h.in... "
 autoheader
 echo "done."
 
+echo "Running libtoolize"
+$LIBTOOLIZE || exit 1
 echo -n "Running ${AUTOMAKE:-automake}... "
 ${AUTOMAKE:-automake} -a -f -c --gnu -Wall
 echo "done."
