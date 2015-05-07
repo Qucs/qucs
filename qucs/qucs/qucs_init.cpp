@@ -1241,12 +1241,23 @@ void QucsApp::slotToggleOctave(bool on)
 AboutMessageBox::AboutMessageBox(QWidget *parent, const QString &title, const QString &message) : QDialog(parent) {
 
   setWindowTitle(title);
-  label = new QLabel(this);
+
+  QString fLogo = "/home/nvd/software/simulators/qucs/github/qucs/qucs/qucs/bitmaps/logo.png";
+
+  QImage logo;
+  logo.load(fLogo);
+
+  QLabel *lblLogo = new QLabel(this);
+  //QLabel lblLogo(this);
+  QPixmap img = QPixmap::fromImage(logo);
+  lblLogo->setPixmap(img.scaled(500, 500, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+
+  /*label = new QLabel(this);
   label->setText(message);
   scroll = new QScrollArea(this);
   scroll->setGeometry(QRect(10, 10, 480, 430));
   scroll->setWidget(label);
-  scroll->setWidgetResizable(true);
+  scroll->setWidgetResizable(true);*/
   okButton = new QPushButton(this);
   connect(okButton, SIGNAL(clicked()), this, SLOT(close()));
   okButton->setGeometry(QRect(200, 450, 100, 30));
