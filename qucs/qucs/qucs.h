@@ -22,6 +22,10 @@
 #include <QString>
 #include <QHash>
 #include <QStack>
+#include <QDialog>
+#include <QLabel>
+#include <QScrollArea>
+#include <QPushButton>
 
 class QucsDoc;
 class Schematic;
@@ -372,5 +376,19 @@ private:
   friend class SaveDialog;
   QString lastExportFilename;
 };
+// ----------------------------------------------------------
+// Class for the "About" message box with scrolling ability
 
+class AboutMessageBox : public QDialog {
+  Q_OBJECT
+
+public:
+  AboutMessageBox(QWidget *parent = 0, const QString &title = "", const QString &message = "");
+
+private:
+  QLabel *label;
+  QScrollArea *scroll;
+  QPushButton *okButton;
+};
+// ----------------------------------------------------------
 #endif /* QUCS_H */

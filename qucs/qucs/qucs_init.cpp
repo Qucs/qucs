@@ -633,7 +633,7 @@ void QucsApp::initActions()
   connect(selectMarker, SIGNAL(triggered()), SLOT(slotSelectMarker()));
 
   editRotate = new QAction(QIcon((":/bitmaps/rotate_ccw.png")), tr("Rotate"), this);
-  editRotate->setStatusTip(tr("Rotates the selected component by 90\u00B0"));
+  editRotate->setStatusTip(tr("Rotates the selected component by 90\u00B0 (counter-clockwise)"));
   editRotate->setWhatsThis(
     tr("Rotate\n\nRotates the selected component by 90\u00B0 counter-clockwise"));
   editRotate->setCheckable(true);
@@ -1238,9 +1238,76 @@ void QucsApp::slotToggleOctave(bool on)
 }
 
 // ----------------------------------------------------------
+AboutMessageBox::AboutMessageBox(QWidget *parent, const QString &title, const QString &message) : QDialog(parent) {
+
+  setWindowTitle(title);
+  label = new QLabel(this);
+  label->setText(message);
+  scroll = new QScrollArea(this);
+  scroll->setGeometry(QRect(10, 10, 480, 430));
+  scroll->setWidget(label);
+  scroll->setWidgetResizable(true);
+  okButton = new QPushButton(this);
+  connect(okButton, SIGNAL(clicked()), this, SLOT(close()));
+  okButton->setGeometry(QRect(200, 450, 100, 30));
+  okButton->setText("OK");
+  resize(500, 490);
+
+  // Prevent memory leak (or possibly this is the default behavior)
+  this->setAttribute(Qt::WA_DeleteOnClose, true);
+
+  show();
+}
+// ----------------------------------------------------------
 void QucsApp::slotHelpAbout()
 {
-  QMessageBox::about(this, tr("About..."),
+
+  QString message =
+
+  tr("Qucs Version") + " " + PACKAGE_VERSION +
+#ifdef GIT
+  " ("+GIT+") " +
+#endif
+  "\n"+
+  tr("Quite Universal Circuit Simulator")+"\n"+
+  tr("Copyright (C)")+" 2003-2009 "+
+  tr("by Michael Margraf")+"\n"+
+  tr("Copyright (C)")+" 2011-2014 "+
+  tr("Qucs Team")+"\n"+
+  "\nThis is free software; see the source for copying conditions."
+  "\nThere is NO warranty; not even for MERCHANTABILITY or "
+  "\nFITNESS FOR A PARTICULAR PURPOSE.\n\n"+
+  tr("Simulator by Stefan Jahn")+"\n"+
+  tr("VHDL simulator 'FreeHDL' by Edwin Naroska and Marius Vollmer")+"\n"+
+  tr("Special thanks to Jens Flucke and Raimund Jacob")+"\n"+
+  tr("Many thanks to Mike Brinson for correcting the VHDL output")+"\n"+
+  tr("GUI improvements by Gopala Krishna A")+"\n"+
+  tr("Verilog-AMS interface by Helene Parruitte")+"\n"+
+  tr("Verilog-AMS dynamic loader by Guilherme Brondani Torri")+"\n\n"+
+  tr("Translations:")+"\n"+
+  tr("German by Stefan Jahn")+"\n"+
+  tr("Polish by Dariusz Pienkowski")+"\n"+
+  tr("Romanian by Radu Circa")+"\n"+
+  tr("French by Vincent Habchi, F5RCS")+"\n"+
+  tr("Portuguese by Luciano Franca, Helio de Sousa, Guilherme Brondani Torri")+"\n"+
+  tr("Spanish by Jose L. Redrejo Rodriguez")+"\n"+
+  tr("Japanese by Toyoyuki Ishikawa")+"\n"+
+  tr("Italian by Giorgio Luparia and Claudio Girardi")+"\n"+
+  tr("Hebrew by Dotan Nahum")+"\n"+
+  tr("Swedish by Peter Landgren")+"\n"+
+  tr("Turkish by Onur and Ozgur Cobanoglu")+"\n"+
+  tr("Hungarian by Jozsef Bus")+"\n"+
+  tr("Russian by Igor Gorbounov")+"\n"+
+  tr("Czech by Marek Straka")+"\n"+
+  tr("Catalan by Antoni Subirats")+"\n"+
+  tr("Arabic by Chabane Noureddine")+"\n"+
+  tr("Kazakh by Erbol Keshubaev");
+
+  QString title = tr("About Qucs ") + PACKAGE_VERSION;
+
+  AboutMessageBox *msgBox = new AboutMessageBox(this, title, message);
+
+  /*QMessageBox::about(this, tr("About..."),
     tr("Qucs Version")+" "+PACKAGE_VERSION+
 #ifdef GIT
     " ("+GIT+") " +
@@ -1278,5 +1345,5 @@ void QucsApp::slotHelpAbout()
     tr("Czech by Marek Straka")+"\n"+
     tr("Catalan by Antoni Subirats")+"\n"+
     tr("Arabic by Chabane Noureddine")+"\n"+
-    tr("Kazakh by Erbol Keshubaev"));
+    tr("Kazakh by Erbol Keshubaev"));*/
 }
