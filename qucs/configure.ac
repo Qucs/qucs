@@ -16,6 +16,7 @@ AC_CANONICAL_TARGET
 AM_INIT_AUTOMAKE([no-define])
 AM_MAINTAINER_MODE
 AC_PREFIX_DEFAULT([/usr/local])
+AC_CONFIG_MACRO_DIR([m4])
 
 dnl Checks for programs.
 AC_PROG_CXX(clang++ g++)
