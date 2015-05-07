@@ -633,9 +633,9 @@ void QucsApp::initActions()
   connect(selectMarker, SIGNAL(triggered()), SLOT(slotSelectMarker()));
 
   editRotate = new QAction(QIcon((":/bitmaps/rotate_ccw.png")), tr("Rotate"), this);
-  editRotate->setStatusTip(tr("Rotates the selected component by 90\x00B0"));
+  editRotate->setStatusTip(tr("Rotates the selected component by 90\u00B0"));
   editRotate->setWhatsThis(
-    tr("Rotate\n\nRotates the selected component by 90\x00B0 counter-clockwise"));
+    tr("Rotate\n\nRotates the selected component by 90\u00B0 counter-clockwise"));
   editRotate->setCheckable(true);
   connect(editRotate, SIGNAL(toggled(bool)), SLOT(slotEditRotate(bool)));
 
@@ -1122,7 +1122,7 @@ void QucsApp::initToolBar()
 void QucsApp::initStatusBar()
 {
   // To reserve enough space, insert the longest text and rewrite it afterwards.
-  WarningLabel = new QLabel(tr("no warnings"), statusBar());
+  WarningLabel = new QLabel(tr("No warnings"), statusBar());
   statusBar()->addWidget(WarningLabel, 0, true);
 
   PositionLabel = new QLabel("0 : 0", statusBar());
@@ -1141,7 +1141,7 @@ void QucsApp::slotShowWarnings()
     QFont f = WarningLabel->font();
     f.setWeight(QFont::DemiBold);
     WarningLabel->setFont(f);
-    WarningLabel->setText(tr("Warnings in last simulation! Press F5"));
+    WarningLabel->setText(tr("Warnings in the last simulation! Press F5"));
   }
 
   ResultState++;
@@ -1163,7 +1163,7 @@ void QucsApp::slotResetWarnings()
   f.setWeight(QFont::Normal);
   WarningLabel->setFont(f);
   WarningLabel->setPaletteForegroundColor(Qt::black);
-  WarningLabel->setText(tr("no warnings"));
+  WarningLabel->setText(tr("No warnings"));
 }
 
 // ----------------------------------------------------------
