@@ -1941,26 +1941,45 @@ void Schematic::contentsWheelEvent(QWheelEvent *Event)
     int cx, cy;
     int vx, vy;
 
-    contentsToViewport(mouseX, mouseY, vx, vy);
+    //viewportSize(vx, vy);
+
+    //contentsToViewport(mouseX, mouseY, vx, vy);
+    //viewportToContents(mouseX, mouseY, vx, vy);
+
+    //mouseX -= contentsX();
+    //mouseY -= contentsY();
+
+    //viewportToContents(mouseX, mouseY, vx, vy);
+    //vx = mouseX;
+    //vy = mouseY;
 
     //contX = contentsX();
     //contY = contentsY();
 
-    qDebug() << "contentsWheelEvent: delta" << delta;
-    qDebug() << "contentsWheelEvent: Scale" << Scale;
-    qDebug() << "contentsWheelEvent: mouseX" << mouseX;
-    qDebug() << "contentsWheelEvent: mouseY" << mouseY;
-    qDebug() << "contentsWheelEvent: ViewX1" << ViewX1;
-    qDebug() << "contentsWheelEvent: ViewY1" << ViewY1;
-    qDebug() << "contentsWheelEvent: ViewX2" << ViewX2;
-    qDebug() << "contentsWheelEvent: ViewY2" << ViewY2;
-    qDebug() << "\n";
+    //float xr = float(mouseX) / visibleWidth();
+    //float yr = float(mouseY) / visibleHeight();
+
+    cx = contentsWidth();
+    cy = contentsHeight();
+
+    float xr1 = float(mouseX) / contentsWidth();
+    float yr1 = float(mouseY) / contentsHeight();
+
+    /*if (cx > cy) {
+      cy = cx;
+    } else if (cy > cx) {
+      cx = cy;
+    }*/
+
+    //int xmargin = xr * (cx / Scale);
+    //int ymargin = yr * (cy / Scale);
 
     //float scrollX = (1.0 * mouseX) / (Scale * 5);
     //float scrollY = (1.0 * mouseY) / (Scale * 5);
 
-    float scrollX = (1.0 * mouseX * scaleDiff);
-    float scrollY = (1.0 * mouseY * scaleDiff);
+    //float scrollX = (1.0 * mouseX * scaleDiff);
+    //float scrollY = (1.0 * mouseY * scaleDiff);
+
 
     /*if (delta > 0) {
       ViewX1 += scrollX;
@@ -1970,14 +1989,68 @@ void Schematic::contentsWheelEvent(QWheelEvent *Event)
       ViewY1 -= scrollY;
     }*/
 
+    //qDebug() << "contentsWheelEvent: delta" << delta;
+    qDebug() << "contentsWheelEvent: Scale" << Scale;
+    qDebug() << "contentsWheelEvent: mouseX" << mouseX;
+    qDebug() << "contentsWheelEvent: mouseY" << mouseY;
+    /*qDebug() << "contentsWheelEvent: ViewX1" << ViewX1;
+    qDebug() << "contentsWheelEvent: ViewY1" << ViewY1;
+    qDebug() << "contentsWheelEvent: ViewX2" << ViewX2;
+    qDebug() << "contentsWheelEvent: ViewY2" << ViewY2;*/
+    qDebug() << "contentsWidth1():" << contentsWidth();
+    qDebug() << "contentsHeight1():" << contentsHeight();
+    //qDebug() << "viewportSizeX:" << visibleWidth();
+    //qDebug() << "viewportSizeY:" << visibleHeight();
+    qDebug() << "xr1:" << xr1;
+    qDebug() << "yr1:" << yr1;
+    //qDebug() << "xmargin:" << xmargin;
+    //qDebug() << "ymargin:" << ymargin;
+    //qDebug() << "\n";
+
     resizeContents(int(Scale*float(ViewX2 - ViewX1)), int(Scale*float(ViewY2 - ViewY1)));
     //scrollBy( int((Scale - 1) * float(contentsX()+visibleWidth()/2)), int((Scale - 1) * float(contentsY()+visibleHeight()/2)) );
     //scrollBy( int(Scaling * float(Event->pos().x())), int(Scaling * float(Event->pos().y())) );
 
+    int mouseX2 = xr1 * contentsWidth();
+    int mouseY2 = yr1 * contentsHeight();
+
+    int shiftX = mouseX2 - mouseX;
+    int shiftY = mouseY2 - mouseY;
+
+    float xr2 = float(mouseX2) / contentsWidth();
+    float yr2 = float(mouseY2) / contentsHeight();
+
+    shiftX += 10;
+    shiftY += 10;
+
+    //shiftX *= Scale;
+    //shiftY *= Scale;
+
+    qDebug() << "contentsWidth2():" << contentsWidth();
+    qDebug() << "contentsHeight2():" << contentsHeight();
+    qDebug() << "xr2:" << xr2;
+    qDebug() << "yr2:" << yr2;
+    qDebug() << "shiftX:" << shiftX;
+    qDebug() << "shiftY:" << shiftY;
+    qDebug() << "\n";
+
+    //shiftX -= Scale * 40;
+    //shiftY -= Scale * 40;
+
+    setContentsPos(shiftX, shiftY);
 
     //scrollBy(scrollX, scrollY);
     //setContentsPos(mouseX / Scale, mouseY / Scale);
-    setContentsPos(vx, vy);
+    //setContentsPos(vx, vy);
+
+    //vx = scaleDiff * (ViewX2 - ViewX1);
+    //vy = scaleDiff * (ViewX2 - ViewX1);
+
+    //scrollBy(vx, vy);
+
+    //setContentsPos(xmargin, ymargin);
+
+    //setContentsPos(Scale * 10, Scale * 10);
 
     //scrollBy(Scale * mouseX2, Scale * mouseY2);
 

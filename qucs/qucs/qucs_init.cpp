@@ -427,9 +427,9 @@ void QucsApp::initActions()
 
   editRotate = new QAction(QIcon((":/bitmaps/rotate_ccw.png")), tr("Rotate"), this);
   editRotate->setShortcut(Qt::CTRL+Qt::Key_R);
-  editRotate->setStatusTip(tr("Rotates the selected component by 90\x00B0"));
+  editRotate->setStatusTip(tr("Rotates the selected component by 90\u00B0"));
   editRotate->setWhatsThis(
-    tr("Rotate\n\nRotates the selected component by 90\x00B0 counter-clockwise"));
+    tr("Rotate\n\nRotates the selected component by 90\u00B0 counter-clockwise"));
   editRotate->setCheckable(true);
   connect(editRotate, SIGNAL(toggled(bool)), SLOT(slotEditRotate(bool)));
 
@@ -941,7 +941,7 @@ void QucsApp::initToolBar()
 void QucsApp::initStatusBar()
 {
   // To reserve enough space, insert the longest text and rewrite it afterwards.
-  WarningLabel = new QLabel(tr("no warnings"), statusBar());
+  WarningLabel = new QLabel(tr("No warnings"), statusBar());
   statusBar()->addWidget(WarningLabel, 0, true);
 
   PositionLabel = new QLabel("0 : 0", statusBar());
@@ -960,7 +960,7 @@ void QucsApp::slotShowWarnings()
     QFont f = WarningLabel->font();
     f.setWeight(QFont::DemiBold);
     WarningLabel->setFont(f);
-    WarningLabel->setText(tr("Warnings in last simulation! Press F5"));
+    WarningLabel->setText(tr("Warnings in the last simulation! Press F5"));
   }
 
   ResultState++;
@@ -982,7 +982,7 @@ void QucsApp::slotResetWarnings()
   f.setWeight(QFont::Normal);
   WarningLabel->setFont(f);
   WarningLabel->setPaletteForegroundColor(Qt::black);
-  WarningLabel->setText(tr("no warnings"));
+  WarningLabel->setText(tr("No warnings"));
 }
 
 // ----------------------------------------------------------
@@ -1056,3 +1056,46 @@ void QucsApp::slotToggleOctave(bool on)
   viewOctaveDock->blockSignals(false);
 }
 
+// ----------------------------------------------------------
+void QucsApp::slotHelpAbout()
+{
+  QMessageBox::about(this, tr("About..."),
+    tr("Qucs Version")+" "+PACKAGE_VERSION+
+#ifdef GIT
+    " ("+GIT+") " +
+#endif
+    "\n"+
+    tr("Quite Universal Circuit Simulator")+"\n"+
+    tr("Copyright (C)")+" 2003-2009 "+
+    tr("by Michael Margraf")+"\n"+
+    tr("Copyright (C)")+" 2011-2014 "+
+    tr("Qucs Team")+"\n"+
+    "\nThis is free software; see the source for copying conditions."
+    "\nThere is NO warranty; not even for MERCHANTABILITY or "
+    "\nFITNESS FOR A PARTICULAR PURPOSE.\n\n"+
+    tr("Simulator by Stefan Jahn")+"\n"+
+    tr("VHDL simulator 'FreeHDL' by Edwin Naroska and Marius Vollmer")+"\n"+
+    tr("Special thanks to Jens Flucke and Raimund Jacob")+"\n"+
+    tr("Many thanks to Mike Brinson for correcting the VHDL output")+"\n"+
+    tr("GUI improvements by Gopala Krishna A")+"\n"+
+    tr("Verilog-AMS interface by Helene Parruitte")+"\n"+
+    tr("Verilog-AMS dynamic loader by Guilherme Brondani Torri")+"\n\n"+
+    tr("Translations:")+"\n"+
+    tr("German by Stefan Jahn")+"\n"+
+    tr("Polish by Dariusz Pienkowski")+"\n"+
+    tr("Romanian by Radu Circa")+"\n"+
+    tr("French by Vincent Habchi, F5RCS")+"\n"+
+    tr("Portuguese by Luciano Franca, Helio de Sousa, Guilherme Brondani Torri")+"\n"+
+    tr("Spanish by Jose L. Redrejo Rodriguez")+"\n"+
+    tr("Japanese by Toyoyuki Ishikawa")+"\n"+
+    tr("Italian by Giorgio Luparia and Claudio Girardi")+"\n"+
+    tr("Hebrew by Dotan Nahum")+"\n"+
+    tr("Swedish by Peter Landgren")+"\n"+
+    tr("Turkish by Onur and Ozgur Cobanoglu")+"\n"+
+    tr("Hungarian by Jozsef Bus")+"\n"+
+    tr("Russian by Igor Gorbounov")+"\n"+
+    tr("Czech by Marek Straka")+"\n"+
+    tr("Catalan by Antoni Subirats")+"\n"+
+    tr("Arabic by Chabane Noureddine")+"\n"+
+    tr("Kazakh by Erbol Keshubaev"));
+}
