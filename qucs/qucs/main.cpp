@@ -60,6 +60,10 @@
 #define executableSuffix ""
 #endif
 
+// might require hacks for non-posix platforms.
+// see gnucap/include/md.h
+#include <dlfcn.h>
+
 tQucsSettings QucsSettings;
 
 QucsApp *QucsMain = 0;  // the Qucs application itself
@@ -245,6 +249,18 @@ void qucsMessageOutput(QtMsgType type, const char *msg)
 #ifdef _WIN32
   OutputDebugStringA(msg);
 #endif
+}
+
+/*!
+ * \brief attaches shared object code
+ */
+void attach(const char* what)
+{
+  int dl_scope = RTLD_LOCAL;
+  int check = RTLD_NOW;
+  // RTLD_NOW means to resolve symbols on loading
+  // RTLD_LOCAL means symbols defined in a plugin are local
+  dlopen(what, check | dl_scope);
 }
 
 Schematic *openSchematic(QString schematic)
@@ -888,6 +904,9 @@ int main(int argc, char *argv[])
     }
     else if (!strcmp(argv[i], "--orin")) {
       orientation = argv[++i];
+    }
+    else if (!strcmp(argv[i], "-a")) {
+      attach(argv[++i]);
     }
     else if (!strcmp(argv[i], "-i")) {
       inputfile = argv[++i];
