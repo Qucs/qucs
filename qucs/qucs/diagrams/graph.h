@@ -65,10 +65,13 @@ public:
   bool    load(const QString&);
   int     getSelected(int, int);
   Graph*  sameNewOne();
+  unsigned numAxes() const { return cPointsX.count(); }
+  DataX* axis(uint i) { return cPointsX.at(i); }
+  bool isEmpty() const { return cPointsX.isEmpty(); }
+  Q3PtrList<DataX>& mutable_axes(){return cPointsX;} // HACK
 
   QDateTime lastLoaded;  // when it was loaded into memory
   int     yAxisNo;       // which y axis is used
-  Q3PtrList<DataX>  cPointsX;
   double *cPointsY;
   float  *ScrPoints; // data in screen coordinates
   int     countY;    // number of curves
@@ -81,6 +84,8 @@ public:
   // for tabular diagram
   int  Precision;   // number of digits to show
   int  numMode;     // real/imag or polar (deg/rad)
+private:
+  Q3PtrList<DataX>  cPointsX;
 };
 
 #endif
