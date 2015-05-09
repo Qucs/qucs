@@ -28,19 +28,20 @@ class QPlainTextEdit;
 
 /*!
  * \file messagedock.h
- * \brief The MessageDock class definiion
+ * \brief The MessagesWindow class definition (nvdl: todo: It is not a dock anymore)
  */
-class MessageDock : public QWidget {
+class MessagesWindow : public QWidget {
   Q_OBJECT
 public:
-  MessageDock(QucsApp*);
- ~MessageDock() {};
+  //MessageDock(QucsApp*);
+  MessagesWindow(QDockWidget*);
+ ~MessagesWindow() {};
 
 public:
 
-  QDockWidget *msgDock;
+  //QDockWidget *msgDock;
 
-  QTabWidget *builderTabs;
+ QTabWidget *builderTabs;
 
   /*!
    * \brief admsOutput holds the make output of running admsXml
@@ -51,14 +52,21 @@ public:
    */
   QPlainTextEdit *cppOutput;
 
-  void reset();
+  /*!
+   * \brief To hold the program messages, warnings and errors
+   */
+  QPlainTextEdit *messages, *warnings, *errors;
 
+  void message(QString);
+  void warning(QString);
+  void error(QString);
+
+  void reset();
 
 private slots:
   void slotAdmsChanged();
   void slotCppChanged();
   void slotCursor();
-
 };
 
 #endif // MESSAGEDOCK_H

@@ -171,6 +171,7 @@ QucsApp::QucsApp()
 
   lastExportFilename = QDir::homePath() + QDir::separator() + "export.png";
 
+  //nvdl: todo: Possible conflicting with the new argument parser
   // load documents given as command line arguments
   for(int z=1; z<qApp->argc(); z++) {
     QString arg = qApp->argv()[z];
@@ -223,6 +224,7 @@ void QucsApp::initView()
   DocumentTab->setMovable (true);
 #endif
 
+  // Components, etc. dock on the left
   dock = new QDockWidget(this);
   TabView = new QTabWidget(dock);
   TabView->setTabPosition(QTabWidget::West);
@@ -275,6 +277,7 @@ void QucsApp::initView()
   // "Content" Tab of the left QTabWidget
   Content = new ProjectView(this);
   Content->setContextMenuPolicy(Qt::CustomContextMenu);
+
 
   TabView->addTab(Content, tr("Content"));
   TabView->setTabToolTip(TabView->indexOf(Content), tr("content of current project"));
@@ -333,7 +336,6 @@ void QucsApp::initView()
 
   LibGroupLayout->addWidget(LibButts);
 
-
   libTreeWidget = new QTreeWidget (this);
   libTreeWidget->setColumnCount (1);
   QStringList headers;
@@ -363,17 +365,22 @@ void QucsApp::initView()
   // Octave docking window
   //octDock = new Q3DockWindow(Q3DockWindow::InDock, this);
   //octDock->setCloseMode(Q3DockWindow::Always);
+
   octDock = new QDockWidget();
+  this->addDockWidget(Qt::BottomDockWidgetArea, octDock);
+  this->setCorner(Qt::BottomLeftCorner, Qt::LeftDockWidgetArea);
+  //| Qt::BottomRightCorner
 
   connect(octDock, SIGNAL(visibilityChanged(bool)), SLOT(slotToggleOctave(bool)));
   octave = new OctaveWindow(octDock);
-  this->addDockWidget(Qt::BottomDockWidgetArea, octDock);
-  this->setCorner(Qt::BottomLeftCorner  , Qt::LeftDockWidgetArea);
-  //| Qt::BottomRightCorner
 
   // ............................................
+  // Dock that holds the window to show compilers' messages
+  messagesDock = new QDockWidget();
+  messages = new MessagesWindow(messagesDock);
+  this->addDockWidget(Qt::BottomDockWidgetArea, messagesDock);
 
-  messageDock = new MessageDock(this);
+  connect(messagesDock, SIGNAL(visibilityChanged(bool)), SLOT(slotToggleMessagesDockVisibility(bool)));
 
   // initial home directory model
   m_homeDirModel = new QFileSystemModel(this);

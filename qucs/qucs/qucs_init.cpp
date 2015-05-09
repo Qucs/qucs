@@ -22,6 +22,7 @@
 #include "main.h"
 #include "qucs.h"
 #include "octave_window.h"
+#include "messagedock.h"
 
 #include <QAction>
 #include <QShortcut>
@@ -34,6 +35,7 @@
 #include <QDockWidget>
 #include <QMessageBox>
 #include <QApplication>
+#include <QDebug>
 
 // initial default value into Shortcut object
 void 
@@ -148,6 +150,7 @@ setDefaultShortcut()
   viewmap->insert("Statusbar", QString());
   viewmap->insert("Dock Window", QString());
   viewmap->insert("Octave Window", QString());
+  viewmap->insert("Messages Window", QString());
   vec->push_back(qMakePair(QString("View"), viewmap));
 
   QMap<QString, QString> *helpmap = new QMap<QString, QString>;
@@ -276,6 +279,7 @@ QucsApp::slotSetAllShortcut()
   viewStatusBar  ->setShortcut(QKeySequence(map->value("Statusbar")));
   viewBrowseDock->setShortcut(QKeySequence(map->value("Dock Window")));
   viewOctaveDock->setShortcut(QKeySequence(map->value("Octave Window")));
+  viewMessagesDock->setShortcut(QKeySequence(map->value("Messages Window")));
 
   map = vec->at(8).second; //Help
   helpIndex    ->setShortcut(QKeySequence(map->value("Help Index")));
@@ -812,12 +816,17 @@ void QucsApp::initActions()
 	tr("Browse Window\n\nEnables/disables the browse dock window"));
   connect(viewBrowseDock, SIGNAL(toggled(bool)), SLOT(slotViewBrowseDock(bool)));
 
-  viewOctaveDock = new QAction(tr("&Octave Window"), this);
+  viewOctaveDock = new QAction(tr("&Octave Dock"), this);
   viewOctaveDock->setCheckable(true);
-  viewOctaveDock->setStatusTip(tr("Shows/hides the Octave dock window"));
-  viewOctaveDock->setWhatsThis(
-      tr("Octave Window\n\nShows/hides the Octave dock window"));
+  viewOctaveDock->setStatusTip(tr("Shows/hides the Octave dock"));
+  viewOctaveDock->setWhatsThis(tr("Octave Dock\n\nShows/hides the Octave dock"));
   connect(viewOctaveDock, SIGNAL(toggled(bool)), SLOT(slotViewOctaveDock(bool)));
+
+  viewMessagesDock = new QAction(tr("&Messages Dock"), this);
+  viewMessagesDock->setCheckable(true);
+  viewMessagesDock->setStatusTip(tr("Shows/hides the messages dock"));
+  viewMessagesDock->setWhatsThis(tr("Messages Dock\n\nShows/hides the messages dock"));
+  connect(viewMessagesDock, SIGNAL(toggled(bool)), SLOT(slotViewMessagesDock(bool)));
 
   helpIndex = new QAction(tr("Help Index..."), this);
   helpIndex->setStatusTip(tr("Index of Qucs Help"));
@@ -976,6 +985,7 @@ void QucsApp::initMenuBar()
   viewMenu->addAction(viewStatusBar);
   viewMenu->addAction(viewBrowseDock);
   viewMenu->addAction(viewOctaveDock);
+  viewMenu->addAction(viewMessagesDock);
 
 
   helpMenu = new QMenu(tr("&Help"));  // menuBar entry helpMenu
@@ -1228,36 +1238,52 @@ void QucsApp::slotViewOctaveDock(bool toggle)
     octave->startOctave();
   }
 }
-
 // ----------------------------------------------------------
+// Slot to capture dock close event
 void QucsApp::slotToggleOctave(bool on)
 {
   viewOctaveDock->blockSignals(true);
   viewOctaveDock->setChecked(on);
   viewOctaveDock->blockSignals(false);
 }
-
 // ----------------------------------------------------------
-AboutMessageBox::AboutMessageBox(QWidget *parent, const QString &title, const QString &message) : QDialog(parent) {
+void QucsApp::slotViewMessagesDock(bool toggle) {
+
+  if (toggle) {
+    //messageDock->msgDock->show();
+    messagesDock->show();
+  } else {
+    //messageDock->msgDock->hide();
+    messagesDock->hide();
+  }
+}
+// ----------------------------------------------------------
+// Slot to capture dock close event
+void QucsApp::slotToggleMessagesDockVisibility(bool on) {
+  viewMessagesDock->blockSignals(true);
+  viewMessagesDock->setChecked(on);
+  viewMessagesDock->blockSignals(false);
+
+}
+// ----------------------------------------------------------
+QucsScrollMessageBox::QucsScrollMessageBox(QWidget *parent, const QString &title, const QString &message) : QDialog(parent) {
 
   setWindowTitle(title);
 
-  QString fLogo = "/home/nvd/software/simulators/qucs/github/qucs/qucs/qucs/bitmaps/logo.png";
-
+  /*QString fLogo = "";
   QImage logo;
   logo.load(fLogo);
 
   QLabel *lblLogo = new QLabel(this);
-  //QLabel lblLogo(this);
   QPixmap img = QPixmap::fromImage(logo);
-  lblLogo->setPixmap(img.scaled(500, 500, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+  lblLogo->setPixmap(img.scaled(500, 500, Qt::KeepAspectRatio, Qt::SmoothTransformation));*/
 
-  /*label = new QLabel(this);
+  label = new QLabel(this);
   label->setText(message);
   scroll = new QScrollArea(this);
   scroll->setGeometry(QRect(10, 10, 480, 430));
   scroll->setWidget(label);
-  scroll->setWidgetResizable(true);*/
+  scroll->setWidgetResizable(true);
   okButton = new QPushButton(this);
   connect(okButton, SIGNAL(clicked()), this, SLOT(close()));
   okButton->setGeometry(QRect(200, 450, 100, 30));
@@ -1316,7 +1342,7 @@ void QucsApp::slotHelpAbout()
 
   QString title = tr("About Qucs ") + PACKAGE_VERSION;
 
-  AboutMessageBox *msgBox = new AboutMessageBox(this, title, message);
+  QucsScrollMessageBox *msgBox = new QucsScrollMessageBox(this, title, message);
 
   /*QMessageBox::about(this, tr("About..."),
     tr("Qucs Version")+" "+PACKAGE_VERSION+
@@ -1358,3 +1384,11 @@ void QucsApp::slotHelpAbout()
     tr("Arabic by Chabane Noureddine")+"\n"+
     tr("Kazakh by Erbol Keshubaev"));*/
 }
+//=================================================================================================
+// nvdl: todo: Disabled for a while. Not needed "as it is".
+QMenu* QucsApp::createPopupMenu() {
+
+  qDebug() << "QucsApp::createPopupMenu(): Context menu is disabled";
+  return NULL;
+}
+//=================================================================================================

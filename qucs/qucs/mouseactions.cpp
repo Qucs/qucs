@@ -1896,7 +1896,7 @@ void MouseActions::drawWire(Schematic* Doc, bool outline) {
     MAx3 = MAx2;
     MAy3 = MAy2;
 
-    //toggleWireOrientation = false;
+    toggleWireOrientation = false;
   }
 }
 // -----------------------------------------------------------
