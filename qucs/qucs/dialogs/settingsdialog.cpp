@@ -20,6 +20,7 @@
 #include "qucs.h"
 #include "mnemo.h"
 #include "schematic.h"
+#include "main.h"
 
 #include <QGridLayout>
 #include <QVBoxLayout>
@@ -62,8 +63,7 @@ SettingsDialog::SettingsDialog(Schematic *Doc_)
     Input_DataDisplay = new QLineEdit(Tab1);
     gp->addWidget(Input_DataDisplay,1,1,1,1);
 
-    Check_OpenDpl = new QCheckBox(tr("open data display after simulation"),
-                                  Tab1);
+    Check_OpenDpl = new QCheckBox(tr("Open data display after simulation"), Tab1);
     gp->addWidget(Check_OpenDpl,2,0,1,2);
 
     QLabel *l20 = new QLabel(tr("Octave Script:"), Tab1);
@@ -71,8 +71,7 @@ SettingsDialog::SettingsDialog(Schematic *Doc_)
     Input_Script = new QLineEdit(Tab1);
     gp->addWidget(Input_Script,3,1,1,1);
 
-    Check_RunScript = new QCheckBox(tr("run script after simulation"),
-                                    Tab1);
+    Check_RunScript = new QCheckBox(tr("Run the script after simulation"), Tab1);
     gp->addWidget(Check_RunScript,4,0,1,2);
 
     t->addTab(Tab1, tr("Simulation"));
@@ -80,18 +79,18 @@ SettingsDialog::SettingsDialog(Schematic *Doc_)
     // ...........................................................
     QWidget *Tab2 = new QWidget(t);
     QGridLayout *gp2 = new QGridLayout(Tab2);
-    Check_GridOn = new QCheckBox(tr("show Grid"), Tab2);
+    Check_GridOn = new QCheckBox(tr("Show Grid"), Tab2);
     gp2->addWidget(Check_GridOn,0,0,1,1);
 
     valExpr = new QRegExpValidator(QRegExp("[1-9]\\d{0,2}"), this);
 
-    QLabel *l3 = new QLabel(tr("horizontal Grid:"), Tab2);
+    QLabel *l3 = new QLabel(tr("Horizontal Grid:"), Tab2);
     gp2->addWidget(l3,1,0);
     Input_GridX = new QLineEdit(Tab2);
     Input_GridX->setValidator(valExpr);
     gp2->addWidget(Input_GridX,1,1,1,1);
 
-    QLabel *l4 = new QLabel(tr("vertical Grid:"), Tab2);
+    QLabel *l4 = new QLabel(tr("Vertical Grid:"), Tab2);
     gp2->addWidget(l4,2,0);
     Input_GridY = new QLineEdit(Tab2);
     Input_GridY->setValidator(valExpr);
@@ -103,7 +102,7 @@ SettingsDialog::SettingsDialog(Schematic *Doc_)
     QWidget *Tab3 = new QWidget(t);
     QGridLayout *gp3 = new QGridLayout(Tab3);
     Combo_Frame = new QComboBox(Tab3);
-    Combo_Frame->insertItem(tr("no Frame"));
+    Combo_Frame->insertItem(tr("No Frame"));
     Combo_Frame->insertItem(tr("DIN A5 landscape"));
     Combo_Frame->insertItem(tr("DIN A5 portrait"));
     Combo_Frame->insertItem(tr("DIN A4 landscape"));
@@ -156,9 +155,16 @@ SettingsDialog::SettingsDialog(Schematic *Doc_)
     Input_Script->setText(Doc->Script);
     Check_OpenDpl->setChecked(Doc->SimOpenDpl);
     Check_RunScript->setChecked(Doc->SimRunScript);
-    Check_GridOn->setChecked(Doc->GridOn);
+
+    /*Check_GridOn->setChecked(Doc->GridOn);
     Input_GridX->setText(QString::number(Doc->GridX));
-    Input_GridY->setText(QString::number(Doc->GridY));
+    Input_GridY->setText(QString::number(Doc->GridY));*/
+
+    // nvdl: todo: Changes
+    Check_GridOn->setChecked(QucsSettings.gridOn);
+    Input_GridX->setText(QString::number(QucsSettings.grid1Spacing));
+    Input_GridY->setText(QString::number(QucsSettings.grid1Spacing));
+
     Combo_Frame->setCurrentItem(Doc->showFrame);
 
     QString Text_;
@@ -224,7 +230,7 @@ void SettingsDialog::slotApply()
         changed = true;
     }
 
-    if(Doc->GridOn != Check_GridOn->isChecked())
+    /*if(Doc->GridOn != Check_GridOn->isChecked())
     {
         Doc->GridOn = Check_GridOn->isChecked();
         changed = true;
@@ -240,6 +246,23 @@ void SettingsDialog::slotApply()
     {
         Doc->GridY = Input_GridY->text().toInt();
         changed = true;
+    }*/
+
+    //nvdl: todo: Changes
+    if(QucsSettings.gridOn != Check_GridOn->isChecked()) {
+      QucsSettings.gridOn = Check_GridOn->isChecked();
+      changed = true;
+    }
+
+    if(QucsSettings.grid1Spacing != Input_GridX->text().toInt()) {
+      QucsSettings.grid1Spacing = Input_GridX->text().toInt();
+      changed = true;
+    }
+
+    // nvdl: todo: Used as grid2 for debugging
+    if(QucsSettings.grid2Spacing != Input_GridY->text().toInt()) {
+      QucsSettings.grid2Spacing = Input_GridY->text().toInt();
+      changed = true;
     }
 
     if(Doc->showFrame != Combo_Frame->currentItem())

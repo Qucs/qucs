@@ -166,6 +166,22 @@ bool loadSettings()
   QucsSettings.GraphAntiAliasing = settings.value("GraphAntiAliasing", "false").toBool();
   QucsSettings.TextAntiAliasing = settings.value("TextAntiAliasing", "false").toBool();
 
+  QucsSettings.gridOn = settings.value("gridOn", "true").toBool();
+
+  QucsSettings.grid1Color.setNamedColor(settings.value("grid1Color", "#f0f0f0").toString());
+  QucsSettings.grid1Thickness = settings.value("grid1Thickness", 0).toInt();
+  QucsSettings.grid1Spacing = settings.value("grid1Spacing", 10).toInt();
+  QucsSettings.grid1Type = settings.value("grid1Type", 1).toInt();
+  QucsSettings.grid1ScaleMin = settings.value("grid1ScaleMin", 0.1).toFloat();
+  QucsSettings.grid1ScaleMax = settings.value("grid1ScaleMax", 1).toFloat();
+
+  QucsSettings.grid2Color.setNamedColor(settings.value("grid2Color", "#a0a0a0").toString());
+  QucsSettings.grid2Thickness = settings.value("grid2Thickness", 2).toInt();
+  QucsSettings.grid2Spacing = settings.value("grid2Spacing", 50).toInt();
+  QucsSettings.grid2Type = settings.value("grid2Type", 1).toInt();
+  QucsSettings.grid2ScaleMin = settings.value("grid2ScaleMin", 0.1).toFloat();
+  QucsSettings.grid2ScaleMax = settings.value("grid2ScaleMax", 1).toFloat();
+
   // nvdl: todo: Add more settings
   /*if (settings.contains("wireLabelLineThickness"))
     QucsSettings.wireLabelLineThickness = settings.value("wireLabelLineThickness").toInt();
@@ -254,6 +270,22 @@ bool saveApplSettings()
 
   settings.setValue("GraphAntiAliasing", QucsSettings.GraphAntiAliasing);
   settings.setValue("TextAntiAliasing", QucsSettings.TextAntiAliasing);
+
+  settings.setValue("gridOn", QucsSettings.gridOn);
+
+  settings.setValue("grid1Color", QucsSettings.grid1Color.name());
+  settings.setValue("grid1Thickness", QucsSettings.grid1Thickness);
+  settings.setValue("grid1Spacing", QucsSettings.grid1Spacing);
+  settings.setValue("grid1Type", QucsSettings.grid1Type);
+  settings.setValue("grid1ScaleMin", QucsSettings.grid1ScaleMin);
+  settings.setValue("grid1ScaleMax", QucsSettings.grid1ScaleMax);
+
+  settings.setValue("grid2Color", QucsSettings.grid2Color.name());
+  settings.setValue("grid2Thickness", QucsSettings.grid2Thickness);
+  settings.setValue("grid2Spacing", QucsSettings.grid2Spacing);
+  settings.setValue("grid2Type", QucsSettings.grid2Type);
+  settings.setValue("grid2ScaleMin", QucsSettings.grid2ScaleMin);
+  settings.setValue("grid2ScaleMax", QucsSettings.grid2ScaleMax);
 
   return true;
 

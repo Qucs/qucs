@@ -91,6 +91,7 @@ MessagesWindow::MessagesWindow(QDockWidget *parent): QWidget()
 void MessagesWindow::message(QString message) {
 
   messages->setPlainText(message);
+  builderTabs->setCurrentIndex(2);
 }
 
 /*!
@@ -99,6 +100,7 @@ void MessagesWindow::message(QString message) {
 void MessagesWindow::warning(QString message) {
 
   warnings->setPlainText(message);
+  builderTabs->setCurrentIndex(3);
 }
 
 /*!
@@ -107,6 +109,7 @@ void MessagesWindow::warning(QString message) {
 void MessagesWindow::error(QString message) {
 
   errors->setPlainText(message);
+  builderTabs->setCurrentIndex(4);
 }
 
 /*!

@@ -418,6 +418,21 @@ void MouseActions::MMoveSelect(Schematic *Doc, QMouseEvent *Event)
 
     Doc->PostPaintEvent(_Rect, x1, y1, width, height);*/
 
+    MAx2 = DOC_X_POS(Event->pos().x()) - MAx1;
+    MAy2 = DOC_Y_POS(Event->pos().y()) - MAy1;
+
+    Doc->setOnGrid(MAx2, MAy2);
+
+    if (isMoveEqual) { // Check if x and y movements should be equal
+      if (abs(MAx2) > abs(MAy2)) {
+        if (MAx2 < 0) MAx2 = -abs(MAy2); else MAx2 = abs(MAy2);
+      } else {
+        if (MAy2 < 0) MAy2 = -abs(MAx2); else MAy2 = abs(MAx2);
+      }
+    }
+
+    Doc->PostPaintEvent (_Rect, MAx1, MAy1, MAx2, MAy2);
+
   } else {
     qDebug() << "MMoveSelect: Nothing under the mouse";
 
@@ -436,7 +451,7 @@ void MouseActions::MMoveSelect(Schematic *Doc, QMouseEvent *Event)
     Doc->PostPaintEvent(_Rect, x1, y1, width, height);
   }
 
-  Doc->viewport()->repaint();
+  //Doc->viewport()->repaint();
 
   //QucsMain->MouseMoveAction = &MouseActions::MMoveMoving;
 
@@ -453,12 +468,6 @@ void MouseActions::MMoveSelect(Schematic *Doc, QMouseEvent *Event)
   }
 
   Doc->PostPaintEvent (_Rect, MAx1, MAy1, MAx2, MAy2);*/
-
-  /*MAx2 = DOC_X_POS(Event->pos().x());
-  MAy2 = DOC_Y_POS(Event->pos().y());
-  Doc->PostPaintEvent (_Rect, MAx1, MAy1, MAx2, MAy2);
-
-  Doc->viewport()->update();*/
 }
 
 // -----------------------------------------------------------
