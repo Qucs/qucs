@@ -136,6 +136,7 @@ public slots:
   void slotCMenuInsert();
 
   void slotUpdateTreeview();
+
 private slots:
   void slotMenuProjOpen();
   void slotMenuProjClose();
@@ -163,6 +164,7 @@ public:
   QTabWidget *DocumentTab;
   QListWidget *CompComps;
   QTreeWidget *libTreeWidget;
+  MessagesWindow *messages;
 
   // menu appearing by right mouse button click on content listview
   QMenu *ContentMenu;
@@ -187,7 +189,6 @@ private:
   QDockWidget     *octDock;
   OctaveWindow    *octave;
   QDockWidget     *messagesDock;
-  MessagesWindow  *messages;
 
   QListView       *Projects;
   ProjectView     *Content;

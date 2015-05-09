@@ -25,24 +25,27 @@ QucsDoc::QucsDoc(QucsApp *App_, const QString& Name_)
 {
   App = App_;
 
-  GridOn = true;
+  //GridOn = true; //nvdl: todo: Moved to "schematic.h"
   DocName = Name_;
   QFileInfo Info(DocName);
-  if(!DocName.isEmpty()) {
+
+  if (!DocName.isEmpty()) {
     DocName = Info.absFilePath();
     QString base = Info.baseName(true);
     QString ext = Info.extension(false);
 
-    if(ext == "m" || ext == "oct")
+    if (ext == "m" || ext == "oct")
       SimTime = "1";
 
     DataSet = base + ".dat";       // name of the default dataset
     Script = base + ".m";          // name of the default script
-    if(ext != "dpl")
+
+    if (ext != "dpl")
       DataDisplay = base + ".dpl"; // name of default data display
     else {
       DataDisplay = base + ".sch"; // name of default schematic
-      GridOn = false;              // data display without grid (per default)
+      // data display without grid (per default)
+      //GridOn = false; // //nvdl: todo: Moved to "schematic.h"
     }
   }
   SimOpenDpl = true;

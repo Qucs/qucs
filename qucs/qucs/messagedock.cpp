@@ -86,9 +86,42 @@ MessageDock::MessageDock(QucsApp *App_): QWidget()
 }
 
 /*!
+<<<<<<< HEAD
  * \brief MessageDock::reset clear the text and tab icons
  */
 void MessageDock::reset()
+=======
+ * \brief MessagesWindow::message Displays a message in the messages dock
+ */
+void MessagesWindow::message(QString message) {
+
+  messages->setPlainText(message);
+  builderTabs->setCurrentIndex(2);
+}
+
+/*!
+ * \brief MessagesWindow::warning Displays a warning message in the messages dock
+ */
+void MessagesWindow::warning(QString message) {
+
+  warnings->setPlainText(message);
+  builderTabs->setCurrentIndex(3);
+}
+
+/*!
+ * \brief MessagesWindow::error Displays an error message in the messages dock
+ */
+void MessagesWindow::error(QString message) {
+
+  errors->setPlainText(message);
+  builderTabs->setCurrentIndex(4);
+}
+
+/*!
+ * \brief MessagesWindow::reset clear the text and tab icons
+ */
+void MessagesWindow::reset()
+>>>>>>> c273845... Moved grid settings to settings file, added two level grids, grid settings in schematic file are ignored now (for a while). Fixed diagram resizing. Changed default grid type and color.
 {
     admsOutput->clear();
     cppOutput->clear();

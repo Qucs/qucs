@@ -57,7 +57,7 @@ public:
   bool SimOpenDpl;   // open data display after simulation ?
   bool SimRunScript; // run script after simulation ?
   int  showBias;     // -1=no, 0=calculation running, >0=show DC bias points
-  bool GridOn;
+  //bool GridOn;
   int  tmpPosX, tmpPosY;
 };
 

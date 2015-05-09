@@ -41,7 +41,7 @@
 #include "components/libcomp.h"
 #include "module.h"
 #include "misc.h"
-
+#include "messagedock.h"
 
 // Here the subcircuits, SPICE components etc are collected. It must be
 // global to also work within the subcircuits.
@@ -361,8 +361,14 @@ int Schematic::saveDocument()
 			 << ViewX2<<","<<ViewY2<< ",";
     stream << Scale <<","<<contentsX()<<","<<contentsY() << ">\n";
   }
-  stream << "  <Grid=" << GridX<<","<<GridY<<","
-			<< GridOn << ">\n";
+
+  //stream << "  <Grid=" << GridX<<","<<GridY<<"," << GridOn << ">\n";
+
+  //nvdl: todo: Changes
+  stream << "  <Grid=" << QucsSettings.grid1Spacing << ",";
+  stream << QucsSettings.grid1Spacing << ",";
+  stream << QucsSettings.gridOn << ">\n";
+
   stream << "  <DataSet=" << DataSet << ">\n";
   stream << "  <DataDisplay=" << DataDisplay << ">\n";
   stream << "  <OpenDisplay=" << SimOpenDpl << ">\n";
@@ -523,39 +529,58 @@ bool Schematic::loadProperties(QTextStream *stream)
 {
   bool ok = true;
   QString Line, cstr, nstr;
-  while(!stream->atEnd()) {
-    Line = stream->readLine();
-    if(Line.at(0) == '<') if(Line.at(1) == '/') return true;  // field end ?
-    Line = Line.trimmed();
-    if(Line.isEmpty()) continue;
 
-    if(Line.at(0) != '<') {
+  while (!stream->atEnd()) {
+    Line = stream->readLine();
+
+    if(Line.at(0) == '<') if(Line.at(1) == '/') return true;  // field end ?
+
+    Line = Line.trimmed();
+
+    if (Line.isEmpty()) continue;
+
+    if (Line.at(0) != '<') {
       QMessageBox::critical(0, QObject::tr("Error"),
-		QObject::tr("Format Error:\nWrong property field limiter!"));
+      QObject::tr("Format Error:\nWrong property field limiter!"));
       return false;
     }
-    if(Line.at(Line.length()-1) != '>') {
+
+    if (Line.at(Line.length()-1) != '>') {
       QMessageBox::critical(0, QObject::tr("Error"),
-		QObject::tr("Format Error:\nWrong property field limiter!"));
+      QObject::tr("Format Error:\nWrong property field limiter!"));
       return false;
     }
+
     Line = Line.mid(1, Line.length()-2);   // cut off start and end character
 
     cstr = Line.section('=',0,0);    // property type
     nstr = Line.section('=',1,1);    // property value
-         if(cstr == "View") {
-		ViewX1 = nstr.section(',',0,0).toInt(&ok); if(ok) {
-		ViewY1 = nstr.section(',',1,1).toInt(&ok); if(ok) {
-		ViewX2 = nstr.section(',',2,2).toInt(&ok); if(ok) {
-		ViewY2 = nstr.section(',',3,3).toInt(&ok); if(ok) {
-		Scale  = nstr.section(',',4,4).toDouble(&ok); if(ok) {
-		tmpViewX1 = nstr.section(',',5,5).toInt(&ok); if(ok)
-		tmpViewY1 = nstr.section(',',6,6).toInt(&ok); }}}}} }
-    else if(cstr == "Grid") {
-		GridX = nstr.section(',',0,0).toInt(&ok); if(ok) {
-		GridY = nstr.section(',',1,1).toInt(&ok); if(ok) {
-		if(nstr.section(',',2,2).toInt(&ok) == 0) GridOn = false;
-		else GridOn = true; }} }
+
+    if (cstr == "View") {
+      ViewX1 = nstr.section(',',0,0).toInt(&ok); if(ok) {
+      ViewY1 = nstr.section(',',1,1).toInt(&ok); if(ok) {
+      ViewX2 = nstr.section(',',2,2).toInt(&ok); if(ok) {
+      ViewY2 = nstr.section(',',3,3).toInt(&ok); if(ok) {
+      Scale  = nstr.section(',',4,4).toDouble(&ok); if(ok) {
+      tmpViewX1 = nstr.section(',',5,5).toInt(&ok); if(ok)
+      tmpViewY1 = nstr.section(',',6,6).toInt(&ok); }}}}} }
+
+    //nvdl: todo: Grid settings are not read from a file anymore
+    else if (cstr == "Grid") {
+      QucsMain->messages->warning("Grid settings in the schematic file are not supported anymore.");
+      ok = true;
+      /*GridX = nstr.section(',',0,0).toInt(&ok);
+      if (ok) {
+        GridY = nstr.section(',',1,1).toInt(&ok);
+        if (ok) {
+          if (nstr.section(',',2,2).toInt(&ok) == 0)
+            GridOn = false;
+          else
+            GridOn = true;
+        }
+      }*/
+    }
+
     else if(cstr == "DataSet") DataSet = nstr;
     else if(cstr == "DataDisplay") DataDisplay = nstr;
     else if(cstr == "OpenDisplay")
@@ -573,12 +598,13 @@ bool Schematic::loadProperties(QTextStream *stream)
     else if(cstr == "FrameText3") misc::convert2Unicode(Frame_Text3 = nstr);
     else {
       QMessageBox::critical(0, QObject::tr("Error"),
-	   QObject::tr("Format Error:\nUnknown property: ")+cstr);
+      QObject::tr("Format Error:\nUnknown property: ") + cstr);
       return false;
     }
-    if(!ok) {
+
+    if (!ok) {
       QMessageBox::critical(0, QObject::tr("Error"),
-	   QObject::tr("Format Error:\nNumber expected in property field!"));
+      QObject::tr("Format Error:\nNumber expected in property field!"));
       return false;
     }
   }
