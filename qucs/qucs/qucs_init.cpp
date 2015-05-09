@@ -22,6 +22,7 @@
 #include "main.h"
 #include "qucs.h"
 #include "octave_window.h"
+#include "messagedock.h"
 
 #include <QAction>
 #include <QShortcut>
@@ -427,7 +428,7 @@ void QucsApp::initActions()
 
   editRotate = new QAction(QIcon((":/bitmaps/rotate_ccw.png")), tr("Rotate"), this);
   editRotate->setShortcut(Qt::CTRL+Qt::Key_R);
-  editRotate->setStatusTip(tr("Rotates the selected component by 90\u00B0"));
+  editRotate->setStatusTip(tr("Rotates the selected component by 90\u00B0 (counter-clockwise)"));
   editRotate->setWhatsThis(
     tr("Rotate\n\nRotates the selected component by 90\u00B0 counter-clockwise"));
   editRotate->setCheckable(true);
@@ -637,6 +638,12 @@ void QucsApp::initActions()
       tr("Octave Window\n\nShows/hides the Octave dock window"));
   connect(viewOctaveDock, SIGNAL(toggled(bool)), SLOT(slotViewOctaveDock(bool)));
 
+  viewMessagesDock = new QAction(tr("&Messages Dock"), this);
+  viewMessagesDock->setCheckable(true);
+  viewMessagesDock->setStatusTip(tr("Shows/hides the messages dock"));
+  viewMessagesDock->setWhatsThis(tr("Messages Dock\n\nShows/hides the messages dock"));
+  connect(viewMessagesDock, SIGNAL(toggled(bool)), SLOT(slotViewMessagesDock(bool)));
+
   helpIndex = new QAction(tr("Help Index..."), this);
   helpIndex->setShortcut(Qt::Key_F1);
   helpIndex->setStatusTip(tr("Index of Qucs Help"));
@@ -795,6 +802,7 @@ void QucsApp::initMenuBar()
   viewMenu->addAction(viewStatusBar);
   viewMenu->addAction(viewBrowseDock);
   viewMenu->addAction(viewOctaveDock);
+  viewMenu->addAction(viewMessagesDock);
 
 
   helpMenu = new QMenu(tr("&Help"));  // menuBar entry helpMenu
@@ -1047,15 +1055,25 @@ void QucsApp::slotViewOctaveDock(bool toggle)
     octave->startOctave();
   }
 }
-
 // ----------------------------------------------------------
+// Slot to capture dock close event
 void QucsApp::slotToggleOctave(bool on)
 {
   viewOctaveDock->blockSignals(true);
   viewOctaveDock->setChecked(on);
   viewOctaveDock->blockSignals(false);
 }
+// ----------------------------------------------------------
+void QucsApp::slotViewMessagesDock(bool toggle) {
 
+  if (toggle) {
+    //messageDock->msgDock->show();
+    messagesDock->show();
+  } else {
+    //messageDock->msgDock->hide();
+    messagesDock->hide();
+  }
+}
 // ----------------------------------------------------------
 void QucsApp::slotHelpAbout()
 {
@@ -1097,5 +1115,5 @@ void QucsApp::slotHelpAbout()
     tr("Czech by Marek Straka")+"\n"+
     tr("Catalan by Antoni Subirats")+"\n"+
     tr("Arabic by Chabane Noureddine")+"\n"+
-    tr("Kazakh by Erbol Keshubaev"));
+    tr("Kazakh by Erbol Keshubaev"));*/
 }

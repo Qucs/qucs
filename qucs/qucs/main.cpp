@@ -155,30 +155,16 @@ bool loadSettings()
   else
     QucsSettings.wireColor = Qt::darkBlue;
 
-  if (settings.contains("wireThickness"))
-    QucsSettings.wireThickness = settings.value("wireThickness").toInt();
-  else
-    QucsSettings.wireThickness = 2;
+  QucsSettings.wireThickness = settings.value("wireThickness", "2").toInt();
 
   if (settings.contains("selectedWireColor"))
     QucsSettings.selectedWireColor.setNamedColor(settings.value("selectedWireColor").toString());
   else
     QucsSettings.selectedWireColor = Qt::darkGray;
 
-  if (settings.contains("selectedWireThickness"))
-    QucsSettings.selectedWireThickness = settings.value("selectedWireThickness").toInt();
-  else
-    QucsSettings.selectedWireThickness = 6;
-
-  if (settings.contains("GraphAntiAliasing"))
-    QucsSettings.GraphAntiAliasing = settings.value("GraphAntiAliasing").toBool();
-  else
-    QucsSettings.GraphAntiAliasing = false;
-
-  if (settings.contains("TextAntiAliasing"))
-    QucsSettings.TextAntiAliasing = settings.value("TextAntiAliasing").toBool();
-  else
-    QucsSettings.TextAntiAliasing = false;
+  QucsSettings.selectedWireThickness = settings.value("selectedWireThickness", "6").toInt();
+  QucsSettings.GraphAntiAliasing = settings.value("GraphAntiAliasing", "false").toBool();
+  QucsSettings.TextAntiAliasing = settings.value("TextAntiAliasing", "false").toBool();
 
   // nvdl: todo: Add more settings
   /*if (settings.contains("wireLabelLineThickness"))

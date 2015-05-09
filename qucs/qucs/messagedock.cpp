@@ -56,9 +56,23 @@ MessageDock::MessageDock(QucsApp *App_): QWidget()
 
     builderTabs->insertTab(1,cppOutput,tr("Compiler"));
 
-    msgDock = new QDockWidget(tr("admsXml Dock"));
-    msgDock->setWidget(builderTabs);
-    App_->addDockWidget(Qt::BottomDockWidgetArea, msgDock);
+    messages = new QPlainTextEdit();
+    messages->setReadOnly(true);
+    builderTabs->insertTab(2, messages, tr("Messages"));
+
+    warnings = new QPlainTextEdit();
+    warnings->setReadOnly(true);
+    builderTabs->insertTab(3, warnings, tr("Warnings"));
+
+    errors = new QPlainTextEdit();
+    errors->setReadOnly(true);
+    builderTabs->insertTab(4, errors, tr("Errors"));
+
+    //msgDock = new QDockWidget();
+    //msgDock->setWidget(builderTabs);
+    //App_->addDockWidget(Qt::BottomDockWidgetArea, msgDock);
+
+    parent->setWidget(builderTabs);
 
     // start hidden
     msgDock->hide();

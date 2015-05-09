@@ -336,7 +336,6 @@ void QucsApp::initView()
 
   LibGroupLayout->addWidget(LibButts);
 
-
   libTreeWidget = new QTreeWidget (this);
   libTreeWidget->setColumnCount (1);
   QStringList headers;
@@ -368,10 +367,12 @@ void QucsApp::initView()
 
   connect(octDock, SIGNAL(visibilityChanged(bool)), SLOT(slotToggleOctave(bool)));
   octave = new OctaveWindow(octDock);
-  this->addDockWidget(Qt::BottomDockWidgetArea, octDock);
-  this->setCorner(Qt::BottomLeftCorner  , Qt::LeftDockWidgetArea);
 
   // ............................................
+  // Dock that holds the window to show compilers' messages
+  messagesDock = new QDockWidget();
+  messages = new MessagesWindow(messagesDock);
+  this->addDockWidget(Qt::BottomDockWidgetArea, messagesDock);
 
   messageDock = new MessageDock(this);
 
@@ -1753,7 +1754,7 @@ void QucsApp::slotFileSettings ()
 {
   editText->setHidden (true); // disable text edit of component property
 
-  QWidget * w = DocumentTab->currentWidget ();
+  QWidget * w = DocumentTab->currentPage ();
   if (isTextDocument (w)) {
     QucsDoc * Doc = (QucsDoc *) ((TextDoc *) w);
     QString ext = Doc->fileSuffix ();
@@ -1795,7 +1796,8 @@ void QucsApp::slotRefreshSchPath()
   this->updateSchNameHash();
   this->updateSpiceNameHash();
 
-  statusBar()->showMessage(tr("The schematic search path has been refreshed."), 2000);
+  int exit = QMessageBox::information(this, tr("Update schematic path"),
+      tr("The schematic file path has been refreshed."), tr("OK"));
 }
 
 // --------------------------------------------------------------
