@@ -795,10 +795,11 @@ void QucsApp::slotSelectComponent(QListWidgetItem *item)
   }
   activeAction = 0;
 
-  MouseMoveAction = &MouseActions::MMoveElement;
+  /*MouseMoveAction = &MouseActions::MMoveElement;
   MousePressAction = &MouseActions::MPressElement;
   MouseReleaseAction = 0;
-  MouseDoubleClickAction = 0;
+  MouseDoubleClickAction = 0;*/
+  view->defaultState(); // nvdl: todo: Changed
 
   pInfoFunc Infos = 0;
   pInfoVAFunc InfosVA = 0;

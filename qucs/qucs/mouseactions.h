@@ -129,6 +129,7 @@ public:
 
   void keyPressEvent(Schematic*, QKeyEvent*);
   void keyReleaseEvent(Schematic*, QKeyEvent*);
+  void defaultState(void);
 };
 
 #endif

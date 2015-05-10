@@ -391,7 +391,7 @@ void MouseActions::MMoveWire1(Schematic *Doc, QMouseEvent *Event)
 
 
 /**
- * @brief MouseActions::MMoveSelect Paints a selection rectangle
+ * @brief MouseActions::MMoveSelect Paints a selection rectangle or moves a selection.
  * @param Doc
  * @param Event
  */
@@ -798,15 +798,22 @@ void MouseActions::MMoveOnGrid(Schematic *Doc, QMouseEvent *Event)
  */
 void MouseActions::MMoveFreely(Schematic *Doc, QMouseEvent *Event) {
 
-	//qDebug() << "MMoveFreely";
+	qDebug() << "MMoveFreely";
 
   // nvdl: todo: Temporary fix; find out when drawing operations complete.
   // Escape key press?
-  Doc->releaseKeyboard();
+  //Doc->releaseKeyboard();
 
-	if (MCloseToNode(Doc, Event)) {
-		//qDebug() << "Close to node";
-	}
+  MAx2 = DOC_X_POS(Event->pos().x());
+  MAy2 = DOC_Y_POS(Event->pos().y());
+
+  Doc->setOnGrid(MAx2, MAy2);
+
+  if (QucsSettings.NodeWiring) {
+    if (MCloseToNode(Doc, Event)) {
+      //qDebug() << "Close to node";
+    }
+  }
 
 	Doc->viewport()->update();
 }
@@ -817,6 +824,8 @@ void MouseActions::MMoveFreely(Schematic *Doc, QMouseEvent *Event) {
  * @param Event
  */
 bool MouseActions::MCloseToNode(Schematic *Doc, QMouseEvent *Event) {
+
+  //qDebug() << "MCloseToNode";
 
 	Node *pn;
 	bool nodeFound = false;
@@ -858,7 +867,7 @@ void MouseActions::MMoveMoveTextB(Schematic *Doc, QMouseEvent *Event)
   Doc->PostPaintEvent (_Line, MAx3+26, MAy3   , MAx3+26, MAy3+ 3);
   Doc->PostPaintEvent (_Line, MAx3+26, MAy3+ 7, MAx3+26, MAy3+10);
 
-  Doc->viewport()->update();
+  //Doc->viewport()->update();
 }
 
 
@@ -869,15 +878,26 @@ void MouseActions::MMoveMoveTextB(Schematic *Doc, QMouseEvent *Event)
  */
 void MouseActions::MMoveMoveText(Schematic *Doc, QMouseEvent *Event)
 {
+
+  qDebug() << "MMoveMoveText";
+
   int newX = DOC_X_POS(Event->pos().x());
   int newY = DOC_Y_POS(Event->pos().y());
+
   MAx1 += newX - MAx3;
   MAy1 += newY - MAy3;
-  MAx3  = newX;
-  MAy3  = newY;
+  MAx3 = newX;
+  MAy3 = newY;
 
-  //Doc->PostPaintEvent (_Rect, MAx1, MAy1, MAx3, MAy3);
-  Doc->PostPaintEvent (_Rect, newX - 10, newY - 10, newX + 10, newY + 10);
+  //Doc->PostPaintEvent (_Rect, newX - 10, newY - 10, 20, 20);
+
+  ((Component*)focusElement)->tx = newX - ((Component*)focusElement)->cx - 10;
+  ((Component*)focusElement)->ty = newY - ((Component*)focusElement)->cy - 10;
+
+  Doc->viewport()->update();
+
+  drawn = false;
+  Doc->setChanged(true, true);
 }
 
 
@@ -895,7 +915,7 @@ void MouseActions::MMoveZoomIn(Schematic *Doc, QMouseEvent *Event)
   Doc->PostPaintEvent (_Line, MAx3+18, MAy3-4 , MAx3+18, MAy3+4);
   Doc->PostPaintEvent (_Ellipse, MAx3+12, MAy3-6, 13, 13,0,0,false);
 
-  Doc->viewport()->update();
+  //Doc->viewport()->update();
 }
 
 /**
@@ -941,7 +961,7 @@ void MouseActions::MMovePanning(Schematic *Doc, QMouseEvent *Event)
 
   panningDone = true;
 
-  Doc->viewport()->update();
+  //Doc->viewport()->update();
 }
 
 /**
@@ -961,7 +981,7 @@ void MouseActions::MReleasePanning(Schematic *Doc, QMouseEvent *Event)
 
   panningDone = false;
 
-  Doc->releaseKeyboard();
+  //Doc->releaseKeyboard();
 }
 
 // ************************************************************************
@@ -1034,6 +1054,8 @@ void MouseActions::rightPressMenu(Schematic *Doc, QMouseEvent *Event, float fX, 
       QucsMain->moveText->addTo(ComponentMenu);
     break;
   }
+
+  // nvdl: todo: Add timeouts or other break checks
   while(true) {
     if(focusElement)
       if(focusElement->Type == isGraph) break;
@@ -1181,7 +1203,6 @@ void MouseActions::MPressLabel(Schematic *Doc, QMouseEvent*, float fX, float fY)
 // -----------------------------------------------------------
 void MouseActions::MPressSelect(Schematic *Doc, QMouseEvent *Event, float fX, float fY)
 {
-
   MAx1 = int(fX);
   MAy1 = int(fY);
 
@@ -1200,10 +1221,9 @@ void MouseActions::MPressSelect(Schematic *Doc, QMouseEvent *Event, float fX, fl
       QucsMain->MousePressAction = 0;
       QucsMain->MouseDoubleClickAction = 0;
 
-      Doc->grabKeyboard();
+      //Doc->grabKeyboard();
 
-      //MAx1 = Event->pos().x();
-      //MAy1 = Event->pos().y();
+      // For panning
       MAx1 = Event->pos().x() - Doc->contentsX();
       MAy1 = Event->pos().y() - Doc->contentsY();
     }
@@ -1213,8 +1233,13 @@ void MouseActions::MPressSelect(Schematic *Doc, QMouseEvent *Event, float fX, fl
     return;
   }
 
+  QucsMain->MouseReleaseAction = 0;
+  QucsMain->MouseMoveAction = 0;
+  QucsMain->MousePressAction = 0;
+  QucsMain->MouseDoubleClickAction = 0;
+
   bool Ctrl;
-  if(Event->state() & Qt::ControlModifier) Ctrl = true;
+  if (Event->state() & Qt::ControlModifier) Ctrl = true;
   else Ctrl = false;
 
   int No = 0;
@@ -1222,7 +1247,7 @@ void MouseActions::MPressSelect(Schematic *Doc, QMouseEvent *Event, float fX, fl
   focusElement = Doc->selectElement(fX, fY, Ctrl, &No);
   isMoveEqual = false;   // moving not neccessarily square
 
-  if(focusElement)
+  if (focusElement)
     // print define value in hex, see element.h
     qDebug() << "MPressSelect: focusElement->Type" <<  QString("0x%1").arg(focusElement->Type, 0, 16);
   else
@@ -1230,15 +1255,15 @@ void MouseActions::MPressSelect(Schematic *Doc, QMouseEvent *Event, float fX, fl
 
   drawn = true;
 
-  if(focusElement) {
+  if (focusElement) {
 
     switch(focusElement->Type)
     {
       case isPainting:
         QucsMain->MouseReleaseAction = &MouseActions::MReleaseSelect;
         QucsMain->MouseMoveAction = &MouseActions::MMoveMoving;
-        QucsMain->MousePressAction = 0;
-        QucsMain->MouseDoubleClickAction = 0;
+        //QucsMain->MousePressAction = 0;
+        //QucsMain->MouseDoubleClickAction = 0;
         Doc->grabKeyboard();  // no keyboard inputs during move actions
         // Update matching wire label highlighting
         Doc->highlightWireLabels ();
@@ -1248,8 +1273,8 @@ void MouseActions::MPressSelect(Schematic *Doc, QMouseEvent *Event, float fX, fl
         focusElement->Type = isPainting;
         QucsMain->MouseReleaseAction = &MouseActions::MReleaseResizePainting;
         QucsMain->MouseMoveAction = &MouseActions::MMoveResizePainting;
-        QucsMain->MousePressAction = 0;
-        QucsMain->MouseDoubleClickAction = 0;
+        //QucsMain->MousePressAction = 0;
+        //QucsMain->MouseDoubleClickAction = 0;
         Doc->grabKeyboard();  // no keyboard inputs during move actions
         // Update matching wire label highlighting
         Doc->highlightWireLabels ();
@@ -1280,8 +1305,8 @@ void MouseActions::MPressSelect(Schematic *Doc, QMouseEvent *Event, float fX, fl
 
         QucsMain->MouseReleaseAction = &MouseActions::MReleaseResizeDiagram;
         QucsMain->MouseMoveAction = &MouseActions::MMoveSelect;
-        QucsMain->MousePressAction = 0;
-        QucsMain->MouseDoubleClickAction = 0;
+        //QucsMain->MousePressAction = 0;
+        //QucsMain->MouseDoubleClickAction = 0;
 
         Doc->grabKeyboard(); // no keyboard inputs during move actions
         // Update matching wire label highlighting
@@ -1304,8 +1329,8 @@ void MouseActions::MPressSelect(Schematic *Doc, QMouseEvent *Event, float fX, fl
             break;
           case 2:  // move scroll bar with mouse cursor
             QucsMain->MouseMoveAction = &MouseActions::MMoveScrollBar;
-            QucsMain->MousePressAction = 0;
-            QucsMain->MouseDoubleClickAction = 0;
+            //QucsMain->MousePressAction = 0;
+            //QucsMain->MouseDoubleClickAction = 0;
             Doc->grabKeyboard();  // no keyboard inputs during move actions
 
             // Remember inital scroll bar position.
@@ -1321,27 +1346,21 @@ void MouseActions::MPressSelect(Schematic *Doc, QMouseEvent *Event, float fX, fl
         break;
 
       case isComponentText:  // property text of component ?
-        focusElement->Type &= (~isComponentText) | isComponent;
 
-        MAx3 = No;
-        QucsMain->slotApplyCompText();
-        // Update matching wire label highlighting
-        Doc->highlightWireLabels();
+        if (Ctrl) {
+          focusElement->Type &= (~isComponentText) | isComponent;
+          MAx3 = No;
+          QucsMain->slotApplyCompText();
+          // Update matching wire label highlighting
+          Doc->highlightWireLabels();
+        } else {
+          MPressMoveText(Doc, Event, fX, fY);
+        }
+
         break;
 
       case isNode:
-        if (QucsSettings.NodeWiring)
-        {
-          toggleWireOrientation = false;
-          //MAx1 = 0;   // paint wire corner first up, then left/right
-
-          /*MAx3 = focusElement->cx;  // works even if node is not on grid
-          MAy3 = focusElement->cy;
-          QucsMain->MouseMoveAction = &MouseActions::MMoveWire2;
-          QucsMain->MousePressAction = &MouseActions::MPressWire2;
-          QucsMain->MouseReleaseAction = 0; // if function is called from elsewhere
-          QucsMain->MouseDoubleClickAction = 0;*/
-
+        if (QucsSettings.NodeWiring) {
           formerAction = QucsMain->select; // to restore action afterwards
           QucsMain->activeAction = QucsMain->insWire;
 
@@ -1352,12 +1371,12 @@ void MouseActions::MPressSelect(Schematic *Doc, QMouseEvent *Event, float fX, fl
           QucsMain->insWire->blockSignals(true);
           QucsMain->insWire->setChecked(true);
           QucsMain->insWire->blockSignals(false);
+
           // Update matching wire label highlighting
           Doc->highlightWireLabels ();
 
+          toggleWireOrientation = false;
           MPressWire1(Doc, Event, fX, fY);
-
-          break;
         }
 
         break;
@@ -1370,6 +1389,7 @@ void MouseActions::MPressSelect(Schematic *Doc, QMouseEvent *Event, float fX, fl
       default:
         qDebug() << "MPressSelect: Unknown element";
         QucsMain->MouseMoveAction = &MouseActions::MMoveMoving;
+        QucsMain->MouseReleaseAction = &MouseActions::MReleaseMoving;
     }
   }
 
@@ -1383,13 +1403,21 @@ void MouseActions::MPressSelect(Schematic *Doc, QMouseEvent *Event, float fX, fl
   if (focusElement == 0) {
     //MAx2 = 0;  // if not clicking on an element => open a rectangle
     //MAy2 = 0;
-    QucsMain->MouseReleaseAction = &MouseActions::MReleaseSelect2;
-    QucsMain->MouseMoveAction = &MouseActions::MMoveSelect;
-    drawn = false;
+
+    if (QucsMain->MouseReleaseAction == 0) {
+      QucsMain->MouseReleaseAction = &MouseActions::MReleaseSelect2;
+    }
+
+    // If there is no element, start a selection rectangle
+    if (QucsMain->MouseMoveAction == 0) {
+      QucsMain->MouseMoveAction = &MouseActions::MMoveSelect;
+    }
+
+    //drawn = false;
 
   } else {
     // Element can be moved
-    if(!Ctrl) {
+    if (!Ctrl) {
       if (!focusElement->isSelected)// Don't move selected elements if clicked
         Doc->deselectElements(focusElement); // Deselect all elements except "focusElement"
 
@@ -1549,7 +1577,7 @@ void MouseActions::MPressElement(Schematic *Doc, QMouseEvent *Event, float, floa
 
   // nvdl: todo: Temporary fix; find out when drawing operations complete.
   // Escape key press?
-  Doc->releaseKeyboard();
+  //Doc->releaseKeyboard();
 
   if (selElem == 0) return;
   //QPainter painter(Doc->viewport());
@@ -1725,7 +1753,7 @@ void MouseActions::MPressWire2(Schematic *Doc, QMouseEvent *Event, float fX, flo
   MAy2 = int(fY);
   Doc->setOnGrid(MAx2, MAy2);
 
-  Doc->releaseKeyboard();
+  //Doc->releaseKeyboard();
 
   switch (Event->button()) {
 
@@ -1949,20 +1977,23 @@ void MouseActions::MPressOnGrid(Schematic *Doc, QMouseEvent*, float fX, float fY
 // -----------------------------------------------------------
 void MouseActions::MPressMoveText(Schematic *Doc, QMouseEvent*, float fX, float fY)
 {
+
+  qDebug() << "MPressMoveText";
+
   MAx1 = int(fX);
   MAy1 = int(fY);
   focusElement = Doc->selectCompText(MAx1, MAy1, MAx2, MAy2);
 
-  if(focusElement) {
+  if (focusElement) {
     MAx3 = MAx1;
     MAy3 = MAy1;
     MAx1 = ((Component*)focusElement)->cx + ((Component*)focusElement)->tx;
     MAy1 = ((Component*)focusElement)->cy + ((Component*)focusElement)->ty;
-    Doc->viewport()->update();
+    //Doc->viewport()->update();
     drawn = false;
     QucsMain->MouseMoveAction = &MouseActions::MMoveMoveText;
     QucsMain->MouseReleaseAction = &MouseActions::MReleaseMoveText;
-    Doc->grabKeyboard();  // no keyboard inputs during move actions
+    //Doc->grabKeyboard();  // no keyboard inputs during move actions
   }
 }
 
@@ -2007,14 +2038,13 @@ void MouseActions::MReleaseSelect(Schematic *Doc, QMouseEvent *Event)
     }
   }
 
+  defaultState();
   Doc->releaseKeyboard();  // allow keyboard inputs again
-  QucsMain->MousePressAction = &MouseActions::MPressSelect;
-  QucsMain->MouseReleaseAction = &MouseActions::MReleaseSelect;
-  QucsMain->MouseDoubleClickAction = &MouseActions::MDoubleClickSelect;
-  QucsMain->MouseMoveAction = &MouseActions::MMoveFreely;   // no element moving
+
   Doc->highlightWireLabels ();
-  Doc->viewport()->update();
   drawn = false;
+
+  Doc->viewport()->update();
 }
 
 // -----------------------------------------------------------
@@ -2023,6 +2053,8 @@ void MouseActions::MReleaseSelect2(Schematic *Doc, QMouseEvent *Event)
 {
 
   qDebug() << "MReleaseSelect2";
+
+  Doc->releaseKeyboard(); // allow keyboard inputs again
 
   if(Event->button() != Qt::LeftButton) return;
 
@@ -2036,14 +2068,12 @@ void MouseActions::MReleaseSelect2(Schematic *Doc, QMouseEvent *Event)
   // Select all elements within the rectangle
   Doc->selectElements(MAx1, MAy1, MAx2, MAy2, Ctrl);
 
-  Doc->releaseKeyboard();  // allow keyboard inputs again
-  QucsMain->MouseMoveAction = &MouseActions::MMoveFreely;
-  QucsMain->MousePressAction = &MouseActions::MPressSelect;
-  QucsMain->MouseReleaseAction = &MouseActions::MReleaseSelect;
-  QucsMain->MouseDoubleClickAction = &MouseActions::MDoubleClickSelect;
+  defaultState();
+
   Doc->highlightWireLabels ();
-  Doc->viewport()->update();
   drawn = false;
+
+  Doc->viewport()->update();
 }
 
 // -----------------------------------------------------------
@@ -2076,7 +2106,7 @@ void MouseActions::MReleaseMoving(Schematic *Doc, QMouseEvent*)
   // Allow all mouse buttons, because for others than the left one,
   // a menu has already created.
   endElementMoving(Doc, &movingElements);
-  Doc->releaseKeyboard();  // allow keyboard inputs again
+  //Doc->releaseKeyboard();  // allow keyboard inputs again
 
   QucsMain->MouseMoveAction = &MouseActions::MMoveFreely;
   QucsMain->MousePressAction = &MouseActions::MPressSelect;
@@ -2133,7 +2163,7 @@ void MouseActions::MReleaseResizeDiagram(Schematic *Doc, QMouseEvent *Event)
   QucsMain->MousePressAction = &MouseActions::MPressSelect;
   QucsMain->MouseReleaseAction = &MouseActions::MReleaseSelect;
   QucsMain->MouseDoubleClickAction = &MouseActions::MDoubleClickSelect;
-  Doc->releaseKeyboard();  // allow keyboard inputs again
+  //Doc->releaseKeyboard();  // allow keyboard inputs again
 
   Doc->viewport()->update();
   drawn = false;
@@ -2152,7 +2182,7 @@ void MouseActions::MReleaseResizePainting(Schematic *Doc, QMouseEvent *Event)
   QucsMain->MousePressAction = &MouseActions::MPressSelect;
   QucsMain->MouseReleaseAction = &MouseActions::MReleaseSelect;
   QucsMain->MouseDoubleClickAction = &MouseActions::MDoubleClickSelect;
-  Doc->releaseKeyboard();  // allow keyboard inputs again
+  //Doc->releaseKeyboard();  // allow keyboard inputs again
 
   Doc->viewport()->update();
   drawn = false;
@@ -2366,7 +2396,7 @@ void MouseActions::MReleasePaste(Schematic *Doc, QMouseEvent *Event)
   default: ;    // avoids compiler warnings
   }
 
-  Doc->viewport()->update();
+  //Doc->viewport()->update();
 }
 
 // -----------------------------------------------------------
@@ -2375,15 +2405,19 @@ void MouseActions::MReleaseMoveText(Schematic *Doc, QMouseEvent *Event)
 
   qDebug() << "MReleaseMoveText";
 
-  if(Event->button() != Qt::LeftButton) return;
+  if (Event->button() != Qt::LeftButton) return;
 
-  QucsMain->MouseMoveAction = &MouseActions::MMoveMoveTextB;
-  QucsMain->MouseReleaseAction = 0;
-  Doc->releaseKeyboard();  // allow keyboard inputs again
+  defaultState();
 
-  ((Component*)focusElement)->tx = MAx1 - ((Component*)focusElement)->cx;
-  ((Component*)focusElement)->ty = MAy1 - ((Component*)focusElement)->cy;
+  //QucsMain->MouseMoveAction = &MouseActions::MMoveMoveTextB;
+  //QucsMain->MouseReleaseAction = 0;
+  //Doc->releaseKeyboard();  // allow keyboard inputs again
+
+  //((Component*)focusElement)->tx = MAx1 - ((Component*)focusElement)->cx;
+  //((Component*)focusElement)->ty = MAy1 - ((Component*)focusElement)->cy;
+
   Doc->viewport()->update();
+
   drawn = false;
   Doc->setChanged(true, true);
 }
@@ -2430,7 +2464,7 @@ void MouseActions::MReleaseZoomIn(Schematic *Doc, QMouseEvent *Event)
 
   QucsMain->MouseMoveAction = &MouseActions::MMoveZoomIn;
   QucsMain->MouseReleaseAction = 0;
-  Doc->releaseKeyboard();  // allow keyboard inputs again
+  //Doc->releaseKeyboard();  // allow keyboard inputs again
 }
 
 
@@ -2571,7 +2605,7 @@ void MouseActions::MDoubleClickSelect(Schematic *Doc, QMouseEvent *Event)
 
   qDebug() << "MDoubleClickSelect";
 
-  Doc->releaseKeyboard();  // allow keyboard inputs again
+  //Doc->releaseKeyboard();  // allow keyboard inputs again
   QucsMain->editText->setHidden(true);
   editElement(Doc, Event);
 }
@@ -2647,7 +2681,8 @@ void MouseActions::keyReleaseEvent(Schematic *doc, QKeyEvent *event) {
     break;
 
   case Qt::Key_Escape:
-    doc->releaseKeyboard(); // Due to "MPressSelect()" capture
+    defaultState(); // Due to "MPressSelect()" capture
+    doc->releaseKeyboard();
     break;
 
   /*case Qt::Key_A: //case Qt::Key_Left:
@@ -2662,5 +2697,21 @@ void MouseActions::keyReleaseEvent(Schematic *doc, QKeyEvent *event) {
     break;
   }
 
+}
+//=================================================================================================
+/**
+ * @brief MouseActions::defaultState Goes to the default "no operation" state.
+ * @param Doc
+ * @param Event
+ */
+void MouseActions::defaultState(void) {
+
+  QucsMain->MouseMoveAction = &MouseActions::MMoveFreely;
+  QucsMain->MousePressAction = &MouseActions::MPressSelect;
+  QucsMain->MouseReleaseAction = &MouseActions::MReleaseSelect;
+  QucsMain->MouseDoubleClickAction = &MouseActions::MDoubleClickSelect;
+
+  //doc->releaseKeyboard();
+  //doc->grabKeyboard(); // Capture all events but do not "accept()" them; sniffing mode
 }
 //=================================================================================================
