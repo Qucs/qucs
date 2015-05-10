@@ -105,28 +105,22 @@ Schematic::Schematic(QucsApp *App_, const QString& Name_)
 
   setVScrollBarMode(Q3ScrollView::AlwaysOn);
   setHScrollBarMode(Q3ScrollView::AlwaysOn);
+
   viewport()->setPaletteBackgroundColor(QucsSettings.BGColor);
   viewport()->setMouseTracking(true);
   viewport()->setAcceptDrops(true);  // enable drag'n drop
 
-  // to repair some strange  scrolling artefacts
-  connect(this, SIGNAL(horizontalSliderReleased()),
-      viewport(), SLOT(update()));
-  connect(this, SIGNAL(verticalSliderReleased()),
-      viewport(), SLOT(update()));
+  // to repair some strange  scrolling artifacts
+  connect(this, SIGNAL(horizontalSliderReleased()), viewport(), SLOT(update()));
+  connect(this, SIGNAL(verticalSliderReleased()), viewport(), SLOT(update()));
+
   if (App_) {
-    connect(this, SIGNAL(signalCursorPosChanged(int, int)), 
-        App_, SLOT(printCursorPosition(int, int)));
-    connect(this, SIGNAL(horizontalSliderPressed()), 
-        App_, SLOT(slotHideEdit()));
-    connect(this, SIGNAL(verticalSliderPressed()),
-        App_, SLOT(slotHideEdit()));
-    connect(this, SIGNAL(signalUndoState(bool)),
-        App_, SLOT(slotUpdateUndo(bool)));
-    connect(this, SIGNAL(signalRedoState(bool)),
-        App_, SLOT(slotUpdateRedo(bool)));
-    connect(this, SIGNAL(signalFileChanged(bool)),
-        App_, SLOT(slotFileChanged(bool)));
+    connect(this, SIGNAL(signalCursorPosChanged(int, int)), App_, SLOT(printCursorPosition(int, int)));
+    connect(this, SIGNAL(horizontalSliderPressed()), App_, SLOT(slotHideEdit()));
+    connect(this, SIGNAL(verticalSliderPressed()), App_, SLOT(slotHideEdit()));
+    connect(this, SIGNAL(signalUndoState(bool)), App_, SLOT(slotUpdateUndo(bool)));
+    connect(this, SIGNAL(signalRedoState(bool)), App_, SLOT(slotUpdateRedo(bool)));
+    connect(this, SIGNAL(signalFileChanged(bool)), App_, SLOT(slotFileChanged(bool)));
   }
 }
 
@@ -2110,7 +2104,7 @@ void Schematic::contentsWheelEvent(QWheelEvent *Event)
 }
 //=================================================================================================
 /**
- * @brief Schematic::keyPressEvent Captures keyboard press events.
+ * @brief Schematic::keyPressEvent Captures keyboard press events and passes them to mouse actions.
  * @param Doc
  * @param Event
  */
@@ -2119,11 +2113,11 @@ void Schematic::keyPressEvent(QKeyEvent *event) {
   //qDebug() << "Schematic::keyPressEvent:" << event->key();
 
   App->view->keyPressEvent(this, event);
-  event->accept(); // Steal it from the parent. ;)
+  //event->accept(); // Steal it from the parent. ;)
 }
 //=================================================================================================
 /**
- * @brief Schematic::keyReleaseEvent Captures keyboard release events.
+ * @brief Schematic::keyReleaseEvent Captures keyboard release events and passes them to mouse actions.
  * @param Doc
  * @param Event
  */
@@ -2132,7 +2126,7 @@ void Schematic::keyReleaseEvent(QKeyEvent *event) {
   //qDebug() << "Schematic::keyReleaseEvent:" << event->key();
 
   App->view->keyReleaseEvent(this, event);
-  event->accept(); // Steal it from the parent. ;)
+  //event->accept(); // Steal it from the parent. ;)
 }
 //=================================================================================================
 // Scrolls the visible area upwards and enlarges or reduces the view
