@@ -165,6 +165,7 @@ public:
   QTabWidget *DocumentTab;
   QListWidget *CompComps;
   QTreeWidget *libTreeWidget;
+  QDockWidget *messagesDock;
   MessagesWindow *messages;
 
   // menu appearing by right mouse button click on content listview
@@ -189,7 +190,6 @@ private:
   QTabWidget      *TabView;
   QDockWidget     *octDock;
   OctaveWindow    *octave;
-  QDockWidget     *messagesDock;
 
   QListView       *Projects;
   ProjectView     *Content;

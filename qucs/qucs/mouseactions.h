@@ -96,6 +96,7 @@ public:
   void MPressMirrorY(Schematic*, QMouseEvent*, float, float);
   void MPressRotate(Schematic*, QMouseEvent*, float, float);
   void MPressElement(Schematic*, QMouseEvent*, float, float);
+  void MReleaseElement(Schematic*, QMouseEvent*);
   void MPressLabel(Schematic*, QMouseEvent*, float, float);
   void MPressWire1(Schematic*, QMouseEvent*, float, float);
   void MPressWire2(Schematic*, QMouseEvent*, float, float);
@@ -130,6 +131,7 @@ public:
   void keyPressEvent(Schematic*, QKeyEvent*);
   void keyReleaseEvent(Schematic*, QKeyEvent*);
   void defaultState(void);
+  void elementInsertState(void);
 };
 
 #endif

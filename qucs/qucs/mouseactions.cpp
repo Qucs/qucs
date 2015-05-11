@@ -292,7 +292,7 @@ void MouseActions::MMoveElement(Schematic *Doc, QMouseEvent *Event)
 
   if (selElem == 0) return;
 
-  Doc->grabKeyboard();
+  Doc->grabKeyboard(); // nvdl: For space key rotation
 
 //  qDebug() << "MMoveElement got selElem";
 
@@ -330,8 +330,8 @@ void MouseActions::MMoveElement(Schematic *Doc, QMouseEvent *Event)
   selElem->setCenter(gx, gy);
   selElem->paintScheme(Doc); // paint scheme at new position
 
-  Doc->viewport()->repaint();
-  //Doc->viewport()->update();
+  //Doc->viewport()->repaint();
+  Doc->viewport()->update();
 }
 
 // -----------------------------------------------------------
@@ -800,7 +800,7 @@ void MouseActions::MMoveFreely(Schematic *Doc, QMouseEvent *Event) {
 
 	qDebug() << "MMoveFreely";
 
-  // nvdl: todo: Temporary fix; find out when drawing operations complete.
+	// nvdl: todo: Temporary fix; find out when drawing operations complete.
   // Escape key press?
   //Doc->releaseKeyboard();
 
@@ -831,8 +831,14 @@ bool MouseActions::MCloseToNode(Schematic *Doc, QMouseEvent *Event) {
 	bool nodeFound = false;
 	int snapDistance = 5; // nvdl: todo: Add to configuration
 
+	if (Doc->Nodes == NULL) {
+	  return false;
+	} else if (Doc->Nodes->isEmpty()) {
+    return false;
+  }
+
 	for (pn = Doc->Nodes->first(); pn != 0; pn = Doc->Nodes->next()) {
-		  if(abs(pn->cx - MAx2) <= snapDistance && abs(pn->cy - MAy2) <= snapDistance) {
+		  if (abs(pn->cx - MAx2) <= snapDistance && abs(pn->cy - MAy2) <= snapDistance) {
 			  nodeFound = true;
 			  break;
 		  }
@@ -1417,8 +1423,8 @@ void MouseActions::MPressSelect(Schematic *Doc, QMouseEvent *Event, float fX, fl
 
   } else {
     // Element can be moved
-    if (!Ctrl) {
-      if (!focusElement->isSelected)// Don't move selected elements if clicked
+    if (!Ctrl) { // If Ctrl key is not pressed, only select the clicked one
+      if (!focusElement->isSelected) // Don't move selected elements if clicked
         Doc->deselectElements(focusElement); // Deselect all elements except "focusElement"
 
       focusElement->isSelected = true;
@@ -1572,12 +1578,7 @@ void MouseActions::MPressRotate(Schematic *Doc, QMouseEvent*, float fX, float fY
 // insert component, diagram, painting into schematic ?!
 void MouseActions::MPressElement(Schematic *Doc, QMouseEvent *Event, float, float)
 {
-
   qDebug() << "MPressElement";
-
-  // nvdl: todo: Temporary fix; find out when drawing operations complete.
-  // Escape key press?
-  //Doc->releaseKeyboard();
 
   if (selElem == 0) return;
   //QPainter painter(Doc->viewport());
@@ -1701,12 +1702,24 @@ void MouseActions::MPressElement(Schematic *Doc, QMouseEvent *Event, float, floa
 }
 
 /**
+ * @brief MouseActions::MReleaseElement Is called when there is an element to be placed and mouse receives release event
+ * @param Doc
+ * @param Event
+  */
+void MouseActions::MReleaseElement(Schematic *Doc, QMouseEvent *Event) {
+
+  Doc->releaseKeyboard();
+  Doc->viewport()->update();
+}
+
+/**
  * @brief MouseActions::MPressWire1 Is called if starting point of wire is pressed
  * @param Doc
+ * @param Event
  * @param fX
  * @param fY
  */
-void MouseActions::MPressWire1(Schematic *Doc, QMouseEvent*, float fX, float fY)
+void MouseActions::MPressWire1(Schematic *Doc, QMouseEvent *Event, float fX, float fY)
 {
 
   qDebug() << "MPressWire1";
@@ -2700,7 +2713,7 @@ void MouseActions::keyReleaseEvent(Schematic *doc, QKeyEvent *event) {
 }
 //=================================================================================================
 /**
- * @brief MouseActions::defaultState Goes to the default "no operation" state.
+ * @brief MouseActions::defaultState Switches to the default "no operation" state.
  * @param Doc
  * @param Event
  */
@@ -2713,5 +2726,18 @@ void MouseActions::defaultState(void) {
 
   //doc->releaseKeyboard();
   //doc->grabKeyboard(); // Capture all events but do not "accept()" them; sniffing mode
+}
+//=================================================================================================
+/**
+ * @brief MouseActions::elementInsertState Switches to the element insertion state.
+ * @param Doc
+ * @param Event
+ */
+void MouseActions::elementInsertState(void) {
+
+  QucsMain->MouseMoveAction = &MouseActions::MMoveElement;
+  QucsMain->MousePressAction = &MouseActions::MPressElement;
+  QucsMain->MouseReleaseAction = &MouseActions::MReleaseElement;
+  QucsMain->MouseDoubleClickAction = 0;
 }
 //=================================================================================================

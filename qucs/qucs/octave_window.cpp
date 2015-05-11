@@ -98,7 +98,7 @@ bool OctaveWindow::startOctave()
       qDebug() << "Octave not found: " << OctavePath;
       QMessageBox::critical(0, QObject::tr("Error"),
                             QObject::tr("Octave not found in: %1\n\n"
-                                        "Set the Octave location on the application settings.").arg(OctavePath));
+                                        "Set the proper Octave location in the application settings.").arg(OctavePath));
       return false;
   }
 

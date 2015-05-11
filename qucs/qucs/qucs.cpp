@@ -382,6 +382,8 @@ void QucsApp::initView()
 
   connect(messagesDock, SIGNAL(visibilityChanged(bool)), SLOT(slotToggleMessagesDockVisibility(bool)));
 
+  messagesDock->hide();
+
   // initial home directory model
   m_homeDirModel = new QFileSystemModel(this);
   QStringList filters;
@@ -799,7 +801,7 @@ void QucsApp::slotSelectComponent(QListWidgetItem *item)
   MousePressAction = &MouseActions::MPressElement;
   MouseReleaseAction = 0;
   MouseDoubleClickAction = 0;*/
-  view->defaultState(); // nvdl: todo: Changed
+  view->elementInsertState(); // nvdl: todo: Changed
 
   pInfoFunc Infos = 0;
   pInfoVAFunc InfosVA = 0;
@@ -1645,6 +1647,7 @@ void QucsApp::closeFile(int index)
     }
 
     DocumentTab->removeTab(index);
+
     delete Doc;
 
     if(DocumentTab->count() < 1) { // if no document left, create an untitled

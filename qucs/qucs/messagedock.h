@@ -60,8 +60,9 @@ public:
   void message(QString);
   void warning(QString);
   void error(QString);
-
   void reset();
+
+  QDockWidget *parent;
 
 private slots:
   void slotAdmsChanged();

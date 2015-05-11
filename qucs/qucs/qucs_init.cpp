@@ -1250,10 +1250,8 @@ void QucsApp::slotToggleOctave(bool on)
 void QucsApp::slotViewMessagesDock(bool toggle) {
 
   if (toggle) {
-    //messageDock->msgDock->show();
     messagesDock->show();
   } else {
-    //messageDock->msgDock->hide();
     messagesDock->hide();
   }
 }

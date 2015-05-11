@@ -728,8 +728,8 @@ int main(int argc, char *argv[])
   QucsSettings.NodeWiring = 0;
 
   // initially center the application
-  QApplication a(argc, argv);
-  QDesktopWidget *d = a.desktop();
+  QApplication app(argc, argv);
+  QDesktopWidget *d = app.desktop();
   int w = d->width();
   int h = d->height();
   QucsSettings.x = w/8;
@@ -851,7 +851,7 @@ int main(int argc, char *argv[])
     QucsSettings.Task = Qt::darkRed;
 
 
-  a.setFont(QucsSettings.font);
+  app.setFont(QucsSettings.font);
 
   // set codecs
   QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
@@ -862,7 +862,7 @@ int main(int argc, char *argv[])
   if(lang.isEmpty())
     lang = QTextCodec::locale();
   tor.load( QString("qucs_") + lang, QucsSettings.LangDir);
-  a.installTranslator( &tor );
+  app.installTranslator( &tor );
 
   // This seems to be neccessary on a few system to make strtod()
   // work properly !???!
@@ -1002,10 +1002,11 @@ int main(int argc, char *argv[])
   }
 
   QucsMain = new QucsApp();
-  a.setMainWidget(QucsMain);
+
+  app.setMainWidget(QucsMain);
   qInstallMsgHandler(qucsMessageOutput);
   QucsMain->show();
-  int result = a.exec();
+  int result = app.exec();
   //saveApplSettings(QucsMain);
   return result;
 }

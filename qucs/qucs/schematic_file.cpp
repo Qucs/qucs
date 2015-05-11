@@ -128,9 +128,13 @@ bool Schematic::pasteFromClipboard(QTextStream *stream, Q3PtrList<Element> *pe)
 
   QString s = PACKAGE_VERSION;
   Line = Line.mid(16, Line.length()-17);
-  if(Line != s) {  // wrong version number ?
+
+  // nvdl: todo: Will it happen in general?
+  // The "QucsFilter" from previous version cannot be used.
+  // Even if the schematic to be pasted is valid, it gives an error and exits.
+  if (Line != s) {  // wrong version number ?
     QMessageBox::critical(0, QObject::tr("Error"),
-                 QObject::tr("Wrong document version: ")+Line);
+                 QObject::tr("Wrong document version: ") + Line);
     return false;
   }
 
@@ -567,7 +571,8 @@ bool Schematic::loadProperties(QTextStream *stream)
 
     //nvdl: todo: Grid settings are not read from a file anymore
     else if (cstr == "Grid") {
-      QucsMain->messages->warning("Grid settings in the schematic file are not supported anymore.");
+      QucsMain->messages->
+      warning("Grid settings in the schematic file are not supported (for a while).\nUse application wide settings.");
       ok = true;
       /*GridX = nstr.section(',',0,0).toInt(&ok);
       if (ok) {

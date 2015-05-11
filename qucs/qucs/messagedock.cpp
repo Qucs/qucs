@@ -39,8 +39,11 @@
  */
 
 //MessageDock::MessageDock(QucsApp *App_): QWidget()
-MessagesWindow::MessagesWindow(QDockWidget *parent): QWidget()
+MessagesWindow::MessagesWindow(QDockWidget *prnt): QWidget()
 {
+
+    parent = prnt;
+
     builderTabs = new QTabWidget();
     builderTabs->setTabPosition(QTabWidget::South);
 
@@ -92,6 +95,7 @@ void MessagesWindow::message(QString message) {
 
   messages->setPlainText(message);
   builderTabs->setCurrentIndex(2);
+  parent->show();
 }
 
 /*!
@@ -101,6 +105,7 @@ void MessagesWindow::warning(QString message) {
 
   warnings->setPlainText(message);
   builderTabs->setCurrentIndex(3);
+  parent->show();
 }
 
 /*!
@@ -110,6 +115,7 @@ void MessagesWindow::error(QString message) {
 
   errors->setPlainText(message);
   builderTabs->setCurrentIndex(4);
+  parent->show();
 }
 
 /*!
