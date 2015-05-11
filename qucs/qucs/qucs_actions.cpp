@@ -1545,7 +1545,7 @@ void QucsApp::slotBuildModule()
     //messages->msgDock->show();
 
     viewMessagesDock->setChecked(true);
-    messagesDock->show();
+    messagesDock->show(); // nvdl: todo: Needed (or if the above statement triggers it?)
 
 }
 

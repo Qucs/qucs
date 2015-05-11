@@ -37,9 +37,10 @@
  * dynamic loaded libraries.
  * \see QucsApp::slotBuildModule() for the make output assignment.
  */
-MessageDock::MessageDock(QucsApp *App_): QWidget()
-{
 
+//MessageDock::MessageDock(QucsApp *App_): QWidget()
+MessagesWindow::MessagesWindow(QDockWidget *parent): QWidget()
+{
     builderTabs = new QTabWidget();
     builderTabs->setTabPosition(QTabWidget::South);
 
@@ -47,14 +48,13 @@ MessageDock::MessageDock(QucsApp *App_): QWidget()
     admsOutput = new QPlainTextEdit();
     admsOutput->setReadOnly(true);
 
-    builderTabs->insertTab(0,admsOutput,tr("admsXml"));
-
+    builderTabs->insertTab(0, admsOutput, tr("ADMS XML"));
 
     // 2) add a dock for the cpp compiler messages
     cppOutput = new QPlainTextEdit();
     cppOutput->setReadOnly(true);
 
-    builderTabs->insertTab(1,cppOutput,tr("Compiler"));
+    builderTabs->insertTab(1,cppOutput,tr("C++ Compiler"));
 
     messages = new QPlainTextEdit();
     messages->setReadOnly(true);
@@ -75,7 +75,7 @@ MessageDock::MessageDock(QucsApp *App_): QWidget()
     parent->setWidget(builderTabs);
 
     // start hidden
-    msgDock->hide();
+    //msgDock->hide();
 
     // monitor the amds output
     connect(admsOutput,SIGNAL(textChanged()), this, SLOT(slotAdmsChanged()));
@@ -86,17 +86,13 @@ MessageDock::MessageDock(QucsApp *App_): QWidget()
 }
 
 /*!
-<<<<<<< HEAD
- * \brief MessageDock::reset clear the text and tab icons
- */
-void MessageDock::reset()
-=======
  * \brief MessagesWindow::message Displays a message in the messages dock
  */
 void MessagesWindow::message(QString message) {
 
   messages->setPlainText(message);
   builderTabs->setCurrentIndex(2);
+  parent->show();
 }
 
 /*!
@@ -106,6 +102,7 @@ void MessagesWindow::warning(QString message) {
 
   warnings->setPlainText(message);
   builderTabs->setCurrentIndex(3);
+  parent->show();
 }
 
 /*!
@@ -115,25 +112,29 @@ void MessagesWindow::error(QString message) {
 
   errors->setPlainText(message);
   builderTabs->setCurrentIndex(4);
+  parent->show();
 }
 
 /*!
  * \brief MessagesWindow::reset clear the text and tab icons
  */
 void MessagesWindow::reset()
->>>>>>> c273845... Moved grid settings to settings file, added two level grids, grid settings in schematic file are ignored now (for a while). Fixed diagram resizing. Changed default grid type and color.
 {
     admsOutput->clear();
     cppOutput->clear();
+
+    messages->clear();
+    warnings->clear();
+    errors->clear();
 
     builderTabs->setTabIcon(0,QPixmap());
     builderTabs->setTabIcon(1,QPixmap());
 }
 
 /*!
- * \brief MessageDock::slotAdmsChanged monitors the adms log, update tab icon
+ * \brief MessagesWindow::slotAdmsChanged monitors the adms log, update tab icon
  */
-void MessageDock::slotAdmsChanged()
+void MessagesWindow::slotAdmsChanged()
 {
     // look for [fatal..] output of admsXml
     // get line from either
@@ -189,9 +190,9 @@ void MessageDock::slotAdmsChanged()
 }
 
 /*!
- * \brief MessageDock::slotCppChanged monitors the compiler log, update tab icon
+ * \brief MessagesWindow::slotCppChanged monitors the compiler log, update tab icon
  */
-void MessageDock::slotCppChanged()
+void MessagesWindow::slotCppChanged()
 {
     QString logContents = cppOutput->toPlainText();
 
@@ -212,13 +213,16 @@ void MessageDock::slotCppChanged()
 }
 
 /*!
- * \brief MessageDock::slotCursor
+ * \brief MessagesWindow::slotCursor
  */
-void MessageDock::slotCursor()
+void MessagesWindow::slotCursor()
 {
     qWarning()  << admsOutput->textCursor().blockNumber();
+
     int gotoLine = -1;
-    QString line =  admsOutput->textCursor().block().text();
+
+    QString line = admsOutput->textCursor().block().text();
+
     if (line.contains("[fatal..]",Qt::CaseSensitive)) {
         // \todo improve the parsing of line
         // try to find line number: ":34:"
@@ -291,9 +295,4 @@ void MessageDock::slotCursor()
     /// \todo add line numbers to TextDoc, highlight as the cursor moves
     /// problem that now the cursor paints over the failed line.
     /// can we have multiple selections?
-
-
 }
-
-
-
