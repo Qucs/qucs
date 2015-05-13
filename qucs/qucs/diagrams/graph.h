@@ -63,7 +63,7 @@ private:
   double Max;
 };
 
-class Axis;
+struct Axis;
 
 class Graph : public Element {
 public:
