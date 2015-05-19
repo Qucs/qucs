@@ -70,9 +70,47 @@ public:
   const double& min()const {return Min;}
   const double& max()const {return Max;}
 public: // only called from Graph. cleanup later.
-  const double& min(const double& x){if (Min<x) Min=x; return Min;}
-  const double& max(const double& x){if (Max>x) Max=x; return Max;}
+  void setLimit(const double& x){
+	  if (Min>x) Min=x;
+	  if (Max<x) Max=x;
+  }
 private:
+  double Min;
+  double Max;
+};
+
+class SimOutputData {
+public:
+  SimOutputData(const QString& filename, const QString& varname);
+  int refresh();
+  int loadIndepVarData(const QString&, char* datfilecontent, DataX* where);
+
+  bool isEmpty() const { return !numAxes(); }
+  unsigned numAxes() const { return CPointsX.count();}
+  double const* coords(uint i) const;
+  DataX* axis(uint i) { if (i<axis_count) return CPointsX.at(i); return NULL;}
+  double *cPointsY() const { return CPointsY; }
+  int countY() const { return CountY; }
+  static void attach(SimOutputData*, SimOutputData**);
+  static void detach(SimOutputData**);
+private:
+  unsigned axis_count;
+  QVector<DataX*> CPointsX;
+  double *CPointsY;
+  int CountY;    // number of curves
+  QString Var;
+  QString FileName;
+  QDateTime lastLoaded;  // when it was loaded into memory
+  unsigned attach_count;
+public:
+  const double& min()const {return Min;}
+  const double& max()const {return Max;}
+public:
+  void setLimit(const double& x){
+	  if (Min>x) Min=x;
+	  if (Max<x) Max=x;
+  }
+private: // limits on "y"-axis (ordinate)
   double Min;
   double Max;
 };

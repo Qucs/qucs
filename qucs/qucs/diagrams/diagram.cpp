@@ -828,16 +828,17 @@ void Diagram::updateGraphData()
 }
 
 // --------------------------------------------------------------------------
-//
 /*!
  * does not (yet) load a dat file. only part of it.
  * this way, it would belong to graph.cpp. but it's too obsolete, lets see..
  */
 SimOutputDat::SimOutputDat(const QString& fileName, const QString& varname)
-    : CPointsY(NULL), Var(varname), fileName(fileName)
+    : CPointsY(NULL), Var(varname), fileName(fileName),
+      Min(INFINITY), Max(-INFINITY)
 {
   refresh();
 }
+
 // --------------------------------------------------------------------------
 // former "loadDatFile", former "loadVarData".
 SimOutputData const* SimOutputDat::refresh()
@@ -947,8 +948,9 @@ SimOutputData const* SimOutputDat::refresh()
     CPointsX.back()->Points = p;
     for(int z=1; z<=counting; z++)  *(p++) = double(z);
     auto Axis = CPointsX.back();
-    Axis->min(1.);
-    Axis->max(double(counting));
+    Axis->setLimit(1.);
+    Axis->setLimit(double(counting));
+    qDebug() << "indep" << counting << Axis->max() << Axis->min();
   }
   else {  // ...................................
     // get independent variables from data file
@@ -971,8 +973,14 @@ SimOutputData const* SimOutputDat::refresh()
       }
       else if(pD == bLast)  pa = &yAxis;   // y axis for Rect3D
 #endif
+      qDebug() << "refresh axis" << pD->Var;
       counting = loadIndepVarData(pD->Var, FileString, CPointsX[ii]);
-      if(counting <= 0)  return 0;
+      if(counting <= 0) {
+	qDebug() << "huh, nothing there";
+	return 0;
+      }else{
+	qDebug() << "sth" << pD->Var << "found" << counting;
+      }
 
       CountY *= counting;
     }
@@ -1022,11 +1030,7 @@ if(Variable.right(3) != ".X ") { // not "digital"
 #endif
 	 {
       if(fabs(y) >= 1e-250) x = sqrt(x*x+y*y);
-      if(std::isfinite(x)) {
-	auto Axis = CPointsX.back();
-	Axis->min(x);
-	Axis->max(x);
-      }
+      if(std::isfinite(x)) setLimit(x);
     }
 
 #if 0 // this is not location curce code.
@@ -1072,6 +1076,14 @@ if(Variable.right(3) != ".X ") { // not "digital"
 
 }  // of "if not digital"
 
+  qDebug() << "loaded" << Var << min() << max();
+  if (numAxes()>1){
+    qDebug() << "dep" << axis(1)->Var << axis(1)->min() << axis(1)->max();
+  }
+  if(numAxes()){
+    qDebug() << "dep" << axis(0)->Var << axis(0)->min() << axis(0)->max();
+  }
+
   lastLoaded = QDateTime::currentDateTime();
   return this;
 }
@@ -1102,9 +1114,11 @@ int SimOutputDat::loadIndepVarData(const QString& Variable,
   // for other purposes!
   char *pFile = strstr(FileString, Line.toLatin1());
   while(pFile) {
-    if(*(pFile-1) == '<')     // is dependent variable ?
+    if(*(pFile-1) == '<') {     // is dependent variable ?
+      qDebug() << "huh? dependent variable in loadIndep";
       break;
-    else if(strncmp(pFile-3, "<in", 3) == 0) {  // is independent variable ?
+    }else if(strncmp(pFile-3, "<in", 3) == 0) {  // is independent variable ?
+      qDebug() << "okay, really independent.";
       isIndep = true;
       break;
     }
@@ -1140,7 +1154,6 @@ int SimOutputDat::loadIndepVarData(const QString& Variable,
   if(!ok)  return -1;
 
   double *p = new double[n];     // memory for new independent variable
-//  DataX *pD = pg->mutable_axes().back();
   pD->Points = p;
   pD->count  = n;
 
@@ -1161,17 +1174,17 @@ int SimOutputDat::loadIndepVarData(const QString& Variable,
     *(p++) = x;
 #if 0 // this is not location curve code
     if(Name[0] != 'C')   // not for location curves
-      if(std::isfinite(x)) {
-        if(x > pa->max) pa->max = x;
-        if(x < pa->min) pa->min = x;
-      }
 #endif
+      if(std::isfinite(x)) {
+        pD->setLimit(x);
+        pD->setLimit(x);
+      }
     
     pPos = pEnd;
     while((*pPos) && (*pPos <= ' '))  pPos++;  // find start of next number
   }
 
-  return n;   // return number of independent data
+  return n; // number of independent data points
 }
 
 /*!
