@@ -23,6 +23,7 @@
 #include "../sim/data.h"
 
 #include <cmath>
+#include <assert.h>
 #include <complex>
 #include <QColor>
 #include <QDateTime>
@@ -65,6 +66,7 @@ struct DataX {
   QString Var;
   double *Points;
   int     count;
+  const double* end() const{return Points+count;}
 
 public:
   const double& min()const {return Min;}
@@ -81,6 +83,28 @@ private:
 
 class SimOutputData {
 public:
+  typedef std::pair<double,std::complex<double> > valuetype;
+  class const_iterator{
+    friend class SimOutputData; // need to access constructor.
+  protected:
+    const_iterator(double const* x, double const* y) : seekx(x), seeky(y) {};
+  public:
+    const_iterator& operator++(){ ++seekx; ++seeky; ++seeky; return *this;}
+    valuetype operator*(){
+      return valuetype(*seekx,std::complex<double>(*seeky,seeky[1]));
+    }
+    const valuetype* operator->() const{
+      _v = valuetype(*seekx,std::complex<double>(*seeky,seeky[1]));
+      return &_v;
+    }
+    bool operator==(const const_iterator& p)const { return seekx==p.seekx; }
+    bool operator!=(const const_iterator& p)const { return seekx!=p.seekx; }
+  private:
+    double const* seekx;
+    double const* seeky;
+    static valuetype _v; // bit of a hack. lets see...
+  };
+
   SimOutputData(const QString& filename, const QString& varname);
   int refresh();
   int loadIndepVarData(const QString&, char* datfilecontent, DataX* where);
@@ -88,11 +112,16 @@ public:
   bool isEmpty() const { return !numAxes(); }
   unsigned numAxes() const { return CPointsX.count();}
   double const* coords(uint i) const;
-  DataX* axis(uint i) { if (i<axis_count) return CPointsX.at(i); return NULL;}
-  double *cPointsY() const { return CPointsY; }
+  // double *cPointsY() const { return CPointsY; }
   int countY() const { return CountY; }
   static void attach(SimOutputData*, SimOutputData**);
   static void detach(SimOutputData**);
+  const_iterator begin() const {return const_iterator(CPointsX[0]->Points, CPointsY);}
+  const_iterator end() const {return const_iterator(CPointsX[0]->end(), NULL);}
+
+public: // obsolete interface. don't use.
+  DataX* axis(uint i) { if (i<axis_count) return CPointsX.at(i); return NULL;}
+  double *cPointsY() const { return CPointsY; }
 private:
   unsigned axis_count;
   QVector<DataX*> CPointsX;
@@ -323,5 +352,4 @@ private:
 };
 
 #endif
-
 // vim:ts=8:sw=2:noet

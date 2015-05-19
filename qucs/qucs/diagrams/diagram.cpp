@@ -1154,6 +1154,7 @@ int SimOutputDat::loadIndepVarData(const QString& Variable,
   if(!ok)  return -1;
 
   double *p = new double[n];     // memory for new independent variable
+  assert(!pD->Points);
   pD->Points = p;
   pD->count  = n;
 

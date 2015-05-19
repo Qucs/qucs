@@ -454,6 +454,36 @@ void GraphDeque::push_back(const Graph& g)
   Graphs.push_back(g);
 }
 
+// attach data to graph object
+void GraphDeque::attach(SimOutputData* d)
+{
+  qDebug() << "attaching to Graph";
+  SimOutputData::attach(d, &data);
+}
+
+// fixme: not here.
+void SimOutputData::attach(SimOutputData* what, SimOutputData** where)
+{
+  qDebug() << "attaching";
+  assert(!*where); // for now.
+  *where = what;
+  ++(what->attach_count);
+}
+
+/*!
+ * coordinates of a data set.
+ * FIXME: i=0 works differently
+ */
+double const* SimOutputData::coords(uint i) const
+{ // ++i;
+  if(i<(uint)CPointsX.size())
+    if(CPointsX.at(i))
+      return CPointsX.at(i)->Points;
+  return NULL;
+}
+
+SimOutputData::valuetype SimOutputData::const_iterator::_v;
+
 // -----------------------------------------------------------------------
 // meaning of the values in a graph "Points" list
 #define STROKEEND   -2

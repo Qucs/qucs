@@ -70,6 +70,12 @@ public:
                (const double*, const double*, const double*, float*, float*, Axis const*) const {};
   void calcCoordinateP (const double*x, const double*y, const double*z, Graph::iterator& p, Axis const* A) const;
   virtual void finishMarkerCoordinates(float&, float&) const;
+  void calcCoordinateC
+               (const double& d, const std::complex<double>& c, float* x, float* y, Axis* a)
+					{
+						calcCoordinate( &d, reinterpret_cast<const double*>(&c),
+						                    reinterpret_cast<const double*>(&c)+1 ,x,y,a );
+					};
   virtual void calcLimits() {};
   virtual QString extraMarkerText(Marker const*) const {return "";}
   
