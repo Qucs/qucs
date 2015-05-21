@@ -2935,9 +2935,13 @@ void QucsApp::slotSaveSchematicToGraphicsFile(bool diagram)
 
 void QucsApp::slotSimulateWithSpice()
 {
-    Schematic *sch = (Schematic*)DocumentTab->currentPage();
+    if (!isTextDocument(DocumentTab->currentPage())) {
+        Schematic *sch = (Schematic*)DocumentTab->currentPage();
 
-    ExternSimDialog *SimDlg = new ExternSimDialog(sch);
-    SimDlg->exec();
-    delete SimDlg;
+        ExternSimDialog *SimDlg = new ExternSimDialog(sch);
+        SimDlg->exec();
+        delete SimDlg;
+        sch->reloadGraphs();
+        sch->viewport()->update();
+    }
 }

@@ -222,6 +222,7 @@
 #include "LTL_SPICE.h"
 #include "UDRCTL_SPICE.h"
 #include "LTRA_SPICE.h"
+#include "volt_ac_SPICE.h"
 
 
 // Spice netlist sections
@@ -230,6 +231,8 @@
 #include "sp_options.h"
 
 // Spice simulations
+#include "sp_fourier.h"
+#include "sp_disto.h"
 #include "sp_customsim.h"
 
 #endif

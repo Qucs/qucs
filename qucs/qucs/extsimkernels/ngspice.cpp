@@ -63,6 +63,7 @@ void Ngspice::createNetlist(QTextStream &stream, int ,
            if (sim_typ==".AC") simulations.append("ac");
            if (sim_typ==".TR") simulations.append("tran");
            if (sim_typ==".CUSTOMSIM") simulations.append("custom");
+           if (sim_typ==".DISTO") simulations.append("disto");
            if ((sim_typ==".SW")&&
                (pc->Props.at(0)->Value.startsWith("DC"))) simulations.append("dc");
            // stream<<s;
@@ -146,11 +147,26 @@ void Ngspice::createNetlist(QTextStream &stream, int ,
                QString sim_typ = pc->Model;
                QString s = pc->getSpiceNetlist();
                if ((sim_typ==".AC")&&(sim=="ac")) stream<<s;
-               if ((sim_typ==".TR")&&(sim=="tran")) stream<<s;
+               if ((sim_typ==".DISTO")&&(sim=="disto")) stream<<s;
+               if ((sim_typ==".TR")&&(sim=="tran")) {
+                   stream<<s;
+                   Q3PtrList<Component> comps(Sch->DocComps); // find Fourier tran
+                   for(Component *pc1 = comps.first(); pc1 != 0; pc1 = comps.next()) {
+                       if (pc1->Model==".FOURIER") {
+                           if (pc1->Props.at(0)->Value==pc->Name) {
+                               QString s1 = pc1->getSpiceNetlist();
+                               outputs.append("spice4qucs.four");
+                               stream<<s1;
+                           }
+                       }
+                   }
+               }
                if ((sim_typ==".CUSTOMSIM")&&(sim=="custom")) {
                    stream<<s;
                    custom_vars = pc->Props.at(1)->Value;
                    custom_vars.replace(";"," ");
+                   QString cust_out = pc->Props.at(2)->Value;
+                   outputs.append(cust_out.split(';',QString::SkipEmptyParts));
                }
                if (sim_typ==".SW") {
                    QString SwpSim = pc->Props.at(0)->Value;
@@ -164,10 +180,13 @@ void Ngspice::createNetlist(QTextStream &stream, int ,
         QString basenam = inf.baseName();
 
         if (sim=="custom") {
-            QString filename = basenam + "_custom.txt";
-            outputs.append(filename);
-            QString write_str = QString("write %1 %2\n").arg(filename).arg(custom_vars);
-            stream<<write_str;
+            QString ss = custom_vars;
+            if (!ss.remove(' ').isEmpty()) { // if there was no variables
+                QString filename = basenam + "_custom.txt";
+                outputs.append(filename);
+                QString write_str = QString("write %1 %2\n").arg(filename).arg(custom_vars);
+                stream<<write_str;
+            }
             continue;
         }
 

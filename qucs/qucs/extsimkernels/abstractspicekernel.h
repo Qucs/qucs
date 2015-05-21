@@ -39,6 +39,7 @@ class AbstractSpiceKernel : public QObject
     Q_OBJECT
 private:
     void normalizeVarsNames(QStringList &var_list);
+    bool checkRawOutupt(QString ngspice_file, QStringList &values);
 
 protected:
     QString netlist,workdir, simulator_cmd,
@@ -67,6 +68,8 @@ public:
                           QStringList &var_list, bool &isComplex);
     void parseHBOutput(QString ngspice_file, QList< QList<double> > &sim_points,
                        QStringList &var_list);
+    void parseFourierOutput(QString ngspice_file, QList< QList<double> > &sim_points,
+                            QStringList &var_list, bool xyce);
     void parseSTEPOutput(QString ngspice_file,
                          QList< QList<double> > &sim_points,
                          QStringList &var_list, bool &isComplex);

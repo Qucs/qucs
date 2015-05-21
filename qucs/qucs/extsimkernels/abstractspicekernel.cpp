@@ -28,8 +28,8 @@
 #include <QTextEdit>
 
 /*!
-  \file abstractspicekernel.h
-  \brief Definition of the AbstractSpiceKernel class
+  \file abstractspicekernel.cpp
+  \brief Implementation of the AbstractSpiceKernel class
 */
 
 
@@ -311,6 +311,67 @@ void AbstractSpiceKernel::parseHBOutput(QString ngspice_file,
 }
 
 /*!
+ * \brief AbstractSpiceKernel::parseFourierOutput Parse output of fourier simulation.
+ * \param ngspice_file[in] Spice output file name
+ * \param sim_points[out] 2D array in which simulation points should be extracted
+ * \param var_list[out] This list is filled by simualtion variables. There is a list of dependent
+ *        and independent varibales. An independent variable is the first in list.
+ */
+void AbstractSpiceKernel::parseFourierOutput(QString ngspice_file, QList<QList<double> > &sim_points,
+                                             QStringList &var_list, bool xyce)
+{
+    QFile ofile(ngspice_file);
+    if (ofile.open(QFile::ReadOnly)) {
+        QTextStream ngsp_data(&ofile);
+        sim_points.clear();
+        var_list.clear();
+        var_list.append("fourierfreq");
+        int Nharm; // number of harmonics
+        bool firstgroup = false;
+        while (!ngsp_data.atEnd()) {
+            QRegExp sep("[ \t,]");
+            QString lin = ngsp_data.readLine();
+            if (lin.isEmpty()) continue;
+            if (lin.contains("Fourier analysis for")) {
+                QString var = lin.split(sep,QString::SkipEmptyParts).last();
+                if (var.endsWith(':')) var.chop(1);
+                var_list.append("magnitude("+var+")");
+                var_list.append("phase("+var+")");
+                var_list.append("norm(mag("+var+"))");
+                var_list.append("norm(phase("+var+"))");
+                continue;
+            }
+            if (lin.contains("No. Harmonics:")) {
+                QString ss = lin.section(sep,2,2,QString::SectionSkipEmpty);
+                if (ss.endsWith(',')) ss.chop(1);
+                Nharm = ss.toInt();
+                while (!ngsp_data.readLine().contains(QRegExp("Harmonic\\s+Frequency")));
+                if (!xyce) lin = ngsp_data.readLine(); // dummy line
+                for (int i=0;i<Nharm;i++) {
+                    lin = ngsp_data.readLine();
+                    if (!firstgroup) {
+                        QList<double> sim_point;
+                        sim_point.append(lin.section(sep,1,1,QString::SectionSkipEmpty).toDouble()); // freq
+                        sim_point.append(lin.section(sep,2,2,QString::SectionSkipEmpty).toDouble()); // magnitude
+                        sim_point.append(lin.section(sep,3,3,QString::SectionSkipEmpty).toDouble()); // phase
+                        sim_point.append(lin.section(sep,4,4,QString::SectionSkipEmpty).toDouble()); // normalized magnitude
+                        sim_point.append(lin.section(sep,5,5,QString::SectionSkipEmpty).toDouble()); // normalized phase
+                        sim_points.append(sim_point);
+                    } else {
+                        sim_points[i].append(lin.section(sep,2,2,QString::SectionSkipEmpty).toDouble()); // magnitude
+                        sim_points[i].append(lin.section(sep,3,3,QString::SectionSkipEmpty).toDouble()); // phase
+                        sim_points[i].append(lin.section(sep,4,4,QString::SectionSkipEmpty).toDouble()); // normalized magnitude
+                        sim_points[i].append(lin.section(sep,5,5,QString::SectionSkipEmpty).toDouble()); // normalized phase
+                    }
+                }
+                firstgroup = true;
+            }
+        }
+        ofile.close();
+    }
+}
+
+/*!
  * \brief AbstractSpiceKernel::parseSTEPOutput This method parses text raw spice
  *        output from Parameter sweep analysis. Can parse data that uses appedwrite.
  *        Extracts a simulation points array and variables names and types (Real
@@ -444,6 +505,34 @@ void AbstractSpiceKernel::parseResFile(QString resfile, QString &var, QStringLis
 }
 
 /*!
+ * \brief AbstractSpiceKernel::checkRawOutupt Determine Ngspice Raw output contains
+ *        parameter sweep.
+ * \param ngspice_file[in] Raw output file name
+ * \param values[out] Numbers of parameter sweep steps
+ * \return true if parameter sweep presents, false otherwise
+ */
+bool AbstractSpiceKernel::checkRawOutupt(QString ngspice_file, QStringList &values)
+{
+    values.clear();
+
+    QFile ofile(ngspice_file);
+    int plots_cnt = 0;
+    if (ofile.open(QFile::ReadOnly)) {
+        QTextStream ngsp_data(&ofile);
+        while (!ngsp_data.atEnd()) {
+            QString lin = ngsp_data.readLine();
+            if (lin.startsWith("Plotname: ")) {
+                plots_cnt++;
+                values.append(QString::number(plots_cnt));
+            }
+        }
+        ofile.close();
+    }
+    if (plots_cnt>1) return true;
+    else return false;
+}
+
+/*!
  * \brief AbstractSpiceKernel::convertToQucsData Put data extracted from spice raw
  *        text output files (given in outputs_files property) into single XML
  *        Qucs Dataset.
@@ -480,6 +569,8 @@ void AbstractSpiceKernel::convertToQucsData(const QString &qucs_dataset, bool xy
             if (ngspice_output_filename.endsWith("_hb.txt")) {
                 parseHBOutput(full_outfile,sim_points,var_list);
                 isComplex = true;
+            } else if (ngspice_output_filename.endsWith(".four")) {
+                parseFourierOutput(full_outfile,sim_points,var_list,xyce);
             } else if (ngspice_output_filename.endsWith("_swp.txt")) {
                 hasParSweep = true;
                 QString simstr = full_outfile;
@@ -507,7 +598,13 @@ void AbstractSpiceKernel::convertToQucsData(const QString &qucs_dataset, bool xy
 
 
             } else {
-                parseNgSpiceSimOutput(full_outfile,sim_points,var_list,isComplex);
+                hasParSweep = checkRawOutupt(full_outfile,swp_var_val);
+                if (hasParSweep) {
+                    swp_var = "Number";
+                    parseSTEPOutput(full_outfile,sim_points,var_list,isComplex);
+                } else {
+                    parseNgSpiceSimOutput(full_outfile,sim_points,var_list,isComplex);
+                }
             }
             if (var_list.isEmpty()) continue; // notning to convert
             normalizeVarsNames(var_list);

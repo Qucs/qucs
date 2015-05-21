@@ -47,6 +47,7 @@ SpiceCustomSim::SpiceCustomSim()
                             "let K=V(1)/V(2)\n", true,
                                          "Insert spice code here"));
   Props.append(new Property("Vars","V(1);V(2)",false,"Vars to plot"));
+  Props.append(new Property("Outputs","Custom_ac.txt;Custom_tran.txt",false,"Extra outputs to parse"));
 
 }
 
@@ -62,7 +63,7 @@ Component* SpiceCustomSim::newOne()
 Element* SpiceCustomSim::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Ngspice custom simulation");
-  BitmapFile = (char *) "tran";
+  BitmapFile = (char *) "sp_customsim";
 
   if(getNewOne)  return new SpiceCustomSim();
   return 0;

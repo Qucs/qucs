@@ -433,6 +433,7 @@ void Module::registerModules (void) {
   REGISTER_EXTERNAL_1 (ecvs);
 
   //spice specific components
+  REGISTER_SPICE_1 (Vac_SPICE);
   REGISTER_SPICE_1 (Src_eqndef);
   REGISTER_SPICE_1 (iSffm);
   REGISTER_SPICE_1 (vAmpMod);
@@ -460,6 +461,8 @@ void Module::registerModules (void) {
   REGISTER_SPICE_SEC_1 (SpiceOptions);
 
   // spice simulations
+  REGISTER_SPICE_SIM_1 (SpiceFourier);
+  REGISTER_SPICE_SIM_1 (SpiceDisto);
   REGISTER_SPICE_SIM_1 (SpiceCustomSim);
 
 
