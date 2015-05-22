@@ -450,16 +450,16 @@ void QucsApp::initActions()
   editMirrorY->setCheckable(true);
   connect(editMirrorY, SIGNAL(toggled(bool)), SLOT(slotEditMirrorY(bool)));
 
-  intoH = new QAction(QIcon((":/bitmaps/bottom.png")), tr("Go into Subcircuit"), this);
+  intoH = new QAction(QIcon((":/bitmaps/bottom.png")), tr("Go into subcircuit"), this);
   intoH->setShortcut(Qt::CTRL+Qt::Key_I);
   intoH->setStatusTip(tr("Goes inside the selected subcircuit"));
   intoH->setWhatsThis(
-	tr("Go into Subcircuit\n\nGoes inside the selected subcircuit"));
+	tr("Go into subcircuit\n\nGoes inside the selected subcircuit"));
   connect(intoH, SIGNAL(triggered()), SLOT(slotIntoHierarchy()));
 
   popH = new QAction(QIcon((":/bitmaps/top.png")), tr("Pop out"), this);
   popH->setShortcut(Qt::CTRL+Qt::Key_H);
-  popH->setStatusTip(tr("Pop outside subcircuit"));
+  popH->setStatusTip(tr("Pops out of the subcircuit"));
   popH->setWhatsThis(
 	tr("Pop out\n\nGoes up one hierarchy level, i.e. leaves subcircuit"));
   connect(popH, SIGNAL(triggered()), SLOT(slotPopHierarchy()));
@@ -1073,6 +1073,13 @@ void QucsApp::slotViewMessagesDock(bool toggle) {
   }
 }
 // ----------------------------------------------------------
+// Slot to capture dock close event
+void QucsApp::slotToggleMessagesDockVisibility(bool on) {
+  viewMessagesDock->blockSignals(true);
+  viewMessagesDock->setChecked(on);
+  viewMessagesDock->blockSignals(false);
+}
+// ----------------------------------------------------------
 void QucsApp::slotHelpAbout()
 {
   QMessageBox::about(this, tr("About..."),
@@ -1113,5 +1120,5 @@ void QucsApp::slotHelpAbout()
     tr("Czech by Marek Straka")+"\n"+
     tr("Catalan by Antoni Subirats")+"\n"+
     tr("Arabic by Chabane Noureddine")+"\n"+
-    tr("Kazakh by Erbol Keshubaev"));*/
+    tr("Kazakh by Erbol Keshubaev"));
 }
