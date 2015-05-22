@@ -90,7 +90,7 @@ QucsSettingsDialog::QucsSettingsDialog(QucsApp *parent, const char *name)
 
     appSettingsGrid->addWidget(new QLabel(tr("Language (set after reload):"), appSettingsTab) ,3,0);
     LanguageCombo = new QComboBox(appSettingsTab);
-    LanguageCombo->insertItem(tr("system language"));
+    LanguageCombo->insertItem(tr("System language"));
     LanguageCombo->insertItem(tr("English")+" (en)");
     LanguageCombo->insertItem(tr("German")+" (de)");
     LanguageCombo->insertItem(tr("French")+" (fr)");
