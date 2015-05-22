@@ -16,15 +16,18 @@
  ***************************************************************************/
 
 #include "inductor.h"
+#include "node.h"
+#include "misc.h"
+#include "extsimkernels/spicecompat.h"
 
 
 Inductor::Inductor()
 {
   Description = QObject::tr("inductor");
 
-  Arcs.append(new Arc(-18, -6, 12, 12,  0, 16*180,QPen(Qt::darkBlue,2)));
-  Arcs.append(new Arc( -6, -6, 12, 12,  0, 16*180,QPen(Qt::darkBlue,2)));
-  Arcs.append(new Arc(  6, -6, 12, 12,  0, 16*180,QPen(Qt::darkBlue,2)));
+  Arcs.append(new Arc(-18, -6, 12, 12,  0, 16*180,QPen(Qt::darkBlue,4)));
+  Arcs.append(new Arc( -6, -6, 12, 12,  0, 16*180,QPen(Qt::darkBlue,4)));
+  Arcs.append(new Arc(  6, -6, 12, 12,  0, 16*180,QPen(Qt::darkBlue,4)));
   Lines.append(new Line(-30,  0,-18,  0,QPen(Qt::darkBlue,2)));
   Lines.append(new Line( 18,  0, 30,  0,QPen(Qt::darkBlue,2)));
 
@@ -38,6 +41,7 @@ Inductor::Inductor()
   ty = y2+4;
   Model = "L";
   Name  = "L";
+  SpiceModel = "L";
 
   Props.append(new Property("L", "1 nH", true,
 		QObject::tr("inductance in Henry")));
@@ -52,6 +56,26 @@ Inductor::~Inductor()
 Component* Inductor::newOne()
 {
   return new Inductor();
+}
+
+
+QString Inductor::spice_netlist(bool)
+{
+    QString s = spicecompat::check_refdes(Name,SpiceModel);
+
+    s += QString(" %1 %2 ").arg(Ports.at(0)->Connection->Name)
+            .arg(Ports.at(1)->Connection->Name); // output source nodes
+    s.replace(" gnd ", " 0 ");
+
+    s += " "+spicecompat::normalize_value(Props.at(0)->Value) + " ";
+    QString val = Props.at(1)->Value; // add inial voltage if presents
+    val = val.remove(' ').toUpper();
+    if (!val.isEmpty()) {
+        s += " IC=" + val;
+    }
+    s += '\n';
+
+    return s;
 }
 
 Element* Inductor::info(QString& Name, char* &BitmapFile, bool getNewOne)

@@ -200,4 +200,40 @@
 // Verilog-A dynamicaly loaded component
 #include "vacomponent.h"
 
+// Spice-specific components
+#include "src_eqndef.h"
+#include "vsffm.h"
+#include "isffm.h"
+#include "vAmpMod.h"
+#include "iAmpMod.h"
+#include "vPWL.h"
+#include "iPWL.h"
+#include "eNL.h"
+#include "gNL.h"
+#include "vTRNOISE.h"
+#include "iTRNOISE.h"
+#include "vTRRANDOM.h"
+#include "C_SPICE.h"
+#include "L_SPICE.h"
+#include "R_SPICE.h"
+#include "K_SPICE.h"
+#include "MESFET_SPICE.h"
+#include "Cmeter_SPICE.h"
+#include "LTL_SPICE.h"
+#include "UDRCTL_SPICE.h"
+#include "LTRA_SPICE.h"
+#include "volt_ac_SPICE.h"
+
+
+// Spice netlist sections
+#include "sp_parameter.h"
+#include "sp_globalpar.h"
+#include "sp_options.h"
+#include "sp_nutmeg.h"
+
+// Spice simulations
+#include "sp_fourier.h"
+#include "sp_disto.h"
+#include "sp_customsim.h"
+
 #endif

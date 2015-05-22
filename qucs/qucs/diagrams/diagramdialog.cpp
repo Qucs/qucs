@@ -273,8 +273,21 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
   DataGroupLayout->addWidget(ChooseData);
   ChooseData->setMinimumWidth(300); // will force also min width of table below
   connect(ChooseData, SIGNAL(activated(int)), SLOT(slotReadVars(int)));
+  connect(ChooseData, SIGNAL(currentIndexChanged(int)),this,SLOT(slotSetSimulator()));
   // todo: replace by QTableWidget
   // see https://gist.github.com/ClemensFMN/8955411
+
+  QHBoxLayout *hb1 = new QHBoxLayout;
+  ChooseSimulator = new QComboBox;
+  QStringList lst_sim;
+  lst_sim<<"Qucsator (built-in)"<<"Ngspice"<<"Xyce";
+  ChooseSimulator->addItems(lst_sim);
+  connect(ChooseSimulator,SIGNAL(currentIndexChanged(int)),this,SLOT(slotSelectSimulatorDataset()));
+  lblSim = new QLabel(tr("Data from simulator:"));
+  hb1->addWidget(lblSim);
+  hb1->addWidget(ChooseSimulator);
+  DataGroupLayout->addLayout(hb1);
+
   ChooseVars = new QTableWidget(1, 3);
   ChooseVars->verticalHeader()->setVisible(false);
   ChooseVars->horizontalHeader()->setStretchLastSection(true);
@@ -295,7 +308,6 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
   ChooseVars->setHorizontalHeaderLabels(headers);
 
   connect(ChooseVars, SIGNAL(itemDoubleClicked(QTableWidgetItem*)), SLOT(slotTakeVar(QTableWidgetItem*)));
-
 
   QGroupBox *GraphGroup = new QGroupBox(tr("Graph"));
   Box1Layout->addWidget(GraphGroup);
@@ -712,6 +724,8 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
       ColorButt->setPaletteBackgroundColor(selectedColor);
     }
   }
+
+  slotSetSimulator();
 }
 
 DiagramDialog::~DiagramDialog()
@@ -1442,4 +1456,37 @@ void DiagramDialog::slotEditRotZ(const QString& Text)
   SliderRotZ->setValue(Text.toInt());
   DiagCross->rotZ = Text.toFloat() * pi/180.0;
   DiagCross->update();
+}
+
+void DiagramDialog::slotSelectSimulatorDataset()
+{
+    int idx = ChooseSimulator->currentIndex();
+    QFileInfo inf(defaultDataSet);
+    QString dataset_base = inf.baseName();
+    QString dataset;
+    switch (idx) {
+    case 0 : dataset = dataset_base;
+        break;
+    case 1: dataset = dataset_base+"_ngspice";
+        break;
+    case 2: dataset = dataset_base+"_xyce";
+    default: break;
+    }
+
+    int new_idx = ChooseData->findText(dataset);
+    if (new_idx>-1) {
+        ChooseData->setCurrentIndex(new_idx);
+        slotReadVars(ChooseData->currentIndex());
+    } /* else {
+        ChooseSimulator->setCurrentIndex(0); // revert default if not exists
+    }*/
+    //slotSetSimulator();
+}
+
+void DiagramDialog::slotSetSimulator()
+{
+    QString s = ChooseData->currentText();
+    if (s.endsWith("_ngspice")) ChooseSimulator->setCurrentIndex(1);
+    else if (s.endsWith("_xyce")) ChooseSimulator->setCurrentIndex(2);
+    else ChooseSimulator->setCurrentIndex(0);
 }

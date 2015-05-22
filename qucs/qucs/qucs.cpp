@@ -67,6 +67,9 @@
 #include "dialogs/matchdialog.h"
 #include "dialogs/simmessage.h"
 #include "dialogs/exportdialog.h"
+//#include "dialogs/vtabwidget.h"
+//#include "dialogs/vtabbeddockwidget.h"
+#include "extsimkernels/externsimdialog.h"
 #include "octave_window.h"
 #include "printerwriter.h"
 #include "imagewriter.h"
@@ -2801,4 +2804,18 @@ void QucsApp::slotSaveSchematicToGraphicsFile(bool diagram)
   writer->print(DocumentTab->currentPage());
   lastExportFilename = writer->getLastSavedFile();
   delete writer;
+}
+
+
+void QucsApp::slotSimulateWithSpice()
+{
+    if (!isTextDocument(DocumentTab->currentPage())) {
+        Schematic *sch = (Schematic*)DocumentTab->currentPage();
+
+        ExternSimDialog *SimDlg = new ExternSimDialog(sch);
+        SimDlg->exec();
+        delete SimDlg;
+        sch->reloadGraphs();
+        sch->viewport()->update();
+    }
 }

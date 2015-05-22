@@ -34,7 +34,6 @@
 
 class QTextStream;
 class QTextEdit;
-class QPlainTextEdit;
 class QDragMoveEvent;
 class QDropEvent;
 class QDragLeaveEvent;
@@ -127,9 +126,6 @@ public:
 
   QList<PostedPaintEvent>   PostedPaintEvents;
   bool symbolMode;  // true if in symbol painting mode
-
-  //bool GridOn;
-  int GridX, GridY; // nvdl: todo: Replace and remove
 
   int ViewX1, ViewY1, ViewX2, ViewY2;  // size of the document area
   int UsedX1, UsedY1, UsedX2, UsedY2;  // document area used by elements
@@ -235,6 +231,7 @@ public:
   Component* searchSelSubcircuit();
   Component* selectedComponent(int, int);
   void       deleteComp(Component*);
+  Component* getComponentByName(QString compname);
 
   void     oneLabel(Node*);
   int      placeNodeLabel(WireLabel*);
@@ -265,13 +262,14 @@ private:
 
 public:
   static int testFile(const QString &);
-  bool createLibNetlist(QTextStream*, QPlainTextEdit*, int);
-  bool createSubNetlist(QTextStream *, int&, QStringList&, QPlainTextEdit*, int);
-  void createSubNetlistPlain(QTextStream*, QPlainTextEdit*, int);
-  int  prepareNetlist(QTextStream&, QStringList&, QPlainTextEdit*);
+  bool createLibNetlist(QTextStream*, QTextEdit*, int);
+  bool createSubNetlist(QTextStream *, int&, QStringList&, QTextEdit*, int, bool spice=false, bool xyce = false);
+  void createSubNetlistPlain(QTextStream*, QTextEdit*, int, bool spice=false);
+  int  prepareNetlist(QTextStream&, QStringList&, QTextEdit*,bool spice=false, bool xyce = false);
   QString createNetlist(QTextStream&, int);
   bool loadDocument();
   void highlightWireLabels (void);
+  void clearSignalsAndFileList();
 
 private:
   int  saveDocument();
@@ -297,10 +295,12 @@ private:
   void throughAllNodes(bool, QStringList&, int&);
   void propagateNode(QStringList&, int&, Node*);
   void collectDigitalSignals(void);
-  bool giveNodeNames(QTextStream *, int&, QStringList&, QPlainTextEdit*, int);
+  bool giveNodeNames(QTextStream *, int&, QStringList&, QTextEdit*, int,
+                     bool spice = false, bool xyce = false);
   void beginNetlistDigital(QTextStream &);
   void endNetlistDigital(QTextStream &);
-  bool throughAllComps(QTextStream *, int&, QStringList&, QPlainTextEdit *, int);
+  bool throughAllComps(QTextStream *, int&, QStringList&, QTextEdit *, int,
+                       bool spice = false, bool xyce = false);
 
   DigMap Signals; // collecting node names for VHDL signal declarations
   QStringList PortTypes;

@@ -16,7 +16,8 @@
  ***************************************************************************/
 #include "resistor.h"
 #include "node.h"
-#include "schematic.h"
+#include "misc.h"
+#include "extsimkernels/spicecompat.h"
 
 
 Resistor::Resistor(bool european)
@@ -24,25 +25,26 @@ Resistor::Resistor(bool european)
   Description = QObject::tr("resistor");
 
   Props.append(new Property("R", "50 Ohm", true,
-	QObject::tr("ohmic resistance in Ohms")));
+    QObject::tr("ohmic resistance in Ohms")));
   Props.append(new Property("Temp", "26.85", false,
-	QObject::tr("simulation temperature in degree Celsius")));
+    QObject::tr("simulation temperature in degree Celsius")));
   Props.append(new Property("Tc1", "0.0", false,
-	QObject::tr("first order temperature coefficient")));
+    QObject::tr("first order temperature coefficient")));
   Props.append(new Property("Tc2", "0.0", false,
-	QObject::tr("second order temperature coefficient")));
+    QObject::tr("second order temperature coefficient")));
   Props.append(new Property("Tnom", "26.85", false,
-	QObject::tr("temperature at which parameters were extracted")));
+    QObject::tr("temperature at which parameters were extracted")));
 
   // this must be the last property in the list !!!
   Props.append(new Property("Symbol", "european", false,
-		QObject::tr("schematic symbol")+" [european, US]"));
+        QObject::tr("schematic symbol")+" [european, US]"));
   if(!european)  Props.getLast()->Value = "US";
 
   createSymbol();
   tx = x1+4;
   ty = y2+4;
   Model = "R";
+  SpiceModel = "R";
   Name  = "R";
 }
 
@@ -50,6 +52,19 @@ Resistor::Resistor(bool european)
 Component* Resistor::newOne()
 {
   return new Resistor(Props.getLast()->Value != "US");
+}
+
+QString Resistor::spice_netlist(bool )
+{
+    QString s=spicecompat::check_refdes(Name,SpiceModel);
+
+    s += QString(" %1 %2 ").arg(Ports.at(0)->Connection->Name)
+            .arg(Ports.at(1)->Connection->Name); // output 2 nodes
+    s.replace(" gnd ", " 0 ");
+
+    s += QString(" %1\n").arg(spicecompat::normalize_value(Props.at(0)->Value));
+
+    return s;
 }
 
 // -------------------------------------------------------

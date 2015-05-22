@@ -16,6 +16,9 @@
  ***************************************************************************/
 
 #include "vrect.h"
+#include "node.h"
+#include "misc.h"
+#include "extsimkernels/spicecompat.h"
 
 
 vRect::vRect()
@@ -47,6 +50,7 @@ vRect::vRect()
   ty = y2+4;
   Model = "Vrect";
   Name  = "V";
+  SpiceModel = "V";
 
   Props.append(new Property("U", "1 V", true,
 		QObject::tr("voltage of high signal")));
@@ -66,6 +70,37 @@ vRect::vRect()
 
 vRect::~vRect()
 {
+}
+
+QString vRect::spice_netlist(bool)
+{
+    QString s = spicecompat::check_refdes(Name,SpiceModel);
+
+    foreach(Port *p1, Ports) {
+        QString nam = p1->Connection->Name;
+        if (nam=="gnd") nam = "0";
+        s += " "+ nam;   // node names
+    }   
+
+    double T, TL, TH, Trval, Tfval, fac;
+    QString unit;
+
+    QString U = spicecompat::normalize_value(Props.at(0)->Value); //VH
+    QString Td = spicecompat::normalize_value(Props.at(5)->Value); // Td
+    QString Tr = spicecompat::normalize_value(Props.at(3)->Value); // Tr
+    QString Tf = spicecompat::normalize_value(Props.at(4)->Value); //Tf
+    misc::str2num(Props.at(1)->Value,TH,unit,fac); //TH
+    TH *= fac;    // TH = pw
+    misc::str2num(Props.at(2)->Value,TL,unit,fac);
+    T = TL*fac+TH;
+   misc::str2num(Props.at(3)->Value,Trval,unit,fac); 
+     T = Trval*fac+T;    
+   misc::str2num(Props.at(4)->Value,Tfval,unit,fac); 
+     T = Tfval*fac+T;    
+     
+    s += QString(" DC 0 PULSE( 0  %1 %2 %3 %4 %5 %6)  AC 0\n").arg(U).arg(Td).arg(Tr).arg(Tf).arg(TH).arg(T);
+
+    return s;
 }
 
 Component* vRect::newOne()

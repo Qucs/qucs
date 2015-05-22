@@ -57,7 +57,7 @@ ComponentDialog::ComponentDialog(Component *c, Schematic *d)
   Validator = new QRegExpValidator(Expr, this);
   Expr.setPattern("[^\"]*");   // valid expression for property 'edit'
   Validator2 = new QRegExpValidator(Expr, this);
-  Expr.setPattern("[\\w_]+");  // valid expression for property 'NameEdit'
+  Expr.setPattern("[\\w_\\.]+");  // valid expression for property 'NameEdit'. Space to enable Spice-style par sweep
   ValRestrict = new QRegExpValidator(Expr, this);
 
   checkSim  = 0;  comboSim  = 0;  comboType  = 0;  checkParam = 0;
@@ -68,7 +68,8 @@ ComponentDialog::ComponentDialog(Component *c, Schematic *d)
   // if simulation component: .TR, .AC, .SW, (.SP ?)
   if((Comp->Model[0] == '.') &&
      (Comp->Model != ".DC") && (Comp->Model != ".HB") &&
-     (Comp->Model != ".Digi") && (Comp->Model != ".ETR")) {
+     (Comp->Model != ".Digi") && (Comp->Model != ".ETR") &&
+     (Comp->Model != ".FOURIER")) {
     QTabWidget *t = new QTabWidget(this);
     all->addWidget(t);
 
@@ -603,8 +604,21 @@ void ComponentDialog::slotSelectProperty(QTableWidgetItem *item)
     ComboEdit->setVisible(false);
 
     NameEdit->setFocus();   // edit QLineEdit
-  }
-  else {  // show standard line edit (description and value)
+  } else if (desc=="Expression") { // Single expression
+      // show two line edit fields (name and value)
+      // And disable buttons
+
+      Name->setText("");
+      NameEdit->setText(name);
+      edit->setText(value);
+
+      edit->setVisible(true);
+      NameEdit->setVisible(true);
+      Description->setVisible(false);
+      ComboEdit->setVisible(false);
+
+      NameEdit->setFocus();   // edit QLineEdit
+  } else {  // show standard line edit (description and value)
     ButtAdd->setEnabled(false);
     ButtRem->setEnabled(false);
     ButtUp->setEnabled(false);
