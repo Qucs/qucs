@@ -31,6 +31,15 @@ class QucsApp;
 
 extern QAction *formerAction;
 
+enum eMouseState {
+    noAction,
+    componentPress,
+    componentMove,
+    componentRelease,
+    wirePress,
+    wireMouse,
+    wireRelease
+};
 
 class MouseActions {
 public:
@@ -53,6 +62,8 @@ public:
 
   // menu appearing by right mouse button click on component
   QMenu *ComponentMenu;
+
+  eMouseState mouseState;
 
 private:
   bool isMoveEqual;
