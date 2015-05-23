@@ -173,7 +173,7 @@ void MouseActions::editLabel(Schematic *Doc, WireLabel *pl)
 
   Doc->sizeOfAll(Doc->UsedX1, Doc->UsedY1, Doc->UsedX2, Doc->UsedY2);
   Doc->viewport()->update();
-  drawn = false;
+  //drawn = false;
   Doc->setChanged(true, true);
 }
 
@@ -229,7 +229,7 @@ void MouseActions::endElementMoving(Schematic *Doc, Q3PtrList<Element> *movEleme
   Doc->sizeOfAll(Doc->UsedX1, Doc->UsedY1, Doc->UsedX2, Doc->UsedY2);
   Doc->enlargeView(Doc->UsedX1, Doc->UsedY1, Doc->UsedX2, Doc->UsedY2);
   Doc->viewport()->update();
-  drawn = false;
+  //drawn = false;
 }
 
 // -----------------------------------------------------------
@@ -800,7 +800,7 @@ void MouseActions::MMoveOnGrid(Schematic *Doc, QMouseEvent *Event)
  */
 void MouseActions::MMoveFreely(Schematic *Doc, QMouseEvent *Event) {
 
-	qDebug() << "MMoveFreely";
+	//qDebug() << "MMoveFreely";
 
 	// nvdl: todo: Temporary fix; find out when drawing operations complete.
   // Escape key press?
@@ -904,7 +904,7 @@ void MouseActions::MMoveMoveText(Schematic *Doc, QMouseEvent *Event)
 
   Doc->viewport()->update();
 
-  drawn = false;
+  //drawn = false;
   Doc->setChanged(true, true);
 }
 
@@ -1131,7 +1131,7 @@ void MouseActions::rightPressMenu(Schematic *Doc, QMouseEvent *Event, float fX, 
 
   *focusMEvent = *Event;  // remember event for "edit component" action
   ComponentMenu->popup(Event->globalPos());
-  drawn = false;
+  //drawn = false;
 
   Doc->viewport()->update();
 }
@@ -1204,7 +1204,7 @@ void MouseActions::MPressLabel(Schematic *Doc, QMouseEvent*, float fX, float fY)
 
   Doc->sizeOfAll(Doc->UsedX1, Doc->UsedY1, Doc->UsedX2, Doc->UsedY2);
   Doc->viewport()->update();
-  drawn = false;
+  //drawn = false;
   Doc->setChanged(true, true);
 }
 
@@ -1350,7 +1350,7 @@ void MouseActions::MPressSelect(Schematic *Doc, QMouseEvent *Event, float fX, fl
         // Update matching wire label highlighting
         Doc->highlightWireLabels();
         Doc->viewport()->update();
-        drawn = false;
+        //drawn = false;
         break;
 
       case isComponentText:  // property text of component ?
@@ -1391,6 +1391,7 @@ void MouseActions::MPressSelect(Schematic *Doc, QMouseEvent *Event, float fX, fl
 
       case isWire:
         QucsMain->MouseMoveAction = &MouseActions::MMoveMoving; //MMoveWire2;
+        QucsMain->MouseReleaseAction = &MouseActions::MReleaseSelect;
         //QucsMain->MousePressAction = &MouseActions::MPressWire2;
         break;
 
@@ -1421,7 +1422,7 @@ void MouseActions::MPressSelect(Schematic *Doc, QMouseEvent *Event, float fX, fl
       QucsMain->MouseMoveAction = &MouseActions::MMoveSelect;
     }
 
-    //drawn = false;
+    ////drawn = false;
 
   } else {
     // Element can be moved
@@ -1453,7 +1454,7 @@ void MouseActions::MPressDelete(Schematic *Doc, QMouseEvent*, float fX, float fY
 
     Doc->sizeOfAll(Doc->UsedX1, Doc->UsedY1, Doc->UsedX2, Doc->UsedY2);
     Doc->viewport()->update();
-    drawn = false;
+    //drawn = false;
   }
 }
 
@@ -1471,7 +1472,7 @@ void MouseActions::MPressActivate(Schematic *Doc, QMouseEvent*, float fX, float 
     QucsMain->MouseMoveAction = &MouseActions::MMoveSelect;
   }
 
-  drawn = false;
+  //drawn = false;
   Doc->viewport()->update();
 }
 
@@ -1492,7 +1493,7 @@ void MouseActions::MPressMirrorX(Schematic *Doc, QMouseEvent*, float fX, float f
   }
 
   Doc->viewport()->update();
-  drawn = false;
+  //drawn = false;
   Doc->setChanged(true, true);
 }
 
@@ -1513,7 +1514,7 @@ void MouseActions::MPressMirrorY(Schematic *Doc, QMouseEvent*, float fX, float f
   }
 
   Doc->viewport()->update();
-  drawn = false;
+  //drawn = false;
   Doc->setChanged(true, true);
 }
 
@@ -1572,7 +1573,7 @@ void MouseActions::MPressRotate(Schematic *Doc, QMouseEvent*, float fX, float fY
   }
 
   Doc->viewport()->update();
-  drawn = false;
+  //drawn = false;
   Doc->setChanged(true, true);
 }
 
@@ -1612,7 +1613,7 @@ void MouseActions::MPressElement(Schematic *Doc, QMouseEvent *Event, float, floa
       Comp->entireBounds(x1,y1,x2,y2, Doc->textCorr());
       Doc->enlargeView(x1, y1, x2, y2);
 
-      drawn = false;
+      //drawn = false;
       //Doc->viewport()->update();
       Doc->setChanged(true, true);
       rot = Comp->rotated;
@@ -1669,7 +1670,7 @@ void MouseActions::MPressElement(Schematic *Doc, QMouseEvent *Event, float, floa
 
     if (dia->exec() == QDialog::Rejected) {  // don't insert if dialog canceled
       Doc->viewport()->update();
-      drawn = false;
+      //drawn = false;
       return;
     }
 
@@ -1697,7 +1698,7 @@ void MouseActions::MPressElement(Schematic *Doc, QMouseEvent *Event, float, floa
     Doc->setChanged(true, true);
 
     MMoveElement(Doc, Event);  // needed before next mouse pressing
-    drawn = false;
+    //drawn = false;
   }
 
   Doc->viewport()->update();
@@ -1943,7 +1944,7 @@ void MouseActions::drawWire(Schematic* Doc, bool outline) {
       QucsMain->MouseDoubleClickAction = 0;
     }
 
-    //drawn = false; // nvdl: todo: Legacy?
+    ////drawn = false; // nvdl: todo: Legacy?
     if (set1 | set2) Doc->setChanged(true, true);
     MAx3 = MAx2;
     MAy3 = MAy2;
@@ -1965,7 +1966,7 @@ void MouseActions::MPressMarker(Schematic *Doc, QMouseEvent*, float fX, float fY
     Doc->enlargeView(x0+pm->x1, y0-pm->y1-pm->y2, x0+pm->x1+pm->x2, y0-pm->y1);
   }
   Doc->viewport()->update();
-  drawn = false;
+  //drawn = false;
 }
 
 // -----------------------------------------------------------
@@ -1984,7 +1985,7 @@ void MouseActions::MPressOnGrid(Schematic *Doc, QMouseEvent*, float fX, float fY
     // Update matching wire label highlighting
     Doc->highlightWireLabels ();
     Doc->viewport()->update();
-    drawn = false;
+    //drawn = false;
   }
 
 }
@@ -2005,7 +2006,7 @@ void MouseActions::MPressMoveText(Schematic *Doc, QMouseEvent*, float fX, float 
     MAx1 = ((Component*)focusElement)->cx + ((Component*)focusElement)->tx;
     MAy1 = ((Component*)focusElement)->cy + ((Component*)focusElement)->ty;
     //Doc->viewport()->update();
-    drawn = false;
+    //drawn = false;
     QucsMain->MouseMoveAction = &MouseActions::MMoveMoveText;
     QucsMain->MouseReleaseAction = &MouseActions::MReleaseMoveText;
     //Doc->grabKeyboard();  // no keyboard inputs during move actions
@@ -2026,7 +2027,7 @@ void MouseActions::MPressZoomIn(Schematic *Doc, QMouseEvent*, float fX, float fY
   QucsMain->MouseReleaseAction = &MouseActions::MReleaseZoomIn;
   Doc->grabKeyboard();  // no keyboard inputs during move actions
   Doc->viewport()->update();
-  drawn = false;
+  //drawn = false;
 }
 
 
@@ -2057,7 +2058,7 @@ void MouseActions::MReleaseSelect(Schematic *Doc, QMouseEvent *Event)
   Doc->releaseKeyboard();  // allow keyboard inputs again
 
   Doc->highlightWireLabels ();
-  drawn = false;
+  //drawn = false;
 
   Doc->viewport()->update();
 }
@@ -2086,7 +2087,7 @@ void MouseActions::MReleaseSelect2(Schematic *Doc, QMouseEvent *Event)
   defaultState();
 
   Doc->highlightWireLabels ();
-  drawn = false;
+  //drawn = false;
 
   Doc->viewport()->update();
 }
@@ -2108,7 +2109,7 @@ void MouseActions::MReleaseActivate(Schematic *Doc, QMouseEvent *Event)
   QucsMain->MouseDoubleClickAction = 0;
   Doc->highlightWireLabels ();
   Doc->viewport()->update();
-  drawn = false;
+  //drawn = false;
 }
 
 // -----------------------------------------------------------
@@ -2121,7 +2122,7 @@ void MouseActions::MReleaseMoving(Schematic *Doc, QMouseEvent*)
   // Allow all mouse buttons, because for others than the left one,
   // a menu has already created.
   endElementMoving(Doc, &movingElements);
-  //Doc->releaseKeyboard();  // allow keyboard inputs again
+  Doc->releaseKeyboard();  // allow keyboard inputs again
 
   QucsMain->MouseMoveAction = &MouseActions::MMoveFreely;
   QucsMain->MousePressAction = &MouseActions::MPressSelect;
@@ -2181,7 +2182,7 @@ void MouseActions::MReleaseResizeDiagram(Schematic *Doc, QMouseEvent *Event)
   //Doc->releaseKeyboard();  // allow keyboard inputs again
 
   Doc->viewport()->update();
-  drawn = false;
+  //drawn = false;
   Doc->setChanged(true, true);
 }
 
@@ -2200,7 +2201,7 @@ void MouseActions::MReleaseResizePainting(Schematic *Doc, QMouseEvent *Event)
   //Doc->releaseKeyboard();  // allow keyboard inputs again
 
   Doc->viewport()->update();
-  drawn = false;
+  //drawn = false;
   Doc->setChanged(true, true);
 }
 
@@ -2383,7 +2384,7 @@ void MouseActions::MReleasePaste(Schematic *Doc, QMouseEvent *Event)
     QucsMain->MouseReleaseAction = 0;
     QucsMain->MouseDoubleClickAction = 0;
 
-    drawn = false;
+    //drawn = false;
     Doc->viewport()->update();
     Doc->setChanged(true, true);
     break;
@@ -2433,7 +2434,7 @@ void MouseActions::MReleaseMoveText(Schematic *Doc, QMouseEvent *Event)
 
   Doc->viewport()->update();
 
-  drawn = false;
+  //drawn = false;
   Doc->setChanged(true, true);
 }
 
@@ -2544,67 +2545,81 @@ void MouseActions::editElement(Schematic *Doc, QMouseEvent *Event)
 
     case isDiagram :
          dia = (Diagram*)focusElement;
-         if(dia->Name.at(0) == 'T') { // don't open dialog on scrollbar
-           if(dia->Name == "Time") {
-             if(dia->cy < int(fY)) {
-	       if(((TimingDiagram*)focusElement)->scroll(MAx1))
-	         Doc->setChanged(true, true, 'm'); // 'm' = only the first time
-	       break;
-             }
-	   }
-           else {
-             if(dia->cx > int(fX)) {
-	       if(((TabDiagram*)focusElement)->scroll(MAy1))
-	         Doc->setChanged(true, true, 'm'); // 'm' = only the first time
-	       break;
-             }
-	   }
-	 }
 
-	 ddia = new DiagramDialog(dia,
-		Info.dirPath() + QDir::separator() + Doc->DataSet, Doc);
-         if(ddia->exec() != QDialog::Rejected)   // is WDestructiveClose
+         if (dia->Name.at(0) == 'T') { // don't open dialog on scrollbar
+           if (dia->Name == "Time") {
+             if (dia->cy < int(fY)) {
+               if (((TimingDiagram*)focusElement)->scroll(MAx1)) {
+                 Doc->setChanged(true, true, 'm'); // 'm' = only the first time
+               }
+               break;
+             }
+           } else {
+             if (dia->cx > int(fX)) {
+               if (((TabDiagram*)focusElement)->scroll(MAy1)) {
+                 Doc->setChanged(true, true, 'm'); // 'm' = only the first time
+               }
+               break;
+             }
+           }
+         }
+
+         ddia = new DiagramDialog(dia, Info.dirPath() + QDir::separator() + Doc->DataSet, Doc);
+         if (ddia->exec() != QDialog::Rejected) { // is WDestructiveClose
            Doc->setChanged(true, true);
+         }
 
-	 dia->Bounding(x1, x2, y1, y2);
-	 Doc->enlargeView(x1, x2, y1, y2);
-	 break;
+         dia->Bounding(x1, x2, y1, y2);
+         Doc->enlargeView(x1, x2, y1, y2);
+         break;
 
     case isGraph :
-	 pg = (Graph*)focusElement;
-	 // searching diagram for this graph
-	 for(dia = Doc->Diagrams->last(); dia != 0; dia = Doc->Diagrams->prev())
-	   if(dia->Graphs.indexOf(pg) >= 0)
-	     break;
-	 if(!dia) break;
+      pg = (Graph*) focusElement;
+      // searching diagram for this graph
+      for (dia = Doc->Diagrams->last(); dia != 0; dia = Doc->Diagrams->prev()) {
+        if (dia->Graphs.indexOf(pg) >= 0) {
+          break;
+        }
+      }
 
+      if(!dia) break;
 
-	 ddia = new DiagramDialog(dia,
-	 	Info.dirPath() + QDir::separator() + Doc->DataSet, Doc, pg);
-	 if(ddia->exec() != QDialog::Rejected)   // is WDestructiveClose
-	   Doc->setChanged(true, true);
-         break;
+      ddia = new DiagramDialog(dia, Info.dirPath() + QDir::separator() + Doc->DataSet, Doc, pg);
+
+      if (ddia->exec() != QDialog::Rejected) {  // is WDestructiveClose
+        Doc->setChanged(true, true);
+      }
+
+      break;
 
     case isWire:
-         MPressLabel(Doc, Event, fX, fY);
-         break;
+      defaultState();
+      MPressLabel(Doc, Event, fX, fY);
+      break;
 
     case isNodeLabel:
     case isHWireLabel:
     case isVWireLabel:
-         editLabel(Doc, (WireLabel*)focusElement);
-         break;
+      editLabel(Doc, (WireLabel*)focusElement);
+      break;
 
     case isPainting:
-         if( ((Painting*)focusElement)->Dialog() )
-           Doc->setChanged(true, true);
-         break;
+      if ( ((Painting*)focusElement)->Dialog() ) {
+        Doc->setChanged(true, true);
+      }
+
+      break;
 
     case isMarker:
-         mdia = new MarkerDialog((Marker*)focusElement, Doc);
-         if(mdia->exec() > 1)
-           Doc->setChanged(true, true);
-         break;
+      mdia = new MarkerDialog((Marker*)focusElement, Doc);
+      if (mdia->exec() > 1) {
+        Doc->setChanged(true, true);
+      }
+
+      break;
+
+    default:
+      break;
   }
 
   // Very strange: Now an open VHDL editor gets all the keyboard input !?!
@@ -2614,7 +2629,7 @@ void MouseActions::editElement(Schematic *Doc, QMouseEvent *Event)
   Doc->setFocus();
 
   Doc->viewport()->update();
-  drawn = false;
+  //drawn = false;
 }
 
 // -----------------------------------------------------------
@@ -2699,6 +2714,11 @@ void MouseActions::keyReleaseEvent(Schematic *doc, QKeyEvent *event) {
     break;
 
   case Qt::Key_Escape:
+    if (QucsMain->MouseMoveAction == &MouseActions::MMoveElement ||
+        QucsMain->MouseMoveAction == &MouseActions::MMoveMoving2)
+    {
+      MReleaseMoving(doc, 0);
+    }
     defaultState(); // Due to "MPressSelect()" capture
     doc->releaseKeyboard();
     break;
