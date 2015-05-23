@@ -58,7 +58,7 @@ EXTRA_DIST = BUGS bootstrap.sh depcomp RELEASE
 pkginclude_HEADERS = config.h
 
 CLEANFILES = *~ *.orig *.rej
-MAINTAINERCLEANFILES = aclocal.m4 config.h.in configure Makefile.in \
+MAINTAINERCLEANFILES = aclocal.m4 configure Makefile.in \
 	stamp-h.in stamp-h[0-9].in
 DISTCLEANFILES = config.cache config.log
 MOSTLYCLEANFILES = \
