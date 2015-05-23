@@ -30,7 +30,7 @@
 #include "components/LTL_SPICE.h"
 #include "components/volt_ac_SPICE.h"
 
-//class Vac_SPICE;
+class Vac_SPICE;
 //class LTL_SPICE;
 /*REGISTER_SPICE_1 (Vac_SPICE);
 REGISTER_SPICE_1 (Src_eqndef);
@@ -480,7 +480,7 @@ void Module::registerModules (void) {
   REGISTER_SPICE_1 (MESFET_SPICE);  
   REGISTER_SPICE_1 (LTL_SPICE); 
   REGISTER_SPICE_1 (UDRCTL_SPICE); 
-  REGISTER_SPICE_1 (LTRA_SPICE);       
+  REGISTER_SPICE_1 (LTRA_SPICE);
 
   // specific sections of spice netlists
   REGISTER_SPICE_SEC_1 (SpiceParam);
@@ -492,7 +492,6 @@ void Module::registerModules (void) {
   REGISTER_SPICE_SIM_1 (SpiceFourier);
   REGISTER_SPICE_SIM_1 (SpiceDisto);
   REGISTER_SPICE_SIM_1 (SpiceCustomSim);
-
 
   // paintings
   REGISTER_PAINT_1 (GraphicLine);

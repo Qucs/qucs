@@ -23,7 +23,7 @@
 #include <QMessageBox>
 #include <QDir>
 #include <QStringList>
-#include <QPlainTextEdit>
+#include <QTextEdit>
 #include <Q3PtrList>
 #include <QTextStream>
 #include <QList>
@@ -599,13 +599,12 @@ bool Schematic::loadProperties(QTextStream *stream)
     else if(cstr == "FrameText3") misc::convert2Unicode(Frame_Text3 = nstr);
     else {
       QMessageBox::critical(0, QObject::tr("Error"),
-      QObject::tr("Format Error:\nUnknown property: ") + cstr);
+	   QObject::tr("Format Error:\nUnknown property: ")+cstr);
       return false;
     }
-
-    if (!ok) {
+    if(!ok) {
       QMessageBox::critical(0, QObject::tr("Error"),
-      QObject::tr("Format Error:\nNumber expected in property field!"));
+	   QObject::tr("Format Error:\nNumber expected in property field!"));
       return false;
     }
   }
@@ -1749,8 +1748,7 @@ int NumPorts, bool spice)
             (*tstream) << "end architecture;\n";
           }
         }
-
-  }
+      }
 
   // close file
   if(creatingLib) {
@@ -1767,7 +1765,7 @@ bool Schematic::createSubNetlist(QTextStream *stream, int& countInit,
 //  int Collect_count = Collect.count();   // position for this subcircuit
 
   // TODO: NodeSets have to be put into the subcircuit block.
-  if(!giveNodeNames(stream, countInit, Collect, ErrText, NumPorts))
+  if(!giveNodeNames(stream, countInit, Collect, ErrText, NumPorts,spice,xyce))
     return false;
 
 /*  Example for TODO

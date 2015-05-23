@@ -53,7 +53,6 @@ class QListView;
 class QFileSystemModel;
 class QModelIndex;
 class QPushButton;
-
 class ProjectView;
 
 typedef bool (Schematic::*pToggleFunc) ();
@@ -131,7 +130,7 @@ public slots:
   void slotCMenuCopy();
   void slotCMenuRename();
   void slotCMenuDelete();
-  void slotCMenuDelGroup();
+  //void slotCMenuDelGroup();
   void slotCMenuInsert();
   void slotUpdateTreeview();
 
@@ -142,7 +141,7 @@ private slots:
   void slotListProjOpen(const QModelIndex &);
   void slotSelectSubcircuit(const QModelIndex&);
   void slotSelectLibComponent(QTreeWidgetItem*);
-  void slotOpenContent(QTreeWidgetItem*);
+  void slotOpenContent(const QModelIndex&);
   void slotSetCompView(int);
   void slotButtonProjNew();
   void slotButtonProjOpen();
@@ -158,7 +157,6 @@ private slots:
   void slotUpdateUndo(bool);
   void slotUpdateRedo(bool);
   void slotToggleMessagesDockVisibility(bool);
-  void slotOpenContent(const QModelIndex&);
   void slotFileChanged(bool);
 
 signals:
@@ -194,7 +192,7 @@ private:
   QTabWidget      *TabView;
   QDockWidget     *octDock;
   OctaveWindow    *octave;
-  QDockWidget    *messagesDock;
+  QDockWidget     *messagesDock;
 
   QListView       *Projects;
   ProjectView     *Content;

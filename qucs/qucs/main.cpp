@@ -68,54 +68,53 @@ QStringList qucsPathList;
 // Loads the settings file and stores the settings.
 bool loadSettings()
 {
-  QSettings settings("qucs","qucs");
+    QSettings settings("qucs","qucs");
+  	qDebug() << "loadSettings: settings.fileName():" << settings.fileName();
 
-  qDebug() << "loadSettings: settings.fileName():" << settings.fileName();
+    if(settings.contains("x"))QucsSettings.x=settings.value("x").toInt();
+    if(settings.contains("y"))QucsSettings.y=settings.value("y").toInt();
+    if(settings.contains("dx"))QucsSettings.dx=settings.value("dx").toInt();
+    if(settings.contains("dy"))QucsSettings.dy=settings.value("dy").toInt();
+    if(settings.contains("font"))QucsSettings.font.fromString(settings.value("font").toString());
+    if(settings.contains("LargeFontSize"))QucsSettings.largeFontSize=settings.value("LargeFontSize").toDouble(); // use toDouble() as it can interpret the string according to the current locale
+    if(settings.contains("maxUndo"))QucsSettings.maxUndo=settings.value("maxUndo").toInt();
+    if(settings.contains("NodeWiring"))QucsSettings.NodeWiring=settings.value("NodeWiring").toInt();
+    if(settings.contains("BGColor"))QucsSettings.BGColor.setNamedColor(settings.value("BGColor").toString());
+    if(settings.contains("Editor"))QucsSettings.Editor=settings.value("Editor").toString();
+    if(settings.contains("FileTypes"))QucsSettings.FileTypes=settings.value("FileTypes").toStringList();
+    if(settings.contains("Language"))QucsSettings.Language=settings.value("Language").toString();
+    if(settings.contains("Comment"))QucsSettings.Comment.setNamedColor(settings.value("Comment").toString());
+    if(settings.contains("String"))QucsSettings.String.setNamedColor(settings.value("String").toString());
+    if(settings.contains("Integer"))QucsSettings.Integer.setNamedColor(settings.value("Integer").toString());
+    if(settings.contains("Real"))QucsSettings.Real.setNamedColor(settings.value("Real").toString());
+    if(settings.contains("Character"))QucsSettings.Character.setNamedColor(settings.value("Character").toString());
+    if(settings.contains("Type"))QucsSettings.Type.setNamedColor(settings.value("Type").toString());
+    if(settings.contains("Attribute"))QucsSettings.Attribute.setNamedColor(settings.value("Attribute").toString());
+    if(settings.contains("Directive"))QucsSettings.Directive.setNamedColor(settings.value("Directive").toString());
+    if(settings.contains("Task"))QucsSettings.Comment.setNamedColor(settings.value("Task").toString());
 
-	if(settings.contains("Editor"))QucsSettings.Editor = settings.value("Editor").toString();
-	//if(settings.contains("BinDir"))QucsSettings.BinDir = settings.value("BinDir").toString();
-	//if(settings.contains("LangDir"))QucsSettings.LangDir = settings.value("LangDir").toString();
-	//if(settings.contains("LibDir"))QucsSettings.LibDir = settings.value("LibDir").toString();
-	if(settings.contains("AdmsXmlBinDir"))QucsSettings.AdmsXmlBinDir = settings.value("AdmsXmlBinDir").toString();
-	if(settings.contains("AscoBinDir"))QucsSettings.AscoBinDir = settings.value("AscoBinDir").toString();
-	//if(settings.contains("OctaveDir"))QucsSettings.OctaveDir = settings.value("OctaveDir").toString();
-	//if(settings.contains("ExamplesDir"))QucsSettings.ExamplesDir = settings.value("ExamplesDir").toString();
-	//if(settings.contains("DocDir"))QucsSettings.DocDir = settings.value("DocDir").toString();
-	if(settings.contains("OctaveBinDir"))QucsSettings.OctaveBinDir.setPath(settings.value("OctaveBinDir").toString());
-	if(settings.contains("NgspiceExecutable")) QucsSettings.NgspiceExecutable = settings.value("NgspiceExecutable").toString();
-	else QucsSettings.NgspiceExecutable = "ngspice";
-	if(settings.contains("XyceExecutable")) QucsSettings.XyceExecutable = settings.value("XyceExecutable").toString();
-	else QucsSettings.XyceExecutable = "/usr/local/Xyce-Release-6.2.0-OPENSOURCE/bin/runxyce";
-	if(settings.contains("XyceParExecutable")) QucsSettings.XyceParExecutable = settings.value("XyceParExecutable").toString();
-	else QucsSettings.XyceParExecutable = "/usr/local/Xyce-Release-6.2.0-OPENMPI-OPENSOURCE/bin/xmpirun";
-	if(settings.contains("Nprocs")) QucsSettings.NProcs = settings.value("Nprocs").toInt();
-	else QucsSettings.NProcs = 4;
-	if(settings.contains("QucsHomeDir"))
-	  if(settings.value("QucsHomeDir").toString() != "")
-		 QucsSettings.QucsHomeDir.setPath(settings.value("QucsHomeDir").toString());
-	QucsSettings.QucsWorkDir = QucsSettings.QucsHomeDir;
-
-  if(settings.contains("x"))QucsSettings.x=settings.value("x").toInt();
-  if(settings.contains("y"))QucsSettings.y=settings.value("y").toInt();
-  if(settings.contains("dx"))QucsSettings.dx=settings.value("dx").toInt();
-  if(settings.contains("dy"))QucsSettings.dy=settings.value("dy").toInt();
-  if(settings.contains("font"))QucsSettings.font.fromString(settings.value("font").toString());
-  if(settings.contains("largeFontSize"))QucsSettings.largeFontSize=settings.value("largeFontSize").toDouble();
-  if(settings.contains("maxUndo"))QucsSettings.maxUndo=settings.value("maxUndo").toInt();
-  if(settings.contains("NodeWiring"))QucsSettings.NodeWiring=settings.value("NodeWiring").toInt();
-  if(settings.contains("BGColor"))QucsSettings.BGColor.setNamedColor(settings.value("BGColor").toString());
-  if(settings.contains("Editor"))QucsSettings.Editor=settings.value("Editor").toString();
-  if(settings.contains("FileTypes"))QucsSettings.FileTypes=settings.value("FileTypes").toStringList();
-  if(settings.contains("Language"))QucsSettings.Language=settings.value("Language").toString();
-  if(settings.contains("Comment"))QucsSettings.Comment.setNamedColor(settings.value("Comment").toString());
-  if(settings.contains("String"))QucsSettings.String.setNamedColor(settings.value("String").toString());
-  if(settings.contains("Integer"))QucsSettings.Integer.setNamedColor(settings.value("Integer").toString());
-  if(settings.contains("Real"))QucsSettings.Real.setNamedColor(settings.value("Real").toString());
-  if(settings.contains("Character"))QucsSettings.Character.setNamedColor(settings.value("Character").toString());
-  if(settings.contains("Type"))QucsSettings.Type.setNamedColor(settings.value("Type").toString());
-  if(settings.contains("Attribute"))QucsSettings.Attribute.setNamedColor(settings.value("Attribute").toString());
-  if(settings.contains("Directive"))QucsSettings.Directive.setNamedColor(settings.value("Directive").toString());
-  if(settings.contains("Task"))QucsSettings.Comment.setNamedColor(settings.value("Task").toString());
+    if(settings.contains("Editor"))QucsSettings.Editor = settings.value("Editor").toString();
+    //if(settings.contains("BinDir"))QucsSettings.BinDir = settings.value("BinDir").toString();
+    //if(settings.contains("LangDir"))QucsSettings.LangDir = settings.value("LangDir").toString();
+    //if(settings.contains("LibDir"))QucsSettings.LibDir = settings.value("LibDir").toString();
+    if(settings.contains("AdmsXmlBinDir"))QucsSettings.AdmsXmlBinDir = settings.value("AdmsXmlBinDir").toString();
+    if(settings.contains("AscoBinDir"))QucsSettings.AscoBinDir = settings.value("AscoBinDir").toString();
+    //if(settings.contains("OctaveDir"))QucsSettings.OctaveDir = settings.value("OctaveDir").toString();
+    //if(settings.contains("ExamplesDir"))QucsSettings.ExamplesDir = settings.value("ExamplesDir").toString();
+    //if(settings.contains("DocDir"))QucsSettings.DocDir = settings.value("DocDir").toString();
+    if(settings.contains("OctaveBinDir"))QucsSettings.OctaveBinDir.setPath(settings.value("OctaveBinDir").toString());
+    if(settings.contains("NgspiceExecutable")) QucsSettings.NgspiceExecutable = settings.value("NgspiceExecutable").toString();
+    else QucsSettings.NgspiceExecutable = "ngspice";
+    if(settings.contains("XyceExecutable")) QucsSettings.XyceExecutable = settings.value("XyceExecutable").toString();
+    else QucsSettings.XyceExecutable = "/usr/local/Xyce-Release-6.2.0-OPENSOURCE/bin/runxyce";
+    if(settings.contains("XyceParExecutable")) QucsSettings.XyceParExecutable = settings.value("XyceParExecutable").toString();
+    else QucsSettings.XyceParExecutable = "/usr/local/Xyce-Release-6.2.0-OPENMPI-OPENSOURCE/bin/xmpirun";
+    if(settings.contains("Nprocs")) QucsSettings.NProcs = settings.value("Nprocs").toInt();
+    else QucsSettings.NProcs = 4;
+    if(settings.contains("QucsHomeDir"))
+      if(settings.value("QucsHomeDir").toString() != "")
+         QucsSettings.QucsHomeDir.setPath(settings.value("QucsHomeDir").toString());
+    QucsSettings.QucsWorkDir = QucsSettings.QucsHomeDir;
 
     if (settings.contains("IgnoreVersion")) QucsSettings.IgnoreFutureVersion = settings.value("IgnoreVersion").toBool();
     // check also for old setting name with typo...
@@ -178,7 +177,7 @@ bool loadSettings()
   else
     QucsSettings.selectedWireColor = Qt::darkGray;
 
-  QucsSettings.selectedWireThickness = settings.value("selectedWireThickness", "6").toInt();
+  QucsSettings.selectedWireThickness = settings.value("selectedWireThickness", "2").toInt();
   QucsSettings.GraphAntiAliasing = settings.value("GraphAntiAliasing", "false").toBool();
   QucsSettings.TextAntiAliasing = settings.value("TextAntiAliasing", "false").toBool();
 
