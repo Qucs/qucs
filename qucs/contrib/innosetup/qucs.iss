@@ -25,10 +25,10 @@
 ; - commented out non admin install, doesn't seem to work
 ; - enable non admin install
 
-#define RELEASE "0.0.18"
+#define RELEASE "0.0.19"
 #define BASENAME "qucs"
 #define APPNAME "Qucs"
-#define APPVERNAME "Quite Universal Circuit Simulator 0.0.18 binary package for Win32"
+#define APPVERNAME "Quite Universal Circuit Simulator 0.0.19 binary package for Win32"
 #define URL "http://qucs.sourceforge.net"
 #define TREE "c:\qucs-win32-bin\"
 #define octaveversion "3.6.4"
@@ -62,7 +62,7 @@ UsePreviousAppDir=yes
 
 [Registry]
 Root: HKLM; Subkey: SYSTEM\CurrentControlSet\Control\Session Manager\Environment; ValueType: string; ValueName: QUCSDIR; ValueData: "{app}"; Flags: deletevalue createvalueifdoesntexist noerror; MinVersion: 0,4.00.1381
-Root: HKLM; Subkey: SYSTEM\CurrentControlSet\Control\Session Manager\Environment; ValueType: string; ValueName: HOME; ValueData: "{code:HomeDir}"; Flags: createvalueifdoesntexist noerror; MinVersion: 0,4.00.1381
+;Root: HKLM; Subkey: SYSTEM\CurrentControlSet\Control\Session Manager\Environment; ValueType: string; ValueName: HOME; ValueData: "{code:HomeDir}"; Flags: createvalueifdoesntexist noerror; MinVersion: 0,4.00.1381
 Root: HKLM; Subkey: SYSTEM\CurrentControlSet\Control\Session Manager\Environment; ValueType: string; ValueName: ADMSXMLBINDIR; ValueData: "{app}\bin"; Flags: deletevalue createvalueifdoesntexist noerror; MinVersion: 0,4.00.1381
 Root: HKLM; Subkey: SYSTEM\CurrentControlSet\Control\Session Manager\Environment; ValueType: string; ValueName: ASCOBINDIR; ValueData: "{app}\bin"; Flags: createvalueifdoesntexist noerror ; MinVersion: 0,4.00.1381
 

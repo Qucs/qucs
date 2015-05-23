@@ -868,6 +868,6 @@ endif
 
 pkginclude_HEADERS = $(XML_FILES) $(MAKE_FILES) $(VA_INCLUDES)
 
-CLEANFILES = *~ *.orig *.rej $(GENERATED_FILES)
+CLEANFILES = *~ *.orig *.rej
 
-MAINTAINERCLEANFILES = Makefile.in
+MAINTAINERCLEANFILES = Makefile.in $(GENERATED_FILES)

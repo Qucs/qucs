@@ -40,7 +40,7 @@ else
   # Set Release git tag
   # TODO get it from git tags or VERSION file
   RELEASE=$(date +"%y%m%d")
-  RELEASE="0.0.18-"${RELEASE:0:6}
+  RELEASE="0.0.19-"${RELEASE:0:6}
 
   # Get Git short hash
   GIT=$(git log --pretty=format:'%h' -n 1)
@@ -70,9 +70,13 @@ echo =================================
 echo Exporting git tree recursively...
 echo =================================
 
-# Recursive to clone also ADMS
-# flatten subdiretories
+# Clone only Qucs code (ADMS version handled below)
 git clone --recursive ./ release/
+
+#checkout ADMS version
+cd release/qucs-core/deps/adms/ && git checkout -b release-2.3.4 && cd -
+
+# flatten subdiretories
 mv release/examples release/qucs/examples/examples
 mv release/qucs-core release/qucs/
 
@@ -175,6 +179,33 @@ aclocal
 cd ..
 
 
+#echo ========================
+#echo Checkout ADMS submodule
+#echo ========================
+#cd $REPO/release/qucs-$RELEASE
+#cd qucs-core/deps/adms
+#./bootstrap.sh  # skip bootstrap done by qucs-core
+#./configure --enable-maintainer-mode
+#make clean
+#make dist
+#rm -r adms-*.tar.gz
+
+#echo =================================
+#echo Download and extract ADMS tarball
+#echo =================================
+#cd $REPO/release/qucs-$RELEASE
+#if [ -f ~/Downloads/adms-2.3.4.tar.gz ]
+#then
+#	cp ~/Downloads/adms-2.3.4.tar.gz .
+#else
+#  wget http://sourceforge.net/projects/mot-adms/files/adms-source/2.3/adms-2.3.4.tar.gz -P ~/Downloads/
+#fi
+#tar -zxvf adms-2.3.4.tar.gz
+#mv adms-2.3.4 adms
+#mv adms/* qucs-core/deps/adms/
+#rm -r adms/
+
+
 echo ==================================
 echo Set configure.ac into RELEASE mode
 echo ==================================
@@ -187,7 +218,7 @@ echo Bootstrap Qucs, Qucs-edit, Qucs-filter...
 echo =========================================
 cd $REPO/release/qucs-$RELEASE
 ./autogen.sh
-make distclean
+#make clean #no need
 rm -rf autom4te.cache
 #libtoolize
 case `uname` in
@@ -202,23 +233,33 @@ echo Bootstrap Qucs-core
 echo ===================
 cd qucs-core
 ./bootstrap.sh
+
+
+# TODO find a more elegant way to handle ADMS as a subproject, AC_CONFIG_SUBDIRS maybe?
+
+# fix libtool complaining
+cd deps/adms/
+#libtool: Version mismatch error.  This is libtool 2.4.5, but the
+#libtool: definition of this LT_INIT comes from libtool 2.4.2.
+#libtool: You should recreate aclocal.m4 with macros from libtool 2.4.5
+#libtool: and run autoconf again.
+glibtoolize && autoconf ## complaining about libtool versions (!)
+cd -
+
 ./configure --enable-maintainer-mode
-make
-./configure
-make distclean # Verilog-A sources are kept ??
+make       # build maintainer-mode Verilog-A C++ sources
+make clean # remove object code; this also removes the maintainer-mode files from the ADMS submodule (BUG!)
+#./configure
 rm -rf autom4te.cache
-cd ..
 
-
-echo ========================
-echo Bootstrap ADMS submodule
-echo ========================
-cd qucs-core/deps/adms
+# bootstrap ADMS once again
+cd deps/adms/
 ./bootstrap.sh
+##glibtoolize && autoconf ## complaining about libtool versions (!)
 ./configure --enable-maintainer-mode
-make distcheck
+#make
+make dist
 rm -r adms-*.tar.gz
-cd ../../..
 
 
 echo ==========================
@@ -226,7 +267,7 @@ echo Creating source archive...
 echo ==========================
 cd $REPO/release/
 tar -zcvhf qucs-$RELEASE.tar.gz qucs-$RELEASE
-rm -rf qucs-$RELEASE
+#rm -rf qucs-$RELEASE
 tar -zxvf qucs-$RELEASE.tar.gz #make the symbolic links actual files
 
 
