@@ -850,8 +850,17 @@ int main(int argc, char *argv[])
   if(!QucsSettings.Task.isValid())
     QucsSettings.Task = Qt::darkRed;
 
-
   app.setFont(QucsSettings.font);
+
+  qDebug() << QucsSettings.QucsWorkDir.absolutePath() + "/qucs.css";
+
+  QFile *sfile = new QFile(QucsSettings.QucsHomeDir.absolutePath() + "/qucs.css");
+  sfile->open(QFile::ReadOnly);
+  if (sfile->exists()) {
+    QString styleSheet = QLatin1String(sfile->readAll());
+    sfile->close();
+    app.setStyleSheet(styleSheet);
+  }
 
   // set codecs
   QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
