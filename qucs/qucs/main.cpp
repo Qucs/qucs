@@ -852,14 +852,15 @@ int main(int argc, char *argv[])
 
   app.setFont(QucsSettings.font);
 
-  qDebug() << QucsSettings.QucsWorkDir.absolutePath() + "/qucs.css";
-
+  qDebug() << "Looking for stylesheet: " << QucsSettings.QucsWorkDir.absolutePath() + "/qucs.css";
   QFile *sfile = new QFile(QucsSettings.QucsHomeDir.absolutePath() + "/qucs.css");
-  sfile->open(QFile::ReadOnly);
   if (sfile->exists()) {
+    sfile->open(QFile::ReadOnly);
     QString styleSheet = QLatin1String(sfile->readAll());
     sfile->close();
     app.setStyleSheet(styleSheet);
+  } else {
+    qDebug() << "No stylesheet found";
   }
 
   // set codecs
