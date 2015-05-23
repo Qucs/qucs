@@ -31,7 +31,7 @@ class SimMessage;
 class MouseActions;
 class SearchDialog;
 class OctaveWindow;
-class MessageDock;
+class MessagesWindow;
 
 class QLabel;
 class QAction;
@@ -53,6 +53,8 @@ class QListView;
 class QFileSystemModel;
 class QModelIndex;
 class QPushButton;
+
+class ProjectView;
 
 typedef bool (Schematic::*pToggleFunc) ();
 typedef void (MouseActions::*pMouseFunc) (Schematic*, QMouseEvent*);
@@ -131,13 +133,14 @@ public slots:
   void slotCMenuDelete();
   void slotCMenuDelGroup();
   void slotCMenuInsert();
+  void slotUpdateTreeview();
 
 private slots:
   void slotMenuProjOpen();
   void slotMenuProjClose();
   void slotMenuProjDel();
   void slotListProjOpen(const QModelIndex &);
-  void slotSelectSubcircuit(QTreeWidgetItem*);
+  void slotSelectSubcircuit(const QModelIndex&);
   void slotSelectLibComponent(QTreeWidgetItem*);
   void slotOpenContent(QTreeWidgetItem*);
   void slotSetCompView(int);
@@ -151,6 +154,12 @@ private slots:
   void slotChangePage(QString&, QString&);
   void slotHideEdit();
   void slotSimulateWithSpice();
+  void slotSetAllShortcut();
+  void slotUpdateUndo(bool);
+  void slotUpdateRedo(bool);
+  void slotToggleMessagesDockVisibility(bool);
+  void slotOpenContent(const QModelIndex&);
+  void slotFileChanged(bool);
 
 signals:
   void signalKillEmAll();
@@ -177,16 +186,18 @@ public:
 
   QAction *activeAction;    // pointer to the action selected by the user
 
+  MessagesWindow  *messages;
+
 private:
 // ********* Widgets on the main area **********************************
   QDockWidget     *dock;
   QTabWidget      *TabView;
   QDockWidget     *octDock;
   OctaveWindow    *octave;
-  MessageDock     *messageDock;
+  QDockWidget    *messagesDock;
 
   QListView       *Projects;
-  QTreeWidget     *Content;
+  ProjectView     *Content;
   QTreeWidgetItem *ConSchematics, *ConSources, *ConDisplays, *ConDatasets,
                   *ConOthers, *ConVerilog, *ConVerilogA, *ConOctave;
 
@@ -250,6 +261,7 @@ private slots:
   void slotToggleOctave(bool);
   void slotToggleDock(bool);
   void slotHelpAbout();     // shows an about dialog
+  void slotViewMessagesDock(bool toggle);
 
 private:
   void initActions();    // initializes all QActions of the application
@@ -258,7 +270,7 @@ private:
   void initStatusBar();  // setup the statusbar
 
   QAction *helpAboutApp, *helpAboutQt, *viewToolBar, *viewStatusBar,
-          *viewBrowseDock, *viewOctaveDock;
+          *viewBrowseDock, *viewOctaveDock, *viewMessagesDock;
 
   // menus contain the items of their menubar
   enum { MaxRecentFiles = 8 };

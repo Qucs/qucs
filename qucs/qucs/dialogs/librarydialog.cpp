@@ -195,7 +195,7 @@ LibraryDialog::LibraryDialog(QWidget *parent)
 
   QGroupBox *msgBox = new QGroupBox(tr("Message:"));
   msgLayout->addWidget(msgBox);
-  ErrText = new QPlainTextEdit();
+  ErrText = new QTextEdit();
   ErrText->setWordWrapMode(QTextOption::NoWrap);
   ErrText->setReadOnly(true);
   QVBoxLayout *vbox1 = new QVBoxLayout();
@@ -418,7 +418,7 @@ void LibraryDialog::slotSave()
   ErrText->insertPlainText(tr("Saving library..."));
 
   if(!LibFile.open(QIODevice::WriteOnly)) {
-    ErrText->appendPlainText(tr("Error: Cannot create library!"));
+    ErrText->append(tr("Error: Cannot create library!"));
     return;
   }
   QTextStream Stream;
@@ -447,7 +447,7 @@ void LibraryDialog::slotSave()
     ErrText->insertPlainText(tr("Loading subcircuit \"%1\".\n").arg(SelectedNames[i]));
     if(!Doc->loadDocument()) {  // load document if possible
         delete Doc;
-        ErrText->appendPlainText(tr("Error: Cannot load subcircuit \"%1\".").
+        ErrText->append(tr("Error: Cannot load subcircuit \"%1\".").
 			arg(SelectedNames[i]));
         break;
     }
@@ -584,11 +584,11 @@ void LibraryDialog::slotSave()
   LibFile.close();
   if(!Success) {
     LibFile.remove();
-    ErrText->appendPlainText(tr("Error creating library."));
+    ErrText->append(tr("Error creating library."));
     return;
   }
 
-  ErrText->appendPlainText(tr("Successfully created library."));
+  ErrText->append(tr("Successfully created library."));
 }
 
 // ---------------------------------------------------------------

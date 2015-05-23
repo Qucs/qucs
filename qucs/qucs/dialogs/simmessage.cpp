@@ -90,7 +90,7 @@ SimMessage::SimMessage(QWidget *w, QWidget *parent)
   QVBoxLayout *vbox1 = new QVBoxLayout();
   Group1->setLayout(vbox1);
 
-  ProgText = new QPlainTextEdit();
+  ProgText = new QTextEdit();
   vbox1->addWidget(ProgText);
   ProgText->setReadOnly(true);
   //ProgText->setWordWrapMode(QTextOption::NoWrap);
@@ -114,7 +114,7 @@ SimMessage::SimMessage(QWidget *w, QWidget *parent)
   all->addWidget(Group2);
   QVBoxLayout *vbox2 = new QVBoxLayout();
 
-  ErrText = new QPlainTextEdit();
+  ErrText = new QTextEdit();
   vbox2->addWidget(ErrText);
   ErrText->setReadOnly(true);
   ErrText->setWordWrapMode(QTextOption::NoWrap);
@@ -157,22 +157,22 @@ bool SimMessage::startProcess()
   QString txt = tr("Starting new simulation on %1 at %2").
     arg(QDate::currentDate().toString("ddd dd. MMM yyyy")).
     arg(QTime::currentTime().toString("hh:mm:ss:zzz"));
-  ProgText->appendPlainText(txt + "\n");
+  ProgText->append(txt + "\n");
 
   SimProcess.blockSignals(false);
  /* On Qt4 it shows as running even before we .start it. FIXME*/
   if(SimProcess.state()==QProcess::Running ||SimProcess.state()==QProcess::Starting) {
     qDebug() << "running!";
-    ErrText->appendPlainText(tr("ERROR: Simulator is still running!"));
+    ErrText->append(tr("ERROR: Simulator is still running!"));
     FinishSimulation(-1);
     return false;
   }
 
   Collect.clear();  // clear list for NodeSets, SPICE components etc.
-  ProgText->appendPlainText(tr("creating netlist... "));
+  ProgText->append(tr("creating netlist... "));
   NetlistFile.setFileName(QucsSettings.QucsHomeDir.filePath("netlist.txt"));
    if(!NetlistFile.open(QIODevice::WriteOnly)) {
-    ErrText->appendPlainText(tr("ERROR: Cannot write netlist file!"));
+    ErrText->append(tr("ERROR: Cannot write netlist file!"));
     FinishSimulation(-1);
     return false;
   }
@@ -184,7 +184,7 @@ bool SimMessage::startProcess()
        ((Schematic*)DocWidget)->prepareNetlist(Stream, Collect, ErrText);
     if(SimPorts < -5) {
       NetlistFile.close();
-      ErrText->appendPlainText(tr("ERROR: Cannot simulate a text file!"));
+      ErrText->append(tr("ERROR: Cannot simulate a text file!"));
       FinishSimulation(-1);
       return false;
     }
@@ -247,7 +247,7 @@ void SimMessage::nextSPICE()
   else
     SpiceFile.setFileName(FileName);
   if(!SpiceFile.open(QIODevice::ReadOnly)) {
-    ErrText->appendPlainText(tr("ERROR: Cannot open SPICE file \"%1\".").arg(FileName));
+    ErrText->append(tr("ERROR: Cannot open SPICE file \"%1\".").arg(FileName));
     FinishSimulation(-1);
     return;
   }
@@ -267,7 +267,7 @@ void SimMessage::nextSPICE()
   SimProcess.start(prog, com);
 
   if(!SimProcess.Running) {
-    ErrText->appendPlainText(tr("SIM ERROR: Cannot start QucsConv!"));
+    ErrText->append(tr("SIM ERROR: Cannot start QucsConv!"));
     FinishSimulation(-1);
     return;
   }
@@ -412,14 +412,14 @@ void SimMessage::startSimulator()
       QDir vhdlDir(dir);
       if(!vhdlDir.exists("vhdl"))
 	if(!vhdlDir.mkdir("vhdl")) {
-	  ErrText->appendPlainText(tr("ERROR: Cannot create VHDL directory \"%1\"!")
+	  ErrText->append(tr("ERROR: Cannot create VHDL directory \"%1\"!")
 			  .arg(vhdlDir.path()+"/vhdl"));
 	  return;
 	}
       vhdlDir.setPath(vhdlDir.path()+"/vhdl");
       if(!vhdlDir.exists(lib))
 	if(!vhdlDir.mkdir(lib)) {
-	  ErrText->appendPlainText(tr("ERROR: Cannot create VHDL directory \"%1\"!")
+	  ErrText->append(tr("ERROR: Cannot create VHDL directory \"%1\"!")
 			  .arg(vhdlDir.path()+"/"+lib));
 	  return;
 	}
@@ -427,7 +427,7 @@ void SimMessage::startSimulator()
       QFile destFile;
       destFile.setFileName(vhdlDir.filePath(entity+".vhdl"));
       if(!destFile.open(QIODevice::WriteOnly)) {
-	ErrText->appendPlainText(tr("ERROR: Cannot create \"%1\"!")
+	ErrText->append(tr("ERROR: Cannot create \"%1\"!")
 			.arg(destFile.fileName()));
 	return;
       }
@@ -649,13 +649,13 @@ void SimMessage::slotDisplayMsg()
     if(i >= 0) {
       wasLF = true;
       qDebug() << "Tab idx = " << i; // << " (" << ProgressText << ")";
-      ProgText->appendPlainText(ProgressText.left(i).trimmed());
+      ProgText->append(ProgressText.left(i).trimmed());
       ProgressText.remove(0, i+1);
       return;
     }
   }
 
-  ProgText->appendPlainText(ProgressText.trimmed());
+  ProgText->append(ProgressText.trimmed());
   ProgressText = "";
   wasLF = false;
 }
@@ -676,7 +676,7 @@ void SimMessage::slotUpdateProgressBar()
  */
 void SimMessage::slotDisplayErr()
 {
-  ErrText->appendPlainText(QString(SimProcess.readAllStandardError()));
+  ErrText->append(QString(SimProcess.readAllStandardError()));
 }
 
 /*!
@@ -748,8 +748,8 @@ void SimMessage::slotSimEnded(int exitCode, QProcess::ExitStatus exitStatus )
     stat = exitCode;
   } else {
     stat = -1;
-    ErrText->appendPlainText(tr("ERROR: Simulator crashed!"));
-    ErrText->appendPlainText(tr("Please report this error to qucs-bugs@lists.sourceforge.net"));
+    ErrText->append(tr("ERROR: Simulator crashed!"));
+    ErrText->append(tr("Please report this error to qucs-bugs@lists.sourceforge.net"));
   }
   FinishSimulation(stat); // 0 = normal  | -1 = crash
 }
@@ -774,13 +774,13 @@ void SimMessage::FinishSimulation(int Status)
     QString txt = tr("Simulation ended on %1 at %2").
       arg(d.toString("ddd dd. MMM yyyy")).
       arg(t.toString("hh:mm:ss:zzz"));
-    ProgText->appendPlainText("\n" + txt + "\n" + tr("Ready."));
+    ProgText->append("\n" + txt + "\n" + tr("Ready."));
   }
   else {
     QString txt = tr("Errors occurred during simulation on %1 at %2").
       arg(d.toString("ddd dd. MMM yyyy")).
       arg(t.toString("hh:mm:ss:zzz"));
-    ProgText->appendPlainText("\n" + txt + "\n" + tr("Aborted."));
+    ProgText->append("\n" + txt + "\n" + tr("Aborted."));
   }
 
   QFile file(QucsSettings.QucsHomeDir.filePath("log.txt"));  // save simulator messages

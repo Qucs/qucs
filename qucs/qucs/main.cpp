@@ -454,7 +454,7 @@ int doPrint(QString schematic, QString printFile,
     Printer->setFitToPage(true);
     Printer->noGuiPrint(sch, printFile, page, dpi, color, orientation);
   } else {
-    ImageWriter *Printer = new ImageWriter();
+    ImageWriter *Printer = new ImageWriter("");
     Printer->noGuiPrint(sch, printFile, color);
   }
   return 0;

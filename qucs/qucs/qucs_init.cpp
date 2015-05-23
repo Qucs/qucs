@@ -36,6 +36,7 @@
 #include <QMessageBox>
 #include <QApplication>
 #include <QDebug>
+#include <QPushButton>
 
 // initial default value into Shortcut object
 void 

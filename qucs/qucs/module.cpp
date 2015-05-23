@@ -27,6 +27,33 @@
 #include "diagrams/diagrams.h"
 #include "module.h"
 
+#include "components/LTL_SPICE.h"
+#include "components/volt_ac_SPICE.h"
+
+//class Vac_SPICE;
+//class LTL_SPICE;
+/*REGISTER_SPICE_1 (Vac_SPICE);
+REGISTER_SPICE_1 (Src_eqndef);
+REGISTER_SPICE_1 (iSffm);
+REGISTER_SPICE_1 (vAmpMod);
+REGISTER_SPICE_1 (iAmpMod);
+REGISTER_SPICE_1 (vSffm);
+REGISTER_SPICE_1 (vPWL);
+REGISTER_SPICE_1 (iPWL);
+REGISTER_SPICE_1 (eNL);
+REGISTER_SPICE_1 (gNL);
+REGISTER_SPICE_1 (vTRNOISE);
+REGISTER_SPICE_1 (iTRNOISE);
+REGISTER_SPICE_1 (vTRRANDOM);
+REGISTER_SPICE_1 (C_SPICE);
+REGISTER_SPICE_1 (L_SPICE);
+REGISTER_SPICE_1 (R_SPICE);
+REGISTER_SPICE_1 (K_SPICE);
+REGISTER_SPICE_1 (MESFET_SPICE);*/
+
+class UDRCTL_SPICE;
+//class LTRA_SPICE;
+
 // Global category and component lists.
 QHash<QString, Module *> Module::Modules;
 QList<Category *> Category::Categories;
