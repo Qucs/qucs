@@ -2075,7 +2075,7 @@ void MouseActions::MReleaseSelect2(Schematic *Doc, QMouseEvent *Event)
   if(Event->button() != Qt::LeftButton) return;
 
   bool Ctrl;
-  if(Event->state() & Qt::ControlModifier) Ctrl = true;
+  if (Event->state() & Qt::ControlModifier) Ctrl = true;
   else Ctrl = false;
 
   MAx2 = DOC_X_POS(Event->pos().x());
@@ -2107,6 +2107,7 @@ void MouseActions::MReleaseActivate(Schematic *Doc, QMouseEvent *Event)
   QucsMain->MousePressAction = &MouseActions::MPressActivate;
   QucsMain->MouseReleaseAction = 0;
   QucsMain->MouseDoubleClickAction = 0;
+
   Doc->highlightWireLabels ();
   Doc->viewport()->update();
   //drawn = false;
@@ -2122,12 +2123,9 @@ void MouseActions::MReleaseMoving(Schematic *Doc, QMouseEvent*)
   // Allow all mouse buttons, because for others than the left one,
   // a menu has already created.
   endElementMoving(Doc, &movingElements);
-  Doc->releaseKeyboard();  // allow keyboard inputs again
 
-  QucsMain->MouseMoveAction = &MouseActions::MMoveFreely;
-  QucsMain->MousePressAction = &MouseActions::MPressSelect;
-  QucsMain->MouseReleaseAction = &MouseActions::MReleaseSelect;
-  QucsMain->MouseDoubleClickAction = &MouseActions::MDoubleClickSelect;
+  Doc->releaseKeyboard();  // allow keyboard inputs again
+  defaultState();
 }
 
 // -----------------------------------------------------------
@@ -2641,6 +2639,8 @@ void MouseActions::MDoubleClickSelect(Schematic *Doc, QMouseEvent *Event)
   //Doc->releaseKeyboard();  // allow keyboard inputs again
   QucsMain->editText->setHidden(true);
   editElement(Doc, Event);
+
+  defaultState();
 }
 
 
@@ -2719,6 +2719,7 @@ void MouseActions::keyReleaseEvent(Schematic *doc, QKeyEvent *event) {
     {
       MReleaseMoving(doc, 0);
     }
+    movingElements.clear();
     defaultState(); // Due to "MPressSelect()" capture
     doc->releaseKeyboard();
     break;
