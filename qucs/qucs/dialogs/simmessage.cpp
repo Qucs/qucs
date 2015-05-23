@@ -697,8 +697,13 @@ void SimMessage::slotStateChanged(QProcess::ProcessState newState)
         case QProcess::UnknownError: // getting here instead
           switch(oldState){
             case QProcess::Starting: // failed to start.
-              ErrText->insertPlainText(tr("ERROR: Cannot start ") + Program +
-                  " (" + SimProcess.errorString() + ")\n");
+              if (Program == "") {
+                ErrText->insertPlainText(tr("ERROR: Cannot start the program.\n"
+                    "No path has been specified.\n"
+                    "Please check the settings.\n"));
+              } else {
+                ErrText->insertPlainText(tr("ERROR: Cannot start ") + Program + " (" + SimProcess.errorString() + ")\n");
+              }
               FinishSimulation(-1);
               break;
             case QProcess::Running:
