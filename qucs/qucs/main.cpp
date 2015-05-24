@@ -112,6 +112,11 @@ bool loadSettings()
   if (settings.contains("IngnoreVersion")) QucsSettings.IgnoreFutureVersion = settings.value("IngnoreVersion").toBool();
   else QucsSettings.IgnoreFutureVersion = false;
 
+  if (settings.contains("GraphAntiAliasing")) QucsSettings.GraphAntiAliasing = settings.value("GraphAntiAliasing").toBool();
+  else QucsSettings.GraphAntiAliasing = false;
+
+  if (settings.contains("TextAntiAliasing")) QucsSettings.TextAntiAliasing = settings.value("TextAntiAliasing").toBool();
+  else QucsSettings.TextAntiAliasing = false;
 
   QucsSettings.RecentDocs = settings.value("RecentDocs").toString().split("*",QString::SkipEmptyParts);
   QucsSettings.numRecentDocs = QucsSettings.RecentDocs.count();
@@ -162,7 +167,7 @@ bool loadSettings()
   else
     QucsSettings.selectedWireColor = Qt::darkGray;
 
-  QucsSettings.selectedWireThickness = settings.value("selectedWireThickness", "6").toInt();
+  QucsSettings.selectedWireThickness = settings.value("selectedWireThickness", "2").toInt();
   QucsSettings.GraphAntiAliasing = settings.value("GraphAntiAliasing", "false").toBool();
   QucsSettings.TextAntiAliasing = settings.value("TextAntiAliasing", "false").toBool();
 
@@ -231,7 +236,9 @@ bool saveApplSettings()
   //settings.setValue("DocDir", QucsSettings.DocDir);
   settings.setValue("OctaveBinDir", QucsSettings.OctaveBinDir.canonicalPath());
   settings.setValue("QucsHomeDir", QucsSettings.QucsHomeDir.canonicalPath());
-  settings.setValue("IngnoreVersion",QucsSettings.IgnoreFutureVersion);
+  settings.setValue("IgnoreVersion",QucsSettings.IgnoreFutureVersion);
+    settings.setValue("GraphAntiAliasing", QucsSettings.GraphAntiAliasing);
+    settings.setValue("TextAntiAliasing", QucsSettings.TextAntiAliasing);
 
   // Copy the list of directory paths in which Qucs should
   // search for subcircuit schematics from qucsPathList

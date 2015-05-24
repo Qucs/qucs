@@ -40,7 +40,7 @@ ComponentDialog::ComponentDialog(Component *c, Schematic *d)
 			: QDialog(d)
 {
   //resize(450, 250);
-  resize(800, 600);
+  resize(850, 750);
   setWindowTitle(tr("Edit Component Properties"));
   Comp  = c;
   Doc   = d;
@@ -297,7 +297,7 @@ ComponentDialog::ComponentDialog(Component *c, Schematic *d)
   vboxPropsL->setLayout(vL);
 
   /// \todo column min width
-  prop = new QTableWidget(0,4); //initialize
+  prop = new QTableWidget(0, 4); //initialize
   vL->addWidget(prop);
   prop->verticalHeader()->setVisible(false);
   prop->setSelectionBehavior(QAbstractItemView::SelectRows);
