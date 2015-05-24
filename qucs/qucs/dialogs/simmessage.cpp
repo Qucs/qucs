@@ -169,7 +169,7 @@ bool SimMessage::startProcess()
   }
 
   Collect.clear();  // clear list for NodeSets, SPICE components etc.
-  ProgText->append(tr("creating netlist... "));
+  ProgText->append(tr("Creating netlist..."));
   NetlistFile.setFileName(QucsSettings.QucsHomeDir.filePath("netlist.txt"));
    if(!NetlistFile.open(QIODevice::WriteOnly)) {
     ErrText->append(tr("ERROR: Cannot write netlist file!"));
@@ -372,7 +372,7 @@ void SimMessage::startSimulator()
     // Take VHDL file in memory as it could contain unsaved changes.
     Stream << Doc->toPlainText();
     NetlistFile.close();
-    ProgText->insertPlainText(tr("done.\n"));  // of "creating netlist...
+    ProgText->insertPlainText(tr("done.\n"));  // of "Creating netlist...
 
     // Simulation.
     if (Doc->simulation) {
@@ -473,7 +473,7 @@ void SimMessage::startSimulator()
 	     << "endmodule // TestBench\n";
     }
     NetlistFile.close();
-    ProgText->insertPlainText(tr("done.\n"));  // of "creating netlist...
+    ProgText->insertPlainText(tr("done.\n"));  // of "Creating netlist...
 
     if(SimPorts < 0) {
 
@@ -724,7 +724,7 @@ void SimMessage::slotStateChanged(QProcess::ProcessState newState)
       }
     break;
     case QProcess::Starting:
-          ProgText->insertPlainText(tr("Starting ") + Program + "\n");
+          ProgText->insertPlainText(tr("Starting ") + Program + "...\n");
     break;
     case QProcess::Running:
     break;
