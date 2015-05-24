@@ -156,9 +156,7 @@ bool loadSettings()
     foreach(QString actionkey, actionlist) {
       submap->insert(actionkey, settings.value(actionkey).toString());
     }
-    settings.endArray();
-
-    QucsSettings.numRecentDocs = 0;
+    settings.endGroup();
 
     menu_it++;
   }
@@ -790,6 +788,13 @@ int main(int argc, char *argv[])
   QucsSettings.QucsHomeDir.setPath(QDir::homeDirPath()+QDir::convertSeparators ("/.qucs"));
   QucsSettings.QucsWorkDir.setPath(QucsSettings.QucsHomeDir.canonicalPath());
 
+  var = getenv("QUCSATOR");
+  if(var != NULL) {
+	  QucsSettings.Qucsator = QString(var);
+  }
+  else {
+	  QucsSettings.Qucsator = QucsSettings.BinDir + "qucsator" + executableSuffix;
+  }
 
   var = getenv("ADMSXMLBINDIR");
   if(var != NULL) {
