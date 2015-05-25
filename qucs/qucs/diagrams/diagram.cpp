@@ -726,13 +726,14 @@ void Diagram::loadGraphData(const QString& defaultDataSet)
 
   int No=0;
   for(auto pg : GraphDeques) {
-    qDebug() << "load GraphData load" << defaultDataSet << pg->var();
     if (!pg->has_data()){
-      SimOutputDat* d = new SimOutputDat(defaultDataSet, pg->var());
-      pg->attach(d);
-      No = 1;
-    }else{
-      qDebug() << "has_data" << defaultDataSet << pg->var();
+      SimOutputData* d = SimOutputDat::createFromFile(defaultDataSet, pg->var());
+      if(d){
+	pg->attach(d);
+      }else{
+	qDebug() << "createFromFile unsuccessful";
+      }
+      No++;
     }
     getAxisLimits(pg);
   }

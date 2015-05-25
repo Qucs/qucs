@@ -215,9 +215,11 @@ GraphDeque* SweepDialog::setBiasPoints()
     }
 
     qDebug() << "memory leak. what is happening here?!";
-    SimOutputDat* d = new SimOutputDat(DataSet, pn->Name + ".V");
+    SimOutputDir* f = SimOutputDat(DataSet)
+    assert(f); // for now.
+    SimOutputDatVar* d = f[pn->Name + ".V"];
 
-    if(d->refresh()) {
+    if(d) {
       pn->Name = misc::num2str(*(d->cPointsY())) + "V";
       NodeList.append(pn);             // remember node ...
       ValueList.append(pg->cPointsY());  // ... and all of its values
@@ -249,8 +251,8 @@ GraphDeque* SweepDialog::setBiasPoints()
         pn = pc->Ports.at(1)->Connection;
 
       pn->x1 = 0x10;   // mark current
-      SimOutputDat* d = new SimOutputDat(DataSet, pn->Name + ".I"); // memory leak. what is happening here?!
-      if(d->refresh()) {
+      SimOutputDatVar* d = f[pn->Name + ".I"];
+      if(d) {
         pn->Name = misc::num2str(*(d->cPointsY())) + "A";
         NodeList.append(pn);             // remember node ...
         ValueList.append(pg->cPointsY());  // ... and all of its values
