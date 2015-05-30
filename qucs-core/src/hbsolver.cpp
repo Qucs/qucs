@@ -788,10 +788,10 @@ void hbsolver::createMatrixLinearY (void) {
     // ---+---
     // ZV | ..
     r = 0;
-    for (auto *e : excitations) {
+    for (auto ite = excitations.begin(); ite != excitations.end(); ++ite, r++) {
       // lower part entries
       for (f = 0; f < lnfreqs; f++) {
-	ZVL_(r, c) = excitationZ (V, e, f);
+	ZVL_(r, c) = excitationZ (V, *ite, f);
       }
     }
   }
