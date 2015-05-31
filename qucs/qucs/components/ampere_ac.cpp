@@ -20,7 +20,7 @@
 
 Ampere_ac::Ampere_ac()
 {
-  Description = QObject::tr("ideal ac current source");
+  Description = QObject::tr("Ideal ac current source");
 
   Arcs.append(new Arc(-12,-12, 24, 24,  0, 16*360,QPen(Qt::darkBlue,2)));
   Lines.append(new Line(-30,  0,-12,  0,QPen(Qt::darkBlue,2)));
@@ -43,13 +43,13 @@ Ampere_ac::Ampere_ac()
   Name  = "I";
 
   Props.append(new Property("I", "1 mA", true,
-		QObject::tr("peak current in Ampere")));
+		QObject::tr("Peak current in Ampere")));
   Props.append(new Property("f", "1 GHz", false,
-		QObject::tr("frequency in Hertz")));
+		QObject::tr("Frequency in Hertz")));
   Props.append(new Property("Phase", "0", false,
-		QObject::tr("initial phase in degrees")));
+		QObject::tr("Initial phase in degrees")));
   Props.append(new Property("Theta", "0", false,
-		QObject::tr("damping factor (transient simulation only)")));
+		QObject::tr("Damping factor (transient simulation only)")));
 
   rotate();  // fix historical flaw
 }
@@ -65,7 +65,7 @@ Component* Ampere_ac::newOne()
 
 Element* Ampere_ac::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
-  Name = QObject::tr("ac Current Source");
+  Name = QObject::tr("AC Current Source");
   BitmapFile = (char *) "ac_current";
 
   if(getNewOne)  return new Ampere_ac();

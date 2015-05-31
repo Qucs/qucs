@@ -100,7 +100,7 @@ void LoadDialog::initDialog()
    ButtCancel = new QPushButton(tr("Cancel"));
    gridButts->addWidget(ButtCancel, 1, 0);
    connect(ButtCancel, SIGNAL(clicked()), SLOT(reject()));
-   ButtOk = new QPushButton(tr("Ok"));
+   ButtOk = new QPushButton(tr("OK"));
    gridButts->addWidget(ButtOk, 1, 1);
    connect(ButtOk, SIGNAL(clicked()), SLOT(loadSelected()));
    ButtOk->setDefault(true);

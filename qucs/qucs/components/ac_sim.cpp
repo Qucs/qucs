@@ -20,7 +20,7 @@
 
 AC_Sim::AC_Sim()
 {
-  Description = QObject::tr("ac simulation");
+  Description = QObject::tr("AC simulation");
 
   QString s = Description;
   int a = s.indexOf(" ");
@@ -45,15 +45,15 @@ AC_Sim::AC_Sim()
 
   // The index of the first 4 properties must not changed. Used in recreate().
   Props.append(new Property("Type", "lin", true,
-			QObject::tr("sweep type")+" [lin, log, list, const]"));
+			QObject::tr("Sweep type")+" [lin, log, list, const]"));
   Props.append(new Property("Start", "1 GHz", true,
-			QObject::tr("start frequency in Hertz")));
+			QObject::tr("Start frequency in Hertz")));
   Props.append(new Property("Stop", "10 GHz", true,
-			QObject::tr("stop frequency in Hertz")));
+			QObject::tr("Stop frequency in Hertz")));
   Props.append(new Property("Points", "19", true,
-			QObject::tr("number of simulation steps")));
+			QObject::tr("Number of simulation steps")));
   Props.append(new Property("Noise", "no", false,
-			QObject::tr("calculate noise voltages")+
+			QObject::tr("Calculate noise voltages")+
 			" [yes, no]"));
 }
 
@@ -68,7 +68,7 @@ Component* AC_Sim::newOne()
 
 Element* AC_Sim::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
-  Name = QObject::tr("ac simulation");
+  Name = QObject::tr("AC simulation");
   BitmapFile = (char *) "ac";
 
   if(getNewOne)  return new AC_Sim();

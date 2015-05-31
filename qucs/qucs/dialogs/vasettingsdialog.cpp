@@ -147,7 +147,7 @@ VASettingsDialog::VASettingsDialog (TextDoc * Doc_)
 
   QHBoxLayout * Buttons = new QHBoxLayout ();
   vbox->addLayout(Buttons);
-  QPushButton * ButtonOk = new QPushButton (tr("Ok"));
+  QPushButton * ButtonOk = new QPushButton (tr("OK"));
   Buttons->addWidget(ButtonOk);
   QPushButton * ButtonCancel = new QPushButton (tr("Cancel"));
   Buttons->addWidget(ButtonCancel);

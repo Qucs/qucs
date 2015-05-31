@@ -939,7 +939,7 @@ void QucsApp::initToolBar()
 void QucsApp::initStatusBar()
 {
   // To reserve enough space, insert the longest text and rewrite it afterwards.
-  WarningLabel = new QLabel(tr("no warnings"), statusBar());
+  WarningLabel = new QLabel(tr("No warnings"), statusBar());
   statusBar()->addWidget(WarningLabel, 0, true);
 
   PositionLabel = new QLabel("0 : 0", statusBar());
@@ -958,7 +958,7 @@ void QucsApp::slotShowWarnings()
     QFont f = WarningLabel->font();
     f.setWeight(QFont::DemiBold);
     WarningLabel->setFont(f);
-    WarningLabel->setText(tr("Warnings in last simulation! Press F5"));
+    WarningLabel->setText(tr("Warnings in the last simulation. Press F5"));
   }
 
   ResultState++;
@@ -980,7 +980,7 @@ void QucsApp::slotResetWarnings()
   f.setWeight(QFont::Normal);
   WarningLabel->setFont(f);
   WarningLabel->setPaletteForegroundColor(Qt::black);
-  WarningLabel->setText(tr("no warnings"));
+  WarningLabel->setText(tr("No warnings"));
 }
 
 // ----------------------------------------------------------
