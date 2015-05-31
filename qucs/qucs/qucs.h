@@ -22,6 +22,8 @@
 #include <QString>
 #include <QHash>
 #include <QStack>
+#include <QScrollArea>
+#include <QDialog>
 
 class QucsDoc;
 class Schematic;
@@ -29,8 +31,7 @@ class SimMessage;
 class MouseActions;
 class SearchDialog;
 class OctaveWindow;
-class MessageDock;
-class ProjectView;
+class MessagesWindow;
 
 class QLabel;
 class QAction;
@@ -52,6 +53,7 @@ class QListView;
 class QFileSystemModel;
 class QModelIndex;
 class QPushButton;
+class ProjectView;
 
 typedef bool (Schematic::*pToggleFunc) ();
 typedef void (MouseActions::*pMouseFunc) (Schematic*, QMouseEvent*);
@@ -124,22 +126,22 @@ public slots:
 
   // for menu that appears by right click in content ListView
   void slotShowContentMenu(const QPoint &);
-
   void slotCMenuOpen();
   void slotCMenuCopy();
   void slotCMenuRename();
   void slotCMenuDelete();
+  //void slotCMenuDelGroup();
   void slotCMenuInsert();
-
   void slotUpdateTreeview();
+
 private slots:
   void slotMenuProjOpen();
   void slotMenuProjClose();
   void slotMenuProjDel();
   void slotListProjOpen(const QModelIndex &);
-  void slotSelectSubcircuit(const QModelIndex &);
+  void slotSelectSubcircuit(const QModelIndex&);
   void slotSelectLibComponent(QTreeWidgetItem*);
-  void slotOpenContent(const QModelIndex &);
+  void slotOpenContent(const QModelIndex&);
   void slotSetCompView(int);
   void slotButtonProjNew();
   void slotButtonProjOpen();
@@ -150,7 +152,13 @@ private slots:
   void slotDCbias();
   void slotChangePage(QString&, QString&);
   void slotHideEdit();
+  void slotSimulateWithSpice();
+  void slotSetAllShortcut();
+  void slotUpdateUndo(bool);
+  void slotUpdateRedo(bool);
+  void slotToggleMessagesDockVisibility(bool);
   void slotFileChanged(bool);
+
 signals:
   void signalKillEmAll();
 
@@ -164,7 +172,7 @@ public:
   QMenu *ContentMenu;
 
   // corresponding actions
-  QAction *ActionCMenuOpen, *ActionCMenuCopy, *ActionCMenuRename, *ActionCMenuDelete, *ActionCMenuInsert;
+  QAction *ActionCMenuOpen, *ActionCMenuCopy, *ActionCMenuRename, *ActionCMenuDelete, *ActionCMenuDelGroup, *ActionCMenuInsert;
 
   QAction *fileNew, *textNew, *fileNewDpl, *fileOpen, *fileSave, *fileSaveAs,
           *fileSaveAll, *fileClose, *fileExamples, *fileSettings, *filePrint, *fileQuit,
@@ -176,16 +184,20 @@ public:
 
   QAction *activeAction;    // pointer to the action selected by the user
 
+  MessagesWindow  *messages;
+
 private:
 // ********* Widgets on the main area **********************************
   QDockWidget     *dock;
   QTabWidget      *TabView;
   QDockWidget     *octDock;
   OctaveWindow    *octave;
-  MessageDock     *messageDock;
+  QDockWidget     *messagesDock;
 
   QListView       *Projects;
   ProjectView     *Content;
+  QTreeWidgetItem *ConSchematics, *ConSources, *ConDisplays, *ConDatasets,
+                  *ConOthers, *ConVerilog, *ConVerilogA, *ConOctave;
 
   QLineEdit       *CompSearch;
   QPushButton     *CompSearchClear;
@@ -200,6 +212,7 @@ private:
 // ********** Methods ***************************************************
   void initView();
   void initCursorMenu();
+  void initContentListView();
 
   void printCurrentDocument(bool);
   bool saveFile(QucsDoc *Doc=0);
@@ -222,6 +235,7 @@ private:
 public:
 
   void readProjects();
+  void readProjectFiles();
   void updatePathList(void); // update the list of paths, pruning non-existing paths
   void updatePathList(QStringList);
   void updateSchNameHash(void); // maps all schematic files in the path list
@@ -236,8 +250,6 @@ public slots:
   void slotShowWarnings();
   void slotResetWarnings();
   void printCursorPosition(int, int);
-  void slotUpdateUndo(bool);  // update undo available state
-  void slotUpdateRedo(bool);  // update redo available state
 
 private slots:
   void slotViewToolBar(bool toggle);    // toggle the toolbar
@@ -247,6 +259,7 @@ private slots:
   void slotToggleOctave(bool);
   void slotToggleDock(bool);
   void slotHelpAbout();     // shows an about dialog
+  void slotViewMessagesDock(bool toggle);
 
 private:
   void initActions();    // initializes all QActions of the application
@@ -255,7 +268,7 @@ private:
   void initStatusBar();  // setup the statusbar
 
   QAction *helpAboutApp, *helpAboutQt, *viewToolBar, *viewStatusBar,
-          *viewBrowseDock, *viewOctaveDock;
+          *viewBrowseDock, *viewOctaveDock, *viewMessagesDock;
 
   // menus contain the items of their menubar
   enum { MaxRecentFiles = 8 };
@@ -294,6 +307,7 @@ public:
           *addToProj, *editFind, *insEntity, *selectMarker,
           *createLib, *importData, *graph2csv, *createPkg, *extractPkg,
           *callAtt, *callRes, *centerHor, *centerVert, *loadModule, *buildModule;
+  QAction *simSpice;
 
 public slots:
   void slotEditRotate(bool);  // rotate the selected items
@@ -370,6 +384,21 @@ private:
   void launchTool(const QString&, const QString&, const QString& = ""); // tool, description and args
   friend class SaveDialog;
   QString lastExportFilename;
+  QMenu* createPopupMenu();
 };
+// ----------------------------------------------------------
+// Class for the message box with scrolling ability
 
+class QucsScrollMessageBox : public QDialog {
+  Q_OBJECT
+
+public:
+  QucsScrollMessageBox(QWidget *parent = 0, const QString &title = "", const QString &message = "");
+
+private:
+  QLabel *label;
+  QScrollArea *scroll;
+  QPushButton *okButton;
+};
+// ----------------------------------------------------------
 #endif /* QUCS_H */

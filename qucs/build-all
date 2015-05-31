@@ -1,0 +1,6 @@
+#!/bin/sh
+
+make clean
+./autogen.sh
+./configure --enable-maintainer-mode
+make -j4

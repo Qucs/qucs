@@ -1492,10 +1492,10 @@ void QucsApp::slotBuildModule()
     qDebug() << "slotBuildModule";
 
     // reset message dock on entry
-    messageDock->reset();
+    messages->reset();
 
-    messageDock->builderTabs->setTabIcon(0,QPixmap());
-    messageDock->builderTabs->setTabIcon(1,QPixmap());
+    messages->builderTabs->setTabIcon(0,QPixmap());
+    messages->builderTabs->setTabIcon(1,QPixmap());
 
 
     QString make;
@@ -1543,7 +1543,7 @@ void QucsApp::slotBuildModule()
 
     // prepend command to log
     QString cmdString = QString("%1 %2\n").arg(make, Arguments.join(" "));
-    messageDock->admsOutput->appendPlainText(cmdString);
+    messages->admsOutput->appendPlainText(cmdString);
 
     qDebug() << "Command :" << make << Arguments.join(" ");
     builder->start(make, Arguments);
@@ -1571,7 +1571,7 @@ void QucsApp::slotBuildModule()
 
     // prepend command to log
     cmdString = QString("%1 %2\n").arg(make, Arguments.join(" "));
-    messageDock->cppOutput->appendPlainText(cmdString);
+    messages->cppOutput->appendPlainText(cmdString);
 
     builder->start(make, Arguments);
 
@@ -1588,10 +1588,13 @@ void QucsApp::slotBuildModule()
     delete builder;
 
     // push make output to message dock
-    messageDock->admsOutput->appendPlainText(vaStatus);
-    messageDock->cppOutput->appendPlainText(cppStatus);
+    messages->admsOutput->appendPlainText(vaStatus);
+    messages->cppOutput->appendPlainText(cppStatus);
 
-    // shot the message docks
-    messageDock->msgDock->show();
+    // show the messages window (by showing the dock which contains it)
+    //messages->msgDock->show();
+
+    viewMessagesDock->setChecked(true);
+    messagesDock->show(); // nvdl: todo: Needed (or if the above statement triggers it?)
 
 }

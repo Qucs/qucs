@@ -24,6 +24,7 @@
 #include <QFile>
 #include <QTextStream>
 #include <QVBoxLayout>
+#include <QTextEdit>
 
 class QPlainTextEdit;
 class QTextStream;
@@ -87,7 +88,7 @@ public:
   QString DocName, DataSet, DataDisplay, Script;
 
   QProcess       SimProcess;
-  QPlainTextEdit *ProgText, *ErrText;
+  QTextEdit *ProgText, *ErrText;
   bool           wasLF;   // linefeed for "ProgText"
   bool           simKilled; // true if simulation was aborted by the user
   QPushButton    *Display, *Abort;

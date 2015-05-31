@@ -17,6 +17,8 @@
 #include "eqndefined.h"
 #include "main.h"
 #include "schematic.h"
+#include "extsimkernels/spicecompat.h"
+#include <QtCore>
 
 #include <QFileInfo>
 
@@ -26,6 +28,7 @@ EqnDefined::EqnDefined()
 
   Model = "EDD";
   Name  = "D";
+  SpiceModel = "B";
 
   // first properties !!!
   Props.append(new Property("Type", "explicit", false,
@@ -88,6 +91,67 @@ QString EqnDefined::netlist()
   }
 
   return s+e;
+}
+
+QString EqnDefined::spice_netlist(bool)
+{
+    QString s;
+    if (Props.at(0)->Value=="explicit") {
+        int Nbranch = Props.at(1)->Value.toInt();
+        for (int i=0;i<Nbranch;i++) {
+            QString Ieqn = Props.at(2*(i+1))->Value; // parse current equation
+            Ieqn.replace("^","**");
+            QStringList Itokens;
+            spicecompat::splitEqn(Ieqn,Itokens);
+            qDebug()<<Itokens;
+            subsVoltages(Itokens,Nbranch);
+            s += QString("B%1I%2 %3 %4 I=%5\n").arg(Name).arg(i).arg(Ports.at(2*i)->Connection->Name)
+                    .arg(Ports.at(2*i+1)->Connection->Name).arg(Itokens.join(""));
+
+            QString Qeqn = Props.at(2*(i+1)+1)->Value; // parse charge equation only for Xyce
+            if (Qeqn!="0") {
+            //if (isXyce) {
+                Qeqn.replace("^","**");
+                QStringList Qtokens;
+                spicecompat::splitEqn(Qeqn,Qtokens);
+                qDebug()<<Qtokens;
+                subsVoltages(Qtokens,Nbranch);
+                QString plus = Ports.at(2*i)->Connection->Name;
+                QString minus = Ports.at(2*i+1)->Connection->Name;
+                s += QString("G%1Q%2 %3 %4 n%1Q%2 %4 1.0\n").arg(Name).arg(i).arg(plus).arg(minus);
+                s += QString("L%1Q%2 n%1Q%2 %3 1.0\n").arg(Name).arg(i).arg(minus);
+                s += QString("B%1Q%2 n%1Q%2 %3 I=-(%4)\n").arg(Name).arg(i).arg(minus).arg(Qtokens.join(""));
+            }
+        }
+    } else {
+        s = "";
+    }
+    return s;
+}
+
+/*!
+ * \brief EqnDefined::subsVoltages Substitute volatges in spice Notation in token list
+ * \param[in/out] tokens Token list. Should be obtained from spicecompat::splitEqn().
+ *                This list is modified.
+ * \param[in] Nbranch Number of branched of EDD
+ */
+void EqnDefined::subsVoltages(QStringList &tokens, int Nbranch)
+{
+    QRegExp volt_pattern("^V[0-9]+$");
+    for (QStringList::iterator it = tokens.begin();it != tokens.end();it++) {
+        if (volt_pattern.exactMatch(*it)) {
+            QString volt = *it;
+            volt.remove('V');
+            int branch = volt.toInt();
+            if (branch<=Nbranch) {
+                QString plus = Ports.at(2*(branch-1))->Connection->Name;
+                if (plus=="gnd") plus="0";
+                QString minus = Ports.at(2*(branch-1)+1)->Connection->Name;
+                if (minus=="gnd") minus="0";
+                *it = QString("(V(%1)-V(%2))").arg(plus).arg(minus);
+            }
+        }
+    }
 }
 
 // -------------------------------------------------------

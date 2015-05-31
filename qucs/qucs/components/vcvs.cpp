@@ -16,6 +16,9 @@
  ***************************************************************************/
 
 #include "vcvs.h"
+#include "node.h"
+#include "misc.h"
+#include "extsimkernels/spicecompat.h"
 
 
 VCVS::VCVS()
@@ -59,6 +62,7 @@ VCVS::VCVS()
   ty = y2+4;
   Model = "VCVS";
   Name  = "SRC";
+  SpiceModel = "E";
 
   Props.append(new Property("G", "1", true,
 		QObject::tr("forward transfer factor")));
@@ -81,4 +85,21 @@ Element* VCVS::info(QString& Name, char* &BitmapFile, bool getNewOne)
 
   if(getNewOne)  return new VCVS();
   return 0;
+}
+
+QString VCVS::spice_netlist(bool)
+{
+   QString s = spicecompat::check_refdes(Name,SpiceModel);
+    QList<int> seq; // nodes sequence
+    seq<<1<<2<<0<<3;
+    // output all node names
+    foreach(int i, seq) {
+        QString nam = Ports.at(i)->Connection->Name;
+        if (nam=="gnd") nam = "0";
+        s += " "+ nam;   // node names
+    }
+
+    s += " " + Props.at(0)->Value + "\n"; // Ignore delay time. It is spice-incompatibele
+
+    return s;
 }

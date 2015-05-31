@@ -85,12 +85,14 @@ QucsSettingsDialog::QucsSettingsDialog(QucsApp *parent, const char *name)
 
     appSettingsGrid->addWidget(new QLabel(tr("Document Background Color:"), appSettingsTab) ,2,0);
     BGColorButton = new QPushButton("      ", appSettingsTab);
+    QString ss = QString("background-color: %1").arg(QucsSettings.BGColor.name());
+    BGColorButton->setStyleSheet(ss);
     connect(BGColorButton, SIGNAL(clicked()), SLOT(slotBGColorDialog()));
     appSettingsGrid->addWidget(BGColorButton,2,1);
 
     appSettingsGrid->addWidget(new QLabel(tr("Language (set after reload):"), appSettingsTab) ,3,0);
     LanguageCombo = new QComboBox(appSettingsTab);
-    LanguageCombo->insertItem(tr("system language"));
+    LanguageCombo->insertItem(tr("System language"));
     LanguageCombo->insertItem(tr("English")+" (en)");
     LanguageCombo->insertItem(tr("German")+" (de)");
     LanguageCombo->insertItem(tr("French")+" (fr)");
@@ -145,6 +147,11 @@ QucsSettingsDialog::QucsSettingsDialog(QucsApp *parent, const char *name)
     checkTextAntiAliasing->setToolTip(tr("Use anti-aliasing for text for a smoother appereance."));
     appSettingsGrid->addWidget(checkTextAntiAliasing,9,1);
     checkTextAntiAliasing->setChecked(QucsSettings.TextAntiAliasing);
+
+    appSettingsGrid->addWidget(new QLabel(tr("Set custom shortcut:")));
+    ShortcutButton = new QPushButton(appSettingsTab);
+    connect(ShortcutButton, SIGNAL(clicked()), SLOT(slotShortcutDialog()));
+    appSettingsGrid->addWidget(ShortcutButton,10,1);
 
     t->addTab(appSettingsTab, tr("Settings"));
 
@@ -381,6 +388,7 @@ QucsSettingsDialog::QucsSettingsDialog(QucsApp *parent, const char *name)
     QString s = QString::number(QucsSettings.largeFontSize, 'f', 1);
     LargeFontSizeEdit->setText(s);
     BGColorButton->setPaletteBackgroundColor(QucsSettings.BGColor);
+    ShortcutButton->setText("Custom Shortcut");
     undoNumEdit->setText(QString::number(QucsSettings.maxUndo));
     editorEdit->setText(QucsSettings.Editor);
     checkWiring->setChecked(QucsSettings.NodeWiring);
@@ -395,6 +403,7 @@ QucsSettingsDialog::QucsSettingsDialog(QucsApp *parent, const char *name)
     ascoEdit->setText(QucsSettings.AscoBinDir.canonicalPath());
     octaveEdit->setText(QucsSettings.OctaveBinDir.canonicalPath());
 
+    shortcutDialog = NULL;
 
     resize(300, 200);
 }
@@ -623,10 +632,22 @@ void QucsSettingsDialog::slotFontDialog()
 // -----------------------------------------------------------
 void QucsSettingsDialog::slotBGColorDialog()
 {
-    QColor c = QColorDialog::getColor(
-                   BGColorButton->paletteBackgroundColor(), this);
-    if(c.isValid())
-        BGColorButton->setPaletteBackgroundColor(c);
+    QColor c = QColorDialog::getColor(BGColorButton->paletteBackgroundColor(), this);
+
+    if (c.isValid()) {
+      BGColorButton->setPaletteBackgroundColor(c);
+      QString ss = QString("background-color: %1").arg(c.name());
+      BGColorButton->setStyleSheet(ss);
+    }
+}
+
+// -----------------------------------------------------------
+void QucsSettingsDialog::slotShortcutDialog()
+{
+  if (!shortcutDialog) {
+    shortcutDialog = new QucsShortcutDialog(App);
+  }
+  shortcutDialog->exec();
 }
 
 // -----------------------------------------------------------

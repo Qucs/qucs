@@ -28,6 +28,12 @@ public:
   ~Equation();
   Component* newOne();
   static Element* info(QString&, char* &, bool getNewOne=false);
+  QString getExpression(bool isXyce);
+  QString getEquations(QString sim, QStringList &dep_vars);
+  QString getNgspiceScript();
+
+private:
+  void getNgnutmegVars(QStringList &vars,QStringList &sims);
 
 protected:
   QString vhdlCode(int);

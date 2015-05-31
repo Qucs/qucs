@@ -16,7 +16,9 @@
  ***************************************************************************/
 
 #include "ccvs.h"
-
+#include "node.h"
+#include "misc.h"
+#include "extsimkernels/spicecompat.h"
 
 CCVS::CCVS()
 {
@@ -57,6 +59,7 @@ CCVS::CCVS()
   ty = y2+4;
   Model = "CCVS";
   Name  = "SRC";
+  SpiceModel = "H";
 
   Props.append(new Property("G", "1 Ohm", true,
 		QObject::tr("forward transfer factor")));
@@ -79,4 +82,19 @@ Element* CCVS::info(QString& Name, char* &BitmapFile, bool getNewOne)
 
   if(getNewOne)  return new CCVS();
   return 0;
+}
+
+QString CCVS::spice_netlist(bool)
+{
+    QString s = spicecompat::check_refdes(Name,SpiceModel); // spice CCVS consists two sources: output source
+                        // and zero value controlling source
+    QString val = spicecompat::normalize_value(Props.at(0)->Value);
+    s += QString(" %1 %2 ").arg(Ports.at(1)->Connection->Name)
+            .arg(Ports.at(2)->Connection->Name); // output source nodes
+    s.replace(" gnd ", " 0 ");
+    s += QString(" V%1 %2\n").arg(Name).arg(val);
+    s += QString("V%1 %2 %3 DC 0 \n").arg(Name).arg(Ports.at(0)->Connection->Name)
+            .arg(Ports.at(3)->Connection->Name);   // controlling 0V source
+
+    return s;
 }

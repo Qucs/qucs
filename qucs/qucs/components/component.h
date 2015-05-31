@@ -36,6 +36,12 @@ public:
   virtual Component* newOne();
   virtual void recreate(Schematic*) {};
   QString getNetlist();
+  QString getSpiceNetlist(bool isXyce = false);
+  virtual QString getExpression(bool isXyce = false);
+  virtual QString getEquations(QString sim, QStringList &dep_vars);
+  virtual QString getProbeVariable(bool isXyce = false);
+  virtual QString getNgspiceBeforeSim(QString sim, int lvl=0) { return QString("");};
+  virtual QString getNgspiceAfterSim(QString sim, int lvl=0) { return QString("");};
   QString get_VHDL_Code(int);
   QString get_Verilog_Code(int);
   void    paint(ViewPainter*);
@@ -77,13 +83,19 @@ public:
   int  isActive; // should it be used in simulation or not ?
   int  tx, ty;   // upper left corner of text (position)
   bool showName;
+  bool isSimulation; // is it AC,DC,TR or other spice-compatible simulation?
+  bool isProbe; // is it Voltage/Current spice-compatible probe?
+  bool isEquation;
   QString  Model, Name;
   QString  Description;
+  QString  SpiceModel;
 
 protected:
   virtual QString netlist();
+  virtual QString spice_netlist(bool isXyce = false);
   virtual QString vhdlCode(int);
   virtual QString verilogCode(int);
+  QString form_spice_param_list(QStringList& ignore_list, QStringList& convert_list);
 
   int  analyseLine(const QString&, int);
   bool getIntegers(const QString&, int *i1=0, int *i2=0, int *i3=0,
@@ -113,6 +125,7 @@ class GateComponent : public MultiViewComponent {
 public:
   GateComponent();
   QString netlist();
+  QString spice_netlist(bool);
   QString vhdlCode(int);
   QString verilogCode(int);
 

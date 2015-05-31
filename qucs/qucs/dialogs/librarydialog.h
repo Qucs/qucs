@@ -81,7 +81,7 @@ private:
   QLabel *checkedCktName;
   QLabel *libSaveName;
   QLineEdit *NameEdit;
-  QPlainTextEdit *ErrText;
+  QTextEdit *ErrText;
   QTextEdit *textDescr;
   QGroupBox *Group;
   QPushButton *ButtCreateNext, *ButtCancel, *ButtSelectAll, *ButtSelectNone;

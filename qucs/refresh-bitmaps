@@ -1,0 +1,3 @@
+#!/bin/sh
+
+rm -vi qucs/qrc_qucs.cpp

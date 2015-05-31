@@ -27,6 +27,33 @@
 #include "diagrams/diagrams.h"
 #include "module.h"
 
+#include "components/LTL_SPICE.h"
+#include "components/volt_ac_SPICE.h"
+
+class Vac_SPICE;
+//class LTL_SPICE;
+/*REGISTER_SPICE_1 (Vac_SPICE);
+REGISTER_SPICE_1 (Src_eqndef);
+REGISTER_SPICE_1 (iSffm);
+REGISTER_SPICE_1 (vAmpMod);
+REGISTER_SPICE_1 (iAmpMod);
+REGISTER_SPICE_1 (vSffm);
+REGISTER_SPICE_1 (vPWL);
+REGISTER_SPICE_1 (iPWL);
+REGISTER_SPICE_1 (eNL);
+REGISTER_SPICE_1 (gNL);
+REGISTER_SPICE_1 (vTRNOISE);
+REGISTER_SPICE_1 (iTRNOISE);
+REGISTER_SPICE_1 (vTRRANDOM);
+REGISTER_SPICE_1 (C_SPICE);
+REGISTER_SPICE_1 (L_SPICE);
+REGISTER_SPICE_1 (R_SPICE);
+REGISTER_SPICE_1 (K_SPICE);
+REGISTER_SPICE_1 (MESFET_SPICE);*/
+
+class UDRCTL_SPICE;
+//class LTRA_SPICE;
+
 // Global category and component lists.
 QHash<QString, Module *> Module::Modules;
 QList<Category *> Category::Categories;
@@ -179,43 +206,49 @@ void Module::intoCategory (Module * m) {
   registerComponent (cat, &val::inf3)
 
 #define REGISTER_LUMPED_1(val) \
-  REGISTER_COMP_1 (QObject::tr("lumped components"),val)
+  REGISTER_COMP_1 (QObject::tr("Lumped components"),val)
 #define REGISTER_LUMPED_2(val,inf1,inf2) \
-  REGISTER_COMP_2 (QObject::tr("lumped components"),val,inf1,inf2)
+  REGISTER_COMP_2 (QObject::tr("Lumped components"),val,inf1,inf2)
 #define REGISTER_SOURCE_1(val) \
-  REGISTER_COMP_1 (QObject::tr("sources"),val)
+  REGISTER_COMP_1 (QObject::tr("Sources"),val)
 #define REGISTER_PROBE_1(val) \
-  REGISTER_COMP_1 (QObject::tr("probes"),val)
+  REGISTER_COMP_1 (QObject::tr("Probes"),val)
 #define REGISTER_TRANS_1(val) \
-  REGISTER_COMP_1 (QObject::tr("transmission lines"),val)
+  REGISTER_COMP_1 (QObject::tr("Transmission lines"),val)
 #define REGISTER_NONLINEAR_1(val) \
-  REGISTER_COMP_1 (QObject::tr("nonlinear components"),val)
+  REGISTER_COMP_1 (QObject::tr("Nonlinear components"),val)
 #define REGISTER_NONLINEAR_2(val,inf1,inf2) \
-  REGISTER_COMP_2 (QObject::tr("nonlinear components"),val,inf1,inf2)
+  REGISTER_COMP_2 (QObject::tr("Nonlinear components"),val,inf1,inf2)
 #define REGISTER_NONLINEAR_3(val,inf1,inf2,inf3) \
-  REGISTER_COMP_3 (QObject::tr("nonlinear components"),val,inf1,inf2,inf3)
+  REGISTER_COMP_3 (QObject::tr("Nonlinear components"),val,inf1,inf2,inf3)
 #define REGISTER_VERILOGA_1(val) \
-  REGISTER_COMP_1 (QObject::tr("verilog-a devices"),val)
+  REGISTER_COMP_1 (QObject::tr("Verilog-A devices"),val)
 #define REGISTER_VERILOGA_2(val,inf1,inf2) \
-  REGISTER_COMP_2 (QObject::tr("verilog-a devices"),val,inf1,inf2)
+  REGISTER_COMP_2 (QObject::tr("Verilog-A devices"),val,inf1,inf2)
 #define REGISTER_DIGITAL_1(val) \
-  REGISTER_COMP_1 (QObject::tr("digital components"),val)
+  REGISTER_COMP_1 (QObject::tr("Digital components"),val)
 #define REGISTER_FILE_1(val) \
-  REGISTER_COMP_1 (QObject::tr("file components"),val)
+  REGISTER_COMP_1 (QObject::tr("File components"),val)
 #define REGISTER_FILE_3(val,inf1,inf2,inf3) \
-  REGISTER_COMP_3 (QObject::tr("file components"),val,inf1,inf2,inf3)
+  REGISTER_COMP_3 (QObject::tr("File components"),val,inf1,inf2,inf3)
 #define REGISTER_SIMULATION_1(val) \
-  REGISTER_COMP_1 (QObject::tr("simulations"),val)
+  REGISTER_COMP_1 (QObject::tr("Simulations"),val)
 #define REGISTER_DIAGRAM_1(val) \
-  REGISTER_MOD_1 (QObject::tr("diagrams"),val)
+  REGISTER_MOD_1 (QObject::tr("Diagrams"),val)
 #define REGISTER_DIAGRAM_2(val,inf1,inf2) \
-  REGISTER_MOD_2 (QObject::tr("diagrams"),val,inf1,inf2)
+  REGISTER_MOD_2 (QObject::tr("Diagrams"),val,inf1,inf2)
 #define REGISTER_PAINT_1(val) \
-  REGISTER_MOD_1 (QObject::tr("paintings"),val)
+  REGISTER_MOD_1 (QObject::tr("Paintings"),val)
 #define REGISTER_PAINT_2(val,inf1,inf2) \
-  REGISTER_MOD_2 (QObject::tr("paintings"),val,inf1,inf2)
+  REGISTER_MOD_2 (QObject::tr("Paintings"),val,inf1,inf2)
 #define REGISTER_EXTERNAL_1(val) \
-  REGISTER_COMP_1 (QObject::tr("external sim components"),val)
+  REGISTER_COMP_1 (QObject::tr("External sim components"),val)
+#define REGISTER_SPICE_1(val) \
+  REGISTER_COMP_1 (QObject::tr("Spice components"),val)
+#define REGISTER_SPICE_SEC_1(val) \
+  REGISTER_COMP_1 (QObject::tr("Spice specific sections"),val)
+#define REGISTER_SPICE_SIM_1(val) \
+  REGISTER_COMP_1 (QObject::tr("Spice simulations"),val)
 
 // This function has to be called once at application startup.  It
 // registers every component available in the application.  Put here
@@ -277,9 +310,11 @@ void Module::registerModules (void) {
   REGISTER_SOURCE_1 (vFile);
   REGISTER_SOURCE_1 (iFile);
 
+
   // probes
   REGISTER_PROBE_1 (iProbe);
   REGISTER_PROBE_1 (vProbe);
+  REGISTER_PROBE_1 (Cmeter_SPICE);
 
   // transmission lines
   REGISTER_TRANS_1 (TLine);
@@ -423,6 +458,40 @@ void Module::registerModules (void) {
   // external simulation
   REGISTER_EXTERNAL_1 (ETR_Sim);
   REGISTER_EXTERNAL_1 (ecvs);
+
+  //spice specific components
+  REGISTER_SPICE_1 (Vac_SPICE);
+  REGISTER_SPICE_1 (Src_eqndef);
+  REGISTER_SPICE_1 (iSffm);
+  REGISTER_SPICE_1 (vAmpMod);
+  REGISTER_SPICE_1 (iAmpMod); 
+  REGISTER_SPICE_1 (vSffm);
+  REGISTER_SPICE_1 (vPWL); 
+  REGISTER_SPICE_1 (iPWL);   
+  REGISTER_SPICE_1 (eNL);   
+  REGISTER_SPICE_1 (gNL);  
+  REGISTER_SPICE_1 (vTRNOISE);   
+  REGISTER_SPICE_1 (iTRNOISE);   
+  REGISTER_SPICE_1 (vTRRANDOM); 
+  REGISTER_SPICE_1 (C_SPICE); 
+  REGISTER_SPICE_1 (L_SPICE); 
+  REGISTER_SPICE_1 (R_SPICE);  
+  REGISTER_SPICE_1 (K_SPICE);  
+  REGISTER_SPICE_1 (MESFET_SPICE);  
+  REGISTER_SPICE_1 (LTL_SPICE); 
+  REGISTER_SPICE_1 (UDRCTL_SPICE); 
+  REGISTER_SPICE_1 (LTRA_SPICE);
+
+  // specific sections of spice netlists
+  REGISTER_SPICE_SEC_1 (SpiceParam);
+  REGISTER_SPICE_SEC_1 (SpiceGlobalParam);
+  REGISTER_SPICE_SEC_1 (SpiceOptions);
+  REGISTER_SPICE_SEC_1 (NutmegEquation);
+
+  // spice simulations
+  REGISTER_SPICE_SIM_1 (SpiceFourier);
+  REGISTER_SPICE_SIM_1 (SpiceDisto);
+  REGISTER_SPICE_SIM_1 (SpiceCustomSim);
 
   // paintings
   REGISTER_PAINT_1 (GraphicLine);
