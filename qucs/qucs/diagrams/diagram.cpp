@@ -178,9 +178,9 @@ void Diagram::createAxisLabels()
 	if(!pD) continue;
 	y -= LineSpacing;
 	if(Name[0] != 'C') {   // locus curve ?
-	  w = metrics.width(pD->Var) >> 1;
+	  w = metrics.width(pg->axisName(0)) >> 1;
 	  if(w > wmax)  wmax = w;
-	  Texts.append(new Text(x-w, y, pD->Var, pg->color(), 12.0));
+	  Texts.append(new Text(x-w, y, pg->axisName(0), pg->color(), 12.0));
 	}
 	else {
           w = metrics.width("real("+pg->var()+")") >> 1;
@@ -506,19 +506,15 @@ void Diagram::clip(Graph::iterator &p) const
 // is this a GraphDeque Member?
 void Diagram::calcData(GraphDeque *g)
 {
-  double *px;
   double *pz = g->cPointsY();
   if(!pz)  return;
   if(g->numAxes() < 1) return;
 
   int i, z, Counter=2;
-  int Size = ((2*(g->axis(0)->count) + 1) * g->countY()) + 10;
-  
+  int Size = ((2*(g->count(0)) + 1) * g->countY()) + 10;
+
   if(xAxis.autoScale)  if(yAxis.autoScale)  if(zAxis.autoScale)
     Counter = -50000;
-
-  double Dummy = 0.0;  // not used
-  double *py = &Dummy;
 
   g->resizeScrPoints(Size);
   auto p = g->_begin();
@@ -533,40 +529,50 @@ void Diagram::calcData(GraphDeque *g)
   if(g->yAxisNo() == 0)  pa = &yAxis;
   else  pa = &zAxis;
 
+  double Stroke=10.0, Space=10.0; // length of strokes and spaces in pixel
   switch(g->style()) {
     case GRAPHSTYLE_SOLID: // ***** solid line ****************************
     case GRAPHSTYLE_DASH:
     case GRAPHSTYLE_DOT:
     case GRAPHSTYLE_LONGDASH:
-      for(i=g->countY(); i>0; i--) {  // every branch of curves
-	graphbegin = p;
-	px = g->axis(0)->Points;
-	calcCoordinateP(px, pz, py, p, pa);
-	p->setIndep(*px);
-	p->setDep(cplx_t(pz[0], pz[1]));
-	++px;
-	pz += 2;
-	++p;
-	for(z=g->axis(0)->count-1; z>0; z--) {  // every point
-	  FIT_MEMORY_SIZE;  // need to enlarge memory block ?
-	  calcCoordinateP(px, pz, py, p, pa);
-	  p->setIndep(*px);
-	  p->setDep(cplx_t(pz[0], pz[1]));
-	  ++px;
-	  pz += 2;
-	  ++p;
-	  if(Counter >= 2)   // clipping only if an axis is manual
-	    clip(p);
-	}
-	if((p-3)->isStrokeEnd() && !(p-3)->isBranchEnd())
-	  p -= 3;  // no single point after "no stroke"
-	else if((p-2)->isBranchEnd() && !(p-1)->isGraphEnd()) {
-	  if((!(p-1)->isPt()))
-	    --p; // erase last hidden point
-	}
-	g->push_back(Graph(graphbegin, p));
-	assert(g->back().begin()>=g->_begin());
-	(p++)->setBranchEnd();
+      qDebug() << "solid", g->countY();
+      if(const SimOutputWaveList* L=g->WaveList()){
+	qDebug() << "iterating through wavelist";
+	for(auto x=L->begin(); x!=L->end(); ++x){
+	  if(SimOutputWaveComplex const* WL = dynamic_cast<const SimOutputWaveComplex*>(*x)){
+	    auto ii = WL->begin();
+	    calcCoordinateC(ii->first, ii->second, &p->Scr, &(p+1)->Scr, pa);
+	    p->setIndep(*px);
+	    p->setDep(cplx_t(pz[0], pz[1]));
+	    ++p;
+	    for(; ii!=WL->end(); ++ii) {
+	      FIT_MEMORY_SIZE;  // need to enlarge memory block ?
+	      calcCoordinateC(ii->first, ii->second, &p->Scr, &(p+1)->Scr, pa);
+	      p->setIndep(*px);
+	      p->setDep(cplx_t(pz[0], pz[1]));
+	      ++p;
+	      if(Counter >= 2)   // clipping only if an axis is manual
+		clip(p);
+	    }
+	  }else if(auto WL = dynamic_cast<const SimOutputWaveReal*>(*x)){
+	    (void) WL;
+	    qDebug() << "real wave. incomplete";
+	    // incomplete.
+	  }else{
+	    qDebug() << "dont know what sort of wave this is";
+	  }
+	  if((p-3)->isStrokeEnd() && !(p-3)->isBranchEnd())
+	    p -= 3;  // no single point after "no stroke"
+	  else if((p-3)->isBranchEnd() && !(p-1)->isGraphEnd()) {
+	    if(((p-2)->Scr < 0) || ((p-1)->Scr < 0))
+	      p -= 2;  // erase last hidden point
+	  }
+	  g->push_back(Graph(graphbegin, p));
+	  assert(g->back().begin()>=g->_begin());
+	  (p++)->setBranchEnd();
+	} // for loop
+      }else{
+	qDebug() << "dont know what this is";
       }
 
       p->setGraphEnd();
@@ -578,28 +584,34 @@ for(int zz=0; zz<z; zz+=2)
       break;
 
     default:  // symbol (e.g. star) at each point **********************
-      // FIXME: WET. merge into case above. only difference: bounds check.
-      for(i=g->countY(); i>0; i--) {  // every branch of curves
-	graphbegin = p;
-        px = g->axis(0)->Points;
-        for(z=g->axis(0)->count; z>0; z--) {  // every point
-          calcCoordinateP(px, pz, py, p, pa);
-	  p->setIndep(*px);
-	  p->setDep(cplx_t(pz[0], pz[1]));
-          ++px;
-          pz += 2;
-          if(insideDiagramP(p))    // within diagram ?
-            ++p;
-        }
-	g->push_back(Graph(graphbegin, p));
-	(p++)->setBranchEnd();
-	assert(p!=g->_end());
-      }
-      (p++)->setGraphEnd();
-/*qDebug("\n******");
-for(int zz=0; zz<60; zz+=2)
-  qDebug("c: %d/%d", *(g->Points+zz), *(g->Points+zz+1));*/
+      qDebug() << "symbol";
+      if(const SimOutputWaveList* L=g->WaveList()){
+	qDebug() << "iterating through wavelist";
+	for(auto x=L->begin(); x!=L->end(); ++x){ // every branch of curves
+	  if(SimOutputWaveComplex const* WL = dynamic_cast<const SimOutputWaveComplex*>(*x)){
+	    for(auto ii = WL->begin(); ii!=WL->end(); ++ii) {
+	      calcCoordinateC(ii->first, ii->second, &p->Scr, &(p+1)->Scr, pa);
+	      if(insideDiagram(p->Scr, (p+1)->Scr))    // within diagram ?
+		p += 2;
+	    }
+	    (p++)->setBranchEnd();
+	  }else if(auto WL = dynamic_cast<const SimOutputWaveReal*>(*x)){
+	    (void) WL;
+	    qDebug() << "real wave. incomplete";
+	  }else{
+	    qDebug() << "dont know what sort of wave this is";
+	  }
+	} // for loop
+	(p++)->setGraphEnd();
+      }else{
+	qDebug() << "dont know what this is";
   }
+      return;
+  }
+
+
+  double alpha, dist;
+  int Flag;    // current state: 1=stroke, 0=space
 
 //  g->invalidateMarkers();
 }
@@ -649,34 +661,21 @@ void Diagram::getAxisLimits(GraphDeque const* pg)
 {
   // FIXME: Graph should know the limits. but it doesn't yet.
   //        we should only copy here. better: just wrap, dont use {x,y,z}Axis
-  int z;
-  double x, y, *p;
-  DataX const *pD = pg->axis(0);
+  double *p;
+  const DataX *pD = pg->axis(0);
   if(pD == 0) return;
 
-  if(Name[0] != 'C') { // BUG: inherit properly.
-    // not for location curves
-    p = pD->Points;
-    for(z=pD->count; z>0; z--) { // check x coordinates (1. dimension)
-      x = *(p++);
-      if(std::isfinite(x)) {
-	if(x > xAxis.max) xAxis.max = x;
-	if(x < xAxis.min) xAxis.min = x;
-      }
-    }
+  if(Name[0] != 'C') {   // not for location curves
+    /// FIXME: overload. location curves inherit from here.
+    xAxis.max = pg->axisMax(0);
+    xAxis.min = pg->axisMin(0);
   }
 
   if(Name == "Rect3D") { // BUG: inherit properly.
     DataX const *pDy = pg->axis(1);
     if(pDy) {
-      p = pDy->Points;
-      for(z=pDy->count; z>0; z--) { // check y coordinates (2. dimension)
-	y = *(p++);
-    if(std::isfinite(y)) {
-	  if(y > yAxis.max) yAxis.max = y;
-	  if(y < yAxis.min) yAxis.min = y;
-	}
-      }
+      yAxis.max = pg->axisMax(1);
+      yAxis.min = pg->axisMin(1);
     }
   }
 
@@ -686,27 +685,26 @@ void Diagram::getAxisLimits(GraphDeque const* pg)
   (pa->numGraphs)++;    // count graphs
   p = pg->cPointsY();
   if(p == 0) return;    // if no data => invalid
-  for(z=pg->countY()*pD->count; z>0; z--) {  // check every y coordinate
-    x = *(p++);
-    y = *(p++);
 
     if(Name[0] != 'C') {
-      if(fabs(y) >= 1e-250) x = sqrt(x*x+y*y);
-      if(std::isfinite(x)) {
-	if(x > pa->max) pa->max = x;
-	if(x < pa->min) pa->min = x;
-      }
-    }
-    else {   // location curve needs different treatment
+      pa->max = pg->max();
+      pa->min = pg->min();
+    } else {   // location curve needs different treatment
       /// FIXME: overload. location curves inherit from here.
-      if(std::isfinite(x)) {
-	if(x > xAxis.max) xAxis.max = x;
-	if(x < xAxis.min) xAxis.min = x;
-      }
-      if(std::isfinite(y)) {
-	if(y > pa->max) pa->max = y;
-	if(y < pa->min) pa->min = y;
-      }
+      //
+      //incomplete. need extreme real/imag parts...
+      // if(std::isfinite(x)) {
+      //   if(x > xAxis.max) xAxis.max = x;
+      //   if(x < xAxis.min) xAxis.min = x;
+      //xAxix->max = pg->maxreal();
+      //xAxix->min = pg->minreal();
+      // }
+      // if(std::isfinite(y)) {
+      //   if(y > pa->max) pa->max = y;
+      //   if(y < pa->min) pa->min = y;
+      // }
+      //yAxix->max = pg->maximag();
+      //yAxix->min = pg->minimag();
     }
   }
   qDebug() << "axis limits" << pg->var() << pa->min << pa->max;
@@ -2042,5 +2040,17 @@ void Diagram::moveMarkers(int x, int y)
     pg->moveMarkers(x, y);
   }
 }
+
+// convenience wrapper.
+void Diagram::calcCoordinateC
+               (const double x, const std::complex<double> c, float* a, float* b, Axis* A)
+{
+  double y[2];
+  double z[2];
+  y[0] = c.real();
+  y[1] = c.imag();
+  z[0] = z[1] = 0.;
+  calcCoordinate(&x, y, z, a, b, A);
+};
 
 // vim:ts=8:sw=2:noet
