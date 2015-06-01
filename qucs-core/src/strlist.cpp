@@ -54,11 +54,11 @@ strlist::~strlist () {
   struct strlist_t * next;
   while (root) {
     next = root->next;
-    if (root->str) free (root->str);
+    free (root->str);
     free (root);
     root = next;
   }
-  if (txt) free (txt);
+  free (txt);
 }
 
 // This function adds a string to the list.
@@ -159,7 +159,7 @@ void strlist::del (strlist * cand) {
   while (root) {
     next = root->next;
     if (cand->contains (root->str) == 0) res->append (root->str);
-    if (root->str) free (root->str);
+    free (root->str);
     free (root);
     root = next;
   }

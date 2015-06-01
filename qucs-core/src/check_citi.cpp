@@ -152,9 +152,9 @@ void citi_finalize (void) {
     struct citi_header_t * h, * hn;
     /* go through each header */
     for (h = p->head; h != NULL; h = hn) {
-      if (h->package) free (h->package);
-      if (h->var) free (h->var);
-      if (h->type) free (h->type);
+      free (h->package);
+      free (h->var);
+      free (h->type);
       hn = h->next;
       free (h);
     }

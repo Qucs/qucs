@@ -163,7 +163,7 @@ static void matlab_save (::vector * v) {
       free (sn);
     }
     free (n);
-    if (mv) delete mv;
+    delete mv;
   }
   else {
     // save vector

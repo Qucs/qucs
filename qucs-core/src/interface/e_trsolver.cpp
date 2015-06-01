@@ -129,7 +129,7 @@ e_trsolver::~e_trsolver ()
 
     deinitTR ();
 
-    if (swp) delete swp;
+    delete swp;
 
     for (int i = 0; i < 8; i++)
     {
@@ -142,7 +142,7 @@ e_trsolver::~e_trsolver ()
             delete lastsolution[i];
         }
     }
-    if (tHistory) delete tHistory;
+    delete tHistory;
 
 }
 

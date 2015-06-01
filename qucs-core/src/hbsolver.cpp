@@ -84,41 +84,41 @@ hbsolver::hbsolver (char * n) : analysis (n) {
 // Destructor deletes the hbsolver class object.
 hbsolver::~hbsolver () {
   // delete nodelists
-  if (nlnodes) delete nlnodes;
-  if (lnnodes) delete lnnodes;
-  if (banodes) delete banodes;
-  if (nanodes) delete nanodes;
+  delete nlnodes;
+  delete lnnodes;
+  delete banodes;
+  delete nanodes;
 
   // delete temporary matrices
-  if (A) delete A;
-  if (Z) delete Z;
-  if (Y) delete Y;
+  delete A;
+  delete Z;
+  delete Y;
 
   // delete matrices
-  if (NA) delete NA;
-  if (YV) delete YV;
-  if (JQ) delete JQ;
-  if (JG) delete JG;
-  if (JF) delete JF;
+  delete NA;
+  delete YV;
+  delete JQ;
+  delete JG;
+  delete JF;
 
   // delete vectors
-  if (IC) delete IC;
-  if (IS) delete IS;
-  if (FV) delete FV;
-  if (IL) delete IL;
-  if (IN) delete IN;
-  if (IG) delete IG;
-  if (FQ) delete FQ;
-  if (VS) delete VS;
-  if (VP) delete VP;
-  if (vs) delete vs;
-  if (OM) delete OM;
-  if (IR) delete IR;
-  if (QR) delete QR;
-  if (RH) delete RH;
+  delete IC;
+  delete IS;
+  delete FV;
+  delete IL;
+  delete IN;
+  delete IG;
+  delete FQ;
+  delete VS;
+  delete VP;
+  delete vs;
+  delete OM;
+  delete IR;
+  delete QR;
+  delete RH;
 
-  if (x) delete x;
-  if (ndfreqs) delete[] ndfreqs;
+  delete x;
+  delete[] ndfreqs;
 }
 
 /* The copy constructor creates a new instance of the hbsolver class
@@ -380,7 +380,7 @@ void hbsolver::collectFrequencies (void) {
   posfreqs.clear ();
   rfreqs.clear ();
   dfreqs.clear ();
-  if (ndfreqs) delete[] ndfreqs;
+  delete[] ndfreqs;
 
   // obtain order
   int i, n = calcOrder (getPropertyInteger ("n"));

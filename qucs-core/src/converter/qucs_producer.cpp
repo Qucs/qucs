@@ -73,7 +73,7 @@ void qucs_free_nodes (struct node_t * node) {
   struct node_t * n;
   for ( ; node; node = n) {
     n = node->next;
-    if (node->node) free (node->node);
+    free (node->node);
     free (node);
   }
 }

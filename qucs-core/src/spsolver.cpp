@@ -87,8 +87,8 @@ spsolver::spsolver (char * n) : analysis (n) {
 
 // Destructor deletes the spsolver class object.
 spsolver::~spsolver () {
-  if (swp) delete swp;
-  if (nlist) delete nlist;
+  delete swp;
+  delete nlist;
 }
 
 /* The copy constructor creates a new instance of the spsolver class

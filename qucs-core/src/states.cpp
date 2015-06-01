@@ -66,7 +66,7 @@ states<state_type_t>::states (const states & c)
 template <class state_type_t>
 states<state_type_t>::~states ()
 {
-    if (stateval) free (stateval);
+    free (stateval);
 }
 
 /* The function allocates and initializes memory for the save-state
@@ -74,7 +74,7 @@ states<state_type_t>::~states ()
 template <class state_type_t>
 void states<state_type_t>::initStates (void)
 {
-    if (stateval != NULL) free (stateval);
+    free (stateval);
     if (nstates)
     {
         stateval = (state_type_t *)

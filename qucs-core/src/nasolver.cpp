@@ -95,8 +95,8 @@ nasolver<nr_type_t>::nasolver (const std::string &n) : analysis (n)
 template <class nr_type_t>
 nasolver<nr_type_t>::~nasolver ()
 {
-    if (nlist) delete nlist;
-    if (C) delete C;
+    delete nlist;
+    delete C;
     delete A;
     delete z;
     delete x;
@@ -226,11 +226,11 @@ void nasolver<nr_type_t>::solve_pre (void)
     // create matrix, solution vector and right hand side vector
     int M = countVoltageSources ();
     int N = countNodes ();
-    if (A != NULL) delete A;
+    delete A;
     A = new tmatrix<nr_type_t> (M + N);
-    if (z != NULL) delete z;
+    delete z;
     z = new tvector<nr_type_t> (N + M);
-    if (x != NULL) delete x;
+    delete x;
     x = new tvector<nr_type_t> (N + M);
 
 #if DEBUG
@@ -748,7 +748,7 @@ void nasolver<nr_type_t>::createNoiseMatrix (void)
     circuit * ct;
 
     // create new Cy matrix if necessary
-    if (C != NULL) delete C;
+    delete C;
     C = new tmatrix<nr_type_t> (N + M);
 
     // go through each column of the Cy matrix

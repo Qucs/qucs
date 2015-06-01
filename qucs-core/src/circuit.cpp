@@ -183,8 +183,8 @@ circuit::circuit (const circuit & c) : object (c), integrator (c) {
 // Destructor deletes a circuit object.
 circuit::~circuit () {
   if (size > 0) {
-    if (MatrixS) delete[] MatrixS;
-    if (MatrixN) delete[] MatrixN;
+    delete[] MatrixS;
+    delete[] MatrixN;
     freeMatrixMNA ();
     freeMatrixHB ();
     delete[] nodes;
@@ -202,8 +202,8 @@ void circuit::setSize (int s) {
 
   if (size > 0) {
     // destroy any matrix and node information
-    if (MatrixS) delete[] MatrixS;
-    if (MatrixN) delete[] MatrixN;
+    delete[] MatrixS;
+    delete[] MatrixN;
     MatrixS = MatrixN = NULL;
     freeMatrixMNA ();
     delete[] nodes; nodes = NULL;
@@ -262,7 +262,7 @@ void circuit::allocMatrixS (void) {
 /* Allocates the noise correlation matrix memory. */
 void circuit::allocMatrixN (int sources) {
   nsources = sources;
-  if (MatrixN) delete[] MatrixN;
+  delete[] MatrixN;
   MatrixN = new nr_complex_t[(size + sources) * (size + sources)];
 }
 

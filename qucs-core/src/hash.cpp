@@ -95,7 +95,7 @@ qucs::hash<type_t>::hash (int size) {
 template <class type_t>
 qucs::hash<type_t>::~hash () {
   for (int n = 0; n < buckets; n++) {
-    if (table[n]) delete table[n];
+    delete table[n];
   }
   free (table);
 }
@@ -105,7 +105,7 @@ qucs::hash<type_t>::~hash () {
 template <class type_t>
 void qucs::hash<type_t>::clear (void) {
   for (int n = 0; n < buckets; n++) {
-    if (table[n]) delete table[n];
+    delete table[n];
   }
   free (table);
 

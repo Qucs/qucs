@@ -156,7 +156,7 @@ void environment::deleteVariables (void) {
       delete var->getSubstrate ();
     else if (var->getType () == VAR_REFERENCE) {
       constant * c = var->getReference()->getResult ();
-      if (c) delete c;
+      delete c;
       delete var->getReference ();
     }
     delete var;
@@ -394,7 +394,7 @@ void environment::setDoubleReference (const char * const ident, char * val) {
     else if (var->getType () == VAR_REFERENCE) {
       // just apply the reference
       reference * r = var->getReference ();
-      if (r->n) free (r->n);
+      free (r->n);
       r->n = strdup (val);
     }
   }

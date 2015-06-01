@@ -2180,7 +2180,7 @@ void evaluate::extract_vector (constant * args, int idx, int &skip, int &size,
       res->addDropDependencies (deps->get (didx));
     }
   }
-  if (res->v != NULL) delete res->v;
+  delete res->v;
   res->v = vres;
 }
 
