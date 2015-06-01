@@ -8,8 +8,8 @@
  * 
  */
 
-#ifndef jkff_SR_H
-#define jkff_SR_H
+#ifndef JKFF_SR_H
+#define JKFF_SR_H
 
 #include "component.h"
 
@@ -26,4 +26,4 @@ class jkff_SR : public Component
     QString verilogCode(int);
 };
 
-#endif /* jkff_SR_H */
+#endif /* JKFF_SR_H */

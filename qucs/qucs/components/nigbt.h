@@ -8,8 +8,8 @@
  * 
  */
 
-#ifndef nigbt_H
-#define nigbt_H
+#ifndef NIGBT_H
+#define NIGBT_H
 
 #include "component.h"
 
@@ -24,4 +24,4 @@ class nigbt : public Component
     void createSymbol();
 };
 
-#endif /* nigbt_H */
+#endif /* NIGBT_H */

@@ -8,8 +8,8 @@
  * 
  */
 
-#ifndef potentiometer_H
-#define potentiometer_H
+#ifndef POTENTIOMETER_H
+#define POTENTIOMETER_H
 
 #include "component.h"
 
@@ -24,4 +24,4 @@ class potentiometer : public Component
     void createSymbol();
 };
 
-#endif /* potentiometer_H */
+#endif /* POTENTIOMETER_H */

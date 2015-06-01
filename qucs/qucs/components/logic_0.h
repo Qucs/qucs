@@ -8,8 +8,8 @@
  * 
  */
 
-#ifndef logic_0_H
-#define logic_0_H
+#ifndef LOGIC_0_H
+#define LOGIC_0_H
 
 #include "component.h"
 
@@ -26,4 +26,4 @@ class logic_0 : public Component
     QString verilogCode(int);
 };
 
-#endif /* logic_0_H */
+#endif /* LOGIC_0_H */

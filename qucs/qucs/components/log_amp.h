@@ -8,8 +8,8 @@
  * 
  */
 
-#ifndef log_amp_H
-#define log_amp_H
+#ifndef LOG_AMP_H
+#define LOG_AMP_H
 
 #include "component.h"
 
@@ -24,4 +24,4 @@ class log_amp : public Component
     void createSymbol();
 };
 
-#endif /* log_amp_H */
+#endif /* LOG_AMP_H */

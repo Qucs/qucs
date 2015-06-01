@@ -8,8 +8,8 @@
  * 
  */
 
-#ifndef binarytogrey4bit_H
-#define binarytogrey4bit_H
+#ifndef BINARYTOGREY4BIT_H
+#define BINARYTOGREY4BIT_H
 
 #include "component.h"
 
@@ -26,4 +26,4 @@ class binarytogrey4bit : public Component
     QString verilogCode(int);
 };
 
-#endif /* binarytogrey4bit_H */
+#endif /* BINARYTOGREY4BIT_H */

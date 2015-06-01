@@ -8,8 +8,8 @@
  * 
  */
 
-#ifndef comp_2bit_H
-#define comp_2bit_H
+#ifndef COMP_2BIT_H
+#define COMP_2BIT_H
 
 #include "component.h"
 
@@ -26,4 +26,4 @@ class comp_2bit : public Component
     QString verilogCode(int);
 };
 
-#endif /* comp_2bit_H */
+#endif /* COMP_2BIT_H */

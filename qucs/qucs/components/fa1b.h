@@ -8,8 +8,8 @@
  * 
  */
 
-#ifndef fa1b_H
-#define fa1b_H
+#ifndef FA1B_H
+#define FA1B_H
 
 #include "component.h"
 
@@ -26,4 +26,4 @@ class fa1b : public Component
     QString verilogCode(int);
 };
 
-#endif /* fa1b_H */
+#endif /* FA1B_H */

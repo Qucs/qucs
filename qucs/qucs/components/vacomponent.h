@@ -49,4 +49,4 @@ QString getData(QString filename);
 double getDouble(QScriptValue data, QString prop);
 QString getString(QScriptValue data, QString prop);
 
-#endif /* vacomponent_H */
+#endif /* VACOMPONENT_H */

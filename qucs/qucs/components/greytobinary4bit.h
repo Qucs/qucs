@@ -8,8 +8,8 @@
  * 
  */
 
-#ifndef greytobinary4bit_H
-#define greytobinary4bit_H
+#ifndef GREYTOBINARY4BIT_H
+#define GREYTOBINARY4BIT_H
 
 #include "component.h"
 
@@ -26,4 +26,4 @@ class greytobinary4bit : public Component
     QString verilogCode(int);
 };
 
-#endif /* greytobinary4bit_H */
+#endif /* GREYTOBINARY4BIT_H */

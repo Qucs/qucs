@@ -8,8 +8,8 @@
  * 
  */
 
-#ifndef dmux3to8_H
-#define dmux3to8_H
+#ifndef DMUX3TO8_H
+#define DMUX3TO8_H
 #include "component.h"
 
 class dmux3to8 : public Component
@@ -25,4 +25,4 @@ class dmux3to8 : public Component
     QString verilogCode(int);
 };
 
-#endif /* dmux3to8_H */
+#endif /* DMUX3TO8_H */

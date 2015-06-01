@@ -8,8 +8,8 @@
  * 
  */
 
-#ifndef DLS_1ton_H
-#define DLS_1ton_H
+#ifndef DLS_1TON_H
+#define DLS_1TON_H
 
 #include "component.h"
 
@@ -24,4 +24,4 @@ class DLS_1ton : public Component
     void createSymbol();
 };
 
-#endif /* DLS_1ton_H */
+#endif /* DLS_1TON_H */

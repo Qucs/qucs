@@ -8,8 +8,8 @@
  * 
  */
 
-#ifndef mod_amp_H
-#define mod_amp_H
+#ifndef MOD_AMP_H
+#define MOD_AMP_H
 
 #include "component.h"
 
@@ -24,4 +24,4 @@ class mod_amp : public Component
     void createSymbol();
 };
 
-#endif /* mod_amp_H */
+#endif /* MOD_AMP_H */

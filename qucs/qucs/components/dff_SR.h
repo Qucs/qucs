@@ -8,8 +8,8 @@
  * 
  */
 
-#ifndef dff_SR_H
-#define dff_SR_H
+#ifndef DFF_SR_H
+#define DFF_SR_H
 
 #include "component.h"
 
@@ -26,4 +26,4 @@ class dff_SR : public Component
     QString verilogCode(int);
 };
 
-#endif /* dff_SR_H */
+#endif /* DFF_SR_H */

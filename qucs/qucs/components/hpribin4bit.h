@@ -8,8 +8,8 @@
  * 
  */
 
-#ifndef hpribin4bit_H
-#define hpribin4bit_H
+#ifndef HPRIBIN4BIT_H
+#define HPRIBIN4BIT_H
 
 #include "component.h"
 
@@ -26,4 +26,4 @@ class hpribin4bit : public Component
     QString verilogCode(int);
 };
 
-#endif /* hpribin4bit_H */
+#endif /* HPRIBIN4BIT_H */
