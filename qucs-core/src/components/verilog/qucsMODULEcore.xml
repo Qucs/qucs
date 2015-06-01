@@ -786,8 +786,8 @@ using qucs::matrix;
  */
 
 <admst:for-each select="/module">
-#ifndef __$(module)_H__
-#define __$(module)_H__
+#ifndef $(module)_H
+#define $(module)_H
 
 class $(module) : public qucs::circuit
 {
@@ -914,7 +914,7 @@ class $(module) : public qucs::circuit
 <admst:text format="\n"/>
 };
 
-#endif /* __$(module)_H__ */
+#endif /* $(module)_H */
 
 </admst:for-each>
 

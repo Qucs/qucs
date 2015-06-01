@@ -284,8 +284,8 @@
  *
  */
 
-#ifndef __$(module)_DEFS_H__
-#define __$(module)_DEFS_H__
+#ifndef $(module)_DEFS_H
+#define $(module)_DEFS_H
 
 
 <!-- find temp and tnom parameters -->
@@ -345,7 +345,7 @@ struct define_t $module::cirdef =
   { &quot;$module&quot;,
     $nbr_nodes, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_NONLINEAR, PROP_DEF };
 
-#endif /* __$(module)_DEFS_H__ */
+#endif /* $(module)_DEFS_H */
 
 </admst:for-each>
 
