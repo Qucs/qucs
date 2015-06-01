@@ -182,7 +182,7 @@ const matrix& matrix::operator=(const matrix & m) {
    Destructor deletes a matrix object.
 */
 matrix::~matrix () {
-  if (data) delete[] data;
+  delete[] data;
 }
 
 /*!\brief  Returns the matrix element at the given row and column.

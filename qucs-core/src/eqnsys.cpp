@@ -65,15 +65,15 @@ eqnsys<nr_type_t>::eqnsys () {
 //! Destructor deletes the eqnsys class object.
 template <class nr_type_t>
 eqnsys<nr_type_t>::~eqnsys () {
-  if (R != NULL) delete R;
-  if (T != NULL) delete T;
-  if (B != NULL) delete B;
-  if (S != NULL) delete S;
-  if (E != NULL) delete E;
-  if (V != NULL) delete V;
-  if (rMap != NULL) delete[] rMap;
-  if (cMap != NULL) delete[] cMap;
-  if (nPvt != NULL) delete[] nPvt;
+  delete R;
+  delete T;
+  delete B;
+  delete S;
+  delete E;
+  delete V;
+  delete[] rMap;
+  delete[] cMap;
+  delete[] nPvt;
 }
 
 /*! The copy constructor creates a new instance of the eqnsys class
@@ -106,15 +106,15 @@ void eqnsys<nr_type_t>::passEquationSys (tmatrix<nr_type_t> * nA,
     update = 1;
     if (N != A->getCols ()) {
       N = A->getCols ();
-      if (cMap) delete[] cMap; cMap = new int[N];
-      if (rMap) delete[] rMap; rMap = new int[N];
-      if (nPvt) delete[] nPvt; nPvt = new nr_double_t[N];
+      delete[] cMap; cMap = new int[N];
+      delete[] rMap; rMap = new int[N];
+      delete[] nPvt; nPvt = new nr_double_t[N];
     }
   }
   else {
     update = 0;
   }
-  if (B != NULL) delete B;
+  delete B;
   B = new tvector<nr_type_t> (*nB);
   X = refX;
 }
@@ -888,7 +888,7 @@ void eqnsys<nr_type_t>::factorize_qrh (void) {
   nr_type_t f, t;
   nr_double_t s, MaxPivot;
 
-  if (R) delete R; R = new tvector<nr_type_t> (N);
+  delete R; R = new tvector<nr_type_t> (N);
 
   for (c = 0; c < N; c++) {
     // compute column norms and save in work array
@@ -952,7 +952,7 @@ void eqnsys<nr_type_t>::factorize_qr_householder (void) {
   int c, r, pivot;
   nr_double_t s, MaxPivot;
 
-  if (T) delete T; T = new tvector<nr_type_t> (N);
+  delete T; T = new tvector<nr_type_t> (N);
 
   for (c = 0; c < N; c++) {
     // compute column norms and save in work array
@@ -1282,11 +1282,11 @@ void eqnsys<nr_type_t>::factorize_svd (void) {
   nr_type_t t;
 
   // allocate space for vectors and matrices
-  if (R) delete R; R = new tvector<nr_type_t> (N);
-  if (T) delete T; T = new tvector<nr_type_t> (N);
-  if (V) delete V; V = new tmatrix<nr_type_t> (N);
-  if (S) delete S; S = new tvector<nr_double_t> (N);
-  if (E) delete E; E = new tvector<nr_double_t> (N);
+  delete R; R = new tvector<nr_type_t> (N);
+  delete T; T = new tvector<nr_type_t> (N);
+  delete V; V = new tmatrix<nr_type_t> (N);
+  delete S; S = new tvector<nr_double_t> (N);
+  delete E; E = new tvector<nr_double_t> (N);
 
   // bidiagonalization through householder transformations
   for (i = 0; i < N; i++) {
