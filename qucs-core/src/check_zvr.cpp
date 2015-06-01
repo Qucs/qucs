@@ -103,17 +103,17 @@ static void zvr_finalize (void) {
     }
     // free header
     if (hdr) {
-      if (hdr->funit) free (hdr->funit);
-      if (hdr->d_UNT) free (hdr->d_UNT);
-      if (hdr->d_FMT) free (hdr->d_FMT);
-      if (hdr->d_TYP) free (hdr->d_TYP);
+      free (hdr->funit);
+      free (hdr->d_UNT);
+      free (hdr->d_FMT);
+      free (hdr->d_TYP);
       free (hdr);
     }
     // free data vector
     if (vec) {
-      if (vec->nf) free (vec->nf);
-      if (vec->n1) free (vec->n1);
-      if (vec->n2) free (vec->n2);
+      free (vec->nf);
+      free (vec->n1);
+      free (vec->n2);
       free (vec);
     }
   }

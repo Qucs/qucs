@@ -43,7 +43,7 @@ rfedd::rfedd () : circuit () {
 
 // Destructor deletes equation defined RF device object from memory.
 rfedd::~rfedd () {
-  if (peqn) free (peqn);
+  free (peqn);
 }
 
 // Callback for initializing the DC analysis.

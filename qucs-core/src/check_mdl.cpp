@@ -489,21 +489,21 @@ void mdl_find_syncdatasets (struct mdl_sync_t * root) {
 
 // Destroys an element structure.
 static void mdl_free_element (struct mdl_element_t * e) {
-  if (e->name) free (e->name);
-  if (e->value) free (e->value);
-  if (e->attr) free (e->attr);
+  free (e->name);
+  free (e->value);
+  free (e->attr);
   free (e);
 }
 
 // Destroys a datasize structure.
 static void mdl_free_datasize (struct mdl_datasize_t * d) {
-  if (d->type) free (d->type);
+  free (d->type);
   free (d);
 }
 
 // Destroys a hypertable structure.
 static void mdl_free_hyptable (struct mdl_hyptable_t * h) {
-  if (h->name) free (h->name);
+  free (h->name);
   struct mdl_element_t * e, * next;
   for (e = h->data; e != NULL; e = next) {
     next = e->next;
@@ -514,7 +514,7 @@ static void mdl_free_hyptable (struct mdl_hyptable_t * h) {
 
 // Destroys a table structure.
 static void mdl_free_table (struct mdl_table_t * t) {
-  if (t->name) free (t->name);
+  free (t->name);
   struct mdl_element_t * e, * next;
   for (e = t->data; e != NULL; e = next) {
     next = e->next;
@@ -525,13 +525,13 @@ static void mdl_free_table (struct mdl_table_t * t) {
 
 // Destroys a dataset structure.
 static void mdl_free_dataset (struct mdl_dataset_t * d) {
-  if (d->type1) free (d->type1);
+  free (d->type1);
   struct mdl_point_t * p, * next;
   for (p = d->data1; p != NULL; p = next) {
     next = p->next;
     free (p);
   }
-  if (d->type2) free (d->type2);
+  free (d->type2);
   for (p = d->data2; p != NULL; p = next) {
     next = p->next;
     free (p);
@@ -571,8 +571,8 @@ static void mdl_free_lcontent (struct mdl_lcontent_t * c) {
 
 // Destroys a link structure.
 static void mdl_free_link (struct mdl_link_t * l) {
-  if (l->name) free (l->name);
-  if (l->type) free (l->type);
+  free (l->name);
+  free (l->type);
   struct mdl_lcontent_t * c, * next;
   for (c = l->content; c != NULL; c = next) {
     next = c->next;
@@ -585,8 +585,8 @@ static void mdl_free_sync (struct mdl_sync_t * s) {
   struct mdl_sync_t * next;
   for (; s != NULL; s = next) {
     next = s->next;
-    if (s->name) free (s->name);
-    if (s->master) free (s->master);
+    free (s->name);
+    free (s->master);
     free (s);
   }
 }

@@ -180,7 +180,7 @@ static char * Cplx2String (nr_complex_t c)
 char * constant::toString (void)
 {
     char str[256];
-    if (txt != NULL) free (txt);
+    free (txt);
     switch (type)
     {
     case TAG_BOOLEAN:
@@ -307,7 +307,7 @@ void reference::replace (char * src, char * dst)
 // Destructor deletes an instance of the reference class.
 reference::~reference ()
 {
-    if (n) free (n);
+    free (n);
 }
 
 // Prints textual representation of the reference object.
@@ -319,7 +319,7 @@ void reference::print (void)
 // Returns textual representation of the reference object.
 char * reference::toString (void)
 {
-    if (txt) free (txt);
+    free (txt);
     txt = strdup (n);
     return txt;
 }
@@ -428,7 +428,7 @@ void assignment::replace (char * src, char * dst)
 // Renames the left hand side of the assignment.
 void assignment::rename (char * n)
 {
-    if (result) free (result);
+    free (result);
     result = n ? strdup (n) : NULL;
 }
 
@@ -436,7 +436,7 @@ void assignment::rename (char * n)
 assignment::~assignment ()
 {
     delete body;
-    if (result) free (result);
+    free (result);
 }
 
 // Prints textual representation of the assignment object.
@@ -448,7 +448,7 @@ void assignment::print (void)
 // Returns textual representation of the assignment object.
 char * assignment::toString (void)
 {
-    if (txt) free (txt);
+    free (txt);
     char * str = body->toString ();
     txt = (char *) malloc (strlen (result) + strlen (str) + 4);
     sprintf (txt, "%s = %s", result, str);
@@ -658,7 +658,7 @@ application::~application ()
         delete arg;
     }
     delete getResult ();
-    if (n) free (n);
+    free (n);
     delete ddx;
 }
 
@@ -672,7 +672,7 @@ void application::print (void)
 char * application::toString (void)
 {
     int nparam = nargs > 0 ? (nargs - 1) : 0;
-    if (txt) free (txt);
+    free (txt);
     // binary operations
     if ((!strcmp (n, "+")  || !strcmp (n, "-")  || !strcmp (n, "*") ||
             !strcmp (n, "/")  || !strcmp (n, "^")  || !strcmp (n, "%") ||
@@ -1058,14 +1058,14 @@ node::~node ()
     delete dataDependencies;
     delete dropDependencies;
     delete prepDependencies;
-    if (txt) free (txt);
-    if (instance) free (instance);
+    free (txt);
+    free (instance);
 }
 
 // Sets the instance name where the node occurred.
 void node::setInstance (const char * n)
 {
-    if (instance) free (instance);
+    free (instance);
     instance = n ? strdup (n) : NULL;
 }
 

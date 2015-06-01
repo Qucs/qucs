@@ -88,7 +88,7 @@ dataset::~dataset () {
     n = (vector *) v->getNext ();
     delete v;
   }
-  if (file) free (file);
+  free (file);
 }
 
 // This function adds a dependency vector to the current dataset.
@@ -321,7 +321,7 @@ char * dataset::getFile (void) {
 /* Sets the current output file name.  The file name is used during
    the print functionality of the dataset class. */
 void dataset::setFile (const char * f) {
-  if (file) free (file);
+  free (file);
   file = f ? strdup (f) : NULL;
 }
 

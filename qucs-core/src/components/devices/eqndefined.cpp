@@ -51,14 +51,14 @@ eqndefined::eqndefined () : circuit () {
 
 // Destructor deletes equation defined device object from memory.
 eqndefined::~eqndefined () {
-  if (veqn) free (veqn);
-  if (ieqn) free (ieqn);
-  if (geqn) free (geqn);
-  if (qeqn) free (qeqn);
-  if (ceqn) free (ceqn);
-  if (_jstat) free (_jstat);
-  if (_jdyna) free (_jdyna);
-  if (_charges) free (_charges);
+  free (veqn);
+  free (ieqn);
+  free (geqn);
+  free (qeqn);
+  free (ceqn);
+  free (_jstat);
+  free (_jdyna);
+  free (_charges);
 }
 
 // Callback for initializing the DC analysis.
