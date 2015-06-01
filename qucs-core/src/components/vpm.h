@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __VPM_H__
-#define __VPM_H__
+#ifndef VPM_H
+#define VPM_H
 
 class vpm : public qucs::circuit
 {
@@ -36,4 +36,4 @@ class vpm : public qucs::circuit
   void calcTR (nr_double_t);
 };
 
-#endif /* __VPM_H__ */
+#endif /* VPM_H */

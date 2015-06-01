@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __EXCEPTIONSTACK_H__
-#define __EXCEPTIONSTACK_H__
+#ifndef EXCEPTIONSTACK_H
+#define EXCEPTIONSTACK_H
 
 namespace qucs {
 
@@ -57,4 +57,4 @@ extern exceptionstack estack;
 #define top_exception()      estack.top ()
 #define pop_exception()      estack.pop ()
 
-#endif /* __EXCEPTIONSTACK_H__ */
+#endif /* EXCEPTIONSTACK_H */

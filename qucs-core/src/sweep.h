@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __SWEEP_H__
-#define __SWEEP_H__
+#ifndef SWEEP_H
+#define SWEEP_H
 
 namespace qucs {
 
@@ -106,4 +106,4 @@ class lstsweep : public sweep
 
 } // namespace qucs
 
-#endif /* __SWEEP_H__ */
+#endif /* SWEEP_H */

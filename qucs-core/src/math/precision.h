@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __PRECISION_H__
-#define __PRECISION_H__
+#ifndef PRECISION_H
+#define PRECISION_H
 
 #include <limits>
 
@@ -47,4 +47,4 @@
 
 
 
-#endif /* __PRECISION_H__ */
+#endif /* PRECISION_H */

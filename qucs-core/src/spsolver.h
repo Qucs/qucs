@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __SPSOLVER_H__
-#define __SPSOLVER_H__
+#ifndef SPSOLVER_H
+#define SPSOLVER_H
 
 #include <string>
 
@@ -82,4 +82,4 @@ class spsolver : public analysis
 
 } // namespace qucs
 
-#endif /* __SPSOLVER_H__ */
+#endif /* SPSOLVER_H */

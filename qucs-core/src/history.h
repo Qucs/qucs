@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __HISTORY_H__
-#define __HISTORY_H__
+#ifndef HISTORY_H
+#define HISTORY_H
 
 #include <memory>
 #include <vector>
@@ -134,4 +134,4 @@ public:
 
 } // namespace qucs
 
-#endif /* __HISTORY_H__ */
+#endif /* HISTORY_H */

@@ -23,8 +23,8 @@
  *
  */
 
-#ifndef __APPLICATIONS_H__
-#define __APPLICATIONS_H__
+#ifndef APPLICATIONS_H
+#define APPLICATIONS_H
 
 // Array containing all kinds of applications.
 struct application_t qucs::eqn::applications[] = {
@@ -1076,4 +1076,4 @@ const char * checker::tag2key (int tag) {
   return key;
 }
 
-#endif /* __APPLICATIONS_H__ */
+#endif /* APPLICATIONS_H */

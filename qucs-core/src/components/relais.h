@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __RELAIS_H__
-#define __RELAIS_H__
+#ifndef RELAIS_H
+#define RELAIS_H
 
 class relais : public qucs::circuit
 {
@@ -44,4 +44,4 @@ class relais : public qucs::circuit
   nr_double_t r;
 };
 
-#endif /* __RELAIS_H__ */
+#endif /* RELAIS_H */

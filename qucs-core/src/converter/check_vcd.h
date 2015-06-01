@@ -23,8 +23,8 @@
  *
  */
 
-#ifndef __CHECK_VCD_H__
-#define __CHECK_VCD_H__
+#ifndef CHECK_VCD_H
+#define CHECK_VCD_H
 
 /* Externalize variables used by the scanner and parser. */
 extern int vcd_lineno;
@@ -185,4 +185,4 @@ struct dataset_variable {
   struct dataset_variable * next;
 };
 
-#endif /* __CHECK_VCD_H__ */
+#endif /* CHECK_VCD_H */

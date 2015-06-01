@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __VARIABLE_H__
-#define __VARIABLE_H__
+#ifndef VARIABLE_H
+#define VARIABLE_H
 
 #include <string>
 
@@ -108,4 +108,4 @@ class variable
 
 } // namespace qucs
 
-#endif /* __VARIABLE_H__ */
+#endif /* VARIABLE_H */

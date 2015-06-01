@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __COAXLINE_H__
-#define __COAXLINE_H__
+#ifndef COAXLINE_H
+#define COAXLINE_H
 
 class coaxline : public qucs::circuit
 {
@@ -44,4 +44,4 @@ class coaxline : public qucs::circuit
   nr_double_t alpha, beta, zl, fc;
 };
 
-#endif /* __COAXLINE_H__ */
+#endif /* COAXLINE_H */

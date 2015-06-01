@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __COMPAT_H__
-#define __COMPAT_H__
+#ifndef COMPAT_H
+#define COMPAT_H
 
 #if HAVE_IEEEFP_H
 # include <ieeefp.h>
@@ -38,4 +38,4 @@
 #define strcasecmp stricmp
 #endif
 
-#endif /* __COMPAT_H__ */
+#endif /* COMPAT_H */

@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __NASOLVER_H__
-#define __NASOLVER_H__
+#ifndef NASOLVER_H
+#define NASOLVER_H
 
 #ifdef HAVE_CONFIG_H
 #include "config.h"
@@ -154,4 +154,4 @@ private:
 
 #include "nasolver.cpp"
 
-#endif /* __NASOLVER_H__ */
+#endif /* NASOLVER_H */

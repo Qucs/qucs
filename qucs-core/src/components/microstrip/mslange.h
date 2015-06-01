@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __MSLANGE_H__
-#define __MSLANGE_H__
+#ifndef MSLANGE_H
+#define MSLANGE_H
 
 class mslange : public qucs::circuit
 {
@@ -52,4 +52,4 @@ class mslange : public qucs::circuit
   nr_double_t ae, be, ze, ao, bo, zo, ee, eo;
 };
 
-#endif /* __MSLANGE_H__ */
+#endif /* MSLANGE_H */

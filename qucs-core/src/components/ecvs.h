@@ -31,8 +31,8 @@
   * \ingroup QucsInterface
   */
 
-#ifndef __ECVS_H__
-#define __ECVS_H__
+#ifndef ECVS_H
+#define ECVS_H
 
 class ecvs : public qucs::circuit
 {
@@ -48,4 +48,4 @@ class ecvs : public qucs::circuit
   void calcTR (nr_double_t);
 };
 
-#endif /* __ECVS_H__ */
+#endif /* ECVS_H */

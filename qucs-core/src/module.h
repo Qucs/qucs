@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __MODULE_H__
-#define __MODULE_H__
+#ifndef MODULE_H
+#define MODULE_H
 
 #include <list>
 
@@ -74,4 +74,4 @@ class module
 
 } // namespace qucs
 
-#endif /* __MODULE_H__ */
+#endif /* MODULE_H */

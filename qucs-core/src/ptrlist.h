@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __PTRLIST_H__
-#define __PTRLIST_H__
+#ifndef PTRLIST_H
+#define PTRLIST_H
 
 #include <list>
 
@@ -33,4 +33,4 @@ template <typename T>
 using ptrlist = std::list<T *>;
 
 }
-#endif /* __PTRLIST_H__ */
+#endif /* PTRLIST_H */

@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __NAND_H__
-#define __NAND_H__
+#ifndef NAND_H
+#define NAND_H
 
 class logicnand : public digital
 {
@@ -33,4 +33,4 @@ class logicnand : public digital
   void calcDerivatives (void);
 };
 
-#endif /* __NAND_H__ */
+#endif /* NAND_H */

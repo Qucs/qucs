@@ -23,8 +23,8 @@
  *
  */
 
-#ifndef __MSSTEP_H__
-#define __MSSTEP_H__
+#ifndef MSSTEP_H
+#define MSSTEP_H
 
 class msstep : public qucs::circuit
 {
@@ -38,4 +38,4 @@ class msstep : public qucs::circuit
   qucs::matrix calcMatrixZ (nr_double_t);
 };
 
-#endif /* __MSSTEP_H__ */
+#endif /* MSSTEP_H */

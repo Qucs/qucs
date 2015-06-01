@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __BIASTEE_H__
-#define __BIASTEE_H__
+#ifndef BIASTEE_H
+#define BIASTEE_H
 
 class biastee : public qucs::circuit
 {
@@ -36,4 +36,4 @@ class biastee : public qucs::circuit
   void calcTR (nr_double_t);
 };
 
-#endif /* __BIASTEE_H__ */
+#endif /* BIASTEE_H */

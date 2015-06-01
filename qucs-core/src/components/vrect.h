@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __VRECT_H__
-#define __VRECT_H__
+#ifndef VRECT_H
+#define VRECT_H
 
 class vrect : public qucs::circuit
 {
@@ -36,4 +36,4 @@ class vrect : public qucs::circuit
   void calcTR (nr_double_t);
 };
 
-#endif /* __VRECT_H__ */
+#endif /* VRECT_H */

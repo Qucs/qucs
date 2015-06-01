@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __HBSOLVER_H__
-#define __HBSOLVER_H__
+#ifndef HBSOLVER_H
+#define HBSOLVER_H
 
 #include <vector>
 
@@ -139,4 +139,4 @@ class hbsolver : public analysis
 
 } // namespace qucs
 
-#endif /* __HBSOLVER_H__ */
+#endif /* HBSOLVER_H */

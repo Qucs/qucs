@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __PARASWEEP_H__
-#define __PARASWEEP_H__
+#ifndef PARASWEEP_H
+#define PARASWEEP_H
 
 namespace qucs {
 
@@ -51,4 +51,4 @@ class parasweep : public analysis
 
 } // namespace qucs
 
-#endif /* __PARASWEEP_H__ */
+#endif /* PARASWEEP_H */

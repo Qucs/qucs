@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __SUBSTRATE_H__
-#define __SUBSTRATE_H__
+#ifndef SUBSTRATE_H
+#define SUBSTRATE_H
 
 #include "object.h"
 
@@ -39,4 +39,4 @@ class substrate : public qucs::object
 
 } // namespace qucs
 
-#endif /* __SUBSTRATE_H__ */
+#endif /* SUBSTRATE_H */

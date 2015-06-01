@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __OPAMP_H__
-#define __OPAMP_H__
+#ifndef OPAMP_H
+#define OPAMP_H
 
 class opamp : public qucs::circuit
 {
@@ -41,4 +41,4 @@ class opamp : public qucs::circuit
   nr_double_t gv;
 };
 
-#endif /* __OPAMP_H__ */
+#endif /* OPAMP_H */

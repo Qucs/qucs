@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __IPULSE_H__
-#define __IPULSE_H__
+#ifndef IPULSE_H
+#define IPULSE_H
 
 class ipulse : public qucs::circuit
 {
@@ -36,4 +36,4 @@ class ipulse : public qucs::circuit
   void calcTR (nr_double_t);
 };
 
-#endif /* __IPULSE_H__ */
+#endif /* IPULSE_H */

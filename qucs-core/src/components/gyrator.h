@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __GYRATOR_H__
-#define __GYRATOR_H__
+#ifndef GYRATOR_H
+#define GYRATOR_H
 
 class gyrator : public qucs::circuit
 {
@@ -35,4 +35,4 @@ class gyrator : public qucs::circuit
   void initTR (void);
 };
 
-#endif /* __GYRATOR_H__ */
+#endif /* GYRATOR_H */

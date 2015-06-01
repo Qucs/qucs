@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __CHECK_TOUCHSTONE_H__
-#define __CHECK_TOUCHSTONE_H__
+#ifndef CHECK_TOUCHSTONE_H
+#define CHECK_TOUCHSTONE_H
 
 /* Touchstone (R) File Format Specification Rev 1.1
 
@@ -80,4 +80,4 @@ void touchstone_destroy (void);
 
 __END_DECLS
 
-#endif /* __CHECK_TOUCHSTONE_H__ */
+#endif /* CHECK_TOUCHSTONE_H */

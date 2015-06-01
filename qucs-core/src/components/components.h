@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __COMPONENTS_H__
-#define __COMPONENTS_H__
+#ifndef COMPONENTS_H
+#define COMPONENTS_H
 
 // BUG: include all component headers.
 // components should add to the kernel, not the other way around.
@@ -185,4 +185,4 @@
 
 #include "ecvs.h"
 
-#endif /* __COMPONENTS_H__ */
+#endif /* COMPONENTS_H */

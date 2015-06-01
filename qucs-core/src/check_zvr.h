@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __CHECK_ZVR_H__
-#define __CHECK_ZVR_H__
+#ifndef CHECK_ZVR_H
+#define CHECK_ZVR_H
 
 // forward declarations
 namespace qucs {
@@ -86,4 +86,4 @@ struct zvr_data_t {
 };
 
 
-#endif /* __CHECK_ZVR_H__ */
+#endif /* CHECK_ZVR_H */

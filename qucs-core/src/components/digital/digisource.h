@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __DIGISOURCE_H__
-#define __DIGISOURCE_H__
+#ifndef DIGISOURCE_H
+#define DIGISOURCE_H
 
 class digisource : public qucs::circuit
 {
@@ -39,4 +39,4 @@ class digisource : public qucs::circuit
   nr_double_t T;
 };
 
-#endif /* __DIGISOURCE_H__ */
+#endif /* DIGISOURCE_H */

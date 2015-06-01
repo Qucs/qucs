@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __CPWOPEN_H__
-#define __CPWOPEN_H__
+#ifndef CPWOPEN_H
+#define CPWOPEN_H
 
 class cpwopen : public qucs::circuit
 {
@@ -40,4 +40,4 @@ class cpwopen : public qucs::circuit
   nr_complex_t calcY (nr_double_t);
 };
 
-#endif /* __CPWOPEN_H__ */
+#endif /* CPWOPEN_H */

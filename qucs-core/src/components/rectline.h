@@ -21,8 +21,8 @@
  *
  */
 
-#ifndef __RECTLINE_H__
-#define __RECTLINE_H__
+#ifndef RECTLINE_H
+#define RECTLINE_H
 
 /*! A TE10 rectangular waveguide component
     \note Evanecent mode are not implemented
@@ -59,4 +59,4 @@ class rectline : public qucs::circuit
   nr_double_t rho;
 };
 
-#endif /* __RECTLINE_H__ */
+#endif /* RECTLINE_H */

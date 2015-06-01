@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __CHECK_CSV_H__
-#define __CHECK_CSV_H__
+#ifndef CHECK_CSV_H
+#define CHECK_CSV_H
 
 namespace qucs {
   class dataset;
@@ -53,4 +53,4 @@ void csv_destroy (void);
 
 __END_DECLS
 
-#endif /* __CHECK_CSV_H__ */
+#endif /* CHECK_CSV_H */

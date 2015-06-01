@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __TRIAC_H__
-#define __TRIAC_H__
+#ifndef TRIAC_H
+#define TRIAC_H
 
 #include "devstates.h"
 
@@ -52,4 +52,4 @@ class triac : public qucs::circuit, public qucs::devstates
   qucs::matrix calcMatrixY (nr_double_t);
 };
 
-#endif /* __TRIAC_H__ */
+#endif /* TRIAC_H */

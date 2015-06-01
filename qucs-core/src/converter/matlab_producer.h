@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __MATLAB_PRODUCER_H__
-#define __MATLAB_PRODUCER_H__
+#ifndef MATLAB_PRODUCER_H
+#define MATLAB_PRODUCER_H
 
 #include "logging.h"
 #include "strlist.h"
@@ -39,4 +39,4 @@ extern FILE * matlab_out;
 /* Available functions of the producers. */
 void matlab_producer (void);
 
-#endif /* __MATLAB_PRODUCER_H__ */
+#endif /* MATLAB_PRODUCER_H */

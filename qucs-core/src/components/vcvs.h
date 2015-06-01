@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __VCVS_H__
-#define __VCVS_H__
+#ifndef VCVS_H
+#define VCVS_H
 
 class vcvs : public qucs::circuit
 {
@@ -37,4 +37,4 @@ class vcvs : public qucs::circuit
   void calcTR (nr_double_t);
 };
 
-#endif /* __VCVS_H__ */
+#endif /* VCVS_H */

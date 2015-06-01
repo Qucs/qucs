@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __SPFILE_H__
-#define __SPFILE_H__
+#ifndef SPFILE_H
+#define SPFILE_H
 
 namespace qucs {
   class vector;
@@ -90,4 +90,4 @@ class spfile : public qucs::circuit
   int  interpolType;
 };
 
-#endif /* __SPFILE_H__ */
+#endif /* SPFILE_H */

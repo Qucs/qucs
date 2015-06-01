@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __ISOLATOR_H__
-#define __ISOLATOR_H__
+#ifndef ISOLATOR_H
+#define ISOLATOR_H
 
 class isolator : public qucs::circuit
 {
@@ -37,4 +37,4 @@ class isolator : public qucs::circuit
   void initTR (void);
 };
 
-#endif /* __ISOLATOR_H__ */
+#endif /* ISOLATOR_H */

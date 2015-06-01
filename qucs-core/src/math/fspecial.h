@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __FSPECIAL_H__
-#define __FSPECIAL_H__
+#ifndef FSPECIAL_H
+#define FSPECIAL_H
 
 namespace fspecial {
 
@@ -45,4 +45,4 @@ namespace fspecial {
 
 } // namespace
 
-#endif /* __FSPECIAL_H__ */
+#endif /* FSPECIAL_H */

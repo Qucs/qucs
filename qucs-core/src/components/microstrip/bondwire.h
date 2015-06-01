@@ -23,8 +23,8 @@
  *
  */
 
-#ifndef __BONDWIRE_H__
-#define __BONDWIRE_H__
+#ifndef BONDWIRE_H
+#define BONDWIRE_H
 
 
 class bondwire : public qucs::circuit
@@ -57,4 +57,4 @@ class bondwire : public qucs::circuit
   nr_double_t temp;  /*!< ambient temperature */
 };
 
-#endif /* __BONDWIRE_H__ */
+#endif /* BONDWIRE_H */

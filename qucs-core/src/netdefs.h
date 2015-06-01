@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __NETDEFS_H__
-#define __NETDEFS_H__
+#ifndef NETDEFS_H
+#define NETDEFS_H
 
 namespace qucs {
 class environment;
@@ -197,4 +197,4 @@ struct define_t {
 #define create_pair() \
   ((struct pair_t *) calloc (sizeof (struct pair_t), 1))
 
-#endif /* __NETDEFS_H__ */
+#endif /* NETDEFS_H */

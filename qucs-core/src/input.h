@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __INPUT_H__
-#define __INPUT_H__
+#ifndef INPUT_H
+#define INPUT_H
 
 namespace qucs {
 
@@ -61,4 +61,4 @@ extern int netlist_check;
 
 }
 
-#endif /* __INPUT_H__ */
+#endif /* INPUT_H */

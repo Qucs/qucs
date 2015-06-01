@@ -31,8 +31,8 @@
   * \ingroup QucsInterface
   */
 
-#ifndef __E_TRSOLVER_H__
-#define __E_TRSOLVER_H__
+#ifndef E_TRSOLVER_H
+#define E_TRSOLVER_H
 
 #include "qucs_interface.h"
 #include "trsolver.h"
@@ -209,5 +209,5 @@ private:
 
 } // namespace qucs
 
-#endif /* __e_trsolver_H__ */
+#endif /* e_trsolver_H */
 

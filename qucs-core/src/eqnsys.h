@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __EQNSYS_H__
-#define __EQNSYS_H__
+#ifndef EQNSYS_H
+#define EQNSYS_H
 
 #include <limits>
 
@@ -138,4 +138,4 @@ class eqnsys
 
 #include "eqnsys.cpp"
 
-#endif /* __EQNSYS_H__ */
+#endif /* EQNSYS_H */

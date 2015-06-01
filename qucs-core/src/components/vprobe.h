@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __VPROBE_H__
-#define __VPROBE_H__
+#ifndef VPROBE_H
+#define VPROBE_H
 
 class vprobe : public qucs::circuit
 {
@@ -36,4 +36,4 @@ class vprobe : public qucs::circuit
   void saveOperatingPoints (void);
 };
 
-#endif /* __VPROBE_H__ */
+#endif /* VPROBE_H */

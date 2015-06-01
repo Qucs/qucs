@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __DCBLOCK_H__
-#define __DCBLOCK_H__
+#ifndef DCBLOCK_H
+#define DCBLOCK_H
 
 class dcblock : public qucs::circuit
 {
@@ -36,4 +36,4 @@ class dcblock : public qucs::circuit
   void calcTR (nr_double_t);
 };
 
-#endif /* __DCBLOCK_H__ */
+#endif /* DCBLOCK_H */

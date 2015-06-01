@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __RFEDD_H__
-#define __RFEDD_H__
+#ifndef RFEDD_H
+#define RFEDD_H
 
 class rfedd : public qucs::circuit
 {
@@ -58,4 +58,4 @@ class rfedd : public qucs::circuit
   void * feqn;
 };
 
-#endif /* __RFEDD_H__ */
+#endif /* RFEDD_H */

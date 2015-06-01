@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __TSWITCH_H__
-#define __TSWITCH_H__
+#ifndef TSWITCH_H
+#define TSWITCH_H
 
 class tswitch : public qucs::circuit
 {
@@ -44,4 +44,4 @@ class tswitch : public qucs::circuit
   bool repeat;
 };
 
-#endif /* __TSWITCH_H__ */
+#endif /* TSWITCH_H */

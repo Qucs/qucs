@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __POLY_H__
-#define __POLY_H__
+#ifndef POLY_H
+#define POLY_H
 
 namespace qucs {
 
@@ -50,4 +50,4 @@ class poly
 
 } // namespace qucs
 
-#endif /* __POLY_H__ */
+#endif /* POLY_H */

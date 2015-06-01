@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __CHECK_MDL_H__
-#define __CHECK_MDL_H__
+#ifndef CHECK_MDL_H
+#define CHECK_MDL_H
 
 namespace qucs {
   class dataset;
@@ -133,4 +133,4 @@ struct mdl_sync_t {
   struct mdl_sync_t * next;
 };
 
-#endif /* __CHECK_MDL_H__ */
+#endif /* CHECK_MDL_H */

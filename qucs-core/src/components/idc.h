@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __IDC_H__
-#define __IDC_H__
+#ifndef IDC_H
+#define IDC_H
 
 class idc : public qucs::circuit
 {
@@ -36,4 +36,4 @@ class idc : public qucs::circuit
   void initTR (void);
 };
 
-#endif /* __IDC_H__ */
+#endif /* IDC_H */

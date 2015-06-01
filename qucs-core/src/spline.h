@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __SPLINE_H__
-#define __SPLINE_H__
+#ifndef SPLINE_H
+#define SPLINE_H
 
 #include <vector>
 #include "tvector.h"
@@ -77,4 +77,4 @@ class spline
 
 } // namespace qucs
 
-#endif /* __SPLINE_H__ */
+#endif /* SPLINE_H */

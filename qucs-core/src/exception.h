@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __EXCEPTION_H__
-#define __EXCEPTION_H__
+#ifndef EXCEPTION_H
+#define EXCEPTION_H
 
 namespace qucs {
 
@@ -65,4 +65,4 @@ class exception
 
 } /* namespace qucs */
 
-#endif /* __EXCEPTION_H__ */
+#endif /* EXCEPTION_H */

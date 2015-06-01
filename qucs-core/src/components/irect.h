@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __IRECT_H__
-#define __IRECT_H__
+#ifndef IRECT_H
+#define IRECT_H
 
 class irect : public qucs::circuit
 {
@@ -36,4 +36,4 @@ class irect : public qucs::circuit
   void calcTR (nr_double_t);
 };
 
-#endif /* __IRECT_H__ */
+#endif /* IRECT_H */

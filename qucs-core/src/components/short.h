@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __SHORT_H__
-#define __SHORT_H__
+#ifndef SHORT_H
+#define SHORT_H
 
 class ashort : public qucs::circuit
 {
@@ -36,4 +36,4 @@ class ashort : public qucs::circuit
   void initHB (void);
 };
 
-#endif /* __SHORT_H__ */
+#endif /* SHORT_H */

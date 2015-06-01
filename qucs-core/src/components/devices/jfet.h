@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __JFET_H__
-#define __JFET_H__
+#ifndef JFET_H
+#define JFET_H
 
 class jfet : public qucs::circuit
 {
@@ -55,4 +55,4 @@ class jfet : public qucs::circuit
   qucs::circuit * rd;
 };
 
-#endif /* __JFET_H__ */
+#endif /* JFET_H */

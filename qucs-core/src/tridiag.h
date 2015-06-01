@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __TRIDIAG_H__
-#define __TRIDIAG_H__
+#ifndef TRIDIAG_H
+#define TRIDIAG_H
 
 #include <vector>
 //#include "tvector.h"
@@ -88,4 +88,4 @@ class tridiag
 
 #include "tridiag.cpp"
 
-#endif /* __TRIDIAG_H__ */
+#endif /* TRIDIAG_H */

@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __NODESET_H__
-#define __NODESET_H__
+#ifndef NODESET_H
+#define NODESET_H
 
 namespace qucs {
 
@@ -51,4 +51,4 @@ class nodeset
 
 } // namespace qucs
 
-#endif /* __NODESET_H__ */
+#endif /* NODESET_H */

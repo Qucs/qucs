@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __TWISTEDPAIR_H__
-#define __TWISTEDPAIR_H__
+#ifndef TWISTEDPAIR_H
+#define TWISTEDPAIR_H
 
 class twistedpair : public qucs::circuit
 {
@@ -48,4 +48,4 @@ class twistedpair : public qucs::circuit
   nr_double_t zl, ereff, alpha, beta, len, angle;
 };
 
-#endif /* __TWISTEDPAIR_H__ */
+#endif /* TWISTEDPAIR_H */

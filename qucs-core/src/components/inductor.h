@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __INDUCTOR_H__
-#define __INDUCTOR_H__
+#ifndef INDUCTOR_H
+#define INDUCTOR_H
 
 class inductor : public qucs::circuit
 {
@@ -40,4 +40,4 @@ class inductor : public qucs::circuit
   void calcHB (nr_double_t);
 };
 
-#endif /* __INDUCTOR_H__ */
+#endif /* INDUCTOR_H */

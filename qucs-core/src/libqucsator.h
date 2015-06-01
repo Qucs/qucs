@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __LIBQUCSATOR_H__
-#define __LIBQUCSATOR_H__
+#ifndef LIBQUCSATOR_H
+#define LIBQUCSATOR_H
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -46,4 +46,4 @@
 #include "check_dataset.h"
 #include "check_touchstone.h"
 
-#endif /* __LIBQUCSATOR_H__ */
+#endif /* LIBQUCSATOR_H */

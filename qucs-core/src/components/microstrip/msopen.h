@@ -23,8 +23,8 @@
  *
  */
 
-#ifndef __MSOPEN_H__
-#define __MSOPEN_H__
+#ifndef MSOPEN_H
+#define MSOPEN_H
 
 class msopen : public qucs::circuit
 {
@@ -39,4 +39,4 @@ class msopen : public qucs::circuit
   nr_complex_t calcY (nr_double_t);
 };
 
-#endif /* __MSOPEN_H__ */
+#endif /* MSOPEN_H */

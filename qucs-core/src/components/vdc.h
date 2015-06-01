@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __VDC_H__
-#define __VDC_H__
+#ifndef VDC_H
+#define VDC_H
 
 class vdc : public qucs::circuit
 {
@@ -38,4 +38,4 @@ class vdc : public qucs::circuit
   void calcHB (nr_double_t);
 };
 
-#endif /* __VDC_H__ */
+#endif /* VDC_H */

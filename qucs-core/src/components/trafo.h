@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __TRAFO_H__
-#define __TRAFO_H__
+#ifndef TRAFO_H
+#define TRAFO_H
 
 class trafo : public qucs::circuit
 {
@@ -35,4 +35,4 @@ class trafo : public qucs::circuit
   void initTR (void);
 };
 
-#endif /* __TRAFO_H__ */
+#endif /* TRAFO_H */

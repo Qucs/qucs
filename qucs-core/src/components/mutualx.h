@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __MUTUALX_H__
-#define __MUTUALX_H__
+#ifndef MUTUALX_H
+#define MUTUALX_H
 
 class mutualx : public qucs::circuit
 {
@@ -41,4 +41,4 @@ class mutualx : public qucs::circuit
   qucs::matrix calcMatrixY (nr_double_t);
 };
 
-#endif /* __MUTUALX_H__ */
+#endif /* MUTUALX_H */

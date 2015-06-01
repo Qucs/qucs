@@ -30,8 +30,8 @@
    @defgroup qucsPhysConstants Qucs Physical Constants
 */
 
-#ifndef __CONSTANTS_H__
-#define __CONSTANTS_H__
+#ifndef CONSTANTS_H
+#define CONSTANTS_H
 
 #include "consts.h"
 #include "precision.h"
@@ -108,4 +108,4 @@ static const double GMin = NR_TINY;
 
 } // namespace qucs
 
-#endif /* __CONSTANTS_H__ */
+#endif /* CONSTANTS_H */

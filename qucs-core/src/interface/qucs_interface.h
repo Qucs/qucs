@@ -32,8 +32,8 @@
   * \defgroup QucsInterface
   */
 
-#ifndef __QUCS_INTERFACE_H__
-#define __QUCS_INTERFACE_H__
+#ifndef QUCS_INTERFACE_H
+#define QUCS_INTERFACE_H
 
 
 namespace qucs
@@ -239,4 +239,4 @@ private:
 
 } // namespace qucs
 
-#endif /* __QUCS_INTERFACE_H__ */
+#endif /* QUCS_INTERFACE_H */

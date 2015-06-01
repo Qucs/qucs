@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __XOR_H__
-#define __XOR_H__
+#ifndef XOR_H
+#define XOR_H
 
 class logicxor : public digital
 {
@@ -33,4 +33,4 @@ class logicxor : public digital
   void calcDerivatives (void);
 };
 
-#endif /* __XOR_H__ */
+#endif /* XOR_H */

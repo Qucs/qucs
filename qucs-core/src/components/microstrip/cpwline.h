@@ -23,8 +23,8 @@
  *
  */
 
-#ifndef __CPWLINE_H__
-#define __CPWLINE_H__
+#ifndef CPWLINE_H
+#define CPWLINE_H
 
 class cpwline : public qucs::circuit
 {
@@ -68,4 +68,4 @@ class cpwline : public qucs::circuit
   nr_double_t Zl, Er;
 };
 
-#endif /* __CPWLINE_H__ */
+#endif /* CPWLINE_H */

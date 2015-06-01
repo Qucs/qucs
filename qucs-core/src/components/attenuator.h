@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __ATTENUATOR_H__
-#define __ATTENUATOR_H__
+#ifndef ATTENUATOR_H
+#define ATTENUATOR_H
 
 class attenuator : public qucs::circuit
 {
@@ -37,4 +37,4 @@ class attenuator : public qucs::circuit
   void initTR (void);
 };
 
-#endif /* __ATTENUATOR_H__ */
+#endif /* ATTENUATOR_H */

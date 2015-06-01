@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __GROUND_H__
-#define __GROUND_H__
+#ifndef GROUND_H
+#define GROUND_H
 
 class ground : public qucs::circuit
 {
@@ -32,4 +32,4 @@ class ground : public qucs::circuit
   void initSP (void);
 };
 
-#endif /* __GROUND_H__ */
+#endif /* GROUND_H */

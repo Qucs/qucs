@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __TUNNELDIODE_H__
-#define __TUNNELDIODE_H__
+#ifndef TUNNELDIODE_H
+#define TUNNELDIODE_H
 
 class tunneldiode : public qucs::circuit
 {
@@ -49,4 +49,4 @@ class tunneldiode : public qucs::circuit
   void calcId (nr_double_t, nr_double_t&, nr_double_t&);
 };
 
-#endif /* __TUNNELDIODE_H__ */
+#endif /* TUNNELDIODE_H */

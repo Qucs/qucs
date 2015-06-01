@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __COMPONENT_H__
-#define __COMPONENT_H__
+#ifndef COMPONENT_H
+#define COMPONENT_H
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -45,4 +45,4 @@
 #include "constants.h"
 #include "netdefs.h"
 
-#endif /* __COMPONENT_H__ */
+#endif /* COMPONENT_H */

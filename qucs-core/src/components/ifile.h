@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __IFILE_H__
-#define __IFILE_H__
+#ifndef IFILE_H
+#define IFILE_H
 
 namespace qucs {
   class dataset;
@@ -49,4 +49,4 @@ private:
   qucs::interpolator * inter;
 };
 
-#endif /* __IFILE_H__ */
+#endif /* IFILE_H */

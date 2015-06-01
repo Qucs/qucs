@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __NET_H__
-#define __NET_H__
+#ifndef NET_H
+#define NET_H
 
 #include <string>
 #include "ptrlist.h"
@@ -108,4 +108,4 @@ class net : public object
 
 } // namespace qucs
 
-#endif /* __NET_H__ */
+#endif /* NET_H */

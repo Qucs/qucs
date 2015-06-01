@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __STATES_H__
-#define __STATES_H__
+#ifndef STATES_H
+#define STATES_H
 
 namespace qucs {
 
@@ -69,4 +69,4 @@ class states
 
 #include "states.cpp"
 
-#endif /* __STATES_H__ */
+#endif /* STATES_H */

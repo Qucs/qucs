@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __VALUELIST_H__
-#define __VALUELIST_H__
+#ifndef VALUELIST_H
+#define VALUELIST_H
 
 #include <unordered_map>
 #include <string>
@@ -33,4 +33,4 @@ namespace qucs {
     using  valuelist= std::unordered_map<std::string,T>;
 }
 
-#endif /* __VALUELIST_H__ */
+#endif /* VALUELIST_H */

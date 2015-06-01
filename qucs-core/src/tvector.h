@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __TVECTOR_H__
-#define __TVECTOR_H__
+#ifndef TVECTOR_H
+#define TVECTOR_H
 
 #include <vector>
 #include <assert.h>
@@ -158,4 +158,4 @@ class tvector
   
 #include "tvector.cpp"
 
-#endif /* __TVECTOR_H__ */
+#endif /* TVECTOR_H */

@@ -23,8 +23,8 @@
  *
  */
 
-#ifndef __AMPLIFIER_H__
-#define __AMPLIFIER_H__
+#ifndef AMPLIFIER_H
+#define AMPLIFIER_H
 
 /*! Ideal and linear amplifier
 
@@ -44,4 +44,4 @@ class amplifier : public qucs::circuit
   void initTR (void);
 };
 
-#endif /* __AMPLIFIER_H__ */
+#endif /* AMPLIFIER_H */

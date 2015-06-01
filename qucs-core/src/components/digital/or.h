@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __OR_H__
-#define __OR_H__
+#ifndef OR_H
+#define OR_H
 
 class logicor : public digital
 {
@@ -33,4 +33,4 @@ class logicor : public digital
   void calcDerivatives (void);
 };
 
-#endif /* __OR_H__ */
+#endif /* OR_H */

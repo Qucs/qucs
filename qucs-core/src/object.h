@@ -28,8 +28,8 @@
   *
   */
 
-#ifndef __OBJECT_H__
-#define __OBJECT_H__
+#ifndef OBJECT_H
+#define OBJECT_H
 
 #include <string>
 #include "property.h"
@@ -89,4 +89,4 @@ class object
 
 } // namespace qucs
 
-#endif /* __OBJECT_H__ */
+#endif /* OBJECT_H */

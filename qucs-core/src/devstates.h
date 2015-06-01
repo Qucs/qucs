@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __DEVSTATES_H__
-#define __DEVSTATES_H__
+#ifndef DEVSTATES_H
+#define DEVSTATES_H
 
 namespace qucs {
 
@@ -55,4 +55,4 @@ class devstates
 
 } // namespace qucs
 
-#endif /* __DEVSTATES_H__ */
+#endif /* DEVSTATES_H */

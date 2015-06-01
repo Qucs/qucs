@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __PHASESHIFTER_H__
-#define __PHASESHIFTER_H__
+#ifndef PHASESHIFTER_H
+#define PHASESHIFTER_H
 
 class phaseshifter : public qucs::circuit
 {
@@ -34,4 +34,4 @@ class phaseshifter : public qucs::circuit
   void initAC (void);
 };
 
-#endif /* __PHASESHIFTER_H__ */
+#endif /* PHASESHIFTER_H */

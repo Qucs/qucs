@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __MSCOUPLED_H__
-#define __MSCOUPLED_H__
+#ifndef MSCOUPLED_H
+#define MSCOUPLED_H
 
 class mscoupled : public qucs::circuit
 {
@@ -52,4 +52,4 @@ class mscoupled : public qucs::circuit
   nr_double_t ae, be, ze, ao, bo, zo, ee, eo;
 };
 
-#endif /* __MSCOUPLED_H__ */
+#endif /* MSCOUPLED_H */
