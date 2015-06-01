@@ -651,15 +651,15 @@ void application::replace (char * src, char * dst)
 // Destructor deletes an instance of the application class.
 application::~application ()
 {
-    node * next, * res;
+    node * next;
     for (node * arg = args; arg != NULL; arg = next)
     {
         next = arg->getNext ();
         delete arg;
     }
-    if ((res = getResult ()) != NULL) delete res;
+    delete getResult ();
     if (n) free (n);
-    if (ddx) delete ddx;
+    delete ddx;
 }
 
 // Prints textual representation of the application object.
@@ -910,7 +910,7 @@ constant * application::evaluate (void)
     // Evaluate ddx() function.
     if (isDDX ())
     {
-        if (getResult ()) delete getResult ();
+        delete getResult ();
         setResult (C (ddx->evaluate()->recreate ()));
         return getResult ();
     }
@@ -961,9 +961,8 @@ constant * application::evaluate (void)
     // then evaluate application itself
     if (!errors)
     {
-        node * res;
         // delete previous result if necessary
-        if ((res = getResult ()) != NULL) delete res;
+        delete getResult ();
         // then evaluate the application
         setResult (eval (C (args)));
         // check the returned type once again
@@ -1055,10 +1054,10 @@ node::node (const node & o)
 // Destructor deletes an instance of the equation node class.
 node::~node ()
 {
-    if (dependencies) delete dependencies;
-    if (dataDependencies) delete dataDependencies;
-    if (dropDependencies) delete dropDependencies;
-    if (prepDependencies) delete prepDependencies;
+    delete dependencies;
+    delete dataDependencies;
+    delete dropDependencies;
+    delete prepDependencies;
     if (txt) free (txt);
     if (instance) free (instance);
 }
@@ -1228,7 +1227,7 @@ qucs::vector node::getResultVector (void)
 // Assigns the dependency list to the equation node object.
 void node::setDependencies (strlist * depends)
 {
-    if (dependencies) delete dependencies;
+    delete dependencies;
     dependencies = depends;
 }
 
@@ -1271,7 +1270,7 @@ strlist * node::recurseDependencies (checker * check, strlist * deps)
                 if (cdeps->length () > 0)
                 {
                     res = strlist::join (sub, cdeps);
-                    if (sub) delete sub;
+                    delete sub;
                     sub = res;
                 }
             }
@@ -1294,7 +1293,7 @@ strlist * node::recurseDependencies (checker * check, strlist * deps)
 
     /* Return the result. */
     res = strlist::join (deps, sub);
-    if (sub) delete (sub);
+    delete (sub);
     return res;
 }
 
@@ -1326,7 +1325,7 @@ void node::appendPrepDependencies (strlist * deps)
 /* The function sets the data dependency list of the equation node. */
 void node::setDataDependencies (strlist * deps)
 {
-    if (dataDependencies != NULL) delete dataDependencies;
+    delete dataDependencies;
     dataDependencies = deps ? new strlist (*deps) : NULL;
 }
 
@@ -1338,7 +1337,7 @@ constant * node::calculate (void)
     {
         strlist * deps = solvee->collectDataDependencies (this);
         getResult()->setDataDependencies (deps);
-        if (deps) delete deps;
+        delete deps;
     }
     else
     {
@@ -1735,7 +1734,7 @@ strlist * checker::foldDependencies (strlist * deps)
         char * var = deps->get (i);
         if (!res->contains (var)) res->append (var);
     }
-    if (deps) delete deps;
+    delete deps;
     return res;
 }
 
@@ -2293,7 +2292,7 @@ strlist * solver::collectDataDependencies (node * eqn)
                 sub->del (n->getResult()->getDropDependencies ());
                 sub->add (n->getResult()->getPrepDependencies ());
             }
-            if (datadeps) delete datadeps;
+            delete datadeps;
             datadeps = sub;
         }
     }
