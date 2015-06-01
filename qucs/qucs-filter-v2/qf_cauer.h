@@ -15,8 +15,8 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef  _QF_CAUER_H
-#define  _QF_CAUER_H
+#ifndef  QF_CAUER_H
+#define  QF_CAUER_H
 
 class qf_cauer: public qf_filter {
 
@@ -86,4 +86,4 @@ struct qf_filter_api qf_cauer_api =
 };
 
   # endif // _QF_API
-# endif	  // _QF_CAUER_H
+# endif	  // QF_CAUER_H

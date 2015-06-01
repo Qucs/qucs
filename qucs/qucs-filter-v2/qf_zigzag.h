@@ -1,7 +1,7 @@
 // Definitions for qf_zigzag.cpp
 
-#ifndef _QF_ZIGZAG_H
-#define	_QF_ZIGZAG_H
+#ifndef QF_ZIGZAG_H
+#define	QF_ZIGZAG_H
 
 #include <vector>
 //Added by qt3to4:
@@ -56,4 +56,4 @@ struct	qf_tform_api	    qf_zigzag_api = {
 };
 
   # endif // _QF_API
-#endif	  // _QF_ZIGZAG_H
+#endif	  // QF_ZIGZAG_H

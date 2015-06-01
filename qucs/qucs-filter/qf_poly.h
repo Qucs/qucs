@@ -15,8 +15,8 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef _QF_POLY_H
-#define _QF_POLY_H
+#ifndef QF_POLY_H
+#define QF_POLY_H
 
 /* Headers for R[X] arithmetic */
 
@@ -134,4 +134,4 @@ inline qf_double_t ROUND_ROOT (qf_double_t k) {
 #define RADIX2		(RADIX*RADIX)
 #define MAX_ITERATIONS	60
 
-#endif // _QF_POLY_H
+#endif // QF_POLY_H

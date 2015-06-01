@@ -20,8 +20,8 @@
  *
  */
 
-#ifndef PRINTERWRITER_H_
-#define PRINTERWRITER_H_ value
+#ifndef PRINTERWRITER_H
+#define PRINTERWRITER_H
 
 #include <QPrinter>
 #include <QString>
@@ -43,4 +43,4 @@ private:
   QPrinter *Printer;
 };
 
-#endif
+#endif /* PRINTERWRITER_H */

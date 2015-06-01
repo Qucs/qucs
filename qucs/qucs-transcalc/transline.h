@@ -20,8 +20,8 @@
  *
  */
 
-#ifndef __TRANSLINE_H
-#define __TRANSLINE_H
+#ifndef TRANSLINE_H
+#define TRANSLINE_H
 
 class QucsTranscalc;
 
@@ -58,4 +58,4 @@ class transline {
   QucsTranscalc * app;
 };
 
-#endif /* __TRANSLINE_H */
+#endif /* TRANSLINE_H */

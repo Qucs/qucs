@@ -21,8 +21,8 @@
  *
  */
 
-#ifndef __COAX_H
-#define __COAX_H
+#ifndef COAX_H
+#define COAX_H
 
 class coax : public transline {
  public:
@@ -58,4 +58,4 @@ class coax : public transline {
   void show_results();
 };
 
-#endif /* __COAX_H */
+#endif /* COAX_H */

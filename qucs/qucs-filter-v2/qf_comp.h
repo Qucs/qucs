@@ -1,5 +1,5 @@
-# ifndef _QF_COMP_H
-# define _QF_COMP_H
+# ifndef QF_COMP_H
+# define QF_COMP_H
 
 #include <vector>
 #include <list>
@@ -222,4 +222,4 @@ struct qf_pslc : public qf_cmplc {
   void		dump	(unsigned, unsigned, Q3TextStream&, Q3TextStream&);
 };
 
-# endif //_QF_COMP_H
+# endif //QF_COMP_H

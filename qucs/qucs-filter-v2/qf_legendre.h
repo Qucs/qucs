@@ -1,6 +1,6 @@
 // Headers for legendre filters
-#ifndef _QF_LGNDR_H
-#define	_QF_LGNDR_H
+#ifndef QF_LGNDR_H
+#define	QF_LGNDR_H
 
 class qf_lgndr : public qf_filter {
   private:
@@ -40,4 +40,4 @@ struct	qf_filter_api	    qf_lgndr_api = {
 };
 
   # endif // _QF_API
-# endif	  // _QF_LGNDR_H
+# endif	  // QF_LGNDR_H

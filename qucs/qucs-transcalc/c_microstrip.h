@@ -21,8 +21,8 @@
  *
  */
 
-#ifndef _C_MICROSTRIP_H_
-#define _C_MICROSTRIP_H_
+#ifndef C_MICROSTRIP_H
+#define C_MICROSTRIP_H
 
 class c_microstrip : public transline {
  public:
@@ -99,4 +99,4 @@ class c_microstrip : public transline {
   microstrip * aux_ms;
 };
 
-#endif /* _C_MICROSTRIP_H_ */
+#endif /* C_MICROSTRIP_H */

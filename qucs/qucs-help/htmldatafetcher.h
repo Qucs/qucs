@@ -17,8 +17,8 @@
  * Boston, MA 02110-1301, USA.                                             *
  ***************************************************************************/
 
-#ifndef __HDF_H
-#define __HDF_H
+#ifndef HDF_H
+#define HDF_H
 #include <QStringList>
 #include <QMap>
 #include <QFile>

@@ -21,8 +21,8 @@
  *
  */
 
-#ifndef __COPLANAR_H
-#define __COPLANAR_H
+#ifndef COPLANAR_H
+#define COPLANAR_H
 
 class coplanar : public transline {
  public:
@@ -64,4 +64,4 @@ class groundedCoplanar : public coplanar {
   groundedCoplanar();
 };
 
-#endif /* __COPLANAR_H */
+#endif /* COPLANAR_H */

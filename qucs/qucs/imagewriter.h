@@ -20,8 +20,8 @@
  *
  */
 
-#ifndef IMAGEWRITER_H_
-#define IMAGEWRITER_H_ value
+#ifndef IMAGEWRITER_H
+#define IMAGEWRITER_H
 
 #include <QString>
 
@@ -47,4 +47,4 @@ private:
   void updateMinMax(int &xmin, int &xmax, int &ymin, int &ymax, int x1, int x2, int y1m, int y2);
 };
 
-#endif
+#endif /* IMAGEWRITER_H */

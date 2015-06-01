@@ -15,8 +15,8 @@
  *                                                                         *
  ***************************************************************************/
 
-# ifndef _QF_FILTER_H
-# define _QF_FILTER_H
+# ifndef QF_FILTER_H
+# define QF_FILTER_H
 
 # ifdef	_QF_QUCSFILTER_TEST
 # define PACKAGE_VERSION "Qf test"

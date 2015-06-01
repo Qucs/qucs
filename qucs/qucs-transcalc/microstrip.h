@@ -21,8 +21,8 @@
  *
  */
 
-#ifndef __MICROSTRIP_H
-#define __MICROSTRIP_H
+#ifndef MICROSTRIP_H
+#define MICROSTRIP_H
 
 class microstrip : public transline {
  public:
@@ -90,4 +90,4 @@ class microstrip : public transline {
   void show_results();
 };
 
-#endif /* __MICROSTRIP_H */
+#endif /* MICROSTRIP_H */

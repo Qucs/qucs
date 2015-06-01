@@ -15,8 +15,8 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef _QF_POLY_H
-#define _QF_POLY_H
+#ifndef QF_POLY_H
+#define QF_POLY_H
 
 /* Headers for R[X] arithmetic */
 
@@ -131,4 +131,4 @@ qf_poly		operator -  (qf_poly&, qf_poly&);
 qf_double_t	setroottol  (qf_double_t&);
 qf_double_t	setrootprec (qf_double_t&);
 
-#endif	// _QF_POLY_H
+#endif	// QF_POLY_H

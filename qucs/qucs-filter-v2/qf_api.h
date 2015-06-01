@@ -1,5 +1,5 @@
-# ifndef  _QF_API_H
-# define  _QF_API_H
+# ifndef  QF_API_H
+# define  QF_API_H
 
 // Identify each filter by a unique bit
 
