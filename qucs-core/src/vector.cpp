@@ -139,7 +139,7 @@ const vector& vector::operator=(const vector & v) {
 // Destructor deletes a vector object.
 vector::~vector () {
   if (data) free (data);
-  if (dependencies) delete dependencies;
+  delete dependencies;
   if (origin) free (origin);
 }
 
@@ -150,7 +150,7 @@ strlist * vector::getDependencies (void) {
 
 // Sets the data dependencies.
 void vector::setDependencies (strlist * s) {
-  if (dependencies) delete dependencies;
+  delete dependencies;
   dependencies = s;
 }
 

@@ -156,7 +156,7 @@ void environment::deleteVariables (void) {
       delete var->getSubstrate ();
     else if (var->getType () == VAR_REFERENCE) {
       constant * c = var->getReference()->getResult ();
-      if (c) delete c;
+      delete c;
       delete var->getReference ();
     }
     delete var;

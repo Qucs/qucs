@@ -105,7 +105,7 @@ tmatrix<nr_type_t>::operator=(const tmatrix<nr_type_t> & m) {
 // Destructor deletes a tmatrix object.
 template <class nr_type_t>
 tmatrix<nr_type_t>::~tmatrix () {
-  if (data) delete[] data;
+  delete[] data;
 }
 
 // Returns the tmatrix element at the given row and column.

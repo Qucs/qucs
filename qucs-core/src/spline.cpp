@@ -144,9 +144,9 @@ void spline::vectors (nr_double_t * y, nr_double_t * t, int len) {
 void spline::realloc (int size) {
   if (n != size - 1) {
     n = size - 1;
-    if (f0) delete[] f0;
+    delete[] f0;
     f0 = new nr_double_t[n+1];
-    if (x) delete[] x;
+    delete[] x;
     x  = new nr_double_t[n+1];
   }
   if (f1) { delete[] f1; f1 = NULL; }
@@ -342,10 +342,10 @@ poly spline::evaluate (nr_double_t t) {
 // Destructor deletes an instance of the spline class.
 spline::~spline () {
   if (x)  delete[] x;
-  if (f0) delete[] f0;
-  if (f1) delete[] f1;
-  if (f2) delete[] f2;
-  if (f3) delete[] f3;
+  delete[] f0;
+  delete[] f1;
+  delete[] f2;
+  delete[] f3;
 }
 
 } // namespace qucs

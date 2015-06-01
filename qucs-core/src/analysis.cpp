@@ -73,7 +73,7 @@ analysis::analysis (const std::string &n) : object (n) {
 
 // Destructor deletes the analysis class object.
 analysis::~analysis () {
-  if (actions) delete actions;
+  delete actions;
 }
 
 /* The copy constructor creates a new instance of the analysis class

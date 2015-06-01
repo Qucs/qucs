@@ -88,7 +88,7 @@ matvec::matvec (const matvec & m) {
 // Destructor deletes a matvec object.
 matvec::~matvec () {
   if (name) free (name);
-  if (data) delete[] data;
+  delete[] data;
 }
 
 // Sets the name of the matvec object.

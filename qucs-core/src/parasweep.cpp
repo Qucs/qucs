@@ -66,7 +66,7 @@ parasweep::parasweep (char * n) : analysis (n) {
 
 // Destructor deletes the parasweep class object.
 parasweep::~parasweep () {
-  if (swp) delete swp;
+  delete swp;
 }
 
 /* The copy constructor creates a new instance of the parasweep class
