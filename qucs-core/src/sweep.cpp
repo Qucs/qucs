@@ -59,8 +59,8 @@ sweep::sweep (const std::string &n) : object (n) {
 
 // Destructor deletes the sweep class object.
 sweep::~sweep () {
-  if (data) free (data);
-  if (txt) free (txt);
+  free (data);
+  free (txt);
 }
 
 /* The copy constructor creates a new instance of the sweep class
@@ -108,7 +108,7 @@ void sweep::setSize (int points) {
 
 // The function creates a string representation of the sweep definition.
 char * sweep::toString (void) {
-  if (txt) free (txt);
+  free (txt);
   if (data == NULL || size == 0) return (char *) "";
   int len = 3 + size - 1;
   txt = (char *) malloc (len);

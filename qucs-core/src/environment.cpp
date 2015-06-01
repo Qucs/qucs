@@ -394,7 +394,7 @@ void environment::setDoubleReference (const char * const ident, char * val) {
     else if (var->getType () == VAR_REFERENCE) {
       // just apply the reference
       reference * r = var->getReference ();
-      if (r->n) free (r->n);
+      free (r->n);
       r->n = strdup (val);
     }
   }

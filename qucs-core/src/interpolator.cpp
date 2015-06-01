@@ -53,9 +53,9 @@ interpolator::interpolator () {
 interpolator::~interpolator () {
   delete rsp;
   delete isp;
-  if (rx) free (rx);
-  if (ry) free (ry);
-  if (cy) free (cy);
+  free (rx);
+  free (ry);
+  free (cy);
 }
 
 // Cleans up vector storage.

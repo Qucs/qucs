@@ -87,13 +87,13 @@ matvec::matvec (const matvec & m) {
 
 // Destructor deletes a matvec object.
 matvec::~matvec () {
-  if (name) free (name);
+  free (name);
   delete[] data;
 }
 
 // Sets the name of the matvec object.
 void matvec::setName (const char * n) {
-  if (name) free (name);
+  free (name);
   name = n ? strdup (n) : NULL;
 }
 
