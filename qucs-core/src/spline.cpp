@@ -149,9 +149,9 @@ void spline::realloc (int size) {
     delete[] x;
     x  = new nr_double_t[n+1];
   }
-  if (f1) { delete[] f1; f1 = NULL; }
-  if (f2) { delete[] f2; f2 = NULL; }
-  if (f3) { delete[] f3; f3 = NULL; }
+  delete[] f1;
+  delete[] f2;
+  delete[] f3;
 }
 
 // Construct cubic spline interpolation coefficients.
