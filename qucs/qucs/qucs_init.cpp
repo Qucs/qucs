@@ -478,7 +478,7 @@ void QucsApp::initActions()
   insEquation->setCheckable(true);
   connect(insEquation, SIGNAL(toggled(bool)), SLOT(slotInsertEquation(bool)));
 
-  insGround = new QAction(QIcon((":/bitmaps/ground.png")), tr("Insert Ground"), this);
+  insGround = new QAction(QIcon((":/bitmaps/ground_eu.png")), tr("Insert Ground"), this);
   insGround->setShortcut(Qt::CTRL+Qt::Key_G);
   insGround->setStatusTip(tr("Inserts a ground symbol"));
   insGround->setWhatsThis(tr("Insert Ground\n\nInserts a ground symbol"));
@@ -1066,7 +1066,7 @@ void QucsApp::slotHelpAbout()
     tr("Quite Universal Circuit Simulator")+"\n"+
     tr("Copyright (C)")+" 2003-2009 "+
     tr("by Michael Margraf")+"\n"+
-    tr("Copyright (C)")+" 2011-2015 "+
+    tr("Copyright (C)")+" 2011-2014 "+
     tr("Qucs Team")+"\n"+
     "\nThis is free software; see the source for copying conditions."
     "\nThere is NO warranty; not even for MERCHANTABILITY or "
