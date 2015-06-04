@@ -104,7 +104,6 @@ void tswitch::initTR (void) {
   nr_double_t maxduration = getPropertyDouble("MaxDuration");
   duration = std::min ( std::max (10*NR_TINY, values->minimum() / 100),
                         maxduration );
-
   initDC ();
 }
 
@@ -112,9 +111,10 @@ void tswitch::calcTR (nr_double_t t) {
   const char * const init = getPropertyString ("init");
   nr_double_t ron = getPropertyDouble ("Ron");
   nr_double_t roff = getPropertyDouble ("Roff");
+  const char * const trans_type = getPropertyString ("Transition");
   nr_double_t r = 0;
   nr_double_t rdiff = 0;
-  nr_double_t s_i = 0;
+  //nr_double_t s_i = 0;
   nr_double_t r_0 = 0;
   qucs::vector * values = getPropertyVector ("time");
   bool on = !strcmp (init, "on");
@@ -155,41 +155,42 @@ void tswitch::calcTR (nr_double_t t) {
       break;
     }
   }
-  // calculate the time since the last switch occurred
-  nr_double_t tdiff = std::max(NR_TINY, t - ts);
 
-  // set the time difference to be no more than the max switch
-  // duration so when we interpolate below we only get the max
-  // or min function value if we are past a switching time
-  if (tdiff > duration) {
-        tdiff = duration;
+  if (!strcmp(trans_type, "abrupt")) {
+    r = (on ? ron : roff);
+  } else {
+    // calculate the time since the last switch occurred
+    nr_double_t tdiff = std::max(NR_TINY, t - ts);
+    
+    // set the time difference to be no more than the max switch
+    // duration so when we interpolate below we only get the max
+    // or min function value if we are past a switching time
+    if (tdiff > duration) {
+      tdiff = duration;
+    }
+    // Set the appropriate resistance. 
+    if (on) {
+      r_0 = roff;
+      rdiff = ron - roff;
+      //    s_i = (rdiff) / (duration);
+    } else {
+      r_0 = ron;
+      rdiff = roff - ron;
+      //  s_i = (rdiff) / (duration);
+    }
+    if (!strcmp(trans_type, "linear")) {
+      // simple linear transition over the transition time
+      r = r_0 + rdiff * tdiff / duration;
+    } else { // assume trans_type is "spline"
+	// the resistance is interpolated along a constrained cubic spline
+	// with zero derivative at the start and end points to ensure a 
+	// smooth derivative
+	//r = r_0 + ((3. * s_i * qucs::pow (tdiff,2.0)) / (duration))
+	//        + ((-2. * s_i * qucs::pow (tdiff,3.0)) / qucs::pow (duration, 2.0));
+	// use Horner's rule to reduce the numerical errors
+	r = r_0 + (((-2. * rdiff * tdiff / duration) + 3. * rdiff) * qucs::pow(tdiff/duration, 2.0));
+      }
   }
-
-  // Set the appropriate resistance. The resistance is interpolated
-  // along a cubic spline with zero derivative at the start and end
-  // points to ensure a smooth derivative
-  if (on)
-  {
-    r_0 = roff;
-
-    rdiff = ron - roff;
-
-    //    s_i = (rdiff) / (duration);
-  }
-  else
-  {
-    r_0 = ron;
-
-    rdiff = roff - ron;
-
-    //  s_i = (rdiff) / (duration);
-  }
-
-  // perform the interpolation of the constrained cubic spline
-  //r = r_0 + ((3. * s_i * qucs::pow (tdiff,2.0)) / (duration))
-  //        + ((-2. * s_i * qucs::pow (tdiff,3.0)) / qucs::pow (duration, 2.0));
-  // use Horner's rule to reduce the numerical errors
-  r = r_0 + (((-2. * rdiff * tdiff / duration) + 3. * rdiff) * qucs::pow(tdiff/duration, 2.0));
 
   // check for (numerical) errors
   assert(r >= ron);
@@ -208,6 +209,7 @@ PROP_OPT [] = {
   { "Roff", PROP_REAL, { 1e12, PROP_NO_STR }, PROP_POS_RANGE },
   { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },
   { "MaxDuration", PROP_REAL, { 1e-6, PROP_NO_STR }, PROP_MIN_VAL (10*NR_TINY) },
+  { "Transition", PROP_STR, { PROP_NO_VAL, "spline" }, PROP_RNG_STR3 ("abrupt", "linear", "spline") },
   PROP_NO_PROP };
 struct define_t tswitch::cirdef =
   { "Switch", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR, PROP_DEF };
