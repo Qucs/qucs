@@ -20,7 +20,7 @@
 
 MSstep::MSstep()
 {
-  Description = QObject::tr("microstrip impedance step");
+  Description = QObject::tr("Microstrip impedance step");
 
   Lines.append(new Line(-30,  0,-18,  0,QPen(Qt::darkBlue,2)));
   Lines.append(new Line( 18,  0, 30,  0,QPen(Qt::darkBlue,2)));
@@ -47,16 +47,16 @@ MSstep::MSstep()
   Name  = "MS";
 
   Props.append(new Property("Subst", "Subst1", true,
-	QObject::tr("substrate")));
+	QObject::tr("Substrate")));
   Props.append(new Property("W1", "2 mm", true,
-	QObject::tr("width 1 of the line")));
+	QObject::tr("Width 1 of the line")));
   Props.append(new Property("W2", "1 mm", true,
-	QObject::tr("width 2 of the line")));
+	QObject::tr("Width 2 of the line")));
   Props.append(new Property("MSModel", "Hammerstad", false,
-	QObject::tr("quasi-static microstrip model")+
+	QObject::tr("Quasi-static microstrip model")+
 		    " [Hammerstad, Wheeler, Schneider]"));
   Props.append(new Property("MSDispModel", "Kirschning", false,
-	QObject::tr("microstrip dispersion model")+" [Kirschning, Kobayashi, "
+	QObject::tr("Microstrip dispersion model")+" [Kirschning, Kobayashi, "
 	"Yamashita, Hammerstad, Getsinger, Schneider, Pramanick]"));
 }
 

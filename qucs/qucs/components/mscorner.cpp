@@ -20,7 +20,7 @@
 
 MScorner::MScorner()
 {
-  Description = QObject::tr("microstrip corner");
+  Description = QObject::tr("Microstrip corner");
 
   Lines.append(new Line(-30,  0,-18,  0,QPen(Qt::darkBlue,2)));
   Lines.append(new Line(  0, 18,  0, 30,QPen(Qt::darkBlue,2)));
@@ -43,9 +43,9 @@ MScorner::MScorner()
   Name  = "MS";
 
   Props.append(new Property("Subst", "Subst1", true,
-		QObject::tr("substrate")));
+		QObject::tr("Substrate")));
   Props.append(new Property("W", "1 mm", true,
-		QObject::tr("width of line")));
+		QObject::tr("Width of line")));
 }
 
 MScorner::~MScorner()

@@ -20,7 +20,7 @@
 
 Circulator::Circulator()
 {
-  Description = QObject::tr("circulator");
+  Description = QObject::tr("Circulator");
 
   Arcs.append(new Arc(-14,-14, 28, 28,  0,16*360,QPen(Qt::darkBlue,2)));
   Lines.append(new Line(-30,  0,-14,  0,QPen(Qt::darkBlue,2)));
@@ -46,11 +46,11 @@ Circulator::Circulator()
   Name  = "X";
 
   Props.append(new Property("Z1", "50 Ohm", false,
-		QObject::tr("reference impedance of port 1")));
+		QObject::tr("Reference impedance of port 1")));
   Props.append(new Property("Z2", "50 Ohm", false,
-		QObject::tr("reference impedance of port 2")));
+		QObject::tr("Reference impedance of port 2")));
   Props.append(new Property("Z3", "50 Ohm", false,
-		QObject::tr("reference impedance of port 3")));
+		QObject::tr("Reference impedance of port 3")));
 }
 
 Circulator::~Circulator()

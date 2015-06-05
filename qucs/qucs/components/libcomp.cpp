@@ -39,9 +39,9 @@ LibComp::LibComp()
   Name  = "X";
 
   Props.append(new Property("Lib", "", true,
-		QObject::tr("name of qucs library file")));
+		QObject::tr("Name of Qucs library file")));
   Props.append(new Property("Comp", "", true,
-		QObject::tr("name of component in library")));
+		QObject::tr("Name of the component in library")));
 }
 
 // ---------------------------------------------------------------------

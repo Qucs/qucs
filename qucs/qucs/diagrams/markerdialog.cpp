@@ -42,9 +42,9 @@ MarkerDialog::MarkerDialog(Marker *pm_, QWidget *parent)
   g->addWidget(Precision, 0, 1);
 
   NumberBox = new QComboBox();
-  NumberBox->insertItem(tr("real/imaginary"));
-  NumberBox->insertItem(tr("magnitude/angle (degree)"));
-  NumberBox->insertItem(tr("magnitude/angle (radian)"));
+  NumberBox->insertItem(tr("Real/imaginary"));
+  NumberBox->insertItem(tr("Magnitude/angle (degrees)"));
+  NumberBox->insertItem(tr("Magnitude/angle (radians)"));
   NumberBox->setCurrentItem(pMarker->numMode);
 
   g->addWidget(new QLabel(tr("Number Notation: ")), 1,0);
@@ -59,7 +59,7 @@ MarkerDialog::MarkerDialog(Marker *pm_, QWidget *parent)
 		g->addWidget(SourceImpedance,2,1);
 	}
   
-  TransBox = new QCheckBox(tr("transparent"));
+  TransBox = new QCheckBox(tr("Transparent"));
   TransBox->setChecked(pMarker->transparent);
   g->addMultiCellWidget(TransBox,3,3,0,1);
 

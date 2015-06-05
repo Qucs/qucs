@@ -20,7 +20,7 @@
 
 CCVS::CCVS()
 {
-  Description = QObject::tr("current controlled voltage source");
+  Description = QObject::tr("Current controlled voltage source");
 
   Arcs.append(new Arc(0,-11, 22, 22,  0, 16*360,QPen(Qt::darkBlue,2)));
 
@@ -59,8 +59,8 @@ CCVS::CCVS()
   Name  = "SRC";
 
   Props.append(new Property("G", "1 Ohm", true,
-		QObject::tr("forward transfer factor")));
-  Props.append(new Property("T", "0", false, QObject::tr("delay time")));
+		QObject::tr("Forward transfer factor")));
+  Props.append(new Property("T", "0", false, QObject::tr("Delay time")));
 }
 
 CCVS::~CCVS()

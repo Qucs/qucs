@@ -20,7 +20,7 @@
 
 vExp::vExp()
 {
-  Description = QObject::tr("exponential voltage source");
+  Description = QObject::tr("Exponential voltage source");
 
   // normal voltage source symbol
   Arcs.append(new Arc(-12,-12, 24, 24,     0, 16*360,QPen(Qt::darkBlue,2)));
@@ -54,17 +54,17 @@ vExp::vExp()
   Name  = "V";
 
   Props.append(new Property("U1", "0 V", true,
-		QObject::tr("voltage before rising edge")));
+		QObject::tr("Voltage before rising edge")));
   Props.append(new Property("U2", "1 V", true,
-		QObject::tr("maximum voltage of the pulse")));
+		QObject::tr("Maximum voltage of the pulse")));
   Props.append(new Property("T1", "0", true,
-		QObject::tr("start time of the exponentially rising edge")));
+		QObject::tr("Start time of the exponentially rising edge")));
   Props.append(new Property("T2", "1 ms", true,
-		QObject::tr("start of exponential decay")));
+		QObject::tr("Start of exponential decay")));
   Props.append(new Property("Tr", "1 ns", false,
-		QObject::tr("rise time of the rising edge")));
+		QObject::tr("Rise time of the rising edge")));
   Props.append(new Property("Tf", "1 ns", false,
-		QObject::tr("fall time of the falling edge")));
+		QObject::tr("Fall time of the falling edge")));
 
   rotate();  // fix historical flaw
 }

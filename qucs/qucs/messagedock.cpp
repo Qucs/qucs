@@ -47,7 +47,7 @@ MessageDock::MessageDock(QucsApp *App_): QWidget()
     admsOutput = new QPlainTextEdit();
     admsOutput->setReadOnly(true);
 
-    builderTabs->insertTab(0,admsOutput,tr("admsXml"));
+    builderTabs->insertTab(0,admsOutput,tr("ADMSXml"));
 
 
     // 2) add a dock for the cpp compiler messages

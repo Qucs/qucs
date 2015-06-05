@@ -20,7 +20,7 @@
 
 vcresistor::vcresistor()
 {
-  Description = QObject::tr("voltage controlled voltage source");
+  Description = QObject::tr("Voltage controlled voltage source");
 
   // The resistor shape
   Lines.append(new Line(5, 18, 5, -18, QPen(Qt::darkBlue,2)));
@@ -67,7 +67,7 @@ vcresistor::vcresistor()
   Name  = "VCR";
 
   Props.append(new Property("gain", "1", true,
-		QObject::tr("resistance gain")));
+		QObject::tr("Resistance gain")));
 }
 
 vcresistor::~vcresistor()

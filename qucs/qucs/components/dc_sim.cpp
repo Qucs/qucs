@@ -20,7 +20,7 @@
 
 DC_Sim::DC_Sim()
 {
-  Description = QObject::tr("dc simulation");
+  Description = QObject::tr("DC simulation");
 
   QString s = Description;
   int a = s.indexOf(" ");
@@ -44,26 +44,26 @@ DC_Sim::DC_Sim()
   Name  = "DC";
 
   Props.append(new Property("Temp", "26.85", false,
-		QObject::tr("simulation temperature in degree Celsius")));
+		QObject::tr("Simulation temperature in degrees Celsius")));
   Props.append(new Property("reltol", "0.001", false,
-		QObject::tr("relative tolerance for convergence")));
+		QObject::tr("Relative tolerance for convergence")));
   Props.append(new Property("abstol", "1 pA", false,
-		QObject::tr("absolute tolerance for currents")));
+		QObject::tr("Absolute tolerance for currents")));
   Props.append(new Property("vntol", "1 uV", false,
-		QObject::tr("absolute tolerance for voltages")));
+		QObject::tr("Absolute tolerance for voltages")));
   Props.append(new Property("saveOPs", "no", false,
-		QObject::tr("put operating points into dataset")+
+		QObject::tr("Put operating points into the dataset")+
 		" [yes, no]"));
   Props.append(new Property("MaxIter", "150", false,
-		QObject::tr("maximum number of iterations until error")));
+		QObject::tr("Maximum number of iterations until error")));
   Props.append(new Property("saveAll", "no", false,
-	QObject::tr("save subcircuit nodes into dataset")+
+	QObject::tr("Save subcircuit nodes into dataset")+
 	" [yes, no]"));
   Props.append(new Property("convHelper", "none", false,
-	QObject::tr("preferred convergence algorithm")+
+	QObject::tr("Preferred convergence algorithm")+
 	" [none, gMinStepping, SteepestDescent, LineSearch, Attenuation, SourceStepping]"));
   Props.append(new Property("Solver", "CroutLU", false,
-	QObject::tr("method for solving the circuit matrix")+
+	QObject::tr("Method for solving the circuit matrix")+
 	" [CroutLU, DoolittleLU, HouseholderQR, HouseholderLQ, GolubSVD]"));
 }
 
@@ -78,7 +78,7 @@ Component* DC_Sim::newOne()
 
 Element* DC_Sim::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
-  Name = QObject::tr("dc simulation");
+  Name = QObject::tr("DC simulation");
   BitmapFile = (char *) "dc";
 
   if(getNewOne)  return new DC_Sim();

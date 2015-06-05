@@ -20,7 +20,7 @@
 
 Relais::Relais()
 {
-  Description = QObject::tr("relay");
+  Description = QObject::tr("Relay");
 
   Lines.append(new Line(-30,-30,-30, -8,QPen(Qt::darkBlue,2)));
   Lines.append(new Line(-30,  8,-30, 30,QPen(Qt::darkBlue,2)));
@@ -57,15 +57,15 @@ Relais::Relais()
   Name  = "S";
 
   Props.append(new Property("Vt", "0.5 V", false,
-		QObject::tr("threshold voltage in Volts")));
+		QObject::tr("Threshold voltage in volts")));
   Props.append(new Property("Vh", "0.1 V", false,
-		QObject::tr("hysteresis voltage in Volts")));
+		QObject::tr("Hysteresis voltage in volts")));
   Props.append(new Property("Ron", "0", false,
-		QObject::tr("resistance of \"on\" state in Ohms")));
+		QObject::tr("Resistance of \"on\" state in ohms")));
   Props.append(new Property("Roff", "1e12", false,
-		QObject::tr("resistance of \"off\" state in Ohms")));
+		QObject::tr("Resistance of \"off\" state in ohms")));
   Props.append(new Property("Temp", "26.85", false,
-		QObject::tr("simulation temperature in degree Celsius")));
+		QObject::tr("Simulation temperature in degrees Celsius")));
 }
 
 Relais::~Relais()

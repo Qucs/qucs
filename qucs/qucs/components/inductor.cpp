@@ -20,7 +20,7 @@
 
 Inductor::Inductor()
 {
-  Description = QObject::tr("inductor");
+  Description = QObject::tr("Inductor");
 
   Arcs.append(new Arc(-18, -6, 12, 12,  0, 16*180,QPen(Qt::darkBlue,2)));
   Arcs.append(new Arc( -6, -6, 12, 12,  0, 16*180,QPen(Qt::darkBlue,2)));
@@ -40,9 +40,9 @@ Inductor::Inductor()
   Name  = "L";
 
   Props.append(new Property("L", "1 nH", true,
-		QObject::tr("inductance in Henry")));
+		QObject::tr("Inductance in henries")));
   Props.append(new Property("I", "", false,
-		QObject::tr("initial current for transient simulation")));
+		QObject::tr("Initial current for transient simulation")));
 }
 
 Inductor::~Inductor()

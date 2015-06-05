@@ -20,7 +20,7 @@
 
 Transformer::Transformer()
 {
-  Description = QObject::tr("ideal transformer");
+  Description = QObject::tr("Ideal transformer");
 
   Arcs.append(new Arc(-16,-18,12,12, 16*270,16*180, QPen(Qt::darkBlue,2)));
   Arcs.append(new Arc(-16, -6,12,12, 16*270,16*180, QPen(Qt::darkBlue,2)));
@@ -58,7 +58,7 @@ Transformer::Transformer()
   Name  = "Tr";
 
   Props.append(new Property("T", "1", true,
-		QObject::tr("voltage transformation ratio")));
+		QObject::tr("Voltage transformation ratio")));
 }
 
 Transformer::~Transformer()

@@ -31,18 +31,18 @@ SParamFile::SParamFile()
 
   // must be the first property !!!
   Props.append(new Property("File", "test.s1p", true,
-		QObject::tr("name of the s parameter file")));
+		QObject::tr("Name of the S-parameter file")));
   Props.append(new Property("Data", "rectangular", false,
-		QObject::tr("data type")+" [rectangular, polar]"));
+		QObject::tr("Data type")+" [rectangular, polar]"));
   Props.append(new Property("Interpolator", "linear", false,
-		QObject::tr("interpolation type")+" [linear, cubic]"));
+		QObject::tr("Interpolation type")+" [linear, cubic]"));
   Props.append(new Property("duringDC", "open", false,
-		QObject::tr("representation during DC analysis")+
+		QObject::tr("Representation during DC analysis")+
 			    " [open, short, shortall, unspecified]"));
 
   // must be the last property !!!
   Props.append(new Property("Ports", "1", false,
-		QObject::tr("number of ports")));
+		QObject::tr("Number of ports")));
 
   createSymbol();
 }
@@ -59,7 +59,7 @@ Component* SParamFile::newOne()
 // -------------------------------------------------------
 Element* SParamFile::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
-  Name = QObject::tr("n-port S parameter file");
+  Name = QObject::tr("N-port S-parameter file");
   BitmapFile = (char *) "spfile3";
 
   if(getNewOne) {
@@ -162,7 +162,7 @@ void SParamFile::createSymbol()
   Lines.append(new Line( 15, -h, 15,  h,QPen(Qt::darkBlue,2)));
   Lines.append(new Line(-15,  h, 15,  h,QPen(Qt::darkBlue,2)));
   Lines.append(new Line(-15, -h,-15,  h,QPen(Qt::darkBlue,2)));
-  stmp = QObject::tr("file"); 
+  stmp = QObject::tr("File"); 
   w = smallmetrics.width(stmp); // compute text size to center it 
   Texts.append(new Text(-w/2, -fHeight/2, stmp));
 

@@ -71,7 +71,7 @@ PackageDialog::PackageDialog(QWidget *parent_, bool create_)
     h1->addWidget(NameEdit);
     h1->addWidget(ButtBrowse);
 
-    LibraryCheck = new QCheckBox(tr("include user libraries"));
+    LibraryCheck = new QCheckBox(tr("Include user libraries"));
     all->addWidget(LibraryCheck);
 
     Group = new QGroupBox(tr("Choose projects:"));

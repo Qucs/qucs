@@ -19,7 +19,7 @@
 
 Logical_XNOR::Logical_XNOR()
 {
-  Description = QObject::tr("logical XNOR");
+  Description = QObject::tr("Logical XNOR");
   Model = "XNOR";
 
   createSymbol();
@@ -42,7 +42,7 @@ Component* Logical_XNOR::newOne()
 
 Element* Logical_XNOR::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
-  Name = QObject::tr("n-port XNOR");
+  Name = QObject::tr("N-port XNOR");
   BitmapFile = (char *) "xnor";
 
   if(getNewOne)  return new Logical_XNOR();

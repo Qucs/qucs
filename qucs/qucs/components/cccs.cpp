@@ -20,7 +20,7 @@
 
 CCCS::CCCS()
 {
-  Description = QObject::tr("current controlled current source");
+  Description = QObject::tr("Current controlled current source");
 
   Arcs.append(new Arc(0,-11, 22, 22,  0, 16*360,QPen(Qt::darkBlue,2)));
   Lines.append(new Line( 11, -7, 11,  7,QPen(Qt::darkBlue,3)));
@@ -58,8 +58,8 @@ CCCS::CCCS()
   Name  = "SRC";
 
   Props.append(new Property("G", "1", true,
-		QObject::tr("forward transfer factor")));
-  Props.append(new Property("T", "0", false, QObject::tr("delay time")));
+		QObject::tr("Forward transfer factor")));
+  Props.append(new Property("T", "0", false, QObject::tr("Delay time")));
 }
 
 CCCS::~CCCS()

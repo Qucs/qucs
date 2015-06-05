@@ -20,7 +20,7 @@
 
 Phaseshifter::Phaseshifter()
 {
-  Description = QObject::tr("phase shifter");
+  Description = QObject::tr("Phase shifter");
 
   Lines.append(new Line(-14,-14, 14,-14,QPen(Qt::darkBlue,2)));
   Lines.append(new Line(-14, 14, 14, 14,QPen(Qt::darkBlue,2)));
@@ -44,9 +44,9 @@ Phaseshifter::Phaseshifter()
   Name  = "X";
 
   Props.append(new Property("phi", "90", true,
-		QObject::tr("phase shift in degree")));
+		QObject::tr("Phase shift in degrees")));
   Props.append(new Property("Zref", "50 Ohm", false,
-		QObject::tr("reference impedance")));
+		QObject::tr("Reference impedance")));
 }
 
 Phaseshifter::~Phaseshifter()

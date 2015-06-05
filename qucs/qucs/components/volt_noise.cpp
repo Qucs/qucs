@@ -20,7 +20,7 @@
 
 Volt_noise::Volt_noise()
 {
-  Description = QObject::tr("noise voltage source");
+  Description = QObject::tr("Noise voltage source");
 
   Arcs.append(new Arc(-12,-12, 24, 24,     0, 16*360,QPen(Qt::darkBlue,2)));
   Lines.append(new Line(-30,  0,-12,  0,QPen(Qt::darkBlue,2)));
@@ -43,13 +43,13 @@ Volt_noise::Volt_noise()
   Name  = "V";
 
   Props.append(new Property("u", "1e-6", true,
-		QObject::tr("voltage power spectral density in V^2/Hz")));
+		QObject::tr("Voltage power spectral density in V^2/Hz")));
   Props.append(new Property("e", "0", false,
-		QObject::tr("frequency exponent")));
+		QObject::tr("Frequency exponent")));
   Props.append(new Property("c", "1", false,
-		QObject::tr("frequency coefficient")));
+		QObject::tr("Frequency coefficient")));
   Props.append(new Property("a", "0", false,
-		QObject::tr("additive frequency term")));
+		QObject::tr("Additive frequency term")));
 
   rotate();  // fix historical flaw
 }

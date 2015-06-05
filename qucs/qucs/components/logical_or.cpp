@@ -19,7 +19,7 @@
 
 Logical_OR::Logical_OR()
 {
-  Description = QObject::tr("logical OR");
+  Description = QObject::tr("Logical OR");
   Model = "OR";
 
   createSymbol();
@@ -42,7 +42,7 @@ Component* Logical_OR::newOne()
 
 Element* Logical_OR::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
-  Name = QObject::tr("n-port OR");
+  Name = QObject::tr("N-port OR");
   BitmapFile = (char *) "or";
 
   if(getNewOne)  return new Logical_OR();

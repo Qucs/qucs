@@ -69,19 +69,19 @@ ArrowDialog::ArrowDialog(QWidget *parent, const char *name)
 
   all->addWidget(new QLabel(tr("Line style: "), this), 2,0);
   StyleBox = new QComboBox(this);
-  StyleBox->insertItem(tr("solid line"));
-  StyleBox->insertItem(tr("dash line"));
-  StyleBox->insertItem(tr("dot line"));
-  StyleBox->insertItem(tr("dash dot line"));
-  StyleBox->insertItem(tr("dash dot dot line"));
+  StyleBox->insertItem(tr("Solid line"));
+  StyleBox->insertItem(tr("Dash line"));
+  StyleBox->insertItem(tr("Dot line"));
+  StyleBox->insertItem(tr("Dash dot line"));
+  StyleBox->insertItem(tr("Dash dot dot line"));
   connect(StyleBox, SIGNAL(activated(int)), SLOT(slotSetStyle(int)));
   LineStyle = Qt::SolidLine;
   all->addMultiCellWidget(StyleBox, 2,2,1,2);
 
   all->addWidget(new QLabel(tr("Arrow head: "), this), 3,0);
   ArrowStyleBox = new QComboBox(this);
-  ArrowStyleBox->insertItem(tr("two lines"));
-  ArrowStyleBox->insertItem(tr("filled"));
+  ArrowStyleBox->insertItem(tr("Two lines"));
+  ArrowStyleBox->insertItem(tr("Filled"));
   all->addMultiCellWidget(ArrowStyleBox, 3,3,1,2);
 
 

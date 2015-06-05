@@ -20,7 +20,7 @@
 
 CPWstep::CPWstep()
 {
-  Description = QObject::tr("coplanar step");
+  Description = QObject::tr("Co-planar step");
 
   Lines.append(new Line(-30,  0,-18,  0,QPen(Qt::darkBlue,2)));
   Lines.append(new Line( 18,  0, 30,  0,QPen(Qt::darkBlue,2)));
@@ -63,15 +63,15 @@ CPWstep::CPWstep()
   Name  = "CL";
 
   Props.append(new Property("Subst", "Subst1", true,
-		QObject::tr("name of substrate definition")));
+		QObject::tr("Name of substrate definition")));
   Props.append(new Property("W1", "1 mm", true,
-		QObject::tr("width of line 1")));
+		QObject::tr("Width of line 1")));
   Props.append(new Property("W2", "2 mm", true,
-		QObject::tr("width of line 2")));
+		QObject::tr("Width of line 2")));
   Props.append(new Property("S", "3 mm", true,
-		QObject::tr("distance between ground planes")));
+		QObject::tr("Distance between ground planes")));
   Props.append(new Property("Backside", "Air", false,
-		QObject::tr("material at the backside of the substrate")+
+		QObject::tr("Material at the backside of the substrate")+
 		" [Metal, Air]"));
 }
 

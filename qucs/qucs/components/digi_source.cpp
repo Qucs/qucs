@@ -22,7 +22,7 @@
 Digi_Source::Digi_Source()
 {
   Type = isComponent;   // both analog and digital
-  Description = QObject::tr("digital source");
+  Description = QObject::tr("Digital source");
 
   Lines.append(new Line(-10,  0,  0,  0,QPen(Qt::darkGreen,2)));
   Lines.append(new Line(-20,-10,-10,  0,QPen(Qt::darkGreen,2)));
@@ -49,13 +49,13 @@ Digi_Source::Digi_Source()
 
   // This property must stay in this order !
   Props.append(new Property("Num", "1", true,
-		QObject::tr("number of the port")));
+		QObject::tr("Number of the port")));
   Props.append(new Property("init", "low", false,
-		QObject::tr("initial output value")+" [low, high]"));
+		QObject::tr("Initial output value")+" [low, high]"));
   Props.append(new Property("times", "1ns; 1ns", false,
-		QObject::tr("list of times for changing output value")));
+		QObject::tr("List of times for changing output value")));
   Props.append(new Property("V", "1 V", false,
-		QObject::tr("voltage of high level")));
+		QObject::tr("Voltage of high level")));
 }
 
 // -------------------------------------------------------
@@ -72,7 +72,7 @@ Component* Digi_Source::newOne()
 // -------------------------------------------------------
 Element* Digi_Source::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
-  Name = QObject::tr("digital source");
+  Name = QObject::tr("Digital source");
   BitmapFile = (char *) "digi_source";
 
   if(getNewOne)  return new Digi_Source();

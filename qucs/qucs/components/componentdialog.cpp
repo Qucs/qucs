@@ -83,7 +83,7 @@ ComponentDialog::ComponentDialog(Component *c, Schematic *d)
     editParam = new QLineEdit(Tab1);
     editParam->setValidator(ValRestrict);
     connect(editParam, SIGNAL(returnPressed()), SLOT(slotParamEntered()));
-    checkParam = new QCheckBox(tr("display in schematic"), Tab1);
+    checkParam = new QCheckBox(tr("Display in the schematic"), Tab1);
 
     if(Comp->Model == ".SW") {   // parameter sweep
       textSim = new QLabel(tr("Simulation:"), Tab1);
@@ -92,7 +92,7 @@ ComponentDialog::ComponentDialog(Component *c, Schematic *d)
       comboSim->setEditable(true);
       connect(comboSim, SIGNAL(activated(int)), SLOT(slotSimEntered(int)));
       gp->addWidget(comboSim, row,1);
-      checkSim = new QCheckBox(tr("display in schematic"), Tab1);
+      checkSim = new QCheckBox(tr("Display in the schematic"), Tab1);
       gp->addWidget(checkSim, row++,2);
     }
     else {
@@ -118,15 +118,15 @@ ComponentDialog::ComponentDialog(Component *c, Schematic *d)
     comboType = new QComboBox(Tab1);
 
     QStringList sweeptypes;
-    sweeptypes << tr("linear") 
-	       << tr("logarithmic") 
-	       << tr("list") 
-	       << tr("constant");
+    sweeptypes << tr("Linear") 
+	       << tr("Logarithmic") 
+	       << tr("List") 
+	       << tr("Constant");
     comboType->insertItems(0, sweeptypes);
 			   
     gp->addWidget(comboType, row,1);
     connect(comboType, SIGNAL(activated(int)), SLOT(slotSimTypeChange(int)));
-    checkType = new QCheckBox(tr("display in schematic"), Tab1);
+    checkType = new QCheckBox(tr("Display in the schematic"), Tab1);
     gp->addWidget(checkType, row++,2);
 
     textValues = new QLabel(tr("Values:"), Tab1);
@@ -135,7 +135,7 @@ ComponentDialog::ComponentDialog(Component *c, Schematic *d)
     editValues->setValidator(Validator);
     connect(editValues, SIGNAL(returnPressed()), SLOT(slotValuesEntered()));
     gp->addWidget(editValues, row,1);
-    checkValues = new QCheckBox(tr("display in schematic"), Tab1);
+    checkValues = new QCheckBox(tr("Display in the schematic"), Tab1);
     gp->addWidget(checkValues, row++,2);
 
     textStart  = new QLabel(tr("Start:"), Tab1);
@@ -144,7 +144,7 @@ ComponentDialog::ComponentDialog(Component *c, Schematic *d)
     editStart->setValidator(Validator);
     connect(editStart, SIGNAL(returnPressed()), SLOT(slotStartEntered()));
     gp->addWidget(editStart, row,1);
-    checkStart = new QCheckBox(tr("display in schematic"), Tab1);
+    checkStart = new QCheckBox(tr("Display in the schematic"), Tab1);
     gp->addWidget(checkStart, row++,2);
 
     textStop   = new QLabel(tr("Stop:"), Tab1);
@@ -153,7 +153,7 @@ ComponentDialog::ComponentDialog(Component *c, Schematic *d)
     editStop->setValidator(Validator);
     connect(editStop, SIGNAL(returnPressed()), SLOT(slotStopEntered()));
     gp->addWidget(editStop, row,1);
-    checkStop = new QCheckBox(tr("display in schematic"), Tab1);
+    checkStop = new QCheckBox(tr("Display in the schematic"), Tab1);
     gp->addWidget(checkStop, row++,2);
 
     textStep   = new QLabel(tr("Step:"), Tab1);
@@ -169,7 +169,7 @@ ComponentDialog::ComponentDialog(Component *c, Schematic *d)
     editNumber->setValidator(ValInteger);
     connect(editNumber, SIGNAL(returnPressed()), SLOT(slotNumberEntered()));
     gp->addWidget(editNumber, row,1);
-    checkNumber = new QCheckBox(tr("display in schematic"), Tab1);
+    checkNumber = new QCheckBox(tr("Display in the schematic"), Tab1);
     gp->addWidget(checkNumber, row++,2);
 
 
@@ -275,7 +275,7 @@ ComponentDialog::ComponentDialog(Component *c, Schematic *d)
   CompNameEdit->setValidator(ValRestrict);
   connect(CompNameEdit, SIGNAL(returnPressed()), SLOT(slotButtOK()));
 
-  showName = new QCheckBox(tr("display in schematic"));
+  showName = new QCheckBox(tr("Display in the schematic"));
   h5->addWidget(showName);
 
   QWidget *hTop = new QWidget;
@@ -314,7 +314,7 @@ ComponentDialog::ComponentDialog(Component *c, Schematic *d)
   QStringList headers;
   headers << tr("Name")
           << tr("Value")
-          << tr("display")
+          << tr("Display")
           << tr("Description");
   prop->setHorizontalHeaderLabels(headers);
 
@@ -369,7 +369,7 @@ ComponentDialog::ComponentDialog(Component *c, Schematic *d)
   BrowseButt->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
   connect(BrowseButt, SIGNAL(clicked()), SLOT(slotBrowseFile()));
 
-  disp = new QCheckBox(tr("display in schematic"));
+  disp = new QCheckBox(tr("Display in the schematic"));
   v1->addWidget(disp);
   connect(disp, SIGNAL(stateChanged(int)), SLOT(slotApplyState(int)));
 
@@ -436,9 +436,9 @@ ComponentDialog::ComponentDialog(Component *c, Schematic *d)
   //    if(p == pp)
   //      break;
       if(p->display)
-        s = tr("yes");
+        s = tr("Yes");
       else
-        s = tr("no");
+        s = tr("No");
 
       // add Props into TableWidget
       qDebug() << " Loading Comp->Props :" << p->Name << p->Value << p->display << p->Description ;
@@ -510,9 +510,9 @@ void ComponentDialog::updateCompPropsList()
   //    if(p == pp)
   //      break;
       if(p->display)
-        s = tr("yes");
+        s = tr("Yes");
       else
-        s = tr("no");
+        s = tr("No");
 
       // add Props into TableWidget
       qDebug() << " Loading Comp->Props :" << p->Name << p->Value << p->display << p->Description ;
@@ -564,7 +564,7 @@ void ComponentDialog::slotSelectProperty(QTableWidgetItem *item)
   QString show  = prop->item(item->row(),2)->text();
   QString desc  = prop->item(item->row(),3)->text();
 
-  if(show == tr("yes"))
+  if(show == tr("Yes"))
     disp->setChecked(true);
   else
     disp->setChecked(false);
@@ -765,9 +765,9 @@ void ComponentDialog::slotApplyState(int State)
 
   QString ButtonState;
   if(State)
-    ButtonState = tr("yes");
+    ButtonState = tr("Yes");
   else
-    ButtonState = tr("no");
+    ButtonState = tr("No");
 
   if(disp != ButtonState) {
     prop->item(row, 2)->setText(ButtonState);
@@ -980,7 +980,7 @@ void ComponentDialog::slotApplyInput()
                 << prop->rowCount() +1
                 << pp;
 
-       display = (disp == tr("yes"));
+       display = (disp == tr("Yes"));
        if( pp ) {
 
          if(pp->display != display) {
@@ -1145,9 +1145,9 @@ void ComponentDialog::slotButtAdd()
   }
 
   // toggle display flag
-  QString s = tr("no");
+  QString s = tr("No");
   if(disp->isChecked())
-    s = tr("yes");
+    s = tr("Yes");
 
   // get number for selected row
   int curRow = prop->currentRow();
@@ -1439,9 +1439,9 @@ void ComponentDialog::slotHHeaderClicked(int headerIdx)
   QTableWidgetItem *cell;
 
   if (setAllVisible)
-    s = tr("yes");
+    s = tr("Yes");
   else
-    s = tr("no");
+    s = tr("No");
 
   // go through all the properties table and set the visibility cell
   for (int row = 0; row < prop->rowCount(); row++) {

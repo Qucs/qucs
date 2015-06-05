@@ -187,7 +187,7 @@ OptimizeDialog::OptimizeDialog(Optimize_Sim *c_, Schematic *d_)
   VarNameEdit->setValidator(Validator);
   connect(VarNameEdit, SIGNAL(textChanged(const QString&)),
           SLOT(slotChangeVarName(const QString&)));
-  VarActiveCheck = new QCheckBox(tr("active"));
+  VarActiveCheck = new QCheckBox(tr("Active"));
   VarActiveCheck->setChecked(true);
   connect(VarActiveCheck, SIGNAL(toggled(bool)),
           SLOT(slotChangeVarActive(bool)));
@@ -212,9 +212,9 @@ OptimizeDialog::OptimizeDialog(Optimize_Sim *c_, Schematic *d_)
   connect(VarMaxEdit, SIGNAL(textChanged(const QString&)),
           SLOT(slotChangeVarMax(const QString&)));
 
-  gp3->addWidget(new QLabel(tr("initial:")), 2,0);
-  gp3->addWidget(new QLabel(tr("min:")), 2,1);
-  gp3->addWidget(new QLabel(tr("max:")), 2,2);
+  gp3->addWidget(new QLabel(tr("Initial:")), 2,0);
+  gp3->addWidget(new QLabel(tr("Min:")), 2,1);
+  gp3->addWidget(new QLabel(tr("Max:")), 2,2);
   gp3->addWidget(VarInitEdit,3,0);
   gp3->addWidget(VarMinEdit,3,1);
   gp3->addWidget(VarMaxEdit,3,2);
@@ -224,10 +224,10 @@ OptimizeDialog::OptimizeDialog(Optimize_Sim *c_, Schematic *d_)
   setTabOrder(VarMinEdit, VarMaxEdit);
 
   VarTypeCombo = new QComboBox();
-  VarTypeCombo->insertItem(0, tr("linear double"));
-  VarTypeCombo->insertItem(1, tr("logarithmic double"));
-  VarTypeCombo->insertItem(2, tr("linear integer"));
-  VarTypeCombo->insertItem(3, tr("logarithmic integer"));
+  VarTypeCombo->insertItem(0, tr("Linear double"));
+  VarTypeCombo->insertItem(1, tr("Logarithmic double"));
+  VarTypeCombo->insertItem(2, tr("Linear integer"));
+  VarTypeCombo->insertItem(3, tr("Logarithmic integer"));
   connect(VarTypeCombo, SIGNAL(activated(const QString&)),
           SLOT(slotChangeVarType(const QString&)));
 
@@ -290,12 +290,12 @@ OptimizeDialog::OptimizeDialog(Optimize_Sim *c_, Schematic *d_)
   gp4->addWidget(GoalNumEdit,2,1);
 
   GoalTypeCombo = new QComboBox();
-  GoalTypeCombo->insertItem(0, tr("minimize"));
-  GoalTypeCombo->insertItem(1, tr("maximize"));
-  GoalTypeCombo->insertItem(2, tr("less"));
-  GoalTypeCombo->insertItem(3, tr("greater"));
-  GoalTypeCombo->insertItem(4, tr("equal"));
-  GoalTypeCombo->insertItem(5, tr("monitor"));
+  GoalTypeCombo->insertItem(0, tr("Minimize"));
+  GoalTypeCombo->insertItem(1, tr("Maximize"));
+  GoalTypeCombo->insertItem(2, tr("Less"));
+  GoalTypeCombo->insertItem(3, tr("Greater"));
+  GoalTypeCombo->insertItem(4, tr("Equal"));
+  GoalTypeCombo->insertItem(5, tr("Monitor"));
   connect(GoalTypeCombo, SIGNAL(activated(const QString&)),
           SLOT(slotChangeGoalType(const QString&)));
   gp4->addWidget(GoalTypeCombo,2,2);
@@ -381,7 +381,7 @@ OptimizeDialog::OptimizeDialog(Optimize_Sim *c_, Schematic *d_)
       item->setFlags(item->flags() & ~Qt::ItemIsEditable);
       VarTable->setItem(row, 0, item);
       // active
-      item = new QTableWidgetItem((ValueSplit.at(1) == "yes")? tr("yes") : tr("no"));
+      item = new QTableWidgetItem((ValueSplit.at(1) == "yes")? tr("Yes") : tr("no"));
       item->setFlags(item->flags() & ~Qt::ItemIsEditable);
       VarTable->setItem(row, 1, item);
       // initial
@@ -399,13 +399,13 @@ OptimizeDialog::OptimizeDialog(Optimize_Sim *c_, Schematic *d_)
       // Type
       QString typeStr;
       if (ValueSplit.at(5) == "LIN_DOUBLE") {
-        typeStr = tr("linear double");
+        typeStr = tr("Linear double");
       } else if (ValueSplit.at(5) == "LOG_DOUBLE") {
-        typeStr = tr("logarithmic double");
+        typeStr = tr("Logarithmic double");
       } else if (ValueSplit.at(5) == "LIN_INT") {
-        typeStr = tr("linear integer");
+        typeStr = tr("Linear integer");
       } else {
-        typeStr = tr("logarithmic integer");
+        typeStr = tr("Logarithmic integer");
       }
       item = new QTableWidgetItem(typeStr);
       item->setFlags(item->flags() & ~Qt::ItemIsEditable);
@@ -421,17 +421,17 @@ OptimizeDialog::OptimizeDialog(Optimize_Sim *c_, Schematic *d_)
       GoalTable->setItem(row, 0, item);
       QString typeStr;
       if (GoalSplit.at(1) == "MIN") {
-        typeStr = tr("minimize");
+        typeStr = tr("Minimize");
       } else if (GoalSplit.at(1) == "MAX") {
-        typeStr = tr("maximize");
+        typeStr = tr("Maximize");
       } else if (GoalSplit.at(1) == "LE") {
-        typeStr = tr("less");
+        typeStr = tr("Less");
       } else if (GoalSplit.at(1) == "GE") {
-        typeStr = tr("greater");
+        typeStr = tr("Greater");
       } else if (GoalSplit.at(1) == "EQ") {
-        typeStr = tr("equal");
+        typeStr = tr("Equal");
       } else {
-        typeStr = tr("monitor");
+        typeStr = tr("Monitor");
       }
       item = new QTableWidgetItem(typeStr);
       item->setFlags(item->flags() & ~Qt::ItemIsEditable);
@@ -472,7 +472,7 @@ void OptimizeDialog::slotEditVariable()
   }
 
   VarNameEdit->setText(VarTable->item(row, 0)->text());
-  VarActiveCheck->setChecked(VarTable->item(row, 1)->text() == tr("yes"));
+  VarActiveCheck->setChecked(VarTable->item(row, 1)->text() == tr("Yes"));
   VarInitEdit->setText(VarTable->item(row, 2)->text());
   VarMinEdit->setText(VarTable->item(row, 3)->text());
   VarMaxEdit->setText(VarTable->item(row, 4)->text());
@@ -506,7 +506,7 @@ void OptimizeDialog::slotAddVariable()
   item = new QTableWidgetItem(VarNameEdit->text());
   item->setFlags(item->flags() & ~Qt::ItemIsEditable);
   VarTable->setItem(row, 0, item);
-  item = new QTableWidgetItem(VarActiveCheck->isChecked() ? tr("yes") : tr("no"));
+  item = new QTableWidgetItem(VarActiveCheck->isChecked() ? tr("Yes") : tr("no"));
   item->setFlags(item->flags() & ~Qt::ItemIsEditable);
   VarTable->setItem(row, 1, item);
   item = new QTableWidgetItem(VarInitEdit->text());
@@ -543,7 +543,7 @@ void OptimizeDialog::slotChangeVarActive(bool On)
   int selectedrow = VarTable->currentRow();
   QTableWidgetItem *item = VarTable->item(selectedrow, 1);
   if (item) {
-    item->setText( On ? tr("yes") : tr("no") );
+    item->setText( On ? tr("Yes") : tr("no") );
   }
 }
 
@@ -738,16 +738,16 @@ void OptimizeDialog::slotApply()
   for (row = 0; row < VarTable->rowCount(); ++row) {
     QStringList propList;
     propList << VarTable->item(row, 0)->text();
-    propList << ((VarTable->item(row, 1)->text() == tr("yes"))? "yes" : "no");
+    propList << ((VarTable->item(row, 1)->text() == tr("Yes"))? "yes" : "no");
     propList << VarTable->item(row, 2)->text();
     propList << VarTable->item(row, 3)->text();
     propList << VarTable->item(row, 4)->text();
     QString typeStr = VarTable->item(row, 5)->text();
-    if (typeStr == tr("linear double")) {
+    if (typeStr == tr("Linear double")) {
       propList << "LIN_DOUBLE";
-    } else if (typeStr == tr("logarithmic double")) {
+    } else if (typeStr == tr("Logarithmic double")) {
       propList << "LOG_DOUBLE";
-    } else if (typeStr == tr("linear integer")) {
+    } else if (typeStr == tr("Linear integer")) {
       propList << "LIN_INT";
     } else {
       propList << "LOG_INT";
@@ -775,15 +775,15 @@ void OptimizeDialog::slotApply()
     QStringList propList;
     propList << GoalTable->item(row, 0)->text();
     QString typeStr = GoalTable->item(row, 1)->text();
-    if (typeStr == tr("minimize")) {
+    if (typeStr == tr("Minimize")) {
       propList << "MIN";
-    } else if (typeStr == tr("maximize")) {
+    } else if (typeStr == tr("Maximize")) {
       propList << "MAX";
-    } else if (typeStr == tr("less")) {
+    } else if (typeStr == tr("Less")) {
       propList << "LE";
-    } else if (typeStr == tr("greater")) {
+    } else if (typeStr == tr("Greater")) {
       propList << "GE";
-    } else if (typeStr == tr("equal")) {
+    } else if (typeStr == tr("Equal")) {
       propList << "EQ";
     } else {
       propList << "MON";

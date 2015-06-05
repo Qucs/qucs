@@ -85,7 +85,7 @@ int TruthDiagram::calcDiagram()
      g= ig.next();
 
   if(g == 0) {  // no variables specified in diagram ?
-    Str = QObject::tr("no variables");
+    Str = QObject::tr("No variables");
     colWidth = checkColumnWidth(Str, metrics, colWidth, x, y2);
     if(colWidth >= 0)
       Texts.append(new Text(x-4, y2-2, Str)); // independent variable
@@ -218,14 +218,14 @@ int TruthDiagram::calcDiagram()
 
       }  // of "if(sameDeps)"
       else {
-        Str = QObject::tr("wrong dependency");
+        Str = QObject::tr("Wrong dependency");
         colWidth = checkColumnWidth(Str, metrics, colWidth, x, y);
         if(colWidth < 0)  goto funcEnd;
         Texts.append(new Text(x, y, Str));
       }
     }
     else {   // no data in graph
-      Str = QObject::tr("no data");
+      Str = QObject::tr("No data");
       colWidth = checkColumnWidth(Str, metrics, colWidth, x, y);
       if(colWidth < 0)  goto funcEnd;
       Texts.append(new Text(x, y, Str));

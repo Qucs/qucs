@@ -284,7 +284,7 @@ void Marker::makeInvalid()
     cx = Diag->x2 >> 1;
     cy = Diag->y2 >> 1;
   }
-  Text = QObject::tr("invalid");
+  Text = QObject::tr("Invalid");
 
   fCX = float(cx);
   fCY = float(cy);

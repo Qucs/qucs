@@ -20,7 +20,7 @@
 
 MSgap::MSgap()
 {
-  Description = QObject::tr("microstrip gap");
+  Description = QObject::tr("Microstrip gap");
 
   Lines.append(new Line(-30,  0,-18,  0,QPen(Qt::darkBlue,2)));
   Lines.append(new Line( 18,  0, 30,  0,QPen(Qt::darkBlue,2)));
@@ -48,18 +48,18 @@ MSgap::MSgap()
   Name  = "MS";
 
   Props.append(new Property("Subst", "Subst1", true,
-	QObject::tr("name of substrate definition")));
+	QObject::tr("Name of substrate definition")));
   Props.append(new Property("W1", "1 mm", true,
-	QObject::tr("width of the line 1")));
+	QObject::tr("Width of the line 1")));
   Props.append(new Property("W2", "1 mm", true,
-	QObject::tr("width of the line 2")));
+	QObject::tr("Width of the line 2")));
   Props.append(new Property("S", "1 mm", true,
-	QObject::tr("spacing between the microstrip ends")));
+	QObject::tr("Spacing between the microstrip ends")));
   Props.append(new Property("MSModel", "Hammerstad", false,
-	QObject::tr("quasi-static microstrip model")+
+	QObject::tr("Quasi-static microstrip model")+
 	" [Hammerstad, Wheeler, Schneider]"));
   Props.append(new Property("MSDispModel", "Kirschning", false,
-	QObject::tr("microstrip dispersion model")+" [Kirschning, Kobayashi, "
+	QObject::tr("Microstrip dispersion model")+" [Kirschning, Kobayashi, "
 	"Yamashita, Hammerstad, Getsinger, Schneider, Pramanick]"));
 }
 

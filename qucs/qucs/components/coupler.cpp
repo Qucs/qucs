@@ -20,7 +20,7 @@
 
 Coupler::Coupler()
 {
-  Description = QObject::tr("ideal coupler");
+  Description = QObject::tr("Ideal coupler");
 
   Lines.append(new Line(-23,-24, 23,-24,QPen(Qt::darkGray,1)));
   Lines.append(new Line( 23,-24, 23, 24,QPen(Qt::darkGray,1)));
@@ -61,11 +61,11 @@ Coupler::Coupler()
   Name  = "X";
 
   Props.append(new Property("k", "0.7071", true,
-		QObject::tr("coupling factor")));
+		QObject::tr("Coupling factor")));
   Props.append(new Property("phi", "180", true,
-		QObject::tr("phase shift of coupling path in degree")));
+		QObject::tr("Phase shift of coupling path in degrees")));
   Props.append(new Property("Z", "50 Ohm", false,
-		QObject::tr("reference impedance")));
+		QObject::tr("Reference impedance")));
 }
 
 Coupler::~Coupler()

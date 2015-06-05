@@ -49,9 +49,9 @@ AM_Modulator::AM_Modulator()
   Name  = "V";
 
   Props.append(new Property("U", "1 V", true,
-		QObject::tr("Peak voltage in Volts")));
+		QObject::tr("Peak voltage in volts")));
   Props.append(new Property("f", "1 GHz", false,
-		QObject::tr("Frequency in Hertz")));
+		QObject::tr("Frequency in hertz")));
   Props.append(new Property("Phase", "0", false,
 		QObject::tr("Initial phase in degrees")));
   Props.append(new Property("m", "1.0", false,

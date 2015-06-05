@@ -20,7 +20,7 @@
 
 CPWgap::CPWgap()
 {
-  Description = QObject::tr("coplanar gap");
+  Description = QObject::tr("Coplanar gap");
 
   Lines.append(new Line(-30,  0,-18,  0,QPen(Qt::darkBlue,2)));
   Lines.append(new Line( 18,  0, 30,  0,QPen(Qt::darkBlue,2)));
@@ -61,13 +61,13 @@ CPWgap::CPWgap()
   Name  = "CL";
 
   Props.append(new Property("Subst", "Subst1", true,
-		QObject::tr("name of substrate definition")));
+		QObject::tr("Name of substrate definition")));
   Props.append(new Property("W", "1 mm", true,
-		QObject::tr("width of the line")));
+		QObject::tr("Width of the line")));
   Props.append(new Property("S", "1 mm", true,
-		QObject::tr("width of a gap")));
+		QObject::tr("Width of the gap")));
   Props.append(new Property("G", "0.5 mm", true,
-		QObject::tr("width of gap between the two lines")));
+		QObject::tr("Width of gap between the two lines")));
 }
 
 CPWgap::~CPWgap()

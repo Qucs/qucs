@@ -104,7 +104,7 @@ Element* Rectangle::info(QString& Name, char* &BitmapFile, bool getNewOne)
 // --------------------------------------------------------------------------
 Element* Rectangle::info_filled(QString& Name, char* &BitmapFile, bool getNewOne)
 {
-  Name = QObject::tr("filled Rectangle");
+  Name = QObject::tr("Filled Rectangle");
   BitmapFile = (char *) "filledrect";
 
   if(getNewOne)  return new Rectangle(true);

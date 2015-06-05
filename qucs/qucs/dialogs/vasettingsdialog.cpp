@@ -107,7 +107,7 @@ VASettingsDialog::VASettingsDialog (TextDoc * Doc_)
 
   toggleGroupDev = new QButtonGroup ();
   QRadioButton * nonRadio =
-    new QRadioButton (tr("unspecified device"));
+    new QRadioButton (tr("Unspecified device"));
   QRadioButton * bjtRadio = 
     new QRadioButton (tr("NPN/PNP polarity"));
   QRadioButton * mosRadio =
@@ -127,11 +127,11 @@ VASettingsDialog::VASettingsDialog (TextDoc * Doc_)
 
   toggleGroupTyp = new QButtonGroup ();
   QRadioButton * anaRadio = 
-    new QRadioButton (tr("analog only"));
+    new QRadioButton (tr("Analog only"));
   QRadioButton * digRadio =
-    new QRadioButton (tr("digital only"));
+    new QRadioButton (tr("Digital only"));
   QRadioButton * allRadio =
-    new QRadioButton (tr("both"));
+    new QRadioButton (tr("Both"));
   toggleGroupTyp->addButton(digRadio, DEV_DIG);
   toggleGroupTyp->addButton(anaRadio, DEV_ANA);
   toggleGroupTyp->addButton(allRadio, DEV_ALL);

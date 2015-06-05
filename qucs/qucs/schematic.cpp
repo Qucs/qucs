@@ -1446,7 +1446,7 @@ int Schematic::adjustPortNumbers()
 	  id->Parameter.append(new SubParameter(
  	    true,
 	    *it+"="+GDefs[Number-1],
-	    tr("generic")+" "+QString::number(Number),
+	    tr("Generic")+" "+QString::number(Number),
 	    GTypes[Number-1]));
 	  Number++;
 	}

@@ -22,7 +22,7 @@
 BJT::BJT()
 {
   // properties obtained from "Basic_BJT" in bjtsub.cpp
-  Description = QObject::tr("bipolar junction transistor");
+  Description = QObject::tr("Bipolar junction transistor");
   createSymbol();
   tx = x2+4;
   ty = y1+4;
@@ -41,7 +41,7 @@ Component* BJT::newOne()
 // -------------------------------------------------------
 Element* BJT::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
-  Name = QObject::tr("npn transistor");
+  Name = QObject::tr("NPN transistor");
   BitmapFile = (char *) "npn";
 
   if(getNewOne)  return new BJT();
@@ -51,7 +51,7 @@ Element* BJT::info(QString& Name, char* &BitmapFile, bool getNewOne)
 // -------------------------------------------------------
 Element* BJT::info_pnp(QString& Name, char* &BitmapFile, bool getNewOne)
 {
-  Name = QObject::tr("pnp transistor");
+  Name = QObject::tr("PNP transistor");
   BitmapFile = (char *) "pnp";
 
   if(getNewOne) {

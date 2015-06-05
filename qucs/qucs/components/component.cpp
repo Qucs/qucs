@@ -1300,17 +1300,17 @@ GateComponent::GateComponent()
 
   // the list order must be preserved !!!
   Props.append(new Property("in", "2", false,
-		QObject::tr("number of input ports")));
+		QObject::tr("Number of input ports")));
   Props.append(new Property("V", "1 V", false,
-		QObject::tr("voltage of high level")));
+		QObject::tr("Voltage of high level")));
   Props.append(new Property("t", "0", false,
-		QObject::tr("delay time")));
+		QObject::tr("Delay time")));
   Props.append(new Property("TR", "10", false,
-		QObject::tr("transfer function scaling factor")));
+		QObject::tr("Transfer function scaling factor")));
 
   // this must be the last property in the list !!!
   Props.append(new Property("Symbol", "old", false,
-		QObject::tr("schematic symbol")+" [old, DIN40900]"));
+		QObject::tr("Schematic symbol")+" [old, DIN40900]"));
 }
 
 // -------------------------------------------------------

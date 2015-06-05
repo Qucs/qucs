@@ -113,7 +113,7 @@ void Module::registerDynamicComponents()
      m->infoVA = &vacomponent::info;
 
      // TODO maybe allow user load into custom category?
-     m->category = QObject::tr("verilog-a user devices");
+     m->category = QObject::tr("Verilog-A user devices");
 
      // instantiation of the component once in order
      // to obtain "Model" property of the component

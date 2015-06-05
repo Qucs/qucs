@@ -20,7 +20,7 @@
 
 TwistedPair::TwistedPair()
 {
-  Description = QObject::tr("twisted pair transmission line");
+  Description = QObject::tr("Twisted pair transmission line");
 
   Arcs.append(new Arc(-25,-36, 18, 38,16*230, 16*68,QPen(Qt::darkBlue,1)));
   Arcs.append(new Arc(-25, -2, 18, 38, 16*62, 16*68,QPen(Qt::darkBlue,1)));
@@ -56,23 +56,23 @@ TwistedPair::TwistedPair()
   Name  = "Line";
 
   Props.append(new Property("d", "0.5 mm", true,
-		QObject::tr("diameter of conductor")));
+		QObject::tr("Diameter of the conductor")));
   Props.append(new Property("D", "0.8 mm", true,
-		QObject::tr("diameter of wire (conductor and insulator)")));
+		QObject::tr("Diameter of wire (conductor and insulator)")));
   Props.append(new Property("L", "1.5", true,
-		QObject::tr("physical length of the line")));
+		QObject::tr("Physical length of the line")));
   Props.append(new Property("T", "100", false,
-		QObject::tr("twists per length in 1/m")));
+		QObject::tr("Twists per length in 1/m")));
   Props.append(new Property("er", "4", false,
-		QObject::tr("dielectric constant of insulator")));
+		QObject::tr("Dielectric constant of the insulator")));
   Props.append(new Property("mur", "1", false,
-		QObject::tr("relative permeability of conductor")));
+		QObject::tr("Relative permeability of the conductor")));
   Props.append(new Property("rho", "0.022e-6", false,
-		QObject::tr("specific resistance of conductor")));
+		QObject::tr("Specific resistance of the conductor")));
   Props.append(new Property("tand", "4e-4", false,
-		QObject::tr("loss tangent")));
+		QObject::tr("Loss tangent")));
   Props.append(new Property("Temp", "26.85", false,
-		QObject::tr("simulation temperature in degree Celsius")));
+		QObject::tr("Simulation temperature in degrees Celsius")));
 }
 
 TwistedPair::~TwistedPair()

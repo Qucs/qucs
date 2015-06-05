@@ -20,7 +20,7 @@
 
 Noise_vv::Noise_vv()
 {
-  Description = QObject::tr("correlated current sources");
+  Description = QObject::tr("Correlated current sources");
 
   // left noise source
   Arcs.append(new Arc(-42,-12, 24, 24,  0, 16*360,QPen(Qt::darkBlue,2)));
@@ -58,17 +58,17 @@ Noise_vv::Noise_vv()
   Name  = "SRC";
 
   Props.append(new Property("v1", "1e-6", true,
-		QObject::tr("voltage power spectral density of source 1")));
+		QObject::tr("Voltage power spectral density of source 1")));
   Props.append(new Property("v2", "1e-6", true,
-		QObject::tr("voltage power spectral density of source 2")));
+		QObject::tr("Voltage power spectral density of source 2")));
   Props.append(new Property("C", "0.5", true,
-		QObject::tr("normalized correlation coefficient")));
+		QObject::tr("Normalized correlation coefficient")));
   Props.append(new Property("e", "0", false,
-		QObject::tr("frequency exponent")));
+		QObject::tr("Frequency exponent")));
   Props.append(new Property("c", "1", false,
-		QObject::tr("frequency coefficient")));
+		QObject::tr("Frequency coefficient")));
   Props.append(new Property("a", "0", false,
-		QObject::tr("additive frequency term")));
+		QObject::tr("Additive frequency term")));
 }
 
 Noise_vv::~Noise_vv()

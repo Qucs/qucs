@@ -21,18 +21,18 @@
 
 Switch::Switch()
 {
-  Description = QObject::tr("switch (time controlled)");
+  Description = QObject::tr("Switch (time controlled)");
 
   Props.append(new Property("init", "off", false,
-		QObject::tr("initial state")+" [on, off]"));
+		QObject::tr("Initial state")+" [on, off]"));
   Props.append(new Property("time", "1 ms", false,
-		QObject::tr("time when state changes (semicolon separated list possible, even numbered lists are repeated)")));
+		QObject::tr("Time when state changes (semicolon separated list possible, even numbered lists are repeated)")));
   Props.append(new Property("Ron", "0", false,
-		QObject::tr("resistance of \"on\" state in ohms")));
+		QObject::tr("Resistance of \"on\" state in ohms")));
   Props.append(new Property("Roff", "1e12", false,
-		QObject::tr("resistance of \"off\" state in ohms")));
+		QObject::tr("Resistance of \"off\" state in ohms")));
   Props.append(new Property("Temp", "26.85", false,
-		QObject::tr("simulation temperature in degree Celsius")));
+		QObject::tr("Simulation temperature in degrees Celsius")));
   Props.append(new Property("MaxDuration", "1e-6", false,
 		QObject::tr("Max possible switch transition time (transition time 1/100 smallest value in 'time', or this number)")));
 

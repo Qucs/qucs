@@ -21,103 +21,103 @@ Basic_MOSFET::Basic_MOSFET()
 {
   // these must be the first properties in the list !!!
   Props.append(new Property("Type", "nfet", false,
-	QObject::tr("polarity")+" [nfet, pfet]"));
+	QObject::tr("Polarity")+" [nfet, pfet]"));
   Props.append(new Property("Vt0", "1.0 V", true,
-	QObject::tr("zero-bias threshold voltage")));
+	QObject::tr("Zero-bias threshold voltage")));
 
   Props.append(new Property("Kp", "2e-5", true,
-	QObject::tr("transconductance coefficient in A/V^2")));
+	QObject::tr("Transconductance coefficient in A/V^2")));
   Props.append(new Property("Gamma", "0.0", false,
-	QObject::tr("bulk threshold in sqrt(V)")));
+	QObject::tr("Bulk threshold in sqrt(V)")));
   Props.append(new Property("Phi", "0.6 V", false,
-	QObject::tr("surface potential")));
+	QObject::tr("Surface potential")));
   Props.append(new Property("Lambda", "0.0", true,
-	QObject::tr("channel-length modulation parameter in 1/V")));
+	QObject::tr("Channel-length modulation parameter in 1/V")));
   Props.append(new Property("Rd", "0.0 Ohm", false,
-	QObject::tr("drain ohmic resistance")));
+	QObject::tr("Drain ohmic resistance")));
   Props.append(new Property("Rs", "0.0 Ohm", false,
-	QObject::tr("source ohmic resistance")));
+	QObject::tr("Source ohmic resistance")));
   Props.append(new Property("Rg", "0.0 Ohm", false,
-	QObject::tr("gate ohmic resistance")));
+	QObject::tr("Gate ohmic resistance")));
   Props.append(new Property("Is", "1e-14 A", false,
-	QObject::tr("bulk junction saturation current")));
+	QObject::tr("Bulk junction saturation current")));
   Props.append(new Property("N", "1.0", false,
-	QObject::tr("bulk junction emission coefficient")));
+	QObject::tr("Bulk junction-emission coefficient")));
   Props.append(new Property("W", "1 um", false,
-	QObject::tr("channel width")));
+	QObject::tr("Channel width")));
   Props.append(new Property("L", "1 um", false,
-	QObject::tr("channel length")));
+	QObject::tr("Channel length")));
   Props.append(new Property("Ld", "0.0", false,
-	QObject::tr("lateral diffusion length")));
+	QObject::tr("Lateral diffusion length")));
   Props.append(new Property("Tox", "0.1 um", false,
-	QObject::tr("oxide thickness")));
+	QObject::tr("Oxide thickness")));
   Props.append(new Property("Cgso", "0.0", false,
-	QObject::tr("gate-source overlap capacitance per meter of "
+	QObject::tr("Gate-source overlap capacitance per meter of "
 		    "channel width in F/m")));
   Props.append(new Property("Cgdo", "0.0", false,
-	QObject::tr("gate-drain overlap capacitance per meter of "
+	QObject::tr("Gate-drain overlap capacitance per meter of "
 		    "channel width in F/m")));
   Props.append(new Property("Cgbo", "0.0", false,
-	QObject::tr("gate-bulk overlap capacitance per meter of "
+	QObject::tr("Gate-bulk overlap capacitance per meter of "
 		    "channel length in F/m")));
   Props.append(new Property("Cbd", "0.0 F", false,
-	QObject::tr("zero-bias bulk-drain junction capacitance")));
+	QObject::tr("Zero-bias bulk-drain junction capacitance")));
   Props.append(new Property("Cbs", "0.0 F", false,
-	QObject::tr("zero-bias bulk-source junction capacitance")));
+	QObject::tr("Zero-bias bulk-source junction capacitance")));
   Props.append(new Property("Pb", "0.8 V", false,
-	QObject::tr("bulk junction potential")));
+	QObject::tr("Bulk junction potential")));
   Props.append(new Property("Mj", "0.5", false,
-	QObject::tr("bulk junction bottom grading coefficient")));
+	QObject::tr("Bulk junction bottom grading coefficient")));
   Props.append(new Property("Fc", "0.5", false,
-	QObject::tr("bulk junction forward-bias depletion capacitance "
+	QObject::tr("Bulk junction forward-bias depletion capacitance "
 		    "coefficient")));
   Props.append(new Property("Cjsw", "0.0", false,
-	QObject::tr("zero-bias bulk junction periphery capacitance per meter "
+	QObject::tr("Zero-bias bulk junction periphery capacitance per meter "
 		    "of junction perimeter in F/m")));
   Props.append(new Property("Mjsw", "0.33", false,
-	QObject::tr("bulk junction periphery grading coefficient")));
+	QObject::tr("Bulk junction periphery grading coefficient")));
   Props.append(new Property("Tt", "0.0 ps", false,
-	QObject::tr("bulk transit time")));
+	QObject::tr("Bulk transit time")));
   Props.append(new Property("Nsub", "0.0", false,
-	QObject::tr("substrate bulk doping density in 1/cm^3")));
+	QObject::tr("Substrate bulk doping density in 1/cm^3")));
   Props.append(new Property("Nss", "0.0", false,
-	QObject::tr("surface state density in 1/cm^2")));
+	QObject::tr("Surface state density in 1/cm^2")));
   Props.append(new Property("Tpg", "1", false,
-	QObject::tr("gate material type: 0 = alumina; -1 = same as bulk; "
+	QObject::tr("Gate material type: 0 = alumina; -1 = same as bulk; "
 		    "1 = opposite to bulk")));
   Props.append(new Property("Uo", "600.0", false,
-	QObject::tr("surface mobility in cm^2/Vs")));
+	QObject::tr("Surface mobility in cm^2/Vs")));
   Props.append(new Property("Rsh", "0.0", false,
-	QObject::tr("drain and source diffusion sheet resistance in "
+	QObject::tr("Drain and source diffusion sheet resistance in "
 		    "Ohms/square")));
   Props.append(new Property("Nrd", "1", false,
-	QObject::tr("number of equivalent drain squares")));
+	QObject::tr("Number of equivalent drain squares")));
   Props.append(new Property("Nrs", "1", false,
-	QObject::tr("number of equivalent source squares")));
+	QObject::tr("Number of equivalent source squares")));
   Props.append(new Property("Cj", "0.0", false,
-	QObject::tr("zero-bias bulk junction bottom capacitance per square "
+	QObject::tr("Zero-bias bulk junction bottom capacitance per square "
 		    "meter of junction area in F/m^2")));
   Props.append(new Property("Js", "0.0", false,
-	QObject::tr("bulk junction saturation current per square "
+	QObject::tr("Bulk junction saturation current per square "
 		    "meter of junction area in A/m^2")));
   Props.append(new Property("Ad", "0.0", false,
-	QObject::tr("drain diffusion area in m^2")));
+	QObject::tr("Drain diffusion area in m^2")));
   Props.append(new Property("As", "0.0", false,
-	QObject::tr("source diffusion area in m^2")));
+	QObject::tr("Source diffusion area in m^2")));
   Props.append(new Property("Pd", "0.0 m", false,
-	QObject::tr("drain junction perimeter")));
+	QObject::tr("Drain junction perimeter")));
   Props.append(new Property("Ps", "0.0 m", false,
-	QObject::tr("source junction perimeter")));
+	QObject::tr("Source junction perimeter")));
   Props.append(new Property("Kf", "0.0", false,
-	QObject::tr("flicker noise coefficient")));
+	QObject::tr("Flicker noise coefficient")));
   Props.append(new Property("Af", "1.0", false,
-	QObject::tr("flicker noise exponent")));
+	QObject::tr("Flicker noise exponent")));
   Props.append(new Property("Ffe", "1.0", false,
-	QObject::tr("flicker noise frequency exponent")));
+	QObject::tr("Flicker noise frequency exponent")));
   Props.append(new Property("Temp", "26.85", false,
-	QObject::tr("simulation temperature in degree Celsius")));
+	QObject::tr("Simulation temperature in degrees Celsius")));
   Props.append(new Property("Tnom", "26.85", false,
-	QObject::tr("parameter measurement temperature")));
+	QObject::tr("Parameter measurement temperature")));
 
   Name  = "T";
 }
@@ -144,7 +144,7 @@ Component* MOSFET_sub::newOne()
 // -------------------------------------------------------
 Element* MOSFET_sub::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
-  Name = QObject::tr("n-MOSFET");
+  Name = QObject::tr("N-MOSFET");
   BitmapFile = (char *) "nmosfet_sub";
 
   if(getNewOne)  return new MOSFET_sub();
@@ -155,7 +155,7 @@ Element* MOSFET_sub::info(QString& Name, char* &BitmapFile, bool getNewOne)
 Element* MOSFET_sub::info_p(QString& Name,
 			char* &BitmapFile, bool getNewOne)
 {
-  Name = QObject::tr("p-MOSFET");
+  Name = QObject::tr("P-MOSFET");
   BitmapFile = (char *) "pmosfet_sub";
 
   if(getNewOne) {
@@ -172,7 +172,7 @@ Element* MOSFET_sub::info_p(QString& Name,
 Element* MOSFET_sub::info_depl(QString& Name,
 			char* &BitmapFile, bool getNewOne)
 {
-  Name = QObject::tr("depletion MOSFET");
+  Name = QObject::tr("Depletion MOSFET");
   BitmapFile = (char *) "dmosfet_sub";
 
   if(getNewOne) {

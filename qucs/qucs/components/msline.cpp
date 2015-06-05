@@ -20,7 +20,7 @@
 
 MSline::MSline()
 {
-  Description = QObject::tr("microstrip line");
+  Description = QObject::tr("Microstrip line");
 
   Lines.append(new Line(-30,  0,-18,  0,QPen(Qt::darkBlue,2)));
   Lines.append(new Line( 18,  0, 30,  0,QPen(Qt::darkBlue,2)));
@@ -41,19 +41,19 @@ MSline::MSline()
   Name  = "MS";
 
   Props.append(new Property("Subst", "Subst1", true,
-	QObject::tr("name of substrate definition")));
+	QObject::tr("Name of substrate definition")));
   Props.append(new Property("W", "1 mm", true,
-	QObject::tr("width of the line")));
+	QObject::tr("Width of the line")));
   Props.append(new Property("L", "10 mm", true,
-	QObject::tr("length of the line")));
+	QObject::tr("Length of the line")));
   Props.append(new Property("Model", "Hammerstad", false,
-	QObject::tr("quasi-static microstrip model")+
+	QObject::tr("Quasi-static microstrip model")+
 		    " [Hammerstad, Wheeler, Schneider]"));
   Props.append(new Property("DispModel", "Kirschning", false,
-	QObject::tr("microstrip dispersion model")+" [Kirschning, Kobayashi, "
+	QObject::tr("Microstrip dispersion model")+" [Kirschning, Kobayashi, "
 	"Yamashita, Hammerstad, Getsinger, Schneider, Pramanick]"));
   Props.append(new Property("Temp", "26.85", false,
-	QObject::tr("simulation temperature in degree Celsius")));
+	QObject::tr("Simulation temperature in degrees Celsius")));
 }
 
 MSline::~MSline()

@@ -67,7 +67,7 @@ ID_Dialog::ID_Dialog(ID_Text *idText_)
   ParamTable->verticalHeader()->hide();
   ParamTable->setColumnCount(5);
   ParamTable->setHorizontalHeaderLabels(
-      QStringList() << tr("display") << tr("Name") << tr("Default") << tr("Description") << tr("Type"));
+      QStringList() << tr("Display") << tr("Name") << tr("Default") << tr("Description") << tr("Type"));
   ParamTable->setSortingEnabled(false); // no sorting
   ParamTable->setSelectionBehavior(QAbstractItemView::SelectRows);
   vbox_param->addWidget(ParamTable);
@@ -77,7 +77,7 @@ ID_Dialog::ID_Dialog(ID_Text *idText_)
   for(it = idText->Parameter.constBegin(); it != idText->Parameter.constEnd(); it++) {
     int row = ParamTable->rowCount();
     ParamTable->insertRow(row);
-    item = new QTableWidgetItem(((*it)->display)? tr("yes") : tr("no"));
+    item = new QTableWidgetItem(((*it)->display)? tr("Yes") : tr("no"));
     item->setFlags(item->flags() & ~Qt::ItemIsEditable);
     ParamTable->setItem(row, 0, item);
     item = new QTableWidgetItem((*it)->Name.section('=', 0, 0));
@@ -95,7 +95,7 @@ ID_Dialog::ID_Dialog(ID_Text *idText_)
   }
   connect(ParamTable, SIGNAL(currentCellChanged(int, int, int, int)), SLOT(slotEditParameter()));
 
-  showCheck = new QCheckBox(tr("display in schematic"));
+  showCheck = new QCheckBox(tr("Display in the schematic"));
   showCheck->setChecked(true);
 
   vbox_param->addWidget(showCheck);
@@ -183,7 +183,7 @@ void ID_Dialog::slotEditParameter()
     return;
   }
 
-  showCheck->setChecked(ParamTable->item(row, 0)->text() == tr("yes"));
+  showCheck->setChecked(ParamTable->item(row, 0)->text() == tr("Yes"));
   ParamNameEdit->setText(ParamTable->item(row, 1)->text());
   ValueEdit->setText(ParamTable->item(row, 2)->text());
   DescriptionEdit->setText(ParamTable->item(row, 3)->text());
@@ -220,7 +220,7 @@ void ID_Dialog::slotAddParameter()
   ParamTable->insertRow(row);
 
   QTableWidgetItem *item;
-  item = new QTableWidgetItem((showCheck->isChecked())? tr("yes") : tr("no"));
+  item = new QTableWidgetItem((showCheck->isChecked())? tr("Yes") : tr("no"));
   item->setFlags(item->flags() & ~Qt::ItemIsEditable);
   ParamTable->setItem(row, 0, item);
   item = new QTableWidgetItem(ParamNameEdit->text());
@@ -269,7 +269,7 @@ void ID_Dialog::slotOk()
 
   QList<SubParameter *> scratch;
   for (int row = 0; row < ParamTable->rowCount(); ++row) {
-      bool display = ParamTable->item(row, 0)->text() == tr("yes");
+      bool display = ParamTable->item(row, 0)->text() == tr("Yes");
       // s = "name=defaultval"
       QString s(ParamTable->item(row, 1)->text() + "=" + ParamTable->item(row, 2)->text()),
               desc(ParamTable->item(row, 3)->text()),
@@ -314,7 +314,7 @@ void ID_Dialog::slotApply()
   int selectedrow = ParamTable->currentRow();
   QTableWidgetItem *item;
   item = ParamTable->item(selectedrow, 0);
-  item->setText(showCheck->isChecked() ? tr("yes") : tr("no"));
+  item->setText(showCheck->isChecked() ? tr("Yes") : tr("no"));
   item = ParamTable->item(selectedrow, 1);
   item->setText(ParamNameEdit->text());
   item = ParamTable->item(selectedrow, 2);

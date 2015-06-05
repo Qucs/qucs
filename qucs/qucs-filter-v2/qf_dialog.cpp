@@ -159,7 +159,7 @@ FilterDialog::FilterDialog (QWidget * parent) : QDialog (parent)
   dBLabel = new QLabel(tr("dB"),Tab1);
   gp1->addWidget(dBLabel,6,2);
 
-  DualBox = new QCheckBox(tr("dual"),Tab1);
+  DualBox = new QCheckBox(tr("Dual"),Tab1);
   gp1->addMultiCellWidget(DualBox,8,8,0,2);
   CauerPoleBox = new QCheckBox(tr("Stopband is first pole"),Tab1);
   CauerPoleBox->setEnabled(FALSE);
@@ -177,13 +177,13 @@ FilterDialog::FilterDialog (QWidget * parent) : QDialog (parent)
   Cboxes = new Q3VButtonGroup(tr("Optimize C"),Tab1);
   Cmin = new QRadioButton(tr("Cmin"),Cboxes);
   Cmax = new QRadioButton(tr("Cmax"),Cboxes);
-  NoC = new QRadioButton(tr("noC"),Cboxes);
+  NoC = new QRadioButton(tr("NoC"),Cboxes);
   gp1->addMultiCellWidget(Cboxes,11,11,0,2);
 
   Lboxes = new Q3VButtonGroup(tr("Optimize L"),Tab1);
   Lmin = new QRadioButton(tr("Lmin"),Lboxes);
   Lmax = new QRadioButton(tr("Lmax"),Lboxes);
-  NoL = new QRadioButton(tr("noL"),Lboxes);
+  NoL = new QRadioButton(tr("NoL"),Lboxes);
   gp1->addMultiCellWidget(Lboxes,11,11,3,5);
 
   t->addTab(Tab1, tr("LC Filters"));

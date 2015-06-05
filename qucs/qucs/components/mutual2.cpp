@@ -23,7 +23,7 @@
 
 Mutual2::Mutual2()
 {
-  Description = QObject::tr("three mutual inductors");
+  Description = QObject::tr("Three mutual inductors");
 
   QFont Font(QucsSettings.font); // default application font
   // symbol text is smaller (10 pt default)
@@ -80,17 +80,17 @@ Mutual2::Mutual2()
   Name  = "Tr";
 
   Props.append(new Property("L1", "1 mH", false,
-		QObject::tr("inductance of coil 1")));
+		QObject::tr("Inductance of coil 1")));
   Props.append(new Property("L2", "1 mH", false,
-		QObject::tr("inductance of coil 2")));
+		QObject::tr("Inductance of coil 2")));
   Props.append(new Property("L3", "1 mH", false,
-		QObject::tr("inductance of coil 3")));
+		QObject::tr("Inductance of coil 3")));
   Props.append(new Property("k12", "0.9", false,
-		QObject::tr("coupling factor between coil 1 and 2")));
+		QObject::tr("Coupling factor between coil 1 and 2")));
   Props.append(new Property("k13", "0.9", false,
-		QObject::tr("coupling factor between coil 1 and 3")));
+		QObject::tr("Coupling factor between coil 1 and 3")));
   Props.append(new Property("k23", "0.9", false,
-		QObject::tr("coupling factor between coil 2 and 3")));
+		QObject::tr("Coupling factor between coil 2 and 3")));
 }
 
 Mutual2::~Mutual2()

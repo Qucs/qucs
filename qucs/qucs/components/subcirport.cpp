@@ -22,14 +22,14 @@
 SubCirPort::SubCirPort()
 {
   Type = isComponent;   // both analog and digital
-  Description = QObject::tr("port of a subcircuit");
+  Description = QObject::tr("Port of a subcircuit");
 
   // This property must be the first one !
   Props.append(new Property("Num", "1", true,
-		QObject::tr("number of the port within the subcircuit")));
+		QObject::tr("Number of the port within the subcircuit")));
   // This property must be the second one !
   Props.append(new Property("Type", "analog", false,
-		QObject::tr("type of the port (for digital simulation only)")
+		QObject::tr("Type of the port (for digital simulation only)")
 		+" [analog, in, out, inout]"));
 
   createSymbol();

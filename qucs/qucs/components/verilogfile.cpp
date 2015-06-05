@@ -130,7 +130,7 @@ void Verilog_File::createSymbol()
   Lines.append(new Line(-HALFWIDTH,  h, HALFWIDTH,  h,QPen(Qt::darkBlue,2)));
   Lines.append(new Line(-HALFWIDTH, -h,-HALFWIDTH,  h,QPen(Qt::darkBlue,2)));
 
-  tmp = QObject::tr("verilog");
+  tmp = QObject::tr("Verilog");
   int w = metrics.width(tmp);
   Texts.append(new Text(w/-2, fHeight/-2, tmp));
 

@@ -20,7 +20,7 @@
 
 OpAmp::OpAmp()
 {
-  Description = QObject::tr("operational amplifier");
+  Description = QObject::tr("Operational amplifier");
 
   Lines.append(new Line(-30,-20,-20,-20,QPen(Qt::darkBlue,2)));
   Lines.append(new Line(-30, 20,-20, 20,QPen(Qt::darkBlue,2)));
@@ -47,9 +47,9 @@ OpAmp::OpAmp()
   Name  = "OP";
 
   Props.append(new Property("G", "1e6", true,
-		QObject::tr("voltage gain")));
+		QObject::tr("Voltage gain")));
   Props.append(new Property("Umax", "15 V", false,
-	QObject::tr("absolute value of maximum and minimum output voltage")));
+	QObject::tr("Absolute value of maximum and minimum output voltage")));
 }
 
 OpAmp::~OpAmp()

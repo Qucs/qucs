@@ -289,7 +289,7 @@ Component * hicumL0V1p2g::newOne()
 
 Element * hicumL0V1p2g::info(QString& Name, char * &BitmapFile, bool getNewOne)
 {
-  Name = QObject::tr("npn HICUM L0 v1.2g");
+  Name = QObject::tr("NPN HICUM L0 v1.2g");
   BitmapFile = (char *) "npnsub_therm";
 
   if(getNewOne) return new hicumL0V1p2g();
@@ -298,7 +298,7 @@ Element * hicumL0V1p2g::info(QString& Name, char * &BitmapFile, bool getNewOne)
 
 Element * hicumL0V1p2g::info_pnp(QString& Name, char * &BitmapFile, bool getNewOne)
 {
-  Name = QObject::tr("pnp HICUM L0 v1.2g");
+  Name = QObject::tr("PNP HICUM L0 v1.2g");
   BitmapFile = (char *) "pnpsub_therm";
 
   if(getNewOne)

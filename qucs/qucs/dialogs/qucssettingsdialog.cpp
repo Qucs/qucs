@@ -90,7 +90,7 @@ QucsSettingsDialog::QucsSettingsDialog(QucsApp *parent, const char *name)
 
     appSettingsGrid->addWidget(new QLabel(tr("Language (set after reload):"), appSettingsTab) ,3,0);
     LanguageCombo = new QComboBox(appSettingsTab);
-    LanguageCombo->insertItem(tr("system language"));
+    LanguageCombo->insertItem(tr("System language"));
     LanguageCombo->insertItem(tr("English")+" (en)");
     LanguageCombo->insertItem(tr("German")+" (de)");
     LanguageCombo->insertItem(tr("French")+" (fr)");
@@ -294,7 +294,7 @@ QucsSettingsDialog::QucsSettingsDialog(QucsApp *parent, const char *name)
     locationsGrid->addWidget(HomeButt, 1, 2);
     connect(HomeButt, SIGNAL(clicked()), SLOT(slotHomeDirBrowse()));
 
-    locationsGrid->addWidget(new QLabel(tr("AdmsXml Path:"), locationsTab) ,2,0);
+    locationsGrid->addWidget(new QLabel(tr("ADMSXml Path:"), locationsTab) ,2,0);
     admsXmlEdit = new QLineEdit(locationsTab);
     locationsGrid->addWidget(admsXmlEdit,2,1);
     QPushButton *AdmsXmlButt = new QPushButton("...");

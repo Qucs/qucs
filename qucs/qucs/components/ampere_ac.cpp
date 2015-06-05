@@ -45,7 +45,7 @@ Ampere_ac::Ampere_ac()
   Props.append(new Property("I", "1 mA", true,
 		QObject::tr("Peak current in Ampere")));
   Props.append(new Property("f", "1 GHz", false,
-		QObject::tr("Frequency in Hertz")));
+		QObject::tr("Frequency in hertz")));
   Props.append(new Property("Phase", "0", false,
 		QObject::tr("Initial phase in degrees")));
   Props.append(new Property("Theta", "0", false,

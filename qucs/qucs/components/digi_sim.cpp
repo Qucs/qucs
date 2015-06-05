@@ -21,7 +21,7 @@
 Digi_Sim::Digi_Sim()
 {
   Type = isDigitalComponent;
-  Description = QObject::tr("digital simulation");
+  Description = QObject::tr("Digital simulation");
 
   QString  s = Description;
   int a = s.indexOf(" ");
@@ -41,11 +41,11 @@ Digi_Sim::Digi_Sim()
 
   // Property list must keeps its order !
   Props.append(new Property("Type", "TruthTable", true,
-	QObject::tr("type of simulation")+" [TruthTable, TimeList]"));
+	QObject::tr("Type of simulation")+" [TruthTable, TimeList]"));
   Props.append(new Property("time", "10 ns", false,
-	QObject::tr("duration of TimeList simulation")));
+	QObject::tr("Duration of TimeList simulation")));
   Props.append(new Property("Model", "VHDL", false,
-	QObject::tr("netlist format")+" [VHDL, Verilog]"));
+	QObject::tr("Netlist format")+" [VHDL, Verilog]"));
 }
 
 // -------------------------------------------------------
@@ -62,7 +62,7 @@ Component* Digi_Sim::newOne()
 // -------------------------------------------------------
 Element* Digi_Sim::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
-  Name = QObject::tr("digital simulation");
+  Name = QObject::tr("Digital simulation");
   BitmapFile = (char *) "digi";
 
   if(getNewOne)  return new Digi_Sim();

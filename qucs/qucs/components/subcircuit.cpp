@@ -32,10 +32,10 @@
 Subcircuit::Subcircuit()
 {
   Type = isComponent;   // both analog and digital
-  Description = QObject::tr("subcircuit");
+  Description = QObject::tr("Subcircuit");
 
   Props.append(new Property("File", "", false,
-		QObject::tr("name of qucs schematic file")));
+		QObject::tr("Name of Qucs schematic file")));
 
   Model = "Sub";
   Name  = "SUB";

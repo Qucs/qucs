@@ -22,22 +22,22 @@
 
 EqnDefined::EqnDefined()
 {
-  Description = QObject::tr("equation defined device");
+  Description = QObject::tr("Equation defined device");
 
   Model = "EDD";
   Name  = "D";
 
   // first properties !!!
   Props.append(new Property("Type", "explicit", false,
-		QObject::tr("type of equations")+" [explicit, implicit]"));
+		QObject::tr("Type of equations")+" [explicit, implicit]"));
   Props.append(new Property("Branches", "1", false,
-		QObject::tr("number of branches")));
+		QObject::tr("Number of branches")));
 
   // last properties
   Props.append(new Property("I1", "0", true,
-		QObject::tr("current equation") + " 1"));
+		QObject::tr("Current equation") + " 1"));
   Props.append(new Property("Q1", "0", false,
-		QObject::tr("charge equation") + " 1"));
+		QObject::tr("Charge equation") + " 1"));
 
   createSymbol();
 }
@@ -117,9 +117,9 @@ void EqnDefined::createSymbol()
   if (NumProps < Num) {
     for(i = NumProps; i < Num; i++) {
       Props.append(new Property("I"+QString::number(i+1), "0", false,
-		QObject::tr("current equation") + " " +QString::number(i+1)));
+		QObject::tr("Current equation") + " " +QString::number(i+1)));
       Props.append(new Property("Q"+QString::number(i+1), "0", false,
-		QObject::tr("charge equation") + " " +QString::number(i+1)));
+		QObject::tr("Charge equation") + " " +QString::number(i+1)));
     }
   } else {
     for(i = Num; i < NumProps; i++) {

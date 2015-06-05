@@ -20,7 +20,7 @@
 
 CPWshort::CPWshort()
 {
-  Description = QObject::tr("coplanar short");
+  Description = QObject::tr("Coplanar short");
 
   Lines.append(new Line(-30,  0,-18,  0,QPen(Qt::darkBlue,2)));
   Lines.append(new Line(-13, -8,  3, -8,QPen(Qt::darkBlue,2)));
@@ -59,13 +59,13 @@ CPWshort::CPWshort()
   Name  = "CL";
 
   Props.append(new Property("Subst", "Subst1", true,
-		QObject::tr("name of substrate definition")));
+		QObject::tr("Name of substrate definition")));
   Props.append(new Property("W", "1 mm", true,
-		QObject::tr("width of the line")));
+		QObject::tr("Width of the line")));
   Props.append(new Property("S", "1 mm", true,
-		QObject::tr("width of a gap")));
+		QObject::tr("Width of the gap")));
   Props.append(new Property("Backside", "Air", false,
-		QObject::tr("material at the backside of the substrate")+
+		QObject::tr("Material at the backside of the substrate")+
 		" [Metal, Air]"));
 }
 

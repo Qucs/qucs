@@ -142,7 +142,7 @@ void VHDL_File::createSymbol()
   Lines.append(new Line(-HALFWIDTH,  h, HALFWIDTH,  h,QPen(Qt::darkBlue,2)));
   Lines.append(new Line(-HALFWIDTH, -h,-HALFWIDTH,  h,QPen(Qt::darkBlue,2)));
 
-  tmp = QObject::tr("vhdl");
+  tmp = QObject::tr("VHDL");
   int w = metrics.width(tmp);
   Texts.append(new Text(w/-2, fHeight/-2, tmp));
 
@@ -183,14 +183,14 @@ void VHDL_File::createSymbol()
     if (!pr) {
       pr = new Property(GenNames.section(',', i, i),
 			GenDefs.section(',', i, i), true,
-			QObject::tr("generic variable")+
+			QObject::tr("Generic variable")+
 			" "+QString::number(i+1));
       Props.append(pr);
       pr = 0;
     }
     else {
       pr->Description =
-	QObject::tr("generic variable")+" "+QString::number(i+1);
+	QObject::tr("Generic variable")+" "+QString::number(i+1);
       pr->Name = GenNames.section(',', i, i);
       pr = Props.next();
     }

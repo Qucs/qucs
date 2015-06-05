@@ -20,7 +20,7 @@
 
 vRect::vRect()
 {
-  Description = QObject::tr("ideal rectangle voltage source");
+  Description = QObject::tr("Ideal rectangular voltage source");
 
   Arcs.append(new Arc(-12,-12, 24, 24,     0, 16*360,QPen(Qt::darkBlue,2)));
   Lines.append(new Line(-30,  0,-12,  0,QPen(Qt::darkBlue,2)));
@@ -49,17 +49,17 @@ vRect::vRect()
   Name  = "V";
 
   Props.append(new Property("U", "1 V", true,
-		QObject::tr("voltage of high signal")));
+		QObject::tr("Voltage of high signal")));
   Props.append(new Property("TH", "1 ms", true,
-		QObject::tr("duration of high pulses")));
+		QObject::tr("Duration of high pulses")));
   Props.append(new Property("TL", "1 ms", true,
-		QObject::tr("duration of low pulses")));
+		QObject::tr("Duration of low pulses")));
   Props.append(new Property("Tr", "1 ns", false,
-		QObject::tr("rise time of the leading edge")));
+		QObject::tr("Rise time of the leading edge")));
   Props.append(new Property("Tf", "1 ns", false,
-		QObject::tr("fall time of the trailing edge")));
+		QObject::tr("Fall time of the trailing edge")));
   Props.append(new Property("Td", "0 ns", false,
-		QObject::tr("initial delay time")));
+		QObject::tr("Initial delay time")));
 
   rotate();  // fix historical flaw
 }

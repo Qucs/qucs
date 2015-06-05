@@ -20,7 +20,7 @@
 
 TLine::TLine()
 {
-  Description = QObject::tr("ideal transmission line");
+  Description = QObject::tr("Ideal transmission line");
 
   Lines.append(new Line(-30,  0, 30,  0,QPen(Qt::darkBlue,2)));
   Lines.append(new Line(-28,  7, 28,  7,QPen(Qt::darkBlue,2)));
@@ -46,13 +46,13 @@ TLine::TLine()
   Name  = "Line";
 
   Props.append(new Property("Z", "50 Ohm", true,
-		QObject::tr("characteristic impedance")));
+		QObject::tr("Characteristic impedance")));
   Props.append(new Property("L", "1 mm", true,
-		QObject::tr("electrical length of the line")));
+		QObject::tr("Electrical length of the line")));
   Props.append(new Property("Alpha", "0 dB", false,
-		QObject::tr("attenuation factor per length in 1/m")));
+		QObject::tr("Attenuation factor per length in 1/m")));
   Props.append(new Property("Temp", "26.85", false,
-		QObject::tr("simulation temperature in degree Celsius")));
+		QObject::tr("Simulation temperature in degrees Celsius")));
 }
 
 TLine::~TLine()

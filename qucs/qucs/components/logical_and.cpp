@@ -19,7 +19,7 @@
 
 Logical_AND::Logical_AND()
 {
-  Description = QObject::tr("logical AND");
+  Description = QObject::tr("Logical AND");
   Model = "AND";
 
   createSymbol();
@@ -42,7 +42,7 @@ Component* Logical_AND::newOne()
 
 Element* Logical_AND::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
-  Name = QObject::tr("n-port AND");
+  Name = QObject::tr("N-port AND");
   BitmapFile = (char *) "and";
 
   if(getNewOne)  return new Logical_AND();

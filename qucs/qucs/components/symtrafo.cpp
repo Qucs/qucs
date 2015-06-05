@@ -23,7 +23,7 @@
 
 symTrafo::symTrafo()
 {
-  Description = QObject::tr("ideal symmetrical transformer");
+  Description = QObject::tr("Ideal symmetrical transformer");
 
   QFont Font(QucsSettings.font); // default application font
   // symbol text is smaller (10 pt default)
@@ -86,9 +86,9 @@ symTrafo::symTrafo()
   Name  = "Tr";
 
   Props.append(new Property("T1", "1", true,
-		QObject::tr("voltage transformation ratio of coil 1")));
+		QObject::tr("Voltage transformation ratio of coil 1")));
   Props.append(new Property("T2", "1", true,
-		QObject::tr("voltage transformation ratio of coil 2")));
+		QObject::tr("Voltage transformation ratio of coil 2")));
 }
 
 symTrafo::~symTrafo()
@@ -102,7 +102,7 @@ Component* symTrafo::newOne()
 
 Element* symTrafo::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
-  Name = QObject::tr("symmetric Transformer");
+  Name = QObject::tr("Symmetric Transformer");
   BitmapFile = (char *) "symtrans";
 
   if(getNewOne)  return new symTrafo();

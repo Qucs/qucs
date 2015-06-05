@@ -260,7 +260,7 @@ Component * hic0_full::newOne()
 
 Element * hic0_full::info(QString& Name, char * &BitmapFile, bool getNewOne)
 {
-  Name = QObject::tr("npn HICUM L0 v1.12");
+  Name = QObject::tr("NPN HICUM L0 v1.12");
   BitmapFile = (char *) "npnsub_therm";
 
   if(getNewOne) return new hic0_full();
@@ -269,7 +269,7 @@ Element * hic0_full::info(QString& Name, char * &BitmapFile, bool getNewOne)
 
 Element * hic0_full::info_pnp(QString& Name, char * &BitmapFile, bool getNewOne)
 {
-  Name = QObject::tr("pnp HICUM L0 v1.12");
+  Name = QObject::tr("PNP HICUM L0 v1.12");
   BitmapFile = (char *) "pnpsub_therm";
 
   if(getNewOne)

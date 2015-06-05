@@ -24,27 +24,27 @@
 
 RFedd2P::RFedd2P()
 {
-  Description = QObject::tr("equation defined 2-port RF device");
+  Description = QObject::tr("Equation defined 2-port RF device");
 
   Model = "RFEDD2P";
   Name  = "RF";
 
   // first properties !!!
   Props.append(new Property("Type", "Y", false,
-		QObject::tr("type of parameters")+" [Y, Z, S, H, G, A, T]"));
+		QObject::tr("Type of parameters")+" [Y, Z, S, H, G, A, T]"));
   Props.append(new Property("duringDC", "open", false,
-		QObject::tr("representation during DC analysis")+
+		QObject::tr("Representation during DC analysis")+
 			    " [open, short, unspecified, zerofrequency]"));
 
   // last properties
   Props.append(new Property("P11", "0", false,
-		QObject::tr("parameter equation") + " 11"));
+		QObject::tr("Parameter equation") + " 11"));
   Props.append(new Property("P12", "0", false,
-		QObject::tr("parameter equation") + " 12"));
+		QObject::tr("Parameter equation") + " 12"));
   Props.append(new Property("P21", "0", false,
-		QObject::tr("parameter equation") + " 21"));
+		QObject::tr("Parameter equation") + " 21"));
   Props.append(new Property("P22", "0", false,
-		QObject::tr("parameter equation") + " 22"));
+		QObject::tr("Parameter equation") + " 22"));
 
   createSymbol();
 }

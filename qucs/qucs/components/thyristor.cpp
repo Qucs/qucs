@@ -20,7 +20,7 @@
 
 Thyristor::Thyristor()
 {
-  Description = QObject::tr("silicon controlled rectifier (SCR)");
+  Description = QObject::tr("Silicon controlled rectifier (SCR)");
 
   Lines.append(new Line(  0,-30,  0, 30,QPen(Qt::darkBlue,2)));
   Lines.append(new Line( -9,  6,  9,  6,QPen(Qt::darkBlue,2)));
@@ -44,21 +44,21 @@ Thyristor::Thyristor()
   Name  = "D";
 
   Props.append(new Property("Vbo", "400 V", false,
-	QObject::tr("breakover voltage")));
+	QObject::tr("Breakover voltage")));
   Props.append(new Property("Igt", "50 uA", true,
-	QObject::tr("gate trigger current")));
+	QObject::tr("Gate trigger current")));
   Props.append(new Property("Cj0", "10 pF", false,
-	QObject::tr("parasitic capacitance")));
+	QObject::tr("Parasitic capacitance")));
   Props.append(new Property("Is", "1e-10 A", false,
-	QObject::tr("saturation current")));
+	QObject::tr("Saturation current")));
   Props.append(new Property("N", "2", false,
-	QObject::tr("emission coefficient")));
+	QObject::tr("Emission coefficient")));
   Props.append(new Property("Ri", "10 Ohm", false,
-	QObject::tr("intrinsic junction resistance")));
+	QObject::tr("Intrinsic junction resistance")));
   Props.append(new Property("Rg", "5 Ohm", false,
-	QObject::tr("gate resistance")));
+	QObject::tr("Gate resistance")));
   Props.append(new Property("Temp", "26.85", false,
-	QObject::tr("simulation temperature")));
+	QObject::tr("Simulation temperature in degrees Celsius")));
 }
 
 Component* Thyristor::newOne()

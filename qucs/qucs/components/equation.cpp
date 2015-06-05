@@ -22,7 +22,7 @@
 Equation::Equation()
 {
   Type = isComponent; // Analogue and digital component.
-  Description = QObject::tr("equation");
+  Description = QObject::tr("Equation");
 
   QFont f = QucsSettings.font;
   f.setWeight(QFont::Light);
@@ -47,7 +47,7 @@ Equation::Equation()
 
   Props.append(new Property("y", "1", true));
   Props.append(new Property("Export", "yes", false,
-  		QObject::tr("put result into dataset")+" [yes, no]"));
+  		QObject::tr("Put result into dataset")+" [yes, no]"));
 }
 
 Equation::~Equation()
