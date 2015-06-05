@@ -1,4 +1,4 @@
-<Qucs Schematic 0.0.18>
+<Qucs Schematic 0.0.19>
 <Properties>
   <View=0,-13,800,569,1,0,0>
   <Grid=10,10,1>
@@ -20,8 +20,8 @@
   <.PortSym 40 0 2 180>
   <Line -10 -20 0 40 #000000 0 1>
   <Line 10 -20 0 40 #000000 0 1>
-  <.ID -40 34 ZQ "1=f=8863k=Crystal Frequency=" "1=Lq=0.01406=Crystal Inductance=" "1=Cs=6.5p=Crystal Capacitance=" "1=IC=0=Initial conditions=">
   <Rectangle -5 -30 10 60 #000000 0 1 #c0c0c0 1 0>
+  <.ID -40 34 ZQ "1=f=8863k=Crystal Frequency=" "1=Lq=0.01406=Crystal Inductance=" "1=Cs=6.5p=Crystal Capacitance=">
 </Symbol>
 <Components>
   <R R1 1 320 280 -26 15 0 0 "50 MOhm" 1 "26.85" 0 "0.0" 0 "0.0" 0 "26.85" 0 "european" 0>
@@ -31,7 +31,7 @@
   <R R2 1 380 90 -26 15 0 0 "2 Ohm" 1 "26.85" 0 "0.0" 0 "0.0" 0 "26.85" 0 "european" 0>
   <L L1 1 320 90 -26 -52 1 0 "Lq" 1 "" 0>
   <Eqn Eqn1 1 150 340 -38 17 0 0 "Cq=1/(4*pi^2*f^2*Lq)" 1 "yes" 0>
-  <C C1 1 260 90 -26 17 0 0 "Cq" 1 "IC" 1 "neutral" 0>
+  <C C1 1 260 90 -26 17 0 0 "Cq" 1 "" 0 "neutral" 0>
 </Components>
 <Wires>
   <210 190 280 190 "" 0 0 0 "">
