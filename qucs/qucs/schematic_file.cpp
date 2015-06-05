@@ -1185,7 +1185,7 @@ void Schematic::propagateNode(QStringList& Collect,
 // Goes through all schematic components and allows special component
 // handling, e.g. like subcircuit netlisting.
 bool Schematic::throughAllComps(QTextStream *stream, int& countInit,
-                   QStringList& Collect, QTextEdit *ErrText, int NumPorts, bool spice, bool xyce)
+                   QStringList& Collect, QPlainTextEdit *ErrText, int NumPorts, bool spice, bool xyce)
 {
   bool r;
   QString s;
@@ -1334,7 +1334,7 @@ bool Schematic::throughAllComps(QTextStream *stream, int& countInit,
       SpiceFile *sf = (SpiceFile*)pc;
       if (spice) r = sf->createSpiceSubckt(stream);
       else r = sf->createSubNetlist(stream);
-      ErrText->insert(sf->getErrorText());
+      ErrText->insertPlainText(sf->getErrorText());
 
       if(!r) return false;
       continue;
@@ -1383,7 +1383,7 @@ bool Schematic::throughAllComps(QTextStream *stream, int& countInit,
 // each component. Output into "stream", NodeSets are collected in
 // "Collect" and counted with "countInit".
 bool Schematic::giveNodeNames(QTextStream *stream, int& countInit,
-                   QStringList& Collect, QTextEdit *ErrText, int NumPorts, bool spice, bool xyce)
+                   QStringList& Collect, QPlainTextEdit *ErrText, int NumPorts, bool spice, bool xyce)
 {
   // delete the node names
   for(Node *pn = DocNodes.first(); pn != 0; pn = DocNodes.next()) {
@@ -1463,7 +1463,7 @@ bool Schematic::createLibNetlist(QTextStream *stream, QPlainTextEdit *ErrText,
 #define VHDL_LIBRARIES   "\nlibrary ieee;\nuse ieee.std_logic_1164.all;\n"
 
 // ---------------------------------------------------
-void Schematic::createSubNetlistPlain(QTextStream *stream, QTextEdit *ErrText,
+void Schematic::createSubNetlistPlain(QTextStream *stream, QPlainTextEdit *ErrText,
 int NumPorts, bool spice)
 {
   int i, z;
@@ -1652,7 +1652,7 @@ int NumPorts, bool spice)
                 if(pc->Model != "Eqn") {
                   s = pc->get_Verilog_Code(NumPorts);
                   if(s.length()>0 && s.at(0) == '\xA7') {  //section symbol
-                    ErrText->insert(s.mid(1));
+                    ErrText->insertPlainText(s.mid(1));
                   }
                   else (*tstream) << s;
                 }
@@ -1701,7 +1701,7 @@ int NumPorts, bool spice)
               // write all equations into netlist file
               for(pc = DocComps.first(); pc != 0; pc = DocComps.next()) {
                 if(pc->Model == "Eqn") {
-                  ErrText->insert(
+                  ErrText->insertPlainText(
                               QObject::tr("WARNING: Equations in \"%1\" are 'time' typed.").
                   arg(pc->Name));
                   (*tstream) << pc->get_VHDL_Code(NumPorts);
@@ -1718,7 +1718,7 @@ int NumPorts, bool spice)
                 if(pc->Model != "Eqn") {
                     s = pc->get_VHDL_Code(NumPorts);
                     if(s.length()>0 && s.at(0) == '\xA7') {  //section symbol
-                      ErrText->insert(s.mid(1));
+                      ErrText->insertPlainText(s.mid(1));
                   }
                   else (*tstream) << s;
                 }
@@ -1740,7 +1740,7 @@ int NumPorts, bool spice)
 // ---------------------------------------------------
 // Write the netlist as subcircuit to the text stream 'stream'.
 bool Schematic::createSubNetlist(QTextStream *stream, int& countInit,
-                     QStringList& Collect, QTextEdit *ErrText, int NumPorts,
+                     QStringList& Collect, QPlainTextEdit *ErrText, int NumPorts,
                                   bool spice, bool xyce)
 {
 //  int Collect_count = Collect.count();   // position for this subcircuit
@@ -1773,7 +1773,7 @@ bool Schematic::createSubNetlist(QTextStream *stream, int& countInit,
 // ---------------------------------------------------
 // Determines the node names and writes subcircuits into netlist file.
 int Schematic::prepareNetlist(QTextStream& stream, QStringList& Collect,
-                              QTextEdit *ErrText,bool spice,bool xyce)
+                              QPlainTextEdit *ErrText,bool spice,bool xyce)
 {
   if(showBias > 0) showBias = -1;  // do not show DC bias anymore
 
