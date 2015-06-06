@@ -1334,7 +1334,7 @@ bool Schematic::throughAllComps(QTextStream *stream, int& countInit,
       SpiceFile *sf = (SpiceFile*)pc;
       if (spice) r = sf->createSpiceSubckt(stream);
       else r = sf->createSubNetlist(stream);
-      ErrText->insertPlainText(sf->getErrorText());
+      ErrText->appendPlainText(sf->getErrorText());
 
       if(!r) return false;
       continue;
