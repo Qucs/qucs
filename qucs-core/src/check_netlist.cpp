@@ -888,7 +888,7 @@ static int checker_validate_strips (struct definition_t * root)
         if (!def->action)
         {
             /* find components with substrate property */
-            if (checker_is_property (def->define, "Subst") == PROP_STR)
+            if (def->define && (checker_is_property (def->define, "Subst") == PROP_STR))
             {
                 /* check validity of 'Subst' property */
                 if ((val = checker_validate_reference (def, "Subst")) == NULL)
