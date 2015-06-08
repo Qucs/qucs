@@ -176,8 +176,12 @@ UCOMPLEX {UCREAL}{UCIMAG}
     return Identifier;
   }
 <INITIAL,STR>{FILE} { /* identify file reference */
-    char * p = strrchr (netlist_text, '}'); *p = '\0';
-    netlist_lval.ident = strdup (&netlist_text[1]);
+    char * p = strrchr (netlist_text, '}');
+    if (!p) {
+      return InvalidCharacter;
+    }
+    size_t len = (size_t)p - (size_t)&netlist_text[1];
+    netlist_lval.ident = strndup (&netlist_text[1], len);
     return Identifier;
   }
 <INITIAL,STR>{CREAL} { /* identify (signed) real float */
