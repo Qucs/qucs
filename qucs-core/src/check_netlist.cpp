@@ -715,7 +715,14 @@ static int checker_validate_lists (struct definition_t * root)
                                  !strcmp (def->type, "AC") ||
                                  !strcmp (def->type, "SP")))
         {
-            struct value_t * val = checker_find_reference (def, "Type");
+            struct value_t * val;
+            if((val = checker_find_reference (def, "Type")) == NULL) {
+                logprint (LOG_ERROR, "line %d: checker error, required property "
+                          "`%s' is invalid in `%s:%s'\n", def->line, "Type",
+                          def->type, def->instance);
+                errors++;
+                continue;
+            }
             char * type = val->ident;
             // list of constant values and constant values
             if (type && (!strcmp (type, "const") || !strcmp (type, "list")))
