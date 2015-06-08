@@ -949,7 +949,7 @@ static int checker_count_nodesets (struct definition_t * root, char * n)
     int count = 0;
     for (struct definition_t * def = root; def != NULL; def = def->next)
     {
-        if (def->nodeset && !def->duplicate)
+        if (def->nodeset && !def->duplicate && def->nodes)
         {
             char * node = def->nodes->node;
             if (!strcmp (node, n))
