@@ -60,7 +60,7 @@ Component* Ground_EU::newOne()
 Element* Ground_EU::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Ground_eu");
-  BitmapFile = (char *) "ground_eu";
+  BitmapFile = (char *) "gnd_eu";
 
   if(getNewOne)  return new Ground_EU();
   return 0;
