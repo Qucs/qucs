@@ -756,6 +756,7 @@ void SimMessage::slotSimEnded(int exitCode, QProcess::ExitStatus exitStatus )
     ErrText->appendPlainText(tr("ERROR: Simulator crashed!"));
     ErrText->appendPlainText(tr("Please report this error to qucs-bugs@lists.sourceforge.net"));
   }
+
   FinishSimulation(stat); // 0 = normal  | -1 = crash
 }
 
@@ -800,20 +801,21 @@ void SimMessage::FinishSimulation(int Status)
     file.close();
   }
 
-  if(Status == 0) {
-    if(SimOpt) { // save optimization data
+  if (Status == 0) {
+    if (SimOpt) { // save optimization data
       QFile ifile(QucsSettings.QucsHomeDir.filePath("asco_out.dat"));
       QFile ofile(DataSet);
       if(ifile.open(QIODevice::ReadOnly)) {
-	if(ofile.open(QIODevice::WriteOnly)) {
-	  QByteArray data = ifile.readAll();
-	  ofile.write(data);
-	  ofile.close();
-	}
-	ifile.close();
+        if(ofile.open(QIODevice::WriteOnly)) {
+          QByteArray data = ifile.readAll();
+          ofile.write(data);
+          ofile.close();
+        }
+        ifile.close();
       }
+
       if(((Optimize_Sim*)SimOpt)->loadASCOout())
-	((Schematic*)DocWidget)->setChanged(true,true);
+        ((Schematic*)DocWidget)->setChanged(true,true);
     }
   }
 

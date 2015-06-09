@@ -374,7 +374,7 @@ void QucsApp::initView()
   messages = new MessagesWindow(messagesDock);
   this->addDockWidget(Qt::BottomDockWidgetArea, messagesDock);
 
-  messageDock = new MessageDock(this);
+  connect(messagesDock, SIGNAL(visibilityChanged(bool)), SLOT(slotToggleMessagesDockVisibility(bool)));
 
   messagesDock->hide();
 
@@ -2055,7 +2055,7 @@ void QucsApp::slotAfterSimulation(int Status, SimMessage *sim)
 
   int i=0;
   QWidget *w;  // search, if page is still open
-  while((w=DocumentTab->widget(i++)) != 0)
+  while((w=DocumentTab->page(i++)) != 0)
     if(w == sim->DocWidget)
       break;
 
