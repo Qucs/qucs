@@ -1001,6 +1001,7 @@ node * application::differentiate (char * derivative)
 node::node ()
 {
     tag = UNKNOWN;
+    setType(TAG_UNKNOWN);
     dropdeps = output = evaluated = evalPossible = cycle = duplicate = skip = 0;
     next = NULL;
     dependencies = NULL;
@@ -1018,6 +1019,7 @@ node::node ()
 node::node (int type)
 {
     tag = type;
+    setType(TAG_UNKNOWN);
     dropdeps = output = evaluated = evalPossible = cycle = duplicate = skip = 0;
     next = NULL;
     dependencies = NULL;
@@ -1036,6 +1038,7 @@ node::node (int type)
 node::node (const node & o)
 {
     tag = o.tag;
+    type = o.type;
     dropdeps = output = evaluated = evalPossible = cycle = duplicate = skip = 0;
     next = NULL;
     dependencies = NULL;
