@@ -401,21 +401,22 @@ int Rect3DDiagram::comparePointZ(const void *Point1, const void *Point2)
  */
 void Rect3DDiagram::removeHiddenLines(char *zBuffer, tBound *Bounds)
 {
-  double Dummy = 0.0;  // number for 1-dimensional data in 3D cartesian
-  double *px, *py, *pz;
   // temporarily disabled. does not work.
   hideLines = false;
 
   tPoint3D *p;
-  int i, j, z, dx, dy, Size=0;
+  int i, j, z, dx=0, dy, Size=0;
   // pre-calculate buffer size to avoid reallocations in the first step
   for(auto g : GraphDeques) {
-    if(g->cPointsY())
-      Size += g->axis(0)->count * g->countY();
-  }
+    if(g->cPointsY()) {
+      Size += g->count(0) * g->countY();
+    }
 
   // "Mem" should be the last malloc to simplify realloc
+  qDebug() << "zMem alloc" << Size << sizeof(tPointZ);
   tPointZ *zMem = (tPointZ*)malloc( (Size+2)*sizeof(tPointZ) );
+  qDebug() << zMem;
+  //free(zMem);
   Mem  = (tPoint3D*)malloc( 2*(Size+2)*sizeof(tPoint3D) );
 
   pMem = Mem;
@@ -424,43 +425,53 @@ void Rect3DDiagram::removeHiddenLines(char *zBuffer, tBound *Bounds)
   // ...............................................................
   for(auto g : GraphDeques) {
 
-    pz = g->cPointsY();
-    if(!pz) continue;
-    if(g->numAxes() < 1) continue;
-
-    py = &Dummy;
-    if(g->countY() > 1)  py = g->axis(1)->Points;
-
     p = pMem;  // save status for cross grid
     zp_tmp = zp;
-    // ..........................................
-    // calculate coordinates of all lines
-    dx = g->axis(0)->count;
-    if(g->countY() > 1)  dy = g->axis(1)->count;
-    else  dy = 0;
-    for(i=g->countY()-1; i>=0; i--) {   // y coordinates
-      px = g->axis(0)->Points;
-    
-      for(j=dx; j>0; j--) { // x coordinates
-        calcCoordinate3D(*px, *py, *pz, *(pz+1), pMem, zp++);
-	pMem->indep = *px;
-	pMem->dep[0] = pz[0]; // BUG:
-	pMem->dep[1] = pz[1]; // only complex data here.
-	++px;
-	++pMem;
-        pz += 2;
-      }
 
-      (pMem-1)->done |= 8;  // mark as "last in line"
-      py++;
-      if(dy > 0) if((i % dy) == 0)
-        py = g->axis(1)->Points;
+    bool mark = false;
+    if(const SimOutput3DList* L=g->Wave3DList()){ // 3D data
+      for(auto ww=L->begin(); ww!=L->end(); ++ww){ // loop 3d things
+	if(auto WW = dynamic_cast<const SimOutputWaveWave*>(*ww)){
+	  dy = g->count(1);
+	  assert(dy == (int)WW->size()); // for now.
+	  for(auto wl=WW->begin(); wl!=WW->end(); ++wl){ // loop "y axis"
+	    double y = wl->first;
+	    if(auto WL = dynamic_cast<const SimOutputWaveComplex*>(wl->second)){
+	      for(auto p=WL->begin(); p!=WL->end(); ++p){ // loop wave ("x axis" and data)
+		dx = g->count(0);
+		assert(dx == (int)WL->size()); // for now.
+		double x = p->first;
+		std::complex<double> z = p->second;
+		calcCoordinate3D(x, y, z.real(), z.imag(), pMem, zp++);
+		pMem->indep = *px;
+		pMem->dep[0] = pz[0]; // BUG:
+		pMem->dep[1] = pz[1]; // only complex data here.
+		++pMem;
+		mark = true;
+	      }
+	      if(mark) (pMem-1)->done |= 8;  // mark as "last in line"
+	    }else{
+	      qDebug() << "this is not a complex Wave";
+	    }
+	  }
+	  if(mark) (pMem-1)->done |= 512;  // mark as "last point before grid"
+	}else{
+	  qDebug() << "this is not a Wave of Waves";
+	}
+      }
+    }else if(const SimOutputWaveList* L=g->WaveList()){ // not really 3D data, just pretend.
+      (void) L;
+      // incomplete.
+    }else{
+      qDebug() << "probably empty data set";
     }
-    (pMem-1)->done |= 512;  // mark as "last point before grid"
 
     // ..........................................
     // copy points for cross lines ("dx", "dy" still unchanged ! )
-    if(g->countY() > 1) {
+    // BUG, this only works for rectangular grids!!!1
+    if(g->countY() > 1 && dx) {
+      assert(g->countY()/dy);
+      assert(dy);
       zp = zp_tmp;
       for(j=g->countY()/dy; j>0; j--) { // every plane
         for(i=dx; i>0; i--) {  // every branch
@@ -481,8 +492,8 @@ void Rect3DDiagram::removeHiddenLines(char *zBuffer, tBound *Bounds)
         p  += dx*(dy-1);
         zp += dx*(dy-1);
       }
+      (pMem-1)->done |= 256;  // mark as "very last point"
     }
-    (pMem-1)->done |= 256;  // mark as "very last point"
 
 
     if(hideLines) {
@@ -551,8 +562,8 @@ void Rect3DDiagram::removeHiddenLines(char *zBuffer, tBound *Bounds)
   zp = zMem;
   for(auto g : GraphDeques) {
     if(!g->cPointsY()) continue;
-    dx = g->axis(0)->count;
-    if(g->countY() > 1)  dy = g->axis(1)->count;
+    dx = g->count(0);
+    if(g->countY() > 1)  dy = g->count(1);
     else  dy = 1;
 
     // look for hidden lines ...
@@ -814,7 +825,7 @@ void Rect3DDiagram::createAxis(Axis *Axis, bool Right,
         }
         pD = pg->axis(Index);
         if(!pD) continue;
-        s = pD->Var;
+        s = pg->axisName(Index);
       }
       else {
         s = pg->var();
@@ -1000,11 +1011,11 @@ void Rect3DDiagram::calcData(GraphDeque *g)
   if(!pMem)  return;
   if(!g->cPointsY()) return;
 
-  int Size = ((2*(g->axis(0)->count) + 1) * g->countY()) + 10;
+  int Size = ((2*(g->count(0)) + 1) * g->countY()) + 10;
   Size *= 2;  // memory for cross grid lines
 
-  double *py;
-  if(g->countY() > 1)  py = g->axis(1)->Points;
+//  double *py;
+//  if(g->countY() > 1)  py = g->axis(1)->Points;
 
   g->resizeScrPoints(Size);
   auto p = g->_begin();
