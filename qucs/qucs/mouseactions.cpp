@@ -829,7 +829,7 @@ bool MouseActions::MCloseToNode(Schematic *Doc, QMouseEvent *Event) {
 
 	Node *pn;
 	bool nodeFound = false;
-	int snapDistance = 5; // nvdl: todo: Add to configuration
+	int snapDistance = QucsSettings.grid1Spacing / 2;
 
 	if (Doc->Nodes == NULL) {
 	  return false;
@@ -839,6 +839,9 @@ bool MouseActions::MCloseToNode(Schematic *Doc, QMouseEvent *Event) {
 
 	for (pn = Doc->Nodes->first(); pn != 0; pn = Doc->Nodes->next()) {
 		  if (abs(pn->cx - MAx2) <= snapDistance && abs(pn->cy - MAy2) <= snapDistance) {
+		    MAx2 = pn->cx; // Allow off-grid node snap
+		    MAy2 = pn->cy;
+	    //if (pn->cx == MAx2 && pn->cy == MAy2) {
 			  nodeFound = true;
 			  break;
 		  }

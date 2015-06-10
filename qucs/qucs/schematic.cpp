@@ -873,7 +873,7 @@ void Schematic::enlargeView(int x1, int y1, int x2, int y2)
 // Sets an arbitrary coordinate onto the next grid coordinate.
 void Schematic::setOnGrid(int& x, int& y) {
 
-  /*if (x < 0) {
+  if (x < 0) {
     x -= (GridX >> 1) - 1;
   } else {
     x += GridX >> 1;
@@ -887,24 +887,7 @@ void Schematic::setOnGrid(int& x, int& y) {
     y += GridY >> 1;
   }
 
-  y -= y % GridY;*/
-
-  /*if (x < 0) {
-    x -= GridX - 1;
-  } else {
-    x += GridX;
-  }*/
-
-  x -= x % GridX;
-
-  /*if (y < 0) {
-    y -= GridY - 1;
-  } else {
-    y += GridY;
-  }*/
-
   y -= y % GridY;
-
 }
 
 // ---------------------------------------------------
