@@ -173,16 +173,16 @@ bool loadSettings()
 
   QucsSettings.gridOn = settings.value("gridOn", "true").toBool();
 
-  QucsSettings.grid1Color.setNamedColor(settings.value("grid1Color", "#f0f0f0").toString());
-  QucsSettings.grid1Thickness = settings.value("grid1Thickness", 0).toInt();
-  QucsSettings.grid1Spacing = settings.value("grid1Spacing", 10).toInt();
+  QucsSettings.grid1Color.setNamedColor(settings.value("grid1Color", "#f5f5f5").toString());
+  QucsSettings.grid1Thickness = settings.value("grid1Thickness", 1).toInt();
+  QucsSettings.grid1Spacing = settings.value("grid1Spacing", 15).toInt();
   QucsSettings.grid1Type = settings.value("grid1Type", 1).toInt();
   QucsSettings.grid1ScaleMin = settings.value("grid1ScaleMin", 0.1).toFloat();
   QucsSettings.grid1ScaleMax = settings.value("grid1ScaleMax", 1).toFloat();
 
-  QucsSettings.grid2Color.setNamedColor(settings.value("grid2Color", "#a0a0a0").toString());
+  QucsSettings.grid2Color.setNamedColor(settings.value("grid2Color", "#f0f0f0").toString());
   QucsSettings.grid2Thickness = settings.value("grid2Thickness", 2).toInt();
-  QucsSettings.grid2Spacing = settings.value("grid2Spacing", 50).toInt();
+  QucsSettings.grid2Spacing = settings.value("grid2Spacing", 240).toInt();
   QucsSettings.grid2Type = settings.value("grid2Type", 1).toInt();
   QucsSettings.grid2ScaleMin = settings.value("grid2ScaleMin", 0.1).toFloat();
   QucsSettings.grid2ScaleMax = settings.value("grid2ScaleMax", 1).toFloat();
@@ -729,7 +729,7 @@ void createListComponentEntry(){
 int main(int argc, char *argv[])
 {
   // apply default settings
-  QucsSettings.font = QFont("Helvetica", 12);
+  QucsSettings.font = QFont("Helvetica", 10);
   QucsSettings.largeFontSize = 16.0;
   QucsSettings.maxUndo = 20;
   QucsSettings.NodeWiring = 0;

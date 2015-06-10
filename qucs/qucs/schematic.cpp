@@ -871,36 +871,56 @@ void Schematic::enlargeView(int x1, int y1, int x2, int y2)
 
 // ---------------------------------------------------
 // Sets an arbitrary coordinate onto the next grid coordinate.
-void Schematic::setOnGrid(int& x, int& y)
-{
-  if(x<0) x -= (GridX >> 1) - 1;
-  else x += GridX >> 1;
+void Schematic::setOnGrid(int& x, int& y) {
+
+  /*if (x < 0) {
+    x -= (GridX >> 1) - 1;
+  } else {
+    x += GridX >> 1;
+  }
+
   x -= x % GridX;
 
-  if(y<0) y -= (GridY >> 1) - 1;
-  else y += GridY >> 1;
+  if (y < 0) {
+    y -= (GridY >> 1) - 1;
+  } else {
+    y += GridY >> 1;
+  }
+
+  y -= y % GridY;*/
+
+  /*if (x < 0) {
+    x -= GridX - 1;
+  } else {
+    x += GridX;
+  }*/
+
+  x -= x % GridX;
+
+  /*if (y < 0) {
+    y -= GridY - 1;
+  } else {
+    y += GridY;
+  }*/
+
   y -= y % GridY;
+
 }
 
 // ---------------------------------------------------
 void Schematic::paintGrid(ViewPainter *p, int cX, int cY, int Width, int Height)
 {
 
+  QPen pen;
+  int x, y;
+  float X, Y, Y0, DX, DY;
+
   if (!QucsSettings.gridOn) return;
 
-  p->Painter->setPen(QPen(QucsSettings.grid1Color, QucsSettings.grid1Thickness));
-
-  int dx = -int(Scale*float(ViewX1)) - cX;
-  int dy = -int(Scale*float(ViewY1)) - cY;
-
-  // nvdl: todo: Better origin marker (if needed)
-  p->Painter->drawLine(-3 + dx, dy, 4 + dx, dy); // small cross at origin
-  p->Painter->drawLine(dx,-3 + dy, dx, 4 + dy);
+  //p->Painter->setPen(QPen(QucsSettings.grid1Color, QucsSettings.grid1Thickness));
 
   int x1 = int(float(cX)/Scale) + ViewX1;
   int y1 = int(float(cY)/Scale) + ViewY1;
-
-  int x, y;
 
   /* \todo setting the center of rotation on the grid causes the center to move when
   doing multiple rotations when it is not already on the grid.
@@ -908,17 +928,15 @@ void Schematic::paintGrid(ViewPainter *p, int cX, int cY, int Width, int Height)
 
   setOnGrid(x1, y1);
 
-  if (x1<0) x1 -= GridX - 1;
-  else x1 += GridX;
+  if (x1<0) x1 -= QucsSettings.grid1Spacing - 1;
+  else x1 += QucsSettings.grid1Spacing;
 
-  x1 -= x1 % (GridX << 1);
+  x1 -= x1 % (QucsSettings.grid1Spacing << 1);
 
-  if (y1<0) y1 -= GridY - 1;
-  else y1 += GridY;
+  if (y1<0) y1 -= QucsSettings.grid1Spacing - 1;
+  else y1 += QucsSettings.grid1Spacing;
 
-  y1 -= y1 % (GridY << 1);
-
-  float X, Y, Y0, DX, DY;
+  y1 -= y1 % (QucsSettings.grid1Spacing << 1);
 
   X = float(x1) * Scale + p->DX;
   Y = Y0 = float(y1)*Scale + p->DY;
@@ -929,11 +947,18 @@ void Schematic::paintGrid(ViewPainter *p, int cX, int cY, int Width, int Height)
   int xEnd = x1 + Width;
   int yEnd = y1 + Height;
 
-  DX = float(GridX << 1) * Scale;   // every second grid a point
-  DY = float(GridY << 1) * Scale;
+  /*DX = float(GridX << 1) * Scale;   // every second grid a point
+  DY = float(GridY << 1) * Scale;*/
+
+  DX = float(QucsSettings.grid1Spacing) * Scale;
+  DY = float(QucsSettings.grid1Spacing) * Scale;
 
   while (DX <= 8.0)  DX *= 1.5;  // if too narrow, every third grid a point
   while (DY <= 8.0)  DY *= 1.5;  // if too narrow, every third grid a point
+
+  pen.setColor(QucsSettings.grid1Color);
+  pen.setWidth(QucsSettings.grid1Thickness);
+  p->Painter->setPen(pen);
 
   if (QucsSettings.grid1Type == 0) { // Dot
 
@@ -965,6 +990,86 @@ void Schematic::paintGrid(ViewPainter *p, int cX, int cY, int Width, int Height)
       y = Y > 0.0 ? int(Y + 0.5) : int(Y - 0.5);
     }
   }
+
+  // nvdl: todo: Simplify and cleanup
+  x1 = int(float(cX)/Scale) + ViewX1;
+  y1 = int(float(cY)/Scale) + ViewY1;
+
+  setOnGrid(x1, y1);
+
+  if (x1<0) x1 -= QucsSettings.grid2Spacing - 1;
+  else x1 += QucsSettings.grid2Spacing;
+
+  x1 -= x1 % (QucsSettings.grid2Spacing << 1);
+
+  if (y1<0) y1 -= QucsSettings.grid2Spacing - 1;
+  else y1 += QucsSettings.grid2Spacing;
+
+  y1 -= y1 % (QucsSettings.grid2Spacing << 1);
+
+  X = float(x1) * Scale + p->DX;
+  Y = Y0 = float(y1)*Scale + p->DY;
+
+  x = x1 = X > 0.0 ? int(X + 0.5) : int(X - 0.5);
+  y = y1 = Y > 0.0 ? int(Y + 0.5) : int(Y - 0.5);
+
+  xEnd = x1 + Width;
+  yEnd = y1 + Height;
+
+  DX = float(QucsSettings.grid2Spacing) * Scale;
+  DY = float(QucsSettings.grid2Spacing) * Scale;
+
+  while (DX <= 8.0)  DX *= 1.5;  // if too narrow, every third grid a point
+  while (DY <= 8.0)  DY *= 1.5;  // if too narrow, every third grid a point
+
+  pen.setColor(QucsSettings.grid2Color);
+  pen.setWidth(QucsSettings.grid2Thickness);
+  p->Painter->setPen(pen);
+
+  if (QucsSettings.grid2Type == 0) { // Dot
+
+    while (x < xEnd) {
+      Y = Y0;
+      y = Y > 0.0 ? int(Y + 0.5) : int(Y - 0.5);
+
+      while (y < yEnd) {
+        p->Painter->drawPoint(x, y);    // paint grid
+        Y += DY;
+        y = Y > 0.0 ? int(Y + 0.5) : int(Y - 0.5);
+      }
+
+      X += DX;
+      x = X > 0.0 ? int(X + 0.5) : int(X - 0.5);
+    }
+
+  } else {
+
+    while (x < xEnd) {
+      p->Painter->drawLine(x, y1, x, yEnd);
+      X += DX;
+      x = X > 0.0 ? int(X + 0.5) : int(X - 0.5);
+    }
+
+    while (y < yEnd) {
+      p->Painter->drawLine(x1, y, xEnd, y);
+      Y += DY;
+      y = Y > 0.0 ? int(Y + 0.5) : int(Y - 0.5);
+    }
+  }
+
+  int dx = -int(Scale*float(ViewX1)) - cX;
+  int dy = -int(Scale*float(ViewY1)) - cY;
+
+  pen.setColor(QColor(0, 0, 0));
+  pen.setWidth(1);
+  p->Painter->setPen(pen);
+  p->Painter->drawLine(dx - 12, dy, dx + 12, dy); // small cross at origin
+  p->Painter->drawLine(dx, dy - 12, dx, dy + 12);
+
+  pen.setColor(QColor(0, 0, 255));
+  pen.setWidth(1);
+  p->Painter->setPen(pen);
+  p->Painter->drawEllipse(dx - 6, dy - 6, 12, 12);
 }
 
 // ---------------------------------------------------
@@ -1942,9 +2047,25 @@ void Schematic::contentsWheelEvent(QWheelEvent *Event)
   // ...................................................................
   else if(Event->modifiers() & Qt::ControlModifier) {  // use mouse wheel to zoom ?
 
+    int cx, cy;
+    int vx, vy;
+    float xr1, yr1;
+
+    cx = contentsWidth();
+    cy = contentsHeight();
+
+    if (cx > 0 && cy > 0) {
+      xr1 = float(mouseX) / contentsWidth();
+      yr1 = float(mouseY) / contentsHeight();
+    } else {
+      Event->accept();   // QScrollView must not handle this event
+      return;
+    }
+
     if (UsedX1 == 0 && UsedX2 == 0 && UsedY1 == 0 && UsedY2 == 0) {
       UsedX1 = UsedY1 = INT_MAX;
       UsedX2 = UsedY2 = INT_MIN;
+      Event->accept();   // QScrollView must not handle this event
       return;
     }
 
@@ -1952,6 +2073,7 @@ void Schematic::contentsWheelEvent(QWheelEvent *Event)
       if (Scale < 10) {
         scaleDiff = (0.1 * delta) / 60;
       } else {
+        Event->accept();   // QScrollView must not handle this event
         return;
       }
 
@@ -1959,20 +2081,21 @@ void Schematic::contentsWheelEvent(QWheelEvent *Event)
       if (Scale > 0.1) {
         scaleDiff = (0.1 * delta) / 60;
       } else {
+        Event->accept();   // QScrollView must not handle this event
         return;
       }
     }
 
     Scale += scaleDiff;
 
+    if (Scale < 0.1) Scale = 0.1;
+    if (Scale > 10) Scale = 10;
+
     //mouseX = Event->pos().x() - contentsX();
     //mouseY = Event->pos().y() - contentsY();
 
     mouseX = Event->pos().x();
     mouseY = Event->pos().y();
-
-    int cx, cy;
-    int vx, vy;
 
     //viewportSize(vx, vy);
 
@@ -1992,11 +2115,16 @@ void Schematic::contentsWheelEvent(QWheelEvent *Event)
     //float xr = float(mouseX) / visibleWidth();
     //float yr = float(mouseY) / visibleHeight();
 
-    cx = contentsWidth();
+    /*cx = contentsWidth();
     cy = contentsHeight();
 
-    float xr1 = float(mouseX) / contentsWidth();
-    float yr1 = float(mouseY) / contentsHeight();
+    if (cx > 0 && cy > 0) {
+      xr1 = float(mouseX) / contentsWidth();
+      yr1 = float(mouseY) / contentsHeight();
+    } else {
+      Event->accept();   // QScrollView must not handle this event
+      return;
+    }*/
 
     /*if (cx > cy) {
       cy = cx;
@@ -2022,7 +2150,7 @@ void Schematic::contentsWheelEvent(QWheelEvent *Event)
       ViewY1 -= scrollY;
     }*/
 
-    //qDebug() << "contentsWheelEvent: delta" << delta;
+    qDebug() << "contentsWheelEvent: delta" << delta;
     qDebug() << "contentsWheelEvent: Scale" << Scale;
     qDebug() << "contentsWheelEvent: mouseX" << mouseX;
     qDebug() << "contentsWheelEvent: mouseY" << mouseY;
