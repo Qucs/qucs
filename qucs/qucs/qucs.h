@@ -152,6 +152,7 @@ private slots:
   void slotHideEdit();
   void slotFileChanged(bool);
   void slotSimulateWithSpice();
+  void slotAfterSpiceSimulation();
 
 signals:
   void signalKillEmAll();
