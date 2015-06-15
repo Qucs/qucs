@@ -22,7 +22,6 @@
 
 #include "component.h"
 
-#include "ground_eu.h"
 #include "ground.h"
 #include "resistor.h"
 #include "capacitor.h"
@@ -44,13 +43,9 @@
 #include "gyrator.h"
 #include "phaseshifter.h"
 #include "volt_dc.h"
-#include "volt_dc_eu.h"
 #include "ampere_dc.h"
-#include "ampere_dc_eu.h"
 #include "volt_ac.h"
-#include "volt_ac_eu.h"
 #include "ampere_ac.h"
-#include "ampere_ac_eu.h"
 #include "source_ac.h"
 #include "vexp.h"
 #include "iexp.h"

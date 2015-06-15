@@ -32,9 +32,9 @@ libcomponents_a_SOURCES = phaseshifter.cpp gyrator.cpp componentdialog.cpp    \
   vcvs.cpp vccs.cpp tr_sim.cpp tline.cpp substrate.cpp sp_sim.cpp             \
   param_sweep.cpp mstee.cpp msstep.cpp msline.cpp mscross.cpp mscoupled.cpp mslange.cpp   \
   mscorner.cpp hb_sim.cpp diode.cpp dc_sim.cpp coplanar.cpp ccvs.cpp cccs.cpp \
-  ac_sim.cpp volt_dc.cpp volt_ac.cpp volt_dc_eu.cpp volt_ac_eu.cpp subcircuit.cpp sparamfile.cpp            \
+  ac_sim.cpp volt_dc.cpp volt_ac.cpp subcircuit.cpp sparamfile.cpp            \
   source_ac.cpp isolator.cpp equation.cpp circulator.cpp attenuator.cpp       \
-  ampere_dc.cpp ampere_ac_eu.cpp ampere_dc_eu.cpp transformer.cpp symtrafo.cpp subcirport.cpp ground.cpp ground_eu.cpp       \
+  ampere_dc.cpp transformer.cpp symtrafo.cpp subcirport.cpp ground.cpp       \
   dcfeed.cpp dcblock.cpp biast.cpp inductor.cpp capacitor.cpp vhdlfile.cpp    \
   component.cpp resistor.cpp iprobe.cpp volt_noise.cpp ampere_noise.cpp       \
   msmbend.cpp msopen.cpp ampere_ac.cpp bjt.cpp jfet.cpp mosfet.cpp            \
@@ -66,9 +66,9 @@ libcomponents_a_SOURCES = phaseshifter.cpp gyrator.cpp componentdialog.cpp    \
 nodist_libcomponents_a_SOURCES = $(MOCFILES)
 
 noinst_HEADERS = $(MOCHEADERS) resistor.h components.h capacitor.h vccs.h     \
-  inductor.h biast.h dcblock.h dcfeed.h ground_eu.h ground.h subcirport.h symtrafo.h      \
-  transformer.h ampere_dc.h ampere_dc_eu.h ampere_ac_eu.h attenuator.h circulator.h equation.h isolator.h   \
-  source_ac.h sparamfile.h subcircuit.h volt_ac.h volt_dc.h volt_ac_eu.h volt_dc_eu.h ac_sim.h cccs.h   \
+  inductor.h biast.h dcblock.h dcfeed.h ground.h subcirport.h symtrafo.h      \
+  transformer.h ampere_dc.h attenuator.h circulator.h equation.h isolator.h   \
+  source_ac.h sparamfile.h subcircuit.h volt_ac.h volt_dc.h ac_sim.h cccs.h   \
   ccvs.h coplanar.h dc_sim.h diode.h hb_sim.h mscorner.h mscoupled.h mslange.h          \
   mscross.h msline.h msstep.h mstee.h param_sweep.h sp_sim.h substrate.h      \
   tline.h tr_sim.h component.h vcvs.h gyrator.h phaseshifter.h vhdlfile.h     \

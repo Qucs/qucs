@@ -19,20 +19,18 @@
 #include "node.h"
 
 
-Ground::Ground()
+Ground::Ground(bool european)
 {
   Type = isComponent;   // both analog and digital
   Description = QObject::tr("ground (reference potential)");
 
-  Lines.append(new Line(  0,  0,  0, 10,QPen(Qt::darkBlue,2)));
-  Lines.append(new Line(-11, 10, 11, 10,QPen(Qt::darkBlue,3)));
-  Lines.append(new Line( -7, 16,  7, 16,QPen(Qt::darkBlue,3)));
-  Lines.append(new Line( -3, 22,  3, 22,QPen(Qt::darkBlue,3)));
-
-  Ports.append(new Port(  0,  0));
-
-  x1 = -12; y1 =  0;
-  x2 =  12; y2 = 25;
+  Props.append(new Property("Name", "GND", false,
+		QObject::tr("Ground")));
+  // this must be the last property in the list !!!
+  Props.append(new Property("Symbol", "european", false,
+		QObject::tr("schematic symbol")+" [european, US]"));
+  if(!european)  Props.getLast()->Value = "US";
+  createSymbol();
 
   tx = 0;
   ty = 0;
@@ -46,21 +44,57 @@ Ground::~Ground()
 
 Component* Ground::newOne()
 {
-  return new Ground();
+  return new Ground(Props.getLast()->Value != "US");
 }
 
 // -------------------------------------------------------
 Element* Ground::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Ground");
-  BitmapFile = (char *) "gnd";
+  BitmapFile = (char *) "gnd_eu";
 
   if(getNewOne)  return new Ground();
   return 0;
 }
+// -------------------------------------------------------
+Element* Ground::info_us(QString& Name, char* &BitmapFile, bool getNewOne)
+{
+  Name = QObject::tr("Ground");
+  BitmapFile = (char *) "gnd";
+
+  if(getNewOne)  return new Ground(false);
+  return 0;
+}
+
 
 // -------------------------------------------------------
 QString Ground::netlist()
 {
   return QString("");
+}
+
+
+// -------------------------------------------------------
+void Ground::createSymbol()
+{
+  if(Props.getLast()->Value == "US") {
+  Lines.append(new Line(  0,  0,  0, 10,QPen(Qt::darkBlue,2)));
+  Lines.append(new Line(-11, 10, 11, 10,QPen(Qt::darkBlue,3)));
+  Lines.append(new Line( -7, 16,  7, 16,QPen(Qt::darkBlue,3)));
+  Lines.append(new Line( -3, 22,  3, 22,QPen(Qt::darkBlue,3)));
+  }
+  else {
+  Lines.append(new Line(  0,  0,  0, 10,QPen(Qt::darkBlue,2)));
+  Lines.append(new Line(-20, 10, 12, 10,QPen(Qt::darkBlue,3)));
+  Lines.append(new Line(12, 10, 4, 18,QPen(Qt::darkBlue,3)));
+  Lines.append(new Line(4, 10, -4, 18,QPen(Qt::darkBlue,3)));
+  Lines.append(new Line(-4, 10, -12, 18,QPen(Qt::darkBlue,3)));
+  Lines.append(new Line(-12, 10, -20, 18,QPen(Qt::darkBlue,3)));
+  }
+
+  Ports.append(new Port(  0,  0));
+
+  x1 = -12; y1 =  0;
+  x2 =  12; y2 = 25;
+
 }

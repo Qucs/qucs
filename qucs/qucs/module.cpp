@@ -177,9 +177,13 @@ void Module::intoCategory (Module * m) {
   registerComponent (cat, &val::inf1); \
   registerComponent (cat, &val::inf2); \
   registerComponent (cat, &val::inf3)
+#define REGISTER_COMP_1_0(cat,val,inf1)  \
+  registerComponent (cat, &val::inf1);
 
 #define REGISTER_MOST_USE(val) \
   REGISTER_COMP_1 (QObject::tr("EU symbol"),val)
+#define REGISTER_MOST_USE_1(val,inf1) \
+  REGISTER_COMP_1_0 (QObject::tr("EU symbol"),val,inf1)
 #define REGISTER_MOST_USE_2(val,inf1,inf2) \
   REGISTER_COMP_2 (QObject::tr("EU symbol"),val,inf1,inf2)
 #define REGISTER_MOST_USE_3(val,inf1,inf2,inf3) \
@@ -229,15 +233,16 @@ void Module::intoCategory (Module * m) {
 void Module::registerModules (void) {
 
   // Most Use
-  REGISTER_MOST_USE_2 (Resistor, info, info_us);
+  REGISTER_MOST_USE_1 (Resistor, info);
+//  REGISTER_MOST_USE (Resistor,info_us);
   REGISTER_MOST_USE (Capacitor);
   REGISTER_MOST_USE (Inductor);
-  REGISTER_MOST_USE (Ground_EU);
-  REGISTER_MOST_USE (Ground);
-  REGISTER_MOST_USE (Volt_dc_EU);
-  REGISTER_MOST_USE (Ampere_dc_EU);
-  REGISTER_MOST_USE (Volt_ac_EU);
-  REGISTER_MOST_USE (Ampere_ac_EU);
+  REGISTER_MOST_USE_2 (Ground,info,info_us);
+//  REGISTER_MOST_USE (Ground);
+  REGISTER_MOST_USE_2 (Volt_dc,info,info_us);
+  REGISTER_MOST_USE_2 (Ampere_dc,info,info_us);
+  REGISTER_MOST_USE_2 (Volt_ac,info,info_us);
+  REGISTER_MOST_USE_2 (Ampere_ac,info,info_us);
   REGISTER_MOST_USE (Diode);
   REGISTER_MOST_USE (iProbe);
   REGISTER_MOST_USE (vProbe);
