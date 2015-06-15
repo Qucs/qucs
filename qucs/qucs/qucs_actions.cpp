@@ -46,7 +46,6 @@
 #include "mouseactions.h"
 #include "messagedock.h"
 #include "components/ground.h"
-//#include "components/ground_eu.h"
 #include "components/subcirport.h"
 #include "components/equation.h"
 #include "dialogs/matchdialog.h"
@@ -428,8 +427,14 @@ void QucsApp::slotInsertGround(bool on)
   if(view->selElem)
     delete view->selElem;  // delete previously selected component
 
-  view->selElem = new Ground();
-
+   if(QucsSettings.USGNDSymbol== true)
+   {
+       view->selElem = new Ground(false);
+   }
+   else
+   {
+      view->selElem = new Ground(true);
+   }
   Schematic *Doc = (Schematic*)DocumentTab->currentPage();
   if(view->drawn) Doc->viewport()->update();
   view->drawn = false;

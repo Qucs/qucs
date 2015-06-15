@@ -237,12 +237,12 @@ void Module::registerModules (void) {
 //  REGISTER_MOST_USE (Resistor,info_us);
   REGISTER_MOST_USE (Capacitor);
   REGISTER_MOST_USE (Inductor);
-  REGISTER_MOST_USE_2 (Ground,info,info_us);
+  REGISTER_MOST_USE_1 (Ground,info);
 //  REGISTER_MOST_USE (Ground);
-  REGISTER_MOST_USE_2 (Volt_dc,info,info_us);
-  REGISTER_MOST_USE_2 (Ampere_dc,info,info_us);
-  REGISTER_MOST_USE_2 (Volt_ac,info,info_us);
-  REGISTER_MOST_USE_2 (Ampere_ac,info,info_us);
+  REGISTER_MOST_USE_1 (Volt_dc,info);
+  REGISTER_MOST_USE_1 (Ampere_dc,info);
+  REGISTER_MOST_USE_1 (Volt_ac,info);
+  REGISTER_MOST_USE_1 (Ampere_ac,info);
   REGISTER_MOST_USE (Diode);
   REGISTER_MOST_USE (iProbe);
   REGISTER_MOST_USE (vProbe);

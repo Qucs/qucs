@@ -478,7 +478,14 @@ void QucsApp::initActions()
   insEquation->setCheckable(true);
   connect(insEquation, SIGNAL(toggled(bool)), SLOT(slotInsertEquation(bool)));
 
-  insGround = new QAction(QIcon((":/bitmaps/ground_eu.png")), tr("Insert Ground"), this);
+  if (QucsSettings.USGNDSymbol==false)
+  {
+     insGround = new QAction(QIcon((":/bitmaps/ground_eu.png")), tr("Insert Ground"), this);
+  }
+  else
+  {
+     insGround = new QAction(QIcon((":/bitmaps/ground.png")), tr("Insert Ground"), this);
+  }
   insGround->setShortcut(Qt::CTRL+Qt::Key_G);
   insGround->setStatusTip(tr("Inserts a ground symbol"));
   insGround->setWhatsThis(tr("Insert Ground\n\nInserts a ground symbol"));
