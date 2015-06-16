@@ -671,6 +671,7 @@ void application::print (void)
 // Returns textual representation of the application object.
 char * application::toString (void)
 {
+    int nparam = nargs > 0 ? (nargs - 1) : 0;
     if (txt) free (txt);
     // binary operations
     if ((!strcmp (n, "+")  || !strcmp (n, "-")  || !strcmp (n, "*") ||
@@ -697,7 +698,7 @@ char * application::toString (void)
     // array indices
     else if (!strcmp (n, "array"))
     {
-        int len = strlen (args->toString ()) + 3 + nargs - 1;
+        int len = strlen (args->toString ()) + 3 + nparam;
         txt = (char *) malloc (len);
         sprintf (txt, "%s[", args->toString ());
         for (node * arg = args->getNext (); arg != NULL; arg = arg->getNext ())
@@ -712,7 +713,7 @@ char * application::toString (void)
     // vectors and matrices
     else if (!strcmp (n, "vector") || !strcmp (n, "matrix"))
     {
-        int len = 3 + nargs - 1;
+        int len = 3 + nparam;
         txt = (char *) malloc (len);
         sprintf (txt, "[");
         for (node * arg = args; arg != NULL; arg = arg->getNext ())
@@ -736,7 +737,7 @@ char * application::toString (void)
     // unary and n-ary operations here
     else
     {
-        int len = strlen (n) + 3 + nargs - 1;
+        int len = strlen (n) + 3 + nparam;
         txt = (char *) malloc (len);
         sprintf (txt, "%s(", n);
         for (node * arg = args; arg != NULL; arg = arg->getNext ())
@@ -1000,6 +1001,7 @@ node * application::differentiate (char * derivative)
 node::node ()
 {
     tag = UNKNOWN;
+    setType(TAG_UNKNOWN);
     dropdeps = output = evaluated = evalPossible = cycle = duplicate = skip = 0;
     next = NULL;
     dependencies = NULL;
@@ -1017,6 +1019,7 @@ node::node ()
 node::node (int type)
 {
     tag = type;
+    setType(TAG_UNKNOWN);
     dropdeps = output = evaluated = evalPossible = cycle = duplicate = skip = 0;
     next = NULL;
     dependencies = NULL;
@@ -1035,6 +1038,7 @@ node::node (int type)
 node::node (const node & o)
 {
     tag = o.tag;
+    type = o.type;
     dropdeps = output = evaluated = evalPossible = cycle = duplicate = skip = 0;
     next = NULL;
     dependencies = NULL;

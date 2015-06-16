@@ -715,7 +715,14 @@ static int checker_validate_lists (struct definition_t * root)
                                  !strcmp (def->type, "AC") ||
                                  !strcmp (def->type, "SP")))
         {
-            struct value_t * val = checker_find_reference (def, "Type");
+            struct value_t * val;
+            if((val = checker_find_reference (def, "Type")) == NULL) {
+                logprint (LOG_ERROR, "line %d: checker error, required property "
+                          "`%s' is invalid in `%s:%s'\n", def->line, "Type",
+                          def->type, def->instance);
+                errors++;
+                continue;
+            }
             char * type = val->ident;
             // list of constant values and constant values
             if (type && (!strcmp (type, "const") || !strcmp (type, "list")))
@@ -888,7 +895,7 @@ static int checker_validate_strips (struct definition_t * root)
         if (!def->action)
         {
             /* find components with substrate property */
-            if (checker_is_property (def->define, "Subst") == PROP_STR)
+            if (def->define && (checker_is_property (def->define, "Subst") == PROP_STR))
             {
                 /* check validity of 'Subst' property */
                 if ((val = checker_validate_reference (def, "Subst")) == NULL)
@@ -942,7 +949,7 @@ static int checker_count_nodesets (struct definition_t * root, char * n)
     int count = 0;
     for (struct definition_t * def = root; def != NULL; def = def->next)
     {
-        if (def->nodeset && !def->duplicate)
+        if (def->nodeset && !def->duplicate && def->nodes)
         {
             char * node = def->nodes->node;
             if (!strcmp (node, n))
