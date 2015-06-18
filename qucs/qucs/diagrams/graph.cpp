@@ -347,7 +347,7 @@ void Graph::ScrPt::setIndep(double x)
   assert(ScrX>=0);
   indep = x;
 }
-void Graph::ScrPt::setDep(double x)
+void Graph::ScrPt::setDep(cplx_t x)
 {
   assert(ScrX>=0);
   dep = x;
@@ -368,7 +368,7 @@ double Graph::ScrPt::getIndep() const
   assert(ScrX>=0);
   return indep;
 }
-double Graph::ScrPt::getDep() const
+cplx_t Graph::ScrPt::getDep() const
 {
   assert(ScrX>=0);
   return dep;
