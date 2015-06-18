@@ -37,6 +37,20 @@
 #include "qucs.h"
 #include "misc.h"
 
+struct tPoint3D {
+  int   x, y;
+  int   No, done;
+  double indep;
+  double dep[2]; // BUG: complex
+};
+struct tPointZ {
+  float z;
+  int   No, NoCross;
+};
+struct tBound{
+  int min, max;
+};
+
 Rect3DDiagram::Rect3DDiagram(int _cx, int _cy) : Diagram(_cx, _cy)
 {
   x1 = 10;     // position of label text
@@ -47,7 +61,7 @@ Rect3DDiagram::Rect3DDiagram(int _cx, int _cy) : Diagram(_cx, _cy)
 
   Mem = pMem = 0;  // auxiliary buffer for hidden lines
 
-  Name = "Rect3D"; // BUG
+  Name = "Rect3D"; // BUG, don't use names. use types.
   // symbolic diagram painting
   Lines.append(new Line(0, 0, cx,  0, QPen(Qt::black,0)));
   Lines.append(new Line(0, 0,  0, cy, QPen(Qt::black,0)));
@@ -135,7 +149,9 @@ int Rect3DDiagram::calcCross(int *Xses, int *Yses)
 }
 
 // ------------------------------------------------------------
-// Is needed for markers.
+/*!
+ * compute screen coordinates, e.g. for markers
+ */
 void Rect3DDiagram::calcCoordinate(const double* xD, const double* zD, const double* yD,
                                    float *px, float *py, Axis const*) const
 {
@@ -381,7 +397,10 @@ int Rect3DDiagram::comparePointZ(const void *Point1, const void *Point2)
 }
 
 // --------------------------------------------------------------
-// Removes the invisible parts of the graph.
+/*!
+ * does what "calcData" is meant to do
+ * also removes the invisible parts of the graph.
+ */
 void Rect3DDiagram::removeHiddenLines(char *zBuffer, tBound *Bounds)
 {
   double Dummy = 0.0;  // number for 1-dimensional data in 3D cartesian
@@ -431,7 +450,12 @@ void Rect3DDiagram::removeHiddenLines(char *zBuffer, tBound *Bounds)
       px = g->axis(0)->Points;
     
       for(j=dx; j>0; j--) { // x coordinates
-        calcCoordinate3D(*(px++), *py, *pz, *(pz+1), pMem++, zp++);
+        calcCoordinate3D(*px, *py, *pz, *(pz+1), pMem, zp++);
+	pMem->indep = *px;
+	pMem->dep[0] = pz[0]; // BUG:
+	pMem->dep[1] = pz[1]; // only complex data here.
+	++px;
+	++pMem;
         pz += 2;
       }
 
@@ -974,7 +998,11 @@ Frame:   // jump here if error occurred (e.g. impossible log boundings)
 }
 
 // ------------------------------------------------------------
-// g->Points must already be empty!!!
+/*!
+ * does not calculate
+ * copies data from pMem to graphDeque
+ * this is redundant, but currently required
+ */
 void Rect3DDiagram::calcData(GraphDeque *g)
 {
   if(!pMem)  return;
@@ -1008,6 +1036,8 @@ void Rect3DDiagram::calcData(GraphDeque *g)
               else  break;
 	    }
           FIT_MEMORY_SIZE;  // need to enlarge memory block ?
+	  p->setIndep(pMem->indep);
+	  p->setDep(cplx_t(pMem->dep[0], pMem->dep[1]));
 	  (p++)->setScr(pMem->x, pMem->y);
           break;
         }
@@ -1035,6 +1065,8 @@ void Rect3DDiagram::calcData(GraphDeque *g)
               else  break;
 	    }
 
+	  p->setIndep(pMem->indep);
+	  p->setDep(cplx_t(pMem->dep[0], pMem->dep[1]));
           (p++)->setScr(pMem->x, pMem->y);
           break;
         }

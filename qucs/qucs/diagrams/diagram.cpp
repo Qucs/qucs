@@ -298,6 +298,15 @@ void Diagram::createAxisLabels()
 }
 
 // ------------------------------------------------------------
+/*! region code.
+ *    y
+ *    ^
+ *  9 | 8 |10
+ *  --+---+--
+ *  1 |vis| 2
+ *  --o---+---> x
+ *  5 | 4 | 6
+ */
 int Diagram::regionCode(float x, float y) const
 {
   int code=0;   // code for clipping
@@ -347,8 +356,9 @@ Marker* Diagram::setMarker(int x, int y)
 }
 
 /*!
-   Cohen-Sutherland clipping algorithm
-*/
+ * Cohen-Sutherland clipping algorithm
+ * FIXME: can Qt do this?
+ */
 void Diagram::rectClip(Graph::iterator &p) const
 {
   int code, z=0;
@@ -358,13 +368,20 @@ void Diagram::rectClip(Graph::iterator &p) const
 
   int code1 = regionCode(x_1, y_1);
   int code2 = regionCode(x_2, y_2);
-  if((code1 | code2) == 0)  return;  // line completly inside ?
+  if((code1 | code2) == 0) return; // line completly inside
+
+  // hmm maybe we should update endpoint data when clipping?
+  //double a_1 = (p-2)->getIndep();
+  //cplx_t d_1 = (p-2)->getDep();
+
+  double a_2 = (p-1)->getIndep();
+  cplx_t d_2 = (p-1)->getDep();
 
   if(code1 != 0) if((p-3)->isPt()) {
     p++;
     (p-3)->setStrokeEnd();
   }
-  if(code1 & code2)   // line not visible at all ?
+  if(code1 & code2) // line not visible at all
     goto endWithHidden;
 
   if(code2 != 0) {
@@ -375,26 +392,29 @@ void Diagram::rectClip(Graph::iterator &p) const
 
 
   for(;;) {
-    if((code1 | code2) == 0) break;  // line completly inside ?
+    if((code1 | code2) == 0) break; // line completly inside
 
     if(code1)  code = code1;
     else  code = code2;
 
-    dx = x_2 - x_1;  // dx and dy never equals zero !
+    dx = x_2 - x_1;
+    assert(dx);
     dy = y_2 - y_1;
-    if(code & 1) {
+    if(code & 1) { // too left
       y = y_1 - dy * x_1 / dx;
       x = 0.0;
     }
-    else if(code & 2) {
+    else if(code & 2) { // too right
       y = y_1 + dy * (x2-x_1) / dx;
       x = float(x2);
     }
-    else if(code & 4) {
+    else if(code & 4) { // too low
+      assert(dy);
       x = x_1 - dx * y_1 / dy;
       y = 0.0;
     }
-    else if(code & 8) {
+    else if(code & 8) { // too high
+      assert(dy);
       x = x_1 + dx * (y2-y_1) / dy;
       y = float(y2);
     }
@@ -413,19 +433,23 @@ void Diagram::rectClip(Graph::iterator &p) const
       goto endWithHidden; // line not visible at all ?
   }
 
+  // todo: update data
   (p-2)->setScr(x_1, y_1);
   (p-1)->setScr(x_2, y_2);
   p += z;
   return;
 
-endWithHidden:
+endWithHidden: // forget endpoint of invisible segment
     (p-2)->setScr(x_2, y_2);
-    p -= 1;
+    (p-2)->setIndep(a_2);
+    (p-2)->setDep(d_2);
+    --p;
 }
 
 /*!
-   Clipping for round diagrams (smith, polar, ...)
-*/
+ * Clipping for round diagrams (smith, polar, ...)
+ * FIXME: can Qt do this?
+ */
 void Diagram::clip(Graph::iterator &p) const
 {
   float R = float(x2) / 2.0;
@@ -526,12 +550,16 @@ void Diagram::calcData(GraphDeque *g)
       for(i=g->countY; i>0; i--) {  // every branch of curves
 	px = g->axis(0)->Points;
 	calcCoordinateP(px, pz, py, p, pa);
+	p->setIndep(*px);
+	p->setDep(cplx_t(pz[0], pz[1]));
 	++px;
 	pz += 2;
 	++p;
 	for(z=g->axis(0)->count-1; z>0; z--) {  // every point
 	  FIT_MEMORY_SIZE;  // need to enlarge memory block ?
 	  calcCoordinateP(px, pz, py, p, pa);
+	  p->setIndep(*px);
+	  p->setDep(cplx_t(pz[0], pz[1]));
 	  ++px;
 	  pz += 2;
 	  ++p;
@@ -556,10 +584,13 @@ for(int zz=0; zz<z; zz+=2)
       return;
 
     default:  // symbol (e.g. star) at each point **********************
+      // FIXME: WET. merge into case above. only difference: bounds check.
       for(i=g->countY; i>0; i--) {  // every branch of curves
         px = g->axis(0)->Points;
         for(z=g->axis(0)->count; z>0; z--) {  // every point
           calcCoordinateP(px, pz, py, p, pa);
+	  p->setIndep(*px);
+	  p->setDep(cplx_t(pz[0], pz[1]));
           ++px;
           pz += 2;
           if(insideDiagramP(p))    // within diagram ?
