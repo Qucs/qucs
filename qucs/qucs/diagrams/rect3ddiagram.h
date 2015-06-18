@@ -21,20 +21,9 @@
 #include "diagram.h"
 
 
-struct tPoint3D {
-  int   x, y;
-  int   No, done;
-};
-
-struct tPointZ {
-  float z;
-  int   No, NoCross;
-};
-
-struct tBound {
-  int min, max;
-};
-
+struct tPoint3D;
+struct tPointZ;
+struct tBound;
 
 class Rect3DDiagram : public Diagram  {
 public:

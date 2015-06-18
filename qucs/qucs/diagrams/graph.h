@@ -23,11 +23,13 @@
 #include "element.h"
 
 #include <cmath>
+#include <complex>
 #include <QColor>
-#include <Q3PtrList>
 #include <QDateTime>
 
 #include <assert.h>
+
+typedef std::complex<double> cplx_t;
 
 typedef enum{
   GRAPHSTYLE_INVALID = -1,
@@ -89,7 +91,7 @@ public:
     float ScrY;
 
     double indep; // top level indep value (sweep)
-    double dep; // top level dep value // FIXME: type?!
+    cplx_t dep; // top level dep value
   public:
     ScrPt() : ScrX(0){}
     ~ScrPt(){}
@@ -101,7 +103,7 @@ public:
     void setScrY(float); // screen vertical coordinate
     void setScr(float,float); // both @ once.
     void setIndep(double);
-    void setDep(double);
+    void setDep(cplx_t);
 //    void attachCoords(double*);
 
     bool isPt() const; // indicate if this is a point on the screen
@@ -112,7 +114,7 @@ public:
     float getScrX() const;
     float getScrY() const;
     double getIndep() const;
-    double getDep() const;
+    cplx_t getDep() const;
   };
   typedef std::vector<ScrPt> container;
   typedef container::iterator iterator;
