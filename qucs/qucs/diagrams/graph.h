@@ -22,6 +22,7 @@
 #include "marker.h"
 #include "element.h"
 
+#include <cmath>
 #include <QColor>
 #include <Q3PtrList>
 #include <QDateTime>
@@ -46,18 +47,32 @@ class ViewPainter;
 
 struct DataX {
   DataX(const QString& Var_, double *Points_=0, int count_=0)
-       : Var(Var_), Points(Points_), count(count_) {};
+       : Var(Var_), Points(Points_), count(count_), Min(INFINITY), Max(-INFINITY) {};
  ~DataX() { if(Points) delete[] Points; };
   QString Var;
   double *Points;
   int     count;
+
+public:
+  const double& min()const {return Min;}
+  const double& max()const {return Max;}
+public: // only called from Graph. cleanup later.
+  const double& min(const double& x){if (Min<x) Min=x; return Min;}
+  const double& max(const double& x){if (Max>x) Max=x; return Max;}
+private:
+  double Min;
+  double Max;
 };
 
+struct Axis;
 
 class Graph : public Element {
 public:
   Graph(const QString& _Line="");
  ~Graph();
+
+  int loadDatFile(const QString& filename);
+  int loadIndepVarData(const QString&, char* datfilecontent);
 
   void    paint(ViewPainter*, int, int);
   void    paintLines(ViewPainter*, int, int);
@@ -65,10 +80,13 @@ public:
   bool    load(const QString&);
   int     getSelected(int, int);
   Graph*  sameNewOne();
+  unsigned numAxes() const { return cPointsX.count(); }
+  DataX* axis(uint i) { return cPointsX.at(i); }
+  bool isEmpty() const { return cPointsX.isEmpty(); }
+  Q3PtrList<DataX>& mutable_axes(){return cPointsX;} // HACK
 
   QDateTime lastLoaded;  // when it was loaded into memory
   int     yAxisNo;       // which y axis is used
-  Q3PtrList<DataX>  cPointsX;
   double *cPointsY;
   float  *ScrPoints; // data in screen coordinates
   int     countY;    // number of curves
@@ -81,6 +99,8 @@ public:
   // for tabular diagram
   int  Precision;   // number of digits to show
   int  numMode;     // real/imag or polar (deg/rad)
+private:
+  Q3PtrList<DataX>  cPointsX;
 };
 
 #endif
