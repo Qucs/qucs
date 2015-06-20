@@ -490,10 +490,14 @@ void MouseActions::MMoveMoving(Schematic *Doc, QMouseEvent *Event)
 
   qDebug() << "MMoveMoving";
 
+  int centerX, centerY;
+
   setPainter(Doc);
 
   Doc->grabKeyboard();
 
+  //MAx2 = DOC_X_POS(Event->pos().x());
+  //MAy2 = DOC_Y_POS(Event->pos().y());
   MAx2 = DOC_X_POS(Event->pos().x());
   MAy2 = DOC_Y_POS(Event->pos().y());
 
@@ -513,23 +517,38 @@ void MouseActions::MMoveMoving(Schematic *Doc, QMouseEvent *Event)
     if (pe->Type == isWire) {
       pw = (Wire*)pe;   // connecting wires are not moved completely
 
-      if(((unsigned long)pw->Port1) > 3) { pw->x1 += MAx1;  pw->y1 += MAy1; }
-      else {  if(long(pw->Port1) & 1) { pw->x1 += MAx1; }
-              if(long(pw->Port1) & 2) { pw->y1 += MAy1; } }
+      if (((unsigned long)pw->Port1) > 3) {
+        pw->x1 += MAx1;  pw->y1 += MAy1;
+      } else {
+        if (long(pw->Port1) & 1) {
+          pw->x1 += MAx1;
+        }
 
-      if(((unsigned long)pw->Port2) > 3) { pw->x2 += MAx1;  pw->y2 += MAy1; }
-      else {  if(long(pw->Port2) & 1) pw->x2 += MAx1;
-              if(long(pw->Port2) & 2) pw->y2 += MAy1; }
+        if (long(pw->Port1) & 2) {
+          pw->y1 += MAy1;
+        }
+      }
 
-      if(pw->Label) {      // root of node label must lie on wire
-        if(pw->Label->cx < pw->x1) pw->Label->cx = pw->x1;
-        if(pw->Label->cy < pw->y1) pw->Label->cy = pw->y1;
-        if(pw->Label->cx > pw->x2) pw->Label->cx = pw->x2;
-        if(pw->Label->cy > pw->y2) pw->Label->cy = pw->y2;
+      if (((unsigned long)pw->Port2) > 3) {
+        pw->x2 += MAx1;  pw->y2 += MAy1;
+      } else {
+        if (long(pw->Port2) & 1) pw->x2 += MAx1;
+        if (long(pw->Port2) & 2) pw->y2 += MAy1;
+      }
+
+      if (pw->Label) {      // root of node label must lie on wire
+        if (pw->Label->cx < pw->x1) pw->Label->cx = pw->x1;
+        if (pw->Label->cy < pw->y1) pw->Label->cy = pw->y1;
+        if (pw->Label->cx > pw->x2) pw->Label->cx = pw->x2;
+        if (pw->Label->cy > pw->y2) pw->Label->cy = pw->y2;
       }
 
     } else {
-      pe->setCenter(MAx1, MAy1, true);
+      // nvdl: Align a component to the grid if off-grid
+      pe->getCenter(centerX, centerY);
+      Doc->setOnGrid(centerX, centerY);
+      pe->setCenter(centerX, centerY, false);
+      //pe->setCenter(MAx1, MAy1, true);
     }
 
     pe->paintScheme(Doc);
@@ -1526,8 +1545,9 @@ void MouseActions::MPressRotate(Schematic *Doc, QMouseEvent*, float fX, float fY
 
   qDebug() << "MPressRotate";
 
+  int centerX, centerY;
   Element *e = Doc->selectElement(int(fX), int(fY), false);
-  if(e == 0) return;
+  if (e == 0) return;
   e->Type &= isSpecialMask;  // remove special functions
 
   WireLabel *pl;
@@ -1573,6 +1593,20 @@ void MouseActions::MPressRotate(Schematic *Doc, QMouseEvent*, float fX, float fY
       qDebug() << "MPressRotate: Unknown element";
       return;
   }
+
+  // nvdl: todo: Align center to grid (needs fixing as nodes get detached from the component)
+  /*switch (e->Type) {
+  case isComponent:
+  case isAnalogComponent:
+  case isDigitalComponent:
+    e->getCenter(centerX, centerY);
+    Doc->setOnGrid(centerX, centerY);
+    e->setCenter(centerX, centerY, false);
+    break;
+
+  default:
+    break;
+  }*/
 
   Doc->viewport()->update();
   //drawn = false;
@@ -2280,6 +2314,7 @@ void MouseActions::rotateElements(Schematic *Doc, int& x1, int& y1)
   qDebug() << "rotateElements";
 
   int x2, y2;
+  int centerX, centerY;
   Element *pe;
   Doc->setOnGrid(x1, y1);
 
@@ -2289,8 +2324,8 @@ void MouseActions::rotateElements(Schematic *Doc, int& x1, int& y1)
   MAx1 = x1;
   MAy1 = y1;
 
-  for(pe = movingElements.first(); pe != 0; pe = movingElements.next()) {
-    switch(pe->Type) {
+  for (pe = movingElements.first(); pe != 0; pe = movingElements.next()) {
+    switch (pe->Type) {
     case isComponent:
     case isAnalogComponent:
     case isDigitalComponent:
@@ -2298,6 +2333,7 @@ void MouseActions::rotateElements(Schematic *Doc, int& x1, int& y1)
       x2 = x1 - pe->cx;
       pe->setCenter(pe->cy - y1 + x1, x2 + y1);
       break;
+
     case isWire:
       x2     = pe->x1;
       pe->x1 = pe->y1 - y1 + x1;
@@ -2306,16 +2342,38 @@ void MouseActions::rotateElements(Schematic *Doc, int& x1, int& y1)
       pe->x2 = pe->y2 - y1 + x1;
       pe->y2 = x1 - x2 + y1;
       break;
+
     case isPainting:
       ((Painting*)pe)->rotate(); // rotate !before! setting the center
       ((Painting*)pe)->getCenter(x2, y2);
       pe->setCenter(y2 - y1 + x1, x1 - x2 + y1);
-          break;
+      break;
+
     default:
       x2 = x1 - pe->cx;   // if diagram -> only rotate cx/cy
       pe->setCenter(pe->cy - y1 + x1, x2 + y1);
       break;
     }
+
+    // nvdl: Align center to grid
+    switch (pe->Type) {
+    case isComponent:
+    case isAnalogComponent:
+    case isDigitalComponent:
+      pe->getCenter(centerX, centerY);
+      Doc->setOnGrid(centerX, centerY);
+      pe->setCenter(centerX, centerY, false);
+      break;
+
+    default:
+      break;
+    }
+
+    /*if (pe->Type != isWire) {
+      pe->getCenter(centerX, centerY);
+      Doc->setOnGrid(centerX, centerY);
+      pe->setCenter(centerX, centerY, false);
+    }*/
   }
 }
 
