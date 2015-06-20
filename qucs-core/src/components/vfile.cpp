@@ -48,8 +48,8 @@ vfile::vfile () : circuit (2) {
 
 // Destructor deletes vfile object from memory.
 vfile::~vfile () {
-  if (data) delete data;
-  if (inter) delete inter;
+  delete data;
+  delete inter;
 }
 
 void vfile::prepare (void) {

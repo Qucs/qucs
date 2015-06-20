@@ -89,7 +89,7 @@ trsolver::trsolver (const std::string &n)
 // Destructor deletes the trsolver class object.
 trsolver::~trsolver ()
 {
-    if (swp) delete swp;
+    delete swp;
     for (int i = 0; i < 8; i++)
     {
         if (solution[i] != NULL)
@@ -97,7 +97,7 @@ trsolver::~trsolver ()
             delete solution[i];
         }
     }
-    if (tHistory) delete tHistory;
+    delete tHistory;
 }
 
 /* The copy constructor creates a new instance of the trsolver class
@@ -115,7 +115,7 @@ trsolver::trsolver (trsolver & o)
 // This function creates the time sweep if necessary.
 void trsolver::initSteps (void)
 {
-    if (swp != NULL) delete swp;
+    delete swp;
     swp = createSweep ("time");
 }
 

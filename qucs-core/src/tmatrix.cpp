@@ -93,7 +93,7 @@ tmatrix<nr_type_t>::operator=(const tmatrix<nr_type_t> & m) {
   if (&m != this) {
     rows = m.rows;
     cols = m.cols;
-    if (data) { delete[] data; data = NULL; }
+    delete[] data;
     if (rows > 0 && cols > 0) {
       data = new nr_type_t[rows * cols];
       memcpy (data, m.data, sizeof (nr_type_t) * rows * cols);
@@ -105,7 +105,7 @@ tmatrix<nr_type_t>::operator=(const tmatrix<nr_type_t> & m) {
 // Destructor deletes a tmatrix object.
 template <class nr_type_t>
 tmatrix<nr_type_t>::~tmatrix () {
-  if (data) delete[] data;
+  delete[] data;
 }
 
 // Returns the tmatrix element at the given row and column.

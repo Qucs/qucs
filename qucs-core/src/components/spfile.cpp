@@ -47,7 +47,7 @@ spfile_vector::spfile_vector () {
 
 // Destructor for S-parameter file vector.
 spfile_vector::~spfile_vector () {
-  if (inter) delete inter;
+  delete inter;
 }
 
 // Passes vectors and their data types to the S-parameter file vector.
@@ -87,17 +87,17 @@ spfile::spfile () : circuit () {
 
 // Destructor deletes spfile object from memory.
 spfile::~spfile () {
-  if (spara) delete[] spara;
-  if (RN) delete RN;
-  if (FMIN) delete FMIN;
-  if (SOPT) delete SOPT;
+  delete[] spara;
+  delete RN;
+  delete FMIN;
+  delete SOPT;
 #if DEBUG && 0
   if (data) {
     data->setFile ("spfile.dat");
     data->print ();
   }
 #endif
-  if (data) delete data;
+  delete data;
 }
 
 void spfile::calcSP (nr_double_t frequency) {

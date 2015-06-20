@@ -46,8 +46,8 @@ ifile::ifile () : circuit (2) {
 
 // Destructor deletes ifile object from memory.
 ifile::~ifile () {
-  if (data) delete data;
-  if (inter) delete inter;
+  delete data;
+  delete inter;
 }
 
 void ifile::prepare (void) {

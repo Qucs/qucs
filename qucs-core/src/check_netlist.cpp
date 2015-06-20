@@ -1398,7 +1398,7 @@ static void checker_cleanup_xlat_nodes (struct definition_t * sub)
 {
     for (struct node_t * n = sub->nodes; n != NULL; n = n->next)
     {
-        if (n->xlate) free (n->xlate);
+        free (n->xlate);
         n->xlate = NULL;
         n->xlatenr = 0;
     }
@@ -1902,9 +1902,9 @@ static void netlist_free_nodes (struct node_t * node)
 /* The following function free()'s the given value. */
 static void netlist_free_value (struct value_t * value)
 {
-    if (value->ident) free (value->ident);
+    free (value->ident);
     if (value->unit)  free (value->unit);
-    if (value->scale) free (value->scale);
+    free (value->scale);
     free (value);
 }
 
@@ -1931,7 +1931,7 @@ static void netlist_free_definition (struct definition_t * def)
 {
     netlist_free_nodes (def->nodes);
     if (!def->copy) netlist_free_pairs (def->pairs);
-    if (def->subcircuit) free (def->subcircuit);
+    free (def->subcircuit);
     free (def->type);
     free (def->instance);
     free (def);

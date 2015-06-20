@@ -540,7 +540,7 @@ spice_set_property_string (struct definition_t * def, const char * key,
 			   const char * val) {
   struct pair_t * prop = spice_find_property (def, key);
   if (prop != NULL) {
-    if (prop->value->ident) free (prop->value->ident);
+    free (prop->value->ident);
     prop->value->ident = strdup (val);
   }
   else {
@@ -574,9 +574,9 @@ static double spice_evaluate_value (struct value_t * value) {
 
 /* The following function free()'s the given value. */
 static void netlist_free_value (struct value_t * value) {
-  if (value->ident) free (value->ident);
+  free (value->ident);
   if (value->unit)  free (value->unit);
-  if (value->scale) free (value->scale);
+  free (value->scale);
   free (value);
 }
 
@@ -640,7 +640,7 @@ static void spice_adjust_device (struct definition_t * def,
       p = spice_generate_Model_pairs (start->next);
       def->pairs = netlist_append_pairs (def->pairs, p);
       // adjust type of device
-      if (def->type) free (def->type);
+      free (def->type);
 
       bool hic = false;
       // check for HICUM transistors
@@ -1173,8 +1173,8 @@ netlist_free_definition (struct definition_t * def) {
   netlist_free_nodes (def->nodes);
   netlist_free_pairs (def->pairs);
   netlist_free_values (def->values);
-  if (def->subcircuit) free (def->subcircuit);
-  if (def->text) free (def->text);
+  free (def->subcircuit);
+  free (def->text);
   if (def->sub) netlist_destroy_intern (def->sub);
   free (def->type);
   free (def->instance);
@@ -1201,7 +1201,7 @@ void spice_destroy (void) {
   definition_root = subcircuit_root = device_root = NULL;
   netlist_free_nodes (spice_nodes);
   spice_nodes = NULL;
-  if (spice_title) free (spice_title);
+  free (spice_title);
   spice_title = NULL;
 }
 

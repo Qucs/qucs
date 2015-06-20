@@ -50,7 +50,7 @@ devstates::devstates (int vars, int states) {
 
 // Destructor for device state class instance.
 devstates::~devstates () {
-  if (states) free (states);
+  free (states);
 }
 
 /* Initializes the device state class instance containing the
@@ -58,7 +58,7 @@ devstates::~devstates () {
 void devstates::deviceStates (int vars, int stats) {
   nvars = vars;
   nstates = stats;
-  if (states) free (states);
+  free (states);
   states = (nr_double_t *) malloc (sizeof (nr_double_t) * nvars * nstates);
   nstate = 0;
   pstate = states;

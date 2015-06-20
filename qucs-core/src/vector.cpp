@@ -138,9 +138,9 @@ const vector& vector::operator=(const vector & v) {
 
 // Destructor deletes a vector object.
 vector::~vector () {
-  if (data) free (data);
-  if (dependencies) delete dependencies;
-  if (origin) free (origin);
+  free (data);
+  delete dependencies;
+  free (origin);
 }
 
 // Returns data dependencies.
@@ -150,7 +150,7 @@ strlist * vector::getDependencies (void) {
 
 // Sets the data dependencies.
 void vector::setDependencies (strlist * s) {
-  if (dependencies) delete dependencies;
+  delete dependencies;
   dependencies = s;
 }
 
@@ -920,7 +920,7 @@ void vector::reverse (void) {
 
 // Sets the origin (the analysis) of the vector.
 void vector::setOrigin (const char * n) {
-  if (origin) free (origin);
+  free (origin);
   origin = n ? strdup (n) : NULL;
 }
 
