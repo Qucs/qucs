@@ -47,7 +47,7 @@ public:
   Element *focusElement;
   QMouseEvent *focusMEvent;
 
-  int  MAx1, MAy1,MAx2, MAy2, MAx3, MAy3;  // cache for mouse movements
+  int  MAx1, MAy1, MAx2, MAy2, MAx3, MAy3;  // cache for mouse movements
   Q3PtrList<Element> movingElements;
   int movingRotated;
 
@@ -58,7 +58,12 @@ private:
   bool isMoveEqual;
   QucsApp* App;
 
-  // -------------------------------------------------------------------
+  // Is true when right mouse button panning is done (used to control right menu display)
+  bool panningDone;
+  bool toggleWireOrientation; // Used to decide if the wire draw order will be flipped or not
+  int prevWireX1, prevWireY1, prevWireX2, prevWireY2;
+
+// -------------------------------------------------------------------
 public:
   void MMoveSelect(Schematic*, QMouseEvent*);
   void MMoveElement(Schematic*, QMouseEvent*);
@@ -75,10 +80,13 @@ public:
   void MMoveRotate(Schematic*, QMouseEvent*);
   void MMoveActivate(Schematic*, QMouseEvent*);
   void MMoveOnGrid(Schematic*, QMouseEvent*);
+  void MMoveFreely(Schematic*, QMouseEvent*);
+  bool MCloseToNode(Schematic*, QMouseEvent*);
   void MMoveResizePainting(Schematic*, QMouseEvent*);
   void MMoveMoveText(Schematic*, QMouseEvent*);
   void MMoveMoveTextB(Schematic*, QMouseEvent*);
   void MMoveZoomIn(Schematic*, QMouseEvent*);
+  void MMovePanning(Schematic*, QMouseEvent*);
   void MMoveScrollBar(Schematic*, QMouseEvent*);
 
   void MPressSelect(Schematic*, QMouseEvent*, float, float);
@@ -88,6 +96,7 @@ public:
   void MPressMirrorY(Schematic*, QMouseEvent*, float, float);
   void MPressRotate(Schematic*, QMouseEvent*, float, float);
   void MPressElement(Schematic*, QMouseEvent*, float, float);
+  void MReleaseElement(Schematic*, QMouseEvent*);
   void MPressLabel(Schematic*, QMouseEvent*, float, float);
   void MPressWire1(Schematic*, QMouseEvent*, float, float);
   void MPressWire2(Schematic*, QMouseEvent*, float, float);
@@ -109,6 +118,7 @@ public:
   void MReleaseResizePainting(Schematic*, QMouseEvent*);
   void MReleaseMoveText(Schematic*, QMouseEvent*);
   void MReleaseZoomIn(Schematic*, QMouseEvent*);
+  void MReleasePanning(Schematic*, QMouseEvent*);
 
   void paintElementsScheme(Schematic*);
   void rotateElements(Schematic*, int&, int&);
@@ -116,6 +126,12 @@ public:
   void moveElements(Q3PtrList<Element>*, int, int);
   void endElementMoving(Schematic*, Q3PtrList<Element>*);
   void rightPressMenu(Schematic*, QMouseEvent*, float, float);
+  void drawWire(Schematic*, bool);
+
+  void keyPressEvent(Schematic*, QKeyEvent*);
+  void keyReleaseEvent(Schematic*, QKeyEvent*);
+  void defaultState(void);
+  void elementInsertState(void);
 };
 
 #endif

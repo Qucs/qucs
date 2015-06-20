@@ -128,8 +128,9 @@ public:
   QList<PostedPaintEvent>   PostedPaintEvents;
   bool symbolMode;  // true if in symbol painting mode
 
+  //bool GridOn;
+  int GridX, GridY; // nvdl: todo: Replace and remove
 
-  int GridX, GridY;
   int ViewX1, ViewY1, ViewX2, ViewY2;  // size of the document area
   int UsedX1, UsedY1, UsedX2, UsedY2;  // document area used by elements
 
@@ -166,6 +167,8 @@ protected:
   void contentsMouseDoubleClickEvent(QMouseEvent*);
   void contentsMouseReleaseEvent(QMouseEvent*);
   void contentsWheelEvent(QWheelEvent*);
+  void keyPressEvent(QKeyEvent*);
+  void keyReleaseEvent(QKeyEvent*);
   void contentsDropEvent(QDropEvent*);
   void contentsDragEnterEvent(QDragEnterEvent*);
   void contentsDragLeaveEvent(QDragLeaveEvent*);

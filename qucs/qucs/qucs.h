@@ -22,6 +22,10 @@
 #include <QString>
 #include <QHash>
 #include <QStack>
+#include <QDialog>
+#include <QLabel>
+#include <QScrollArea>
+#include <QPushButton>
 
 class QucsDoc;
 class Schematic;
@@ -29,7 +33,8 @@ class SimMessage;
 class MouseActions;
 class SearchDialog;
 class OctaveWindow;
-class MessageDock;
+//class MessageDock;
+class MessagesWindow;
 class ProjectView;
 
 class QLabel;
@@ -132,6 +137,7 @@ public slots:
   void slotCMenuInsert();
 
   void slotUpdateTreeview();
+
 private slots:
   void slotMenuProjOpen();
   void slotMenuProjClose();
@@ -159,6 +165,8 @@ public:
   QTabWidget *DocumentTab;
   QListWidget *CompComps;
   QTreeWidget *libTreeWidget;
+  QDockWidget *messagesDock;
+  MessagesWindow *messages;
 
   // menu appearing by right mouse button click on content listview
   QMenu *ContentMenu;
@@ -182,7 +190,6 @@ private:
   QTabWidget      *TabView;
   QDockWidget     *octDock;
   OctaveWindow    *octave;
-  MessageDock     *messageDock;
 
   QListView       *Projects;
   ProjectView     *Content;
@@ -233,6 +240,7 @@ public:
    ************************************************** */
 
 public slots:
+  void slotSetAllShortcut();
   void slotShowWarnings();
   void slotResetWarnings();
   void printCursorPosition(int, int);
@@ -245,6 +253,8 @@ private slots:
   void slotViewBrowseDock(bool toggle); // toggle the dock window
   void slotViewOctaveDock(bool); // toggle the dock window
   void slotToggleOctave(bool);
+  void slotViewMessagesDock(bool); // toggles the messages dock (admsXml output)
+  void slotToggleMessagesDockVisibility(bool); // called when closed by the user
   void slotToggleDock(bool);
   void slotHelpAbout();     // shows an about dialog
 
@@ -255,7 +265,7 @@ private:
   void initStatusBar();  // setup the statusbar
 
   QAction *helpAboutApp, *helpAboutQt, *viewToolBar, *viewStatusBar,
-          *viewBrowseDock, *viewOctaveDock;
+          *viewBrowseDock, *viewOctaveDock, *viewMessagesDock;
 
   // menus contain the items of their menubar
   enum { MaxRecentFiles = 8 };
@@ -370,6 +380,22 @@ private:
   void launchTool(const QString&, const QString&, const QString& = ""); // tool, description and args
   friend class SaveDialog;
   QString lastExportFilename;
-};
 
+  QMenu* createPopupMenu();
+};
+// ----------------------------------------------------------
+// Class for the message box with scrolling ability
+
+class QucsScrollMessageBox : public QDialog {
+  Q_OBJECT
+
+public:
+  QucsScrollMessageBox(QWidget *parent = 0, const QString &title = "", const QString &message = "");
+
+private:
+  QLabel *label;
+  QScrollArea *scroll;
+  QPushButton *okButton;
+};
+// ----------------------------------------------------------
 #endif /* QUCS_H */

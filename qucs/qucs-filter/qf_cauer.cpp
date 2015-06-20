@@ -308,7 +308,7 @@ void qf_cauer::xfer (void) {
 
 #ifdef _QF_CAUER_DEBUG
   std::cerr << "Computing filter of order " << ord << " with ";
-  std::cerr << "rho = " << rho << " and theta = " << ASIND (th) << "°\n";
+  std::cerr << "rho = " << rho << " and theta = " << ASIND (th) << "ï¿½\n";
   std::cerr << "k = " << k << '\n';
 #endif
 
@@ -589,7 +589,7 @@ void qf_cauer::dump () {
     break;
   }
   std::cout << "of order " << ord << ", theta = "
-	    << ASIND (th) << "\x00B0, rho = " << rho << '\n';
+	    << ASIND (th) << "\u00B0, rho = " << rho << '\n';
   dump_cout ();
 }
 
@@ -605,7 +605,7 @@ void CC (void) {
     std::cout << "Reflexion (%) : ";
     std::cin >> r;
     r /= 100.0;
-    std::cout << "Angle (\x00B0) : ";
+    std::cout << "Angle (\u00B0) : ";
     std::cin >> t;
     t = pi * t / 180.0;
     qf_cauer F (o, r, t);

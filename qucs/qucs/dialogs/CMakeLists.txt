@@ -35,6 +35,7 @@ importdialog.cpp		savedialog.cpp labeldialog.cpp
 searchdialog.cpp     librarydialog.cpp settingsdialog.cpp
 matchdialog.cpp			simmessage.cpp newprojdialog.cpp
 sweepdialog.cpp			exportdialog.cpp loaddialog.cpp
+qucsshortcutdialog.cpp keysequenceedit.cpp
 )
 
 SET(DIALOGS_MOC_HDRS
@@ -56,6 +57,8 @@ simmessage.h
 sweepdialog.h
 sweepdialog.h
 vasettingsdialog.h
+qucsshortcutdialog.h
+keysequenceedit.h
 )
 
 SET(DIALOGS_UIC_HDRS

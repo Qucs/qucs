@@ -93,13 +93,35 @@ void GraphicText::paintScheme(Schematic *p)
 {
   // FIXME #warning QMatrix wm = p->worldMatrix();
   // FIXME #warning QMatrix Mat (wm.m11(), 0.0, 0.0, wm.m22(),
-// FIXME #warning 		wm.dx() + double(cx) * wm.m11(),
-// FIXME #warning 		wm.dy() + double(cy) * wm.m22());
+  // FIXME #warning 		wm.dx() + double(cx) * wm.m11(),
+  // FIXME #warning 		wm.dy() + double(cy) * wm.m22());
   // FIXME #warning p->setWorldMatrix(Mat);
   // FIXME #warning p->rotate(-Angle);
-  p->PostPaintEvent(_Rect, 0, 0, x2, y2);
-
   // FIXME #warning p->setWorldMatrix(wm);
+  //p->PostPaintEvent(_Rect, 0, 0, x2, y2);
+
+  // nvdl
+  switch (Angle) {
+
+  case 0:
+    p->PostPaintEvent(_Rect, cx, cy, x2, y2);
+    break;
+
+  case 90:
+    p->PostPaintEvent(_Rect, cx, cy - x2, y2, x2);
+    break;
+
+  case 180:
+    p->PostPaintEvent(_Rect, cx - x2, cy - y2, x2, y2);
+    break;
+
+  case 270:
+    p->PostPaintEvent(_Rect, cx - y2, cy, y2, x2);
+    break;
+
+  default:
+    p->PostPaintEvent(_Rect, cx, cy, x2, y2);
+  }
 }
 
 // ------------------------------------------------------------------------
