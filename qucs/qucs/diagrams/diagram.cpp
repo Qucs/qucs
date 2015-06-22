@@ -48,6 +48,7 @@
 #include <QRegExp>
 #include <QDateTime>
 #include <QPainter>
+#include <QDebug>
 
 Diagram::Diagram(int _cx, int _cy)
 {
@@ -172,7 +173,7 @@ void Diagram::createAxisLabels()
   if(xAxis.Label.isEmpty()) {
     // write all x labels ----------------------------------------
     foreach(Graph *pg, Graphs) {
-	DataX *pD = pg->cPointsX.getFirst();
+	DataX *pD = pg->axis(0);
 	if(!pD) continue;
 	y -= LineSpacing;
 	if(Name[0] != 'C') {   // locus curve ?
@@ -492,11 +493,11 @@ void Diagram::calcData(Graph *g)
   double *px;
   double *pz = g->cPointsY;
   if(!pz)  return;
-  if(g->cPointsX.count() < 1) return;
+  if(g->numAxes() < 1) return;
 
   int i, z, Counter=2;
   float dx, dy, xtmp, ytmp;
-  int Size = ((2*(g->cPointsX.getFirst()->count) + 1) * g->countY) + 10;
+  int Size = ((2*(g->axis(0)->count) + 1) * g->countY) + 10;
   
   if(xAxis.autoScale)  if(yAxis.autoScale)  if(zAxis.autoScale)
     Counter = -50000;
@@ -520,10 +521,10 @@ void Diagram::calcData(Graph *g)
   switch(g->Style) {
     case GRAPHSTYLE_SOLID: // ***** solid line ****************************
       for(i=g->countY; i>0; i--) {  // every branch of curves
-	px = g->cPointsX.getFirst()->Points;
+	px = g->axis(0)->Points;
 	calcCoordinate(px, pz, py, &p->Scr, &(p+1)->Scr, pa);
 	p += 2;
-	for(z=g->cPointsX.getFirst()->count-1; z>0; z--) {  // every point
+	for(z=g->axis(0)->count-1; z>0; z--) {  // every point
 	  FIT_MEMORY_SIZE;  // need to enlarge memory block ?
 	  calcCoordinate(px, pz, py, &p->Scr, &(p+1)->Scr, pa);
 	  p += 2;
@@ -560,8 +561,8 @@ for(int zz=0; zz<z; zz+=2)
 
     default:  // symbol (e.g. star) at each point **********************
       for(i=g->countY; i>0; i--) {  // every branch of curves
-        px = g->cPointsX.getFirst()->Points;
-        for(z=g->cPointsX.getFirst()->count; z>0; z--) {  // every point
+        px = g->axis(0)->Points;
+        for(z=g->axis(0)->count; z>0; z--) {  // every point
           calcCoordinate(px, pz, py, &p->Scr, &(p+1)->Scr, pa);
           if(insideDiagram(p->Scr, (p+1)->Scr))    // within diagram ?
             p += 2;
@@ -581,14 +582,14 @@ for(int zz=0; zz<60; zz+=2)
   for(i=g->countY; i>0; i--) {  // every branch of curves
     Flag = 1;
     dist = -Stroke;
-    px = g->cPointsX.getFirst()->Points;
+    px = g->axis(0)->Points;
     calcCoordinate(px, pz, py, &xtmp, &ytmp, pa);
     (p++)->Scr = xtmp;
     assert(p!=g->end());
     (p++)->Scr = ytmp;
     assert(p!=g->end());
     Counter = 1;
-    for(z=g->cPointsX.getFirst()->count-1; z>0; z--) {
+    for(z=g->axis(0)->count-1; z>0; z--) {
       dx = xtmp;
       dy = ytmp;
       calcCoordinate(px, pz, py, &xtmp, &ytmp, pa);
@@ -699,9 +700,11 @@ bool Diagram::resizeTouched(float fX, float fY, float len)
 // --------------------------------------------------------------------------
 void Diagram::getAxisLimits(Graph *pg)
 {
+  // FIXME: Graph should know the limits. but it doesn't yet.
+  //        we should only copy here. better: just wrap, dont use {x,y,z}Axis
   int z;
   double x, y, *p;
-  DataX *pD = pg->cPointsX.first();
+  DataX *pD = pg->axis(0);
   if(pD == 0) return;
 
   if(Name[0] != 'C') {   // not for location curves
@@ -716,7 +719,7 @@ void Diagram::getAxisLimits(Graph *pg)
   }
 
   if(Name == "Rect3D") {
-    DataX *pDy = pg->cPointsX.next();
+    DataX *pDy = pg->axis(1);
     if(pDy) {
       p = pDy->Points;
       for(z=pDy->count; z>0; z--) { // check y coordinates (2. dimension)
@@ -773,11 +776,10 @@ void Diagram::loadGraphData(const QString& defaultDataSet)
 
   int No=0;
   foreach(Graph *pg, Graphs) {
-    if(loadVarData(defaultDataSet, pg) != 1)   // load data, determine max/min values
+    qDebug() << "load GraphData load" << defaultDataSet;
+    if(pg->loadDatFile(defaultDataSet) != 1)   // load data, determine max/min values
       No++;
-    else
-      getAxisLimits(pg);
-    pg->lastLoaded = QDateTime::currentDateTime();
+    getAxisLimits(pg);
   }
 
   if(No <= 0) {   // All dataset files unchanged ?
@@ -861,8 +863,9 @@ void Diagram::updateGraphData()
 }
 
 // --------------------------------------------------------------------------
-int Diagram::loadVarData(const QString& fileName, Graph *g)
+int Graph::loadDatFile(const QString& fileName)
 {
+  Graph* g = this;
   QFile file;
   QString Variable;
   QFileInfo Info(fileName);
@@ -891,13 +894,15 @@ int Diagram::loadVarData(const QString& fileName, Graph *g)
       return 1;    // dataset unchanged -> no update neccessary
 
   g->countY = 0;
-  g->cPointsX.clear();
+  g->mutable_axes().clear(); // HACK
   if(g->cPointsY) { delete[] g->cPointsY;  g->cPointsY = 0; }
   if(Variable.isEmpty()) return 0;
 
+#if 0 // FIXME encapsulation. implement digital waves later.
   if(Variable.right(2) == ".X")
     if(Name.at(0) != 'T')
       return 0;  // digital variables only for tabulars and ziming diagram
+#endif
 
 
   if(!file.open(QIODevice::ReadOnly))  return 0;
@@ -946,13 +951,12 @@ int Diagram::loadVarData(const QString& fileName, Graph *g)
     pos = 0;
     tmp = Line.section(' ', pos, pos);
     while(!tmp.isEmpty()) {
-      g->cPointsX.append(new DataX(tmp));  // name of independet variable
+      g->mutable_axes().append(new DataX(tmp));  // name of independet variable
       pos++;
       tmp = Line.section(' ', pos, pos);
     }
   }
 
-  Axis *pa;
   // *****************************************************************
   // get independent variable ****************************************
   bool ok=true;
@@ -960,31 +964,39 @@ int Diagram::loadVarData(const QString& fileName, Graph *g)
   int counting = 0;
   if(isIndep) {    // create independent variable by myself ?
     counting = Line.toInt(&ok);  // get number of values
-    g->cPointsX.append(new DataX("number", 0, counting));
+    g->mutable_axes().append(new DataX("number", 0, counting));
     if(!ok)  return 0;
 
     p = new double[counting];  // memory of new independent variable
     g->countY = 1;
-    g->cPointsX.current()->Points = p;
+    g->mutable_axes().current()->Points = p;
     for(int z=1; z<=counting; z++)  *(p++) = double(z);
-    if(xAxis.min > 1.0)  xAxis.min = 1.0;
-    if(xAxis.max < double(counting))  xAxis.max = double(counting);
+    auto Axis = g->mutable_axes().current();
+    Axis->min(1.);
+    Axis->max(double(counting));
   }
   else {  // ...................................
     // get independent variables from data file
     g->countY = 1;
+#if 0 // FIXME: we do not have a Name.
     DataX *bLast = 0;
-    if(Name == "Rect3D")  bLast = g->cPointsX.at(1);  // y axis for Rect3D
+    if(Name == "Rect3D")  bLast = g->axis(1);  // y axis for Rect3D
+#endif
 
+#if 0 // FIXME: this is about diagram. do after load.
     double min_tmp = xAxis.min, max_tmp = xAxis.max;
-    for(DataX *pD = g->cPointsX.last(); pD!=0; pD = g->cPointsX.prev()) {
+#endif
+    DataX *pD;
+    for(int ii= g->numAxes(); (pD = g->axis(--ii)); ) {
+#if 0 // FIXME: this is about diagram. do after load.
       pa = &xAxis;
-      if(pD == g->cPointsX.getFirst()) {
+      if(pD == g->axis(0)) {
         xAxis.min = min_tmp;    // only count first independent variable
         xAxis.max = max_tmp;
       }
       else if(pD == bLast)  pa = &yAxis;   // y axis for Rect3D
-      counting = loadIndepVarData(pD->Var, FileString, pa, g);
+#endif
+      counting = loadIndepVarData(pD->Var, FileString);
       if(counting <= 0)  return 0;
 
       g->countY *= counting;
@@ -998,15 +1010,17 @@ int Diagram::loadVarData(const QString& fileName, Graph *g)
   counting  *= g->countY;
   p = new double[2*counting]; // memory for dependent variables
   g->cPointsY = p;
+#if 0 // FIXME: what does this do?!
   if(g->yAxisNo == 0)  pa = &yAxis;   // for which axis
   else  pa = &zAxis;
   (pa->numGraphs)++;    // count graphs
+#endif
 
   char *pEnd;
   double x, y;
   pPos = pFile;
 
-if(Variable.right(3) != ".X ")
+if(Variable.right(3) != ".X ") { // not "digital"
 
   for(int z=counting; z>0; z--) {
     pEnd = 0;
@@ -1028,13 +1042,19 @@ if(Variable.right(3) != ".X ")
     }
     *(p++) = x;
     *(p++) = y;
-    if(Name[0] != 'C') {
+#if 0 // FIXME there is no Name here.
+    if(Name[0] != 'C')
+#endif
+	 {
       if(fabs(y) >= 1e-250) x = sqrt(x*x+y*y);
       if(std::isfinite(x)) {
-        if(x > pa->max) pa->max = x;
-        if(x < pa->min) pa->min = x;
+			auto Axis = g->mutable_axes().current();
+			Axis->min(x);
+			Axis->max(x);
       }
     }
+
+#if 0 // this is not location curce code.
     else {   // location curve needs different treatment
       if(std::isfinite(x)) {
         if(x > xAxis.max) xAxis.max = x;
@@ -1045,10 +1065,10 @@ if(Variable.right(3) != ".X ")
         if(y < pa->min) pa->min = y;
       }
     }
+#endif
   }
 
-
-else {  // of "if not digital"
+} else {  // of "if not digital"
 
   char *pc = (char*)p;
   pEnd = pc + 2*(counting-1)*sizeof(double);
@@ -1077,15 +1097,17 @@ else {  // of "if not digital"
 
 }  // of "if not digital"
 
+  lastLoaded = QDateTime::currentDateTime();
   return 2;
 }
 
 /*!
    Reads the data of an independent variable. Returns the number of points.
 */
-int Diagram::loadIndepVarData(const QString& Variable,
-			      char *FileString, Axis *pa, Graph *pg)
+int Graph::loadIndepVarData(const QString& Variable,
+			      char *FileString)
 {
+  Graph* pg = this;
   bool isIndep = false;
   QString Line, tmp;
 
@@ -1136,7 +1158,7 @@ int Diagram::loadIndepVarData(const QString& Variable,
   if(!ok)  return -1;
 
   double *p = new double[n];     // memory for new independent variable
-  DataX *pD = pg->cPointsX.current();
+  DataX *pD = pg->mutable_axes().current();
   pD->Points = p;
   pD->count  = n;
 
@@ -1155,11 +1177,13 @@ int Diagram::loadIndepVarData(const QString& Variable,
     }
     
     *(p++) = x;
+#if 0 // this is not location curve code
     if(Name[0] != 'C')   // not for location curves
       if(std::isfinite(x)) {
         if(x > pa->max) pa->max = x;
         if(x < pa->min) pa->min = x;
       }
+#endif
     
     pPos = pEnd;
     while((*pPos) && (*pPos <= ' '))  pPos++;  // find start of next number
@@ -1173,14 +1197,16 @@ int Diagram::loadIndepVarData(const QString& Variable,
 */
 bool Diagram::sameDependencies(Graph *g1, Graph *g2)
 {
+  // FIXME
+  // return g1>same(*g2);
   if(g1 == g2)  return true;
 
-  DataX *g1Data = g1->cPointsX.first();
-  DataX *g2Data = g2->cPointsX.first();
+  DataX *g1Data = g1->mutable_axes().first();
+  DataX *g2Data = g2->mutable_axes().first();
   while(g1Data && g2Data) {
     if(g1Data->Var != g2Data->Var)  return false;
-    g1Data = g1->cPointsX.next();
-    g2Data = g2->cPointsX.next();
+    g1Data = g1->mutable_axes().next();
+    g2Data = g2->mutable_axes().next();
   }
 
   if(g1Data)  return false;  // Is there more data ?
