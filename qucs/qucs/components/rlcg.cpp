@@ -57,17 +57,17 @@ RLCG::RLCG()
   Name  = "Line";
 
   Props.append(new Property("R", "0.0", false,
-		QObject::tr("resistive load")+" ("+QObject::tr ("Ohm/m")+")"));
+		QObject::tr("Resistive load")+" ("+QObject::tr ("Ohm/m")+")"));
   Props.append(new Property("L", "0.6e-6", true,
-		QObject::tr("inductive load")+" ("+QObject::tr ("H/m")+")"));
+		QObject::tr("Inductive load")+" ("+QObject::tr ("H/m")+")"));
   Props.append(new Property("C", "240e-12", true,
-		QObject::tr("capacitive load")+" ("+QObject::tr ("F/m")+")"));
+		QObject::tr("Capacitive load")+" ("+QObject::tr ("F/m")+")"));
   Props.append(new Property("G", "0.0", false,
-		QObject::tr("conductive load")+" ("+QObject::tr ("S/m")+")"));
+		QObject::tr("Conductive load")+" ("+QObject::tr ("S/m")+")"));
   Props.append(new Property("Length", "1 mm", true,
-		QObject::tr("electrical length of the line")));
+		QObject::tr("Electrical length of the line")));
   Props.append(new Property("Temp", "26.85", false,
-		QObject::tr("simulation temperature in degree Celsius")));
+		QObject::tr("Simulation temperature in degrees Celsius")));
 }
 
 RLCG::~RLCG()

@@ -21,7 +21,7 @@
 
 MSvia::MSvia()
 {
-  Description = QObject::tr("microstrip via");
+  Description = QObject::tr("Microstrip via");
 
   Arcs.append(new Arc(-5,-4, 10,  7,  0, 16*360,QPen(Qt::darkBlue,2)));
   Lines.append(new Line(-20,  0, -5,  0,QPen(Qt::darkBlue,2)));
@@ -42,11 +42,11 @@ MSvia::MSvia()
   Name  = "MS";
 
   Props.append(new Property("Subst", "Subst1", true,
-		QObject::tr("substrate")));
+		QObject::tr("Substrate")));
   Props.append(new Property("D", "1 mm", true,
-		QObject::tr("diameter of round via conductor")));
+		QObject::tr("Diameter of round via conductor")));
   Props.append(new Property("Temp", "26.85", false,
-	QObject::tr("simulation temperature in degree Celsius")));
+	QObject::tr("Simulation temperature in degrees Celsius")));
 }
 
 MSvia::~MSvia()

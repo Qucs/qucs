@@ -589,7 +589,7 @@ Component * bsim4v30nMOS::newOne()
 
 Element * bsim4v30nMOS::info(QString& Name, char * &BitmapFile, bool getNewOne)
 {
-  Name = QObject::tr("bsim4v30nMOS");
+  Name = QObject::tr("Bsim4v30nMOS");
   BitmapFile = (char *) "bsim4v30nMOS";
 
   if(getNewOne) return new bsim4v30nMOS();

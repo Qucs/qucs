@@ -20,14 +20,14 @@
 
 Capacitor::Capacitor()
 {
-  Description = QObject::tr("capacitor");
+  Description = QObject::tr("Capacitor");
 
   Props.append(new Property("C", "1 pF", true,
-		QObject::tr("capacitance in Farad")));
+		QObject::tr("Capacitance in farads")));
   Props.append(new Property("V", "", false,
-		QObject::tr("initial voltage for transient simulation")));
+		QObject::tr("Initial voltage for transient simulation")));
   Props.append(new Property("Symbol", "neutral", false,
-	QObject::tr("schematic symbol")+" [neutral, polar]"));
+	QObject::tr("Schematic symbol")+" [neutral, polar]"));
 
   createSymbol();
   tx = x1+4;

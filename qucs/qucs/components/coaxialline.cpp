@@ -20,7 +20,7 @@
 
 CoaxialLine::CoaxialLine()
 {
-  Description = QObject::tr("coaxial transmission line");
+  Description = QObject::tr("Coaxial transmission line");
 
   Arcs.append(new Arc(-20, -9, 8, 18,     0, 16*360,QPen(Qt::darkBlue,2)));
   Arcs.append(new Arc( 11, -9, 8, 18,16*270, 16*180,QPen(Qt::darkBlue,2)));
@@ -42,21 +42,21 @@ CoaxialLine::CoaxialLine()
   Name  = "Line";
 
   Props.append(new Property("er", "2.29", true,
-		QObject::tr("relative permittivity of dielectric")));
+		QObject::tr("Relative permittivity of the dielectric")));
   Props.append(new Property("rho", "0.022e-6", false,
-		QObject::tr("specific resistance of conductor")));
+		QObject::tr("Specific resistance of the conductor")));
   Props.append(new Property("mur", "1", false,
-		QObject::tr("relative permeability of conductor")));
+		QObject::tr("Relative permeability of the conductor")));
   Props.append(new Property("D", "2.95 mm", false,
-		QObject::tr("inner diameter of shield")));
+		QObject::tr("Inner diameter of the shield")));
   Props.append(new Property("d", "0.9 mm", false,
-		QObject::tr("diameter of inner conductor")));
+		QObject::tr("Diameter of the inner conductor")));
   Props.append(new Property("L", "1500 mm", true,
-		QObject::tr("mechanical length of the line")));
+		QObject::tr("Mechanical length of the line")));
   Props.append(new Property("tand", "4e-4", false,
-		QObject::tr("loss tangent")));
+		QObject::tr("Loss tangent")));
   Props.append(new Property("Temp", "26.85", false,
-		QObject::tr("simulation temperature in degree Celsius")));
+		QObject::tr("Simulation temperature in degrees Celsius")));
 }
 
 CoaxialLine::~CoaxialLine()

@@ -20,7 +20,7 @@
 
 iProbe::iProbe()
 {
-  Description = QObject::tr("current probe");
+  Description = QObject::tr("Current probe");
 
   Lines.append(new Line(-30,  0,-20,  0,QPen(Qt::darkBlue,2)));
   Lines.append(new Line( 30,  0, 20,  0,QPen(Qt::darkBlue,2)));

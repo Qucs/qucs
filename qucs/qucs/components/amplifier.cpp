@@ -20,7 +20,7 @@
 
 Amplifier::Amplifier()
 {
-  Description = QObject::tr("ideal amplifier");
+  Description = QObject::tr("Ideal amplifier");
 
   Lines.append(new Line(-16,-20,-16, 20,QPen(Qt::darkBlue,2)));
   Lines.append(new Line(-16,-20, 16,  0,QPen(Qt::darkBlue,2)));
@@ -41,13 +41,13 @@ Amplifier::Amplifier()
   Name  = "X";
 
   Props.append(new Property("G", "10", true,
-		QObject::tr("voltage gain")));
+		QObject::tr("Voltage gain")));
   Props.append(new Property("Z1", "50 Ohm", false,
-		QObject::tr("reference impedance of input port")));
+		QObject::tr("Reference impedance of input port")));
   Props.append(new Property("Z2", "50 Ohm", false,
-		QObject::tr("reference impedance of output port")));
+		QObject::tr("Reference impedance of output port")));
   Props.append(new Property("NF", "0 dB", false,
-		QObject::tr("noise figure")));
+		QObject::tr("Noise figure")));
 }
 
 Amplifier::~Amplifier()

@@ -20,7 +20,7 @@
 
 Volt_ac::Volt_ac()
 {
-  Description = QObject::tr("ideal ac voltage source");
+  Description = QObject::tr("Ideal AC voltage source");
 
   Arcs.append(new Arc(-12,-12, 24, 24,     0, 16*360,QPen(Qt::darkBlue,2)));
   Arcs.append(new Arc( -3, -7,  7,  7,16*270, 16*180,QPen(Qt::darkBlue,2)));
@@ -43,13 +43,13 @@ Volt_ac::Volt_ac()
   Name  = "V";
 
   Props.append(new Property("U", "1 V", true,
-		QObject::tr("peak voltage in Volts")));
+		QObject::tr("Peak voltage in volts")));
   Props.append(new Property("f", "1 GHz", false,
-		QObject::tr("frequency in Hertz")));
+		QObject::tr("Frequency in hertz")));
   Props.append(new Property("Phase", "0", false,
-		QObject::tr("initial phase in degrees")));
+		QObject::tr("Initial phase in degrees")));
   Props.append(new Property("Theta", "0", false,
-		QObject::tr("damping factor (transient simulation only)")));
+		QObject::tr("Damping factor (transient simulation only)")));
 
   rotate();  // fix historical flaw
 }
@@ -65,7 +65,7 @@ Component* Volt_ac::newOne()
 
 Element* Volt_ac::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
-  Name = QObject::tr("ac Voltage Source");
+  Name = QObject::tr("AC Voltage Source");
   BitmapFile = (char *) "ac_voltage";
 
   if(getNewOne)  return new Volt_ac();

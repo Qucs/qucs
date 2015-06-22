@@ -19,7 +19,7 @@
 
 Logical_XOR::Logical_XOR()
 {
-  Description = QObject::tr("logical XOR");
+  Description = QObject::tr("Logical XOR");
   Model = "XOR";
 
   createSymbol();
@@ -42,7 +42,7 @@ Component* Logical_XOR::newOne()
 
 Element* Logical_XOR::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
-  Name = QObject::tr("n-port XOR");
+  Name = QObject::tr("N-port XOR");
   BitmapFile = (char *) "xor";
 
   if(getNewOne)  return new Logical_XOR();

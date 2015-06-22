@@ -20,57 +20,57 @@
 
 JFET::JFET()
 {
-  Description = QObject::tr("junction field-effect transistor");
+  Description = QObject::tr("Junction field-effect transistor");
 
   // this must be the first property in the list !!!
   Props.append(new Property("Type", "nfet", true,
-	QObject::tr("polarity")+" [nfet, pfet]"));
+	QObject::tr("Polarity")+" [nfet, pfet]"));
   Props.append(new Property("Vt0", "-2.0 V", true,
-	QObject::tr("threshold voltage")));
+	QObject::tr("Threshold voltage")));
   Props.append(new Property("Beta", "1e-4", true,
-	QObject::tr("transconductance parameter")));
+	QObject::tr("Transconductance parameter")));
   Props.append(new Property("Lambda", "0.0", true,
-	QObject::tr("channel-length modulation parameter")));
+	QObject::tr("Channel-length modulation parameter")));
   Props.append(new Property("Rd", "0.0", false,
-	QObject::tr("parasitic drain resistance")));
+	QObject::tr("Parasitic drain resistance")));
   Props.append(new Property("Rs", "0.0", false,
-	QObject::tr("parasitic source resistance")));
+	QObject::tr("Parasitic source resistance")));
   Props.append(new Property("Is", "1e-14", false,
-	QObject::tr("gate-junction saturation current")));
+	QObject::tr("Gate-junction saturation current")));
   Props.append(new Property("N", "1.0", false,
-	QObject::tr("gate-junction emission coefficient")));
+	QObject::tr("Gate-junction emission coefficient")));
   Props.append(new Property("Isr", "1e-14", false,
-	QObject::tr("gate-junction recombination current parameter")));
+	QObject::tr("Gate-junction recombination current parameter")));
   Props.append(new Property("Nr", "2.0", false,
 	QObject::tr("Isr emission coefficient")));
   Props.append(new Property("Cgs", "0.0", false,
-	QObject::tr("zero-bias gate-source junction capacitance")));
+	QObject::tr("Zero-bias gate-source junction capacitance")));
   Props.append(new Property("Cgd", "0.0", false,
-	QObject::tr("zero-bias gate-drain junction capacitance")));
+	QObject::tr("Zero-bias gate-drain junction capacitance")));
   Props.append(new Property("Pb", "1.0", false,
-	QObject::tr("gate-junction potential")));
+	QObject::tr("Gate-junction potential")));
   Props.append(new Property("Fc", "0.5", false,
-	QObject::tr("forward-bias junction capacitance coefficient")));
+	QObject::tr("Forward-bias junction capacitance coefficient")));
   Props.append(new Property("M", "0.5", false,
-	QObject::tr("gate P-N grading coefficient")));
+	QObject::tr("Gate P-N grading coefficient")));
   Props.append(new Property("Kf", "0.0", false,
-	QObject::tr("flicker noise coefficient")));
+	QObject::tr("Flicker noise coefficient")));
   Props.append(new Property("Af", "1.0", false,
-	QObject::tr("flicker noise exponent")));
+	QObject::tr("Flicker noise exponent")));
   Props.append(new Property("Ffe", "1.0", false,
-	QObject::tr("flicker noise frequency exponent")));
+	QObject::tr("Flicker noise frequency exponent")));
   Props.append(new Property("Temp", "26.85", false,
-	QObject::tr("simulation temperature in degree Celsius")));
+	QObject::tr("Simulation temperature in degrees Celsius")));
   Props.append(new Property("Xti", "3.0", false,
-	QObject::tr("saturation current temperature exponent")));
+	QObject::tr("Saturation current temperature exponent")));
   Props.append(new Property("Vt0tc", "0.0", false,
 	QObject::tr("Vt0 temperature coefficient")));
   Props.append(new Property("Betatce", "0.0", false,
 	QObject::tr("Beta exponential temperature coefficient")));
   Props.append(new Property("Tnom", "26.85", false,
-	QObject::tr("temperature at which parameters were extracted")));
+	QObject::tr("Temperature at which parameters were extracted")));
   Props.append(new Property("Area", "1.0", false,
-	QObject::tr("default area for JFET")));
+	QObject::tr("Default area for JFET")));
 
   createSymbol();
   tx = x2+4;
@@ -91,7 +91,7 @@ Component* JFET::newOne()
 // -------------------------------------------------------
 Element* JFET::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
-  Name = QObject::tr("n-JFET");
+  Name = QObject::tr("N-JFET");
   BitmapFile = (char *) "nfet";
 
   if(getNewOne)  return new JFET();
@@ -101,7 +101,7 @@ Element* JFET::info(QString& Name, char* &BitmapFile, bool getNewOne)
 // -------------------------------------------------------
 Element* JFET::info_p(QString& Name, char* &BitmapFile, bool getNewOne)
 {
-  Name = QObject::tr("p-JFET");
+  Name = QObject::tr("P-JFET");
   BitmapFile = (char *) "pfet";
 
   if(getNewOne) {

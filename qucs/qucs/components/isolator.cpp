@@ -20,7 +20,7 @@
 
 Isolator::Isolator()
 {
-  Description = QObject::tr("isolator");
+  Description = QObject::tr("Isolator");
 
   Lines.append(new Line( -8,  0,  8,  0,QPen(Qt::darkBlue,3)));
   Lines.append(new Line(  8,  0,  0, -5,QPen(Qt::darkBlue,3)));
@@ -46,11 +46,11 @@ Isolator::Isolator()
   Name  = "X";
 
   Props.append(new Property("Z1", "50 Ohm", false,
-		QObject::tr("reference impedance of input port")));
+		QObject::tr("Reference impedance of input port")));
   Props.append(new Property("Z2", "50 Ohm", false,
-		QObject::tr("reference impedance of output port")));
+		QObject::tr("Reference impedance of output port")));
   Props.append(new Property("Temp", "26.85", false,
-		QObject::tr("simulation temperature in degree Celsius")));
+		QObject::tr("Simulation temperature in degrees Celsius")));
 }
 
 Isolator::~Isolator()

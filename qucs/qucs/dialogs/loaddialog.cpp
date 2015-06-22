@@ -100,7 +100,7 @@ void LoadDialog::initDialog()
    ButtCancel = new QPushButton(tr("Cancel"));
    gridButts->addWidget(ButtCancel, 1, 0);
    connect(ButtCancel, SIGNAL(clicked()), SLOT(reject()));
-   ButtOk = new QPushButton(tr("Ok"));
+   ButtOk = new QPushButton(tr("OK"));
    gridButts->addWidget(ButtOk, 1, 1);
    connect(ButtOk, SIGNAL(clicked()), SLOT(loadSelected()));
    ButtOk->setDefault(true);
@@ -133,7 +133,7 @@ void LoadDialog::initDialog()
    iconLayout->addWidget(group3);
 
    //
-   QCheckBox *autoLoadSelCheck = new QCheckBox(tr("auto-load selected"));
+   QCheckBox *autoLoadSelCheck = new QCheckBox(tr("Auto-load selected"));
    autoLoadSelCheck->setToolTip(
                tr("Load the selected symbols when opening the project."));
 
@@ -142,7 +142,7 @@ void LoadDialog::initDialog()
    group3Layout->addWidget(autoLoadSelCheck);
 
    /*
-   QCheckBox *autoLoadAllwaysCheck = new QCheckBox(tr("auto-load all"));
+   QCheckBox *autoLoadAllwaysCheck = new QCheckBox(tr("Auto-load all"));
    autoLoadAllwaysCheck->setToolTip(
                tr("Load all symbols."));
    group3Layout->addWidget(autoLoadAllwaysCheck);

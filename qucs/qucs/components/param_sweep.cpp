@@ -40,17 +40,17 @@ Param_Sweep::Param_Sweep()
 
   // The index of the first 6 properties must not changed. Used in recreate().
   Props.append(new Property("Sim", "", true,
-		QObject::tr("simulation to perform parameter sweep on")));
+		QObject::tr("Simulation to perform parameter sweep on")));
   Props.append(new Property("Type", "lin", true,
-		QObject::tr("sweep type")+" [lin, log, list, const]"));
+		QObject::tr("Sweep type")+" [lin, log, list, const]"));
   Props.append(new Property("Param", "R1", true,
-		QObject::tr("parameter to sweep")));
+		QObject::tr("Parameter to sweep")));
   Props.append(new Property("Start", "5 Ohm", true,
-		QObject::tr("start value for sweep")));
+		QObject::tr("Start value for sweep")));
   Props.append(new Property("Stop", "50 Ohm", true,
-		QObject::tr("stop value for sweep")));
+		QObject::tr("Stop value for sweep")));
   Props.append(new Property("Points", "20", true,
-		QObject::tr("number of simulation steps")));
+		QObject::tr("Number of simulation steps")));
 }
 
 Param_Sweep::~Param_Sweep()

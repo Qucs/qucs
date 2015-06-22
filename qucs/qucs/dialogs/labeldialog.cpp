@@ -57,7 +57,7 @@ LabelDialog::LabelDialog(WireLabel *pl, QWidget *parent)
 
   ButtonMore = new QPushButton(tr("Less..."));
   gbox->addWidget(ButtonMore,3,0);
-  ButtonOk = new QPushButton(tr("Ok"));
+  ButtonOk = new QPushButton(tr("OK"));
   gbox->addWidget(ButtonOk,3,1);
   ButtonCancel = new QPushButton(tr("Cancel"));
   gbox->addWidget(ButtonCancel,3,2);

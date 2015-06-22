@@ -19,7 +19,7 @@
 
 MSrstub::MSrstub()
 {
-  Description = QObject::tr("microstrip radial stub");
+  Description = QObject::tr("Microstrip radial stub");
 
   Arcs.append(new Arc( -26, -26, 52, 52,16*45, 16*90,QPen(Qt::darkBlue,2)));
 
@@ -39,13 +39,13 @@ MSrstub::MSrstub()
   Name  = "MS";
 
   Props.append(new Property("Subst", "Subst1", true,
-	QObject::tr("name of substrate definition")));
+	QObject::tr("Name of substrate definition")));
   Props.append(new Property("ri", "1 mm", false,
-	QObject::tr("inner radius")));
+	QObject::tr("Inner radius")));
   Props.append(new Property("ro", "10 mm", true,
-	QObject::tr("outer radius")));
+	QObject::tr("Outer radius")));
   Props.append(new Property("alpha", "90", true,
-	QObject::tr("stub angle")+" ("+QObject::tr ("degrees")+")"));
+	QObject::tr("Stub angle")+" ("+QObject::tr ("degrees")+")"));
 }
 
 MSrstub::~MSrstub()

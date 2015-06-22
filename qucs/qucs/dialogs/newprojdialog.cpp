@@ -36,7 +36,7 @@ NewProjDialog::NewProjDialog(QWidget *parent, const char *name)
   ProjName = new QLineEdit(this);
   ProjName->setMinimumWidth(250);
   gbox->addMultiCellWidget(ProjName,0,0,1,2);
-  OpenProj = new QCheckBox(tr("open new project"));
+  OpenProj = new QCheckBox(tr("Open new project"));
   OpenProj->setChecked(true);
   gbox->addMultiCellWidget(OpenProj,1,1,1,2);
 

@@ -23,7 +23,7 @@ RS_FlipFlop::RS_FlipFlop()
   Type = isDigitalComponent;
   Description = QObject::tr("RS flip flop");
 
-  Props.append(new Property("t", "0", false, QObject::tr("delay time")));
+  Props.append(new Property("t", "0", false, QObject::tr("Delay time")));
 
   Lines.append(new Line(-20,-20, 20,-20,QPen(Qt::darkBlue,2)));
   Lines.append(new Line(-20, 20, 20, 20,QPen(Qt::darkBlue,2)));

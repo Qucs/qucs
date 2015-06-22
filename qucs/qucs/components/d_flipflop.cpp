@@ -23,7 +23,7 @@ D_FlipFlop::D_FlipFlop()
   Type = isDigitalComponent;
   Description = QObject::tr("D flip flop with asynchron reset");
 
-  Props.append(new Property("t", "0", false, QObject::tr("delay time")));
+  Props.append(new Property("t", "0", false, QObject::tr("Delay time")));
 
   Lines.append(new Line(-20,-20, 20,-20,QPen(Qt::darkBlue,2)));
   Lines.append(new Line(-20, 20, 20, 20,QPen(Qt::darkBlue,2)));

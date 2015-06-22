@@ -19,7 +19,7 @@
 
 Logical_NOR::Logical_NOR()
 {
-  Description = QObject::tr("logical NOR");
+  Description = QObject::tr("Logical NOR");
   Model = "NOR";
 
   createSymbol();
@@ -42,7 +42,7 @@ Component* Logical_NOR::newOne()
 
 Element* Logical_NOR::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
-  Name = QObject::tr("n-port NOR");
+  Name = QObject::tr("N-port NOR");
   BitmapFile = (char *) "nor";
 
   if(getNewOne)  return new Logical_NOR();

@@ -20,7 +20,7 @@
 
 iPulse::iPulse()
 {
-  Description = QObject::tr("ideal current pulse source");
+  Description = QObject::tr("Ideal current pulse source");
 
   Arcs.append(new Arc(-12,-12, 24, 24,  0, 16*360,QPen(Qt::darkBlue,2)));
   Lines.append(new Line(-30,  0,-12,  0,QPen(Qt::darkBlue,2)));
@@ -48,17 +48,17 @@ iPulse::iPulse()
   Name  = "I";
 
   Props.append(new Property("I1", "0", true,
-		QObject::tr("current before and after the pulse")));
+		QObject::tr("Current before and after the pulse")));
   Props.append(new Property("I2", "1 A", true,
-		QObject::tr("current of the pulse")));
+		QObject::tr("Current of the pulse")));
   Props.append(new Property("T1", "0", true,
-		QObject::tr("start time of the pulse")));
+		QObject::tr("Start time of the pulse")));
   Props.append(new Property("T2", "1 ms", true,
-		QObject::tr("ending time of the pulse")));
+		QObject::tr("End time of the pulse")));
   Props.append(new Property("Tr", "1 ns", false,
-		QObject::tr("rise time of the leading edge")));
+		QObject::tr("Rise time of the leading edge")));
   Props.append(new Property("Tf", "1 ns", false,
-		QObject::tr("fall time of the trailing edge")));
+		QObject::tr("Fall time of the trailing edge")));
 
   rotate();  // fix historical flaw
 }

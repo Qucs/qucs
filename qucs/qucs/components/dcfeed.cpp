@@ -20,7 +20,7 @@
 
 dcFeed::dcFeed()
 {
-  Description = QObject::tr("dc feed");
+  Description = QObject::tr("DC feed");
 
   Arcs.append(new Arc(-17, -6, 12, 12,  0, 16*180,QPen(Qt::darkBlue,2)));
   Arcs.append(new Arc( -6, -6, 12, 12,  0, 16*180,QPen(Qt::darkBlue,2)));
@@ -45,7 +45,7 @@ dcFeed::dcFeed()
   Name  = "L";
 
   Props.append(new Property("L", "1 uH", false,
-	QObject::tr("for transient simulation: inductance in Henry")));
+	QObject::tr("For transient simulation: inductance in henries")));
 }
 
 dcFeed::~dcFeed()
@@ -59,7 +59,7 @@ Component* dcFeed::newOne()
 
 Element* dcFeed::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
-  Name = QObject::tr("dc Feed");
+  Name = QObject::tr("Dc Feed");
   BitmapFile = (char *) "dcfeed";
 
   if(getNewOne)  return new dcFeed();

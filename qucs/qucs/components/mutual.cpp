@@ -20,7 +20,7 @@
 
 Mutual::Mutual()
 {
-  Description = QObject::tr("two mutual inductors");
+  Description = QObject::tr("Two mutual inductors");
 
   Arcs.append(new Arc(-16,-18,12,12, 16*270,16*180, QPen(Qt::darkBlue,2)));
   Arcs.append(new Arc(-16, -6,12,12, 16*270,16*180, QPen(Qt::darkBlue,2)));
@@ -55,11 +55,11 @@ Mutual::Mutual()
   Name  = "Tr";
 
   Props.append(new Property("L1", "1 mH", false,
-		QObject::tr("inductance of coil 1")));
+		QObject::tr("Inductance of coil 1")));
   Props.append(new Property("L2", "1 mH", false,
-		QObject::tr("inductance of coil 2")));
+		QObject::tr("Inductance of coil 2")));
   Props.append(new Property("k", "0.9", false,
-		QObject::tr("coupling factor between coil 1 and 2")));
+		QObject::tr("Coupling factor between coil 1 and 2")));
 }
 
 Mutual::~Mutual()

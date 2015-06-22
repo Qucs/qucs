@@ -18,7 +18,7 @@
 
 ecvs::ecvs()
 {
-  Description = QObject::tr("externally controlled voltage source");
+  Description = QObject::tr("Externally controlled voltage source");
 
 
 //  Arcs.append(new Arc( -3, -7,  7,  7,16*270, 16*180,QPen(Qt::darkBlue,2)));
@@ -63,9 +63,9 @@ ecvs::ecvs()
   Name  = "ECVS";
 
   Props.append(new Property("U", "0 V", true,
-		QObject::tr("voltage in Volts")));
+		QObject::tr("Voltage in volts")));
 //  Props.append(new Property("Interpolator", "linear", false,
-//		QObject::tr("interpolation type")+" [hold, linear, cubic]"));
+//		QObject::tr("Interpolation type")+" [hold, linear, cubic]"));
 
   rotate();  // fix historical flaw
 }

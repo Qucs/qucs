@@ -20,7 +20,7 @@
 
 Attenuator::Attenuator()
 {
-  Description = QObject::tr("attenuator");
+  Description = QObject::tr("Attenuator");
 
   Lines.append(new Line( -4, -6, -4,  6,QPen(Qt::darkBlue,2)));
   Lines.append(new Line( -4, -6,  4, -6,QPen(Qt::darkBlue,2)));
@@ -49,11 +49,11 @@ Attenuator::Attenuator()
   Name  = "X";
 
   Props.append(new Property("L", "10 dB", true,
-		QObject::tr("power attenuation")));
+		QObject::tr("Power attenuation")));
   Props.append(new Property("Zref", "50 Ohm", false,
-		QObject::tr("reference impedance")));
+		QObject::tr("Reference impedance")));
   Props.append(new Property("Temp", "26.85", false,
-		QObject::tr("simulation temperature in degree Celsius")));
+		QObject::tr("Simulation temperature in degrees Celsius")));
 }
 
 Attenuator::~Attenuator()

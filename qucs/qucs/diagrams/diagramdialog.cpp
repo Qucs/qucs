@@ -123,26 +123,26 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
 
   QString NameY, NameZ;
   if((Diag->Name == "Rect") || (Diag->Name == "Curve")) {
-    NameY = tr("left Axis");
-    NameZ = tr("right Axis");
+    NameY = tr("Left Axis");
+    NameZ = tr("Right Axis");
   }
   else if(Diag->Name == "Polar") {
-    NameY = tr("y-Axis");
+    NameY = tr("Y-Axis");
   }
   else if((Diag->Name == "Smith") || (Diag->Name == "ySmith")) {
-    NameY = tr("y-Axis");
+    NameY = tr("Y-Axis");
   }
   else if(Diag->Name == "PS") {
-    NameY = tr("smith Axis");
-    NameZ = tr("polar Axis");
+    NameY = tr("Smith Axis");
+    NameZ = tr("Polar Axis");
   }
   else if(Diag->Name == "SP") {
-    NameY = tr("polar Axis");
-    NameZ = tr("smith Axis");
+    NameY = tr("Polar Axis");
+    NameZ = tr("Smith Axis");
   }
   else if(Diag->Name == "Rect3D") {
-    NameY = tr("y-Axis");
-    NameZ = tr("z-Axis");
+    NameY = tr("Y-Axis");
+    NameZ = tr("Z-Axis");
   }
 
   
@@ -183,9 +183,9 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
     Box2Layout->addWidget(Label1);
     PropertyBox = new QComboBox();
     Box2Layout->addWidget(PropertyBox);
-    PropertyBox->insertItem(tr("real/imaginary"));
-    PropertyBox->insertItem(tr("magnitude/angle (degree)"));
-    PropertyBox->insertItem(tr("magnitude/angle (radian)"));
+    PropertyBox->insertItem(tr("Real/imaginary"));
+    PropertyBox->insertItem(tr("Magnitude/angle (degrees)"));
+    PropertyBox->insertItem(tr("Magnitude/angle (radians)"));
     PropertyBox->setCurrentItem(1);
     connect(PropertyBox, SIGNAL(activated(int)), SLOT(slotSetNumMode(int)));
     Box2Layout->setStretchFactor(new QWidget(Box2), 5); // stretchable placeholder
@@ -214,14 +214,14 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
     Label3->setEnabled(false);
     PropertyBox = new QComboBox();
     Box2Layout->addWidget(PropertyBox);
-    PropertyBox->insertItem(tr("solid line"));
-    PropertyBox->insertItem(tr("dash line"));
-    PropertyBox->insertItem(tr("dot line"));
+    PropertyBox->insertItem(tr("Solid line"));
+    PropertyBox->insertItem(tr("Dash line"));
+    PropertyBox->insertItem(tr("Dot line"));
     if(Diag->Name != "Time") {
-      PropertyBox->insertItem(tr("long dash line"));
-      PropertyBox->insertItem(tr("stars"));
-      PropertyBox->insertItem(tr("circles"));
-      PropertyBox->insertItem(tr("arrows"));
+      PropertyBox->insertItem(tr("Long dash line"));
+      PropertyBox->insertItem(tr("Stars"));
+      PropertyBox->insertItem(tr("Circles"));
+      PropertyBox->insertItem(tr("Arrows"));
     }
     connect(PropertyBox, SIGNAL(activated(int)),
 			 SLOT(slotSetGraphStyle(int)));
@@ -237,7 +237,7 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
     Property2->setText("0");
 
     if((Diag->Name=="Rect") || (Diag->Name=="PS") || (Diag->Name=="SP") || (Diag->Name=="Curve")) {
-      Label4 = new QLabel(tr("y-Axis:"));
+      Label4 = new QLabel(tr("Y-Axis:"));
       Box2Layout->addWidget(Label4);
       Label4->setEnabled(false);
       yAxisBox = new QComboBox();
@@ -322,7 +322,7 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
     QWidget *Tab2 = new QWidget(t);
     QGridLayout *gp = new QGridLayout(Tab2,13,3,5,5);
 
-    gp->addMultiCellWidget(new QLabel(tr("x-Axis Label:"), Tab2), Row,Row,0,0);
+    gp->addMultiCellWidget(new QLabel(tr("X-Axis Label:"), Tab2), Row,Row,0,0);
     xLabel = new QLineEdit(Tab2);
     xLabel->setValidator(Validator);
     gp->addMultiCellWidget(xLabel, Row,Row,1,2);
@@ -350,7 +350,7 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
     Row++;
 
     if(Diag->Name != "Rect3D") {
-      GridOn = new QCheckBox(tr("show Grid"), Tab2);
+      GridOn = new QCheckBox(tr("Show Grid"), Tab2);
       gp->addMultiCellWidget(GridOn, Row,Row,0,2);
       Row++;
 
@@ -365,11 +365,11 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
       GridLabel2 = new QLabel(tr("Grid Style: "), Tab2);
       gp->addMultiCellWidget(GridLabel2, Row,Row,0,0);
       GridStyleBox = new QComboBox(Tab2);
-      GridStyleBox->insertItem(tr("solid line"));
-      GridStyleBox->insertItem(tr("dash line"));
-      GridStyleBox->insertItem(tr("dot line"));
-      GridStyleBox->insertItem(tr("dash dot line"));
-      GridStyleBox->insertItem(tr("dash dot dot line"));
+      GridStyleBox->insertItem(tr("Solid line"));
+      GridStyleBox->insertItem(tr("Dash line"));
+      GridStyleBox->insertItem(tr("Dot line"));
+      GridStyleBox->insertItem(tr("Dash dot line"));
+      GridStyleBox->insertItem(tr("Dash dot dot line"));
       gp->addMultiCellWidget(GridStyleBox, Row,Row,1,2);
       Row++;
       GridStyleBox->setCurrentItem(Diag->GridPen.style()-1);
@@ -390,15 +390,15 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
     if(yrLabel)  yrLabel->setText(Diag->zAxis.Label);
 
     if((Diag->Name.left(4) == "Rect") || (Diag->Name == "Curve")) {
-      GridLogX = new QCheckBox(tr("logarithmical X Axis Grid"), Tab2);
+      GridLogX = new QCheckBox(tr("Logarithmical X Axis Grid"), Tab2);
       gp->addMultiCellWidget(GridLogX, Row,Row,0,2);
       Row++;
 
-      GridLogY = new QCheckBox(tr("logarithmical")+" "+NameY+" "+tr("Grid"), Tab2);
+      GridLogY = new QCheckBox(tr("Logarithmical")+" "+NameY+" "+tr("Grid"), Tab2);
       gp->addMultiCellWidget(GridLogY, Row,Row,0,2);
       Row++;
 
-      GridLogZ = new QCheckBox(tr("logarithmical")+" "+NameZ+" "+tr("Grid"), Tab2);
+      GridLogZ = new QCheckBox(tr("Logarithmical")+" "+NameZ+" "+tr("Grid"), Tab2);
       gp->addMultiCellWidget(GridLogZ, Row,Row,0,2);
       Row++;
 
@@ -410,7 +410,7 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
 
 
       if(Diag->Name == "Rect3D") {
-        hideInvisible = new QCheckBox(tr("hide invisible lines"), Tab2);
+        hideInvisible = new QCheckBox(tr("Hide invisible lines"), Tab2);
         gp->addMultiCellWidget(hideInvisible, Row,Row,0,2);
         Row++;
 
@@ -484,14 +484,14 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
     QWidget *Tab3 = new QWidget();
     QVBoxLayout *Tab3Layout = new QVBoxLayout();
 
-    QGroupBox *axisX = new QGroupBox(tr("x-Axis"));
+    QGroupBox *axisX = new QGroupBox(tr("X-Axis"));
     QHBoxLayout *axisXLayout = new QHBoxLayout();
 
     QWidget *VBox1 = new QWidget();
     axisXLayout->addWidget(VBox1);
     QVBoxLayout *VBox1Layout = new QVBoxLayout();
     VBox1Layout->addStretch();
-    manualX = new QCheckBox(tr("manual"));//, VBox1);
+    manualX = new QCheckBox(tr("Manual"));//, VBox1);
     VBox1Layout->addWidget(manualX);
     VBox1->setLayout(VBox1Layout);
     connect(manualX, SIGNAL(stateChanged(int)), SLOT(slotManualX(int)));
@@ -499,7 +499,7 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
     QWidget *VBox2 = new QWidget();
     axisXLayout->addWidget(VBox2);
     QVBoxLayout *VBox2Layout = new QVBoxLayout();
-    VBox2Layout->addWidget(new QLabel(tr("start")));
+    VBox2Layout->addWidget(new QLabel(tr("Start")));
     startX = new QLineEdit();
     VBox2Layout->addWidget(startX);
     startX->setValidator(ValDouble);
@@ -508,7 +508,7 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
     QWidget *VBox3 = new QWidget();
     axisXLayout->addWidget(VBox3);
     QVBoxLayout *VBox3Layout = new QVBoxLayout();
-    VBox3Layout->addWidget(new QLabel(tr("step")));
+    VBox3Layout->addWidget(new QLabel(tr("Step")));
     stepX = new QLineEdit();//VBox3);
     VBox3Layout->addWidget(stepX);
     stepX->setValidator(ValDouble);
@@ -517,7 +517,7 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
     QWidget *VBox4 = new QWidget();
     axisXLayout->addWidget(VBox4);
     QVBoxLayout *VBox4Layout = new QVBoxLayout();
-    VBox4Layout->addWidget(new QLabel(tr("stop")));
+    VBox4Layout->addWidget(new QLabel(tr("Stop")));
     stopX = new QLineEdit();
     VBox4Layout->addWidget(stopX);
     stopX->setValidator(ValDouble);
@@ -534,7 +534,7 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
     axisYLayout->addWidget(VBox5);
     QVBoxLayout *VBox5Layout = new QVBoxLayout();
     VBox5Layout->addStretch();
-    manualY = new QCheckBox(tr("manual"));
+    manualY = new QCheckBox(tr("Manual"));
     VBox5Layout->addWidget(manualY);
     connect(manualY, SIGNAL(stateChanged(int)), SLOT(slotManualY(int)));
     VBox5->setLayout(VBox5Layout);
@@ -542,7 +542,7 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
     QWidget *VBox6 = new QWidget();
     axisYLayout->addWidget(VBox6);
     QVBoxLayout *VBox6Layout = new QVBoxLayout();
-    VBox6Layout->addWidget(new QLabel(tr("start")));
+    VBox6Layout->addWidget(new QLabel(tr("Start")));
     startY = new QLineEdit();
     VBox6Layout->addWidget(startY);
     startY->setValidator(ValDouble);
@@ -552,8 +552,8 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
     axisYLayout->addWidget(VBox7);
     QVBoxLayout *VBox7Layout = new QVBoxLayout();
     if((Diag->Name=="Smith") || (Diag->Name=="ySmith") || (Diag->Name=="PS"))
-      VBox7Layout->addWidget(new QLabel(tr("number")));
-    else  VBox7Layout->addWidget(new QLabel(tr("step")));
+      VBox7Layout->addWidget(new QLabel(tr("Number")));
+    else  VBox7Layout->addWidget(new QLabel(tr("Step")));
     stepY = new QLineEdit();
     VBox7Layout->addWidget(stepY);
     stepY->setValidator(ValDouble);
@@ -562,7 +562,7 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
     QWidget *VBox8 = new QWidget();
     axisYLayout->addWidget(VBox8);
     QVBoxLayout *VBox8Layout = new QVBoxLayout();
-    VBox8Layout->addWidget(new QLabel(tr("stop")));
+    VBox8Layout->addWidget(new QLabel(tr("Stop")));
     stopY = new QLineEdit();
     VBox8Layout->addWidget(stopY);
     stopY->setValidator(ValDouble);
@@ -579,7 +579,7 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
     axisZLayout->addWidget(VBox9);
     QVBoxLayout *VBox9Layout = new QVBoxLayout();
     VBox9Layout->addStretch();
-    manualZ = new QCheckBox(tr("manual"));
+    manualZ = new QCheckBox(tr("Manual"));
     VBox9Layout->addWidget(manualZ);
     connect(manualZ, SIGNAL(stateChanged(int)), SLOT(slotManualZ(int)));
     VBox9->setLayout(VBox9Layout);
@@ -587,7 +587,7 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
     QWidget *VBox10 = new QWidget();
     axisZLayout->addWidget(VBox10);
     QVBoxLayout *VBox10Layout = new QVBoxLayout();
-    VBox10Layout->addWidget(new QLabel(tr("start")));
+    VBox10Layout->addWidget(new QLabel(tr("Start")));
     startZ = new QLineEdit();
     VBox10Layout->addWidget(startZ);
     startZ->setValidator(ValDouble);
@@ -596,8 +596,8 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
     QWidget *VBox11 = new QWidget();
     axisZLayout->addWidget(VBox11);
     QVBoxLayout *VBox11Layout = new QVBoxLayout();
-    if(Diag->Name == "SP") VBox11Layout->addWidget(new QLabel(tr("number")));
-    else VBox11Layout->addWidget(new QLabel(tr("step")));
+    if(Diag->Name == "SP") VBox11Layout->addWidget(new QLabel(tr("Number")));
+    else VBox11Layout->addWidget(new QLabel(tr("Step")));
     stepZ = new QLineEdit();
     VBox11Layout->addWidget(stepZ);
     stepZ->setValidator(ValDouble);
@@ -606,7 +606,7 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
     QWidget *VBox12 = new QWidget();
     axisZLayout->addWidget(VBox12);
     QVBoxLayout *VBox12Layout = new QVBoxLayout();
-    VBox12Layout->addWidget(new QLabel(tr("stop")));
+    VBox12Layout->addWidget(new QLabel(tr("Stop")));
     stopZ = new QLineEdit();
     VBox12Layout->addWidget(stopZ);
     stopZ->setValidator(ValDouble);

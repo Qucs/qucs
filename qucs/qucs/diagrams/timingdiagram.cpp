@@ -155,7 +155,7 @@ int TimingDiagram::calcDiagram()
     g = ig.next();
   
   if(g == 0) {  // no variables specified in diagram ?
-    Str = QObject::tr("no variables");
+    Str = QObject::tr("No variables");
     colWidth = checkColumnWidth(Str, metrics, colWidth, x, y2);
     if(colWidth >= 0)
       Texts.append(new Text(x, y2-2, Str)); // independent variable
@@ -171,7 +171,7 @@ int TimingDiagram::calcDiagram()
   }
   
   if(g->cPointsX.isEmpty()) { // no graph with data found ?
-    Str = QObject::tr("no data");
+    Str = QObject::tr("No data");
     colWidth = checkColumnWidth(Str, metrics, colWidth, x, y2);
     if(colWidth < 0)  return 0;
     Texts.append(new Text(x, y2-2, Str));
@@ -204,7 +204,7 @@ int TimingDiagram::calcDiagram()
 if(!firstGraph->cPointsX.isEmpty()) {
   // ................................................
   if(firstGraph->cPointsX.count() > 1) {
-    Str = QObject::tr("wrong dependency");
+    Str = QObject::tr("Wrong dependency");
     colWidth = checkColumnWidth(Str, metrics, colWidth, x, y2);
     if(colWidth >= 0)
       Texts.append(new Text(x, y2-2, Str)); // independent variable
@@ -284,7 +284,7 @@ if(!firstGraph->cPointsX.isEmpty()) {
     colWidth = 0;
 
     if(g->cPointsY == 0) {
-      Str = QObject::tr("no data");
+      Str = QObject::tr("No data");
       colWidth = checkColumnWidth(Str, metrics, colWidth, x, y);
       if(colWidth < 0)  goto funcEnd;
       Texts.append(new Text(x, y, Str));
@@ -293,7 +293,7 @@ if(!firstGraph->cPointsX.isEmpty()) {
     }
 
     if(!sameDependencies(g, firstGraph)) {
-      Str = QObject::tr("wrong dependency");
+      Str = QObject::tr("Wrong dependency");
       colWidth = checkColumnWidth(Str, metrics, colWidth, x, y);
       if(colWidth < 0)  goto funcEnd;
       Texts.append(new Text(x, y, Str));

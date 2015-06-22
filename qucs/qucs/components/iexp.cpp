@@ -20,7 +20,7 @@
 
 iExp::iExp()
 {
-  Description = QObject::tr("exponential current source");
+  Description = QObject::tr("Exponential current source");
 
   // normal current source symbol
   Arcs.append(new Arc(-12,-12, 24, 24,  0, 16*360,QPen(Qt::darkBlue,2)));
@@ -54,17 +54,17 @@ iExp::iExp()
   Name  = "I";
 
   Props.append(new Property("I1", "0", true,
-		QObject::tr("current before rising edge")));
+		QObject::tr("Current before rising edge")));
   Props.append(new Property("I2", "1 A", true,
-		QObject::tr("maximum current of the pulse")));
+		QObject::tr("Maximum current of the pulse")));
   Props.append(new Property("T1", "0", true,
-		QObject::tr("start time of the exponentially rising edge")));
+		QObject::tr("Start time of the exponentially rising edge")));
   Props.append(new Property("T2", "1 ms", true,
-		QObject::tr("start of exponential decay")));
+		QObject::tr("Start of exponential decay")));
   Props.append(new Property("Tr", "1 ns", false,
-		QObject::tr("time constant of the rising edge")));
+		QObject::tr("Time constant of the rising edge")));
   Props.append(new Property("Tf", "1 ns", false,
-		QObject::tr("time constant of the falling edge")));
+		QObject::tr("Time constant of the falling edge")));
 
   rotate();  // fix historical flaw
 }

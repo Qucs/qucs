@@ -20,7 +20,7 @@
 
 BiasT::BiasT()
 {
-  Description = QObject::tr("bias t");
+  Description = QObject::tr("Bias tee");
 
   Arcs.append(new Arc( -3,  2, 6, 6, 16*270, 16*180,QPen(Qt::darkBlue,1)));
   Arcs.append(new Arc( -3,  8, 6, 6, 16*270, 16*180,QPen(Qt::darkBlue,1)));
@@ -53,9 +53,9 @@ BiasT::BiasT()
   Name  = "X";
 
   Props.append(new Property("L", "1 uH", false,
-	QObject::tr("for transient simulation: inductance in Henry")));
+	QObject::tr("For transient simulation: inductance in henries")));
   Props.append(new Property("C", "1 uF", false,
-	QObject::tr("for transient simulation: capacitance in Farad")));
+	QObject::tr("For transient simulation: capacitance in farads")));
 }
 
 BiasT::~BiasT()

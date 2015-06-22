@@ -23,29 +23,29 @@
 
 RFedd::RFedd()
 {
-  Description = QObject::tr("equation defined RF device");
+  Description = QObject::tr("Equation defined RF device");
 
   Model = "RFEDD";
   Name  = "RF";
 
   // first properties !!!
   Props.append(new Property("Type", "Y", false,
-		QObject::tr("type of parameters")+" [Y, Z, S]"));
+		QObject::tr("Type of parameters")+" [Y, Z, S]"));
   Props.append(new Property("Ports", "2", false,
-		QObject::tr("number of ports")));
+		QObject::tr("Number of ports")));
   Props.append(new Property("duringDC", "open", false,
-		QObject::tr("representation during DC analysis")+
+		QObject::tr("Representation during DC analysis")+
 			    " [open, short, unspecified, zerofrequency]"));
 
   // last properties
   Props.append(new Property("P11", "0", false,
-		QObject::tr("parameter equation") + " 11"));
+		QObject::tr("Parameter equation") + " 11"));
   Props.append(new Property("P12", "0", false,
-		QObject::tr("parameter equation") + " 12"));
+		QObject::tr("Parameter equation") + " 12"));
   Props.append(new Property("P21", "0", false,
-		QObject::tr("parameter equation") + " 21"));
+		QObject::tr("Parameter equation") + " 21"));
   Props.append(new Property("P22", "0", false,
-		QObject::tr("parameter equation") + " 22"));
+		QObject::tr("Parameter equation") + " 22"));
 
   createSymbol();
 }
@@ -130,12 +130,12 @@ void RFedd::createSymbol()
     for(i = 0; i < NumProps; i++) {
       tmp=QString::number((i)/No+1)+QString::number((i)%No+1);
       Props.at(i+3)->Name="P"+tmp;
-      Props.at(i+3)->Description=QObject::tr("parameter equation") + " " +tmp;
+      Props.at(i+3)->Description=QObject::tr("Parameter equation") + " " +tmp;
     }
     for(i = NumProps; i < No * No; i++) {
       tmp=QString::number((i)/No+1)+QString::number((i)%No+1);
       Props.append(new Property("P"+tmp, "0", false,
-		QObject::tr("parameter equation") + " " +tmp));
+		QObject::tr("Parameter equation") + " " +tmp));
     }
   } else { // number of ports was decreased, remove properties
     for(i = No * No; i < NumProps; i++) {
@@ -144,7 +144,7 @@ void RFedd::createSymbol()
     for(i = 0; i < No * No; i++) {
       tmp=QString::number((i)/No+1)+QString::number((i)%No+1);
       Props.at(i+3)->Name="P"+tmp;
-      Props.at(i+3)->Description=QObject::tr("parameter equation") + " " +tmp;
+      Props.at(i+3)->Description=QObject::tr("Parameter equation") + " " +tmp;
     }
   }
 

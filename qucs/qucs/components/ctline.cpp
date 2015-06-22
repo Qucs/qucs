@@ -16,7 +16,7 @@
 
 CoupledTLine::CoupledTLine()
 {
-  Description = QObject::tr("coupled transmission lines");
+  Description = QObject::tr("Coupled transmission lines");
 
   Arcs.append(new Arc(-28,-40, 18, 38,16*232, 16*33,QPen(Qt::darkBlue,2)));
   Arcs.append(new Arc(-28,  2, 18, 38, 16*95, 16*33,QPen(Qt::darkBlue,2)));
@@ -52,21 +52,21 @@ CoupledTLine::CoupledTLine()
   Name  = "Line";
 
   Props.append(new Property("Ze", "50 Ohm", true,
-		QObject::tr("characteristic impedance of even mode")));
+		QObject::tr("Characteristic impedance of even mode")));
   Props.append(new Property("Zo", "50 Ohm", true,
-		QObject::tr("characteristic impedance of odd mode")));
+		QObject::tr("Characteristic impedance of odd mode")));
   Props.append(new Property("L", "1 mm", true,
-		QObject::tr("electrical length of the line")));
+		QObject::tr("Electrical length of the line")));
   Props.append(new Property("Ere", "1", false,
-		QObject::tr("relative dielectric constant of even mode")));
+		QObject::tr("Relative dielectric constant of even mode")));
   Props.append(new Property("Ero", "1", false,
-		QObject::tr("relative dielectric constant of odd mode")));
+		QObject::tr("Relative dielectric constant of odd mode")));
   Props.append(new Property("Ae", "0 dB", false,
-		QObject::tr("attenuation factor per length of even mode")));
+		QObject::tr("Attenuation factor per length of even mode")));
   Props.append(new Property("Ao", "0 dB", false,
-		QObject::tr("attenuation factor per length of odd mode")));
+		QObject::tr("Attenuation factor per length of odd mode")));
   Props.append(new Property("Temp", "26.85", false,
-		QObject::tr("simulation temperature in degree Celsius")));
+		QObject::tr("Simulation temperature in degrees Celsius")));
 }
 
 

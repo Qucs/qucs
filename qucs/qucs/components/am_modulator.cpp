@@ -20,7 +20,7 @@
 
 AM_Modulator::AM_Modulator()
 {
-  Description = QObject::tr("ac voltage source with amplitude modulator");
+  Description = QObject::tr("AC voltage source with amplitude modulator");
 
   Arcs.append(new Arc(-12,-12, 24, 24,     0, 16*360,QPen(Qt::darkBlue,2)));
   Arcs.append(new Arc( -7, -4,  7,  7,     0, 16*180,QPen(Qt::darkBlue,2)));
@@ -49,13 +49,13 @@ AM_Modulator::AM_Modulator()
   Name  = "V";
 
   Props.append(new Property("U", "1 V", true,
-		QObject::tr("peak voltage in Volts")));
+		QObject::tr("Peak voltage in volts")));
   Props.append(new Property("f", "1 GHz", false,
-		QObject::tr("frequency in Hertz")));
+		QObject::tr("Frequency in hertz")));
   Props.append(new Property("Phase", "0", false,
-		QObject::tr("initial phase in degrees")));
+		QObject::tr("Initial phase in degrees")));
   Props.append(new Property("m", "1.0", false,
-		QObject::tr("modulation level")));
+		QObject::tr("Modulation level")));
 }
 
 AM_Modulator::~AM_Modulator()

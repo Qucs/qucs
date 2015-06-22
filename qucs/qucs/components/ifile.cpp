@@ -21,7 +21,7 @@
 
 iFile::iFile()
 {
-  Description = QObject::tr("file based current source");
+  Description = QObject::tr("File-based current source");
 
   Arcs.append(new Arc(-12,-12, 24, 24,  0, 16*360,QPen(Qt::darkBlue,2)));
   Lines.append(new Line(-30,  0,-12,  0,QPen(Qt::darkBlue,2)));
@@ -50,13 +50,13 @@ iFile::iFile()
   Name  = "I";
 
   Props.append(new Property("File", "ifile.dat", true,
-		QObject::tr("name of the sample file")));
+		QObject::tr("Name of the sample file")));
   Props.append(new Property("Interpolator", "linear", false,
-		QObject::tr("interpolation type")+" [hold, linear, cubic]"));
+		QObject::tr("Interpolation type")+" [hold, linear, cubic]"));
   Props.append(new Property("Repeat", "no", false,
-		QObject::tr("repeat waveform")+" [no, yes]"));
-  Props.append(new Property("G", "1", false, QObject::tr("current gain")));
-  Props.append(new Property("T", "0", false, QObject::tr("delay time")));
+		QObject::tr("Repeat waveform")+" [no, yes]"));
+  Props.append(new Property("G", "1", false, QObject::tr("Current gain")));
+  Props.append(new Property("T", "0", false, QObject::tr("Delay time")));
 
   rotate();  // fix historical flaw
 }

@@ -21,22 +21,22 @@
 
 Resistor::Resistor(bool european)
 {
-  Description = QObject::tr("resistor");
+  Description = QObject::tr("Resistor");
 
   Props.append(new Property("R", "50 Ohm", true,
-	QObject::tr("ohmic resistance in Ohms")));
+	QObject::tr("Ohmic resistance in ohms")));
   Props.append(new Property("Temp", "26.85", false,
-	QObject::tr("simulation temperature in degree Celsius")));
+	QObject::tr("Simulation temperature in degrees Celsius")));
   Props.append(new Property("Tc1", "0.0", false,
-	QObject::tr("first order temperature coefficient")));
+	QObject::tr("First order temperature coefficient")));
   Props.append(new Property("Tc2", "0.0", false,
-	QObject::tr("second order temperature coefficient")));
+	QObject::tr("Second order temperature coefficient")));
   Props.append(new Property("Tnom", "26.85", false,
-	QObject::tr("temperature at which parameters were extracted")));
+	QObject::tr("Temperature at which parameters were extracted")));
 
   // this must be the last property in the list !!!
   Props.append(new Property("Symbol", "european", false,
-		QObject::tr("schematic symbol")+" [european, US]"));
+		QObject::tr("Schematic symbol")+" [european, US]"));
   if(!european)  Props.getLast()->Value = "US";
 
   createSymbol();

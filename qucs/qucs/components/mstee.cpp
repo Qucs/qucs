@@ -22,7 +22,7 @@
 
 MStee::MStee()
 {
-  Description = QObject::tr("microstrip tee");
+  Description = QObject::tr("Microstrip tee");
 
   x1 = -30; y1 = -11;
   x2 =  30; y2 =  30;
@@ -35,23 +35,23 @@ MStee::MStee()
   Name  = "MS";
 
   Props.append(new Property("Subst", "Subst1", true,
-		QObject::tr("substrate")));
+		QObject::tr("Substrate")));
   Props.append(new Property("W1", "1 mm", true,
-		QObject::tr("width of line 1")));
+		QObject::tr("Width of line 1")));
   Props.append(new Property("W2", "1 mm", true,
-		QObject::tr("width of line 2")));
+		QObject::tr("Width of line 2")));
   Props.append(new Property("W3", "2 mm", true,
-		QObject::tr("width of line 3")));
+		QObject::tr("Width of line 3")));
   Props.append(new Property("MSModel", "Hammerstad", false,
-	QObject::tr("quasi-static microstrip model")+
+	QObject::tr("Quasi-static microstrip model")+
 	" [Hammerstad, Wheeler, Schneider]"));
   Props.append(new Property("MSDispModel", "Kirschning", false,
-	QObject::tr("microstrip dispersion model")+" [Kirschning, Kobayashi, "
+	QObject::tr("Microstrip dispersion model")+" [Kirschning, Kobayashi, "
 	"Yamashita, Hammerstad, Getsinger, Schneider, Pramanick]"));
   Props.append(new Property("Temp", "26.85", false,
-		QObject::tr("temperature in degree Celsius")));
+		QObject::tr("Temperature in degrees Celsius")));
   Props.append(new Property("Symbol", "showNumbers", false,
-	QObject::tr("show port numbers in symbol or not")+
+	QObject::tr("Show port numbers in symbol or not")+
 	" [showNumbers, noNumbers]"));
 
   createSymbol();

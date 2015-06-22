@@ -245,7 +245,7 @@ QucsFilter::QucsFilter()
   QLabel *Label5 = new QLabel("mm", this);
   gbox2->addWidget(Label5, 1,2);
 
-  QLabel *Label6 = new QLabel(tr("metal thickness:"), this);
+  QLabel *Label6 = new QLabel(tr("Metal thickness:"), this);
   gbox2->addWidget(Label6, 2,0);
   EditThickness = new QLineEdit("12.5", this);
   EditThickness->setValidator(DoubleVal);
@@ -253,7 +253,7 @@ QucsFilter::QucsFilter()
   QLabel *Label7 = new QLabel("um", this);
   gbox2->addWidget(Label7, 2,2);
 
-  QLabel *Label8 = new QLabel(tr("minimum width:"), this);
+  QLabel *Label8 = new QLabel(tr("Minimum width:"), this);
   gbox2->addWidget(Label8, 3,0);
   EditMinWidth = new QLineEdit("0.4", this);
   EditMinWidth->setValidator(DoubleVal);
@@ -261,7 +261,7 @@ QucsFilter::QucsFilter()
   QLabel *Label9 = new QLabel("mm", this);
   gbox2->addWidget(Label9, 3,2);
 
-  QLabel *Label10 = new QLabel(tr("maximum width:"), this);
+  QLabel *Label10 = new QLabel(tr("Maximum width:"), this);
   gbox2->addWidget(Label10, 4,0);
   EditMaxWidth = new QLineEdit("5.0", this);
   EditMaxWidth->setValidator(DoubleVal);

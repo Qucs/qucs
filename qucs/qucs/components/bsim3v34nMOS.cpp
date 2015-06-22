@@ -848,7 +848,7 @@ Component * bsim3v34nMOS::newOne()
 
 Element * bsim3v34nMOS::info(QString& Name, char * &BitmapFile, bool getNewOne)
 {
-  Name = QObject::tr("bsim3v34nMOS");
+  Name = QObject::tr("Bsim3v34nMOS");
   BitmapFile = (char *) "bsim3v34nMOS";
 
   if(getNewOne) return new bsim3v34nMOS();

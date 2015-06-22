@@ -1,0 +1,2976 @@
+power matching
+Power matching
+
+noise matching
+Noise matching
+
+generic
+Generic
+
+untitled
+Untitled
+
+content of project directory
+Contents of project directory
+
+content of current project
+Contents of current project
+
+components and diagrams
+Components and diagrams
+
+paintings
+Paintings
+
+verilog-a user devices
+Verilog-A user devices
+
+verilog-a user devices
+Verilog-A user devices
+
+verilog-a user devices
+Verilog-A user devices
+
+unknown
+Unknown
+
+data file
+Data file
+
+data display
+Data display
+
+schematic
+Schematic
+
+symbol
+Symbol
+
+configuration
+Configuration
+
+error
+Error
+
+untitled
+Untitled
+
+untitled
+Untitled
+
+untitled
+Untitled
+
+untitled
+Untitled
+
+untitled
+Untitled
+
+diagrams
+Diagrams
+
+verilog-a user devices
+Verilog-A user devices
+
+verilog-a user devices
+Verilog-A user devices
+
+admsXml
+ADMSXml
+
+delay time
+Delay time
+
+Peak voltage in Volts
+Peak voltage in volts
+
+Frequency in Hertz
+Frequency in hertz
+
+equation
+Equation
+
+put result into dataset
+Put result into dataset
+
+logical inverter
+Logical inverter
+
+voltage of high level
+Voltage of high level
+
+delay time
+Delay time
+
+transfer function scaling factor
+Transfer function scaling factor
+
+schematic symbol
+Schematic symbol
+
+Ac simulation
+AC simulation
+
+Start frequency in Hertz
+Start frequency in hertz
+
+Stop frequency in Hertz
+Stop frequency in hertz
+
+switch (time controlled)
+Switch (time controlled)
+
+initial state
+Initial state
+
+time when state changes (semicolon separated list possible, even numbered lists are repeated)
+Time when state changes (semicolon separated list possible, even numbered lists are repeated)
+
+resistance of \"on\" state in ohms
+Resistance of \"on\" state in ohms
+
+resistance of \"off\" state in ohms
+Resistance of \"off\" state in ohms
+
+simulation temperature in degree Celsius
+Simulation temperature in degrees Celsius
+
+logical buffer
+Logical buffer
+
+voltage of high level
+Voltage of high level
+
+delay time
+Delay time
+
+transfer function scaling factor
+Transfer function scaling factor
+
+schematic symbol
+Schematic symbol
+
+bsim3v34pMOS
+Bsim3v34pMOS
+
+ideal dc current source
+Ideal DC current source
+
+current in Ampere
+Current in Ampere
+
+dc Current Source
+DC current source
+
+ac voltage source with phase modulator
+AC voltage source with phase modulator
+
+peak voltage in Volts
+Peak voltage in volts
+
+frequency in Hertz
+Frequency in hertz
+
+initial phase in degrees
+Initial phase in degrees
+
+modulation index
+Modulation index
+
+number of input ports
+Number of input ports
+
+voltage of high level
+Voltage of high level
+
+delay time
+Delay time
+
+transfer function scaling factor
+Transfer function scaling factor
+
+schematic symbol
+Schematic symbol
+
+three mutual inductors
+Three mutual inductors
+
+inductance of coil 1
+Inductance of coil 1
+
+inductance of coil 2
+Inductance of coil 2
+
+inductance of coil 3
+Inductance of coil 3
+
+coupling factor between coil 1 and 2
+Coupling factor between coil 1 and 2
+
+coupling factor between coil 1 and 3
+Coupling factor between coil 1 and 3
+
+coupling factor between coil 2 and 3
+Coupling factor between coil 2 and 3
+
+ideal transmission line
+Ideal transmission line
+
+characteristic impedance
+Characteristic impedance
+
+electrical length of the line
+Electrical length of the line
+
+attenuation factor per length in 1/m
+Attenuation factor per length in 1/m
+
+simulation temperature in degree Celsius
+Simulation temperature in degrees Celsius
+
+verilog
+Verilog
+
+microstrip open
+Microstrip open
+
+name of substrate definition
+Name of substrate definition
+
+width of the line
+Width of the line
+
+quasi-static microstrip model
+Quasi-static microstrip model
+
+microstrip dispersion model
+Microstrip dispersion model
+
+microstrip open end model
+Microstrip open end model
+
+ideal amplifier
+Ideal amplifier
+
+voltage gain
+Voltage gain
+
+reference impedance of input port
+Reference impedance of input port
+
+reference impedance of output port
+Reference impedance of output port
+
+noise figure
+Noise figure
+
+attenuator
+Attenuator
+
+power attenuation
+Power attenuation
+
+reference impedance
+Reference impedance
+
+simulation temperature in degree Celsius
+Simulation temperature in degrees Celsius
+
+voltage probe
+Voltage probe
+
+active
+Active
+
+initial:
+Initial:
+
+min:
+Min:
+
+max:
+Max:
+
+linear double
+Linear double
+
+logarithmic double
+Logarithmic double
+
+linear integer
+Linear integer
+
+logarithmic integer
+Logarithmic integer
+
+minimize
+Minimize
+
+maximize
+Maximize
+
+less
+Less
+
+greater
+Greater
+
+equal
+Equal
+
+monitor
+Monitor
+
+yes
+Yes
+
+linear double
+Linear double
+
+logarithmic double
+Logarithmic double
+
+linear integer
+Linear integer
+
+logarithmic integer
+Logarithmic integer
+
+minimize
+Minimize
+
+maximize
+Maximize
+
+less
+Less
+
+greater
+Greater
+
+equal
+Equal
+
+monitor
+Monitor
+
+yes
+Yes
+
+yes
+Yes
+
+yes
+Yes
+
+yes
+Yes
+
+linear double
+Linear double
+
+logarithmic double
+Logarithmic double
+
+linear integer
+Linear integer
+
+minimize
+Minimize
+
+maximize
+Maximize
+
+less
+Less
+
+greater
+Greater
+
+equal
+Equal
+
+current controlled current source
+Current controlled current source
+
+forward transfer factor
+Forward transfer factor
+
+delay time
+Delay time
+
+npn HICUM L0 v1.3
+NPN HICUM L0 v1.3
+
+pnp HICUM L0 v1.3
+PNP HICUM L0 v1.3
+
+frequency in Hertz
+Frequency in hertz
+
+number of harmonics
+Number of harmonics
+
+absolute tolerance for currents
+Absolute tolerance for currents
+
+absolute tolerance for voltages
+Absolute tolerance for voltages
+
+relative tolerance for convergence
+Relative tolerance for convergence
+
+maximum number of iterations until error
+Maximum number of iterations until error
+
+ideal transformer
+Ideal transformer
+
+voltage transformation ratio
+Voltage transformation ratio
+
+Ohmic resistance in Ohms
+Ohmic resistance in ohms
+
+Ohmic resistance in Ohms
+Ohmic resistance in ohms
+
+microstrip cross
+Microstrip cross
+
+substrate
+Substrate
+
+width of line 1
+Width of line 1
+
+width of line 2
+Width of line 2
+
+width of line 3
+Width of line 3
+
+width of line 4
+Width of line 4
+
+quasi-static microstrip model
+Quasi-static microstrip model
+
+microstrip dispersion model
+Microstrip dispersion model
+
+show port numbers in symbol or not
+Show port numbers in symbol or not
+
+sweep type
+Sweep type
+
+start frequency in Hertz
+Start frequency in hertz
+
+stop frequency in Hertz
+Stop frequency in hertz
+
+number of simulation steps
+Number of simulation steps
+
+calculate noise parameters
+Calculate noise parameters
+
+input port for noise figure
+Input port for noise figure
+
+output port for noise figure
+Output port for noise figure
+
+put characteristic values into dataset
+Put characteristic values into dataset
+
+save subcircuit characteristic values into dataset
+Save subcircuit characteristic values into dataset
+
+circulator
+Circulator
+
+reference impedance of port 1
+Reference impedance of port 1
+
+reference impedance of port 2
+Reference impedance of port 2
+
+reference impedance of port 3
+Reference impedance of port 3
+
+bsim4v30nMOS
+Bsim4v30nMOS
+
+coplanar short
+Coplanar short
+
+name of substrate definition
+Name of substrate definition
+
+width of the line
+Width of the line
+
+width of a gap
+Width of the gap
+
+material at the backside of the substrate
+Material at the backside of the substrate
+
+coupled microstrip line
+Coupled microstrip line
+
+name of substrate definition
+Name of substrate definition
+
+width of the line
+Width of the line
+
+length of the line
+Length of the line
+
+spacing between the lines
+Spacing between the lines
+
+microstrip model
+Microstrip model
+
+microstrip dispersion model
+Microstrip dispersion model
+
+simulation temperature in degree Celsius
+Simulation temperature in degrees Celsius
+
+polarity
+Polarity
+
+zero-bias threshold voltage
+Zero-bias threshold voltage
+
+transconductance coefficient in A/V^2
+Transconductance coefficient in A/V^2
+
+bulk threshold in sqrt(V)
+Bulk threshold in sqrt(V)
+
+surface potential
+Surface potential
+
+channel-length modulation parameter in 1/V
+Channel-length modulation parameter in 1/V
+
+drain ohmic resistance
+Drain ohmic resistance
+
+source ohmic resistance
+Source ohmic resistance
+
+gate ohmic resistance
+Gate ohmic resistance
+
+bulk junction saturation current
+Bulk junction saturation current
+
+bulk junction emission coefficient
+Bulk junction-emission coefficient
+
+channel width
+Channel width
+
+channel length
+Channel length
+
+lateral diffusion length
+Lateral diffusion length
+
+oxide thickness
+Oxide thickness
+
+gate-source overlap capacitance per meter of 
+Gate-source overlap capacitance per meter of 
+
+gate-drain overlap capacitance per meter of 
+Gate-drain overlap capacitance per meter of 
+
+gate-bulk overlap capacitance per meter of 
+Gate-bulk overlap capacitance per meter of 
+
+zero-bias bulk-drain junction capacitance
+Zero-bias bulk-drain junction capacitance
+
+zero-bias bulk-source junction capacitance
+Zero-bias bulk-source junction capacitance
+
+bulk junction potential
+Bulk junction potential
+
+bulk junction bottom grading coefficient
+Bulk junction bottom grading coefficient
+
+bulk junction forward-bias depletion capacitance 
+Bulk junction forward-bias depletion capacitance 
+
+zero-bias bulk junction periphery capacitance per meter 
+Zero-bias bulk junction periphery capacitance per meter 
+
+bulk junction periphery grading coefficient
+Bulk junction periphery grading coefficient
+
+bulk transit time
+Bulk transit time
+
+substrate bulk doping density in 1/cm^3
+Substrate bulk doping density in 1/cm^3
+
+surface state density in 1/cm^2
+Surface state density in 1/cm^2
+
+gate material type: 0 = alumina; -1 = same as bulk; 
+Gate material type: 0 = alumina; -1 = same as bulk; 
+
+surface mobility in cm^2/Vs
+Surface mobility in cm^2/Vs
+
+drain and source diffusion sheet resistance in 
+Drain and source diffusion sheet resistance in 
+
+number of equivalent drain squares
+Number of equivalent drain squares
+
+number of equivalent source squares
+Number of equivalent source squares
+
+zero-bias bulk junction bottom capacitance per square 
+Zero-bias bulk junction bottom capacitance per square 
+
+bulk junction saturation current per square 
+Bulk junction saturation current per square 
+
+drain diffusion area in m^2
+Drain diffusion area in m^2
+
+source diffusion area in m^2
+Source diffusion area in m^2
+
+drain junction perimeter
+Drain junction perimeter
+
+source junction perimeter
+Source junction perimeter
+
+flicker noise coefficient
+Flicker noise coefficient
+
+flicker noise exponent
+Flicker noise exponent
+
+flicker noise frequency exponent
+Flicker noise frequency exponent
+
+simulation temperature in degree Celsius
+Simulation temperature in degrees Celsius
+
+parameter measurement temperature
+Parameter measurement temperature
+
+n-MOSFET
+N-MOSFET
+
+p-MOSFET
+P-MOSFET
+
+depletion MOSFET
+Depletion MOSFET
+
+voltage controlled current source
+Voltage controlled current source
+
+forward transconductance
+Forward transconductance
+
+delay time
+Delay time
+
+microstrip radial stub
+Microstrip radial stub
+
+name of substrate definition
+Name of substrate definition
+
+inner radius
+Inner radius
+
+outer radius
+Outer radius
+
+stub angle
+Stub angle
+
+capacitor
+Capacitor
+
+capacitance in Farad
+Capacitance in farads
+
+initial voltage for transient simulation
+Initial voltage for transient simulation
+
+schematic symbol
+Schematic symbol
+
+coplanar step
+Co-planar step
+
+name of substrate definition
+Name of substrate definition
+
+width of line 1
+Width of line 1
+
+width of line 2
+Width of line 2
+
+distance between ground planes
+Distance between ground planes
+
+material at the backside of the substrate
+Material at the backside of the substrate
+
+equation defined 2-port RF device
+Equation defined 2-port RF device
+
+type of parameters
+Type of parameters
+
+representation during DC analysis
+Representation during DC analysis
+
+parameter equation
+Parameter equation
+
+parameter equation
+Parameter equation
+
+parameter equation
+Parameter equation
+
+parameter equation
+Parameter equation
+
+two mutual inductors
+Two mutual inductors
+
+inductance of coil 1
+Inductance of coil 1
+
+inductance of coil 2
+Inductance of coil 2
+
+coupling factor between coil 1 and 2
+Coupling factor between coil 1 and 2
+
+ground (reference potential)
+Ground (reference potential)
+
+bsim3v34nMOS
+Bsim3v34nMOS
+
+substrate definition
+Substrate definition
+
+relative permittivity
+Relative permittivity
+
+thickness in meters
+Thickness in meters
+
+thickness of metalization
+Thickness of metalization
+
+loss tangent
+Loss tangent
+
+specific resistance of metal
+Specific resistance of metal
+
+rms substrate roughness
+RMS substrate roughness
+
+vhdl
+VHDL
+
+generic variable
+Generic variable
+
+generic variable
+Generic variable
+
+correlated current sources
+Correlated current sources
+
+voltage power spectral density of source 1
+Voltage power spectral density of source 1
+
+voltage power spectral density of source 2
+Voltage power spectral density of source 2
+
+normalized correlation coefficient
+Normalized correlation coefficient
+
+frequency exponent
+Frequency exponent
+
+frequency coefficient
+Frequency coefficient
+
+additive frequency term
+Additive frequency term
+
+optimization
+Optimization
+
+resistive load
+Resistive load
+
+inductive load
+Inductive load
+
+capacitive load
+Capacitive load
+
+conductive load
+Conductive load
+
+electrical length of the line
+Electrical length of the line
+
+simulation temperature in degree Celsius
+Simulation temperature in degrees Celsius
+
+n-MOSFET
+N-MOSFET
+
+p-MOSFET
+P-MOSFET
+
+depletion MOSFET
+Depletion MOSFET
+
+subcircuit
+Subcircuit
+
+name of qucs schematic file
+Name of Qucs schematic file
+
+microstrip gap
+Microstrip gap
+
+name of substrate definition
+Name of substrate definition
+
+width of the line 1
+Width of the line 1
+
+width of the line 2
+Width of the line 2
+
+spacing between the microstrip ends
+Spacing between the microstrip ends
+
+quasi-static microstrip model
+Quasi-static microstrip model
+
+microstrip dispersion model
+Microstrip dispersion model
+
+relay
+Relay
+
+threshold voltage in Volts
+Threshold voltage in volts
+
+hysteresis voltage in Volts
+Hysteresis voltage in volts
+
+resistance of \"on\" state in Ohms
+Resistance of \"on\" state in ohms
+
+resistance of \"off\" state in Ohms
+Resistance of \"off\" state in ohms
+
+simulation temperature in degree Celsius
+Simulation temperature in degrees Celsius
+
+diode
+Diode
+
+saturation current
+Saturation current
+
+emission coefficient
+Emission coefficient
+
+zero-bias junction capacitance
+Zero-bias junction capacitance
+
+grading coefficient
+Grading coefficient
+
+junction potential
+Junction potential
+
+forward-bias depletion capacitance coefficient
+Forward-bias depletion capacitance coefficient
+
+linear capacitance
+Linear capacitance
+
+recombination current parameter
+Recombination current parameter
+
+emission coefficient for Isr
+Emission coefficient for Isr
+
+ohmic series resistance
+Ohmic series resistance
+
+transit time
+Transit time
+
+high-injection knee current (0=infinity)
+High-injection knee current (0=infinity)
+
+flicker noise coefficient
+Flicker noise coefficient
+
+flicker noise exponent
+Flicker noise exponent
+
+flicker noise frequency exponent
+Flicker noise frequency exponent
+
+reverse breakdown voltage
+Reverse breakdown voltage
+
+current at reverse breakdown voltage
+Current at reverse breakdown voltage
+
+simulation temperature in degree Celsius
+Simulation temperature in degrees Celsius
+
+saturation current temperature exponent
+Saturation current temperature exponent
+
+energy bandgap in eV
+Energy bandgap in eV
+
+temperature at which parameters were extracted
+Temperature at which parameters were extracted
+
+default area for diode
+Default area for diode
+
+schematic symbol
+Schematic symbol
+
+diac (bidirectional trigger diode)
+Diac (bidirectional trigger diode)
+
+parasitic capacitance
+Parasitic capacitance
+
+saturation current
+Saturation current
+
+emission coefficient
+Emission coefficient
+
+intrinsic junction resistance
+Intrinsic junction resistance
+
+simulation temperature
+Simulation temperature in degrees Celsius
+
+logical OR
+Logical OR
+
+n-port OR
+N-port OR
+
+npn HICUM L0 v1.12
+NPN HICUM L0 v1.12
+
+pnp HICUM L0 v1.12
+PNP HICUM L0 v1.12
+
+microstrip lange coupler
+Microstrip lange coupler
+
+name of substrate definition
+Name of substrate definition
+
+width of the line
+Width of the line
+
+length of the line
+Length of the line
+
+spacing between the lines
+Spacing between the lines
+
+microstrip model
+Microstrip model
+
+microstrip dispersion model
+Microstrip dispersion model
+
+simulation temperature in degree Celsius
+Simulation temperature in degrees Celsius
+
+equation defined RF device
+Equation defined RF device
+
+type of parameters
+Type of parameters
+
+number of ports
+Number of ports
+
+representation during DC analysis
+Representation during DC analysis
+
+parameter equation
+Parameter equation
+
+parameter equation
+Parameter equation
+
+parameter equation
+Parameter equation
+
+parameter equation
+Parameter equation
+
+parameter equation
+Parameter equation
+
+parameter equation
+Parameter equation
+
+parameter equation
+Parameter equation
+
+delay time
+Delay time
+
+logical XNOR
+Logical XNOR
+
+n-port XNOR
+N-port XNOR
+
+correlated current sources
+Correlated current sources
+
+current power spectral density of source 1
+Current power spectral density of source 1
+
+voltage power spectral density of source 2
+Voltage power spectral density of source 2
+
+normalized correlation coefficient
+Normalized correlation coefficient
+
+frequency exponent
+Frequency exponent
+
+frequency coefficient
+Frequency coefficient
+
+additive frequency term
+Additive frequency term
+
+file based current source
+File-based current source
+
+name of the sample file
+Name of the sample file
+
+interpolation type
+Interpolation type
+
+repeat waveform
+Repeat waveform
+
+current gain
+Current gain
+
+delay time
+Delay time
+
+noise current source
+Noise current source
+
+current power spectral density in A^2/Hz
+Current power spectral density in A^2/Hz
+
+frequency exponent
+Frequency exponent
+
+frequency coefficient
+Frequency coefficient
+
+additive frequency term
+Additive frequency term
+
+resonance tunnel diode
+Resonance tunnel diode
+
+peak current
+Peak current
+
+valley current
+Valley current
+
+valley voltage
+Valley voltage
+
+resonance energy in Ws
+Resonance energy in Ws
+
+resonance width in Ws
+Resonance width in Ws
+
+maximum of transmission
+Maximum of transmission
+
+fitting factor for electron density
+Fitting factor for electron density
+
+fitting factor for voltage drop
+Fitting factor for voltage drop
+
+fitting factor for diode current
+Fitting factor for diode current
+
+zero-bias depletion capacitance
+Zero-bias depletion capacitance
+
+grading coefficient
+Grading coefficient
+
+junction potential
+Junction potential
+
+life-time of electrons
+Life-time of electrons
+
+simulation temperature in degree Celsius
+Simulation temperature in degrees Celsius
+
+default area for diode
+Default area for diode
+
+correlated current sources
+Correlated current sources
+
+current power spectral density of source 1
+Current power spectral density of source 1
+
+current power spectral density of source 2
+Current power spectral density of source 2
+
+normalized correlation coefficient
+Normalized correlation coefficient
+
+frequency exponent
+Frequency exponent
+
+frequency coefficient
+Frequency coefficient
+
+additive frequency term
+Additive frequency term
+
+polarity
+Polarity
+
+saturation current
+Saturation current
+
+forward emission coefficient
+Forward emission coefficient
+
+reverse emission coefficient
+Reverse emission coefficient
+
+high current corner for forward beta
+High current corner for forward beta
+
+high current corner for reverse beta
+High current corner for reverse beta
+
+forward early voltage
+Forward early voltage
+
+reverse early voltage
+Reverse early voltage
+
+base-emitter leakage saturation current
+Base-emitter leakage saturation current
+
+base-emitter leakage emission coefficient
+Base-emitter leakage emission coefficient
+
+base-collector leakage saturation current
+Base-collector leakage saturation current
+
+base-collector leakage emission coefficient
+Base-collector leakage emission coefficient
+
+forward beta
+Forward beta
+
+reverse beta
+Reverse beta
+
+minimum base resistance for high currents
+Minimum base resistance for high currents
+
+current for base resistance midpoint
+Current for base resistance midpoint
+
+collector ohmic resistance
+Collector ohmic resistance
+
+emitter ohmic resistance
+Emitter ohmic resistance
+
+zero-bias base resistance (may be high-current dependent)
+Zero-bias base resistance (may be high-current dependent)
+
+base-emitter zero-bias depletion capacitance
+Base-emitter zero-bias depletion capacitance
+
+base-emitter junction built-in potential
+Base-emitter junction built-in potential
+
+base-emitter junction exponential factor
+Base-emitter junction exponential factor
+
+base-collector zero-bias depletion capacitance
+Base-collector zero-bias depletion capacitance
+
+base-collector junction built-in potential
+Base-collector junction built-in potential
+
+base-collector junction exponential factor
+Base-collector junction exponential factor
+
+fraction of Cjc that goes to internal base pin
+Fraction of Cjc that goes to internal base pin
+
+zero-bias collector-substrate capacitance
+Zero-bias collector-substrate capacitance
+
+substrate junction built-in potential
+Substrate junction built-in potential
+
+substrate junction exponential factor
+Substrate junction exponential factor
+
+forward-bias depletion capacitance coefficient
+Forward-bias depletion capacitance coefficient
+
+ideal forward transit time
+Ideal forward transit time
+
+coefficient of bias-dependence for Tf
+Coefficient of bias-dependence for Tf
+
+voltage dependence of Tf on base-collector voltage
+Voltage dependence of Tf on base-collector voltage
+
+high-current effect on Tf
+High-current effect on Tf
+
+ideal reverse transit time
+Ideal reverse transit time
+
+simulation temperature in degree Celsius
+Simulation temperature in degrees Celsius
+
+flicker noise coefficient
+Flicker noise coefficient
+
+flicker noise exponent
+Flicker noise exponent
+
+flicker noise frequency exponent
+Flicker noise frequency exponent
+
+burst noise coefficient
+Burst noise coefficient
+
+burst noise exponent
+Burst noise exponent
+
+burst noise corner frequency in Hertz
+Burst noise corner frequency in hertz
+
+excess phase in degrees
+Excess phase in degrees
+
+temperature exponent for forward- and reverse beta
+Temperature exponent for forward- and reverse beta
+
+saturation current temperature exponent
+Saturation current temperature exponent
+
+energy bandgap in eV
+Energy bandgap in eV
+
+temperature at which parameters were extracted
+Temperature at which parameters were extracted
+
+default area for bipolar transistor
+Default area for bipolar transistor
+
+bipolar junction transistor with substrate
+Bipolar junction transistor with substrate
+
+npn transistor
+NPN transistor
+
+pnp transistor
+PNP transistor
+
+current probe
+Current probe
+
+junction field-effect transistor
+Junction field-effect transistor
+
+polarity
+Polarity
+
+threshold voltage
+Threshold voltage
+
+transconductance parameter
+Transconductance parameter
+
+channel-length modulation parameter
+Channel-length modulation parameter
+
+parasitic drain resistance
+Parasitic drain resistance
+
+parasitic source resistance
+Parasitic source resistance
+
+gate-junction saturation current
+Gate-junction saturation current
+
+gate-junction emission coefficient
+Gate-junction emission coefficient
+
+gate-junction recombination current parameter
+Gate-junction recombination current parameter
+
+zero-bias gate-source junction capacitance
+Zero-bias gate-source junction capacitance
+
+zero-bias gate-drain junction capacitance
+Zero-bias gate-drain junction capacitance
+
+gate-junction potential
+Gate-junction potential
+
+forward-bias junction capacitance coefficient
+Forward-bias junction capacitance coefficient
+
+gate P-N grading coefficient
+Gate P-N grading coefficient
+
+flicker noise coefficient
+Flicker noise coefficient
+
+flicker noise exponent
+Flicker noise exponent
+
+flicker noise frequency exponent
+Flicker noise frequency exponent
+
+simulation temperature in degree Celsius
+Simulation temperature in degrees Celsius
+
+saturation current temperature exponent
+Saturation current temperature exponent
+
+temperature at which parameters were extracted
+Temperature at which parameters were extracted
+
+default area for JFET
+Default area for JFET
+
+n-JFET
+N-JFET
+
+p-JFET
+P-JFET
+
+voltage controlled voltage source
+Voltage controlled voltage source
+
+forward transfer factor
+Forward transfer factor
+
+delay time
+Delay time
+
+logical NOR
+Logical NOR
+
+n-port NOR
+N-port NOR
+
+externally driven transient simulation
+Externally driven transient simulation
+
+integration method
+Integration method
+
+order of integration method
+Order of integration method
+
+initial step size in seconds
+Initial step size in seconds
+
+minimum step size in seconds
+Minimum step size in seconds
+
+maximum number of iterations until error
+Maximum number of iterations until error
+
+relative tolerance for convergence
+Relative tolerance for convergence
+
+absolute tolerance for currents
+Absolute tolerance for currents
+
+absolute tolerance for voltages
+Absolute tolerance for voltages
+
+simulation temperature in degree Celsius
+Simulation temperature in degrees Celsius
+
+relative tolerance of local truncation error
+Relative tolerance of local truncation error
+
+absolute tolerance of local truncation error
+Absolute tolerance of local truncation error
+
+overestimation of local truncation error
+Overestimation of local truncation error
+
+method for solving the circuit matrix
+Method for solving the circuit matrix
+
+relax time step raster
+Relax time step raster
+
+perform an initial DC analysis
+Perform an initial DC analysis
+
+maximum step size in seconds
+Maximum step size in seconds
+
+isolator
+Isolator
+
+reference impedance of input port
+Reference impedance of input port
+
+reference impedance of output port
+Reference impedance of output port
+
+simulation temperature in degree Celsius
+Simulation temperature in degrees Celsius
+
+microstrip mitered bend
+Microstrip mitered bend
+
+substrate
+Substrate
+
+width of line
+Width of line
+
+ideal 4-terminal transmission line
+Ideal 4-terminal transmission line
+
+characteristic impedance
+Characteristic impedance
+
+electrical length of the line
+Electrical length of the line
+
+attenuation factor per length in 1/m
+Attenuation factor per length in 1/m
+
+simulation temperature in degree Celsius
+Simulation temperature in degrees Celsius
+
+logical NAND
+Logical NAND
+
+n-port NAND
+N-port NAND
+
+Put operating points into dataset
+Put operating points into the dataset
+
+triac (bidirectional thyristor)
+Triac (bidirectional thyristor)
+
+parasitic capacitance
+Parasitic capacitance
+
+saturation current
+Saturation current
+
+emission coefficient
+Emission coefficient
+
+intrinsic junction resistance
+Intrinsic junction resistance
+
+gate resistance
+Gate resistance
+
+simulation temperature
+Simulation temperature in degrees Celsius
+
+dc block
+DC block
+
+for transient simulation: capacitance in Farad
+For transient simulation: capacitance in farads
+
+dc Block
+DC block
+
+ideal coupler
+Ideal coupler
+
+coupling factor
+Coupling factor
+
+phase shift of coupling path in degree
+Phase shift of coupling path in degrees
+
+reference impedance
+Reference impedance
+
+simulation to perform parameter sweep on
+Simulation to perform parameter sweep on
+
+sweep type
+Sweep type
+
+parameter to sweep
+Parameter to sweep
+
+start value for sweep
+Start value for sweep
+
+stop value for sweep
+Stop value for sweep
+
+number of simulation steps
+Number of simulation steps
+
+exponential current source
+Exponential current source
+
+current before rising edge
+Current before rising edge
+
+maximum current of the pulse
+Maximum current of the pulse
+
+start time of the exponentially rising edge
+Start time of the exponentially rising edge
+
+start of exponential decay
+Start of exponential decay
+
+time constant of the rising edge
+Time constant of the rising edge
+
+time constant of the falling edge
+Time constant of the falling edge
+
+exponential voltage source
+Exponential voltage source
+
+voltage before rising edge
+Voltage before rising edge
+
+maximum voltage of the pulse
+Maximum voltage of the pulse
+
+start time of the exponentially rising edge
+Start time of the exponentially rising edge
+
+start of exponential decay
+Start of exponential decay
+
+rise time of the rising edge
+Rise time of the rising edge
+
+fall time of the falling edge
+Fall time of the falling edge
+
+current controlled voltage source
+Current controlled voltage source
+
+forward transfer factor
+Forward transfer factor
+
+delay time
+Delay time
+
+file based voltage source
+File-based voltage source
+
+name of the sample file
+Name of the sample file
+
+interpolation type
+Interpolation type
+
+repeat waveform
+Repeat waveform
+
+voltage gain
+Voltage gain
+
+delay time
+Delay time
+
+coupled transmission lines
+Coupled transmission lines
+
+characteristic impedance of even mode
+Characteristic impedance of even mode
+
+characteristic impedance of odd mode
+Characteristic impedance of odd mode
+
+electrical length of the line
+Electrical length of the line
+
+relative dielectric constant of even mode
+Relative dielectric constant of even mode
+
+relative dielectric constant of odd mode
+Relative dielectric constant of odd mode
+
+attenuation factor per length of even mode
+Attenuation factor per length of even mode
+
+attenuation factor per length of odd mode
+Attenuation factor per length of odd mode
+
+simulation temperature in degree Celsius
+Simulation temperature in degrees Celsius
+
+coplanar line
+Coplanar line
+
+name of substrate definition
+Name of substrate definition
+
+width of the line
+Width of the line
+
+width of a gap
+Width of the gap
+
+length of the line
+Length of the line
+
+material at the backside of the substrate
+Material at the backside of the substrate
+
+use approximation instead of precise equation
+Use approximation instead of precise equation
+
+ideal rectangle current source
+Ideal rectangle current source
+
+current at high pulse
+Current at high pulse
+
+duration of high pulses
+Duration of high pulses
+
+duration of low pulses
+Duration of low pulses
+
+rise time of the leading edge
+Rise time of the leading edge
+
+fall time of the trailing edge
+Fall time of the trailing edge
+
+initial delay time
+Initial delay time
+
+coplanar open
+Coplanar open
+
+name of substrate definition
+Name of substrate definition
+
+width of the line
+Width of the line
+
+width of a gap
+Width of the gap
+
+width of gap at end of line
+Width of the gap at end of line
+
+material at the backside of the substrate
+Material at the backside of the substrate
+
+transient simulation
+Transient simulation
+
+sweep type
+Sweep type
+
+start time in seconds
+Start time in seconds
+
+stop time in seconds
+Stop time in seconds
+
+number of simulation time steps
+Number of simulation time steps
+
+integration method
+Integration method
+
+order of integration method
+Order of integration method
+
+initial step size in seconds
+Initial step size in seconds
+
+minimum step size in seconds
+Minimum step size in seconds
+
+maximum number of iterations until error
+Maximum number of iterations until error
+
+relative tolerance for convergence
+Relative tolerance for convergence
+
+absolute tolerance for currents
+Absolute tolerance for currents
+
+absolute tolerance for voltages
+Absolute tolerance for voltages
+
+simulation temperature in degree Celsius
+Simulation temperature in degrees Celsius
+
+relative tolerance of local truncation error
+Relative tolerance of local truncation error
+
+absolute tolerance of local truncation error
+Absolute tolerance of local truncation error
+
+overestimation of local truncation error
+Overestimation of local truncation error
+
+method for solving the circuit matrix
+Method for solving the circuit matrix
+
+relax time step raster
+Relax time step raster
+
+perform an initial DC analysis
+Perform an initial DC analysis
+
+maximum step size in seconds
+Maximum step size in seconds
+
+bipolar junction transistor
+Bipolar junction transistor
+
+npn transistor
+NPN transistor
+
+pnp transistor
+PNP transistor
+
+externally controlled voltage source
+Externally controlled voltage source
+
+voltage in Volts
+Voltage in volts
+
+interpolation type
+Interpolation type
+
+npn HICUM L0 v1.2
+NPN HICUM L0 v1.2
+
+pnp HICUM L0 v1.2
+PNP HICUM L0 v1.2
+
+ideal symmetrical transformer
+Ideal symmetrical transformer
+
+voltage transformation ratio of coil 1
+Voltage transformation ratio of coil 1
+
+voltage transformation ratio of coil 2
+Voltage transformation ratio of coil 2
+
+symmetric Transformer
+Symmetric Transformer
+
+npn HICUM L0 v1.2g
+NPN HICUM L0 v1.2g
+
+pnp HICUM L0 v1.2g
+PNP HICUM L0 v1.2g
+
+bond wire
+Bond wire
+
+length of the wire
+Length of the wire
+
+diameter of the wire
+Diameter of the wire
+
+height above ground plane
+Height above ground plane
+
+specific resistance of the metal
+Specific resistance of the metal
+
+relative permeability of the metal
+Relative permeability of the metal
+
+bond wire model
+Bond wire model
+
+substrate
+Substrate
+
+simulation temperature in degree Celsius
+Simulation temperature in degrees Celsius
+
+microstrip line
+Microstrip line
+
+name of substrate definition
+Name of substrate definition
+
+width of the line
+Width of the line
+
+length of the line
+Length of the line
+
+quasi-static microstrip model
+Quasi-static microstrip model
+
+microstrip dispersion model
+Microstrip dispersion model
+
+simulation temperature in degree Celsius
+Simulation temperature in degrees Celsius
+
+name of qucs library file
+Name of Qucs library file
+
+name of component in library
+Name of the component in library
+
+voltage controlled voltage source
+Voltage controlled voltage source
+
+resistance gain
+Resistance gain
+
+silicon controlled rectifier (SCR)
+Silicon controlled rectifier (SCR)
+
+breakover voltage
+Breakover voltage
+
+gate trigger current
+Gate trigger current
+
+parasitic capacitance
+Parasitic capacitance
+
+saturation current
+Saturation current
+
+emission coefficient
+Emission coefficient
+
+intrinsic junction resistance
+Intrinsic junction resistance
+
+gate resistance
+Gate resistance
+
+simulation temperature
+Simulation temperature in degrees Celsius
+
+several mutual inductors
+Several mutual inductors
+
+number of mutual inductances
+Number of mutual inductances
+
+inductance of coil
+Inductance of coil
+
+coupling factor between coil %1 and coil %2
+Coupling factor between coil %1 and coil %2
+
+inductance of coil
+Inductance of coil
+
+inductance of coil
+Inductance of coil
+
+coupling factor between coil %1 and coil %2
+Coupling factor between coil %1 and coil %2
+
+widest side
+Widest side
+
+shortest side
+Shortest side
+
+mechanical length of the line
+Mechanical length of the line
+
+relative permittivity of dielectric
+Relative permittivity of the dielectric
+
+relative permeability of conductor
+Relative permeability of the conductor
+
+loss tangent
+Loss tangent
+
+specific resistance of conductor
+Specific resistance of the conductor
+
+simulation temperature in degree Celsius
+Simulation temperature in degrees Celsius
+
+material parameter for temperature model
+Material parameter for temperature model
+
+delay time
+Delay time
+
+hybrid (unsymmetrical 3dB coupler)
+Hybrid (unsymmetrical 3dB coupler)
+
+phase shift in degree
+Phase shift in degrees
+
+reference impedance
+Reference impedance
+
+coplanar gap
+Coplanar gap
+
+name of substrate definition
+Name of substrate definition
+
+width of the line
+Width of the line
+
+width of a gap
+Width of the gap
+
+width of gap between the two lines
+Width of gap between the two lines
+
+bsim4v30pMOS
+Bsim4v30pMOS
+
+digital source
+Digital source
+
+number of the port
+Number of the port
+
+initial output value
+Initial output value
+
+list of times for changing output value
+List of times for changing output value
+
+voltage of high level
+Voltage of high level
+
+digital source
+Digital source
+
+ac power source
+AC power source
+
+number of the port
+Number of the port
+
+port impedance
+Port impedance
+
+frequency in Hertz
+Frequency in hertz
+
+simulation temperature in degree Celsius
+Simulation temperature in degrees Celsius
+
+microstrip corner
+Microstrip corner
+
+substrate
+Substrate
+
+width of line
+Width of line
+
+resistor
+Resistor
+
+ohmic resistance in Ohms
+Ohmic resistance in ohms
+
+simulation temperature in degree Celsius
+Simulation temperature in degrees Celsius
+
+first order temperature coefficient
+First order temperature coefficient
+
+second order temperature coefficient
+Second order temperature coefficient
+
+temperature at which parameters were extracted
+Temperature at which parameters were extracted
+
+schematic symbol
+Schematic symbol
+
+sim
+Sim
+
+spice
+Spice
+
+equation defined device
+Equation defined device
+
+type of equations
+Type of equations
+
+number of branches
+Number of branches
+
+current equation
+Current equation
+
+charge equation
+Charge equation
+
+current equation
+Current equation
+
+charge equation
+Charge equation
+
+operational amplifier
+Operational amplifier
+
+voltage gain
+Voltage gain
+
+absolute value of maximum and minimum output voltage
+Absolute value of maximum and minimum output voltage
+
+inductor
+Inductor
+
+inductance in Henry
+Inductance in henries
+
+initial current for transient simulation
+Initial current for transient simulation
+
+ideal ac voltage source
+Ideal AC voltage source
+
+peak voltage in Volts
+Peak voltage in volts
+
+frequency in Hertz
+Frequency in hertz
+
+initial phase in degrees
+Initial phase in degrees
+
+damping factor (transient simulation only)
+Damping factor (transient simulation only)
+
+ac Voltage Source
+AC Voltage Source
+
+noise voltage source
+Noise voltage source
+
+voltage power spectral density in V^2/Hz
+Voltage power spectral density in V^2/Hz
+
+frequency exponent
+Frequency exponent
+
+frequency coefficient
+Frequency coefficient
+
+additive frequency term
+Additive frequency term
+
+ideal voltage pulse source
+Ideal voltage pulse source
+
+voltage before and after the pulse
+Voltage before and after the pulse
+
+voltage of the pulse
+Voltage of the pulse
+
+start time of the pulse
+Start time of the pulse
+
+ending time of the pulse
+End time of the pulse
+
+rise time of the leading edge
+Rise time of the leading edge
+
+fall time of the trailing edge
+Fall time of the trailing edge
+
+logical XOR
+Logical XOR
+
+n-port XOR
+N-port XOR
+
+Start frequency in Hertz
+Start frequency in hertz
+
+Stop frequency in Hertz
+Stop frequency in hertz
+
+Frequency in Hertz
+Frequency in hertz
+
+ideal dc voltage source
+Ideal dc voltage source
+
+voltage in Volts
+Voltage in volts
+
+dc Voltage Source
+DC voltage source
+
+logical AND
+Logical AND
+
+n-port AND
+N-port AND
+
+coaxial transmission line
+Coaxial transmission line
+
+relative permittivity of dielectric
+Relative permittivity of the dielectric
+
+specific resistance of conductor
+Specific resistance of the conductor
+
+relative permeability of conductor
+Relative permeability of the conductor
+
+inner diameter of shield
+Inner diameter of the shield
+
+diameter of inner conductor
+Diameter of the inner conductor
+
+mechanical length of the line
+Mechanical length of the line
+
+loss tangent
+Loss tangent
+
+simulation temperature in degree Celsius
+Simulation temperature in degrees Celsius
+
+ideal current pulse source
+Ideal current pulse source
+
+current before and after the pulse
+Current before and after the pulse
+
+current of the pulse
+Current of the pulse
+
+start time of the pulse
+Start time of the pulse
+
+ending time of the pulse
+End time of the pulse
+
+rise time of the leading edge
+Rise time of the leading edge
+
+fall time of the trailing edge
+Fall time of the trailing edge
+
+name of the s parameter file
+Name of the S-parameter file
+
+data type
+Data type
+
+interpolation type
+Interpolation type
+
+representation during DC analysis
+Representation during DC analysis
+
+number of ports
+Number of ports
+
+n-port S parameter file
+N-port S-parameter file
+
+file
+File
+
+digital simulation
+Digital simulation
+
+type of simulation
+Type of simulation
+
+duration of TimeList simulation
+Duration of TimeList simulation
+
+netlist format
+Netlist format
+
+digital simulation
+Digital simulation
+
+phase shifter
+Phase shifter
+
+phase shift in degree
+Phase shift in degrees
+
+reference impedance
+Reference impedance
+
+microstrip via
+Microstrip via
+
+substrate
+Substrate
+
+diameter of round via conductor
+Diameter of round via conductor
+
+simulation temperature in degree Celsius
+Simulation temperature in degrees Celsius
+
+gyrator (impedance inverter)
+Gyrator (impedance inverter)
+
+gyrator ratio
+Gyrator ratio
+
+reference impedance
+Reference impedance
+
+microstrip impedance step
+Microstrip impedance step
+
+substrate
+Substrate
+
+width 1 of the line
+Width 1 of the line
+
+width 2 of the line
+Width 2 of the line
+
+quasi-static microstrip model
+Quasi-static microstrip model
+
+microstrip dispersion model
+Microstrip dispersion model
+
+port of a subcircuit
+Port of a subcircuit
+
+number of the port within the subcircuit
+Number of the port within the subcircuit
+
+type of the port (for digital simulation only)
+Type of the port (for digital simulation only)
+
+bias t
+Bias tee
+
+for transient simulation: inductance in Henry
+For transient simulation: inductance in henries
+
+for transient simulation: capacitance in Farad
+For transient simulation: capacitance in farads
+
+twisted pair transmission line
+Twisted pair transmission line
+
+diameter of conductor
+Diameter of the conductor
+
+diameter of wire (conductor and insulator)
+Diameter of wire (conductor and insulator)
+
+physical length of the line
+Physical length of the line
+
+twists per length in 1/m
+Twists per length in 1/m
+
+dielectric constant of insulator
+Dielectric constant of the insulator
+
+relative permeability of conductor
+Relative permeability of the conductor
+
+specific resistance of conductor
+Specific resistance of the conductor
+
+loss tangent
+Loss tangent
+
+simulation temperature in degree Celsius
+Simulation temperature in degrees Celsius
+
+ideal rectangle voltage source
+Ideal rectangular voltage source
+
+voltage of high signal
+Voltage of high signal
+
+duration of high pulses
+Duration of high pulses
+
+duration of low pulses
+Duration of low pulses
+
+rise time of the leading edge
+Rise time of the leading edge
+
+fall time of the trailing edge
+Fall time of the trailing edge
+
+initial delay time
+Initial delay time
+
+display in schematic
+Display in the schematic
+
+display in schematic
+Display in the schematic
+
+linear
+Linear
+
+logarithmic
+Logarithmic
+
+list
+List
+
+constant
+Constant
+
+display in schematic
+Display in the schematic
+
+display in schematic
+Display in the schematic
+
+display in schematic
+Display in the schematic
+
+display in schematic
+Display in the schematic
+
+display in schematic
+Display in the schematic
+
+display in schematic
+Display in the schematic
+
+display
+Display
+
+display in schematic
+Display in the schematic
+
+yes
+Yes
+
+no
+No
+
+yes
+Yes
+
+no
+No
+
+yes
+Yes
+
+yes
+Yes
+
+no
+No
+
+yes
+Yes
+
+no
+No
+
+yes
+Yes
+
+yes
+Yes
+
+no
+No
+
+dc simulation
+DC simulation
+
+simulation temperature in degree Celsius
+Simulation temperature in degrees Celsius
+
+relative tolerance for convergence
+Relative tolerance for convergence
+
+absolute tolerance for currents
+Absolute tolerance for currents
+
+absolute tolerance for voltages
+Absolute tolerance for voltages
+
+put operating points into dataset
+Put operating points into the dataset
+
+maximum number of iterations until error
+Maximum number of iterations until error
+
+save subcircuit nodes into dataset
+Save subcircuit nodes into dataset
+
+preferred convergence algorithm
+Preferred convergence algorithm
+
+method for solving the circuit matrix
+Method for solving the circuit matrix
+
+dc simulation
+DC simulation
+
+show file name in schematic
+Show file name in schematic
+
+include SPICE simulations
+Include SPICE simulations
+
+preprocessor
+Preprocessor
+
+microstrip tee
+Microstrip tee
+
+substrate
+Substrate
+
+width of line 1
+Width of line 1
+
+width of line 2
+Width of line 2
+
+width of line 3
+Width of line 3
+
+quasi-static microstrip model
+Quasi-static microstrip model
+
+microstrip dispersion model
+Microstrip dispersion model
+
+temperature in degree Celsius
+Temperature in degrees Celsius
+
+show port numbers in symbol or not
+Show port numbers in symbol or not
+
+dc feed
+DC feed
+
+for transient simulation: inductance in Henry
+For transient simulation: inductance in henries
+
+dc Feed
+Dc Feed
+
+open new project
+Open new project
+
+system language
+System language
+
+AdmsXml Path:
+ADMSXml Path:
+
+creating netlist... 
+Creating netlist... 
+
+done.\n
+Done.\n
+
+done.\n
+Done.\n
+
+all components
+All components
+
+resistors
+Resistors
+
+capacitors
+Capacitors
+
+inductors
+Inductors
+
+transistors
+Transistors
+
+these components ?
+These components?
+
+include user libraries
+Include user libraries
+
+auto-load selected
+Auto-load selected
+
+auto-load all
+Auto-load all
+
+calculate two-port matching
+Calculate two-port matching
+
+real/imag
+Real/imag
+
+mag/deg
+Mag/deg
+
+open data display after simulation
+Open data display after simulation
+
+run script after simulation
+Run script after simulation
+
+show Grid
+Show Grid
+
+horizontal Grid:
+Horizontal Grid:
+
+vertical Grid:
+Vertical Grid:
+
+no Frame
+No Frame
+
+unspecified device
+Unspecified device
+
+analog only
+Analog only
+
+digital only
+Digital only
+
+both
+Both
+
+display
+Display
+
+yes
+Yes
+
+display in schematic
+Display in the schematic
+
+yes
+Yes
+
+yes
+Yes
+
+yes
+Yes
+
+yes
+Yes
+
+solid line
+Solid line
+
+dash line
+Dash line
+
+dot line
+Dot line
+
+dash dot line
+Dash dot line
+
+dash dot dot line
+Dash dot dot line
+
+enable filling
+Enable filling
+
+no filling
+No filling
+
+solid
+Solid
+
+dense 1 (densest)
+Dense 1 (densest)
+
+dense 2
+Dense 2
+
+dense 3
+Dense 3
+
+dense 4
+Dense 4
+
+dense 5
+Dense 5
+
+dense 6
+Dense 6
+
+dense 7 (least dense)
+Dense 7 (least dense)
+
+horizontal line
+Horizontal line
+
+vertical line
+Vertical line
+
+crossed lines
+Crossed lines
+
+hatched backwards
+Hatched backwards
+
+hatched forwards
+Hatched forwards
+
+diagonal crossed
+Diagonal crossed
+
+filled Rectangle
+Filled Rectangle
+
+solid line
+Solid line
+
+dash line
+Dash line
+
+dot line
+Dot line
+
+dash dot line
+Dash dot line
+
+dash dot dot line
+Dash dot dot line
+
+two lines
+Two lines
+
+filled
+Filled
+
+filled Ellipse
+Filled Ellipse
+
+no variables
+No variables
+
+no data
+No data
+
+wrong dependency
+Wrong dependency
+
+no data
+No data
+
+wrong dependency
+Wrong dependency
+
+invalid
+Invalid
+
+no variables
+No variables
+
+wrong dependency
+Wrong dependency
+
+no data
+No data
+
+real/imaginary
+Real/imaginary
+
+magnitude/angle (degree)
+Magnitude/angle (degrees)
+
+magnitude/angle (radian)
+Magnitude/angle (radians)
+
+transparent
+Transparent
+
+no variables
+No variables
+
+invalid
+Invalid
+
+wrong dependency
+Wrong dependency
+
+no data
+No data
+
+left Axis
+Left Axis
+
+right Axis
+Right Axis
+
+y-Axis
+Y-Axis
+
+y-Axis
+Y-Axis
+
+smith Axis
+Smith Axis
+
+polar Axis
+Polar Axis
+
+polar Axis
+Polar Axis
+
+smith Axis
+Smith Axis
+
+y-Axis
+Y-Axis
+
+z-Axis
+Z-Axis
+
+real/imaginary
+Real/imaginary
+
+magnitude/angle (degree)
+Magnitude/angle (degrees)
+
+magnitude/angle (radian)
+Magnitude/angle (radians)
+
+solid line
+Solid line
+
+dash line
+Dash line
+
+dot line
+Dot line
+
+long dash line
+Long dash line
+
+stars
+Stars
+
+circles
+Circles
+
+arrows
+Arrows
+
+y-Axis:
+Y-Axis:
+
+x-Axis Label:
+X-Axis Label:
+
+show Grid
+Show Grid
+
+solid line
+Solid line
+
+dash line
+Dash line
+
+dot line
+Dot line
+
+dash dot line
+Dash dot line
+
+dash dot dot line
+Dash dot dot line
+
+logarithmical X Axis Grid
+Logarithmical X Axis Grid
+
+logarithmical
+Logarithmical
+
+logarithmical
+Logarithmical
+
+hide invisible lines
+Hide invisible lines
+
+x-Axis
+X-Axis
+
+manual
+Manual
+
+start
+Start
+
+step
+Step
+
+stop
+Stop
+
+manual
+Manual
+
+start
+Start
+
+number
+Number
+
+step
+Step
+
+stop
+Stop
+
+manual
+Manual
+
+start
+Start
+
+number
+Number
+
+step
+Step
+
+stop
+Stop
+
+metal thickness:
+Metal thickness:
+
+minimum width:
+Minimum width:
+
+maximum width:
+Maximum width:
+
+dual
+Dual
+
+noC
+NoC
+
+noL
+NoL
+

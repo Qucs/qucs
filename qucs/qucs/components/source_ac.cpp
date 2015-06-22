@@ -20,7 +20,7 @@
 
 Source_ac::Source_ac()
 {
-  Description = QObject::tr("ac power source");
+  Description = QObject::tr("AC power source");
 
   Lines.append(new Line(-22,-11, 22,-11,QPen(Qt::darkGray,0)));
   Lines.append(new Line(-22, 11, 22, 11,QPen(Qt::darkGray,0)));
@@ -56,15 +56,15 @@ Source_ac::Source_ac()
 
   // This property must be the first one !
   Props.append(new Property("Num", "1", true,
-		QObject::tr("number of the port")));
+		QObject::tr("Number of the port")));
   Props.append(new Property("Z", "50 Ohm", true,
-		QObject::tr("port impedance")));
+		QObject::tr("Port impedance")));
   Props.append(new Property("P", "0 dBm", false,
 		QObject::tr("(available) ac power in Watts")));
   Props.append(new Property("f", "1 GHz", false,
-		QObject::tr("frequency in Hertz")));
+		QObject::tr("Frequency in hertz")));
   Props.append(new Property("Temp", "26.85", false,
-	QObject::tr("simulation temperature in degree Celsius")));
+	QObject::tr("Simulation temperature in degrees Celsius")));
 
   rotate();  // fix historical flaw
 }

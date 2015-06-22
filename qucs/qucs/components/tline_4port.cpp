@@ -20,7 +20,7 @@
 
 TLine_4Port::TLine_4Port()
 {
-  Description = QObject::tr("ideal 4-terminal transmission line");
+  Description = QObject::tr("Ideal 4-terminal transmission line");
 
   Arcs.append(new Arc(-28,-40, 18, 38,16*232, 16*33,QPen(Qt::darkBlue,1)));
   Arcs.append(new Arc(-28,  2, 18, 38, 16*95, 16*33,QPen(Qt::darkBlue,1)));
@@ -50,13 +50,13 @@ TLine_4Port::TLine_4Port()
   Name  = "Line";
 
   Props.append(new Property("Z", "50 Ohm", true,
-		QObject::tr("characteristic impedance")));
+		QObject::tr("Characteristic impedance")));
   Props.append(new Property("L", "1 mm", true,
-		QObject::tr("electrical length of the line")));
+		QObject::tr("Electrical length of the line")));
   Props.append(new Property("Alpha", "0 dB", false,
-		QObject::tr("attenuation factor per length in 1/m")));
+		QObject::tr("Attenuation factor per length in 1/m")));
   Props.append(new Property("Temp", "26.85", false,
-		QObject::tr("simulation temperature in degree Celsius")));
+		QObject::tr("Simulation temperature in degrees Celsius")));
 }
 
 TLine_4Port::~TLine_4Port()

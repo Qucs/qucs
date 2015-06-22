@@ -20,7 +20,7 @@
 
 BondWire::BondWire()
 {
-  Description = QObject::tr("bond wire");
+  Description = QObject::tr("Bond wire");
 
   Lines.append(new Line(-30, 0,-8, 0,QPen(Qt::darkBlue,3)));
   Lines.append(new Line( 30, 0, 8, 0,QPen(Qt::darkBlue,3)));
@@ -41,21 +41,21 @@ BondWire::BondWire()
   Name  = "Line";
 
   Props.append(new Property("L", "3 mm", true,
-		QObject::tr("length of the wire")));
+		QObject::tr("Length of the wire")));
   Props.append(new Property("D", "50 um", true,
-		QObject::tr("diameter of the wire")));
+		QObject::tr("Diameter of the wire")));
   Props.append(new Property("H", "2 mm", true,
-		QObject::tr("height above ground plane")));
+		QObject::tr("Height above ground plane")));
   Props.append(new Property("rho", "0.022e-6", false,
-		QObject::tr("specific resistance of the metal")));
+		QObject::tr("Specific resistance of the metal")));
   Props.append(new Property("mur", "1", false,
-		QObject::tr("relative permeability of the metal")));
+		QObject::tr("Relative permeability of the metal")));
   Props.append(new Property("Model", "FREESPACE", false,
-	QObject::tr("bond wire model")+" [FREESPACE, MIRROR, DESCHARLES]"));
+	QObject::tr("Bond wire model")+" [FREESPACE, MIRROR, DESCHARLES]"));
   Props.append(new Property("Subst", "Subst1", true,
-		QObject::tr("substrate")));
+		QObject::tr("Substrate")));
   Props.append(new Property("Temp", "26.85", false,
-		QObject::tr("simulation temperature in degree Celsius")));
+		QObject::tr("Simulation temperature in degrees Celsius")));
 }
 
 Component* BondWire::newOne()

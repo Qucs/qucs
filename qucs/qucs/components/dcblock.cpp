@@ -19,7 +19,7 @@
 
 dcBlock::dcBlock()
 {
-  Description = QObject::tr("dc block");
+  Description = QObject::tr("DC block");
 
   Lines.append(new Line(- 4,-11, -4, 11,QPen(Qt::darkBlue,4)));
   Lines.append(new Line(  4,-11,  4, 11,QPen(Qt::darkBlue,4)));
@@ -43,7 +43,7 @@ dcBlock::dcBlock()
   Name  = "C";
 
   Props.append(new Property("C", "1 uF", false,
-	QObject::tr("for transient simulation: capacitance in Farad")));
+	QObject::tr("For transient simulation: capacitance in farads")));
 }
 
 dcBlock::~dcBlock()
@@ -57,7 +57,7 @@ Component* dcBlock::newOne()
 
 Element* dcBlock::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
-  Name = QObject::tr("dc Block");
+  Name = QObject::tr("DC block");
   BitmapFile = (char *) "dcblock";
 
   if(getNewOne)  return new dcBlock();

@@ -779,9 +779,9 @@ void MouseActions::rightPressMenu(Schematic *Doc, QMouseEvent *Event, float fX, 
     QucsMain->editDelete->addTo(ComponentMenu);
   if(focusElement) if(focusElement->Type == isMarker) {
     ComponentMenu->insertSeparator();
-    QString s = QObject::tr("power matching");
+    QString s = QObject::tr("Power matching");
     if( ((Marker*)focusElement)->pGraph->Var == "Sopt" )
-      s = QObject::tr("noise matching");
+      s = QObject::tr("Noise matching");
     ComponentMenu->insertItem(s, QucsMain, SLOT(slotPowerMatching()));
     if( ((Marker*)focusElement)->pGraph->Var.left(2) == "S[" )
       ComponentMenu->insertItem(QObject::tr("2-port matching"), QucsMain,

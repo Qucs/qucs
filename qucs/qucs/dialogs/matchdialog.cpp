@@ -52,7 +52,7 @@ MatchDialog::MatchDialog(QWidget *parent)
 
   all = new QVBoxLayout(this);
 
-  TwoCheck = new QCheckBox(tr("calculate two-port matching"));
+  TwoCheck = new QCheckBox(tr("Calculate two-port matching"));
   all->addWidget(TwoCheck);
   TwoCheck->setChecked(true);
   connect(TwoCheck, SIGNAL(toggled(bool)), SLOT(slotSetTwoPort(bool)));
@@ -92,8 +92,8 @@ MatchDialog::MatchDialog(QWidget *parent)
   h1->addWidget(FormatLabel);
   FormatCombo = new QComboBox();
   h1->addWidget(FormatCombo);
-  FormatCombo->insertItem(tr("real/imag"));
-  FormatCombo->insertItem(tr("mag/deg"));
+  FormatCombo->insertItem(tr("Real/imag"));
+  FormatCombo->insertItem(tr("Mag/deg"));
   connect(FormatCombo, SIGNAL(activated(int)), SLOT(slotChangeMode(int)));
   h1->addStretch(5);
   SParLayout->addLayout(h1);

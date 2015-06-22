@@ -20,7 +20,7 @@
 
 Substrate::Substrate()
 {
-  Description = QObject::tr("substrate definition");
+  Description = QObject::tr("Substrate definition");
 
   Lines.append(new Line(-30,-16, 30,-16,QPen(Qt::darkBlue,2)));
   Lines.append(new Line(-30,-12, 30,-12,QPen(Qt::darkBlue,2)));
@@ -56,17 +56,17 @@ Substrate::Substrate()
   Name  = "Subst";
 
   Props.append(new Property("er", "9.8", true,
-		QObject::tr("relative permittivity")));
+		QObject::tr("Relative permittivity")));
   Props.append(new Property("h", "1 mm", true,
-		QObject::tr("thickness in meters")));
+		QObject::tr("Thickness in meters")));
   Props.append(new Property("t", "35 um", true,
-		QObject::tr("thickness of metalization")));
+		QObject::tr("Thickness of metalization")));
   Props.append(new Property("tand", "2e-4", true,
-		QObject::tr("loss tangent")));
+		QObject::tr("Loss tangent")));
   Props.append(new Property("rho", "0.022e-6", true,
-		QObject::tr("specific resistance of metal")));
+		QObject::tr("Specific resistance of metal")));
   Props.append(new Property("D", "0.15e-6", true,
-		QObject::tr("rms substrate roughness")));
+		QObject::tr("RMS substrate roughness")));
 }
 
 Substrate::~Substrate()

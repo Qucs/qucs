@@ -59,11 +59,11 @@ FillDialog::FillDialog(const QString& _Caption, bool show, QWidget *parent)
 
   gp1->addWidget(new QLabel(tr("Line Style: "), Tab1), 2,0);
   StyleBox = new QComboBox(Tab1);
-  StyleBox->insertItem(tr("solid line"));
-  StyleBox->insertItem(tr("dash line"));
-  StyleBox->insertItem(tr("dot line"));
-  StyleBox->insertItem(tr("dash dot line"));
-  StyleBox->insertItem(tr("dash dot dot line"));
+  StyleBox->insertItem(tr("Solid line"));
+  StyleBox->insertItem(tr("Dash line"));
+  StyleBox->insertItem(tr("Dot line"));
+  StyleBox->insertItem(tr("Dash dot line"));
+  StyleBox->insertItem(tr("Dash dot dot line"));
   gp1->addWidget(StyleBox, 2,1);
 
 
@@ -74,7 +74,7 @@ if(show) {
   QWidget *Tab2 = new QWidget(t);
   QGridLayout *gp2 = new QGridLayout(Tab2,3,2,5,5);
 
-  CheckFilled = new QCheckBox(tr("enable filling"),Tab2);
+  CheckFilled = new QCheckBox(tr("Enable filling"),Tab2);
   connect(CheckFilled, SIGNAL(toggled(bool)), SLOT(slotCheckFilled(bool)));
   gp2->addMultiCellWidget(CheckFilled, 0,0,0,1);
 
@@ -89,21 +89,21 @@ if(show) {
   FillLabel2 = new QLabel(tr("Fill Style: "), Tab2);
   gp2->addWidget(FillLabel2, 2,0);
   FillStyleBox = new QComboBox(Tab2);
-  FillStyleBox->insertItem(tr("no filling"));
-  FillStyleBox->insertItem(tr("solid"));
-  FillStyleBox->insertItem(tr("dense 1 (densest)"));
-  FillStyleBox->insertItem(tr("dense 2"));
-  FillStyleBox->insertItem(tr("dense 3"));
-  FillStyleBox->insertItem(tr("dense 4"));
-  FillStyleBox->insertItem(tr("dense 5"));
-  FillStyleBox->insertItem(tr("dense 6"));
-  FillStyleBox->insertItem(tr("dense 7 (least dense)"));
-  FillStyleBox->insertItem(tr("horizontal line"));
-  FillStyleBox->insertItem(tr("vertical line"));
-  FillStyleBox->insertItem(tr("crossed lines"));
-  FillStyleBox->insertItem(tr("hatched backwards"));
-  FillStyleBox->insertItem(tr("hatched forwards"));
-  FillStyleBox->insertItem(tr("diagonal crossed"));
+  FillStyleBox->insertItem(tr("No filling"));
+  FillStyleBox->insertItem(tr("Solid"));
+  FillStyleBox->insertItem(tr("Dense 1 (densest)"));
+  FillStyleBox->insertItem(tr("Dense 2"));
+  FillStyleBox->insertItem(tr("Dense 3"));
+  FillStyleBox->insertItem(tr("Dense 4"));
+  FillStyleBox->insertItem(tr("Dense 5"));
+  FillStyleBox->insertItem(tr("Dense 6"));
+  FillStyleBox->insertItem(tr("Dense 7 (least dense)"));
+  FillStyleBox->insertItem(tr("Horizontal line"));
+  FillStyleBox->insertItem(tr("Vertical line"));
+  FillStyleBox->insertItem(tr("Crossed lines"));
+  FillStyleBox->insertItem(tr("Hatched backwards"));
+  FillStyleBox->insertItem(tr("Hatched forwards"));
+  FillStyleBox->insertItem(tr("Diagonal crossed"));
   gp2->addWidget(FillStyleBox, 2,1);
 
 

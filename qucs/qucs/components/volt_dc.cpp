@@ -20,7 +20,7 @@
 
 Volt_dc::Volt_dc()
 {
-  Description = QObject::tr("ideal dc voltage source");
+  Description = QObject::tr("Ideal dc voltage source");
 
   Lines.append(new Line(  4,-13,  4, 13,QPen(Qt::darkBlue,2)));
   Lines.append(new Line( -4, -6, -4,  6,QPen(Qt::darkBlue,4)));
@@ -42,7 +42,7 @@ Volt_dc::Volt_dc()
   Name  = "V";
 
   Props.append(new Property("U", "1 V", true,
-		QObject::tr("voltage in Volts")));
+		QObject::tr("Voltage in volts")));
 
   rotate();  // fix historical flaw
 }
@@ -58,7 +58,7 @@ Component* Volt_dc::newOne()
 
 Element* Volt_dc::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
-  Name = QObject::tr("dc Voltage Source");
+  Name = QObject::tr("DC voltage source");
   BitmapFile = (char *) "dc_voltage";
 
   if(getNewOne)  return new Volt_dc();

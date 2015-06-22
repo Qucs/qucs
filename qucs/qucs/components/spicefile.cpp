@@ -102,11 +102,11 @@ void SpiceFile::createSymbol()
   int w, i = fHeight/2;
   if(withSim) {
     i = fHeight - 2;
-    tmp = QObject::tr("sim");
+    tmp = QObject::tr("Sim");
     w = smallmetrics.width(tmp);
     Texts.append(new Text(w/-2, 0, tmp, Qt::red));
   }
-  tmp = QObject::tr("spice");
+  tmp = QObject::tr("Spice");
   w = smallmetrics.boundingRect(tmp).width();
   Texts.append(new Text(w/-2, -i, tmp));
 

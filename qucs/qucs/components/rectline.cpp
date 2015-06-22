@@ -47,23 +47,23 @@ RectLine::RectLine()
   Name  = "Line";
 
   Props.append(new Property("a", "2.95 mm", true,
-		QObject::tr("widest side")));
+		QObject::tr("Widest side")));
   Props.append(new Property("b", "0.9 mm", true,
-		QObject::tr("shortest side")));
+		QObject::tr("Shortest side")));
   Props.append(new Property("L", "1500 mm", true,
-		QObject::tr("mechanical length of the line")));
+		QObject::tr("Mechanical length of the line")));
   Props.append(new Property("er", "1", false,
-		QObject::tr("relative permittivity of dielectric")));
+		QObject::tr("Relative permittivity of the dielectric")));
   Props.append(new Property("mur", "1", false,
-		QObject::tr("relative permeability of conductor")));
+		QObject::tr("Relative permeability of the conductor")));
   Props.append(new Property("tand", "0", false,
-		QObject::tr("loss tangent")));
+		QObject::tr("Loss tangent")));
   Props.append(new Property("rho", "0.022e-6", false,
-		QObject::tr("specific resistance of conductor")));
+		QObject::tr("Specific resistance of the conductor")));
   Props.append(new Property("Temp", "26.85", false,
-		QObject::tr("simulation temperature in degree Celsius")));
+		QObject::tr("Simulation temperature in degrees Celsius")));
   Props.append(new Property("Material", "unspecified", false,
-		QObject::tr("material parameter for temperature model")+
+		QObject::tr("Material parameter for temperature model")+
 			    " [unspecified, Copper, StainlessSteel, Gold]"));
 }
 

@@ -20,7 +20,7 @@
 
 vPulse::vPulse()
 {
-  Description = QObject::tr("ideal voltage pulse source");
+  Description = QObject::tr("Ideal voltage pulse source");
 
   Arcs.append(new Arc(-12,-12, 24, 24,     0, 16*360,QPen(Qt::darkBlue,2)));
   Lines.append(new Line(-30,  0,-12,  0,QPen(Qt::darkBlue,2)));
@@ -47,17 +47,17 @@ vPulse::vPulse()
   Name  = "V";
 
   Props.append(new Property("U1", "0 V", true,
-		QObject::tr("voltage before and after the pulse")));
+		QObject::tr("Voltage before and after the pulse")));
   Props.append(new Property("U2", "1 V", true,
-		QObject::tr("voltage of the pulse")));
+		QObject::tr("Voltage of the pulse")));
   Props.append(new Property("T1", "0", true,
-		QObject::tr("start time of the pulse")));
+		QObject::tr("Start time of the pulse")));
   Props.append(new Property("T2", "1 ms", true,
-		QObject::tr("ending time of the pulse")));
+		QObject::tr("End time of the pulse")));
   Props.append(new Property("Tr", "1 ns", false,
-		QObject::tr("rise time of the leading edge")));
+		QObject::tr("Rise time of the leading edge")));
   Props.append(new Property("Tf", "1 ns", false,
-		QObject::tr("fall time of the trailing edge")));
+		QObject::tr("Fall time of the trailing edge")));
 
   rotate();  // fix historical flaw
 }

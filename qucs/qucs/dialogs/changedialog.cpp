@@ -52,11 +52,11 @@ ChangeDialog::ChangeDialog(Schematic *Doc_)
 
   all->addWidget(new QLabel(tr("Components:"), this), 0,0);
   CompTypeEdit = new QComboBox(this);
-  CompTypeEdit->insertItem(tr("all components"));
-  CompTypeEdit->insertItem(tr("resistors"));
-  CompTypeEdit->insertItem(tr("capacitors"));
-  CompTypeEdit->insertItem(tr("inductors"));
-  CompTypeEdit->insertItem(tr("transistors"));
+  CompTypeEdit->insertItem(tr("All components"));
+  CompTypeEdit->insertItem(tr("Resistors"));
+  CompTypeEdit->insertItem(tr("Capacitors"));
+  CompTypeEdit->insertItem(tr("Inductors"));
+  CompTypeEdit->insertItem(tr("Transistors"));
   all->addWidget(CompTypeEdit, 0,1);
 
   all->addWidget(new QLabel(tr("Component Names:"), this), 1,0);
@@ -149,7 +149,7 @@ void ChangeDialog::slotButtReplace()
   QVBoxLayout *Dia_Box = new QVBoxLayout(Dia_Scroll->viewport());
   Dia_Scroll->insertChild(Dia_Box);
   QLabel *Dia_Label = new QLabel(tr("Change properties of\n")
-                               + tr("these components ?"), Dia);
+                               + tr("These components?"), Dia);
   Dia_All->addWidget(Dia_Label);
   
   QHBoxLayout *Dia_h = new QHBoxLayout(Dia);

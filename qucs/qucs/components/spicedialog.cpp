@@ -80,7 +80,7 @@ SpiceDialog::SpiceDialog(QucsApp* App_, SpiceFile *c, Schematic *d)
   topGrid->addWidget(ButtBrowse, 1,2);
 
 
-  FileCheck = new QCheckBox(tr("show file name in schematic"), myParent);
+  FileCheck = new QCheckBox(tr("Show file name in schematic"), myParent);
   ButtEdit = new QPushButton(tr("Edit"), myParent);
   connect(ButtEdit, SIGNAL(clicked()), SLOT(slotButtEdit()));
 
@@ -88,7 +88,7 @@ SpiceDialog::SpiceDialog(QucsApp* App_, SpiceFile *c, Schematic *d)
   topGrid->addWidget(ButtEdit, 2, 2);
 
 
-  SimCheck = new QCheckBox(tr("include SPICE simulations"), myParent);
+  SimCheck = new QCheckBox(tr("Include SPICE simulations"), myParent);
   topGrid->addWidget(SimCheck, 3,1);
 
   QHBoxLayout *hcenter = new QHBoxLayout;
@@ -97,7 +97,7 @@ SpiceDialog::SpiceDialog(QucsApp* App_, SpiceFile *c, Schematic *d)
   hcenter->setSpacing(5);
   PrepCombo = new QComboBox();
   PrepCombo->insertItems(0, QStringList() << "none" << "ps2sp" << "spicepp" << "spiceprm" );
-  QLabel *PrepLabel = new QLabel(tr("preprocessor"));
+  QLabel *PrepLabel = new QLabel(tr("Preprocessor"));
   PrepLabel->setMargin(5);
   connect(PrepCombo, SIGNAL(activated(int)), SLOT(slotPrepChanged(int)));
 

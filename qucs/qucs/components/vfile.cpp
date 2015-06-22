@@ -21,7 +21,7 @@
 
 vFile::vFile()
 {
-  Description = QObject::tr("file based voltage source");
+  Description = QObject::tr("File-based voltage source");
 
   Arcs.append(new Arc(-12,-12, 24, 24,     0, 16*360,QPen(Qt::darkBlue,2)));
   Arcs.append(new Arc( -3, -7,  7,  7,16*270, 16*180,QPen(Qt::darkBlue,2)));
@@ -52,13 +52,13 @@ vFile::vFile()
   Name  = "V";
 
   Props.append(new Property("File", "vfile.dat", true,
-		QObject::tr("name of the sample file")));
+		QObject::tr("Name of the sample file")));
   Props.append(new Property("Interpolator", "linear", false,
-		QObject::tr("interpolation type")+" [hold, linear, cubic]"));
+		QObject::tr("Interpolation type")+" [hold, linear, cubic]"));
   Props.append(new Property("Repeat", "no", false,
-		QObject::tr("repeat waveform")+" [no, yes]"));
-  Props.append(new Property("G", "1", false, QObject::tr("voltage gain")));
-  Props.append(new Property("T", "0", false, QObject::tr("delay time")));
+		QObject::tr("Repeat waveform")+" [no, yes]"));
+  Props.append(new Property("G", "1", false, QObject::tr("Voltage gain")));
+  Props.append(new Property("T", "0", false, QObject::tr("Delay time")));
 
   rotate();  // fix historical flaw
 }

@@ -20,7 +20,7 @@
 
 vProbe::vProbe()
 {
-  Description = QObject::tr("voltage probe");
+  Description = QObject::tr("Voltage probe");
 
   Lines.append(new Line(-20,-31, 20,-31,QPen(Qt::darkBlue,2)));
   Lines.append(new Line(-20,  9, 20,  9,QPen(Qt::darkBlue,2)));

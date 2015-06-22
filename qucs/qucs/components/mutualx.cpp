@@ -24,7 +24,7 @@
 
 MutualX::MutualX()
 {
-  Description = QObject::tr("several mutual inductors");
+  Description = QObject::tr("Several mutual inductors");
 
   Model = "MUTX";
   Name  = "Tr";
@@ -32,17 +32,17 @@ MutualX::MutualX()
   const int init_coils=2; // initial number of coils
   // must be the first property!
   Props.append(new Property("coils", QString::number(init_coils), false,
-                QObject::tr("number of mutual inductances")));
+                QObject::tr("Number of mutual inductances")));
 
   for (int i=1;i<=init_coils; i++) {
       Props.append(new Property("L"+QString::number(i), "1 mH", false,
-                                QObject::tr("inductance of coil") + " " + QString::number(i)));
+                                QObject::tr("Inductance of coil") + " " + QString::number(i)));
   }
 
   for(int i = 1; i < init_coils; i++)
     for(int j = i+1; j <= init_coils; j++) {
        QString nam = "k" + QString::number(i) + QString::number(j);
-       QString desc = QObject::tr("coupling factor between coil %1 and coil %2").arg(i).arg(j);
+       QString desc = QObject::tr("Coupling factor between coil %1 and coil %2").arg(i).arg(j);
        Props.append(new Property(nam,"0.9",false,desc));
     }
 
@@ -167,7 +167,7 @@ void MutualX::createSymbol()
         Props.insert(oldCoils+1, new Property("L"+QString::number(Num-i), 
 					      "1 mH", 
 					      false, 
-					      QObject::tr("inductance of coil") + " " + QString::number(Num-i)));
+					      QObject::tr("Inductance of coil") + " " + QString::number(Num-i)));
       }
 
       for(int i = 1,state=1; i < Num; i++)
@@ -186,7 +186,7 @@ void MutualX::createSymbol()
   Property * p1 = Props.at(1);
   for(int i = 1; i <= Num; i++) {
     p1->Name = "L"+QString::number(i);
-    p1->Description = QObject::tr("inductance of coil") + " " + QString::number(i);
+    p1->Description = QObject::tr("Inductance of coil") + " " + QString::number(i);
     p1 = Props.next();
   }
   // adjust coupling coeffs names
@@ -194,7 +194,7 @@ void MutualX::createSymbol()
     for(int j = i+1; j <= Num; j++,state++) {
       Props.at(Num+state)->Name = "k" + QString::number(i) + QString::number(j);
       Props.at(Num+state)->Description =
-        QObject::tr("coupling factor between coil %1 and coil %2").arg(i).arg(j);
+        QObject::tr("Coupling factor between coil %1 and coil %2").arg(i).arg(j);
     }
 
   // draw symbol

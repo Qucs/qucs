@@ -162,7 +162,7 @@ QucsApp::QucsApp()
 
   // creates a document called "untitled"
   Schematic *d = new Schematic(this, "");
-  int i = DocumentTab->addTab(d, QPixmap(empty_xpm), QObject::tr("untitled"));
+  int i = DocumentTab->addTab(d, QPixmap(empty_xpm), QObject::tr("Untitled"));
   DocumentTab->setCurrentIndex(i);
 
   select->setChecked(true);  // switch on the 'select' action
@@ -265,7 +265,7 @@ void QucsApp::initView()
   ProjGroup->setLayout(ProjGroupLayout);
 
   TabView->addTab(ProjGroup, tr("Projects"));
-  TabView->setTabToolTip(TabView->indexOf(ProjGroup), tr("content of project directory"));
+  TabView->setTabToolTip(TabView->indexOf(ProjGroup), tr("Contents of project directory"));
 
   connect(Projects, SIGNAL(doubleClicked(const QModelIndex &)),
           this, SLOT(slotListProjOpen(const QModelIndex &)));
@@ -276,7 +276,7 @@ void QucsApp::initView()
   Content->setContextMenuPolicy(Qt::CustomContextMenu);
 
   TabView->addTab(Content, tr("Content"));
-  TabView->setTabToolTip(TabView->indexOf(Content), tr("content of current project"));
+  TabView->setTabToolTip(TabView->indexOf(Content), tr("Contents of current project"));
 
   connect(Content, SIGNAL(clicked(const QModelIndex &)), 
           SLOT(slotSelectSubcircuit(const QModelIndex &)));
@@ -307,7 +307,7 @@ void QucsApp::initView()
   CompGroup->setLayout(CompGroupLayout);
 
   TabView->addTab(CompGroup,tr("Components"));
-  TabView->setTabToolTip(TabView->indexOf(CompGroup), tr("components and diagrams"));
+  TabView->setTabToolTip(TabView->indexOf(CompGroup), tr("Components and diagrams"));
   fillComboBox(true);
 
   slotSetCompView(0);
@@ -595,7 +595,7 @@ void QucsApp::fillComboBox (bool setAll)
   CompChoose->clear ();
 
   if (!setAll) {
-    CompChoose->insertItem(QObject::tr("paintings"));
+    CompChoose->insertItem(QObject::tr("Paintings"));
   } else {
     QStringList cats = Category::getCategories ();
     foreach (QString it, cats) {
@@ -624,7 +624,7 @@ void QucsApp::slotSetCompView (int index)
   QString Name;
 
   // if something was registered dynamicaly, get and draw icons into dock
-  if (item == QObject::tr("verilog-a user devices")) {
+  if (item == QObject::tr("Verilog-A user devices")) {
 
     QListWidgetItem *icon;
     QMapIterator<QString, QString> i(Module::vaComponents);
@@ -827,7 +827,7 @@ void QucsApp::slotSelectComponent(QListWidgetItem *item)
       i++;
     }
     //search verilog-a component
-    i = CompChoose->findText(QObject::tr("verilog-a user devices"));
+    i = CompChoose->findText(QObject::tr("Verilog-A user devices"));
     QMapIterator<QString, QString> it(Module::vaComponents);
     while (it.hasNext()) {
       it.next();
@@ -842,7 +842,7 @@ void QucsApp::slotSelectComponent(QListWidgetItem *item)
     }
   } else {
     // handle static and dynamic components
-    if (CompChoose->currentText() == QObject::tr("verilog-a user devices")){
+    if (CompChoose->currentText() == QObject::tr("Verilog-A user devices")){
       InfosVA = Comps.at(i)->infoVA;
 
       // get JSON file out of item name on widgetitem
@@ -903,7 +903,7 @@ void QucsApp::slotShowContentMenu(const QPoint& pos)
 // ----------------------------------------------------------
 QString QucsApp::fileType (const QString& Ext)
 {
-  QString Type = tr("unknown");
+  QString Type = tr("Unknown");
   if (Ext == "v")
     Type = tr("Verilog source");
   else if (Ext == "va")
@@ -911,17 +911,17 @@ QString QucsApp::fileType (const QString& Ext)
   else if (Ext == "vhd" || Ext == "vhdl")
     Type = tr("VHDL source");
   else if (Ext == "dat")
-    Type = tr("data file");
+    Type = tr("Data file");
   else if (Ext == "dpl")
-    Type = tr("data display");
+    Type = tr("Data display");
   else if (Ext == "sch")
-    Type = tr("schematic");
+    Type = tr("Schematic");
   else if (Ext == "sym")
-    Type = tr("symbol");
+    Type = tr("Symbol");
   else if (Ext == "vhdl.cfg" || Ext == "vhd.cfg")
     Type = tr("VHDL configuration");
   else if (Ext == "cfg")
-    Type = tr("configuration");
+    Type = tr("Configuration");
   return Type;
 }
 
@@ -980,7 +980,7 @@ void QucsApp::slotCMenuCopy()
     }
 
     if (QFile::exists(dir.filePath(s))) {  //check New Name exists
-      QMessageBox::critical(this, tr("error"), tr("Cannot copy file to identical name: %1").arg(filename));
+      QMessageBox::critical(this, tr("Error"), tr("Cannot copy file to identical name: %1").arg(filename));
       return;
     }
 
@@ -1138,7 +1138,7 @@ void QucsApp::openProject(const QString& Path)
 
   if(!closeAllFiles()) return;   // close files and ask for saving them
   Schematic *d = new Schematic(this, "");
-  i = DocumentTab->addTab(d, QPixmap(empty_xpm), QObject::tr("untitled"));
+  i = DocumentTab->addTab(d, QPixmap(empty_xpm), QObject::tr("Untitled"));
   DocumentTab->setCurrentIndex(i);
 
   view->drawn = false;
@@ -1207,7 +1207,7 @@ void QucsApp::slotMenuProjClose()
 
   if(!closeAllFiles()) return;   // close files and ask for saving them
   Schematic *d = new Schematic(this, "");
-  int i = DocumentTab->addTab(d, QPixmap(empty_xpm), QObject::tr("untitled"));
+  int i = DocumentTab->addTab(d, QPixmap(empty_xpm), QObject::tr("Untitled"));
   DocumentTab->setCurrentIndex(i);
 
   view->drawn = false;
@@ -1329,7 +1329,7 @@ void QucsApp::slotFileNew()
   slotHideEdit(); // disable text edit of component property
 
   Schematic *d = new Schematic(this, "");
-  int i = DocumentTab->addTab(d, QPixmap(empty_xpm), QObject::tr("untitled"));
+  int i = DocumentTab->addTab(d, QPixmap(empty_xpm), QObject::tr("Untitled"));
   DocumentTab->setCurrentIndex(i);
 
   statusBar()->message(tr("Ready."));
@@ -1341,7 +1341,7 @@ void QucsApp::slotTextNew()
   statusBar()->message(tr("Creating new text editor..."));
   slotHideEdit(); // disable text edit of component property
   TextDoc *d = new TextDoc(this, "");
-  int i = DocumentTab->addTab(d, QPixmap(empty_xpm), QObject::tr("untitled"));
+  int i = DocumentTab->addTab(d, QPixmap(empty_xpm), QObject::tr("Untitled"));
   DocumentTab->setCurrentIndex(i);
 
   statusBar()->message(tr("Ready."));
@@ -1640,7 +1640,7 @@ void QucsApp::closeFile(int index)
 
     if(DocumentTab->count() < 1) { // if no document left, create an untitled
       Schematic *d = new Schematic(this, "");
-      DocumentTab->addTab(d, QPixmap(empty_xpm), QObject::tr("untitled")); 
+      DocumentTab->addTab(d, QPixmap(empty_xpm), QObject::tr("Untitled")); 
       DocumentTab->setCurrentIndex(0);
     }
 
@@ -2158,7 +2158,7 @@ void QucsApp::slotChangePage(QString& DocName, QString& DataDisplay)
 
   TabView->setCurrentPage (2);   // switch to "Component"-Tab
   if (Name.right(4) == ".dpl") {
-    int i = Category::getModulesNr (QObject::tr("diagrams"));
+    int i = Category::getModulesNr (QObject::tr("Diagrams"));
     CompChoose->setCurrentItem (i);   // switch to diagrams
     slotSetCompView (i);
   }

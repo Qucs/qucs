@@ -20,7 +20,7 @@
 
 MSlange::MSlange()
 {
-  Description = QObject::tr("microstrip lange coupler");
+  Description = QObject::tr("Microstrip lange coupler");
 
   Lines.append(new Line(-30,-30,-30, 10,QPen(Qt::darkBlue,2)));
   Lines.append(new Line(-30, 30,-30, 20,QPen(Qt::darkBlue,2)));
@@ -46,20 +46,20 @@ MSlange::MSlange()
   Name  = "MS";
 
   Props.append(new Property("Subst", "Subst1", true,
-	QObject::tr("name of substrate definition")));
+	QObject::tr("Name of substrate definition")));
   Props.append(new Property("W", "1 mm", true,
-	QObject::tr("width of the line")));
+	QObject::tr("Width of the line")));
   Props.append(new Property("L", "10 mm", true,
-	QObject::tr("length of the line")));
+	QObject::tr("Length of the line")));
   Props.append(new Property("S", "1 mm", true,
-	QObject::tr("spacing between the lines")));
+	QObject::tr("Spacing between the lines")));
   Props.append(new Property("Model", "Kirschning", false,
-	QObject::tr("microstrip model")+" [Kirschning, Hammerstad]"));
+	QObject::tr("Microstrip model")+" [Kirschning, Hammerstad]"));
   Props.append(new Property("DispModel", "Kirschning", false,
-	QObject::tr("microstrip dispersion model")+
+	QObject::tr("Microstrip dispersion model")+
 	" [Kirschning, Getsinger]"));
   Props.append(new Property("Temp", "26.85", false,
-	QObject::tr("simulation temperature in degree Celsius")));
+	QObject::tr("Simulation temperature in degrees Celsius")));
 }
 
 MSlange::~MSlange()

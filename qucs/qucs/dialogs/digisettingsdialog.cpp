@@ -95,7 +95,7 @@ DigiSettingsDialog::DigiSettingsDialog(TextDoc *Doc_)
   all->addSpacing(5);
   all->addStretch();
   QHBoxLayout *Buttons = new QHBoxLayout();
-  QPushButton *ButtonOk = new QPushButton(tr("Ok"));
+  QPushButton *ButtonOk = new QPushButton(tr("OK"));
   QPushButton *ButtonCancel = new QPushButton(tr("Cancel"));
   Buttons->addWidget(ButtonOk);
   Buttons->addWidget(ButtonCancel);

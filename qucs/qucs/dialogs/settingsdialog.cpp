@@ -62,7 +62,7 @@ SettingsDialog::SettingsDialog(Schematic *Doc_)
     Input_DataDisplay = new QLineEdit(Tab1);
     gp->addWidget(Input_DataDisplay,1,1,1,1);
 
-    Check_OpenDpl = new QCheckBox(tr("open data display after simulation"),
+    Check_OpenDpl = new QCheckBox(tr("Open data display after simulation"),
                                   Tab1);
     gp->addWidget(Check_OpenDpl,2,0,1,2);
 
@@ -71,7 +71,7 @@ SettingsDialog::SettingsDialog(Schematic *Doc_)
     Input_Script = new QLineEdit(Tab1);
     gp->addWidget(Input_Script,3,1,1,1);
 
-    Check_RunScript = new QCheckBox(tr("run script after simulation"),
+    Check_RunScript = new QCheckBox(tr("Run script after simulation"),
                                     Tab1);
     gp->addWidget(Check_RunScript,4,0,1,2);
 
@@ -80,18 +80,18 @@ SettingsDialog::SettingsDialog(Schematic *Doc_)
     // ...........................................................
     QWidget *Tab2 = new QWidget(t);
     QGridLayout *gp2 = new QGridLayout(Tab2);
-    Check_GridOn = new QCheckBox(tr("show Grid"), Tab2);
+    Check_GridOn = new QCheckBox(tr("Show Grid"), Tab2);
     gp2->addWidget(Check_GridOn,0,0,1,1);
 
     valExpr = new QRegExpValidator(QRegExp("[1-9]\\d{0,2}"), this);
 
-    QLabel *l3 = new QLabel(tr("horizontal Grid:"), Tab2);
+    QLabel *l3 = new QLabel(tr("Horizontal Grid:"), Tab2);
     gp2->addWidget(l3,1,0);
     Input_GridX = new QLineEdit(Tab2);
     Input_GridX->setValidator(valExpr);
     gp2->addWidget(Input_GridX,1,1,1,1);
 
-    QLabel *l4 = new QLabel(tr("vertical Grid:"), Tab2);
+    QLabel *l4 = new QLabel(tr("Vertical Grid:"), Tab2);
     gp2->addWidget(l4,2,0);
     Input_GridY = new QLineEdit(Tab2);
     Input_GridY->setValidator(valExpr);
@@ -103,7 +103,7 @@ SettingsDialog::SettingsDialog(Schematic *Doc_)
     QWidget *Tab3 = new QWidget(t);
     QGridLayout *gp3 = new QGridLayout(Tab3);
     Combo_Frame = new QComboBox(Tab3);
-    Combo_Frame->insertItem(tr("no Frame"));
+    Combo_Frame->insertItem(tr("No Frame"));
     Combo_Frame->insertItem(tr("DIN A5 landscape"));
     Combo_Frame->insertItem(tr("DIN A5 portrait"));
     Combo_Frame->insertItem(tr("DIN A4 landscape"));
