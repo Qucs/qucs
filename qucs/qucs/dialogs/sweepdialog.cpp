@@ -72,11 +72,13 @@ SweepDialog::SweepDialog(Schematic *Doc_)
   pGraph = setBiasPoints();
   // if simulation has no sweeps, terminate dialog before showing it
   if(!pGraph->numAxes()) {
+    qDebug() << "no axes";
     reject();
     return;
   }
   if(pGraph->numAxes() <= 1)
     if(pGraph->axis(0)->count <= 1) {
+      qDebug() << "empty axis";
       reject();
       return;
     }
@@ -161,7 +163,9 @@ GraphDeque* SweepDialog::setBiasPoints()
   qDebug() << "SweepDialog::setBiasPoints()";
 
   bool hasNoComp;
-  GraphDeque *pg = new GraphDeque(NULL, ""); // HACK!
+  GraphDeque *pg = NULL;
+  GraphDeque *one_of_them = NULL;
+  Diagram *Diag = new Diagram();
   QFileInfo Info(Doc->DocName);
   QString DataSet = Info.dirPath() + QDir::separator() + Doc->DataSet;
 
@@ -173,8 +177,12 @@ GraphDeque* SweepDialog::setBiasPoints()
   // This is a current hack as "Graph::loadDatFile()" does not support multi-node data loading
   // from the simulation results without refreshing (changing) or invalidating the timestamp.
 
-  NodeList.clear();
+  NodeList.clear(); // FIXME: use Doc->Nodes.
   ValueList.clear();
+
+  // these should be obsolete now.
+  for(auto i:GraphDeques) delete i;
+  GraphDeques.clear();
 
   // create DC voltage for all nodes
   for(pn = Doc->Nodes->first(); pn != 0; pn = Doc->Nodes->next()) {
@@ -206,16 +214,20 @@ GraphDeque* SweepDialog::setBiasPoints()
       }
     }
 
-    pg->Var = pn->Name + ".V";
-    pg->lastLoaded = QDateTime(); // Note 1 at the start of this function
-    if(pg->loadDatFile(DataSet) == 2) {
+    // BUG: we do not need a graphDeque here. just the DC data.
+    pg = new GraphDeque(NULL, pn->Name + ".V");
+    if(pg->loadDatFile(DataSet) == 2) { // FIXME: what is 2?
       pn->Name = misc::num2str(*(pg->cPointsY)) + "V";
       NodeList.append(pn);             // remember node ...
       ValueList.append(pg->cPointsY);  // ... and all of its values
-      pg->cPointsY = 0;   // do not delete it next time !
-    }
-    else
+    }else{
       pn->Name = "0V";
+    }
+    if(!one_of_them && pg->numAxes()){
+      one_of_them = pg;
+    }else{
+      // delete pg;
+    }
 
 
     for(pe = pn->Connections.first(); pe!=0; pe = pn->Connections.next())
@@ -236,16 +248,14 @@ GraphDeque* SweepDialog::setBiasPoints()
         pn = pc->Ports.at(1)->Connection;
 
       pn->x1 = 0x10;   // mark current
-      pg->Var = pc->Name + ".I";
-      pg->lastLoaded = QDateTime(); // Note 1 at the start of this function
+      pg = new GraphDeque(NULL, pc->Name + ".I");
       if(pg->loadDatFile(DataSet) == 2) {
         pn->Name = misc::num2str(*(pg->cPointsY)) + "A";
         NodeList.append(pn);             // remember node ...
         ValueList.append(pg->cPointsY);  // ... and all of its values
-        pg->cPointsY = 0;   // do not delete it next time !
-      }
-      else
+      }else{
         pn->Name = "0A";
+      }
 
       for(pe = pn->Connections.first(); pe!=0; pe = pn->Connections.next())
         if(pe->Type == isWire) {
@@ -259,5 +269,6 @@ GraphDeque* SweepDialog::setBiasPoints()
 
   Doc->showBias = 1;
 
-  return pg;
+  delete Diag;
+  return one_of_them;
 }

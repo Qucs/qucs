@@ -64,6 +64,8 @@ private:
   Schematic *Doc;
   QList<Node *> NodeList;
   QList<double *> ValueList;
+
+  QList<GraphDeque*> GraphDeques; // BUG: use data, not GraphDeques.
 };
 
 #endif
