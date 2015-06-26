@@ -50,6 +50,12 @@ SET(LANGUAGEDIR "${CMAKE_INSTALL_PREFIX}/share/qucs/lang/")
 
 
 FIND_PACKAGE( Qt4 4.6.3 REQUIRED QtCore QtGui Qt3Support QtSvg QtXml QtScript)
+
+# Fix MSVC10 unresolved _WinMain@16 symbol
+if(MSVC10)
+  SET(QT_USE_QTMAIN TRUE)
+endif()
+
 INCLUDE( ${QT_USE_FILE} )
 
 #MESSAGE("QT_INCLUDES=[${QT_INCLUDES}]")
@@ -77,14 +83,17 @@ CONFIGURE_FILE (
 INCLUDE_DIRECTORIES("${PROJECT_BINARY_DIR}")
 INCLUDE_DIRECTORIES( ${CMAKE_SOURCE_DIR} )
 
-SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall ") # enable warning level
-SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-deprecated-register ") # disable deprecated register warning
-SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x ") # enable C++11
+# these flags are unknown to MSVC10
+IF (NOT MSVC10)
+  SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall ") # enable warning level
+  SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-deprecated-register ") # disable deprecated register warning
+  SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x ") # enable C++11
+ENDIF()
 
 # For some reason, on Windows QT_LIBRARIES point to static(?) .a libs
 # which do not provide the needed symbols. They are found on
 # the .dll libraries.
-IF(WIN32)
+IF(MINGW)
   LINK_DIRECTORIES("${QT_BINARY_DIR}")
 
   if(CMAKE_BUILD_TYPE STREQUAL "Debug")
@@ -92,7 +101,7 @@ IF(WIN32)
   else()
     set(QT_LIBRARIES QtCore4 QtGui4 Qt3Support4 QtSvg4 QtXml4 QtScript4)
   ENDIF()
-ENDIF(WIN32)
+ENDIF()
 
 ADD_DEFINITIONS(${QT_DEFINITIONS})
 

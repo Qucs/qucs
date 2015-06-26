@@ -37,11 +37,11 @@
 #define FILETYPE8 tr("Others")
 
 #define APPEND_ROW(parent, data) \
-({ \
+{ \
   QList<QStandardItem*> c; \
   c.append(new QStandardItem(data)); \
   parent->appendRow(c); \
-})
+}
 
 class QStandardItemModel;
 

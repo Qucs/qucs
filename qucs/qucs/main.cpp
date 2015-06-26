@@ -609,7 +609,7 @@ void createListComponentEntry(){
       }
 
       // skip Subcircuit, segfault, there is nothing to netlist
-      if (c->Model == "Sub" or c->Model == ".Opt") {
+      if (c->Model == "Sub" || c->Model == ".Opt") {
         fprintf(stdout, "WARNING, qucsator netlist not generated for %s\n\n", c->Model.toAscii().data());
         continue;
       }
@@ -861,10 +861,10 @@ int main(int argc, char *argv[])
   }
 
   // check operation and its required arguments
-  if (netlist_flag and print_flag) {
+  if (netlist_flag && print_flag) {
     fprintf(stderr, "Error: --print and --netlist cannot be used together\n");
     return -1;
-  } else if (netlist_flag or print_flag) {
+  } else if (netlist_flag || print_flag) {
     if (inputfile.isEmpty()) {
       fprintf(stderr, "Error: Expected input file.\n");
       return -1;
