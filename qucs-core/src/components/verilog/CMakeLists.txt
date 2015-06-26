@@ -67,6 +67,21 @@ SET( VA_FILES
 )
 
 
+# XML sripts need to build, the order matters
+SET(XML_BUILD
+  analogfunction.xml
+  qucsVersion.xml
+  qucsMODULEcore.xml
+  qucsMODULEdefs.xml
+)
+
+# Concatenate scripts into command: -e script1 [-e script2]
+SET(XML_CMD)
+FOREACH(script ${XML_BUILD})
+  SET(XML_CMD ${XML_CMD} -e ${CMAKE_CURRENT_SOURCE_DIR}/${script})
+ENDFOREACH()
+
+
 # clear lists of generated files
 SET(generated_SRC)
 
@@ -99,17 +114,18 @@ FOREACH( filename ${VA_FILES} )
     SET(base_abs ${CMAKE_CURRENT_BINARY_DIR}/${base})
 
     # set outputs for each Verilog-A input
-    SET(output ${base_abs}.analogfunction.cpp ${base_abs}.analogfunction.h
-               ${base_abs}.core.cpp ${base_abs}.core.h ${base_abs}.defs.h)
+    SET(output ${base_abs}.analogfunction.cpp
+               ${base_abs}.analogfunction.h
+               ${base_abs}.core.cpp
+               ${base_abs}.core.h
+               ${base_abs}.defs.h)
 
     # custom command/rule to generate outputs with admsXml
     ADD_CUSTOM_COMMAND(
         OUTPUT ${output}
-        COMMAND ${ADMSXML} ${CMAKE_CURRENT_SOURCE_DIR}/${filename}
-                           -e ${CMAKE_CURRENT_SOURCE_DIR}/analogfunction.xml
-                           -e ${CMAKE_CURRENT_SOURCE_DIR}/qucsVersion.xml
-                           -e ${CMAKE_CURRENT_SOURCE_DIR}/qucsMODULEcore.xml
-                           -e ${CMAKE_CURRENT_SOURCE_DIR}/qucsMODULEdefs.xml )
+        COMMAND ${ADMSXML} ${CMAKE_CURRENT_SOURCE_DIR}/${filename} ${XML_CMD}
+        DEPENDS ${filename} ${XML_BUILD}
+        )
     SET_SOURCE_FILES_PROPERTIES(${output} PROPERTIES GENERATED TRUE)
 
     # append outputs list of generated sources
@@ -125,18 +141,11 @@ ENDFOREACH()
 ADD_LIBRARY( coreVerilog OBJECT ${generated_SRC} )
 
 
-# TODO install distributable files
-#
-#
-# EXTRA_DIST = $(VERILOG_FILES) $(XML_FILES)
-
-SET(XML_FILES
-  analogfunction.xml
-  qucsMODULEcore.xml
-  qucsMODULEdefs.xml
+# Distribute XML scripts
+SET(XML_DIST
+  ${XML_BUILD}
   qucsMODULEgui.xml
   qucsMODULEguiJSONsymbol.xml
-  qucsVersion.xml
 )
 
 SET(MAKE_FILES
@@ -149,7 +158,7 @@ SET(VA_INCLUDES
   disciplines.vams
 )
 
-INSTALL(FILES ${XML_FILES}   DESTINATION include/qucs-core)
+INSTALL(FILES ${XML_DIST}    DESTINATION include/qucs-core)
 INSTALL(FILES ${MAKE_FILES}  DESTINATION include/qucs-core)
 INSTALL(FILES ${VA_INCLUDES} DESTINATION include/qucs-core)
 
