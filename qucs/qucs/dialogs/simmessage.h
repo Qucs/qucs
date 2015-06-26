@@ -45,6 +45,7 @@ public:
  ~SimMessage();
 
   bool startProcess();
+  void setDocWidget(QWidget*);
 
 signals:
   void SimulationEnded(int, SimMessage*);

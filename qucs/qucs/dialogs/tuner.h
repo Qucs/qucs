@@ -39,6 +39,8 @@ class tunerElement : public QWidget
         tunerElement(QWidget *parent, Component*, int);
         Property* getElementProperty();
         void resetValue();
+        void updateProperty();
+
         virtual ~tunerElement();
     signals:
         void elementValueUpdated();
@@ -54,7 +56,10 @@ class tunerElement : public QWidget
         QLineEdit *minimum;
         QLineEdit *value;
         QLineEdit *step;
-        void updateProperty(double v);
+        QPushButton *up;
+        QPushButton *down;
+
+        bool setValue(double);
 
     private slots:
         void slotSliderValueChanged(int);
@@ -63,6 +68,8 @@ class tunerElement : public QWidget
         void slotStepChanged();
         void slotValueChanged();
         void slotDelete();
+        void slotDownClicked();
+        void slotUpClicked();
 
 };
 
@@ -85,6 +92,8 @@ private:
     QGridLayout *gbox;
     QList<tunerElement*> *currentElements;
     QList<Property*> *currentProps;
+
+    void blockInput(bool enabled);
     void closeEvent(QCloseEvent *event);
 
 private slots:
@@ -92,7 +101,7 @@ private slots:
     void slotRemoveTunerElement(tunerElement*);
     void slotUpdateValues();
     void slotResetValues();
-
+    void slotSimulationEnded();
 };
 
 #endif // TUNER_H

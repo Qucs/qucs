@@ -77,7 +77,8 @@ public:
 
   QLineEdit *editText;  // for edit component properties on schematic
   SearchDialog *SearchDia;  // global in order to keep values
-  TunerDialog *tunerDia;
+  TunerDialog *tunerDia; // global in order to keep values
+  SimMessage *sim; // global in order to keep values
 
   // current mouse methods
   void (MouseActions::*MouseMoveAction) (Schematic*, QMouseEvent*);

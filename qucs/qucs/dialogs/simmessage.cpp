@@ -65,22 +65,6 @@ SimMessage::SimMessage(QWidget *w, QWidget *parent)
 		: QDialog(parent) 
 {
   setWindowTitle(tr("Qucs Simulation Messages"));
-  QucsDoc *Doc;
-  DocWidget = w;
-  if(QucsApp::isTextDocument(DocWidget))
-    Doc = (QucsDoc*) ((TextDoc*)DocWidget);
-  else
-    Doc = (QucsDoc*) ((Schematic*)DocWidget);
-
-  DocName = Doc->DocName;
-  DataDisplay = Doc->DataDisplay;
-  Script = Doc->Script;
-  QFileInfo Info(DocName);
-  DataSet = QDir::convertSeparators(Info.path()) +
-    QDir::separator() + Doc->DataSet;
-  showBias = Doc->showBias;     // save some settings as the document...
-  SimOpenDpl = Doc->SimOpenDpl; // ...could be closed during the simulation.
-  SimRunScript = Doc->SimRunScript;
 
   all = new QVBoxLayout(this);
   all->setSpacing(5);
@@ -154,6 +138,9 @@ bool SimMessage::startProcess()
   Abort->setText(tr("Abort simulation"));
   Display->setDisabled(true);
 
+  ProgText->clear();
+  ErrText->clear();
+
   QString txt = tr("Starting new simulation on %1 at %2").
     arg(QDate::currentDate().toString("ddd dd. MMM yyyy")).
     arg(QTime::currentTime().toString("hh:mm:ss:zzz"));
@@ -203,6 +190,32 @@ bool SimMessage::startProcess()
   return true;
   // Since now, the Doc pointer may be obsolete, as the user could have
   // closed the schematic !!!
+}
+
+/* \brief Allows the doc Widget to be set after the constructor
+ *
+ *  Useful for creating only one SimMessage dialog
+ */
+void SimMessage::setDocWidget(QWidget *w)
+{
+    this->DocWidget = w;
+
+    QucsDoc *Doc;
+    DocWidget = w;
+    if(QucsApp::isTextDocument(DocWidget))
+      Doc = (QucsDoc*) ((TextDoc*)DocWidget);
+    else
+      Doc = (QucsDoc*) ((Schematic*)DocWidget);
+
+    DocName = Doc->DocName;
+    DataDisplay = Doc->DataDisplay;
+    Script = Doc->Script;
+    QFileInfo Info(DocName);
+    DataSet = QDir::convertSeparators(Info.path()) +
+      QDir::separator() + Doc->DataSet;
+    showBias = Doc->showBias;     // save some settings as the document...
+    SimOpenDpl = Doc->SimOpenDpl; // ...could be closed during the simulation.
+    SimRunScript = Doc->SimRunScript;
 }
 
 /*!
