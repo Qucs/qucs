@@ -12,6 +12,7 @@
 # * By default, the prefix is "/usr/local"
 # * Use -DADMSXML_DIR=[path] to give the path containing admsXml
 # * Use -DUSE_MAINTAINER_MODE=ON to rebuild submodules (ADMS)
+# * Bison can be pointed to with -DBISON_DIR=[path]
 
 
 ## Running with QtCreator
@@ -22,6 +23,11 @@
 #
 # Add the following arguments to the 'Run CMake':
 # -DAMSXML_DIR=~/git/qucs/qucs-core/adms/admsXml/ -DCMAKE_BUILD_TYPE:STRING=Debug
+#
+# With Homebrew/MacPorts on Mac OS X:
+#  It might be necessary to change the PATH variable on the Build Environment.
+#  Prepend '/usr/local/bin' before '/usr/bin/' otherwise it will find the
+#  older executables provided by Apple.
 
 ## Dependencies
 # * CMake 2.8.8
@@ -142,20 +148,30 @@ ENDIF()
 #
 SET(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/modules/")
 
-
 #
-# Need Flex / Bison
+# Need Flex
 #
-SET(FLEX_MINIMAL_VERSION "2.5.9")
-FIND_PACKAGE(FLEX REQUIRED)
+FIND_PACKAGE(FLEX 2.5.9  REQUIRED)
 IF(FLEX_FOUND)
   MESSAGE(STATUS "Found flex: ${FLEX_EXECUTABLE} / Version: ${FLEX_VERSION}" )
 ENDIF()
 
-SET(BISON_MINIMAL_VERSION "2.4")
-FIND_PACKAGE(BISON REQUIRED)
-IF(BISON_FOUND)
-  MESSAGE(STATUS "Found bison: ${BISON_EXECUTABLE} / Version: ${BISON_VERSION}" )
+#
+# Need Bison
+#
+#FIND_PACKAGE(BISON 2.4 REQUIRED
+#  NO_DEFAULT_PATH)
+#IF(BISON_FOUND)
+#  MESSAGE(STATUS "Found bison: ${BISON_EXECUTABLE} / Version: ${BISON_VERSION}" )
+#ENDIF()
+FIND_PROGRAM( BISON_EXECUTABLE bison
+  HINTS ${BISON_DIR} # use -DBISON_DIR=/path/ to overwrite, useful for Windows.
+  PATHS /usr/local/bin/ /opt/local/bin/ /usr/bin
+  DOC "bison path"
+  NO_DEFAULT_PATH )
+IF(BISON_EXECUTABLE )
+  # use external admsXml
+  MESSAGE(STATUS "Found bison: " ${BISON_EXECUTABLE})
 ENDIF()
 
 #

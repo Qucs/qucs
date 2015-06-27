@@ -278,39 +278,49 @@ CONFIGURE_FILE (
 # List of lexer/parsers type names
 #
 SET(ParserTypes
-	csv citi dataset mdl netlist touchstone zvr
+	csv
+  citi
+  dataset
+  mdl
+  netlist
+  touchstone
+  zvr
 )
 
-# Flex/Bison generated code, example:
-#   - parse_csv.cpp scan_csv.cpp
+SET(generated_SRC)
 
-# TODO Double check the location where the generated scanner/parser should go
 FOREACH( type ${ParserTypes} )
 
-  FLEX_TARGET(scan${type} scan_${type}.l ${PROJECT_SOURCE_DIR}/scan_${type}.cpp)
+  # Create custom Bison
+  SET(BO_${type}
+    ${CMAKE_CURRENT_BINARY_DIR}/parse_${type}.cpp
+    ${CMAKE_CURRENT_BINARY_DIR}/tokens_${type}.h )
+  ADD_CUSTOM_COMMAND(
+    OUTPUT ${BO_${type}}
+    COMMAND ${BISON_EXECUTABLE}
+              --defines=${CMAKE_CURRENT_BINARY_DIR}/tokens_${type}.h
+              --output=${CMAKE_CURRENT_BINARY_DIR/}parse_${type}.cpp
+              ${CMAKE_CURRENT_SOURCE_DIR}/parse_${type}.y
+    DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/parse_${type}.y
+    )
 
-  BISON_TARGET(parse${type}
-               parse_${type}.y ${PROJECT_SOURCE_DIR}/parse_${type}.cpp
-               COMPILE_FLAGS --defines="${PROJECT_SOURCE_DIR}/tokens_${type}.h" )
-
-  ADD_FLEX_BISON_DEPENDENCY(scan${type} parse${type})
-
-  SET(flexInputs   ${flexInputs}   ${FLEX_scan${type}_INPUT}   )
-  SET(flexOutputs  ${flexOutputs}  ${FLEX_scan${type}_OUTPUTS} )
-  SET(bisonInputs  ${bisonInputs}  ${BISON_parse${type}_INPUT} )
-  SET(bisonOutputs ${bisonOutputs} ${BISON_parse${type}_OUTPUTS})
+  # Create custom Flex
+  SET(FI_${type} ${CMAKE_CURRENT_SOURCE_DIR}/scan_${type}.l )
+  SET(FO_${type} ${CMAKE_CURRENT_BINARY_DIR}/scan_${type}.cpp )
+  ADD_CUSTOM_COMMAND(
+    OUTPUT ${FO_${type}}
+    COMMAND ${FLEX_EXECUTABLE}
+            --outfile=${FO_${type}}
+            ${FI_${type}}
+    DEPENDS ${BO_${type}} ${FI_${type}}
+    )
+  SET(generated_SRC ${generated_SRC} ${FO_${type}})
+  SET(generated_SRC ${generated_SRC} ${BO_${type}})
 ENDFOREACH()
 
-#
-# Combine all genereated flex/bison files
-#
-SET(generated_SRC ${flexOutputs} ${bisonOutputs})
-
-#MESSAGE(STATUS "----> Scanner / Parser     ${generated_SRC}\n")
-#MESSAGE(STATUS "Qucsator -- Flex Inputs : ${flexInputs}")
-#MESSAGE(STATUS "Qucsator -- Flex Outputs: ${flexOutputs}")
-#MESSAGE(STATUS "Qucsator -- Bison Inputs : ${bisonInputs}")
-#MESSAGE(STATUS "Qucsator -- Bison Outputs: ${bisonOutputs}")
+FOREACH( gfile ${generated_SRC} )
+  SET_SOURCE_FILES_PROPERTIES(${gfile} PROPERTIES GENERATED TRUE)
+ENDFOREACH()
 
 
 #
