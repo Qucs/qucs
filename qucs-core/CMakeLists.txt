@@ -12,6 +12,7 @@
 # * By default, the prefix is "/usr/local"
 # * Use -DADMSXML_DIR=[path] to give the path containing admsXml
 # * Use -DUSE_MAINTAINER_MODE=ON to rebuild submodules (ADMS)
+# * Bison can be pointed to with -DBISON_DIR=[path]
 
 
 ## Running with QtCreator
@@ -148,16 +149,29 @@ ENDIF()
 SET(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/modules/")
 
 #
-# Need Flex / Bison
+# Need Flex
 #
 FIND_PACKAGE(FLEX 2.5.9  REQUIRED)
 IF(FLEX_FOUND)
   MESSAGE(STATUS "Found flex: ${FLEX_EXECUTABLE} / Version: ${FLEX_VERSION}" )
 ENDIF()
 
-FIND_PACKAGE(BISON 2.4 REQUIRED)
-IF(BISON_FOUND)
-  MESSAGE(STATUS "Found bison: ${BISON_EXECUTABLE} / Version: ${BISON_VERSION}" )
+#
+# Need Bison
+#
+#FIND_PACKAGE(BISON 2.4 REQUIRED
+#  NO_DEFAULT_PATH)
+#IF(BISON_FOUND)
+#  MESSAGE(STATUS "Found bison: ${BISON_EXECUTABLE} / Version: ${BISON_VERSION}" )
+#ENDIF()
+FIND_PROGRAM( BISON_EXECUTABLE bison
+  HINTS ${BISON_DIR} # use -DBISON_DIR=/path/ to overwrite, useful for Windows.
+  PATHS /usr/local/bin/ /opt/local/bin/ /usr/bin
+  DOC "bison path"
+  NO_DEFAULT_PATH )
+IF(BISON_EXECUTABLE )
+  # use external admsXml
+  MESSAGE(STATUS "Found bison: " ${BISON_EXECUTABLE})
 ENDIF()
 
 #
