@@ -804,7 +804,7 @@ void QucsApp::launchTool(const QString& prog, const QString& progDesc, const QSt
   QProcess *tool = new QProcess();
 
 #ifdef __MINGW32__
-  QString cmd = QDir::toNativeSeparators(QucsSettings.BinDir + prog + ".exe") + " " + args;
+  QString cmd = QDir::toNativeSeparators("\""+QucsSettings.BinDir + prog + ".exe\"") + " " + args;
 #elif __APPLE__
   QString cmd = QDir::toNativeSeparators(QucsSettings.BinDir + prog + ".app/Contents/MacOS/" + prog) + " " + args;
 #else
