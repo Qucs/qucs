@@ -26,6 +26,7 @@
 #include <QTextEdit>
 #include <QMessageBox>
 #include <QDebug>
+#include <QToolButton>
 
 tunerElement::tunerElement(QWidget *parent, Component *component, int selectedPropertyId)
     : QWidget(parent)
@@ -84,9 +85,11 @@ tunerElement::tunerElement(QWidget *parent, Component *component, int selectedPr
     QLabel *unitLabel = new QLabel(unit, this);
     gbox->addWidget(unitLabel, row, column+1, 1, 1); // Value
 
-    up = new QPushButton(tr("Up"), this);
+    up = new QToolButton(this, "Up");
+    up->setArrowType(Qt::UpArrow);
     gbox->addWidget(up, 1, gbox->columnCount() -1, 1, 1);
-    down = new QPushButton(tr("Down"), this);
+    down = new QToolButton(this, "Down");
+    down->setArrowType(Qt::DownArrow);
     gbox->addWidget(down, 2, gbox->columnCount() - 1, 1, 1);
 
     double numericValue = lst.first().toDouble();
@@ -191,6 +194,7 @@ void tunerElement::slotStepChanged()
         maximum->setText(QString::number(stepValue*10));
     }
     slider->setSingleStep(stepValue*10);
+    slider->setTickInterval(0); // trying to auto adjust tickInterval
 }
 
 void tunerElement::slotValueChanged()
@@ -269,13 +273,24 @@ TunerDialog::TunerDialog(QWidget *parent) :
     closeButton = new QPushButton("Close", this);
     QPushButton *updateValues = new QPushButton("Update Values", this);
     QPushButton *resetValues = new QPushButton("Reset Values", this);
+    info = new QLabel(this);
     gbox->addWidget(resetValues);
     gbox->addWidget(updateValues);
     gbox->addWidget(closeButton);
+    gbox->addWidget(info);
+    info->setAlignment(Qt::AlignmentFlag::AlignBottom);
+
+    info->setText("Please select a component to tune");
 
     connect(closeButton, SIGNAL(released()), this, SLOT(close()));
     connect(resetValues, SIGNAL(released()),this, SLOT(slotResetValues()));
     connect(updateValues, SIGNAL(released()), this, SLOT(slotUpdateValues()));
+}
+
+void TunerDialog::infoMsg(const QString msg)
+{
+    info->clear();
+    info->setText(msg);
 }
 
 bool TunerDialog::containsProperty(Property* prop)
@@ -301,6 +316,7 @@ void TunerDialog::addTunerElement(tunerElement *element)
         gbox->addWidget(element, 0, column, gbox->rowCount(), 1);
         currentProps->append(element->getElementProperty());
         currentElements->append(element);
+        this->infoMsg(QString("Added element: \r\n").append(element->name()));
     }
     else
     {
@@ -313,6 +329,7 @@ void TunerDialog::slotRemoveTunerElement(tunerElement *e)
 {
     qDebug() << "Tuner::slotRemoveTunerElement()";
     currentProps->removeAll(e->getElementProperty());
+    this->infoMsg(QString("Removed element: ") + e->name());
     delete e;
     this->adjustSize();
     this->update();
@@ -366,6 +383,11 @@ void TunerDialog::closeEvent(QCloseEvent *event)
 void TunerDialog::slotSimulationEnded()
 {
     this->setEnabled(true);
+}
+
+void TunerDialog::showEvent(QShowEvent *e)
+{
+
 }
 
 TunerDialog::~TunerDialog()
