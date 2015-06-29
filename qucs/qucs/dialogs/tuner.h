@@ -28,7 +28,8 @@
 #include <QLineEdit>
 #include <QString>
 #include <QSlider>
-#include <Q3PtrList>
+#include <QLabel>
+#include <QToolButton>
 
 extern QucsApp *QucsMain;  // the Qucs application itself
 
@@ -56,8 +57,8 @@ class tunerElement : public QWidget
         QLineEdit *minimum;
         QLineEdit *value;
         QLineEdit *step;
-        QPushButton *up;
-        QPushButton *down;
+        QToolButton *up;
+        QToolButton *down;
 
         bool setValue(double);
 
@@ -86,15 +87,19 @@ signals:
     void addTunerElement(Element *e);
 public slots:
     void slotResetTunerDialog();
+protected:
+    virtual void showEvent(QShowEvent *);
 
 private:
     QPushButton *closeButton;
     QGridLayout *gbox;
     QList<tunerElement*> *currentElements;
     QList<Property*> *currentProps;
+    QLabel *info;
 
     void blockInput(bool enabled);
     void closeEvent(QCloseEvent *event);
+    void infoMsg(const QString msg);
 
 private slots:
     void slotElementValueUpdated();
