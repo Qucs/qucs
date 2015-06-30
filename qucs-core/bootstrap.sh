@@ -39,7 +39,7 @@ else
   echo "|   $ git submodule update                                   |"
   echo "|                                                            |"
   echo "| To use an already installed version of ADMS (> 2.3.0)      |"
-  echo "| use the configure option '--with-mkadms=[path/to/admsXml]' |"
+  echo "| use the configure option '--with-mkadms=[path/to/]admsXml' |"
   echo "+------------------------------------------------------------+"
 fi
 
