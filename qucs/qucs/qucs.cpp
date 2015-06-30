@@ -2216,7 +2216,6 @@ void QucsApp::slotAfterSimulation(int Status, SimMessage *sim)
   // Kill the simulation process, otherwise we have 200+++ sims in the background
   if(tunerDia->isVisible())
       sim->slotClose();
-
 }
 
 // ------------------------------------------------------------------------
