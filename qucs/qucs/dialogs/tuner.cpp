@@ -316,7 +316,7 @@ void TunerDialog::addTunerElement(tunerElement *element)
         gbox->addWidget(element, 0, column, gbox->rowCount(), 1);
         currentProps->append(element->getElementProperty());
         currentElements->append(element);
-        this->infoMsg(QString("Added element: \r\n").append(element->name()));
+        this->infoMsg(QString("Added element\r\n"));
     }
     else
     {
@@ -387,7 +387,11 @@ void TunerDialog::slotSimulationEnded()
 
 void TunerDialog::showEvent(QShowEvent *e)
 {
-
+    for (int i = 0; i < currentElements->count(); i++)
+    {
+        if (currentElements->at(i)->getElementProperty() == nullptr)
+            currentElements->removeAt(i);
+    }
 }
 
 TunerDialog::~TunerDialog()
