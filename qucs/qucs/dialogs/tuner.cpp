@@ -173,12 +173,14 @@ void tunerElement::slotSliderValueChanged(int v)
 void tunerElement::slotMaxValueChanged()
 {
     double numericValue = maximum->text().split(' ').first().toDouble();
+    qDebug() << "slotMaxValueChanged() " << numericValue;
     slider->setMaximum(numericValue*10);
 }
 
 void tunerElement::slotMinValueChanged()
 {
     double numericValue = minimum->text().split(' ').first().toDouble();
+    qDebug() << "slotMinValueChanged() " << numericValue;
     slider->setMinimum(numericValue*10);
 }
 
@@ -186,15 +188,21 @@ void tunerElement::slotStepChanged()
 {
     bool ok;
     double stepValue = step->text().toDouble(&ok);
+    double value = this->value->text().toDouble();
+
+    int max = slider->maximum() / 10;
 
     if (!ok)
         return;
-    if (stepValue*10 > slider->maxValue())
+
+    if ( (stepValue + value) > max)
     {
-        maximum->setText(QString::number(stepValue*10));
+        maximum->setText(QString::number(stepValue + value));
+        slotMaxValueChanged();
     }
     slider->setSingleStep(stepValue*10);
-    slider->setTickInterval(0); // trying to auto adjust tickInterval
+    slider->setTickInterval(stepValue*10); // trying to auto adjust tickInterval
+    qDebug() << "tunerElement::slotStepChanged() " << stepValue;
 }
 
 void tunerElement::slotValueChanged()
@@ -282,9 +290,26 @@ TunerDialog::TunerDialog(QWidget *parent) :
 
     info->setText("Please select a component to tune");
 
-    connect(closeButton, SIGNAL(released()), this, SLOT(close()));
+    connect(closeButton, SIGNAL(released()), this, SLOT(slotCloseClicked()));
     connect(resetValues, SIGNAL(released()),this, SLOT(slotResetValues()));
     connect(updateValues, SIGNAL(released()), this, SLOT(slotUpdateValues()));
+}
+
+void TunerDialog::slotCloseClicked()
+{
+    qDebug() << "slotCloseClicked";
+    QMessageBox::StandardButton msg;
+    msg = QMessageBox::question(this, "Update values before closing?",
+                                "Do you want to update the component values before closing?",
+                               QMessageBox::Yes | QMessageBox::No );
+
+    if (msg == QMessageBox::Yes)
+    {
+        qDebug() << "slotCloseClicked::User clicked yes";
+        slotUpdateValues();
+    }
+
+    this->close();
 }
 
 void TunerDialog::infoMsg(const QString msg)
@@ -367,7 +392,7 @@ void TunerDialog::slotResetTunerDialog()
     qDebug() << "Tuner::slotResetTunerDialog()";
     for (int i = 0; i < gbox->count(); i++)
     {
-        slotRemoveTunerElement((tunerElement*)gbox->itemAt(i));
+       delete (tunerElement*)gbox->itemAt(i);
     }
 }
 
