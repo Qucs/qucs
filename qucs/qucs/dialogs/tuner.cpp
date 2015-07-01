@@ -382,6 +382,7 @@ void TunerDialog::slotUpdateValues()
     qDebug() << "Tuner::slotUpdateValues()";
     for (int i = 0; i < currentElements->count(); i++)
     {
+        qDebug() << "Tuner::slotUpdateValues()::updateProperty()";
         currentElements->at(i)->updateProperty();
     }
 }
@@ -390,10 +391,13 @@ void TunerDialog::slotResetTunerDialog()
 {
     // Document closed. Reset tuner
     qDebug() << "Tuner::slotResetTunerDialog()";
-    for (int i = 0; i < gbox->count(); i++)
+    for (int i = 0; i < currentElements->count(); i++)
     {
-       delete (tunerElement*)gbox->itemAt(i);
+       qDebug() << "Tuner::slotResetTunerDialog()::delete";
+       delete currentElements->at(i);
+       currentElements->removeAt(i);
     }
+    this->update();
 }
 
 void TunerDialog::closeEvent(QCloseEvent *event)
