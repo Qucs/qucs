@@ -1,0 +1,125 @@
+
+platform:
+  - x64
+
+install:
+  # Keep track of base directory
+  - cd
+  - set topDIR=%CD%
+
+  # Take a look at the environment
+  - path
+
+  # CMake fails to generate "MinGW Makefiles" if sh.exe is on the path.
+  - del "%ProgramFiles(x86)%\Git\bin\sh.exe"
+
+  # Get tools from Chocolatey
+  - choco install -y curl 7zip.commandline
+
+  # Download and install Qt.
+  # Qt 4 series not available in Appveyor.
+  - cd %topDIR%
+  - mkdir Qt
+  - cd Qt
+  - curl -kLO  http://download.qt.io/official_releases/qt/4.8/4.8.7/qt-opensource-windows-x86-mingw482-4.8.7.exe
+  - 7z x qt-opensource-windows-x86-mingw482-4.8.7.exe > nul
+  - dir
+  # payload in $OUTDIR\bin\bin\qmake.exe
+  - move $OUTDIR Qt-4.8.7
+  - set QTDIR=%CD%\Qt-4.8.7\bin\bin
+  # Configure Qt prefix
+  - echo [Paths]   >  %QTDIR%\qt.conf
+  - echo Prefix=.. >> %QTDIR%\qt.conf
+  - type %QTDIR%\qt.conf
+  # Puth Qt in the path
+  - path %QTDIR%;%PATH%
+  - qmake --version
+
+  # Appveyour has Mingw 4.8.3 at the moment which is incompatible with Qt 4.8.7
+  # Get the matching compiler for Qt 4.8.7
+  - cd %topDIR%
+  # try to use my dropbox, as SF seems to be unreachable...
+  #curl -kLO http://sourceforge.net/projects/mingw-w64/files/Toolchains%20targetting%20Win32/Personal%20Builds/mingw-builds/4.8.2/threads-posix/dwarf/i686-4.8.2-release-posix-dwarf-rt_v3-rev3.7z
+  - curl -kLO https://www.dropbox.com/s/ww0jetzg6gkpdis/i686-4.8.2-release-posix-dwarf-rt_v3-rev3.7z
+  - dir
+  - 7z x i686-4.8.2-release-posix-dwarf-rt_v3-rev3.7z > nul
+  - dir
+  # Mingw 4.8.2 should be fist in the path (inserted after Strawberry Perl install , which puts yet another compiler on the path)
+  #- path %topDir%\mingw32\bin;%PATH%
+  #- g++ --version
+
+  # Flex and bison are provided with Git
+  - flex --version
+  - bison --version
+
+  # Build ADMS
+  # * amds-2.3.4  depends on Bison 2.6
+  # * adms-master depends on Bison 2.4, using master till next ADMS release
+  # Get Strawberry Perl to bootstrap ADMS (XML:LibXML is already included)
+  # need to keep c\bin because libxml is in there, but there is a gcc 4.8.3 in there
+  # mingw 4.8.2 should come first in the path
+  - choco install -y strawberryperl
+  - path C:\Strawberry\perl\bin;C:\Strawberry\perl\site\bin;C:\Strawberry\c\bin;%PATH%
+  - g++ --version
+
+  # Put Mingw 4.8.2 first in the path
+  - path %topDir%\mingw32\bin;%PATH%
+  - g++ --version
+
+  # Install ADMS from tarball
+  #- curl -kLO http://sourceforge.net/projects/mot-adms/files/adms-source/2.3/adms-2.3.4.tar.gz
+  #- 7z x adms-2.3.4.tar.gz > nul
+  #- 7z x adms-2.3.4.tar
+  #- cd adms-2.3.4
+  #- mkdir cmake_build
+  #- cd cmake_build
+  #- cmake .. -G "MinGW Makefiles" -DCMAKE_INSTALL_PREFIX="C:\projects\test-appveyor\local\adms"
+  #- mingw32-make install
+  #
+  # Install ADMS from repository (this works with Bison 2.4, switch back to tarball after next ADMS release)
+  - cd %topDIR%
+  - git clone --depth=1 --branch=master https://github.com/Qucs/ADMS.git adms-master
+  - cd adms-master
+  - mkdir cmake_build
+  - cd cmake_build
+  - cmake .. -G "MinGW Makefiles" -DCMAKE_INSTALL_PREFIX="C:\projects\test-appveyor\local\adms" -DUSE_MAINTAINER_MODE=ON
+  - mingw32-make install
+
+  # Add ADMS in the path
+  - path C:\projects\test-appveyor\local\adms\bin;%PATH%
+  - admsXml --version
+
+  # Get geperf, download, extract add to path
+  - cd %topDIR%
+  - curl -kLO http://sourceforge.net/projects/gnuwin32/files/gperf/3.0.1/gperf-3.0.1-bin.zip
+  - 7z x gperf-3.0.1-bin.zip -ogperf
+  - path %topDIR%\gperf\bin;%PATH%
+  - gperf --version
+
+
+build_script:
+
+  # Check if we have everything we need on the path.
+  - g++ --version
+  - qmake --version
+  - admsXml --version
+  - gperf --version
+  - flex --version
+  - bison --version
+  - cmake --version
+
+  # Build Qucs-GUI
+  - cd %topDIR%
+  - cd qucs
+  - mkdir cmake_build
+  - cd cmake_build
+  - cmake .. -G "MinGW Makefiles"
+  - mingw32-make
+
+  # Build Qucs-core
+  - cd %topDIR%
+  - cd qucs-core
+  - mkdir cmake_build
+  - cd cmake_build
+  - cmake .. -G "MinGW Makefiles"
+  - mingw32-make
