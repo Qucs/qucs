@@ -107,6 +107,8 @@ private slots:
     void slotUpdateValues();
     void slotResetValues();
     void slotSimulationEnded();
+    void slotCloseClicked();
+
 };
 
 #endif // TUNER_H
