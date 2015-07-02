@@ -2103,6 +2103,7 @@ void QucsApp::slotSimulate()
 
   QucsDoc *Doc;
   QWidget *w = DocumentTab->currentWidget();
+
   if(isTextDocument (w)) {
     Doc = (QucsDoc*)((TextDoc*)w);
     if(Doc->SimTime.isEmpty() && ((TextDoc*)Doc)->simulation) {
@@ -2119,6 +2120,7 @@ void QucsApp::slotSimulate()
 
   // Perhaps the document was modified from another program ?
   QFileInfo Info(Doc->DocName);
+  QString ext = Info.suffix();
   if(Doc->lastSaved.isValid()) {
     if(Doc->lastSaved < Info.lastModified()) {
       int No = QMessageBox::warning(this, tr("Warning"),
@@ -2139,6 +2141,28 @@ void QucsApp::slotSimulate()
     slotViewOctaveDock(true);
     octave->runOctaveScript(Doc->DocName);
     return;
+  }  
+
+  if (ext == "dpl")
+  {
+      QucsDoc* d;
+      QString _tabToFind = Doc->DataDisplay;
+
+      for (int i = 0; i < DocumentTab->count(); i++)
+      {
+          if (! isTextDocument(DocumentTab->widget(i)))
+          {
+            d = (QucsDoc*)((Schematic*)DocumentTab->widget(i));
+            QFileInfo Info(d->DocName);
+
+
+            if (Info.fileName() == _tabToFind)
+            {
+                //This should be the simulation schematic of this data display
+                w = DocumentTab->widget(i);
+            }
+          }
+      }
   }
 
   //SimMessage *sim = new SimMessage(w, this);
@@ -2200,7 +2224,7 @@ void QucsApp::slotAfterSimulation(int Status, SimMessage *sim)
 	octave->runOctaveScript(sim->DataDisplay);
       }
       else
-	slotChangePage(sim->DocName, sim->DataDisplay);
+        slotChangePage(sim->DocName, sim->DataDisplay);
       // modbykevin: since SimMessage is global should we still close it automatically
       // sim->slotClose();   // close and delete simulation window
     }

@@ -97,6 +97,8 @@ private:
     QList<Property*> *currentProps;
     QLabel *info;
 
+    Schematic* doc;
+
     void blockInput(bool enabled);
     void closeEvent(QCloseEvent *event);
     void infoMsg(const QString msg);
