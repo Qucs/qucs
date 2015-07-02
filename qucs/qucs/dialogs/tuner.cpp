@@ -256,13 +256,13 @@ tunerElement::~tunerElement()
     //dtor
 }
 
-/*
- *
- *
+/* \brief
  * TUNER Dialog Class
- * contains tunerElements
  *
  *
+ * Tuner dialog contains tuner elements
+ * Updates property values
+ * Resets values
  *
  */
 
@@ -281,6 +281,7 @@ TunerDialog::TunerDialog(QWidget *parent) :
     closeButton = new QPushButton("Close", this);
     QPushButton *updateValues = new QPushButton("Update Values", this);
     QPushButton *resetValues = new QPushButton("Reset Values", this);
+
     info = new QLabel(this);
     gbox->addWidget(resetValues);
     gbox->addWidget(updateValues);
@@ -353,6 +354,7 @@ void TunerDialog::addTunerElement(tunerElement *element)
 void TunerDialog::slotRemoveTunerElement(tunerElement *e)
 {
     qDebug() << "Tuner::slotRemoveTunerElement()";
+    this->infoMsg("Removed element from Tuner");
     currentProps->removeAll(e->getElementProperty());
     this->infoMsg(QString("Removed element: ") + e->name());
     delete e;
@@ -385,6 +387,7 @@ void TunerDialog::slotUpdateValues()
         qDebug() << "Tuner::slotUpdateValues()::updateProperty()";
         currentElements->at(i)->updateProperty();
     }
+    this->infoMsg("Updated Schematic values");
 }
 
 void TunerDialog::slotResetTunerDialog()
