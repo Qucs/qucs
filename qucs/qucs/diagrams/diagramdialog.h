@@ -44,7 +44,7 @@ class DiagramDialog : public QDialog  {
 Q_OBJECT
 public:
   DiagramDialog(Diagram *d, QWidget *parent=0,
-		Graph *currentGraph=0);
+		GraphDeque *currentGraph=0);
   ~DiagramDialog();
 
   bool loadVarData(const QString&);
@@ -92,7 +92,7 @@ protected slots:
     void reject();
 
 private:
-  void SelectGraph(Graph*);
+  void SelectGraph(GraphDeque*);
 
   Diagram *Diag;
   QString defaultDataSet;
@@ -107,7 +107,7 @@ private:
 
   QComboBox *ChooseData;
   QTableWidget *ChooseVars;
-  QListWidget  *GraphList;
+  QListWidget  *GraphDequeList;
 
   QVBoxLayout *all;   // the mother of all widgets
   QLineEdit   *GraphInput, *Property2, *xLabel, *ylLabel, *yrLabel;
@@ -125,7 +125,7 @@ private:
   QSlider     *SliderRotX, *SliderRotY, *SliderRotZ;
   Cross3D     *DiagCross;
   bool changed, transfer, toTake;
-  Q3PtrList<Graph>  Graphs;
+  Q3PtrList<GraphDeque>  GraphDeques; // FIXME maybe QList?
 };
 
 #endif

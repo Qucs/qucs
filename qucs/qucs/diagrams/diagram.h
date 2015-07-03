@@ -35,9 +35,16 @@
 // Enlarge memory block if neccessary.
 #define  FIT_MEMORY_SIZE  \
   if(p >= p_end) {     \
-    int pos = p - g->begin(); \
+    int pos = p - g->_begin(); \
     assert(pos<Size); \
   }
+
+#if 0
+    Size += 256;        \
+    g->resizeScrPoints(Size); \
+    p = g->_begin() + pos; \
+    p_end = g->_begin() + (Size - 9);
+#endif
 
 struct Axis {
   double  min, max; // least and greatest values of all graph data
@@ -68,8 +75,6 @@ public:
   virtual QString extraMarkerText(Marker const*) const {return "";}
   
   virtual void paint(ViewPainter*);
-  virtual void paintDiagram(ViewPainter* p);
-  void paintMarkers(ViewPainter* p, bool paintAll = true);
   void    setCenter(int, int, bool relative=false);
   void    getCenter(int&, int&);
   void    paintScheme(Schematic*);
@@ -79,11 +84,11 @@ public:
   QString save();
   bool    load(const QString&, QTextStream*);
 
-  void getAxisLimits(Graph*);
+  void getAxisLimits(GraphDeque const*);
   void updateGraphData();
   void loadGraphData(const QString&);
   void recalcGraphData();
-  bool sameDependencies(Graph const*, Graph const*) const;
+  bool sameDependencies(GraphDeque const*, GraphDeque const*) const;
   int  checkColumnWidth(const QString&, const QFontMetrics&, int, int, int);
 
   virtual bool insideDiagram(float, float) const;
@@ -103,7 +108,8 @@ public:
   QString Name; // identity of diagram type (e.g. Polar), used for saving etc.
   QPen    GridPen;
 
-  QList<Graph *>  Graphs;
+  QList<GraphDeque *> const& graphLists() const {return GraphDeques;}
+  QList<GraphDeque *>  GraphDeques;
   QList<Arc *>    Arcs;
   QList<Line *>   Lines;
   QList<Text *>   Texts;
@@ -137,7 +143,7 @@ protected:
   virtual void clip(Graph::iterator &) const;
   void rectClip(Graph::iterator &) const;
 
-  virtual void calcData(Graph*);
+  virtual void calcData(GraphDeque*);
 
 private:
   int Bounding_x1, Bounding_x2, Bounding_y1, Bounding_y2;

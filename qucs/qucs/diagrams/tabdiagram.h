@@ -37,7 +37,7 @@ public:
   void createAxisLabels() {};   // no labels in this diagram
 
 protected:
-  void calcData(Graph*) {};  // no graph data
+  void calcData(GraphDeque*) {};  // no graph data
 };
 
 #endif

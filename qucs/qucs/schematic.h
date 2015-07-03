@@ -263,6 +263,7 @@ private:
   void copyComponents2(int&, int&, int&, int&, QList<Element *> *);
   bool copyComps2WiresPaints(int&, int&, int&, int&, QList<Element *> *);
   int  copyElements(int&, int&, int&, int&, QList<Element *> *);
+  void getSelAreaWidthAndHeight(int &, int &, int&, int&);
 
 
 /* ********************************************************************

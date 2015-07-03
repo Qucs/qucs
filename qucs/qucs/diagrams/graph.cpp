@@ -24,7 +24,7 @@
 
 class Diagram;
 
-Graph::Graph(Diagram const* d, const QString& _Line) :
+GraphDeque::GraphDeque(Diagram const* d, const QString& _Line) :
   Element(),
   Style(GRAPHSTYLE_SOLID),
   diagram(d)
@@ -43,14 +43,14 @@ Graph::Graph(Diagram const* d, const QString& _Line) :
   gy=NULL;
 }
 
-Graph::~Graph()
+GraphDeque::~GraphDeque()
 {
   if(cPointsY != 0)
     delete[] cPointsY;
 }
 
 // ---------------------------------------------------------------------
-void Graph::createMarkerText() const
+void GraphDeque::createMarkerText() const
 {
   for(auto pm : Markers) {
     pm->createText();
@@ -58,7 +58,7 @@ void Graph::createMarkerText() const
 }
 
 // ---------------------------------------------------------------------
-void Graph::paint(ViewPainter *p, int x0, int y0)
+void GraphDeque::paint(ViewPainter *p, int x0, int y0)
 {
   if(!ScrPoints.size())
     return;
@@ -78,7 +78,7 @@ void Graph::paint(ViewPainter *p, int x0, int y0)
 }
 
 // ---------------------------------------------------------------------
-void Graph::paintLines(ViewPainter *p, int x0, int y0)
+void GraphDeque::paintLines(ViewPainter *p, int x0, int y0)
 {
   switch(Style) {
     case GRAPHSTYLE_STAR:
@@ -94,8 +94,9 @@ void Graph::paintLines(ViewPainter *p, int x0, int y0)
       drawLines(x0, y0, p);
   }
 }
+/* PHASOR DIAGRAM CODE
 // ---------------------------------------------------------------------
-/*paint function for phasor diagram*/
+//paint function for phasor diagram
 void Graph::paintvect(ViewPainter *p, int x0, int y0)
 {
     if(!ScrPoints.size())
@@ -113,9 +114,10 @@ void Graph::paintvect(ViewPainter *p, int x0, int y0)
   // **** not selected ****
   p->Painter->setPen(QPen(QColor(Color), Thick*p->PrintScale, Qt::SolidLine));
   drawvect(x0, y0, p);
-}
+}*/
+
 // ---------------------------------------------------------------------
-QString Graph::save()
+QString GraphDeque::save()
 {
   QString s = "\t<\""+Var+"\" "+Color.name()+
 	      " "+QString::number(Thick)+" "+QString::number(Precision)+
@@ -129,7 +131,7 @@ QString Graph::save()
 }
 
 // ---------------------------------------------------------------------
-bool Graph::load(const QString& _s)
+bool GraphDeque::load(const QString& _s)
 {
   bool ok;
   QString s = _s;
@@ -181,7 +183,7 @@ bool Graph::load(const QString& _s)
  *
  * FIXME: should return reference to hit sample point or some context.
  */
-int Graph::getSelected(int x, int y)
+int GraphDeque::getSelected(int x, int y) const
 {
   auto pp = ScrPoints.begin();
   if(pp == ScrPoints.end()) return -1;
@@ -262,10 +264,11 @@ int Graph::getSelected(int x, int y)
 
   return -1;
 }
-// -----------------------------------------------------------------------
-/*it's a select function for phasordiagram that with the 2 points of the vector 
-creates a linear equation and find if the point is in that equation*/
 
+/* PHASOR DIAGRAM CODE
+// -----------------------------------------------------------------------
+//it's a select function for phasordiagram that with the 2 points of the vector
+//creates a linear equation and find if the point is in that equation
 int Graph::getSelectedP(int x, int y)
 {
 
@@ -316,12 +319,14 @@ int Graph::getSelectedP(int x, int y)
 
   return -1;
 
-}
+}*/
+
 // -----------------------------------------------------------------------
 // Creates a new graph and copies all the properties into it.
-Graph* Graph::sameNewOne()
+GraphDeque* GraphDeque::sameNewOne()
 {
-  Graph *pg = new Graph(diagram, Var);
+  // FIXME: implement private copy constructor and use here.
+  GraphDeque *pg = new GraphDeque(diagram, Var);
 
   pg->Color = Color;
   pg->Thick = Thick;
@@ -340,7 +345,7 @@ Graph* Graph::sameNewOne()
 /*!
  * find a sample point close to VarPos, snap to it, and return data at VarPos
  */
-std::pair<double,double> Graph::findSample(std::vector<double>& VarPos) const
+std::pair<double,double> GraphDeque::findSample(std::vector<double>& VarPos) const
 {
   DataX const* pD;
   unsigned nVarPos=0;

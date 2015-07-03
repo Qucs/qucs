@@ -46,7 +46,7 @@ static double default_Z0=50;
  * marker position is the sampling point closest to the click.
  */
 
-Marker::Marker(Graph *pg_, int branchNo, int cx_, int cy_) :
+Marker::Marker(GraphDeque *pg_, int branchNo, int cx_, int cy_) :
   Element(),
   pGraph(pg_),
   Precision(3),
@@ -240,17 +240,10 @@ void Marker::createText()
   double *pp;
   nVarPos = pGraph->numAxes();
   DataX const *pD;
-  if(diag()->Name!="Waveac")
-  {
-    auto p = pGraph->findSample(VarPos);
-    VarDep[0] = p.first;
-    VarDep[1] = p.second;
-  }
-  else
-  {
-    VarDep[0] = wavevalY(VarPos[0],VarPos);
-    VarDep[1] = 0;
-  }
+
+  auto p = pGraph->findSample(VarPos);
+  VarDep[0] = p.first;
+  VarDep[1] = p.second;
 
   double v=0.;   // needed for 2D graph in 3D diagram
   double *py=&v;
@@ -615,8 +608,10 @@ bool Marker::getSelected(int x_, int y_)
 
   return false;
 }
+
+/* WAVE AC CODE
 // ------------------------------------------------------------------------
-/*will find the y value of a point in time for waveac*/
+// will find the y value of a point in time for waveac
 double Marker::wavevalY(double xn,std::vector<double>& VarPos)  
 {
   double n;
@@ -634,7 +629,9 @@ double Marker::wavevalY(double xn,std::vector<double>& VarPos)
   A = sqrt(yp[1]*yp[1] +yp[0]*yp[0]);
   VarPos[0]=n;
   return A*sin(2*pi*(diag()->freq[0])*xn + af);
-}
+}*/
+
+
 // ------------------------------------------------------------------------
 /*
  * the diagram this belongs to
@@ -646,7 +643,7 @@ const Diagram* Marker::diag() const
 }
 
 // ------------------------------------------------------------------------
-Marker* Marker::sameNewOne(Graph *pGraph_)
+Marker* Marker::sameNewOne(GraphDeque *pGraph_)
 {
   Marker *pm = new Marker(pGraph_, 0, cx ,cy);
 

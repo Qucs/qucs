@@ -102,7 +102,7 @@ void ViewPainter::drawLine(int x1i, int y1i, int x2i, int y2i)
 /*!
  * draw a (line) graph from screen coord pairs
  */
-void Graph::drawLines(int x0, int y0, ViewPainter *p) const
+void GraphDeque::drawLines(int x0, int y0, ViewPainter *p) const
 {
   float DX_, DY_;
   float x1, y1;
@@ -140,7 +140,7 @@ void Graph::drawLines(int x0, int y0, ViewPainter *p) const
   }
   Painter->setPen(pen);
 
-  auto pp = begin();
+  auto pp = _begin();
   if(!pp->isPt())
     pp++;
 
@@ -169,6 +169,8 @@ void Graph::drawLines(int x0, int y0, ViewPainter *p) const
     Painter->drawPath(path);
   }
 }
+
+/*
 // -------------------------------------------------------------
 //draws the vectors of phasor diagram
 void Graph::drawvect(int x0, int y0, ViewPainter *p) const
@@ -224,15 +226,16 @@ void Graph::drawvect(int x0, int y0, ViewPainter *p) const
 
   }
 
-}
+}*/
+
 // -------------------------------------------------------------
-void Graph::drawStarSymbols(int x0i, int y0i, ViewPainter *p) const
+void GraphDeque::drawStarSymbols(int x0i, int y0i, ViewPainter *p) const
 {
   float x3, x0, y0, x1, x2, y1, y2;
   float z, DX_, DY_;
   auto Scale = p->Scale;
   auto Painter = p->Painter;
-  auto pp = begin();
+  auto pp = _begin();
   if(!pp->isPt())
     pp++;
 
@@ -259,13 +262,13 @@ void Graph::drawStarSymbols(int x0i, int y0i, ViewPainter *p) const
 }
 
 // -------------------------------------------------------------
-void Graph::drawCircleSymbols(int x0i, int y0i, ViewPainter *p) const
+void GraphDeque::drawCircleSymbols(int x0i, int y0i, ViewPainter *p) const
 {
   float x0, y0;
   float z, DX_, DY_;
   auto Scale = p->Scale;
   auto Painter = p->Painter;
-  auto pp = begin();
+  auto pp = _begin();
   if(!pp->isPt())
     pp++;
 
@@ -284,13 +287,13 @@ void Graph::drawCircleSymbols(int x0i, int y0i, ViewPainter *p) const
 }
 
 // -------------------------------------------------------------
-void Graph::drawArrowSymbols(int x0i, int y0i, ViewPainter *p) const
+void GraphDeque::drawArrowSymbols(int x0i, int y0i, ViewPainter *p) const
 {
   int x0, y0, x1, x2, y1, y2;
   float DX_, DY_;
   auto Scale = p->Scale;
   auto Painter = p->Painter;
-  auto pp = begin();
+  auto pp = _begin();
   if(!pp->isPt())
     pp++;
 

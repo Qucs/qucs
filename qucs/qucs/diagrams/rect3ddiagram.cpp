@@ -390,9 +390,10 @@ void Rect3DDiagram::removeHiddenLines(char *zBuffer, tBound *Bounds)
   tPoint3D *p;
   int i, j, z, dx, dy, Size=0;
   // pre-calculate buffer size to avoid reallocations in the first step
-  foreach(Graph *g, Graphs)
+  for(auto g : GraphDeques) {
     if(g->cPointsY)
       Size += g->axis(0)->count * g->countY;
+  }
 
   // "Mem" should be the last malloc to simplify realloc
   // multiplicator 'malloc_8xsize' added
@@ -410,7 +411,7 @@ void Rect3DDiagram::removeHiddenLines(char *zBuffer, tBound *Bounds)
   tPointZ *zp = zMem, *zp_tmp;
 
   // ...............................................................
-  foreach(Graph *g, Graphs) {
+  for(auto g : GraphDeques) {
 
     pz = g->cPointsY;
     if(!pz) continue;
@@ -533,7 +534,7 @@ void Rect3DDiagram::removeHiddenLines(char *zBuffer, tBound *Bounds)
   tPoint3D *MemEnd = Mem + malloc_8xsize*2*Size - 5;   // limit of buffer
 
   zp = zMem;
-  foreach(Graph *g, Graphs) {
+  for(auto g : GraphDeques) {
     if(!g->cPointsY) continue;
     dx = g->axis(0)->count;
     if(g->countY > 1)  dy = g->axis(1)->count;
@@ -787,7 +788,7 @@ void Rect3DDiagram::createAxis(Axis *Axis, bool Right,
   y = y1_ - int(double(valid)*cos_phi);
   if(Axis->Label.isEmpty()) {
     // write all labels ----------------------------------------
-    foreach(Graph *pg, Graphs) {
+    for(auto pg : GraphDeques) {
       if(Axis != &zAxis) {
         if(!pg->cPointsY)  continue;
         if(valid < 0) {
@@ -974,7 +975,7 @@ Frame:   // jump here if error occurred (e.g. impossible log boundings)
 
 // ------------------------------------------------------------
 // g->Points must already be empty!!!
-void Rect3DDiagram::calcData(Graph *g)
+void Rect3DDiagram::calcData(GraphDeque *g)
 {
   if(!pMem)  return;
   if(!g->cPointsY) return;
@@ -983,8 +984,8 @@ void Rect3DDiagram::calcData(Graph *g)
   Size *= 2;  // memory for cross grid lines
 
   g->resizeScrPoints(Size);
-  auto p = g->begin();
-  auto p_end = g->begin();
+  auto p = g->_begin();
+  auto p_end = g->_begin();
   p_end += Size - 9;   // limit of buffer
 
 

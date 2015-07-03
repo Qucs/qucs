@@ -57,7 +57,7 @@ public:
 
 
 protected:
-  void calcData(Graph*);
+  void calcData(GraphDeque*);
 
 private:
   int  calcAxis(Axis*, int, int, double, double, bool);
