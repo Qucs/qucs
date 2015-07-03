@@ -156,7 +156,6 @@ void tunerElement::updateProperty()
 
     // prop->Value = QString::number(value->text()).append(tr(" ") + unit);
     prop->Value = value->text().append(tr(" ") + unit);
-    originalValue = prop->Value;
 }
 
 void tunerElement::slotSliderValueChanged(int v)
@@ -192,11 +191,11 @@ void tunerElement::slotStepChanged()
     if (!ok)
         return;
 
-    if ( (stepValue + value) > max)
+    /*if ( (stepValue + value) > max)
     {
         maximum->setText(QString::number(stepValue + value));
         slotMaxValueChanged();
-    }
+    }*/
     slider->setSingleStep(stepValue*10);
     slider->setTickInterval(stepValue*10); // trying to auto adjust tickInterval
     qDebug() << "tunerElement::slotStepChanged() " << stepValue;
@@ -215,7 +214,7 @@ void tunerElement::slotValueChanged()
     updateProperty();
     slider->setValue(v*10);
 
-    //emit elementValueUpdated();
+    emit elementValueUpdated();
 }
 
 void tunerElement::slotUpClicked()
@@ -407,7 +406,6 @@ void TunerDialog::closeEvent(QCloseEvent *event)
     //Undo changes to mouse actions when closing tuner window
     QucsMain->MousePressAction = &MouseActions::MPressSelect;
     QucsMain->MouseReleaseAction = &MouseActions::MReleaseSelect;
-
     event->accept();
 }
 
