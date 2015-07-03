@@ -572,7 +572,7 @@ void assignment::add (assignment * f)
     else if (isZero (body))
     {
         delete body;
-        //body = factor;
+        body = factor;
     }
     else if (isZero (factor))
     {
