@@ -137,7 +137,7 @@ int Rect3DDiagram::calcCross(int *Xses, int *Yses)
 // ------------------------------------------------------------
 // Is needed for markers.
 void Rect3DDiagram::calcCoordinate(const double* xD, const double* zD, const double* yD,
-                                   float *px, float *py, Axis*) const
+                                   float *px, float *py, Axis const*) const
 {
   double x3D = zD[0];
   double y3D = zD[1];
@@ -733,7 +733,7 @@ void Rect3DDiagram::createAxis(Axis *Axis, bool Right,
 {
   Q_UNUSED(Right);
 
-  DataX *pD;
+  DataX const *pD;
   double phi, cos_phi, sin_phi;
   int x, y, z, w, valid, Index = 0;
   if(Axis == &yAxis)  Index = 1;
@@ -982,8 +982,7 @@ void Rect3DDiagram::calcData(Graph *g)
               else  break;
 	    }
           FIT_MEMORY_SIZE;  // need to enlarge memory block ?
-	  (p++)->Scr = pMem->x;
-	  (p++)->Scr = pMem->y;
+	  (p++)->setScr(pMem->x, pMem->y);
           break;
         }
 
@@ -991,7 +990,7 @@ void Rect3DDiagram::calcData(Graph *g)
         if(pMem->done & 8)  (p++)->setBranchEnd();
 
         if(pMem->done & 4)   // point invisible ?
-          if( (p-1)->Scr >= 0 )  // line already interrupted ?
+          if((p-1)->isPt())
             (p++)->setStrokeEnd();
 
       } while(((pMem++)->done & 256) == 0);
@@ -1020,8 +1019,7 @@ void Rect3DDiagram::calcData(Graph *g)
               else  break;
 	    }
 
-          (p++)->Scr = pMem->x;
-          (p++)->Scr = pMem->y;
+          (p++)->setScr(pMem->x, pMem->y);
           break;
         }
 
@@ -1057,36 +1055,37 @@ void Rect3DDiagram::calcData(Graph *g)
  
     if(Counter > 1) {
       if(Counter == 2) {
-	(p++)->Scr = dx;    // if first points of branch -> paint first one
-	(p++)->Scr = dy;
+	(p++)->setScr(dx, dy);    // if first points of branch -> paint first one
       }
       dx = xtmp - dx;
       dy = ytmp - dy;
       dist += sqrt(double(dx*dx + dy*dy)); // distance between points
       if((Flag == 1) && (dist <= 0.0)) {
 	FIT_MEMORY_SIZE;  // need to enlarge memory block ?
-	(p++)->Scr = xtmp;    // if stroke then save points
-	(p++)->Scr = ytmp;
+	(p++)->setScr(xtmp, ytmp);    // if stroke then save points
       }
       else {
         alpha = atan2(double(dy), double(dx));   // slope for interpolation
         while(dist > 0) {   // stroke or space finished ?
 	  FIT_MEMORY_SIZE;  // need to enlarge memory block ?
 
-	  (p++)->Scr = xtmp - float(dist*cos(alpha)); // linearly interpolate
-	  (p++)->Scr = ytmp - float(dist*sin(alpha));
+	  (p++)->setScr(xtmp - float(dist*cos(alpha)), // linearly interpolate
+		        ytmp - float(dist*sin(alpha)));
 
           if(Flag == 0) {
             dist -= Stroke;
             if(dist <= 0) {
-	      (p++)->Scr = xtmp;  // don't forget point after ...
-	      (p++)->Scr = ytmp;  // ... interpolated point
+	      (p++)->setScr(xtmp,  // don't forget point after ...
+	                    ytmp); // ... interpolated point
             }
           }
           else {
 	    dist -= Space;
-	    if((p-3)->Scr < 0)  p -= 2;
-	    else (p++)->setStrokeEnd();
+	    if(!(p-2)->isPt()){
+	      --p;
+	    }else{
+	      (p++)->setStrokeEnd();
+	    }
           }
           Flag ^= 1; // toggle between stroke and space
         }
@@ -1099,11 +1098,12 @@ void Rect3DDiagram::calcData(Graph *g)
     dy = ytmp;
 
     if(pMem->done & 8) {
-      if((p-3)->isStrokeEnd() && !(p-3)->isBranchEnd()) {
-        p -= 3;  // no single point after "no stroke"
-      }else if((p-3)->isBranchEnd() && !(p-3)->isGraphEnd()) {
-        if(((p-2)->Scr < 0) || ((p-1)->Scr < 0))
-          p -= 2;  // erase last hidden point
+      if((p-2)->isStrokeEnd() && (p-2)->isBranchEnd()) {
+        p -= 2;  // no single point after "no stroke"
+      }else if((p-2)->isBranchEnd() && !(p-2)->isGraphEnd()) {
+        if((!(p-1)->isPt())){
+          p -= 1;  // erase last hidden point
+	}
       }
       (p++)->setBranchEnd();
       Counter = 0;
@@ -1112,7 +1112,7 @@ void Rect3DDiagram::calcData(Graph *g)
     }
 
     if(pMem->done & 4)   // point invisible ?
-      if( (p-1)->Scr >= 0 )  // line already interrupted ?
+      if((p-1)->isPt())
         (p++)->setStrokeEnd();
 
   } while(((pMem++)->done & 256) == 0);
