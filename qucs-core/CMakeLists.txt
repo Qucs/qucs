@@ -153,25 +153,31 @@ SET(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/modules/")
 #
 FIND_PACKAGE(FLEX 2.5.9  REQUIRED)
 IF(FLEX_FOUND)
-  MESSAGE(STATUS "Found flex: ${FLEX_EXECUTABLE} / Version: ${FLEX_VERSION}" )
+  #MESSAGE(STATUS "Found flex: ${FLEX_EXECUTABLE} / Version: ${FLEX_VERSION}" )
 ENDIF()
 
 #
 # Need Bison
 #
-#FIND_PACKAGE(BISON 2.4 REQUIRED
-#  NO_DEFAULT_PATH)
-#IF(BISON_FOUND)
-#  MESSAGE(STATUS "Found bison: ${BISON_EXECUTABLE} / Version: ${BISON_VERSION}" )
-#ENDIF()
-FIND_PROGRAM( BISON_EXECUTABLE bison
-  HINTS ${BISON_DIR} # use -DBISON_DIR=/path/ to overwrite, useful for Windows.
-  PATHS /usr/local/bin/ /opt/local/bin/ /usr/bin
-  DOC "bison path"
-  NO_DEFAULT_PATH )
-IF(BISON_EXECUTABLE )
-  # use external admsXml
-  MESSAGE(STATUS "Found bison: " ${BISON_EXECUTABLE})
+# This is a HACK to get arround a PATH issue with Qt Creator on OSX.
+# It seams impossible to pass a custom PATH to Qt Creator on OSX, ie, cannot prepend `/usr/local/bin/` for intance.
+# The FIND_PACKAGE fails. For now we provide a fallback with a custom FIND_PROGRAM. The variable BISON_DIR is also available.
+IF(WIN32)
+  FIND_PACKAGE(BISON 2.4 REQUIRED)
+  IF(BISON_FOUND)
+    #MESSAGE(STATUS "Found bison: ${BISON_EXECUTABLE} / Version: ${BISON_VERSION}" )
+  ENDIF()
+ELSE()  # Linux, OSX
+  # use -DBISON_DIR=/path/ to provide the path to bison
+  FIND_PROGRAM( BISON_EXECUTABLE bison
+    PATHS /usr/local/bin/ /opt/local/bin/ /usr/bin ${BISON_DIR}
+    DOC "bison path"
+    NO_DEFAULT_PATH )
+  IF(BISON_EXECUTABLE )
+    MESSAGE(STATUS "Found bison: " ${BISON_EXECUTABLE})
+  ELSE()
+	  MESSAGE(FATAL_ERROR "Unable to find bison. Try to provide -DBISON_DIR=[path]")
+  ENDIF()
 ENDIF()
 
 #
