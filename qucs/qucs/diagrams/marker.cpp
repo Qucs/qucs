@@ -44,7 +44,7 @@
  * marker position is the sampling point closest to the click.
  */
 
-Marker::Marker(Graph *pg_, int branchNo, int cx_, int cy_) :
+Marker::Marker(GraphDeque *pg_, int branchNo, int cx_, int cy_) :
   Element(),
   pGraph(pg_),
   Precision(3),
@@ -545,7 +545,7 @@ const Diagram* Marker::diag() const
 }
 
 // ------------------------------------------------------------------------
-Marker* Marker::sameNewOne(Graph *pGraph_)
+Marker* Marker::sameNewOne(GraphDeque *pGraph_)
 {
   Marker *pm = new Marker(pGraph_, 0, cx ,cy);
 
