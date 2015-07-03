@@ -180,8 +180,10 @@ UCOMPLEX {UCREAL}{UCIMAG}
     if (!p) {
       return InvalidCharacter;
     }
-    size_t len = (size_t)p - (size_t)&netlist_text[1];
-    netlist_lval.ident = strndup (&netlist_text[1], len);
+    //size_t len = (size_t)p - (size_t)&netlist_text[1];
+    //netlist_lval.ident = strndup (&netlist_text[1], len);
+    *p = '\0';
+    netlist_lval.ident = strdup (&netlist_text[1]);
     return Identifier;
   }
 <INITIAL,STR>{CREAL} { /* identify (signed) real float */
