@@ -696,7 +696,7 @@ void Schematic::paintSchToViewpainter(ViewPainter *p, bool printAll, bool toImag
     for(Diagram *pd = Diagrams->first(); pd != 0; pd = Diagrams->next())
       if(pd->isSelected || printAll) {
         // if graph or marker is selected, deselect during printing
-        foreach(Graph *pg, pd->Graphs) {
+        for(auto pg : pd->GraphDeques) {
       if(pg->isSelected)  pg->Type |= 1;  // remember selection
       pg->isSelected = false;
       foreach(Marker *pm, pg->Markers) {
@@ -711,7 +711,7 @@ void Schematic::paintSchToViewpainter(ViewPainter *p, bool printAll, bool toImag
         pd->isSelected = selected;
 
         // revert selection of graphs and markers
-        foreach(Graph *pg, pd->Graphs) {
+        for(auto pg : pd->GraphDeques) {
       if(pg->Type & 1)  pg->isSelected = true;
       pg->Type &= -2;
       foreach(Marker *pm, pg->Markers) {
@@ -1000,7 +1000,7 @@ void Schematic::sizeOfAll(int& xmin, int& ymin, int& xmax, int& ymax)
     if(y1 < ymin) ymin = y1;
     if(y2 > ymax) ymax = y2;
 
-    foreach(Graph *pg, pd->Graphs)
+    for(auto pg : pd->GraphDeques) {
       // test all markers of diagram
       foreach(Marker *pm, pg->Markers) {
         pm->Bounding(x1, y1, x2, y2);
@@ -1009,6 +1009,7 @@ void Schematic::sizeOfAll(int& xmin, int& ymin, int& xmax, int& ymax)
         if(y1 < ymin) ymin = y1;
         if(y2 > ymax) ymax = y2;
       }
+    }
   }
 
   // find boundings of all Paintings
@@ -1820,7 +1821,7 @@ bool Schematic::elementsOnGrid()
       count = true;
     }
 
-    foreach(Graph *pg,pd->Graphs)
+    for(auto pg : pd->GraphDeques) {
       // test markers of diagram
       foreach(Marker *pm, pg->Markers)
         if(pm->isSelected) {
@@ -1832,6 +1833,7 @@ bool Schematic::elementsOnGrid()
 	  pm->isSelected = false;
 	  count = true;
         }
+    }
   }
 
   // test all paintings
@@ -2255,3 +2257,5 @@ void Schematic::getSelAreaWidthAndHeight(int &wsel, int &hsel, int& xmin_sel_, i
     xmin_sel_ = xmin;
     ymin_sel_ = ymin;
 }
+
+// vim:ts=8:sw=2:noet

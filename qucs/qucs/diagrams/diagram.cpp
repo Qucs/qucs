@@ -103,8 +103,8 @@ void Diagram::paint(ViewPainter *p)
     p->drawArc(cx+pa->x, cy-pa->y, pa->w, pa->h, pa->angle, pa->arclen);
   }
 
-  // draw all graphs
-  foreach(Graph *pg, Graphs)
+  // draw graphs from all graphLists
+  for(auto pg : GraphDeques)
     pg->paint(p, cx, cy);
 
   // keep track of painter state
@@ -128,7 +128,7 @@ void Diagram::paint(ViewPainter *p)
   p->Painter->restore();
 
   // draw markers last, so they are at the top of painting layers
-  foreach(Graph *pg, Graphs)
+  for(auto pg : GraphDeques)
     foreach(Marker *pm, pg->Markers)
       pm->paint(p, cx, cy);
 
@@ -172,7 +172,7 @@ void Diagram::createAxisLabels()
   y = -y1;
   if(xAxis.Label.isEmpty()) {
     // write all x labels ----------------------------------------
-    foreach(Graph *pg, Graphs) {
+    for(auto pg : GraphDeques) {
 	DataX const *pD = pg->axis(0);
 	if(!pD) continue;
 	y -= LineSpacing;
@@ -208,7 +208,7 @@ void Diagram::createAxisLabels()
   y = y2>>1;
   if(yAxis.Label.isEmpty()) {
     // draw left y-label for all graphs ------------------------------
-    foreach(Graph *pg, Graphs) {
+    for(auto pg : GraphDeques) {
       if(pg->yAxisNo != 0)  continue;
       if(pg->cPointsY) {
 	if(Name[0] != 'C') {   // location curve ?
@@ -246,7 +246,7 @@ void Diagram::createAxisLabels()
   y = y2>>1;
   if(zAxis.Label.isEmpty()) {
     // draw right y-label for all graphs ------------------------------
-    foreach(Graph *pg, Graphs) {
+    for(auto pg : GraphDeques) {
       if(pg->yAxisNo != 1)  continue;
       if(pg->cPointsY) {
 	if(Name[0] != 'C') {   // location curve ?
@@ -322,7 +322,7 @@ Marker* Diagram::setMarker(int x, int y)
 {
   if(getSelected(x, y)) {
     // test all graphs of the diagram
-    foreach(Graph *pg,Graphs) {
+    for(auto pg : GraphDeques) {
       int n  = pg->getSelected(x-cx, cy-y); // sic!
       if(n >= 0) {
 	assert(pg->parentDiagram() == this);
@@ -478,8 +478,8 @@ void Diagram::clip(Graph::iterator &p) const
 
 // ------------------------------------------------------------
 // g->Points must already be empty!!!
-// is this a Graph Member?
-void Diagram::calcData(Graph *g)
+// is this a GraphDeque Member?
+void Diagram::calcData(GraphDeque *g)
 {
   double *px;
   double *pz = g->cPointsY;
@@ -496,12 +496,12 @@ void Diagram::calcData(Graph *g)
   double *py = &Dummy;
 
   g->resizeScrPoints(Size);
-  auto p = g->begin();
-  auto p_end = g->begin();
+  auto p = g->_begin();
+  auto p_end = g->_begin();
   p_end += Size - 9;   // limit of buffer
   p->setStrokeEnd();
   ++p;
-  assert(p!=g->end());
+  assert(p!=g->_end());
 
   Axis *pa;
   if(g->yAxisNo == 0)  pa = &yAxis;
@@ -512,7 +512,6 @@ void Diagram::calcData(Graph *g)
     case GRAPHSTYLE_DASH:
     case GRAPHSTYLE_DOT:
     case GRAPHSTYLE_LONGDASH:
-
       for(i=g->countY; i>0; i--) {  // every branch of curves
 	px = g->axis(0)->Points;
 	calcCoordinateP(px, pz, py, p, pa);
@@ -556,7 +555,7 @@ for(int zz=0; zz<z; zz+=2)
             ++p;
         }
 	(p++)->setBranchEnd();
-	assert(p!=g->end());
+	assert(p!=g->_end());
       }
       (p++)->setGraphEnd();
 /*qDebug("\n******");
@@ -609,7 +608,7 @@ bool Diagram::resizeTouched(float fX, float fY, float len)
 }
 
 // --------------------------------------------------------------------------
-void Diagram::getAxisLimits(Graph *pg)
+void Diagram::getAxisLimits(GraphDeque const* pg)
 {
   // FIXME: Graph should know the limits. but it doesn't yet.
   //        we should only copy here. better: just wrap, dont use {x,y,z}Axis
@@ -618,7 +617,8 @@ void Diagram::getAxisLimits(Graph *pg)
   DataX const *pD = pg->axis(0);
   if(pD == 0) return;
 
-  if(Name[0] != 'C') {   // not for location curves
+  if(Name[0] != 'C') { // BUG: inherit properly.
+    // not for location curves
     p = pD->Points;
     for(z=pD->count; z>0; z--) { // check x coordinates (1. dimension)
       x = *(p++);
@@ -629,7 +629,7 @@ void Diagram::getAxisLimits(Graph *pg)
     }
   }
 
-  if(Name == "Rect3D") {
+  if(Name == "Rect3D") { // BUG: inherit properly.
     DataX const *pDy = pg->axis(1);
     if(pDy) {
       p = pDy->Points;
@@ -686,7 +686,7 @@ void Diagram::loadGraphData(const QString& defaultDataSet)
   yAxis.max = zAxis.max = xAxis.max = -DBL_MAX;
 
   int No=0;
-  foreach(Graph *pg, Graphs) {
+  for(auto pg : GraphDeques) {
     qDebug() << "load GraphData load" << defaultDataSet << pg->Var;
     if(pg->loadDatFile(defaultDataSet) != 1)   // load data, determine max/min values
       No++;
@@ -726,8 +726,9 @@ void Diagram::recalcGraphData()
   yAxis.numGraphs = zAxis.numGraphs = 0;
 
   // get maximum and minimum values
-  foreach(Graph *pg, Graphs)
+  for(auto pg : GraphDeques) {
     getAxisLimits(pg);
+  }
 
   if(xAxis.min > xAxis.max) {
     xAxis.min = 0.0;
@@ -754,7 +755,7 @@ void Diagram::updateGraphData()
 {
   int valid = calcDiagram();   // do not calculate graph data if invalid
 
-  foreach(Graph *pg, Graphs) {
+  for(auto pg : GraphDeques) {
     pg->clear();
     if((valid & (pg->yAxisNo+1)) != 0)
       calcData(pg);   // calculate screen coordinates
@@ -768,7 +769,7 @@ void Diagram::updateGraphData()
 
   // Setting markers must be done last, because in 3D diagram "Mem"
   // is released in "createAxisLabels()".
-  foreach(Graph *pg, Graphs){
+  for(auto pg : GraphDeques) {
     pg->createMarkerText();
   }
 }
@@ -780,9 +781,9 @@ void Diagram::updateGraphData()
  *
  * FIXME: must invalidate markers.
  */
-int Graph::loadDatFile(const QString& fileName)
+int GraphDeque::loadDatFile(const QString& fileName)
 {
-  Graph* g = this;
+  GraphDeque* g = this;
   QFile file;
   QString Variable;
   QFileInfo Info(fileName);
@@ -1021,7 +1022,7 @@ if(Variable.right(3) != ".X ") { // not "digital"
 /*!
    Reads the data of an independent variable. Returns the number of points.
 */
-int Graph::loadIndepVarData(const QString& Variable,
+int GraphDeque::loadIndepVarData(const QString& Variable,
 			      char *FileString, DataX* pD)
 {
   bool isIndep = false;
@@ -1109,9 +1110,9 @@ int Graph::loadIndepVarData(const QString& Variable,
 }
 
 /*!
-   Checks if the two graphs have the same independent variables.
+   Checks if the two graph lists share the independent variables.
 */
-bool Diagram::sameDependencies(Graph const*g1, Graph const*g2) const
+bool Diagram::sameDependencies(GraphDeque const*g1, GraphDeque const*g2) const
 {
   // FIXME
   // return g1->same(*g2);
@@ -1216,7 +1217,7 @@ QString Diagram::save()
   // labels can contain spaces -> must be last items in the line
   s += " \""+xAxis.Label+"\" \""+yAxis.Label+"\" \""+zAxis.Label+"\">\n";
 
-  foreach(Graph *pg, Graphs)
+  for(auto pg : GraphDeques)
     s += pg->save()+"\n";
 
   s += "  </"+Name+">";
@@ -1340,7 +1341,7 @@ bool Diagram::load(const QString& Line, QTextStream *stream)
   yAxis.Label = s.section('"',3,3);   // yLabel left
   zAxis.Label = s.section('"',5,5);   // yLabel right
 
-  Graph *pg;
+  GraphDeque *pg;
   // .......................................................
   // load graphs of the diagram
   while(!stream->atEnd()) {
@@ -1353,7 +1354,7 @@ bool Diagram::load(const QString& Line, QTextStream *stream)
 
       // .......................................................
       // load markers of the diagram
-      pg = Graphs.last();
+      pg = GraphDeques.last();
       if(!pg)  return false;
       assert(pg->parentDiagram() == this);
       Marker *pm = new Marker(pg);
@@ -1365,12 +1366,12 @@ bool Diagram::load(const QString& Line, QTextStream *stream)
       continue;
     }
 
-    pg = new Graph(this);
+    pg = new GraphDeque(this);
     if(!pg->load(s)) {
       delete pg;
       return false;
     }
-    Graphs.append(pg);
+    GraphDeques.append(pg);
   }
 
   return false;   // end tag missing

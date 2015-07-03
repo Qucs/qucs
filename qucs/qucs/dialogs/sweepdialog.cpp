@@ -153,7 +153,7 @@ void SweepDialog::slotNewValue(int)
 }
 
 // ---------------------------------------------------
-Graph* SweepDialog::setBiasPoints()
+GraphDeque* SweepDialog::setBiasPoints()
 {
   // When this function is entered, a simulation was performed.
   // Thus, the node names are still in "node->Name".
@@ -161,7 +161,7 @@ Graph* SweepDialog::setBiasPoints()
   qDebug() << "SweepDialog::setBiasPoints()";
 
   bool hasNoComp;
-  Graph *pg = new Graph(NULL, ""); // HACK!
+  GraphDeque *pg = new GraphDeque(NULL, ""); // HACK!
   QFileInfo Info(Doc->DocName);
   QString DataSet = Info.dirPath() + QDir::separator() + Doc->DataSet;
 

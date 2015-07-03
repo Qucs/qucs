@@ -27,7 +27,7 @@
 
 #include "node.h"
 
-class Graph;
+class GraphDeque;
 class Schematic;
 class QGridLayout;
 
@@ -55,12 +55,12 @@ private slots:
   void slotNewValue(int);
 
 private:
-  Graph* setBiasPoints();
+  GraphDeque* setBiasPoints();
 
   QGridLayout *all;   // the mother of all widgets
   QList<mySpinBox *> BoxList;
 
-  Graph *pGraph;
+  GraphDeque *pGraph;
   Schematic *Doc;
   QList<Node *> NodeList;
   QList<double *> ValueList;
