@@ -71,14 +71,10 @@ tunerElement::tunerElement(QWidget *parent, Component *component, int selectedPr
 
 
     QStringList lst = prop->Value.split(' ');
-    unit = lst.last();
-
-    if (lst.count() == 1)
-    {
-        // Probably a value without unit (like Epsilon r)
-        // or a value with unit but without space
-        // TODO: needs to be handled
-    }
+    if (lst.count() > 1)
+        unit = lst.last();
+    else
+        unit = ""; // No unit
 
     index = gbox->indexOf(value);
     gbox->getItemPosition(index, &row, &column, &rowSpan, &colSpan);
@@ -93,8 +89,8 @@ tunerElement::tunerElement(QWidget *parent, Component *component, int selectedPr
     gbox->addWidget(down, 2, gbox->columnCount() - 1, 1, 1);
 
     double numericValue = lst.first().toDouble();
-    double maxValue = numericValue + (numericValue * 0.10);
-    double minValue = numericValue - (numericValue * 0.10);
+    int maxValue = numericValue + (numericValue * 0.10);
+    int minValue = numericValue - (numericValue * 0.10);
 
     maximum->setText(QString::number(maxValue));
     minimum->setText(QString::number(minValue));
@@ -160,6 +156,7 @@ void tunerElement::updateProperty()
 
     // prop->Value = QString::number(value->text()).append(tr(" ") + unit);
     prop->Value = value->text().append(tr(" ") + unit);
+    originalValue = prop->Value;
 }
 
 void tunerElement::slotSliderValueChanged(int v)
@@ -309,6 +306,8 @@ void TunerDialog::slotCloseClicked()
         qDebug() << "slotCloseClicked::User clicked yes";
         slotUpdateValues();
     }
+    else
+        slotResetValues();
 
     this->close();
 }
