@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/Qucs/qucs.svg?branch=master)](https://travis-ci.org/Qucs/qucs)
+[![Build status](https://ci.appveyor.com/api/projects/status/6wm4mmnk59h7soh1/branch/master?svg=true)](https://ci.appveyor.com/project/qucs/qucs/branch/master)
 [![Coverage Status](https://img.shields.io/coveralls/Qucs/qucs.svg)](https://coveralls.io/r/Qucs/qucs?branch=master)
 
 ## QUCS - Quite Universal Circuit Simulator
