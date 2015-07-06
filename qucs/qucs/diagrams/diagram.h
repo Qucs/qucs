@@ -37,10 +37,6 @@
   if(p >= p_end) {     \
     int pos = p - g->begin(); \
     assert(pos<Size); \
-    Size += 256;        \
-    g->resizeScrPoints(Size); \
-    p = g->begin() + pos; \
-    p_end = g->begin() + (Size - 9); \
   }
 
 struct Axis {
