@@ -368,6 +368,17 @@ GraphDeque* GraphDeque::sameNewOne()
   return pg;
 }
 
+// ---------------------------------------------------------------------
+/*!
+ * lookup a graph closest to some coordinates
+ */
+#if 0 // later
+GraphDeque::iterator GraphDeque::findGraph(double* coordinate)
+{
+}
+#endif
+
+// -----------------------------------------------------------------------
 /*!
  * snap position to nearby lattice point.
  * return iterators.
@@ -400,6 +411,31 @@ GraphDeque::MarkerPos GraphDeque::findSample(std::vector<double>& VarPos) const
 
   auto gPos = n->findSample(VarPos[0]);
   return MarkerPos(n, gPos);
+}
+
+/*!
+ * write graph coordinates into vector.
+ */
+void GraphDeque::samplePos(const_iterator here, std::vector<double>& VarPos) const
+{
+  assert(here>=begin());
+  assert(here<=end());
+  if(here==end()){ // just assert? later..
+    qDebug() << "BUG: invalid iterator in GraphDeque::samplePos";
+    return;
+  }
+
+  double const*px;
+  unsigned nn = here - begin();
+  DataX const *pD = axis(0); // BUG: don't use DataX
+
+  assert(VarPos.size()>=numAxes());
+  for(unsigned i=1; (pD = axis(i)); ++i) {
+    px = coords(i);
+    px += (nn % count(i));
+    VarPos[i] = *px;
+    nn /= count(i);
+  }
 }
 
 /*!

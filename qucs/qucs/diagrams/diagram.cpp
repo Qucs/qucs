@@ -746,6 +746,7 @@ void Diagram::loadGraphData(const QString& defaultDataSet)
 
   qDebug() << "dataset changes" << No;
   if(No <= 0) {   // All dataset files unchanged ?
+    qDebug() << "unchanged";
     yAxis.numGraphs = yNum;  // rebuild scrollbar position
     zAxis.numGraphs = zNum;
 
@@ -805,6 +806,7 @@ void Diagram::recalcGraphData()
 // ------------------------------------------------------------------------
 void Diagram::updateGraphData()
 {
+  qDebug() << "Diagram::updateGraphData";
   int valid = calcDiagram();   // do not calculate graph data if invalid
 
   for(auto pg : GraphDeques) {
@@ -828,6 +830,7 @@ void Diagram::updateGraphData()
   for(auto pg : GraphDeques) {
     pg->createMarkerText();
   }
+  qDebug() << "done Diagram::updateGraphData";
 }
 
 // --------------------------------------------------------------------------

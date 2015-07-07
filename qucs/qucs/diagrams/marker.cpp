@@ -122,6 +122,9 @@ Marker::Marker(GraphDeque::const_iterator const& pos,
   }else{
     VarPos.resize(pGraph->numAxes());
     initText(pos);
+    qDebug() << "finally create marker Text";
+    assert(pGraph->begin()<=pos);
+    assert(pos<=pGraph->end());
     createText();
   }
 
@@ -150,83 +153,41 @@ void Marker::initText(GraphDeque::const_iterator const& pos)
   assert(diag());
   if(pGraph->yAxisNo == 0)  pa = &(diag()->yAxis);
   else  pa = &(diag()->zAxis);
-  double Dummy = 0.0;   // needed for 2D graph in 3D diagram
-  double *px, *py=&Dummy, *pz;
-  unsigned splPerGraph = pGraph->axis(0)->count;
   SplPosD = pos;
 
-
-  bool isCross = false;
-  int nn, nnn, m, x, y, d, dmin = INT_MAX;
-  DataX const *pD = pGraph->axis(0);
+  int x, y, d, dmin = INT_MAX;
 
   Graph::const_iterator here = pos->begin();
-  int n = (pos-pGraph->begin()) * splPerGraph;
-  qDebug() << "initText" << pGraph->countY << splPerGraph << "oldn" << n;
 
-  px  = pD->Points;
-  nnn = pD->count;
-  DataX const *pDy = pGraph->axis(1);
-  if(pDy) {   // only for 3D diagram
-    nn = pGraph->countY * pD->count;
-    py  = pDy->Points;
-    if(n >= nn) {    // is on cross grid ?
-      isCross = true;
-      n -= nn;
-      n /= nnn;
-      px += (n % nnn);
-      if(pGraph->axis(2))   // more than 2 indep variables ?
-        n  = (n % nnn) + (n / nnn) * nnn * pDy->count;
-      nnn = pDy->count;
+  assert(here>=pGraph->_begin());
+  for(auto spl=pos->begin(); spl!=pos->end(); ++spl) {
+    if(!spl->isPt()){
+      qDebug() << "BUG in calcData? bogus data in spl";
+      continue;
     }
-    else py += (n/pD->count) % pDy->count;
-  }
+    // diag()->calcCoordinate(px, pz, py, &fCX, &fCY, pa);
+    fCX = spl->getScrX();
+    fCY = spl->getScrY();
 
-  // find exact marker position
-  m  = nnn - 1;
-  pz = pGraph->cPointsY + 2*n;
-  for(nn=0; nn<nnn; nn++) {
-    diag()->calcCoordinate(px, pz, py, &fCX, &fCY, pa);
-    ++px;
-    pz += 2;
-    if(isCross) {
-      px--;
-      py++;
-      pz += 2*(pD->count-1);
-    }
     x = int(fCX+0.5) - cx;
     y = int(fCY+0.5) - cy;
     d = x*x + y*y;
     if(d < dmin) {
       dmin = d;
-      m = nn;
+      here = spl;
     }
   }
 
-  n += m;
-
   SplPosX = here;
-  SplPosX += n % pGraph->axis(0)->count;
 
   assert(here<pos->end());
   assert(VarPos.size());
   VarPos[0] = here->getIndep();
-//  double* pd = VarPos.data()+1;
-//  pGraph->getCoords(pos, pd);
-  {
-  double const*px;
 
-  qDebug() << "oldX" << n << "newX" << SplPosX - pos->begin();
-  qDebug() << "oldD" << n/pGraph->axis(0)->count << "newD" << pos - pGraph->begin();
+  pGraph->samplePos(pos, VarPos); // FIXME: don't touch VarPos[0]
 
-  assert(VarPos.size()>=pGraph->numAxes());
-  nn = n;
-  for(unsigned i=0; (pD = pGraph->axis(i)); ++i) {
-    px = pGraph->coords(i);
-    px += (nn % pGraph->count(i));
-    VarPos[i] = *px;
-    nn /= pGraph->count(i);
-  }
+  if(VarPos[0] != here->getIndep()){
+    qDebug() << "BUG" << VarPos[0] << here->getIndep();
   }
 }
 
@@ -238,10 +199,29 @@ void Marker::initText(GraphDeque::const_iterator const& pos)
  */
 void Marker::createText()
 {
+  qDebug() << "createText";
   assert(pGraph);
   if(!(pGraph->cPointsY)) {
     makeInvalid();
     return;
+  }else if(SplPosD == pGraph->end()){ // here?!
+    qDebug() << "invalid marker" << pGraph->numAxes();
+    for(auto x : VarPos){
+      qDebug() << x;
+    }
+    GraphDeque::MarkerPos P = pGraph->findSample(VarPos);
+    SplPosD = P.first;
+    SplPosX = P.second;
+    VarDep[0] = SplPosX->getDep().real();
+    VarDep[1] = SplPosX->getDep().imag();
+  }
+
+
+  if(splPos().second<pGraph->_begin()){
+    qDebug() << "bogus marker";
+  }else if(splPos().second>=pGraph->_end()){
+    qDebug() << "bogus marker end";
+  }else{
   }
 
 #if 0 // not yet. marker pos can be invalid here.
@@ -264,7 +244,6 @@ void Marker::createText()
   }
 
   // independent variables
-  Text = "";
   nVarPos = pGraph->numAxes();
 
   // BUG? not necessarily needed here.
@@ -400,11 +379,13 @@ void Marker::getTextSize()
 // ---------------------------------------------------------------------
 bool Marker::moveLeftRight(bool left)
 {
-  int n;
-  double *px;
+  assert(pGraph);
+  assert(SplPosD>=pGraph->begin());
+  assert(SplPosD<=pGraph->end());
 
+  int n;
   DataX const *pD = pGraph->axis(0);
-  px = pD->Points;
+  double* px = pD->Points;
   if(!px) return false;
   for(n=0; n<pD->count; n++) {
     if(VarPos[0] <= *px) break;
