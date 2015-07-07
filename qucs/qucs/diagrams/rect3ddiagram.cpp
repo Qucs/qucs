@@ -21,6 +21,7 @@
 */
 
 #include <QFontMetrics>
+#include <QDebug>
 
 #if HAVE_CONFIG_H
 # include <config.h>
@@ -992,6 +993,7 @@ void Rect3DDiagram::calcData(GraphDeque *g)
 
   p->setStrokeEnd();
   ++p;
+  auto graphbegin = p;
   switch(g->Style) {
     case GRAPHSTYLE_SOLID:
     case GRAPHSTYLE_DASH:
@@ -1016,7 +1018,13 @@ void Rect3DDiagram::calcData(GraphDeque *g)
         }
 
         FIT_MEMORY_SIZE;  // need to enlarge memory block ?
-        if(pMem->done & 8)  (p++)->setBranchEnd();
+        if(pMem->done & 8) {
+	  qDebug() << "pushback 3d" << p-graphbegin;
+	  g->push_back(Graph(graphbegin, p)); // BUG: push back 3D Graph
+	                                      // (not implemented!)
+	  (p++)->setBranchEnd();
+	  graphbegin = p;
+	}
 
         if(pMem->done & 4)   // point invisible ?
           if((p-1)->isPt())
@@ -1028,6 +1036,7 @@ void Rect3DDiagram::calcData(GraphDeque *g)
 
     default:  // symbol (e.g. star) at each point **********************
       do {
+	graphbegin = p;
         while(1) {
           if(pMem->done & 11)    // is grid point ?
             if(pMem->done & 4) { // is hidden
@@ -1044,8 +1053,11 @@ void Rect3DDiagram::calcData(GraphDeque *g)
           break;
         }
 
-        if(pMem->done & 8)
+        if(pMem->done & 8) {
+	  g->push_back(Graph(graphbegin, p));
+	  graphbegin = p;
           (p++)->setBranchEnd();
+	}
       } while(((pMem++)->done & 512) == 0);
       p->setGraphEnd();
   }
