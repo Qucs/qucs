@@ -214,6 +214,7 @@ private: // painting
 public: // marker related
   void createMarkerText() const;
   MarkerPos findSample(std::vector<double>&) const;
+  void samplePos(const_iterator, std::vector<double>& VarPos) const;
   Diagram const* parentDiagram() const{return diagram;}
   void invalidateMarkers();
 private:
