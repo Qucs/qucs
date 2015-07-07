@@ -532,6 +532,7 @@ void Diagram::calcData(GraphDeque *g)
 
   g->resizeScrPoints(Size);
   auto p = g->_begin();
+  auto graphbegin = p;
   auto p_end = g->_begin();
   p_end += Size - 9;   // limit of buffer
   p->setStrokeEnd();
@@ -548,6 +549,7 @@ void Diagram::calcData(GraphDeque *g)
     case GRAPHSTYLE_DOT:
     case GRAPHSTYLE_LONGDASH:
       for(i=g->countY; i>0; i--) {  // every branch of curves
+	graphbegin = p;
 	px = g->axis(0)->Points;
 	calcCoordinateP(px, pz, py, p, pa);
 	p->setIndep(*px);
@@ -573,6 +575,7 @@ void Diagram::calcData(GraphDeque *g)
 	    --p; // erase last hidden point
 	}
 	(p++)->setBranchEnd();
+	g->push_back(Graph(graphbegin, p));
       }
 
       p->setGraphEnd();
@@ -586,6 +589,7 @@ for(int zz=0; zz<z; zz+=2)
     default:  // symbol (e.g. star) at each point **********************
       // FIXME: WET. merge into case above. only difference: bounds check.
       for(i=g->countY; i>0; i--) {  // every branch of curves
+	graphbegin = p;
         px = g->axis(0)->Points;
         for(z=g->axis(0)->count; z>0; z--) {  // every point
           calcCoordinateP(px, pz, py, p, pa);
@@ -596,6 +600,7 @@ for(int zz=0; zz<z; zz+=2)
           if(insideDiagramP(p))    // within diagram ?
             ++p;
         }
+	g->push_back(Graph(graphbegin, p));
 	(p++)->setBranchEnd();
 	assert(p!=g->_end());
       }
