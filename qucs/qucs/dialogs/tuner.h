@@ -59,8 +59,9 @@ class tunerElement : public QWidget
         QLineEdit *step;
         QToolButton *up;
         QToolButton *down;
-
-        bool setValue(double);
+        double minValue;
+        double maxValue;
+        double numValue;
 
     private slots:
         void slotSliderValueChanged(int);
@@ -71,7 +72,8 @@ class tunerElement : public QWidget
         void slotDelete();
         void slotDownClicked();
         void slotUpClicked();
-
+        void slotUpdateTextBox();
+        void updateSlider();
 };
 
 class TunerDialog : public QDialog
