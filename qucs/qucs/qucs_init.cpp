@@ -574,7 +574,7 @@ void QucsApp::initActions()
   connect(simulate, SIGNAL(triggered()), SLOT(slotSimulate()));
 
   /* MODBYKEVIN */
-  tune = new QAction("Tune", this);
+  tune = new QAction(QIcon((":/bitmaps/tune.png")),"Tune", this);
   tune->setStatusTip("Tuner");
   tune->setWhatsThis("Allows to live tune variables and show the result in the dataview");
   connect(tune, SIGNAL(triggered()), SLOT(slotTune()));
