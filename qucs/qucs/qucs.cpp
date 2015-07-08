@@ -136,7 +136,7 @@ QucsApp::QucsApp()
   SearchDia = new SearchDialog(this);
 
   // instance of tuner
-  tunerDia = new TunerDialog(0);
+  tunerDia = new TunerDialog(this);
 
   // instance of simulation windows
   sim = new SimMessage(this);

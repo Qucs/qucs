@@ -88,18 +88,19 @@ tunerElement::tunerElement(QWidget *parent, Component *component, int selectedPr
     down->setArrowType(Qt::DownArrow);
     gbox->addWidget(down, 2, gbox->columnCount() - 1, 1, 1);
 
-    double numericValue = lst.first().toDouble();
-    int maxValue = numericValue + (numericValue * 0.10);
-    int minValue = numericValue - (numericValue * 0.10);
+    numValue = lst.first().toDouble();
+    maxValue = numValue + (numValue * 0.10);
+    minValue = numValue - (numValue * 0.10);
 
     maximum->setText(QString::number(maxValue));
     minimum->setText(QString::number(minValue));
-    value->setText(QString::number(numericValue));
-    step->setText(tr("1"));
+    value->setText(QString::number(numValue));
+    step->setText(QString::number(numValue/10));
 
-    slider->setMaximum((numericValue + (numericValue * 0.10))*10);
-    slider->setMinimum((numericValue - (numericValue * 0.10))*10);
-    slider->setValue(numericValue*10);
+    slider->setRange(0,100);
+    double v = (numValue - minValue) / (maxValue - minValue);
+    slider->setValue(v*100);
+
     slider->setTickmarks(QSlider::Both);
     slider->setTickInterval(0);
 
@@ -126,31 +127,6 @@ void tunerElement::resetValue()
     this->slotValueChanged();
 }
 
-bool tunerElement::setValue(double v)
-{
-    double max = this->maximum->text().toDouble();
-    double min = this->minimum->text().toDouble();
-
-    if (v > max)
-    {
-        value->setText(QString::number(max));
-        slotValueChanged();
-        return false;
-    }
-    else if (v < min)
-    {
-        value->setText(QString::number(min));
-        slotValueChanged();
-        return false;
-    }
-    else
-    {
-        value->setText(QString::number(v));
-        slotValueChanged();
-        return true;
-    }
-}
-
 void tunerElement::updateProperty()
 {
 
@@ -160,29 +136,29 @@ void tunerElement::updateProperty()
 
 void tunerElement::slotSliderValueChanged(int v)
 {
-    this->value->setText(QString::number(v/10.0));
-    updateProperty();
-
-    emit elementValueUpdated();
+    value->setText(QString::number( minValue + ((v/100.0) * (maxValue - minValue)), 'f', 3));
+    //slotValueChanged();
 }
 
 void tunerElement::slotMaxValueChanged()
 {
-    double numericValue = maximum->text().split(' ').first().toDouble();
-    qDebug() << "slotMaxValueChanged() " << numericValue;
-    slider->setMaximum(numericValue*10);
+    maxValue = maximum->text().split(' ').first().toDouble();
+    qDebug() << "slotMaxValueChanged() " << numValue;
+    updateSlider();
+    slotUpdateTextBox();
 }
 
 void tunerElement::slotMinValueChanged()
 {
-    double numericValue = minimum->text().split(' ').first().toDouble();
-    qDebug() << "slotMinValueChanged() " << numericValue;
-    slider->setMinimum(numericValue*10);
+    minValue = minimum->text().split(' ').first().toDouble();
+    qDebug() << "slotMinValueChanged() " << numValue;
+    updateSlider();
+    slotUpdateTextBox();
 }
 
 void tunerElement::slotStepChanged()
 {
-    bool ok;
+    /*bool ok;
     double stepValue = step->text().toDouble(&ok);
     double value = this->value->text().toDouble();
 
@@ -195,10 +171,10 @@ void tunerElement::slotStepChanged()
     {
         maximum->setText(QString::number(stepValue + value));
         slotMaxValueChanged();
-    }*/
+    }
     slider->setSingleStep(stepValue*10);
     slider->setTickInterval(stepValue*10); // trying to auto adjust tickInterval
-    qDebug() << "tunerElement::slotStepChanged() " << stepValue;
+    qDebug() << "tunerElement::slotStepChanged() " << stepValue;*/
 }
 
 void tunerElement::slotValueChanged()
@@ -211,40 +187,65 @@ void tunerElement::slotValueChanged()
     if (!ok)
         return;
 
-    updateProperty();
-    slider->setValue(v*10);
+    if (v > maxValue)
+    {
+        value->setText(QString::number(maxValue, 'f', 3));
+        v = maxValue;
+    }
+    else if (v < minValue)
+    {
+        value->setText(QString::number(minValue, 'f', 3));
+        v = minValue;
+    }
 
+    numValue = v;
+
+    // numValue = v;
+    updateProperty();
+    updateSlider();
+    slotUpdateTextBox();
     emit elementValueUpdated();
 }
 
 void tunerElement::slotUpClicked()
 {
-    double v = value->text().toDouble();
-
     qDebug() << "tunerElement::slotUpClicked()";
 
-    v += step->text().toDouble();
-    this->setValue(v);
-
-    this->slotValueChanged();
+    numValue += step->text().toDouble();
+    value->setText(QString::number(numValue, 'f', 3));
+    slotValueChanged();
 }
 
 void tunerElement::slotDownClicked()
 {
-    double v = value->text().toDouble();
-
     qDebug() << "tunerElement::slotDownClicked()";
 
-    v -= step->text().toDouble();
-    this->setValue(v);
-
-    this->slotValueChanged();
+    numValue -= step->text().toDouble();
+    value->setText(QString::number(numValue, 'f', 3));
+    slotValueChanged();
 }
 
 void tunerElement::slotDelete()
 {
     this->setVisible(false);
     emit removeElement(this);
+}
+
+void tunerElement::updateSlider()
+{
+    // double numericValue = this->value->text().toDouble();
+    double maxValue = this->maximum->text().toDouble();
+    double minValue = this->minimum->text().toDouble();
+
+    double v = (numValue - minValue) / (maxValue - minValue);
+    slider->setValue(v*100);
+}
+
+void tunerElement::slotUpdateTextBox()
+{
+    value->setText(QString::number(numValue));
+    maximum->setText(QString::number(maxValue));
+    minimum->setText(QString::number(minValue));
 }
 
 tunerElement::~tunerElement()
