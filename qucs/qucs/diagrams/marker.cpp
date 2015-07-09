@@ -570,6 +570,9 @@ bool Marker::load(const QString& _s)
     i = j+1;
   } while(j >= 0);
 
+  VarDep[1] = VarPos.back(); VarPos.pop_back();
+  VarDep[0] = VarPos.back(); VarPos.pop_back();
+
   n  = s.section(' ',2,2);    // x1
   x1 = n.toInt(&ok);
   if(!ok) return false;
