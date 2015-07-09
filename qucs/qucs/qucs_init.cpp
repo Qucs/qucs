@@ -1061,7 +1061,7 @@ void QucsApp::slotToggleOctave(bool on)
   viewOctaveDock->blockSignals(false);
 }
 
-<<<<<<< HEAD
+/*
 // ----------------------------------------------------------
 void QucsApp::slotHelpAbout()
 {
@@ -1105,5 +1105,4 @@ void QucsApp::slotHelpAbout()
     tr("Arabic by Chabane Noureddine")+"\n"+
     tr("Kazakh by Erbol Keshubaev"));
 }
-=======
->>>>>>> a16372c15c8945d6a887ca899dcdd97dd31ec55f
+*/
