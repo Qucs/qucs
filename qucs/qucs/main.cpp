@@ -118,6 +118,9 @@ bool loadSettings()
     if (settings.contains("TextAntiAliasing")) QucsSettings.TextAntiAliasing = settings.value("TextAntiAliasing").toBool();
     else QucsSettings.TextAntiAliasing = false;
 
+    if (settings.contains("USGNDSymbol")) QucsSettings.USGNDSymbol = settings.value("USGNDSymbol").toBool();
+    else QucsSettings.USGNDSymbol = false;
+
     QucsSettings.RecentDocs = settings.value("RecentDocs").toString().split("*",QString::SkipEmptyParts);
     QucsSettings.numRecentDocs = QucsSettings.RecentDocs.count();
 
@@ -180,6 +183,7 @@ bool saveApplSettings()
     settings.setValue("IgnoreVersion", QucsSettings.IgnoreFutureVersion);
     settings.setValue("GraphAntiAliasing", QucsSettings.GraphAntiAliasing);
     settings.setValue("TextAntiAliasing", QucsSettings.TextAntiAliasing);
+    settings.setValue("USGNDSymbol", QucsSettings.USGNDSymbol);
 
     // Copy the list of directory paths in which Qucs should
     // search for subcircuit schematics from qucsPathList

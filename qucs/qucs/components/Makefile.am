@@ -34,7 +34,7 @@ libcomponents_a_SOURCES = phaseshifter.cpp gyrator.cpp componentdialog.cpp    \
   mscorner.cpp hb_sim.cpp diode.cpp dc_sim.cpp coplanar.cpp ccvs.cpp cccs.cpp \
   ac_sim.cpp volt_dc.cpp volt_ac.cpp subcircuit.cpp sparamfile.cpp            \
   source_ac.cpp isolator.cpp equation.cpp circulator.cpp attenuator.cpp       \
-  ampere_dc.cpp transformer.cpp symtrafo.cpp subcirport.cpp ground.cpp        \
+  ampere_dc.cpp transformer.cpp symtrafo.cpp subcirport.cpp ground.cpp       \
   dcfeed.cpp dcblock.cpp biast.cpp inductor.cpp capacitor.cpp vhdlfile.cpp    \
   component.cpp resistor.cpp iprobe.cpp volt_noise.cpp ampere_noise.cpp       \
   msmbend.cpp msopen.cpp ampere_ac.cpp bjt.cpp jfet.cpp mosfet.cpp            \

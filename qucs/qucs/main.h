@@ -73,6 +73,7 @@ struct tQucsSettings {
   bool IgnoreFutureVersion;
   bool GraphAntiAliasing;
   bool TextAntiAliasing;
+  bool USGNDSymbol;
 };
 
 extern tQucsSettings QucsSettings;  // extern because nearly everywhere used
