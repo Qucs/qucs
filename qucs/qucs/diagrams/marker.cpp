@@ -110,10 +110,13 @@ Marker::Marker(GraphDeque::const_iterator const& pos,
     qDebug() << "no data in pGraph";
   }else{
     VarPos.resize(pGraph->numAxes());
+    assert(pGraph->begin()<=pos);
+    assert(pos<=pGraph->end());
     initText(pos);
     assert(pGraph->begin()<=pos);
     assert(pos<=pGraph->end());
-    createText();
+    createText(); // assignText();?
+    qDebug() << "done create marker" << this;
   }
 
   CHECK_MARKER

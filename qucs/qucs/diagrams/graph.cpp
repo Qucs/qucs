@@ -367,7 +367,7 @@ GraphDeque::MarkerPos GraphDeque::findSample(std::vector<double>& VarPos) const
   for(unsigned ii=1; (pD=axis(ii)); ++ii) {
     double* pp = pD->Points;
     double v = VarPos[ii];
-    for(unsigned i=pD->count; i>1; i--) {  // find appropiate marker position
+    for(unsigned i=1; i<count(ii); ++i) {
       if(fabs(v-(*pp)) < fabs(v-(*(pp+1)))) break;
       pp++;
       n += m;
