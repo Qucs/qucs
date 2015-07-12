@@ -1,6 +1,6 @@
 <Qucs Schematic 0.0.19>
 <Properties>
-  <View=0,0,957,690,1,0,120>
+  <View=0,0,957,690,1,0,0>
   <Grid=10,10,1>
   <DataSet=Relay.dat>
   <DataDisplay=Relay.dpl>
@@ -51,12 +51,12 @@
   <370 280 380 280 "" 0 0 0 "">
 </Wires>
 <Diagrams>
-  <Rect 480 253 417 223 3 #c0c0c0 1 00 1 0 0.002 0.02 1 -236.436 200 265.081 1 -1 0.5 1 315 0 225 "" "" "">
-	<"LCR_ngspice:tran.v(drain)" #0000ff 0 3 0 0 0>
-	<"LCR_ngspice:tran.v(pr1)" #ff0000 0 3 0 0 0>
-  </Rect>
   <Rect 470 531 429 202 3 #c0c0c0 1 00 1 -1 0.2 1 1 -1 0.5 1 1 -1 0.5 1 315 0 225 "" "" "">
-	<"LCR_xyce:tran.V(PR1)" #ff0000 0 3 0 0 0>
+	<"Relay_xyce:tran.V(PR1)" #0000ff 0 3 0 0 0>
+  </Rect>
+  <Rect 480 253 417 223 3 #c0c0c0 1 00 1 -1 0.2 1 1 -1 0.5 1 1 -1 0.5 1 315 0 225 "" "" "">
+	<"Relay_ngspice:tran.v(drain)" #0000ff 0 3 0 0 0>
+	<"Relay_ngspice:tran.v(pr1)" #ff0000 0 3 0 0 0>
   </Rect>
 </Diagrams>
 <Paintings>
