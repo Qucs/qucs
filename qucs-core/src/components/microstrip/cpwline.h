@@ -43,6 +43,7 @@ class cpwline : public qucs::circuit
   static void ellipke (nr_double_t, nr_double_t &, nr_double_t &);
   static nr_double_t ellipk (nr_double_t);
   static nr_double_t ellipa (nr_double_t);
+  static nr_double_t KoverKp(nr_double_t);
 
   static void analyseQuasiStatic (nr_double_t, nr_double_t, nr_double_t,
 				  nr_double_t, nr_double_t, int,
