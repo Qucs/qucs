@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+   <FileVersion major="1" minor="6" />
+   <Project>
+      <Option title="qucsfilter" />
+      <Option makefile_is_custom="1" />
+      <Option compiler="gcc" />
+      <Option virtualFolders="CMake Files\;CMake Files\..\;" />
+      <Build>
+      <Target title="all">
+         <Option working_dir="/home/andresmmera/git/qucs/qucs/build-qucs-filter-Desktop-Default" />
+         <Option type="4" />
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/home/andresmmera/git/qucs/qucs/build-qucs-filter-Desktop-Default/Makefile&quot;  VERBOSE=1 all" />
+            <CompileFile command="/usr/bin/make -f &quot;/home/andresmmera/git/qucs/qucs/build-qucs-filter-Desktop-Default/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/home/andresmmera/git/qucs/qucs/build-qucs-filter-Desktop-Default/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/home/andresmmera/git/qucs/qucs/build-qucs-filter-Desktop-Default/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="install">
+         <Option working_dir="/home/andresmmera/git/qucs/qucs/build-qucs-filter-Desktop-Default" />
+         <Option type="4" />
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/home/andresmmera/git/qucs/qucs/build-qucs-filter-Desktop-Default/Makefile&quot;  VERBOSE=1 install" />
+            <CompileFile command="/usr/bin/make -f &quot;/home/andresmmera/git/qucs/qucs/build-qucs-filter-Desktop-Default/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/home/andresmmera/git/qucs/qucs/build-qucs-filter-Desktop-Default/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/home/andresmmera/git/qucs/qucs/build-qucs-filter-Desktop-Default/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="install/local">
+         <Option working_dir="/home/andresmmera/git/qucs/qucs/build-qucs-filter-Desktop-Default" />
+         <Option type="4" />
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/home/andresmmera/git/qucs/qucs/build-qucs-filter-Desktop-Default/Makefile&quot;  VERBOSE=1 install/local" />
+            <CompileFile command="/usr/bin/make -f &quot;/home/andresmmera/git/qucs/qucs/build-qucs-filter-Desktop-Default/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/home/andresmmera/git/qucs/qucs/build-qucs-filter-Desktop-Default/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/home/andresmmera/git/qucs/qucs/build-qucs-filter-Desktop-Default/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="install/strip">
+         <Option working_dir="/home/andresmmera/git/qucs/qucs/build-qucs-filter-Desktop-Default" />
+         <Option type="4" />
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/home/andresmmera/git/qucs/qucs/build-qucs-filter-Desktop-Default/Makefile&quot;  VERBOSE=1 install/strip" />
+            <CompileFile command="/usr/bin/make -f &quot;/home/andresmmera/git/qucs/qucs/build-qucs-filter-Desktop-Default/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/home/andresmmera/git/qucs/qucs/build-qucs-filter-Desktop-Default/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/home/andresmmera/git/qucs/qucs/build-qucs-filter-Desktop-Default/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="list_install_components">
+         <Option working_dir="/home/andresmmera/git/qucs/qucs/build-qucs-filter-Desktop-Default" />
+         <Option type="4" />
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/home/andresmmera/git/qucs/qucs/build-qucs-filter-Desktop-Default/Makefile&quot;  VERBOSE=1 list_install_components" />
+            <CompileFile command="/usr/bin/make -f &quot;/home/andresmmera/git/qucs/qucs/build-qucs-filter-Desktop-Default/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/home/andresmmera/git/qucs/qucs/build-qucs-filter-Desktop-Default/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/home/andresmmera/git/qucs/qucs/build-qucs-filter-Desktop-Default/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="qucsfilter">
+         <Option output="/home/andresmmera/git/qucs/qucs/build-qucs-filter-Desktop-Default/qucsfilter" prefix_auto="0" extension_auto="0" />
+         <Option working_dir="/home/andresmmera/git/qucs/qucs/build-qucs-filter-Desktop-Default" />
+         <Option object_output="./" />
+         <Option type="0" />
+         <Option compiler="gcc" />
+         <Compiler>
+            <Add option="-DHAVE_CONFIG_H" />
+            <Add option="-DQT_GUI_LIB" />
+            <Add option="-DQT_CORE_LIB" />
+            <Add option="-DQT_DEBUG" />
+            <Add directory="/home/andresmmera/git/qucs/qucs/build-qucs-filter-Desktop-Default" />
+            <Add directory="/usr/include" />
+            <Add directory="/usr/include/c++/4.8" />
+            <Add directory="/usr/include/c++/4.8/backward" />
+            <Add directory="/usr/include/qt4" />
+            <Add directory="/usr/include/qt4/QtCore" />
+            <Add directory="/usr/include/qt4/QtGui" />
+            <Add directory="/usr/include/x86_64-linux-gnu" />
+            <Add directory="/usr/include/x86_64-linux-gnu/c++/4.8" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.8/include" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.8/include-fixed" />
+            <Add directory="/usr/local/include" />
+         </Compiler>
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/home/andresmmera/git/qucs/qucs/build-qucs-filter-Desktop-Default/Makefile&quot;  VERBOSE=1 qucsfilter" />
+            <CompileFile command="/usr/bin/make -f &quot;/home/andresmmera/git/qucs/qucs/build-qucs-filter-Desktop-Default/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/home/andresmmera/git/qucs/qucs/build-qucs-filter-Desktop-Default/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/home/andresmmera/git/qucs/qucs/build-qucs-filter-Desktop-Default/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="qucsfilter/fast">
+         <Option output="/home/andresmmera/git/qucs/qucs/build-qucs-filter-Desktop-Default/qucsfilter" prefix_auto="0" extension_auto="0" />
+         <Option working_dir="/home/andresmmera/git/qucs/qucs/build-qucs-filter-Desktop-Default" />
+         <Option object_output="./" />
+         <Option type="0" />
+         <Option compiler="gcc" />
+         <Compiler>
+            <Add option="-DHAVE_CONFIG_H" />
+            <Add option="-DQT_GUI_LIB" />
+            <Add option="-DQT_CORE_LIB" />
+            <Add option="-DQT_DEBUG" />
+            <Add directory="/home/andresmmera/git/qucs/qucs/build-qucs-filter-Desktop-Default" />
+            <Add directory="/usr/include" />
+            <Add directory="/usr/include/c++/4.8" />
+            <Add directory="/usr/include/c++/4.8/backward" />
+            <Add directory="/usr/include/qt4" />
+            <Add directory="/usr/include/qt4/QtCore" />
+            <Add directory="/usr/include/qt4/QtGui" />
+            <Add directory="/usr/include/x86_64-linux-gnu" />
+            <Add directory="/usr/include/x86_64-linux-gnu/c++/4.8" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.8/include" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/4.8/include-fixed" />
+            <Add directory="/usr/local/include" />
+         </Compiler>
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/home/andresmmera/git/qucs/qucs/build-qucs-filter-Desktop-Default/Makefile&quot;  VERBOSE=1 qucsfilter/fast" />
+            <CompileFile command="/usr/bin/make -f &quot;/home/andresmmera/git/qucs/qucs/build-qucs-filter-Desktop-Default/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/home/andresmmera/git/qucs/qucs/build-qucs-filter-Desktop-Default/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/home/andresmmera/git/qucs/qucs/build-qucs-filter-Desktop-Default/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="rebuild_cache">
+         <Option working_dir="/home/andresmmera/git/qucs/qucs/build-qucs-filter-Desktop-Default" />
+         <Option type="4" />
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/home/andresmmera/git/qucs/qucs/build-qucs-filter-Desktop-Default/Makefile&quot;  VERBOSE=1 rebuild_cache" />
+            <CompileFile command="/usr/bin/make -f &quot;/home/andresmmera/git/qucs/qucs/build-qucs-filter-Desktop-Default/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/home/andresmmera/git/qucs/qucs/build-qucs-filter-Desktop-Default/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/home/andresmmera/git/qucs/qucs/build-qucs-filter-Desktop-Default/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      </Build>
+      <Unit filename="/home/andresmmera/git/qucs/qucs/qucs-filter/cline_filter.cpp">
+      </Unit>
+      <Unit filename="/home/andresmmera/git/qucs/qucs/qucs-filter/eqn_filter.cpp">
+      </Unit>
+      <Unit filename="/home/andresmmera/git/qucs/qucs/qucs-filter/filter.cpp">
+      </Unit>
+      <Unit filename="/home/andresmmera/git/qucs/qucs/qucs-filter/helpdialog.cpp">
+      </Unit>
+      <Unit filename="/home/andresmmera/git/qucs/qucs/qucs-filter/lc_filter.cpp">
+      </Unit>
+      <Unit filename="/home/andresmmera/git/qucs/qucs/qucs-filter/line_filter.cpp">
+      </Unit>
+      <Unit filename="/home/andresmmera/git/qucs/qucs/qucs-filter/main.cpp">
+      </Unit>
+      <Unit filename="/home/andresmmera/git/qucs/qucs/qucs-filter/qf_cauer.cpp">
+      </Unit>
+      <Unit filename="/home/andresmmera/git/qucs/qucs/qucs-filter/qf_filter.cpp">
+      </Unit>
+      <Unit filename="/home/andresmmera/git/qucs/qucs/qucs-filter/qf_poly.cpp">
+      </Unit>
+      <Unit filename="/home/andresmmera/git/qucs/qucs/qucs-filter/quarterwave_filter.cpp">
+      </Unit>
+      <Unit filename="/home/andresmmera/git/qucs/qucs/qucs-filter/qucsfilter.cpp">
+      </Unit>
+      <Unit filename="/home/andresmmera/git/qucs/qucs/qucs-filter/stepz_filter.cpp">
+      </Unit>
+      <Unit filename="/home/andresmmera/git/qucs/qucs/qucs-filter/tl_filter.cpp">
+      </Unit>
+      <Unit filename="/home/andresmmera/git/qucs/qucs/qucs-filter/cline_filter.h">
+      </Unit>
+      <Unit filename="/home/andresmmera/git/qucs/qucs/qucs-filter/eqn_filter.h">
+      </Unit>
+      <Unit filename="/home/andresmmera/git/qucs/qucs/qucs-filter/filter.h">
+      </Unit>
+      <Unit filename="/home/andresmmera/git/qucs/qucs/qucs-filter/helpdialog.h">
+      </Unit>
+      <Unit filename="/home/andresmmera/git/qucs/qucs/qucs-filter/lc_filter.h">
+      </Unit>
+      <Unit filename="/home/andresmmera/git/qucs/qucs/qucs-filter/line_filter.h">
+      </Unit>
+      <Unit filename="/home/andresmmera/git/qucs/qucs/qucs-filter/material_props.h">
+      </Unit>
+      <Unit filename="/home/andresmmera/git/qucs/qucs/qucs-filter/qf_cauer.h">
+      </Unit>
+      <Unit filename="/home/andresmmera/git/qucs/qucs/qucs-filter/qf_filter.h">
+      </Unit>
+      <Unit filename="/home/andresmmera/git/qucs/qucs/qucs-filter/qf_matrix.h">
+      </Unit>
+      <Unit filename="/home/andresmmera/git/qucs/qucs/qucs-filter/qf_poly.h">
+      </Unit>
+      <Unit filename="/home/andresmmera/git/qucs/qucs/qucs-filter/quarterwave_filter.h">
+      </Unit>
+      <Unit filename="/home/andresmmera/git/qucs/qucs/qucs-filter/qucsfilter.h">
+      </Unit>
+      <Unit filename="/home/andresmmera/git/qucs/qucs/qucs-filter/qucsfilter.qrc">
+      </Unit>
+      <Unit filename="/home/andresmmera/git/qucs/qucs/qucs-filter/stepz_filter.h">
+      </Unit>
+      <Unit filename="/home/andresmmera/git/qucs/qucs/qucs-filter/tl_filter.h">
+      </Unit>
+      <Unit filename="/home/andresmmera/git/qucs/qucs/qucs-filter/CMakeLists.txt">
+          <Option virtualFolder="CMake Files\" />
+      </Unit>
+      <Unit filename="/home/andresmmera/git/qucs/qucs/qucs-filter/qucsfilter.qrc">
+          <Option virtualFolder="CMake Files\" />
+      </Unit>
+      <Unit filename="/home/andresmmera/git/qucs/qucs/qucs-filter/../config.h.cmake">
+          <Option virtualFolder="CMake Files\..\" />
+      </Unit>
+   </Project>
+</CodeBlocks_project_file>
