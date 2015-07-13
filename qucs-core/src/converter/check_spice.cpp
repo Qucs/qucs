@@ -126,7 +126,7 @@ struct define_t spice_definition_available[] =
   { "K", 4, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
     spice_noprops, spice_noprops },
   /* BJT device */
-  { "Q", 4, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_NONLINEAR,
+  { "Q", 5, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_NONLINEAR,
     spice_noprops, spice_noprops },
   /* MOS device */
   { "M", 4, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_NONLINEAR,
