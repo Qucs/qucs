@@ -40,6 +40,7 @@ public:
 
 private:
   void    initText(int);
+  void assignText();
 public:
   /* RELATED TO THE PHASOR DIAGRAM CODE
   void    fix();

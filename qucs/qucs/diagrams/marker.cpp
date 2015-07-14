@@ -24,7 +24,7 @@
 #include "marker.h"
 #include "diagram.h"
 #include "graph.h"
-#include "qucs.h"
+#include "main.h"
 
 #include <QString>
 #include <QPainter>
@@ -134,26 +134,23 @@ void Marker::initText(int n)
   // find exact marker position
   m  = nnn - 1;
   pz = pGraph->cPointsY + 2*n;
-
-    for(nn=0; nn<nnn; nn++) {
-      diag()->calcCoordinate(px, pz, py, &fCX, &fCY, pa);
-      ++px;
-      pz += 2;
-      if(isCross) {
-	px--;
-	py++;
-	pz += 2*(pD->count-1);
-      }
-      
-      x = int(fCX+0.5) - cx;
-      y = int(fCY+0.5) - cy;
-      d = x*x + y*y;
-      if(d < dmin) {
-	dmin = d;
-	m = nn;
-      }
+  for(nn=0; nn<nnn; nn++) {
+    diag()->calcCoordinate(px, pz, py, &fCX, &fCY, pa);
+    ++px;
+    pz += 2;
+    if(isCross) {
+      px--;
+      py++;
+      pz += 2*(pD->count-1);
     }
-
+    x = int(fCX+0.5) - cx;
+    y = int(fCY+0.5) - cy;
+    d = x*x + y*y;
+    if(d < dmin) {
+      dmin = d;
+      m = nn;
+    }
+  }
   if(isCross) m *= pD->count;
   n += m;
 
@@ -237,17 +234,24 @@ void Marker::createText()
 
   // independent variables
   Text = "";
-  double *pp;
   nVarPos = pGraph->numAxes();
-  DataX const *pD;
 
   auto p = pGraph->findSample(VarPos);
   VarDep[0] = p.first;
   VarDep[1] = p.second;
 
+  assignText();
+}
+
+/*!
+ * turn SplPosX, VarPos[1+] into Text
+ * (recheck: use SplPos{X,Y} only?)
+ */
+void Marker::assignText()
+{
   double v=0.;   // needed for 2D graph in 3D diagram
   double *py=&v;
-  pD = pGraph->axis(0);
+  DataX const *pD = pGraph->axis(0);
   if(pGraph->axis(1)) {
     *py = VarPos[1];
   }else{
@@ -279,14 +283,12 @@ void Marker::createText()
   assert(diag());
   Text += diag()->extraMarkerText(this);
 
-    Axis const *pa,*pt;
+  Axis const *pa;
+  if(pGraph->yAxisNo == 0)  pa = &(diag()->yAxis);
+  else  pa = &(diag()->zAxis);
+  double* pp = &(VarPos[0]);
 
-    if(pGraph->yAxisNo == 0)  pa = &(diag()->yAxis);
-    else  pa = &(diag()->zAxis);
-    pp = &(VarPos[0]);
-
-    diag()->calcCoordinate(pp, pz, py, &fCX, &fCY, pa);
-
+  diag()->calcCoordinate(pp, pz, py, &fCX, &fCY, pa);
   diag()->finishMarkerCoordinates(fCX, fCY);
 
   cx = int(fCX+0.5);
@@ -322,28 +324,25 @@ bool Marker::moveLeftRight(bool left)
 {
   int n;
   double *px;
-  double x;
 
   DataX const *pD = pGraph->axis(0);
   px = pD->Points;
   if(!px) return false;
+  for(n=0; n<pD->count; n++) {
+    if(VarPos[0] <= *px) break;
+    px++;
+  }
+  if(n == pD->count) px--;
 
-    for(n=0; n<pD->count; n++) {
-      if(VarPos[0] <= *px) break;
-      px++;
-    }
-    if(n == pD->count) px--;
-
-    if(left) {
-      if(px <= pD->Points) return false;
-      px--;  // one position to the left
-    }
-    else {
-      if(px >= (pD->Points + pD->count - 1)) return false;
-      px++;  // one position to the right
-    }
-    VarPos[0] = *px;
-
+  if(left) {
+    if(px <= pD->Points) return false;
+    px--;  // one position to the left
+  }
+  else {
+    if(px >= (pD->Points + pD->count - 1)) return false;
+    px++;  // one position to the right
+  }
+  VarPos[0] = *px;
   createText();
 
   return true;
