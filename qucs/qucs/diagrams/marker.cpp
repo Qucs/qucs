@@ -36,7 +36,42 @@
 
 #include "misc.h"
 
+#define CHECK_MARKER \
+  if(pGraph){ \
+    assert(SplPosD>=pGraph->begin()); \
+    assert(SplPosD<=pGraph->end()); \
+    if(SplPosD!=pGraph->end()){ \
+      assert(SplPosX>=pGraph->_begin()); \
+      assert(SplPosX<=pGraph->_end()); \
+      assert(SplPosD->begin()>=pGraph->_begin()); \
+      assert(SplPosD->end()<=pGraph->_end()); \
+      if(SplPosX!=SplPosD->end()){ \
+	assert(SplPosX>=SplPosD->begin()); \
+	assert(SplPosX<=SplPosD->end()); \
+	assert(SplPosX->isPt()); \
+      } \
+    } \
+  }
+
 static double default_Z0=50;
+
+/*!
+ * copy a marker
+ */
+Marker::Marker(const Marker& m) :
+    Element(m),
+    pGraph(m.pGraph),
+    VarPos(m.VarPos),
+//    SplPosD(m.SplPosD),
+//    SplPosX(m.SplPosX),
+    Text(m.Text),
+    transparent(m.transparent),
+    Precision(m.Precision),
+    numMode(m.numMode)
+{
+  qDebug() << "cloning Marker";
+  SplPosD = pGraph->end();
+}
 
 /*!
  * create a marker based on click position and
@@ -44,11 +79,15 @@ static double default_Z0=50;
  *
  * the click position is used to compute the marker position. currently, the
  * marker position is the sampling point closest to the click.
+ *
+ * redundant: why not pass a GraphDeque::MarkerPos?!
  */
-
-Marker::Marker(GraphDeque *pg_, int branchNo, int cx_, int cy_) :
+Marker::Marker(GraphDeque::const_iterator const& pos,
+               GraphDeque const *pg_,
+               int cx_, int cy_) :
   Element(),
   pGraph(pg_),
+  SplPosD(pos),
   Precision(3),
   numMode(0),
   Z0(default_Z0) // BUG: see declaration.
@@ -56,16 +95,26 @@ Marker::Marker(GraphDeque *pg_, int branchNo, int cx_, int cy_) :
   Type = isMarker;
   isSelected = transparent = false;
 
+  if(pGraph){ // tmp hack
+    SplPosX = pGraph->_end();
+  }
+
   cx =  cx_;
   cy = -cy_;
   fCX = float(cx);
   fCY = float(cy);
   if(!pGraph){
+    qDebug() << "no Graph in Marker::Marker";
     makeInvalid();
+  }else if(pGraph->begin()==pGraph->end()) {
+    qDebug() << "no data in pGraph";
   }else{
-    initText(branchNo);   // finally create marker
+    VarPos.resize(pGraph->numAxes());
+    initText(pos);
     createText();
   }
+
+  CHECK_MARKER
 
   x1 =  cx + 60;
   y1 = -cy - 60;
@@ -78,29 +127,32 @@ Marker::~Marker()
 
 // ---------------------------------------------------------------------
 /*!
- * compute VarPos from branch number n and click position (cx, cy)
- * this is done by recreating branch samples and comparing against click
- *
- * FIXME: should use ScrPoints instead. do not call calcCoordinate from here!
+ * compute VarPos from Graph instance and click position (cx, cy)
+ * FIXME: (should this) use sample from findSample?
  */
-void Marker::initText(int n)
+void Marker::initText(GraphDeque::const_iterator const& pos)
 {
-  if(pGraph->isEmpty()) {
-      makeInvalid();
-      return;
-  }
-
+  assert(pGraph);
+  assert(pos>=pGraph->begin());
+  assert(pos<=pGraph->end());
   Axis const *pa;
   assert(diag());
   if(pGraph->yAxisNo == 0)  pa = &(diag()->yAxis);
   else  pa = &(diag()->zAxis);
   double Dummy = 0.0;   // needed for 2D graph in 3D diagram
   double *px, *py=&Dummy, *pz;
-  Text = "";
+  unsigned splPerGraph = pGraph->axis(0)->count;
+  SplPosD = pos;
+
 
   bool isCross = false;
   int nn, nnn, m, x, y, d, dmin = INT_MAX;
   DataX const *pD = pGraph->axis(0);
+
+  Graph::const_iterator here = pos->begin();
+  int n = (pos-pGraph->begin()) * splPerGraph;
+  qDebug() << "initText" << pGraph->countY << splPerGraph << "oldn" << n;
+
   px  = pD->Points;
   nnn = pD->count;
   DataX const *pDy = pGraph->axis(1);
@@ -139,25 +191,32 @@ void Marker::initText(int n)
       m = nn;
     }
   }
-  if(isCross) m *= pD->count;
+
   n += m;
 
-  // why check over and over again?! do in the right place and just assert otherwise.
-  if(VarPos.size() != pGraph->numAxes()){
-    qDebug() << "huh, wrong size" << VarPos.size() << pGraph->numAxes();
-    VarPos.resize(pGraph->numAxes());
-  }
+  SplPosX = here;
+  SplPosX += n % pGraph->axis(0)->count;
 
-  // gather text of all independent variables
+  assert(here<pos->end());
+  assert(VarPos.size());
+  VarPos[0] = here->getIndep();
+//  double* pd = VarPos.data()+1;
+//  pGraph->getCoords(pos, pd);
+  {
+  double const*px;
+
+  qDebug() << "oldX" << n << "newX" << SplPosX - pos->begin();
+  qDebug() << "oldD" << n/pGraph->axis(0)->count << "newD" << pos - pGraph->begin();
+
+  assert(VarPos.size()>=pGraph->numAxes());
   nn = n;
   for(unsigned i=0; (pD = pGraph->axis(i)); ++i) {
-    px = pD->Points + (nn % pD->count);
+    px = pGraph->coords(i);
+    px += (nn % pGraph->count(i));
     VarPos[i] = *px;
-    Text += pD->Var + ": " + QString::number(*px,'g',Precision) + "\n";
-    nn /= pD->count;
+    nn /= pGraph->count(i);
   }
-
-  // createText();
+  }
 }
 
 // ---------------------------------------------------------------------
@@ -168,10 +227,17 @@ void Marker::initText(int n)
  */
 void Marker::createText()
 {
+  assert(pGraph);
   if(!(pGraph->cPointsY)) {
     makeInvalid();
     return;
   }
+
+#if 0 // not yet. marker pos can be invalid here.
+  assert(pGraph->begin()<=pGraph->end());
+  assert(pGraph->begin()<=SplPosD);
+  assert(SplPosD<=pGraph->end());
+#endif
 
   unsigned nVarPos = VarPos.size();
 
@@ -190,9 +256,17 @@ void Marker::createText()
   Text = "";
   nVarPos = pGraph->numAxes();
 
+  // BUG? not necessarily needed here.
   auto p = pGraph->findSample(VarPos);
-  VarDep[0] = p.first;
-  VarDep[1] = p.second;
+  SplPosD = p.first;
+  SplPosX = p.second;
+
+  CHECK_MARKER
+
+  if(SplPosX->isPt()){
+    VarDep[0] = p.second->getDep().real();
+    VarDep[1] = p.second->getDep().imag();
+  }
 
   assignText();
 }
@@ -205,39 +279,59 @@ void Marker::assignText()
 {
   double v=0.;   // needed for 2D graph in 3D diagram
   double *py=&v;
-  DataX const *pD = pGraph->axis(0);
   if(pGraph->axis(1)) {
     *py = VarPos[1];
   }else{
     qDebug() << *py << "is not" << VarPos[1]; // does it really matter?!
   }
 
+  Text = "";
+  assert(pGraph);
+  if(pGraph->isEmpty()) {
+    qDebug() << "empty";
+    makeInvalid();
+    return;
+  }
+  assert(pGraph->begin()<=SplPosD);
+  assert(SplPosD<=pGraph->end());
+
+  // why check over and over again?! do in the right place and just assert otherwise.
+  if(VarPos.size() != pGraph->numAxes()){
+    qDebug() << "huh, wrong size" << VarPos.size() << pGraph->numAxes();
+    VarPos.resize(pGraph->numAxes());
+  }
+
+  for(unsigned i=0; i<pGraph->numAxes(); ++i) {
+    Text += pGraph->axisName(i) + ": " + QString::number(VarPos[i],'g',Precision) + "\n";
+  }
+
+
   double pz[2];
-  pz[0] = VarDep[0];
-  pz[1] = VarDep[1];
+  if (SplPosX->isPt()){
+    pz[0] = SplPosX->getDep().real();
+    pz[1] = SplPosX->getDep().imag();
 
-  // now actually create text.
-  for(unsigned ii=0; (pD=pGraph->axis(ii)); ++ii) {
-    Text += pD->Var + ": " + QString::number(VarPos[ii],'g',Precision) + "\n";
+    Text += pGraph->Var + ": ";
+    switch(numMode) {
+      case nM_Rect: Text += misc::complexRect(*pz, *(pz+1), Precision);
+		    break;
+      case nM_Deg: Text += misc::complexDeg(*pz, *(pz+1), Precision);
+		   break;
+      case nM_Rad: Text += misc::complexRad(*pz, *(pz+1), Precision);
+		   break;
+    }
+    assert(diag());
+    Text += diag()->extraMarkerText(this);
+  }else{
+    Text+="NA"; // BUG?
+    pz[0] = 1e-3;
+    pz[1] = 1e-3;
   }
-
-  Text += pGraph->Var + ": ";
-  switch(numMode) {
-    case nM_Rect: Text += misc::complexRect(*pz, *(pz+1), Precision);
-      break;
-    case nM_Deg: Text += misc::complexDeg(*pz, *(pz+1), Precision);
-      break;
-    case nM_Rad: Text += misc::complexRad(*pz, *(pz+1), Precision);
-      break;
-  }
-
-  assert(diag());
-  Text += diag()->extraMarkerText(this);
 
   Axis const *pa;
   if(pGraph->yAxisNo == 0)  pa = &(diag()->yAxis);
   else  pa = &(diag()->zAxis);
-  double* pp = &(VarPos[0]);
+  double *pp = &(VarPos[0]);
 
   diag()->calcCoordinate(pp, pz, py, &fCX, &fCY, pa);
   diag()->finishMarkerCoordinates(fCX, fCY);
@@ -248,8 +342,24 @@ void Marker::assignText()
 }
 
 // ---------------------------------------------------------------------
+/*!
+ * retrieve sample marker position in terms of sampling iterator from marker
+ */
+GraphDeque::MarkerPos Marker::splPos() const
+{
+  return GraphDeque::MarkerPos(SplPosD, SplPosX);
+}
+
+// ---------------------------------------------------------------------
 void Marker::makeInvalid()
 {
+  if(pGraph){
+    qDebug() << "resetting SplPos";
+    SplPosD = pGraph->end();
+    assert(SplPosD>=pGraph->begin());
+  }else{
+    qDebug() << "theres no graph to invalidate marker, BUG?";
+  }
   fCX = fCY = -1e3; // invalid coordinates
   assert(diag());
   diag()->finishMarkerCoordinates(fCX, fCY); // leave to diagram
@@ -258,6 +368,12 @@ void Marker::makeInvalid()
 
   Text = QObject::tr("invalid");
   getTextSize();
+
+  qDebug() << "marker is now invalid" << VarPos.size();
+  if(pGraph){
+    assert(SplPosD>=pGraph->begin());
+    assert(SplPosD<=pGraph->end());
+  }
 }
 
 // ---------------------------------------------------------------------
@@ -555,21 +671,22 @@ const Diagram* Marker::diag() const
 }
 
 // ------------------------------------------------------------------------
-Marker* Marker::sameNewOne(GraphDeque *pGraph_)
+Marker* Marker::sameNewOne(GraphDeque const *pGraph_)
 {
-  Marker *pm = new Marker(pGraph_, 0, cx ,cy);
-
-  pm->x1 = x1;  pm->y1 = y1;
-  pm->x2 = x2;  pm->y2 = y2;
-
-  pm->VarPos = VarPos;
-
-  pm->Text        = Text;
-  pm->transparent = transparent;
-  pm->Precision   = Precision;
-  pm->numMode     = numMode;
-
+  assert(pGraph_);
+  CHECK_MARKER
+  Marker *pm = new Marker(*this);
+  pm->setGraph(pGraph_);
   return pm;
+}
+
+// ------------------------------------------------------------------------
+void Marker::setGraph(GraphDeque const *d)
+{
+  pGraph = d;
+  assert(d);
+  SplPosD = d->end();
+//  SplPosX = invalid
 }
 
 // vim:ts=8:sw=2:noet
