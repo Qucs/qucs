@@ -19,6 +19,7 @@
 #define MARKER_H
 
 #include "element.h"
+#include "graph.h"
 #include "viewpainter.h"
 
 class QPainter;
@@ -31,15 +32,15 @@ typedef enum{
 	nM_Rad
 } numMode_t;
 
-struct Axis;
-
+// GraphMarker?
 class Marker : public Element {
+  Marker(const Marker&);
 public:
-  Marker(GraphDeque *pg_=0, int _nn=0, int cx_=0, int cy_=0);
+  Marker(GraphDeque::const_iterator const& p, GraphDeque const *pg_=NULL, int cx_=0, int cy_=0);
  ~Marker();
 
 private:
-  void    initText(int);
+  void initText(GraphDeque::const_iterator const&);
   void assignText();
 public:
   /* RELATED TO THE PHASOR DIAGRAM CODE
@@ -58,25 +59,28 @@ public:
   QString save();
   bool    load(const QString& Line);
   bool    getSelected(int, int);
-  Marker* sameNewOne(GraphDeque*);
+  Marker* sameNewOne(GraphDeque const*);
+  void setGraph(GraphDeque const*);
   void    getTextSize();
   GraphDeque const* graph() const {return pGraph;}
   int precision() const {return Precision;}
   std::vector<double> const& varPos() const {return VarPos;}
   const Diagram *diag() const;
-
+  GraphDeque::MarkerPos splPos() const;
 public: // power matching stuff. some sort of VarPos (ab?)use
   double  powFreq() const {return VarPos[0];}
   double  powReal() const {return VarDep[0];}
   double  powImag() const {return VarDep[1];}
 
 // private: // not yet
-  GraphDeque const *pGraph;
+  const GraphDeque *pGraph;
 
 private:
   std::vector<double> VarPos;   // values the marker is pointing to
   double VarDep[2];   // dependent value
   float  fCX, fCY;  // coordinates for the line from graph to marker body
+  GraphDeque::const_iterator SplPosD;
+  Graph::const_iterator SplPosX;
 
 public:
   QString Text;     // the string to be displayed in the marker text

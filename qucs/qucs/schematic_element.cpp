@@ -1202,8 +1202,7 @@ Element* Schematic::selectElement(float fX, float fY, bool flag, int *index)
 
             // test graphs of diagram
 	    for(auto pg : pd->GraphDeques) {
-                if(pg->getSelected(x-pd->cx, pd->cy-y) >= 0)
-                {
+                if(pg->getSelected(x-pd->cx, pd->cy-y) != pg->end()) {
                     if(flag)
                     {
                         // The element can be deselected

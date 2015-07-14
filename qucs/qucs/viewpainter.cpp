@@ -165,7 +165,6 @@ void GraphDeque::drawLines(int x0, int y0, ViewPainter *p) const
       path.lineTo(x1,y1);
       ++pp;
     }
-
     Painter->drawPath(path);
   }
 }

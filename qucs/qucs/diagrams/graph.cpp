@@ -15,6 +15,8 @@
  *                                                                         *
  ***************************************************************************/
 #include "graph.h"
+#include "marker.h"
+#include "viewpainter.h"
 
 #include <stdlib.h>
 #include <iostream>
@@ -53,6 +55,19 @@ GraphDeque::~GraphDeque()
 void GraphDeque::createMarkerText() const
 {
   for(auto pm : Markers) {
+    qDebug() << "marker" << pm->varPos().size();
+    assert(pm);
+
+// no. maybe data has just reloaded...
+//    assert(pm->splPos().first>=begin());
+//    assert(pm->splPos().first<=end());
+
+    if(pm->splPos().second<_begin()){
+      qDebug() << "bug, bogus marker";
+    }else if(pm->splPos().second>=_end()){
+      qDebug() << "bug, bogus marker end";
+    }else{
+    }
     pm->createText();
   }
 }
@@ -175,32 +190,38 @@ bool GraphDeque::load(const QString& _s)
 
 // -----------------------------------------------------------------------
 /*!
- * Checks if the coordinates x/y point to the graph. returns the number of the
- * branch of the graph, -1 upon a miss.
+ * Checks if the coordinates x/y point to a graph within this deque.
+ * returns corresponding iterator, end() upon a miss.
  *
  * x/y are relative to diagram cx/cy. 5 is the precision the user must point
  * onto the graph.
  *
  * FIXME: should return reference to hit sample point or some context.
  */
-int GraphDeque::getSelected(int x, int y) const
+GraphDeque::const_iterator GraphDeque::getSelected(int x, int y) const
 {
+  auto z = begin();
   auto pp = ScrPoints.begin();
-  if(pp == ScrPoints.end()) return -1;
+  if(pp == ScrPoints.end()){
+    return end();
+  }
 
-  int A, z=0;
+  int A;
   int dx, dx2, x1;
   int dy, dy2, y1;
 
-  int countX = cPointsX.at(0)->count;
   if(pp->isStrokeEnd()) {
     if(pp->isBranchEnd()) z++;
     pp++;
     if(pp->isBranchEnd()) {
-      if(pp->isGraphEnd())  return -1;   // not even one point ?
+      if(pp->isGraphEnd()) { // not even one point ?
+        return end();
+      }
       z++;
       pp++;
-      if(pp->isGraphEnd())  return -1;   // not even one point ?
+      if(pp->isGraphEnd()) { // not even one point ?
+        return end();
+      }
     }
   }
 
@@ -210,19 +231,19 @@ int GraphDeque::getSelected(int x, int y) const
       if(!pp->isStrokeEnd()) {
         dx  = x - int((pp)->getScrX());
         dy  = y - int((pp++)->getScrY());
-
         if(dx < -5) continue;
         if(dx >  5) continue;
         if(dy < -5) continue;
         if(dy >  5) continue;
-        return z*countX;   // points on graph symbol
+        return z;
       }
       else {
-        z++;   // next branch
+        assert(z!=end());
+        z++;   // next graph
         pp++;
       }
     }
-    return -1;
+    return end();
   }
 
   // for graph lines
@@ -239,7 +260,9 @@ int GraphDeque::getSelected(int x, int y) const
         break;
       }else if(pp->isStrokeEnd()) {
         pp++;
-        dx2 = int(pp->getScrX());  // go on as graph can also be selected between strokes
+        if(pp->isPt()){
+          dx2 = int(pp->getScrX());  // go on as graph can also be selected between strokes
+        }
         if(pp->isBranchEnd()) break;
       }
       if(dx < -5) { if(x < dx2-5) continue; } // point between x coordinates ?
@@ -256,13 +279,14 @@ int GraphDeque::getSelected(int x, int y) const
       A *= A;                  // avoid the need for square root
       A -= 25*(dx2*dx2 + dy2*dy2);  // substract selectable area
 
-      if(A <= 0)  return z*countX;  // lies x/y onto the graph line ?
+      if(A <= 0)  return z; // x/y lies on the graph line
     }
     pp++;
+    assert(z!=end());
     z++;
   }
 
-  return -1;
+  return end();
 }
 
 /* PHASOR DIAGRAM CODE
@@ -336,36 +360,94 @@ GraphDeque* GraphDeque::sameNewOne()
   pg->numMode   = numMode;
   pg->yAxisNo   = yAxisNo;
 
-  foreach(Marker *pm, Markers)
+  qDebug() << "cloning" << Markers.size() << "Markers";
+  foreach(Marker *pm, Markers) {
     pg->Markers.append(pm->sameNewOne(pg));
+  }
 
   return pg;
 }
 
 /*!
- * find a sample point close to VarPos, snap to it, and return data at VarPos
+ * snap position to nearby lattice point.
+ * return iterators.
+ * BUG: using grossly suboptimal linear search.
  */
-std::pair<double,double> GraphDeque::findSample(std::vector<double>& VarPos) const
+GraphDeque::MarkerPos GraphDeque::findSample(std::vector<double>& VarPos) const
 {
   DataX const* pD;
-  unsigned nVarPos=0;
-  unsigned n=0;
+  if(end()==begin()){
+    qDebug() << "snap: empty GraphDeque";
+    return MarkerPos(end(), Graph::const_iterator());
+  }
+
+  const_iterator n = begin();
   unsigned m=1;
 
-  for(unsigned ii=0; (pD=axis(ii)); ++ii) {
+  for(unsigned ii=1; (pD=axis(ii)); ++ii) {
     double* pp = pD->Points;
-    double v = VarPos[nVarPos];
+    double v = VarPos[ii];
     for(unsigned i=pD->count; i>1; i--) {  // find appropiate marker position
       if(fabs(v-(*pp)) < fabs(v-(*(pp+1)))) break;
       pp++;
       n += m;
     }
 
-    m *= pD->count;
-    VarPos[nVarPos++] = *pp;
+    m *= count(ii);
+    VarPos[ii] = *pp;
   }
+  assert(n<=end());
 
-  return std::pair<double,double>(cPointsY[2*n], cPointsY[2*n+1]);
+  auto gPos = n->findSample(VarPos[0]);
+  return MarkerPos(n, gPos);
+}
+
+/*!
+ * snap position to nearby screen sample.
+ * BUG: using grossly suboptimal linear search.
+ */
+Graph::const_iterator Graph::findSample(double& v) const
+{
+  qDebug() << "findsample" << end()-begin();
+  if(end()-begin()==0){
+    qDebug() << "oops. empty graph?";
+    return end();
+  }
+  for(auto i=begin(); i!=end(); ++i) {
+    if (i+1 == end()) {
+      return i;
+    }else if (!i->isPt()) {
+      qDebug() << "BUG, not a point in findSample";
+      return end();
+    } else if (!(i+1)->isPt()) {
+      qDebug() << "BUG, not a point in findSample";
+      return end();
+    }
+    if(fabs(v-i->getIndep()) < fabs(v-(i+1)->getIndep())) {
+      v = i->getIndep();
+      return i;
+    }
+  }
+  qDebug() << "Graph::findSample, empty";
+  assert(end()==begin());
+  return end();
+}
+
+void GraphDeque::invalidateMarkers(){
+  for (auto m : Markers){
+    m->makeInvalid();
+  }
+}
+
+/*!
+ * push back a new graph.
+ * currently done by Diagram (FIXME?)
+ */
+void GraphDeque::push_back(const Graph& g)
+{
+  assert(g.begin()>=_begin());
+  assert(g.end()<=_end());
+  Graphs.push_back(g);
 }
 
 // -----------------------------------------------------------------------

@@ -343,10 +343,11 @@ Marker* Diagram::setMarker(int x, int y)
   if(getSelected(x, y)) {
     // test all graphs of the diagram
     for(auto pg : GraphDeques) {
-      int n  = pg->getSelected(x-cx, cy-y); // sic!
-      if(n >= 0) {
+      GraphDeque::const_iterator n = pg->getSelected(x-cx, cy-y);
+      if(n != pg->end()) {
 	assert(pg->parentDiagram() == this);
-	Marker *pm = new Marker(pg, n, x-cx, y-cy);
+
+	Marker *pm = new Marker(n, pg, x-cx, y-cy);
 	pg->Markers.append(pm);
 	return pm;
       }
@@ -574,8 +575,9 @@ void Diagram::calcData(GraphDeque *g)
 	  if((!(p-1)->isPt()))
 	    --p; // erase last hidden point
 	}
-	(p++)->setBranchEnd();
 	g->push_back(Graph(graphbegin, p));
+	assert(g->back().begin()>=g->_begin());
+	(p++)->setBranchEnd();
       }
 
       p->setGraphEnd();
@@ -584,7 +586,7 @@ p = g->Points;
 qDebug("\n****** p=%p", p);
 for(int zz=0; zz<z; zz+=2)
   qDebug("c: %d/%d", *(p+zz), *(p+zz+1));*/
-      return;
+      break;
 
     default:  // symbol (e.g. star) at each point **********************
       // FIXME: WET. merge into case above. only difference: bounds check.
@@ -608,10 +610,9 @@ for(int zz=0; zz<z; zz+=2)
 /*qDebug("\n******");
 for(int zz=0; zz<60; zz+=2)
   qDebug("c: %d/%d", *(g->Points+zz), *(g->Points+zz+1));*/
-      return;
   }
 
-  // unreachable
+//  g->invalidateMarkers();
 }
 
 // -------------------------------------------------------
@@ -736,11 +737,14 @@ void Diagram::loadGraphData(const QString& defaultDataSet)
   int No=0;
   for(auto pg : GraphDeques) {
     qDebug() << "load GraphData load" << defaultDataSet << pg->Var;
-    if(pg->loadDatFile(defaultDataSet) != 1)   // load data, determine max/min values
+    if(pg->loadDatFile(defaultDataSet) != 1) {   // load data, determine max/min values
       No++;
+//      pg->refreshMarkers();
+    }
     getAxisLimits(pg);
   }
 
+  qDebug() << "dataset changes" << No;
   if(No <= 0) {   // All dataset files unchanged ?
     yAxis.numGraphs = yNum;  // rebuild scrollbar position
     zAxis.numGraphs = zNum;
@@ -805,9 +809,12 @@ void Diagram::updateGraphData()
 
   for(auto pg : GraphDeques) {
     pg->clear();
-    if((valid & (pg->yAxisNo+1)) != 0)
+    if((valid & (pg->yAxisNo+1)) != 0) {
       calcData(pg);   // calculate screen coordinates
-    else if(pg->cPointsY) {
+      qDebug() << "done calcData...";
+// ??      pg->invalidateMarkers(); not here.
+    }else if(pg->cPointsY) {
+      qDebug() << "updateGraphData graph write?!"; // shouldn't pGraph be const?
       delete[] pg->cPointsY;
       pg->cPointsY = 0;
     }
@@ -815,6 +822,7 @@ void Diagram::updateGraphData()
 
   createAxisLabels();  // virtual function
 
+  qDebug() << "updataGraphData, renew markers...";
   // Setting markers must be done last, because in 3D diagram "Mem"
   // is released in "createAxisLabels()".
   for(auto pg : GraphDeques) {
@@ -826,8 +834,6 @@ void Diagram::updateGraphData()
 /*!
  * does not (yet) load a dat file. only part of it.
  * this way, it would belong to graph.cpp. but it's too obsolete, lets see..
- *
- * FIXME: must invalidate markers.
  */
 int GraphDeque::loadDatFile(const QString& fileName)
 {
@@ -1405,7 +1411,7 @@ bool Diagram::load(const QString& Line, QTextStream *stream)
       pg = GraphDeques.last();
       if(!pg)  return false;
       assert(pg->parentDiagram() == this);
-      Marker *pm = new Marker(pg);
+      Marker *pm = new Marker(pg->end(), pg);
       if(!pm->load(s)) {
 	delete pm;
 	return false;
