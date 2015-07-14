@@ -383,26 +383,31 @@ bool Marker::moveLeftRight(bool left)
   assert(SplPosD>=pGraph->begin());
   assert(SplPosD<=pGraph->end());
 
-  int n;
-  DataX const *pD = pGraph->axis(0);
-  double* px = pD->Points;
-  if(!px) return false;
-  for(n=0; n<pD->count; n++) {
-    if(VarPos[0] <= *px) break;
-    px++;
+  if(SplPosD==pGraph->end()) {
+    // invalid marker
+    return false;
+  }else if(SplPosX==SplPosD->end()) {
+    // oops?
+    return false;
   }
-  if(n == pD->count) px--;
+
+  CHECK_MARKER
 
   if(left) {
-    if(px <= pD->Points) return false;
-    px--;  // one position to the left
+    if(SplPosX == SplPosD->begin()) return false;
+    if((SplPosX-1)->isStrokeEnd()) return false;
+    --SplPosX;
+    assert(!SplPosX->isStrokeEnd());
+  } else {
+    if(SplPosX == SplPosD->end()) return false; // reachable?
+    if(SplPosX+1 == SplPosD->end()) return false;
+    if(SplPosX->isStrokeEnd()) return false;
+    ++SplPosX;
+    assert(SplPosX != SplPosD->end());
   }
-  else {
-    if(px >= (pD->Points + pD->count - 1)) return false;
-    px++;  // one position to the right
-  }
-  VarPos[0] = *px;
-  createText();
+  VarPos[0] = SplPosX->getIndep();
+  // other VarPos unchanged
+  assignText();
 
   return true;
 }
@@ -410,54 +415,28 @@ bool Marker::moveLeftRight(bool left)
 // ---------------------------------------------------------------------
 bool Marker::moveUpDown(bool up)
 {
-  int n, i=0;
-  double *px;
-
   DataX const *pD = pGraph->axis(0);
   if(!pD) return false;
-
-  if(up) {  // move upwards ? **********************
-    do {
-      pD = pGraph->axis(++i);
-      if(!pD) return false;
-      px = pD->Points;
-      if(!px) return false;
-      for(n=1; n<pD->count; n++) {  // go through all data points
-        if(fabs(VarPos[i]-(*px)) < fabs(VarPos[i]-(*(px+1)))) break;
-        px++;
-      }
-
-    } while(px >= (pD->Points + pD->count - 1));  // go to next dimension ?
-
-    px++;  // one position up
-    VarPos[i] = *px;
-    while(i > 1) {
-      pD = pGraph->axis(--i);
-      VarPos[i] = *(pD->Points);
-    }
+  assert(SplPosD>=pGraph->begin());
+  assert(SplPosD<=pGraph->end());
+  if(SplPosD==pGraph->end()){
+    // is this reachable?
+    return false;
   }
-  else {  // move downwards **********************
-    do {
-      pD = pGraph->axis(++i);
-      if(!pD) return false;
-      px = pD->Points;
-      if(!px) return false;
-      for(n=0; n<pD->count; n++) {
-        if(fabs(VarPos[i]-(*px)) < fabs(VarPos[i]-(*(px+1)))) break;
-        px++;
-      }
 
-    } while(px <= pD->Points);  // go to next dimension ?
-
-    px--;  // one position down
-    VarPos[i] = *px;
-    while(i > 1) {
-      pD = pGraph->axis(--i);
-      VarPos[i] = *(pD->Points + pD->count - 1);
-    }
+  unsigned X = SplPosX - SplPosD->begin();
+  if(up) {
+    if(SplPosD+1==pGraph->end()) return false;
+    ++SplPosD;
+  } else {  // down
+    if(SplPosD==pGraph->begin()) return false;
+    --SplPosD;
   }
-  createText();
 
+  SplPosX = SplPosD->begin() + X; // BUG: needs rectangular grid.
+  VarPos[0] = SplPosX->getIndep();
+  pGraph->samplePos(SplPosD, VarPos);
+  assignText();
   return true;
 }
 
