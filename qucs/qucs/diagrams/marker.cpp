@@ -185,17 +185,24 @@ void Marker::createText()
 
   // independent variables
   Text = "";
-  double *pp;
   nVarPos = pGraph->numAxes();
-  DataX const *pD;
 
   auto p = pGraph->findSample(VarPos);
   VarDep[0] = p.first;
   VarDep[1] = p.second;
 
+  assignText();
+}
+
+/*!
+ * turn SplPosX, VarPos[1+] into Text
+ * (recheck: use SplPos{X,Y} only?)
+ */
+void Marker::assignText()
+{
   double v=0.;   // needed for 2D graph in 3D diagram
   double *py=&v;
-  pD = pGraph->axis(0);
+  DataX const *pD = pGraph->axis(0);
   if(pGraph->axis(1)) {
     *py = VarPos[1];
   }else{
@@ -227,7 +234,7 @@ void Marker::createText()
   Axis const *pa;
   if(pGraph->yAxisNo == 0)  pa = &(diag()->yAxis);
   else  pa = &(diag()->zAxis);
-  pp = &(VarPos[0]);
+  double* pp = &(VarPos[0]);
 
   diag()->calcCoordinate(pp, pz, py, &fCX, &fCY, pa);
   diag()->finishMarkerCoordinates(fCX, fCY);
