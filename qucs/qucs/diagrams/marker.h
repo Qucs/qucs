@@ -39,6 +39,7 @@ public:
 
 private:
   void    initText(int);
+  void assignText();
 public:
   void    createText();
   void    makeInvalid();
