@@ -152,6 +152,7 @@
 #include "verilog/bsim3v34pMOS.core.h"
 #include "verilog/bsim4v30nMOS.core.h"
 #include "verilog/bsim4v30pMOS.core.h"
+#include "verilog/bsim6v10nMOS.core.h"
 #include "verilog/hicumL0V1p2.core.h"
 #include "verilog/hicumL0V1p2g.core.h"
 #include "verilog/hicumL0V1p3.core.h"

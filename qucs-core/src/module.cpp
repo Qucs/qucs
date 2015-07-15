@@ -268,6 +268,7 @@ void module::registerModules (void) {
   REGISTER_CIRCUIT (bsim3v34pMOS);
   REGISTER_CIRCUIT (bsim4v30nMOS);
   REGISTER_CIRCUIT (bsim4v30pMOS);
+  REGISTER_CIRCUIT (bsim6v10nMOS);
   REGISTER_CIRCUIT (hicumL0V1p2);
   REGISTER_CIRCUIT (hicumL0V1p2g);
   REGISTER_CIRCUIT (hicumL0V1p3);
