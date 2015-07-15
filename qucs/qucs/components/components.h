@@ -152,6 +152,7 @@
 #include "bsim3v34pMOS.h"
 #include "bsim4v30nMOS.h"
 #include "bsim4v30pMOS.h"
+#include "bsim6v10nMOS.h"
 #include "hicumL0V1p2.h"
 #include "hicumL0V1p2g.h"
 #include "hicumL0V1p3.h"
