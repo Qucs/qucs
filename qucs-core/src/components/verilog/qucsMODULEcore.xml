@@ -425,6 +425,7 @@ using qucs::matrix;
 <admst:text format="/* Evaluate Verilog-AMS equations in analog block. */\n"/>
 <admst:text format="void $module::calcVerilog (void)\n{\n"/>
 /* ----------------- evaluate verilog analog equations -------------------- */
+// Note: (void) NAME; is used to silence warnings about unused variables.
 <admst:text format="\n"/>
 
 <admst:apply-templates select="analog/code" match="analog:evaluate"/>
