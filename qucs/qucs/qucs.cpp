@@ -2809,8 +2809,12 @@ void QucsApp::slotSimulateWithSpice()
 
         ExternSimDialog *SimDlg = new ExternSimDialog(sch);
         connect(SimDlg,SIGNAL(simulated()),this,SLOT(slotAfterSpiceSimulation()));
+        connect(SimDlg,SIGNAL(warnings()),this,SLOT(slotShowWarnings()));
+        connect(SimDlg,SIGNAL(success()),this,SLOT(slotResetWarnings()));
         SimDlg->exec();
         disconnect(SimDlg,SIGNAL(simulated()),this,SLOT(slotAfterSpiceSimulation()));
+        disconnect(SimDlg,SIGNAL(warnings()),this,SLOT(slotShowWarnings()));
+        disconnect(SimDlg,SIGNAL(success()),this,SLOT(slotResetWarnings()));
         if (SimDlg->wasSimulated) slotChangePage(sch->DocName,sch->DataDisplay);
         delete SimDlg;
     }
