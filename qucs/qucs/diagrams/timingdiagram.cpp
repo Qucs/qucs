@@ -183,9 +183,9 @@ int TimingDiagram::calcDiagram()
   // First check the maximum bit number of all vectors.
   colWidth = 0;
   for(auto g : GraphDeques) {
-    if(g->cPointsY) {
-      if(g->Var.right(2) == ".X") {
-        z = strlen((char*)g->cPointsY);
+    if(g->cPointsY()) {
+      if(g->var().right(2) == ".X") { // HACK. use type.
+        z = strlen((char*)g->cPointsY());
         if(z > colWidth)
           colWidth = z;
       }
@@ -226,7 +226,7 @@ if(!firstGraph->isEmpty()) {
   // write all dependent variable names to get width of first column
   for(auto g : GraphDeques) {
     if(y < tHeight)  break;
-    Str = g->Var;
+    Str = g->var();
     colWidth = checkColumnWidth(Str, metrics, colWidth, x, y);
     if(colWidth < 0)  return 1;
     Texts.append(new Text(x, y, Str));  // dependent variable
@@ -284,7 +284,7 @@ if(!firstGraph->isEmpty()) {
     x = xStart + 5;
     colWidth = 0;
 
-    if(g->cPointsY == 0) {
+    if(g->cPointsY() == 0) {
       Str = QObject::tr("no data");
       colWidth = checkColumnWidth(Str, metrics, colWidth, x, y);
       if(colWidth < 0)  goto funcEnd;
@@ -302,16 +302,16 @@ if(!firstGraph->isEmpty()) {
       continue;
     }
 
-    Pen = QPen(g->Color, g->Thick);  // default is solid line
-    switch(g->Style) {
+    Pen = QPen(g->color(), g->thick());  // default is solid line
+    switch(g->style()) {
       case 1: Pen.setStyle(Qt::DashLine); break;
       case 2: Pen.setStyle(Qt::DotLine);  break;
 		default: break;
     }
 
     z = int(xAxis.limit_min + 0.5);
-    if(g->Var.right(2) != ".X") {  // not digital variable ?
-      px = g->cPointsY;
+    if(g->var().right(2) != ".X") {  // not digital variable ?
+      px = g->cPointsY();
       px += 2 * z;
       z = g->axis(0)->count - z;
       yNow = 1 + ((tHeight - 6) >> 1);
@@ -341,7 +341,7 @@ if(!firstGraph->isEmpty()) {
 
 
     // digital variable !!!
-    char *pcx = (char*)g->cPointsY;
+    char *pcx = (char*)g->cPointsY();
     pcx += z * (strlen(pcx)+1);
 
     if(strlen(pcx) < 2) {   // vector or single bit ?

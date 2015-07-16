@@ -702,7 +702,7 @@ DiagramDialog::DiagramDialog(Diagram *d, QWidget *parent, GraphDeque *currentGra
   // put all graphs into the ListBox
   Row = 0;
   for(auto pg : Diag->graphLists()) {
-    GraphDequeList->insertItem(Row, pg->Var);
+    GraphDequeList->insertItem(Row, pg->var());
     if(pg == currentGraphDeque) {
       GraphDequeList->setCurrentRow(Row);   // select current graphList
       SelectGraph(currentGraphDeque);
@@ -825,33 +825,36 @@ void DiagramDialog::slotTakeVar(QTableWidgetItem* Item)
 
     GraphDeque *g = new GraphDeque(Diag, GraphInput->text());   // create a new graph
 
-    if(Diag->Name != "Tab") {
-      if(Diag->Name != "Truth") {
-        g->Color = ColorButt->paletteBackgroundColor();
-        g->Thick = Property2->text().toInt();
+    if(Diag->Name != "Tab") { // BUG: don't use names.
+      if(Diag->Name != "Truth") { // BUG: don't use names.
+        g->setColor(ColorButt->paletteBackgroundColor());
+        g->setThick(Property2->text().toInt()); // BUG: use type, not int.
         QColor selectedColor(DefaultColors[GraphDequeList->count()%NumDefaultColors]);
         QString stylesheet = QString("QPushButton {background-color: %1};").arg(selectedColor.name());
         ColorButt->setStyleSheet(stylesheet);
         ColorButt->setPaletteBackgroundColor(selectedColor);
-        if(g->Var.right(3) == ".Vb")   // harmonic balance output ?
+        if(g->var().right(3) == ".Vb")   // harmonic balance output ?
           if(PropertyBox->count() >= GRAPHSTYLE_ARROW)
             PropertyBox->setCurrentItem(GRAPHSTYLE_ARROW);
-        g->Style = toGraphStyle(PropertyBox->currentItem());
-        assert(g->Style!=GRAPHSTYLE_INVALID);
+        g->setStyle(toGraphStyle(PropertyBox->currentItem()));
+        assert(g->style()!=GRAPHSTYLE_INVALID);
         if(yAxisBox) {
-          g->yAxisNo = yAxisBox->currentItem();
+          g->setYAxisNo(yAxisBox->currentItem());
           yAxisBox->setEnabled(true);
           Label4->setEnabled(true);
-        }
-        else if(Diag->Name == "Rect3D") g->yAxisNo = 1;
+        } else if(Diag->Name == "Rect3D") {
+	  // BUG: this must not be necessary
+	  //      need a different graph type for "3D"-graphs anyway
+	  g->setYAxisNo(1);
+	}
 
         Label3->setEnabled(true);
         ColorButt->setEnabled(true);
       }
     }
     else {
-      g->Precision = Property2->text().toInt();
-      g->numMode   = PropertyBox->currentItem();
+      g->setPrecision(Property2->text().toInt());
+      g->setNumMode(PropertyBox->currentItem());
     }
 
     GraphDeques.append(g);
@@ -888,18 +891,18 @@ void DiagramDialog::slotSelectGraph(QListWidgetItem *item)
 void DiagramDialog::SelectGraph(GraphDeque *g)
 {
   GraphInput->blockSignals(true);
-  GraphInput->setText(g->Var);
+  GraphInput->setText(g->var());
   GraphInput->blockSignals(false);
 
-  if(Diag->Name != "Tab") {
-    if(Diag->Name != "Truth") {
-      Property2->setText(QString::number(g->Thick));
-      QString stylesheet = QString("QPushButton {background-color: %1};").arg(g->Color.name());
+  if(Diag->Name != "Tab") { // BUG. don't do this.
+    if(Diag->Name != "Truth") { // BUG. don't do this.
+      Property2->setText(QString::number(g->thick()));
+      QString stylesheet = QString("QPushButton {background-color: %1};").arg(g->color().name());
       ColorButt->setStyleSheet(stylesheet);
-      ColorButt->setPaletteBackgroundColor(g->Color);
-      PropertyBox->setCurrentItem(g->Style);
+      ColorButt->setPaletteBackgroundColor(g->color());
+      PropertyBox->setCurrentItem(g->style());
       if(yAxisBox) {
-        yAxisBox->setCurrentItem(g->yAxisNo);
+        yAxisBox->setCurrentItem(g->yAxisNo());
         yAxisBox->setEnabled(true);
         Label4->setEnabled(true);
       }
@@ -909,8 +912,8 @@ void DiagramDialog::SelectGraph(GraphDeque *g)
     }
   }
   else {
-    Property2->setText(QString::number(g->Precision));
-    PropertyBox->setCurrentItem(g->numMode);
+    Property2->setText(QString::number(g->precision()));
+    PropertyBox->setCurrentItem(g->numMode());
   }
   toTake = false;
 
@@ -986,19 +989,22 @@ void DiagramDialog::slotNewGraph()
 
   GraphDeque *g = new GraphDeque(Diag, GraphInput->text());
 // FIXME: call  Diag->whateverelse();
+// BUG: this is a duplicate.
   if(Diag->Name != "Tab") { // BUG
     if(Diag->Name != "Truth") { // BUG
-      g->Color = ColorButt->paletteBackgroundColor();
-      g->Thick = Property2->text().toInt();
-      g->Style = toGraphStyle(PropertyBox->currentItem());
-      assert(g->Style!=GRAPHSTYLE_INVALID);
-      if(yAxisBox)  g->yAxisNo = yAxisBox->currentItem();
-      else if(Diag->Name == "Rect3D")  g->yAxisNo = 1;
+      g->setColor(ColorButt->paletteBackgroundColor());
+      g->setThick(Property2->text().toInt());
+      g->setStyle(toGraphStyle(PropertyBox->currentItem()));
+      assert(g->style()!=GRAPHSTYLE_INVALID);
+      if(yAxisBox) g->setYAxisNo(yAxisBox->currentItem());
+      else if(Diag->Name == "Rect3D") { // BUG: name again
+      	g->setYAxisNo(1);
+      }
     }
   }
   else {
-    g->Precision = Property2->text().toInt();
-    g->numMode   = PropertyBox->currentItem();
+    g->setPrecision(Property2->text().toInt());
+    g->setNumMode(PropertyBox->currentItem());
   }
   GraphDeques.append(g);
   changed = true;
@@ -1208,7 +1214,7 @@ void DiagramDialog::slotSetColor()
   if(i < 0) return;   // return, if no item selected
 
   GraphDeque *g = GraphDeques.at(i);
-  g->Color = c;
+  g->setColor(c);
   changed = true;
   toTake  = false;
 }
@@ -1232,7 +1238,7 @@ void DiagramDialog::slotResetToTake(const QString& s)
   if(i < 0) return;   // return, if no item selected
 
   GraphDeque *g = GraphDeques.at(i);
-  g->Var = s;
+  g->var() = s;
   // \todo GraphDeque->changeItem(s, i);   // must done after the graph settings !!!
   changed = true;
   toTake  = false;
@@ -1247,8 +1253,12 @@ void DiagramDialog::slotSetProp2(const QString& s)
   if(i < 0) return;   // return, if no item selected
 
   GraphDeque *g = GraphDeques.at(i);
-  if(Diag->Name == "Tab") g->Precision = s.toInt();
-  else  g->Thick = s.toInt();
+  if(Diag->Name == "Tab"){ // hmm don't do that. do it in tabdiagram.cpp
+    g->setPrecision(s.toInt());
+  }
+  else{
+    g->setThick(s.toInt());
+  }
   changed = true;
   toTake  = false;
 }
@@ -1262,7 +1272,7 @@ void DiagramDialog::slotSetNumMode(int Mode)
   if(i < 0) return;   // return, if no item selected
 
   GraphDeque *g = GraphDeques.at(i);
-  g->numMode = Mode;
+  g->setNumMode(Mode);
   changed = true;
   toTake  = false;
 }
@@ -1295,8 +1305,8 @@ void DiagramDialog::slotSetGraphStyle(int style)
   if(i < 0) return;   // return, if no item selected
 
   GraphDeque *g = GraphDeques.at(i);
-  g->Style = toGraphStyle(style);
-  assert(g->Style!=GRAPHSTYLE_INVALID);
+  g->setStyle(toGraphStyle(style));
+  assert(g->style()!=GRAPHSTYLE_INVALID);
   changed = true;
   toTake  = false;
 }
@@ -1320,7 +1330,7 @@ void DiagramDialog::slotSetYAxis(int axis)
   if(i < 0) return;   // return, if no item selected
 
   GraphDeque *g = GraphDeques.at(i);
-  g->yAxisNo = axis;
+  g->setYAxisNo(axis);
   changed = true;
   toTake  = false;
 }

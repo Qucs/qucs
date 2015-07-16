@@ -178,6 +178,23 @@ public:
   QString axisName(unsigned i) const {if(axis(i))return axis(i)->Var; return "";}
   bool isEmpty() const { return !cPointsX.size(); }
   QVector<DataX*>& mutable_axes(){return cPointsX;} // HACK
+  QString var() const {return Var;}
+  QColor color() const {return Color;}
+  int thick() const {return Thick;}
+  graphstyle_t style() const {return Style;}
+  int yAxisNo() const {return YAxisNo;}
+  double *cPointsY() const { return CPointsY; }
+  int countY() const { return CountY; }
+  int precision() const{return Precision;}
+  int numMode() const{return NumMode;}
+
+public: // modify
+  void setColor(QColor c) {Color = c;}
+  void setThick(int c) {Thick = c;}
+  void setStyle(graphstyle_t s) {Style = s;}
+  void setPrecision(int p) {Precision = p;}
+  void setNumMode(int m) {NumMode = m;}
+  void setYAxisNo(int x) {YAxisNo = x;}
 
   void clear(){ScrPoints.resize(0); Graphs.resize(0); invalidateMarkers();}
   void resizeScrPoints(size_t s){assert(s>=(unsigned)ScrPoints.size()); ScrPoints.resize(s);}
@@ -185,6 +202,7 @@ public:
   iterator end(){return Graphs.end();}
   const_iterator begin() const{return Graphs.begin();}
   const_iterator end() const{return Graphs.end();}
+  QList<Marker *> const& markers()const{return Markers;}
 
 // private: not yet
   Graph::iterator _begin(){return ScrPoints.begin();}
@@ -192,19 +210,21 @@ public:
   Graph::const_iterator _begin()const{return ScrPoints.begin();}
   Graph::const_iterator _end()const{return ScrPoints.end();}
 
+private:
   QDateTime lastLoaded;  // when it was loaded into memory
-  int     yAxisNo;       // which y axis is used
-  double *cPointsY;
-  int     countY;    // number of curves
+  int YAxisNo;       // which y axis is used
+  double *CPointsY;
+  int     CountY;    // number of curves
   QString Var;
   QColor  Color;
   int     Thick;
   graphstyle_t Style;
+public: // BUG
   QList<Marker *> Markers;
 
-  // for tabular diagram
-  int  Precision;   // number of digits to show
-  int  numMode;     // real/imag or polar (deg/rad)
+private: // FIXME: for tabular diagram
+  int Precision;   // number of digits to show
+  int NumMode;     // real/imag or polar (deg/rad)
 
 private: // painting
   void drawLines(int, int, ViewPainter*) const;
@@ -212,7 +232,15 @@ private: // painting
   void drawCircleSymbols(int, int, ViewPainter*) const;
   void drawArrowSymbols(int, int, ViewPainter*) const;
 public: // marker related
+  Marker* newMarker(const_iterator const& p,
+      GraphDeque const *pg_,
+      int cx_, int cy_);
+  Marker const* newMarker(
+      GraphDeque::const_iterator const& p,
+      GraphDeque const *pg,
+      QString const& s);
   void createMarkerText() const;
+  void moveMarkers(int x, int y);
   MarkerPos findSample(std::vector<double>&) const;
   void samplePos(const_iterator, std::vector<double>& VarPos) const;
   Diagram const* parentDiagram() const{return diagram;}

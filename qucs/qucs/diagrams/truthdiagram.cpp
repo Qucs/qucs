@@ -107,7 +107,7 @@ int TruthDiagram::calcDiagram()
 
   if(!g->isEmpty()) { // did we find a graph with data ?
     // ................................................
-    NumAll = g->axis(0)->count * g->countY;  // number of values
+    NumAll = g->axis(0)->count * g->countY();  // number of values
     
     invisibleCount = NumAll - y/tHeight;
     if(invisibleCount <= 0)  xAxis.limit_min = 0.0;// height bigger than needed
@@ -157,7 +157,7 @@ int TruthDiagram::calcDiagram()
   for(auto g : GraphDeques) {
     y = y2-tHeight-5;
 
-    Str = g->Var;
+    Str = g->var();
     colWidth = checkColumnWidth(Str, metrics, 0, x, y2);
     if(colWidth < 0)  goto funcEnd;
     Texts.append(new Text(x, y2-2, Str));  // dependent variable
@@ -168,8 +168,8 @@ int TruthDiagram::calcDiagram()
 
       if(sameDependencies(g, firstGraph)) {
 
-        if(g->Var.right(2) != ".X") {  // not a digital variable ?
-          double *pdy = g->cPointsY - 2;
+        if(g->var().right(2) != ".X") {  // not a digital variable ? HACK: use type!
+          double *pdy = g->cPointsY() - 2;
           for(z = NumAll; z>0; z--) {
             pdy += 2;
             if(startWriting-- > 0) continue; // reached visible area ?
@@ -185,7 +185,7 @@ int TruthDiagram::calcDiagram()
         }
 
         else {  // digital variable !!!
-          py = (char*)g->cPointsY;
+          py = (char*)g->cPointsY();
           counting = strlen((char*)py);    // count number of "bits"
 
           digitWidth = metrics.width("X") + 2;

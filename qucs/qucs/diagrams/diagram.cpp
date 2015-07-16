@@ -34,6 +34,7 @@
 # include <ieeefp.h>
 #endif
 #include <locale.h>
+#include <assert.h>
 
 #include "diagram.h"
 #include "main.h"
@@ -129,7 +130,7 @@ void Diagram::paint(ViewPainter *p)
 
   // draw markers last, so they are at the top of painting layers
   for(auto pg : GraphDeques)
-    foreach(Marker *pm, pg->Markers)
+    foreach(Marker *pm, pg->markers())
       pm->paint(p, cx, cy);
 
 
@@ -179,13 +180,13 @@ void Diagram::createAxisLabels()
 	if(Name[0] != 'C') {   // locus curve ?
 	  w = metrics.width(pD->Var) >> 1;
 	  if(w > wmax)  wmax = w;
-	  Texts.append(new Text(x-w, y, pD->Var, pg->Color, 12.0));
+	  Texts.append(new Text(x-w, y, pD->Var, pg->color(), 12.0));
 	}
 	else {
-          w = metrics.width("real("+pg->Var+")") >> 1;
+          w = metrics.width("real("+pg->var()+")") >> 1;
 	  if(w > wmax)  wmax = w;
-          Texts.append(new Text(x-w, y, "real("+pg->Var+")",
-                                pg->Color, 12.0));
+          Texts.append(new Text(x-w, y, "real("+pg->var()+")",
+                                pg->color(), 12.0));
 	}
     }
   }
@@ -209,25 +210,25 @@ void Diagram::createAxisLabels()
   if(yAxis.Label.isEmpty()) {
     // draw left y-label for all graphs ------------------------------
     for(auto pg : GraphDeques) {
-      if(pg->yAxisNo != 0)  continue;
-      if(pg->cPointsY) {
+      if(pg->yAxisNo() != 0)  continue;
+      if(pg->cPointsY()) {
 	if(Name[0] != 'C') {   // location curve ?
-          w = metrics.width(pg->Var) >> 1;
+          w = metrics.width(pg->var()) >> 1;
           if(w > wmax)  wmax = w;
-          Texts.append(new Text(x, y-w, pg->Var, pg->Color, 12.0, 0.0, 1.0));
+          Texts.append(new Text(x, y-w, pg->var(), pg->color(), 12.0, 0.0, 1.0));
 	}
 	else {
-          w = metrics.width("imag("+pg->Var+")") >> 1;
+          w = metrics.width("imag("+pg->var()+")") >> 1;
           if(w > wmax)  wmax = w;
-          Texts.append(new Text(x, y-w, "imag("+pg->Var+")",
-                                pg->Color, 12.0, 0.0, 1.0));
+          Texts.append(new Text(x, y-w, "imag("+pg->var()+")",
+                                pg->color(), 12.0, 0.0, 1.0));
 	}
       }
       else {     // if no data => <invalid>
-        w = metrics.width(pg->Var+INVALID_STR) >> 1;
+        w = metrics.width(pg->var()+INVALID_STR) >> 1;
         if(w > wmax)  wmax = w;
-        Texts.append(new Text(x, y-w, pg->Var+INVALID_STR,
-                              pg->Color, 12.0, 0.0, 1.0));
+        Texts.append(new Text(x, y-w, pg->var()+INVALID_STR,
+                              pg->color(), 12.0, 0.0, 1.0));
       }
       x -= LineSpacing;
     }
@@ -247,26 +248,26 @@ void Diagram::createAxisLabels()
   if(zAxis.Label.isEmpty()) {
     // draw right y-label for all graphs ------------------------------
     for(auto pg : GraphDeques) {
-      if(pg->yAxisNo != 1)  continue;
-      if(pg->cPointsY) {
+      if(pg->yAxisNo() != 1)  continue;
+      if(pg->cPointsY()) {
 	if(Name[0] != 'C') {   // location curve ?
-          w = metrics.width(pg->Var) >> 1;
+          w = metrics.width(pg->var()) >> 1;
           if(w > wmax)  wmax = w;
-          Texts.append(new Text(x, y+w, pg->Var,
-                                pg->Color, 12.0, 0.0, -1.0));
+          Texts.append(new Text(x, y+w, pg->var(),
+                                pg->color(), 12.0, 0.0, -1.0));
 	}
 	else {
-          w = metrics.width("imag("+pg->Var+")") >> 1;
+          w = metrics.width("imag("+pg->var()+")") >> 1;
           if(w > wmax)  wmax = w;
-          Texts.append(new Text(x, y+w, "imag("+pg->Var+")",
-                                pg->Color, 12.0, 0.0, -1.0));
+          Texts.append(new Text(x, y+w, "imag("+pg->var()+")",
+                                pg->color(), 12.0, 0.0, -1.0));
 	}
       }
       else {     // if no data => <invalid>
-        w = metrics.width(pg->Var+INVALID_STR) >> 1;
+        w = metrics.width(pg->var()+INVALID_STR) >> 1;
         if(w > wmax)  wmax = w;
-        Texts.append(new Text(x, y+w, pg->Var+INVALID_STR,
-                              pg->Color, 12.0, 0.0, -1.0));
+        Texts.append(new Text(x, y+w, pg->var()+INVALID_STR,
+                              pg->color(), 12.0, 0.0, -1.0));
       }
       x += LineSpacing;
     }
@@ -336,8 +337,7 @@ Marker* Diagram::setMarker(int x, int y)
       if(n != pg->end()) {
 	assert(pg->parentDiagram() == this);
 
-	Marker *pm = new Marker(n, pg, x-cx, y-cy);
-	pg->Markers.append(pm);
+	auto pm = pg->newMarker(n, pg, x-cx, y-cy);
 	return pm;
       }
     }
@@ -507,12 +507,12 @@ void Diagram::clip(Graph::iterator &p) const
 void Diagram::calcData(GraphDeque *g)
 {
   double *px;
-  double *pz = g->cPointsY;
+  double *pz = g->cPointsY();
   if(!pz)  return;
   if(g->numAxes() < 1) return;
 
   int i, z, Counter=2;
-  int Size = ((2*(g->count(0)) + 1) * g->countY) + 10;
+  int Size = ((2*(g->axis(0)->count) + 1) * g->countY()) + 10;
   
   if(xAxis.autoScale)  if(yAxis.autoScale)  if(zAxis.autoScale)
     Counter = -50000;
@@ -530,15 +530,15 @@ void Diagram::calcData(GraphDeque *g)
   assert(p!=g->_end());
 
   Axis *pa;
-  if(g->yAxisNo == 0)  pa = &yAxis;
+  if(g->yAxisNo() == 0)  pa = &yAxis;
   else  pa = &zAxis;
 
-  switch(g->Style) {
+  switch(g->style()) {
     case GRAPHSTYLE_SOLID: // ***** solid line ****************************
     case GRAPHSTYLE_DASH:
     case GRAPHSTYLE_DOT:
     case GRAPHSTYLE_LONGDASH:
-      for(i=g->countY; i>0; i--) {  // every branch of curves
+      for(i=g->countY(); i>0; i--) {  // every branch of curves
 	graphbegin = p;
 	px = g->axis(0)->Points;
 	calcCoordinateP(px, pz, py, p, pa);
@@ -579,7 +579,7 @@ for(int zz=0; zz<z; zz+=2)
 
     default:  // symbol (e.g. star) at each point **********************
       // FIXME: WET. merge into case above. only difference: bounds check.
-      for(i=g->countY; i>0; i--) {  // every branch of curves
+      for(i=g->countY(); i>0; i--) {  // every branch of curves
 	graphbegin = p;
         px = g->axis(0)->Points;
         for(z=g->axis(0)->count; z>0; z--) {  // every point
@@ -681,12 +681,12 @@ void Diagram::getAxisLimits(GraphDeque const* pg)
   }
 
   Axis *pa;
-  if(pg->yAxisNo == 0)  pa = &yAxis;
+  if(pg->yAxisNo() == 0)  pa = &yAxis;
   else  pa = &zAxis;
   (pa->numGraphs)++;    // count graphs
-  p = pg->cPointsY;
+  p = pg->cPointsY();
   if(p == 0) return;    // if no data => invalid
-  for(z=pg->countY*pD->count; z>0; z--) {  // check every y coordinate
+  for(z=pg->countY()*pD->count; z>0; z--) {  // check every y coordinate
     x = *(p++);
     y = *(p++);
 
@@ -698,6 +698,7 @@ void Diagram::getAxisLimits(GraphDeque const* pg)
       }
     }
     else {   // location curve needs different treatment
+      /// FIXME: overload. location curves inherit from here.
       if(std::isfinite(x)) {
 	if(x > xAxis.max) xAxis.max = x;
 	if(x < xAxis.min) xAxis.min = x;
@@ -708,6 +709,7 @@ void Diagram::getAxisLimits(GraphDeque const* pg)
       }
     }
   }
+  qDebug() << "axis limits" << pg->var() << pa->min << pa->max;
 }
 
 // --------------------------------------------------------------------------
@@ -724,7 +726,7 @@ void Diagram::loadGraphData(const QString& defaultDataSet)
 
   int No=0;
   for(auto pg : GraphDeques) {
-    qDebug() << "load GraphData load" << defaultDataSet << pg->Var;
+    qDebug() << "load GraphData load" << defaultDataSet << pg->var();
     if(pg->loadDatFile(defaultDataSet) != 1) {   // load data, determine max/min values
       No++;
 //      pg->refreshMarkers();
@@ -799,14 +801,15 @@ void Diagram::updateGraphData()
 
   for(auto pg : GraphDeques) {
     pg->clear();
-    if((valid & (pg->yAxisNo+1)) != 0) {
+    if((valid & (pg->yAxisNo()+1)) != 0) {
       calcData(pg);   // calculate screen coordinates
       qDebug() << "done calcData...";
 // ??      pg->invalidateMarkers(); not here.
-    }else if(pg->cPointsY) {
+    }else if(pg->cPointsY()) {
       qDebug() << "updateGraphData graph write?!"; // shouldn't pGraph be const?
-      delete[] pg->cPointsY;
-      pg->cPointsY = 0;
+      // BUG: cannot do this.
+      // delete[] pg->cPointsY;
+      // pg->cPointsY = 0;
     }
   }
 
@@ -856,9 +859,7 @@ int GraphDeque::loadDatFile(const QString& fileName)
     if(g->lastLoaded > Info.lastModified())
       return 1;    // dataset unchanged -> no update neccessary
 
-  g->countY = 0;
-  g->mutable_axes().clear(); // HACK
-  if(g->cPointsY) { delete[] g->cPointsY;  g->cPointsY = 0; }
+  g->clear(); // oops?
   if(Variable.isEmpty()) return 0;
 
 #if 0 // FIXME encapsulation. implement digital waves later.
@@ -931,7 +932,7 @@ int GraphDeque::loadDatFile(const QString& fileName)
     if(!ok)  return 0;
 
     p = new double[counting];  // memory of new independent variable
-    g->countY = 1;
+    CountY = 1;
     g->mutable_axes().back()->Points = p;
     for(int z=1; z<=counting; z++)  *(p++) = double(z);
     auto Axis = g->mutable_axes().back();
@@ -940,7 +941,7 @@ int GraphDeque::loadDatFile(const QString& fileName)
   }
   else {  // ...................................
     // get independent variables from data file
-    g->countY = 1;
+    CountY = 1;
 #if 0 // FIXME: we do not have a Name.
     DataX *bLast = 0;
     if(Name == "Rect3D")  bLast = g->axis(1);  // y axis for Rect3D
@@ -962,17 +963,17 @@ int GraphDeque::loadDatFile(const QString& fileName)
       counting = loadIndepVarData(pD->Var, FileString, mutable_axis(ii));
       if(counting <= 0)  return 0;
 
-      g->countY *= counting;
+      CountY *= counting;
     }
-    g->countY /= counting;
+    CountY /= counting;
   }
 
 
   // *****************************************************************
   // get dependent variables *****************************************
-  counting  *= g->countY;
+  counting *= CountY;
   p = new double[2*counting]; // memory for dependent variables
-  g->cPointsY = p;
+  CPointsY = p;
 #if 0 // FIXME: what does this do?!
   if(g->yAxisNo == 0)  pa = &yAxis;   // for which axis
   else  pa = &zAxis;
@@ -994,7 +995,7 @@ if(Variable.right(3) != ".X ") { // not "digital"
       y = 0.0;
     else {
       if(((*pEnd != '+') && (*pEnd != '-')) || (*pPos != 'j')) {
-        delete[] g->cPointsY;  g->cPointsY = 0;
+        delete[] CPointsY; CPointsY = NULL;
         return 0;
       }
       *pPos = *pEnd;  // overwrite 'j' with sign
@@ -1040,17 +1041,17 @@ if(Variable.right(3) != ".X ") { // not "digital"
 
     while((*pPos) && (*pPos <= ' '))  pPos++; // find start of next bit vector
     if(*pPos == 0) {
-      delete[] g->cPointsY;  g->cPointsY = 0;
+      delete[] CPointsY; CPointsY = NULL;
       return 0;
     }
 
     while(*pPos > ' ') {    // copy bit vector
       *(pc++) = *(pPos++);
       if(pEnd <= pc) {
-        counting = pc - (char*)g->cPointsY;
-        pc = (char*)realloc(g->cPointsY, counting+1024);
+        counting = pc - (char*)CPointsY;
+        pc = (char*)realloc(g->CPointsY, counting+1024);
         pEnd = pc;
-        g->cPointsY = (double*)pEnd;
+        CPointsY = (double*)pEnd;
         pc += counting;
         pEnd += counting+1020;
       }
@@ -1402,12 +1403,9 @@ bool Diagram::load(const QString& Line, QTextStream *stream)
       pg = GraphDeques.last();
       if(!pg)  return false;
       assert(pg->parentDiagram() == this);
-      Marker *pm = new Marker(pg->end(), pg);
-      if(!pm->load(s)) {
-	delete pm;
+      if(!pg->newMarker(pg->end(), pg, s)){
 	return false;
       }
-      pg->Markers.append(pm);
       continue;
     }
 
@@ -2004,5 +2002,11 @@ void Diagram::calcCoordinateP (const double*x, const double*y, const double*z, G
   p->setScr(f1, f2);
 };
 
+void Diagram::moveMarkers(int x, int y)
+{
+  for(auto pg : GraphDeques) {
+    pg->moveMarkers(x, y);
+  }
+}
 
 // vim:ts=8:sw=2:noet

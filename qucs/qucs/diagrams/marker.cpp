@@ -139,7 +139,7 @@ void Marker::initText(GraphDeque::const_iterator const& pos)
   assert(pos<=pGraph->end());
   Axis const *pa;
   assert(diag());
-  if(pGraph->yAxisNo == 0)  pa = &(diag()->yAxis);
+  if(pGraph->yAxisNo() == 0)  pa = &(diag()->yAxis);
   else  pa = &(diag()->zAxis);
   SplPosD = pos;
 
@@ -188,7 +188,7 @@ void Marker::initText(GraphDeque::const_iterator const& pos)
 void Marker::createText()
 {
   assert(pGraph);
-  if(!(pGraph->cPointsY)) {
+  if(!(pGraph->cPointsY())) {
     makeInvalid();
     return;
   }else if(SplPosD == pGraph->end()){ // here?!
@@ -287,7 +287,7 @@ void Marker::assignText()
     pz[0] = SplPosX->getDep().real();
     pz[1] = SplPosX->getDep().imag();
 
-    Text += pGraph->Var + ": ";
+    Text += pGraph->var() + ": ";
     switch(numMode) {
       case nM_Rect: Text += misc::complexRect(*pz, *(pz+1), Precision);
 		    break;
@@ -305,7 +305,7 @@ void Marker::assignText()
   }
 
   Axis const *pa;
-  if(pGraph->yAxisNo == 0)  pa = &(diag()->yAxis);
+  if(pGraph->yAxisNo() == 0)  pa = &(diag()->yAxis);
   else  pa = &(diag()->zAxis);
   double *pp = &(VarPos[0]);
 

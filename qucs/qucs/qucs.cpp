@@ -2513,7 +2513,7 @@ void QucsApp::slotPowerMatching()
   Marker *pm = (Marker*)view->focusElement;
 
 //  double Z0 = 50.0;
-  QString Var = pm->pGraph->Var;
+  QString Var = pm->pGraph->var();
   double Imag = pm->powImag();
   if(Var == "Sopt")  // noise matching ?
     Imag *= -1.0;
@@ -2540,9 +2540,9 @@ void QucsApp::slot2PortMatching()
 
   QString DataSet;
   Schematic *Doc = (Schematic*)DocumentTab->currentWidget();
-  int z = pm->pGraph->Var.indexOf(':');
+  int z = pm->pGraph->var().indexOf(':');
   if(z <= 0)  DataSet = Doc->DataSet;
-  else  DataSet = pm->pGraph->Var.mid(z+1);
+  else  DataSet = pm->pGraph->var().mid(z+1);
   double Freq = pm->powFreq();
 
   QFileInfo Info(Doc->DocName);
@@ -2591,14 +2591,14 @@ void QucsApp::slot2PortMatching()
     if(*(Value++) == Freq) break;
 
   // get S-parameters
-  double S11real = *(Diag->GraphDeques.at(0)->cPointsY + 2*z);
-  double S11imag = *(Diag->GraphDeques.at(0)->cPointsY + 2*z + 1);
-  double S12real = *(Diag->GraphDeques.at(1)->cPointsY + 2*z);
-  double S12imag = *(Diag->GraphDeques.at(1)->cPointsY + 2*z + 1);
-  double S21real = *(Diag->GraphDeques.at(2)->cPointsY + 2*z);
-  double S21imag = *(Diag->GraphDeques.at(2)->cPointsY + 2*z + 1);
-  double S22real = *(Diag->GraphDeques.at(3)->cPointsY + 2*z);
-  double S22imag = *(Diag->GraphDeques.at(3)->cPointsY + 2*z + 1);
+  double S11real = *(Diag->GraphDeques.at(0)->cPointsY() + 2*z);
+  double S11imag = *(Diag->GraphDeques.at(0)->cPointsY() + 2*z + 1);
+  double S12real = *(Diag->GraphDeques.at(1)->cPointsY() + 2*z);
+  double S12imag = *(Diag->GraphDeques.at(1)->cPointsY() + 2*z + 1);
+  double S21real = *(Diag->GraphDeques.at(2)->cPointsY() + 2*z);
+  double S21imag = *(Diag->GraphDeques.at(2)->cPointsY() + 2*z + 1);
+  double S22real = *(Diag->GraphDeques.at(3)->cPointsY() + 2*z);
+  double S22imag = *(Diag->GraphDeques.at(3)->cPointsY() + 2*z + 1);
   delete Diag;
 
   MatchDialog *Dia = new MatchDialog(this);

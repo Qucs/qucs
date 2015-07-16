@@ -93,6 +93,7 @@ public:
   virtual bool insideDiagram(float, float) const;
   bool insideDiagramP(Graph::iterator const& ) const;
   Marker* setMarker(int x, int y);
+  void moveMarkers(int x, int y);
 
   QString Name; // identity of diagram type (e.g. Polar), used for saving etc.
   QPen    GridPen;

@@ -182,7 +182,7 @@ int TabDiagram::calcDiagram()
 
   if(!g->isEmpty()) { // did we find a graph with data ?
     // ................................................
-    counting = g->axis(0)->count * g->countY;  // number of values
+    counting = g->axis(0)->count * g->countY();  // number of values
     NumAll = counting;
     
     invisibleCount = counting - y/tHeight;
@@ -212,7 +212,7 @@ int TabDiagram::calcDiagram()
 	      y += tHeight*startWriting;
 	      startWriting = 0;
 	      if(y < tHeight) break;  // no room for more rows ?
-	      Str = misc::StringNum(*px, 'g', g->Precision);
+	      Str = misc::StringNum(*px, 'g', g->precision());
 	      colWidth = checkColumnWidth(Str, metrics, colWidth, x, y);
 	      if(colWidth < 0)  goto funcEnd;
 	      
@@ -241,35 +241,35 @@ int TabDiagram::calcDiagram()
     y = y2-tHeight-5;
     colWidth = 0;
 
-    Str = g->Var;
+    Str = g->var();
     colWidth = checkColumnWidth(Str, metrics, colWidth, x, y2);
     if(colWidth < 0)  goto funcEnd;
     Texts.append(new Text(x, y2-2, Str));  // dependent variable
 
 
     startWriting = int(xAxis.limit_min + 0.5); // when to reach visible area
-    py = g->cPointsY - 2;
+    py = g->cPointsY() - 2;
     if(g->axis(0)) {
 
-      if (!g->cPointsY) {   // no data points
+      if (!g->cPointsY()) {   // no data points
 	Str = QObject::tr("invalid");
 	colWidth = checkColumnWidth(Str, metrics, colWidth, x, y);
 	if(colWidth < 0)  goto funcEnd;
 	Texts.append(new Text(x, y, Str));
       }
       else if(sameDependencies(g, firstGraphDeque)) {
-        int z=g->axis(0)->count * g->countY;
+        int z=g->axis(0)->count * g->countY();
         if(z > NumAll)  NumAll = z;
 
-        if(g->Var.right(2) != ".X")
+        if(g->var().right(2) != ".X") // FIXME: use type
           for(; z>0; z--) {
             py += 2;
             if(startWriting-- > 0) continue; // reached visible area ?
             if(y < tHeight) break;           // no room for more rows ?
-            switch(g->numMode) {
-              case 0: Str = misc::complexRect(*py, *(py+1), g->Precision); break;
-              case 1: Str = misc::complexDeg (*py, *(py+1), g->Precision); break;
-              case 2: Str = misc::complexRad (*py, *(py+1), g->Precision); break;
+            switch(g->numMode()) {
+              case 0: Str = misc::complexRect(*py, *(py+1), g->precision()); break;
+              case 1: Str = misc::complexDeg (*py, *(py+1), g->precision()); break;
+              case 2: Str = misc::complexRad (*py, *(py+1), g->precision()); break;
             }
 
             colWidth = checkColumnWidth(Str, metrics, colWidth, x, y);
@@ -280,7 +280,7 @@ int TabDiagram::calcDiagram()
           }
 
         else {  // digital data
-          char *pcy = (char*)g->cPointsY;
+          char *pcy = (char*)g->cPointsY();
           for(; z>0; z--) {
             if(startWriting-- > 0) {  // reached visible area ?
               pcy += strlen(pcy) + 1;

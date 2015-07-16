@@ -20,6 +20,7 @@
 
 #include <stdlib.h>
 #include <iostream>
+#include <assert.h>
 
 #include <QPainter>
 #include <QDebug>
@@ -34,20 +35,48 @@ GraphDeque::GraphDeque(Diagram const* d, const QString& _Line) :
   Type = isGraph;
 
   Var    = _Line;
-  countY = 0;    // no points in graph
-  Thick  = numMode = 0;
+  CountY = 0;    // no points in graph
+  Thick  = 0;
+  NumMode = 0;
   Color  = 0x0000ff;   // blue
   Precision  = 3;
   isSelected = false;
-  yAxisNo = 0;   // left y axis
+  YAxisNo = 0;   // left y axis
 
-  cPointsY = 0;
+  CPointsY = NULL;
 }
 
 GraphDeque::~GraphDeque()
 {
-  if(cPointsY != 0)
-    delete[] cPointsY;
+  if(CPointsY != 0)
+    delete[] CPointsY;
+}
+
+/*!
+ * add new marker
+ * BUG: leaks mutable pointer, is it used?
+ */
+Marker* GraphDeque::newMarker(
+    GraphDeque::const_iterator const& p,
+    GraphDeque const *pg_,
+    int cx_, int cy_)
+{
+  auto m = new Marker(p, pg_, cx_, cy_);
+  Markers.append(m);
+  return m;
+}
+
+Marker const* GraphDeque::newMarker(
+    GraphDeque::const_iterator const& p,
+    GraphDeque const *pg,
+    QString const& s)
+{
+  Marker *pm = new Marker(p, pg);
+  if(!pm->load(s)) {
+    delete pm;
+    pm = NULL;
+  }
+  return pm;
 }
 
 // ---------------------------------------------------------------------
@@ -68,6 +97,14 @@ void GraphDeque::createMarkerText() const
     }else{
     }
     pm->createText();
+  }
+}
+
+void GraphDeque::moveMarkers(int x, int y)
+{
+  for(auto pm : Markers) {
+    pm->x1 += x; // ouch. these are Element members
+    pm->y1 += y;
   }
 }
 
@@ -114,8 +151,8 @@ QString GraphDeque::save()
 {
   QString s = "\t<\""+Var+"\" "+Color.name()+
 	      " "+QString::number(Thick)+" "+QString::number(Precision)+
-	      " "+QString::number(numMode)+" "+QString::number(Style)+
-	      " "+QString::number(yAxisNo)+">";
+	      " "+QString::number(NumMode)+" "+QString::number(Style)+
+	      " "+QString::number(YAxisNo)+">";
 
   foreach(Marker *pm, Markers)
     s += "\n\t  "+pm->save();
@@ -149,7 +186,7 @@ bool GraphDeque::load(const QString& _s)
   if(!ok) return false;
 
   n  = s.section(' ',4,4);    // numMode
-  numMode = n.toInt(&ok);
+  NumMode = n.toInt(&ok);
   if(!ok) return false;
 
   n  = s.section(' ',5,5);    // Style
@@ -160,7 +197,7 @@ bool GraphDeque::load(const QString& _s)
 
   n  = s.section(' ',6,6);    // yAxisNo
   if(n.isEmpty()) return true;   // backward compatible
-  yAxisNo = n.toInt(&ok);
+  YAxisNo = n.toInt(&ok);
   if(!ok) return false;
 
   return true;
@@ -279,8 +316,8 @@ GraphDeque* GraphDeque::sameNewOne()
   pg->Style = Style;
 
   pg->Precision = Precision;
-  pg->numMode   = numMode;
-  pg->yAxisNo   = yAxisNo;
+  pg->NumMode   = NumMode;
+  pg->YAxisNo   = YAxisNo;
 
   qDebug() << "cloning" << Markers.size() << "Markers";
   foreach(Marker *pm, Markers) {

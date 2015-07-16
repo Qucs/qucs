@@ -1261,12 +1261,12 @@ void QucsApp::slotExportGraphAsCsv()
   // First output the names of independent and dependent variables.
   for(unsigned ii=0; (pD=g->axis(ii)); ++ii)
     Stream << '\"' << pD->Var << "\";";
-  Stream << "\"r " << g->Var << "\";\"i " << g->Var << "\"\n";
+  Stream << "\"r " << g->var() << "\";\"i " << g->var() << "\"\n";
 
 
   int n, m;
-  double *py = g->cPointsY;
-  int Count = g->countY * g->axis(0)->count;
+  double *py = g->cPointsY();
+  int Count = g->countY() * g->axis(0)->count;
   for(n = 0; n < Count; n++) {
     m = n;
 	 for(unsigned ii=0; (pD=g->axis(ii)); ++ii) {

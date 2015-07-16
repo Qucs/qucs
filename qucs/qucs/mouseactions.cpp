@@ -780,10 +780,10 @@ void MouseActions::rightPressMenu(Schematic *Doc, QMouseEvent *Event, float fX, 
   if(focusElement) if(focusElement->Type == isMarker) {
     ComponentMenu->insertSeparator();
     QString s = QObject::tr("power matching");
-    if( ((Marker*)focusElement)->pGraph->Var == "Sopt" )
+    if( ((Marker*)focusElement)->pGraph->var() == "Sopt" )
       s = QObject::tr("noise matching");
     ComponentMenu->insertItem(s, QucsMain, SLOT(slotPowerMatching()));
-    if( ((Marker*)focusElement)->pGraph->Var.left(2) == "S[" )
+    if( ((Marker*)focusElement)->pGraph->var().left(2) == "S[" )
       ComponentMenu->insertItem(QObject::tr("2-port matching"), QucsMain,
                                 SLOT(slot2PortMatching()));
   }
@@ -1596,12 +1596,7 @@ void MouseActions::MReleaseResizeDiagram(Schematic *Doc, QMouseEvent *Event)
 
   Diagram *pd = (Diagram*)focusElement;
   pd->updateGraphData();
-  for(auto pg : pd->GraphDeques) {
-    foreach(Marker *pm, pg->Markers) {
-      pm->x1 += MAx3;      // correct changes due to move of diagram corner
-      pm->y1 += MAy3;
-    }
-  }
+  pd->moveMarkers(MAx3, MAy3);
 
   int x1, x2, y1, y2;
   pd->Bounding(x1, x2, y1, y2);

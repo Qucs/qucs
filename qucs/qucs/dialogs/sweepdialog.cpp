@@ -217,9 +217,9 @@ GraphDeque* SweepDialog::setBiasPoints()
     // BUG: we do not need a graphDeque here. just the DC data.
     pg = new GraphDeque(NULL, pn->Name + ".V");
     if(pg->loadDatFile(DataSet) == 2) { // FIXME: what is 2?
-      pn->Name = misc::num2str(*(pg->cPointsY)) + "V";
+      pn->Name = misc::num2str(*(pg->cPointsY())) + "V";
       NodeList.append(pn);             // remember node ...
-      ValueList.append(pg->cPointsY);  // ... and all of its values
+      ValueList.append(pg->cPointsY());  // ... and all of its values
     }else{
       pn->Name = "0V";
     }
@@ -250,9 +250,9 @@ GraphDeque* SweepDialog::setBiasPoints()
       pn->x1 = 0x10;   // mark current
       pg = new GraphDeque(NULL, pc->Name + ".I");
       if(pg->loadDatFile(DataSet) == 2) {
-        pn->Name = misc::num2str(*(pg->cPointsY)) + "A";
+        pn->Name = misc::num2str(*(pg->cPointsY())) + "A";
         NodeList.append(pn);             // remember node ...
-        ValueList.append(pg->cPointsY);  // ... and all of its values
+        ValueList.append(pg->cPointsY());  // ... and all of its values
       }else{
         pn->Name = "0A";
       }
@@ -272,3 +272,5 @@ GraphDeque* SweepDialog::setBiasPoints()
   delete Diag;
   return one_of_them;
 }
+
+// vim:ts=8:sw=2:noet

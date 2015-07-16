@@ -143,7 +143,7 @@ QString SmithDiagram::extraMarkerText(Marker const* m) const
   Zi = m->powImag();
 
   MatchDialog::r2z(Zr, Zi, Z0);
-  QString Var = pGraph->Var;
+  QString Var = pGraph->var();
 
   if(Var.startsWith("S")) { // uuh, ooh hack.
     return "\n"+ Var.replace('S', 'Z')+": " +misc::complexRect(Zr, Zi, Precision);

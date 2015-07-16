@@ -410,8 +410,8 @@ void Rect3DDiagram::removeHiddenLines(char *zBuffer, tBound *Bounds)
   int i, j, z, dx, dy, Size=0;
   // pre-calculate buffer size to avoid reallocations in the first step
   for(auto g : GraphDeques) {
-    if(g->cPointsY)
-      Size += g->axis(0)->count * g->countY;
+    if(g->cPointsY())
+      Size += g->axis(0)->count * g->countY();
   }
 
   // "Mem" should be the last malloc to simplify realloc
@@ -424,21 +424,21 @@ void Rect3DDiagram::removeHiddenLines(char *zBuffer, tBound *Bounds)
   // ...............................................................
   for(auto g : GraphDeques) {
 
-    pz = g->cPointsY;
+    pz = g->cPointsY();
     if(!pz) continue;
     if(g->numAxes() < 1) continue;
 
     py = &Dummy;
-    if(g->countY > 1)  py = g->axis(1)->Points;
+    if(g->countY() > 1)  py = g->axis(1)->Points;
 
     p = pMem;  // save status for cross grid
     zp_tmp = zp;
     // ..........................................
     // calculate coordinates of all lines
     dx = g->axis(0)->count;
-    if(g->countY > 1)  dy = g->axis(1)->count;
+    if(g->countY() > 1)  dy = g->axis(1)->count;
     else  dy = 0;
-    for(i=g->countY-1; i>=0; i--) {   // y coordinates
+    for(i=g->countY()-1; i>=0; i--) {   // y coordinates
       px = g->axis(0)->Points;
     
       for(j=dx; j>0; j--) { // x coordinates
@@ -460,9 +460,9 @@ void Rect3DDiagram::removeHiddenLines(char *zBuffer, tBound *Bounds)
 
     // ..........................................
     // copy points for cross lines ("dx", "dy" still unchanged ! )
-    if(g->countY > 1) {
+    if(g->countY() > 1) {
       zp = zp_tmp;
-      for(j=g->countY/dy; j>0; j--) { // every plane
+      for(j=g->countY()/dy; j>0; j--) { // every plane
         for(i=dx; i>0; i--) {  // every branch
           for(z=dy; z>0; z--) {  // every point
             pMem->x  = p->x;
@@ -493,7 +493,7 @@ void Rect3DDiagram::removeHiddenLines(char *zBuffer, tBound *Bounds)
     // points are filled with "-FLTMAX".
     zp = zp_tmp;
     // "dx" and "dy" are still unchanged !
-    for(i=g->countY-1; i>=0; i--) {   // all branches
+    for(i=g->countY()-1; i>=0; i--) {   // all branches
       if(dy > 0) if(i % dy) {
         for(j=dx-1; j>0; j--) {   // x coordinates
           zp->z += (zp+1)->z + (zp+dx)->z + (zp+dx+1)->z;
@@ -550,13 +550,13 @@ void Rect3DDiagram::removeHiddenLines(char *zBuffer, tBound *Bounds)
 
   zp = zMem;
   for(auto g : GraphDeques) {
-    if(!g->cPointsY) continue;
+    if(!g->cPointsY()) continue;
     dx = g->axis(0)->count;
-    if(g->countY > 1)  dy = g->axis(1)->count;
+    if(g->countY() > 1)  dy = g->axis(1)->count;
     else  dy = 1;
 
     // look for hidden lines ...
-    for(int No = g->countY/dy * (dx-1)*(dy-1); No>0; No--) {
+    for(int No = g->countY()/dy * (dx-1)*(dy-1); No>0; No--) {
 
       // reset the polygon bounding buffer
       for(i=x2; i>=0; i--) {
@@ -805,10 +805,11 @@ void Rect3DDiagram::createAxis(Axis *Axis, bool Right,
     // write all labels ----------------------------------------
     for(auto pg : GraphDeques) {
       if(Axis != &zAxis) {
-        if(!pg->cPointsY)  continue;
+        if(!pg->cPointsY())  continue;
         if(valid < 0) {
-          delete[] pg->cPointsY;
-          pg->cPointsY = 0;
+	 //      what does this do? pg is not mutable!
+    //      delete[] pg->cPointsY();
+    //      pg->cPointsY() = 0;
           continue;
         }
         pD = pg->axis(Index);
@@ -816,15 +817,15 @@ void Rect3DDiagram::createAxis(Axis *Axis, bool Right,
         s = pD->Var;
       }
       else {
-        s = pg->Var;
-        if(!pg->cPointsY)  s += INVALID_STR;
+        s = pg->var();
+        if(!pg->cPointsY())  s += INVALID_STR;
       }
       x += int(double(metrics.lineSpacing())*sin_phi);
       y -= int(double(metrics.lineSpacing())*cos_phi);
       w = metrics.width(s);
       Texts.append(new Text(x+int(double((z-w)>>1)*cos_phi),
                             y+int(double((z-w)>>1)*sin_phi),
-                            s, pg->Color, 12.0, cos_phi, sin_phi));
+                            s, pg->color(), 12.0, cos_phi, sin_phi));
     }
   }
   else {
@@ -997,10 +998,13 @@ Frame:   // jump here if error occurred (e.g. impossible log boundings)
 void Rect3DDiagram::calcData(GraphDeque *g)
 {
   if(!pMem)  return;
-  if(!g->cPointsY) return;
+  if(!g->cPointsY()) return;
 
-  int Size = ((2*(g->axis(0)->count) + 1) * g->countY) + 10;
+  int Size = ((2*(g->axis(0)->count) + 1) * g->countY()) + 10;
   Size *= 2;  // memory for cross grid lines
+
+  double *py;
+  if(g->countY() > 1)  py = g->axis(1)->Points;
 
   g->resizeScrPoints(Size);
   auto p = g->_begin();
@@ -1011,7 +1015,7 @@ void Rect3DDiagram::calcData(GraphDeque *g)
   p->setStrokeEnd();
   ++p;
   auto graphbegin = p;
-  switch(g->Style) {
+  switch(g->style()) {
     case GRAPHSTYLE_SOLID:
     case GRAPHSTYLE_DASH:
     case GRAPHSTYLE_DOT:
