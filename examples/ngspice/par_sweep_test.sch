@@ -1,6 +1,6 @@
 <Qucs Schematic 0.0.19>
 <Properties>
-  <View=-51,-190,1185,1026,1,51,0>
+  <View=-51,-120,1185,1026,1,51,180>
   <Grid=10,10,1>
   <DataSet=par_sweep_test.dat>
   <DataDisplay=par_sweep_test.dpl>
@@ -34,16 +34,16 @@
   <360 120 360 160 "" 0 0 0 "">
 </Wires>
 <Diagrams>
-  <Rect 460 640 402 190 3 #c0c0c0 1 00 1 1e+06 2e+06 1e+07 1 -0.0588236 0.2 0.656252 1 -1 0.5 1 315 0 225 "" "" "">
-	<"par_sweep_test_ngspice:ac.v(vr)" #0000ff 0 3 0 0 0>
+  <Rect 460 640 402 190 3 #c0c0c0 1 00 1 -1 0.2 1 1 -1 0.5 1 1 -1 0.5 1 315 0 225 "" "" "">
+	<"ngspice/ac.v(vr)" #0000ff 0 3 0 0 0>
   </Rect>
-  <Rect 467 372 377 272 3 #c0c0c0 1 00 1 1e+06 2e+06 1e+07 1 -0.0588236 0.2 0.656252 1 -1 0.5 1 315 0 225 "" "" "">
-	<"par_sweep_test_xyce:ac.V(VR)" #0000ff 0 3 0 0 0>
+  <Rect 467 372 377 272 3 #c0c0c0 1 00 1 -1 0.2 1 1 -1 0.5 1 1 -1 0.5 1 315 0 225 "" "" "">
+	<"xyce/ac.V(VR)" #0000ff 0 3 0 0 0>
   </Rect>
-  <Rect 90 948 370 260 3 #c0c0c0 1 00 1 0 2e-07 2e-06 1 -0.6 0.2 0.6 1 -1 0.5 1 315 0 225 "" "" "">
-	<"par_sweep_test_ngspice:tran.v(vr)" #0000ff 0 3 0 0 0>
+  <Rect 90 948 370 260 3 #c0c0c0 1 00 1 -1 0.2 1 1 -1 0.5 1 1 -1 0.5 1 315 0 225 "" "" "">
+	<"ngspice/tran.v(vr)" #0000ff 0 3 0 0 0>
   </Rect>
 </Diagrams>
 <Paintings>
-  <Text 180 -80 12 #000000 0 "This examples shows how to use \nparameter sweep with passive circuit and AC and TRAN\nsimulations. For Ngspice both AC and TRAN are \nsupporrted. For Xyce there is no warranty of proper \nTRAN+ParSweep operation.">
+  <Text 180 -100 12 #000000 0 "This examples shows how to use \nparameter sweep with passive circuit and AC and TRAN\nsimulations. For Ngspice both AC and TRAN are \nsupporrted. For Xyce there is no warranty of proper \nTRAN+ParSweep operation.\n\nNOTE: This Example could be run only with Ngspice/Xyce">
 </Paintings>

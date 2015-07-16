@@ -1,6 +1,6 @@
 <Qucs Schematic 0.0.19>
 <Properties>
-  <View=95,26,1067,923,1,0,120>
+  <View=50,10,1067,944,1,88,364>
   <Grid=10,10,1>
   <DataSet=Distortion.dat>
   <DataDisplay=Distortion.dpl>
@@ -60,14 +60,14 @@
 </Wires>
 <Diagrams>
   <Rect 697 825 323 243 3 #c0c0c0 1 00 1 -1 0.5 1 1 -1 0.5 1 1 -1 0.5 1 315 0 225 "" "" "">
-	<"Distortion_ngspice:tran.v(in)" #0000ff 0 3 0 0 0>
-	<"Distortion_ngspice:tran.v(out)" #ff0000 0 3 0 0 0>
+	<"ngspice/tran.v(in)" #0000ff 0 3 0 0 0>
+	<"ngspice/tran.v(out)" #ff0000 0 3 0 0 0>
   </Rect>
   <Rect 230 822 372 242 3 #c0c0c0 1 00 1 -1 0.2 1 1 -1 0.5 1 1 -1 0.5 1 315 0 225 "" "" "">
-	<"Distortion_ngspice:ac.h2" #0000ff 0 3 0 0 0>
-	<"Distortion_ngspice:ac.h3" #ff0000 0 3 0 0 0>
+	<"ngspice/ac.h2" #0000ff 0 3 0 0 0>
+	<"ngspice/ac.h3" #ff0000 0 3 0 0 0>
   </Rect>
 </Diagrams>
 <Paintings>
-  <Text 120 80 12 #000000 0 "DISTORTION analysis example.\n 2nd and 3rd harmonic \ncomponents are plotted.">
+  <Text 80 30 12 #000000 0 "DISTORTION analysis example.\n 2nd and 3rd harmonic \ncomponents are plotted.\n\nNOTE: This Example could be run \nonly with Ngspice">
 </Paintings>

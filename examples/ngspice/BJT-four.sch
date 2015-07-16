@@ -1,6 +1,6 @@
 <Qucs Schematic 0.0.19>
 <Properties>
-  <View=-127,26,1020,2008,1,0,180>
+  <View=-127,-34,1020,1433,1,0,0>
   <Grid=10,10,1>
   <DataSet=BJT-four.dat>
   <DataDisplay=BJT-four.dpl>
@@ -60,46 +60,31 @@
   <820 80 820 110 "" 0 0 0 "">
 </Wires>
 <Diagrams>
-  <Rect 10 750 240 160 3 #c0c0c0 1 00 1 0 0.0002 0.001 1 -10 10 13.6166 1 -1 1 1 315 0 225 "" "" "">
-	<"BJT-four_ngspice:tran.v(out)" #0000ff 0 3 0 0 0>
-	<"BJT-four_ngspice:tran.v(in)" #ff0000 0 3 0 0 0>
-	<"BJT-four_ngspice:tran.v(out2)" #ff00ff 0 3 0 0 0>
+  <Rect 10 750 240 160 3 #c0c0c0 1 00 1 -1 0.5 1 1 -1 1 1 1 -1 1 1 315 0 225 "" "" "">
+	<"ngspice/tran.v(out)" #0000ff 0 3 0 0 0>
+	<"ngspice/tran.v(out2)" #ff0000 0 3 0 0 0>
+	<"ngspice/tran.v(in)" #ff00ff 0 3 0 0 0>
   </Rect>
-  <Rect 690 740 240 160 3 #c0c0c0 1 00 1 0 20000 80000 1 -200 200 200 1 -1 1 1 315 0 225 "" "" "">
-	<"BJT-four_ngspice:phase(v(out))" #ff0000 0 3 0 6 0>
+  <Rect 690 740 240 160 3 #c0c0c0 1 00 1 -1 0.5 1 1 -1 1 1 1 -1 1 1 315 0 225 "" "" "">
+	<"ngspice/phase(v(out))" #0000ff 0 3 0 6 0>
   </Rect>
-  <Rect 350 750 240 160 3 #c0c0c0 1 00 1 0 20000 80000 1 -1.83952 5 8.41737 1 -1 1 1 315 0 225 "" "" "">
-	<"BJT-four_ngspice:magnitude(v(out))" #0000ff 0 3 0 6 0>
-	<"BJT-four_ngspice:magnitude(v(out2))" #ff0000 0 3 0 6 0>
+  <Rect 350 750 240 160 3 #c0c0c0 1 00 1 -1 0.5 1 1 -1 1 1 1 -1 1 1 315 0 225 "" "" "">
+	<"ngspice/magnitude(v(out))" #0000ff 0 3 0 6 0>
+	<"ngspice/magnitude(v(out2))" #ff0000 0 3 0 6 0>
   </Rect>
-  <Rect 10 1030 240 160 3 #c0c0c0 1 00 1 0 10000 36000 1 -1.84688 5 8.41288 1 -1 1 1 315 0 225 "" "" "">
-	<"BJT-four_xyce:magnitude(V(OUT2))" #0000ff 0 3 0 6 0>
-	<"BJT-four_xyce:magnitude(V(OUT))" #ff0000 0 3 0 6 0>
+  <Rect 10 1030 240 160 3 #c0c0c0 1 00 1 -1 0.5 1 1 -1 1 1 1 -1 1 1 315 0 225 "" "" "">
+	<"xyce/magnitude(V(OUT))" #0000ff 0 3 0 6 0>
+	<"xyce/magnitude(V(OUT2))" #ff0000 0 3 0 6 0>
   </Rect>
-  <Rect 380 1030 240 160 3 #c0c0c0 1 00 1 0 10000 36000 1 -200 200 200 1 -1 1 1 315 0 225 "" "" "">
-	<"BJT-four_xyce:phase(V(OUT))" #0000ff 0 3 0 6 0>
-	<"BJT-four_xyce:phase(V(OUT2))" #ff0000 0 3 0 6 0>
+  <Rect 380 1030 240 160 3 #c0c0c0 1 00 1 -1 0.5 1 1 -1 1 1 1 -1 1 1 315 0 225 "" "" "">
+	<"xyce/phase(V(OUT))" #0000ff 0 3 0 6 0>
+	<"xyce/phase(V(OUT2))" #ff0000 0 3 0 6 0>
   </Rect>
   <Tab 137 1413 611 281 3 #c0c0c0 1 00 1 0 1 1 1 0 1 1 1 0 1 20 315 0 225 "" "" "">
-	<"BJT-four_ngspice:magnitude(v(out))" #0000ff 0 3 0 0 0>
-	<"BJT-four_ngspice:phase(v(out))" #0000ff 0 3 0 0 0>
+	<"ngspice/magnitude(v(out))" #0000ff 0 3 0 0 0>
+	<"ngspice/phase(v(out))" #0000ff 0 3 0 0 0>
   </Tab>
-  <Rect -40 1630 240 160 3 #c0c0c0 1 00 1 0 20000 80000 1 -31.3726 200 400 1 -1 1 1 315 0 225 "" "" "">
-	<"BJT-four_ngspice:norm(phase(v(out2)))" #0000ff 0 3 0 6 0>
-  </Rect>
-  <Rect 330 1630 240 160 3 #c0c0c0 1 00 1 0 20000 80000 1 -0.1 0.5 1.1 1 -1 1 1 315 0 225 "" "" "">
-	<"BJT-four_ngspice:norm(mag(v(out2)))" #0000ff 0 3 0 6 0>
-	<"BJT-four_ngspice:norm(mag(v(out)))" #ff0000 0 3 0 6 0>
-  </Rect>
-  <Rect 340 1910 240 160 3 #c0c0c0 1 00 1 0 10000 36000 1 -30.802 200 338.822 1 -1 1 1 315 0 225 "" "" "">
-	<"BJT-four_xyce:norm(phase(V(OUT)))" #0000ff 0 3 0 6 0>
-	<"BJT-four_xyce:norm(phase(V(OUT2)))" #ff0000 0 3 0 6 0>
-  </Rect>
-  <Rect -40 1910 240 160 3 #c0c0c0 1 00 1 0 10000 36000 1 -0.1 0.5 1.1 1 -1 1 1 315 0 225 "" "" "">
-	<"BJT-four_xyce:norm(mag(V(OUT)))" #0000ff 0 3 0 6 0>
-	<"BJT-four_xyce:norm(mag(V(OUT2)))" #ff0000 0 3 0 6 0>
-  </Rect>
 </Diagrams>
 <Paintings>
-  <Text -40 90 12 #000000 0 "Fourier analysis example.\nCould be run with Ngspice or Xyce">
+  <Text -40 90 12 #000000 0 "Fourier analysis example.\nCould be run only with Ngspice or Xyce">
 </Paintings>

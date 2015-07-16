@@ -1,6 +1,6 @@
 <Qucs Schematic 0.0.19>
 <Properties>
-  <View=66,-5,1348,1165,1,0,600>
+  <View=66,-5,1348,1031,1,0,120>
   <Grid=10,10,1>
   <DataSet=audio_amp.dat>
   <DataDisplay=audio_amp.dpl>
@@ -223,5 +223,5 @@
 <Diagrams>
 </Diagrams>
 <Paintings>
-  <Text 140 860 12 #000000 0 "It is an example of Hi-Fi audio amplifier. It uses USSR\nsemiconductor devices. It illustrates how realistic \ncircuits could be simulated with Ngspice and Xyce. \nYou can perform AC and TRAN simulations and plot \noutout voltage in time- and frequency domain.">
+  <Text 140 860 12 #000000 0 "It is an example of Hi-Fi audio amplifier. It uses USSR\nsemiconductor devices. It illustrates how realistic \ncircuits could be simulated with Ngspice and Xyce. \nYou can perform AC and TRAN simulations and plot \noutout voltage in time- and frequency domain.\nNOTE: Example could be run only with Ngspice/Xyce">
 </Paintings>

@@ -1,6 +1,6 @@
 <Qucs Schematic 0.0.19>
 <Properties>
-  <View=-126,-300,932,869,1,46,0>
+  <View=-126,-300,932,947,1,46,0>
   <Grid=10,10,1>
   <DataSet=BJT-noise.dat>
   <DataDisplay=BJT-noise.dpl>
@@ -57,14 +57,14 @@
 </Wires>
 <Diagrams>
   <Tab 330 566 561 190 3 #c0c0c0 1 00 1 0 1 1 1 0 1 1 1 0 1 21 315 0 225 "" "" "">
-	<"BJT-noise_ngspice:inoise_total" #0000ff 0 3 1 0 0>
-	<"BJT-noise_ngspice:onoise_total" #0000ff 0 3 1 0 0>
+	<"ngspice/inoise_total" #0000ff 0 3 0 0 0>
+	<"ngspice/onoise_total" #0000ff 0 3 0 0 0>
   </Tab>
   <Rect 60 849 442 219 3 #c0c0c0 1 00 1 1000 1000 10000 1 -6.37339e-10 2e-09 8.69074e-09 1 -1 0.5 1 315 0 225 "" "" "">
-	<"BJT-noise_ngspice:onoise_total" #0000ff 0 3 0 0 0>
-	<"BJT-noise_ngspice:inoise_total" #ff0000 0 3 0 0 1>
+	<"ngspice/inoise_total" #0000ff 0 3 0 0 0>
+	<"ngspice/onoise_total" #ff0000 0 3 0 0 1>
   </Rect>
 </Diagrams>
 <Paintings>
-  <Text 50 -40 12 #000000 0 "Here is a noise analysis exmple. This is BJT \none-stage amplifier. Simulate this circuit and plot\nonoise _ total and inoise _ total variables to obtain\ndependencies of total noise vs. collector resistance.">
+  <Text 50 -40 12 #000000 0 "Here is a noise analysis exmple. This is BJT \none-stage amplifier. Simulate this circuit and plot\nonoise _ total and inoise _ total variables to obtain\ndependencies of total noise vs. collector resistance.\nNOTE: This Example could be run only with Ngspice">
 </Paintings>
