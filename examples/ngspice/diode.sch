@@ -31,11 +31,10 @@
   <250 140 250 180 "" 0 0 0 "">
 </Wires>
 <Diagrams>
-  <Rect 490 330 351 240 3 #c0c0c0 1 00 1 -10 2 2 1 -1.23258 5 15 1 -1 0.5 1 315 0 225 "" "" "">
-	<"diode_ngspice:i(pr1)" #0000ff 0 3 0 0 0>
-	  <Mkr 0.65 5 -209 3 0 0>
+  <Rect 490 330 351 240 3 #c0c0c0 1 00 1 -1 0.5 1 1 -1 0.5 1 1 -1 0.5 1 315 0 225 "" "" "">
+	<"ngspice/i(pr1)" #0000ff 0 3 0 0 0>
   </Rect>
 </Diagrams>
 <Paintings>
-  <Text 120 370 12 #000000 0 "This is DC-sweep usage example. Refer to Chapter 2 of\nspice4qucs project documentation. Run simulation\nand obtain IV-chart of diode.">
+  <Text 120 370 12 #000000 0 "This is DC-sweep usage example. Refer to Chapter 2 of\nspice4qucs project documentation. Run simulation\nand obtain IV-chart of diode.\n\nNOTE: This Example could be run only with Ngspice/Xyce">
 </Paintings>

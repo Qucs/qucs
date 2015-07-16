@@ -37,9 +37,9 @@
 </Wires>
 <Diagrams>
   <Rect 610 442 386 242 3 #c0c0c0 1 00 1 -1 0.2 1 1 -1 0.5 1 1 -1 0.5 1 315 0 225 "" "" "">
-	<"BJT_dc_ngspice:i(pr1)" #0000ff 0 3 0 0 0>
+	<"ngspice/i(pr1)" #0000ff 0 3 0 0 0>
   </Rect>
 </Diagrams>
 <Paintings>
-  <Text 530 500 12 #000000 0 "This is an example of DC sweep usage with \nNgspice. It shows how to sweep model \nparameters with Ngspice. Simulate it with Ngspice\n and obtain IV-chart of BJT.">
+  <Text 530 500 12 #000000 0 "This is an example of DC sweep usage with \nNgspice. It shows how to sweep model \nparameters with Ngspice. Simulate it with Ngspice\n and obtain IV-chart of BJT.\n\nNOTE: This Example could be run only with Ngspice">
 </Paintings>

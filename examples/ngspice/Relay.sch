@@ -1,6 +1,6 @@
 <Qucs Schematic 0.0.19>
 <Properties>
-  <View=0,0,957,690,1,0,0>
+  <View=0,-120,957,621,1,0,0>
   <Grid=10,10,1>
   <DataSet=Relay.dat>
   <DataDisplay=Relay.dpl>
@@ -52,13 +52,13 @@
 </Wires>
 <Diagrams>
   <Rect 470 531 429 202 3 #c0c0c0 1 00 1 -1 0.2 1 1 -1 0.5 1 1 -1 0.5 1 315 0 225 "" "" "">
-	<"Relay_xyce:tran.V(PR1)" #0000ff 0 3 0 0 0>
+	<"xyce/tran.V(PR1)" #0000ff 0 3 0 0 0>
   </Rect>
   <Rect 480 253 417 223 3 #c0c0c0 1 00 1 -1 0.2 1 1 -1 0.5 1 1 -1 0.5 1 315 0 225 "" "" "">
-	<"Relay_ngspice:tran.v(drain)" #0000ff 0 3 0 0 0>
-	<"Relay_ngspice:tran.v(pr1)" #ff0000 0 3 0 0 0>
+	<"ngspice/tran.v(drain)" #0000ff 0 3 0 0 0>
+	<"ngspice/tran.v(pr1)" #ff0000 0 3 0 0 0>
   </Rect>
 </Diagrams>
 <Paintings>
-  <Text 80 560 12 #000000 0 "This example illustrates how to use ideal switch\nwith LCR circuit. ">
+  <Text 80 560 12 #000000 0 "This example illustrates how to use ideal switch\nwith LCR circuit. \n\nNOTE: This Example could be run with Qucs and\n Ngspice/Xyce">
 </Paintings>

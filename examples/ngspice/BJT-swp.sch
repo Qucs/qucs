@@ -1,6 +1,6 @@
 <Qucs Schematic 0.0.19>
 <Properties>
-  <View=-41,86,1091,1205,1,41,0>
+  <View=-41,-94,1091,1196,1,0,0>
   <Grid=10,10,1>
   <DataSet=BJT-swp.dat>
   <DataDisplay=BJT-swp.dpl>
@@ -61,17 +61,17 @@
   <120 270 170 270 "in" 120 220 6 "">
 </Wires>
 <Diagrams>
-  <Rect 512 870 382 210 3 #c0c0c0 1 10 1 1 1 1e+07 1 -1.60478 5 17.6533 1 -1 0.5 1 315 0 225 "" "" "">
-	<"BJT-swp_ngspice:ac.k" #0000ff 0 3 0 0 0>
+  <Rect 512 870 382 210 3 #c0c0c0 1 10 1 0 1 0 1 -1 0.5 1 1 -1 0.5 1 315 0 225 "" "" "">
+	<"ngspice/ac.k" #0000ff 0 3 0 0 0>
   </Rect>
-  <Rect 80 874 352 217 3 #c0c0c0 1 00 1 0 0.0001 0.0004 1 -4 2 4 1 -1 0.5 1 315 0 225 "" "" "">
-	<"BJT-swp_ngspice:tran.v(out)" #0000ff 0 3 0 0 0>
-	<"BJT-swp_ngspice:tran.v(in)" #ff0000 0 3 0 0 0>
+  <Rect 80 874 352 217 3 #c0c0c0 1 00 1 -1 0.5 1 1 -1 0.5 1 1 -1 0.5 1 315 0 225 "" "" "">
+	<"ngspice/tran.v(in)" #0000ff 0 3 0 0 0>
+	<"ngspice/tran.v(out)" #ff0000 0 3 0 0 0>
   </Rect>
-  <Rect 110 1120 444 168 3 #c0c0c0 1 00 1 0 5e-05 0.0004 1 -2.19939e-05 0.0001 0.000241933 1 -1 1 1 315 0 225 "" "" "">
-	<"BJT-swp_ngspice:tran.pwr" #0000ff 0 3 0 0 0>
+  <Rect 110 1120 444 168 3 #c0c0c0 1 00 1 -1 0.2 1 1 -1 1 1 1 -1 1 1 315 0 225 "" "" "">
+	<"ngspice/tran.pwr" #0000ff 0 3 0 0 0>
   </Rect>
 </Diagrams>
 <Paintings>
-  <Text 670 310 12 #000000 0 "This schematic shows how to utilize Parameter sweep\nwith Ngpice simulation. ">
+  <Text 670 310 12 #000000 0 "This schematic shows how to utilize Parameter sweep\nwith Ngpice simulation.\nNOTE: This Example could be run only with Ngspice ">
 </Paintings>

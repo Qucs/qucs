@@ -1,9 +1,9 @@
-<Qucs Schematic 0.0.19> 
+<Qucs Schematic 0.0.19>
 <Properties>
-  <View=0,11,1700,932,1,0,0>
+  <View=0,69,1700,794,1,0,0>
   <Grid=10,10,1>
-  <DataSet=Test_tran_pos_coup.dat>
-  <DataDisplay=Test_tran_pos_coup.dpl>
+  <DataSet=Test_tran_coup.dat>
+  <DataDisplay=Test_tran_coup.dpl>
   <OpenDisplay=1>
   <Script=Test_tran_pos_coup.m>
   <RunScript=0>
@@ -53,13 +53,13 @@
   <690 340 690 340 "N6" 670 310 0 "">
 </Wires>
 <Diagrams>
-  <Rect 690 690 240 160 3 #c0c0c0 1 00 1 0 0.02 0.1 1 -1.2 1 1.2 1 -1 1 1 315 0 225 "" "" "">
-	<"Test_tran_coup_ngspice:tran.v(nsig)" #ff0000 2 3 0 0 0>
-	<"Test_tran_coup_ngspice:tran.v(n6)" #0000ff 2 3 0 0 0>
+  <Rect 690 690 240 160 3 #c0c0c0 1 00 1 -1 0.5 1 1 -1 1 1 1 -1 1 1 315 0 225 "" "" "">
+	<"ngspice/tran.v(n6)" #0000ff 0 3 0 0 0>
+	<"ngspice/tran.v(nsig)" #ff0000 0 3 0 0 0>
   </Rect>
-  <Rect 370 690 240 160 3 #c0c0c0 1 00 1 0 0.02 0.1 1 -1.2 1 1.2 1 -1 1 1 315 0 225 "" "" "">
-	<"Test_tran_coup_ngspice:tran.v(n4)" #0000ff 2 3 0 0 0>
-	<"Test_tran_coup_ngspice:tran.v(nsig)" #ff0000 2 3 0 0 0>
+  <Rect 370 690 240 160 3 #c0c0c0 1 00 1 -1 0.5 1 1 -1 1 1 1 -1 1 1 315 0 225 "" "" "">
+	<"ngspice/tran.v(n4)" #0000ff 0 3 0 0 0>
+	<"ngspice/tran.v(nsig)" #ff0000 0 3 0 0 0>
   </Rect>
 </Diagrams>
 <Paintings>

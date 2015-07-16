@@ -186,6 +186,8 @@ moc_*.cpp
 *.sch
 *.sch~
 *.dat
+*.dat.ngspice
+*.dat.xyce
 *.dpl
 qrc_*.cpp
 moc_*.cxx

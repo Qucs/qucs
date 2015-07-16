@@ -1,6 +1,6 @@
 <Qucs Schematic 0.0.19>
 <Properties>
-  <View=0,-137,1087,721,1,0,240>
+  <View=0,-137,1087,721,1,0,120>
   <Grid=10,10,1>
   <DataSet=irfz44_switch.dat>
   <DataDisplay=irfz44_switch.dpl>
@@ -45,15 +45,15 @@
   <200 200 200 200 "drain" 270 160 0 "">
 </Wires>
 <Diagrams>
-  <Rect 525 184 500 257 3 #c0c0c0 1 00 1 -1 0.2 1 1 -1 1 1 1 -1 1 1 315 0 225 "" "" "">
-	<"irfz44_switch_ngspice:tran.v(drain)" #0000ff 0 3 0 0 0>
-	<"irfz44_switch_ngspice:tran.v(gate)" #ff0000 0 3 0 0 0>
+  <Rect 525 184 500 257 3 #c0c0c0 1 00 1 -1 0.2 1 1 -1 0.5 1 1 -1 0.5 1 315 0 225 "" "" "">
+	<"ngspice/tran.v(drain)" #0000ff 0 3 0 0 0>
+	<"ngspice/tran.v(gate)" #ff0000 0 3 0 0 0>
   </Rect>
-  <Rect 532 623 487 348 3 #c0c0c0 1 00 1 -1 0.2 1 1 -1 1 1 1 -1 1 1 315 0 225 "" "" "">
-	<"irfz44_switch_xyce:tran.V(DRAIN)" #0000ff 0 3 0 0 0>
-	<"irfz44_switch_xyce:tran.V(GATE)" #ff0000 0 3 0 0 0>
+  <Rect 532 623 487 348 3 #c0c0c0 1 00 1 -1 0.2 1 1 -1 0.5 1 1 -1 0.5 1 315 0 225 "" "" "">
+	<"xyce/tran.V(DRAIN)" #0000ff 0 3 0 0 0>
+	<"xyce/tran.V(GATE)" #ff0000 0 3 0 0 0>
   </Rect>
 </Diagrams>
 <Paintings>
-  <Text 40 470 12 #000000 0 "This example shows how realistic switching circuits \ncould be simulated with Ngspice and Xyce. This \napproach can be used for simulation of power electronics \nin time domain. Also this illustrates usage of library \ncomponents with Ngspice and Xyce.">
+  <Text 40 470 12 #000000 0 "This example shows how realistic switching circuits \ncould be simulated with Ngspice and Xyce. This \napproach can be used for simulation of power electronics \nin time domain. Also this illustrates usage of library \ncomponents with Ngspice and Xyce.\n\nNOTE: This Example could be run only with Ngspice/Xyce">
 </Paintings>

@@ -1,6 +1,6 @@
 <Qucs Schematic 0.0.19>
 <Properties>
-  <View=-78,26,1020,1184,1,78,240>
+  <View=-78,26,1020,1234,1,169,420>
   <Grid=10,10,1>
   <DataSet=BJT.dat>
   <DataDisplay=BJT.dpl>
@@ -34,8 +34,8 @@
   <.DC DC1 1 660 380 0 61 0 0 "26.85" 0 "0.001" 0 "1 pA" 0 "1 uV" 0 "no" 0 "150" 0 "no" 0 "none" 0 "CroutLU" 0>
   <R R4 1 600 300 15 -26 0 1 "Rload" 1 "26.85" 0 "0.0" 0 "0.0" 0 "26.85" 0 "european" 0>
   <Eqn Eqn1 1 150 390 -31 17 0 0 "Rload=47k" 1 "K=out.v/in.v" 1 "Pwr=(out.Vt*out.Vt)/Rload" 1 "yes" 0>
-  <.AC AC1 1 490 380 0 61 0 0 "lin" 1 "100 Hz" 1 "10 MHz" 1 "2000" 1 "no" 0>
   <IProbe Pr1 1 680 80 -26 16 1 2>
+  <.AC AC1 1 490 380 0 61 0 0 "log" 1 "100 Hz" 1 "10 MHz" 1 "101" 1 "no" 0>
 </Components>
 <Wires>
   <280 80 280 120 "" 0 0 0 "">
@@ -59,14 +59,14 @@
   <820 80 820 110 "" 0 0 0 "">
 </Wires>
 <Diagrams>
-  <Rect 506 835 387 269 3 #c0c0c0 1 10 1 100 1 1e+07 1 0 2 9.08769 1 -1 0.5 1 315 0 225 "" "" "">
-	<"BJT_ngspice:ac.k" #0000ff 0 3 0 0 0>
+  <Rect 510 1136 368 271 3 #c0c0c0 1 00 1 -1 0.2 1 1 -1 0.5 1 1 -1 0.5 1 315 0 225 "" "" "">
+	<"ngspice/tran.i(pr1)" #0000ff 0 3 0 0 0>
+	<"ngspice/tran.pwr" #ff0000 0 3 0 0 1>
   </Rect>
-  <Rect 510 1136 368 271 3 #c0c0c0 1 00 1 0 0.0002 0.001 1 -6.179e-06 2e-05 6.7969e-05 1 -0.0016 0.0002 -0.000727486 315 0 225 "" "" "">
-	<"BJT_ngspice:tran.pwr" #0000ff 0 3 0 0 0>
-	<"BJT_ngspice:tran.i(pr1)" #ff0000 0 3 0 0 1>
+  <Rect 506 835 387 269 3 #c0c0c0 1 10 1 0 1 0 1 -1 0.5 1 1 -1 0.5 1 315 0 225 "" "" "">
+	<"ngspice/ac.k" #0000ff 0 3 0 0 0>
   </Rect>
 </Diagrams>
 <Paintings>
-  <Text 110 580 12 #000000 0 "This example shows the following \nfeatures of Ngspice support:\n1. Semiconductor devices usage\n2. AC and TRAN analysis\n3. Current probes usage\n4. Parametrization usage. Rload is parameter.\n5. Postprocessing usage in frequency domain.\n Volatge gain K calculation.\n6. Postrprocessing usage in time domain.">
+  <Text 110 580 12 #000000 0 "This example shows the following \nfeatures of Ngspice support:\n1. Semiconductor devices usage\n2. AC and TRAN analysis\n3. Current probes usage\n4. Parametrization usage. Rload is parameter.\n5. Postprocessing usage in frequency domain.\n Volatge gain K calculation.\n6. Postrprocessing usage in time domain.\n\nNOTE: You can run this example with Qucsator and\n Ngspice  and compare results.">
 </Paintings>

@@ -1,6 +1,6 @@
 <Qucs Schematic 0.0.19>
 <Properties>
-  <View=0,-191,922,548,1,0,0>
+  <View=0,-251,922,588,1,0,0>
   <Grid=10,10,1>
   <DataSet=EDD-Q-test.dat>
   <DataDisplay=EDD-Q-test.dpl>
@@ -33,15 +33,15 @@
   <100 130 150 130 "" 0 0 0 "">
 </Wires>
 <Diagrams>
-  <Rect 476 138 369 225 3 #c0c0c0 1 10 1 1 1 10000 1 -0.0749954 0.5 1.09772 1 -1 1 1 315 0 225 "" "" "">
+  <Rect 476 138 369 225 3 #c0c0c0 1 10 1 1 1 10000 1 -0.0749954 0.5 1.09772 1 -1 0.5 1 315 0 225 "" "" "">
 	<"out.v" #0000ff 0 3 0 0 0>
-	<"EDD-Q-test_xyce:ac.V(OUT)" #ff0000 0 3 0 0 0>
+	<"xyce/ac.V(OUT)" #ff0000 0 3 0 0 0>
   </Rect>
-  <Rect 488 490 350 211 3 #c0c0c0 1 10 1 1 1 10000 1 -0.0824942 0.5 1.0984 1 -1 1 1 315 0 225 "" "" "">
-	<"EDD-Q-test_ngspice:ac.v(out)" #0000ff 0 3 0 0 0>
-	<"EDD-Q-test_xyce:ac.V(OUT)" #ff0000 0 3 0 0 0>
+  <Rect 488 490 350 211 3 #c0c0c0 1 10 1 0 1 0 1 -1 0.5 1 1 -1 0.5 1 315 0 225 "" "" "">
+	<"ngspice/ac.v(out)" #0000ff 0 3 0 0 0>
+	<"xyce/ac.V(OUT)" #ff0000 0 3 0 0 0>
   </Rect>
 </Diagrams>
 <Paintings>
-  <Text 50 -40 12 #000000 0 "This is a nonlinear capacitance exmple for \nNgspice and Xyce. It is shown how to use charge\nequations with EDDs. Simulate it with Qucs, Ngspice,\nand Xyce and compare results.">
+  <Text 50 -40 12 #000000 0 "This is a nonlinear capacitance example for \nNgspice and Xyce. It is shown how to use charge\nequations with EDDs. Simulate it with Qucs, Ngspice,\nand Xyce and compare results.">
 </Paintings>

@@ -42,10 +42,10 @@
   <250 130 310 130 "" 0 0 0 "">
 </Wires>
 <Diagrams>
-  <Rect 510 577 275 217 3 #c0c0c0 1 00 1 0 0.2 1 1 -0.1 0.5 1.1 1 -0.1 0.5 1.1 315 0 225 "" "" "">
-	<"Tunnel_ngspice:i(pr1)" #0000ff 0 3 0 0 0>
+  <Rect 510 577 275 217 3 #c0c0c0 1 00 1 -1 0.5 1 1 -1 0.5 1 1 -1 0.5 1 315 0 225 "" "" "">
+	<"ngspice/i(pr1)" #0000ff 0 3 0 0 0>
   </Rect>
 </Diagrams>
 <Paintings>
-  <Text 20 390 12 #000000 0 "This examples shows how to use\n current-defined EDDwith Ngspice. \nYou can simulate it and obtain\n IV-chart of the Tunnel diode. ">
+  <Text 20 390 12 #000000 0 "This examples shows how to use\n current-defined EDDwith Ngspice. \nYou can simulate it and obtain\n IV-chart of the Tunnel diode. \n\nNOTE: This Example could be run \nwith Qucs and Ngspice/Xyce">
 </Paintings>

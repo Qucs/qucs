@@ -1,6 +1,6 @@
 <Qucs Schematic 0.0.19>
 <Properties>
-  <View=0,0,909,800,1,0,0>
+  <View=0,-13,909,677,1,0,120>
   <Grid=10,10,1>
   <DataSet=B-sources.dat>
   <DataDisplay=B-sources.dpl>
@@ -36,12 +36,12 @@
 </Wires>
 <Diagrams>
   <Rect 390 230 256 161 3 #c0c0c0 1 00 1 -1 0.5 1 1 -1 1 1 1 -1 1 1 315 0 225 "" "" "">
-	<"B-sources_ngspice:tran.v(mul)" #ff0000 0 3 0 0 0>
+	<"ngspice/tran.v(mul)" #0000ff 0 3 0 0 0>
   </Rect>
   <Rect 390 464 254 164 3 #c0c0c0 1 00 1 -1 0.5 1 1 -1 1 1 1 -1 1 1 315 0 225 "" "" "">
-	<"B-sources_xyce:tran.V(MUL)" #0000ff 0 3 0 0 0>
+	<"xyce/tran.V(MUL)" #0000ff 0 3 0 0 0>
   </Rect>
 </Diagrams>
 <Paintings>
-  <Text 90 470 12 #000000 0 "This is a voltage multiplier that \nuses B-type spice sources.">
+  <Text 90 470 12 #000000 0 "This is a voltage multiplier that \nuses B-type spice sources.\nNOTE: This Example could be run \nonly with Ngspice/Xyce">
 </Paintings>
