@@ -2275,6 +2275,8 @@
     </admst:when>
     <admst:when test="[name='mosfetbsim4']">
     </admst:when>
+    <admst:when test="[name='bsim6v10nMOS' or name='bsim6v10pMOS']">
+    </admst:when>
     <admst:when test="[name='mod_amp']">
     </admst:when>
     <admst:when test="[name='log_amp']">
