@@ -20,6 +20,7 @@
 
 
 #include "element.h"
+#include "../sim/data.h"
 
 #include <cmath>
 #include <complex>
@@ -77,6 +78,30 @@ private:
 };
 
 struct Axis;
+
+class SimOutputDat : public SimOutputData {
+public:
+  SimOutputDat(const QString& filename, const QString& varname);
+  SimOutputData const* refresh();
+  int loadIndepVarData(const QString&, char* datfilecontent, DataX* where);
+
+  bool isEmpty() const { return !numAxes(); }
+  unsigned numAxes() const { return CPointsX.count();}
+  DataX* axis(uint i) { if (i<axis_count) return CPointsX.at(i); return NULL;}
+  double *cPointsY() const { return CPointsY; }
+  int countY() const { return CountY; }
+private:
+  void clear();
+private:
+  unsigned axis_count;
+  QList<DataX*>  CPointsX;
+  double *CPointsY;
+  int CountY;    // number of curves
+  QString Var;
+  QString fileName;
+  QDateTime lastLoaded;  // when it was loaded into memory
+};
+
 
 /*!
  * a graph (in the usual sense)
@@ -155,7 +180,6 @@ public:
   typedef std::pair<GraphDeque::const_iterator, Graph::const_iterator> MarkerPos;
 
   int loadDatFile(const QString& filename);
-  int loadIndepVarData(const QString&, char* datfilecontent, DataX* where);
 
   void    paint(ViewPainter*, int, int);
   void    paintLines(ViewPainter*, int, int);
@@ -253,6 +277,11 @@ private:
 public: // BUG. used by Diagram
   void push_back(const Graph& g);
   const Graph& back() const {return Graphs.back();}
+public: // bookkeeping
+  void attach(SimOutputData* d);
+  bool has_data() const{return data;}
+private:
+  SimOutputData* data;
 };
 
 #endif

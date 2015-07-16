@@ -30,7 +30,8 @@ class Diagram;
 GraphDeque::GraphDeque(Diagram const* d, const QString& _Line) :
   Element(),
   Style(GRAPHSTYLE_SOLID),
-  diagram(d)
+  diagram(d),
+  data(NULL)
 {
   Type = isGraph;
 
@@ -325,6 +326,15 @@ GraphDeque* GraphDeque::sameNewOne()
   }
 
   return pg;
+}
+
+/*!
+ * attach data to graphDeque
+ */
+void GraphDeque::attach(SimOutputData* d)
+{
+  qDebug() << "attaching to Graph";
+  SimOutputData::attach(d, &data);
 }
 
 // ---------------------------------------------------------------------

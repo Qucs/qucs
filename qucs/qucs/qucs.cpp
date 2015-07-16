@@ -2554,8 +2554,10 @@ void QucsApp::slot2PortMatching()
   for(auto i : pairs){
     // FIXME: use normal Diagrams.
     GraphDeque *pg = new GraphDeque(Diag, "S["+i+"]");
+	 SimOutputDat* d = new SimOutputDat(DataSet, pg->var());
+	 pg->attach(d);
     Diag->GraphDeques.append(pg);
-    if(!pg->loadDatFile(DataSet)){
+    if(!d->refresh()){
      QMessageBox::critical(0, tr("Error"), tr("Could not load S["+i+"]."));
      return;
     }

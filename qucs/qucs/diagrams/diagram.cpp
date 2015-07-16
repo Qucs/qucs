@@ -727,9 +727,12 @@ void Diagram::loadGraphData(const QString& defaultDataSet)
   int No=0;
   for(auto pg : GraphDeques) {
     qDebug() << "load GraphData load" << defaultDataSet << pg->var();
-    if(pg->loadDatFile(defaultDataSet) != 1) {   // load data, determine max/min values
-      No++;
-//      pg->refreshMarkers();
+    if (!pg->has_data()){
+      SimOutputDat* d = new SimOutputDat(defaultDataSet, pg->var());
+      pg->attach(d);
+      No = 1;
+    }else{
+      qDebug() << "has_data" << defaultDataSet << pg->var();
     }
     getAxisLimits(pg);
   }
@@ -825,13 +828,21 @@ void Diagram::updateGraphData()
 }
 
 // --------------------------------------------------------------------------
+//
 /*!
  * does not (yet) load a dat file. only part of it.
  * this way, it would belong to graph.cpp. but it's too obsolete, lets see..
  */
-int GraphDeque::loadDatFile(const QString& fileName)
+SimOutputDat::SimOutputDat(const QString& fileName, const QString& varname)
+    : CPointsY(NULL), Var(varname), fileName(fileName)
 {
-  GraphDeque* g = this;
+  refresh();
+}
+// --------------------------------------------------------------------------
+// former "loadDatFile", former "loadVarData".
+SimOutputData const* SimOutputDat::refresh()
+{
+  SimOutputDat* g = this;
   QFile file;
   QString Variable;
   QFileInfo Info(fileName);
@@ -857,10 +868,10 @@ int GraphDeque::loadDatFile(const QString& fileName)
   Info.setFile(file);
   if(g->lastLoaded.isValid())
     if(g->lastLoaded > Info.lastModified())
-      return 1;    // dataset unchanged -> no update neccessary
+      return this;    // dataset unchanged -> no update neccessary
 
-  g->clear(); // oops?
-  if(Variable.isEmpty()) return 0;
+  clear(); // oops?
+  if(Variable.isEmpty()) return NULL;
 
 #if 0 // FIXME encapsulation. implement digital waves later.
   if(Variable.right(2) == ".X")
@@ -869,7 +880,7 @@ int GraphDeque::loadDatFile(const QString& fileName)
 #endif
 
 
-  if(!file.open(QIODevice::ReadOnly))  return 0;
+  if(!file.open(QIODevice::ReadOnly)) return NULL;
 
   // *****************************************************************
   // To strongly speed up the file read operation the whole file is
@@ -915,7 +926,7 @@ int GraphDeque::loadDatFile(const QString& fileName)
     pos = 0;
     tmp = Line.section(' ', pos, pos);
     while(!tmp.isEmpty()) {
-      g->mutable_axes().push_back(new DataX(tmp));  // name of independet variable
+      CPointsX.push_back(new DataX(tmp));  // name of independet variable
       pos++;
       tmp = Line.section(' ', pos, pos);
     }
@@ -928,14 +939,14 @@ int GraphDeque::loadDatFile(const QString& fileName)
   int counting = 0;
   if(isIndep) {    // create independent variable by myself ?
     counting = Line.toInt(&ok);  // get number of values
-    g->mutable_axes().push_back(new DataX("number", 0, counting));
+    CPointsX.push_back(new DataX("number", 0, counting));
     if(!ok)  return 0;
 
     p = new double[counting];  // memory of new independent variable
     CountY = 1;
-    g->mutable_axes().back()->Points = p;
+    CPointsX.back()->Points = p;
     for(int z=1; z<=counting; z++)  *(p++) = double(z);
-    auto Axis = g->mutable_axes().back();
+    auto Axis = CPointsX.back();
     Axis->min(1.);
     Axis->max(double(counting));
   }
@@ -960,7 +971,7 @@ int GraphDeque::loadDatFile(const QString& fileName)
       }
       else if(pD == bLast)  pa = &yAxis;   // y axis for Rect3D
 #endif
-      counting = loadIndepVarData(pD->Var, FileString, mutable_axis(ii));
+      counting = loadIndepVarData(pD->Var, FileString, CPointsX[ii]);
       if(counting <= 0)  return 0;
 
       CountY *= counting;
@@ -1012,9 +1023,9 @@ if(Variable.right(3) != ".X ") { // not "digital"
 	 {
       if(fabs(y) >= 1e-250) x = sqrt(x*x+y*y);
       if(std::isfinite(x)) {
-			auto Axis = g->mutable_axes().back();
-			Axis->min(x);
-			Axis->max(x);
+	auto Axis = CPointsX.back();
+	Axis->min(x);
+	Axis->max(x);
       }
     }
 
@@ -1062,13 +1073,21 @@ if(Variable.right(3) != ".X ") { // not "digital"
 }  // of "if not digital"
 
   lastLoaded = QDateTime::currentDateTime();
-  return 2;
+  return this;
+}
+
+void SimOutputDat::clear()
+{
+  for(auto i : CPointsX){
+	  delete[] i;
+  }
+  delete[] CPointsY;
 }
 
 /*!
    Reads the data of an independent variable. Returns the number of points.
 */
-int GraphDeque::loadIndepVarData(const QString& Variable,
+int SimOutputDat::loadIndepVarData(const QString& Variable,
 			      char *FileString, DataX* pD)
 {
   bool isIndep = false;
