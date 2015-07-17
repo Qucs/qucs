@@ -1,6 +1,6 @@
 <Qucs Schematic 0.0.19>
 <Properties>
-  <View=0,-420,1093,770,1,0,0>
+  <View=0,-310,1093,770,1,0,0>
   <Grid=10,10,1>
   <DataSet=hb-test.dat>
   <DataDisplay=hb-test.dpl>
@@ -49,17 +49,17 @@
   <450 270 450 300 "" 0 0 0 "">
 </Wires>
 <Diagrams>
-  <Rect 343 133 452 173 3 #c0c0c0 1 00 1 -8e+06 2e+06 8e+06 1 -0.540553 2 6 1 -1 1 1 315 0 225 "" "" "">
-	<"hb-test_xyce:NODE1.Vb" #0000ff 0 3 0 6 0>
-	<"hb-test_xyce:NODE3.Vb" #ff0000 0 3 0 6 0>
+  <Rect 343 133 452 173 3 #c0c0c0 1 00 1 -8e+06 2e+06 8e+06 1 -0.237875 1 2.20344 1 -1 1 1 315 0 225 "" "" "">
+	<"xyce/NODE1.Vb" #0000ff 0 3 0 6 0>
+	<"xyce/NODE3.Vb" #ff0000 0 3 0 6 0>
   </Rect>
-  <Rect 99 692 581 232 3 #c0c0c0 1 00 1 -8e+06 2e+06 8e+06 1 -0.00218477 0.01 0.0245501 1 -1 0.5 1 315 0 225 "" "" "">
-	<"hb-test_xyce:VPR2.Vb" #0000ff 0 3 0 6 0>
+  <Rect 99 692 581 232 3 #c0c0c0 1 00 1 -1 0.2 1 1 -1 0.5 1 1 -1 0.5 1 315 0 225 "" "" "">
+	<"xyce/VPR2.Vb" #0000ff 0 3 0 6 0>
   </Rect>
-  <Rect 630 410 240 160 3 #c0c0c0 1 00 1 -8e+06 5e+06 8e+06 1 -0.09411 0.2 0.6 1 -1 1 1 315 0 225 "" "" "">
-	<"hb-test_xyce:PR1.Vb" #0000ff 0 3 0 6 0>
+  <Rect 630 410 240 160 3 #c0c0c0 1 00 1 -1 0.5 1 1 -1 1 1 1 -1 1 1 315 0 225 "" "" "">
+	<"xyce/PR1.Vb" #0000ff 0 3 0 6 0>
   </Rect>
 </Diagrams>
 <Paintings>
-  <Text 60 -150 12 #000000 0 "This example shows how to use Harmonic balance \n(HB) simulation with Qucs and Xyce. You can compare\nHB simulation results from Qucs and Xyce. ">
+  <Text 60 -160 12 #000000 0 "This example shows how to use Harmonic balance \n(HB) simulation with Qucs and Xyce. You can compare\nHB simulation results from Qucs and Xyce. \n\nNOTE: This example could be run only with Xyce and Qucs">
 </Paintings>
