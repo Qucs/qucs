@@ -687,7 +687,34 @@ static void spice_adjust_device (struct definition_t * def,
 	    }
 	  }
 	}
-      }
+      } // end BJT check
+
+      // check for BSIM transistors
+      if (!strcmp (tran->trans_type, "MOSFET")) {
+        //fprintf(stdout," ==> got MOSFET: %s %s\n",def->type, tran->trans_type_prop);
+        struct pair_t * p1, * p2;
+        if ((p1 = spice_find_property (def, "LEVEL")) != NULL) {
+          double level = spice_evaluate_value (p1->value);
+          def->pairs = spice_del_property (def->pairs, p1);
+          if ((p2 = spice_find_property (def, "VERSION")) != NULL) {
+            double version = spice_evaluate_value (p2->value);
+            def->pairs = spice_del_property (def->pairs, p2);
+            if (level == 6) {
+              if (version == 6.10) {
+                if (!strcmp(tran->trans_type_prop,"nfet")) {
+                  def->type = strdup ("bsim6v10nMOS");
+                  hic = true;
+                }
+                else if (!strcmp(tran->trans_type_prop,"pfet")) {
+                  def->type = strdup ("bsim6v10pMOS");
+                  hic = true;
+                }
+              }
+            }
+          }
+        }
+      } // end MOSFET check
+
       if (!hic) {
 	def->type = strdup (tran->trans_type);
 	// append "Type" property
