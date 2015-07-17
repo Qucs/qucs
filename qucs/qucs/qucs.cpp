@@ -2550,33 +2550,15 @@ void QucsApp::slot2PortMatching()
 
   Diagram *Diag = new Diagram();
 
-  // FIXME: use normal Diagrams.
-  GraphDeque *pg = new GraphDeque(Diag, "S[1,1]");
-  Diag->GraphDeques.append(pg);
-  if(!pg->loadDatFile(DataSet)) {
-    QMessageBox::critical(0, tr("Error"), tr("Could not load S[1,1]."));
-    return;
-  }
-
-  pg = new GraphDeque(Diag, "S[1,2]");
-  Diag->GraphDeques.append(pg);
-  if(!pg->loadDatFile(DataSet)) {
-    QMessageBox::critical(0, tr("Error"), tr("Could not load S[1,2]."));
-    return;
-  }
-
-  pg = new GraphDeque(Diag, "S[2,1]");
-  Diag->GraphDeques.append(pg);
-  if(!pg->loadDatFile(DataSet)) {
-    QMessageBox::critical(0, tr("Error"), tr("Could not load S[2,1]."));
-    return;
-  }
-
-  pg = new GraphDeque(Diag, "S[2,2]");
-  Diag->GraphDeques.append(pg);
-  if(!pg->loadDatFile(DataSet)) {
-    QMessageBox::critical(0, tr("Error"), tr("Could not load S[2,2]."));
-    return;
+  static QString pairs[4] = {"1,1", "1,2", "2,1", "2,2"};
+  for(auto i : pairs){
+    // FIXME: use normal Diagrams.
+    GraphDeque *pg = new GraphDeque(Diag, "S["+i+"]");
+    Diag->GraphDeques.append(pg);
+    if(!pg->loadDatFile(DataSet)){
+     QMessageBox::critical(0, tr("Error"), tr("Could not load S["+i+"]."));
+     return;
+    }
   }
 
   DataX const *Data = Diag->GraphDeques.first()->axis(0);
