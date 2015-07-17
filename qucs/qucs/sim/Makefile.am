@@ -22,4 +22,10 @@
 # Boston, MA 02110-1301, USA.
 #
 
-EXTRA_DIST = qucsator.cpp
+noinst_LTLIBRARIES = qucsator.la
+AM_DEFAULT_SOURCE_EXT = .cpp
+
+qucsator_la_LDFLAGS = -module -avoid-version
+qucsator_la_CPPFLAGS = $(AM_CPPFLAGS) -I$(abs_top_srcdir)/qucs
+# need Qt for TextStream.
+qucsator_la_CPPFLAGS += $(QT_INCLUDES)

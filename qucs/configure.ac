@@ -20,8 +20,8 @@ AC_PREFIX_DEFAULT([/usr/local])
 dnl Checks for programs.
 AC_PROG_CXX(clang++ g++)
 AC_PROG_CC
-AC_PROG_RANLIB
 AC_CHECK_TOOL(AR, ar, :)
+LT_INIT()
 
 dnl Check for debugging option.
 AC_ARG_ENABLE([debug],

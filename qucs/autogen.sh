@@ -31,6 +31,8 @@ echo "done."
 echo -n "Creating config.h.in... "
 autoheader
 echo "done."
+echo "Running libtoolize"
+libtoolize || exit 1
 echo -n "Creating Makefile.in(s)... "
 ${AUTOMAKE:-automake} -a -f -c
 echo "done."
