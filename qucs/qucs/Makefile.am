@@ -24,6 +24,8 @@
 
 include ../common.mk
 
+SUBDIRS = components diagrams paintings dialogs octave sim
+
 AM_DEFAULT_SOURCE_EXT = .cpp
 
 SUBDIRS = \

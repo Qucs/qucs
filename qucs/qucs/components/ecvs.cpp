@@ -90,7 +90,7 @@ Element* ecvs::info(QString& Name, char* &BitmapFile, bool getNewOne)
 
 
 // -------------------------------------------------------
-QString ecvs::netlist()
+QString ecvs::netlist() const
 {
   QString s = Model+":"+Name;
 

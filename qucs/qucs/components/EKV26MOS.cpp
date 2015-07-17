@@ -270,7 +270,7 @@ void EKV26MOS::createSymbol()
   x2 =  20; y2 =  30;
 }
 
-QString EKV26MOS::netlist()
+QString EKV26MOS::netlist() const
 {
   QString s = Model+":"+Name;
 

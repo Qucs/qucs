@@ -35,7 +35,7 @@ public:
 
   virtual Component* newOne();
   virtual void recreate(Schematic*) {};
-  QString getNetlist();
+  QString getNetlist() const;
   QString get_VHDL_Code(int);
   QString get_Verilog_Code(int);
   void    paint(ViewPainter*);
@@ -57,7 +57,7 @@ public:
   bool mirroredX;   // is it mirrored about X axis or not
   int  rotated;     // rotation angle divided by 90 degrees
 
-  virtual QString getSubcircuitFile() { return ""; }
+  virtual QString getSubcircuitFile() const { return ""; }
   // set the pointer scematic associated with the component
   virtual void setSchematic (Schematic* p) { containingSchematic = p; }
   virtual Schematic* getSchematic () {return containingSchematic; }
@@ -70,7 +70,8 @@ public:
   QList<Area *>     Ellips;
   QList<Port *>     Ports;
   QList<Text *>     Texts;
-  Q3PtrList<Property> Props;
+  mutable //bug: Q3PtrList does not support constness
+      Q3PtrList<Property> Props;
 
   #define COMP_IS_OPEN    0
   #define COMP_IS_ACTIVE  1
@@ -113,7 +114,7 @@ protected: // BUG => Element.
 protected: // BUG
   QString  Description;
 protected:
-  virtual QString netlist();
+  virtual QString netlist() const;
   virtual QString vhdlCode(int);
   virtual QString verilogCode(int);
 
@@ -144,7 +145,7 @@ protected:
 class GateComponent : public MultiViewComponent {
 public:
   GateComponent();
-  QString netlist();
+  QString netlist() const;
   QString vhdlCode(int);
   QString verilogCode(int);
 

@@ -91,7 +91,7 @@ void BJT::createSymbol()
 }
 
 // -------------------------------------------------------
-QString BJT::netlist()
+QString BJT::netlist() const
 {
   QString s = "BJT:"+Name;
 

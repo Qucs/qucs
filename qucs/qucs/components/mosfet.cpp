@@ -120,7 +120,7 @@ void MOSFET::createSymbol()
 }
 
 // -------------------------------------------------------
-QString MOSFET::netlist()
+QString MOSFET::netlist() const
 {
   QString s = "MOSFET:"+Name;
 

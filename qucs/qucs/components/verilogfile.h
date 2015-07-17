@@ -33,7 +33,7 @@ public:
 
   bool createSubNetlist(QTextStream *);
   QString getErrorText() { return ErrText; }
-  QString getSubcircuitFile();
+  QString getSubcircuitFile() const;
 
 protected:
   QString verilogCode(int);

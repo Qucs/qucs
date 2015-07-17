@@ -450,7 +450,11 @@ void SimMessage::startSimulator()
     Stream << '\n';
 
     isVerilog = ((Schematic*)DocWidget)->isVerilog;
-    SimTime = ((Schematic*)DocWidget)->createNetlist(Stream, SimPorts);
+    auto sd = SimulatorDispatcher::get("qucsator");
+    assert(sd);
+    auto nl = sd->netLang();
+    assert(nl);
+    SimTime = ((Schematic*)DocWidget)->createNetlist(Stream, SimPorts, nl);
     if(SimTime.length()>0&&SimTime.at(0) == '\xA7') {
       NetlistFile.close();
       ErrText->insertPlainText(SimTime.mid(1));
