@@ -341,7 +341,7 @@ void hic0_full::createSymbol()
   x2 =  30; y2 =  30;
 }
 
-QString hic0_full::netlist()
+QString hic0_full::netlist() const
 {
   QString s = "hic0_full:"+Name;
 

@@ -2799,3 +2799,5 @@ void QucsApp::slotSaveSchematicToGraphicsFile(bool diagram)
   }
   delete writer;
 }
+
+std::map<std::string, Simulator const*> SimulatorDispatcher::Simulators;

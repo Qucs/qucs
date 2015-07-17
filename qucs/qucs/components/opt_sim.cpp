@@ -62,7 +62,7 @@ Element* Optimize_Sim::info(QString& Name, char* &BitmapFile, bool getNewOne)
 }
 
 // -------------------------------------------------------
-QString Optimize_Sim::netlist()
+QString Optimize_Sim::netlist() const
 {
   QString s = "#\n";
   if (createASCOFiles()) {
@@ -76,7 +76,7 @@ QString Optimize_Sim::netlist()
 
  
 // -----------------------------------------------------------
-bool Optimize_Sim::createASCOFiles()
+bool Optimize_Sim::createASCOFiles() const
 {
   Property* pp;
   QFile afile(QucsSettings.QucsHomeDir.filePath("asco_netlist.cfg"));

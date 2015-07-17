@@ -37,7 +37,7 @@ public:
   bool withSim;
   bool createSubNetlist(QTextStream *);
   QString getErrorText() { return ErrText; }
-  QString getSubcircuitFile();
+  QString getSubcircuitFile() const;
 
 private:
   bool makeSubcircuit;
@@ -50,7 +50,7 @@ private:
   bool recreateSubNetlist(QString *, QString *);
 
 protected:
-  QString netlist();
+  QString netlist() const;
   void createSymbol();
 
 private slots:

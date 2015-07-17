@@ -259,7 +259,7 @@ Schematic *openSchematic(QString schematic)
   return sch;
 }
 
-int doNetlist(QString schematic, QString netlist)
+int doNetlist(QString schematic, QString netlist, NetLang const* lang)
 {
   Schematic *sch = openSchematic(schematic);
   if (sch == NULL) {
@@ -305,7 +305,7 @@ int doNetlist(QString schematic, QString netlist)
 
   Stream << '\n';
 
-  QString SimTime = sch->createNetlist(Stream, SimPorts);
+  QString SimTime = sch->createNetlist(Stream, SimPorts, lang);
   delete(sch);
 
   NetlistFile.close();
@@ -876,7 +876,11 @@ int main(int argc, char *argv[])
     }
     // create netlist from schematic
     if (netlist_flag) {
-      return doNetlist(inputfile, outputfile);
+      auto sd = SimulatorDispatcher::get("qucsator");
+      assert(sd);
+      auto nl = sd->netLang();
+      assert(nl);
+      return doNetlist(inputfile, outputfile, nl);
     } else if (print_flag) {
       return doPrint(inputfile, outputfile,
           page, dpi, color, orientation);
@@ -891,3 +895,5 @@ int main(int argc, char *argv[])
   //saveApplSettings(QucsMain);
   return result;
 }
+
+// vim:ts=8:sw=2:noet

@@ -370,7 +370,7 @@ void hicumL0V1p2g::createSymbol()
   x2 =  30; y2 =  30;
 }
 
-QString hicumL0V1p2g::netlist()
+QString hicumL0V1p2g::netlist() const
 {
   QString s = "hicumL0V1p2g:"+Name;
 

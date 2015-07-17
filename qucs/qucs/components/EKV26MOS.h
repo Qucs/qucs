@@ -23,7 +23,7 @@ class EKV26MOS : public MultiViewComponent
     static Element* info_pmos(QString&, char* &, bool getNewOne=false);
   protected:
     void createSymbol();
-    QString netlist();
+    QString netlist() const;
 };
 
 #endif /* EKV26MOS_H */

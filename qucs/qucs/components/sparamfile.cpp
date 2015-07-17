@@ -99,7 +99,7 @@ Element* SParamFile::info2(QString& Name, char* &BitmapFile, bool getNewOne)
 }
 
 // -------------------------------------------------------
-QString SParamFile::getSubcircuitFile()
+QString SParamFile::getSubcircuitFile() const
 {
   // construct full filename
   QString FileName = Props.getFirst()->Value;
@@ -107,7 +107,7 @@ QString SParamFile::getSubcircuitFile()
 }
 
 // -------------------------------------------------------
-QString SParamFile::netlist()
+QString SParamFile::netlist() const
 {
   QString s = Model+":"+Name;
 

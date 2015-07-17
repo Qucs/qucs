@@ -210,7 +210,7 @@ int LibComp::loadSymbol()
 }
 
 // -------------------------------------------------------
-QString LibComp::getSubcircuitFile()
+QString LibComp::getSubcircuitFile() const
 {
   QDir Directory(QucsSettings.LibDir);
   QString FileName = Directory.absFilePath(Props.first()->Value);
@@ -259,14 +259,14 @@ bool LibComp::createSubNetlist(QTextStream *stream, QStringList &FileList,
 }
 
 // -------------------------------------------------------
-QString LibComp::createType()
+QString LibComp::createType() const
 {
   QString Type = misc::properFileName(Props.first()->Value);
   return misc::properName(Type + "_" + Props.next()->Value);
 }
 
 // -------------------------------------------------------
-QString LibComp::netlist()
+QString LibComp::netlist() const
 {
   QString s = "Sub:"+Name;   // output as subcircuit
 

@@ -23,7 +23,7 @@ class hicumL0V1p3 : public MultiViewComponent
     static Element* info_pnp(QString&, char* &, bool getNewOne=false);
   protected:
     void createSymbol();
-    QString netlist();
+    QString netlist() const;
 };
 
 #endif /* hicumL0V1p3_H */

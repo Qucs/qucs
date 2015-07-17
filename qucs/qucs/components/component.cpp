@@ -611,7 +611,7 @@ void Component::mirrorY()
 }
 
 // -------------------------------------------------------
-QString Component::netlist()
+QString Component::netlist() const
 {
   QString s = Model+":"+Name;
 
@@ -628,7 +628,7 @@ QString Component::netlist()
 }
 
 // -------------------------------------------------------
-QString Component::getNetlist()
+QString Component::getNetlist() const
 {
   switch(isActive) {
     case COMP_IS_ACTIVE:
@@ -1314,7 +1314,7 @@ GateComponent::GateComponent()
 }
 
 // -------------------------------------------------------
-QString GateComponent::netlist()
+QString GateComponent::netlist() const
 {
   QString s = Model+":"+Name;
 

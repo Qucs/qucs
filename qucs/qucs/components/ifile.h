@@ -28,10 +28,10 @@ public:
   Component* newOne();
   static Element* info(QString&, char* &, bool getNewOne=false);
 
-  QString getSubcircuitFile();
+  QString getSubcircuitFile() const;
 
 protected:
-  QString netlist();
+  QString netlist() const;
 };
 
 #endif

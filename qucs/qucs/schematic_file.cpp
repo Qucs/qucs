@@ -41,6 +41,7 @@
 #include "components/libcomp.h"
 #include "module.h"
 #include "misc.h"
+#include "sim/sim.h"
 
 
 // Here the subcircuits, SPICE components etc are collected. It must be
@@ -1843,7 +1844,8 @@ int Schematic::prepareNetlist(QTextStream& stream, QStringList& Collect,
 
 // ---------------------------------------------------
 // Write the beginning of digital netlist to the text stream 'stream'.
-void Schematic::beginNetlistDigital(QTextStream& stream)
+// FIXME: really use lang. get rid of isVerilog
+void Schematic::beginNetlistDigital(QTextStream& stream, NetLang const* /*lang*/)
 {
   if (isVerilog) {
     stream << "module TestBench ();\n";
@@ -1876,7 +1878,8 @@ void Schematic::beginNetlistDigital(QTextStream& stream)
 
 // ---------------------------------------------------
 // Write the end of digital netlist to the text stream 'stream'.
-void Schematic::endNetlistDigital(QTextStream& stream)
+// FIXME: use lang, not isVerilog
+void Schematic::endNetlistDigital(QTextStream& stream, NetLang const* /*lang*/)
 {
   if (isVerilog) {
   } else {
@@ -1886,10 +1889,11 @@ void Schematic::endNetlistDigital(QTextStream& stream)
 
 // ---------------------------------------------------
 // write all components with node names into the netlist file
-QString Schematic::createNetlist(QTextStream& stream, int NumPorts)
+// return some Time.
+QString Schematic::createNetlist(QTextStream& stream, int NumPorts, NetLang const* lang)
 {
   if(!isAnalog) {
-    beginNetlistDigital(stream);
+    beginNetlistDigital(stream, lang);
   }
 
   Signals.clear();  // was filled in "giveNodeNames()"
@@ -1898,9 +1902,8 @@ QString Schematic::createNetlist(QTextStream& stream, int NumPorts)
   QString s, Time;
   for(Component *pc = DocComps.first(); pc != 0; pc = DocComps.next()) {
     if(isAnalog) {
-      s = pc->getNetlist();
-    }
-    else {
+      lang->printInstance(pc, stream);
+    } else { // FIXME: use different lang to print things differently
       if(pc->Model == ".Digi" && pc->isActive) {  // simulation component ?
         if(NumPorts > 0) { // truth table simulation ?
 	  if (isVerilog)
@@ -1924,13 +1927,15 @@ QString Schematic::createNetlist(QTextStream& stream, int NumPorts)
       if (s.length()>0 && s.at(0) == '\xA7'){
           return s; // return error
       }
+      stream << s;
     }
-    stream << s;
   }
 
   if(!isAnalog) {
-    endNetlistDigital(stream);
+    endNetlistDigital(stream, lang);
   }
 
   return Time;
 }
+
+// vim:ts=8:sw=2:noet

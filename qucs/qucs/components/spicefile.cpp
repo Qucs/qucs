@@ -148,7 +148,7 @@ void SpiceFile::createSymbol()
 }
 
 // ---------------------------------------------------
-QString SpiceFile::netlist()
+QString SpiceFile::netlist() const
 {
   if(Props.at(1)->Value.isEmpty())
     return QString("");  // no ports, no subcircuit instance
@@ -163,7 +163,7 @@ QString SpiceFile::netlist()
 }
 
 // -------------------------------------------------------
-QString SpiceFile::getSubcircuitFile()
+QString SpiceFile::getSubcircuitFile() const
 {
   // construct full filename
   QString FileName = Props.getFirst()->Value;

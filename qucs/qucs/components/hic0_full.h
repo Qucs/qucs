@@ -23,7 +23,7 @@ class hic0_full : public MultiViewComponent
     static Element* info_pnp(QString&, char* &, bool getNewOne=false);
   protected:
     void createSymbol();
-    QString netlist();
+    QString netlist() const;
 };
 
 #endif /* hic0_full_H */
