@@ -34,6 +34,7 @@
 #include "diagrams/diagram.h"
 #include "paintings/painting.h"
 #include "components/component.h"
+#include "sim/sim.h"
 
 #include <Q3ScrollView>
 #include <Q3PtrList>
@@ -301,7 +302,7 @@ public:
   bool createSubNetlist(QTextStream *, int&, QStringList&, QPlainTextEdit*, int);
   void createSubNetlistPlain(QTextStream*, QPlainTextEdit*, int);
   int  prepareNetlist(QTextStream&, QStringList&, QPlainTextEdit*);
-  QString createNetlist(QTextStream&, int);
+  QString createNetlist(QTextStream&, int, NetLang const*);
   bool loadDocument();
   void highlightWireLabels (void);
 
@@ -330,8 +331,8 @@ private:
   void propagateNode(QStringList&, int&, Node*);
   void collectDigitalSignals(void);
   bool giveNodeNames(QTextStream *, int&, QStringList&, QPlainTextEdit*, int);
-  void beginNetlistDigital(QTextStream &);
-  void endNetlistDigital(QTextStream &);
+  void beginNetlistDigital(QTextStream &, NetLang const*);
+  void endNetlistDigital(QTextStream &, NetLang const*);
   bool throughAllComps(QTextStream *, int&, QStringList&, QPlainTextEdit *, int);
 
   DigMap Signals; // collecting node names for VHDL signal declarations

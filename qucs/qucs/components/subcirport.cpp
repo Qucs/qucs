@@ -98,7 +98,7 @@ Element* SubCirPort::info(QString& Name, char* &BitmapFile, bool getNewOne)
 }
 
 // -------------------------------------------------------
-QString SubCirPort::netlist()
+QString SubCirPort::netlist() const
 {
   return QString("");
 }

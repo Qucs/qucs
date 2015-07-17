@@ -198,7 +198,7 @@ int Subcircuit::loadSymbol(const QString& DocName)
 }
 
 // -------------------------------------------------------
-QString Subcircuit::netlist()
+QString Subcircuit::netlist() const
 {
   QString s = Model+":"+Name;
 
@@ -279,7 +279,7 @@ QString Subcircuit::verilogCode(int)
 }
 
 // -------------------------------------------------------
-QString Subcircuit::getSubcircuitFile()
+QString Subcircuit::getSubcircuitFile() const
 {
   // construct full filename
   QString FileName = Props.getFirst()->Value;

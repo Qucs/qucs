@@ -31,7 +31,7 @@ public:
 
 protected:
   void createSymbol();
-  QString netlist();
+  QString netlist() const;
 };
 
 #endif
