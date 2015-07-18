@@ -1953,7 +1953,7 @@ QString Schematic::createNetlist(QTextStream& stream, int NumPorts, NetLang cons
   QString s, Time;
   for(Component *pc = DocComps.first(); pc != 0; pc = DocComps.next()) {
     if(isAnalog) {
-      lang->printInstance(pc, stream);
+      lang->printItem(pc, stream);
     } else { // FIXME: use different lang to print things differently
       if(pc->obsolete_model_hack() == ".Digi" && pc->isActive) {  // simulation component ?
         if(NumPorts > 0) { // truth table simulation ?

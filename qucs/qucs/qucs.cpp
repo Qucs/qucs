@@ -3208,6 +3208,4 @@ bool QucsSortFilterProxyModel::lessThan(const QModelIndex &left, const QModelInd
   return QSortFilterProxyModel::lessThan(left, right);
 }
 
-// here?
-std::map<std::string, Simulator const*> SimulatorDispatcher::Simulators;
 // vim:ts=8:sw=2:et

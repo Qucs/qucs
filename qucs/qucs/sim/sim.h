@@ -21,15 +21,18 @@ class NetLang;
 class Component;
 
 #include <assert.h>
+#include <components/component.h>
+#include <iostream>
 
 #include <QTextStream>
 #include <QDebug>
+#include "object.h"
 #define stream_t QTextStream
 
 /*!
  * class to provide simulator duties
  */
-class Simulator{
+class Simulator : public Object{
 public:
   virtual ~Simulator(){}
 
@@ -41,32 +44,31 @@ public:
  * class to provide language dependent functionality, such as netlisting
  * FIXME (later): don't use Qt types here. has nothing to do with GUI
  */
-class NetLang{
+class NetLang : public Object{
 public:
   virtual ~NetLang(){}
-
+  void printItem(Element const*, stream_t&) const;
+private:
   virtual void printInstance(Component const*, stream_t&) const = 0;
 };
 
 /*!
- * a dispatcher stub. hardly sophisticated, but functional
+ * print an item
+ * boldly ripped from gnucap.
  */
-class SimulatorDispatcher{
-public:
-  SimulatorDispatcher(std::string label, Simulator const* what)
-  {
-    qDebug() << "dispatcher install" << label.c_str();
-    assert(what);
-    Simulators[label] = what;
+inline void NetLang::printItem(Element const* c, stream_t& s) const
+{
+  assert(c);
+//  if (auto C=dynamic_cast<const Subcircuit*>(c)) {
+//    still using obsolete code
+//  }else
+//  ...
+  if (auto C=dynamic_cast<const Component*>(c)) {
+    printInstance(C, s);
+  }else{
+    std::cerr << "incomplete\n";
   }
-  static Simulator const* get(std::string const& s)
-  {
-    qDebug() << "dispatcher get" << s.c_str();
-    return Simulators[s];
-  }
-private:
-  static std::map<std::string, Simulator const*> Simulators;
-};
+}
 
 #define QUCS_SIM_H__
 #endif

@@ -24,17 +24,16 @@
 
 include ../common.mk
 
-SUBDIRS = components diagrams paintings dialogs octave sim
-
 AM_DEFAULT_SOURCE_EXT = .cpp
 
 SUBDIRS = \
-			 . \
+	. \
 	bitmaps \
 	components diagrams \
 	paintings \
 	dialogs \
 	octave \
+	sim \
 	tests
 
 all-local: qucs
@@ -94,7 +93,6 @@ libqucsschematic_la_SOURCES += $(MOCFILES)
 AM_CPPFLAGS = $(X11_INCLUDES) $(QT_CFLAGS) -I$(top_srcdir)/qucs-lib
 libqucsschematic_la_LDFLAGS = $(X11_LDFLAGS) $(QT_LIBS)
 
-<<<<<<< HEAD
 # these are not plugins yet. but there's hope.
 # TODO:
 # - cleanup
@@ -119,11 +117,6 @@ noinst_HEADERS = $(MOCHEADERS) wire.h qucsdoc.h element.h node.h \
 
 # must be installed. but later
 noinst_HEADERS += platform.h globals.h l_dispatcher.h io_trace.h
-
-qucs_LDADD+= sim/qucsator.la
-
-noinst_HEADERS = $(MOCHEADERS) main.h wire.h qucsdoc.h element.h node.h \
-  wirelabel.h viewpainter.h mnemo.h mouseactions.h syntax.h module.h misc.h
 
 hicolor16dir = ${prefix}/share/icons/hicolor/16x16/apps
 hicolor16_DATA =  bitmaps/hicolor/16x16/apps/qucs.png
