@@ -25,6 +25,11 @@
 here=`pwd`
 cd `dirname $0`
 
+case `uname` in
+  *Darwin*) LIBTOOLIZE=glibtoolize ;;
+  *) LIBTOOLIZE=libtoolize ;;
+esac
+
 echo -n "Creating aclocal.m4... "
 ${ACLOCAL:-aclocal} -I m4
 echo "done."
@@ -32,7 +37,7 @@ echo -n "Creating config.h.in... "
 autoheader
 echo "done."
 echo "Running libtoolize"
-libtoolize || exit 1
+$LIBTOOLIZE || exit 1
 echo -n "Creating Makefile.in(s)... "
 ${AUTOMAKE:-automake} -a -f -c
 echo "done."
