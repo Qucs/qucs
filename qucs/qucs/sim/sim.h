@@ -21,6 +21,8 @@ class NetLang;
 class Component;
 
 #include <assert.h>
+#include <components/component.h>
+#include <iostream>
 
 #include <QTextStream>
 #include <QDebug>
@@ -44,9 +46,29 @@ public:
 class NetLang{
 public:
   virtual ~NetLang(){}
-
+  void printItem(Element const*, stream_t&) const;
+private:
   virtual void printInstance(Component const*, stream_t&) const = 0;
 };
+
+/*!
+ * print an item
+ * boldly ripped from gnucap.
+ */
+inline void NetLang::printItem(Element const* c, stream_t& s) const
+{
+  assert(c);
+//  if (auto C=dynamic_cast<const Subcircuit*>(c)) {
+//    still using obsolete code
+//  }else
+//  ...
+  if (auto C=dynamic_cast<const Component*>(c)) {
+    printInstance(C, s);
+  }else{
+    std::cerr << "incomplete\n";
+  }
+}
+
 
 /*!
  * a dispatcher stub. hardly sophisticated, but functional
