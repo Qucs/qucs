@@ -612,54 +612,13 @@ void Component::mirrorY()
 }
 
 // -------------------------------------------------------
+/*!
+ * obsolete function. still used for some special components
+ * just indicate that it's obsolete, so the netlister knows.
+ */
 QString Component::netlist() const
 {
-  QString s = Model+":"+Name;
-  int i=-1;
-  // output all node names
-  // This only works in cases where the resistor would be a series
-  // with the component, as for the other components, they're accounted
-  // as a resistor as well, and the changes were made to their .cpp
-  foreach(Port *p1, Ports){
-    i++;
-    s += " " + p1->Connection->Name;   // node names
-  }
-
-  // output all properties
-  for (Property *p2 = Props.first(); p2 != 0; p2 = Props.next()){
-    if (p2->Name != "Symbol"){
-      s += " " + p2->Name + "=\"" + p2->Value + "\"";
-    }else{
-      // BUG: what is this?
-      // doing name dependent stuff
-    }
-  }
-
-  s += '\n';
-
-  return s;
-}
-
-// -------------------------------------------------------
-QString Component::getNetlist() const
-{
-  switch(isActive) {
-    case COMP_IS_ACTIVE:
-      return netlist();
-    case COMP_IS_OPEN:
-      return QString("");
-  }
-
-  // Component is shortened.
-  int z=0;
-  QListIterator<Port *> iport(Ports);
-  Port *pp = iport.next();
-  QString Node1 = pp->Connection->Name;
-  QString s = "";
-  while (iport.hasNext())
-    s += "R:" + Name + "." + QString::number(z++) + " " +
-      Node1 + " " + iport.next()->Connection->Name + " R=\"0\"\n";
-  return s;
+  return "obsolete";
 }
 
 // -------------------------------------------------------

@@ -17,7 +17,9 @@
 
 #include "sim.h"
 #include "../components/component.h"
+#include "node.h"
 #include <QString>
+#include "globals.h"
 
 namespace {
 // qucslang language implementation
@@ -31,8 +33,41 @@ class QucsLang : public NetLang
  */
 void QucsLang::printInstance(Component const* c, QTextStream& s) const
 {
-  // use callback hack (for now)
-  s << c->getNetlist();
+  if(c->isOpen()) {
+    // nothing.
+  }else if(c->isShort()){
+    // replace by some resistors (hack?)
+    int z=0;
+    QListIterator<Port *> iport(c->ports());
+    Port *pp = iport.next();
+    QString Node1 = pp->Connection->Name;
+    while (iport.hasNext()){
+      s << "R:" << c->label() << "." << QString::number(z++) << " "
+	<< Node1 << " " << iport.next()->Connection->Name << " R=\"0\"\n";
+    }
+  }else{
+    QString netlist(c->getNetlist());
+    if(netlist!="obsolete") {
+      // still using obsolete netlister here.
+      // other languages must throw here!
+      qDebug() << "incomplete, using netlist()";
+      s << netlist;
+    }else{ // normal netlisting
+      s << c->type() << ":" << c->label();
+
+      // output all node names
+      for(Port *p1 : c->ports()){
+	s << " " << p1->Connection->Name;
+      }
+
+      for(auto p2 : c->params()) {
+	if(p2->Name != "Symbol") { // hack.
+	  s << " " << p2->Name << "=\"" << p2->Value << "\"";
+	}
+      }
+      s << '\n';
+    }
+  }
 }
 
 static QucsLang qucslang;
@@ -44,7 +79,7 @@ class Qucsator : public Simulator
 };
 
 static Qucsator Q;
-static SimulatorDispatcher p("qucsator", &Q);
+static Dispatcher<Simulator>::INSTALL p(&simulator_dispatcher, "qucsator", &Q);
 }
 
 // vim:ts=8:sw=2:noet

@@ -22,8 +22,9 @@
 # Boston, MA 02110-1301, USA.
 #
 
-noinst_LTLIBRARIES = qucsator.la
+pkglib_LTLIBRARIES = qucsator.la
 AM_DEFAULT_SOURCE_EXT = .cpp
+AM_CPPFLAGS = $(X11_INCLUDES) $(QT_CFLAGS) -I$(top_srcdir)/qucs
 
 qucsator_la_LDFLAGS = -module -avoid-version
 qucsator_la_CPPFLAGS = $(AM_CPPFLAGS) -I$(abs_top_srcdir)/qucs

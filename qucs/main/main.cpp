@@ -798,7 +798,7 @@ int main(int argc, char *argv[])
     }
     // create netlist from schematic
     if (netlist_flag) {
-      auto sd = SimulatorDispatcher::get("qucsator");
+      auto sd=simulator_dispatcher["qucsator"];
       assert(sd);
       auto nl = sd->netLang();
       assert(nl);

@@ -35,7 +35,7 @@ public:
 
   virtual Component* newOne();
   virtual void recreate(Schematic*) {};
-  QString getNetlist() const;
+  QString getNetlist() const {return netlist();}
   QString get_VHDL_Code(int);
   QString get_Verilog_Code(int);
   void    paint(ViewPainter*);
@@ -76,6 +76,13 @@ public:
   #define COMP_IS_OPEN    0
   #define COMP_IS_ACTIVE  1
   #define COMP_IS_SHORTEN 2
+  bool isShort() const{return isActive==COMP_IS_SHORTEN;}
+  bool isOpen() const{return isActive==COMP_IS_OPEN;}
+  QString type() const{return Model;}
+  QString label() const{return Name;}
+  Q3PtrList<Property> const& params() const{return Props;}
+  QList<Port*>const& ports() const{return Ports;}
+// private: // not yet
   int  isActive; // should it be used in simulation or not ?
   int  tx, ty;   // upper left corner of text (position)
 
