@@ -132,6 +132,7 @@ SET(QUCS_SRCS
   wirelabel.cpp node.cpp qucs_init.cpp
   syntax.cpp misc.cpp messagedock.cpp
   imagewriter.cpp printerwriter.cpp projectView.cpp
+  sim/qucsator.cpp
 )
 
 SET(QUCS_HDRS
