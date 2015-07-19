@@ -670,7 +670,7 @@ QString Component::spice_netlist(bool)
 
 QString Component::va_code()
 {
-    return QString("\n"); // ignore if not implemented
+    return QString(""); // ignore if not implemented
 }
 
 // -------------------------------------------------------
