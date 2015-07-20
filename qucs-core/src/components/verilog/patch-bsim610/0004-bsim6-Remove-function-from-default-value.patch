@@ -1,0 +1,27 @@
+From 3aa2dd14de886997c416d16d1b02528f1fe1aae2 Mon Sep 17 00:00:00 2001
+From: Guilherme Brondani Torri <guitorri@gmail.com>
+Date: Thu, 16 Jul 2015 20:40:43 +0200
+Subject: [PATCH] [bsim6] Remove function from default value
+
+System function $simparam is not available?
+---
+ bsim6.va | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/bsim6.va b/bsim6.va
+index d20d82d..1ca6576 100755
+--- a/bsim6.va
++++ b/bsim6.va
+@@ -1538,7 +1538,8 @@ parameter real SCREF 	= 1.0e-6;				//Reference distance to calculate SCA,SCB and
+ 
+ 
+ // GMIN - added for convergence
+-parameter real GMIN		= $simparam("gmin", 1.0e-15);
++//parameter real GMIN		= $simparam("gmin", 1.0e-15);
++parameter real GMIN		= 1e-15;
+ 
+ // ***********************************
+ //   Variables
+-- 
+2.1.2
+

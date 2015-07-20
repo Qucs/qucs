@@ -1,0 +1,41 @@
+From 51cb1f6c36519b3c10ff7004b8f633c9f112e75e Mon Sep 17 00:00:00 2001
+From: Guilherme Brondani Torri <guitorri@gmail.com>
+Date: Thu, 16 Jul 2015 21:05:50 +0200
+Subject: [PATCH] [bsim6NMOS] Set ternary operator default to NMOS
+
+---
+ bsim6.va | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
+
+diff --git a/bsim6.va b/bsim6.va
+index 2f0db8f..d17bf86 100644
+--- a/bsim6.va
++++ b/bsim6.va
+@@ -1060,15 +1060,15 @@ parameter real BIGBINV = 9.49e-4                        	`ATTR(info="Parameter f
+ parameter real CIGBINV = 0.006                          	`ATTR(info="Parameter for Igb");
+ parameter real EIGBINV = 1.1                            	`ATTR(info="Parm for the Si bandgap for Igbinv [V]");
+ parameter real NIGBINV = 3.0                            	`ATTR(info="Parameter for Igbinv slope");
+-parameter real AIGC = (TYPE == `ntype) ? 1.36e-2 : 9.8e-3 	`ATTR(info="Parameter for Igc");
+-parameter real BIGC = (TYPE == `ntype) ? 1.71e-3 : 7.59e-4 	`ATTR(info="Parameter for Igc");
+-parameter real CIGC = (TYPE == `ntype) ? 0.075 : 0.03   	`ATTR(info="Parameter for Igc");
+-parameter real AIGS = (TYPE == `ntype) ? 1.36e-2 : 9.8e-3 	`ATTR(info="Parameter for Igs d");
+-parameter real BIGS = (TYPE == `ntype) ? 1.71e-3 : 7.59e-4 	`ATTR(info="Parameter for Igs d");
+-parameter real CIGS = (TYPE == `ntype) ? 0.075 : 0.03   	`ATTR(info="Parameter for Igs d");
+-parameter real AIGD = (TYPE == `ntype) ? 1.36e-2 : 9.8e-3 	`ATTR(info="Parameter for Igs d");
+-parameter real BIGD = (TYPE == `ntype) ? 1.71e-3 : 7.59e-4 	`ATTR(info="Parameter for Igs d");
+-parameter real CIGD = (TYPE == `ntype) ? 0.075 : 0.03   	`ATTR(info="Parameter for Igs d");
++parameter real AIGC = 1.36e-2  	                `ATTR(info="Parameter for Igc");
++parameter real BIGC = 1.71e-3 	                `ATTR(info="Parameter for Igc");
++parameter real CIGC = 0.075   	                `ATTR(info="Parameter for Igc");
++parameter real AIGS = 1.36e-2  	                `ATTR(info="Parameter for Igs d");
++parameter real BIGS = 1.71e-3  	                `ATTR(info="Parameter for Igs d");
++parameter real CIGS = 0.075   	                `ATTR(info="Parameter for Igs d");
++parameter real AIGD = 1.36e-2  	                `ATTR(info="Parameter for Igs d");
++parameter real BIGD = 1.71e-3  	                `ATTR(info="Parameter for Igs d");
++parameter real CIGD = 0.075    	                `ATTR(info="Parameter for Igs d");
+ parameter real DLCIG  = LINT                            	`ATTR(info="Delta L for Ig model [m]");
+ parameter real DLCIGD = DLCIG                           	`ATTR(info="Delta L for Ig model [m]");
+ parameter real POXEDGE = 1.0                            	`ATTR(info="Factor for the gate edge Tox");
+-- 
+2.1.2
+

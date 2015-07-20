@@ -1,0 +1,42 @@
+From a77bce3006aa0e386dda4dbd56dd3f32c3d479b2 Mon Sep 17 00:00:00 2001
+From: Guilherme Brondani Torri <guitorri@gmail.com>
+Date: Thu, 16 Jul 2015 20:37:53 +0200
+Subject: [PATCH] [bsim6] Fix sbulk, dbulk defined
+
+This looks like a bug in the model.
+With RBODYMOD disabled sbulk and dbuld are still in use.
+---
+ bsim6.va | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+diff --git a/bsim6.va b/bsim6.va
+index d119cdd..d20d82d 100755
+--- a/bsim6.va
++++ b/bsim6.va
+@@ -3870,16 +3870,23 @@ end
+ 
+ 	CSS = ddx(QS,V(`IntrinsicSource));
+ 	CSD = -ddx(QS,V(`IntrinsicDrain));
++`ifdef __RBODYMOD__
+ 	CSB = CSBI - ddx((QS-QSI),V(sbulk));
++`endif
+ 	CSG = CSGI - ddx((QS-QSI),V(`GateEdgeNode));
+ 	
+ 	CDS = -ddx(QD,V(`IntrinsicSource));
+ 	CDD = ddx(QD,V(`IntrinsicDrain));
++`ifdef __RBODYMOD__
+ 	CDB = CDBI - ddx((QD-QDI),V(dbulk));
++`endif
+ 	CDG = CDGI - ddx((QD-QDI),V(`GateEdgeNode));
+ 	CBS = -ddx(QB,V(`IntrinsicSource));
+ 	CBD = -ddx(QB,V(`IntrinsicDrain));
++`ifdef __RBODYMOD__
+ 	CBB = CBBI + ddx(QB,V(sbulk)) + ddx(QB,V(dbulk)) + ddx((devsign * Qovb), V( `IntrinsicBody));
++`endif
++
+ 	CBG = -ddx(QB,V(`IntrinsicGate)) - ddx((devsign * Qovb), V(`GateEdgeNode));
+ 	
+ 
+-- 
+2.1.2
+

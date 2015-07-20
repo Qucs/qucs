@@ -1,0 +1,1295 @@
+From 292f198f44244276faf6eef36b62484416e25348 Mon Sep 17 00:00:00 2001
+From: Guilherme Brondani Torri <guitorri@gmail.com>
+Date: Thu, 16 Jul 2015 20:59:51 +0200
+Subject: [PATCH] [bsim6] Promote comments to parameter attributes
+
+The parameter attributes can be used for documentation.
+---
+ bsim6.va | 872 +++++++++++++++++++++++++++++++--------------------------------
+ 1 file changed, 428 insertions(+), 444 deletions(-)
+ mode change 100755 => 100644 bsim6.va
+
+diff --git a/bsim6.va b/bsim6.va
+old mode 100755
+new mode 100644
+index 4b6d780..3c6011b
+--- a/bsim6.va
++++ b/bsim6.va
+@@ -608,248 +608,237 @@ endfunction
+ /*  Model Parameters    */
+ /************************/
+ parameter integer TYPE		= `ntype	from [`ptype:`ntype] exclude 0;
+-parameter integer CVMOD		= 0		from [0:1]; // 0: Consistent IV-CV
+-													// 1: Different IV-CV
+-parameter integer GEOMOD	= 0 		from [0:10];// Geo dependent parasitics model
+-parameter integer RGEOMOD	= 0		from [0:8]; // Geometry-dependent source/drain resistance
+-													//  0: RSH-based, 1: Holistic
+-parameter integer COVMOD	= 0		from [0:1]; // 0: Use Bias-independent Overlap Capacitances
+-													// 1: Use Bias-dependent Overlap Capacitances
+-parameter integer RDSMOD	= 0 		from [0:2]; // 0: Internal bias dependent and external bias independent s/d resistance model
+-													// 1: External s/d resistance model
+-													// 2: Internal s/d resistance model	
+-parameter integer GIDLMOD	= 0		from [0:1]; // 0: Turn off GIDL Current
+-													// 1: Turn on GIDL Current
+-parameter integer RGATEMOD	= 0		from [0:3]; // Gate resistance model selector
+-parameter integer RBODYMOD	= 0		from [0:2]; // Distributed body R model
+-parameter integer IGCMOD	= 0		from [0:1]; // 0: Turn off Igc, Igs and Igd
+-													// 1: Turn on Igc, Igs and Igd
+-parameter integer IGBMOD	= 0		from [0:1]; // 0: Turn off Igb
+-													// 1: Turn on Igb
+-parameter integer TNOIMOD	= 0		from [0:1]; // Thermal noise model selector
+-parameter integer SHMOD		= 0		from [0:1]; // 0 : Self heating model OFF
+-												// 1 : Self heating model ON
++parameter integer CVMOD		= 0		from [0:1]                	`ATTR(info="0: Consistent IV-CV\n1: Different IV-CV");
++parameter integer GEOMOD	= 0 		from [0:10]              	`ATTR(info="Geo dependent parasitics model");
++parameter integer RGEOMOD	= 0		from [0:8]               	`ATTR(info="Geometry-dependent source/drain resistance\n0: RSH-based, 1: Holistic");
++parameter integer COVMOD	= 0		from [0:1]                	`ATTR(info="0: Use Bias-independent Overlap Capacitances\n1: Use Bias-dependent Overlap Capacitances");
++parameter integer RDSMOD	= 0 		from [0:2]               	`ATTR(info="0: Internal bias dependent and external bias independent s/d resistance model\n1: External s/d resistance model\n2: Internal s/d resistance model");
++parameter integer GIDLMOD	= 0		from [0:1]               	`ATTR(info="0: Turn off GIDL Current\n1: Turn on GIDL Current");
++parameter integer RGATEMOD	= 0		from [0:3]              	`ATTR(info="Gate resistance model selector");
++parameter integer RBODYMOD	= 0		from [0:2]              	`ATTR(info="Distributed body R model");
++parameter integer IGCMOD	= 0		from [0:1]                	`ATTR(info="0: Turn off Igc, Igs and Igd\n1: Turn on Igc, Igs and Igd");
++parameter integer IGBMOD	= 0		from [0:1]                	`ATTR(info="0: Turn off Igb\n1: Turn on Igb");
++parameter integer TNOIMOD	= 0		from [0:1]               	`ATTR(info="Thermal noise model selector");
++parameter integer SHMOD		= 0		from [0:1]                	`ATTR(info="0 : Self heating model OFF\n1 : Self heating model ON");
+ // *************************
+ //   Device Parameters
+ // *************************
+-parameter real L	 	= 10u	from (0:inf);	// units are m
+-parameter real LLONG 		= 10u	from (0:inf);	// L of extracted Long channel device - units are m
+-parameter real LMLT		= 1.0	from (0:inf);	// Length Shrinking Parameter
+-parameter real WMLT		= 1.0	from (0:inf);	// Width Shrinking Parameter
+-parameter real XL 		= 0.0;			// L offset for channel length due to mask/etch effect
+-parameter real W	 	= 10u	from (0:inf);	// Total Width including fingers (units are m)
+-parameter real WWIDE 		= 10u	from (0:inf);	// W of extracted Wide channel device - units are m
+-parameter real XW 		= 0.0;					// W offset for channel width due to mask/etch effect
+-parameter real LINT		= 0.0;					// delta L for IV
++parameter real L	 	= 10u	from (0:inf)                   	`ATTR(info="units are m");
++parameter real LLONG 		= 10u	from (0:inf)               	`ATTR(info="L of extracted Long channel device - units are m");
++parameter real LMLT		= 1.0	from (0:inf)                 	`ATTR(info="Length Shrinking Parameter");
++parameter real WMLT		= 1.0	from (0:inf)                 	`ATTR(info="Width Shrinking Parameter");
++parameter real XL 		= 0.0                               	`ATTR(info="L offset for channel length due to mask/etch effect");
++parameter real W	 	= 10u	from (0:inf)                   	`ATTR(info="Total Width including fingers (units are m)");
++parameter real WWIDE 		= 10u	from (0:inf)               	`ATTR(info="W of extracted Wide channel device - units are m");
++parameter real XW 		= 0.0                               	`ATTR(info="W offset for channel width due to mask/etch effect");
++parameter real LINT		= 0.0                              	`ATTR(info="delta L for IV");
+ parameter real LL		= 0.0;
+ parameter real LW		= 0.0;
+ parameter real LWL		= 0.0;
+ parameter real LLN		= 1.0;
+ parameter real LWN		= 1.0;
+-parameter real WINT		= 0.0;					// delta W for IV
++parameter real WINT		= 0.0                              	`ATTR(info="delta W for IV");
+ parameter real WL		= 0.0;
+ parameter real WW		= 0.0;
+ parameter real WWL		= 0.0;
+ parameter real WLN		= 1.0;
+ parameter real WWN		= 1.0;
+-parameter real DLC		= 0.0;					// delta L for CV
++parameter real DLC		= 0.0                               	`ATTR(info="delta L for CV");
+ parameter real LLC		= 0.0;
+ parameter real LWC		= 0.0;
+ parameter real LWLC		= 0.0;
+-parameter real DWC		= 0.0;					// delta W for CV
++parameter real DWC		= 0.0                               	`ATTR(info="delta W for CV");
+ parameter real WLC		= 0.0;
+ parameter real WWC		= 0.0;
+ parameter real WWLC		= 0.0;
+-parameter real TOXE		= 3.0e-9;				// Effective gate dielectric thickness relative to SiO2, m
+-parameter real TOXP		= TOXE;					// Physical gate dielectric thickness, m
+-												// If not given, TOXP is calculated from TOXE and DTOX
+-parameter real DTOX		= 0.0;					// Difference between effective dielectric thickness
+-												// and physical thickness
+-parameter integer NF	= 1		from [1:inf);	// number of fingers
+-parameter real NDEP 	= 1e24;					// Channel Doping Concentration (m^-3) for IV
+-parameter real NDEPL1 	= 0.0;					// Length dependence coefficient of NDEP
+-parameter real NDEPLEXP1 = 1.0	from (0:inf);			// Length dependence exponent coefficient of NDEP
+-parameter real NDEPL2 	= 0.0;					// Length dependence of NDEP - For Short Channel Devices
+-parameter real NDEPLEXP2 = 2.0	from (0:inf);			// Length dependence exponent coefficient of NDEP
+-parameter real NDEPW 	= 0.0;					// Width dependence coefficient of NDEP
+-parameter real NDEPWEXP = 1.0	from (0:inf);			// Width dependence exponent coefficient of NDEP
+-parameter real NDEPWL 	= 0.0;					// Width-Length dependence coefficient of NDEP
+-parameter real NDEPWLEXP = 1.0	from (0:inf);			// Width-Length dependence exponent coefficient of NDEP
++parameter real TOXE		= 3.0e-9                           	`ATTR(info="Effective gate dielectric thickness relative to SiO2, m");
++parameter real TOXP		= TOXE                             	`ATTR(info="Physical gate dielectric thickness, m\nIf not given, TOXP is calculated from TOXE and DTOX");
++parameter real DTOX		= 0.0                              	`ATTR(info="Difference between effective dielectric thickness\nand physical thickness");
++parameter integer NF	= 1		from [1:inf)                  	`ATTR(info="number of fingers");
++parameter real NDEP 	= 1e24                             	`ATTR(info="Channel Doping Concentration (m^-3) for IV");
++parameter real NDEPL1 	= 0.0                            	`ATTR(info="Length dependence coefficient of NDEP");
++parameter real NDEPLEXP1 = 1.0	from (0:inf)             	`ATTR(info="Length dependence exponent coefficient of NDEP");
++parameter real NDEPL2 	= 0.0                            	`ATTR(info="Length dependence of NDEP - For Short Channel Devices");
++parameter real NDEPLEXP2 = 2.0	from (0:inf)             	`ATTR(info="Length dependence exponent coefficient of NDEP");
++parameter real NDEPW 	= 0.0                             	`ATTR(info="Width dependence coefficient of NDEP");
++parameter real NDEPWEXP = 1.0	from (0:inf)              	`ATTR(info="Width dependence exponent coefficient of NDEP");
++parameter real NDEPWL 	= 0.0                            	`ATTR(info="Width-Length dependence coefficient of NDEP");
++parameter real NDEPWLEXP = 1.0	from (0:inf)             	`ATTR(info="Width-Length dependence exponent coefficient of NDEP");
+ parameter real LNDEP 	= 0.0;
+ parameter real WNDEP 	= 0.0;
+ parameter real PNDEP 	= 0.0;
+ 
+-parameter real NDEPCV 	= NDEP;					// Channel Doping Concentration (m^-3) for CV
+-parameter real NDEPCVL1 = NDEPL1;				// Length dependence coefficient of NDEPCV
+-parameter real NDEPCVLEXP1 = NDEPLEXP1	from (0:inf);		// Length dependence exponent coefficient of NDEPCV
+-parameter real NDEPCVL2 = NDEPL2;				// Length dependence coefficient of NDEPCV - For Short Channel Devices
+-parameter real NDEPCVLEXP2 = NDEPLEXP2	from (0:inf);		// Length dependence exponent coefficient of NDEPCV
+-parameter real NDEPCVW 	= NDEPW;				// Width dependence coefficient of NDEPCV
+-parameter real NDEPCVWEXP = NDEPWEXP	from (0:inf);		// Width dependence exponent coefficient of NDEPCV
+-parameter real NDEPCVWL	= NDEPWL;				// Width-Length dependence coefficient of NDEPCV
+-parameter real NDEPCVWLEXP = NDEPWLEXP	from (0:inf);		// Width-Length dependence exponent coefficient of NDEPCV
++parameter real NDEPCV 	= NDEP                           	`ATTR(info="Channel Doping Concentration (m^-3) for CV");
++parameter real NDEPCVL1 = NDEPL1                        	`ATTR(info="Length dependence coefficient of NDEPCV");
++parameter real NDEPCVLEXP1 = NDEPLEXP1	from (0:inf)     	`ATTR(info="Length dependence exponent coefficient of NDEPCV");
++parameter real NDEPCVL2 = NDEPL2                        	`ATTR(info="Length dependence coefficient of NDEPCV - For Short Channel Devices");
++parameter real NDEPCVLEXP2 = NDEPLEXP2	from (0:inf)     	`ATTR(info="Length dependence exponent coefficient of NDEPCV");
++parameter real NDEPCVW 	= NDEPW                         	`ATTR(info="Width dependence coefficient of NDEPCV");
++parameter real NDEPCVWEXP = NDEPWEXP	from (0:inf)       	`ATTR(info="Width dependence exponent coefficient of NDEPCV");
++parameter real NDEPCVWL	= NDEPWL                        	`ATTR(info="Width-Length dependence coefficient of NDEPCV");
++parameter real NDEPCVWLEXP = NDEPWLEXP	from (0:inf)     	`ATTR(info="Width-Length dependence exponent coefficient of NDEPCV");
+ parameter real LNDEPCV 	= LNDEP;
+ parameter real WNDEPCV 	= WNDEP;
+ parameter real PNDEPCV 	= PNDEP;
+ 
+-parameter real NGATE 	= 5e25;					// Gate Doping Concentration (m^-3)
++parameter real NGATE 	= 5e25                            	`ATTR(info="Gate Doping Concentration (m^-3)");
+ parameter real LNGATE 	= 0.0;
+ parameter real WNGATE 	= 0.0;
+ parameter real PNGATE 	= 0.0;
+ 
+-parameter real EASUB 	= 4.05;					// Electron affinity of substrate, eV
+-parameter real NI0SUB 	= 1.1e16;				// Intrinsic carrier concentration of the substrate at 300.15K ( m^-3)
+-parameter real BG0SUB 	= 1.17; 				// Band gap of substrate at 300.15K, eV
+-parameter real EPSRSUB	= 11.9;					// Relative dielectric constant of the channel material
+-parameter real EPSROX	= 3.9;					// Relative dielectric constant of the gate dielectric
+-parameter real XJ 		= 1.5e-7;				// S/D junction depth
++parameter real EASUB 	= 4.05                            	`ATTR(info="Electron affinity of substrate, eV");
++parameter real NI0SUB 	= 1.1e16                         	`ATTR(info="Intrinsic carrier concentration of the substrate at 300.15K ( m^-3)");
++parameter real BG0SUB 	= 1.17                           	`ATTR(info="Band gap of substrate at 300.15K, eV");
++parameter real EPSRSUB	= 11.9                           	`ATTR(info="Relative dielectric constant of the channel material");
++parameter real EPSROX	= 3.9                             	`ATTR(info="Relative dielectric constant of the gate dielectric");
++parameter real XJ 		= 1.5e-7                            	`ATTR(info="S/D junction depth");
+ parameter real LXJ 		= 0.0;
+ parameter real WXJ 		= 0.0;
+ parameter real PXJ 		= 0.0;
+-parameter real VFB 		= -1.0;					// Flat band voltage for IV
++parameter real VFB 		= -1.0                             	`ATTR(info="Flat band voltage for IV");
+ parameter real LVFB 	= 0.0;
+ parameter real WVFB 	= 0.0;
+ parameter real PVFB 	= 0.0;
+ 
+-parameter real VFBCV	= VFB;					// Flat band voltage for CV
++parameter real VFBCV	= VFB                              	`ATTR(info="Flat band voltage for CV");
+ parameter real LVFBCV 	= LVFB;
+ parameter real WVFBCV 	= WVFB;
+ parameter real PVFBCV 	= PVFB;
+-parameter real VFBCVL 	= 0.0;					// Length dependence coefficient of VFBCV
+-parameter real VFBCVLEXP = 1.0	from (0:inf);			// Length dependence exponent coefficient of VFBCV
+-parameter real VFBCVW 	= 0.0;					// Width dependence coefficient of VFBCV
+-parameter real VFBCVWEXP = 1.0	from (0:inf);			// Width dependence exponent coefficient of VFBCV
+-parameter real VFBCVWL 	= 0.0;					// Width-Length dependence coefficient of VFBCV
+-parameter real VFBCVWLEXP = 1.0	from (0:inf);			// Width-Length dependence coefficient of VFBCV
++parameter real VFBCVL 	= 0.0                            	`ATTR(info="Length dependence coefficient of VFBCV");
++parameter real VFBCVLEXP = 1.0	from (0:inf)             	`ATTR(info="Length dependence exponent coefficient of VFBCV");
++parameter real VFBCVW 	= 0.0                            	`ATTR(info="Width dependence coefficient of VFBCV");
++parameter real VFBCVWEXP = 1.0	from (0:inf)             	`ATTR(info="Width dependence exponent coefficient of VFBCV");
++parameter real VFBCVWL 	= 0.0                           	`ATTR(info="Width-Length dependence coefficient of VFBCV");
++parameter real VFBCVWLEXP = 1.0	from (0:inf)            	`ATTR(info="Width-Length dependence coefficient of VFBCV");
+ 
+ //Diode parameters
+-parameter integer PERMOD	= 1 from [0:1];		// Whether PS/PD (when given) include gate-edge perimeter
+-parameter real AS		= 0.0 from [0:inf);     // Source to Substrate Junction Area
+-parameter real AD		= 0.0 from [0:inf);     // Drain to Substrate Junction Area
+-parameter real PS		= 0.0 from [0:inf);     // Source to Substrate Junction Perimeter
+-parameter real PD		= 0.0 from [0:inf);     // Drain to Substrate Junction Perimeter
+-parameter real DWJ		= DWC;					// delta W for S/D junctions
++parameter integer PERMOD	= 1 from [0:1]                 	`ATTR(info="Whether PS/PD (when given) include gate-edge perimeter");
++parameter real AS		= 0.0 from [0:inf)                   	`ATTR(info="Source to Substrate Junction Area");
++parameter real AD		= 0.0 from [0:inf)                   	`ATTR(info="Drain to Substrate Junction Area");
++parameter real PS		= 0.0 from [0:inf)                   	`ATTR(info="Source to Substrate Junction Perimeter");
++parameter real PD		= 0.0 from [0:inf)                   	`ATTR(info="Drain to Substrate Junction Perimeter");
++parameter real DWJ		= DWC                               	`ATTR(info="delta W for S/D junctions");
+ 
+ // Rd, Rs related Parameter
+ parameter real VFBSDOFF	= 0.0;
+-parameter real NRS		= 1.0 from [0:inf);		// Number of squares in source
+-parameter real NRD		= 1.0 from [0:inf);		// Number of squares in drain
+-parameter integer MINZ	= 0   from [0:1];		// Minimize either D or S
++parameter real NRS		= 1.0 from [0:inf)                  	`ATTR(info="Number of squares in source");
++parameter real NRD		= 1.0 from [0:inf)                  	`ATTR(info="Number of squares in drain");
++parameter integer MINZ	= 0   from [0:1]                 	`ATTR(info="Minimize either D or S");
+ 
+ // Short Channel Effects
+-parameter real NSD 		= 1e26;					// S/D Doping Concentration (m^-3)
++parameter real NSD 		= 1e26                             	`ATTR(info="S/D Doping Concentration (m^-3)");
+ parameter real LNSD 	= 0.0;
+ parameter real WNSD 	= 0.0;
+ parameter real PNSD 	= 0.0;
+ 
+-parameter real DVTP0 	= 0.0;				// DITS
++parameter real DVTP0 	= 0.0                             	`ATTR(info="DITS");
+ parameter real LDVTP0 	= 0;
+ parameter real WDVTP0 	= 0;
+ parameter real PDVTP0 	= 0;
+-parameter real DVTP1 	= 0.0;					// DITS
++parameter real DVTP1 	= 0.0                             	`ATTR(info="DITS");
+ parameter real LDVTP1 	= 0;
+ parameter real WDVTP1 	= 0;
+ parameter real PDVTP1 	= 0;
+-parameter real DVTP2 	= 0.0;					// DITS
++parameter real DVTP2 	= 0.0                             	`ATTR(info="DITS");
+ parameter real LDVTP2 	= 0;
+ parameter real WDVTP2 	= 0;
+ parameter real PDVTP2 	= 0;
+-parameter real DVTP3 	= 0.0;					// DITS
++parameter real DVTP3 	= 0.0                             	`ATTR(info="DITS");
+ parameter real LDVTP3 	= 0;
+ parameter real WDVTP3 	= 0;
+ parameter real PDVTP3 	= 0;
+-parameter real DVTP4 	= 0.0;					// DITS
++parameter real DVTP4 	= 0.0                             	`ATTR(info="DITS");
+ parameter real LDVTP4 	= 0;
+ parameter real WDVTP4 	= 0;
+ parameter real PDVTP4 	= 0;
+-parameter real DVTP5 	= 0.0;					// DITS
++parameter real DVTP5 	= 0.0                             	`ATTR(info="DITS");
+ parameter real LDVTP5 	= 0;
+ parameter real WDVTP5 	= 0;
+ parameter real PDVTP5 	= 0;
+ 
+-parameter real PHIN 	= 0.045;				// Nonuniform vertical doping effect on surface potential, V
++parameter real PHIN 	= 0.045                            	`ATTR(info="Nonuniform vertical doping effect on surface potential, V");
+ parameter real LPHIN 	= 0.0;
+ parameter real WPHIN 	= 0.0;
+ parameter real PPHIN 	= 0.0;
+ 
+-parameter real ETA0 	= 0.08;					// DIBL coefficient
++parameter real ETA0 	= 0.08                             	`ATTR(info="DIBL coefficient");
+ parameter real LETA0	= 0.0;
+ parameter real WETA0 	= 0.0;
+ parameter real PETA0 	= 0.0;
+-parameter real DSUB 	= 1.0;					// Length scaling exponent for DIBL
+-parameter real ETAB 	= -0.07;				// Body bias coefficient for subthreshold DIBL effect
+-parameter real ETABEXP 	= 1.0	from (0:inf);			// Exponent coefficient of ETAB
++parameter real DSUB 	= 1.0                              	`ATTR(info="Length scaling exponent for DIBL");
++parameter real ETAB 	= -0.07                            	`ATTR(info="Body bias coefficient for subthreshold DIBL effect");
++parameter real ETABEXP 	= 1.0	from (0:inf)              	`ATTR(info="Exponent coefficient of ETAB");
+ parameter real LETAB 	= 0.0;
+ parameter real WETAB 	= 0.0;
+ parameter real PETAB 	= 0.0;
+ 
+-parameter real K2 	= 0.0;					// Vth shift due to Vertical Non-uniform doping
+-parameter real K2L 	= 0.0;					// Length dependence coefficient of K2
+-parameter real K2LEXP 	= 1.0	from (0:inf);			// Length dependence exponent coefficient of K2
+-parameter real K2W 	= 0.0;					// Width dependence coefficient of K2
+-parameter real K2WEXP 	= 1.0	from (0:inf);			// Width dependence exponent coefficient of K2
+-parameter real K2WL 	= 0.0;					// Width-Length dependence coefficient of K2
+-parameter real K2WLEXP 	= 1.0	from (0:inf);			// Width-Length dependence exponent coefficient of K2
++parameter real K2 	= 0.0                                	`ATTR(info="Vth shift due to Vertical Non-uniform doping");
++parameter real K2L 	= 0.0                               	`ATTR(info="Length dependence coefficient of K2");
++parameter real K2LEXP 	= 1.0	from (0:inf)               	`ATTR(info="Length dependence exponent coefficient of K2");
++parameter real K2W 	= 0.0                               	`ATTR(info="Width dependence coefficient of K2");
++parameter real K2WEXP 	= 1.0	from (0:inf)               	`ATTR(info="Width dependence exponent coefficient of K2");
++parameter real K2WL 	= 0.0                              	`ATTR(info="Width-Length dependence coefficient of K2");
++parameter real K2WLEXP 	= 1.0	from (0:inf)              	`ATTR(info="Width-Length dependence exponent coefficient of K2");
+ parameter real LK2 	= 0.0;
+ parameter real WK2 	= 0.0;
+ parameter real PK2 	= 0.0;
+ 
+ // Quantum Mechanical Effects
+-parameter real ADOS 	= 0.0 	from [0:inf);	// Quantum mechanical effect prefactor cum switch in inversion
+-parameter real BDOS 	= 1.0 	from [0:inf);	// Charge centroid parameter - slope of CV curve under QME in inversion
+-parameter real QM0 		= 1.0e-3 from (0:inf);	// Charge centroid parameter - starting point for QME in inversion
+-parameter real ETAQM	= 0.54	from [0:inf);	// Bulk charge coefficient for charge centroid in inversion
++parameter real ADOS 	= 0.0 	from [0:inf)                	`ATTR(info="Quantum mechanical effect prefactor cum switch in inversion");
++parameter real BDOS 	= 1.0 	from [0:inf)                	`ATTR(info="Charge centroid parameter - slope of CV curve under QME in inversion");
++parameter real QM0 		= 1.0e-3 from (0:inf)              	`ATTR(info="Charge centroid parameter - starting point for QME in inversion");
++parameter real ETAQM	= 0.54	from [0:inf)                	`ATTR(info="Bulk charge coefficient for charge centroid in inversion");
+ 
+ //Subthreshold Swing Factor
+-parameter real CIT      = 0.0;			// parameter for interface trap
++parameter real CIT      = 0.0                           	`ATTR(info="parameter for interface trap");
+ parameter real LCIT 	= 0.0;
+ parameter real WCIT 	= 0.0;
+ parameter real PCIT 	= 0.0;
+ 
+ 
+-parameter real NFACTOR 		= 0.0;				// Sub-threshold slope factor
+-parameter real NFACTORL 	= 0.0;			// Length dependence coefficient of NFACTOR
+-parameter real NFACTORLEXP 	= 1.0	from (0:inf);	// Length dependence exponent coefficient of NFACTOR
+-parameter real NFACTORW 	= 0.0;			// Width dependence coefficient of NFACTOR
+-parameter real NFACTORWEXP 	= 1.0	from (0:inf);	// Width dependence exponent coefficient of NFACTOR
+-parameter real NFACTORWL 	= 0.0;			// Width-Length dependence coefficient of NFACTOR
+-parameter real NFACTORWLEXP 	= 1.0	from (0:inf);	// Width-Length dependence exponent coefficient of NFACTOR
++parameter real NFACTOR 		= 0.0                          	`ATTR(info="Sub-threshold slope factor");
++parameter real NFACTORL 	= 0.0                          	`ATTR(info="Length dependence coefficient of NFACTOR");
++parameter real NFACTORLEXP 	= 1.0	from (0:inf)          	`ATTR(info="Length dependence exponent coefficient of NFACTOR");
++parameter real NFACTORW 	= 0.0                          	`ATTR(info="Width dependence coefficient of NFACTOR");
++parameter real NFACTORWEXP 	= 1.0	from (0:inf)          	`ATTR(info="Width dependence exponent coefficient of NFACTOR");
++parameter real NFACTORWL 	= 0.0                         	`ATTR(info="Width-Length dependence coefficient of NFACTOR");
++parameter real NFACTORWLEXP 	= 1.0	from (0:inf)         	`ATTR(info="Width-Length dependence exponent coefficient of NFACTOR");
+ parameter real LNFACTOR 	= 0.0;
+ parameter real WNFACTOR 	= 0.0;
+ parameter real PNFACTOR 	= 0.0;
+ 
+-parameter real CDSCD 	= 1e-9;				// drain-bias sensitivity of sub-threshold slope
+-parameter real CDSCDL 	= 0.0;				// Length dependence coefficient of CDSCD
+-parameter real CDSCDLEXP = 1.0	from (0:inf);		// Length dependence exponent coefficient of CDSCD
++parameter real CDSCD 	= 1e-9                            	`ATTR(info="drain-bias sensitivity of sub-threshold slope");
++parameter real CDSCDL 	= 0.0                            	`ATTR(info="Length dependence coefficient of CDSCD");
++parameter real CDSCDLEXP = 1.0	from (0:inf)             	`ATTR(info="Length dependence exponent coefficient of CDSCD");
+ parameter real LCDSCD 	= 0.0;
+ parameter real WCDSCD 	= 0.0;
+ parameter real PCDSCD 	= 0.0;
+-parameter real CDSCB 	= 0.0;				// body-bias sensitivity of sub-threshold slope
+-parameter real CDSCBL 	= 0.0;				// Length dependence coefficient of CDSCB
+-parameter real CDSCBLEXP = 1.0	from (0:inf);		// Length dependence exponent coefficient of CDSCB
++parameter real CDSCB 	= 0.0                             	`ATTR(info="body-bias sensitivity of sub-threshold slope");
++parameter real CDSCBL 	= 0.0                            	`ATTR(info="Length dependence coefficient of CDSCB");
++parameter real CDSCBLEXP = 1.0	from (0:inf)             	`ATTR(info="Length dependence exponent coefficient of CDSCB");
+ parameter real LCDSCB 	= 0.0;
+ parameter real WCDSCB 	= 0.0;
+ parameter real PCDSCB 	= 0.0;
+ 
+ //Drain Saturation Voltage
+-parameter real VSAT		= 1e5;					// Saturation Velocity m/s
++parameter real VSAT		= 1e5                              	`ATTR(info="Saturation Velocity m/s");
+ parameter real LVSAT		= 0.0;
+ parameter real WVSAT		= 0.0;
+ parameter real PVSAT		= 0.0;
+-parameter real VSATL		= 0.0;					// Length dependence coefficient of of VSAT
+-parameter real VSATLEXP		= 1.0	from (0:inf);			// Length dependence exponent coefficient of VSAT
+-parameter real VSATW		= 0.0;					// Width dependence coefficient of of VSAT
+-parameter real VSATWEXP		= 1.0	from (0:inf);			// Width dependence exponent coefficient of of VSAT
+-parameter real VSATWL		= 0.0;					// Width-Length dependence coefficient of of VSAT
+-parameter real VSATWLEXP	= 1.0	from (0:inf);			// Width-Length dependence exponent coefficient of of VSAT
+-parameter real DELTA		= 0.125;				// Smoothing function factor for Vdsat
++parameter real VSATL		= 0.0                             	`ATTR(info="Length dependence coefficient of of VSAT");
++parameter real VSATLEXP		= 1.0	from (0:inf)             	`ATTR(info="Length dependence exponent coefficient of VSAT");
++parameter real VSATW		= 0.0                             	`ATTR(info="Width dependence coefficient of of VSAT");
++parameter real VSATWEXP		= 1.0	from (0:inf)             	`ATTR(info="Width dependence exponent coefficient of of VSAT");
++parameter real VSATWL		= 0.0                            	`ATTR(info="Width-Length dependence coefficient of of VSAT");
++parameter real VSATWLEXP	= 1.0	from (0:inf)             	`ATTR(info="Width-Length dependence exponent coefficient of of VSAT");
++parameter real DELTA		= 0.125                           	`ATTR(info="Smoothing function factor for Vdsat");
+ parameter real LDELTA		= 0.0;
+ parameter real WDELTA		= 0.0;
+ parameter real PDELTA		= 0.0;
+-parameter real DELTAL		= 0.0;					// Length dependence coefficient of DELTA
+-parameter real DELTALEXP 	= 1.0	from (0:inf);			// Length dependence exponent coefficient of DELTA
++parameter real DELTAL		= 0.0                            	`ATTR(info="Length dependence coefficient of DELTA");
++parameter real DELTALEXP 	= 1.0	from (0:inf)            	`ATTR(info="Length dependence exponent coefficient of DELTA");
+ 
+-parameter real VSATCV		= VSAT;					// VSAT parameter for CV
++parameter real VSATCV		= VSAT                           	`ATTR(info="VSAT parameter for CV");
+ parameter real LVSATCV		= LVSAT;
+ parameter real WVSATCV		= WVSAT;
+ parameter real PVSATCV		= PVSAT;
+@@ -861,239 +850,239 @@ parameter real VSATCVWL		= VSATWL;
+ parameter real VSATCVWLEXP 	= VSATWLEXP	from (0:inf);
+ 
+ // Mobility Degradation
+-parameter real U0		= 67.0e-3;			// units are m2/Vs
+-parameter real U0L		= 0.0;				// Length dependence coefficient of U0L
+-parameter real U0LEXP		= 1.0	from (0:inf);		// Length dependence exponent coefficient of U0L
++parameter real U0		= 67.0e-3                            	`ATTR(info="units are m2/Vs");
++parameter real U0L		= 0.0                               	`ATTR(info="Length dependence coefficient of U0L");
++parameter real U0LEXP		= 1.0	from (0:inf)               	`ATTR(info="Length dependence exponent coefficient of U0L");
+ parameter real LU0		= 0.0;
+ parameter real WU0		= 0.0;
+ parameter real PU0		= 0.0;
+ 
+-parameter real ETAMOB		= 1.0;				// Effective field parameter (should be kept close to 1)
++parameter real ETAMOB		= 1.0                            	`ATTR(info="Effective field parameter (should be kept close to 1)");
+ 
+-parameter real UA		= 0.001;			// Mobility reduction coefficient
+-parameter real UAL		= 0.0;				// Length dependence coefficient of  UA
+-parameter real UALEXP		= 1.0	from (0:inf);		// Length dependence exponent coefficient of  UA
+-parameter real UAW		= 0.0;				// Width dependence coefficient of UA
+-parameter real UAWEXP		= 1.0	from (0:inf);		// Width dependence exponent coefficient of UA
+-parameter real UAWL		= 0.0;				// Width-Length dependence coefficient of UA
+-parameter real UAWLEXP		= 1.0	from (0:inf);		// Width-Length dependence coefficient of UA
++parameter real UA		= 0.001                              	`ATTR(info="Mobility reduction coefficient");
++parameter real UAL		= 0.0                               	`ATTR(info="Length dependence coefficient of  UA");
++parameter real UALEXP		= 1.0	from (0:inf)               	`ATTR(info="Length dependence exponent coefficient of  UA");
++parameter real UAW		= 0.0                               	`ATTR(info="Width dependence coefficient of UA");
++parameter real UAWEXP		= 1.0	from (0:inf)               	`ATTR(info="Width dependence exponent coefficient of UA");
++parameter real UAWL		= 0.0                              	`ATTR(info="Width-Length dependence coefficient of UA");
++parameter real UAWLEXP		= 1.0	from (0:inf)              	`ATTR(info="Width-Length dependence coefficient of UA");
+ parameter real LUA		= 0.0;
+ parameter real WUA		= 0.0;
+ parameter real PUA		= 0.0;
+ 
+-parameter real EU		= 1.5;				// Mobility reduction exponent
++parameter real EU		= 1.5                                	`ATTR(info="Mobility reduction exponent");
+ parameter real LEU		= 0.0;
+ parameter real WEU		= 0.0;
+ parameter real PEU		= 0.0;
+-parameter real EUL		= 0.0;					// Length dependence coefficient of EU
+-parameter real EULEXP		= 1.0	from (0:inf);			// Length dependence exponent coefficient of EU
+-parameter real EUW		= 0.0;					// Width dependence coefficient of EU
+-parameter real EUWEXP		= 1.0	from (0:inf);			// Width dependence exponent coefficient of EU
+-parameter real EUWL		= 0.0;					// Width-Length dependence coefficient of EU
+-parameter real EUWLEXP		= 1.0	from (0:inf);			// Width-Length dependence coefficient of EU
+-
+-parameter real UD		= 0.001;				// Coulombic scattering parameter
+-parameter real UDL		= 0.0;					// Length dependence coefficient of UD
+-parameter real UDLEXP		= 1.0	from (0:inf);			// Length dependence exponent coefficient of UD
++parameter real EUL		= 0.0                               	`ATTR(info="Length dependence coefficient of EU");
++parameter real EULEXP		= 1.0	from (0:inf)               	`ATTR(info="Length dependence exponent coefficient of EU");
++parameter real EUW		= 0.0                               	`ATTR(info="Width dependence coefficient of EU");
++parameter real EUWEXP		= 1.0	from (0:inf)               	`ATTR(info="Width dependence exponent coefficient of EU");
++parameter real EUWL		= 0.0                              	`ATTR(info="Width-Length dependence coefficient of EU");
++parameter real EUWLEXP		= 1.0	from (0:inf)              	`ATTR(info="Width-Length dependence coefficient of EU");
++
++parameter real UD		= 0.001                              	`ATTR(info="Coulombic scattering parameter");
++parameter real UDL		= 0.0                               	`ATTR(info="Length dependence coefficient of UD");
++parameter real UDLEXP		= 1.0	from (0:inf)               	`ATTR(info="Length dependence exponent coefficient of UD");
+ parameter real LUD		= 0.0;
+ parameter real WUD		= 0.0;
+ parameter real PUD		= 0.0;
+ 
+-parameter real UCS		= 2.0;					// Coulombic scattering parameter
++parameter real UCS		= 2.0                               	`ATTR(info="Coulombic scattering parameter");
+ parameter real LUCS		= 0.0;
+ parameter real WUCS		= 0.0;
+ parameter real PUCS		= 0.0;
+ 
+ 
+-parameter real UC		= 0.0;					// Mobility reduction with body bias
+-parameter real UCL		= 0.0;					// Length dependence coefficient of UC
+-parameter real UCLEXP		= 1.0	from (0:inf);			// Length dependence exponent coefficient of UC
+-parameter real UCW		= 0.0;					// Width dependence coefficient of UC
+-parameter real UCWEXP		= 1.0	from (0:inf);			// Width dependence exponent coefficient of UC
+-parameter real UCWL		= 0.0;					// Width-Length dependence coefficient of UC
+-parameter real UCWLEXP		= 1.0	from (0:inf);			// Width-Length dependence exponent coefficient of UC
++parameter real UC		= 0.0                                	`ATTR(info="Mobility reduction with body bias");
++parameter real UCL		= 0.0                               	`ATTR(info="Length dependence coefficient of UC");
++parameter real UCLEXP		= 1.0	from (0:inf)               	`ATTR(info="Length dependence exponent coefficient of UC");
++parameter real UCW		= 0.0                               	`ATTR(info="Width dependence coefficient of UC");
++parameter real UCWEXP		= 1.0	from (0:inf)               	`ATTR(info="Width dependence exponent coefficient of UC");
++parameter real UCWL		= 0.0                              	`ATTR(info="Width-Length dependence coefficient of UC");
++parameter real UCWLEXP		= 1.0	from (0:inf)              	`ATTR(info="Width-Length dependence exponent coefficient of UC");
+ parameter real LUC		= 0.0;
+ parameter real WUC		= 0.0;
+ parameter real PUC		= 0.0;
+ 
+ // Channel Length Modulation
+-parameter real PCLM		    = 0.0;				// CLM prefactor
+-parameter real PCLML		= 0.0;				// Length dependence coefficient of PCLM
+-parameter real PCLMLEXP 	= 1.0 from (0:inf);		// Length dependence exponent coefficient of PCLM
++parameter real PCLM		    = 0.0                          	`ATTR(info="CLM prefactor");
++parameter real PCLML		= 0.0                             	`ATTR(info="Length dependence coefficient of PCLM");
++parameter real PCLMLEXP 	= 1.0 from (0:inf)             	`ATTR(info="Length dependence exponent coefficient of PCLM");
+ parameter real LPCLM		= 0.0;
+ parameter real WPCLM		= 0.0;
+ parameter real PPCLM		= 0.0;
+ 
+-parameter real PCLMG		= 0.0;				// CLM prefactor gate voltage dependence
++parameter real PCLMG		= 0.0                             	`ATTR(info="CLM prefactor gate voltage dependence");
+ 
+-parameter real PCLMCV		= PCLM;				// CLM parameter for CV
++parameter real PCLMCV		= PCLM                           	`ATTR(info="CLM parameter for CV");
+ parameter real PCLMCVL		= PCLML;
+ parameter real PCLMCVLEXP	= PCLMLEXP from (0:inf);
+ parameter real LPCLMCV		= LPCLM;
+ parameter real WPCLMCV		= WPCLM;
+ parameter real PPCLMCV		= PPCLM;
+ 
+-parameter real PSCBE1 	= 4.24e8;				// Substrate current body-effect coeff
++parameter real PSCBE1 	= 4.24e8                         	`ATTR(info="Substrate current body-effect coeff");
+ parameter real LPSCBE1 	= 0.0;
+ parameter real WPSCBE1 	= 0.0;
+ parameter real PPSCBE1 	= 0.0;
+-parameter real PSCBE2 	= 1.0e-8;				// Substrate current body-effect coeff
++parameter real PSCBE2 	= 1.0e-8                         	`ATTR(info="Substrate current body-effect coeff");
+ parameter real LPSCBE2 	= 0.0;
+ parameter real WPSCBE2 	= 0.0;
+ parameter real PPSCBE2 	= 0.0;
+ 
+-parameter real PDITS 	= 0.0;   			// Coefficient for drain-induced Vth shifts
++parameter real PDITS 	= 0.0                             	`ATTR(info="Coefficient for drain-induced Vth shifts");
+ parameter real LPDITS 	= 0.0;
+ parameter real WPDITS 	= 0.0;
+ parameter real PPDITS 	= 0.0;
+-parameter real PDITSL 	= 0.0 from [0:inf);		// L dep of drain-induced Vth shifts
+-parameter real PDITSD 	= 0.0;					// Vds dep of drain-induced Vth shifts
++parameter real PDITSL 	= 0.0 from [0:inf)               	`ATTR(info="L dep of drain-induced Vth shifts");
++parameter real PDITSD 	= 0.0                            	`ATTR(info="Vds dep of drain-induced Vth shifts");
+ parameter real LPDITSD 	= 0.0;
+ parameter real WPDITSD 	= 0.0;
+ parameter real PPDITSD 	= 0.0;
+ 
+ // S/D Series Resistance
+-parameter real RSH 	= 0.0 from [0:inf);		// Source-drain sheet resistance [Ohm]
+-parameter real PRWG 	= 1.0;					// gate bias dependence of S/D extension resistance, V-1
++parameter real RSH 	= 0.0 from [0:inf)                  	`ATTR(info="Source-drain sheet resistance [Ohm]");
++parameter real PRWG 	= 1.0                              	`ATTR(info="gate bias dependence of S/D extension resistance, V-1");
+ parameter real LPRWG 	= 0.0;
+ parameter real WPRWG 	= 0.0;
+ parameter real PPRWG 	= 0.0;
+-parameter real PRWB 	= 0.0;					// Body bias dependence of resistance
++parameter real PRWB 	= 0.0                              	`ATTR(info="Body bias dependence of resistance");
+ parameter real LPRWB 	= 0.0;
+ parameter real WPRWB 	= 0.0;
+ parameter real PPRWB 	= 0.0;
+-parameter real PRWBL 	= 0.0;					// Length dependence coefficient of PPRWB
+-parameter real PRWBLEXP	= 1.0	from (0:inf);			// Length dependence exponent coefficient of PPRWB
+-parameter real WR 	= 1.0;					// W dependence parameter of S/D extension resistance
++parameter real PRWBL 	= 0.0                             	`ATTR(info="Length dependence coefficient of PPRWB");
++parameter real PRWBLEXP	= 1.0	from (0:inf)              	`ATTR(info="Length dependence exponent coefficient of PPRWB");
++parameter real WR 	= 1.0                                	`ATTR(info="W dependence parameter of S/D extension resistance");
+ parameter real LWR 	= 0.0;
+ parameter real WWR 	= 0.0;
+ parameter real PWR 	= 0.0;
+ 
+-parameter real RSWMIN 	= 0.0;					// Source Resistance per unit width at high Vgs (RDSMOD=1)
++parameter real RSWMIN 	= 0.0                            	`ATTR(info="Source Resistance per unit width at high Vgs (RDSMOD=1)");
+ parameter real LRSWMIN 	= 0.0;
+ parameter real WRSWMIN 	= 0.0;
+ parameter real PRSWMIN 	= 0.0;
+-parameter real RSW 	= 10.0;					// zero bias Source Resistance (RDSMOD=1)
++parameter real RSW 	= 10.0                              	`ATTR(info="zero bias Source Resistance (RDSMOD=1)");
+ parameter real LRSW 	= 0.0;
+ parameter real WRSW 	= 0.0;
+ parameter real PRSW 	= 0.0;
+-parameter real RSWL 	= 0.0;					// Geometrical scaling of RSW (RDSMOD=1)
+-parameter real RSWLEXP 	= 1.0	from (0:inf);			// Geometrical scaling of RSW (RDSMOD=1)
++parameter real RSWL 	= 0.0                              	`ATTR(info="Geometrical scaling of RSW (RDSMOD=1)");
++parameter real RSWLEXP 	= 1.0	from (0:inf)              	`ATTR(info="Geometrical scaling of RSW (RDSMOD=1)");
+ 
+-parameter real RDWMIN 	= RSWMIN;				// Drain Resistance per unit width at high Vgs (RDSMOD=1)
++parameter real RDWMIN 	= RSWMIN                         	`ATTR(info="Drain Resistance per unit width at high Vgs (RDSMOD=1)");
+ parameter real LRDWMIN 	= LRSWMIN;
+ parameter real WRDWMIN 	= WRSWMIN;
+ parameter real PRDWMIN 	= PRSWMIN;
+-parameter real RDW 	= RSW;					// zero bias Drain Resistance (RDSMOD=1)
++parameter real RDW 	= RSW                               	`ATTR(info="zero bias Drain Resistance (RDSMOD=1)");
+ parameter real LRDW 	= LRSW;
+ parameter real WRDW 	= WRSW;
+ parameter real PRDW 	= PRSW;
+-parameter real RDWL 	= RSWL;					// Geometrical scaling of RDW (RDSMOD=1)
+-parameter real RDWLEXP 	= RSWLEXP	from (0:inf);		// Geometrical scaling of RDW (RDSMOD=1)
++parameter real RDWL 	= RSWL                             	`ATTR(info="Geometrical scaling of RDW (RDSMOD=1)");
++parameter real RDWLEXP 	= RSWLEXP	from (0:inf)          	`ATTR(info="Geometrical scaling of RDW (RDSMOD=1)");
+ 
+-parameter real RDSWMIN 	= 0.0;					// S/D Resistance per unit width at high Vgs (RDSMOD=0 and RDSMOD=2)
++parameter real RDSWMIN 	= 0.0                           	`ATTR(info="S/D Resistance per unit width at high Vgs (RDSMOD=0 and RDSMOD=2)");
+ parameter real LRDSWMIN = 0.0;
+ parameter real WRDSWMIN = 0.0;
+ parameter real PRDSWMIN = 0.0;
+-parameter real RDSW 	= 20.0;					// zero bias Resistance (RDSMOD=0 and RDSMOD=2)
+-parameter real RDSWL 	= 0.0;					// Geometrical scaling of RDSW (RDSMOD=0 and RDSMOD=2)
+-parameter real RDSWLEXP = 1.0	from (0:inf); 			// Geometrical scaling of RDSW (RDSMOD=0 and RDSMOD=2)
++parameter real RDSW 	= 20.0                             	`ATTR(info="zero bias Resistance (RDSMOD=0 and RDSMOD=2)");
++parameter real RDSWL 	= 0.0                             	`ATTR(info="Geometrical scaling of RDSW (RDSMOD=0 and RDSMOD=2)");
++parameter real RDSWLEXP = 1.0	from (0:inf)              	`ATTR(info="Geometrical scaling of RDSW (RDSMOD=0 and RDSMOD=2)");
+ parameter real LRDSW 	= 0.0;
+ parameter real WRDSW 	= 0.0;
+ parameter real PRDSW 	= 0.0;
+ 
+ // Velocity Saturation
+ 
+-parameter real PSAT 	= 1.0;				// Gmsat variation with gate bias
++parameter real PSAT 	= 1.0                              	`ATTR(info="Gmsat variation with gate bias");
+ parameter real LPSAT 	= 0.0;
+ parameter real WPSAT 	= 0.0;
+ parameter real PPSAT 	= 0.0;
+ parameter real PSATL 	= 0.0;
+ parameter real PSATLEXP = 1.0	from (0:inf);
+-parameter real PSATB	= 0.0;					// Body bias effect on Idsat
++parameter real PSATB	= 0.0                              	`ATTR(info="Body bias effect on Idsat");
+ parameter real LPSATB	= 0.0;
+ parameter real WPSATB	= 0.0;
+ parameter real PPSATB	= 0.0;
+ 
+ parameter real PSATX	= 1.0 from (0:inf);
+-parameter real PTWG 	= 0.0;					// Idsat variation with gate bias
++parameter real PTWG 	= 0.0                              	`ATTR(info="Idsat variation with gate bias");
+ parameter real LPTWG 	= 0.0;
+ parameter real WPTWG 	= 0.0;
+ parameter real PPTWG 	= 0.0;
+-parameter real PTWGL 	= 0.0;					// Length dependence coefficient of PTWG
+-parameter real PTWGLEXP = 1.0	from (0:inf);			// Length dependence exponent coefficient of PTWG
++parameter real PTWGL 	= 0.0                             	`ATTR(info="Length dependence coefficient of PTWG");
++parameter real PTWGLEXP = 1.0	from (0:inf)              	`ATTR(info="Length dependence exponent coefficient of PTWG");
+ 
+ // Output Conductance
+-parameter real PDIBLC 	= 0.0;					// parameter for DIBL effect on Rout
+-parameter real PDIBLCL  = 0.0;					// Length dependence coefficient of PDIBLC
+-parameter real PDIBLCLEXP = 1.0	from (0:inf);			// Length dependence exponent coefficient of PDIBLC
++parameter real PDIBLC 	= 0.0                            	`ATTR(info="parameter for DIBL effect on Rout");
++parameter real PDIBLCL  = 0.0                           	`ATTR(info="Length dependence coefficient of PDIBLC");
++parameter real PDIBLCLEXP = 1.0	from (0:inf)            	`ATTR(info="Length dependence exponent coefficient of PDIBLC");
+ parameter real LPDIBLC  = 0.0;
+ parameter real WPDIBLC  = 0.0;
+ parameter real PPDIBLC  = 0.0;
+ 
+-parameter real PDIBLCB 	= 0.0;					// parameter for DIBL effect on Rout
++parameter real PDIBLCB 	= 0.0                           	`ATTR(info="parameter for DIBL effect on Rout");
+ parameter real LPDIBLCB = 0.0;
+ parameter real WPDIBLCB = 0.0;
+ parameter real PPDIBLCB = 0.0;
+ 
+-parameter real PVAG 	= 1.0;					// Vg dependence of early voltage
++parameter real PVAG 	= 1.0                              	`ATTR(info="Vg dependence of early voltage");
+ parameter real LPVAG 	= 0.0;
+ parameter real WPVAG 	= 0.0;
+ parameter real PPVAG 	= 0.0;
+ 
+ parameter real FPROUT 	= 0.0;
+-parameter real FPROUTL 	= 0.0; 					// Length dependence coefficient of FPROUT
+-parameter real FPROUTLEXP = 1.0	from (0:inf);			// Length dependence exponent coefficient of FPROUT
++parameter real FPROUTL 	= 0.0                           	`ATTR(info="Length dependence coefficient of FPROUT");
++parameter real FPROUTLEXP = 1.0	from (0:inf)            	`ATTR(info="Length dependence exponent coefficient of FPROUT");
+ parameter real LFPROUT 	= 0.0;
+ parameter real WFPROUT 	= 0.0;
+ parameter real PFPROUT 	= 0.0;
+ 
+ // Impact Ionization Current
+-parameter real ALPHA0	= 0.0;					// first parameter of Iii, m/V
+-parameter real ALPHA0L	= 0.0;					// Length dependence coefficient of ALPHA0
+-parameter real ALPHA0LEXP = 1.0	from (0:inf);			// Length dependence exponent coefficient of ALPHA0
++parameter real ALPHA0	= 0.0                             	`ATTR(info="first parameter of Iii, m/V");
++parameter real ALPHA0L	= 0.0                            	`ATTR(info="Length dependence coefficient of ALPHA0");
++parameter real ALPHA0LEXP = 1.0	from (0:inf)            	`ATTR(info="Length dependence exponent coefficient of ALPHA0");
+ parameter real LALPHA0	= 0.0;
+ parameter real WALPHA0	= 0.0;
+ parameter real PALPHA0	= 0.0;
+ 
+-parameter real BETA0	= 0.0;					// Vds dependent parameter of Iii, 1/V
++parameter real BETA0	= 0.0                              	`ATTR(info="Vds dependent parameter of Iii, 1/V");
+ parameter real LBETA0	= 0.0;
+ parameter real WBETA0	= 0.0;
+ parameter real PBETA0	= 0.0;
+ 
+ //Gate Dielectric Tunneling Current Model Parameters
+-parameter real AIGBACC = 1.36e-2;	 			// Parameter for Igb
+-parameter real BIGBACC = 1.71e-3;	 			// Parameter for Igb
+-parameter real CIGBACC = 0.075;	 				// Parameter for Igb
+-parameter real NIGBACC = 1.0;	 				// Parameter for Igbacc slope
+-parameter real AIGBINV = 1.11e-2;	 			// Parameter for Igb
+-parameter real BIGBINV = 9.49e-4;	 			// Parameter for Igb
+-parameter real CIGBINV = 0.006;	 				// Parameter for Igb
+-parameter real EIGBINV = 1.1;	 				// Parm for the Si bandgap for Igbinv [V]
+-parameter real NIGBINV = 3.0;	 				// Parameter for Igbinv slope
+-parameter real AIGC = (TYPE == `ntype) ? 1.36e-2 : 9.8e-3; 		// Parameter for Igc
+-parameter real BIGC = (TYPE == `ntype) ? 1.71e-3 : 7.59e-4; 		// Parameter for Igc
+-parameter real CIGC = (TYPE == `ntype) ? 0.075 : 0.03; 			// Parameter for Igc
+-parameter real AIGS = (TYPE == `ntype) ? 1.36e-2 : 9.8e-3; 		// Parameter for Igs d
+-parameter real BIGS = (TYPE == `ntype) ? 1.71e-3 : 7.59e-4; 		// Parameter for Igs d
+-parameter real CIGS = (TYPE == `ntype) ? 0.075 : 0.03; 			// Parameter for Igs d
+-parameter real AIGD = (TYPE == `ntype) ? 1.36e-2 : 9.8e-3; 		// Parameter for Igs d
+-parameter real BIGD = (TYPE == `ntype) ? 1.71e-3 : 7.59e-4; 		// Parameter for Igs d
+-parameter real CIGD = (TYPE == `ntype) ? 0.075 : 0.03; 			// Parameter for Igs d
+-parameter real DLCIG  = LINT;					// Delta L for Ig model [m]
+-parameter real DLCIGD = DLCIG;					// Delta L for Ig model [m]
+-parameter real POXEDGE = 1.0;					// Factor for the gate edge Tox
+-parameter real NTOX = 1.0;						// Exponent for Tox ratio
+-parameter real TOXREF = 3.0e-9 from (0:inf);			// Target tox value [m]
+-parameter real PIGCD = 1.0 from [-50:50];			// Igc, S/D partition parameter
+-
+-parameter real AIGCL = 0.0; 					// Length dependence coefficient of AIGC
+-parameter real AIGCW = 0.0; 					// Width dependence coefficient of AIGC
+-parameter real AIGSL = 0.0; 					// Length dependence coefficient of AIGS
+-parameter real AIGSW = 0.0; 					// Width dependence coefficient of AIGS
+-parameter real AIGDL = 0.0; 					// Length dependence coefficient of AIGD
+-parameter real AIGDW = 0.0; 					// Width dependence coefficient of AIGD
+-parameter real PIGCDL = 0.0; 					// Length dependence coefficient of PIGCD
++parameter real AIGBACC = 1.36e-2                        	`ATTR(info="Parameter for Igb");
++parameter real BIGBACC = 1.71e-3                        	`ATTR(info="Parameter for Igb");
++parameter real CIGBACC = 0.075                          	`ATTR(info="Parameter for Igb");
++parameter real NIGBACC = 1.0                            	`ATTR(info="Parameter for Igbacc slope");
++parameter real AIGBINV = 1.11e-2                        	`ATTR(info="Parameter for Igb");
++parameter real BIGBINV = 9.49e-4                        	`ATTR(info="Parameter for Igb");
++parameter real CIGBINV = 0.006                          	`ATTR(info="Parameter for Igb");
++parameter real EIGBINV = 1.1                            	`ATTR(info="Parm for the Si bandgap for Igbinv [V]");
++parameter real NIGBINV = 3.0                            	`ATTR(info="Parameter for Igbinv slope");
++parameter real AIGC = (TYPE == `ntype) ? 1.36e-2 : 9.8e-3 	`ATTR(info="Parameter for Igc");
++parameter real BIGC = (TYPE == `ntype) ? 1.71e-3 : 7.59e-4 	`ATTR(info="Parameter for Igc");
++parameter real CIGC = (TYPE == `ntype) ? 0.075 : 0.03   	`ATTR(info="Parameter for Igc");
++parameter real AIGS = (TYPE == `ntype) ? 1.36e-2 : 9.8e-3 	`ATTR(info="Parameter for Igs d");
++parameter real BIGS = (TYPE == `ntype) ? 1.71e-3 : 7.59e-4 	`ATTR(info="Parameter for Igs d");
++parameter real CIGS = (TYPE == `ntype) ? 0.075 : 0.03   	`ATTR(info="Parameter for Igs d");
++parameter real AIGD = (TYPE == `ntype) ? 1.36e-2 : 9.8e-3 	`ATTR(info="Parameter for Igs d");
++parameter real BIGD = (TYPE == `ntype) ? 1.71e-3 : 7.59e-4 	`ATTR(info="Parameter for Igs d");
++parameter real CIGD = (TYPE == `ntype) ? 0.075 : 0.03   	`ATTR(info="Parameter for Igs d");
++parameter real DLCIG  = LINT                            	`ATTR(info="Delta L for Ig model [m]");
++parameter real DLCIGD = DLCIG                           	`ATTR(info="Delta L for Ig model [m]");
++parameter real POXEDGE = 1.0                            	`ATTR(info="Factor for the gate edge Tox");
++parameter real NTOX = 1.0                               	`ATTR(info="Exponent for Tox ratio");
++parameter real TOXREF = 3.0e-9 from (0:inf)             	`ATTR(info="Target tox value [m]");
++parameter real PIGCD = 1.0 from [-50:50]                	`ATTR(info="Igc, S/D partition parameter");
++
++parameter real AIGCL = 0.0                              	`ATTR(info="Length dependence coefficient of AIGC");
++parameter real AIGCW = 0.0                              	`ATTR(info="Width dependence coefficient of AIGC");
++parameter real AIGSL = 0.0                              	`ATTR(info="Length dependence coefficient of AIGS");
++parameter real AIGSW = 0.0                              	`ATTR(info="Width dependence coefficient of AIGS");
++parameter real AIGDL = 0.0                              	`ATTR(info="Length dependence coefficient of AIGD");
++parameter real AIGDW = 0.0                              	`ATTR(info="Width dependence coefficient of AIGD");
++parameter real PIGCDL = 0.0                             	`ATTR(info="Length dependence coefficient of PIGCD");
+ 
+ parameter real LAIGBINV = 0.0;
+ parameter real WAIGBINV = 0.0;
+@@ -1184,53 +1173,53 @@ parameter real WNTOX = 0.0;
+ parameter real PNTOX = 0.0;
+ 
+ //GIDL/GISL Current
+-parameter real AGIDL	= 0.0;					// pre-exponential coeff. for GIDL in mho
+-parameter real AGIDLL	= 0.0;					// Length dependence coefficient of AGIDL
+-parameter real AGIDLW	= 0.0;					// Width dependence coefficient of AGIDL
++parameter real AGIDL	= 0.0                              	`ATTR(info="pre-exponential coeff. for GIDL in mho");
++parameter real AGIDLL	= 0.0                             	`ATTR(info="Length dependence coefficient of AGIDL");
++parameter real AGIDLW	= 0.0                             	`ATTR(info="Width dependence coefficient of AGIDL");
+ parameter real LAGIDL	= 0.0;
+ parameter real WAGIDL	= 0.0;
+ parameter real PAGIDL	= 0.0;
+-parameter real BGIDL	= 2.3e9;				// exponential coeff. for GIDL in V/m
++parameter real BGIDL	= 2.3e9                            	`ATTR(info="exponential coeff. for GIDL in V/m");
+ parameter real LBGIDL	= 0.0;
+ parameter real WBGIDL	= 0.0;
+ parameter real PBGIDL	= 0.0;
+ 
+-parameter real CGIDL	= 0.5;       				// exponential coeff. for GIDL in V/m
++parameter real CGIDL	= 0.5                              	`ATTR(info="exponential coeff. for GIDL in V/m");
+ parameter real LCGIDL	= 0.0;
+ parameter real WCGIDL	= 0.0;
+ parameter real PCGIDL	= 0.0;
+-parameter real EGIDL	= 0.8;					// band bending parameter for GIDL in V
++parameter real EGIDL	= 0.8                              	`ATTR(info="band bending parameter for GIDL in V");
+ parameter real LEGIDL	= 0.0;
+ parameter real WEGIDL	= 0.0;
+ parameter real PEGIDL	= 0.0;
+-parameter real AGISL	= AGIDL;				// pre-exponential coeff. for GISL in mho
+-parameter real AGISLL	= AGIDLL;				// Length dependence coefficient of AGISL
+-parameter real AGISLW	= AGIDLW;				// Width dependence coefficient of AGISL
++parameter real AGISL	= AGIDL                            	`ATTR(info="pre-exponential coeff. for GISL in mho");
++parameter real AGISLL	= AGIDLL                          	`ATTR(info="Length dependence coefficient of AGISL");
++parameter real AGISLW	= AGIDLW                          	`ATTR(info="Width dependence coefficient of AGISL");
+ parameter real LAGISL	= LAGIDL;
+ parameter real WAGISL	= WAGIDL;
+ parameter real PAGISL	= PAGIDL;
+-parameter real BGISL	= BGIDL;				// exponential coeff. for GISL in V/m
++parameter real BGISL	= BGIDL                            	`ATTR(info="exponential coeff. for GISL in V/m");
+ parameter real LBGISL	= LBGIDL;
+ parameter real WBGISL	= WBGIDL;
+ parameter real PBGISL	= PBGIDL;
+-parameter real CGISL	= CGIDL;                		// exponential coeff. for GISL in V/m
++parameter real CGISL	= CGIDL                            	`ATTR(info="exponential coeff. for GISL in V/m");
+ parameter real LCGISL	= LCGIDL;
+ parameter real WCGISL	= WCGIDL;
+ parameter real PCGISL	= PCGIDL;
+-parameter real EGISL	= EGIDL;				// band bending parameter for GISL in V
++parameter real EGISL	= EGIDL                            	`ATTR(info="band bending parameter for GISL in V");
+ parameter real LEGISL	= LEGIDL;
+ parameter real WEGISL	= WEGIDL;
+ parameter real PEGISL	= PEGIDL;
+ 
+ // Overlap Cap and Fringing Cap
+-parameter real CF 		= 0.0;					// Outer Fringe Cap (F)
++parameter real CF 		= 0.0                               	`ATTR(info="Outer Fringe Cap (F)");
+ parameter real LCF 		= 0.0;
+ parameter real WCF 		= 0.0;
+ parameter real PCF 		= 0.0;
+-parameter real CFRCOEFF = 1.0 from [1.0:inf);	// Coefficient for Outer Fringe Cap (F)
+-parameter real CGSO		= 0.0;					// Gate - Source overlap capacitance (F)
+-parameter real CGDO		= 0.0;					// Gate - Drain overlap capacitance (F)
+-parameter real CGBO		= 0.0;					// Gate - Body overlap capacitance (F)
++parameter real CFRCOEFF = 1.0 from [1.0:inf)            	`ATTR(info="Coefficient for Outer Fringe Cap (F)");
++parameter real CGSO		= 0.0                              	`ATTR(info="Gate - Source overlap capacitance (F)");
++parameter real CGDO		= 0.0                              	`ATTR(info="Gate - Drain overlap capacitance (F)");
++parameter real CGBO		= 0.0                              	`ATTR(info="Gate - Body overlap capacitance (F)");
+ parameter real CGSL		= 0.0;
+ parameter real LCGSL	= 0.0;
+ parameter real WCGSL	= 0.0;
+@@ -1250,124 +1239,120 @@ parameter real PCKAPPAD	= 0.0;
+ 
+ 
+ // Layout-Dependent Parasitics Model Parameters ....Resistance only
+-parameter real DMCG 	= 0.0;					// Distance of Mid-Contact to Gate edge [m]
+-parameter real DMCI 	= DMCG;					// Distance of Mid-Contact to Isolation [m]
+-parameter real DMDG 	= 0.0;					// Distance of Mid-Diffusion to Gate edge [m]
+-parameter real DMCGT 	= 0.0;					// Dist of Mid-Contact to Gate edge in Test [m]
++parameter real DMCG 	= 0.0                              	`ATTR(info="Distance of Mid-Contact to Gate edge [m]");
++parameter real DMCI 	= DMCG                             	`ATTR(info="Distance of Mid-Contact to Isolation [m]");
++parameter real DMDG 	= 0.0                              	`ATTR(info="Distance of Mid-Diffusion to Gate edge [m]");
++parameter real DMCGT 	= 0.0                             	`ATTR(info="Dist of Mid-Contact to Gate edge in Test [m]");
+ 
+ `ifdef __RGATEMOD__
+-	parameter real XGW		= 0.0;					// Dist from gate contact center to dev edge [m]
+-	parameter real XGL		= 0.0 from (-inf:L*LMLT+XL);	// Variation in Ldrawn [m]
+-	parameter integer NGCON = 1 from [1:2];			// Number of gate contacts
+-	parameter real RSHG		= 0.1 from [0:inf);		// Gate sheet resistance [Ohm]
++	parameter real XGW		= 0.0                              	`ATTR(info="Dist from gate contact center to dev edge [m]");
++	parameter real XGL		= 0.0 from (-inf:L*LMLT+XL)        	`ATTR(info="Variation in Ldrawn [m]");
++	parameter integer NGCON = 1 from [1:2]                 	`ATTR(info="Number of gate contacts");
++	parameter real RSHG		= 0.1 from [0:inf)                	`ATTR(info="Gate sheet resistance [Ohm]");
+ `endif
+ 
+ // Junction current and capacitance
+ // Junction Capacitance
+-parameter real CJS 		= 5.0e-4;				// Unit area source-side junction capacitance at zero bias
+-parameter real CJD 		= CJS;					// Unit area drain-side junction capacitance at zero bias
+-parameter real CJSWS 	= 5.0e-10;				// Unit length source-side sidewall junction capacitance at zero bias
+-parameter real CJSWD 	= CJSWS;				// Unit length drain-side sidewall junction capacitance at zero bias
+-parameter real CJSWGS 	= 0.0;					// Unit length source-side gate sidewall junction capacitance at zero bias
+-parameter real CJSWGD 	= CJSWGS;				// Unit length drain-side gate sidewall junction capacitance at zero bias
+-parameter real PBS 		= 1.0;					// Source-side bulk junction built-in potential
+-parameter real PBD 		= PBS;					// Drain-side bulk junction built-in potential
+-parameter real PBSWS 	= 1.0;					// Built-in potential for Source-side sidewall junction capacitance
+-parameter real PBSWD 	= PBSWS;				// Built-in potential for Drain-side sidewall junction capacitance
+-parameter real PBSWGS 	= PBSWS;				// Built-in potential for Source-side gate sidewall junction capacitance
+-parameter real PBSWGD 	= PBSWGS;				// Built-in potential for Drain-side gate sidewall junction capacitance
+-parameter real MJS 		= 0.5;					// Source bottom junction capacitance grading coefficient
+-parameter real MJD 		= MJS;					// Drain bottom junction capacitance grading coefficient
+-parameter real MJSWS 	= 0.33;					// Source sidewall junction capacitance grading coefficient
+-parameter real MJSWD 	= MJSWS;				// Drain sidewall junction capacitance grading coefficient
+-parameter real MJSWGS 	= MJSWS;				// Source-side gate sidewall junction capacitance grading coefficient
+-parameter real MJSWGD 	= MJSWGS;				// Drain-side gate sidewall junction capacitance grading coefficient
++parameter real CJS 		= 5.0e-4                           	`ATTR(info="Unit area source-side junction capacitance at zero bias");
++parameter real CJD 		= CJS                              	`ATTR(info="Unit area drain-side junction capacitance at zero bias");
++parameter real CJSWS 	= 5.0e-10                         	`ATTR(info="Unit length source-side sidewall junction capacitance at zero bias");
++parameter real CJSWD 	= CJSWS                           	`ATTR(info="Unit length drain-side sidewall junction capacitance at zero bias");
++parameter real CJSWGS 	= 0.0                            	`ATTR(info="Unit length source-side gate sidewall junction capacitance at zero bias");
++parameter real CJSWGD 	= CJSWGS                         	`ATTR(info="Unit length drain-side gate sidewall junction capacitance at zero bias");
++parameter real PBS 		= 1.0                              	`ATTR(info="Source-side bulk junction built-in potential");
++parameter real PBD 		= PBS                              	`ATTR(info="Drain-side bulk junction built-in potential");
++parameter real PBSWS 	= 1.0                             	`ATTR(info="Built-in potential for Source-side sidewall junction capacitance");
++parameter real PBSWD 	= PBSWS                           	`ATTR(info="Built-in potential for Drain-side sidewall junction capacitance");
++parameter real PBSWGS 	= PBSWS                          	`ATTR(info="Built-in potential for Source-side gate sidewall junction capacitance");
++parameter real PBSWGD 	= PBSWGS                         	`ATTR(info="Built-in potential for Drain-side gate sidewall junction capacitance");
++parameter real MJS 		= 0.5                              	`ATTR(info="Source bottom junction capacitance grading coefficient");
++parameter real MJD 		= MJS                              	`ATTR(info="Drain bottom junction capacitance grading coefficient");
++parameter real MJSWS 	= 0.33                            	`ATTR(info="Source sidewall junction capacitance grading coefficient");
++parameter real MJSWD 	= MJSWS                           	`ATTR(info="Drain sidewall junction capacitance grading coefficient");
++parameter real MJSWGS 	= MJSWS                          	`ATTR(info="Source-side gate sidewall junction capacitance grading coefficient");
++parameter real MJSWGD 	= MJSWGS                         	`ATTR(info="Drain-side gate sidewall junction capacitance grading coefficient");
+ 
+ // Junction Current
+-parameter real JSS 		= 1.0e-4;				// Bottom source junction reverse saturation current density
+-parameter real JSD 		= JSS;					// Bottom drain junction reverse saturation current density
+-parameter real JSWS 	= 0.0;					// Unit length reverse saturation current for sidewall source junction
+-parameter real JSWD 	= JSWS;					// Unit length reverse saturation current for sidewall drain junction
+-parameter real JSWGS 	= 0.0;					// Unit length reverse saturation current for gate-edge sidewall source junction
+-parameter real JSWGD 	= JSWGS;				// Unit length reverse saturation current for gate-edge sidewall drain junction
+-parameter real NJS 		= 1.0;					// Source junction emission coefficient
+-parameter real NJD 		= NJS;					// Drain junction emission coefficient
+-parameter real IJTHSFWD = 0.1;					// Forward source diode breakdown limiting current
+-parameter real IJTHDFWD = IJTHSFWD;				// Forward drain diode breakdown limiting current
+-parameter real IJTHSREV = 0.1;					// Reverse source diode breakdown limiting current
+-parameter real IJTHDREV = IJTHSREV;				// Reverse drain diode breakdown limiting current
+-parameter real BVS 		= 10.0;					// Source diode breakdown voltage
+-parameter real BVD 		= BVS;					// Drain diode breakdown voltage
+-parameter real XJBVS 	= 1.0;					// Fitting parameter for source diode breakdown current
+-parameter real XJBVD 	= XJBVS;				// Fitting parameter for drain diode breakdown current
++parameter real JSS 		= 1.0e-4                           	`ATTR(info="Bottom source junction reverse saturation current density");
++parameter real JSD 		= JSS                              	`ATTR(info="Bottom drain junction reverse saturation current density");
++parameter real JSWS 	= 0.0                              	`ATTR(info="Unit length reverse saturation current for sidewall source junction");
++parameter real JSWD 	= JSWS                             	`ATTR(info="Unit length reverse saturation current for sidewall drain junction");
++parameter real JSWGS 	= 0.0                             	`ATTR(info="Unit length reverse saturation current for gate-edge sidewall source junction");
++parameter real JSWGD 	= JSWGS                           	`ATTR(info="Unit length reverse saturation current for gate-edge sidewall drain junction");
++parameter real NJS 		= 1.0                              	`ATTR(info="Source junction emission coefficient");
++parameter real NJD 		= NJS                              	`ATTR(info="Drain junction emission coefficient");
++parameter real IJTHSFWD = 0.1                           	`ATTR(info="Forward source diode breakdown limiting current");
++parameter real IJTHDFWD = IJTHSFWD                      	`ATTR(info="Forward drain diode breakdown limiting current");
++parameter real IJTHSREV = 0.1                           	`ATTR(info="Reverse source diode breakdown limiting current");
++parameter real IJTHDREV = IJTHSREV                      	`ATTR(info="Reverse drain diode breakdown limiting current");
++parameter real BVS 		= 10.0                             	`ATTR(info="Source diode breakdown voltage");
++parameter real BVD 		= BVS                              	`ATTR(info="Drain diode breakdown voltage");
++parameter real XJBVS 	= 1.0                             	`ATTR(info="Fitting parameter for source diode breakdown current");
++parameter real XJBVD 	= XJBVS                           	`ATTR(info="Fitting parameter for drain diode breakdown current");
+ 
+ // Tunneling Component of Junction Current
+-parameter real JTSS 	= 0.0;					// Bottom source junction trap-assisted saturation current density
+-parameter real JTSD 	= JTSS;					// Bottom drain junction trap-assisted saturation current density
+-parameter real JTSSWS 	= 0.0;					// Unit length trap-assisted saturation current for sidewall source junction
+-parameter real JTSSWD 	= JTSSWS;				// Unit length trap-assisted saturation current for sidewall drain junction
+-parameter real JTSSWGS 	= 0.0;					// Unit length trap-assisted saturation current for gate-edge sidewall source junction
+-parameter real JTSSWGD 	= JTSSWGS;				// Unit length trap-assisted saturation current for gate-edge sidewall drain junction
+-parameter real JTWEFF 	= 0.0;					// Trap assisted tunneling current width dependence
+-parameter real NJTS 	= 20.0;					// Non-ideality factor for JTSS
+-parameter real NJTSD 	= NJTS;					// Non-ideality factor for JTSD
+-parameter real NJTSSW 	= 20.0;					// Non-ideality factor for JTSSWS
+-parameter real NJTSSWD 	= NJTSSW;				// Non-ideality factor for JTSSWD
+-parameter real NJTSSWG 	= 20.0;					// Non-ideality factor for JTSSWGS
+-parameter real NJTSSWGD = NJTSSWG;				// Non-ideality factor for JTSSWGD
+-parameter real VTSS 	= 10.0;					// Bottom source junction trap-assisted current voltage dependent parameter
+-parameter real VTSD 	= VTSS;					// Bottom drain junction trap-assisted current voltage dependent parameter
+-parameter real VTSSWS 	= 10.0;					// Unit length trap-assisted current voltage dependent parameter
+-												// for sidewall source junction
+-parameter real VTSSWD 	= VTSSWS;				// Unit length trap-assisted current voltage dependent parameter
+-												// for sidewall drain junction
+-parameter real VTSSWGS 	= 10.0;					// Unit length trap-assisted current voltage dependent parameter for
+-												// gate-edge sidewall source junction
+-parameter real VTSSWGD 	= VTSSWGS;				// Unit length trap-assisted current voltage dependent parameter for
+-												// gate-edge sidewall drain junction
++parameter real JTSS 	= 0.0                              	`ATTR(info="Bottom source junction trap-assisted saturation current density");
++parameter real JTSD 	= JTSS                             	`ATTR(info="Bottom drain junction trap-assisted saturation current density");
++parameter real JTSSWS 	= 0.0                            	`ATTR(info="Unit length trap-assisted saturation current for sidewall source junction");
++parameter real JTSSWD 	= JTSSWS                         	`ATTR(info="Unit length trap-assisted saturation current for sidewall drain junction");
++parameter real JTSSWGS 	= 0.0                           	`ATTR(info="Unit length trap-assisted saturation current for gate-edge sidewall source junction");
++parameter real JTSSWGD 	= JTSSWGS                       	`ATTR(info="Unit length trap-assisted saturation current for gate-edge sidewall drain junction");
++parameter real JTWEFF 	= 0.0                            	`ATTR(info="Trap assisted tunneling current width dependence");
++parameter real NJTS 	= 20.0                             	`ATTR(info="Non-ideality factor for JTSS");
++parameter real NJTSD 	= NJTS                            	`ATTR(info="Non-ideality factor for JTSD");
++parameter real NJTSSW 	= 20.0                           	`ATTR(info="Non-ideality factor for JTSSWS");
++parameter real NJTSSWD 	= NJTSSW                        	`ATTR(info="Non-ideality factor for JTSSWD");
++parameter real NJTSSWG 	= 20.0                          	`ATTR(info="Non-ideality factor for JTSSWGS");
++parameter real NJTSSWGD = NJTSSWG                       	`ATTR(info="Non-ideality factor for JTSSWGD");
++parameter real VTSS 	= 10.0                             	`ATTR(info="Bottom source junction trap-assisted current voltage dependent parameter");
++parameter real VTSD 	= VTSS                             	`ATTR(info="Bottom drain junction trap-assisted current voltage dependent parameter");
++parameter real VTSSWS 	= 10.0                           	`ATTR(info="Unit length trap-assisted current voltage dependent parameter\nfor sidewall source junction");
++parameter real VTSSWD 	= VTSSWS                         	`ATTR(info="Unit length trap-assisted current voltage dependent parameter\nfor sidewall drain junction");
++parameter real VTSSWGS 	= 10.0                          	`ATTR(info="Unit length trap-assisted current voltage dependent parameter for\ngate-edge sidewall source junction");
++parameter real VTSSWGD 	= VTSSWGS                       	`ATTR(info="Unit length trap-assisted current voltage dependent parameter for\ngate-edge sidewall drain junction");
+ 
+ // High-Speed/RF Model Parameters
+ `ifdef __RGATEMOD__
+-	parameter real XRCRG1	= 12.0;			    // 1st fitting parm the bias-dependent Rg //make it binnable
+-	parameter real XRCRG2	= 1.0;			    // 2nd fitting parm the bias-dependent Rg  //make it binnable
++	parameter real XRCRG1	= 12.0                           	`ATTR(info="1st fitting parm the bias-dependent Rg");
++	parameter real XRCRG2	= 1.0                            	`ATTR(info="2nd fitting parm the bias-dependent Rg");
+ `endif
+ `ifdef __RBODYMOD__
+-	parameter real RBPB		= 50.0 from [0:inf);	// Resistance between bNodePrime and bNode [Ohm]
+-	parameter real RBDB		= 50.0 from [0:inf);	// Resistance between bNode and dbNode [Ohm]
+-	parameter real RBSB		= 50.0 from [0:inf);	// Resistance between bNode and sbNode [Ohm]
+-	parameter real RBPS		= 50.0 from [0:inf);	// Resistance between bNodePrime and sbNode [Ohm]
+-	parameter real RBPD		= 50.0 from [0:inf);	// Resistance between bNodePrime and bNode [Ohm]
+-	parameter real GBMIN	= 1.0e-12 from [0:inf);	// Minimum body conductance
+-	parameter real RBPS0	= 50.0 from (0:inf);	// Scaling prefactor for RBPS 50 Ohms
+-	parameter real RBPSL	= 0.0 from [0:inf);		//Length Scaling parameter for RBPS
+-	parameter real RBPSW	= 0.0 from [0:inf);		//Width Scaling parameter for RBPS
+-	parameter real RBPSNF	= 0.0 from [0:inf);		//Number of fingers Scaling parameter for RBPS
+-	parameter real RBPD0	= 50.0 from (0:inf);	//Scaling prefactor for RBPD
+-	parameter real RBPDL	= 0.0 from [0:inf);		// Length Scaling parameter for RBPD
+-	parameter real RBPDW	= 0.0 from [0:inf);		// Width Scaling parameter for RBPD
+-	parameter real RBPDNF	= 0.0 from [0:inf);		// Number of fingers Scaling parameter for RBPD
+-	parameter real RBPBX0	= 100.0 from (0:inf);	//Scaling prefactor for RBPBX
+-	parameter real RBPBXL	= 0.0 from [0:inf);		// Length Scaling parameter for RBPBX
+-	parameter real RBPBXW	= 0.0 from [0:inf);		// Width Scaling parameter for RBPBX
+-	parameter real RBPBXNF	= 0.0 from [0:inf);		// Number of fingers Scaling parameter for RBPBX
+-	parameter real RBPBY0	= 100.0 from (0:inf);	// Scaling prefactor for RBPBY
+-	parameter real RBPBYL	= 0.0 from [0:inf);		// Length Scaling parameter for RBPBY
+-	parameter real RBPBYW	= 0.0 from [0:inf);		// Width Scaling parameter for RBPBY
+-	parameter real RBPBYNF	= 0.0 from [0:inf);		// Number of fingers Scaling parameter for RBPBY
+-	parameter real RBSBX0	= 100.0 from (0:inf);	// Scaling prefactor for RBSBX
+-	parameter real RBSBY0	= 100.0 from (0:inf);	// Scaling prefactor for RBSBY
+-	parameter real RBDBX0	= 100.0 from (0:inf);	// Scaling prefactor for RBDBX
+-	parameter real RBDBY0	= 100.0 from (0:inf);	// Scaling prefactor for RBDBY
+-	parameter real RBSDBXL	= 0.0 from [0:inf);		// Length Scaling parameter for RBSBX and RBDBX
+-	parameter real RBSDBXW	= 0.0 from [0:inf);		// Width Scaling parameter for RBSBX and RBDBX
+-	parameter real RBSDBXNF	= 0.0 from [0:inf);		// Number of fingers Scaling parameter for RBSBX and RBDBX
+-	parameter real RBSDBYL	= 0.0 from [0:inf);		// Length Scaling parameter for RBSBY and RBDBY
+-	parameter real RBSDBYW	= 0.0 from [0:inf);		// Width Scaling parameter for RBSBY and RBDBY
+-	parameter real RBSDBYNF	= 0.0 from [0:inf);		// Number of fingers Scaling parameter for RBSBY and RBDBY
++	parameter real RBPB		= 50.0 from [0:inf)               	`ATTR(info="Resistance between bNodePrime and bNode [Ohm]");
++	parameter real RBDB		= 50.0 from [0:inf)               	`ATTR(info="Resistance between bNode and dbNode [Ohm]");
++	parameter real RBSB		= 50.0 from [0:inf)               	`ATTR(info="Resistance between bNode and sbNode [Ohm]");
++	parameter real RBPS		= 50.0 from [0:inf)               	`ATTR(info="Resistance between bNodePrime and sbNode [Ohm]");
++	parameter real RBPD		= 50.0 from [0:inf)               	`ATTR(info="Resistance between bNodePrime and bNode [Ohm]");
++	parameter real GBMIN	= 1.0e-12 from [0:inf)            	`ATTR(info="Minimum body conductance");
++	parameter real RBPS0	= 50.0 from (0:inf)               	`ATTR(info="Scaling prefactor for RBPS 50 Ohms");
++	parameter real RBPSL	= 0.0 from [0:inf)                	`ATTR(info="Length Scaling parameter for RBPS");
++	parameter real RBPSW	= 0.0 from [0:inf)                	`ATTR(info="Width Scaling parameter for RBPS");
++	parameter real RBPSNF	= 0.0 from [0:inf)               	`ATTR(info="Number of fingers Scaling parameter for RBPS");
++	parameter real RBPD0	= 50.0 from (0:inf)               	`ATTR(info="Scaling prefactor for RBPD");
++	parameter real RBPDL	= 0.0 from [0:inf)                	`ATTR(info="Length Scaling parameter for RBPD");
++	parameter real RBPDW	= 0.0 from [0:inf)                	`ATTR(info="Width Scaling parameter for RBPD");
++	parameter real RBPDNF	= 0.0 from [0:inf)               	`ATTR(info="Number of fingers Scaling parameter for RBPD");
++	parameter real RBPBX0	= 100.0 from (0:inf)             	`ATTR(info="Scaling prefactor for RBPBX");
++	parameter real RBPBXL	= 0.0 from [0:inf)               	`ATTR(info="Length Scaling parameter for RBPBX");
++	parameter real RBPBXW	= 0.0 from [0:inf)               	`ATTR(info="Width Scaling parameter for RBPBX");
++	parameter real RBPBXNF	= 0.0 from [0:inf)              	`ATTR(info="Number of fingers Scaling parameter for RBPBX");
++	parameter real RBPBY0	= 100.0 from (0:inf)             	`ATTR(info="Scaling prefactor for RBPBY");
++	parameter real RBPBYL	= 0.0 from [0:inf)               	`ATTR(info="Length Scaling parameter for RBPBY");
++	parameter real RBPBYW	= 0.0 from [0:inf)               	`ATTR(info="Width Scaling parameter for RBPBY");
++	parameter real RBPBYNF	= 0.0 from [0:inf)              	`ATTR(info="Number of fingers Scaling parameter for RBPBY");
++	parameter real RBSBX0	= 100.0 from (0:inf)             	`ATTR(info="Scaling prefactor for RBSBX");
++	parameter real RBSBY0	= 100.0 from (0:inf)             	`ATTR(info="Scaling prefactor for RBSBY");
++	parameter real RBDBX0	= 100.0 from (0:inf)             	`ATTR(info="Scaling prefactor for RBDBX");
++	parameter real RBDBY0	= 100.0 from (0:inf)             	`ATTR(info="Scaling prefactor for RBDBY");
++	parameter real RBSDBXL	= 0.0 from [0:inf)              	`ATTR(info="Length Scaling parameter for RBSBX and RBDBX");
++	parameter real RBSDBXW	= 0.0 from [0:inf)              	`ATTR(info="Width Scaling parameter for RBSBX and RBDBX");
++	parameter real RBSDBXNF	= 0.0 from [0:inf)             	`ATTR(info="Number of fingers Scaling parameter for RBSBX and RBDBX");
++	parameter real RBSDBYL	= 0.0 from [0:inf)              	`ATTR(info="Length Scaling parameter for RBSBY and RBDBY");
++	parameter real RBSDBYW	= 0.0 from [0:inf)              	`ATTR(info="Width Scaling parameter for RBSBY and RBDBY");
++	parameter real RBSDBYNF	= 0.0 from [0:inf)             	`ATTR(info="Number of fingers Scaling parameter for RBSBY and RBDBY");
+ `endif
+ 
+ // Flicker Noise
+-parameter real EF		= 1.0 from (0:2];		// Flicker Noise frequency exponent
++parameter real EF		= 1.0 from (0:2]                     	`ATTR(info="Flicker Noise frequency exponent");
+ parameter real EM		= 4.1e7;
+ parameter real NOIA		= 6.250e+40;
+ parameter real NOIB		= 3.125e+25;
+@@ -1377,178 +1362,177 @@ parameter real LINTNOI	= 0.0;
+ // Thermal Noise
+ parameter real NTNOI = 1.0	from [0:inf);
+ `ifdef __TNOISW__
+-	parameter real RNOIA = 0.577;				// TNOIMOD = 1
+-	parameter real RNOIB = 0.5164;				// TNOIMOD = 1
+-	parameter real RNOIC = 0.395;				// TNOIMOD = 1
+-	parameter real TNOIA = 0.0 from [0:inf);		// TNOIMOD = 1
+-	parameter real TNOIB = 0.0 from [0:inf);		// TNOIMOD = 1
+-	parameter real TNOIC = 0.0 from [0:inf);		// Correlation coefficient
++	parameter real RNOIA = 0.577                           	`ATTR(info="TNOIMOD = 1");
++	parameter real RNOIB = 0.5164                          	`ATTR(info="TNOIMOD = 1");
++	parameter real RNOIC = 0.395                           	`ATTR(info="TNOIMOD = 1");
++	parameter real TNOIA = 0.0 from [0:inf)                	`ATTR(info="TNOIMOD = 1");
++	parameter real TNOIB = 0.0 from [0:inf)                	`ATTR(info="TNOIMOD = 1");
++	parameter real TNOIC = 0.0 from [0:inf)                	`ATTR(info="Correlation coefficient");
+ `endif
+ 
+ 
+ // Binning Parameters
+-parameter integer BINUNIT	= 1		from [0:1]; //	Unit of L and W for Binning  
+-							    //  1 : micro-meter, 0 : default
++parameter integer BINUNIT	= 1		from [0:1]               	`ATTR(info="Unit of L and W for Binning\n1 : micro-meter, 0 : default");
+ parameter real DLBIN = 0.0;
+ parameter real DWBIN = 0.0;
+ 
+ 
+ 
+ // Temperature Dependence Parameters
+-parameter real TNOM 	= 27.0;					// Temperature at which the model was extracted (degrees)
+-parameter real DTEMP 	= 0.0;					// Offset of Device Temperature
++parameter real TNOM 	= 27.0                             	`ATTR(info="Temperature at which the model was extracted (degrees)");
++parameter real DTEMP 	= 0.0                             	`ATTR(info="Offset of Device Temperature");
+ 
+-parameter real TBGASUB 	= 4.73e-4;				// Bandgap Temperature Coefficient (eV / degrees)
+-parameter real TBGBSUB 	= 636.0;				// Bandgap Temperature Coefficient (degrees)
++parameter real TBGASUB 	= 4.73e-4                       	`ATTR(info="Bandgap Temperature Coefficient (eV / degrees)");
++parameter real TBGBSUB 	= 636.0                         	`ATTR(info="Bandgap Temperature Coefficient (degrees)");
+ 
+-parameter real TNFACTOR = 0.0;					// Temperature exponent for NFACTOR
++parameter real TNFACTOR = 0.0                           	`ATTR(info="Temperature exponent for NFACTOR");
+ 
+-parameter real UTE 	= -1.5;					// Mobility temperature exponent
++parameter real UTE 	= -1.5                              	`ATTR(info="Mobility temperature exponent");
+ parameter real LUTE 	= 0.0;
+ parameter real WUTE 	= 0.0;
+ parameter real PUTE 	= 0.0;
+-parameter real UTEL 	= 0.0;					// Length Scaling parameter for UTE
++parameter real UTEL 	= 0.0                              	`ATTR(info="Length Scaling parameter for UTE");
+ 
+-parameter real UA1	= 1.0e-3;				// Temperature coefficient for UA
++parameter real UA1	= 1.0e-3                             	`ATTR(info="Temperature coefficient for UA");
+ parameter real LUA1 	= 0.0;
+ parameter real WUA1 	= 0.0;
+ parameter real PUA1 	= 0.0;
+-parameter real UA1L 	= 0.0;					// Length Scaling parameter for UA1
++parameter real UA1L 	= 0.0                              	`ATTR(info="Length Scaling parameter for UA1");
+ 
+-parameter real UC1	= 0.056e-9;				// Temperature coefficient for UC
++parameter real UC1	= 0.056e-9                           	`ATTR(info="Temperature coefficient for UC");
+ parameter real LUC1 	= 0.0;
+ parameter real WUC1 	= 0.0;
+ parameter real PUC1 	= 0.0;
+-parameter real UD1	= 0.0;					// Temperature coefficient for UD
++parameter real UD1	= 0.0                                	`ATTR(info="Temperature coefficient for UD");
+ parameter real LUD1 	= 0.0;
+ parameter real WUD1 	= 0.0;
+ parameter real PUD1 	= 0.0;
+-parameter real UD1L 	= 0.0;					// Length Scaling parameter for UD1
++parameter real UD1L 	= 0.0                              	`ATTR(info="Length Scaling parameter for UD1");
+ 
+-parameter real UCSTE	= -4.775e-3;				// Temperature coefficient for UCS
++parameter real UCSTE	= -4.775e-3                        	`ATTR(info="Temperature coefficient for UCS");
+ parameter real LUCSTE 	= 0.0;
+ parameter real WUCSTE 	= 0.0;
+ parameter real PUCSTE 	= 0.0;
+ 
+-parameter real TETA0	= 0.0;					// Temperature coefficient for ETA0
++parameter real TETA0	= 0.0                              	`ATTR(info="Temperature coefficient for ETA0");
+ 
+-parameter real PRT	= 0.0;					// Temperature coefficient for resistance
++parameter real PRT	= 0.0                                	`ATTR(info="Temperature coefficient for resistance");
+ parameter real LPRT 	= 0.0;
+ parameter real WPRT 	= 0.0;
+ parameter real PPRT 	= 0.0;
+ 
+-parameter real AT	= -1.56e-3;				// Temperature coefficient for saturation velocity
++parameter real AT	= -1.56e-3                            	`ATTR(info="Temperature coefficient for saturation velocity");
+ parameter real LAT	= 0.0;
+ parameter real WAT	= 0.0;
+ parameter real PAT	= 0.0;
+-parameter real ATL 	= 0.0;					// Length Scaling parameter for AT
++parameter real ATL 	= 0.0                               	`ATTR(info="Length Scaling parameter for AT");
+ 
+-parameter real TDELTA	= 0.0;					// Temperature coefficient for DELTA
++parameter real TDELTA	= 0.0                             	`ATTR(info="Temperature coefficient for DELTA");
+ 
+-parameter real PTWGT	= 0.0;					// Temperature coefficient for PTWG
++parameter real PTWGT	= 0.0                              	`ATTR(info="Temperature coefficient for PTWG");
+ parameter real LPTWGT	= 0.0;
+ parameter real WPTWGT	= 0.0;
+ parameter real PPTWGT	= 0.0;
+-parameter real PTWGTL 	= 0.0;					// Length Scaling parameter for PTWGT
++parameter real PTWGTL 	= 0.0                            	`ATTR(info="Length Scaling parameter for PTWGT");
+ 
+-parameter real KT1	= -0.11;				// Temperature coefficient for Vth
+-parameter real KT1EXP	= 1.0 from (0:inf);			// Temperature coefficient for Vth
+-parameter real KT1L	= 0.0;					// Temperature coefficient for Vth
++parameter real KT1	= -0.11                              	`ATTR(info="Temperature coefficient for Vth");
++parameter real KT1EXP	= 1.0 from (0:inf)                	`ATTR(info="Temperature coefficient for Vth");
++parameter real KT1L	= 0.0                               	`ATTR(info="Temperature coefficient for Vth");
+ parameter real LKT1	= 0.0;
+ parameter real WKT1	= 0.0;
+ parameter real PKT1	= 0.0;
+ 
+-parameter real KT2	= 0.022;				// Temperature coefficient for Vth
++parameter real KT2	= 0.022                              	`ATTR(info="Temperature coefficient for Vth");
+ parameter real LKT2	= 0.0;
+ parameter real WKT2	= 0.0;
+ parameter real PKT2	= 0.0;
+ 
+-parameter real IIT	= 0.0;					// Temperature coefficient for BETA0
++parameter real IIT	= 0.0                                	`ATTR(info="Temperature coefficient for BETA0");
+ parameter real LIIT	= 0.0;
+ parameter real WIIT	= 0.0;
+ parameter real PIIT	= 0.0;
+ 
+-parameter real IGT	= 2.5;					// Gate Current Temperature Dependence
++parameter real IGT	= 2.5                                	`ATTR(info="Gate Current Temperature Dependence");
+ parameter real LIGT	= 0.0;
+ parameter real WIGT	= 0.0;
+ parameter real PIGT	= 0.0;
+ 
+-parameter real TGIDL	= 0.0;					// Temperature coefficient for GIDL/GISL
++parameter real TGIDL	= 0.0                              	`ATTR(info="Temperature coefficient for GIDL/GISL");
+ parameter real LTGIDL	= 0.0;
+ parameter real WTGIDL	= 0.0;
+ parameter real PTGIDL	= 0.0;
+ 
+-parameter real TCJ 	= 0.0;					// Temperature coefficient for CJS/CJD
+-parameter real TCJSW 	= 0.0;					// Temperature coefficient for CJSWS/CJSWD
+-parameter real TCJSWG 	= 0.0;					// Temperature coefficient for CJSWGS/CJSWGD
+-parameter real TPB 	= 0.0;					// Temperature coefficient for PBS/PBD
+-parameter real TPBSW 	= 0.0;					// Temperature coefficient for PBSWS/PBSWD
+-parameter real TPBSWG 	= 0.0;					// Temperature coefficient for PBSWGS/PBSWGD
+-parameter real XTIS 	= 3.0;					// Source junction current temperature exponent
+-parameter real XTID 	= XTIS;					// Drain junction current temperature exponent
+-parameter real XTSS 	= 0.02;					// Power dependence of JTSS on temperature
+-parameter real XTSD 	= XTSS;					// Power dependence of JTSD on temperature
+-parameter real XTSSWS 	= 0.02;					// Power dependence of JTSSWS on temperature
+-parameter real XTSSWD 	= XTSSWS;				// Power dependence of JTSSWD on temperature
+-parameter real XTSSWGS 	= 0.02;					// Power dependence of JTSSWGS on temperature
+-parameter real XTSSWGD 	= XTSSWGS;				// Power dependence of JTSSWGD on temperature
+-parameter real TNJTS 	= 0.0;					// Temperature coefficient for NJTS
+-parameter real TNJTSD 	= TNJTS;				// Temperature coefficient for NJTSD
+-parameter real TNJTSSW 	= 0.0;					// Temperature coefficient for NJTSSW
+-parameter real TNJTSSWD = TNJTSSW;				// Temperature coefficient for NJTSSWD
+-parameter real TNJTSSWG = 0.0;					// Temperature coefficient for NJTSSWG
+-parameter real TNJTSSWGD = TNJTSSWG;				// Temperature coefficient for NJTSSWGD
++parameter real TCJ 	= 0.0                               	`ATTR(info="Temperature coefficient for CJS/CJD");
++parameter real TCJSW 	= 0.0                             	`ATTR(info="Temperature coefficient for CJSWS/CJSWD");
++parameter real TCJSWG 	= 0.0                            	`ATTR(info="Temperature coefficient for CJSWGS/CJSWGD");
++parameter real TPB 	= 0.0                               	`ATTR(info="Temperature coefficient for PBS/PBD");
++parameter real TPBSW 	= 0.0                             	`ATTR(info="Temperature coefficient for PBSWS/PBSWD");
++parameter real TPBSWG 	= 0.0                            	`ATTR(info="Temperature coefficient for PBSWGS/PBSWGD");
++parameter real XTIS 	= 3.0                              	`ATTR(info="Source junction current temperature exponent");
++parameter real XTID 	= XTIS                             	`ATTR(info="Drain junction current temperature exponent");
++parameter real XTSS 	= 0.02                             	`ATTR(info="Power dependence of JTSS on temperature");
++parameter real XTSD 	= XTSS                             	`ATTR(info="Power dependence of JTSD on temperature");
++parameter real XTSSWS 	= 0.02                           	`ATTR(info="Power dependence of JTSSWS on temperature");
++parameter real XTSSWD 	= XTSSWS                         	`ATTR(info="Power dependence of JTSSWD on temperature");
++parameter real XTSSWGS 	= 0.02                          	`ATTR(info="Power dependence of JTSSWGS on temperature");
++parameter real XTSSWGD 	= XTSSWGS                       	`ATTR(info="Power dependence of JTSSWGD on temperature");
++parameter real TNJTS 	= 0.0                             	`ATTR(info="Temperature coefficient for NJTS");
++parameter real TNJTSD 	= TNJTS                          	`ATTR(info="Temperature coefficient for NJTSD");
++parameter real TNJTSSW 	= 0.0                           	`ATTR(info="Temperature coefficient for NJTSSW");
++parameter real TNJTSSWD = TNJTSSW                       	`ATTR(info="Temperature coefficient for NJTSSWD");
++parameter real TNJTSSWG = 0.0                           	`ATTR(info="Temperature coefficient for NJTSSWG");
++parameter real TNJTSSWGD = TNJTSSWG                     	`ATTR(info="Temperature coefficient for NJTSSWGD");
+ 
+ // Self Heating Parameter
+-parameter real RTH0    = 0.0;                                   // Thermal resistance
+-parameter real CTH0    = 1.0E-05;                               // Thermal capacitance
+-parameter real WTH0    = 0.0;                                   // Width dependence coefficient for Rth and Cth
++parameter real RTH0    = 0.0                            	`ATTR(info="Thermal resistance");
++parameter real CTH0    = 1.0E-05                        	`ATTR(info="Thermal capacitance");
++parameter real WTH0    = 0.0                            	`ATTR(info="Width dependence coefficient for Rth and Cth");
+ 
+ //Stress related Parameter
+-parameter real SA 	= 0.0;					// Distance between OD edge from Poly from one side
+-parameter real SB 	= 0.0;					// Distance between OD edge from Poly from other side
+-parameter real SD 	= 0.0;					// Distance between neighboring fingers
+-parameter real SAREF 	= 1.0e-6 from (0:inf);			// Reference distance between OD edge from Poly from one side
+-parameter real SBREF 	= 1.0e-6 from (0:inf);			// Reference distance between OD edge from Poly from other side
+-parameter real WLOD 	= 0.0	 from [0:inf);			// Width Parameter for Stress Effect
+-parameter real KU0 	= 0.0;					// Mobility degradation/enhancement Parameter for Stress Effect
+-parameter real KVSAT 	= 0.0;					// Saturation Velocity degradation/enhancement Parameter for Stress Effect
+-parameter real TKU0 	= 0.0;					// Temperature Coefficient for KU0
+-parameter real LKU0 	= 0.0;					// Length Dependence of KU0
+-parameter real WKU0 	= 0.0;					// Width Dependence of KU0
+-parameter real PKU0 	= 0.0;					// Cross Term Dependence of KU0
+-parameter real LLODKU0 	= 0.0;					// Length Parameter for u0 stress effect
+-parameter real WLODKU0 	= 0.0;					// Width Parameter for u0 stress effect
+-parameter real KVTH0 	= 0.0;					// Threshold Shift parameter for stress effect
+-parameter real LKVTH0 	= 0.0;					// Length dependence of KVTH0
+-parameter real WKVTH0 	= 0.0;					// Width dependence of KVTH0
+-parameter real PKVTH0 	= 0.0;					// Cross-term dependence of KVTH0
+-parameter real LLODVTH 	= 0.0;					// Length Parameter for Vth stress effect
+-parameter real WLODVTH 	= 0.0;					// Width Parameter for Vth stress effect
+-parameter real STK2 	= 0.0;					// K2 shift factor related to Vth change
+-parameter real LODK2 	= 0.0;					// K2 shift modification factor for stress effect
+-parameter real STETA0 	= 0.0;					// eta0 shift related to Vth0 change
+-parameter real LODETA0 	= 0.0;					// eta0 modification foator for stress effect
++parameter real SA 	= 0.0                                	`ATTR(info="Distance between OD edge from Poly from one side");
++parameter real SB 	= 0.0                                	`ATTR(info="Distance between OD edge from Poly from other side");
++parameter real SD 	= 0.0                                	`ATTR(info="Distance between neighboring fingers");
++parameter real SAREF 	= 1.0e-6 from (0:inf)             	`ATTR(info="Reference distance between OD edge from Poly from one side");
++parameter real SBREF 	= 1.0e-6 from (0:inf)             	`ATTR(info="Reference distance between OD edge from Poly from other side");
++parameter real WLOD 	= 0.0	 from [0:inf)                	`ATTR(info="Width Parameter for Stress Effect");
++parameter real KU0 	= 0.0                               	`ATTR(info="Mobility degradation/enhancement Parameter for Stress Effect");
++parameter real KVSAT 	= 0.0                             	`ATTR(info="Saturation Velocity degradation/enhancement Parameter for Stress Effect");
++parameter real TKU0 	= 0.0                              	`ATTR(info="Temperature Coefficient for KU0");
++parameter real LKU0 	= 0.0                              	`ATTR(info="Length Dependence of KU0");
++parameter real WKU0 	= 0.0                              	`ATTR(info="Width Dependence of KU0");
++parameter real PKU0 	= 0.0                              	`ATTR(info="Cross Term Dependence of KU0");
++parameter real LLODKU0 	= 0.0                           	`ATTR(info="Length Parameter for u0 stress effect");
++parameter real WLODKU0 	= 0.0                           	`ATTR(info="Width Parameter for u0 stress effect");
++parameter real KVTH0 	= 0.0                             	`ATTR(info="Threshold Shift parameter for stress effect");
++parameter real LKVTH0 	= 0.0                            	`ATTR(info="Length dependence of KVTH0");
++parameter real WKVTH0 	= 0.0                            	`ATTR(info="Width dependence of KVTH0");
++parameter real PKVTH0 	= 0.0                            	`ATTR(info="Cross-term dependence of KVTH0");
++parameter real LLODVTH 	= 0.0                           	`ATTR(info="Length Parameter for Vth stress effect");
++parameter real WLODVTH 	= 0.0                           	`ATTR(info="Width Parameter for Vth stress effect");
++parameter real STK2 	= 0.0                              	`ATTR(info="K2 shift factor related to Vth change");
++parameter real LODK2 	= 0.0                             	`ATTR(info="K2 shift modification factor for stress effect");
++parameter real STETA0 	= 0.0                            	`ATTR(info="eta0 shift related to Vth0 change");
++parameter real LODETA0 	= 0.0                           	`ATTR(info="eta0 modification foator for stress effect");
+ //Well Proximity Parameters
+-parameter real SCA 	= 0.0;					//Integration of first distribution function for scattered well dopant
+-parameter real SCB 	= 0.0;					//Integration of second distribution function for scattered well dopant
+-parameter real SCC 	= 0.0;					//Integration of second distribution function for scattered well dopant
+-parameter real SC 	= 0.0;					//Distance to a single well edge
+-parameter real WEB 	= 0.0;					//Coefficient for SCB
+-parameter real WEC 	= 0.0;					//Coefficient for SCC
+-parameter real KVTH0WE 	= 0.0;					//Vth shift for well proximity effect
++parameter real SCA 	= 0.0                               	`ATTR(info="Integration of first distribution function for scattered well dopant");
++parameter real SCB 	= 0.0                               	`ATTR(info="Integration of second distribution function for scattered well dopant");
++parameter real SCC 	= 0.0                               	`ATTR(info="Integration of second distribution function for scattered well dopant");
++parameter real SC 	= 0.0                                	`ATTR(info="Distance to a single well edge");
++parameter real WEB 	= 0.0                               	`ATTR(info="Coefficient for SCB");
++parameter real WEC 	= 0.0                               	`ATTR(info="Coefficient for SCC");
++parameter real KVTH0WE 	= 0.0                           	`ATTR(info="Vth shift for well proximity effect");
+ parameter real LKVTH0WE = 0.0;					
+ parameter real WKVTH0WE = 0.0;					
+ parameter real PKVTH0WE = 0.0;					
+-parameter real K2WE 	= 0.0;					//K2 shift for well proximity effect
++parameter real K2WE 	= 0.0                              	`ATTR(info="K2 shift for well proximity effect");
+ parameter real LK2WE 	= 0.0;
+ parameter real WK2WE 	= 0.0;
+ parameter real PK2WE 	= 0.0;
+-parameter real KU0WE 	= 0.0;					//Mobility degradation factor for well proximity effect
++parameter real KU0WE 	= 0.0                             	`ATTR(info="Mobility degradation factor for well proximity effect");
+ parameter real LKU0WE 	= 0.0;
+ parameter real WKU0WE 	= 0.0;
+ parameter real PKU0WE 	= 0.0;
+-parameter real SCREF 	= 1.0e-6;				//Reference distance to calculate SCA,SCB and SCC
++parameter real SCREF 	= 1.0e-6                          	`ATTR(info="Reference distance to calculate SCA,SCB and SCC");
+ 
+ 
+ // GMIN - added for convergence
+-- 
+2.1.2
+
