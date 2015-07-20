@@ -73,21 +73,28 @@ inline void NetLang::printItem(Element const* c, stream_t& s) const
 /*!
  * a dispatcher stub. hardly sophisticated, but functional
  */
-class SimulatorDispatcher{
+template<class T>
+class Dispatcher{
 public:
-  SimulatorDispatcher(std::string label, Simulator const* what)
+  Dispatcher(std::string label, T const* what)
   {
     qDebug() << "dispatcher install" << label.c_str();
     assert(what);
-    Simulators[label] = what;
+    Stash[label] = what;
   }
-  static Simulator const* get(std::string const& s)
+  static T const* get(std::string const& s)
   {
     qDebug() << "dispatcher get" << s.c_str();
-    return Simulators[s];
+    return Stash[s];
+  }
+  static T const* get(QString const& s){
+    return get(std::string(s));
+  }
+  static T const* get(char const* s){
+    return get(std::string(s));
   }
 private:
-  static std::map<std::string, Simulator const*> Simulators;
+  static std::map<std::string, T const*> Stash;
 };
 
 #define QUCS_SIM_H__

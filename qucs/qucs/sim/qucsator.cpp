@@ -78,7 +78,7 @@ class Qucsator : public Simulator
 };
 
 static Qucsator Q;
-static SimulatorDispatcher p("qucsator", &Q);
+static Dispatcher<Simulator> p("qucsator", &Q);
 }
 
 // vim:ts=8:sw=2:noet

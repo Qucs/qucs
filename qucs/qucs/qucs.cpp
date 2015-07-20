@@ -2800,4 +2800,7 @@ void QucsApp::slotSaveSchematicToGraphicsFile(bool diagram)
   delete writer;
 }
 
-std::map<std::string, Simulator const*> SimulatorDispatcher::Simulators;
+template<>
+std::map<std::string, Simulator const*> Dispatcher<Simulator>::Stash{};
+template<>
+std::map<std::string, NetLang const*> Dispatcher<NetLang>::Stash{};
