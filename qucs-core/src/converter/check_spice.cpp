@@ -700,7 +700,7 @@ static void spice_adjust_device (struct definition_t * def,
             double version = spice_evaluate_value (p2->value);
             def->pairs = spice_del_property (def->pairs, p2);
             if (level == 6) {
-              if (version == 6.10) {
+              if (version == 1.0) {
                 if (!strcmp(tran->trans_type_prop,"nfet")) {
                   def->type = strdup ("bsim6v10nMOS");
                   hic = true;
