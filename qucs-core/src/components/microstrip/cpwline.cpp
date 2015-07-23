@@ -47,61 +47,48 @@ cpwline::cpwline () : circuit (2) {
    algorithm (AGM) by Abramowitz and Stegun.
 \todo move to common math
 */
-void cpwline::ellipke (nr_double_t arg, nr_double_t &k, nr_double_t &e) {
-  int iMax = 16;
-  if (arg == 1.0) {
-    k = std::numeric_limits<nr_double_t>::infinity();
-    e = 0;
-  }
-  else if (std::isinf (arg) && arg < 0) {
-    k = 0;
-    e = std::numeric_limits<nr_double_t>::infinity();
-  }
-  else {
-    nr_double_t a, b, c, f, s, fk = 1, fe = 1, t, da = arg;
-    int i;
-    if (arg < 0) {
-      fk = 1 / qucs::sqrt (1 - arg);
-      fe = qucs::sqrt (1 - arg);
-      da = -arg / (1 - arg);
-    }
-    a = 1;
-    b = qucs::sqrt (1 - da);
-    c = qucs::sqrt (da);
-    f = 0.5;
-    s = f * c * c;
-    for (i = 0; i < iMax; i++) {
-      t = (a + b) / 2;
-      c = (a - b) / 2;
-      b = qucs::sqrt (a * b);
-      a = t;
-      f *= 2;
-      s += f * c * c;
-      if (c / a < std::numeric_limits<nr_double_t>::epsilon()) break;
-    }
-    if (i >= iMax) {
-      k = 0; e = 0;
-    }
-    else {
-      k = pi_over_2 / a;
-      e = pi_over_2 * (1 - s) / a;
-      if (arg < 0) {
-	k *= fk;
-	e *= fe;
-      }
-    }
-  }
-}
-
-/* We need to know only K(k), and if possible KISS. */
+/* The function computes the complete elliptic integral of first kind
+   K(k) using the arithmetic-geometric mean algorithm (AGM) found e.g.
+   in Abramowitz and Stegun (17.6.1). 
+   Note that the argument of the function here is the elliptic modulus k
+   and not the parameter m=k^2 . */
+/* \todo move to common math */
 nr_double_t cpwline::ellipk (nr_double_t k) {
-  nr_double_t r, lost;
-  ellipke (k, r, lost);
-  return r;
+  if ((k < 0.0) || (k >= 1.0))
+    // we use only the range from 0 <= k < 1
+    return std::numeric_limits<nr_double_t>::quiet_NaN();
+
+  nr_double_t a = 1.0;
+  nr_double_t b = qucs::sqrt(1-k*k);
+  nr_double_t c = k;
+
+  while (c > std::numeric_limits<nr_double_t>::epsilon()) {
+    nr_double_t tmp = (a + b) / 2.0;
+    c = (a - b) / 2.0;
+    b = qucs::sqrt(a * b);
+    a = tmp;
+  }
+  return (pi_over_2 / a);
 }
 
-/* More or less accurate approximation of K(k)/K'(k).  Suggested by
-   publications dealing with coplanar components. */
+nr_double_t cpwline::KoverKp(nr_double_t k) {
+  if ((k < 0.0) || (k >= 1.0))
+    return std::numeric_limits<nr_double_t>::quiet_NaN();
+
+  return (ellipk(k) / ellipk(qucs::sqrt(1-k*k)));
+}
+
+/* Approximation of K(k)/K'(k).
+   First appeared in
+   Hilberg, W., "From Approximations to Exact Relations for Characteristic
+   Impedances," IEEE Trans. MTT, May 1969.
+   More accurate expressions can be found in the above article and in
+   Abbott, J. T., "Modeling the Capacitive Behavior of Coplanar Striplines
+   and Coplanar Waveguides using Simple Functions", Rochester Institute of
+   Technology, Rochester, New York, June 2011.
+   The maximum relative error of the approximation implemented here is
+   about 2 ppm, so good enough for any practical purpose.
+ */
 nr_double_t cpwline::ellipa (nr_double_t k) {
   nr_double_t r, kp;
   if (k < sqrt1_2) {
@@ -181,7 +168,8 @@ void cpwline::initPropagation (void) {
     We = W + d;
 
     // modifies k1 accordingly (k1 = ke)
-    ke = We / (We + se + se); // ke = k1 + (1 - k1 * k1) * d / 2 / s;
+    //ke = We / (We + se + se); 
+    ke = k1 + (1 - k1 * k1) * d / 2 / s;
     if (approx) {
       qe = ellipa (ke);
     } else {
@@ -190,7 +178,7 @@ void cpwline::initPropagation (void) {
     // backside is metal
     if (backMetal) {
       qz  = 1 / (qe + q3);
-      er0 = 1 + q3 * qz * (er - 1);
+      //er0 = 1 + q3 * qz * (er - 1);
       zl_factor = Z0 / 2 * qz;
     }
     // backside is air
@@ -228,6 +216,7 @@ void cpwline::initPropagation (void) {
   ac_factor *= qucs::sqrt (pi * MU0 * rho); // Rs factor
   ad_factor  = (er / (er - 1)) * tand * pi / C0;
 
+  // propagation constant (partial, final value computed in calcAB() )
   bt_factor  = 2 * pi / C0;
 }
 
@@ -283,6 +272,7 @@ void cpwline::calcSP (nr_double_t frequency) {
   setS (NODE_1, NODE_2, s21); setS (NODE_2, NODE_1, s21);
 }
 
+/* FIXME : following function is unused? */
 /* The function calculates the quasi-static impedance of a coplanar
    waveguide line and the value of the effective dielectric constant
    for the given coplanar line and substrate properties. */
@@ -324,13 +314,14 @@ void cpwline::analyseQuasiStatic (nr_double_t W, nr_double_t s, nr_double_t h,
     We = W + d;
 
     // modifies k1 accordingly (k1 = ke)
-    ke = We / (We + se + se); // ke = k1 + (1 - k1 * k1) * d / 2 / s;
+    //ke = We / (We + se + se);
+    ke = k1 + (1 - k1 * k1) * d / 2 / s;
     qe = ellipk (ke) / ellipk (qucs::sqrt (1 - ke * ke));
 
     // backside is metal
     if (backMetal) {
       qz  = 1 / (qe + q3);
-      ErEff = 1 + q3 * qz * (er - 1);
+      //ErEff = 1 + q3 * qz * (er - 1);
       ZlEff = Z0 / 2 * qz;
     }
     // backside is air
@@ -345,6 +336,7 @@ void cpwline::analyseQuasiStatic (nr_double_t W, nr_double_t s, nr_double_t h,
   ZlEff /= ErEff;
 }
 
+/* FIXME : following function is unused? */
 /* This function calculates the frequency dependent value of the
    effective dielectric constant and the coplanar line impedance for
    the given frequency. */

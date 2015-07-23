@@ -103,9 +103,28 @@ C_a = 2\cdot \varepsilon_0\cdot \dfrac{K(k_1)}{K'(k_1)}
 
 In both formulae $K(k)$ and $K'(k)$ represent the complete elliptic
 integral of the first kind and its complement, and $k_1=
-\tfrac{W}{W+2s}$.  While the separate evaluation of $K$ and $K'$ is
-more or less tricky, the $K/K'$ ratio lets itself compute efficiently
-through the following formulae:
+\tfrac{W}{W+2s}$.
+
+\addvspace{12pt}
+
+$K(k)$ (and $K'(k)$) can be computed easily by using the \emph{arithmetic-geometric mean} method \cite{Abramowitz}: starting with
+\begin{equation}
+a_0 = 1, \quad b_0 = \sqrt{1 -k^2}
+\end{equation}
+the following recursion formulae are iterated
+\begin{equation}
+a_n = \dfrac{1}{2}(a_{n-1}+b_{n-1}), \quad b_n = \sqrt{a_{n-1}b_{n-1}}, \quad c_n=a_{n-1}-b_{n-1}
+\end{equation}
+until $c_N=0$ within a predetermined accuracy.\\
+$K(k)$ is then found from
+\begin{equation}
+K(k) = \dfrac{\pi}{2 a_N}
+\end{equation}
+
+\addvspace{12pt}
+
+When only the the $K/K'$ ratio is needed it can be approximated
+efficiently through the following formulae:
 \begin{equation}
 \dfrac{K(k)}{K'(k)} =
 \dfrac{\pi}{\ln\left(2\tfrac{1+\sqrt{k'}}{1-\sqrt{k'}}\right)}
@@ -119,10 +138,14 @@ through the following formulae:
 \dfrac{1}{\sqrt{2}} \le k \le 1
 \end{equation}
 
-with $k'$ being the complementary modulus: $k'=\sqrt{1-k^2}$.  While
-\cite{Collin} states that the accuracy of the above formulae is close
-to $10^{-5}$, \cite{Gupta1} claims it to be $3\cdot10^{-6}$.  It can
-be considered as exact for any practical purposes.
+with $k'$ being the complementary modulus: $k'=\sqrt{1-k^2}$.
+This formula was first derived in \cite{Hilberg}. According to
+\cite{Collin} the accuracy of the above formulae is close
+to $10^{-5}$, \cite{Gupta1} claims it to be $3\cdot10^{-6}$ while comparison
+with GNU Octave using the $ellipke()$ function shows a maximum relative error
+of about $2\cdot10^{-6}$ . More accurate approximations can be found in 
+\cite{Hilberg} and \cite{Abbott} but the above formulae can already be 
+considered as exact for any practical purpose.
 
 \addvspace{12pt}
 
