@@ -91,7 +91,9 @@ install:
 
   # Get geperf, download, extract add to path
   - cd %topDIR%
-  - curl -kLO http://sourceforge.net/projects/gnuwin32/files/gperf/3.0.1/gperf-3.0.1-bin.zip
+  #- curl -kLO http://sourceforge.net/projects/gnuwin32/files/gperf/3.0.1/gperf-3.0.1-bin.zip
+  # Use my Dropbox till we find a better fallback or cache mechanism for SourceForge
+  - curl -kLO https://www.dropbox.com/s/nxjyuyil1h3gjgm/gperf-3.0.1-bin.zip
   - 7z x gperf-3.0.1-bin.zip -ogperf
   - path %topDIR%\gperf\bin;%PATH%
   - gperf --version
