@@ -108,14 +108,14 @@ install:
       brew install adms;
     fi
 
-  # Install official Qt (184MB)
+  # Install official Qt (185MB)
   # Homebrew Qt binary has no Qt3Support (build from souce takes hours)
   - if [[ $OSX ]]; then
-      QT_VERSION=4.8.6-1 ;
-      curl -L -O http://download.qt.io/archive/qt/4.8/4.8.6/qt-opensource-mac-${QT_VERSION}.dmg ;
+      QT_VERSION=4.8.7 ;
+      curl -L -O http://download.qt.io/official_releases/qt/4.8/4.8.7/qt-opensource-mac-${QT_VERSION}.dmg ;
       hdiutil mount qt-opensource-mac-${QT_VERSION}.dmg ;
-      sudo installer -pkg /Volumes/Qt\ 4.8.6/Qt.mpkg -target / ;
-      hdiutil unmount /Volumes/Qt\ 4.8.6 ;
+      sudo installer -pkg /Volumes/Qt\ 4.8.7/Qt.mpkg -target / ;
+      hdiutil unmount /Volumes/Qt\ 4.8.7 ;
     fi
 
   # Grab tip of Qucs-Test
