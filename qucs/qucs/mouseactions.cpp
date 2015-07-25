@@ -214,7 +214,7 @@ void MouseActions::endElementMoving(Schematic *Doc, Q3PtrList<Element> *movEleme
 	Doc->insertNodeLabel((WireLabel*)pe);
 	break;
       case isMarker:
-	((Marker*)pe)->pGraph->Markers.append((Marker*)pe);
+        assert(dynamic_cast<Marker*>(pe));
 	break;
     }
   }
@@ -1700,9 +1700,7 @@ void MouseActions::MPressElement(Schematic *Doc, QMouseEvent *Event, float, floa
     Diagram *Diag = (Diagram*) selElem;
     QFileInfo Info(Doc->DocName);
     // dialog is Qt::WDestructiveClose !!!
-    DiagramDialog *dia =
-       new DiagramDialog(Diag,
-           Info.dirPath() + QDir::separator() + Doc->DataSet, Doc);
+    DiagramDialog *dia = new DiagramDialog(Diag, Doc);
 
     if (dia->exec() == QDialog::Rejected) {  // don't insert if dialog canceled
       Doc->viewport()->update();
@@ -1997,8 +1995,10 @@ void MouseActions::MPressMarker(Schematic *Doc, QMouseEvent*, float fX, float fY
   Marker *pm = Doc->setMarker(MAx1, MAy1);
 
   if(pm) {
-    int x0 = pm->Diag->cx;
-    int y0 = pm->Diag->cy;
+    //int x0 = pm->Diag->cx;
+    //int y0 = pm->Diag->cy;
+    int x0 = pm->cx;
+    int y0 = pm->cy;
     Doc->enlargeView(x0+pm->x1, y0-pm->y1-pm->y2, x0+pm->x1+pm->x2, y0-pm->y1);
   }
   Doc->viewport()->update();
@@ -2619,7 +2619,7 @@ void MouseActions::editElement(Schematic *Doc, QMouseEvent *Event)
            }
          }
 
-         ddia = new DiagramDialog(dia, Info.dirPath() + QDir::separator() + Doc->DataSet, Doc);
+         ddia = new DiagramDialog(dia, Doc, pg);
          if (ddia->exec() != QDialog::Rejected) { // is WDestructiveClose
            Doc->setChanged(true, true);
          }
@@ -2639,7 +2639,7 @@ void MouseActions::editElement(Schematic *Doc, QMouseEvent *Event)
 
       if(!dia) break;
 
-      ddia = new DiagramDialog(dia, Info.dirPath() + QDir::separator() + Doc->DataSet, Doc, pg);
+      new DiagramDialog(dia, Doc);
 
       if (ddia->exec() != QDialog::Rejected) {  // is WDestructiveClose
         Doc->setChanged(true, true);

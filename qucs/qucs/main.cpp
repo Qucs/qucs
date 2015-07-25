@@ -831,7 +831,6 @@ int main(int argc, char *argv[])
       if(octaveExec1.exists()) QucsSettings.OctaveBinDir.setPath(QString("/usr/local/bin/"));
 #endif
   }
-  setDefaultShortcut();
   loadSettings();
 
   if(!QucsSettings.BGColor.isValid())
