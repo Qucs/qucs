@@ -37,9 +37,10 @@
  * dynamic loaded libraries.
  * \see QucsApp::slotBuildModule() for the make output assignment.
  */
-MessageDock::MessageDock(QucsApp *App_): QWidget()
-{
 
+//MessageDock::MessageDock(QucsApp *App_): QWidget()
+MessagesWindow::MessagesWindow(QDockWidget *parent): QWidget()
+{
     builderTabs = new QTabWidget();
     builderTabs->setTabPosition(QTabWidget::South);
 
@@ -47,21 +48,34 @@ MessageDock::MessageDock(QucsApp *App_): QWidget()
     admsOutput = new QPlainTextEdit();
     admsOutput->setReadOnly(true);
 
-    builderTabs->insertTab(0,admsOutput,tr("admsXml"));
-
+    builderTabs->insertTab(0, admsOutput, tr("ADMS XML"));
 
     // 2) add a dock for the cpp compiler messages
     cppOutput = new QPlainTextEdit();
     cppOutput->setReadOnly(true);
 
-    builderTabs->insertTab(1,cppOutput,tr("Compiler"));
+    builderTabs->insertTab(1,cppOutput,tr("C++ Compiler"));
 
-    msgDock = new QDockWidget(tr("admsXml Dock"));
-    msgDock->setWidget(builderTabs);
-    App_->addDockWidget(Qt::BottomDockWidgetArea, msgDock);
+    messages = new QPlainTextEdit();
+    messages->setReadOnly(true);
+    builderTabs->insertTab(2, messages, tr("Messages"));
+
+    warnings = new QPlainTextEdit();
+    warnings->setReadOnly(true);
+    builderTabs->insertTab(3, warnings, tr("Warnings"));
+
+    errors = new QPlainTextEdit();
+    errors->setReadOnly(true);
+    builderTabs->insertTab(4, errors, tr("Errors"));
+
+    //msgDock = new QDockWidget();
+    //msgDock->setWidget(builderTabs);
+    //App_->addDockWidget(Qt::BottomDockWidgetArea, msgDock);
+
+    parent->setWidget(builderTabs);
 
     // start hidden
-    msgDock->hide();
+    //msgDock->hide();
 
     // monitor the amds output
     connect(admsOutput,SIGNAL(textChanged()), this, SLOT(slotAdmsChanged()));
@@ -72,21 +86,55 @@ MessageDock::MessageDock(QucsApp *App_): QWidget()
 }
 
 /*!
- * \brief MessageDock::reset clear the text and tab icons
+ * \brief MessagesWindow::message Displays a message in the messages dock
  */
-void MessageDock::reset()
+void MessagesWindow::message(QString message) {
+
+  messages->setPlainText(message);
+  builderTabs->setCurrentIndex(2);
+  parent->show();
+}
+
+/*!
+ * \brief MessagesWindow::warning Displays a warning message in the messages dock
+ */
+void MessagesWindow::warning(QString message) {
+
+  warnings->setPlainText(message);
+  builderTabs->setCurrentIndex(3);
+  parent->show();
+}
+
+/*!
+ * \brief MessagesWindow::error Displays an error message in the messages dock
+ */
+void MessagesWindow::error(QString message) {
+
+  errors->setPlainText(message);
+  builderTabs->setCurrentIndex(4);
+  parent->show();
+}
+
+/*!
+ * \brief MessagesWindow::reset clear the text and tab icons
+ */
+void MessagesWindow::reset()
 {
     admsOutput->clear();
     cppOutput->clear();
+
+    messages->clear();
+    warnings->clear();
+    errors->clear();
 
     builderTabs->setTabIcon(0,QPixmap());
     builderTabs->setTabIcon(1,QPixmap());
 }
 
 /*!
- * \brief MessageDock::slotAdmsChanged monitors the adms log, update tab icon
+ * \brief MessagesWindow::slotAdmsChanged monitors the adms log, update tab icon
  */
-void MessageDock::slotAdmsChanged()
+void MessagesWindow::slotAdmsChanged()
 {
     // look for [fatal..] output of admsXml
     // get line from either
@@ -142,9 +190,9 @@ void MessageDock::slotAdmsChanged()
 }
 
 /*!
- * \brief MessageDock::slotCppChanged monitors the compiler log, update tab icon
+ * \brief MessagesWindow::slotCppChanged monitors the compiler log, update tab icon
  */
-void MessageDock::slotCppChanged()
+void MessagesWindow::slotCppChanged()
 {
     QString logContents = cppOutput->toPlainText();
 
@@ -165,13 +213,16 @@ void MessageDock::slotCppChanged()
 }
 
 /*!
- * \brief MessageDock::slotCursor
+ * \brief MessagesWindow::slotCursor
  */
-void MessageDock::slotCursor()
+void MessagesWindow::slotCursor()
 {
     qWarning()  << admsOutput->textCursor().blockNumber();
+
     int gotoLine = -1;
-    QString line =  admsOutput->textCursor().block().text();
+
+    QString line = admsOutput->textCursor().block().text();
+
     if (line.contains("[fatal..]",Qt::CaseSensitive)) {
         // \todo improve the parsing of line
         // try to find line number: ":34:"
@@ -244,9 +295,4 @@ void MessageDock::slotCursor()
     /// \todo add line numbers to TextDoc, highlight as the cursor moves
     /// problem that now the cursor paints over the failed line.
     /// can we have multiple selections?
-
-
 }
-
-
-

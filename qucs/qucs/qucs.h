@@ -22,6 +22,10 @@
 #include <QString>
 #include <QHash>
 #include <QStack>
+#include <QDialog>
+#include <QLabel>
+#include <QScrollArea>
+#include <QPushButton>
 
 class QucsDoc;
 class Schematic;
@@ -29,7 +33,7 @@ class SimMessage;
 class MouseActions;
 class SearchDialog;
 class OctaveWindow;
-class MessageDock;
+class MessagesWindow;
 class ProjectView;
 
 class QLabel;
@@ -132,6 +136,7 @@ public slots:
   void slotCMenuInsert();
 
   void slotUpdateTreeview();
+
 private slots:
   void slotMenuProjOpen();
   void slotMenuProjClose();
@@ -159,6 +164,8 @@ public:
   QTabWidget *DocumentTab;
   QListWidget *CompComps;
   QTreeWidget *libTreeWidget;
+  QDockWidget *messagesDock;
+  MessagesWindow *messages;
 
   // menu appearing by right mouse button click on content listview
   QMenu *ContentMenu;
@@ -182,7 +189,6 @@ private:
   QTabWidget      *TabView;
   QDockWidget     *octDock;
   OctaveWindow    *octave;
-  MessageDock     *messageDock;
 
   QListView       *Projects;
   ProjectView     *Content;
@@ -245,6 +251,8 @@ private slots:
   void slotViewBrowseDock(bool toggle); // toggle the dock window
   void slotViewOctaveDock(bool); // toggle the dock window
   void slotToggleOctave(bool);
+  void slotViewMessagesDock(bool); // toggles the messages dock (admsXml output)
+  void slotToggleMessagesDockVisibility(bool); // called when closed by the user
   void slotToggleDock(bool);
   void slotHelpAbout();     // shows an about dialog
 
@@ -255,7 +263,7 @@ private:
   void initStatusBar();  // setup the statusbar
 
   QAction *helpAboutApp, *helpAboutQt, *viewToolBar, *viewStatusBar,
-          *viewBrowseDock, *viewOctaveDock;
+          *viewBrowseDock, *viewOctaveDock, *viewMessagesDock;
 
   // menus contain the items of their menubar
   enum { MaxRecentFiles = 8 };

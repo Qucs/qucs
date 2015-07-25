@@ -697,8 +697,13 @@ void SimMessage::slotStateChanged(QProcess::ProcessState newState)
         case QProcess::UnknownError: // getting here instead
           switch(oldState){
             case QProcess::Starting: // failed to start.
-              ErrText->insertPlainText(tr("ERROR: Cannot start ") + Program +
-                  " (" + SimProcess.errorString() + ")\n");
+              if (Program == "") {
+                ErrText->insertPlainText(tr("ERROR: Cannot start the program.\n"
+                    "No path has been specified.\n"
+                    "Please check the settings.\n"));
+              } else {
+                ErrText->insertPlainText(tr("ERROR: Cannot start ") + Program + " (" + SimProcess.errorString() + ")\n");
+              }
               FinishSimulation(-1);
               break;
             case QProcess::Running:
@@ -751,6 +756,7 @@ void SimMessage::slotSimEnded(int exitCode, QProcess::ExitStatus exitStatus )
     ErrText->appendPlainText(tr("ERROR: Simulator crashed!"));
     ErrText->appendPlainText(tr("Please report this error to qucs-bugs@lists.sourceforge.net"));
   }
+
   FinishSimulation(stat); // 0 = normal  | -1 = crash
 }
 
@@ -795,20 +801,21 @@ void SimMessage::FinishSimulation(int Status)
     file.close();
   }
 
-  if(Status == 0) {
-    if(SimOpt) { // save optimization data
+  if (Status == 0) {
+    if (SimOpt) { // save optimization data
       QFile ifile(QucsSettings.QucsHomeDir.filePath("asco_out.dat"));
       QFile ofile(DataSet);
       if(ifile.open(QIODevice::ReadOnly)) {
-	if(ofile.open(QIODevice::WriteOnly)) {
-	  QByteArray data = ifile.readAll();
-	  ofile.write(data);
-	  ofile.close();
-	}
-	ifile.close();
+        if(ofile.open(QIODevice::WriteOnly)) {
+          QByteArray data = ifile.readAll();
+          ofile.write(data);
+          ofile.close();
+        }
+        ifile.close();
       }
+
       if(((Optimize_Sim*)SimOpt)->loadASCOout())
-	((Schematic*)DocWidget)->setChanged(true,true);
+        ((Schematic*)DocWidget)->setChanged(true,true);
     }
   }
 

@@ -336,7 +336,6 @@ void QucsApp::initView()
 
   LibGroupLayout->addWidget(LibButts);
 
-
   libTreeWidget = new QTreeWidget (this);
   libTreeWidget->setColumnCount (1);
   QStringList headers;
@@ -368,12 +367,16 @@ void QucsApp::initView()
 
   connect(octDock, SIGNAL(visibilityChanged(bool)), SLOT(slotToggleOctave(bool)));
   octave = new OctaveWindow(octDock);
-  this->addDockWidget(Qt::BottomDockWidgetArea, octDock);
-  this->setCorner(Qt::BottomLeftCorner  , Qt::LeftDockWidgetArea);
 
   // ............................................
+  // Dock that holds the window to show compilers' messages
+  messagesDock = new QDockWidget();
+  messages = new MessagesWindow(messagesDock);
+  this->addDockWidget(Qt::BottomDockWidgetArea, messagesDock);
 
-  messageDock = new MessageDock(this);
+  connect(messagesDock, SIGNAL(visibilityChanged(bool)), SLOT(slotToggleMessagesDockVisibility(bool)));
+
+  messagesDock->hide();
 
   // initial home directory model
   m_homeDirModel = new QFileSystemModel(this);
@@ -788,10 +791,11 @@ void QucsApp::slotSelectComponent(QListWidgetItem *item)
   }
   activeAction = 0;
 
-  MouseMoveAction = &MouseActions::MMoveElement;
+  /*MouseMoveAction = &MouseActions::MMoveElement;
   MousePressAction = &MouseActions::MPressElement;
   MouseReleaseAction = 0;
-  MouseDoubleClickAction = 0;
+  MouseDoubleClickAction = 0;*/
+  view->elementInsertState(); // nvdl: todo: Changed
 
   pInfoFunc Infos = 0;
   pInfoVAFunc InfosVA = 0;
@@ -1638,6 +1642,7 @@ void QucsApp::closeFile(int index)
     }
 
     DocumentTab->removeTab(index);
+
     delete Doc;
 
     if(DocumentTab->count() < 1) { // if no document left, create an untitled
@@ -1753,7 +1758,7 @@ void QucsApp::slotFileSettings ()
 {
   editText->setHidden (true); // disable text edit of component property
 
-  QWidget * w = DocumentTab->currentWidget ();
+  QWidget * w = DocumentTab->currentPage ();
   if (isTextDocument (w)) {
     QucsDoc * Doc = (QucsDoc *) ((TextDoc *) w);
     QString ext = Doc->fileSuffix ();
@@ -1795,7 +1800,8 @@ void QucsApp::slotRefreshSchPath()
   this->updateSchNameHash();
   this->updateSpiceNameHash();
 
-  statusBar()->showMessage(tr("The schematic search path has been refreshed."), 2000);
+  int exit = QMessageBox::information(this, tr("Update schematic path"),
+      tr("The schematic file path has been refreshed."), tr("OK"));
 }
 
 // --------------------------------------------------------------
@@ -2049,7 +2055,7 @@ void QucsApp::slotAfterSimulation(int Status, SimMessage *sim)
 
   int i=0;
   QWidget *w;  // search, if page is still open
-  while((w=DocumentTab->widget(i++)) != 0)
+  while((w=DocumentTab->page(i++)) != 0)
     if(w == sim->DocWidget)
       break;
 

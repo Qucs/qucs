@@ -67,11 +67,17 @@ Schematic::Schematic(QucsApp *App_, const QString& Name_)
   symbolMode = false;
 
   // ...........................................................
-  GridX  = GridY  = 10;
+  //GridX  = GridY  = 10;
+  GridX = QucsSettings.grid1Spacing;
+  GridY = QucsSettings.grid1Spacing;
+
   ViewX1=ViewY1=0;
   ViewX2=ViewY2=800;
   UsedX1 = UsedY1 = INT_MAX;
   UsedX2 = UsedY2 = INT_MIN;
+
+  // To avoid segmentation fault on an empty schematic when a node is searched for
+  Nodes = NULL;
 
   tmpPosX = tmpPosY = -100;
   tmpUsedX1 = tmpUsedY1 = tmpViewX1 = tmpViewY1 = -200;
@@ -102,28 +108,22 @@ Schematic::Schematic(QucsApp *App_, const QString& Name_)
 
   setVScrollBarMode(Q3ScrollView::AlwaysOn);
   setHScrollBarMode(Q3ScrollView::AlwaysOn);
+
   viewport()->setPaletteBackgroundColor(QucsSettings.BGColor);
   viewport()->setMouseTracking(true);
   viewport()->setAcceptDrops(true);  // enable drag'n drop
 
-  // to repair some strange  scrolling artefacts
-  connect(this, SIGNAL(horizontalSliderReleased()),
-      viewport(), SLOT(update()));
-  connect(this, SIGNAL(verticalSliderReleased()),
-      viewport(), SLOT(update()));
+  // to repair some strange  scrolling artifacts
+  connect(this, SIGNAL(horizontalSliderReleased()), viewport(), SLOT(update()));
+  connect(this, SIGNAL(verticalSliderReleased()), viewport(), SLOT(update()));
+
   if (App_) {
-    connect(this, SIGNAL(signalCursorPosChanged(int, int)), 
-        App_, SLOT(printCursorPosition(int, int)));
-    connect(this, SIGNAL(horizontalSliderPressed()), 
-        App_, SLOT(slotHideEdit()));
-    connect(this, SIGNAL(verticalSliderPressed()),
-        App_, SLOT(slotHideEdit()));
-    connect(this, SIGNAL(signalUndoState(bool)),
-        App_, SLOT(slotUpdateUndo(bool)));
-    connect(this, SIGNAL(signalRedoState(bool)),
-        App_, SLOT(slotUpdateRedo(bool)));
-    connect(this, SIGNAL(signalFileChanged(bool)),
-        App_, SLOT(slotFileChanged(bool)));
+    connect(this, SIGNAL(signalCursorPosChanged(int, int)), App_, SLOT(printCursorPosition(int, int)));
+    connect(this, SIGNAL(horizontalSliderPressed()), App_, SLOT(slotHideEdit()));
+    connect(this, SIGNAL(verticalSliderPressed()), App_, SLOT(slotHideEdit()));
+    connect(this, SIGNAL(signalUndoState(bool)), App_, SLOT(slotUpdateUndo(bool)));
+    connect(this, SIGNAL(signalRedoState(bool)), App_, SLOT(slotUpdateRedo(bool)));
+    connect(this, SIGNAL(signalFileChanged(bool)), App_, SLOT(slotFileChanged(bool)));
   }
 }
 
@@ -530,13 +530,14 @@ void Schematic::contentsMouseMoveEvent(QMouseEvent *Event)
 void Schematic::contentsMousePressEvent(QMouseEvent *Event)
 {
   App->editText->setHidden(true); // disable text edit of component property
+
   if(App->MouseReleaseAction == &MouseActions::MReleasePaste)
     return;
 
   float x = float(Event->pos().x())/Scale + float(ViewX1);
   float y = float(Event->pos().y())/Scale + float(ViewY1);
 
-  if(Event->button() != Qt::LeftButton)
+  /*if(Event->button() != Qt::LeftButton)
     if(App->MousePressAction != &MouseActions::MPressElement)
       if(App->MousePressAction != &MouseActions::MPressWire2) {
         // show menu on right mouse button
@@ -546,6 +547,7 @@ void Schematic::contentsMousePressEvent(QMouseEvent *Event)
           (App->view->*(App->MouseReleaseAction))(this, Event);
         return;
       }
+   */
 
   if(App->MousePressAction)
     (App->view->*(App->MousePressAction))(this, Event, x, y);
@@ -554,6 +556,16 @@ void Schematic::contentsMousePressEvent(QMouseEvent *Event)
 // -----------------------------------------------------------
 void Schematic::contentsMouseReleaseEvent(QMouseEvent *Event)
 {
+
+  float x = float(Event->pos().x())/Scale + float(ViewX1);
+  float y = float(Event->pos().y())/Scale + float(ViewY1);
+
+  // Show menu on right mouse button release
+  if (Event->button() == Qt::RightButton) {
+    App->view->rightPressMenu(this, Event, x, y);
+    return;
+  }
+
   if(App->MouseReleaseAction)
     (App->view->*(App->MouseReleaseAction))(this, Event);
 }
@@ -754,12 +766,14 @@ float Schematic::zoom(float s)
   // to hidden. This causes some flicker, but it is still nicer.
   viewport()->setHidden(true);
 //  setHidden(true);
+
   resizeContents(int(Scale*float(ViewX2 - ViewX1)),
                  int(Scale*float(ViewY2 - ViewY1)));
-//  setHidden(false);
-  viewport()->setHidden(false);
 
+  //  setHidden(false);
+  viewport()->setHidden(false);
   viewport()->update();
+
   App->view->drawn = false;
   return Scale;
 }
@@ -857,67 +871,188 @@ void Schematic::enlargeView(int x1, int y1, int x2, int y2)
 
 // ---------------------------------------------------
 // Sets an arbitrary coordinate onto the next grid coordinate.
-void Schematic::setOnGrid(int& x, int& y)
-{
-  if(x<0) x -= (GridX >> 1) - 1;
-  else x += GridX >> 1;
+void Schematic::setOnGrid(int& x, int& y) {
+
+  if (x < 0) {
+    x -= (GridX >> 1) - 1;
+  } else {
+    x += GridX >> 1;
+  }
+
   x -= x % GridX;
 
-  if(y<0) y -= (GridY >> 1) - 1;
-  else y += GridY >> 1;
+  if (y < 0) {
+    y -= (GridY >> 1) - 1;
+  } else {
+    y += GridY >> 1;
+  }
+
   y -= y % GridY;
 }
 
 // ---------------------------------------------------
 void Schematic::paintGrid(ViewPainter *p, int cX, int cY, int Width, int Height)
 {
-  if(!GridOn) return;
 
-  p->Painter->setPen(QPen(Qt::black,0));
-  int dx = -int(Scale*float(ViewX1)) - cX;
-  int dy = -int(Scale*float(ViewY1)) - cY;
-  p->Painter->drawLine(-3+dx, dy, 4+dx, dy); // small cross at origin
-  p->Painter->drawLine( dx,-3+dy, dx, 4+dy);
-
-
-  int x1  = int(float(cX)/Scale) + ViewX1;
-  int y1  = int(float(cY)/Scale) + ViewY1;
-
-  /// \todo setting the center of rotation on the grid causes the center to move when doing multiple rotations when it is not already on the grid. Should not force the center but force the component alignment after rotation.
-  setOnGrid(x1, y1);
-  if(x1<0) x1 -= GridX - 1;
-  else x1 += GridX;
-  x1 -= x1 % (GridX << 1);
-
-  if(y1<0) y1 -= GridY - 1;
-  else y1 += GridY;
-  y1 -= y1 % (GridY << 1);
-
+  QPen pen;
+  int x, y;
   float X, Y, Y0, DX, DY;
-  X = float(x1)*Scale + p->DX;
-  Y = Y0 = float(y1)*Scale + p->DY;
-  x1 = X > 0.0 ? int(X + 0.5) : int(X - 0.5);
-  y1 = Y > 0.0 ? int(Y + 0.5) : int(Y - 0.5);
 
+  if (!QucsSettings.gridOn) return;
+
+  //p->Painter->setPen(QPen(QucsSettings.grid1Color, QucsSettings.grid1Thickness));
+
+  int x1 = int(float(cX)/Scale) + ViewX1;
+  int y1 = int(float(cY)/Scale) + ViewY1;
+
+  /* \todo setting the center of rotation on the grid causes the center to move when
+  doing multiple rotations when it is not already on the grid.
+  Should not force the center but force the component alignment after rotation.*/
+
+  setOnGrid(x1, y1);
+
+  if (x1<0) x1 -= QucsSettings.grid1Spacing - 1;
+  else x1 += QucsSettings.grid1Spacing;
+
+  x1 -= x1 % (QucsSettings.grid1Spacing << 1);
+
+  if (y1<0) y1 -= QucsSettings.grid1Spacing - 1;
+  else y1 += QucsSettings.grid1Spacing;
+
+  y1 -= y1 % (QucsSettings.grid1Spacing << 1);
+
+  X = float(x1) * Scale + p->DX;
+  Y = Y0 = float(y1)*Scale + p->DY;
+
+  x = x1 = X > 0.0 ? int(X + 0.5) : int(X - 0.5);
+  y = y1 = Y > 0.0 ? int(Y + 0.5) : int(Y - 0.5);
 
   int xEnd = x1 + Width;
   int yEnd = y1 + Height;
-  DX = float(GridX << 1) * Scale;   // every second grid a point
-  DY = float(GridY << 1) * Scale;
-  while(DX <= 8.0)  DX *= 1.5;  // if too narrow, every third grid a point
-  while(DY <= 8.0)  DY *= 1.5;  // if too narrow, every third grid a point
 
-  while(x1 < xEnd) {
-    Y = Y0;
-    y1 = Y > 0.0 ? int(Y + 0.5) : int(Y - 0.5);
-    while(y1 < yEnd) {
-      p->Painter->drawPoint(x1, y1);    // paint grid
-      Y += DY;
-      y1 = Y > 0.0 ? int(Y + 0.5) : int(Y - 0.5);
+  /*DX = float(GridX << 1) * Scale;   // every second grid a point
+  DY = float(GridY << 1) * Scale;*/
+
+  DX = float(QucsSettings.grid1Spacing) * Scale;
+  DY = float(QucsSettings.grid1Spacing) * Scale;
+
+  while (DX <= 8.0)  DX *= 1.5;  // if too narrow, every third grid a point
+  while (DY <= 8.0)  DY *= 1.5;  // if too narrow, every third grid a point
+
+  pen.setColor(QucsSettings.grid1Color);
+  pen.setWidth(QucsSettings.grid1Thickness);
+  p->Painter->setPen(pen);
+
+  if (QucsSettings.grid1Type == 0) { // Dot
+
+    while (x < xEnd) {
+      Y = Y0;
+      y = Y > 0.0 ? int(Y + 0.5) : int(Y - 0.5);
+
+      while (y < yEnd) {
+        p->Painter->drawPoint(x, y);    // paint grid
+        Y += DY;
+        y = Y > 0.0 ? int(Y + 0.5) : int(Y - 0.5);
+      }
+
+      X += DX;
+      x = X > 0.0 ? int(X + 0.5) : int(X - 0.5);
     }
-    X += DX;
-    x1 = X > 0.0 ? int(X + 0.5) : int(X - 0.5);
+
+  } else {
+
+    while (x < xEnd) {
+      p->Painter->drawLine(x, y1, x, yEnd);
+      X += DX;
+      x = X > 0.0 ? int(X + 0.5) : int(X - 0.5);
+    }
+
+    while (y < yEnd) {
+      p->Painter->drawLine(x1, y, xEnd, y);
+      Y += DY;
+      y = Y > 0.0 ? int(Y + 0.5) : int(Y - 0.5);
+    }
   }
+
+  // nvdl: todo: Simplify and cleanup
+  x1 = int(float(cX)/Scale) + ViewX1;
+  y1 = int(float(cY)/Scale) + ViewY1;
+
+  setOnGrid(x1, y1);
+
+  if (x1<0) x1 -= QucsSettings.grid2Spacing - 1;
+  else x1 += QucsSettings.grid2Spacing;
+
+  x1 -= x1 % (QucsSettings.grid2Spacing << 1);
+
+  if (y1<0) y1 -= QucsSettings.grid2Spacing - 1;
+  else y1 += QucsSettings.grid2Spacing;
+
+  y1 -= y1 % (QucsSettings.grid2Spacing << 1);
+
+  X = float(x1) * Scale + p->DX;
+  Y = Y0 = float(y1)*Scale + p->DY;
+
+  x = x1 = X > 0.0 ? int(X + 0.5) : int(X - 0.5);
+  y = y1 = Y > 0.0 ? int(Y + 0.5) : int(Y - 0.5);
+
+  xEnd = x1 + Width;
+  yEnd = y1 + Height;
+
+  DX = float(QucsSettings.grid2Spacing) * Scale;
+  DY = float(QucsSettings.grid2Spacing) * Scale;
+
+  while (DX <= 8.0)  DX *= 1.5;  // if too narrow, every third grid a point
+  while (DY <= 8.0)  DY *= 1.5;  // if too narrow, every third grid a point
+
+  pen.setColor(QucsSettings.grid2Color);
+  pen.setWidth(QucsSettings.grid2Thickness);
+  p->Painter->setPen(pen);
+
+  if (QucsSettings.grid2Type == 0) { // Dot
+
+    while (x < xEnd) {
+      Y = Y0;
+      y = Y > 0.0 ? int(Y + 0.5) : int(Y - 0.5);
+
+      while (y < yEnd) {
+        p->Painter->drawPoint(x, y);    // paint grid
+        Y += DY;
+        y = Y > 0.0 ? int(Y + 0.5) : int(Y - 0.5);
+      }
+
+      X += DX;
+      x = X > 0.0 ? int(X + 0.5) : int(X - 0.5);
+    }
+
+  } else {
+
+    while (x < xEnd) {
+      p->Painter->drawLine(x, y1, x, yEnd);
+      X += DX;
+      x = X > 0.0 ? int(X + 0.5) : int(X - 0.5);
+    }
+
+    while (y < yEnd) {
+      p->Painter->drawLine(x1, y, xEnd, y);
+      Y += DY;
+      y = Y > 0.0 ? int(Y + 0.5) : int(Y - 0.5);
+    }
+  }
+
+  int dx = -int(Scale*float(ViewX1)) - cX;
+  int dy = -int(Scale*float(ViewY1)) - cY;
+
+  pen.setColor(QColor(0, 0, 0));
+  pen.setWidth(1);
+  p->Painter->setPen(pen);
+  p->Painter->drawLine(dx - 12, dy, dx + 12, dy); // small cross at origin
+  p->Painter->drawLine(dx, dy - 12, dx, dy + 12);
+
+  pen.setColor(QColor(0, 0, 255));
+  pen.setWidth(1);
+  p->Painter->setPen(pen);
+  p->Painter->drawEllipse(dx - 6, dy - 6, 12, 12);
 }
 
 // ---------------------------------------------------
@@ -1877,6 +2012,10 @@ void Schematic::switchPaintMode()
 // *********************************************************************
 void Schematic::contentsWheelEvent(QWheelEvent *Event)
 {
+  int mouseX;
+  int mouseY;
+  float scaleDiff;
+
   App->editText->setHidden(true);  // disable edit of component property
   int delta = Event->delta() >> 1;     // use smaller steps
 
@@ -1890,13 +2029,182 @@ void Schematic::contentsWheelEvent(QWheelEvent *Event)
   }
   // ...................................................................
   else if(Event->modifiers() & Qt::ControlModifier) {  // use mouse wheel to zoom ?
-      float Scaling;
-      if(delta < 0) Scaling = float(delta)/-60.0/1.1;
-      else Scaling = 1.1*60.0/float(delta);
-      zoom(Scaling);
-      Scaling -= 1.0;
-      scrollBy( int(Scaling * float(Event->pos().x())),
-                int(Scaling * float(Event->pos().y())) );
+
+    int cx, cy;
+    int vx, vy;
+    float xr1, yr1;
+
+    cx = contentsWidth();
+    cy = contentsHeight();
+
+    if (cx > 0 && cy > 0) {
+      xr1 = float(mouseX) / contentsWidth();
+      yr1 = float(mouseY) / contentsHeight();
+    } else {
+      Event->accept();   // QScrollView must not handle this event
+      return;
+    }
+
+    if (UsedX1 == 0 && UsedX2 == 0 && UsedY1 == 0 && UsedY2 == 0) {
+      UsedX1 = UsedY1 = INT_MAX;
+      UsedX2 = UsedY2 = INT_MIN;
+      Event->accept();   // QScrollView must not handle this event
+      return;
+    }
+
+    if (delta > 0) {
+      if (Scale < 10) {
+        scaleDiff = (0.1 * delta) / 60;
+      } else {
+        Event->accept();   // QScrollView must not handle this event
+        return;
+      }
+
+    } else {
+      if (Scale > 0.1) {
+        scaleDiff = (0.1 * delta) / 60;
+      } else {
+        Event->accept();   // QScrollView must not handle this event
+        return;
+      }
+    }
+
+    Scale += scaleDiff;
+
+    if (Scale < 0.1) Scale = 0.1;
+    if (Scale > 10) Scale = 10;
+
+    //mouseX = Event->pos().x() - contentsX();
+    //mouseY = Event->pos().y() - contentsY();
+
+    mouseX = Event->pos().x();
+    mouseY = Event->pos().y();
+
+    //viewportSize(vx, vy);
+
+    //contentsToViewport(mouseX, mouseY, vx, vy);
+    //viewportToContents(mouseX, mouseY, vx, vy);
+
+    //mouseX -= contentsX();
+    //mouseY -= contentsY();
+
+    //viewportToContents(mouseX, mouseY, vx, vy);
+    //vx = mouseX;
+    //vy = mouseY;
+
+    //contX = contentsX();
+    //contY = contentsY();
+
+    //float xr = float(mouseX) / visibleWidth();
+    //float yr = float(mouseY) / visibleHeight();
+
+    /*cx = contentsWidth();
+    cy = contentsHeight();
+
+    if (cx > 0 && cy > 0) {
+      xr1 = float(mouseX) / contentsWidth();
+      yr1 = float(mouseY) / contentsHeight();
+    } else {
+      Event->accept();   // QScrollView must not handle this event
+      return;
+    }*/
+
+    /*if (cx > cy) {
+      cy = cx;
+    } else if (cy > cx) {
+      cx = cy;
+    }*/
+
+    //int xmargin = xr * (cx / Scale);
+    //int ymargin = yr * (cy / Scale);
+
+    //float scrollX = (1.0 * mouseX) / (Scale * 5);
+    //float scrollY = (1.0 * mouseY) / (Scale * 5);
+
+    //float scrollX = (1.0 * mouseX * scaleDiff);
+    //float scrollY = (1.0 * mouseY * scaleDiff);
+
+
+    /*if (delta > 0) {
+      ViewX1 += scrollX;
+      ViewY1 += scrollY;
+    } else {
+      ViewX1 -= scrollX;
+      ViewY1 -= scrollY;
+    }*/
+
+    qDebug() << "contentsWheelEvent: delta" << delta;
+    qDebug() << "contentsWheelEvent: Scale" << Scale;
+    qDebug() << "contentsWheelEvent: mouseX" << mouseX;
+    qDebug() << "contentsWheelEvent: mouseY" << mouseY;
+    /*qDebug() << "contentsWheelEvent: ViewX1" << ViewX1;
+    qDebug() << "contentsWheelEvent: ViewY1" << ViewY1;
+    qDebug() << "contentsWheelEvent: ViewX2" << ViewX2;
+    qDebug() << "contentsWheelEvent: ViewY2" << ViewY2;*/
+    qDebug() << "contentsWidth1():" << contentsWidth();
+    qDebug() << "contentsHeight1():" << contentsHeight();
+    //qDebug() << "viewportSizeX:" << visibleWidth();
+    //qDebug() << "viewportSizeY:" << visibleHeight();
+    qDebug() << "xr1:" << xr1;
+    qDebug() << "yr1:" << yr1;
+    //qDebug() << "xmargin:" << xmargin;
+    //qDebug() << "ymargin:" << ymargin;
+    //qDebug() << "\n";
+
+    resizeContents(int(Scale*float(ViewX2 - ViewX1)), int(Scale*float(ViewY2 - ViewY1)));
+    //scrollBy( int((Scale - 1) * float(contentsX()+visibleWidth()/2)), int((Scale - 1) * float(contentsY()+visibleHeight()/2)) );
+    //scrollBy( int(Scaling * float(Event->pos().x())), int(Scaling * float(Event->pos().y())) );
+
+    int mouseX2 = xr1 * contentsWidth();
+    int mouseY2 = yr1 * contentsHeight();
+
+    int shiftX = mouseX2 - mouseX;
+    int shiftY = mouseY2 - mouseY;
+
+    float xr2 = float(mouseX2) / contentsWidth();
+    float yr2 = float(mouseY2) / contentsHeight();
+
+    shiftX += 10;
+    shiftY += 10;
+
+    //shiftX *= Scale;
+    //shiftY *= Scale;
+
+    qDebug() << "contentsWidth2():" << contentsWidth();
+    qDebug() << "contentsHeight2():" << contentsHeight();
+    qDebug() << "xr2:" << xr2;
+    qDebug() << "yr2:" << yr2;
+    qDebug() << "shiftX:" << shiftX;
+    qDebug() << "shiftY:" << shiftY;
+    qDebug() << "\n";
+
+    //shiftX -= Scale * 40;
+    //shiftY -= Scale * 40;
+
+    setContentsPos(shiftX, shiftY);
+
+    //scrollBy(scrollX, scrollY);
+    //setContentsPos(mouseX / Scale, mouseY / Scale);
+    //setContentsPos(vx, vy);
+
+    //vx = scaleDiff * (ViewX2 - ViewX1);
+    //vy = scaleDiff * (ViewX2 - ViewX1);
+
+    //scrollBy(vx, vy);
+
+    //setContentsPos(xmargin, ymargin);
+
+    //setContentsPos(Scale * 10, Scale * 10);
+
+    //scrollBy(Scale * mouseX2, Scale * mouseY2);
+
+    viewport()->update();
+    App->view->drawn = false;
+
+    //zoom(Scaling);
+    //Scaling -= 1.0;
+    //scrollBy( int(Scaling * float(Event->pos().x())),
+    //            int(Scaling * float(Event->pos().y())) );
   }
   // ...................................................................
   else {     // scroll vertically !
@@ -1908,8 +2216,33 @@ void Schematic::contentsWheelEvent(QWheelEvent *Event)
 
   Event->accept();   // QScrollView must not handle this event
 }
+//=================================================================================================
+/**
+ * @brief Schematic::keyPressEvent Captures keyboard press events and passes them to mouse actions.
+ * @param Doc
+ * @param Event
+ */
+void Schematic::keyPressEvent(QKeyEvent *event) {
 
-// -----------------------------------------------------------
+  //qDebug() << "Schematic::keyPressEvent:" << event->key();
+
+  App->view->keyPressEvent(this, event);
+  //event->accept(); // Steal it from the parent. ;)
+}
+//=================================================================================================
+/**
+ * @brief Schematic::keyReleaseEvent Captures keyboard release events and passes them to mouse actions.
+ * @param Doc
+ * @param Event
+ */
+void Schematic::keyReleaseEvent(QKeyEvent *event) {
+
+  //qDebug() << "Schematic::keyReleaseEvent:" << event->key();
+
+  App->view->keyReleaseEvent(this, event);
+  //event->accept(); // Steal it from the parent. ;)
+}
+//=================================================================================================
 // Scrolls the visible area upwards and enlarges or reduces the view
 // area accordingly.
 bool Schematic::scrollUp(int step)

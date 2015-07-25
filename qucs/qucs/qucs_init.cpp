@@ -22,6 +22,7 @@
 #include "main.h"
 #include "qucs.h"
 #include "octave_window.h"
+#include "messagedock.h"
 
 #include <QAction>
 #include <QShortcut>
@@ -427,9 +428,9 @@ void QucsApp::initActions()
 
   editRotate = new QAction(QIcon((":/bitmaps/rotate_ccw.png")), tr("Rotate"), this);
   editRotate->setShortcut(Qt::CTRL+Qt::Key_R);
-  editRotate->setStatusTip(tr("Rotates the selected component by 90\x00B0"));
+  editRotate->setStatusTip(tr("Rotates the selected component by 90\u00B0 (counter-clockwise)"));
   editRotate->setWhatsThis(
-    tr("Rotate\n\nRotates the selected component by 90\x00B0 counter-clockwise"));
+    tr("Rotate\n\nRotates the selected component by 90\u00B0 counter-clockwise"));
   editRotate->setCheckable(true);
   connect(editRotate, SIGNAL(toggled(bool)), SLOT(slotEditRotate(bool)));
 
@@ -449,16 +450,16 @@ void QucsApp::initActions()
   editMirrorY->setCheckable(true);
   connect(editMirrorY, SIGNAL(toggled(bool)), SLOT(slotEditMirrorY(bool)));
 
-  intoH = new QAction(QIcon((":/bitmaps/bottom.png")), tr("Go into Subcircuit"), this);
+  intoH = new QAction(QIcon((":/bitmaps/bottom.png")), tr("Go into subcircuit"), this);
   intoH->setShortcut(Qt::CTRL+Qt::Key_I);
   intoH->setStatusTip(tr("Goes inside the selected subcircuit"));
   intoH->setWhatsThis(
-	tr("Go into Subcircuit\n\nGoes inside the selected subcircuit"));
+	tr("Go into subcircuit\n\nGoes inside the selected subcircuit"));
   connect(intoH, SIGNAL(triggered()), SLOT(slotIntoHierarchy()));
 
   popH = new QAction(QIcon((":/bitmaps/top.png")), tr("Pop out"), this);
   popH->setShortcut(Qt::CTRL+Qt::Key_H);
-  popH->setStatusTip(tr("Pop outside subcircuit"));
+  popH->setStatusTip(tr("Pops out of the subcircuit"));
   popH->setWhatsThis(
 	tr("Pop out\n\nGoes up one hierarchy level, i.e. leaves subcircuit"));
   connect(popH, SIGNAL(triggered()), SLOT(slotPopHierarchy()));
@@ -637,6 +638,12 @@ void QucsApp::initActions()
       tr("Octave Window\n\nShows/hides the Octave dock window"));
   connect(viewOctaveDock, SIGNAL(toggled(bool)), SLOT(slotViewOctaveDock(bool)));
 
+  viewMessagesDock = new QAction(tr("&Messages Dock"), this);
+  viewMessagesDock->setCheckable(true);
+  viewMessagesDock->setStatusTip(tr("Shows/hides the messages dock"));
+  viewMessagesDock->setWhatsThis(tr("Messages Dock\n\nShows/hides the messages dock"));
+  connect(viewMessagesDock, SIGNAL(toggled(bool)), SLOT(slotViewMessagesDock(bool)));
+
   helpIndex = new QAction(tr("Help Index..."), this);
   helpIndex->setShortcut(Qt::Key_F1);
   helpIndex->setStatusTip(tr("Index of Qucs Help"));
@@ -795,6 +802,7 @@ void QucsApp::initMenuBar()
   viewMenu->addAction(viewStatusBar);
   viewMenu->addAction(viewBrowseDock);
   viewMenu->addAction(viewOctaveDock);
+  viewMenu->addAction(viewMessagesDock);
 
 
   helpMenu = new QMenu(tr("&Help"));  // menuBar entry helpMenu
@@ -941,7 +949,7 @@ void QucsApp::initToolBar()
 void QucsApp::initStatusBar()
 {
   // To reserve enough space, insert the longest text and rewrite it afterwards.
-  WarningLabel = new QLabel(tr("no warnings"), statusBar());
+  WarningLabel = new QLabel(tr("No warnings"), statusBar());
   statusBar()->addWidget(WarningLabel, 0, true);
 
   PositionLabel = new QLabel("0 : 0", statusBar());
@@ -960,7 +968,7 @@ void QucsApp::slotShowWarnings()
     QFont f = WarningLabel->font();
     f.setWeight(QFont::DemiBold);
     WarningLabel->setFont(f);
-    WarningLabel->setText(tr("Warnings in last simulation! Press F5"));
+    WarningLabel->setText(tr("Warnings in the last simulation! Press F5"));
   }
 
   ResultState++;
@@ -982,7 +990,7 @@ void QucsApp::slotResetWarnings()
   f.setWeight(QFont::Normal);
   WarningLabel->setFont(f);
   WarningLabel->setPaletteForegroundColor(Qt::black);
-  WarningLabel->setText(tr("no warnings"));
+  WarningLabel->setText(tr("No warnings"));
 }
 
 // ----------------------------------------------------------
@@ -1047,12 +1055,28 @@ void QucsApp::slotViewOctaveDock(bool toggle)
     octave->startOctave();
   }
 }
-
 // ----------------------------------------------------------
+// Slot to capture dock close event
 void QucsApp::slotToggleOctave(bool on)
 {
   viewOctaveDock->blockSignals(true);
   viewOctaveDock->setChecked(on);
   viewOctaveDock->blockSignals(false);
 }
+// ----------------------------------------------------------
+void QucsApp::slotViewMessagesDock(bool toggle) {
 
+  if (toggle) {
+    messagesDock->show();
+  } else {
+    messagesDock->hide();
+  }
+}
+// ----------------------------------------------------------
+// Slot to capture dock close event
+void QucsApp::slotToggleMessagesDockVisibility(bool on) {
+  viewMessagesDock->blockSignals(true);
+  viewMessagesDock->setChecked(on);
+  viewMessagesDock->blockSignals(false);
+}
+// ----------------------------------------------------------
