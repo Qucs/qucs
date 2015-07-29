@@ -56,7 +56,13 @@ PSFILES = MNAexample.eps NLexample.eps CYexample.eps MNAnoise1.eps \
   Real_r.eps TLpiece.eps QuarterWavelengthFilter.eps               \
   rectwaveguide.eps circularwaveguide.eps                          \
   PlanarSpiralInductors.eps CircularLoop.eps PrintedInductorEC.eps \
-  ReflectionCoeffsTaper.eps capq.eps indq.eps
+  ReflectionCoeffsTaper.eps capq.eps indq.eps \
+  DoubleStubOpen.eps DoubleStubShort.eps \
+  SingleStubOpen.eps SingleStubShort.eps \
+  DoubleStubOpenBalanced.eps DoubleStubShortBalanced.eps \
+  SingleStubOpenBalanced.eps SingleStubShortBalanced.eps \
+  Lsection.eps SmithChart-Lsection.eps SmithChartTL.eps \
+  Smithl8l4.eps CascadedLCsch.eps SmithCascadedLCsections.eps
 EPSFILES = $(FIGURES:.fig=.eps)
 PSFRAGTEXS = $(FIGURES:.fig=.tex) $(MATHFILES:.m=.tex)
 PDFFILES = $(FIGURES:.fig=.pdf)
@@ -81,7 +87,7 @@ html:
 # install-local: # maybe use this?
 #endif
 
-technical.dvi: $(EPSFILES) $(PSFILES) $(MPSFILES)
+technical.dvi: $(EPSFILES) $(PSFILES) $(MPSFILES) $(CHAPTERS)
 
 SUFFIXES = .dvi .tex .pdf .ps .eps .fig .frg .m
 
