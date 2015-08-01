@@ -70,9 +70,15 @@ public:
   static bool calcMatchingCircuitLambda4(double, double, double, double, int);
   static QString calcBiMatch(double, double, double, double, double, double,double, double);
   static bool calc2PortMatch(double, double, double, double, double, double, double, double, double);
-  static bool calcMatchingCircuitSingleStub2Ports(double S11real, double S11imag, double S12real, double S12imag, double S21real, double S21imag, double S22real, double S22imag, double Z1, double Z2, double Freq, bool open_short, double Z0);
-  static bool calcMatchingCircuitDoubleStub2Ports(double s11_r, double s11_i, double s12_r, double s12_i, double s21_r, double s21_i, double s22_r, double s22_i, double Z1, double Z2, double Freq, bool open_short, double Z0);
-  static bool calcMatchingCircuitLambda42Ports(double s11_r, double s11_i, double s12_r, double s12_i, double s21_r, double s21_i, double s22_r, double s22_i, double Z1, double Z2, double Freq, int order, double Z0);
+  static bool calcMatchingCircuitSingleStub2Ports(double S11real, double S11imag,
+                                                  double S22real, double S22imag, double DetReal, double DetImag,
+                                                  double Z1, double Z2, double Freq, bool open_short);
+  static bool calcMatchingCircuitDoubleStub2Ports(double S11real, double S11imag,
+                                                  double S22real, double S22imag, double DetReal, double DetImag,
+                                                  double Z1, double Z2, double Freq, double open_short);
+  static bool calcMatchingCircuitLambda42Ports(double S11real, double S11imag,
+                                               double S22real, double S22imag, double DetReal, double DetImag,
+                                               double Z1, double Z2, double Freq, int order);
 
 
 

@@ -1,4 +1,4 @@
-/***************************************************************************
+﻿/***************************************************************************
                                matchdialog.cpp
                               -----------------
     begin                : Fri Jul 22 2005
@@ -499,15 +499,21 @@ double Z0=50;
                break;
            case 1: // Single stub
                openStub = OpenRadioButton->isChecked();
-               if(!MatchDialog::calcMatchingCircuitSingleStub2Ports(S11real, S11imag, S12real, S12imag, S21real, S21imag, S22real, S22imag, Z1, Z2, Freq, openStub, Z0))return;
+               if(!MatchDialog::calcMatchingCircuitSingleStub2Ports(S11real, S11imag,
+                                                                    S22real, S22imag, DetReal, DetImag,
+                                                                    Z1, Z2, Freq, openStub))return;
                break;
            case 2: // Double stub
                openStub = OpenRadioButton->isChecked();
-               if(!MatchDialog::calcMatchingCircuitDoubleStub2Ports(S11real, S11imag, S12real, S12imag, S21real, S21imag, S22real, S22imag, Z1, Z2, Freq, openStub, Z0))return;
+               if(!MatchDialog::calcMatchingCircuitDoubleStub2Ports(S11real, S11imag,
+                                                                    S22real, S22imag, DetReal, DetImag,
+                                                                    Z1, Z2, Freq, openStub))return;
                break;
            case 3: // Quarter wave cascaded sections
                 order = OrderEdit->text().toInt()+1 ;
-                if(!MatchDialog::calcMatchingCircuitLambda42Ports(S11real, S11imag, S12real, S12imag, S21real, S21imag, S22real, S22imag, Z1, Z2, Freq, order, Z0))return;
+                if(!MatchDialog::calcMatchingCircuitLambda42Ports(S11real, S11imag,
+                                                                  S22real, S22imag, DetReal, DetImag,
+                                                                  Z1, Z2, Freq, order))return;
                 break;
 
         }
@@ -584,6 +590,7 @@ void MatchDialog::z2r(double& Real, double& Imag, double Z0)
 QString MatchDialog::calcMatching(double r_real, double r_imag,
 				double Z0, double Freq)
 {
+
   double Zreal = r_real, Zimag = r_imag;
   r2z(Zreal, Zimag, Z0);
 
@@ -660,11 +667,11 @@ bool MatchDialog::calcMatchingCircuitSingleStub(double r_real, double r_imag, do
         }
         else
         {
-            t1 = (XL + sqrt(((RL/Z0)*abs((Z0 - RL)*(Z0 - RL) - XL*XL))))/(RL - Z0);
+            t1 = (XL + sqrt(((RL/Z0)*fabs((Z0 - RL)*(Z0 - RL) + XL*XL))))/(RL - Z0);
             (t1 < 0) ? dl1 = (M_PI + atan(t1))/ (2*M_PI) : dl1 = (atan(t1))/ (2*M_PI);
             B1 = (RL*RL * t1 - (Z0-XL*t1)*(Z0*t1 + XL))/(Z0*(RL*RL + (Z0*t1 + XL)*(Z0*t1 + XL)));
 
-            t2  = (XL - sqrt((RL*abs((Z0 - RL)*(Z0 - RL) - XL*XL))/(Z0)))/(RL - Z0);
+            t2  = (XL - sqrt((RL*fabs((Z0 - RL)*(Z0 - RL) + XL*XL))/(Z0)))/(RL - Z0);
             (t2 < 0) ? dl2 = (M_PI + atan(t2))/ (2*M_PI) : dl2 = (atan(t2))/ (2*M_PI);
             B2 = (RL*RL * t2 - (Z0-XL*t2)*(Z0*t2 + XL))/(Z0*(RL*RL + (Z0*t2 + XL)*(Z0*t2 + XL)));
         }
@@ -712,7 +719,7 @@ bool MatchDialog::calcMatchingCircuitSingleStub(double r_real, double r_imag, do
         if ((RL > 0)&&(XL < 0))
         {
         s += QString("<R R1 1 %1 270 15 -26 0 -1 \"%2 Ohm\" 1 \"26.85\" 0 \"US\" 0>\n").arg(x).arg(RL);
-        s += QString("<C C1 1 %1 330 15 -26 0 -1 \"%2 F\" 1 0>\n").arg(x).arg(1/(abs(XL)*2*M_PI*Freq));
+        s += QString("<C C1 1 %1 330 15 -26 0 -1 \"%2 F\" 1 0>\n").arg(x).arg(1/(fabs(XL)*2*M_PI*Freq));
         }
         if ((RL > 0)&&(XL > 0))
         {
@@ -806,7 +813,7 @@ bool MatchDialog::calcMatchingCircuitDoubleStub(double r_real, double r_imag, do
      if ((RL > 0)&&(XL< 0))
      {
      s += QString("<R R1 1 %1 270 15 -26 0 -1 \"%2 Ohm\" 1 \"26.85\" 0 \"US\" 0>\n").arg(x).arg(RL);
-     s += QString("<C C1 1 %1 330 15 -26 0 -1 \"%2 F\" 1 0>\n").arg(x).arg(1/(abs(XL)*2*M_PI*Freq));
+     s += QString("<C C1 1 %1 330 15 -26 0 -1 \"%2 F\" 1 0>\n").arg(x).arg(1/(fabs(XL)*2*M_PI*Freq));
      }
      if ((RL > 0)&&(XL > 0))
      {
@@ -1201,31 +1208,52 @@ double angle(double r, double i)
              }
 }
 
- bool MatchDialog::calcMatchingCircuitSingleStub2Ports(double s11_r, double s11_i, double s12_r, double s12_i, double s21_r, double s21_i, double s22_r, double s22_i, double Z1, double Z2, double Freq, bool open_short, double Z0)
+ bool MatchDialog::calcMatchingCircuitSingleStub2Ports(double S11real, double S11imag,
+                                                       double S22real, double S22imag, double DetReal, double DetImag,
+                                                       double Z1, double Z2, double Freq, bool open_short)
  {
+     double Z0=50, B;
 
-     double gammaS = (Z1-Z0)/(Z1+Z0);
-     double gammaL = (Z2-Z0)/(Z2+Z0);
-     double phi21 = atan(s21_i/s21_r);
-     double phi12 = atan(s12_i/s12_r);
-     double mag12 = sqrt(s12_r*s12_r + s12_i*s12_i);
-     double mag21 = sqrt(s21_r*s21_r + s21_i*s21_i);
-     double gamma_in_r= s11_r + ((gammaL*mag12*mag21)/(sqrt(pow(1-s22_r*gammaL,2) + pow(s22_i*gammaL,2))))*cos(phi12 + phi21 - angle((-s22_i*gammaL),(1-s22_r*gammaL)));
-     double gamma_in_i= s11_i + ((gammaL*mag12*mag21)/(sqrt(pow(1-s22_r*gammaL,2) + pow(s22_i*gammaL,2))))*sin(phi12 + phi21 - angle((-s22_i*gammaL),(1-s22_r*gammaL)));
+     // B calculation
+     double B1 = 1.0 + S11real*S11real + S11imag*S11imag  // Input port
+                    - S22real*S22real - S22imag*S22imag
+                    - DetReal*DetReal - DetImag*DetImag;
+     double B2 = 1.0 + S22real*S22real + S22imag*S22imag  // Output port
+                    - S11real*S11real - S11imag*S11imag
+                    - DetReal*DetReal - DetImag*DetImag;
 
-     double gamma_out_r= s22_r + ((gammaS*mag12*mag21)/(sqrt(pow(1-s11_r*gammaS,2) + pow(s11_i*gammaS,2))))*cos(phi12 + phi21 - angle((-s11_i*gammaS),(1-s11_r*gammaS)));
-     double gamma_out_i= s22_i + ((gammaS*mag12*mag21)/(sqrt(pow(1-s11_r*gammaS,2) + pow(s11_i*gammaS,2))))*sin(phi12 + phi21 - angle((-s11_i*gammaS),(1-s11_r*gammaS)));
+     // C calculation
+     double C1real = S11real - S22real*DetReal - S22imag*DetImag; // Input port
+     double C1imag = S22real*DetImag - S11imag - S22imag*DetReal;
+     double C1mag  = sqrt(C1real*C1real + C1imag*C1imag);
+
+     double C2real = S22real - S11real*DetReal - S11imag*DetImag;
+     double C2imag = S11real*DetImag - S22imag - S11imag*DetReal;
+     double C2mag  = sqrt(C2real*C2real + C2imag*C2imag);
+
+     double K1 = (B1 - sqrt(B1*B1 - 4*C1mag*C1mag))/(2*(C1real*C1real + C1imag*C1imag));
+     double K2 = (B2 - sqrt(B2*B2 - 4*C2mag*C2mag))/(2*(C2real*C2real + C2imag*C2imag));
+
+     // INPUT PORT
+     double gamma_in_r = K1*C1real;
+     double gamma_in_i = -K1*C1imag;
+
+     double gamma_out_r = K2*C2real;
+     double gamma_out_i = -K2*C2imag;
+
 
 
 	 double t=0, t1 = 0, t2 = 0;
 	 double dl, dl1, dl2;
-     double B1, B2, B, d, lstub, ll;
+     double d, lstub, ll;
 	 double lambda = 3e8/Freq;
 
 	 double D_port1, L_port1, D_port2, L_port2;
 
      double RL = gamma_in_r, XL= gamma_in_i;
-     r2z(RL, XL, Z0);
+
+      r2z(RL, XL, Z0);
+
 
 	 if (RL == Z1)
 	 {
@@ -1235,14 +1263,16 @@ double angle(double r, double i)
 	 }
 	 else
 	 {
-			 t1 = (XL + sqrt(((RL/Z1)*abs((Z1 - RL)*(Z1 - RL) - XL*XL))))/(RL - Z1);
+             t1 = (XL + sqrt((RL/Z1)*fabs((Z1 - RL)*(Z1 - RL) + XL*XL)))/(RL - Z1);
 			 (t1 < 0) ? dl1 = (M_PI + atan(t1))/ (2*M_PI) : dl1 = (atan(t1))/ (2*M_PI);
 			 B1 = (RL*RL * t1 - (Z1-XL*t1)*(Z1*t1 + XL))/(Z1*(RL*RL + (Z1*t1 + XL)*(Z1*t1 + XL)));
 
-			 t2  = (XL - sqrt((RL*abs((Z1 - RL)*(Z1 - RL) - XL*XL))/(Z1)))/(RL - Z1);
+             t2  = (XL - sqrt((RL*fabs((Z1 - RL)*(Z1 - RL) + XL*XL))/(Z1)))/(RL - Z1);
 			 (t2 < 0) ? dl2 = (M_PI + atan(t2))/ (2*M_PI) : dl2 = (atan(t2))/ (2*M_PI);
 			 B2 = (RL*RL * t2 - (Z1-XL*t2)*(Z1*t2 + XL))/(Z1*(RL*RL + (Z1*t2 + XL)*(Z1*t2 + XL)));
 	 }
+
+
 
 	 if (t!=0)
 	 {
@@ -1275,31 +1305,9 @@ double angle(double r, double i)
 	 L_port1 = lstub;
 
 	 // OUTPUT Port
-    /* B = 1.0 + S22real*S22real + S22imag*S22imag
-	 							 - S11real*S11real - S11imag*S11imag
-	 							 - DetReal*DetReal - DetImag*DetImag;
-	 Creal = S22real - S11real*DetReal - S11imag*DetImag;
-	 Cimag = S11real*DetImag - S22imag - S11imag*DetReal;
-	 Cmag  = 2.0 * (Creal*Creal + Cimag*Cimag);
-	 Creal /= Cmag;
-	 Cimag /= Cmag;
 
-	 Rreal = B*B - 2.0*Cmag;
-     Rimag;
-	 if(Rreal < 0.0) {
-	 	Rimag = Cimag * B - Creal * sqrt(-Rreal);
-	 	Rreal = Creal * B + Cimag * sqrt(-Rreal);
-	 }
-	 else {
-	 	Rreal  = B - sqrt(Rreal);
-	 	Rimag  = Cimag * Rreal;
-	 	Rreal *= Creal;
-	 }
-
-	 RL = Rreal;
-     XL = -Rimag;*/
      RL = gamma_out_r;
-     XL= gamma_out_i;
+     XL = gamma_out_i;
      r2z(RL, XL, Z2);
 
 	 if (RL == Z2)
@@ -1310,11 +1318,11 @@ double angle(double r, double i)
 	 }
 	 else
 	 {
-			 t1 = (XL + sqrt(((RL/Z2)*abs((Z2 - RL)*(Z2 - RL) - XL*XL))))/(RL - Z2);
+             t1 = (XL + sqrt(((RL/Z2)*fabs((Z2 - RL)*(Z2 - RL) + XL*XL))))/(RL - Z2);
 			 (t1 < 0) ? dl1 = (M_PI + atan(t1))/ (2*M_PI) : dl1 = (atan(t1))/ (2*M_PI);
 			 B1 = (RL*RL * t1 - (Z2-XL*t1)*(Z2*t1 + XL))/(Z2*(RL*RL + (Z2*t1 + XL)*(Z2*t1 + XL)));
 
-			 t2  = (XL - sqrt((RL*abs((Z2 - RL)*(Z2 - RL) - XL*XL))/(Z2)))/(RL - Z2);
+             t2  = (XL - sqrt((RL*fabs((Z2 - RL)*(Z2 - RL) + XL*XL))/(Z2)))/(RL - Z2);
 			 (t2 < 0) ? dl2 = (M_PI + atan(t2))/ (2*M_PI) : dl2 = (atan(t2))/ (2*M_PI);
 			 B2 = (RL*RL * t2 - (Z2-XL*t2)*(Z2*t2 + XL))/(Z2*(RL*RL + (Z2*t2 + XL)*(Z2*t2 + XL)));
 	 }
@@ -1391,19 +1399,38 @@ double angle(double r, double i)
  }
 
 
-bool MatchDialog::calcMatchingCircuitDoubleStub2Ports(double s11_r, double s11_i, double s12_r, double s12_i, double s21_r, double s21_i, double s22_r, double s22_i, double Z1, double Z2, double Freq, bool open_short, double Z0)
+bool MatchDialog::calcMatchingCircuitDoubleStub2Ports(double S11real, double S11imag,
+                                                      double S22real, double S22imag, double DetReal, double DetImag,
+                                                      double Z1, double Z2, double Freq, double open_short)
 {
-    double gammaS = (Z1-Z0)/(Z1+Z0);
-    double gammaL = (Z2-Z0)/(Z2+Z0);
-    double phi21 = angle(s21_r,s21_i);
-    double phi12 = angle(s12_r, s12_i);
-    double mag12 = sqrt(s12_r*s12_r + s12_i*s12_i);
-    double mag21 = sqrt(s21_r*s21_r + s21_i*s21_i);
-    double gamma_in_r= s11_r + ((gammaL*mag12*mag21)/(sqrt(pow(1-s22_r*gammaL,2) + pow(s22_i*gammaL,2))))*cos(phi12 + phi21 - angle((1-s22_r*gammaL),(-s22_i*gammaL)));
-    double gamma_in_i= s11_i + ((gammaL*mag12*mag21)/(sqrt(pow(1-s22_r*gammaL,2) + pow(s22_i*gammaL,2))))*sin(phi12 + phi21 - angle((1-s22_r*gammaL),(-s22_i*gammaL)));
+    double Z0=50, B;
 
-    double gamma_out_r= s22_r + ((gammaS*mag12*mag21)/(sqrt(pow(1-s11_r*gammaS,2) + pow(s11_i*gammaS,2))))*cos(phi12 + phi21 - angle((1-s11_r*gammaS),(-s11_i*gammaS)));
-    double gamma_out_i= s22_i + ((gammaS*mag12*mag21)/(sqrt(pow(1-s11_r*gammaS,2) + pow(s11_i*gammaS,2))))*sin(phi12 + phi21 - angle((1-s11_r*gammaS),(-s11_i*gammaS)));
+    // B calculation
+    double B1 = 1.0 + S11real*S11real + S11imag*S11imag  // Input port
+                   - S22real*S22real - S22imag*S22imag
+                   - DetReal*DetReal - DetImag*DetImag;
+    double B2 = 1.0 + S22real*S22real + S22imag*S22imag  // Output port
+                   - S11real*S11real - S11imag*S11imag
+                   - DetReal*DetReal - DetImag*DetImag;
+
+    // C calculation
+    double C1real = S11real - S22real*DetReal - S22imag*DetImag; // Input port
+    double C1imag = S22real*DetImag - S11imag - S22imag*DetReal;
+    double C1mag  = sqrt(C1real*C1real + C1imag*C1imag);
+
+    double C2real = S22real - S11real*DetReal - S11imag*DetImag;
+    double C2imag = S11real*DetImag - S22imag - S11imag*DetReal;
+    double C2mag  = sqrt(C2real*C2real + C2imag*C2imag);
+
+    double K1 = (B1 - sqrt(B1*B1 - 4*C1mag*C1mag))/(2*(C1real*C1real + C1imag*C1imag));
+    double K2 = (B2 - sqrt(B2*B2 - 4*C2mag*C2mag))/(2*(C2real*C2real + C2imag*C2imag));
+
+    // INPUT PORT
+    double gamma_in_r = K1*C1real;
+    double gamma_in_i = -K1*C1imag;
+
+    double gamma_out_r = K2*C2real;
+    double gamma_out_i = -K2*C2imag;
 
     // INPUT PORT
 
@@ -1439,7 +1466,8 @@ bool MatchDialog::calcMatchingCircuitDoubleStub2Ports(double s11_r, double s11_i
     // OUTPUT PORT
 
     RL = gamma_out_r;
-    XL = gamma_out_i;
+    XL= gamma_out_i;
+
     r2z(RL, XL, Z0);
     Y0=1./Z0;
     GL = (1/((RL*RL)+(XL*XL)))*RL;
@@ -1514,20 +1542,38 @@ bool MatchDialog::calcMatchingCircuitDoubleStub2Ports(double s11_r, double s11_i
     return true;
 
 }
-bool MatchDialog::calcMatchingCircuitLambda42Ports(double s11_r, double s11_i, double s12_r, double s12_i, double s21_r, double s21_i, double s22_r, double s22_i, double Z1, double Z2, double Freq, int order, double Z0)
+bool MatchDialog::calcMatchingCircuitLambda42Ports(double S11real, double S11imag,
+                                                   double S22real, double S22imag, double DetReal, double DetImag,
+                                                   double Z1, double Z2, double Freq, int order)
 {
-    double gammaS = (Z1-Z0)/(Z1+Z0);
-    double gammaL = (Z2-Z0)/(Z2+Z0);
-    double phi21 = atan(s21_i/s21_r);
-    double phi12 = atan(s12_i/s12_r);
-    double mag12 = sqrt(s12_r*s12_r + s12_i*s12_i);
-    double mag21 = sqrt(s21_r*s21_r + s21_i*s21_i);
-    double gamma_in_r= s11_r + ((gammaL*mag12*mag21)/(sqrt(pow(1-s22_r*gammaL,2) + pow(s22_i*gammaL,2))))*cos(phi12 + phi21 - angle((-s22_i*gammaL),(1-s22_r*gammaL)));
-    double gamma_in_i= s11_i + ((gammaL*mag12*mag21)/(sqrt(pow(1-s22_r*gammaL,2) + pow(s22_i*gammaL,2))))*sin(phi12 + phi21 - angle((-s22_i*gammaL),(1-s22_r*gammaL)));
+    double Z0=50, B;
 
-    double gamma_out_r= s22_r + ((gammaS*mag12*mag21)/(sqrt(pow(1-s11_r*gammaS,2) + pow(s11_i*gammaS,2))))*cos(phi12 + phi21 - angle((-s11_i*gammaS),(1-s11_r*gammaS)));
-    double gamma_out_i= s22_i + ((gammaS*mag12*mag21)/(sqrt(pow(1-s11_r*gammaS,2) + pow(s11_i*gammaS,2))))*sin(phi12 + phi21 - angle((-s11_i*gammaS),(1-s11_r*gammaS)));
+    // B calculation
+    double B1 = 1.0 + S11real*S11real + S11imag*S11imag  // Input port
+                   - S22real*S22real - S22imag*S22imag
+                   - DetReal*DetReal - DetImag*DetImag;
+    double B2 = 1.0 + S22real*S22real + S22imag*S22imag  // Output port
+                   - S11real*S11real - S11imag*S11imag
+                   - DetReal*DetReal - DetImag*DetImag;
 
+    // C calculation
+    double C1real = S11real - S22real*DetReal - S22imag*DetImag; // Input port
+    double C1imag = S22real*DetImag - S11imag - S22imag*DetReal;
+    double C1mag  = sqrt(C1real*C1real + C1imag*C1imag);
+
+    double C2real = S22real - S11real*DetReal - S11imag*DetImag;
+    double C2imag = S11real*DetImag - S22imag - S11imag*DetReal;
+    double C2mag  = sqrt(C2real*C2real + C2imag*C2imag);
+
+    double K1 = (B1 - sqrt(B1*B1 - 4*C1mag*C1mag))/(2*(C1real*C1real + C1imag*C1imag));
+    double K2 = (B2 - sqrt(B2*B2 - 4*C2mag*C2mag))/(2*(C2real*C2real + C2imag*C2imag));
+
+    // INPUT PORT
+    double gamma_in_r = K1*C1real;
+    double gamma_in_i = -K1*C1imag;
+
+    double gamma_out_r = K2*C2real;
+    double gamma_out_i = -K2*C2imag;
 
     // INPUT PORT
 
