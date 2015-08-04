@@ -41,8 +41,10 @@
 #include <QApplication>
 #include <QClipboard>
 #include <QGroupBox>
-
 #include <cmath>
+#include "../../qucs-filter/material_props.h"
+
+
 
 
 MatchDialog::MatchDialog(QWidget *parent)
@@ -51,29 +53,113 @@ MatchDialog::MatchDialog(QWidget *parent)
   setWindowTitle(tr("Create Matching Circuit"));
   DoubleVal = new QDoubleValidator(this);
 
-  all = new QVBoxLayout(this);
+  all = new QHBoxLayout(this);
 
-	QGroupBox *MethodBox = new QGroupBox(tr("Implementation"));
-  all->addWidget(MethodBox);
+/* The main frame was divided into two vertical layouts. The first one, on the left side, is much the
+ * old matching tool whereas the other layout was included specifically for microstrip synthesis.
+ */
+  QVBoxLayout* matchFrame = new QVBoxLayout(); // Old window
+  QVBoxLayout* micro_layout = new QVBoxLayout(); // Microstrip synthesis
+  all->addLayout(matchFrame);
+  all->addLayout(micro_layout);
+
+  QGroupBox *MethodBox = new QGroupBox(tr("Implementation"));
+  matchFrame->addWidget(MethodBox);
   QVBoxLayout *MethodLayout = new QVBoxLayout();
   MethodBox->setLayout(MethodLayout);
+
+  SubstrateBox = new QGroupBox(tr("Microstrip Substrate"));
+  QVBoxLayout *hsubs = new QVBoxLayout();
+
+  SubstrateBox->setVisible(false);
+  micro_layout->addWidget(SubstrateBox);
+  SubstrateBox->setLayout(hsubs);
+  QHBoxLayout * Erlayout =  new QHBoxLayout();
+  RelPermLabel = new QLabel(tr("Relative Permitivity"));
+  RelPermCombo = new QComboBox();
+  RelPermCombo->setEditable(true);
+  const char **p = List_er;
+  while(*(++p)) RelPermCombo->addItem(*p);  // put material properties into combobox
+  RelPermCombo->lineEdit()->setText("9.8");
+  Erlayout->addWidget(RelPermLabel);
+  Erlayout->addWidget(RelPermCombo);
+  hsubs->addLayout(Erlayout);
+
+  QHBoxLayout *SubsLayout = new QHBoxLayout();
+  subsHLabel = new QLabel(tr("Substrate height"));
+  SubHeightEdit = new QLineEdit("1.0");
+  SubHeightEdit->setFixedWidth(60);
+  SubsHScale = new QLabel("mm");
+  SubsLayout->addWidget(subsHLabel);
+  SubsLayout->addWidget(SubHeightEdit);
+  SubsLayout->addWidget(SubsHScale);
+  hsubs->addLayout(SubsLayout);
+
+
+  QHBoxLayout *ThicknessLayout = new QHBoxLayout();
+  thicknessLabel = new QLabel(tr("Metal thickness"));
+  thicknessEdit = new QLineEdit("12.5");
+  ThicknessScale = new QLabel("um");
+  ThicknessLayout->addWidget(thicknessLabel);
+  ThicknessLayout->addWidget(thicknessEdit);
+  ThicknessLayout->addWidget(ThicknessScale);
+  hsubs->addLayout(ThicknessLayout);
+
+  QHBoxLayout *minWLayout = new QHBoxLayout();
+  minWLabel = new QLabel(tr("Minimum width"));
+  minWEdit = new QLineEdit("0.4");
+  minWScale = new QLabel("mm");
+  minWLayout->addWidget(minWLabel);
+  minWLayout->addWidget(minWEdit);
+  minWLayout->addWidget(minWScale);
+  hsubs->addLayout(minWLayout);
+
+  QHBoxLayout *maxWLayout = new QHBoxLayout();
+  maxWLabel = new QLabel(tr("Maximum width"));
+  maxWEdit = new QLineEdit("5.0");
+  maxWScale = new QLabel("mm");
+  maxWLayout->addWidget(maxWLabel);
+  maxWLayout->addWidget(maxWEdit);
+  maxWLayout->addWidget(maxWScale);
+  hsubs->addLayout(maxWLayout);
+
+  QHBoxLayout *tanDLayout = new QHBoxLayout();
+  tanDLabel = new QLabel(tr("tanD"));
+  tanDEdit = new QLineEdit("0.0125");
+  tanDLayout->addWidget(tanDLabel);
+  tanDLayout->addWidget(tanDEdit);
+  hsubs->addLayout(tanDLayout);
+
+  QHBoxLayout *ResistivityLayout = new QHBoxLayout();
+  ResistivityLabel = new QLabel(tr("Resistivity"));
+  ResistivityEdit = new QLineEdit("2.43902e-08");
+  ResistivityLayout->addWidget(ResistivityLabel);
+  ResistivityLayout->addWidget(ResistivityEdit);
+  hsubs->addLayout(ResistivityLayout);
+
+hsubs->insertStretch(-1, 1); // Remove spacing between layouts.
 
   QHBoxLayout *h4 = new QHBoxLayout();
   h4->setSpacing(3);
   TopoLabel = new QLabel(tr("Method"));
   h4->addWidget(TopoLabel);
+
+  // Matching network topology
   TopoCombo = new QComboBox();
   TopoCombo->insertItem(tr("LC matching"));
   TopoCombo->insertItem(tr("Single stub"));
   TopoCombo->insertItem(tr("Double stub"));
-	QString str = tr("Multistage binomial ") + QString(QChar(0xBB, 0x03)) + "/4";
+  QString str = tr("Multistage binomial ") + QString(QChar(0xBB, 0x03)) + "/4";
   TopoCombo->insertItem((str));
-  h4->addWidget(TopoCombo);
-	connect(TopoCombo, SIGNAL(activated(int)), SLOT(slotChangeMode_TopoCombo(int)));
-  h4->addStretch(5);
-	MethodLayout->addLayout(h4);
 
-	QHBoxLayout *h5 = new QHBoxLayout();
+   h4->addWidget(TopoCombo);
+   connect(TopoCombo, SIGNAL(activated(int)), SLOT(slotChangeMode_TopoCombo(int)));
+   h4->addStretch(5);
+   MethodLayout->addLayout(h4);
+
+    // When the stub implementation is selected, it is possible to select either the open or
+    // the short circuit solution
+    QHBoxLayout *h5 = new QHBoxLayout();
 	OpenRadioButton = new QRadioButton(tr("Open stub"), this);
 	h5->addWidget(OpenRadioButton);
 	OpenRadioButton->setChecked(true);
@@ -98,15 +184,19 @@ MatchDialog::MatchDialog(QWidget *parent)
 	MethodLayout->addLayout(h6);
 
   TwoCheck = new QCheckBox(tr("Calculate two-port matching"));
-  all->addWidget(TwoCheck);
+  MicrostripCheck = new QCheckBox(tr("Synthesize microstrip lines"));
+  MicrostripCheck->setVisible(false);
+  matchFrame->addWidget(TwoCheck);
+  matchFrame->addWidget(MicrostripCheck);
   TwoCheck->setChecked(true);
+  MicrostripCheck->setChecked(false);
   connect(TwoCheck, SIGNAL(toggled(bool)), SLOT(slotSetTwoPort(bool)));
-
+  connect(MicrostripCheck, SIGNAL(toggled(bool)), SLOT(slotSetMicrostripCheck(bool)));
 
 
   // ...........................................................
   QGroupBox *ImpBox = new QGroupBox(tr("Reference Impedance"));
-  all->addWidget(ImpBox);
+  matchFrame->addWidget(ImpBox);
   QHBoxLayout *ImpLayout = new QHBoxLayout();
   Port1Label = new QLabel(tr("Port 1"));
   Ref1Edit = new QLineEdit("50");
@@ -129,7 +219,7 @@ MatchDialog::MatchDialog(QWidget *parent)
 
   // ...........................................................
   QGroupBox *SParBox = new QGroupBox(tr("S Parameter"));
-  all->addWidget(SParBox);
+  matchFrame->addWidget(SParBox);
   QVBoxLayout *SParLayout = new QVBoxLayout();
   SParBox->setLayout(SParLayout);
 
@@ -247,7 +337,7 @@ MatchDialog::MatchDialog(QWidget *parent)
   // ...........................................................
   QHBoxLayout *h0 = new QHBoxLayout();
   h0->setSpacing(5);
-  all->addLayout(h0);
+  matchFrame->addLayout(h0);
   h0->addStretch(5);
   QPushButton *buttCreate = new QPushButton(tr("Create"));
   QPushButton *buttCancel = new QPushButton(tr("Cancel"));
@@ -258,7 +348,7 @@ MatchDialog::MatchDialog(QWidget *parent)
 
   slotReflexionChanged("");  // calculate impedance
   setFrequency(1e9);  // set 1GHz
-  resize(520, 100);
+  resize(500, 100);
 }
 
 MatchDialog::~MatchDialog()
@@ -278,8 +368,24 @@ void MatchDialog::setFrequency(double Freq_)
   FrequencyEdit->setText(QString::number(Freq_));
 }
 
+//------------------------------------------------------
+// This function sets the visibility of the microstrip synthesis panel.
+void MatchDialog::slotSetMicrostripCheck(bool on)
+{
+    if (MicrostripCheck->isChecked())
+    {
+        SubstrateBox->setVisible(true);
+        resize(650, 100);
+    }
+    else
+    {
+        SubstrateBox->setVisible(false);
+        resize(500, 100);
+    }
+}
+
 // -----------------------------------------------------------------------
-// Is called when the checkbox for two-port matching changes.
+// It is called when the checkbox for two-port matching changes.
 void MatchDialog::slotSetTwoPort(bool on)
 {
   if(on) { // two-port matching ?
@@ -322,7 +428,7 @@ void MatchDialog::slotSetTwoPort(bool on)
   }
 }
 //------------------------------------------------------------------------
-// It is called when the implementation combobox changes
+// This function is called when 'Topocombo' combobox changes
 void MatchDialog::slotChangeMode_TopoCombo(int Index)
 {
 	if ((TopoCombo->currentIndex() == 1)||(TopoCombo->currentIndex() == 2))
@@ -335,6 +441,14 @@ void MatchDialog::slotChangeMode_TopoCombo(int Index)
 		ShortRadioButton->setVisible(false);
 		OpenRadioButton->setVisible(false);
 	}
+    if (TopoCombo->currentIndex() != 0)
+    {
+        MicrostripCheck->setVisible(true);
+    }
+    else
+    {
+        MicrostripCheck->setVisible(false);
+    }
 	if (TopoCombo->currentIndex() == 3)
 	{
 		OrderLabel->setVisible(true);
@@ -484,7 +598,8 @@ void MatchDialog::slotButtCreate()
     p2c(S21real, S21imag);
     p2c(S22real, S22imag);
   }
-double Z0=50;
+bool micro_syn = MicrostripCheck->isChecked();
+
   if(TwoCheck->isChecked()) {  // two-port matching ?
     // determinante of S-parameter matrix
     double DetReal = S11real*S22real - S11imag*S22imag
@@ -492,7 +607,8 @@ double Z0=50;
     double DetImag = S11real*S22imag + S11imag*S22real
                    - S12real*S21imag - S12imag*S21real;
 
-        switch(TopoCombo->currentIndex())
+// This switch selects the configuration of the matching network
+        switch(TopoCombo->currentIndex())// Matches the source impedance (typically, 50 Ohms) to a complex load.
         {
            case 0: // LC
                if(!MatchDialog::calc2PortMatch(S11real, S11imag, S22real, S22imag, DetReal, DetImag, Z1, Z2, Freq))return;
@@ -501,19 +617,19 @@ double Z0=50;
                openStub = OpenRadioButton->isChecked();
                if(!MatchDialog::calcMatchingCircuitSingleStub2Ports(S11real, S11imag,
                                                                     S22real, S22imag, DetReal, DetImag,
-                                                                    Z1, Z2, Freq, openStub))return;
+                                                                    Z1, Z2, Freq, openStub, micro_syn))return;
                break;
            case 2: // Double stub
                openStub = OpenRadioButton->isChecked();
                if(!MatchDialog::calcMatchingCircuitDoubleStub2Ports(S11real, S11imag,
                                                                     S22real, S22imag, DetReal, DetImag,
-                                                                    Z1, Z2, Freq, openStub))return;
+                                                                    Z1, Z2, Freq, openStub, micro_syn))return;
                break;
            case 3: // Quarter wave cascaded sections
                 order = OrderEdit->text().toInt()+1 ;
                 if(!MatchDialog::calcMatchingCircuitLambda42Ports(S11real, S11imag,
                                                                   S22real, S22imag, DetReal, DetImag,
-                                                                  Z1, Z2, Freq, order))return;
+                                                                  Z1, Z2, Freq, order, micro_syn))return;
                 break;
 
         }
@@ -523,22 +639,22 @@ double Z0=50;
 
   }
   else{
-      switch(TopoCombo->currentIndex())
+      switch(TopoCombo->currentIndex()) //Matches both the input and the output port to external sources (typically, 50 Ohms)
       {
           case 0: // LC
                   if(!calcMatchingCircuitLC(S11real, S11imag, Z1, Freq))return;
                   break;
           case 1: // Single stub
-									openStub = OpenRadioButton->isChecked();
-                  if(!calcMatchingCircuitSingleStub(S11real, S11imag, Z1, Freq, openStub))return;
+                  openStub = OpenRadioButton->isChecked();
+                  if(!calcMatchingCircuitSingleStub(S11real, S11imag, Z1, Freq, openStub, micro_syn))return;
                   break;
           case 2: // Double stub
-									openStub = OpenRadioButton->isChecked();
-                  if(!calcMatchingCircuitDoubleStub(S11real, S11imag, Z1, Freq, openStub))return;
+                  openStub = OpenRadioButton->isChecked();
+                  if(!calcMatchingCircuitDoubleStub(S11real, S11imag, Z1, Freq, openStub, micro_syn))return;
                   break;
           case 3: // Quarter wave cascaded sections
-									order = OrderEdit->text().toInt()+1;
-                  if(!calcMatchingCircuitLambda4(S11real, S11imag, Z1, Freq, order))return;
+                  order = OrderEdit->text().toInt()+1;
+                  if(!calcMatchingCircuitLambda4(S11real, S11imag, Z1, Freq, order, micro_syn))return;
                   break;
 
       }
@@ -649,16 +765,35 @@ QString MatchDialog::calcMatching(double r_real, double r_imag,
   return Str;
 }
 
-bool MatchDialog::calcMatchingCircuitSingleStub(double r_real, double r_imag, double Z0, double Freq, bool open_short)
+
+// ----------------------------------------------------------------------------------
+// This function calculates a matching network for a single port using a transmission line and
+// a stub (short or open). It can also convert the transmission lines microstrip lines
+// See Microwave Engineering. David Pozar. John Wiley and Sons. 4th Edition. Pg 234-240
+bool MatchDialog::calcMatchingCircuitSingleStub(double r_real, double r_imag, double Z0, double Freq, bool open_short, bool micro_syn)
 {
         double RL = r_real;
         double XL = r_imag;
         double t=0, t1 = 0, t2 = 0;
         double dl, dl1, dl2, B;
-        double B1, B2, d, lstub, ll;
-        double lambda = 3e8/Freq;
+        double B1, B2, d, lstub, ll, width;
+        tSubstrate Substrate;
+        if (micro_syn)//Microstrip synthesis
+        {
+        Substrate.er = RelPermCombo->currentText().section("  ", 0, 0).toDouble();
+        Substrate.height = SubHeightEdit->text().toDouble() / 1e3;
+        Substrate.thickness = thicknessEdit->text().toDouble() / 1e6;
+        Substrate.tand = tanDEdit->text().toDouble();
+        Substrate.resistivity = ResistivityEdit->text().toDouble();
+        Substrate.roughness = 0.0;
+        Substrate.minWidth = minWEdit->text().toDouble() / 1e3;
+        Substrate.maxWidth = maxWEdit->text().toDouble() / 1e3;
+        }
 
-        r2z(RL, XL, Z0);
+        double er;
+        double lambda = 3e8/(Freq);
+
+        r2z(RL, XL, Z0);// Calculation of the load impedance
         if (RL == Z0)
         {
              t = -XL / (2*Z0);
@@ -705,16 +840,37 @@ bool MatchDialog::calcMatchingCircuitSingleStub(double r_real, double r_imag, do
         }
 
 
+        // Creation of the schematic
+
         QString s = "<Qucs Schematic " PACKAGE_VERSION ">\n";
         int x = 60;
         s += "<Components>\n";
         s += QString("<Pac P1 1 %1 330 18 -26 0 1 \"1\" 1 \"%2 Ohm\" 1 \"0 dBm\" 0 \"1 GHz\" 0>\n").arg(x).arg(Z0);
         s += QString("<GND * 1 %1 360 0 0 0 0>\n").arg(x);
         x += 60;
-        s += QString("<TLIN Line1 1 %1 120 -26 20 0 -1 \"%2\" 1 \"%3\" 1 \"0 dB\" 0 \"26.85\" 0>\n").arg(x).arg(Z0).arg(lstub);
-				if (!open_short)s += QString("<GND * 1 %1 90 0 0 -1 1>\n").arg(x);
+
+        if (micro_syn)
+        {
+            er = Substrate.er;
+            getMicrostrip(Z0, Freq, &Substrate, width, er);
+            s += QString("<MLIN MS1 1 %1 120 -26 20 0 -1 \"Sub1\" 1 \"%2\" 1 \"%3\" 1 \"Hammerstad\" 0 \"Kirschning\" 0 \"26.85\" 0>\n").arg(x).arg(width).arg(lstub/sqrt(er));
+        }
+        else
+        {
+            s += QString("<TLIN Line1 1 %1 120 -26 20 0 -1 \"%2\" 1 \"%3\" 1 \"0 dB\" 0 \"26.85\" 0>\n").arg(x).arg(Z0).arg(lstub);
+        }
+        if (!open_short)s += QString("<GND * 1 %1 90 0 0 -1 1>\n").arg(x);
         x+=40;
-        s += QString("<TLIN Line1 1 %1 180 -26 20 0 0 \"%2\" 1 \"%3\" 1 \"0 dB\" 0 \"26.85\" 0>\n").arg(x).arg(Z0).arg(d);
+
+        if (micro_syn)
+        {
+            er = Substrate.er;
+            s += QString("<MLIN MS1 1 %1 180 -26 20 0 0 \"Sub1\" 1 \"%2\" 1 \"%3\" 1 \"Hammerstad\" 0 \"Kirschning\" 0 \"26.85\" 0>\n").arg(x).arg(width).arg(d/sqrt(er));
+        }
+        else
+        {
+            s += QString("<TLIN Line1 1 %1 180 -26 20 0 0 \"%2\" 1 \"%3\" 1 \"0 dB\" 0 \"26.85\" 0>\n").arg(x).arg(Z0).arg(d);
+        }
         x += 80;
         if ((RL > 0)&&(XL < 0))
         {
@@ -737,6 +893,8 @@ bool MatchDialog::calcMatchingCircuitSingleStub(double r_real, double r_imag, do
         double freq_stop = Freq+1e9;
         s += QString("<.SP SP1 1 70 460 0 67 0 0 \"lin\" 1 \"%2Hz\" 1 \"%3Hz\" 1 \"300\" 1 \"no\" 0 \"1\" 0 \"2\" 0>\n").arg((freq_start)).arg((freq_stop));
         s += QString("<Eqn Eqn1 1 450 560 -28 15 0 0 \"S11_dB=dB(S[1,1])\" 1 \"yes\" 0>\n");
+        if (micro_syn)s += QString("<SUBST Sub1 1 300 500 -30 24 0 0 \"%1\" 1 \"%2mm\" 1 \"%3um\" 1 \"%4\" 1 \"%5\" 1 \"%6\" 1>\n").arg(Substrate.er).arg(Substrate.height*1e3).arg(Substrate.thickness*1e6).arg(Substrate.tand).arg(Substrate.resistivity).arg(Substrate.roughness);
+
         s += "</Components>\n";
         s += "<Wires>\n";
 
@@ -758,18 +916,50 @@ bool MatchDialog::calcMatchingCircuitSingleStub(double r_real, double r_imag, do
         }
         s += "</Wires>\n";
 
+        s+= "<Paintings>\n";
+        s+= QString("<Rectangle %1 200 60 150 #000000 0 1 #c0c0c0 1 0>\n").arg(x-30);
+        if (XL == 0)
+        {
+            s+= QString("<Text %1 200 12 #000000 0 \"%2 %3 @ %4 GHz\">\n").arg(x+30).arg(RL).arg(QChar (0x2126)).arg(Freq*1e-9);
+        }
+        else
+        {(XL > 0) ? s+= QString("<Text %1 200 12 #000000 0 \"Load: %2+j%3 %4 @ %5 GHz\">\n").arg(x+30).arg(RL).arg(XL).arg(QChar (0x2126)).arg(Freq*1e-9):
+                    s+= QString("<Text %1 200 12 #000000 0 \"Load: %2-j%3 %4 @ %5 GHz\">\n").arg(x+30).arg(RL).arg(abs(XL)).arg(QChar (0x2126)).arg(Freq*1e-9);
+        }
+        s+="</Paintings>\n";
+
           s += "<Diagrams>\n";
           s += "</Diagrams>\n";
 
-					QApplication::clipboard()->setText(s, QClipboard::Clipboard);
-				  return true;
+        QApplication::clipboard()->setText(s, QClipboard::Clipboard);
+        return true;
 }
-bool MatchDialog::calcMatchingCircuitDoubleStub(double r_real, double r_imag, double Z0, double Freq, bool open_short)
+
+// ----------------------------------------------------------------------------------
+// This function calculates a matching network for a single port using a transmission line and
+// two stubs (short or open). It can also convert the transmission lines microstrip lines
+// See Microwave Engineering. David Pozar. John Wiley and Sons. 4th Edition. Pg 241-245
+bool MatchDialog::calcMatchingCircuitDoubleStub(double r_real, double r_imag, double Z0, double Freq, bool open_short, bool micro_syn)
 {
-	   double RL = r_real;
-	   double XL = r_imag;
-		 r2z(RL, XL, Z0);
-	   double Y0=1./Z0;
+    tSubstrate Substrate;
+    if (micro_syn)//Microstrip synthesis
+    {
+    Substrate.er = RelPermCombo->currentText().section("  ", 0, 0).toDouble();
+    Substrate.height = SubHeightEdit->text().toDouble() / 1e3;
+    Substrate.thickness = thicknessEdit->text().toDouble() / 1e6;
+    Substrate.tand = tanDEdit->text().toDouble();
+    Substrate.resistivity = ResistivityEdit->text().toDouble();
+    Substrate.roughness = 0.0;
+    Substrate.minWidth = minWEdit->text().toDouble() / 1e3;
+    Substrate.maxWidth = maxWEdit->text().toDouble() / 1e3;
+    }
+
+    double er, width;
+
+     double RL = r_real;
+     double XL = r_imag;
+     r2z(RL, XL, Z0);
+     double Y0=1./Z0;
      double GL = (1/((RL*RL)+(XL*XL)))*RL;
      double BL = -(1/((RL*RL)+(XL*XL)))*XL;
      double lambda = 3e8/Freq;
@@ -777,6 +967,17 @@ bool MatchDialog::calcMatchingCircuitDoubleStub(double r_real, double r_imag, do
      double d = lambda/8;
      double t = tan(beta*d);
 		 double ll1, ll2;
+
+
+
+     if (GL > Y0*((1+t*t)/(2*t*t)))//Not every load can be match using the double stub technique.
+     {
+         QMessageBox msgBox;
+         QString str = QString("It is not possible to match this load");
+         QMessageBox::warning(0, QObject::tr("Error"),
+                            QObject::tr(str));
+         return false;
+     }
 
      // Stubs susceptance
      double B11 = -BL + (Y0 + sqrt((1+t*t)*GL*Y0 - GL*GL*t*t))/(t); // 1st solution
@@ -788,6 +989,9 @@ bool MatchDialog::calcMatchingCircuitDoubleStub(double r_real, double r_imag, do
      // Open circuit solution
 		 (open_short) ? ll1 = (atan(B11*Z0))/(2*M_PI) : ll1= -(atan(1./(1.*B11*Z0)))/(2*M_PI);
 		 (open_short) ? ll2 = (atan(B21*Z0))/(2*M_PI) : ll2= -(atan(1./(1.*B21*Z0)))/(2*M_PI);
+
+
+
          if (ll1<0)ll1+=0.5;
          if (ll2<0)ll2+=0.5;
 		 if ((!open_short)&&(ll1>0.5))ll1-=0.5;
@@ -796,19 +1000,53 @@ bool MatchDialog::calcMatchingCircuitDoubleStub(double r_real, double r_imag, do
 
      double lstub1 = ll1*lambda, lstub2=ll2*lambda;
 
+     //Schematic synthesis
+
      QString s = "<Qucs Schematic " PACKAGE_VERSION ">\n";
      int x = 60;
      s += "<Components>\n";
      s += QString("<Pac P1 1 %1 330 18 -26 0 1 \"1\" 1 \"%2 Ohm\" 1 \"0 dBm\" 0 \"1 GHz\" 0>\n").arg(x).arg(Z0);
      s += QString("<GND * 1 %1 360 0 0 0 0>\n").arg(x);
      x += 60;
-     s += QString("<TLIN Line1 1 %1 80 -26 20 0 0 \"%2\" 1 \"%3\" 1 \"0 dB\" 0 \"26.85\" 0>\n").arg(x+30).arg(Z0).arg(lstub2);
-		 if (!open_short)s += QString("<GND * 1 %1 80 0 0 -1 1>\n").arg(x+60);
+
+     if (micro_syn)
+     {
+         er = Substrate.er;
+         getMicrostrip(Z0, Freq, &Substrate, width, er);
+         s += QString("<MLIN MS1 1 %1 80 -26 20 0 0 \"Sub1\" 1 \"%2\" 1 \"%3\" 1 \"Hammerstad\" 0 \"Kirschning\" 0 \"26.85\" 0>\n").arg(x+30).arg(width).arg(lstub2/sqrt(er));
+     }
+     else
+     {
+         s += QString("<TLIN Line1 1 %1 80 -26 20 0 0 \"%2\" 1 \"%3\" 1 \"0 dB\" 0 \"26.85\" 0>\n").arg(x+30).arg(Z0).arg(lstub2);
+     }
+     if (!open_short)s += QString("<GND * 1 %1 80 0 0 -1 1>\n").arg(x+60);
      x+=40;
+
+     if (micro_syn)
+     {
+         er = Substrate.er;
+         getMicrostrip(Z0, Freq, &Substrate, width, er);
+         s += QString("<MLIN MS1 1 %1 180 -26 20 0 0 \"Sub1\" 1 \"%2\" 1 \"%3\" 1 \"Hammerstad\" 0 \"Kirschning\" 0 \"26.85\" 0>\n").arg(x).arg(width).arg(d/sqrt(er));
+     }
+     else
+     {
      s += QString("<TLIN Line1 1 %1 180 -26 20 0 0 \"%2\" 1 \"%3\" 1 \"0 dB\" 0 \"26.85\" 0>\n").arg(x).arg(Z0).arg(d);
+     }
+
      x += 80;
+
+     if (micro_syn)
+     {
+         er = Substrate.er;
+         getMicrostrip(Z0, Freq, &Substrate, width, er);
+         s += QString("<MLIN MS1 1 %1 80 -26 20 0 0 \"Sub1\" 1 \"%2\" 1 \"%3\" 1 \"Hammerstad\" 0 \"Kirschning\" 0 \"26.85\" 0>\n").arg(x+30).arg(width).arg(lstub1/sqrt(er));
+     }
+     else
+     {
      s += QString("<TLIN Line1 1 %1 80 -26 20 0 0 \"%2\" 1 \"%3\" 1 \"0 dB\" 0 \"26.85\" 0>\n").arg(x+30).arg(Z0).arg(lstub1);
-		 if (!open_short)s += QString("<GND * 1 %1 80 0 0 -1 1>\n").arg(x+60);
+     }
+
+     if (!open_short)s += QString("<GND * 1 %1 80 0 0 -1 1>\n").arg(x+60);
      x += 80;
      if ((RL > 0)&&(XL< 0))
      {
@@ -831,6 +1069,8 @@ bool MatchDialog::calcMatchingCircuitDoubleStub(double r_real, double r_imag, do
      double freq_stop = Freq+1e9;
      s += QString("<.SP SP1 1 70 460 0 67 0 0 \"lin\" 1 \"%2Hz\" 1 \"%3Hz\" 1 \"300\" 1 \"no\" 0 \"1\" 0 \"2\" 0>\n").arg((freq_start)).arg((freq_stop));
      s += QString("<Eqn Eqn1 1 450 560 -28 15 0 0 \"S11_dB=dB(S[1,1])\" 1 \"yes\" 0>\n");
+     if (micro_syn)s += QString("<SUBST Sub1 1 300 500 -30 24 0 0 \"%1\" 1 \"%2mm\" 1 \"%3um\" 1 \"%4\" 1 \"%5\" 1 \"%6\" 1>\n").arg(Substrate.er).arg(Substrate.height*1e3).arg(Substrate.thickness*1e6).arg(Substrate.tand).arg(Substrate.resistivity).arg(Substrate.roughness);
+
      s += "</Components>\n";
      s += "<Wires>\n";
 
@@ -852,6 +1092,18 @@ bool MatchDialog::calcMatchingCircuitDoubleStub(double r_real, double r_imag, do
      s += QString("<%1 180 %2 80 \"\" 0 0 0>\n").arg(x-80).arg(x-80);
      s += "</Wires>\n";
 
+     s+= "<Paintings>\n";
+     s+= QString("<Rectangle %1 200 60 150 #000000 0 1 #c0c0c0 1 0>\n").arg(x-30);
+     if (XL == 0)
+     {
+         s+= QString("<Text %1 200 12 #000000 0 \"Load: %2 %3 @ %4 GHz\">\n").arg(x+30).arg(RL).arg(QChar (0x2126)).arg(Freq*1e-9);
+     }
+     else
+     {(XL > 0) ? s+= QString("<Text %1 200 12 #000000 0 \"Load: %2+j%3 %4 @ %5 GHz\">\n").arg(x+30).arg(RL).arg(XL).arg(QChar (0x2126)).arg(Freq*1e-9):
+                 s+= QString("<Text %1 200 12 #000000 0 \"Load: %2-j%3 %4 @ %5 GHz\">\n").arg(x+30).arg(RL).arg(abs(XL)).arg(QChar (0x2126)).arg(Freq*1e-9);
+     }
+     s+="</Paintings>\n";
+
      s += "<Diagrams>\n";
      s += "</Diagrams>\n";
 
@@ -860,16 +1112,35 @@ bool MatchDialog::calcMatchingCircuitDoubleStub(double r_real, double r_imag, do
 
 }
 
+
 double factorial(double n)
 {
   return (n == 1 || n == 0) ? 1 : factorial(n - 1) * n;
 }
 
-bool MatchDialog::calcMatchingCircuitLambda4(double r_real, double r_imag, double Z0, double Freq, int order)
+// ----------------------------------------------------------------------------------
+// This function calculates a matching network for a single port using cascaded sections
+// of lambda/4 lines. It can also convert these lines microstrip lines
+// See Microwave Engineering. David Pozar. John Wiley and Sons. 4th Edition. Pg 252-256
+bool MatchDialog::calcMatchingCircuitLambda4(double r_real, double r_imag, double Z0, double Freq, int order, bool micro_syn)
 {
+    tSubstrate Substrate;
+    if (micro_syn)//Microstrip synthesis
+    {
+        Substrate.er = RelPermCombo->currentText().section("  ", 0, 0).toDouble();
+        Substrate.height = SubHeightEdit->text().toDouble() / 1e3;
+        Substrate.thickness = thicknessEdit->text().toDouble() / 1e6;
+        Substrate.tand = tanDEdit->text().toDouble();
+        Substrate.resistivity = ResistivityEdit->text().toDouble();
+        Substrate.roughness = 0.0;
+        Substrate.minWidth = minWEdit->text().toDouble() / 1e3;
+        Substrate.maxWidth = maxWEdit->text().toDouble() / 1e3;
+    }
+
+    double er, width;
 	double RL = r_real;
 	double XL = r_imag;
-	r2z(RL, XL, Z0);
+    r2z(RL, XL, Z0);//Converting the reflection coefficient to impedances (given Z0)
 
 	if (RL ==0)
 	 {
@@ -887,6 +1158,8 @@ bool MatchDialog::calcMatchingCircuitLambda4(double r_real, double r_imag, doubl
 	 double lambda4 = lambda/4;
 	 double Ci, Zi, Zaux=Z0;
 
+     // Schematic synthesis
+
 	 QString s = "<Qucs Schematic " PACKAGE_VERSION ">\n";
 	 int x = 60;
 	 s += "<Components>\n";
@@ -899,8 +1172,17 @@ bool MatchDialog::calcMatchingCircuitLambda4(double r_real, double r_imag, doubl
 		Ci = (factorial(order-1))/(factorial(order-1-(i-1))*factorial(i-1));
 		Zi = Zaux*exp((Ci/pow(2,order-1))*log(RL/Z0));
 		Zaux=Zi;
-	 	s += QString("<TLIN Line1 1 %1 180 -26 20 0 0 \"%2\" 1 \"%3\" 1 \"0 dB\" 0 \"26.85\" 0>\n").arg(x+30).arg(Zi).arg(lambda4);
-	 }
+        if (micro_syn)
+        {
+            er = Substrate.er;
+            getMicrostrip(Zi, Freq, &Substrate, width, er);
+            s += QString("<MLIN MS1 1 %1 180 -26 20 0 0 \"Sub1\" 1 \"%2\" 1 \"%3\" 1 \"Hammerstad\" 0 \"Kirschning\" 0 \"26.85\" 0>\n").arg(x+30).arg(width).arg(lambda4/sqrt(er));
+        }
+        else
+        {
+            s += QString("<TLIN Line1 1 %1 180 -26 20 0 0 \"%2\" 1 \"%3\" 1 \"0 dB\" 0 \"26.85\" 0>\n").arg(x+30).arg(Zi).arg(lambda4);
+        }
+     }
 	 x += 90;
 	 s += QString("<Pac P1 1 %1 270 15 -26 0 1 \"1\" 1 \"%2 Ohm\" 1 \"0 dBm\" 0 \"1 GHz\" 0>\n").arg(x+20).arg(RL);
 	 s += QString("<GND * 1 %1 360 0 0 0 0>\n").arg(x+20);
@@ -909,6 +1191,8 @@ bool MatchDialog::calcMatchingCircuitLambda4(double r_real, double r_imag, doubl
 	 double freq_stop = Freq+2e9;
 	 s += QString("<.SP SP1 1 70 460 0 67 0 0 \"lin\" 1 \"%2Hz\" 1 \"%3Hz\" 1 \"300\" 1 \"no\" 0 \"1\" 0 \"2\" 0>\n").arg((freq_start)).arg((freq_stop));
 	 s += QString("<Eqn Eqn1 1 450 560 -28 15 0 0 \"S21_dB=dB(S[2,1])\" 1 \"S11_dB=dB(S[1,1])\" 1 \"yes\" 0>\n");
+     if (micro_syn)s += QString("<SUBST Sub1 1 300 500 -30 24 0 0 \"%1\" 1 \"%2mm\" 1 \"%3um\" 1 \"%4\" 1 \"%5\" 1 \"%6\" 1>\n").arg(Substrate.er).arg(Substrate.height*1e3).arg(Substrate.thickness*1e6).arg(Substrate.tand).arg(Substrate.resistivity).arg(Substrate.roughness);
+
 	 s += "</Components>\n";
 	 s += "<Wires>\n";
 
@@ -931,6 +1215,20 @@ bool MatchDialog::calcMatchingCircuitLambda4(double r_real, double r_imag, doubl
 
 
 	 s += "</Wires>\n";
+
+     s+= "<Paintings>\n";
+     s+= QString("<Rectangle %1 200 60 150 #000000 0 1 #c0c0c0 1 0>\n").arg(x-30);
+
+     if (XL == 0)
+     {
+         s+= QString("<Text %1 200 12 #000000 0 \"Load: %2 %3 @ %4 GHz\">\n").arg(x+30).arg(RL).arg(QChar (0x2126)).arg(Freq*1e-9);
+     }
+     else
+     {(XL > 0) ? s+= QString("<Text %1 200 12 #000000 0 \"Load: %2+j%3 %4 @ %5 GHz\">\n").arg(x+30).arg(RL).arg(XL).arg(QChar (0x2126)).arg(Freq*1e-9):
+                 s+= QString("<Text %1 200 12 #000000 0 \"Load: %2-j%3 %4 @ %5 GHz\">\n").arg(x+30).arg(RL).arg(abs(XL)).arg(QChar (0x2126)).arg(Freq*1e-9);
+     }
+     s+="</Paintings>\n";
+
 	 s += "<Diagrams>\n";
 	 s += "</Diagrams>\n";
 
@@ -1185,36 +1483,26 @@ bool MatchDialog::calc2PortMatch(double S11real, double S11imag,
 }
 
 
-double angle(double r, double i)
-{
-
-             if (r>=0)
-             {
-                 //Quadrant 1 or Quadrant 4
-                return atan(i/r);
-
-             }
-             else //Quadrant 2 or 3
-             {
-                 if(i>=0)//Quadrant 2
-                 {
-                     return atan(i/r)+pi;
-                 }
-                 else //Quadrant 3
-                 {
-                      return atan(i/r)-pi;
-                 }
-
-             }
-}
-
  bool MatchDialog::calcMatchingCircuitSingleStub2Ports(double S11real, double S11imag,
                                                        double S22real, double S22imag, double DetReal, double DetImag,
-                                                       double Z1, double Z2, double Freq, bool open_short)
+                                                       double Z1, double Z2, double Freq, bool open_short, bool micro_syn)
  {
-     double Z0=50, B;
+     double Z0=50, B,er, width;
 
-     // B calculation
+     tSubstrate Substrate;
+     if (micro_syn)
+     {
+     Substrate.er = RelPermCombo->currentText().section("  ", 0, 0).toDouble();
+     Substrate.height = SubHeightEdit->text().toDouble() / 1e3;
+     Substrate.thickness = thicknessEdit->text().toDouble() / 1e6;
+     Substrate.tand = tanDEdit->text().toDouble();
+     Substrate.resistivity = ResistivityEdit->text().toDouble();
+     Substrate.roughness = 0.0;
+     Substrate.minWidth = minWEdit->text().toDouble() / 1e3;
+     Substrate.maxWidth = maxWEdit->text().toDouble() / 1e3;
+     }
+
+    // B calculation
      double B1 = 1.0 + S11real*S11real + S11imag*S11imag  // Input port
                     - S22real*S22real - S22imag*S22imag
                     - DetReal*DetReal - DetImag*DetImag;
@@ -1357,24 +1645,64 @@ double angle(double r, double i)
 	 D_port2 = d;
 	 L_port2 = lstub;
 
-	 QString s = "<Qucs Schematic " PACKAGE_VERSION ">\n";
+      QString s = "<Qucs Schematic " PACKAGE_VERSION ">\n";
 	 int x = 60;
 	 s += "<Components>\n";
 	 //INPUT port
 	 x += 60;
-	 s += QString("<TLIN Line1 1 %1 120 -26 20 0 -1 \"%2\" 1 \"%3\" 1 \"0 dB\" 0 \"26.85\" 0>\n").arg(x).arg(Z1).arg(L_port1);
-	 if (!open_short)s += QString("<GND * 1 %1 90 0 0 -1 1>\n").arg(x);
+     if (micro_syn)
+     {
+         er = Substrate.er;
+         getMicrostrip(Z1, Freq, &Substrate, width, er);
+        // s += QString("<MLIN MS1 1 %1 120 -26 20 0 -1 \"Sub1\" 1 \"%2\" 1 \"%3\" 1 \"Hammerstad\" 0 \"Kirschning\" 0 \"26.85\" 0>\n").arg(x).arg(width).arg(L_port1/sqrt(er));
+     }
+     else
+     {
+         s += QString("<TLIN Line1 1 %1 120 -26 20 0 -1 \"%2\" 1 \"%3\" 1 \"0 dB\" 0 \"26.85\" 0>\n").arg(x).arg(Z1).arg(L_port1);
+     }
+     if (!open_short)s += QString("<GND * 1 %1 90 0 0 -1 1>\n").arg(x);
 	 x+=40;
-	 s += QString("<TLIN Line1 1 %1 180 -26 20 0 0 \"%2\" 1 \"%3\" 1 \"0 dB\" 0 \"26.85\" 0>\n").arg(x).arg(Z1).arg(D_port1);
-	 x += 200;
+
+     if (micro_syn)
+     {
+         er = Substrate.er;
+         getMicrostrip(Z1, Freq, &Substrate, width, er);
+         s += QString("<MLIN MS1 1 %1 180 -26 20 0 0 \"Sub1\" 1 \"%2\" 1 \"%3\" 1 \"Hammerstad\" 0 \"Kirschning\" 0 \"26.85\" 0>\n").arg(x).arg(width).arg(D_port1/sqrt(er));
+     }
+     else
+     {
+         s += QString("<TLIN Line1 1 %1 180 -26 20 0 0 \"%2\" 1 \"%3\" 1 \"0 dB\" 0 \"26.85\" 0>\n").arg(x).arg(Z1).arg(D_port1);
+     }
+     x += 200;
 
 // OUTPUT port
-	 s += QString("<TLIN Line1 1 %1 180 -26 20 0 0 \"%2\" 1 \"%3\" 1 \"0 dB\" 0 \"26.85\" 0>\n").arg(x).arg(Z2).arg(D_port2);
-	 x+=60;
-	 s += QString("<TLIN Line1 1 %1 120 -26 20 0 -1 \"%2\" 1 \"%3\" 1 \"0 dB\" 0 \"26.85\" 0>\n").arg(x).arg(Z2).arg(L_port2);
-	 if (!open_short)s += QString("<GND * 1 %1 90 0 0 -1 1>\n").arg(x);
+     if (micro_syn)
+     {
+         er = Substrate.er;
+         getMicrostrip(Z2, Freq, &Substrate, width, er);
+         s += QString("<MLIN MS1 1 %1 180 -26 20 0 0 \"Sub1\" 1 \"%2\" 1 \"%3\" 1 \"Hammerstad\" 0 \"Kirschning\" 0 \"26.85\" 0>\n").arg(x).arg(width).arg(D_port2/sqrt(er));
+     }
+     else
+     {
+         s += QString("<TLIN Line1 1 %1 180 -26 20 0 0 \"%2\" 1 \"%3\" 1 \"0 dB\" 0 \"26.85\" 0>\n").arg(x).arg(Z2).arg(D_port2);
+     }
+     x+=60;
+
+     if (micro_syn)
+     {
+         er = Substrate.er;
+         getMicrostrip(Z2, Freq, &Substrate, width, er);
+         s += QString("<MLIN MS1 1 %1 120 -26 20 0 -1 \"Sub1\" 1 \"%2\" 1 \"%3\" 1 \"Hammerstad\" 0 \"Kirschning\" 0 \"26.85\" 0>\n").arg(x).arg(width).arg(L_port2/sqrt(er));
+     }
+     else
+     {
+        s += QString("<TLIN Line1 1 %1 120 -26 20 0 -1 \"%2\" 1 \"%3\" 1 \"0 dB\" 0 \"26.85\" 0>\n").arg(x).arg(Z2).arg(L_port2);
+     }
+     if (!open_short)s += QString("<GND * 1 %1 90 0 0 -1 1>\n").arg(x);
 
 	 x += 60;
+     if (micro_syn)s += QString("<SUBST Sub1 1 300 500 -30 24 0 0 \"%1\" 1 \"%2mm\" 1 \"%3um\" 1 \"%4\" 1 \"%5\" 1 \"%6\" 1>\n").arg(Substrate.er).arg(Substrate.height*1e3).arg(Substrate.thickness*1e6).arg(Substrate.tand).arg(Substrate.resistivity).arg(Substrate.roughness);
+
 	 s += "</Components>\n";
 	 s += "<Wires>\n";
 
@@ -1388,22 +1716,35 @@ double angle(double r, double i)
 
 
 	 s += "</Wires>\n";
-	 s += "<Diagrams>\n";
+
+     s += "<Diagrams>\n";
 	 s += "</Diagrams>\n";
 
 	 s+="<Paintings>\n<Text 240 170 12 #000000 0 \"Device\">\n</Paintings>\n";
 
 		 QApplication::clipboard()->setText(s, QClipboard::Clipboard);
-		 return true;
+        return true;
 
  }
 
 
 bool MatchDialog::calcMatchingCircuitDoubleStub2Ports(double S11real, double S11imag,
                                                       double S22real, double S22imag, double DetReal, double DetImag,
-                                                      double Z1, double Z2, double Freq, double open_short)
+                                                      double Z1, double Z2, double Freq, double open_short, bool micro_syn)
 {
-    double Z0=50, B;
+    double Z0=50, B, er, width;
+    tSubstrate Substrate;
+    if (micro_syn)
+    {
+    Substrate.er = RelPermCombo->currentText().section("  ", 0, 0).toDouble();
+    Substrate.height = SubHeightEdit->text().toDouble() / 1e3;
+    Substrate.thickness = thicknessEdit->text().toDouble() / 1e6;
+    Substrate.tand = tanDEdit->text().toDouble();
+    Substrate.resistivity = ResistivityEdit->text().toDouble();
+    Substrate.roughness = 0.0;
+    Substrate.minWidth = minWEdit->text().toDouble() / 1e3;
+    Substrate.maxWidth = maxWEdit->text().toDouble() / 1e3;
+    }
 
     // B calculation
     double B1 = 1.0 + S11real*S11real + S11imag*S11imag  // Input port
@@ -1446,6 +1787,15 @@ bool MatchDialog::calcMatchingCircuitDoubleStub2Ports(double S11real, double S11
     double t = tan(beta*d);
     double ll1, ll2;
 
+    if (GL > Y0*((1+t*t)/(2*t*t)))
+    {
+        QString str = QString("It is not possible to match the input load");
+        QMessageBox::warning(0, QObject::tr("Error"),
+                           QObject::tr(str));
+        return false;
+    }
+
+
     // Stubs susceptance
     double B11 = -BL + (Y0 + sqrt((1+t*t)*GL*Y0 - GL*GL*t*t))/(t); // 1st solution
     double B12 = -BL + (Y0 - sqrt((1+t*t)*GL*Y0 - GL*GL*t*t))/(t); // 2nd solution
@@ -1477,6 +1827,15 @@ bool MatchDialog::calcMatchingCircuitDoubleStub2Ports(double S11real, double S11
     d = lambda/8;
     t = tan(beta*d);
 
+    if (GL > Y0*((1+t*t)/(2*t*t)))
+    {
+        QMessageBox msgBox;
+        QString str = QString("It is not possible to match the output load");
+        QMessageBox::warning(0, QObject::tr("Error"),
+                           QObject::tr(str));
+        return false;
+    }
+
     // Stubs susceptance
     B11 = -BL + (Y0 + sqrt((1+t*t)*GL*Y0 - GL*GL*t*t))/(t); // 1st solution
     B12 = -BL + (Y0 - sqrt((1+t*t)*GL*Y0 - GL*GL*t*t))/(t); // 2nd solution
@@ -1499,20 +1858,79 @@ bool MatchDialog::calcMatchingCircuitDoubleStub2Ports(double S11real, double S11
     QString s = "<Qucs Schematic " PACKAGE_VERSION ">\n";
     s += "<Components>\n";
     //INPUT port
-    s += QString("<TLIN Line1 1 40 120 -26 20 0 -1 \"%1\" 1 \"%2\" 1 \"0 dB\" 0 \"26.85\" 0>\n").arg(Z1).arg(lstub2_in);
+
+    if (micro_syn)
+    {
+        er = Substrate.er;
+        getMicrostrip(Z1, Freq, &Substrate, width, er);
+        s += QString("<MLIN MS1 1 40 120 -26 20 0 -1 \"Sub1\" 1 \"%1\" 1 \"%2\" 1 \"Hammerstad\" 0 \"Kirschning\" 0 \"26.85\" 0>\n").arg(width).arg(lstub2_in/sqrt(er));
+    }
+    else
+    {
+        s += QString("<TLIN Line1 1 40 120 -26 20 0 -1 \"%1\" 1 \"%2\" 1 \"0 dB\" 0 \"26.85\" 0>\n").arg(Z1).arg(lstub2_in);
+    }
     if (!open_short)s += QString("<GND * 1 40 90 0 0 -1 1>\n");
 
-    s += QString("<TLIN Line1 1 80 180 -26 20 0 0 \"%1\" 1 \"%2\" 1 \"0 dB\" 0 \"26.85\" 0>\n").arg(Z1).arg(d);
-    s += QString("<TLIN Line1 1 140 120 -26 20 0 -1 \"%1\" 1 \"%2\" 1 \"0 dB\" 0 \"26.85\" 0>\n").arg(Z1).arg(lstub1_in);
+    if (micro_syn)
+    {
+        er = Substrate.er;
+        getMicrostrip(Z1, Freq, &Substrate, width, er);
+        s += QString("<MLIN MS1 1 80 180 -26 20 0 0 \"Sub1\" 1 \"%1\" 1 \"%2\" 1 \"Hammerstad\" 0 \"Kirschning\" 0 \"26.85\" 0>\n").arg(width).arg(d/sqrt(er));
+    }
+    else
+    {
+        s += QString("<TLIN Line1 1 80 180 -26 20 0 0 \"%1\" 1 \"%2\" 1 \"0 dB\" 0 \"26.85\" 0>\n").arg(Z1).arg(d);
+    }
+
+    if (micro_syn)
+    {
+        er = Substrate.er;
+        getMicrostrip(Z1, Freq, &Substrate, width, er);
+        s += QString("<MLIN MS1 1 140 120 -26 20 0 -1 \"Sub1\" 1 \"%1\" 1 \"%2\" 1 \"Hammerstad\" 0 \"Kirschning\" 0 \"26.85\" 0>\n").arg(width).arg(lstub1_in/sqrt(er));
+    }
+    else
+    {
+        s += QString("<TLIN Line1 1 140 120 -26 20 0 -1 \"%1\" 1 \"%2\" 1 \"0 dB\" 0 \"26.85\" 0>\n").arg(Z1).arg(lstub1_in);
+    }
+
     if (!open_short)s += QString("<GND * 1 140 90 0 0 -1 1>\n");
 
-    s += QString("<TLIN Line1 1 340 120 -26 20 0 -1 \"%1\" 1 \"%2\" 1 \"0 dB\" 0 \"26.85\" 0>\n").arg(Z2).arg(lstub2_out);
+    if (micro_syn)
+    {
+        er = Substrate.er;
+        getMicrostrip(Z2, Freq, &Substrate, width, er);
+        s += QString("<MLIN MS1 1 340 120 -26 20 0 -1 \"Sub1\" 1 \"%2\" 1 \"%3\" 1 \"Hammerstad\" 0 \"Kirschning\" 0 \"26.85\" 0>\n").arg(width).arg(lstub2_out/sqrt(er));
+    }
+    else
+    {
+        s += QString("<TLIN Line1 1 340 120 -26 20 0 -1 \"%1\" 1 \"%2\" 1 \"0 dB\" 0 \"26.85\" 0>\n").arg(Z2).arg(lstub2_out);
+    }
     if (!open_short)s += QString("<GND * 1 340 90 0 0 -1 1>\n");
 
-    s += QString("<TLIN Line1 1 380 180 -26 20 0 0 \"%1\" 1 \"%2\" 1 \"0 dB\" 0 \"26.85\" 0>\n").arg(Z2).arg(d);
-    s += QString("<TLIN Line1 1 440 120 -26 20 0 -1 \"%1\" 1 \"%2\" 1 \"0 dB\" 0 \"26.85\" 0>\n").arg(Z2).arg(lstub1_out);
+    if (micro_syn)
+    {
+        er = Substrate.er;
+        getMicrostrip(Z2, Freq, &Substrate, width, er);
+        s += QString("<MLIN MS1 1 380 180 -26 20 0 0 \"Sub1\" 1 \"%1\" 1 \"%2\" 1 \"Hammerstad\" 0 \"Kirschning\" 0 \"26.85\" 0>\n").arg(width).arg(d/sqrt(er));
+    }
+    else
+    {
+        s += QString("<TLIN Line1 1 380 180 -26 20 0 0 \"%1\" 1 \"%2\" 1 \"0 dB\" 0 \"26.85\" 0>\n").arg(Z2).arg(d);
+    }
+
+    if (micro_syn)
+    {
+        er = Substrate.er;
+        getMicrostrip(Z2, Freq, &Substrate, width, er);
+        s += QString("<MLIN MS1 1 440 120 -26 20 0 -1 \"Sub1\" 1 \"%1\" 1 \"%2\" 1 \"Hammerstad\" 0 \"Kirschning\" 0 \"26.85\" 0>\n").arg(width).arg(lstub1_out/sqrt(er));
+    }
+    else
+    {
+        s += QString("<TLIN Line1 1 440 120 -26 20 0 -1 \"%1\" 1 \"%2\" 1 \"0 dB\" 0 \"26.85\" 0>\n").arg(Z2).arg(lstub1_out);
+    }
     if (!open_short)s += QString("<GND * 1 440 90 0 0 -1 1>\n");
 
+    if (micro_syn)s += QString("<SUBST Sub1 1 300 500 -30 24 0 0 \"%1\" 1 \"%2mm\" 1 \"%3um\" 1 \"%4\" 1 \"%5\" 1 \"%6\" 1>\n").arg(Substrate.er).arg(Substrate.height*1e3).arg(Substrate.thickness*1e6).arg(Substrate.tand).arg(Substrate.resistivity).arg(Substrate.roughness);
 
     s += "</Components>\n";
     s += "<Wires>\n";
@@ -1533,6 +1951,7 @@ bool MatchDialog::calcMatchingCircuitDoubleStub2Ports(double S11real, double S11
 
 
     s += "</Wires>\n";
+
     s += "<Diagrams>\n";
     s += "</Diagrams>\n";
 
@@ -1544,9 +1963,22 @@ bool MatchDialog::calcMatchingCircuitDoubleStub2Ports(double S11real, double S11
 }
 bool MatchDialog::calcMatchingCircuitLambda42Ports(double S11real, double S11imag,
                                                    double S22real, double S22imag, double DetReal, double DetImag,
-                                                   double Z1, double Z2, double Freq, int order)
+                                                   double Z1, double Z2, double Freq, int order, bool micro_syn)
 {
-    double Z0=50, B;
+    double Z0=50, B, er, width;
+
+    tSubstrate Substrate;
+    if (micro_syn)
+    {
+    Substrate.er = RelPermCombo->currentText().section("  ", 0, 0).toDouble();
+    Substrate.height = SubHeightEdit->text().toDouble() / 1e3;
+    Substrate.thickness = thicknessEdit->text().toDouble() / 1e6;
+    Substrate.tand = tanDEdit->text().toDouble();
+    Substrate.resistivity = ResistivityEdit->text().toDouble();
+    Substrate.roughness = 0.0;
+    Substrate.minWidth = minWEdit->text().toDouble() / 1e3;
+    Substrate.maxWidth = maxWEdit->text().toDouble() / 1e3;
+    }
 
     // B calculation
     double B1 = 1.0 + S11real*S11real + S11imag*S11imag  // Input port
@@ -1584,13 +2016,13 @@ bool MatchDialog::calcMatchingCircuitLambda42Ports(double S11real, double S11ima
     if (RL ==0)
      {
              QMessageBox::warning(0, QObject::tr("Error"),
-                                QObject::tr("The load has not resistive part. It cannot be matched using the quarter wavelength method"));
+                                QObject::tr("The impedance of the input port has not real part. It cannot be matched using quarter wavelength lines"));
              return NULL;
      }
      if (XL !=0)
      {
              QMessageBox::warning(0, QObject::tr("Warning"),
-                                QObject::tr("Reactive loads cannot be matched. Only the real part will be matched"));
+                                QObject::tr("The load at the input port has a reactive component. Reactances cannot be matched, so only the resistive part will be matched"));
      }
 
      double lambda = 3e8/Freq;
@@ -1620,13 +2052,13 @@ bool MatchDialog::calcMatchingCircuitLambda42Ports(double S11real, double S11ima
      if (RL ==0)
       {
               QMessageBox::warning(0, QObject::tr("Error"),
-                                 QObject::tr("The load has not resistive part. It cannot be matched using the quarter wavelength method"));
+                                 QObject::tr("The impedance of the input port has not real part. It cannot be matched using quarter wavelength lines"));
               return NULL;
       }
       if (XL !=0)
       {
               QMessageBox::warning(0, QObject::tr("Warning"),
-                                 QObject::tr("Reactive loads cannot be matched. Only the real part will be matched"));
+                                 QObject::tr("The load at the output port has a reactive component. Reactances cannot be matched, so only the resistive part will be matched"));
       }
 
       x+=200;
@@ -1642,6 +2074,8 @@ bool MatchDialog::calcMatchingCircuitLambda42Ports(double S11real, double S11ima
          s += QString("<TLIN Line1 1 %1 180 -26 20 0 0 \"%2\" 1 \"%3\" 1 \"0 dB\" 0 \"26.85\" 0>\n").arg(x+30).arg(Zi).arg(lambda4);
          x -= 90;
       }
+
+     if (micro_syn)s += QString("<SUBST Sub1 1 300 500 -30 24 0 0 \"%1\" 1 \"%2mm\" 1 \"%3um\" 1 \"%4\" 1 \"%5\" 1 \"%6\" 1>\n").arg(Substrate.er).arg(Substrate.height*1e3).arg(Substrate.thickness*1e6).arg(Substrate.tand).arg(Substrate.resistivity).arg(Substrate.roughness);
 
      s += "</Components>\n";
      s += "<Wires>\n";
@@ -1666,11 +2100,12 @@ bool MatchDialog::calcMatchingCircuitLambda42Ports(double S11real, double S11ima
 
 
      s += "</Wires>\n";
+
      s += "<Diagrams>\n";
      s += "</Diagrams>\n";
 
          QApplication::clipboard()->setText(s, QClipboard::Clipboard);
-         return true;
+        return true;
 
 }
 
@@ -1764,7 +2199,7 @@ void calcMicrostrip(tSubstrate *substrate,
 // Calculates the width 'width' and the relative effective permittivity 'er_eff'
 // of a microstrip line. It uses an iterative search algorithm because
 // synthesis equations doesn't exist.
-void getMicrostrip(double Z0, double freq, tSubstrate *substrate,
+void MatchDialog::getMicrostrip(double Z0, double freq, tSubstrate *substrate,
                               double &width, double &er_eff)
 {
   int iteration = 0;  // iteration counter
