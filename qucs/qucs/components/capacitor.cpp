@@ -64,7 +64,7 @@ QString Capacitor::spice_netlist(bool)
     s.replace(" gnd ", " 0 ");
 
     s += " "+spicecompat::normalize_value(Props.at(0)->Value) + " ";
-    QString val = Props.at(1)->Value; // add inial voltage if presents
+    QString val = Props.at(1)->Value; // add initial voltage if presents
     val = val.remove(' ').toUpper();
     if (!val.isEmpty()) {
         s += " IC=" + val;
@@ -76,8 +76,8 @@ QString Capacitor::spice_netlist(bool)
 QString Capacitor::va_code()
 {
     QString val = vacompat::normalize_value(Props.at(0)->Value);
-    return QString("I(%1,%2) <+ ddt(V(%1,%2)*(%3));\n").arg(Ports.at(0)->Connection->Name)
-            .arg(Ports.at(1)->Connection->Name).arg(val);
+    return QString("I( %1 , %2 ) <+ ddt( V( %1 , %2 )*( %3 ) );\n").arg((Ports.at(0)->Connection->Name).replace(" 0 ", "gnd"))
+            .arg((Ports.at(1)->Connection->Name).replace(" 0 ", "gnd")).arg(val);
 }
 
 void Capacitor::createSymbol()

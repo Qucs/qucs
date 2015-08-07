@@ -168,14 +168,14 @@ QString EqnDefined::va_code()
             subsVoltages(Itokens,Nbranch);
             QString plus = Ports.at(2*i)->Connection->Name;
             QString minus = Ports.at(2*i+1)->Connection->Name;
-            s += QString("I(%1,%2) <+ %3;\n").arg(plus).arg(minus).arg(Itokens.join(""));
+            s += QString("I( %1 , %2 ) <+ %3 ;\n").arg((plus).replace(" 0 ","gnd")).arg((minus).replace(" 0 ","gnd")).arg(Itokens.join(""));
             QString Qeqn = Props.at(2*(i+1)+1)->Value; // parse charge equation only for Xyce
             if (Qeqn!="0") {
                 QStringList Qtokens;
                 spicecompat::splitEqn(Qeqn,Qtokens);
                 vacompat::convert_functions(Qtokens);
                 subsVoltages(Qtokens,Nbranch);
-                s += QString("I(%1,%2) <+ ddt(%3);\n").arg(plus).arg(minus).arg(Qtokens.join(""));
+                s += QString("I( %1, %2) <+ ddt( %3 );\n").arg((plus).replace(" 0 ", "gnd")).arg((minus).replace(" 0 ", "gnd")).arg(Qtokens.join(""));
             }
         }
     } else {
@@ -200,10 +200,10 @@ void EqnDefined::subsVoltages(QStringList &tokens, int Nbranch)
             int branch = volt.toInt();
             if (branch<=Nbranch) {
                 QString plus = Ports.at(2*(branch-1))->Connection->Name;
-                if (plus=="gnd") plus="0";
+                if (plus==" 0 ") plus="gnd";
                 QString minus = Ports.at(2*(branch-1)+1)->Connection->Name;
-                if (minus=="gnd") minus="0";
-                *it = QString("V(%1,%2)").arg(plus).arg(minus);
+                if (minus==" 0 ") minus="gnd";
+                *it = QString("V( %1, %2 )").arg(plus).arg(minus);
             }
         }
     }
