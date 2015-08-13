@@ -144,7 +144,7 @@ bool VerilogAwriter::createVA_module(QTextStream &stream, Schematic *sch)
 
     // List all variables
     for(Component *pc = sch->DocComps.first(); pc != 0; pc = sch->DocComps.next()) {
-        if (pc->isEquation) {
+        if (pc->isEquation && pc->isActive) {
             stream<<pc->getVAvariables();
         }
     }
@@ -154,7 +154,7 @@ bool VerilogAwriter::createVA_module(QTextStream &stream, Schematic *sch)
             "begin \n";
     // Output expressions
     for(Component *pc = sch->DocComps.first(); pc != 0; pc = sch->DocComps.next()) {
-        if (pc->isEquation) {
+        if (pc->isEquation && pc->isActive) {
             stream<<pc->getVAExpressions();
         }
     }
