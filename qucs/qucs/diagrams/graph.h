@@ -116,7 +116,7 @@ public:
     double getIndep() const;
     cplx_t getDep() const;
   };
-  typedef std::vector<ScrPt> container;
+  typedef QVector<ScrPt> container;
   typedef container::iterator iterator;
   typedef container::const_iterator const_iterator;
 
@@ -125,13 +125,13 @@ public:
   const_iterator begin() const{return b;}
   const_iterator end() const{return e;}
 public:
-  Graph() {} // required by GraphDeque::Graphs.resize()...
+  Graph() : b(), e() {} // required by GraphDeque::Graphs.resize()...
   Graph(const_iterator B, const_iterator E) : b(B), e(E) {}
   const_iterator findSample(double&) const;
   ~Graph(){}
 private:
-  const const_iterator b;
-  const const_iterator e;
+  /*const*/ const_iterator b;
+  /*const*/ const_iterator e;
   // SimOutputData* origin;
 };
 
@@ -147,7 +147,7 @@ public:
   GraphDeque(const Diagram*, const QString& _Line="");
   ~GraphDeque();
 
-  typedef std::vector<Graph> container;
+  typedef QVector<Graph> container;
   typedef container::iterator iterator;
   typedef container::const_iterator const_iterator;
 
@@ -180,7 +180,7 @@ public:
   QVector<DataX*>& mutable_axes(){return cPointsX;} // HACK
 
   void clear(){ScrPoints.resize(0); Graphs.resize(0); invalidateMarkers();}
-  void resizeScrPoints(size_t s){assert(s>=ScrPoints.size()); ScrPoints.resize(s);}
+  void resizeScrPoints(size_t s){assert(s>=(unsigned)ScrPoints.size()); ScrPoints.resize(s);}
   iterator begin(){return Graphs.begin();}
   iterator end(){return Graphs.end();}
   const_iterator begin() const{return Graphs.begin();}
