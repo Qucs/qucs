@@ -120,8 +120,8 @@ public slots:
   void slotReflexionChanged(const QString&);
   void slotSetTwoPort(bool);
   void slotChangeMode(int);
-  void slotChangeMode_TopoCombo(int);
-  void slotSetMicrostripCheck(bool on);
+  void slotChangeMode_TopoCombo();
+  void slotSetMicrostripCheck();
 
 
 private:

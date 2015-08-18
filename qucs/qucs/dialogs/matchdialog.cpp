@@ -153,11 +153,11 @@ MatchDialog::MatchDialog(QWidget *parent)
     TopoCombo->addItem(tr("LC matching"));
     TopoCombo->addItem(tr("Single stub"));
     TopoCombo->addItem(tr("Double stub"));
-    QString str = tr("Multistage binomial ") + QString(QChar(0xBB, 0x03)) + "/4";
+    QString str = tr("Multistage ") + QString(QChar(0xBB, 0x03)) + "/4";
     TopoCombo->addItem((str));
 
     h4->addWidget(TopoCombo);
-    connect(TopoCombo, SIGNAL(activated(int)), SLOT(slotChangeMode_TopoCombo(int)));
+    connect(TopoCombo, SIGNAL(activated(int)), SLOT(slotChangeMode_TopoCombo()));
     h4->addStretch(5);
     MethodLayout->addLayout(h4);
 
@@ -230,7 +230,7 @@ MatchDialog::MatchDialog(QWidget *parent)
 
 
     connect(TwoCheck, SIGNAL(toggled(bool)), SLOT(slotSetTwoPort(bool)));
-    connect(MicrostripCheck, SIGNAL(toggled(bool)), SLOT(slotSetMicrostripCheck(bool)));
+    connect(MicrostripCheck, SIGNAL(toggled(bool)), SLOT(slotSetMicrostripCheck()));
 
 
     // ...........................................................
@@ -410,7 +410,7 @@ void MatchDialog::setFrequency(double Freq_)
 
 //------------------------------------------------------
 // This function sets the visibility of the microstrip synthesis panel.
-void MatchDialog::slotSetMicrostripCheck(bool on)
+void MatchDialog::slotSetMicrostripCheck()
 {
     if (MicrostripCheck->isChecked())
     {
@@ -469,7 +469,7 @@ void MatchDialog::slotSetTwoPort(bool on)
 }
 //------------------------------------------------------------------------
 // This function is called when a new topology is selected
-void MatchDialog::slotChangeMode_TopoCombo(int Index)
+void MatchDialog::slotChangeMode_TopoCombo()
 {
     if ((TopoCombo->currentIndex() == 1)||(TopoCombo->currentIndex() == 2))//Single/Double stub selected
     {
@@ -839,12 +839,12 @@ bool MatchDialog::calcMatchingCircuitSingleStub(double RL, double XL, double Z0,
         if ((RL > 1e-4)&&(XL < 0))// R + C
         {
             s += QString("<R R1 1 %1 270 15 -26 0 -1 \"%2 Ohm\" 1 \"26.85\" 0 \"US\" 0>\n").arg(x).arg(RL);
-            s += QString("<C C1 1 %1 330 15 -26 0 -1 \"%2 F\" 1 0>\n").arg(x).arg(1/(fabs(XL)*2*M_PI*Freq));
+            s += QString("<C C1 1 %1 330 15 -26 0 -1 \"%2 F\" 1 0>\n").arg(x).arg(1/(fabs(XL)*2*pi*Freq));
         }
         if ((RL > 1e-4)&&(XL > 0))//R + L
         {
             s += QString("<R R1 1 %1 270 15 -26 0 -1 \"%2 Ohm\" 1 \"26.85\" 0 \"US\" 0>\n").arg(x).arg(RL);
-            s += QString("<L L1 1 %1 330 15 -26 0 -1 \"%2 H\" 1 0>\n").arg(x).arg(XL/(2*M_PI*Freq));
+            s += QString("<L L1 1 %1 330 15 -26 0 -1 \"%2 H\" 1 0>\n").arg(x).arg(XL/(2*pi*Freq));
         }
         if ((RL > 1e-4)&&(XL == 0))//R
         {
@@ -1008,12 +1008,12 @@ bool MatchDialog::calcMatchingCircuitDoubleStub(double RL, double XL, double Z0,
         if ((RL > 1e-4)&&(XL< 0)) // R + C
         {
             s += QString("<R R1 1 %1 270 15 -26 0 -1 \"%2 Ohm\" 1 \"26.85\" 0 \"US\" 0>\n").arg(x).arg(RL);
-            s += QString("<C C1 1 %1 330 15 -26 0 -1 \"%2 F\" 1 0>\n").arg(x).arg(1/(fabs(XL)*2*M_PI*Freq));
+            s += QString("<C C1 1 %1 330 15 -26 0 -1 \"%2 F\" 1 0>\n").arg(x).arg(1/(fabs(XL)*2*pi*Freq));
         }
         if ((RL > 1e-4)&&(XL > 0))// R + L
         {
             s += QString("<R R1 1 %1 270 15 -26 0 -1 \"%2 Ohm\" 1 \"26.85\" 0 \"US\" 0>\n").arg(x).arg(RL);
-            s += QString("<L L1 1 %1 330 15 -26 0 -1 \"%2 H\" 1 0>\n").arg(x).arg(XL/(2*M_PI*Freq));
+            s += QString("<L L1 1 %1 330 15 -26 0 -1 \"%2 H\" 1 0>\n").arg(x).arg(XL/(2*pi*Freq));
         }
         if ((RL > 1e-4)&&(XL == 0))// R
         {
@@ -1257,13 +1257,13 @@ bool MatchDialog::calcMatchingCircuitLC(double r_real, double r_imag,
         if ((RL > 1e-4)&&(XL < 0))//R + C
         {
             Schematic += QString("<R R1 1 %1 40 15 -26 0 -1 \"%2 Ohm\" 1 \"26.85\" 0 \"US\" 0>\n").arg(x).arg(RL);
-            Schematic += QString("<C C1 1 %1 100 15 -26 0 -1 \"%2 F\" 1 0>\n").arg(x).arg(1/(fabs(XL)*2*M_PI*Freq));
+            Schematic += QString("<C C1 1 %1 100 15 -26 0 -1 \"%2 F\" 1 0>\n").arg(x).arg(1/(fabs(XL)*2*pi*Freq));
             Schematic += QString("<GND * 1 %1 130 0 0 0 0>\n").arg(x);
         }
         if ((RL > 1e-4)&&(XL > 0))//R + L
         {
             Schematic += QString("<R R1 1 %1 40 15 -26 0 -1 \"%2 Ohm\" 1 \"26.85\" 0 \"US\" 0>\n").arg(x).arg(RL);
-            Schematic += QString("<L L1 1 %1 100 15 -26 0 -1 \"%2 H\" 1 0>\n").arg(x).arg(XL/(2*M_PI*Freq));
+            Schematic += QString("<L L1 1 %1 100 15 -26 0 -1 \"%2 H\" 1 0>\n").arg(x).arg(XL/(2*pi*Freq));
             Schematic += QString("<GND * 1 %1 130 0 0 0 0>\n").arg(x);
         }
         if ((RL > 1e-4)&&(XL == 0))//R
@@ -1273,12 +1273,12 @@ bool MatchDialog::calcMatchingCircuitLC(double r_real, double r_imag,
         }
         if ((RL < 1e-4)&&(XL > 0))//L
         {
-            Schematic += QString("<L L1 1 %1 40 15 -26 0 -1 \"%2 H\" 1 0>\n").arg(x).arg(XL/(2*M_PI*Freq));
+            Schematic += QString("<L L1 1 %1 40 15 -26 0 -1 \"%2 H\" 1 0>\n").arg(x).arg(XL/(2*pi*Freq));
             Schematic += QString("<GND * 1 %1 110 0 0 0 0>\n").arg(x);
         }
         if ((RL < 1e-4)&&(XL < 0))//C
         {
-            Schematic += QString("<C C1 1 %1 40 15 -26 0 -1 \"%2 F\" 1 0>\n").arg(x).arg(XL/(2*M_PI*Freq));
+            Schematic += QString("<C C1 1 %1 40 15 -26 0 -1 \"%2 F\" 1 0>\n").arg(x).arg(XL/(2*pi*Freq));
             Schematic += QString("<GND * 1 %1 110 0 0 0 0>\n").arg(x);
         }
 
@@ -1388,9 +1388,9 @@ bool MatchDialog::calcMatchingCircuitLC(double r_real, double r_imag,
 
     if (SP_block)
     {
-        if ((XL >0))Schematic +=   QString("<Line 180 -50 0 290 #000000 0 1>\n" "<Text 200 220 12 #000000 0 \"Load: %1 +j%2 %3 @ %4 GHz\">\n" "</Paintings>\n").arg(RL).arg(XL).arg(QChar (0x2126)).arg(Freq*1e-9);
-        if ((XL < 0))Schematic +=   QString("<Line 180 -50 0 290 #000000 0 1>\n" "<Text 200 220 12 #000000 0 \"Load: %1 -j%2 %3 @ %4 GHz\">\n" "</Paintings>\n").arg(RL).arg(XL).arg(QChar (0x2126)).arg(Freq*1e-9);
-        if ((XL == 0))Schematic +=   QString("<Line 180 -50 0 290 #000000 0 1>\n" "<Text 200 220 12 #000000 0 \"Load: %1  %2 @ %3 GHz\">\n" "</Paintings>\n").arg(RL).arg(QChar (0x2126)).arg(Freq*1e-9);
+        if (XL >0)Schematic +=   QString("<Line 180 -50 0 290 #000000 0 1>\n" "<Text 200 220 12 #000000 0 \"Load: %1 +j%2 %3 @ %4 GHz\">\n" "</Paintings>\n").arg(RL).arg(XL).arg(QChar (0x2126)).arg(Freq*1e-9);
+        if (XL < 0)Schematic +=   QString("<Line 180 -50 0 290 #000000 0 1>\n" "<Text 200 220 12 #000000 0 \"Load: %1 -j%2 %3 @ %4 GHz\">\n" "</Paintings>\n").arg(RL).arg(XL).arg(QChar (0x2126)).arg(Freq*1e-9);
+        if (XL == 0)Schematic +=   QString("<Line 180 -50 0 290 #000000 0 1>\n" "<Text 200 220 12 #000000 0 \"Load: %1  %2 @ %3 GHz\">\n" "</Paintings>\n").arg(RL).arg(QChar (0x2126)).arg(Freq*1e-9);
     }
     else
     {
@@ -1478,7 +1478,7 @@ bool MatchDialog::calc2PortMatch(double S11real, double S11imag,
         break;
 
     }
-
+ return true;
 }
 
 
@@ -2244,24 +2244,24 @@ QString MatchDialog::calcSingleStub(double RL, double XL, double Z0, double Freq
     if (RL == Z0)
     {
         t = -XL / (2*Z0);
-        (t<0) ? dl = (M_PI + atan(t))/ (2*M_PI): dl = (atan(t))/ (2*M_PI);
+        (t<0) ? dl = (pi + atan(t))/ (2*pi): dl = (atan(t))/ (2*pi);
         B = (RL*RL * t - (Z0-XL*t)*(Z0*t + XL))/(Z0*(RL*RL + (Z0*t + XL)*(Z0*t + XL)));
     }
     else
     {
         t1 = (XL + sqrt(((RL/Z0)*fabs((Z0 - RL)*(Z0 - RL) + XL*XL))))/(RL - Z0);
-        (t1 < 0) ? dl1 = (M_PI + atan(t1))/ (2*M_PI) : dl1 = (atan(t1))/ (2*M_PI);
+        (t1 < 0) ? dl1 = (pi + atan(t1))/ (2*pi) : dl1 = (atan(t1))/ (2*pi);
         B1 = (RL*RL * t1 - (Z0-XL*t1)*(Z0*t1 + XL))/(Z0*(RL*RL + (Z0*t1 + XL)*(Z0*t1 + XL)));
 
         t2  = (XL - sqrt((RL*fabs((Z0 - RL)*(Z0 - RL) + XL*XL))/(Z0)))/(RL - Z0);
-        (t2 < 0) ? dl2 = (M_PI + atan(t2))/ (2*M_PI) : dl2 = (atan(t2))/ (2*M_PI);
+        (t2 < 0) ? dl2 = (pi + atan(t2))/ (2*pi) : dl2 = (atan(t2))/ (2*pi);
         B2 = (RL*RL * t2 - (Z0-XL*t2)*(Z0*t2 + XL))/(Z0*(RL*RL + (Z0*t2 + XL)*(Z0*t2 + XL)));
     }
 
     if (t!=0)
     {
         d=dl*lambda;
-        (open_short) ? ll = -(atan(B*Z0))/(2*M_PI) :ll= (atan(1./(B*Z0)))/(2*M_PI);
+        (open_short) ? ll = -(atan(B*Z0))/(2*pi) :ll= (atan(1./(B*Z0)))/(2*pi);
         if ((open_short)&&(ll<0))ll+=0.5;
         if ((!open_short)&&(ll>0.5))ll-=0.5;
         lstub = ll*lambda;
@@ -2270,7 +2270,7 @@ QString MatchDialog::calcSingleStub(double RL, double XL, double Z0, double Freq
     if (t1 != 0)
     {
         d=dl1*lambda;
-        (open_short) ? ll = -(atan(B1*Z0))/(2*M_PI) : ll= (atan(1./(1.*B1*Z0)))/(2*M_PI);
+        (open_short) ? ll = -(atan(B1*Z0))/(2*pi) : ll= (atan(1./(1.*B1*Z0)))/(2*pi);
         if ((open_short)&&(ll<0))ll+=0.5;
         if ((!open_short)&&(ll>0.5))ll-=0.5;
         lstub = ll*lambda;
@@ -2279,7 +2279,7 @@ QString MatchDialog::calcSingleStub(double RL, double XL, double Z0, double Freq
         if (t2 != 0)
         {
             d=dl2*lambda;
-            (open_short) ? ll = -(atan(B2*Z0))/(2*M_PI) : ll= (atan(1./(1.*B2*Z0)))/(2*M_PI);
+            (open_short) ? ll = -(atan(B2*Z0))/(2*pi) : ll= (atan(1./(1.*B2*Z0)))/(2*pi);
             if ((open_short)&&(ll<0))ll+=0.5;
             if ((!open_short)&&(ll>0.5))ll-=0.5;
             lstub = ll*lambda;
@@ -2299,7 +2299,7 @@ QString MatchDialog::calcDoubleStub(double RL, double XL, double Z0, double Freq
     double GL = (1/((RL*RL)+(XL*XL)))*RL;
     double BL = -(1/((RL*RL)+(XL*XL)))*XL;
     double lambda = SPEED_OF_LIGHT/Freq;
-    double beta=(2*M_PI)/lambda;
+    double beta=(2*pi)/lambda;
     double d = lambda/8;
     double t = tan(beta*d);
     double ll1, ll2;
@@ -2323,8 +2323,8 @@ QString MatchDialog::calcDoubleStub(double RL, double XL, double Z0, double Freq
     //double B22 = ((-Y0*sqrt((1+t*t)*GL*Y0 - GL*GL*t*t)) + GL*Y0)/(GL*t);// 2nd solution
 
     // Open circuit solution
-    (open_short) ? ll1 = (atan(B11*Z0))/(2*M_PI) : ll1= -(atan(1./(1.*B11*Z0)))/(2*M_PI);
-    (open_short) ? ll2 = (atan(B21*Z0))/(2*M_PI) : ll2= -(atan(1./(1.*B21*Z0)))/(2*M_PI);
+    (open_short) ? ll1 = (atan(B11*Z0))/(2*pi) : ll1= -(atan(1./(1.*B11*Z0)))/(2*pi);
+    (open_short) ? ll2 = (atan(B21*Z0))/(2*pi) : ll2= -(atan(1./(1.*B21*Z0)))/(2*pi);
 
 
 
@@ -2452,6 +2452,8 @@ QString MatchDialog::calcChebyLines(double RL, double XL, double Z0, double gamm
         Zi = exp(log(Zaux) + A*w[i]);
         Zaux=Zi;
         s+=QString("%1;").arg(Zi);
+        QString S = QString("%1;%2;%3").arg(Zi/Z0).arg(Zaux).arg(((1+A*0.5*w[i])/(1-A*0.5*w[i])));
+
     }
     return s;
 }
