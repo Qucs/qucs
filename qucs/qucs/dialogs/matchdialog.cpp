@@ -208,7 +208,7 @@ MatchDialog::MatchDialog(QWidget *parent)
     maxRippleLabel = new QLabel(tr("Maximum ripple"));
     maxRippleLabel->setVisible(false);
     h8->addWidget(maxRippleLabel);
-    MaxRippleEdit = new QLineEdit("0.01");
+    MaxRippleEdit = new QLineEdit("0.05");
     MaxRippleEdit->setVisible(false);
     h8->addWidget(MaxRippleEdit);
     MaxRippleEdit->setFixedWidth(50);
@@ -231,6 +231,7 @@ MatchDialog::MatchDialog(QWidget *parent)
 
     connect(TwoCheck, SIGNAL(toggled(bool)), SLOT(slotSetTwoPort(bool)));
     connect(MicrostripCheck, SIGNAL(toggled(bool)), SLOT(slotSetMicrostripCheck()));
+		connect(ChebyRadio, SIGNAL(toggled(bool)), SLOT(slotChebyCheck()));
 
 
     // ...........................................................
@@ -424,6 +425,20 @@ void MatchDialog::slotSetMicrostripCheck()
     }
 }
 
+void MatchDialog::slotChebyCheck()
+{
+	if (ChebyRadio->isChecked())
+	{
+		MaxRippleEdit->setVisible(true);
+		maxRippleLabel->setVisible(true);
+	}
+	else
+	{
+		MaxRippleEdit->setVisible(false);
+ 	  maxRippleLabel->setVisible(false);
+	}
+}
+
 // -----------------------------------------------------------------------
 // It is called when the checkbox for two-port matching changes.
 void MatchDialog::slotSetTwoPort(bool on)
@@ -497,8 +512,6 @@ void MatchDialog::slotChangeMode_TopoCombo()
         BinRadio->setVisible(true);
         ChebyRadio->setVisible(true);
         WeightingLabel->setVisible(true);
-        maxRippleLabel->setVisible(true);
-        MaxRippleEdit->setVisible(true);
     }
     else
     {
@@ -507,8 +520,6 @@ void MatchDialog::slotChangeMode_TopoCombo()
         BinRadio->setVisible(false);
         ChebyRadio->setVisible(false);
         WeightingLabel->setVisible(false);
-        maxRippleLabel->setVisible(false);
-        MaxRippleEdit->setVisible(false);
     }
 }
 
@@ -2380,22 +2391,16 @@ QString MatchDialog::calcBinomialLines(double RL, double XL, double Z0)
     return s;
 }
 
-double cheby_pol(double x, int N)
-{
-    switch (N)
-    {
-    case 1: return x;
-    case 2: return (2*x*x - 1);
-    case 3: return (4*x*x*x - 3*x);
-    case 4: return (8*pow(x, 4) - 8*x*x + 1);
-    case 5: return (16*pow(x,5) - 20*x*x*x + 5*x);
-    }
-    return -1;
-}
 
 QString MatchDialog::calcChebyLines(double RL, double XL, double Z0, double gamma)
 {
     int N = OrderEdit->text().toInt();
+		if (N > 7)
+		{
+			QMessageBox::warning(0, QObject::tr("Error"),
+													 QObject::tr("Chebyshev weighting for N>7 is not available"));
+	    return QString("");
+		}
     QString s;
     r2z(RL, XL, Z0);
     double sec_theta_m;// = cosh((1/(1.*N))*acosh((1/gamma)*fabs((RL-Z0)/(Z0+RL))) );
@@ -2403,7 +2408,7 @@ QString MatchDialog::calcChebyLines(double RL, double XL, double Z0, double gamm
 
     (fabs(log(RL/Z0)/(2*gamma)) < 1) ? sec_theta_m = 0 : sec_theta_m = cosh((1/(1.*N))*acosh(fabs(log(RL/Z0)/(2*gamma))) );
 
-    double A = gamma;//((RL-Z0)/(RL+Z0))*(1/cheby_pol(sec_theta_m, N));
+    double A = gamma;
     double w[N];
 
     switch(N)
@@ -2423,23 +2428,33 @@ QString MatchDialog::calcChebyLines(double RL, double XL, double Z0, double gamm
     case 4:
         w[0] = pow(sec_theta_m, 4);
         w[1] = 4*sec_theta_m*sec_theta_m*(sec_theta_m*sec_theta_m-1);
-        w[2] = 1-4*sec_theta_m*sec_theta_m+3*pow(sec_theta_m, 4);
+        w[2] =2*( 1-4*sec_theta_m*sec_theta_m+3*pow(sec_theta_m, 4));
         w[3]= w[1];
         break;
     case 5:
         w[0] = pow(sec_theta_m, 5);
-        w[1] = 5*(pow(sec_theta_m, 5) + pow(sec_theta_m, 3));
-        w[2] = 10*pow(sec_theta_m, 5) + 15*pow(sec_theta_m, 3) + 5*sec_theta_m;
+        w[1] = 5*(pow(sec_theta_m, 5) - pow(sec_theta_m, 3));
+        w[2] = 10*pow(sec_theta_m, 5) - 15*pow(sec_theta_m, 3) + 5*sec_theta_m;
         w[3] = w[2];
         w[4] = w[1];
         break;
     case 6:
         w[0] = pow(sec_theta_m, 6);
         w[1] = 6*pow(sec_theta_m,4)*(sec_theta_m*sec_theta_m - 1);
-        w[2] = sec_theta_m*sec_theta_m*(9+pow(sec_theta_m, 4)*(15*sec_theta_m*sec_theta_m - 24));
-        w[3] = sec_theta_m*sec_theta_m*(9 +pow(sec_theta_m, 4)*(-18+10*sec_theta_m*sec_theta_m));
+        w[2] = 15*pow(sec_theta_m, 6) - 24*pow(sec_theta_m, 4) + 9*sec_theta_m*sec_theta_m;
+        w[3] = 2*(10*pow(sec_theta_m, 6) - 18*pow(sec_theta_m, 4) + 9*sec_theta_m*sec_theta_m - 1);
         w[4] = w[2];
         w[5] = w[1];
+				break;
+		case 7:
+		   w[0] = pow(sec_theta_m, 7);
+			 w[1] = 7*pow(sec_theta_m, 5)*(sec_theta_m*sec_theta_m -1);
+			 w[2] = 21*pow(sec_theta_m, 7) - 35*pow(sec_theta_m, 5) + 14*pow(sec_theta_m, 3);
+			 w[3] = 35*pow(sec_theta_m, 7) - 70*pow(sec_theta_m, 5) + 42*pow(sec_theta_m, 3) -7*sec_theta_m ;
+			 w[4] = w[3];
+			 w[5] = w[2];
+			 w[6] = w[1];
+			 break;
     }
 
 
@@ -2448,11 +2463,9 @@ QString MatchDialog::calcChebyLines(double RL, double XL, double Z0, double gamm
     double Zaux=Z0, Zi;
     for (int i = 0; i < N; i++)
     {
-        Zi=Zaux*((1+A*0.5*w[i])/(1-A*0.5*w[i]));
         Zi = exp(log(Zaux) + A*w[i]);
         Zaux=Zi;
         s+=QString("%1;").arg(Zi);
-        QString S = QString("%1;%2;%3").arg(Zi/Z0).arg(Zaux).arg(((1+A*0.5*w[i])/(1-A*0.5*w[i])));
 
     }
     return s;

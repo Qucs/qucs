@@ -122,6 +122,7 @@ public slots:
   void slotChangeMode(int);
   void slotChangeMode_TopoCombo();
   void slotSetMicrostripCheck();
+  void slotChebyCheck();
 
 
 private:
