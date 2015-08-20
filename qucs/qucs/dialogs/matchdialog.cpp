@@ -79,7 +79,7 @@ MatchDialog::MatchDialog(QWidget *parent)
     RelPermCombo = new QComboBox();
     RelPermCombo->setEditable(true);
     const char **p = List_er;
-    while(*(++p)) RelPermCombo->addItem(*p);  // The dielectri coeff combobox is filled with the materials taken from "../../qucs-filter/material_props.h"
+    while(*(++p)) RelPermCombo->addItem(*p);  // The dielectric coeff combobox is filled with the materials taken from "../../qucs-filter/material_props.h"
     RelPermCombo->lineEdit()->setText("9.8");
     Erlayout->addWidget(RelPermLabel);
     Erlayout->addWidget(RelPermCombo);
@@ -231,7 +231,7 @@ MatchDialog::MatchDialog(QWidget *parent)
 
     connect(TwoCheck, SIGNAL(toggled(bool)), SLOT(slotSetTwoPort(bool)));
     connect(MicrostripCheck, SIGNAL(toggled(bool)), SLOT(slotSetMicrostripCheck()));
-		connect(ChebyRadio, SIGNAL(toggled(bool)), SLOT(slotChebyCheck()));
+    connect(ChebyRadio, SIGNAL(toggled(bool)), SLOT(slotChebyCheck()));
 
 
     // ...........................................................
@@ -410,7 +410,8 @@ void MatchDialog::setFrequency(double Freq_)
 }
 
 //------------------------------------------------------
-// This function sets the visibility of the microstrip synthesis panel.
+// This function sets the visibility of the microstrip synthesis panel. The substrate properties
+// are visible when the microstrip implementation is selected.
 void MatchDialog::slotSetMicrostripCheck()
 {
     if (MicrostripCheck->isChecked())
@@ -425,18 +426,22 @@ void MatchDialog::slotSetMicrostripCheck()
     }
 }
 
+//---------------------------------------------------------
+// When the Chebyshev weighting is selected, the window show the MaxRipple textbox and label
+// so as to let the user to enter this parameter. It makes no sense to show it otherwise since
+// when using the binomial weighting, the maximum ripple is given by the number of sections
 void MatchDialog::slotChebyCheck()
 {
-	if (ChebyRadio->isChecked())
-	{
-		MaxRippleEdit->setVisible(true);
-		maxRippleLabel->setVisible(true);
-	}
-	else
-	{
-		MaxRippleEdit->setVisible(false);
- 	  maxRippleLabel->setVisible(false);
-	}
+    if (ChebyRadio->isChecked())
+    {
+        MaxRippleEdit->setVisible(true);
+        maxRippleLabel->setVisible(true);
+    }
+    else
+    {
+        MaxRippleEdit->setVisible(false);
+        maxRippleLabel->setVisible(false);
+    }
 }
 
 // -----------------------------------------------------------------------
@@ -483,13 +488,15 @@ void MatchDialog::slotSetTwoPort(bool on)
     }
 }
 //------------------------------------------------------------------------
-// This function is called when a new topology is selected
+// This function is called when a new topology is selected. According to the index selected, it makes visible (or invisible)
+// certain window components.
 void MatchDialog::slotChangeMode_TopoCombo()
 {
     if ((TopoCombo->currentIndex() == 1)||(TopoCombo->currentIndex() == 2))//Single/Double stub selected
     {
         ShortRadioButton->setVisible(true);
         OpenRadioButton->setVisible(true);
+        OpenRadioButton->setChecked(true);
     }
     else
     {
@@ -514,7 +521,7 @@ void MatchDialog::slotChangeMode_TopoCombo()
         WeightingLabel->setVisible(true);
     }
     else
-    {
+    {// Then it makes no sense to show these items
         OrderLabel->setVisible(false);
         OrderEdit->setVisible(false);
         BinRadio->setVisible(false);
@@ -639,10 +646,11 @@ void MatchDialog::slotReflexionChanged(const QString&)
 // Is called if the "Create"-button is pressed.
 void MatchDialog::slotButtCreate()
 {
-    double Z1   = Ref1Edit->text().toDouble();
-    double Z2   = Ref2Edit->text().toDouble();
+    double Z1   = Ref1Edit->text().toDouble();//Port 1 impedance
+    double Z2   = Ref2Edit->text().toDouble();//Port 2 impedance
     double Freq = FrequencyEdit->text().toDouble()*pow(10.0, 3.0*UnitCombo->currentIndex());
 
+    // S matrix
     double S11real = S11magEdit->text().toDouble();
     double S11imag = S11degEdit->text().toDouble();
     double S12real = S12magEdit->text().toDouble();
@@ -658,16 +666,36 @@ void MatchDialog::slotButtCreate()
         p2c(S22real, S22imag);
     }
 
+    bool micro_syn = MicrostripCheck->isChecked();//Microstrip implementation?
+    bool SP_block = AddSPBlock->isChecked();//Add S-parameter block?
+    bool open_short = OpenRadioButton->isChecked();//Open stub or short circuit stub configuration
+    int order = OrderEdit->text().toInt()+1;//Order of the multisection lambda/4 matching
+
+    double gamma_MAX = MaxRippleEdit->text().toDouble();//Maximum ripple (Chebyshev weighting only)
+
+    tSubstrate Substrate;
+    if (micro_syn)//In case microstrip implementation is selected. This reads the substrate properties given by the user
+    {
+        Substrate.er = RelPermCombo->currentText().section("  ", 0, 0).toDouble();
+        Substrate.height = SubHeightEdit->text().toDouble() / 1e3;
+        Substrate.thickness = thicknessEdit->text().toDouble() / 1e6;
+        Substrate.tand = tanDEdit->text().toDouble();
+        Substrate.resistivity = ResistivityEdit->text().toDouble();
+        Substrate.roughness = 0.0;
+        Substrate.minWidth = minWEdit->text().toDouble() / 1e3;
+        Substrate.maxWidth = maxWEdit->text().toDouble() / 1e3;
+    }
+
     if(TwoCheck->isChecked()) {  // two-port matching ?
-        // determinante of S-parameter matrix
+        // determinant of S-parameter matrix
         double DetReal = S11real*S22real - S11imag*S22imag
                 - S12real*S21real + S12imag*S21imag;
         double DetImag = S11real*S22imag + S11imag*S22real
                 - S12real*S21imag - S12imag*S21real;
-        calc2PortMatch(S11real, S11imag, S22real, S22imag, DetReal, DetImag, Z1, Z2, Freq);
+        calc2PortMatch(S11real, S11imag, S22real, S22imag, DetReal, DetImag, Z1, Z2, Freq, micro_syn, SP_block, open_short, Substrate, order, gamma_MAX);
     }
     else{
-        calcMatchingCircuit(S11real, S11imag, Z1, Freq);
+        calcMatchingCircuit(S11real, S11imag, Z1, Freq, micro_syn, SP_block, open_short, Substrate, order, gamma_MAX);
     }
 
     QucsMain->slotEditPaste(true);
@@ -780,32 +808,15 @@ QString MatchDialog::calcMatchingLC(double r_real, double r_imag,
 // This function calculates a matching network for a single port using a transmission line and
 // a stub (short or open). It can also convert the transmission lines microstrip lines
 // See Microwave Engineering. David Pozar. John Wiley and Sons. 4th Edition. Pg 234-240
-bool MatchDialog::calcMatchingCircuitSingleStub(double RL, double XL, double Z0, double Freq)
+bool MatchDialog::calcMatchingCircuitSingleStub(double r_real, double r_imag, double Z0, double Freq, bool micro_syn, bool SP_block, bool open_short, tSubstrate Substrate)
 {
-
-    bool open_short = OpenRadioButton->isChecked();
-    bool micro_syn = MicrostripCheck->isChecked();
-    bool SP_block = AddSPBlock->isChecked();
-
-
-    QString str = calcSingleStub(RL, XL, Z0, Freq);
+    QString str = calcSingleStub(r_real, r_imag, Z0, Freq, open_short);
+    double RL=r_real, XL=r_imag;
     r2z(RL, XL, Z0);
     double d = str.section(';', 0, 0).toDouble();
     double lstub = str.section(';', 1, 1).toDouble();
-    double er, width;
-    tSubstrate Substrate;
+    double er, width;//Dielectric coefficient and width of the microstrip line. They are used when synthesizing the microstrip lines
 
-    if (micro_syn)//Microstrip synthesis
-    {
-        Substrate.er = RelPermCombo->currentText().section("  ", 0, 0).toDouble();
-        Substrate.height = SubHeightEdit->text().toDouble() / 1e3;
-        Substrate.thickness = thicknessEdit->text().toDouble() / 1e6;
-        Substrate.tand = tanDEdit->text().toDouble();
-        Substrate.resistivity = ResistivityEdit->text().toDouble();
-        Substrate.roughness = 0.0;
-        Substrate.minWidth = minWEdit->text().toDouble() / 1e3;
-        Substrate.maxWidth = maxWEdit->text().toDouble() / 1e3;
-    }
 
     // Creation of the schematic
 
@@ -830,7 +841,8 @@ bool MatchDialog::calcMatchingCircuitSingleStub(double RL, double XL, double Z0,
     {
         s += QString("<TLIN Line1 1 %1 120 -26 20 0 -1 \"%2\" 1 \"%3\" 1 \"0 dB\" 0 \"26.85\" 0>\n").arg(x).arg(Z0).arg(lstub);
     }
-    if (!open_short)s += QString("<GND * 1 %1 90 0 0 -1 1>\n").arg(x);
+    if (!open_short)s += QString("<GND * 1 %1 90 0 0 -1 1>\n").arg(x);//It adds a ground component if short stub configuration is selected
+
 
     x+=40;
 
@@ -846,7 +858,7 @@ bool MatchDialog::calcMatchingCircuitSingleStub(double RL, double XL, double Z0,
     x += 80;
 
     if (SP_block) //Load
-    {
+    {// The load impedance is synthesized using lumped components.
         if ((RL > 1e-4)&&(XL < 0))// R + C
         {
             s += QString("<R R1 1 %1 270 15 -26 0 -1 \"%2 Ohm\" 1 \"26.85\" 0 \"US\" 0>\n").arg(x).arg(RL);
@@ -930,33 +942,20 @@ bool MatchDialog::calcMatchingCircuitSingleStub(double RL, double XL, double Z0,
 // This function calculates a matching network for a single port using a transmission line and
 // two stubs (short or open). It can also convert the transmission lines microstrip lines
 // See Microwave Engineering. David Pozar. John Wiley and Sons. 4th Edition. Pg 241-245
-bool MatchDialog::calcMatchingCircuitDoubleStub(double RL, double XL, double Z0, double Freq)
+bool MatchDialog::calcMatchingCircuitDoubleStub(double r_real, double r_imag, double Z0, double Freq, bool micro_syn, bool SP_block, bool open_short, tSubstrate Substrate)
 {
-    bool open_short = OpenRadioButton->isChecked();
-    bool micro_syn = MicrostripCheck->isChecked();
-    bool SP_block = AddSPBlock->isChecked();
-
-    QString str = calcDoubleStub(RL, XL, Z0, Freq);
+    QString str = calcDoubleStub(r_real, r_imag, Z0, Freq, open_short);
+    double RL=r_real, XL=r_imag;
     r2z(RL, XL, Z0);
     if(str.isEmpty())return false;//In case matching is not possible to achieve, the function must stop
+
+    // The lengths of the two stubs and the line are stored in 'QString str'
     double d = str.section(';', 0, 0).toDouble();
     double lstub1 = str.section(';', 1, 1).toDouble();
     double lstub2  = str.section(';', 2, 2).toDouble();
 
-    tSubstrate Substrate;
-    if (micro_syn)//Microstrip synthesis
-    {
-        Substrate.er = RelPermCombo->currentText().section("  ", 0, 0).toDouble();
-        Substrate.height = SubHeightEdit->text().toDouble() / 1e3;
-        Substrate.thickness = thicknessEdit->text().toDouble() / 1e6;
-        Substrate.tand = tanDEdit->text().toDouble();
-        Substrate.resistivity = ResistivityEdit->text().toDouble();
-        Substrate.roughness = 0.0;
-        Substrate.minWidth = minWEdit->text().toDouble() / 1e3;
-        Substrate.maxWidth = maxWEdit->text().toDouble() / 1e3;
-    }
+    double er, width;//Dielectric coefficient and width of the microstrip line. They are used when synthesizing the microstrip lines
 
-    double er, width;
 
 
     //Schematic
@@ -983,7 +982,8 @@ bool MatchDialog::calcMatchingCircuitDoubleStub(double RL, double XL, double Z0,
     {
         s += QString("<TLIN Line1 1 %1 80 -26 20 0 0 \"%2\" 1 \"%3\" 1 \"0 dB\" 0 \"26.85\" 0>\n").arg(x+30).arg(Z0).arg(lstub2);
     }
-    if (!open_short)s += QString("<GND * 1 %1 80 0 0 -1 1>\n").arg(x+60);
+    if (!open_short)s += QString("<GND * 1 %1 80 0 0 -1 1>\n").arg(x+60);//It adds a ground component if short stub configuration is selected
+
     x+=40;
 
 
@@ -1015,7 +1015,7 @@ bool MatchDialog::calcMatchingCircuitDoubleStub(double RL, double XL, double Z0,
     x += 80;
 
     if (SP_block)//Load
-    {
+    {// The load impedance is synthesized using lumped components.
         if ((RL > 1e-4)&&(XL< 0)) // R + C
         {
             s += QString("<R R1 1 %1 270 15 -26 0 -1 \"%2 Ohm\" 1 \"26.85\" 0 \"US\" 0>\n").arg(x).arg(RL);
@@ -1101,29 +1101,11 @@ bool MatchDialog::calcMatchingCircuitDoubleStub(double RL, double XL, double Z0,
 // This function calculates a matching network for a single port using cascaded sections
 // of lambda/4 lines. It can also convert these lines microstrip lines
 // See Microwave Engineering. David Pozar. John Wiley and Sons. 4th Edition. Pg 252-256
-bool MatchDialog::calcMatchingCircuitLambda4Binomial(double RL, double XL, double Z0, double Freq)
+bool MatchDialog::calcMatchingCircuitCascadedLambda4(double r_real, double r_imag, double Z0, double Freq, bool micro_syn, bool SP_block, tSubstrate Substrate, double gamma, int order)
 {
-    int order = OrderEdit->text().toInt()+1;
-    bool micro_syn = MicrostripCheck->isChecked();
-    bool SP_block = AddSPBlock->isChecked();
-
-    tSubstrate Substrate;
-    if (micro_syn)//Microstrip synthesis
-    {
-        Substrate.er = RelPermCombo->currentText().section("  ", 0, 0).toDouble();
-        Substrate.height = SubHeightEdit->text().toDouble() / 1e3;
-        Substrate.thickness = thicknessEdit->text().toDouble() / 1e6;
-        Substrate.tand = tanDEdit->text().toDouble();
-        Substrate.resistivity = ResistivityEdit->text().toDouble();
-        Substrate.roughness = 0.0;
-        Substrate.minWidth = minWEdit->text().toDouble() / 1e3;
-        Substrate.maxWidth = maxWEdit->text().toDouble() / 1e3;
-    }
-
     QString str;
-
-    double gamma = MaxRippleEdit->text().toDouble();
-    (BinRadio->isChecked()) ? str = calcBinomialLines(RL, XL, Z0) : str = calcChebyLines(RL, XL, Z0, gamma);
+    (BinRadio->isChecked()) ? str = calcBinomialLines(r_real, r_imag, Z0, order) : str = calcChebyLines(r_real, r_imag, Z0, gamma, order);
+    double RL = r_real, XL=r_imag;
     r2z(RL, XL, Z0);
     double er, width, Zi;
     double lambda = SPEED_OF_LIGHT/Freq;
@@ -1223,47 +1205,48 @@ bool MatchDialog::calcMatchingCircuitLambda4Binomial(double RL, double XL, doubl
 }
 
 
-
-bool MatchDialog::calcMatchingCircuit(double S11real, double S11imag,double Z0, double Freq)
+// -----------------------------------------------------------------------
+// This function calculates one port matching according to the selected technique
+bool MatchDialog::calcMatchingCircuit(double S11real, double S11imag,double Z0, double Freq, bool micro_syn, bool SP_block, bool open_short, tSubstrate Substrate, int order, double gamma_MAX)
 {
     switch(TopoCombo->currentIndex())
     {
     case 0: // LC
-        if(!calcMatchingCircuitLC(S11real, S11imag, Z0, Freq))return false;
+        if(!calcMatchingCircuitLC(S11real, S11imag, Z0, Freq, SP_block))return false;
         break;
     case 1: // Single stub
-        if(!calcMatchingCircuitSingleStub(S11real, S11imag, Z0, Freq))return false;
+        if(!calcMatchingCircuitSingleStub(S11real, S11imag, Z0, Freq, micro_syn, SP_block, open_short, Substrate))return false;
         break;
     case 2: // Double stub
-        if(!calcMatchingCircuitDoubleStub(S11real, S11imag, Z0, Freq))return false;
+        if(!calcMatchingCircuitDoubleStub(S11real, S11imag, Z0, Freq, micro_syn, SP_block, open_short, Substrate))return false;
         break;
     case 3: // Quarter wave cascaded sections
-        if(!calcMatchingCircuitLambda4Binomial(S11real, S11imag, Z0, Freq))return false;
+        if(!calcMatchingCircuitCascadedLambda4(S11real, S11imag, Z0, Freq, micro_syn, SP_block, Substrate, gamma_MAX, order))return false;
         break;
-
     }
     return true;
 }
 
 
 // -----------------------------------------------------------------------
+// This function calculates one port LC matching
 bool MatchDialog::calcMatchingCircuitLC(double r_real, double r_imag,
-                                        double Z0, double Freq)
+                                        double Z0, double Freq, bool SP_block)
 {
     double RL=r_real, XL=r_imag;
     r2z(RL, XL, Z0);
-    bool SP_block = AddSPBlock->isChecked();
     QString Schematic =
             "<Qucs Schematic " PACKAGE_VERSION ">\n"
             "<Components>\n";
 
     if (SP_block)
     {
-        // Generator
+        // Source
         Schematic += QString("<Pac P1 1 -150 70 18 -26 0 1 \"1\" 1 \"%1 Ohm\" 1 \"0 dBm\" 0 \"1 GHz\" 0>\n").arg(Z0);
         Schematic += QString("<GND * 1 -150 100 0 0 0 0>\n");
 
         // Load
+        // The load impedance is synthesized using lumped components.
         int x=200;
         if ((RL > 1e-4)&&(XL < 0))//R + C
         {
@@ -1294,6 +1277,7 @@ bool MatchDialog::calcMatchingCircuitLC(double r_real, double r_imag,
         }
 
 
+        //Add the frequency range for the S-param simulation
         double freq_start = std::max(0., Freq-1e9);
         double freq_stop = Freq+1e9;
         Schematic += QString("<.SP SP1 1 -70 300 0 67 0 0 \"lin\" 1 \"%2Hz\" 1 \"%3Hz\" 1 \"300\" 1 \"no\" 0 \"1\" 0 \"2\" 0>\n").arg((freq_start)).arg((freq_stop));
@@ -1302,7 +1286,7 @@ bool MatchDialog::calcMatchingCircuitLC(double r_real, double r_imag,
 
 
 
-    QString Str = calcMatchingLC(r_real, r_imag, Z0, Freq);
+    QString Str = calcMatchingLC(r_real, r_imag, Z0, Freq);//It calculates the LC matching circuit.
     if(Str.isEmpty())  return false;
 
     if(Str.section(':', 0,0) == "sp") {
@@ -1416,7 +1400,7 @@ bool MatchDialog::calcMatchingCircuitLC(double r_real, double r_imag,
 // Fundamental calculations for concurrent 2-port matching.
 QString MatchDialog::calcBiMatch(double S11real, double S11imag,
                                  double S22real, double S22imag, double DetReal, double DetImag,
-                                 double Z0, double Freq)
+                                 double Z0, double Freq, bool open_short, double gamma_MAX, int order)
 {
     double B = 1.0 + S11real*S11real + S11imag*S11imag
             - S22real*S22real - S22imag*S22imag
@@ -1447,13 +1431,13 @@ QString MatchDialog::calcBiMatch(double S11real, double S11imag,
         str = calcMatchingLC(Rreal, -Rimag, Z0, Freq);
         break;
     case 1: // Single stub
-        str = calcSingleStub(Rreal, -Rimag, Z0, Freq);
+        str = calcSingleStub(Rreal, -Rimag, Z0, Freq, open_short);
         break;
     case 2: // Double stub
-        str = calcDoubleStub(Rreal,-Rimag, Z0, Freq);
+        str = calcDoubleStub(Rreal,-Rimag, Z0, Freq, open_short);
         break;
     case 3: // Quarter wave cascaded sections
-        str = calcBinomialLines(Rreal, -Rimag, Z0);
+        (BinRadio->isChecked()) ? str = calcBinomialLines(Rreal, -Rimag, Z0, order) : str = calcChebyLines(Rreal, -Rimag, Z0, gamma_MAX, order);
         break;
     }
 
@@ -1461,45 +1445,46 @@ QString MatchDialog::calcBiMatch(double S11real, double S11imag,
 }
 
 // -----------------------------------------------------------------------
+// This function calculates both the input and the output matching networks. In this sense,
+// it calls 'calcBiMatch' function to get the input/output impedance. Then it synthesize the network
+// according to the user choice
 bool MatchDialog::calc2PortMatch(double S11real, double S11imag,
                                  double S22real, double S22imag, double DetReal, double DetImag,
-                                 double Z1, double Z2, double Freq)
+                                 double Z1, double Z2, double Freq, bool micro_syn, bool SP_block, bool open_short, tSubstrate Substrate, int order, double gamma_MAX)
 {
+    // Input port network
     QString Input = calcBiMatch(S11real, S11imag, S22real, S22imag,
-                                DetReal, DetImag, Z1, Freq);
+                                DetReal, DetImag, Z1, Freq, open_short, gamma_MAX, order);
     if(Input.isEmpty()) return false;
 
+    // Output port network
     QString Output = calcBiMatch(S22real, S22imag, S11real, S11imag,
-                                 DetReal, DetImag, Z2, Freq);
+                                 DetReal, DetImag, Z2, Freq, open_short, gamma_MAX, order);
     if(Output.isEmpty()) return false;
 
-    switch(TopoCombo->currentIndex())
+    switch(TopoCombo->currentIndex())//Given the matching technique, it synthesizes both the input and the output network.
     {
     case 0: //LC
-        Create2Port_LC_matching_Schematic(Input, Output);
+        Create2Port_LC_matching_Schematic(Input, Output, Z1, Z2, Freq, SP_block);
         break;
     case 1: //Single stub
-        Create2Port_SingleStub_matching_Schematic(Input, Output);
+        Create2Port_SingleStub_matching_Schematic(Input, Output, Z1, Z2, Freq, micro_syn, SP_block, open_short, Substrate);
         break;
     case 2: //Double stub
-        Create2Port_DoubleStub_matching_Schematic(Input, Output);
+        Create2Port_DoubleStub_matching_Schematic(Input, Output, Z1, Z2, Freq, micro_syn, SP_block, open_short, Substrate);
         break;
     case 3: // Binomial quarter wave
-        Create2Port_BinomialQW_matching_Schematic(Input, Output);
+        Create2Port_Cascaded_lambda4_matching_Schematic(Input, Output, Z1, Z2, Freq, micro_syn, SP_block, Substrate, order);
         break;
 
     }
- return true;
+    return true;
 }
 
-
-bool MatchDialog::Create2Port_LC_matching_Schematic(QString Input, QString Output)
+//---------------------------------------------------------------------
+// Generates the LC network for matching a two-port device
+bool MatchDialog::Create2Port_LC_matching_Schematic(QString Input, QString Output, double Z1, double Z2, double Freq, bool SP_block)
 {
-
-    double Z1 = Ref1Edit->text().toDouble();
-    double Z2 = Ref2Edit->text().toDouble();
-    double Freq = FrequencyEdit->text().toDouble();
-    bool SP_block = AddSPBlock->isChecked();
     QString Schematic =
             "<Qucs Schematic " PACKAGE_VERSION ">\n"
             "<Components>\n";
@@ -1668,29 +1653,11 @@ bool MatchDialog::Create2Port_LC_matching_Schematic(QString Input, QString Outpu
     return true;
 }
 
-bool MatchDialog::Create2Port_SingleStub_matching_Schematic(QString Input, QString Output)
+//---------------------------------------------------------------------------------------------
+// It creates a single stub matching network at the input and the output port so as to match a two-port device
+bool MatchDialog::Create2Port_SingleStub_matching_Schematic(QString Input, QString Output, double Z1, double Z2, double Freq, bool micro_syn, bool SP_block, bool open_short, tSubstrate Substrate)
 {
-    double er, width;
-    double Z1 = Ref1Edit->text().toDouble();
-    double Z2 = Ref2Edit->text().toDouble();
-    double Freq = FrequencyEdit->text().toDouble();
-
-    bool micro_syn = MicrostripCheck->isChecked();
-    bool SP_block = AddSPBlock->isChecked();
-    bool open_short = OpenRadioButton->isChecked();
-
-    tSubstrate Substrate;
-    if (micro_syn)
-    {
-        Substrate.er = RelPermCombo->currentText().section("  ", 0, 0).toDouble();
-        Substrate.height = SubHeightEdit->text().toDouble() / 1e3;
-        Substrate.thickness = thicknessEdit->text().toDouble() / 1e6;
-        Substrate.tand = tanDEdit->text().toDouble();
-        Substrate.resistivity = ResistivityEdit->text().toDouble();
-        Substrate.roughness = 0.0;
-        Substrate.minWidth = minWEdit->text().toDouble() / 1e3;
-        Substrate.maxWidth = maxWEdit->text().toDouble() / 1e3;
-    }
+    double er, width;//Dielectric coefficient and width of the microstrip line. They are used when synthesizing the microstrip lines
 
     QString s = "<Qucs Schematic " PACKAGE_VERSION ">\n";
 
@@ -1701,14 +1668,14 @@ bool MatchDialog::Create2Port_SingleStub_matching_Schematic(QString Input, QStri
     double D_port2 = Output.section(';', 0, 0).toDouble();
     double L_port2 = Output.section(';', 1, 1).toDouble();
 
-    if (SP_block)
+    if (SP_block)//Source
     {
         s += QString("<Pac P1 1 0 330 18 -26 0 1 \"1\" 1 \"%1 Ohm\" 1 \"0 dBm\" 0 \"1 GHz\" 0>\n").arg(Z1);
         s += QString("<GND * 1 0 360 0 0 0 0>\n");
     }
 
 
-    if (micro_syn)
+    if (micro_syn)//Stub
     {
         er = Substrate.er;
         getMicrostrip(Z1, Freq, &Substrate, width, er);
@@ -1718,10 +1685,10 @@ bool MatchDialog::Create2Port_SingleStub_matching_Schematic(QString Input, QStri
     {
         s += QString("<TLIN Line1 1 60 120 -26 20 0 -1 \"%1\" 1 \"%2\" 1 \"0 dB\" 0 \"26.85\" 0>\n").arg(Z1).arg(L_port1);
     }
-    if (!open_short)s += QString("<GND * 1 60 90 0 0 -1 1>\n");
+    if (!open_short)s += QString("<GND * 1 60 90 0 0 -1 1>\n");//It adds a ground component if short stub configuration is selected
 
 
-    if (micro_syn)
+    if (micro_syn)//Line
     {
         er = Substrate.er;
         getMicrostrip(Z1, Freq, &Substrate, width, er);
@@ -1736,7 +1703,7 @@ bool MatchDialog::Create2Port_SingleStub_matching_Schematic(QString Input, QStri
     // OUTPUT port
 
 
-    if (micro_syn)
+    if (micro_syn)//Line
     {
         er = Substrate.er;
         getMicrostrip(Z2, Freq, &Substrate, width, er);
@@ -1748,7 +1715,7 @@ bool MatchDialog::Create2Port_SingleStub_matching_Schematic(QString Input, QStri
     }
 
 
-    if (micro_syn)
+    if (micro_syn)//Stub
     {
         er = Substrate.er;
         getMicrostrip(Z2, Freq, &Substrate, width, er);
@@ -1758,7 +1725,7 @@ bool MatchDialog::Create2Port_SingleStub_matching_Schematic(QString Input, QStri
     {
         s += QString("<TLIN Line1 1 380 120 -26 20 0 -1 \"%1\" 1 \"%2\" 1 \"0 dB\" 0 \"26.85\" 0>\n").arg(Z2).arg(L_port2);
     }
-    if (!open_short)s += QString("<GND * 1 380 90 0 0 -1 1>\n");
+    if (!open_short)s += QString("<GND * 1 380 90 0 0 -1 1>\n");//It adds a ground component if short stub configuration is selected
 
 
     if (micro_syn)s += QString("<SUBST Sub1 1 300 500 -30 24 0 0 \"%1\" 1 \"%2mm\" 1 \"%3um\" 1 \"%4\" 1 \"%5\" 1 \"%6\" 1>\n").arg(Substrate.er).arg(Substrate.height*1e3).arg(Substrate.thickness*1e6).arg(Substrate.tand).arg(Substrate.resistivity).arg(Substrate.roughness);
@@ -1809,33 +1776,13 @@ bool MatchDialog::Create2Port_SingleStub_matching_Schematic(QString Input, QStri
 
 }
 
-bool MatchDialog::Create2Port_DoubleStub_matching_Schematic(QString Input, QString Output)
+//---------------------------------------------------------------------------------------------
+// It creates a double stub matching network at the input and the output port so as to match a two-port device
+bool MatchDialog::Create2Port_DoubleStub_matching_Schematic(QString Input, QString Output, double Z1, double Z2, double Freq, bool micro_syn, bool SP_block, bool open_short, tSubstrate Substrate)
 {
-    double er, width;
-    double Z1 = Ref1Edit->text().toDouble();
-    double Z2 = Ref2Edit->text().toDouble();
-    double Freq = FrequencyEdit->text().toDouble();
-
-    bool micro_syn = MicrostripCheck->isChecked();
-    bool SP_block = AddSPBlock->isChecked();
-    bool open_short = OpenRadioButton->isChecked();
-
-
-    tSubstrate Substrate;
-    if (micro_syn)
-    {
-        Substrate.er = RelPermCombo->currentText().section("  ", 0, 0).toDouble();
-        Substrate.height = SubHeightEdit->text().toDouble() / 1e3;
-        Substrate.thickness = thicknessEdit->text().toDouble() / 1e6;
-        Substrate.tand = tanDEdit->text().toDouble();
-        Substrate.resistivity = ResistivityEdit->text().toDouble();
-        Substrate.roughness = 0.0;
-        Substrate.minWidth = minWEdit->text().toDouble() / 1e3;
-        Substrate.maxWidth = maxWEdit->text().toDouble() / 1e3;
-    }
+    double er, width;//Dielectric coefficient and width of the microstrip line. They are used when synthesizing the microstrip lines
 
     // QUCS SCHEMATIC
-
     QString s = "<Qucs Schematic " PACKAGE_VERSION ">\n";
     s += "<Components>\n";
 
@@ -1847,13 +1794,13 @@ bool MatchDialog::Create2Port_DoubleStub_matching_Schematic(QString Input, QStri
 
     //INPUT port
 
-    if (SP_block)
+    if (SP_block)//Source
     {
         s += QString("<Pac P1 1 0 330 18 -26 0 1 \"1\" 1 \"%1 Ohm\" 1 \"0 dBm\" 0 \"1 GHz\" 0>\n").arg(Z1);
         s += QString("<GND * 1 0 360 0 0 0 0>\n");
     }
 
-    if (micro_syn)
+    if (micro_syn)//First stub
     {
         er = Substrate.er;
         getMicrostrip(Z1, Freq, &Substrate, width, er);
@@ -1863,9 +1810,10 @@ bool MatchDialog::Create2Port_DoubleStub_matching_Schematic(QString Input, QStri
     {
         s += QString("<TLIN Line1 1 60 120 -26 20 0 -1 \"%1\" 1 \"%2\" 1 \"0 dB\" 0 \"26.85\" 0>\n").arg(Z1).arg(lstub2_in);
     }
-    if (!open_short)s += QString("<GND * 1 60 90 0 0 -1 1>\n");
+    if (!open_short)s += QString("<GND * 1 60 90 0 0 -1 1>\n");//It adds a ground component if short stub configuration is selected
 
-    if (micro_syn)
+
+    if (micro_syn)//Line between the two stubs
     {
         er = Substrate.er;
         getMicrostrip(Z1, Freq, &Substrate, width, er);
@@ -1876,7 +1824,7 @@ bool MatchDialog::Create2Port_DoubleStub_matching_Schematic(QString Input, QStri
         s += QString("<TLIN Line1 1 100 180 -26 20 0 0 \"%1\" 1 \"%2\" 1 \"0 dB\" 0 \"26.85\" 0>\n").arg(Z1).arg(d);
     }
 
-    if (micro_syn)
+    if (micro_syn)// 2nd Stub
     {
         er = Substrate.er;
         getMicrostrip(Z1, Freq, &Substrate, width, er);
@@ -1887,9 +1835,11 @@ bool MatchDialog::Create2Port_DoubleStub_matching_Schematic(QString Input, QStri
         s += QString("<TLIN Line1 1 160 120 -26 20 0 -1 \"%1\" 1 \"%2\" 1 \"0 dB\" 0 \"26.85\" 0>\n").arg(Z1).arg(lstub1_in);
     }
 
-    if (!open_short)s += QString("<GND * 1 160 90 0 0 -1 1>\n");
+    if (!open_short)s += QString("<GND * 1 160 90 0 0 -1 1>\n");//It adds a ground component if short stub configuration is selected
 
-    if (micro_syn)
+
+    // OUTPUT PORT
+    if (micro_syn)// First stub
     {
         er = Substrate.er;
         getMicrostrip(Z2, Freq, &Substrate, width, er);
@@ -1899,9 +1849,9 @@ bool MatchDialog::Create2Port_DoubleStub_matching_Schematic(QString Input, QStri
     {
         s += QString("<TLIN Line1 1 360 120 -26 20 0 -1 \"%1\" 1 \"%2\" 1 \"0 dB\" 0 \"26.85\" 0>\n").arg(Z2).arg(lstub2_out);
     }
-    if (!open_short)s += QString("<GND * 1 360 90 0 0 -1 1>\n");
+    if (!open_short)s += QString("<GND * 1 360 90 0 0 -1 1>\n");//It adds a ground component if short stub configuration is selected
 
-    if (micro_syn)
+    if (micro_syn)//Line between the two stubs
     {
         er = Substrate.er;
         getMicrostrip(Z2, Freq, &Substrate, width, er);
@@ -1912,7 +1862,7 @@ bool MatchDialog::Create2Port_DoubleStub_matching_Schematic(QString Input, QStri
         s += QString("<TLIN Line1 1 400 180 -26 20 0 0 \"%1\" 1 \"%2\" 1 \"0 dB\" 0 \"26.85\" 0>\n").arg(Z2).arg(d);
     }
 
-    if (micro_syn)
+    if (micro_syn)// 2nd stub
     {
         er = Substrate.er;
         getMicrostrip(Z2, Freq, &Substrate, width, er);
@@ -1922,16 +1872,18 @@ bool MatchDialog::Create2Port_DoubleStub_matching_Schematic(QString Input, QStri
     {
         s += QString("<TLIN Line1 1 460 120 -26 20 0 -1 \"%1\" 1 \"%2\" 1 \"0 dB\" 0 \"26.85\" 0>\n").arg(Z2).arg(lstub1_out);
     }
-    if (!open_short)s += QString("<GND * 1 460 90 0 0 -1 1>\n");
+    if (!open_short)s += QString("<GND * 1 460 90 0 0 -1 1>\n");//It adds a ground component if short stub configuration is selected
 
+    // Substrate. Added only for the microstrip implementation
     if (micro_syn)s += QString("<SUBST Sub1 1 300 520 -30 24 0 0 \"%1\" 1 \"%2mm\" 1 \"%3um\" 1 \"%4\" 1 \"%5\" 1 \"%6\" 1>\n").arg(Substrate.er).arg(Substrate.height*1e3).arg(Substrate.thickness*1e6).arg(Substrate.tand).arg(Substrate.resistivity).arg(Substrate.roughness);
 
     if (SP_block)
     {
+        //Adds the output term for S-param analysis
         s += QString("<Pac P1 1 520 330 18 -26 0 1 \"1\" 1 \"%1 Ohm\" 1 \"0 dBm\" 0 \"1 GHz\" 0>\n").arg(Z1);
         s += QString("<GND * 1 520 360 0 0 0 0>\n");
 
-        double freq_start = std::max(0., Freq-1e9);
+        double freq_start = std::max(0., Freq-1e9);//S-param component
         double freq_stop = Freq+1e9;
         s += QString("<.SP SP1 1 70 460 0 67 0 0 \"lin\" 1 \"%2Hz\" 1 \"%3Hz\" 1 \"300\" 1 \"no\" 0 \"1\" 0 \"2\" 0>\n").arg((freq_start)).arg((freq_stop));
         s += QString("<Eqn Eqn1 1 450 560 -28 15 0 0 \"S11_dB=dB(S[1,1])\" 1 \"yes\" 0>\n");
@@ -1974,57 +1926,38 @@ bool MatchDialog::Create2Port_DoubleStub_matching_Schematic(QString Input, QStri
     return true;
 
 }
-
-bool MatchDialog::Create2Port_BinomialQW_matching_Schematic(QString Input, QString Output)
+//---------------------------------------------------------------------------------------------
+// It creates a multisection lambda/4 matching network at the input and the output port so as to match a two-port device
+bool MatchDialog::Create2Port_Cascaded_lambda4_matching_Schematic(QString Input, QString Output, double Z1, double Z2, double Freq, bool micro_syn, bool SP_block, tSubstrate Substrate, int order)
 {
-    double er, width;
-    int spacing = 50;
-    double Z1 = Ref1Edit->text().toDouble();
-    double Z2 = Ref2Edit->text().toDouble();
-    double Freq = FrequencyEdit->text().toDouble()*1e9;
-    int order = OrderEdit->text().toInt();
-    double Zi;
+    double er, width;//Dielectric coefficient and width of the microstrip line. They are used when synthesizing the microstrip lines
 
-    bool micro_syn = MicrostripCheck->isChecked();
-    bool SP_block = AddSPBlock->isChecked();
+    int spacing = 50;//Blank space between the input and the output port
+    double Zi;//Auxiliar variable for creating the cascaded lines.
     double lambda4 = SPEED_OF_LIGHT/(Freq*4.0);
-
-
-    tSubstrate Substrate;
-    if (micro_syn)
-    {
-        Substrate.er = RelPermCombo->currentText().section("  ", 0, 0).toDouble();
-        Substrate.height = SubHeightEdit->text().toDouble() / 1e3;
-        Substrate.thickness = thicknessEdit->text().toDouble() / 1e6;
-        Substrate.tand = tanDEdit->text().toDouble();
-        Substrate.resistivity = ResistivityEdit->text().toDouble();
-        Substrate.roughness = 0.0;
-        Substrate.minWidth = minWEdit->text().toDouble() / 1e3;
-        Substrate.maxWidth = maxWEdit->text().toDouble() / 1e3;
-    }
 
     QString s = "<Qucs Schematic " PACKAGE_VERSION ">\n";
     int x = 0;
     s += "<Components>\n";
 
-    if (SP_block)
+    if (SP_block)//Source
     {
         s += QString("<Pac P1 1 %1 330 18 -26 0 1 \"1\" 1 \"%2 Ohm\" 1 \"0 dBm\" 0 \"1 GHz\" 0>\n").arg(x).arg(Z1);
         s += QString("<GND * 1 %1 360 0 0 0 0>\n").arg(x);
     }
     x += 60;
 
-    for (int i = 0; i <order; i++)
+    for (int i = 0; i <order; i++)// It generates the quarter wave lines of the input matching network according to the impedances given at QString Input
     {
 
         Zi = Input.section(';', i, i).toDouble();
-        if (micro_syn)
+        if (micro_syn)//Microstrip implementation
         {
             er = Substrate.er;
             getMicrostrip(Zi, Freq, &Substrate, width, er);
             s += QString("<MLIN MS1 1 %1 180 -26 20 0 0 \"Sub1\" 1 \"%1\" 1 \"%2\" 1 \"Hammerstad\" 0 \"Kirschning\" 0 \"26.85\" 0>\n").arg(x+30).arg(width).arg(lambda4/sqrt(er));
         }
-        else
+        else//Ideal transmission line implementation
         {
             s += QString("<TLIN Line1 1 %1 180 -26 20 0 0 \"%2\" 1 \"%3\" 1 \"0 dB\" 0 \"26.85\" 0>\n").arg(x+30).arg(Zi).arg(lambda4);
         }
@@ -2033,41 +1966,38 @@ bool MatchDialog::Create2Port_BinomialQW_matching_Schematic(QString Input, QStri
 
 
     // OUTPUT PORT
-
-
-
-
     x+=spacing;
 
     x+=(order)*90;
 
-    if (SP_block)
+    if (SP_block)//Output term
     {
         s += QString("<Pac P1 1 %1 330 18 -26 0 1 \"1\" 1 \"%2 Ohm\" 1 \"0 dBm\" 0 \"1 GHz\" 0>\n").arg(x+120).arg(Z2);
         s += QString("<GND * 1 %1 360 0 0 0 0>\n").arg(x+120);
     }
 
-    for (int i = 0; i <order; i++)
+    for (int i = 0; i <order; i++)// It generates the quarter wave lines of the output matching network according to the impedances given at QString Output
     {
         Zi = Output.section(';', i, i).toDouble();
-        if (micro_syn)
+        if (micro_syn)//Microstrip implementation
         {
             er = Substrate.er;
             getMicrostrip(Zi, Freq, &Substrate, width, er);
             s += QString("<MLIN MS1 1 %1 180 -26 20 0 0 \"Sub1\" 1 \"%1\" 1 \"%2\" 1 \"Hammerstad\" 0 \"Kirschning\" 0 \"26.85\" 0>\n").arg(x+30).arg(width).arg(lambda4/sqrt(er));
         }
-        else
+        else//Ideal transmission line implementation
         {
             s += QString("<TLIN Line1 1 %1 180 -26 20 0 0 \"%2\" 1 \"%3\" 1 \"0 dB\" 0 \"26.85\" 0>\n").arg(x+30).arg(Zi).arg(lambda4);
         }
         x -= 90;
     }
 
+    //Substrate component for the microstrip implementation
     if (micro_syn)s += QString("<SUBST Sub1 1 300 500 -30 24 0 0 \"%1\" 1 \"%2mm\" 1 \"%3um\" 1 \"%4\" 1 \"%5\" 1 \"%6\" 1>\n").arg(Substrate.er).arg(Substrate.height*1e3).arg(Substrate.thickness*1e6).arg(Substrate.tand).arg(Substrate.resistivity).arg(Substrate.roughness);
 
 
     if (SP_block)
-    {
+    {   // S-param simulation component
         double freq_start = std::max(0., Freq-1e9);
         double freq_stop = Freq+1e9;
         s += QString("<.SP SP1 1 70 460 0 67 0 0 \"lin\" 1 \"%2Hz\" 1 \"%3Hz\" 1 \"300\" 1 \"no\" 0 \"1\" 0 \"2\" 0>\n").arg((freq_start)).arg((freq_stop));
@@ -2118,7 +2048,8 @@ bool MatchDialog::Create2Port_BinomialQW_matching_Schematic(QString Input, QStri
 
 }
 
-
+// FUNCTIONS FOR THE MICROSTRIP LINE SYNTHESIS. JUST COPIED FROM THE QUCS-FILTER TOOL
+/////////////////////////////////////////////////////////////////////////////////////////////////
 #define  MAX_ERROR  1e-7
 void calcMicrostrip(tSubstrate *substrate,
                     double width, double freq, double& er_eff, double& zl)
@@ -2240,18 +2171,22 @@ void MatchDialog::getMicrostrip(double Z0, double freq, tSubstrate *substrate,
         iteration++;
     } while(iteration < 150);
 }
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
-QString MatchDialog::calcSingleStub(double RL, double XL, double Z0, double Freq)
+//--------------------------------------------------------------------------------
+// Calculates a matching network according to the stub+line method
+// See Microwave Engineering. David Pozar. John Wiley and Sons. 4th Edition. Pg 234-241
+QString MatchDialog::calcSingleStub(double r_real, double r_imag, double Z0, double Freq, bool open_short)
 {
     double t=0, t1 = 0, t2 = 0;
     double dl, dl1, dl2, B;
     double B1, B2, d, lstub, ll;
     double lambda = SPEED_OF_LIGHT/(Freq);
-    bool open_short = OpenRadioButton->isChecked();
+    double RL = r_real, XL = r_imag;
     r2z(RL, XL, Z0);
 
 
+    // Stub+line method formulas
     if (RL == Z0)
     {
         t = -XL / (2*Z0);
@@ -2298,13 +2233,16 @@ QString MatchDialog::calcSingleStub(double RL, double XL, double Z0, double Freq
     }
 
 
-    return QString("%1;%2;").arg(d).arg(lstub);
+    return QString("%1;%2;").arg(d).arg(lstub);// It returns the length of the stub and the line
 }
 
 
-
-QString MatchDialog::calcDoubleStub(double RL, double XL, double Z0, double Freq)
+//--------------------------------------------------------------------------------
+// Calculates a matching network according to the stub+line+stub method
+// See Microwave Engineering. David Pozar. John Wiley and Sons. 4th Edition. Pg 241-245
+QString MatchDialog::calcDoubleStub(double r_real, double r_imag, double Z0, double Freq, bool open_short)
 {
+    double RL=r_real, XL=r_imag;
     r2z(RL, XL, Z0);
     double Y0=1./Z0;
     double GL = (1/((RL*RL)+(XL*XL)))*RL;
@@ -2314,10 +2252,9 @@ QString MatchDialog::calcDoubleStub(double RL, double XL, double Z0, double Freq
     double d = lambda/8;
     double t = tan(beta*d);
     double ll1, ll2;
-    bool open_short = OpenRadioButton->isChecked();
 
 
-
+    // Double stub method formulas
     if (GL > Y0*((1+t*t)/(2*t*t)))//Not every load can be match using the double stub technique.
     {
         QString str = QString("It is not possible to match this load using the double stub method");
@@ -2347,7 +2284,7 @@ QString MatchDialog::calcDoubleStub(double RL, double XL, double Z0, double Freq
 
     double lstub1 = ll1*lambda, lstub2=ll2*lambda;
 
-    return QString("%1;%2;%3").arg(d).arg(lstub1).arg(lstub2);
+    return QString("%1;%2;%3").arg(d).arg(lstub1).arg(lstub2);//It returns the length of the two lines and the stub
 }
 
 
@@ -2363,9 +2300,12 @@ int BinomialCoeffs(int n, int k)
     return (int) coeff;
 }
 
-QString MatchDialog::calcBinomialLines(double RL, double XL, double Z0)
+//-----------------------------------------------------------------------------------
+// This function calculates a multistage lambda/4 matching using binomial weigthing
+// See Microwave Engineering. David Pozar. John Wiley and Sons. 4th Edition. Pg 252-256
+QString MatchDialog::calcBinomialLines(double r_real, double r_imag, double Z0, int order)
 {
-    int order = OrderEdit->text().toInt()+1;
+    double RL = r_real, XL = r_imag;
     r2z(RL, XL, Z0);
     if (RL ==0)
     {
@@ -2391,27 +2331,30 @@ QString MatchDialog::calcBinomialLines(double RL, double XL, double Z0)
     return s;
 }
 
-
-QString MatchDialog::calcChebyLines(double RL, double XL, double Z0, double gamma)
+//-----------------------------------------------------------------------------------
+// This function calculates a multistage lambda/4 matching using the Chebyshev weigthing.
+// See Microwave Engineering. David Pozar. John Wiley and Sons. 4th Edition. Pg 256-261
+QString MatchDialog::calcChebyLines(double r_real, double r_imag, double Z0, double gamma, int order)
 {
-    int N = OrderEdit->text().toInt();
-		if (N > 7)
-		{
-			QMessageBox::warning(0, QObject::tr("Error"),
-													 QObject::tr("Chebyshev weighting for N>7 is not available"));
-	    return QString("");
-		}
+    int N = order-1;// Number of sections
+    if (N > 7)// So far, it is only available Chebyshev weighting up to 7 sections.
+        // Probably, it makes no sense to use a higher number of sections because of the losses
+    {
+        QMessageBox::warning(0, QObject::tr("Error"),
+                             QObject::tr("Chebyshev weighting for N>7 is not available"));
+        return QString("");
+    }
     QString s;
-    r2z(RL, XL, Z0);
+    double RL = r_real, XL = r_imag;
+    r2z(RL, XL, Z0);// Calculation of the load impedance given the reflection coeffient
     double sec_theta_m;// = cosh((1/(1.*N))*acosh((1/gamma)*fabs((RL-Z0)/(Z0+RL))) );
     //double sec_theta_m = cosh((1/(1.*N))*acosh(fabs(log(RL/Z0)/(2*gamma))) );
 
     (fabs(log(RL/Z0)/(2*gamma)) < 1) ? sec_theta_m = 0 : sec_theta_m = cosh((1/(1.*N))*acosh(fabs(log(RL/Z0)/(2*gamma))) );
 
-    double A = gamma;
     double w[N];
 
-    switch(N)
+    switch(N)//The weights are calculated by equating the reflection coeffient formula to the N-th Chebyshev polinomial
     {
     case 1:
         w[0] = sec_theta_m;
@@ -2445,25 +2388,22 @@ QString MatchDialog::calcChebyLines(double RL, double XL, double Z0, double gamm
         w[3] = 2*(10*pow(sec_theta_m, 6) - 18*pow(sec_theta_m, 4) + 9*sec_theta_m*sec_theta_m - 1);
         w[4] = w[2];
         w[5] = w[1];
-				break;
-		case 7:
-		   w[0] = pow(sec_theta_m, 7);
-			 w[1] = 7*pow(sec_theta_m, 5)*(sec_theta_m*sec_theta_m -1);
-			 w[2] = 21*pow(sec_theta_m, 7) - 35*pow(sec_theta_m, 5) + 14*pow(sec_theta_m, 3);
-			 w[3] = 35*pow(sec_theta_m, 7) - 70*pow(sec_theta_m, 5) + 42*pow(sec_theta_m, 3) -7*sec_theta_m ;
-			 w[4] = w[3];
-			 w[5] = w[2];
-			 w[6] = w[1];
-			 break;
+        break;
+    case 7:
+        w[0] = pow(sec_theta_m, 7);
+        w[1] = 7*pow(sec_theta_m, 5)*(sec_theta_m*sec_theta_m -1);
+        w[2] = 21*pow(sec_theta_m, 7) - 35*pow(sec_theta_m, 5) + 14*pow(sec_theta_m, 3);
+        w[3] = 35*pow(sec_theta_m, 7) - 70*pow(sec_theta_m, 5) + 42*pow(sec_theta_m, 3) -7*sec_theta_m ;
+        w[4] = w[3];
+        w[5] = w[2];
+        w[6] = w[1];
+        break;
     }
-
-
-
 
     double Zaux=Z0, Zi;
     for (int i = 0; i < N; i++)
     {
-        Zi = exp(log(Zaux) + A*w[i]);
+        Zi = exp(log(Zaux) + gamma*w[i]);
         Zaux=Zi;
         s+=QString("%1;").arg(Zi);
 
