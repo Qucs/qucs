@@ -78,13 +78,13 @@ public:
   static void z2r(double&, double&, double);
   static QString calcMatchingLC(double, double, double, double);
   bool calcMatchingCircuitLC(double, double, double, double, bool);
-  bool calcMatchingCircuit(double, double,double, double, bool, bool, bool, tSubstrate, int, double);
+  bool calcMatchingCircuit(double, double,double, double, bool, bool, bool, tSubstrate, int, double, bool);
 
 
-  bool calcMatchingCircuitSingleStub(double, double, double, double, bool, bool, bool, tSubstrate);
+  bool calcMatchingCircuitSingleStub(double, double, double, double, bool, bool, bool, tSubstrate, bool);
   QString calcSingleStub(double, double, double, double, bool);
 
-  bool calcMatchingCircuitDoubleStub(double RL, double XL, double, double, bool, bool, bool, tSubstrate);
+  bool calcMatchingCircuitDoubleStub(double RL, double XL, double, double, bool, bool, bool, tSubstrate, bool);
   QString calcDoubleStub(double, double, double, double, bool);
 
 
@@ -94,7 +94,7 @@ public:
   QString calcChebyLines(double, double, double, double, int);
 
   QString calcBiMatch(double, double, double, double, double, double, double, double, bool, double, int);
-  bool calc2PortMatch(double, double, double, double, double, double, double, double, double, bool, bool, bool, tSubstrate, int, double);
+  bool calc2PortMatch(double, double, double, double, double, double, double, double, double, bool, bool, bool, tSubstrate, int, double, bool);
 
 
   //Schematic creation for two-port devices
@@ -111,7 +111,7 @@ public:
   QLineEdit *Ref1Edit, *Ref2Edit, *FrequencyEdit, *OrderEdit,
             *S11magEdit,*S11degEdit, *S21magEdit,*S21degEdit,*ResistivityEdit, *MaxRippleEdit,
             *S12magEdit,*S12degEdit, *S22magEdit,*S22degEdit, *SubHeightEdit, *thicknessEdit, *minWEdit, *maxWEdit, *tanDEdit;
-  QCheckBox *TwoCheck, *MicrostripCheck, *AddSPBlock;
+  QCheckBox *TwoCheck, *MicrostripCheck, *AddSPBlock, *BalancedCheck;
   QRadioButton *OpenRadioButton, *ShortRadioButton, *BinRadio, *ChebyRadio;
   QGroupBox *SubstrateBox;
 

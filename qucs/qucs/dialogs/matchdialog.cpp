@@ -175,6 +175,7 @@ MatchDialog::MatchDialog(QWidget *parent)
     ShortRadioButton->setVisible(false);
     MethodLayout->addLayout(h5);
 
+
     // Number of sections of the cascaded lambda/4 implementation
     QHBoxLayout *h6 = new QHBoxLayout();
     OrderLabel = new QLabel(tr("Number of sections"));
@@ -216,6 +217,8 @@ MatchDialog::MatchDialog(QWidget *parent)
     h8->setAlignment(Qt::AlignLeft);
     MethodLayout->addLayout(h8);
 
+    BalancedCheck = new QCheckBox(tr("Use balanced stubs"));
+    BalancedCheck->setVisible(false);
     TwoCheck = new QCheckBox(tr("Calculate two-port matching"));
     TwoCheck->setChecked(true);
     AddSPBlock = new QCheckBox(tr("Add S-Parameter simulation"));// The user can choose whether add a S-param simulation or not
@@ -224,6 +227,7 @@ MatchDialog::MatchDialog(QWidget *parent)
     MicrostripCheck->setVisible(false);
     MicrostripCheck->setChecked(false);
 
+    matchFrame->addWidget(BalancedCheck);
     matchFrame->addWidget(TwoCheck);
     matchFrame->addWidget(AddSPBlock);
     matchFrame->addWidget(MicrostripCheck);
@@ -497,11 +501,14 @@ void MatchDialog::slotChangeMode_TopoCombo()
         ShortRadioButton->setVisible(true);
         OpenRadioButton->setVisible(true);
         OpenRadioButton->setChecked(true);
+        BalancedCheck->setChecked(true);
+        BalancedCheck->setVisible(true);
     }
     else
     {
         ShortRadioButton->setVisible(false);
         OpenRadioButton->setVisible(false);
+        BalancedCheck->setVisible(false);
     }
     if (TopoCombo->currentIndex() != 0)//Obviously, the microstrip implementation panel cannot be used when LC is selected
     {
@@ -666,6 +673,7 @@ void MatchDialog::slotButtCreate()
         p2c(S22real, S22imag);
     }
 
+    bool BalancedStubs = BalancedCheck->isChecked();
     bool micro_syn = MicrostripCheck->isChecked();//Microstrip implementation?
     bool SP_block = AddSPBlock->isChecked();//Add S-parameter block?
     bool open_short = OpenRadioButton->isChecked();//Open stub or short circuit stub configuration
@@ -692,10 +700,10 @@ void MatchDialog::slotButtCreate()
                 - S12real*S21real + S12imag*S21imag;
         double DetImag = S11real*S22imag + S11imag*S22real
                 - S12real*S21imag - S12imag*S21real;
-        calc2PortMatch(S11real, S11imag, S22real, S22imag, DetReal, DetImag, Z1, Z2, Freq, micro_syn, SP_block, open_short, Substrate, order, gamma_MAX);
+        calc2PortMatch(S11real, S11imag, S22real, S22imag, DetReal, DetImag, Z1, Z2, Freq, micro_syn, SP_block, open_short, Substrate, order, gamma_MAX, BalancedStubs);
     }
     else{
-        calcMatchingCircuit(S11real, S11imag, Z1, Freq, micro_syn, SP_block, open_short, Substrate, order, gamma_MAX);
+        calcMatchingCircuit(S11real, S11imag, Z1, Freq, micro_syn, SP_block, open_short, Substrate, order, gamma_MAX, BalancedStubs);
     }
 
     QucsMain->slotEditPaste(true);
@@ -808,7 +816,7 @@ QString MatchDialog::calcMatchingLC(double r_real, double r_imag,
 // This function calculates a matching network for a single port using a transmission line and
 // a stub (short or open). It can also convert the transmission lines microstrip lines
 // See Microwave Engineering. David Pozar. John Wiley and Sons. 4th Edition. Pg 234-240
-bool MatchDialog::calcMatchingCircuitSingleStub(double r_real, double r_imag, double Z0, double Freq, bool micro_syn, bool SP_block, bool open_short, tSubstrate Substrate)
+bool MatchDialog::calcMatchingCircuitSingleStub(double r_real, double r_imag, double Z0, double Freq, bool micro_syn, bool SP_block, bool open_short, tSubstrate Substrate, bool BalancedStubs)
 {
     QString str = calcSingleStub(r_real, r_imag, Z0, Freq, open_short);
     double RL=r_real, XL=r_imag;
@@ -831,18 +839,45 @@ bool MatchDialog::calcMatchingCircuitSingleStub(double r_real, double r_imag, do
     }
     x += 60;
 
-    if (micro_syn)//Stub
-    {
-        er = Substrate.er;
-        getMicrostrip(Z0, Freq, &Substrate, width, er);
-        s += QString("<MLIN MS1 1 %1 120 -26 20 0 -1 \"Sub1\" 1 \"%2\" 1 \"%3\" 1 \"Hammerstad\" 0 \"Kirschning\" 0 \"26.85\" 0>\n").arg(x).arg(width).arg(lstub/sqrt(er));
+    if (BalancedStubs)
+    {//Balanced stub implementation
+        double lsb, K, lambda=SPEED_OF_LIGHT/Freq;
+        (open_short) ? K=0.5 : K=2;
+        (micro_syn) ? lambda=SPEED_OF_LIGHT/(sqrt(Substrate.er)*Freq) : lambda=SPEED_OF_LIGHT/Freq;
+        lsb = (lambda/(2*pi))*atan(K*tan((2*pi*lstub)/lambda));
+        if (lsb < 0) lsb+=0.5*lambda;
+        if (micro_syn)//Stub
+        {
+          er = Substrate.er;
+          getMicrostrip(Z0, Freq, &Substrate, width, er);
+          s += QString("<MLIN MS1 1 %1 120 -26 20 0 -1 \"Sub1\" 1 \"%2\" 1 \"%3\" 1 \"Hammerstad\" 0 \"Kirschning\" 0 \"26.85\" 0>\n").arg(x).arg(width).arg(lsb/sqrt(er));
+          s += QString("<MLIN MS1 1 %1 230 -26 20 0 -1 \"Sub1\" 1 \"%2\" 1 \"%3\" 1 \"Hammerstad\" 0 \"Kirschning\" 0 \"26.85\" 0>\n").arg(x).arg(width).arg(lsb/sqrt(er));
+        }
+        else
+        {
+          s += QString("<TLIN Line1 1 %1 120 -26 20 0 -1 \"%2\" 1 \"%3\" 1 \"0 dB\" 0 \"26.85\" 0>\n").arg(x).arg(Z0).arg(lsb);
+          s += QString("<TLIN Line1 1 %1 230 -26 20 0 -1 \"%2\" 1 \"%3\" 1 \"0 dB\" 0 \"26.85\" 0>\n").arg(x).arg(Z0).arg(lsb);
+        }
+        if (!open_short)
+        {
+            s += QString("<GND * 1 %1 90 0 0 -1 1>\n").arg(x);//It adds a ground component if short stub configuration is selected
+            s += QString("<GND * 1 %1 260 0 0 -1 1>\n").arg(x);
+        }
     }
     else
-    {
-        s += QString("<TLIN Line1 1 %1 120 -26 20 0 -1 \"%2\" 1 \"%3\" 1 \"0 dB\" 0 \"26.85\" 0>\n").arg(x).arg(Z0).arg(lstub);
+    {//Unbalanced stub implementation
+       if (micro_syn)//Stub
+       {
+         er = Substrate.er;
+         getMicrostrip(Z0, Freq, &Substrate, width, er);
+         s += QString("<MLIN MS1 1 %1 120 -26 20 0 -1 \"Sub1\" 1 \"%2\" 1 \"%3\" 1 \"Hammerstad\" 0 \"Kirschning\" 0 \"26.85\" 0>\n").arg(x).arg(width).arg(lstub/sqrt(er));
+       }
+       else
+       {
+         s += QString("<TLIN Line1 1 %1 120 -26 20 0 -1 \"%2\" 1 \"%3\" 1 \"0 dB\" 0 \"26.85\" 0>\n").arg(x).arg(Z0).arg(lstub);
+       }
+       if (!open_short)s += QString("<GND * 1 %1 90 0 0 -1 1>\n").arg(x);//It adds a ground component if short stub configuration is selected
     }
-    if (!open_short)s += QString("<GND * 1 %1 90 0 0 -1 1>\n").arg(x);//It adds a ground component if short stub configuration is selected
-
 
     x+=40;
 
@@ -898,6 +933,7 @@ bool MatchDialog::calcMatchingCircuitSingleStub(double r_real, double r_imag, do
 
     s += QString("<60 180 130 180 \"\" 0 0 0>\n");
     s += QString("<120 150 120 180 \"\" 0 0 0>\n");
+    if (BalancedStubs)s += QString("<120 180 120 200 \"\" 0 0 0>\n");
     if (SP_block)
     {
         // connect left source
@@ -942,7 +978,7 @@ bool MatchDialog::calcMatchingCircuitSingleStub(double r_real, double r_imag, do
 // This function calculates a matching network for a single port using a transmission line and
 // two stubs (short or open). It can also convert the transmission lines microstrip lines
 // See Microwave Engineering. David Pozar. John Wiley and Sons. 4th Edition. Pg 241-245
-bool MatchDialog::calcMatchingCircuitDoubleStub(double r_real, double r_imag, double Z0, double Freq, bool micro_syn, bool SP_block, bool open_short, tSubstrate Substrate)
+bool MatchDialog::calcMatchingCircuitDoubleStub(double r_real, double r_imag, double Z0, double Freq, bool micro_syn, bool SP_block, bool open_short, tSubstrate Substrate, bool BalancedStubs)
 {
     QString str = calcDoubleStub(r_real, r_imag, Z0, Freq, open_short);
     double RL=r_real, XL=r_imag;
@@ -971,6 +1007,7 @@ bool MatchDialog::calcMatchingCircuitDoubleStub(double r_real, double r_imag, do
     }
 
     x += 60;
+
 
     if (micro_syn)// First stub
     {
@@ -1207,7 +1244,7 @@ bool MatchDialog::calcMatchingCircuitCascadedLambda4(double r_real, double r_ima
 
 // -----------------------------------------------------------------------
 // This function calculates one port matching according to the selected technique
-bool MatchDialog::calcMatchingCircuit(double S11real, double S11imag,double Z0, double Freq, bool micro_syn, bool SP_block, bool open_short, tSubstrate Substrate, int order, double gamma_MAX)
+bool MatchDialog::calcMatchingCircuit(double S11real, double S11imag,double Z0, double Freq, bool micro_syn, bool SP_block, bool open_short, tSubstrate Substrate, int order, double gamma_MAX, bool BalancedStubs)
 {
     switch(TopoCombo->currentIndex())
     {
@@ -1215,10 +1252,10 @@ bool MatchDialog::calcMatchingCircuit(double S11real, double S11imag,double Z0, 
         if(!calcMatchingCircuitLC(S11real, S11imag, Z0, Freq, SP_block))return false;
         break;
     case 1: // Single stub
-        if(!calcMatchingCircuitSingleStub(S11real, S11imag, Z0, Freq, micro_syn, SP_block, open_short, Substrate))return false;
+        if(!calcMatchingCircuitSingleStub(S11real, S11imag, Z0, Freq, micro_syn, SP_block, open_short, Substrate, BalancedStubs))return false;
         break;
     case 2: // Double stub
-        if(!calcMatchingCircuitDoubleStub(S11real, S11imag, Z0, Freq, micro_syn, SP_block, open_short, Substrate))return false;
+        if(!calcMatchingCircuitDoubleStub(S11real, S11imag, Z0, Freq, micro_syn, SP_block, open_short, Substrate, BalancedStubs))return false;
         break;
     case 3: // Quarter wave cascaded sections
         if(!calcMatchingCircuitCascadedLambda4(S11real, S11imag, Z0, Freq, micro_syn, SP_block, Substrate, gamma_MAX, order))return false;
@@ -1450,7 +1487,7 @@ QString MatchDialog::calcBiMatch(double S11real, double S11imag,
 // according to the user choice
 bool MatchDialog::calc2PortMatch(double S11real, double S11imag,
                                  double S22real, double S22imag, double DetReal, double DetImag,
-                                 double Z1, double Z2, double Freq, bool micro_syn, bool SP_block, bool open_short, tSubstrate Substrate, int order, double gamma_MAX)
+                                 double Z1, double Z2, double Freq, bool micro_syn, bool SP_block, bool open_short, tSubstrate Substrate, int order, double gamma_MAX, bool BalancedStubs)
 {
     // Input port network
     QString Input = calcBiMatch(S11real, S11imag, S22real, S22imag,
