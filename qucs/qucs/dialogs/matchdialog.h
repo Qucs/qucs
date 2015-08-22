@@ -99,8 +99,8 @@ public:
 
   //Schematic creation for two-port devices
   bool Create2Port_LC_matching_Schematic(QString, QString, double, double, double, bool);
-  bool Create2Port_SingleStub_matching_Schematic(QString, QString, double, double, double, bool, bool, bool, tSubstrate);
-  bool Create2Port_DoubleStub_matching_Schematic(QString, QString, double, double, double, bool, bool, bool, tSubstrate);
+  bool Create2Port_SingleStub_matching_Schematic(QString, QString, double, double, double, bool, bool, bool, tSubstrate, bool);
+  bool Create2Port_DoubleStub_matching_Schematic(QString, QString, double, double, double, bool, bool, bool, tSubstrate, bool);
   bool Create2Port_Cascaded_lambda4_matching_Schematic(QString, QString, double, double, double, bool, bool, tSubstrate, int);
 
   void getMicrostrip(double, double, tSubstrate *, double &, double &);
