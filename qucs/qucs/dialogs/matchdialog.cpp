@@ -1581,7 +1581,7 @@ bool MatchDialog::calc2PortMatch(double S11real, double S11imag,
     case 2: //Double stub
         Create2Port_DoubleStub_matching_Schematic(Input, Output, Z1, Z2, Freq, micro_syn, SP_block, open_short, Substrate, BalancedStubs);
         break;
-    case 3: // Binomial quarter wave
+    case 3: // Cascaded quarter wave lines
         Create2Port_Cascaded_lambda4_matching_Schematic(Input, Output, Z1, Z2, Freq, micro_syn, SP_block, Substrate, order);
         break;
 
@@ -2655,7 +2655,6 @@ QString MatchDialog::calcChebyLines(double r_real, double r_imag, double Z0, dou
     r2z(RL, XL, Z0);// Calculation of the load impedance given the reflection coeffient
     double sec_theta_m;// = cosh((1/(1.*N))*acosh((1/gamma)*fabs((RL-Z0)/(Z0+RL))) );
     //double sec_theta_m = cosh((1/(1.*N))*acosh(fabs(log(RL/Z0)/(2*gamma))) );
-
     (fabs(log(RL/Z0)/(2*gamma)) < 1) ? sec_theta_m = 0 : sec_theta_m = cosh((1/(1.*N))*acosh(fabs(log(RL/Z0)/(2*gamma))) );
 
     double w[N];
@@ -2709,7 +2708,7 @@ QString MatchDialog::calcChebyLines(double r_real, double r_imag, double Z0, dou
     double Zaux=Z0, Zi;
     for (int i = 0; i < N; i++)
     {
-        Zi = exp(log(Zaux) + gamma*w[i]);
+        (RL<Z0) ? Zi = exp(log(Zaux) - gamma*w[i]):Zi = exp(log(Zaux) + gamma*w[i]); // When RL<Z0, Z_{i}<Z_{i-1}
         Zaux=Zi;
         s+=QString("%1;").arg(Zi);
 
