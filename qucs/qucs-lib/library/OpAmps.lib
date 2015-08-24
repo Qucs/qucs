@@ -1124,3 +1124,1057 @@ Sub:X1 _net0 _net1 _net4 _net3 _net2 _net5 gnd Type="lm3886_mod"
   <Line 13 3 0 -6 #000000 1 1>
   </Symbol>
 </Component>
+
+<Component LM311>
+  <Description>
+Authors: Vadim Kuznetsov <ra3xdh@gmail.com> and Timofey Moiseev <voig1396@gmail.com>
+  </Description>
+  <Model>
+.Def:OpAmps_LM311 _net0 _net1 _net2 _net3 _net5 _net4
+Sub:X1 _net3 _net0 _net1 _net2 _net4 _net5 gnd Type="LM311_cir"
+.Def:End
+.Def:LM311_cir _net4 _net1 _net2 _net3 _net6 _net5 _ref
+  .Def:LM311 _ref _net1 _net2 _net3 _net4 _net5 _net6
+  CCCS:F1 _net10 _net9 _net3 _cnet0 G="1"
+  Idc:IEE _net7 _net3 I="0.0001"
+  Vdc:VI1 _net21 _net1 U="0.45"
+  Vdc:VI2 _net22 _net2 U="0.45"
+  BJT:Q1 _net21 _net9 _net7 _ref Type="pnp" Is="8e-16" Bf="500" Nf="1" Nr="1" Ikf="0" Ikr="0" Vaf="0" Var="0" Ise="0" Ne="1.5" Isc="0" Nc="2" Br="1" Rbm="0" Irb="0" Cje="0" Vje="0.75" Mje="0.33" Cjc="0" Vjc="0.75" Mjc="0.33" Xcjc="1" Cjs="0" Vjs="0.75" Mjs="0" Fc="0.5" Vtf="0" Tf="0" Xtf="0" Itf="0" Tr="0"
+  BJT:Q2 _net22 _net8 _net7 _ref Type="pnp" Is="8e-16" Bf="500" Nf="1" Nr="1" Ikf="0" Ikr="0" Vaf="0" Var="0" Ise="0" Ne="1.5" Isc="0" Nc="2" Br="1" Rbm="0" Irb="0" Cje="0" Vje="0.75" Mje="0.33" Cjc="0" Vjc="0.75" Mjc="0.33" Xcjc="1" Cjs="0" Vjs="0.75" Mjs="0" Fc="0.5" Vtf="0" Tf="0" Xtf="0" Itf="0" Tr="0"
+  BJT:Q3 _net8 _net9 _net4 _ref Type="npn" Is="8e-16" Bf="1000" Cjc="1e-15" Tr="1.025e-07" Nf="1" Nr="1" Ikf="0" Ikr="0" Vaf="0" Var="0" Ise="0" Ne="1.5" Isc="0" Nc="2" Br="1" Rbm="0" Irb="0" Cje="0" Vje="0.75" Mje="0.33" Vjc="0.75" Mjc="0.33" Xcjc="1" Cjs="0" Vjs="0.75" Mjs="0" Fc="0.5" Vtf="0" Tf="0" Xtf="0" Itf="0"
+  BJT:Q4 _net8 _net8 _net4 _ref Type="npn" Is="8e-16" Bf="1002" Nf="1" Nr="1" Ikf="0" Ikr="0" Vaf="0" Var="0" Ise="0" Ne="1.5" Isc="0" Nc="2" Br="1" Rbm="0" Irb="0" Cje="0" Vje="0.75" Mje="0.33" Cjc="0" Vjc="0.75" Mjc="0.33" Xcjc="1" Cjs="0" Vjs="0.75" Mjs="0" Fc="0.5" Vtf="0" Tf="0" Xtf="0" Itf="0" Tr="0"
+  VCVS:E1 _net9 _net10 _net6 _net4 G="1"
+  Vdc:V1 _cnet0 _net11 U="0"
+  BJT:Q5 _net11 _net5 _net6 _ref Type="npn" Is="8e-16" Bf="103500" Cjc="1e-15" Tf="1.16e-11" Tr="4.819e-08" Nf="1" Nr="1" Ikf="0" Ikr="0" Vaf="0" Var="0" Ise="0" Ne="1.5" Isc="0" Nc="2" Br="1" Rbm="0" Irb="0" Cje="0" Vje="0.75" Mje="0.33" Vjc="0.75" Mjc="0.33" Xcjc="1" Cjs="0" Vjs="0.75" Mjs="0" Fc="0.5" Vtf="0" Xtf="0" Itf="0"
+  Diode:DP _net3 _net4 Is="8e-16" N="1" M="0.5" Cj0="1e-14" Vj="0.7"
+  R:RP _net3 _net4 R="6667"
+  .Def:End
+  Sub:X1 _ref _net1 _net2 _net3 _net4 _net5 _net6 Type="LM311"
+.Def:End
+  </Model>
+  <Symbol>
+    <Line -20 -40 0 80 #000080 2 1>
+    <Line -20 -40 80 40 #000080 2 1>
+    <Line -20 40 80 -40 #000080 2 1>
+    <Line -40 -20 20 0 #000080 2 1>
+    <Line -40 20 20 0 #000080 2 1>
+    <Line -15 20 10 0 #000000 2 1>
+    <Line -10 -25 0 10 #ff0000 0 1>
+    <Line -15 -20 10 0 #ff0000 0 1>
+    <.PortSym -40 -20 1 0>
+    <.PortSym -40 20 2 0>
+    <Line 60 0 20 0 #000080 2 1>
+    <Line 20 -20 0 -30 #000080 2 1>
+    <Line 40 10 0 40 #000080 2 1>
+    <.ID 60 24 OP>
+    <Line 0 30 0 20 #000080 2 1>
+    <.PortSym 0 50 4 90>
+    <.PortSym 40 50 6 90>
+    <.PortSym 20 -50 3 270>
+    <.PortSym 80 0 5 180>
+  </Symbol>
+</Component>
+
+<Component LM324>
+  <Description>
+Authors: Vadim Kuznetsov <ra3xdh@gmail.com> and Timofey Moiseev <voig1396@gmail.com>
+  </Description>
+  <Model>
+.Def:OpAmps_LM324 _net2 _net3 _net4 _net0 _net1
+Sub:X1 _net0 _net1 _net2 _net3 _net4 gnd Type="LM324_cir"
+.Def:End
+.Def:LM324_cir _net4 _net5 _net1 _net2 _net3 _ref
+  .Def:LM324 _ref _net1 _net2 _net3 _net4 _net5
+  CCCS:FB _cnet11 _net99 _net7 gnd G="1"
+  Eqn:EqnFBI1 FB.I1="+1.591e+07*V2-2e+07*V3+2e+07*V4+2e+07*V5-2e+07*V6" Export="no"
+  Eqn:EqnFBQ1 FB.Q1="0" Export="no"
+  Eqn:EqnFBI2 FB.I2="0" Export="no"
+  Eqn:EqnFBQ2 FB.Q2="0" Export="no"
+  CCVS:FBV2 _ref _cnet9 gnd _cnet10 G="1"
+  Eqn:EqnFBI3 FB.I3="0" Export="no"
+  Eqn:EqnFBQ3 FB.Q3="0" Export="no"
+  CCVS:FBV3 _net91 _cnet7 gnd _cnet8 G="1"
+  Eqn:EqnFBI4 FB.I4="0" Export="no"
+  Eqn:EqnFBQ4 FB.Q4="0" Export="no"
+  CCVS:FBV4 _net54 _cnet5 gnd _cnet6 G="1"
+  Eqn:EqnFBI5 FB.I5="0" Export="no"
+  Eqn:EqnFBQ5 FB.Q5="0" Export="no"
+  CCVS:FBV5 _net3 _cnet3 gnd _cnet4 G="1"
+  Eqn:EqnFBI6 FB.I6="0" Export="no"
+  Eqn:EqnFBQ6 FB.Q6="0" Export="no"
+  CCVS:FBV6 _net9 _cnet1 gnd _cnet2 G="1"
+  CCVS:EGND _cnet0 _ref _net99 gnd G="1"
+  Eqn:EqnEGNDI1 EGND.I1="+0.5*V2+0.5*V3" Export="no"
+  Eqn:EqnEGNDQ1 EGND.Q1="0" Export="no"
+  Eqn:EqnEGNDI2 EGND.I2="0" Export="no"
+  Eqn:EqnEGNDQ2 EGND.Q2="0" Export="no"
+  Eqn:EqnEGNDI3 EGND.I3="0" Export="no"
+  Eqn:EqnEGNDQ3 EGND.Q3="0" Export="no"
+  C:C1 _net11 _net12 C="5.544e-12"
+  C:C2 _net6 _net7 C="2e-11"
+  Diode:DC _net53 _net5 Is="8e-16" N="1" M="0.5" Cj0="1e-14" Vj="0.7"
+  Diode:DE _net5 _net54 Is="8e-16" N="1" M="0.5" Cj0="1e-14" Vj="0.7"
+  Diode:DLP _net91 _net90 Is="8e-16" N="1" M="0.5" Cj0="1e-14" Vj="0.7"
+  Diode:DLN _net90 _net92 Is="8e-16" N="1" M="0.5" Cj0="1e-14" Vj="0.7"
+  Diode:DP _net3 _net4 Is="8e-16" N="1" M="0.5" Cj0="1e-14" Vj="0.7"
+  EDD:EGND _cnet0 gnd _net3 _ref _net4 _ref I1="EGND.I1" Q1="EGND.Q1" I2="EGND.I2" Q2="EGND.Q2" I3="EGND.I3" Q3="EGND.Q3"
+  EDD:FB _cnet11 gnd _cnet1 gnd _cnet3 gnd _cnet5 gnd _cnet7 gnd _cnet9 gnd I1="FB.I1" Q1="FB.Q1" I2="FB.I2" Q2="FB.Q2" I3="FB.I3" Q3="FB.Q3" I4="FB.I4" Q4="FB.Q4" I5="FB.I5" Q5="FB.Q5" I6="FB.I6" Q6="FB.Q6"
+  VCCS:GA _net11 _net6 _ref _net12 G="0.0001257"
+  VCCS:GCM _net10 _ref _net6 _net99 G="7.067e-09"
+  Idc:IEE _net10 _net3 I="1.004e-05"
+  CCVS:HLIM _net7 _net90 _ref _cnet12 G="1k"
+  BJT:Q1 _net2 _net11 _net13 _ref Type="pnp" Is="8e-16" Bf="250" Nf="1" Nr="1" Ikf="0" Ikr="0" Vaf="0" Var="0" Ise="0" Ne="1.5" Isc="0" Nc="2" Br="1" Rbm="0" Irb="0" Cje="0" Vje="0.75" Mje="0.33" Cjc="0" Vjc="0.75" Mjc="0.33" Xcjc="1" Cjs="0" Vjs="0.75" Mjs="0" Fc="0.5" Vtf="0" Tf="0" Xtf="0" Itf="0" Tr="0"
+  BJT:Q2 _net1 _net12 _net14 _ref Type="pnp" Is="8e-16" Bf="250" Nf="1" Nr="1" Ikf="0" Ikr="0" Vaf="0" Var="0" Ise="0" Ne="1.5" Isc="0" Nc="2" Br="1" Rbm="0" Irb="0" Cje="0" Vje="0.75" Mje="0.33" Cjc="0" Vjc="0.75" Mjc="0.33" Xcjc="1" Cjs="0" Vjs="0.75" Mjs="0" Fc="0.5" Vtf="0" Tf="0" Xtf="0" Itf="0" Tr="0"
+  R:R2 _net6 _net9 R="100000"
+  R:RC1 _net4 _net11 R="7957"
+  R:RC2 _net4 _net12 R="7957"
+  R:RE1 _net13 _net10 R="2773"
+  R:RE2 _net14 _net10 R="2773"
+  R:REE _net10 _net99 R="1.992e+07"
+  R:RO1 _net8 _net5 R="50"
+  R:RO2 _net7 _net99 R="50"
+  R:RP _net3 _net4 R="30310"
+  Vdc:VB _cnet2 _ref U="0"
+  Vdc:VC _cnet4 _net53 U="2.1"
+  Vdc:VE _cnet6 _net4 U="0.6"
+  Vdc:VLIM _cnet12 _net8 U="0"
+  Vdc:VLP _cnet8 _ref U="40"
+  Vdc:VLN _cnet10 _net92 U="40"
+  .Def:End
+  Sub:X1 _ref _net1 _net2 _net3 _net4 _net5 Type="LM324"
+.Def:End
+  </Model>
+  <Symbol>
+    <Line -20 -40 0 80 #000080 2 1>
+    <Line -20 -40 60 40 #000080 2 1>
+    <Line -20 40 60 -40 #000080 2 1>
+    <Line 40 0 20 0 #000080 2 1>
+    <Line -40 -20 20 0 #000080 2 1>
+    <Line -40 20 20 0 #000080 2 1>
+    <Line -15 20 10 0 #000000 2 1>
+    <Line -10 -25 0 10 #ff0000 0 1>
+    <Line -15 -20 10 0 #ff0000 0 1>
+    <Line 10 -20 0 -20 #000080 2 1>
+    <Line 10 20 0 20 #000080 2 1>
+    <.PortSym -40 -20 1 0>
+    <.PortSym -40 20 2 0>
+    <.PortSym 10 -40 3 270>
+    <.PortSym 10 40 4 90>
+    <.PortSym 60 0 5 180>
+    <.ID 50 24 OP>
+  </Symbol>
+</Component>
+
+<Component LM358>
+  <Description>
+Authors: Vadim Kuznetsov <ra3xdh@gmail.com> and Timofey Moiseev <voig1396@gmail.com>
+  </Description>
+  <Model>
+.Def:OpAmps_LM358 _net2 _net3 _net4 _net0 _net1
+Sub:X1 _net0 _net1 _net2 _net3 _net4 gnd Type="LM358_sp"
+.Def:End
+.Def:LM358_sp _net4 _net5 _net1 _net2 _net3 _ref
+  .Def:LM358 _ref _net1 _net2 _net3 _net4 _net5
+  CCCS:FB _cnet11 _net99 _net7 gnd G="1"
+  Eqn:EqnFBI1 FB.I1="+1.591e+07*V2-2e+07*V3+2e+07*V4+2e+07*V5-2e+07*V6" Export="no"
+  Eqn:EqnFBQ1 FB.Q1="0" Export="no"
+  Eqn:EqnFBI2 FB.I2="0" Export="no"
+  Eqn:EqnFBQ2 FB.Q2="0" Export="no"
+  CCVS:FBV2 _ref _cnet9 gnd _cnet10 G="1"
+  Eqn:EqnFBI3 FB.I3="0" Export="no"
+  Eqn:EqnFBQ3 FB.Q3="0" Export="no"
+  CCVS:FBV3 _net91 _cnet7 gnd _cnet8 G="1"
+  Eqn:EqnFBI4 FB.I4="0" Export="no"
+  Eqn:EqnFBQ4 FB.Q4="0" Export="no"
+  CCVS:FBV4 _net54 _cnet5 gnd _cnet6 G="1"
+  Eqn:EqnFBI5 FB.I5="0" Export="no"
+  Eqn:EqnFBQ5 FB.Q5="0" Export="no"
+  CCVS:FBV5 _net3 _cnet3 gnd _cnet4 G="1"
+  Eqn:EqnFBI6 FB.I6="0" Export="no"
+  Eqn:EqnFBQ6 FB.Q6="0" Export="no"
+  CCVS:FBV6 _net9 _cnet1 gnd _cnet2 G="1"
+  CCVS:EGND _cnet0 _ref _net99 gnd G="1"
+  Eqn:EqnEGNDI1 EGND.I1="+0.5*V2+0.5*V3" Export="no"
+  Eqn:EqnEGNDQ1 EGND.Q1="0" Export="no"
+  Eqn:EqnEGNDI2 EGND.I2="0" Export="no"
+  Eqn:EqnEGNDQ2 EGND.Q2="0" Export="no"
+  Eqn:EqnEGNDI3 EGND.I3="0" Export="no"
+  Eqn:EqnEGNDQ3 EGND.Q3="0" Export="no"
+  C:C1 _net11 _net12 C="5.544e-12"
+  C:C2 _net6 _net7 C="2e-11"
+  Diode:DC _net53 _net5 Is="8e-16" N="1" M="0.5" Cj0="1e-14" Vj="0.7"
+  Diode:DE _net5 _net54 Is="8e-16" N="1" M="0.5" Cj0="1e-14" Vj="0.7"
+  Diode:DLP _net91 _net90 Is="8e-16" N="1" M="0.5" Cj0="1e-14" Vj="0.7"
+  Diode:DLN _net90 _net92 Is="8e-16" N="1" M="0.5" Cj0="1e-14" Vj="0.7"
+  Diode:DP _net3 _net4 Is="8e-16" N="1" M="0.5" Cj0="1e-14" Vj="0.7"
+  EDD:EGND _cnet0 gnd _net3 _ref _net4 _ref I1="EGND.I1" Q1="EGND.Q1" I2="EGND.I2" Q2="EGND.Q2" I3="EGND.I3" Q3="EGND.Q3"
+  EDD:FB _cnet11 gnd _cnet1 gnd _cnet3 gnd _cnet5 gnd _cnet7 gnd _cnet9 gnd I1="FB.I1" Q1="FB.Q1" I2="FB.I2" Q2="FB.Q2" I3="FB.I3" Q3="FB.Q3" I4="FB.I4" Q4="FB.Q4" I5="FB.I5" Q5="FB.Q5" I6="FB.I6" Q6="FB.Q6"
+  VCCS:GA _net11 _net6 _ref _net12 G="0.0001257"
+  VCCS:GCM _net10 _ref _net6 _net99 G="7.067e-09"
+  Idc:IEE _net10 _net3 I="1.004e-05"
+  CCVS:HLIM _net7 _net90 _ref _cnet12 G="1k"
+  BJT:Q1 _net2 _net11 _net13 _ref Type="pnp" Is="8e-16" Bf="250" Nf="1" Nr="1" Ikf="0" Ikr="0" Vaf="0" Var="0" Ise="0" Ne="1.5" Isc="0" Nc="2" Br="1" Rbm="0" Irb="0" Cje="0" Vje="0.75" Mje="0.33" Cjc="0" Vjc="0.75" Mjc="0.33" Xcjc="1" Cjs="0" Vjs="0.75" Mjs="0" Fc="0.5" Vtf="0" Tf="0" Xtf="0" Itf="0" Tr="0"
+  BJT:Q2 _net1 _net12 _net14 _ref Type="pnp" Is="8e-16" Bf="250" Nf="1" Nr="1" Ikf="0" Ikr="0" Vaf="0" Var="0" Ise="0" Ne="1.5" Isc="0" Nc="2" Br="1" Rbm="0" Irb="0" Cje="0" Vje="0.75" Mje="0.33" Cjc="0" Vjc="0.75" Mjc="0.33" Xcjc="1" Cjs="0" Vjs="0.75" Mjs="0" Fc="0.5" Vtf="0" Tf="0" Xtf="0" Itf="0" Tr="0"
+  R:R2 _net6 _net9 R="100000"
+  R:RC1 _net4 _net11 R="7957"
+  R:RC2 _net4 _net12 R="7957"
+  R:RE1 _net13 _net10 R="2773"
+  R:RE2 _net14 _net10 R="2773"
+  R:REE _net10 _net99 R="1.992e+07"
+  R:RO1 _net8 _net5 R="50"
+  R:RO2 _net7 _net99 R="50"
+  R:RP _net3 _net4 R="30310"
+  Vdc:VB _cnet2 _ref U="0"
+  Vdc:VC _cnet4 _net53 U="2.1"
+  Vdc:VE _cnet6 _net4 U="0.6"
+  Vdc:VLIM _cnet12 _net8 U="0"
+  Vdc:VLP _cnet8 _ref U="40"
+  Vdc:VLN _cnet10 _net92 U="40"
+  .Def:End
+  Sub:X1 _ref _net1 _net2 _net3 _net4 _net5 Type="LM358"
+.Def:End
+  </Model>
+  <Symbol>
+    <Line -20 -40 0 80 #000080 2 1>
+    <Line -20 -40 60 40 #000080 2 1>
+    <Line -20 40 60 -40 #000080 2 1>
+    <Line 40 0 20 0 #000080 2 1>
+    <Line -40 -20 20 0 #000080 2 1>
+    <Line -40 20 20 0 #000080 2 1>
+    <Line -15 20 10 0 #000000 2 1>
+    <Line -10 -25 0 10 #ff0000 0 1>
+    <Line -15 -20 10 0 #ff0000 0 1>
+    <Line 10 -20 0 -20 #000080 2 1>
+    <Line 10 20 0 20 #000080 2 1>
+    <.PortSym -40 -20 1 0>
+    <.PortSym -40 20 2 0>
+    <.PortSym 10 -40 3 0>
+    <.PortSym 10 40 4 0>
+    <.PortSym 60 0 5 180>
+    <.ID 40 34 OP>
+  </Symbol>
+</Component>
+
+
+<Component NE5532>
+  <Description>
+Authors: Vadim Kuznetsov <ra3xdh@gmail.com> and Timofey Moiseev <voig1396@gmail.com>
+  </Description>
+  <Model>
+.Def:OpAmps_NE5532 _net2 _net3 _net4 _net0 _net1
+Sub:X1 _net0 _net1 _net2 _net3 _net4 gnd Type="NE5532_cir"
+.Def:End
+.Def:NE5532_cir _net4 _net5 _net1 _net2 _net3 _ref
+  .Def:NE5532 _ref _net1 _net2 _net3 _net4 _net5
+  CCCS:FB _cnet11 _net99 _net7 gnd G="1"
+  Eqn:EqnFBI1 FB.I1="+2.893e+06*V2-3e+06*V3+3e+06*V4+3e+06*V5-3e+06*V6" Export="no"
+  Eqn:EqnFBQ1 FB.Q1="0" Export="no"
+  Eqn:EqnFBI2 FB.I2="0" Export="no"
+  Eqn:EqnFBQ2 FB.Q2="0" Export="no"
+  CCVS:FBV2 _ref _cnet9 gnd _cnet10 G="1"
+  Eqn:EqnFBI3 FB.I3="0" Export="no"
+  Eqn:EqnFBQ3 FB.Q3="0" Export="no"
+  CCVS:FBV3 _net91 _cnet7 gnd _cnet8 G="1"
+  Eqn:EqnFBI4 FB.I4="0" Export="no"
+  Eqn:EqnFBQ4 FB.Q4="0" Export="no"
+  CCVS:FBV4 _net54 _cnet5 gnd _cnet6 G="1"
+  Eqn:EqnFBI5 FB.I5="0" Export="no"
+  Eqn:EqnFBQ5 FB.Q5="0" Export="no"
+  CCVS:FBV5 _net3 _cnet3 gnd _cnet4 G="1"
+  Eqn:EqnFBI6 FB.I6="0" Export="no"
+  Eqn:EqnFBQ6 FB.Q6="0" Export="no"
+  CCVS:FBV6 _net9 _cnet1 gnd _cnet2 G="1"
+  CCVS:EGND _cnet0 _ref _net99 gnd G="1"
+  Eqn:EqnEGNDI1 EGND.I1="+0.5*V2+0.5*V3" Export="no"
+  Eqn:EqnEGNDQ1 EGND.Q1="0" Export="no"
+  Eqn:EqnEGNDI2 EGND.I2="0" Export="no"
+  Eqn:EqnEGNDQ2 EGND.Q2="0" Export="no"
+  Eqn:EqnEGNDI3 EGND.I3="0" Export="no"
+  Eqn:EqnEGNDQ3 EGND.Q3="0" Export="no"
+  C:C1 _net11 _net12 C="7.703e-12"
+  C:C2 _net6 _net7 C="2.35e-11"
+  Diode:DC _net53 _net5 Is="8e-16" N="1" M="0.5" Cj0="1e-14" Vj="0.7"
+  Diode:DE _net5 _net54 Is="8e-16" N="1" M="0.5" Cj0="1e-14" Vj="0.7"
+  Diode:DLP _net91 _net90 Is="8e-16" N="1" M="0.5" Cj0="1e-14" Vj="0.7"
+  Diode:DLN _net90 _net92 Is="8e-16" N="1" M="0.5" Cj0="1e-14" Vj="0.7"
+  Diode:DP _net3 _net4 Is="8e-16" N="1" M="0.5" Cj0="1e-14" Vj="0.7"
+  EDD:EGND _cnet0 gnd _net3 _ref _net4 _ref I1="EGND.I1" Q1="EGND.Q1" I2="EGND.I2" Q2="EGND.Q2" I3="EGND.I3" Q3="EGND.Q3"
+  EDD:FB _cnet11 gnd _cnet1 gnd _cnet3 gnd _cnet5 gnd _cnet7 gnd _cnet9 gnd I1="FB.I1" Q1="FB.Q1" I2="FB.I2" Q2="FB.Q2" I3="FB.I3" Q3="FB.Q3" I4="FB.I4" Q4="FB.Q4" I5="FB.I5" Q5="FB.Q5" I6="FB.I6" Q6="FB.Q6"
+  VCCS:GA _net11 _net6 _ref _net12 G="0.001382"
+  VCCS:GCM _net10 _ref _net6 _net99 G="1.382e-08"
+  Idc:IEE _net4 _net10 I="0.000133"
+  CCVS:HLIM _net7 _net90 _ref _cnet12 G="1k"
+  BJT:Q1 _net2 _net11 _net13 _ref Type="npn" Is="8e-16" Bf="132" Nf="1" Nr="1" Ikf="0" Ikr="0" Vaf="0" Var="0" Ise="0" Ne="1.5" Isc="0" Nc="2" Br="1" Rbm="0" Irb="0" Cje="0" Vje="0.75" Mje="0.33" Cjc="0" Vjc="0.75" Mjc="0.33" Xcjc="1" Cjs="0" Vjs="0.75" Mjs="0" Fc="0.5" Vtf="0" Tf="0" Xtf="0" Itf="0" Tr="0"
+  BJT:Q2 _net1 _net12 _net14 _ref Type="npn" Is="8e-16" Bf="132" Nf="1" Nr="1" Ikf="0" Ikr="0" Vaf="0" Var="0" Ise="0" Ne="1.5" Isc="0" Nc="2" Br="1" Rbm="0" Irb="0" Cje="0" Vje="0.75" Mje="0.33" Cjc="0" Vjc="0.75" Mjc="0.33" Xcjc="1" Cjs="0" Vjs="0.75" Mjs="0" Fc="0.5" Vtf="0" Tf="0" Xtf="0" Itf="0" Tr="0"
+  R:R2 _net6 _net9 R="100000"
+  R:RC1 _net3 _net11 R="723.3"
+  R:RC2 _net3 _net12 R="723.3"
+  R:RE1 _net13 _net10 R="329"
+  R:RE2 _net14 _net10 R="329"
+  R:REE _net10 _net99 R="1.504e+06"
+  R:RO1 _net8 _net5 R="50"
+  R:RO2 _net7 _net99 R="25"
+  R:RP _net3 _net4 R="7757"
+  Vdc:VB _cnet2 _ref U="0"
+  Vdc:VC _cnet4 _net53 U="2.7"
+  Vdc:VE _cnet6 _net4 U="2.7"
+  Vdc:VLIM _cnet12 _net8 U="0"
+  Vdc:VLP _cnet8 _ref U="38"
+  Vdc:VLN _cnet10 _net92 U="38"
+  .Def:End
+  Sub:X1 _ref _net1 _net2 _net3 _net4 _net5 Type="NE5532"
+.Def:End
+  </Model>
+  <Symbol>
+    <Line -20 -40 0 80 #000080 2 1>
+    <Line -20 -40 60 40 #000080 2 1>
+    <Line -20 40 60 -40 #000080 2 1>
+    <Line 40 0 20 0 #000080 2 1>
+    <Line -40 -20 20 0 #000080 2 1>
+    <Line -40 20 20 0 #000080 2 1>
+    <Line -15 20 10 0 #000000 2 1>
+    <Line -10 -25 0 10 #ff0000 0 1>
+    <Line -15 -20 10 0 #ff0000 0 1>
+    <Line 10 -20 0 -20 #000080 2 1>
+    <Line 10 20 0 20 #000080 2 1>
+    <.PortSym -40 -20 1 0>
+    <.PortSym -40 20 2 0>
+    <.PortSym 10 -40 3 270>
+    <.PortSym 10 40 4 90>
+    <.PortSym 60 0 5 180>
+    <.ID 50 34 OP>
+  </Symbol>
+</Component>
+
+<Component NE5534>
+  <Description>
+Authors: Vadim Kuznetsov <ra3xdh@gmail.com> and Timofey Moiseev <voig1396@gmail.com>
+  </Description>
+  <Model>
+.Def:OpAmps_NE5534 _net2 _net3 _net4 _net0 _net1 _net5 _net6
+Sub:X1 _net0 _net1 _net2 _net3 _net4 _net5 _net6 gnd Type="NE5534_cir"
+.Def:End
+.Def:NE5534_cir _net4 _net5 _net1 _net2 _net3 _net6 _net7 _ref
+  .Def:NE5534 _ref _net1 _net2 _net3 _net4 _net5 _net6 _net7
+  CCCS:FB _cnet11 _net99 _net7 gnd G="1"
+  Eqn:EqnFBI1 FB.I1="+2.893e+06*V2-3e+06*V3+3e+06*V4+3e+06*V5-3e+06*V6" Export="no"
+  Eqn:EqnFBQ1 FB.Q1="0" Export="no"
+  Eqn:EqnFBI2 FB.I2="0" Export="no"
+  Eqn:EqnFBQ2 FB.Q2="0" Export="no"
+  CCVS:FBV2 _ref _cnet9 gnd _cnet10 G="1"
+  Eqn:EqnFBI3 FB.I3="0" Export="no"
+  Eqn:EqnFBQ3 FB.Q3="0" Export="no"
+  CCVS:FBV3 _net91 _cnet7 gnd _cnet8 G="1"
+  Eqn:EqnFBI4 FB.I4="0" Export="no"
+  Eqn:EqnFBQ4 FB.Q4="0" Export="no"
+  CCVS:FBV4 _net54 _cnet5 gnd _cnet6 G="1"
+  Eqn:EqnFBI5 FB.I5="0" Export="no"
+  Eqn:EqnFBQ5 FB.Q5="0" Export="no"
+  CCVS:FBV5 _net3 _cnet3 gnd _cnet4 G="1"
+  Eqn:EqnFBI6 FB.I6="0" Export="no"
+  Eqn:EqnFBQ6 FB.Q6="0" Export="no"
+  CCVS:FBV6 _net9 _cnet1 gnd _cnet2 G="1"
+  CCVS:EGND _cnet0 _ref _net99 gnd G="1"
+  Eqn:EqnEGNDI1 EGND.I1="+0.5*V2+0.5*V3" Export="no"
+  Eqn:EqnEGNDQ1 EGND.Q1="0" Export="no"
+  Eqn:EqnEGNDI2 EGND.I2="0" Export="no"
+  Eqn:EqnEGNDQ2 EGND.Q2="0" Export="no"
+  Eqn:EqnEGNDI3 EGND.I3="0" Export="no"
+  Eqn:EqnEGNDQ3 EGND.Q3="0" Export="no"
+  C:C1 _net11 _net12 C="7.703e-12"
+  C:C2 _net6 _net7 C="3.5e-12"
+  Diode:DC _net53 _net5 Is="8e-16" N="1" M="0.5" Cj0="1e-14" Vj="0.7"
+  Diode:DE _net5 _net54 Is="8e-16" N="1" M="0.5" Cj0="1e-14" Vj="0.7"
+  Diode:DLP _net91 _net90 Is="8e-16" N="1" M="0.5" Cj0="1e-14" Vj="0.7"
+  Diode:DLN _net90 _net92 Is="8e-16" N="1" M="0.5" Cj0="1e-14" Vj="0.7"
+  Diode:DP _net3 _net4 Is="8e-16" N="1" M="0.5" Cj0="1e-14" Vj="0.7"
+  EDD:EGND _cnet0 gnd _net3 _ref _net4 _ref I1="EGND.I1" Q1="EGND.Q1" I2="EGND.I2" Q2="EGND.Q2" I3="EGND.I3" Q3="EGND.Q3"
+  EDD:FB _cnet11 gnd _cnet1 gnd _cnet3 gnd _cnet5 gnd _cnet7 gnd _cnet9 gnd I1="FB.I1" Q1="FB.Q1" I2="FB.I2" Q2="FB.Q2" I3="FB.I3" Q3="FB.Q3" I4="FB.I4" Q4="FB.Q4" I5="FB.I5" Q5="FB.Q5" I6="FB.I6" Q6="FB.Q6"
+  VCCS:GA _net11 _net6 _ref _net12 G="0.001382"
+  VCCS:GCM _net10 _ref _net6 _net99 G="1.382e-08"
+  Idc:IEE _net4 _net10 I="0.000133"
+  CCVS:HLIM _net7 _net90 _ref _cnet12 G="1k"
+  BJT:Q1 _net2 _net11 _net13 _ref Type="npn" Is="8e-16" Bf="132" Nf="1" Nr="1" Ikf="0" Ikr="0" Vaf="0" Var="0" Ise="0" Ne="1.5" Isc="0" Nc="2" Br="1" Rbm="0" Irb="0" Cje="0" Vje="0.75" Mje="0.33" Cjc="0" Vjc="0.75" Mjc="0.33" Xcjc="1" Cjs="0" Vjs="0.75" Mjs="0" Fc="0.5" Vtf="0" Tf="0" Xtf="0" Itf="0" Tr="0"
+  BJT:Q2 _net1 _net12 _net14 _ref Type="npn" Is="8e-16" Bf="132" Nf="1" Nr="1" Ikf="0" Ikr="0" Vaf="0" Var="0" Ise="0" Ne="1.5" Isc="0" Nc="2" Br="1" Rbm="0" Irb="0" Cje="0" Vje="0.75" Mje="0.33" Cjc="0" Vjc="0.75" Mjc="0.33" Xcjc="1" Cjs="0" Vjs="0.75" Mjs="0" Fc="0.5" Vtf="0" Tf="0" Xtf="0" Itf="0" Tr="0"
+  R:R2 _net6 _net9 R="100000"
+  R:RC1 _net3 _net11 R="723.3"
+  R:RC2 _net3 _net12 R="723.3"
+  R:RE1 _net13 _net10 R="329"
+  R:RE2 _net14 _net10 R="329"
+  R:REE _net10 _net99 R="1.504e+06"
+  R:RO1 _net8 _net5 R="50"
+  R:RO2 _net7 _net99 R="25"
+  R:RP _net3 _net4 R="7757"
+  Vdc:VB _cnet2 _ref U="0"
+  Vdc:VC _cnet4 _net53 U="2.7"
+  Vdc:VE _cnet6 _net4 U="2.7"
+  Vdc:VLIM _cnet12 _net8 U="0"
+  Vdc:VLP _cnet8 _ref U="38"
+  Vdc:VLN _cnet10 _net92 U="38"
+  .Def:End
+  Sub:X1 _ref _net1 _net2 _net3 _net4 _net5 _net6 _net7 Type="NE5534"
+.Def:End
+  </Model>
+  <Symbol>
+    <Line -20 -40 0 80 #000080 2 1>
+    <Line -20 -40 80 40 #000080 2 1>
+    <Line -20 40 80 -40 #000080 2 1>
+    <Line -40 -20 20 0 #000080 2 1>
+    <Line -40 20 20 0 #000080 2 1>
+    <Line -15 20 10 0 #000000 2 1>
+    <Line -10 -25 0 10 #ff0000 0 1>
+    <Line -15 -20 10 0 #ff0000 0 1>
+    <.PortSym -40 -20 1 0>
+    <.PortSym -40 20 2 0>
+    <Line 0 -30 0 -20 #000080 2 1>
+    <.PortSym 0 -50 3 270>
+    <Line 60 0 20 0 #000080 2 1>
+    <.PortSym 80 0 5 180>
+    <Line 40 -10 0 -40 #000080 2 1>
+    <Line 0 30 0 20 #000080 2 1>
+    <.PortSym 0 50 4 90>
+    <.ID 70 24 OP>
+    <Line 20 -20 0 -30 #000080 2 1>
+    <.PortSym 20 -50 6 270>
+    <.PortSym 40 -50 7 270>
+  </Symbol>
+</Component>
+
+<Component ad822>
+  <Description>
+Authors: Vadim Kuznetsov <ra3xdh@gmail.com> and Timofey Moiseev <voig1396@gmail.com>
+  </Description>
+  <Model>
+.Def:OpAmps_ad822 _net0 _net2 _net4 _net3 _net1
+Sub:X1 _net0 _net1 _net2 _net3 _net4 gnd Type="ad822_cir"
+.Def:End
+.Def:ad822_cir _net1 _net25 _net2 _net50 _net99 _ref
+  .Def:AD822 _ref _net1 _net2 _net99 _net50 _net25
+  CCVS:EN _cnet6 _ref _net52 gnd G="1"
+  Eqn:EqnENI1 EN.I1="-0.015+1*V2" Export="no"
+  Eqn:EqnENQ1 EN.Q1="0" Export="no"
+  Eqn:EqnENI2 EN.I2="0" Export="no"
+  Eqn:EqnENQ2 EN.Q2="0" Export="no"
+  CCVS:EP _cnet5 _ref _net96 gnd G="1"
+  Eqn:EqnEPI1 EP.I1="+0.01+1*V2" Export="no"
+  Eqn:EqnEPQ1 EP.Q1="0" Export="no"
+  Eqn:EqnEPI2 EP.I2="0" Export="no"
+  Eqn:EqnEPQ2 EP.Q2="0" Export="no"
+  CCVS:ES _cnet4 _net51 _net26 gnd G="1"
+  Eqn:EqnESI1 ES.I1="+1.72+1*V2" Export="no"
+  Eqn:EqnESQ1 ES.Q1="0" Export="no"
+  Eqn:EqnESI2 ES.I2="0" Export="no"
+  Eqn:EqnESQ2 ES.Q2="0" Export="no"
+  CCVS:E13 _cnet3 _net98 _net11 gnd G="1"
+  Eqn:EqnE13I1 E13.I1="+0.5*V2+0.5*V3" Export="no"
+  Eqn:EqnE13Q1 E13.Q1="0" Export="no"
+  Eqn:EqnE13I2 E13.I2="0" Export="no"
+  Eqn:EqnE13Q2 E13.Q2="0" Export="no"
+  Eqn:EqnE13I3 E13.I3="0" Export="no"
+  Eqn:EqnE13Q3 E13.Q3="0" Export="no"
+  CCCS:GB2 _cnet2 _net7 _net50 gnd G="1"
+  Eqn:EqnGB2I1 GB2.I1="+1e-12*V2+1e-12*V3+1e-12*V4" Export="no"
+  Eqn:EqnGB2Q1 GB2.Q1="0" Export="no"
+  Eqn:EqnGB2I2 GB2.I2="0" Export="no"
+  Eqn:EqnGB2Q2 GB2.Q2="0" Export="no"
+  Eqn:EqnGB2I3 GB2.I3="0" Export="no"
+  Eqn:EqnGB2Q3 GB2.Q3="0" Export="no"
+  Eqn:EqnGB2I4 GB2.I4="0" Export="no"
+  Eqn:EqnGB2Q4 GB2.Q4="0" Export="no"
+  CCCS:GB1 _cnet1 _net2 _net50 gnd G="1"
+  Eqn:EqnGB1I1 GB1.I1="+1e-12*V2+1e-12*V3+1e-12*V4" Export="no"
+  Eqn:EqnGB1Q1 GB1.Q1="0" Export="no"
+  Eqn:EqnGB1I2 GB1.I2="0" Export="no"
+  Eqn:EqnGB1Q2 GB1.Q2="0" Export="no"
+  Eqn:EqnGB1I3 GB1.I3="0" Export="no"
+  Eqn:EqnGB1Q3 GB1.Q3="0" Export="no"
+  Eqn:EqnGB1I4 GB1.I4="0" Export="no"
+  Eqn:EqnGB1Q4 GB1.Q4="0" Export="no"
+  CCVS:EOS _cnet0 _net1 _net7 gnd G="1"
+  Eqn:EqnEOSI1 EOS.I1="+0.0001+1*V2" Export="no"
+  Eqn:EqnEOSQ1 EOS.Q1="0" Export="no"
+  Eqn:EqnEOSI2 EOS.I2="0" Export="no"
+  Eqn:EqnEOSQ2 EOS.Q2="0" Export="no"
+  R:R3 _net5 _net99 R="2456"
+  R:R4 _net6 _net99 R="2456"
+  C:CIN _net1 _net2 C="5e-12"
+  C:C2 _net5 _net6 C="6.48e-12"
+  Idc:I1 _net50 _net4 I="0.000108"
+  Idc:IOS _net2 _net1 I="1e-12"
+  EDD:EOS _cnet0 gnd _net12 _net98 I1="EOS.I1" Q1="EOS.Q1" I2="EOS.I2" Q2="EOS.Q2"
+  JFET:J1 _net2 _net5 _net4 Type="nfet" Beta="0.000767" Vt0="-2" Is="1e-12" N="1" Lambda="0" M="0.5" Pb="1" Fc="0.5" Cgs="0" Cgd="0"
+  JFET:J2 _net7 _net6 _net4 Type="nfet" Beta="0.000767" Vt0="-2" Is="1e-12" N="1" Lambda="0" M="0.5" Pb="1" Fc="0.5" Cgs="0" Cgd="0"
+  EDD:GB1 _cnet1 gnd _net2 _net4 _net2 _net5 _net2 _net50 I1="GB1.I1" Q1="GB1.Q1" I2="GB1.I2" Q2="GB1.Q2" I3="GB1.I3" Q3="GB1.Q3" I4="GB1.I4" Q4="GB1.Q4"
+  EDD:GB2 _cnet2 gnd _net7 _net4 _net7 _net5 _net7 _net50 I1="GB2.I1" Q1="GB2.Q1" I2="GB2.I2" Q2="GB2.Q2" I3="GB2.I3" Q3="GB2.Q3" I4="GB2.I4" Q4="GB2.Q4"
+  VCVS:EREF _net30 _net98 _ref _ref G="1"
+  R:R5 _net9 _net98 R="2.313e+06"
+  C:C3 _net9 _net25 C="3.2e-11"
+  VCCS:G1 _net6 _net98 _net9 _net5 G="0.000407"
+  Vdc:V1 _net8 _net98 U="0"
+  Vdc:V2 _net98 _net10 U="-1"
+  Diode:D1 _net10 _net9 Is="1e-15" N="1" M="0.5" Cj0="1e-14" Vj="0.7"
+  Diode:D2 _net9 _net8 Is="1e-15" N="1" M="0.5" Cj0="1e-14" Vj="0.7"
+  R:R21 _net11 _net12 R="1e+06"
+  R:R22 _net12 _net98 R="100"
+  C:C14 _net11 _net12 C="1.59e-10"
+  EDD:E13 _cnet3 gnd _net2 _net98 _net1 _net98 I1="E13.I1" Q1="E13.Q1" I2="E13.I2" Q2="E13.Q2" I3="E13.I3" Q3="E13.Q3"
+  R:R23 _net18 _net98 R="1e+06"
+  C:C15 _net18 _net98 C="1.59e-14"
+  VCCS:G15 _net9 _net98 _net18 _net98 G="1e-06"
+  EDD:ES _cnet4 gnd _net18 _net98 I1="ES.I1" Q1="ES.Q1" I2="ES.I2" Q2="ES.Q2"
+  R:RS _net26 _net22 R="500"
+  Vdc:V3 _net23 _net51 U="1.03951"
+  Vdc:V4 _net21 _net23 U="1.36"
+  C:C16 _net20 _net25 C="2e-12"
+  C:C17 _net24 _net25 C="2e-12"
+  R:RG1 _net20 _net97 R="1e+08"
+  R:RG2 _net24 _net97 R="1e+08"
+  BJT:Q1 _net20 _net20 _net97 _ref Type="pnp" Bf="120" Vaf="150" Var="15" Rb="2000" Re="4" Rc="900" Is="1e-16" Nf="1" Nr="1" Ikf="0" Ikr="0" Ise="0" Ne="1.5" Isc="0" Nc="2" Br="1" Rbm="0" Irb="0" Cje="0" Vje="0.75" Mje="0.33" Cjc="0" Vjc="0.75" Mjc="0.33" Xcjc="1" Cjs="0" Vjs="0.75" Mjs="0" Fc="0.5" Vtf="0" Tf="0" Xtf="0" Itf="0" Tr="0"
+  BJT:Q2 _net21 _net20 _net22 _ref Type="npn" Bf="120" Vaf="150" Var="15" Rb="2000" Re="4" Rc="200" Is="1e-16" Nf="1" Nr="1" Ikf="0" Ikr="0" Ise="0" Ne="1.5" Isc="0" Nc="2" Br="1" Rbm="0" Irb="0" Cje="0" Vje="0.75" Mje="0.33" Cjc="0" Vjc="0.75" Mjc="0.33" Xcjc="1" Cjs="0" Vjs="0.75" Mjs="0" Fc="0.5" Vtf="0" Tf="0" Xtf="0" Itf="0" Tr="0"
+  BJT:Q3 _net23 _net24 _net22 _ref Type="pnp" Bf="120" Vaf="150" Var="15" Rb="2000" Re="4" Rc="900" Is="1e-16" Nf="1" Nr="1" Ikf="0" Ikr="0" Ise="0" Ne="1.5" Isc="0" Nc="2" Br="1" Rbm="0" Irb="0" Cje="0" Vje="0.75" Mje="0.33" Cjc="0" Vjc="0.75" Mjc="0.33" Xcjc="1" Cjs="0" Vjs="0.75" Mjs="0" Fc="0.5" Vtf="0" Tf="0" Xtf="0" Itf="0" Tr="0"
+  BJT:Q4 _net24 _net24 _net51 _ref Type="npn" Bf="120" Vaf="150" Var="15" Rb="2000" Re="4" Rc="200" Is="1e-16" Nf="1" Nr="1" Ikf="0" Ikr="0" Ise="0" Ne="1.5" Isc="0" Nc="2" Br="1" Rbm="0" Irb="0" Cje="0" Vje="0.75" Mje="0.33" Cjc="0" Vjc="0.75" Mjc="0.33" Xcjc="1" Cjs="0" Vjs="0.75" Mjs="0" Fc="0.5" Vtf="0" Tf="0" Xtf="0" Itf="0" Tr="0"
+  BJT:Q5 _net20 _net25 _net97 _ref Type="pnp" Area="20" Bf="120" Vaf="150" Var="15" Rb="2000" Re="4" Rc="900" Is="1e-16" Nf="1" Nr="1" Ikf="0" Ikr="0" Ise="0" Ne="1.5" Isc="0" Nc="2" Br="1" Rbm="0" Irb="0" Cje="0" Vje="0.75" Mje="0.33" Cjc="0" Vjc="0.75" Mjc="0.33" Xcjc="1" Cjs="0" Vjs="0.75" Mjs="0" Fc="0.5" Vtf="0" Tf="0" Xtf="0" Itf="0" Tr="0"
+  BJT:Q6 _net24 _net25 _net51 _ref Type="npn" Area="20" Bf="120" Vaf="150" Var="15" Rb="2000" Re="4" Rc="200" Is="1e-16" Nf="1" Nr="1" Ikf="0" Ikr="0" Ise="0" Ne="1.5" Isc="0" Nc="2" Br="1" Rbm="0" Irb="0" Cje="0" Vje="0.75" Mje="0.33" Cjc="0" Vjc="0.75" Mjc="0.33" Xcjc="1" Cjs="0" Vjs="0.75" Mjs="0" Fc="0.5" Vtf="0" Tf="0" Xtf="0" Itf="0" Tr="0"
+  Vdc:VP _cnet7 _net97 U="0"
+  Vdc:VN _cnet8 _net52 U="0"
+  EDD:EP _cnet5 gnd _net99 _ref I1="EP.I1" Q1="EP.Q1" I2="EP.I2" Q2="EP.Q2"
+  EDD:EN _cnet6 gnd _net50 _ref I1="EN.I1" Q1="EN.Q1" I2="EN.I2" Q2="EN.Q2"
+  R:R25 _net30 _net99 R="63500"
+  R:R26 _net30 _net50 R="63500"
+  CCCS:FSY1 _net96 _net99 _ref _cnet7 G="1"
+  CCCS:FSY2 _net51 _ref _net50 _cnet8 G="1"
+  .Def:End
+  Sub:X1 _ref _net1 _net2 _net99 _net50 _net25 Type="AD822"
+.Def:End
+  </Model>
+  <Symbol>
+    <Line -20 -40 0 80 #000080 2 1>
+    <Line -20 -40 60 40 #000080 2 1>
+    <Line -20 40 60 -40 #000080 2 1>
+    <Line 40 0 20 0 #000080 2 1>
+    <Line -40 -20 20 0 #000080 2 1>
+    <Line -40 20 20 0 #000080 2 1>
+    <Line -15 20 10 0 #000000 2 1>
+    <Line -10 -25 0 10 #ff0000 0 1>
+    <Line -15 -20 10 0 #ff0000 0 1>
+    <Line 10 -20 0 -20 #000080 2 1>
+    <Line 10 20 0 20 #000080 2 1>
+    <.PortSym -40 -20 1 0>
+    <.PortSym -40 20 2 0>
+    <.PortSym 10 -40 3 270>
+    <.PortSym 10 40 4 90>
+    <.PortSym 60 0 5 180>
+    <.ID 50 34 OP>
+  </Symbol>
+</Component>
+
+<Component ad822a>
+  <Description>
+Authors: Vadim Kuznetsov <ra3xdh@gmail.com> and Timofey Moiseev <voig1396@gmail.com>
+  </Description>
+  <Model>
+.Def:OpAmps_ad822a _net0 _net2 _net4 _net3 _net1
+Sub:X1 _net0 _net1 _net2 _net3 _net4 gnd Type="ad822a_cir"
+.Def:End
+.Def:ad822a_cir _net1 _net25 _net2 _net50 _net99 _ref
+  .Def:AD822A _ref _net1 _net2 _net99 _net50 _net25
+  CCCS:FSY2 _cnet12 _net50 _ref gnd G="1"
+  Eqn:EqnFSY2I1 FSY2.I1="+0.0002105+1*V2" Export="no"
+  Eqn:EqnFSY2Q1 FSY2.Q1="0" Export="no"
+  Eqn:EqnFSY2I2 FSY2.I2="0" Export="no"
+  Eqn:EqnFSY2Q2 FSY2.Q2="0" Export="no"
+  CCVS:FSY2V2 _net51 _cnet10 gnd _cnet11 G="1"
+  CCCS:FSY1 _cnet9 _ref _net99 gnd G="1"
+  Eqn:EqnFSY1I1 FSY1.I1="+0.0002105+1*V2" Export="no"
+  Eqn:EqnFSY1Q1 FSY1.Q1="0" Export="no"
+  Eqn:EqnFSY1I2 FSY1.I2="0" Export="no"
+  Eqn:EqnFSY1Q2 FSY1.Q2="0" Export="no"
+  CCVS:FSY1V2 _net96 _cnet7 gnd _cnet8 G="1"
+  CCVS:EN _cnet6 _ref _net52 gnd G="1"
+  Eqn:EqnENI1 EN.I1="-0.015+1*V2" Export="no"
+  Eqn:EqnENQ1 EN.Q1="0" Export="no"
+  Eqn:EqnENI2 EN.I2="0" Export="no"
+  Eqn:EqnENQ2 EN.Q2="0" Export="no"
+  CCVS:EP _cnet5 _ref _net96 gnd G="1"
+  Eqn:EqnEPI1 EP.I1="+0.01+1*V2" Export="no"
+  Eqn:EqnEPQ1 EP.Q1="0" Export="no"
+  Eqn:EqnEPI2 EP.I2="0" Export="no"
+  Eqn:EqnEPQ2 EP.Q2="0" Export="no"
+  CCVS:ES _cnet4 _net51 _net26 gnd G="1"
+  Eqn:EqnESI1 ES.I1="+1.72+1*V2" Export="no"
+  Eqn:EqnESQ1 ES.Q1="0" Export="no"
+  Eqn:EqnESI2 ES.I2="0" Export="no"
+  Eqn:EqnESQ2 ES.Q2="0" Export="no"
+  CCVS:E13 _cnet3 _net98 _net11 gnd G="1"
+  Eqn:EqnE13I1 E13.I1="+0.5*V2+0.5*V3" Export="no"
+  Eqn:EqnE13Q1 E13.Q1="0" Export="no"
+  Eqn:EqnE13I2 E13.I2="0" Export="no"
+  Eqn:EqnE13Q2 E13.Q2="0" Export="no"
+  Eqn:EqnE13I3 E13.I3="0" Export="no"
+  Eqn:EqnE13Q3 E13.Q3="0" Export="no"
+  CCCS:GB2 _cnet2 _net7 _net50 gnd G="1"
+  Eqn:EqnGB2I1 GB2.I1="+1e-12*V2+1e-12*V3+1e-12*V4" Export="no"
+  Eqn:EqnGB2Q1 GB2.Q1="0" Export="no"
+  Eqn:EqnGB2I2 GB2.I2="0" Export="no"
+  Eqn:EqnGB2Q2 GB2.Q2="0" Export="no"
+  Eqn:EqnGB2I3 GB2.I3="0" Export="no"
+  Eqn:EqnGB2Q3 GB2.Q3="0" Export="no"
+  Eqn:EqnGB2I4 GB2.I4="0" Export="no"
+  Eqn:EqnGB2Q4 GB2.Q4="0" Export="no"
+  CCCS:GB1 _cnet1 _net2 _net50 gnd G="1"
+  Eqn:EqnGB1I1 GB1.I1="+1e-12*V2+1e-12*V3+1e-12*V4" Export="no"
+  Eqn:EqnGB1Q1 GB1.Q1="0" Export="no"
+  Eqn:EqnGB1I2 GB1.I2="0" Export="no"
+  Eqn:EqnGB1Q2 GB1.Q2="0" Export="no"
+  Eqn:EqnGB1I3 GB1.I3="0" Export="no"
+  Eqn:EqnGB1Q3 GB1.Q3="0" Export="no"
+  Eqn:EqnGB1I4 GB1.I4="0" Export="no"
+  Eqn:EqnGB1Q4 GB1.Q4="0" Export="no"
+  CCVS:EOS _cnet0 _net1 _net7 gnd G="1"
+  Eqn:EqnEOSI1 EOS.I1="+0.0008+2.41*V2" Export="no"
+  Eqn:EqnEOSQ1 EOS.Q1="0" Export="no"
+  Eqn:EqnEOSI2 EOS.I2="0" Export="no"
+  Eqn:EqnEOSQ2 EOS.Q2="0" Export="no"
+  R:R3 _net5 _net99 R="2456"
+  R:R4 _net6 _net99 R="2456"
+  C:CIN _net1 _net2 C="5e-12"
+  C:C2 _net5 _net6 C="6.48e-12"
+  Idc:I1 _net50 _net4 I="0.000108"
+  Idc:IOS _net2 _net1 I="1e-11"
+  EDD:EOS _cnet0 gnd _net12 _net98 I1="EOS.I1" Q1="EOS.Q1" I2="EOS.I2" Q2="EOS.Q2"
+  JFET:J1 _net2 _net5 _net4 Type="nfet" Beta="0.000767" Vt0="-2" Is="1.25e-11" N="1" Lambda="0" M="0.5" Pb="1" Fc="0.5" Cgs="0" Cgd="0"
+  JFET:J2 _net7 _net6 _net4 Type="nfet" Beta="0.000767" Vt0="-2" Is="1.25e-11" N="1" Lambda="0" M="0.5" Pb="1" Fc="0.5" Cgs="0" Cgd="0"
+  EDD:GB1 _cnet1 gnd _net2 _net4 _net2 _net5 _net2 _net50 I1="GB1.I1" Q1="GB1.Q1" I2="GB1.I2" Q2="GB1.Q2" I3="GB1.I3" Q3="GB1.Q3" I4="GB1.I4" Q4="GB1.Q4"
+  EDD:GB2 _cnet2 gnd _net7 _net4 _net7 _net5 _net7 _net50 I1="GB2.I1" Q1="GB2.Q1" I2="GB2.I2" Q2="GB2.Q2" I3="GB2.I3" Q3="GB2.Q3" I4="GB2.I4" Q4="GB2.Q4"
+  VCVS:EREF _net30 _net98 _ref _ref G="1"
+  R:R5 _net9 _net98 R="1.234e+06"
+  C:C3 _net9 _net25 C="3.2e-11"
+  VCCS:G1 _net6 _net98 _net9 _net5 G="0.000407"
+  Vdc:V1 _net8 _net98 U="0"
+  Vdc:V2 _net98 _net10 U="-1"
+  Diode:D1 _net10 _net9 Is="1e-15" N="1" M="0.5" Cj0="1e-14" Vj="0.7"
+  Diode:D2 _net9 _net8 Is="1e-15" N="1" M="0.5" Cj0="1e-14" Vj="0.7"
+  R:R21 _net11 _net12 R="1e+06"
+  R:R22 _net12 _net98 R="200"
+  C:C14 _net11 _net12 C="3.225e-11"
+  EDD:E13 _cnet3 gnd _net2 _net98 _net1 _net98 I1="E13.I1" Q1="E13.Q1" I2="E13.I2" Q2="E13.Q2" I3="E13.I3" Q3="E13.Q3"
+  R:R23 _net18 _net98 R="1e+06"
+  C:C15 _net18 _net98 C="1.59e-14"
+  VCCS:G15 _net9 _net98 _net18 _net98 G="1e-06"
+  EDD:ES _cnet4 gnd _net18 _net98 I1="ES.I1" Q1="ES.Q1" I2="ES.I2" Q2="ES.Q2"
+  R:RS _net26 _net22 R="500"
+  Vdc:V3 _net23 _net51 U="1.03951"
+  Vdc:V4 _net21 _net23 U="1.36"
+  C:C16 _net20 _net25 C="2e-12"
+  C:C17 _net24 _net25 C="2e-12"
+  R:RG1 _net20 _net97 R="1e+08"
+  R:RG2 _net24 _net97 R="1e+08"
+  BJT:Q1 _net20 _net20 _net97 _ref Type="pnp" Bf="120" Vaf="150" Var="15" Rb="2000" Re="4" Rc="900" Is="1e-16" Nf="1" Nr="1" Ikf="0" Ikr="0" Ise="0" Ne="1.5" Isc="0" Nc="2" Br="1" Rbm="0" Irb="0" Cje="0" Vje="0.75" Mje="0.33" Cjc="0" Vjc="0.75" Mjc="0.33" Xcjc="1" Cjs="0" Vjs="0.75" Mjs="0" Fc="0.5" Vtf="0" Tf="0" Xtf="0" Itf="0" Tr="0"
+  BJT:Q2 _net21 _net20 _net22 _ref Type="npn" Bf="120" Vaf="150" Var="15" Rb="2000" Re="4" Rc="200" Is="1e-16" Nf="1" Nr="1" Ikf="0" Ikr="0" Ise="0" Ne="1.5" Isc="0" Nc="2" Br="1" Rbm="0" Irb="0" Cje="0" Vje="0.75" Mje="0.33" Cjc="0" Vjc="0.75" Mjc="0.33" Xcjc="1" Cjs="0" Vjs="0.75" Mjs="0" Fc="0.5" Vtf="0" Tf="0" Xtf="0" Itf="0" Tr="0"
+  BJT:Q3 _net23 _net24 _net22 _ref Type="pnp" Bf="120" Vaf="150" Var="15" Rb="2000" Re="4" Rc="900" Is="1e-16" Nf="1" Nr="1" Ikf="0" Ikr="0" Ise="0" Ne="1.5" Isc="0" Nc="2" Br="1" Rbm="0" Irb="0" Cje="0" Vje="0.75" Mje="0.33" Cjc="0" Vjc="0.75" Mjc="0.33" Xcjc="1" Cjs="0" Vjs="0.75" Mjs="0" Fc="0.5" Vtf="0" Tf="0" Xtf="0" Itf="0" Tr="0"
+  BJT:Q4 _net24 _net24 _net51 _ref Type="npn" Bf="120" Vaf="150" Var="15" Rb="2000" Re="4" Rc="200" Is="1e-16" Nf="1" Nr="1" Ikf="0" Ikr="0" Ise="0" Ne="1.5" Isc="0" Nc="2" Br="1" Rbm="0" Irb="0" Cje="0" Vje="0.75" Mje="0.33" Cjc="0" Vjc="0.75" Mjc="0.33" Xcjc="1" Cjs="0" Vjs="0.75" Mjs="0" Fc="0.5" Vtf="0" Tf="0" Xtf="0" Itf="0" Tr="0"
+  BJT:Q5 _net20 _net25 _net97 _ref Type="pnp" Area="20" Bf="120" Vaf="150" Var="15" Rb="2000" Re="4" Rc="900" Is="1e-16" Nf="1" Nr="1" Ikf="0" Ikr="0" Ise="0" Ne="1.5" Isc="0" Nc="2" Br="1" Rbm="0" Irb="0" Cje="0" Vje="0.75" Mje="0.33" Cjc="0" Vjc="0.75" Mjc="0.33" Xcjc="1" Cjs="0" Vjs="0.75" Mjs="0" Fc="0.5" Vtf="0" Tf="0" Xtf="0" Itf="0" Tr="0"
+  BJT:Q6 _net24 _net25 _net51 _ref Type="npn" Area="20" Bf="120" Vaf="150" Var="15" Rb="2000" Re="4" Rc="200" Is="1e-16" Nf="1" Nr="1" Ikf="0" Ikr="0" Ise="0" Ne="1.5" Isc="0" Nc="2" Br="1" Rbm="0" Irb="0" Cje="0" Vje="0.75" Mje="0.33" Cjc="0" Vjc="0.75" Mjc="0.33" Xcjc="1" Cjs="0" Vjs="0.75" Mjs="0" Fc="0.5" Vtf="0" Tf="0" Xtf="0" Itf="0" Tr="0"
+  Vdc:VP _cnet8 _net97 U="0"
+  Vdc:VN _cnet11 _net52 U="0"
+  EDD:EP _cnet5 gnd _net99 _ref I1="EP.I1" Q1="EP.Q1" I2="EP.I2" Q2="EP.Q2"
+  EDD:EN _cnet6 gnd _net50 _ref I1="EN.I1" Q1="EN.Q1" I2="EN.I2" Q2="EN.Q2"
+  R:R25 _net30 _net99 R="275000"
+  R:R26 _net30 _net50 R="275000"
+  EDD:FSY1 _cnet9 gnd _cnet7 gnd I1="FSY1.I1" Q1="FSY1.Q1" I2="FSY1.I2" Q2="FSY1.Q2"
+  EDD:FSY2 _cnet12 gnd _cnet10 gnd I1="FSY2.I1" Q1="FSY2.Q1" I2="FSY2.I2" Q2="FSY2.Q2"
+  .Def:End
+  Sub:X1 _ref _net1 _net2 _net99 _net50 _net25 Type="AD822A"
+.Def:End
+  </Model>
+  <Symbol>
+    <Line -20 -40 0 80 #000080 2 1>
+    <Line -20 -40 60 40 #000080 2 1>
+    <Line -20 40 60 -40 #000080 2 1>
+    <Line 40 0 20 0 #000080 2 1>
+    <Line -40 -20 20 0 #000080 2 1>
+    <Line -40 20 20 0 #000080 2 1>
+    <Line -15 20 10 0 #000000 2 1>
+    <Line -10 -25 0 10 #ff0000 0 1>
+    <Line -15 -20 10 0 #ff0000 0 1>
+    <Line 10 -20 0 -20 #000080 2 1>
+    <Line 10 20 0 20 #000080 2 1>
+    <.PortSym -40 -20 1 0>
+    <.PortSym -40 20 2 0>
+    <.PortSym 10 -40 3 270>
+    <.PortSym 10 40 4 90>
+    <.PortSym 60 0 5 180>
+    <.ID 50 34 OP>
+  </Symbol>
+</Component>
+
+<Component ad822b>
+  <Description>
+Authors: Vadim Kuznetsov <ra3xdh@gmail.com> and Timofey Moiseev <voig1396@gmail.com>
+  </Description>
+  <Model>
+.Def:OpAmps_ad822b _net0 _net2 _net4 _net3 _net1
+Sub:X1 _net0 _net1 _net2 _net3 _net4 gnd Type="ad822b_cir"
+.Def:End
+.Def:ad822b_cir _net1 _net25 _net2 _net50 _net99 _ref
+  .Def:AD822B _ref _net1 _net2 _net99 _net50 _net25
+  CCCS:FSY2 _cnet12 _net50 _ref gnd G="1"
+  Eqn:EqnFSY2I1 FSY2.I1="+0.0002105+1*V2" Export="no"
+  Eqn:EqnFSY2Q1 FSY2.Q1="0" Export="no"
+  Eqn:EqnFSY2I2 FSY2.I2="0" Export="no"
+  Eqn:EqnFSY2Q2 FSY2.Q2="0" Export="no"
+  CCVS:FSY2V2 _net51 _cnet10 gnd _cnet11 G="1"
+  CCCS:FSY1 _cnet9 _ref _net99 gnd G="1"
+  Eqn:EqnFSY1I1 FSY1.I1="+0.0002105+1*V2" Export="no"
+  Eqn:EqnFSY1Q1 FSY1.Q1="0" Export="no"
+  Eqn:EqnFSY1I2 FSY1.I2="0" Export="no"
+  Eqn:EqnFSY1Q2 FSY1.Q2="0" Export="no"
+  CCVS:FSY1V2 _net96 _cnet7 gnd _cnet8 G="1"
+  CCVS:EN _cnet6 _ref _net52 gnd G="1"
+  Eqn:EqnENI1 EN.I1="-0.015+1*V2" Export="no"
+  Eqn:EqnENQ1 EN.Q1="0" Export="no"
+  Eqn:EqnENI2 EN.I2="0" Export="no"
+  Eqn:EqnENQ2 EN.Q2="0" Export="no"
+  CCVS:EP _cnet5 _ref _net96 gnd G="1"
+  Eqn:EqnEPI1 EP.I1="+0.01+1*V2" Export="no"
+  Eqn:EqnEPQ1 EP.Q1="0" Export="no"
+  Eqn:EqnEPI2 EP.I2="0" Export="no"
+  Eqn:EqnEPQ2 EP.Q2="0" Export="no"
+  CCVS:ES _cnet4 _net51 _net26 gnd G="1"
+  Eqn:EqnESI1 ES.I1="+1.72+1*V2" Export="no"
+  Eqn:EqnESQ1 ES.Q1="0" Export="no"
+  Eqn:EqnESI2 ES.I2="0" Export="no"
+  Eqn:EqnESQ2 ES.Q2="0" Export="no"
+  CCVS:E13 _cnet3 _net98 _net11 gnd G="1"
+  Eqn:EqnE13I1 E13.I1="+0.5*V2+0.5*V3" Export="no"
+  Eqn:EqnE13Q1 E13.Q1="0" Export="no"
+  Eqn:EqnE13I2 E13.I2="0" Export="no"
+  Eqn:EqnE13Q2 E13.Q2="0" Export="no"
+  Eqn:EqnE13I3 E13.I3="0" Export="no"
+  Eqn:EqnE13Q3 E13.Q3="0" Export="no"
+  CCCS:GB2 _cnet2 _net7 _net50 gnd G="1"
+  Eqn:EqnGB2I1 GB2.I1="+1e-12*V2+1e-12*V3+1e-12*V4" Export="no"
+  Eqn:EqnGB2Q1 GB2.Q1="0" Export="no"
+  Eqn:EqnGB2I2 GB2.I2="0" Export="no"
+  Eqn:EqnGB2Q2 GB2.Q2="0" Export="no"
+  Eqn:EqnGB2I3 GB2.I3="0" Export="no"
+  Eqn:EqnGB2Q3 GB2.Q3="0" Export="no"
+  Eqn:EqnGB2I4 GB2.I4="0" Export="no"
+  Eqn:EqnGB2Q4 GB2.Q4="0" Export="no"
+  CCCS:GB1 _cnet1 _net2 _net50 gnd G="1"
+  Eqn:EqnGB1I1 GB1.I1="+1e-12*V2+1e-12*V3+1e-12*V4" Export="no"
+  Eqn:EqnGB1Q1 GB1.Q1="0" Export="no"
+  Eqn:EqnGB1I2 GB1.I2="0" Export="no"
+  Eqn:EqnGB1Q2 GB1.Q2="0" Export="no"
+  Eqn:EqnGB1I3 GB1.I3="0" Export="no"
+  Eqn:EqnGB1Q3 GB1.Q3="0" Export="no"
+  Eqn:EqnGB1I4 GB1.I4="0" Export="no"
+  Eqn:EqnGB1Q4 GB1.Q4="0" Export="no"
+  CCVS:EOS _cnet0 _net1 _net7 gnd G="1"
+  Eqn:EqnEOSI1 EOS.I1="+0.0004+2.41*V2" Export="no"
+  Eqn:EqnEOSQ1 EOS.Q1="0" Export="no"
+  Eqn:EqnEOSI2 EOS.I2="0" Export="no"
+  Eqn:EqnEOSQ2 EOS.Q2="0" Export="no"
+  R:R3 _net5 _net99 R="2456"
+  R:R4 _net6 _net99 R="2456"
+  C:CIN _net1 _net2 C="5e-12"
+  C:C2 _net5 _net6 C="6.48e-12"
+  Idc:I1 _net50 _net4 I="0.000108"
+  Idc:IOS _net2 _net1 I="5e-12"
+  EDD:EOS _cnet0 gnd _net12 _net98 I1="EOS.I1" Q1="EOS.Q1" I2="EOS.I2" Q2="EOS.Q2"
+  JFET:J1 _net2 _net5 _net4 Type="nfet" Beta="0.000767" Vt0="-2" Is="5e-12" N="1" Lambda="0" M="0.5" Pb="1" Fc="0.5" Cgs="0" Cgd="0"
+  JFET:J2 _net7 _net6 _net4 Type="nfet" Beta="0.000767" Vt0="-2" Is="5e-12" N="1" Lambda="0" M="0.5" Pb="1" Fc="0.5" Cgs="0" Cgd="0"
+  EDD:GB1 _cnet1 gnd _net2 _net4 _net2 _net5 _net2 _net50 I1="GB1.I1" Q1="GB1.Q1" I2="GB1.I2" Q2="GB1.Q2" I3="GB1.I3" Q3="GB1.Q3" I4="GB1.I4" Q4="GB1.Q4"
+  EDD:GB2 _cnet2 gnd _net7 _net4 _net7 _net5 _net7 _net50 I1="GB2.I1" Q1="GB2.Q1" I2="GB2.I2" Q2="GB2.Q2" I3="GB2.I3" Q3="GB2.Q3" I4="GB2.I4" Q4="GB2.Q4"
+  VCVS:EREF _net30 _net98 _ref _ref G="1"
+  R:R5 _net9 _net98 R="1.234e+06"
+  C:C3 _net9 _net25 C="3.2e-11"
+  VCCS:G1 _net6 _net98 _net9 _net5 G="0.000407"
+  Vdc:V1 _net8 _net98 U="0"
+  Vdc:V2 _net98 _net10 U="-1"
+  Diode:D1 _net10 _net9 Is="1e-15" N="1" M="0.5" Cj0="1e-14" Vj="0.7"
+  Diode:D2 _net9 _net8 Is="1e-15" N="1" M="0.5" Cj0="1e-14" Vj="0.7"
+  R:R21 _net11 _net12 R="1e+06"
+  R:R22 _net12 _net98 R="141"
+  C:C14 _net11 _net12 C="4.56e-11"
+  EDD:E13 _cnet3 gnd _net2 _net98 _net1 _net98 I1="E13.I1" Q1="E13.Q1" I2="E13.I2" Q2="E13.Q2" I3="E13.I3" Q3="E13.Q3"
+  R:R23 _net18 _net98 R="1e+06"
+  C:C15 _net18 _net98 C="1.59e-14"
+  VCCS:G15 _net9 _net98 _net18 _net98 G="1e-06"
+  EDD:ES _cnet4 gnd _net18 _net98 I1="ES.I1" Q1="ES.Q1" I2="ES.I2" Q2="ES.Q2"
+  R:RS _net26 _net22 R="500"
+  Vdc:V3 _net23 _net51 U="1.03951"
+  Vdc:V4 _net21 _net23 U="1.36"
+  C:C16 _net20 _net25 C="2e-12"
+  C:C17 _net24 _net25 C="2e-12"
+  R:RG1 _net20 _net97 R="1e+08"
+  R:RG2 _net24 _net97 R="1e+08"
+  BJT:Q1 _net20 _net20 _net97 _ref Type="pnp" Bf="120" Vaf="150" Var="15" Rb="2000" Re="4" Rc="900" Is="1e-16" Nf="1" Nr="1" Ikf="0" Ikr="0" Ise="0" Ne="1.5" Isc="0" Nc="2" Br="1" Rbm="0" Irb="0" Cje="0" Vje="0.75" Mje="0.33" Cjc="0" Vjc="0.75" Mjc="0.33" Xcjc="1" Cjs="0" Vjs="0.75" Mjs="0" Fc="0.5" Vtf="0" Tf="0" Xtf="0" Itf="0" Tr="0"
+  BJT:Q2 _net21 _net20 _net22 _ref Type="npn" Bf="120" Vaf="150" Var="15" Rb="2000" Re="4" Rc="200" Is="1e-16" Nf="1" Nr="1" Ikf="0" Ikr="0" Ise="0" Ne="1.5" Isc="0" Nc="2" Br="1" Rbm="0" Irb="0" Cje="0" Vje="0.75" Mje="0.33" Cjc="0" Vjc="0.75" Mjc="0.33" Xcjc="1" Cjs="0" Vjs="0.75" Mjs="0" Fc="0.5" Vtf="0" Tf="0" Xtf="0" Itf="0" Tr="0"
+  BJT:Q3 _net23 _net24 _net22 _ref Type="pnp" Bf="120" Vaf="150" Var="15" Rb="2000" Re="4" Rc="900" Is="1e-16" Nf="1" Nr="1" Ikf="0" Ikr="0" Ise="0" Ne="1.5" Isc="0" Nc="2" Br="1" Rbm="0" Irb="0" Cje="0" Vje="0.75" Mje="0.33" Cjc="0" Vjc="0.75" Mjc="0.33" Xcjc="1" Cjs="0" Vjs="0.75" Mjs="0" Fc="0.5" Vtf="0" Tf="0" Xtf="0" Itf="0" Tr="0"
+  BJT:Q4 _net24 _net24 _net51 _ref Type="npn" Bf="120" Vaf="150" Var="15" Rb="2000" Re="4" Rc="200" Is="1e-16" Nf="1" Nr="1" Ikf="0" Ikr="0" Ise="0" Ne="1.5" Isc="0" Nc="2" Br="1" Rbm="0" Irb="0" Cje="0" Vje="0.75" Mje="0.33" Cjc="0" Vjc="0.75" Mjc="0.33" Xcjc="1" Cjs="0" Vjs="0.75" Mjs="0" Fc="0.5" Vtf="0" Tf="0" Xtf="0" Itf="0" Tr="0"
+  BJT:Q5 _net20 _net25 _net97 _ref Type="pnp" Area="20" Bf="120" Vaf="150" Var="15" Rb="2000" Re="4" Rc="900" Is="1e-16" Nf="1" Nr="1" Ikf="0" Ikr="0" Ise="0" Ne="1.5" Isc="0" Nc="2" Br="1" Rbm="0" Irb="0" Cje="0" Vje="0.75" Mje="0.33" Cjc="0" Vjc="0.75" Mjc="0.33" Xcjc="1" Cjs="0" Vjs="0.75" Mjs="0" Fc="0.5" Vtf="0" Tf="0" Xtf="0" Itf="0" Tr="0"
+  BJT:Q6 _net24 _net25 _net51 _ref Type="npn" Area="20" Bf="120" Vaf="150" Var="15" Rb="2000" Re="4" Rc="200" Is="1e-16" Nf="1" Nr="1" Ikf="0" Ikr="0" Ise="0" Ne="1.5" Isc="0" Nc="2" Br="1" Rbm="0" Irb="0" Cje="0" Vje="0.75" Mje="0.33" Cjc="0" Vjc="0.75" Mjc="0.33" Xcjc="1" Cjs="0" Vjs="0.75" Mjs="0" Fc="0.5" Vtf="0" Tf="0" Xtf="0" Itf="0" Tr="0"
+  Vdc:VP _cnet8 _net97 U="0"
+  Vdc:VN _cnet11 _net52 U="0"
+  EDD:EP _cnet5 gnd _net99 _ref I1="EP.I1" Q1="EP.Q1" I2="EP.I2" Q2="EP.Q2"
+  EDD:EN _cnet6 gnd _net50 _ref I1="EN.I1" Q1="EN.Q1" I2="EN.I2" Q2="EN.Q2"
+  R:R25 _net30 _net99 R="275000"
+  R:R26 _net30 _net50 R="275000"
+  EDD:FSY1 _cnet9 gnd _cnet7 gnd I1="FSY1.I1" Q1="FSY1.Q1" I2="FSY1.I2" Q2="FSY1.Q2"
+  EDD:FSY2 _cnet12 gnd _cnet10 gnd I1="FSY2.I1" Q1="FSY2.Q1" I2="FSY2.I2" Q2="FSY2.Q2"
+  .Def:End
+  Sub:X1 _ref _net1 _net2 _net99 _net50 _net25 Type="AD822B"
+.Def:End
+  </Model>
+  <Symbol>
+    <Line -20 -40 0 80 #000080 2 1>
+    <Line -20 -40 60 40 #000080 2 1>
+    <Line -20 40 60 -40 #000080 2 1>
+    <Line 40 0 20 0 #000080 2 1>
+    <Line -40 -20 20 0 #000080 2 1>
+    <Line -40 20 20 0 #000080 2 1>
+    <Line -15 20 10 0 #000000 2 1>
+    <Line -10 -25 0 10 #ff0000 0 1>
+    <Line -15 -20 10 0 #ff0000 0 1>
+    <Line 10 -20 0 -20 #000080 2 1>
+    <Line 10 20 0 20 #000080 2 1>
+    <.PortSym -40 -20 1 0>
+    <.PortSym -40 20 2 0>
+    <.PortSym 10 -40 3 270>
+    <.PortSym 10 40 4 90>
+    <.PortSym 60 0 5 180>
+    <.ID 40 24 OP>
+  </Symbol>
+</Component>
+
+<Component ad822s>
+  <Description>
+Authors: Vadim Kuznetsov <ra3xdh@gmail.com> and Timofey Moiseev <voig1396@gmail.com>
+  </Description>
+  <Model>
+.Def:OpAmps_ad822s _net0 _net2 _net4 _net3 _net1
+Sub:X1 _net0 _net1 _net2 _net3 _net4 gnd Type="ad822s_cir"
+.Def:End
+.Def:ad822s_cir _net1 _net25 _net2 _net50 _net99 _ref
+  .Def:AD822S _ref _net1 _net2 _net99 _net50 _net25
+  CCCS:FSY2 _cnet12 _net50 _ref gnd G="1"
+  Eqn:EqnFSY2I1 FSY2.I1="+0.0002105+1*V2" Export="no"
+  Eqn:EqnFSY2Q1 FSY2.Q1="0" Export="no"
+  Eqn:EqnFSY2I2 FSY2.I2="0" Export="no"
+  Eqn:EqnFSY2Q2 FSY2.Q2="0" Export="no"
+  CCVS:FSY2V2 _net51 _cnet10 gnd _cnet11 G="1"
+  CCCS:FSY1 _cnet9 _ref _net99 gnd G="1"
+  Eqn:EqnFSY1I1 FSY1.I1="+0.0002105+1*V2" Export="no"
+  Eqn:EqnFSY1Q1 FSY1.Q1="0" Export="no"
+  Eqn:EqnFSY1I2 FSY1.I2="0" Export="no"
+  Eqn:EqnFSY1Q2 FSY1.Q2="0" Export="no"
+  CCVS:FSY1V2 _net96 _cnet7 gnd _cnet8 G="1"
+  CCVS:EN _cnet6 _ref _net52 gnd G="1"
+  Eqn:EqnENI1 EN.I1="-0.015+1*V2" Export="no"
+  Eqn:EqnENQ1 EN.Q1="0" Export="no"
+  Eqn:EqnENI2 EN.I2="0" Export="no"
+  Eqn:EqnENQ2 EN.Q2="0" Export="no"
+  CCVS:EP _cnet5 _ref _net96 gnd G="1"
+  Eqn:EqnEPI1 EP.I1="+0.01+1*V2" Export="no"
+  Eqn:EqnEPQ1 EP.Q1="0" Export="no"
+  Eqn:EqnEPI2 EP.I2="0" Export="no"
+  Eqn:EqnEPQ2 EP.Q2="0" Export="no"
+  CCVS:ES _cnet4 _net51 _net26 gnd G="1"
+  Eqn:EqnESI1 ES.I1="+1.72+1*V2" Export="no"
+  Eqn:EqnESQ1 ES.Q1="0" Export="no"
+  Eqn:EqnESI2 ES.I2="0" Export="no"
+  Eqn:EqnESQ2 ES.Q2="0" Export="no"
+  CCVS:E13 _cnet3 _net98 _net11 gnd G="1"
+  Eqn:EqnE13I1 E13.I1="+0.5*V2+0.5*V3" Export="no"
+  Eqn:EqnE13Q1 E13.Q1="0" Export="no"
+  Eqn:EqnE13I2 E13.I2="0" Export="no"
+  Eqn:EqnE13Q2 E13.Q2="0" Export="no"
+  Eqn:EqnE13I3 E13.I3="0" Export="no"
+  Eqn:EqnE13Q3 E13.Q3="0" Export="no"
+  CCCS:GB2 _cnet2 _net7 _net50 gnd G="1"
+  Eqn:EqnGB2I1 GB2.I1="+1e-12*V2+1e-12*V3+1e-12*V4" Export="no"
+  Eqn:EqnGB2Q1 GB2.Q1="0" Export="no"
+  Eqn:EqnGB2I2 GB2.I2="0" Export="no"
+  Eqn:EqnGB2Q2 GB2.Q2="0" Export="no"
+  Eqn:EqnGB2I3 GB2.I3="0" Export="no"
+  Eqn:EqnGB2Q3 GB2.Q3="0" Export="no"
+  Eqn:EqnGB2I4 GB2.I4="0" Export="no"
+  Eqn:EqnGB2Q4 GB2.Q4="0" Export="no"
+  CCCS:GB1 _cnet1 _net2 _net50 gnd G="1"
+  Eqn:EqnGB1I1 GB1.I1="+1e-12*V2+1e-12*V3+1e-12*V4" Export="no"
+  Eqn:EqnGB1Q1 GB1.Q1="0" Export="no"
+  Eqn:EqnGB1I2 GB1.I2="0" Export="no"
+  Eqn:EqnGB1Q2 GB1.Q2="0" Export="no"
+  Eqn:EqnGB1I3 GB1.I3="0" Export="no"
+  Eqn:EqnGB1Q3 GB1.Q3="0" Export="no"
+  Eqn:EqnGB1I4 GB1.I4="0" Export="no"
+  Eqn:EqnGB1Q4 GB1.Q4="0" Export="no"
+  CCVS:EOS _cnet0 _net1 _net7 gnd G="1"
+  Eqn:EqnEOSI1 EOS.I1="+0.0008+2.41*V2" Export="no"
+  Eqn:EqnEOSQ1 EOS.Q1="0" Export="no"
+  Eqn:EqnEOSI2 EOS.I2="0" Export="no"
+  Eqn:EqnEOSQ2 EOS.Q2="0" Export="no"
+  R:R3 _net5 _net99 R="2456"
+  R:R4 _net6 _net99 R="2456"
+  C:CIN _net1 _net2 C="5e-12"
+  C:C2 _net5 _net6 C="6.48e-12"
+  Idc:I1 _net50 _net4 I="0.000108"
+  Idc:IOS _net2 _net1 I="1e-11"
+  EDD:EOS _cnet0 gnd _net12 _net98 I1="EOS.I1" Q1="EOS.Q1" I2="EOS.I2" Q2="EOS.Q2"
+  JFET:J1 _net2 _net5 _net4 Type="nfet" Beta="0.000767" Vt0="-2" Is="1.25e-11" N="1" Lambda="0" M="0.5" Pb="1" Fc="0.5" Cgs="0" Cgd="0"
+  JFET:J2 _net7 _net6 _net4 Type="nfet" Beta="0.000767" Vt0="-2" Is="1.25e-11" N="1" Lambda="0" M="0.5" Pb="1" Fc="0.5" Cgs="0" Cgd="0"
+  EDD:GB1 _cnet1 gnd _net2 _net4 _net2 _net5 _net2 _net50 I1="GB1.I1" Q1="GB1.Q1" I2="GB1.I2" Q2="GB1.Q2" I3="GB1.I3" Q3="GB1.Q3" I4="GB1.I4" Q4="GB1.Q4"
+  EDD:GB2 _cnet2 gnd _net7 _net4 _net7 _net5 _net7 _net50 I1="GB2.I1" Q1="GB2.Q1" I2="GB2.I2" Q2="GB2.Q2" I3="GB2.I3" Q3="GB2.Q3" I4="GB2.I4" Q4="GB2.Q4"
+  VCVS:EREF _net30 _net98 _ref _ref G="1"
+  R:R5 _net9 _net98 R="1.234e+06"
+  C:C3 _net9 _net25 C="3.2e-11"
+  VCCS:G1 _net6 _net98 _net9 _net5 G="0.000407"
+  Vdc:V1 _net8 _net98 U="0"
+  Vdc:V2 _net98 _net10 U="-1"
+  Diode:D1 _net10 _net9 Is="1e-15" N="1" M="0.5" Cj0="1e-14" Vj="0.7"
+  Diode:D2 _net9 _net8 Is="1e-15" N="1" M="0.5" Cj0="1e-14" Vj="0.7"
+  R:R21 _net11 _net12 R="1e+06"
+  R:R22 _net12 _net98 R="200"
+  C:C14 _net11 _net12 C="3.225e-11"
+  EDD:E13 _cnet3 gnd _net2 _net98 _net1 _net98 I1="E13.I1" Q1="E13.Q1" I2="E13.I2" Q2="E13.Q2" I3="E13.I3" Q3="E13.Q3"
+  R:R23 _net18 _net98 R="1e+06"
+  C:C15 _net18 _net98 C="1.59e-14"
+  VCCS:G15 _net9 _net98 _net18 _net98 G="1e-06"
+  EDD:ES _cnet4 gnd _net18 _net98 I1="ES.I1" Q1="ES.Q1" I2="ES.I2" Q2="ES.Q2"
+  R:RS _net26 _net22 R="500"
+  Vdc:V3 _net23 _net51 U="1.03951"
+  Vdc:V4 _net21 _net23 U="1.36"
+  C:C16 _net20 _net25 C="2e-12"
+  C:C17 _net24 _net25 C="2e-12"
+  R:RG1 _net20 _net97 R="1e+08"
+  R:RG2 _net24 _net97 R="1e+08"
+  BJT:Q1 _net20 _net20 _net97 _ref Type="pnp" Bf="120" Vaf="150" Var="15" Rb="2000" Re="4" Rc="900" Is="1e-16" Nf="1" Nr="1" Ikf="0" Ikr="0" Ise="0" Ne="1.5" Isc="0" Nc="2" Br="1" Rbm="0" Irb="0" Cje="0" Vje="0.75" Mje="0.33" Cjc="0" Vjc="0.75" Mjc="0.33" Xcjc="1" Cjs="0" Vjs="0.75" Mjs="0" Fc="0.5" Vtf="0" Tf="0" Xtf="0" Itf="0" Tr="0"
+  BJT:Q2 _net21 _net20 _net22 _ref Type="npn" Bf="120" Vaf="150" Var="15" Rb="2000" Re="4" Rc="200" Is="1e-16" Nf="1" Nr="1" Ikf="0" Ikr="0" Ise="0" Ne="1.5" Isc="0" Nc="2" Br="1" Rbm="0" Irb="0" Cje="0" Vje="0.75" Mje="0.33" Cjc="0" Vjc="0.75" Mjc="0.33" Xcjc="1" Cjs="0" Vjs="0.75" Mjs="0" Fc="0.5" Vtf="0" Tf="0" Xtf="0" Itf="0" Tr="0"
+  BJT:Q3 _net23 _net24 _net22 _ref Type="pnp" Bf="120" Vaf="150" Var="15" Rb="2000" Re="4" Rc="900" Is="1e-16" Nf="1" Nr="1" Ikf="0" Ikr="0" Ise="0" Ne="1.5" Isc="0" Nc="2" Br="1" Rbm="0" Irb="0" Cje="0" Vje="0.75" Mje="0.33" Cjc="0" Vjc="0.75" Mjc="0.33" Xcjc="1" Cjs="0" Vjs="0.75" Mjs="0" Fc="0.5" Vtf="0" Tf="0" Xtf="0" Itf="0" Tr="0"
+  BJT:Q4 _net24 _net24 _net51 _ref Type="npn" Bf="120" Vaf="150" Var="15" Rb="2000" Re="4" Rc="200" Is="1e-16" Nf="1" Nr="1" Ikf="0" Ikr="0" Ise="0" Ne="1.5" Isc="0" Nc="2" Br="1" Rbm="0" Irb="0" Cje="0" Vje="0.75" Mje="0.33" Cjc="0" Vjc="0.75" Mjc="0.33" Xcjc="1" Cjs="0" Vjs="0.75" Mjs="0" Fc="0.5" Vtf="0" Tf="0" Xtf="0" Itf="0" Tr="0"
+  BJT:Q5 _net20 _net25 _net97 _ref Type="pnp" Area="20" Bf="120" Vaf="150" Var="15" Rb="2000" Re="4" Rc="900" Is="1e-16" Nf="1" Nr="1" Ikf="0" Ikr="0" Ise="0" Ne="1.5" Isc="0" Nc="2" Br="1" Rbm="0" Irb="0" Cje="0" Vje="0.75" Mje="0.33" Cjc="0" Vjc="0.75" Mjc="0.33" Xcjc="1" Cjs="0" Vjs="0.75" Mjs="0" Fc="0.5" Vtf="0" Tf="0" Xtf="0" Itf="0" Tr="0"
+  BJT:Q6 _net24 _net25 _net51 _ref Type="npn" Area="20" Bf="120" Vaf="150" Var="15" Rb="2000" Re="4" Rc="200" Is="1e-16" Nf="1" Nr="1" Ikf="0" Ikr="0" Ise="0" Ne="1.5" Isc="0" Nc="2" Br="1" Rbm="0" Irb="0" Cje="0" Vje="0.75" Mje="0.33" Cjc="0" Vjc="0.75" Mjc="0.33" Xcjc="1" Cjs="0" Vjs="0.75" Mjs="0" Fc="0.5" Vtf="0" Tf="0" Xtf="0" Itf="0" Tr="0"
+  Vdc:VP _cnet8 _net97 U="0"
+  Vdc:VN _cnet11 _net52 U="0"
+  EDD:EP _cnet5 gnd _net99 _ref I1="EP.I1" Q1="EP.Q1" I2="EP.I2" Q2="EP.Q2"
+  EDD:EN _cnet6 gnd _net50 _ref I1="EN.I1" Q1="EN.Q1" I2="EN.I2" Q2="EN.Q2"
+  R:R25 _net30 _net99 R="275000"
+  R:R26 _net30 _net50 R="275000"
+  EDD:FSY1 _cnet9 gnd _cnet7 gnd I1="FSY1.I1" Q1="FSY1.Q1" I2="FSY1.I2" Q2="FSY1.Q2"
+  EDD:FSY2 _cnet12 gnd _cnet10 gnd I1="FSY2.I1" Q1="FSY2.Q1" I2="FSY2.I2" Q2="FSY2.Q2"
+  .Def:End
+  Sub:X1 _ref _net1 _net2 _net99 _net50 _net25 Type="AD822S"
+.Def:End
+  </Model>
+  <Symbol>
+    <Line -20 -40 0 80 #000080 2 1>
+    <Line -20 -40 60 40 #000080 2 1>
+    <Line -20 40 60 -40 #000080 2 1>
+    <Line 40 0 20 0 #000080 2 1>
+    <Line -40 -20 20 0 #000080 2 1>
+    <Line -40 20 20 0 #000080 2 1>
+    <Line -15 20 10 0 #000000 2 1>
+    <Line -10 -25 0 10 #ff0000 0 1>
+    <Line -15 -20 10 0 #ff0000 0 1>
+    <Line 10 -20 0 -20 #000080 2 1>
+    <Line 10 20 0 20 #000080 2 1>
+    <.PortSym -40 -20 1 0>
+    <.PortSym -40 20 2 0>
+    <.PortSym 10 -40 3 270>
+    <.PortSym 10 40 4 90>
+    <.PortSym 60 0 5 180>
+    <.ID 50 34 OP>
+  </Symbol>
+</Component>
+
+
+<Component LF411>
+  <Description>
+Authors: Vadim Kuznetsov <ra3xdh@gmail.com> and Timofey Moiseev <voig1396@gmail.com>
+  </Description>
+  <Model>
+.Def:OpAmps_LF411 _net2 _net3 _net4 _net0 _net1
+Sub:X1 _net0 _net1 _net2 _net3 _net4 gnd Type="LF411C_cir"
+.Def:End
+
+.Def:LF411C_cir _net4 _net5 _net1 _net2 _net3 _ref
+  .Def:LF411C _ref _net1 _net2 _net3 _net4 _net5
+  CCCS:FB _cnet11 _net99 _net7 gnd G="1"
+  Eqn:EqnFBI1 FB.I1="+2.829e+07*V2-3e+07*V3+3e+07*V4+3e+07*V5-3e+07*V6" Export="no"
+  Eqn:EqnFBQ1 FB.Q1="0" Export="no"
+  Eqn:EqnFBI2 FB.I2="0" Export="no"
+  Eqn:EqnFBQ2 FB.Q2="0" Export="no"
+  CCVS:FBV2 _ref _cnet9 gnd _cnet10 G="1"
+  Eqn:EqnFBI3 FB.I3="0" Export="no"
+  Eqn:EqnFBQ3 FB.Q3="0" Export="no"
+  CCVS:FBV3 _net91 _cnet7 gnd _cnet8 G="1"
+  Eqn:EqnFBI4 FB.I4="0" Export="no"
+  Eqn:EqnFBQ4 FB.Q4="0" Export="no"
+  CCVS:FBV4 _net54 _cnet5 gnd _cnet6 G="1"
+  Eqn:EqnFBI5 FB.I5="0" Export="no"
+  Eqn:EqnFBQ5 FB.Q5="0" Export="no"
+  CCVS:FBV5 _net3 _cnet3 gnd _cnet4 G="1"
+  Eqn:EqnFBI6 FB.I6="0" Export="no"
+  Eqn:EqnFBQ6 FB.Q6="0" Export="no"
+  CCVS:FBV6 _net9 _cnet1 gnd _cnet2 G="1"
+  CCVS:EGND _cnet0 _ref _net99 gnd G="1"
+  Eqn:EqnEGNDI1 EGND.I1="+0.5*V2+0.5*V3" Export="no"
+  Eqn:EqnEGNDQ1 EGND.Q1="0" Export="no"
+  Eqn:EqnEGNDI2 EGND.I2="0" Export="no"
+  Eqn:EqnEGNDQ2 EGND.Q2="0" Export="no"
+  Eqn:EqnEGNDI3 EGND.I3="0" Export="no"
+  Eqn:EqnEGNDQ3 EGND.Q3="0" Export="no"
+  C:C1 _net11 _net12 C="3.498e-12"
+  C:C2 _net6 _net7 C="1.5e-11"
+  Diode:DC _net53 _net5 Is="8e-16" N="1" M="0.5" Cj0="1e-14" Vj="0.7"
+  Diode:DE _net5 _net54 Is="8e-16" N="1" M="0.5" Cj0="1e-14" Vj="0.7"
+  Diode:DLP _net91 _net90 Is="8e-16" N="1" M="0.5" Cj0="1e-14" Vj="0.7"
+  Diode:DLN _net90 _net92 Is="8e-16" N="1" M="0.5" Cj0="1e-14" Vj="0.7"
+  Diode:DP _net3 _net4 Is="8e-16" N="1" M="0.5" Cj0="1e-14" Vj="0.7"
+  EDD:EGND _cnet0 gnd _net3 _ref _net4 _ref I1="EGND.I1" Q1="EGND.Q1" I2="EGND.I2" Q2="EGND.Q2" I3="EGND.I3" Q3="EGND.Q3"
+  EDD:FB _cnet11 gnd _cnet1 gnd _cnet3 gnd _cnet5 gnd _cnet7 gnd _cnet9 gnd I1="FB.I1" Q1="FB.Q1" I2="FB.I2" Q2="FB.Q2" I3="FB.I3" Q3="FB.Q3" I4="FB.I4" Q4="FB.Q4" I5="FB.I5" Q5="FB.Q5" I6="FB.I6" Q6="FB.Q6"
+  VCCS:GA _net11 _net6 _ref _net12 G="0.0002828"
+  VCCS:GCM _net10 _ref _net6 _net99 G="1.59e-09"
+  Idc:ISS _net10 _net3 I="0.000195"
+  CCVS:HLIM _net7 _net90 _ref _cnet12 G="1k"
+  JFET:J1 _net2 _net11 _net10 Type="pfet" Is="1.25e-11" Beta="0.0002501" Vt0="-1" N="1" Lambda="0" M="0.5" Pb="1" Fc="0.5" Cgs="0" Cgd="0"
+  JFET:J2 _net1 _net12 _net10 Type="pfet" Is="1.25e-11" Beta="0.0002501" Vt0="-1" N="1" Lambda="0" M="0.5" Pb="1" Fc="0.5" Cgs="0" Cgd="0"
+  R:R2 _net6 _net9 R="100000"
+  R:RD1 _net4 _net11 R="3536"
+  R:RD2 _net4 _net12 R="3536"
+  R:RO1 _net8 _net5 R="50"
+  R:RO2 _net7 _net99 R="25"
+  R:RP _net3 _net4 R="15000"
+  R:RSS _net10 _net99 R="1.026e+06"
+  Vdc:VB _cnet2 _ref U="0"
+  Vdc:VC _cnet4 _net53 U="2.2"
+  Vdc:VE _cnet6 _net4 U="2.2"
+  Vdc:VLIM _cnet12 _net8 U="0"
+  Vdc:VLP _cnet8 _ref U="30"
+  Vdc:VLN _cnet10 _net92 U="30"
+  .Def:End
+  Sub:X1 _ref _net1 _net2 _net3 _net4 _net5 Type="LF411C"
+.Def:End
+  </Model>
+  <Symbol>
+    <Line -20 -40 0 80 #000080 2 1>
+    <Line -20 -40 60 40 #000080 2 1>
+    <Line -20 40 60 -40 #000080 2 1>
+    <Line 40 0 20 0 #000080 2 1>
+    <Line -40 -20 20 0 #000080 2 1>
+    <Line -40 20 20 0 #000080 2 1>
+    <Line -15 20 10 0 #000000 2 1>
+    <Line -10 -25 0 10 #ff0000 0 1>
+    <Line -15 -20 10 0 #ff0000 0 1>
+    <Line 10 -20 0 -20 #000080 2 1>
+    <Line 10 20 0 20 #000080 2 1>
+    <.PortSym 60 0 5 180>
+    <.PortSym 10 40 4 0>
+    <.PortSym 10 -40 3 0>
+    <.PortSym -40 20 2 0>
+    <.PortSym -40 -20 1 0>
+    <.ID 30 24 OP>
+  </Symbol>
+</Component>
+
