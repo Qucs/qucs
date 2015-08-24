@@ -83,19 +83,19 @@ dnl Check for parser and lexer generators.
 AC_PROG_YACC
 AC_PROG_LEX
 
+lexver_req="2.5.9";
+
 if test "x$LEX" != "x:"; then
   if test $USE_MAINTAINER_MODE = yes; then
-    AC_MSG_CHECKING([for $LEX version])
+    AC_MSG_CHECKING([for $LEX >= $lexver_req])
     [lexver=`eval $LEX --version 2>/dev/null | head -1 | sed 's/[^0-9\.]//g'`]
     if test -n "$lexver"; then
-      case "$lexver" in
-	[2.5.9 | [2-9].[5-9].[1-9][0-9])]
-	  AC_MSG_RESULT([$lexver >= 2.5.9])
-	;;
-	  [*)]
-	  AC_MSG_ERROR([$lexver < 2.5.9])
-	;;
-      esac
+      AS_VERSION_COMPARE(${lexver},${lexver_req},
+	    [cmp=-1],[cmp=0],[cmp=1])
+      AS_IF([test "${cmp}" != "-1"],
+	    [AC_MSG_RESULT([yes])],
+	    [AC_MSG_RESULT([no])
+	     AC_MSG_ERROR([need $LEX >= $lexver_req])])
     else
       AC_MSG_RESULT([not identified])
     fi
@@ -986,3 +986,5 @@ Configure Information:
 
     Prefix          : $prefix
 ])
+
+# vim:ts=8:sw=2:noet
