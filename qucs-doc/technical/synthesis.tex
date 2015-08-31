@@ -221,3 +221,59 @@ n = \dfrac{\textrm{sech}\left(\dfrac{10^{-0.1\cdot \alpha_{stop}} - 1}{10^{-0.1\
 \subsubsection{Chebyshev II}
 
 Because of the nature of the derivation of the inverse Chebychev approxiation function from the standard Chebychev approximation the calculation of the order \eqref{eq:ChebOrder} is the same.
+
+
+\section{Matching newtworks}
+The matching networks are a keypoint in RF design since they are aimed to maximize the power transfer (i.e. $S_{11} \rightarrow$ 0). They can be implemented using lumped components (inductances and capacitors), specially for RF. However, the parasitics become a problem for higher frequencies (specially for the inductances), so it may be more convenient to use transmission lines (e.g. microstrip). In what follows, it will be depicted the design equations for the methods included in the matching network tool.
+\subsection{LC}
+\subsection{Single stub}
+Any complex load can be matched using the single stub implementation. The variables are the distance between the stub and the load, and the length of the stub. Let be $Z_L = R_L +jX_L$ the load impedance, then the impedance at the stub is:
+
+\begin{equation}
+Z(d) = Z_0 \frac{Z_L + j\cdot Z_0\cdot tan(\beta \cdot d)}{Z_0 + j\cdot Z_L \cdot tan(\beta \cdot d)}
+\end{equation}
+
+\noindent where $\theta = \frac{2\pi}{\lambda}$ is the wave number and $d$ the distance between the load and the stub. Say $Y(d) = G(d)+j \cdot B(d)$, where G(d) is the conductance and B(d) the susceptance at d. It can be shown that:
+
+\begin{equation}
+G(d) = \frac{R_L \cdot (1 + tan^2(\beta \cdot d))}{R_L^2 + (X_L + Z_0\cdot tan(\beta \dot d))^2}
+\end{equation}
+
+\noindent and, 
+
+\begin{equation}
+B(d) = \frac{R_L^2\cdot tan(\beta \cdot d) - (Z_0 - X_L\cdot tan(\beta \cdot d))\cdot (X_L + Z_0\cdot tan(\beta \cdot d))}{Z_0 \cdot (R_L^2 + (X_L + Z_0\cdot tan(\beta \cdot d))^2)}
+\end{equation}
+
+The matching condition for the conductance is $G(d) = 1/Z_0$, so applying this condition and solving for $t = tan(\beta \cdot d)$ it gives:
+
+\begin{equation}
+t = \frac{X_L \pm \sqrt((R_L/Z_0) \cdot ((Z_0 - R_L)^2 + X_L^2))}{R_L - Z_0}
+\end{equation}
+
+\noindent obviously, this solution works only if $R_L \neq Z_0$. When $R_L = Z_0$, $t = -X_L/(2\cdot Z_0)$. Once the real part of the load impedance is matched, the reactive part should be cancelled. This implies that the susceptance of the stub must be $B_{stub} = -B(d)$.
+
+\noindent Taking into account the equations above, d can be calculated as:
+
+\begin{equation}
+d = \frac{\lambda}{2\pi} atan(t) \;\;\;\;\;\;\;\; \text{if t $\geq$ 0}
+\end{equation}
+
+\begin{equation}
+d = \frac{\lambda}{2\pi} (\pi + atan(t)) \;\;\;\;\;\;\;\; \text{if t $<$ 0}
+\end{equation}
+
+\noindent The length of the stub, l, can be calculated as:
+
+\begin{equation}
+l_{open} = \frac{-\lambda}{2\pi} atan(Z_0\cdot B(d))   \;\;\;\;\;\;\;\; \text{Open stub}
+\begin{equation}
+
+\begin{equation}
+l_{short} = \frac{\lambda}{2\pi} atan(\frac{1}{Z_0\cdot B(d)}) \;\;\;\;\;\;\;\; \text{Short circuited stub}
+\begin{equation}
+
+\subsection{Double stub}
+\subsection{Multistage $\lambda$/4 sections}
+\subsubsection{Binomial weighting}
+\subsubsection{Chebyshev weighting}
