@@ -883,6 +883,7 @@ bool MatchDialog::calcMatchingCircuitSingleStub(double r_real, double r_imag, do
     if (micro_syn)//Line
     {
         er = Substrate.er;
+        getMicrostrip(Z0, Freq, &Substrate, width, er);
         s += QString("<MLIN MS1 1 %1 180 -26 20 0 0 \"Sub1\" 1 \"%2\" 1 \"%3\" 1 \"Hammerstad\" 0 \"Kirschning\" 0 \"26.85\" 0>\n").arg(x).arg(width).arg(d/sqrt(er));
     }
     else
