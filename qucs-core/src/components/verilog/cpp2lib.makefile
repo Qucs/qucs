@@ -62,20 +62,19 @@ endif
 LDFLAGS=-L$(PREFIX)/lib -Wl,-rpath -Wl,$(PROJDIR)
 
 # Required (admsXml generated) sources
-SRC=$(MODEL).core.cpp $(MODEL).analogfunction.cpp
+SRC=$(MODEL).cpp
 
 # Generated headers
-HDR=$(MODEL).core.h $(MODEL).analogfunction.h
+HDR=$(MODEL).h $(MODEL).*.h
 
 # Default
 .PHONY: cpp2lib
 
 # Main target
-# clean before building
-cpp2lib: clean $(MODEL)$(DLLEXT)
+cpp2lib: $(MODEL)$(DLLEXT)
 
 # Build library
-$(MODEL)$(DLLEXT): $(SRC)
+%.$(DLLEXT): %.cpp
 	$(CXX)  $(CXXFLAGS) -o $(MODEL)$(DLLEXT) $(SRC) $(LDFLAGS) $(LIBS)
 
 clean:
