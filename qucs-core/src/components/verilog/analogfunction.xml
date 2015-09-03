@@ -1133,5 +1133,5 @@ double $(module)_d_$(function) (<admst:join select="variable[input='yes']" separ
   <admst:apply-templates select="/module" match="analogfunctionC"/>
 <admst:text format="\n"/>
 </admst:open>
-<admst:message format="$(module).analogfunction.cpp created\n"/>
+<admst:message format="$(filename).$(module).analogfunction.cpp created\n"/>
 </admst>
