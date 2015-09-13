@@ -7,8 +7,10 @@
 
 /*circline.cpp models the TE11 mode of circular waveguide
 
-Reference:
+References:
 Microwave Engineering. David M Pozar. John Wiley and Sons. 4th Edition. Pg 121-130
+Fundation for Microwave Engineering. IEEE Press. Robert E. Collin. 2d edition. Pg 194-198
+       1992
 */
 
 
@@ -120,6 +122,7 @@ void circline::calcPropagation (nr_double_t frequency) {
   nr_double_t ad, ac, rs;
 
   // check cutoff frequency
+
   if (frequency >= fc_high) {
     logprint (LOG_ERROR, "WARNING: Operating frequency (%g) outside TE11 "
 	      "band (%g <= TE11 <= %g) or outside non propagative mode "
@@ -146,11 +149,11 @@ void circline::calcPropagation (nr_double_t frequency) {
 //printf("%d, %d, %d, %d, %d, %d", k0, kc, beta, rs, ac, ad);
 
   } else {
-    /* according to [2] eq 3.207 */
     beta = 0;
-    alpha = -std::sqrt (- (sqr (k0) - sqr (kc)));
+    alpha = std::sqrt (- (sqr (k0) - sqr (kc)));
     // wave impedance
-    zl = (k0 * Z0 * std::sqrt(mur/er)) / nr_complex_t (0, -alpha) ;
+    zl = (k0 * Z0 * std::sqrt(mur/er)) / nr_complex_t (0, alpha) ;
+    //Evanescent modes have an imaginary propagation constant, so they do not carry energy (they vanish). Eq. 203 Collins
   }
 }
 
@@ -158,7 +161,7 @@ void circline::calcPropagation (nr_double_t frequency) {
 void circline::calcNoiseSP (nr_double_t) {
   nr_double_t l = getPropertyDouble ("L");
   if (l < 0) return;
-  // calculate noise using Bosma's theorem
+  // calculate noise using Bosma's theore
   nr_double_t T = getPropertyDouble ("Temp");
   matrix s = getMatrixS ();
   matrix e = eye (getSize ());
@@ -174,8 +177,8 @@ void circline::initCheck (void) {
   nr_double_t mur = getPropertyDouble ("mur");//Relative permeability
   
   if (a < 0) logprint (LOG_ERROR, "ERROR: The radius, 'a', must be positive!.\n");// checking if the radius is > 0
-  fc_low =  pe11/(2*pi*a*std::sqrt(MU0*mur*E0*epsr));// Below this frequency, the modes do not propagate (evanescent modes)
-  fc_high = pm01/(2*pi*a*std::sqrt(MU0*mur*E0*epsr));//In most cases, the circular waveguide operation is limited to TE11.
+  fc_low =  (pe11*C0)/(2*pi*a*std::sqrt(mur*epsr));// Below this frequency, the modes do not propagate (evanescent modes)
+  fc_high = (pm01*C0)/(2*pi*a*std::sqrt(mur*epsr));//In most cases, the circular waveguide operation is limited to TE11.
                                                    //So, it is of interest to determine the range in which only TE11 is propagating.
                                                    //In this sense, the cutoff frequency is given by the TM01 mode
   rho  = getPropertyDouble ("rho");//Resitivity
@@ -210,6 +213,7 @@ void circline::calcSP (nr_double_t frequency) {
   nr_complex_t s21 = 2.0 / n;
   setS (NODE_1, NODE_1, s11); setS (NODE_2, NODE_2, s11);
   setS (NODE_1, NODE_2, s21); setS (NODE_2, NODE_1, s21);
+
 }
 
 /* ! Compute DC
