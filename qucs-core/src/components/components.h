@@ -73,6 +73,7 @@
 #include "tline.h"
 #include "ctline.h"
 #include "coaxline.h"
+#include "circline.h"
 #include "rectline.h"
 #include "twistedpair.h"
 #include "tline4p.h"

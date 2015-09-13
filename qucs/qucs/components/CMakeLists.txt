@@ -34,6 +34,7 @@ bsim3v34pMOS.cpp	hicumL0V1p2g.cpp	mstee.cpp		thyristor.cpp
 capacitor.cpp		hicumL0V1p3.cpp		msvia.cpp		tline.cpp
 cccs.cpp		hicumL2V2p1.cpp		mutual.cpp		tline_4port.cpp
 ccvs.cpp		hicumL2V2p23.cpp	mutual2.cpp		tr_sim.cpp
+circline.cpp
 circulator.cpp		hicumL2V2p24.cpp	mux2to1.cpp		transformer.cpp
 coaxialline.cpp		hicumL2V2p31n.cpp	mux4to1.cpp		triac.cpp
 comp_1bit.cpp		hpribin4bit.cpp		mux8to1.cpp		tunneldiode.cpp
@@ -84,6 +85,7 @@ capacitor.h
 cccs.h
 ccvs.h
 circulator.h
+circline.h
 coaxialline.h
 comp_1bit.h
 comp_2bit.h

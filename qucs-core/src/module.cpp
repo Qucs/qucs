@@ -200,6 +200,7 @@ void module::registerModules (void) {
   REGISTER_CIRCUIT (tline4p);
   REGISTER_CIRCUIT (ctline);
   REGISTER_CIRCUIT (coaxline);
+  REGISTER_CIRCUIT (circline);
   REGISTER_CIRCUIT (rectline);
   REGISTER_CIRCUIT (twistedpair);
   REGISTER_CIRCUIT (rlcg);
