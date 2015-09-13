@@ -183,7 +183,7 @@ void rectline::calcPropagation (nr_double_t frequency) {
     // resistive
     rs = std::sqrt (pi * frequency * mur * MU0 * rho);
     ac = rs * (2.0 * b * sqr (pi) + cubic (a) * sqr (k0)) /
-      (cubic (a) * b * beta * k0 *  Z0);
+      (cubic (a) * b * beta * k0 *  Z0  * std::sqrt(mur/er));
     alpha = (ad + ac);
 
     // wave impedance
