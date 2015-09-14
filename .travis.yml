@@ -5,7 +5,7 @@
 # linux: clang, make check, qucs-test, doxygen deploy
 # osx:   clang, make check, qucs-test
 #
-# Try matrix tries to balance the run time of the instances instead of
+# The matrix tries to balance the run time of the instances instead of
 # creating new instances for shorter jobs.
 #
 # Most time consuming tasks:
@@ -181,18 +181,20 @@ script:
   # Run Qucs-Test suite and collect coverage
   # Need to be on `script` section to raise error as failure
   # Use qucsator in-tree to generate gcov coverage for GCC (LINUX)
-
-  # Testsuite
+  
+  # Run tests for Qucs (GUI) 
+  # Schematic to Netlist conversion require QucsConv and Qucs component library, so use the prefix of the installed package.
+  - cd qucs-test && python run.py --prefix /usr/bin/ --qucs && cd -;
+  
+  # Run test on qucsator
   - if [[ $LINUX ]]; then
       cd qucs-test && python run.py --prefix $HOME/build/Qucs/qucs/qucs-core/src/ --qucsator --exclude skip.txt && cd -;
     fi
-
   - if [[ $OSX ]]; then
       cd qucs-test && python run.py --prefix $HOME/build/Qucs/qucs/qucs-core/src/ --qucsator --exclude skip_OSX.txt && cd -;
     fi
-
-  # Qucs equation system
-  # disabled, need fix on matrix parser
+  
+  # Run tests on Qucsator equation system
   - cd qucs-test && python run_equations.py --prefix $HOME/build/Qucs/qucs/qucs-core/src/ && cd -
 
   # Run Doxygen for qucs-GUI and qucs-core
