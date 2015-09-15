@@ -92,7 +92,7 @@ void circline::calcResistivity (const char * const Mat, nr_double_t T) {
     where p_{nm} are given in Table 3.3 (Pg 123) and in table 3.4 (126) for the TE and TM modes, respectively.
     The propagation constant is:
     \f[
-    \beta = \sqrt{k^2 - k_c^2} 
+    \beta = \sqrt{k^2 - k_c^2}
     \f]
     Loss could be divised in dielectric and resistive loss.
     Dielectric loss are computed using:
@@ -110,15 +110,15 @@ void circline::calcResistivity (const char * const Mat, nr_double_t T) {
     \f]
 */
 void circline::calcPropagation (nr_double_t frequency) {
-  nr_double_t er   = getPropertyDouble ("er");
-  nr_double_t mur  = getPropertyDouble ("mur");
-  nr_double_t tand = getPropertyDouble ("tand");
+  nr_double_t er   = getPropertyDouble ("er");//Dielectric permittivity
+  nr_double_t mur  = getPropertyDouble ("mur");//Dielectric permeability
+  nr_double_t tand = getPropertyDouble ("tand");//Dielectric loss
   nr_double_t a    = getPropertyDouble ("a");//Radius
 
   /* wave number */
   nr_double_t k0;
   nr_double_t kc;
-  /* dielectric loss */
+
   nr_double_t ad, ac, rs;
 
   // check cutoff frequency
@@ -141,14 +141,13 @@ void circline::calcPropagation (nr_double_t frequency) {
     ad = (sqr(k0) * tand) / (2.0 * beta);
     // resistive
     rs = std::sqrt (pi * frequency * mur * MU0 * rho);
-    ac = (rs/(a*k0*Z0*std::sqrt(mur/er)*beta))*(kc*kc + (k0*k0)/(pe11*pe11 - 1));//Attenuation constant for he TE11 mode
+    ac = (rs/(a*k0*Z0*std::sqrt(mur/er)*beta))*(kc*kc + (k0*k0)/(pe11*pe11 - 1));//Conductor attenuation for the TE11 mode
     alpha = (ad + ac);
 
-    // wave impedance
+    // wave impedance for TE11
     zl = (k0 * Z0* std::sqrt(mur/er)) / beta;
-//printf("%d, %d, %d, %d, %d, %d", k0, kc, beta, rs, ac, ad);
 
-  } else {
+  } else {//Evanescent modes
     beta = 0;
     alpha = std::sqrt (- (sqr (k0) - sqr (kc)));
     // wave impedance
@@ -159,7 +158,7 @@ void circline::calcPropagation (nr_double_t frequency) {
 
 /*! Compute noise parameter */
 void circline::calcNoiseSP (nr_double_t) {
-  nr_double_t l = getPropertyDouble ("L");
+  nr_double_t l = getPropertyDouble ("L");//Length
   if (l < 0) return;
   // calculate noise using Bosma's theore
   nr_double_t T = getPropertyDouble ("Temp");
@@ -175,12 +174,12 @@ void circline::initCheck (void) {
   nr_double_t a = getPropertyDouble ("a");//Radius
   nr_double_t epsr = getPropertyDouble ("er");//Relative permittivity
   nr_double_t mur = getPropertyDouble ("mur");//Relative permeability
-  
+
   if (a < 0) logprint (LOG_ERROR, "ERROR: The radius, 'a', must be positive!.\n");// checking if the radius is > 0
   fc_low =  (pe11*C0)/(2*pi*a*std::sqrt(mur*epsr));// Below this frequency, the modes do not propagate (evanescent modes)
   fc_high = (pm01*C0)/(2*pi*a*std::sqrt(mur*epsr));//In most cases, the circular waveguide operation is limited to TE11.
                                                    //So, it is of interest to determine the range in which only TE11 is propagating.
-                                                   //In this sense, the cutoff frequency is given by the TM01 mode
+                                                   //When using circular waveguides, the upper cutoff frequency is given by the TM01 mode
   rho  = getPropertyDouble ("rho");//Resitivity
   nr_double_t T = getPropertyDouble ("Temp");//Temperature
   calcResistivity (getPropertyString ("Material"), celsius2kelvin (T));//Temperature calculation
@@ -204,7 +203,7 @@ void circline::calcSP (nr_double_t frequency) {
   // calculate propagation constants
   calcPropagation (frequency);
 
-  // calculate S-parameters
+  // calculate S-parameters Reference: http://qucs.sourceforge.net/tech/node61.html
   nr_complex_t z = zl / z0;
   nr_complex_t y = 1.0 / z;
   nr_complex_t g = nr_complex_t (alpha, beta);
