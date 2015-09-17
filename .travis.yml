@@ -148,9 +148,11 @@ script:
   # Check ADMS
   - which admsXml && admsXml --version
 
+  # bootstrap
+  - ./bootstrap
+
   # Build Qucs GUI components
   - cd qucs
-  - ./autogen.sh
   - ./configure --enable-maintainer-mode --prefix=/usr --disable-dependency-tracking
   - make && sudo make install
   - cd ..
@@ -160,7 +162,6 @@ script:
 
   # Build Qucs-core
   - cd qucs-core
-  - ./bootstrap.sh
 
   # Only collect coverage for GCC (LINUX)
   # `make check-code-coverage` is failing due to old lcov
@@ -209,7 +210,6 @@ script:
       cd ${TOP};
 
       cd qucs-doc;
-      ./autogen.sh;
       cd doxygen;
       make doxygen;
       cd ${TOP};

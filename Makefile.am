@@ -1,43 +1,36 @@
 ## Process this file with automake to produce Makefile.in
-# 
+#
 # Makefile.am
 #
 # Automake input file.
 #
-# Copyright (C) 2005, 2006, 2007 Stefan Jahn <stefan@lkcc.org>
+# Copyright (C) 2015 Felix Salfelder
 #
 # This is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; either version 2, or (at your option)
 # any later version.
-# 
+#
 # This software is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU General Public License
 # along with this package; see the file COPYING.  If not, write to
 # the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
-# Boston, MA 02110-1301, USA.  
+# Boston, MA 02110-1301, USA.
 #
 
-SUBDIRS = technical tutorial report doxygen
+# will not work anytime soon.
+AM_DISTCHECK_CONFIGURE_FLAGS=--disable-doc
 
-DOCPDF = tutorial report technical
+if ENABLE_DOC
+DOC_SUBDIR = qucs-doc
+else
+DOC_SUBDIR =
+endif
 
-EXTRA_DIST = bootstrap RELEASE
+SUBDIRS = qucs qucs-core $(DOC_SUBDIR)
 
-# default to build all PDF files
-all-recursive: pdf
-
-pdf:
-	@for d in $(DOCPDF); do \
-	  (cd $$d && $(MAKE) $(AM_MAKEFLAGS) $$d); \
-	done
-	cd tutorial && $(MAKE) $(AM_MAKEFLAGS) book
-
-CLEANFILES = *~ *.orig *.rej
-MAINTAINERCLEANFILES = aclocal.m4 config.h.in configure Makefile.in \
-	stamp-h.in stamp-h[0-9].in
-DISTCLEANFILES = config.cache config.log
+EXTRA_DIST = bootstrap
