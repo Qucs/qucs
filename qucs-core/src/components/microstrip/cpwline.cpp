@@ -162,13 +162,10 @@ void cpwline::initPropagation (void) {
 
   // adds effect of strip thickness
   if (t > 0) {
-    nr_double_t d, se, We, ke, qe;
+    nr_double_t d, ke, qe;
     d  = (t * 1.25 / pi) * (1 + qucs::log (4 * pi * W / t));
-    se = s - d;
-    We = W + d;
 
     // modifies k1 accordingly (k1 = ke)
-    //ke = We / (We + se + se); 
     ke = k1 + (1 - k1 * k1) * d / 2 / s;
     if (approx) {
       qe = ellipa (ke);
@@ -308,13 +305,10 @@ void cpwline::analyseQuasiStatic (nr_double_t W, nr_double_t s, nr_double_t h,
 
   // adds effect of strip thickness
   if (t > 0) {
-    nr_double_t d, se, We, ke, qe;
+    nr_double_t d, ke, qe;
     d  = (t * 1.25 / pi) * (1 + qucs::log (4 * pi * W / t));
-    se = s - d;
-    We = W + d;
 
     // modifies k1 accordingly (k1 = ke)
-    //ke = We / (We + se + se);
     ke = k1 + (1 - k1 * k1) * d / 2 / s;
     qe = ellipk (ke) / ellipk (qucs::sqrt (1 - ke * ke));
 
