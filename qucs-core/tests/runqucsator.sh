@@ -1,4 +1,6 @@
-# run qucsator in directory dst on file 
+#!/bin/sh
+# run qucsator in directory dst on file
+
 qucsator="$1"
 dst="$2"
 simuldir=`
