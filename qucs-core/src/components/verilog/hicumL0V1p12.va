@@ -796,7 +796,7 @@ analog begin
 	I(br_bbi_i)	  	<+ Vbbi/rb				`P(spectre:gmin="add");
 	end else begin
 	//V(br_bbi_v)		<+ 0.0;
-	I(br_bbi_i)		<+ I(br_bbi_i)/1e-6;
+	I(br_bbi_i)		<+ V(br_bbi_i)/1e-6;
 	end
 	I(br_bici)	<+ Ibici				`P(spectre:gmin="add" spectre:pwl_sat_current="IMAX" spectre:pwl_sat_cond="imax/0.025" spectre:pwl_rev_current="imax" spectre:pwl_rev_cond="IMAX/0.025");
 	I(br_bici)	<+ ddt(Qbici);
