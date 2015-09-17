@@ -415,7 +415,7 @@ void hbsolver::collectFrequencies (void) {
 
   // build frequency dimension lengths
   ndfreqs = new int[dfreqs.size ()];
-  for (i = 0; i < dfreqs.size (); i++) {
+  for (unsigned int i = 0; i < dfreqs.size (); i++) {
     ndfreqs[i] = (n + 1) * 2;
   }
 
@@ -428,7 +428,7 @@ void hbsolver::collectFrequencies (void) {
 #endif /* HB_DEBUG */
 
   // build list of positive frequencies including DC
-  for (n = 0; n < negfreqs.size (); n++) {
+  for (unsigned n = 0; n < negfreqs.size (); n++) {
     if ((f = negfreqs[n]) < 0.0) continue;
     rfreqs.push_back (f);
   }
@@ -576,7 +576,7 @@ void hbsolver::createMatrixLinearA (void) {
   A = new tmatrix<nr_complex_t> ((N + M) * lnfreqs);
 
   // through each frequency
-  for (int i = 0; i < rfreqs.size (); i++) {
+  for (unsigned i = 0; i < rfreqs.size (); i++) {
     freq = rfreqs[i];
     // calculate components' MNA matrix for the given frequency
     for (auto *lc : lincircuits)
@@ -882,7 +882,7 @@ void hbsolver::calcConstantCurrent (void) {
     circuit * vs = *it;
     vs->initHB ();
     vs->setVoltageSource (0);
-    for (int f = 0; f < rfreqs.size (); f++) { // for each frequency
+    for (unsigned f = 0; f < rfreqs.size (); f++) { // for each frequency
       nr_double_t freq = rfreqs[f];
       vs->calcHB (freq);
       VC (vsrc * lnfreqs + f) = vs->getE (VSRC_1);

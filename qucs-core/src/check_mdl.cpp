@@ -418,9 +418,9 @@ static void mdl_find_varlink (struct mdl_link_t * link, char * name,
 // Sorts a dependency list according to their sweep order.
 static strlist * mdl_sort_deps (valuelist<int> * d) {
   strlist * deps = new strlist ();
-  for (int i = 0; i < d->size(); i++) {
+  for (unsigned i = 0; i < d->size(); i++) {
     for (auto &val: *d) {
-      if (val.second == i + 1) {
+      if ((unsigned) val.second == i + 1) {
 	deps->append (val.first.c_str());
       }
     }

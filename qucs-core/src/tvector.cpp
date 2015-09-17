@@ -180,7 +180,7 @@ template <class nr_type_t>
 nr_type_t scalar (tvector<nr_type_t> a, tvector<nr_type_t> b) {
   assert (a.size () == b.size ());
   nr_type_t n = 0;
-  for (int i = 0; i < a.size (); i++) n += a.get (i) * b.get (i);
+  for (unsigned int i = 0; i < a.size (); i++) n += a.get (i) * b.get (i);
   return n;
 }
 
@@ -195,16 +195,16 @@ tvector<nr_type_t> tvector<nr_type_t>::operator = (const nr_type_t val) {
 template <class nr_type_t>
 nr_type_t sum (tvector<nr_type_t> a) {
   nr_type_t res = 0;
-  for (int i = 0; i < a.size (); i++) res += a.get (i);
+  for (unsigned int i = 0; i < a.size (); i++) res += a.get (i);
   return res;
 }
 
 // Vector negation.
 template <class nr_type_t>
 tvector<nr_type_t> operator - (tvector<nr_type_t> a) {
-  int n = a.size ();
+  unsigned int n = a.size ();
   tvector<nr_type_t> res (n);
-  for (int i = 0; i < n; i++) res.set (i, -a.get (i));
+  for (unsigned int i = 0; i < n; i++) res.set (i, -a.get (i));
   return res;
 }
 
@@ -249,7 +249,7 @@ nr_double_t norm (tvector<nr_type_t> a) {
   return n;
 #else
   nr_double_t scale = 0, n = 1, x, ax;
-  for (int i = 0; i < a.size (); i++) {
+  for (unsigned int i = 0; i < a.size (); i++) {
     if ((x = real (a (i))) != 0) {
       ax = fabs (x);
       if (scale < ax) {
@@ -283,7 +283,7 @@ nr_double_t norm (tvector<nr_type_t> a) {
 template <class nr_type_t>
 nr_double_t maxnorm (tvector<nr_type_t> a) {
   nr_double_t nMax = 0, n;
-  for (int i = 0; i < a.size (); i++) {
+  for (unsigned int i = 0; i < a.size (); i++) {
     n = norm (a.get (i));
     if (n > nMax) nMax = n;
   }
@@ -293,16 +293,16 @@ nr_double_t maxnorm (tvector<nr_type_t> a) {
 // Conjugate vector.
 template <class nr_type_t>
 tvector<nr_type_t> conj (tvector<nr_type_t> a) {
-  int n = a.size ();
+  unsigned int n = a.size ();
   tvector<nr_type_t> res (n);
-  for (int i = 0; i < n; i++) res.set (i, conj (a.get (i)));
+  for (unsigned int i = 0; i < n; i++) res.set (i, conj (a.get (i)));
   return res;
 }
 
 // Checks validity of vector.
 template <class nr_type_t>
 int tvector<nr_type_t>::isFinite (void) {
-  for (int i = 0; i < (int)data.size (); i++)
+  for (unsigned int i = 0; i < (int)data.size (); i++)
     if (!std::isfinite (real ((*data)[i]))) return 0;
   return 1;
 }
