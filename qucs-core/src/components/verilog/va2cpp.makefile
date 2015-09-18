@@ -54,7 +54,10 @@ va2cpp: $(MODEL).cpp
 # The '-A' is not really defined. admsXml will take almost any `-[CHAR] command`
 # Include the search path to use constants.vams disciplines.vams distributed by qucs
 # wich are known to work.
-%.cpp: %.va:
+
+SUFFIXES = .cpp .va
+
+.va.cpp:
 	@echo '# va2cpp - Creating C++ sources.'
 	$(ADMSXML) $< \
                            -I "$(INC)"                    \
