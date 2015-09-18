@@ -94,6 +94,7 @@ EXTRA_DIST = \
 	$(hicolorsc_DATA) $(desktop_DATA)
 
 
+SUFFIXES = .moc.cpp
 .h.moc.cpp:
 	$(MOC) -o $@ $<
 
