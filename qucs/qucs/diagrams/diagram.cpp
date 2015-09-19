@@ -744,7 +744,7 @@ void Diagram::loadGraphData(const QString& defaultDataSet)
     getAxisLimits(pg);
   }
 
-  qDebug() << "dataset changes" << No;
+//  qDebug() << "dataset changes" << No;
   if(No <= 0) {   // All dataset files unchanged ?
     qDebug() << "unchanged";
     yAxis.numGraphs = yNum;  // rebuild scrollbar position

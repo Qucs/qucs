@@ -63,7 +63,7 @@ void GraphDeque::createMarkerText() const
 //    assert(pm->splPos().first<=end());
 
     if(pm->splPos().second<_begin()){
-      qDebug() << "bug, bogus marker";
+      // qDebug() << "bug, bogus marker";
     }else if(pm->splPos().second>=_end()){
       qDebug() << "bug, bogus marker end";
     }else{
@@ -444,7 +444,7 @@ void GraphDeque::samplePos(const_iterator here, std::vector<double>& VarPos) con
  */
 Graph::const_iterator Graph::findSample(double& v) const
 {
-  qDebug() << "findsample" << end()-begin();
+  // qDebug() << "findsample" << end()-begin();
   if(end()-begin()==0){
     qDebug() << "oops. empty graph?";
     return end();
@@ -464,7 +464,6 @@ Graph::const_iterator Graph::findSample(double& v) const
       return i;
     }
   }
-  qDebug() << "Graph::findSample, empty";
   assert(end()==begin());
   return end();
 }
