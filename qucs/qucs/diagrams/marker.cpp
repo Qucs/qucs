@@ -108,7 +108,6 @@ Marker::Marker(GraphDeque::const_iterator const& pos,
   }else{
     VarPos.resize(pGraph->numAxes());
     initText(pos);
-    qDebug() << "finally create marker Text";
     assert(pGraph->begin()<=pos);
     assert(pos<=pGraph->end());
     createText();
@@ -185,7 +184,6 @@ void Marker::initText(GraphDeque::const_iterator const& pos)
  */
 void Marker::createText()
 {
-  qDebug() << "createText";
   assert(pGraph);
   if(!(pGraph->cPointsY)) {
     makeInvalid();
@@ -204,7 +202,6 @@ void Marker::createText()
 
 
   if(splPos().second<pGraph->_begin()){
-    qDebug() << "bogus marker";
   }else if(splPos().second>=pGraph->_end()){
     qDebug() << "bogus marker end";
   }else{
