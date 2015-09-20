@@ -816,6 +816,8 @@ AC_CONFIG_FILES([Makefile
     qucs/dialogs/Makefile
     translations/Makefile])
 
+AC_CONFIG_FILES([qucs/qucs], [chmod +x qucs/qucs])
+
 dnl Check for Git short SHA to tag version
 dnl The release package should also keep it on the config.h
 GIT="unknown"
