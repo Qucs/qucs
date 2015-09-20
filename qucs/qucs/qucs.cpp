@@ -40,6 +40,7 @@
 #include <QFileSystemModel>
 #include <QUrl>
 #include <QSettings>
+#include <QTimer>
 #include <QDebug>
 
 #include "main.h"
@@ -177,6 +178,17 @@ QucsApp::QucsApp()
       arg = QucsSettings.QucsWorkDir.filePath(Info.fileName());
       gotoPage(arg);
     }
+  }
+
+  // show What's New dialog ?
+  VersionTriplet QucsVersion = VersionTriplet(PACKAGE_VERSION);
+  VersionTriplet WhatsNewVersion = VersionTriplet(QucsSettings.WhatsNewVersion);
+  if (WhatsNewVersion < QucsVersion) {
+    // hack to show the dialog after the main window is shown
+    QTimer *timer = new QTimer(this);
+    timer->setSingleShot(true);
+    connect(timer, SIGNAL(timeout()), this, SLOT(slotWhatsNew()));
+    timer->start(100); // hopefully 100 ms are enough to show the main window...
   }
 }
 

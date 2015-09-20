@@ -56,7 +56,12 @@
 #include "dialogs/importdialog.h"
 #include "dialogs/packagedialog.h"
 #include "dialogs/aboutdialog.h"
+#include "dialogs/whatsnewdialog.h"
 #include "module.h"
+#include "misc.h"
+
+// Qucs version string
+extern VersionTriplet QucsVersion;
 
 // for editing component name on schematic
 QRegExp  Expr_CompProp;
@@ -1551,6 +1556,24 @@ void QucsApp::slotHelpAbout()
 {
   AboutDialog *ad = new AboutDialog(this);
   ad->exec();
+}
+
+void QucsApp::slotWhatsNew()
+{
+  WhatsNewDialog *wd = new WhatsNewDialog(this);
+  VersionTriplet WhatsNewVersion = VersionTriplet(QucsSettings.WhatsNewVersion);
+
+  // tick checkbox "don't show again" ?
+  wd->setCheckBoxState(WhatsNewVersion >= QucsVersion);
+  wd->exec();
+
+  if (wd->getCheckBoxState()) { // don't want to see the dialog again at startup
+    // remember the version for which the dialog was shown
+    QucsSettings.WhatsNewVersion = QucsVersion.toString();
+  } else {
+    // remove version, so that dialog will be shown ar next startup
+    QucsSettings.WhatsNewVersion = "";
+  }
 }
 
 // vim:ts=8:sw=2:noet

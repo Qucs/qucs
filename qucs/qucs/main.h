@@ -78,6 +78,7 @@ struct tQucsSettings {
   bool IgnoreFutureVersion;
   bool GraphAntiAliasing;
   bool TextAntiAliasing;
+  QString WhatsNewVersion;
 };
 
 extern tQucsSettings QucsSettings;  // extern because nearly everywhere used

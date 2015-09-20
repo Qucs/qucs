@@ -649,6 +649,11 @@ void QucsApp::initActions()
 	tr("Getting Started\n\nShort introduction into Qucs"));
   connect(helpGetStart, SIGNAL(triggered()), SLOT(slotGettingStarted()));
 
+  helpWhatsNew = new QAction(tr("What's new..."), this);
+  helpWhatsNew->setStatusTip(tr("What's new in this Qucs release"));
+  helpWhatsNew->setWhatsThis(tr("What's new\n\nWhat's new in this Qucs release"));
+  connect(helpWhatsNew, SIGNAL(triggered()), SLOT(slotWhatsNew()));
+
   helpAboutApp = new QAction(tr("&About Qucs..."), this);
   helpAboutApp->setStatusTip(tr("About the application"));
   helpAboutApp->setWhatsThis(tr("About\n\nAbout the application"));
@@ -864,6 +869,7 @@ void QucsApp::initMenuBar()
   }
 
 
+  helpMenu->addAction(helpWhatsNew);
   helpMenu->insertSeparator();
   helpMenu->addAction(helpAboutApp);
   helpMenu->addAction(helpAboutQt);

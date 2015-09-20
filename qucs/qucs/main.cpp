@@ -120,6 +120,9 @@ bool loadSettings()
     if (settings.contains("TextAntiAliasing")) QucsSettings.TextAntiAliasing = settings.value("TextAntiAliasing").toBool();
     else QucsSettings.TextAntiAliasing = false;
 
+    if (settings.contains("WhatsNewVersion")) QucsSettings.WhatsNewVersion = settings.value("WhatsNewVersion").toString();
+    else QucsSettings.WhatsNewVersion = "";
+
     QucsSettings.RecentDocs = settings.value("RecentDocs").toString().split("*",QString::SkipEmptyParts);
     QucsSettings.numRecentDocs = QucsSettings.RecentDocs.count();
 
@@ -184,6 +187,7 @@ bool saveApplSettings()
     settings.setValue("IgnoreVersion", QucsSettings.IgnoreFutureVersion);
     settings.setValue("GraphAntiAliasing", QucsSettings.GraphAntiAliasing);
     settings.setValue("TextAntiAliasing", QucsSettings.TextAntiAliasing);
+    settings.setValue("WhatsNewVersion", QucsSettings.WhatsNewVersion);
 
     // Copy the list of directory paths in which Qucs should
     // search for subcircuit schematics from qucsPathList
@@ -906,10 +910,12 @@ int main(int argc, char *argv[])
   }
 
   QucsMain = new QucsApp();
-  a.setMainWidget(QucsMain);
+  a.setMainWidget(QucsMain); // FIXME Qt3 relic?
   
   QucsMain->show();
+
   int result = a.exec();
+
   //saveApplSettings(QucsMain);
   return result;
 }
