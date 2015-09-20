@@ -82,7 +82,6 @@ tokens_vcd.h
 
 # Autotools Generated #
 #######################
-*.in
 *.la
 *.lo
 configure
