@@ -30,7 +30,15 @@ else
 bin_SCRIPTS = qucsdigi qucsveri qucsdigilib
 endif
 
-bin_PROGRAMS = qucs
+qucs_appledir = $(bindir)/qucs.app/Contents/MacOS/
+
+if COND_MACOSX
+qucs_apple_PROGRAMS = qucs.real
+else
+endif
+
+bin_PROGRAMS = qucs.real
+transform=s&\.real$$&&;$(program_transform_name)
 
 MOCHEADERS = \
   messagedock.h \
@@ -42,7 +50,7 @@ MOCHEADERS = \
 
 MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
 
-qucs_SOURCES = node.cpp element.cpp qucsdoc.cpp wire.cpp mouseactions.cpp   \
+qucs_real_SOURCES = node.cpp element.cpp qucsdoc.cpp wire.cpp mouseactions.cpp   \
   qucs.cpp main.cpp wirelabel.cpp qucs_init.cpp qucs_actions.cpp            \
   viewpainter.cpp mnemo.cpp schematic.cpp schematic_element.cpp textdoc.cpp \
   schematic_file.cpp syntax.cpp module.cpp octave_window.cpp qrc_qucs.cpp   \
@@ -52,11 +60,11 @@ qucs_SOURCES = node.cpp element.cpp qucsdoc.cpp wire.cpp mouseactions.cpp   \
 qrc_qucs.cpp: qucs.qrc
 	$(RCC) -o $@ $<
 
-nodist_qucs_SOURCES = $(MOCFILES)
+nodist_qucs_real_SOURCES = $(MOCFILES)
 
 AM_CPPFLAGS = $(X11_INCLUDES) $(QT_INCLUDES) -I$(top_srcdir)/qucs-lib
-qucs_LDFLAGS = $(X11_LDFLAGS) $(QT_LDFLAGS)
-qucs_LDADD = components/libcomponents.a diagrams/libdiagrams.a \
+qucs_real_LDFLAGS = $(X11_LDFLAGS) $(QT_LDFLAGS)
+qucs_real_LDADD = components/libcomponents.a diagrams/libdiagrams.a \
   paintings/libpaintings.a dialogs/libdialogs.a \
   $(X11_LIBS) $(QT_LIBS)
 

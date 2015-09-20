@@ -1,0 +1,41 @@
+#!/bin/sh
+#***************************************************************************
+#*   copyright      : (C) 2015 Felix Salfelder                             *
+#*   email          : felix@salfelder.org                                  *
+#***************************************************************************
+#*                                                                         *
+#*   This program is free software; you can redistribute it and/or modify  *
+#*   it under the terms of the GNU General Public License as published by  *
+#*   the Free Software Foundation; either version 2 of the License, or     *
+#*   (at your option) any later version.                                   *
+#*                                                                         *
+#***************************************************************************
+dir=`dirname $0`
+top="@abs_top_builddir@"
+
+if [ -z "$QUCSATOR" ]; then
+	# this will work within the current git layout,
+	# needs more thought (configuration) for standalone build.
+	QUCSATOR="$top/../qucs-core/src/qucsator";
+fi
+
+if [ -z "$QUCSCONV" ]; then
+	# this will work within the current git layout,
+	# needs more thought (configuration) for standalone build.
+	QUCSCONV="$top/../qucs-core/src/converter/qucsconv";
+fi
+
+if [ -z "$QUCSTRANS" ]; then
+	QUCSTRANS="$top/qucs-transline/transcalc";
+fi
+
+if [ -z "$QUCSDIR" ]; then
+	export QUCSATOR
+	export QUCSTRANS
+else
+	# not doing anything for
+	# backwards compatibility
+	:
+fi
+
+$dir/qucs.real $*

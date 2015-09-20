@@ -39,6 +39,7 @@ SUBDIRS = \
 EXTRA_DIST = bootstrap depcomp PLATFORMS RELEASE Info.plist
 
 # MacOSX specific installation of applications
+# FIXME: don't install twice.
 if COND_MACOSX
 app_PROGS = $(top_builddir)/qucs/qucs \
   $(top_builddir)/qucs-attenuator/qucsattenuator \
@@ -52,6 +53,7 @@ app_PROGS = $(top_builddir)/qucs/qucs \
 
 install-exec-hook: mac-install-apps mac-deploy-framework
 
+# BUG: overwrites. don't install from here.
 mac-install-apps:
 	@echo "Creating MacOSX applications...";
 	@list='$(app_PROGS)'; for file in $$list; do \
@@ -59,8 +61,11 @@ mac-install-apps:
 	$(mkinstalldirs) $(DESTDIR)$(bindir)/$$app.app/Contents && \
 	$(mkinstalldirs) $(DESTDIR)$(bindir)/$$app.app/Contents/Resources && \
 	$(mkinstalldirs) $(DESTDIR)$(bindir)/$$app.app/Contents/MacOS && \
-	$(install_sh_PROGRAM) $$file $(DESTDIR)$(bindir)/$$app.app/Contents/MacOS/ && \
-	strip $(DESTDIR)$(bindir)/$$app.app/Contents/MacOS/$$app && \
+	echo "$(install_sh_PROGRAM) $$file $(DESTDIR)$(bindir)/$$app.app/Contents/MacOS/" && \
+	if [ $$app != qucs ]; then \
+	  $(install_sh_PROGRAM) $$file $(DESTDIR)$(bindir)/$$app.app/Contents/MacOS/ && \
+	  strip $(DESTDIR)$(bindir)/$$app.app/Contents/MacOS/$$app; \
+	fi; \
 	case $$app in \
 	  qucs)		  desc="Qucs";; \
 	  qucsattenuator) desc="Qucs Attenuator";; \
