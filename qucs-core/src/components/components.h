@@ -73,6 +73,7 @@
 #include "tline.h"
 #include "ctline.h"
 #include "coaxline.h"
+#include "expo_taperedline.h"
 #include "rectline.h"
 #include "twistedpair.h"
 #include "tline4p.h"
