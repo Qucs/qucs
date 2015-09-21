@@ -57,6 +57,7 @@ vcresistor.cpp
 vacomponent.cpp
 mutualx.cpp
 circline.cpp
+taperedline.cpp
 )
 
 SET(COMPONENTS_HDRS
@@ -113,6 +114,7 @@ EKV26MOS.h
 eqndefined.h
 equation.h
 etr_sim.h
+taperedline.h
 fa1b.h
 fa2b.h
 gatedDlatch.h
