@@ -31,11 +31,6 @@
 </admst:for-each>
 
 <!-- parse ADMS command line arguments, needs to be outside admst:open, keep last comand -->
-<!-- if last command is 'dyload' (i.e., -A dyload) emmit/append code for dynamic loader -->
-<admst:for-each select="argv">
-  <admst:variable name="dyload" string="%(.)"/>
-</admst:for-each>
-
 <!-- output filename is 1st argument in -o flag in command line-->
 <admst:variable name="filename" select="%(/module/name)_common"/>
 <admst:variable name="filename_state" select="0"/>
@@ -740,23 +735,22 @@ using qucs::matrix;
 #include &quot;$(filename).defs.h&quot;
 
 
-<!-- if 'dyload' is passed as last argument, emmit code for the dynamic loader -->
-<admst:if test="[$dyload='dyload']">
-  <admst:message format="last argument 'dyload' provided, emmiting code for the dynamic loader\n"/>
-  <admst:text format="\n// loader constructor interface\n"/>
-  <admst:text format="extern &quot;C&quot; {\n"/>
-  <admst:text format="  class va_proxy { public:\n"/>
-  <admst:text format="    va_proxy(){\n"/>
-  <admst:text format="      // register the constructor and the definitions with the global factories\n"/>
-  <admst:text format="      // Note that ::create and ::definition are handled by expanding the CREATOR define constructor\n"/>
-  <admst:text format="      factorycreate[&quot;$module&quot;] = $module::create;\n"/>
-  <admst:text format="      factorydef   [&quot;$module&quot;] = $module::definition;\n"/>
-  <admst:text format="    }\n"/>
-  <admst:text format="  };\n"/>
-  <admst:text format="  // our one instance of the proxy\n"/>
-  <admst:text format="  va_proxy proxy_instance;\n"/>
-  <admst:text format="}\n"/>
-</admst:if>
+<!-- emmit code for the dynamic loader -->
+<admst:text format="\n// loader constructor interface\n"/>
+<admst:text format="#ifdef QUCSADMS_DYLOAD\n"/>
+<admst:text format="extern &quot;C&quot; {\n"/>
+<admst:text format="  class va_proxy { public:\n"/>
+<admst:text format="    va_proxy(){\n"/>
+<admst:text format="      // register the constructor and the definitions with the global factories\n"/>
+<admst:text format="      // Note that ::create and ::definition are handled by expanding the CREATOR define constructor\n"/>
+<admst:text format="      factorycreate[&quot;$module&quot;] = $module::create;\n"/>
+<admst:text format="      factorydef   [&quot;$module&quot;] = $module::definition;\n"/>
+<admst:text format="    }\n"/>
+<admst:text format="  };\n"/>
+<admst:text format="  // our one instance of the proxy\n"/>
+<admst:text format="  va_proxy proxy_instance;\n"/>
+<admst:text format="}\n"/>
+<admst:text format="#endif\n"/>
 
 </admst:for-each>
 
