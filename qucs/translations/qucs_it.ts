@@ -5774,7 +5774,7 @@ Inizio linea errato!</translation>
     <message>
         <location line="+20"/>
         <source>Format Error:
-Unknown component!
+Unknown component
 %1
 
 Do you make use of loadable components?</source>
@@ -12801,9 +12801,9 @@ Formato della linea &apos;component&apos; errato!</translation>
     </message>
     <message>
         <location line="+13"/>
-        <source>ERROR: Cannot create user library subdirectory !
+        <source>ERROR: Cannot create user library subdirectory
 </source>
-        <translation>ERRORE: Impossibile creare la sottodirectory per la libreria utente!
+        <translation>ERRORE: Impossibile creare la sottodirectory per la libreria utente
 </translation>
     </message>
     <message>
@@ -13322,28 +13322,28 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <location line="+48"/>
-        <source>Too long command line argument!
+        <source>Too long command line argument
 
 </source>
-        <translation>Parametro linea di comando troppo lungo!
+        <translation>Parametro linea di comando troppo lungo
 
 </translation>
     </message>
     <message>
         <location line="+10"/>
-        <source>Wrong command line argument!
+        <source>Wrong command line argument
 
 </source>
-        <translation>Parametro linea di comando errato!
+        <translation>Parametro linea di comando errato
 
 </translation>
     </message>
     <message>
         <location line="+7"/>
-        <source>Only one filename allowed!
+        <source>Only one filename allowed
 
 </source>
-        <translation>Ammesso un solo nome di file!
+        <translation>Ammesso un solo nome di file
 
 </translation>
     </message>
@@ -13894,9 +13894,9 @@ Active Filter synthesis program
     <message>
         <location line="+1"/>
         <location line="+676"/>
-        <source>The document contains unsaved changes!
+        <source>The document contains unsaved changes
 </source>
-        <translation>Il documento contiene modifiche non salvate!
+        <translation>Il documento contiene modifiche non salvate
 </translation>
     </message>
     <message>
@@ -14203,7 +14203,7 @@ Active Filter synthesis program
     </message>
     <message>
         <location line="+0"/>
-        <source>&apos; already exists!
+        <source>&apos; already exists
 </source>
         <translation>&apos; esiste gi�
 </translation>
@@ -16557,9 +16557,9 @@ Editor di testo minimale per Qucs
     </message>
     <message>
         <location line="+1"/>
-        <source>The text contains unsaved changes!
+        <source>The text contains unsaved changes
 </source>
-        <translation>Il testo contiene cambiamenti non salvati!
+        <translation>Il testo contiene cambiamenti non salvati
 </translation>
     </message>
     <message>

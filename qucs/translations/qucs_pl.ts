@@ -1650,7 +1650,7 @@ Program syntezy filtrów
     <message>
         <location filename="../qucs-filter/helpdialog.cpp" line="-29"/>
         <source>QucsFilter is a filter synthesis program. To create a filter, simply enter all parameters and press the big button at the bottom of the main window. Immediatly, the schematic of the filter is calculated and put into the clipboard. Now go to Qucs, open an empty schematic and press CTRL-V (paste from clipboard). The filter schematic can now be inserted and  simulated. Have lots of fun!</source>
-        <translation>QucsFilter jest programem służącym do syntezy filtrów. Aby zaprojektować filtr, wprowadź po prostu wszystkie parametry i wciśnij duży przycisk znajdujący na dole głównego okienka. Schemat filtra zostanie wtedy wygenerowany i zapamiętany w schowku. Następnie otwórz pusty plik schematu w programie Qucs i wciśnij CTRL-V (wklej ze schowka). Schemat filtra zostanie w ten sposób wstawiony i   może być zasymulowany. Miłej zabawy!
+        <translation>QucsFilter jest programem służącym do syntezy filtrów. Aby zaprojektować filtr, wprowadź po prostu wszystkie parametry i wciśnij duży przycisk znajdujący na dole głównego okienka. Schemat filtra zostanie wtedy wygenerowany i zapamiętany w schowku. Następnie otwórz pusty plik schematu w programie Qucs i wciśnij CTRL-V (wklej ze schowka). Schemat filtra zostanie w ten sposób wstawiony i   może być zasymulowany. Miłej zabawy
  </translation>
     </message>
     <message>
@@ -5771,7 +5771,7 @@ Błędny początek linii!</translation>
     <message>
         <location line="+20"/>
         <source>Format Error:
-Unknown component!
+Unknown component
 %1
 
 Do you make use of loadable components?</source>
@@ -12799,9 +12799,9 @@ Błędny format lini &apos;component&apos;!</translation>
     </message>
     <message>
         <location line="+13"/>
-        <source>ERROR: Cannot create user library subdirectory !
+        <source>ERROR: Cannot create user library subdirectory
 </source>
-        <translation>BŁĄD: Nie można stworzyć podkatalogu z biblioteką użytkownika!
+        <translation>BŁĄD: Nie można stworzyć podkatalogu z biblioteką użytkownika
 </translation>
     </message>
     <message>
@@ -13322,28 +13322,28 @@ Stosowanie:  qucsedit [-r] plik
     </message>
     <message>
         <location line="+48"/>
-        <source>Too long command line argument!
+        <source>Too long command line argument
 
 </source>
-        <translation>Za długi argument komendy!
+        <translation>Za długi argument komendy
 
 </translation>
     </message>
     <message>
         <location line="+10"/>
-        <source>Wrong command line argument!
+        <source>Wrong command line argument
 
 </source>
-        <translation>Zły argument komendy!
+        <translation>Zły argument komendy
 
 </translation>
     </message>
     <message>
         <location line="+7"/>
-        <source>Only one filename allowed!
+        <source>Only one filename allowed
 
 </source>
-        <translation>Tylko jedna naywa pliku dozwolona!
+        <translation>Tylko jedna naywa pliku dozwolona
 
 </translation>
     </message>
@@ -13893,9 +13893,9 @@ Active Filter synthesis program
     <message>
         <location line="+1"/>
         <location line="+676"/>
-        <source>The document contains unsaved changes!
+        <source>The document contains unsaved changes
 </source>
-        <translation>Dokument zawiera niezapisane zmiany!
+        <translation>Dokument zawiera niezapisane zmiany
 </translation>
     </message>
     <message>
@@ -14202,9 +14202,9 @@ Active Filter synthesis program
     </message>
     <message>
         <location line="+0"/>
-        <source>&apos; already exists!
+        <source>&apos; already exists
 </source>
-        <translation>&apos; już istnieje!
+        <translation>&apos; już istnieje
 </translation>
     </message>
     <message>
@@ -16558,9 +16558,9 @@ Bardzo prosty edytor tekstowy programu Qucs
     </message>
     <message>
         <location line="+1"/>
-        <source>The text contains unsaved changes!
+        <source>The text contains unsaved changes
 </source>
-        <translation>Tekst zawiera niezapisane zmiany!
+        <translation>Tekst zawiera niezapisane zmiany
 
 </translation>
     </message>

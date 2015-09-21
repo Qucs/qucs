@@ -5770,7 +5770,7 @@ Neplatný začátek řádku!</translation>
     <message>
         <location line="+20"/>
         <source>Format Error:
-Unknown component!
+Unknown component
 %1
 
 Do you make use of loadable components?</source>
@@ -12796,7 +12796,7 @@ Chybný řádkový formát &apos;component&apos; !</translation>
     </message>
     <message>
         <location line="+13"/>
-        <source>ERROR: Cannot create user library subdirectory !
+        <source>ERROR: Cannot create user library subdirectory
 </source>
         <translation type="unfinished"></translation>
     </message>
@@ -13317,28 +13317,28 @@ Použití:  qucsedit [-r] soubor
     </message>
     <message>
         <location line="+48"/>
-        <source>Too long command line argument!
+        <source>Too long command line argument
 
 </source>
-        <translation>Příliš dlouhý argument v příkazovém řádku!
+        <translation>Příliš dlouhý argument v příkazovém řádku
 
 </translation>
     </message>
     <message>
         <location line="+10"/>
-        <source>Wrong command line argument!
+        <source>Wrong command line argument
 
 </source>
-        <translation>Chybný argument v příkazovém řádku!
+        <translation>Chybný argument v příkazovém řádku
 
 </translation>
     </message>
     <message>
         <location line="+7"/>
-        <source>Only one filename allowed!
+        <source>Only one filename allowed
 
 </source>
-        <translation>Je povolen jen jeden název souboru!
+        <translation>Je povolen jen jeden název souboru
 
 </translation>
     </message>
@@ -13888,9 +13888,9 @@ Active Filter synthesis program
     <message>
         <location line="+1"/>
         <location line="+676"/>
-        <source>The document contains unsaved changes!
+        <source>The document contains unsaved changes
 </source>
-        <translation>Dokument obsahuje neuložené změny!
+        <translation>Dokument obsahuje neuložené změny
 </translation>
     </message>
     <message>
@@ -14197,9 +14197,9 @@ Active Filter synthesis program
     </message>
     <message>
         <location line="+0"/>
-        <source>&apos; already exists!
+        <source>&apos; already exists
 </source>
-        <translation>&apos; již existuje!
+        <translation>&apos; již existuje
 </translation>
     </message>
     <message>
@@ -16550,9 +16550,9 @@ Jednoduchý editor pro Qucs
     </message>
     <message>
         <location line="+1"/>
-        <source>The text contains unsaved changes!
+        <source>The text contains unsaved changes
 </source>
-        <translation>Text obsahuje neuložené změny!
+        <translation>Text obsahuje neuložené změny
 </translation>
     </message>
     <message>

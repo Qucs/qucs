@@ -5774,7 +5774,7 @@ Felaktig början på rad!</translation>
     <message>
         <location line="+20"/>
         <source>Format Error:
-Unknown component!
+Unknown component
 %1
 
 Do you make use of loadable components?</source>
@@ -12801,7 +12801,7 @@ Felaktigt komponentsradsformat!</translation>
     </message>
     <message>
         <location line="+13"/>
-        <source>ERROR: Cannot create user library subdirectory !
+        <source>ERROR: Cannot create user library subdirectory
 </source>
         <translation type="unfinished"></translation>
     </message>
@@ -13320,26 +13320,26 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <location line="+48"/>
-        <source>Too long command line argument!
+        <source>Too long command line argument
 
 </source>
-        <translation>För långt argument på kommandoraden!
+        <translation>För långt argument på kommandoraden
 
 </translation>
     </message>
     <message>
         <location line="+10"/>
-        <source>Wrong command line argument!
+        <source>Wrong command line argument
 
 </source>
         <translation>Felaktigt kommandoradsargument!</translation>
     </message>
     <message>
         <location line="+7"/>
-        <source>Only one filename allowed!
+        <source>Only one filename allowed
 
 </source>
-        <translation>Enast ett filnamn tillåtet!
+        <translation>Enast ett filnamn tillåtet
 </translation>
     </message>
     <message>
@@ -13888,9 +13888,9 @@ Active Filter synthesis program
     <message>
         <location line="+1"/>
         <location line="+676"/>
-        <source>The document contains unsaved changes!
+        <source>The document contains unsaved changes
 </source>
-        <translation>Dokumentet innehåller osparade ändringr!
+        <translation>Dokumentet innehåller osparade ändringr
 </translation>
     </message>
     <message>
@@ -14197,9 +14197,9 @@ Active Filter synthesis program
     </message>
     <message>
         <location line="+0"/>
-        <source>&apos; already exists!
+        <source>&apos; already exists
 </source>
-        <translation>&apos; finns redan!
+        <translation>&apos; finns redan
 </translation>
     </message>
     <message>
@@ -16509,9 +16509,9 @@ Very simple text editor for Qucs
     </message>
     <message>
         <location line="+1"/>
-        <source>The text contains unsaved changes!
+        <source>The text contains unsaved changes
 </source>
-        <translation>Texten innehåller osparade ändringar!
+        <translation>Texten innehåller osparade ändringar
 
 </translation>
     </message>

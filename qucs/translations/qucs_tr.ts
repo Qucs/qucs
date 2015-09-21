@@ -5770,7 +5770,7 @@ Yanlış satır başlangıcı!</translation>
     <message>
         <location line="+20"/>
         <source>Format Error:
-Unknown component!
+Unknown component
 %1
 
 Do you make use of loadable components?</source>
@@ -12798,9 +12798,9 @@ Yanlış &quot;bileşen-component&quot; satır biçimi!</translation>
     </message>
     <message>
         <location line="+13"/>
-        <source>ERROR: Cannot create user library subdirectory !
+        <source>ERROR: Cannot create user library subdirectory
 </source>
-        <translation>HATA: Kullanıcı kütüphanesi alt-dizini oluşturulamıyor !
+        <translation>HATA: Kullanıcı kütüphanesi alt-dizini oluşturulamıyor
 </translation>
     </message>
     <message>
@@ -13321,28 +13321,28 @@ Kullanım:  qucsedit [-r] kütük
     </message>
     <message>
         <location line="+48"/>
-        <source>Too long command line argument!
+        <source>Too long command line argument
 
 </source>
-        <translation>Komut satırı çok uzun!
+        <translation>Komut satırı çok uzun
 
 </translation>
     </message>
     <message>
         <location line="+10"/>
-        <source>Wrong command line argument!
+        <source>Wrong command line argument
 
 </source>
-        <translation>Yanlış komut satırı anahtarı!
+        <translation>Yanlış komut satırı anahtarı
 
 </translation>
     </message>
     <message>
         <location line="+7"/>
-        <source>Only one filename allowed!
+        <source>Only one filename allowed
 
 </source>
-        <translation>Sadece bir kütük ismi izinli!
+        <translation>Sadece bir kütük ismi izinli
 
 </translation>
     </message>
@@ -13892,9 +13892,9 @@ Active Filter synthesis program
     <message>
         <location line="+1"/>
         <location line="+676"/>
-        <source>The document contains unsaved changes!
+        <source>The document contains unsaved changes
 </source>
-        <translation>Belge kaydedilmemiş değişiklikler içeriyor!
+        <translation>Belge kaydedilmemiş değişiklikler içeriyor
 </translation>
     </message>
     <message>
@@ -14201,9 +14201,9 @@ Active Filter synthesis program
     </message>
     <message>
         <location line="+0"/>
-        <source>&apos; already exists!
+        <source>&apos; already exists
 </source>
-        <translation>&apos; zaten mevcut!
+        <translation>&apos; zaten mevcut
 </translation>
     </message>
     <message>
@@ -16557,9 +16557,9 @@ Qucs için çok basit bit metin düzenleyici
     </message>
     <message>
         <location line="+1"/>
-        <source>The text contains unsaved changes!
+        <source>The text contains unsaved changes
 </source>
-        <translation>Metin, kaydedilmemiş değişiklikler içeriyor!
+        <translation>Metin, kaydedilmemiş değişiklikler içeriyor
 </translation>
     </message>
     <message>
