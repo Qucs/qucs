@@ -55,7 +55,7 @@ va2cpp: $(MODEL).cpp
 # Include the search path to use constants.vams disciplines.vams distributed by qucs
 # wich are known to work.
 
-SUFFIXES = .cpp .va
+.SUFFIXES: .cpp .va
 
 .va.cpp:
 	@echo '# va2cpp - Creating C++ sources.'

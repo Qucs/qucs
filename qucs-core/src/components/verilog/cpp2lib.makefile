@@ -74,7 +74,7 @@ HDR=$(MODEL).h $(MODEL).*.h
 cpp2lib: $(MODEL)$(DLLEXT)
 
 # Build library
-SUFFIXES = .cpp .dll .dylib .so
+.SUFFIXES: .cpp .dll .dylib .so
 
 .cpp.so:
 	$(CXX)  $(CXXFLAGS) -o $@ $(SRC) $(LDFLAGS) $(LIBS)
