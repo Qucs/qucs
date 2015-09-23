@@ -1,5 +1,5 @@
 /*
-* expo_taperedline.h - ideal tapered transmission line class definition
+* taperedline.h - ideal tapered transmission line class definition
 *
 * Copyright (C) 2015 Andres Martinez-Mera <andresmartinezmera@gmail.com>
  *
@@ -22,13 +22,13 @@
  *
  */
 
-#ifndef __expo_taperedline_H__
-#define __expo_taperedline_H__
+#ifndef __taperedline_H__
+#define __taperedline_H__
 
-class expo_taperedline : public qucs::circuit
+class taperedline : public qucs::circuit
 {
  public:
-  CREATOR (expo_taperedline);
+  CREATOR (taperedline);
   void calcSP (nr_double_t);
   void initDC (void);
   void initAC (void);
@@ -37,7 +37,12 @@ class expo_taperedline : public qucs::circuit
   void calcNoiseSP (nr_double_t);
 private:
   void calcSparams(nr_double_t);
-  nr_complex_t S11, S12, S21, S22;
+  nr_double_t calcExponential(nr_double_t, nr_double_t, nr_double_t, nr_double_t);
+  nr_double_t calcLinear(nr_double_t, nr_double_t, nr_double_t, nr_double_t);
+  nr_double_t calcTriangular(nr_double_t, nr_double_t, nr_double_t, nr_double_t);
+  nr_double_t calcKlopfenstein(nr_double_t, nr_double_t, nr_double_t, nr_double_t, nr_double_t);
+  nr_double_t phi(nr_double_t, nr_double_t);
+  nr_complex_t A, B, C, D;
 };
 
-#endif /* __expo_taperedline_H__ */
+#endif /* __taperedline_H__ */

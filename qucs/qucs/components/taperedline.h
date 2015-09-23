@@ -1,5 +1,5 @@
 /*
-* expo_taperedline.cpp - Exponentially tapered line definition
+* taperedline.cpp - Exponentially tapered line definition
 *
 * copyright (C) 2015 Andres Martinez-Mera <andresmartinezmera@gmail.com>
 *
@@ -20,16 +20,16 @@
 *
 *
 */
-#ifndef expo_taperedline_H
-#define expo_taperedline_H
+#ifndef taperedline_H
+#define taperedline_H
 
 #include "component.h"
 
 
-class expo_taperedline : public Component  {
+class taperedline : public Component  {
 public:
-  expo_taperedline();
- ~expo_taperedline();
+  taperedline();
+ ~taperedline();
   Component* newOne();
   static Element* info(QString&, char* &, bool getNewOne=false);
 };

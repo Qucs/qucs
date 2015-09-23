@@ -60,7 +60,7 @@
 #include "tline_4port.h"
 #include "twistedpair.h"
 #include "coaxialline.h"
-#include "expo_tapperedline.h"
+#include "taperedline.h"
 #include "rectline.h"
 #include "rlcg.h"
 #include "substrate.h"

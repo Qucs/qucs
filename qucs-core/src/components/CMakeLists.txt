@@ -18,7 +18,7 @@ SET( COMPONENTS_SRC
   dcblock.cpp
   dcfeed.cpp
   ecvs.cpp
-  expo_taperedline.cpp
+  taperedline.cpp
   ground.cpp
   gyrator.cpp
   hybrid.cpp
