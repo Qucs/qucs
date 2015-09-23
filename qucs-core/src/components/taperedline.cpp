@@ -22,6 +22,13 @@
  *
  */
 
+
+
+/* References
+[1] Microwave Engineering. David M Pozar. John Wiley and Sons. 4th edition. Pages 261-267
+[2] "Conversions between S, Z, Y, h, ABCD and T parameters which are Valid for Complex source and load impedances".
+Dean A. Frickey. IEEE Transaction on Microwave Theory and Techniques. Vol 42. No 2. February 1994
+*/
 #if HAVE_CONFIG_H
 # include <config.h>
 #endif
@@ -35,9 +42,9 @@ using namespace qucs;
 taperedline::taperedline () : circuit (2) {
   type = CIR_TAPEREDLINE;
 }
-//**************************************************************
-// This function calculates the S-parameter matrix of an exponential tapered
-// line by discretizing it into differential slots.
+//------------------------------------------------------------------
+// This function calculates the ABCD matrix of an arbitrarily tapered
+// line by diving it into differential slots and calculating their ABCD matrix.
 void taperedline::calcSparams(nr_double_t frequency)
 {
   nr_double_t L = getPropertyDouble ("L");//Length
@@ -93,19 +100,23 @@ void taperedline::calcSparams(nr_double_t frequency)
   C=ABCD.get(1,0);
   D=ABCD.get(1,1);
 }
-
+//------------------------------------------------------------------
+// Exponential impedance profile
 nr_double_t taperedline::calcExponential(nr_double_t l, nr_double_t L, nr_double_t Z1, nr_double_t Z2)
 {
    nr_double_t a = (1/L)*std::log(Z2/Z1);
    return Z1*std::exp(a*l);
 }
 
+//------------------------------------------------------------------
+// Linear impedance profile
 nr_double_t taperedline::calcLinear(nr_double_t l, nr_double_t L, nr_double_t Z1, nr_double_t Z2)
 {
    return Z1+l*(Z2-Z1)/L;
 }
 
-
+//------------------------------------------------------------------
+// Triangular impedance profile
 nr_double_t taperedline::calcTriangular(nr_double_t l, nr_double_t L, nr_double_t Z1, nr_double_t Z2)
 {
    if (l < L/2)
@@ -116,16 +127,18 @@ nr_double_t taperedline::calcTriangular(nr_double_t l, nr_double_t L, nr_double_
    return Z1*std::exp(((4*l/L) - (2*l*l/(L*L)) -1)*std::log(Z2/Z1));
 }
 
-
+//------------------------------------------------------------------
+// Klopfenstein impedance profile
 nr_double_t taperedline::calcKlopfenstein(nr_double_t l, nr_double_t L, nr_double_t Z1, nr_double_t Z2, nr_double_t gamma_max)
 {
-   nr_double_t gamma0 = 0.5*log(Z2/Z1);
-   nr_double_t A = acosh(gamma0/gamma_max);
-   Zi = exp(0.5*log(ZS*ZL) + (gamma0/cosh(A))*A*A*phi(2*(l/L)-1, A));
+   nr_double_t gamma0 = 0.5*std::log(Z2/Z1);
+   nr_double_t A = std::acosh(gamma0/gamma_max);
+   return std::exp(0.5*std::log(Z1*Z2) + (gamma0/std::cosh(A))*A*A*phi(2*(l/L)-1, A));
 
 }
 
-
+//------------------------------------------------------------------
+// Auxiliar function for Klopfenstein profile calculation
 nr_double_t taperedline::phi(nr_double_t x, nr_double_t A)
 {
    if (abs(x)<1e-4)
@@ -139,14 +152,24 @@ nr_double_t taperedline::phi(nr_double_t x, nr_double_t A)
    nr_double_t p=0;
    nr_double_t dy = 1e-3*x;
    for (nr_double_t y = 0; y < x; y+=dy)
-   {//Property: I_{\alpha}(x) = i^{-\alpha} J_{alpha}(x)
-       p = p + nr_complex_t (0, (-besselj(1, A*std::sqrt(1-y*y))/(A*std::sqrt(1-y*y)))*dy);
+   {
+       p = p + (besseli(1, A*std::sqrt(1-y*y))/(A*std::sqrt(1-y*y)))*dy;
    }
    return p;
 
 }
 
+//------------------------------------------------------------------
+// Modified Bessel function. It is calculated using its integral expression
+nr_double_t taperedline::besseli(nr_double_t alpha, nr_double_t x)
+{
+ nr_double_t a=0, b=0;
+ nr_double_t dtheta = 1e-1, dt = 10;
+ for (nr_double_t theta = 0; theta<pi; theta+=dtheta) a+= std::exp(x*std::cos(theta))*std::cos(alpha*theta)*dtheta;
+ for (nr_double_t t=0; t<1e4; t+=dt) b+= std::exp(-x*std::cosh(t) - alpha*t)*dt;
+ return (a/pi)-b*std::sin(alpha/pi);
 
+}
 void taperedline::calcSP (nr_double_t frequency) {
   calcSparams(frequency);
   nr_double_t Z1 = getPropertyDouble ("Z1");

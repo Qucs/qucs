@@ -74,7 +74,7 @@ Component* taperedline::newOne()
 
 Element* taperedline::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
-  Name = QObject::tr("Exponential tapered line");
+  Name = QObject::tr("Tapered line");
   BitmapFile = (char *) "taperedline";
 
   if(getNewOne)  return new taperedline();

@@ -42,6 +42,7 @@ private:
   nr_double_t calcTriangular(nr_double_t, nr_double_t, nr_double_t, nr_double_t);
   nr_double_t calcKlopfenstein(nr_double_t, nr_double_t, nr_double_t, nr_double_t, nr_double_t);
   nr_double_t phi(nr_double_t, nr_double_t);
+  nr_double_t besseli(nr_double_t, nr_double_t);
   nr_complex_t A, B, C, D;
 };
 
