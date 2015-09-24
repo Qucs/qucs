@@ -36,6 +36,11 @@ SUBDIRS = \
 	contrib \
 	$(RELEASEDIRS)
 
+subdirs:
+	@echo $(SUBDIRS)
+
+.PHONY: subdirs
+
 EXTRA_DIST = bootstrap depcomp PLATFORMS RELEASE Info.plist
 
 # MacOSX specific installation of applications
