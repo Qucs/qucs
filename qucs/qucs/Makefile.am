@@ -24,6 +24,8 @@
 
 SUBDIRS = components diagrams paintings dialogs octave
 
+all-local: qucs
+
 if COND_WIN32
 bin_SCRIPTS = qucsdigi.bat qucsveri.bat qucsdigilib.bat
 else
