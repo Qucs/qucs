@@ -36,14 +36,16 @@ class taperedline : public qucs::circuit
   void calcNoiseAC (nr_double_t);
   void calcNoiseSP (nr_double_t);
 private:
-  void calcSparams(nr_double_t);
+  void calcABCDparams(nr_double_t);
   nr_double_t calcExponential(nr_double_t, nr_double_t, nr_double_t, nr_double_t);
   nr_double_t calcLinear(nr_double_t, nr_double_t, nr_double_t, nr_double_t);
   nr_double_t calcTriangular(nr_double_t, nr_double_t, nr_double_t, nr_double_t);
   nr_double_t calcKlopfenstein(nr_double_t, nr_double_t, nr_double_t, nr_double_t, nr_double_t);
   nr_double_t phi(nr_double_t, nr_double_t);
   nr_double_t besseli(nr_double_t, nr_double_t);
+  long int factorial(int);
   nr_complex_t A, B, C, D;
 };
 
 #endif /* __taperedline_H__ */
+

@@ -28,6 +28,8 @@
 [1] Microwave Engineering. David M Pozar. John Wiley and Sons. 4th edition. Pages 261-267
 [2] "Conversions between S, Z, Y, h, ABCD and T parameters which are Valid for Complex source and load impedances".
 Dean A. Frickey. IEEE Transaction on Microwave Theory and Techniques. Vol 42. No 2. February 1994
+[3] "Handbook of Mathematical functions with Formulas, Graphs and Mathematical Tables". Milton Abramowitz. 
+US department of commerce (1964). Link: http://people.math.sfu.ca/~cbm/aands/page_375.htm
 */
 #if HAVE_CONFIG_H
 # include <config.h>
@@ -45,20 +47,24 @@ taperedline::taperedline () : circuit (2) {
 //------------------------------------------------------------------
 // This function calculates the ABCD matrix of an arbitrarily tapered
 // line by diving it into differential slots and calculating their ABCD matrix.
-void taperedline::calcSparams(nr_double_t frequency)
+void taperedline::calcABCDparams(nr_double_t frequency)
 {
   nr_double_t L = getPropertyDouble ("L");//Length
-  nr_double_t Z1 = getPropertyDouble ("Z1");//Source impedance
-  nr_double_t Z2 = getPropertyDouble ("Z2");//Load impedance
-  nr_double_t alpha = getPropertyDouble ("Alpha");//Load impedance
+  nr_double_t Z1 = getPropertyDouble ("Z1");//Port 1 impedance
+  nr_double_t Z2 = getPropertyDouble ("Z2");//Port 2 impedance
+  nr_double_t alpha = getPropertyDouble ("Alpha");//Loss coefficient
+  nr_double_t gamma_max = getPropertyDouble ("Gamma_max");;//Maximum ripple (Klopfenstein weighting only)
   nr_double_t lambda = C0/frequency;
-  nr_double_t lstep = 1e-3*lambda;
+  nr_double_t lstep = 3e-3*lambda;//Size of the differential elements
   nr_double_t Zi, beta;
   nr_complex_t a, b, c, d, gamma;
-  matrix ABCD = eye(2);
-  matrix ABCDaux = eye(2);
-  for (nr_double_t l = lstep; l < L; l+=lstep)
+  matrix ABCD = eye(2);//Overall ABCD matrix
+  matrix ABCDaux = eye(2);//Auxiliar matrix for performing the iterative product
+  for (nr_double_t l = lstep; l <= L; l+=lstep)
   {
+    // The line is discretized in finite elements. The size of these elements can be considered a differential
+    // length since it is 1e-3*wavelength. Taking into account the cascading property of the ABCD matrix, the overall
+    // ABCD matrix can be calculated as the product of the individual ABCD matrices.
     if (!strcmp (getPropertyString ("Weighting"), "Exponential"))
     {
        Zi = calcExponential(l, L, Z1, Z2);
@@ -77,13 +83,13 @@ void taperedline::calcSparams(nr_double_t frequency)
            }
            else//Klopfenstein
            {
-              nr_double_t gamma_max = 0.05;
               Zi = calcKlopfenstein(l, L, Z1, Z2, gamma_max);
            }
         }
     }    
-    beta = 2*pi*frequency/C0;
-    gamma = nr_complex_t (alpha, beta);
+    beta = 2*pi*frequency/C0;//Propagation constant
+    gamma = nr_complex_t (alpha, beta);//Complex propagation constant
+    // ABCD coefficients
     a = cosh(gamma*lstep);
     b = Zi*sinh(gamma*lstep);
     c = sinh(gamma*lstep)/Zi;
@@ -92,9 +98,11 @@ void taperedline::calcSparams(nr_double_t frequency)
     ABCDaux.set(0,1,b);
     ABCDaux.set(1,0,c);
     ABCDaux.set(1,1,d);
+    //Iterative product
     ABCD=ABCD*ABCDaux;
+
   }
-  //Converting T matrix to S-parameters
+  // Overall ABCD coefficients
   A=ABCD.get(0,0);
   B=ABCD.get(0,1);
   C=ABCD.get(1,0);
@@ -133,47 +141,102 @@ nr_double_t taperedline::calcKlopfenstein(nr_double_t l, nr_double_t L, nr_doubl
 {
    nr_double_t gamma0 = 0.5*std::log(Z2/Z1);
    nr_double_t A = std::acosh(gamma0/gamma_max);
-   return std::exp(0.5*std::log(Z1*Z2) + (gamma0/std::cosh(A))*A*A*phi(2*(l/L)-1, A));
-
+   return (std::exp(0.5*std::log(Z1*Z2) + (gamma0/std::cosh(A))*A*A*phi(2.*(l/L)-1., A)));
 }
 
 //------------------------------------------------------------------
 // Auxiliar function for Klopfenstein profile calculation
 nr_double_t taperedline::phi(nr_double_t x, nr_double_t A)
 {
-   if (abs(x)<1e-4)
+   if (abs(x)<1e-4) return 0;//phi(0, A) = 0
+   if(abs(A)<1e-4) return x/2.;//phi(x, 0) = x/2
+   if(abs(x-1)<1e-4) return (std::cosh(A)-1)/(A*A);//phi(1, A)=(cosh(A)-1)/A^2 
+   nr_double_t sign;
+   // phi(x, A) is defined for |x|<=1
+   if (x > 1) x=1;
+   if (x < -1) x=-1;
+
+   if (x <= 0)
    {
-      return 0;
+     sign = -1;
    }
-   if(abs(A)<1e-4)
+   else
    {
-      return x/2.;
+     sign = 1;
    }
+
+   nr_double_t dy = abs(5e-3*x);//Differential step
    nr_double_t p=0;
-   nr_double_t dy = 1e-3*x;
-   for (nr_double_t y = 0; y < x; y+=dy)
+   for (nr_double_t y = 0; y <= abs(x); y+=dy)//Integration
    {
-       p = p + (besseli(1, A*std::sqrt(1-y*y))/(A*std::sqrt(1-y*y)))*dy;
+       p += (besseli(1, A*std::sqrt(1-y*y))/(A*std::sqrt(1-y*y)))*dy;
    }
-   return p;
+   return sign*p;
 
 }
 
 //------------------------------------------------------------------
-// Modified Bessel function. It is calculated using its integral expression
+// Modified Bessel function. It is calculated using the infinite discrete
+// summation formula. See "Handbook of Mathematical functions with Formulas, Graphs and
+// Mathematical Tables". Milton Abramowitz. US department of commerce (1964). Page 375
+// http://people.math.sfu.ca/~cbm/aands/page_375.htm
 nr_double_t taperedline::besseli(nr_double_t alpha, nr_double_t x)
 {
- nr_double_t a=0, b=0;
- nr_double_t dtheta = 1e-1, dt = 10;
- for (nr_double_t theta = 0; theta<pi; theta+=dtheta) a+= std::exp(x*std::cos(theta))*std::cos(alpha*theta)*dtheta;
- for (nr_double_t t=0; t<1e4; t+=dt) b+= std::exp(-x*std::cosh(t) - alpha*t)*dt;
- return (a/pi)-b*std::sin(alpha/pi);
+nr_double_t b=0;
+for (int m = 0; m<15; m++)
+{
+	b+=std::pow(x/2, 2*m+alpha)*(1/(factorial(m)*std::tgamma(m+alpha+1)));
+}
+return b;
+}
+
+//------------------------------------------------------------------------
+// This function calculates the factorial. In favour of efficiency, it implements a LUT for m < 30
+long int taperedline::factorial(int m)
+{
+switch(m)
+{
+   case 0: return 1;
+   case 1: return 1;
+   case 2: return 2;
+   case 3: return 6;
+   case 4: return 24;
+   case 5: return 120;
+   case 6: return 720;
+   case 7: return 5040;
+   case 8: return 40320;
+   case 9: return 362880;
+   case 10: return 3628800;
+   case 11: return 39916800;
+   case 12: return 479001600;
+   case 13: return 6227020800; 
+   case 14: return 87178291200;
+   case 15: return 1307674368000;
+   case 16: return 20922789888000;
+   case 17: return 355687428096000;
+   case 18: return 6402373705728000;
+   case 19: return 121645100408832000;
+   case 20: return 2432902008176640000;
+   default:
+      long int k=1;
+      for(int i =1; i<=m;i++)k*=i;
+      return k;
+}
 
 }
+
+
+
+
+
 void taperedline::calcSP (nr_double_t frequency) {
-  calcSparams(frequency);
+  calcABCDparams(frequency);
   nr_double_t Z1 = getPropertyDouble ("Z1");
   nr_double_t Z2 = getPropertyDouble ("Z2");
+/*
+Conversions between S, Z, Y, h, ABCD and T parameters which are Valid for Complex source and load impedances.
+Dean A. Frickey. IEEE Transaction on Microwave Theory and Techniques. Vol 42. No 2. February 1994
+*/
   nr_complex_t S11 = (A*Z2+B -C*conj(Z1)*Z2-D*conj(Z1))/(A*Z2+B+C*Z1*Z2+D*Z1);
   nr_complex_t S12 = 2.*(A*D-B*C)*std::sqrt(Z1*Z2)/(A*Z2+B+C*Z1*Z2+D*Z1);
   nr_complex_t S21 = 2.*std::sqrt(Z1*Z2)/(A*Z2+B+C*Z1*Z2+D*Z1);
@@ -212,6 +275,7 @@ void taperedline::initAC (void) {
 }
 
 void taperedline::calcAC (nr_double_t frequency) {
+  calcABCDparams(frequency);
   nr_double_t L = getPropertyDouble ("L");
   if (L != 0.0) {
 /*
@@ -237,7 +301,8 @@ PROP_REQ [] = {
     PROP_RNG_STR4 ("Exponential", "Linear", "Triangular", "Klopfenstein") },
     PROP_NO_PROP };
 PROP_OPT [] = {
-  { "Alpha", PROP_REAL, { 1, PROP_NO_STR }, PROP_POS_RANGEX },
+  { "Gamma_max", PROP_REAL, { 0.1, PROP_NO_STR }, PROP_POS_RANGEX },
+  { "Alpha", PROP_REAL, { -30, PROP_NO_STR }, PROP_POS_RANGEX },
   { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },
   PROP_NO_PROP };
 struct define_t taperedline::cirdef =
