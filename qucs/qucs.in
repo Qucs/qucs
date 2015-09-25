@@ -34,7 +34,7 @@ if [ -z "$QUCSHELP" ]; then
 fi
 
 for i in $( make subdirs ); do
-	PATH="$PWD/$i:$PATH"
+	PATH="$top/$i:$PATH"
 done
 
 if [ -z "$QUCSDIR" ]; then
