@@ -702,7 +702,10 @@ QString Component::get_VHDL_Code(int NumPorts)
 }
 
 // -------------------------------------------------------
-QString Component::save()
+// save a component
+// FIXME: part of corresponding SchematicSerializer implementation
+// BUG: c must be const (cannot because of QT3)
+void Schematic::saveComponent(QTextStream& s, Component /*const*/ * c) const
 {
 #if XML
   QDomDocument doc;
@@ -723,34 +726,51 @@ QString Component::save()
   }
   qDebug (doc.toString());
 #endif
-  QString s = "<" + Model;
+  // s << "  "; ??
+  s << "<" << c->Model;
 
-  if(Name.isEmpty()) s += " * ";
-  else s += " "+Name+" ";
+  s << " ";
+  if(c->Name.isEmpty()){
+    s << "*";
+  }else{
+    s << c->Name;
+  }
+  s << " ";
 
   int i=0;
-  if(!showName)
+  if(!c->showName){
     i = 4;
-  i |= isActive;
-  s += QString::number(i);
-  s += " "+QString::number(cx)+" "+QString::number(cy);
-  s += " "+QString::number(tx)+" "+QString::number(ty);
-  if(mirroredX) s += " 1";
-  else s += " 0";
-  s += " "+QString::number(rotated);
+  }
+  i |= c->isActive;
+  s << QString::number(i);
+  s << " "+QString::number(c->cx)+" "+QString::number(c->cy);
+  s << " "+QString::number(c->tx)+" "+QString::number(c->ty);
+  s << " ";
+  if(c->mirroredX){
+    s << "1";
+  }else{
+    s << "0";
+  }
+  s << " " << QString::number(c->rotated);
 
   // write all properties
-  for(Property *p1 = Props.first(); p1 != 0; p1 = Props.next()) {
-    if(p1->Description.isEmpty())
-      s += " \""+p1->Name+"="+p1->Value+"\"";   // e.g. for equations
-    else s += " \""+p1->Value+"\"";
-    if(p1->display) s += " 1";
-    else s += " 0";
+  // FIXME: ask component for properties, not for dictionary
+  for(Property *p1 = c->Props.first(); p1 != 0; p1 = c->Props.next()) {
+    if(p1->Description.isEmpty()){
+      s << " \""+p1->Name+"="+p1->Value+"\"";   // e.g. for equations
+    }else{
+      s << " \""+p1->Value+"\"";
+    }
+    s << " ";
+    if(p1->display){
+      s << "1";
+    }else{
+      s << "0";
+    }
   }
 
-  return s+">";
+  s << ">";
 }
-
 // -------------------------------------------------------
 bool Component::load(const QString& _s)
 {

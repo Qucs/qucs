@@ -51,7 +51,6 @@ public:
   void    rotate();
   void    mirrorX();  // mirror about X axis
   void    mirrorY();  // mirror about Y axis
-  QString save();
   bool    load(const QString&);
 
   // to hold track of the component appearance for saving and copying
