@@ -318,6 +318,9 @@ public:
   bool isAnalog;
   bool isVerilog;
   bool creatingLib;
+
+public: // serializer
+  void saveComponent(QTextStream& s, Component /* FIXME const */* c) const;
 };
 
 #endif
