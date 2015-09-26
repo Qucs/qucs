@@ -350,5 +350,65 @@ l_{short} = \frac{-\lambda}{2\pi} atan\left(\frac{1}{Z_0\cdot B_{stub_i}}\right)
 \noindent where $i$ denotes the number of the stub. 
 
 \subsection{Multistage $\lambda$/4 sections}
+The overall reflection coefficient of N cascaded transmission lines of the same length can be approximated as:
+
+\begin{equation}
+\Gamma(\theta) = \sum \limits_{n=0}^{N} \Gamma_n \cdot e^{-j\cdot 2n \theta}
+\label{eq:CascadeReflection}
+\end{equation}
+
+\noindent where $\theta$ is the electrical length of a single transmission line (typically $\lambda/4$). The ${\Gamma_n}$ weigths define the shape of $\Gamma(\theta)$ and they are taylored so as to get a binomial or a Chebyshev overall response.
+
+\noindent Once given $\Gamma_n \;\; \forall n \in [0, N]$, it is possible to calculate the impedance of each transmission line:
+
+\begin{equation}
+Z_{n+1} \sim Z_n \cdot e^{2\cdot\Gamma_n}
+\end{equation}
+
+\noindent where n indicates the section number.
+
 \subsubsection{Binomial weighting}
+\noindent $\Gamma_n$ is defined as:
+
+\begin{equation}
+\Gamma_n = A\cdot C^{N}_{n} \;\; \forall n \in [0, N]
+\end{equation}	
+
+\noindent where $A = 2^{-N}\frac{Z_L - Z_0}{Z_L + Z_0}$ and $C^N_n = \frac{N!}{(N-n)!n!}$
+
 \subsubsection{Chebyshev weighting}
+
+The overall reflection coeffient is set to:
+
+\begin{equation}
+\Gamma(\theta) = A \cdot e^{-jN\theta} \cdot T_{\theta}(sec(\theta_m)cos(\theta))
+\end{equation}
+
+\noindent where:
+
+\begin{equation}
+ A = \frac{Z_L - Z_0}{Z_L + Z_0} \cdot \frac{1}{T_N(sec(\theta_m))}
+\end{equation}
+
+\begin{equation}
+  sec(\theta_m) = cosh(\frac{1}{N} acosh\left( \frac{1}{\Gamma_m} \lvert \frac{Z_L - Z_0}{Z_L + Z_0} \rvert \right))
+\end{equation}
+
+\noindent and $T_N(x)$ is the Chebyshev polynomial of order N. The Chebyshev polinomials are defined such that:
+\begin{equation}
+ T_n(x) = 2xT_{n-1}(x) - T_{n-1}(x) 
+\end{equation}
+
+\begin{equation}
+T_1(x) = x
+\end{equation}
+
+\begin{equation}
+T_0(x) = 1
+\end{equation}
+
+\noindent $T_N(sec(\theta_m)cos(\theta))$ involves terms such as $cos^N(x)$, $cos^{N-1}(x)$,... In order to equate this terms to the $\Gamma_n$ terms in \ref{eq:CascadeReflection}, it is necessary to expand $cos^N(x)$ terms into sums of terms such as $cos((n-2m)\theta)$
+
+
+
+
