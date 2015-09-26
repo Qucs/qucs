@@ -191,12 +191,13 @@ void LoadDialog::slotSelectNone()
 
 void LoadDialog::slotSymbolFileClicked(QListWidgetItem* item)
 {
-//  qDebug() << "pressed" << item->text();
+  qDebug() << "pressed" << item->text();
+  qDebug() << "projDir" << projDir;
  // get bitmap, try to plot
  // similar to QucsApp::slotSetCompView
   QString JSON = projDir.filePath(item->text());
 
-//  qDebug() << "read " << JSON;
+  qDebug() << "read " << JSON;
 
   // Just need path to bitmap, do not create an object
   QString Name, vaBitmap;
@@ -204,19 +205,17 @@ void LoadDialog::slotSymbolFileClicked(QListWidgetItem* item)
           vacomponent::info (Name, vaBitmap, false, JSON);
   if (c) delete c;
 
-//  qDebug() << "slotSymbolFileClicked" << Name << vaBitmap;
+  qDebug() << "slotSymbolFileClicked" << Name << vaBitmap;
 
   // check if icon exists, fall back to default
   QString iconPath = QString(projDir.absoluteFilePath(vaBitmap+".png"));
   QFile iconFile(iconPath);
 
-  if(iconFile.exists())
-  {
+  if(iconFile.exists()) {
     // load bitmap defined on the JSON symbol file
     iconPixmap->setPixmap(QPixmap(iconPath));
-  }
-  else
-  {
+  } else {
+    qDebug() << "does not exist?" << iconPath;
     QMessageBox::information(this, tr("Info"),
                  tr("Icon not found:\n %1.png").arg(vaBitmap));
     // default icon
@@ -334,3 +333,5 @@ bool LoadDialog::eventFilter(QObject *obj, QEvent *event)
   }
   return false;
 }
+
+// vim:ts=8:sw=2:noet
