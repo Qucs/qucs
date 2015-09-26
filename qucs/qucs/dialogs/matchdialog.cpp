@@ -2667,7 +2667,7 @@ QString MatchDialog::calcChebyLines(double r_real, double r_imag, double Z0, dou
         break;
     case 2:
         w[0] = sec_theta_m*sec_theta_m;
-        w[1] = sec_theta_m*sec_theta_m-1;
+        w[1] = 2*(sec_theta_m*sec_theta_m-1);
         break;
     case 3:
         w[0] = pow(sec_theta_m,3);
