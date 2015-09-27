@@ -58,7 +58,8 @@ va2cpp: $(MODEL).cpp
 
 .va.cpp: $(XML_FILES)
 	@echo '# va2cpp - Creating C++ sources.'
-	$(ADMSXML) $< \
+	# BUG: must catch stray spaces in ADMSXML, adding extra quotation
+	"$(ADMSXML)" $< \
                            -I "$(INC)"                    \
                            -e "$(INC)/qucsVersion.xml"    \
                            -e "$(INC)/qucsMODULEcore.xml" \
