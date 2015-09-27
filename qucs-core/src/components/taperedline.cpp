@@ -38,7 +38,6 @@ US department of commerce (1964). Link: http://people.math.sfu.ca/~cbm/aands/pag
 #include "component.h"
 #include "taperedline.h"
 
-
 using namespace qucs;
 
 taperedline::taperedline () : circuit (2) {
@@ -105,6 +104,15 @@ void taperedline::calcABCDparams(nr_double_t frequency)
   // Overall ABCD coefficients
   ABCD = ABCD_;
 }
+
+nr_double_t integrate_n (vector v) { /* using trapezoidal rule */
+  nr_double_t result = 0.0;
+  for (int i = 1; i < v.getSize () - 1; i++) result += norm (v.get (i));
+  result += 0.5 * norm (v.get (0));
+  result += 0.5 * norm (v.get (v.getSize () - 1));
+  return result;
+}
+
 //------------------------------------------------------------------
 // Exponential impedance profile
 nr_double_t taperedline::calcExponential(nr_double_t l, nr_double_t L, nr_double_t Z1, nr_double_t Z2)
@@ -153,7 +161,7 @@ nr_double_t taperedline::phi(nr_double_t x, nr_double_t A)
    if (x > 1) x=1;
    if (x < -1) x=-1;
 
-   if (x <= 0)
+   if (x <= 0)//Integration direction
    {
      sign = -1;
    }
@@ -163,14 +171,17 @@ nr_double_t taperedline::phi(nr_double_t x, nr_double_t A)
    }
 
    nr_double_t dy = abs(5e-3*x);//Differential step
-   nr_double_t p=0;
+   vector vIntegration(std::floor(abs(x)/dy));
+   int i=0;
    for (nr_double_t y = 0; y <= abs(x); y+=dy)//Integration
    {
-       p += (besseli(1, A*std::sqrt(1-y*y))/(A*std::sqrt(1-y*y)))*dy;
+       vIntegration(i) = (besseli(1, A*std::sqrt(1-y*y))/(A*std::sqrt(1-y*y)))*dy;
+       i++;
    }
-   return sign*p;
+   return sign*integrate_n(vIntegration);
 
 }
+
 
 //------------------------------------------------------------------
 // Modified Bessel function. It is calculated using the infinite discrete

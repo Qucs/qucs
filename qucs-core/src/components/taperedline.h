@@ -24,7 +24,8 @@
 
 #ifndef __taperedline_H__
 #define __taperedline_H__
-#include <matrix.h>
+#include "matrix.h"
+
 class taperedline : public qucs::circuit
 {
  public:
