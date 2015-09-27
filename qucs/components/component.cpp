@@ -772,64 +772,79 @@ void Schematic::saveComponent(QTextStream& s, Component /*const*/ * c) const
   s << ">";
 }
 // -------------------------------------------------------
-bool Component::load(const QString& _s)
+// FIXME: must be Component* SchematicParser::loadComponent(Stream&, Component*);
+Component* Schematic::loadComponent(const QString& _s, Component* c) const
 {
   bool ok;
   int  ttx, tty, tmp;
   QString s = _s;
 
-  if(s.at(0) != '<') return false;
-  if(s.at(s.length()-1) != '>') return false;
+  if(s.at(0) != '<'){
+    return NULL;
+  }else if(s.at(s.length()-1) != '>'){
+    return NULL;
+  }
   s = s.mid(1, s.length()-2);   // cut off start and end character
 
   QString n;
-  Name = s.section(' ',1,1);    // Name
-  if(Name == "*") Name = "";
+  c->Name = s.section(' ',1,1);    // Name
+  if(c->Name == "*"){
+	  c->Name = "";
+  }
 
   n  = s.section(' ',2,2);      // isActive
   tmp = n.toInt(&ok);
-  if(!ok) return false;
-  isActive = tmp & 3;
+  if(!ok){
+    return NULL;
+  }
+  c->isActive = tmp & 3;
 
   if(tmp & 4)
-    showName = false;
+    c->showName = false;
   else
-    showName = true;
+    c->showName = true;
 
   n  = s.section(' ',3,3);    // cx
-  cx = n.toInt(&ok);
-  if(!ok) return false;
+  c->cx = n.toInt(&ok);
+  if(!ok) return NULL;
 
   n  = s.section(' ',4,4);    // cy
-  cy = n.toInt(&ok);
-  if(!ok) return false;
+  c->cy = n.toInt(&ok);
+  if(!ok) return NULL;
 
   n  = s.section(' ',5,5);    // tx
   ttx = n.toInt(&ok);
-  if(!ok) return false;
+  if(!ok) return NULL;
 
   n  = s.section(' ',6,6);    // ty
   tty = n.toInt(&ok);
-  if(!ok) return false;
+  if(!ok) return NULL;
 
-  if(Model.at(0) != '.') {  // is simulation component (dc, ac, ...) ?
+  if(c->Model.at(0) != '.') {  // is simulation component (dc, ac, ...) ?
 
     n  = s.section(' ',7,7);    // mirroredX
-    if(n.toInt(&ok) == 1) mirrorX();
-    if(!ok) return false;
+    if(n.toInt(&ok) == 1){
+      c->mirrorX();
+    }
+    if(!ok) return NULL;
 
     n  = s.section(' ',8,8);    // rotated
     tmp = n.toInt(&ok);
-    if(!ok) return false;
-    if(rotated > tmp)  // neccessary because of historical flaw in ...
+    if(!ok) return NULL;
+    if(c->rotated > tmp)  // neccessary because of historical flaw in ...
       tmp += 4;        // ... components like "volt_dc"
-    for(int z=rotated; z<tmp; z++) rotate();
-
+    for(int z=c->rotated; z<tmp; z++){
+      c->rotate();
+    }
   }
 
-  tx = ttx; ty = tty; // restore text position (was changed by rotate/mirror)
+  c->tx = ttx;
+  c->ty = tty; // restore text position (was changed by rotate/mirror)
+
+  QString Model = c->Model; // BUG: don't use names
 
   unsigned int z=0, counts = s.count('"');
+  // FIXME. use c->paramCount()
   if(Model == "Sub")
     tmp = 2;   // first property (File) already exists
   else if(Model == "Lib")
@@ -844,12 +859,13 @@ bool Component::load(const QString& _s)
     tmp = 5; // number of properties for the default MUTX (2 inductors)
   else tmp = counts + 1;    // "+1" because "counts" could be zero
 
+  /// BUG FIXME. dont use Component parameter dictionary.
   for(; tmp<=(int)counts/2; tmp++)
-    Props.append(new Property("p", "", true, " "));
+    c->Props.append(new Property("p", "", true, " "));
 
   // load all properties
   Property *p1;
-  for(p1 = Props.first(); p1 != 0; p1 = Props.next()) {
+  for(p1 = c->Props.first(); p1 != 0; p1 = c->Props.next()) {
     z++;
     n = s.section('"',z,z);    // property value
     z++;
@@ -857,55 +873,57 @@ bool Component::load(const QString& _s)
 
     // not all properties have to be mentioned (backward compatible)
     if(z > counts) {
-      if(p1->Description.isEmpty())
-        Props.remove();    // remove if allocated in vain
+      if(p1->Description.isEmpty()){
+        c->Props.remove();    // remove if allocated in vain
+      }
 
-      if(Model == "Diode") {
+      if(Model == "Diode") { // BUG: don't use names
 	if(counts < 56) {  // backward compatible
           counts >>= 1;
-          p1 = Props.at(counts-1);
-          for(; p1 != 0; p1 = Props.current()) {
-            if(counts-- < 19)
+          p1 = c->Props.at(counts-1);
+          for(; p1 != 0; p1 = c->Props.current()) {
+            if(counts-- < 19){
               break;
+	    }
 
-            n = Props.prev()->Value;
+            n = c->Props.prev()->Value;
             p1->Value = n;
           }
 
-          p1 = Props.at(17);
-          p1->Value = Props.at(11)->Value;
-          Props.current()->Value = "0";
+          p1 = c->Props.at(17);
+          p1->Value = c->Props.at(11)->Value;
+          c->Props.current()->Value = "0";
         }
       }
       else if(Model == "AND" || Model == "NAND" || Model == "NOR" ||
 	      Model == "OR" ||  Model == "XNOR"|| Model == "XOR") {
 	if(counts < 10) {   // backward compatible
           counts >>= 1;
-          p1 = Props.at(counts);
-          for(; p1 != 0; p1 = Props.current()) {
+          p1 = c->Props.at(counts);
+          for(; p1 != 0; p1 = c->Props.current()) {
             if(counts-- < 4)
               break;
-            n = Props.prev()->Value;
+            n = c->Props.prev()->Value;
             p1->Value = n;
           }
-          Props.current()->Value = "10";
+          c->Props.current()->Value = "10";
 	}
       }
       else if(Model == "Buf" || Model == "Inv") {
 	if(counts < 8) {   // backward compatible
           counts >>= 1;
-          p1 = Props.at(counts);
-          for(; p1 != 0; p1 = Props.current()) {
+          p1 = c->Props.at(counts);
+          for(; p1 != 0; p1 = c->Props.current()) {
             if(counts-- < 3)
               break;
-            n = Props.prev()->Value;
+            n = c->Props.prev()->Value;
             p1->Value = n;
           }
-          Props.current()->Value = "10";
+          c->Props.current()->Value = "10";
 	}
       }
 
-      return true;
+      return c;
     }
 
     // for equations
@@ -914,15 +932,15 @@ bool Component::load(const QString& _s)
       p1->Name = n.section('=',0,0);
       n = n.section('=',1);
       // allocate memory for a new property (e.g. for equations)
-      if(Props.count() < (counts>>1)) {
-        Props.insert(z >> 1, new Property("y", "1", true));
-        Props.prev();
+      if(c->Props.count() < (counts>>1)) {
+        c->Props.insert(z >> 1, new Property("y", "1", true));
+        c->Props.prev();
       }
     }
     if(z == 6)  if(counts == 6)     // backward compatible
       if(Model == "R") {
-        Props.getLast()->Value = n;
-        return true;
+        c->Props.getLast()->Value = n;
+        return c;
       }
     p1->Value = n;
 
@@ -930,8 +948,10 @@ bool Component::load(const QString& _s)
     p1->display = (n.at(1) == '1');
   }
 
-  return true;
+  return c;
 }
+
+// -------------------------------------------------------
 
 // *******************************************************************
 // ***  The following functions are used to load the schematic symbol
@@ -1560,11 +1580,14 @@ void GateComponent::createSymbol()
 // ***********************************************************************
 // ********                                                       ********
 // ******** The following function does not belong to any class.  ********
-// ******** It creates a component by getting the identification  ********
+// ******** It creates a symbol by getting the identification     ********
 // ******** string used in the schematic file and for copy/paste. ********
 // ********                                                       ********
 // ***********************************************************************
 
+// FIXME:
+// must be Component* SomeParserClass::getComponent(QString& Line)
+// better: Component* SomeParserClass::getComponent(SomeDataStream& s)
 Component* getComponentFromName(QString& Line, Schematic* p)
 {
   Component *c = 0;
@@ -1585,9 +1608,11 @@ Component* getComponentFromName(QString& Line, Schematic* p)
   else if (cstr.left (6) == "SPfile" && cstr != "SPfile") {
     // backward compatible
     c = new SParamFile ();
-    c->Props.getLast()->Value = cstr.mid (6); }
-  else
+    c->Props.getLast()->Value = cstr.mid (6);
+  }else{
+	  // FIXME: fetch proto from dictionary.
     c = Module::getComponent (cstr);
+  }
 
   if(!c) {
     /// \todo enable user to load partial schematic, skip unknown components
@@ -1598,7 +1623,8 @@ Component* getComponentFromName(QString& Line, Schematic* p)
     return 0;
   }
 
-  if(!c->load(Line)) {
+  // BUG: don't use schematic.
+  if(!p->loadComponent(Line, c)) {
     QMessageBox::critical(0, QObject::tr("Error"),
 	QObject::tr("Format Error:\nWrong 'component' line format!"));
     delete c;
@@ -1613,3 +1639,5 @@ Component* getComponentFromName(QString& Line, Schematic* p)
   c->tx = x;  c->ty = y;
   return c;
 }
+
+// vim:ts=8:sw=2:noet
