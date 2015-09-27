@@ -58,7 +58,7 @@ va2cpp: $(MODEL).cpp
 
 .va.cpp: $(XML_FILES)
 	@echo '# va2cpp - Creating C++ sources.'
-	$(ADMSXML) $< \
+	"$(ADMSXML)" $< \
                            -I "$(INC)"                    \
                            -e "$(INC)/qucsVersion.xml"    \
                            -e "$(INC)/qucsMODULEcore.xml" \
