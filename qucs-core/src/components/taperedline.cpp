@@ -37,7 +37,7 @@ US department of commerce (1964). Link: http://people.math.sfu.ca/~cbm/aands/pag
 
 #include "component.h"
 #include "taperedline.h"
-#include <matrix.h>
+
 
 using namespace qucs;
 
@@ -58,7 +58,7 @@ void taperedline::calcABCDparams(nr_double_t frequency)
   nr_double_t lstep = 3e-3*lambda;//Size of the differential elements
   nr_double_t Zi, beta;
   nr_complex_t a, b, c, d, gamma;
-  matrix ABCD = eye(2);//Overall ABCD matrix
+  matrix ABCD_ = eye(2);//Overall ABCD matrix
   matrix ABCDaux = eye(2);//Auxiliar matrix for performing the iterative product
   for (nr_double_t l = lstep; l <= L; l+=lstep)
   {
@@ -99,14 +99,11 @@ void taperedline::calcABCDparams(nr_double_t frequency)
     ABCDaux.set(1,0,c);
     ABCDaux.set(1,1,d);
     //Iterative product
-    ABCD=ABCD*ABCDaux;
+    ABCD_=ABCD_*ABCDaux;
 
   }
   // Overall ABCD coefficients
-  A=ABCD.get(0,0);
-  B=ABCD.get(0,1);
-  C=ABCD.get(1,0);
-  D=ABCD.get(1,1);
+  ABCD = ABCD_;
 }
 //------------------------------------------------------------------
 // Exponential impedance profile
@@ -231,16 +228,11 @@ switch(m)
 
 void taperedline::calcSP (nr_double_t frequency) {
   calcABCDparams(frequency);
-  nr_double_t Z1 = getPropertyDouble ("Z1");
-  nr_double_t Z2 = getPropertyDouble ("Z2");
-/*
-Conversions between S, Z, Y, h, ABCD and T parameters which are Valid for Complex source and load impedances.
-Dean A. Frickey. IEEE Transaction on Microwave Theory and Techniques. Vol 42. No 2. February 1994
-*/
-  nr_complex_t S11 = (A*Z2+B -C*conj(Z1)*Z2-D*conj(Z1))/(A*Z2+B+C*Z1*Z2+D*Z1);
-  nr_complex_t S12 = 2.*(A*D-B*C)*std::sqrt(Z1*Z2)/(A*Z2+B+C*Z1*Z2+D*Z1);
-  nr_complex_t S21 = 2.*std::sqrt(Z1*Z2)/(A*Z2+B+C*Z1*Z2+D*Z1);
-  nr_complex_t S22 = (-A*conj(Z2)+B-C*Z1*Z2+D*Z1)/(A*Z2+B+C*Z1*Z2+D*Z1);
+  matrix S = qucs::atos(ABCD, z0, z0);
+  nr_complex_t S11 = S.get(0,0);
+  nr_complex_t S12 = S.get(0,1);
+  nr_complex_t S21 = S.get(1,0);
+  nr_complex_t S22 = S.get(1,1);
   setS (NODE_1, NODE_1, S11); setS (NODE_2, NODE_2, S22);
   setS (NODE_1, NODE_2, S12); setS (NODE_2, NODE_1, S21);
 }
@@ -282,12 +274,13 @@ void taperedline::calcAC (nr_double_t frequency) {
 Conversions between S, Z, Y, h, ABCD and T parameters which are Valid for Complex source and load impedances.
 Dean A. Frickey. IEEE Transaction on Microwave Theory and Techniques. Vol 42. No 2. February 1994
 */
-    nr_complex_t y11 = D/B;
-    nr_complex_t y12 = (B*C-A*D)/B;
-    nr_complex_t y21 = -1./B;
-    nr_complex_t y22 = A/B;
-    setY (NODE_1, NODE_1, y11); setY (NODE_2, NODE_2, y11);
-    setY (NODE_1, NODE_2, y21); setY (NODE_2, NODE_1, y21);
+    
+    nr_complex_t y11 = ABCD.get(1,1)/ABCD.get(0,1);
+    nr_complex_t y12 = det(ABCD)/ABCD.get(0,1);
+    nr_complex_t y21 = -1./ABCD.get(0,1);
+    nr_complex_t y22 = ABCD.get(0,0)/ABCD.get(0,1);
+    setY (NODE_1, NODE_1, y11); setY (NODE_2, NODE_2, y22);
+    setY (NODE_1, NODE_2, y12); setY (NODE_2, NODE_1, y21);
   }
 }
 
@@ -302,7 +295,7 @@ PROP_REQ [] = {
     PROP_NO_PROP };
 PROP_OPT [] = {
   { "Gamma_max", PROP_REAL, { 0.1, PROP_NO_STR }, PROP_POS_RANGEX },
-  { "Alpha", PROP_REAL, { -30, PROP_NO_STR }, PROP_POS_RANGEX },
+  { "Alpha", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGEX },
   { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },
   PROP_NO_PROP };
 struct define_t taperedline::cirdef =

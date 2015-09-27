@@ -24,7 +24,7 @@
 
 #ifndef __taperedline_H__
 #define __taperedline_H__
-
+#include <matrix.h>
 class taperedline : public qucs::circuit
 {
  public:
@@ -44,7 +44,7 @@ private:
   nr_double_t phi(nr_double_t, nr_double_t);
   nr_double_t besseli(nr_double_t, nr_double_t);
   long int factorial(int);
-  nr_complex_t A, B, C, D;
+  qucs::matrix ABCD;
 };
 
 #endif /* __taperedline_H__ */

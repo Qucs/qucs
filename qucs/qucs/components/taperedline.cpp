@@ -60,7 +60,7 @@ taperedline::taperedline()
 		" [Exponential, Linear, Triangular, Klopfenstein]"));
   Props.append(new Property("Gamma_max", "0.1", false,
 		QObject::tr("Maximum ripple (Klopfenstein taper only) ")));
-  Props.append(new Property("Alpha", "-30 dB", false,
+  Props.append(new Property("Alpha", "0 dB", false,
 		QObject::tr("attenuation factor per length in 1/m")));
   Props.append(new Property("Temp", "26.85", false,
 		QObject::tr("simulation temperature in degree Celsius")));
