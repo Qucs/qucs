@@ -25,6 +25,9 @@
 #ifndef __COMPONENTS_H__
 #define __COMPONENTS_H__
 
+// BUG: include all component headers.
+// components should add to the kernel, not the other way around.
+
 #include "complex.h"
 #include "object.h"
 #include "node.h"
@@ -139,12 +142,12 @@
 #include "digital/digisource.h"
 #include "digital/buffer.h"
 
-#include "verilog/hicumL2V2p1.core.h"
-#include "verilog/HBT_X.core.h"
+#include "verilog/hicumL2V2p11.core.h"
+#include "verilog/fbh_hbt-2_2a.core.h"
 #include "verilog/mod_amp.core.h"
-#include "verilog/hic2_full.core.h"
+#include "verilog/hicumL2V2p22.core.h"
 #include "verilog/log_amp.core.h"
-#include "verilog/hic0_full.core.h"
+#include "verilog/hicumL0V1p12.core.h"
 #include "verilog/potentiometer.core.h"
 #include "verilog/MESFET.core.h"
 #include "verilog/EKV26MOS.core.h"
