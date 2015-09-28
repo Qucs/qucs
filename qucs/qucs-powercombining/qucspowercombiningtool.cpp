@@ -160,6 +160,7 @@ QucsPowerCombiningTool::QucsPowerCombiningTool()
   QHBoxLayout *hboxMicr1 = new QHBoxLayout();
   RelPermlabel = new QLabel("Relative permitivity");
   RelPermcomboBox = new QComboBox();
+  RelPermcomboBox->setEditable(true);
   const char **p = List_er;
   while(*(++p)) RelPermcomboBox->addItem(*p);
   hboxMicr1->addWidget(RelPermlabel);
@@ -653,7 +654,7 @@ int QucsPowerCombiningTool::MultistageWilkinson(double Z0, double Freq, int NSta
     }
     else
     {
-      alpha = log(pow(0.1*Alpha, 10));//Alpha is given in natural units, then it is necessary to convert it into Np/m units
+      alpha = log(pow(0.1*Alpha, 10));//Alpha is given in dB/m, then it is necessary to convert it into Np/m units
     }
     std::complex<double> gamma(alpha, 2*pi/lambda);//It is only considered the attenation of the metal conductor since it tends to be much higher than the dielectric
     QString Risol = calcMultistageWilkinsonIsolators(Freq, Zlines, lambda4, gamma, NStages, Z0);
@@ -673,6 +674,7 @@ int QucsPowerCombiningTool::MultistageWilkinson(double Z0, double Freq, int NSta
         double freq_start = std::max(0., Freq-1e9);
         double freq_stop = Freq+1e9;
         s += QString("<.SP SP1 1 200 100 0 67 0 0 \"lin\" 1 \"%2Hz\" 1 \"%3Hz\" 1 \"300\" 1 \"no\" 0 \"1\" 0 \"2\" 0>\n").arg((freq_start)).arg((freq_stop));
+        str += QString("\"S11_dB=dB(S[1,1])\" 1 ");
         str += QString("\"S21_dB=dB(S[2,1])\" 1 ");
         str +=QString("\"S31_dB=dB(S[3,1])\" 1 ");
         s += QString("<Eqn Eqn1 1 50 200 -28 15 0 0 ") + str + QString("\"yes\" 0>\n");
@@ -691,7 +693,7 @@ int QucsPowerCombiningTool::MultistageWilkinson(double Z0, double Freq, int NSta
     }
     else
     {
-    s += QString("<TLIN Line1 1 %1 -30 -26 20 0 0 \"%2\" 0 \"%3\" 0 \"%3 dB\" 0 \"26.85\" 0>\n").arg(x).arg(Z0).arg(lambda4).arg(Alpha);//Z0 line
+    s += QString("<TLIN Line1 1 %1 -30 -26 20 0 0 \"%2\" 0 \"%3\" 0 \"%4 dB\" 0 \"26.85\" 0>\n").arg(x).arg(Z0).arg(lambda4).arg(Alpha);//Z0 line
     }
     wirestr +=QString("<%1 -90 %1 30 \"\" 0 0 0>\n").arg(x+30);
     for (int i = NStages-1; i>= 0;i--)
@@ -720,8 +722,8 @@ int QucsPowerCombiningTool::MultistageWilkinson(double Z0, double Freq, int NSta
         }
         else
         {
-            s += QString("<TLIN Line1 1 %1 -90 -26 20 0 0 \"%2\" 0 \"%3\" 0 \"%3 dB\" 0 \"26.85\" 0>\n").arg(x+100).arg(Zi).arg(lambda4).arg(Alpha);//Output branch 1
-            s += QString("<TLIN Line1 1 %1 30 -26 20 0 0 \"%2\" 0 \"%3\" 0 \"%3 dB\" 0 \"26.85\" 0>\n").arg(x+100).arg(Zi).arg(lambda4).arg(Alpha);//Output branch 2
+            s += QString("<TLIN Line1 1 %1 -90 -26 20 0 0 \"%2\" 0 \"%3\" 0 \"%4 dB\" 0 \"26.85\" 0>\n").arg(x+100).arg(Zi).arg(lambda4).arg(Alpha);//Output branch 1
+            s += QString("<TLIN Line1 1 %1 30 -26 20 0 0 \"%2\" 0 \"%3\" 0 \"%4 dB\" 0 \"26.85\" 0>\n").arg(x+100).arg(Zi).arg(lambda4).arg(Alpha);//Output branch 2
         }
         s += QString("<R R1 1 %1 -20 30 -26 0 -1 \"%2 Ohm\" 1 \"26.85\" 0 \"US\" 0>\n").arg(x+160).arg(Ri);//Isolation resistor
         x+=spacing;
