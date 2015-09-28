@@ -1,0 +1,29 @@
+From 762e38140c6c6552ee6e49e702c59ac6dc261ea3 Mon Sep 17 00:00:00 2001
+From: Guilherme Brondani Torri <guitorri@gmail.com>
+Date: Thu, 16 Jul 2015 20:45:37 +0200
+Subject: [PATCH] [bsim6] Add modification note
+
+The bsim6.1.0 models added to Qucs repository is already patched.
+Patches are provided in the patch-bsim610 directory.
+---
+ bsim6.va | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+diff --git a/bsim6.va b/bsim6.va
+index 1ca6576..aadcc55 100755
+--- a/bsim6.va
++++ b/bsim6.va
+@@ -1,3 +1,10 @@
++/// --- NOTE ---
++/// This copy of BSIM6.1.0 was modified for the Qucs project.
++/// See the directory 'patch-bsim610' for details.
++/// The unmodified source can be downloaded from:
++///   http://www-device.eecs.berkeley.edu/bsim/?page=BSIM6
++/// --- NOTE ---
++
+ // ********************************************************
+ // **** BSIM6.1.0 released by Yogesh Singh Chauhan on 03/20/2014 ****/
+ // ********************************************************
+-- 
+2.1.2
+

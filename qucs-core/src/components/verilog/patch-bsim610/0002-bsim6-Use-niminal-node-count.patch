@@ -1,0 +1,34 @@
+From 12cd3e5bb9ffa69d41f17581d91b162f1df5899f Mon Sep 17 00:00:00 2001
+From: Guilherme Brondani Torri <guitorri@gmail.com>
+Date: Thu, 16 Jul 2015 20:36:19 +0200
+Subject: [PATCH] [bsim6] Use niminal node count
+
+We don't have node collapsing.
+---
+ bsim6.va | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/bsim6.va b/bsim6.va
+index 49b0c86..d119cdd 100755
+--- a/bsim6.va
++++ b/bsim6.va
+@@ -60,11 +60,11 @@
+ // Not all Verilog-A compilers are able to properly collapse
+ // internal nodes  by shorting branches. To ensure minimal node
+ // count, comment out the following lines:
+-`define __RDSMOD__
+-`define __TNOISW__
+-`define __RGATEMOD__
+-`define __RBODYMOD__
+-`define __SHMOD__
++//`define __RDSMOD__
++//`define __TNOISW__
++//`define __RGATEMOD__
++//`define __RBODYMOD__
++//`define __SHMOD__
+ 
+ // Normalized pinch-off voltage including PD
+ `define PO_psip(vg_vfb,gamma,DPD,phif,psip) \
+-- 
+2.1.2
+

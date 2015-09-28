@@ -1,0 +1,25 @@
+From 8ba9f1a992105696ba1a269c9f19e9d2bb774173 Mon Sep 17 00:00:00 2001
+From: Guilherme Brondani Torri <guitorri@gmail.com>
+Date: Thu, 16 Jul 2015 21:58:33 +0200
+Subject: [PATCH] [bsim6PMOS] Name module bsim6v10pMOS
+
+---
+ bsim6.va | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/bsim6.va b/bsim6.va
+index 3c6011b..92f4c28 100644
+--- a/bsim6.va
++++ b/bsim6.va
+@@ -525,7 +525,7 @@
+ `define EPS0 8.85418e-12
+ `define KboQ 8.617087e-5 // Joule / degree
+ 
+-module bsim6(d, g, s, b);
++module bsim6v10pMOS(d, g, s, b);
+ inout d, g, s, b;
+ electrical d, g, s, b;
+ 
+-- 
+2.1.2
+

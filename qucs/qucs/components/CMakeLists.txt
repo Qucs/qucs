@@ -55,6 +55,8 @@ dcblock.cpp		logic_1.cpp		phototransistor.cpp
 dcfeed.cpp		logical_and.cpp		pm_modulator.cpp
 bsim4v30nMOS.cpp
 bsim4v30pMOS.cpp
+bsim6v10nMOS.cpp
+bsim6v10pMOS.cpp
 vcresistor.cpp
 vacomponent.cpp
 mutualx.cpp
@@ -80,6 +82,8 @@ bsim3v34nMOS.h
 bsim3v34pMOS.h
 bsim4v30nMOS.h
 bsim4v30pMOS.h
+bsim6v10nMOS.h
+bsim6v10pMOS.h
 capacitor.h
 cccs.h
 ccvs.h

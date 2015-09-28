@@ -20,6 +20,8 @@ SET( VA_FILES
   bsim3v34pMOS.va
   bsim4v30nMOS.va
   bsim4v30pMOS.va
+  bsim6v10nMOS.va
+  bsim6v10pMOS.va
   comp_1bit.va
   comp_2bit.va
   comp_4bit.va

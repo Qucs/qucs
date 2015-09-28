@@ -1,0 +1,4052 @@
+/// --- NOTE ---
+/// This copy of BSIM6.1.0 was modified for the Qucs project.
+/// See the directory 'patch-bsim610' for details.
+/// The unmodified source can be downloaded from:
+///   http://www-device.eecs.berkeley.edu/bsim/?page=BSIM6
+/// --- NOTE ---
+
+// ********************************************************
+// **** BSIM6.1.0 released by Yogesh Singh Chauhan on 03/20/2014 ****/
+// ********************************************************
+//
+// ********************************************************
+// * Copyright 2013 Regents of the University of California. 
+// * All rights reserved.
+// *
+// * Project Director: Prof. Chenming Hu.
+// * Authors: Yogesh Singh Chauhan, M. A. Karim
+// *          Sriramkumar Venugopalan, Harshit Agarwal, Darsen Lu,
+// *          Ali Niknejad, Chenming Hu
+// ********************************************************
+// ********************************************************
+// *   NONDISCLOSURE STATEMENT
+// Software is distributed as is, completely without warranty or service
+// support. The University of California and its employees are not liable
+// for the condition or performance of the software.
+// The University of California owns the copyright and grants users a perpetual,
+// irrevocable, worldwide, non-exclusive, royalty-free license with 
+// respect to the software as set forth below.
+// The University of California hereby disclaims all implied warranties.
+// The University of California grants the users the right to modify, copy,
+// and redistribute the software and documentation, both within the user's
+// organization and externally, subject to the following restrictions
+// 1. The users agree not to charge for the University of California code
+// itself but may charge for additions, extensions, or support.
+// 2. In any product based on the software, the users agree to acknowledge
+// the University of California that developed the software. This
+// acknowledgment shall appear in the product documentation.
+// 3. The users agree to obey all U.S. Government restrictions governing
+// redistribution or export of the software.
+// 4. The users agree to reproduce any copyright notice which appears on
+// the software on any copy or modification of such made available
+// to others
+// Agreed to on __March 20, 2014_________________
+// By: ___University of California, Berkeley____ 
+//     ___Chenming Hu_____________________ 
+//     ___Professor in Graduate School _______
+// ********************************************************
+
+
+
+// ********************************************************
+// *  BSIM Bulk MOSFET Model Equations (Verilog-A)
+// ********************************************************
+`include "constants.vams"
+`include "disciplines.vams"
+
+// Macros used to provide parameter attributes, documentation purposes
+`ifdef insideADMS
+ `define ATTR(txt) (*txt*)
+`else
+ `define ATTR(txt)
+`endif
+
+// Disable strobe for improved performance speed
+//`define DISABLE_STROBE	//To Use DISABLE_STROBE, Activate it here. Used Only at GEOMOD and RGEOMOD
+`ifdef DISABLE_STROBE
+	`define STROBE(X)
+	`define STROBE2(X,Y)
+`else
+	`define STROBE(X) $strobe(X)
+	`define STROBE2(X,Y) $strobe(X,Y)
+`endif
+
+// Not all Verilog-A compilers are able to properly collapse
+// internal nodes  by shorting branches. To ensure minimal node
+// count, comment out the following lines:
+//`define __RDSMOD__
+//`define __TNOISW__
+//`define __RGATEMOD__
+//`define __RBODYMOD__
+//`define __SHMOD__
+
+// Normalized pinch-off voltage including PD
+`define PO_psip(vg_vfb,gamma,DPD,phif,psip) \
+	T1 = 1.0 + DPD; \
+	vgfbPD = vg_vfb/T1; \
+	gammaPD = gamma/T1; \
+	T1 = 0.5*vgfbPD - 3.0*(1.0 + gammaPD/`M_SQRT2); \
+	T2 = T1 + sqrt(T1*T1 + 6.0*vgfbPD); \
+	if (vgfbPD < 0.0) begin \
+		T3 = (vgfbPD - T2) / gammaPD; \
+		psip = -ln(1.0 - T2 + T3*T3); \
+	end else begin \
+		T3 = exp(-T2); \
+		T1 = 0.5 * gammaPD; \
+		T2 = sqrt(vgfbPD - 1.0 + T3 + T1*T1) - T1; \
+		psip = T2*T2 + 1.0 - T3; \
+	end \
+
+// BSIMv6's normalized charge-voltage relationship
+`define BSIM_q(psip,phib,vch,gam,q) \
+	T8 = 0.5*( psip+1.0 + sqrt((psip-1.0)*(psip-1.0) + 0.25*2*2 ) ); \
+	sqrtpsip = sqrt(T8); \
+	T9 = 1.0+ gam/(2.0*sqrtpsip); \
+	T_0 = ( 1.0+ (gam/(2.0*sqrtpsip)) )/gam; \
+	T1 = psip - 2.0*phib -vch; \
+	T2 = T1 - ln(4.0*T_0*sqrtpsip); \
+	T8 = 0.5*(T2 - 0.201491 - sqrt(T2 * (T2 + 0.402982) + 2.446562)); \
+	sqrtpsisa = sqrtpsip; \
+	if (T8 <= -68.0) begin \
+		T4 = -100.0; \
+		T5= 20.0; \
+		if (T8 < T4 - 0.5 * T5) \
+			T3 = exp(T4); \
+		else begin \
+			if (T8 > T4 + 0.5 * T5) \
+				T3 = exp(T8); \
+			else begin \
+				T2 = (T8 - T4) / T5; \
+				T6 = T2 * T2; \
+				T3 = exp(T4 + T5 * ((5.0/64.0) + 0.5*T2 + T6*( (15.0/16.0) - T6*(1.25 - T6)))); \
+			end \
+		end \
+		q = T3 * (1.0 + T1 - T8 -ln(2.0*T_0*(T3*2.0*T_0+2.0*sqrtpsisa))); \
+	end else begin \
+		T3 = exp(T8); \
+		sqrtpsisainv = 1.0 / sqrtpsisa; \
+		T4 = 2.0*T3 + ln(T3*2.0*T_0*(T3*2.0*T_0+2.0*sqrtpsisa)) - T1; \
+		T5 = 2.0 + (1.0/T3) + (T_0 - sqrtpsisainv)/(T_0*T3 + sqrtpsisa); \
+		T3 = T3 - T4/T5; \
+		T4 = 2.0*T3 + ln(T3*2.0*T_0*(T3*2.0*T_0+2.0*sqrtpsisa)) - T1; \
+		T5 = 2.0 + (1.0/T3) + (T_0 - sqrtpsisainv)/(T_0*T3 + sqrtpsisa); \
+		T6 = ((T_0 - sqrtpsisainv)/(T_0*T3 + sqrtpsisa))*((T_0 - sqrtpsisainv)/(T_0*T3 + sqrtpsisa)); \
+		T7 = -((1.0/T3)*(1.0/T3)) -(1.0/(sqrtpsisa*sqrtpsisa*sqrtpsisa*(T_0*T3+sqrtpsisa))) - T6; \
+		q = T3 - (T4/T5)*( 1.0 + T4*T7/(2.0*T5*T5)); \
+	end \
+
+// Smoothing function for (max of x, x0 with deltax)
+`define Smooth(x,x0,deltax,xsmooth) \
+	xsmooth = 0.5*( x+x0 + sqrt((x-x0)*(x-x0) + 0.25*deltax*deltax ) ); \
+// Smoothing function for (max of x, x0 with deltax)
+`define Smooth1(x,x0,deltax,xsmooth) \
+	xsmooth = 0.5*( x+x0 + sqrt((x-x0)*(x-x0) + 0.25*deltax*deltax ) ) - 0.25*deltax; \
+// Smoothing function for (min of x, x0 with deltax)
+`define Smooth2(x,x0,deltax,xsmooth) \
+	xsmooth = 0.5*( x+x0 - sqrt((x-x0)*(x-x0) + 0.25*deltax*deltax ) ) + 0.25*deltax; \
+
+// Smoothing function for (min of x, x0 with deltax)
+`define Min1(x,x0,deltax,xsmooth) \
+	xsmooth = 0.5*( x+x0 - sqrt((x-x0)*(x-x0) + 0.25*deltax*deltax ) ) ; \
+
+/*
+ * These macros represent the subroutines to process the geometry dependent
+ * parasitics for BSIM6, which calculates Ps, Pd, As, Ad, and Rs and Rd
+ * for multi-fingers and various GEO and RGEO options.
+ */
+//Define GEOMOD and RGEOMOD in the Modelcard
+`define BSIM6NumFingerDiff(nf, minSD, nuIntD, nuEndD, nuIntS, nuEndS) \
+	if ((nf%2) != 0) begin \
+		nuEndD = 1.0; \
+		nuEndS = 1.0; \
+		nuIntD = 2.0 * max((nf - 1.0) / 2.0, 0.0); \
+		nuIntS = nuIntD; \
+	end else begin \
+		if (minSD == 1) begin \
+			nuEndD = 2.0; \
+			nuIntD = 2.0 * max((nf / 2.0 - 1.0), 0.0); \
+			nuEndS = 0.0; \
+			nuIntS = nf; \
+		end else begin \
+			nuEndD = 0.0; \
+			nuIntD = nf; \
+			nuEndS = 2.0; \
+			nuIntS = 2.0 * max((nf / 2.0 - 1.0), 0.0); \
+		end \
+	end
+
+
+`define BSIM6RdsEndIso(Weffcj, Rsh, DMCG, DMCI, DMDG, nuEnd, rgeo, TYPE, Rend) \
+	if (TYPE == 1) begin \
+		case(rgeo) \
+		1, 2, 5: begin \
+			if (nuEnd == 0.0) \
+				Rend = 0.0; \
+			else \
+				Rend = Rsh * DMCG / (Weffcj * nuEnd); \
+		end \
+		3, 4, 6: begin \
+			if ((DMCG + DMCI) == 0.0) \
+				`STROBE("(DMCG + DMCI) can not be equal to zero"); \
+			if (nuEnd == 0.0) \
+				Rend = 0.0; \
+			else \
+				Rend = Rsh * Weffcj / (3.0 * nuEnd * (DMCG + DMCI)); \
+		end \
+		default: begin \
+			`STROBE2("Warning: (instance %M) Specified RGEO = %d not matched (BSIM6RdsEndIso), \
+			Rend is set to zero.", rgeo); \
+			Rend = 0.0; \
+		end \
+		endcase \
+	end \
+	else begin \
+		case(rgeo) \
+		1, 3, 7: begin \
+			if (nuEnd == 0.0) \
+				Rend = 0.0; \
+			else \
+				Rend = Rsh * DMCG / (Weffcj * nuEnd); \
+		end \
+		2, 4, 8: begin \
+			if ((DMCG + DMCI) == 0.0) \
+				`STROBE("(DMCG + DMCI) can not be equal to zero"); \
+			if (nuEnd == 0.0) \
+				Rend = 0.0; \
+			else \
+				Rend = Rsh * Weffcj / (3.0 * nuEnd * (DMCG + DMCI)); \
+		end \
+		default: begin \
+			`STROBE2("Warning: (instance %M) Specified RGEO=%d not matched (BSIM6RdsEndIso \
+			type 2), Rend is set to zero.", rgeo); \
+			Rend = 0.0; \
+		end \
+		endcase \
+	end
+
+
+`define BSIM6RdsEndSha(Weffcj, Rsh, DMCG, DMCI, DMDG, nuEnd, rgeo, TYPE, Rend) \
+	begin \
+		if (TYPE == 1) begin \
+			case(rgeo) \
+			1, 2, 5: begin \
+				if (nuEnd == 0.0) \
+					Rend = 0.0; \
+				else \
+					Rend = Rsh * DMCG / (Weffcj * nuEnd); \
+			end \
+			3, 4, 6: begin \
+				if (DMCG == 0.0) \
+					`STROBE("DMCG can not be equal to zero"); \
+				if (nuEnd == 0.0) \
+					Rend = 0.0; \
+				else \
+					Rend = Rsh * Weffcj / (6.0 * nuEnd * DMCG); \
+			end \
+			default: begin \
+				`STROBE2("Warning: (instance %M) Specified RGEO = %d not matched (BSIM6RdsEndSha), \
+				Rend is set to zero.", rgeo); \
+				Rend = 0.0; \
+			end \
+			endcase \
+		end \
+		else begin \
+			case(rgeo) \
+			1, 3, 7: begin \
+				if (nuEnd == 0.0) \
+					Rend = 0.0; \
+				else \
+					Rend = Rsh * DMCG / (Weffcj * nuEnd); \
+			end \
+			2, 4, 8: begin \
+				if (DMCG == 0.0) \
+					`STROBE("DMCG can not be equal to zero"); \
+				if (nuEnd == 0.0) \
+					Rend = 0.0; \
+				else \
+					Rend = Rsh * Weffcj / (6.0 * nuEnd * DMCG); \
+			end \
+			default: begin \
+				`STROBE2("Warning: (instance %M) Specified RGEO=%d not matched (BSIM6RdsEndSha \
+				type 2), Rend is set to zero.", rgeo); \
+				Rend = 0.0; \
+			end \
+			endcase \
+		end \
+	end
+
+
+`define BSIM6RdseffGeo(nf, geo, rgeo, minSD, Weffcj, Rsh, DMCG, DMCI, DMDG, TYPE, Rtot) \
+	begin \
+		if (geo < 9) begin \
+			`BSIM6NumFingerDiff(nf, minSD, nuIntD, nuEndD, nuIntS, nuEndS) \
+			if (TYPE == 1) begin \
+				if (nuIntS == 0.0) \
+					Rint = 0.0; \
+				else \
+					Rint = Rsh * DMCG / ( Weffcj * nuIntS); \
+				end \
+			else begin \
+				if (nuIntD == 0.0) \
+					Rint = 0.0; \
+				else \
+					Rint = Rsh * DMCG / ( Weffcj * nuIntD); \
+			end \
+		end \
+		case(geo) \
+		0: begin \
+			if (TYPE == 1) \
+				`BSIM6RdsEndIso(Weffcj, Rsh, DMCG, DMCI, DMDG, nuEndS, \
+				rgeo, 1, Rend) \
+			else \
+				`BSIM6RdsEndIso(Weffcj, Rsh, DMCG, DMCI, DMDG, nuEndD, \
+				rgeo, 0, Rend) \
+		end \
+		1: begin \
+			if (TYPE == 1) \
+				`BSIM6RdsEndIso(Weffcj, Rsh, DMCG, DMCI, DMDG, nuEndS, \
+				rgeo, 1, Rend) \
+			else\
+				`BSIM6RdsEndSha(Weffcj, Rsh, DMCG, DMCI, DMDG, nuEndD, \
+				rgeo, 0, Rend) \
+		end \
+		2: begin \
+			if (TYPE == 1) \
+				`BSIM6RdsEndSha(Weffcj, Rsh, DMCG, DMCI, DMDG, nuEndS, \
+				rgeo, 1, Rend) \
+			else \
+				`BSIM6RdsEndIso(Weffcj, Rsh, DMCG, DMCI, DMDG, nuEndD, \
+				rgeo, 0, Rend) \
+		end \
+		3: begin \
+			if (TYPE == 1) \
+				`BSIM6RdsEndSha(Weffcj, Rsh, DMCG, DMCI, DMDG, nuEndS, \
+				rgeo, 1, Rend) \
+			else \
+				`BSIM6RdsEndSha(Weffcj, Rsh, DMCG, DMCI, DMDG, nuEndD, \
+				rgeo, 0, Rend) \
+		end \
+		4: begin \
+			if (TYPE == 1) \
+				`BSIM6RdsEndIso(Weffcj, Rsh, DMCG, DMCI, DMDG, nuEndS, \
+				rgeo, 1, Rend) \
+			else \
+				Rend = Rsh * DMDG / Weffcj; \
+		end \
+		5: begin \
+			if (TYPE == 1) \
+				`BSIM6RdsEndSha(Weffcj, Rsh, DMCG, DMCI, DMDG, nuEndS, \
+				rgeo, 1, Rend) \
+			else begin \
+					if (nuEndD==0)\
+						Rend = 0;\
+					else\
+					Rend = Rsh * DMDG / (Weffcj * nuEndD); \
+				end\
+		end \
+		6: begin \
+			if (TYPE == 1) \
+				Rend = Rsh * DMDG / Weffcj; \
+			else \
+				`BSIM6RdsEndIso(Weffcj, Rsh, DMCG, DMCI, DMDG, nuEndD, \
+				rgeo, 0, Rend) \
+		end \
+		7:begin \
+			if (TYPE == 1) begin \
+					if (nuEndS==0) \
+						Rend = 0; \
+					else \
+						Rend = Rsh * DMDG / (Weffcj * nuEndS); \
+			end else \
+				`BSIM6RdsEndSha(Weffcj, Rsh, DMCG, DMCI, DMDG, nuEndD, \
+				rgeo, 0, Rend) \
+		end \
+		8: begin \
+			Rend = Rsh * DMDG / Weffcj; \
+		end \
+		9: begin /* all wide contacts assumed for geo = 9 and 10 */\
+			if (TYPE == 1) begin \
+				Rend = 0.5 * Rsh * DMCG / Weffcj; \
+				if (nf == 2.0) \
+					Rint = 0.0; \
+				else \
+					Rint = Rsh * DMCG / (Weffcj * (nf - 2.0)); \
+			end \
+			else begin \
+				Rend = 0.0; \
+				Rint = Rsh * DMCG / (Weffcj * nf); \
+			end \
+		end \
+		10: begin \
+			if (TYPE == 1) begin \
+				Rend = 0.0; \
+				Rint = Rsh * DMCG / (Weffcj * nf); \
+			end \
+			else begin \
+				Rend = 0.5 * Rsh * DMCG / Weffcj; \
+				if (nf == 2.0) \
+					Rint = 0.0; \
+				else \
+					Rint = Rsh * DMCG / (Weffcj * (nf - 2.0)); \
+			end \
+		end \
+		default: begin \
+			`STROBE2("Warning: (instance %M) Specified RGEO=%d not matched (BSIM6RdseffGeo \
+			), Rint is set to zero.", rgeo); \
+			Rint = 0.0; \
+		end \
+		endcase \
+		if (Rint <= 0.0) \
+			Rtot = Rend; \
+		else if (Rend <= 0.0) \
+			Rtot = Rint; \
+		else \
+			Rtot = Rint * Rend / (Rint + Rend); \
+		if (Rtot==0.0) \
+			`STROBE("Warning: (instance %M) Zero resistance returned from RdseffGeo"); \
+	end
+
+//****************** Effective PS,PD,AS,AD Calculation. Ref: BSIM4 ****************************
+
+`define BSIM6PAeffGeo(nf, geo, minSD,Weffcj, DMCG, DMCI, DMDG, Ps, Pd, As, Ad) \
+	begin if (geo < 9) \
+			`BSIM6NumFingerDiff(nf, minSD, nuIntD, nuEndD, nuIntS, nuEndS) \
+	T_0 = DMCG + DMCI;\
+	T1 = DMCG + DMCG;\
+	T2 = DMDG + DMDG;\
+	PSiso = T_0 + T_0 + Weffcj;\
+	PDiso = T_0 + T_0 + Weffcj;\
+	PSsha = T1;\
+	PDsha = T1;\
+	PSmer = T2;\
+	PDmer = T2;\
+	ASiso = T_0 * Weffcj;\
+	ADiso = T_0 * Weffcj;\
+	ASsha = DMCG * Weffcj;\
+	ADsha = DMCG * Weffcj;\
+	ASmer = DMDG * Weffcj;	\
+	ADmer = DMDG * Weffcj;	\
+		case(geo) \
+		0: begin \
+			Ps = nuEndS * PSiso + nuIntS * PSsha;\
+			Pd = nuEndD * PDiso + nuIntD * PDsha;\
+			As = nuEndS * ASiso + nuIntS * ASsha;\
+			Ad = nuEndD * ADiso + nuIntD * ADsha;\
+		end \
+		1: begin \
+			Ps = nuEndS * PSiso + nuIntS * PSsha;\
+                	Pd = (nuEndD + nuIntD) * PDsha;\
+                	As = nuEndS * ASiso + nuIntS * ASsha;\
+                	Ad = (nuEndD + nuIntD) * ADsha;\
+		end \
+		2: begin \
+			Ps = (nuEndS + nuIntS) * PSsha;\
+                	Pd = nuEndD * PDiso + nuIntD * PDsha;\
+                	As = (nuEndS + nuIntS) * ASsha;\
+                	Ad = nuEndD * ADiso + nuIntD * ADsha;\
+		end \
+		3: begin \
+			Ps = (nuEndS + nuIntS) * PSsha;\
+                	Pd = (nuEndD + nuIntD) * PDsha;\
+                	As = (nuEndS + nuIntS) * ASsha;\
+                	Ad = (nuEndD + nuIntD) * ADsha;\
+		end \
+		4: begin \
+			Ps = nuEndS * PSiso + nuIntS * PSsha;\
+                	Pd = nuEndD * PDmer + nuIntD * PDsha;\
+                	As = nuEndS * ASiso + nuIntS * ASsha;\
+                	Ad = nuEndD * ADmer + nuIntD * ADsha;\
+		end \
+		5: begin \
+			Ps = (nuEndS + nuIntS) * PSsha;\
+                	Pd = nuEndD * PDmer + nuIntD * PDsha;\
+                	As = (nuEndS + nuIntS) * ASsha;\
+                	Ad = nuEndD * ADmer + nuIntD * ADsha;\
+		end \
+		6: begin \
+			Ps = nuEndS * PSmer + nuIntS * PSsha;\
+                	Pd = nuEndD * PDiso + nuIntD * PDsha;\
+                	As = nuEndS * ASmer + nuIntS * ASsha;\
+                	Ad = nuEndD * ADiso + nuIntD * ADsha;\
+		end \
+		7: begin \
+			Ps = nuEndS * PSmer + nuIntS * PSsha;\
+                	Pd = (nuEndD + nuIntD) * PDsha;\
+                	As = nuEndS * ASmer + nuIntS * ASsha;\
+                	Ad = (nuEndD + nuIntD) * ADsha;\
+		end \
+		8: begin \
+			Ps = nuEndS * PSmer + nuIntS * PSsha;\
+                	Pd = nuEndD * PDmer + nuIntD * PDsha;\
+                	As = nuEndS * ASmer + nuIntS * ASsha;\
+                	Ad = nuEndD * ADmer + nuIntD * ADsha;\
+		end \
+		9: begin \
+			Ps = PSiso + (nf - 1.0) * PSsha;\
+                	Pd = nf * PDsha;\
+                	As = ASiso + (nf - 1.0) * ASsha;\
+                	Ad = nf * ADsha;\
+		end \
+		10: begin \
+			Ps = nf * PSsha;\
+                	Pd = PDiso + (nf - 1.0) * PDsha;\
+                	As = nf * ASsha;\
+                	Ad = ADiso + (nf - 1.0) * ADsha;\
+		end \
+		default: begin \
+			`STROBE2("Warning: (instance %M) Specified GEO=%d not matched (BSIM6RdseffGeo \
+			), PS,PD,AS,AD set to zero.", geo); \
+			Ps = 0;\
+                	Pd = 0;\
+                	As = 0;\
+                	Ad = 0;\
+		end \
+		endcase \
+	end \
+
+//******************************************************
+
+
+
+
+// Numerical Constants
+`define EXPL_THRESHOLD 80.0
+`define MAX_EXPL 5.540622384e+34
+`define MIN_EXPL 1.804851387e-35
+`define N_MINLOG 	1.0e-38
+`define DELTA_1 0.02
+`define Oneby3		0.33333333333333333
+`define REFTEMP (300.15) /* 27 degrees C */
+
+//Physical Constants
+`define ntype 1
+`define ptype -1
+`define q    1.60219e-19
+`define EPS0 8.85418e-12
+`define KboQ 8.617087e-5 // Joule / degree
+
+module bsim6v10pMOS(d, g, s, b);
+inout d, g, s, b;
+electrical d, g, s, b;
+
+`ifdef __RDSMOD__
+	electrical di, si;
+`endif
+
+`ifdef __RGATEMOD__
+	electrical gi, gm;
+`endif
+`ifdef __RBODYMOD__
+	electrical bi, sbulk, dbulk;
+`endif
+
+// Node definitions
+`ifdef __RDSMOD__
+	`define IntrinsicDrain di
+	`define IntrinsicSource si
+`else
+	`define IntrinsicDrain d
+	`define IntrinsicSource s
+`endif
+
+`ifdef __RGATEMOD__
+	`define IntrinsicGate gi
+	`define GateEdgeNode gm
+`else
+	`define IntrinsicGate g
+	`define GateEdgeNode g
+`endif
+
+`ifdef __RBODYMOD__
+	`define IntrinsicBody bi
+`else
+	`define IntrinsicBody b
+`endif
+
+// Extra internal nodes and branches (TNOIMOD=1) for correlated drain and gate noise
+`ifdef __TNOISW__
+	electrical N1, N2;
+	branch (N1) NI;
+	branch (N1) NR;
+	branch (N1) NC;
+`endif
+
+// Clamped exponential function
+analog function real lexp;
+	input x;
+	real x;
+	begin
+		if(x > `EXPL_THRESHOLD) begin
+			lexp = `MAX_EXPL * (1.0+(x)-`EXPL_THRESHOLD);
+		end else if(x < -`EXPL_THRESHOLD) begin
+			lexp = `MIN_EXPL;
+		end else begin
+			lexp = exp(x);
+		end
+	end
+endfunction
+
+// Clamped log function
+analog function real lln;
+	input x;
+	real x;
+	begin
+		lln = ln(max(x , `N_MINLOG));
+	end
+endfunction
+
+// Hyperbolic smoothing function
+analog function real hypsmooth;
+	input x , c;
+	real x , c;
+	begin
+		hypsmooth = 0.5 * (x + sqrt(x*x + 4.0*c*c));
+	end
+endfunction
+
+/************************/
+/*  Model Parameters    */
+/************************/
+//parameter integer TYPE		= `ntype	from [`ptype:`ntype] exclude 0;
+parameter integer CVMOD		= 0		from [0:1]                	`ATTR(info="0: Consistent IV-CV\n1: Different IV-CV");
+parameter integer GEOMOD	= 0 		from [0:10]              	`ATTR(info="Geo dependent parasitics model");
+parameter integer RGEOMOD	= 0		from [0:8]               	`ATTR(info="Geometry-dependent source/drain resistance\n0: RSH-based, 1: Holistic");
+parameter integer COVMOD	= 0		from [0:1]                	`ATTR(info="0: Use Bias-independent Overlap Capacitances\n1: Use Bias-dependent Overlap Capacitances");
+parameter integer RDSMOD	= 0 		from [0:2]               	`ATTR(info="0: Internal bias dependent and external bias independent s/d resistance model\n1: External s/d resistance model\n2: Internal s/d resistance model");
+parameter integer GIDLMOD	= 0		from [0:1]               	`ATTR(info="0: Turn off GIDL Current\n1: Turn on GIDL Current");
+parameter integer RGATEMOD	= 0		from [0:3]              	`ATTR(info="Gate resistance model selector");
+parameter integer RBODYMOD	= 0		from [0:2]              	`ATTR(info="Distributed body R model");
+parameter integer IGCMOD	= 0		from [0:1]                	`ATTR(info="0: Turn off Igc, Igs and Igd\n1: Turn on Igc, Igs and Igd");
+parameter integer IGBMOD	= 0		from [0:1]                	`ATTR(info="0: Turn off Igb\n1: Turn on Igb");
+parameter integer TNOIMOD	= 0		from [0:1]               	`ATTR(info="Thermal noise model selector");
+parameter integer SHMOD		= 0		from [0:1]                	`ATTR(info="0 : Self heating model OFF\n1 : Self heating model ON");
+// *************************
+//   Device Parameters
+// *************************
+parameter real L	 	= 10u	from (0:inf)                   	`ATTR(info="units are m");
+parameter real LLONG 		= 10u	from (0:inf)               	`ATTR(info="L of extracted Long channel device - units are m");
+parameter real LMLT		= 1.0	from (0:inf)                 	`ATTR(info="Length Shrinking Parameter");
+parameter real WMLT		= 1.0	from (0:inf)                 	`ATTR(info="Width Shrinking Parameter");
+parameter real XL 		= 0.0                               	`ATTR(info="L offset for channel length due to mask/etch effect");
+parameter real W	 	= 10u	from (0:inf)                   	`ATTR(info="Total Width including fingers (units are m)");
+parameter real WWIDE 		= 10u	from (0:inf)               	`ATTR(info="W of extracted Wide channel device - units are m");
+parameter real XW 		= 0.0                               	`ATTR(info="W offset for channel width due to mask/etch effect");
+parameter real LINT		= 0.0                              	`ATTR(info="delta L for IV");
+parameter real LL		= 0.0;
+parameter real LW		= 0.0;
+parameter real LWL		= 0.0;
+parameter real LLN		= 1.0;
+parameter real LWN		= 1.0;
+parameter real WINT		= 0.0                              	`ATTR(info="delta W for IV");
+parameter real WL		= 0.0;
+parameter real WW		= 0.0;
+parameter real WWL		= 0.0;
+parameter real WLN		= 1.0;
+parameter real WWN		= 1.0;
+parameter real DLC		= 0.0                               	`ATTR(info="delta L for CV");
+parameter real LLC		= 0.0;
+parameter real LWC		= 0.0;
+parameter real LWLC		= 0.0;
+parameter real DWC		= 0.0                               	`ATTR(info="delta W for CV");
+parameter real WLC		= 0.0;
+parameter real WWC		= 0.0;
+parameter real WWLC		= 0.0;
+parameter real TOXE		= 3.0e-9                           	`ATTR(info="Effective gate dielectric thickness relative to SiO2, m");
+parameter real TOXP		= TOXE                             	`ATTR(info="Physical gate dielectric thickness, m\nIf not given, TOXP is calculated from TOXE and DTOX");
+parameter real DTOX		= 0.0                              	`ATTR(info="Difference between effective dielectric thickness\nand physical thickness");
+parameter integer NF	= 1		from [1:inf)                  	`ATTR(info="number of fingers");
+parameter real NDEP 	= 1e24                             	`ATTR(info="Channel Doping Concentration (m^-3) for IV");
+parameter real NDEPL1 	= 0.0                            	`ATTR(info="Length dependence coefficient of NDEP");
+parameter real NDEPLEXP1 = 1.0	from (0:inf)             	`ATTR(info="Length dependence exponent coefficient of NDEP");
+parameter real NDEPL2 	= 0.0                            	`ATTR(info="Length dependence of NDEP - For Short Channel Devices");
+parameter real NDEPLEXP2 = 2.0	from (0:inf)             	`ATTR(info="Length dependence exponent coefficient of NDEP");
+parameter real NDEPW 	= 0.0                             	`ATTR(info="Width dependence coefficient of NDEP");
+parameter real NDEPWEXP = 1.0	from (0:inf)              	`ATTR(info="Width dependence exponent coefficient of NDEP");
+parameter real NDEPWL 	= 0.0                            	`ATTR(info="Width-Length dependence coefficient of NDEP");
+parameter real NDEPWLEXP = 1.0	from (0:inf)             	`ATTR(info="Width-Length dependence exponent coefficient of NDEP");
+parameter real LNDEP 	= 0.0;
+parameter real WNDEP 	= 0.0;
+parameter real PNDEP 	= 0.0;
+
+parameter real NDEPCV 	= NDEP                           	`ATTR(info="Channel Doping Concentration (m^-3) for CV");
+parameter real NDEPCVL1 = NDEPL1                        	`ATTR(info="Length dependence coefficient of NDEPCV");
+parameter real NDEPCVLEXP1 = NDEPLEXP1	from (0:inf)     	`ATTR(info="Length dependence exponent coefficient of NDEPCV");
+parameter real NDEPCVL2 = NDEPL2                        	`ATTR(info="Length dependence coefficient of NDEPCV - For Short Channel Devices");
+parameter real NDEPCVLEXP2 = NDEPLEXP2	from (0:inf)     	`ATTR(info="Length dependence exponent coefficient of NDEPCV");
+parameter real NDEPCVW 	= NDEPW                         	`ATTR(info="Width dependence coefficient of NDEPCV");
+parameter real NDEPCVWEXP = NDEPWEXP	from (0:inf)       	`ATTR(info="Width dependence exponent coefficient of NDEPCV");
+parameter real NDEPCVWL	= NDEPWL                        	`ATTR(info="Width-Length dependence coefficient of NDEPCV");
+parameter real NDEPCVWLEXP = NDEPWLEXP	from (0:inf)     	`ATTR(info="Width-Length dependence exponent coefficient of NDEPCV");
+parameter real LNDEPCV 	= LNDEP;
+parameter real WNDEPCV 	= WNDEP;
+parameter real PNDEPCV 	= PNDEP;
+
+parameter real NGATE 	= 5e25                            	`ATTR(info="Gate Doping Concentration (m^-3)");
+parameter real LNGATE 	= 0.0;
+parameter real WNGATE 	= 0.0;
+parameter real PNGATE 	= 0.0;
+
+parameter real EASUB 	= 4.05                            	`ATTR(info="Electron affinity of substrate, eV");
+parameter real NI0SUB 	= 1.1e16                         	`ATTR(info="Intrinsic carrier concentration of the substrate at 300.15K ( m^-3)");
+parameter real BG0SUB 	= 1.17                           	`ATTR(info="Band gap of substrate at 300.15K, eV");
+parameter real EPSRSUB	= 11.9                           	`ATTR(info="Relative dielectric constant of the channel material");
+parameter real EPSROX	= 3.9                             	`ATTR(info="Relative dielectric constant of the gate dielectric");
+parameter real XJ 		= 1.5e-7                            	`ATTR(info="S/D junction depth");
+parameter real LXJ 		= 0.0;
+parameter real WXJ 		= 0.0;
+parameter real PXJ 		= 0.0;
+parameter real VFB 		= -1.0                             	`ATTR(info="Flat band voltage for IV");
+parameter real LVFB 	= 0.0;
+parameter real WVFB 	= 0.0;
+parameter real PVFB 	= 0.0;
+
+parameter real VFBCV	= VFB                              	`ATTR(info="Flat band voltage for CV");
+parameter real LVFBCV 	= LVFB;
+parameter real WVFBCV 	= WVFB;
+parameter real PVFBCV 	= PVFB;
+parameter real VFBCVL 	= 0.0                            	`ATTR(info="Length dependence coefficient of VFBCV");
+parameter real VFBCVLEXP = 1.0	from (0:inf)             	`ATTR(info="Length dependence exponent coefficient of VFBCV");
+parameter real VFBCVW 	= 0.0                            	`ATTR(info="Width dependence coefficient of VFBCV");
+parameter real VFBCVWEXP = 1.0	from (0:inf)             	`ATTR(info="Width dependence exponent coefficient of VFBCV");
+parameter real VFBCVWL 	= 0.0                           	`ATTR(info="Width-Length dependence coefficient of VFBCV");
+parameter real VFBCVWLEXP = 1.0	from (0:inf)            	`ATTR(info="Width-Length dependence coefficient of VFBCV");
+
+//Diode parameters
+parameter integer PERMOD	= 1 from [0:1]                 	`ATTR(info="Whether PS/PD (when given) include gate-edge perimeter");
+parameter real AS		= 0.0 from [0:inf)                   	`ATTR(info="Source to Substrate Junction Area");
+parameter real AD		= 0.0 from [0:inf)                   	`ATTR(info="Drain to Substrate Junction Area");
+parameter real PS		= 0.0 from [0:inf)                   	`ATTR(info="Source to Substrate Junction Perimeter");
+parameter real PD		= 0.0 from [0:inf)                   	`ATTR(info="Drain to Substrate Junction Perimeter");
+parameter real DWJ		= DWC                               	`ATTR(info="delta W for S/D junctions");
+
+// Rd, Rs related Parameter
+parameter real VFBSDOFF	= 0.0;
+parameter real NRS		= 1.0 from [0:inf)                  	`ATTR(info="Number of squares in source");
+parameter real NRD		= 1.0 from [0:inf)                  	`ATTR(info="Number of squares in drain");
+parameter integer MINZ	= 0   from [0:1]                 	`ATTR(info="Minimize either D or S");
+
+// Short Channel Effects
+parameter real NSD 		= 1e26                             	`ATTR(info="S/D Doping Concentration (m^-3)");
+parameter real LNSD 	= 0.0;
+parameter real WNSD 	= 0.0;
+parameter real PNSD 	= 0.0;
+
+parameter real DVTP0 	= 0.0                             	`ATTR(info="DITS");
+parameter real LDVTP0 	= 0;
+parameter real WDVTP0 	= 0;
+parameter real PDVTP0 	= 0;
+parameter real DVTP1 	= 0.0                             	`ATTR(info="DITS");
+parameter real LDVTP1 	= 0;
+parameter real WDVTP1 	= 0;
+parameter real PDVTP1 	= 0;
+parameter real DVTP2 	= 0.0                             	`ATTR(info="DITS");
+parameter real LDVTP2 	= 0;
+parameter real WDVTP2 	= 0;
+parameter real PDVTP2 	= 0;
+parameter real DVTP3 	= 0.0                             	`ATTR(info="DITS");
+parameter real LDVTP3 	= 0;
+parameter real WDVTP3 	= 0;
+parameter real PDVTP3 	= 0;
+parameter real DVTP4 	= 0.0                             	`ATTR(info="DITS");
+parameter real LDVTP4 	= 0;
+parameter real WDVTP4 	= 0;
+parameter real PDVTP4 	= 0;
+parameter real DVTP5 	= 0.0                             	`ATTR(info="DITS");
+parameter real LDVTP5 	= 0;
+parameter real WDVTP5 	= 0;
+parameter real PDVTP5 	= 0;
+
+parameter real PHIN 	= 0.045                            	`ATTR(info="Nonuniform vertical doping effect on surface potential, V");
+parameter real LPHIN 	= 0.0;
+parameter real WPHIN 	= 0.0;
+parameter real PPHIN 	= 0.0;
+
+parameter real ETA0 	= 0.08                             	`ATTR(info="DIBL coefficient");
+parameter real LETA0	= 0.0;
+parameter real WETA0 	= 0.0;
+parameter real PETA0 	= 0.0;
+parameter real DSUB 	= 1.0                              	`ATTR(info="Length scaling exponent for DIBL");
+parameter real ETAB 	= -0.07                            	`ATTR(info="Body bias coefficient for subthreshold DIBL effect");
+parameter real ETABEXP 	= 1.0	from (0:inf)              	`ATTR(info="Exponent coefficient of ETAB");
+parameter real LETAB 	= 0.0;
+parameter real WETAB 	= 0.0;
+parameter real PETAB 	= 0.0;
+
+parameter real K2 	= 0.0                                	`ATTR(info="Vth shift due to Vertical Non-uniform doping");
+parameter real K2L 	= 0.0                               	`ATTR(info="Length dependence coefficient of K2");
+parameter real K2LEXP 	= 1.0	from (0:inf)               	`ATTR(info="Length dependence exponent coefficient of K2");
+parameter real K2W 	= 0.0                               	`ATTR(info="Width dependence coefficient of K2");
+parameter real K2WEXP 	= 1.0	from (0:inf)               	`ATTR(info="Width dependence exponent coefficient of K2");
+parameter real K2WL 	= 0.0                              	`ATTR(info="Width-Length dependence coefficient of K2");
+parameter real K2WLEXP 	= 1.0	from (0:inf)              	`ATTR(info="Width-Length dependence exponent coefficient of K2");
+parameter real LK2 	= 0.0;
+parameter real WK2 	= 0.0;
+parameter real PK2 	= 0.0;
+
+// Quantum Mechanical Effects
+parameter real ADOS 	= 0.0 	from [0:inf)                	`ATTR(info="Quantum mechanical effect prefactor cum switch in inversion");
+parameter real BDOS 	= 1.0 	from [0:inf)                	`ATTR(info="Charge centroid parameter - slope of CV curve under QME in inversion");
+parameter real QM0 		= 1.0e-3 from (0:inf)              	`ATTR(info="Charge centroid parameter - starting point for QME in inversion");
+parameter real ETAQM	= 0.54	from [0:inf)                	`ATTR(info="Bulk charge coefficient for charge centroid in inversion");
+
+//Subthreshold Swing Factor
+parameter real CIT      = 0.0                           	`ATTR(info="parameter for interface trap");
+parameter real LCIT 	= 0.0;
+parameter real WCIT 	= 0.0;
+parameter real PCIT 	= 0.0;
+
+
+parameter real NFACTOR 		= 0.0                          	`ATTR(info="Sub-threshold slope factor");
+parameter real NFACTORL 	= 0.0                          	`ATTR(info="Length dependence coefficient of NFACTOR");
+parameter real NFACTORLEXP 	= 1.0	from (0:inf)          	`ATTR(info="Length dependence exponent coefficient of NFACTOR");
+parameter real NFACTORW 	= 0.0                          	`ATTR(info="Width dependence coefficient of NFACTOR");
+parameter real NFACTORWEXP 	= 1.0	from (0:inf)          	`ATTR(info="Width dependence exponent coefficient of NFACTOR");
+parameter real NFACTORWL 	= 0.0                         	`ATTR(info="Width-Length dependence coefficient of NFACTOR");
+parameter real NFACTORWLEXP 	= 1.0	from (0:inf)         	`ATTR(info="Width-Length dependence exponent coefficient of NFACTOR");
+parameter real LNFACTOR 	= 0.0;
+parameter real WNFACTOR 	= 0.0;
+parameter real PNFACTOR 	= 0.0;
+
+parameter real CDSCD 	= 1e-9                            	`ATTR(info="drain-bias sensitivity of sub-threshold slope");
+parameter real CDSCDL 	= 0.0                            	`ATTR(info="Length dependence coefficient of CDSCD");
+parameter real CDSCDLEXP = 1.0	from (0:inf)             	`ATTR(info="Length dependence exponent coefficient of CDSCD");
+parameter real LCDSCD 	= 0.0;
+parameter real WCDSCD 	= 0.0;
+parameter real PCDSCD 	= 0.0;
+parameter real CDSCB 	= 0.0                             	`ATTR(info="body-bias sensitivity of sub-threshold slope");
+parameter real CDSCBL 	= 0.0                            	`ATTR(info="Length dependence coefficient of CDSCB");
+parameter real CDSCBLEXP = 1.0	from (0:inf)             	`ATTR(info="Length dependence exponent coefficient of CDSCB");
+parameter real LCDSCB 	= 0.0;
+parameter real WCDSCB 	= 0.0;
+parameter real PCDSCB 	= 0.0;
+
+//Drain Saturation Voltage
+parameter real VSAT		= 1e5                              	`ATTR(info="Saturation Velocity m/s");
+parameter real LVSAT		= 0.0;
+parameter real WVSAT		= 0.0;
+parameter real PVSAT		= 0.0;
+parameter real VSATL		= 0.0                             	`ATTR(info="Length dependence coefficient of of VSAT");
+parameter real VSATLEXP		= 1.0	from (0:inf)             	`ATTR(info="Length dependence exponent coefficient of VSAT");
+parameter real VSATW		= 0.0                             	`ATTR(info="Width dependence coefficient of of VSAT");
+parameter real VSATWEXP		= 1.0	from (0:inf)             	`ATTR(info="Width dependence exponent coefficient of of VSAT");
+parameter real VSATWL		= 0.0                            	`ATTR(info="Width-Length dependence coefficient of of VSAT");
+parameter real VSATWLEXP	= 1.0	from (0:inf)             	`ATTR(info="Width-Length dependence exponent coefficient of of VSAT");
+parameter real DELTA		= 0.125                           	`ATTR(info="Smoothing function factor for Vdsat");
+parameter real LDELTA		= 0.0;
+parameter real WDELTA		= 0.0;
+parameter real PDELTA		= 0.0;
+parameter real DELTAL		= 0.0                            	`ATTR(info="Length dependence coefficient of DELTA");
+parameter real DELTALEXP 	= 1.0	from (0:inf)            	`ATTR(info="Length dependence exponent coefficient of DELTA");
+
+parameter real VSATCV		= VSAT                           	`ATTR(info="VSAT parameter for CV");
+parameter real LVSATCV		= LVSAT;
+parameter real WVSATCV		= WVSAT;
+parameter real PVSATCV		= PVSAT;
+parameter real VSATCVL		= VSATL;
+parameter real VSATCVLEXP 	= VSATLEXP	from (0:inf);
+parameter real VSATCVW		= VSATW;
+parameter real VSATCVWEXP 	= VSATWEXP	from (0:inf);
+parameter real VSATCVWL		= VSATWL;
+parameter real VSATCVWLEXP 	= VSATWLEXP	from (0:inf);
+
+// Mobility Degradation
+parameter real U0		= 67.0e-3                            	`ATTR(info="units are m2/Vs");
+parameter real U0L		= 0.0                               	`ATTR(info="Length dependence coefficient of U0L");
+parameter real U0LEXP		= 1.0	from (0:inf)               	`ATTR(info="Length dependence exponent coefficient of U0L");
+parameter real LU0		= 0.0;
+parameter real WU0		= 0.0;
+parameter real PU0		= 0.0;
+
+parameter real ETAMOB		= 1.0                            	`ATTR(info="Effective field parameter (should be kept close to 1)");
+
+parameter real UA		= 0.001                              	`ATTR(info="Mobility reduction coefficient");
+parameter real UAL		= 0.0                               	`ATTR(info="Length dependence coefficient of  UA");
+parameter real UALEXP		= 1.0	from (0:inf)               	`ATTR(info="Length dependence exponent coefficient of  UA");
+parameter real UAW		= 0.0                               	`ATTR(info="Width dependence coefficient of UA");
+parameter real UAWEXP		= 1.0	from (0:inf)               	`ATTR(info="Width dependence exponent coefficient of UA");
+parameter real UAWL		= 0.0                              	`ATTR(info="Width-Length dependence coefficient of UA");
+parameter real UAWLEXP		= 1.0	from (0:inf)              	`ATTR(info="Width-Length dependence coefficient of UA");
+parameter real LUA		= 0.0;
+parameter real WUA		= 0.0;
+parameter real PUA		= 0.0;
+
+parameter real EU		= 1.5                                	`ATTR(info="Mobility reduction exponent");
+parameter real LEU		= 0.0;
+parameter real WEU		= 0.0;
+parameter real PEU		= 0.0;
+parameter real EUL		= 0.0                               	`ATTR(info="Length dependence coefficient of EU");
+parameter real EULEXP		= 1.0	from (0:inf)               	`ATTR(info="Length dependence exponent coefficient of EU");
+parameter real EUW		= 0.0                               	`ATTR(info="Width dependence coefficient of EU");
+parameter real EUWEXP		= 1.0	from (0:inf)               	`ATTR(info="Width dependence exponent coefficient of EU");
+parameter real EUWL		= 0.0                              	`ATTR(info="Width-Length dependence coefficient of EU");
+parameter real EUWLEXP		= 1.0	from (0:inf)              	`ATTR(info="Width-Length dependence coefficient of EU");
+
+parameter real UD		= 0.001                              	`ATTR(info="Coulombic scattering parameter");
+parameter real UDL		= 0.0                               	`ATTR(info="Length dependence coefficient of UD");
+parameter real UDLEXP		= 1.0	from (0:inf)               	`ATTR(info="Length dependence exponent coefficient of UD");
+parameter real LUD		= 0.0;
+parameter real WUD		= 0.0;
+parameter real PUD		= 0.0;
+
+parameter real UCS		= 2.0                               	`ATTR(info="Coulombic scattering parameter");
+parameter real LUCS		= 0.0;
+parameter real WUCS		= 0.0;
+parameter real PUCS		= 0.0;
+
+
+parameter real UC		= 0.0                                	`ATTR(info="Mobility reduction with body bias");
+parameter real UCL		= 0.0                               	`ATTR(info="Length dependence coefficient of UC");
+parameter real UCLEXP		= 1.0	from (0:inf)               	`ATTR(info="Length dependence exponent coefficient of UC");
+parameter real UCW		= 0.0                               	`ATTR(info="Width dependence coefficient of UC");
+parameter real UCWEXP		= 1.0	from (0:inf)               	`ATTR(info="Width dependence exponent coefficient of UC");
+parameter real UCWL		= 0.0                              	`ATTR(info="Width-Length dependence coefficient of UC");
+parameter real UCWLEXP		= 1.0	from (0:inf)              	`ATTR(info="Width-Length dependence exponent coefficient of UC");
+parameter real LUC		= 0.0;
+parameter real WUC		= 0.0;
+parameter real PUC		= 0.0;
+
+// Channel Length Modulation
+parameter real PCLM		    = 0.0                          	`ATTR(info="CLM prefactor");
+parameter real PCLML		= 0.0                             	`ATTR(info="Length dependence coefficient of PCLM");
+parameter real PCLMLEXP 	= 1.0 from (0:inf)             	`ATTR(info="Length dependence exponent coefficient of PCLM");
+parameter real LPCLM		= 0.0;
+parameter real WPCLM		= 0.0;
+parameter real PPCLM		= 0.0;
+
+parameter real PCLMG		= 0.0                             	`ATTR(info="CLM prefactor gate voltage dependence");
+
+parameter real PCLMCV		= PCLM                           	`ATTR(info="CLM parameter for CV");
+parameter real PCLMCVL		= PCLML;
+parameter real PCLMCVLEXP	= PCLMLEXP from (0:inf);
+parameter real LPCLMCV		= LPCLM;
+parameter real WPCLMCV		= WPCLM;
+parameter real PPCLMCV		= PPCLM;
+
+parameter real PSCBE1 	= 4.24e8                         	`ATTR(info="Substrate current body-effect coeff");
+parameter real LPSCBE1 	= 0.0;
+parameter real WPSCBE1 	= 0.0;
+parameter real PPSCBE1 	= 0.0;
+parameter real PSCBE2 	= 1.0e-8                         	`ATTR(info="Substrate current body-effect coeff");
+parameter real LPSCBE2 	= 0.0;
+parameter real WPSCBE2 	= 0.0;
+parameter real PPSCBE2 	= 0.0;
+
+parameter real PDITS 	= 0.0                             	`ATTR(info="Coefficient for drain-induced Vth shifts");
+parameter real LPDITS 	= 0.0;
+parameter real WPDITS 	= 0.0;
+parameter real PPDITS 	= 0.0;
+parameter real PDITSL 	= 0.0 from [0:inf)               	`ATTR(info="L dep of drain-induced Vth shifts");
+parameter real PDITSD 	= 0.0                            	`ATTR(info="Vds dep of drain-induced Vth shifts");
+parameter real LPDITSD 	= 0.0;
+parameter real WPDITSD 	= 0.0;
+parameter real PPDITSD 	= 0.0;
+
+// S/D Series Resistance
+parameter real RSH 	= 0.0 from [0:inf)                  	`ATTR(info="Source-drain sheet resistance [Ohm]");
+parameter real PRWG 	= 1.0                              	`ATTR(info="gate bias dependence of S/D extension resistance, V-1");
+parameter real LPRWG 	= 0.0;
+parameter real WPRWG 	= 0.0;
+parameter real PPRWG 	= 0.0;
+parameter real PRWB 	= 0.0                              	`ATTR(info="Body bias dependence of resistance");
+parameter real LPRWB 	= 0.0;
+parameter real WPRWB 	= 0.0;
+parameter real PPRWB 	= 0.0;
+parameter real PRWBL 	= 0.0                             	`ATTR(info="Length dependence coefficient of PPRWB");
+parameter real PRWBLEXP	= 1.0	from (0:inf)              	`ATTR(info="Length dependence exponent coefficient of PPRWB");
+parameter real WR 	= 1.0                                	`ATTR(info="W dependence parameter of S/D extension resistance");
+parameter real LWR 	= 0.0;
+parameter real WWR 	= 0.0;
+parameter real PWR 	= 0.0;
+
+parameter real RSWMIN 	= 0.0                            	`ATTR(info="Source Resistance per unit width at high Vgs (RDSMOD=1)");
+parameter real LRSWMIN 	= 0.0;
+parameter real WRSWMIN 	= 0.0;
+parameter real PRSWMIN 	= 0.0;
+parameter real RSW 	= 10.0                              	`ATTR(info="zero bias Source Resistance (RDSMOD=1)");
+parameter real LRSW 	= 0.0;
+parameter real WRSW 	= 0.0;
+parameter real PRSW 	= 0.0;
+parameter real RSWL 	= 0.0                              	`ATTR(info="Geometrical scaling of RSW (RDSMOD=1)");
+parameter real RSWLEXP 	= 1.0	from (0:inf)              	`ATTR(info="Geometrical scaling of RSW (RDSMOD=1)");
+
+parameter real RDWMIN 	= RSWMIN                         	`ATTR(info="Drain Resistance per unit width at high Vgs (RDSMOD=1)");
+parameter real LRDWMIN 	= LRSWMIN;
+parameter real WRDWMIN 	= WRSWMIN;
+parameter real PRDWMIN 	= PRSWMIN;
+parameter real RDW 	= RSW                               	`ATTR(info="zero bias Drain Resistance (RDSMOD=1)");
+parameter real LRDW 	= LRSW;
+parameter real WRDW 	= WRSW;
+parameter real PRDW 	= PRSW;
+parameter real RDWL 	= RSWL                             	`ATTR(info="Geometrical scaling of RDW (RDSMOD=1)");
+parameter real RDWLEXP 	= RSWLEXP	from (0:inf)          	`ATTR(info="Geometrical scaling of RDW (RDSMOD=1)");
+
+parameter real RDSWMIN 	= 0.0                           	`ATTR(info="S/D Resistance per unit width at high Vgs (RDSMOD=0 and RDSMOD=2)");
+parameter real LRDSWMIN = 0.0;
+parameter real WRDSWMIN = 0.0;
+parameter real PRDSWMIN = 0.0;
+parameter real RDSW 	= 20.0                             	`ATTR(info="zero bias Resistance (RDSMOD=0 and RDSMOD=2)");
+parameter real RDSWL 	= 0.0                             	`ATTR(info="Geometrical scaling of RDSW (RDSMOD=0 and RDSMOD=2)");
+parameter real RDSWLEXP = 1.0	from (0:inf)              	`ATTR(info="Geometrical scaling of RDSW (RDSMOD=0 and RDSMOD=2)");
+parameter real LRDSW 	= 0.0;
+parameter real WRDSW 	= 0.0;
+parameter real PRDSW 	= 0.0;
+
+// Velocity Saturation
+
+parameter real PSAT 	= 1.0                              	`ATTR(info="Gmsat variation with gate bias");
+parameter real LPSAT 	= 0.0;
+parameter real WPSAT 	= 0.0;
+parameter real PPSAT 	= 0.0;
+parameter real PSATL 	= 0.0;
+parameter real PSATLEXP = 1.0	from (0:inf);
+parameter real PSATB	= 0.0                              	`ATTR(info="Body bias effect on Idsat");
+parameter real LPSATB	= 0.0;
+parameter real WPSATB	= 0.0;
+parameter real PPSATB	= 0.0;
+
+parameter real PSATX	= 1.0 from (0:inf);
+parameter real PTWG 	= 0.0                              	`ATTR(info="Idsat variation with gate bias");
+parameter real LPTWG 	= 0.0;
+parameter real WPTWG 	= 0.0;
+parameter real PPTWG 	= 0.0;
+parameter real PTWGL 	= 0.0                             	`ATTR(info="Length dependence coefficient of PTWG");
+parameter real PTWGLEXP = 1.0	from (0:inf)              	`ATTR(info="Length dependence exponent coefficient of PTWG");
+
+// Output Conductance
+parameter real PDIBLC 	= 0.0                            	`ATTR(info="parameter for DIBL effect on Rout");
+parameter real PDIBLCL  = 0.0                           	`ATTR(info="Length dependence coefficient of PDIBLC");
+parameter real PDIBLCLEXP = 1.0	from (0:inf)            	`ATTR(info="Length dependence exponent coefficient of PDIBLC");
+parameter real LPDIBLC  = 0.0;
+parameter real WPDIBLC  = 0.0;
+parameter real PPDIBLC  = 0.0;
+
+parameter real PDIBLCB 	= 0.0                           	`ATTR(info="parameter for DIBL effect on Rout");
+parameter real LPDIBLCB = 0.0;
+parameter real WPDIBLCB = 0.0;
+parameter real PPDIBLCB = 0.0;
+
+parameter real PVAG 	= 1.0                              	`ATTR(info="Vg dependence of early voltage");
+parameter real LPVAG 	= 0.0;
+parameter real WPVAG 	= 0.0;
+parameter real PPVAG 	= 0.0;
+
+parameter real FPROUT 	= 0.0;
+parameter real FPROUTL 	= 0.0                           	`ATTR(info="Length dependence coefficient of FPROUT");
+parameter real FPROUTLEXP = 1.0	from (0:inf)            	`ATTR(info="Length dependence exponent coefficient of FPROUT");
+parameter real LFPROUT 	= 0.0;
+parameter real WFPROUT 	= 0.0;
+parameter real PFPROUT 	= 0.0;
+
+// Impact Ionization Current
+parameter real ALPHA0	= 0.0                             	`ATTR(info="first parameter of Iii, m/V");
+parameter real ALPHA0L	= 0.0                            	`ATTR(info="Length dependence coefficient of ALPHA0");
+parameter real ALPHA0LEXP = 1.0	from (0:inf)            	`ATTR(info="Length dependence exponent coefficient of ALPHA0");
+parameter real LALPHA0	= 0.0;
+parameter real WALPHA0	= 0.0;
+parameter real PALPHA0	= 0.0;
+
+parameter real BETA0	= 0.0                              	`ATTR(info="Vds dependent parameter of Iii, 1/V");
+parameter real LBETA0	= 0.0;
+parameter real WBETA0	= 0.0;
+parameter real PBETA0	= 0.0;
+
+//Gate Dielectric Tunneling Current Model Parameters
+parameter real AIGBACC = 1.36e-2                        	`ATTR(info="Parameter for Igb");
+parameter real BIGBACC = 1.71e-3                        	`ATTR(info="Parameter for Igb");
+parameter real CIGBACC = 0.075                          	`ATTR(info="Parameter for Igb");
+parameter real NIGBACC = 1.0                            	`ATTR(info="Parameter for Igbacc slope");
+parameter real AIGBINV = 1.11e-2                        	`ATTR(info="Parameter for Igb");
+parameter real BIGBINV = 9.49e-4                        	`ATTR(info="Parameter for Igb");
+parameter real CIGBINV = 0.006                          	`ATTR(info="Parameter for Igb");
+parameter real EIGBINV = 1.1                            	`ATTR(info="Parm for the Si bandgap for Igbinv [V]");
+parameter real NIGBINV = 3.0                            	`ATTR(info="Parameter for Igbinv slope");
+parameter real AIGC = 9.8e-3 	            `ATTR(info="Parameter for Igc");
+parameter real BIGC = 7.59e-4             `ATTR(info="Parameter for Igc");
+parameter real CIGC = 0.03   	            `ATTR(info="Parameter for Igc");
+parameter real AIGS = 9.8e-3 	            `ATTR(info="Parameter for Igs d");
+parameter real BIGS = 7.59e-4             `ATTR(info="Parameter for Igs d");
+parameter real CIGS = 0.03   	            `ATTR(info="Parameter for Igs d");
+parameter real AIGD = 9.8e-3 	            `ATTR(info="Parameter for Igs d");
+parameter real BIGD = 7.59e-4             `ATTR(info="Parameter for Igs d");
+parameter real CIGD = 0.03   	            `ATTR(info="Parameter for Igs d");
+parameter real DLCIG  = LINT                            	`ATTR(info="Delta L for Ig model [m]");
+parameter real DLCIGD = DLCIG                           	`ATTR(info="Delta L for Ig model [m]");
+parameter real POXEDGE = 1.0                            	`ATTR(info="Factor for the gate edge Tox");
+parameter real NTOX = 1.0                               	`ATTR(info="Exponent for Tox ratio");
+parameter real TOXREF = 3.0e-9 from (0:inf)             	`ATTR(info="Target tox value [m]");
+parameter real PIGCD = 1.0 from [-50:50]                	`ATTR(info="Igc, S/D partition parameter");
+
+parameter real AIGCL = 0.0                              	`ATTR(info="Length dependence coefficient of AIGC");
+parameter real AIGCW = 0.0                              	`ATTR(info="Width dependence coefficient of AIGC");
+parameter real AIGSL = 0.0                              	`ATTR(info="Length dependence coefficient of AIGS");
+parameter real AIGSW = 0.0                              	`ATTR(info="Width dependence coefficient of AIGS");
+parameter real AIGDL = 0.0                              	`ATTR(info="Length dependence coefficient of AIGD");
+parameter real AIGDW = 0.0                              	`ATTR(info="Width dependence coefficient of AIGD");
+parameter real PIGCDL = 0.0                             	`ATTR(info="Length dependence coefficient of PIGCD");
+
+parameter real LAIGBINV = 0.0;
+parameter real WAIGBINV = 0.0;
+parameter real PAIGBINV = 0.0;
+
+parameter real LBIGBINV = 0.0;
+parameter real WBIGBINV = 0.0;
+parameter real PBIGBINV = 0.0;
+
+parameter real LCIGBINV = 0.0;
+parameter real WCIGBINV = 0.0;
+parameter real PCIGBINV = 0.0;
+
+parameter real LEIGBINV = 0.0;
+parameter real WEIGBINV = 0.0;
+parameter real PEIGBINV = 0.0;
+
+parameter real LNIGBINV = 0.0;
+parameter real WNIGBINV = 0.0;
+parameter real PNIGBINV = 0.0;
+
+parameter real LAIGBACC = 0.0;
+parameter real WAIGBACC = 0.0;
+parameter real PAIGBACC = 0.0;
+
+parameter real LBIGBACC = 0.0;
+parameter real WBIGBACC = 0.0;
+parameter real PBIGBACC = 0.0;
+
+parameter real LCIGBACC = 0.0;
+parameter real WCIGBACC = 0.0;
+parameter real PCIGBACC = 0.0;
+
+parameter real LNIGBACC = 0.0;
+parameter real WNIGBACC = 0.0;
+parameter real PNIGBACC = 0.0;
+
+parameter real LAIGC = 0.0;
+parameter real WAIGC = 0.0;
+parameter real PAIGC = 0.0;
+
+parameter real LBIGC = 0.0;
+parameter real WBIGC = 0.0;
+parameter real PBIGC = 0.0;
+
+parameter real LCIGC = 0.0;
+parameter real WCIGC = 0.0;
+parameter real PCIGC = 0.0;
+
+parameter real LAIGS = 0.0;
+parameter real WAIGS = 0.0;
+parameter real PAIGS = 0.0;
+
+parameter real LBIGS = 0.0;
+parameter real WBIGS = 0.0;
+parameter real PBIGS = 0.0;
+
+parameter real LCIGS = 0.0;
+parameter real WCIGS = 0.0;
+parameter real PCIGS = 0.0;
+
+parameter real LAIGD = 0.0;
+parameter real WAIGD = 0.0;
+parameter real PAIGD = 0.0;
+
+parameter real LBIGD = 0.0;
+parameter real WBIGD = 0.0;
+parameter real PBIGD = 0.0;
+
+parameter real LCIGD = 0.0;
+parameter real WCIGD = 0.0;
+parameter real PCIGD = 0.0;
+
+parameter real LPOXEDGE = 0.0;
+parameter real WPOXEDGE = 0.0;
+parameter real PPOXEDGE = 0.0;
+
+parameter real LDLCIG = 0.0;
+parameter real WDLCIG = 0.0;
+parameter real PDLCIG = 0.0;
+
+parameter real LDLCIGD = 0.0;
+parameter real WDLCIGD = 0.0;
+parameter real PDLCIGD = 0.0;
+
+parameter real LNTOX = 0.0;
+parameter real WNTOX = 0.0;
+parameter real PNTOX = 0.0;
+
+//GIDL/GISL Current
+parameter real AGIDL	= 0.0                              	`ATTR(info="pre-exponential coeff. for GIDL in mho");
+parameter real AGIDLL	= 0.0                             	`ATTR(info="Length dependence coefficient of AGIDL");
+parameter real AGIDLW	= 0.0                             	`ATTR(info="Width dependence coefficient of AGIDL");
+parameter real LAGIDL	= 0.0;
+parameter real WAGIDL	= 0.0;
+parameter real PAGIDL	= 0.0;
+parameter real BGIDL	= 2.3e9                            	`ATTR(info="exponential coeff. for GIDL in V/m");
+parameter real LBGIDL	= 0.0;
+parameter real WBGIDL	= 0.0;
+parameter real PBGIDL	= 0.0;
+
+parameter real CGIDL	= 0.5                              	`ATTR(info="exponential coeff. for GIDL in V/m");
+parameter real LCGIDL	= 0.0;
+parameter real WCGIDL	= 0.0;
+parameter real PCGIDL	= 0.0;
+parameter real EGIDL	= 0.8                              	`ATTR(info="band bending parameter for GIDL in V");
+parameter real LEGIDL	= 0.0;
+parameter real WEGIDL	= 0.0;
+parameter real PEGIDL	= 0.0;
+parameter real AGISL	= AGIDL                            	`ATTR(info="pre-exponential coeff. for GISL in mho");
+parameter real AGISLL	= AGIDLL                          	`ATTR(info="Length dependence coefficient of AGISL");
+parameter real AGISLW	= AGIDLW                          	`ATTR(info="Width dependence coefficient of AGISL");
+parameter real LAGISL	= LAGIDL;
+parameter real WAGISL	= WAGIDL;
+parameter real PAGISL	= PAGIDL;
+parameter real BGISL	= BGIDL                            	`ATTR(info="exponential coeff. for GISL in V/m");
+parameter real LBGISL	= LBGIDL;
+parameter real WBGISL	= WBGIDL;
+parameter real PBGISL	= PBGIDL;
+parameter real CGISL	= CGIDL                            	`ATTR(info="exponential coeff. for GISL in V/m");
+parameter real LCGISL	= LCGIDL;
+parameter real WCGISL	= WCGIDL;
+parameter real PCGISL	= PCGIDL;
+parameter real EGISL	= EGIDL                            	`ATTR(info="band bending parameter for GISL in V");
+parameter real LEGISL	= LEGIDL;
+parameter real WEGISL	= WEGIDL;
+parameter real PEGISL	= PEGIDL;
+
+// Overlap Cap and Fringing Cap
+parameter real CF 		= 0.0                               	`ATTR(info="Outer Fringe Cap (F)");
+parameter real LCF 		= 0.0;
+parameter real WCF 		= 0.0;
+parameter real PCF 		= 0.0;
+parameter real CFRCOEFF = 1.0 from [1.0:inf)            	`ATTR(info="Coefficient for Outer Fringe Cap (F)");
+parameter real CGSO		= 0.0                              	`ATTR(info="Gate - Source overlap capacitance (F)");
+parameter real CGDO		= 0.0                              	`ATTR(info="Gate - Drain overlap capacitance (F)");
+parameter real CGBO		= 0.0                              	`ATTR(info="Gate - Body overlap capacitance (F)");
+parameter real CGSL		= 0.0;
+parameter real LCGSL	= 0.0;
+parameter real WCGSL	= 0.0;
+parameter real PCGSL	= 0.0;
+parameter real CGDL		= 0.0;
+parameter real LCGDL	= 0.0;
+parameter real WCGDL	= 0.0;
+parameter real PCGDL	= 0.0;
+parameter real CKAPPAS	= 0.6;
+parameter real LCKAPPAS	= 0.0;
+parameter real WCKAPPAS	= 0.0;
+parameter real PCKAPPAS	= 0.0;
+parameter real CKAPPAD	= 0.6;
+parameter real LCKAPPAD	= 0.0;
+parameter real WCKAPPAD	= 0.0;
+parameter real PCKAPPAD	= 0.0;
+
+
+// Layout-Dependent Parasitics Model Parameters ....Resistance only
+parameter real DMCG 	= 0.0                              	`ATTR(info="Distance of Mid-Contact to Gate edge [m]");
+parameter real DMCI 	= DMCG                             	`ATTR(info="Distance of Mid-Contact to Isolation [m]");
+parameter real DMDG 	= 0.0                              	`ATTR(info="Distance of Mid-Diffusion to Gate edge [m]");
+parameter real DMCGT 	= 0.0                             	`ATTR(info="Dist of Mid-Contact to Gate edge in Test [m]");
+
+`ifdef __RGATEMOD__
+	parameter real XGW		= 0.0                              	`ATTR(info="Dist from gate contact center to dev edge [m]");
+	parameter real XGL		= 0.0 from (-inf:L*LMLT+XL)        	`ATTR(info="Variation in Ldrawn [m]");
+	parameter integer NGCON = 1 from [1:2]                 	`ATTR(info="Number of gate contacts");
+	parameter real RSHG		= 0.1 from [0:inf)                	`ATTR(info="Gate sheet resistance [Ohm]");
+`endif
+
+// Junction current and capacitance
+// Junction Capacitance
+parameter real CJS 		= 5.0e-4                           	`ATTR(info="Unit area source-side junction capacitance at zero bias");
+parameter real CJD 		= CJS                              	`ATTR(info="Unit area drain-side junction capacitance at zero bias");
+parameter real CJSWS 	= 5.0e-10                         	`ATTR(info="Unit length source-side sidewall junction capacitance at zero bias");
+parameter real CJSWD 	= CJSWS                           	`ATTR(info="Unit length drain-side sidewall junction capacitance at zero bias");
+parameter real CJSWGS 	= 0.0                            	`ATTR(info="Unit length source-side gate sidewall junction capacitance at zero bias");
+parameter real CJSWGD 	= CJSWGS                         	`ATTR(info="Unit length drain-side gate sidewall junction capacitance at zero bias");
+parameter real PBS 		= 1.0                              	`ATTR(info="Source-side bulk junction built-in potential");
+parameter real PBD 		= PBS                              	`ATTR(info="Drain-side bulk junction built-in potential");
+parameter real PBSWS 	= 1.0                             	`ATTR(info="Built-in potential for Source-side sidewall junction capacitance");
+parameter real PBSWD 	= PBSWS                           	`ATTR(info="Built-in potential for Drain-side sidewall junction capacitance");
+parameter real PBSWGS 	= PBSWS                          	`ATTR(info="Built-in potential for Source-side gate sidewall junction capacitance");
+parameter real PBSWGD 	= PBSWGS                         	`ATTR(info="Built-in potential for Drain-side gate sidewall junction capacitance");
+parameter real MJS 		= 0.5                              	`ATTR(info="Source bottom junction capacitance grading coefficient");
+parameter real MJD 		= MJS                              	`ATTR(info="Drain bottom junction capacitance grading coefficient");
+parameter real MJSWS 	= 0.33                            	`ATTR(info="Source sidewall junction capacitance grading coefficient");
+parameter real MJSWD 	= MJSWS                           	`ATTR(info="Drain sidewall junction capacitance grading coefficient");
+parameter real MJSWGS 	= MJSWS                          	`ATTR(info="Source-side gate sidewall junction capacitance grading coefficient");
+parameter real MJSWGD 	= MJSWGS                         	`ATTR(info="Drain-side gate sidewall junction capacitance grading coefficient");
+
+// Junction Current
+parameter real JSS 		= 1.0e-4                           	`ATTR(info="Bottom source junction reverse saturation current density");
+parameter real JSD 		= JSS                              	`ATTR(info="Bottom drain junction reverse saturation current density");
+parameter real JSWS 	= 0.0                              	`ATTR(info="Unit length reverse saturation current for sidewall source junction");
+parameter real JSWD 	= JSWS                             	`ATTR(info="Unit length reverse saturation current for sidewall drain junction");
+parameter real JSWGS 	= 0.0                             	`ATTR(info="Unit length reverse saturation current for gate-edge sidewall source junction");
+parameter real JSWGD 	= JSWGS                           	`ATTR(info="Unit length reverse saturation current for gate-edge sidewall drain junction");
+parameter real NJS 		= 1.0                              	`ATTR(info="Source junction emission coefficient");
+parameter real NJD 		= NJS                              	`ATTR(info="Drain junction emission coefficient");
+parameter real IJTHSFWD = 0.1                           	`ATTR(info="Forward source diode breakdown limiting current");
+parameter real IJTHDFWD = IJTHSFWD                      	`ATTR(info="Forward drain diode breakdown limiting current");
+parameter real IJTHSREV = 0.1                           	`ATTR(info="Reverse source diode breakdown limiting current");
+parameter real IJTHDREV = IJTHSREV                      	`ATTR(info="Reverse drain diode breakdown limiting current");
+parameter real BVS 		= 10.0                             	`ATTR(info="Source diode breakdown voltage");
+parameter real BVD 		= BVS                              	`ATTR(info="Drain diode breakdown voltage");
+parameter real XJBVS 	= 1.0                             	`ATTR(info="Fitting parameter for source diode breakdown current");
+parameter real XJBVD 	= XJBVS                           	`ATTR(info="Fitting parameter for drain diode breakdown current");
+
+// Tunneling Component of Junction Current
+parameter real JTSS 	= 0.0                              	`ATTR(info="Bottom source junction trap-assisted saturation current density");
+parameter real JTSD 	= JTSS                             	`ATTR(info="Bottom drain junction trap-assisted saturation current density");
+parameter real JTSSWS 	= 0.0                            	`ATTR(info="Unit length trap-assisted saturation current for sidewall source junction");
+parameter real JTSSWD 	= JTSSWS                         	`ATTR(info="Unit length trap-assisted saturation current for sidewall drain junction");
+parameter real JTSSWGS 	= 0.0                           	`ATTR(info="Unit length trap-assisted saturation current for gate-edge sidewall source junction");
+parameter real JTSSWGD 	= JTSSWGS                       	`ATTR(info="Unit length trap-assisted saturation current for gate-edge sidewall drain junction");
+parameter real JTWEFF 	= 0.0                            	`ATTR(info="Trap assisted tunneling current width dependence");
+parameter real NJTS 	= 20.0                             	`ATTR(info="Non-ideality factor for JTSS");
+parameter real NJTSD 	= NJTS                            	`ATTR(info="Non-ideality factor for JTSD");
+parameter real NJTSSW 	= 20.0                           	`ATTR(info="Non-ideality factor for JTSSWS");
+parameter real NJTSSWD 	= NJTSSW                        	`ATTR(info="Non-ideality factor for JTSSWD");
+parameter real NJTSSWG 	= 20.0                          	`ATTR(info="Non-ideality factor for JTSSWGS");
+parameter real NJTSSWGD = NJTSSWG                       	`ATTR(info="Non-ideality factor for JTSSWGD");
+parameter real VTSS 	= 10.0                             	`ATTR(info="Bottom source junction trap-assisted current voltage dependent parameter");
+parameter real VTSD 	= VTSS                             	`ATTR(info="Bottom drain junction trap-assisted current voltage dependent parameter");
+parameter real VTSSWS 	= 10.0                           	`ATTR(info="Unit length trap-assisted current voltage dependent parameter\nfor sidewall source junction");
+parameter real VTSSWD 	= VTSSWS                         	`ATTR(info="Unit length trap-assisted current voltage dependent parameter\nfor sidewall drain junction");
+parameter real VTSSWGS 	= 10.0                          	`ATTR(info="Unit length trap-assisted current voltage dependent parameter for\ngate-edge sidewall source junction");
+parameter real VTSSWGD 	= VTSSWGS                       	`ATTR(info="Unit length trap-assisted current voltage dependent parameter for\ngate-edge sidewall drain junction");
+
+// High-Speed/RF Model Parameters
+`ifdef __RGATEMOD__
+	parameter real XRCRG1	= 12.0                           	`ATTR(info="1st fitting parm the bias-dependent Rg");
+	parameter real XRCRG2	= 1.0                            	`ATTR(info="2nd fitting parm the bias-dependent Rg");
+`endif
+`ifdef __RBODYMOD__
+	parameter real RBPB		= 50.0 from [0:inf)               	`ATTR(info="Resistance between bNodePrime and bNode [Ohm]");
+	parameter real RBDB		= 50.0 from [0:inf)               	`ATTR(info="Resistance between bNode and dbNode [Ohm]");
+	parameter real RBSB		= 50.0 from [0:inf)               	`ATTR(info="Resistance between bNode and sbNode [Ohm]");
+	parameter real RBPS		= 50.0 from [0:inf)               	`ATTR(info="Resistance between bNodePrime and sbNode [Ohm]");
+	parameter real RBPD		= 50.0 from [0:inf)               	`ATTR(info="Resistance between bNodePrime and bNode [Ohm]");
+	parameter real GBMIN	= 1.0e-12 from [0:inf)            	`ATTR(info="Minimum body conductance");
+	parameter real RBPS0	= 50.0 from (0:inf)               	`ATTR(info="Scaling prefactor for RBPS 50 Ohms");
+	parameter real RBPSL	= 0.0 from [0:inf)                	`ATTR(info="Length Scaling parameter for RBPS");
+	parameter real RBPSW	= 0.0 from [0:inf)                	`ATTR(info="Width Scaling parameter for RBPS");
+	parameter real RBPSNF	= 0.0 from [0:inf)               	`ATTR(info="Number of fingers Scaling parameter for RBPS");
+	parameter real RBPD0	= 50.0 from (0:inf)               	`ATTR(info="Scaling prefactor for RBPD");
+	parameter real RBPDL	= 0.0 from [0:inf)                	`ATTR(info="Length Scaling parameter for RBPD");
+	parameter real RBPDW	= 0.0 from [0:inf)                	`ATTR(info="Width Scaling parameter for RBPD");
+	parameter real RBPDNF	= 0.0 from [0:inf)               	`ATTR(info="Number of fingers Scaling parameter for RBPD");
+	parameter real RBPBX0	= 100.0 from (0:inf)             	`ATTR(info="Scaling prefactor for RBPBX");
+	parameter real RBPBXL	= 0.0 from [0:inf)               	`ATTR(info="Length Scaling parameter for RBPBX");
+	parameter real RBPBXW	= 0.0 from [0:inf)               	`ATTR(info="Width Scaling parameter for RBPBX");
+	parameter real RBPBXNF	= 0.0 from [0:inf)              	`ATTR(info="Number of fingers Scaling parameter for RBPBX");
+	parameter real RBPBY0	= 100.0 from (0:inf)             	`ATTR(info="Scaling prefactor for RBPBY");
+	parameter real RBPBYL	= 0.0 from [0:inf)               	`ATTR(info="Length Scaling parameter for RBPBY");
+	parameter real RBPBYW	= 0.0 from [0:inf)               	`ATTR(info="Width Scaling parameter for RBPBY");
+	parameter real RBPBYNF	= 0.0 from [0:inf)              	`ATTR(info="Number of fingers Scaling parameter for RBPBY");
+	parameter real RBSBX0	= 100.0 from (0:inf)             	`ATTR(info="Scaling prefactor for RBSBX");
+	parameter real RBSBY0	= 100.0 from (0:inf)             	`ATTR(info="Scaling prefactor for RBSBY");
+	parameter real RBDBX0	= 100.0 from (0:inf)             	`ATTR(info="Scaling prefactor for RBDBX");
+	parameter real RBDBY0	= 100.0 from (0:inf)             	`ATTR(info="Scaling prefactor for RBDBY");
+	parameter real RBSDBXL	= 0.0 from [0:inf)              	`ATTR(info="Length Scaling parameter for RBSBX and RBDBX");
+	parameter real RBSDBXW	= 0.0 from [0:inf)              	`ATTR(info="Width Scaling parameter for RBSBX and RBDBX");
+	parameter real RBSDBXNF	= 0.0 from [0:inf)             	`ATTR(info="Number of fingers Scaling parameter for RBSBX and RBDBX");
+	parameter real RBSDBYL	= 0.0 from [0:inf)              	`ATTR(info="Length Scaling parameter for RBSBY and RBDBY");
+	parameter real RBSDBYW	= 0.0 from [0:inf)              	`ATTR(info="Width Scaling parameter for RBSBY and RBDBY");
+	parameter real RBSDBYNF	= 0.0 from [0:inf)             	`ATTR(info="Number of fingers Scaling parameter for RBSBY and RBDBY");
+`endif
+
+// Flicker Noise
+parameter real EF		= 1.0 from (0:2]                     	`ATTR(info="Flicker Noise frequency exponent");
+parameter real EM		= 4.1e7;
+parameter real NOIA		= 6.250e+40;
+parameter real NOIB		= 3.125e+25;
+parameter real NOIC		= 8.750e+8;
+parameter real LINTNOI	= 0.0;
+
+// Thermal Noise
+parameter real NTNOI = 1.0	from [0:inf);
+`ifdef __TNOISW__
+	parameter real RNOIA = 0.577                           	`ATTR(info="TNOIMOD = 1");
+	parameter real RNOIB = 0.5164                          	`ATTR(info="TNOIMOD = 1");
+	parameter real RNOIC = 0.395                           	`ATTR(info="TNOIMOD = 1");
+	parameter real TNOIA = 0.0 from [0:inf)                	`ATTR(info="TNOIMOD = 1");
+	parameter real TNOIB = 0.0 from [0:inf)                	`ATTR(info="TNOIMOD = 1");
+	parameter real TNOIC = 0.0 from [0:inf)                	`ATTR(info="Correlation coefficient");
+`endif
+
+
+// Binning Parameters
+parameter integer BINUNIT	= 1		from [0:1]               	`ATTR(info="Unit of L and W for Binning\n1 : micro-meter, 0 : default");
+parameter real DLBIN = 0.0;
+parameter real DWBIN = 0.0;
+
+
+
+// Temperature Dependence Parameters
+parameter real TNOM 	= 27.0                             	`ATTR(info="Temperature at which the model was extracted (degrees)");
+parameter real DTEMP 	= 0.0                             	`ATTR(info="Offset of Device Temperature");
+
+parameter real TBGASUB 	= 4.73e-4                       	`ATTR(info="Bandgap Temperature Coefficient (eV / degrees)");
+parameter real TBGBSUB 	= 636.0                         	`ATTR(info="Bandgap Temperature Coefficient (degrees)");
+
+parameter real TNFACTOR = 0.0                           	`ATTR(info="Temperature exponent for NFACTOR");
+
+parameter real UTE 	= -1.5                              	`ATTR(info="Mobility temperature exponent");
+parameter real LUTE 	= 0.0;
+parameter real WUTE 	= 0.0;
+parameter real PUTE 	= 0.0;
+parameter real UTEL 	= 0.0                              	`ATTR(info="Length Scaling parameter for UTE");
+
+parameter real UA1	= 1.0e-3                             	`ATTR(info="Temperature coefficient for UA");
+parameter real LUA1 	= 0.0;
+parameter real WUA1 	= 0.0;
+parameter real PUA1 	= 0.0;
+parameter real UA1L 	= 0.0                              	`ATTR(info="Length Scaling parameter for UA1");
+
+parameter real UC1	= 0.056e-9                           	`ATTR(info="Temperature coefficient for UC");
+parameter real LUC1 	= 0.0;
+parameter real WUC1 	= 0.0;
+parameter real PUC1 	= 0.0;
+parameter real UD1	= 0.0                                	`ATTR(info="Temperature coefficient for UD");
+parameter real LUD1 	= 0.0;
+parameter real WUD1 	= 0.0;
+parameter real PUD1 	= 0.0;
+parameter real UD1L 	= 0.0                              	`ATTR(info="Length Scaling parameter for UD1");
+
+parameter real UCSTE	= -4.775e-3                        	`ATTR(info="Temperature coefficient for UCS");
+parameter real LUCSTE 	= 0.0;
+parameter real WUCSTE 	= 0.0;
+parameter real PUCSTE 	= 0.0;
+
+parameter real TETA0	= 0.0                              	`ATTR(info="Temperature coefficient for ETA0");
+
+parameter real PRT	= 0.0                                	`ATTR(info="Temperature coefficient for resistance");
+parameter real LPRT 	= 0.0;
+parameter real WPRT 	= 0.0;
+parameter real PPRT 	= 0.0;
+
+parameter real AT	= -1.56e-3                            	`ATTR(info="Temperature coefficient for saturation velocity");
+parameter real LAT	= 0.0;
+parameter real WAT	= 0.0;
+parameter real PAT	= 0.0;
+parameter real ATL 	= 0.0                               	`ATTR(info="Length Scaling parameter for AT");
+
+parameter real TDELTA	= 0.0                             	`ATTR(info="Temperature coefficient for DELTA");
+
+parameter real PTWGT	= 0.0                              	`ATTR(info="Temperature coefficient for PTWG");
+parameter real LPTWGT	= 0.0;
+parameter real WPTWGT	= 0.0;
+parameter real PPTWGT	= 0.0;
+parameter real PTWGTL 	= 0.0                            	`ATTR(info="Length Scaling parameter for PTWGT");
+
+parameter real KT1	= -0.11                              	`ATTR(info="Temperature coefficient for Vth");
+parameter real KT1EXP	= 1.0 from (0:inf)                	`ATTR(info="Temperature coefficient for Vth");
+parameter real KT1L	= 0.0                               	`ATTR(info="Temperature coefficient for Vth");
+parameter real LKT1	= 0.0;
+parameter real WKT1	= 0.0;
+parameter real PKT1	= 0.0;
+
+parameter real KT2	= 0.022                              	`ATTR(info="Temperature coefficient for Vth");
+parameter real LKT2	= 0.0;
+parameter real WKT2	= 0.0;
+parameter real PKT2	= 0.0;
+
+parameter real IIT	= 0.0                                	`ATTR(info="Temperature coefficient for BETA0");
+parameter real LIIT	= 0.0;
+parameter real WIIT	= 0.0;
+parameter real PIIT	= 0.0;
+
+parameter real IGT	= 2.5                                	`ATTR(info="Gate Current Temperature Dependence");
+parameter real LIGT	= 0.0;
+parameter real WIGT	= 0.0;
+parameter real PIGT	= 0.0;
+
+parameter real TGIDL	= 0.0                              	`ATTR(info="Temperature coefficient for GIDL/GISL");
+parameter real LTGIDL	= 0.0;
+parameter real WTGIDL	= 0.0;
+parameter real PTGIDL	= 0.0;
+
+parameter real TCJ 	= 0.0                               	`ATTR(info="Temperature coefficient for CJS/CJD");
+parameter real TCJSW 	= 0.0                             	`ATTR(info="Temperature coefficient for CJSWS/CJSWD");
+parameter real TCJSWG 	= 0.0                            	`ATTR(info="Temperature coefficient for CJSWGS/CJSWGD");
+parameter real TPB 	= 0.0                               	`ATTR(info="Temperature coefficient for PBS/PBD");
+parameter real TPBSW 	= 0.0                             	`ATTR(info="Temperature coefficient for PBSWS/PBSWD");
+parameter real TPBSWG 	= 0.0                            	`ATTR(info="Temperature coefficient for PBSWGS/PBSWGD");
+parameter real XTIS 	= 3.0                              	`ATTR(info="Source junction current temperature exponent");
+parameter real XTID 	= XTIS                             	`ATTR(info="Drain junction current temperature exponent");
+parameter real XTSS 	= 0.02                             	`ATTR(info="Power dependence of JTSS on temperature");
+parameter real XTSD 	= XTSS                             	`ATTR(info="Power dependence of JTSD on temperature");
+parameter real XTSSWS 	= 0.02                           	`ATTR(info="Power dependence of JTSSWS on temperature");
+parameter real XTSSWD 	= XTSSWS                         	`ATTR(info="Power dependence of JTSSWD on temperature");
+parameter real XTSSWGS 	= 0.02                          	`ATTR(info="Power dependence of JTSSWGS on temperature");
+parameter real XTSSWGD 	= XTSSWGS                       	`ATTR(info="Power dependence of JTSSWGD on temperature");
+parameter real TNJTS 	= 0.0                             	`ATTR(info="Temperature coefficient for NJTS");
+parameter real TNJTSD 	= TNJTS                          	`ATTR(info="Temperature coefficient for NJTSD");
+parameter real TNJTSSW 	= 0.0                           	`ATTR(info="Temperature coefficient for NJTSSW");
+parameter real TNJTSSWD = TNJTSSW                       	`ATTR(info="Temperature coefficient for NJTSSWD");
+parameter real TNJTSSWG = 0.0                           	`ATTR(info="Temperature coefficient for NJTSSWG");
+parameter real TNJTSSWGD = TNJTSSWG                     	`ATTR(info="Temperature coefficient for NJTSSWGD");
+
+// Self Heating Parameter
+parameter real RTH0    = 0.0                            	`ATTR(info="Thermal resistance");
+parameter real CTH0    = 1.0E-05                        	`ATTR(info="Thermal capacitance");
+parameter real WTH0    = 0.0                            	`ATTR(info="Width dependence coefficient for Rth and Cth");
+
+//Stress related Parameter
+parameter real SA 	= 0.0                                	`ATTR(info="Distance between OD edge from Poly from one side");
+parameter real SB 	= 0.0                                	`ATTR(info="Distance between OD edge from Poly from other side");
+parameter real SD 	= 0.0                                	`ATTR(info="Distance between neighboring fingers");
+parameter real SAREF 	= 1.0e-6 from (0:inf)             	`ATTR(info="Reference distance between OD edge from Poly from one side");
+parameter real SBREF 	= 1.0e-6 from (0:inf)             	`ATTR(info="Reference distance between OD edge from Poly from other side");
+parameter real WLOD 	= 0.0	 from [0:inf)                	`ATTR(info="Width Parameter for Stress Effect");
+parameter real KU0 	= 0.0                               	`ATTR(info="Mobility degradation/enhancement Parameter for Stress Effect");
+parameter real KVSAT 	= 0.0                             	`ATTR(info="Saturation Velocity degradation/enhancement Parameter for Stress Effect");
+parameter real TKU0 	= 0.0                              	`ATTR(info="Temperature Coefficient for KU0");
+parameter real LKU0 	= 0.0                              	`ATTR(info="Length Dependence of KU0");
+parameter real WKU0 	= 0.0                              	`ATTR(info="Width Dependence of KU0");
+parameter real PKU0 	= 0.0                              	`ATTR(info="Cross Term Dependence of KU0");
+parameter real LLODKU0 	= 0.0                           	`ATTR(info="Length Parameter for u0 stress effect");
+parameter real WLODKU0 	= 0.0                           	`ATTR(info="Width Parameter for u0 stress effect");
+parameter real KVTH0 	= 0.0                             	`ATTR(info="Threshold Shift parameter for stress effect");
+parameter real LKVTH0 	= 0.0                            	`ATTR(info="Length dependence of KVTH0");
+parameter real WKVTH0 	= 0.0                            	`ATTR(info="Width dependence of KVTH0");
+parameter real PKVTH0 	= 0.0                            	`ATTR(info="Cross-term dependence of KVTH0");
+parameter real LLODVTH 	= 0.0                           	`ATTR(info="Length Parameter for Vth stress effect");
+parameter real WLODVTH 	= 0.0                           	`ATTR(info="Width Parameter for Vth stress effect");
+parameter real STK2 	= 0.0                              	`ATTR(info="K2 shift factor related to Vth change");
+parameter real LODK2 	= 0.0                             	`ATTR(info="K2 shift modification factor for stress effect");
+parameter real STETA0 	= 0.0                            	`ATTR(info="eta0 shift related to Vth0 change");
+parameter real LODETA0 	= 0.0                           	`ATTR(info="eta0 modification foator for stress effect");
+//Well Proximity Parameters
+parameter real SCA 	= 0.0                               	`ATTR(info="Integration of first distribution function for scattered well dopant");
+parameter real SCB 	= 0.0                               	`ATTR(info="Integration of second distribution function for scattered well dopant");
+parameter real SCC 	= 0.0                               	`ATTR(info="Integration of second distribution function for scattered well dopant");
+parameter real SC 	= 0.0                                	`ATTR(info="Distance to a single well edge");
+parameter real WEB 	= 0.0                               	`ATTR(info="Coefficient for SCB");
+parameter real WEC 	= 0.0                               	`ATTR(info="Coefficient for SCC");
+parameter real KVTH0WE 	= 0.0                           	`ATTR(info="Vth shift for well proximity effect");
+parameter real LKVTH0WE = 0.0;					
+parameter real WKVTH0WE = 0.0;					
+parameter real PKVTH0WE = 0.0;					
+parameter real K2WE 	= 0.0                              	`ATTR(info="K2 shift for well proximity effect");
+parameter real LK2WE 	= 0.0;
+parameter real WK2WE 	= 0.0;
+parameter real PK2WE 	= 0.0;
+parameter real KU0WE 	= 0.0                             	`ATTR(info="Mobility degradation factor for well proximity effect");
+parameter real LKU0WE 	= 0.0;
+parameter real WKU0WE 	= 0.0;
+parameter real PKU0WE 	= 0.0;
+parameter real SCREF 	= 1.0e-6                          	`ATTR(info="Reference distance to calculate SCA,SCB and SCC");
+
+
+// GMIN - added for convergence
+//parameter real GMIN		= $simparam("gmin", 1.0e-15);
+parameter real GMIN		= 1e-15;
+
+// ***********************************
+//   Variables
+// ***********************************
+
+// Qucs - use TYPE as internal variable, harcode to device type
+integer TYPE;
+
+// Common Variables
+real PSiso,PDiso,PSsha,PDsha,PSmer,PDmer,ASiso,ADiso,ASsha,ADsha,ASmer,ADmer;
+real T_0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12;
+real Tb;
+real epssi, epsox, ni, Weff, Leff, Weff1, Leff1, Wact, Lact, Weffcj, Eg, Eg0;
+real dLIV, dWIV, dLB, dWB, dLCV, dWCV, dWJ, Cox, epsratio;
+real Vdb_noswap, Vsb_noswap, Vgs_noswap, Vgd_noswap;
+real sigvds, vfb, vgfb, vgfbCV, Vbsx, Vfbsdr;
+real Vg, vg, Vd, Vs, vs, Vds, Vdsx, Vgs_eff, Vgd_eff;
+real Vth_shift;
+real qia, qba, qiaCV, qbaCV, qbs, qbd, qb, dps, phib, phib_n;
+real nq, psip, psiavg, psipclamp, sqrtpsisa, sqrtpsisainv, sqrtpsip;
+real Cdep, Lnew, L_mult, Wnew, W_mult;
+
+// Short Channel Effects
+real n, Fp, nVt, inv_nVt, Vt, inv_Vt;
+real PhistVbs, sqrtPhistVbs, Xdep, cdsc;
+real T1DEP;
+real dVth_ldop, DVTP0_i, DVTP1_i, DVTP2_i, DVTP3_i, DVTP4_i, DVTP5_i;
+real dVth_VNUD, dVth_dibl, dvth_temp;
+real gam, inv_gam, Phist, sqrtPhist, litl;
+
+// Drain Saturation Voltage
+real qis, qdsat, Eeffs, Dmobs, Esat, EsatL, Vdsat, LambdaC_by2, LambdaC;
+real Vdseff, Vdssat, VdssatCV, vdeff, vdsat, qdeff, vdsatcv, VdsatCV;
+real ln_T1_T2;
+
+// Mobility Degradation
+real EeffFactor, Eeffm, ueff, eta_mu, Dmob, Dtot;
+
+// Velocity Saturation
+real zsat, Dvsat, Dptwg, PSAT_i;
+
+// Output Conductance
+real diffVds, VaDITS, VaSCBE, Vasat;
+real DIBLfactor, PVAGfactor, VaDIBL, Vgst2Vtm, Moc, MdL, Mscbe;
+
+//Impact Ionization and GIDL
+real Iii, igidl, igisl;
+
+// IV Variables
+integer devsign;
+real ids;
+
+// CV Variables
+real Qb, Qs, Qd1, Qd2, Qd, Qi, QBi, QSi, QDi, QGi, WLCOXVtinv;
+real qs, qbeff, dqgeff;
+real DPD, vgfbPD, gammaPD, gamg2;
+real MdL_2, inv_MdL, inv_MdL_2, MdL_less_1;
+real sis, sid, vgpqm, Temps, Tempd, DQSD, DQSD2, invgamg2;
+real Vgsov, Vgdov, Qovb, Qovg, Qovs, Qovd, Cgsof, Cgdof;
+real XDCinv, Coxeffinv, BSIM6TOXP;
+real Vgd_ov_noswap, Vgs_ov_noswap;
+
+// S/D Series Resistance
+real WeffWRFactor, Rtot, DMCGeff, DMDGeff, DMCIeff;
+real RSourceGeo, RDrainGeo, Rsource, Rdrain, Rdss, Rdsi, Dr;
+
+// S/D Junction Area and Perimeter
+real temp_ASeff, temp_ADeff,temp_PSeff,temp_PDeff;
+real ASeff, ADeff;
+
+//Gate Resistances
+`ifdef __RGATEMOD__
+	real Grgeltd, Gcrg, idsovvds;
+`endif
+
+//Body Resistance
+`ifdef __RBODYMOD__
+	real Lnl, Lnw, Lnnf, Bodymode, Rbpbx, Rbpby, Rbsbx, Rbsby, Rbdbx, Rbdby;
+	real Rbdb, Rbsb, Rbpb, Rbps, Rbpd;
+	real Grbsb, Grbdb, Grbpb, Grbps, Grbpd;
+`endif
+
+// Gate Current
+real Voxm, Voxminv, Voxmacc, Vdseffx;
+real Vaux_Igbinv, Vaux_Igbacc, igbinv, igbacc, igb;
+real igcs, igcd, igc0, T1_exp;
+real igs, igd, igs_mult, igd_mult;
+real Aechvb, Bechvb, AechvbEdge, BechvbEdge, ToxRatio, ToxRatioEdge;
+
+// Junction Current and Capacitance
+real PSeff, PDeff;
+real Ibs, Ibd, Vbs_jct, Vbd_jct;
+real Czbs, Czbssw, Czbsswg, Czbd, Czbdsw, Czbdswg;
+real arg, sarg, Qbs, Qbd;
+real Isbs, Isbd, Nvtms, Nvtmd;
+real SslpRev, IVjsmRev, VjsmRev, SslpFwd, IVjsmFwd, VjsmFwd, XExpBVS;
+real DslpRev, IVjdmRev, VjdmRev, DslpFwd, IVjdmFwd, VjdmFwd, XExpBVD;
+
+// Flicker Noise
+real LINTNOI_i;
+real Esatnoi, Leffnoi, Leffnoisq, DelClm;
+real N0, Nl, Nstar, Ssi, Swi, FNPowerAt1Hz;
+
+// Thermal Noise
+real gspr, gdpr;
+real Gtnoi, sidn, Nt;
+`ifdef __TNOISW__
+	real mig, migid, mid, Lvsat, Vtn;
+	real cm_igid, sqid, sqig, ctnoi, betanoisq, thetanoisq;
+`endif
+
+// Temperature Effects
+real DevTemp, Tnom, Vtm, Vtm0;
+real TRatio, delTemp;
+real U0_t, UA_t, UC_t, UD_t, UCS_t, rdstemp, VSAT_t, VSATCV_t;
+real DELTA_t, PTWG_t, BETA0_t, BGIDL_t, BGISL_t;
+real igtemp;
+real ETA0_t, NFACTOR_t;
+
+//Diode temperature effects
+real CJS_t, CJSWS_t, CJSWGD_t, CJD_t, CJSWD_t, CJSWGS_t;
+real PBS_t, PBSWS_t, PBSWGS_t, PBD_t, PBSWD_t, PBSWGD_t;
+real JSS_t, JSWS_t, JSWGS_t, JSD_t, JSWD_t, JSWGD_t;
+real JTSS_t, JTSD_t, JTSSWS_t, JTSSWD_t, JTSSWGS_t, JTSSWGD_t;
+real NJTS_t, NJTSD_t, NJTSSW_t, NJTSSWD_t, NJTSSWG_t, NJTSSWGD_t;
+
+// Binning
+real PSATB_i;
+real KT1_i, KT2_i;
+real W_by_NF;
+real L_LLN, W_LWN, LW_LLN_LWN, L_LLN1, W_LWN1, LW_LLN_LWN1;
+real L_WLN, W_WWN, LW_WLN_WWN, L_WLN1, W_WWN1, LW_WLN_WWN1;
+real Inv_L, Inv_W, Inv_WL, Inv_Lact, Inv_Wact, Inv_Llong, Inv_Wwide;
+real BIN_L, BIN_W, BIN_WL;
+real NGATE_i, NSD_i, NDEP_i, VFB_i;
+real CIT_i, CDSCD_i, CDSCB_i, NFACTOR_i;
+real PHIN_i, ETA0_i, ETAB_i, K2_i;
+real DELTA_i;
+real U0_i, VSAT_i, VSATCV_i, UA_i, EU_i, UD_i, UCS_i, UC_i;
+real PDIBLC_i, PDIBLCB_i, PSCBE1_i, PSCBE2_i, PDITS_i, PDITSD_i, FPROUT_i;
+real PRWG_i, WR_i, RDWMIN_i, RSWMIN_i, RDW_i, RSW_i, RDSW_i, RDSWMIN_i;
+real PTWG_i, PVAG_i, XJ_i;
+real PCLM_i, PCLMCV_i, PRWB_i;
+real CF_i, CGSL_i, CGDL_i, CKAPPAS_i, CKAPPAD_i;
+real VFBCV_i, NDEPCV_i;
+real ALPHA0_i, BETA0_i;
+real AGIDL_i, BGIDL_i, CGIDL_i, EGIDL_i;
+real AGISL_i, BGISL_i, CGISL_i, EGISL_i;
+real UTE_i, UA1_i, UC1_i, UD1_i, UCSTE_i, PRT_i, AT_i, PTWGT_i, IIT_i, TGIDL_i;
+real KVTH0WE_i, K2WE_i, KU0WE_i;
+real AIGBINV_i, BIGBINV_i, CIGBINV_i, EIGBINV_i, NIGBINV_i;
+real AIGBACC_i, BIGBACC_i, CIGBACC_i, NIGBACC_i;
+real AIGC_i, BIGC_i, CIGC_i;
+real AIGS_i, BIGS_i, CIGS_i, AIGD_i, BIGD_i, CIGD_i, POXEDGE_i, PIGCD_i;
+real DLCIG_i, DLCIGD_i, NTOX_i;
+real IGT_i;
+
+//stress effect
+real W_tmp_stress, tmp1_stress, kstress_u0, tmp1_stress_vth, kstress_vth0, ku0_temp;
+real Inv_sa, Inv_sb, Inv_saref, Inv_sbref, Inv_odref, rho_ref, Inv_od,rho;
+real mu0_mult, vsat_mult, vth0_stress, k2_stress, eta_stress;
+integer i;
+
+//Well Proximity effect
+real vth0_well, k2_well, mu_well;
+
+
+// The following are used by the macro definitions (GEOMOD and RGEOMOD )
+real nuIntD, nuEndD, nuIntS, nuEndS;
+real Rint, Rend;
+
+// Self Heating
+`ifdef __SHMOD__
+	real gth, cth;
+`endif
+
+// ---- OPERATING POINT VARIABLES ----
+
+(* desc="QBI"	*) real QBI;
+(* desc="QSI"	*) real QSI;
+(* desc="QDI"	*) real QDI;
+(* desc="QGI"	*) real QGI;
+
+(* desc="CGGI"	*) real CGGI;
+(* desc="CGBI"	*) real CGBI;
+(* desc="CGSI"	*) real CGSI;
+(* desc="CGDI"	*) real CGDI;
+
+(* desc="CSGI"	*) real CSGI;
+(* desc="CSBI"	*) real CSBI;
+(* desc="CSSI"	*) real CSSI;
+(* desc="CSDI"	*) real CSDI;
+
+(* desc="CDGI"	*) real CDGI;
+(* desc="CDBI"	*) real CDBI;
+(* desc="CDSI"	*) real CDSI;
+(* desc="CDDI"	*) real CDDI;
+
+(* desc="CBGI"	*) real CBGI;
+(* desc="CBBI"	*) real CBBI;
+(* desc="CBSI"	*) real CBSI;
+(* desc="CBDI"	*) real CBDI;
+
+(* desc="QB"	*) real QB;
+(* desc="QS"	*) real QS;
+(* desc="QD"	*) real QD;
+(* desc="QG"	*) real QG;
+
+(* desc="CGG"	*) real CGG;
+(* desc="CGB"	*) real CGB;
+(* desc="CGS"	*) real CGS;
+(* desc="CGD"	*) real CGD;
+
+(* desc="CSG"	*) real CSG;
+(* desc="CSB"	*) real CSB;
+(* desc="CSS"	*) real CSS;
+(* desc="CSD"	*) real CSD;
+
+(* desc="CDG"	*) real CDG;
+(* desc="CDB"	*) real CDB;
+(* desc="CDS"	*) real CDS;
+(* desc="CDD"	*) real CDD;
+
+(* desc="CBG"	*) real CBG;
+(* desc="CBB"	*) real CBB;
+(* desc="CBS"	*) real CBS;
+(* desc="CBD"	*) real CBD;
+
+(* desc="ISUB"	*) real ISUB;
+(* desc="IGIDL"	*) real IGIDL;
+(* desc="IGISL"	*) real IGISL;
+
+(* desc="IGS"	*) real IGS;
+(* desc="IGD"	*) real IGD;
+(* desc="IGCS"	*) real IGCS;
+(* desc="IGCD"	*) real IGCD;
+(* desc="IGB"	*) real IGB;
+
+(* desc="CGSEXT"*) real CGSEXT;
+(* desc="CGDEXT"*) real CGDEXT;
+(* desc="CGBOV"	*) real CGBOV;
+
+(* desc="CAPBS"	*) real CAPBS;
+(* desc="CAPBD"	*) real CAPBD;
+
+(* desc="WEFF"	*) real WEFF;
+(* desc="LEFF"	*) real LEFF;
+(* desc="WEFFCV"*) real WEFFCV;
+(* desc="LEFFCV"*) real LEFFCV;
+
+(* desc="IDS"	*) real IDS;
+(* desc="IDEFF"	*) real IDEFF;
+(* desc="ISEFF"	*) real ISEFF;
+(* desc="IGEFF"	*) real IGEFF;
+(* desc="IBS"	*) real IBS;
+(* desc="IBD"	*) real IBD;
+
+(* desc="VDS"	*) real VDS;
+(* desc="VGS"	*) real VGS;
+(* desc="VBS"	*) real VBS;
+(* desc="VDSAT"*) real VDSAT;
+
+(* desc="GM"	*) real GM;
+(* desc="GMBS"	*) real GMBS;
+(* desc="GDS"	*) real GDS;
+(* desc="TK"	*) real TK;
+
+// Self Heating
+`ifdef __SHMOD__
+    thermal t;
+    branch (t) rth_branch;
+    branch (t) ith_branch;
+`endif 
+
+analog begin
+	// Qucs - use fixed TYPE
+	TYPE = `ptype;
+
+	// Bias independent calculations
+	if( TYPE == `ntype ) devsign = 1;
+	else devsign = -1;
+
+	// Constants
+	//ni 		= NI0SUB;
+	epssi 	= EPSRSUB * `EPS0;
+	epsox 	= EPSROX * `EPS0;
+	Cox 	= EPSROX * `EPS0 / TOXE;
+	epsratio = EPSRSUB / EPSROX;
+
+	//Physical Oxide Thickness
+	if (!$param_given(TOXP))
+		BSIM6TOXP = (TOXE*EPSROX/3.9) - DTOX; // valid for any dielectric
+	else
+		BSIM6TOXP = TOXP;
+
+	L_mult = L*LMLT ;
+	W_mult = W*WMLT ;
+
+	Lnew = L_mult + XL;
+	if (Lnew <= 0) begin					
+		$strobe("Fatal: Ldrawn*LMLT+XL = %e for  %M is non-positive", Lnew); 
+		$finish(0);
+	end
+	W_by_NF = W_mult/NF ;
+	Wnew 	= W_by_NF +XW;
+	if (Wnew <= 0) begin					
+		$strobe("Fatal: W/NF*WMLT+XW = %e for  %M is non-positive", Wnew); 
+		$finish(0);
+	end		
+	// Binning
+	
+	//Leff and Weff for IV
+	L_LLN		= pow(Lnew, -LLN);
+	W_LWN		= pow(Wnew, -LWN);
+	LW_LLN_LWN	= L_LLN*W_LWN;
+	dLIV		= LINT + LL * L_LLN + LW * W_LWN + LWL * LW_LLN_LWN;
+	L_WLN		= pow(Lnew, -WLN);
+	W_WWN		= pow(Wnew, -WWN);
+	LW_WLN_WWN	= L_WLN*W_WWN;
+	dWIV		= WINT + WL * L_WLN + WW * W_WWN + WWL * LW_WLN_WWN;
+	Leff		= Lnew - 2.0*dLIV;
+	if (Leff <= 0) begin
+		$strobe("Fatal: Effective channel length = %e for  %M is non-positive", Leff);
+		$finish(0);
+	end else if (Leff<=1.0e-9)
+	$strobe("Warning: Effective channel length = %e for  %M is <= 1.0e-9. Recommended Leff >= 1e-8", Leff);
+
+	Weff		= Wnew - 2.0*dWIV;
+	if (Weff <= 0) begin
+		$strobe("Fatal: Effective channel Width = %e for  %M is non-positive", Weff);
+		$finish(0);
+	end else if (Weff<=1.0e-9)
+	$strobe("Warning: Effective channel width = %e for  %M is <= 1.0e-9. Recommended Weff >= 1e-8", Leff);
+
+	//Leff and Weff for CV
+	dLCV		= DLC + LLC * L_LLN + LWC * W_LWN + LWLC * LW_LLN_LWN;
+	dWCV		= DWC + WLC * L_WLN + WWC * W_WWN + WWLC * LW_WLN_WWN;
+	Lact		= Lnew - 2.0*dLCV;
+	if (Lact <= 0) begin
+		$strobe("Fatal: Effective channel length for CV = %e for  %M is non-positive", Lact);
+		$finish(0);
+	end else if (Lact<=1.0e-9)
+	$strobe("Warning: Effective channel length for CV = %e for  %M is <= 1.0e-9. Recommended Leff >= 1e-8", Leff);
+
+	Wact		= Wnew - 2.0*dWCV;
+	if (Wact <= 0) begin
+		$strobe("Fatal: Effective channel width for CV = %e for  %M is non-positive", Wact);
+		$finish(0);
+	end else if (Wact<=1.0e-9)
+	$strobe("Warning: Effective channel width for CV = %e for  %M is <= 1.0e-9. Recommended Weff >= 1e-8", Leff);
+
+
+	//Weffcj for Diode, GIDL etc.
+	dWJ		= DWJ + WLC / pow(Lnew,WLN) + WWC / pow(Wnew,WWN) + WWLC / pow(Lnew,WLN) / pow(Wnew,WWN);
+	Weffcj		= Wnew - 2.0*dWJ;
+	if (Weffcj <= 0) begin
+		$strobe("Fatal: Effective channel width for S/D junctions = %e for  %M is non-positive", Weffcj);
+		$finish(0);
+	end
+
+	Inv_L		= 1.0e-6 / Leff;
+	Inv_W		= 1.0e-6 / Weff;
+	Inv_Lact	= 1.0e-6 / Lact;
+	Inv_Wact	= 1.0e-6 / Wact;
+	Inv_Llong	= 1.0e-6 / LLONG;
+	Inv_Wwide	= 1.0e-6 / WWIDE;
+	Inv_WL		= Inv_L * Inv_W;
+
+	// Effective Length and Width for Binning
+	if (DLBIN != 0) begin
+			if(DLBIN<=-Lnew) begin
+				$strobe("Fatal: DLBIN for  %M = %e is <= -Ldrawn*LMLT", DLBIN);
+				$finish(0);
+			end else begin
+				L_LLN1		= pow(Lnew+DLBIN, -LLN);
+				L_WLN1		= pow(Lnew+DLBIN, -WLN);
+			end
+	end else begin
+		L_LLN1		= L_LLN;
+		L_WLN1		= L_WLN;
+	end
+	if (DWBIN != 0) begin
+			if(DWBIN<=-Wnew) begin
+				$strobe("Fatal: DWBIN for  %M = %e is <= -Wdrawn*WMLT", DWBIN);
+				$finish(0);
+			end else begin
+				W_LWN1		= pow(Wnew+DWBIN, -LWN);	
+				W_WWN1		= pow(Wnew+DWBIN, -WWN);
+			end
+	end else begin
+		W_LWN1          = W_LWN;
+		W_WWN1		= W_WWN;
+	end
+	LW_LLN_LWN1	= L_LLN1*W_LWN1;
+	dLB		= LINT + LL * L_LLN1 + LW * W_LWN1 + LWL * LW_LLN_LWN1;
+	LW_WLN_WWN1	= L_WLN1*W_WWN1;
+	dWB 		= WINT + WL * L_WLN1 + WW * W_WWN1 + WWL * LW_WLN_WWN1;
+
+	Leff1		= Lnew - 2.0*dLB + DLBIN;
+	if (Leff1 <= 0) begin
+		$strobe("Fatal: Effective channel length for binning = %e for  %M is non-positive", Leff1);
+		$finish(0);
+	end
+	Weff1		= Wnew - 2.0*dWB + DWBIN;
+	if (Weff1 <= 0) begin
+		$strobe("Fatal: Effective channel width for binning = %e for  %M is non-positive", Weff1);
+		$finish(0);
+	end
+
+	if (BINUNIT==1) begin
+		BIN_L		= 1.0e-6 / Leff1;
+		BIN_W		= 1.0e-6 / Weff1;
+	end else begin
+		BIN_L		= 1.0 / Leff1;
+		BIN_W		= 1.0 / Weff1;
+	end
+
+	BIN_WL		= BIN_L * BIN_W;
+
+	VFB_i		= VFB		+ BIN_L * LVFB 		+ BIN_W * WVFB 		+ BIN_WL * PVFB ;
+	VFBCV_i		= VFBCV		+ BIN_L * LVFBCV 	+ BIN_W * WVFBCV 	+ BIN_WL * PVFBCV ;
+	NSD_i		= NSD 		+ BIN_L * LNSD 		+ BIN_W * WNSD 		+ BIN_WL * PNSD ;
+	NDEP_i		= NDEP		+ BIN_L * LNDEP 	+ BIN_W * WNDEP 	+ BIN_WL * PNDEP ;
+	NDEPCV_i	= NDEPCV	+ BIN_L * LNDEPCV 	+ BIN_W * WNDEPCV 	+ BIN_WL * PNDEPCV ;
+	NGATE_i		= NGATE		+ BIN_L * LNGATE	+ BIN_W * WNGATE 	+ BIN_WL * PNGATE;
+	CIT_i		= CIT		+ BIN_L * LCIT  	+ BIN_W * WCIT  	+ BIN_WL * PCIT ;
+	NFACTOR_i	= NFACTOR 	+ BIN_L * LNFACTOR	+ BIN_W * WNFACTOR 	+ BIN_WL * PNFACTOR ;
+	CDSCD_i		= CDSCD 	+ BIN_L * LCDSCD  	+ BIN_W * WCDSCD  	+ BIN_WL * PCDSCD ;
+	CDSCB_i		= CDSCB 	+ BIN_L * LCDSCB  	+ BIN_W * WCDSCB  	+ BIN_WL * PCDSCB ;
+	DVTP0_i		= DVTP0 	+ BIN_L * LDVTP0  	+ BIN_W * WDVTP0  	+ BIN_WL * PDVTP0 ;
+	DVTP1_i		= DVTP1 	+ BIN_L * LDVTP1  	+ BIN_W * WDVTP1  	+ BIN_WL * PDVTP1 ;
+	DVTP2_i		= DVTP2 	+ BIN_L * LDVTP2  	+ BIN_W * WDVTP2  	+ BIN_WL * PDVTP2 ;
+	DVTP3_i		= DVTP3 	+ BIN_L * LDVTP3  	+ BIN_W * WDVTP3  	+ BIN_WL * PDVTP3 ;
+	DVTP4_i		= DVTP4 	+ BIN_L * LDVTP4  	+ BIN_W * WDVTP4 	+ BIN_WL * PDVTP4 ;
+	DVTP5_i		= DVTP5 	+ BIN_L * LDVTP5  	+ BIN_W * WDVTP5  	+ BIN_WL * PDVTP5 ;
+	K2_i		= K2 		+ BIN_L * LK2  		+ BIN_W * WK2  		+ BIN_WL * PK2 ;
+	XJ_i		= XJ 		+ BIN_L * LXJ  		+ BIN_W * WXJ  		+ BIN_WL * PXJ ;
+	PHIN_i		= PHIN 		+ BIN_L * LPHIN  	+ BIN_W * WPHIN  	+ BIN_WL * PPHIN ;
+	ETA0_i		= ETA0 		+ BIN_L * LETA0  	+ BIN_W * WETA0  	+ BIN_WL * PETA0 ;
+	ETAB_i		= ETAB 		+ BIN_L * LETAB  	+ BIN_W * WETAB  	+ BIN_WL * PETAB ;
+	DELTA_i		= DELTA 	+ BIN_L * LDELTA  	+ BIN_W * WDELTA 	+ BIN_WL * PDELTA ;
+	U0_i		= U0 		+ BIN_L * LU0  		+ BIN_W * WU0  		+ BIN_WL * PU0 ;
+	UA_i		= UA 		+ BIN_L * LUA  		+ BIN_W * WUA  		+ BIN_WL * PUA ;
+	UD_i		= UD 		+ BIN_L * LUD  		+ BIN_W * WUD  		+ BIN_WL * PUD ;
+	EU_i		= EU 		+ BIN_L * LEU 		+ BIN_W * WEU 		+ BIN_WL * PEU;
+	UCS_i		= UCS 		+ BIN_L * LUCS 		+ BIN_W * WUCS 		+ BIN_WL * PUCS;
+	UC_i		= UC 		+ BIN_L * LUC 		+ BIN_W * WUC 		+ BIN_WL * PUC;
+	PCLM_i		= PCLM 		+ BIN_L * LPCLM  	+ BIN_W * WPCLM  	+ BIN_WL * PPCLM ;
+	PCLMCV_i	= PCLMCV	+ BIN_L * LPCLMCV	+ BIN_W * WPCLMCV  	+ BIN_WL * PPCLMCV ;
+
+	RSW_i		= RSW 		+ BIN_L * LRSW  	+ BIN_W * WRSW  	+ BIN_WL * PRSW ;
+	RDW_i		= RDW 		+ BIN_L * LRDW  	+ BIN_W * WRDW  	+ BIN_WL * PRDW ;
+	PRWG_i		= PRWG 		+ BIN_L * LPRWG  	+ BIN_W * WPRWG  	+ BIN_WL * PPRWG ;
+	PRWB_i		= PRWB 		+ BIN_L * LPRWB  	+ BIN_W * WPRWB  	+ BIN_WL * PPRWB ;
+	WR_i		= WR 		+ BIN_L * LWR  		+ BIN_W * WWR 		+ BIN_WL * PWR ;
+	RSWMIN_i	= RSWMIN 	+ BIN_L * LRSWMIN  	+ BIN_W * WRSWMIN  	+ BIN_WL * PRSWMIN ;
+	RDWMIN_i	= RDWMIN 	+ BIN_L * LRDWMIN  	+ BIN_W * WRDWMIN  	+ BIN_WL * PRDWMIN ;
+	RDSW_i		= RDSW 		+ BIN_L * LRDSW  	+ BIN_W * WRDSW  	+ BIN_WL * PRDSW ;
+	RDSWMIN_i	= RDSWMIN 	+ BIN_L * LRDSWMIN	+ BIN_W * WRDSWMIN	+ BIN_WL * PRDSWMIN ;
+
+	PTWG_i		= PTWG 		+ BIN_L * LPTWG  	+ BIN_W * WPTWG  	+ BIN_WL * PPTWG ;
+	PDIBLC_i	= PDIBLC 	+ BIN_L * LPDIBLC  	+ BIN_W * WPDIBLC  	+ BIN_WL * PPDIBLC ;
+	PDIBLCB_i	= PDIBLCB 	+ BIN_L * LPDIBLCB	+ BIN_W * WPDIBLCB 	+ BIN_WL * PPDIBLCB ;
+	PSCBE1_i	= PSCBE1 	+ BIN_L * LPSCBE1  	+ BIN_W * WPSCBE1  	+ BIN_WL * PPSCBE1 ;
+	PSCBE2_i	= PSCBE2 	+ BIN_L * LPSCBE2  	+ BIN_W * WPSCBE2  	+ BIN_WL * PPSCBE2 ;
+	PDITS_i		= PDITS 	+ BIN_L * LPDITS 	+ BIN_W * WPDITS  	+ BIN_WL * PPDITS ;
+	PDITSD_i	= PDITSD 	+ BIN_L * LPDITSD 	+ BIN_W * WPDITSD  	+ BIN_WL * PPDITSD ;
+	FPROUT_i	= FPROUT 	+ BIN_L * LFPROUT 	+ BIN_W * WFPROUT  	+ BIN_WL * PFPROUT ;
+	PVAG_i		= PVAG 		+ BIN_L * LPVAG  	+ BIN_W * WPVAG  	+ BIN_WL * PPVAG ;
+	VSAT_i		= VSAT 		+ BIN_L * LVSAT		+ BIN_W * WVSAT  	+ BIN_WL * PVSAT ;
+	PSAT_i		= PSAT 		+ BIN_L * LPSAT 	+ BIN_W * WPSAT  	+ BIN_WL * PPSAT ;
+	VSATCV_i	= VSATCV 	+ BIN_L * LVSATCV  	+ BIN_W * WVSATCV  	+ BIN_WL * PVSATCV ;
+	CF_i		= CF 		+ BIN_L * LCF 		+ BIN_W * WCF  		+ BIN_WL * PCF ;
+	CGSL_i		= CGSL 		+ BIN_L * LCGSL 	+ BIN_W * WCGSL  	+ BIN_WL * PCGSL  ;
+	CGDL_i		= CGDL 		+ BIN_L * LCGDL 	+ BIN_W * WCGDL  	+ BIN_WL * PCGDL ;
+	CKAPPAS_i	= CKAPPAS 	+ BIN_L * LCKAPPAS	+ BIN_W * WCKAPPAS	+ BIN_WL * PCKAPPAS ;
+	CKAPPAD_i	= CKAPPAD 	+ BIN_L * LCKAPPAD	+ BIN_W * WCKAPPAD	+ BIN_WL * PCKAPPAD ;
+
+	ALPHA0_i 	= ALPHA0	+ BIN_L * LALPHA0	+ BIN_W * WALPHA0	+ BIN_WL * PALPHA0;
+	BETA0_i 	= BETA0		+ BIN_L * LBETA0	+ BIN_W * WBETA0	+ BIN_WL * PBETA0;
+
+	KVTH0WE_i 	= KVTH0WE	+ BIN_L * LKVTH0WE	+ BIN_W * WKVTH0WE	+ BIN_WL * PKVTH0WE;
+	K2WE_i 		= K2WE		+ BIN_L * LK2WE		+ BIN_W * WK2WE		+ BIN_WL * PK2WE;
+	KU0WE_i 	= KU0WE		+ BIN_L * LKU0WE	+ BIN_W * WKU0WE	+ BIN_WL * PKU0WE;
+
+	AGIDL_i 	= AGIDL		+ BIN_L * LAGIDL	+ BIN_W  * WAGIDL	+ BIN_WL * PAGIDL;
+	BGIDL_i 	= BGIDL		+ BIN_L * LBGIDL	+ BIN_W  * WBGIDL	+ BIN_WL * PBGIDL;
+	CGIDL_i 	= CGIDL		+ BIN_L * LCGIDL	+ BIN_W  * WCGIDL	+ BIN_WL * PCGIDL;
+	EGIDL_i 	= EGIDL		+ BIN_L * LEGIDL	+ BIN_W  * WEGIDL	+ BIN_WL * PEGIDL;
+	AGISL_i 	= AGISL		+ BIN_L * LAGISL	+ BIN_W  * WAGISL	+ BIN_WL * PAGISL;
+	BGISL_i 	= BGISL		+ BIN_L * LBGISL	+ BIN_W  * WBGISL	+ BIN_WL * PBGISL;
+	CGISL_i 	= CGISL		+ BIN_L * LCGISL	+ BIN_W  * WCGISL	+ BIN_WL * PCGISL;
+	EGISL_i 	= EGISL		+ BIN_L * LEGISL	+ BIN_W  * WEGISL	+ BIN_WL * PEGISL;
+
+	UTE_i		= UTE 		+ BIN_L * LUTE		+ BIN_W  * WUTE		+ BIN_WL * PUTE;
+	UA1_i		= UA1 		+ BIN_L * LUA1		+ BIN_W  * WUA1		+ BIN_WL * PUA1;
+	UC1_i		= UC1 		+ BIN_L * LUC1		+ BIN_W  * WUC1		+ BIN_WL * PUC1;
+	UD1_i		= UD1 		+ BIN_L * LUD1		+ BIN_W  * WUD1		+ BIN_WL * PUD1;
+	UCSTE_i		= UCSTE		+ BIN_L * LUCSTE	+ BIN_W  * WUCSTE	+ BIN_WL * PUCSTE;
+	PRT_i		= PRT 		+ BIN_L * LPRT		+ BIN_W  * WPRT		+ BIN_WL * PPRT;
+	AT_i		= AT 		+ BIN_L * LAT		+ BIN_W  * WAT		+ BIN_WL * PAT;
+	PTWGT_i		= PTWGT		+ BIN_L * LPTWGT	+ BIN_W  * WPTWGT	+ BIN_WL * PPTWGT;
+	IIT_i		= IIT		+ BIN_L * LIIT		+ BIN_W  * WIIT		+ BIN_WL * PIIT;
+	TGIDL_i		= TGIDL		+ BIN_L * LTGIDL	+ BIN_W  * WTGIDL	+ BIN_WL * PTGIDL;
+	IGT_i		= IGT		+ BIN_L * LIGT		+ BIN_W  * WIGT		+ BIN_WL * PIGT;
+
+	AIGBINV_i 	= AIGBINV 	+ BIN_L * LAIGBINV 	+ BIN_W * WAIGBINV 	+ BIN_WL * PAIGBINV;
+	BIGBINV_i 	= BIGBINV 	+ BIN_L * LBIGBINV 	+ BIN_W * WBIGBINV 	+ BIN_WL * PBIGBINV;
+	CIGBINV_i 	= CIGBINV 	+ BIN_L * LCIGBINV 	+ BIN_W * WCIGBINV 	+ BIN_WL * PCIGBINV;
+	EIGBINV_i 	= EIGBINV 	+ BIN_L * LEIGBINV 	+ BIN_W * WEIGBINV 	+ BIN_WL * PEIGBINV;
+	NIGBINV_i 	= NIGBINV 	+ BIN_L * LNIGBINV 	+ BIN_W * WNIGBINV 	+ BIN_WL * PNIGBINV;
+	AIGBACC_i 	= AIGBACC 	+ BIN_L * LAIGBACC 	+ BIN_W * WAIGBACC 	+ BIN_WL * PAIGBACC;
+	BIGBACC_i 	= BIGBACC 	+ BIN_L * LBIGBACC 	+ BIN_W * WBIGBACC 	+ BIN_WL * PBIGBACC;
+	CIGBACC_i 	= CIGBACC 	+ BIN_L * LCIGBACC 	+ BIN_W * WCIGBACC 	+ BIN_WL * PCIGBACC;
+ 	NIGBACC_i 	= NIGBACC 	+ BIN_L * LNIGBACC 	+ BIN_W * WNIGBACC 	+ BIN_WL * PNIGBACC;
+	AIGC_i 		= AIGC 		+ BIN_L * LAIGC 	+ BIN_W * WAIGC 	+ BIN_WL * PAIGC;
+	BIGC_i 		= BIGC 		+ BIN_L * LBIGC 	+ BIN_W * WBIGC 	+ BIN_WL * PBIGC;
+	CIGC_i 		= CIGC 		+ BIN_L * LCIGC 	+ BIN_W * WCIGC 	+ BIN_WL * PCIGC;
+	AIGS_i 		= AIGS 		+ BIN_L * LAIGS 	+ BIN_W * WAIGS 	+ BIN_WL * PAIGS;
+	BIGS_i 		= BIGS 		+ BIN_L * LBIGS 	+ BIN_W * WBIGS 	+ BIN_WL * PBIGS;
+	CIGS_i 		= CIGS 		+ BIN_L * LCIGS 	+ BIN_W * WCIGS 	+ BIN_WL * PCIGS;
+	AIGD_i 		= AIGD 		+ BIN_L * LAIGD 	+ BIN_W * WAIGD 	+ BIN_WL * PAIGD;
+	BIGD_i 		= BIGD 		+ BIN_L * LBIGD 	+ BIN_W * WBIGD 	+ BIN_WL * PBIGD;
+	CIGD_i 		= CIGD 		+ BIN_L * LCIGD 	+ BIN_W * WCIGD 	+ BIN_WL * PCIGD;
+	POXEDGE_i 	= POXEDGE 	+ BIN_L * LPOXEDGE 	+ BIN_W * WPOXEDGE 	+ BIN_WL * PPOXEDGE;
+	DLCIG_i 	= DLCIG 	+ BIN_L * LDLCIG 	+ BIN_W * WDLCIG 	+ BIN_WL * PDLCIG;
+	DLCIGD_i 	= DLCIGD 	+ BIN_L * LDLCIGD 	+ BIN_W * WDLCIGD 	+ BIN_WL * PDLCIGD;
+	NTOX_i 		= NTOX 		+ BIN_L * LNTOX 	+ BIN_W * WNTOX 	+ BIN_WL * PNTOX;
+
+	KT1_i 		= KT1 		+ BIN_L * LKT1 		+ BIN_W * WKT1 		+ BIN_WL * PKT1;
+	KT2_i 		= KT2 		+ BIN_L * LKT2 		+ BIN_W * WKT2 		+ BIN_WL * PKT2;
+	PSATB_i		= PSATB 	+ BIN_L * LPSATB 	+ BIN_W * WPSATB	+ BIN_WL * PPSATB;
+
+	// Geometrical scaling
+	T_0 = NDEPL1 * max( pow(Inv_L, NDEPLEXP1) - pow(Inv_Llong, NDEPLEXP1), 0) + NDEPL2 * max( pow(Inv_L, NDEPLEXP2) - pow(Inv_Llong, NDEPLEXP2), 0);
+	T1 = NDEPW * max( pow(Inv_W, NDEPWEXP) - pow(Inv_Wwide, NDEPWEXP), 0) + NDEPWL * pow(Inv_W * Inv_L, NDEPWLEXP);
+	NDEP_i = NDEP_i * (1.0 + T_0 + T1);
+
+	T_0 = NFACTORL * max( pow(Inv_L, NFACTORLEXP) - pow(Inv_Llong, NFACTORLEXP), 0);
+	T1 = NFACTORW * max( pow(Inv_W, NFACTORWEXP) - pow(Inv_Wwide, NFACTORWEXP), 0) + NFACTORWL * pow(Inv_WL, NFACTORWLEXP);
+	NFACTOR_i = NFACTOR_i * (1.0 + T_0 + T1);
+
+	CDSCD_i = CDSCD_i * (1.0 + CDSCDL * max( pow(Inv_L, CDSCDLEXP) - pow(Inv_Llong, CDSCDLEXP), 0) );
+	CDSCB_i = CDSCB_i * (1.0 + CDSCBL * max( pow(Inv_L, CDSCBLEXP) - pow(Inv_Llong, CDSCBLEXP), 0) );
+
+	if(U0LEXP > 0) begin
+		U0_i = U0_i * (1.0 - U0L * max( pow(Inv_L, U0LEXP) - pow(Inv_Llong, U0LEXP), 0));
+	end else
+		U0_i = U0_i * (1.0 - U0L);
+
+	T_0 = UAL * max( pow(Inv_L, UALEXP) - pow(Inv_Llong, UALEXP), 0);
+	T1 = UAW * max( pow(Inv_W, UAWEXP) - pow(Inv_Wwide, UAWEXP), 0) + UAWL * pow(Inv_WL, UAWLEXP);
+	UA_i = UA_i * (1.0 + T_0 + T1);
+
+	T_0 = EUL * max( pow(Inv_L, EULEXP) - pow(Inv_Llong, EULEXP), 0);
+	T1 = EUW * max( pow(Inv_W, EUWEXP) - pow(Inv_Wwide, EUWEXP), 0) + EUWL * pow(Inv_WL, EUWLEXP);
+	EU_i = EU_i * (1.0 + T_0 + T1);
+
+	UD_i = UD_i * (1.0 + UDL * max( pow(Inv_L, UDLEXP) - pow(Inv_Llong, UDLEXP), 0));
+	T_0 = UCL * max( pow(Inv_L, UCLEXP) - pow(Inv_Llong, UCLEXP), 0);
+	T1 = UCW * max( pow(Inv_W, UCWEXP) - pow(Inv_Wwide, UCWEXP), 0) + UCWL * pow(Inv_WL, UCWLEXP);
+	UC_i = UC_i * (1.0 + T_0 + T1);
+
+	ETA0_i = ETA0_i * max( pow(Inv_L, DSUB) - pow(Inv_Llong, DSUB), 0);
+	ETAB_i = ETAB_i * max( pow(Inv_L, ETABEXP) - pow(Inv_Llong, ETABEXP), 0);
+	PDIBLC_i = PDIBLC_i * ( 1.0 + PDIBLCL * max( pow(Inv_L, PDIBLCLEXP) - pow(Inv_Llong, PDIBLCLEXP), 0));
+
+	T_0 = DELTA_i * (1.0 + DELTAL * max( pow(Inv_L, DELTALEXP) - pow(Inv_Llong, DELTALEXP), 0));
+	DELTA_i = min(T_0, 0.5);
+
+	FPROUT_i = FPROUT_i * (1.0 + FPROUTL * max( pow(Inv_L, FPROUTLEXP) - pow(Inv_Llong, FPROUTLEXP), 0));
+	PCLM_i = PCLM_i * (1.0 + PCLML * max( pow(Inv_L, PCLMLEXP) - pow(Inv_Llong, PCLMLEXP), 0));
+	PCLM_i = max(PCLM_i,0);
+
+	T_0 = VSATL * max( pow(Inv_L, VSATLEXP) - pow(Inv_Llong, VSATLEXP), 0);
+	T1 = VSATW * max( pow(Inv_W, VSATWEXP) - pow(Inv_Wwide, VSATWEXP), 0) + VSATWL * pow(Inv_WL, VSATWLEXP);
+	VSAT_i = VSAT_i * (1.0 + T_0 + T1);
+
+	PSAT_i = max(PSAT_i * (1.0 + PSATL * max( pow(Inv_L, PSATLEXP) - pow(Inv_Llong, PSATLEXP), 0)), 0.25);
+	PTWG_i = PTWG_i * (1.0 + PTWGL * max( pow(Inv_L, PTWGLEXP) - pow(Inv_Llong, PTWGLEXP), 0));
+
+	ALPHA0_i = ALPHA0_i * (1.0 + ALPHA0L * max( pow(Inv_L, ALPHA0LEXP) - pow(Inv_Llong, ALPHA0LEXP), 0));
+
+	AGIDL_i = AGIDL_i * (1.0 + AGIDLL * Inv_L + AGIDLW * Inv_W);
+	AGISL_i = AGISL_i * (1.0 + AGISLL * Inv_L + AGISLW * Inv_W);
+
+	AIGC_i = AIGC_i * (1.0 + AIGCL * Inv_L + AIGCW * Inv_W);
+	AIGS_i = AIGS_i * (1.0 + AIGSL * Inv_L + AIGSW * Inv_W);
+	AIGD_i = AIGD_i * (1.0 + AIGDL * Inv_L + AIGDW * Inv_W);
+	PIGCD_i = PIGCD * (1.0 + PIGCDL * Inv_L);
+
+	T_0 = NDEPCVL1 * max( pow(Inv_Lact, NDEPCVLEXP1) - pow(Inv_Llong, NDEPCVLEXP1), 0) + NDEPCVL2 * max( pow(Inv_Lact, NDEPCVLEXP2) - pow(Inv_Llong, NDEPCVLEXP2), 0);
+	T1 = NDEPCVW * max( pow(Inv_Wact, NDEPCVWEXP) - pow(Inv_Wwide, NDEPCVWEXP), 0) + NDEPCVWL * pow(Inv_Wact * Inv_Lact, NDEPCVWLEXP);
+	NDEPCV_i = NDEPCV_i * (1.0 + T_0 + T1);
+
+	T_0 = VFBCVL * max( pow(Inv_Lact, VFBCVLEXP) - pow(Inv_Llong, VFBCVLEXP), 0);
+	T1 = VFBCVW * max( pow(Inv_Wact, VFBCVWEXP) - pow(Inv_Wwide, VFBCVWEXP), 0) + VFBCVWL * pow(Inv_WL, VFBCVWLEXP);
+	VFBCV_i = VFBCV_i * (1.0 + T_0 + T1);
+
+	T_0 = VSATCVL * max( pow(Inv_Lact, VSATCVLEXP) - pow(Inv_Llong, VSATCVLEXP), 0);
+	T1 = VSATCVW * max( pow(Inv_W, VSATCVWEXP) - pow(Inv_Wwide, VSATCVWEXP), 0) + VSATCVWL * pow(Inv_WL, VSATCVWLEXP);
+	VSATCV_i = VSATCV_i * (1.0 + T_0 + T1);
+	PCLMCV_i = PCLMCV_i * (1.0 + PCLMCVL * max( pow(Inv_Lact, PCLMCVLEXP) - pow(Inv_Llong, PCLMCVLEXP), 0));
+	PCLMCV_i = max(PCLMCV_i,0);
+
+	T_0 = K2L * max( pow(Inv_L, K2LEXP) - pow(Inv_Llong, K2LEXP), 0);
+	T1 = K2W * max( pow(Inv_W, K2WEXP) - pow(Inv_Wwide, K2WEXP), 0) + K2WL * pow(Inv_WL, K2WLEXP);
+	K2_i = K2_i * (1.0 + T_0 + T1);
+
+	PRWB_i = PRWB_i * (1.0 + PRWBL * max( pow(Inv_L, PRWBLEXP) - pow(Inv_Llong, PRWBLEXP), 0));
+
+	//Global Scaling parameters for Temperature
+	UTE_i = UTE_i * (1.0 + Inv_L * UTEL);
+	UA1_i = UA1_i * (1.0 + Inv_L * UA1L);
+	UD1_i = UD1_i * (1.0 + Inv_L * UD1L);
+	AT_i = AT_i * (1.0 + Inv_L * ATL);
+	PTWGT_i = PTWGT_i * (1.0 + Inv_L * PTWGTL);
+
+
+`ifdef __RDSMOD__
+	if(RDSMOD == 1) begin
+		RSW_i = RSW_i * (1.0 + RSWL * max( pow(Inv_L, RSWLEXP) - pow(Inv_Llong, RSWLEXP), 0));
+		RDW_i = RDW_i * (1.0 + RDWL * max( pow(Inv_L, RDWLEXP) - pow(Inv_Llong, RDWLEXP), 0));
+	end else begin
+`endif
+		RDSW_i = RDSW_i * (1.0 + RDSWL * max( pow(Inv_L, RDSWLEXP) - pow(Inv_Llong, RDSWLEXP),0));
+`ifdef __RDSMOD__
+	end
+`else
+	if(RDSMOD != 0)
+		$strobe("[BSIM6] Although the model selector RDSMOD is set to %d, the external source/drain resistance model was not activated when the Verilog-A code was compiled.  Please uncomment \"`define __RDSMOD__\" in the beginning of the Verilog-A code.", RDSMOD);
+`endif
+
+	// Parameter Checking
+
+	if (UCS_i < 1.0)
+		UCS_i = 1.0;
+	else if (UCS_i > 2.0)
+		UCS_i = 2.0;
+
+	if (UC_i < 0) begin
+		$strobe("Fatal: UC_i = %e is negative.", UC_i);
+		$finish(0);
+	end
+
+	if (CGIDL_i < 0) begin
+		$strobe("Fatal: CGIDL_i = %e is negative.", CGIDL_i);
+		$finish(0);
+	end
+
+	if (CGISL_i < 0) begin
+		$strobe("Fatal: CGISL_i = %e is negative.", CGISL_i);
+		$finish(0);
+	end
+
+	if (CKAPPAD_i <= 0) begin
+		$strobe("Fatal: CKAPPAD_i = %e is non-positive.", CKAPPAD_i);
+		$finish(0);
+	end
+
+	if (CKAPPAS_i <= 0) begin
+		$strobe("Fatal: CKAPPAS_i = %e is non-positive.", CKAPPAS_i);
+		$finish(0);
+	end
+
+	if (PDITS_i < 0) begin
+		$strobe("Fatal: PDITS_i = %e is negative.", PDITS_i);
+		$finish(0);
+	end
+
+	if (CIT_i < 0) begin
+		$strobe("Fatal: CIT_i = %e is negative.", CIT_i);
+		$finish(0);
+	end
+
+	if (NFACTOR_i < 0) begin
+		$strobe("Fatal: NFACTOR_i = %e is negative.", NFACTOR_i);
+		$finish(0);
+	end
+
+	if (K2_i > 0) begin
+		$strobe("Fatal: K2_i = %e is positive.", K2_i);
+		$finish(0);
+	end
+
+	if(NSD_i <= 0) begin
+		$strobe("Fatal: NSD_i = %e is non-positive.", NSD_i);
+		$finish(0);
+	end
+	if(NDEP_i <= 0) begin
+		$strobe("Fatal: NDEP_i = %e is non-positive.", NDEP_i);
+		$finish(0);
+	end
+	if(NDEPCV_i <= 0) begin
+		$strobe("Fatal: NDEPCV_i = %e is non-positive.", NDEPCV_i);
+		$finish(0);
+	end
+	if(IGBMOD != 0) begin
+		if(NIGBINV_i <= 0) begin
+			$strobe("Fatal: NIGBINV_i = %e is non-positive.", NIGBINV_i);
+			$finish(0);
+		end
+		if(NIGBACC_i <= 0) begin
+			$strobe("Fatal: NIGBACC_i = %e is non-positive.", NIGBACC_i);
+			$finish(0);
+		end
+	end
+	if(IGCMOD != 0) begin
+		if(POXEDGE_i <= 0) begin
+			$strobe("Fatal: POXEDGE_i = %e is non-positive.", POXEDGE_i);
+			$finish(0);
+		end
+	end
+	if(CDSCD_i < 0) begin
+		$strobe("Fatal: CDSCD_i = %e is negative.", CDSCD_i);
+		$finish(0);
+	end
+	if(CDSCB_i < 0) begin
+		$strobe("Fatal: CDSCB_i = %e is negative.", CDSCB_i);
+		$finish(0);
+	end
+
+	//* initialize variables used in geometry macros
+	nuEndD = 0; nuEndS = 0; nuIntD = 0; nuIntS = 0; Rend = 0; Rint = 0;
+
+	//* process drain series resistance
+	DMCGeff = DMCG - DMCGT;
+	DMCIeff = DMCI;
+	DMDGeff = DMDG - DMCGT;
+
+	if (RSH > 0) begin
+		if (!$param_given(NRD)&& (RGEOMOD != 0))
+			`BSIM6RdseffGeo(NF, GEOMOD, RGEOMOD, MINZ, Weff, RSH, DMCGeff, DMCIeff, DMDGeff, 0, Rtot)
+	end
+
+	/* process source series resistance */
+	if (RSH > 0) begin
+		if (!$param_given(NRS)&& (RGEOMOD != 0))
+			`BSIM6RdseffGeo(NF, GEOMOD, RGEOMOD, MINZ, Weff, RSH, DMCGeff, DMCIeff, DMDGeff, 1, Rtot)
+	end
+
+	//* Processing S/D resistance and conductance below */
+	if($param_given(NRS)) begin
+		RSourceGeo = RSH * NRS;
+	end else if (RGEOMOD > 0) begin
+		`BSIM6RdseffGeo(NF, GEOMOD, RGEOMOD, MINZ, Weff, RSH, DMCGeff, DMCIeff, DMDGeff, 1, RSourceGeo)
+	end else
+		RSourceGeo = 0.0;
+
+	if($param_given(NRD))
+		RDrainGeo = RSH * NRD;
+	else if (RGEOMOD > 0) begin
+		`BSIM6RdseffGeo(NF, GEOMOD, RGEOMOD, MINZ, Weff, RSH, DMCGeff, DMCIeff, DMDGeff, 0, RDrainGeo)
+	end else
+		RDrainGeo = 0.0;
+
+	/* End of Rsd processing */
+
+	// Clamping of Source/Drain Resistances
+	if(RSourceGeo <= 1.0e-3) RSourceGeo = 1.0e-3;
+	if(RDrainGeo  <= 1.0e-3) RDrainGeo  = 1.0e-3;
+
+`ifdef __RDSMOD__
+	if(RDSMOD == 1) begin
+		if (RSWMIN_i <= 0) RSWMIN_i = 0;
+		if (RDWMIN_i <= 0) RDWMIN_i = 0;
+		if (RSW_i <= 0) RSW_i = 0;
+		if (RDW_i <= 0) RDW_i = 0;
+	end else begin
+`endif
+		if (RDSWMIN_i <= 0) RDSWMIN_i = 0;
+		if (RDSW_i <= 0) RDSW_i = 0;
+`ifdef __RDSMOD__
+	end
+`endif
+	// End - Clamping of Source/Drain Resistances
+
+`ifdef __RBODYMOD__
+	//Body resistance network
+	Grbsb=0.0; Grbdb=0.0; Grbpb=0.0; Grbps=0.0; Grbpd=0.0;//Initialization
+	if(RBODYMOD != 0) begin
+		Lnl = ln(Leff * 1.0e6);
+		Lnw = ln(Weff * 1.0e6);
+		Lnnf = ln(NF);
+		Bodymode = 5;
+		Rbpb=RBPB;
+		Rbpd=RBPD;
+		Rbps=RBPS;
+		Rbdb=RBDB;
+		Rbsb=RBSB;
+
+		if( !$param_given(RBPS0) || !$param_given(RBPD0))
+			Bodymode = 1;
+		else if( !$param_given(RBSBX0) && !$param_given(RBSBY0) || !$param_given(RBDBX0) && !$param_given(RBDBY0) )
+			Bodymode = 3;
+
+		if(RBODYMOD == 2) begin
+			if (Bodymode == 5) begin
+				Rbsbx = RBSBX0 * exp( RBSDBXL * Lnl + RBSDBXW * Lnw + RBSDBXNF * Lnnf );
+				Rbsby = RBSBY0 * exp( RBSDBYL * Lnl + RBSDBYW * Lnw + RBSDBYNF * Lnnf );
+				Rbsb = Rbsbx * Rbsby / (Rbsbx + Rbsby);
+				Rbdbx =  RBDBX0 * exp( RBSDBXL * Lnl + RBSDBXW * Lnw + RBSDBXNF * Lnnf );
+				Rbdby =  RBDBY0 * exp( RBSDBYL * Lnl + RBSDBYW * Lnw + RBSDBYNF * Lnnf );
+				Rbdb = Rbdbx * Rbdby / (Rbdbx + Rbdby);
+			end
+			if ((Bodymode == 3)|| (Bodymode == 5)) begin
+				Rbps = RBPS0 * exp( RBPSL * Lnl + RBPSW * Lnw + RBPSNF * Lnnf );
+				Rbpd = RBPD0 * exp( RBPDL * Lnl + RBPDW * Lnw + RBPDNF * Lnnf );
+			end
+			Rbpbx =  RBPBX0 * exp( RBPBXL * Lnl + RBPBXW * Lnw + RBPBXNF * Lnnf );
+			Rbpby =  RBPBY0 * exp( RBPBYL * Lnl + RBPBYW * Lnw + RBPBYNF * Lnnf );
+			Rbpb = Rbpbx*Rbpby/(Rbpbx + Rbpby);
+		end
+
+		if ((RBODYMOD == 1 ) || ((RBODYMOD == 2 ) && (Bodymode == 5)) ) begin
+			if (Rbdb < 1.0e-3)
+				Grbdb = 1.0e3; /* in mho */
+			else
+				Grbdb = GBMIN + 1.0 / Rbdb;
+			if (Rbpb < 1.0e-3)
+				Grbpb = 1.0e3;
+			else
+				Grbpb = GBMIN + 1.0 / Rbpb;
+			if (Rbps < 1.0e-3)
+				Grbps = 1.0e3;
+			else
+				Grbps = GBMIN + 1.0 / Rbps;
+			if (Rbsb < 1.0e-3)
+				Grbsb = 1.0e3;
+			else
+				Grbsb = GBMIN + 1.0 / Rbsb;
+			if (Rbpd < 1.0e-3)
+				Grbpd = 1.0e3;
+			else
+				Grbpd = GBMIN + 1.0 / Rbpd;
+		end else if((RBODYMOD == 2) && (Bodymode == 3)) begin
+			Grbdb  =  GBMIN;
+			Grbsb  =  GBMIN;
+			if (Rbpb < 1.0e-3)
+				Grbpb = 1.0e3;
+			else
+				Grbpb = GBMIN + 1.0 / Rbpb;
+			if (Rbps < 1.0e-3)
+				Grbps = 1.0e3;
+			else
+				Grbps = GBMIN + 1.0 / Rbps;
+			if (Rbpd < 1.0e-3)
+				Grbpd = 1.0e3;
+			else
+				Grbpd = GBMIN + 1.0 / Rbpd;
+		end else if((RBODYMOD == 2) && (Bodymode == 1)) begin
+			Grbdb  =  GBMIN;
+			Grbsb  =  GBMIN;
+			Grbps  =  1.0e3;
+			Grbpd  =  1.0e3;
+			if (Rbpb < 1.0e-3)
+				Grbpb = 1.0e3;
+			else
+				Grbpb = GBMIN + 1.0 / Rbpb;
+		end
+	end
+`else
+	if(RBODYMOD != 0)
+		$strobe("[BSIM6] Although the model selector RBODYMOD is set to %d, the body resistance model was not activated when the Verilog-A code was compiled.  Please uncomment \"`define __RBODYMOD__\" in the beginning of the Verilog-A code.", RBODYMOD);
+`endif
+
+	// Gate process resistance
+`ifdef __RGATEMOD__
+	Grgeltd = RSHG * (XGW + Weffcj / 3.0 / NGCON)/ ( NGCON * NF * (Lnew - XGL));
+	if (Grgeltd > 0.0)
+		Grgeltd = 1.0 / Grgeltd;
+	else begin
+		Grgeltd = 1.0e3; /* mho */
+		if (RGATEMOD != 0)
+			`STROBE("Warning: (instance %M) The gate conductance reset to 1.0e3 mho.");
+	end
+`else
+	if(RGATEMOD != 0)
+		$strobe("[BSIM6] Although the model selector RGATEMOD is set to %d, the gate resistance model was not activated when the Verilog-A code was compiled.  Please uncomment \"`define __RGATEMOD__\" in the beginning of the Verilog-A code.", RGATEMOD);
+`endif
+
+	T_0 = TOXE * TOXE;
+	T1 = TOXE * POXEDGE_i;
+	T2 = T1 * T1;
+	ToxRatio = exp(NTOX_i * ln(TOXREF / TOXE))/ T_0;
+	ToxRatioEdge = exp(NTOX_i * ln(TOXREF / T1)) /T2;
+
+	Aechvb = (TYPE == `ntype) ? 4.97232e-7 : 3.42537e-7;
+	Bechvb = (TYPE == `ntype) ? 7.45669e11 : 1.16645e12;
+	AechvbEdge = Aechvb * Weff * ToxRatioEdge;
+	BechvbEdge = -Bechvb * TOXE * POXEDGE_i;
+	Aechvb = Aechvb * ( Weff * Leff * ToxRatio);
+	Bechvb = Bechvb * ( -TOXE);
+
+
+// Self Heating 
+`ifdef __SHMOD__
+	// Parameters for self-heating
+	if(SHMOD != 0 && RTH0 > 0) begin
+		gth = (WTH0 + Weff) * NF / RTH0;
+		cth = CTH0 * (WTH0 + Weff) * NF;
+	end else begin
+   		gth = 1.0; // set gth to some value to prevent a singular G matrix
+		cth = 0.0;
+	end
+`else
+	if(SHMOD != 0)
+		$strobe("[bsim6] Although the model selector SHMOD is set to 1, the self-heating model was not activated when the Verilog-A code was compiled.  Please uncomment \"`define __SHMOD__\" in bsim6.va to activate it.");
+`endif
+
+
+	//***** Temperature Dependent Calculations Begin Here *****//
+
+	if(TNOM <= -`P_CELSIUS0) begin
+		T_0 = `REFTEMP - `P_CELSIUS0;
+		$strobe("Warning: TNOM = %e C <= %e C. Setting TNOM to %e C.", TNOM, -`P_CELSIUS0, T_0);
+		Tnom = `REFTEMP;
+	end else begin
+		Tnom = TNOM + `P_CELSIUS0;
+	end
+	
+// Self Heating
+`ifdef __SHMOD__
+	if(SHMOD != 0 && RTH0 > 0) begin
+		DevTemp = $temperature + Temp(rth_branch)+ DTEMP;
+     	end else begin
+`endif
+	DevTemp = $temperature + DTEMP;
+`ifdef __SHMOD__
+	end
+`endif
+	TK = DevTemp;
+	Vt = $vt(DevTemp);
+	inv_Vt 	= 1.0/Vt;
+
+	TRatio = DevTemp / Tnom;
+	delTemp = DevTemp - Tnom;
+	Vtm = `KboQ * DevTemp;
+	Vtm0 = `KboQ * Tnom;
+	Eg = BG0SUB - TBGASUB * DevTemp * DevTemp / (DevTemp + TBGBSUB);
+	Eg0 = BG0SUB - TBGASUB * Tnom * Tnom / (Tnom + TBGBSUB);
+
+	T1 = (DevTemp / Tnom) * sqrt(DevTemp / Tnom);
+	ni = NI0SUB * T1 * lexp(Eg / (2.0 * Vtm0) - Eg / (2.0 * Vtm));
+	phib = ln(NDEP_i / ni);
+
+	if(NGATE_i > 0)
+	Vfbsdr = -devsign * Vt * lln(NGATE_i/NSD_i) + VFBSDOFF;
+		
+	else
+		Vfbsdr = 0.0;
+
+	// Short Channel Effects
+	Phist = max(0.4 + Vt * phib + PHIN_i, 0.4);
+	sqrtPhist = sqrt(Phist);
+	T1DEP = sqrt(2.0 * epssi / (`q * NDEP_i));
+	litl  = sqrt((epssi / epsox) * TOXE * XJ_i);//SCBE Rout
+
+	NFACTOR_t = NFACTOR_i * hypsmooth((1.0 + TNFACTOR * (TRatio - 1.0)),1e-3);
+	ETA0_t = ETA0_i * (1.0 + TETA0 * (TRatio - 1.0));
+
+	// Mobility Degradation
+	eta_mu = (TYPE != `ntype) ? (`Oneby3 * ETAMOB) : (0.5 * ETAMOB);
+
+	U0_t = U0_i * pow(TRatio, UTE_i);
+	UA_t = UA_i * hypsmooth(1.0 + UA1_i*delTemp - 1.0E-6, 1.0E-3);
+	UC_t = UC_i * hypsmooth(1.0 + UC1_i*delTemp - 1.0E-6, 1.0E-3);
+	UD_t = UD_i * pow(TRatio, UD1_i);
+	UCS_t = UCS_i * pow(TRatio, UCSTE_i);
+
+	rdstemp = pow(TRatio, PRT_i);
+
+	VSAT_t = VSAT_i * pow(TRatio, -AT_i);
+	if(VSAT_t < 100.0) begin
+		$strobe("Warning: VSAT(%f) = %e is less than 100, setting it to 100.", DevTemp, VSAT_t);
+		VSAT_t = 100.0;
+	end
+
+	VSATCV_t = VSATCV_i * pow(TRatio, -AT_i);
+	if(VSATCV_t < 100.0) begin
+		$strobe("Warning: VSATCV(%f) = %e is less than 100, setting it to 100.", DevTemp, VSATCV_t);
+		VSATCV_t = 100.0;
+	end
+
+	DELTA_t = 1.0 / ( hypsmooth((1.0/DELTA_i) * (1.0 + TDELTA * delTemp)-2.0 , 1.0E-3) + 2.0);
+	PTWG_t = PTWG_i * hypsmooth(1.0 - PTWGT_i*delTemp - 1.0E-6, 1.0E-3);
+	BETA0_t = BETA0_i * pow(TRatio, IIT_i);
+	BGIDL_t = BGIDL_i * hypsmooth(1.0 + TGIDL_i * delTemp - 1.0E-6, 1.0E-3);
+	BGISL_t = BGISL_i * hypsmooth(1.0 + TGIDL_i * delTemp - 1.0E-6, 1.0E-3);
+	igtemp = lexp(IGT_i * lln(TRatio)); //pow(TRatio, IGT_i);
+
+	//***Diode Model temperature Code Start***//
+	CJS_t = CJS * hypsmooth(1.0 + TCJ * delTemp - 1.0E-6, 1.0E-3);
+	CJD_t = CJD * hypsmooth(1.0 + TCJ * delTemp - 1.0E-6, 1.0E-3);
+	CJSWS_t = CJSWS * hypsmooth(1.0 + TCJSW * delTemp - 1.0E-6, 1.0E-3);
+	CJSWD_t = CJSWD * hypsmooth(1.0 + TCJSW * delTemp - 1.0E-6, 1.0E-3);
+	CJSWGS_t = CJSWGS * hypsmooth(1.0 + TCJSWG * delTemp - 1.0E-6, 1.0E-3);
+	CJSWGD_t = CJSWGD * hypsmooth(1.0 + TCJSWG * delTemp - 1.0E-6, 1.0E-3);
+	PBS_t = hypsmooth(PBS - TPB * delTemp - 0.01, 1.0E-3) + 0.01;
+	PBD_t = hypsmooth(PBD - TPB * delTemp - 0.01, 1.0E-3) + 0.01;
+	PBSWS_t = hypsmooth(PBSWS - TPBSW * delTemp - 0.01, 1.0E-3) + 0.01;
+	PBSWD_t = hypsmooth(PBSWD - TPBSW * delTemp - 0.01, 1.0E-3) + 0.01;
+	PBSWGS_t = hypsmooth(PBSWGS - TPBSWG * delTemp - 0.01, 1.0E-3) + 0.01;
+	PBSWGD_t = hypsmooth(PBSWGD - TPBSWG * delTemp - 0.01, 1.0E-3) + 0.01;
+
+	T_0 = Eg0 / Vtm0 - Eg / Vtm;
+	T1 = lln(TRatio);
+	T3 = lexp((T_0 + XTIS * T1) / NJS);
+	JSS_t = JSS * T3;
+	JSWS_t = JSWS * T3;
+	JSWGS_t = JSWGS * T3;
+	T3 = lexp((T_0 + XTID * T1) / NJD);
+	JSD_t = JSD * T3;
+	JSWD_t = JSWD * T3;
+	JSWGD_t = JSWGD * T3;
+	JTSS_t = JTSS * lexp(Eg0 * XTSS * (TRatio - 1.0) / Vtm);
+	JTSSWS_t = JTSSWS * lexp(Eg0 * XTSSWS * (TRatio - 1.0) / Vtm);
+	JTSSWGS_t = JTSSWGS * (sqrt(JTWEFF / Weffcj) + 1.0) * lexp(Eg0 * XTSSWGS * (TRatio - 1) / Vtm);
+	JTSD_t = JTSD * lexp(Eg0 * XTSD * (TRatio - 1.0) / Vtm);
+	JTSSWD_t = JTSSWD * lexp(Eg0 * XTSSWD * (TRatio - 1.0) / Vtm);
+	JTSSWGD_t = JTSSWGD * (sqrt(JTWEFF / Weffcj) + 1.0) * lexp(Eg0 * XTSSWGD * (TRatio - 1) / Vtm);
+
+	//All NJT*'s smoothed to 0.01 to prevent divide by zero / negative values
+	NJTS_t = hypsmooth(NJTS * (1.0 + TNJTS * (TRatio-1.0)) - 0.01, 1.0E-3) + 0.01;
+	NJTSSW_t = hypsmooth(NJTSSW * (1.0 + TNJTSSW * (TRatio-1.0)) - 0.01, 1.0E-3) + 0.01;
+	NJTSSWG_t = hypsmooth(NJTSSWG * (1.0 + TNJTSSWG * (TRatio-1.0)) - 0.01, 1.0E-3) + 0.01;
+	NJTSD_t = hypsmooth(NJTSD * (1.0 + TNJTSD * (TRatio-1.0)) - 0.01, 1.0E-3) + 0.01;
+	NJTSSWD_t = hypsmooth(NJTSSWD * (1.0 + TNJTSSWD * (TRatio-1.0)) - 0.01, 1.0E-3) + 0.01;
+	NJTSSWGD_t = hypsmooth(NJTSSWGD * (1.0 + TNJTSSWGD * (TRatio-1.0)) - 0.01, 1.0E-3) + 0.01;
+	//***Diode Model temperature Code End***//
+
+	// Effective Source/Drain junction area and perimeter
+	`BSIM6PAeffGeo(NF,GEOMOD,MINZ,Weffcj,DMCGeff,DMCIeff,DMDGeff, temp_PSeff,temp_PDeff,temp_ASeff,temp_ADeff)
+	if ($param_given(AS))
+		ASeff=AS * WMLT * LMLT;
+	else
+		ASeff=temp_ASeff;
+	if(ASeff<0.0) begin
+		$strobe("Warning: (instance %M) ASeff = %e is negative, set to zero.", ASeff); 
+		ASeff=0.0;
+	end
+
+	if ($param_given(AD))
+		ADeff=AD * WMLT * LMLT;
+	else
+		ADeff=temp_ADeff;
+	if(ADeff<0.0) begin
+		$strobe("Warning: (instance %M) ADeff = %e is negative, set to zero.", ADeff); 
+		ADeff=0.0;
+	end
+
+	if ($param_given(PS)) begin
+		if (PERMOD == 0) begin
+			PSeff = PS * WMLT; // PS does not include gate-edge perimeter
+		end else begin
+			PSeff = max(PS*WMLT - Weffcj * NF, 0.0); // PS includes gate-edge perimeter
+		end
+	end else begin
+		PSeff=temp_PSeff;
+		if(PSeff<0.0) begin // final check
+			$strobe("Warning: (instance %M) PSeff = %e is negative.Set to 0.0", PSeff);
+			PSeff=0.0;
+		end
+	end
+	if ($param_given(PD)) begin
+		if (PERMOD == 0) begin
+			PDeff = PD * WMLT; // PD does not include gate-edge perimeter
+		end else begin
+			PDeff = max(PD*WMLT - Weffcj * NF, 0.0); // PD includes gate-edge perimeter
+		end
+	end else begin
+		PDeff=temp_PDeff;
+		if(PDeff<0.0) begin // final check
+			$strobe("Warning: (instance %M) PDeff = %e is negative.Set to 0.0", PDeff);
+			PDeff=0.0;
+		end
+	end
+
+
+	Isbs = ASeff * JSS_t + PSeff * JSWS_t + Weffcj * NF * JSWGS_t;
+	if(Isbs > 0.0) begin
+		Nvtms = Vtm * NJS;
+		XExpBVS = lexp(-BVS / Nvtms) * XJBVS;
+		T2 = max(IJTHSFWD / Isbs, 10.0);
+		Tb = 1.0 + T2 - XExpBVS;
+		VjsmFwd = Nvtms * lln(0.5 * (Tb + sqrt(Tb * Tb + 4 * XExpBVS)));
+		T_0 = lexp(VjsmFwd / Nvtms);
+		IVjsmFwd = Isbs * (T_0 - XExpBVS / T_0 + XExpBVS - 1.0);
+		SslpFwd = Isbs * (T_0 + XExpBVS / T_0) / Nvtms;
+		T2 = hypsmooth(IJTHSREV / Isbs - 10.0, 1.0E-3) + 10.0;
+		VjsmRev = -BVS - Nvtms * lln((T2 - 1.0) / XJBVS);
+		T1 = XJBVS * lexp(-(BVS + VjsmRev) / Nvtms);
+		IVjsmRev = Isbs * (1.0 + T1);
+		SslpRev = -Isbs * T1 / Nvtms;
+	end else begin
+		Nvtms = 0;
+		XExpBVS = 0;
+		VjsmFwd = 0;
+		IVjsmFwd = 0;
+		SslpFwd = 0;
+		VjsmRev = 0;
+		IVjsmRev = 0;
+		SslpRev = 0;
+	end
+
+	// Drain-side junction current
+  	Isbd = ADeff * JSD_t + PDeff * JSWD_t + Weffcj * NF * JSWGD_t;
+	if(Isbd > 0.0) begin
+		Nvtmd = Vtm * NJD;
+		XExpBVD = lexp(-BVD / Nvtmd) * XJBVD;
+		T2 = max(IJTHDFWD / Isbd, 10.0);
+		Tb = 1.0 + T2 - XExpBVD;
+		VjdmFwd = Nvtmd * lln(0.5 * (Tb + sqrt(Tb * Tb + 4 * XExpBVD)));
+		T_0 = lexp(VjdmFwd / Nvtmd);
+		IVjdmFwd = Isbd * (T_0 - XExpBVD / T_0 + XExpBVD - 1.0);
+		DslpFwd = Isbd * (T_0 + XExpBVD / T_0) / Nvtmd;
+		T2 = hypsmooth(IJTHDREV / Isbd - 10.0, 1.0E-3) + 10.0;
+		VjdmRev = -BVD - Nvtmd * lln((T2 - 1.0) / XJBVD);
+		T1 = XJBVD * lexp(-(BVD + VjdmRev) / Nvtmd);
+		IVjdmRev = Isbd * (1.0 + T1);
+		DslpRev = -Isbd * T1 / Nvtmd;
+	end else begin
+		Nvtmd = 0;
+		XExpBVD = 0;
+		VjdmFwd = 0;
+		IVjdmFwd = 0;
+		DslpFwd = 0;
+		VjdmRev = 0;
+		IVjdmRev = 0;
+		DslpRev = 0;
+	end
+
+	// Junction Capacitance
+	Czbs = CJS_t * ASeff;
+	Czbssw = CJSWS_t * PSeff;
+	Czbsswg = CJSWGS_t * Weffcj * NF;
+	Czbd = CJD_t * ADeff; 
+	Czbdsw = CJSWD_t * PDeff;
+	Czbdswg = CJSWGD_t * Weffcj * NF;
+
+	//STI Stress Equations
+
+	if (KU0 !=0 || KVSAT !=0 || KVTH0 !=0 || STK2 !=0 || STETA0 !=0) begin
+		T_0 = pow(Lnew, LLODKU0);
+		
+		W_tmp_stress = Wnew + WLOD;
+
+		T1 = pow(W_tmp_stress, WLODKU0);
+		tmp1_stress = LKU0 / T_0 + WKU0 / T1 + PKU0 / (T_0 * T1);
+
+		kstress_u0 = 1.0 + tmp1_stress;
+
+		T_0 = pow(Lnew, LLODVTH);
+		T1 = pow(W_tmp_stress, WLODVTH);
+		tmp1_stress_vth = LKVTH0 / T_0 + WKVTH0 / T1 + PKVTH0 / (T_0 * T1);
+		kstress_vth0 = 1.0 + tmp1_stress_vth;
+
+		T_0 = (TRatio - 1.0);
+		ku0_temp = kstress_u0 * (1.0 + TKU0 * T_0) + 1.0e-9;
+
+		Inv_sa = 0;	Inv_sb = 0;//Initialization of for loop
+		for (i = 0; i < NF; i = i+1) begin : forloop
+			T_0 = 1.0 / NF / (SA + 0.5*L_mult + i * (SD +L_mult));
+			T1 = 1.0 / NF / (SB + 0.5*L_mult + i * (SD +L_mult));
+			Inv_sa = Inv_sa + T_0;
+			Inv_sb = Inv_sb + T1;
+		end
+
+		Inv_saref = 1.0 / (SAREF + 0.5 * L_mult);
+		Inv_sbref = 1.0 / (SBREF + 0.5 * L_mult);
+		Inv_odref = Inv_saref + Inv_sbref;
+		rho_ref = (KU0/ku0_temp)*Inv_odref;
+		Inv_od = Inv_sa + Inv_sb;
+		rho = (KU0/ku0_temp)*Inv_od;
+		mu0_mult = (1.0 + rho)/(1.0 + rho_ref);
+		vsat_mult = (1.0 + rho*KVSAT)/(1.0 + rho_ref*KVSAT);
+		vth0_stress = (KVTH0/kstress_vth0)*(Inv_od - Inv_odref);
+		k2_stress = (STK2/pow(kstress_vth0,LODK2))*(Inv_od - Inv_odref);
+		eta_stress = (STETA0/pow(kstress_vth0,LODETA0))*(Inv_od - Inv_odref);
+
+		U0_t = U0_t * mu0_mult;
+		VSAT_t = VSAT_t * vsat_mult;
+		K2_i = K2_i + k2_stress;
+		ETA0_t = ETA0_t + eta_stress;
+	end else begin
+		vth0_stress = 0;
+	end
+	///End of Stress Effect
+
+	//Well Proximity Effect
+	vth0_well = KVTH0WE_i*(SCA + WEB*SCB + WEC*SCC);
+	k2_well = K2WE_i*(SCA + WEB*SCB + WEC*SCC);
+	mu_well = 1.0 + KU0WE_i*(SCA + WEB*SCB + WEC*SCC);
+
+	U0_t = U0_t * mu_well;
+	K2_i = K2_i + k2_well;
+	// end of WPE
+
+	// Load Terminal Voltages
+	Vg = devsign * V(`IntrinsicGate, `IntrinsicBody);
+	Vd = devsign * V(`IntrinsicDrain, `IntrinsicBody);
+	Vs = devsign * V(`IntrinsicSource, `IntrinsicBody);
+	Vds = Vd - Vs;
+	Vsb_noswap = Vs;
+	Vdb_noswap = Vd;
+
+`ifdef __RBODYMOD__
+	Vbs_jct = devsign * V(sbulk, `IntrinsicSource);//Beta6 modification
+	Vbd_jct = devsign * V(dbulk,`IntrinsicDrain);
+`else
+	Vbs_jct = -Vs;
+	Vbd_jct = -Vd;
+`endif
+
+	Vgd_noswap = Vg - Vd;
+	Vgs_noswap = Vg - Vs;
+
+
+`ifdef __RGATEMOD__
+	Vgd_ov_noswap = devsign * V(`GateEdgeNode, `IntrinsicDrain);
+	Vgs_ov_noswap = devsign * V(`GateEdgeNode, `IntrinsicSource);
+`else
+	Vgd_ov_noswap = Vgd_noswap;
+	Vgs_ov_noswap = Vgs_noswap;
+`endif
+
+	// ***************************************************
+	// Terminal Voltage Conditioning
+	// ***************************************************
+
+	// Source-drain Interchange
+	sigvds = 1.0;
+	if(Vds < 0.0) begin
+		sigvds = -1.0;
+		Vd = devsign * V(`IntrinsicSource, `IntrinsicBody);
+		Vs = devsign * V(`IntrinsicDrain, `IntrinsicBody);
+	end
+
+	Vds = Vd - Vs;
+	Vdsx = sqrt(Vds*Vds + 0.01) - 0.1;
+
+	Vbsx = -(Vs + 0.5*(Vds-Vdsx));//Vbsx smoothing
+
+	// *** SCE, DIBL, SS degradation effects (Ref: BSIM4 Model)***
+
+	`Smooth(Phist - Vbsx, 0.05, 0.1, PhistVbs)
+
+	sqrtPhistVbs = sqrt(PhistVbs);
+	Xdep 		= T1DEP * sqrtPhistVbs;
+	Cdep		= epssi / Xdep;
+	cdsc 		= CIT_i + NFACTOR_t + CDSCD_i * Vdsx - CDSCB_i * Vbsx;
+	T1 			= 1.0 + cdsc/Cox;
+
+	`Smooth(T1, 1.0, 0.05, n) //Limiting n to 1.0
+
+	nVt 	= n * Vt;
+	inv_nVt = 1.0/nVt;
+
+	dVth_dibl 	= -(ETA0_t + ETAB_i*Vbsx) * Vdsx;//Vth Shift for DIBL
+	dvth_temp = (KT1_i + KT1L / Leff + KT2_i*Vbsx) * (pow(TRatio,KT1EXP) - 1.0);//Vth shift with temperature
+
+	/* Vth correction for Pocket implant*/
+	if (DVTP0_i > 0.0) begin
+		T_0 = -DVTP1_i * Vdsx;
+		if (T_0 < -`EXPL_THRESHOLD)
+			T2 = `MIN_EXPL;
+		else
+			T2 = exp(T_0);
+		T3 = Leff + DVTP0_i * (1.0 + T2);
+		dVth_ldop = -nVt * lln(Leff / T3);
+	end else
+		dVth_ldop = 0;
+
+	T4 = DVTP5_i + DVTP2_i/pow(Leff, DVTP3_i);
+	dVth_ldop = dVth_ldop - T4 * tanh(DVTP4_i * Vdsx);
+
+	//Normalization of terminal and flatband voltage by nVt
+	vg 	= Vg * inv_nVt;
+	vs 	= Vs * inv_nVt;
+	vfb 	= VFB_i * inv_nVt;
+
+	dVth_VNUD	= - K2_i*Vbsx;
+	Vth_shift	= dVth_dibl + dVth_ldop + dVth_VNUD - dvth_temp + vth0_stress + vth0_well;
+	vgfb = vg - vfb - Vth_shift * inv_nVt;
+
+
+	//Normalized body factor
+	gam = sqrt(2.0 * `q * epssi*NDEP_i * inv_nVt)/Cox;
+	inv_gam = 1.0/gam;
+
+	// psip: pinch-off voltage
+	phib_n 	= phib/n;
+	`PO_psip(vgfb,gam,0,phib_n,psip)
+
+	`BSIM_q(psip,phib_n,vs,gam,qs) // normalized inversion charge at source end of channel
+
+	// average charge-surf. pot. slope - Ref.: Charge-based MOS Transistor Modeling by C. Enz & E. Vittoz
+	`Smooth(psip, 1.0, 2.0, psipclamp)
+	sqrtpsip = sqrt(psipclamp);
+	psiavg 	 = psip - 2.0*qs; // source side surf pot.
+	`Smooth(psiavg, 1.0, 2.0, T_0)
+	nq 		 = 1.0 + gam / (sqrtpsip + sqrt(T_0));
+
+	// *** Drain Saturation Voltage ***
+	EeffFactor = 1.0e-8 / (epsratio * TOXE);
+
+	T_0 = nVt * (vgfb - psip - 2.0*qs*(nq-1.0));
+	`Smooth(T_0, 0, 0.1, qbs)
+	qis = 2.0 * nq * nVt * qs; //Source side qi and qb for Vdsat- normalized to Cox
+
+	Eeffs = EeffFactor * (qbs + eta_mu * qis); // in the unit of MV/cm
+
+	// Ref: BSIM4 Model mobility model
+	T2 		= pow(0.5 * (1.0 + (qis / qbs)), UCS_t);
+	T3 		= (UA_t + UC_t*Vbsx) * pow(Eeffs, EU_i) + UD_t / T2;
+	Dmobs 	= 1.0 + T3;
+
+	WeffWRFactor = 1.0 / (pow(Weff*1.0e6, WR_i) * NF);
+
+`ifdef __RDSMOD__
+	if(RDSMOD == 1)
+		Rdss = 0.0;
+	else begin
+`endif
+		T_0 = 1.0 + PRWG_i * qis;
+		T1 = PRWB_i*(sqrtPhistVbs - sqrtPhist);
+		T2 = 1.0 / T_0 + T1;
+		T3 = T2 + sqrt(T2*T2 + 0.01);
+		Rdss = (RDSWMIN_i + RDSW_i * T3) * WeffWRFactor * NF * rdstemp;
+		
+`ifdef __RDSMOD__
+	if (RDSMOD==2)
+		Rdss = (RSourceGeo + (RDSWMIN_i + RDSW_i * T3) * WeffWRFactor * NF + RDrainGeo) * rdstemp;
+	end
+`endif
+
+	T_0			= pow(Dmobs, 1.0/PSAT_i);
+	if (PSATB_i<0)
+		T1		= 1.0 / (1.0 + PSATB_i * Vbsx);
+	else
+		T1		= 1.0 - PSATB_i * Vbsx;				 
+
+	T2			= 10.0 *PSATX * qs * T1 / (10.0 *PSATX + qs * T1);
+	if (PTWG_t<0)
+		LambdaC = 2.0 * ((U0_t / T_0) * nVt / (VSAT_t * Leff)) * (1.0/(1.0-PTWG_t*T2));
+	else
+		LambdaC = 2.0 * ((U0_t / T_0) * nVt / (VSAT_t * Leff)) * (1.0 + PTWG_t*T2);
+
+	if (Rdss==0) begin// qdsat for external Rds
+		// Accurate qdsat derived from consistent I-V
+		T_0 = 0.5 * LambdaC * (qs*qs + qs) / (1.0 + 0.5 * LambdaC *(1.0 + qs));
+		T1 = 2.0 * LambdaC * (qs - T_0);
+		T2 = sqrt(1.0 + T1*T1);
+		ln_T1_T2 = asinh(T1);//used VA function for asinh(T1)=ln(T1 + T2)
+		if (T1 != 0)
+			T3 =   T2 + (1.0/T1) * ln_T1_T2;
+		else
+			T3 =   T2 + (1.0/T2);
+
+		T4 = T_0 * T3 - LambdaC * ((qs*qs + qs) - (T_0*T_0 + T_0) );
+		if (T1 != 0)
+			T5 = (-2.0 * LambdaC) * (T1*T2 - ln_T1_T2) / (T1*T1);
+		else
+			T5 = (-2.0 * LambdaC) * (T1/T2) * (T1/T2) *(T1/T2);
+
+		T6 = T_0 * T5 + T3 + LambdaC * (2.0*T_0 + 1.0);
+		T_0 = T_0 - (T4/T6);
+
+		T1 = 2.0 * LambdaC * (qs - T_0);
+		T2 = sqrt(1.0 + T1*T1);
+		ln_T1_T2 = asinh(T1);
+		if (T1 != 0)
+			T3 =   T2 + (1.0/T1) * ln_T1_T2;
+		else
+			T3 =   T2 + (1.0/T2);
+
+		T4 = T_0 * T3 - LambdaC * ((qs*qs + qs) - (T_0*T_0 + T_0) );
+		if (T1 != 0)
+			T5 = (-2.0 * LambdaC) * (T1*T2 - ln_T1_T2) / (T1*T1);
+		else
+			T5 = (T1/T2) * (T1/T2) *(T1/T2);
+
+		T6 = T_0 * T5 + T3 + LambdaC * (2.0*T_0 + 1.0);
+		qdsat = T_0 - (T4/T6);
+
+	end else begin // qdsat for internal Rds -- Ref. : BSIM4 model
+		// Accurate qdsat derived from consistent I-V
+		T11 = Weff * 2.0 * nq * Cox * nVt * VSAT_t;
+		T12 = T11 * LambdaC * Rdss / (2.0*nVt);
+		T_0  = 0.5 * LambdaC * (qs*qs + qs) / (1.0 + 0.5 * LambdaC *(1.0 + qs));
+		T1  = 2.0 * LambdaC * (qs - T_0);
+		T2  = sqrt(1.0 + T1*T1);
+		ln_T1_T2 = asinh(T1);//used VA function for asinh(T1)=ln(T1 + T2)
+		if (T1 != 0)
+			T3 =   T2 + (1.0/T1) * ln_T1_T2;
+		else
+			T3 =   T2 + (1.0/T2);
+
+		T4  = T_0 * T3 + T12 * T_0 * (qs + T_0 + 1.0) - LambdaC * ((qs*qs + qs) - (T_0*T_0 + T_0) );
+		if (T1 != 0)
+			T5 = (-2.0 * LambdaC) * (T1*T2 - ln_T1_T2) / (T1*T1);
+		else
+			T5 = (-2.0 * LambdaC) * (T1/T2) * (T1/T2) *(T1/T2);
+
+		T6  = T_0 * T5 + T3 + T12 * (qs + 2.0*T_0 + 1.0) + LambdaC * (2.0 * T_0 + 1.0);
+		T_0  = T_0 - T4/T6;
+
+		T1  = 2.0 * LambdaC * (qs - T_0);
+		T2  = sqrt(1.0 + T1*T1);
+		ln_T1_T2 = asinh(T1);
+		if (T1 != 0)
+			T3 =   T2 + (1.0/T1) * ln_T1_T2;
+		else
+			T3 =   T2 + (1.0/T2);
+
+		T4  = T_0 * T3 + T12 * T_0 * (qs + T_0 + 1.0) - LambdaC * ((qs*qs + qs) - (T_0*T_0 + T_0) );
+		if (T1 != 0)
+			T5 = (-2.0 * LambdaC) * (T1*T2 - ln_T1_T2) / (T1*T1);
+		else
+			T5 = (-2.0 * LambdaC) * (T1/T2) * (T1/T2) *(T1/T2);
+
+		T6  = T_0 * T5 + T3 + T12 * (qs + 2.0*T_0 + 1.0) + LambdaC * (2.0 * T_0 + 1.0);
+		qdsat  = T_0 - T4/T6;
+	end
+
+	vdsat 	= psip -2.0*phib_n - (2.0*qdsat + ln( (qdsat*2.0*nq*inv_gam)*((qdsat*2.0*nq*inv_gam) + (gam/(nq-1.0)) ) ));
+	Vdsat 	= vdsat * nVt;
+
+	// normalized charge qdeff at drain end of channel
+	`Smooth(Vdsat - Vs, 0.0, 1e-3, Vdssat) //Vdssat clamped to avoid negative values during transient simulation
+	T7 		= pow(Vds/Vdssat , 1.0/DELTA_t);
+	T8 		= pow(1.0+T7, -DELTA_t);
+	Vdseff 	=  Vds*T8;
+	vdeff 	= (Vdseff + Vs) * inv_nVt;
+	`BSIM_q(psip,phib_n,vdeff,gam,qdeff)
+
+	//*********************************************************
+	// Reevaluation of nq to include qdeff --needed for gummel symmetry
+	psiavg = psip - qs - qdeff -1.0;
+	`Smooth(psiavg, 1.0, 2.0, T_0)
+	T2 = sqrt(T_0);
+	nq = 1.0 + gam/(sqrtpsip+T2);
+	//Inversion and bulk charge
+	DQSD2 = (qs-qdeff)*(qs-qdeff);
+	T_0 = 1.0 / (1.0 + qs + qdeff);
+	T1 = DQSD2 * T_0;
+	Qb = vgfb -psip - (nq-1.0)*( qs + qdeff + `Oneby3 * T1);
+	T2 = `Oneby3*nq;
+	T3 = T1*T_0;
+	Qs = T2*( 2.0*qs + qdeff + 0.5*(1.0+0.8*qs+1.2*qdeff)*T3);
+	Qd = T2*( qs + 2.0*qdeff + 0.5*(1.0+1.2*qs+0.8*qdeff)*T3);
+	//*********************************************************
+
+	// *** Mobility Degradation (Ref: BSIM4 Model)***
+	//Average charges (qba and qia) - normalized to Cox
+	`Smooth(nVt*Qb, 0, 0.1, qba)
+	qia = nVt*( Qs + Qd);
+
+	Eeffm 	= EeffFactor * (qba + eta_mu * qia); // in the unit of MV/cm
+	T2 		= pow(0.5 * (1.0 + (qia / qba)), UCS_t);
+	T3 		= (UA_t + UC_t * Vbsx) * pow(Eeffm, EU_i) + UD_t / T2;
+	Dmob 	= 1.0 + T3;
+
+	// *** Output Conductance Modules ***
+	Esat 	= 2.0 * VSAT_t / (U0_t / Dmob);
+	EsatL 	= Esat * Leff;
+	if(PVAG_i  > 0)
+		PVAGfactor = 1.0 + PVAG_i * qia / EsatL;
+	else
+		PVAGfactor = 1.0 / (1.0 - PVAG_i * qia / EsatL);
+
+	// Output conductance due to DIBL - Ref: BSIM4 Model
+	DIBLfactor 	= PDIBLC_i;
+	diffVds 	= Vds - Vdseff;
+	Vgst2Vtm 	= qia + 2.0 * nVt;
+	if (DIBLfactor > 0) begin
+		T3 		= Vgst2Vtm / (Vdssat + Vgst2Vtm);
+		T4 		= hypsmooth((1.0 + PDIBLCB_i * Vbsx),1e-3);
+		T5		= 1/T4;
+		VaDIBL 	        = Vgst2Vtm / DIBLfactor * T3 * PVAGfactor * T5;
+		Moc 		= 1.0 + diffVds / VaDIBL;
+	end else begin
+		Moc = 1.0;
+	end
+
+	// Degradation factor due to pocket implant -- Ref BSIM4
+	if (FPROUT_i <= 0.0)
+		Fp = 1.0;
+	else begin
+		T9 = FPROUT_i * sqrt(Leff) / Vgst2Vtm;
+		Fp = 1.0 / (1.0 + T9);
+	end
+
+	// Channel Length Modulation -- Ref BSIM4
+	Vasat = Vdssat + EsatL;
+	if(PCLM_i != 0) begin
+		if(PCLMG < 0.0)
+			T1 = PCLM_i / (1.0 - PCLMG * qia / EsatL)/Fp;
+		else
+			T1 = PCLM_i * (1.0 + PCLMG * qia / EsatL)/Fp;
+		MdL = 1.0 + T1 * lln(1.0 + diffVds / T1 / Vasat);
+	end else
+		MdL = 1.0;
+	Moc = Moc * MdL;
+
+	// Calculate Vadits -- Ref BSIM4
+	T1 = lexp(PDITSD_i * Vds);
+	if (PDITS_i > 0.0) begin
+		T2 		= 1.0 + PDITSL * Leff;
+		VaDITS 	= (1.0 + T2 * T1) / PDITS_i;
+		VaDITS 	= VaDITS * Fp;
+	end else
+		VaDITS 	= `MAX_EXPL;
+
+	T4  = diffVds / VaDITS;
+	T_0  = 1.0 + T4;
+	Moc = Moc * T_0;
+
+	// Calculate Vascbe -- Ref BSIM4
+	if (PSCBE2_i > 0.0) begin
+		if (diffVds > PSCBE1_i * litl / `EXPL_THRESHOLD) begin
+			T_0 		= PSCBE1_i * litl / diffVds;
+			VaSCBE 	= Leff * exp(T_0) / PSCBE2_i;
+		end else
+			VaSCBE 	= `MAX_EXPL * Leff/PSCBE2_i;
+	end else
+		VaSCBE = `MAX_EXPL;
+
+	Mscbe 	= 1.0 + (diffVds / VaSCBE);
+	Moc = Moc * Mscbe;
+
+	// *** Velocity Saturation ***
+	T_0			= pow(Dmob, 1.0/PSAT_i);
+	if (PSATB_i<0)
+		T1		= 1.0 / (1.0 + PSATB_i * Vbsx);
+	else
+		T1		= 1.0 - PSATB_i * Vbsx;
+
+	T2			= 10.0* PSATX * qia * T1 / (10.0 *PSATX + qia * T1);
+	if (PTWG_t<0)
+		LambdaC = 2.0 * ((U0_t / T_0) * nVt / (VSAT_t * Leff)) * (1.0/(1.0- PTWG_t * T2));
+	else
+		LambdaC = 2.0 * ((U0_t / T_0) * nVt / (VSAT_t * Leff)) * (1.0 + PTWG_t * T2);
+
+	T1			= 2.0 * LambdaC * (qs - qdeff);
+	T2			= sqrt(1.0 + T1 * T1);
+
+	if (T1 != 0)
+		Dvsat	= 0.5 * ( T2 + (1.0/T1) * asinh(T1) );
+	else
+		Dvsat	= 0.5 * ( T2 + (1.0/T2) );
+	Dptwg		= Dvsat;
+
+
+	// *** S/D series resistance -- Ref: BSIM4 Model
+`ifdef __RDSMOD__
+	Rsource = 0.0; Rdrain = 0.0; //Initialization
+	if(RDSMOD == 1) begin
+		Rdsi = 0.0;
+		Dr = 1.0;
+
+		// Rs (Source side resistance for all fingers)
+		T2 		= Vgs_noswap - Vfbsdr;
+		T3 		= sqrt(T2 * T2 + 0.01);
+		Vgs_eff = 0.5 * (T2 + T3);
+		T5 		= 1.0 + PRWG_i * Vgs_eff;
+		T6 		= (1.0/T5) + PRWB_i * Vsb_noswap;
+		T4 		= 0.5 * (T6 + sqrt(T6 * T6 + 0.01));
+		Rsource = rdstemp * (RSourceGeo + (RSWMIN_i + RSW_i * T4) * WeffWRFactor);
+
+		// Rd (Drain side resistance for all fingers)
+		T2 		= Vgd_noswap - Vfbsdr;
+		T3 		= sqrt(T2 * T2 + 0.01);
+		Vgd_eff = 0.5 * (T2 + T3);
+		T5 		= 1.0 + PRWG_i * Vgd_eff;
+		T6 		= (1.0/T5) + PRWB_i * Vdb_noswap;
+		T4 		= 0.5 * (T6 + sqrt(T6 * T6 + 0.01));
+		Rdrain 	= rdstemp * (RDrainGeo + (RDWMIN_i + RDW_i * T4) * WeffWRFactor);
+
+	end else begin
+`endif
+		// Ref: (1) BSIM4 Model
+		//      (2) "Operation and Modeling of the MOS Transistor" by Yannis Tsividis
+		T_0 = 1.0 + PRWG_i * qia;//reevaluate for gummel symmetry
+		T1 = PRWB_i*(sqrtPhistVbs - sqrtPhist);
+		T2 = 1.0 / T_0 + T1;
+		T3 = 0.5 * (T2 + sqrt(T2*T2 + 0.01));
+		Rdsi = rdstemp * (RDSWMIN_i + RDSW_i * T3) * WeffWRFactor * NF ;
+		Rdrain = RDrainGeo;
+		Rsource = RSourceGeo;
+		Dr = 1.0 + U0_t /(Dvsat * Dmob) * Cox * Weff / Leff * qia * Rdsi;
+		
+`ifdef __RDSMOD__
+	if(RDSMOD == 2) begin
+			
+			Rdsi = rdstemp * (RSourceGeo + (RDSWMIN_i + RDSW_i * T3) * WeffWRFactor * NF + RDrainGeo ) ;
+			Rdrain = 0;
+			Rsource = 0;
+			Dr = 1.0 + U0_t /(Dvsat * Dmob) * Cox * Weff / Leff * qia * Rdsi;
+		end
+	end
+`endif
+
+
+	Dtot 		= Dmob * Dvsat * Dr;
+
+	ueff = U0_t / Dtot; //Effective Mobility including mobility degradation
+
+	// ***************************************************
+	// I-V Equation
+	// ***************************************************
+
+	ids = 2.0 * NF * nq * ueff * Weff/Leff * Cox * nVt * nVt *((qs - qdeff)*(1.0 + qs + qdeff)) *Moc;
+
+
+`ifdef __RGATEMOD__
+	/* Calculate Rg */
+	Gcrg = 0.0;
+	if (RGATEMOD > 1) begin
+		//idsovvds= ueff*Weff/Leff*Cox*qia*Moc;
+		idsovvds= ueff*Weff/Leff*Cox*qia;
+		T9 = XRCRG2 * Vt;
+		T_0 = T9 * ueff * Weff/Leff * Cox;
+		Gcrg = XRCRG1 * NF * (T_0 + idsovvds);
+		if (RGATEMOD == 2) begin
+			T11 = Grgeltd + Gcrg;
+			Gcrg = Grgeltd * Gcrg / T11;
+		end
+	end
+`endif
+
+	//Impact Ionization Current (Ref: BSIM4 Model)
+	if ((ALPHA0_i <= 0.0) || (BETA0_t <= 0.0))
+		Iii = 0.0;
+	else if (diffVds > BETA0_t / `EXPL_THRESHOLD) begin
+		T1 = - BETA0_t / diffVds;
+		Iii = ALPHA0_i * diffVds * ids * lexp(T1)/Mscbe;
+	end else begin
+		Iii = ALPHA0_i * diffVds * ids * `MIN_EXPL/Mscbe;
+	end
+	ISUB = Iii * devsign;
+
+	// *** Gate Current ***// Ref: BSIM4 Model
+
+	igbinv = 0.0;	igbacc = 0.0;	igb = 0.0;
+	igcs = 0.0;		igcd = 0.0;		igs = 0.0;	igd = 0.0;
+	//Initialization
+
+	if ((IGCMOD != 0) || (IGBMOD != 0)) begin
+		Voxm = nVt * (vgfb -psip + qs + qdeff);
+		T1 = sqrt(Voxm*Voxm + 1.0E-4);
+		Voxmacc = 0.5*(-Voxm + T1);
+		Voxminv = 0.5*( Voxm + T1);
+
+		// Igbinv
+	if (IGBMOD != 0) begin
+		T1 = Voxmacc / NIGBACC_i / Vt; //representative of Qb in acc
+		Vaux_Igbacc = NIGBACC_i * Vt * lln(1 + lexp(-T1));
+		T2 = AIGBACC_i - BIGBACC_i * Voxmacc;
+		T3 = 1.0 + CIGBACC_i * Voxmacc;
+		T4 = -7.45669e11 * TOXE * T2 * T3;
+		T5 = lexp (T4);
+		T6 = 4.97232e-7;
+		igbacc = NF * Weff * Leff * T6 * ToxRatio * Vg * Vaux_Igbacc * T5;
+		igbacc = igbacc * igtemp;
+
+		T1 = (Voxminv - EIGBINV_i) / NIGBINV_i / Vt;
+		Vaux_Igbinv = NIGBINV_i * Vt * lln(1.0 + lexp(T1));
+		T2 = AIGBINV_i - BIGBINV_i * Voxminv;
+		T3 = 1.0 + CIGBINV_i * Voxminv;
+		T4 = -9.82222e11 * TOXE * T2 * T3;
+		T5 = lexp (T4);
+		T6 = 3.75956e-7;
+		igbinv = NF * Weff * Leff * T6 * ToxRatio * Vg * Vaux_Igbinv * T5;
+		igbinv = igbinv * igtemp;
+		igb = (igbacc + igbinv);
+	end
+
+	if(IGCMOD != 0) begin
+		// Igcinv
+		T1 = AIGC_i - BIGC_i * Voxminv;
+		T2 = 1.0 + CIGC_i * Voxminv;
+		T3 = Bechvb * T1 * T2;
+		T4 = nq * nVt * (qs + qdeff) * lexp(T3);
+		igc0 = NF * Aechvb * T4 * (Vg + 0.5 *Vdsx - 0.5*(Vs+Vd)) * igtemp;
+
+		// Gate-current partitioning
+		Vdseffx = sqrt(Vdseff*Vdseff + 0.01) - 0.1;
+		T1 = PIGCD_i * Vdseffx;
+		T1_exp = lexp(-T1);
+		T3 = T1 + T1_exp -1.0 + 1.0E-4;
+		T4 = 1.0 - (T1 + 1.0) * T1_exp + 1.0E-4;
+		T5 = T1 * T1 + 2.0E-4;
+		if(sigvds > 0) begin
+			igcd = igc0 * T4 / T5;
+			igcs = igc0 * T3 / T5;
+		end else begin
+			igcs = igc0 * T4 / T5;
+			igcd = igc0 * T3 / T5;
+		end
+
+		// Igs
+		T2 	= Vgs_noswap - Vfbsdr;
+		Vgs_eff = sqrt(T2 * T2 + 1.0e-4);
+		T1 = AIGS_i - BIGS_i * Vgs_eff;
+		T2 = 1.0 + CIGS_i * Vgs_eff;
+		T3 = BechvbEdge * T1 * T2;
+		T4 = lexp(T3);
+		igs_mult = igtemp * NF * AechvbEdge * DLCIG_i;
+		igs = igs_mult * Vgs_noswap * Vgs_eff * T4;
+		
+
+		// Igd
+		T2 	= Vgd_noswap - Vfbsdr;
+		Vgd_eff 	= sqrt(T2 * T2 + 1.0e-4);
+		T1 = AIGD_i - BIGD_i * Vgd_eff;
+		T2 = 1.0 + CIGD_i * Vgd_eff;
+		T3 = BechvbEdge * T1 * T2;
+		T4 = lexp(T3);
+		igd_mult = igtemp * NF * AechvbEdge * DLCIGD_i;
+		igd = igd_mult * Vgd_noswap * Vgd_eff * T4;
+	end
+	end
+
+	IGS = devsign * igs;
+	IGD = devsign * igd;
+	IGB = devsign * igb;
+	IGCS = devsign * igcs;
+	IGCD = devsign * igcd;
+
+	// GIDL/GISL current (Ref: BSIM4 Model)
+	igisl = 0.0;
+	igidl = 0.0;
+	if (GIDLMOD != 0) begin
+		T_0 = epsratio * TOXE;
+		// GIDL
+		if ((AGIDL_i <= 0.0) || (BGIDL_t <= 0.0) || (CGIDL_i < 0.0)) begin
+			T6 = 0.0;
+		end else begin
+			T1 = (- Vgd_noswap - EGIDL_i + Vfbsdr) / T_0;
+			T1 =  hypsmooth(T1, 1.0E-2);
+			T2 = BGIDL_t / (T1 + 1.0E-3);
+			if (CGIDL_i !=0) begin
+				T3 = Vdb_noswap*Vdb_noswap*Vdb_noswap;
+				T4 = CGIDL_i + abs(T3) + 1.0E-9;
+				T5 = hypsmooth(T3/T4, 1.0E-6) - 1.0E-6;
+			end else
+				T5 = 1.0;
+			T6 = AGIDL_i * Weff * T1 * lexp(-T2) * T5;
+		end
+		igidl = T6;
+
+		// GISL
+		if ((AGISL_i <= 0.0) || (BGISL_t <= 0.0) || (CGISL_i < 0.0)) begin
+			T6 = 0.0;
+		end else begin
+			T1 = (- Vgs_noswap - EGISL_i + Vfbsdr) / T_0;
+			T1 =  hypsmooth(T1, 1.0E-2);
+			T2 = BGISL_t / (T1 + 1.0E-3);
+			if (CGISL_i !=0) begin
+				T3 = Vsb_noswap*Vsb_noswap*Vsb_noswap;
+				T4 = CGISL_i + abs(T3) + 1.0E-9;
+				T5 = hypsmooth(T3/T4, 1.0E-6) - 1.0E-6;
+			end else
+				T5 = 1.0;
+			T6 = AGISL_i * Weff * T1 * lexp(-T2) * T5;
+		end
+		igisl = T6;
+	end // GIDLMOD
+
+	IGIDL = devsign * NF * igidl;
+	IGISL = devsign * NF * igisl;
+
+	// Junction Current and Capacitances
+	// Source-side junction current
+	if(Isbs > 0.0) begin
+		if (Vbs_jct < VjsmRev) begin
+			T_0 = Vbs_jct / Nvtms;
+			T1 = lexp(T_0) - 1.0;
+			T2 = IVjsmRev + SslpRev * (Vbs_jct - VjsmRev);
+			Ibs = T1 * T2;
+		end else if (Vbs_jct <= VjsmFwd) begin
+			T_0 = Vbs_jct / Nvtms;
+			T1 = (BVS + Vbs_jct) / Nvtms;
+			T2 = lexp(-T1);
+			Ibs = Isbs * (lexp(T_0) + XExpBVS - 1.0 - XJBVS * T2);
+		end else
+			Ibs = IVjsmFwd + SslpFwd * (Vbs_jct - VjsmFwd);
+	end else
+		Ibs = 0.0;
+
+	//Source-side junction tunneling current
+	if(JTSS_t > 0.0) begin
+		if((VTSS - Vbs_jct) < (VTSS * 1.0e-3)) begin
+			T_0 = -Vbs_jct / Vtm0 / NJTS_t;
+			T1 = lexp(T_0 * 1.0e+3) - 1.0;
+			Ibs = Ibs - ASeff * JTSS_t * T1;
+		end else begin
+			T_0 = -Vbs_jct / Vtm0 / NJTS_t;
+			T1 = lexp(T_0 * VTSS / (VTSS - Vbs_jct)) - 1.0;
+			Ibs = Ibs - ASeff * JTSS_t * T1;
+		end
+	end
+	if(JTSSWS_t > 0.0) begin
+		if((VTSSWS - Vbs_jct) < (VTSSWS * 1.0e-3)) begin
+			T_0 = -Vbs_jct / Vtm0 / NJTSSW_t;
+			T1 = lexp(T_0 * 1.0e+3) - 1.0;
+			Ibs = Ibs - PSeff * JTSSWS_t * T1;
+		end else begin
+			T_0 = -Vbs_jct / Vtm0 / NJTSSW_t;
+			T1 = lexp(T_0 * VTSSWS / (VTSSWS - Vbs_jct)) - 1.0;
+			Ibs = Ibs - PSeff * JTSSWS_t * T1;
+		end
+	end
+	if(JTSSWGS_t > 0.0) begin
+		if((VTSSWGS - Vbs_jct) < (VTSSWGS * 1.0e-3)) begin
+			T_0 = -Vbs_jct / Vtm0 / NJTSSWG_t;
+			T1 = lexp(T_0 * 1.0e+3) - 1.0;
+			Ibs = Ibs - Weffcj * NF * JTSSWGS_t * T1;
+		end else begin
+			T_0 = -Vbs_jct / Vtm0 / NJTSSWG_t;
+			T1 = lexp(T_0 * VTSSWGS / (VTSSWGS - Vbs_jct)) - 1.0;
+			Ibs = Ibs - Weffcj * NF * JTSSWGS_t * T1;
+		end
+	end
+
+
+	// Drain-side junction current
+	if(Isbd > 0.0) begin
+		if (Vbd_jct < VjdmRev) begin
+			T_0 = Vbd_jct / Nvtmd;
+			T1 = lexp(T_0) - 1.0;
+			T2 = IVjdmRev + DslpRev * (Vbd_jct - VjdmRev);
+			Ibd = T1 * T2;
+		end else if (Vbd_jct <= VjdmFwd) begin
+			T_0 = Vbd_jct / Nvtmd;
+			T1 = (BVD + Vbd_jct) / Nvtmd;
+			T2 = lexp(-T1);
+			Ibd = Isbd * (lexp(T_0) + XExpBVD - 1.0 - XJBVD * T2);
+		end else
+			Ibd = IVjdmFwd + DslpFwd * (Vbd_jct - VjdmFwd);
+	end else
+		Ibd = 0.0;
+
+	//Drain-side junction tunneling current
+	if(JTSD_t > 0.0) begin
+		if((VTSD - Vbd_jct) < (VTSD * 1.0e-3)) begin
+			T_0 = -Vbd_jct / Vtm0 / NJTSD_t;
+			T1 = lexp(T_0 * 1.0e+3) - 1.0;
+			Ibd = Ibd - ADeff * JTSD_t * T1;
+		end else begin
+			T_0 = -Vbd_jct / Vtm0 / NJTSD_t;
+			T1 = lexp(T_0 * VTSD/ (VTSD - Vbd_jct)) - 1.0;
+			Ibd = Ibd - ADeff * JTSD_t * T1;
+		end
+	end
+	if(JTSSWD_t > 0.0) begin
+		if((VTSSWD - Vbd_jct) < (VTSSWD * 1.0e-3)) begin
+			T_0 = -Vbd_jct / Vtm0 / NJTSSWD_t;
+			T1 = lexp(T_0 * 1.0e+3) - 1.0;
+			Ibd = Ibd - PDeff * JTSSWD_t * T1;
+		end else begin
+			T_0 = -Vbd_jct / Vtm0 / NJTSSWD_t;
+			T1 = lexp(T_0 * VTSSWD / (VTSSWD - Vbd_jct)) - 1.0;
+			Ibd = Ibd - PDeff * JTSSWD_t * T1;
+		end
+	end
+	if(JTSSWGD_t > 0.0) begin
+		if((VTSSWGD - Vbd_jct) < (VTSSWGD * 1.0e-3)) begin
+			T_0 = -Vbd_jct / Vtm0 / NJTSSWGD_t;
+			T1 = lexp(T_0 * 1.0e+3) - 1.0;
+			Ibd = Ibd - Weffcj * NF * JTSSWGD_t * T1;
+		end else begin
+			T_0 = -Vbd_jct / Vtm0 / NJTSSWGD_t;
+			T1 = lexp(T_0 * VTSSWGD / (VTSSWGD - Vbd_jct)) - 1.0;
+			Ibd = Ibd - Weffcj * NF * JTSSWGD_t * T1;
+		end
+	end
+
+	// *** Junction capacitance (!!no swapping !!) ***
+	/* Source Bulk Junction */
+	if (Czbs > 0.0) begin
+		T1 = Vbs_jct/PBS_t;
+		if (T1<0.9) begin
+			arg = 1.0 - T1;
+			if (MJS == 0.5)  sarg = 1.0 / sqrt(arg);
+			else             sarg = lexp(-MJS * lln(arg));
+			Qbs = PBS_t * Czbs * (1.0 - arg * sarg) / (1.0 - MJS);
+		end else begin
+			T2 = pow(0.1,-MJS);
+			T3 = 1.0/(1.0-MJS);
+			T4 = T2 * (T1-1.0) * (5.0*MJS*(T1-1.0) + (1.0+MJS) );
+			T5 = T3 * (1.0 - 0.05*MJS*(1.0+MJS)*T2 );
+			Qbs = PBS_t * Czbs * (T4 + T5); //Quadratic equation for Qbs when Vbs_jct/PBS_t<=0.9
+		end
+	end else begin
+		Qbs = 0.0;
+	end
+
+	if (Czbssw > 0.0) begin
+		T1 = Vbs_jct/PBSWS_t;
+		if (T1<0.9) begin
+			arg = 1.0 - T1;
+			if (MJSWS == 0.5)  sarg = 1.0 / sqrt(arg);
+			else               sarg = lexp(-MJSWS * lln(arg));
+			Qbs = Qbs + PBSWS_t * Czbssw * (1.0 - arg * sarg) / (1.0 - MJSWS);
+		end else begin
+			T2 = pow(0.1,-MJSWS);
+			T3 = 1.0/(1.0-MJSWS);
+			T4 = T2 * (T1-1.0) * (5.0*MJSWS*(T1-1.0) + (1.0+MJSWS) );
+			T5 = T3 * (1.0 - 0.05*MJSWS*(1.0+MJSWS)*T2 );
+			Qbs = Qbs + PBSWS_t * Czbssw * (T4 + T5);
+		end
+	end
+
+	if (Czbsswg > 0.0) begin
+		T1 = Vbs_jct/PBSWGS_t;
+		if (T1<0.9) begin
+			arg = 1.0 - T1;
+			if (MJSWGS == 0.5)  sarg = 1.0 / sqrt(arg);
+			else                sarg = lexp(-MJSWGS * lln(arg));
+			Qbs = Qbs + PBSWGS_t * Czbsswg * (1.0 - arg * sarg) / (1.0 - MJSWGS);
+		end else begin
+			T2 = pow(0.1,-MJSWGS);
+			T3 = 1.0/(1.0-MJSWGS);
+			T4 = T2 * (T1-1.0) * (5.0*MJSWGS*(T1-1.0) + (1.0+MJSWGS) );
+			T5 = T3 * (1.0 - 0.05*MJSWGS*(1.0+MJSWGS)*T2 );
+			Qbs = Qbs + PBSWGS_t * Czbsswg * (T4 + T5);
+		end
+	end
+
+	/* Drain Bulk Junction */
+	if (Czbd > 0.0) begin
+		T1 = Vbd_jct/PBD_t;
+		if (T1<0.9) begin
+			arg = 1.0 - T1;
+			if (MJD == 0.5)  sarg = 1.0 / sqrt(arg);
+			else             sarg = lexp(-MJD * lln(arg));
+			Qbd = PBD_t * Czbd * (1.0 - arg * sarg) / (1.0 - MJD);
+		end else begin
+			T2 = pow(0.1,-MJD);
+			T3 = 1.0/(1.0-MJD);
+			T4 = T2 * (T1-1.0) * (5.0*MJD*(T1-1.0) + (1.0+MJD) );
+			T5 = T3 * (1.0 - 0.05*MJD*(1.0+MJD)*T2 );
+			Qbd = PBD_t * Czbd * (T4 + T5);
+		end
+	end else begin
+		Qbd = 0.0;
+	end
+
+	if (Czbdsw > 0.0) begin
+		T1 = Vbd_jct/PBSWD_t;
+		if (T1<0.9) begin
+			arg = 1.0 - T1;
+			if (MJSWD == 0.5)  sarg = 1.0 / sqrt(arg);
+			else               sarg = lexp(-MJSWD * lln(arg));
+			Qbd = Qbd + PBSWD_t * Czbdsw * (1.0 - arg * sarg) / (1.0 - MJSWD);
+		end else begin
+			T2 = pow(0.1,-MJSWD);
+			T3 = 1.0/(1.0-MJSWD);
+			T4 = T2 * (T1-1.0) * (5.0*MJSWD*(T1-1.0) + (1.0+MJSWD) );
+			T5 = T3 * (1.0 - 0.05*MJSWD*(1.0+MJSWD)*T2 );
+			Qbd = Qbd + PBSWD_t * Czbdsw * (T4 + T5);
+		end
+	end
+
+	if (Czbdswg > 0.0) begin
+		T1 = Vbd_jct/PBSWGD_t;
+		if (T1<0.9) begin
+			arg = 1.0 - T1;
+			if (MJSWGD == 0.5)  sarg = 1.0 / sqrt(arg);
+			else                sarg = lexp(-MJSWGD * lln(arg));
+			Qbd = Qbd + PBSWGD_t * Czbdswg * (1.0 - arg * sarg) / (1.0 - MJSWGD);
+		end else begin
+			T2 = pow(0.1,-MJSWGD);
+			T3 = 1.0/(1.0-MJSWGD);
+			T4 = T2 * (T1-1.0) * (5.0*MJSWGD*(T1-1.0) + (1.0+MJSWGD) );
+			T5 = T3 * (1.0 - 0.05*MJSWGD*(1.0+MJSWGD)*T2 );
+			Qbd = Qbd + PBSWGD_t * Czbdswg * (T4 + T5);
+		end
+	end
+
+	//*************** Noise Modeling - Ref. BSIM4
+	Nt = 4.0 * Vt * `q;
+
+	//Parameter Checking
+	if(LINTNOI >= Leff/2.0) begin
+		$strobe("Warning: LINTNOI = %e is too large - Leff for noise is negative.  Re-setting LINTNOI = 0.", LINTNOI);
+		LINTNOI_i = 0;
+	end else begin
+		LINTNOI_i = LINTNOI;
+	end
+
+	Esatnoi = 2.0 * VSAT_t / ueff;
+
+	if(NOIA > 0 || NOIB > 0 || NOIC > 0) begin
+		Leffnoi = Leff - 2.0 * LINTNOI_i;
+		Leffnoisq = Leffnoi * Leffnoi;
+		if(EM <= 0.0)
+			DelClm = 0.0;
+		else begin
+			T_0 = (diffVds / litl + EM) / Esatnoi;
+			DelClm = litl * lln(T_0);
+			if (DelClm < 0.0)  DelClm = 0.0;
+		end
+		T1 = `q * `q * `q * Vt * abs(ids) * ueff;
+		T2 = 1.0e10 * Cox * Leffnoisq;
+		N0 = 2.0 * nq * Cox * Vt * qs / `q;
+		Nl = 2.0 * nq * Cox * Vt * qdeff / `q;
+		Nstar = Vt / `q * (Cox + Cdep + CIT);
+		T3 = NOIA * lln((N0 + Nstar) / (Nl + Nstar));
+		T4 = NOIB * (N0 - Nl);
+		T5 = 0.5 * NOIC * (N0 * N0 - Nl * Nl);
+		T6 = `q * Vt * ids * ids;
+		T7 = 1.0e10 * Leffnoisq * Weff * NF;
+		T8 = NOIA + NOIB * Nl + NOIC * Nl * Nl;
+		T9 = (Nl + Nstar) * (Nl + Nstar);
+		Ssi = T1 / T2 * (T3 + T4 + T5) + T6 / T7 * DelClm * T8 / T9;
+		T10 = NOIA * `q * Vt;
+		T11 = Weff * NF * Leffnoi * 1.0e10 * Nstar * Nstar;
+		Swi = T10 / T11 * ids * ids;
+		T1 = Swi + Ssi;
+
+		if (T1 > 0.0)	FNPowerAt1Hz = (Ssi * Swi) / T1;
+		else			FNPowerAt1Hz = 0.0;
+	end else begin
+		FNPowerAt1Hz = 0.0;
+	end
+
+	I(`IntrinsicDrain,`IntrinsicSource) <+ flicker_noise(FNPowerAt1Hz, EF, "1overf");
+
+`ifdef __TNOISW__
+	T_0 = qia/Esatnoi/Leff;
+	T1 = T_0 * T_0;
+	T3 = RNOIA * (1.0 + TNOIA * Leff * T1);
+	T4 = RNOIB * (1.0 + TNOIB * Leff * T1);
+	ctnoi = RNOIC * (1.0 + TNOIC * Leff * T1);
+	betanoisq = T3 * T3;
+	thetanoisq = T4 * T4;
+
+	cm_igid=0; //Initialization
+	case(TNOIMOD)
+	0: begin
+`endif
+		QSi = - NF * Weff * Leff * Cox *Vt * Qs;
+		QDi = - NF * Weff * Leff * Cox *Vt * Qd;
+		T_0 = ueff * abs(QSi+QDi);
+		T1 = T_0 * Rdsi + Leff * Leff;
+		Gtnoi = (T_0 / T1) * NTNOI;
+		sidn = Nt * Gtnoi;
+		I(`IntrinsicDrain, `IntrinsicSource) <+ white_noise(sidn, "id");
+`ifdef __TNOISW__
+	end
+	1: begin
+		Vtn = 2.0 * nq * nVt;
+		T_0 = ueff * Dptwg * Moc * Cox * Vtn;
+		T1 = 0.5 * (qs + qdeff);
+		T3 = T1 + 0.5;
+		T4 = T3 * T3;
+		T5 = T4 * T3;
+		T6 = qs - qdeff;
+		T7 = T6 * T6;
+		T8 = T7 * T6;
+		T9 = (6.0 * T1 + 0.5) * T7;
+		Lvsat = Leff * Dptwg;
+		T10 = Lvsat / Leff;
+		mid = T_0 * NF * Weff/Lvsat * (T1 + T7/(12.0 * T3)) * 3.0 * betanoisq;
+		mig = Lvsat * T10 * T10 * (T1/T4 - T9/(60.0 * T4 * T4) + T7 * T7/(144.0 * T4 * T5)) * 15.0/4.0 * thetanoisq/(NF * Weff * 12.0 * T_0);
+		migid = T10 * (T6/(12.0 * T3) - T8/(144.0 * T5)) * ctnoi/0.395;
+		sqid =  sqrt(Nt * mid);
+
+		if (mig == 0) begin
+			sqig = 0.0;
+			cm_igid = 0.0;
+		end else begin
+			sqig =  sqrt(Nt / mig);
+			if (sqid == 0) begin
+				cm_igid = 0.0;
+			end else begin
+				cm_igid = migid * sqig / sqid;
+			end
+		end
+
+		I(N2)   <+  white_noise(cm_igid, "corl");
+		I(NI)   <+  white_noise(sqig * sqig * (1.0 - cm_igid), "corl");
+		I(NI)   <+  -sqig * V(N2);
+		I(NC)   <+  ddt(mig * Cox * Weff * Leff * V(NC));
+		I(`IntrinsicDrain,`IntrinsicSource)  <+  white_noise(sqid * sqid * (1.0 - cm_igid), "id");
+		I(`IntrinsicDrain,`IntrinsicSource)  <+  sqid * V(N2);
+		I(`IntrinsicGate,`IntrinsicSource)  <+  ddt(0.5 * ((1.0 + sigvds) * mig * Cox * Weff * Leff * V(NC)));
+		I(`IntrinsicGate,`IntrinsicDrain)  <+  ddt(0.5 * ((1.0 - sigvds) * mig * Cox * Weff * Leff * V(NC)));
+	end
+	endcase
+
+	I(N2)   <+  V(N2);
+	I(NR)   <+  V(NR);
+`else
+	if(TNOIMOD != 0)
+		$strobe("[BSIM6] Although the model selector TNOIMOD is set to 1, the correlated thermal noise model was not activated when the Verilog-A code was compiled.  Please uncomment \"`define __TNOISW__\" in the beginning of the Verilog-A code.");
+`endif
+
+	// Gate current shot noise
+	if(IGCMOD != 0) begin
+		I(`IntrinsicGate, `IntrinsicSource)	<+ white_noise(2.0 * `q * abs(igcs + igs), "igs");
+		I(`IntrinsicGate, `IntrinsicDrain)	<+ white_noise(2.0 * `q * abs(igcd + igd), "igd");
+	end
+
+	if(IGBMOD != 0) I(`IntrinsicGate, `IntrinsicBody) <+ white_noise(2.0 * `q * abs(igb), "igb");
+
+	//*********************************
+	//C-V Model
+	//*********************************
+vgfbCV 		= vgfb;
+gamg2 		= (2.0 * `q * epssi*NGATE_i)/(Cox*Cox*Vt);
+invgamg2 	= (NGATE_i>0) ? (1.0/gamg2) : 0.0;
+
+if (CVMOD==1) begin
+	vg 	= Vg * inv_Vt;
+	vs 	= Vs * inv_Vt;
+	vfb 	= VFBCV_i * inv_Vt;
+	vgfbCV 	= vg - vfb;
+
+	phib = ln(NDEPCV_i / ni);
+	//Normalized body factor
+	gam = sqrt(2.0 * `q * epssi*NDEPCV_i * inv_Vt)/Cox;
+	inv_gam = 1.0/gam;
+	gamg2 = (2.0 * `q * epssi*NGATE_i)/(Cox*Cox*Vt);
+	invgamg2 = (NGATE_i>0) ? (1.0/gamg2) : 0.0;
+	DPD = (NGATE_i>0) ? (NDEPCV_i/NGATE_i) : 0.0;
+
+	// psip: pinch-off voltage
+	`PO_psip(vgfbCV,gam,DPD,phib,psip)
+	`BSIM_q(psip,phib,vs,gam,qs) // normalized inversion charge at source end of channel
+
+	`Smooth(psip, 1.0, 2.0, psipclamp)
+	sqrtpsip = sqrt(psipclamp);
+	psiavg 	 = psip - 2.0*qs; // source side surf pot.
+	`Smooth(psiavg, 1.0, 2.0, T_0)
+	nq 		 = 1.0 + gam / (sqrtpsip + sqrt(T_0));
+
+	// *** Drain Saturation Voltage ***
+	T_0 = Vt * (vgfbCV - psip - 2.0*qs*(nq-1.0));
+	`Smooth(T_0, 0, 0.1, qbs)
+	qis = 2.0 * nq * Vt * qs; //Source side qi and qb for Vdsat- normalized to Cox
+
+	Eeffs = EeffFactor * (qbs + eta_mu * qis); // in the unit of MV/cm
+
+	// Ref: BSIM4 Model mobility model
+	T3 		= (UA_t + UC_t * Vbsx) * pow(Eeffs, EU_i);
+	Dmobs 	= 1.0 + T3;
+
+	LambdaC_by2 = (U0_t / Dmobs) * Vt / (VSATCV_t * Lact);
+	qdsat 		= LambdaC_by2 * (qs*qs + qs) / (1.0 + LambdaC_by2 *(1.0 + qs));
+	vdsatcv 	= psip -2.0*phib - (2.0*qdsat + ln( (qdsat*2.0*nq*inv_gam)*((qdsat*2.0*nq*inv_gam) + (gam/(nq-1.0)) ) ));
+	VdsatCV 	= vdsatcv * Vt;
+
+	// normalized charge qdeff at drain end of channel
+	`Smooth(VdsatCV - Vs, 0.0, 1e-3, VdssatCV)
+	T7 		= pow(Vds/VdssatCV , 1.0/DELTA_t);
+	T8 		= pow(1.0+T7, -DELTA_t);
+	Vdseff 	=  Vds*T8;
+	vdeff 	= (Vdseff + Vs) * inv_Vt;
+	`BSIM_q(psip,phib,vdeff,gam,qdeff)
+
+	// Reevaluation of nq to include qdeff --needed for gummel symmetry
+	psiavg = psip - qs - qdeff -1.0;
+	`Smooth(psiavg, 1.0, 2.0, T_0)
+	T2 = sqrt(T_0);
+	T3 = 1.0 + DPD + gam/(sqrtpsip+T2);
+	T4 = 0.5 + DPD*T2*inv_gam;
+	T5 = sqrt( T4*T4 + T3*(qs+qdeff)*invgamg2);
+	nq = T3/ (T4+T5);
+
+	//*********************************************************
+	//CV Expressions including Velocity Saturation and CLM
+	//*********************************************************
+	// --- Velocity Saturation for CV ---
+	T_0 = Vt * (vgfbCV - psip - 2.0*qs*(nq-1.0));
+	`Smooth(T_0, 0, 0.1, qbs)
+	T1 = Vt * (vgfbCV - psip - 2.0*qdeff*(nq-1.0));
+	`Smooth(T1, 0, 0.1, qbd)
+	qb = 0.5*(qbs+qbd);
+	qia = nq * Vt * (qs + qdeff);
+
+	Eeffm 	= EeffFactor * (qb + eta_mu * qia); // in the unit of MV/cm
+	T3 		= (UA_t + UC_t * Vbsx) * pow(Eeffm, EU_i);
+	Dmob 	= 1.0 + T3;
+
+	LambdaC 	= 2.0 * (U0_t / Dmob) * Vt / (VSATCV_t * Lact);
+	dps 		= qs - qdeff;
+	T1			= 2.0 * (LambdaC * dps) * (LambdaC * dps);
+	zsat		= sqrt(1.0 + T1);
+	Dvsat 		= 0.5 * (1.0 + zsat);
+	// --- CLM for CV ---
+	Esat 	= 2.0 * VSATCV_t / (U0_t / Dmob);
+	EsatL 	= Esat * Lact;
+	Vasat = VdssatCV + EsatL;
+	diffVds 	= Vds - Vdseff;
+	
+
+end
+	if(PCLMCV_i != 0) begin
+		MdL = 1.0 + PCLMCV_i * lln(1.0 + diffVds / PCLMCV_i / Vasat);
+	end else
+		MdL = 1.0;
+
+	MdL_2		= MdL*MdL;
+	inv_MdL 	= 1.0/MdL;
+	inv_MdL_2	= 1.0/MdL_2;
+	MdL_less_1 	= MdL - 1.0;
+	vgpqm = vgfbCV - psip;
+	DQSD = (qs-qdeff);
+	DQSD2 = (qs-qdeff)*(qs-qdeff);
+	sis = vgpqm + 2.0*qs;
+	sid = vgpqm + 2.0*qdeff;
+	`Smooth(sis, 0.0, 0.5, T1)
+	`Smooth(sid, 0.0, 0.5, T2)
+	Temps = sqrt(0.25 + T1*invgamg2);
+	Tempd = sqrt(0.25 + T2*invgamg2);
+	T1 = sis / (1.0 + 2.0*Temps);
+	T2 = sid / (1.0 + 2.0*Tempd);
+	T3 = Temps + Tempd;
+	T4 = `Oneby3*(DQSD2/(T3*T3*T3));
+	T5 = (Dvsat * inv_MdL) / (1.0 + qs + qdeff);
+	T6 = 0.8*(T3*T3 + Temps*Tempd) * T5;
+	T7 = T6 + (2.0*invgamg2);
+	T8 = `Oneby3 * DQSD2 * T5;
+	dqgeff = sid * (2.0*Tempd - 1.0)/(2.0*Tempd + 1.0);
+	qbeff = vgpqm - 2.0 * (nq-1.0)*qdeff + dqgeff;
+	Qb = inv_MdL * (T1 + T2 + (T4*T7 - nq*( qs + qdeff + T8))) + MdL_less_1 * qbeff ;
+
+	T9 = qs + qdeff;
+	T10 = DQSD2*T5*T5;
+	Qi = nq * inv_MdL * (T9 + `Oneby3 * DQSD2*T5) + 2.0*nq*MdL_less_1*qdeff;
+	Qd1 = nq * inv_MdL_2 * ( 0.5*T9 - (DQSD/6.0)*(1.0 - DQSD*T5 - 0.2*T10));
+	Qd2 = nq * (MdL - inv_MdL) * qdeff;
+	Qd = Qd1 + Qd2;
+	Qs = Qi - Qd;
+	//*********************************************************
+
+	//Quantum Mechanical Effect
+
+	`Smooth(Vt*Qb, 0, 0.1, qbaCV)
+	qiaCV = Vt*( Qs + Qd);
+
+	T_0 = (qiaCV + ETAQM * qbaCV) / QM0;
+	T1 = 1.0 + pow(T_0, 0.7*BDOS);
+	XDCinv = ADOS * 1.9e-9 / T1;
+
+	Coxeffinv = 3.9 * `EPS0 / (BSIM6TOXP * 3.9 / EPSROX + XDCinv / epsratio);
+
+	QBi = -NF*Wact*Lact*(`EPS0 * EPSROX / BSIM6TOXP)*Vt*Qb;
+	WLCOXVtinv = NF*Wact*Lact*Coxeffinv*Vt;
+
+	QSi = -WLCOXVtinv*Qs;
+	QDi = -WLCOXVtinv*Qd;
+	QGi = -(QBi + QSi + QDi);
+
+
+	//Outer fringing capacitance
+	if (!$param_given(CF))
+		CF_i = 2.0 * EPSROX * `EPS0 / `M_PI * ln(CFRCOEFF*(1.0 + 0.4e-6 / TOXE));
+	Cgsof = CGSO + CF_i ;
+	Cgdof = CGDO + CF_i ;
+
+	//Overlap Capacitance
+	if (COVMOD == 0) begin
+		Qovs	= -Wact*NF*Cgsof*Vgs_ov_noswap;
+		Qovd	= -Wact*NF*Cgdof*Vgd_ov_noswap;
+	end else begin
+		T_0 		= sqrt((Vgs_ov_noswap -Vfbsdr + `DELTA_1)*(Vgs_ov_noswap -Vfbsdr + `DELTA_1) +4.0 * `DELTA_1);
+		Vgsov	= 0.5*(Vgs_ov_noswap -Vfbsdr + `DELTA_1 - T_0);
+		T1		= sqrt(1.0 - 4.0*Vgsov/CKAPPAS_i);
+		Qovs	= -Wact*NF*( Cgsof*Vgs_ov_noswap + CGSL_i*( Vgs_ov_noswap -Vfbsdr - Vgsov - 0.5*CKAPPAS_i*(-1.0 + T1)));
+
+		T_0		= sqrt((Vgd_ov_noswap -Vfbsdr + `DELTA_1)*(Vgd_ov_noswap -Vfbsdr + `DELTA_1) +4.0 * `DELTA_1);
+		Vgdov	= 0.5*(Vgd_ov_noswap -Vfbsdr + `DELTA_1 - T_0);
+		T2		= sqrt(1.0 - 4.0*Vgdov/CKAPPAD_i);
+		Qovd	= -Wact*NF*( Cgdof*Vgd_ov_noswap + CGDL_i*( Vgd_ov_noswap -Vfbsdr - Vgdov - 0.5*CKAPPAD_i*(-1.0 + T2)));
+	end
+
+	Qovb	= - devsign * NF*Lact*CGBO* V(`GateEdgeNode, `IntrinsicBody);
+	Qovg	= - (Qovs + Qovd + Qovb);
+
+	//Charge expressions including fringing and overlap cap
+	QB = devsign *(QBi + Qovb + Qbs + Qbd);
+
+	if (sigvds > 0) begin
+		QSI = devsign * QSi;
+		QDI = devsign * QDi;
+		QS = devsign *(QSi + Qovs - Qbs);
+		QD = devsign *(QDi + Qovd - Qbd);
+	end else begin
+		QSI = devsign * QDi;
+		QDI = devsign * QSi;
+		QS = devsign *(QDi + Qovs - Qbs);
+		QD = devsign *(QSi + Qovd - Qbd);
+	end
+
+	QG = devsign *(QGi + Qovg);
+
+	//Output
+	//Intrinsic Charges
+	QBI = devsign * QBi;
+	QGI = devsign * QGi;
+	
+	//QSI and QDI are defined above
+
+	//Intrinsic Capacitances
+	CGSI = - ddx(QGI,V(`IntrinsicSource));
+	CGDI = - ddx(QGI,V(`IntrinsicDrain));
+	CGBI = - ddx(QGI,V(`IntrinsicBody));
+	CGGI = ddx(QGI,V(`IntrinsicGate));
+
+	CSSI = ddx(QSI,V(`IntrinsicSource));
+	CSDI = - ddx(QSI,V(`IntrinsicDrain));
+	CSBI = - ddx(QSI,V(`IntrinsicBody));
+	CSGI = - ddx(QSI,V(`IntrinsicGate));
+
+	CDSI = - ddx(QDI,V(`IntrinsicSource));
+	CDDI = ddx(QDI,V(`IntrinsicDrain));
+	CDBI = - ddx(QDI,V(`IntrinsicBody));
+	CDGI = - ddx(QDI,V(`IntrinsicGate));
+
+	CBSI = - ddx(QBI,V(`IntrinsicSource));
+	CBDI = - ddx(QBI,V(`IntrinsicDrain));
+	CBBI =  ddx(QBI,V(`IntrinsicBody));
+	CBGI = - ddx(QBI,V(`IntrinsicGate));
+
+	//Total Capacitances
+	CGS = -ddx(QG,V(`IntrinsicSource));
+	CGD = -ddx(QG,V(`IntrinsicDrain));
+	CGB = -ddx(QG,V(`IntrinsicBody));
+ 	CGG = CGGI + ddx(devsign*Qovg,V(`GateEdgeNode));
+
+	CSS = ddx(QS,V(`IntrinsicSource));
+	CSD = -ddx(QS,V(`IntrinsicDrain));
+`ifdef __RBODYMOD__
+	CSB = CSBI - ddx((QS-QSI),V(sbulk));
+`endif
+	CSG = CSGI - ddx((QS-QSI),V(`GateEdgeNode));
+	
+	CDS = -ddx(QD,V(`IntrinsicSource));
+	CDD = ddx(QD,V(`IntrinsicDrain));
+`ifdef __RBODYMOD__
+	CDB = CDBI - ddx((QD-QDI),V(dbulk));
+`endif
+	CDG = CDGI - ddx((QD-QDI),V(`GateEdgeNode));
+	CBS = -ddx(QB,V(`IntrinsicSource));
+	CBD = -ddx(QB,V(`IntrinsicDrain));
+`ifdef __RBODYMOD__
+	CBB = CBBI + ddx(QB,V(sbulk)) + ddx(QB,V(dbulk)) + ddx((devsign * Qovb), V( `IntrinsicBody));
+`endif
+
+	CBG = -ddx(QB,V(`IntrinsicGate)) - ddx((devsign * Qovb), V(`GateEdgeNode));
+	
+
+	//Total extrinsic capacitance
+	CGSEXT 	= - devsign * ddx(Qovg,V(`IntrinsicSource));//Gate-Source Overlap + outer fringing
+	CGDEXT 	= - devsign * ddx(Qovg,V(`IntrinsicDrain));//Gate-Drain Overlap + outer fringing
+	CGBOV	= - devsign * ddx(Qovg,V(`IntrinsicBody));//Gate-Body Overlap
+
+	//Total Source and Drain junction capacitances
+	CAPBS 	= - devsign *ddx(Qbs,V(`IntrinsicSource));
+	CAPBD 	= - devsign *ddx(Qbd,V(`IntrinsicDrain));
+
+	//W & L
+	WEFF	= Weff;//Effective width for IV
+	LEFF	= Leff;//Effective length for IV
+	WEFFCV	= Wact;//Effective width for CV
+	LEFFCV	= Lact;//Effective length for CV
+
+
+	//Currents and derivatives
+	if (sigvds>0) begin
+		IDS	= devsign * ids;//Intrinsic drain to source current
+		IDEFF	=  IDS - (IGD + IGCD) + ISUB + IGIDL;//Total drain current
+		ISEFF	= -IDS - (IGS + IGCS) + IGISL;//Total source current
+	end else begin
+		IDS	= - devsign * ids;//Intrinsic drain to source current
+		IDEFF	=  IDS - (IGD + IGCD) + IGIDL;//Total drain current
+		ISEFF	= -IDS - (IGS + IGCS) + ISUB + IGISL;//Total source current
+	end
+
+	IGEFF 	= IGB + IGS + IGCS + IGD + IGCD;//Total gate tunneling current
+	IBS 	= - devsign * Ibs;//Source junction current
+	IBD 	= - devsign * Ibd;//Source junction current
+
+	VDS	= V(`IntrinsicDrain, `IntrinsicSource);//Drain-Source Voltage
+	VGS 	= V(`IntrinsicGate,`IntrinsicSource);
+	VBS	= -V(`IntrinsicSource, `IntrinsicBody);//Source-body Voltage
+	VDSAT	= Vdssat;//Drain-Source saturation Voltage
+	GM		= ddx(IDS,V(`IntrinsicGate));//Transconductance
+	GMBS	= ddx(IDS,V(`IntrinsicBody));//Body transconductance
+	GDS		= ddx(IDS,V(`IntrinsicDrain));//Output conductance
+
+	// Loading variables
+	I(`IntrinsicGate, `IntrinsicBody)	<+ ddt(QGI);
+	I(`IntrinsicSource, `IntrinsicBody)	<+ ddt(QSI);
+	I(`IntrinsicDrain, `IntrinsicBody)	<+ ddt(QDI);
+
+	I(`GateEdgeNode, `IntrinsicSource)	<+ ddt(-devsign * Qovs );
+	I(`GateEdgeNode, `IntrinsicDrain) 	<+ ddt(-devsign * Qovd );
+	I(`GateEdgeNode, `IntrinsicBody)	<+ ddt(-devsign * Qovb);
+
+	//Drain to Source Current
+	I(`IntrinsicDrain, `IntrinsicSource)	<+ devsign * sigvds * ids + (GMIN * V(`IntrinsicDrain,`IntrinsicSource));
+
+	if(IGBMOD != 0)
+		I(`IntrinsicGate, `IntrinsicBody)	<+ IGB;
+	if(IGCMOD != 0) begin
+		I(`IntrinsicGate, `IntrinsicSource)	<+ (IGS + IGCS);
+		I(`IntrinsicGate, `IntrinsicDrain)	<+ (IGD + IGCD);
+	end
+
+	if (sigvds>0) begin
+		I(`IntrinsicDrain, `IntrinsicBody)	<+ ISUB + IGIDL;
+		I(`IntrinsicSource, `IntrinsicBody)	<+ IGISL;
+	end else begin
+		I(`IntrinsicDrain, `IntrinsicBody)	<+ IGIDL;
+		I(`IntrinsicSource, `IntrinsicBody)	<+ ISUB + IGISL;
+	end
+
+	// External S/D Resistance
+
+`ifdef __RDSMOD__
+	if(RDSMOD != 2) begin
+		gdpr = 1.0 / Rdrain; /* Note: gdpr considers all fingers */
+		gspr = 1.0 / Rsource; /* Note: gspr considers all fingers */
+		I(d, di) <+ V(d, di) * gdpr;
+		I(s, si) <+ V(s, si) * gspr;
+		I(d,di) <+ white_noise(Nt * gdpr, "rd");
+		I(s,si) <+ white_noise(Nt * gspr, "rs");
+	end else begin
+		V(d, di) <+ 0;
+		V(s, si) <+ 0;
+	end
+`endif
+
+`ifdef __RGATEMOD__
+	if (RGATEMOD == 0) begin
+		V(g, gm) <+ 0;
+	end else begin : rgate
+		real Ggate, Gnoise;
+		if (RGATEMOD == 2) begin
+			Ggate = Gcrg;
+			Gnoise = Gcrg * Gcrg / Grgeltd;
+		end else begin
+			Ggate = Grgeltd;
+			Gnoise = Grgeltd;
+		end
+		I(g, gm) <+ V(g, gm) * Ggate;
+		I(g, gm) <+ white_noise( Nt * Gnoise, "rg");
+	end
+
+	if (RGATEMOD == 3) begin
+		I(gm,gi) <+ V(gm,gi) * Gcrg;
+	end else begin
+		V(gm,gi) <+ 0;
+	end
+`endif
+
+// Self Heating
+`ifdef __SHMOD__
+	if (SHMOD !=0 && RTH0 > 0) begin
+		Pwr(ith_branch) <+ -devsign * sigvds * ids * V(`IntrinsicDrain, `IntrinsicSource);
+	end
+	Pwr(rth_branch) <+ Temp(rth_branch) * gth;
+	Pwr(rth_branch) <+ ddt(Temp(rth_branch) * cth);
+`endif
+
+
+`ifdef __RBODYMOD__
+	if(RBODYMOD != 0) begin
+		I(bi,sbulk) <+ V(bi,sbulk) * Grbps;
+		I(b,sbulk)  <+ V(b,sbulk)  * Grbsb;
+		I(b,bi)     <+ V(b,bi)     * Grbpb;
+		I(b,dbulk)  <+ V(b,dbulk)  * Grbdb;
+		I(bi,dbulk) <+ V(bi,dbulk) * Grbpd;
+		I(sbulk,bi) <+ white_noise(Nt * Grbps, "rbps");
+		I(sbulk,b)  <+ white_noise(Nt * Grbsb, "rbsb");
+		I(b,bi)     <+ white_noise(Nt * Grbpb, "rbpb");
+		I(dbulk,bi) <+ white_noise(Nt * Grbpd, "rbpd");
+		I(dbulk,b)  <+ white_noise(Nt * Grbdb, "rbdb");
+	end else begin
+		V(b,sbulk)  <+ 0;
+		V(b,bi)     <+ 0;
+		V(b,dbulk)  <+ 0;
+	end
+`endif
+
+	// Diode Current and Capacitance
+`ifdef __RBODYMOD__
+	if(RBODYMOD != 0) begin
+		I(sbulk, `IntrinsicSource) <+ devsign * Ibs;
+		I(dbulk, `IntrinsicDrain)  <+ devsign * Ibd;
+		I(sbulk, `IntrinsicSource) <+ devsign * ddt(Qbs);
+		I(dbulk, `IntrinsicDrain)  <+ devsign * ddt(Qbd);
+	end else begin
+`endif
+		I(`IntrinsicBody, `IntrinsicSource) <+ devsign * Ibs;
+		I(`IntrinsicBody, `IntrinsicDrain)  <+ devsign * Ibd;
+		I(`IntrinsicBody, `IntrinsicSource) <+ devsign * ddt(Qbs);
+		I(`IntrinsicBody, `IntrinsicDrain)  <+ devsign * ddt(Qbd);
+`ifdef __RBODYMOD__
+	end
+`endif
+
+end
+
+endmodule
+

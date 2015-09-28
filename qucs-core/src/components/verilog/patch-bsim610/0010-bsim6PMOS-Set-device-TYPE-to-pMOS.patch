@@ -1,0 +1,45 @@
+From f5dc65fb64388b5e02b66dc07c0ab05945531bc4 Mon Sep 17 00:00:00 2001
+From: Guilherme Brondani Torri <guitorri@gmail.com>
+Date: Thu, 16 Jul 2015 22:01:44 +0200
+Subject: [PATCH] [bsim6PMOS] Set device TYPE to pMOS
+
+---
+ bsim6.va | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
+
+diff --git a/bsim6.va b/bsim6.va
+index f546712..8c4a751 100644
+--- a/bsim6.va
++++ b/bsim6.va
+@@ -607,7 +607,7 @@ endfunction
+ /************************/
+ /*  Model Parameters    */
+ /************************/
+-parameter integer TYPE		= `ntype	from [`ptype:`ntype] exclude 0;
++//parameter integer TYPE		= `ntype	from [`ptype:`ntype] exclude 0;
+ parameter integer CVMOD		= 0		from [0:1]                	`ATTR(info="0: Consistent IV-CV\n1: Different IV-CV");
+ parameter integer GEOMOD	= 0 		from [0:10]              	`ATTR(info="Geo dependent parasitics model");
+ parameter integer RGEOMOD	= 0		from [0:8]               	`ATTR(info="Geometry-dependent source/drain resistance\n0: RSH-based, 1: Holistic");
+@@ -1543,6 +1543,9 @@ parameter real GMIN		= 1e-15;
+ //   Variables
+ // ***********************************
+ 
++// Qucs - use TYPE as internal variable, harcode to device type
++integer TYPE;
++
+ // Common Variables
+ real PSiso,PDiso,PSsha,PDsha,PSmer,PDmer,ASiso,ADiso,ASsha,ADsha,ASmer,ADmer;
+ real T_0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12;
+@@ -1810,6 +1813,9 @@ real Rint, Rend;
+ `endif 
+ 
+ analog begin
++	// Qucs - use fixed TYPE
++	TYPE = `ptype;
++
+ 	// Bias independent calculations
+ 	if( TYPE == `ntype ) devsign = 1;
+ 	else devsign = -1;
+-- 
+2.1.2
+

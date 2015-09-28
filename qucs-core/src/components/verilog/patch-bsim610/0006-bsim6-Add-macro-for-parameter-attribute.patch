@@ -1,0 +1,31 @@
+From 3a3625892f3dc1e16d95b8894ff1da9f853055e3 Mon Sep 17 00:00:00 2001
+From: Guilherme Brondani Torri <guitorri@gmail.com>
+Date: Thu, 16 Jul 2015 20:47:28 +0200
+Subject: [PATCH] [bsim6] Add macro for parameter attribute
+
+Used for documentation
+---
+ bsim6.va | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+diff --git a/bsim6.va b/bsim6.va
+index aadcc55..4b6d780 100755
+--- a/bsim6.va
++++ b/bsim6.va
+@@ -54,6 +54,13 @@
+ `include "constants.vams"
+ `include "disciplines.vams"
+ 
++// Macros used to provide parameter attributes, documentation purposes
++`ifdef insideADMS
++ `define ATTR(txt) (*txt*)
++`else
++ `define ATTR(txt)
++`endif
++
+ // Disable strobe for improved performance speed
+ //`define DISABLE_STROBE	//To Use DISABLE_STROBE, Activate it here. Used Only at GEOMOD and RGEOMOD
+ `ifdef DISABLE_STROBE
+-- 
+2.1.2
+
