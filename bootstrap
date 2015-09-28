@@ -1,0 +1,24 @@
+#!/bin/sh
+
+MODULES="qucs-core qucs qucs-doc"
+ACLOCAL_FLAGS=-Im4
+
+echo "Running aclocal..."
+aclocal $ACLOCAL_FLAGS || exit 1
+
+echo "Running automake..."
+automake -a -c --gnu --add-missing  || exit 1
+
+echo "Running autoconf..."
+autoconf || exit 1
+
+if test "x$1" = xhere; then
+	exit 0;
+fi
+
+for i in $MODULES; do
+	( cd $i;
+	  echo autogen in $( pwd )
+	  ./bootstrap || ( echo trouble in $i/autogen.sh; exit 1 )
+	) || exit 1
+done

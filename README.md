@@ -74,10 +74,13 @@ Install Perl modules for ADMS:
     sudo apt-get install libxml-libxml-perl
     sudo apt-get install libgd-perl
 
+Bootstrap (after cloning from git):
+
+    ./bootstrap
+
 Compile qucs:
 
     cd qucs
-    ./autogen.sh
     ./configure --enable-maintainer-mode
     make
     sudo make install
@@ -85,7 +88,6 @@ Compile qucs:
 Compile qucs-core:
 
     cd qucs-core
-    ./bootstrap.sh
     ./configure --enable-maintainer-mode
     make
     sudo make install

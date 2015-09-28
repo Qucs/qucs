@@ -1,6 +1,6 @@
 #! /bin/sh
 #
-# autogen.sh
+# bootstrap
 #
 # Run this script to re-generate all maintainer-generated files.
 #
