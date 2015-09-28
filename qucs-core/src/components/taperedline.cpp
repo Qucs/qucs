@@ -52,19 +52,32 @@ void taperedline::calcABCDparams(nr_double_t frequency)
   nr_double_t Z1 = getPropertyDouble ("Z1");//Port 1 impedance
   nr_double_t Z2 = getPropertyDouble ("Z2");//Port 2 impedance
   nr_double_t alpha = getPropertyDouble ("Alpha");//Loss coefficient
+  alpha = std::log(alpha) / 2.0;//The attenuation coefficient needs to be converted into Neper/m units
   nr_double_t gamma_max = getPropertyDouble ("Gamma_max");;//Maximum ripple (Klopfenstein weighting only)
   nr_double_t lambda = C0/frequency;
-  nr_double_t lstep = 3e-3*lambda;//Size of the differential elements
-  nr_double_t Zi, beta;
-  nr_complex_t a, b, c, d, gamma;
+  int Nsteps = 20; // Number of sections used to approximate the taper
+  nr_double_t lstep = L/Nsteps; //Size of the differential elements
+  nr_double_t beta = 2*pi*frequency/C0; //Propagation constant
+  nr_complex_t gamma = nr_complex_t (alpha, beta); //Complex propagation constant
   matrix ABCD_ = eye(2);//Overall ABCD matrix
   matrix ABCDaux = eye(2);//Auxiliar matrix for performing the iterative product
-  alpha = std::log(alpha) / 2.0;//The attenuation coefficient needs to be converted into Neper/m units
-  for (nr_double_t l = lstep/2; l <= L-(lstep/2); l+=lstep)
+  int idx = 0;
+  nr_double_t Zi;
+  nr_complex_t a, b, c, d;
+  // ABCD coefficients
+  a = cosh(gamma*lstep);
+  b = sinh(gamma*lstep); // need to be multiplied by Zi
+  c = sinh(gamma*lstep); // need to be divided by Zi
+  d = cosh(gamma*lstep); 
+
+  nr_double_t l = lstep/2.0; // compute impedance in the middle of the section
+  for (int idx = 0 ; idx < Nsteps; idx++)
+  //for (nr_double_t l = lstep/2; l <= L-(lstep/2); l+=lstep)
   {
     // The line is discretized in finite elements. The size of these elements can be considered a differential
-    // length since it is 1e-3*wavelength. Taking into account the cascading property of the ABCD matrix, the overall
-    // ABCD matrix can be calculated as the product of the individual ABCD matrices.
+    // length since the impedance change across the actual section is small. 
+    // Taking into account the cascading property of the ABCD matrix, the overall
+    // ABCD matrix can be calculated as the product of the individual ABCD matrices.   
     if (!strcmp (getPropertyString ("Weighting"), "Exponential"))
     {
        Zi = calcExponential(l, L, Z1, Z2);
@@ -86,32 +99,17 @@ void taperedline::calcABCDparams(nr_double_t frequency)
               Zi = calcKlopfenstein(l, L, Z1, Z2, gamma_max);
            }
         }
-    }    
-    beta = 2*pi*frequency/C0;//Propagation constant
-    gamma = nr_complex_t (alpha, beta);//Complex propagation constant
-    // ABCD coefficients
-    a = cosh(gamma*lstep);
-    b = Zi*sinh(gamma*lstep);
-    c = sinh(gamma*lstep)/Zi;
-    d = cosh(gamma*lstep); 
+    }
     ABCDaux.set(0,0,a);
-    ABCDaux.set(0,1,b);
-    ABCDaux.set(1,0,c);
+    ABCDaux.set(0,1,Zi*b);
+    ABCDaux.set(1,0,c/Zi);
     ABCDaux.set(1,1,d);
     //Iterative product
     ABCD_=ABCD_*ABCDaux;
-
+    l += lstep; // move to the next section
   }
   // Overall ABCD coefficients
   ABCD = ABCD_;
-}
-
-nr_double_t integrate_n (vector v) { /* using trapezoidal rule */
-  nr_double_t result = 0.0;
-  for (int i = 1; i < v.getSize () - 1; i++) result += norm (v.get (i));
-  result += 0.5 * norm (v.get (0));
-  result += 0.5 * norm (v.get (v.getSize () - 1));
-  return result;
 }
 
 //------------------------------------------------------------------
@@ -152,101 +150,31 @@ nr_double_t taperedline::calcKlopfenstein(nr_double_t l, nr_double_t L, nr_doubl
 
 //------------------------------------------------------------------
 // Auxiliar function for Klopfenstein profile calculation
+// The recursive calculation algorithm is from
+//   Grossberg, M. A., "Extremely rapid computation of the Klopfenstein
+//   impedance taper," IEEE Proc., vol.56, no.9, pp.1629-1630, Sept. 1968
+//
+// In practice less than 10 iterations are needed in most cases
 nr_double_t taperedline::phi(nr_double_t x, nr_double_t A)
 {
-   if (abs(x)<1e-4) return 0;//phi(0, A) = 0
-   if(abs(A)<1e-4) return x/2.;//phi(x, 0) = x/2
-   if(abs(x-1)<1e-4) return (std::cosh(A)-1)/(A*A);//phi(1, A)=(cosh(A)-1)/A^2 
-   nr_double_t sign;
-   // phi(x, A) is defined for |x|<=1
-   if (x > 1) x=1;
-   if (x < -1) x=-1;
-
-   if (x <= 0)//Integration direction
-   {
-     sign = -1;
-   }
-   else
-   {
-     sign = 1;
-   }
-
-   nr_double_t dy = abs(5e-3*x);//Differential step
-   vector vIntegration(std::floor(abs(x)/dy));
-   int i=0;
-   for (nr_double_t y = 0; y <= abs(x); y+=dy)//Integration
-   {
-       vIntegration(i) = (besseli(1, A*std::sqrt(1-y*y))/(A*std::sqrt(1-y*y)))*dy;
-       i++;
-   }
-   return sign*integrate_n(vIntegration);
-
+  nr_double_t ak = 1.0;
+  nr_double_t bk = x / 2.0;
+  nr_double_t ck = bk;
+  nr_double_t phi = bk;
+  for (int k = 1; k < 20; k++) {
+    ck *= (1.0 - x*x);
+    bk = (ck + 2.0*k*bk) / (2.0*k + 1.0);
+    ak = A*A / (4.0*k*(k + 1.0)) * ak;
+    phi += ak*bk;
+    if (abs(ak*bk) < 1e-7) break;
+  }
+  return phi;
 }
-
-
-//------------------------------------------------------------------
-// Modified Bessel function. It is calculated using the infinite discrete
-// summation formula. See "Handbook of Mathematical functions with Formulas, Graphs and
-// Mathematical Tables". Milton Abramowitz. US department of commerce (1964). Page 375
-// http://people.math.sfu.ca/~cbm/aands/page_375.htm
-nr_double_t taperedline::besseli(nr_double_t alpha, nr_double_t x)
-{
-nr_double_t b=0;
-for (int m = 0; m<15; m++)
-{
-	b+=std::pow(x/2, 2*m+alpha)*(1/(factorial(m)*std::tgamma(m+alpha+1)));
-}
-return b;
-}
-
-//------------------------------------------------------------------------
-// This function calculates the factorial. In favour of efficiency, it implements a LUT for m < 30
-long int taperedline::factorial(int m)
-{
-switch(m)
-{
-   case 0: return 1;
-   case 1: return 1;
-   case 2: return 2;
-   case 3: return 6;
-   case 4: return 24;
-   case 5: return 120;
-   case 6: return 720;
-   case 7: return 5040;
-   case 8: return 40320;
-   case 9: return 362880;
-   case 10: return 3628800;
-   case 11: return 39916800;
-   case 12: return 479001600;
-   case 13: return 6227020800; 
-   case 14: return 87178291200;
-   case 15: return 1307674368000;
-   case 16: return 20922789888000;
-   case 17: return 355687428096000;
-   case 18: return 6402373705728000;
-   case 19: return 121645100408832000;
-   case 20: return 2432902008176640000;
-   default:
-      long int k=1;
-      for(int i =1; i<=m;i++)k*=i;
-      return k;
-}
-
-}
-
-
-
-
 
 void taperedline::calcSP (nr_double_t frequency) {
   calcABCDparams(frequency);
-  matrix S = qucs::atos(ABCD, z0, z0);
-  nr_complex_t S11 = S.get(0,0);
-  nr_complex_t S12 = S.get(0,1);
-  nr_complex_t S21 = S.get(1,0);
-  nr_complex_t S22 = S.get(1,1);
-  setS (NODE_1, NODE_1, S11); setS (NODE_2, NODE_2, S22);
-  setS (NODE_1, NODE_2, S12); setS (NODE_2, NODE_1, S21);
+  matrix Stmp = qucs::atos(ABCD, z0, z0);
+  setMatrixS(Stmp);
 }
 
 void taperedline::calcNoiseSP (nr_double_t) {
@@ -282,13 +210,8 @@ void taperedline::calcAC (nr_double_t frequency) {
   calcABCDparams(frequency);
   nr_double_t L = getPropertyDouble ("L");
   if (L != 0.0) {
-/*
-Conversions between S, Z, Y, h, ABCD and T parameters which are Valid for Complex source and load impedances.
-Dean A. Frickey. IEEE Transaction on Microwave Theory and Techniques. Vol 42. No 2. February 1994
-*/
-    
     nr_complex_t y11 = ABCD.get(1,1)/ABCD.get(0,1);
-    nr_complex_t y12 = det(ABCD)/ABCD.get(0,1);
+    nr_complex_t y12 = -det(ABCD)/ABCD.get(0,1);
     nr_complex_t y21 = -1./ABCD.get(0,1);
     nr_complex_t y22 = ABCD.get(0,0)/ABCD.get(0,1);
     setY (NODE_1, NODE_1, y11); setY (NODE_2, NODE_2, y22);
