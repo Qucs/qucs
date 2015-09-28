@@ -59,7 +59,8 @@ void taperedline::calcABCDparams(nr_double_t frequency)
   nr_complex_t a, b, c, d, gamma;
   matrix ABCD_ = eye(2);//Overall ABCD matrix
   matrix ABCDaux = eye(2);//Auxiliar matrix for performing the iterative product
-  for (nr_double_t l = lstep; l <= L; l+=lstep)
+  alpha = std::log(alpha) / 2.0;//The attenuation coefficient needs to be converted into Neper/m units
+  for (nr_double_t l = lstep/2; l <= L-(lstep/2); l+=lstep)
   {
     // The line is discretized in finite elements. The size of these elements can be considered a differential
     // length since it is 1e-3*wavelength. Taking into account the cascading property of the ABCD matrix, the overall
