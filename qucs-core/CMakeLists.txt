@@ -325,7 +325,7 @@ add_custom_target(coreuninstall
 
 
 # TODO install distributables
-#EXTRA_DIST = BUGS autogen.sh depcomp RELEASE
+#EXTRA_DIST = BUGS bootstrap depcomp RELEASE
 
 # TODO tarball
 # TODO bundle

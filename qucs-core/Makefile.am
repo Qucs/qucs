@@ -41,7 +41,7 @@ ACLOCAL_AMFLAGS = -I m4
 
 nodist_pkginclude_HEADERS = qucs_typedefs.h
 
-EXTRA_DIST = BUGS bootstrap.sh RELEASE
+EXTRA_DIST = BUGS bootstrap RELEASE
 
 pkginclude_HEADERS = config.h
 
