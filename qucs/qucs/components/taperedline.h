@@ -20,8 +20,8 @@
 *
 *
 */
-#ifndef taperedline_H
-#define taperedline_H
+#ifndef TAPEREDLINE_H
+#define TAPEREDLINE_H
 
 #include "component.h"
 

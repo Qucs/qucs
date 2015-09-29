@@ -121,6 +121,56 @@ nr_double_t taperedline::calcKlopfenstein(nr_double_t l, nr_double_t L, nr_doubl
    return (std::exp(0.5*std::log(Z1*Z2) + (gamma0/std::cosh(A))*A*A*phi(2.*(l/L)-1., A)));
 }
 
+void taperedline::calcImpedanceProfile()
+{
+nr_double_t L = getPropertyDouble ("L");//Length
+  nr_double_t Z1 = getPropertyDouble ("Z1");//Port 1 impedance
+  nr_double_t Z2 = getPropertyDouble ("Z2");//Port 2 impedance
+
+  if (Z1 > Z2)//Handling Z1 > Z2 case
+  {
+     logprint (LOG_ERROR, "WARNING: The impedance at port 1 is bigger than the impedance at port 2 ((Z1 = %g Ohm ) > (Z2 = %g Ohm))\n", Z1, Z2);
+     nr_double_t Zaux = Z2;
+     Z2 = Z1;
+     Z1 = Zaux;
+  } 
+
+  nr_double_t gamma_max = getPropertyDouble ("Gamma_max");;//Maximum ripple (Klopfenstein weighting only)
+  nr_double_t lstep = L/Nsteps; //Size of the differential elements
+
+  int idx=0;
+  nr_double_t l = lstep/2.0;
+  for (idx = 0, l = lstep/2.0 ; idx < Nsteps; idx++, l += lstep)
+  {
+    // The line is discretized in finite elements. The size of these elements can be considered a differential
+    // length since the impedance change across the actual section is small. 
+    // Taking into account the cascading property of the ABCD matrix, the overall
+    // ABCD matrix can be calculated as the product of the individual ABCD matrices.   
+    if (!strcmp (getPropertyString ("Weighting"), "Exponential"))
+    {
+       Zprofile[idx] = calcExponential(l, L, Z1, Z2);
+    }
+    else
+    {
+        if (!strcmp (getPropertyString ("Weighting"), "Linear"))
+        {
+            Zprofile[idx] = calcLinear(l, L, Z1, Z2);
+        }
+        else
+        {
+           if (!strcmp (getPropertyString ("Weighting"), "Triangular"))
+           {
+              Zprofile[idx] = calcTriangular(l, L, Z1, Z2);
+           }
+           else//Klopfenstein
+           {
+              Zprofile[idx] = calcKlopfenstein(l, L, Z1, Z2, gamma_max);
+           }
+        }
+    }
+ }
+}
+
 //------------------------------------------------------------------
 // Auxiliar function for Klopfenstein profile calculation
 // The recursive calculation algorithm is from
@@ -177,58 +227,14 @@ void taperedline::initDC (void) {
 void taperedline::initAC (void) {
   setVoltageSources (0);
   allocMatrixMNA ();
+  calcImpedanceProfile();
 }
 
 
 void taperedline::initSP(void)
 {
   allocMatrixS ();
-  nr_double_t L = getPropertyDouble ("L");//Length
-  nr_double_t Z1 = getPropertyDouble ("Z1");//Port 1 impedance
-  nr_double_t Z2 = getPropertyDouble ("Z2");//Port 2 impedance
-
-  if (Z1 > Z2)//Handling Z1 > Z2 case
-  {
-     logprint (LOG_ERROR, "WARNING: The impedance at port 1 is bigger than the impedance at port 2 ((Z1 = %g Ohm ) > (Z2 = %g Ohm))\n", Z1, Z2);
-     nr_double_t Zaux = Z2;
-     Z2 = Z1;
-     Z1 = Zaux;
-  } 
-
-  nr_double_t gamma_max = getPropertyDouble ("Gamma_max");;//Maximum ripple (Klopfenstein weighting only)
-  nr_double_t lstep = L/Nsteps; //Size of the differential elements
-
-  int idx=0;
-  nr_double_t l = lstep/2.0;
-  for (idx = 0, l = lstep/2.0 ; idx < Nsteps; idx++, l += lstep)
-  {
-    // The line is discretized in finite elements. The size of these elements can be considered a differential
-    // length since the impedance change across the actual section is small. 
-    // Taking into account the cascading property of the ABCD matrix, the overall
-    // ABCD matrix can be calculated as the product of the individual ABCD matrices.   
-    if (!strcmp (getPropertyString ("Weighting"), "Exponential"))
-    {
-       Zprofile[idx] = calcExponential(l, L, Z1, Z2);
-    }
-    else
-    {
-        if (!strcmp (getPropertyString ("Weighting"), "Linear"))
-        {
-            Zprofile[idx] = calcLinear(l, L, Z1, Z2);
-        }
-        else
-        {
-           if (!strcmp (getPropertyString ("Weighting"), "Triangular"))
-           {
-              Zprofile[idx] = calcTriangular(l, L, Z1, Z2);
-           }
-           else//Klopfenstein
-           {
-              Zprofile[idx] = calcKlopfenstein(l, L, Z1, Z2, gamma_max);
-           }
-        }
-    }
- }
+  calcImpedanceProfile();
 }
 
 void taperedline::calcAC (nr_double_t frequency) {

@@ -23,8 +23,8 @@
  *
  */
 
-#ifndef __taperedline_H__
-#define __taperedline_H__
+#ifndef __TAPEREDLINE_H__
+#define __TAPEREDLINE_H__
 #include "matrix.h"
 
 const int Nsteps = 20; // Number of sections used to approximate the taper
@@ -42,6 +42,7 @@ class taperedline : public qucs::circuit
   void calcNoiseSP (nr_double_t);
 private:
   void calcABCDparams(nr_double_t);
+  void calcImpedanceProfile();
   nr_double_t calcExponential(nr_double_t, nr_double_t, nr_double_t, nr_double_t);
   nr_double_t calcLinear(nr_double_t, nr_double_t, nr_double_t, nr_double_t);
   nr_double_t calcTriangular(nr_double_t, nr_double_t, nr_double_t, nr_double_t);
