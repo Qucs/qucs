@@ -129,13 +129,6 @@ if MAINTAINER_MODE
 ## set the path to the admsXml binary depeding on the choice
 ## the user made at configure time
 
-## FIXME: let configure.ac decide
-if USE_INTERNAL_ADMS
-ADMSXML = $(abs_top_builddir)/deps/adms/admsXml/admsXml
-else
-ADMSXML = @ADMSXML@
-endif
-
 GENERATED_FILES = *.core.* *.analogfunction.* *.gui.* *.defs.* .*.adms .*.xml
 else
 GENERATED_FILES =

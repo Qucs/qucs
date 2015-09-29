@@ -582,7 +582,7 @@ if test $USE_MAINTAINER_MODE = yes; then
 fi
 
 dnl check for adms
-if test $USE_MAINTAINER_MODE = yes; then
+if test yes = yes; then
   dnl now, to build or not to build the adms subproject. The adms
   dnl subproject is required to generate code during the maintainer
   dnl build process. It is not required for distributions. It is
@@ -600,16 +600,12 @@ if test $USE_MAINTAINER_MODE = yes; then
     [ADMSXML=$withval],
     [with_mkadms=check])
   AS_IF([test "$with_mkadms" = check -o "$with_mkadms" = external],
-    [AC_PATH_PROG([ADMSXML], [mkadms], [no])
+    [AC_PATH_PROG([ADMSXML], [admsXml], [no])
      AC_MSG_NOTICE([Using host external admsXml rather than bundled version.])],
     [AC_MSG_NOTICE([Using bundled admsXml.])])
   AS_IF([test "$with_mkadms" = external -a "$ADMSXML" = no],
     [AC_MSG_ERROR([External adms demanded, but not found.])])
-  dnl We conditionally set ADMSXML in the top level Makefile.am in
-  dnl qucs-core. AM_SUBST_NOTMAKE([ADMSXML]) stops automake from
-  dnl generating a line of the form ADMSXML = @ADMSXML@ in Makefile.in.
-  dnl We need to do that assignment conditionally.
-  AM_SUBST_NOTMAKE([ADMSXML])
+  AC_SUBST([ADMSXML])
 else
   dnl not maintainer mode, set with_mkadms to external which will prevent it
   dnl being built
@@ -975,6 +971,9 @@ AC_MSG_RESULT([])
 AC_MSG_RESULT([ $PACKAGE version $VERSION ($GIT_REVISION) configured successfully.])
 AC_MSG_RESULT([
 Configure Information:
+  AdmsXml           : $ADMSXML
+    internal        :   $internal_adms
+
   C Compiler        : $CC
     DEFS            :   $DEFS
     CPPFLAGS        :   $CPPFLAGS
