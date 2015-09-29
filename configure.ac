@@ -33,11 +33,9 @@ AM_CONDITIONAL([ENABLE_DOC], [test "$enable_doc" != no])
 
 # Create Output
 
-AS_IF([test "x$enable_doc" != "xno"], [
-  AC_CONFIG_SUBDIRS([qucs-doc])
-])
 AC_CONFIG_SUBDIRS([qucs
-                   qucs-core])
+                   qucs-core
+                   qucs-doc])
 AC_CONFIG_FILES([Makefile
                  examples/Makefile])
 AC_OUTPUT
