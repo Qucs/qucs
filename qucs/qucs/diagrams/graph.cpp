@@ -461,19 +461,14 @@ void Graph::ScrPt::setScr(float x, float y)
 }
 void Graph::ScrPt::setIndep(double x)
 {
-  assert(ScrX>=0);
   indep = x;
 }
 void Graph::ScrPt::setDep(cplx_t x)
 {
-  assert(ScrX>=0);
   dep = x;
 }
 float Graph::ScrPt::getScrX() const
 {
-  if(ScrX<0){
-  //  std::cerr << "dangerous: returning negative screen coordinate" << ScrX;
-  }
   return ScrX;
 }
 float Graph::ScrPt::getScrY() const
@@ -482,12 +477,10 @@ float Graph::ScrPt::getScrY() const
 }
 double Graph::ScrPt::getIndep() const
 {
-  assert(ScrX>=0);
   return indep;
 }
 cplx_t Graph::ScrPt::getDep() const
 {
-  assert(ScrX>=0);
   return dep;
 }
 
