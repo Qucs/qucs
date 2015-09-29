@@ -421,6 +421,8 @@ void Rect3DDiagram::removeHiddenLines(char *zBuffer, tBound *Bounds)
 {
   double Dummy = 0.0;  // number for 1-dimensional data in 3D cartesian
   double *px, *py, *pz;
+  // temporarily disabled. does not work.
+  hideLines = false;
 
   tPoint3D *p;
   int i, j, z, dx, dy, Size=0;
