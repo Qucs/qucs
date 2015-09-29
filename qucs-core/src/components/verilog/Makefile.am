@@ -135,4 +135,12 @@ pkginclude_HEADERS = $(XML_FILES) $(MAKE_FILES) $(VA_INCLUDES)
 CLEANFILES = *~ *.orig *.rej *.analogfunction.cpp *.core.cpp .*.adms \
              *.core.h *.analogfunction.h *.cpp *.defs.h
 
+DISTCLEANFILES = \
+    constants.vams\
+    discipline.vams\
+    .adms.implicit.xml\
+    .interface.xml\
+    disciplines.vams
+
+
 MAINTAINERCLEANFILES = Makefile.in $(GENERATED_FILES)
