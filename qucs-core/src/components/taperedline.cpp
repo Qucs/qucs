@@ -50,19 +50,13 @@ taperedline::taperedline () : circuit (2) {
 void taperedline::calcABCDparams(nr_double_t frequency)
 {
   nr_double_t L = getPropertyDouble ("L");//Length
-  nr_double_t Z1 = getPropertyDouble ("Z1");//Port 1 impedance
-  nr_double_t Z2 = getPropertyDouble ("Z2");//Port 2 impedance
   nr_double_t alpha = getPropertyDouble ("Alpha");//Loss coefficient
   alpha = std::log(alpha) *.5;//The attenuation coefficient needs to be converted into Neper/m units
-  nr_double_t gamma_max = getPropertyDouble ("Gamma_max");;//Maximum ripple (Klopfenstein weighting only)
-  nr_double_t lambda = C0/frequency;
-  int Nsteps = 20; // Number of sections used to approximate the taper
   nr_double_t lstep = L/Nsteps; //Size of the differential elements
   nr_double_t beta = 2*pi*frequency/C0; //Propagation constant
   nr_complex_t gamma = nr_complex_t (alpha, beta); //Complex propagation constant
   matrix ABCD_ = eye(2);//Overall ABCD matrix
   matrix ABCDaux = eye(2);//Auxiliar matrix for performing the iterative product
-  int idx = 0;
   nr_double_t Zi;
   nr_complex_t a, b, c, d;
   // ABCD coefficients
@@ -78,28 +72,7 @@ void taperedline::calcABCDparams(nr_double_t frequency)
     // length since the impedance change across the actual section is small. 
     // Taking into account the cascading property of the ABCD matrix, the overall
     // ABCD matrix can be calculated as the product of the individual ABCD matrices.   
-    if (!strcmp (getPropertyString ("Weighting"), "Exponential"))
-    {
-       Zi = calcExponential(l, L, Z1, Z2);
-    }
-    else
-    {
-        if (!strcmp (getPropertyString ("Weighting"), "Linear"))
-        {
-            Zi = calcLinear(l, L, Z1, Z2);
-        }
-        else
-        {
-           if (!strcmp (getPropertyString ("Weighting"), "Triangular"))
-           {
-              Zi = calcTriangular(l, L, Z1, Z2);
-           }
-           else//Klopfenstein
-           {
-              Zi = calcKlopfenstein(l, L, Z1, Z2, gamma_max);
-           }
-        }
-    }
+    Zi = Zprofile[idx];
     ABCDaux.set(0,0,a);
     ABCDaux.set(0,1,Zi*b);
     ABCDaux.set(1,0,c/Zi);
@@ -204,6 +177,58 @@ void taperedline::initDC (void) {
 void taperedline::initAC (void) {
   setVoltageSources (0);
   allocMatrixMNA ();
+}
+
+
+void taperedline::initSP(void)
+{
+  allocMatrixS ();
+  nr_double_t L = getPropertyDouble ("L");//Length
+  nr_double_t Z1 = getPropertyDouble ("Z1");//Port 1 impedance
+  nr_double_t Z2 = getPropertyDouble ("Z2");//Port 2 impedance
+
+  if (Z1 > Z2)//Handling Z1 > Z2 case
+  {
+     logprint (LOG_ERROR, "WARNING: The impedance at port 1 is bigger than the impedance at port 2 ((Z1 = %g Ohm ) > (Z2 = %g Ohm))\n", Z1, Z2);
+     nr_double_t Zaux = Z2;
+     Z2 = Z1;
+     Z1 = Zaux;
+  } 
+
+  nr_double_t gamma_max = getPropertyDouble ("Gamma_max");;//Maximum ripple (Klopfenstein weighting only)
+  nr_double_t lstep = L/Nsteps; //Size of the differential elements
+
+  int idx=0;
+  nr_double_t l = lstep/2.0;
+  for (idx = 0, l = lstep/2.0 ; idx < Nsteps; idx++, l += lstep)
+  {
+    // The line is discretized in finite elements. The size of these elements can be considered a differential
+    // length since the impedance change across the actual section is small. 
+    // Taking into account the cascading property of the ABCD matrix, the overall
+    // ABCD matrix can be calculated as the product of the individual ABCD matrices.   
+    if (!strcmp (getPropertyString ("Weighting"), "Exponential"))
+    {
+       Zprofile[idx] = calcExponential(l, L, Z1, Z2);
+    }
+    else
+    {
+        if (!strcmp (getPropertyString ("Weighting"), "Linear"))
+        {
+            Zprofile[idx] = calcLinear(l, L, Z1, Z2);
+        }
+        else
+        {
+           if (!strcmp (getPropertyString ("Weighting"), "Triangular"))
+           {
+              Zprofile[idx] = calcTriangular(l, L, Z1, Z2);
+           }
+           else//Klopfenstein
+           {
+              Zprofile[idx] = calcKlopfenstein(l, L, Z1, Z2, gamma_max);
+           }
+        }
+    }
+ }
 }
 
 void taperedline::calcAC (nr_double_t frequency) {

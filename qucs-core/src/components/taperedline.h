@@ -27,6 +27,8 @@
 #define __taperedline_H__
 #include "matrix.h"
 
+const int Nsteps = 20; // Number of sections used to approximate the taper
+
 class taperedline : public qucs::circuit
 {
  public:
@@ -34,6 +36,7 @@ class taperedline : public qucs::circuit
   void calcSP (nr_double_t);
   void initDC (void);
   void initAC (void);
+  void initSP (void);
   void calcAC (nr_double_t);
   void calcNoiseAC (nr_double_t);
   void calcNoiseSP (nr_double_t);
@@ -44,9 +47,8 @@ private:
   nr_double_t calcTriangular(nr_double_t, nr_double_t, nr_double_t, nr_double_t);
   nr_double_t calcKlopfenstein(nr_double_t, nr_double_t, nr_double_t, nr_double_t, nr_double_t);
   nr_double_t phi(nr_double_t, nr_double_t);
-  nr_double_t besseli(nr_double_t, nr_double_t);
-  long int factorial(int);
   qucs::matrix ABCD;
+  double Zprofile[Nsteps];
 };
 
 #endif /* __taperedline_H__ */
