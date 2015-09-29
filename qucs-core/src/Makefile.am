@@ -97,7 +97,6 @@ qucsator_SOURCES = ucs.cpp
 all-am: qucsdefs.h
 
 
-if MAINTAINER_MODE
 ## Here we create the various input parsing code files using
 ## lex and yacc, these files will be distributed
 generated_FILES = scan_netlist.cpp parse_netlist.cpp scan_dataset.cpp     \
@@ -148,14 +147,9 @@ parse_zvr.cpp: parse_zvr.y
 
 parse_mdl.cpp: parse_mdl.y
 	$(YACC) -v -o $@ --defines=tokens_mdl.h $<
-else
-generated_FILES =
-endif
 
-if MAINTAINER_MODE
 qucsdefs.h: qucsator$(EXEEXT)
 	./$< -l > $@
-endif
 
 ## The qucs equation definitions use a hash lookup table
 ## generated using gperf and put in gperfapphash.cpp which
@@ -164,7 +158,6 @@ equation.cpp: gperfapphash.cpp
 
 BUILT_SOURCES = equation.cpp
 
-if MAINTAINER_MODE
 ## Here we generate gperfapphash.cpp for equation.cpp.
 ##
 ## To generate the hash table code we must first create a
@@ -186,10 +179,6 @@ gperfappgen.h: applications.h
 ## Store the gperf names in their own variable as the are
 ## not distributed but must be removed in a maintainer-clean
 gperf_FILES = gperfapphash.cpp gperfapphash.gph gperfappgen.h
-
-else
-gperf_FILES =
-endif
 
 CLEANFILES = *~ *.orig *.rej *.output
 MAINTAINERCLEANFILES = Makefile.in $(generated_FILES) $(gperf_FILES)

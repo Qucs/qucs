@@ -123,16 +123,12 @@ AM_CPPFLAGS = -I$(top_srcdir)/src -I$(top_srcdir)/src/math \
   -I$(top_srcdir)/src/components -I$(top_srcdir)/src/components/devices \
   -I$(builddir)
 
-if MAINTAINER_MODE
 ## configure determines if we want to build and use the
 ## bundled version of ADMS, or the host's ADMS. Here we
 ## set the path to the admsXml binary depeding on the choice
 ## the user made at configure time
 
 GENERATED_FILES = *.core.* *.analogfunction.* *.gui.* *.defs.* .*.adms .*.xml
-else
-GENERATED_FILES =
-endif
 
 pkginclude_HEADERS = $(XML_FILES) $(MAKE_FILES) $(VA_INCLUDES)
 

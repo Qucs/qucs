@@ -23,7 +23,6 @@ AC_CANONICAL_TARGET
 
 dnl AM_INIT_AUTOMAKE does several things, including defining VERSION and PACKAGE
 AM_INIT_AUTOMAKE([no-define])
-AM_MAINTAINER_MODE
 
 AC_PREFIX_DEFAULT([/usr/local])
 test "x$prefix" = xNONE && prefix="/usr/local"
@@ -86,7 +85,7 @@ AC_PROG_LEX
 lexver_req="2.5.9";
 
 if test "x$LEX" != "x:"; then
-  if test $USE_MAINTAINER_MODE = yes; then
+  if test yes = yes; then
     AC_MSG_CHECKING([for $LEX >= $lexver_req])
     [lexver=`eval $LEX --version 2>/dev/null | head -1 | sed 's/[^0-9\.]//g'`]
     if test -n "$lexver"; then
@@ -127,9 +126,6 @@ AC_ARG_ENABLE([debug],
    *)   enable_debug="no"  ;;
    esac],
   [enable_debug="no"])
-if test $USE_MAINTAINER_MODE = yes; then
-  enable_debug="yes"
-fi
 if test "$enable_debug" = yes; then
   AC_DEFINE(DEBUG, 1, [Define if debug output should be supported.])
 else
@@ -258,7 +254,7 @@ case $host_os in
 	[CFLAGS="$CFLAGS -pipe"
 	 CXXFLAGS="$CXXFLAGS -pipe -fno-exceptions -fno-check-new -ldl -rdynamic"],[])
 
-  if test $USE_MAINTAINER_MODE = yes; then
+  if test "$enable_debug" = yes; then
     CFLAGS="$CFLAGS -W -Wall -Wmissing-prototypes"
     CXXFLAGS="$CXXFLAGS -W -Wall"
   fi
@@ -539,7 +535,7 @@ case $host_os in
   AC_MSG_NOTICE([MAC_OS_X_VERSION_MAX_ALLOWED=$MAC_OS_X_VERSION_MAX_ALLOWED])
 
 
-  if test $USE_MAINTAINER_MODE = yes; then
+  if test "$enable_debug" = yes; then
     CFLAGS="$CFLAGS -W -Wall -Wmissing-prototypes"
     CXXFLAGS="$CXXFLAGS -W -Wall"
   fi
@@ -553,7 +549,7 @@ case $host_os in
   if test "x$GCC" = xyes; then
     CFLAGS="$CFLAGS -pipe"
     CXXFLAGS="$CXXFLAGS -pipe -fno-exceptions -fno-check-new"
-    if test $USE_MAINTAINER_MODE = yes; then
+    if test "$enable_debug" = yes; then
       CFLAGS="$CFLAGS -W -Wall -Wmissing-prototypes"
       CXXFLAGS="$CXXFLAGS -W -Wall"
     fi
@@ -575,11 +571,6 @@ unset osversion
 
 dnl Check for additional programs.
 AC_PATH_PROG(GPERF, gperf, :)
-if test $USE_MAINTAINER_MODE = yes; then
-  if test "$GPERF" = ":"; then
-    AC_MSG_ERROR([The $PACKAGE package requires an installed gperf.])
-  fi
-fi
 
 dnl check for adms
 if test yes = yes; then

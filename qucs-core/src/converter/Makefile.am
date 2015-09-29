@@ -42,7 +42,6 @@ qucsconv_SOURCES = qucsconv.cpp parse_spice.cpp scan_spice.cpp \
 noinst_HEADERS = tokens_spice.h check_spice.h qucs_producer.h check_vcd.h \
 	tokens_vcd.h csv_producer.h touchstone_producer.h matlab_producer.h
 
-if MAINTAINER_MODE
 generated_FILES = parse_spice.cpp scan_spice.cpp tokens_spice.h \
 	parse_vcd.cpp scan_vcd.cpp tokens_vcd.h
 
@@ -57,10 +56,6 @@ scan_vcd.cpp: scan_vcd.l
 
 parse_vcd.cpp: parse_vcd.y
 	$(YACC) -v -o $@ --defines=tokens_vcd.h $<
-
-else
-generated_FILES =
-endif
 
 CLEANFILES = *~ *.orig *.rej *.output
 MAINTAINERCLEANFILES = Makefile.in $(generated_FILES)
