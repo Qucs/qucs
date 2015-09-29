@@ -31,6 +31,6 @@ else
 DOC_SUBDIR =
 endif
 
-SUBDIRS = qucs qucs-core $(DOC_SUBDIR)
+SUBDIRS = examples qucs qucs-core $(DOC_SUBDIR)
 
 EXTRA_DIST = bootstrap

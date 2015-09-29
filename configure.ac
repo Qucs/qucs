@@ -9,7 +9,7 @@ dnl Read version from file
 m4_define([QUCS_VERSION], m4_esyscmd([tr -d '\n' < VERSION]))
 
 AC_INIT([qucs], [QUCS_VERSION], [qucs-bugs@lists.sourceforge.net])
-AC_CONFIG_SRCDIR([examples/external_interface/cpp-interface/main.cpp])
+AC_CONFIG_SRCDIR([examples/resonance.sch])
 # AC_CONFIG_HEADERS([config.h])
 AM_INIT_AUTOMAKE([foreign])
 
@@ -38,5 +38,6 @@ AS_IF([test "x$enable_doc" != "xno"], [
 ])
 AC_CONFIG_SUBDIRS([qucs
                    qucs-core])
-AC_CONFIG_FILES([Makefile])
+AC_CONFIG_FILES([Makefile
+                 examples/Makefile])
 AC_OUTPUT
