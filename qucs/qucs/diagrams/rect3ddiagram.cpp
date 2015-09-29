@@ -38,6 +38,21 @@
 #include "qucs.h"
 #include "misc.h"
 
+// Enlarge memory block if neccessary.
+#undef FIT_MEMORY_SIZE
+#define  FIT_MEMORY_SIZE  \
+  if(p >= p_end) {     \
+    int pos = p - g->_begin(); \
+    assert(pos<Size); \
+  }
+
+#if 0
+    Size += 256;        \
+    g->resizeScrPoints(Size); \
+    p = g->_begin() + pos; \
+    p_end = g->_begin() + (Size - 9);
+#endif
+
 struct tPoint3D {
   int   x, y;
   int   No, done;
@@ -1037,6 +1052,10 @@ void Rect3DDiagram::calcData(GraphDeque *g)
               }
               else  break;
 	    }
+	  int pos = p - g->_begin();
+	  if(pos>=Size){
+	    qDebug() << pos << Size << "too many";
+	  }
           FIT_MEMORY_SIZE;  // need to enlarge memory block ?
 	  p->setIndep(pMem->indep);
 	  p->setDep(cplx_t(pMem->dep[0], pMem->dep[1]));
@@ -1044,6 +1063,10 @@ void Rect3DDiagram::calcData(GraphDeque *g)
           break;
         }
 
+	int pos = p - g->_begin();
+	if(pos>=Size){
+	  qDebug() << pos << Size << "too many";
+	}
         FIT_MEMORY_SIZE;  // need to enlarge memory block ?
         if(pMem->done & 8) {
 	  qDebug() << "pushback 3d" << p-graphbegin;

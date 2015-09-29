@@ -550,7 +550,7 @@ void Graph::ScrPt::setDep(cplx_t x)
 float Graph::ScrPt::getScrX() const
 {
   if(ScrX<0){
-    std::cerr << "dangerous: returning negative screen coordinate" << ScrX;
+  //  std::cerr << "dangerous: returning negative screen coordinate" << ScrX;
   }
   return ScrX;
 }
