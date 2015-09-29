@@ -52,7 +52,7 @@ void taperedline::calcABCDparams(nr_double_t frequency)
   nr_double_t Z1 = getPropertyDouble ("Z1");//Port 1 impedance
   nr_double_t Z2 = getPropertyDouble ("Z2");//Port 2 impedance
   nr_double_t alpha = getPropertyDouble ("Alpha");//Loss coefficient
-  alpha = std::log(alpha) / 2.0;//The attenuation coefficient needs to be converted into Neper/m units
+  alpha = std::log(alpha) *.5;//The attenuation coefficient needs to be converted into Neper/m units
   nr_double_t gamma_max = getPropertyDouble ("Gamma_max");;//Maximum ripple (Klopfenstein weighting only)
   nr_double_t lambda = C0/frequency;
   int Nsteps = 20; // Number of sections used to approximate the taper
@@ -72,7 +72,6 @@ void taperedline::calcABCDparams(nr_double_t frequency)
 
   nr_double_t l = lstep/2.0; // compute impedance in the middle of the section
   for (int idx = 0 ; idx < Nsteps; idx++)
-  //for (nr_double_t l = lstep/2; l <= L-(lstep/2); l+=lstep)
   {
     // The line is discretized in finite elements. The size of these elements can be considered a differential
     // length since the impedance change across the actual section is small. 
@@ -158,7 +157,7 @@ nr_double_t taperedline::calcKlopfenstein(nr_double_t l, nr_double_t L, nr_doubl
 nr_double_t taperedline::phi(nr_double_t x, nr_double_t A)
 {
   nr_double_t ak = 1.0;
-  nr_double_t bk = x / 2.0;
+  nr_double_t bk = x *.5;
   nr_double_t ck = bk;
   nr_double_t phi = bk;
   for (int k = 1; k < 20; k++) {
