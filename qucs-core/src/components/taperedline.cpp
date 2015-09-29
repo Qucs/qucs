@@ -1,6 +1,7 @@
 /*
  * taperedline.cpp - ideal tapered transmission line class implementation
  *
+ * Copyright (C) 2015 Claudio Girardi <in3otd@qsl.net>
  * Copyright (C) 2015 Andres Martinez-Mera <andresmartinezmera@gmail.com>
  *
  * This is free software; you can redistribute it and/or modify

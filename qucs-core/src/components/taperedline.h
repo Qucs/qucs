@@ -1,7 +1,8 @@
 /*
-* taperedline.h - ideal tapered transmission line class definition
-*
-* Copyright (C) 2015 Andres Martinez-Mera <andresmartinezmera@gmail.com>
+ * taperedline.h - ideal tapered transmission line class definition
+ *
+ * Copyright (C) 2015 Claudio Girardi <in3otd@qsl.net>
+ * Copyright (C) 2015 Andres Martinez-Mera <andresmartinezmera@gmail.com>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
