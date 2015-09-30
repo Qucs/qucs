@@ -147,7 +147,6 @@ script:
 
   # Check available tools
   - which admsXml && admsXml --version
-  - which gcov-4.8 && gcov-4.8 --version
 
   # run all checks
   - ./bootstrap
