@@ -205,8 +205,8 @@ QucsPowerCombiningTool::QucsPowerCombiningTool()
 
   //Maximum width
   QHBoxLayout *hboxMicr5 = new QHBoxLayout();
-  MaxWidthLabel= new QLabel("Minimum width");
-  MaxWidthlineEdit = new QLineEdit("0.4");
+  MaxWidthLabel= new QLabel("Maximum width");
+  MaxWidthlineEdit = new QLineEdit("5");
   MaxWidthlineEdit->setFixedWidth(40);
   MaxWidthmmLabel = new QLabel("mm");
   MaxWidthmmLabel->setFixedWidth(40);
