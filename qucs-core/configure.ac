@@ -624,6 +624,42 @@ dnl Checks for header files.
 AC_HEADER_STDC
 AC_CHECK_HEADERS([stddef.h stdlib.h string.h unistd.h ieeefp.h])
 
+dnl gtest.h, Google Test support
+AC_LANG_PUSH(C++)
+GTEST_CPPFLAGS=
+
+dnl use if available, don't use otherwise.
+AC_ARG_WITH([gtest], AS_HELP_STRING(
+    [--with-gtest=DIR], [Run tests that are implemented for gtest.]
+   ),
+ [
+ AS_IF([test "x$with_gtest" != "xno"], [
+  GTEST_CPPFLAGS="-I$withval/include -I$withval"
+  with_gtest=manual
+  ])
+ ],
+[
+  AC_CHECK_HEADER([gtest/gtest.h],
+		  [ with_gtest=yes ],
+		  [ with_gtest=no ])
+ ]
+)
+
+# don't know how to check. fix later.
+# GTEST_VERSION="1.7.0"
+
+AM_CONDITIONAL(USE_GTEST, test "x$with_gtest" != "xno")
+
+AS_IF([test "x$with_gtest" == "xmanual"], [
+  OLD_CPPFLAGS="$CPPFLAGS"
+  CPPFLAGS+=" $GTEST_CPPFLAGS"
+  AC_CHECK_HEADER([gtest/gtest.h],,[AC_MSG_ERROR([cannot find gtest headers])])
+  CPPFLAGS="$OLD_CPPFLAGS"
+])
+AC_LANG_POP()
+
+AC_SUBST(GTEST_CPPFLAGS)
+
 dnl Checks for typedefs, structures, and compiler characteristics.
 AC_C_CONST
 AC_TYPE_SIZE_T
@@ -840,61 +876,10 @@ AC_MSG_NOTICE([Check for functions in std:: namespace])
   done
 
 
-dnl Setup Google Test support
-dnl See: https://github.com/broune/mathicgb/blob/master/configure.ac
-AC_ARG_WITH([gtest], AS_HELP_STRING(
-    [--with-gtest], [use gtest, which is required for running the unit tests
-      with make check. The value download, which is the default, downloads
-      gtest if a gtest source directory cannot be found. Per the recommendation
-      of the gtest documentation, gtest is compiled with the tests, so an
-      installed gtest is not usable - you need the gtest source. GTEST_PATH
-      indicates where to look for gtest and it is also where gtest
-      will be downloaded to if not found. The default path is srcdir/libs so
-      that gtest needs to be at srcdir/libs/gtest/ where srcdir is the
-      base of the directory being configured from.]
-))
-
-AC_MSG_CHECKING([for gtest])
-AS_IF([test "x$GTEST_PATH" == "x"], [GTEST_PATH="$srcdir/libs"])
-AS_IF([test "x$GTEST_VERSION" == "x"], [GTEST_VERSION="1.7.0"])
-AS_IF([test "x$with_gtest" == "xyes"], [with_gtest="download"])
-
-AS_IF([test "x$with_gtest" == "xdownload"],
-  [with_gtest="yes"; AC_CHECK_FILE([$GTEST_PATH/gtest/src/gtest-all.cc], [], [
-    mkdir -p "$GTEST_PATH";
-    (
-      cd $GTEST_PATH;
-      rm -rf gtest-$GTEST_VERSION.zip
-      wget https://googletest.googlecode.com/files/gtest-$GTEST_VERSION.zip;
-      unzip gtest-$GTEST_VERSION.zip;
-      rm gtest-$GTEST_VERSION.zip
-      rm -rf gtest/
-      mv gtest-$GTEST_VERSION/ gtest/
-    );
-    if test ! -e "$GTEST_PATH/gtest/src/gtest-all.cc"; then
-      AC_MSG_WARN([Failed to download or extract gtest.]);
-      with_gtest="no";
-    else
-      with_gtest="yes";
-    fi
-  ])],
-  [test "x$with_gtest" == "xyes"], [
-    AC_CHECK_FILE([$GTEST_PATH/gtest/src/gtest-all.cc], [], [
-      AC_MSG_ERROR([could not find gtest source at path $GTEST_PATH.])
-    ])
-  ],
-  [test "x$with_gtest" == "xno"], [],
-  [AC_MSG_NOTICE([gtest disabled])]
-)
-AS_IF([test "x$with_gtest" == "xyes"],
-  [GTEST_CFLAGS="-I`cd $GTEST_PATH/gtest/include; echo $PWD` -I`cd $GTEST_PATH/gtest/; echo $PWD`"]);
-AM_CONDITIONAL(USE_GTEST, test "x$with_gtest" == "xyes")
-
-# enable extra test
+dnl BUG. remove option. always run tests
+dnl FIXME: skip tests that are not applicable (and be verbose about that).
 AC_ARG_ENABLE([qucs-test],
   AS_HELP_STRING([--enable-qucs-test], [Enable running qucs test project]))
-
-dnl variable to steer ./Makefile.am to enable qucs_test
 AM_CONDITIONAL([USE_QUCS_TEST], [test "$enable_qucs_test" = yes])
 
 # enable gcov
@@ -978,6 +963,9 @@ Configure Information:
   Linker            : $LD
     LDFLAGS         :   $LDFLAGS
     LIBS            :   $LIBS
+
+  gtest             : $with_gtest
+    CPPFLAGS        :   $GTEST_CPPFLAGS
 
     Prefix          : $prefix
 ])

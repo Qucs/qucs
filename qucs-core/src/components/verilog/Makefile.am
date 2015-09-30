@@ -34,7 +34,7 @@ XML_BUILD = \
   $(srcdir)/qucsMODULEdefs.xml
 
 .va.cpp: $(XML_BUILD)
-	for i in $(XML_BUILD); do \
+	@for i in $(XML_BUILD); do \
 	  echo "$$i"; \
 	  es="$$es -e $$i"; \
 	done; \
