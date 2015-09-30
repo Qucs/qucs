@@ -34,8 +34,6 @@ AM_CPPFLAGS = -I$(top_builddir)/src \
 
 # needed to generate parse_spice.hpp from parse_spice.ypp
 AM_YFLAGS = -d -t
-#
-# AM_LFLAGS = -d -Psomething
 
 # needed for ylwrap
 scan_spice.cpp: LEX_OUTPUT_ROOT = lex.spice_
