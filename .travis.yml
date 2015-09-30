@@ -149,7 +149,8 @@ script:
   - which admsXml && admsXml --version
 
   # bootstrap
-  - ./bootstrap
+  - (cd qucs; ./bootstrap)
+  - (cd qucs-core; ./bootstrap)
 
   # Build Qucs GUI components
   - cd qucs
