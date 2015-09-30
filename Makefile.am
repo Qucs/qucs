@@ -39,4 +39,72 @@ EXTRA_DIST = bootstrap
 #  - either moved into qucs
 #  - or get its own build system
 dist-hook:
-	cp -r qucs-test $(distdir)
+	cp -r $(abs_top_srcdir)/qucs-test $(distdir)
+
+all-local:
+	:
+
+  # Run Qucs-Test suite and collect coverage
+  # Need to be on `script` section to raise error as failure
+  # Use qucsator in-tree to generate gcov coverage for GCC (LINUX)
+  #
+check-local: qucsatorcheck eqncheck qucscheck
+QUCSTEST_ENV = export PATH=$(abs_top_builddir)/qucs/qucs:$(abs_top_builddir)/qucs-core/src:$(PATH); \
+               export QUCSCONV=qucsconv; \
+               export QUCSATOR=qucsator;
+
+# Run tests for Qucs (GUI) 
+# Schematic to Netlist conversion require QucsConv and Qucs component library,
+# so use the prefix of the installed package.
+qucscheck: $(PWD)/qucs-test
+	$(QUCSTEST_ENV) \
+	cd qucs-test && python run.py --qucs
+
+if COND_MACOSX
+macossuffix=_OSX
+endif
+
+# Run test on qucsator
+qucsatorcheck: $(PWD)/qucs-test
+	$(QUCSTEST_ENV) \
+	cd qucs-test && python run.py --prefix $(abs_top_builddir)/qucs-core/src/ \
+		--qucsator --exclude skip$(macossuffix).txt
+
+# Run tests on Qucsator equation system
+eqncheck: $(PWD)/qucs-test
+	$(QUCSTEST_ENV) \
+	cd qucs-test && python run_equations.py --prefix $(abs_top_builddir)/qucs-core/src/
+
+# BUG should not be necessary, but is.
+$(PWD)/qucs-test:
+	what=qucs-test; \
+	if [ -d $$what ]; then \
+		touch $$what; \
+	elif [ -d $(abs_top_srcdir)/$$what ]; then \
+		cp -r $(abs_top_srcdir)/$$what .; \
+	else \
+		echo cannot find $$what; \
+		exit 1; \
+	fi
+
+.PHONY: eqncheck qucscheck qucsatorcheck
+
+#if DO_DOXYGEN
+#-  # Publish HTML into Qucs/qucs-doxygen repo
+#-  # See: http://awestruct.org/auto-deploy-to-github-pages/
+#-  # Clone repo, put the html pages on its gh_pages branch
+#-  # Credentials taken from the secure environment variables GIT_NAME, GIT_EMAIL and GH_TOKEN
+#-  - if [[ $LINUX && $CLANG && $MASTER ]]; then
+#-      git config --global user.name ${GIT_NAME} ;
+#-      git config --global user.email ${GIT_EMAIL} ;
+#-      git clone https://github.com/Qucs/qucs-doxygen.git qucs-doxygen ;
+#-      cd qucs-doxygen ;
+#-      git checkout gh-pages ;
+#-      git rm -r * ;
+#-      mv ../qucs/contrib/doxygen/html/ qucs/ ;
+#-      mv ../qucs-doc/doxygen/html/ qucs-core/ ;
+#-      git add --all . ;
+#-      git commit -m "Auto-updating Doxygen developer documentation" ;
+#-      git push https://${GH_TOKEN}@github.com/Qucs/qucs-doxygen gh-pages ;
+#-    fi
+#endif
