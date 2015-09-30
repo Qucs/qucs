@@ -23,8 +23,8 @@
  *
  */
 
-#ifndef __TAPEREDLINE_H__
-#define __TAPEREDLINE_H__
+#ifndef TAPEREDLINE_H
+#define TAPEREDLINE_H
 #include "matrix.h"
 
 const int Nsteps = 20; // Number of sections used to approximate the taper
