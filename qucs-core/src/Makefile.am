@@ -105,6 +105,7 @@ scan_netlist.cpp: LEX_OUTPUT_ROOT = lex.netlist_
 scan_touchstone.cpp: LEX_OUTPUT_ROOT = lex.touchstone_
 scan_zvr.cpp: LEX_OUTPUT_ROOT = lex.zvr_
 
+# just make sure, everything is in place
 bin_PROGRAMS = qucsator
 
 qucsator_LDADD = libqucs.la
@@ -128,7 +129,15 @@ qucsdefs.h: qucsator$(EXEEXT)
 ## is #included in the body of equation.cpp
 equation.cpp: gperfapphash.cpp
 
-BUILT_SOURCES = equation.cpp
+BUILT_SOURCES = equation.cpp \
+	parse_citi.hpp \
+	parse_csv.hpp \
+	parse_dataset.hpp \
+	parse_mdl.hpp \
+	parse_netlist.hpp \
+	parse_touchstone.hpp \
+	parse_zvr.hpp
+
 
 ## Here we generate gperfapphash.cpp for equation.cpp.
 ##
