@@ -34,3 +34,9 @@ endif
 SUBDIRS = examples qucs qucs-core $(DOC_SUBDIR)
 
 EXTRA_DIST = bootstrap
+
+# this is insane. the qucs testsuite needs to be
+#  - either moved into qucs
+#  - or get its own build system
+dist-hook:
+	cp -r qucs-test $(distdir)
