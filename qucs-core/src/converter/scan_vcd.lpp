@@ -49,7 +49,7 @@
 #endif
 
 #include "check_vcd.h"
-#include "tokens_vcd.h"
+#include "parse_vcd.hpp"
 
 #if !HAVE_STRCHR
 # define strchr  index
