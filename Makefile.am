@@ -48,8 +48,10 @@ all-local:
   # Need to be on `script` section to raise error as failure
   # Use qucsator in-tree to generate gcov coverage for GCC (LINUX)
   #
+MORE_PATH=$(abs_top_builddir)/qucs/qucs:$(abs_top_builddir)/qucs-core/src:$(abs_top_builddir)/qucs-core/src/converter
+
 check-local: qucsatorcheck eqncheck qucscheck
-QUCSTEST_ENV = export PATH=$(abs_top_builddir)/qucs/qucs:$(abs_top_builddir)/qucs-core/src:$(PATH); \
+QUCSTEST_ENV = export PATH=$(MORE_PATH):$(PATH); \
                export QUCSCONV=qucsconv; \
                export QUCSATOR=qucsator;
 
