@@ -93,6 +93,14 @@ $(PWD)/qucs-test:
 
 .PHONY: eqncheck qucscheck qucsatorcheck
 
+distclean-local:
+	if [ x$(srcdir) = x$(builddir) ]; then\
+		echo not touching qucs-test; \
+	else \
+		echo removing qucs-test; \
+		rm -rf qucs-test; \
+	fi
+
 #if DO_DOXYGEN
 #-  # Publish HTML into Qucs/qucs-doxygen repo
 #-  # See: http://awestruct.org/auto-deploy-to-github-pages/
