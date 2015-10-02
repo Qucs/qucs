@@ -706,7 +706,7 @@ int main(int argc, char *argv[])
   QucsSettings.Editor = "qucs";
 
   /// \todo Make the setting up of all executables below more consistent
-  var = getenv("QUCSATOR");
+  getenv("QUCSATOR");
   if(var != NULL) {
       QucsSettings.Qucsator = QString(var);
   }
