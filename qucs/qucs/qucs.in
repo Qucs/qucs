@@ -33,6 +33,10 @@ if [ -z "$QUCSHELP" ]; then
 	QUCSTRANS="$top/qucs-help/qucshelp";
 fi
 
+if [ -z "$QUCS_LIBDIR" ]; then
+	QUCS_LIBDIR="$top/qucs/qucs-lib/library";
+fi
+
 for i in $( make subdirs ); do
 	PATH="$top/$i:$PATH"
 done
@@ -41,6 +45,7 @@ if [ -z "$QUCSDIR" ]; then
 	# use these (part of qucs-core)
 	export QUCSATOR
 	export QUCSCONV
+	export QUCS_LIBDIR
 	# rely on path, forget about QUCSDIR
 	# this is *not* a user variable. don't touch.
 	export QUCS_USE_PATH=yes
