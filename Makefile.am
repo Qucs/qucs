@@ -83,7 +83,8 @@ $(PWD)/qucs-test:
 	if [ -d $$what ]; then \
 		touch $$what; \
 	elif [ -d $(abs_top_srcdir)/$$what ]; then \
-		cp -r $(abs_top_srcdir)/$$what .; \
+		cp -r $(abs_top_srcdir)/$$what . || exit 5; \
+		chmod -R +w $$what || exit 6; \
 	else \
 		echo cannot find $$what; \
 		exit 1; \
