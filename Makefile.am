@@ -53,6 +53,7 @@ MORE_PATH=$(abs_top_builddir)/qucs/qucs:$(abs_top_builddir)/qucs-core/src:$(abs_
 check-local: qucsatorcheck eqncheck qucscheck
 QUCSTEST_ENV = export PATH=$(MORE_PATH):$(PATH); \
                export QUCSCONV=qucsconv; \
+               export QUCS_LIBDIR=$(abs_top_srcdir)/qucs/qucs-lib/library; \
                export QUCSATOR=qucsator;
 
 # Run tests for Qucs (GUI) 
