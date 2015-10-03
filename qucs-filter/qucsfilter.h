@@ -21,6 +21,7 @@
 #include <QMainWindow>
 #include <QGroupBox>
 #include <QLabel>
+#include <QtSvg>
 
 class QGridLayout;
 class QComboBox;
@@ -57,6 +58,8 @@ private slots:
   void slotShowResult();
   void slotRealizationChanged(int);
   void slotTakeEr(const QString&);
+  void FlushImage();
+  void on_MicrostripcheckBox_clicked();
 
 private:
   void setError(const QString&);
@@ -64,8 +67,8 @@ private:
 
   int ResultState;
 
-  QGridLayout *all, *gbox1, *gbox2;
-  QGroupBox *box1, *box2;
+  QGridLayout *all, *gbox1, *gbox2, *gboxImage;
+  QGroupBox *box1, *box2, *boxImage;
   QComboBox *ComboRealize, *ComboType, *ComboClass, *ComboCorner, *ComboStop, *ComboBandStop, *ComboEr;
   QLineEdit *EditOrder, *EditCorner, *EditStop, *EditRipple, *EditImpedance, *EditThickness, *EditHeight, *EditMinWidth, *EditMaxWidth;
   QLineEdit *EditAtten, *EditBandStop;
@@ -73,6 +76,8 @@ private:
   QLabel *LabelAtten, *LabelAtten_dB, *LabelBandStop, *LabelOrder, *LabelImpedance, *LabelOhm;
   QIntValidator *IntVal;
   QDoubleValidator *DoubleVal;
+  QSvgWidget *imgLayout;
+  QCheckBox * MicrostripcheckBox;
 };
 
 #endif

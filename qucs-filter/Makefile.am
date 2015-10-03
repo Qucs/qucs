@@ -44,6 +44,8 @@ qucsfilter_SOURCES =  \
 	main.cpp  \
 	qf_poly.cpp \
 	quarterwave_filter.cpp \
+        qw_coupled_ring_filter.cpp \
+        ccoupled_shunt_resonators.cpp \
 	qrc_qucsfilter.cpp
 
 qrc_qucsfilter.cpp: qucsfilter.qrc
