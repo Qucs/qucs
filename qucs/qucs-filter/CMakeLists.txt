@@ -55,6 +55,8 @@ SET(QUCS-FILTER_SRCS
   stepz_filter.cpp
   tl_filter.cpp
   quarterwave_filter.cpp
+  qw_coupled_ring_filter.cpp
+  ccoupled_shunt_resonators.cpp
 )
 
 SET(QUCS-FILTER_HDRS
