@@ -152,6 +152,10 @@ public:
   bool isSelected;
   int  Type;    // whether it is Component, Wire, ...
   int  cx, cy, x1, y1, x2, y2;  // center and relative boundings
+public: // parameters
+  // FIXME: should throw. currently returns false instead
+  virtual bool setParamByIndex(unsigned index, QString value);
+
 };
 
 

@@ -18,6 +18,34 @@
 #ifndef RECT3DDIAGRAM_H
 #define RECT3DDIAGRAM_H
 
+#include <QObject>
+class Rect3DDiagram;
+
+// map signals to Rect3DDiagram and its Dialogs
+// TODO: this is a bit ugly. need more generic approach, for all Diagrams
+class mySignalWrapper : public QObject
+{
+    Q_OBJECT
+public:
+    mySignalWrapper(QObject *parent=0) {}
+    mySignalWrapper(Rect3DDiagram *target, void (Rect3DDiagram::*f)(int)) :
+      QObject(), _target(target), _int(f) {}
+    mySignalWrapper(Rect3DDiagram *target, void (Rect3DDiagram::*f)(const QString&)) :
+      QObject(), _target(target), _str(f) {}
+    ~mySignalWrapper(){}
+
+public Q_SLOTS:
+    void map(int x);
+    void map(const QString& x);
+
+private:
+    Rect3DDiagram* _target;
+    void (Rect3DDiagram::*_int)(int);
+    void (Rect3DDiagram::*_str)(const QString&);
+};
+
+// ----------------------------------------
+// BUG. belongs to rect3ddiagram.cpp
 #include "diagram.h"
 
 
@@ -25,7 +53,11 @@ struct tPoint3D;
 struct tPointZ;
 struct tBound;
 
+class QSlider;
+class Cross3D;
+
 class Rect3DDiagram : public Diagram  {
+  friend class mySignalWrapper;
 public:
   Rect3DDiagram(int _cx=0, int _cy=0);
  ~Rect3DDiagram();
@@ -49,8 +81,11 @@ protected:
   void calcData(GraphDeque*);
 
 private:
+  bool setParamByIndex(unsigned index, QString value);
+
   int  calcAxis(Axis*, int, int, double, double, bool);
   void createAxis(Axis*, bool, int, int, int, int);
+  // void paint(ViewPainter*);
 
   void   calcCoefficients();
   int    calcCross(int*, int*);
@@ -70,6 +105,33 @@ private:
   float  xorig, yorig; // where is the 3D origin with respect to cx/cy
   double cxx, cxy, cxz, cyx, cyy, cyz, czx, czy, czz; // coefficients 3D -> 2D
   double scaleX, scaleY;
+  bool hideLines;
+  int rotX, rotY, rotZ;
+
+  QCheckBox *hideInvisible;
+  QLineEdit *rotationX, *rotationY, *rotationZ;
+  QSlider *SliderRotX, *SliderRotY, *SliderRotZ;
+  // FIXME: rotate diagram, not tinylittlecross
+  Cross3D *DiagCross;
+
+  void slotNewRotX(int);
+  void slotNewRotY(int);
+  void slotNewRotZ(int);
+  void slotEditRotX(const QString&);
+  void slotEditRotY(const QString&);
+  void slotEditRotZ(const QString&);
+
+  bool applyDialog();
+  void grid_layout_stuff(DiagramDialog*, QGridLayout*, QWidget*, unsigned);
+  void save_some_char(QTextStream& str) const;
+  void save_rot_hack(QTextStream& str) const;
+  void set_hide_lines_hack(bool h){hideLines=h;}
+  mySignalWrapper* m_sigmapper;
+
+private:
+  QList<QObject *> callbacks;
 };
 
+
 #endif
+// vim:ts=8:sw=2:noet

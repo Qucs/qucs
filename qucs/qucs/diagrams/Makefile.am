@@ -25,6 +25,10 @@
 noinst_LIBRARIES = libdiagrams.a
 
 MOCHEADERS = diagramdialog.h markerdialog.h
+
+# currently required to route callbacks.
+MOCHEADERS += rect3ddiagram.h
+
 MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
 
 libdiagrams_a_SOURCES = tabdiagram.cpp smithdiagram.cpp rectdiagram.cpp \

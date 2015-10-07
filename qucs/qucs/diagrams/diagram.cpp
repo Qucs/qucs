@@ -72,11 +72,6 @@ Diagram::Diagram(int _cx, int _cy)
   xAxis.step = yAxis.step = zAxis.step = 1.0;
   xAxis.autoScale = yAxis.autoScale = zAxis.autoScale = true;
 
-  rotX = 315;  // for 3D diagram
-  rotY = 0;
-  rotZ = 225;
-  hideLines = true;  // hide invisible lines
-
   Type = isDiagram;
   isSelected = false;
   GridPen = QPen(Qt::lightGray,0);
@@ -1224,14 +1219,27 @@ void Diagram::finishMarkerCoordinates(float& fCX, float& fCY) const
 }
 
 // ------------------------------------------------------------
+void Diagram::save_some_char(QTextStream& str) const
+{
+  char c = '0';
+  if(xAxis.GridOn) c |= 1;
+  str << c;
+}
+
+void Diagram::save_rot_hack(QTextStream& s) const
+{
+  s << "0 0 0";
+}
+
+// ------------------------------------------------------------
+// // BUG. not here.
 QString Diagram::save()
 {
   QString s = "<"+Name+" "+QString::number(cx)+" "+QString::number(cy)+" ";
   s += QString::number(x2)+" "+QString::number(y2)+" ";
   char c = '0';
-  if(xAxis.GridOn) c |= 1;
-  if(hideLines) c |= 2;
-  s += c;
+  QTextStream str(&s);
+  save_some_char(str);
   s += " " + GridPen.color().name() + " " + QString::number(GridPen.style());
 
   if(xAxis.log) s+= " 1";  else s += " 0";
@@ -1256,8 +1264,10 @@ QString Diagram::save()
   s += QString::number(zAxis.step) + " ";
   s += QString::number(zAxis.limit_max) + " ";
 
-  s += QString::number(rotX)+" "+QString::number(rotY)+" "+
-       QString::number(rotZ);
+  {
+    QTextStream str(&s);
+    save_rot_hack(str);
+  }
 
   // labels can contain spaces -> must be last items in the line
   s += " \""+xAxis.Label+"\" \""+yAxis.Label+"\" \""+zAxis.Label+"\">\n";
@@ -1300,7 +1310,8 @@ bool Diagram::load(const QString& Line, QTextStream *stream)
   n = s.section(' ',5,5);    // GridOn
   c = n.at(0).toLatin1() - '0';
   xAxis.GridOn = yAxis.GridOn = (c & 1) != 0;
-  hideLines = (c & 2) != 0;
+
+  set_hide_lines_hack(c & 2);
 
   n = s.section(' ',6,6);    // color for GridPen
   QColor co;
@@ -1367,18 +1378,16 @@ bool Diagram::load(const QString& Line, QTextStream *stream)
     zAxis.limit_max = n.toDouble(&ok);
     if(!ok) return false;
 
-    n = s.section(' ',21,21); // rotX
-    if(n.at(0) != '"') {      // backward compatible
-      rotX = n.toInt(&ok);
-      if(!ok) return false;
+    n = s.section(' ',21,21);
+    if(n.at(0) == '"') {      // strange corner case.
+    }else{
+      if(!setParamByIndex(21, n)) return false;
 
-      n = s.section(' ',22,22); // rotY
-      rotY = n.toInt(&ok);
-      if(!ok) return false;
+      n = s.section(' ',22,22);
+      if(!setParamByIndex(22, n)) return false;
 
-      n = s.section(' ',23,23); // rotZ
-      rotZ = n.toInt(&ok);
-      if(!ok) return false;
+      n = s.section(' ',23,23);
+      if(!setParamByIndex(23, n)) return false;
     }
   }
 

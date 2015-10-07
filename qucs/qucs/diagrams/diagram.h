@@ -59,6 +59,11 @@ struct Axis {
 };
 
 
+class QCheckBox;
+class QGridLayout;
+class QLineEdit;
+class DiagramDialog;
+
 class Diagram : public Element {
 public:
   Diagram(int _cx=0, int _cy=0);
@@ -81,7 +86,10 @@ public:
   bool    getSelected(int, int);
   bool    resizeTouched(float, float, float);
   QString save();
+  virtual void save_some_char(QTextStream&) const;
+  virtual void save_rot_hack(QTextStream&) const;
   bool    load(const QString&, QTextStream*);
+  virtual void set_hide_lines_hack(bool){};
 
   void getAxisLimits(GraphDeque const*);
   void updateGraphData();
@@ -107,8 +115,10 @@ public:
   Axis  xAxis, yAxis, zAxis;   // axes (x, y left, y right)
   int State;  // to remember which resize area was touched
 
-  bool hideLines;       // for "Rect3D": hide invisible lines ?
-  int rotX, rotY, rotZ; // for "Rect3D": rotation around x, y and z axis
+  // FIXME: one callback for all options
+  virtual bool applyDialog(){return false;}
+  // FIXME: ugly.
+  virtual void grid_layout_stuff(DiagramDialog*, QGridLayout*, QWidget*, unsigned){}
 
 protected:
   void calcSmithAxisScale(Axis*, int&, int&);
