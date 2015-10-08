@@ -26,7 +26,9 @@
 here=`pwd`
 cd `dirname $0`
 
-if [ -e "./deps/adms/bootstrap.sh" ]; then
+if [ x$1 = xhere ]; then
+	:
+elif [ -e "./deps/adms/bootstrap.sh" ]; then
   echo "running ADMS bootstrap.sh ..."
   ./deps/adms/bootstrap.sh "$@"
 else
