@@ -136,6 +136,12 @@ script:
   - pwd
   - ls
 
+  # fetch gtest...
+  - wget https://github.com/google/googletest/archive/release-1.7.0.tar.gz -O /tmp/gtest.tar.gz
+  - mkdir /tmp/gtest
+  - tar --strip-components=1 -C /tmp/gtest -xvf /tmp/gtest.tar.gz
+
+
   # Build ADMS from release (avoid need of Perl and its modules)
   #   Workaround sourceforge shortage, use personal Dropbox.
   #   wget http://sourceforge.net/projects/mot-adms/files/adms-source/2.3/adms-2.3.4.tar.gz -O /tmp/adms-2.3.4.tar.gz;
@@ -150,5 +156,12 @@ script:
 
   # run all checks
   - ./bootstrap
-  - ./configure --disable-dependency-tracking
+  - ./configure --disable-dependency-tracking --with-gtest=/tmp/gtest
   - make distcheck
+  - echo $TRAVIS_BRANCH
+
+  # incomplete
+  - echo $TRAVIS_BRANCH
+  - if [[ $TRAVIS_BRANCH == develop ]] ; then
+      echo developmentstuff...;
+    fi
