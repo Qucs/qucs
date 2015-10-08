@@ -130,6 +130,7 @@ qucsdefs.h: qucsator$(EXEEXT)
 equation.cpp: gperfapphash.cpp
 
 BUILT_SOURCES = equation.cpp \
+	gperfappgen.h \
 	parse_citi.hpp \
 	parse_csv.hpp \
 	parse_dataset.hpp \
@@ -155,7 +156,7 @@ gperfapphash.cpp: gperfapphash.gph
 	$(GPERF) -I -m 8 $< | sed -e 's/{""},/{"",0},/g' > $@
 
 gperfappgen.h: applications.h
-	sed -e 's/evaluate::[a-zA-Z0-9_]*/NULL/g' < $< > $@
+	sed -e 's/evaluate::[a-zA-Z0-9_]*/NULL/g' < $< > gperfappgen.h
 
 ## Store the gperf names in their own variable as the are
 ## not distributed but must be removed in a maintainer-clean
