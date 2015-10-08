@@ -1,3 +1,5 @@
+// BUG: use config.h
+// this file is not timestamp-safe
 
 #ifndef nr_double_t
 /* The global type of double representation. */

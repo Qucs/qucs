@@ -22,10 +22,12 @@
  *
  */
 
-// the types required for qucs library files are defined
-// in qucs_typedefs.h, created by configure from
-// qucs_typedefs.h.in
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#else
+// BUG
 #include "qucs_typedefs.h"
+#endif
 
 #include <stdio.h>
 #include <stdlib.h>
