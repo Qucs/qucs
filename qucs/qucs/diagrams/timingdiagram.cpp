@@ -510,12 +510,6 @@ bool TimingDiagram::scrollTo(int initial, int dx, int)
 }
 
 // ------------------------------------------------------------
-Diagram* TimingDiagram::newOne()
-{
-  return new TimingDiagram();
-}
-
-// ------------------------------------------------------------
 Element* TimingDiagram::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Timing Diagram");

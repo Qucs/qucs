@@ -69,7 +69,8 @@ public:
   Diagram(int _cx=0, int _cy=0);
   virtual ~Diagram();
 
-  virtual Diagram* newOne();
+  virtual Element* newOne() const{return NULL;}
+
   virtual int  calcDiagram() { return 0; };
   virtual void calcCoordinate
                (const double*, const double*, const double*, float*, float*, Axis const*) const {};

@@ -148,6 +148,7 @@ public:
   virtual void paintScheme(QPainter *);
   virtual void setCenter(int, int, bool relative=false);
   virtual void getCenter(int&, int&);
+  virtual Element* newOne() const {/*unreachable*/ return NULL;};
 
   bool isSelected;
   int  Type;    // whether it is Component, Wire, ...

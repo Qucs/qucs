@@ -1204,12 +1204,6 @@ void Diagram::getCenter(int& x, int& y)
 }
 
 // ------------------------------------------------------------
-Diagram* Diagram::newOne()
-{
-  return new Diagram();
-}
-
-// ------------------------------------------------------------
 void Diagram::finishMarkerCoordinates(float& fCX, float& fCY) const
 {
   if(!insideDiagram(fCX, fCY)) {

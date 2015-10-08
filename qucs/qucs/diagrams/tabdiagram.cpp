@@ -25,7 +25,7 @@
 #include <QPainter>
 
 #include "tabdiagram.h"
-#include "main.h"
+#include "main.h" // BUG: needed for QucsSettings?!
 #include <cmath>
 #include "misc.h"
 
@@ -395,12 +395,6 @@ bool TabDiagram::scrollTo(int initial, int, int dy)
     return false;   // did anything change ?
 
   return true;
-}
-
-// ------------------------------------------------------------
-Diagram* TabDiagram::newOne()
-{
-  return new TabDiagram();
 }
 
 // ------------------------------------------------------------

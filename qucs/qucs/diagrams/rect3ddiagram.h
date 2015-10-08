@@ -58,12 +58,12 @@ class Cross3D;
 
 class Rect3DDiagram : public Diagram  {
   friend class mySignalWrapper;
+  Rect3DDiagram(const Rect3DDiagram&) { /*incomplete*/ }
 public:
   Rect3DDiagram(int _cx=0, int _cy=0);
  ~Rect3DDiagram();
 
-
-  Diagram* newOne();
+  Element* newOne() const {return new Rect3DDiagram(*this);}
   static Element* info(QString&, char* &, bool getNewOne=false);
   int  calcDiagram();
   void calcLimits();

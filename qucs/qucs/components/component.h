@@ -33,7 +33,9 @@ public:
   Component();
   virtual ~Component() {};
 
-  virtual Component* newOne();
+  // FIXME: must be Element* newOne() const;
+  // ejects a ton of warnings...
+  Component* newOne();
   virtual void recreate(Schematic*) {};
   QString getNetlist();
   QString get_VHDL_Code(int);
