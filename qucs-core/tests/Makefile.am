@@ -33,9 +33,10 @@ AM_CPPFLAGS = \
 
 AM_CXXFLAGS =
 
+GTEST_TESTS = libqucsUnitTest
+
 if USE_GTEST
 GTEST_LIBQUCS = libqucsUnitTest
-GTEST_TESTS = libqucsUnitTest
 check_PROGRAMS = $(GTEST_LIBQUCS)
 libqucsUnitTest_LDADD = $(top_builddir)/src/libqucs.la
 libqucsUnitTest_CPPFLAGS = $(AM_CPPFLAGS) @GTEST_CPPFLAGS@ \
@@ -47,7 +48,10 @@ libqucsUnitTest_SOURCES = testMain.cpp \
 	Matrix.cpp \
 	Vector.cpp
 else
-# .. skip test, hmmm
+libqucsUnitTest:
+	echo "!#/bin/sh" > $@
+	echo exit 77 >> $@
+	chmod +x $@
 endif
 
 # TESTS -- Programs run automatically by "make check"
