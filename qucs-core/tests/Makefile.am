@@ -51,3 +51,4 @@ libqucsUnitTest_SOURCES = testMain.cpp \
 
 libqucsUnitTest_CXXFLAGS = "-DGTEST_HAS_PTHREAD=0"
 
+EXTRA_DIST = runqucsator.sh

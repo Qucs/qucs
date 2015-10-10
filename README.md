@@ -69,16 +69,18 @@ For ADMS
     sudo apt-get install zlib1g zlib1g-dev
     sudo apt-get install libgd2-xpm-dev
 
-Install Perl modules for ADMS. Configure cpan, no waiting for user input.
+Install Perl modules for ADMS:
 
-    (echo y;echo o conf prerequisites_policy follow;echo o conf commit)| sudo cpan
-    sudo cpan -i XML::LibXML
-    sudo cpan -f GD
+    sudo apt-get install libxml-libxml-perl
+    sudo apt-get install libgd-perl
+
+Bootstrap (after cloning from git):
+
+    ./bootstrap
 
 Compile qucs:
 
     cd qucs
-    ./autogen.sh
     ./configure --enable-maintainer-mode
     make
     sudo make install
@@ -86,7 +88,6 @@ Compile qucs:
 Compile qucs-core:
 
     cd qucs-core
-    ./bootstrap.sh
     ./configure --enable-maintainer-mode
     make
     sudo make install

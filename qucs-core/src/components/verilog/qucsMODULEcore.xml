@@ -31,13 +31,26 @@
 </admst:for-each>
 
 <!-- parse ADMS command line arguments, needs to be outside admst:open, keep last comand -->
-<!-- if last command is 'dyload' (i.e., -A dyload) emmit/append code for dynamic loader -->
-<admst:for-each select="argv">
-  <admst:variable name="dyload" string="%(.)"/>
+<!-- output filename is 1st argument in -o flag in command line-->
+<admst:variable name="filename" select="%(/module/name)_common"/>
+<admst:variable name="filename_state" select="0"/>
+<admst:for-each select="/argv">
+  <admst:variable name="arg" select="%(.)"/>
+
+  <admst:if test="[position(.)=2]">
+    <admst:variable name="filename" select="$arg"/>
+  </admst:if>
+  <admst:if test="[$(filename_state)='1']">
+    <admst:variable name="filename" select="$arg"/>
+    <admst:variable name="filename_state" select="2"/>
+  </admst:if>
+  <admst:if test="[$(filename_state)='0' and $(arg)='-o']">
+    <admst:variable name="filename_state" select="1"/>
+  </admst:if>
 </admst:for-each>
 
-<admst:open file="$module.core.cpp">/*
- * $(module).core.cpp - device implementations for $(module) module
+<admst:open file="$(filename).$(module).core.cpp">/*
+ * $(filename).$(module).core.cpp - device implementations for $(filename).$(module)
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -51,10 +64,10 @@
 #include &lt;config.h&gt;
 #endif
 
-#include &quot;$(module).analogfunction.h&quot;
+#include "$(filename).$(module).analogfunction.h"
 #include "component.h"
 #include "device.h"
-#include &quot;$(module).core.h&quot;
+#include "$(filename).core.h"
 
 #ifndef CIR_$(module)
 #define CIR_$(module) -1
@@ -213,7 +226,7 @@
 
 <!--
 * apply qucsVersion.xml c:math_h macro
-* similar derivative macros already on analogfuncion.h cannot reuse inlines?
+* similar derivative macros already on analogfunction.h cannot reuse inlines?
 -->
 <admst:text format="\n// derivative helper macros"/>
 <admst:apply-templates select="." match="c:math_h"/>
@@ -719,34 +732,50 @@ using qucs::matrix;
 <admst:text format="    }\n  }\n"/>
 
 <admst:text format="}\n"/>
-#include &quot;$(module).defs.h&quot;
+#include &quot;$(filename).defs.h&quot;
 
 
-<!-- if 'dyload' is passed as last argument, emmit code for the dynamic loader -->
-<admst:if test="[$dyload='dyload']">
-  <admst:message format="last argument 'dyload' provided, emmiting code for the dynamic loader\n"/>
-  <admst:text format="\n// loader constructor interface\n"/>
-  <admst:text format="extern &quot;C&quot; {\n"/>
-  <admst:text format="  class va_proxy { public:\n"/>
-  <admst:text format="    va_proxy(){\n"/>
-  <admst:text format="      // register the constructor and the definitions with the global factories\n"/>
-  <admst:text format="      // Note that ::create and ::definition are handled by expanding the CREATOR define constructor\n"/>
-  <admst:text format="      factorycreate[&quot;$module&quot;] = $module::create;\n"/>
-  <admst:text format="      factorydef   [&quot;$module&quot;] = $module::definition;\n"/>
-  <admst:text format="    }\n"/>
-  <admst:text format="  };\n"/>
-  <admst:text format="  // our one instance of the proxy\n"/>
-  <admst:text format="  va_proxy proxy_instance;\n"/>
-  <admst:text format="}\n"/>
-</admst:if>
-
+<!-- emmit code for the dynamic loader -->
+<admst:text format="\n// loader constructor interface\n"/>
+<admst:text format="#ifdef QUCSADMS_DYLOAD\n"/>
+<admst:text format="extern &quot;C&quot; {\n"/>
+<admst:text format="  class va_proxy { public:\n"/>
+<admst:text format="    va_proxy(){\n"/>
+<admst:text format="      // register the constructor and the definitions with the global factories\n"/>
+<admst:text format="      // Note that ::create and ::definition are handled by expanding the CREATOR define constructor\n"/>
+<admst:text format="      factorycreate[&quot;$module&quot;] = $module::create;\n"/>
+<admst:text format="      factorydef   [&quot;$module&quot;] = $module::definition;\n"/>
+<admst:text format="    }\n"/>
+<admst:text format="  };\n"/>
+<admst:text format="  // our one instance of the proxy\n"/>
+<admst:text format="  va_proxy proxy_instance;\n"/>
+<admst:text format="}\n"/>
+<admst:text format="#endif\n"/>
 
 </admst:for-each>
 
 </admst:open>
 
-<admst:open file="$module.core.h">/*
- * $(module).core.h - device class definitions for $(module) module
+<admst:open file="$(filename).core.h">/*
+ * $(filename).cpp - device implementations for $(filename) modules
+ *
+ * This is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2, or (at your option)
+ * any later version.
+ *
+ */
+
+<admst:for-each select="/module">
+// include everything. may cause name clashes.
+// used in components/components.h
+#include "$(filename).$(module).core.h"
+</admst:for-each>
+
+</admst:open>
+
+<admst:open file="$(filename).core.h">/*
+ * $(filename).core.h - device class definitions for $(filename) modules
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by

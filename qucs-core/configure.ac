@@ -623,7 +623,12 @@ AM_CONDITIONAL([USE_INTERNAL_ADMS],
 dnl if we are using internal adms we need to add it to the
 dnl subdirectories autoconf will recurse into as it has its
 dnl own configure.ac and Makefile.am
-AM_COND_IF([USE_INTERNAL_ADMS], [AC_CONFIG_SUBDIRS([deps/adms/])])
+adms_subdir=
+AM_COND_IF([USE_INTERNAL_ADMS],
+	   [AC_CONFIG_SUBDIRS([deps/adms/])
+	    adms_subdir=deps/adms
+	   ])
+AC_SUBST(ADMS_SUBDIR, $adms_subdir)
 
 dnl Checks for libraries.
 AC_CHECK_LIB(m, sin)

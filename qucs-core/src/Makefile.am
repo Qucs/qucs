@@ -57,17 +57,17 @@ noinst_HEADERS = $(noinst_TEMPLATES)            \
 	tokens_netlist.h tokens_dataset.h check_dataset.h tokens_touchstone.h       \
 	check_touchstone.h  spsolver.h dcsolver.h variable.h       \
 	parasweep.h sweep.h libqucsator.h evaluate.h matvec.h acsolver.h   \
-	transient.h netdefs.h qucsdefs.h hbsolver.h poly.h     \
+	transient.h netdefs.h hbsolver.h poly.h     \
 	spline.h tridiag.h fourier.h hash.h applications.h     \
 	range.h history.h devstates.h tokens_citi.h check_citi.h check_zvr.h  \
 	tokens_zvr.h check_mdl.h tokens_mdl.h differentiate.h tokens_csv.h  \
-	check_csv.h analyses.h receiver.h interpolator.h
+	check_csv.h analyses.h receiver.h interpolator.h \
 	logging.h net.h input.h dataset.h equation.h tvector.h tmatrix.h \
 	environment.h exceptionstack.h check_netlist.h module.h nasolver.h \
 	states.h analysis.h trsolver.h nasolution.h eqnsys.h compat.h \
 	exception.h object.h node.h circuit.h constants.h vector.h \
 	nodeset.h nodelist.h strlist.h operatingpoint.h  consts.h  \
-	integrator.h valuelist.h
+	integrator.h valuelist.h gperfappgen.h
 
 libqucs_la_SOURCES = dataset.cpp check_dataset.cpp parse_dataset.cpp      \
 	scan_dataset.cpp check_touchstone.cpp vector.cpp object.cpp          \
@@ -92,6 +92,9 @@ qucsator_LDADD = libqucs.la
 qucsator_LDFLAGS = -Wl,-rpath,$(libdir)
 
 qucsator_SOURCES = ucs.cpp
+
+all-am: qucsdefs.h
+
 
 if MAINTAINER_MODE
 ## Here we create the various input parsing code files using
@@ -158,6 +161,8 @@ endif
 ## is #included in the body of equation.cpp
 equation.cpp: gperfapphash.cpp
 
+BUILT_SOURCES = equation.cpp
+
 if MAINTAINER_MODE
 ## Here we generate gperfapphash.cpp for equation.cpp.
 ##
@@ -174,8 +179,6 @@ gperfapphash.gph: gperfappgen$(EXEEXT)
 gperfapphash.cpp: gperfapphash.gph
 	$(GPERF) -I -m 8 $< | sed -e 's/{""},/{"",0},/g' > $@
 
-gperfappgen.cpp: gperfappgen.h
-
 gperfappgen.h: applications.h
 	sed -e 's/evaluate::[a-zA-Z0-9_]*/NULL/g' < $< > $@
 
@@ -189,4 +192,4 @@ endif
 
 CLEANFILES = *~ *.orig *.rej *.output
 MAINTAINERCLEANFILES = Makefile.in $(generated_FILES) $(gperf_FILES)
-DISTCLEANFILES = $(generated_FILES)
+DISTCLEANFILES = $(generated_FILES) $(gperf_FILES)
