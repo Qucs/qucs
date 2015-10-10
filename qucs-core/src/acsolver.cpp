@@ -61,8 +61,8 @@ acsolver::acsolver (char * n) : nasolver<nr_complex_t> (n) {
 
 // Destructor deletes the acsolver class object.
 acsolver::~acsolver () {
-  delete swp;
-  delete xn;
+  if (swp) delete swp;
+  if (xn) delete xn;
 }
 
 /* The copy constructor creates a new instance of the acsolver class

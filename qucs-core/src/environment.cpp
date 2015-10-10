@@ -26,8 +26,6 @@
 # include <config.h>
 #endif
 
-#include <list>
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -35,6 +33,7 @@
 #include "complex.h"
 #include "variable.h"
 #include "equation.h"
+#include "ptrlist.h"
 #include "logging.h"
 #include "environment.h"
 
@@ -43,57 +42,57 @@ using namespace qucs::eqn;
 namespace qucs {
 
 // Constructor creates an unnamed instance of the environment class.
-environment::environment () :
-  name(),
-  children()
-{
+environment::environment () {
+  name = NULL;
   root = NULL;
   solvee = NULL;
   checkee = NULL;
   defs = NULL;
   iscopy = false;
+  children = new ptrlist<environment>;
 }
 
-
 // Constructor creates a named instance of the environment class.
-environment::environment (const std::string & p_name) :
-  name(p_name),
-  children()
-{
+environment::environment (const char * n) {
+  name = n ? strdup (n) : NULL;
   root = NULL;
   solvee = NULL;
   checkee = NULL;
   defs = NULL;
   iscopy = false;
+  children = new ptrlist<environment>;
 }
 
 /* The copy constructor creates a new instance of the environment
    class based on the given environment object. */
-environment::environment (const environment & e)  {
-  this->name = e.name;
+environment::environment (const environment & e) {
+  name = e.name ? strdup (e.name) : NULL;
   copyVariables (e.root);
   solvee = e.solvee;
   checkee = e.checkee;
   defs = e.defs;
   iscopy = true;
-  children = std::list<environment *>();
+  children = new ptrlist<environment>;
 }
 
 /* Very alike the copy constructor the function copies the content of
    the given environment into the calling environment. */
 void environment::copy (const environment & e) {
-  this->name = e.name;
+  if (name) free (name);
+  name = e.name ? strdup (e.name) : NULL;
   deleteVariables ();
   copyVariables (e.root);
   solvee = e.solvee;
   checkee = e.checkee;
   defs = e.defs;
+  delete children;
   iscopy = true;
-  children = std::list<environment *>();
+  children = new ptrlist<environment>;
 }
 
 // Destructor deletes the environment object.
 environment::~environment () {
+  if (name) free (name);
   deleteVariables ();
   // delete solver and checker if this is not just a reference
   if (!iscopy) {
@@ -105,12 +104,22 @@ environment::~environment () {
     }
   }
   // delete children
-  for (auto it = children.begin(); it != children.end(); ++it) {
-    environment * etmp = *it;
-    delete etmp;
+  for (ptrlistiterator<environment> it (*children); *it; ++it) {
+    delete (*it);
   }
+  delete children;
 }
 
+// Sets the name of the environment.
+void environment::setName (char * n) {
+  if (name) free (name);
+  name = n ? strdup (n) : NULL;
+}
+
+// Returns the name of the environment.
+char * environment::getName (void) {
+  return name;
+}
 
 /* This function copies all variables in the given variable list into
    an environment. */
@@ -156,7 +165,7 @@ void environment::deleteVariables (void) {
       delete var->getSubstrate ();
     else if (var->getType () == VAR_REFERENCE) {
       constant * c = var->getReference()->getResult ();
-      delete c;
+      if (c) delete c;
       delete var->getReference ();
     }
     delete var;
@@ -165,15 +174,15 @@ void environment::deleteVariables (void) {
 }
 
 /* This function adds a variable to the environment. */
-void environment::addVariable (variable * const var, const bool pass) {
+void environment::addVariable (variable * var, bool pass) {
   var->setNext (root);
   var->setPassing (pass);
-  this->root = var;
+  root = var;
 }
 
 /* This function looks for the variable name in the environment and
    returns it if possible.  Otherwise the function returns NULL. */
-variable * environment::getVariable (const char * const n) const {
+variable * environment::getVariable (char * n) {
   for (variable * var = root; var != NULL; var = var->getNext ()) {
     if (var->getType () != VAR_VALUE)
       if (!strcmp (var->getName (), n))
@@ -183,13 +192,13 @@ variable * environment::getVariable (const char * const n) const {
 }
 
 // The function runs the equation checker for this environment.
-int environment::equationChecker (const int noundefined) const {
+int environment::equationChecker (int noundefined) {
   checkee->setDefinitions (defs);
   return checkee->check (noundefined);
 }
 
 // The function runs the equation solver for this environment.
-int environment::equationSolver (dataset * const data) {
+int environment::equationSolver (dataset * data) {
   checkee->setDefinitions (defs);
   solvee->setEquations (checkee->getEquations ());
   int err = solvee->solve (data);
@@ -207,6 +216,15 @@ void environment::equationSolver (void) {
   checkee->setEquations (solvee->getEquations ());
 }
 
+// Adds a child to the environment.
+void environment::addChild (environment * child) {
+  children->add (child);
+}
+
+// Removes a child from the environment.
+void environment::delChild (environment * child) {
+  children->del (child);
+}
 
 /* The function solves the equations of the current environment object
    as well as these of its children, updates the variables and passes
@@ -219,7 +237,7 @@ int environment::runSolver (void) {
   fetchConstants ();
 
   // cycle through children
-  for(auto it = children.begin(); it != children.end(); ++it) {
+  for (ptrlistiterator<environment> it (*children); *it; ++it) {
     // pass constants to solver
     (*it)->passConstants ();
     // pass references
@@ -335,22 +353,22 @@ void environment::updateReferences (environment * up) {
 }
 
 // Returns vector of an assignment in the equation checker.
-qucs::vector environment::getVector (const char * const ident) const {
+qucs::vector environment::getVector (char * ident) {
   return checkee->getVector (ident);
 }
 
 // Returns double value of an assignment in the equation checker.
-nr_double_t environment::getDouble (const char * const ident) const {
+nr_double_t environment::getDouble (char * ident) {
   return checkee->getDouble (ident);
 }
 
 // Sets the double value of an assignment in the equation checker.
-void environment::setDouble (const char * const ident, const nr_double_t val) {
+void environment::setDouble (char * ident, nr_double_t val) {
   checkee->setDouble (ident, val);
 }
 
 // Return double value of a variable in the environment.
-nr_double_t environment::getDoubleConstant (const char * const ident) const {
+nr_double_t environment::getDoubleConstant (char * ident) {
   variable * var = getVariable (ident);
   if (var != NULL && var->getType () == VAR_CONSTANT) {
     constant * c = var->getConstant ();
@@ -360,7 +378,7 @@ nr_double_t environment::getDoubleConstant (const char * const ident) const {
 }
 
 // Sets the double value of a variable in the environment.
-void environment::setDoubleConstant (const char * const ident, nr_double_t val) {
+void environment::setDoubleConstant (char * ident, nr_double_t val) {
   variable * var = getVariable (ident);
   if (var != NULL && var->getType () == VAR_CONSTANT) {
     constant * c = var->getConstant ();
@@ -369,7 +387,7 @@ void environment::setDoubleConstant (const char * const ident, nr_double_t val) 
 }
 
 // Returns the referenced value of a variable in the environment.
-char * environment::getDoubleReference (const char * const ident) const {
+char * environment::getDoubleReference (char * ident) {
   variable * var = getVariable (ident);
   if (var != NULL &&  var->getType () == VAR_REFERENCE) {
     reference * r = var->getReference ();
@@ -379,7 +397,7 @@ char * environment::getDoubleReference (const char * const ident) const {
 }
 
 // Sets the referenced value of a variable in the environment.
-void environment::setDoubleReference (const char * const ident, char * val) {
+void environment::setDoubleReference (char * ident, char * val) {
   variable * var = getVariable (ident);
   if (var != NULL) {
     if (var->getType () == VAR_CONSTANT) {
@@ -394,23 +412,24 @@ void environment::setDoubleReference (const char * const ident, char * val) {
     else if (var->getType () == VAR_REFERENCE) {
       // just apply the reference
       reference * r = var->getReference ();
-      free (r->n);
+      if (r->n) free (r->n);
       r->n = strdup (val);
     }
   }
 }
 
-//! Prints the environment.
-void environment::print (const bool all) const {
-  logprint (LOG_STATUS, "environment %s\n",this->name.c_str());
+// Prints the environment.
+void environment::print (bool all) {
+  ptrlistiterator<environment> it;
+  logprint (LOG_STATUS, "environment %s\n", getName () ? getName () : "?env?");
   for (variable * var = root; var != NULL; var = var->getNext ()) {
     logprint (LOG_STATUS, "  %s [%s]\n", var->getName (), var->toString ());
   }
-  for (auto it = children.begin(); it != children.end() ; ++it) {
-    logprint (LOG_STATUS, "  %s\n", (*it)->name.c_str ());
+  for (it = ptrlistiterator<environment> (*children); *it; ++it) {
+    logprint (LOG_STATUS, "  %s\n", (*it)->getName ());
   }
   if (all) {
-    for (auto it = children.begin(); it != children.end() ; ++it)
+    for (it = ptrlistiterator<environment> (*children); *it; ++it)
       (*it)->print ();
   }
 }

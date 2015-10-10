@@ -69,7 +69,7 @@ int dcsolver::solve (void) {
   // fetch simulation properties
   saveOPs |= !strcmp (getPropertyString ("saveOPs"), "yes") ? SAVE_OPS : 0;
   saveOPs |= !strcmp (getPropertyString ("saveAll"), "yes") ? SAVE_ALL : 0;
-  const char * const solver = getPropertyString ("Solver");
+  char * solver = getPropertyString ("Solver");
 
   // initialize node voltages, first guess for non-linear circuits and
   // generate extra circuits if necessary
@@ -102,7 +102,7 @@ int dcsolver::solve (void) {
     -1 };
 
   // is a certain convergence helper requested?
-  const char * const helper = getPropertyString ("convHelper");
+  char * helper = getPropertyString ("convHelper");
   convHelper = CONV_None;
   if (!strcmp (helper, "LineSearch")) {
     convHelper = CONV_LineSearch;
@@ -144,7 +144,7 @@ int dcsolver::solve (void) {
       convHelper = helpers[fallback++];
       if (convHelper != -1) {
 	logprint (LOG_ERROR, "WARNING: %s: %s analysis failed, using fallback "
-		  "#%d (%s)\n", getName (), getDescription ().c_str(), fallback,
+		  "#%d (%s)\n", getName (), getDescription (), fallback,
 		  getHelperDescription ());
 	retry++;
 	restart ();

@@ -1,5 +1,3 @@
-//Created by Pedro Macedo
-
 #ifndef __WPROBE_H__
 #define __WPROBE_H__
 

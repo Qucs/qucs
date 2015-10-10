@@ -28,8 +28,8 @@ SOURCES = attenuator.cpp dcblock.cpp open.cpp vccs.cpp \
 	biastee.cpp circulator.cpp dcfeed.cpp pac.cpp vcvs.cpp capacitor.cpp \
 	ground.cpp resistor.cpp cccs.cpp cross.cpp trafo.cpp inductor.cpp    \
 	tee.cpp ccvs.cpp isolator.cpp itrafo.cpp strafo.cpp vdc.cpp idc.cpp  \
-	vac.cpp phaseshifter.cpp gyrator.cpp tline.cpp iprobe.cpp wprobe.cpp iac.cpp    \
-	spfile.cpp vnoise.cpp inoise.cpp vpulse.cpp ipulse.cpp vrect.cpp     \
+	vac.cpp phaseshifter.cpp gyrator.cpp tline.cpp iprobe.cpp iac.cpp    \
+	spfile.cpp vnoise.cpp wprobe.cpp inoise.cpp vpulse.cpp ipulse.cpp vrect.cpp     \
 	irect.cpp amplifier.cpp opamp.cpp iinoise.cpp mutual.cpp mutual2.cpp \
 	vvnoise.cpp ivnoise.cpp coupler.cpp coaxline.cpp vprobe.cpp vam.cpp  \
 	vpm.cpp tswitch.cpp relais.cpp short.cpp tline4p.cpp twistedpair.cpp \

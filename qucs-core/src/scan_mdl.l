@@ -25,11 +25,6 @@
  *
  */
 
-#if defined(__clang__)
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-register"
-#endif
-
 #if HAVE_CONFIG_H
 # include <config.h>
 #endif
@@ -74,7 +69,7 @@ LINKS    "MODEL"|"CIRC"|"PS"|"DUT"|"DPS"|"DAT"|"OUT"|"SWEEP"|"XFORM"|"MACRO"|"TC
 %x VERSION BLKEDIT BLKEDIT1 CIRCUIT CIRCUIT1 PLINK PLIST PMEMBER
 %x TABDATA TABDATA1
 
-%option yylineno noyywrap nounput noinput prefix="mdl_"
+%option yylineno noyywrap nounput prefix="mdl_"
 
 %%
 

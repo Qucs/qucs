@@ -31,9 +31,6 @@
 #ifndef __OBJECT_H__
 #define __OBJECT_H__
 
-#include <string>
-#include "property.h"
-
 #define MCREATOR(val) \
   val (); \
   static struct define_t miscdef; \
@@ -41,9 +38,9 @@
 
 namespace qucs {
 
+class property;
 class variable;
 class vector;
-class property;
 
 /*! \class object
  * \brief generic object class.
@@ -55,36 +52,43 @@ class property;
 class object
 {
  public:
-  //! Constructor creates an unnamed instance of the object class.
-  object () : name(), props() {} ;
-  //! This constructor creates a named instance of the object class.
-  object (const std::string &n) : name(n), props() {} ;
-  //! Sets the name of the object.
-  void setName (const std::string &n) { this->name = n; };
-  //! Get the name of the object.
-  const char * getName (void) const { return this->name.c_str(); };
-  void addProperty (const std::string &n, const char * const val, const bool def = false);
-  void addProperty (const std::string &n, const nr_double_t, const bool def = false);
-  void addProperty (const std::string &n, variable * const, const bool def = false);
-  void setProperty (const std::string &n, const char * const);
-  void setProperty (const std::string &n, nr_double_t);
-  void setScaledProperty (const std::string &n, const nr_double_t);
-  void setProperty (const std::string &n, variable * const);
-  vector * getPropertyVector (const std::string &n) const;
-  const char * getPropertyString (const std::string &n) const;
-  const char * getPropertyReference (const std::string &n) const;
-  nr_double_t getPropertyDouble (const std::string &n) const;
-  nr_double_t getScaledProperty (const std::string &n) const;
-  int  getPropertyInteger (const std::string &n) const;
-  bool hasProperty (const std::string &n) const ;
-  bool isPropertyGiven (const std::string &n) const;
-  int  countProperties (void) const;
-  const char *
-    propertyList (void) const;
+  object ();
+  object (const char *);
+  object (const object &);
+  virtual ~object ();
+  object * getNext (void) { return next; }
+  void setNext (object * o) { next = o; }
+  object * getPrev (void) { return prev; }
+  void setPrev (object * o) { prev = o; }
+  void setName (const char *);
+  char * getName (void);
+  void addProperty (property *);
+  property * addProperty (const char *, const char *);
+  property * addProperty (const char *, nr_double_t);
+  property * addProperty (const char *, variable *);
+  void setProperty (const char *, char *);
+  void setProperty (const char *, nr_double_t);
+  void setScaledProperty (const char *, nr_double_t);
+  void setProperty (const char *, variable *);
+  vector * getPropertyVector (const char *);
+  char * getPropertyString (const char *);
+  char * getPropertyReference (const char *);
+  nr_double_t getPropertyDouble (const char *);
+  nr_double_t getScaledProperty (const char *);
+  int  getPropertyInteger (const char *);
+  bool hasProperty (const char *);
+  bool isPropertyGiven (const char *);
+  void copyProperties (property *);
+  void deleteProperties (void);
+  int  countProperties (void);
+  char * propertyList (void);
 
  private:
-  std::string name;
-  properties props;
+  char * name;
+  object * next;
+  object * prev;
+  property * prop;
+  char * ptxt;
 };
 
 } // namespace qucs

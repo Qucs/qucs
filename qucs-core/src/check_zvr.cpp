@@ -103,17 +103,17 @@ static void zvr_finalize (void) {
     }
     // free header
     if (hdr) {
-      free (hdr->funit);
-      free (hdr->d_UNT);
-      free (hdr->d_FMT);
-      free (hdr->d_TYP);
+      if (hdr->funit) free (hdr->funit);
+      if (hdr->d_UNT) free (hdr->d_UNT);
+      if (hdr->d_FMT) free (hdr->d_FMT);
+      if (hdr->d_TYP) free (hdr->d_TYP);
       free (hdr);
     }
     // free data vector
     if (vec) {
-      free (vec->nf);
-      free (vec->n1);
-      free (vec->n2);
+      if (vec->nf) free (vec->nf);
+      if (vec->n1) free (vec->n1);
+      if (vec->n2) free (vec->n2);
       free (vec);
     }
   }
@@ -186,7 +186,7 @@ static void zvr_conversion (struct zvr_data_t * root) {
       for (n = 0; n < var->getSize (); n++) {
 	nr_double_t r = real (var->get (n));
 	nr_double_t i = imag (var->get (n));
-	var->set (std::polar (std::pow (10.0, r / 20.0), deg2rad (i)), n);
+	var->set (std::polar (std::pow (10.0, r / 20.0), rad (i)), n);
       }
     }
     // magnitude in [dB]
@@ -201,7 +201,7 @@ static void zvr_conversion (struct zvr_data_t * root) {
       for (n = 0; n < var->getSize (); n++) {
 	nr_double_t r = real (var->get (n));
 	nr_double_t i = imag (var->get (n));
-	var->set (std::polar (r, deg2rad (i)), n);
+	var->set (std::polar (r, rad (i)), n);
       }
     }
     // magnitude in [dB] and angle in [degree]
@@ -209,7 +209,7 @@ static void zvr_conversion (struct zvr_data_t * root) {
       for (n = 0; n < var->getSize (); n++) {
 	nr_double_t r = real (var->get (n));
 	nr_double_t i = imag (var->get (n));
-	var->set (std::polar (std::pow (10.0, r / 20.0), deg2rad (i)), n);
+	var->set (std::polar (std::pow (10.0, r / 20.0), rad (i)), n);
       }
     }
   }

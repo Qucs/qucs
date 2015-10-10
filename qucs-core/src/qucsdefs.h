@@ -114,6 +114,8 @@ static struct property_t req_Iac[] = {
 };
 
 static struct property_t opt_Iac[] = {
+  { "Ri", 1, { 0, ((char *) -1) }, { '.', 0, 0, '.',
+    { ((char *) 0) } } },
   { "Phase", 1, { 0, ((char *) -1) }, { '[', -360, 360, ']',
     { ((char *) 0) } } },
   { "Theta", 1, { 0, ((char *) -1) }, { '[', 0, 0, '.',
@@ -345,6 +347,8 @@ static struct property_t req_Idc[] = {
 };
 
 static struct property_t opt_Idc[] = {
+  { "Ri", 1, { 0, ((char *) -1) }, { '.', 0, 0, '.',
+    { ((char *) 0) } } },
   { ((char *) 0), 1, { 0, ((char *) -1) }, { '.', 0, 0, '.',
     { ((char *) 0) } } }
 };
@@ -8228,6 +8232,8 @@ static struct define_t def_PShift = {
   "PShift", 2, 0, 0, 0, req_PShift, opt_PShift };
 
 static struct property_t req_WProbe[] = {
+  { "Ri", 1, { 0, ((char *) -1) }, { '.', 0, 0, '.',
+    { ((char *) 0) } } },
   { ((char *) 0), 1, { 0, ((char *) -1) }, { '.', 0, 0, '.',
     { ((char *) 0) } } }
 };
@@ -8357,14 +8363,6 @@ static struct property_t req_Vdc[] = {
 
 static struct property_t opt_Vdc[] = {
   { "Ri", 1, { 0, ((char *) -1) }, { '.', 0, 0, '.',
-    { ((char *) 0) } } },
-  { "Temp", 1, { 26.85, ((char *) -1) }, { '[', -273.15, 0, '.',
-    { ((char *) 0) } } },
-  { "Tc1", 1, { 0, ((char *) -1) }, { '.', 0, 0, '.',
-    { ((char *) 0) } } },
-  { "Tc2", 1, { 0, ((char *) -1) }, { '.', 0, 0, '.',
-    { ((char *) 0) } } },
-  { "Tnom", 1, { 26.85, ((char *) -1) }, { '[', -273.15, 0, '.',
     { ((char *) 0) } } },
   { ((char *) 0), 1, { 0, ((char *) -1) }, { '.', 0, 0, '.',
     { ((char *) 0) } } }
@@ -8597,6 +8595,8 @@ static struct property_t opt_Vac[] = {
   { "Theta", 1, { 0, ((char *) -1) }, { '[', 0, 0, '.',
     { ((char *) 0) } } },
   { "f", 1, { 1e+09, ((char *) -1) }, { '[', 0, 0, '.',
+    { ((char *) 0) } } },
+  { "Ri", 1, { 0, ((char *) -1) }, { '.', 0, 0, '.',
     { ((char *) 0) } } },
   { ((char *) 0), 1, { 0, ((char *) -1) }, { '.', 0, 0, '.',
     { ((char *) 0) } } }

@@ -52,7 +52,7 @@ void isolator::calcNoiseSP (nr_double_t) {
   nr_double_t z1 = getPropertyDouble ("Z1");
   nr_double_t z2 = getPropertyDouble ("Z2");
   nr_double_t r = (z0 - z1) / (z0 + z2);
-  nr_double_t f = 4 * z0 / sqr (z1 + z0) * celsius2kelvin (T) / T0;
+  nr_double_t f = 4 * z0 / sqr (z1 + z0) * kelvin (T) / T0;
   setN (NODE_1, NODE_1, f * z1);
   setN (NODE_1, NODE_2, f * std::sqrt (z1 * z2) * r);
   setN (NODE_2, NODE_1, f * std::sqrt (z1 * z2) * r);
@@ -63,7 +63,7 @@ void isolator::calcNoiseAC (nr_double_t) {
   nr_double_t T = getPropertyDouble ("Temp");
   nr_double_t z1 = getPropertyDouble ("Z1");
   nr_double_t z2 = getPropertyDouble ("Z2");
-  nr_double_t f = 4 * celsius2kelvin (T) / T0;
+  nr_double_t f = 4 * kelvin (T) / T0;
   setN (NODE_1, NODE_1, +f / z1);
   setN (NODE_1, NODE_2, 0);
   setN (NODE_2, NODE_1, -f * 2 / std::sqrt (z1 * z2));

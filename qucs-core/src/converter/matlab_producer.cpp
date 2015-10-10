@@ -37,8 +37,6 @@
 #include "matvec.h"
 #include "constants.h"
 
-#include <cstdint>
-
 using namespace qucs;
 
 /* Global variables. */
@@ -47,15 +45,14 @@ int matlab_symbols = 1;   // convert data names to have valid Matlab identifier
 int nr_bigendian = 0;     // endianness
 
 // Test endianness.
-// http://www.geeksforgeeks.org/little-and-big-endian-mystery/
 static void initendian (void) {
-  unsigned int i = 1;
-  char *c = (char*)&i;
-  nr_bigendian = (*c == 1) ? 0 : 1;
+  unsigned char EndianTest[2] = { 1, 0 };
+  nr_int16_t x = * (nr_int16_t *) EndianTest;
+  nr_bigendian = (x == 1) ? 0 : 1;
 }
 
 // Writes a Matlab v4 header.
-static void matlab_header (int32_t rows, int32_t cols, const char * name) {
+static void matlab_header (nr_int32_t rows, nr_int32_t cols, char * name) {
 
   // MOPT
   char mopt[4];
@@ -69,28 +66,27 @@ static void matlab_header (int32_t rows, int32_t cols, const char * name) {
   fwrite (mopt, sizeof (mopt), 1, matlab_out);
 
   // dimension
-  fwrite (&rows, sizeof (int32_t), 1, matlab_out);
-  fwrite (&cols, sizeof (int32_t), 1, matlab_out);
+  fwrite (&rows, sizeof (nr_int32_t), 1, matlab_out);
+  fwrite (&cols, sizeof (nr_int32_t), 1, matlab_out);
 
   // imaginary flag
-  int32_t imag = 1;
-  fwrite (&imag, sizeof (int32_t), 1, matlab_out);
+  nr_int32_t imag = 1;
+  fwrite (&imag, sizeof (nr_int32_t), 1, matlab_out);
 
   // data name length
-  int32_t len = strlen (name) + 1;
-  fwrite (&len, sizeof (int32_t), 1, matlab_out);
+  nr_int32_t len = strlen (name) + 1;
+  fwrite (&len, sizeof (nr_int32_t), 1, matlab_out);
 
-  char * p = strdup(name);
   // data name
   if (matlab_symbols) {
+    char * p = name;
     // convert to valid Matlab identifiers
     for (unsigned int i = 0; i < strlen (name); i++, p++) {
       if (!isalnum (*p) && *p != '_')
 	*p = '_';
     }
   }
-  fwrite (p, 1, len, matlab_out);
-  free(p);
+  fwrite (name, 1, len, matlab_out);
 }
 
 // Writes a Matlab v4 vector.
@@ -133,7 +129,7 @@ static void matlab_matrix (matrix * m) {
 static void matlab_save (::vector * v) {
   int r, c;
   char * n, * sn;
-  const char * vn = v->getName ();
+  char * vn = v->getName ();
   matvec * mv = NULL;
   matrix m;
 
@@ -163,7 +159,7 @@ static void matlab_save (::vector * v) {
       free (sn);
     }
     free (n);
-    delete mv;
+    if (mv) delete mv;
   }
   else {
     // save vector

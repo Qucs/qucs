@@ -26,8 +26,6 @@
 #ifndef __RECEIVER_H__
 #define __RECEIVER_H__
 
-#include <cstdint>
-
 namespace qucs {
 
 namespace emi {
@@ -41,7 +39,7 @@ namespace emi {
   };
 
   // internal helper functions
-  int32_t nearestbin32 (int);
+  nr_int32_t nearestbin32 (int);
   nr_double_t f_2ndorder (nr_double_t, nr_double_t, nr_double_t);
   nr_double_t f_gauss (nr_double_t, nr_double_t, nr_double_t);
   nr_double_t f_ideal (nr_double_t, nr_double_t, nr_double_t);

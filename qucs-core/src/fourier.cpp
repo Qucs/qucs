@@ -72,7 +72,7 @@ void fourier::_fft_1d (nr_double_t * data, int len, int isign) {
   mmax = 2;
   while (n > mmax) {
     istep = mmax << 1;
-    th = isign * (2 * pi / mmax);
+    th = isign * (2 * M_PI / mmax);
     wt = sin (0.5 * th);
     wpr = -2.0 * wt * wt;
     wpi = sin (th);
@@ -195,7 +195,7 @@ void fourier::_dft_1d (nr_double_t * data, int len, int isign) {
   nr_double_t * res = (nr_double_t *) calloc (size, 1);
   nr_double_t th, c, s;
   for (n = 0; n < 2 * len; n += 2) {
-    th = n * pi / 2 / len;
+    th = n * M_PI / 2 / len;
     for (k = 0; k < 2 * len; k += 2) {
       c = cos (k * th);
       s = isign * sin (k * th);
@@ -214,7 +214,7 @@ vector fourier::dft_1d (vector var, int isign) {
   int k, n, len = var.getSize ();
   vector res = vector (len);
   for (n = 0; n < len; n++) {
-    nr_double_t th = - isign * 2 * pi * n / len;
+    nr_double_t th = - isign * 2 * M_PI * n / len;
     nr_complex_t val = 0;
     for (k = 0; k < len; k++)
       val += var (k) * std::polar (1.0, th * k);
@@ -281,7 +281,7 @@ void fourier::_fft_nd (nr_double_t * data, int len[], int nd, int isign) {
    ifp1 = ip1;
    while (ifp1 < ip2) {
      ifp2 = ifp1 << 1;
-     th = isign * 2 * pi / (ifp2 / ip1);
+     th = isign * 2 * M_PI / (ifp2 / ip1);
      wt = sin (0.5 * th);
      wpr = -2.0 * wt * wt;
      wpi = sin (th);

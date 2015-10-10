@@ -2,7 +2,6 @@
  * gperfappgen.cpp - generates the gperf input file
  *
  * Copyright (C) 2005 Stefan Jahn <stefan@lkcc.org>
- * Copyright (C) 2015 Guilherme Brondani Torri <guitorri@gmail.com>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by

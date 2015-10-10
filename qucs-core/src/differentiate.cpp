@@ -53,7 +53,7 @@ using namespace qucs::eqn;
 #define isZero(n)  (isConst(n) && D(n) == 0.0)
 #define isOne(n)   (isConst(n) && D(n) == 1.0)
 #define isNeg(n)   (isConst(n) && D(n) == -1.0)
-#define isEuler(n) ((isConst(n) && D(n) == euler) || isRef(n,"e"))
+#define isEuler(n) ((isConst(n) && D(n) == M_E) || isRef(n,"e"))
 #define isval(n,v) (isConst(n) && D(n) == v)
 
 #define isVar(v)   ((v)->getTag()==REFERENCE)
@@ -408,8 +408,8 @@ node * differentiate::exp (application * app, char * derivative) {
 node * differentiate::limexp (application * app, char * derivative) {
   _AF0 (f0);
   _AD0 (d0);
-  defCon (lexp, ::exp (limitexp));
-  defCon (lcon, limitexp);
+  defCon (lexp, ::exp (M_LIMEXP));
+  defCon (lcon, M_LIMEXP);
   defApp2 (ask, "<", f0->recreate(), lcon);
   defApp1 (exp, "exp", f0->recreate());
   defApp3 (ite, "?:", ask, exp, lexp);

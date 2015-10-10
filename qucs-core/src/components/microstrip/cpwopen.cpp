@@ -82,7 +82,7 @@ void cpwopen::checkProperties (void) {
 }
 
 nr_complex_t cpwopen::calcY (nr_double_t frequency) {
-  nr_double_t o = 2 * pi * frequency;
+  nr_double_t o = 2 * M_PI * frequency;
   nr_double_t c = calcCend (frequency);
   return nr_complex_t (0, c * o);
 }

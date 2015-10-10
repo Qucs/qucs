@@ -540,7 +540,7 @@ static void vcd_free_scope (struct vcd_scope * root) {
       vnext = vv->next;
       free (vv->code);
       free (vv->ident);
-      free (vv->range);
+      if (vv->range) free (vv->range);
       free (vv);
     }
     vcd_free_scope (vs->scopes);
@@ -579,7 +579,7 @@ static void vcd_free_dataset (struct dataset_variable * root) {
   for (ds = root; ds; ds = snext) {
     snext = ds->next;
     free (ds->ident);
-    free (ds->dependencies);
+    if (ds->dependencies) free (ds->dependencies);
     struct dataset_value * dv, * dnext;
     for (dv = ds->values; dv; dv = dnext) {
       dnext = dv->next;

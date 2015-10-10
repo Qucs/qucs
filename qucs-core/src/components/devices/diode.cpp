@@ -55,7 +55,7 @@ diode::diode () : circuit (2) {
 void diode::calcSP (nr_double_t frequency) {
   nr_double_t gd = getOperatingPoint ("gd");
   nr_double_t Cd = getOperatingPoint ("Cd");
-  nr_complex_t y = 2 * z0 * nr_complex_t (gd, Cd * 2.0 * pi * frequency);
+  nr_complex_t y = 2 * z0 * nr_complex_t (gd, Cd * 2.0 * M_PI * frequency);
   setS (NODE_C, NODE_C, 1.0 / (1.0 + y));
   setS (NODE_A, NODE_A, 1.0 / (1.0 + y));
   setS (NODE_C, NODE_A, y / (1.0 + y));
@@ -74,7 +74,7 @@ void diode::calcNoiseSP (nr_double_t frequency) {
   nr_double_t gd = getOperatingPoint ("gd");
   nr_double_t Cd = getOperatingPoint ("Cd");
 
-  nr_complex_t y = rect (gd, Cd * 2.0 * pi * frequency);
+  nr_complex_t y = rect (gd, Cd * 2.0 * M_PI * frequency);
   nr_complex_t f = 2 * z0 * (Id + 2 * Is) / norm (2 * z0 * y + 1) * QoverkB / T0;
   setN (NODE_C, NODE_C, +f); setN (NODE_A, NODE_A, +f);
   setN (NODE_C, NODE_A, -f); setN (NODE_A, NODE_C, -f);
@@ -118,8 +118,8 @@ void diode::initModel (void) {
   nr_double_t Xti = getPropertyDouble ("Xti");
   nr_double_t Eg  = getPropertyDouble ("Eg");
   nr_double_t T1, T2;
-  T2 = celsius2kelvin (T);
-  T1 = celsius2kelvin (Tn);
+  T2 = kelvin (T);
+  T1 = kelvin (Tn);
   Is = pnCurrent_T (T1, T2, Is, Eg, N, Xti);
   setScaledProperty ("Is", Is * A);
 
@@ -223,7 +223,7 @@ void diode::prepareDC (void) {
     nr_double_t Ibv, Is, tol, Ut, Xbv, Xibv;
     Ibv = getPropertyDouble ("Ibv");
     Is = getScaledProperty ("Is");
-    Ut = celsius2kelvin (T) * kBoverQ;
+    Ut = kelvin (T) * kBoverQ;
     // adjust very small breakdown currents
     if (Ibv < Is * Bv / Ut) {
       Ibv = Is * Bv / Ut;
@@ -278,13 +278,13 @@ void diode::calcDC (void) {
 
   nr_double_t Ut, Ieq, Ucrit, gtiny;
 
-  T = celsius2kelvin (T);
+  T = kelvin (T);
   Ut = T * kBoverQ;
   Ud = real (getV (NODE_A) - getV (NODE_C));
 
   // critical voltage necessary for bad start values
   Ucrit = pnCriticalVoltage (Is, N * Ut);
-  if (Bv != 0 && Ud < std::min (0.0, -Bv + 10 * N * Ut)) {
+  if (Bv != 0 && Ud < MIN (0, -Bv + 10 * N * Ut)) {
     nr_double_t V = -(Ud + Bv);
     V = pnVoltage (V, -(UdPrev + Bv), Ut * N, Ucrit);
     Ud = -(V + Bv);
@@ -302,7 +302,7 @@ void diode::calcDC (void) {
     Id = pnCurrent (Ud, Is, Ut * N) + pnCurrent (Ud, Isr, Ut * Nr);
   }
   else if (Bv == 0 || Ud >= -Bv) { // reverse region
-    nr_double_t a = 3 * N * Ut / (Ud * euler);
+    nr_double_t a = 3 * N * Ut / (Ud * M_E);
     a = cubic (a);
     Id = -Is * (1 + a);
     gd = +Is * 3 * a / Ud;
@@ -388,7 +388,7 @@ void diode::initAC (void) {
 void diode::calcAC (nr_double_t frequency) {
   nr_double_t gd = getOperatingPoint ("gd");
   nr_double_t Cd = getOperatingPoint ("Cd");
-  nr_complex_t y = nr_complex_t (gd, Cd * 2.0 * pi * frequency);
+  nr_complex_t y = nr_complex_t (gd, Cd * 2.0 * M_PI * frequency);
   setY (NODE_C, NODE_C, +y); setY (NODE_A, NODE_A, +y);
   setY (NODE_C, NODE_A, -y); setY (NODE_A, NODE_C, -y);
 }

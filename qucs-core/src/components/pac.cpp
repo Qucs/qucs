@@ -47,7 +47,7 @@ void pac::calcSP (nr_double_t) {
 void pac::calcNoiseSP (nr_double_t) {
   nr_double_t r = getPropertyDouble ("Z");
   nr_double_t T = getPropertyDouble ("Temp");
-  nr_double_t f = celsius2kelvin (T) * 4.0 * r * z0 / qucs::sqr (2.0 * z0 + r) / T0;
+  nr_double_t f = kelvin (T) * 4.0 * r * z0 / qucs::sqr (2.0 * z0 + r) / T0;
   setN (NODE_1, NODE_1, +f); setN (NODE_2, NODE_2, +f);
   setN (NODE_1, NODE_2, -f); setN (NODE_2, NODE_1, -f);
 }
@@ -70,7 +70,7 @@ void pac::calcAC (nr_double_t) {
 void pac::calcNoiseAC (nr_double_t) {
   nr_double_t r = getPropertyDouble ("Z");
   nr_double_t T = getPropertyDouble ("Temp");
-  nr_double_t f = celsius2kelvin (T) / T0 * 4.0 / r;
+  nr_double_t f = kelvin (T) / T0 * 4.0 / r;
   setN (NODE_1, NODE_1, +f); setN (NODE_2, NODE_2, +f);
   setN (NODE_1, NODE_2, -f); setN (NODE_2, NODE_1, -f);
 }
@@ -79,7 +79,7 @@ void pac::calcTR (nr_double_t t) {
   nr_double_t p = getPropertyDouble ("P");
   nr_double_t r = getPropertyDouble ("Z");
   nr_double_t f = getPropertyDouble ("f");
-  nr_double_t i = std::sqrt (8 * p / r) * std::sin (2 * pi * f * t);
+  nr_double_t i = std::sqrt (8 * p / r) * std::sin (2 * M_PI * f * t);
   calcDC ();
   setI (NODE_1, +i); setI (NODE_2, -i);
 }

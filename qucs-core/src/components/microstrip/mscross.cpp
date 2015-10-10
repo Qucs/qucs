@@ -77,8 +77,8 @@ nr_double_t mscross::capCorrection (nr_double_t W, nr_double_t f) {
   nr_double_t er = subst->getPropertyDouble ("er");
   nr_double_t h  = subst->getPropertyDouble ("h");
   nr_double_t t  = subst->getPropertyDouble ("t");
-  const char * SModel = getPropertyString ("MSModel");
-  const char * DModel = getPropertyString ("MSDispModel");
+  char * SModel = getPropertyString ("MSModel");
+  char * DModel = getPropertyString ("MSDispModel");
   nr_double_t Zl1, Er1, Zl2, Er2;
   nr_double_t ZlEff, ErEff, WEff;
   msline::analyseQuasiStatic (W, h, t, 9.9, SModel, ZlEff, ErEff, WEff);
@@ -128,7 +128,7 @@ matrix mscross::calcMatrixY (nr_double_t f) {
   L3 = calcInd (W3, h, (W4 + W2) / 2);
   L4 = calcInd (W4, h, (W3 + W1) / 2);
 
-  L5 = 1e-9 * h * (5 * W2h * qucs::cos (pi / 2 * (1.5 - W1h)) -
+  L5 = 1e-9 * h * (5 * W2h * qucs::cos (M_PI / 2 * (1.5 - W1h)) -
 		   (1 + 7 / W1h ) / W2h - 337.5);
 
   // center inductance correction
@@ -141,7 +141,7 @@ matrix mscross::calcMatrixY (nr_double_t f) {
   C4 = C4 * capCorrection (W4, f);
 
   // compute admittance matrix
-  nr_double_t o = 2 * pi * f;
+  nr_double_t o = 2 * M_PI * f;
   nr_complex_t yc1 = nr_complex_t (0, o * C1);
   nr_complex_t yc2 = nr_complex_t (0, o * C2);
   nr_complex_t yc3 = nr_complex_t (0, o * C3);

@@ -55,7 +55,7 @@ class hashentry
     code = 0; key = NULL; value = NULL;
   }
   ~hashentry () { // Destructor.
-    free (key);
+    if (key) free (key);
   }
 
  private:

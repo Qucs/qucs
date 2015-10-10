@@ -26,8 +26,6 @@
 #ifndef __VECTOR_H__
 #define __VECTOR_H__
 
-#include <limits>
-
 #include "consts.h"
 #include "precision.h"
 #include "complex.h"
@@ -49,20 +47,11 @@ qucs::vector runavg (const nr_complex_t, const int);
 class vector : public object
 {
  public:
-  vector * getNext (void) const { return this->next; }
-  void setNext (vector * const o) { this->next = o; }
-  vector * getPrev (void) const { return prev; }
-  void setPrev (vector * const o) { this->prev = o; }
- private:
-  vector * next;
-  vector * prev;
-
- public:
   vector ();
-  vector (const std::string &);
+  vector (const char *);
   vector (int);
   vector (int, nr_complex_t);
-  vector (const std::string &, int);
+  vector (const char *, int);
   vector (const vector &);
   const vector& operator = (const vector &);
   ~vector ();
@@ -78,9 +67,9 @@ class vector : public object
   void reverse (void);
   strlist * getDependencies (void);
   void setDependencies (strlist *);
-  void setOrigin (const char *);
+  void setOrigin (char *);
   char * getOrigin (void);
-  int contains (nr_complex_t, nr_double_t eps = std::numeric_limits<nr_double_t>::epsilon());
+  int contains (nr_complex_t, nr_double_t eps = NR_EPSI);
   void sort (bool ascending = true);
   void print (void);
 
@@ -176,8 +165,6 @@ class vector : public object
   friend vector erfc    (vector);
   friend vector erfinv  (vector);
   friend vector erfcinv (vector);
-  friend vector rad2deg     (vector);
-  friend vector deg2rad     (vector);
 
   // operator functions
   friend vector operator + (vector, vector);
@@ -274,7 +261,7 @@ vector rtoz   (vector, nr_complex_t zref = 50.0);
 vector ytor   (vector, nr_complex_t zref = 50.0);
 vector rtoy   (vector, nr_complex_t zref = 50.0);
 vector diff   (vector, vector, int n = 1);
-vector unwrap (vector, nr_double_t tol = pi, nr_double_t step = 2 * pi);
+vector unwrap (vector, nr_double_t tol = M_PI, nr_double_t step = 2 * M_PI);
 vector polar   (vector, const nr_complex_t);
 vector polar   (const nr_complex_t, vector);
 vector polar   (vector, vector);
@@ -328,8 +315,6 @@ vector erf     (vector);
 vector erfc    (vector);
 vector erfinv  (vector);
 vector erfcinv (vector);
-vector rad2deg     (vector);
-vector deg2rad     (vector);
 
 } // namespace qucs
 

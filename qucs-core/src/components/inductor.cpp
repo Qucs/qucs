@@ -38,7 +38,7 @@ inductor::inductor () : circuit (2) {
 
 void inductor::calcSP (nr_double_t frequency) {
   nr_double_t l = getPropertyDouble ("L") / z0;
-  nr_complex_t z = nr_complex_t (0, 2.0 * pi * frequency * l);
+  nr_complex_t z = nr_complex_t (0, 2.0 * M_PI * frequency * l);
   setS (NODE_1, NODE_1, z / (z + 2.0));
   setS (NODE_2, NODE_2, z / (z + 2.0));
   setS (NODE_1, NODE_2, 2.0 / (z + 2.0));
@@ -75,7 +75,7 @@ void inductor::calcAC (nr_double_t frequency) {
 
   // for non-zero inductance usual MNA entries
   if (l != 0.0) {
-    nr_complex_t y = nr_complex_t (0, -1 / (2.0 * pi * frequency * l));
+    nr_complex_t y = nr_complex_t (0, -1 / (2.0 * M_PI * frequency * l));
     setY (NODE_1, NODE_1, +y); setY (NODE_2, NODE_2, +y);
     setY (NODE_1, NODE_2, -y); setY (NODE_2, NODE_1, -y);
   }
@@ -115,7 +115,7 @@ void inductor::initHB (void) {
 
 void inductor::calcHB (nr_double_t frequency) {
   nr_double_t l = getPropertyDouble ("L");
-  setD (VSRC_1, VSRC_1, -l * 2 * pi * frequency);
+  setD (VSRC_1, VSRC_1, -l * 2 * M_PI * frequency);
 }
 
 // properties

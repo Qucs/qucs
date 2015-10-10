@@ -54,7 +54,6 @@
 
 using namespace qucs;
 
-/*! \todo replace environement name root by "/" in order to be filesystem compatible */
 int main (int argc, char ** argv) {
 
   char * infile = NULL;
@@ -72,17 +71,14 @@ int main (int argc, char ** argv) {
   std::list<std::string> vamodules;
 
   loginit ();
+  precinit ();
   ::srand (::time (NULL));
 
   // check program arguments
   for (int i = 1; i < argc; i++) {
     if (!strcmp (argv[i], "-v") || !strcmp (argv[i], "--version")) {
       fprintf (stdout,
-#ifdef GIT_REVISION
-	"Qucsator " PACKAGE_VERSION " (" GIT_REVISION ") \n"
-#else
 	"Qucsator " PACKAGE_VERSION "\n"
-#endif
 	"Copyright (C) 2003-2009 "
 	"Stefan Jahn <stefan@lkcc.org>\n"
         "Copyright (C) 2006 Helene Parruitte <parruit@enseirb.fr>\n"
@@ -218,7 +214,7 @@ int main (int argc, char ** argv) {
 
 
   // create root environment
-  root = new environment (std::string("root"));
+  root = new environment ("root");
 
   // create netlist object and input
   subnet = new net ("subnet");

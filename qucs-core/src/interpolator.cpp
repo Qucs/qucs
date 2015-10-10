@@ -51,11 +51,11 @@ interpolator::interpolator () {
 
 // Destructor deletes an instance of the interpolator class.
 interpolator::~interpolator () {
-  delete rsp;
-  delete isp;
-  free (rx);
-  free (ry);
-  free (cy);
+  if (rsp) delete rsp;
+  if (isp) delete isp;
+  if (rx) free (rx);
+  if (ry) free (ry);
+  if (cy) free (cy);
 }
 
 // Cleans up vector storage.
@@ -170,8 +170,8 @@ void interpolator::prepare (int interpol, int repitition, int domain) {
     // prepare complex vector interpolation using splines
     if (cy != NULL) {
       // create splines if necessary
-      delete rsp;
-      delete isp;
+      if (rsp) delete rsp;
+      if (isp) delete isp;
       rsp = new spline (SPLINE_BC_NATURAL);
       isp = new spline (SPLINE_BC_NATURAL);
       if (repeat & REPEAT_YES) {
@@ -196,7 +196,7 @@ void interpolator::prepare (int interpol, int repitition, int domain) {
 
     // prepare real vector interpolation using spline
     else {
-      delete rsp;
+      if (rsp) delete rsp;
       rsp = new spline (SPLINE_BC_NATURAL);
       if (repeat & REPEAT_YES) rsp->setBoundary (SPLINE_BC_PERIODIC);
       rsp->vectors (ry, rx, length);

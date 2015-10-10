@@ -64,7 +64,14 @@ void vprobe::initTR (void) {
 }
 
 // properties
-PROP_REQ [] = { PROP_NO_PROP };
+//PROP_REQ [] = { PROP_NO_PROP };
+//PROP_OPT [] = { PROP_NO_PROP };
+//struct define_t vprobe::cirdef =
+//  { "VProbe", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR, PROP_DEF };
+
+PROP_REQ [] = {
+  { "Ri", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE },
+  PROP_NO_PROP };
 PROP_OPT [] = { PROP_NO_PROP };
 struct define_t vprobe::cirdef =
   { "VProbe", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR, PROP_DEF };
