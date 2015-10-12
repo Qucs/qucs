@@ -87,13 +87,13 @@ matvec::matvec (const matvec & m) {
 
 // Destructor deletes a matvec object.
 matvec::~matvec () {
-  free (name);
-  delete[] data;
+  if (name) free (name);
+  if (data) delete[] data;
 }
 
 // Sets the name of the matvec object.
 void matvec::setName (const char * n) {
-  free (name);
+  if (name) free (name);
   name = n ? strdup (n) : NULL;
 }
 
@@ -145,9 +145,8 @@ char * matvec::createMatrixString (char n, int r, int c) {
    row and column indices as well.  The caller is responsible to
    'free()' the returned string.  If the vectors name does not match
    the pattern the function returns NULL. */
-char * matvec::isMatrixVector (const char * n, int& r, int& c) {
-  const char * p; int len;
-  char *pnew;
+char * matvec::isMatrixVector (char * n, int& r, int& c) {
+  char * p; int len;
   if (n == NULL) return NULL;              // nothing todo here
   if ((p = strchr (n, '[')) != NULL) {     // find first '['
     r = atoi (p + 1) - 1;                  // get first index
@@ -157,10 +156,10 @@ char * matvec::isMatrixVector (const char * n, int& r, int& c) {
 	if (p[1] == '\0') {                // identifier must end in ']'
 	  // parse actual identifier
 	  if ((len = strchr (n, '[') - n) > 0) {
-	    pnew = (char *) malloc (len + 1);
-	    memcpy (pnew, n, len);
-	    pnew[len] = '\0';
-	    return pnew;
+	    p = (char *) malloc (len + 1);
+	    memcpy (p, n, len);
+	    p[len] = '\0';
+	    return p;
 	  }
 	}
       }
@@ -175,8 +174,7 @@ char * matvec::isMatrixVector (const char * n, int& r, int& c) {
 void matvec::getMatrixVectorSize (qucs::vector * data, char * name,
 				  int& rs, int& cs, int& ss) {
   qucs::vector * v;
-  char * n;
-  const char *vn;
+  char * vn, * n;
   int r, c, s;
   rs = cs = ss = -1;
   // go through vector list
@@ -206,8 +204,7 @@ matvec * matvec::getMatrixVector (qucs::vector * data, char * name) {
   getMatrixVectorSize (data, name, rs, cs, ss);
 
   qucs::vector * v;
-  const char * vn;
-  char * n;
+  char * vn, * n;
   int r, c;
   // valid matrix entries found
   if (rs >= 0 && cs >= 0 && ss > 0) {
@@ -681,18 +678,6 @@ qucs::vector b1 (matvec m) {
   assert (m.getCols () >= 2 && m.getRows () >= 2);
   qucs::vector res (m.getSize ());
   for (int i = 0; i < m.getSize (); i++) res.set (b1 (m.get (i)), i);
-  return res;
-}
-
-matvec rad2deg (matvec a) {
-  matvec res (a.getSize (), a.getRows (), a.getCols ());
-  for (int i = 0; i < a.getSize (); i++) res.set (rad2deg (a.get (i)), i);
-  return res;
-}
-
-matvec deg2rad (matvec a) {
-  matvec res (a.getSize (), a.getRows (), a.getCols ());
-  for (int i = 0; i < a.getSize (); i++) res.set (deg2rad (a.get (i)), i);
   return res;
 }
 

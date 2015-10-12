@@ -43,7 +43,7 @@ void ctline::calcSP (nr_double_t frequency) {
   nr_double_t ero = getPropertyDouble ("Ero");
   nr_double_t ae  = getPropertyDouble ("Ae");
   nr_double_t ao  = getPropertyDouble ("Ao");
-  nr_double_t o   = 2.0 * pi * frequency;
+  nr_double_t o   = 2.0 * M_PI * frequency;
 
   nr_complex_t ge = nr_complex_t (std::log (ae) / 2, o / C0 * std::sqrt (ere)) * l;
   nr_complex_t go = nr_complex_t (std::log (ao) / 2, o / C0 * std::sqrt (ero)) * l;
@@ -71,7 +71,7 @@ void ctline::calcNoiseSP (nr_double_t) {
   nr_double_t T = getPropertyDouble ("Temp");
   matrix s = getMatrixS ();
   matrix e = eye (getSize ());
-  setMatrixN (celsius2kelvin (T) / T0 * (e - s * transpose (conj (s))));
+  setMatrixN (kelvin (T) / T0 * (e - s * transpose (conj (s))));
 }
 
 void ctline::calcNoiseAC (nr_double_t) {
@@ -79,7 +79,7 @@ void ctline::calcNoiseAC (nr_double_t) {
   if (l < 0) return;
   // calculate noise using Bosma's theorem
   nr_double_t T = getPropertyDouble ("Temp");
-  setMatrixN (4 * celsius2kelvin (T) / T0 * real (getMatrixY ()));
+  setMatrixN (4 * kelvin (T) / T0 * real (getMatrixY ()));
 }
 
 void ctline::initDC (void) {
@@ -110,7 +110,7 @@ void ctline::calcAC (nr_double_t frequency) {
   nr_double_t ero = getPropertyDouble ("Ero");
   nr_double_t ae  = getPropertyDouble ("Ae");
   nr_double_t ao  = getPropertyDouble ("Ao");
-  nr_double_t o   = 2.0 * pi * frequency;
+  nr_double_t o   = 2.0 * M_PI * frequency;
 
   if (l != 0.0) {
     nr_complex_t y11, y12, y13, y14;

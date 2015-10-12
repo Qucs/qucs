@@ -29,6 +29,7 @@ class vdc : public qucs::circuit
 {
  public:
   CREATOR (vdc);
+  void initModel (void);
   void initSP (void);
   void initDC (void);
   void calcDC (void);

@@ -46,7 +46,7 @@ matrix mutual2::calcMatrixY (nr_double_t frequency) {
   nr_double_t l1 = getPropertyDouble ("L1");
   nr_double_t l2 = getPropertyDouble ("L2");
   nr_double_t l3 = getPropertyDouble ("L3");
-  nr_double_t o = 2 * pi * frequency;
+  nr_double_t o = 2 * M_PI * frequency;
   nr_double_t a = 1 - k12 * k12 - k13 * k13 - k23 * k23 + 2 * k12 * k13 * k23;
   nr_complex_t y11 = nr_complex_t (0, (k23 * k23 - 1) / l1 / a / o);
   nr_complex_t y22 = nr_complex_t (0, (k12 * k12 - 1) / l3 / a / o);

@@ -50,7 +50,7 @@ class dataset : public object
   void delDependency (qucs::vector *);
   void delVariable (qucs::vector *);
 
-  void assignDependency (const char *const, const char * const);
+  void assignDependency (char *, char *);
   char * getFile (void);
   void setFile (const char *);
   void print (void);
@@ -58,7 +58,7 @@ class dataset : public object
   void printDependency (qucs::vector *, FILE *);
   void printVariable (qucs::vector *, FILE *);
   qucs::vector * findDependency (const char *);
-  qucs::vector * findVariable (const std::string &);
+  qucs::vector * findVariable (const char *);
   qucs::vector * getDependencies (void) { return dependencies; }
   qucs::vector * getVariables (void) { return variables; }
   int isDependency (qucs::vector *);

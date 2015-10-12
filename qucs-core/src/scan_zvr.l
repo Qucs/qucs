@@ -25,11 +25,6 @@
  *
  */
 
-#if defined(__clang__)
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-register"
-#endif
-
 #if HAVE_CONFIG_H
 # include <config.h>
 #endif
@@ -71,7 +66,7 @@ DIDENT   [A-Z]({DIGIT}{1,2})?
 
 %x VERSION
 
-%option yylineno noyywrap nounput noinput prefix="zvr_"
+%option yylineno noyywrap nounput prefix="zvr_"
 
 %%
 

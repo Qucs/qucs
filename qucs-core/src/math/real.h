@@ -28,8 +28,6 @@
 
 #include <cmath>
 
-#include <constants.h>
-
 /**It is prefered to add all used funcions into the qucs namespace.
  * Doing so one is forced do think about compatibility instead of using std directly.
  * Inline is optional at this moment
@@ -104,20 +102,11 @@ nr_double_t cosech (const nr_double_t );
 // Qucs extra math functions
 //
 nr_double_t  sqr (const nr_double_t );
+
 unsigned int sqr (unsigned int);
+
+
 nr_double_t  quadr (const nr_double_t );
-
-nr_double_t rad2deg (const nr_double_t );
-nr_double_t deg2rad (const nr_double_t x );
-
-/*!\brief Compute the third power of input */
-static inline nr_double_t cubic (const nr_double_t x)  { return (x * x * x); }
-
-/*!\brief Convert Celsius to Kelvin */
-static inline nr_double_t celsius2kelvin (const nr_double_t x)  { return (x - K); }
-
-/*!\brief Convert Kelvin to Celsius */
-static inline nr_double_t kelvin2celsius (const nr_double_t x)  { return (x + K); }
 
 
 //

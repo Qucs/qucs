@@ -196,6 +196,7 @@ enum circuit_type {
 
   // external interface components
   CIR_ECVS,
+  CIR_WPROBE,
 
 };
 

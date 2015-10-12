@@ -225,7 +225,7 @@ nr_complex_t log (const nr_complex_t z)
 nr_complex_t log10 (const nr_complex_t z)
 {
     nr_double_t phi = arg (z);
-    return nr_complex_t (log10 (abs (z)), phi * log10e);
+    return nr_complex_t (log10 (abs (z)), phi * M_LOG10E);
 }
 
 
@@ -394,7 +394,7 @@ nr_complex_t log2 (const nr_complex_t z)
 {
 #ifndef HAVE_CXX_COMPLEX_LOG2
     nr_double_t phi = std::arg (z);
-    return nr_complex_t (std::log (std::abs (z)) * log2e, phi * log2e);
+    return nr_complex_t (std::log (std::abs (z)) * M_LOG2E, phi * M_LOG2E);
 #else
     return std::log2 (z);
 #endif
@@ -897,24 +897,6 @@ bool operator>(const nr_complex_t z1, const nr_complex_t z2)
 bool operator<(const nr_complex_t z1, const nr_complex_t z2)
 {
     return norm (z1) < norm (z2);
-}
-
-/*!
- * \brief rad2deg Convert radian to degree
- * \param x input
- * \return real(x)*180/pi
- */
-nr_double_t rad2deg (const nr_complex_t x) {
-  return rad2deg (real(x));
-}
-
-/*!
- * \brief rad2deg Convert radian to degree
- * \param x input
- * \return real(x)*pi/180
- */
-nr_double_t deg2rad (const nr_complex_t x) {
-  return deg2rad (real(x));
 }
 
 } // namespace qucs

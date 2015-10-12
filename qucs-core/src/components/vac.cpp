@@ -54,7 +54,7 @@ void vac::initAC (void) {
   initDC ();
   nr_double_t a = getPropertyDouble ("U");
   nr_double_t p = getPropertyDouble ("Phase");
-  setE (VSRC_1, qucs::polar (a, deg2rad (p)));
+  setE (VSRC_1, qucs::polar (a, rad (p)));
 }
 
 void vac::initTR (void) {
@@ -67,9 +67,9 @@ void vac::calcTR (nr_double_t t) {
   nr_double_t d = getPropertyDouble ("Theta");
   nr_double_t a = getPropertyDouble ("U");
   nr_double_t s = getNet()->getSrcFactor ();
-  nr_double_t o = 2 * pi * f;
+  nr_double_t o = 2 * M_PI * f;
   nr_double_t T = p / f / 360;
-  nr_double_t u = s * a * std::exp (-(t + T) * d * f) * std::sin (o * t + deg2rad (p));
+  nr_double_t u = s * a * std::exp (-(t + T) * d * f) * std::sin (o * t + rad (p));
   setE (VSRC_1, u);
 }
 
@@ -84,7 +84,7 @@ void vac::calcHB (nr_double_t frequency) {
   if (f == frequency) {
     nr_double_t a = getPropertyDouble ("U");
     nr_double_t p = getPropertyDouble ("Phase");
-    setE (VSRC_1, qucs::polar (a, deg2rad (p)));
+    setE (VSRC_1, qucs::polar (a, rad (p)));
   }
   else {
     setE (VSRC_1, 0);
@@ -98,6 +98,7 @@ PROP_OPT [] = {
   { "Phase", PROP_REAL, { 0, PROP_NO_STR }, PROP_RNGII (-360, 360) },
   { "Theta", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
   { "f", PROP_REAL, { 1e9, PROP_NO_STR }, PROP_POS_RANGE },
+  { "Ri", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE },
   PROP_NO_PROP };
 struct define_t vac::cirdef =
   { "Vac", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR, PROP_DEF };

@@ -25,12 +25,78 @@
 #ifndef __PTRLIST_H__
 #define __PTRLIST_H__
 
-#include <list>
-
 namespace qucs {
 
-template <typename T>
-using ptrlist = std::list<T *>;
+template <class type_t> class ptrentry;
+template <class type_t> class ptrlist;
+template <class type_t> class ptrlistiterator;
 
-}
+/* Pointer entry class. */
+template <class type_t>
+class ptrentry
+{
+  friend class ptrlist<type_t>;
+  friend class ptrlistiterator<type_t>;
+
+ public:
+  type_t * data;
+
+ private:
+  ptrentry * next;
+  ptrentry * prev;
+};
+
+/* Pointer list class. */
+template <class type_t>
+class ptrlist
+{
+  friend class ptrlistiterator<type_t>;
+
+ public:
+  ptrlist ();
+  ~ptrlist ();
+  ptrlist (const ptrlist &);
+  void add (type_t *);
+  void append (type_t *);
+  void del (type_t *);
+  int  length (void);
+  int  contains (type_t *);
+  int  index (type_t *);
+  type_t * get (int);
+
+ private:
+  int size;
+  ptrentry<type_t> * root;
+};
+
+/* Pointer list iterator. */
+template <class type_t>
+class ptrlistiterator
+{
+ public:
+  ptrlistiterator ();
+  ptrlistiterator (ptrlist<type_t> &);
+  ~ptrlistiterator ();
+
+  int count (void);
+  type_t * toFirst (void);
+  type_t * toLast (void);
+  type_t * operator++ (void);
+  type_t * operator-- (void);
+  type_t * operator * (void) { return current (); }
+  type_t * current (void);
+  type_t * first (void);
+  type_t * last (void);
+
+ private:
+  ptrlist<type_t> * _ptrlist;
+  ptrentry<type_t> * _first;
+  ptrentry<type_t> * _last;
+  ptrentry<type_t> * _current;
+};
+
+} // namespace qucs
+
+#include "ptrlist.cpp"
+
 #endif /* __PTRLIST_H__ */

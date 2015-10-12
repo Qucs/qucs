@@ -26,11 +26,6 @@
  *
  */
 
-#if defined(__clang__)
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-register"
-#endif
-
 #if HAVE_CONFIG_H
 # include <config.h>
 #endif
@@ -72,7 +67,7 @@ IDENT    [a-zA-Z_][a-zA-Z0-9_.-]*
 %x COMMENT SCALE SCOPE IGNORE VAR VAR2 VAR3 VAR4 DUMP TIMESTAMP CHANGE
 %x BIN FLOAT
 
-%option yylineno noyywrap nounput noinput prefix="vcd_"
+%option yylineno noyywrap nounput prefix="vcd_"
 
 %%
 

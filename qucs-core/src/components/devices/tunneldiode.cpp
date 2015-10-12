@@ -57,9 +57,9 @@ void tunneldiode::calcId (nr_double_t U, nr_double_t& I, nr_double_t& G) {
   nr_double_t dW   = getPropertyDouble ("dW");
 
   U   = Wr - Q_e*U/dv;
-  de *= kB * celsius2kelvin (getPropertyDouble ("Temp"));
+  de *= kB * kelvin (getPropertyDouble ("Temp"));
 
-  nr_double_t a = pi_over_2 + qucs::atan ( U / dW );
+  nr_double_t a = M_PI_2 + qucs::atan ( U / dW );
 
   nr_double_t e = (eta - U) / de;
   nr_double_t b = e;
@@ -84,14 +84,14 @@ void tunneldiode::calcDC (void) {
   nr_double_t Iv   = getPropertyDouble ("Iv");
   nr_double_t Vv   = getPropertyDouble ("Vv");
   nr_double_t nv   = getPropertyDouble ("nv");
-  nr_double_t T    = kB * celsius2kelvin (getPropertyDouble ("Temp"));
+  nr_double_t T    = kB * kelvin (getPropertyDouble ("Temp"));
 
   // diode voltage
   Ud = real (getV (NODE_A1) - getV (NODE_A2));
 
   // bi-directional tunnel current
   nr_double_t Ipos, Ineg, Gpos, Gneg;
-  gd = Id = A * Ip * Tmax * de * T / eta / pi_over_2;
+  gd = Id = A * Ip * Tmax * de * T / eta / M_PI_2;
   calcId ( Ud, Ipos, Gpos);
   calcId (-Ud, Ineg, Gneg);
   Id *= Ipos - Ineg;
@@ -160,7 +160,7 @@ void tunneldiode::initAC (void) {
 matrix tunneldiode::calcMatrixY (nr_double_t frequency) {
   nr_double_t gd = getOperatingPoint ("gd");
   nr_double_t Cd = getOperatingPoint ("Cd");
-  nr_complex_t yd = nr_complex_t (gd, Cd * 2.0 * pi * frequency);
+  nr_complex_t yd = nr_complex_t (gd, Cd * 2.0 * M_PI * frequency);
   matrix y (2);
   y.set (NODE_A1, NODE_A1, +yd);
   y.set (NODE_A2, NODE_A2, +yd);

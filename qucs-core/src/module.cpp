@@ -308,6 +308,7 @@ void module::registerModules (void) {
   REGISTER_CIRCUIT (hpribin4bit);
   REGISTER_CIRCUIT (vcresistor);
   REGISTER_CIRCUIT (ecvs);
+  REGISTER_CIRCUIT (wprobe);
 
   // analyses
   REGISTER_ANALYSIS (dcsolver);

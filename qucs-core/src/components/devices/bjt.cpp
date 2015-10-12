@@ -69,15 +69,15 @@ matrix bjt::calcMatrixY (nr_double_t frequency) {
   nr_double_t Tf   = getPropertyDouble ("Tf");
 
   // compute admittance matrix entries
-  nr_complex_t Ybe = nr_complex_t (gbe, 2.0 * pi * frequency * Cbe);
-  nr_complex_t Ybc = nr_complex_t (gbc, 2.0 * pi * frequency * Cbci);
-  nr_complex_t Ycs = nr_complex_t (0.0, 2.0 * pi * frequency * Ccs);
+  nr_complex_t Ybe = nr_complex_t (gbe, 2.0 * M_PI * frequency * Cbe);
+  nr_complex_t Ybc = nr_complex_t (gbc, 2.0 * M_PI * frequency * Cbci);
+  nr_complex_t Ycs = nr_complex_t (0.0, 2.0 * M_PI * frequency * Ccs);
 
   // admittance matrix entries for "transcapacitance"
-  nr_complex_t Ybebc = nr_complex_t (0.0, 2.0 * pi * frequency * dQbedUbc);
+  nr_complex_t Ybebc = nr_complex_t (0.0, 2.0 * M_PI * frequency * dQbedUbc);
 
   // compute influence of excess phase
-  nr_double_t phase = deg2rad (Ptf) * Tf * 2 * pi * frequency;
+  nr_double_t phase = rad (Ptf) * Tf * 2 * M_PI * frequency;
 #if NEWSGP
   nr_complex_t gmf = qucs::polar (gm, -phase);
 #else
@@ -173,8 +173,8 @@ void bjt::initModel (void) {
   nr_double_t Xti = getPropertyDouble ("Xti");
   nr_double_t Eg  = getPropertyDouble ("Eg");
   nr_double_t T1, T2, IsT;
-  T2 = celsius2kelvin (T);
-  T1 = celsius2kelvin (Tn);
+  T2 = kelvin (T);
+  T1 = kelvin (Tn);
   IsT = pnCurrent_T (T1, T2, Is, Eg, 1, Xti);
   setScaledProperty ("Is", IsT * A);
 
@@ -288,7 +288,7 @@ void bjt::initDC (void) {
   initModel ();
 
   // apply polarity of BJT
-  const char * const type = getPropertyString ("Type");
+  char * type = getPropertyString ("Type");
   pol = !strcmp (type, "pnp") ? -1 : 1;
 
   // get simulation temperature
@@ -394,7 +394,7 @@ void bjt::calcDC (void) {
   Vaf = Vaf > 0 ? 1.0 / Vaf : 0;
   Var = Var > 0 ? 1.0 / Var : 0;
 
-  T = celsius2kelvin (T);
+  T = kelvin (T);
   Ut = T * kBoverQ;
   Ube = real (getV (NODE_B) - getV (NODE_E)) * pol;
   Ubc = real (getV (NODE_B) - getV (NODE_C)) * pol;
@@ -486,8 +486,8 @@ void bjt::calcDC (void) {
     if (Irb != 0.0) {
       nr_double_t a, b, z;
       a = (Ibci + Ibcn + Ibei + Iben) / Irb;
-      a = std::max (a, NR_TINY); // enforce positive values
-      z = (qucs::sqrt (1 + 144 / sqr (pi) * a) - 1) / 24 * sqr (pi) / qucs::sqrt (a);
+      a = MAX (a, NR_TINY); // enforce positive values
+      z = (qucs::sqrt (1 + 144 / sqr (M_PI) * a) - 1) / 24 * sqr (M_PI) / qucs::sqrt (a);
       b = qucs::tan (z);
       Rbb = Rbm + 3 * (Rb - Rbm) * (b - z) / z / sqr (b);
     }
@@ -605,7 +605,7 @@ void bjt::calcOperatingPoints (void) {
   if (If != 0.0) {
     nr_double_t e, Tff, dTffdUbe, dTffdUbc, a;
     a = 1 / (1 + Itf / If);
-    e = 2 * qucs::exp (std::min (Ubc * Vtf, 709.0));
+    e = 2 * qucs::exp (MIN (Ubc * Vtf, 709));
     Tff = Tf * (1 + Xtf * sqr (a) * e);
     dTffdUbe = Tf * Xtf * 2 * gif * Itf * cubic (a) / sqr (If) * e;
     Cbe += (If * dTffdUbe + Tff * (gif - If / Qb * dQbdUbe)) / Qb;
@@ -744,7 +744,7 @@ void bjt::excessPhase (int istate, nr_double_t& i, nr_double_t& g) {
   // fetch device properties
   nr_double_t Ptf = getPropertyDouble ("Ptf");
   nr_double_t Tf = getPropertyDouble ("Tf");
-  nr_double_t td = deg2rad (Ptf) * Tf;
+  nr_double_t td = rad (Ptf) * Tf;
 
   // return if nothing todo
   if (td == 0.0) return;

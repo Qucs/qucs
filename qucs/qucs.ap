@@ -1,7 +1,7 @@
 #
-# qucs.ap - Autodsp input file.
+# qucs/qucs.ap - Autodsp input file.
 #
-# Copyright (C) 2005, 2006 Stefan Jahn <stefan@lkcc.org>
+# Copyright (C) 2005, 2006, 2009, 2011 Stefan Jahn <stefan@lkcc.org>
 #
 # This is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -20,19 +20,36 @@
 #
 
 OWNER = <4>
-TARGET_TYPE = Project
+TARGET_TYPE = Qt Win32 App
+NAME = qucs
 
-# List all projects here.
-PROJECTS = \
-	qucs-help/qucshelp qucs-edit/qucsedit qucs/qucs \
-	qucs/components/libcomponents qucs/diagrams/libdiagrams \
-	qucs/paintings/libpaintings qucs/dialogs/libdialogs \
-	qucs-filter/qucsfilter qucs-transcalc/qucstrans \
-	qucs-transcalc/libtranscalc qucs-lib/qucslib \
-	qucs-attenuator/qucsattenuator \
-	qucsactivefilter/qucsactivefilter
+# List all sources here.
+SOURCES = node.cpp element.cpp qucsdoc.cpp wire.cpp mouseactions.cpp        \
+  qucs.cpp main.cpp wirelabel.cpp qucs_init.cpp qucs_actions.cpp            \
+  viewpainter.cpp mnemo.cpp schematic.cpp schematic_element.cpp textdoc.cpp \
+  schematic_file.cpp syntax.cpp module.cpp octave_window.cpp
 
-# Notify dependencies.
-qucs_DEPENDENCIES = libcomponents libdiagrams libpaintings libdialogs
+# List of special Qt files.
+MOCHEADERS = qucs.h schematic.h textdoc.h octave_window.h
 
-qucstrans_DEPENDENCIES = libtranscalc
+# Additional libraries.
+LIBS = -lcomponents -ldiagrams -lpaintings -ldialogs \
+  -lqtmain.lib -lqt-mt3.lib
+
+# Linker flags.
+LDFLAGS = -Lcomponents -Ldiagrams -Lpaintings -Ldialogs
+
+# More linker flags.
+all_LDFLAGS = -L$(QTDIR)/lib
+
+# Include paths.
+INCLUDES = -I. -I.. -I$(QTDIR)/include
+
+# Preprocessor flags.
+DEFS = -DQT_THREAD_SUPPORT -D_REENTRANT -DUNICODE -DQT_DLL
+
+# Extra debug preprocessor flags.
+dbg_DEFS = -DDEBUG
+
+# Extra release preprocessor flags.
+opt_DEFS = -DQT_NO_DEBUG

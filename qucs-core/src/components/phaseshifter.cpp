@@ -36,7 +36,7 @@ phaseshifter::phaseshifter () : circuit (2) {
 }
 
 void phaseshifter::initSP (void) {
-  nr_double_t p = deg2rad (getPropertyDouble ("phi"));
+  nr_double_t p = rad (getPropertyDouble ("phi"));
   nr_double_t z = getPropertyDouble ("Zref");
   nr_double_t r = (z0 - z) / (z0 + z);
   nr_complex_t d = 1.0 - qucs::polar (r * r, 2 * p);
@@ -57,7 +57,7 @@ void phaseshifter::initDC (void) {
 }
 
 void phaseshifter::initAC (void) {
-  nr_double_t p = deg2rad (getPropertyDouble ("phi"));
+  nr_double_t p = rad (getPropertyDouble ("phi"));
 
   if (p == 0.0) { // no phase shift, thus a short
     initDC ();

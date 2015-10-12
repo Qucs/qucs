@@ -41,7 +41,7 @@ class sweep : public object
 {
  public:
   sweep ();
-  sweep (const std::string&);
+  sweep (const char *);
   sweep (sweep &);
   ~sweep ();
   int getSize (void) { return size; }
@@ -72,7 +72,7 @@ class linsweep : public sweep
 {
  public:
   linsweep ();
-  linsweep (const std::string &);
+  linsweep (const char *);
   ~linsweep ();
   void create (nr_double_t, nr_double_t, int);
 };
@@ -81,7 +81,7 @@ class logsweep : public sweep
 {
  public:
   logsweep ();
-  logsweep (const std::string &);
+  logsweep (const char *);
   ~logsweep ();
   void create (nr_double_t, nr_double_t, int);
 };
@@ -90,7 +90,7 @@ class consweep : public sweep
 {
  public:
   consweep ();
-  consweep (const std::string &);
+  consweep (const char *);
   ~consweep ();
   void create (nr_double_t);
 };
@@ -99,7 +99,7 @@ class lstsweep : public sweep
 {
  public:
   lstsweep ();
-  lstsweep (const std::string &);
+  lstsweep (const char *);
   ~lstsweep ();
   void create (int);
 };

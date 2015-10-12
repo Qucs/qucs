@@ -25,8 +25,6 @@
 #ifndef __SPSOLVER_H__
 #define __SPSOLVER_H__
 
-#include <string>
-
 namespace qucs {
 
 class analysis;
@@ -49,8 +47,8 @@ class spsolver : public analysis
   int  solve (void);
   void insertConnections (void);
   void insertDifferentialPorts (void);
-  void insertTee (node **, const char *);
-  void insertCross (node **, const char *);
+  void insertTee (node **, char *);
+  void insertCross (node **, char *);
   void insertConnectors (node *);
   void insertOpen (node *);
   void insertGround (node *);
@@ -62,7 +60,7 @@ class spsolver : public analysis
   void saveNoiseResults (nr_complex_t[4], nr_complex_t[4],
 			 nr_double_t, vector *);
   char * createSP (int, int);
-  const char * createCV (const std::string &c, const std::string &n);
+  char * createCV (char *, char *);
   void saveCharacteristics (nr_double_t);
   void dropTee (circuit *);
   void dropCross (circuit *);

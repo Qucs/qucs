@@ -25,118 +25,63 @@
 #ifndef __NODELIST_H__
 #define __NODELIST_H__
 
-#include <vector>
-#include <list>
-#include <memory>
-#include <algorithm>
-
 namespace qucs {
 
 class node;
 class net;
 
-namespace detail {
-  typedef std::vector<node *> nodevector;
-}
-
 struct nodelist_t {
-public:
-  nodelist_t(const std::string &n="", bool intern = false) :
-    n(0), name(n), internal(intern), nodes() {}
-
-  nodelist_t(nodelist_t &c) = default;
-
-  typedef detail::nodevector::value_type value_type;
-  typedef detail::nodevector::iterator iterator;
-  typedef detail::nodevector::const_iterator const_iterator;
-  typedef detail::nodevector::size_type size_type;
-  typedef detail::nodevector::reference reference;
-  typedef detail::nodevector::const_reference const_reference;
-#ifdef HAVE_ERASE_CONSTANT_ITERATOR
-  typedef detail::nodevector::const_iterator erase_iterator;
-#else
-  typedef detail::nodevector::iterator erase_iterator;
-#endif
-
-  /*! alias node number */
-  std::size_t n;
-  /*! name of node */
-  std::string name;
-  bool internal;
-
-  reference operator[] (size_type n) {
-    return (this->nodes[n]);
-  }
-  const_reference operator[] (size_type n) const {
-    return (this->nodes[n]);
-  }
-
-  size_type size() const noexcept {
-    return nodes.size();
-  }
-
-  void push_back(const value_type &val) {
-    this->nodes.push_back(val);
-  }
-
-  iterator begin() noexcept {
-    return nodes.begin();
-  }
-  const_iterator begin() const noexcept {
-    return nodes.begin();
-  }
-  iterator end() noexcept {
-    return nodes.end();
-  }
-  const_iterator end() const noexcept {
-    return nodes.end();
-  }
-  iterator erase (erase_iterator position)
-  { return nodes.erase(position); };
-  iterator erase (erase_iterator first, erase_iterator last)
-  { return nodes.erase(first,last); };
-
-  bool empty() const noexcept {
-    return nodes.empty();
-  }
-private:
-  std::vector<value_type> nodes;
+  int n;
+  char * name;
+  node ** nodes;
+  int nNodes;
+  int nAlloc;
+  int internal;
+  struct nodelist_t * next;
 };
 
 class nodelist
 {
  public:
-  // Constructor creates an instance of the nodelist class.
-  nodelist () :  narray(), sorting(0) {
-  }
+  nodelist ();
   nodelist (net *);
+  nodelist (const nodelist &);
   ~nodelist ();
-  int length (void) const ;
-  int getNodeNr (const std::string &) const ;
-  std::string get (int) const ;
-  bool isInternal (int) const ;
+  void add (char *, int intern = 0);
+  void append (char *, int intern = 0);
+  struct nodelist_t * getRoot (void) { return root; }
+  int length (void);
+  int contains (char *);
+  int getNodeNr (char *);
+  char * get (int);
+  int isInternal (int);
+  void addCircuitNode (struct nodelist_t *, node *);
   void assignNodes (void);
-  void print (void) const;
-  std::string getNodeString (int) const;
+  void print (void);
+  struct nodelist_t * getNode (int);
+  struct nodelist_t * getLastNode (void);
+  char * getNodeString (int);
   void sort (void);
+  struct nodelist_t * copy (struct nodelist_t *);
+  void add (struct nodelist_t *);
+  void append (struct nodelist_t *);
+  void release (struct nodelist_t *);
+  void remove (char *);
+  void remove (struct nodelist_t *, int keep = 0);
   void remove (circuit *);
+  struct nodelist_t * create (char *, int);
+  void insert (struct nodelist_t *);
   void insert (circuit *);
+  void delCircuitNode (struct nodelist_t *, node *);
   void sortedNodes (node **, node **);
-  struct nodelist_t * getNode (const std::string &) const;
-  struct nodelist_t * getNode (int nr) const {
-    return narray[nr + 1];
-  }
-  nodelist_t &operator[](int nr) const {
-    return *narray[nr + 1];
-  }
+  struct nodelist_t * getNode (char *);
 
  private:
-  std::vector<nodelist_t *> narray;
-  std::list<nodelist_t *> root;
+  struct nodelist_t ** narray;
+  struct nodelist_t * root;
+  struct nodelist_t * last;
+  char * txt;
   int sorting;
-  bool contains (const std::string &) const;
-  void insert (struct nodelist_t *);
-  void addCircuitNode (struct nodelist_t *, node *);
 };
 
 } // namespace qucs
