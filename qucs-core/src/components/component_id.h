@@ -82,7 +82,6 @@ enum circuit_type {
   CIR_RLCG,
   CIR_IPROBE,
   CIR_VPROBE,
-  CIR_WPROBE,
   CIR_SPFILE,
   CIR_VPULSE,
   CIR_IPULSE,
@@ -197,6 +196,7 @@ enum circuit_type {
 
   // external interface components
   CIR_ECVS,
+  CIR_WPROBE,
 
 };
 

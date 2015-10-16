@@ -106,12 +106,12 @@ nr_complex_t cpwstep::calcY (nr_double_t frequency) {
   nr_double_t s1 = (s - W1) / 2;
   nr_double_t s2 = (s - W2) / 2;
   nr_double_t a, c, c1, c2, x1, x2;
-  nr_double_t o = 2 * pi * frequency;
+  nr_double_t o = 2 * M_PI * frequency;
   calcCends (frequency, c1, c2);
   x1 = c1 * s1;
   x2 = c2 * s2;
   a = s1 > s2 ? s2 / s1 : s1 / s2;
-  c = one_over_pi * ((a * a + 1) / a * std::log ((1 + a) / (1 - a)) -
+  c = M_1_PI * ((a * a + 1) / a * std::log ((1 + a) / (1 - a)) -
 		2 * std::log (4 * a / (1 - a * a)));
   c = c * (x1 + x2) / 2;
   return nr_complex_t (0, c * o);

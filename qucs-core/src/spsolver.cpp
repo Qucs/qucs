@@ -87,8 +87,8 @@ spsolver::spsolver (char * n) : analysis (n) {
 
 // Destructor deletes the spsolver class object.
 spsolver::~spsolver () {
-  delete swp;
-  delete nlist;
+  if (swp) delete swp;
+  if (nlist) delete nlist;
 }
 
 /* The copy constructor creates a new instance of the spsolver class
@@ -636,7 +636,7 @@ void spsolver::insertConnectors (node * n) {
 
   int count = 0;
   node * nodes[4], * _node;
-  const char * _name = n->getName ();
+  char * _name = n->getName ();
   circuit * root = subnet->getRoot ();
 
 #if USE_GROUNDS
@@ -683,7 +683,7 @@ void spsolver::insertConnectors (node * n) {
 /* The following function creates a tee circuit with the given nodes
    and the node name.  The tee's node names are adjusted to be
    internal nodes. */
-void spsolver::insertTee (node ** nodes, const char * name) {
+void spsolver::insertTee (node ** nodes, char * name) {
   circuit * result;
   // create a tee and assign its node names
   result = new tee ();
@@ -710,7 +710,7 @@ void spsolver::insertTee (node ** nodes, const char * name) {
 /* The following function creates a cross circuit with the given nodes
    and the node name.  The cross's node names are adjusted to be
    internal nodes. */
-void spsolver::insertCross (node ** nodes, const char * name) {
+void spsolver::insertCross (node ** nodes, char * name) {
   circuit * result;
   // create a cross and assign its node names
   result = new cross ();
@@ -743,7 +743,7 @@ void spsolver::insertCross (node ** nodes, const char * name) {
 void spsolver::dropTee (circuit * c) {
   node * n;
   if (c->getType () == CIR_TEE) {
-    const char * name = c->getNode(0)->getName ();
+    char * name = c->getNode(0)->getName ();
     n = subnet->findConnectedNode (c->getNode (1)); n->setName (name);
     n = subnet->findConnectedNode (c->getNode (2)); n->setName (name);
     c->setOriginal (0);
@@ -756,7 +756,7 @@ void spsolver::dropTee (circuit * c) {
 void spsolver::dropCross (circuit * c) {
   node * n;
   if (c->getType () == CIR_CROSS) {
-    const char * name = c->getNode(0)->getName ();
+    char * name = c->getNode(0)->getName ();
     n = subnet->findConnectedNode (c->getNode (1)); n->setName (name);
     n = subnet->findConnectedNode (c->getNode (2)); n->setName (name);
     n = subnet->findConnectedNode (c->getNode (3)); n->setName (name);
@@ -1078,8 +1078,10 @@ char * spsolver::createSP (int i, int j) {
 
 /* Create an appropriate variable name for characteristic values.  The
    caller is responsible to free() the returned string. */
-const char * spsolver::createCV (const std::string &c, const std::string &n) {
-  return (c+"."+n).c_str();
+char * spsolver::createCV (char * c, char * n) {
+  char * text = (char *) malloc (strlen (c) + strlen (n) + 2);
+  sprintf (text, "%s.%s", c, n);
+  return text;
 }
 
 /* Goes through the list of circuit objects and runs its
@@ -1087,16 +1089,18 @@ const char * spsolver::createCV (const std::string &c, const std::string &n) {
    dataset. */
 void spsolver::saveCharacteristics (nr_double_t freq) {
   circuit * root = subnet->getRoot ();
-  const char * n;
+  char * n;
   vector * f = data->findDependency ("frequency");
   for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ()) {
     c->saveCharacteristics (freq);
-    if (!c->getSubcircuit ().empty() && !(saveCVs & SAVE_ALL)) continue;
+    if (c->getSubcircuit () && !(saveCVs & SAVE_ALL)) continue;
     c->calcCharacteristics (freq);
-    for (auto ps: c->getCharacteristics ()) {
-      characteristic &p = ps.second;
-      n = createCV (c->getName (), p.getName ());
-      saveVariable (n, p.getValue (), f);
+    valuelistiterator<characteristic> it (c->getCharacteristics ());
+    for (; *it; ++it) {
+      characteristic * p = it.currentVal ();
+      n = createCV (c->getName (), p->getName ());
+      saveVariable (n, p->getValue (), f);
+      free (n);
     }
   }
 }

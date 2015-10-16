@@ -86,14 +86,14 @@ bool range::inside (nr_double_t value) {
 
 // Destructor deletes an instance of the range class.
 range::~range () {
-  free (txt);
+  if (txt) free (txt);
 }
 
 /* Returns a text representation of the range object. */
 char * range::toString (void) {
   char str[64];
   sprintf (str, "%c%g,%g%c", il, l, h, ih);
-  free (txt);
+  if (txt) free (txt);
   txt = strdup (str);
   return txt;
 }

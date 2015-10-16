@@ -54,15 +54,15 @@ strlist::~strlist () {
   struct strlist_t * next;
   while (root) {
     next = root->next;
-    free (root->str);
+    if (root->str) free (root->str);
     free (root);
     root = next;
   }
-  free (txt);
+  if (txt) free (txt);
 }
 
 // This function adds a string to the list.
-void strlist::add (const char * const str) {
+void strlist::add (char * str) {
   struct strlist_t * s;
   s = (struct strlist_t *) calloc (sizeof (struct strlist_t), 1);
   s->next = root;
@@ -71,20 +71,17 @@ void strlist::add (const char * const str) {
 }
 
 // The function adds the given string list to the list.
-void strlist::add (const strlist * const lst) {
-  if (lst)
-    for (int i = lst->length () - 1; i >= 0; i--)
-      add (lst->get (i));
+void strlist::add (strlist * lst) {
+  if (lst) for (int i = lst->length () - 1; i >= 0; i--) add (lst->get (i));
 }
 
 // The function apends the given string list to the list.
-void strlist::append (const strlist * const lst) {
-  if (lst) for (int i = 0; i < lst->length (); i++)
-	     append (lst->get (i));
+void strlist::append (strlist * lst) {
+  if (lst) for (int i = 0; i < lst->length (); i++) append (lst->get (i));
 }
 
 // This function append a string to the list.
-void strlist::append (const char * const str) {
+void strlist::append (char * str) {
   struct strlist_t * s;
   s = (struct strlist_t *) calloc (sizeof (struct strlist_t), 1);
   s->next = NULL;
@@ -100,14 +97,14 @@ void strlist::append (const char * const str) {
 }
 
 // This function counts the string in the list.
-int strlist::length (void) const {
+int strlist::length (void) {
   int res = 0;
   for (struct strlist_t * s = root; s != NULL; s = s->next) res++;
   return res;
 }
 
 // This function finds the specified string in the list.
-int strlist::contains (const char * const str) const {
+int strlist::contains (char * str) {
   int res = 0;
   for (struct strlist_t * s = root; s != NULL; s = s->next) {
     if (s->str != NULL && str != NULL && !strcmp (s->str, str))
@@ -129,7 +126,7 @@ int strlist::index (char * str) {
 
 /* This function returns the string positioned at the specified
    location in the string list. */
-char * strlist::get (int pos) const {
+char * strlist::get (int pos) {
   struct strlist_t * s = root;
   for (int i = 0; i < pos && s != NULL; s = s->next, i++) ;
   return s ? s->str : NULL;
@@ -137,7 +134,7 @@ char * strlist::get (int pos) const {
 
 /* This function returns the string positioned at the end of the
    string list. */
-char * strlist::last (void) const {
+char * strlist::last (void) {
   struct strlist_t * s;
   for (s = root; s != NULL && s->next != NULL; s = s->next) ;
   return s ? s->str : NULL;
@@ -145,7 +142,7 @@ char * strlist::last (void) const {
 
 /* This function returns the string positioned at the beginning of the
    string list. */
-char * strlist::first (void) const {
+char * strlist::first (void) {
   struct strlist_t * s = root;
   return s ? s->str : NULL;
 }
@@ -159,7 +156,7 @@ void strlist::del (strlist * cand) {
   while (root) {
     next = root->next;
     if (cand->contains (root->str) == 0) res->append (root->str);
-    free (root->str);
+    if (root->str) free (root->str);
     free (root);
     root = next;
   }

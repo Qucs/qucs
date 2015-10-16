@@ -47,8 +47,8 @@ matrix msstep::calcMatrixZ (nr_double_t frequency) {
   /* how to get properties of this component, e.g. W */
   nr_double_t W1 = getPropertyDouble ("W1");
   nr_double_t W2 = getPropertyDouble ("W2");
-  const char * SModel = getPropertyString ("MSModel");
-  const char * DModel = getPropertyString ("MSDispModel");
+  char * SModel = getPropertyString ("MSModel");
+  char * DModel = getPropertyString ("MSDispModel");
 
   /* how to get properties of the substrate, e.g. Er, H */
   substrate * subst = getSubstrate ();
@@ -83,9 +83,9 @@ matrix msstep::calcMatrixZ (nr_double_t frequency) {
   L2 *= Ls;
 
   // build Z-parameter matrix
-  nr_complex_t z21 = nr_complex_t (0.0, -0.5e12 / (pi * frequency * Cs));
-  nr_complex_t z11 = nr_complex_t (0.0, 2e-9 * pi * frequency * L1) + z21;
-  nr_complex_t z22 = nr_complex_t (0.0, 2e-9 * pi * frequency * L2) + z21;
+  nr_complex_t z21 = nr_complex_t (0.0, -0.5e12 / (M_PI * frequency * Cs));
+  nr_complex_t z11 = nr_complex_t (0.0, 2e-9 * M_PI * frequency * L1) + z21;
+  nr_complex_t z22 = nr_complex_t (0.0, 2e-9 * M_PI * frequency * L2) + z21;
   matrix z (2);
   z.set (0, 0, z11);
   z.set (0, 1, z21);

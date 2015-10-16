@@ -45,20 +45,19 @@ libqucs_la_LIBADD = math/libqucsmath.la   \
 libqucs_la_LDFLAGS = -shared -no-undefined
 
 pkginclude_HEADERS = compat.h logging.h object.h vector.h consts.h node.h \
-  net.h circuit.h integrator.h states.h states.cpp valuelist.h \
-  constants.h netdefs.h property.h ptrlist.h characteristic.h pair.h \
-  operatingpoint.h
+  net.h circuit.h integrator.h states.h states.cpp valuelist.h valuelist.cpp \
+  constants.h netdefs.h
 
-noinst_TEMPLATES = tridiag.cpp hash.cpp \
+noinst_TEMPLATES = ptrlist.cpp tridiag.cpp hash.cpp \
 	tmatrix.cpp tvector.cpp eqnsys.cpp states.cpp \
-	nasolver.cpp
+	nasolver.cpp nasolution.cpp valuelist.cpp
 
 noinst_HEADERS = $(noinst_TEMPLATES)            \
 	tokens_netlist.h tokens_dataset.h check_dataset.h tokens_touchstone.h       \
-	check_touchstone.h  spsolver.h dcsolver.h variable.h       \
+	check_touchstone.h  spsolver.h dcsolver.h property.h variable.h       \
 	parasweep.h sweep.h libqucsator.h evaluate.h matvec.h acsolver.h   \
-	transient.h netdefs.h qucsdefs.h hbsolver.h poly.h     \
-	spline.h tridiag.h fourier.h hash.h applications.h     \
+	transient.h netdefs.h qucsdefs.h ptrlist.h hbsolver.h poly.h     \
+	spline.h tridiag.h fourier.h hash.h applications.h characteristic.h    \
 	range.h history.h devstates.h tokens_citi.h check_citi.h check_zvr.h  \
 	tokens_zvr.h check_mdl.h tokens_mdl.h differentiate.h tokens_csv.h  \
 	check_csv.h analyses.h receiver.h interpolator.h
@@ -66,7 +65,7 @@ noinst_HEADERS = $(noinst_TEMPLATES)            \
 	environment.h exceptionstack.h check_netlist.h module.h nasolver.h \
 	states.h analysis.h trsolver.h nasolution.h eqnsys.h compat.h \
 	exception.h object.h node.h circuit.h constants.h vector.h \
-	nodeset.h nodelist.h strlist.h operatingpoint.h  consts.h  \
+	nodeset.h nodelist.h strlist.h operatingpoint.h pair.h consts.h  \
 	integrator.h valuelist.h
 
 libqucs_la_SOURCES = dataset.cpp check_dataset.cpp parse_dataset.cpp      \
@@ -76,20 +75,18 @@ libqucs_la_SOURCES = dataset.cpp check_dataset.cpp parse_dataset.cpp      \
 	matvec.cpp parse_citi.cpp                                            \
 	scan_citi.cpp check_citi.cpp parse_zvr.cpp scan_zvr.cpp sweep.cpp    \
 	check_zvr.cpp parse_mdl.cpp scan_mdl.cpp check_mdl.cpp check_csv.cpp \
-	parse_csv.cpp scan_csv.cpp circuit.cpp check_netlist.cpp \
-	parse_netlist.cpp scan_netlist.cpp net.cpp input.cpp        \
+	parse_csv.cpp scan_csv.cpp circuit.cpp check_netlist.cpp operatingpoint.cpp  \
+	parse_netlist.cpp scan_netlist.cpp node.cpp net.cpp input.cpp        \
 	analysis.cpp spsolver.cpp dcsolver.cpp nodelist.cpp environment.cpp  \
 	parasweep.cpp equation.cpp evaluate.cpp acsolver.cpp                 \
 	trsolver.cpp transient.cpp integrator.cpp nodeset.cpp hbsolver.cpp   \
-	spline.cpp fourier.cpp history.cpp       \
+	spline.cpp fourier.cpp pair.cpp characteristic.cpp history.cpp       \
 	range.cpp devstates.cpp differentiate.cpp module.cpp receiver.cpp    \
 	interpolator.cpp
 
 bin_PROGRAMS = qucsator
 
 qucsator_LDADD = libqucs.la
-
-qucsator_LDFLAGS = -Wl,-rpath,$(libdir)
 
 qucsator_SOURCES = ucs.cpp
 

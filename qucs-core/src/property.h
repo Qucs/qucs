@@ -25,10 +25,6 @@
 #ifndef __PROPERTY_H__
 #define __PROPERTY_H__
 
-#include <string>
-#include <unordered_map>
-#include <utility>
-
 namespace qucs {
 
 class variable;
@@ -46,31 +42,41 @@ class property
 {
  public:
   property ();
+  property (const char *);
+  property (const char *, const char *);
+  property (const char *, nr_double_t);
+  property (const char *, variable *);
+  property (const property &);
   virtual ~property ();
-
-  qucs::vector * getVector (void) const;
-  nr_double_t getDouble (void) const;
-  int getInteger (void) const;
-  const char * getString (void) const;
-  const char * getReference (void) const;
-  void set (const nr_double_t);
+  property * getNext (void) { return next; }
+  void setNext (property * p) { next = p; }
+  void setName (char *);
+  char * getName (void);
+  qucs::vector * getVector (void);
+  nr_double_t getDouble (void);
+  int getInteger (void);
+  char * getString (void);
+  char * getReference (void);
+  void set (nr_double_t);
   void set (int);
-  void set (const std::string &);
+  void set (char *);
   void set (variable *);
-  std::string toString (void) const;
-  bool isDefault (void) const { return def; }
+  property * findProperty (const char *);
+  char * toString (void);
+  bool isDefault (void) { return def; }
   void setDefault (bool d) { def = d; }
 
  private:
   bool def;
   int type;
-  std::string str;
+  char * name;
+  char * str;
+  char * txt;
   nr_double_t value;
   variable * var;
+  property * next;
 };
 
-typedef std::unordered_map<std::string, property> properties;
- 
 } // namespace qucs
 
 #endif /* __PROPERTY_H__ */

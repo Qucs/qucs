@@ -88,7 +88,7 @@ dataset::~dataset () {
     n = (vector *) v->getNext ();
     delete v;
   }
-  free (file);
+  if (file) free (file);
 }
 
 // This function adds a dependency vector to the current dataset.
@@ -242,7 +242,7 @@ vector * dataset::findOrigin (char * n) {
 
 /* This function assigns dependency entries to variable vectors which
    do have the specified origin. */
-void dataset::assignDependency (const char * const origin, const char * const depvar) {
+void dataset::assignDependency (char * origin, char * depvar) {
   for (vector * v = variables; v != NULL; v = (vector *) v->getNext ()) {
     char * n = v->getOrigin ();
     if (n != NULL && origin != NULL && !strcmp (origin, n)) {
@@ -289,9 +289,9 @@ vector * dataset::findDependency (const char * n) {
 /* The function goes through the list of variables in the dataset and
    returns the vector specified by the given name.  If there is no
    such variable registered the function returns NULL. */
-vector * dataset::findVariable (const std::string &name) {
+vector * dataset::findVariable (const char * n) {
   for (vector * v = variables; v != NULL; v = (vector *) v->getNext ()) {
-    if (!strcmp (v->getName (), name.c_str()))
+    if (!strcmp (v->getName (), n))
       return v;
   }
   return NULL;
@@ -321,7 +321,7 @@ char * dataset::getFile (void) {
 /* Sets the current output file name.  The file name is used during
    the print functionality of the dataset class. */
 void dataset::setFile (const char * f) {
-  free (file);
+  if (file) free (file);
   file = f ? strdup (f) : NULL;
 }
 
@@ -397,10 +397,10 @@ void dataset::printData (vector * v, FILE * f) {
   for (int i = 0; i < v->getSize (); i++) {
     nr_complex_t c = v->get (i);
     if (imag (c) == 0.0) {
-      fprintf (f, "  %+." "20" "e\n", (double) real (c));
+      fprintf (f, "  %+." NR_DECS "e\n", (double) real (c));
     }
     else {
-      fprintf (f, "  %+." "20" "e%cj%." "20" "e\n", (double) real (c), 
+      fprintf (f, "  %+." NR_DECS "e%cj%." NR_DECS "e\n", (double) real (c),
 	       imag (c) >= 0.0 ? '+' : '-', (double) fabs (imag (c)));
     }
   }

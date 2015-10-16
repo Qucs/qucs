@@ -37,7 +37,7 @@ using namespace qucs;
 
 /* Calculate the hash code for a given string. This is the standard
    callback for any newly created hash table.  */
-static inline int hash_code (char * key) {
+static int hash_code (char * key) {
   int code = 0;
   char * p = key;
   while (*p) { code = (code << 1) ^ *p; p++; }
@@ -47,7 +47,7 @@ static inline int hash_code (char * key) {
 /* This is the default callback for any newly created hash for
    determining two keys being equal.  Return zero if both strings are
    equal, otherwise non-zero.  */
-static inline int hash_key_equals (char * key1, char * key2) {
+static int hash_key_equals (char * key1, char * key2) {
   char * p1, * p2;
   if (key1 == key2) return 0;
   p1 = key1;
@@ -62,7 +62,7 @@ static inline int hash_key_equals (char * key1, char * key2) {
 
 /* This is the default routine for determining the actual hash table
    key length of the given key.  */
-static inline unsigned hash_key_length (char * key) {
+static unsigned hash_key_length (char * key) {
   unsigned len = 0;
   while (*key++) len++;
   len++;
@@ -95,7 +95,7 @@ qucs::hash<type_t>::hash (int size) {
 template <class type_t>
 qucs::hash<type_t>::~hash () {
   for (int n = 0; n < buckets; n++) {
-    delete table[n];
+    if (table[n]) delete table[n];
   }
   free (table);
 }
@@ -105,7 +105,7 @@ qucs::hash<type_t>::~hash () {
 template <class type_t>
 void qucs::hash<type_t>::clear (void) {
   for (int n = 0; n < buckets; n++) {
-    delete table[n];
+    if (table[n]) delete table[n];
   }
   free (table);
 

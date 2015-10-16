@@ -182,7 +182,7 @@ const matrix& matrix::operator=(const matrix & m) {
    Destructor deletes a matrix object.
 */
 matrix::~matrix () {
-  delete[] data;
+  if (data) delete[] data;
 }
 
 /*!\brief  Returns the matrix element at the given row and column.
@@ -1864,23 +1864,6 @@ nr_double_t b1 (matrix m) {
   assert (m.getRows () >= 2 && m.getCols () >= 2);
   nr_double_t res;
   res = 1 + norm (m (0, 0)) - norm (m (1, 1)) - norm (det (m));
-  return res;
-}
-
-
-matrix rad2deg (matrix a) {
-  matrix res (a.getRows (), a.getCols ());
-  for (int r = 0; r < a.getRows (); r++)
-    for (int c = 0; c < a.getCols (); c++)
-      res.set (r, c, rad2deg (a.get (r, c)));
-  return res;
-}
-
-matrix deg2rad (matrix a) {
-  matrix res (a.getRows (), a.getCols ());
-  for (int r = 0; r < a.getRows (); r++)
-    for (int c = 0; c < a.getCols (); c++)
-      res.set (r, c, deg2rad (a.get (r, c)));
   return res;
 }
 

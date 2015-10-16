@@ -51,14 +51,14 @@ eqndefined::eqndefined () : circuit () {
 
 // Destructor deletes equation defined device object from memory.
 eqndefined::~eqndefined () {
-  free (veqn);
-  free (ieqn);
-  free (geqn);
-  free (qeqn);
-  free (ceqn);
-  free (_jstat);
-  free (_jdyna);
-  free (_charges);
+  if (veqn) free (veqn);
+  if (ieqn) free (ieqn);
+  if (geqn) free (geqn);
+  if (qeqn) free (qeqn);
+  if (ceqn) free (ceqn);
+  if (_jstat) free (_jstat);
+  if (_jdyna) free (_jdyna);
+  if (_charges) free (_charges);
 }
 
 // Callback for initializing the DC analysis.
@@ -75,7 +75,7 @@ void eqndefined::initDC (void) {
 
 // Creates a variable name from the given arguments.
 char * eqndefined::createVariable (const char * base, int n, bool pfx) {
-  const char * str = strchr (getName (), '.');
+  char * str = strchr (getName (), '.');
   if (str != NULL)
     str = strrchr (str, '.') + 1;
   else
@@ -90,7 +90,7 @@ char * eqndefined::createVariable (const char * base, int n, bool pfx) {
 
 // Creates also a variable name from the given arguments.
 char * eqndefined::createVariable (const char * base, int r, int c, bool pfx) {
-  const char * str = strchr (getName (), '.');
+  char * str = strchr (getName (), '.');
   if (str != NULL)
     str = strrchr (str, '.') + 1;
   else
@@ -359,7 +359,7 @@ void eqndefined::calcAC (nr_double_t frequency) {
 matrix eqndefined::calcMatrixY (nr_double_t frequency) {
   int i, j, k, branches = getSize () / 2;
   matrix y (2 * branches);
-  nr_double_t o = 2 * pi * frequency;
+  nr_double_t o = 2 * M_PI * frequency;
 
   // merge conductances and capacitances
   for (k = 0, i = 0; i < branches; i++) {

@@ -25,11 +25,6 @@
  *
  */
 
-#if defined(__clang__)
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-register"
-#endif
-
 #if HAVE_CONFIG_H
 # include <config.h>
 #endif
@@ -147,7 +142,7 @@ UCOMPLEX {UCREAL}{UCIMAG}
 
 
 %x COMMENT STR EQN
-%option yylineno noyywrap nounput noinput prefix="netlist_"
+%option yylineno noyywrap nounput prefix="netlist_"
 
 %%
 
@@ -176,13 +171,7 @@ UCOMPLEX {UCREAL}{UCIMAG}
     return Identifier;
   }
 <INITIAL,STR>{FILE} { /* identify file reference */
-    char * p = strrchr (netlist_text, '}');
-    if (!p) {
-      return InvalidCharacter;
-    }
-    //size_t len = (size_t)p - (size_t)&netlist_text[1];
-    //netlist_lval.ident = strndup (&netlist_text[1], len);
-    *p = '\0';
+    char * p = strrchr (netlist_text, '}'); *p = '\0';
     netlist_lval.ident = strdup (&netlist_text[1]);
     return Identifier;
   }

@@ -22,12 +22,6 @@
 # Boston, MA 02110-1301, USA.
 #
 
-# Ignore external headers and sources,
-# enable branch coverage (default disabled on lcov 1.10)
-CODE_COVERAGE_LCOV_OPTIONS ?= --no-external --rc lcov_branch_coverage=1 $(CODE_COVERAGE_LCOV_OPTIONS_DEFAULT)
-CODE_COVERAGE_GENHTML_OPTIONS ?= --rc lcov_branch_coverage=1
-@CODE_COVERAGE_RULES@
-
 ## if maintainer mode we may build adms
 if MAINTAINER_MODE
 ## Test if an internal adms has been requested
@@ -46,7 +40,7 @@ SUBDIRS += src doc .
 
 # include subdirs to build gtest and run unit tests
 if USE_GTEST
-SUBDIRS += tests
+SUBDIRS += $(GTEST_DIR) tests
 endif
 
 ACLOCAL_AMFLAGS = -I m4
@@ -58,11 +52,9 @@ EXTRA_DIST = BUGS bootstrap.sh depcomp RELEASE
 pkginclude_HEADERS = config.h
 
 CLEANFILES = *~ *.orig *.rej
-MAINTAINERCLEANFILES = aclocal.m4 configure Makefile.in \
+MAINTAINERCLEANFILES = aclocal.m4 config.h.in configure Makefile.in \
 	stamp-h.in stamp-h[0-9].in
 DISTCLEANFILES = config.cache config.log
-MOSTLYCLEANFILES = \
-    *.gcda *.gcno *.gcov
 
 ## Test suite
 #  Run with: make check
@@ -73,41 +65,24 @@ MOSTLYCLEANFILES = \
 #
 # See also qucs-test for another way of testing.
 # https://github.com/Qucs/qucs-test.
-TEST_EXTENSIONS = .net .txt
-NET_LOG_COMPILER = $(top_srcdir)/tests/runqucsator.sh
-AM_NET_LOG_FLAGS = $(abs_top_srcdir)/src/qucsator
-
-TESTS =
-
-# U=RI variation
-TESTS +=                                               \
+TESTS =                                               \
   tests/basic/u=ri/u=ri@dc.net                        \
   tests/basic/u=ri/u=ri@ac.net                        \
   tests/basic/u=ri/u=ri@tr.net                        \
-  tests/basic/u=ri/u=ri@dc+sweep.net                  \
-  tests/basic/u=ri/u=ri@ac+sweep.net                  \
-  tests/basic/u=ri/u=ri@tr+sweep.net                  \
-  tests/basic/u=ri/u=ri@sp.net
-
-# voltage diviser
-TESTS += \
   tests/basic/voltagediviser/voltagediviser@tr.net
 
-# component
-TESTS += \
-  tests/basic/components/capacitor/capacitor@dc.net \
-  tests/basic/components/capacitor/capacitor@ac.net \
-  tests/basic/components/capacitor/capacitor@tr.net \
-  tests/basic/components/spfile/spfile@sp.net
+TEST_EXTENSIONS = .net
+NET_LOG_COMPILER = src/qucsator
+AM_NET_LOG_FLAGS = -i
 
 
-if USE_QUCS_TEST
-    TXT_LOG_COMPILER = src/qucsator
-    AM_TXT_LOG_FLAGS = -i
-    TESTS +=  tests/qucs-test/testsuite/DC_SW_bridge_prj/netlist.txt \
-              tests/qucs-test/testsuite/DC_SW_bsim4v30nMOS_Ids_Vgs_prj/netlist.txt \
-              tests/qucs-test/testsuite/DC_SW_bsim4v30pMOS_Ids_Vgs_prj/netlist.txt \
-              tests/qucs-test/testsuite/DC_SW_charac_prj/netlist.txt \
-              tests/qucs-test/testsuite/DC_SW_diff1_prj/netlist.txt \
-              tests/qucs-test/testsuite/DC_TR_SW_spice_BFR520_prj/netlist.txt
-endif
+install-exec-hook:
+	@echo "----------------------------------------------"
+	@echo "                    NOTE                      "
+	@echo "On some systems (e.g. Linux) you may need"
+	@echo "to run sudo ldconfig or reboot before running"
+	@echo "qucsator or trying to use the libraries it"
+	@echo "installs. Otherwise you will receive an error"
+	@echo "about loading the shared libraries."
+	@echo "----------------------------------------------"
+

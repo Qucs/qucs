@@ -2,11 +2,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ(2.64)
-
-dnl Read version from file
-m4_define([QUCS_VERSION], m4_esyscmd([tr -d '\n' < VERSION]))
-
-AC_INIT([qucs-core],[QUCS_VERSION],[qucs-bugs@lists.sourceforge.net])
+AC_INIT([qucs-core],[0.0.18],[qucs-bugs@lists.sourceforge.net])
 AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_AUX_DIR([build-aux])
 LT_PREREQ([2.2.2])
@@ -36,66 +32,23 @@ AC_PROG_LN_S
 AC_PROG_INSTALL
 AC_PROG_CC_C_O
 
-AX_COMPILER_VENDOR
-AC_LANG_PUSH(C++)
-AX_COMPILER_VENDOR
-AC_LANG_POP(C++)
-
-dnl check for compiler problem
-# see http://llvm.org/bugs/show_bug.cgi?id=13530
-m4_define([CHECK_CLANG13530_PROGRAM],dnl
-	  [AC_LANG_PROGRAM([
-			     #include <iostream>
-			   ],
-			   [std::cout << "Hello, world!" << std::endl;])])
-AC_MSG_CHECKING([wether c++ compiler is affected by clang bug 13530])
-AC_LANG_PUSH(C++)
-AS_IF([test "x$ax_cv_cxx_compiler_vendor" = "xclang"],
-      [dnl
-	AC_COMPILE_IFELSE(dnl
-		[CHECK_CLANG13530_PROGRAM],
-		[dnl
-		  clang13530_workarround_needed="no"
-		],
-		[dnl
-		  AX_SAVE_FLAGS
-		  CXXFLAGS="$CXXFLAGS -D__STRICT_ANSI__"
-		  AC_COMPILE_IFELSE(dnl
-			[CHECK_CLANG13530_PROGRAM],
-			[dnl
-			   clang13530_workarround_needed="yes"
-			],
-			[AC_MSG_FAILURE([Cannot compile test suite for clang 13530 even with workarround])])
-		  AX_RESTORE_FLAGS
-		]dnl
-	)dnl
-      ],
-      [dnl
-	clang13530_workarround_needed="no"dnl
-      ])
-AS_IF([test "x$clang13530_workarround_needed" = "xyes"],
-      [AX_APPEND_COMPILE_FLAGS([-D__STRICT_ANSI__],CXXFLAGS)],
-      [])
-AC_LANG_POP(C++)
-AC_MSG_RESULT([$clang13530_workarround_needed])
-
 dnl Check for parser and lexer generators.
 AC_PROG_YACC
 AC_PROG_LEX
 
-lexver_req="2.5.9";
-
 if test "x$LEX" != "x:"; then
   if test $USE_MAINTAINER_MODE = yes; then
-    AC_MSG_CHECKING([for $LEX >= $lexver_req])
+    AC_MSG_CHECKING([for $LEX version])
     [lexver=`eval $LEX --version 2>/dev/null | head -1 | sed 's/[^0-9\.]//g'`]
     if test -n "$lexver"; then
-      AS_VERSION_COMPARE(${lexver},${lexver_req},
-	    [cmp=-1],[cmp=0],[cmp=1])
-      AS_IF([test "${cmp}" != "-1"],
-	    [AC_MSG_RESULT([yes])],
-	    [AC_MSG_RESULT([no])
-	     AC_MSG_ERROR([need $LEX >= $lexver_req])])
+      case "$lexver" in
+        [2.5.9 | [2-9].[5-9].[1-9][0-9])]
+          AC_MSG_RESULT([$lexver >= 2.5.9])
+        ;;
+          [*)]
+          AC_MSG_ERROR([$lexver < 2.5.9])
+        ;;
+      esac
     else
       AC_MSG_RESULT([not identified])
     fi
@@ -120,7 +73,7 @@ fi
 dnl Check for debugging.
 AC_ARG_ENABLE([debug],
   AS_HELP_STRING([--enable-debug],
-		 [include debug output @<:@default=no@:>@]),
+                 [include debug output @<:@default=no@:>@]),
   [case "$enableval" in
    yes) enable_debug="yes" ;;
    no)  enable_debug="no"  ;;
@@ -161,83 +114,83 @@ unset enable_debug
 dnl MacOSX build and runtime environment options
 dnl   borrowed from http://cgit.freedesktop.org/libreoffice/core/tree/configure.ac
 
-dnl Default-disabled search for SDK
+dnl Default-enabled search for SDK
 AC_ARG_ENABLE([sdk],
   AS_HELP_STRING([--enable-sdk],
-		 [search for Mac OSX SDK @<:@default=yes@:>@. \
-		  Disable this option to set custom compiler flags CXX, CXXFLAGS]),
+                 [search for Mac OSX SDK @<:@default=yes@:>@. \
+                  Disable this option to set custom compiler flags CXX, CXXFLAGS]),
   [case "$enableval" in
    yes) enable_sdk="yes" ;;
    no)  enable_sdk="no"  ;;
    *)   enable_sdk="yes"  ;;
    esac],
-  [enable_sdk="no"])
+  [enable_sdk="yes"])
 
 dnl Specify version of SDK
 AC_ARG_WITH(macosx-sdk,
     AS_HELP_STRING([--with-macosx-sdk],
-	[Use a specific SDK for building.])
+        [Use a specific SDK for building.])
     [
-			  Usage:     --with-macosx-sdk=<version>
+                          Usage:     --with-macosx-sdk=<version>
 
-			  e. g.: --with-macosx-sdk=10.6
+                          e. g.: --with-macosx-sdk=10.6
 
-			  there are 3 options to control the MacOSX build:
-			  --with-macosx-sdk (refered as 'sdk' below)
-			  --with-macosx-version-min-required (refered as 'min' below)
-			  --with-macosx-version-max-allowed (refered as 'max' below)
+                          there are 3 options to control the MacOSX build:
+                          --with-macosx-sdk (refered as 'sdk' below)
+                          --with-macosx-version-min-required (refered as 'min' below)
+                          --with-macosx-version-max-allowed (refered as 'max' below)
 
-			  the connection between these value and the default they take is as follow:
-			  ( ? means not specified on the command line, s means the SDK version found,
-			  constraint: x <= y <= z)
+                          the connection between these value and the default they take is as follow:
+                          ( ? means not specified on the command line, s means the SDK version found,
+                          constraint: x <= y <= z)
 
-			  ==========================================
-			   command line      || config result
-			  ==========================================
-			  min  | max  | sdk  || min  | max  | sdk  |
-			  ?    | ?    | ?    || 10.6 | 10.s | 10.s |
-			  ?    | ?    | 10.x || 10.6 | 10.x | 10.x |
-			  ?    | 10.x | ?    || 10.6 | 10.s | 10.s |
-			  ?    | 10.x | 10.y || 10.6 | 10.x | 10.y |
-			  10.x | ?    | ?    || 10.x | 10.s | 10.s |
-			  10.x | ?    | 10.y || 10.x | 10.y | 10.y |
-			  10.x | 10.y | ?    || 10.x | 10.y | 10.y |
-			  10.x | 10.y | 10.z || 10.x | 10.y | 10.z |
+                          ==========================================
+                           command line      || config result
+                          ==========================================
+                          min  | max  | sdk  || min  | max  | sdk  |
+                          ?    | ?    | ?    || 10.6 | 10.s | 10.s |
+                          ?    | ?    | 10.x || 10.6 | 10.x | 10.x |
+                          ?    | 10.x | ?    || 10.6 | 10.s | 10.s |
+                          ?    | 10.x | 10.y || 10.6 | 10.x | 10.y |
+                          10.x | ?    | ?    || 10.x | 10.s | 10.s |
+                          10.x | ?    | 10.y || 10.x | 10.y | 10.y |
+                          10.x | 10.y | ?    || 10.x | 10.y | 10.y |
+                          10.x | 10.y | 10.z || 10.x | 10.y | 10.z |
 
 
-			  see: http://developer.apple.com/library/mac/#technotes/tn2064/_index.html
-			  for a detailled technical explanation of these variables
+                          see: http://developer.apple.com/library/mac/#technotes/tn2064/_index.html
+                          for a detailled technical explanation of these variables
 
-			  Note: MACOSX_DEPLOYMENT_TARGET will be set to the value of 'min'.
+                          Note: MACOSX_DEPLOYMENT_TARGET will be set to the value of 'min'.
 
-			  Note that even if in theory using a --with-macosx-version-max-allowed
-			  (i.e. the MAC_OS_X_VERSION_MAX_ALLOWED macro) less than the SDK version
-			  should work, in practice Apple does not seem to test that, and at least
-			  compiling with -DMAC_OS_X_VERSION_MAX_ALLOWED=1060 against the 10.7 SDK
-			  fails in a couple of places. Just because of oversights in ifdefs in the SDK
-			  headers, but still.
+                          Note that even if in theory using a --with-macosx-version-max-allowed
+                          (i.e. the MAC_OS_X_VERSION_MAX_ALLOWED macro) less than the SDK version
+                          should work, in practice Apple does not seem to test that, and at least
+                          compiling with -DMAC_OS_X_VERSION_MAX_ALLOWED=1060 against the 10.7 SDK
+                          fails in a couple of places. Just because of oversights in ifdefs in the SDK
+                          headers, but still.
     ],
 ,)
 
 AC_ARG_WITH(macosx-version-min-required,
     AS_HELP_STRING([--with-macosx-version-min-required],
-	[set the minimum OS version needed to run the built Qucs-core])
+        [set the minimum OS version needed to run the built Qucs-core])
     [
-			  Usage:     --with-macosx-version-min-required=<version>
+                          Usage:     --with-macosx-version-min-required=<version>
 
-			  e. g.: --with-macosx-version-min-required=10.6
-			  see --with-macosx-sdk for more info
+                          e. g.: --with-macosx-version-min-required=10.6
+                          see --with-macosx-sdk for more info
     ],
 ,)
 
 AC_ARG_WITH(macosx-version-max-allowed,
     AS_HELP_STRING([--with-macosx-version-max-allowed],
-	[set the maximum allowed OS version the Qucs-core compilation can use APIs from])
+        [set the maximum allowed OS version the Qucs-core compilation can use APIs from])
     [
-			  Usage:     --with-macosx-version-max-allowed=<version>
+                          Usage:     --with-macosx-version-max-allowed=<version>
 
-			  e. g.: --with-macosx-version-max-allowed=10.6
-			  see --with-macosx-sdk for more info
+                          e. g.: --with-macosx-version-max-allowed=10.6
+                          see --with-macosx-sdk for more info
     ],
 ,)
 
@@ -248,15 +201,18 @@ case $host_os in
   *linux* | *cygwin* )
 
   dnl Set Clang
-  AS_IF([test "x$ax_cv_cxx_compiler_vendor" = "xclang"],
-	[CFLAGS="$CFLAGS -pipe"
-	 CXXFLAGS="$CXXFLAGS -pipe -fno-exceptions -ldl -D__STRICT_ANSI__"
-	 use_CLANG="yes"],[])
+  dnl STRICT_ANSI: http://stackoverflow.com/questions/13525774/clang-and-float128-bug-error
+  if test "$CXX -dM -E - < /dev/null | grep __clang__" ; then
+    CFLAGS="$CFLAGS -pipe"
+    CXXFLAGS="$CXXFLAGS -pipe -fno-exceptions -ldl -D__STRICT_ANSI__"
+    use_CLANG="yes"
+  fi
 
   dnl Set GCC
-  AS_IF([test "x$use_CLANG" != "xyes" -a "x$GCC" = "xyes"],
-	[CFLAGS="$CFLAGS -pipe"
-	 CXXFLAGS="$CXXFLAGS -pipe -fno-exceptions -fno-check-new -ldl -rdynamic"],[])
+  if test "x$use_CLANG" != "xyes" -a "x$GCC" = "xyes" ; then
+    CFLAGS="$CFLAGS -pipe"
+    CXXFLAGS="$CXXFLAGS -pipe -fno-exceptions -fno-check-new -ldl -rdynamic"
+  fi
 
   if test $USE_MAINTAINER_MODE = yes; then
     CFLAGS="$CFLAGS -W -Wall -Wmissing-prototypes"
@@ -267,7 +223,7 @@ case $host_os in
   *darwin* )
 
   dnl ===================================================================
-  dnl Test if search for SDK was enabled
+  dnl Test if search for SDK was disabled
   AS_IF([test "x$enable_sdk" = "xyes"], [
 
   dnl Check OS X SDK and compiler
@@ -278,35 +234,35 @@ case $host_os in
 
   if test -z "$with_macosx_sdk"; then
       if test -d /Developer/SDKs/MacOSX10.6.sdk; then
-	  with_macosx_sdk=10.6
+          with_macosx_sdk=10.6
       elif test -d /Developer-old/SDKs/MacOSX10.6.sdk; then
-	  with_macosx_sdk=10.6
+          with_macosx_sdk=10.6
       elif test -d /Xcode3/SDKs/MacOSX10.6.sdk; then
-	  with_macosx_sdk=10.6
+          with_macosx_sdk=10.6
       elif test -d /Developer/SDKs/MacOSX10.7.sdk; then
-	  with_macosx_sdk=10.7
+          with_macosx_sdk=10.7
       elif test -d "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.6.sdk"; then
-	  with_macosx_sdk=10.6
+          with_macosx_sdk=10.6
       elif test -d "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.7.sdk"; then
-	  with_macosx_sdk=10.7
+          with_macosx_sdk=10.7
       elif test -d "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk"; then
-	  with_macosx_sdk=10.8
+          with_macosx_sdk=10.8
       elif test -d "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk"; then
-	  with_macosx_sdk=10.9
+          with_macosx_sdk=10.9
       elif test -x /usr/bin/xcode-select; then
-	  xcodepath="`xcode-select -print-path`"
-	  if test -d "$xcodepath/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.6.sdk"; then
-	      with_macosx_sdk=10.6
-	  elif test -d "$xcodepath/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.7.sdk"; then
-	      with_macosx_sdk=10.7
-	  elif test -d "$xcodepath/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk"; then
-	      with_macosx_sdk=10.8
-	  elif test -d "$xcodepath/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk"; then
-	      with_macosx_sdk=10.9
-	  fi
+          xcodepath="`xcode-select -print-path`"
+          if test -d "$xcodepath/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.6.sdk"; then
+              with_macosx_sdk=10.6
+          elif test -d "$xcodepath/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.7.sdk"; then
+              with_macosx_sdk=10.7
+          elif test -d "$xcodepath/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk"; then
+              with_macosx_sdk=10.8
+          elif test -d "$xcodepath/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk"; then
+              with_macosx_sdk=10.9
+          fi
       fi
       if test -z "$with_macosx_sdk"; then
-	  AC_MSG_ERROR([Could not figure out the location of a Mac OS X SDK and its version])
+          AC_MSG_ERROR([Could not figure out the location of a Mac OS X SDK and its version])
       fi
   fi
 
@@ -341,56 +297,56 @@ case $host_os in
   if test -z "$MACOSX_SDK_PATH"; then
       case $with_macosx_sdk in
       10.5)
-	  if test -x /usr/bin/xcode-select; then
-	      xcodepath="`xcode-select -print-path`"
-	      if test -d "$xcodepath/SDKs/MacOSX$with_macosx_sdk.sdk"; then
-		  MACOSX_SDK_PATH="$xcodepath/SDKs/MacOSX$with_macosx_sdk.sdk"
-	      fi
-	  elif test -d /Developer/SDKs/MacOSX10.5.sdk; then
-	      MACOSX_SDK_PATH=/Developer/SDKs/MacOSX10.5.sdk
-	  elif test -d /Developer-old/SDKs/MacOSX10.5.sdk; then
-	      MACOSX_SDK_PATH=/Developer-old/SDKs/MacOSX10.5.sdk
-	  elif test -d /Xcode3/SDKs/MacOSX10.5.sdk; then
-	      MACOSX_SDK_PATH=/Xcode3/SDKs/MacOSX10.5.sdk
-	  fi
-	  ;;
+          if test -x /usr/bin/xcode-select; then
+              xcodepath="`xcode-select -print-path`"
+              if test -d "$xcodepath/SDKs/MacOSX$with_macosx_sdk.sdk"; then
+                  MACOSX_SDK_PATH="$xcodepath/SDKs/MacOSX$with_macosx_sdk.sdk"
+              fi
+          elif test -d /Developer/SDKs/MacOSX10.5.sdk; then
+              MACOSX_SDK_PATH=/Developer/SDKs/MacOSX10.5.sdk
+          elif test -d /Developer-old/SDKs/MacOSX10.5.sdk; then
+              MACOSX_SDK_PATH=/Developer-old/SDKs/MacOSX10.5.sdk
+          elif test -d /Xcode3/SDKs/MacOSX10.5.sdk; then
+              MACOSX_SDK_PATH=/Xcode3/SDKs/MacOSX10.5.sdk
+          fi
+          ;;
       10.6)
-	  if test -d /Developer/SDKs/MacOSX10.6.sdk; then
-	      MACOSX_SDK_PATH=/Developer/SDKs/MacOSX10.6.sdk
-	  elif test -d /Developer-old/SDKs/MacOSX10.6.sdk; then
-	      MACOSX_SDK_PATH=/Developer-old/SDKs/MacOSX10.6.sdk
-	  elif test -d /Xcode3/SDKs/MacOSX10.6.sdk; then
-	      MACOSX_SDK_PATH=/Xcode3/SDKs/MacOSX10.6.sdk
-	  elif test -d "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX$with_macosx_sdk.sdk"; then
-	      MACOSX_SDK_PATH=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX$with_macosx_sdk.sdk
-	  elif test -x /usr/bin/xcode-select; then
-	      xcodepath="`xcode-select -print-path`"
-	      if test -d "$xcodepath/Platforms/MacOSX.platform/Developer/SDKs/MacOSX$with_macosx_sdk.sdk"; then
-		  MACOSX_SDK_PATH="$xcodepath/Platforms/MacOSX.platform/Developer/SDKs/MacOSX$with_macosx_sdk.sdk"
-	      fi
-	  fi
-	  ;;
+          if test -d /Developer/SDKs/MacOSX10.6.sdk; then
+              MACOSX_SDK_PATH=/Developer/SDKs/MacOSX10.6.sdk
+          elif test -d /Developer-old/SDKs/MacOSX10.6.sdk; then
+              MACOSX_SDK_PATH=/Developer-old/SDKs/MacOSX10.6.sdk
+          elif test -d /Xcode3/SDKs/MacOSX10.6.sdk; then
+              MACOSX_SDK_PATH=/Xcode3/SDKs/MacOSX10.6.sdk
+          elif test -d "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX$with_macosx_sdk.sdk"; then
+              MACOSX_SDK_PATH=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX$with_macosx_sdk.sdk
+          elif test -x /usr/bin/xcode-select; then
+              xcodepath="`xcode-select -print-path`"
+              if test -d "$xcodepath/Platforms/MacOSX.platform/Developer/SDKs/MacOSX$with_macosx_sdk.sdk"; then
+                  MACOSX_SDK_PATH="$xcodepath/Platforms/MacOSX.platform/Developer/SDKs/MacOSX$with_macosx_sdk.sdk"
+              fi
+          fi
+          ;;
       10.7)
-	  if test -d /Developer/SDKs/MacOSX$with_macosx_sdk.sdk; then
-	      MACOSX_SDK_PATH=/Developer/SDKs/MacOSX$with_macosx_sdk.sdk
-	  elif test -d "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX$with_macosx_sdk.sdk"; then
-	      MACOSX_SDK_PATH=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX$with_macosx_sdk.sdk
-	  elif test -x /usr/bin/xcode-select; then
-	      xcodepath="`xcode-select -print-path`"
-	      if test -d "$xcodepath/Platforms/MacOSX.platform/Developer/SDKs/MacOSX$with_macosx_sdk.sdk"; then
-		  MACOSX_SDK_PATH="$xcodepath/Platforms/MacOSX.platform/Developer/SDKs/MacOSX$with_macosx_sdk.sdk"
-	      fi
-	  fi
-	  ;;
+          if test -d /Developer/SDKs/MacOSX$with_macosx_sdk.sdk; then
+              MACOSX_SDK_PATH=/Developer/SDKs/MacOSX$with_macosx_sdk.sdk
+          elif test -d "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX$with_macosx_sdk.sdk"; then
+              MACOSX_SDK_PATH=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX$with_macosx_sdk.sdk
+          elif test -x /usr/bin/xcode-select; then
+              xcodepath="`xcode-select -print-path`"
+              if test -d "$xcodepath/Platforms/MacOSX.platform/Developer/SDKs/MacOSX$with_macosx_sdk.sdk"; then
+                  MACOSX_SDK_PATH="$xcodepath/Platforms/MacOSX.platform/Developer/SDKs/MacOSX$with_macosx_sdk.sdk"
+              fi
+          fi
+          ;;
       10.8|10.9|10.10)
-	  xcodepath="`xcode-select -print-path`"
-	  if test -d "$xcodepath/Platforms/MacOSX.platform/Developer/SDKs/MacOSX$with_macosx_sdk.sdk"; then
-	      MACOSX_SDK_PATH="$xcodepath/Platforms/MacOSX.platform/Developer/SDKs/MacOSX$with_macosx_sdk.sdk"
-	  fi
-	  ;;
+          xcodepath="`xcode-select -print-path`"
+          if test -d "$xcodepath/Platforms/MacOSX.platform/Developer/SDKs/MacOSX$with_macosx_sdk.sdk"; then
+              MACOSX_SDK_PATH="$xcodepath/Platforms/MacOSX.platform/Developer/SDKs/MacOSX$with_macosx_sdk.sdk"
+          fi
+          ;;
       esac
       if test -z "$MACOSX_SDK_PATH"; then
-	  AC_MSG_ERROR([Could not figure out the location of Mac OS X $with_macosx_sdk SDK])
+          AC_MSG_ERROR([Could not figure out the location of Mac OS X $with_macosx_sdk SDK])
       fi
   fi
   AC_MSG_RESULT([SDK $with_macosx_sdk at $MACOSX_SDK_PATH])
@@ -398,9 +354,9 @@ case $host_os in
   if test "$with_macosx_version_min_required" = ""; then
       case $with_macosx_sdk in
       10.5)
-	  with_macosx_version_min_required="10.5";;
+          with_macosx_version_min_required="10.5";;
       *)
-	  with_macosx_version_min_required="10.6";;
+          with_macosx_version_min_required="10.6";;
       esac
   fi
 
@@ -442,15 +398,15 @@ case $host_os in
   if test "$BITNESS_OVERRIDE" = ""; then
       case "$with_macosx_version_min_required" in
       10.5)
-	  case "$with_macosx_sdk" in
-	  10.5)
-	      ;;
-	  *)
-	      AC_MSG_WARN([Building with a SDK > 10.5 possibly breaks 10.5 compatibility.])
-	      add_warning "Building with a SDK > 10.5 possibly breaks 10.5 compatibility."
-	      ;;
-	  esac
-	  ;;
+          case "$with_macosx_sdk" in
+          10.5)
+              ;;
+          *)
+              AC_MSG_WARN([Building with a SDK > 10.5 possibly breaks 10.5 compatibility.])
+              add_warning "Building with a SDK > 10.5 possibly breaks 10.5 compatibility."
+              ;;
+          esac
+          ;;
       esac
   fi
 
@@ -461,39 +417,39 @@ case $host_os in
       AC_MSG_CHECKING([what compiler to use])
       case $with_macosx_sdk in
       10.5)
-	  CC="${gccprefix}gcc-4.2 $arch -mmacosx-version-min=$with_macosx_version_min_required -isysroot $MACOSX_SDK_PATH"
-	  CXX="${gccprefix}g++-4.2 $arch -mmacosx-version-min=$with_macosx_version_min_required -isysroot $MACOSX_SDK_PATH"
-	  INSTALL_NAME_TOOL=`xcrun -find install_name_tool`
-	  ;;
+          CC="${gccprefix}gcc-4.2 $arch -mmacosx-version-min=$with_macosx_version_min_required -isysroot $MACOSX_SDK_PATH"
+          CXX="${gccprefix}g++-4.2 $arch -mmacosx-version-min=$with_macosx_version_min_required -isysroot $MACOSX_SDK_PATH"
+          INSTALL_NAME_TOOL=`xcrun -find install_name_tool`
+          ;;
       10.6)
-	  # did someone copy her 10.6 sdk into xcode 4 (needed on Mountain Lion)?
-	  if test "$(echo $MACOSX_SDK_PATH | cut -c1-23)" = "/Applications/Xcode.app"; then
-	      CC="`xcrun -find gcc` $bitness -mmacosx-version-min=$with_macosx_version_min_required -isysroot $MACOSX_SDK_PATH"
-	      CXX="`xcrun -find g++` $bitness -mmacosx-version-min=$with_macosx_version_min_required -isysroot $MACOSX_SDK_PATH"
-	  else
-	      CC="gcc-4.2 $bitness -mmacosx-version-min=$with_macosx_version_min_required -isysroot $MACOSX_SDK_PATH"
-	      CXX="g++-4.2 $bitness -mmacosx-version-min=$with_macosx_version_min_required -isysroot $MACOSX_SDK_PATH"
-	  fi
-	  INSTALL_NAME_TOOL=`xcrun -find install_name_tool`
-	  #LIBTOOL=libtool
-	  ;;
+          # did someone copy her 10.6 sdk into xcode 4 (needed on Mountain Lion)?
+          if test "$(echo $MACOSX_SDK_PATH | cut -c1-23)" = "/Applications/Xcode.app"; then
+              CC="`xcrun -find gcc` $bitness -mmacosx-version-min=$with_macosx_version_min_required -isysroot $MACOSX_SDK_PATH"
+              CXX="`xcrun -find g++` $bitness -mmacosx-version-min=$with_macosx_version_min_required -isysroot $MACOSX_SDK_PATH"
+          else
+              CC="gcc-4.2 $bitness -mmacosx-version-min=$with_macosx_version_min_required -isysroot $MACOSX_SDK_PATH"
+              CXX="g++-4.2 $bitness -mmacosx-version-min=$with_macosx_version_min_required -isysroot $MACOSX_SDK_PATH"
+          fi
+          INSTALL_NAME_TOOL=`xcrun -find install_name_tool`
+          #LIBTOOL=libtool
+          ;;
       10.7|10.8|10.9|10.10)
-	  if test "$with_macosx_version_min_required" != 10.6; then
-	      # Use libc++ instead of libstdc++ when possible
-	      stdlib=-stdlib=libc++
-	  fi
-	  #if test "$ENABLE_LTO" = TRUE; then
-	  #    lto=-flto
-	  #fi
-	  CC="`xcrun -find clang` $bitness $lto -mmacosx-version-min=$with_macosx_version_min_required -isysroot $MACOSX_SDK_PATH"
-	  CXX="`xcrun -find clang++` $bitness $lto $stdlib -mmacosx-version-min=$with_macosx_version_min_required -isysroot $MACOSX_SDK_PATH"
-	  INSTALL_NAME_TOOL=`xcrun -find install_name_tool`
-	  AR=`xcrun -find ar`
-	  NM=`xcrun -find nm`
-	  STRIP=`xcrun -find strip`
-	  #LIBTOOL=`xcrun -find libtool`
-	  RANLIB=`xcrun -find ranlib`
-	  ;;
+          if test "$with_macosx_version_min_required" != 10.6; then
+              # Use libc++ instead of libstdc++ when possible
+              stdlib=-stdlib=libc++
+          fi
+          #if test "$ENABLE_LTO" = TRUE; then
+          #    lto=-flto
+          #fi
+          CC="`xcrun -find clang` $bitness $lto -mmacosx-version-min=$with_macosx_version_min_required -isysroot $MACOSX_SDK_PATH"
+          CXX="`xcrun -find clang++` $bitness $lto $stdlib -mmacosx-version-min=$with_macosx_version_min_required -isysroot $MACOSX_SDK_PATH"
+          INSTALL_NAME_TOOL=`xcrun -find install_name_tool`
+          AR=`xcrun -find ar`
+          NM=`xcrun -find nm`
+          STRIP=`xcrun -find strip`
+          #LIBTOOL=`xcrun -find libtool`
+          RANLIB=`xcrun -find ranlib`
+          ;;
       esac
       AC_MSG_RESULT([$CC and $CXX])
   fi
@@ -640,11 +596,33 @@ dnl Check for type sizes.
 AC_CHECK_SIZEOF([short])
 AC_CHECK_SIZEOF([int])
 AC_CHECK_SIZEOF([long])
+type32="int"
+if test $ac_cv_sizeof_short -eq 4; then
+  type32=short
+elif test $ac_cv_sizeof_int -eq 4; then
+  type32=int
+elif test $ac_cv_sizeof_long -eq 4; then
+  type32=long
+fi
+AC_DEFINE_UNQUOTED(nr_int32_t, $type32, [C-type for 32-bit integers.])
+AC_SUBST(QUCS_INT32_TYPE, $type32)
+unset type32
+type16="short"
+if test $ac_cv_sizeof_short -eq 2; then
+  type16=short
+elif test $ac_cv_sizeof_int -eq 2; then
+  type16=int
+elif test $ac_cv_sizeof_long -eq 2; then
+  type16=long
+fi
+AC_DEFINE_UNQUOTED(nr_int16_t, $type16, [C-type for 16-bit integers.])
+AC_SUBST(QUCS_INT16_TYPE, $type16)
+unset type16
 
 dnl Check for double type.
 AC_ARG_ENABLE([double],
   AS_HELP_STRING([--enable-double=TYPE],
-		 [type of double representation @<:@default=double@:>@]),
+                 [type of double representation @<:@default=double@:>@]),
   [case "$enableval" in
    no | yes | double)
      double_type="double"
@@ -660,10 +638,14 @@ AC_ARG_ENABLE([double],
      double_size=4
      ;;
    *)
-     AC_MSG_ERROR([valid types are double, float and ldouble.])
+     double_type="none"
+     double_size=0
      ;;
    esac],
   [double_type="double"; double_size=8])
+if test "$double_type" = none; then
+  AC_MSG_ERROR([valid types are double, float and ldouble.])
+fi
 AC_DEFINE_UNQUOTED(nr_double_t, $double_type,
   [The global type of double representation.])
 AC_SUBST(QUCS_DOUBLE_TYPE, $double_type)
@@ -673,7 +655,7 @@ AC_SUBST(QUCS_DOUBLE_SIZE, $double_size)
 unset double_type
 unset double_size
 
-AC_MSG_NOTICE([Check functions in the global namespace])
+echo "\nCheck functions in the global namespace"
 dnl http://www.cplusplus.com/reference/cmath/
 
 # Trigonometric functions
@@ -740,22 +722,12 @@ AC_CHECK_FUNCS([ jn yn ])
 AC_CHECK_FUNCS([ strdup strerror strchr])
 
 dnl Checks for complex classes and functions.
-AX_CXX_NAMESPACES
-AS_VAR_IF([ax_cv_cxx_namespaces],[yes],
-	 [],
-	 [AC_MSG_ERROR([require a c++ namespace])])
-AX_CXX_HAVE_NUMERIC_LIMITS
-AS_VAR_IF([ax_cv_cxx_have_numeric_limits],[yes],
-	 [],
-	 [AC_MSG_ERROR([require a c++ std::numeric_limits<> class])])
-
+AC_CXX_NAMESPACES
 AC_CXX_HAVE_COMPLEX
 AS_IF([test "X$ac_cv_cxx_have_complex" = "X"],[AC_MSG_ERROR([Qucs needs a templated complex class])])
 
-AX_CXX_ERASE_ITERATOR_TYPE
 
-
-AC_MSG_NOTICE([Check complex transcendental overload in namespace std])
+echo "\nCheck complex transcendental overload in namespace std"
 dnl http://www.cplusplus.com/reference/complex/
 
 AC_CHECK_CXX_COMPLEX_FUNCS([ \
@@ -800,48 +772,48 @@ AC_CHECK_CXX_COMPLEX_POLAR_COMPLEX
 
 
 dnl Depending on the implementation, funcions may or may not be included on the std namespace
-AC_MSG_NOTICE([Check for functions in std:: namespace])
+echo "\nCheck for functions in std:: namespace"
  for f in std::acosh std::asinh std::atanh std::hypot std::trunc std::round std::erf std::erfc; do
     AC_MSG_CHECKING([for $f])
     AC_LINK_IFELSE([AC_LANG_SOURCE(
-				  [[#include <cmath>
-				  int main() { return $f(0.7) ? 1 : 0; }
-				  ]])],
+                                  [[#include <cmath>
+                                  int main() { return $f(0.7) ? 1 : 0; }
+                                  ]])],
       [AC_MSG_RESULT([yes])
        if test $f = "std::acosh"; then
-	 AC_DEFINE(HAVE_STD_ACOSH, 1,
+         AC_DEFINE(HAVE_STD_ACOSH, 1,
 		     [Define to 1 if you have the `std::acosh` function.])
 
        elif test $f = "std::asinh"; then
-	 AC_DEFINE(HAVE_STD_ASINH, 1,
+         AC_DEFINE(HAVE_STD_ASINH, 1,
 	       [Define to 1 if you have the `std::asinh` function.])
 
        elif test $f = "std::atanh"; then
-	 AC_DEFINE(HAVE_STD_ATANH, 1,
+         AC_DEFINE(HAVE_STD_ATANH, 1,
 	       [Define to 1 if you have the `std::atanh` function.])
 
        elif test $f = "std::hypot"; then
-	 AC_DEFINE(HAVE_STD_HYPOT, 1,
+         AC_DEFINE(HAVE_STD_HYPOT, 1,
 	       [Define to 1 if you have the `std::hypot` function.])
 
        elif test $f = "std::fmod"; then
-	 AC_DEFINE(HAVE_STD_FMOD, 1,
-	 [Define to 1 if you have the `std::fmod` function.])
+         AC_DEFINE(HAVE_STD_FMOD, 1,
+         [Define to 1 if you have the `std::fmod` function.])
 
        elif test $f = "std::trund"; then
-	 AC_DEFINE(HAVE_STD_TRUNC, 1,
-	 [Define to 1 if you have the `std::trunc` function.])
+         AC_DEFINE(HAVE_STD_TRUNC, 1,
+         [Define to 1 if you have the `std::trunc` function.])
 
        elif test $f = "std::round"; then
-	 AC_DEFINE(HAVE_STD_ROUND, 1,
+         AC_DEFINE(HAVE_STD_ROUND, 1,
 		     [Define to 1 if you have the `std::round` function.])
 
        elif test $f = "std::erf"; then
-	 AC_DEFINE(HAVE_STD_ERF, 1,
+         AC_DEFINE(HAVE_STD_ERF, 1,
 	       [Define to 1 if you have the `std::erf` function.])
 
        elif test $f = "std::erfc"; then
-	 AC_DEFINE(HAVE_STD_ERFC, 1,
+         AC_DEFINE(HAVE_STD_ERFC, 1,
 	       [Define to 1 if you have the `std::erfc` function.])
        fi],
       [AC_MSG_RESULT([no])])
@@ -849,72 +821,38 @@ AC_MSG_NOTICE([Check for functions in std:: namespace])
 
 
 dnl Setup Google Test support
-dnl See: https://github.com/broune/mathicgb/blob/master/configure.ac
-AC_ARG_WITH([gtest], AS_HELP_STRING(
-    [--with-gtest], [use gtest, which is required for running the unit tests
-      with make check. The value download, which is the default, downloads
-      gtest if a gtest source directory cannot be found. Per the recommendation
-      of the gtest documentation, gtest is compiled with the tests, so an
-      installed gtest is not usable - you need the gtest source. GTEST_PATH
-      indicates where to look for gtest and it is also where gtest
-      will be downloaded to if not found. The default path is srcdir/libs so
-      that gtest needs to be at srcdir/libs/gtest/ where srcdir is the
-      base of the directory being configured from.]
-))
+dnl * copy of gtest source into qucs-core/lib/gtest/
+dnl * run configure with --enable-gtest
+dnl * make
+dnl * make check (run all tests including gtest itself)
+dnl * cd tests && make check  (run only Qucs unit tests)
+dnl
+dnl Reason for the nested package
+dnl * gtest better be compiled with the same flags as the project
+dnl * https://code.google.com/p/googletest/wiki/FAQ#Why_is_it_not_recommended_to_install_a_pre-compiled_copy_of_Goog
 
-AC_MSG_CHECKING([for gtest])
-AS_IF([test "x$GTEST_PATH" == "x"], [GTEST_PATH="$srcdir/libs"])
-AS_IF([test "x$GTEST_VERSION" == "x"], [GTEST_VERSION="1.7.0"])
-AS_IF([test "x$with_gtest" == "xyes"], [with_gtest="download"])
+AC_ARG_ENABLE([gtest],
+  AS_HELP_STRING([--enable-gtest], [Enable compilation of Google Test]))
 
-AS_IF([test "x$with_gtest" == "xdownload"],
-  [with_gtest="yes"; AC_CHECK_FILE([$GTEST_PATH/gtest/src/gtest-all.cc], [], [
-    mkdir -p "$GTEST_PATH";
-    (
-      cd $GTEST_PATH;
-      rm -rf gtest-$GTEST_VERSION.zip
-      wget https://googletest.googlecode.com/files/gtest-$GTEST_VERSION.zip;
-      unzip gtest-$GTEST_VERSION.zip;
-      rm gtest-$GTEST_VERSION.zip
-      rm -rf gtest/
-      mv gtest-$GTEST_VERSION/ gtest/
-    );
-    if test ! -e "$GTEST_PATH/gtest/src/gtest-all.cc"; then
-      AC_MSG_WARN([Failed to download or extract gtest.]);
-      with_gtest="no";
-    else
-      with_gtest="yes";
-    fi
-  ])],
-  [test "x$with_gtest" == "xyes"], [
-    AC_CHECK_FILE([$GTEST_PATH/gtest/src/gtest-all.cc], [], [
-      AC_MSG_ERROR([could not find gtest source at path $GTEST_PATH.])
-    ])
-  ],
-  [test "x$with_gtest" == "xno"], [],
-  [AC_MSG_NOTICE([gtest disabled])]
-)
-AS_IF([test "x$with_gtest" == "xyes"],
-  [GTEST_CFLAGS="-I`cd $GTEST_PATH/gtest/include; echo $PWD` -I`cd $GTEST_PATH/gtest/; echo $PWD`"]);
-AM_CONDITIONAL(USE_GTEST, test "x$with_gtest" == "xyes")
+dnl variable to steer ./Makefile.am to gtest and unit tests
+AM_CONDITIONAL([USE_GTEST], [test "$enable_gtest" = yes])
 
-# enable extra test
-AC_ARG_ENABLE([qucs-test],
-  AS_HELP_STRING([--enable-qucs-test], [Enable running qucs test project]))
+AS_IF([test "x$enable_gtest" = "xyes"], [
 
-dnl variable to steer ./Makefile.am to enable qucs_test
-AM_CONDITIONAL([USE_QUCS_TEST], [test "$enable_qucs_test" = yes])
+  echo "\nEnabling compilation of Google Test library..."
 
-# enable gcov
-AX_CODE_COVERAGE
-AS_IF([ test "$enable_code_coverage" = "yes" ],
-      [AX_APPEND_COMPILE_FLAGS([--coverage],CFLAGS)
-      AX_APPEND_COMPILE_FLAGS([-fno-inline],CFLAGS)
-      AX_APPEND_COMPILE_FLAGS([--coverage],CXXFLAGS)
-      AX_APPEND_COMPILE_FLAGS([-fno-inline],CXXFLAGS)
-      AX_APPEND_LINK_FLAGS([--coverage],LDFLAGS)
-      AX_APPEND_LINK_FLAGS([-lgcov],LDFLAGS)
-      ],[])
+  AC_CHECK_FILE([lib/gtest/configure], [],
+      [AC_MSG_ERROR([gtest sources not found, cannot --enable-gtest])])
+
+  dnl Set dir into Makefile.am if found
+  GTEST_DIR=lib/gtest
+  AC_SUBST([GTEST_DIR])
+
+  dnl configure nested package
+  AC_CONFIG_SUBDIRS([lib/gtest/])
+
+])
+
 
 dnl Definitions at top of <config.h>.
 AH_TOP([
@@ -938,36 +876,24 @@ AH_TOP([
 
 dnl Add here all your Makefiles. These are created by configure.
 AC_CONFIG_FILES([Makefile
-		 qucs_typedefs.h
-		 doc/Makefile
-		 src/Makefile
-		 src/math/Makefile
-		 src/interface/Makefile
-		 src/converter/Makefile
-		 src/components/Makefile
-		 src/components/microstrip/Makefile
-		 src/components/devices/Makefile
-		 src/components/digital/Makefile
-		 src/components/verilog/Makefile
-		 tests/Makefile
-		 ])
-
-
-dnl Check for Git short SHA to tag version
-dnl The release package should also keep it on the config.h
-AC_PATH_PROG([GIT],[git],[git])
-AS_IF([test -d "../.git"],
-      [AS_IF([test X"$GIT" != "X"],
-             [AC_MSG_CHECKING([for git tree revision])
-	      GIT_REVISION=`git log --pretty=format:'%h' -n 1u`
-	      AC_DEFINE_UNQUOTED([GIT_REVISION], ["$GIT_REVISION"], [Git short revision hash.])
-	      AC_MSG_RESULT($GIT_REVISION)])])
-
+                 qucs_typedefs.h
+                 doc/Makefile
+                 src/Makefile
+                 src/math/Makefile
+                 src/interface/Makefile
+                 src/converter/Makefile
+                 src/components/Makefile
+                 src/components/microstrip/Makefile
+                 src/components/devices/Makefile
+                 src/components/digital/Makefile
+                 src/components/verilog/Makefile
+                 tests/Makefile
+                 ])
 AC_OUTPUT
 
 dnl Print results.
 AC_MSG_RESULT([])
-AC_MSG_RESULT([ $PACKAGE version $VERSION ($GIT_REVISION) configured successfully.])
+AC_MSG_RESULT([ $PACKAGE version $VERSION configured successfully.])
 AC_MSG_RESULT([
 Configure Information:
   C Compiler        : $CC
@@ -983,8 +909,4 @@ Configure Information:
   Linker            : $LD
     LDFLAGS         :   $LDFLAGS
     LIBS            :   $LIBS
-
-    Prefix          : $prefix
 ])
-
-# vim:ts=8:sw=2:noet

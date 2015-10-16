@@ -41,8 +41,8 @@ msopen::msopen () : circuit (1) {
 // Returns the microstrip open end capacitance.
 nr_double_t msopen::calcCend (nr_double_t frequency, nr_double_t W,
 			      nr_double_t h, nr_double_t t, nr_double_t er,
-			      const char * const SModel, const char * const DModel,
-			      const char * const Model) {
+			      char * SModel, char * DModel,
+			      const char * Model) {
 
   nr_double_t ZlEff, ErEff, WEff, ZlEffFreq, ErEffFreq;
   msline::analyseQuasiStatic (W, h, t, er, SModel, ZlEff, ErEff, WEff);
@@ -81,9 +81,9 @@ nr_complex_t msopen::calcY (nr_double_t frequency) {
 
   /* how to get properties of this component, e.g. W */
   nr_double_t W = getPropertyDouble ("W");
-  const char * SModel = getPropertyString ("MSModel");
-  const char * DModel = getPropertyString ("MSDispModel");
-  const char * Model  = getPropertyString ("Model");
+  char * SModel = getPropertyString ("MSModel");
+  char * DModel = getPropertyString ("MSDispModel");
+  char * Model  = getPropertyString ("Model");
 
   /* how to get properties of the substrate, e.g. Er, H */
   substrate * subst = getSubstrate ();
@@ -93,7 +93,7 @@ nr_complex_t msopen::calcY (nr_double_t frequency) {
 
   /* local variables */
   nr_complex_t y;
-  nr_double_t o = 2 * pi * frequency;
+  nr_double_t o = 2 * M_PI * frequency;
 
   /* Alexopoulos and Wu */
   if (!strcmp (Model, "Alexopoulos")) {

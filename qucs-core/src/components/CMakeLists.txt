@@ -16,7 +16,6 @@ SET( COMPONENTS_SRC
   cross.cpp
   ctline.cpp
   dcblock.cpp
-  wprobe.cpp
   dcfeed.cpp
   ecvs.cpp
   ground.cpp
@@ -30,6 +29,7 @@ SET( COMPONENTS_SRC
   inductor.cpp
   inoise.cpp
   iprobe.cpp
+  wprobe.cpp
   ipulse.cpp
   irect.cpp
   isolator.cpp

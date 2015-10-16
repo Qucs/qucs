@@ -39,7 +39,7 @@ void coupler::initSP (void) {
   allocMatrixS ();
   nr_double_t k = getPropertyDouble ("k");
   nr_double_t z = getPropertyDouble ("Z");
-  nr_double_t p = deg2rad (getPropertyDouble ("phi"));
+  nr_double_t p = rad (getPropertyDouble ("phi"));
   nr_double_t r = (z0 - z) / (z0 + z);
   nr_double_t k2 = k * k;
   nr_double_t r2 = r * r;
@@ -74,7 +74,7 @@ void coupler::initAC (void) {
   allocMatrixMNA ();
   nr_double_t k = getPropertyDouble ("k");
   nr_double_t z = getPropertyDouble ("Z");
-  nr_double_t p = deg2rad (getPropertyDouble ("phi"));
+  nr_double_t p = rad (getPropertyDouble ("phi"));
   nr_double_t b = 2 * std::sqrt (1 - k * k);
   nr_complex_t a = k * k * (qucs::polar (1.0, 2 * p) + 1.0);
   nr_complex_t c = qucs::polar (2 * k, p);
@@ -100,7 +100,7 @@ void coupler::initTR (void) {
 
 // properties
 PROP_REQ [] = {
-  { "k", PROP_REAL, { sqrt1_2, PROP_NO_STR }, PROP_NO_RANGE },
+  { "k", PROP_REAL, { M_SQRT1_2, PROP_NO_STR }, PROP_NO_RANGE },
   { "phi", PROP_REAL, { 0, PROP_NO_STR }, PROP_RNGII (-180, +180) },
   PROP_NO_PROP };
 PROP_OPT [] = {

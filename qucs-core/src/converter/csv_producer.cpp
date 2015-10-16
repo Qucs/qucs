@@ -76,11 +76,11 @@ void csv_print (struct csv_data * data, int vectors, const char * sep) {
   for (int k = 0; k < len; k++) {
     for (int i = 0; i < vectors; i++) {
       if (data[i].type == 'c')
-	fprintf (csv_out, "%+." "20" "e%s%+." "20" "e",
+	fprintf (csv_out, "%+." NR_DECS "e%s%+." NR_DECS "e",
 		 (double) real (data[i].v->get (data[i].idx)), sep,
 		 (double) imag (data[i].v->get (data[i].idx)));
       else
-	fprintf (csv_out, "%+." "20" "e",
+	fprintf (csv_out, "%+." NR_DECS "e",
 		 (double) real (data[i].v->get (data[i].idx)));
       fprintf (csv_out, "%s", i != vectors - 1 ? sep : csv_crlf);
       data[i].idx = ((k + 1) / data[i].skip) % data[i].len;

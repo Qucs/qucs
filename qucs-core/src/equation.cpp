@@ -180,7 +180,7 @@ static char * Cplx2String (nr_complex_t c)
 char * constant::toString (void)
 {
     char str[256];
-    free (txt);
+    if (txt != NULL) free (txt);
     switch (type)
     {
     case TAG_BOOLEAN:
@@ -307,7 +307,7 @@ void reference::replace (char * src, char * dst)
 // Destructor deletes an instance of the reference class.
 reference::~reference ()
 {
-    free (n);
+    if (n) free (n);
 }
 
 // Prints textual representation of the reference object.
@@ -319,7 +319,7 @@ void reference::print (void)
 // Returns textual representation of the reference object.
 char * reference::toString (void)
 {
-    free (txt);
+    if (txt) free (txt);
     txt = strdup (n);
     return txt;
 }
@@ -428,7 +428,7 @@ void assignment::replace (char * src, char * dst)
 // Renames the left hand side of the assignment.
 void assignment::rename (char * n)
 {
-    free (result);
+    if (result) free (result);
     result = n ? strdup (n) : NULL;
 }
 
@@ -436,7 +436,7 @@ void assignment::rename (char * n)
 assignment::~assignment ()
 {
     delete body;
-    free (result);
+    if (result) free (result);
 }
 
 // Prints textual representation of the assignment object.
@@ -448,7 +448,7 @@ void assignment::print (void)
 // Returns textual representation of the assignment object.
 char * assignment::toString (void)
 {
-    free (txt);
+    if (txt) free (txt);
     char * str = body->toString ();
     txt = (char *) malloc (strlen (result) + strlen (str) + 4);
     sprintf (txt, "%s = %s", result, str);
@@ -520,7 +520,7 @@ void assignment::mul (assignment * f)
     else if (isOne (factor))
     {
         delete factor;
-        //body = body;
+        body = body;
     }
     else
     {
@@ -548,7 +548,7 @@ void assignment::mulref (assignment * f)
     }
     else if (isOne (factor))
     {
-        //body = body;
+        body = body;
     }
     else
     {
@@ -577,7 +577,7 @@ void assignment::add (assignment * f)
     else if (isZero (factor))
     {
         delete factor;
-        //body = body;
+        body = body;
     }
     else
     {
@@ -651,15 +651,15 @@ void application::replace (char * src, char * dst)
 // Destructor deletes an instance of the application class.
 application::~application ()
 {
-    node * next;
+    node * next, * res;
     for (node * arg = args; arg != NULL; arg = next)
     {
         next = arg->getNext ();
         delete arg;
     }
-    delete getResult ();
-    free (n);
-    delete ddx;
+    if ((res = getResult ()) != NULL) delete res;
+    if (n) free (n);
+    if (ddx) delete ddx;
 }
 
 // Prints textual representation of the application object.
@@ -671,8 +671,7 @@ void application::print (void)
 // Returns textual representation of the application object.
 char * application::toString (void)
 {
-    int nparam = nargs > 0 ? (nargs - 1) : 0;
-    free (txt);
+    if (txt) free (txt);
     // binary operations
     if ((!strcmp (n, "+")  || !strcmp (n, "-")  || !strcmp (n, "*") ||
             !strcmp (n, "/")  || !strcmp (n, "^")  || !strcmp (n, "%") ||
@@ -698,7 +697,7 @@ char * application::toString (void)
     // array indices
     else if (!strcmp (n, "array"))
     {
-        int len = strlen (args->toString ()) + 3 + nparam;
+        int len = strlen (args->toString ()) + 3 + nargs - 1;
         txt = (char *) malloc (len);
         sprintf (txt, "%s[", args->toString ());
         for (node * arg = args->getNext (); arg != NULL; arg = arg->getNext ())
@@ -713,7 +712,7 @@ char * application::toString (void)
     // vectors and matrices
     else if (!strcmp (n, "vector") || !strcmp (n, "matrix"))
     {
-        int len = 3 + nparam;
+        int len = 3 + nargs - 1;
         txt = (char *) malloc (len);
         sprintf (txt, "[");
         for (node * arg = args; arg != NULL; arg = arg->getNext ())
@@ -737,7 +736,7 @@ char * application::toString (void)
     // unary and n-ary operations here
     else
     {
-        int len = strlen (n) + 3 + nparam;
+        int len = strlen (n) + 3 + nargs - 1;
         txt = (char *) malloc (len);
         sprintf (txt, "%s(", n);
         for (node * arg = args; arg != NULL; arg = arg->getNext ())
@@ -777,12 +776,6 @@ void application::evalTypeArgs (void)
     }
 }
 
-
-// gperfapphash has register inside, ignore warning
-#if defined(__clang__)
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-register"
-#endif
 #include "gperfapphash.cpp"
 
 /* The function creates a hash key for the given type of
@@ -910,7 +903,7 @@ constant * application::evaluate (void)
     // Evaluate ddx() function.
     if (isDDX ())
     {
-        delete getResult ();
+        if (getResult ()) delete getResult ();
         setResult (C (ddx->evaluate()->recreate ()));
         return getResult ();
     }
@@ -961,8 +954,9 @@ constant * application::evaluate (void)
     // then evaluate application itself
     if (!errors)
     {
+        node * res;
         // delete previous result if necessary
-        delete getResult ();
+        if ((res = getResult ()) != NULL) delete res;
         // then evaluate the application
         setResult (eval (C (args)));
         // check the returned type once again
@@ -1000,7 +994,6 @@ node * application::differentiate (char * derivative)
 node::node ()
 {
     tag = UNKNOWN;
-    setType(TAG_UNKNOWN);
     dropdeps = output = evaluated = evalPossible = cycle = duplicate = skip = 0;
     next = NULL;
     dependencies = NULL;
@@ -1018,7 +1011,6 @@ node::node ()
 node::node (int type)
 {
     tag = type;
-    setType(TAG_UNKNOWN);
     dropdeps = output = evaluated = evalPossible = cycle = duplicate = skip = 0;
     next = NULL;
     dependencies = NULL;
@@ -1037,7 +1029,6 @@ node::node (int type)
 node::node (const node & o)
 {
     tag = o.tag;
-    type = o.type;
     dropdeps = output = evaluated = evalPossible = cycle = duplicate = skip = 0;
     next = NULL;
     dependencies = NULL;
@@ -1054,18 +1045,18 @@ node::node (const node & o)
 // Destructor deletes an instance of the equation node class.
 node::~node ()
 {
-    delete dependencies;
-    delete dataDependencies;
-    delete dropDependencies;
-    delete prepDependencies;
-    free (txt);
-    free (instance);
+    if (dependencies) delete dependencies;
+    if (dataDependencies) delete dataDependencies;
+    if (dropDependencies) delete dropDependencies;
+    if (prepDependencies) delete prepDependencies;
+    if (txt) free (txt);
+    if (instance) free (instance);
 }
 
 // Sets the instance name where the node occurred.
 void node::setInstance (const char * n)
 {
-    free (instance);
+    if (instance) free (instance);
     instance = n ? strdup (n) : NULL;
 }
 
@@ -1227,7 +1218,7 @@ qucs::vector node::getResultVector (void)
 // Assigns the dependency list to the equation node object.
 void node::setDependencies (strlist * depends)
 {
-    delete dependencies;
+    if (dependencies) delete dependencies;
     dependencies = depends;
 }
 
@@ -1270,7 +1261,7 @@ strlist * node::recurseDependencies (checker * check, strlist * deps)
                 if (cdeps->length () > 0)
                 {
                     res = strlist::join (sub, cdeps);
-                    delete sub;
+                    if (sub) delete sub;
                     sub = res;
                 }
             }
@@ -1293,7 +1284,7 @@ strlist * node::recurseDependencies (checker * check, strlist * deps)
 
     /* Return the result. */
     res = strlist::join (deps, sub);
-    delete (sub);
+    if (sub) delete (sub);
     return res;
 }
 
@@ -1325,7 +1316,7 @@ void node::appendPrepDependencies (strlist * deps)
 /* The function sets the data dependency list of the equation node. */
 void node::setDataDependencies (strlist * deps)
 {
-    delete dataDependencies;
+    if (dataDependencies != NULL) delete dataDependencies;
     dataDependencies = deps ? new strlist (*deps) : NULL;
 }
 
@@ -1337,7 +1328,7 @@ constant * node::calculate (void)
     {
         strlist * deps = solvee->collectDataDependencies (this);
         getResult()->setDataDependencies (deps);
-        delete deps;
+        if (deps) delete deps;
     }
     else
     {
@@ -1676,19 +1667,18 @@ int checker::findDuplicate (void)
 /* The function returns the equation resulting in the passed variable
    or NULL if there is no such equation.  The function looks through
    the passed equation root. */
-node * checker::findEquation (node * root, const char * const n)
+node * checker::findEquation (node * root, char * n)
 {
     for (node * eqn = root; eqn != NULL; eqn = eqn->getNext ())
     {
-        if (!strcmp (A(eqn)->result, n))
-	  return eqn;
+        if (!strcmp (A(eqn)->result, n)) return eqn;
     }
     return NULL;
 }
 
 /* The function returns the equation resulting in the passed variable
    or NULL if there is no such equation. */
-node * checker::findEquation (const char * const n) const
+node * checker::findEquation (char * n)
 {
     foreach_equation (eqn)
     {
@@ -1734,7 +1724,7 @@ strlist * checker::foldDependencies (strlist * deps)
         char * var = deps->get (i);
         if (!res->contains (var)) res->append (var);
     }
-    delete deps;
+    if (deps) delete deps;
     return res;
 }
 
@@ -2292,7 +2282,7 @@ strlist * solver::collectDataDependencies (node * eqn)
                 sub->del (n->getResult()->getDropDependencies ());
                 sub->add (n->getResult()->getPrepDependencies ());
             }
-            delete datadeps;
+            if (datadeps) delete datadeps;
             datadeps = sub;
         }
     }
@@ -2440,7 +2430,7 @@ strlist * checker::variables (void)
 }
 
 // Checks if the given variable name is an equation.
-bool checker::containsVariable (const char * const ident) const
+bool checker::containsVariable (char * ident)
 {
     foreach_equation (eqn)
     {
@@ -2460,8 +2450,8 @@ struct pconstant
 // List of global constant variables.
 static struct pconstant pconstants[] =
 {
-    { "pi", pi },
-    { "e",  euler  },
+    { "pi", M_PI },
+    { "e",  M_E  },
     { "kB", kB   },
     { "q",  Q_e    },
     { NULL, 0    }
@@ -2593,7 +2583,7 @@ node * checker::createReference (const char * type, const char * ident,
 /* The functions looks through the set of equations for a real valued
    result and returns it.  If there is no such assignment, zero is
    returned. */
-nr_double_t checker::getDouble (const char * const ident) const
+nr_double_t checker::getDouble (char * ident)
 {
     foreach_equation (eqn)
     {
@@ -2607,7 +2597,7 @@ nr_double_t checker::getDouble (const char * const ident) const
 
 /* The function goes through the equation set and looks for the
    specified assignment.  If found the given value is set. */
-void checker::setDouble (const char * const ident, nr_double_t val)
+void checker::setDouble (char * ident, nr_double_t val)
 {
     foreach_equation (eqn)
     {
@@ -2625,7 +2615,7 @@ void checker::setDouble (const char * const ident, nr_double_t val)
 /* The functions looks through the set of equations for a vector
    result and returns it.  If there is no such assignment, an empty
    vector is returned. */
-qucs::vector checker::getVector (const char * const ident) const
+qucs::vector checker::getVector (char * ident)
 {
     foreach_equation (eqn)
     {

@@ -715,14 +715,7 @@ static int checker_validate_lists (struct definition_t * root)
                                  !strcmp (def->type, "AC") ||
                                  !strcmp (def->type, "SP")))
         {
-            struct value_t * val;
-            if((val = checker_find_reference (def, "Type")) == NULL) {
-                logprint (LOG_ERROR, "line %d: checker error, required property "
-                          "`%s' is invalid in `%s:%s'\n", def->line, "Type",
-                          def->type, def->instance);
-                errors++;
-                continue;
-            }
+            struct value_t * val = checker_find_reference (def, "Type");
             char * type = val->ident;
             // list of constant values and constant values
             if (type && (!strcmp (type, "const") || !strcmp (type, "list")))
@@ -895,7 +888,7 @@ static int checker_validate_strips (struct definition_t * root)
         if (!def->action)
         {
             /* find components with substrate property */
-            if (def->define && (checker_is_property (def->define, "Subst") == PROP_STR))
+            if (checker_is_property (def->define, "Subst") == PROP_STR)
             {
                 /* check validity of 'Subst' property */
                 if ((val = checker_validate_reference (def, "Subst")) == NULL)
@@ -949,7 +942,7 @@ static int checker_count_nodesets (struct definition_t * root, char * n)
     int count = 0;
     for (struct definition_t * def = root; def != NULL; def = def->next)
     {
-        if (def->nodeset && !def->duplicate && def->nodes)
+        if (def->nodeset && !def->duplicate)
         {
             char * node = def->nodes->node;
             if (!strcmp (node, n))
@@ -1398,7 +1391,7 @@ static void checker_cleanup_xlat_nodes (struct definition_t * sub)
 {
     for (struct node_t * n = sub->nodes; n != NULL; n = n->next)
     {
-        free (n->xlate);
+        if (n->xlate) free (n->xlate);
         n->xlate = NULL;
         n->xlatenr = 0;
     }
@@ -1507,7 +1500,7 @@ checker_copy_subcircuits (struct definition_t * type,
 
     // create environment for subcircuit instance
     environment * child = new environment (*(type->env));
-    parent->push_front_Child (child);
+    parent->addChild (child);
 
     // put instance properties into subcircuit environment
     for (struct pair_t * pair = inst->pairs; pair != NULL; pair = pair->next)
@@ -1593,7 +1586,7 @@ checker_copy_subcircuits (struct definition_t * type,
     icopy->append (type->instance);
     icopy->append (*(instances));
     icopy->append (inst->instance);
-    child->setName (std::string(icopy->toString (".")));
+    child->setName (icopy->toString ("."));
     delete icopy;
 
     return root;
@@ -1902,9 +1895,9 @@ static void netlist_free_nodes (struct node_t * node)
 /* The following function free()'s the given value. */
 static void netlist_free_value (struct value_t * value)
 {
-    free (value->ident);
+    if (value->ident) free (value->ident);
     if (value->unit)  free (value->unit);
-    free (value->scale);
+    if (value->scale) free (value->scale);
     free (value);
 }
 
@@ -1931,7 +1924,7 @@ static void netlist_free_definition (struct definition_t * def)
 {
     netlist_free_nodes (def->nodes);
     if (!def->copy) netlist_free_pairs (def->pairs);
-    free (def->subcircuit);
+    if (def->subcircuit) free (def->subcircuit);
     free (def->type);
     free (def->instance);
     free (def);
@@ -2288,7 +2281,7 @@ int netlist_checker (environment * env)
         def->sub = checker_build_equations (def->sub, &eqns);
         // setup the subcircuit environment
         environment * subenv = new environment (def->instance);
-        env_root->push_front_Child (subenv);
+        env_root->addChild (subenv);
         checker_setup_env (def, subenv, eqns);
         if (def->sub) def->sub->env = subenv;
         // add subcircuit parameters to equations

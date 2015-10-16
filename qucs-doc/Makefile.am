@@ -1,43 +1,14 @@
-## Process this file with automake to produce Makefile.in
-# 
-# Makefile.am
-#
-# Automake input file.
-#
-# Copyright (C) 2005, 2006, 2007 Stefan Jahn <stefan@lkcc.org>
-#
-# This is free software; you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 2, or (at your option)
-# any later version.
-# 
-# This software is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-# 
-# You should have received a copy of the GNU General Public License
-# along with this package; see the file COPYING.  If not, write to
-# the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
-# Boston, MA 02110-1301, USA.  
-#
+# Install examples
 
-SUBDIRS = technical tutorial report doxygen
-
-DOCPDF = tutorial report technical
-
-EXTRA_DIST = autogen.sh RELEASE
-
-# default to build all PDF files
-all-recursive: pdf
-
-pdf:
-	@for d in $(DOCPDF); do \
-	  (cd $$d && $(MAKE) $(AM_MAKEFLAGS) $$d); \
+install-data-local:
+	$(MKDIR_P) $(DESTDIR)$(datadir)/qucs/docs; \
+	for DOC_SUBDIR in report technical tutorial ; do \
+		$(MKDIR_P) $(DESTDIR)$(datadir)/qucs/docs/$$DOC_SUBDIR; \
+		for docfile in $$DOC_SUBDIR/*.pdf ; do \
+			if test -f $$docfile; then \
+				$(INSTALL_DATA) $$docfile $(DESTDIR)$(datadir)/qucs/docs/$$docfile; \
+			fi \ 
+		done \
 	done
-	cd tutorial && $(MAKE) $(AM_MAKEFLAGS) book
+	
 
-CLEANFILES = *~ *.orig *.rej
-MAINTAINERCLEANFILES = aclocal.m4 config.h.in configure Makefile.in \
-	stamp-h.in stamp-h[0-9].in
-DISTCLEANFILES = config.cache config.log

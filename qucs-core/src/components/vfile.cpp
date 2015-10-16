@@ -48,34 +48,34 @@ vfile::vfile () : circuit (2) {
 
 // Destructor deletes vfile object from memory.
 vfile::~vfile () {
-  delete data;
-  delete inter;
+  if (data) delete data;
+  if (inter) delete inter;
 }
 
 void vfile::prepare (void) {
 
   // check type of interpolator
-  const char * itype = getPropertyString ("Interpolator");
-  if (!strcmp (itype, "linear")) {
+  char * type = getPropertyString ("Interpolator");
+  if (!strcmp (type, "linear")) {
     interpolType = INTERPOL_LINEAR;
-  } else if (!strcmp (itype, "cubic")) {
+  } else if (!strcmp (type, "cubic")) {
     interpolType = INTERPOL_CUBIC;
-  } else if (!strcmp (itype, "hold")) {
+  } else if (!strcmp (type, "hold")) {
     interpolType = INTERPOL_HOLD;
   }
 
   // check type of repetition
-  const char * rtype = getPropertyString ("Repeat");
-  if (!strcmp (rtype, "no")) {
+  type = getPropertyString ("Repeat");
+  if (!strcmp (type, "no")) {
     // rectangular data
     dataType = REPEAT_NO;
-  } else if (!strcmp (rtype, "yes")) {
+  } else if (!strcmp (type, "yes")) {
     // polar data
     dataType = REPEAT_YES;
   }
 
   // load file with samples
-  const char * file = getPropertyString ("File");
+  char * file = getPropertyString ("File");
   if (data == NULL) {
     if (strlen (file) > 4 && !strcasecmp (&file[strlen (file) - 4], ".dat"))
       data = dataset::load (file);

@@ -30,7 +30,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <assert.h>
-#include <vector>
 
 #include "logging.h"
 #include "complex.h"
@@ -60,17 +59,7 @@ spline::spline (int b) {
 }
 
 // Constructor creates an instance of the spline class with vector data given.
-spline::spline (qucs::vector y, qucs::vector t) {
-  x = f0 = f1 = f2 = f3 = NULL;
-  d0 = dn = 0;
-  n = 0;
-  boundary = SPLINE_BC_NATURAL;
-  vectors (y, t);
-  construct ();
-}
-
-// Constructor creates an instance of the spline class with tvector data given.
-spline::spline (::std::vector<nr_double_t> y, ::std::vector<nr_double_t> t) {
+spline::spline (vector y, vector t) {
   x = f0 = f1 = f2 = f3 = NULL;
   d0 = dn = 0;
   n = 0;
@@ -93,7 +82,7 @@ spline::spline (tvector<nr_double_t> y, tvector<nr_double_t> t) {
 #define y_ (y)
 
 // Pass interpolation datapoints as vectors.
-void spline::vectors (qucs::vector y, qucs::vector t) {
+void spline::vectors (vector y, vector t) {
   int i = t.getSize ();
   assert (y.getSize () == i && i >= 3);
 
@@ -105,21 +94,9 @@ void spline::vectors (qucs::vector y, qucs::vector t) {
 }
 
 // Pass interpolation datapoints as tvectors.
-void spline::vectors (::std::vector<nr_double_t> y, ::std::vector<nr_double_t> t) {
-  int i = (int)t.size ();
-  assert ((int)y.size () == i && i >= 3);
-
-  // create local copy of f(x)
-  realloc (i);
-  for (i = 0; i <= n; i++) {
-    f0[i] = y[i]; x[i] = t[i];
-  }
-}
-
-// Pass interpolation datapoints as tvectors.
 void spline::vectors (tvector<nr_double_t> y, tvector<nr_double_t> t) {
-  int i = t.size ();
-  assert (y.size () == i && i >= 3);
+  int i = t.getSize ();
+  assert (y.getSize () == i && i >= 3);
 
   // create local copy of f(x)
   realloc (i);
@@ -144,14 +121,14 @@ void spline::vectors (nr_double_t * y, nr_double_t * t, int len) {
 void spline::realloc (int size) {
   if (n != size - 1) {
     n = size - 1;
-    delete[] f0;
+    if (f0) delete[] f0;
     f0 = new nr_double_t[n+1];
-    delete[] x;
+    if (x) delete[] x;
     x  = new nr_double_t[n+1];
   }
-  delete[] f1;
-  delete[] f2;
-  delete[] f3;
+  if (f1) { delete[] f1; f1 = NULL; }
+  if (f2) { delete[] f2; f2 = NULL; }
+  if (f3) { delete[] f3; f3 = NULL; }
 }
 
 // Construct cubic spline interpolation coefficients.
@@ -236,7 +213,7 @@ void spline::construct (void) {
   // second kind of cubic splines
   else if (boundary == SPLINE_BC_PERIODIC) {
     // non-trigdiagonal equations - periodic boundary condition
-    ::std::vector<nr_double_t> z (n+1);
+    nr_double_t * z = new nr_double_t[n+1];
     if (n == 2) {
       nr_double_t B = h[0] + h[1];
       nr_double_t A = 2 * B;
@@ -250,20 +227,18 @@ void spline::construct (void) {
     }
     else {
       tridiag<nr_double_t> sys;
-      ::std::vector<nr_double_t> o (n);
-      ::std::vector<nr_double_t> d (n);
-      ::std::vector<nr_double_t> b(&z[1],&z[n]);
-      //b.setData (&z[1], n);
+      tvector<nr_double_t> o (n);
+      tvector<nr_double_t> d (n);
+      tvector<nr_double_t> b;
+      b.setData (&z[1], n);
       for (i = 0; i < n - 1; i++) {
-        o[i] = h[i+1];
-        d[i] = 2 * (h[i+1] + h[i]);
-        b[i] = 3 * ((f0[i+2] - f0[i+1]) / h[i+1] - (f0[i+1] - f0[i]) / h[i]);
-        z[i+1] = b[i];
+	o(i) = h[i+1];
+	d(i) = 2 * (h[i+1] + h[i]);
+	b(i) = 3 * ((f0[i+2] - f0[i+1]) / h[i+1] - (f0[i+1] - f0[i]) / h[i]);
       }
-      o[i] = h[0];
-      d[i] = 2 * (h[0] + h[i]);
-      b[i] = 3 * ((f0[1] - f0[i+1]) / h[0] - (f0[i+1] - f0[i]) / h[i]);
-      z[i+1] = b[i];
+      o(i) = h[0];
+      d(i) = 2 * (h[0] + h[i]);
+      b(i) = 3 * ((f0[1] - f0[i+1]) / h[0] - (f0[i+1] - f0[i]) / h[i]);
       sys.setDiagonal (&d);
       sys.setOffDiagonal (&o);
       sys.setRHS (&b);
@@ -273,7 +248,7 @@ void spline::construct (void) {
     }
 
     f1 = new nr_double_t[n+1];
-    f2 = &z.front (); // reuse storage
+    f2 = z; // reuse storage
     f3 = h;
     for (i = n - 1; i >= 0; i--) {
       f1[i] = (f0[i+1] - f0[i]) / h[i] - h[i] * (z[i+1] + 2 * z[i]) / 3;
@@ -342,10 +317,10 @@ poly spline::evaluate (nr_double_t t) {
 // Destructor deletes an instance of the spline class.
 spline::~spline () {
   if (x)  delete[] x;
-  delete[] f0;
-  delete[] f1;
-  delete[] f2;
-  delete[] f3;
+  if (f0) delete[] f0;
+  if (f1) delete[] f1;
+  if (f2) delete[] f2;
+  if (f3) delete[] f3;
 }
 
 } // namespace qucs

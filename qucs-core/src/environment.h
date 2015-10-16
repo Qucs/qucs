@@ -28,13 +28,10 @@
  * Contains the environment class definition.
  */
 
+#include "equation.h"
+
 #ifndef __ENVIRONMENT_H__
 #define __ENVIRONMENT_H__
-
-#include <list>
-#include <string>
-
-#include "equation.h"
 
 namespace qucs {
 
@@ -42,7 +39,7 @@ class variable;
 class checker;
 class solver;
 class dataset;
-
+template <class type_t> class ptrlist;
 
 /*! \class environment
  * \brief Houses the settings for netlist evaluation.
@@ -55,39 +52,40 @@ class environment
 {
  public:
   environment ();
-  environment (const std::string & p_name);
+  environment (const char *);
   environment (const environment &);
   virtual ~environment ();
   void copy (const environment &);
-  void setName (char *) = delete;
-  void print (const bool all = false) const;
-  void setDefinitions (struct definition_t * const d) { defs = d; }
-  struct definition_t * getDefinitions (void) const { return defs; }
+  void setName (char *);
+  char * getName (void);
+  void print (bool all = false);
+  void setDefinitions (struct definition_t * d) { defs = d; }
+  struct definition_t * getDefinitions (void) { return defs; }
 
   // variable specific functionality
   void copyVariables (variable *);
   void deleteVariables (void);
-  void addVariable (variable * const, const bool pass = true);
-  variable * getVariable (const char * const) const;
+  void addVariable (variable *, bool pass = true);
+  variable * getVariable (char *);
 
   // equation specific functionality
   void setChecker (eqn::checker * c) { checkee = c; }
   eqn::checker * getChecker (void) { return checkee; }
   void setSolver (eqn::solver * s) { solvee = s; }
   eqn::solver * getSolver (void) { return solvee; }
-  int equationChecker (const int noundefined = 1) const;
-  int equationSolver (dataset * const);
+  int equationChecker (int noundefined = 1);
+  int equationSolver (dataset *);
   int runSolver (void);
   void equationSolver (void);
 
   // subcircuit specific
-  qucs::vector getVector (const char * const) const ;
-  void setDoubleConstant (const char * const, const nr_double_t);
-  nr_double_t getDoubleConstant (const char * const) const;
-  void setDouble (const char * const , nr_double_t);
-  nr_double_t getDouble (const char * const) const;
-  void setDoubleReference (const char * const, char *);
-  char * getDoubleReference (const char * const) const;
+  qucs::vector getVector (char *);
+  void setDoubleConstant (char *, nr_double_t);
+  nr_double_t getDoubleConstant (char *);
+  void setDouble (char *, nr_double_t);
+  nr_double_t getDouble (char *);
+  void setDoubleReference (char *, char *);
+  char * getDoubleReference (char *);
   void updateReferences (environment *);
   void passConstants (void);
   void fetchConstants (void);
@@ -95,32 +93,16 @@ class environment
   void setValue (char *, eqn::constant *);
   void saveResults (void);
 
-  /*! Adds a child to the environment. */
-  inline void push_front_Child (environment * child) {
-    children.push_front (child);
-  }
-
-  /*! Removes a child from the environment. */
-  void remove_Child (environment * child) {
-    children.remove (child);
-  }
-
-  /*! set the name */
-  void setName (const std::string &p_name) {
-    this->name = p_name;
-  }
-
-  /*! Returns the name of the environment. */
-  const std::string & getName(void) const {
-    return this->name;
-  }
+  // children functionality
+  void delChild (environment *);
+  void addChild (environment *);
 
  private:
-  std::string name;
+  char * name;
   variable * root;
   eqn::checker * checkee;
   eqn::solver * solvee;
-  std::list<environment *> children;
+  ptrlist<environment> * children;
   bool iscopy;
   struct definition_t * defs;
 };

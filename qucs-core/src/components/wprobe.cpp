@@ -1,7 +1,28 @@
-//Created by Pedro Macedo
+/*
+ * wprobe.cpp - AC/DC and transient power probe class implementation
+ *
+ * Copyright (C) [2015], [Pedro Macedo], [macedo.pp@gmail.com]
+ *
+ * This file is part of Qucs
+ *
+ * Qucs is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2, or (at your option)
+ * any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Qucs.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
+
 
 #if HAVE_CONFIG_H
-# include <config.h>
+#include <config.h>
 #endif
 
 #include "component.h"
@@ -60,7 +81,9 @@ void wprobe::initTR (void) {
 }
 
 // properties
-PROP_REQ [] = { PROP_NO_PROP };
+PROP_REQ [] = { 
+  { "Ri", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE },
+  PROP_NO_PROP };
 PROP_OPT [] = { PROP_NO_PROP };
 struct define_t wprobe::cirdef =
   { "WProbe", 4, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR, PROP_DEF };
