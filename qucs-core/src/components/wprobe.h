@@ -1,5 +1,5 @@
 /*
- * wprobe.cpp - AC/DC and transient power probe class implementation
+ * wprobe.h - AC/DC and transient power probe class implementation
  *
  * Copyright (C) [2015], [Pedro Macedo], [macedo.pp@gmail.com]
  *
