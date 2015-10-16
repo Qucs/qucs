@@ -58,6 +58,7 @@ bsim4v30pMOS.cpp
 vcresistor.cpp
 vacomponent.cpp
 mutualx.cpp
+wprobe.cpp
 )
 
 SET(COMPONENTS_HDRS

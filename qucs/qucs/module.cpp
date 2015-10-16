@@ -280,6 +280,7 @@ void Module::registerModules (void) {
   // probes
   REGISTER_PROBE_1 (iProbe);
   REGISTER_PROBE_1 (vProbe);
+  REGISTER_PROBE_1 (wProbe);
 
   // transmission lines
   REGISTER_TRANS_1 (TLine);

@@ -14,6 +14,7 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
+#include <QtGui>
 #include "sweepdialog.h"
 #include "schematic.h"
 #include "qucs.h"
@@ -21,13 +22,11 @@
 #include <QGridLayout>
 #include "main.h"
 #include "../diagrams/graph.h"
-#include "misc.h"
 
 #include <QLabel>
 #include <QLineEdit>
 #include <QValidator>
 #include <QPushButton>
-#include <QDebug>
 
 // SpinBoxes are used to show the calculated bias points at the given set of sweep points
 mySpinBox::mySpinBox(int Min, int Max, int Step, double *Val, QWidget *Parent)
@@ -45,11 +44,9 @@ mySpinBox::mySpinBox(int Min, int Max, int Step, double *Val, QWidget *Parent)
 
 #include <iostream>
 using namespace std;
-QString mySpinBox::textFromValue(int Val) const
+QString mySpinBox::textFromValue(int Val)
 {
-  if (Values == NULL) return "";
-
-  qDebug() << "Values + Val" << *(Values+Val) << endl;
+  cout<<"Values + Val"<<*(Values+Val)<<endl;
   return QString::number(*(Values+Val));
 }
 
@@ -63,20 +60,18 @@ QValidator::State mySpinBox::validate ( QString & text, int & pos ) const
 
 
 SweepDialog::SweepDialog(Schematic *Doc_)
-			: QDialog(Doc_)
+			: QDialog(Doc_)//, 0, TRUE, Qt::WDestructiveClose)
 {
-  qDebug() << "SweepDialog::SweepDialog()";
-
   Doc = Doc_;
 
   pGraph = setBiasPoints();
   // if simulation has no sweeps, terminate dialog before showing it
-  if(!pGraph->numAxes()) {
+  if(pGraph->cPointsX.count() == 0) {
     reject();
     return;
   }
-  if(pGraph->numAxes() <= 1)
-    if(pGraph->axis(0)->count <= 1) {
+  if(pGraph->cPointsX.count() <= 1)
+    if(pGraph->cPointsX.getFirst()->count <= 1) {
       reject();
       return;
     }
@@ -91,12 +86,12 @@ SweepDialog::SweepDialog(Schematic *Doc_)
   all->setSpacing(5);
   all->setColStretch(1,5);
 
-  DataX const *pD;
+  DataX *pD;
   mySpinBox *Box;
   
-  for(unsigned ii=0; (pD=pGraph->axis(ii)); ++ii) {
+  for(pD = pGraph->cPointsX.first(); pD!=0; pD = pGraph->cPointsX.next()) {
     all->addWidget(new QLabel(pD->Var, this), i,0);
-    //cout<<"count: "<<pD->count-1<<", points: "<<*pD->Points<<endl;
+  //cout<<"count: "<<pD->count-1<<", points: "<<*pD->Points<<endl;
     //works only for linear:
     /*double Min = pD->Points[0];
     double Max = pD->Points[pD->count-1];
@@ -122,31 +117,29 @@ SweepDialog::~SweepDialog()
 {
   delete pGraph;
 
-  while(!ValueList.isEmpty()) {
-    delete ValueList.takeFirst();
-  }
+  for(double *p = ValueList.first(); p!=0; p = ValueList.next())
+    delete p;
 }
 
 // ---------------------------------------------------------------
 void SweepDialog::slotNewValue(int)
 {
-  DataX const*pD = pGraph->axis(0);
-
+  DataX *pD = pGraph->cPointsX.first();
   int Factor = 1, Index = 0;
-  QList<mySpinBox *>::const_iterator it;
-  for(it = BoxList.constBegin(); it != BoxList.constEnd(); it++) {
-    Index  += (*it)->value() * Factor;
+  for(mySpinBox *pb = BoxList.first(); pb!=0; pb = BoxList.next()) {
+    Index  += pb->value() * Factor;
     Factor *= pD->count;
   }
   Index *= 2;  // because of complex values
 
-  QList<Node *>::iterator node_it;
-  QList<double *>::const_iterator value_it = ValueList.begin();
-  for(node_it = NodeList.begin(); node_it != NodeList.end(); node_it++) {
-    qDebug() << "SweepDialog::slotNewValue:(*node_it)->Name:" << (*node_it)->Name;
-    (*node_it)->Name = misc::num2str(*((*value_it)+Index));
-    (*node_it)->Name += ((*node_it)->x1 & 0x10)? "A" : "V";
-    value_it++;
+  double *p = ValueList.first();
+  for(Node *pn = NodeList.first(); pn!=0; pn = NodeList.next()) {
+    pn->Name = num2str(*(p+Index));
+    if(pn->x1 & 0x10)
+      pn->Name += "A";
+    else
+      pn->Name += "V";
+    p = ValueList.next();
   }
 
   Doc->viewport()->update();
@@ -158,24 +151,14 @@ Graph* SweepDialog::setBiasPoints()
   // When this function is entered, a simulation was performed.
   // Thus, the node names are still in "node->Name".
 
-  qDebug() << "SweepDialog::setBiasPoints()";
-
   bool hasNoComp;
-  Graph *pg = new Graph(NULL, ""); // HACK!
+  Graph *pg = new Graph("");
+  Diagram *Diag = new Diagram();
   QFileInfo Info(Doc->DocName);
   QString DataSet = Info.dirPath() + QDir::separator() + Doc->DataSet;
 
   Node *pn;
   Element *pe;
-
-  // Note 1:
-  // Invalidate it so that "Graph::loadDatFile()" does not check for the previously loaded time.
-  // This is a current hack as "Graph::loadDatFile()" does not support multi-node data loading
-  // from the simulation results without refreshing (changing) or invalidating the timestamp.
-
-  NodeList.clear();
-  ValueList.clear();
-
   // create DC voltage for all nodes
   for(pn = Doc->Nodes->first(); pn != 0; pn = Doc->Nodes->next()) {
     if(pn->Name.isEmpty()) continue;
@@ -207,9 +190,8 @@ Graph* SweepDialog::setBiasPoints()
     }
 
     pg->Var = pn->Name + ".V";
-    pg->lastLoaded = QDateTime(); // Note 1 at the start of this function
-    if(pg->loadDatFile(DataSet) == 2) {
-      pn->Name = misc::num2str(*(pg->cPointsY)) + "V";
+    if(Diag->loadVarData(DataSet, pg)) {
+      pn->Name = num2str(*(pg->cPointsY)) + "V";
       NodeList.append(pn);             // remember node ...
       ValueList.append(pg->cPointsY);  // ... and all of its values
       pg->cPointsY = 0;   // do not delete it next time !
@@ -230,16 +212,16 @@ Graph* SweepDialog::setBiasPoints()
   // create DC current through each probe
   Component *pc;
   for(pc = Doc->Components->first(); pc != 0; pc = Doc->Components->next())
+  {
     if(pc->Model == "IProbe") {
       pn = pc->Ports.first()->Connection;
       if(!pn->Name.isEmpty())   // preserve node voltage ?
-        pn = pc->Ports.at(1)->Connection;
+        pn = pc->Ports.next()->Connection;
 
       pn->x1 = 0x10;   // mark current
       pg->Var = pc->Name + ".I";
-      pg->lastLoaded = QDateTime(); // Note 1 at the start of this function
-      if(pg->loadDatFile(DataSet) == 2) {
-        pn->Name = misc::num2str(*(pg->cPointsY)) + "A";
+      if(Diag->loadVarData(DataSet, pg)) {
+        pn->Name = num2str(*(pg->cPointsY)) + "A";
         NodeList.append(pn);             // remember node ...
         ValueList.append(pg->cPointsY);  // ... and all of its values
         pg->cPointsY = 0;   // do not delete it next time !
@@ -256,8 +238,34 @@ Graph* SweepDialog::setBiasPoints()
         }
     }
 
+    if(pc->Model == "WProbe") {
+      pn = pc->Ports.at(0)->Connection;
+      if(!pn->Name.isEmpty())   // preserve node voltage ?
+      //  pn = pc->Ports.next()->Connection;
+	pn = pc->Ports.at(1)->Connection;
+      pn->x1 = 0x10;   // mark current
+      pg->Var = pc->Name + ".I";
+      if(Diag->loadVarData(DataSet, pg)) {
+        pn->Name = num2str(*(pg->cPointsY)) + "A";
+        NodeList.append(pn);             // remember node ...
+        ValueList.append(pg->cPointsY);  // ... and all of its values
+        pg->cPointsY = 0;   // do not delete it next time !
+      }
+      else
+        pn->Name = "0A";
+
+      for(pe = pn->Connections.at(3); pe!=0; pe = pn->Connections.next())
+        if(pe->Type == isWire) {
+          if( ((Wire*)pe)->isHorizontal() )  pn->x1 |= 2;
+        }
+        else {
+          if(pn->cx < pe->cx)  pn->x1 |= 1;  // to the right is no room
+        }
+    }
+
+  }
 
   Doc->showBias = 1;
-
+  delete Diag;
   return pg;
 }

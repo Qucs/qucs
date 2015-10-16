@@ -82,6 +82,7 @@
 #include "rlcg.h"
 #include "iprobe.h"
 #include "vprobe.h"
+#include "wprobe.h"
 #include "spfile.h"
 #include "vpulse.h"
 #include "ipulse.h"
