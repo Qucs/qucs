@@ -57,3 +57,4 @@ endif
 # TESTS -- Programs run automatically by "make check"
 TESTS = $(GTEST_TESTS)
 EXTRA_DIST = runqucsator.sh
+CLEANFILES = $(GTEST_TESTS)
