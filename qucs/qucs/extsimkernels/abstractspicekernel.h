@@ -74,6 +74,8 @@ public:
                             QStringList &var_list, bool xyce);
     void parseNoiseOutput(QString ngspice_file, QList< QList<double> > &sim_points,
                           QStringList &var_list, bool &ParSwp);
+    void parsePZOutput(QString ngspice_file, QList< QList<double> > &sim_points,
+                       QStringList &var_list, bool &ParSwp);
     void parseSTEPOutput(QString ngspice_file,
                          QList< QList<double> > &sim_points,
                          QStringList &var_list, bool &isComplex);
@@ -84,7 +86,7 @@ public:
     void convertToQucsData(const QString &qucs_dataset, bool xyce = false);
     QString getOutput();
 
-    void setSimulatorCmd(QString cmd);
+    virtual void setSimulatorCmd(QString cmd);
     void setWorkdir(QString path);
     virtual void SaveNetlist(QString filename);
     virtual bool waitEndOfSimulation();

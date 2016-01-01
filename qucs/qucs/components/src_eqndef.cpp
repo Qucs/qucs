@@ -6,15 +6,15 @@
 
 Src_eqndef::Src_eqndef()
 {
-  Description = QObject::tr("Equation defined (B-type) voltage or current source");
+  Description = QObject::tr("SPICE B (V type):\nMultiple line ngspice or Xyce B specifications allowed using \"+\" continuation lines.\nLeave continuation lines blank when NOT in use.  "); 
 
-  Arcs.append(new Arc(-14,-14, 28, 28,     0, 16*360,QPen(Qt::red,3)));
-  Texts.append(new Text(7,-12,"Eqn",Qt::red,10.0,0.0,-1.0));
+  Arcs.append(new Arc(-14,-14, 28, 28,     0, 16*360,QPen(Qt::darkRed,3)));
+  Texts.append(new Text(10,-12,"Eqn",Qt::darkRed,10.0,0.0,-1.0));
   Lines.append(new Line(-30,  0,-14,  0,QPen(Qt::darkBlue,2)));
   Lines.append(new Line( 30,  0, 14,  0,QPen(Qt::darkBlue,2)));
-  Lines.append(new Line( 18,  5, 18, 11,QPen(Qt::red,1)));
-  Lines.append(new Line( 21,  8, 15,  8,QPen(Qt::red,1)));
-  Lines.append(new Line(-18,  5,-18, 11,QPen(Qt::black,1)));
+  Lines.append(new Line( 18,  5, 18, 11,QPen(Qt::red,2)));
+  Lines.append(new Line( 21,  8, 15,  8,QPen(Qt::red,2)));
+  Lines.append(new Line(-18,  5,-18, 11,QPen(Qt::black,2)));
 
   Ports.append(new Port( 30,  0));
   Ports.append(new Port(-30,  0));
@@ -24,11 +24,19 @@ Src_eqndef::Src_eqndef()
 
   tx = x1+4;
   ty = y2+4;
-  Model = "B";
+  Model = "src_eqndef";
   SpiceModel = "B";
   Name  = "B";
+  
+  Props.append(new Property("V", "", true,"B(V) specification"));
+  Props.append(new Property("Line_2", "", false,"+ continuation line 1"));
+  Props.append(new Property("Line_3", "", false,"+ continuation line 2"));
+  Props.append(new Property("Line_4", "", false,"+ continuation line 3"));
+  Props.append(new Property("Line_5", "", false,"+ continuation line 4"));
 
-  Props.append(new Property("V", "0", true,"Expression"));
+
+
+// Props.append(new Property("V", "0", true,"Expression"));
 
   rotate();  // fix historical flaw
 }
@@ -44,7 +52,7 @@ Component* Src_eqndef::newOne()
 
 Element* Src_eqndef::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
-  Name = QObject::tr("Equation defined (B-type) voltage or current source");
+  Name = QObject::tr("B source (V)");
   BitmapFile = (char *) "src_eqndef";
 
   if(getNewOne)  return new Src_eqndef();
@@ -62,9 +70,22 @@ QString Src_eqndef::spice_netlist(bool)
     foreach(Port *p1, Ports) {
         QString nam = p1->Connection->Name;
         if (nam=="gnd") nam = "0";
-        s += " "+ nam;   // node names
+        s += " "+ nam   + " ";   // node names
     }
-    s += QString(" %1 = %2 \n").arg(Props.at(0)->Name).arg(Props.at(0)->Value);
+    
+    QString VI  = Props.at(0)-> Name;
+    QString VI2 = Props.at(0)->Value;
+    QString Line_2 = Props.at(1)->Value;
+    QString Line_3 = Props.at(2)->Value;
+    QString Line_4 = Props.at(3)->Value;
+    QString Line_5 = Props.at(4)->Value;
+
+    s += QString(" %1 = %2 \n").arg(VI).arg(VI2);
+    if(  Line_2.length() > 0 )   s += QString("%1\n").arg(Line_2);
+    if(  Line_3.length() > 0 )   s += QString("%1\n").arg(Line_3);
+    if(  Line_4.length() > 0 )   s += QString("%1\n").arg(Line_4);
+    if(  Line_5.length() > 0 )   s += QString("%1\n").arg(Line_5);
+ 
     return s;
 }
 

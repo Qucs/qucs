@@ -26,19 +26,19 @@
 
 DIODE_SPICE::DIODE_SPICE()
 {
-    Description = QObject::tr("Diode SPICE format");
+    Description = QObject::tr("SPICE D:\nMultiple line ngspice or Xyce D model specifications allowed using \"+\" continuation lines.\nLeave continuation lines blank when NOT in use.");
 
 
     Lines.append(new Line(-30,  0, -20,  0,QPen(Qt::darkBlue,3)));
-    Lines.append(new Line( -20, 0, -6,   0,QPen(Qt::red,3)));
-    Lines.append(new Line(  6,  0, 20,   0,QPen(Qt::red,3)));
-    Lines.append(new Line( 20,  0, 30,   0,QPen(Qt::darkBlue,3)));    
+    Lines.append(new Line( -20, 0, -6,   0,QPen(Qt::darkRed,3)));
+    Lines.append(new Line(  6,  0, 20,   0,QPen(Qt::darkRed,3)));
+    Lines.append(new Line( 20,  0, 30,   0,QPen(Qt::darkBlue,3)));
  
  
-    Lines.append(new Line( -6, -9, -6,  9,QPen(Qt::red,3)));
-    Lines.append(new Line(  6, -9,  6,  9,QPen(Qt::red,3)));
-    Lines.append(new Line( -6,  0,  6, -9,QPen(Qt::red,3)));
-    Lines.append(new Line( -6,  0,  6,  9,QPen(Qt::red,3)));
+    Lines.append(new Line( -6, -9, -6,  9,QPen(Qt::darkRed,3)));
+    Lines.append(new Line(  6, -9,  6,  9,QPen(Qt::darkRed,3)));
+    Lines.append(new Line( -6,  0,  6, -9,QPen(Qt::darkRed,3)));
+    Lines.append(new Line( -6,  0,  6,  9,QPen(Qt::darkRed,3)));
 
   Ports.append(new Port(-30, 0));
   Ports.append(new Port( 30, 0));
@@ -53,11 +53,11 @@ DIODE_SPICE::DIODE_SPICE()
     SpiceModel = "D";
     Name  = "D";
 
-    Props.append(new Property("D", "", true,"Expression"));
-    Props.append(new Property("D_Line 2", "", false,"Expression"));
-    Props.append(new Property("D_Line 3", "", false,"Expression"));
-    Props.append(new Property("D _Line 4", "", false,"Expression"));
-    Props.append(new Property("D _Line 5", "", false,"Expression"));
+    Props.append(new Property("D", "", true,"Param list and\n .model spec."));
+    Props.append(new Property("D_Line 2", "", false,"+ continuation line 1"));
+    Props.append(new Property("D_Line 3", "", false,"+ continuation line 2"));
+    Props.append(new Property("D_Line 4", "", false,"+ continuation line 3"));
+    Props.append(new Property("D_Line 5", "", false,"+ continuation line 4"));
 
 }
 
@@ -72,7 +72,7 @@ Component* DIODE_SPICE::newOne()
 
 Element* DIODE_SPICE::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
-  Name = QObject::tr(" Diode");
+  Name = QObject::tr("D Diode");
   BitmapFile = (char *) "DIODE_SPICE";
 
   if(getNewOne)  return new DIODE_SPICE();

@@ -59,12 +59,20 @@ vcresistor.cpp
 vacomponent.cpp
 mutualx.cpp
 src_eqndef.cpp
+
+#SPICE sections
+
 sp_parameter.cpp
 sp_globalpar.cpp
 sp_options.cpp
 sp_nutmeg.cpp
 sp_ic.cpp
 sp_nodeset.cpp
+sp_model.cpp
+sp_include.cpp
+
+#end of SPICE section
+
 vsffm.cpp
 isffm.cpp
 vAmpMod.cpp
@@ -82,7 +90,6 @@ R_SPICE.cpp
 K_SPICE.cpp
 MESFET_SPICE.cpp
 PMF_MESFET_SPICE.cpp
-Cmeter_SPICE.cpp
 LTL_SPICE.cpp
 UDRCTL_SPICE.cpp
 LTRA_SPICE.cpp
@@ -98,6 +105,38 @@ sp_customsim.cpp
 sp_fourier.cpp
 sp_disto.cpp
 sp_noise.cpp
+sp_pz.cpp
+
+# 
+# Qucs-S new components cpp list
+#
+
+
+S4Q_V.cpp
+S4Q_Ieqndef.cpp
+S4Q_I.cpp
+S4Q_S.cpp
+S4Q_W.cpp
+#
+# XSPICE cpp list
+#
+
+Cmeter_SPICE.cpp
+SE_V_amp.cpp 
+DE_V_amp.cpp
+SE_V_int.cpp
+DE_V_int.cpp
+SE_V_diff.cpp
+DE_V_diff.cpp
+ABV.cpp
+ABCV.cpp
+APBV.cpp
+APBPCV.cpp
+DivV.cpp
+Icouple.cpp
+core.cpp
+SDTF.cpp
+
 )
 
 SET(COMPONENTS_HDRS
@@ -278,12 +317,20 @@ vprobe.h
 vpulse.h
 vrect.h
 src_eqndef.h
+
+#SPICE sections
+
 sp_parameter.h
 sp_globalpar.h
 sp_options.h
 sp_nutmeg.h
 sp_ic.h
 sp_nodeset.h
+sp_model.h
+sp_include.h
+
+#end SPICE sections
+
 vsffm.h
 isffm.h
 vAmpMod.h
@@ -301,7 +348,6 @@ R_SPICE.h
 K_SPICE.h
 MESFET_SPICE.h
 PMF_MESFET_SPICE.h
-Cmeter_SPICE.h
 LTL_SPICE.h
 UDRCTL_SPICE.h
 LTRA_SPICE.h
@@ -317,6 +363,36 @@ sp_customsim.h
 sp_fourier.h
 sp_disto.h
 sp_noise.h
+sp_pz.h
+
+# 
+# Qucs-S new components h list
+#
+
+S4Q_V.h
+S4Q_Ieqndef.h
+S4Q_I.h
+S4Q_S.h
+S4Q_W.h
+#
+# XSPICE component headers
+#
+
+Cmeter_SPICE.h
+SE_V_amp.h
+DE_V_amp.h
+SE_V_int.h
+DE_V_int.h
+SE_V_diff.h
+DE_V_diff.h
+ABV.h
+ABCV.h
+APBV.h
+APBPCV.h
+DivV.h
+Icouple.h
+core.h
+SDTF.h
 )
 
 

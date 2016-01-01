@@ -26,12 +26,12 @@
 
 R_SPICE::R_SPICE()
 {
-    Description = QObject::tr("R SPICE format");
+    Description = QObject::tr("SPICE R:\nMultiple line ngspice or Xyce R specifications allowed using \"+\" continuation lines.\nLeave continuation lines blank when NOT in use.  ");
 
-    Lines.append(new Line(-18, -9, 18, -9,QPen(Qt::red,3)));
-    Lines.append(new Line( 18, -9, 18,  9,QPen(Qt::red,3)));
-    Lines.append(new Line( 18,  9,-18,  9,QPen(Qt::red,3)));
-    Lines.append(new Line(-18,  9,-18, -9,QPen(Qt::red,3)));
+    Lines.append(new Line(-18, -9, 18, -9,QPen(Qt::darkRed,3)));
+    Lines.append(new Line( 18, -9, 18,  9,QPen(Qt::darkRed,3)));
+    Lines.append(new Line( 18,  9,-18,  9,QPen(Qt::darkRed,3)));
+    Lines.append(new Line(-18,  9,-18, -9,QPen(Qt::darkRed,3)));
     Lines.append(new Line(-30,  0,-18,  0,QPen(Qt::darkBlue,2)));
     Lines.append(new Line( 18,  0, 30,  0,QPen(Qt::darkBlue,2)));
     
@@ -48,11 +48,11 @@ R_SPICE::R_SPICE()
     SpiceModel = "R";
     Name  = "R";
 
-    Props.append(new Property("R", "", true,"Expression"));
-    Props.append(new Property("R_Line 2", "", false,"Expression"));
-    Props.append(new Property("R_Line 3", "", false,"Expression"));
-    Props.append(new Property("R_Line 4", "", false,"Expression"));
-    Props.append(new Property("R_Line 5", "", false,"Expression"));
+    Props.append(new Property("R", "", true,"R param list and\n .model spec."));
+    Props.append(new Property("R_Line 2", "", false,"+ continuation line 1"));
+    Props.append(new Property("R_Line 3", "", false,"+ continuation line 2"));
+    Props.append(new Property("R_Line 4", "", false,"+ continuation line 3"));
+    Props.append(new Property("R_Line 5", "", false,"+ continuation line 4"));
 
 
 
@@ -70,7 +70,7 @@ Component* R_SPICE::newOne()
 
 Element* R_SPICE::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
-  Name = QObject::tr("Resistor");
+  Name = QObject::tr(" R Resistor");
   BitmapFile = (char *) "R_SPICE";
 
   if(getNewOne)  return new R_SPICE();
@@ -97,11 +97,11 @@ QString R_SPICE::spice_netlist(bool)
     QString R_Line_4= Props.at(3)->Value;
     QString R_Line_5= Props.at(4)->Value;
 
-     if(  R.length()  > 0)                 s += QString("%1\n").arg(R);
+    if(  R.length()  > 0)          s += QString("%1\n").arg(R);
     if(  R_Line_2.length() > 0 )   s += QString("%1\n").arg(R_Line_2);
     if(  R_Line_3.length() > 0 )   s += QString("%1\n").arg(R_Line_3);
     if(  R_Line_4.length() > 0 )   s += QString("%1\n").arg(R_Line_4);
-    if( R_Line_5.length() > 0)   s += QString("%1\n").arg(R_Line_5);
+    if(  R_Line_5.length() > 0)    s += QString("%1\n").arg(R_Line_5);
  
     return s;
 }

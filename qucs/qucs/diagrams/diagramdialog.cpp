@@ -176,7 +176,14 @@ DiagramDialog::DiagramDialog(Diagram *d, QWidget *parent, Graph *currentGraph)
   InputGroup->setLayout(InputGroupLayout);
   Tab1Layout->addWidget(InputGroup);
   GraphInput = new QLineEdit();
-  InputGroupLayout->addWidget(GraphInput);
+  lblPlotVs = new QLabel(tr("Plot Vs."));
+  ChooseXVar = new QComboBox();
+  connect(ChooseXVar,SIGNAL(currentIndexChanged(int)),this,SLOT(slotPlotVs(int)));
+  QHBoxLayout *InpSubHL = new QHBoxLayout();
+  InpSubHL->addWidget(GraphInput);
+  InpSubHL->addWidget(lblPlotVs);
+  InpSubHL->addWidget(ChooseXVar);
+  InputGroupLayout->addLayout(InpSubHL);
   GraphInput->setValidator(Validator);
   connect(GraphInput, SIGNAL(textChanged(const QString&)), SLOT(slotResetToTake(const QString&)));
   QWidget *Box2 = new QWidget();
@@ -287,7 +294,7 @@ DiagramDialog::DiagramDialog(Diagram *d, QWidget *parent, Graph *currentGraph)
   QHBoxLayout *hb1 = new QHBoxLayout;
   ChooseSimulator = new QComboBox;
   QStringList lst_sim;
-  lst_sim<<"Qucsator (built-in)"<<"Ngspice"<<"Xyce";
+  lst_sim<<"Qucsator (built-in)"<<"Ngspice"<<"Xyce"<<"SpiceOpus";
   ChooseSimulator->addItems(lst_sim);
   connect(ChooseSimulator,SIGNAL(currentIndexChanged(int)),this,SLOT(slotReadVars(int)));
   lblSim = new QLabel(tr("Data from simulator:"));
@@ -779,6 +786,8 @@ void DiagramDialog::slotReadVars(int)
   if (Info.exists()) ChooseSimulator->addItem("Ngspice");
   Info.setFile(Info.dirPath() + QDir::separator() + DocName + ".xyce");
   if (Info.exists()) ChooseSimulator->addItem("Xyce");
+  Info.setFile(Info.dirPath() + QDir::separator() + DocName + ".spopus");
+  if (Info.exists()) ChooseSimulator->addItem("SpiceOpus");
   Info.setFile(defaultDataSet);
   int sim_pos = ChooseSimulator->findText(curr_sim); // revert recent simulator if possible
   if (sim_pos>=0) ChooseSimulator->setCurrentIndex(sim_pos);
@@ -788,6 +797,8 @@ void DiagramDialog::slotReadVars(int)
       DocName += ".ngspice";
   } else if (ChooseSimulator->currentText()=="Xyce") {
       DocName += ".xyce";
+  } else if (ChooseSimulator->currentText()=="SpiceOpus") {
+      DocName += ".spopus";
   }
 
   QFile file(Info.dirPath() + QDir::separator() + DocName);
@@ -805,6 +816,9 @@ void DiagramDialog::slotReadVars(int)
   // make sure sorting is disabled before inserting items
   ChooseVars->setSortingEnabled(false);
   ChooseVars->clearContents();
+  ChooseXVar->clear();
+  ChooseXVar->addItem("default");
+
   int i=0, j=0;
   i = FileString.indexOf('<')+1;
   if(i > 0)
@@ -824,6 +838,7 @@ void DiagramDialog::slotReadVars(int)
       qDebug() << varNumber << Var << tmp.remove('>');
       ChooseVars->setRowCount(varNumber+1);
       QTableWidgetItem *cell = new QTableWidgetItem(Var);
+      ChooseXVar->addItem(Var);
       cell->setFlags(cell->flags() ^ Qt::ItemIsEditable);
       ChooseVars->setItem(varNumber, 0, cell);
       cell = new QTableWidgetItem("dep");
@@ -840,6 +855,7 @@ void DiagramDialog::slotReadVars(int)
       qDebug() << varNumber << Var << tmp.remove('>');
       ChooseVars->setRowCount(varNumber+1);
       QTableWidgetItem *cell = new QTableWidgetItem(Var);
+      ChooseXVar->addItem(Var);
       cell->setFlags(cell->flags() ^ Qt::ItemIsEditable);
       ChooseVars->setItem(varNumber, 0, cell);
       cell = new QTableWidgetItem("indep");
@@ -877,8 +893,11 @@ void DiagramDialog::slotTakeVar(QTableWidgetItem* Item)
       s1 = "ngspice/" + s1;
   } else if (ChooseSimulator->currentText()=="Xyce") {
       s1 = "xyce/" + s1;
+  } else if (ChooseSimulator->currentText()=="SpiceOpus") {
+      s1 = "spopus/" + s1;
   }
   GraphInput->setText(s1);
+  updateXVar();
 
   //if(s.isEmpty()) {
     GraphList->addItem(GraphInput->text());////insertItem(i, GraphInput->text());
@@ -951,6 +970,7 @@ void DiagramDialog::SelectGraph(Graph *g)
   GraphInput->blockSignals(true);
   GraphInput->setText(g->Var);
   GraphInput->blockSignals(false);
+  updateXVar();
 
   if(Diag->Name != "Tab") {
     if(Diag->Name != "Truth") {
@@ -1296,6 +1316,7 @@ void DiagramDialog::slotResetToTake(const QString& s)
   // \todo GraphList->changeItem(s, i);   // must done after the graph settings !!!
   changed = true;
   toTake  = false;
+  updateXVar();
 }
 
 /*!
@@ -1516,3 +1537,27 @@ void DiagramDialog::slotEditRotZ(const QString& Text)
   DiagCross->update();
 }
 
+void DiagramDialog::slotPlotVs(int)
+{
+    QString s = GraphInput->text();
+    s.remove(QRegExp("@.*$")); // remove all after "@" symbol
+    if (ChooseXVar->currentIndex()!=0) {
+        s += "@" + ChooseXVar->currentText();
+    }
+    GraphInput->setText(s);
+}
+
+void DiagramDialog::updateXVar()
+{
+    ChooseXVar->blockSignals(true);
+    QString s = GraphInput->text();
+    if (s.contains("@")) {
+        QString xvar = s.section("@",1,1);
+        int n = ChooseXVar->findText(xvar);
+        if (n != -1) ChooseXVar->setCurrentIndex(n);
+        else ChooseXVar->setCurrentIndex(0);
+    } else {
+        ChooseXVar->setCurrentIndex(0);
+    }
+    ChooseXVar->blockSignals(false);
+}

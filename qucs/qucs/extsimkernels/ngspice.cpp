@@ -65,6 +65,7 @@ void Ngspice::createNetlist(QTextStream &stream, int ,
            if (sim_typ==".CUSTOMSIM") simulations.append("custom");
            if (sim_typ==".DISTO") simulations.append("disto");
            if (sim_typ==".NOISE") simulations.append("noise");
+           if (sim_typ==".PZ") simulations.append("pz");
            if ((sim_typ==".SW")&&
                (pc->Props.at(0)->Value.startsWith("DC"))) simulations.append("dc");
            // stream<<s;
@@ -99,7 +100,8 @@ void Ngspice::createNetlist(QTextStream &stream, int ,
 
     stream<<".control\n"          //execute simulations
           <<"set filetype=ascii\n"
-          <<"echo \"\" > spice4qucs.cir.noise\n";
+          <<"echo \"\" > spice4qucs.cir.noise\n"
+          <<"echo \"\" > spice4qucs.cir.pz\n";
 
     QString sim;
     outputs.clear();
@@ -134,7 +136,11 @@ void Ngspice::createNetlist(QTextStream &stream, int ,
                     QString s2 = getParentSWPscript(pc,sim,true,hasDblSWP);
                     stream<<(s2+s);
                     hasParSWP = true;
-                } else if (SwpSim.startsWith("TR")&&(sim=="tran")) {
+                } else if (SwpSim.startsWith("PZ")&&(sim=="pz")) {
+                    QString s2 = getParentSWPscript(pc,sim,true,hasDblSWP);
+                    stream<<(s2+s);
+                    hasParSWP = true;
+                } if (SwpSim.startsWith("TR")&&(sim=="tran")) {
                     QString s2 = getParentSWPscript(pc,sim,true,hasDblSWP);
                     stream<<(s2+s);
                     hasParSWP = true;
@@ -160,6 +166,10 @@ void Ngspice::createNetlist(QTextStream &stream, int ,
                if ((sim_typ==".DISTO")&&(sim=="disto")) stream<<s;
                if ((sim_typ==".NOISE")&&(sim=="noise")) {
                    outputs.append("spice4qucs.cir.noise");
+                   stream<<s;
+               } if ((sim_typ==".PZ")&&(sim=="pz")) {
+                   outputs.append("spice4qucs.cir.pz"); // Add it twice for poles and zeros
+                   outputs.append("spice4qucs.cir.pz");
                    stream<<s;
                } if ((sim_typ==".TR")&&(sim=="tran")) {
                    stream<<s;
@@ -232,7 +242,7 @@ void Ngspice::createNetlist(QTextStream &stream, int ,
             nods += " " + *it;
         }
 
-        if (sim!="noise") {
+        if ((sim!="noise")&&(sim!="pz")) {
             QString filename;
             if (hasParSWP&&hasDblSWP) filename = QString("%1_%2_swp_swp.txt").arg(basenam).arg(sim);
             else if (hasParSWP) filename = QString("%1_%2_swp.txt").arg(basenam).arg(sim);
@@ -258,6 +268,9 @@ void Ngspice::createNetlist(QTextStream &stream, int ,
                     s += getParentSWPscript(pc,sim,false,b);
                     stream<<s;
                 } else if (SwpSim.startsWith("NOISE")&&(sim=="noise")) {
+                    s += getParentSWPscript(pc,sim,false,b);
+                    stream<<s;
+                } else if (SwpSim.startsWith("PZ")&&(sim=="pz")) {
                     s += getParentSWPscript(pc,sim,false,b);
                     stream<<s;
                 } else if (SwpSim.startsWith("TR")&&(sim=="tran")) {
@@ -322,7 +335,7 @@ QString Ngspice::getParentSWPscript(Component *pc_swp, QString sim, bool before,
  */
 void Ngspice::slotSimulate()
 {
-    //output.clear();
+    output.clear();
     QStringList incompat;
     if (!checkSchematic(incompat)) {
         QString s = incompat.join("; ");
@@ -375,4 +388,20 @@ void Ngspice::SaveNetlist(QString filename)
         createNetlist(stream,num,sims,vars,output_files);
         spice_file.close();
     }
+}
+
+void Ngspice::setSimulatorCmd(QString cmd)
+{
+    if (cmd.contains(QRegExp("spiceopus(....|)$"))) {
+        // spiceopus needs English locale to produce correct decimal point (dot symbol)
+        QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
+        env.remove("LANG");
+        env.insert("LANG","en_US");
+        SimProcess->setProcessEnvironment(env);
+    } else { // restore system environment
+        QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
+        SimProcess->setProcessEnvironment(env);
+    }
+
+    simulator_cmd = cmd;
 }

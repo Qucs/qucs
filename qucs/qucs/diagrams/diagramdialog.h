@@ -84,11 +84,14 @@ private slots:
   void slotEditRotY(const QString&);
   void slotEditRotZ(const QString&);
 
+  void slotPlotVs(int);
+
 protected slots:
     void reject();
 
 private:
   void SelectGraph(Graph*);
+  void updateXVar();
 
   Diagram *Diag;
   QString defaultDataSet;
@@ -99,8 +102,10 @@ private:
   QRegExpValidator *Validator;
 
   QLabel *lblSim;
+  QLabel *lblPlotVs;
   QComboBox *ChooseData;
   QComboBox *ChooseSimulator;
+  QComboBox *ChooseXVar;
   QTableWidget *ChooseVars;
   QListWidget  *GraphList;
 

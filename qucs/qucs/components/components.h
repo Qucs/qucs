@@ -200,7 +200,15 @@
 // Verilog-A dynamicaly loaded component
 #include "vacomponent.h"
 
-// Spice-specific components
+//
+// Qucs-S ngspice and Xyce components
+#include "S4Q_V.h"
+#include "S4Q_Ieqndef.h"
+#include "S4Q_I.h"
+#include "S4Q_S.h"
+#include "S4Q_W.h"
+//
+//
 #include "src_eqndef.h"
 #include "vsffm.h"
 #include "isffm.h"
@@ -230,7 +238,23 @@
 #include "PMOS_SPICE.h"
 #include "MESFET_SPICE.h"
 #include "PMF_MESFET_SPICE.h"
+
+// XSPICE analogue blocks
 #include "Cmeter_SPICE.h"
+#include "SE_V_amp.h"
+#include "DE_V_amp.h"
+#include "SE_V_int.h"
+#include "DE_V_int.h"
+#include "SE_V_diff.h"
+#include "DE_V_diff.h"
+#include "ABV.h"
+#include "ABCV.h"
+#include "APBV.h"
+#include "APBPCV.h"
+#include "DivV.h"
+#include "Icouple.h"
+#include "core.h"
+#include "SDTF.h"
 
 // Spice netlist sections
 #include "sp_parameter.h"
@@ -239,11 +263,14 @@
 #include "sp_nutmeg.h"
 #include "sp_nodeset.h"
 #include "sp_ic.h"
+#include "sp_model.h"
+#include "sp_include.h"
 
 // Spice simulations
 #include "sp_fourier.h"
 #include "sp_disto.h"
 #include "sp_customsim.h"
 #include "sp_noise.h"
+#include "sp_pz.h"
 
 #endif

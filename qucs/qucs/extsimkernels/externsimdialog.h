@@ -48,7 +48,7 @@ private:
     Ngspice *ngspice;
     Xyce *xyce;
 
-    enum Simulator {simNgspice=0, simXyceSer = 1, simXycePar =2};
+    enum Simulator {simNgspice = 0, simXyceSer = 1, simXycePar = 2, simSpiceOpus = 3};
 
 public:
     explicit ExternSimDialog(Schematic *sch,QWidget *parent = 0);
@@ -67,8 +67,8 @@ signals:
 public slots:
 
 private slots:
-    void slotProcessNgspiceOutput();
-    void slotProcessXyceOutput();
+    void slotProcessOutput();
+    //void slotProcessXyceOutput();
     void slotNgspiceStarted();
     void slotNgspiceStartError(QProcess::ProcessError err);
     void slotStart();

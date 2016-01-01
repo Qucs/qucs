@@ -798,9 +798,8 @@ int Graph::loadDatFile(const QString& fileName)
 
   QString tail = "";
   QString svar = g->Var;
-  if (pos1 > 0) {
-      if (g->Var.startsWith("ngspice/")) tail = ".ngspice";
-      else if (g->Var.startsWith("xyce/")) tail = ".xyce";
+  if (pos1 > 0) {  // remove simulator signature
+      tail = '.' + g->Var.section('/',0,0);
       svar = g->Var.mid(pos1 + 1);
   }
 
@@ -831,6 +830,15 @@ int Graph::loadDatFile(const QString& fileName)
     if(Name.at(0) != 'T')
       return 0;  // digital variables only for tabulars and ziming diagram
 #endif
+
+  // PlotVs() emulation
+  bool hasExplIndep = false; // Ex[licit indep var
+  QString ExplIndep = "";
+  if (Variable.contains("@")) {
+      hasExplIndep = true;
+      ExplIndep = Variable.section("@",1,1);
+      Variable = Variable.section("@",0,0);
+  }
 
 
   if(!file.open(QIODevice::ReadOnly))  return 0;
@@ -879,7 +887,8 @@ int Graph::loadDatFile(const QString& fileName)
     pos = 0;
     tmp = Line.section(' ', pos, pos);
     while(!tmp.isEmpty()) {
-      g->mutable_axes().push_back(new DataX(tmp));  // name of independet variable
+      if (hasExplIndep)g->mutable_axes().push_back(new DataX(ExplIndep));
+      else g->mutable_axes().push_back(new DataX(tmp));  // name of independet variable
       pos++;
       tmp = Line.section(' ', pos, pos);
     }
@@ -1098,6 +1107,10 @@ int Graph::loadIndepVarData(const QString& Variable,
   for(int z=0; z<n; z++) {
     pEnd = 0;
     x = strtod(pPos, &pEnd);  // real part
+
+    if (*pEnd > ' ')  // drop imaginary part because
+        while (*pEnd > ' ') pEnd++; // Complex number on X-axis has no sense
+
     if(pPos == pEnd) {
       delete[] pD->Points;  pD->Points = 0;
       return -1;

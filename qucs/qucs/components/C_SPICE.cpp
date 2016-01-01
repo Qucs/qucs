@@ -26,10 +26,10 @@
 
 C_SPICE::C_SPICE()
 {
-    Description = QObject::tr("C SPICE format");
+    Description = QObject::tr("SPICE C:\nMultiple line ngspice or Xyce C specifications allowed using \"+\" continuation lines.\nLeave continuation lines blank when NOT in use.");
 
-    Lines.append(new Line( -4,-11, -4, 11,QPen(Qt::red,3)));
-    Lines.append(new Line(  4,-11,  4, 11, QPen(Qt::red,3)));
+    Lines.append(new Line( -4,-11, -4, 11,QPen(Qt::darkRed,3)));
+    Lines.append(new Line(  4,-11,  4, 11, QPen(Qt::darkRed,3)));
     Lines.append(new Line(-30,  0, -4,  0,  QPen(Qt::darkBlue,2)));
     Lines.append(new Line(  4,  0, 30,  0,   QPen(Qt::darkBlue,2)));
     
@@ -46,11 +46,11 @@ C_SPICE::C_SPICE()
     SpiceModel = "C";
     Name  = "C";
 
-    Props.append(new Property("C", "", true,"Expression"));
-    Props.append(new Property("C_Line 2", "", false,"Expression"));
-    Props.append(new Property("C_Line 3", "", false,"Expression"));
-    Props.append(new Property("C_Line 4", "", false,"Expression"));
-    Props.append(new Property("C_Line 5", "", false,"Expression"));
+    Props.append(new Property("C", "", true,"C param list and\n .model spec."));
+    Props.append(new Property("C_Line 2", "", false,"+ continuation line 1"));
+    Props.append(new Property("C_Line 3", "", false,"+ continuation line 2"));
+    Props.append(new Property("C_Line 4", "", false,"+ continuation line 3"));
+    Props.append(new Property("C_Line 5", "", false,"+ continuation line 4"));
 
     rotate();  // fix historical flaw
 }
@@ -66,7 +66,7 @@ Component* C_SPICE::newOne()
 
 Element* C_SPICE::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
-  Name = QObject::tr("Capacitor");
+  Name = QObject::tr("C Capacitor");
   BitmapFile = (char *) "C_SPICE";
 
   if(getNewOne)  return new C_SPICE();
@@ -93,7 +93,7 @@ QString C_SPICE::spice_netlist(bool)
     QString C_Line_4= Props.at(3)->Value;
     QString C_Line_5= Props.at(4)->Value;
 
-     if(  C.length()  > 0)                 s += QString("%1\n").arg(C);
+    if(  C.length()  > 0)          s += QString("%1\n").arg(C);
     if(  C_Line_2.length() > 0 )   s += QString("%1\n").arg(C_Line_2);
     if(  C_Line_3.length() > 0 )   s += QString("%1\n").arg(C_Line_3);
     if(  C_Line_4.length() > 0 )   s += QString("%1\n").arg(C_Line_4);
