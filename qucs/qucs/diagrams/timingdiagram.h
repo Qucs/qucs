@@ -22,11 +22,12 @@
 
 
 class TimingDiagram : public TabDiagram  {
-public: 
+  TimingDiagram(const TimingDiagram&){ /*incomplete*/ }
+public:
   TimingDiagram(int _cx=0, int _cy=0);
  ~TimingDiagram();
 
-  Diagram* newOne();
+  Element* newOne() const {return new TimingDiagram(*this);}
   static Element* info(QString&, char* &, bool getNewOne=false);
   void paint(ViewPainter*);
   int calcDiagram();

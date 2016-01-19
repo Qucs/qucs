@@ -247,12 +247,6 @@ void CurveDiagram::clip(Graph::iterator &p) const
 }
 
 // ------------------------------------------------------------
-Diagram* CurveDiagram::newOne()
-{
-  return new CurveDiagram();
-}
-
-// ------------------------------------------------------------
 Element* CurveDiagram::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Locus Curve");

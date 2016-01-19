@@ -77,10 +77,10 @@ int TruthDiagram::calcDiagram()
   if(xAxis.limit_min < 0.0)
     xAxis.limit_min = 0.0;
 
-  Graph *firstGraph;
+  GraphDeque *firstGraph;
 
-  QListIterator<Graph *> ig(Graphs);
-  Graph *g = 0;
+  QListIterator<GraphDeque*> ig(GraphDeques);
+  GraphDeque *g = 0;
   if (ig.hasNext())
      g= ig.next();
 
@@ -154,7 +154,7 @@ int TruthDiagram::calcDiagram()
   firstGraph = g;
   // ................................................
   // all dependent variables
-  foreach(Graph *g ,Graphs) {
+  for(auto g : GraphDeques) {
     y = y2-tHeight-5;
 
     Str = g->Var;
@@ -231,7 +231,7 @@ int TruthDiagram::calcDiagram()
       Texts.append(new Text(x, y, Str));
     }
     x += colWidth+15;
-    if(g != Graphs.last())   // do not paint last line
+    if(g != GraphDeques.last())   // do not paint last line
       Lines.append(new Line(x-8, y2, x-8, 0, QPen(Qt::black,0)));
   }
 

@@ -33,7 +33,7 @@
 #include "viewpainter.h"
 #include "diagrams/diagram.h"
 #include "paintings/painting.h"
-#include "components/component.h"
+#include "components/component.h" // BUG?!
 
 #include <Q3ScrollView>
 #include <Q3PtrList>

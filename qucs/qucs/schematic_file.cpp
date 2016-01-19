@@ -737,28 +737,38 @@ bool Schematic::loadWires(QTextStream *stream, Q3PtrList<Element> *List)
 bool Schematic::loadDiagrams(QTextStream *stream, Q3PtrList<Diagram> *List)
 {
   Diagram *d;
-  QString Line, cstr;
+  QString Line;
   while(!stream->atEnd()) {
     Line = stream->readLine();
     if(Line.at(0) == '<') if(Line.at(1) == '/') return true;
     Line = Line.trimmed();
     if(Line.isEmpty()) continue;
 
-    cstr = Line.section(' ',0,0);    // diagram type
-         if(cstr == "<Rect") d = new RectDiagram();
-    else if(cstr == "<Polar") d = new PolarDiagram();
-    else if(cstr == "<Tab") d = new TabDiagram();
-    else if(cstr == "<Smith") d = new SmithDiagram();
-    else if(cstr == "<ySmith") d = new SmithDiagram(0,0,false);
-    else if(cstr == "<PS") d = new PSDiagram();
-    else if(cstr == "<SP") d = new PSDiagram(0,0,false);
-    else if(cstr == "<Rect3D") d = new Rect3DDiagram();
-    else if(cstr == "<Curve") d = new CurveDiagram();
-    else if(cstr == "<Time") d = new TimingDiagram();
-    else if(cstr == "<Truth") d = new TruthDiagram();
+    QString cstr = Line.section(' ',0,0);    // diagram type
+
+    if(cstr.at(0) != '<'){
+      QMessageBox::critical(0, QObject::tr("Error"),
+		   QObject::tr("Format Error:\nExpecting '<'\n"));
+      return false;
+    }
+    cstr.remove(0,1); // skip '<';
+    if (const Digaram* proto=diagrams[std::string(cstr)]) {
+      d=proto->newOne();
+    } else
+         if(cstr == "Rect") d = new RectDiagram();
+    else if(cstr == "Polar") d = new PolarDiagram();
+    else if(cstr == "Tab") d = new TabDiagram();
+    else if(cstr == "Smith") d = new SmithDiagram();
+    else if(cstr == "ySmith") d = new SmithDiagram(0,0,false);
+    else if(cstr == "PS") d = new PSDiagram();
+    else if(cstr == "SP") d = new PSDiagram(0,0,false);
+    else if(cstr == "Rect3D") d = new Rect3DDiagram();
+    else if(cstr == "Curve") d = new CurveDiagram();
+    else if(cstr == "Time") d = new TimingDiagram();
+    else if(cstr == "Truth") d = new TruthDiagram();
     else {
       QMessageBox::critical(0, QObject::tr("Error"),
-		   QObject::tr("Format Error:\nUnknown diagram!"));
+		   QObject::tr("Format Error:\nUnknown diagram: \"" + cstr + "\n"));
       return false;
     }
 
@@ -1959,3 +1969,5 @@ QString Schematic::createNetlist(QTextStream& stream, int NumPorts)
 
   return Time;
 }
+
+// vim:ts=8:sw=2:noet

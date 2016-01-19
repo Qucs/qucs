@@ -43,3 +43,9 @@ void Element::setCenter(int, int, bool)
 void Element::getCenter(int&, int&)
 {
 }
+
+bool Element::setParamByIndex(unsigned index, QString value)
+{
+	// just ignore (for now)
+	return true;
+}

@@ -20,16 +20,11 @@
 #include "diagram.h"
 #include "node.h"
 
-#ifndef pi
-#define pi 3.1415926535897932384626433832795029
-#endif
-
 #include <QDialog>
 #include <QRegExp>
 #include <Q3PtrList>
 
 class QVBoxLayout;
-class Cross3D;
 class QLabel;
 class QLineEdit;
 class QCheckBox;
@@ -48,7 +43,7 @@ class DiagramDialog : public QDialog  {
 Q_OBJECT
 public:
   DiagramDialog(Diagram *d, QWidget *parent=0,
-		Graph *currentGraph=0);
+		GraphDeque *currentGraph=0);
   ~DiagramDialog();
 
   bool loadVarData(const QString&);
@@ -77,46 +72,38 @@ private slots:
   void slotManualZ(int);
   void slotChangeTab(QWidget*);
 
-  void slotNewRotX(int);
-  void slotNewRotY(int);
-  void slotNewRotZ(int);
-  void slotEditRotX(const QString&);
-  void slotEditRotY(const QString&);
-  void slotEditRotZ(const QString&);
-
 protected slots:
     void reject();
 
 private:
-  void SelectGraph(Graph*);
+  void SelectGraph(GraphDeque*);
 
   Diagram *Diag;
   QString defaultDataSet;
 
   QRegExp Expr;
   QDoubleValidator *ValDouble;
+public: // BUG
   QIntValidator    *ValInteger;
+private:
   QRegExpValidator *Validator;
 
   QComboBox *ChooseData;
   QTableWidget *ChooseVars;
-  QListWidget  *GraphList;
+  QListWidget  *GraphDequeList;
 
   QVBoxLayout *all;   // the mother of all widgets
   QLineEdit   *GraphInput, *Property2, *xLabel, *ylLabel, *yrLabel;
   QCheckBox   *GridOn, *GridLogX, *GridLogY, *GridLogZ;
-  QCheckBox   *manualX, *manualY, *manualZ, *hideInvisible;
+  QCheckBox   *manualX, *manualY, *manualZ;
   QLineEdit   *startX, *stepX, *stopX;
   QLineEdit   *startY, *stepY, *stopY;
   QLineEdit   *startZ, *stepZ, *stopZ;
-  QLineEdit   *rotationX, *rotationY, *rotationZ;
   QLabel      *GridLabel1, *GridLabel2, *Label1, *Label2, *Label3, *Label4;
   QComboBox   *PropertyBox, *GridStyleBox, *yAxisBox;
   QPushButton *ColorButt, *GridColorButt;
-  QSlider     *SliderRotX, *SliderRotY, *SliderRotZ;
-  Cross3D     *DiagCross;
   bool changed, transfer, toTake;
-  Q3PtrList<Graph>  Graphs;
+  Q3PtrList<GraphDeque>  GraphDeques; // FIXME maybe QList?
 };
 
 #endif

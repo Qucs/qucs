@@ -102,12 +102,6 @@ int SmithDiagram::calcDiagram()
 }
 
 // ------------------------------------------------------------
-Diagram* SmithDiagram::newOne()
-{
-  return new SmithDiagram();
-}
-
-// ------------------------------------------------------------
 Element* SmithDiagram::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Smith Chart");
@@ -130,7 +124,7 @@ Element* SmithDiagram::info_y(QString& Name, char* &BitmapFile, bool getNewOne)
 QString SmithDiagram::extraMarkerText(Marker const* m) const
 {
   assert(m);
-  Graph const* pGraph = m->graph();
+  GraphDeque const* pGraph = m->graph();
   assert(pGraph);
   std::vector<double> const& Pos = m->varPos();
   unsigned nVarPos = pGraph->numAxes();

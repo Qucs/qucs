@@ -22,11 +22,11 @@
 
 
 class TabDiagram : public Diagram  {
-public: 
+public:
   TabDiagram(int _cx=0, int _cy=0);
  ~TabDiagram();
 
-  virtual Diagram* newOne();
+  Element* newOne() const {return new TabDiagram(*this);}
   static Element* info(QString&, char* &, bool getNewOne=false);
   virtual void paint(ViewPainter*);
   virtual int calcDiagram();
@@ -36,7 +36,7 @@ public:
   void createAxisLabels() {};   // no labels in this diagram
 
 protected:
-  void calcData(Graph*) {};  // no graph data
+  void calcData(GraphDeque*) {};  // no graph data
 };
 
 #endif

@@ -35,13 +35,16 @@
 // Enlarge memory block if neccessary.
 #define  FIT_MEMORY_SIZE  \
   if(p >= p_end) {     \
-    int pos = p - g->begin(); \
+    int pos = p - g->_begin(); \
     assert(pos<Size); \
+  }
+
+#if 0
     Size += 256;        \
     g->resizeScrPoints(Size); \
-    p = g->begin() + pos; \
-    p_end = g->begin() + (Size - 9); \
-  }
+    p = g->_begin() + pos; \
+    p_end = g->_begin() + (Size - 9);
+#endif
 
 struct Axis {
   double  min, max; // least and greatest values of all graph data
@@ -56,12 +59,18 @@ struct Axis {
 };
 
 
+class QCheckBox;
+class QGridLayout;
+class QLineEdit;
+class DiagramDialog;
+
 class Diagram : public Element {
 public:
   Diagram(int _cx=0, int _cy=0);
   virtual ~Diagram();
 
-  virtual Diagram* newOne();
+  virtual Element* newOne() const{return NULL;}
+
   virtual int  calcDiagram() { return 0; };
   virtual void calcCoordinate
                (const double*, const double*, const double*, float*, float*, Axis const*) const {};
@@ -78,13 +87,16 @@ public:
   bool    getSelected(int, int);
   bool    resizeTouched(float, float, float);
   QString save();
+  virtual void save_some_char(QTextStream&) const;
+  virtual void save_rot_hack(QTextStream&) const;
   bool    load(const QString&, QTextStream*);
+  virtual void set_hide_lines_hack(bool){};
 
-  void getAxisLimits(Graph*);
+  void getAxisLimits(GraphDeque const*);
   void updateGraphData();
   void loadGraphData(const QString&);
   void recalcGraphData();
-  bool sameDependencies(Graph const*, Graph const*) const;
+  bool sameDependencies(GraphDeque const*, GraphDeque const*) const;
   int  checkColumnWidth(const QString&, const QFontMetrics&, int, int, int);
 
   virtual bool insideDiagram(float, float) const;
@@ -94,7 +106,8 @@ public:
   QString Name; // identity of diagram type (e.g. Polar), used for saving etc.
   QPen    GridPen;
 
-  QList<Graph *>  Graphs;
+  QList<GraphDeque *> const& graphLists() const {return GraphDeques;}
+  QList<GraphDeque *>  GraphDeques;
   QList<Arc *>    Arcs;
   QList<Line *>   Lines;
   QList<Text *>   Texts;
@@ -103,8 +116,10 @@ public:
   Axis  xAxis, yAxis, zAxis;   // axes (x, y left, y right)
   int State;  // to remember which resize area was touched
 
-  bool hideLines;       // for "Rect3D": hide invisible lines ?
-  int rotX, rotY, rotZ; // for "Rect3D": rotation around x, y and z axis
+  // FIXME: one callback for all options
+  virtual bool applyDialog(){return false;}
+  // FIXME: ugly.
+  virtual void grid_layout_stuff(DiagramDialog*, QGridLayout*, QWidget*, unsigned){}
 
 protected:
   void calcSmithAxisScale(Axis*, int&, int&);
@@ -121,7 +136,7 @@ protected:
   virtual void clip(Graph::iterator &) const;
   void rectClip(Graph::iterator &) const;
 
-  virtual void calcData(Graph*);
+  virtual void calcData(GraphDeque*);
 
 private:
   int Bounding_x1, Bounding_x2, Bounding_y1, Bounding_y2;

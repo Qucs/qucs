@@ -19,11 +19,12 @@
 #define MARKER_H
 
 #include "element.h"
+#include "graph.h"
 #include "viewpainter.h"
 
 class QPainter;
 class Diagram;
-class Graph;
+class GraphDeque;
 
 typedef enum{
 	nM_Rect = 0,
@@ -31,14 +32,16 @@ typedef enum{
 	nM_Rad
 } numMode_t;
 
-
+// GraphMarker?
 class Marker : public Element {
+  Marker(const Marker&);
 public:
-  Marker(Graph *pg_=0, int _nn=0, int cx_=0, int cy_=0);
+  Marker(GraphDeque::const_iterator const& p, GraphDeque const *pg_=NULL, int cx_=0, int cy_=0);
  ~Marker();
 
 private:
-  void    initText(int);
+  void initText(GraphDeque::const_iterator const&);
+  void assignText();
 public:
   void    createText();
   void    makeInvalid();
@@ -51,24 +54,28 @@ public:
   QString save();
   bool    load(const QString& Line);
   bool    getSelected(int, int);
-  Marker* sameNewOne(Graph*);
+  Marker* sameNewOne(GraphDeque const*);
+  void setGraph(GraphDeque const*);
   void    getTextSize();
-  Graph const* graph() const {return pGraph;}
+  GraphDeque const* graph() const {return pGraph;}
   int precision() const {return Precision;}
   std::vector<double> const& varPos() const {return VarPos;}
   const Diagram *diag() const;
+  GraphDeque::MarkerPos splPos() const;
 public: // power matching stuff. some sort of VarPos (ab?)use
   double  powFreq() const {return VarPos[0];}
   double  powReal() const {return VarDep[0];}
   double  powImag() const {return VarDep[1];}
 
 // private: // not yet
-  Graph const *pGraph;   // the corresponding graph
+  const GraphDeque *pGraph;
 
 private:
   std::vector<double> VarPos;   // values the marker is pointing to
   double VarDep[2];   // dependent value
   float  fCX, fCY;  // coordinates for the line from graph to marker body
+  GraphDeque::const_iterator SplPosD;
+  Graph::const_iterator SplPosX;
 
 public:
   QString Text;     // the string to be displayed in the marker text

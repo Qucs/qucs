@@ -19,15 +19,16 @@
 #define GRAPH_H
 
 
-#include "marker.h"
 #include "element.h"
 
 #include <cmath>
+#include <complex>
 #include <QColor>
-#include <Q3PtrList>
 #include <QDateTime>
 
 #include <assert.h>
+
+typedef std::complex<double> cplx_t;
 
 typedef enum{
   GRAPHSTYLE_INVALID = -1,
@@ -52,6 +53,7 @@ inline graphstyle_t toGraphStyle(int x){
 }
 
 class Diagram;
+class Marker;
 class ViewPainter;
 
 
@@ -77,23 +79,19 @@ private:
 struct Axis;
 
 /*!
- * prepare data for plotting purposes in Diagram.
- * a Graph is a list of graphs (bug?!)
- * iterating yields points (in screen coordinates) and control tokens.
- *
- * also stores markers.
+ * a graph (in the usual sense)
+ * FIXME: this is a COMPLEX graph in one variable,
+ *        there are other graphs...
+ *        should be made more explicit.
  */
-class Graph : public Element {
+class /*Complex*/Graph /*: public GraphBase*/ {
 public:
-  Graph(const Diagram*, const QString& _Line="");
- ~Graph();
-
   class ScrPt{
     float ScrX;
     float ScrY;
 
     double indep; // top level indep value (sweep)
-    double dep; // top level dep value // FIXME: type?!
+    cplx_t dep; // top level dep value
   public:
     ScrPt() : ScrX(0){}
     ~ScrPt(){}
@@ -105,7 +103,7 @@ public:
     void setScrY(float); // screen vertical coordinate
     void setScr(float,float); // both @ once.
     void setIndep(double);
-    void setDep(double);
+    void setDep(cplx_t);
 //    void attachCoords(double*);
 
     bool isPt() const; // indicate if this is a point on the screen
@@ -116,11 +114,45 @@ public:
     float getScrX() const;
     float getScrY() const;
     double getIndep() const;
-    double getDep() const;
+    cplx_t getDep() const;
   };
-  typedef std::vector<ScrPt> container;
+  typedef QVector<ScrPt> container;
   typedef container::iterator iterator;
   typedef container::const_iterator const_iterator;
+
+//  iterator begin(){return b;}
+//  iterator end(){return e;}
+  const_iterator begin() const{return b;}
+  const_iterator end() const{return e;}
+public:
+  Graph() : b(), e() {} // required by GraphDeque::Graphs.resize()...
+  Graph(const_iterator B, const_iterator E) : b(B), e(E) {}
+  const_iterator findSample(double&) const;
+  ~Graph(){}
+private:
+  /*const*/ const_iterator b;
+  /*const*/ const_iterator e;
+  // SimOutputData* origin;
+};
+
+/*!
+ * prepare data for plotting purposes in Diagram.
+ * iterating yields Graphs.
+ *
+ * also stores markers.
+ */
+class GraphDeque : public Element /*why Element?*/ {
+  GraphDeque(const GraphDeque&){assert(false/*unreachable*/);}
+public:
+  GraphDeque(const Diagram*, const QString& _Line="");
+  ~GraphDeque();
+
+  typedef QVector<Graph> container;
+  typedef container::iterator iterator;
+  typedef container::const_iterator const_iterator;
+
+  // just a sketch. (how about markers in between sampling points?)
+  typedef std::pair<GraphDeque::const_iterator, Graph::const_iterator> MarkerPos;
 
   int loadDatFile(const QString& filename);
   int loadIndepVarData(const QString&, char* datfilecontent, DataX* where);
@@ -129,25 +161,36 @@ public:
   void    paintLines(ViewPainter*, int, int);
   QString save();
   bool    load(const QString&);
-  int     getSelected(int, int);
-  Graph*  sameNewOne();
+  GraphDeque::const_iterator getSelected(int, int) const;
+  GraphDeque* sameNewOne();
   
 private: // tmp hack
   DataX* mutable_axis(uint i) { if(i<(uint)cPointsX.size()) return cPointsX.at(i); return NULL;}
 public:
   unsigned numAxes() const { return cPointsX.size(); }
   DataX const* axis(uint i) const { if(i<(uint)cPointsX.size()) return cPointsX.at(i); return NULL;}
+  double const* coords(uint i) const { // ++i;
+                                       if(i<(uint)cPointsX.size())
+                                         if(cPointsX.at(i))
+					   return cPointsX.at(i)->Points;
+					     return NULL;}
   size_t count(uint i) const { if(axis(i)) return axis(i)->count; return 0; }
   QString axisName(unsigned i) const {if(axis(i))return axis(i)->Var; return "";}
   bool isEmpty() const { return !cPointsX.size(); }
   QVector<DataX*>& mutable_axes(){return cPointsX;} // HACK
 
-  void clear(){ScrPoints.resize(0);}
-  void resizeScrPoints(size_t s){assert(s>=ScrPoints.size()); ScrPoints.resize(s);}
-  iterator begin(){return ScrPoints.begin();}
-  iterator end(){return ScrPoints.end();}
-  const_iterator begin() const{return ScrPoints.begin();}
-  const_iterator end() const{return ScrPoints.end();}
+  void clear(){ScrPoints.resize(0); Graphs.resize(0); invalidateMarkers();}
+  void resizeScrPoints(size_t s){assert(s>=(unsigned)ScrPoints.size()); ScrPoints.resize(s);}
+  iterator begin(){return Graphs.begin();}
+  iterator end(){return Graphs.end();}
+  const_iterator begin() const{return Graphs.begin();}
+  const_iterator end() const{return Graphs.end();}
+
+// private: not yet
+  Graph::iterator _begin(){return ScrPoints.begin();}
+  Graph::iterator _end(){return ScrPoints.end();}
+  Graph::const_iterator _begin()const{return ScrPoints.begin();}
+  Graph::const_iterator _end()const{return ScrPoints.end();}
 
   QDateTime lastLoaded;  // when it was loaded into memory
   int     yAxisNo;       // which y axis is used
@@ -170,12 +213,18 @@ private: // painting
   void drawArrowSymbols(int, int, ViewPainter*) const;
 public: // marker related
   void createMarkerText() const;
-  std::pair<double,double> findSample(std::vector<double>&) const;
+  MarkerPos findSample(std::vector<double>&) const;
+  void samplePos(const_iterator, std::vector<double>& VarPos) const;
   Diagram const* parentDiagram() const{return diagram;}
+  void invalidateMarkers();
 private:
   QVector<DataX*>  cPointsX;
-  std::vector<ScrPt> ScrPoints; // data in screen coordinates
+  Graph::container ScrPoints; // data in screen coordinates
   Diagram const* diagram;
+  container Graphs;
+public: // BUG. used by Diagram
+  void push_back(const Graph& g);
+  const Graph& back() const {return Graphs.back();}
 };
 
 #endif

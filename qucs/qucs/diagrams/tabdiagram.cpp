@@ -25,7 +25,7 @@
 #include <QPainter>
 
 #include "tabdiagram.h"
-#include "main.h"
+#include "main.h" // BUG: needed for QucsSettings?!
 #include <cmath>
 #include "misc.h"
 
@@ -152,11 +152,11 @@ int TabDiagram::calcDiagram()
   if(xAxis.limit_min < 0.0)
     xAxis.limit_min = 0.0;
 
-  Graph *firstGraph;
+  GraphDeque *firstGraphDeque;
 
-  QListIterator<Graph *> ig(Graphs);
-  Graph *g = 0;
-  if (ig.hasNext()) // point to first graph
+  QListIterator<GraphDeque *> ig(GraphDeques);
+  GraphDeque *g = 0;
+  if (ig.hasNext()) // point to first graph(list)
     g = ig.next();
 
   if(g == 0) {  // no variables specified in diagram ?
@@ -234,11 +234,10 @@ int TabDiagram::calcDiagram()
     Lines.last()->style = QPen(Qt::black,2);
   }  // of "if no data in graphs"
 
-  
-  firstGraph = g;
+  firstGraphDeque = g;
   // ................................................
   // all dependent variables
-  foreach(Graph *g, Graphs) {
+  for(auto g : GraphDeques) {
     y = y2-tHeight-5;
     colWidth = 0;
 
@@ -258,7 +257,7 @@ int TabDiagram::calcDiagram()
 	if(colWidth < 0)  goto funcEnd;
 	Texts.append(new Text(x, y, Str));
       }
-      else if(sameDependencies(g, firstGraph)) {
+      else if(sameDependencies(g, firstGraphDeque)) {
         int z=g->axis(0)->count * g->countY;
         if(z > NumAll)  NumAll = z;
 
@@ -315,7 +314,7 @@ int TabDiagram::calcDiagram()
       Texts.append(new Text(x, y, Str));
     }
     x += colWidth+15;
-    if(g != Graphs.last())   // do not paint last line
+    if(g != GraphDeques.last())   // do not paint last line
       Lines.append(new Line(x-8, y2, x-8, 0, QPen(Qt::black,0)));
   }
 
@@ -396,12 +395,6 @@ bool TabDiagram::scrollTo(int initial, int, int dy)
     return false;   // did anything change ?
 
   return true;
-}
-
-// ------------------------------------------------------------
-Diagram* TabDiagram::newOne()
-{
-  return new TabDiagram();
 }
 
 // ------------------------------------------------------------

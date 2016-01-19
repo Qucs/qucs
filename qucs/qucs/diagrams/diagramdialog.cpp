@@ -22,7 +22,6 @@
 #include "diagramdialog.h"
 #include "qucs.h"
 #include "schematic.h"
-#include "rect3ddiagram.h"
 
 #include <cmath>
 #include <assert.h>
@@ -46,56 +45,6 @@
 #include <QDir>
 #include <QDebug>
 
-
-#define CROSS3D_SIZE   30
-#define WIDGET3D_SIZE  2*CROSS3D_SIZE
-// This widget class paints a small 3-dimensional coordinate cross.
-class Cross3D : public QWidget  {
-public:
-  Cross3D(float rx_, float ry_, float rz_, QWidget *parent = 0)
-          : QWidget(parent) {
-    rotX = rx_;
-    rotY = ry_;
-    rotZ = rz_;
-    setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
-    setMinimumSize(WIDGET3D_SIZE, WIDGET3D_SIZE);
-    resize(WIDGET3D_SIZE, WIDGET3D_SIZE);
-  };
- ~Cross3D() {};
-
-  double rotX, rotY, rotZ;   // in radians !!!!
-
-private:
-  void  paintEvent(QPaintEvent*) {
-    QPainter Painter(this);
-    float cxx = cos(rotZ);
-    float cxy = sin(rotZ);
-    float cxz = sin(rotY);
-    float cyz = sin(rotX);
-    float cyy = cos(rotX);
-    float cyx = cyy * cxy + cyz * cxz * cxx;
-    cyy = cyy * cxx - cyz * cxz * cxy;
-    cyz *= cos(rotY);
-    cxx *= cos(rotY);
-    cxy *= cos(rotY);
-
-    Painter.setPen(QPen(Qt::red,2));
-    Painter.drawLine(CROSS3D_SIZE, CROSS3D_SIZE,
-		     int(CROSS3D_SIZE * (1.0+cxx)),
-		     int(CROSS3D_SIZE * (1.0-cyx)));
-    Painter.setPen(QPen(Qt::green,2));
-    Painter.drawLine(CROSS3D_SIZE, CROSS3D_SIZE,
-		     int(CROSS3D_SIZE * (1.0-cxy)),
-		     int(CROSS3D_SIZE * (1.0-cyy)));
-    Painter.setPen(QPen(Qt::blue,2));
-    Painter.drawLine(CROSS3D_SIZE, CROSS3D_SIZE,
-		     int(CROSS3D_SIZE * (1.0+cxz)),
-		     int(CROSS3D_SIZE * (1.0+cyz)));
-  };
-};
-
-
-
 // standard colors: blue, red, magenta, green, cyan, yellow, grey, black
 static const QRgb DefaultColors[]
           = {0x0000ff, 0xff0000, 0xff00ff, 0x00ff00, 0x00ffff, 0xffff00,
@@ -104,11 +53,10 @@ static const QRgb DefaultColors[]
 static const int NumDefaultColors = 8;
 
 
-DiagramDialog::DiagramDialog(Diagram *d, QWidget *parent, Graph *currentGraph)
+DiagramDialog::DiagramDialog(Diagram *d, QWidget *parent, GraphDeque *currentGraphDeque)
                     : QDialog(parent, 0, TRUE, Qt::WDestructiveClose)
 {
   Diag = d;
-  Graphs.setAutoDelete(true);
   copyDiagramGraphs();   // make a copy of all graphs
   if(parent){
 	  const Schematic* s = dynamic_cast<const Schematic*>(parent);
@@ -168,8 +116,6 @@ DiagramDialog::DiagramDialog(Diagram *d, QWidget *parent, Graph *currentGraph)
   yAxisBox = 0;
   Property2 = 0;
   ColorButt = 0;
-  hideInvisible = 0;
-  rotationX = rotationY = rotationZ = 0;
 
   QGroupBox *InputGroup = new QGroupBox(tr("Graph Input"));
   QVBoxLayout *InputGroupLayout = new QVBoxLayout();
@@ -308,10 +254,10 @@ DiagramDialog::DiagramDialog(Diagram *d, QWidget *parent, Graph *currentGraph)
   Box1Layout->addWidget(GraphGroup);
   QVBoxLayout *GraphGroupLayout = new QVBoxLayout();
   GraphGroup->setLayout(GraphGroupLayout);
-  GraphList = new QListWidget();
-  GraphGroupLayout->addWidget(GraphList);
-  connect(GraphList, SIGNAL(itemClicked(QListWidgetItem*)), SLOT(slotSelectGraph(QListWidgetItem*)));
-  connect(GraphList, SIGNAL(itemDoubleClicked(QListWidgetItem*)), SLOT(slotDeleteGraph()));
+  GraphDequeList = new QListWidget();
+  GraphGroupLayout->addWidget(GraphDequeList);
+  connect(GraphDequeList, SIGNAL(itemClicked(QListWidgetItem*)), SLOT(slotSelectGraph(QListWidgetItem*)));
+  connect(GraphDequeList, SIGNAL(itemDoubleClicked(QListWidgetItem*)), SLOT(slotDeleteGraph()));
   QPushButton *NewButt = new QPushButton(tr("New Graph"));
   GraphGroupLayout->addWidget(NewButt);
   connect(NewButt, SIGNAL(clicked()), SLOT(slotNewGraph()));
@@ -324,7 +270,7 @@ DiagramDialog::DiagramDialog(Diagram *d, QWidget *parent, Graph *currentGraph)
 
 
   // Tab #2...........................................................
-  int Row = 0;
+  unsigned Row = 0;
   if(Diag->Name.at(0) != 'T') {  // not tabular or timing diagram
     QWidget *Tab2 = new QWidget(t);
     QGridLayout *gp = new QGridLayout(Tab2,13,3,5,5);
@@ -356,7 +302,7 @@ DiagramDialog::DiagramDialog(Diagram *d, QWidget *parent, Graph *currentGraph)
         Tab2),  Row,Row,0,2);
     Row++;
 
-    if(Diag->Name != "Rect3D") {
+    if(Diag->Name != "Rect3D") { // BUG
       GridOn = new QCheckBox(tr("show Grid"), Tab2);
       gp->addMultiCellWidget(GridOn, Row,Row,0,2);
       Row++;
@@ -415,73 +361,8 @@ DiagramDialog::DiagramDialog(Diagram *d, QWidget *parent, Graph *currentGraph)
       GridLogY->setChecked(Diag->yAxis.log);
       GridLogZ->setChecked(Diag->zAxis.log);
 
-
-      if(Diag->Name == "Rect3D") {
-        hideInvisible = new QCheckBox(tr("hide invisible lines"), Tab2);
-        gp->addMultiCellWidget(hideInvisible, Row,Row,0,2);
-        Row++;
-
-        QLabel *LabelRotX = new QLabel(tr("Rotation around x-Axis:"), Tab2);
-        LabelRotX->setPaletteForegroundColor(Qt::red);
-        gp->addWidget(LabelRotX, Row,0);
-        SliderRotX = new QSlider(0,360,20, ((Rect3DDiagram*)Diag)->rotX,
-				 Qt::Horizontal, Tab2);
-        gp->addWidget(SliderRotX, Row,1);
-        connect(SliderRotX, SIGNAL(valueChanged(int)), SLOT(slotNewRotX(int)));
-        rotationX = new QLineEdit(Tab2);
-        rotationX->setValidator(ValInteger);
-        rotationX->setMaxLength(3);
-        rotationX->setMaximumWidth(40);
-        gp->addWidget(rotationX, Row,2);
-        connect(rotationX, SIGNAL(textChanged(const QString&)),
-			   SLOT(slotEditRotX(const QString&)));
-        Row++;
-
-        QLabel *LabelRotY = new QLabel(tr("Rotation around y-Axis:"), Tab2);
-        LabelRotY->setPaletteForegroundColor(Qt::green);
-        gp->addWidget(LabelRotY, Row,0);
-        SliderRotY = new QSlider(0,360,20, ((Rect3DDiagram*)Diag)->rotY,
-				 Qt::Horizontal, Tab2);
-        gp->addWidget(SliderRotY, Row,1);
-        connect(SliderRotY, SIGNAL(valueChanged(int)), SLOT(slotNewRotY(int)));
-        rotationY = new QLineEdit(Tab2);
-        rotationY->setValidator(ValInteger);
-        rotationY->setMaxLength(3);
-        rotationY->setMaximumWidth(40);
-        gp->addWidget(rotationY, Row,2);
-        connect(rotationY, SIGNAL(textChanged(const QString&)),
-			   SLOT(slotEditRotY(const QString&)));
-        Row++;
-
-        QLabel *LabelRotZ = new QLabel(tr("Rotation around z-Axis:"), Tab2);
-        LabelRotZ->setPaletteForegroundColor(Qt::blue);
-        gp->addWidget(LabelRotZ, Row,0);
-        SliderRotZ = new QSlider(0,360,20, ((Rect3DDiagram*)Diag)->rotZ,
-				 Qt::Horizontal, Tab2);
-        gp->addWidget(SliderRotZ, Row,1);
-        connect(SliderRotZ, SIGNAL(valueChanged(int)), SLOT(slotNewRotZ(int)));
-        rotationZ = new QLineEdit(Tab2);
-        rotationZ->setValidator(ValInteger);
-        rotationZ->setMaxLength(3);
-        rotationZ->setMaximumWidth(40);
-        gp->addWidget(rotationZ, Row,2);
-        connect(rotationZ, SIGNAL(textChanged(const QString&)),
-			   SLOT(slotEditRotZ(const QString&)));
-        Row++;
-
-        gp->addWidget(new QLabel(tr("2D-projection:"), Tab2), Row,0);
-        DiagCross = new Cross3D(((Rect3DDiagram*)Diag)->rotX,
-				((Rect3DDiagram*)Diag)->rotY,
-				((Rect3DDiagram*)Diag)->rotZ, Tab2);
-        gp->addWidget(DiagCross, Row,1);
-
-        // transfer the diagram properties to the dialog
-        hideInvisible->setChecked(Diag->hideLines);
-        rotationX->setText(QString::number(((Rect3DDiagram*)Diag)->rotX));
-        rotationY->setText(QString::number(((Rect3DDiagram*)Diag)->rotY));
-        rotationZ->setText(QString::number(((Rect3DDiagram*)Diag)->rotZ));
-
-      }
+      // FIXME: should do all of the above.
+      Diag->grid_layout_stuff(this, gp, Tab2, Row);
     }
     else GridLogX = GridLogY = GridLogZ = 0;
 
@@ -702,18 +583,18 @@ DiagramDialog::DiagramDialog(Diagram *d, QWidget *parent, Graph *currentGraph)
   // ...........................................................
   // put all graphs into the ListBox
   Row = 0;
-  foreach(Graph *pg, Diag->Graphs) {
-    GraphList->insertItem(Row, pg->Var);
-    if(pg == currentGraph) {
-      GraphList->setCurrentRow(Row);   // select current graph
-      SelectGraph(currentGraph);
+  for(auto pg : Diag->graphLists()) {
+    GraphDequeList->insertItem(Row, pg->Var);
+    if(pg == currentGraphDeque) {
+      GraphDequeList->setCurrentRow(Row);   // select current graphList
+      SelectGraph(currentGraphDeque);
     }
     Row++;
   }
 
   if(ColorButt) {
-    if(!currentGraph) {
-      QColor selectedColor(DefaultColors[GraphList->count()%NumDefaultColors]);
+    if(!currentGraphDeque) {
+      QColor selectedColor(DefaultColors[GraphDequeList->count()%NumDefaultColors]);
       QString stylesheet = QString("QPushButton {background-color: %1};").arg(selectedColor.name());
       ColorButt->setStyleSheet(stylesheet);
       ColorButt->setPaletteBackgroundColor(selectedColor);
@@ -821,16 +702,16 @@ void DiagramDialog::slotTakeVar(QTableWidgetItem* Item)
   GraphInput->setText(s1);
 
   //if(s.isEmpty()) {
-    GraphList->addItem(GraphInput->text());////insertItem(i, GraphInput->text());
-    GraphList->setCurrentRow(GraphList->count()-1);
+    GraphDequeList->addItem(GraphInput->text());////insertItem(i, GraphInput->text());
+    GraphDequeList->setCurrentRow(GraphDequeList->count()-1);
 
-    Graph *g = new Graph(Diag, GraphInput->text());   // create a new graph
+    GraphDeque *g = new GraphDeque(Diag, GraphInput->text());   // create a new graph
 
     if(Diag->Name != "Tab") {
       if(Diag->Name != "Truth") {
         g->Color = ColorButt->paletteBackgroundColor();
         g->Thick = Property2->text().toInt();
-        QColor selectedColor(DefaultColors[GraphList->count()%NumDefaultColors]);
+        QColor selectedColor(DefaultColors[GraphDequeList->count()%NumDefaultColors]);
         QString stylesheet = QString("QPushButton {background-color: %1};").arg(selectedColor.name());
         ColorButt->setStyleSheet(stylesheet);
         ColorButt->setPaletteBackgroundColor(selectedColor);
@@ -855,7 +736,7 @@ void DiagramDialog::slotTakeVar(QTableWidgetItem* Item)
       g->numMode   = PropertyBox->currentItem();
     }
 
-    Graphs.append(g);
+    GraphDeques.append(g);
     changed = true;
     toTake  = true;
   //}
@@ -876,17 +757,17 @@ void DiagramDialog::slotTakeVar(QTableWidgetItem* Item)
 void DiagramDialog::slotSelectGraph(QListWidgetItem *item)
 {
   if(item == 0) {
-    GraphList->clearSelection();
+    GraphDequeList->clearSelection();
     return;
   }
 
-  SelectGraph (Graphs.at (GraphList->currentRow()));
+  SelectGraph (GraphDeques.at (GraphDequeList->currentRow()));
 }
 
 /*!
-  Puts the text of the selected graph into the line edit.
+  Puts the text of the selected graph list into the line edit.
 */
-void DiagramDialog::SelectGraph(Graph *g)
+void DiagramDialog::SelectGraph(GraphDeque *g)
 {
   GraphInput->blockSignals(true);
   GraphInput->setText(g->Var);
@@ -928,27 +809,27 @@ void DiagramDialog::SelectGraph(Graph *g)
 */
 void DiagramDialog::slotDeleteGraph()
 {
-  int i = GraphList->currentRow();
+  int i = GraphDequeList->currentRow();
   if(i < 0) return;   // return, if no item selected
 
-  GraphList->takeItem(i);
-  Graphs.remove(i);
+  GraphDequeList->takeItem(i);
+  GraphDeques.remove(i);
 
   int k=0;
-  if (GraphList->count()!=0) {
-      if (i>(GraphList->count()-1)) {
-          k = GraphList->count()-1;
+  if (GraphDequeList->count()!=0) {
+      if (i>(GraphDequeList->count()-1)) {
+          k = GraphDequeList->count()-1;
       } else {
           k=i;
       }
-      GraphInput->setText(GraphList->item(k)->text());
+      GraphInput->setText(GraphDequeList->item(k)->text());
   } else {
       GraphInput->setText("");  // erase input line and back to default values
   }
 
   if(Diag->Name != "Tab") {
     if(Diag->Name != "Truth") {
-      QColor selectedColor(DefaultColors[GraphList->count()%NumDefaultColors]);
+      QColor selectedColor(DefaultColors[GraphDequeList->count()%NumDefaultColors]);
       QString stylesheet = QString("QPushButton {background-color: %1};").arg(selectedColor.name());
       ColorButt->setStyleSheet(stylesheet);
       ColorButt->setPaletteBackgroundColor(selectedColor);
@@ -983,9 +864,9 @@ void DiagramDialog::slotNewGraph()
   assert(Diag);
   if(GraphInput->text().isEmpty()) return;
 
-  GraphList->addItem(GraphInput->text());
+  GraphDequeList->addItem(GraphInput->text());
 
-  Graph *g = new Graph(Diag, GraphInput->text());
+  GraphDeque *g = new GraphDeque(Diag, GraphInput->text());
 // FIXME: call  Diag->whateverelse();
   if(Diag->Name != "Tab") { // BUG
     if(Diag->Name != "Truth") { // BUG
@@ -1001,7 +882,7 @@ void DiagramDialog::slotNewGraph()
     g->Precision = Property2->text().toInt();
     g->numMode   = PropertyBox->currentItem();
   }
-  Graphs.append(g);
+  GraphDeques.append(g);
   changed = true;
   toTake  = false;
 }
@@ -1137,39 +1018,18 @@ void DiagramDialog::slotApply()
       changed = true;
     }
 
-    // for "rect3D"
-    if(hideInvisible)
-      if(((Rect3DDiagram*)Diag)->hideLines != hideInvisible->isChecked()) {
-        ((Rect3DDiagram*)Diag)->hideLines = hideInvisible->isChecked();
-        changed = true;
-      }
-
-    if(rotationX)
-      if(((Rect3DDiagram*)Diag)->rotX != rotationX->text().toInt()) {
-        ((Rect3DDiagram*)Diag)->rotX = rotationX->text().toInt();
-        changed = true;
-      }
-
-    if(rotationY)
-      if(((Rect3DDiagram*)Diag)->rotY != rotationY->text().toInt()) {
-        ((Rect3DDiagram*)Diag)->rotY = rotationY->text().toInt();
-        changed = true;
-      }
-
-    if(rotationZ)
-      if(((Rect3DDiagram*)Diag)->rotZ != rotationZ->text().toInt()) {
-        ((Rect3DDiagram*)Diag)->rotZ = rotationZ->text().toInt();
-        changed = true;
-      }
+    // FIXME: should do all of the above
+    changed |= Diag->applyDialog();
 
   }   // of "if(Diag->Name != "Tab")"
 
-  Diag->Graphs.clear();   // delete the graphs
-  Graphs.setAutoDelete(false);
-  for(Graph *pg = Graphs.first(); pg != 0; pg = Graphs.next())
-    Diag->Graphs.append(pg);  // transfer the new graphs to diagram
-  Graphs.clear();
-  Graphs.setAutoDelete(true);
+  Diag->GraphDeques.clear();
+  GraphDeques.setAutoDelete(false);
+  for(GraphDeque *pg = GraphDeques.first(); pg != 0; pg = GraphDeques.next()) {
+    Diag->GraphDeques.append(pg);  // transfer the new graphs to diagram
+  }
+  GraphDeques.clear();
+  GraphDeques.setAutoDelete(true);
 
   Diag->loadGraphData(defaultDataSet);
   ((Schematic*)parent())->viewport()->repaint();
@@ -1204,10 +1064,10 @@ void DiagramDialog::slotSetColor()
   ColorButt->setStyleSheet(stylesheet);
   ColorButt->setPaletteBackgroundColor(c);
 
-  int i = GraphList->currentRow();
+  int i = GraphDequeList->currentRow();
   if(i < 0) return;   // return, if no item selected
 
-  Graph *g = Graphs.at(i);
+  GraphDeque *g = GraphDeques.at(i);
   g->Color = c;
   changed = true;
   toTake  = false;
@@ -1228,12 +1088,12 @@ void DiagramDialog::slotSetGridColor()
 */
 void DiagramDialog::slotResetToTake(const QString& s)
 {
-  int i = GraphList->currentRow();
+  int i = GraphDequeList->currentRow();
   if(i < 0) return;   // return, if no item selected
 
-  Graph *g = Graphs.at(i);
+  GraphDeque *g = GraphDeques.at(i);
   g->Var = s;
-  // \todo GraphList->changeItem(s, i);   // must done after the graph settings !!!
+  // \todo GraphDeque->changeItem(s, i);   // must done after the graph settings !!!
   changed = true;
   toTake  = false;
 }
@@ -1243,10 +1103,10 @@ void DiagramDialog::slotResetToTake(const QString& s)
 */
 void DiagramDialog::slotSetProp2(const QString& s)
 {
-  int i = GraphList->currentRow();
+  int i = GraphDequeList->currentRow();
   if(i < 0) return;   // return, if no item selected
 
-  Graph *g = Graphs.at(i);
+  GraphDeque *g = GraphDeques.at(i);
   if(Diag->Name == "Tab") g->Precision = s.toInt();
   else  g->Thick = s.toInt();
   changed = true;
@@ -1258,10 +1118,10 @@ void DiagramDialog::slotSetProp2(const QString& s)
 */
 void DiagramDialog::slotSetNumMode(int Mode)
 {
-  int i = GraphList->currentRow();
+  int i = GraphDequeList->currentRow();
   if(i < 0) return;   // return, if no item selected
 
-  Graph *g = Graphs.at(i);
+  GraphDeque *g = GraphDeques.at(i);
   g->numMode = Mode;
   changed = true;
   toTake  = false;
@@ -1291,10 +1151,10 @@ void DiagramDialog::slotSetGridBox(int state)
 */
 void DiagramDialog::slotSetGraphStyle(int style)
 {
-  int i = GraphList->currentRow();
+  int i = GraphDequeList->currentRow();
   if(i < 0) return;   // return, if no item selected
 
-  Graph *g = Graphs.at(i);
+  GraphDeque *g = GraphDeques.at(i);
   g->Style = toGraphStyle(style);
   assert(g->Style!=GRAPHSTYLE_INVALID);
   changed = true;
@@ -1306,8 +1166,9 @@ void DiagramDialog::slotSetGraphStyle(int style)
 */
 void DiagramDialog::copyDiagramGraphs()
 {
-  foreach(Graph *pg, Diag->Graphs)
-    Graphs.append(pg->sameNewOne());
+  foreach(GraphDeque *pg, Diag->GraphDeques) {
+    GraphDeques.append(pg->sameNewOne());
+  }
 }
 
 /*!
@@ -1315,10 +1176,10 @@ void DiagramDialog::copyDiagramGraphs()
 */
 void DiagramDialog::slotSetYAxis(int axis)
 {
-  int i = GraphList->currentRow();
+  int i = GraphDequeList->currentRow();
   if(i < 0) return;   // return, if no item selected
 
-  Graph *g = Graphs.at(i);
+  GraphDeque *g = GraphDeques.at(i);
   g->yAxisNo = axis;
   changed = true;
   toTake  = false;
@@ -1396,64 +1257,5 @@ void DiagramDialog::slotChangeTab(QWidget*)
 }
 
 
-/*!
- Is called when the slider for rotation angle is changed.
-*/
-void DiagramDialog::slotNewRotX(int Value)
-{
-  rotationX->setText(QString::number(Value));
-  DiagCross->rotX = float(Value) * pi/180.0;
-  DiagCross->update();
-}
-
-/*!
- Is called when the slider for rotation angle is changed.
-*/
-void DiagramDialog::slotNewRotY(int Value)
-{
-  rotationY->setText(QString::number(Value));
-  DiagCross->rotY = float(Value) * pi/180.0;
-  DiagCross->update();
-}
-
-/*!
- Is called when the slider for rotation angle is changed.
-*/
-void DiagramDialog::slotNewRotZ(int Value)
-{
-  rotationZ->setText(QString::number(Value));
-  DiagCross->rotZ = float(Value) * pi/180.0;
-  DiagCross->update();
-}
-
-/*!
- Is called when the number (text) for rotation angle is changed.
-*/
-void DiagramDialog::slotEditRotX(const QString& Text)
-{
-  SliderRotX->setValue(Text.toInt());
-  DiagCross->rotX = Text.toFloat() * pi/180.0;
-  DiagCross->update();
-}
-
-/*!
- Is called when the number (text) for rotation angle is changed.
-*/
-void DiagramDialog::slotEditRotY(const QString& Text)
-{
-  SliderRotY->setValue(Text.toInt());
-  DiagCross->rotY = Text.toFloat() * pi/180.0;
-  DiagCross->update();
-}
-
-/*!
- Is called when the number (text) for rotation angle is changed.
-*/
-void DiagramDialog::slotEditRotZ(const QString& Text)
-{
-  SliderRotZ->setValue(Text.toInt());
-  DiagCross->rotZ = Text.toFloat() * pi/180.0;
-  DiagCross->update();
-}
 
 // vim:ts=8:sw=2:noet

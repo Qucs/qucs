@@ -21,6 +21,15 @@
 */
 
 #include <QFontMetrics>
+#include <QCheckBox>
+#include <QGridLayout>
+#include <QSlider>
+#include <QLabel>
+#include <QLineEdit>
+#include <QDebug>
+#include <QIntValidator>
+#include <QPainter>
+#include <QSignalMapper>
 
 #if HAVE_CONFIG_H
 # include <config.h>
@@ -34,10 +43,108 @@
 #endif
 
 #include "rect3ddiagram.h"
+#include "diagramdialog.h"
 #include "main.h"
 #include "misc.h"
 
-Rect3DDiagram::Rect3DDiagram(int _cx, int _cy) : Diagram(_cx, _cy)
+#define Qtr(x) QObject::tr(x)
+
+// Enlarge memory block if neccessary.
+#undef FIT_MEMORY_SIZE
+#define  FIT_MEMORY_SIZE  \
+  if(p >= p_end) {     \
+    int pos = p - g->_begin(); \
+    assert(pos<Size); \
+  }
+
+#if 0
+    Size += 256;        \
+    g->resizeScrPoints(Size); \
+    p = g->_begin() + pos; \
+    p_end = g->_begin() + (Size - 9);
+#endif
+
+// This widget class paints a small 3-dimensional coordinate cross.
+#define CROSS3D_SIZE   30
+#define WIDGET3D_SIZE  2*CROSS3D_SIZE
+
+class Cross3D : public QWidget  {
+public:
+  Cross3D(float rx_, float ry_, float rz_, QWidget *parent = 0)
+          : QWidget(parent) {
+    rotX = rx_;
+    rotY = ry_;
+    rotZ = rz_;
+    setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
+    setMinimumSize(WIDGET3D_SIZE, WIDGET3D_SIZE);
+    resize(WIDGET3D_SIZE, WIDGET3D_SIZE);
+  };
+ ~Cross3D() {};
+
+  double rotX, rotY, rotZ;   // in radians !!!!
+
+private:
+  void  paintEvent(QPaintEvent*) {
+    QPainter Painter(this);
+    float cxx = cos(rotZ);
+    float cxy = sin(rotZ);
+    float cxz = sin(rotY);
+    float cyz = sin(rotX);
+    float cyy = cos(rotX);
+    float cyx = cyy * cxy + cyz * cxz * cxx;
+    cyy = cyy * cxx - cyz * cxz * cxy;
+    cyz *= cos(rotY);
+    cxx *= cos(rotY);
+    cxy *= cos(rotY);
+
+    Painter.setPen(QPen(Qt::red,2));
+    Painter.drawLine(CROSS3D_SIZE, CROSS3D_SIZE,
+		     int(CROSS3D_SIZE * (1.0+cxx)),
+		     int(CROSS3D_SIZE * (1.0-cyx)));
+    Painter.setPen(QPen(Qt::green,2));
+    Painter.drawLine(CROSS3D_SIZE, CROSS3D_SIZE,
+		     int(CROSS3D_SIZE * (1.0-cxy)),
+		     int(CROSS3D_SIZE * (1.0-cyy)));
+    Painter.setPen(QPen(Qt::blue,2));
+    Painter.drawLine(CROSS3D_SIZE, CROSS3D_SIZE,
+		     int(CROSS3D_SIZE * (1.0+cxz)),
+		     int(CROSS3D_SIZE * (1.0+cyz)));
+  };
+};
+
+struct tPoint3D {
+  int   x, y;
+  int   No, done;
+  double indep;
+  double dep[2]; // BUG: complex
+};
+struct tPointZ {
+  float z;
+  int   No, NoCross;
+};
+struct tBound{
+  int min, max;
+};
+
+// -------------------------------------------- //
+//
+void mySignalWrapper::map(const QString& x)
+{
+  (_target->*_str)(x);
+}
+
+void mySignalWrapper::map(int x)
+{
+  (_target->*_int)(x);
+}
+
+// -------------------------------------------- //
+// -------------------------------------------- //
+
+Rect3DDiagram::Rect3DDiagram(int _cx, int _cy) : Diagram(_cx, _cy),
+  rotX(315), rotY(0), rotZ(225), hideLines(true),
+  hideInvisible(NULL), rotationX(NULL), rotationY(NULL), rotationZ(NULL),
+  SliderRotX(NULL), SliderRotY(NULL), SliderRotZ(NULL)
 {
   x1 = 10;     // position of label text
   y1 = y3 = 7;
@@ -45,9 +152,10 @@ Rect3DDiagram::Rect3DDiagram(int _cx, int _cy) : Diagram(_cx, _cy)
   y2 = 200;
   x3 = 207;    // with some distance for right axes text
 
+
   Mem = pMem = 0;  // auxiliary buffer for hidden lines
 
-  Name = "Rect3D"; // BUG
+  Name = "Rect3D"; // BUG, don't use names. use types.
   // symbolic diagram painting
   Lines.append(new Line(0, 0, cx,  0, QPen(Qt::black,0)));
   Lines.append(new Line(0, 0,  0, cy, QPen(Qt::black,0)));
@@ -56,6 +164,9 @@ Rect3DDiagram::Rect3DDiagram(int _cx, int _cy) : Diagram(_cx, _cy)
 
 Rect3DDiagram::~Rect3DDiagram()
 {
+  while (!callbacks.isEmpty()){
+    delete callbacks.takeFirst();
+  }
 }
 
 // ------------------------------------------------------------
@@ -135,7 +246,9 @@ int Rect3DDiagram::calcCross(int *Xses, int *Yses)
 }
 
 // ------------------------------------------------------------
-// Is needed for markers.
+/*!
+ * compute screen coordinates, e.g. for markers
+ */
 void Rect3DDiagram::calcCoordinate(const double* xD, const double* zD, const double* yD,
                                    float *px, float *py, Axis const*) const
 {
@@ -363,18 +476,24 @@ int Rect3DDiagram::comparePointZ(const void *Point1, const void *Point2)
 }
 
 // --------------------------------------------------------------
-// Removes the invisible parts of the graph.
+/*!
+ * does what "calcData" is meant to do
+ * also removes the invisible parts of the graph.
+ */
 void Rect3DDiagram::removeHiddenLines(char *zBuffer, tBound *Bounds)
 {
   double Dummy = 0.0;  // number for 1-dimensional data in 3D cartesian
   double *px, *py, *pz;
+  // temporarily disabled. does not work.
+  hideLines = false;
 
   tPoint3D *p;
   int i, j, z, dx, dy, Size=0;
   // pre-calculate buffer size to avoid reallocations in the first step
-  foreach(Graph *g, Graphs)
+  for(auto g : GraphDeques) {
     if(g->cPointsY)
       Size += g->axis(0)->count * g->countY;
+  }
 
   // "Mem" should be the last malloc to simplify realloc
   tPointZ *zMem = (tPointZ*)malloc( (Size+2)*sizeof(tPointZ) );
@@ -384,7 +503,7 @@ void Rect3DDiagram::removeHiddenLines(char *zBuffer, tBound *Bounds)
   tPointZ *zp = zMem, *zp_tmp;
 
   // ...............................................................
-  foreach(Graph *g, Graphs) {
+  for(auto g : GraphDeques) {
 
     pz = g->cPointsY;
     if(!pz) continue;
@@ -404,7 +523,12 @@ void Rect3DDiagram::removeHiddenLines(char *zBuffer, tBound *Bounds)
       px = g->axis(0)->Points;
     
       for(j=dx; j>0; j--) { // x coordinates
-        calcCoordinate3D(*(px++), *py, *pz, *(pz+1), pMem++, zp++);
+        calcCoordinate3D(*px, *py, *pz, *(pz+1), pMem, zp++);
+	pMem->indep = *px;
+	pMem->dep[0] = pz[0]; // BUG:
+	pMem->dep[1] = pz[1]; // only complex data here.
+	++px;
+	++pMem;
         pz += 2;
       }
 
@@ -506,7 +630,7 @@ void Rect3DDiagram::removeHiddenLines(char *zBuffer, tBound *Bounds)
   tPoint3D *MemEnd = Mem + 2*Size - 5;   // limit of buffer
 
   zp = zMem;
-  foreach(Graph *g, Graphs) {
+  for(auto g : GraphDeques) {
     if(!g->cPointsY) continue;
     dx = g->axis(0)->count;
     if(g->countY > 1)  dy = g->axis(1)->count;
@@ -760,7 +884,7 @@ void Rect3DDiagram::createAxis(Axis *Axis, bool Right,
   y = y1_ - int(double(valid)*cos_phi);
   if(Axis->Label.isEmpty()) {
     // write all labels ----------------------------------------
-    foreach(Graph *pg, Graphs) {
+    for(auto pg : GraphDeques) {
       if(Axis != &zAxis) {
         if(!pg->cPointsY)  continue;
         if(valid < 0) {
@@ -946,8 +1070,12 @@ Frame:   // jump here if error occurred (e.g. impossible log boundings)
 }
 
 // ------------------------------------------------------------
-// g->Points must already be empty!!!
-void Rect3DDiagram::calcData(Graph *g)
+/*!
+ * does not calculate
+ * copies data from pMem to graphDeque
+ * this is redundant, but currently required
+ */
+void Rect3DDiagram::calcData(GraphDeque *g)
 {
   if(!pMem)  return;
   if(!g->cPointsY) return;
@@ -956,13 +1084,14 @@ void Rect3DDiagram::calcData(Graph *g)
   Size *= 2;  // memory for cross grid lines
 
   g->resizeScrPoints(Size);
-  auto p = g->begin();
-  auto p_end = g->begin();
+  auto p = g->_begin();
+  auto p_end = g->_begin();
   p_end += Size - 9;   // limit of buffer
 
 
   p->setStrokeEnd();
   ++p;
+  auto graphbegin = p;
   switch(g->Style) {
     case GRAPHSTYLE_SOLID:
     case GRAPHSTYLE_DASH:
@@ -979,13 +1108,29 @@ void Rect3DDiagram::calcData(Graph *g)
               }
               else  break;
 	    }
+	  int pos = p - g->_begin();
+	  if(pos>=Size){
+	    qDebug() << pos << Size << "too many";
+	  }
           FIT_MEMORY_SIZE;  // need to enlarge memory block ?
+	  p->setIndep(pMem->indep);
+	  p->setDep(cplx_t(pMem->dep[0], pMem->dep[1]));
 	  (p++)->setScr(pMem->x, pMem->y);
           break;
         }
 
+	int pos = p - g->_begin();
+	if(pos>=Size){
+	  qDebug() << pos << Size << "too many";
+	}
         FIT_MEMORY_SIZE;  // need to enlarge memory block ?
-        if(pMem->done & 8)  (p++)->setBranchEnd();
+        if(pMem->done & 8) {
+	  qDebug() << "pushback 3d" << p-graphbegin;
+	  g->push_back(Graph(graphbegin, p)); // BUG: push back 3D Graph
+	                                      // (not implemented!)
+	  (p++)->setBranchEnd();
+	  graphbegin = p;
+	}
 
         if(pMem->done & 4)   // point invisible ?
           if((p-1)->isPt())
@@ -997,6 +1142,7 @@ void Rect3DDiagram::calcData(Graph *g)
 
     default:  // symbol (e.g. star) at each point **********************
       do {
+	graphbegin = p;
         while(1) {
           if(pMem->done & 11)    // is grid point ?
             if(pMem->done & 4) { // is hidden
@@ -1007,12 +1153,17 @@ void Rect3DDiagram::calcData(Graph *g)
               else  break;
 	    }
 
+	  p->setIndep(pMem->indep);
+	  p->setDep(cplx_t(pMem->dep[0], pMem->dep[1]));
           (p++)->setScr(pMem->x, pMem->y);
           break;
         }
 
-        if(pMem->done & 8)
+        if(pMem->done & 8) {
+	  g->push_back(Graph(graphbegin, p));
+	  graphbegin = p;
           (p++)->setBranchEnd();
+	}
       } while(((pMem++)->done & 512) == 0);
       p->setGraphEnd();
   }
@@ -1037,12 +1188,6 @@ bool Rect3DDiagram::insideDiagram(float x, float y) const
 }
 
 // ------------------------------------------------------------
-Diagram* Rect3DDiagram::newOne()
-{
-  return new Rect3DDiagram();
-}
-
-// ------------------------------------------------------------
 Element* Rect3DDiagram::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("3D-Cartesian");
@@ -1050,6 +1195,211 @@ Element* Rect3DDiagram::info(QString& Name, char* &BitmapFile, bool getNewOne)
 
   if(getNewOne)  return new Rect3DDiagram();
   return 0;
+}
+
+// ------------------------------------------------------------
+bool Rect3DDiagram::applyDialog()
+{
+  bool changed=false;
+  if(!hideInvisible){ // reachable?
+  }else if(hideLines != hideInvisible->isChecked()) {
+    hideLines = hideInvisible->isChecked();
+    changed = true;
+  }
+
+  if(rotationX)
+    if(rotX != rotationX->text().toInt()) {
+      rotX = rotationX->text().toInt();
+      changed = true;
+    }
+
+  if(rotationY)
+    if(rotY != rotationY->text().toInt()) {
+      rotY = rotationY->text().toInt();
+      changed = true;
+    }
+
+  if(rotationZ)
+    if(rotZ != rotationZ->text().toInt()) {
+      rotZ = rotationZ->text().toInt();
+      changed = true;
+    }
+  return changed;
+}
+
+// ------------------------------------------------------------
+void Rect3DDiagram::grid_layout_stuff(DiagramDialog* d, QGridLayout* gp, QWidget *Tab2, unsigned Row)
+{
+  mySignalWrapper* m_sigmapper;
+  hideInvisible = new QCheckBox(Qtr("hide invisible lines"), Tab2);
+  gp->addMultiCellWidget(hideInvisible, Row,Row,0,2);
+  Row++;
+
+  QLabel *LabelRotX = new QLabel(Qtr("Rotation around x-Axis:"), Tab2);
+  LabelRotX->setPaletteForegroundColor(Qt::red);
+  gp->addWidget(LabelRotX, Row,0);
+  SliderRotX = new QSlider(0,360,20, rotX,
+      Qt::Horizontal, Tab2);
+  gp->addWidget(SliderRotX, Row,1);
+  m_sigmapper = new mySignalWrapper(this, &Rect3DDiagram::slotNewRotX);
+  callbacks.push_back(m_sigmapper);
+  SliderRotX->connect(SliderRotX, SIGNAL(valueChanged(int)), m_sigmapper, SLOT(map(int)));
+  rotationX = new QLineEdit(Tab2);
+  rotationX->setValidator(d->ValInteger);
+  rotationX->setMaxLength(3);
+  rotationX->setMaximumWidth(40);
+  gp->addWidget(rotationX, Row,2);
+  m_sigmapper = new mySignalWrapper(this, &Rect3DDiagram::slotEditRotX);
+  callbacks.push_back(m_sigmapper);
+  rotationX->connect(rotationX, SIGNAL(textChanged(const QString&)), m_sigmapper,
+      SLOT(map(const QString&)));
+  Row++;
+
+  QLabel *LabelRotY = new QLabel(Qtr("Rotation around y-Axis:"), Tab2);
+  LabelRotY->setPaletteForegroundColor(Qt::green);
+  gp->addWidget(LabelRotY, Row,0);
+  SliderRotY = new QSlider(0,360,20, rotY,
+      Qt::Horizontal, Tab2);
+  gp->addWidget(SliderRotY, Row,1);
+  m_sigmapper = new mySignalWrapper(this, &Rect3DDiagram::slotNewRotY);
+  callbacks.push_back(m_sigmapper);
+  SliderRotY->connect(SliderRotY, SIGNAL(valueChanged(int)), m_sigmapper, SLOT(map(int)));
+  rotationY = new QLineEdit(Tab2);
+  rotationY->setValidator(d->ValInteger);
+  rotationY->setMaxLength(3);
+  rotationY->setMaximumWidth(40);
+  gp->addWidget(rotationY, Row,2);
+  m_sigmapper = new mySignalWrapper(this, &Rect3DDiagram::slotEditRotY);
+  callbacks.push_back(m_sigmapper);
+  rotationY->connect(rotationY, SIGNAL(textChanged(const QString&)), m_sigmapper,
+      SLOT(map(const QString&)));
+  Row++;
+
+  QLabel *LabelRotZ = new QLabel(Qtr("Rotation around z-Axis:"), Tab2);
+  LabelRotZ->setPaletteForegroundColor(Qt::blue);
+  gp->addWidget(LabelRotZ, Row,0);
+  SliderRotZ = new QSlider(0,360,20, rotZ,
+      Qt::Horizontal, Tab2);
+  gp->addWidget(SliderRotZ, Row,1);
+  m_sigmapper = new mySignalWrapper(this, &Rect3DDiagram::slotNewRotZ);
+  callbacks.push_back(m_sigmapper);
+  SliderRotZ->connect(SliderRotZ, SIGNAL(valueChanged(int)), m_sigmapper, SLOT(map(int)));
+  rotationZ = new QLineEdit(Tab2);
+  rotationZ->setValidator(d->ValInteger);
+  rotationZ->setMaxLength(3);
+  rotationZ->setMaximumWidth(40);
+  gp->addWidget(rotationZ, Row,2);
+  m_sigmapper = new mySignalWrapper(this, &Rect3DDiagram::slotEditRotZ);
+  callbacks.push_back(m_sigmapper);
+  rotationZ->connect(rotationZ, SIGNAL(textChanged(const QString&)), m_sigmapper,
+      SLOT(map(const QString&)));
+  Row++;
+
+  gp->addWidget(new QLabel(Qtr("2D-projection:"), Tab2), Row,0);
+  DiagCross = new Cross3D(rotX,
+      rotY,
+      rotZ, Tab2);
+  gp->addWidget(DiagCross, Row,1);
+
+  // transfer the diagram properties to the dialog
+  hideInvisible->setChecked(hideLines);
+  rotationX->setText(QString::number(rotX));
+  rotationY->setText(QString::number(rotY));
+  rotationZ->setText(QString::number(rotZ));
+
+}
+
+bool Rect3DDiagram::setParamByIndex(unsigned index, QString value)
+{
+  bool ok;
+  switch(index){
+    case 21:
+      rotX = value.toInt(&ok);
+      return ok;
+    case 22:
+      rotY = value.toInt(&ok);
+      return ok;
+    case 23:
+      rotZ = value.toInt(&ok);
+      return ok;
+    default:
+      return false;
+  }
+}
+
+void Rect3DDiagram::save_some_char(QTextStream& str) const
+{
+  char c = '0';
+  if(xAxis.GridOn) c |= 1;
+  if(hideLines) c |= 2;
+  str << c;
+}
+
+void Rect3DDiagram::save_rot_hack(QTextStream& s) const
+{
+  s << QString::number(rotX)+" "+QString::number(rotY)+" "+
+       QString::number(rotZ);
+}
+
+/*!
+ Is called when the slider for rotation angle is changed.
+*/
+void Rect3DDiagram::slotNewRotX(int Value)
+{
+  qDebug() << "slotNewRotX";
+  rotationX->setText(QString::number(Value));
+  DiagCross->rotX = float(Value) * pi/180.0;
+  DiagCross->update();
+}
+
+/*!
+ Is called when the slider for rotation angle is changed.
+*/
+void Rect3DDiagram::slotNewRotY(int Value)
+{
+  rotationY->setText(QString::number(Value));
+  DiagCross->rotY = float(Value) * pi/180.0;
+  DiagCross->update();
+}
+
+/*!
+ Is called when the slider for rotation angle is changed.
+*/
+void Rect3DDiagram::slotNewRotZ(int Value)
+{
+  rotationZ->setText(QString::number(Value));
+  DiagCross->rotZ = float(Value) * pi/180.0;
+  DiagCross->update();
+}
+
+/*!
+ Is called when the number (text) for rotation angle is changed.
+*/
+void Rect3DDiagram::slotEditRotX(const QString& Text)
+{
+  SliderRotX->setValue(Text.toInt());
+  DiagCross->rotX = Text.toFloat() * pi/180.0;
+  DiagCross->update();
+}
+
+/*!
+ Is called when the number (text) for rotation angle is changed.
+*/
+void Rect3DDiagram::slotEditRotY(const QString& Text)
+{
+  SliderRotY->setValue(Text.toInt());
+  DiagCross->rotY = Text.toFloat() * pi/180.0;
+  DiagCross->update();
+}
+
+/*!
+ Is called when the number (text) for rotation angle is changed.
+*/
+void Rect3DDiagram::slotEditRotZ(const QString& Text)
+{
+  SliderRotZ->setValue(Text.toInt());
+  DiagCross->rotZ = Text.toFloat() * pi/180.0;
+  DiagCross->update();
 }
 
 // vim:ts=8:sw=2:noet

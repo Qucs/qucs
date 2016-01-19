@@ -147,10 +147,10 @@ int TimingDiagram::calcDiagram()
   if(xAxis.limit_min < 0.0)
     xAxis.limit_min = 0.0;
 
-  Graph *firstGraph;
+  GraphDeque *firstGraph;
 
-  QListIterator<Graph *> ig(Graphs);
-  Graph *g = 0;
+  QListIterator<GraphDeque*> ig(GraphDeques);
+  GraphDeque *g = 0;
   if (ig.hasNext()) // point to first graph
     g = ig.next();
   
@@ -182,7 +182,7 @@ int TimingDiagram::calcDiagram()
 
   // First check the maximum bit number of all vectors.
   colWidth = 0;
-  foreach(Graph *g, Graphs)
+  for(auto g : GraphDeques) {
     if(g->cPointsY) {
       if(g->Var.right(2) == ".X") {
         z = strlen((char*)g->cPointsY);
@@ -195,6 +195,7 @@ int TimingDiagram::calcDiagram()
           colWidth = z;
       }
     }
+  }
   int TimeStepWidth = colWidth * metrics.width("X") + 8;
   if(TimeStepWidth < 40)
     TimeStepWidth = 40;
@@ -223,7 +224,7 @@ if(!firstGraph->isEmpty()) {
 
   y -= 5;
   // write all dependent variable names to get width of first column
-  foreach(Graph *g, Graphs) {
+  for(auto g : GraphDeques) {
     if(y < tHeight)  break;
     Str = g->Var;
     colWidth = checkColumnWidth(Str, metrics, colWidth, x, y);
@@ -271,7 +272,7 @@ if(!firstGraph->isEmpty()) {
   QPen Pen;
   int  yLast, yNow;
   y = y2-tHeight-9;
-  foreach(Graph *g, Graphs) {
+  for(auto g : GraphDeques) {
     if(y < tHeight) {
       // mark lack of space with a small arrow
       Lines.append(new Line(4, 6, 4, -7, QPen(Qt::red,2)));
@@ -506,12 +507,6 @@ bool TimingDiagram::scrollTo(int initial, int dx, int)
     return false;   // did anything change ?
 
   return true;
-}
-
-// ------------------------------------------------------------
-Diagram* TimingDiagram::newOne()
-{
-  return new TimingDiagram();
 }
 
 // ------------------------------------------------------------

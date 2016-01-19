@@ -1135,8 +1135,7 @@ Element* Schematic::selectElement(float fX, float fY, bool flag, int *index)
     for(Diagram *pd = Diagrams->last(); pd != 0; pd = Diagrams->prev())
     {
 
-        foreach(Graph *pg, pd->Graphs)
-        {
+        for(auto pg : pd->GraphDeques) {
             // test markers of graphs
             foreach(Marker *pm, pg->Markers)
             {
@@ -1202,10 +1201,8 @@ Element* Schematic::selectElement(float fX, float fY, bool flag, int *index)
             }
 
             // test graphs of diagram
-            foreach(Graph *pg, pd->Graphs)
-            {
-                if(pg->getSelected(x-pd->cx, pd->cy-y) >= 0)
-                {
+	    for(auto pg : pd->GraphDeques) {
+                if(pg->getSelected(x-pd->cx, pd->cy-y) != pg->end()) {
                     if(flag)
                     {
                         // The element can be deselected
@@ -1360,8 +1357,7 @@ void Schematic::deselectElements(Element *e)
         if(e != pd)  pd->isSelected = false;
 
         // test graphs of diagram
-        foreach(Graph *pg, pd->Graphs)
-        {
+	for(auto pg : pd->GraphDeques) {
             if(e != pg) pg->isSelected = false;
 
             // test markers of graph
@@ -1461,8 +1457,7 @@ int Schematic::selectElements(int x1, int y1, int x2, int y2, bool flag)
     for(Diagram *pd = Diagrams->first(); pd != 0; pd = Diagrams->next())
     {
         // test graphs of diagram
-        foreach(Graph *pg, pd->Graphs)
-        {
+	for(auto pg : pd->GraphDeques) {
             if(pg->isSelected &= flag) z++;
 
             // test markers of graph
@@ -1511,9 +1506,10 @@ int Schematic::selectElements(int x1, int y1, int x2, int y2, bool flag)
 void Schematic::selectMarkers()
 {
     for(Diagram *pd = Diagrams->first(); pd != 0; pd = Diagrams->next())
-        foreach(Graph *pg, pd->Graphs)
+	for(auto pg : pd->GraphDeques) {
             foreach(Marker *pm, pg->Markers)
                 pm->isSelected = true;
+	}
 }
 
 // ---------------------------------------------------
@@ -1780,8 +1776,7 @@ int Schematic::copySelectedElements(Q3PtrList<Element> *p)
         }
         else
         {
-            foreach(Graph *pg, pd->Graphs)
-            {
+	    for(auto pg : pd->GraphDeques) {
                 QMutableListIterator<Marker *> im(pg->Markers);
                 Marker *pm;
                 while (im.hasNext())
@@ -1925,8 +1920,8 @@ bool Schematic::deleteElements()
             bool wasGraphDeleted = false;
             // all graphs of diagram
 
-            QMutableListIterator<Graph *> ig(pd->Graphs);
-            Graph *pg;
+            QMutableListIterator<GraphDeque*> ig(pd->GraphDeques);
+            GraphDeque *pg;
 
             while (ig.hasNext())
             {
