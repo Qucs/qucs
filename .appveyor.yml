@@ -3,7 +3,7 @@ platform:
   - x64
 
 cache:
-  - C:\msys64 -> .appveyor.yml
+  - C:\msys64\var\cache\pacman\pkg\mingw-w64-x86_64-qt4* -> .appveyor.yml
 
 install:
 
