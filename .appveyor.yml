@@ -2,126 +2,86 @@
 platform:
   - x64
 
+cache:
+  - C:\msys64\var\cache\pacman\pkg\mingw-w64-x86_64-qt4* -> .appveyor.yml
+
 install:
-  # Keep track of base directory
-  - cd
-  - set topDIR=%CD%
 
   # Take a look at the environment
-  - path
+  - set
 
-  # CMake fails to generate "MinGW Makefiles" if sh.exe is on the path.
-  - del "%ProgramFiles(x86)%\Git\bin\sh.exe"
+  - set "PATH=C:\msys64\usr\bin;C:\msys64\mingw64\bin;%PATH%"
 
-  # Get tools from Chocolatey
-  - choco install -y curl 7zip.commandline
-
-  # Download and install Qt.
-  # Qt 4 series not available in Appveyor.
-  - cd %topDIR%
-  - mkdir Qt
-  - cd Qt
-  - curl -kLO  http://download.qt.io/official_releases/qt/4.8/4.8.7/qt-opensource-windows-x86-mingw482-4.8.7.exe
-  - 7z x qt-opensource-windows-x86-mingw482-4.8.7.exe > nul
-  - dir
-  # payload in $OUTDIR\bin\bin\qmake.exe
-  - move $OUTDIR Qt-4.8.7
-  - set QTDIR=%CD%\Qt-4.8.7\bin\bin
-  # Configure Qt prefix
-  - echo [Paths]   >  %QTDIR%\qt.conf
-  - echo Prefix=.. >> %QTDIR%\qt.conf
-  - type %QTDIR%\qt.conf
-  # Puth Qt in the path
-  - path %QTDIR%;%PATH%
-  - qmake --version
-
-  # Appveyour has Mingw 4.8.3 at the moment which is incompatible with Qt 4.8.7
-  # Get the matching compiler for Qt 4.8.7
-  - cd %topDIR%
-  # try to use my dropbox, as SF seems to be unreachable...
-  #curl -kLO http://sourceforge.net/projects/mingw-w64/files/Toolchains%20targetting%20Win32/Personal%20Builds/mingw-builds/4.8.2/threads-posix/dwarf/i686-4.8.2-release-posix-dwarf-rt_v3-rev3.7z
-  - curl -kLO https://www.dropbox.com/s/ww0jetzg6gkpdis/i686-4.8.2-release-posix-dwarf-rt_v3-rev3.7z
-  - dir
-  - 7z x i686-4.8.2-release-posix-dwarf-rt_v3-rev3.7z > nul
-  - dir
-  # Mingw 4.8.2 should be fist in the path (inserted after Strawberry Perl install , which puts yet another compiler on the path)
-  #- path %topDir%\mingw32\bin;%PATH%
-  #- g++ --version
-
-  # Flex and bison are provided with Git
-  - flex --version
-  - bison --version
-
-  # Build ADMS
-  # * amds-2.3.4  depends on Bison 2.6
-  # * adms-master depends on Bison 2.4, using master till next ADMS release
-  # Get Strawberry Perl to bootstrap ADMS (XML:LibXML is already included)
-  # need to keep c\bin because libxml is in there, but there is a gcc 4.8.3 in there
-  # mingw 4.8.2 should come first in the path
-  - choco install -y strawberryperl
-  - path C:\Strawberry\perl\bin;C:\Strawberry\perl\site\bin;C:\Strawberry\c\bin;%PATH%
-  - g++ --version
-
-  # Put Mingw 4.8.2 first in the path
-  - path %topDir%\mingw32\bin;%PATH%
-  - g++ --version
-
-  # Install ADMS from tarball
-  #- curl -kLO http://sourceforge.net/projects/mot-adms/files/adms-source/2.3/adms-2.3.4.tar.gz
-  #- 7z x adms-2.3.4.tar.gz > nul
-  #- 7z x adms-2.3.4.tar
-  #- cd adms-2.3.4
-  #- mkdir cmake_build
-  #- cd cmake_build
-  #- cmake .. -G "MinGW Makefiles" -DCMAKE_INSTALL_PREFIX="C:\projects\test-appveyor\local\adms"
-  #- mingw32-make install
-  #
-  # Install ADMS from repository (this works with Bison 2.4, switch back to tarball after next ADMS release)
-  - cd %topDIR%
-  - git clone --depth=1 --branch=master https://github.com/Qucs/ADMS.git adms-master
-  - cd adms-master
-  - mkdir cmake_build
-  - cd cmake_build
-  - cmake .. -G "MinGW Makefiles" -DCMAKE_INSTALL_PREFIX="C:\projects\test-appveyor\local\adms" -DUSE_MAINTAINER_MODE=ON
-  - mingw32-make install
-
-  # Add ADMS in the path
-  - path C:\projects\test-appveyor\local\adms\bin;%PATH%
-  - admsXml --version
-
-  # Get geperf, download, extract add to path
-  - cd %topDIR%
-  #- curl -kLO http://sourceforge.net/projects/gnuwin32/files/gperf/3.0.1/gperf-3.0.1-bin.zip
-  # Use my Dropbox till we find a better fallback or cache mechanism for SourceForge
-  - curl -kLO https://www.dropbox.com/s/nxjyuyil1h3gjgm/gperf-3.0.1-bin.zip
-  - 7z x gperf-3.0.1-bin.zip -ogperf
-  - path %topDIR%\gperf\bin;%PATH%
-  - gperf --version
+  - C:\msys64\usr\bin\bash -lc ""
+  - C:\msys64\usr\bin\bash -lc "pacman --version"
+  - C:\msys64\usr\bin\bash -lc "pacman -Q"
+  # Switch from SF to msys2.org (default, much faster)
+  - C:\msys64\usr\bin\bash -lc "pacman --noconfirm --sync pacman-mirrors"
+  - C:\msys64\usr\bin\bash -lc "pacman --noconfirm -S autoconf automake bison flex"
+  - C:\msys64\usr\bin\bash -lc "pacman --noconfirm -S mingw-w64-x86_64-qt4"
+  # To extract gperf
+  - C:\msys64\usr\bin\bash -lc "pacman --noconfirm -S p7zip"
 
 
 build_script:
+  ## Notes
+  #  * The "exec 0</dev/null" opens a dummy file descriptor to fix error: ./configure: line 560: 0: Bad file descriptor
+  #  * We force CXX=g++, somehow it is picking up flags related to clang++
 
-  # Check if we have everything we need on the path.
-  - g++ --version
-  - qmake --version
-  - admsXml --version
-  - gperf --version
-  - flex --version
-  - bison --version
-  - cmake --version
+  ## Other dependencies
+  # Download, build and install ADMS
+  - bash -lc "exec 0</dev/null && wget.exe http://sourceforge.net/projects/mot-adms/files/adms-source/2.3/adms-2.3.4.tar.gz"
+  - bash -lc "exec 0</dev/null && tar xvfz adms-2.3.4.tar.gz"
+  - bash -lc "exec 0</dev/null && cd adms-2.3.4/ && ./configure --build=x86_64-w64-mingw32 && make install && cd -"
+  - bash -lc "exec 0</dev/null && admsXml -h"
 
-  # Build Qucs-GUI
-  - cd %topDIR%
-  - cd qucs
-  - mkdir cmake_build
-  - cd cmake_build
-  - cmake .. -G "MinGW Makefiles"
-  - mingw32-make
+  # Issue with gperf: https://github.com/Qucs/qucs/issues/295
+  # Get gperf, download, extract/overwrite
+  # Use my Dropbox till we find a better fallback or cache mechanism for SourceForge
+  - bash -lc "exec 0</dev/null && wget.exe https://www.dropbox.com/s/nxjyuyil1h3gjgm/gperf-3.0.1-bin.zip"
+  - bash -lc "exec 0</dev/null && 7z x -y gperf-3.0.1-bin.zip -o/usr/local"
+  - bash -lc "exec 0</dev/null && gperf --version"
 
-  # Build Qucs-core
-  - cd %topDIR%
-  - cd qucs-core
-  - mkdir cmake_build
-  - cd cmake_build
-  - cmake .. -G "MinGW Makefiles"
-  - mingw32-make
+
+  ## Build Qucs-GUI applications
+  - bash -lc "exec 0</dev/null && cd $APPVEYOR_BUILD_FOLDER/qucs && ./bootstrap"
+  - bash -lc "exec 0</dev/null && cd $APPVEYOR_BUILD_FOLDER/qucs && export QTDIR=/c/msys64/mingw64/ && CXX=g++ ./configure"
+  - bash -lc "exec 0</dev/null && cd $APPVEYOR_BUILD_FOLDER/qucs && make install"
+  - bash -lc "exec 0</dev/null && qucs -v"
+
+  ## Build Qucs-core
+  - bash -lc "exec 0</dev/null && cd $APPVEYOR_BUILD_FOLDER/qucs-core && ./bootstrap"
+  - bash -lc "exec 0</dev/null && cd $APPVEYOR_BUILD_FOLDER/qucs-core && ./configure --enable-maintainer-mode --with-mkadms=`which admsXml`"
+  - bash -lc "exec 0</dev/null && cd $APPVEYOR_BUILD_FOLDER/qucs-core && make install"
+  - bash -lc "exec 0</dev/null && qucsator -v"
+
+  ## Prepare simple redistributable package (no qucs-doc)
+  # Install to a destination
+  - bash -lc "exec 0</dev/null && cd $APPVEYOR_BUILD_FOLDER/qucs && make install DESTDIR=/c/qucs-win64"
+  - bash -lc "exec 0</dev/null && cd $APPVEYOR_BUILD_FOLDER/qucs-core && make install DESTDIR=/c/qucs-win64"
+
+  # Copy required libraries, make binaries usable from command line, Windows Explorer
+  - set QTDIR=c:\msys64\mingw64\
+  - set QUCSDIR=c:\qucs-win64\usr\local\
+  - cp %QTDIR%\bin\Qt3Support4.dll %QUCSDIR%\bin
+  - cp %QTDIR%\bin\QtCore4.dll     %QUCSDIR%\bin
+  - cp %QTDIR%\bin\QtGui4.dll      %QUCSDIR%\bin
+  - cp %QTDIR%\bin\QtNetwork4.dll  %QUCSDIR%\bin
+  - cp %QTDIR%\bin\QtXml4.dll      %QUCSDIR%\bin
+  - cp %QTDIR%\bin\QtSql4.dll      %QUCSDIR%\bin
+  - cp %QTDIR%\bin\QtSvg4.dll      %QUCSDIR%\bin
+  - cp %QTDIR%\bin\QtScript4.dll   %QUCSDIR%\bin
+
+  - cp %QTDIR%\bin\libstdc++-6.dll     %QUCSDIR%\bin
+  - cp %QTDIR%\bin\libwinpthread-1.dll %QUCSDIR%\bin
+  - cp %QTDIR%\bin\libpng16-16.dll     %QUCSDIR%\bin
+
+  # Run from windows cmd
+  - cd %QUCSDIR%\bin
+  - qucs.exe -v
+  - qucsator.exe -v
+
+  # TODO
+  # * one could zip the %QUCSDIR% and use it for testing
+  # * perhaps it is best we finish the top level 'make dist',
+  #   doing so it is easier to create tarballs, build the binaries from it and distribute both.
