@@ -158,6 +158,9 @@ gperfapphash.cpp: gperfapphash.gph
 gperfappgen.h: applications.h
 	sed -e 's/evaluate::[a-zA-Z0-9_]*/NULL/g' < $< > gperfappgen.h
 
+# this is redundant (trying to figure out appveyor problem)
+gperfappgen.o: gperfappgen.h
+
 ## Store the gperf names in their own variable as the are
 ## not distributed but must be removed in a maintainer-clean
 gperf_FILES = gperfapphash.cpp gperfapphash.gph gperfappgen.h
