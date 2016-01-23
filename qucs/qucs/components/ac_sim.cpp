@@ -16,10 +16,15 @@
  ***************************************************************************/
 #include "ac_sim.h"
 #include "main.h"
+#include "misc.h"
+#include "extsimkernels/spicecompat.h"
+
+#include <cmath>
 
 
 AC_Sim::AC_Sim()
 {
+  isSimulation = true;
   Description = QObject::tr("ac simulation");
 
   QString s = Description;
@@ -41,6 +46,7 @@ AC_Sim::AC_Sim()
   tx = 0;
   ty = y2+1;
   Model = ".AC";
+  SpiceModel = ".AC";
   Name  = "AC";
 
   // The index of the first 4 properties must not changed. Used in recreate().
@@ -93,4 +99,30 @@ void AC_Sim::recreate(Schematic*)
     Props.next()->Name = "Stop";
     Props.next()->Name = "Points";
   }
+}
+
+QString AC_Sim::spice_netlist(bool isXyce)
+{
+    QString s = SpiceModel + " ";
+    QString unit;
+    if (Props.at(0)->Value=="log") { // convert points number for spice compatibility
+        double Np,Fstart,Fstop,fac = 1.0;
+        misc::str2num(Props.at(3)->Value,Np,unit,fac); // Points number
+        Np *= fac;
+        misc::str2num(Props.at(1)->Value,Fstart,unit,fac);
+        Fstart *= fac;
+        misc::str2num(Props.at(2)->Value,Fstop,unit,fac);
+        Fstop *= fac;
+        double Nd = ceil(log10(Fstop/Fstart)); // number of decades
+        double Npd = ceil(Np/Nd); // points per decade
+        s += QString("DEC %1 ").arg(Npd);
+    } else {  // no need conversion
+        s += QString("LIN %1 ").arg(Props.at(3)->Value);
+    }
+    QString fstart = spicecompat::normalize_value(Props.at(1)->Value); // Start freq.
+    QString fstop = spicecompat::normalize_value(Props.at(2)->Value); // Stop freq.
+    s += QString("%1 %2 \n").arg(fstart).arg(fstop);
+    if (!isXyce) s.remove(0,1);
+    return s.toLower();
+
 }

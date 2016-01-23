@@ -20,6 +20,8 @@
 #include "main.h"
 #include "schematic.h"
 #include "misc.h"
+#include "extsimkernels/qucs2spice.h"
+#include "extsimkernels/spicecompat.h"
 
 #include <limits.h>
 
@@ -37,6 +39,7 @@ LibComp::LibComp()
 
   Model = "Lib";
   Name  = "X";
+  SpiceModel = "X";
 
   Props.append(new Property("Lib", "", true,
 		QObject::tr("name of qucs library file")));
@@ -230,6 +233,18 @@ bool LibComp::createSubNetlist(QTextStream *stream, QStringList &FileList,
     r = loadSection("VHDLModel", FileString, &Includes);
   } else if(type&4) {
     r = loadSection("VerilogModel", FileString, &Includes);
+  } else if(type&8) {
+    r = loadSection("Spice",FileString, &Includes);
+    if (r<0) {
+        r = loadSection("Model", FileString, &Includes); // Ngspice
+        FileString = qucs2spice::convert_netlist(FileString);
+    }
+  } else if (type&16) {
+      r = loadSection("Spice",FileString, &Includes);
+      if (r<0) {
+          r = loadSection("Model", FileString, &Includes); // Ngspice
+          FileString = qucs2spice::convert_netlist(FileString,true);
+      }
   }
   if(r < 0)  return false;
 
@@ -318,4 +333,21 @@ QString LibComp::vhdlCode(int)
 
   s += ");\n";
   return s;
+}
+
+QString LibComp::spice_netlist(bool)
+{
+    QString s = SpiceModel + Name + " 0 "; // connect ground of subckt to circuit ground
+    foreach(Port *p1, Ports)
+      s += " "+p1->Connection->Name;   // node names
+    s += " " + createType();
+
+    // output user defined parameters
+    for(Property *pp = Props.at(2); pp != 0; pp = Props.next()) {
+      QString val = spicecompat::normalize_value(pp->Value);
+      s += " "+pp->Name+"="+val;
+    }
+    s +="\n";
+
+    return s;
 }

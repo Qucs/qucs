@@ -16,6 +16,9 @@
  ***************************************************************************/
 
 #include "ampere_dc.h"
+#include "node.h"
+#include "misc.h"
+#include "extsimkernels/spicecompat.h"
 
 
 Ampere_dc::Ampere_dc()
@@ -39,6 +42,7 @@ Ampere_dc::Ampere_dc()
   ty = y2+4;
   Model = "Idc";
   Name  = "I";
+  SpiceModel = "I";
 
   Props.append(new Property("I", "1 mA", true,
 		QObject::tr("current in Ampere")));
@@ -50,6 +54,18 @@ Ampere_dc::~Ampere_dc()
 {
 }
 
+QString Ampere_dc::spice_netlist(bool)
+{
+    QString s = spicecompat::check_refdes(Name,SpiceModel);
+    foreach(Port *p1, Ports) {
+        QString nam = p1->Connection->Name;
+        if (nam=="gnd") nam = "0";
+        s += " "+ nam;   // node names
+    }
+
+    s += QString(" DC %1\n").arg(spicecompat::normalize_value(Props.at(0)->Value));
+    return s;
+}
 Component* Ampere_dc::newOne()
 {
   return new Ampere_dc();

@@ -17,6 +17,9 @@
 #include "eqndefined.h"
 #include "main.h"
 #include "schematic.h"
+#include "extsimkernels/spicecompat.h"
+#include "extsimkernels/verilogawriter.h"
+#include <QtCore>
 
 #include <QFileInfo>
 
@@ -26,6 +29,7 @@ EqnDefined::EqnDefined()
 
   Model = "EDD";
   Name  = "D";
+  SpiceModel = "B";
 
   // first properties !!!
   Props.append(new Property("Type", "explicit", false,
@@ -88,6 +92,160 @@ QString EqnDefined::netlist()
   }
 
   return s+e;
+}
+
+QString EqnDefined::spice_netlist(bool isXyce)
+{    
+    QString s;
+
+    QList<int> used_currents;
+    used_currents.clear();
+
+    if (Props.at(0)->Value=="explicit") {
+        int Nbranch = Props.at(1)->Value.toInt();
+
+        for (int i=0;i<Nbranch;i++) {
+            QStringList tokens;
+            QString Ieqn = Props.at(2*(i+1))->Value; // parse current equation
+            tokens.clear();
+            spicecompat::splitEqn(Ieqn,tokens);
+            findCurrents(tokens,used_currents);
+            QString Qeqn = Props.at(2*(i+1)+1)->Value;
+            tokens.clear();
+            spicecompat::splitEqn(Qeqn,tokens);
+            findCurrents(tokens,used_currents);
+        }
+
+        for (int i=0;i<Nbranch;i++) {
+            QString Ieqn = Props.at(2*(i+1))->Value; // parse current equation
+            Ieqn.replace("^","**");
+            QStringList Itokens;
+            spicecompat::splitEqn(Ieqn,Itokens);
+            spicecompat::convert_functions(Itokens,isXyce);
+            subsVoltages(Itokens,Nbranch);
+            subsCurrents(Itokens);
+            QString plus = Ports.at(2*i)->Connection->Name;
+            QString minus = Ports.at(2*i+1)->Connection->Name;
+            if (used_currents.contains(i)) { // if current is used add sensing source V=0
+                s += QString("V_%1sens_%2 %3 %4 DC 0\n").arg(Name).arg(i).arg(plus).arg(plus+"_sens");
+                plus = plus+"_sens";
+            }
+            s += QString("B%1I%2 %3 %4 I=%5\n").arg(Name).arg(i).arg(plus)
+                    .arg(minus).arg(Itokens.join(""));
+
+            QString Qeqn = Props.at(2*(i+1)+1)->Value; // parse charge equation only for Xyce
+            if (Qeqn!="0") {
+            //if (isXyce) {
+                Qeqn.replace("^","**");
+                QStringList Qtokens;
+                spicecompat::splitEqn(Qeqn,Qtokens);
+                spicecompat::convert_functions(Qtokens,isXyce);
+                subsVoltages(Qtokens,Nbranch);
+                subsCurrents(Qtokens);
+                s += QString("G%1Q%2 %3 %4 n%1Q%2 %4 1.0\n").arg(Name).arg(i).arg(plus).arg(minus);
+                s += QString("L%1Q%2 n%1Q%2 %3 1.0\n").arg(Name).arg(i).arg(minus);
+                s += QString("B%1Q%2 n%1Q%2 %3 I=-(%4)\n").arg(Name).arg(i).arg(minus).arg(Qtokens.join(""));
+            }
+        }
+    } else {
+        s = "";
+    }
+    return s;
+}
+
+QString EqnDefined::va_code()
+{
+    QString s;
+
+    if (Props.at(0)->Value=="explicit") {
+        int Nbranch = Props.at(1)->Value.toInt();
+
+        for (int i=0;i<Nbranch;i++) {
+            QString Ieqn = Props.at(2*(i+1))->Value; // parse current equation
+            QString plus = Ports.at(2*i)->Connection->Name;
+            QString minus = Ports.at(2*i+1)->Connection->Name;
+            QString Ipm = vacompat::normalize_current(plus,minus,true);
+            if (Ieqn!="0") { // check for default
+                QStringList Itokens;
+                spicecompat::splitEqn(Ieqn,Itokens);
+                vacompat::convert_functions(Itokens);
+                subsVoltages(Itokens,Nbranch);
+                if (plus=="gnd") s += QString("%1 <+ -(%2);\n").arg(Ipm).arg(Itokens.join(""));
+                else s += QString("%1 <+ %2;\n").arg(Ipm).arg(Itokens.join(""));
+            }
+            QString Qeqn = Props.at(2*(i+1)+1)->Value; // parse charge equation only for Xyce
+            if (Qeqn!="0") {
+                QStringList Qtokens;
+                spicecompat::splitEqn(Qeqn,Qtokens);
+                vacompat::convert_functions(Qtokens);
+                subsVoltages(Qtokens,Nbranch);
+                if (plus=="gnd") s += QString("%1 <+ -ddt( %2 );\n").arg(Ipm).arg(Qtokens.join(""));
+		else s += QString("%1 <+ ddt( %2 );\n").arg(Ipm).arg(Qtokens.join(""));
+            }
+        }
+    } else {
+        s = "";
+    }
+    return s;
+}
+
+/*!
+ * \brief EqnDefined::subsVoltages Substitute volatges in spice Notation in token list
+ * \param[in/out] tokens Token list. Should be obtained from spicecompat::splitEqn().
+ *                This list is modified.
+ * \param[in] Nbranch Number of branched of EDD
+ */
+void EqnDefined::subsVoltages(QStringList &tokens, int Nbranch)
+{
+    QRegExp volt_pattern("^V[0-9]+$");
+    for (QStringList::iterator it = tokens.begin();it != tokens.end();it++) {
+        if (volt_pattern.exactMatch(*it)) {
+            QString volt = *it;
+            volt.remove('V');
+            int branch = volt.toInt();
+            if (branch<=Nbranch) {
+                QString plus = Ports.at(2*(branch-1))->Connection->Name;
+                QString minus = Ports.at(2*(branch-1)+1)->Connection->Name;
+                *it = vacompat::normalize_voltage(plus,minus);
+            }
+        }
+    }
+}
+
+/*!
+ * \brief EqnDefined::findCurrents Finds used currents (I1, I2, ...) in equation
+ * \param tokens[in] Token list. Should be obtained from spicecompat::splitEqn().
+ *                This list is not modified.
+ * \param branches[out] The list of numbers of branches that currents are in use.
+ *                      Branches are numbered from zero.
+ */
+void EqnDefined::findCurrents(QStringList &tokens, QList<int> &branches)
+{
+    QRegExp curr_pattern("^I[0-9]+$");
+    for (QStringList::iterator it = tokens.begin();it != tokens.end();it++) {
+        if (curr_pattern.exactMatch(*it)) {
+            QString curr = *it;
+            int num = curr.remove(0,1).toInt();
+            if (!branches.contains(num)) branches.append(num-1);
+        }
+    }
+}
+
+/*!
+ * \brief EqnDefined::subsCurrents Substitute currents in spice Notation in token list
+ * \param tokens  Token list. Should be obtained from spicecompat::splitEqn().
+ *                This list is modified.
+ */
+void EqnDefined::subsCurrents(QStringList &tokens)
+{
+    QRegExp curr_pattern("^I[0-9]+$");
+    for (QStringList::iterator it = tokens.begin();it != tokens.end();it++) {
+        if (curr_pattern.exactMatch(*it)) {
+            QString curr = *it;
+            int branch = curr.remove('I').toInt();
+            *it = QString("i(V_%1sens_%2)").arg(Name).arg(branch-1);
+        }
+    }
 }
 
 // -------------------------------------------------------

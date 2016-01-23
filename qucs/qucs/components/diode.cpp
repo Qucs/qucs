@@ -16,7 +16,9 @@
  ***************************************************************************/
 
 #include "diode.h"
-
+#include "node.h"
+#include "main.h"
+#include "extsimkernels/spicecompat.h"
 
 Diode::Diode()
 {
@@ -35,7 +37,7 @@ Diode::Diode()
   Props.append(new Property("Fc", "0.5", false,
 	QObject::tr("forward-bias depletion capacitance coefficient")));
   Props.append(new Property("Cp", "0.0 fF", false,
-	QObject::tr("linear capacitance")));
+    QObject::tr("linear capacitance")));
   Props.append(new Property("Isr", "0.0", false,
 	QObject::tr("recombination current parameter")));
   Props.append(new Property("Nr", "2.0", false,
@@ -86,11 +88,50 @@ Diode::Diode()
   ty = y2+4;
   Model = "Diode";
   Name  = "D";
+  SpiceModel = "D";
 }
 
 Component* Diode::newOne()
 {
   return new Diode();
+}
+
+QString Diode::spice_netlist(bool isXyce)
+{
+    QString s = spicecompat::check_refdes(Name,SpiceModel);
+    // output all node names
+    QList<int> pin_seq;
+    pin_seq<<1<<0; // Pin sequence: CBE
+    // output all node names
+    foreach(int pin, pin_seq) {
+        QString nam = Ports.at(pin)->Connection->Name;
+        if (nam=="gnd") nam = "0";
+        s += " "+ nam;   // node names
+    }
+
+    QStringList spice_incompat,spice_tr;
+    if (isXyce) {
+        spice_tr<<"Tbv"<<"Tbv1"<<"Trs"<<"Trs1"; // parameters that need convertion of names
+        spice_incompat<<"Ttt1"<<"Ttt2"<<"Tm1"<<"Tm2"<<"Cp"<<"Isr"
+                     <<"Nr"<<"Ffe"<<"Temp"<<"Area"<<"Symbol"; // spice-incompatible parameters
+    } else {
+        spice_tr<<"Tbv"<<"Tcv";
+        spice_incompat<<"Cp"<<"Isr"<<"Nr"<<"Ffe"<<"Temp"<<"Area"<<"Symbol";
+    }
+
+    QString par_str = form_spice_param_list(spice_incompat,spice_tr);
+
+    s += QString(" DMOD_%1 AREA=%2 Temp=%3\n").arg(Name).arg(getProperty("Area")->Value)
+            .arg(getProperty("Temp")->Value);
+    if (isXyce) {
+        s += QString(".MODEL DMOD_%1 D (LEVEL = 2 %2)\n").arg(Name).arg(par_str);
+    } else {
+        s += QString(".MODEL DMOD_%1 D (%2)\n").arg(Name).arg(par_str);
+    }
+
+
+    return s;
+
 }
 
 Element* Diode::info(QString& Name, char* &BitmapFile, bool getNewOne)

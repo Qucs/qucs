@@ -16,6 +16,9 @@
  ***************************************************************************/
 
 #include "relais.h"
+#include "node.h"
+#include "misc.h"
+#include "extsimkernels/spicecompat.h"
 
 
 Relais::Relais()
@@ -55,6 +58,7 @@ Relais::Relais()
   ty = y1+4;
   Model = "Relais";
   Name  = "S";
+  SpiceModel = "SW";
 
   Props.append(new Property("Vt", "0.5 V", false,
 		QObject::tr("threshold voltage in Volts")));
@@ -75,6 +79,44 @@ Relais::~Relais()
 Component* Relais::newOne()
 {
   return new Relais();
+}
+
+QString Relais::spice_netlist(bool isXyce)
+{
+    QString s = Name;
+    QString unit;
+    double Vt,Vh,fac;
+
+    QList<int> seq; // nodes sequence
+    seq<<1<<2<<0<<3;
+    // output all node names
+    foreach(int i, seq) {
+        QString nam = Ports.at(i)->Connection->Name;
+        if (nam=="gnd") nam = "0";
+        s += " "+ nam;   // node names
+    }
+
+    QString model = " MOD_" + Name;
+    s += model + " OFF\n";
+
+    QString val = Props.at(0)->Value; // Vt
+    misc::str2num(val,Vt,unit,fac);
+    Vt *= fac;
+
+    val = Props.at(1)->Value;
+    misc::str2num(val,Vh,unit,fac);
+    Vh *= fac;
+
+    QString Ron = spicecompat::normalize_value(Props.at(2)->Value);
+    QString Roff = spicecompat::normalize_value(Props.at(3)->Value);
+
+    if (isXyce) {
+        s += QString(".MODEL %1 vswitch von=%2 voff=%3 ron=%4 roff=%5 \n").arg(model).arg(Vt).arg(Vt-Vh).arg(Ron).arg(Roff);
+    } else {
+        s += QString(".MODEL %1 sw vt=%2 vh=%3 ron=%4 roff=%5 \n").arg(model).arg(Vt).arg(Vh).arg(Ron).arg(Roff);
+    }
+
+    return s;
 }
 
 Element* Relais::info(QString& Name, char* &BitmapFile, bool getNewOne)

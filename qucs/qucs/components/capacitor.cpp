@@ -16,6 +16,10 @@
  ***************************************************************************/
 
 #include "capacitor.h"
+#include "node.h"
+#include "misc.h"
+#include "extsimkernels/spicecompat.h"
+#include "extsimkernels/verilogawriter.h"
 
 
 Capacitor::Capacitor()
@@ -33,6 +37,7 @@ Capacitor::Capacitor()
   tx = x1+4;
   ty = y2+4;
   Model = "C";
+  SpiceModel = "C";
   Name  = "C";
 }
 
@@ -48,6 +53,37 @@ Element* Capacitor::info(QString& Name, char* &BitmapFile, bool getNewOne)
 
   if(getNewOne)  return new Capacitor();
   return 0;
+}
+
+QString Capacitor::spice_netlist(bool)
+{
+    QString s = spicecompat::check_refdes(Name,SpiceModel);
+
+    s += QString(" %1 %2 ").arg(Ports.at(0)->Connection->Name)
+            .arg(Ports.at(1)->Connection->Name); // output  nodes
+    s.replace(" gnd ", " 0 ");
+
+    s += " "+spicecompat::normalize_value(Props.at(0)->Value) + " ";
+    QString val = Props.at(1)->Value; // add inial voltage if presents
+    val = val.remove(' ').toUpper();
+    if (!val.isEmpty()) {
+        s += " IC=" + val;
+    }
+
+    return s+'\n';
+}
+
+QString Capacitor::va_code()
+{
+    QString val = vacompat::normalize_value(Props.at(0)->Value);
+    QString plus =  Ports.at(0)->Connection->Name;
+    QString minus = Ports.at(1)->Connection->Name; 
+    QString s = "";
+    QString Vpm = vacompat::normalize_voltage(plus,minus);
+    QString Ipm = vacompat::normalize_current(plus,minus,true); 
+    s  += QString("%1  <+ ddt( %2 *  %3  );\n").arg(Ipm).arg(Vpm).arg(val);
+            
+    return s;
 }
 
 void Capacitor::createSymbol()

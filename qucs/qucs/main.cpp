@@ -48,6 +48,9 @@
 
 #include "components/components.h"
 
+#include "extsimkernels/ngspice.h"
+#include "extsimkernels/xyce.h"
+
 #ifdef _WIN32
 #include <Windows.h>  //for OutputDebugString
 #endif
@@ -102,6 +105,18 @@ bool loadSettings()
     //if(settings.contains("ExamplesDir"))QucsSettings.ExamplesDir = settings.value("ExamplesDir").toString();
     //if(settings.contains("DocDir"))QucsSettings.DocDir = settings.value("DocDir").toString();
     if(settings.contains("OctaveBinDir"))QucsSettings.OctaveBinDir.setPath(settings.value("OctaveBinDir").toString());
+    if(settings.contains("NgspiceExecutable")) QucsSettings.NgspiceExecutable = settings.value("NgspiceExecutable").toString();
+    else QucsSettings.NgspiceExecutable = "ngspice";
+    if(settings.contains("XyceExecutable")) QucsSettings.XyceExecutable = settings.value("XyceExecutable").toString();
+    else QucsSettings.XyceExecutable = "/usr/local/Xyce-Release-6.2.0-OPENSOURCE/bin/runxyce";
+    if(settings.contains("XyceParExecutable")) QucsSettings.XyceParExecutable = settings.value("XyceParExecutable").toString();
+    else QucsSettings.XyceParExecutable = "/usr/local/Xyce-Release-6.2.0-OPENMPI-OPENSOURCE/bin/xmpirun -np %p";
+    if(settings.contains("SpiceOpusExecutable")) QucsSettings.SpiceOpusExecutable = settings.value("SpiceOpusExecutable").toString();
+    else QucsSettings.SpiceOpusExecutable = "spiceopus";
+    if(settings.contains("Nprocs")) QucsSettings.NProcs = settings.value("Nprocs").toInt();
+    else QucsSettings.NProcs = 4;
+    if(settings.contains("S4Q_workdir")) QucsSettings.S4Qworkdir = settings.value("S4Q_workdir").toString();
+    else QucsSettings.S4Qworkdir = QDir::convertSeparators(QDir::homePath()+"/.qucs/spice4qucs");
     if(settings.contains("QucsHomeDir"))
       if(settings.value("QucsHomeDir").toString() != "")
          QucsSettings.QucsHomeDir.setPath(settings.value("QucsHomeDir").toString());
@@ -178,6 +193,12 @@ bool saveApplSettings()
     //settings.setValue("ExamplesDir", QucsSettings.ExamplesDir);
     //settings.setValue("DocDir", QucsSettings.DocDir);
     settings.setValue("OctaveBinDir", QucsSettings.OctaveBinDir.canonicalPath());
+    settings.setValue("NgspiceExecutable",QucsSettings.NgspiceExecutable);
+    settings.setValue("XyceExecutable",QucsSettings.XyceExecutable);
+    settings.setValue("XyceParExecutable",QucsSettings.XyceParExecutable);
+    settings.setValue("SpiceOpusExecutable",QucsSettings.SpiceOpusExecutable);
+    settings.setValue("Nprocs",QucsSettings.NProcs);
+    settings.setValue("S4Q_workdir",QucsSettings.S4Qworkdir);
     settings.setValue("QucsHomeDir", QucsSettings.QucsHomeDir.canonicalPath());
     settings.setValue("IgnoreVersion", QucsSettings.IgnoreFutureVersion);
     settings.setValue("GraphAntiAliasing", QucsSettings.GraphAntiAliasing);
@@ -315,6 +336,80 @@ int doNetlist(QString schematic, QString netlist)
   NetlistFile.close();
 
   return 0;
+}
+
+int runNgspice(QString schematic, QString dataset)
+{
+    Schematic *sch = openSchematic(schematic);
+    if (sch == NULL) {
+      return 1;
+    }
+
+    Ngspice *ngspice = new Ngspice(sch);
+    ngspice->slotSimulate();
+    bool ok = ngspice->waitEndOfSimulation();
+    if (!ok) {
+        fprintf(stderr, "Ngspice timed out or start error!\n");
+        delete ngspice;
+        return -1;
+    } else {
+        ngspice->convertToQucsData(dataset);
+    }
+
+    delete ngspice;
+    return 0;
+}
+
+int runXyce(QString schematic, QString dataset)
+{
+    Schematic *sch = openSchematic(schematic);
+    if (sch == NULL) {
+      return 1;
+    }
+
+    Xyce *xyce = new Xyce(sch);
+    xyce->slotSimulate();
+    bool ok = xyce->waitEndOfSimulation();
+    if (!ok) {
+        fprintf(stderr, "Xyce timed out or start error!\n");
+        delete xyce;
+        return -1;
+    } else {
+        xyce->convertToQucsData(dataset);
+    }
+
+    delete xyce;
+    return 0;
+}
+
+int doNgspiceNetlist(QString schematic, QString netlist)
+{
+
+    Schematic *sch = openSchematic(schematic);
+    if (sch == NULL) {
+      return 1;
+    }
+    Ngspice *ngspice = new Ngspice(sch);
+    ngspice->SaveNetlist(netlist);
+    delete ngspice;
+
+    if (!QFile::exists(netlist)) return -1;
+    else return 0;
+}
+
+int doXyceNetlist(QString schematic, QString netlist)
+{
+
+    Schematic *sch = openSchematic(schematic);
+    if (sch == NULL) {
+      return 1;
+    }
+    Xyce *xyce = new Xyce(sch);
+    xyce->SaveNetlist(netlist);
+    delete xyce;
+
+    if (!QFile::exists(netlist)) return -1;
+    else return 0;
 }
 
 int doPrint(QString schematic, QString printFile,
@@ -796,6 +891,9 @@ int main(int argc, char *argv[])
 
   bool netlist_flag = false;
   bool print_flag = false;
+  bool ngspice_flag = false;
+  bool xyce_flag = false;
+  bool run_flag = false;
   QString page = "A4";
   int dpi = 96;
   QString color = "RGB";
@@ -818,6 +916,9 @@ int main(int argc, char *argv[])
   "    --orin [portraid|landscape]  set orientation (default portraid)\n"
   "  -i FILENAME    use file as input schematic\n"
   "  -o FILENAME    use file as output netlist\n"
+  "     --ngspice   create Ngspice netlist\n"
+  "     --xyce      Xyce netlist\n"
+  "     --run       execute Ngspice/Xyce immediately\n"
   "  -icons         create component icons under ./bitmaps_generated\n"
   "  -doc           dump data for documentation:\n"
   "                 * file with of categories: categories.txt\n"
@@ -860,6 +961,15 @@ int main(int argc, char *argv[])
     else if (!strcmp(argv[i], "-o")) {
       outputfile = argv[++i];
     }
+    else if (!strcmp(argv[i], "--ngspice")) {
+      ngspice_flag = true;
+    }
+    else if (!strcmp(argv[i], "--xyce")) {
+      xyce_flag = true;
+    }
+    else if (!strcmp(argv[i], "--run")) {
+      run_flag = true;
+    }
     else if(!strcmp(argv[i], "-icons")) {
       createIcons();
       return 0;
@@ -882,6 +992,11 @@ int main(int argc, char *argv[])
   if (netlist_flag and print_flag) {
     fprintf(stderr, "Error: --print and --netlist cannot be used together\n");
     return -1;
+  } else if (((ngspice_flag||xyce_flag) && print_flag)||
+             (run_flag && print_flag))
+  {
+    fprintf(stderr, "Error: --print and Ngspice/Xyce cannot be used together\n");
+    return -1;
   } else if (netlist_flag or print_flag) {
     if (inputfile.isEmpty()) {
       fprintf(stderr, "Error: Expected input file.\n");
@@ -893,7 +1008,15 @@ int main(int argc, char *argv[])
     }
     // create netlist from schematic
     if (netlist_flag) {
-      return doNetlist(inputfile, outputfile);
+        if (!run_flag) {
+            if (ngspice_flag) return doNgspiceNetlist(inputfile, outputfile);
+            else if (xyce_flag) return doXyceNetlist(inputfile, outputfile);
+            else return doNetlist(inputfile, outputfile);
+        } else {
+            if (ngspice_flag) return runNgspice(inputfile, outputfile);
+            else if (xyce_flag) return runXyce(inputfile, outputfile);
+            else return 1;
+        }
     } else if (print_flag) {
       return doPrint(inputfile, outputfile,
           page, dpi, color, orientation);

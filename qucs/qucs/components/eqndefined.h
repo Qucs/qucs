@@ -22,6 +22,11 @@
 
 
 class EqnDefined : public MultiViewComponent  {
+private:
+  void subsVoltages(QStringList &tokens, int Nbranch);
+  void findCurrents(QStringList &tokens, QList<int> &branches);
+  void subsCurrents(QStringList &tokens);
+
 public:
   EqnDefined();
  ~EqnDefined() {};
@@ -31,6 +36,8 @@ public:
 protected:
   QString netlist();
   void createSymbol();
+  QString spice_netlist(bool isXyce);
+  QString va_code();
 };
 
 #endif

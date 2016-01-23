@@ -28,6 +28,12 @@ public:
   Component* newOne();
   static Element* info(QString&, char* &, bool getNewOne=false);
   void recreate(Schematic*);
+
+  QString getNgspiceBeforeSim(QString sim, int lvl=0);
+  QString getNgspiceAfterSim(QString sim, int lvl=0);
+
+protected:
+  QString spice_netlist(bool isXyce);
 };
 
 #endif

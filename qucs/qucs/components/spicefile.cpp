@@ -36,6 +36,7 @@
 #include "main.h"
 #include "qucs.h"
 #include "misc.h"
+#include "extsimkernels/spicecompat.h"
 
 
 SpiceFile::SpiceFile()
@@ -49,6 +50,7 @@ SpiceFile::SpiceFile()
   withSim = false;
 
   Model = "SPICE";
+  SpiceModel = "X";
   Name  = "X";
   changed = false;
 
@@ -316,6 +318,20 @@ bool SpiceFile::createSubNetlist(QTextStream *stream)
   return true;
 }
 
+
+bool SpiceFile::createSpiceSubckt(QTextStream *stream)
+{
+    (*stream)<<"\n";
+    QFile sub_file(getSubcircuitFile());
+    if (sub_file.open(QIODevice::ReadOnly|QFile::Text)) {
+        QTextStream ts(&sub_file);
+        (*stream)<<ts.readAll().remove(QChar(0x1A));
+        sub_file.close();
+    }
+    (*stream)<<"\n";
+    return true;
+}
+
 // -------------------------------------------------------------------------
 bool SpiceFile::recreateSubNetlist(QString *SpiceFile, QString *FileName)
 {
@@ -550,4 +566,72 @@ void SpiceFile::slotExited()
       (*filstream) << SimText;
     }
   }
+}
+
+QString SpiceFile::getSubcktName()
+{
+    QString s = "";
+
+    QFile sub_file(getSubcircuitFile());
+    if (sub_file.open(QIODevice::ReadOnly)) {
+        QStringList lst = QString(sub_file.readAll()).split("\n");
+        foreach (QString str, lst) {
+            QRegExp subckt_header("^\\s*\\.(S|s)(U|u)(B|b)(C|c)(K|k)(T|t)\\s.*");
+            if (subckt_header.exactMatch(str)) {
+                QRegExp sep("\\s");
+                s = str.section(sep,1,1,QString::SectionSkipEmpty);
+            }
+        }
+        sub_file.close();
+    }
+    return s;
+}
+
+QStringList SpiceFile::getSubcktPorts()
+{
+    QStringList lst;
+    lst.clear();
+
+    QFile sub_file(getSubcircuitFile());
+    if (sub_file.open(QIODevice::ReadOnly)) {
+        QStringList lst1 = QString(sub_file.readAll()).split("\n");
+        foreach (QString str, lst1) {
+            QRegExp subckt_header("^\\s*\\.(S|s)(U|u)(B|b)(C|c)(K|k)(T|t)\\s.*");
+            if (subckt_header.exactMatch(str)) {
+                QRegExp sep("\\s");
+                QStringList lst2 = str.split(sep,QString::SkipEmptyParts);
+                lst2.removeFirst();
+                lst2.removeFirst();
+                foreach (QString s1, lst2) {
+                    if (!s1.contains('=')) lst.append(s1);
+                }
+            }
+        }
+        sub_file.close();
+    }
+    return lst;
+}
+
+QString SpiceFile::spice_netlist(bool)
+{
+    QStringList ports_lst = Props.at(1)->Value.split(",");
+    for (QStringList::iterator it = ports_lst.begin();it != ports_lst.end();it++) {
+        if (it->startsWith("_net")) (*it).remove(0,4);
+    }
+    QStringList nod_lst = getSubcktPorts();
+
+    QList<int> seq;
+    seq.clear();
+    for(int i=0;i<nod_lst.count();i++) {
+        seq.append(ports_lst.indexOf(nod_lst.at(i)));
+    }
+
+    QString s = spicecompat::check_refdes(Name,SpiceModel);
+    //foreach(Port *p1, Ports) {
+    foreach(int i,seq) {
+        s += " "+Ports.at(i)->Connection->Name;   // node names
+    }
+
+    s += " " + getSubcktName() + "\n";
+    return s;
 }

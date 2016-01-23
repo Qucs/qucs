@@ -67,11 +67,15 @@
 #include "dialogs/matchdialog.h"
 #include "dialogs/simmessage.h"
 #include "dialogs/exportdialog.h"
+//#include "dialogs/vtabwidget.h"
+//#include "dialogs/vtabbeddockwidget.h"
+#include "extsimkernels/externsimdialog.h"
 #include "octave_window.h"
 #include "printerwriter.h"
 #include "imagewriter.h"
 #include "../qucs-lib/qucslib_common.h"
 #include "misc.h"
+#include "extsimkernels/verilogawriter.h"
 
 // icon for unsaved files (diskette)
 const char *smallsave_xpm[] = {
@@ -2827,4 +2831,64 @@ void QucsApp::slotSaveSchematicToGraphicsFile(bool diagram)
     statusBar()->showMessage(QObject::tr("Successfully exported"), 2000);
   }
   delete writer;
+}
+
+
+void QucsApp::slotSimulateWithSpice()
+{
+    if (!isTextDocument(DocumentTab->currentPage())) {
+        Schematic *sch = (Schematic*)DocumentTab->currentPage();
+
+        ExternSimDialog *SimDlg = new ExternSimDialog(sch);
+        connect(SimDlg,SIGNAL(simulated()),this,SLOT(slotAfterSpiceSimulation()));
+        connect(SimDlg,SIGNAL(warnings()),this,SLOT(slotShowWarnings()));
+        connect(SimDlg,SIGNAL(success()),this,SLOT(slotResetWarnings()));
+        SimDlg->exec();
+        disconnect(SimDlg,SIGNAL(simulated()),this,SLOT(slotAfterSpiceSimulation()));
+        disconnect(SimDlg,SIGNAL(warnings()),this,SLOT(slotShowWarnings()));
+        disconnect(SimDlg,SIGNAL(success()),this,SLOT(slotResetWarnings()));
+        if (SimDlg->wasSimulated && sch->SimOpenDpl)
+            slotChangePage(sch->DocName,sch->DataDisplay);
+        delete SimDlg;
+    }
+}
+
+void QucsApp::slotAfterSpiceSimulation()
+{
+    Schematic *sch = (Schematic*)DocumentTab->currentPage();
+    sch->reloadGraphs();
+    sch->viewport()->update();
+    if(sch->SimRunScript) {
+      // run script
+      octave->startOctave();
+      octave->runOctaveScript(sch->Script);
+    }
+}
+
+void QucsApp::slotBuildVAModule()
+{
+    if (!isTextDocument(DocumentTab->currentPage())) {
+        Schematic *Sch = (Schematic*)DocumentTab->currentPage();
+
+        QFileInfo inf(Sch->DocName);
+        QString filename = QFileDialog::getSaveFileName(this,tr("Save Verilog-A module"),
+                                                        inf.path()+QDir::separator()+"testmodule.va",
+                                                        "Verilog-A (*.va)");
+        if (filename.isEmpty()) return;
+
+        QFile f(filename);
+        if (f.open(QIODevice::WriteOnly)) {
+            QTextStream stream(&f);
+            VerilogAwriter *writer = new VerilogAwriter;
+            if (!writer->createVA_module(stream,Sch)) {
+                QMessageBox::critical(this,tr("Build Verilog-A module"),
+                                      tr("This schematic is not a subcircuit!\n"
+                                         "Use subcircuit to crete Verilog-A module!"),
+                                          QMessageBox::Ok);
+            }
+            delete writer;
+            f.close();
+        }
+    }
+
 }

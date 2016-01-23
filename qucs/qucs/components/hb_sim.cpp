@@ -16,6 +16,8 @@
  ***************************************************************************/
 #include "hb_sim.h"
 #include "main.h"
+#include "misc.h"
+#include "extsimkernels/spicecompat.h"
 
 
 HB_Sim::HB_Sim()
@@ -37,6 +39,8 @@ HB_Sim::HB_Sim()
   ty = y2+1;
   Model = ".HB";
   Name  = "HB";
+  SpiceModel = ".HB";
+  isSimulation = true;
 
   Props.append(new Property("f", "1 GHz", false,
 		QObject::tr("frequency in Hertz")));
@@ -68,4 +72,19 @@ Element* HB_Sim::info(QString& Name, char* &BitmapFile, bool getNewOne)
 
   if(getNewOne)  return new HB_Sim();
   return 0;
+}
+
+QString HB_Sim::spice_netlist(bool isXyce)
+{
+    QString s="";
+    if (isXyce) {  // Only in Xyce
+        s += QString(".options hbint numfreq=%1 STARTUPPERIODS=2\n").arg(Props.at(1)->Value);
+        QStringList freqs = Props.at(0)->Value.split(QRegExp("\\s+(?=[0-9])"));
+        // split frequencyes list by space before digit
+        for (QStringList::iterator it = freqs.begin();it != freqs.end(); it++) {
+            (*it) = spicecompat::normalize_value(*it);
+        }
+        s += QString(".HB %1\n").arg(freqs.join(" "));
+    }
+    return s;
 }

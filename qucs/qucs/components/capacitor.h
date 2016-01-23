@@ -30,6 +30,8 @@ public:
 
 protected:
   void createSymbol();
+  QString spice_netlist(bool isXyce = false);
+  QString va_code();
 };
 
 #endif

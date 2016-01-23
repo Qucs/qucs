@@ -16,6 +16,9 @@
  ***************************************************************************/
 
 #include "mosfet_sub.h"
+#include "node.h"
+#include "misc.h"
+#include "extsimkernels/spicecompat.h"
 
 Basic_MOSFET::Basic_MOSFET()
 {
@@ -120,6 +123,7 @@ Basic_MOSFET::Basic_MOSFET()
 	QObject::tr("parameter measurement temperature")));
 
   Name  = "T";
+  SpiceModel = "M";
 }
 
 MOSFET_sub::MOSFET_sub()
@@ -139,6 +143,64 @@ Component* MOSFET_sub::newOne()
   p->Props.next()->Value = Props.next()->Value;
   p->recreate(0);
   return p;
+}
+
+QString MOSFET_sub::spice_netlist(bool isXyce)
+{
+    QString s = spicecompat::check_refdes(Name,SpiceModel);
+    QList<int> pin_seq;
+    pin_seq<<1<<0<<2<<3; // Pin sequence: DGS
+    // output all node names
+    foreach(int pin, pin_seq) {
+        QString nam = Ports.at(pin)->Connection->Name;
+        if (nam=="gnd") nam = "0";
+        s += " "+ nam;   // node names
+    }
+
+    QStringList spice_incompat,spice_tr;
+    spice_incompat<<"Type"<<"Temp"<<"L"<<"W"<<"Ad"<<"As"<<"Pd"<<"Ps"
+                 <<"Rg"<<"N"<<"Tt"<<"Nrd"<<"Nrs"<<"Ffe";
+                              // spice-incompatible parameters
+    if (isXyce) {
+        spice_tr<<"Vt0"<<"VtO"; // parameters that need convertion of names
+    } else {
+        spice_tr.clear();
+    }
+
+    QStringList check_defaults_list;
+    QString unit;
+    check_defaults_list<<"Nsub"<<"Nss";
+    foreach (QString parnam,check_defaults_list) { // Check some parameters for default value (zero)
+        double val,fac;   // And reduce parameter list
+        misc::str2num(getProperty(parnam)->Value,val,unit,fac);
+        if ((val *= fac)==0.0) {
+            spice_incompat.append(parnam);
+        }
+    }
+
+    QString par_str = form_spice_param_list(spice_incompat,spice_tr);
+
+    QString mosfet_type = getProperty("Type")->Value.at(0).toUpper();
+
+    double l,w,as,ad,ps,pd,fac;
+    misc::str2num(getProperty("L")->Value,l,unit,fac);
+    l *= fac;
+    misc::str2num(getProperty("W")->Value,w,unit,fac);
+    w *= fac;
+    misc::str2num(getProperty("Ad")->Value,ad,unit,fac);
+    ad *= fac;
+    misc::str2num(getProperty("As")->Value,as,unit,fac);
+    as *= fac;
+    misc::str2num(getProperty("Pd")->Value,pd,unit,fac);
+    pd *= fac;
+    misc::str2num(getProperty("Ps")->Value,ps,unit,fac);
+    ps *= fac;
+
+    s += QString(" MMOD_%1 L=%2 W=%3 Ad=%4 As=%5 Pd=%6 Ps=%7 Temp=%8\n")
+            .arg(Name).arg(l).arg(w).arg(ad).arg(as).arg(pd).arg(ps).arg(getProperty("Temp")->Value);
+    s += QString(".MODEL MMOD_%1 %2MOS (%3)\n").arg(Name).arg(mosfet_type).arg(par_str);
+
+    return s;
 }
 
 // -------------------------------------------------------

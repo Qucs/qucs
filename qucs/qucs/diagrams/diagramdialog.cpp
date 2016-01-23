@@ -176,7 +176,14 @@ DiagramDialog::DiagramDialog(Diagram *d, QWidget *parent, Graph *currentGraph)
   InputGroup->setLayout(InputGroupLayout);
   Tab1Layout->addWidget(InputGroup);
   GraphInput = new QLineEdit();
-  InputGroupLayout->addWidget(GraphInput);
+  lblPlotVs = new QLabel(tr("Plot Vs."));
+  ChooseXVar = new QComboBox();
+  connect(ChooseXVar,SIGNAL(currentIndexChanged(int)),this,SLOT(slotPlotVs(int)));
+  QHBoxLayout *InpSubHL = new QHBoxLayout();
+  InpSubHL->addWidget(GraphInput);
+  InpSubHL->addWidget(lblPlotVs);
+  InpSubHL->addWidget(ChooseXVar);
+  InputGroupLayout->addLayout(InpSubHL);
   GraphInput->setValidator(Validator);
   connect(GraphInput, SIGNAL(textChanged(const QString&)), SLOT(slotResetToTake(const QString&)));
   QWidget *Box2 = new QWidget();
@@ -280,8 +287,21 @@ DiagramDialog::DiagramDialog(Diagram *d, QWidget *parent, Graph *currentGraph)
   DataGroupLayout->addWidget(ChooseData);
   ChooseData->setMinimumWidth(300); // will force also min width of table below
   connect(ChooseData, SIGNAL(activated(int)), SLOT(slotReadVars(int)));
+  // connect(ChooseData, SIGNAL(currentIndexChanged(int)),this,SLOT(slotSetSimulator()));
   // todo: replace by QTableWidget
   // see https://gist.github.com/ClemensFMN/8955411
+
+  QHBoxLayout *hb1 = new QHBoxLayout;
+  ChooseSimulator = new QComboBox;
+  QStringList lst_sim;
+  lst_sim<<"Qucsator (built-in)"<<"Ngspice"<<"Xyce"<<"SpiceOpus";
+  ChooseSimulator->addItems(lst_sim);
+  connect(ChooseSimulator,SIGNAL(currentIndexChanged(int)),this,SLOT(slotReadVars(int)));
+  lblSim = new QLabel(tr("Data from simulator:"));
+  hb1->addWidget(lblSim);
+  hb1->addWidget(ChooseSimulator);
+  DataGroupLayout->addLayout(hb1);
+
   ChooseVars = new QTableWidget(1, 3);
   ChooseVars->verticalHeader()->setVisible(false);
   ChooseVars->horizontalHeader()->setStretchLastSection(true);
@@ -302,7 +322,6 @@ DiagramDialog::DiagramDialog(Diagram *d, QWidget *parent, Graph *currentGraph)
   ChooseVars->setHorizontalHeaderLabels(headers);
 
   connect(ChooseVars, SIGNAL(itemDoubleClicked(QTableWidgetItem*)), SLOT(slotTakeVar(QTableWidgetItem*)));
-
 
   QGroupBox *GraphGroup = new QGroupBox(tr("Graph"));
   Box1Layout->addWidget(GraphGroup);
@@ -689,10 +708,29 @@ DiagramDialog::DiagramDialog(Diagram *d, QWidget *parent, Graph *currentGraph)
   // put all data files into ComboBox
   QFileInfo Info(defaultDataSet);
   QDir ProjDir(Info.dirPath());
-  QStringList Elements = ProjDir.entryList("*.dat", QDir::Files, QDir::Name);
+  QStringList entries;
+  entries<<"*.dat"<<"*.dat.ngspice"<<"*.dat.xyce";
+  QStringList Elements = ProjDir.entryList(entries, QDir::Files, QDir::Name);
   QStringList::iterator it;
   for(it = Elements.begin(); it != Elements.end(); ++it) {
-    ChooseData->insertItem((*it).left((*it).length()-4));
+      if (it->endsWith(".dat")) {
+          QString dat = (*it).left((*it).length()-4);
+          if (ChooseData->findText(dat)<0)
+              ChooseData->insertItem((*it).left((*it).length()-4));
+      } else if (it->endsWith(".dat.ngspice")) {
+          QString dat = (*it).left((*it).length()-12);
+          if (ChooseData->findText(dat)<0)
+              ChooseData->insertItem((*it).left((*it).length()-12));
+          if((*it).left((*it).length()-8) == Info.fileName()) // default dataset should be the current
+            ChooseData->setCurrentItem(ChooseData->count()-1);
+      } else if (it->endsWith(".dat.xyce")) {
+          QString dat = (*it).left((*it).length()-9);
+          if (ChooseData->findText(dat)<0)
+              ChooseData->insertItem((*it).left((*it).length()-9));
+          if((*it).left((*it).length()-5) == Info.fileName()) // default dataset should be the current
+            ChooseData->setCurrentItem(ChooseData->count()-1);
+      }
+
     if((*it) == Info.fileName())
       // default dataset should be the current
       ChooseData->setCurrentItem(ChooseData->count()-1);
@@ -719,6 +757,7 @@ DiagramDialog::DiagramDialog(Diagram *d, QWidget *parent, Graph *currentGraph)
       ColorButt->setPaletteBackgroundColor(selectedColor);
     }
   }
+
 }
 
 DiagramDialog::~DiagramDialog()
@@ -735,6 +774,33 @@ void DiagramDialog::slotReadVars(int)
   QFileInfo Info(defaultDataSet);
   QString DocName = ChooseData->currentText()+".dat";
 
+  QString curr_sim = ChooseSimulator->currentText();
+
+  // Recreate items of ChooseSimulator. Only existing datasets
+  // should be shown
+  ChooseSimulator->blockSignals(true); // Lock signals firing
+  ChooseSimulator->clear();
+  Info.setFile(Info.dirPath() + QDir::separator() + DocName);
+  if (Info.exists()) ChooseSimulator->addItem("Qucsator (built-in)");
+  Info.setFile(Info.dirPath() + QDir::separator() + DocName + ".ngspice");
+  if (Info.exists()) ChooseSimulator->addItem("Ngspice");
+  Info.setFile(Info.dirPath() + QDir::separator() + DocName + ".xyce");
+  if (Info.exists()) ChooseSimulator->addItem("Xyce");
+  Info.setFile(Info.dirPath() + QDir::separator() + DocName + ".spopus");
+  if (Info.exists()) ChooseSimulator->addItem("SpiceOpus");
+  Info.setFile(defaultDataSet);
+  int sim_pos = ChooseSimulator->findText(curr_sim); // revert recent simulator if possible
+  if (sim_pos>=0) ChooseSimulator->setCurrentIndex(sim_pos);
+  ChooseSimulator->blockSignals(false); // Unlock signals
+
+  if (ChooseSimulator->currentText()=="Ngspice") {
+      DocName += ".ngspice";
+  } else if (ChooseSimulator->currentText()=="Xyce") {
+      DocName += ".xyce";
+  } else if (ChooseSimulator->currentText()=="SpiceOpus") {
+      DocName += ".spopus";
+  }
+
   QFile file(Info.dirPath() + QDir::separator() + DocName);
   if(!file.open(QIODevice::ReadOnly)) {
     return;
@@ -750,6 +816,9 @@ void DiagramDialog::slotReadVars(int)
   // make sure sorting is disabled before inserting items
   ChooseVars->setSortingEnabled(false);
   ChooseVars->clearContents();
+  ChooseXVar->clear();
+  ChooseXVar->addItem("default");
+
   int i=0, j=0;
   i = FileString.indexOf('<')+1;
   if(i > 0)
@@ -769,6 +838,7 @@ void DiagramDialog::slotReadVars(int)
       qDebug() << varNumber << Var << tmp.remove('>');
       ChooseVars->setRowCount(varNumber+1);
       QTableWidgetItem *cell = new QTableWidgetItem(Var);
+      ChooseXVar->addItem(Var);
       cell->setFlags(cell->flags() ^ Qt::ItemIsEditable);
       ChooseVars->setItem(varNumber, 0, cell);
       cell = new QTableWidgetItem("dep");
@@ -785,6 +855,7 @@ void DiagramDialog::slotReadVars(int)
       qDebug() << varNumber << Var << tmp.remove('>');
       ChooseVars->setRowCount(varNumber+1);
       QTableWidgetItem *cell = new QTableWidgetItem(Var);
+      ChooseXVar->addItem(Var);
       cell->setFlags(cell->flags() ^ Qt::ItemIsEditable);
       ChooseVars->setItem(varNumber, 0, cell);
       cell = new QTableWidgetItem("indep");
@@ -818,7 +889,15 @@ void DiagramDialog::slotTakeVar(QTableWidgetItem* Item)
   QFileInfo Info(defaultDataSet);
   if(ChooseData->currentText() != Info.baseName(true))
     s1 = ChooseData->currentText() + ":" + s1;
+  if (ChooseSimulator->currentText()=="Ngspice") {
+      s1 = "ngspice/" + s1;
+  } else if (ChooseSimulator->currentText()=="Xyce") {
+      s1 = "xyce/" + s1;
+  } else if (ChooseSimulator->currentText()=="SpiceOpus") {
+      s1 = "spopus/" + s1;
+  }
   GraphInput->setText(s1);
+  updateXVar();
 
   //if(s.isEmpty()) {
     GraphList->addItem(GraphInput->text());////insertItem(i, GraphInput->text());
@@ -891,6 +970,7 @@ void DiagramDialog::SelectGraph(Graph *g)
   GraphInput->blockSignals(true);
   GraphInput->setText(g->Var);
   GraphInput->blockSignals(false);
+  updateXVar();
 
   if(Diag->Name != "Tab") {
     if(Diag->Name != "Truth") {
@@ -1236,6 +1316,7 @@ void DiagramDialog::slotResetToTake(const QString& s)
   // \todo GraphList->changeItem(s, i);   // must done after the graph settings !!!
   changed = true;
   toTake  = false;
+  updateXVar();
 }
 
 /*!
@@ -1456,4 +1537,27 @@ void DiagramDialog::slotEditRotZ(const QString& Text)
   DiagCross->update();
 }
 
-// vim:ts=8:sw=2:noet
+void DiagramDialog::slotPlotVs(int)
+{
+    QString s = GraphInput->text();
+    s.remove(QRegExp("@.*$")); // remove all after "@" symbol
+    if (ChooseXVar->currentIndex()!=0) {
+        s += "@" + ChooseXVar->currentText();
+    }
+    GraphInput->setText(s);
+}
+
+void DiagramDialog::updateXVar()
+{
+    ChooseXVar->blockSignals(true);
+    QString s = GraphInput->text();
+    if (s.contains("@")) {
+        QString xvar = s.section("@",1,1);
+        int n = ChooseXVar->findText(xvar);
+        if (n != -1) ChooseXVar->setCurrentIndex(n);
+        else ChooseXVar->setCurrentIndex(0);
+    } else {
+        ChooseXVar->setCurrentIndex(0);
+    }
+    ChooseXVar->blockSignals(false);
+}

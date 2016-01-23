@@ -16,10 +16,13 @@
  ***************************************************************************/
 #include "tr_sim.h"
 #include "main.h"
+#include "misc.h"
+#include "extsimkernels/spicecompat.h"
 
 
 TR_Sim::TR_Sim()
 {
+  isSimulation = true;
   Description = QObject::tr("transient simulation");
 
   QString  s = Description;
@@ -37,6 +40,7 @@ TR_Sim::TR_Sim()
   ty = y2+1;
   Model = ".TR";
   Name  = "TR";
+  SpiceModel = ".TRAN";
 
   // The index of the first 4 properties must not changed. Used in recreate().
   Props.append(new Property("Type", "lin", true,
@@ -99,6 +103,32 @@ Element* TR_Sim::info(QString& Name, char* &BitmapFile, bool getNewOne)
 
   if(getNewOne)  return new TR_Sim();
   return 0;
+}
+
+QString TR_Sim::spice_netlist(bool isXyce)
+{
+    QString s = SpiceModel;
+    QString unit;
+    double Tstart,Tstop,Npoints,Tstep,fac;
+
+    misc::str2num(Props.at(1)->Value,Tstart,unit,fac); // Calculate Time Step
+    Tstart *= fac;
+    misc::str2num(Props.at(2)->Value,Tstop,unit,fac);
+    Tstop *= fac;
+    Npoints = Props.at(3)->Value.toDouble();
+    Tstep = (Tstop-Tstart)/Npoints;
+
+    s += QString(" %1 %2 %3 ").arg(Tstep).arg(Tstop).arg(Tstart);
+
+    QString max_step = spicecompat::normalize_value(getProperty("MaxStep")->Value);
+    if (max_step!="0") s+= max_step;
+
+    if (!isXyce) { // Xyce ignores this parameter
+        if (Props.at(18)->Value == "no") s += " UIC";
+    }
+    s += "\n";
+    if (!isXyce) s.remove(0,1);
+    return s.toLower();
 }
 
 void TR_Sim::recreate(Schematic*)

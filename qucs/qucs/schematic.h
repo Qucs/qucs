@@ -245,6 +245,7 @@ public:
   Component* searchSelSubcircuit();
   Component* selectedComponent(int, int);
   void       deleteComp(Component*);
+  Component* getComponentByName(QString compname);
 
   void     oneLabel(Node*);
   int      placeNodeLabel(WireLabel*);
@@ -275,12 +276,13 @@ private:
 public:
   static int testFile(const QString &);
   bool createLibNetlist(QTextStream*, QPlainTextEdit*, int);
-  bool createSubNetlist(QTextStream *, int&, QStringList&, QPlainTextEdit*, int);
-  void createSubNetlistPlain(QTextStream*, QPlainTextEdit*, int);
-  int  prepareNetlist(QTextStream&, QStringList&, QPlainTextEdit*);
+  bool createSubNetlist(QTextStream *, int&, QStringList&, QPlainTextEdit*, int, bool spice=false, bool xyce = false);
+  void createSubNetlistPlain(QTextStream*, QPlainTextEdit*, int, bool spice=false);
+  int  prepareNetlist(QTextStream&, QStringList&, QPlainTextEdit*,bool spice=false, bool xyce = false);
   QString createNetlist(QTextStream&, int);
   bool loadDocument();
   void highlightWireLabels (void);
+  void clearSignalsAndFileList();
 
 private:
   int  saveDocument();
@@ -306,10 +308,12 @@ private:
   void throughAllNodes(bool, QStringList&, int&);
   void propagateNode(QStringList&, int&, Node*);
   void collectDigitalSignals(void);
-  bool giveNodeNames(QTextStream *, int&, QStringList&, QPlainTextEdit*, int);
+  bool giveNodeNames(QTextStream *, int&, QStringList&, QPlainTextEdit*, int,
+                     bool spice = false, bool xyce = false);
   void beginNetlistDigital(QTextStream &);
   void endNetlistDigital(QTextStream &);
-  bool throughAllComps(QTextStream *, int&, QStringList&, QPlainTextEdit *, int);
+  bool throughAllComps(QTextStream *, int&, QStringList&, QPlainTextEdit *, int,
+                       bool spice = false, bool xyce = false);
 
   DigMap Signals; // collecting node names for VHDL signal declarations
   QStringList PortTypes;

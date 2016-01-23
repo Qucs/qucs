@@ -38,6 +38,7 @@ Ground::Ground()
   ty = 0;
   Model = "GND";
   Name  = "";
+  SpiceModel = "*";
 }
 
 Ground::~Ground()
@@ -63,4 +64,9 @@ Element* Ground::info(QString& Name, char* &BitmapFile, bool getNewOne)
 QString Ground::netlist()
 {
   return QString("");
+}
+
+QString Ground::spice_netlist(bool)
+{
+    return QString("");
 }

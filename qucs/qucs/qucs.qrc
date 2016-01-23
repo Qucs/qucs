@@ -234,7 +234,69 @@
         <file>bitmaps/vcresistor.png</file>
         <file>bitmaps/tick.png</file>
         <file>bitmaps/error.png</file>
-        <file>bitmaps/mutualx.png</file>
-	<file>bitmaps/hicolor/128x128/apps/qucs.png</file>
+        <file>bitmaps/hicolor/128x128/apps/qucs.png</file>
+        <file>bitmaps/S4Q_V.png</file>
+        <file>bitmaps/S4Q_I.png</file>
+        <file>bitmaps/S4Q_Ieqndef.png</file>
+        <file>bitmaps/S4Q_S.png</file>
+        <file>bitmaps/S4Q_W.png</file>
+        <file>bitmaps/src_eqndef.png</file>
+        <file>bitmaps/sp_param.png</file>
+        <file>bitmaps/sp_globpar.png</file>
+        <file>bitmaps/sp_options.png</file>
+        <file>bitmaps/vsffm.png</file>
+        <file>bitmaps/isffm.png</file>
+        <file>bitmaps/vAmpMod.png</file>
+        <file>bitmaps/iAmpMod.png</file>
+        <file>bitmaps/vPWL.png</file>
+        <file>bitmaps/iPWL.png</file>
+        <file>bitmaps/eNL.png</file>
+        <file>bitmaps/gNL.png</file>
+        <file>bitmaps/vTRNOISE.png</file>
+        <file>bitmaps/iTRNOISE.png</file>
+        <file>bitmaps/vTRRANDOM.png</file>
+        <file>bitmaps/C_SPICE.png</file>
+        <file>bitmaps/L_SPICE.png</file>
+        <file>bitmaps/R_SPICE.png</file>
+        <file>bitmaps/K_SPICE.png</file>
+        <file>bitmaps/MESFET_SPICE.png</file>
+        <file>bitmaps/PMF_MESFET_SPICE.png</file>
+        <file>bitmaps/LTL_SPICE.png</file>
+        <file>bitmaps/UDRCTL_SPICE.png</file>
+        <file>bitmaps/LTRA_SPICE.png</file>
+        <file>bitmaps/DIODE_SPICE.png</file>
+        <file>bitmaps/NPN_SPICE.png</file>
+        <file>bitmaps/PNP_SPICE.png</file>
+        <file>bitmaps/NJF_SPICE.png</file>
+        <file>bitmaps/PJF_SPICE.png</file>
+        <file>bitmaps/NMOS_SPICE.png</file>
+        <file>bitmaps/PMOS_SPICE.png</file>
+        <file>bitmaps/sp_fourier.png</file>
+        <file>bitmaps/sp_customsim.png</file>
+        <file>bitmaps/sp_disto.png</file>
+        <file>bitmaps/Vac_SPICE.png</file>
+        <file>bitmaps/sp_nutmeg.png</file>
+        <file>bitmaps/sp_ic.png</file>
+        <file>bitmaps/sp_nodeset.png</file>
+        <file>bitmaps/sp_noise.png</file>
+        <file>bitmaps/Cmeter_SPICE.png</file>
+        <file>bitmaps/SE_V_amp.png</file>
+        <file>bitmaps/DE_V_amp.png</file>
+        <file>bitmaps/SE_V_int.png</file>
+        <file>bitmaps/DE_V_int.png</file>
+        <file>bitmaps/SE_V_diff.png</file>
+        <file>bitmaps/DE_V_diff.png</file>
+        <file>bitmaps/sp_model.png</file>
+        <file>bitmaps/sp_pz.png</file>
+        <file>bitmaps/ABV.png</file>
+        <file>bitmaps/ABCV.png</file>
+        <file>bitmaps/APBV.png</file>
+        <file>bitmaps/APBPCV.png</file>
+        <file>bitmaps/DivV.png</file>
+        <file>bitmaps/Icouple.png</file> 
+        <file>bitmaps/core.png</file> 
+        <file>bitmaps/SDTF.png</file> 
+        <file>bitmaps/sp_include.png</file>
+ 
     </qresource>
 </RCC>

@@ -57,7 +57,7 @@ ComponentDialog::ComponentDialog(Component *c, Schematic *d)
   Validator = new QRegExpValidator(Expr, this);
   Expr.setPattern("[^\"]*");   // valid expression for property 'edit'
   Validator2 = new QRegExpValidator(Expr, this);
-  Expr.setPattern("[\\w_]+");  // valid expression for property 'NameEdit'
+  Expr.setPattern("[\\w_\\.\\(\\)]+");  // valid expression for property 'NameEdit'. Space to enable Spice-style par sweep
   ValRestrict = new QRegExpValidator(Expr, this);
 
   checkSim  = 0;  comboSim  = 0;  comboType  = 0;  checkParam = 0;
@@ -68,7 +68,9 @@ ComponentDialog::ComponentDialog(Component *c, Schematic *d)
   // if simulation component: .TR, .AC, .SW, (.SP ?)
   if((Comp->Model[0] == '.') &&
      (Comp->Model != ".DC") && (Comp->Model != ".HB") &&
-     (Comp->Model != ".Digi") && (Comp->Model != ".ETR")) {
+     (Comp->Model != ".Digi") && (Comp->Model != ".ETR") &&
+     (Comp->Model != ".FOURIER") &&
+     (Comp->Model != ".PZ")) {
     QTabWidget *t = new QTabWidget(this);
     all->addWidget(t);
 
@@ -585,7 +587,12 @@ void ComponentDialog::slotSelectProperty(QTableWidgetItem *item)
     ButtAdd->setEnabled(true);
     ButtRem->setEnabled(true);
 
-    if (Comp->Description == "equation") {
+    QStringList eqns_desc;
+    eqns_desc<<"equation"<<".PARAM section"
+             <<".GLOBAL_PARAM section"
+             <<".IC section"<<".NODESET section"
+            <<"Nutmeg equation";
+    if (eqns_desc.contains(Comp->Description)) {
       ButtUp->setEnabled(true);
       ButtDown->setEnabled(true);
     }
@@ -603,8 +610,21 @@ void ComponentDialog::slotSelectProperty(QTableWidgetItem *item)
     ComboEdit->setVisible(false);
 
     NameEdit->setFocus();   // edit QLineEdit
-  }
-  else {  // show standard line edit (description and value)
+  } else if (desc=="Expression") { // Single expression
+      // show two line edit fields (name and value)
+      // And disable buttons
+
+      Name->setText("");
+      NameEdit->setText(name);
+      edit->setText(value);
+
+      edit->setVisible(true);
+      NameEdit->setVisible(true);
+      Description->setVisible(false);
+      ComboEdit->setVisible(false);
+
+      NameEdit->setFocus();   // edit QLineEdit
+  } else {  // show standard line edit (description and value)
     ButtAdd->setEnabled(false);
     ButtRem->setEnabled(false);
     ButtUp->setEnabled(false);
@@ -1184,8 +1204,12 @@ void ComponentDialog::slotButtAdd()
 */
 void ComponentDialog::slotButtRem()
 {
-  if(prop->rowCount() < 3)
-    return;  // the last property cannot be removed
+  if ((prop->rowCount() < 3)&&
+          (Comp->Model=="Eqn"||Comp->Model=="NutmegEq"))
+     return;  // the last property cannot be removed
+  if (prop->rowCount() < 2)
+     return;  // the last property cannot be removed
+
 
   QTableWidgetItem *item = prop->selectedItems()[0];
   int row = item->row();
@@ -1195,8 +1219,14 @@ void ComponentDialog::slotButtRem()
 
   // peek next, delete current, set next current
   if ( row < prop->rowCount()) {
-    prop->setCurrentItem(prop->item(row+1,0));
-    slotSelectProperty(prop->item(row+1,0));
+    prop->setCurrentItem(prop->item(row-1,0)); // Shift selection up
+    slotSelectProperty(prop->item(row-1,0));
+
+    if (!prop->selectedItems().size()) { // The first item was removed
+        prop->setCurrentItem(prop->item(0,0)); // Select the first item
+        slotSelectProperty(prop->item(0,0));
+    }
+
     prop->removeRow(row);
     }
 }
@@ -1211,6 +1241,8 @@ void ComponentDialog::slotButtUp()
 
   int curRow = prop->currentRow();
   if (curRow == 0)
+    return;
+  if ((curRow == 1)&&(Comp->Model=="NutmegEq"))
     return;
 
   // swap current and row above it
@@ -1238,7 +1270,11 @@ void ComponentDialog::slotButtDown()
 
   int curRow = prop->currentRow();
   // Leave Export as last
-  if (curRow == prop->rowCount()-2)
+  if ((curRow == prop->rowCount()-2)&&(Comp->Model=="Eqn"))
+    return;
+  if ((curRow == 0)&&(Comp->Model=="NutmegEq")) // Don't let to shift the first property "Simulation="
+    return;
+  if ((curRow ==  prop->rowCount()-1)) // Last property
     return;
 
   // swap current and row below it

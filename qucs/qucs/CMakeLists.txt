@@ -92,7 +92,7 @@ CONFIGURE_FILE (
 INCLUDE_DIRECTORIES("${PROJECT_BINARY_DIR}")
 INCLUDE_DIRECTORIES( ${CMAKE_SOURCE_DIR} )
 
-SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall ") # enable warning level
+SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra ") # enable warning level
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x ") # enable C++11
 
 # flag not available in mingw 4.8.2, MSVC10
@@ -122,6 +122,7 @@ ADD_SUBDIRECTORY( dialogs )
 ADD_SUBDIRECTORY( octave )
 ADD_SUBDIRECTORY( python )
 ADD_SUBDIRECTORY( paintings )
+ADD_SUBDIRECTORY( extsimkernels )
 
 SET(QUCS_SRCS
   element.cpp	octave_window.cpp	qucsdoc.cpp
@@ -244,7 +245,7 @@ ADD_EXECUTABLE( qucs MACOSX_BUNDLE WIN32
 #
 # Tell CMake which libraries we need to link our executable against.
 #
-TARGET_LINK_LIBRARIES( qucs  components diagrams dialogs paintings ${QT_LIBRARIES} )
+TARGET_LINK_LIBRARIES( qucs  components diagrams dialogs paintings extsimkernels ${QT_LIBRARIES} )
 
 #
 # Prepare the installation
@@ -326,10 +327,6 @@ INSTALL( FILES ${SCRIPTS} DESTINATION bin/ )
 # And then there's ways to customize this as well
 #set(CPACK_BINARY_DRAGNDROP ON)
 #include(CPack)
-
-
-
-
 
 
 

@@ -16,6 +16,9 @@
  ***************************************************************************/
 
 #include "volt_ac.h"
+#include "node.h"
+#include "misc.h"
+#include "extsimkernels/spicecompat.h"
 
 
 Volt_ac::Volt_ac()
@@ -40,6 +43,7 @@ Volt_ac::Volt_ac()
   tx = x1+4;
   ty = y2+4;
   Model = "Vac";
+  SpiceModel = "V";
   Name  = "V";
 
   Props.append(new Property("U", "1 V", true,
@@ -70,4 +74,23 @@ Element* Volt_ac::info(QString& Name, char* &BitmapFile, bool getNewOne)
 
   if(getNewOne)  return new Volt_ac();
   return 0;
+}
+
+QString Volt_ac::spice_netlist(bool)
+{
+    QString s = spicecompat::check_refdes(Name,SpiceModel);
+    foreach(Port *p1, Ports) {
+        QString nam = p1->Connection->Name;
+        if (nam=="gnd") nam = "0";
+        s += " "+ nam;   // node names
+    }
+
+    QString volts = spicecompat::normalize_value(Props.at(0)->Value);
+    QString freq = spicecompat::normalize_value(Props.at(1)->Value);
+
+    QString theta = Props.at(3)->Value;
+    theta.remove(' ');
+    if (theta.isEmpty()) theta="0";
+    s += QString(" DC 0 SIN(0 %1 %2 0 %3) AC %4\n").arg(volts).arg(freq).arg(theta).arg(volts);
+    return s;
 }

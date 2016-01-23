@@ -216,6 +216,14 @@ void Module::intoCategory (Module * m) {
   REGISTER_MOD_2 (QObject::tr("paintings"),val,inf1,inf2)
 #define REGISTER_EXTERNAL_1(val) \
   REGISTER_COMP_1 (QObject::tr("external sim components"),val)
+#define REGISTER_SPICE_1(val) \
+  REGISTER_COMP_1 (QObject::tr("SPICE components"),val)
+#define REGISTER_SPICE_SEC_1(val) \
+  REGISTER_COMP_1 (QObject::tr("SPICE specific sections"),val)
+#define REGISTER_SPICE_SIM_1(val) \
+  REGISTER_COMP_1 (QObject::tr("SPICE simulations"),val)
+#define REGISTER_XSPICE_ANALOGUE_1(val) \
+  REGISTER_COMP_1 (QObject::tr("XSPICE analogue blocks"),val)  
 
 // This function has to be called once at application startup.  It
 // registers every component available in the application.  Put here
@@ -276,6 +284,7 @@ void Module::registerModules (void) {
   REGISTER_SOURCE_1 (vExp);
   REGISTER_SOURCE_1 (vFile);
   REGISTER_SOURCE_1 (iFile);
+
 
   // probes
   REGISTER_PROBE_1 (iProbe);
@@ -423,6 +432,80 @@ void Module::registerModules (void) {
   // external simulation
   REGISTER_EXTERNAL_1 (ETR_Sim);
   REGISTER_EXTERNAL_1 (ecvs);
+  //
+  //Qucs-S ngspice and Xycecomponents
+  //
+  
+  REGISTER_SPICE_1 (R_SPICE);
+  REGISTER_SPICE_1 (C_SPICE);
+  REGISTER_SPICE_1 (L_SPICE);
+  REGISTER_SPICE_1 (K_SPICE);
+  REGISTER_SPICE_1 (S4Q_V); 
+  REGISTER_SPICE_1 (S4Q_I); 
+  REGISTER_SPICE_1 (Src_eqndef);
+  REGISTER_SPICE_1 (S4Q_Ieqndef);  
+  REGISTER_SPICE_1 (DIODE_SPICE);
+  REGISTER_SPICE_1 (NPN_SPICE); 
+  REGISTER_SPICE_1 (PNP_SPICE); 
+  REGISTER_SPICE_1 (NJF_SPICE); 
+  REGISTER_SPICE_1 (PJF_SPICE);
+  REGISTER_SPICE_1 (NMOS_SPICE);
+  REGISTER_SPICE_1 (PMOS_SPICE);
+  REGISTER_SPICE_1 (MESFET_SPICE);
+  REGISTER_SPICE_1 (PMF_MESFET_SPICE);
+  REGISTER_SPICE_1 (vPWL);
+  REGISTER_SPICE_1 (iPWL);
+  REGISTER_SPICE_1 (vSffm);
+  REGISTER_SPICE_1 (iSffm);
+  REGISTER_SPICE_1 (LTL_SPICE);
+  REGISTER_SPICE_1 (LTRA_SPICE);
+  REGISTER_SPICE_1 (S4Q_S); 
+  REGISTER_SPICE_1 (S4Q_W);    
+  REGISTER_SPICE_1 (eNL);
+  REGISTER_SPICE_1 (gNL);
+  REGISTER_SPICE_1 (vAmpMod);
+  REGISTER_SPICE_1 (iAmpMod);
+  REGISTER_SPICE_1 (UDRCTL_SPICE);
+  REGISTER_SPICE_1 (vTRNOISE);
+  REGISTER_SPICE_1 (iTRNOISE);
+  REGISTER_SPICE_1 (vTRRANDOM);
+  REGISTER_SPICE_1 (Vac_SPICE);
+//
+
+  // XSPICE analogue component blocks
+  REGISTER_XSPICE_ANALOGUE_1 (Cmeter_SPICE);
+  REGISTER_XSPICE_ANALOGUE_1 (SE_V_amp);
+  REGISTER_XSPICE_ANALOGUE_1 (DE_V_amp);
+  REGISTER_XSPICE_ANALOGUE_1 (SE_V_int);
+  REGISTER_XSPICE_ANALOGUE_1 (DE_V_int);
+  REGISTER_XSPICE_ANALOGUE_1 (SE_V_diff);
+  REGISTER_XSPICE_ANALOGUE_1 (DE_V_diff);
+  REGISTER_XSPICE_ANALOGUE_1 (ABV);
+  REGISTER_XSPICE_ANALOGUE_1 (ABCV);
+  REGISTER_XSPICE_ANALOGUE_1 (APBV);
+  REGISTER_XSPICE_ANALOGUE_1 (APBPCV);
+  REGISTER_XSPICE_ANALOGUE_1 (DivV);
+  REGISTER_XSPICE_ANALOGUE_1 (Icouple); 
+  REGISTER_XSPICE_ANALOGUE_1 (core);  
+  REGISTER_XSPICE_ANALOGUE_1 (SDTF);   
+
+  // specific sections of spice netlists
+  REGISTER_SPICE_SEC_1 (SpiceParam);
+  REGISTER_SPICE_SEC_1 (SpiceGlobalParam);
+  REGISTER_SPICE_SEC_1 (SpiceOptions);
+  REGISTER_SPICE_SEC_1 (SpiceIC);
+  REGISTER_SPICE_SEC_1 (SpiceNodeset);
+  REGISTER_SPICE_SEC_1 (NutmegEquation);
+  REGISTER_SPICE_SEC_1 (S4Q_Model);
+  REGISTER_SPICE_SEC_1 (S4Q_Include);
+
+  // spice simulations
+  REGISTER_SPICE_SIM_1 (SpiceFourier);
+  REGISTER_SPICE_SIM_1 (SpiceDisto);
+  REGISTER_SPICE_SIM_1 (SpiceCustomSim);
+  REGISTER_SPICE_SIM_1 (SpiceNoise);
+  REGISTER_SPICE_SIM_1 (SpicePZ);
+
 
   // paintings
   REGISTER_PAINT_1 (GraphicLine);

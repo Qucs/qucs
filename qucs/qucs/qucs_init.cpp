@@ -610,6 +610,12 @@ void QucsApp::initActions()
 	tr("Show Last Netlist\n\nShows the netlist of the last simulation"));
   connect(showNet, SIGNAL(triggered()), SLOT(slotShowLastNetlist()));
 
+  simSpice = new QAction(tr("Simulate with spice"),this);
+  connect(simSpice,SIGNAL(activated()),SLOT(slotSimulateWithSpice()));
+  buildVAModule = new QAction(tr("Build Verilog-A module from subcircuit"),this);
+  connect(buildVAModule,SIGNAL(activated()),SLOT(slotBuildVAModule()));
+
+
   viewToolBar = new QAction(tr("Tool&bar"), this);
   viewToolBar->setCheckable(true);
   viewToolBar->setStatusTip(tr("Enables/disables the toolbar"));
@@ -684,6 +690,8 @@ void QucsApp::initMenuBar()
   fileMenu->addAction(exportAsImage);
   fileMenu->addAction(filePrint);
   fileMenu->addAction(filePrintFit);
+  fileMenu->insertSeparator();
+  fileMenu->addAction(buildVAModule);
   fileMenu->insertSeparator();
   fileMenu->addAction(fileExamples);
   fileMenu->insertSeparator();
@@ -782,6 +790,7 @@ void QucsApp::initMenuBar()
   simMenu->addAction(dcbias);
   simMenu->addAction(showMsg);
   simMenu->addAction(showNet);
+  simMenu->addAction(simSpice);
 
 
   viewMenu = new QMenu(tr("&View"));  // menuBar entry viewMenu

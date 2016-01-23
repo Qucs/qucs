@@ -20,6 +20,7 @@
 #include "schematic.h"
 #include "main.h"
 #include "misc.h"
+#include "extsimkernels/spicecompat.h"
 
 #include <QTextStream>
 #include <QFileInfo>
@@ -39,6 +40,7 @@ Subcircuit::Subcircuit()
 
   Model = "Sub";
   Name  = "SUB";
+  SpiceModel = "X";
 
   // Do NOT call createSymbol() here. But create port to let it rotate.
   Ports.append(new Port(0, 0, false));
@@ -214,6 +216,24 @@ QString Subcircuit::netlist()
   for(Property *pp = Props.next(); pp != 0; pp = Props.next())
     s += " "+pp->Name+"=\""+pp->Value+"\"";
   return s + '\n';
+}
+
+QString Subcircuit::spice_netlist(bool)
+{
+    QString s;
+    QString f = misc::properFileName(Props.first()->Value);
+    s += QString("X%1 ").arg(Name);
+    foreach(Port *p1, Ports) {
+        QString nam = p1->Connection->Name;
+        if (nam=="gnd") nam = "0";
+        s += " "+nam;   // node names
+    }
+    s += " " + misc::properName(f);
+    for(Property *pp = Props.next(); pp != 0; pp = Props.next()) {
+        s += QString(" %1=%2").arg(pp->Name).arg(spicecompat::normalize_value(pp->Value));
+    }
+    s += "\n";
+    return s;
 }
 
 // -------------------------------------------------------

@@ -16,6 +16,10 @@
  ***************************************************************************/
 
 #include "vcvs.h"
+#include "node.h"
+#include "misc.h"
+#include "extsimkernels/spicecompat.h"
+#include "extsimkernels/verilogawriter.h"
 
 
 VCVS::VCVS()
@@ -59,6 +63,7 @@ VCVS::VCVS()
   ty = y2+4;
   Model = "VCVS";
   Name  = "SRC";
+  SpiceModel = "E";
 
   Props.append(new Property("G", "1", true,
 		QObject::tr("forward transfer factor")));
@@ -81,4 +86,40 @@ Element* VCVS::info(QString& Name, char* &BitmapFile, bool getNewOne)
 
   if(getNewOne)  return new VCVS();
   return 0;
+}
+
+QString VCVS::va_code()
+{
+    QString Gain = vacompat::normalize_value(Props.at(0)->Value);
+	QString P1 = Ports.at(0)->Connection->Name;
+    QString P4 = Ports.at(1)->Connection->Name;
+    QString P3 = Ports.at(2)->Connection->Name;
+    QString P2 = Ports.at(3)->Connection->Name;
+    QString s = "";
+    
+    QString Vpm = vacompat::normalize_voltage(P1,P2);
+    QString Ipm = vacompat::normalize_current(P1,P2,true);  
+    s += QString(" %1  <+  %2 * 1e-9;\n").arg(Ipm).arg(Vpm);
+    QString Vpm2 = vacompat::normalize_voltage(P3,P4);
+    QString Ipm2 = vacompat::normalize_current(P3,P4,true); 
+    s += QString("%1  <+  -(%2 * 1e3);\n").arg(Ipm2).arg(Vpm2);
+    s += QString("%1  <+  -(%2 * 1e3*  %3) ;\n").arg(Ipm2).arg(Vpm).arg(Gain);
+    
+    return s;
+ }
+QString VCVS::spice_netlist(bool)
+{
+   QString s = spicecompat::check_refdes(Name,SpiceModel);
+    QList<int> seq; // nodes sequence
+    seq<<1<<2<<0<<3;
+    // output all node names
+    foreach(int i, seq) {
+        QString nam = Ports.at(i)->Connection->Name;
+        if (nam=="gnd") nam = "0";
+        s += " "+ nam;   // node names
+    }
+
+    s += " " + Props.at(0)->Value + "\n"; // Ignore delay time. It is spice-incompatibele
+
+    return s;
 }

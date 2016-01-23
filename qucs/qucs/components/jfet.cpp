@@ -16,6 +16,8 @@
  ***************************************************************************/
 
 #include "jfet.h"
+#include "node.h"
+#include "extsimkernels/spicecompat.h"
 
 
 JFET::JFET()
@@ -77,6 +79,7 @@ JFET::JFET()
   ty = y1+4;
   Model = "JFET";
   Name  = "T";
+  SpiceModel = "J";
 }
 
 // -------------------------------------------------------
@@ -86,6 +89,43 @@ Component* JFET::newOne()
   p->Props.getFirst()->Value = Props.getFirst()->Value;
   p->recreate(0);
   return p;
+}
+
+QString JFET::spice_netlist(bool isXyce)
+{
+    QString s = spicecompat::check_refdes(Name,SpiceModel);
+    QList<int> pin_seq;
+    pin_seq<<1<<0<<2; // Pin sequence: DGS
+    // output all node names
+    foreach(int pin, pin_seq) {
+        QString nam = Ports.at(pin)->Connection->Name;
+        if (nam=="gnd") nam = "0";
+        s += " "+ nam;   // node names
+    }
+
+
+    QStringList spice_incompat,spice_tr;
+    if (isXyce) {
+        spice_incompat<<"Type"<<"Area"<<"Temp"<<"Ffe"<<"N"
+                     <<"Isr"<<"Nr"<<"M"<<"Xti"<<"Betatce"<<"Vt0tc";
+                                  // spice-incompatible parameters
+        spice_tr<<"Vt0"<<"VtO"; // parameters that need convertion of names
+    } else {
+        spice_incompat<<"Type"<<"Area"<<"Temp"<<"Ffe"<<"N"<<"Isr"<<"Nr"<<"M"<<"Xti"<<"Betatce";
+                                  // spice-incompatible parameters
+        spice_tr<<"Vt0tc"<<"Tcv"; // parameters that need convertion of names
+    }
+
+
+    QString par_str = form_spice_param_list(spice_incompat,spice_tr);
+
+    QString jfet_type = getProperty("Type")->Value.at(0).toUpper();
+
+    s += QString(" JMOD_%1 %2 TEMP=%3\n").arg(Name).arg(getProperty("Area")->Value)
+            .arg(getProperty("Temp")->Value);
+    s += QString(".MODEL JMOD_%1 %2JF (%3)\n").arg(Name).arg(jfet_type).arg(par_str);
+
+    return s;
 }
 
 // -------------------------------------------------------

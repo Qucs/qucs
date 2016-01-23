@@ -46,6 +46,10 @@ Component::Component()
 {
   Type = isAnalogComponent;
 
+  SpiceModel = "";
+  isSimulation = false;
+  isProbe = false;
+  isEquation = false;
   mirroredX = false;
   rotated = 0;
   isSelected = false;
@@ -194,7 +198,12 @@ void Component::paint(ViewPainter *p)
     p->Painter->setFont(newFont);
     p->map(cx, cy, x, y);
 
-    p->Painter->setPen(QPen(Qt::darkBlue,2));
+    if ((Model==".CUSTOMSIM")||(Model==".DISTO")
+            ||(Model==".NOISE")||(Model==".PZ"))
+        p->Painter->setPen(QPen(Qt::blue,2));
+    else if (Model==".FOURIER") p->Painter->setPen(QPen(Qt::darkRed,2));
+    else p->Painter->setPen(QPen(Qt::darkBlue,2));
+
     a = b = 0;
     QRect r, t;
     foreach(Text *pt, Texts) {
@@ -628,6 +637,44 @@ QString Component::netlist()
   return s + '\n';
 }
 
+// Forms spice parameter list
+// ignore_list --- QStringList with spice_incompatible parameters
+// convert_list ---  QString list with parameters that needs names conversion
+//                   list format is: ( qucs_parameter_name<i> , spice_parameter_name<i>, ... )
+
+QString Component::form_spice_param_list(QStringList& ignore_list, QStringList& convert_list)
+{
+    QString par_str = "";
+
+    for (unsigned int i=0;i<Props.count();i++) {
+        if (!ignore_list.contains(Props.at(i)->Name)) {
+            QString unit,nam;
+            if (convert_list.contains(Props.at(i)->Name)) {
+                nam = convert_list.at(convert_list.indexOf(Props.at(i)->Name)+1);
+            } else {
+                nam = Props.at(i)->Name;
+            }
+            double val,fac;
+            misc::str2num(Props.at(i)->Value,val,unit,fac);
+            val *= fac;
+            par_str += QString("%1=%2 ").arg(nam).arg(val);
+        }
+
+    }
+
+    return par_str;
+}
+
+QString Component::spice_netlist(bool)
+{
+    return QString("\n"); // ignore if not implemented
+}
+
+QString Component::va_code()
+{
+    return QString(""); // ignore if not implemented
+}
+
 // -------------------------------------------------------
 QString Component::getNetlist()
 {
@@ -648,6 +695,76 @@ QString Component::getNetlist()
     s += "R:" + Name + "." + QString::number(z++) + " " +
       Node1 + " " + iport.next()->Connection->Name + " R=\"0\"\n";
   return s;
+}
+
+QString Component::getSpiceNetlist(bool isXyce)
+{
+    QString s;
+    switch(isActive) {
+      case COMP_IS_ACTIVE:
+           s = spice_netlist(isXyce);
+           s.replace(" gnd "," 0 ");
+           return s;
+      case COMP_IS_OPEN:
+        return QString("");
+    }
+
+    // Component is shortened.
+    int z=0;
+
+    QString Node1 = Ports.first()->Connection->Name;
+    foreach(Port *pp, Ports)
+      s += "R"+Name  + QString::number(z++) + " " +
+           Node1 + " " + pp->Connection->Name + " 0";
+    s.replace(" gnd "," 0 ");
+    return s;
+}
+
+QString Component::getVerilogACode()
+{
+    QString s;
+    switch(isActive) {
+      case COMP_IS_ACTIVE:
+           s = va_code();
+           return s;
+      case COMP_IS_OPEN:
+      default:
+        return QString("");
+    }
+}
+
+QString Component::getExpression(bool)
+{
+    return QString("");
+}
+
+QString Component::getEquations(QString, QStringList &)
+{
+    return QString("");
+}
+
+QString Component::getProbeVariable(bool)
+{
+    return QString("");
+}
+
+QString Component::getSpiceModel()
+{
+    return QString("");
+}
+
+QString Component::getNgspiceBeforeSim(QString sim, int lvl)
+{
+    Q_UNUSED(sim); // To supress warning
+    Q_UNUSED(lvl);
+    return QString("");
+}
+
+QString Component::getNgspiceAfterSim(QString sim, int lvl)
+{
+    Q_UNUSED(sim); // To supress warning
+    Q_UNUSED(lvl);
+    return QString("");
 }
 
 // -------------------------------------------------------
@@ -719,7 +836,10 @@ QString Component::save()
   el.setAttribute ("rotate", rotated);
 
   for (Property *pr = Props.first(); pr != 0; pr = Props.next()) {
-    el.setAttribute (pr->Name, (pr->display ? "1@" : "0@") + pr->Value);
+    QString val = pr->Value;
+    val.replace("\n","\\n");
+    val.replace("\"","''");
+    el.setAttribute (pr->Name, (pr->display ? "1@" : "0@") + val);
   }
   qDebug (doc.toString());
 #endif
@@ -741,9 +861,12 @@ QString Component::save()
 
   // write all properties
   for(Property *p1 = Props.first(); p1 != 0; p1 = Props.next()) {
-    if(p1->Description.isEmpty())
-      s += " \""+p1->Name+"="+p1->Value+"\"";   // e.g. for equations
-    else s += " \""+p1->Value+"\"";
+      QString val = p1->Value; // enable newline in properties
+      val.replace("\n","\\n");
+      val.replace("\"","''");
+      if(p1->Description.isEmpty()||(p1->Description=="Expression"))
+      s += " \""+p1->Name+"="+val+"\"";   // e.g. for equations
+    else s += " \""+val+"\"";
     if(p1->display) s += " 1";
     else s += " 0";
   }
@@ -832,6 +955,8 @@ bool Component::load(const QString& _s)
   for(p1 = Props.first(); p1 != 0; p1 = Props.next()) {
     z++;
     n = s.section('"',z,z);    // property value
+    n.replace("\\n","\n");
+    n.replace("''","\"");
     z++;
     //qDebug() << "LOAD: " << p1->Description;
 
@@ -890,7 +1015,7 @@ bool Component::load(const QString& _s)
 
     // for equations
     if(Model != "EDD" && Model != "RFEDD" && Model != "RFEDD2P")
-    if(p1->Description.isEmpty()) {  // unknown number of properties ?
+      if(p1->Description.isEmpty()||p1->Description=="Expression") {  // unknown number of properties ?
       p1->Name = n.section('=',0,0);
       n = n.section('=',1);
       // allocate memory for a new property (e.g. for equations)
@@ -1318,6 +1443,24 @@ GateComponent::GateComponent()
 QString GateComponent::netlist()
 {
   QString s = Model+":"+Name;
+
+  // output all node names
+  foreach(Port *pp, Ports)
+    s += " "+pp->Connection->Name;   // node names
+
+  // output all properties
+  Property *p = Props.at(1);
+  s += " " + p->Name + "=\"" + p->Value + "\"";
+  p = Props.next();
+  s += " " + p->Name + "=\"" + p->Value + "\"";
+  p = Props.next();
+  s += " " + p->Name + "=\"" + p->Value + "\"\n";
+  return s;
+}
+
+QString GateComponent::spice_netlist(bool)
+{
+  QString s = Model+Name;
 
   // output all node names
   foreach(Port *pp, Ports)

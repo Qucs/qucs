@@ -16,11 +16,14 @@
  ***************************************************************************/
 #include "equation.h"
 #include "main.h"
+#include "extsimkernels/spicecompat.h"
+#include "extsimkernels/verilogawriter.h"
 
 #include <QFontMetrics>
 
 Equation::Equation()
 {
+  isEquation = true;
   Type = isComponent; // Analogue and digital component.
   Description = QObject::tr("equation");
 
@@ -88,4 +91,175 @@ Element* Equation::info(QString& Name, char* &BitmapFile, bool getNewOne)
 
   if(getNewOne)  return new Equation();
   return 0;
+}
+
+QString Equation::getVAvariables()
+{
+    QStringList vars;
+    for (unsigned int i=0;i<Props.count()-1;i++) {
+        vars.append(Props.at(i)->Name);
+    }
+
+    return QString("real %1;\n").arg(vars.join(", "));
+}
+
+QString Equation::getVAExpressions()
+{
+    QString s;
+    for (unsigned int i=0;i<Props.count()-1;i++) {
+        QStringList tokens;
+        spicecompat::splitEqn(Props.at(i)->Value,tokens);
+        vacompat::convert_functions(tokens);
+        s += QString("%1=%2;\n").arg(Props.at(i)->Name).arg(tokens.join(""));
+    }
+    return s;
+}
+
+/*!
+ * \brief Equation::getExpression Extract equations that don't contain simualtion variables
+ *        (voltages/cureents) in .PARAM section of spice netlist
+ * \param isXyce True if Xyce is used.
+ * \return .PARAM section of spice netlist as a single string.
+ */
+QString Equation::getExpression(bool isXyce)
+{
+    if (isActive != COMP_IS_ACTIVE) return QString("");
+
+    QStringList ng_vars,ngsims;
+    getNgnutmegVars(ng_vars,ngsims);
+
+    QString s;
+    s.clear();
+    for (unsigned int i=0;i<Props.count()-1;i++) {
+        QStringList tokens;
+        QString eqn = Props.at(i)->Value;
+        spicecompat::splitEqn(eqn,tokens);
+        spicecompat::convert_functions(tokens,isXyce);
+        eqn = tokens.join("");
+        if (isXyce) {
+            eqn.replace("^","**");
+            QRegExp fp_pattern("^[\\+\\-]*\\d*\\.\\d+$"); // float
+            QRegExp fp_exp_pattern("^[\\+\\-]*\\d*\\.*\\d+e[\\+\\-]*\\d+$"); // float with exp
+            QRegExp dec_pattern("^[\\+\\-]*\\d+$"); // integer
+            QRegExp spicefp_pattern("^[\\+\\-]*\\d*\\.\\d+[A-Za-z]{,3}$"); // float and scaling suffix
+            QRegExp spicedec_pattern("^[\\+\\-]*\\d+[A-Za-z]{,3}$"); // decimal and scaling suffix
+            if (!(fp_pattern.exactMatch(eqn)||
+                  dec_pattern.exactMatch(eqn)||
+                  fp_exp_pattern.exactMatch(eqn)||
+                  spicefp_pattern.exactMatch(eqn)||
+                  spicedec_pattern.exactMatch(eqn))) eqn = "{" + eqn + "}"; // wrap equation if it contains vars
+        }
+
+        if (!spicecompat::containNodes(tokens,ng_vars)) {
+            s += QString(".PARAM %1=%2\n").arg(Props.at(i)->Name).arg(eqn);
+        }
+    }
+    return s;
+}
+
+/*!
+ * \brief Equation::getEquations Convert equations that contains simulation variables
+ *        (voltages/currents) into ngspice script. This script is placed between
+ *        .control .endc sections of ngspice netlist. Also determines output variables
+ *        that need to be plot.
+ * \param[in] sim Used simulation (i.e "ac", "dc", "tran" )
+ * \param[out] dep_vars The list of variables that need to place in dataset and to plot.
+ * \return Ngspice script as a single string.
+ */
+QString Equation::getEquations(QString sim, QStringList &dep_vars)
+{
+    if (isActive != COMP_IS_ACTIVE) return QString("");
+
+    QStringList ng_vars,ngsims;
+    getNgnutmegVars(ng_vars,ngsims);
+
+    QString s;
+    dep_vars.clear();
+    for (unsigned int i=0;i<Props.count()-1;i++) {
+        QStringList tokens;
+        QString eqn = Props.at(i)->Value;
+        spicecompat::splitEqn(eqn,tokens);
+        eqn.replace("^","**");
+        if (spicecompat::containNodes(tokens,ng_vars)) {
+            QString used_sim="";
+            spicecompat::convertNodeNames(tokens,used_sim);
+            if (used_sim.isEmpty()) {
+                int idx = ng_vars.indexOf(Props.at(i)->Name);
+                if (idx>=0) used_sim = ngsims.at(idx);
+            }
+            if ((sim == used_sim)||(used_sim=="all")) {
+                eqn = tokens.join("");
+                s += QString("let %1=%2\n").arg(Props.at(i)->Name).arg(eqn);
+                dep_vars.append(Props.at(i)->Name);
+            }
+        }
+    }
+    return s;
+}
+
+/*!
+ * \brief Equation::getNgspiceScript Duplicate variables from .PARAM section
+ *        in .control .endc section of Ngspice netlist.
+ * \return Ngspice script as a single string.
+ */
+QString Equation::getNgspiceScript()
+{
+    QStringList ng_vars,ngsims;
+    getNgnutmegVars(ng_vars,ngsims);
+
+    QString s;
+    s.clear();
+    for (unsigned int i=0;i<Props.count()-1;i++) {
+        QStringList tokens;
+        QString eqn = Props.at(i)->Value;
+        spicecompat::splitEqn(eqn,tokens);
+        spicecompat::convert_functions(tokens,false);
+        eqn = tokens.join("");
+
+        if (!spicecompat::containNodes(tokens,ng_vars)) {
+            s += QString("let %1=%2\n").arg(Props.at(i)->Name).arg(eqn);
+        }
+    }
+    return s;
+}
+
+/*!
+ * \brief Equation::getNgnutmegVars Extract variables and simulations that are used
+ *        in Ngnutneg script in nested variables
+ * \param[out] vars
+ * \param[sims] simulations
+ */
+void Equation::getNgnutmegVars(QStringList &vars, QStringList &sims)
+{
+    vars.clear();
+    sims.clear();
+    for (unsigned int i=0;i<Props.count()-1;i++) {
+        QStringList tokens;
+        QString eqn = Props.at(i)->Value;
+        spicecompat::splitEqn(eqn,tokens);
+        if (spicecompat::containNodes(tokens,vars)) {
+            vars.append(Props.at(i)->Name);
+            QString used_sim="";
+            spicecompat::convertNodeNames(tokens,used_sim);
+            if (used_sim.isEmpty()) {
+                sims.append("all");
+            } else {
+                sims.append(used_sim);
+            }
+        }
+    }
+    foreach (QString var,vars) {
+        QString sim;
+        int idx = vars.indexOf(var);
+        if (idx>=0) sim = sims.at(idx);
+        if (sim=="all") {
+            QString eqn = getProperty(var)->Value;
+            QStringList tokens;
+            spicecompat::splitEqn(eqn,tokens);
+            foreach (QString tok,tokens) {
+                int idx1 = vars.indexOf(tok);
+                if ((idx1>=0)&&(sims[idx1]!="all")) sims[idx]=sims[idx1];
+            }
+        }
+    }
 }
