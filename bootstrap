@@ -18,7 +18,7 @@ fi
 
 for i in $MODULES; do
 	( cd $i;
-	  echo autogen in $( pwd )
+	  echo bootstrapping $( pwd )
 	  ./bootstrap || ( echo trouble in $i/autogen.sh; exit 1 )
 	) || exit 1
 done

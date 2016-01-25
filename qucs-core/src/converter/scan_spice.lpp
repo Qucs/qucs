@@ -2,7 +2,7 @@
 
 %{
 /*
- * scan_spice.l - scanner for a Spice netlist
+ * scan_spice.lpp - scanner for a Spice netlist
  *
  * Copyright (C) 2004-2009 Stefan Jahn <stefan@lkcc.org>
  *
@@ -48,7 +48,7 @@
 #endif
 
 #include "check_spice.h"
-#include "tokens_spice.h"
+#include "parse_spice.hpp"
 
 #if !HAVE_STRCHR
 # define strchr  index
@@ -140,7 +140,6 @@ POLY     [pP][oO][lL][yY]
 %x STARTUP VSINGLE ISWITCH VSWITCH CONTROL GEVALS INLINE SUBCKT TLPROP RLCPROP
 %x FHVALS
 %option yylineno noyywrap nounput noinput prefix="spice_"
-
 %%
 
 <INITIAL>^{TITLE} { /* detect initial title lines */

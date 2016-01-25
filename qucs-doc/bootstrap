@@ -34,21 +34,3 @@ echo "done."
 echo -n "Creating configure... "
 autoconf
 echo "done."
-
-#
-# run configure, maybe with parameters recorded in config.status
-#
-if [ -r config.status ]; then
-  # Autoconf 2.13
-  CMD=`awk '/^#.*\/?configure .*/ { $1 = ""; print; exit }' < config.status`
-  if test "x$CMD" = "x" ; then
-    # Autoconf 2.5x
-    CMD=`grep "with options" < config.status | \
-         sed 's/[^"]*["]\([^"]*\)["]/\1/' | sed 's/\\\//g' | sed "s/'//g"`
-    CMD="./configure $CMD"
-  fi
-else
-  CMD="./configure --enable-maintainer-mode"
-fi
-echo "Running $CMD $@ ..."
-$CMD "$@"

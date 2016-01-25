@@ -30,12 +30,7 @@ CODE_COVERAGE_GENHTML_OPTIONS ?= --rc lcov_branch_coverage=1
 
 ## Add the subdirectories, including a '.' which forces adms
 ## to be build first, followed by src, then doc
-SUBDIRS = $(ADMS_SUBDIR) src doc
-
-# include subdirs to build gtest and run unit tests
-if USE_GTEST
-SUBDIRS += tests
-endif
+SUBDIRS = $(ADMS_SUBDIR) src doc tests
 
 ACLOCAL_AMFLAGS = -I m4
 

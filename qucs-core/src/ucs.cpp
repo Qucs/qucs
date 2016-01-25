@@ -147,7 +147,7 @@ int main (int argc, char ** argv) {
   // create static modules
   module::registerModules ();
 
-#if DEBUG
+#ifndef NOMODULEPRINT
   // emit C-code for available definitions if requested and exit
   if (listing) {
     module::print ();

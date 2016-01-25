@@ -81,22 +81,27 @@ Bootstrap (after cloning from git):
 Compile qucs:
 
     cd qucs
-    ./configure --enable-maintainer-mode
+    ./configure
     make
     sudo make install
 
 Compile qucs-core:
 
     cd qucs-core
-    ./configure --enable-maintainer-mode
+    ./configure
     make
     sudo make install
 
 Note:
 
- * Qucs it will be installed by default to `/usr/local/`. This can be modified by passing `--prefix=[some location]` to the `./configure` script.
+ * Qucs will be installed to `/usr/local` by default. You may override this
+   by passing `--prefix=[some location]` to the `./configure` script.
 
- * ADMS can be installed from a released tarball (>= 2.3.0). To use an already available `admsXml` pass the option `--with-mkadms=[path/to/admsXml]` to the `./configure` script
+ * ADMS should be installed e.g. from a released tarball (>= 2.3.0).
+   To use a different `admsXml` pass the option `--with-admsxml=[path/to/]anotherAdmsXml`
+   to `./configure'.
+
+ * Consider the output of `./configure --help` for more and definitive build options.
 
 
 ## Binary Installation

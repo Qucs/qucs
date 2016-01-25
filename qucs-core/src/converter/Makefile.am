@@ -22,8 +22,6 @@
 # Boston, MA 02110-1301, USA.
 #
 
-EXTRA_DIST = parse_spice.y scan_spice.l parse_vcd.y scan_vcd.l
-
 bin_PROGRAMS = qucsconv
 
 qucsconv_LDADD = ../libqucs.la ../math/libqucsmath.la
@@ -34,34 +32,20 @@ AM_CPPFLAGS = -I$(top_builddir)/src \
               -I$(top_srcdir)/src \
               -I$(top_srcdir)/src/math
 
-qucsconv_SOURCES = qucsconv.cpp parse_spice.cpp scan_spice.cpp \
-	check_spice.cpp qucs_producer.cpp parse_vcd.cpp scan_vcd.cpp \
+# needed to generate parse_spice.hpp from parse_spice.ypp
+AM_YFLAGS = -d -t
+
+# needed for ylwrap
+scan_spice.cpp: LEX_OUTPUT_ROOT = lex.spice_
+scan_vcd.cpp: LEX_OUTPUT_ROOT = lex.vcd_
+
+qucsconv_SOURCES = qucsconv.cpp parse_spice.ypp scan_spice.lpp \
+	check_spice.cpp qucs_producer.cpp parse_vcd.ypp scan_vcd.lpp \
 	check_vcd.cpp csv_producer.cpp touchstone_producer.cpp \
 	matlab_producer.cpp
 
-noinst_HEADERS = tokens_spice.h check_spice.h qucs_producer.h check_vcd.h \
-	tokens_vcd.h csv_producer.h touchstone_producer.h matlab_producer.h
-
-if MAINTAINER_MODE
-generated_FILES = parse_spice.cpp scan_spice.cpp tokens_spice.h \
-	parse_vcd.cpp scan_vcd.cpp tokens_vcd.h
-
-scan_spice.cpp: scan_spice.l
-	$(LEX) -o$@ $<
-
-parse_spice.cpp: parse_spice.y
-	$(YACC) -v -o $@ --defines=tokens_spice.h $<
-
-scan_vcd.cpp: scan_vcd.l
-	$(LEX) -o$@ $<
-
-parse_vcd.cpp: parse_vcd.y
-	$(YACC) -v -o $@ --defines=tokens_vcd.h $<
-
-else
-generated_FILES =
-endif
+noinst_HEADERS = check_spice.h qucs_producer.h check_vcd.h \
+	csv_producer.h touchstone_producer.h matlab_producer.h
 
 CLEANFILES = *~ *.orig *.rej *.output
-MAINTAINERCLEANFILES = Makefile.in $(generated_FILES)
-DISTCLEANFILES = $(generated_FILES)
+MAINTAINERCLEANFILES = Makefile.in

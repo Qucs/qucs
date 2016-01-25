@@ -328,7 +328,7 @@ void module::unregisterModules (void) {
   modules.clear ();
 }
 
-#if DEBUG
+#ifndef NOMODULEPRINT
 // header prefix
 static const char * def_prefix =
 "/*\n"

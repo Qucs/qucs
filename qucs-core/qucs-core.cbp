@@ -370,11 +370,11 @@
 		<Unit filename="src/converter/matlab_producer.cpp" />
 		<Unit filename="src/converter/matlab_producer.h" />
 		<Unit filename="src/converter/parse_spice.cpp" />
-		<Unit filename="src/converter/parse_spice.y">
+		<Unit filename="src/converter/parse_spice.ypp">
 			<Option compile="1" />
 		</Unit>
 		<Unit filename="src/converter/parse_vcd.cpp" />
-		<Unit filename="src/converter/parse_vcd.y">
+		<Unit filename="src/converter/parse_vcd.ypp">
 			<Option compile="1" />
 		</Unit>
 		<Unit filename="src/converter/qucs_producer.cpp" />
@@ -489,25 +489,25 @@
 		<Unit filename="src/pair.h" />
 		<Unit filename="src/parasweep.cpp" />
 		<Unit filename="src/parasweep.h" />
-		<Unit filename="src/parse_citi.y">
+		<Unit filename="src/parse_citi.ypp">
 			<Option compile="1" />
 		</Unit>
-		<Unit filename="src/parse_csv.y">
+		<Unit filename="src/parse_csv.ypp">
 			<Option compile="1" />
 		</Unit>
-		<Unit filename="src/parse_dataset.y">
+		<Unit filename="src/parse_dataset.ypp">
 			<Option compile="1" />
 		</Unit>
-		<Unit filename="src/parse_mdl.y">
+		<Unit filename="src/parse_mdl.ypp">
 			<Option compile="1" />
 		</Unit>
-		<Unit filename="src/parse_netlist.y">
+		<Unit filename="src/parse_netlist.ypp">
 			<Option compile="1" />
 		</Unit>
-		<Unit filename="src/parse_touchstone.y">
+		<Unit filename="src/parse_touchstone.ypp">
 			<Option compile="1" />
 		</Unit>
-		<Unit filename="src/parse_zvr.y">
+		<Unit filename="src/parse_zvr.ypp">
 			<Option compile="1" />
 		</Unit>
 		<Unit filename="src/poly.h" />

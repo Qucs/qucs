@@ -48,7 +48,7 @@
 #endif
 
 #include "check_mdl.h"
-#include "tokens_mdl.h"
+#include "parse_mdl.hpp"
 
 #if !HAVE_STRCHR
 # define strchr  index

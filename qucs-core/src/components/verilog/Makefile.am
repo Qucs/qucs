@@ -34,7 +34,7 @@ XML_BUILD = \
   $(srcdir)/qucsMODULEdefs.xml
 
 .va.cpp: $(XML_BUILD)
-	for i in $(XML_BUILD); do \
+	@for i in $(XML_BUILD); do \
 	  echo "$$i"; \
 	  es="$$es -e $$i"; \
 	done; \
@@ -123,27 +123,24 @@ AM_CPPFLAGS = -I$(top_srcdir)/src -I$(top_srcdir)/src/math \
   -I$(top_srcdir)/src/components -I$(top_srcdir)/src/components/devices \
   -I$(builddir)
 
-if MAINTAINER_MODE
 ## configure determines if we want to build and use the
 ## bundled version of ADMS, or the host's ADMS. Here we
 ## set the path to the admsXml binary depeding on the choice
 ## the user made at configure time
 
-## FIXME: let configure.ac decide
-if USE_INTERNAL_ADMS
-ADMSXML = $(abs_top_builddir)/deps/adms/admsXml/admsXml
-else
-ADMSXML = @ADMSXML@
-endif
-
 GENERATED_FILES = *.core.* *.analogfunction.* *.gui.* *.defs.* .*.adms .*.xml
-else
-GENERATED_FILES =
-endif
 
 pkginclude_HEADERS = $(XML_FILES) $(MAKE_FILES) $(VA_INCLUDES)
 
 CLEANFILES = *~ *.orig *.rej *.analogfunction.cpp *.core.cpp .*.adms \
              *.core.h *.analogfunction.h *.cpp *.defs.h
+
+DISTCLEANFILES = \
+    constants.vams\
+    discipline.vams\
+    .adms.implicit.xml\
+    .interface.xml\
+    disciplines.vams
+
 
 MAINTAINERCLEANFILES = Makefile.in $(GENERATED_FILES)

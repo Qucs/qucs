@@ -22,14 +22,15 @@
 # Boston, MA 02110-1301, USA.
 #
 
-EXTRA_DIST = parse_netlist.y scan_netlist.l scan_dataset.l parse_dataset.y \
-	parse_touchstone.y scan_touchstone.l parse_citi.y scan_citi.l \
-	gperfapphash.cpp parse_zvr.y scan_zvr.l parse_mdl.y scan_mdl.l \
-	parse_csv.y scan_csv.l
+EXTRA_DIST = gperfapphash.cpp
 
 SUBDIRS = math components interface . converter
 
+# needed to generate parse_spice.hpp from parse_spice.ypp
+AM_YFLAGS = -d -t
+
 AM_CPPFLAGS = -I$(top_srcdir)/src/math -I$(top_srcdir)/src/components \
+	-I$(top_builddir)/src/components \
 	-I$(top_srcdir)/src/interface -I$(builddir)
 
 lib_LTLIBRARIES = libqucs.la
@@ -54,13 +55,13 @@ noinst_TEMPLATES = tridiag.cpp hash.cpp \
 	nasolver.cpp
 
 noinst_HEADERS = $(noinst_TEMPLATES)            \
-	tokens_netlist.h tokens_dataset.h check_dataset.h tokens_touchstone.h       \
+	check_dataset.h \
 	check_touchstone.h  spsolver.h dcsolver.h variable.h       \
 	parasweep.h sweep.h libqucsator.h evaluate.h matvec.h acsolver.h   \
 	transient.h netdefs.h hbsolver.h poly.h     \
 	spline.h tridiag.h fourier.h hash.h applications.h     \
-	range.h history.h devstates.h tokens_citi.h check_citi.h check_zvr.h  \
-	tokens_zvr.h check_mdl.h tokens_mdl.h differentiate.h tokens_csv.h  \
+	range.h history.h devstates.h check_citi.h check_zvr.h  \
+	check_mdl.h differentiate.h  \
 	check_csv.h analyses.h receiver.h interpolator.h \
 	logging.h net.h input.h dataset.h equation.h tvector.h tmatrix.h \
 	environment.h exceptionstack.h check_netlist.h module.h nasolver.h \
@@ -69,22 +70,42 @@ noinst_HEADERS = $(noinst_TEMPLATES)            \
 	nodeset.h nodelist.h strlist.h operatingpoint.h  consts.h  \
 	integrator.h valuelist.h gperfappgen.h
 
-libqucs_la_SOURCES = dataset.cpp check_dataset.cpp parse_dataset.cpp      \
-	scan_dataset.cpp check_touchstone.cpp vector.cpp object.cpp          \
-	property.cpp parse_touchstone.cpp scan_touchstone.cpp variable.cpp   \
+libqucs_la_SOURCES = dataset.cpp check_dataset.cpp \
+	check_touchstone.cpp vector.cpp object.cpp          \
+	property.cpp \
+	variable.cpp   \
 	strlist.cpp logging.c exception.cpp exceptionstack.cpp               \
-	matvec.cpp parse_citi.cpp                                            \
-	scan_citi.cpp check_citi.cpp parse_zvr.cpp scan_zvr.cpp sweep.cpp    \
-	check_zvr.cpp parse_mdl.cpp scan_mdl.cpp check_mdl.cpp check_csv.cpp \
-	parse_csv.cpp scan_csv.cpp circuit.cpp check_netlist.cpp \
-	parse_netlist.cpp scan_netlist.cpp net.cpp input.cpp        \
+	matvec.cpp \
+	check_citi.cpp \
+	sweep.cpp    \
+	check_zvr.cpp \
+	check_mdl.cpp check_csv.cpp \
+	circuit.cpp check_netlist.cpp \
+	net.cpp input.cpp        \
 	analysis.cpp spsolver.cpp dcsolver.cpp nodelist.cpp environment.cpp  \
 	parasweep.cpp equation.cpp evaluate.cpp acsolver.cpp                 \
 	trsolver.cpp transient.cpp integrator.cpp nodeset.cpp hbsolver.cpp   \
 	spline.cpp fourier.cpp history.cpp       \
 	range.cpp devstates.cpp differentiate.cpp module.cpp receiver.cpp    \
-	interpolator.cpp
+	interpolator.cpp \
+	parse_citi.ypp scan_citi.lpp \
+	parse_csv.ypp scan_csv.lpp \
+	parse_dataset.ypp scan_dataset.lpp \
+	parse_mdl.ypp scan_mdl.lpp \
+	parse_netlist.ypp scan_netlist.lpp \
+	parse_touchstone.ypp scan_touchstone.lpp \
+	parse_zvr.ypp scan_zvr.lpp
 
+# needed for ylwrap
+scan_citi.cpp: LEX_OUTPUT_ROOT = lex.citi_
+scan_csv.cpp: LEX_OUTPUT_ROOT = lex.csv_
+scan_dataset.cpp: LEX_OUTPUT_ROOT = lex.dataset_
+scan_mdl.cpp: LEX_OUTPUT_ROOT = lex.mdl_
+scan_netlist.cpp: LEX_OUTPUT_ROOT = lex.netlist_
+scan_touchstone.cpp: LEX_OUTPUT_ROOT = lex.touchstone_
+scan_zvr.cpp: LEX_OUTPUT_ROOT = lex.zvr_
+
+# just make sure, everything is in place
 bin_PROGRAMS = qucsator
 
 qucsator_LDADD = libqucs.la
@@ -96,74 +117,29 @@ qucsator_SOURCES = ucs.cpp
 all-am: qucsdefs.h
 
 
-if MAINTAINER_MODE
 ## Here we create the various input parsing code files using
 ## lex and yacc, these files will be distributed
-generated_FILES = scan_netlist.cpp parse_netlist.cpp scan_dataset.cpp     \
-	parse_dataset.cpp tokens_dataset.h tokens_netlist.h               \
-	parse_touchstone.cpp tokens_touchstone.h scan_touchstone.cpp      \
-	parse_citi.cpp tokens_citi.h scan_citi.cpp parse_zvr.cpp          \
-	scan_zvr.cpp tokens_zvr.h parse_mdl.cpp	scan_mdl.cpp tokens_mdl.h \
-	parse_csv.cpp tokens_csv.h scan_csv.cpp qucsdefs.h
+generated_FILES = qucsdefs.h
 
-scan_netlist.cpp: scan_netlist.l
-	$(LEX) -o$@ $<
-
-scan_dataset.cpp: scan_dataset.l
-	$(LEX) -o$@ $<
-
-scan_touchstone.cpp: scan_touchstone.l
-	$(LEX) -o$@ $<
-
-scan_csv.cpp: scan_csv.l
-	$(LEX) -o$@ $<
-
-scan_citi.cpp: scan_citi.l
-	$(LEX) -o$@ $<
-
-scan_zvr.cpp: scan_zvr.l
-	$(LEX) -o$@ $<
-
-scan_mdl.cpp: scan_mdl.l
-	$(LEX) -o$@ $<
-
-parse_netlist.cpp: parse_netlist.y
-	$(YACC) -v -o $@ --defines=tokens_netlist.h $<
-
-parse_dataset.cpp: parse_dataset.y
-	$(YACC) -v -o $@ --defines=tokens_dataset.h $<
-
-parse_touchstone.cpp: parse_touchstone.y
-	$(YACC) -v -o $@ --defines=tokens_touchstone.h $<
-
-parse_csv.cpp: parse_csv.y
-	$(YACC) -v -o $@ --defines=tokens_csv.h $<
-
-parse_citi.cpp: parse_citi.y
-	$(YACC) -v -o $@ --defines=tokens_citi.h $<
-
-parse_zvr.cpp: parse_zvr.y
-	$(YACC) -v -o $@ --defines=tokens_zvr.h $<
-
-parse_mdl.cpp: parse_mdl.y
-	$(YACC) -v -o $@ --defines=tokens_mdl.h $<
-else
-generated_FILES =
-endif
-
-if MAINTAINER_MODE
 qucsdefs.h: qucsator$(EXEEXT)
 	./$< -l > $@
-endif
 
 ## The qucs equation definitions use a hash lookup table
 ## generated using gperf and put in gperfapphash.cpp which
 ## is #included in the body of equation.cpp
 equation.cpp: gperfapphash.cpp
 
-BUILT_SOURCES = equation.cpp
+BUILT_SOURCES = equation.cpp \
+	gperfappgen.h \
+	parse_citi.hpp \
+	parse_csv.hpp \
+	parse_dataset.hpp \
+	parse_mdl.hpp \
+	parse_netlist.hpp \
+	parse_touchstone.hpp \
+	parse_zvr.hpp
 
-if MAINTAINER_MODE
+
 ## Here we generate gperfapphash.cpp for equation.cpp.
 ##
 ## To generate the hash table code we must first create a
@@ -180,15 +156,14 @@ gperfapphash.cpp: gperfapphash.gph
 	$(GPERF) -I -m 8 $< | sed -e 's/{""},/{"",0},/g' > $@
 
 gperfappgen.h: applications.h
-	sed -e 's/evaluate::[a-zA-Z0-9_]*/NULL/g' < $< > $@
+	sed -e 's/evaluate::[a-zA-Z0-9_]*/NULL/g' < $< > gperfappgen.h
+
+# this is redundant (trying to figure out appveyor problem)
+gperfappgen.o: gperfappgen.h
 
 ## Store the gperf names in their own variable as the are
 ## not distributed but must be removed in a maintainer-clean
 gperf_FILES = gperfapphash.cpp gperfapphash.gph gperfappgen.h
-
-else
-gperf_FILES =
-endif
 
 CLEANFILES = *~ *.orig *.rej *.output
 MAINTAINERCLEANFILES = Makefile.in $(generated_FILES) $(gperf_FILES)

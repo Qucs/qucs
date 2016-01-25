@@ -289,7 +289,8 @@ int doNetlist(QString schematic, QString netlist)
 
   if(SimPorts < -5) {
     NetlistFile.close();
-    fprintf(stderr, "Error: Could not prepare the netlist...\n");
+    QByteArray ba = netlist.toLatin1();
+    fprintf(stderr, "Error: Could not prepare netlist %s\n", ba.data());
     /// \todo better handling for error/warnings
     qCritical() << ErrText->toPlainText();
     return 1;
@@ -670,7 +671,12 @@ int main(int argc, char *argv[])
 
   QucsSettings.BinDir =      QucsDir.absolutePath() + "/bin/";
   QucsSettings.LangDir =     QucsDir.canonicalPath() + "/share/qucs/lang/";
-  QucsSettings.LibDir =      QucsDir.canonicalPath() + "/share/qucs/library/";
+  var = getenv("QUCS_LIBDIR");
+  if(var != NULL) {
+	  QucsSettings.LibDir = QString(var);
+  }else{
+	  QucsSettings.LibDir =      QucsDir.canonicalPath() + "/share/qucs/library/";
+  }
   QucsSettings.OctaveDir =   QucsDir.canonicalPath() + "/share/qucs/octave/";
   QucsSettings.ExamplesDir = QucsDir.canonicalPath() + "/share/qucs/docs/examples/";
   QucsSettings.DocDir =      QucsDir.canonicalPath() + "/share/qucs/docs/";
@@ -680,7 +686,7 @@ int main(int argc, char *argv[])
   QucsSettings.QucsWorkDir.setPath(QucsSettings.QucsHomeDir.canonicalPath());
 
   /// \todo Make the setting up of all executables below more consistent
-  var = getenv("QUCSATOR");
+  getenv("QUCSATOR");
   if(var != NULL) {
       QucsSettings.Qucsator = QString(var);
   }
