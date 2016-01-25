@@ -42,7 +42,9 @@
 
 #include "resistor.h"
 #include "capacitor.h"
+#include "capq.h"
 #include "inductor.h"
+#include "indq.h"
 #include "mutual.h"
 #include "mutual2.h"
 #include "mutualx.h"
@@ -128,6 +130,9 @@
 #include "microstrip/msvia.h"
 #include "microstrip/msrstub.h"
 #include "microstrip/bondwire.h"
+#include "microstrip/spiralinductor.h"
+#include "microstrip/circularloop.h"
+
 
 #include "microstrip/cpwline.h"
 #include "microstrip/cpwopen.h"

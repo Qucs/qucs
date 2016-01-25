@@ -42,7 +42,9 @@ enum circuit_type {
   // linear components
   CIR_RESISTOR,
   CIR_CAPACITOR,
+  CIR_CAPQ,
   CIR_INDUCTOR,
+  CIR_INDQ,
   CIR_MUTUAL,
   CIR_MUTUAL2,
   CIR_MUTUALX,
@@ -117,6 +119,8 @@ enum circuit_type {
   CIR_MSVIA,
   CIR_MSRSTUB,
   CIR_BONDWIRE,
+  CIR_SPIRALIND,
+  CIR_CIRCULARLOOP,
 
   // coplanar components
   CIR_CPWLINE,

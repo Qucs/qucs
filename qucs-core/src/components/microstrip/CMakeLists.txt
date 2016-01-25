@@ -7,6 +7,7 @@ INCLUDE_DIRECTORIES( ${qucs-core_SOURCE_DIR}
 
 SET( MICROSTRIP_SRC
   bondwire.cpp
+  circularloop.cpp
   cpwgap.cpp
   cpwline.cpp
   cpwopen.cpp
@@ -24,6 +25,7 @@ SET( MICROSTRIP_SRC
   msstep.cpp
   mstee.cpp
   msvia.cpp
+  spiralinductor.cpp
   substrate.cpp
 )
 
