@@ -40,6 +40,7 @@ EXTRA_DIST = bootstrap
 #  - or get its own build system
 dist-hook:
 	cp -r $(abs_top_srcdir)/qucs-test $(distdir)
+	rm -rf $(distdir)/qucs-test/.git/
 
 all-local:
 	:
