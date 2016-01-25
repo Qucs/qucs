@@ -1,56 +1,37 @@
 ## Process this file with automake to produce Makefile.in
-# 
-# tutorial/textmode/Makefile.am
+#
+# tutorial/textmode/pics/Makefile.am
 #
 # Automake input file.
 #
-# Copyright (C) 2014 Guilherme Brondani Torri <guitorri@gmail.com>
+# Copyright (C) 2016 Guilherme Brondani Torri <guitorri@gmail.com>
 #
 # This is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; either version 2, or (at your option)
 # any later version.
-# 
+#
 # This software is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU General Public License
 # along with this package; see the file COPYING.  If not, write to
 # the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
-# Boston, MA 02110-1301, USA.  
+# Boston, MA 02110-1301, USA.
 #
 
-SUBDIRS = pics
+EXTRA_DIST = $(PDFS)
 
-EXTRA_DIST = $(SOURCES)
+PDFS = \
+  rc_ac.eps \
+  rc_ac_circuit.eps \
+  rc_ac_python.eps \
+  rc_ac_sweep_python.eps \
+  rc_ac_tr.eps
 
-SOURCES = textmode.tex content.tex
-TARGETS = textmode.pdf
-
-tutorial: $(TARGETS)
-
-SUFFIXES = .dvi .tex .pdf .ps
-
-.tex.dvi:
-	$(LATEX) $<
-	$(LATEX) $<
-	$(LATEX) -interaction=batchmode $<
-
-.tex.pdf:
-	TEXINPUTS=$$TEXINPUTS:.. $(PDFLATEX) $<
-	TEXINPUTS=$$TEXINPUTS:.. $(PDFLATEX) $<
-	TEXINPUTS=$$TEXINPUTS:.. $(PDFLATEX) -interaction=batchmode $<
-
-.dvi.ps:
-	$(DVIPS) $< -o $@
-
-# installation of documentation
-docdatadir = ${prefix}/share/qucs/docs/tutorial
-docdata_DATA = ${TARGETS}
-
-CLEANFILES = *~ *.bak *.aux *.log *.toc *.pdf *.bbl *.blg *.dvi *.brf *.out *.idx
+CLEANFILES = *~ *.orig *.rej
 MAINTAINERCLEANFILES = Makefile.in
-DISTCLEANFILES = *.ps *.pdf
+
 

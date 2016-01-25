@@ -141,7 +141,9 @@ AC_CONFIG_FILES([Makefile
 		 tutorial/bjtbias/Makefile
 		 tutorial/bjtbias/pics/Makefile
 		 tutorial/textmode/Makefile
+		 tutorial/textmode/pics/Makefile
 		 tutorial/RFResModels/Makefile
+		 tutorial/RFResModels/pics/Makefile
 		 tutorial/activefilter/Makefile
 		 tutorial/activefilter/pics/Makefile])
 
