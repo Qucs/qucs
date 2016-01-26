@@ -157,7 +157,7 @@ script:
   # run all checks
   - ./bootstrap
   - ./configure --disable-dependency-tracking --with-gtest=/tmp/gtest
-  - make distcheck
+  - make distcheck DISTCHECK_CONFIGURE_FLAGS=--with-gtest=/tmp/gtest
   - echo $TRAVIS_BRANCH
 
   # incomplete
