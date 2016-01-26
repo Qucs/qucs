@@ -16,6 +16,7 @@ AM_INIT_AUTOMAKE([no-define])
 AC_PREFIX_DEFAULT([/usr/local])
 test "x$prefix" = xNONE && prefix="/usr/local"
 
+# FIXME: don't use colons
 AC_PATH_PROG(LATEX, latex, :)
 AC_PATH_PROG(PDFLATEX, pdflatex, :)
 AC_PATH_PROG(FIG2DEV, fig2dev, :)
@@ -24,7 +25,11 @@ AC_PATH_PROG(DVIPS, dvips, :)
 AC_PATH_PROG(PS2EPS, ps2eps, :)
 AC_PATH_PROG(PS2PDF, ps2pdf, :)
 AC_PATH_PROG(EPSTOPDF, epstopdf, :)
-AC_PATH_PROG(OCTAVE, octave, :)
+
+AC_PATH_PROG(OCTAVE, octave, no)
+AM_CONDITIONAL(USE_OCTAVE, test x$OCTAVE != xno)
+
+# FIXME: don't use colons
 AC_PATH_PROG(LATEX2HTML, latex2html, :)
 AC_PATH_PROG(TEX2PDF, tex2pdf, :)
 AC_PATH_PROG(MAKEINDEX, makeindex, :)
