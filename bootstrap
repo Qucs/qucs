@@ -1,5 +1,7 @@
 #!/bin/sh
 
+[ -d m4 ] || mkdir m4
+
 MODULES="qucs-core qucs qucs-doc"
 ACLOCAL_FLAGS=-Im4
 
