@@ -395,6 +395,17 @@ DefinitionLine:
     spice_append_str_value ($$, $6, HINT_NAME);
     $$->values = netlist_append_values ($$->values, $7);
   }
+  | Bipolar_Device Node Node Node Node Node MODEL_Ident DEVICE_List_2 {
+    /* 5 node BJT */
+    $$ = spice_create_device ($1);
+    spice_append_str_value ($$, $2, HINT_NODE);
+    spice_append_str_value ($$, $3, HINT_NODE);
+    spice_append_str_value ($$, $4, HINT_NODE);
+    spice_append_str_value ($$, $5, HINT_NODE);
+    spice_append_str_value ($$, $6, HINT_NODE);
+    spice_append_str_value ($$, $7, HINT_NAME);
+    $$->values = netlist_append_values ($$->values, $8);
+  }
   | MOSFET_Device Node Node Node Node MODEL_Ident DEVICE_List_3 {
     /* MOS */
     $$ = spice_create_device ($1);

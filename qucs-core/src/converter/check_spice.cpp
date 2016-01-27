@@ -126,7 +126,7 @@ struct define_t spice_definition_available[] =
   { "K", 4, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
     spice_noprops, spice_noprops },
   /* BJT device */
-  { "Q", 4, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_NONLINEAR,
+  { "Q", 5, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_NONLINEAR,
     spice_noprops, spice_noprops },
   /* MOS device */
   { "M", 4, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_NONLINEAR,
@@ -681,10 +681,19 @@ static void spice_adjust_device (struct definition_t * def,
 	      def->type = strdup ("hicumL2V2p23");
 	      hic = true;
 	    }
-	    else if (level == 2 && version >= 2.24) {
+	    else if (level == 2 && version == 2.24) {
 	      def->type = strdup ("hicumL2V2p24");
 	      hic = true;
 	    }
+	    else if (level == 2 && (version == 2.31 || version == 2.31e-9) ) {
+	      def->type = strdup ("hicumL2V2p31n");
+	      hic = true;
+	    }
+      else {
+        fprintf (stderr, "spice error, no such BJT level `%1.0f' and "
+	        "version `%.2e' as referenced by %s\n", level, version, def->instance);
+        spice_errors++;
+      }
 	  }
 	}
       }

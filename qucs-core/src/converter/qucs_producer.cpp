@@ -269,7 +269,7 @@ struct device_t {
   const char * ltype;      // schematic type
   const char * stype;      // spice type
   int nodes;               // number of nodes
-  const char * props[128]; // list of properties in schematic order
+  const char * props[130]; // list of properties in schematic order
   const char * symbol;     // symbol text
   const char * coords;     // coordinates and other text
   const char * ports;      // subcircuit ports
@@ -437,6 +437,28 @@ qucs_devices[] = {
       "latb", "latl", "vgb", "alt0", "kt0", "zetaci", "alvs", "alces",
       "zetarbi", "zetarbx", "zetarcx", "zetare", "zetacx", "vge", "vgc",
       "vgs", "f1vg", "f2vg", "zetact", "zetabet", "alb", "flsh", "rth", "cth",
+      "flcomp", "tnom", "dt", "Temp", NULL },
+    NULL,
+    "1 0 0 8 -26 0 0",
+    NULL
+  },
+  /* hicum/l2 v2.31 bipolar transistor */
+  { "hicumL2V2p31n", "hicumL2V2p31n", "Q", 5,
+    { "c10", "qp0", "ich", "hf0", "hfe", "hfc", "hjei", "ahjei", "rhjei",
+      "hjci", "ibeis", "mbei", "ireis", "mrei", "ibeps", "mbep", "ireps",
+      "mrep", "mcf", "tbhrec", "ibcis", "mbci", "ibcxs", "mbcx", "ibets",
+      "abet", "tunode", "favl", "qavl", "alfav", "alqav", "rbi0", "rbx",
+      "fgeo", "fdqr0", "fcrbi", "fqi", "re", "rcx", "itss", "msf", "iscs",
+      "msc", "tsf", "rsu", "csu", "cjei0", "vdei", "zei", "ajei", "cjep0",
+      "vdep", "zep", "ajep", "cjci0", "vdci", "zci", "vptci", "cjcx0", "vdcx",
+      "zcx", "vptcx", "fbcpar", "fbepar", "cjs0", "vds", "zs", "vpts", "t0",
+      "dt0h", "tbvl", "tef0", "gtfe", "thcs", "ahc", "fthc", "rci0", "vlim",
+      "vces", "vpt", "tr", "vcbar", "icbar", "acbar", "delck", "cbepar",
+      "cbcpar", "alqf", "alit", "flnqs", "kf", "af", "cfbe", "flcono", "kfre",
+      "afre", "latb", "latl", "vgb", "alt0", "kt0", "zetaci", "alvs", "alces",
+      "zetarbi", "zetarbx", "zetarcx", "zetare", "zetacx", "vge", "vgc",
+      "vgs", "f1vg", "f2vg", "zetact", "zetabet", "alb", "dvgbe", "zetahjei",
+      "zetavgbe", "flsh", "rth", "zetarth", "alrth", "cth",
       "flcomp", "tnom", "dt", "Temp", NULL },
     NULL,
     "1 0 0 8 -26 0 0",
