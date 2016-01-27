@@ -643,18 +643,32 @@ void trsolver::adjustDelta (nr_double_t t)
             }
             else
             {
-                if (delta > (t - current) && t > current)
+	      // check whether this step will bring too close to a breakpoint
+	      //   is ok if the step will go past the breakpoint, this is handled by
+	      //   the next branch
+	      if ((t - (current + delta) < deltaMin) && ((current + delta) < t))
                 {
-                    // save last valid delta and set exact step
-                    stepDelta = deltaOld;
-                    delta = t - current;
-                    good = 1;
-                }
+                    // if we take this delta we will end up too close to the breakpoint
+                    // and next step will be very tiny, possibly causing numerical issues
+                    // so reduce it so that next step will likely not end up too close
+                    // to the breakpoint
+                    delta /= 2.0; 
+		} 
                 else
-                {
-                    stepDelta = -1.0;
+	        {
+                    if (delta > (t - current) && t > current)
+                    {
+                        // save last valid delta and set exact step
+                        stepDelta = deltaOld;
+                        delta = t - current;
+                        good = 1;
+                    }
+                    else
+                    {
+                        stepDelta = -1.0;
+                    }
                 }
-            }
+	    }
             if (delta > deltaMax) delta = deltaMax;
             if (delta < deltaMin) delta = deltaMin;
         }
