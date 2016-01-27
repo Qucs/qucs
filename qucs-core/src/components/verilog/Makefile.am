@@ -44,28 +44,14 @@ XML_BUILD = \
 .va.cpp:
 
 VA_FILES = \
-	fbh_hbt-2_2a.va \
-	hicumL2V2p11.va \
-	mod_amp.va \
-	hicumL2V2p22.va \
-	log_amp.va \
-	hicumL0V1p12.va \
-	potentiometer.va \
-	MESFET.va \
 	EKV26MOS.va \
-	bsim3v34nMOS.va \
-	bsim3v34pMOS.va \
-	bsim4v30nMOS.va \
-	bsim4v30pMOS.va \
-	hicumL0V1p2.va \
-	hicumL0V1p2g.va \
-	hicumL0V1p3.va \
-	hicumL2V2p23.va \
-	hicumL2V2p24.va \
-	hicumL2V2p31n.va \
+	log_amp.va \
+	MESFET.va \
+	mod_amp.va \
+	nigbt.va \
 	photodiode.va \
 	phototransistor.va \
-	nigbt.va \
+	potentiometer.va \
 	\
 	dff_SR.va \
 	tff_SR.va \
