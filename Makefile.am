@@ -57,16 +57,16 @@ QUCSTEST_ENV = export PATH=$(MORE_PATH):$(PATH); \
                export QUCS_LIBDIR=$(abs_top_srcdir)/qucs/qucs-lib/library; \
                export QUCSATOR=qucsator;
 
-# Run tests for Qucs (GUI) 
+if COND_MACOSX
+macossuffix=_OSX
+endif
+
+# Run tests for Qucs (GUI)
 # Schematic to Netlist conversion require QucsConv and Qucs component library,
 # so use the prefix of the installed package.
 qucscheck: $(PWD)/qucs-test
 	$(QUCSTEST_ENV) \
-	cd qucs-test && python run.py --qucs
-
-if COND_MACOSX
-macossuffix=_OSX
-endif
+	cd qucs-test && python run.py --qucs --exclude skip$(macossuffix).txt
 
 # Run test on qucsator
 qucsatorcheck: $(PWD)/qucs-test
