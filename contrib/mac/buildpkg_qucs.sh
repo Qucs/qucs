@@ -9,6 +9,11 @@
 # 4) This script will create a package out of the 'DESTDIR' directory
 #
 #
+# NOTES
+# - Only Intel 64 architecture is supported.
+# - The OSX SDK version is now handled by the configure.ac
+#   - it sets -stdlib=libstdc++ for OS X 10.6
+#   - it sets -stdlib=libc++     for OS X 10.7 and higher
 
 ## References:
 # http://vincent.bernat.im/en/blog/2013-autoconf-osx-packaging.html
@@ -18,16 +23,19 @@
 ## About uninstaller:
 # http://superuser.com/questions/36567/how-do-i-uninstall-any-apple-pkg-package-file
 
-# TODO extract / cd into tarball
+# TODO
+# - pass tarball location and paramters to this script
+# - change the package in such a way the user password is not needed.
+#
 
-# SDK is now handled by the configure.ac
-# set -stdlib=libstdc++ for OS X 10.6
-# set -stdlib=libc++     for OS X 10.7 and higher
 
-# Only include ASCO
-# Verilog-A, FreeHdl, require a compiler, better use Homebrew or Macports and build everything.
+# Package stamp
+version="0.0.19"
+#date=`date "+%Y%m%d"`
 
-## Only Intel 64
+tar xvfz qucs-${version}.tar.gz
+cd qucs-${version}
+
 
 ## configure one of the following targets
 
@@ -36,12 +44,12 @@ VER=7 # 10.7+
 #VER=5 # 10.5 #issues detecting this SDK
 
 if [ $VER -eq 7 ]; then
-  echo "Configure for OSX 10.7 to 10.9 (libc++)"
+  echo "Configure for OSX 10.7 to 10.11 (libc++)"
 
 ./configure --prefix=/usr/local --disable-adms \
 --with-macosx-sdk=10.9 \
 --with-macosx-version-min-required=10.7 \
---with-macosx-version-max-allowed=10.9
+--with-macosx-version-max-allowed=10.11
 fi
 
 if [ $VER -eq 6 ]; then
@@ -66,7 +74,6 @@ fi
 # build
 make -j 8
 
-
 # might need to install with sudo, to set correct permissions
 # Install to a separate directory for capture.
 DEST=/tmp/installdir10$VER
@@ -79,7 +86,7 @@ mkdir $DEST
 sudo make install DESTDIR=$DEST
 
 # source location of package resources
-SRC=$HOME/git/qucs/qucs/contrib/pm
+SRC=$HOME/git/qucs/contrib/mac
 
 # where to put the resources
 mkdir resources
@@ -101,9 +108,6 @@ sudo chmod +x scripts/postinstall
 # copy locally the customized Distribution file
 cp $SRC/Distribution.xml .
 
-# Simple flat package stamp
-version="0.0.18"
-#date=`date "+%Y%m%d"`
 
 # pickup DESTDIR and build flat package
 rm ./qucs-${version}.pkg
@@ -111,7 +115,7 @@ command="pkgbuild \
          --root $DEST \
          --scripts ./scripts
          --identifier org.qucs.pkg \
-         --version 0.0.18 \
+         --version ${version} \
          --install-location / \
          ./qucs-${version}.pkg"
 
