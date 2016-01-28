@@ -118,9 +118,6 @@ install:
       hdiutil unmount /Volumes/Qt\ 4.8.7 ;
     fi
 
-  # Grab tip of Qucs-Test
-  - git clone --depth=1 --branch=master git://github.com/Qucs/qucs-test.git qucs-test
-
 script:
   - uname -a
   - $CXX --version
