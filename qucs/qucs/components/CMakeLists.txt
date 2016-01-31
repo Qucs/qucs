@@ -53,7 +53,7 @@ d_flipflop.cpp		log_amp.cpp		phaseshifter.cpp	vpulse.cpp
 dc_sim.cpp		logic_0.cpp		photodiode.cpp		vrect.cpp
 dcblock.cpp		logic_1.cpp		phototransistor.cpp
 dcfeed.cpp		logical_and.cpp		pm_modulator.cpp
-bsim4v30nMOS.cpp
+bsim4v30nMOS.cpp        taperedline.cpp
 bsim4v30pMOS.cpp
 vcresistor.cpp
 vacomponent.cpp
@@ -117,6 +117,7 @@ EKV26MOS.h
 eqndefined.h
 equation.h
 etr_sim.h
+taperedline.h
 fa1b.h
 fa2b.h
 gatedDlatch.h

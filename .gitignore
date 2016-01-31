@@ -1,3 +1,6 @@
+/qucs-core/build-aux/ar-lib
+/qucs-core/build-aux/compile
+/qucs-core/build-aux/test-driver
 <<<<<<< HEAD
 # Qucs Specific #
 ######################

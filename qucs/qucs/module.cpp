@@ -283,6 +283,7 @@ void Module::registerModules (void) {
 
   // transmission lines
   REGISTER_TRANS_1 (TLine);
+  REGISTER_TRANS_1 (taperedline);
   REGISTER_TRANS_1 (TLine_4Port);
   REGISTER_TRANS_1 (CoupledTLine);
   REGISTER_TRANS_1 (TwistedPair);
