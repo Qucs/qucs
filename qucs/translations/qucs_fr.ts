@@ -5775,7 +5775,7 @@ Début de ligne incorrect !</translation>
     <message>
         <location line="+20"/>
         <source>Format Error:
-Unknown component!
+Unknown component
 %1
 
 Do you make use of loadable components?</source>
@@ -12802,9 +12802,9 @@ Ligne « composant » incohérente !</translation>
     </message>
     <message>
         <location line="+13"/>
-        <source>ERROR: Cannot create user library subdirectory !
+        <source>ERROR: Cannot create user library subdirectory
 </source>
-        <translation>ERREUR : impossible de créer un rayonnage personnalisé !
+        <translation>ERREUR : impossible de créer un rayonnage personnalisé
 </translation>
     </message>
     <message>
@@ -13325,7 +13325,7 @@ Invocation :  qucsedit [-r] fichier
     </message>
     <message>
         <location line="+48"/>
-        <source>Too long command line argument!
+        <source>Too long command line argument
 
 </source>
         <translation>Ligne de commande trop longue ! 
@@ -13334,19 +13334,19 @@ Invocation :  qucsedit [-r] fichier
     </message>
     <message>
         <location line="+10"/>
-        <source>Wrong command line argument!
+        <source>Wrong command line argument
 
 </source>
-        <translation>Ligne de commande incorrecte !
+        <translation>Ligne de commande incorrecte
 
 </translation>
     </message>
     <message>
         <location line="+7"/>
-        <source>Only one filename allowed!
+        <source>Only one filename allowed
 
 </source>
-        <translation>Un seul nom de fichier possible !
+        <translation>Un seul nom de fichier possible
 
 </translation>
     </message>
@@ -13896,9 +13896,9 @@ Active Filter synthesis program
     <message>
         <location line="+1"/>
         <location line="+676"/>
-        <source>The document contains unsaved changes!
+        <source>The document contains unsaved changes
 </source>
-        <translation>Certaines modifications sont non sauvegardées !
+        <translation>Certaines modifications sont non sauvegardées
 </translation>
     </message>
     <message>
@@ -14205,9 +14205,9 @@ Active Filter synthesis program
     </message>
     <message>
         <location line="+0"/>
-        <source>&apos; already exists!
+        <source>&apos; already exists
 </source>
-        <translation> » existe déjà !
+        <translation> » existe déjà
 </translation>
     </message>
     <message>
@@ -16556,9 +16556,9 @@ Un petit éditeur sans prétention pour Qucs
     </message>
     <message>
         <location line="+1"/>
-        <source>The text contains unsaved changes!
+        <source>The text contains unsaved changes
 </source>
-        <translation>Le texte contient des modifications non sauvegardées !
+        <translation>Le texte contient des modifications non sauvegardées
 </translation>
     </message>
     <message>

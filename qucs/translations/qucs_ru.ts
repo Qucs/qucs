@@ -5787,12 +5787,12 @@ Wrong line start!</source>
     <message>
         <location line="+20"/>
         <source>Format Error:
-Unknown component!
+Unknown component
 %1
 
 Do you make use of loadable components?</source>
         <translation>Ошибка формата:
-Неизвестный компонент!
+Неизвестный компонент
 %1
 
 Вы пытаетесь использовать загружаемые компоненты?</translation>
@@ -12818,9 +12818,9 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <location line="+13"/>
-        <source>ERROR: Cannot create user library subdirectory !
+        <source>ERROR: Cannot create user library subdirectory
 </source>
-        <translation>ОШИБКА: Не удаётся создать подкаталог для библиотек пользователя!
+        <translation>ОШИБКА: Не удаётся создать подкаталог для библиотек пользователя
 </translation>
     </message>
     <message>
@@ -13345,7 +13345,7 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <location line="+48"/>
-        <source>Too long command line argument!
+        <source>Too long command line argument
 
 </source>
         <translation>Слишком много аргументов в командной строке
@@ -13354,19 +13354,19 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <location line="+10"/>
-        <source>Wrong command line argument!
+        <source>Wrong command line argument
 
 </source>
-        <translation>Неверный аргумент командной строки!
+        <translation>Неверный аргумент командной строки
 
 </translation>
     </message>
     <message>
         <location line="+7"/>
-        <source>Only one filename allowed!
+        <source>Only one filename allowed
 
 </source>
-        <translation>Разрешается только одно имя файла!
+        <translation>Разрешается только одно имя файла
 
 </translation>
     </message>
@@ -13922,9 +13922,9 @@ Active Filter synthesis program
     <message>
         <location line="+1"/>
         <location line="+676"/>
-        <source>The document contains unsaved changes!
+        <source>The document contains unsaved changes
 </source>
-        <translation>В документе есть несохранённые изменения!
+        <translation>В документе есть несохранённые изменения
 </translation>
     </message>
     <message>
@@ -14231,9 +14231,9 @@ Active Filter synthesis program
     </message>
     <message>
         <location line="+0"/>
-        <source>&apos; already exists!
+        <source>&apos; already exists
 </source>
-        <translation>&apos; уже существует!
+        <translation>&apos; уже существует
 </translation>
     </message>
     <message>
@@ -16641,9 +16641,9 @@ Very simple text editor for Qucs
     </message>
     <message>
         <location line="+1"/>
-        <source>The text contains unsaved changes!
+        <source>The text contains unsaved changes
 </source>
-        <translation>В тексте есть несохранённые изменения!
+        <translation>В тексте есть несохранённые изменения
 </translation>
     </message>
     <message>

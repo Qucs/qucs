@@ -5770,7 +5770,7 @@ Wrong line start!</source>
     <message>
         <location line="+20"/>
         <source>Format Error:
-Unknown component!
+Unknown component
 %1
 
 Do you make use of loadable components?</source>
@@ -12797,9 +12797,9 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <location line="+13"/>
-        <source>ERROR: Cannot create user library subdirectory !
+        <source>ERROR: Cannot create user library subdirectory
 </source>
-        <translation>ПОМИЛКА: Неможливо створити папку для користувацьких бібліотек !
+        <translation>ПОМИЛКА: Неможливо створити папку для користувацьких бібліотек
 </translation>
     </message>
     <message>
@@ -13320,28 +13320,28 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <location line="+48"/>
-        <source>Too long command line argument!
+        <source>Too long command line argument
 
 </source>
-        <translation>За довгий аргумент командного рядку!
+        <translation>За довгий аргумент командного рядку
 
 </translation>
     </message>
     <message>
         <location line="+10"/>
-        <source>Wrong command line argument!
+        <source>Wrong command line argument
 
 </source>
-        <translation>Невірний аргумент командного рядку!
+        <translation>Невірний аргумент командного рядку
 
 </translation>
     </message>
     <message>
         <location line="+7"/>
-        <source>Only one filename allowed!
+        <source>Only one filename allowed
 
 </source>
-        <translation>Можна тільки одну назву файлу!
+        <translation>Можна тільки одну назву файлу
 
 </translation>
     </message>
@@ -13891,7 +13891,7 @@ Active Filter synthesis program
     <message>
         <location line="+1"/>
         <location line="+676"/>
-        <source>The document contains unsaved changes!
+        <source>The document contains unsaved changes
 </source>
         <translation>У документі є незбережені зміни! 
 </translation>
@@ -14200,7 +14200,7 @@ Active Filter synthesis program
     </message>
     <message>
         <location line="+0"/>
-        <source>&apos; already exists!
+        <source>&apos; already exists
 </source>
         <translation>&apos; вже існує! 
 </translation>
@@ -16556,7 +16556,7 @@ Very simple text editor for Qucs
     </message>
     <message>
         <location line="+1"/>
-        <source>The text contains unsaved changes!
+        <source>The text contains unsaved changes
 </source>
         <translation>У тексті є незбережені зміни! 
 </translation>

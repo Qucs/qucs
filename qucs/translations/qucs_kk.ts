@@ -5767,7 +5767,7 @@ Wrong line start!</source>
     <message>
         <location line="+20"/>
         <source>Format Error:
-Unknown component!
+Unknown component
 %1
 
 Do you make use of loadable components?</source>
@@ -12793,7 +12793,7 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <location line="+13"/>
-        <source>ERROR: Cannot create user library subdirectory !
+        <source>ERROR: Cannot create user library subdirectory
 </source>
         <translation>ҚАТЕ:Тұтынушыға арналған папка құрылған жоқ!</translation>
     </message>
@@ -13310,28 +13310,28 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <location line="+48"/>
-        <source>Too long command line argument!
+        <source>Too long command line argument
 
 </source>
-        <translation>Басқару жолының аргументі өте ұзын!
+        <translation>Басқару жолының аргументі өте ұзын
 
 </translation>
     </message>
     <message>
         <location line="+10"/>
-        <source>Wrong command line argument!
+        <source>Wrong command line argument
 
 </source>
-        <translation>Басқару жолының аргументі дұрыс емес!
+        <translation>Басқару жолының аргументі дұрыс емес
 
 </translation>
     </message>
     <message>
         <location line="+7"/>
-        <source>Only one filename allowed!
+        <source>Only one filename allowed
 
 </source>
-        <translation>Тек қана бір файлдың аты рұқсат етіледі!
+        <translation>Тек қана бір файлдың аты рұқсат етіледі
 
 </translation>
     </message>
@@ -13881,9 +13881,9 @@ Active Filter synthesis program
     <message>
         <location line="+1"/>
         <location line="+676"/>
-        <source>The document contains unsaved changes!
+        <source>The document contains unsaved changes
 </source>
-        <translation>Құжатта сақталмаған өзгертулер бар!
+        <translation>Құжатта сақталмаған өзгертулер бар
 </translation>
     </message>
     <message>
@@ -14190,9 +14190,9 @@ Active Filter synthesis program
     </message>
     <message>
         <location line="+0"/>
-        <source>&apos; already exists!
+        <source>&apos; already exists
 </source>
-        <translation>&apos; әлбетте бар !
+        <translation>&apos; әлбетте бар
 </translation>
     </message>
     <message>
@@ -16550,7 +16550,7 @@ Very simple text editor for Qucs
     </message>
     <message>
         <location line="+1"/>
-        <source>The text contains unsaved changes!
+        <source>The text contains unsaved changes
 </source>
         <translation>Мәтін құрамында сақталмаған өзгерістер бар!</translation>
     </message>

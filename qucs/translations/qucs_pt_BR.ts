@@ -5782,12 +5782,12 @@ Linha inicial errada!</translation>
     <message>
         <location line="+20"/>
         <source>Format Error:
-Unknown component!
+Unknown component
 %1
 
 Do you make use of loadable components?</source>
         <translation>Erro de formato: 
-Componente desconhecido!
+Componente desconhecido
 %1 
 Você utiliza componentes carregáveis dinamicamente?</translation>
     </message>
@@ -12811,7 +12811,7 @@ Formato da linha &apos;componente&apos; errado!</translation>
     </message>
     <message>
         <location line="+13"/>
-        <source>ERROR: Cannot create user library subdirectory !
+        <source>ERROR: Cannot create user library subdirectory
 </source>
         <translation>ERRO: Não é possivel criar o subdiretório para biblioteca do usuário!</translation>
     </message>
@@ -13164,7 +13164,7 @@ Campo &apos;diagrama&apos; não está fechado!</translation>
         <source>Format Error:
 Wrong &apos;painting&apos; line delimiter!</source>
         <translation>Erro de formato:
-Delimitador linha &apos;descrição&apos; errado!
+Delimitador linha &apos;descrição&apos; errado
 </translation>
     </message>
     <message>
@@ -13331,21 +13331,21 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <location line="+48"/>
-        <source>Too long command line argument!
+        <source>Too long command line argument
 
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+10"/>
-        <source>Wrong command line argument!
+        <source>Wrong command line argument
 
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+7"/>
-        <source>Only one filename allowed!
+        <source>Only one filename allowed
 
 </source>
         <translation type="unfinished"></translation>
@@ -13898,7 +13898,7 @@ Programa de síntese de filtro ativo
     <message>
         <location line="+1"/>
         <location line="+676"/>
-        <source>The document contains unsaved changes!
+        <source>The document contains unsaved changes
 </source>
         <translation>Este documento contém modificações a salvar!</translation>
     </message>
@@ -14206,9 +14206,9 @@ Programa de síntese de filtro ativo
     </message>
     <message>
         <location line="+0"/>
-        <source>&apos; already exists!
+        <source>&apos; already exists
 </source>
-        <translation>&apos; já existe!
+        <translation>&apos; já existe
 </translation>
     </message>
     <message>
@@ -14414,7 +14414,7 @@ Programa de síntese de filtro ativo
         <location line="+1"/>
         <source>File &quot;%1&quot; already exists.
 Overwrite ?</source>
-        <translation>Arquivo &quot;%1&quot; já existe!
+        <translation>Arquivo &quot;%1&quot; já existe
 Sobrescrever?</translation>
     </message>
     <message>
@@ -16580,7 +16580,7 @@ Editor muito simples para Qucs</translation>
     </message>
     <message>
         <location line="+1"/>
-        <source>The text contains unsaved changes!
+        <source>The text contains unsaved changes
 </source>
         <translation>O texto contém modificações a salvar!</translation>
     </message>
