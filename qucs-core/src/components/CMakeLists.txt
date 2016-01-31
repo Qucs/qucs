@@ -10,6 +10,7 @@ SET( COMPONENTS_SRC
   capacitor.cpp
   cccs.cpp
   ccvs.cpp
+  circline.cpp
   circulator.cpp
   coaxline.cpp
   coupler.cpp
