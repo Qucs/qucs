@@ -16,10 +16,6 @@ SET( VA_FILES
   andor4x3
   andor4x4
   binarytogrey4bit
-  bsim3v34nMOS
-  bsim3v34pMOS
-  bsim4v30nMOS
-  bsim4v30pMOS
   comp_1bit
   comp_2bit
   comp_4bit
@@ -32,19 +28,9 @@ SET( VA_FILES
   EKV26MOS
   fa1b
   fa2b
-  fbh_hbt-2_2a
   gatedDlatch
   greytobinary4bit
   ha1b
-  hicumL0V1p12
-  hicumL0V1p2
-  hicumL0V1p2g
-  hicumL0V1p3
-  hicumL2V2p11
-  hicumL2V2p22
-  hicumL2V2p23
-  hicumL2V2p24
-  hicumL2V2p31n
   hpribin4bit
   jkff_SR
   log_amp
