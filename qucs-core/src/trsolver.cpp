@@ -222,6 +222,8 @@ int trsolver::solve (void)
 
     // Apply the nodesets and adjust previous solutions.
     applyNodeset (false);
+    // propagate the current solution to the non-linear circuits
+    restart();
     fillSolution (x);
 
     // Tell integrators to be initialized.
