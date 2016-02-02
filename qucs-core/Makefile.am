@@ -28,9 +28,7 @@ CODE_COVERAGE_LCOV_OPTIONS ?= --no-external --rc lcov_branch_coverage=1 $(CODE_C
 CODE_COVERAGE_GENHTML_OPTIONS ?= --rc lcov_branch_coverage=1
 @CODE_COVERAGE_RULES@
 
-## Add the subdirectories, including a '.' which forces adms
-## to be build first, followed by src, then doc
-SUBDIRS = $(ADMS_SUBDIR) src doc tests
+SUBDIRS = src doc tests
 
 ACLOCAL_AMFLAGS = -I m4
 

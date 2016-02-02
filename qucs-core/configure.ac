@@ -569,53 +569,14 @@ if test "x$osversion" = "x"; then
 fi
 unset osversion
 
-dnl Check for additional programs.
-AC_PATH_PROG(GPERF, gperf, :)
+dnl Check for additional programs in PATH
+AC_PATH_PROG([GPERF],[gperf],[gperf])
+AS_IF([test -z "$GPERF"],
+      [AC_MSG_ERROR([gperf required in the PATH])])
 
-dnl check for adms
-if test yes = yes; then
-  dnl now, to build or not to build the adms subproject. The adms
-  dnl subproject is required to generate code during the maintainer
-  dnl build process. It is not required for distributions. It is
-  dnl only required if MAINTAINER_MODE is true in the Makefile.am's
-  dnl
-  dnl The default behaviour is "check for adms, if it's not there,
-  dnl build and use the bundled copy". Note also that it supports
-  dnl --with-mkadms=PATH (user may have a copy installed in an odd
-  dnl place), --with-mkadms=internal (needed for distcheck, where
-  dnl we want to test everything) and --with-mkadms=external (for
-  dnl package maintainers, who don't like bundled subprojects).
-  AC_ARG_WITH([mkadms],
-    [AS_HELP_STRING([--with-mkadms],
-      [Either the full path to adms, or "external", "internal", or "check" @<:@check@:>@])],
-    [ADMSXML=$withval],
-    [with_mkadms=check])
-  AS_IF([test "$with_mkadms" = check -o "$with_mkadms" = external],
-    [AC_PATH_PROG([ADMSXML], [admsXml], [no])
-     AC_MSG_NOTICE([Using host external admsXml rather than bundled version.])],
-    [AC_MSG_NOTICE([Using bundled admsXml.])])
-  AS_IF([test "$with_mkadms" = external -a "$ADMSXML" = no],
-    [AC_MSG_ERROR([External adms demanded, but not found.])])
-  AC_SUBST([ADMSXML])
-else
-  dnl not maintainer mode, set with_mkadms to external which will prevent it
-  dnl being built
-  with_mkadms = external
-fi
-
-dnl We set up an automake conditional because we need to do
-dnl different stuff for internal/external adms inside Makefile.am
-AM_CONDITIONAL([USE_INTERNAL_ADMS],
-  [test "$with_mkadms" = internal -o "$ADMSXML" = no])
-dnl if we are using internal adms we need to add it to the
-dnl subdirectories autoconf will recurse into as it has its
-dnl own configure.ac and Makefile.am
-adms_subdir=
-AM_COND_IF([USE_INTERNAL_ADMS],
-	   [AC_CONFIG_SUBDIRS([deps/adms/])
-	    adms_subdir=deps/adms
-	   ])
-AC_SUBST(ADMS_SUBDIR, $adms_subdir)
+AC_PATH_PROG([ADMSXML],[admsXml],[admsXml])
+AS_IF([test -z "$ADMSXML"],
+      [AC_MSG_ERROR([admsXml required in the PATH])])
 
 dnl Checks for libraries.
 AC_CHECK_LIB(m, sin)
