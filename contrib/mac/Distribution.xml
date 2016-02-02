@@ -4,7 +4,7 @@
     <options customize="never" require-scripts="false"/>
 
     <!-- Define documents displayed at various steps -->
-    <title>Qucs 0.0.18</title>
+    <title>Qucs 0.0.19</title>
     <background file="qucslogo4_transparent.png" mime-type="image/png" alignment="center" scaling="tofit" />
     <welcome file="Welcome.rtf"/>
     <license file="License.rtf"/>
@@ -20,5 +20,5 @@
     <choice id="org.qucs.pkg" visible="false">
         <pkg-ref id="org.qucs.pkg"/>
     </choice>
-    <pkg-ref id="org.qucs.pkg" version="0.0.18" onConclusion="none">qucs-0.0.18.pkg</pkg-ref>
+    <pkg-ref id="org.qucs.pkg" version="0.0.19" onConclusion="none">qucs-0.0.19.pkg</pkg-ref>
 </installer-gui-script>

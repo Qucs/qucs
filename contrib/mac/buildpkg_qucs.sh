@@ -72,18 +72,18 @@ fi
 
 
 # build
-make -j 8
+make
 
-# might need to install with sudo, to set correct permissions
+# might need to install with sudo, to set correct permissions (?)
 # Install to a separate directory for capture.
 DEST=/tmp/installdir10$VER
 
 if [ -d $DEST ]; then
-  sudo rm -rf $DEST
+  rm -rf $DEST
 fi
 mkdir $DEST
 
-sudo make install DESTDIR=$DEST
+make install DESTDIR=$DEST
 
 # source location of package resources
 SRC=$HOME/git/qucs/contrib/mac
@@ -97,13 +97,10 @@ cp $SRC/Welcome.rtf resources/
 cp $SRC/License.rtf resources/
 cp $SRC/Readme.rtf resources/
 
-# tag the Welcome file
-sed -i 'voo' "s/10\.[5-7]/10\.${VER}/g" resources/Welcome.rtf
-
 # copy locally the postinstall script
 mkdir scripts
 cp $SRC/postinstall scripts/
-sudo chmod +x scripts/postinstall
+chmod +x scripts/postinstall
 
 # copy locally the customized Distribution file
 cp $SRC/Distribution.xml .
@@ -123,7 +120,7 @@ echo "${command}"
 ${command}
 
 # check out which Distribution data we have so far
-# productbuild --synthesize --package qucs-0.0.18.pkg Distribution.xml
+# productbuild --synthesize --package qucs-0.0.19.pkg Distribution.xml
 # edit the Distrubution.xml file if necessary
 
 # finish package
