@@ -577,16 +577,18 @@ AS_IF([test -z "$GPERF"],
 dnl check for adms (queued for removal)
 dnl The default behaviour is "check for adms, if it's not there,
 dnl error out.
-dnl override with --with-mkadms=alternative_executable
-AC_ARG_WITH([mkadms],
-  [AS_HELP_STRING([--with-mkadms], [specify alternative admsXml])],
-  [with_mkadms=$withval],
-  [with_mkadms=admsXml])
+dnl override with --with-mkadms=alternative_bin_directory
+ADMS_PATH=$PATH
+AC_ARG_WITH(mkadms, [--with-mkadms=DIR path to adms binary directory],
+		    [ADMS_PATH=`cd ${withval}; pwd`])
 
-AC_PATH_PROG([ADMSXML], [$with_mkadms], [no])
-
-AS_IF([test "$ADMSXML" = no],
-  [AC_MSG_ERROR([need admsXml, but not found. consider --with-mkadms=<alternative admsXml>])])
+AC_CHECK_TOOL([HAVE_ADMSXML], [admsXml[], [], [$ADMS_PATH])
+if test [ "$HAVE_ADMSXML"]
+then
+  AC_PATH_PROG([ADMSXML], [admsXml], [], [$ADMS_PATH])
+else
+  AC_MSG_ERROR([need admsXml, but not found. consider --with-mkadms=<path to adms binary directory>])
+fi
 AC_SUBST([ADMSXML])
 
 dnl Checks for libraries.
