@@ -574,9 +574,25 @@ AC_PATH_PROG([GPERF],[gperf],[gperf])
 AS_IF([test -z "$GPERF"],
       [AC_MSG_ERROR([gperf required in the PATH])])
 
-AC_PATH_PROG([ADMSXML],[admsXml],[admsXml])
-AS_IF([test -z "$ADMSXML"],
-      [AC_MSG_ERROR([admsXml required in the PATH])])
+dnl check for adms (queued for removal)
+dnl The default behaviour is "check for adms, if it's not there,
+dnl error out.
+dnl override with --with-mkadms=alternative_executable
+ADMSXML=admsXml
+AC_ARG_WITH([mkadms],
+  [AS_HELP_STRING([--with-mkadms], [specify alternative admsXml])],
+  [ADMSXML=$withval],)
+
+AC_MSG_CHECKING([Checking if ${ADMSXML} is working])
+AS_IF([${ADMSXML} --version > /dev/null 2>&1], , ADMSXML="")
+AS_IF([test -z $ADMSXML],
+  [ AC_MSG_RESULT([ no ])
+    ADMSXML=no],
+  [ AC_MSG_RESULT([ yes ])])
+
+AS_IF([test "$ADMSXML" = no],
+  [AC_MSG_ERROR([need admsXml, but not found. consider --with-mkadms=<alternative admsXml>])])
+AC_SUBST([ADMSXML])
 
 dnl Checks for libraries.
 AC_CHECK_LIB(m, sin)
@@ -909,7 +925,6 @@ AC_MSG_RESULT([ $PACKAGE version $VERSION ($GIT_REVISION) configured successfull
 AC_MSG_RESULT([
 Configure Information:
   AdmsXml           : $ADMSXML
-    internal        :   $internal_adms
 
   C Compiler        : $CC
     DEFS            :   $DEFS
