@@ -37,7 +37,7 @@ matrix:
       env: BUILD=autotools
 
     - os: linux
-      compiler: clang
+      compiler: gcc
       env: BUILD=cmake
 
     - compiler: clang
