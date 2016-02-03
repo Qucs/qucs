@@ -39,15 +39,18 @@
 namespace qucs {
 
 // Constructor creates an unnamed instance of the variable class.
-variable::variable () : name() {
+variable::variable () {
+  name = NULL;
+  text = NULL;
   next = NULL;
   type = VAR_UNKNOWN;
   pass = true;
 }
 
 // This constructor creates a named instance of the variable class.
-variable::variable (const char * const n) {
-  name = n ? std::string(n) : std::string();
+variable::variable (char * n) {
+  name = n ? strdup (n) : NULL;
+  text = NULL;
   next = NULL;
   type = VAR_UNKNOWN;
   pass = true;
@@ -56,49 +59,71 @@ variable::variable (const char * const n) {
 /* This copy constructor creates a instance of the variable class based
    on the given variable. */
 variable::variable (const variable & o) {
-  this->name = o.name;
+  name = o.name ? strdup (o.name) : NULL;
+  text = o.text ? strdup (o.text) : NULL;
   type = o.type;
   next = o.next;
   pass = o.pass;
   value = o.value;
 }
 
+/// Destructor deletes an instance of the variable class.
+variable::~variable () {
+  if (name) free (name);
+  if (text) free (text);
+}
+
+// Sets the name of the variable.
+void variable::setName (char * n) {
+  if (name) free (name);
+  name = n ? strdup (n) : NULL;
+}
+
+// Returns the name of the variable.
+char * variable::getName (void) {
+  return name;
+}
 
 // Creates textual representation of a variable.
-const char * variable::toString (void) {
-  std::string text;
-  const char * str = NULL;
+char * variable::toString (void) {
+  char * str = NULL;
   char * val = NULL;
+  if (text) { free (text); text = NULL; }
   switch (type) {
   case VAR_UNKNOWN:
-    text = "variable";
+    text = strdup ("variable");
     break;
   case VAR_CONSTANT:
     str = value.c->toString ();
-    text = "constant: "+std::string(str);
+    text = (char *) malloc (strlen (str) + 11);
+    sprintf (text, "constant: %s", str);
     break;
   case VAR_VALUE:
     str = value.v->toString ();
-    text = "value: "+std::string(str);
+    text = (char *) malloc (strlen (str) + 8);
+    sprintf (text, "value: %s", str);
     break;
   case VAR_REFERENCE:
     str = value.r->toString ();
     val = value.r->getResult()->toString ();
-    text = "reference: "+std::string(str)+" = "+std::string(val);
+    text = (char *) malloc (strlen (str) + strlen (val) + 15);
+    sprintf (text, "reference: %s = %s", str, val);
     break;
   case VAR_SUBSTRATE:
     str = value.s->getName ();
-    text = "substrate: "+std::string(str);
+    text = (char *) malloc (strlen (str) + 12);
+    sprintf (text, "substrate: %s", str);
     break;
   case VAR_ANALYSIS:
     str = value.a->getName ();
-    text = "analysis: "+std::string(str);
+    text = (char *) malloc (strlen (str) + 11);
+    sprintf (text, "analysis: %s", str);
     break;
   default:
-    text = "?variable?";
+    text = strdup ("?variable?");
     break;
   }
-  return text.c_str();
+  return text;
 }
 
 } // namespace qucs

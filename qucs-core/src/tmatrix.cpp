@@ -22,12 +22,7 @@
  *
  */
 
-#ifdef HAVE_CONFIG_H
-#include "config.h"
-#else
-// BUG
 #include "qucs_typedefs.h"
-#endif
 
 #include <assert.h>
 #include <stdio.h>
@@ -98,7 +93,7 @@ tmatrix<nr_type_t>::operator=(const tmatrix<nr_type_t> & m) {
   if (&m != this) {
     rows = m.rows;
     cols = m.cols;
-    delete[] data;
+    if (data) { delete[] data; data = NULL; }
     if (rows > 0 && cols > 0) {
       data = new nr_type_t[rows * cols];
       memcpy (data, m.data, sizeof (nr_type_t) * rows * cols);
@@ -110,7 +105,7 @@ tmatrix<nr_type_t>::operator=(const tmatrix<nr_type_t> & m) {
 // Destructor deletes a tmatrix object.
 template <class nr_type_t>
 tmatrix<nr_type_t>::~tmatrix () {
-  delete[] data;
+  if (data) delete[] data;
 }
 
 // Returns the tmatrix element at the given row and column.
@@ -294,7 +289,7 @@ tmatrix<nr_type_t> operator * (tmatrix<nr_type_t> a, tmatrix<nr_type_t> b) {
 // Multiplication of matrix and vector.
 template <class nr_type_t>
 tvector<nr_type_t> operator * (tmatrix<nr_type_t> a, tvector<nr_type_t> b) {
-  assert (a.getCols () == b.size ());
+  assert (a.getCols () == b.getSize ());
   int r, c, n = a.getCols ();
   nr_type_t z;
   tvector<nr_type_t> res (n);
@@ -309,7 +304,7 @@ tvector<nr_type_t> operator * (tmatrix<nr_type_t> a, tvector<nr_type_t> b) {
 // Multiplication of vector (transposed) and matrix.
 template <class nr_type_t>
 tvector<nr_type_t> operator * (tvector<nr_type_t> a, tmatrix<nr_type_t> b) {
-  assert (a.size () == b.getRows ());
+  assert (a.getSize () == b.getRows ());
   int r, c, n = b.getRows ();
   nr_type_t z;
   tvector<nr_type_t> res (n);

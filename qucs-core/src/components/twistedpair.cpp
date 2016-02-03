@@ -69,7 +69,7 @@ void twistedpair::calcNoiseSP (nr_double_t) {
   nr_double_t T = getPropertyDouble ("Temp");
   matrix s = getMatrixS ();
   matrix e = eye (getSize ());
-  setMatrixN (celsius2kelvin (T) / T0 * (e - s * transpose (conj (s))));
+  setMatrixN (kelvin (T) / T0 * (e - s * transpose (conj (s))));
 }
 
 void twistedpair::initDC (void) {
@@ -79,7 +79,7 @@ void twistedpair::initDC (void) {
 
   if (d != 0.0 && rho != 0.0 && len != 0.0) {
     // tiny resistances
-    nr_double_t g1 = pi * sqr (d / 2) / rho / len;
+    nr_double_t g1 = M_PI * sqr (d / 2) / rho / len;
     nr_double_t g2 = g1;
     setVoltageSources (0);
     allocMatrixMNA ();
@@ -120,16 +120,16 @@ nr_double_t twistedpair::calcLoss (nr_double_t frequency) {
   // calculate conductor losses
   rout = d / 2;
   if (frequency > 0.0) {
-    delta = qucs::sqrt (rho / (pi * frequency * MU0 * mur));
+    delta = qucs::sqrt (rho / (M_PI * frequency * MU0 * mur));
     rin = rout - delta;
     if (rin < 0.0) rin = 0.0;
   }
   else rin = 0.0;
-  ac = (rho * one_over_pi) / (rout * rout - rin * rin) / zl;
+  ac = (rho * M_1_PI) / (rout * rout - rin * rin) / zl;
 
   // calculate dielectric losses
   l0 = C0 / frequency;
-  ad = pi * tand * qucs::sqrt (ereff) / l0;
+  ad = M_PI * tand * qucs::sqrt (ereff) / l0;
 
   alpha = ac + ad;
   return alpha;
@@ -139,7 +139,7 @@ nr_double_t twistedpair::calcLength (void) {
   nr_double_t l  = getPropertyDouble ("L");
   nr_double_t T  = getPropertyDouble ("T");
   nr_double_t D  = getPropertyDouble ("D");
-  len = l * T * pi * D * qucs::sqrt (1 + 1 / sqr (T * pi * D));
+  len = l * T * M_PI * D * qucs::sqrt (1 + 1 / sqr (T * M_PI * D));
   return len;
 }
 
@@ -150,13 +150,13 @@ void twistedpair::calcPropagation (nr_double_t frequency) {
   nr_double_t T  = getPropertyDouble ("T");
 
   nr_double_t q, p;
-  p = qucs::atan (T * pi * D);
+  p = qucs::atan (T * M_PI * D);
   q = 0.25 + 0.001 * p * p;  // soft PTFE
   q = 0.25 + 0.0004 * p * p; // usual
   ereff = 1.0 + q * (er - 1.0);
-  zl = Z0 / pi / qucs::sqrt (ereff) * qucs::acosh (D / d);
-  beta = 2 * pi * frequency / C0 * qucs::sqrt (ereff);
-  angle = rad2deg (p);
+  zl = Z0 / M_PI / qucs::sqrt (ereff) * qucs::acosh (D / d);
+  beta = 2 * M_PI * frequency / C0 * qucs::sqrt (ereff);
+  angle = deg (p);
   alpha = calcLoss (frequency);
 }
 
@@ -188,7 +188,7 @@ void twistedpair::calcNoiseAC (nr_double_t) {
   if (len < 0) return;
   // calculate noise using Bosma's theorem
   nr_double_t T = getPropertyDouble ("Temp");
-  setMatrixN (4 * celsius2kelvin (T) / T0 * real (getMatrixY ()));
+  setMatrixN (4 * kelvin (T) / T0 * real (getMatrixY ()));
 }
 
 void twistedpair::initTR (void) {

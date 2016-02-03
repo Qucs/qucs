@@ -66,7 +66,7 @@ parasweep::parasweep (char * n) : analysis (n) {
 
 // Destructor deletes the parasweep class object.
 parasweep::~parasweep () {
-  delete swp;
+  if (swp) delete swp;
 }
 
 /* The copy constructor creates a new instance of the parasweep class
@@ -82,10 +82,11 @@ parasweep::parasweep (parasweep & p) : analysis (p) {
 
 /* Initializes the parameter sweep. */
 int parasweep::initialize (void) {
+  char * n;
   constant * val;
 
   // get fixed simulation properties
-  const char * const n = getPropertyString ("Param");
+  n = getPropertyString ("Param");
 
   // create sweep if necessary
   if (swp == NULL) {
@@ -114,11 +115,10 @@ int parasweep::initialize (void) {
   env->setDouble (n, v);
 
   // also run initialize functionality for all children
-  if (actions != nullptr) {
-    for (auto *a : *actions) {
-      a->initialize ();
-      a->setProgress (false);
-    }
+  for (int k = 0; actions && k < actions->length (); k++) {
+    analysis * a = actions->get (k);
+    a->initialize ();
+    a->setProgress (false);
   }
   return 0;
 }
@@ -134,20 +134,21 @@ int parasweep::cleanup (void) {
   }
 
   // also run cleanup functionality for all children
-  if( actions != nullptr)
-    for (auto *a : *actions)
-      a->cleanup ();
-
+  for (int k = 0; actions && k < actions->length (); k++) {
+    analysis * a = actions->get (k);
+    a->cleanup ();
+  }
   return 0;
 }
 
 /* This is the parameter sweep solver. */
 int parasweep::solve (void) {
   int err = 0;
+  char * n;
   runs++;
 
   // get fixed simulation properties
-  const char * const n = getPropertyString ("Param");
+  n = getPropertyString ("Param");
 
   // run the parameter sweep
   swp->reset ();
@@ -166,12 +167,14 @@ int parasweep::solve (void) {
     logprint (LOG_STATUS, "NOTIFY: %s: running netlist for %s = %g\n",
 	      getName (), n, v);
 #endif
-    for (auto *a : *actions) {
+    for (int k = 0; k < actions->length (); k++) {
+      analysis * a = actions->get (k);
       err |= a->solve ();
       // assign variable dataset dependencies to last order analyses
-      ptrlist<analysis> * lastorder = subnet->findLastOrderChildren (this);
-      for (auto *dep : *lastorder)
-	data->assignDependency (dep->getName (), var->getName ());
+      ptrlist<analysis> * last = subnet->findLastOrderChildren (this);
+      for (ptrlistiterator<analysis> it (*last); *it; ++it) {
+	data->assignDependency ((*it)->getName (), var->getName ());
+      }
     }
   }
   // clear progress bar

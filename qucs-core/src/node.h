@@ -32,21 +32,16 @@ class circuit;
 class node : public object
 {
  public:
-  //! Constructor creates an unnamed instance of the node class.
-  node () : object (), nNode(0), port(0), internal(0), _circuit(nullptr) {};
-  //! Constructor creates a named instance of the node class.
-  node (char * const n) : object (n), nNode(0), port(0), internal(0), _circuit(nullptr) {};
-  //! Sets the unique number of this node
-  void setNode (const int n) { this->nNode = n ; };
-  //! Returns the unique number of this node.
-  int  getNode (void) const { return this->nNode; };
-  //! Sets the port number of this node.
-  void setPort (const int p) { this->port = p; };
-  //! Returns the port number of this node.
-  int  getPort (void) const { return this->port; };
-  //! Sets this node's circuit.
-  void setCircuit (circuit *const c) { this->_circuit = c; };
-  circuit * getCircuit (void) const { return this->_circuit; };
+  node ();
+  node (char *);
+  node (const node &);
+  ~node ();
+  void setNode (int);
+  int  getNode (void);
+  void setPort (int);
+  int  getPort (void);
+  void setCircuit (circuit *);
+  circuit * getCircuit (void);
   void setInternal (int i) { internal = i; }
   int  getInternal (void) { return internal; }
 

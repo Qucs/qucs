@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE admst PUBLIC "-//adms//DTD admst 2.0//-" "http://mot-adms.sourceforge.net/xml-files/adms/admst.dtd">
+<!--
+  Usage: admsXml -e arobavariable.xml
+  Description: create file arobavariable.va, then test implementation of @... construct
+-->
+<!--
+  $Id: getinstance.xml 505 2007-01-23 11:17:43Z r29173 $
+  $Log$
+-->
+
+<admst version="2.3.0"  xmlns:admst="http://mot-adms.svn.sourceforge.net/viewvc/*checkout*/mot-adms/trunk/adms/admst.dtd">
+  <!-- create file arobavariable.va -->
+  <admst:variable name="module1" select="arobavariable"/>
+  <admst:open file="$(module1).va">
+`include &quot;discipline.h&quot;
+module $(module1)(p,n);
+  inout p, n;
+  electrical p, n;
+  parameter real A=1.0;
+  parameter real B=1.0;
+  real a,b;
+  analog
+  begin
+    begin : A
+      real a,b;
+      a=1;
+      b=1;
+    end
+    begin : B
+      a=1;
+      b=1;
+    end
+  end
+endmodule
+  </admst:open>
+  <admst:message format="$(module1).va: file created\n"/>
+  <admst:read file="$(module1).va"/>
+  <admst:apply-templates select="module[name='$(module1)']" match="adms.implicit.xml.module"/>
+  <!-- test @... construct -->
+  <admst:template match="iterate">
+    <admst:push into="@(%(upper-case(module)))" select="module"/>
+    <admst:push into="@scope" select="block/name"/>
+    <admst:push into="@itself" select="."/>
+    <admst:text format="set %(@(%(upper-case(module)))).%(@scope).%(@itself)\n"/>
+  </admst:template>
+  <admst:for-each select="/module/assignment">
+    <admst:apply-templates select="lhs" match="iterate"/>
+  </admst:for-each>
+  <admst:text select="/module/assignment/lhs" format="check %(@AROBAVARIABLE/datatypename).%(@scope).%(@itself)\n"/>
+</admst>
+

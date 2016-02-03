@@ -3,7 +3,6 @@
   Copyright (C) 2006 Helene Parruitte <parruit@enseirb.fr>
   Copyright (C) 2006 Bertrand Ardouin <ardouin@xmodtech.com>
   Copyright (C) 2006, 2007, 2008 Stefan Jahn <stefan@lkcc.org>
-  Copyright (C) 2015 Guilherme Brondani Torri <guitorri@gmail.com>
 
   This is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -31,26 +30,13 @@
 </admst:for-each>
 
 <!-- parse ADMS command line arguments, needs to be outside admst:open, keep last comand -->
-<!-- output filename is 1st argument in -o flag in command line-->
-<admst:variable name="filename" select="%(/module/name)_common"/>
-<admst:variable name="filename_state" select="0"/>
-<admst:for-each select="/argv">
-  <admst:variable name="arg" select="%(.)"/>
-
-  <admst:if test="[position(.)=2]">
-    <admst:variable name="filename" select="$arg"/>
-  </admst:if>
-  <admst:if test="[$(filename_state)='1']">
-    <admst:variable name="filename" select="$arg"/>
-    <admst:variable name="filename_state" select="2"/>
-  </admst:if>
-  <admst:if test="[$(filename_state)='0' and $(arg)='-o']">
-    <admst:variable name="filename_state" select="1"/>
-  </admst:if>
+<!-- if last command is 'dyload' (i.e., -A dyload) emmit/append code for dynamic loader -->
+<admst:for-each select="argv">
+  <admst:variable name="dyload" string="%(.)"/>
 </admst:for-each>
 
-<admst:open file="$(filename).$(module).core.cpp">/*
- * $(filename).$(module).core.cpp - device implementations for $(filename).$(module)
+<admst:open file="$module.core.cpp">/*
+ * $(module).core.cpp - device implementations for $(module) module
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -64,10 +50,10 @@
 #include &lt;config.h&gt;
 #endif
 
-#include "$(filename).$(module).analogfunction.h"
+#include &quot;$(module).analogfunction.h&quot;
 #include "component.h"
 #include "device.h"
-#include "$(filename).core.h"
+#include &quot;$(module).core.h&quot;
 
 #ifndef CIR_$(module)
 #define CIR_$(module) -1
@@ -212,21 +198,21 @@
 	_flicker_pwr[n1][n2] += pwr;\\
 	_flicker_exp[n1][n2] += exp;
 #define _load_whitenoise2(n1,n2,pwr)\\
-	cy (n1,n2) -= pwr/qucs::kB/qucs::T0; cy (n2,n1) -= pwr/qucs::kB/qucs::T0;\\
-	cy (n1,n1) += pwr/qucs::kB/qucs::T0; cy (n2,n2) += pwr/qucs::kB/qucs::T0;
+	cy (n1,n2) -= pwr/kB/T0; cy (n2,n1) -= pwr/kB/T0;\\
+	cy (n1,n1) += pwr/kB/T0; cy (n2,n2) += pwr/kB/T0;
 #define _load_whitenoise1(n1,pwr)\\
-	cy (n1,n1) += pwr/qucs::kB/qucs::T0;
+	cy (n1,n1) += pwr/kB/T0;
 #define _load_flickernoise2(n1,n2,pwr,exp)\\
-	cy (n1,n2) -= pwr*pow(_freq,-exp)/qucs::kB/qucs::T0;\\
-	cy (n2,n1) -= pwr*pow(_freq,-exp)/qucs::kB/qucs::T0;\\
-	cy (n1,n1) += pwr*pow(_freq,-exp)/qucs::kB/qucs::T0;\\
-	cy (n2,n2) += pwr*pow(_freq,-exp)/qucs::kB/qucs::T0;
+	cy (n1,n2) -= pwr*pow(_freq,-exp)/kB/T0;\\
+	cy (n2,n1) -= pwr*pow(_freq,-exp)/kB/T0;\\
+	cy (n1,n1) += pwr*pow(_freq,-exp)/kB/T0;\\
+	cy (n2,n2) += pwr*pow(_freq,-exp)/kB/T0;
 #define _load_flickernoise1(n1,pwr,exp)\\
-	cy (n1,n1) += pwr*pow(_freq,-exp)/qucs::kB/qucs::T0;
+	cy (n1,n1) += pwr*pow(_freq,-exp)/kB/T0;
 
 <!--
 * apply qucsVersion.xml c:math_h macro
-* similar derivative macros already on analogfunction.h cannot reuse inlines?
+* similar derivative macros already on analogfuncion.h cannot reuse inlines?
 -->
 <admst:text format="\n// derivative helper macros"/>
 <admst:apply-templates select="." match="c:math_h"/>
@@ -239,7 +225,7 @@
 #define _param_given(p)		(isPropertyGiven(p)?1:0)
 
 <admst:text format="\n\n// \$vt and \$vt() functions"/>
-#define _vt_nom                 (qucs::kBoverQ*_circuit_temp)
+#define _vt_nom                 (kBoverQ*_circuit_temp)
 
 using namespace qucs::device;
 using qucs::matrix;
@@ -551,7 +537,7 @@ using qucs::matrix;
 <admst:text format="\n"/>
 <admst:text format="  for (int i1 = 0; i1 < $nbr_nodes; i1++) {\n"/>
 <admst:text format="    for (int i2 = 0; i2 < $nbr_nodes; i2++) {\n"/>
-<admst:text format="      y (i1,i2) = nr_complex_t (_jstat[i1][i2], _jdyna[i1][i2] * 2 * qucs::pi * _freq);\n"/>
+<admst:text format="      y (i1,i2) = nr_complex_t (_jstat[i1][i2], _jdyna[i1][i2] * 2 * M_PI * _freq);\n"/>
 <admst:text format="    }\n  }\n"/>
   return y;
 <admst:text format="\n}\n\n"/>
@@ -732,50 +718,34 @@ using qucs::matrix;
 <admst:text format="    }\n  }\n"/>
 
 <admst:text format="}\n"/>
-#include &quot;$(filename).defs.h&quot;
+#include &quot;$(module).defs.h&quot;
 
 
-<!-- emmit code for the dynamic loader -->
-<admst:text format="\n// loader constructor interface\n"/>
-<admst:text format="#ifdef QUCSADMS_DYLOAD\n"/>
-<admst:text format="extern &quot;C&quot; {\n"/>
-<admst:text format="  class va_proxy { public:\n"/>
-<admst:text format="    va_proxy(){\n"/>
-<admst:text format="      // register the constructor and the definitions with the global factories\n"/>
-<admst:text format="      // Note that ::create and ::definition are handled by expanding the CREATOR define constructor\n"/>
-<admst:text format="      factorycreate[&quot;$module&quot;] = $module::create;\n"/>
-<admst:text format="      factorydef   [&quot;$module&quot;] = $module::definition;\n"/>
-<admst:text format="    }\n"/>
-<admst:text format="  };\n"/>
-<admst:text format="  // our one instance of the proxy\n"/>
-<admst:text format="  va_proxy proxy_instance;\n"/>
-<admst:text format="}\n"/>
-<admst:text format="#endif\n"/>
+<!-- if 'dyload' is passed as last argument, emmit code for the dynamic loader -->
+<admst:if test="[$dyload='dyload']">
+  <admst:message format="last argument 'dyload' provided, emmiting code for the dynamic loader\n"/>
+  <admst:text format="\n// loader constructor interface\n"/>
+  <admst:text format="extern &quot;C&quot; {\n"/>
+  <admst:text format="  class va_proxy { public:\n"/>
+  <admst:text format="    va_proxy(){\n"/>
+  <admst:text format="      // register the constructor and the definitions with the global factories\n"/>
+  <admst:text format="      // Note that ::create and ::definition are handled by expanding the CREATOR define constructor\n"/>
+  <admst:text format="      factorycreate[&quot;$module&quot;] = $module::create;\n"/>
+  <admst:text format="      factorydef   [&quot;$module&quot;] = $module::definition;\n"/>
+  <admst:text format="    }\n"/>
+  <admst:text format="  };\n"/>
+  <admst:text format="  // our one instance of the proxy\n"/>
+  <admst:text format="  va_proxy proxy_instance;\n"/>
+  <admst:text format="}\n"/>
+</admst:if>
+
 
 </admst:for-each>
 
 </admst:open>
 
-<admst:open file="$(filename).core.h">/*
- * $(filename).cpp - device implementations for $(filename) modules
- *
- * This is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2, or (at your option)
- * any later version.
- *
- */
-
-<admst:for-each select="/module">
-// include everything. may cause name clashes.
-// used in components/components.h
-#include "$(filename).$(module).core.h"
-</admst:for-each>
-
-</admst:open>
-
-<admst:open file="$(filename).core.h">/*
- * $(filename).core.h - device class definitions for $(filename) modules
+<admst:open file="$module.core.h">/*
+ * $(module).core.h - device class definitions for $(module) module
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -834,19 +804,11 @@ class $(module) : public qucs::circuit
   nr_double_t _chs[$nbr_nodes];
   nr_double_t _jstat[$nbr_nodes][$nbr_nodes];
   nr_double_t _jdyna[$nbr_nodes][$nbr_nodes];
+  nr_double_t _white_pwr[$nbr_nodes][$nbr_nodes];
+  nr_double_t _flicker_pwr[$nbr_nodes][$nbr_nodes];
+  nr_double_t _flicker_exp[$nbr_nodes][$nbr_nodes];
   nr_double_t _charges[$nbr_nodes][$nbr_nodes];
   nr_double_t _caps[$nbr_nodes][$nbr_nodes][$nbr_nodes][$nbr_nodes];
-
-<!-- add noise storage if needed -->
-<admst:if test="[$(nbr_sources_whitenoise) != 0]">
-<admst:text format="  nr_double_t _white_pwr[$nbr_nodes][$nbr_nodes]; \n"/>
-</admst:if>
-
-<!-- add flicker storage if needed -->
-<admst:if test="[$(nbr_sources_flickernoise) != 0]">
-<admst:text format="  nr_double_t _flicker_pwr[$nbr_nodes][$nbr_nodes];\n"/>
-<admst:text format="  nr_double_t _flicker_exp[$nbr_nodes][$nbr_nodes];\n"/>
-</admst:if>
 
 <admst:text format="\n  // device model parameters\n"/>
 <admst:for-each select="variable">

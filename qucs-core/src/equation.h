@@ -282,7 +282,7 @@ public:
   static int isGenerated (char *);
   strlist * getVariables (void);
   int findDuplicate (void);
-  static node * findEquation (node *, const char * const);
+  static node * findEquation (node *, char *);
   int detectCycles (void);
   static strlist * foldDependencies (strlist *);
   node * appendEquation (node *, node *);
@@ -302,12 +302,11 @@ public:
   node * createReference (const char *, const char *, char *);
   void appendEquation (node *);
   void addEquation (node *);
-  node * findEquation (const char *
-		       const) const;
-  bool containsVariable (const char * const) const;
-  nr_double_t getDouble (const char *const) const;
-  void setDouble (const char *const, nr_double_t);
-  qucs::vector getVector (const char * const) const;
+  node * findEquation (char *);
+  bool containsVariable (char *);
+  nr_double_t getDouble (char *);
+  void setDouble (char *, nr_double_t);
+  qucs::vector getVector (char *);
   void setDefinitions (struct definition_t * d) { defs = d; }
   struct definition_t * getDefinitions (void) { return defs; }
   node * findProperty (char *);

@@ -102,7 +102,7 @@ void bondwire::getProperties (void) {
   mur = getPropertyDouble ("mur");
 
   /* model used */
-  const char * Model  = getPropertyString ("Model");
+  char * Model  = getPropertyString ("Model");
   if (Model == NULL) {
     model = FREESPACE;
     logprint (LOG_STATUS, "Model is not specified force FREESPACE\n");
@@ -142,7 +142,7 @@ void bondwire::getProperties (void) {
  */
 static nr_double_t skindepth (const nr_double_t f,
 			      const nr_double_t rho, const nr_double_t mur) {
-  return std::sqrt (rho / (pi * f * MU0 * mur));
+  return std::sqrt (rho / (M_PI * f * MU0 * mur));
 }
 
 /*! Compute resitance of the wire.
@@ -168,7 +168,7 @@ nr_double_t bondwire::resistance (const nr_double_t f) const {
   else
     rin = 0.0;
 
-  return (rho * one_over_pi * l) / (rout * rout - rin * rin);
+  return (rho * M_1_PI * l) / (rout * rout - rin * rin);
 }
 
 
@@ -260,7 +260,7 @@ nr_double_t bondwire::Lfreespace (const nr_double_t f) const {
   tmp += d2l - std::sqrt (1 + d2l * d2l);
   tmp += correctionfactor (f, d, rho, mur);
 
-  return MU0 * (one_over_pi / 2) * l * tmp;
+  return MU0 * (M_1_PI / 2) * l * tmp;
 }
 
 
@@ -305,7 +305,7 @@ nr_double_t bondwire::Lmirror (void) const {
   tmp -= 2 * h / l;
   tmp += d / (2 * l);
 
-  return  MU0 * (one_over_pi / 2) * l * tmp;
+  return  MU0 * (M_1_PI / 2) * l * tmp;
 }
 
 
@@ -328,7 +328,7 @@ matrix bondwire::calcMatrixY (const nr_double_t f) {
     break;
   }
 
-  Lw = L * 2 * pi * f;
+  Lw = L * 2 * M_PI * f;
 
   /* build Y-parameter matrix */
   nr_complex_t yL = 1.0 / nr_complex_t (R, Lw);
@@ -403,7 +403,7 @@ void bondwire::calcAC (const nr_double_t frequency) {
 void bondwire::calcNoiseSP (nr_double_t) {
   // calculate noise correlation matrix
   nr_double_t T = getPropertyDouble ("Temp");
-  nr_double_t f = celsius2kelvin (T) * 4.0 * R * z0 / norm (4.0 * z0 + R) / T0;
+  nr_double_t f = kelvin (T) * 4.0 * R * z0 / norm (4.0 * z0 + R) / T0;
   setN (NODE_1, NODE_1, +f); setN (NODE_2, NODE_2, +f);
   setN (NODE_1, NODE_2, -f); setN (NODE_2, NODE_1, -f);
 }
@@ -412,7 +412,7 @@ void bondwire::calcNoiseAC (nr_double_t) {
   // calculate noise current correlation matrix
   nr_double_t y = 1 / R;
   nr_double_t T = getPropertyDouble ("Temp");
-  nr_double_t f = celsius2kelvin (T) / T0 * 4.0 * y;
+  nr_double_t f = kelvin (T) / T0 * 4.0 * y;
   setN (NODE_1, NODE_1, +f); setN (NODE_2, NODE_2, +f);
   setN (NODE_1, NODE_2, -f); setN (NODE_2, NODE_1, -f);
 }

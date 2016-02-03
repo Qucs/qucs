@@ -77,7 +77,7 @@ void diac::calcTheModel (bool last) {
   nr_double_t Ut, Ieq, Vd;
 
   if (isOn)
-    Ut = N * celsius2kelvin (T) * kBoverQ;
+    Ut = N * kelvin (T) * kBoverQ;
   else
     Ut  = Ubo / std::log (Ibo / Is);
 
@@ -145,7 +145,7 @@ matrix diac::calcMatrixY (nr_double_t frequency) {
   nr_double_t gd = getOperatingPoint ("gd");
   nr_double_t gi = getOperatingPoint ("gi");
   nr_double_t Ci = getOperatingPoint ("Ci");
-  nr_complex_t yd = nr_complex_t (gd, Ci * 2.0 * pi * frequency);
+  nr_complex_t yd = nr_complex_t (gd, Ci * 2.0 * M_PI * frequency);
   matrix y (3);
   y.set (NODE_A2, NODE_A2, +yd);
   y.set (NODE_IN, NODE_IN, +yd +gi);

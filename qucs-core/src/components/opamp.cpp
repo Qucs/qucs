@@ -65,8 +65,8 @@ void opamp::calcDC (void) {
   nr_double_t g    = getPropertyDouble ("G");
   nr_double_t uMax = getPropertyDouble ("Umax");
   nr_double_t Uin  = real (getV (NODE_INP) - getV (NODE_INM));
-  nr_double_t Uout = uMax * two_over_pi * qucs::atan (Uin * g * pi_over_2 / uMax);
-  gv = g / (1 + sqr (pi_over_2 / uMax * g * Uin)) + GMin;
+  nr_double_t Uout = uMax * M_2_PI * qucs::atan (Uin * g * M_PI_2 / uMax);
+  gv = g / (1 + sqr (M_PI_2 / uMax * g * Uin)) + GMin;
   setC (VSRC_1, NODE_INP, +gv);
   setC (VSRC_1, NODE_INM, -gv);
   setE (VSRC_1, Uin * gv - Uout);

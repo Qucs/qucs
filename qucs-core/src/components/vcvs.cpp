@@ -41,8 +41,8 @@ void vcvs::calcSP (nr_double_t frequency) {
   nr_double_t g = getPropertyDouble ("G");
   nr_double_t T = getPropertyDouble ("T");
 
-  nr_complex_t z1 = qucs::polar (g, pi - 2.0 * pi * frequency * T);
-  nr_complex_t z2 = qucs::polar (g, - 2.0 * pi * frequency * T);
+  nr_complex_t z1 = qucs::polar (g, M_PI - 2.0 * M_PI * frequency * T);
+  nr_complex_t z2 = qucs::polar (g, - 2.0 * M_PI * frequency * T);
 
   setS (NODE_1, NODE_1, 1.0); setS (NODE_1, NODE_2, 0.0);
   setS (NODE_1, NODE_3, 0.0); setS (NODE_1, NODE_4, 0.0);
@@ -72,7 +72,7 @@ void vcvs::initAC (void) {
 void vcvs::calcAC (nr_double_t frequency) {
   nr_double_t T = getPropertyDouble ("T");
   nr_complex_t g = qucs::polar (getPropertyDouble ("G"),
-			  - 2.0 * pi * frequency * T);
+			  - 2.0 * M_PI * frequency * T);
   setC (VSRC_1, NODE_1, +g); setC (VSRC_1, NODE_4, -g);
 }
 

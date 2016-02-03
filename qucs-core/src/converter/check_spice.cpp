@@ -126,7 +126,7 @@ struct define_t spice_definition_available[] =
   { "K", 4, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
     spice_noprops, spice_noprops },
   /* BJT device */
-  { "Q", 5, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_NONLINEAR,
+  { "Q", 4, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_NONLINEAR,
     spice_noprops, spice_noprops },
   /* MOS device */
   { "M", 4, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_NONLINEAR,
@@ -540,7 +540,7 @@ spice_set_property_string (struct definition_t * def, const char * key,
 			   const char * val) {
   struct pair_t * prop = spice_find_property (def, key);
   if (prop != NULL) {
-    free (prop->value->ident);
+    if (prop->value->ident) free (prop->value->ident);
     prop->value->ident = strdup (val);
   }
   else {
@@ -574,9 +574,9 @@ static double spice_evaluate_value (struct value_t * value) {
 
 /* The following function free()'s the given value. */
 static void netlist_free_value (struct value_t * value) {
-  free (value->ident);
+  if (value->ident) free (value->ident);
   if (value->unit)  free (value->unit);
-  free (value->scale);
+  if (value->scale) free (value->scale);
   free (value);
 }
 
@@ -640,8 +640,61 @@ static void spice_adjust_device (struct definition_t * def,
       p = spice_generate_Model_pairs (start->next);
       def->pairs = netlist_append_pairs (def->pairs, p);
       // adjust type of device
-      free (def->type);
+      if (def->type) free (def->type);
 
+      bool hic = false;
+      // check for HICUM transistors
+      if (!strcmp (tran->trans_type, "BJT")) {
+	struct pair_t * p1, * p2;
+	if ((p1 = spice_find_property (def, "LEVEL")) != NULL) {
+	  double level = spice_evaluate_value (p1->value);
+	  def->pairs = spice_del_property (def->pairs, p1);
+	  if ((p2 = spice_find_property (def, "VERSION")) != NULL) {
+	    double version = spice_evaluate_value (p2->value);
+	    def->pairs = spice_del_property (def->pairs, p2);
+	    if (level == 0) {
+	      if (version >= 1.11) {
+		if (version >= 1.2e9)
+		  def->type = strdup ("hicumL0V1p2g");
+		else if (version >= 1.3)
+		  def->type = strdup ("hicumL0V1p3");
+		else if (version >= 1.2)
+		  def->type = strdup ("hicumL0V1p2");
+		else
+		  def->type = strdup ("hic0_full");
+		if (tran->trans_type_prop != NULL) {
+		  spice_set_property_string (def, "Type",
+					     tran->trans_type_prop);
+		}
+		hic = true;
+	      }
+	    }
+	    else if (level == 2 && version == 2.1) {
+	      def->type = strdup ("hicumL2V2p1");
+	      hic = true;
+	    }
+	    else if (level == 2 && version >= 2.21 && version <= 2.22) {
+	      def->type = strdup ("hic2_full");
+	      hic = true;
+	    }
+	    else if (level == 2 && version == 2.23) {
+	      def->type = strdup ("hicumL2V2p23");
+	      hic = true;
+	    }
+	    else if (level == 2 && version >= 2.24) {
+	      def->type = strdup ("hicumL2V2p24");
+	      hic = true;
+	    }
+	  }
+	}
+      }
+      if (!hic) {
+	def->type = strdup (tran->trans_type);
+	// append "Type" property
+	if (tran->trans_type_prop != NULL) {
+	  spice_set_property_string (def, "Type", tran->trans_type_prop);
+	}
+      }
       break;
     }
   }
@@ -752,6 +805,15 @@ node_translations[] = {
     { 1, 2, -1 }
   },
   { "Iac", 0,
+    { 2, 1, -1 },
+    { 1, 2, -1 }
+  },
+  { "Idc", 0,
+    { 2, 1, -1 },
+    { 1, 2, -1 }
+  },
+  { "VCCS", 0,
+    { 3, 1, 2, 4, -1 },
     { 1, 2, 3, 4, -1 }
   },
   { "VCVS", 0,
@@ -1111,8 +1173,8 @@ netlist_free_definition (struct definition_t * def) {
   netlist_free_nodes (def->nodes);
   netlist_free_pairs (def->pairs);
   netlist_free_values (def->values);
-  free (def->subcircuit);
-  free (def->text);
+  if (def->subcircuit) free (def->subcircuit);
+  if (def->text) free (def->text);
   if (def->sub) netlist_destroy_intern (def->sub);
   free (def->type);
   free (def->instance);
@@ -1139,7 +1201,7 @@ void spice_destroy (void) {
   definition_root = subcircuit_root = device_root = NULL;
   netlist_free_nodes (spice_nodes);
   spice_nodes = NULL;
-  free (spice_title);
+  if (spice_title) free (spice_title);
   spice_title = NULL;
 }
 

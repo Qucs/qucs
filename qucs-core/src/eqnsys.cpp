@@ -22,19 +22,15 @@
  *
  */
 
-#ifdef HAVE_CONFIG_H
-#include "config.h"
-#else
-// BUG
+// the types required for qucs library files are defined
+// in qucs_typedefs.h, created by configure from
+// qucs_typedefs.h.in
 #include "qucs_typedefs.h"
-#endif
 
 #include <assert.h>
 #include <time.h>
 #include <cmath>
 #include <float.h>
-
-#include <limits>
 
 #include "compat.h"
 #include "logging.h"
@@ -67,15 +63,15 @@ eqnsys<nr_type_t>::eqnsys () {
 //! Destructor deletes the eqnsys class object.
 template <class nr_type_t>
 eqnsys<nr_type_t>::~eqnsys () {
-  delete R;
-  delete T;
-  delete B;
-  delete S;
-  delete E;
-  delete V;
-  delete[] rMap;
-  delete[] cMap;
-  delete[] nPvt;
+  if (R != NULL) delete R;
+  if (T != NULL) delete T;
+  if (B != NULL) delete B;
+  if (S != NULL) delete S;
+  if (E != NULL) delete E;
+  if (V != NULL) delete V;
+  if (rMap != NULL) delete[] rMap;
+  if (cMap != NULL) delete[] cMap;
+  if (nPvt != NULL) delete[] nPvt;
 }
 
 /*! The copy constructor creates a new instance of the eqnsys class
@@ -108,15 +104,15 @@ void eqnsys<nr_type_t>::passEquationSys (tmatrix<nr_type_t> * nA,
     update = 1;
     if (N != A->getCols ()) {
       N = A->getCols ();
-      delete[] cMap; cMap = new int[N];
-      delete[] rMap; rMap = new int[N];
-      delete[] nPvt; nPvt = new nr_double_t[N];
+      if (cMap) delete[] cMap; cMap = new int[N];
+      if (rMap) delete[] rMap; rMap = new int[N];
+      if (nPvt) delete[] nPvt; nPvt = new nr_double_t[N];
     }
   }
   else {
     update = 0;
   }
-  delete B;
+  if (B != NULL) delete B;
   B = new tvector<nr_type_t> (*nB);
   X = refX;
 }
@@ -828,7 +824,7 @@ void eqnsys<nr_type_t>::solve_qr_ls (void) {
 }
 
 /*! Helper function for the euclidian norm calculators. */
-static inline void
+static void
 euclidian_update (nr_double_t a, nr_double_t& n, nr_double_t& scale) {
   nr_double_t x, ax;
   if ((x = a) != 0) {
@@ -890,7 +886,7 @@ void eqnsys<nr_type_t>::factorize_qrh (void) {
   nr_type_t f, t;
   nr_double_t s, MaxPivot;
 
-  delete R; R = new tvector<nr_type_t> (N);
+  if (R) delete R; R = new tvector<nr_type_t> (N);
 
   for (c = 0; c < N; c++) {
     // compute column norms and save in work array
@@ -954,7 +950,7 @@ void eqnsys<nr_type_t>::factorize_qr_householder (void) {
   int c, r, pivot;
   nr_double_t s, MaxPivot;
 
-  delete T; T = new tvector<nr_type_t> (N);
+  if (T) delete T; T = new tvector<nr_type_t> (N);
 
   for (c = 0; c < N; c++) {
     // compute column norms and save in work array
@@ -1015,7 +1011,7 @@ void eqnsys<nr_type_t>::substitute_qrh (void) {
   for (r = N - 1; r >= 0; r--) {
     f = B_(r);
     for (c = r + 1; c < N; c++) f -= A_(r, c) * X_(cMap[c]);
-    if (abs (R_(r)) > std::numeric_limits<nr_double_t>::epsilon())
+    if (abs (R_(r)) > NR_EPSI)
       X_(cMap[r]) = f / R_(r);
     else
       X_(cMap[r]) = 0;
@@ -1043,7 +1039,7 @@ void eqnsys<nr_type_t>::substitute_qr_householder (void) {
   // backward substitution in order to solve RX = Q'B
   for (r = N - 1; r >= 0; r--) {
     for (f = B_(r), c = r + 1; c < N; c++) f -= A_(r, c) * X_(cMap[c]);
-    if (abs (A_(r, r)) > std::numeric_limits<nr_double_t>::epsilon())
+    if (abs (A_(r, r)) > NR_EPSI)
       X_(cMap[r]) = f / A_(r, r);
     else
       X_(cMap[r]) = 0;
@@ -1062,7 +1058,7 @@ void eqnsys<nr_type_t>::substitute_qr_householder_ls (void) {
   // forward substitution in order to solve R'X = B
   for (r = 0; r < N; r++) {
     for (f = B_(r), c = 0; c < r; c++) f -= A_(c, r) * B_(c);
-    if (abs (A_(r, r)) > std::numeric_limits<nr_double_t>::epsilon())
+    if (abs (A_(r, r)) > NR_EPSI)
       B_(r) = f / A_(r, r);
     else
       B_(r) = 0;
@@ -1245,7 +1241,7 @@ void eqnsys<nr_type_t>::chop_svd (void) {
   nr_double_t Max, Min;
   Max = 0.0;
   for (c = 0; c < N; c++) if (fabs (S_(c)) > Max) Max = fabs (S_(c));
-  Min = Max * std::numeric_limits<nr_double_t>::max();
+  Min = Max * NR_EPSI;
   for (c = 0; c < N; c++) if (fabs (S_(c)) < Min) S_(c) = 0.0;
 }
 
@@ -1284,11 +1280,11 @@ void eqnsys<nr_type_t>::factorize_svd (void) {
   nr_type_t t;
 
   // allocate space for vectors and matrices
-  delete R; R = new tvector<nr_type_t> (N);
-  delete T; T = new tvector<nr_type_t> (N);
-  delete V; V = new tmatrix<nr_type_t> (N);
-  delete S; S = new tvector<nr_double_t> (N);
-  delete E; E = new tvector<nr_double_t> (N);
+  if (R) delete R; R = new tvector<nr_type_t> (N);
+  if (T) delete T; T = new tvector<nr_type_t> (N);
+  if (V) delete V; V = new tmatrix<nr_type_t> (N);
+  if (S) delete S; S = new tvector<nr_double_t> (N);
+  if (E) delete E; E = new tvector<nr_double_t> (N);
 
   // bidiagonalization through householder transformations
   for (i = 0; i < N; i++) {
@@ -1337,7 +1333,7 @@ void eqnsys<nr_type_t>::factorize_svd (void) {
 #endif
 
 //! Helper function computes Givens rotation.
-static inline nr_double_t
+static nr_double_t
 givens (nr_double_t a, nr_double_t b, nr_double_t& c, nr_double_t& s) {
   nr_double_t z = xhypot (a, b);
   c = a / z;

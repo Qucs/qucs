@@ -118,7 +118,7 @@ void digital::calcSP (nr_double_t frequency) {
   nr_double_t t = getPropertyDouble ("t");
   for (i = 0; i < getSize () - 1; i++) {
     setS (NODE_OUT, NODE_IN1 + i,
-	  4.0 * std::polar (g[i], - 2.0 * pi * frequency * t));
+	  4.0 * std::polar (g[i], - 2.0 * M_PI * frequency * t));
   }
 }
 
@@ -156,7 +156,7 @@ void digital::initAC (void) {
 void digital::calcAC (nr_double_t frequency) {
   nr_double_t t = getPropertyDouble ("t");
   for (i = 0; i < getSize () - 1; i++) {
-    setC (VSRC_1, NODE_IN1 + i, std::polar (g[i], - 2.0 * pi * frequency * t));
+    setC (VSRC_1, NODE_IN1 + i, std::polar (g[i], - 2.0 * M_PI * frequency * t));
   }
 }
 

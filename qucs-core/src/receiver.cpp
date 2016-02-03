@@ -31,7 +31,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <cmath>
-#include <cstdint>
 
 #include "consts.h"
 #include "object.h"
@@ -46,9 +45,9 @@ namespace qucs {
 
 /* The function returns a power-of-two value which is equal or larger
    than the given value.  The maximum returned value is 2^30. */
-int32_t emi::nearestbin32 (int x) {
-  int32_t boundary = 1 << 30;
-  int32_t current = 1;
+nr_int32_t emi::nearestbin32 (int x) {
+  nr_int32_t boundary = 1 << 30;
+  nr_int32_t current = 1;
   if (x >= boundary) return boundary;
   while (current < x) current <<= 1;
   return current;

@@ -1,0 +1,62 @@
+adms-2.3.4:
+ * able to parse BSIM6, BSIMCMG (107.0.0)
+ * merge patches from WRspice
+ * preprocessorLex.l:
+   * remove print to screen of `disciplines.vams`
+	 * Change string recognition to allow embedded \" as literal quote
+	 * Capture quoted string containing line continuation character `\`
+	 * avoid spurious fatal error from an included file which last line contains
+	 onlywhite space.
+ * preprocessorYacc.y:
+   * fix BSIM6 parse problem, string macro arg broken by continuator
+     caused 'unexpected end-of-line' error.
+ * verilogLex.l:
+	 * Change string recognition to allow embedded \" as literal quote
+ * admsXml.c:
+	 * update website address on info message
+	 * turn error on verbose message for mismatched assignments (WRspice)
+
+adms-2.3.3:
+ * adms.implitic.xml
+	 * add all standard functions and transcendental functions (LRM v2.3.1)
+	 * add `$limit` function, used in Xyce
+ * fixed CMake build system:
+   * enabled config.h reader configuration, checks for HAVE_ defines used on
+	 the generated source code.
+   * added module to search for Perl modules (maintainer mode)
+   * it runs the Perl scripts to generate source code
+ * preprocessorLex.l: set Flex ptional output name to `preprocessorLex.c`
+ * verilogaLex.l: set Flex optional output name to `verilogaLex.c`
+ * install admsCheck: this is a test program for admsXml
+ * admsXml, admsCheck: link libraries statically
+   * Set static linking on Linux, OSX, Windows
+   * Drop DLL support on MINGW (Win32), static linked
+
+adms-2.3.2:
+ * further cleanup, no new language features
+ * bump bison dependency, bison-2.6+ (tested with 2.7.1 and 3.0.2)
+ * update admsXml help
+   * use Git hash as revision number
+   * show OS and Compiler version
+ * fix `make dist` to create tarball
+ * introduce support for CMake build scripts
+ * update Readme and build instructions
+
+
+adms-2.3.1:
+ * very little change from adms-2.3.0
+ * small improvements to build system and tidied up source download package.
+
+
+adms-2.3.0: svn release 1190
+ * Last released version used by Qucs and QucsStudio teams.
+ * The original svn repository this was created from is now closed to the public.
+
+---
+2010-08-01  Holger Vogt
+ * autogen.sh: update for CYGWIN and LINUX
+ * compile-mingw.sh: added to allow compilation of admsXml.exe on MINGW
+ * configure.ac: check for GD perl module removed
+ * /images/makefile.am: image generation removed (are already there).
+ * mkelements.pl: add preprocessor flag 'staticlink' to use with MINGW compilation
+

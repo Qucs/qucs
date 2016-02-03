@@ -67,7 +67,7 @@ matrix mutualx::calcMatrixZ (nr_double_t frequency) {
   int r, c, state;
   qucs::vector * L = getPropertyVector ("L");
   qucs::vector * C = getPropertyVector ("k");
-  nr_double_t o = 2 * pi * frequency;
+  nr_double_t o = 2 * M_PI * frequency;
   matrix z = matrix (inductors);
 
   // fill Z-Matrix entries
@@ -91,7 +91,7 @@ void mutualx::calcAC (nr_double_t frequency) {
   int r, c, state;
   qucs::vector * L = getPropertyVector ("L");
   qucs::vector * C = getPropertyVector ("k");
-  nr_double_t o = 2 * pi * frequency;
+  nr_double_t o = 2 * M_PI * frequency;
 
   // fill D-Matrix
   for (state = 0, r = 0; r < inductors; r++) {

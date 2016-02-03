@@ -1,0 +1,105 @@
+##
+## RCS Info
+## $Id: TODO 682 2007-06-28 09:49:24Z r29173 $
+## 
+## Log
+## $Log$
+## Revision 1.3  2004/08/03 12:33:54  r29173
+## import adms-1.21.0 from local CVS
+##
+## Revision 1.1.1.1  2004/05/21 12:20:01  r29173
+## recreated cvs data structure (crashed after revision 1.13.0!)
+##
+## Revision 1.3  2003/06/20 08:26:11  r29173
+## added RCS info into files
+##
+## Revision 1.3  2003/06/19 12:52:15  r29173
+## fixed dependency problem
+##
+## Revision 1.2  2003/05/21 14:20:55  r29173
+## add rcs info
+##
+##
+
+Bug:
+  `define f(x) mytoto(V(I)): Cette phrase conduit le parser a echouer car mytoto n'est ni ANALOG, BUILTIN ou SYSTEM. 
+  La grammaire doit etre plus flexible et ne pas decider au niveau du lexer la semantique de mytoto.
+
+CoreDump:
+- parameter x=1u; 1u not supported
+- parameter x=1 exclude 0; exclude not supported
+
+Improvement:
+- dummy = $message: should be $message(...);
+- for(x;y;z): x should be saved as expression, not assignment
+
+-fixme: if(ln(x)<1.0) begin...end --> add suffix to tempory variables created for ln
+-fixme: c=$derivate(dynamic_code) --> declaration of c is static instead of derivate/dynamic
+-fixme:admsMica:add c code: if nb of terminals in netlist < default -> create new terminals
+
+=========================================================================================
+Display:
+
+prendre comme base le soft "gmas" par example
+
+OPEN -- SAVE -- SAVE-AS -- ADMS -- COMPILE -- ABORT -- QUIT -- DEVICE(S)
+OPEN*   SAVE*   SAVE_AS*   ADMS*   MICA*      ABORT*   QUIT*   list of devices
+                                  VERILOGA
+                                  SPICE
+                                  ETC
+ -----------------------------------------
+|                                         |
+|                                         |
+|                                         |
+|                                         |
+|                                         |
+|                                         |
+|     TEXT                                |
+|                                         |
+|                                         |
+|                                         |
+|                                         |
+ -----------------------------------------
+
+STAR `*': show default menu
+          if click on parent menu, action
+          linked to this menu is activated
+          
+OPEN:
+  OPEN*:     open new window with list of current .ams files
+
+SAVE:
+  SAVE*:     save current text in same file or new file
+
+SAVE-AS:
+  SAVE*-AS:  prompt for file name
+             save as current text given file name
+
+ADMS:
+  ADMS*:      check current file versus ADMS-grammar
+             create internal parse-tree data
+             create internal class object data
+             FILE CREATED: .log
+             USE         : ALL
+             MENU        : message at bottom (OK or #warnings #errors)
+  PARSE:     parse current file wrt ADMS-grammar
+             create internal parse-tree data
+            .log file is created
+             FILE CREATED: .log
+             USE         : DEBUG
+  SEMANTIC:  check current file wrt ADMS-grammar
+             FILE CREATED: .log
+             USE         : DEBUG
+COMPILE:
+  MICA*: MICA is default compiled language,
+             create c-code for MICA DPI
+             FILE CREATED: .log and all mica files
+             USE         : ALL
+             MENU        : message at bottom (OK or #warnings #errors)
+
+DEVICE(S):
+  device list*: gives a list of devices for which compilation succeed
+                (gives target language for which compilation succeed)
+
+-----------------------------------------------------------------------
+

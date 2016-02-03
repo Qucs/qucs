@@ -58,7 +58,6 @@ void iprobe::initTR (void) {
   initDC ();
 }
 
-// properties
 PROP_REQ [] = { PROP_NO_PROP };
 PROP_OPT [] = { PROP_NO_PROP };
 struct define_t iprobe::cirdef =

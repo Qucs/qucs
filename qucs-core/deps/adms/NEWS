@@ -1,0 +1,99 @@
+#####################################################################
+#                      ChangeLog                                    #
+#####################################################################
+
+10-10-2000: Increment version 1.0.2
+            1.0.1 has been used to compile r3-1.0.0
+01-06-2001: Increment version 1.0.3
+            Made a lot of simplifications 
+            Remove class admsSemantic
+            Add module admsNS
+            Test-suite golden with previous SUCCEED
+18-07-2001: Increment version 1.0.4
+            Made a lot of simplifications
+            Test-suite golden with previous SUCCEED
+25-07-2001: Increment version 1.0.5
+	    mica/loadAC calls loadTRAN instead loadDC
+            Test-suite golden with previous FAILED (mica)
+30-07-2001: Increment version 1.0.6
+	    useless classes removed
+            Test-suite golden with previous SUCCEED
+10-08-2001: Increment version 1.0.7
+            Made a lot of simplifications
+            Test-suite golden with previous SUCCEED
+13-08-2001: Increment version 1.0.8
+            Alias are not printed out by simulators
+            Test-suite golden with previous FAILED (mica/spectre)
+07-11-2002: Increment version: now 1.0.24
+            mica models created with this version (SP, MOSCAP3, R3, VBICSELFT)
+07-11-2002: Increment version: now 1.0.25
+            mica models: 1.0.24 and 1.0.25 generate same c code for:
+            HBT-1 MOSCAP3-9 R3-13 SMOS-16 SP-16 VBICSELFT-23 MOS1_lilly_qi-0
+            handles arrays of variables: module PDSOI_lilly_qi-0
+20-11-2002: Increment version: now 1.1.0
+            start implementing admsXml
+            mica models: 1.1.0 and 1.0.25 generate same c code
+01-12-2002: Increment version: now 1.1.1
+            improve  admsXml
+            mica models: 1.1.1 and 1.0.25 generate same c code
+            except for adms*/data/*interface_h.in (fix to _d_pow)
+08-01-2003: Increment version: now 1.1.2
+            mica models: 1.1.2 and 1.1.1 generate same c code
+            except MICAinterface.h (fixes to _limexp)
+            except *defs.h and *noise.c (started implementation of noise analysis)
+19-03-2003: Increment version: now 1.1.3
+19-03-2003: Increment version: now 1.1.4
+            mica models: 1.1.4 and 1.1.2 generate same c code except
+              file <MODULE>reverse.c (one comment added)
+              module VBICSELFT: 
+		VBICSELFTdefs.h
+		VBICSELFTevaluate.include
+		VBICSELFTload.include
+		VBICSELFTreserve.c
+              module MOS1: it is a `A' device 
+19-03-2003: Increment version: now 1.1.5
+            mica models: 1.1.5 and 1.1.4 generate same c code except
+            xml scripts for spectre 90% tested
+            TODO: 1- "flag parameters" should be processed like
+                     real/int/string operators
+                  2- remove "ask=" field
+                  3- remove GLOBAL flag
+                  4- add NOISE
+                  5- add xpath=/adms to xml scripts
+
+08-04-2003: Increment version: now 1.1.6
+            mica models: 1.1.6 and 1.1.5 generate same c code except
+            WarningL R3-16 does not compile with this version.
+            mica5HBT-1/HBTtopo.c mica6HBT-1/HBTtopo.c
+            mica5MOSCAP3-14/MOSCAP3topo.c mica6MOSCAP3-14/MOSCAP3topo.c
+            mica5VBICSELFT-24/VBICSELFTtopo.c mica6VBICSELFT-24/VBICSELFTtopo.c
+            Same contents, however order of lines differ
+            Keep changes and move to next version
+11-04-2003: Increment version: now 1.1.7
+            mica models: 1.1.7 and 1.1.6 generate same c code for mica
+            Did lot of clean-up in the code
+15-04-2003: Increment version: now 1.1.8
+            mica models: 1.1.8 and 1.1.7 generate same c code for mica
+            Did lot of clean-up
+16-04-2003: Increment version: now 1.1.9
+            mica models: 1.1.9 and 1.1.8 generate same c code for mica.
+            This version does not compile on Windows
+17-04-2003: Increment version: now 1.1.10
+            mica models: 1.1.10 and 1.1.8 generate same c code
+            for mica/spectre/ads
+            Fixes to make adms compiled on Windows
+            No check done on HPUX/SUN
+18-04-2003: Increment version: now 1.1.11
+            fix bug in admsCheck that prevented use of gprof
+            mica models: 1.1.11 and 1.1.8 generate same c code
+            for mica/spectre/ads
+18-05-2003: Increment version: now 1.1.12
+            fix bug in admsCheck that prevented use of gprof
+            spectre: handles parameter range checking
+            ads: improve syntax of code created
+            mica: same c code as 1.1.8
+03-05-2005: removed admsNS directory
+            release adms-2.0.1
+
+
+

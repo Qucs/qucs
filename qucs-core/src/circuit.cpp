@@ -53,7 +53,6 @@ const nr_double_t circuit::z0 = 50.0;
 
 // Constructor creates an unnamed instance of the circuit class.
 circuit::circuit () : object (), integrator () {
-  next = prev = NULL;
   size = 0;
   MatrixN = MatrixS = MatrixY = NULL;
   MatrixB = MatrixC = MatrixD = NULL;
@@ -69,7 +68,7 @@ circuit::circuit () : object (), integrator () {
   vsources = 0;
   nsources = 0;
   inserted = -1;
-  subcircuit = std::string();
+  subcircuit = NULL;
   subnet = NULL;
   deltas = NULL;
   histories = NULL;
@@ -80,7 +79,6 @@ circuit::circuit () : object (), integrator () {
 /* Constructor creates an unnamed instance of the circuit class with a
    certain number of ports. */
 circuit::circuit (int s) : object (), integrator () {
-  next = prev = NULL;
   assert (s >= 0);
   size = s;
   if (size > 0) nodes = new node[s];
@@ -97,7 +95,7 @@ circuit::circuit (int s) : object (), integrator () {
   vsources = 0;
   nsources = 0;
   inserted = -1;
-  subcircuit = std::string();
+  subcircuit = NULL;
   subnet = NULL;
   deltas = NULL;
   histories = NULL;
@@ -108,8 +106,6 @@ circuit::circuit (int s) : object (), integrator () {
 /* The copy constructor creates a new instance based on the given
    circuit object. */
 circuit::circuit (const circuit & c) : object (c), integrator (c) {
-  next = c.next;
-  prev = c.prev;
   size = c.size;
   pol = c.pol;
   pacport = c.pacport;
@@ -124,7 +120,7 @@ circuit::circuit (const circuit & c) : object (c), integrator (c) {
   deltas = c.deltas;
   nHistories = c.nHistories;
   histories = NULL;
-  subcircuit = c.subcircuit;
+  subcircuit = c.subcircuit ? strdup (c.subcircuit) : NULL;
 
   if (size > 0) {
     // copy each node and set its circuit to the current circuit object
@@ -183,12 +179,13 @@ circuit::circuit (const circuit & c) : object (c), integrator (c) {
 // Destructor deletes a circuit object.
 circuit::~circuit () {
   if (size > 0) {
-    delete[] MatrixS;
-    delete[] MatrixN;
+    if (MatrixS) delete[] MatrixS;
+    if (MatrixN) delete[] MatrixN;
     freeMatrixMNA ();
     freeMatrixHB ();
     delete[] nodes;
   }
+  if (subcircuit) free (subcircuit);
   deleteHistory ();
 }
 
@@ -202,8 +199,8 @@ void circuit::setSize (int s) {
 
   if (size > 0) {
     // destroy any matrix and node information
-    delete[] MatrixS;
-    delete[] MatrixN;
+    if (MatrixS) delete[] MatrixS;
+    if (MatrixN) delete[] MatrixN;
     MatrixS = MatrixN = NULL;
     freeMatrixMNA ();
     delete[] nodes; nodes = NULL;
@@ -262,7 +259,7 @@ void circuit::allocMatrixS (void) {
 /* Allocates the noise correlation matrix memory. */
 void circuit::allocMatrixN (int sources) {
   nsources = sources;
-  delete[] MatrixN;
+  if (MatrixN) delete[] MatrixN;
   MatrixN = new nr_complex_t[(size + sources) * (size + sources)];
 }
 
@@ -299,7 +296,7 @@ void circuit::freeMatrixMNA (void) {
    nodes.  It also tells the appropriate node about the circuit it
    belongs to.  The optional 'intern' argument is used to mark a node
    to be for internal use only. */
-void circuit::setNode (int i, const std::string &n, int intern) {
+void circuit::setNode (int i, const char * n, int intern) {
   nodes[i].setName (n);
   nodes[i].setCircuit (this);
   nodes[i].setPort (i);
@@ -312,8 +309,9 @@ node * circuit::getNode (int i) {
 }
 
 // Sets the subcircuit reference for the circuit object.
-void circuit::setSubcircuit (const std::string &n) {
-  subcircuit = n;
+void circuit::setSubcircuit (char * n) {
+  if (subcircuit) free (subcircuit);
+  subcircuit = n ? strdup (n) : NULL;
 }
 
 #if DEBUG
@@ -516,27 +514,26 @@ void circuit::setCV (int port, nr_complex_t cv) {
 
 /* This function adds a operating point consisting of a key and a
    value to the circuit. */
-void circuit::addOperatingPoint (const std::string &n, nr_double_t val) {
-  operatingpoint p(n, val);
-  oper.insert ({{n,p}});
+void circuit::addOperatingPoint (const char * n, nr_double_t val) {
+  operatingpoint * p = new operatingpoint (n, val);
+  oper.add (n, p);
 }
 
 /* Returns the requested operating point value which has been
    previously added as its double representation.  If there is no such
    operating point the function returns zero. */
-nr_double_t circuit::getOperatingPoint (const std::string &n) {
-  const auto it = oper.find(n);
-  if (it != oper.end())
-    return (*it).second.getValue();
+nr_double_t circuit::getOperatingPoint (const char * n) {
+  operatingpoint * p = oper.get (n);
+  if (p != NULL) return p->getValue ();
   return 0.0;
 }
 
 /* This function sets the operating point specified by the given name
    to the value passed to the function. */
-void circuit::setOperatingPoint (const std::string& n, nr_double_t val) {
-  auto it = oper.find(n);
-  if (it != oper.end())
-    (*it).second.setValue (val);
+void circuit::setOperatingPoint (const char * n, nr_double_t val) {
+  operatingpoint * p = oper.get (n);
+  if (p != NULL)
+    p->setValue (val);
   else
     addOperatingPoint (n, val);
 }
@@ -544,33 +541,32 @@ void circuit::setOperatingPoint (const std::string& n, nr_double_t val) {
 /* The function checks whether the circuit has got a certain operating
    point value.  If so it returns non-zero, otherwise it returns
    zero. */
-int circuit::hasOperatingPoint (const std::string& n) {
-  return oper.find(n) != oper.end();
+int circuit::hasOperatingPoint (char * n) {
+  return (oper.get (n)) ? 1 : 0;
 }
 
 /* This function adds a characteristic point consisting of a key and a
    value to the circuit. */
-void circuit::addCharacteristic (const std::string &n, nr_double_t val) {
-  characteristic p(n, val);
-  charac.insert({{n, p}});
+void circuit::addCharacteristic (const char * n, nr_double_t val) {
+  characteristic * p = new characteristic (n, val);
+  charac.add (n, p);
 }
 
 /* Returns the requested characteristic value which has been
    previously added as its double representation.  If there is no such
    characteristic value the function returns zero. */
-nr_double_t circuit::getCharacteristic (const std::string &n) {
-  const auto it = charac.find(n);
-  if (it != charac.end())
-    return (*it).second.getValue ();
+nr_double_t circuit::getCharacteristic (char * n) {
+  characteristic * p = charac.get (n);
+  if (p != NULL) return p->getValue ();
   return 0.0;
 }
 
 /* This function sets the characteristic value specified by the given
    name to the value passed to the function. */
-void circuit::setCharacteristic (const std::string &n, nr_double_t val) {
-  auto it = charac.find(n);
-  if (it != charac.end())
-    (*it).second.setValue (val);
+void circuit::setCharacteristic (const char * n, nr_double_t val) {
+  characteristic * p = charac.get (n);
+  if (p != NULL)
+    p->setValue (val);
   else
     addCharacteristic (n, val);
 }
@@ -578,8 +574,8 @@ void circuit::setCharacteristic (const std::string &n, nr_double_t val) {
 /* The function checks whether the circuit has got a certain
    characteristic value.  If so it returns non-zero, otherwise it
    returns zero. */
-int circuit::hasCharacteristic (const std::string & n) {
-  return charac.find (n) != charac.end();
+int circuit::hasCharacteristic (char * n) {
+  return (charac.get (n)) ? 1 : 0;
 }
 
 // Returns the S-parameter at the given matrix position.
@@ -627,16 +623,19 @@ void circuit::setNoiseSources (int s) {
 /* The function returns an internal node or circuit name with the
    given prefix and based on the given circuits name.  The caller is
    responsible to free() the returned string. */
-std::string circuit::createInternal (const std::string &prefix, const std::string &obj) {
-  return "_"+prefix+"#"+obj;
+char * circuit::createInternal (const char * prefix, const char * obj) {
+  char * n = (char *) malloc (strlen (prefix) + strlen (obj) + 3);
+  sprintf (n, "_%s#%s", prefix, obj);
+  return n;
 }
 
 /* Creates an internal node given the node number as well as the name
    suffix.  An appropriate node name is constructed from the circuits
    name and the suffix. */
-void circuit::setInternalNode (int node, const std::string &suffix) {
-  const std::string &n = createInternal (getName (), suffix);
+void circuit::setInternalNode (int node, const char * suffix) {
+  char * n = createInternal (getName (), suffix);
   setNode (node, n, 1);
+  free (n);
 }
 
 /* This function copies the matrix elements inside the given matrix to
@@ -655,7 +654,7 @@ void circuit::setMatrixS (matrix s) {
 matrix circuit::getMatrixS (void) {
   matrix res (size);
   for(unsigned int i=0; i < size; ++i)
-    for(unsigned int j=0; j < size; ++j)
+    for(unsigned int j=0; i < size; ++j)
       res(i,j) = MatrixS[i*size + j];
   return res;
 }
@@ -676,7 +675,7 @@ void circuit::setMatrixN (matrix n) {
 matrix circuit::getMatrixN (void) {
   matrix res (size);
   for(unsigned int i=0; i < size; ++i)
-    for(unsigned int j=0; j < size; ++j)
+    for(unsigned int j=0; i < size; ++j)
       res(i,j) = MatrixN[i*size + j];
   return res;
 }
@@ -697,7 +696,7 @@ void circuit::setMatrixY (matrix y) {
 matrix circuit::getMatrixY (void) {
   matrix res (size);
   for(unsigned int i=0; i < size; ++i)
-    for(unsigned int j=0; j < size; ++j)
+    for(unsigned int j=0; i < size; ++j)
       res(i,j) = MatrixY[i*size + j];
   return res;
 }
@@ -905,7 +904,7 @@ void circuit::truncateHistory (nr_double_t tcut) {
 
 // Appends a history value.
 void circuit::appendHistory (int n, nr_double_t val) {
-  histories[n].push_back (val);
+  histories[n].append (val);
 }
 
 // Returns the required age of the history.
@@ -916,7 +915,7 @@ nr_double_t circuit::getHistoryAge (void) {
 
 // Returns size of the history
 int circuit::getHistorySize (void) {
-  return histories[0].size ();
+  return histories[0].getSize ();
 }
 
 // Returns the time with the specified index
@@ -928,9 +927,12 @@ nr_double_t circuit::getHistoryTFromIndex (int idx)
 /* This function should be used to apply the time vector history to
    the value histories of a circuit. */
 void circuit::applyHistory (history * h) {
+
+  tvector<nr_double_t> * t = h->getTvector ();
+
   for (int i = 0; i < nHistories; i++)
   {
-    histories[i].apply(*h);
+      histories[i].setTvector (t);
   }
 
 }

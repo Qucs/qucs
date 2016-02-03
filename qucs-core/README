@@ -76,6 +76,6 @@ Qucsator.  The SVN version might not even compile.
 
     $ svn co https://qucs.svn.sourceforge.net/svnroot/qucs/trunk/qucs-core
 
-Press 'Enter' when asked for a password.  Run `sh bootstrap' and
+Press 'Enter' when asked for a password.  Run `sh autogen.sh' and
 `configure' with the appropriate options.  Maintainance currently
 requires Autoconf version 2.57 and GNU automake 1.7.0.

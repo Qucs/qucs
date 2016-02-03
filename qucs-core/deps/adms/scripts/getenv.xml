@@ -1,0 +1,11 @@
+<admst version="2.3.0"  xmlns:admst="http://mot-adms.svn.sourceforge.net/viewvc/*checkout*/mot-adms/trunk/adms/admst.dtd">
+  <admst:getenv name="HOME"/>
+  <admst:text format="HOME is %s\n"/>
+  <admst:setenv name="H" value="home1"/>
+  <admst:getenv name="H"/>
+  <admst:text format="H is %s\n"/>
+  <admst:setenv name="H" string="home2"/>
+  <admst:getenv name="H"/>
+  <admst:text format="H is %s\n"/>
+  <admst:text format="time is %(/simulator/currentdate)\n"/>
+</admst>

@@ -36,22 +36,14 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
-		<Unit filename="CMakeLists.txt" />
 		<Unit filename="Makefile.am" />
 		<Unit filename="bootstrap.sh" />
-		<Unit filename="cmake/modules/AC_HEADER_STDC.cmake" />
-		<Unit filename="cmake/modules/CheckDIRSymbolExists.cmake" />
-		<Unit filename="cmake/modules/CheckPrototypeExists.cmake" />
-		<Unit filename="config.h.cmake" />
 		<Unit filename="configure.ac" />
-		<Unit filename="doc/CMakeLists.txt" />
 		<Unit filename="doc/Makefile.am" />
 		<Unit filename="m4/ax_cxx_compile_stdcxx_11.m4" />
 		<Unit filename="m4/complexcxx.m4" />
 		<Unit filename="m4/namespace.m4" />
-		<Unit filename="qucs_typedefs.h.cmake" />
 		<Unit filename="qucs_typedefs.h.in" />
-		<Unit filename="src/CMakeLists.txt" />
 		<Unit filename="src/Makefile.am" />
 		<Unit filename="src/acsolver.cpp" />
 		<Unit filename="src/acsolver.h" />
@@ -108,7 +100,6 @@
 		<Unit filename="src/components/dcblock.h" />
 		<Unit filename="src/components/dcfeed.cpp" />
 		<Unit filename="src/components/dcfeed.h" />
-		<Unit filename="src/components/devices/CMakeLists.txt" />
 		<Unit filename="src/components/devices/Makefile.am" />
 		<Unit filename="src/components/devices/bjt.cpp" />
 		<Unit filename="src/components/devices/bjt.h" />
@@ -130,7 +121,6 @@
 		<Unit filename="src/components/devices/triac.h" />
 		<Unit filename="src/components/devices/tunneldiode.cpp" />
 		<Unit filename="src/components/devices/tunneldiode.h" />
-		<Unit filename="src/components/digital/CMakeLists.txt" />
 		<Unit filename="src/components/digital/Makefile.am" />
 		<Unit filename="src/components/digital/and.cpp" />
 		<Unit filename="src/components/digital/and.h" />
@@ -186,7 +176,6 @@
 		<Unit filename="src/components/itrafo.h" />
 		<Unit filename="src/components/ivnoise.cpp" />
 		<Unit filename="src/components/ivnoise.h" />
-		<Unit filename="src/components/microstrip/CMakeLists.txt" />
 		<Unit filename="src/components/microstrip/Makefile.am" />
 		<Unit filename="src/components/microstrip/bondwire.cpp" />
 		<Unit filename="src/components/microstrip/bondwire.h" />
@@ -278,7 +267,6 @@
 		<Unit filename="src/components/vcvs.h" />
 		<Unit filename="src/components/vdc.cpp" />
 		<Unit filename="src/components/vdc.h" />
-		<Unit filename="src/components/verilog/CMakeLists.txt" />
 		<Unit filename="src/components/verilog/ChangeLog" />
 		<Unit filename="src/components/verilog/DLS_1ton.va" />
 		<Unit filename="src/components/verilog/DLS_nto1.va" />
@@ -290,6 +278,10 @@
 		<Unit filename="src/components/verilog/andor4x3.va" />
 		<Unit filename="src/components/verilog/andor4x4.va" />
 		<Unit filename="src/components/verilog/binarytogrey4bit.va" />
+		<Unit filename="src/components/verilog/bsim3v34nMOS.va" />
+		<Unit filename="src/components/verilog/bsim3v34pMOS.va" />
+		<Unit filename="src/components/verilog/bsim4v30nMOS.va" />
+		<Unit filename="src/components/verilog/bsim4v30pMOS.va" />
 		<Unit filename="src/components/verilog/comp_1bit.va" />
 		<Unit filename="src/components/verilog/comp_2bit.va" />
 		<Unit filename="src/components/verilog/comp_4bit.va" />
@@ -302,9 +294,19 @@
 		<Unit filename="src/components/verilog/dmux4to16.va" />
 		<Unit filename="src/components/verilog/fa1b.va" />
 		<Unit filename="src/components/verilog/fa2b.va" />
+		<Unit filename="src/components/verilog/fbh_hbt-2_2a.va" />
 		<Unit filename="src/components/verilog/gatedDlatch.va" />
 		<Unit filename="src/components/verilog/greytobinary4bit.va" />
 		<Unit filename="src/components/verilog/ha1b.va" />
+		<Unit filename="src/components/verilog/hicumL0V1p12.va" />
+		<Unit filename="src/components/verilog/hicumL0V1p2.va" />
+		<Unit filename="src/components/verilog/hicumL0V1p2g.va" />
+		<Unit filename="src/components/verilog/hicumL0V1p3.va" />
+		<Unit filename="src/components/verilog/hicumL2V2p11.va" />
+		<Unit filename="src/components/verilog/hicumL2V2p22.va" />
+		<Unit filename="src/components/verilog/hicumL2V2p23.va" />
+		<Unit filename="src/components/verilog/hicumL2V2p24.va" />
+		<Unit filename="src/components/verilog/hicumL2V2p31n.va" />
 		<Unit filename="src/components/verilog/hpribin4bit.va" />
 		<Unit filename="src/components/verilog/jkff_SR.va" />
 		<Unit filename="src/components/verilog/libverilog.ap" />
@@ -345,7 +347,6 @@
 		<Unit filename="src/components/vvnoise.h" />
 		<Unit filename="src/constants.h" />
 		<Unit filename="src/consts.h" />
-		<Unit filename="src/converter/CMakeLists.txt" />
 		<Unit filename="src/converter/Makefile.am" />
 		<Unit filename="src/converter/check_spice.cpp" />
 		<Unit filename="src/converter/check_spice.h" />
@@ -356,24 +357,16 @@
 		<Unit filename="src/converter/matlab_producer.cpp" />
 		<Unit filename="src/converter/matlab_producer.h" />
 		<Unit filename="src/converter/parse_spice.cpp" />
-		<Unit filename="src/converter/parse_spice.ypp">
-			<Option compile="1" />
-		</Unit>
+		<Unit filename="src/converter/parse_spice.y" />
 		<Unit filename="src/converter/parse_vcd.cpp" />
-		<Unit filename="src/converter/parse_vcd.ypp">
-			<Option compile="1" />
-		</Unit>
+		<Unit filename="src/converter/parse_vcd.y" />
 		<Unit filename="src/converter/qucs_producer.cpp" />
 		<Unit filename="src/converter/qucs_producer.h" />
 		<Unit filename="src/converter/qucsconv.cpp" />
 		<Unit filename="src/converter/scan_spice.cpp" />
-		<Unit filename="src/converter/scan_spice.l">
-			<Option compile="1" />
-		</Unit>
+		<Unit filename="src/converter/scan_spice.l" />
 		<Unit filename="src/converter/scan_vcd.cpp" />
-		<Unit filename="src/converter/scan_vcd.l">
-			<Option compile="1" />
-		</Unit>
+		<Unit filename="src/converter/scan_vcd.l" />
 		<Unit filename="src/converter/tokens_spice.h" />
 		<Unit filename="src/converter/tokens_vcd.h" />
 		<Unit filename="src/converter/touchstone_producer.cpp" />
@@ -411,7 +404,6 @@
 		<Unit filename="src/input.h" />
 		<Unit filename="src/integrator.cpp" />
 		<Unit filename="src/integrator.h" />
-		<Unit filename="src/interface/CMakeLists.txt" />
 		<Unit filename="src/interface/Makefile.am" />
 		<Unit filename="src/interface/asynctrcircuit.m" />
 		<Unit filename="src/interface/class_handle.hpp" />
@@ -434,7 +426,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="src/logging.h" />
-		<Unit filename="src/math/CMakeLists.txt" />
 		<Unit filename="src/math/Makefile.am" />
 		<Unit filename="src/math/cbesselj.cpp" />
 		<Unit filename="src/math/complex.cpp" />
@@ -475,27 +466,13 @@
 		<Unit filename="src/pair.h" />
 		<Unit filename="src/parasweep.cpp" />
 		<Unit filename="src/parasweep.h" />
-		<Unit filename="src/parse_citi.ypp">
-			<Option compile="1" />
-		</Unit>
-		<Unit filename="src/parse_csv.ypp">
-			<Option compile="1" />
-		</Unit>
-		<Unit filename="src/parse_dataset.ypp">
-			<Option compile="1" />
-		</Unit>
-		<Unit filename="src/parse_mdl.ypp">
-			<Option compile="1" />
-		</Unit>
-		<Unit filename="src/parse_netlist.ypp">
-			<Option compile="1" />
-		</Unit>
-		<Unit filename="src/parse_touchstone.ypp">
-			<Option compile="1" />
-		</Unit>
-		<Unit filename="src/parse_zvr.ypp">
-			<Option compile="1" />
-		</Unit>
+		<Unit filename="src/parse_citi.y" />
+		<Unit filename="src/parse_csv.y" />
+		<Unit filename="src/parse_dataset.y" />
+		<Unit filename="src/parse_mdl.y" />
+		<Unit filename="src/parse_netlist.y" />
+		<Unit filename="src/parse_touchstone.y" />
+		<Unit filename="src/parse_zvr.y" />
 		<Unit filename="src/poly.h" />
 		<Unit filename="src/property.cpp" />
 		<Unit filename="src/property.h" />
@@ -506,27 +483,13 @@
 		<Unit filename="src/range.h" />
 		<Unit filename="src/receiver.cpp" />
 		<Unit filename="src/receiver.h" />
-		<Unit filename="src/scan_citi.l">
-			<Option compile="1" />
-		</Unit>
-		<Unit filename="src/scan_csv.l">
-			<Option compile="1" />
-		</Unit>
-		<Unit filename="src/scan_dataset.l">
-			<Option compile="1" />
-		</Unit>
-		<Unit filename="src/scan_mdl.l">
-			<Option compile="1" />
-		</Unit>
-		<Unit filename="src/scan_netlist.l">
-			<Option compile="1" />
-		</Unit>
-		<Unit filename="src/scan_touchstone.l">
-			<Option compile="1" />
-		</Unit>
-		<Unit filename="src/scan_zvr.l">
-			<Option compile="1" />
-		</Unit>
+		<Unit filename="src/scan_citi.l" />
+		<Unit filename="src/scan_csv.l" />
+		<Unit filename="src/scan_dataset.l" />
+		<Unit filename="src/scan_mdl.l" />
+		<Unit filename="src/scan_netlist.l" />
+		<Unit filename="src/scan_touchstone.l" />
+		<Unit filename="src/scan_zvr.l" />
 		<Unit filename="src/spline.cpp" />
 		<Unit filename="src/spline.h" />
 		<Unit filename="src/spsolver.cpp" />

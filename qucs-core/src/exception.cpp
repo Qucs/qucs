@@ -59,7 +59,7 @@ exception::exception (const exception & e) {
 
 // Destructor deletes an instance of the exception class.
 exception::~exception () {
-  free (txt);
+  if (txt) free (txt);
 }
 
 /* This function save the given messages format and the appropriate
@@ -68,7 +68,7 @@ void exception::setText (const char * format, ...) {
   char * str;
   va_list args;
 
-  free (txt);
+  if (txt) free (txt);
   str = (char *) malloc (1024); // this should be enough
   va_start (args, format);
   vsprintf (str, format, args);

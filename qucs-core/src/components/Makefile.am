@@ -32,7 +32,7 @@ libcomponent_la_SOURCES = attenuator.cpp dcblock.cpp open.cpp vccs.cpp        \
 	biastee.cpp circulator.cpp dcfeed.cpp pac.cpp vcvs.cpp capacitor.cpp \
 	ground.cpp resistor.cpp cccs.cpp cross.cpp trafo.cpp inductor.cpp    \
 	tee.cpp ccvs.cpp isolator.cpp itrafo.cpp strafo.cpp vdc.cpp idc.cpp  \
-	vac.cpp phaseshifter.cpp gyrator.cpp tline.cpp iprobe.cpp iac.cpp    \
+	vac.cpp phaseshifter.cpp gyrator.cpp tline.cpp iprobe.cpp wprobe.cpp iac.cpp    \
 	spfile.cpp vnoise.cpp inoise.cpp vpulse.cpp ipulse.cpp vrect.cpp     \
 	irect.cpp amplifier.cpp opamp.cpp iinoise.cpp mutual.cpp mutual2.cpp \
 	vvnoise.cpp ivnoise.cpp coupler.cpp coaxline.cpp vprobe.cpp vam.cpp  \
@@ -50,7 +50,7 @@ noinst_HEADERS = attenuator.h dcblock.h open.h vccs.h biastee.h circulator.h \
 	vrect.h irect.h amplifier.h opamp.h iinoise.h mutual.h mutual2.h     \
 	vvnoise.h ivnoise.h coupler.h coaxline.h vprobe.h vam.h vpm.h        \
 	tswitch.h relais.h short.h twistedpair.h tline4p.h vexp.h iexp.h     \
-	mutualx.h vfile.h ifile.h rfedd.h rectline.h components.h rlcg.h     \
+	mutualx.h vfile.h ifile.h wprobe.h rfedd.h rectline.h components.h rlcg.h     \
 	hybrid.h ctline.h ecvs.h \
 	component.h components.h component_id.h
 

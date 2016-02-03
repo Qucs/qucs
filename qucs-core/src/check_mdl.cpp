@@ -44,7 +44,7 @@
 #include "valuelist.h"
 #include "constants.h"
 #include "check_mdl.h"
-#include "parse_mdl.hpp"
+#include "tokens_mdl.h"
 
 using namespace qucs;
 
@@ -204,7 +204,7 @@ static double mdl_variable_value (struct mdl_link_t * link, char * txt) {
       if (!mdl_resolve_variable (link, txt, val)) {
 	// special variables
 	if (!strcmp (txt, "PI")) {
-	  val = pi;
+	  val = M_PI;
 	}
 	// no resolvable (probably equation)
 	else {
@@ -290,7 +290,7 @@ valuelist<int> * mdl_find_depdataset (struct mdl_link_t * link,
 	  nof = mdl_helement_ivalue (link, hyptab->data, "# of Points");
 	  step = mdl_helement_dvalue (link, hyptab->data, "Step Size");
 	  if (nof <= 0) nof = (int) fabs ((stop - start) / step) + 1;
-	  deps->insert({{name,order}});
+	  deps->append (name, new int (order));
 	  linsweep * sw = new linsweep ();
 	  sw->create (start, stop, nof);
 	  mdl_create_depdataset (sw, name);
@@ -313,7 +313,7 @@ valuelist<int> * mdl_find_depdataset (struct mdl_link_t * link,
 	    if (start == 0.0) start = 1.0;
 	    if (stop  == 0.0) stop  = 1.0;
 	  }
-	  deps->insert({{name,order}});
+	  deps->append (name, new int (order));
 	  logsweep * sw = new logsweep ();
 	  sw->create (start, stop, nof);
 	  mdl_create_depdataset (sw, name);
@@ -323,7 +323,7 @@ valuelist<int> * mdl_find_depdataset (struct mdl_link_t * link,
 	  // list sweep
 	  order = mdl_helement_ivalue (link, hyptab->data, "Sweep Order");
 	  nof = mdl_helement_ivalue (link, hyptab->data, "# of Values");
-	  deps->insert({{name,order}});
+	  deps->append (name, new int (order));
 	}
 	else if (!strcmp (stype, "SYNC")) {
 	  // sync sweep
@@ -371,17 +371,15 @@ static char * mdl_create_linkname (char * base, char * name) {
 static void mdl_find_deplink (struct mdl_link_t * link, char * name,
 			      valuelist<int> * deps) {
   struct mdl_lcontent_t * root;
-  const valuelist<int> * d;
+  valuelist<int> * d;
   // go through link content
   for (root = link->content; root != NULL; root = root->next) {
     // independent data vector
     if (root->type == t_DATA) {
       d = mdl_find_depdataset (link, root->data->content, name);
       if (d != NULL) {
-	valuelist<int> copy = *d;
+	deps->append (d);
 	delete d;
-	copy.insert(deps->begin(),deps->end());
-	*deps=copy;
       }
     }
     // link to independent data vector
@@ -418,10 +416,10 @@ static void mdl_find_varlink (struct mdl_link_t * link, char * name,
 // Sorts a dependency list according to their sweep order.
 static strlist * mdl_sort_deps (valuelist<int> * d) {
   strlist * deps = new strlist ();
-  for (int i = 0; i < d->size(); i++) {
-    for (auto &val: *d) {
-      if (val.second == i + 1) {
-	deps->append (val.first.c_str());
+  for (int i = 0; i < d->length (); i++) {
+    for (valuelistiterator<int> it (*d); *it; ++it) {
+      if (*(it.currentVal ()) == i + 1) {
+	deps->append (it.currentKey ());
       }
     }
   }
@@ -489,21 +487,21 @@ void mdl_find_syncdatasets (struct mdl_sync_t * root) {
 
 // Destroys an element structure.
 static void mdl_free_element (struct mdl_element_t * e) {
-  free (e->name);
-  free (e->value);
-  free (e->attr);
+  if (e->name) free (e->name);
+  if (e->value) free (e->value);
+  if (e->attr) free (e->attr);
   free (e);
 }
 
 // Destroys a datasize structure.
 static void mdl_free_datasize (struct mdl_datasize_t * d) {
-  free (d->type);
+  if (d->type) free (d->type);
   free (d);
 }
 
 // Destroys a hypertable structure.
 static void mdl_free_hyptable (struct mdl_hyptable_t * h) {
-  free (h->name);
+  if (h->name) free (h->name);
   struct mdl_element_t * e, * next;
   for (e = h->data; e != NULL; e = next) {
     next = e->next;
@@ -514,7 +512,7 @@ static void mdl_free_hyptable (struct mdl_hyptable_t * h) {
 
 // Destroys a table structure.
 static void mdl_free_table (struct mdl_table_t * t) {
-  free (t->name);
+  if (t->name) free (t->name);
   struct mdl_element_t * e, * next;
   for (e = t->data; e != NULL; e = next) {
     next = e->next;
@@ -525,13 +523,13 @@ static void mdl_free_table (struct mdl_table_t * t) {
 
 // Destroys a dataset structure.
 static void mdl_free_dataset (struct mdl_dataset_t * d) {
-  free (d->type1);
+  if (d->type1) free (d->type1);
   struct mdl_point_t * p, * next;
   for (p = d->data1; p != NULL; p = next) {
     next = p->next;
     free (p);
   }
-  free (d->type2);
+  if (d->type2) free (d->type2);
   for (p = d->data2; p != NULL; p = next) {
     next = p->next;
     free (p);
@@ -571,8 +569,8 @@ static void mdl_free_lcontent (struct mdl_lcontent_t * c) {
 
 // Destroys a link structure.
 static void mdl_free_link (struct mdl_link_t * l) {
-  free (l->name);
-  free (l->type);
+  if (l->name) free (l->name);
+  if (l->type) free (l->type);
   struct mdl_lcontent_t * c, * next;
   for (c = l->content; c != NULL; c = next) {
     next = c->next;
@@ -585,8 +583,8 @@ static void mdl_free_sync (struct mdl_sync_t * s) {
   struct mdl_sync_t * next;
   for (; s != NULL; s = next) {
     next = s->next;
-    free (s->name);
-    free (s->master);
+    if (s->name) free (s->name);
+    if (s->master) free (s->master);
     free (s);
   }
 }
