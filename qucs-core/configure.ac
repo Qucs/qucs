@@ -582,7 +582,7 @@ ADMS_PATH=$PATH
 AC_ARG_WITH(mkadms, [--with-mkadms=DIR path to adms binary directory],
 		    [ADMS_PATH=`cd ${withval}; pwd`])
 
-AC_CHECK_TOOL([HAVE_ADMSXML], [admsXml[], [], [$ADMS_PATH])
+AC_CHECK_TOOL([HAVE_ADMSXML], [admsXml], [], [$ADMS_PATH])
 if test [ "$HAVE_ADMSXML"]
 then
   AC_PATH_PROG([ADMSXML], [admsXml], [], [$ADMS_PATH])
