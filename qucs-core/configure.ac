@@ -574,9 +574,22 @@ AC_PATH_PROG([GPERF],[gperf],[gperf])
 AS_IF([test -z "$GPERF"],
       [AC_MSG_ERROR([gperf required in the PATH])])
 
-AC_PATH_PROG([ADMSXML],[admsXml],[admsXml])
-AS_IF([test -z "$ADMSXML"],
-      [AC_MSG_ERROR([admsXml required in the PATH])])
+dnl check for adms (queued for removal)
+dnl The default behaviour is "check for adms, if it's not there,
+dnl error out.
+dnl override with --with-mkadms=alternative_bin_directory
+ADMS_PATH=$PATH
+AC_ARG_WITH(mkadms, [--with-mkadms=DIR path to adms binary directory],
+		    [ADMS_PATH=`cd ${withval}; pwd`])
+
+AC_CHECK_TOOL([HAVE_ADMSXML], [admsXml], [], [$ADMS_PATH])
+if test [ "$HAVE_ADMSXML"]
+then
+  AC_PATH_PROG([ADMSXML], [admsXml], [], [$ADMS_PATH])
+else
+  AC_MSG_ERROR([need admsXml, but not found. consider --with-mkadms=<path to adms binary directory>])
+fi
+AC_SUBST([ADMSXML])
 
 dnl Checks for libraries.
 AC_CHECK_LIB(m, sin)
@@ -909,7 +922,6 @@ AC_MSG_RESULT([ $PACKAGE version $VERSION ($GIT_REVISION) configured successfull
 AC_MSG_RESULT([
 Configure Information:
   AdmsXml           : $ADMSXML
-    internal        :   $internal_adms
 
   C Compiler        : $CC
     DEFS            :   $DEFS
