@@ -578,12 +578,17 @@ dnl check for adms (queued for removal)
 dnl The default behaviour is "check for adms, if it's not there,
 dnl error out.
 dnl override with --with-mkadms=alternative_executable
+ADMSXML=admsXml
 AC_ARG_WITH([mkadms],
   [AS_HELP_STRING([--with-mkadms], [specify alternative admsXml])],
-  [with_mkadms=$withval],
-  [with_mkadms=admsXml])
+  [ADMSXML=$withval],)
 
-AC_PATH_PROG([ADMSXML], [$with_mkadms], [no])
+AC_MSG_CHECKING([Checking if ${ADMSXML} is working])
+AS_IF([${ADMSXML} --version > /dev/null 2>&1], , ADMSXML="")
+AS_IF([test -z $ADMSXML],
+  [ AC_MSG_RESULT([ no ])
+    ADMSXML=no],
+  [ AC_MSG_RESULT([ yes ])])
 
 AS_IF([test "$ADMSXML" = no],
   [AC_MSG_ERROR([need admsXml, but not found. consider --with-mkadms=<alternative admsXml>])])
