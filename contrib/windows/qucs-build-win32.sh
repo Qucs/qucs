@@ -1,8 +1,15 @@
 #!/bin/bash
 
-## file: build_win32.sh
 #
-## This script cross compiles Qucs from OSX/Linux to Windows 32. It uses Wine and MinGW.
+# This script cross compiles Qucs from OSX/Linux to Windows 32.
+# It uses Wine and MinGW.
+#
+
+## TODO
+# * use AppVeyor to package, build binary and upload to SF
+# * create a release/package branches
+# * perhaps nightly builds in the future
+# * Linux cross compile script
 
 ##
 # Requires package:     ~/git/qucs/release/qucs-x.x.x.tar.gz
@@ -12,12 +19,14 @@
 # Compile
 # Install binaries into ~/.wine/drive_c/qucs-win32-bin/
 
+## Notes:
+# Need to add --disable-dependency-tracking to avoid mixup of host and target header files
+# https://software.sandia.gov/trac/acro/ticket/2835
 
 
+## Setup Mac OSX host, Win32 target
+#
 
-## Setup cross-compile environment Mac OS X host, Win32 target
-
-# TODO Linux
 
 ## 1) Install Wine (using homebrew)
 #
@@ -39,7 +48,6 @@
 #
 # It expect MinGW 4.8.2 to be installed, we do it next. Leave the MinGW path as:
 #   C:\mingw32
-
 
 ## 3) Install MinGW into Wine (MinGW matched to Qt)
 #
@@ -64,8 +72,6 @@
 # regedit /tmp/qttemp.reg
 # rm /tmp/qttemp.reg
 
-
-
 ## 5) Install Inno Setup 5 (used also on `qucs-installer-win32.sh`)
 # Install older Inno version due to issues with wine
 # Error: * Could not find dependent assembly L"Microsoft.Windows.Common-Controls" (6.0.0.0)
@@ -75,34 +81,6 @@
 # $ wine isetup-5.5.0.exe
 
 
-
-## Notes:
-# Need to add --disable-dependency-tracking to avoid mixup of host and target header files
-# https://software.sandia.gov/trac/acro/ticket/2835
-
-
-##
-# Build Win32 Binary
-# * build ASCO
-# * build ADMS
-# * include freehdl binary package
-# * include iverilog binary package
-# * include MinGW binary package (needed for freeHDL and Verilog-A compiler)
-# * link to Octave
-
-
-# TODO
-# * use Travis to package, build binary and upload to SF
-#   * create a release/package branches
-#   * figure out a way to install Qt silently, no user intervention.
-#   * maybe AutoIt can be used
-#   * perhaps nightly builds in the future
-
-# extract tarball
-# cd into
-# configure
-# make
-# make install
 
 #if [ $# -ne 0 ]
 #then
@@ -133,6 +111,7 @@ cd ${REPO}/release
 mkdir build_win32
 cd build_win32
 
+# Process tarball
 # Requires package:     ~/git/qucs/release/qucs-x.x.x.tar.gz
 TARBALL=$(basename $1)
 DIRNAME=$(basename $1 .tar.gz)
@@ -142,10 +121,7 @@ echo Using source tarball: $TARBALL
 tar xvfz ../$TARBALL
 cd $DIRNAME
 
-
 echo "Building Qucs for Win32"
-
-# TODO Linux / Mac
 
 # Temporary install prefix
 WINDIR=${HOME}/.wine/drive_c/qucs-win32-bin

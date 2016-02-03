@@ -7,6 +7,14 @@
   echo 'DISCLAIMER: USE THIS SCRIPT AT YOUR OWN RISK!'
   echo 'THE AUTHOR TAKES NO RESPONSIBILITY FOR THE RESULTS OF THIS SCRIPT.'
   echo "Disclaimer aside, this worked for the author, for what that's worth."
+  echo ''
+  echo "To uninstall type the following in the Terminal application:"
+  echo ''
+  echo "    curl -ksO https://raw.githubusercontent.com/Qucs/qucs/master/contrib/mac/uninstall-qucs-pkg.sh"
+  echo "    chmod +x ./uninstall-qucs-pkg.sh"
+  echo "    ./uninstall-qucs-pkg.sh"
+  echo "    rm uninstall-qucs-pkg.sh"
+  echo ''
   echo 'Press Control-C to quit now.'
   echo 'You may need to use as sudo.'
   read
