@@ -12,7 +12,6 @@
 # * By default, the prefix is "/usr/local"
 # * Use -DADMSXML_DIR=[path] to give the path containing admsXml
 # * Use -DUSE_MAINTAINER_MODE=ON to rebuild submodules (ADMS)
-# * Bison can be pointed to with -DBISON_DIR=[path]
 
 
 ## Running with QtCreator
@@ -23,11 +22,6 @@
 #
 # Add the following arguments to the 'Run CMake':
 # -DAMSXML_DIR=~/git/qucs/qucs-core/adms/admsXml/ -DCMAKE_BUILD_TYPE:STRING=Debug
-#
-# With Homebrew/MacPorts on Mac OS X:
-#  It might be necessary to change the PATH variable on the Build Environment.
-#  Prepend '/usr/local/bin' before '/usr/bin/' otherwise it will find the
-#  older executables provided by Apple.
 
 ## Dependencies
 # * CMake 2.8.8
@@ -46,15 +40,13 @@
 #   * qucsconv
 #
 PROJECT(qucs-core CXX)
-CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
 
-# ignore the project() managed VERSION (new in CMake 3.0)
-IF(POLICY CMP0048)
-  cmake_policy(SET CMP0048 OLD)
-ENDIF(POLICY CMP0048)
+CMAKE_MINIMUM_REQUIRED(VERSION 2.8.8)
+
 
 # default is off, assume one is building the released tarball (pre-configured)
 option ( USE_MAINTAINER_MODE "development mode, rebuild ADMS submodule" OFF )
+
 
 #SET(CMAKE_VERBOSE_MAKEFILE ON)
 
@@ -85,32 +77,14 @@ ADD_DEFINITIONS( -DHAVE_CONFIG_H )
 # -Wmissing-prototypes : Warn if a global function is defined without a previous prototype declaration.
 #
 #
-
-# use top VERSION file
-file (STRINGS ${qucs-core_SOURCE_DIR}/VERSION QUCS_VERSION)
-message(STATUS "Configuring ${PROJECT_NAME}: VERSION ${QUCS_VERSION}")
-
-set(PROJECT_VERSION "${QUCS_VERSION}")
-
+SET(PROJECT_VERSION_MAJOR "0")
+SET(PROJECT_VERSION_MINOR "0")
+SET(PROJECT_VERSION_PATCH "18")
+SET(PROJECT_VERSION "${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}.${PROJECT_VERSION_PATCH}")
 SET(PROJECT_VENDOR "Qucs team. This program is licensed under the GNU GPL")
 SET(PROJECT_COPYRIGHT_YEAR "2013")
 SET(PROJECT_DOMAIN_FIRST "qucs")
 SET(PROJECT_DOMAIN_SECOND "org")
-
-# use last git commit hash along the version
-set(GIT unknown)
-IF(EXISTS ${CMAKE_SOURCE_DIR}/../.git )
-  FIND_PACKAGE(Git)
-  # Get the latest abbreviated commit hash of the working branch
-  execute_process(
-    COMMAND ${GIT_EXECUTABLE} log --pretty=format:%h -n 1u
-    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
-    OUTPUT_VARIABLE GIT_COMMIT_HASH
-  )
-  set(GIT ${GIT_COMMIT_HASH})
-  message(STATUS "Found Git repository, last commit hash: ${GIT}")
-ENDIF()
-
 
 #TODO rename the above variables? Project/Package?
 
@@ -148,36 +122,20 @@ ENDIF()
 #
 SET(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/modules/")
 
-#
-# Need Flex
-#
-FIND_PACKAGE(FLEX 2.5.9  REQUIRED)
-IF(FLEX_FOUND)
-  #MESSAGE(STATUS "Found flex: ${FLEX_EXECUTABLE} / Version: ${FLEX_VERSION}" )
-ENDIF()
 
 #
-# Need Bison
+# Need Flex / Bison
 #
-# This is a HACK to get arround a PATH issue with Qt Creator on OSX.
-# It seams impossible to pass a custom PATH to Qt Creator on OSX, ie, cannot prepend `/usr/local/bin/` for intance.
-# The FIND_PACKAGE fails. For now we provide a fallback with a custom FIND_PROGRAM. The variable BISON_DIR is also available.
-IF(WIN32)
-  FIND_PACKAGE(BISON 2.4 REQUIRED)
-  IF(BISON_FOUND)
-    #MESSAGE(STATUS "Found bison: ${BISON_EXECUTABLE} / Version: ${BISON_VERSION}" )
-  ENDIF()
-ELSE()  # Linux, OSX
-  # use -DBISON_DIR=/path/ to provide the path to bison
-  FIND_PROGRAM( BISON_EXECUTABLE bison
-    PATHS /usr/local/bin/ /opt/local/bin/ /usr/bin ${BISON_DIR}
-    DOC "bison path"
-    NO_DEFAULT_PATH )
-  IF(BISON_EXECUTABLE )
-    MESSAGE(STATUS "Found bison: " ${BISON_EXECUTABLE})
-  ELSE()
-	  MESSAGE(FATAL_ERROR "Unable to find bison. Try to provide -DBISON_DIR=[path]")
-  ENDIF()
+SET(FLEX_MINIMAL_VERSION "2.5.9")
+FIND_PACKAGE(FLEX REQUIRED)
+IF(FLEX_FOUND)
+  MESSAGE(STATUS "Found flex: ${FLEX_EXECUTABLE} / Version: ${FLEX_VERSION}" )
+ENDIF()
+
+SET(BISON_MINIMAL_VERSION "2.4")
+FIND_PACKAGE(BISON REQUIRED)
+IF(BISON_FOUND)
+  MESSAGE(STATUS "Found bison: ${BISON_EXECUTABLE} / Version: ${BISON_VERSION}" )
 ENDIF()
 
 #
@@ -195,7 +153,7 @@ ENDIF()
 #
 FIND_PROGRAM(GPERF_TOOL NAMES gperf)
 IF (NOT GPERF_TOOL)
-	MESSAGE(FATAL_ERROR "gperf required in PATH")
+	MESSAGE(FATAL_ERROR "Unable to find gperf")
 ELSE()
   MESSAGE(STATUS "Found gperf: " ${GPERF_TOOL})
 ENDIF()
@@ -205,14 +163,28 @@ ENDIF()
 #  * Use -DADMSXML_DIR=[path] to give the path containing admsXml
 #  * Try a few othe locations
 #
-FIND_PROGRAM( ADMSXML admsXml
-  HINTS ${ADMSXML_DIR}
-  PATHS /usr/local/bin/ /opt/local/bin/ /usr/bin
-  DOC "admsXml application" )
-IF(NOT ADMSXML)
-  MESSAGE(FATAL_ERROR "admsXml required in PATH")
+
+# If USE_MAINTAINER_MODE it will build the Git submodule
+# Else, try to use available ADMS (system or used provided), else build included ADMS
+IF(USE_MAINTAINER_MODE)
+  ADD_SUBDIRECTORY( deps/adms )
+  SET(ADMSXML ${CMAKE_BINARY_DIR}/deps/adms/admsXml/admsXml)
 ELSE()
-  MESSAGE(STATUS "Found admsXml: " ${ADMSXML})
+  # TODO check for min version
+  # search for external version of admsXML
+  FIND_PROGRAM( ADMSXML admsXml
+    HINTS ${ADMSXML_DIR}
+    PATHS /usr/local/bin/ /opt/local/bin/ /usr/bin
+    DOC "admsXml application" )
+  IF(ADMSXML)
+    # use external admsXml
+    MESSAGE(STATUS "Found admsXml: " ${ADMSXML})
+  ELSE()
+    MESSAGE(WARNING "admsXml was not found! Using distributed submodule in deps/adms.")
+    # build internal preconfigured admsXml (release mode)
+    ADD_SUBDIRECTORY( deps/adms )
+    SET(ADMSXML ${qucs-core_BINARY_DIR}/deps/adms/admsXml/admsXml)
+  ENDIF()
 ENDIF()
 
 
@@ -247,6 +219,13 @@ ENDIF()
 #http://stackoverflow.com/questions/10984442/how-to-detect-c11-support-of-a-compiler-with-cmake/20165220#20165220
 
 # Initialize CXXFLAGS.
+IF(UNIX AND NOT APPLE)
+  SET(CMAKE_CXX_FLAGS                "-std=c++11")
+ENDIF()
+# CMake defaults to clang++, use proper library
+IF(APPLE)
+  SET(CMAKE_CXX_FLAGS                "-stdlib=libc++")
+ENDIF()
 
 # \todo fix headers and use standard C++ methods
 # * strdup is not C or C++ standart, it is POSIX
@@ -256,12 +235,13 @@ ENDIF()
 #   -U__STRICT_ANSI__. Could use -std=gnu++0x
 IF(WIN32)
   SET(CMAKE_CXX_FLAGS                "-Wall -std=c++0x -fpermissive -U__STRICT_ANSI__")
-ELSE()
-  SET(CMAKE_CXX_FLAGS                "-Wall -std=c++11")
 ENDIF()
 
 # indiscriminate copy/paste from:
 #http://stackoverflow.com/questions/10984442/how-to-detect-c11-support-of-a-compiler-with-cmake/20165220#20165220
+
+# Initialize CXXFLAGS.
+set(CMAKE_CXX_FLAGS                "-Wall -std=c++0x -fpermissive -U__STRICT_ANSI__")
 set(CMAKE_CXX_FLAGS_DEBUG          "-O0 -g")
 set(CMAKE_CXX_FLAGS_MINSIZEREL     "-Os -DNDEBUG")
 set(CMAKE_CXX_FLAGS_RELEASE        "-O4 -DNDEBUG")
@@ -286,7 +266,8 @@ endif ()
 #
 IF (UNIX AND NOT APPLE)
   IF( CMAKE_SYSTEM_PROCESSOR STREQUAL "x86_64" )
-    SET(CMAKE_POSITION_INDEPENDENT_CODE ON)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fPIC")
   ENDIF()
 ENDIF()
 
@@ -311,7 +292,7 @@ add_custom_target(coreuninstall
 
 
 # TODO install distributables
-#EXTRA_DIST = BUGS bootstrap depcomp RELEASE
+#EXTRA_DIST = BUGS autogen.sh depcomp RELEASE
 
 # TODO tarball
 # TODO bundle
@@ -324,6 +305,3 @@ SET(CPACK_GENERATOR "TGZ")
 SET (CPACK_PACKAGE_VERSION_MAJOR 0)
 SET (CPACK_PACKAGE_VERSION_MINOR 18)
 include (CPack)
-
-
-

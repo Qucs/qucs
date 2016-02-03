@@ -31,9 +31,6 @@
 #ifndef __CIRCUIT_H__
 #define __CIRCUIT_H__
 
-#include "characteristic.h"
-#include "operatingpoint.h"
-
 #define NODE_1 0
 #define NODE_2 1
 #define NODE_3 2
@@ -56,8 +53,6 @@
   static struct define_t * definition (void) { return &cirdef; }
 
 #include <map>
-#include <string>
-
 #include "integrator.h"
 #include "valuelist.h"
 
@@ -78,6 +73,8 @@ enum circuit_flag {
 class node;
 class property;
 class substrate;
+class operatingpoint;
+class characteristic;
 class matrix;
 class net;
 class environment;
@@ -95,20 +92,11 @@ class history;
 class circuit : public object, public integrator
 {
  public:
-  circuit * getNext (void) const { return this->next; }
-  void setNext (circuit * const o) { this->next = o; }
-  circuit * getPrev (void) const { return prev; }
-  void setPrev (circuit * const o) { this->prev = o; }
- private:
-  circuit * next;
-  circuit * prev;
-  
- public:
   // constructor and destructor set
   circuit ();
   circuit (int);
   circuit (const circuit &);
-  virtual ~circuit ();
+  ~circuit ();
 
   // functionality to be overloaded by real, derived circuit element
   // implementations
@@ -141,10 +129,9 @@ class circuit : public object, public integrator
   virtual void saveOperatingPoints (void) { }
   virtual void calcCharacteristics (nr_double_t) { }
   virtual void saveCharacteristics (nr_double_t) { }
-  virtual void saveCharacteristics (nr_complex_t) { }
 
   // basic circuit element functionality
-  void   setNode (int, const std::string&, int intern = 0);
+  void   setNode (int, const char *, int intern = 0);
   node * getNode (int);
   void   setType (int t) { type = t; }
   int    getType (void) { return type; }
@@ -186,8 +173,8 @@ class circuit : public object, public integrator
   net *  getNet (void) { return subnet; }
 
   // subcircuitry
-  std::string getSubcircuit (void) { return subcircuit; }
-  void   setSubcircuit (const std::string &);
+  char * getSubcircuit (void) { return subcircuit; }
+  void   setSubcircuit (char *);
 
   // environment specific
   environment * getEnv (void) { return env; }
@@ -294,17 +281,17 @@ class circuit : public object, public integrator
   void addI (int, nr_double_t);
 
   // operating point functionality
-  void        addOperatingPoint (const std::string &name, nr_double_t);
-  nr_double_t getOperatingPoint (const std::string &name);
-  void        setOperatingPoint (const std::string &name, nr_double_t);
-  int         hasOperatingPoint (const std::string &name);
+  void        addOperatingPoint (const char *, nr_double_t);
+  nr_double_t getOperatingPoint (const char *);
+  void        setOperatingPoint (const char *, nr_double_t);
+  int         hasOperatingPoint (char *);
   valuelist<operatingpoint> & getOperatingPoints (void) { return oper; }
 
   // characteristics functionality
-  void        addCharacteristic (const std::string &name, nr_double_t);
-  nr_double_t getCharacteristic (const std::string &name);
-  void        setCharacteristic (const std::string &name, nr_double_t);
-  int         hasCharacteristic (const std::string &name);
+  void        addCharacteristic (const char *, nr_double_t);
+  nr_double_t getCharacteristic (char *);
+  void        setCharacteristic (const char *, nr_double_t);
+  int         hasCharacteristic (char *);
   valuelist<characteristic> & getCharacteristics (void) { return charac; }
 
   // differentiate between linear and non-linear circuits
@@ -313,8 +300,8 @@ class circuit : public object, public integrator
 
   // miscellaneous functionality
   void print (void);
-  static std::string createInternal (const std::string &, const std::string &);
-  void setInternalNode (int, const std::string &);
+  static char * createInternal (const char *, const char *);
+  void setInternalNode (int, const char *);
 
   // matrix operations
   void   allocMatrixS (void);
@@ -358,7 +345,7 @@ class circuit : public object, public integrator
   nr_complex_t * MatrixQV;
   nr_complex_t * VectorGV;
   nr_complex_t * VectorCV;
-  std::string subcircuit;
+  char * subcircuit;
   node * nodes;
   substrate * subst;
   valuelist<operatingpoint> oper;

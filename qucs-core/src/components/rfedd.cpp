@@ -43,14 +43,14 @@ rfedd::rfedd () : circuit () {
 
 // Destructor deletes equation defined RF device object from memory.
 rfedd::~rfedd () {
-  free (peqn);
+  if (peqn) free (peqn);
 }
 
 // Callback for initializing the DC analysis.
 void rfedd::initDC (void) {
 
   // get appropriate property value
-  const char * const dc = getPropertyString ("duringDC");
+  char * dc = getPropertyString ("duringDC");
 
   // a short during DC
   if (!strcmp (dc, "short")) {
@@ -88,7 +88,7 @@ void rfedd::initDC (void) {
 
 // Creates a parameter variable name from the given arguments.
 char * rfedd::createVariable (const char * base, int r, int c, bool pfx) {
-  const char * str = strchr (getName (), '.');
+  char * str = strchr (getName (), '.');
   if (str != NULL)
     str = strrchr (str, '.') + 1;
   else
@@ -103,7 +103,7 @@ char * rfedd::createVariable (const char * base, int r, int c, bool pfx) {
 
 // Creates a variable name from the given arguments.
 char * rfedd::createVariable (const char * base, bool pfx) {
-  const char * str = strchr (getName (), '.');
+  char * str = strchr (getName (), '.');
   if (str != NULL)
     str = strrchr (str, '.') + 1;
   else
@@ -139,8 +139,7 @@ nr_complex_t rfedd::getResult (void * eqn) {
 // Initializes the equation defined device.
 void rfedd::initModel (void) {
   int i, j, k, ports = getSize ();
-  char * pn, * sn, * snold, * fn, * fnold;
-  const char * vr;
+  char * type, * pn, * sn, * snold, * fn, * fnold, * vr;
   eqn::node * pvalue;
 
   // allocate space for equation pointers
@@ -157,7 +156,7 @@ void rfedd::initModel (void) {
   A(feqn)->evalType (); A(feqn)->skip = 1;
 
   // obtain type of parameters
-  const char * const type = getPropertyString ("Type");
+  type = getPropertyString ("Type");
 
   // prepare device equations
   for (k = 0, i = 0; i < ports; i++) {
@@ -197,7 +196,7 @@ void rfedd::prepareModel (void) {
 void rfedd::updateLocals (nr_double_t frequency) {
 
   // update frequency variables for equations
-  setResult (seqn, nr_complex_t (0, 2 * pi * frequency));
+  setResult (seqn, nr_complex_t (0, 2 * M_PI * frequency));
   setResult (feqn, frequency);
 
   // get local subcircuit values
@@ -212,7 +211,7 @@ void rfedd::calcDC (void) {
 // Initializes MNA representation depending on parameter type.
 void rfedd::initMNA (void) {
   int i, ports = getSize ();
-  const char * const type = getPropertyString ("Type");
+  char * type = getPropertyString ("Type");
   switch (type[0]) {
   case 'Y':
     setVoltageSources (0);
@@ -255,7 +254,7 @@ void rfedd::initMNA (void) {
 
 // Calculates MNA representation depending on parameter type.
 void rfedd::calcMNA (nr_double_t frequency) {
-  const char * const type = getPropertyString ("Type");
+  char * type = getPropertyString ("Type");
   int r, c, ports = getSize ();
   matrix p = calcMatrix (frequency);
   switch (type[0]) {
@@ -350,7 +349,7 @@ void rfedd::initSP (void) {
 
 // Callback for S-parameter analysis.
 void rfedd::calcSP (nr_double_t frequency) {
-  const char * const type = getPropertyString ("Type");
+  char * type = getPropertyString ("Type");
   matrix p = calcMatrix (frequency);
   switch (type[0]) {
   case 'Y':

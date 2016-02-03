@@ -28,8 +28,8 @@
 
 #include <stdio.h>
 #include <string.h>
+#include <math.h>
 #include <float.h>
-#include <algorithm>
 
 #include "compat.h"
 #include "object.h"
@@ -74,7 +74,7 @@ trsolver::trsolver ()
 }
 
 // Constructor creates a named instance of the trsolver class.
-trsolver::trsolver (const std::string &n)
+trsolver::trsolver (char * n)
     : nasolver<nr_double_t> (n), states<nr_double_t> ()
 {
     swp = NULL;
@@ -89,7 +89,7 @@ trsolver::trsolver (const std::string &n)
 // Destructor deletes the trsolver class object.
 trsolver::~trsolver ()
 {
-    delete swp;
+    if (swp) delete swp;
     for (int i = 0; i < 8; i++)
     {
         if (solution[i] != NULL)
@@ -97,7 +97,7 @@ trsolver::~trsolver ()
             delete solution[i];
         }
     }
-    delete tHistory;
+    if (tHistory) delete tHistory;
 }
 
 /* The copy constructor creates a new instance of the trsolver class
@@ -115,7 +115,7 @@ trsolver::trsolver (trsolver & o)
 // This function creates the time sweep if necessary.
 void trsolver::initSteps (void)
 {
-    delete swp;
+    if (swp != NULL) delete swp;
     swp = createSweep ("time");
 }
 
@@ -143,7 +143,7 @@ int trsolver::dcAnalysis (void)
         pop_exception ();
         convHelper = CONV_LineSearch;
         logprint (LOG_ERROR, "WARNING: %s: %s analysis failed, using line search "
-                  "fallback\n", getName (), getDescription ().c_str());
+                  "fallback\n", getName (), getDescription ());
         applyNodeset ();
         restart ();
         error = solve_nonlinear ();
@@ -165,7 +165,7 @@ int trsolver::dcAnalysis (void)
     if (error)
     {
         logprint (LOG_ERROR, "ERROR: %s: %s analysis failed\n",
-                  getName (), getDescription ().c_str());
+                  getName (), getDescription ());
     }
     return error;
 }
@@ -176,7 +176,7 @@ int trsolver::solve (void)
 {
     nr_double_t time, saveCurrent;
     int error = 0, convError = 0;
-    const char * const solver = getPropertyString ("Solver");
+    char * solver = getPropertyString ("Solver");
     relaxTSR = !strcmp (getPropertyString ("relaxTSR"), "yes") ? true : false;
     initialDC = !strcmp (getPropertyString ("initialDC"), "yes") ? true : false;
 
@@ -330,7 +330,7 @@ int trsolver::solve (void)
             {
                 logprint (LOG_ERROR, "ERROR: %s: Jacobian singular at t = %.3e, "
                           "aborting %s analysis\n", getName (), (double) current,
-                          getDescription ().c_str());
+                          getDescription ());
                 return -1;
             }
 
@@ -402,7 +402,7 @@ void trsolver::initHistory (nr_double_t t)
 {
     // initialize time vector
     tHistory = new history ();
-    tHistory->push_back(t);
+    tHistory->append (t);
     tHistory->self ();
     // initialize circuit histories
     nr_double_t age = 0.0;
@@ -430,7 +430,7 @@ void trsolver::updateHistory (nr_double_t t)
     if (t > tHistory->last ())
     {
         // update time vector
-        tHistory->push_back (t);
+        tHistory->append (t);
         // update circuit histories
         circuit * root = subnet->getRoot ();
         for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ())
@@ -643,32 +643,18 @@ void trsolver::adjustDelta (nr_double_t t)
             }
             else
             {
-	      // check whether this step will bring too close to a breakpoint
-	      //   is ok if the step will go past the breakpoint, this is handled by
-	      //   the next branch
-	      if ((t - (current + delta) < deltaMin) && ((current + delta) < t))
+                if (delta > (t - current) && t > current)
                 {
-                    // if we take this delta we will end up too close to the breakpoint
-                    // and next step will be very tiny, possibly causing numerical issues
-                    // so reduce it so that next step will likely not end up too close
-                    // to the breakpoint
-                    delta /= 2.0; 
-		} 
-                else
-	        {
-                    if (delta > (t - current) && t > current)
-                    {
-                        // save last valid delta and set exact step
-                        stepDelta = deltaOld;
-                        delta = t - current;
-                        good = 1;
-                    }
-                    else
-                    {
-                        stepDelta = -1.0;
-                    }
+                    // save last valid delta and set exact step
+                    stepDelta = deltaOld;
+                    delta = t - current;
+                    good = 1;
                 }
-	    }
+                else
+                {
+                    stepDelta = -1.0;
+                }
+            }
             if (delta > deltaMax) delta = deltaMax;
             if (delta < deltaMin) delta = deltaMin;
         }
@@ -780,7 +766,7 @@ void trsolver::initDC (void)
    function. */
 void trsolver::initTR (void)
 {
-    const char * const IMethod = getPropertyString ("IntegrationMethod");
+    char * IMethod = getPropertyString ("IntegrationMethod");
     nr_double_t start = getPropertyDouble ("Start");
     nr_double_t stop = getPropertyDouble ("Stop");
     nr_double_t points = getPropertyDouble ("Points");
@@ -797,11 +783,11 @@ void trsolver::initTR (void)
     deltaMin = getPropertyDouble ("MinStep");
     deltaMax = getPropertyDouble ("MaxStep");
     if (deltaMax == 0.0)
-        deltaMax = std::min ((stop - start) / (points - 1), stop / 200);
+        deltaMax = MIN ((stop - start) / (points - 1), stop / 200);
     if (deltaMin == 0.0)
         deltaMin = NR_TINY * 10 * deltaMax;
     if (delta == 0.0)
-        delta = std::min (stop / 200, deltaMax) / 10;
+        delta = MIN (stop / 200, deltaMax) / 10;
     if (delta < deltaMin) delta = deltaMin;
     if (delta > deltaMax) delta = deltaMax;
 
@@ -890,7 +876,7 @@ nr_double_t trsolver::checkDelta (void)
     nr_double_t LTEreltol = getPropertyDouble ("LTEreltol");
     nr_double_t LTEabstol = getPropertyDouble ("LTEabstol");
     nr_double_t LTEfactor = getPropertyDouble ("LTEfactor");
-    nr_double_t dif, rel, tol, lte, q, n =  std::numeric_limits<nr_double_t>::max();
+    nr_double_t dif, rel, tol, lte, q, n = NR_MAX;
     int N = countNodes ();
     int M = countVoltageSources ();
 
@@ -918,14 +904,14 @@ nr_double_t trsolver::checkDelta (void)
             tol = LTEreltol * rel + LTEabstol;
             lte = LTEfactor * (cec / (pec - cec)) * dif;
             q =  delta * exp (log (fabs (tol / lte)) / (corrOrder + 1));
-            n = std::min (n, q);
+            n = MIN (n, q);
         }
     }
 #if STEPDEBUG
     logprint (LOG_STATUS, "DEBUG: delta according to local truncation "
               "error h = %.3e\n", (double) n);
 #endif
-    delta = std::min ((n > 1.9 * delta) ? 2 * delta : delta, n);
+    delta = MIN ((n > 1.9 * delta) ? 2 * delta : delta, n);
     return delta;
 }
 

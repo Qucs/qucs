@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  This dtd describes the basic data structures used by adms classes
+  It is used to check the validy of file http://mot-adms/sourceforge.net/xml-files/adms.xml
+  You can try using xmllint: xmllint adms.xml -noout -postvalid -noblanks
+-->
+<!-- $Id: metaadms.xsd 505 2007-01-23 11:17:43Z r29173 $ -->
+<!--
+  $Log$
+  Revision 1.1  2005/05/03 07:43:32  r29173
+  schema version of dtd's
+
+  Revision 1.5  2005/03/17 08:26:28  r29173
+  migration to adms-2.x.x: move all href from absolute to relative values
+  
+  Revision 1.4  2005/02/25 12:49:35  r29173
+  migration to adms-2.x.x: renamed admst transforms
+  
+-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+  <xs:element name="adms">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="element"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="element">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="uid"/>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="scalar"/>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="list"/>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="element"/>
+      </xs:sequence>
+      <xs:attributeGroup ref="attlist.element"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="uid">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="scalar"/>
+      </xs:sequence>
+      <xs:attributeGroup ref="attlist.uid"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="scalar">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="attribute"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="list">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="attribute"/>
+      </xs:sequence>
+      <xs:attributeGroup ref="attlist.list"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="attribute">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="evalue"/>
+      </xs:sequence>
+      <xs:attributeGroup ref="attlist.attribute"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="reference">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="evalue">
+    <xs:complexType>
+      <xs:attributeGroup ref="attlist.evalue"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:attributeGroup name="attlist.uid">
+    <xs:attribute name="format" use="required"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="attlist.element">
+    <xs:attribute name="name" use="required"/>
+    <xs:attribute name="info" use="required"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="attlist.list">
+    <xs:attribute name="onduplicate" default="ignore">
+      <xs:simpleType>
+        <xs:restriction base="xs:token">
+          <xs:enumeration value="ignore"/>
+          <xs:enumeration value="abort"/>
+          <xs:enumeration value="ignore-abort"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="attlist.attribute">
+    <xs:attribute name="name" use="required"/>
+    <xs:attribute name="datatypefamily" default="basictype">
+      <xs:simpleType>
+        <xs:restriction base="xs:token">
+          <xs:enumeration value="basictype"/>
+          <xs:enumeration value="reference"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+    <xs:attribute name="datatypename" use="required"/>
+    <xs:attribute name="default"/>
+    <xs:attribute name="required" default="yes">
+      <xs:simpleType>
+        <xs:restriction base="xs:token">
+          <xs:enumeration value="yes"/>
+          <xs:enumeration value="no"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+    <xs:attribute name="onrewrite"/>
+    <xs:attribute name="info" use="required"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="attlist.evalue">
+    <xs:attribute name="name" use="required"/>
+    <xs:attribute name="info" use="required"/>
+  </xs:attributeGroup>
+</xs:schema>

@@ -71,7 +71,7 @@ void thyristor::calcTheModel (bool last) {
 
   nr_double_t Ut, Ud_bo, Ieq, Vd;
 
-  Ut = N * celsius2kelvin (T) * kBoverQ;
+  Ut = N * kelvin (T) * kBoverQ;
   Ud_bo = std::log (Ibo / Is + 1.0);
 
   Vd = Ud = real (getV (NODE_IN) - getV (NODE_A2));
@@ -167,7 +167,7 @@ matrix thyristor::calcMatrixY (nr_double_t frequency) {
   nr_double_t gi = getOperatingPoint ("gi");
   nr_double_t gg = 1.0 / getPropertyDouble ("Rg");
   nr_double_t Ci = getOperatingPoint ("Ci");
-  nr_complex_t yi = nr_complex_t (gi, Ci * 2.0 * pi * frequency);
+  nr_complex_t yi = nr_complex_t (gi, Ci * 2.0 * M_PI * frequency);
   matrix y (4);
   y.set (NODE_A2, NODE_A2, +gd);
   y.set (NODE_IN, NODE_IN, +gd +yi +gg);

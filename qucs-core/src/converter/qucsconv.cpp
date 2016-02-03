@@ -111,17 +111,13 @@ int main (int argc, char ** argv) {
   char * infile = NULL, * outfile = NULL, * input = NULL, * output = NULL;
 
   loginit ();
+  precinit ();
 
   // check program arguments
   for (int i = 1; i < argc; i++) {
     if (!strcmp (argv[i], "-v") || !strcmp (argv[i], "--version")) {
       fprintf (stdout,
-#ifdef GIT_REVISION
-	"QucsConverter " PACKAGE_VERSION " (" GIT_REVISION ") \n"
-#else
 	"QucsConverter " PACKAGE_VERSION "\n"
-#endif
-
 	"Copyright (C) 2004, 2005, 2006, 2007 Stefan Jahn <stefan@lkcc.org>\n"
 	"\nThis is free software; see the source for copying "
 	"conditions.  There is NO\n"
@@ -136,25 +132,12 @@ int main (int argc, char ** argv) {
 	"  -v, --version   display version information and exit\n"
 	"  -i  FILENAME    use file as input file (default stdin)\n"
 	"  -o  FILENAME    use file as output file (default stdout)\n"
-	"  -if FORMAT      input data specification (see FORMAT below)\n"
-	"  -of FORMAT      output data specification (see FORMAT below)\n"
+	"  -if FORMAT      input data specification (e.g. spice)\n"
+	"  -of FORMAT      output data specification (e.g. qucs)\n"
 	"  -a, --noaction  do not include netlist actions in the output\n"
 	"  -g  GNDNODE     replace ground node\n"
 	"  -d  DATANAME    data variable specification\n"
 	"  -c, --correct   enable node correction\n"
-  "\nFORMAT: The input - output format pair should be one of the following:\n"
-  "  inputformat - outputformat\n"
-  "  spice       - qucs\n"
-  "  spice       - qucslib\n"
-  "  vcd         - qucsdata\n"
-  "  qucsdata    - csv\n"
-  "  qucsdata    - touchstone\n"
-  "  citi        - qucsdata\n"
-  "  touchstone  - qucsdata\n"
-  "  csv         - qucsdata\n"
-  "  zvr         - qucsdata\n"
-  "  mdl         - qucsdata\n"
-  "  qucsdata    - matlab\n"
 	"\nReport bugs to <" PACKAGE_BUGREPORT ">.\n", argv[0]);
       return 0;
     }

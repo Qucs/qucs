@@ -84,9 +84,6 @@ matrix cstocz (matrix, matrix);
 matrix twoport (matrix, char, char);
 nr_double_t rollet (matrix);
 nr_double_t b1 (matrix);
-matrix rad2deg     (matrix);
-matrix deg2rad     (matrix);
-
 
 /*!\class matrix
  * \brief Dense complex matrix class
@@ -185,9 +182,6 @@ class matrix
   friend matrix twoport (matrix, char, char);
   friend nr_double_t rollet (matrix);
   friend nr_double_t b1 (matrix);
-
-  friend matrix rad2deg    (matrix);
-  friend matrix deg2rad    (matrix);
 
   /*! \brief Read access operator
       \param[in] r: row number (from 0 like usually in C)

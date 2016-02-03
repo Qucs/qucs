@@ -1,0 +1,42 @@
+language: c
+
+compiler:
+  - gcc
+  - clang
+
+before_install:
+
+  - sudo apt-get install automake libtool flex
+
+  # ubuntu 12.04 gives bison 2.5, need to install 2.6
+  - wget http://ftp.gnu.org/gnu/bison/bison-2.6.tar.gz -O /tmp/bison-2.6.tar.gz
+  - tar -xzvf /tmp/bison-2.6.tar.gz
+  - cd bison-2.6
+  - ./configure
+  - make
+  - sudo make install
+  - cd ..
+
+  - sudo apt-get install libxml2 libxml2-dev
+  - sudo apt-get install zlib1g zlib1g-dev
+  - sudo apt-get install libgd2-xpm-dev
+
+  # configure cpan, no waiting for user input
+  - (echo y;echo o conf prerequisites_policy follow;echo o conf commit)| sudo cpan
+  - sudo cpan -i XML::LibXML
+  - sudo cpan -f GD
+
+script:
+  - $CC --version
+  - which $CC
+  # workaround clang not system wide, fail on sudo make install
+  - export CC=`which $CC`
+
+  - ./bootstrap.sh
+  - ./configure --enable-maintainer-mode --prefix=/usr
+  - make
+  - sudo make install
+
+  # test
+  - admsXml -h
+

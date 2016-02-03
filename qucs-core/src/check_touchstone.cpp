@@ -281,11 +281,11 @@ static void touchstone_create (void) {
 	  }
 	  else if (!strcmp (touchstone_options.format, "MA")) {
 	    val = qucs::polar (real (root->get (pos + 0)),
-			 deg2rad (real (root->get (pos + 1))));
+			 rad (real (root->get (pos + 1))));
 	  }
 	  else if (!strcmp (touchstone_options.format, "dB")) {
 	    val = qucs::polar (std::pow (10.0, real (root->get (pos + 0)) / 20.0),
-			 deg2rad (real (root->get (pos + 1))));
+			 rad (real (root->get (pos + 1))));
 	  }
 	  v->add (val);
 	  v = (qucs::vector *) v->getNext ();
@@ -302,7 +302,7 @@ static void touchstone_create (void) {
       v->add (val);
       /* fill optimal noise reflexion coefficient vector */
       v = touchstone_result->findVariable ("Sopt");
-      val = qucs::polar (real (root->get (2)), deg2rad (real (root->get (3))));
+      val = qucs::polar (real (root->get (2)), rad (real (root->get (3))));
       if (ZREF != touchstone_options.resistance) {
 	// re-normalize reflexion coefficient if necessary
 	nr_double_t r = (ZREF - touchstone_options.resistance) /

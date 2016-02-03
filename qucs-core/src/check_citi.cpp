@@ -100,14 +100,14 @@ static qucs::vector * citi_create_vector (struct citi_package_t * p, int i,
   if (!strcmp (type, "MAGANGLE")) {
     for (int i = 0; i < vec->getSize (); i++) {
       nr_complex_t val = vec->get (i);
-      val = std::polar (real (val), deg2rad (imag (val)));
+      val = std::polar (real (val), rad (imag (val)));
       vec->set (val, i);
     }
   }
   else if (!strcmp (type, "DBANGLE")) {
     for (int i = 0; i < vec->getSize (); i++) {
       nr_complex_t val = vec->get (i);
-      val = std::polar (std::pow (10.0, real (val) / 20.0), deg2rad (imag (val)));
+      val = std::polar (std::pow (10.0, real (val) / 20.0), rad (imag (val)));
       vec->set (val, i);
     }
   }
@@ -152,9 +152,9 @@ void citi_finalize (void) {
     struct citi_header_t * h, * hn;
     /* go through each header */
     for (h = p->head; h != NULL; h = hn) {
-      free (h->package);
-      free (h->var);
-      free (h->type);
+      if (h->package) free (h->package);
+      if (h->var) free (h->var);
+      if (h->type) free (h->type);
       hn = h->next;
       free (h);
     }

@@ -1,0 +1,621 @@
+<?xml version="1.0" ?>
+<?xml-stylesheet type="text/xsl" href="admstpathstyle.xsl"?>
+<!DOCTYPE admstpath SYSTEM "metaadmstpath.dtd">
+<!--
+       This XML file describes the basic data elements used by adms classes
+       its validity is checked by file metaadms.dtd
+       you can try using xmllint: xmllint admstpath.xml -noout -postvalid -noblanks
+       see http://xmlsoft.org/
+       Most of the code that builds adms is created automatically from this file
+       Note: XSL semantic admstpathstyle.xsl transforms the contents of this file to HTML format
+-->
+<admstpath>
+
+<lex>
+  <ignore value="*t&amp;&amp;isspace(*t)" id="space">space - ignored during parsing</ignore>
+  <regexp id="openE"><![CDATA[  else if(!strncmp(t,"(",1))
+  {
+    t+=1, mypparse->_tkid= (admse) tktk_openE;
+    paren++;
+  }
+]]></regexp>
+  <regexp id="closeE"><![CDATA[  else if(!strncmp(t,")",1))
+  {
+    if(PARENMATCH)
+    {
+      t+=1, mypparse->_tkid= (admse) tktk_closeE, adms_slist_pull(&parenidx);
+      adms_slist_pull(&globalctxt);
+    }
+    else
+      t+=1, mypparse->_tkid= (admse) tktk_closeE;
+    paren--;
+  }
+]]></regexp>
+  <regexp id="dollarvariable"><![CDATA[  else if(*t=='$'&&*(t+1)=='(')
+  {
+    t++;
+    t++;
+    paren++; adms_slist_push(&parenidx,(p_adms)(long)paren); SETTEXT
+    mypparse->_tkid= (admse) tktk_dollarvariable;
+  }
+]]></regexp>
+  <regexp id="kdollarvariable"><![CDATA[  else if(*t=='$')
+  {
+    t++;
+    while(isalnum(*t)||*t=='_') t++;
+    mypparse->_tkstart=tstart+1;
+    mypparse->_tklen=(int)(long)(t-(tstart+1));
+    mypparse->_tkid= (admse) tktk_kdollarvariable;
+  }
+]]></regexp>
+  <regexp id="arobavariable"><![CDATA[  else if(*t=='@'&&*(t+1)=='(')
+  {
+    t++;
+    t++;
+    paren++; adms_slist_push(&parenidx,(p_adms)(long)paren); SETTEXT
+    mypparse->_tkid= (admse) tktk_arobavariable;
+  }
+]]></regexp>
+  <regexp id="karobavariable"><![CDATA[  else if(*t=='@')
+  {
+    t++;
+    while(isalnum(*t)||*t=='_') t++;
+    mypparse->_tkstart=tstart+1;
+    mypparse->_tklen=(int)(long)(t-(tstart+1));
+    mypparse->_tkid= (admse) tktk_karobavariable;
+  }
+]]></regexp>
+  <regexp id="croixcroixvariable"><![CDATA[  else if(*t=='#'&&*(t+1)=='#'&&*(t+2)=='(')
+  {
+    t++;
+    t++;
+    t++;
+    paren++; adms_slist_push(&parenidx,(p_adms)(long)paren); SETTEXT
+    mypparse->_tkid= (admse) tktk_croixcroixvariable;
+  }
+]]></regexp>
+  <regexp id="croixstar"><![CDATA[  else if(*t=='#'&&*(t+1)=='*')
+  {
+    t++;
+    t++;
+    while(isalnum(*t)||*t=='_') t++;
+    mypparse->_tkstart=tstart+1;
+    mypparse->_tklen=(int)(long)(t-(tstart+1));
+    mypparse->_tkid= (admse) tktk_croixstar;
+  }
+]]></regexp>
+  <regexp id="kcroixcroixvariable"><![CDATA[  else if(*t=='#'&&*(t+1)=='#')
+  {
+    t++;
+    t++;
+    while(isalnum(*t)||*t=='_') t++;
+    mypparse->_tkstart=tstart+1;
+    mypparse->_tklen=(int)(long)(t-(tstart+1));
+    mypparse->_tkid= (admse) tktk_kcroixcroixvariable;
+  }
+]]></regexp>
+  <regexp id="croixvariable"><![CDATA[  else if(*t=='#'&&*(t+1)=='(')
+  {
+    t++;
+    t++;
+    paren++; adms_slist_push(&parenidx,(p_adms)(long)paren); SETTEXT
+    mypparse->_tkid= (admse) tktk_croixvariable;
+  }
+]]></regexp>
+  <regexp id="kcroixvariable"><![CDATA[  else if(*t=='#')
+  {
+    t++;
+    while(isalnum(*t)||*t=='_') t++;
+    mypparse->_tkstart=tstart+1;
+    mypparse->_tklen=(int)(long)(t-(tstart+1));
+    mypparse->_tkid= (admse) tktk_kcroixvariable;
+  }
+]]></regexp>
+  <regexp id="oquote"><![CDATA[  else if(*t=='\'')
+  {
+    SETTIC
+    t+=1, mypparse->_tkid= (admse) tktk_oquote;
+  }
+]]></regexp>
+  <constant value="!=" id="notequal">Boolean not-equal</constant>
+  <constant value="&gt;" id="gt">Boolean gt</constant>
+  <constant value="&lt;" id="lt">Boolean lt</constant>
+  <constant value="*" id="star">used to select all children</constant>
+  <constant value="++" id="incrp">Arithmetic increment</constant>
+  <constant value="--" id="incrm">Arithmetic decrement</constant>
+  <constant value="+" id="addp">Arithmetic addition</constant>
+  <constant value=":" id="column">Arithmetic divide</constant>
+  <constant value="," id="comma">comma</constant>
+  <constant value="|" id="bar">bar</constant>
+  <constant value="-" id="addm">Arithmetic substraction</constant>
+  <constant value=".." id="dotdot">selector of previous admst transform</constant>
+  <constant value="." id="dot">selector of current admst transform</constant>
+  <constant value="/" id="slash">separator between two admstpath items</constant>
+  <constant value="=" id="equal">Boolean equal</constant>
+  <constant value="[" id="openCond">open admstpath condition</constant>
+  <constant value="]" id="closeCond">close admstpath condition</constant>
+  <constant value="admst" id="admst">function: return admst element</constant>
+  <constant value="and" id="and">Boolean and</constant>
+  <constant value="count" id="count">function: return count of argument</constant>
+  <constant value="exists" id="exists">function: return 1 if argument is exists</constant>
+  <constant value="false" id="false">false() function</constant>
+  <constant value="id" id="id">function: generates unique id of argument</constant>
+  <constant value="index" id="index">function: return position if second argument inside first argument</constant>
+  <constant value="isdefault" id="isdefault">function: return 1 if argument has default value</constant>
+  <constant value="lower-case" id="lower_mcase">function: returns argument converted to upper-case string</constant>
+  <constant value="nilled" id="nilled">function: return 1 if argument is nilled</constant>
+  <constant value="not" id="not">inverse Boolean value of admstpath condition</constant>
+  <constant value="or" id="or">Boolean or</constant>
+  <constant value="position" id="position">function: return position of argument</constant>
+  <constant value="returned" id="returned">function: return value from admst:apply-templates </constant>
+  <constant value="reverse" id="reverse">function: reverse order</constant>
+  <constant value="sort" id="sort">function: sort in dictionary order</constant>
+  <constant value="text" id="text">function: prints first argument using format specified in second argument</constant>
+  <constant value="true" id="true">true() function</constant>
+  <constant value="uid" id="uid">function: return uid of element</constant>
+  <constant value="upper-case" id="upper_mcase">function: returns argument converted to upper-case string</constant>
+  <regexp id="ident"><![CDATA[  else if(isalpha(*t))
+  {
+    while(isalnum(*t)||*t=='_'||*t==':') t++;
+    mypparse->_tkid= (admse) tktk_ident;
+    mypparse->_tkstart=tstart;
+    mypparse->_tklen=(int)(long)(t-tstart);
+  }
+]]></regexp>
+  <regexp id="real integer">  else if(isdigit(*t))
+  {
+    while(isdigit(*t)) t++;
+    if(*t=='.')
+    {
+      t++;
+      while(isdigit(*t)) t++;
+      mypparse->_tkid= (admse) tktk_real;
+      mypparse->_tkstart=tstart;
+      mypparse->_tklen=(int)(long)(t-tstart);
+    }
+    else
+    {
+      mypparse->_tkid= (admse) tktk_integer;
+      mypparse->_tkstart=tstart;
+      mypparse->_tklen=(int)(long)(t-tstart);
+    }
+  }
+</regexp>
+</lex>
+
+<yacc>
+  <productionset id="root">
+    <production id="0">
+      <item linkto="pathroot_l"/>
+    </production>
+    <production id="1">
+      <item linkto="goto_atext"/>
+      <item linkto="atext"/>
+    </production>
+  </productionset>
+  <productionset id="pathroot_l" ret="path">
+    <production id="0">
+      <item linkto="pathroot"/>
+    </production>
+    <production id="1">
+      <item linkto="pathroot_l"/>
+      <item linkto="comma"/>
+      <item linkto="pathroot"/>
+    </production>
+  </productionset>
+  <productionset id="pathroot" ret="path">
+    <production id="0">
+      <item linkto="pathbar"/>
+    </production>
+  </productionset>
+  <productionset id="pathbar" ret="slist">
+   <production id="0">
+    <item linkto="pathadd"/>
+   </production>
+   <production id="1">
+    <item linkto="pathbar"/>
+    <item linkto="bar"/>
+    <item linkto="pathadd"/>
+   </production>
+  </productionset>
+  <productionset id="pathadd" ret="slist">
+   <production id="0">
+    <item linkto="pathmult"/>
+   </production>
+   <production id="1">
+    <item linkto="pathadd"/>
+    <item linkto="addp"/>
+    <item linkto="pathmult"/>
+   </production>
+   <production id="2">
+    <item linkto="pathadd"/>
+    <item linkto="addm"/>
+    <item linkto="pathmult"/>
+   </production>
+  </productionset>
+  <productionset id="pathmult" ret="slist">
+   <production id="0">
+    <item linkto="pathunary"/>
+   </production>
+   <production id="1">
+    <item linkto="pathmult"/>
+    <item linkto="star"/>
+    <item linkto="pathunary"/>
+   </production>
+   <production id="2">
+    <item linkto="pathmult"/>
+    <item linkto="column"/>
+    <item linkto="pathunary"/>
+   </production>
+  </productionset>
+  <productionset id="pathunary" ret="slist">
+   <production id="0">
+    <item linkto="pathincr"/>
+   </production>
+   <production id="1">
+    <item linkto="addp"/>
+    <item linkto="pathincr"/>
+   </production>
+   <production id="2">
+    <item linkto="addm"/>
+    <item linkto="pathincr"/>
+   </production>
+  </productionset>
+  <productionset id="pathincr" ret="slist">
+   <production id="0">
+    <item linkto="pathsep0"/>
+   </production>
+   <production id="1">
+    <item linkto="pathsep0"/>
+    <item linkto="incrp"/>
+   </production>
+   <production id="2">
+    <item linkto="pathsep0"/>
+    <item linkto="incrm"/>
+   </production>
+  </productionset>
+  <productionset id="pathsep0" ret="slist">
+   <production id="0">
+    <item linkto="pathsep"/>
+   </production>
+   <production id="1">
+    <item linkto="pathsep"/>
+    <item linkto="slash"/>
+   </production>
+   <production id="2">
+    <item linkto="slash"/>
+    <item linkto="pathsep"/>
+   </production>
+   <production id="3">
+    <item linkto="slash"/>
+    <item linkto="pathsep"/>
+    <item linkto="slash"/>
+   </production>
+  </productionset>
+  <productionset id="pathsep" ret="slist">
+   <production id="0">
+    <item linkto="locationcondition"/>
+   </production>
+   <production id="1">
+    <item linkto="pathsep"/>
+    <item linkto="slash"/>
+    <item linkto="locationcondition"/>
+   </production>
+  </productionset>
+  <productionset id="locationcondition" ret="path">
+   <production id="0">
+    <item linkto="location"/>
+    <item linkto="condition"/>
+   </production>
+   <production id="1">
+    <item linkto="condition"/>
+   </production>
+   <production id="2">
+    <item linkto="location"/>
+   </production>
+   <production id="3">
+    <item linkto="openE"/>
+    <item linkto="pathroot"/>
+    <item linkto="closeE"/>
+   </production>
+  </productionset>
+
+  <productionset id="identifier" ret="path">
+   <production id="0">
+    <item linkto="ident"/>
+   </production>
+  </productionset>
+  <productionset id="location" ret="path">
+   <production id="0" label="dot">
+    <item linkto="dot"/>
+   </production>
+   <production id="1" label="dotdot">
+    <item linkto="dotdot"/>
+   </production>
+   <production id="10" label="intp">
+    <item linkto="integer"/>
+   </production>
+   <production id="7" label="realp">
+    <item linkto="real"/>
+   </production>
+   <production id="3" label="ident">
+    <item linkto="ident"/>
+   </production>
+   <production id="3" label="ident.index">
+    <item linkto="index"/>
+   </production>
+   <production id="4" label="kdollar">
+    <item linkto="kdollarvariable"/>
+   </production>
+   <production id="5" label="karoba" >
+    <item linkto="karobavariable"/>
+   </production>
+   <production id="13" label="kcroix">
+    <item linkto="kcroixvariable"/>
+   </production>
+   <production id="12" label="kcroixcroix">
+    <item linkto="kcroixcroixvariable"/>
+   </production>
+   <production id="4" label="dollar" ret="var-$">
+    <item linkto="dollarvariable"/>
+    <item linkto="atext"/>
+    <item linkto="closeE"/>
+   </production>
+   <production id="5" label="aroba" ret="var-@">
+    <item linkto="arobavariable"/>
+    <item linkto="atext"/>
+    <item linkto="closeE"/>
+   </production>
+   <production id="13" label="croix" ret="var-#">
+    <item linkto="croixvariable"/>
+    <item linkto="atext"/>
+    <item linkto="closeE"/>
+   </production>
+   <production id="12" label="croixcroix" ret="var-##">
+    <item linkto="croixcroixvariable"/>
+    <item linkto="atext"/>
+    <item linkto="closeE"/>
+   </production>
+   <production id="9" label="q">
+    <item linkto="quotedstring"/>
+   </production>
+   <production id="2" label="function.ident">
+    <item linkto="identifier"/>
+    <item linkto="openE"/>
+    <item linkto="pathroot"/>
+    <item linkto="closeE"/>
+   </production>
+   <production id="20" label="function.uid">
+    <item linkto="uid"/>
+    <item linkto="openE"/>
+    <item linkto="pathroot"/>
+    <item linkto="closeE"/>
+   </production>
+   <production id="21" label="function.id">
+    <item linkto="id"/>
+    <item linkto="openE"/>
+    <item linkto="pathroot"/>
+    <item linkto="closeE"/>
+   </production>
+   <production id="22" label="function.sort">
+    <item linkto="sort"/>
+    <item linkto="openE"/>
+    <item linkto="pathroot"/>
+    <item linkto="closeE"/>
+   </production>
+   <production id="23" label="function.reverse">
+    <item linkto="reverse"/>
+    <item linkto="openE"/>
+    <item linkto="pathroot"/>
+    <item linkto="closeE"/>
+   </production>
+   <production id="24" label="function.uc">
+    <item linkto="upper_mcase"/>
+    <item linkto="openE"/>
+    <item linkto="pathroot"/>
+    <item linkto="closeE"/>
+   </production>
+   <production id="25" label="function.lc">
+    <item linkto="lower_mcase"/>
+    <item linkto="openE"/>
+    <item linkto="pathroot"/>
+    <item linkto="closeE"/>
+   </production>
+   <production id="27" label="function.count">
+    <item linkto="count"/>
+    <item linkto="openE"/>
+    <item linkto="pathroot"/>
+    <item linkto="closeE"/>
+   </production>
+   <production id="14" label="function.admst">
+    <item linkto="admst"/>
+    <item linkto="openE"/>
+    <item linkto="dot"/>
+    <item linkto="closeE"/>
+   </production>
+   <production id="19" label="function.index">
+    <item linkto="index"/>
+    <item linkto="openE"/>
+    <item linkto="pathroot"/>
+    <item linkto="comma"/>
+    <item linkto="pathroot"/>
+    <item linkto="closeE"/>
+   </production>
+   <production id="26" label="function.text">
+    <item linkto="text"/>
+    <item linkto="openE"/>
+    <item linkto="quotedstring"/>
+    <item linkto="closeE"/>
+   </production>
+   <production id="15" label="function.returned">
+    <item linkto="returned"/>
+    <item linkto="openE"/>
+    <item linkto="quotedstring"/>
+    <item linkto="closeE"/>
+   </production>
+   <production id="18" label="function.pos">
+    <item linkto="position"/>
+    <item linkto="openE"/>
+    <item linkto="dot"/>
+    <item linkto="closeE"/>
+   </production>
+   <production id="130" label="croixstar">
+    <item linkto="croixstar"/>
+   </production>
+   <production id="200" label="ticptr">
+    <item linkto="ticptr"/>
+   </production>
+  </productionset>
+  <productionset id="quotedstring" ret="text">
+   <production id="0">
+    <item linkto="oquote"/>
+    <item linkto="atext"/>
+    <item linkto="cquote"/>
+   </production>
+   <production id="1">
+    <item linkto="oquote"/>
+    <item linkto="cquote"/>
+   </production>
+  </productionset>
+  <productionset id="atext" ret="slist">
+   <production id="0">
+    <item linkto="atextitem"/>
+   </production>
+   <production id="1">
+    <item linkto="atext"/>
+    <item linkto="atextitem"/>
+   </production>
+  </productionset>
+  <productionset id="atextitem" ret="path">
+   <production id="0">
+    <item linkto="cr"/>
+   </production>
+   <production id="1">
+    <item linkto="lf"/>
+   </production>
+   <production id="2">
+    <item linkto="tab"/>
+   </production>
+   <production id="3">
+    <item linkto="anytext"/>
+   </production>
+   <production id="4">
+    <item linkto="percents"/>
+   </production>
+   <production id="5">
+    <item linkto="dollarvariable"/>
+    <item linkto="atext"/>
+    <item linkto="closeE"/>
+   </production>
+   <production id="6">
+    <item linkto="kdollarvariable"/>
+   </production>
+   <production id="7">
+    <item linkto="percent"/>
+    <item linkto="pathroot"/>
+    <item linkto="closeE"/>
+   </production>
+  </productionset>
+  <productionset id="condition" ret="path">
+   <production id="0">
+    <item linkto="openCond"/>
+    <item linkto="expression"/>
+    <item linkto="closeCond"/>
+   </production>
+  </productionset>
+  <productionset id="expression" ret="path">
+    <production id="0">
+      <item linkto="binaryor"/>
+    </production>
+    <production id="1">
+      <item linkto="pathroot"/>
+    </production>
+  </productionset>
+  <productionset id="binaryor" ret="path">
+    <production id="0">
+      <item linkto="binaryand"/>
+    </production>
+    <production id="1">
+      <item linkto="binaryor"/>
+      <item linkto="or"/>
+      <item linkto="binaryand"/>
+    </production>
+  </productionset>
+  <productionset id="binaryand" ret="path">
+    <production id="0">
+      <item linkto="unary"/>
+    </production>
+    <production id="1">
+      <item linkto="binaryand"/>
+      <item linkto="and"/>
+      <item linkto="unary"/>
+    </production>
+  </productionset>
+  <productionset id="unary" ret="path">
+    <production id="0">
+      <item linkto="atomic"/>
+    </production>
+    <production id="1">
+      <item linkto="not"/>
+      <item linkto="atomic"/>
+    </production>
+  </productionset>
+  <productionset id="atomic" ret="path">
+    <production label="groupage" id="3">
+      <item linkto="openE"/>
+      <item linkto="binaryor"/>
+      <item linkto="closeE"/>
+    </production>
+    <production label="eq" id="8">
+      <item linkto="pathroot"/>
+      <item linkto="equal"/>
+      <item linkto="pathroot"/>
+    </production>
+    <production label="ne" id="9">
+      <item linkto="pathroot"/>
+      <item linkto="notequal"/>
+      <item linkto="pathroot"/>
+    </production>
+    <production label="lt" id="10">
+      <item linkto="pathroot"/>
+      <item linkto="lt"/>
+      <item linkto="pathroot"/>
+    </production>
+    <production label="gt" id="11">
+      <item linkto="pathroot"/>
+      <item linkto="gt"/>
+      <item linkto="pathroot"/>
+    </production>
+    <production label="nilled" id="0">
+      <item linkto="nilled"/>
+      <item linkto="openE"/>
+      <item linkto="pathroot"/>
+      <item linkto="closeE"/>
+    </production>
+    <production label="exists" id="1">
+      <item linkto="exists"/>
+      <item linkto="openE"/>
+      <item linkto="pathroot"/>
+      <item linkto="closeE"/>
+    </production>
+    <production label="isdefault" id="2">
+      <item linkto="isdefault"/>
+      <item linkto="openE"/>
+      <item linkto="ident"/>
+      <item linkto="closeE"/>
+    </production>
+    <production label="true" id="5">
+      <item linkto="true"/>
+      <item linkto="openE"/>
+      <item linkto="closeE"/>
+    </production>
+    <production label="false" id="6">
+      <item linkto="false"/>
+      <item linkto="openE"/>
+      <item linkto="closeE"/>
+    </production>
+  </productionset>
+</yacc>
+
+</admstpath>
+

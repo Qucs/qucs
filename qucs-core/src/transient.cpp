@@ -328,7 +328,7 @@ void transient::setIntegrationMethod (circuit * c, int Method) {
 
 /* Returns an appropriate integrator type identifier and the maximum
    order depending on the given string argument. */
-int transient::correctorType (const char * const Method, int& MaxOrder) {
+int transient::correctorType (char * Method, int& MaxOrder) {
   if (!strcmp (Method, "Gear")) {
     if (MaxOrder > 6) MaxOrder = 6;
     if (MaxOrder < 1) MaxOrder = 1;

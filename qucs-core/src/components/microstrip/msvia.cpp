@@ -41,7 +41,7 @@ msvia::msvia () : circuit (2) {
 void msvia::calcNoiseSP (nr_double_t) {
   // calculate noise correlation matrix
   nr_double_t T = getPropertyDouble ("Temp");
-  nr_double_t f = celsius2kelvin (T) * 4.0 * real (Z) * z0 / norm (4.0 * z0 + Z) / T0;
+  nr_double_t f = kelvin (T) * 4.0 * real (Z) * z0 / norm (4.0 * z0 + Z) / T0;
   setN (NODE_1, NODE_1, +f); setN (NODE_2, NODE_2, +f);
   setN (NODE_1, NODE_2, -f); setN (NODE_2, NODE_1, -f);
 }
@@ -76,7 +76,7 @@ nr_complex_t msvia::calcImpedance (nr_double_t frequency) {
   }
 
   // create Z-parameter
-  nr_double_t fs  = pi * MU0 * sqr (t) / rho;
+  nr_double_t fs  = M_PI * MU0 * sqr (t) / rho;
   nr_double_t res = R * std::sqrt (1 + frequency * fs);
   nr_double_t a   = std::sqrt (sqr (r) + sqr (h));
   nr_double_t ind = MU0 * (h * std::log ((h + a) / r) + 1.5 * (r - a));
@@ -90,7 +90,7 @@ nr_double_t msvia::calcResistance (void) {
   nr_double_t t   = subst->getPropertyDouble ("t");
   nr_double_t rho = subst->getPropertyDouble ("rho");
   nr_double_t r   = getPropertyDouble ("D") / 2;
-  nr_double_t v   = h / pi / (sqr (r) - sqr (r - t));
+  nr_double_t v   = h / M_PI / (sqr (r) - sqr (r - t));
   return R = rho * v;
 }
 
@@ -131,7 +131,7 @@ void msvia::calcNoiseAC (nr_double_t) {
   // calculate noise current correlation matrix
   nr_double_t y = real (1.0 / Z);
   nr_double_t T = getPropertyDouble ("Temp");
-  nr_double_t f = celsius2kelvin (T) / T0 * 4.0 * y;
+  nr_double_t f = kelvin (T) / T0 * 4.0 * y;
   setN (NODE_1, NODE_1, +f); setN (NODE_2, NODE_2, +f);
   setN (NODE_1, NODE_2, -f); setN (NODE_2, NODE_1, -f);
 }

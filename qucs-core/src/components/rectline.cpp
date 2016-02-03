@@ -60,7 +60,7 @@ rectline::rectline () : circuit (2) {
   type = CIR_RECTANGULAR;
 }
 
-void rectline::calcResistivity (const char * const Mat, nr_double_t T) {
+void rectline::calcResistivity (char * Mat, nr_double_t T) {
   if (!strcmp (Mat, "Copper")) {
     if (T < 7) {
       rho = 2e-11;
@@ -170,8 +170,8 @@ void rectline::calcPropagation (nr_double_t frequency) {
 	      "<= %g\n", frequency, fc_low, fc_high, fc_low);
   }
   // calculate wave number
-  k0 = (2.0 * pi * frequency * std::sqrt (er * mur)) / C0;
-  kc = pi / a;
+  k0 = (2.0 * M_PI * frequency * std::sqrt (er * mur)) / C0;
+  kc = M_PI / a;
 
   // calculate losses only for propagative mode
   if (frequency >= fc_low) {
@@ -181,8 +181,8 @@ void rectline::calcPropagation (nr_double_t frequency) {
     // dielectric
     ad = (sqr(k0) * tand) / (2.0 * beta);
     // resistive
-    rs = std::sqrt (pi * frequency * mur * MU0 * rho);
-    ac = rs * (2.0 * b * sqr (pi) + cubic (a) * sqr (k0)) /
+    rs = std::sqrt (M_PI * frequency * mur * MU0 * rho);
+    ac = rs * (2.0 * b * sqr (M_PI) + cubic (a) * sqr (k0)) /
       (cubic (a) * b * beta * k0 *  Z0);
     alpha = (ad + ac);
 
@@ -206,7 +206,7 @@ void rectline::calcNoiseSP (nr_double_t) {
   nr_double_t T = getPropertyDouble ("Temp");
   matrix s = getMatrixS ();
   matrix e = eye (getSize ());
-  setMatrixN (celsius2kelvin (T) / T0 * (e - s * transpose (conj (s))));
+  setMatrixN (kelvin (T) / T0 * (e - s * transpose (conj (s))));
 }
 
 /*! Check validity of parameter and compute cutoff frequencies
@@ -224,11 +224,11 @@ void rectline::initCheck (void) {
   nr_double_t c = std::sqrt (epsr * mur);
   fc_low =  C0 / (2.0 * a * c);
   /* min of second TE mode and first TM mode */
-  fc_high = std::min (C0 / (a * c),  C0 / (2.0  * b * c));
+  fc_high = MIN (C0 / (a * c),  C0 / (2.0  * b * c));
   // calculation of resistivity
   rho  = getPropertyDouble ("rho");
   nr_double_t T = getPropertyDouble ("Temp");
-  calcResistivity (getPropertyString ("Material"), celsius2kelvin (T));
+  calcResistivity (getPropertyString ("Material"), kelvin (T));
 }
 
 void rectline::saveCharacteristics (nr_complex_t) {
@@ -297,7 +297,7 @@ void rectline::calcNoiseAC (nr_double_t) {
   if (l < 0) return;
   // calculate noise using Bosma's theorem
   nr_double_t T = getPropertyDouble ("Temp");
-  setMatrixN (4.0 * celsius2kelvin (T) / T0 * real (getMatrixY ()));
+  setMatrixN (4.0 * kelvin (T) / T0 * real (getMatrixY ()));
 }
 
 // properties

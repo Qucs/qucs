@@ -1,0 +1,26 @@
+// DUMMY EXAMPLE
+//
+// example and test verilog file for use with adms
+//
+`include"discipline.h"
+module dummy(p,q);
+ inout  p,q;
+ // external nodes
+ (* desc="+ node"*) electrical p;
+ (* desc="- node"*) electrical q;
+// Branch definitions
+ branch (q ,q)  pq;   //           branch from p to q
+// Parameter definitions
+ (* desc="resistance value" unit="Ohm" *)
+ parameter real R =  1.0;
+// Variable definitions
+ (* desc="clamped conductance value" unit="1/Ohm" *)
+ real g;
+ analog
+ begin
+   begin
+    g = (R>0.1) ? 1.0/R : 10.0;
+    I(p,q) <+ g*V(p,q);
+   end
+ end
+endmodule

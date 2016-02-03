@@ -47,8 +47,6 @@ matvec arg       (matvec);
 matvec adjoint   (matvec);
 vector rollet    (matvec);
 vector b1        (matvec);
-matvec rad2deg       (matvec);
-matvec deg2rad       (matvec);
 matvec stos (matvec, nr_complex_t, nr_complex_t z0 = 50.0);
 matvec stos (matvec, nr_double_t, nr_double_t z0 = 50.0);
 matvec stos (matvec, vector, nr_complex_t z0 = 50.0);
@@ -83,7 +81,7 @@ class matvec
   matrix get (int);
   static char * createMatrixString (const char *, int, int);
   static char * createMatrixString (char, int, int);
-  static char * isMatrixVector (const char *, int&, int&);
+  static char * isMatrixVector (char *, int&, int&);
   static matvec * getMatrixVector (qucs::vector *, char *);
   static void getMatrixVectorSize (qucs::vector *, char *, int&, int&, int&);
 
@@ -141,8 +139,6 @@ class matvec
   friend matvec adjoint   (matvec);
   friend qucs::vector rollet    (matvec);
   friend qucs::vector b1        (matvec);
-  friend matvec rad2deg       (matvec);
-  friend matvec deg2rad       (matvec);
 
   friend matvec stos (matvec, nr_complex_t, nr_complex_t);
   friend matvec stos (matvec, nr_double_t, nr_double_t);

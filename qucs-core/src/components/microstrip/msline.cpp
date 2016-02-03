@@ -44,15 +44,15 @@ void msline::calcNoiseSP (nr_double_t) {
   nr_double_t T = getPropertyDouble ("Temp");
   matrix s = getMatrixS ();
   matrix e = eye (getSize ());
-  setMatrixN (celsius2kelvin (T) / T0 * (e - s * transpose (conj (s))));
+  setMatrixN (kelvin (T) / T0 * (e - s * transpose (conj (s))));
 }
 
 void msline::calcPropagation (nr_double_t frequency) {
 
   /* how to get properties of this component, e.g. L, W */
   nr_double_t W = getPropertyDouble ("W");
-  const char * SModel = getPropertyString ("Model");
-  const char * DModel = getPropertyString ("DispModel");
+  char * SModel = getPropertyString ("Model");
+  char * DModel = getPropertyString ("DispModel");
 
   /* how to get properties of the substrate, e.g. Er, H */
   substrate * subst = getSubstrate ();
@@ -83,7 +83,7 @@ void msline::calcPropagation (nr_double_t frequency) {
   zl    = ZlEffFreq;
   ereff = ErEffFreq;
   alpha = ac + ad;
-  beta  = qucs::sqrt (ErEffFreq) * 2 * pi * frequency / C0;
+  beta  = qucs::sqrt (ErEffFreq) * 2 * M_PI * frequency / C0;
 }
 
 void msline::calcSP (nr_double_t frequency) {
@@ -113,7 +113,7 @@ void msline::saveCharacteristics (nr_double_t) {
    effective width due to the finite conductor thickness for the given
    microstrip line and substrate properties. */
 void msline::analyseQuasiStatic (nr_double_t W, nr_double_t h, nr_double_t t,
-				 nr_double_t er, const char * const Model,
+				 nr_double_t er, char * Model,
 				 nr_double_t& ZlEff, nr_double_t& ErEff,
 				 nr_double_t& WEff) {
 
@@ -130,8 +130,8 @@ void msline::analyseQuasiStatic (nr_double_t W, nr_double_t h, nr_double_t t,
 
     // compute strip thickness effect
     if (t != 0) {
-      dW1 = t / pi * qucs::log (4 * euler / qucs::sqrt (sqr (t / h) +
-					    sqr (one_over_pi / (W / t + 1.10))));
+      dW1 = t / M_PI * qucs::log (4 * M_E / qucs::sqrt (sqr (t / h) +
+					    sqr (M_1_PI / (W / t + 1.10))));
     }
     else dW1 = 0;
     dWr = (1 + 1 / er) / 2 * dW1;
@@ -140,26 +140,26 @@ void msline::analyseQuasiStatic (nr_double_t W, nr_double_t h, nr_double_t t,
     // compute characteristic impedance
     if (W / h < 3.3) {
       c = qucs::log (4 * h / Wr + qucs::sqrt (sqr (4 * h / Wr) + 2));
-      b = (er - 1) / (er + 1) / 2 * (qucs::log (pi_over_2) + qucs::log (2 * two_over_pi) / er);
-      z = (c - b) * Z0 / pi / qucs::sqrt (2 * (er + 1));
+      b = (er - 1) / (er + 1) / 2 * (qucs::log (M_PI_2) + qucs::log (2 * M_2_PI) / er);
+      z = (c - b) * Z0 / M_PI / qucs::sqrt (2 * (er + 1));
     }
     else {
-      c = 1 + qucs::log (pi_over_2) + qucs::log (Wr / h / 2 + 0.94);
-      d = one_over_pi / 2 * (1 + qucs::log (sqr (pi) / 16)) * (er - 1) / sqr (er);
-      x = 2 * ln2 / pi + Wr / h / 2 + (er + 1) / 2 / pi / er * c + d;
+      c = 1 + qucs::log (M_PI_2) + qucs::log (Wr / h / 2 + 0.94);
+      d = M_1_PI / 2 * (1 + qucs::log (sqr (M_PI) / 16)) * (er - 1) / sqr (er);
+      x = 2 * M_LN2 / M_PI + Wr / h / 2 + (er + 1) / 2 / M_PI / er * c + d;
       z = Z0 / 2 / x / qucs::sqrt (er);
     }
 
     // compute effective dielectric constant
     if (W / h < 1.3) {
       a = qucs::log (8 * h / Wr) + sqr (Wr / h) / 32;
-      b = (er - 1) / (er + 1) / 2 * (qucs::log (pi_over_2) + qucs::log (2 * two_over_pi) / er);
+      b = (er - 1) / (er + 1) / 2 * (qucs::log (M_PI_2) + qucs::log (2 * M_2_PI) / er);
       e = (er + 1) / 2 * sqr (a / (a - b));
     }
     else {
-      a = (er - 1) / 2 / pi / er * (qucs::log (2.1349 * Wr / h + 4.0137) -
+      a = (er - 1) / 2 / M_PI / er * (qucs::log (2.1349 * Wr / h + 4.0137) -
 				      0.5169 / er);
-      b = Wr / h / 2 + one_over_pi * qucs::log (8.5397 * Wr / h + 16.0547);
+      b = Wr / h / 2 + M_1_PI * qucs::log (8.5397 * Wr / h + 16.0547);
       e = er * sqr ((b - a) / b);
     }
   }
@@ -170,8 +170,8 @@ void msline::analyseQuasiStatic (nr_double_t W, nr_double_t h, nr_double_t t,
 
     // consider strip thickness equations
     if (t != 0 && t < W / 2) {
-      nr_double_t arg = (u < one_over_pi / 2) ? 2 * pi * W / t : h / t;
-      dW = t / pi * (1 + qucs::log (2 * arg));
+      nr_double_t arg = (u < M_1_PI / 2) ? 2 * M_PI * W / t : h / t;
+      dW = t / M_PI * (1 + qucs::log (2 * arg));
       if (t / dW >= 0.75) dW = 0;
     }
     WEff = W + dW; u = WEff / h;
@@ -181,7 +181,7 @@ void msline::analyseQuasiStatic (nr_double_t W, nr_double_t h, nr_double_t t,
 
     // characteristic impedance
     if (u < 1.0) {
-      z = one_over_pi / 2 * qucs::log (8 / u + u / 4);
+      z = M_1_PI / 2 * qucs::log (8 / u + u / 4);
     }
     else {
       z = 1 / (u + 2.42 - 0.44 / u + qucs::pow ((1. - 1. / u), 6.));
@@ -197,7 +197,7 @@ void msline::analyseQuasiStatic (nr_double_t W, nr_double_t h, nr_double_t t,
 
     // compute strip thickness effect
     if (t != 0) {
-      du1 = t / pi * qucs::log (1 + 4 * euler / t / sqr (coth (qucs::sqrt (6.517 * u))));
+      du1 = t / M_PI * qucs::log (1 + 4 * M_E / t / sqr (coth (qucs::sqrt (6.517 * u))));
     }
     else du1 = 0;
     du = du1 * (1 + sech (qucs::sqrt (er - 1))) / 2;
@@ -228,7 +228,7 @@ void msline::analyseQuasiStatic (nr_double_t W, nr_double_t h, nr_double_t t,
    the given frequency. */
 void msline::analyseDispersion (nr_double_t W, nr_double_t h, nr_double_t er,
 				nr_double_t ZlEff, nr_double_t ErEff,
-				nr_double_t frequency, const char * const Model,
+				nr_double_t frequency, char * Model,
 				nr_double_t& ZlEffFreq,
 				nr_double_t& ErEffFreq) {
 
@@ -263,7 +263,7 @@ void msline::analyseDispersion (nr_double_t W, nr_double_t h, nr_double_t er,
   else if (!strcmp (Model, "Kobayashi")) {
     nr_double_t n, no, nc, fh, fk;
     fk = C0 * qucs::atan (er * qucs::sqrt ((ErEff - 1) / (er - ErEff))) /
-      (2 * pi * h * qucs::sqrt (er - ErEff));
+      (2 * M_PI * h * qucs::sqrt (er - ErEff));
     fh = fk / (0.75 + (0.75 - 0.332 / qucs::pow (er, 1.73)) * W / h);
     no = 1 + 1 / (1 + qucs::sqrt (W / h)) + 0.32 * cubic (1 / (1 + qucs::sqrt (W / h)));
     if (W / h < 0.7) {
@@ -286,7 +286,7 @@ void msline::analyseDispersion (nr_double_t W, nr_double_t h, nr_double_t er,
   // HAMMERSTAD and JENSEN
   else if (!strcmp (Model, "Hammerstad")) {
     nr_double_t f, g;
-    g = sqr (pi) / 12 * (er - 1) / ErEff * qucs::sqrt (2 * pi * ZlEff / Z0);
+    g = sqr (M_PI) / 12 * (er - 1) / ErEff * qucs::sqrt (2 * M_PI * ZlEff / Z0);
     f = 2 * MU0 * h * frequency / ZlEff;
     e = er - (er - ErEff) / (1 + g * sqr (f));
     z = ZlEff * qucs::sqrt (ErEff / e) * (e - 1) / (ErEff - 1);
@@ -329,8 +329,8 @@ void msline::Hammerstad_er (nr_double_t u, nr_double_t er, nr_double_t a,
    equation is used in single and coupled microstrip calculations as
    well. */
 void msline::Hammerstad_zl (nr_double_t u, nr_double_t& zl) {
-  nr_double_t fu = 6 + (2 * pi - 6) * qucs::exp (- qucs::pow (30.666 / u, 0.7528));
-  zl = Z0 / 2 / pi * qucs::log (fu / u + qucs::sqrt (1 + sqr (2 / u)));
+  nr_double_t fu = 6 + (2 * M_PI - 6) * qucs::exp (- qucs::pow (30.666 / u, 0.7528));
+  zl = Z0 / 2 / M_PI * qucs::log (fu / u + qucs::sqrt (1 + sqr (2 / u)));
 }
 
 /* Calculates dispersion effects for effective dielectric constant and
@@ -412,7 +412,7 @@ void msline::analyseLoss (nr_double_t W, nr_double_t t, nr_double_t er,
 
     // conductor losses
     if (t != 0.0) {
-      Rs = qucs::sqrt (pi * frequency * MU0 * rho); // skin resistance
+      Rs = qucs::sqrt (M_PI * frequency * MU0 * rho); // skin resistance
       ds = rho / Rs;                            // skin depth
       // valid for t > 3 * ds
       if (t < 3 * ds) {
@@ -423,13 +423,13 @@ void msline::analyseLoss (nr_double_t W, nr_double_t t, nr_double_t er,
       // current distribution factor
       Ki = qucs::exp (-1.2 * qucs::pow ((ZlEff1 + ZlEff2) / 2 / Z0, 0.7));
       // D is RMS surface roughness
-      Kr = 1 + two_over_pi * qucs::atan (1.4 * sqr (D / ds));
+      Kr = 1 + M_2_PI * qucs::atan (1.4 * sqr (D / ds));
       ac = Rs / (ZlEff1 * W) * Ki * Kr;
     }
 
     // dielectric losses
     l0 = C0 / frequency;
-    ad = pi * er / (er - 1) * (ErEff - 1) / qucs::sqrt (ErEff) * tand / l0;
+    ad = M_PI * er / (er - 1) * (ErEff - 1) / qucs::sqrt (ErEff) * tand / l0;
   }
 }
 
@@ -482,7 +482,7 @@ void msline::calcNoiseAC (nr_double_t) {
   if (l < 0) return;
   // calculate noise using Bosma's theorem
   nr_double_t T = getPropertyDouble ("Temp");
-  setMatrixN (4 * celsius2kelvin (T) / T0 * real (getMatrixY ()));
+  setMatrixN (4 * kelvin (T) / T0 * real (getMatrixY ()));
 }
 
 // properties

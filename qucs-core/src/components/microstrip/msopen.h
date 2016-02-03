@@ -31,8 +31,8 @@ class msopen : public qucs::circuit
  public:
   CREATOR (msopen);
   static nr_double_t calcCend (nr_double_t, nr_double_t, nr_double_t,
-			       nr_double_t, nr_double_t, const char * const, const char * const,
-			       const char * const);
+			       nr_double_t, nr_double_t, char *, char *,
+			       const char *);
   void calcSP (nr_double_t);
   void initDC (void);
   void calcAC (nr_double_t);

@@ -26,8 +26,6 @@
 # include <config.h>
 #endif
 
-#include<algorithm>
-
 #include <stdio.h>
 
 #include "object.h"
@@ -84,41 +82,41 @@ hbsolver::hbsolver (char * n) : analysis (n) {
 // Destructor deletes the hbsolver class object.
 hbsolver::~hbsolver () {
   // delete nodelists
-  delete nlnodes;
-  delete lnnodes;
-  delete banodes;
-  delete nanodes;
+  if (nlnodes) delete nlnodes;
+  if (lnnodes) delete lnnodes;
+  if (banodes) delete banodes;
+  if (nanodes) delete nanodes;
 
   // delete temporary matrices
-  delete A;
-  delete Z;
-  delete Y;
+  if (A) delete A;
+  if (Z) delete Z;
+  if (Y) delete Y;
 
   // delete matrices
-  delete NA;
-  delete YV;
-  delete JQ;
-  delete JG;
-  delete JF;
+  if (NA) delete NA;
+  if (YV) delete YV;
+  if (JQ) delete JQ;
+  if (JG) delete JG;
+  if (JF) delete JF;
 
   // delete vectors
-  delete IC;
-  delete IS;
-  delete FV;
-  delete IL;
-  delete IN;
-  delete IG;
-  delete FQ;
-  delete VS;
-  delete VP;
-  delete vs;
-  delete OM;
-  delete IR;
-  delete QR;
-  delete RH;
+  if (IC) delete IC;
+  if (IS) delete IS;
+  if (FV) delete FV;
+  if (IL) delete IL;
+  if (IN) delete IN;
+  if (IG) delete IG;
+  if (FQ) delete FQ;
+  if (VS) delete VS;
+  if (VP) delete VP;
+  if (vs) delete vs;
+  if (OM) delete OM;
+  if (IR) delete IR;
+  if (QR) delete QR;
+  if (RH) delete RH;
 
-  delete x;
-  delete[] ndfreqs;
+  if (x) delete x;
+  if (ndfreqs) delete[] ndfreqs;
 }
 
 /* The copy constructor creates a new instance of the hbsolver class
@@ -332,34 +330,34 @@ bool hbsolver::isExcitation (circuit * c) {
 
 // Expands the frequency array using the given frequency and the order.
 void hbsolver::expandFrequencies (nr_double_t f, int n) {
-  auto nfreqs = negfreqs;
-  auto pfreqs = posfreqs;
-  int i, k, len = nfreqs.size ();
+  tvector<nr_double_t> nfreqs = negfreqs;
+  tvector<nr_double_t> pfreqs = posfreqs;
+  int i, k, len = nfreqs.getSize ();
   negfreqs.clear ();
   posfreqs.clear ();
   if (len > 0) {
     // frequency expansion for full frequency sets
     for (i = 0; i <= n + 1; i++) {
       for (k = 0; k < len; k++) {
-	negfreqs.push_back (i * f + nfreqs[k]);
+	negfreqs.add (i * f + nfreqs.get (k));
       }
     }
     for (i = -n; i < 0; i++) {
       for (k = 0; k < len; k++) {
-	negfreqs.push_back (i * f + nfreqs[k]);
+	negfreqs.add (i * f + nfreqs.get (k));
       }
     }
     for (i = 0; i <= 2 * n + 1; i++) {
       for (k = 0; k < len; k++) {
-	posfreqs.push_back (i * f + pfreqs[k]);
+	posfreqs.add (i * f + pfreqs.get (k));
       }
     }
   }
   else {
     // first frequency
-    for (i = 0; i <= n + 1; i++) negfreqs.push_back (i * f);
-    for (i = -n; i < 0; i++) negfreqs.push_back (i * f);
-    for (i = 0; i <= 2 * n + 1; i++) posfreqs.push_back (i * f);
+    for (i = 0; i <= n + 1; i++) negfreqs.add (i * f);
+    for (i = -n; i < 0; i++) negfreqs.add (i * f);
+    for (i = 0; i <= 2 * n + 1; i++) posfreqs.add (i * f);
   }
 }
 
@@ -380,25 +378,19 @@ void hbsolver::collectFrequencies (void) {
   posfreqs.clear ();
   rfreqs.clear ();
   dfreqs.clear ();
-  delete[] ndfreqs;
+  if (ndfreqs) delete[] ndfreqs;
 
   // obtain order
   int i, n = calcOrder (getPropertyInteger ("n"));
 
   // expand frequencies for each exitation
   nr_double_t f;
-  for (auto * c : excitations) {
+  for (ptrlistiterator<circuit> it (excitations); *it; ++it) {
+    circuit * c = it.current ();
     if (c->getType () != CIR_VDC) { // no extra DC sources
       if ((f = c->getPropertyDouble ("f")) != 0.0) {
-	const auto epsilon = std::numeric_limits<nr_double_t>::epsilon();
-        auto found =
-	  std::find_if(dfreqs.cbegin(),dfreqs.cend(),
-		       [f,epsilon](decltype(*dfreqs.cbegin()) x) {
-			 return (std::abs(x-f) < epsilon);
-		       })
-	  ;
-	if (found == dfreqs.cend()) { // no double frequencies
-	  dfreqs.push_back (f);
+	if (!dfreqs.contains (f)) { // no double frequencies
+	  dfreqs.add (f);
 	  expandFrequencies (f, n);
 	}
       }
@@ -406,16 +398,16 @@ void hbsolver::collectFrequencies (void) {
   }
 
   // no excitations
-  if (negfreqs.size () == 0) {
+  if (negfreqs.getSize () == 0) {
     // use specified frequency
     f = getPropertyDouble ("f");
-    dfreqs.push_back (f);
+    dfreqs.add (f);
     expandFrequencies (f, n);
   }
 
   // build frequency dimension lengths
-  ndfreqs = new int[dfreqs.size ()];
-  for (i = 0; i < dfreqs.size (); i++) {
+  ndfreqs = new int[dfreqs.getSize ()];
+  for (i = 0; i < dfreqs.getSize (); i++) {
     ndfreqs[i] = (n + 1) * 2;
   }
 
@@ -428,17 +420,17 @@ void hbsolver::collectFrequencies (void) {
 #endif /* HB_DEBUG */
 
   // build list of positive frequencies including DC
-  for (n = 0; n < negfreqs.size (); n++) {
-    if ((f = negfreqs[n]) < 0.0) continue;
-    rfreqs.push_back (f);
+  for (n = 0; n < negfreqs.getSize (); n++) {
+    if ((f = negfreqs (n)) < 0.0) continue;
+    rfreqs.add (f);
   }
-  lnfreqs = rfreqs.size ();
-  nlfreqs = negfreqs.size ();
+  lnfreqs = rfreqs.getSize ();
+  nlfreqs = negfreqs.getSize ();
 
   // pre-calculate the j[O] vector
   OM = new tvector<nr_complex_t> (nlfreqs);
   for (n = i = 0; n < nlfreqs; n++, i++)
-    OM_(n) = nr_complex_t (0, 2 * pi * negfreqs[i]);
+    OM_(n) = nr_complex_t (0, 2 * M_PI * negfreqs (i));
 }
 
 // Split netlist into excitation, linear and non-linear part.
@@ -447,15 +439,15 @@ void hbsolver::splitCircuits (void) {
   for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ()) {
     if (c->isNonLinear ()) {
       // non-linear part
-      nolcircuits.push_front(c);
+      nolcircuits.add (c);
     }
     else if (isExcitation (c)) {
       // get sinusoidal sources
-      excitations.push_front(c);
+      excitations.add (c);
     }
     else if (c->getType () != CIR_GROUND) {
       // linear part
-      lincircuits.push_front (c);
+      lincircuits.add (c);
     }
   }
 }
@@ -463,9 +455,10 @@ void hbsolver::splitCircuits (void) {
 // Creates a nodelist for the given circuit list.
 strlist * hbsolver::circuitNodes (ptrlist<circuit> circuits) {
   strlist * nodes = new strlist ();
-  for (auto * c : circuits) {
+  for (ptrlistiterator<circuit> it (circuits); *it; ++it) {
+    circuit * c = it.current ();
     for (int i = 0; i < c->getSize (); i++) {
-      const char * n = c->getNode(i)->getName ();
+      char * n = c->getNode(i)->getName ();
       if (strcmp (n, "gnd")) {
 	if (!nodes->contains (n)) nodes->add (n);
       }
@@ -519,7 +512,8 @@ void hbsolver::getNodeLists (void) {
    built in internal voltage source in the list of circuits. */
 int hbsolver::assignVoltageSources (ptrlist<circuit> circuits) {
   int sources = 0;
-  for (auto *c: circuits) {
+  for (ptrlistiterator<circuit> it (circuits); *it; ++it) {
+    circuit * c = it.current ();
     if (c->getVoltageSources () > 0) {
       c->setVoltageSource (sources);
       sources += c->getVoltageSources ();
@@ -535,7 +529,8 @@ int hbsolver::assignNodes (ptrlist<circuit> circuits, strlist * nodes,
   for (int nr = 0; nr < nodes->length (); nr++) {
     char * nn = nodes->get (nr);
     // through all circuits
-    for (auto *c : circuits) {
+    for (ptrlistiterator<circuit> it (circuits); *it; ++it) {
+      circuit * c = it.current ();
       // assign current identifier if any of the circuit nodes equals
       // the current one
       for (int i = 0; i < c->getSize (); i++) {
@@ -549,10 +544,9 @@ int hbsolver::assignNodes (ptrlist<circuit> circuits, strlist * nodes,
 
 // Prepares the linear operations.
 void hbsolver::prepareLinear (void) {
-  for (auto *lc : lincircuits)
-    lc->initHB ();
+  for (ptrlistiterator<circuit> it (lincircuits); *it; ++it) (*it)->initHB ();
   nlnvsrcs = assignVoltageSources (lincircuits);
-  nnlvsrcs = excitations.size ();
+  nnlvsrcs = excitations.length ();
   nnanodes = nanodes->length ();
   nexnodes = exnodes->length ();
   nbanodes = banodes->length ();
@@ -576,11 +570,11 @@ void hbsolver::createMatrixLinearA (void) {
   A = new tmatrix<nr_complex_t> ((N + M) * lnfreqs);
 
   // through each frequency
-  for (int i = 0; i < rfreqs.size (); i++) {
-    freq = rfreqs[i];
+  for (int i = 0; i < rfreqs.getSize (); i++) {
+    freq = rfreqs (i);
     // calculate components' MNA matrix for the given frequency
-    for (auto *lc : lincircuits)
-      lc->calcHB (freq);
+    for (ptrlistiterator<circuit> it (lincircuits); *it; ++it)
+      (*it)->calcHB (freq);
     // fill in all matrix entries for the given frequency
     fillMatrixLinearA (A, f++);
   }
@@ -604,7 +598,8 @@ void hbsolver::fillMatrixLinearA (tmatrix<nr_complex_t> * A, int f) {
   int N = nnanodes;
 
   // through each linear circuit
-  for (auto *cir : lincircuits) {
+  for (ptrlistiterator<circuit> it (lincircuits); *it; ++it) {
+    circuit * cir = it.current ();
     int s = cir->getSize ();
     int nr, nc, r, c, v;
 
@@ -717,6 +712,7 @@ void hbsolver::createMatrixLinearY (void) {
   int M = nlnvsrcs;
   int N = nnanodes;
   int c, r, f;
+  ptrlistiterator<circuit> ite;
 
   // size of overall MNA matrix
   int sa = (N + M) * lnfreqs;
@@ -743,7 +739,8 @@ void hbsolver::createMatrixLinearY (void) {
   for (c = 0; c < sv * lnfreqs; c++) A_(c, c) += 0.01;
 
   // connect a 100 Ohm resistor (in parallel) to each excitation
-  for (auto *vs : excitations) {
+  for (ite = ptrlistiterator<circuit> (excitations); *ite; ++ite) {
+    circuit * vs = ite.current ();
     // get positive and negative node
     int pnode = vs->getNode(NODE_1)->getNode ();
     int nnode = vs->getNode(NODE_2)->getNode ();
@@ -788,7 +785,7 @@ void hbsolver::createMatrixLinearY (void) {
     // ---+---
     // ZV | ..
     r = 0;
-    for (auto ite = excitations.begin(); ite != excitations.end(); ++ite, r++) {
+    for (ite = ptrlistiterator<circuit> (excitations); *ite; ++ite, r++) {
       // lower part entries
       for (f = 0; f < lnfreqs; f++) {
 	ZVL_(r, c) = excitationZ (V, *ite, f);
@@ -800,8 +797,8 @@ void hbsolver::createMatrixLinearY (void) {
   // source voltages to the interconnection currents
   int vsrc = 0;
   // aquire constant transadmittance matrix entries
-  for (auto it = excitations.begin(); it != excitations.end(); ++it, vsrc++) {
-    circuit * vs = *it;
+  for (ptrlistiterator<circuit> it (excitations); *it; ++it, vsrc++) {
+    circuit * vs = it.current ();
     // get positive and negative node
     int pnode = vs->getNode(NODE_1)->getNode ();
     int nnode = vs->getNode(NODE_2)->getNode ();
@@ -824,7 +821,7 @@ void hbsolver::createMatrixLinearY (void) {
       // ---+---
       // .. | ZC
       r = 0;
-      for (auto ite = excitations.begin(); ite != excitations.end(); ++ite, r++) {
+      for (ite = ptrlistiterator<circuit> (excitations); *ite; ++ite, r++) {
 	// lower part entries
 	ZCL_(r, vsrc) = excitationZ (V, *ite, f);
       }
@@ -878,12 +875,12 @@ void hbsolver::calcConstantCurrent (void) {
 
   // collect excitation voltages
   tvector<nr_complex_t> VC (se);
-  for (auto it = excitations.begin(); it != excitations.end(); ++it, vsrc++) {
-    circuit * vs = *it;
+  for (ptrlistiterator<circuit> it (excitations); *it; ++it, vsrc++) {
+    circuit * vs = it.current ();
     vs->initHB ();
     vs->setVoltageSource (0);
-    for (int f = 0; f < rfreqs.size (); f++) { // for each frequency
-      nr_double_t freq = rfreqs[f];
+    for (int f = 0; f < rfreqs.getSize (); f++) { // for each frequency
+      nr_double_t freq = rfreqs (f);
       vs->calcHB (freq);
       VC (vsrc * lnfreqs + f) = vs->getE (VSRC_1);
     }
@@ -929,7 +926,7 @@ int hbsolver::checkBalance (void) {
   nr_double_t iabstol = getPropertyDouble ("iabstol");
   nr_double_t vabstol = getPropertyDouble ("vabstol");
   nr_double_t reltol = getPropertyDouble ("reltol");
-  int n, len = FV->size ();
+  int n, len = FV->getSize ();
   for (n = 0; n < len; n++) {
     // check iteration voltages
     nr_double_t v_abs = abs (VS->get (n) - VP->get (n));
@@ -969,7 +966,8 @@ void hbsolver::fillMatrixNonLinear (tmatrix<nr_complex_t> * jg,
 				    tvector<nr_complex_t> * qr,
 				    int f) {
   // through each linear circuit
-  for (auto *cir: nolcircuits) {
+  for (ptrlistiterator<circuit> it (nolcircuits); *it; ++it) {
+    circuit * cir = it.current ();
     int s = cir->getSize ();
     int nr, nc, r, c;
 
@@ -1050,8 +1048,8 @@ void hbsolver::prepareNonLinear (void) {
   assignNodes (nolcircuits, nanodes);
 
   // initialize circuits
-  for (auto *cir : nolcircuits) {
-    cir->initHB (nlfreqs);
+  for (ptrlistiterator<circuit> it (nolcircuits); *it; ++it) {
+    (*it)->initHB (nlfreqs);
   }
 }
 
@@ -1080,9 +1078,9 @@ void hbsolver::loadMatrices (void) {
   // through each frequency
   for (int f = 0; f < nlfreqs; f++) {
     // calculate components' HB matrices and vector for the given frequency
-    for (auto *cir : nolcircuits) {
-      saveNodeVoltages (cir, f); // node voltages
-      cir->calcHB (f);         // HB calculator
+    for (ptrlistiterator<circuit> it (nolcircuits); *it; ++it) {
+      saveNodeVoltages (*it, f); // node voltages
+      (*it)->calcHB (f);         // HB calculator
     }
     // fill in all matrix entries for the given frequency
     fillMatrixNonLinear (JG, JQ, IG, FQ, IR, QR, f);
@@ -1090,15 +1088,13 @@ void hbsolver::loadMatrices (void) {
 }
 
 /* The following function transforms a vector using a Fast Fourier
-   Transformation from the time domain to the frequency domain. 
-   \todo rewrite ugly sould die
-*/
+   Transformation from the time domain to the frequency domain. */
 void hbsolver::VectorFFT (tvector<nr_complex_t> * V, int isign) {
   int i, k, r;
   int n = nlfreqs;
-  int nd = dfreqs.size ();
-  int nodes = V->size () / n;
-  nr_double_t * d = (double *)V->getData ();
+  int nd = dfreqs.getSize ();
+  int nodes = V->getSize () / n;
+  nr_double_t * d = (nr_double_t *) V->getData ();
 
   if (nd == 1) {
     // for each node a single 1d-FFT
@@ -1321,13 +1317,14 @@ void hbsolver::fillMatrixLinearExtended (tmatrix<nr_complex_t> * Y,
   int of = lnfreqs * (nlnvsrcs + nnanodes);
   int sc = of;
 
-  for (auto *vs : excitations) {
+  for (ptrlistiterator<circuit> it (excitations); *it; ++it) {
+    circuit * vs = it.current ();
     // get positive and negative node
     int pnode = vs->getNode(NODE_1)->getNode ();
     int nnode = vs->getNode(NODE_2)->getNode ();
     for (int f = 0; f < lnfreqs; f++, sc++) { // for each frequency
       // fill right hand side vector
-      nr_double_t freq = rfreqs[f];
+      nr_double_t freq = rfreqs (f);
       vs->calcHB (freq);
       I_(sc) = vs->getE (VSRC_1);
       // fill MNA entries
@@ -1401,7 +1398,7 @@ void hbsolver::saveResults (void) {
   }
   // save frequency vector
   if (runs == 1) {
-    for (int i = 0; i < lnfreqs; i++) f->add (rfreqs[i]);
+    for (int i = 0; i < lnfreqs; i++) f->add (rfreqs (i));
   }
   // save node voltage vectors
   int nanode = 0;

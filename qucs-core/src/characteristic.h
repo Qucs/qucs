@@ -29,7 +29,15 @@
 
 namespace qucs {
 
-typedef class qucs::pair characteristic;
+class characteristic : public qucs::pair
+{
+ public:
+  characteristic ();
+  characteristic (const char *);
+  characteristic (const char *, nr_double_t);
+  characteristic (const characteristic &);
+  ~characteristic () { }
+};
 
 } // namespace qucs
 

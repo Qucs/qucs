@@ -39,46 +39,97 @@
 
 namespace qucs {
 
+// Constructor creates an unnamed instance of the history class.
+history::history () {
+  age = 0;
+  t = values = NULL;
+}
+
+/* The copy constructor creates a new instance based on the given
+   history object. */
+history::history (const history & h) {
+  age = h.age;
+  t = h.t;
+  values = h.values ? new tvector<nr_double_t> (*h.values) : NULL;
+}
+
+// Destructor deletes a history object.
+history::~history () {
+  if (values) delete values;
+}
+
+// The function appends the given value to the history.
+void history::append (nr_double_t val) {
+  if (values == NULL) values = new tvector<nr_double_t>;
+  values->add (val);
+  if (values != t) drop ();
+}
+
+/* This function drops the most recent n values in the history. */
+void history::truncate (int n)
+{
+  t->truncate (n);
+  values->truncate (n);
+}
 
 /* This function drops those values in the history which are newer
    than the specified time. */
-void history::truncate (const nr_double_t tcut)
+void history::truncate (nr_double_t tcut)
 {
-    std::size_t i;
-    std::size_t ts = this->t->size ();
+    int i;
+    int ts = t->getSize ();
 
-    for (i = this->leftidx (); i < ts; i++)
+    for (i = leftidx (); i < ts; i++)
     {
-      if ( (*this->t)[i] > tcut)
+      if (t->get (i) > tcut)
       {
-	break;
+        break;
       }
     }
-    this->resize (ts - i);
+    truncate (ts - i);
 }
 
+// Returns left-most valid index into the time value vector.
+int history::leftidx (void) {
+  int ts = t->getSize ();
+  int vs = values->getSize ();
+  return ts - vs > 0 ? ts - vs : 0;
+}
+
+/* Returns number of unused values (time value vector shorter than
+   value vector). */
+int history::unused (void) {
+  int ts = t->getSize ();
+  int vs = values->getSize ();
+  return vs - ts > 0 ? vs - ts : 0;
+}
+
+// Returns the first (oldest) time value in the history.
+nr_double_t history::first (void) {
+  return (t != NULL) ? t->get (leftidx ()) : 0.0;
+}
+
+// Returns the last (youngest) time value in the history.
+nr_double_t history::last (void) {
+  return (t != NULL) ? t->get (t->getSize () - 1) : 0.0;
+}
+
+// Returns the duration of the history.
+nr_double_t history::duration (void) {
+  return last () - first ();
+}
 
 /* This function drops those values in the history which are older
    than the specified age of the history instance. */
 void history::drop (void) {
-  if(this->values->empty())
-    return;
-  nr_double_t f = this->first ();
-  nr_double_t l = this->last ();
+  nr_double_t f = first ();
+  nr_double_t l = last ();
   if (age > 0.0 && l - f > age) {
-    std::size_t r;
-    std::size_t i = this->leftidx ();
-    for (r = 0; i < this->t->size (); r++, i++)
-      if (l - (*this->t)[i] < age)
-	break;
-    // keep 2 values being older than specified age
-    r += this->unused ();
-    if (r >= 2)
-      r -= 2;
-    r = std::min(r,this->values->size()-1);
-    if (r > 127)
-      /* erase the first r value */
-      this->values->erase(this->values->begin(),this->values->begin()+r);
+    int r, i = leftidx ();
+    for (r = 0; i < t->getSize (); r++, i++)
+      if (l - t->get (i) < age)	break;
+    r += unused () - 2; // keep 2 values being older than specified age
+    if (r > 127) values->drop (r);
   }
 }
 
@@ -89,37 +140,36 @@ nr_double_t history::interpol (nr_double_t tval, int idx, bool left) {
   static tvector<nr_double_t> x (4);
   static tvector<nr_double_t> y (4);
 
-  unsigned int n = left ? idx + 1: idx;
-  if (n > 1 && n + 2 < this->values->size ()) {
-    int i, k, l = this->leftidx ();
+  int n = left ? idx + 1: idx;
+  if (n > 1 && n + 2 < values->getSize ()) {
+    int i, k, l = leftidx ();
     for (k = 0, i = n - 2; k < 4; i++, k++) {
-      x (k) = (*this->t)[i + l];
-      y (k) = (*this->values)[i];
+      x (k) = t->get (i + l);
+      y (k) = values->get (i);
     }
     spl.vectors (y, x);
     spl.construct ();
     return spl.evaluate (tval).f0;
   }
-  return (*this->values)[idx];
+  return values->get (idx);
 }
 
 /* The function returns the value nearest to the given time value.  If
    the otional parameter is true then additionally cubic spline
    interpolation is used. */
 nr_double_t history::nearest (nr_double_t tval, bool interpolate) {
-  if (t->empty())
-    return 0.0;
-
-  int l = this->leftidx ();
-  int r = t->size () - 1;
-  int i = -1;
-  nr_double_t diff = std::numeric_limits<nr_double_t>::max();
-  sign = true;
-  i = seek (tval, l, r, diff, i);
-  i = i - l;
-  if (interpolate)
-    return interpol (tval, i, sign);
-  return (*this->values)[i];
+  if (t != NULL) {
+    int l = leftidx ();
+    int r = t->getSize () - 1;
+    int i = -1;
+    nr_double_t diff = NR_MAX;
+    sign = true;
+    i = seek (tval, l, r, diff, i);
+    i = i - l;
+    if (interpolate) return interpol (tval, i, sign);
+    return values->get (i);
+  }
+  return 0.0;
 }
 
 /* The function is utilized in order to find the nearest value to a
@@ -129,9 +179,8 @@ nr_double_t history::nearest (nr_double_t tval, bool interpolate) {
 int history::seek (nr_double_t tval, int l, int r, nr_double_t& diff,
 		   int idx) {
   int i = (l + r) / 2;
-  if (l == r)
-    return i;
-  nr_double_t v = (*this->t)[i];
+  if (l == r) return i;
+  nr_double_t v = t->get (i);
   nr_double_t d = v - tval;
   if (fabs (d) < diff) {
     // better approximation
@@ -152,6 +201,42 @@ int history::seek (nr_double_t tval, int l, int r, nr_double_t& diff,
     return seek (tval, l, i, diff, idx);
   }
   return idx;
+}
+
+nr_double_t history::getTfromidx (int idx)
+{
+  if (t == NULL)
+  {
+    return 0;
+  }
+  else
+  {
+    return t->get(idx);
+  }
+}
+
+nr_double_t history::getValfromidx (int idx)
+{
+  if (t == NULL)
+  {
+    return 0;
+  }
+  else
+  {
+    return values->get(idx);
+  }
+}
+
+int history::getSize (void)
+{
+  if (t == NULL)
+  {
+    return 0;
+  }
+  else
+  {
+    return t->getSize ();
+  }
 }
 
 } // namespace qucs

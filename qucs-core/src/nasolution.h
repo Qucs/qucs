@@ -25,8 +25,7 @@
 #ifndef __NASOLUTION_H__
 #define __NASOLUTION_H__
 
-#include <string>
-#include <unordered_map>
+#include "valuelist.h"
 
 namespace qucs {
 
@@ -35,23 +34,36 @@ template <class nr_type_t>
 class naentry
 {
  public:
-  naentry () = default;
-  naentry (const naentry &) = default;
-  naentry (nr_type_t &v, int c):
-    current(c), value(v) {};
-  ~naentry () = default;
+  naentry ();
+  naentry (const naentry &);
+  naentry (char *, nr_type_t, int);
+  ~naentry ();
 
  public:
+  char * n;
   int current;
   nr_type_t value;
 };
 
 /* The solution class. */
-template <typename T>
-    using  nasolution = std::unordered_map<std::string,naentry<T> >;
+template <class nr_type_t>
+class nasolution
+{
+ public:
+  nasolution ();
+  ~nasolution ();
+  nasolution (const nasolution &);
 
+  void add (char *, nr_type_t, int);
+  naentry<nr_type_t> * find (char *, int);
+  void clear (void);
+
+ private:
+  valuelist< naentry<nr_type_t> > entries;
+};
 
 } // namespace qucs
 
+#include "nasolution.cpp"
 
 #endif /* __NASOLUTION_H__ */

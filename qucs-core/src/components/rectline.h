@@ -44,7 +44,7 @@ class rectline : public qucs::circuit
  private:
   void calcPropagation (nr_double_t);
   void initCheck (void);
-  void calcResistivity (const char * const, nr_double_t);
+  void calcResistivity (char *, nr_double_t);
   /*! attenuation constant */
   nr_double_t alpha;
   /*! propagation constant */

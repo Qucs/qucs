@@ -39,10 +39,10 @@ class msline : public qucs::circuit
   void saveCharacteristics (nr_double_t);
 
   static void analyseQuasiStatic (nr_double_t, nr_double_t, nr_double_t,
-				  nr_double_t, const char * const,
+				  nr_double_t, char *,
 				  nr_double_t&, nr_double_t&, nr_double_t&);
   static void analyseDispersion (nr_double_t, nr_double_t, nr_double_t,
-				 nr_double_t, nr_double_t, nr_double_t, const char * const,
+				 nr_double_t, nr_double_t, nr_double_t, char *,
 				 nr_double_t&, nr_double_t&);
   static void Hammerstad_ab (nr_double_t, nr_double_t,
 			     nr_double_t&, nr_double_t&);

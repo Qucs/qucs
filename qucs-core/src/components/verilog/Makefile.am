@@ -27,67 +27,128 @@
 
 noinst_LTLIBRARIES = libverilog.la
 
-XML_BUILD = \
-  $(srcdir)/analogfunction.xml \
-  $(srcdir)/qucsVersion.xml \
-  $(srcdir)/qucsMODULEcore.xml \
-  $(srcdir)/qucsMODULEdefs.xml
-
-.va.cpp: $(XML_BUILD)
-	@for i in $(XML_BUILD); do \
-	  echo "$$i"; \
-	  es="$$es -e $$i"; \
-	done; \
-	echo "$(ADMSXML) $< $$es -o $*"; \
-	$(ADMSXML) $< $$es -o $*
-
-.va.cpp:
-
-VA_FILES = \
-	EKV26MOS.va \
-	log_amp.va \
-	MESFET.va \
-	mod_amp.va \
-	nigbt.va \
-	photodiode.va \
-	phototransistor.va \
-	potentiometer.va \
+libverilog_la_SOURCES = HBT_X.analogfunction.cpp HBT_X.core.cpp \
+	hicumL2V2p1.analogfunction.cpp hicumL2V2p1.core.cpp \
+	mod_amp.analogfunction.cpp mod_amp.core.cpp \
+	hic2_full.analogfunction.cpp hic2_full.core.cpp \
+	log_amp.analogfunction.cpp log_amp.core.cpp \
+	hic0_full.analogfunction.cpp hic0_full.core.cpp \
+	potentiometer.analogfunction.cpp potentiometer.core.cpp \
+	MESFET.analogfunction.cpp MESFET.core.cpp \
+	EKV26MOS.analogfunction.cpp EKV26MOS.core.cpp \
+        bsim3v34nMOS.analogfunction.cpp bsim3v34nMOS.core.cpp \
+        bsim3v34pMOS.analogfunction.cpp bsim3v34pMOS.core.cpp \
+        bsim4v30nMOS.analogfunction.cpp bsim4v30nMOS.core.cpp \
+        bsim4v30pMOS.analogfunction.cpp bsim4v30pMOS.core.cpp \
+	hicumL0V1p2.analogfunction.cpp hicumL0V1p2.core.cpp \
+	hicumL0V1p2g.analogfunction.cpp hicumL0V1p2g.core.cpp \
+	hicumL0V1p3.analogfunction.cpp hicumL0V1p3.core.cpp \
+	hicumL2V2p23.analogfunction.cpp hicumL2V2p23.core.cpp \
+	hicumL2V2p24.analogfunction.cpp hicumL2V2p24.core.cpp \
+        hicumL2V2p31n.analogfunction.cpp hicumL2V2p31n.core.cpp \
+	photodiode.analogfunction.cpp photodiode.core.cpp \
+	phototransistor.analogfunction.cpp phototransistor.core.cpp \
+	nigbt.analogfunction.cpp nigbt.core.cpp \
 	\
-	dff_SR.va \
-	tff_SR.va \
-	jkff_SR.va \
-	gatedDlatch.va \
-	logic_0.va \
-	logic_1.va \
-	mux2to1.va \
-	mux4to1.va \
-	mux8to1.va \
-	DLS_nto1.va \
-	DLS_1ton.va \
-	andor4x2.va \
-	andor4x3.va \
-	andor4x4.va \
-	dmux2to4.va \
-	dmux3to8.va \
-	dmux4to16.va \
-	ha1b.va \
-	fa1b.va \
-	fa2b.va \
-	pad2bit.va \
-	pad3bit.va \
-	pad4bit.va \
-	binarytogrey4bit.va \
-	greytobinary4bit.va \
-	comp_1bit.va \
-	comp_2bit.va \
-	comp_4bit.va \
-	hpribin4bit.va \
-	vcresistor.va
+	dff_SR.analogfunction.cpp dff_SR.core.cpp \
+	tff_SR.analogfunction.cpp tff_SR.core.cpp \
+	jkff_SR.analogfunction.cpp jkff_SR.core.cpp \
+	gatedDlatch.analogfunction.cpp gatedDlatch.core.cpp \
+	logic_0.analogfunction.cpp logic_0.core.cpp \
+	logic_1.analogfunction.cpp logic_1.core.cpp \
+	mux2to1.analogfunction.cpp mux2to1.core.cpp \
+	mux4to1.analogfunction.cpp mux4to1.core.cpp \
+	mux8to1.analogfunction.cpp mux8to1.core.cpp \
+	DLS_nto1.analogfunction.cpp DLS_nto1.core.cpp \
+	DLS_1ton.analogfunction.cpp DLS_1ton.core.cpp \
+	andor4x2.analogfunction.cpp andor4x2.core.cpp \
+	andor4x3.analogfunction.cpp andor4x3.core.cpp \
+	andor4x4.analogfunction.cpp andor4x4.core.cpp \
+	dmux2to4.analogfunction.cpp dmux2to4.core.cpp \
+	dmux3to8.analogfunction.cpp dmux3to8.core.cpp \
+	dmux4to16.analogfunction.cpp dmux4to16.core.cpp \
+	ha1b.analogfunction.cpp ha1b.core.cpp \
+	fa1b.analogfunction.cpp fa1b.core.cpp \
+	fa2b.analogfunction.cpp fa2b.core.cpp \
+	pad2bit.analogfunction.cpp pad2bit.core.cpp \
+	pad3bit.analogfunction.cpp pad3bit.core.cpp \
+	pad4bit.analogfunction.cpp pad4bit.core.cpp \
+	binarytogrey4bit.analogfunction.cpp binarytogrey4bit.core.cpp \
+	greytobinary4bit.analogfunction.cpp greytobinary4bit.core.cpp \
+	comp_1bit.analogfunction.cpp comp_1bit.core.cpp \
+	comp_2bit.analogfunction.cpp comp_2bit.core.cpp \
+	comp_4bit.analogfunction.cpp comp_4bit.core.cpp \
+	hpribin4bit.analogfunction.cpp hpribin4bit.core.cpp \
+	vcresistor.analogfunction.cpp vcresistor.core.cpp
 
-libverilog_la_SOURCES = $(VA_FILES)
-VERILOGdir=$(pkgdatadir)/verilog
+noinst_HEADERS = HBT_X.analogfunction.h HBT_X.defs.h HBT_X.core.h \
+	hicumL2V2p1.analogfunction.h hicumL2V2p1.defs.h hicumL2V2p1.core.h \
+	mod_amp.analogfunction.h mod_amp.defs.h mod_amp.core.h \
+	hic2_full.analogfunction.h hic2_full.defs.h hic2_full.core.h \
+	log_amp.analogfunction.h log_amp.defs.h log_amp.core.h \
+	hic0_full.analogfunction.h hic0_full.defs.h hic0_full.core.h \
+	potentiometer.analogfunction.h potentiometer.defs.h \
+        potentiometer.core.h \
+	MESFET.analogfunction.h MESFET.defs.h MESFET.core.h \
+	EKV26MOS.analogfunction.h EKV26MOS.defs.h EKV26MOS.core.h \
+	bsim3v34nMOS.analogfunction.h bsim3v34nMOS.defs.h bsim3v34nMOS.core.h \
+	bsim3v34pMOS.analogfunction.h bsim3v34pMOS.defs.h bsim3v34pMOS.core.h \
+        bsim4v30nMOS.analogfunction.h bsim4v30nMOS.defs.h bsim4v30nMOS.core.h \
+        bsim4v30pMOS.analogfunction.h bsim4v30pMOS.defs.h bsim4v30pMOS.core.h \
+	hicumL0V1p2.analogfunction.h hicumL0V1p2.defs.h hicumL0V1p2.core.h \
+	hicumL0V1p2g.analogfunction.h hicumL0V1p2g.defs.h hicumL0V1p2g.core.h \
+	hicumL0V1p3.analogfunction.h hicumL0V1p3.defs.h hicumL0V1p3.core.h \
+	hicumL2V2p23.analogfunction.h hicumL2V2p23.defs.h hicumL2V2p23.core.h \
+	hicumL2V2p24.analogfunction.h hicumL2V2p24.defs.h hicumL2V2p24.core.h \
+	hicumL2V2p31n.analogfunction.h hicumL2V2p31n.defs.h hicumL2V2p31n.core.h \
+	photodiode.analogfunction.h photodiode.defs.h photodiode.core.h \
+	phototransistor.analogfunction.h phototransistor.defs.h phototransistor.core.h \
+	nigbt.analogfunction.h nigbt.defs.h nigbt.core.h \
+	\
+	dff_SR.analogfunction.h dff_SR.defs.h dff_SR.core.h \
+	tff_SR.analogfunction.h tff_SR.defs.h tff_SR.core.h \
+	jkff_SR.analogfunction.h jkff_SR.defs.h jkff_SR.core.h \
+	gatedDlatch.analogfunction.h gatedDlatch.defs.h gatedDlatch.core.h \
+	logic_0.analogfunction.h logic_0.defs.h logic_0.core.h \
+	logic_1.analogfunction.h logic_1.defs.h logic_1.core.h \
+	mux2to1.analogfunction.h mux2to1.defs.h mux2to1.core.h \
+	mux4to1.analogfunction.h mux4to1.defs.h mux4to1.core.h \
+	mux8to1.analogfunction.h mux8to1.defs.h mux8to1.core.h \
+	DLS_nto1.analogfunction.h DLS_nto1.defs.h DLS_nto1.core.h \
+	DLS_1ton.analogfunction.h DLS_1ton.defs.h DLS_1ton.core.h \
+	andor4x2.analogfunction.h andor4x2.defs.h andor4x2.core.h \
+	andor4x3.analogfunction.h andor4x3.defs.h andor4x3.core.h \
+	andor4x4.analogfunction.h andor4x4.defs.h andor4x4.core.h \
+	dmux2to4.analogfunction.h dmux2to4.defs.h dmux2to4.core.h \
+	dmux3to8.analogfunction.h dmux3to8.defs.h dmux3to8.core.h \
+	dmux4to16.analogfunction.h dmux4to16.defs.h dmux4to16.core.h \
+	ha1b.analogfunction.h ha1b.defs.h ha1b.core.h \
+	fa1b.analogfunction.h fa1b.defs.h fa1b.core.h \
+	fa2b.analogfunction.h fa2b.defs.h fa2b.core.h \
+	pad2bit.analogfunction.h pad2bit.defs.h pad2bit.core.h \
+	pad3bit.analogfunction.h pad3bit.defs.h pad3bit.core.h \
+	pad4bit.analogfunction.h pad4bit.defs.h pad4bit.core.h \
+	binarytogrey4bit.analogfunction.h binarytogrey4bit.defs.h \
+	binarytogrey4bit.core.h	greytobinary4bit.analogfunction.h \
+	greytobinary4bit.defs.h greytobinary4bit.core.h \
+	comp_1bit.analogfunction.h comp_1bit.defs.h comp_1bit.core.h \
+	comp_2bit.analogfunction.h comp_2bit.defs.h comp_2bit.core.h \
+	comp_4bit.analogfunction.h comp_4bit.defs.h comp_4bit.core.h \
+	hpribin4bit.analogfunction.h hpribin4bit.defs.h hpribin4bit.core.h \
+	vcresistor.analogfunction.h vcresistor.defs.h vcresistor.core.h
 
-VERILOG_DATA = $(VA_FILES) constants.vams disciplines.vams
+VERILOG_FILES = constants.vams disciplines.vams \
+  fbh_hbt-2_2a.va hicumL2V2p11.va mod_amp.va hicumL2V2p22.va log_amp.va \
+  hicumL0V1p12.va potentiometer.va MESFET.va hicumL0V1p2.va hicumL2V2p23.va \
+  photodiode.va EKV26MOS.va bsim3v34nMOS.va  bsim3v34pMOS.va bsim4v30nMOS.va bsim4v30pMOS.va \
+  hicumL2V2p24.va hicumL0V1p2g.va hicumL0V1p3.va hicumL2V2p31n.va \
+  phototransistor.va nigbt.va \
+  dff_SR.va jkff_SR.va tff_SR.va gatedDlatch.va logic_0.va logic_1.va \
+  mux2to1.va mux4to1.va mux8to1.va DLS_nto1.va DLS_1ton.va andor4x2.va \
+  andor4x3.va andor4x4.va dmux2to4.va dmux3to8.va dmux4to16.va ha1b.va \
+  fa1b.va fa2b.va pad2bit.va pad3bit.va pad4bit.va binarytogrey4bit.va \
+  greytobinary4bit.va comp_1bit.va comp_2bit.va comp_4bit.va hpribin4bit.va \
+  vcresistor.va
 
 VERILOGDIGITAL_FILES =
 
@@ -103,30 +164,708 @@ MAKE_FILES = cpp2lib.makefile\
 
 VA_INCLUDES = constants.vams disciplines.vams
 
-EXTRA_DIST = $(VERILOG_DATA) $(XML_FILES) $(MAKE_FILES)
+EXTRA_DIST = $(VERILOG_FILES) $(XML_FILES) $(MAKE_FILES)
 
 AM_CPPFLAGS = -I$(top_srcdir)/src -I$(top_srcdir)/src/math \
   -I$(top_srcdir)/src/components -I$(top_srcdir)/src/components/devices \
   -I$(builddir)
 
+if MAINTAINER_MODE
 ## configure determines if we want to build and use the
 ## bundled version of ADMS, or the host's ADMS. Here we
 ## set the path to the admsXml binary depeding on the choice
 ## the user made at configure time
+if USE_INTERNAL_ADMS
+ADMSXML = $(abs_top_builddir)/deps/adms/admsXml/admsXml
+else
+ADMSXML = @ADMSXML@
+endif
+
+HBT_X.analogfunction.cpp: analogfunction.xml
+HBT_X.analogfunction.cpp: fbh_hbt-2_2a.va
+	$(ADMSXML) $< -e $(srcdir)/analogfunction.xml
+HBT_X.core.cpp: HBT_X.defs.h qucsVersion.xml qucsMODULEcore.xml
+HBT_X.core.cpp: fbh_hbt-2_2a.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEcore.xml
+HBT_X.defs.h: qucsVersion.xml qucsMODULEdefs.xml
+HBT_X.defs.h: fbh_hbt-2_2a.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEdefs.xml
+HBT_X.gui.cpp: qucsVersion.xml qucsMODULEgui.xml
+HBT_X.gui.cpp: fbh_hbt-2_2a.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEgui.xml
+
+hicumL2V2p1.analogfunction.cpp: analogfunction.xml
+hicumL2V2p1.analogfunction.cpp: hicumL2V2p11.va
+	$(ADMSXML) $< -e $(srcdir)/analogfunction.xml
+hicumL2V2p1.core.cpp: hicumL2V2p1.defs.h qucsVersion.xml qucsMODULEcore.xml
+hicumL2V2p1.core.cpp: hicumL2V2p11.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEcore.xml
+hicumL2V2p1.defs.h: qucsVersion.xml qucsMODULEdefs.xml
+hicumL2V2p1.defs.h: hicumL2V2p11.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEdefs.xml
+hicumL2V2p1.gui.cpp: qucsVersion.xml qucsMODULEgui.xml
+hicumL2V2p1.gui.cpp: hicumL2V2p11.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEgui.xml
+
+mod_amp.analogfunction.cpp: analogfunction.xml
+mod_amp.analogfunction.cpp: mod_amp.va
+	$(ADMSXML) $< -e $(srcdir)/analogfunction.xml
+mod_amp.core.cpp: mod_amp.defs.h qucsVersion.xml qucsMODULEcore.xml
+mod_amp.core.cpp: mod_amp.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEcore.xml
+mod_amp.defs.h: qucsVersion.xml qucsMODULEdefs.xml
+mod_amp.defs.h: mod_amp.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEdefs.xml
+mod_amp.gui.cpp: qucsVersion.xml qucsMODULEgui.xml
+mod_amp.gui.cpp: mod_amp.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEgui.xml
+
+hic2_full.analogfunction.cpp: analogfunction.xml
+hic2_full.analogfunction.cpp: hicumL2V2p22.va
+	$(ADMSXML) $< -e $(srcdir)/analogfunction.xml
+hic2_full.core.cpp: hic2_full.defs.h qucsVersion.xml qucsMODULEcore.xml
+hic2_full.core.cpp: hicumL2V2p22.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEcore.xml
+hic2_full.defs.h: qucsVersion.xml qucsMODULEdefs.xml
+hic2_full.defs.h: hicumL2V2p22.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEdefs.xml
+hic2_full.gui.cpp: qucsVersion.xml qucsMODULEgui.xml
+hic2_full.gui.cpp: hicumL2V2p22.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEgui.xml
+
+log_amp.analogfunction.cpp: analogfunction.xml
+log_amp.analogfunction.cpp: log_amp.va
+	$(ADMSXML) $< -e $(srcdir)/analogfunction.xml
+log_amp.core.cpp: log_amp.defs.h qucsVersion.xml qucsMODULEcore.xml
+log_amp.core.cpp: log_amp.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEcore.xml
+log_amp.defs.h: qucsVersion.xml qucsMODULEdefs.xml
+log_amp.defs.h: log_amp.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEdefs.xml
+log_amp.gui.cpp: qucsVersion.xml qucsMODULEgui.xml
+log_amp.gui.cpp: log_amp.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEgui.xml
+
+hic0_full.analogfunction.cpp: analogfunction.xml
+hic0_full.analogfunction.cpp: hicumL0V1p12.va
+	$(ADMSXML) $< -e $(srcdir)/analogfunction.xml
+hic0_full.core.cpp: hic0_full.defs.h qucsVersion.xml qucsMODULEcore.xml
+hic0_full.core.cpp: hicumL0V1p12.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEcore.xml
+hic0_full.defs.h: qucsVersion.xml qucsMODULEdefs.xml
+hic0_full.defs.h: hicumL0V1p12.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEdefs.xml
+hic0_full.gui.cpp: qucsVersion.xml qucsMODULEgui.xml
+hic0_full.gui.cpp: hicumL0V1p12.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEgui.xml
+
+potentiometer.analogfunction.cpp: analogfunction.xml
+potentiometer.analogfunction.cpp: potentiometer.va
+	$(ADMSXML) $< -e $(srcdir)/analogfunction.xml
+potentiometer.core.cpp: potentiometer.defs.h qucsVersion.xml qucsMODULEcore.xml
+potentiometer.core.cpp: potentiometer.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEcore.xml
+potentiometer.defs.h: qucsVersion.xml qucsMODULEdefs.xml
+potentiometer.defs.h: potentiometer.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEdefs.xml
+potentiometer.gui.cpp: qucsVersion.xml qucsMODULEgui.xml
+potentiometer.gui.cpp: potentiometer.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEgui.xml
+
+MESFET.analogfunction.cpp: analogfunction.xml
+MESFET.analogfunction.cpp: MESFET.va
+	$(ADMSXML) $< -e $(srcdir)/analogfunction.xml
+MESFET.core.cpp: MESFET.defs.h qucsVersion.xml qucsMODULEcore.xml
+MESFET.core.cpp: MESFET.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEcore.xml
+MESFET.defs.h: qucsVersion.xml qucsMODULEdefs.xml
+MESFET.defs.h: MESFET.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEdefs.xml
+MESFET.gui.cpp: qucsVersion.xml qucsMODULEgui.xml
+MESFET.gui.cpp: MESFET.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEgui.xml
+
+EKV26MOS.analogfunction.cpp: analogfunction.xml
+EKV26MOS.analogfunction.cpp: EKV26MOS.va
+	$(ADMSXML) $< -e $(srcdir)/analogfunction.xml
+EKV26MOS.core.cpp: EKV26MOS.defs.h qucsVersion.xml qucsMODULEcore.xml
+EKV26MOS.core.cpp: EKV26MOS.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEcore.xml
+EKV26MOS.defs.h: qucsVersion.xml qucsMODULEdefs.xml
+EKV26MOS.defs.h: EKV26MOS.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEdefs.xml
+EKV26MOS.gui.cpp: qucsVersion.xml qucsMODULEgui.xml
+EKV26MOS.gui.cpp: EKV26MOS.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEgui.xml
+
+bsim3v34nMOS.analogfunction.cpp: analogfunction.xml
+bsim3v34nMOS.analogfunction.cpp: bsim3v34nMOS.va
+	$(ADMSXML) $< -e $(srcdir)/analogfunction.xml
+bsim3v34nMOS.core.cpp: bsim3v34nMOS.defs.h qucsVersion.xml qucsMODULEcore.xml
+bsim3v34nMOS.core.cpp: bsim3v34nMOS.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEcore.xml
+bsim3v34nMOS.defs.h: qucsVersion.xml qucsMODULEdefs.xml
+bsim3v34nMOS.defs.h: bsim3v34nMOS.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEdefs.xml
+bsim3v34nMOS.gui.cpp: qucsVersion.xml qucsMODULEgui.xml
+bsim3v34nMOS.gui.cpp: bsim3v34nMOS.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEgui.xml
+
+bsim3v34pMOS.analogfunction.cpp: analogfunction.xml
+bsim3v34pMOS.analogfunction.cpp: bsim3v34pMOS.va
+	$(ADMSXML) $< -e $(srcdir)/analogfunction.xml
+bsim3v34pMOS.core.cpp: bsim3v34pMOS.defs.h qucsVersion.xml qucsMODULEcore.xml
+bsim3v34pMOS.core.cpp: bsim3v34pMOS.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEcore.xml
+bsim3v34pMOS.defs.h: qucsVersion.xml qucsMODULEdefs.xml
+bsim3v34pMOS.defs.h: bsim3v34pMOS.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEdefs.xml
+bsim3v34pMOS.gui.cpp: qucsVersion.xml qucsMODULEgui.xml
+bsim3v34pMOS.gui.cpp: bsim3v34pMOS.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEgui.xml
+
+bsim4v30nMOS.analogfunction.cpp: analogfunction.xml
+bsim4v30nMOS.analogfunction.cpp: bsim4v30nMOS.va
+	$(ADMSXML) $< -e $(srcdir)/analogfunction.xml
+bsim4v30nMOS.core.cpp: bsim4v30nMOS.defs.h qucsVersion.xml qucsMODULEcore.xml
+bsim4v30nMOS.core.cpp: bsim4v30nMOS.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEcore.xml
+bsim4v30nMOS.defs.h: qucsVersion.xml qucsMODULEdefs.xml
+bsim4v30nMOS.defs.h: bsim4v30nMOS.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEdefs.xml
+bsim4v30nMOS.gui.cpp: qucsVersion.xml qucsMODULEgui.xml
+bsim4v30nMOS.gui.cpp: bsim4v30nMOS.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEgui.xml
+
+bsim4v30pMOS.analogfunction.cpp: analogfunction.xml
+bsim4v30pMOS.analogfunction.cpp: bsim4v30pMOS.va
+	$(ADMSXML) $< -e $(srcdir)/analogfunction.xml
+bsim4v30pMOS.core.cpp: bsim4v30pMOS.defs.h qucsVersion.xml qucsMODULEcore.xml
+bsim4v30pMOS.core.cpp: bsim4v30pMOS.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEcore.xml
+bsim4v30pMOS.defs.h: qucsVersion.xml qucsMODULEdefs.xml
+bsim4v30pMOS.defs.h: bsim4v30pMOS.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEdefs.xml
+bsim4v30pMOS.gui.cpp: qucsVersion.xml qucsMODULEgui.xml
+bsim4v30pMOS.gui.cpp: bsim4v30pMOS.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEgui.xml
+
+
+hicumL0V1p2.analogfunction.cpp: analogfunction.xml
+hicumL0V1p2.analogfunction.cpp: hicumL0V1p2.va
+	$(ADMSXML) $< -e $(srcdir)/analogfunction.xml
+hicumL0V1p2.core.cpp: hicumL0V1p2.defs.h qucsVersion.xml qucsMODULEcore.xml
+hicumL0V1p2.core.cpp: hicumL0V1p2.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEcore.xml
+hicumL0V1p2.defs.h: qucsVersion.xml qucsMODULEdefs.xml
+hicumL0V1p2.defs.h: hicumL0V1p2.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEdefs.xml
+hicumL0V1p2.gui.cpp: qucsVersion.xml qucsMODULEgui.xml
+hicumL0V1p2.gui.cpp: hicumL0V1p2.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEgui.xml
+
+hicumL0V1p2g.analogfunction.cpp: analogfunction.xml
+hicumL0V1p2g.analogfunction.cpp: hicumL0V1p2g.va
+	$(ADMSXML) $< -e $(srcdir)/analogfunction.xml
+hicumL0V1p2g.core.cpp: hicumL0V1p2g.defs.h qucsVersion.xml qucsMODULEcore.xml
+hicumL0V1p2g.core.cpp: hicumL0V1p2g.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEcore.xml
+hicumL0V1p2g.defs.h: qucsVersion.xml qucsMODULEdefs.xml
+hicumL0V1p2g.defs.h: hicumL0V1p2g.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEdefs.xml
+hicumL0V1p2g.gui.cpp: qucsVersion.xml qucsMODULEgui.xml
+hicumL0V1p2g.gui.cpp: hicumL0V1p2g.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEgui.xml
+
+hicumL0V1p3.analogfunction.cpp: analogfunction.xml
+hicumL0V1p3.analogfunction.cpp: hicumL0V1p3.va
+	$(ADMSXML) $< -e $(srcdir)/analogfunction.xml
+hicumL0V1p3.core.cpp: hicumL0V1p3.defs.h qucsVersion.xml qucsMODULEcore.xml
+hicumL0V1p3.core.cpp: hicumL0V1p3.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEcore.xml
+hicumL0V1p3.defs.h: qucsVersion.xml qucsMODULEdefs.xml
+hicumL0V1p3.defs.h: hicumL0V1p3.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEdefs.xml
+hicumL0V1p3.gui.cpp: qucsVersion.xml qucsMODULEgui.xml
+hicumL0V1p3.gui.cpp: hicumL0V1p3.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEgui.xml
+
+hicumL2V2p23.analogfunction.cpp: analogfunction.xml
+hicumL2V2p23.analogfunction.cpp: hicumL2V2p23.va
+	$(ADMSXML) $< -e $(srcdir)/analogfunction.xml
+hicumL2V2p23.core.cpp: hicumL2V2p23.defs.h qucsVersion.xml qucsMODULEcore.xml
+hicumL2V2p23.core.cpp: hicumL2V2p23.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEcore.xml
+hicumL2V2p23.defs.h: qucsVersion.xml qucsMODULEdefs.xml
+hicumL2V2p23.defs.h: hicumL2V2p23.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEdefs.xml
+hicumL2V2p23.gui.cpp: qucsVersion.xml qucsMODULEgui.xml
+hicumL2V2p23.gui.cpp: hicumL2V2p23.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEgui.xml
+
+hicumL2V2p24.analogfunction.cpp: analogfunction.xml
+hicumL2V2p24.analogfunction.cpp: hicumL2V2p24.va
+	$(ADMSXML) $< -e $(srcdir)/analogfunction.xml
+hicumL2V2p24.core.cpp: hicumL2V2p24.defs.h qucsVersion.xml qucsMODULEcore.xml
+hicumL2V2p24.core.cpp: hicumL2V2p24.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEcore.xml
+hicumL2V2p24.defs.h: qucsVersion.xml qucsMODULEdefs.xml
+hicumL2V2p24.defs.h: hicumL2V2p24.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEdefs.xml
+hicumL2V2p24.gui.cpp: qucsVersion.xml qucsMODULEgui.xml
+hicumL2V2p24.gui.cpp: hicumL2V2p24.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEgui.xml
+
+hicumL2V2p31n.analogfunction.cpp: analogfunction.xml
+hicumL2V2p31n.analogfunction.cpp: hicumL2V2p31n.va
+	$(ADMSXML) $< -e $(srcdir)/analogfunction.xml
+hicumL2V2p31n.core.cpp: hicumL2V2p31n.defs.h $(srcdir)/qucsVersion.xml $(srcdir)/qucsMODULEcore.xml
+hicumL2V2p31n.core.cpp: hicumL2V2p31n.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEcore.xml
+hicumL2V2p31n.defs.h: $(srcdir)/qucsVersion.xml $(srcdir)/qucsMODULEdefs.xml
+hicumL2V2p31n.defs.h: hicumL2V2p31n.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEdefs.xml
+hicumL2V2p31n.gui.cpp: $(srcdir)/qucsVersion.xml $(srcdir)/qucsMODULEgui.xml
+hicumL2V2p31n.gui.cpp: hicumL2V2p31n.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEgui.xml
+
+
+photodiode.analogfunction.cpp: analogfunction.xml
+photodiode.analogfunction.cpp: photodiode.va
+	$(ADMSXML) $< -e $(srcdir)/analogfunction.xml
+photodiode.core.cpp: photodiode.defs.h qucsVersion.xml qucsMODULEcore.xml
+photodiode.core.cpp: photodiode.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEcore.xml
+photodiode.defs.h: qucsVersion.xml qucsMODULEdefs.xml
+photodiode.defs.h: photodiode.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEdefs.xml
+photodiode.gui.cpp: qucsVersion.xml qucsMODULEgui.xml
+photodiode.gui.cpp: photodiode.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEgui.xml
+
+dff_SR.analogfunction.cpp: analogfunction.xml
+dff_SR.analogfunction.cpp: dff_SR.va
+	$(ADMSXML) $< -e $(srcdir)/analogfunction.xml
+dff_SR.core.cpp: dff_SR.defs.h qucsVersion.xml qucsMODULEcore.xml
+dff_SR.core.cpp: dff_SR.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEcore.xml
+dff_SR.defs.h: qucsVersion.xml qucsMODULEdefs.xml
+dff_SR.defs.h: dff_SR.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEdefs.xml
+dff_SR.gui.cpp: qucsVersion.xml qucsMODULEgui.xml
+dff_SR.gui.cpp: dff_SR.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEgui.xml
+
+tff_SR.analogfunction.cpp: analogfunction.xml
+tff_SR.analogfunction.cpp: tff_SR.va
+	$(ADMSXML) $< -e $(srcdir)/analogfunction.xml
+tff_SR.core.cpp: tff_SR.defs.h qucsVersion.xml qucsMODULEcore.xml
+tff_SR.core.cpp: tff_SR.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEcore.xml
+tff_SR.defs.h: qucsVersion.xml qucsMODULEdefs.xml
+tff_SR.defs.h: tff_SR.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEdefs.xml
+tff_SR.gui.cpp: qucsVersion.xml qucsMODULEgui.xml
+tff_SR.gui.cpp: tff_SR.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEgui.xml
+
+jkff_SR.analogfunction.cpp: analogfunction.xml
+jkff_SR.analogfunction.cpp: jkff_SR.va
+	$(ADMSXML) $< -e $(srcdir)/analogfunction.xml
+jkff_SR.core.cpp: jkff_SR.defs.h qucsVersion.xml qucsMODULEcore.xml
+jkff_SR.core.cpp: jkff_SR.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEcore.xml
+jkff_SR.defs.h: qucsVersion.xml qucsMODULEdefs.xml
+jkff_SR.defs.h: jkff_SR.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEdefs.xml
+jkff_SR.gui.cpp: qucsVersion.xml qucsMODULEgui.xml
+jkff_SR.gui.cpp: jkff_SR.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEgui.xml
+
+gatedDlatch.analogfunction.cpp: analogfunction.xml
+gatedDlatch.analogfunction.cpp: gatedDlatch.va
+	$(ADMSXML) $< -e $(srcdir)/analogfunction.xml
+gatedDlatch.core.cpp: gatedDlatch.defs.h qucsVersion.xml qucsMODULEcore.xml
+gatedDlatch.core.cpp: gatedDlatch.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEcore.xml
+gatedDlatch.defs.h: qucsVersion.xml qucsMODULEdefs.xml
+gatedDlatch.defs.h: gatedDlatch.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEdefs.xml
+gatedDlatch.gui.cpp: qucsVersion.xml qucsMODULEgui.xml
+gatedDlatch.gui.cpp: gatedDlatch.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEgui.xml
+
+logic_0.analogfunction.cpp: analogfunction.xml
+logic_0.analogfunction.cpp: logic_0.va
+	$(ADMSXML) $< -e $(srcdir)/analogfunction.xml
+logic_0.core.cpp: logic_0.defs.h qucsVersion.xml qucsMODULEcore.xml
+logic_0.core.cpp: logic_0.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEcore.xml
+logic_0.defs.h: qucsVersion.xml qucsMODULEdefs.xml
+logic_0.defs.h: logic_0.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEdefs.xml
+logic_0.gui.cpp: qucsVersion.xml qucsMODULEgui.xml
+logic_0.gui.cpp: logic_0.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEgui.xml
+
+logic_1.analogfunction.cpp: analogfunction.xml
+logic_1.analogfunction.cpp: logic_1.va
+	$(ADMSXML) $< -e $(srcdir)/analogfunction.xml
+logic_1.core.cpp: logic_1.defs.h qucsVersion.xml qucsMODULEcore.xml
+logic_1.core.cpp: logic_1.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEcore.xml
+logic_1.defs.h: qucsVersion.xml qucsMODULEdefs.xml
+logic_1.defs.h: logic_1.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEdefs.xml
+logic_1.gui.cpp: qucsVersion.xml qucsMODULEgui.xml
+logic_1.gui.cpp: logic_1.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEgui.xml
+
+mux2to1.analogfunction.cpp: analogfunction.xml
+mux2to1.analogfunction.cpp: mux2to1.va
+	$(ADMSXML) $< -e $(srcdir)/analogfunction.xml
+mux2to1.core.cpp: mux2to1.defs.h qucsVersion.xml qucsMODULEcore.xml
+mux2to1.core.cpp: mux2to1.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEcore.xml
+mux2to1.defs.h: qucsVersion.xml qucsMODULEdefs.xml
+mux2to1.defs.h: mux2to1.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEdefs.xml
+mux2to1.gui.cpp: qucsVersion.xml qucsMODULEgui.xml
+mux2to1.gui.cpp: mux2to1.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEgui.xml
+
+mux4to1.analogfunction.cpp: analogfunction.xml
+mux4to1.analogfunction.cpp: mux4to1.va
+	$(ADMSXML) $< -e $(srcdir)/analogfunction.xml
+mux4to1.core.cpp: mux4to1.defs.h qucsVersion.xml qucsMODULEcore.xml
+mux4to1.core.cpp: mux4to1.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEcore.xml
+mux4to1.defs.h: qucsVersion.xml qucsMODULEdefs.xml
+mux4to1.defs.h: mux4to1.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEdefs.xml
+mux4to1.gui.cpp: qucsVersion.xml qucsMODULEgui.xml
+mux4to1.gui.cpp: mux4to1.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEgui.xml
+
+mux8to1.analogfunction.cpp: analogfunction.xml
+mux8to1.analogfunction.cpp: mux8to1.va
+	$(ADMSXML) $< -e $(srcdir)/analogfunction.xml
+mux8to1.core.cpp: mux8to1.defs.h qucsVersion.xml qucsMODULEcore.xml
+mux8to1.core.cpp: mux8to1.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEcore.xml
+mux8to1.defs.h: qucsVersion.xml qucsMODULEdefs.xml
+mux8to1.defs.h: mux8to1.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEdefs.xml
+mux8to1.gui.cpp: qucsVersion.xml qucsMODULEgui.xml
+mux8to1.gui.cpp: mux8to1.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEgui.xml
+
+DLS_nto1.analogfunction.cpp: analogfunction.xml
+DLS_nto1.analogfunction.cpp: DLS_nto1.va
+	$(ADMSXML) $< -e $(srcdir)/analogfunction.xml
+DLS_nto1.core.cpp: DLS_nto1.defs.h qucsVersion.xml qucsMODULEcore.xml
+DLS_nto1.core.cpp: DLS_nto1.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEcore.xml
+DLS_nto1.defs.h: qucsVersion.xml qucsMODULEdefs.xml
+DLS_nto1.defs.h: DLS_nto1.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEdefs.xml
+DLS_nto1.gui.cpp: qucsVersion.xml qucsMODULEgui.xml
+DLS_nto1.gui.cpp: DLS_nto1.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEgui.xml
+
+DLS_1ton.analogfunction.cpp: analogfunction.xml
+DLS_1ton.analogfunction.cpp: DLS_1ton.va
+	$(ADMSXML) $< -e $(srcdir)/analogfunction.xml
+DLS_1ton.core.cpp: DLS_1ton.defs.h qucsVersion.xml qucsMODULEcore.xml
+DLS_1ton.core.cpp: DLS_1ton.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEcore.xml
+DLS_1ton.defs.h: qucsVersion.xml qucsMODULEdefs.xml
+DLS_1ton.defs.h: DLS_1ton.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEdefs.xml
+DLS_1ton.gui.cpp: qucsVersion.xml qucsMODULEgui.xml
+DLS_1ton.gui.cpp: DLS_1ton.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEgui.xml
+
+andor4x2.analogfunction.cpp: analogfunction.xml
+andor4x2.analogfunction.cpp: andor4x2.va
+	$(ADMSXML) $< -e $(srcdir)/analogfunction.xml
+andor4x2.core.cpp: andor4x2.defs.h qucsVersion.xml qucsMODULEcore.xml
+andor4x2.core.cpp: andor4x2.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEcore.xml
+andor4x2.defs.h: qucsVersion.xml qucsMODULEdefs.xml
+andor4x2.defs.h: andor4x2.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEdefs.xml
+andor4x2.gui.cpp: qucsVersion.xml qucsMODULEgui.xml
+andor4x2.gui.cpp: andor4x2.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEgui.xml
+
+andor4x3.analogfunction.cpp: analogfunction.xml
+andor4x3.analogfunction.cpp: andor4x3.va
+	$(ADMSXML) $< -e $(srcdir)/analogfunction.xml
+andor4x3.core.cpp: andor4x3.defs.h qucsVersion.xml qucsMODULEcore.xml
+andor4x3.core.cpp: andor4x3.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEcore.xml
+andor4x3.defs.h: qucsVersion.xml qucsMODULEdefs.xml
+andor4x3.defs.h: andor4x3.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEdefs.xml
+andor4x3.gui.cpp: qucsVersion.xml qucsMODULEgui.xml
+andor4x3.gui.cpp: andor4x3.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEgui.xml
+
+andor4x4.analogfunction.cpp: analogfunction.xml
+andor4x4.analogfunction.cpp: andor4x4.va
+	$(ADMSXML) $< -e $(srcdir)/analogfunction.xml
+andor4x4.core.cpp: andor4x4.defs.h qucsVersion.xml qucsMODULEcore.xml
+andor4x4.core.cpp: andor4x4.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEcore.xml
+andor4x4.defs.h: qucsVersion.xml qucsMODULEdefs.xml
+andor4x4.defs.h: andor4x4.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEdefs.xml
+andor4x4.gui.cpp: qucsVersion.xml qucsMODULEgui.xml
+andor4x4.gui.cpp: andor4x4.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEgui.xml
+
+dmux2to4.analogfunction.cpp: analogfunction.xml
+dmux2to4.analogfunction.cpp: dmux2to4.va
+	$(ADMSXML) $< -e $(srcdir)/analogfunction.xml
+dmux2to4.core.cpp: dmux2to4.defs.h qucsVersion.xml qucsMODULEcore.xml
+dmux2to4.core.cpp: dmux2to4.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEcore.xml
+dmux2to4.defs.h: qucsVersion.xml qucsMODULEdefs.xml
+dmux2to4.defs.h: dmux2to4.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEdefs.xml
+dmux2to4.gui.cpp: qucsVersion.xml qucsMODULEgui.xml
+dmux2to4.gui.cpp: dmux2to4.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEgui.xml
+
+dmux3to8.analogfunction.cpp: analogfunction.xml
+dmux3to8.analogfunction.cpp: dmux3to8.va
+	$(ADMSXML) $< -e $(srcdir)/analogfunction.xml
+dmux3to8.core.cpp: dmux3to8.defs.h qucsVersion.xml qucsMODULEcore.xml
+dmux3to8.core.cpp: dmux3to8.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEcore.xml
+dmux3to8.defs.h: qucsVersion.xml qucsMODULEdefs.xml
+dmux3to8.defs.h: dmux3to8.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEdefs.xml
+dmux3to8.gui.cpp: qucsVersion.xml qucsMODULEgui.xml
+dmux3to8.gui.cpp: dmux3to8.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEgui.xml
+
+dmux4to16.analogfunction.cpp: analogfunction.xml
+dmux4to16.analogfunction.cpp: dmux4to16.va
+	$(ADMSXML) $< -e $(srcdir)/analogfunction.xml
+dmux4to16.core.cpp: dmux4to16.defs.h qucsVersion.xml qucsMODULEcore.xml
+dmux4to16.core.cpp: dmux4to16.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEcore.xml
+dmux4to16.defs.h: qucsVersion.xml qucsMODULEdefs.xml
+dmux4to16.defs.h: dmux4to16.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEdefs.xml
+dmux4to16.gui.cpp: qucsVersion.xml qucsMODULEgui.xml
+dmux4to16.gui.cpp: dmux4to16.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEgui.xml
+
+ha1b.analogfunction.cpp: analogfunction.xml
+ha1b.analogfunction.cpp: ha1b.va
+	$(ADMSXML) $< -e $(srcdir)/analogfunction.xml
+ha1b.core.cpp: ha1b.defs.h qucsVersion.xml qucsMODULEcore.xml
+ha1b.core.cpp: ha1b.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEcore.xml
+ha1b.defs.h: qucsVersion.xml qucsMODULEdefs.xml
+ha1b.defs.h: ha1b.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEdefs.xml
+ha1b.gui.cpp: qucsVersion.xml qucsMODULEgui.xml
+ha1b.gui.cpp: ha1b.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEgui.xml
+
+fa1b.analogfunction.cpp: analogfunction.xml
+fa1b.analogfunction.cpp: fa1b.va
+	$(ADMSXML) $< -e $(srcdir)/analogfunction.xml
+fa1b.core.cpp: fa1b.defs.h qucsVersion.xml qucsMODULEcore.xml
+fa1b.core.cpp: fa1b.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEcore.xml
+fa1b.defs.h: qucsVersion.xml qucsMODULEdefs.xml
+fa1b.defs.h: fa1b.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEdefs.xml
+fa1b.gui.cpp: qucsVersion.xml qucsMODULEgui.xml
+fa1b.gui.cpp: fa1b.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEgui.xml
+
+fa2b.analogfunction.cpp: analogfunction.xml
+fa2b.analogfunction.cpp: fa2b.va
+	$(ADMSXML) $< -e $(srcdir)/analogfunction.xml
+fa2b.core.cpp: fa2b.defs.h qucsVersion.xml qucsMODULEcore.xml
+fa2b.core.cpp: fa2b.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEcore.xml
+fa2b.defs.h: qucsVersion.xml qucsMODULEdefs.xml
+fa2b.defs.h: fa2b.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEdefs.xml
+fa2b.gui.cpp: qucsVersion.xml qucsMODULEgui.xml
+fa2b.gui.cpp: fa2b.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEgui.xml
+
+pad2bit.analogfunction.cpp: analogfunction.xml
+pad2bit.analogfunction.cpp: pad2bit.va
+	$(ADMSXML) $< -e $(srcdir)/analogfunction.xml
+pad2bit.core.cpp: pad2bit.defs.h qucsVersion.xml qucsMODULEcore.xml
+pad2bit.core.cpp: pad2bit.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEcore.xml
+pad2bit.defs.h: qucsVersion.xml qucsMODULEdefs.xml
+pad2bit.defs.h: pad2bit.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEdefs.xml
+pad2bit.gui.cpp: qucsVersion.xml qucsMODULEgui.xml
+pad2bit.gui.cpp: pad2bit.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEgui.xml
+
+pad3bit.analogfunction.cpp: analogfunction.xml
+pad3bit.analogfunction.cpp: pad3bit.va
+	$(ADMSXML) $< -e $(srcdir)/analogfunction.xml
+pad3bit.core.cpp: pad3bit.defs.h qucsVersion.xml qucsMODULEcore.xml
+pad3bit.core.cpp: pad3bit.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEcore.xml
+pad3bit.defs.h: qucsVersion.xml qucsMODULEdefs.xml
+pad3bit.defs.h: pad3bit.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEdefs.xml
+pad3bit.gui.cpp: qucsVersion.xml qucsMODULEgui.xml
+pad3bit.gui.cpp: pad3bit.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEgui.xml
+
+pad4bit.analogfunction.cpp: analogfunction.xml
+pad4bit.analogfunction.cpp: pad4bit.va
+	$(ADMSXML) $< -e $(srcdir)/analogfunction.xml
+pad4bit.core.cpp: pad4bit.defs.h qucsVersion.xml qucsMODULEcore.xml
+pad4bit.core.cpp: pad4bit.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEcore.xml
+pad4bit.defs.h: qucsVersion.xml qucsMODULEdefs.xml
+pad4bit.defs.h: pad4bit.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEdefs.xml
+pad4bit.gui.cpp: qucsVersion.xml qucsMODULEgui.xml
+pad4bit.gui.cpp: pad4bit.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEgui.xml
+
+binarytogrey4bit.analogfunction.cpp: analogfunction.xml
+binarytogrey4bit.analogfunction.cpp: binarytogrey4bit.va
+	$(ADMSXML) $< -e $(srcdir)/analogfunction.xml
+binarytogrey4bit.core.cpp: binarytogrey4bit.defs.h qucsVersion.xml qucsMODULEcore.xml
+binarytogrey4bit.core.cpp: binarytogrey4bit.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEcore.xml
+binarytogrey4bit.defs.h: qucsVersion.xml qucsMODULEdefs.xml
+binarytogrey4bit.defs.h: binarytogrey4bit.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEdefs.xml
+binarytogrey4bit.gui.cpp: qucsVersion.xml qucsMODULEgui.xml
+binarytogrey4bit.gui.cpp: binarytogrey4bit.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEgui.xml
+
+greytobinary4bit.analogfunction.cpp: analogfunction.xml
+greytobinary4bit.analogfunction.cpp: greytobinary4bit.va
+	$(ADMSXML) $< -e $(srcdir)/analogfunction.xml
+greytobinary4bit.core.cpp: greytobinary4bit.defs.h qucsVersion.xml qucsMODULEcore.xml
+greytobinary4bit.core.cpp: greytobinary4bit.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEcore.xml
+greytobinary4bit.defs.h: qucsVersion.xml qucsMODULEdefs.xml
+greytobinary4bit.defs.h: greytobinary4bit.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEdefs.xml
+greytobinary4bit.gui.cpp: qucsVersion.xml qucsMODULEgui.xml
+greytobinary4bit.gui.cpp: greytobinary4bit.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEgui.xml
+
+comp_1bit.analogfunction.cpp: analogfunction.xml
+comp_1bit.analogfunction.cpp: comp_1bit.va
+	$(ADMSXML) $< -e $(srcdir)/analogfunction.xml
+comp_1bit.core.cpp: comp_1bit.defs.h qucsVersion.xml qucsMODULEcore.xml
+comp_1bit.core.cpp: comp_1bit.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEcore.xml
+comp_1bit.defs.h: qucsVersion.xml qucsMODULEdefs.xml
+comp_1bit.defs.h: comp_1bit.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEdefs.xml
+comp_1bit.gui.cpp: qucsVersion.xml qucsMODULEgui.xml
+comp_1bit.gui.cpp: comp_1bit.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEgui.xml
+
+comp_2bit.analogfunction.cpp: analogfunction.xml
+comp_2bit.analogfunction.cpp: comp_2bit.va
+	$(ADMSXML) $< -e $(srcdir)/analogfunction.xml
+comp_2bit.core.cpp: comp_2bit.defs.h qucsVersion.xml qucsMODULEcore.xml
+comp_2bit.core.cpp: comp_2bit.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEcore.xml
+comp_2bit.defs.h: qucsVersion.xml qucsMODULEdefs.xml
+comp_2bit.defs.h: comp_2bit.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEdefs.xml
+comp_2bit.gui.cpp: qucsVersion.xml qucsMODULEgui.xml
+comp_2bit.gui.cpp: comp_2bit.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEgui.xml
+
+comp_4bit.analogfunction.cpp: analogfunction.xml
+comp_4bit.analogfunction.cpp: comp_4bit.va
+	$(ADMSXML) $< -e $(srcdir)/analogfunction.xml
+comp_4bit.core.cpp: comp_4bit.defs.h qucsVersion.xml qucsMODULEcore.xml
+comp_4bit.core.cpp: comp_4bit.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEcore.xml
+comp_4bit.defs.h: qucsVersion.xml qucsMODULEdefs.xml
+comp_4bit.defs.h: comp_4bit.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEdefs.xml
+comp_4bit.gui.cpp: qucsVersion.xml qucsMODULEgui.xml
+comp_4bit.gui.cpp: comp_4bit.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEgui.xml
+
+hpribin4bit.analogfunction.cpp: analogfunction.xml
+hpribin4bit.analogfunction.cpp: hpribin4bit.va
+	$(ADMSXML) $< -e $(srcdir)/analogfunction.xml
+hpribin4bit.core.cpp: hpribin4bit.defs.h qucsVersion.xml qucsMODULEcore.xml
+hpribin4bit.core.cpp: hpribin4bit.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEcore.xml
+hpribin4bit.defs.h: qucsVersion.xml qucsMODULEdefs.xml
+hpribin4bit.defs.h: hpribin4bit.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEdefs.xml
+hpribin4bit.gui.cpp: qucsVersion.xml qucsMODULEgui.xml
+hpribin4bit.gui.cpp: hpribin4bit.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEgui.xml
+
+phototransistor.analogfunction.cpp: analogfunction.xml
+phototransistor.analogfunction.cpp: phototransistor.va
+	$(ADMSXML) $< -e $(srcdir)/analogfunction.xml
+phototransistor.core.cpp: phototransistor.defs.h qucsVersion.xml qucsMODULEcore.xml
+phototransistor.core.cpp: phototransistor.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEcore.xml
+phototransistor.defs.h: qucsVersion.xml qucsMODULEdefs.xml
+phototransistor.defs.h: phototransistor.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEdefs.xml
+phototransistor.gui.cpp: qucsVersion.xml qucsMODULEgui.xml
+phototransistor.gui.cpp: phototransistor.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEgui.xml
+
+nigbt.analogfunction.cpp: analogfunction.xml
+nigbt.analogfunction.cpp: nigbt.va
+	$(ADMSXML) $< -e $(srcdir)/analogfunction.xml
+nigbt.core.cpp: nigbt.defs.h qucsVersion.xml qucsMODULEcore.xml
+nigbt.core.cpp: nigbt.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEcore.xml
+nigbt.defs.h: qucsVersion.xml qucsMODULEdefs.xml
+nigbt.defs.h: nigbt.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEdefs.xml
+nigbt.gui.cpp: qucsVersion.xml qucsMODULEgui.xml
+nigbt.gui.cpp: nigbt.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEgui.xml
+
+vcresistor.analogfunction.cpp: analogfunction.xml
+vcresistor.analogfunction.cpp: vcresistor.va
+	$(ADMSXML) $< -e $(srcdir)/analogfunction.xml
+vcresistor.core.cpp: vcresistor.defs.h qucsVersion.xml qucsMODULEcore.xml
+vcresistor.core.cpp: vcresistor.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEcore.xml
+vcresistor.defs.h: qucsVersion.xml qucsMODULEdefs.xml
+vcresistor.defs.h: vcresistor.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEdefs.xml
+vcresistor.gui.cpp: qucsVersion.xml qucsMODULEgui.xml
+vcresistor.gui.cpp: vcresistor.va
+	$(ADMSXML) $< -e $(srcdir)/qucsVersion.xml -e $(srcdir)/qucsMODULEgui.xml
 
 GENERATED_FILES = *.core.* *.analogfunction.* *.gui.* *.defs.* .*.adms .*.xml
+else
+GENERATED_FILES =
+endif
 
 pkginclude_HEADERS = $(XML_FILES) $(MAKE_FILES) $(VA_INCLUDES)
 
-CLEANFILES = *~ *.orig *.rej *.analogfunction.cpp *.core.cpp .*.adms \
-             *.core.h *.analogfunction.h *.cpp *.defs.h
+CLEANFILES = *~ *.orig *.rej $(GENERATED_FILES)
 
-DISTCLEANFILES = \
-    constants.vams\
-    discipline.vams\
-    .adms.implicit.xml\
-    .interface.xml\
-    disciplines.vams
-
-
-MAINTAINERCLEANFILES = Makefile.in $(GENERATED_FILES)
+MAINTAINERCLEANFILES = Makefile.in

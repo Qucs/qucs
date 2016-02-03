@@ -69,12 +69,12 @@ nodeset::nodeset (const nodeset & p) {
 
 // Destructor deletes the node set object.
 nodeset::~nodeset () {
-  free (name);
+  if (name) free (name);
 }
 
 // Sets the name of the node set.
 void nodeset::setName (char * n) {
-  free (name);
+  if (name) free (name);
   name = n ? strdup (n) : NULL;
 }
 

@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- This script is used to test the xml interpreter of adms.
+Please refer to file adms.xml to better understand how this xml script works.
+It is a good starting point/template to learn how to build xml scripts for adms.
+Running the following command 'admsXml <vafile> -e vlatovla.xml' will
+create a new verilog-ams file - say newvafile - equivalent to vafile (same behavioral model).
+If the command is again applied but on file newvafile then the output of the command
+should exactly match the contents of newvafile.
+In other words vlatovla * vlatovla = vlatovla.
+This property is used to test a new release of adms.
+Issues/Suggestions: r29173 AT users.sourceforge.net (Laurent Lemaitre)
+-->
+<!--
+  $Id: vlatovla.xml 1102 2008-10-03 14:09:22Z r29173 $
+  $Log$
+  Revision 1.20  2006/09/04 08:51:05  r29173
+  tons of simplifications
+
+  Revision 1.19  2006/04/05 08:38:31  r29173
+  added support to elements analogfunction and blockvariable
+
+  Revision 1.17  2006/03/21 14:39:16  r29173
+  cosmetic improvements
+
+  Revision 1.16  2006/03/15 10:24:27  r29173
+  improved 'number' template
+
+  Revision 1.15  2006/03/09 13:35:02  r29173
+  updated to adms-2.2.0
+
+  Revision 1.14  2005/11/25 14:15:25  r29173
+  changed admstpath parser mechanisms
+
+  Revision 1.13  2005/09/14 15:41:31  r29173
+  renamed admst:templates to admst:template (same for apply-template)
+
+  Revision 1.12  2005/04/01 14:16:25  r29173
+  migration to adms-2.x.x: updated version to 2.0.0
+
+  Revision 1.11  2005/04/01 08:33:22  r29173
+  migration to adms-2.x.x: removed predicate options
+
+  Revision 1.10  2005/03/31 18:12:02  r29173
+  migration to adms-2.x.x: converted to adms2 syntax
+
+  Revision 1.9  2005/03/11 09:04:53  r29173
+  migration to adms-2.x.x: admst:if requires attribute 'test'
+
+  Revision 1.8  2005/02/28 08:03:31  r29173
+  migration to adms-2.x.x: admst:version required
+
+  Revision 1.7  2005/02/25 14:36:52  r29173
+  migration to adms-2.x.x: fixed test vlatovla
+
+  Revision 1.6  2005/02/20 11:46:07  r29173
+  migration to adms-2.x.x: renamed device to module
+
+  Revision 1.5  2005/02/20 11:01:01  r29173
+  migration to adms-2.x.x: renamed devicenode to node
+
+  Revision 1.4  2005/02/01 09:06:48  r29173
+  added comment
+
+-->
+<!DOCTYPE admst PUBLIC "-//adms//DTD admst 2.0//-" "http://mot-adms.sourceforge.net/xml-files/adms/admst.dtd">
+<admst version="2.3.0"  xmlns:admst="http://mot-adms.svn.sourceforge.net/viewvc/*checkout*/mot-adms/trunk/adms/admst.dtd">
+<admst:open file="vlatovla.va">
+  <!-- handling of nature -->
+  <admst:for-each select="/nature">
+nature %(name)
+ access=%(access);
+ units=&quot;%(units)&quot;;
+ abstol=%(abstol);
+endnature
+  </admst:for-each>
+
+  <!-- handling of discipline -->
+  <admst:for-each select="/discipline">
+discipline %(name)
+ potential %(potential/name);
+ flow      %(flow/name);
+enddiscipline
+  </admst:for-each>
+
+  <!-- handling of device: starting point -->
+  <admst:for-each select="/module">
+module %(name) <admst:if test="node[location='external']">
+  (<admst:join select="node[location='external']" separator=", ">%(name)</admst:join>)
+    </admst:if>
+    <admst:if test="attribute">(*<admst:apply-templates select="attribute" match="doattribute"/>*)</admst:if>;
+    <!-- nodes -->
+    <admst:if test="node">
+      <admst:if test="node[location='external']">
+inout <admst:join select="node[location='external']" separator=", ">%(name)</admst:join>;
+      </admst:if>
+electrical <admst:join select="node[grounded='no']" separator=", ">%(name)
+        <admst:if test="attribute">(*<admst:apply-templates select="attribute" match="doattribute"/>*)</admst:if>
+      </admst:join>;\n
+    </admst:if>
+    <!-- variables -->
+    <admst:for-each select="variable">
+      <admst:text format="/*insource=%(insource) v=%(static).%(dynamic) v.m=%(static).%(dynamic) scope=%(scope)*/ "/>
+      <admst:if test="[input='yes']">parameter </admst:if> %(type) %(name)
+      <admst:if test="[input='yes']">=<admst:apply-templates select="default" match="doexpression"/></admst:if>
+      <admst:if test="attribute">(* <admst:for-each select="attribute">%(name)=&quot;%(value)&quot; </admst:for-each>*)</admst:if>;\n
+    </admst:for-each>
+    <admst:for-each select="analogfunction">
+      <admst:variable name="name" path="name"/>
+      <admst:text format="analog function %(type) $name;\n"/>
+      <admst:for-each select="variable[name!='$name']">
+        <admst:choose>
+          <admst:when test="[input='yes' and output='yes']">
+            <admst:text format="inout %(name);\n"/>
+          </admst:when>
+          <admst:when test="[input='yes']">
+            <admst:text format="input %(name);\n"/>
+          </admst:when>
+          <admst:when test="[output='yes']">
+            <admst:text format="output %(name);\n"/>
+          </admst:when>
+        </admst:choose>
+        <admst:text format="%(type) %(name);\n"/>
+      </admst:for-each>
+      <admst:apply-templates select="tree" match="do%(adms/datatypename)"/>
+      <admst:text format="endfunction\n"/>
+    </admst:for-each>
+    <admst:text format="analog\n"/>
+    <admst:apply-templates select="analog/code" match="do%(adms/datatypename)"/>
+    <admst:text format="endmodule\n"/>
+  </admst:for-each>
+  <!-- handling of expression -->
+  <admst:template match="doexpression">
+    <admst:apply-templates select="tree" match="do%(adms/datatypename)" required="yes"/>
+  </admst:template>
+  <admst:template match="domapply_unary">
+    <admst:text format="("/>
+    <admst:if test="[name='plus']"> <admst:text format="+"/> </admst:if>
+    <admst:if test="[name='minus']"> <admst:text format="-"/> </admst:if>
+    <admst:if test="[name='not']"> <admst:text format="!"/> </admst:if>
+    <admst:if test="[name='bw_not']"> <admst:text format="~"/> </admst:if>
+    <admst:apply-templates select="arg1" match="do%(adms/datatypename)" required="yes"/>
+    <admst:text format=")"/>
+  </admst:template>
+  <admst:template match="domapply_binary">
+    <admst:text format="("/>
+    <admst:apply-templates select="arg1" match="do%(adms/datatypename)" required="yes"/>
+    <admst:if test="[name='bw_or']"> <admst:text format="|"/> </admst:if>
+    <admst:if test="[name='bw_and']"> <admst:text format="&amp;"/> </admst:if>
+    <admst:if test="[name='addp']"> <admst:text format="+"/> </admst:if>
+    <admst:if test="[name='addm']"> <admst:text format="-"/> </admst:if>
+    <admst:if test="[name='multtime']"> <admst:text format="*"/> </admst:if>
+    <admst:if test="[name='multdiv']"> <admst:text format="/"/> </admst:if>
+    <admst:if test="[name='and']"> <admst:text format="&amp;&amp;"/> </admst:if>
+    <admst:if test="[name='equ']"> <admst:text format="=="/> </admst:if>
+    <admst:if test="[name='gt']"> <admst:text format="&gt;"/> </admst:if>
+    <admst:if test="[name='gt_equ']"> <admst:text format="&gt;="/> </admst:if>
+    <admst:if test="[name='lt']"> <admst:text format="&lt;"/> </admst:if>
+    <admst:if test="[name='lt_equ']"> <admst:text format="&lt;="/> </admst:if>
+    <admst:if test="[name='notequ']"> <admst:text format="!="/> </admst:if>
+    <admst:if test="[name='or']"> <admst:text format="||"/> </admst:if>
+    <admst:if test="[name='multmod']"> <admst:text format="%%"/> </admst:if>
+    <admst:apply-templates select="arg2" match="do%(adms/datatypename)" required="yes"/>
+    <admst:text format=")"/>
+  </admst:template>
+  <admst:template match="domapply_ternary">
+    <admst:if test="[name='conditional']">
+      <admst:text format="("/>
+      <admst:apply-templates select="arg1" match="do%(adms/datatypename)" required="yes"/>
+      <admst:text format="?"/>
+      <admst:apply-templates select="arg2" match="do%(adms/datatypename)" required="yes"/>
+      <admst:text format=":"/>
+      <admst:apply-templates select="arg3" match="do%(adms/datatypename)" required="yes"/>
+      <admst:text format=")"/>
+    </admst:if>
+  </admst:template>
+  <admst:template match="dovariable">%(name)</admst:template>
+  <admst:template match="dofunction">
+    <admst:text format="%(name)"/>
+    <admst:if test="arguments">
+      <admst:text format="("/>
+      <admst:join select="arguments" separator=",">
+        <admst:apply-templates select="." match="do%(adms/datatypename)" required="yes"/>
+      </admst:join>
+      <admst:text format=")"/>
+    </admst:if>
+  </admst:template>
+  <admst:template match="dostring">&quot;%(value)&quot;</admst:template>
+  <admst:template match="donumber">
+    <admst:choose>
+      <admst:when test="[scalingunit='1']">%(value)</admst:when>
+      <admst:when test="[scalingunit='E']">(%(value)*1.0e+18)</admst:when>
+      <admst:when test="[scalingunit='P']">(%(value)*1.0e+15)</admst:when>
+      <admst:when test="[scalingunit='T']">(%(value)*1.0e+12)</admst:when>
+      <admst:when test="[scalingunit='G']">(%(value)*1.0e+9)</admst:when>
+      <admst:when test="[scalingunit='M']">(%(value)*1.0e+6)</admst:when>
+      <admst:when test="[scalingunit='k']">(%(value)*1.0e+3)</admst:when>
+      <admst:when test="[scalingunit='h']">(%(value)*1.0e+2)</admst:when>
+      <admst:when test="[scalingunit='D']">(%(value)*1.0e+1)</admst:when>
+      <admst:when test="[scalingunit='d']">(%(value)*1.0e-1)</admst:when>
+      <admst:when test="[scalingunit='c']">(%(value)*1.0e-2)</admst:when>
+      <admst:when test="[scalingunit='m']">(%(value)*1.0e-3)</admst:when>
+      <admst:when test="[scalingunit='u']">(%(value)*1.0e-6)</admst:when>
+      <admst:when test="[scalingunit='n']">(%(value)*1.0e-9)</admst:when>
+      <admst:when test="[scalingunit='A']">(%(value)*1.0e-10)</admst:when>
+      <admst:when test="[scalingunit='p']">(%(value)*1.0e-12)</admst:when>
+      <admst:when test="[scalingunit='f']">(%(value)*1.0e-15)</admst:when>
+      <admst:when test="[scalingunit='a']">(%(value)*1.0e-18)</admst:when>
+      <admst:otherwise><admst:fatal format="%(value)%(scalingunit): scaling unit not supported\n"/></admst:otherwise>
+    </admst:choose>
+  </admst:template>
+  <admst:template match="doprobe">
+    <admst:apply-templates select="." match="doprobe_and_source" required="yes"/>
+  </admst:template>
+  <admst:template match="donilled">;</admst:template>
+
+  <!-- handling of probes and sources -->
+  <admst:template match="doprobe_and_source">
+    <admst:if test="branch/nnode[grounded='yes']">
+      <admst:text format="%(nature/access)(%(branch/pnode/name))"/>
+    </admst:if>
+    <admst:if test="branch/nnode[grounded='no']">
+      <admst:text format="%(nature/access)(%(branch/pnode/name),%(branch/nnode/name))"/>
+    </admst:if>
+  </admst:template>
+
+  <!-- handling of attributes -->
+  <admst:template match="doattribute">
+    <admst:text format="%(name)=&quot;%(value)&quot; "/>
+  </admst:template>
+
+  <!-- handling of block -->
+  <admst:template match="doblock">
+    <admst:text format="/*#insource=%(#insource) b=%(static).%(dynamic) {*/"/>
+    <admst:text format="begin"/>
+    <admst:text test="[name!='']" format=": %(name)"/>
+    <admst:text format="\n"/>
+    <admst:apply-templates select="item" match="do%(adms/datatypename)"/>
+    <admst:text format="end /*}*/\n"/>
+  </admst:template>
+
+  <!-- handling of conditional -->
+  <admst:template match="doconditional">
+    <admst:text format="/*#insource=%(#insource) c=%(static).%(dynamic) ite=%(if/static).%(if/dynamic):%(then/static).%(then/dynamic):%([exists(else)]/else/static).%([exists(else)]/else/dynamic)*/ if("/>
+    <admst:apply-templates select="if" match="doexpression"/>
+    <admst:text format=")\n"/>
+    <admst:apply-templates select="then" match="do%(adms/datatypename)"/>
+    <admst:if test="else">
+      <admst:text format="/*#insource=%(else/#insource) e=%(else/static).%(else/dynamic)*/ else\n"/>
+      <admst:apply-templates select="else" match="do%(adms/datatypename)"/>
+    </admst:if>
+  </admst:template>
+
+  <!-- handling of callfunction -->
+  <admst:template match="docallfunction">
+    <admst:text format="/*%(static).%(dynamic)*/ "/>
+    <admst:apply-templates select="function" match="dofunction"/>
+    <admst:text format=";\n"/>
+  </admst:template>
+
+  <!-- handling of whileloop -->
+  <admst:template match="dowhileloop">
+    <admst:text format="/*#insource=%(#insource)*/ while("/>
+    <admst:apply-templates select="while" match="doexpression"/>
+    <admst:text format=")\n"/>
+    <admst:apply-templates select="whileblock" match="do%(adms/datatypename)"/>
+  </admst:template>
+
+  <!-- handling of case -->
+  <admst:template match="docase">
+    <admst:text format="case ("/>
+    <admst:apply-templates select="case/tree" match="do%(tree/adms/datatypename)"/>
+    <admst:text format=")\n"/>
+    <admst:for-each select="caseitem">
+      <admst:text format="  "/>
+      <admst:join select="condition" separator=",">
+        <admst:text format="%(.)"/>
+      </admst:join>
+      <admst:if test="[defaultcase='yes']">
+        <admst:text format="default"/>
+      </admst:if>
+      <admst:text format=": \n"/>
+      <admst:apply-templates select="code" match="do%(adms/datatypename)"/>
+    </admst:for-each>
+    <admst:text format="endcase\n"/>
+  </admst:template>
+
+  <!-- handling of blockvariable -->
+  <admst:template match="doblockvariable">
+    <admst:text format="/*#insource=%(#insource) b.v=%(static).%(dynamic)*/ %(variable[1]/type) "/>
+    <admst:join select="variable" separator=", ">
+      <admst:text format="/*#insource=%(#insource) insource=%(insource) v=%(static).%(dynamic)*/ %(name)"/>
+    </admst:join>
+    <admst:text format=";\n"/>
+  </admst:template>
+
+  <!-- handling of assignment -->
+  <admst:template match="doassignment">
+    <admst:text format="/*#insource=%(#insource) a=%(static).%(dynamic) l.insource=%(lhs/insource) l=%(lhs/static).%(lhs/dynamic) r=%(rhs/static).%(rhs/dynamic)*/ %(lhs/name)=%(doexpression(rhs));\n"/>
+  </admst:template>
+
+  <!-- handling of contribution -->
+  <admst:template match="docontribution">
+    <admst:text format="/*#insource=%(#insource) c=%(static).%(dynamic)*/ "/>
+    <admst:apply-templates select="lhs" match="doprobe_and_source" required="yes"/>
+    <admst:text format="&lt;+%(doexpression(rhs));\n"/>
+  </admst:template>
+</admst:open>
+<admst:message format="vlatovla.va: file created\n"/>
+</admst>

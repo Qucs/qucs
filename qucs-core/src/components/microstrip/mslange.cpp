@@ -42,8 +42,8 @@ void mslange::calcPropagation (nr_double_t frequency) {
   // fetch line properties
   nr_double_t W = getPropertyDouble ("W");
   nr_double_t s = getPropertyDouble ("S");
-  const char * const SModel = getPropertyString ("Model");
-  const char * const DModel = getPropertyString ("DispModel");
+  char * SModel = getPropertyString ("Model");
+  char * DModel = getPropertyString ("DispModel");
 
   // fetch substrate properties
   substrate * subst = getSubstrate ();
@@ -71,7 +71,7 @@ void mslange::calcPropagation (nr_double_t frequency) {
 		       frequency, "Hammerstad", aco, ado);
 
   // compute propagation constants for even and odd mode
-  nr_double_t k0 = 2 * pi * frequency / C0;
+  nr_double_t k0 = 2 * M_PI * frequency / C0;
   ae = ace + ade;
   ao = aco + ado;
   be = qucs::sqrt (ErEffeFreq) * k0;
@@ -128,7 +128,7 @@ void mslange::calcNoiseSP (nr_double_t) {
   nr_double_t T = getPropertyDouble ("Temp");
   matrix s = getMatrixS ();
   matrix e = eye (getSize ());
-  setMatrixN (celsius2kelvin (T) / T0 * (e - s * transpose (conj (s))));
+  setMatrixN (kelvin (T) / T0 * (e - s * transpose (conj (s))));
 }
 
 /* The function calculates the quasi-static dielectric constants and
@@ -137,7 +137,7 @@ void mslange::calcNoiseSP (nr_double_t) {
    lines. */
 void mslange::analysQuasiStatic (nr_double_t W, nr_double_t h, nr_double_t s,
 				   nr_double_t t, nr_double_t er,
-				   const char * const SModel, nr_double_t& Zle,
+				   char * SModel, nr_double_t& Zle,
 				   nr_double_t& Zlo, nr_double_t& ErEffe,
 				   nr_double_t& ErEffo) {
   // initialize default return values
@@ -173,10 +173,10 @@ void mslange::analysQuasiStatic (nr_double_t W, nr_double_t h, nr_double_t s,
     // further modifying equations
     r = 1 + 0.15 * (1 - qucs::exp (1 - sqr (er - 1) / 8.2) / (1 + qucs::pow (g, -6.)));
     fo1 = 1 - qucs::exp (-0.179 * qucs::pow (g, 0.15) -
-		   0.328 * qucs::pow (g, r) / qucs::log (euler + qucs::pow (g / 7, 2.8)));
+		   0.328 * qucs::pow (g, r) / qucs::log (M_E + qucs::pow (g / 7, 2.8)));
     q = qucs::exp (-1.366 - g);
     p = qucs::exp (-0.745 * qucs::pow (g, 0.295)) / qucs::cosh (qucs::pow (g, 0.68));
-    fo = fo1 * qucs::exp (p * qucs::log (u) + q * qucs::sin (pi * qucs::log10 (u)));
+    fo = fo1 * qucs::exp (p * qucs::log (u) + q * qucs::sin (M_PI * qucs::log10 (u)));
 
     Mu = g * qucs::exp (-g) + u * (20 + sqr (g)) / (10 + sqr (g));
     msline::Hammerstad_ab (Mu, er, a, b);
@@ -212,10 +212,10 @@ void mslange::analysQuasiStatic (nr_double_t W, nr_double_t h, nr_double_t s,
     if (t != 0 && s > 10 * (2 * t)) {
       nr_double_t dW = 0;
       // SCHNEIDER, referred by JANSEN
-      if (u >= one_over_pi / 2 && one_over_pi / 2 > 2 * t / h)
-	dW = t * (1 + qucs::log (2 * h / t)) / pi;
+      if (u >= M_1_PI / 2 && M_1_PI / 2 > 2 * t / h)
+	dW = t * (1 + qucs::log (2 * h / t)) / M_PI;
       else if (W > 2 * t)
-	dW = t * (1 + qucs::log (4 * pi * W / t)) / pi;
+	dW = t * (1 + qucs::log (4 * M_PI * W / t)) / M_PI;
       // JANSEN
       nr_double_t dt = 2 * t * h / s / er;
       nr_double_t We = W + dW * (1 - 0.5 * qucs::exp (-0.69 * dW / dt));
@@ -275,7 +275,7 @@ void mslange::analyseDispersion (nr_double_t W, nr_double_t h, nr_double_t s,
 				   nr_double_t er, nr_double_t Zle,
 				   nr_double_t Zlo, nr_double_t ErEffe,
 				   nr_double_t ErEffo, nr_double_t frequency,
-				   const char * const DModel, nr_double_t& ZleFreq,
+				   char * DModel, nr_double_t& ZleFreq,
 				   nr_double_t& ZloFreq,
 				   nr_double_t& ErEffeFreq,
 				   nr_double_t& ErEffoFreq) {
@@ -466,7 +466,7 @@ void mslange::calcAC (nr_double_t frequency) {
 void mslange::calcNoiseAC (nr_double_t) {
   // calculate noise using Bosma's theorem
   nr_double_t T = getPropertyDouble ("Temp");
-  setMatrixN (4 * celsius2kelvin (T) / T0 * real (getMatrixY ()));
+  setMatrixN (4 * kelvin (T) / T0 * real (getMatrixY ()));
 }
 
 // properties

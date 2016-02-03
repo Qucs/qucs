@@ -124,8 +124,8 @@ struct define_t {
 #define PROP_NO_VAL       0.0
 #define PROP_NO_STR       ((char *) -1)
 #define PROP_NO_RANGE     { '.', 0, 0, '.', { NULL } }
-#define PROP_VAL_MAX      std::numeric_limits<nr_double_t>::max()
-#define PROP_VAL_MIN      std::numeric_limits<nr_double_t>::min()
+#define PROP_VAL_MAX      NR_MAX
+#define PROP_VAL_MIN      NR_MIN
 #define PROP_POS_RANGE    { '[', 0, 0, '.', { NULL } }
 #define PROP_NEG_RANGE    { '.', 0, 0, ']', { NULL } }
 #define PROP_POS_RANGEX   { ']', 0, 0, '.', { NULL } }

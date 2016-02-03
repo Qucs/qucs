@@ -47,7 +47,7 @@ spfile_vector::spfile_vector () {
 
 // Destructor for S-parameter file vector.
 spfile_vector::~spfile_vector () {
-  delete inter;
+  if (inter) delete inter;
 }
 
 // Passes vectors and their data types to the S-parameter file vector.
@@ -87,17 +87,17 @@ spfile::spfile () : circuit () {
 
 // Destructor deletes spfile object from memory.
 spfile::~spfile () {
-  delete[] spara;
-  delete RN;
-  delete FMIN;
-  delete SOPT;
+  if (spara) delete[] spara;
+  if (RN) delete RN;
+  if (FMIN) delete FMIN;
+  if (SOPT) delete SOPT;
 #if DEBUG && 0
   if (data) {
     data->setFile ("spfile.dat");
     data->print ();
   }
 #endif
-  delete data;
+  if (data) delete data;
 }
 
 void spfile::calcSP (nr_double_t frequency) {
@@ -249,7 +249,7 @@ matrix spfile::expandNoiseMatrix (matrix n, matrix s) {
 
   // expand noise correlation matrix
   matrix res (ports);
-  res = (k * n * adjoint (k) - celsius2kelvin (T) / T0 * fabs (1 - norm (g)) *
+  res = (k * n * adjoint (k) - kelvin (T) / T0 * fabs (1 - norm (g)) *
 	 d * adjoint (d)) * norm (1 / (1 - g));
   return res;
 }
@@ -279,7 +279,7 @@ matrix spfile::shrinkNoiseMatrix (matrix n, matrix s) {
 
   // shrink noise correlation matrix
   matrix res (ports - 1);
-  res = k * n * adjoint (k) + celsius2kelvin (T) / T0 * fabs (1.0 - norm (g)) /
+  res = k * n * adjoint (k) + kelvin (T) / T0 * fabs (1.0 - norm (g)) /
     norm (1.0 - g * s.get (ports - 1, ports - 1)) * d * adjoint (d);
   return res;
 }
@@ -287,27 +287,27 @@ matrix spfile::shrinkNoiseMatrix (matrix n, matrix s) {
 void spfile::prepare (void) {
 
   // check type of data
-  const char * const dtype = getPropertyString ("Data");
-  if (!strcmp (dtype, "rectangular")) {
+  char * type = getPropertyString ("Data");
+  if (!strcmp (type, "rectangular")) {
     // rectangular data
     dataType = DATA_RECTANGULAR;
   }
-  else if (!strcmp (dtype, "polar")) {
+  else if (!strcmp (type, "polar")) {
     // polar data
     dataType = DATA_POLAR;
   }
 
   // check type of interpolator
-  const char * const itype = getPropertyString ("Interpolator");
-  if (!strcmp (itype, "linear")) {
+  type = getPropertyString ("Interpolator");
+  if (!strcmp (type, "linear")) {
     interpolType = INTERPOL_LINEAR;
   }
-  else if (!strcmp (itype, "cubic")) {
+  else if (!strcmp (type, "cubic")) {
     interpolType = INTERPOL_CUBIC;
   }
 
   // load S-parameter file
-  const char * file = getPropertyString ("File");
+  char * file = getPropertyString ("File");
   if (data == NULL) data = dataset::load_touchstone (file);
   if (data != NULL) {
     // determine the number of ports defined by that file
@@ -356,16 +356,14 @@ void spfile::createVector (int r, int c) {
    frequency vector.  It also tries to find the noise parameter
    data. */
 void spfile::createIndex (void) {
-  qucs::vector * v; int s = getSize ();
-  char * n;
-  const char *name;
+  qucs::vector * v; int s = getSize (); char * n;
   int r, c, i;
 
   // go through list of dependency vectors and find frequency vectors
   for (v = data->getDependencies (); v != NULL; v = (::vector *) v->getNext ()) {
-    if ((name = v->getName ()) != NULL) {
-      if (!strcmp (name, "frequency")) sfreq = v;
-      else if (!strcmp (name, "nfreq")) nfreq = v;
+    if ((n = v->getName ()) != NULL) {
+      if (!strcmp (n, "frequency")) sfreq = v;
+      else if (!strcmp (n, "nfreq")) nfreq = v;
     }
   }
 
@@ -383,17 +381,17 @@ void spfile::createIndex (void) {
       paraType = n[0];  // save type of touchstone data
       free (n);
     }
-    if ((name = v->getName ()) != NULL) {
+    if ((n = v->getName ()) != NULL) {
       // find noise parameter vectors
-      if (!strcmp (name, "Rn")) {
+      if (!strcmp (n, "Rn")) {
 	RN = new spfile_vector ();
 	RN->prepare (v, nfreq, true, interpolType, dataType);
       }
-      else if (!strcmp (name, "Fmin")) {
+      else if (!strcmp (n, "Fmin")) {
 	FMIN = new spfile_vector ();
 	FMIN->prepare (v, nfreq, true, interpolType, dataType);
       }
-      else if (!strcmp (name, "Sopt")) {
+      else if (!strcmp (n, "Sopt")) {
 	SOPT = new spfile_vector ();
 	SOPT->prepare (v, nfreq, false, interpolType, dataType);
       }
@@ -454,7 +452,7 @@ nr_double_t spfile::noiseFigure (matrix s, matrix c, nr_double_t& Fmin,
 
 void spfile::initDC (void) {
   // get appropriate property value
-  const char * const dc = getPropertyString ("duringDC");
+  char * dc = getPropertyString ("duringDC");
 
   // a short during DC including the reference node
   if (!strcmp (dc, "shortall")) {

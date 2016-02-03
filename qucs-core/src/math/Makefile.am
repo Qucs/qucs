@@ -45,8 +45,8 @@ libqucsmath_la_SOURCES =  \
     complex.cpp           \
     fspecial.cpp          \
     matrix.cpp            \
-    real.cpp
-
+    real.cpp              \
+    precision.c
 
 CLEANFILES = *~ *.orig *.rej *.output
 MAINTAINERCLEANFILES = Makefile.in

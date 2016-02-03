@@ -20,43 +20,37 @@ SET(ParserTypes
   vcd
 )
 
+# clear list of generated files
+SET(conv_generated)
+
 # generated files are named like:
 #   - parse_spice.cpp scan_spice.cpp tokens_spice.h
 
-# clear list of generated files
-SET(conv_generated)
-FOREACH( type ${ParserTypes} )
+# TODO Double check the location where the generated scanner/parser should go
+FOREACH(type ${ParserTypes})
 
-  # Create custom Bison
-  SET(BO_${type}
-    ${CMAKE_CURRENT_BINARY_DIR}/parse_${type}.cpp
-    ${CMAKE_CURRENT_BINARY_DIR}/tokens_${type}.h )
-  ADD_CUSTOM_COMMAND(
-    OUTPUT ${BO_${type}}
-    COMMAND ${BISON_EXECUTABLE}
-              --defines=${CMAKE_CURRENT_BINARY_DIR}/parse_${type}.hpp
-              --output=${CMAKE_CURRENT_BINARY_DIR/}parse_${type}.cpp
-              ${CMAKE_CURRENT_SOURCE_DIR}/parse_${type}.ypp
-    DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/parse_${type}.ypp
-    )
+  FLEX_TARGET(scan${type} scan_${type}.l ${PROJECT_SOURCE_DIR}/scan_${type}.cpp)
 
-  # Create custom Flex
-  SET(FI_${type} ${CMAKE_CURRENT_SOURCE_DIR}/scan_${type}.lpp )
-  SET(FO_${type} ${CMAKE_CURRENT_BINARY_DIR}/scan_${type}.cpp )
-  ADD_CUSTOM_COMMAND(
-    OUTPUT ${FO_${type}}
-    COMMAND ${FLEX_EXECUTABLE}
-            --outfile=${FO_${type}}
-            ${FI_${type}}
-    DEPENDS ${BO_${type}} ${FI_${type}}
-    )
-  SET(conv_generated ${conv_generated} ${FO_${type}})
-  SET(conv_generated ${conv_generated} ${BO_${type}})
-ENDFOREACH()
-FOREACH( gfile ${conv_generated} )
-  SET_SOURCE_FILES_PROPERTIES(${gfile} PROPERTIES GENERATED TRUE)
+  BISON_TARGET(parse${type}
+               parse_${type}.y ${PROJECT_SOURCE_DIR}/parse_${type}.cpp
+               COMPILE_FLAGS --defines="${PROJECT_SOURCE_DIR}/tokens_${type}.h" )
+
+  ADD_FLEX_BISON_DEPENDENCY(scan${type} parse${type})
+
+  SET(convflexInputs   ${convflexInputs}   ${FLEX_scan${type}_INPUT}   )
+  SET(convflexOutputs  ${convflexOutputs}  ${FLEX_scan${type}_OUTPUTS} )
+  SET(convbisonInputs  ${convbisonInputs}  ${BISON_parse${type}_INPUT} )
+  SET(convbisonOutputs ${convbisonOutputs} ${BISON_parse${type}_OUTPUTS})
+
 ENDFOREACH()
 
+SET(conv_generated ${convflexOutputs} ${convbisonOutputs})
+
+#message(STATUS "----> Scanner / Parser ${conv_generated}\n")
+#message(STATUS "Qucsconv -- Flex Inputs  : ${convflexInputs}")
+#message(STATUS "Qucsconv -- Flex Outputs : ${convflexOutputs}")
+#message(STATUS "Qucsconv -- Bison Inputs : ${convbisonInputs}")
+#message(STATUS "Qucsconv -- Bison Outputs: ${convbisonOutputs}")
 
 #
 # qucsator is needed before qucsconv can be compiled
