@@ -167,46 +167,9 @@
 <admst:variable name="nbr_nodes" select="%s"/>
 </admst:for-each>
 
-<!-- output filename is 1st argument in -o flag in command line-->
-<admst:variable name="filename" select="%(/module/name)_common"/>
-<admst:variable name="filename_state" select="0"/>
-<admst:for-each select="/argv">
-  <admst:variable name="arg" select="%(.)"/>
-
-  <admst:if test="[position(.)=2]">
-    <admst:variable name="filename" select="$arg"/>
-  </admst:if>
-  <admst:if test="[$(filename_state)='1']">
-    <admst:variable name="filename" select="$arg"/>
-    <admst:variable name="filename_state" select="2"/>
-  </admst:if>
-  <admst:if test="[$(filename_state)='0' and $(arg)='-o']">
-    <admst:variable name="filename_state" select="1"/>
-  </admst:if>
-</admst:for-each>
-
-<admst:open file="$(filename).cpp">/*
- * $(filename).cpp - device implementations for $(filename) modules
- *
- * This is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2, or (at your option)
- * any later version.
- *
- */
-
-<admst:for-each select="/module">
-// namespace { // %(.), BUG: not yet, possible name clashes
-#include "$(filename).$(module).core.cpp"
-#include "$(filename).$(module).analogfunction.cpp"
-// }
-</admst:for-each>
-
-</admst:open>
-
-<admst:open file="$(filename).defs.h">
+<admst:open file="$module.defs.h">
 <admst:for-each select="/module">/*
- * $(filename).defs.h - device definition header
+ * $(module).defs.h - device definition header
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -265,7 +228,7 @@ PROP_OPT [] = {
     </admst:when>
     <admst:otherwise><admst:text format="26.85"/></admst:otherwise>
   </admst:choose>
-  <admst:text format=", PROP_NO_STR }, PROP_MIN_VAL (qucs::K) },\n"/>
+  <admst:text format=", PROP_NO_STR }, PROP_MIN_VAL (K) },\n"/>
   </admst:if>
 </admst:if>
 <admst:text format="  PROP_NO_PROP };\n"/>

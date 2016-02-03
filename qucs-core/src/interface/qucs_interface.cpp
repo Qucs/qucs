@@ -52,8 +52,6 @@
 #include <unistd.h>
 #endif
 
-#include <string>
-
 using namespace qucs;
 
 // constructor
@@ -65,6 +63,7 @@ qucsint::qucsint ()
     err = 0;
 
     loginit ();
+    precinit ();
     ::srand (::time (NULL));
 
 }
@@ -76,6 +75,7 @@ qucsint::qucsint (char* infile)
     err = 0;
 
     loginit ();
+    precinit ();
     ::srand (::time (NULL));
 
     prepare_netlist (infile);
@@ -95,7 +95,6 @@ qucsint::~qucsint ()
     netlist_destroy_env ();
 }
 
-/*!\ todo: replace "root" by / as environement root */
 int qucsint::prepare_netlist (char * infile)
 {
 
@@ -103,7 +102,7 @@ int qucsint::prepare_netlist (char * infile)
     module::registerModules ();
 
     // create root environment
-    root = new qucs::environment (std::string("root"));
+    root = new qucs::environment ("root");
 
     // create netlist object and input
     subnet = new net ("subnet");
@@ -145,7 +144,11 @@ int qucsint::prepare_netlist (char * infile)
     subnet->insertCircuit (gnd);
 
     // apply some data to all analyses
-    subnet->setActionNetAll(subnet);
+    for (int i = 0; i < subnet->getNActions(); i++)
+    {
+        subnet->setActionNet(i, subnet);
+        //a->setData (out);
+    }
 
     return NETLIST_OK;
 }

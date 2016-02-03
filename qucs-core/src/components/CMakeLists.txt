@@ -29,6 +29,7 @@ SET( COMPONENTS_SRC
   inductor.cpp
   inoise.cpp
   iprobe.cpp
+  wprobe.cpp
   ipulse.cpp
   irect.cpp
   isolator.cpp

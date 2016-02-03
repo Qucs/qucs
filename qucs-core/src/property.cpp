@@ -31,7 +31,6 @@
 #include <string.h>
 #include <ctype.h>
 #include <cmath>
-#include <string>
 
 #include "complex.h"
 #include "variable.h"
@@ -42,15 +41,80 @@ namespace qucs {
 using namespace eqn;
 
 // Constructor creates an unnamed instance of the property class.
-property::property () :
-  str()
-{
+property::property () {
   type = PROPERTY_UNKNOWN;
+  name = NULL;
   value = 0.0;
+  str = NULL;
+  txt = NULL;
   var = NULL;
+  next = NULL;
   def = false;
 }
 
+// Constructor creates a named instance of the property class.
+property::property (const char * n) {
+  type = PROPERTY_UNKNOWN;
+  name = n ? strdup (n) : NULL;
+  value = 0.0;
+  str = NULL;
+  txt = NULL;
+  var = NULL;
+  next = NULL;
+  def = false;
+}
+
+/* This full qualified constructor creates an instance of the property
+   class containing both the key and the value of the property. */
+property::property (const char * n, const char * val) {
+  type = PROPERTY_STR;
+  name = n ? strdup (n) : NULL;
+  str = val ? strdup (val) : NULL;
+  value = 0.0;
+  txt = NULL;
+  var = NULL;
+  next = NULL;
+  def = false;
+}
+
+/* This full qualified constructor creates an instance of the property
+   class containing both the key and the value of the property. */
+property::property (const char * n, nr_double_t val) {
+  type = PROPERTY_DOUBLE;
+  name = n ? strdup (n) : NULL;
+  value = val;
+  str = NULL;
+  txt = NULL;
+  var = NULL;
+  next = NULL;
+  def = false;
+}
+
+/* This full qualified constructor creates an instance of the property
+   class containing both the key and the value of the property. */
+property::property (const char * n, variable * val) {
+  type = PROPERTY_VAR;
+  name = n ? strdup (n) : NULL;
+  var = val;
+  value = 0.0;
+  txt = NULL;
+  str = NULL;
+  next = NULL;
+  def = false;
+}
+
+/* The copy constructor creates a new instance of the property class
+   based on the given property object. */
+property::property (const property & p) {
+  type = p.type;
+  name = p.name ? strdup (p.name) : NULL;
+  str = p.str ? strdup (p.str) : NULL;
+  value = p.value;
+  txt = p.txt ? strdup (p.txt) : NULL;
+  next = p.next;
+  var = p.var;
+  def = p.def;
+}
 
 // Destructor deletes the property object.
 property::~property () {
@@ -63,8 +127,31 @@ property::~property () {
     }
   }
 #endif
+  if (name) free (name);
+  if (str) free (str);
+  if (txt) free (txt);
 }
 
+// Sets the name of the property.
+void property::setName (char * n) {
+  if (name) free (name);
+  name = n ? strdup (n) : NULL;
+}
+
+// Returns the name of the property.
+char * property::getName (void) {
+  return name;
+}
+
+/* Goes through the chained list of the properties and looks for a
+   property matching the given key and returns its value if possible.
+   If there is no such property the function returns NULL. */
+property * property::findProperty (const char * n) {
+  for (property * p = this; p != NULL; p = p->getNext ()) {
+    if (!strcmp (p->getName (), n)) return p;
+  }
+  return NULL;
+}
 
 // Short macro in order to obtain the correct constant value.
 #define D(con) ((constant *) (con))->d
@@ -72,7 +159,7 @@ property::~property () {
 #define V(con) ((constant *) (con))->v
 
 // Returns the property's value as vector.
-qucs::vector * property::getVector (void) const {
+qucs::vector * property::getVector (void) {
   if (var != NULL) {
     if (var->getType () == VAR_CONSTANT)
       return V (var->getConstant ());
@@ -83,21 +170,19 @@ qucs::vector * property::getVector (void) const {
 }
 
 // Returns the property's value as string.
-const char * property::getString (void) const {
-  if (var != NULL)
-    return S (var->getConstant ());
-  return str.c_str();
+char * property::getString (void) {
+  if (var != NULL) return S (var->getConstant ());
+  return str;
 }
 
 // Returns the property's reference if it is a variable.
-const char * property::getReference (void) const {
-  if (var != NULL)
-    return var->getName ();
-  return str.c_str();
+char * property::getReference (void) {
+  if (var != NULL) return var->getName ();
+  return str;
 }
 
 // Returns the property's value as double.
-nr_double_t property::getDouble (void) const {
+nr_double_t property::getDouble (void) {
   if (var != NULL) {
     if (var->getType () == VAR_CONSTANT)
       return D (var->getConstant ());
@@ -108,55 +193,61 @@ nr_double_t property::getDouble (void) const {
 }
 
 // Returns the property's value as integer.
-int property::getInteger (void) const {
+int property::getInteger (void) {
   if (var != NULL) return (int) std::floor (D (var->getConstant ()));
   return (int) std::floor (value);
 }
 
 // Sets the property's value being a double.
-void property::set (const nr_double_t val) {
+void property::set (nr_double_t val) {
   type = PROPERTY_DOUBLE;
   value = val;
 }
 
 // Sets the property's value being an integer.
-void property::set (const int val) {
+void property::set (int val) {
   type = PROPERTY_INT;
   value = val;
 }
 
 // Sets the property's value being a variable.
-void property::set (variable * const val) {
+void property::set (variable * val) {
   type = PROPERTY_VAR;
   var = val;
 }
 
 // Sets the property's value being a string.
-void property::set (const std::string &val) {
+void property::set (char * val) {
   type = PROPERTY_STR;
-  this->str = val;
+  if (str) free (str);
+  str = val ? strdup (val) : NULL;
 }
 
 // This function returns a text representation of the property object.
-std::string property::toString (void) const {
+char * property::toString (void) {
+  char text[256];
+  if (txt) free (txt);
   switch (type) {
   case PROPERTY_UNKNOWN:
-    return "(no such type)";
+    txt = strdup ("(no such type)");
     break;
   case PROPERTY_INT:
-    return std::to_string(std::floor(value));
+    sprintf (text, "%d", (int) std::floor (value));
+    txt = strdup (text);
     break;
   case PROPERTY_STR:
-    return std::string(this->str);
+    txt = strdup (str);
     break;
   case PROPERTY_DOUBLE:
-    return std::to_string(value);
+    sprintf (text, "%g", (double) value);
+    txt = strdup (text);
     break;
   case PROPERTY_VAR:
-    return var->getName();
+    sprintf (text, "%s", var->getName ());
+    txt = strdup (text);
     break;
   }
-  return "";
+  return txt;
 }
 
 } // namespace qucs

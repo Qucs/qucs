@@ -25,7 +25,6 @@
 #ifndef __SPLINE_H__
 #define __SPLINE_H__
 
-#include <vector>
 #include "tvector.h"
 
 namespace qucs {
@@ -46,14 +45,12 @@ class spline
  public:
   spline ();
   spline (int);
-  spline (tvector<nr_double_t>, tvector<nr_double_t>);
   spline (qucs::vector, qucs::vector);
-  spline (::std::vector<nr_double_t>, ::std::vector<nr_double_t>);
+  spline (tvector<nr_double_t>, tvector<nr_double_t>);
   ~spline ();
 
   void vectors (qucs::vector, qucs::vector);
   void vectors (tvector<nr_double_t>, tvector<nr_double_t>);
-  void vectors (::std::vector<nr_double_t>, ::std::vector<nr_double_t>);
   void vectors (nr_double_t *, nr_double_t *, int);
   void construct (void);
   poly evaluate (nr_double_t);

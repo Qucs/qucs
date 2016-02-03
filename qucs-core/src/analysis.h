@@ -32,7 +32,6 @@
 #define __ANALYSIS_H__
 
 #include "object.h"
-#include "ptrlist.h"
 
 #define SAVE_OPS 1 // save operating points
 #define SAVE_ALL 2 // also save subcircuit nodes and operating points
@@ -51,6 +50,7 @@ class net;
 class environment;
 class sweep;
 class vector;
+template <class type_t> class ptrlist;
 
 /*! \enum analysis_type
  * \brief enumerates the analysis types available.
@@ -95,7 +95,7 @@ public:
     *
     * Constructor. Creates a named instance of the analysis class.
     */
-    analysis (const std::string &);
+    analysis (char *);
 
     /*! \fn analysis
     * \brief Copy Constructor
@@ -110,7 +110,7 @@ public:
     *
     * Destructor. Destroys an analysis object.
     */
-    virtual ~analysis ();
+    ~analysis ();
 
     /*! \fn solve
     * \brief placehoder for solution function
@@ -233,7 +233,7 @@ public:
      * Supported sweep types are: linear, logarithmic, lists and constants.
      *
      */
-    sweep * createSweep (const std::string &);
+    sweep * createSweep (const char *);
 
     /*! \fn saveVariable
      * \brief Save variable into analysis dataset.
@@ -244,7 +244,7 @@ public:
      * Saves the given variable into the dataset associated with the
      * analysis.  Creates the dataset vector if necessary.
      */
-    void saveVariable (const std::string &, nr_complex_t, qucs::vector *);
+     void saveVariable (const char *, nr_complex_t, qucs::vector *);
 
     /*! \fn getProgress
      * \brief get

@@ -1,0 +1,14 @@
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Spec interne d'un chemin 'admstpath'. Validation: xmllint dbgp.xml -noout -postvalid -noblanks -->
+<!--
+Fichier dbgp.xml
+<?xml version="1.0"?>
+<!--?xml-stylesheet type="text/xsl" href="admsstyle.xsl"?-->
+<!DOCTYPE admstpath SYSTEM "admstpath.dtd">
+<!-- Exemple de donnees 'admstpath' -->
+<admstpath>
+<!-- inserer ici les elements <p/> -->
+</admstpath>
+-->
+<!ELEMENT admstpath (p+) >

@@ -142,9 +142,6 @@ nr_complex_t  erfinv (const nr_complex_t); //see fspecial
 nr_complex_t erfcinv (const nr_complex_t); //see fspecial
 
 
-nr_double_t rad2deg (const nr_complex_t );
-nr_double_t deg2rad (const nr_complex_t );
-
 // modulo operators
 nr_complex_t operator % (const nr_complex_t, const nr_complex_t);
 nr_complex_t operator % (const nr_complex_t, const nr_double_t);

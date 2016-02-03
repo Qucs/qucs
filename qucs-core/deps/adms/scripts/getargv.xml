@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE admst PUBLIC "-//adms//DTD admst 2.0//-" "http://mot-adms.sourceforge.net/xml-files/adms/admst.dtd">
+<admst version="2.3.0" xmlns:admst="http://mot-adms.svn.sourceforge.net/viewvc/*checkout*/mot-adms/trunk/adms/admst.dtd">
+
+  <admst:text format="argc=%(argc)\n"/>
+  <admst:text format="argv="/>
+  <admst:join select="/argv" separator="| ">
+    <admst:text format="%(.)"/>
+  </admst:join>
+  <admst:text format="\n"/>
+
+</admst>

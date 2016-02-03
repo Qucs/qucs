@@ -27,8 +27,6 @@
 # include <config.h>
 #endif
 
-#include <limits>
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -53,7 +51,6 @@ vector::vector () : object () {
   dependencies = NULL;
   origin = NULL;
   requested = 0;
-  next = prev = nullptr;
 }
 
 /* Constructor creates an unnamed instance of the vector class with a
@@ -66,7 +63,6 @@ vector::vector (int s) : object () {
   dependencies = NULL;
   origin = NULL;
   requested = 0;
-  next = prev = nullptr;
 }
 
 /* Constructor creates an unnamed instance of the vector class with a
@@ -80,22 +76,20 @@ vector::vector (int s, nr_complex_t val) : object () {
   dependencies = NULL;
   origin = NULL;
   requested = 0;
-  next = prev = nullptr;
 }
 
 // Constructor creates an named instance of the vector class.
-vector::vector (const std::string &n) : object (n) {
+vector::vector (const char * n) : object (n) {
   capacity = size = 0;
   data = NULL;
   dependencies = NULL;
   origin = NULL;
   requested = 0;
-  next = prev = nullptr;
 }
 
 /* This constructor creates a named instance of the vector class with
    a given initial size. */
-  vector::vector (const std::string &n, int s) : object (n) {
+vector::vector (const char * n, int s) : object (n) {
   assert (s >= 0);
   capacity = size = s;
   data = s > 0 ? (nr_complex_t *)
@@ -103,7 +97,6 @@ vector::vector (const std::string &n) : object (n) {
   dependencies = NULL;
   origin = NULL;
   requested = 0;
-  next = prev = nullptr;
 }
 
 /* The copy constructor creates a new instance based on the given
@@ -116,8 +109,6 @@ vector::vector (const vector & v) : object (v) {
   dependencies = v.dependencies ? new strlist (*v.dependencies) : NULL;
   origin = v.origin ? strdup (v.origin) : NULL;
   requested = v.requested;
-  next = v.next;
-  prev = v.prev;
 }
 
 /* The assignment copy constructor creates a new instance based on the
@@ -138,9 +129,9 @@ const vector& vector::operator=(const vector & v) {
 
 // Destructor deletes a vector object.
 vector::~vector () {
-  free (data);
-  delete dependencies;
-  free (origin);
+  if (data) free (data);
+  if (dependencies) delete dependencies;
+  if (origin) free (origin);
 }
 
 // Returns data dependencies.
@@ -150,7 +141,7 @@ strlist * vector::getDependencies (void) {
 
 // Sets the data dependencies.
 void vector::setDependencies (strlist * s) {
-  delete dependencies;
+  if (dependencies) delete dependencies;
   dependencies = s;
 }
 
@@ -216,10 +207,10 @@ int vector::checkSizes (vector v1, vector v2) {
 // complex numbers in the 2. and 3. quadrant are counted as "-abs(c)".
 nr_double_t vector::maximum (void) {
   nr_complex_t c;
-  nr_double_t d, max_D = -std::numeric_limits<nr_double_t>::max();
+  nr_double_t d, max_D = -NR_MAX;
   for (int i = 0; i < getSize (); i++) {
     c = data[i];
-    d = fabs (arg (c)) < pi_over_2 ? abs (c) : -abs (c);
+    d = fabs (arg (c)) < M_PI_2 ? abs (c) : -abs (c);
     if (d > max_D) max_D = d;
   }
   return max_D;
@@ -230,10 +221,10 @@ nr_double_t vector::maximum (void) {
 // complex numbers in the 2. and 3. quadrant are counted as "-abs(c)".
 nr_double_t vector::minimum (void) {
   nr_complex_t c;
-  nr_double_t d, min_D = +std::numeric_limits<nr_double_t>::max();
+  nr_double_t d, min_D = +NR_MAX;
   for (int i = 0; i < getSize (); i++) {
     c = data[i];
-    d = fabs (arg (c)) < pi_over_2 ? abs (c) : -abs (c);
+    d = fabs (arg (c)) < M_PI_2 ? abs (c) : -abs (c);
     if (d < min_D) min_D = d;
   }
   return min_D;
@@ -919,8 +910,8 @@ void vector::reverse (void) {
 }
 
 // Sets the origin (the analysis) of the vector.
-void vector::setOrigin (const char * n) {
-  free (origin);
+void vector::setOrigin (char * n) {
+  if (origin) free (origin);
   origin = n ? strdup (n) : NULL;
 }
 
@@ -961,7 +952,7 @@ vector linspace (nr_double_t start, nr_double_t stop, int points) {
   nr_double_t val, step = (stop - start) / (points - 1);
   for (int i = 0; i < points; i++) {
     val = start + (i * step);
-    if (i != 0 && fabs (val) < fabs (step) / 4 && fabs (val) < std::numeric_limits<nr_double_t>::epsilon())
+    if (i != 0 && fabs (val) < fabs (step) / 4 && fabs (val) < NR_EPSI)
       val = 0.0;
     result.set (val, i);
   }
@@ -1111,18 +1102,6 @@ vector erfinv (vector v) {
 vector erfcinv (vector v) {
   vector result (v);
   for (int i = 0; i < v.getSize (); i++) result.set (erfcinv (v.get (i)), i);
-  return result;
-}
-
-vector rad2deg (vector v) {
-  vector result (v);
-  for (int i = 0; i < v.getSize (); i++) result.set (rad2deg (v.get (i)), i);
-  return result;
-}
-
-vector deg2rad (vector v) {
-  vector result (v);
-  for (int i = 0; i < v.getSize (); i++) result.set (deg2rad (v.get (i)), i);
   return result;
 }
 

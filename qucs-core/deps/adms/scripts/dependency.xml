@@ -1,0 +1,408 @@
+<admst version="2.3.0"  xmlns:admst="http://mot-adms.svn.sourceforge.net/viewvc/*checkout*/mot-adms/trunk/adms/admst.dtd">
+  <admst:variable name="m" string="dependency"/>
+  <admst:open file="$m.trg">
++:
+  0  1  2  3
+  1  1  2  3
+  2  2  2  3
+  3  3  3  3
+-:
+  0  1  2  3
+  1  1  2  3
+  2  2  2  3
+  3  3  3  3
+*:
+  0  1  2  3
+  1  1  2  3
+  2  2  3  3
+  3  3  3  3
+/:
+  0  1  3  3
+  1  1  3  3
+  2  2  3  3
+  3  3  3  3
+?: arg1=c:
+  0  1  2  3
+  1  1  2  3
+  2  2  2  3
+  3  3  3  3
+?: arg1=np:
+  1  1  2  3
+  1  1  2  3
+  2  2  2  3
+  3  3  3  3
+?: arg1=l :
+  1  1  2  3
+  1  1  2  3
+  2  2  2  3
+  3  3  3  3
+?: arg1=nl:
+  1  1  2  3
+  1  1  2  3
+  2  2  2  3
+  3  3  3  3
+sqrt:
+  0.0  1.0  3.1  3.1
+pow:
+  0.0  1.0  3.1  3.1
+  1.0  1.0  3.1  3.1
+  3.1  3.1  3.1  3.1
+  3.1  3.1  3.1  3.1
+ddx:
+  0.0  1.0  3.1  3.1
+branch: p:GND=yes
+source: V(p:GND)=yes
+source: I(p:GND)=yes
+probe: I(p:GND)=yes
+probe: V(p:GND)=yes
+c: parametertype=model input=no
+np: parametertype=model input=no
+l: parametertype=model input=no
+nl: parametertype=model input=no
+P: parametertype=instance input=yes
+C01: parametertype=model input=no
+C02: parametertype=model input=no
+C03: parametertype=model input=no
+C04: parametertype=model input=no
+C05: parametertype=model input=no
+C06: parametertype=model input=no
+C07: parametertype=model input=no
+C08: parametertype=model input=no
+C09: parametertype=model input=no
+C10: parametertype=model input=no
+C11: parametertype=model input=no
+C12: parametertype=model input=no
+C13: parametertype=model input=no
+C14: parametertype=model input=no
+C15: parametertype=model input=no
+C16: parametertype=model input=no
+A: parametertype=model input=no
+B: parametertype=model input=no
+AA: parametertype=model input=no
+awl: parametertype=model input=no
+bwl: parametertype=model input=no
+afl: parametertype=model input=no
+bfl: parametertype=model input=no
+c: input=local OPdependent=no
+np: input=local OPdependent=yes
+l: input=local OPdependent=yes
+nl: input=local OPdependent=yes
+P: input=global_instance OPdependent=no
+C01: input=local OPdependent=no
+C02: input=local OPdependent=yes
+C03: input=local OPdependent=yes
+C04: input=local OPdependent=yes
+C05: input=local OPdependent=yes
+C06: input=local OPdependent=yes
+C07: input=local OPdependent=yes
+C08: input=local OPdependent=yes
+C09: input=local OPdependent=yes
+C10: input=local OPdependent=yes
+C11: input=local OPdependent=yes
+C12: input=local OPdependent=yes
+C13: input=local OPdependent=yes
+C14: input=local OPdependent=yes
+C15: input=local OPdependent=yes
+C16: input=local OPdependent=yes
+A: input=local OPdependent=yes
+B: input=local OPdependent=yes
+AA: input=global_instance OPdependent=no
+awl: input=local OPdependent=yes
+bwl: input=local OPdependent=yes
+afl: input=local OPdependent=yes
+bfl: input=local OPdependent=yes
+P from [(0):(1)]
+P exclude [(-inf):(+inf)]
+I(p:GND)&lt;+(I(p:GND)); wn=no lhswn=no
+I(p:GND)&lt;+(V(p:GND)); wn=no lhswn=no
+V(p:GND)&lt;+(I(p:GND)); wn=no lhswn=yes
+V(p:GND)&lt;+(white_noise(V(p:GND))); wn=yes lhswn=yes
+V(p:GND)&lt;+(flicker_noise(V(p:GND),1.0)); wn=no lhswn=yes
+I(p:GND)&lt;+(I(p:GND)); lhsfn=no fn=no
+I(p:GND)&lt;+(V(p:GND)); lhsfn=no fn=no
+V(p:GND)&lt;+(I(p:GND)); lhsfn=yes fn=no
+V(p:GND)&lt;+(white_noise(V(p:GND))); lhsfn=yes fn=no
+V(p:GND)&lt;+(flicker_noise(V(p:GND),1.0)); lhsfn=yes fn=yes
+conditional:
+000001002003010011012013020021022023030031032033111111112113111111112113121121122123131131132133211211212213211211212213221221222223231231232233311311312313311311312313321321322323331331332333
+ C0
+ 0_0_0 1_1_1 1_1_1 1_1_1
+ 1_1_1 1_1_1 1_1_1 1_1_1
+ 2_2_2 2_2_2 2_2_2 2_2_2
+ 3_3_3 3_3_3 3_3_3 3_3_3
+ C1
+ 0 1 2 3
+ 1 1 2 3
+ 2 2 2 3
+ 3 3 3 3
+--------
+ 1 1 2 3
+ 1 1 2 3
+ 2 2 2 3
+ 3 3 3 3
+--------
+ 1 1 2 3
+ 1 1 2 3
+ 2 2 2 3
+ 3 3 3 3
+--------
+ 1 1 2 3
+ 1 1 2 3
+ 2 2 2 3
+ 3 3 3 3
+--------
+ LOOPS
+block.fl: linear
+block.FL: linear
+block.wl: nonlinear
+block.WL: nonlinear
+block.main: nonlinear
+c: constant
+np: noprobe
+l: linear
+nl: nonlinear
+P: constant
+C01: constant
+C02: noprobe
+C03: noprobe
+C04: noprobe
+C05: noprobe
+C06: noprobe
+C07: noprobe
+C08: noprobe
+C09: linear
+C10: linear
+C11: linear
+C12: linear
+C13: nonlinear
+C14: nonlinear
+C15: nonlinear
+C16: nonlinear
+A: nonlinear
+B: nonlinear
+AA: constant
+awl: noprobe
+bwl: nonlinear
+afl: noprobe
+bfl: linear
+  </admst:open>
+  <admst:message format="$m.trg: created\n"/>
+  <admst:open file="$m.va">
+`include &quot;disciplines.vams&quot;
+module $m (p);
+electrical p;
+real c,np,l,nl;
+(*type="instance"*) parameter real P=1 from [0:1] exclude [-inf:+inf];
+real C01,C02,C03,C04,C05,C06,C07,C08,C09;
+real C10,C11,C12,C13,C14,C15,C16;
+real A;
+real B;
+real AA (*ask="yes"*);
+real awl,bwl;
+real afl,bfl;
+analog
+begin : main
+  c=1;
+  if(V(p)) np=1;
+  l=V(p);
+  nl=log(V(p));
+  (*dbg:name="+"*)
+  A=c +c ; A=c +np; A=c +l ; (*dbg:nl*) A=c +nl;
+  A=np+c ; A=np+np; A=np+l ; (*dbg:nl*) A=np+nl;
+  A=l +c ; A=l +np; A=l +l ; (*dbg:nl*) A=l +nl;
+  A=nl+c ; A=nl+np; A=nl+l ; (*dbg:nl*) A=nl+nl;
+  (*dbg:name="-"*)
+  A=c -c ; A=c -np; A=c -l ; (*dbg:nl*) A=c -nl;
+  A=np-c ; A=np-np; A=np-l ; (*dbg:nl*) A=np-nl;
+  A=l -c ; A=l -np; A=l -l ; (*dbg:nl*) A=l -nl;
+  A=nl-c ; A=nl-np; A=nl-l ; (*dbg:nl*) A=nl-nl;
+  (*dbg:name="*"*)
+  A=c *c ; A=c *np; A=c *l ; (*dbg:nl*) A=c *nl;
+  A=np*c ; A=np*np; A=np*l ; (*dbg:nl*) A=np*nl;
+  A=l *c ; A=l *np; A=l *l ; (*dbg:nl*) A=l *nl;
+  A=nl*c ; A=nl*np; A=nl*l ; (*dbg:nl*) A=nl*nl;
+  (*dbg:name="/"*)
+  A=c /c ; A=c /np; A=c /l ; (*dbg:nl*) A=c /nl;
+  A=np/c ; A=np/np; A=np/l ; (*dbg:nl*) A=np/nl;
+  A=l /c ; A=l /np; A=l /l ; (*dbg:nl*) A=l /nl;
+  A=nl/c ; A=nl/np; A=nl/l ; (*dbg:nl*) A=nl/nl;
+  (*dbg:name="?: arg1=c"*)
+  A=c ?c :c ; A=c ?c :np; A=c ?c :l ; (*dbg:nl*) A=c ?c :nl;
+  A=c ?np:c ; A=c ?np:np; A=c ?np:l ; (*dbg:nl*) A=c ?np:nl;
+  A=c ?l :c ; A=c ?l :np; A=c ?l :l ; (*dbg:nl*) A=c ?l :nl;
+  A=c ?nl:c ; A=c ?nl:np; A=c ?nl:l ; (*dbg:nl*) A=c ?nl:nl;
+  (*dbg:name="?: arg1=np"*)
+  A=np?c :c ; A=np?c :np; A=np?c :l ; (*dbg:nl*) A=np?c :nl;
+  A=np?np:c ; A=np?np:np; A=np?np:l ; (*dbg:nl*) A=np?np:nl;
+  A=np?l :c ; A=np?l :np; A=np?l :l ; (*dbg:nl*) A=np?l :nl;
+  A=np?nl:c ; A=np?nl:np; A=np?nl:l ; (*dbg:nl*) A=np?nl:nl;
+  (*dbg:name="?: arg1=l "*)
+  A=l ?c :c ; A=l ?c :np; A=l ?c :l ; (*dbg:nl*) A=l ?c :nl;
+  A=l ?np:c ; A=l ?np:np; A=l ?np:l ; (*dbg:nl*) A=l ?np:nl;
+  A=l ?l :c ; A=l ?l :np; A=l ?l :l ; (*dbg:nl*) A=l ?l :nl;
+  A=l ?nl:c ; A=l ?nl:np; A=l ?nl:l ; (*dbg:nl*) A=l ?nl:nl;
+  (*dbg:name="?: arg1=nl"*)
+  A=nl?c :c ; A=nl?c :np; A=nl?c :l ; (*dbg:nl*) A=nl?c :nl;
+  A=nl?np:c ; A=nl?np:np; A=nl?np:l ; (*dbg:nl*) A=nl?np:nl;
+  A=nl?l :c ; A=nl?l :np; A=nl?l :l ; (*dbg:nl*) A=nl?l :nl;
+  A=nl?nl:c ; A=nl?nl:np; A=nl?nl:l ; (*dbg:nl*) A=nl?nl:nl;
+  (*dbg:name="sqrt"*)
+  A=sqrt(c) ; A=sqrt(np); A=sqrt(l ); (*dbg:nl*) A=sqrt(nl);
+  (*dbg:name="pow"*)
+  A=pow(c ,c) ; A=pow(c ,np); A=pow(c ,l ); (*dbg:nl*) A=pow(c ,nl);
+  A=pow(np,c) ; A=pow(np,np); A=pow(np,l ); (*dbg:nl*) A=pow(np,nl);
+  A=pow(l ,c) ; A=pow(l ,np); A=pow(l ,l ); (*dbg:nl*) A=pow(l ,nl);
+  A=pow(nl,c) ; A=pow(nl,np); A=pow(nl,l ); (*dbg:nl*) A=pow(nl,nl);
+  (*dbg:name="ddx"*)
+  A=ddx(c) ; A=ddx(np,V(p)); A=ddx(l ,V(p)); (*dbg:nl*) A=ddx(nl,V(p));
+  I(p)&lt;+I(p);
+  I(p)&lt;+V(p);
+  V(p)&lt;+I(p);
+  V(p)&lt;+white_noise(V(p));
+  V(p)&lt;+flicker_noise(V(p),1.0);
+
+  if(c ) (*dbg:c0=""  *) C01=c ;
+  if(np) (*dbg:c0=""  *) C02=c ;
+  if(l ) (*dbg:c0=""  *) C03=c ;
+  if(nl) (*dbg:c0="\n"*) C04=c ;
+  if(c ) (*dbg:c0=""  *) C05=np;
+  if(np) (*dbg:c0=""  *) C06=np;
+  if(l ) (*dbg:c0=""  *) C07=np;
+  if(nl) (*dbg:c0="\n"*) C08=np;
+  if(c ) (*dbg:c0=""  *) C09=l ;
+  if(np) (*dbg:c0=""  *) C10=l ;
+  if(l ) (*dbg:c0=""  *) C11=l ;
+  if(nl) (*dbg:c0="\n"*) C12=l ;
+  if(c ) (*dbg:c0=""  *) C13=nl;
+  if(np) (*dbg:c0=""  *) C14=nl;
+  if(l ) (*dbg:c0=""  *) C15=nl;
+  if(nl) (*dbg:c0="\n"*) C16=nl;
+
+  if(c ) (*dbg:c1=""            *) B=c ; else B=c;
+  if(c ) (*dbg:c1=""            *) B=c ; else B=np;
+  if(c ) (*dbg:c1=""            *) B=c ; else B=l ;
+  if(c ) (*dbg:c1="\n"          *) B=c ; else B=nl;
+  if(c ) (*dbg:c1=""            *) B=np; else B=c ;
+  if(c ) (*dbg:c1=""            *) B=np; else B=np;
+  if(c ) (*dbg:c1=""            *) B=np; else B=l ;
+  if(c ) (*dbg:c1="\n"          *) B=np; else B=nl;
+  if(c ) (*dbg:c1=""            *) B=l ; else B=c ;
+  if(c ) (*dbg:c1=""            *) B=l ; else B=np;
+  if(c ) (*dbg:c1=""            *) B=l ; else B=l;
+  if(c ) (*dbg:c1="\n"          *) B=l ; else B=nl;
+  if(c ) (*dbg:c1=""            *) B=nl; else B=c ;
+  if(c ) (*dbg:c1=""            *) B=nl; else B=np;
+  if(c ) (*dbg:c1=""            *) B=nl; else B=l ;
+  if(c ) (*dbg:c1="\n--------\n"*) B=nl; else B=nl;
+
+  if(np) (*dbg:c1=""            *) B=c ; else B=c;
+  if(np) (*dbg:c1=""            *) B=c ; else B=np;
+  if(np) (*dbg:c1=""            *) B=c ; else B=l ;
+  if(np) (*dbg:c1="\n"          *) B=c ; else B=nl;
+  if(np) (*dbg:c1=""            *) B=np; else B=c ;
+  if(np) (*dbg:c1=""            *) B=np; else B=np;
+  if(np) (*dbg:c1=""            *) B=np; else B=l ;
+  if(np) (*dbg:c1="\n"          *) B=np; else B=nl;
+  if(np) (*dbg:c1=""            *) B=l ; else B=c ;
+  if(np) (*dbg:c1=""            *) B=l ; else B=np;
+  if(np) (*dbg:c1=""            *) B=l ; else B=l;
+  if(np) (*dbg:c1="\n"          *) B=l ; else B=nl;
+  if(np) (*dbg:c1=""            *) B=nl; else B=c ;
+  if(np) (*dbg:c1=""            *) B=nl; else B=np;
+  if(np) (*dbg:c1=""            *) B=nl; else B=l ;
+  if(np) (*dbg:c1="\n--------\n"*) B=nl; else B=nl;
+
+  if(l ) (*dbg:c1=""            *) B=c ; else B=c;
+  if(l ) (*dbg:c1=""            *) B=c ; else B=np;
+  if(l ) (*dbg:c1=""            *) B=c ; else B=l ;
+  if(l ) (*dbg:c1="\n"          *) B=c ; else B=nl;
+  if(l ) (*dbg:c1=""            *) B=np; else B=c ;
+  if(l ) (*dbg:c1=""            *) B=np; else B=np;
+  if(l ) (*dbg:c1=""            *) B=np; else B=l ;
+  if(l ) (*dbg:c1="\n"          *) B=np; else B=nl;
+  if(l ) (*dbg:c1=""            *) B=l ; else B=c ;
+  if(l ) (*dbg:c1=""            *) B=l ; else B=np;
+  if(l ) (*dbg:c1=""            *) B=l ; else B=l;
+  if(l ) (*dbg:c1="\n"          *) B=l ; else B=nl;
+  if(l ) (*dbg:c1=""            *) B=nl; else B=c ;
+  if(l ) (*dbg:c1=""            *) B=nl; else B=np;
+  if(l ) (*dbg:c1=""            *) B=nl; else B=l ;
+  if(l ) (*dbg:c1="\n--------\n"*) B=nl; else B=nl;
+
+  if(nl) (*dbg:c1=""            *) B=c ; else B=c;
+  if(nl) (*dbg:c1=""            *) B=c ; else B=np;
+  if(nl) (*dbg:c1=""            *) B=c ; else B=l ;
+  if(nl) (*dbg:c1="\n"          *) B=c ; else B=nl;
+  if(nl) (*dbg:c1=""            *) B=np; else B=c ;
+  if(nl) (*dbg:c1=""            *) B=np; else B=np;
+  if(nl) (*dbg:c1=""            *) B=np; else B=l ;
+  if(nl) (*dbg:c1="\n"          *) B=np; else B=nl;
+  if(nl) (*dbg:c1=""            *) B=l ; else B=c ;
+  if(nl) (*dbg:c1=""            *) B=l ; else B=np;
+  if(nl) (*dbg:c1=""            *) B=l ; else B=l;
+  if(nl) (*dbg:c1="\n"          *) B=l ; else B=nl;
+  if(nl) (*dbg:c1=""            *) B=nl; else B=c ;
+  if(nl) (*dbg:c1=""            *) B=nl; else B=np;
+  if(nl) (*dbg:c1=""            *) B=nl; else B=l ;
+  if(nl) (*dbg:c1="\n--------\n"*) B=nl; else B=nl;
+
+  begin : WL
+    while(bwl==0) begin : wl awl=1; bwl=V(p)*V(p); end
+  end
+  begin : FL
+    for(afl=1;afl&lt;bfl;bfl=1) begin : fl afl=1; bfl=V(p); end
+  end
+
+end
+endmodule
+  </admst:open>
+  <admst:message format="$m.va: file created\n"/>
+  <admst:read file="$m.va"/>
+  <admst:apply-templates select="/module[name=$m]" match="adms.implicit.xml.module"/>
+  <admst:template match="aliasd">
+    <admst:choose>
+      <admst:when test="[.='constant']">0</admst:when>
+      <admst:when test="[.='noprobe']">1</admst:when>
+      <admst:when test="[.='linear']">2</admst:when>
+      <admst:when test="[.='nonlinear']">3</admst:when>
+    </admst:choose>
+  </admst:template>
+  <admst:template match="aliasB">
+    <admst:choose>
+      <admst:when test="[.='no']">0</admst:when>
+      <admst:when test="[.='yes']">1</admst:when>
+    </admst:choose>
+  </admst:template>
+  <admst:for-each select="/module/assignment[lhs/datatypename='variable' and lhs/name='A']">
+    <admst:text select="attribute[name='dbg:name']" format="%(value):\n"/>
+    <admst:text format="  %(aliasd(math/dependency))"/>
+    <admst:text select="rhs/tree[datatypename='function']/subexpression/expression" format=".%(aliasB(hasVoltageDependentFunction))"/>
+    <admst:text test="attribute[name='ibm' and value='dbg:nl']" format="\n"/>
+  </admst:for-each>
+  <admst:text select="/module/(branch|source|probe)" format="%(datatypename): %(.)=%(grounded)\n"/>
+  <admst:text select="/module/variable" format="%(.): parametertype=%(parametertype) input=%(input)\n"/>
+  <admst:text select="/module/variable" format="%(.): input=%(scope) OPdependent=%(OPdependent)\n"/>
+  <admst:text select="/module/variable/range" format="%(..) %(.)\n"/>
+  <admst:text select="/module/contribution" format="%(.) wn=%(whitenoise) lhswn=%(lhs/whitenoise)\n"/>
+  <admst:text select="/module/contribution" format="%(.) lhsfn=%(lhs/flickernoise) fn=%(flickernoise)\n"/>
+  <admst:text format="conditional:\n"/>
+  <admst:for-each select="/module/reverse(conditional[exists(then/attribute[name='dbg:c1'])])">
+    <admst:text format="%(if/aliasd(dependency))%(then/aliasd(dependency))%(else/aliasd(dependency))"/>
+  </admst:for-each>
+  <admst:text format="\n"/>
+  <admst:text format=" C0\n"/>
+  <admst:for-each select="/module/reverse(conditional[exists(then/attribute[name='dbg:c0'])])">
+    <admst:text format=" %(aliasd(dependency))_%(aliasd(then/dependency))_%(aliasd(then/lhs/dependency))"/>
+    <admst:text format="%(then/attribute[name='dbg:c0']/value)"/>
+  </admst:for-each>
+  <admst:text format=" C1\n"/>
+  <admst:for-each select="/module/reverse(conditional[exists(then/attribute[name='dbg:c1'])])">
+    <admst:text format=" %(aliasd(dependency))"/>
+    <admst:text format="%(then/attribute[name='dbg:c1']/value)"/>
+  </admst:for-each>
+  <admst:text format=" LOOPS\n"/>
+  <admst:for-each select="/module">
+    <admst:text select="block" format="block.%(name): %(dependency)\n"/> 
+    <admst:text select="variable" format="%(.): %(dependency)\n"/> 
+  </admst:for-each>
+</admst>

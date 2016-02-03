@@ -47,7 +47,7 @@ void relais::initSP (void) {
 
 void relais::calcNoiseSP (nr_double_t) {
   nr_double_t T = getPropertyDouble ("Temp");
-  nr_double_t f = celsius2kelvin (T) * 4.0 * r * z0 / qucs::sqr (2.0 * z0 + r) / T0;
+  nr_double_t f = kelvin (T) * 4.0 * r * z0 / qucs::sqr (2.0 * z0 + r) / T0;
   setN (NODE_2, NODE_2, +f); setN (NODE_3, NODE_3, +f);
   setN (NODE_2, NODE_3, -f); setN (NODE_3, NODE_2, -f);
 }
@@ -55,7 +55,7 @@ void relais::calcNoiseSP (nr_double_t) {
 void relais::calcNoiseAC (nr_double_t) {
   if (r > 0.0 || r < 0.0) {
     nr_double_t T = getPropertyDouble ("Temp");
-    nr_double_t f = celsius2kelvin (T) / T0 * 4.0 / r;
+    nr_double_t f = kelvin (T) / T0 * 4.0 / r;
     setN (NODE_2, NODE_2, +f); setN (NODE_3, NODE_3, +f);
     setN (NODE_2, NODE_3, -f); setN (NODE_3, NODE_2, -f);
   }

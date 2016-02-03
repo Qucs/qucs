@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE admst PUBLIC "-//adms//DTD admst 2.0//-" "http://mot-adms.sourceforge.net/xml-files/adms/admst.dtd">
+<!--
+  Usage: admsXml -e croixvariable.xml
+  Description: create file croixvariable.va, then test implementation of #... construct
+-->
+<!--
+  $Id: getinstance.xml 505 2007-01-23 11:17:43Z r29173 $
+  $Log$
+-->
+
+<admst version="2.3.0"  xmlns:admst="http://mot-adms.svn.sourceforge.net/viewvc/*checkout*/mot-adms/trunk/adms/admst.dtd">
+  <!-- create file croixvariable.va -->
+  <admst:variable name="module1" select="croixvariable"/>
+  <admst:open file="$(module1).va">
+`include &quot;discipline.h&quot;
+module $(module1)(p,n);
+  inout p, n;
+  electrical p, n;
+  parameter real A=1.0;
+  parameter real B=1.0;
+  real a,b;
+  analog
+  begin
+    begin : Loc
+      real a,b;
+      (*eq="Eq.1"*) a=1;
+      (*eq="Eq.2"*) b=1;
+    end
+    begin : Glob
+      (*eq="Eq.1"*) a=1;
+      (*eq="Eq.2"*) b=1;
+    end
+  end
+endmodule
+  </admst:open>
+  <admst:message format="$(module1).va: file created\n"/>
+  <admst:read file="$(module1).va"/>
+  <admst:apply-templates select="module[name='$(module1)']" match="adms.implicit.xml.module"/>
+  <!-- test #... construct -->
+  <admst:template match="iterate">
+    <admst:value-to select="#insource" path="../attribute[name='eq']/value"/>
+    <admst:text format="set %(.)#insource=%(#insource)\n"/>
+  </admst:template>
+  <admst:apply-templates select="/module/reverse(assignment)/lhs" match="iterate"/>
+  <admst:text select="/module/reverse(assignment)/lhs" format="check %(block/name):%(.)#insource=%(#insource)\n"/>
+  <admst:value-to select="/#a" path="module/variable"/>
+  <admst:text format="-- %(/#a/datatypename)\n"/>
+</admst>

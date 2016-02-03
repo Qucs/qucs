@@ -36,7 +36,7 @@
 
 //#include <stdio.h>
 //#include <stdlib.h>
-#include <string.h>
+//#include <string.h>
 
 #include "object.h"
 #include "complex.h"
@@ -61,7 +61,7 @@ analysis::analysis () : object () {
 }
 
 // Constructor creates a named instance of the analysis class.
-analysis::analysis (const std::string &n) : object (n) {
+analysis::analysis (char * n) : object (n) {
   data = NULL;
   subnet = NULL;
   env = NULL;
@@ -73,7 +73,7 @@ analysis::analysis (const std::string &n) : object (n) {
 
 // Destructor deletes the analysis class object.
 analysis::~analysis () {
-  delete actions;
+  if (actions) delete actions;
 }
 
 /* The copy constructor creates a new instance of the analysis class
@@ -92,24 +92,22 @@ analysis::analysis (analysis & a) : object (a) {
    associated with the current analysis object. */
 void analysis::addAnalysis (analysis * a) {
   if (!actions) actions = new ptrlist<analysis> ();
-  actions->push_front (a);
+  actions->add (a);
 }
 
 /* This function deletes the given analysis from the actions being
    associated with the current analysis object. */
 void analysis::delAnalysis (analysis * a) {
-  if (actions != nullptr) {
-    actions->remove (a);
-  }
+  if (actions) actions->del (a);
 }
 
 /* The following function creates a sweep object depending on the
    analysis's properties.  Supported sweep types are: linear,
    logarithmic, lists and constants. */
-sweep * analysis::createSweep (const std::string& n) {
+sweep * analysis::createSweep (const char * n) {
   sweep * swp = NULL;
   // get type of sweep
-  const char * const type = getPropertyString ("Type");
+  char * type = getPropertyString ("Type");
 
   // linearly or logarithmically stepped sweeps
   if (!strcmp (type, "lin") || !strcmp (type, "log")) {
@@ -150,7 +148,7 @@ sweep * analysis::createSweep (const std::string& n) {
 
 /* Saves the given variable into the dataset.  Creates the dataset
    vector if necessary. */
-  void analysis::saveVariable (const std::string &n, nr_complex_t z, vector * f) {
+void analysis::saveVariable (const char * n, nr_complex_t z, vector * f) {
   vector * d;
   if ((d = data->findVariable (n)) == NULL) {
     d = new vector (n);

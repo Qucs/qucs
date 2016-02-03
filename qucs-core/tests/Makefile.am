@@ -22,39 +22,34 @@
 # Boston, MA 02110-1301, USA.
 #
 
-# FIXME: different paths used in configure.ac
-AM_CPPFLAGS = \
-    -I$(top_srcdir)/libs/gtest/include \
-    -I$(top_srcdir)/libs/gtest/ \
+AM_CPPFLAGS =  \
+    -isystem $(top_srcdir)/lib/gtest/include \
     -I$(top_srcdir)/src \
     -I$(top_srcdir)/src/math \
-    -I$(top_builddir)/src/components \
     -I$(top_srcdir)/src/components
 
-AM_CXXFLAGS =
+AM_CXXFLAGS = $(AM_CPPFLAGS)
 
-GTEST_TESTS = libqucsUnitTest
+AM_LDFLAGS = \
+	 $(top_srcdir)/lib/gtest/lib/libgtest_main.la \
+	 $(top_srcdir)/lib/gtest/lib/libgtest.la \
+	 $(top_srcdir)/src/libqucs.la
 
-if USE_GTEST
-GTEST_LIBQUCS = libqucsUnitTest
-check_PROGRAMS = $(GTEST_LIBQUCS)
-libqucsUnitTest_LDADD = $(top_builddir)/src/libqucs.la
-libqucsUnitTest_CPPFLAGS = $(AM_CPPFLAGS) @GTEST_CPPFLAGS@ \
-                           -DGTEST_HAS_PTHREAD=0
-libqucsUnitTest_SOURCES = testMain.cpp \
-  test_libqucs.cpp \
-	Fourier.cpp \
-	Math.cpp \
-	Matrix.cpp \
-	Vector.cpp
-else
-libqucsUnitTest:
-	echo "!#/bin/sh" > $@
-	echo exit 77 >> $@
-	chmod +x $@
-endif
 
 # TESTS -- Programs run automatically by "make check"
-TESTS = $(GTEST_TESTS)
-EXTRA_DIST = runqucsator.sh testDefine.h
-CLEANFILES = $(GTEST_TESTS)
+# check_PROGRAMS -- Programs built by "make check" but not necessarily run
+TESTS =
+check_PROGRAMS =
+
+
+# It could also test individual cpp files
+#TESTS += func_test
+#check_PROGRAMS += func_test
+#func_test_SOURCES = func_test.cpp
+#func_test_LDADD = $(top_srcdir)/src/func.o
+
+
+# Test libqucs
+TESTS += test_libqucs
+check_PROGRAMS += test_libqucs
+test_libqucs_SOURCES = test_libqucs.cpp

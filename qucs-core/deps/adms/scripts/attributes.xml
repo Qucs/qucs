@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE admst PUBLIC "-//adms//DTD admst 2.0//-" "http://mot-adms.sourceforge.net/xml-files/adms/admst.dtd">
+
+<!--
+  Usage: admsXml -e attributes.xml
+    This example gives some hints on how to use Verilog-AMS attributes.
+-->
+<!--
+  $Id: attributes.xml 1102 2008-10-03 14:09:22Z r29173 $
+  $Log$
+  Revision 1.1  2006/03/28 13:22:34  r29173
+  initial import
+
+  Revision 1.4  2006/03/23 07:51:39  r29173
+  fixed bug in computation of ddx
+
+-->
+
+<admst version="2.3.0"  xmlns:admst="http://mot-adms.svn.sourceforge.net/viewvc/*checkout*/mot-adms/trunk/adms/admst.dtd">
+  <admst:template match=":attribute">
+    <admst:for-each select="attribute">
+      <admst:text format="attr: %(name)=%(value)\n"/>
+    </admst:for-each> 
+    <admst:text format="==============================================\n"/>
+  </admst:template>
+<admst:open file="attributes.va">
+    `include &quot;disciplines.h&quot;
+    (* info_before=&quot;module info before&quot; *) module mymodule (p,n) (* info_after=&quot;module info after&quot; *) ;
+      (*globalterminal=&quot;my terminals&quot;*) inout p, n;
+      electrical p(*localterm=&quot;my p term&quot;*), n(*localterm=&quot;my n term&quot;*);
+      (*globalbranch=&quot;my branches&quot;*)branch (p,n) pn;
+      (*globalwidth=&quot;width applies to all parameters&quot;*) parameter real w1=1u (*localwidth=&quot;local attribute of width1&quot;*), w2=1u (*localwidth=&quot;local attribute of width2&quot;*);
+      (*globallength=&quot;length applies to all parameters&quot;*) parameter real l1=1u (*locallength=&quot;local attribute of length1&quot;*), l2=1u (*locallength=&quot;local attribute of length2&quot;*);
+      (*global=&quot;my conductances&quot;*) real g1 (*local=&quot;this is g1&quot;*),g2 (*local=&quot;this is g2&quot;*),g3 (*local=&quot;this is g3&quot;*),g4 (*local=&quot;this is g4&quot;*);
+      analog
+      begin
+        g1=w1/l1;
+        g2=w2/l2;
+        I(p,n)&lt;+g1*V(p,n) (*contrib_attr1=&quot;hello1&quot; contrib_attr2=&quot;hello2&quot;*);
+        I(p,n)&lt;+g2*V(p,n) (*contrib1=&quot;hello1bis&quot; contrib2=&quot;hello2bis&quot; contrib3=&quot;hello3&quot; contrib4=&quot;hello4&quot;*);
+      end
+    endmodule
+</admst:open>
+<admst:read file="attributes.va"/>
+  <admst:for-each select="/module">
+    <admst:apply-templates select="." match=":attribute"/>
+    <admst:text format="branch\n"/>
+    <admst:for-each select="branch">
+      <admst:apply-templates select="." match=":attribute"/>
+    </admst:for-each> 
+    <admst:text format="node\n"/>
+    <admst:for-each select="node">
+      <admst:apply-templates select="." match=":attribute"/>
+    </admst:for-each> 
+    <admst:text format="variable\n"/>
+    <admst:for-each select="variable">
+      <admst:apply-templates select="." match=":attribute"/>
+    </admst:for-each> 
+    <admst:text format="contribution\n"/>
+    <admst:for-each select="contribution">
+      <admst:apply-templates select="." match=":attribute"/>
+    </admst:for-each> 
+    <admst:text format="source\n"/>
+    <admst:for-each select="source">
+      <admst:apply-templates select="." match=":attribute"/>
+    </admst:for-each> 
+  </admst:for-each> 
+</admst>

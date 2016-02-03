@@ -57,7 +57,6 @@
 
 */
 
-
 //#if HAVE_CONFIG_H
 //# include <config.h>
 //#endif
@@ -72,7 +71,6 @@
 //#include "complex.h"
 //#include "constants.h"
 //#include "precision.h"
-//#include <limits>
 
 #define SMALL_J0_BOUND 1e6
 
@@ -131,8 +129,8 @@ cbesselj_smallarg (unsigned int n, nr_complex_t z)
     {
       ak = -(z * z) / (4.0 * k * (n + k));
       Rk = ak * Rk;
-      if (fabs (real (Rk)) < fabs (real (R) * std::numeric_limits<nr_double_t>::epsilon()) &&
-	  fabs (imag (Rk)) < fabs (imag (R) * std::numeric_limits<nr_double_t>::epsilon()))
+      if (fabs (real (Rk)) < fabs (real (R) * NR_EPSI) &&
+	  fabs (imag (Rk)) < fabs (imag (R) * NR_EPSI))
 	return R;
 
       R += Rk;
@@ -247,8 +245,8 @@ cbesselj_largearg (unsigned int n, nr_complex_t z)
       denum = 2 * k * (2 * k - 1);
       Pk = Pk * ((nr_double_t) num * m1a8z2) / ((nr_double_t) denum);
 
-      if (real (Pk) < real (P0) * std::numeric_limits<nr_double_t>::epsilon() &&
-	  imag (Pk) < imag (P0) * std::numeric_limits<nr_double_t>::epsilon())
+      if (real (Pk) < real (P0) * NR_EPSI &&
+	  imag (Pk) < imag (P0) * NR_EPSI)
 	break;
 
       P += Pk;
@@ -264,8 +262,8 @@ cbesselj_largearg (unsigned int n, nr_complex_t z)
       denum = 2 * k * (2 * k - 1);
       Qk = Qk * ((nr_double_t) num * m1a8z2) / ((nr_double_t) denum);
 
-      if (real (Qk) < real (Q0) * std::numeric_limits<nr_double_t>::epsilon() ||
-	  imag (Qk) < imag (Q0) * std::numeric_limits<nr_double_t>::epsilon())
+      if (real (Qk) < real (Q0) * NR_EPSI ||
+	  imag (Qk) < imag (Q0) * NR_EPSI)
 	break;
 
       Q_ += Qk;

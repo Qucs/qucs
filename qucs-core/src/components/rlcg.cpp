@@ -41,8 +41,8 @@ void rlcg::calcPropagation (nr_double_t frequency) {
   nr_double_t L = getPropertyDouble ("L");
   nr_double_t C = getPropertyDouble ("C");
   nr_double_t G = getPropertyDouble ("G");
-  nr_complex_t Z = nr_complex_t (R, 2 * pi * frequency * L);
-  nr_complex_t Y = nr_complex_t (G, 2 * pi * frequency * C);
+  nr_complex_t Z = nr_complex_t (R, 2 * M_PI * frequency * L);
+  nr_complex_t Y = nr_complex_t (G, 2 * M_PI * frequency * C);
   g = std::sqrt (Z * Y);
   z = std::sqrt (Z / Y);
 }
@@ -69,7 +69,7 @@ void rlcg::calcNoiseSP (nr_double_t) {
   nr_double_t T = getPropertyDouble ("Temp");
   matrix s = getMatrixS ();
   matrix e = eye (getSize ());
-  setMatrixN (celsius2kelvin (T) / T0 * (e - s * transpose (conj (s))));
+  setMatrixN (kelvin (T) / T0 * (e - s * transpose (conj (s))));
 }
 
 void rlcg::calcNoiseAC (nr_double_t) {
@@ -77,7 +77,7 @@ void rlcg::calcNoiseAC (nr_double_t) {
   if (l == 0.0) return;
   // calculate noise using Bosma's theorem
   nr_double_t T = getPropertyDouble ("Temp");
-  setMatrixN (4 * celsius2kelvin (T) / T0 * real (getMatrixY ()));
+  setMatrixN (4 * kelvin (T) / T0 * real (getMatrixY ()));
 }
 
 void rlcg::initDC (void) {

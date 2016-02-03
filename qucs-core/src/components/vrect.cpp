@@ -52,11 +52,7 @@ void vrect::initDC (void) {
   nr_double_t tf = getPropertyDouble ("Tf");
   if (tr > th) tr = th;
   if (tf > tl) tf = tl;
-  // DC value defined as 0.0 instead of
-  // (th + (tf - tr) / 2) / (th + tl) previously used
-  // so that the transient starting value will also be 0, 
-  // otherwise a discontinuity occurs
-  nr_double_t a  = 0.0;
+  nr_double_t a  = (th + (tf - tr) / 2) / (th + tl);
   nr_double_t u  = getPropertyDouble ("U") * a;
   allocMatrixMNA ();
   voltageSource (VSRC_1, NODE_1, NODE_2, u);

@@ -53,7 +53,7 @@ void attenuator::calcNoiseSP (nr_double_t) {
   nr_double_t l = getPropertyDouble ("L");
   nr_double_t z = getPropertyDouble ("Zref");
   nr_double_t r = (z - z0) / (z + z0);
-  nr_double_t f = (l - 1) * (r * r - 1) / sqr (l - r * r) * celsius2kelvin (T) / T0;
+  nr_double_t f = (l - 1) * (r * r - 1) / sqr (l - r * r) * kelvin (T) / T0;
   setN (NODE_1, NODE_1, -f * (r * r + l));
   setN (NODE_2, NODE_2, -f * (r * r + l));
   setN (NODE_1, NODE_2, +f * 2 * r * std::sqrt (l));
@@ -64,7 +64,7 @@ void attenuator::calcNoiseAC (nr_double_t) {
   nr_double_t T = getPropertyDouble ("Temp");
   nr_double_t l = getPropertyDouble ("L");
   nr_double_t z = getPropertyDouble ("Zref");
-  nr_double_t f = 4.0 * celsius2kelvin (T) / T0 / z / (l - 1);
+  nr_double_t f = 4.0 * kelvin (T) / T0 / z / (l - 1);
   setN (NODE_1, NODE_1, +f * (l + 1));
   setN (NODE_2, NODE_2, +f * (l + 1));
   setN (NODE_1, NODE_2, -f * 2 * std::sqrt (l));

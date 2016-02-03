@@ -1,0 +1,42 @@
+admsXml.exe 
+
+2010-08-04  Holger Vogt
+
+binary for MS Windows (32 bit, o.k. for 64 bit), created with MINGW 
+gcc.exe (tdm-1) 4.5.0
+
+Tested with ngspice under MINGW.
+
+Copy to MSYS /bin directory for immediate use with ngspice.
+
+
+How admsXml.exe was created:
+
+adms sources downloaded from svn server with
+$  svn co https://mot-adms.svn.sourceforge.net/svnroot/mot-adms/trunk/adms adms-svn
+on 2010-08-01
+
+Changes made to sources
+ * autogen.sh: update for CYGWIN and LINUX
+ * compile-mingw.sh: added to allow compilation of admsXml.exe on MINGW
+ * configure.ac: check for GD perl module removed
+ * /images/makefile.am: image generation removed (are already there).
+ * mkelements.pl; add preprocessor flag 'staticlink' to use with
+   MINGW compilation
+ * ChangeLog added  
+   
+Adapted sources are available at
+http://ngspice.sourceforge.net/admshowto.html
+
+Expand zip file to directory 'myadms'
+
+In CYGWIN window run
+cd myadms/adms-svn-ngspice-dist
+./autogen_cyg.sh
+make install
+
+In MSYS window run
+cd myadms/adms-svn-ngspice-dist
+./compile-mingw.sh  
+
+admsXml.exe will be available in MSYS /bin diretory, ready for use with ngspice.

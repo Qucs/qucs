@@ -42,7 +42,7 @@ void mutual::calcSP (nr_double_t frequency) {
   nr_double_t l1 = getPropertyDouble ("L1");
   nr_double_t l2 = getPropertyDouble ("L2");
   nr_double_t k = getPropertyDouble ("k");
-  nr_double_t o = 2 * pi * frequency;
+  nr_double_t o = 2 * M_PI * frequency;
   nr_double_t a = k * k - 1;
   nr_complex_t d = nr_complex_t (o * o * l1 * l2 * a / 2 / z0 + 2 * z0, o * (l1 + l2));
   nr_complex_t r;
@@ -67,7 +67,7 @@ matrix mutual::calcMatrixY (nr_double_t frequency) {
   nr_double_t l1 = getPropertyDouble ("L1");
   nr_double_t l2 = getPropertyDouble ("L2");
   nr_double_t k = getPropertyDouble ("k");
-  nr_double_t o = 2 * pi * frequency;
+  nr_double_t o = 2 * M_PI * frequency;
   nr_double_t a = 1 - k * k;
   nr_complex_t z1 = nr_complex_t (0, o * l1 * a);
   nr_complex_t z2 = nr_complex_t (0, o * l2 * a);

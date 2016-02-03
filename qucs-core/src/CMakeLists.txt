@@ -1,6 +1,6 @@
 
 PROJECT(qucsator CXX C)
-cmake_policy(VERSION 2.6)
+
 
 #
 # Checks for libraries.
@@ -75,6 +75,28 @@ CHECK_TYPE_SIZE("long double"  SIZEOF_LONG_DOUBLE)
 #MESSAGE(STATUS "long  ${SIZEOF_LONG}" )
 #MESSAGE(STATUS "double ${SIZEOF_DOUBLE}" )
 #MESSAGE(STATUS "long double ${SIZEOF_LONG_DOUBLE}" )
+
+#
+# Check C-type for 32-bit integers.
+#
+IF( ${SIZEOF_SHORT} EQUAL 4)
+  SET( nr_int32_t "short")
+ELSEIF( ${SIZEOF_INT} EQUAL 4)
+  SET( nr_int32_t "int")
+ELSEIF( ${SIZEOF_long} EQUAL 4)
+  SET( nr_int32_t "long")
+ENDIF()
+
+#
+# Check C-type for 16-bit integers.
+#
+IF( ${SIZEOF_SHORT} EQUAL 2)
+  SET( nr_int16_t "short")
+ELSEIF( ${SIZEOF_INT} EQUAL 2)
+  SET( nr_int16_t "int")
+ELSEIF( ${SIZEOF_long} EQUAL 2)
+  SET( nr_int16_t "long")
+ENDIF()
 
 #
 # Check for double type.
@@ -189,34 +211,16 @@ IF(NOT HAVE_COMPLEX)
   MESSAGE(SEND_ERROR "HAVE_COMPLEX failed")# ${TRY_OUT}")
 ENDIF()
 
-
-#
-# Check std::vector::erase iterator type [const_iterator | iterator]
-#
-MESSAGE(STATUS "Checking HAVE_ERASE_CONSTANT_ITERATOR")
-TRY_COMPILE( HAVE_ERASE_CONSTANT_ITERATOR
-        ${CMAKE_BINARY_DIR}
-        ${qucs-core_SOURCE_DIR}/cmake/erase_iterator_type.cpp
-        OUTPUT_VARIABLE TRY_OUT)
-IF(HAVE_ERASE_CONSTANT_ITERATOR)
-  MESSAGE(STATUS "Using std::vector:erase iterator type : const_iterator")
-ELSE()
-  MESSAGE(STATUS "Using std::vector:erase iterator type : iterator")
-ENDIF()
-
-
 #
 # Check for list of complex functions.
 #
-SET(COMPLEX_FUNCS_GRP1 acos acosh asin asinh atan atanh cos cosh
-                   exp log log10 sin sinh sqrt tan tanh log2 norm )
-SET(COMPLEX_FUNCS_GRP2 pow atan2 fmod polar polar_complex )
+SET(COMPLEX_FUNCS acos acosh asin asinh atan atanh cos cosh
+                  exp log log10 sin sinh sqrt tan tanh log2 norm )
 
 #
-# test complex function group 1
 # code inlined to easily replace '${func}'
-#
-FOREACH(func ${COMPLEX_FUNCS_GRP1})
+# TODO any better way to scape the ";" ?
+FOREACH(func ${COMPLEX_FUNCS})
   SET(code
     " #include <complex>
       using namespace std\;
@@ -243,28 +247,67 @@ FOREACH(func ${COMPLEX_FUNCS_GRP1})
   if(NOT HAVE_CXX_COMPLEX_${FNAME})
     message(STATUS "HAVE_CXX_COMPLEX_${FNAME} failed")# ${TRY_OUT}")
   ENDIF()
-
-  FILE(REMOVE ${qucs-core_SOURCE_DIR}/cmake/test_${func}.cpp ${code})
 ENDFOREACH()
 
 #
-# test complex function group 2
-# use prepared source file. 
+# Check whether you have the complex pow function.
 #
-FOREACH(func ${COMPLEX_FUNCS_GRP2})
-  string(TOUPPER ${func} FNAME)
+TRY_COMPILE( HAVE_CXX_COMPLEX_POW
+        ${CMAKE_BINARY_DIR}
+        ${qucs-core_SOURCE_DIR}/cmake/complex_pow.cpp
+        COMPILE_DEFINITIONS -DHAVE_NAMESPACES -DHAVE_COMPLEX -DHAVE_TR1_COMPLEX
+        OUTPUT_VARIABLE TRY_OUT)
+IF(NOT HAVE_CXX_COMPLEX_POW)
+  MESSAGE(SEND_ERROR "HAVE_CXX_COMPLEX_POW failed")# ${TRY_OUT}")
+ENDIF()
 
-  message(STATUS "Checking HAVE_CXX_COMPLEX_${FNAME}")
+#
+# Check whether you have the complex atan2 function.
+#
+TRY_COMPILE( HAVE_CXX_COMPLEX_ATAN2
+        ${CMAKE_BINARY_DIR}
+        ${qucs-core_SOURCE_DIR}/cmake/complex_atan2.cpp
+        COMPILE_DEFINITIONS -DHAVE_NAMESPACES -DHAVE_COMPLEX -DHAVE_TR1_COMPLEX
+        OUTPUT_VARIABLE TRY_OUT)
+IF(NOT HAVE_CXX_COMPLEX_ATAN2)
+  MESSAGE(STATUS "HAVE_CXX_COMPLEX_ATAN2 failed ") #${TRY_OUT}")
+ENDIF()
 
-  TRY_COMPILE( HAVE_CXX_COMPLEX_${FNAME}
-          ${CMAKE_BINARY_DIR}
-          ${qucs-core_SOURCE_DIR}/cmake/complex_${func}.cpp
-          COMPILE_DEFINITIONS -DHAVE_NAMESPACES -DHAVE_COMPLEX -DHAVE_TR1_COMPLEX
-          OUTPUT_VARIABLE TRY_OUT)
-  if(NOT HAVE_CXX_COMPLEX_${FNAME})
-    message(STATUS "HAVE_CXX_COMPLEX_${FNAME} failed")# ${TRY_OUT}")
-  ENDIF()
-ENDFOREACH()
+#
+# Check wheter you have the complex fmod function.
+#
+TRY_COMPILE( HAVE_CXX_COMPLEX_FMOD
+        ${CMAKE_BINARY_DIR}
+        ${qucs-core_SOURCE_DIR}/cmake/complex_fmod.cpp
+        COMPILE_DEFINITIONS -DHAVE_NAMESPACES -DHAVE_COMPLEX -DHAVE_TR1_COMPLEX
+        OUTPUT_VARIABLE TRY_OUT)
+IF(NOT HAVE_CXX_COMPLEX_FMOD)
+  MESSAGE(STATUS "HAVE_CXX_COMPLEX_FMOD failed ") #${TRY_OUT}")
+ENDIF()
+
+#
+# Check whether you have the complex polar (double, double) function.
+#
+TRY_COMPILE( HAVE_CXX_COMPLEX_POLAR
+        ${CMAKE_BINARY_DIR}
+        ${qucs-core_SOURCE_DIR}/cmake/complex_polar.cpp
+        COMPILE_DEFINITIONS -DHAVE_NAMESPACES -DHAVE_COMPLEX -DHAVE_TR1_COMPLEX
+        OUTPUT_VARIABLE TRY_OUT)
+IF(NOT HAVE_CXX_COMPLEX_POLAR)
+  MESSAGE(STATUS "HAVE_CXX_COMPLEX_POLAR failed ") #${TRY_OUT}")
+ENDIF()
+
+#
+# Check wheter you have the complex polar (complex, complex) function.
+#
+TRY_COMPILE( HAVE_CXX_COMPLEX_POLAR_COMPLEX
+        ${CMAKE_BINARY_DIR}
+        ${qucs-core_SOURCE_DIR}/cmake/complex_polar_complex.cpp
+        COMPILE_DEFINITIONS -DHAVE_NAMESPACES -DHAVE_COMPLEX -DHAVE_TR1_COMPLEX
+        OUTPUT_VARIABLE TRY_OUT)
+IF(NOT HAVE_CXX_COMPLEX_POLAR_COMPLEX)
+  MESSAGE(STATUS "HAVE_CXX_COMPLEX_POLAR_COMPLEX failed ") #${TRY_OUT}")
+ENDIF()
 
 #
 # Configure the header config.h, interpolate above definitions.
@@ -287,40 +330,36 @@ SET(ParserTypes
   zvr
 )
 
-SET(generated_SRC)
+# Flex/Bison generated code, example:
+#   - parse_csv.cpp scan_csv.cpp
 
+# TODO Double check the location where the generated scanner/parser should go
 FOREACH( type ${ParserTypes} )
 
-  # Create custom Bison
-  SET(BO_${type}
-    ${CMAKE_CURRENT_BINARY_DIR}/parse_${type}.cpp
-    ${CMAKE_CURRENT_BINARY_DIR}/tokens_${type}.h )
-  ADD_CUSTOM_COMMAND(
-    OUTPUT ${BO_${type}}
-    COMMAND ${BISON_EXECUTABLE}
-              --defines=${CMAKE_CURRENT_BINARY_DIR}/parse_${type}.hpp
-              --output=${CMAKE_CURRENT_BINARY_DIR/}parse_${type}.cpp
-              ${CMAKE_CURRENT_SOURCE_DIR}/parse_${type}.ypp
-    DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/parse_${type}.ypp
-    )
+  FLEX_TARGET(scan${type} scan_${type}.l ${PROJECT_SOURCE_DIR}/scan_${type}.cpp)
 
-  # Create custom Flex
-  SET(FI_${type} ${CMAKE_CURRENT_SOURCE_DIR}/scan_${type}.lpp )
-  SET(FO_${type} ${CMAKE_CURRENT_BINARY_DIR}/scan_${type}.cpp )
-  ADD_CUSTOM_COMMAND(
-    OUTPUT ${FO_${type}}
-    COMMAND ${FLEX_EXECUTABLE}
-            --outfile=${FO_${type}}
-            ${FI_${type}}
-    DEPENDS ${BO_${type}} ${FI_${type}}
-    )
-  SET(generated_SRC ${generated_SRC} ${FO_${type}})
-  SET(generated_SRC ${generated_SRC} ${BO_${type}})
+  BISON_TARGET(parse${type}
+               parse_${type}.y ${PROJECT_SOURCE_DIR}/parse_${type}.cpp
+               COMPILE_FLAGS --defines="${PROJECT_SOURCE_DIR}/tokens_${type}.h" )
+
+  ADD_FLEX_BISON_DEPENDENCY(scan${type} parse${type})
+
+  SET(flexInputs   ${flexInputs}   ${FLEX_scan${type}_INPUT}   )
+  SET(flexOutputs  ${flexOutputs}  ${FLEX_scan${type}_OUTPUTS} )
+  SET(bisonInputs  ${bisonInputs}  ${BISON_parse${type}_INPUT} )
+  SET(bisonOutputs ${bisonOutputs} ${BISON_parse${type}_OUTPUTS})
 ENDFOREACH()
 
-FOREACH( gfile ${generated_SRC} )
-  SET_SOURCE_FILES_PROPERTIES(${gfile} PROPERTIES GENERATED TRUE)
-ENDFOREACH()
+#
+# Combine all genereated flex/bison files
+#
+SET(generated_SRC ${flexOutputs} ${bisonOutputs})
+
+#MESSAGE(STATUS "----> Scanner / Parser     ${generated_SRC}\n")
+#MESSAGE(STATUS "Qucsator -- Flex Inputs : ${flexInputs}")
+#MESSAGE(STATUS "Qucsator -- Flex Outputs: ${flexOutputs}")
+#MESSAGE(STATUS "Qucsator -- Bison Inputs : ${bisonInputs}")
+#MESSAGE(STATUS "Qucsator -- Bison Outputs: ${bisonOutputs}")
 
 
 #
@@ -338,6 +377,7 @@ SET(LIBQUCS_SRC
 	strlist.cpp
 	trsolver.cpp
   acsolver.cpp
+  characteristic.cpp
   check_citi.cpp
   check_csv.cpp
   check_dataset.cpp
@@ -363,9 +403,12 @@ SET(LIBQUCS_SRC
   matvec.cpp
   module.cpp
   net.cpp
+  node.cpp
   nodelist.cpp
   nodeset.cpp
   object.cpp
+  operatingpoint.cpp
+  pair.cpp
   receiver.cpp
   spsolver.cpp
   sweep.cpp
@@ -384,7 +427,7 @@ SET(TEMPLATES tmatrix.h tvector.h eqnsys.h nasolver.h states.h tvector.h
 #
 # Include headers to be installed
 #
-SET(PUBLIC_HEADERS
+SET(HEADERS
   ${qucs-core_BINARY_DIR}/config.h
   ${qucs-core_BINARY_DIR}/qucs_typedefs.h
   circuit.h
@@ -397,14 +440,11 @@ SET(PUBLIC_HEADERS
   netdefs.h
   node.h
   object.h
+  states.cpp
   states.h
+  valuelist.cpp
   valuelist.h
   vector.h
-  property.h
-  ptrlist.h
-  characteristic.h
-  pair.h
-  operatingpoint.h
 )
 
 INCLUDE_DIRECTORIES( ${qucs-core_SOURCE_DIR}          # generated config.h
@@ -412,9 +452,6 @@ INCLUDE_DIRECTORIES( ${qucs-core_SOURCE_DIR}          # generated config.h
                      ${qucs-core_SOURCE_DIR}/src/     # compat.h
                      ${qucs-core_SOURCE_DIR}/src/components # microstrip/substrate.h
                      ${qucs-core_SOURCE_DIR}/src/interface
-                     ${qucs-core_BINARY_DIR}          # cmake generated config.h
-                     ${qucs-core_BINARY_DIR}/src      # cmake generated gperfapphash.h
-                     ${qucs-core_BINARY_DIR}/src/components   # generated verilog/[].core.h
                      )
 
 #
@@ -457,7 +494,7 @@ ADD_CUSTOM_COMMAND(
 #
 ADD_CUSTOM_COMMAND(
     OUTPUT gperfapphash.cpp
-    COMMAND ${GPERF_TOOL} -I -m 8 ${CMAKE_CURRENT_BINARY_DIR}/gperfapphash.gph > temp.gperf
+    COMMAND ${GPERF_TOOL} -I -m 8 ${CMAKE_CURRENT_SOURCE_DIR}/gperfapphash.gph > temp.gperf
     COMMAND ${SED_TOOL} -e 's/{""},/{"",0},/g' < temp.gperf > ${CMAKE_CURRENT_BINARY_DIR}/gperfapphash.cpp
     DEPENDS gperfapphash.gph
 )
@@ -490,7 +527,7 @@ ADD_SUBDIRECTORY( converter )
 #
 # Create qucsator
 #
-ADD_EXECUTABLE( qucsator ucs.cpp ${PUBLIC_HEADERS} ${TEMPLATES})
+ADD_EXECUTABLE( qucsator ucs.cpp )
 
 #
 # Build libqucs as SHARED, dynamic library
@@ -539,4 +576,4 @@ INSTALL(TARGETS libqucs
      ARCHIVE DESTINATION lib COMPONENT devel
      LIBRARY DESTINATION lib COMPONENT library)
 
-INSTALL(FILES ${PUBLIC_HEADERS} DESTINATION include/qucs-core)
+INSTALL(FILES ${HEADERS} DESTINATION include/qucs-core)

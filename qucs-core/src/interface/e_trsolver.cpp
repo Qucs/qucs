@@ -129,7 +129,7 @@ e_trsolver::~e_trsolver ()
 
     deinitTR ();
 
-    delete swp;
+    if (swp) delete swp;
 
     for (int i = 0; i < 8; i++)
     {
@@ -142,7 +142,7 @@ e_trsolver::~e_trsolver ()
             delete lastsolution[i];
         }
     }
-    delete tHistory;
+    if (tHistory) delete tHistory;
 
 }
 
@@ -166,8 +166,8 @@ void e_trsolver::debug()
     {
         messagefcn (0, c->getName() );
 
-        if (!c->getSubcircuit ().empty()) {
-	  printf ("subcircuit Name %s\n", c->getSubcircuit ().c_str());
+        if (c->getSubcircuit ()) {
+            printf ("subcircuit Name %s\n", c->getSubcircuit ());
         }
     }
 
@@ -183,7 +183,7 @@ int e_trsolver::init (nr_double_t start, nr_double_t firstdelta, int mode)
     this->getEnv()->runSolver();
 
     int error = 0;
-    const char * const solver = getPropertyString ("Solver");
+    char * solver = getPropertyString ("Solver");
     relaxTSR = !strcmp (getPropertyString ("relaxTSR"), "yes") ? true : false;
     initialDC = !strcmp (getPropertyString ("initialDC"), "yes") ? true : false;
     // fetch simulation properties
@@ -291,7 +291,7 @@ void e_trsolver::fillLastSolution (tvector<nr_double_t> * s)
    function. */
 void e_trsolver::initETR (nr_double_t start, nr_double_t firstdelta, int mode)
 {
-    const char * const IMethod = getPropertyString ("IntegrationMethod");
+    char * IMethod = getPropertyString ("IntegrationMethod");
     //nr_double_t start = getPropertyDouble ("Start");
     //nr_double_t stop = start + firstdelta;
     //nr_double_t points = 1.0;
@@ -321,7 +321,7 @@ void e_trsolver::initETR (nr_double_t start, nr_double_t firstdelta, int mode)
     {
         delta = firstdelta;
         deltaMin = NR_TINY * 10;
-        deltaMax =  std::numeric_limits<nr_double_t>::max() / 10;
+        deltaMax = NR_MAX / 10;
     }
 
     // initialize step history
@@ -371,7 +371,7 @@ void e_trsolver::printx()
 {
     char buf [1024];
 
-    for (int r = 0; r < x->size(); r++) {
+    for (int r = 0; r < x->getSize(); r++) {
         buf[0] = '\0';
         //sprintf (buf, "%+.2e%+.2ei", (double) real (x->get (r)), (double) imag (x->get (r)));
 
@@ -732,7 +732,7 @@ int e_trsolver::stepsolve_async(nr_double_t steptime)
         {
             messagefcn (LOG_ERROR, "ERROR: %s: Jacobian singular at t = %.3e, "
                       "aborting %s analysis\n", getName (), (double) current,
-			getDescription ().c_str());
+                      getDescription ());
             return -1;
         }
 
@@ -828,9 +828,9 @@ void e_trsolver::copySolution (tvector<nr_double_t> * src[8], tvector<nr_double_
     for (int i = 0; i < 8; i++)
     {
         // check sizes are the same
-        assert (src[i]->size () == dest[i]->size ());
+        assert (src[i]->getSize () == dest[i]->getSize ());
         // copy over the data values
-        for (int j = 0; j < src[i]->size (); j++)
+        for (int j = 0; j < src[i]->getSize (); j++)
         {
             dest[i]->set (j, src[i]->get (j));
         }
@@ -918,7 +918,7 @@ int e_trsolver::getVProbeV (char * probename, nr_double_t& probeV)
                 // Subcircuit elements top level name is the
                 // subcircuit type (the base name of the subcircuit
                 // file)
-                if (!c->getSubcircuit ().empty())
+                if (c->getSubcircuit ())
                 {
                     fullname.append (c->getSubcircuit ());
                     fullname.append (".");
@@ -950,7 +950,7 @@ int e_trsolver::getIProbeI (char * probename, nr_double_t& probeI)
 {
     // string to hold the full name of the circuit
     std::string fullname;
-
+	printf("ola\n");
     // check for NULL name
     if (probename)
     {
@@ -964,7 +964,7 @@ int e_trsolver::getIProbeI (char * probename, nr_double_t& probeI)
                 // Subcircuit elements top level name is the
                 // subcircuit type (the base name of the subcircuit
                 // file)
-                if (!c->getSubcircuit ().empty())
+                if (c->getSubcircuit ())
                 {
                     fullname.append (c->getSubcircuit ());
                     fullname.append (".");
@@ -1006,7 +1006,7 @@ int e_trsolver::setECVSVoltage(char * ecvsname, nr_double_t V)
                 // Subcircuit elements top level name is the
                 // subcircuit type (the base name of the subcircuit
                 // file)
-                if (!c->getSubcircuit ().empty())
+                if (c->getSubcircuit ())
                 {
                     fullname.append (c->getSubcircuit ());
                     fullname.append (".");
@@ -1038,7 +1038,7 @@ void e_trsolver::updateExternalInterpTime(nr_double_t t)
         if (c->getType () == CIR_ECVS) {
             // Set the voltage to the desired value
             c->setProperty ("Tnext", t);
-            if (tHistory != NULL && tHistory->size () > 0)
+            if (tHistory != NULL && tHistory->getSize () > 0)
             {
               c->setHistoryAge ( t - tHistory->last () + 0.1 * (t - tHistory->last ()) );
             }

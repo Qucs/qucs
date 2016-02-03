@@ -43,7 +43,7 @@ void digisource::initSP (void) {
 }
 
 void digisource::initDC (void) {
-  const char * const init = getPropertyString ("init");
+  char * init = getPropertyString ("init");
   nr_double_t v = getPropertyDouble ("V");
   bool lo = !strcmp (init, "low");
   allocMatrixMNA ();
@@ -65,7 +65,7 @@ void digisource::initTR (void) {
 }
 
 void digisource::calcTR (nr_double_t t) {
-  const char * const init = getPropertyString ("init");
+  char * init = getPropertyString ("init");
   nr_double_t v = getPropertyDouble ("V");
   qucs::vector * values = getPropertyVector ("times");
   bool lo = !strcmp (init, "low");

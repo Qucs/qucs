@@ -39,7 +39,7 @@ void tline4p::calcSP (nr_double_t frequency) {
   nr_double_t l = getPropertyDouble ("L");
   nr_double_t z = getPropertyDouble ("Z");
   nr_double_t a = getPropertyDouble ("Alpha");
-  nr_double_t b = 2 * pi * frequency / C0;
+  nr_double_t b = 2 * M_PI * frequency / C0;
   a = std::log (a) / 2;
 
   nr_complex_t g = nr_complex_t (a, b);
@@ -69,7 +69,7 @@ void tline4p::calcNoiseSP (nr_double_t) {
   nr_double_t T = getPropertyDouble ("Temp");
   matrix s = getMatrixS ();
   matrix e = eye (getSize ());
-  setMatrixN (celsius2kelvin (T) / T0 * (e - s * transpose (conj (s))));
+  setMatrixN (kelvin (T) / T0 * (e - s * transpose (conj (s))));
 }
 
 void tline4p::calcNoiseAC (nr_double_t) {
@@ -77,7 +77,7 @@ void tline4p::calcNoiseAC (nr_double_t) {
   if (l < 0) return;
   // calculate noise using Bosma's theorem
   nr_double_t T = getPropertyDouble ("Temp");
-  setMatrixN (4 * celsius2kelvin (T) / T0 * real (getMatrixY ()));
+  setMatrixN (4 * kelvin (T) / T0 * real (getMatrixY ()));
 }
 
 void tline4p::initDC (void) {
@@ -104,7 +104,7 @@ void tline4p::calcAC (nr_double_t frequency) {
   nr_double_t l = getPropertyDouble ("L");
   nr_double_t z = getPropertyDouble ("Z");
   nr_double_t a = getPropertyDouble ("Alpha");
-  nr_double_t b = 2 * pi * frequency / C0;
+  nr_double_t b = 2 * M_PI * frequency / C0;
   a = std::log (a) / 2;
   if (l != 0.0) {
     nr_complex_t g = nr_complex_t (a, b);

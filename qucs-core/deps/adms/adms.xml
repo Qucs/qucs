@@ -1,0 +1,998 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="admsstyle.xsl"?>
+<!DOCTYPE adms SYSTEM "metaadms.dtd">
+<!-- 
+       This xml file describes the basic data elements used by adms classes
+       its validity is checked by file metaadms.dtd
+       you can try using xmllint: xmllint adms.xml -noout -postvalid -noblanks
+       see http://xmlsoft.org/
+       Most of the code that builts adms is created automatically from this file
+       Note: xsl script admsstyle.xsl transforms the contents of this file to html format 
+--> 
+<adms>
+  <element name="adms" info="base type">
+    <uid format="$1">
+      <scalar datatypefamily="basictype" name="datatypename" datatypename="basicinteger" info="datatypename" default="@name"/>
+    </uid>
+    <list datatypefamily="reference" name="attribute" datatypename="attribute" info="list of attribute"/>
+    <list datatypefamily="reference" name="variable" datatypename="admstvariable" info="list of variable"/>
+    <element name="simulator" info="miscellaneous info on simulator">
+      <uid format="$1">
+        <scalar datatypefamily="basictype" name="name" datatypename="basicstring" info="name"/>
+      </uid>
+      <scalar datatypefamily="basictype" name="currentdate" datatypename="basicstring" info="current compilation date"/>
+      <scalar datatypefamily="basictype" name="developer" datatypename="basicstring" info="adms version"/>
+      <scalar datatypefamily="basictype" name="fullname" datatypename="basicstring" info="full adms version"/>
+      <scalar datatypefamily="basictype" name="package_name" datatypename="basicstring" info="autotool package name"/>
+      <scalar datatypefamily="basictype" name="package_tarname" datatypename="basicstring" info="autotool package identity"/>
+      <scalar datatypefamily="basictype" name="package_version" datatypename="basicstring" info="autotool package version"/>
+      <scalar datatypefamily="basictype" name="package_string" datatypename="basicstring" info="autotool package string"/>
+      <scalar datatypefamily="basictype" name="package_bugreport" datatypename="basicstring" info="email for bug report"/>
+      <warning>dummy variables: should be removed in the future</warning>
+      <scalar datatypefamily="reference" name="probe" datatypename="probe" info="dummy variable"/>
+      <scalar datatypefamily="basictype" name="tmp" datatypename="basicstring" info="dummy variable" default=""/>
+      <scalar datatypefamily="basictype" name="tmp1" datatypename="basicstring" info="dummy variable" default=""/>
+      <scalar datatypefamily="reference" name="br1" datatypename="branch" info="dummy variable"/>
+      <scalar datatypefamily="reference" name="br2" datatypename="branch" info="dummy variable"/>
+      <scalar datatypefamily="reference" name="sr1" datatypename="source" info="dummy variable"/>
+      <scalar datatypefamily="basictype" name="ddx" datatypename="basicstring" info="dummy variable" default=""/>
+    </element>
+    <element name="admsmain" info="adms main pointer - selected using /">
+      <uid format="$1">
+        <scalar datatypefamily="basictype" name="name" datatypename="basicstring" info="identifier (always admsmain)"/>
+      </uid>
+      <scalar datatypefamily="basictype" name="argc" datatypename="basicinteger" info="number of command line arguments"/>
+      <scalar datatypefamily="basictype" name="fullfilename" datatypename="basicstring" info="full name of veriloga parsed file"/>
+      <scalar datatypefamily="basictype" name="filename" datatypename="basicstring" info="base name of veriloga parsed file"/>
+      <scalar datatypefamily="basictype" name="curfilename" datatypename="basicstring" info="name of current parsed veriloga file"/>
+      <scalar datatypefamily="basictype" name="curline" datatypename="basicinteger" info="current line when parsing file"/>
+      <scalar datatypefamily="basictype" name="fpos" datatypename="basicinteger" info="first position of returned parsed token"/>
+      <scalar datatypefamily="reference" name="simulator" datatypename="simulator" info="miscellaneous info on simulator"/>
+      <scalar datatypefamily="basictype" name="info" datatypename="basicenumeration" info="info mode" default="yes">
+        <evalue name="yes" info="it is true"/>
+        <evalue name="no" info="it is false"/>
+      </scalar>
+      <scalar datatypefamily="basictype" name="usage" datatypename="basicenumeration" info="usage mode" default="yes">
+        <evalue name="yes" info="it is true"/>
+        <evalue name="no" info="it is false"/>
+      </scalar>
+      <scalar datatypefamily="basictype" name="verbose" datatypename="basicenumeration" info="verbose mode" default="no">
+        <evalue name="yes" info="it is true"/>
+        <evalue name="no" info="it is false"/>
+      </scalar>
+      <scalar datatypefamily="basictype" name="hint" datatypename="basicenumeration" info="hint mode" default="no">
+        <evalue name="yes" info="it is true"/>
+        <evalue name="no" info="it is false"/>
+      </scalar>
+      <scalar datatypefamily="basictype" name="warning" datatypename="basicenumeration" info="warning mode" default="yes">
+        <evalue name="yes" info="it is true"/>
+        <evalue name="no" info="it is false"/>
+      </scalar>
+      <scalar datatypefamily="basictype" name="obsolete" datatypename="basicenumeration" info="obsolete mode" default="yes">
+        <evalue name="yes" info="it is true"/>
+        <evalue name="no" info="it is false"/>
+      </scalar>
+      <scalar datatypefamily="basictype" name="debug" datatypename="basicenumeration" info="debug mode" default="no">
+        <evalue name="yes" info="it is true"/>
+        <evalue name="no" info="it is false"/>
+      </scalar>
+      <scalar datatypefamily="basictype" name="dbg_vla" datatypename="basicenumeration" info="verilogamsparsing debug mode" default="no">
+        <evalue name="yes" info="it is true"/>
+        <evalue name="no" info="it is false"/>
+      </scalar>
+      <scalar datatypefamily="basictype" name="dbg_xml" datatypename="basicenumeration" info="xml parsing debug mode" default="no">
+        <evalue name="yes" info="it is true"/>
+        <evalue name="no" info="it is false"/>
+      </scalar>
+      <scalar datatypefamily="basictype" name="error" datatypename="basicenumeration" info="error mode" default="yes">
+        <evalue name="yes" info="it is true"/>
+        <evalue name="no" info="it is false"/>
+      </scalar>
+      <scalar datatypefamily="basictype" name="fatal" datatypename="basicenumeration" info="fatal mode" default="yes">
+        <evalue name="yes" info="it is true"/>
+        <evalue name="no" info="it is false"/>
+      </scalar>
+      <scalar datatypefamily="basictype" name="dbg_mem" datatypename="basicenumeration" info="debug memory mode" default="no">
+        <evalue name="yes" info="it is true"/>
+        <evalue name="no" info="it is false"/>
+      </scalar>
+      <list datatypefamily="reference" name="module" datatypename="module" info="list of modules"/>
+      <list datatypefamily="reference" name="discipline" datatypename="discipline" info="list of discipline"/>
+      <list datatypefamily="reference" name="nature" datatypename="nature" info="list of nature"/>
+      <list datatypefamily="reference" name="variable" datatypename="admstvariable" info="global admst variables  (scope is all admst:template)"/>
+      <list datatypefamily="basictype" name="argv" datatypename="basicstring" info="command line arguments"/>
+      <list datatypefamily="reference" name="transform" datatypename="transform" info="transforms"/>
+      <list datatypefamily="reference" name="invtransform" datatypename="transform" info="transforms (inversed order)"/>
+      <list datatypefamily="reference" name="itransform" datatypename="itransform" info="instance created by apply-templates"/>
+      <list datatypefamily="reference" name="itransforminsideapplytemplate" datatypename="itransform" info="instance inside apply-templates"/>
+      <list datatypefamily="reference" name="valueof" datatypename="adms" info="adms stack"/>
+    </element>
+    <comment>basic adms elements</comment>
+    <element name="list" info="adms list">
+      <uid format="$1">
+        <scalar datatypefamily="basictype" name="datatype" datatypename="basicstring" info="name"/>
+      </uid>
+      <list datatypefamily="reference" name="item" datatypename="adms" info="item"/>
+    </element>
+    <comment>elements used to save natures and disciplines inside the internal adms data tree</comment>
+    <element name="nature" info="all natures created after parsing">
+      <uid format="$1">
+        <scalar datatypefamily="basictype" name="access" datatypename="basicstring" info="access identifier"/>
+      </uid>
+      <scalar datatypefamily="basictype" name="name" datatypename="basicstring" info="name of the nature"/>
+      <scalar datatypefamily="reference" name="abstol" datatypename="number" info="absolute tolerance"/>
+      <scalar datatypefamily="reference" name="base" datatypename="nature" info="base parent"/>
+      <scalar datatypefamily="basictype" name="ddt_name" datatypename="basicstring" info="name of ddt nature"/>
+      <scalar datatypefamily="reference" name="ddt_nature" datatypename="nature" info="back to ddt nature"/>
+      <scalar datatypefamily="basictype" name="idt_name" datatypename="basicstring" info="name of idt nature"/>
+      <scalar datatypefamily="reference" name="idt_nature" datatypename="nature" info="back to idt nature"/>
+      <scalar datatypefamily="basictype" name="units" datatypename="basicstring" info="unit"/>
+    </element>
+    <element name="discipline" info="all disciplines created after parsing">
+      <uid format="$1">
+        <scalar datatypefamily="basictype" name="name" datatypename="basicstring" info="name of discipline"/>
+      </uid>
+      <scalar datatypefamily="reference" name="flow" datatypename="nature" info="back to flow nature"/>
+      <scalar datatypefamily="reference" name="potential" datatypename="nature" info="back to potential nature"/>
+      <scalar datatypefamily="basictype" name="domain" datatypename="basicenumeration" info="domain" default="continuous">
+        <evalue name="continuous" info="continuous domain"/>
+        <evalue name="discrete" info="discrete domain"/>
+      </scalar>
+    </element>
+    <comment>elements used to save a module inside the internal adms data tree</comment>
+    <element name="module" info="module">
+      <uid format="$1">
+        <scalar datatypefamily="basictype" name="name" datatypename="basicstring" info="name of module"/>
+      </uid>
+      <!-- under module -->
+      <list datatypefamily="reference" name="node" datatypename="node" info="list of nodes"/>
+      <list datatypefamily="reference" name="nodealias" datatypename="nodealias" info="list of node aliases"/>
+      <list datatypefamily="reference" name="branch" datatypename="branch" info="list of all branches"/>
+      <list datatypefamily="reference" name="branchalias" datatypename="branchalias" info="list of all branch alias"/>
+      <list datatypefamily="reference" name="analogfunction" datatypename="analogfunction" info="list of all analogfunction"/>
+      <list datatypefamily="reference" name="instance" datatypename="instance" info="instances"/>
+      <list datatypefamily="reference" name="variable" datatypename="variableprototype" info="variable declarations"/>
+      <!-- under analog -->
+      <scalar datatypefamily="reference" name="analog" datatypename="analog" info="analog code"/>
+      <list datatypefamily="reference" name="block" datatypename="block" info="list of all blocks"/>
+      <list datatypefamily="reference" name="blockvariable" datatypename="blockvariable" info="list of all blockvariable"/>
+      <list datatypefamily="reference" name="assignment" datatypename="assignment" info="list of assignments"/>
+      <list datatypefamily="reference" name="callfunction" datatypename="module" info="instantiator"/>
+      <list datatypefamily="reference" name="contribution" datatypename="contribution" info="list of contributions"/>
+      <list datatypefamily="reference" name="conditional" datatypename="conditional" info="list of all conditional"/>
+      <list datatypefamily="reference" name="case" datatypename="module" info="case"/>
+      <list datatypefamily="reference" name="forloop" datatypename="module" info="forloop"/>
+      <list datatypefamily="reference" name="whileloop" datatypename="module" info="whileloop"/>
+      <list datatypefamily="reference" name="instantiator" datatypename="module" info="instantiator"/>
+      <!-- under expression -->
+      <list datatypefamily="reference" name="expression" datatypename="expression" info="list of all expressions"/>
+      <list datatypefamily="reference" name="jacobian" datatypename="jacobian" info="list of jacobians"/>
+      <list datatypefamily="reference" name="probe" datatypename="probe" info="list of all probes"/>
+      <list datatypefamily="reference" name="source" datatypename="source" info="list of all sources"/>
+      <list datatypefamily="reference" name="range" datatypename="range" info="list of parameter ranges"/>
+      <list datatypefamily="reference" name="attribute" datatypename="attribute" info="veriloga items"/>
+      <!-- obsolete -->
+      <scalar datatypefamily="reference" name="evaluation" datatypename="evaluation" info="obsolete"/>
+    </element>
+    <element name="analogfunction" info="analog functions (user defined functions)">
+      <uid format="$1:$2">
+        <scalar datatypefamily="reference" name="module" datatypename="module" info="back to the module"/>
+        <scalar datatypefamily="reference" name="lexval" datatypename="lexval" info="name of the analog function"/>
+      </uid>
+      <aliasbis name="name" path="lexval/string"/>
+      <scalar datatypefamily="basictype" name="type" datatypename="basicenumeration" info="returned type" default="real">
+        <evalue name="real" info="returns reals"/>
+        <evalue name="integer" info="returns integers"/>
+      </scalar>
+      <scalar datatypefamily="reference" name="tree" datatypename="adms" info="code"/>
+      <list datatypefamily="reference" name="variable" datatypename="variableprototype" info="variable declarations"/>
+      <list datatypefamily="reference" name="attribute" datatypename="attribute" info="veriloga items"/>
+    </element>
+    <element name="nodealias" info="node aliases declared in the module">
+      <uid format="$2">
+        <scalar datatypefamily="reference" name="module" datatypename="module" info="back to the module"/>
+        <scalar datatypefamily="basictype" name="name" datatypename="basicstring" info="alias name"/>
+      </uid>
+      <scalar datatypefamily="reference" name="node" datatypename="node" info="back to branch"/>
+    </element>
+    <element name="node" info="internal nodes + terminals">
+      <uid format="$2">
+        <scalar datatypefamily="reference" name="module" datatypename="module" info="back to the module"/>
+        <scalar datatypefamily="basictype" name="name" datatypename="basicstring" info="node name"/>
+      </uid>
+      <scalar datatypefamily="basictype" name="direction" datatypename="basicenumeration" info="its topological direction" default="inout">
+        <evalue name="input" info="node is input terminal"/>
+        <evalue name="output" info="node is output terminal"/>
+        <evalue name="inout" info="node is input/output terminal"/>
+        <evalue name="internal" info="node is internal node"/>
+      </scalar>
+      <scalar datatypefamily="reference" name="discipline" datatypename="discipline" info="back to node discipline"/>
+      <scalar datatypefamily="basictype" name="grounded" datatypename="basicenumeration" info="node is ground" default="no">
+        <evalue name="yes" info="it is true"/>
+        <evalue name="no" info="it is false"/>
+      </scalar>
+      <scalar datatypefamily="basictype" name="location" datatypename="basicenumeration" info="topological location of node" default="internal">
+        <evalue name="ground" info="node is ground"/>
+        <evalue name="external" info="node is terminal"/>
+        <evalue name="internal" info="node is internal node"/>
+      </scalar>
+      <list datatypefamily="reference" name="attribute" datatypename="attribute" info="veriloga items"/>
+    </element>
+    <element name="branchalias" info="branch aliases declared in the module">
+      <uid format="$2">
+        <scalar datatypefamily="reference" name="module" datatypename="module" info="back to the module"/>
+        <scalar datatypefamily="basictype" name="name" datatypename="basicstring" info="alias name"/>
+      </uid>
+      <scalar datatypefamily="reference" name="branch" datatypename="branch" info="back to branch"/>
+    </element>
+    <element name="branch" info="branches used by the module">
+      <uid format="$2,$3">
+        <scalar datatypefamily="reference" name="module" datatypename="module" info="back to the module"/>
+        <scalar datatypefamily="reference" name="pnode" datatypename="node" info="back to pnode"/>
+        <scalar datatypefamily="reference" name="nnode" datatypename="node" info="back to nnode"/>
+      </uid>
+      <scalar datatypefamily="reference" name="discipline" datatypename="discipline" info="back to discipline"/>
+      <scalar datatypefamily="basictype" name="grounded" datatypename="basicenumeration" info="nnode is ground" default="no">
+          <evalue name="yes" info="it is true"/>
+          <evalue name="no" info="it is false"/>
+      </scalar>
+      <list datatypefamily="reference" name="attribute" datatypename="attribute" info="veriloga items"/>
+    </element>
+    <element name="variableprototype" info="potential/flow source">
+      <uid format="$2">
+        <scalar datatypefamily="reference" name="module" datatypename="module" info="back to the module"/>
+        <scalar datatypefamily="reference" name="lexval" datatypename="lexval" info="locus"/>
+        <scalar datatypefamily="reference" name="block" datatypename="adms" info="where is the variable declared? (module,block,analogfunction)"/>
+      </uid>
+      <aliasbis name="name" path="lexval/string"/>
+      <scalar datatypefamily="basictype" name="dependency" datatypename="basicenumeration" info="is Probe dependent" default="constant">
+        <evalue name="constant" info="is operating point independent"/>
+        <evalue name="noprobe" info="does not depend on probes"/>
+        <evalue name="linear" info="depends lineary on probes"/>
+        <evalue name="nonlinear" info="depends non-lineary on probes"/>
+      </scalar>
+      <scalar datatypefamily="basictype" name="static" datatypename="basicenumeration" info="this term has static contribution" default="no">
+        <evalue name="yes" info="it is true"/>
+        <evalue name="no" info="it is false"/>
+      </scalar>
+      <scalar datatypefamily="basictype" name="dynamic" datatypename="basicenumeration" info="this term has dynamic contribution" default="no">
+        <evalue name="yes" info="it is true"/>
+        <evalue name="no" info="it is false"/>
+      </scalar>
+      <scalar datatypefamily="basictype" name="sizetype" datatypename="basicenumeration" info="variable is either scalar or array" default="scalar">
+        <evalue name="scalar" info="it is a scalar"/>
+        <evalue name="array" info="it is an array"/>
+      </scalar>
+      <scalar datatypefamily="basictype" name="parametertype" datatypename="basicenumeration" info="parameter type" default="model">
+        <evalue name="model" info="model parameter (process, scaling)"/>
+        <evalue name="instance" info="instance (geometries, mfactor)"/>
+        <evalue name="analogfunction" info="analog function variable"/>
+      </scalar>
+      <scalar datatypefamily="basictype" name="type" datatypename="basicenumeration" info="variable data type" default="real">
+        <evalue name="integer" info="variable has integer values"/>
+        <evalue name="real" info="variable has real values"/>
+        <evalue name="string" info="variable has string values"/>
+      </scalar>
+      <scalar datatypefamily="reference" name="maxsize" datatypename="number" info="upper index of variable (array)"/>
+      <scalar datatypefamily="reference" name="minsize" datatypename="number" info="lower index of variable (array)"/>
+      <scalar datatypefamily="basictype" name="input" datatypename="basicenumeration" info="parameter variable" default="no">
+        <evalue name="yes" info="it is true"/>
+        <evalue name="no" info="it is false"/>
+      </scalar>
+      <scalar datatypefamily="basictype" name="output" datatypename="basicenumeration" default="no" info="variable is output parameter">
+        <evalue name="yes" info="it is true"/>
+        <evalue name="no" info="it is false"/>
+      </scalar>
+      <scalar datatypefamily="basictype" name="scope" datatypename="basicenumeration" info="tells where variable is set/used" default="local">
+        <evalue name="local" info="local variable"/>
+        <evalue name="global_model" info="parameter model or set in @model, used atleast in @ask|@instance|@evaluate|@noise|@final"/>
+        <evalue name="global_instance" info="set in @instance, usedatleast in @instance|@evaluate|@noise|@final"/>
+        <evalue name="global_final" info="set in @final_step, usedatleast in @ask|@final_step"/>
+        <evalue name="global_past" info="obsolete"/>
+      </scalar>
+      <scalar datatypefamily="reference" name="default" datatypename="expression" info="default value of the variable"/>
+      <scalar datatypefamily="basictype" name="derivate" datatypename="basicenumeration" info="obsolete-used by old interfaces" default="no">
+        <evalue name="yes" info="it is true"/>
+        <evalue name="no" info="it is false"/>
+      </scalar>
+      <scalar datatypefamily="basictype" name="isstate" datatypename="basicenumeration" info="obsolete-used by old interfaces" default="no">
+        <evalue name="yes" info="it is true"/>
+        <evalue name="no" info="it is false"/>
+      </scalar>
+      <scalar datatypefamily="basictype" name="usedinmodel" datatypename="basicenumeration" info="variable value used in @model" default="no">
+        <evalue name="yes" info="it is true"/>
+        <evalue name="no" info="it is false"/>
+      </scalar>
+      <scalar datatypefamily="basictype" name="usedininstance" datatypename="basicenumeration" info="variable value used in @instance" default="no">
+        <evalue name="yes" info="it is true"/>
+        <evalue name="no" info="it is false"/>
+      </scalar>
+      <scalar datatypefamily="basictype" name="usedininitial_step" datatypename="basicenumeration" info="variable value used in @initial_step" default="no">
+        <evalue name="yes" info="it is true"/>
+        <evalue name="no" info="it is false"/>
+      </scalar>
+      <scalar datatypefamily="basictype" name="usedinevaluate" datatypename="basicenumeration" info="variable value used in @evaluate" default="no">
+        <evalue name="yes" info="it is true"/>
+        <evalue name="no" info="it is false"/>
+      </scalar>
+      <scalar datatypefamily="basictype" name="usedinnoise" datatypename="basicenumeration" info="variable value used in @noise" default="no">
+        <evalue name="yes" info="it is true"/>
+        <evalue name="no" info="it is false"/>
+      </scalar>
+      <scalar datatypefamily="basictype" name="usedinfinal" datatypename="basicenumeration" info="variable value used in @final" default="no">
+        <evalue name="yes" info="it is true"/>
+        <evalue name="no" info="it is false"/>
+      </scalar>
+      <scalar datatypefamily="basictype" name="setinmodel" datatypename="basicenumeration" info="variable value assigned in @model" default="no">
+        <evalue name="yes" info="it is true"/>
+        <evalue name="no" info="it is false"/>
+      </scalar>
+      <scalar datatypefamily="basictype" name="setininstance" datatypename="basicenumeration" info="variable value assigned in @instance" default="no">
+        <evalue name="yes" info="it is true"/>
+        <evalue name="no" info="it is false"/>
+      </scalar>
+      <scalar datatypefamily="basictype" name="setininitial_step" datatypename="basicenumeration" info="variable value assigned in @initial_step" default="no">
+        <evalue name="yes" info="it is true"/>
+        <evalue name="no" info="it is false"/>
+      </scalar>
+      <scalar datatypefamily="basictype" name="setinevaluate" datatypename="basicenumeration" info="variable value assigned in @evaluate" default="no">
+        <evalue name="yes" info="it is true"/>
+        <evalue name="no" info="it is false"/>
+      </scalar>
+      <scalar datatypefamily="basictype" name="setinnoise" datatypename="basicenumeration" info="variable value assigned in @noise" default="no">
+        <evalue name="yes" info="it is true"/>
+        <evalue name="no" info="it is false"/>
+      </scalar>
+      <scalar datatypefamily="basictype" name="setinfinal" datatypename="basicenumeration" info="variable value assigned in @final" default="no">
+        <evalue name="yes" info="it is true"/>
+        <evalue name="no" info="it is false"/>
+      </scalar>
+      <scalar datatypefamily="basictype" name="setingetprev" datatypename="basicenumeration" info="variable value assigned from previous" default="no">
+        <evalue name="yes" info="it is true"/>
+        <evalue name="no" info="it is false"/>
+      </scalar>
+      <scalar datatypefamily="basictype" name="TemperatureDependent" datatypename="basicenumeration" info="variable is temperature dependent" default="no">
+        <evalue name="yes" info="it is true"/>
+        <evalue name="no" info="it is false"/>
+      </scalar>
+      <scalar datatypefamily="basictype" name="OPdependent" datatypename="basicenumeration" info="variable is OP dependent" default="no">
+        <evalue name="yes" info="it is true"/>
+        <evalue name="no" info="it is false"/>
+      </scalar>
+      <scalar datatypefamily="basictype" name="insource" datatypename="basicenumeration" info="variable occurs in source assignment" default="no">
+        <evalue name="yes" info="it is true"/>
+        <evalue name="no" info="it is false"/>
+      </scalar>
+      <scalar datatypefamily="basictype" name="vcount" datatypename="basicinteger" info="count in source assignment" default="0"/>
+      <scalar datatypefamily="reference" name="vlast" datatypename="assignment" info="last assignment"/>
+      <list datatypefamily="reference" name="arraydefault" datatypename="adms" info="default value"/>
+      <list datatypefamily="reference" name="attribute" datatypename="attribute" info="veriloga items"/>
+      <list datatypefamily="basictype" name="alias" datatypename="basicstring" info="alias name"/>
+      <list datatypefamily="reference" name="range" datatypename="range" info="list of ranges of the variable"/>
+      <list datatypefamily="reference" name="probe" datatypename="probe" info="the variable depends on these probes"/>
+      <list datatypefamily="reference" name="ddxprobe" datatypename="probe" info="the variable depends on these ddx probes"/>
+      <list datatypefamily="reference" name="variable" datatypename="variable" info="variable depends on these variables"/>
+      <list datatypefamily="reference" name="assignment" datatypename="assignment" info="obsolete"/>
+      <list datatypefamily="reference" name="instance" datatypename="variable" info="all instances"/>
+    </element>
+    <element name="source" info="potential/flow source">
+      <uid format="$3($2)">
+        <scalar datatypefamily="reference" name="module" datatypename="module" info="back to the module"/>
+        <scalar datatypefamily="reference" name="branch" datatypename="branch" info="branch associated to the source"/>
+        <scalar datatypefamily="reference" name="nature" datatypename="nature" info="nature of the source"/>
+      </uid>
+      <scalar datatypefamily="reference" name="discipline" datatypename="discipline" info="discipline of the source"/>
+      <scalar datatypefamily="basictype" name="static" datatypename="basicenumeration" info="has the source a static contribution?" default="no">
+        <evalue name="yes" info="it is true"/>
+        <evalue name="no" info="it is false"/>
+      </scalar>
+      <scalar datatypefamily="basictype" name="dynamic" datatypename="basicenumeration" info="has the source a dynamic contribution?" default="no">
+        <evalue name="yes" info="it is true"/>
+        <evalue name="no" info="it is false"/>
+      </scalar>
+      <scalar datatypefamily="basictype" name="whitenoise" datatypename="basicenumeration" info="has the source a whitenoise contribution?" default="no">
+        <evalue name="yes" info="it is true"/>
+        <evalue name="no" info="it is false"/>
+      </scalar>
+      <scalar datatypefamily="basictype" name="flickernoise" datatypename="basicenumeration" info="has the source a flickernoise contribution?" default="no">
+        <evalue name="yes" info="it is true"/>
+        <evalue name="no" info="it is false"/>
+      </scalar>
+      <scalar datatypefamily="basictype" name="grounded" datatypename="basicenumeration" info="is second terminal of the source ground?" default="no">
+        <evalue name="yes" info="it is true"/>
+        <evalue name="no" info="it is false"/>
+      </scalar>
+      <scalar datatypefamily="basictype" name="switch" datatypename="basicenumeration" info="is source switch?" default="no">
+        <evalue name="yes" info="it is true"/>
+        <evalue name="no" info="it is false"/>
+      </scalar>
+      <scalar datatypefamily="basictype" name="type" datatypename="basicenumeration" info="type of the source" default="fs">
+        <evalue name="shot" info="source is shot noise"/>
+        <evalue name="thermal" info="source is thermal noise"/>
+        <evalue name="flicker" info="source is flicker noise"/>
+        <evalue name="fs" info="source is flow source"/>
+        <evalue name="ps" info="source is potential source"/>
+      </scalar>
+      <list datatypefamily="reference" name="probe" datatypename="probe" info="list of probes"/>
+      <list datatypefamily="reference" name="attribute" datatypename="attribute" info="veriloga items"/>
+    </element>
+    <element name="range" info="range are used by variables to specify valid values">
+      <uid format="$7 $5$2:$3$6">
+        <scalar datatypefamily="reference" name="module" datatypename="module" info="back to the module"/>
+        <scalar datatypefamily="reference" name="infexpr" datatypename="expression" info="value of inf bound"/>
+        <scalar datatypefamily="reference" name="supexpr" datatypename="expression" info="value of sup bound"/>
+      </uid>
+      <scalar datatypefamily="basictype" name="name" datatypename="basicstring" info="unused"/>
+      <scalar datatypefamily="basictype" name="infboundtype" datatypename="basicenumeration" info="inf bound type">
+        <evalue name="range_bound_include" info="["/>
+        <evalue name="range_bound_exclude" info="("/>
+        <evalue name="range_bound_value" info="["/>
+      </scalar>
+      <scalar datatypefamily="basictype" name="supboundtype" datatypename="basicenumeration" info="sup bound type">
+        <evalue name="range_bound_include" info="]"/>
+        <evalue name="range_bound_exclude" info=")"/>
+        <evalue name="range_bound_value" info="]"/>
+      </scalar>
+      <scalar datatypefamily="basictype" name="type" datatypename="basicenumeration" info="type of range" default="include">
+        <evalue name="include" info="from"/>
+        <evalue name="include_value" info="from"/>
+        <evalue name="exclude" info="exclude"/>
+        <evalue name="exclude_value" info="exclude"/>
+      </scalar>
+    </element>
+    <element name="jacobian" info="jacobians created after compilation">
+      <uid format="$2:$3">
+        <scalar datatypefamily="reference" name="module" datatypename="module" info="back to the module"/>
+        <scalar datatypefamily="reference" name="row" datatypename="node" info="back to node (either equation or node)"/>
+        <scalar datatypefamily="reference" name="column" datatypename="node" info="back to node (either equation or node)"/>
+      </uid>
+      <scalar datatypefamily="basictype" name="diagonal" datatypename="basicenumeration" info="this term is in the diagonal" default="no">
+        <evalue name="yes" info="it is true"/>
+        <evalue name="no" info="it is false"/>
+      </scalar>
+      <scalar datatypefamily="basictype" name="static" datatypename="basicenumeration" info="this term has static contribution" default="no">
+        <evalue name="yes" info="it is true"/>
+        <evalue name="no" info="it is false"/>
+      </scalar>
+      <scalar datatypefamily="basictype" name="dynamic" datatypename="basicenumeration" info="this term has dynamic contribution" default="no">
+        <evalue name="yes" info="it is true"/>
+        <evalue name="no" info="it is false"/>
+      </scalar>
+    </element>
+    <element name="analog" info="to analog code">
+      <uid format="analog $1">
+        <scalar datatypefamily="reference" name="code" datatypename="adms" info="top of analog block"/>
+      </uid>
+    </element>
+    <element name="math" info="mathml-like type">
+      <uid format="$1">
+        <scalar datatypefamily="basictype" name="name" datatypename="basicstring" info="name"/>
+      </uid>
+      <scalar datatypefamily="basictype" name="value" datatypename="basicreal" info="numerical value" default="adms_NAN"/>
+      <scalar datatypefamily="basictype" name="static" datatypename="basicenumeration" info="math used by static contribution" default="no">
+        <evalue name="yes" info="it is true"/>
+        <evalue name="no" info="it is false"/>
+      </scalar>
+      <scalar datatypefamily="basictype" name="dynamic" datatypename="basicenumeration" info="math used by static contribution" default="no">
+        <evalue name="yes" info="it is true"/>
+        <evalue name="no" info="it is false"/>
+      </scalar>
+      <scalar datatypefamily="basictype" name="dependency" datatypename="basicenumeration" info="is Probe dependent" default="constant">
+        <evalue name="constant" info="is operating point independent"/>
+        <evalue name="noprobe" info="does not depend on probes"/>
+        <evalue name="linear" info="depends lineary on probes"/>
+        <evalue name="nonlinear" info="depends non-lineary on probes"/>
+      </scalar>
+      <list datatypefamily="reference" name="attribute" datatypename="adms" info="list of any items"/>
+      <element name="string" info="adms string">
+        <uid format="\&quot;$1\&quot;">
+          <scalar datatypefamily="basictype" name="value" datatypename="basicstring" info="character array value"/>
+        </uid>
+      </element>
+      <element name="subexpression" info="mathml-like subexpression">
+        <uid format="$1">
+          <scalar datatypefamily="reference" name="expression" datatypename="expression" info="root expression"/>
+        </uid>
+        <element name="mapply_unary" info="unary operator">
+          <uid format="$1">
+            <scalar datatypefamily="basictype" name="name" datatypename="basicenumeration" info="name of operator" default="fixme:not_used">
+              <evalue name="plus" info="(+$2)"/>
+              <evalue name="minus" info="(-$2)"/>
+              <evalue name="not" info="(!$2)"/>
+              <evalue name="bw_not" info="(~$2)"/>
+            </scalar>
+            <scalar datatypefamily="reference" name="arg1" datatypename="adms" info="first argument"/>
+          </uid>
+        </element>
+        <element name="mapply_binary" info="binary operator">
+          <uid format="$1">
+            <scalar datatypefamily="basictype" name="name" datatypename="basicenumeration" info="name of operator" default="fixme:not_used">
+              <evalue name="bw_equr" info="($2^~$3)"/>
+              <evalue name="bw_equl" info="($2~^$3)"/>
+              <evalue name="bw_xor" info="($2^$3)"/>
+              <evalue name="bw_or" info="($2|$3)"/>
+              <evalue name="bw_and" info="($2&amp;$3)"/>
+              <evalue name="or" info="($2||$3)"/>
+              <evalue name="and" info="($2&amp;&amp;$3)"/>
+              <evalue name="equ" info="($2==$3)"/>
+              <evalue name="notequ" info="($2!=$3)"/>
+              <evalue name="lt" info="($2&lt;=$3)"/>
+              <evalue name="lt_equ" info="($2&lt;=$3)"/>
+              <evalue name="gt" info="($2&gt;$3)"/>
+              <evalue name="gt_equ" info="($2&gt;=$3)"/>
+              <evalue name="shiftr" info="($2&gt;&gt;$3)"/>
+              <evalue name="shiftl" info="($2&lt;&lt;$3)"/>
+              <evalue name="addp" info="($2+$3)"/>
+              <evalue name="addm" info="($2-$3)"/>
+              <evalue name="multtime" info="($2*$3)"/>
+              <evalue name="multdiv" info="($2/$3)"/>
+              <evalue name="multmod" info="($2%$3)"/>
+            </scalar>
+            <scalar datatypefamily="reference" name="arg1" datatypename="adms" info="first argument"/>
+            <scalar datatypefamily="reference" name="arg2" datatypename="adms" info="second argument"/>
+          </uid>
+        </element>
+        <element name="mapply_ternary" info="ternary operator">
+          <uid format="$1">
+            <scalar datatypefamily="basictype" name="name" datatypename="basicenumeration" info="name of operator" default="fixme_not_used">
+              <evalue name="conditional" info="($2?$3:$4)"/>
+            </scalar>
+            <scalar datatypefamily="reference" name="arg1" datatypename="adms" info="first argument"/>
+            <scalar datatypefamily="reference" name="arg2" datatypename="adms" info="second argument"/>
+            <scalar datatypefamily="reference" name="arg3" datatypename="adms" info="third argument"/>
+          </uid>
+        </element>
+        <element name="number" info="number representation">
+          <uid format="$1">
+            <scalar datatypefamily="reference" name="lexval" datatypename="lexval" info="locus"/>
+          </uid>
+          <aliasbis name="value" path="lexval/string"/>
+          <scalar datatypefamily="basictype" name="scalingunit" datatypename="basicenumeration" info="factor by which the number value is scaled" default="1">
+            <evalue name="E" info="multiplication factor = 1.0e+18 (exa)"/>
+            <evalue name="P" info="multiplication factor = 1.0e+15 (peta)"/>
+            <evalue name="T" info="multiplication factor = 1.0e+12 (tera)"/>
+            <evalue name="G" info="multiplication factor = 1.0e+9  (giga)"/>
+            <evalue name="M" info="multiplication factor = 1.0e+6  (mega)"/>
+            <evalue name="k" info="multiplication factor = 1.0e+3  (kilo)"/>
+            <evalue name="h" info="multiplication factor = 1.0e+2  (hecto)"/>
+            <evalue name="D" info="multiplication factor = 1.0e+1  (deka)"/>
+            <evalue name="1" info="multiplication factor = 1.0     (none)"/>
+            <evalue name="d" info="multiplication factor = 1.0e-1  (deci)"/>
+            <evalue name="c" info="multiplication factor = 1.0e-2  (centi)"/>
+            <evalue name="m" info="multiplication factor = 1.0e-3  (milli)"/>
+            <evalue name="u" info="multiplication factor = 1.0e-6  (micro)"/>
+            <evalue name="n" info="multiplication factor = 1.0e-9  (nano)"/>
+            <evalue name="A" info="multiplication factor = 1.0e-10 (amgstron)"/>
+            <evalue name="p" info="multiplication factor = 1.0e-12 (pico)"/>
+            <evalue name="f" info="multiplication factor = 1.0e-15 (femto)"/>
+            <evalue name="a" info="multiplication factor = 1.0e-18 (atto)"/>
+          </scalar>
+          <scalar datatypefamily="basictype" name="cast" datatypename="basicenumeration" info="representation" default="d">
+            <evalue name="i" info="integer"/>
+            <evalue name="d" info="double"/>
+          </scalar>
+        </element>
+        <element name="function" info="function representation">
+          <uid format="$1($5)">
+            <scalar datatypefamily="reference" name="lexval" datatypename="lexval" info="locus"/>
+            <scalar datatypefamily="basictype" name="unique_id" datatypename="basicinteger" info="uinque id"/>
+          </uid>
+          <aliasbis name="name" path="lexval/string"/>
+          <scalar datatypefamily="reference" name="definition" datatypename="analogfunction" info="back to analogfunction"/>
+          <scalar datatypefamily="basictype" name="class" datatypename="basicenumeration" info="type of function (builtin, userdefined, ...)" default="analog">
+            <evalue name="builtin" info="builtin standard math function"/>
+            <evalue name="analog" info="analog function - user defined"/>
+            <evalue name="digital" info="digital function - user defined"/>
+          </scalar>
+          <list datatypefamily="reference" name="arguments" datatypename="adms" info="list of arguments" format=","/>
+        </element>
+        <element name="variable" info="variable instantiation">
+          <uid format="$1">
+            <scalar datatypefamily="reference" name="prototype" datatypename="variableprototype" info="variable prototype"/>
+          </uid>
+          <aliasbis name="module" path="prototype/module"/>
+          <aliasbis name="lexval" path="prototype/lexval"/>
+          <aliasbis name="block" path="prototype/block"/>
+          <aliasbis name="name" path="prototype/lexval/string"/>
+          <aliasbis name="sizetype" path="prototype/sizetype"/>
+          <aliasbis name="parametertype" path="prototype/parametertype"/>
+          <aliasbis name="type" path="prototype/type"/>
+          <aliasbis name="maxsize" path="prototype/maxsize"/>
+          <aliasbis name="minsize" path="prototype/minsize"/>
+          <aliasbis name="input" path="prototype/input"/>
+          <aliasbis name="output" path="prototype/output"/>
+          <aliasbis name="scope" path="prototype/scope"/>
+          <aliasbis name="default" path="prototype/default"/>
+          <aliasbis name="derivate" path="prototype/derivate"/>
+          <aliasbis name="isstate" path="prototype/isstate"/>
+          <aliasbis name="usedinmodel" path="prototype/usedinmodel"/>
+          <aliasbis name="usedininstance" path="prototype/usedininstance"/>
+          <aliasbis name="usedininitial_step" path="prototype/usedininitial_step"/>
+          <aliasbis name="usedinevaluate" path="prototype/usedinevaluate"/>
+          <aliasbis name="usedinnoise" path="prototype/usedinnoise"/>
+          <aliasbis name="usedinfinal" path="prototype/usedinfinal"/>
+          <aliasbis name="setinmodel" path="prototype/setinmodel"/>
+          <aliasbis name="setininstance" path="prototype/setininstance"/>
+          <aliasbis name="setininitial_step" path="prototype/setininitial_step"/>
+          <aliasbis name="setinevaluate" path="prototype/setinevaluate"/>
+          <aliasbis name="setinnoise" path="prototype/setinnoise"/>
+          <aliasbis name="setinfinal" path="prototype/setinfinal"/>
+          <aliasbis name="setingetprev" path="prototype/setingetprev"/>
+          <aliasbis name="TemperatureDependent" path="prototype/TemperatureDependent"/>
+          <aliasbis name="OPdependent" path="prototype/OPdependent"/>
+          <aliasbis name="insource" path="prototype/insource"/>
+          <aliasbis name="vcount" path="prototype/vcount"/>
+          <aliasbis name="vlast" path="prototype/vlast"/>
+          <aliasbis name="probe" path="prototype/probe"/>
+          <!-- inside math -->
+          <aliasbis name="static" path="prototype/static"/>
+          <aliasbis name="dynamic" path="prototype/dynamic"/>
+          <aliasbis name="attribute" path="prototype/attribute"/>
+          <!-- lists -->
+          <aliasbis name="ddxprobe" path="prototype/ddxprobe"/>
+          <aliasbis name="variable" path="prototype/variable"/>
+          <aliasbis name="assignment" path="prototype/assignment"/>
+          <aliasbis name="alias" path="prototype/alias"/>
+          <aliasbis name="range" path="prototype/range"/>
+        </element>
+        <element name="array" info="array instantiation">
+          <uid format="$1[$2]">
+            <scalar datatypefamily="reference" name="variable" datatypename="variable" info="back to the variable"/>
+            <scalar datatypefamily="reference" name="index" datatypename="adms" info="index (can be complex expression)"/>
+          </uid>
+        </element>
+        <element name="probe" info="all probes created after compilation">
+          <uid format="$3($2)">
+            <scalar datatypefamily="reference" name="module" datatypename="module" info="back to the module"/>
+            <scalar datatypefamily="reference" name="branch" datatypename="branch" info="back to branch"/>
+            <scalar datatypefamily="reference" name="nature" datatypename="nature" info="back to probe nature"/>
+          </uid>
+          <scalar datatypefamily="basictype" name="seen" datatypename="basicenumeration" info="internal use" default="no">
+            <evalue name="yes" info="it is true"/>
+            <evalue name="no" info="it is false"/>
+          </scalar>
+          <scalar datatypefamily="reference" name="discipline" datatypename="discipline" info="back to discipline"/>
+          <scalar datatypefamily="basictype" name="grounded" datatypename="basicenumeration" info="nnode of probe is ground" default="no">
+            <evalue name="yes" info="it is true"/>
+            <evalue name="no" info="it is false"/>
+          </scalar>
+          <scalar datatypefamily="reference" name="source" datatypename="source" info="back to source"/>
+        </element>
+      </element>
+      <element name="expression" info="expression tree">
+        <uid format="($2)">
+          <scalar datatypefamily="reference" name="module" datatypename="module" info="back to the module"/>
+          <scalar datatypefamily="reference" name="tree" datatypename="adms" info="subexpression"/>
+        </uid>
+        <alias name="static" element="math" attribute="static"/>
+        <alias name="dynamic" element="math" attribute="dynamic"/>
+        <scalar datatypefamily="basictype" name="hasspecialnumber" datatypename="basicstring" info="obsolete - is either +inf or -inf" default="NO"/>
+        <scalar datatypefamily="basictype" name="hasVoltageDependentFunction" datatypename="basicenumeration" info="expression has voltage dependent functions" default="no">
+          <evalue name="yes" info="it is true"/>
+          <evalue name="no" info="it is false"/>
+        </scalar>
+        <scalar datatypefamily="basictype" name="infinity" datatypename="basicenumeration" info="infinite value" default="no">
+          <evalue name="minus" info="-inf"/>
+          <evalue name="plus" info="+inf"/>
+          <evalue name="no" info="otherwise"/>
+        </scalar>
+        <scalar datatypefamily="basictype" name="TemperatureDependent" datatypename="basicenumeration" info="expression is temperature dependent" default="no">
+          <evalue name="yes" info="it is true"/>
+          <evalue name="no" info="it is false"/>
+        </scalar>
+        <scalar datatypefamily="basictype" name="value" datatypename="basicenumeration" info="expression value is either 0, 1, -1 or any" default="is_any">
+          <evalue name="is_zero" info="expression value equals 0"/>
+          <evalue name="is_one" info="expression value equals 1"/>
+          <evalue name="is_neg_one" info="expression value equals -1"/>
+          <evalue name="is_any" info="expression value equals neither -1, 0, 1"/>
+        </scalar>
+        <list datatypefamily="reference" name="function" datatypename="function" info="built-in functions occuring in expression"/>
+        <list datatypefamily="reference" name="probe" datatypename="probe" info="list of probes that occur in expression"/>
+        <list datatypefamily="reference" name="variable" datatypename="variable" info="list of explicit variables that occur in expression"/>
+      </element>
+      <element name="instance" info="instantiation">
+        <uid format="$1.$2#$3">
+          <scalar datatypefamily="reference" name="instantiator" datatypename="module" info="back to instantiator"/>
+          <scalar datatypefamily="reference" name="module" datatypename="module" info="instance module"/>
+          <scalar datatypefamily="basictype" name="name" datatypename="basicstring" info="name"/>
+        </uid>
+        <list datatypefamily="reference" name="terminal" datatypename="instancenode" info="terminals"/>
+        <list datatypefamily="reference" name="parameterset" datatypename="instanceparameter" info="parameter assignments"/>
+      </element>
+      <element name="instanceparameter" info=".parameter(expression)">
+        <uid format="$1#$2">
+          <scalar datatypefamily="reference" name="parameter" datatypename="variableprototype" info="left-hand-side"/>
+        </uid>
+        <scalar datatypefamily="reference" name="value" datatypename="expression" info="right-hand-side"/>
+      </element>
+      <element name="instancenode" info="instance node">
+        <uid format="$1#$2">
+          <scalar datatypefamily="reference" name="nodefrominstantiator" datatypename="node" info="instantiator node"/>
+          <scalar datatypefamily="reference" name="nodefrommodule" datatypename="node" info="instance node"/>
+        </uid>
+      </element>
+      <element name="nilled" info="nilled operator">
+        <uid format="nilled operator">
+          <scalar datatypefamily="reference" name="module" datatypename="module" info="back to the module"/>
+        </uid>
+        <alias name="static" element="math" attribute="static"/>
+        <alias name="dynamic" element="math" attribute="dynamic"/>
+        <scalar datatypefamily="basictype" name="name" datatypename="basicstring" default="" info="obsolete - not used"/>
+      </element>
+      <element name="assignment" info="assignement: variable=expression;">
+        <uid format="$2=$3;">
+          <scalar datatypefamily="reference" name="module" datatypename="module" info="back to the module"/>
+          <scalar datatypefamily="reference" name="lhs" datatypename="adms" info="left-hand-side (variable or array)"/>
+          <scalar datatypefamily="reference" name="rhs" datatypename="expression" info="right-hand-side"/>
+          <scalar datatypefamily="reference" name="lexval" datatypename="lexval" info="locus"/>
+        </uid>
+        <alias name="static" element="math" attribute="static"/>
+        <alias name="dynamic" element="math" attribute="dynamic"/>
+        <scalar datatypefamily="basictype" name="name" datatypename="basicstring" default="" info="obsolete - not used"/>
+        <list datatypefamily="reference" name="attribute" datatypename="attribute" info="veriloga items"/>
+      </element>
+      <element name="contribution" info="contribution: source &lt;+ expression;">
+        <uid format="$2&lt;+$3;">
+          <scalar datatypefamily="reference" name="module" datatypename="module" info="back to the module"/>
+          <scalar datatypefamily="reference" name="lhs" datatypename="source" info="left-hand-side"/>
+          <scalar datatypefamily="reference" name="rhs" datatypename="expression" info="right-hand-side"/>
+          <scalar datatypefamily="reference" name="lexval" datatypename="lexval" info="locus"/>
+        </uid>
+        <alias name="static" element="math" attribute="static"/>
+        <alias name="dynamic" element="math" attribute="dynamic"/>
+        <scalar datatypefamily="reference" name="branchalias" datatypename="branchalias" info="name of branch"/>
+        <scalar datatypefamily="basictype" name="name" datatypename="basicstring" default="" info="obsolete - not used"/>
+        <scalar datatypefamily="basictype" name="whitenoise" datatypename="basicenumeration" info="do we have source&lt;+whitenoise(...)?" default="no">
+          <evalue name="yes" info="it is true"/>
+          <evalue name="no" info="it is false"/>
+        </scalar>
+        <scalar datatypefamily="basictype" name="flickernoise" datatypename="basicenumeration" info="do we have source&lt;+flickernoise(...)?" default="no">
+          <evalue name="yes" info="it is true"/>
+          <evalue name="no" info="it is false"/>
+        </scalar>
+        <list datatypefamily="reference" name="attribute" datatypename="attribute" info="veriloga items"/>
+      </element>
+      <element name="conditional" info="conditional if..then..else..">
+        <uid format="if($2) $3$4">
+          <scalar datatypefamily="reference" name="module" datatypename="module" info="back to the module"/>
+          <scalar datatypefamily="reference" name="if" datatypename="expression" info="conditional expression"/>
+          <scalar datatypefamily="reference" name="then" datatypename="adms" info="then block"/>
+          <scalar datatypefamily="reference" name="else" datatypename="adms" info="else block" format=" else $4"/>
+        </uid>
+        <alias name="static" element="math" attribute="static"/>
+        <alias name="dynamic" element="math" attribute="dynamic"/>
+        <scalar datatypefamily="basictype" name="name" datatypename="basicstring" default="" info="name"/>
+      </element>
+      <element name="forloop" info="for(initial;conditional;update) forblock">
+        <uid format="for($2;$3;$4)\n$5">
+          <scalar datatypefamily="reference" name="module" datatypename="module" info="back to the module"/>
+          <scalar datatypefamily="reference" name="initial" datatypename="assignment" info="initial"/>
+          <scalar datatypefamily="reference" name="condition" datatypename="expression" info="condition"/>
+          <scalar datatypefamily="reference" name="update" datatypename="assignment" info="update"/>
+          <scalar datatypefamily="reference" name="forblock" datatypename="adms" info="for block"/>
+        </uid>
+        <alias name="static" element="math" attribute="static"/>
+        <alias name="dynamic" element="math" attribute="dynamic"/>
+        <scalar datatypefamily="basictype" name="name" datatypename="basicstring" default="" info="name"/>
+      </element>
+      <element name="whileloop" info="while(..)..">
+        <uid format="while($2)\n$3">
+          <scalar datatypefamily="reference" name="module" datatypename="module" info="back to the module"/>
+          <scalar datatypefamily="reference" name="while" datatypename="expression" info="while condition"/>
+          <scalar datatypefamily="reference" name="whileblock" datatypename="adms" info="while block"/>
+        </uid>
+        <alias name="static" element="math" attribute="static"/>
+        <alias name="dynamic" element="math" attribute="dynamic"/>
+        <scalar datatypefamily="basictype" name="name" datatypename="basicstring" default="" info="name"/>
+      </element>
+      <element name="case" info="case (..) 1,2:...; 2,4:...; default:...; endcase">
+        <uid format="case">
+          <scalar datatypefamily="reference" name="module" datatypename="module" info="back to the module"/>
+          <scalar datatypefamily="reference" name="case" datatypename="expression" info="case condition"/>
+        </uid>
+        <alias name="static" element="math" attribute="static"/>
+        <alias name="dynamic" element="math" attribute="dynamic"/>
+        <scalar datatypefamily="basictype" name="name" datatypename="basicstring" default="" info="name"/>
+        <list datatypefamily="reference" name="caseitem" datatypename="caseitem" info="list of case items"/>
+      </element>
+      <element name="caseitem" info="case item in 'case (..) 1:...; 2:...; endcase'">
+        <uid format="caseitem">
+          <scalar datatypefamily="reference" name="code" datatypename="adms" info="evaluated code"/>
+        </uid>
+        <scalar datatypefamily="basictype" name="defaultcase" datatypename="basicenumeration" info="is default case? (in that case condition is empty)" default="no">
+          <evalue name="yes" info="it is true"/>
+          <evalue name="no" info="it is false"/>
+        </scalar>
+        <list datatypefamily="reference" name="condition" datatypename="adms" info="or-ed conditions for selected case item"/>
+      </element>
+      <element name="blockvariable" info="block variable declarations">
+        <uid format="real $2;">
+          <scalar datatypefamily="reference" name="block" datatypename="block" info="back to the module"/>
+        </uid>
+        <alias name="static" element="math" attribute="static"/>
+        <alias name="dynamic" element="math" attribute="dynamic"/>
+        <list datatypefamily="reference" name="variable" datatypename="variable" info="block variables" format=","/>
+      </element>
+      <element name="block" info="begin..end block">
+        <uid format="begin :$2\n$4end\n">
+          <scalar datatypefamily="reference" name="module" datatypename="module" info="back to the module"/>
+          <scalar datatypefamily="reference" name="lexval" datatypename="lexval" info="locus"/>
+          <scalar datatypefamily="reference" name="block" datatypename="block" info="block just above"/>
+          <list datatypefamily="reference" name="item" datatypename="adms" info="items inside begin..end" format="\n"/>
+        </uid>
+        <aliasbis name="name" path="lexval/string"/>
+        <alias name="static" element="math" attribute="static"/>
+        <alias name="dynamic" element="math" attribute="dynamic"/>
+        <list datatypefamily="reference" name="attribute" datatypename="attribute" info="veriloga items"/>
+        <list datatypefamily="reference" name="variable" datatypename="variableprototype" info="block variable declarations"/>
+        <list datatypefamily="reference" name="probe" datatypename="probe" info="list of probes that occur in begin..end"/>
+      </element>
+      <element name="callfunction" info="calling functions ($strobe, $warning, ..)">
+        <uid format="$2">
+          <scalar datatypefamily="reference" name="module" datatypename="module" info="back to the module"/>
+          <scalar datatypefamily="reference" name="function" datatypename="function" info="function called"/>
+        </uid>
+        <alias name="static" element="math" attribute="static"/>
+        <alias name="dynamic" element="math" attribute="dynamic"/>
+      </element>
+    </element>
+    <comment>internal usage - parsing of xml scripts</comment>
+    <element name="evaluation" info="obsolete - kept for backward compatibility">
+      <uid format=""/>
+      <list datatypefamily="reference" name="variable" datatypename="variable" info="variables"/>
+    </element>
+    <comment>text: parse</comment>
+    <element name="text" info="text=[admst.basicstring|text|path]*">
+      <uid format="$1:$2">
+        <scalar datatypefamily="reference" name="transform" datatypename="transform" info="back to transform"/>
+        <scalar datatypefamily="basictype" name="value" datatypename="basicstring" info="string value"/>
+      </uid>
+      <scalar datatypefamily="basictype" name="aname" datatypename="basicstring" info="attribute name or %(...)"/>
+      <scalar datatypefamily="basictype" name="admse" datatypename="basicinteger" info="admse value, otherwise any" default="0"/>
+      <list datatypefamily="reference" name="token" datatypename="adms" info="sequence of text, admst, path"/>
+    </element>
+    <comment>path: parse</comment>
+    <element name="path" info="internal representation of path">
+      <uid format="$1:$3.$4">
+        <scalar datatypefamily="reference" name="transform" datatypename="transform" info="back to transform"/>
+        <scalar datatypefamily="reference" name="text" datatypename="text" info="text inside (...) in $(...), @(...) or #(...)"/>
+      </uid>
+      <scalar datatypefamily="basictype" name="aname" datatypename="basicstring" info="attribute name or %(...)"/>
+      <scalar datatypefamily="basictype" name="avalue" datatypename="basicstring" info="attribute value"/>
+      <scalar datatypefamily="reference" name="template" datatypename="transform" info="template when path is location02"/>
+      <scalar datatypefamily="basictype" name="keeplist" datatypename="basicinteger" info="do not flatten lists" default="0"/>
+      <scalar datatypefamily="basictype" name="callbackname" datatypename="basicstring" info="callback name"/>
+      <scalar datatypefamily="basictype" name="callback" datatypename="basicfunction" info="called when node traversed"/>
+      <list datatypefamily="reference" name="bar" datatypename="path" default="" info="all items between |"/>
+      <list datatypefamily="reference" name="arg" datatypename="path" default="" info="arguments of arithmetics (+,-,..)"/>
+      <list datatypefamily="reference" name="u" datatypename="path" default="" info="child of unary"/>
+      <list datatypefamily="reference" name="b" datatypename="path" default="" info="children (1 or 2) of binary"/>
+      <list datatypefamily="reference" name="c" datatypename="path" default="" info="condition"/>
+    </element>
+    <element name="ptraverse" info="traverse path">
+      <uid format="$1">
+        <scalar datatypefamily="reference" name="transform" datatypename="transform" info="back to admst path"/>
+      </uid>
+      <list datatypefamily="reference" name="admst" datatypename="admst" info="admst list"/>
+      <list datatypefamily="reference" name="alladmst" datatypename="admst" info="keep track of all admst for memory management"/>
+      <list datatypefamily="reference" name="aliasadmst" datatypename="admst" info="keep track of all admst for memory management"/>
+      <scalar datatypefamily="basictype" name="position" datatypename="basicinteger" info="count"/>
+      <scalar datatypefamily="reference" name="a1" datatypename="admst" info="returned path"/>
+      <scalar datatypefamily="reference" name="an" datatypename="admst" info="returned path"/>
+    </element>
+    <element name="pparse" info="parser of attr=&quot;path&quot;">
+      <uid format="$1:$2">
+        <scalar datatypefamily="reference" name="transform" datatypename="transform" info="transform"/>
+        <scalar datatypefamily="basictype" name="aname" datatypename="basicstring" info="path aname"/>
+        <scalar datatypefamily="basictype" name="value" datatypename="basicstring" info="path value"/>
+      </uid>
+      <scalar datatypefamily="reference" name="path" datatypename="path" info="returned path"/>
+      <scalar datatypefamily="reference" name="text" datatypename="text" info="returned text"/>
+      <scalar datatypefamily="basictype" name="position" datatypename="basickstring" info="current character in lexical analysis"/>
+      <scalar datatypefamily="basictype" name="tkstart" datatypename="basickstring" info="first character of token"/>
+      <scalar datatypefamily="basictype" name="tklen" datatypename="basicinteger" info="length of token"/>
+      <scalar datatypefamily="basictype" name="tkid" datatypename="basicenumeration" info="id of token"/>
+    </element>
+    <comment>path: traverse</comment>
+    <element name="admst" info="admst value">
+      <uid format="admst">
+        <scalar datatypefamily="reference" name="previous" datatypename="admst" info="previous admst"/>
+        <scalar datatypefamily="reference" name="previouspath" datatypename="admst" info="previous path"/>
+        <scalar datatypefamily="basictype" name="pseudo" datatypename="basicenumeration" info="pseudo datatypename"/>
+      </uid>
+      <scalar datatypefamily="reference" name="item" datatypename="adms" info="item"/>
+      <scalar datatypefamily="basictype" name="valueto" datatypename="basicfunction" info="valueto routine"/>
+      <scalar datatypefamily="basictype" name="position" datatypename="basicinteger" info="position"/>
+      <scalar datatypefamily="basictype" name="count" datatypename="basicinteger" info="count"/>
+      <scalar datatypefamily="basictype" name="hasnewbasicstring" datatypename="basicinteger" info="string newly allocated" default="0"/>
+      <scalar datatypefamily="reference" name="original" datatypename="admst" info="original admst"/>
+      <scalar datatypefamily="basictype" name="refd" datatypename="basicinteger" info="count of references" default="1"/>
+      <scalar datatypefamily="basictype" name="true" datatypename="basicinteger" info="count of references" default="1"/>
+      <scalar datatypefamily="reference" name="preva" datatypename="admst" info="returned path"/>
+      <scalar datatypefamily="reference" name="nexta" datatypename="admst" info="returned path"/>
+      <scalar datatypefamily="basictype" name="selected" datatypename="basicenumeration" info="is selected?" default="yes">
+        <evalue name="yes" info="it is true"/>
+        <evalue name="no" info="it is false"/>
+      </scalar>
+    </element>
+    <comment>transform: parse</comment>
+    <element name="transform" info="transform">
+      <uid format="[$1:$3]">
+        <scalar datatypefamily="basictype" name="fullfilename" datatypename="basicstring" info="full file name"/>
+        <scalar datatypefamily="basictype" name="basefilename" datatypename="basicstring" info="base file name"/>
+        <scalar datatypefamily="basictype" name="l" datatypename="basicinteger" info="line number in file name"/>
+        <scalar datatypefamily="basictype" name="name" datatypename="basicstring" info="name in &lt;admst:name ... /&gt;"/>
+        <scalar datatypefamily="reference" name="parent" datatypename="transform" info="parent of transform"/>
+      </uid>
+      <scalar datatypefamily="basictype" name="callback" datatypename="basicfunction" info="routine evaluated when transform is traversed"/>
+      <scalar datatypefamily="basictype" name="id" datatypename="basicstring" info="callback name"/>
+      <scalar datatypefamily="reference" name="pathselect" datatypename="path" info="path"/>
+      <scalar datatypefamily="reference" name="pathpath" datatypename="path" info="path"/>
+      <scalar datatypefamily="reference" name="pathinto" datatypename="path" info="path"/>
+      <scalar datatypefamily="reference" name="pathtest" datatypename="path" info="path"/>
+      <scalar datatypefamily="reference" name="pathlist" datatypename="path" info="built from tlist"/>
+      <scalar datatypefamily="reference" name="textselect" datatypename="text" info="text - for admst:variable - obsolete"/>
+      <scalar datatypefamily="reference" name="textdatatype" datatypename="text" info="text"/>
+      <scalar datatypefamily="reference" name="textmatch" datatypename="text" info="text"/>
+      <scalar datatypefamily="reference" name="textrequired" datatypename="text" info="text"/>
+      <scalar datatypefamily="reference" name="textseparator" datatypename="text" info="text"/>
+      <scalar datatypefamily="reference" name="textfrom" datatypename="text" info="text"/>
+      <scalar datatypefamily="reference" name="textto" datatypename="text" info="text"/>
+      <scalar datatypefamily="reference" name="textlist" datatypename="text" info="text"/>
+      <scalar datatypefamily="reference" name="textname" datatypename="text" info="text"/>
+      <scalar datatypefamily="reference" name="textformat" datatypename="text" info="text"/>
+      <scalar datatypefamily="reference" name="textfile" datatypename="text" info="text"/>
+      <scalar datatypefamily="reference" name="textversion" datatypename="text" info="text"/>
+      <scalar datatypefamily="reference" name="textonduplicate" datatypename="text" info="text"/>
+      <scalar datatypefamily="reference" name="textprobe" datatypename="text" info="text"/>
+      <scalar datatypefamily="reference" name="textstring" datatypename="text" info="text"/>
+      <list datatypefamily="reference" name="templates" datatypename="transform" info="list of templates"/>
+      <list datatypefamily="reference" name="textarguments" datatypename="text" info="list of text"/>
+      <scalar datatypefamily="reference" name="pathoncompare" datatypename="path" info="comparison"/>
+      <list datatypefamily="reference" name="pathinputs" datatypename="path" info="list of path"/>
+      <list datatypefamily="reference" name="attribute" datatypename="attribute" info="attributes: &lt;xmlname attribute=&quot;value&quot;/&gt; (unused if xmlname is transform)"/>
+      <list datatypefamily="reference" name="children" datatypename="transform" info="children of transform"/>
+    </element>
+    <element name="itransform" info="instance of adms transform created by apply-template">
+      <uid format="$1">
+        <scalar datatypefamily="reference" name="template" datatypename="transform" info="link to matching template"/>
+      </uid>
+      <scalar datatypefamily="reference" name="originalcall" datatypename="transform" info="original call"/>
+      <list datatypefamily="reference" name="variable" datatypename="admstvariable" info="local admst variables (scope is template)"/>
+      <list datatypefamily="reference" name="return" datatypename="admst" info="returned values"/>
+    </element>
+    <element name="return" info="Xreturn value">
+      <uid format="$1">
+        <scalar datatypefamily="basictype" name="name" datatypename="basicstring" info="name"/>
+        <scalar datatypefamily="basictype" name="value" datatypename="basicstring" info="value"/>
+      </uid>
+    </element>
+    <element name="attribute" info="pair (name,value)">
+      <uid format="$1">
+        <scalar datatypefamily="basictype" name="name" datatypename="basicstring" info="name"/>
+      </uid>
+      <scalar datatypefamily="reference" name="value" datatypename="adms" info="value"/>
+    </element>
+    <element name="admstvariable" info="admst variable">
+      <uid format="$1">
+        <scalar datatypefamily="basictype" name="name" datatypename="basicstring" info="name"/>
+      </uid>
+      <list datatypefamily="reference" name="value" datatypename="admst" info="value (list)"/>
+    </element>
+    <comment>veriloga: parse</comment>
+    <element name="lexval" info="token value returned by veriloga lexical analyzer">
+      <uid format="$1">
+        <scalar datatypefamily="basictype" name="string" datatypename="basicstring" info="token value"/>
+        <scalar datatypefamily="basictype" name="f" datatypename="basicstring" info="file name"/>
+        <scalar datatypefamily="basictype" name="l" datatypename="basicinteger" info="line number"/>
+        <scalar datatypefamily="basictype" name="c" datatypename="basicinteger" info="first char position"/>
+      </uid>
+    </element>
+    <element name="yaccval" info="in yacc rules value saved into $$">
+      <uid format="$1">
+        <scalar datatypefamily="basictype" name="filename" datatypename="basicstring" info="file name"/>
+      </uid>
+      <scalar datatypefamily="reference" name="usrdata" datatypename="adms" info="any element"/>
+    </element>
+  </element>
+</adms>

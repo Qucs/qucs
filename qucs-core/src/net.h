@@ -25,9 +25,6 @@
 #ifndef __NET_H__
 #define __NET_H__
 
-#include <string>
-#include "ptrlist.h"
-
 namespace qucs {
 
 class circuit;
@@ -37,13 +34,13 @@ class nodeset;
 class analysis;
 class dataset;
 class environment;
-
+template <class type_t> class ptrlist;
 
 class net : public object
 {
  public:
   net ();
-  net (const std::string &);
+  net (const char *);
   net (net &);
   ~net ();
   circuit * getRoot (void) { return root; }
@@ -68,11 +65,11 @@ class net : public object
   void setReduced (int r) { reduced = r; }
   int  getVoltageSources (void) { return nSources; }
   void setVoltageSources (int n) { nSources = n; }
-  analysis * findAnalysis (const std::string &) const;
+  analysis * findAnalysis (char *);
   analysis * findAnalysis (int);
   analysis * findSecondOrder (void);
   analysis * getChildAnalysis (analysis *);
-  const char * getChild (analysis *) const;
+  char * getChild (analysis *);
   void orderAnalysis (void);
   analysis * findLastOrder (analysis *);
   ptrlist<analysis> * findLastOrderChildren (analysis *);
@@ -88,7 +85,8 @@ class net : public object
   nodeset * getNodeset (void) { return nset; }
   void setSrcFactor (nr_double_t f) { srcFactor = f; }
   nr_double_t getSrcFactor (void) { return srcFactor; }
-  void setActionNetAll(net *);
+  void setActionNet(int, net *);
+  int getNActions(void);
 
  private:
   nodeset * nset;

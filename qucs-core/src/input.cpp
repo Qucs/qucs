@@ -239,7 +239,7 @@ void input::factory (void) {
       o = (object *) c;
       c->setName (def->instance);
       c->setNonLinear (def->nonlinear != 0);
-      c->setSubcircuit (def->subcircuit == nullptr ? "" : def->subcircuit);
+      c->setSubcircuit (def->subcircuit);
 
       // change size (number of ports) of variable sized components
       if (c->isVariableSized ()) {
@@ -308,15 +308,18 @@ void input::assignDefaultProperties (object * obj, struct define_t * def) {
   for (int i = 0; PROP_IS_PROP (def->optional[i]); i++) {
     // is the property already assigned ?
     if (!obj->hasProperty (def->optional[i].key)) {
+      property * p;
       if (PROP_IS_VAL (def->optional[i])) {
 	// add double property
-	obj->addProperty (def->optional[i].key,
-			  def->optional[i].defaultval.d,true);
+	p = obj->addProperty (def->optional[i].key,
+			      def->optional[i].defaultval.d);
+	p->setDefault (true);
       }
       else {
 	// add string property
-	obj->addProperty (def->optional[i].key,
-	    	          def->optional[i].defaultval.s,true);
+	p = obj->addProperty (def->optional[i].key,
+			      def->optional[i].defaultval.s);
+	p->setDefault (true);
       }
     }
   }

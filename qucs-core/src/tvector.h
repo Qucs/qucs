@@ -25,11 +25,7 @@
 #ifndef __TVECTOR_H__
 #define __TVECTOR_H__
 
-#include <vector>
 #include <assert.h>
-
-#include <limits>
-
 #include "precision.h"
 
 namespace qucs {
@@ -73,23 +69,28 @@ template <class nr_type_t>
 class tvector
 {
  public:
-  tvector () = default;
-  tvector (const std::size_t i) : data(i) {};
-  tvector (const tvector &) = default;
-  ~tvector () = default;
+  tvector ();
+  tvector (int);
+  tvector (const tvector &);
+  const tvector& operator = (const tvector &);
+  ~tvector ();
   nr_type_t get (int);
   void set (int, nr_type_t);
   void set (nr_type_t);
   void set (nr_type_t, int, int);
   void set (tvector, int, int);
-  std::size_t  size (void) const { return data.size (); }
-  nr_type_t * getData (void) { return data.data(); }
+  int  getSize (void) { return size; }
+  nr_type_t * getData (void) { return data; }
+  void setData (nr_type_t *, int);
+  void add (nr_type_t);
   void clear (void);
+  void drop (int);
+  void truncate (int);
   void exchangeRows (int, int);
   int  isFinite (void);
   void print (void);
   void reorder (int *);
-  int  contains (nr_type_t, nr_double_t eps = std::numeric_limits<nr_double_t>::epsilon());
+  int  contains (nr_type_t, nr_double_t eps = NR_EPSI);
 
   // some basic vector operations
 #ifndef _MSC_VER
@@ -129,33 +130,19 @@ class tvector
 
   // easy accessor operators
   nr_type_t  operator () (int i) const {
-    return data.at(i);
-  }
+    assert (i >= 0 && i < size); return data[i]; }
   nr_type_t& operator () (int i) {
-    return data.at(i); }
-   nr_type_t  operator [] (int i) const {
-    return data[i];
-  }
-  nr_type_t& operator [] (int i) {
-    return data[i];
-  }
+    assert (i >= 0 && i < size); return data[i]; }
 
- protected:
-  std::vector<nr_type_t> data;
-
+ private:
+  int external;
+  int size;
+  int capacity;
+  nr_type_t * data;
 };
 
-  /*
-  int  contains (nr_type_t val, nr_double_t eps = std::numeric_limits<nr_double_t>::epsilon()) {
-    int count = 0;
-    for (int i = 0; i < (int)data.size (); i++) if (abs ((data)[i] - val) <= eps) count++;
-    return count;
-    }*/
-
-
-  
 } // namespace qucs
-  
+
 #include "tvector.cpp"
 
 #endif /* __TVECTOR_H__ */
