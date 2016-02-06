@@ -789,7 +789,6 @@ dnl Add here all your Makefiles. These are created by configure.
 AC_CONFIG_FILES([Makefile
     contrib/Makefile
     examples/Makefile
-    qucs-edit/Makefile
     qucs-help/Makefile
     qucs-help/docs/Makefile
     qucs-help/docs/en/Makefile

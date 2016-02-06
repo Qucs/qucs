@@ -41,10 +41,6 @@
 		<Unit filename="qucs-doc/Makefile.am" />
 		<Unit filename="qucs-doc/bootstrap" />
 		<Unit filename="qucs-doc/configure.ac" />
-		<Unit filename="qucs-edit/Makefile.am" />
-		<Unit filename="qucs-edit/main.cpp" />
-		<Unit filename="qucs-edit/qucsedit.cpp" />
-		<Unit filename="qucs-edit/qucsedit.h" />
 		<Unit filename="qucs-filter-v2/Makefile.am" />
 		<Unit filename="qucs-filter-v2/qf_api.cpp" />
 		<Unit filename="qucs-filter-v2/qf_api.h" />
