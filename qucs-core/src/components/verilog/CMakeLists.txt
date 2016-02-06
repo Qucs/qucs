@@ -6,12 +6,9 @@ INCLUDE_DIRECTORIES( ${qucs-core_SOURCE_DIR}
                      ${qucs-core_SOURCE_DIR}/src/components/devices )   # devices.h
 
 
-# TODO does constants / disciplines need to be generated, or adms creates them as needed?
 # TODO, test if VA files change, should recompile
 
 SET( VA_FILES
-#  constants.vams   #--> created by admsXml if not found
-#  disciplines.vams #--> created by admsXml
   andor4x2
   andor4x3
   andor4x4
@@ -118,13 +115,7 @@ SET(MAKE_FILES
   va2cpp.makefile
 )
 
-SET(VA_INCLUDES
-  constants.vams
-  disciplines.vams
-)
-
 INSTALL(FILES ${XML_DIST}    DESTINATION include/qucs-core)
 INSTALL(FILES ${MAKE_FILES}  DESTINATION include/qucs-core)
-INSTALL(FILES ${VA_INCLUDES} DESTINATION include/qucs-core)
 
 
