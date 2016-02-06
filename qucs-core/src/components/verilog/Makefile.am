@@ -121,7 +121,7 @@ CLEANFILES = *~ *.orig *.rej *.analogfunction.cpp *.core.cpp .*.adms \
 
 DISTCLEANFILES = \
     .adms.implicit.xml\
-    .interface.xml\
+    .interface.xml
 
 
 MAINTAINERCLEANFILES = Makefile.in $(GENERATED_FILES)
