@@ -1,4 +1,4 @@
-qucs-doc (0.0.19-1) trusty; urgency=medium
+qucs-doc (0.0.19) trusty; urgency=medium
 
   * Created separate package for qucs-doc
 
