@@ -3,7 +3,7 @@ Section: electronics
 Priority: optional
 Maintainer: José L. Redrejo Rodríguez <jredrejo@debian.org>
 Homepage: http://qucs.sourceforge.net
-Build-Depends: debhelper (>> 4.0.0),autotools-dev, build-essential, cmake, texlive-latex-extra, texlive-font-utils, texlive-base, texlive-latex-recommended, texlive-science, texlive-math-extra, texlive-font-utils, doxygen, gawk, ps2eps, latex2html, doxygen, tipa, autoconf, automake, libtool, libncurses5-dev, libpam0g-dev, libcap-dev, libsnmp-dev, fig2ps, octave, texlive-full
+Build-Depends: debhelper (>> 4.0.0),autotools-dev, build-essential
 Standards-Version: 3.8.1
 
 Package: qucs-doc
