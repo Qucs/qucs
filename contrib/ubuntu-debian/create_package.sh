@@ -44,6 +44,9 @@ rmdir qucs-doc-$RELEASE/share/qucs
 rmdir qucs-doc-$RELEASE/share
 #copy the debian packaging folder for the debian package
 mv qucs-$RELEASE/contrib/ubuntu-debian/qucs-doc/* qucs-doc-$RELEASE/
+cd qucs-doc-$RELEASE
+./autogen.sh
+cd ..
 
 #create the tar archive
 tar -zcvhf qucs-doc_$RELEASE.orig.tar.gz qucs-doc-$RELEASE
