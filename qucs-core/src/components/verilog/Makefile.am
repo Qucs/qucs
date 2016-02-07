@@ -87,7 +87,7 @@ VA_FILES = \
 libverilog_la_SOURCES = $(VA_FILES)
 VERILOGdir=$(pkgdatadir)/verilog
 
-VERILOG_DATA = $(VA_FILES) constants.vams disciplines.vams
+VERILOG_DATA = $(VA_FILES)
 
 VERILOGDIGITAL_FILES =
 
@@ -100,8 +100,6 @@ XML_FILES = analogfunction.xml \
 
 MAKE_FILES = cpp2lib.makefile\
   va2cpp.makefile
-
-VA_INCLUDES = constants.vams disciplines.vams
 
 EXTRA_DIST = $(VERILOG_DATA) $(XML_FILES) $(MAKE_FILES)
 
@@ -116,17 +114,16 @@ AM_CPPFLAGS = -I$(top_srcdir)/src -I$(top_srcdir)/src/math \
 
 GENERATED_FILES = *.core.* *.analogfunction.* *.gui.* *.defs.* .*.adms .*.xml
 
-pkginclude_HEADERS = $(XML_FILES) $(MAKE_FILES) $(VA_INCLUDES)
+pkginclude_HEADERS = $(XML_FILES) $(MAKE_FILES)
 
 CLEANFILES = *~ *.orig *.rej *.analogfunction.cpp *.core.cpp .*.adms \
              *.core.h *.analogfunction.h *.cpp *.defs.h
 
 DISTCLEANFILES = \
-    constants.vams\
-    discipline.vams\
-    .adms.implicit.xml\
-    .interface.xml\
-    disciplines.vams
+     .adms.implicit.xml \
+     .interface.xml \
+     constants.vams \
+     disciplines.vams
 
 
 MAINTAINERCLEANFILES = Makefile.in $(GENERATED_FILES)
