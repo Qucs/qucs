@@ -120,8 +120,10 @@ CLEANFILES = *~ *.orig *.rej *.analogfunction.cpp *.core.cpp .*.adms \
              *.core.h *.analogfunction.h *.cpp *.defs.h
 
 DISTCLEANFILES = \
-    .adms.implicit.xml\
-    .interface.xml
+     .adms.implicit.xml \
+     .interface.xml \
+     constants.vams \
+     disciplines.vams
 
 
 MAINTAINERCLEANFILES = Makefile.in $(GENERATED_FILES)
