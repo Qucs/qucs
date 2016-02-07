@@ -1,11 +1,12 @@
 dnl Process this file with autoconf to produce a configure script.
-dnl Created by Anjuta application wizard.
 
-AC_INIT(qucs_doc, 0.1)
+AC_INIT(qucs_doc, 0.0.19)
 
-AM_INIT_AUTOMAKE([1.11])
+AM_INIT_AUTOMAKE([1.14])
 
-AM_SILENT_RULES([yes])
+AC_CONFIG_AUX_DIR(.)
+
+AM_SILENT_RULES([no])
 
 AC_OUTPUT([
 Makefile
