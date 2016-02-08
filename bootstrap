@@ -23,6 +23,9 @@
 #
 
 LIBTOOLIZE=${LIBTOOLIZE:-libtoolize}
+case `uname` in
+  *Darwin*) LIBTOOLIZE=glibtoolize ;;
+esac
 
 echo -n "Creating aclocal.m4... "
 ${ACLOCAL:-aclocal} -I m4
