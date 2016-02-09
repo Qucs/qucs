@@ -39,6 +39,7 @@ class OctaveWindow;
 class MessageDock;
 class ProjectView;
 class ContextMenuTabWidget;
+class tuner; //forward declaration
 class tunerElement;
 class VersionTriplet;
 class QucsApp;
@@ -63,7 +64,6 @@ class QListView;
 class QFileSystemModel;
 class QModelIndex;
 class QPushButton;
-class tuner; //forward declaration
 
 #ifdef __MINGW32__
 #define executableSuffix ".exe"
