@@ -4,6 +4,8 @@ platform:
 
 cache:
   - C:\msys64\var\cache\pacman\pkg\mingw-w64-x86_64-qt4* -> .appveyor.yml
+  - adms-2.3.5-bin-win64.zip -> .appveyor.yml
+  - gperf-3.0.1-bin.zip -> .appveyor.yml
 
 install:
 
@@ -22,6 +24,10 @@ install:
   # To extract gperf
   - C:\msys64\usr\bin\bash -lc "pacman --noconfirm -S p7zip"
 
+  # Set compiler (64bit)
+  - set "CC=/c/msys64/mingw64/bin/gcc.exe"
+  - set "CXX=/c/msys64/mingw64/bin/g++.exe"
+
 
 build_script:
   ## Notes
@@ -29,17 +35,17 @@ build_script:
   #  * We force CXX=g++, somehow it is picking up flags related to clang++
 
   ## Other dependencies
-  # Download, build and install ADMS
-  - bash -lc "exec 0</dev/null && wget.exe http://sourceforge.net/projects/mot-adms/files/adms-source/2.3/adms-2.3.4.tar.gz"
-  - bash -lc "exec 0</dev/null && tar xvfz adms-2.3.4.tar.gz"
-  - bash -lc "exec 0</dev/null && cd adms-2.3.4/ && ./configure --build=x86_64-w64-mingw32 && make install && cd -"
-  - bash -lc "exec 0</dev/null && admsXml -h"
+  # Download ADMS (64bit)
+  - bash -lc "exec 0</dev/null && wget.exe http://sourceforge.net/projects/mot-adms/files/adms-binary/2.3/adms-2.3.5-bin-win64.zip"
+  - bash -lc "exec 0</dev/null && 7z x -y adms-2.3.5-bin-win64.zip"
+  - bash -lc "exec 0</dev/null && cp -r adms-2.3.5-bin-win64/* /c/msys64/mingw64/usr/local/"
+  - bash -lc "exec 0</dev/null && admsXml --version"
 
   # Issue with gperf: https://github.com/Qucs/qucs/issues/295
   # Get gperf, download, extract/overwrite
   # Use my Dropbox till we find a better fallback or cache mechanism for SourceForge
   - bash -lc "exec 0</dev/null && wget.exe https://www.dropbox.com/s/nxjyuyil1h3gjgm/gperf-3.0.1-bin.zip"
-  - bash -lc "exec 0</dev/null && 7z x -y gperf-3.0.1-bin.zip -o/usr/local"
+  - bash -lc "exec 0</dev/null && 7z x -y gperf-3.0.1-bin.zip -o/c/msys64/mingw64/usr/local"
   - bash -lc "exec 0</dev/null && gperf --version"
 
 
