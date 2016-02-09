@@ -54,7 +54,7 @@ tunerElement::tunerElement(QWidget *parent, Component *component, int selectedPr
     QLabel *Label1 = new QLabel(tr("Value"));
     gbox->addWidget(Label1);
     value = new QLineEdit();
-    originalValue = prop->Value.copy();
+    originalValue = prop->Value;
     gbox->addWidget(value);
 
     QLabel *Label2 = new QLabel(tr("Minimum"));
@@ -348,6 +348,7 @@ void TunerDialog::slotRemoveTunerElement(tunerElement *e)
     qDebug() << "Tuner::slotRemoveTunerElement()";
     this->infoMsg("Removed element from Tuner");
     currentProps->removeAll(e->getElementProperty());
+    currentElements->removeAll(e);
     this->infoMsg(QString("Removed element: ") + e->name());
     delete e;
     this->adjustSize();
