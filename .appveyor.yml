@@ -38,7 +38,7 @@ build_script:
   # Download ADMS (64bit)
   - bash -lc "exec 0</dev/null && wget.exe http://sourceforge.net/projects/mot-adms/files/adms-binary/2.3/adms-2.3.5-bin-win64.zip"
   - bash -lc "exec 0</dev/null && 7z x -y adms-2.3.5-bin-win64.zip"
-  - bash -lc "exec 0</dev/null && mv -f adms-2.3.5-bin-win64/* /usr/local/"
+  - bash -lc "exec 0</dev/null && cp -r adms-2.3.5-bin-win64/* /usr/local/"
   - bash -lc "exec 0</dev/null && admsXml --version"
 
   # Issue with gperf: https://github.com/Qucs/qucs/issues/295
