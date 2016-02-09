@@ -22,6 +22,10 @@ install:
   # To extract gperf
   - C:\msys64\usr\bin\bash -lc "pacman --noconfirm -S p7zip"
 
+  # Set compiler (64bit)
+  - set "CC=/c/msys64/mingw64/bin/gcc.exe"
+  - set "CXX=/c/msys64/mingw64/bin/g++.exe"
+
 
 build_script:
   ## Notes
