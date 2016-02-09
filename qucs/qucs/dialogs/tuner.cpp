@@ -1,3 +1,19 @@
+/***************************************************************************
+                               tuner.cpp
+                              -----------------
+    begin                : Sat April 11 2015
+    copyright            : (C) 2015 by Kevin Voet
+    email                : kevin.voet@gmail.com
+ ***************************************************************************/
+
+/***************************************************************************
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 2 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ ***************************************************************************/
 #include "tuner.h"
 
 #include "qucs.h"
@@ -51,6 +67,14 @@ tunerElement::tunerElement(QWidget *parent, Component *component, int selectedPr
 
     QStringList lst = prop->Value.split(' ');
     unit = lst.last();
+
+
+    if (lst.count() == 1)
+    {
+        // Probably a value without unit (like Epsilon r)
+        // or a value with unit but without space
+
+    }
 
     int nextColumn = gbox->columnCount();
     for (int i=gbox->rowCount()-1; i > gbox->rowCount() - 6; i = i-2 )

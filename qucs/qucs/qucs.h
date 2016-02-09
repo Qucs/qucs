@@ -31,6 +31,7 @@ class SearchDialog;
 class OctaveWindow;
 class MessageDock;
 class ProjectView;
+class tuner; //forward declaration
 class tunerElement;
 
 class QLabel;
@@ -53,7 +54,6 @@ class QListView;
 class QFileSystemModel;
 class QModelIndex;
 class QPushButton;
-class tuner; //forward declaration
 
 typedef bool (Schematic::*pToggleFunc) ();
 typedef void (MouseActions::*pMouseFunc) (Schematic*, QMouseEvent*);

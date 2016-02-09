@@ -2013,7 +2013,7 @@ void QucsApp::slotZoomOut()
  */
 void QucsApp::slotTune()
 {
-    slotHideEdit();
+    slotHideEdit(); // disable text edit of component property
 
     QucsDoc *Doc;
     QWidget *w = DocumentTab->currentPage();
@@ -2088,7 +2088,9 @@ void QucsApp::slotSimulate()
   connect(sim, SIGNAL(displayDataPage(QString&, QString&)),
 		this, SLOT(slotChangePage(QString&, QString&)));
 
-  sim->show();
+  if (!tunerDia->isVisible())//We're tuning, don't need 20 Windows
+    sim->show();
+
   if(!sim->startProcess()) return;
 
   // to kill it before qucs ends
@@ -2144,6 +2146,10 @@ void QucsApp::slotAfterSimulation(int Status, SimMessage *sim)
 
   if(!isTextDocument (sim->DocWidget))
     ((Schematic*)sim->DocWidget)->viewport()->update();
+
+  // Kill the simulation process, otherwise we have 200+++ sims in the background
+  if(tunerDia->isVisible())
+      delete sim;
 
 }
 
