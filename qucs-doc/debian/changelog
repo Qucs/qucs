@@ -1,5 +1,0 @@
-qucs-doc (0.0.19-1) trusty; urgency=medium
-
-  * Created separate package for qucs-doc
-
- -- Frans Schreuder <fransschreuder@gmail.com>  Tue, 02 Sep 2014 16:52:48 +0200

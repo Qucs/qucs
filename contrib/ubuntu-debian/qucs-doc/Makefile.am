@@ -7,7 +7,7 @@ install-data-local:
 		for docfile in $$DOC_SUBDIR/*.pdf ; do \
 			if test -f $$docfile; then \
 				$(INSTALL_DATA) $$docfile $(DESTDIR)$(datadir)/qucs/docs/$$docfile; \
-			fi \ 
+			fi \
 		done \
 	done
 	

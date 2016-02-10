@@ -3,7 +3,7 @@ Section: electronics
 Priority: optional
 Maintainer: José L. Redrejo Rodríguez <jredrejo@debian.org>
 Homepage: http://qucs.sourceforge.net
-Build-Depends: debhelper (>> 4.0.0),autotools-dev, build-essential, cmake, texlive-latex-base, texlive-latex-extra, texlive-latex,texlive-math-extra,  texlive-extra-utils, texlive-font-utils, texlive-fonts-recommended
+Build-Depends: debhelper (>> 4.0.0),autotools-dev, build-essential
 Standards-Version: 3.8.1
 
 Package: qucs-doc
