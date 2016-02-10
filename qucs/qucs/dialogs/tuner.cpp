@@ -21,6 +21,7 @@
 #include "components/component.h"
 
 #include <QWidget>
+#include <QAction>
 #include <QDialog>
 #include <QLabel>
 #include <QTextEdit>
@@ -84,13 +85,14 @@ tunerElement::tunerElement(QWidget *parent, Component *component, int selectedPr
     up = new QToolButton(this, "Up");
     up->setArrowType(Qt::UpArrow);
     gbox->addWidget(up, 1, gbox->columnCount() -1, 1, 1);
+
     down = new QToolButton(this, "Down");
     down->setArrowType(Qt::DownArrow);
     gbox->addWidget(down, 2, gbox->columnCount() - 1, 1, 1);
 
-    numValue = lst.first().toDouble();
-    maxValue = numValue + (numValue * 0.10);
-    minValue = numValue - (numValue * 0.10);
+    numValue = lst.first().toFloat();
+    maxValue = ceil(numValue + (numValue * 0.15));
+    minValue = floor(numValue - (numValue * 0.15));
 
     maximum->setText(QString::number(maxValue));
     minimum->setText(QString::number(minValue));
@@ -98,13 +100,13 @@ tunerElement::tunerElement(QWidget *parent, Component *component, int selectedPr
     step->setText(QString::number(numValue/10));
 
     slider->setRange(0,100);
-    double v = (numValue - minValue) / (maxValue - minValue);
+    float v = (numValue - minValue) / (maxValue - minValue);
     slider->setValue(v*100);
 
     slider->setTickmarks(QSlider::Both);
     slider->setTickInterval(0);
 
-    connect(slider, SIGNAL(valueChanged(int)), this, SLOT(slotSliderValueChanged(int)));
+    connect(slider, SIGNAL(valueChanged(int)), this, SLOT(slotValueChanged()));
     connect(maximum, SIGNAL(editingFinished()), this, SLOT(slotMaxValueChanged()));
     connect(minimum, SIGNAL(editingFinished()), this, SLOT(slotMinValueChanged()));
     connect(step, SIGNAL(editingFinished()), this, SLOT(slotStepChanged()));
@@ -130,99 +132,118 @@ void tunerElement::resetValue()
 void tunerElement::updateProperty()
 {
 
-    // prop->Value = QString::number(value->text()).append(tr(" ") + unit);
     prop->Value = value->text().append(tr(" ") + unit);
-}
-
-void tunerElement::slotSliderValueChanged(int v)
-{
-    value->setText(QString::number( minValue + ((v/100.0) * (maxValue - minValue)), 'f', 3));
-    //slotValueChanged();
 }
 
 void tunerElement::slotMaxValueChanged()
 {
-    maxValue = maximum->text().split(' ').first().toDouble();
-    qDebug() << "slotMaxValueChanged() " << numValue;
+    bool ok;
+    float v = maximum->text().toFloat(&ok);
+
+    if (!ok)
+    {
+        QMessageBox::warning(this, "ERROR", "Maximum value not correct", QMessageBox::Ok);
+        return;
+    }
+
+    maxValue = v;
+    qDebug() << "tunerElement::slotMaxValueChanged() " << v;
+
     updateSlider();
-    slotUpdateTextBox();
 }
 
 void tunerElement::slotMinValueChanged()
 {
-    minValue = minimum->text().split(' ').first().toDouble();
-    qDebug() << "slotMinValueChanged() " << numValue;
+    bool ok;
+    float v = minimum->text().toFloat(&ok);
+
+    if (!ok)
+    {
+        QMessageBox::warning(this, "ERROR", "Minimum value not correct", QMessageBox::Ok);
+        return;
+    }
+
+    minValue = v;
+    qDebug() << "slotMinValueChanged() " << v;
+
     updateSlider();
-    slotUpdateTextBox();
 }
 
 void tunerElement::slotStepChanged()
 {
-    /*bool ok;
-    double stepValue = step->text().toDouble(&ok);
-    double value = this->value->text().toDouble();
+    bool ok;
+    float v = step->text().toFloat(&ok);
+    float range = maxValue - minValue;
 
-    int max = slider->maximum() / 10;
+    qDebug() << "tunerElement::slotStepChanged()" << v;
 
     if (!ok)
-        return;
-
-    /*if ( (stepValue + value) > max)
     {
-        maximum->setText(QString::number(stepValue + value));
-        slotMaxValueChanged();
+        QMessageBox::warning(this, "ERROR", "Entered step is not correct", QMessageBox::Ok);
+        return;
     }
-    slider->setSingleStep(stepValue*10);
-    slider->setTickInterval(stepValue*10); // trying to auto adjust tickInterval
-    qDebug() << "tunerElement::slotStepChanged() " << stepValue;*/
+
+    slider->blockSignals(true);
+    slider->setTickInterval(100 / (range/v));
+    slider->blockSignals(false);
 }
 
 void tunerElement::slotValueChanged()
 {
     bool ok;
-    double v = value->text().toDouble(&ok);
-
-    qDebug() << "tunerElement::slotValueChanged()";
+    float v = value->text().toFloat(&ok);
+    float slider_v = minValue + ((slider->value()/100.0) * (maxValue - minValue));
+    qDebug() << "tunerElement::slotValueChanged()" << v;
 
     if (!ok)
+    {
+        QMessageBox::warning(this, "ERROR", "Entered value not correct", QMessageBox::Ok);
         return;
+    }
 
     if (v > maxValue)
     {
-        value->setText(QString::number(maxValue, 'f', 3));
+        value->setText(QString::number(maxValue));
         v = maxValue;
     }
     else if (v < minValue)
     {
-        value->setText(QString::number(minValue, 'f', 3));
+        value->setText(QString::number(minValue));
         v = minValue;
     }
 
     numValue = v;
 
-    // numValue = v;
+    if ( (int)v*1000 != (int)slider_v*1000 )
+        updateSlider();
+
     updateProperty();
-    updateSlider();
-    slotUpdateTextBox();
     emit elementValueUpdated();
 }
 
 void tunerElement::slotUpClicked()
 {
-    qDebug() << "tunerElement::slotUpClicked()";
+    float s = step->text().toFloat();
+    qDebug() << "tunerElement::slotUpClicked() " << s;
 
-    numValue += step->text().toDouble();
+    numValue += s;
+
     value->setText(QString::number(numValue, 'f', 3));
+
     slotValueChanged();
+    updateSlider();
 }
 
 void tunerElement::slotDownClicked()
 {
-    qDebug() << "tunerElement::slotDownClicked()";
+    float s = step->text().toFloat();
+    qDebug() << "tunerElement::slotDownClicked() " << s;
 
-    numValue -= step->text().toDouble();
+    numValue -= s;
     value->setText(QString::number(numValue, 'f', 3));
+
     slotValueChanged();
+    updateSlider();
 }
 
 void tunerElement::slotDelete()
@@ -233,19 +254,12 @@ void tunerElement::slotDelete()
 
 void tunerElement::updateSlider()
 {
-    // double numericValue = this->value->text().toDouble();
-    double maxValue = this->maximum->text().toDouble();
-    double minValue = this->minimum->text().toDouble();
-
-    double v = (numValue - minValue) / (maxValue - minValue);
+    float v = (numValue - minValue) / (maxValue - minValue);
+    float s = step->text().toFloat();
+    slider->blockSignals(true);
     slider->setValue(v*100);
-}
-
-void tunerElement::slotUpdateTextBox()
-{
-    value->setText(QString::number(numValue));
-    maximum->setText(QString::number(maxValue));
-    minimum->setText(QString::number(minValue));
+    slider->setTickInterval(100 / ((maxValue - minValue)/s));
+    slider->blockSignals(false);
 }
 
 tunerElement::~tunerElement()
@@ -288,28 +302,9 @@ TunerDialog::TunerDialog(QWidget *parent) :
 
     info->setText("Please select a component to tune");
 
-    connect(closeButton, SIGNAL(released()), this, SLOT(slotCloseClicked()));
+    connect(closeButton, SIGNAL(released()), this, SLOT(close()));
     connect(resetValues, SIGNAL(released()),this, SLOT(slotResetValues()));
     connect(updateValues, SIGNAL(released()), this, SLOT(slotUpdateValues()));
-}
-
-void TunerDialog::slotCloseClicked()
-{
-    qDebug() << "slotCloseClicked";
-    QMessageBox::StandardButton msg;
-    msg = QMessageBox::question(this, "Update values before closing?",
-                                "Do you want to update the component values before closing?",
-                               QMessageBox::Yes | QMessageBox::No );
-
-    if (msg == QMessageBox::Yes)
-    {
-        qDebug() << "slotCloseClicked::User clicked yes";
-        slotUpdateValues();
-    }
-    else
-        slotResetValues();
-
-    this->close();
 }
 
 void TunerDialog::infoMsg(const QString msg)
@@ -320,10 +315,8 @@ void TunerDialog::infoMsg(const QString msg)
 
 bool TunerDialog::containsProperty(Property* prop)
 {
-    if (currentProps->contains(prop))
-        return true;
-    else
-        return false;
+    if (currentProps->contains(prop)) return true;
+    else return false;
 }
 
 void TunerDialog::addTunerElement(tunerElement *element)
@@ -369,6 +362,13 @@ void TunerDialog::slotElementValueUpdated()
     QucsMain->slotSimulate();
 }
 
+void TunerDialog::slotSimulationEnded()
+{
+    qDebug() << "Tuner::slotSimulationEnded()";
+
+    this->setEnabled(true);
+}
+
 void TunerDialog::slotResetValues()
 {
     qDebug() << "Tuner::slotResetValues()";
@@ -393,6 +393,7 @@ void TunerDialog::slotResetTunerDialog()
 {
     // Document closed. Reset tuner
     qDebug() << "Tuner::slotResetTunerDialog()";
+    infoMsg("Document closed");
     for (int i = 0; i < currentElements->count(); i++)
     {
        qDebug() << "Tuner::slotResetTunerDialog()::delete";
@@ -404,15 +405,24 @@ void TunerDialog::slotResetTunerDialog()
 
 void TunerDialog::closeEvent(QCloseEvent *event)
 {
+    QMessageBox::StandardButton msg;
+    msg = QMessageBox::question(this, "Update values before closing?",
+                                "Do you want to update the component values before closing?",
+                               QMessageBox::Yes | QMessageBox::No );
+
+    if (msg == QMessageBox::Yes)
+    {
+        qDebug() << "slotCloseClicked::User clicked yes";
+        slotUpdateValues();
+    }
+    else
+        slotResetValues();
+
     //Undo changes to mouse actions when closing tuner window
     QucsMain->MousePressAction = &MouseActions::MPressSelect;
     QucsMain->MouseReleaseAction = &MouseActions::MReleaseSelect;
+    QucsMain->tune->setChecked(false);
     event->accept();
-}
-
-void TunerDialog::slotSimulationEnded()
-{
-    this->setEnabled(true);
 }
 
 void TunerDialog::showEvent(QShowEvent *e)

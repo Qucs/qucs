@@ -245,5 +245,6 @@
         <file>bitmaps/hicolor/128x128/apps/qucs.png</file>
         <file>bitmaps/smallsave.xpm</file>
         <file>bitmaps/empty.xpm</file>
+        <file>bitmaps/tune.png</file>
     </qresource>
 </RCC>

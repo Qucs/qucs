@@ -42,6 +42,7 @@
 #include <QSettings>
 #include <QVariant>
 #include <QDebug>
+#include <QToolBar>
 
 #include "qucs.h"
 #include "qucsdoc.h"
@@ -2072,25 +2073,35 @@ void QucsApp::slotZoomOut()
  * \brief QucsApp::slotTune
  *  is called when the tune toolbar button is pressed.
  */
-void QucsApp::slotTune()
+void QucsApp::slotTune(bool checked)
 {
-    slotHideEdit(); // disable text edit of component property
-
-    QucsDoc *Doc;
-    QWidget *w = DocumentTab->currentPage();
-    if (isTextDocument(w))
+    if (checked)
     {
-        //Probably digital Simulation. Tuning is limited to S-Parameter for now
-        QMessageBox *msg = new QMessageBox(QMessageBox::Warning, "Not implemented",
-                                           "Currently tuning is only supported by S-Parameter simulation", QMessageBox::Ok);
-        return;
+        slotHideEdit(); // disable text edit of component property
+        workToolbar->setEnabled(false); // disable workToolbar to preserve TuneMouseAction
+        QucsDoc *Doc;
+        QWidget *w = DocumentTab->currentPage();
+        if (isTextDocument(w))
+        {
+            //Probably digital Simulation. Tuning is limited to S-Parameter for now
+            QMessageBox::warning(this, "Not implemented",
+                                               "Currently tuning is only supported by S-Parameter simulation", QMessageBox::Ok);
+            return;
+        }
+
+        Doc = (QucsDoc*)((Schematic*)w);
+        MousePressAction = &MouseActions::MPressTune;
+        MouseReleaseAction = 0; //While Tune is active release is not needed. This puts Press Action back to normal select
+
+        tunerDia->show();
     }
     else
-        Doc = (QucsDoc*)((Schematic*)w);
-    MousePressAction = &MouseActions::MPressTune;
-    MouseReleaseAction = 0; //While Tune is active release is not needed. This puts Press Action back to normal select
+    {
+        this->workToolbar->setEnabled(true);
 
-    tunerDia->show();
+        // MouseActions are reset in closing of tunerDialog class
+        tunerDia->close();
+    }
 }
 
 /*!

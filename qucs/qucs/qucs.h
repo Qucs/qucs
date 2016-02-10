@@ -239,7 +239,7 @@ private slots:
   void slotButtonProjOpen();
   void slotButtonProjDel();
   void slotChangeView(QWidget*);
-  void slotTune();
+  void slotTune(bool checked);
 
   void slotAfterSimulation(int, SimMessage*);
   void slotDCbias();
