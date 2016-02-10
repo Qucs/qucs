@@ -25,7 +25,7 @@
 #include <QDialog>
 #include <QPushButton>
 #include <QGridLayout>
-#include <QTextEdit>
+#include <QLineEdit>
 #include <QString>
 #include <QSlider>
 #include <Q3PtrList>
@@ -50,10 +50,10 @@ class tunerElement : public QWidget
         QString originalValue;
         QString unit;
         QSlider *slider;
-        QTextEdit *maximum;
-        QTextEdit *minimum;
-        QTextEdit *value;
-        QTextEdit *step;
+        QLineEdit *maximum;
+        QLineEdit *minimum;
+        QLineEdit *value;
+        QLineEdit *step;
         void updateProperty(double v);
 
     private slots:
@@ -78,6 +78,7 @@ public:
 signals:
     void addTunerElement(Element *e);
 public slots:
+    void slotResetTunerDialog();
 
 private:
     QPushButton *closeButton;
@@ -91,6 +92,7 @@ private slots:
     void slotRemoveTunerElement(tunerElement*);
     void slotUpdateValues();
     void slotResetValues();
+
 };
 
 #endif // TUNER_H
