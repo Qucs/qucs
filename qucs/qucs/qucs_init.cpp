@@ -575,9 +575,11 @@ void QucsApp::initActions()
 
   /* MODBYKEVIN */
   tune = new QAction(QIcon((":/bitmaps/tune.png")),"Tune", this);
+  tune->setShortcut(Qt::Key_F3);
   tune->setStatusTip("Tuner");
   tune->setWhatsThis("Allows to live tune variables and show the result in the dataview");
-  connect(tune, SIGNAL(triggered()), SLOT(slotTune()));
+  tune->setCheckable(true);
+  connect(tune, SIGNAL(toggled(bool)), SLOT(slotTune(bool)));
   /* end MODBYKEVIN */
 
   dpl_sch = new QAction(QIcon((":/bitmaps/rebuild.png")), tr("View Data Display/Schematic"), this);

@@ -59,12 +59,12 @@ class tunerElement : public QWidget
         QLineEdit *step;
         QToolButton *up;
         QToolButton *down;
-        double minValue;
-        double maxValue;
-        double numValue;
+        float minValue;
+        float maxValue;
+        float numValue;
 
     private slots:
-        void slotSliderValueChanged(int);
+
         void slotMinValueChanged();
         void slotMaxValueChanged();
         void slotStepChanged();
@@ -72,7 +72,7 @@ class tunerElement : public QWidget
         void slotDelete();
         void slotDownClicked();
         void slotUpClicked();
-        void slotUpdateTextBox();
+
         void updateSlider();
 };
 
@@ -111,8 +111,6 @@ private slots:
     void slotUpdateValues();
     void slotResetValues();
     void slotSimulationEnded();
-    void slotCloseClicked();
-
 };
 
 #endif // TUNER_H
