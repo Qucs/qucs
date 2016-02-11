@@ -19,8 +19,6 @@ install:
   - C:\msys64\usr\bin\bash -lc "pacman --noconfirm --sync pacman-mirrors"
   - C:\msys64\usr\bin\bash -lc "pacman --noconfirm -S autoconf automake bison flex"
   - C:\msys64\usr\bin\bash -lc "pacman --noconfirm -S mingw-w64-x86_64-qt4"
-  # To extract gperf
-  - C:\msys64\usr\bin\bash -lc "pacman --noconfirm -S p7zip"
 
   # Set compiler (64bit)
   - set "CC=/c/msys64/mingw64/bin/gcc.exe"
@@ -38,14 +36,6 @@ build_script:
   - bash -lc "exec 0</dev/null && tar xvfz adms-2.3.4.tar.gz"
   - bash -lc "exec 0</dev/null && cd adms-2.3.4/ && ./configure --build=x86_64-w64-mingw32 && make install && cd -"
   - bash -lc "exec 0</dev/null && admsXml -h"
-
-  # Issue with gperf: https://github.com/Qucs/qucs/issues/295
-  # Get gperf, download, extract/overwrite
-  # Use my Dropbox till we find a better fallback or cache mechanism for SourceForge
-  - bash -lc "exec 0</dev/null && wget.exe https://www.dropbox.com/s/nxjyuyil1h3gjgm/gperf-3.0.1-bin.zip"
-  - bash -lc "exec 0</dev/null && 7z x -y gperf-3.0.1-bin.zip -o/usr/local"
-  - bash -lc "exec 0</dev/null && gperf --version"
-
 
   ## Build Qucs-GUI applications
   - bash -lc "exec 0</dev/null && cd $APPVEYOR_BUILD_FOLDER/qucs && ./bootstrap"

@@ -40,6 +40,13 @@ AC_LANG_PUSH(C++)
 AX_COMPILER_VENDOR
 AC_LANG_POP(C++)
 
+dnl Check for Win32.
+case $host_os in
+  *mingw* | *msys* ) WIN32=yes ;;
+  *)       WIN32=no  ;;
+esac
+AM_CONDITIONAL(COND_WIN32, test x$WIN32 = xyes)
+
 dnl check for compiler problem
 # see http://llvm.org/bugs/show_bug.cgi?id=13530
 m4_define([CHECK_CLANG13530_PROGRAM],dnl
