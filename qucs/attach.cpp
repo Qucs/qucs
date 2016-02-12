@@ -22,9 +22,7 @@
 #include <map>
 #include <ctype.h>
 
-// might require hacks for non-posix platforms.
-// see gnucap/include/md.h
-#include <dlfcn.h>
+#include "platform.h"
 
 class plugins{
   public:
