@@ -24,6 +24,8 @@
 
 include ../common.mk
 
+AM_DEFAULT_SOURCE_EXT = .cpp
+
 SUBDIRS = \
 	bitmaps \
 	components diagrams \
@@ -48,12 +50,14 @@ MOCHEADERS = \
 
 MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
 
-qucs_SOURCES = node.cpp element.cpp qucsdoc.cpp wire.cpp mouseactions.cpp   \
+qucs_SOURCES = \
+  attach.cpp \
+  node.cpp element.cpp qucsdoc.cpp wire.cpp mouseactions.cpp   \
   qucs.cpp main.cpp wirelabel.cpp qucs_init.cpp qucs_actions.cpp            \
   viewpainter.cpp mnemo.cpp schematic.cpp schematic_element.cpp textdoc.cpp \
   schematic_file.cpp syntax.cpp module.cpp octave_window.cpp qucs_.qrc   \
   messagedock.cpp misc.cpp imagewriter.cpp printerwriter.cpp \
-	projectView.cpp
+  projectView.cpp
 
 nodist_qucs_SOURCES = $(MOCFILES)
 
@@ -106,6 +110,19 @@ EXTRA_DIST = \
 	bitmaps/qucsrescodes.icns \
 	bitmaps/qucstrans.icns
 
-CLEANFILES = *~ *.rej *.orig qucs_.cpp
+SUFFIXES = .h .moc.cpp
+
+.h.moc.cpp:
+	$(MOC) -o $@ $<
+
+check_LTLIBRARIES = helloworld.la
+helloworld_la_LDFLAGS = -module -avoid-version -rpath /dev/null
+helloworld.so: %.so: %.la
+	[ -f $@ ] || $(LN_S) .libs/$@ .
+TEST_EXTENSIONS = .sh
+TESTS = helloworld.sh
+helloworld.log: helloworld.so
+
+CLEANFILES = *~ *.rej *.orig
 MAINTAINERCLEANFILES = Makefile.in *.moc.cpp *.qm
 DISTCLEANFILES = *.moc.cpp *.qm
