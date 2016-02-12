@@ -120,7 +120,7 @@ SUFFIXES = .h .moc.cpp
 	$(MOC) -o $@ $<
 
 check_LTLIBRARIES = helloworld.la
-helloworld_la_LDFLAGS = -module -avoid-version -rpath /dev/null
+helloworld_la_LDFLAGS = -shared -no-undefined -module -avoid-version -rpath /dev/null
 helloworld.so: %.so: %.la
 	[ -f $@ ] || $(LN_S) .libs/$@ .
 TEST_EXTENSIONS = .sh
