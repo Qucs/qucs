@@ -65,6 +65,7 @@
 // Microsoft DLL hacks -- thanks to Holger Vogt and Cesar Strauss for the info
 // Make the MS DLL functions look like the posix ones.
 #include <windows.h>
+#include <stdlib.h>
 #undef min
 #undef max
 #undef INTERFACE
@@ -76,7 +77,10 @@
 
 inline void* dlopen(const char* f, int)
 {
-  return LoadLibrary(const_cast<char*>(f));
+  const size_t fSize = strlen(f)+1;
+  std::wstring wf( fSize, L'#' );
+  mbstowcs( &wf[0], f, fSize );
+  return LoadLibrary(wf.c_str());
 }
 
 inline void dlclose(void* h)
