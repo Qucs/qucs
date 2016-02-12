@@ -23,6 +23,8 @@
 # include <config.h>
 #endif
 
+#include <iostream>
+
 #include <stdlib.h>
 #include <ctype.h>
 #include <locale.h>
@@ -59,10 +61,6 @@
 #else
 #define executableSuffix ""
 #endif
-
-// might require hacks for non-posix platforms.
-// see gnucap/include/md.h
-#include <dlfcn.h>
 
 tQucsSettings QucsSettings;
 
@@ -254,14 +252,7 @@ void qucsMessageOutput(QtMsgType type, const char *msg)
 /*!
  * \brief attaches shared object code
  */
-void attach(const char* what)
-{
-  int dl_scope = RTLD_LOCAL;
-  int check = RTLD_NOW;
-  // RTLD_NOW means to resolve symbols on loading
-  // RTLD_LOCAL means symbols defined in a plugin are local
-  dlopen(what, check | dl_scope);
-}
+void attach(const char* what);
 
 Schematic *openSchematic(QString schematic)
 {
@@ -863,6 +854,7 @@ int main(int argc, char *argv[])
   "  -v, --version  display version information and exit\n"
   "  -n, --netlist  convert Qucs schematic into netlist\n"
   "  -p, --print    print Qucs schematic to file (eps needs inkscape)\n"
+  "  -q, --quit     exit\n"
   "    --page [A4|A3|B4|B5]         set print page size (default A4)\n"
   "    --dpi NUMBER                 set dpi value (default 96)\n"
   "    --color [RGB|RGB]            set color mode (default RGB)\n"
@@ -878,8 +870,7 @@ int main(int argc, char *argv[])
   "  -list-entries  list component entry formats for schematic and netlist\n"
   , argv[0]);
       return 0;
-    }
-    else if (!strcmp(argv[i], "-v") || !strcmp(argv[i], "--version")) {
+    }else if (!strcmp(argv[i], "-v") || !strcmp(argv[i], "--version")) {
 #ifdef GIT
       fprintf(stdout, "Qucs " PACKAGE_VERSION " (" GIT ")" "\n");
 #else
@@ -907,6 +898,9 @@ int main(int argc, char *argv[])
     }
     else if (!strcmp(argv[i], "-a")) {
       attach(argv[++i]);
+    }
+    else if(!strcmp(argv[i], "-q")) {
+	exit(0);
     }
     else if (!strcmp(argv[i], "-i")) {
       inputfile = argv[++i];
@@ -961,3 +955,4 @@ int main(int argc, char *argv[])
   //saveApplSettings(QucsMain);
   return result;
 }
+// vim:ts=8:sw=2:noet
