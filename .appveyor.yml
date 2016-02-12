@@ -19,14 +19,15 @@ install:
   - C:\msys64\usr\bin\bash -lc "pacman --noconfirm --sync pacman-mirrors"
   - C:\msys64\usr\bin\bash -lc "pacman --noconfirm -S autoconf automake bison flex"
   - C:\msys64\usr\bin\bash -lc "pacman --noconfirm -S mingw-w64-x86_64-qt4"
-  # To extract gperf
-  - C:\msys64\usr\bin\bash -lc "pacman --noconfirm -S p7zip"
+
+  # Set compiler (64bit)
+  - set "CC=/c/msys64/mingw64/bin/gcc.exe"
+  - set "CXX=/c/msys64/mingw64/bin/g++.exe"
 
 
 build_script:
   ## Notes
   #  * The "exec 0</dev/null" opens a dummy file descriptor to fix error: ./configure: line 560: 0: Bad file descriptor
-  #  * We force CXX=g++, somehow it is picking up flags related to clang++
 
   ## Other dependencies
   # Download, build and install ADMS
@@ -35,17 +36,9 @@ build_script:
   - bash -lc "exec 0</dev/null && cd adms-2.3.4/ && ./configure --build=x86_64-w64-mingw32 && make install && cd -"
   - bash -lc "exec 0</dev/null && admsXml -h"
 
-  # Issue with gperf: https://github.com/Qucs/qucs/issues/295
-  # Get gperf, download, extract/overwrite
-  # Use my Dropbox till we find a better fallback or cache mechanism for SourceForge
-  - bash -lc "exec 0</dev/null && wget.exe https://www.dropbox.com/s/nxjyuyil1h3gjgm/gperf-3.0.1-bin.zip"
-  - bash -lc "exec 0</dev/null && 7z x -y gperf-3.0.1-bin.zip -o/usr/local"
-  - bash -lc "exec 0</dev/null && gperf --version"
-
-
   ## Build Qucs-GUI applications
   - bash -lc "exec 0</dev/null && cd $APPVEYOR_BUILD_FOLDER/qucs && ./bootstrap"
-  - bash -lc "exec 0</dev/null && cd $APPVEYOR_BUILD_FOLDER/qucs && export QTDIR=/c/msys64/mingw64/ && CXX=g++ ./configure"
+  - bash -lc "exec 0</dev/null && cd $APPVEYOR_BUILD_FOLDER/qucs && export QTDIR=/c/msys64/mingw64/ && ./configure"
   - bash -lc "exec 0</dev/null && cd $APPVEYOR_BUILD_FOLDER/qucs && make install"
   - bash -lc "exec 0</dev/null && qucs -v"
 

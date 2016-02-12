@@ -149,8 +149,12 @@ noinst_PROGRAMS = gperfappgen
 
 gperfappgen_SOURCES = gperfappgen.cpp
 
+if COND_WIN32
+FILTER=| dos2unix
+endif
+
 gperfapphash.gph: gperfappgen$(EXEEXT)
-	./$< > $@
+	./$< $(FILTER) > $@
 
 gperfapphash.cpp: gperfapphash.gph
 	$(GPERF) -I -m 8 $< | sed -e 's/{""},/{"",0},/g' > $@
