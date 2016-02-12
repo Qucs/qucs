@@ -57,6 +57,11 @@ build_script:
   - bash -lc "exec 0</dev/null && cd /c/qucs-win%MBITS%/bin && ./qucsator -v"
 
   ## Prepare simple redistributable package (no qucs-doc)
+  # Install to a destination
+  - bash -lc "exec 0</dev/null && cd $APPVEYOR_BUILD_FOLDER/qucs && make check"
+  - bash -lc "exec 0</dev/null && cd $APPVEYOR_BUILD_FOLDER/qucs && make install DESTDIR=/c/qucs-win64"
+  - bash -lc "exec 0</dev/null && cd $APPVEYOR_BUILD_FOLDER/qucs-core && make install DESTDIR=/c/qucs-win64"
+
   # Copy required libraries, make binaries usable from command line, Windows Explorer
   - set QTDIR=c:\msys64\mingw%MBITS%\
   - set QUCSDIR=c:\qucs-win%MBITS%\
