@@ -54,6 +54,7 @@ build_script:
   ## Build Qucs-core and install
   - bash -lc "exec 0</dev/null && cd $APPVEYOR_BUILD_FOLDER/qucs-core && ./bootstrap"
   - bash -lc "exec 0</dev/null && cd $APPVEYOR_BUILD_FOLDER/qucs-core && ./configure --prefix=/c/qucs-win%MBITS% --with-mkadms=`which admsXml` --disable-dependency-tracking"
+  - bash -lc "exec 0</dev/null && cd $APPVEYOR_BUILD_FOLDER/qucs-core && make check"
   - bash -lc "exec 0</dev/null && cd $APPVEYOR_BUILD_FOLDER/qucs-core && make -j2 install"
   - bash -lc "exec 0</dev/null && cd /c/qucs-win%MBITS%/bin && ./qucsator -v"
 
