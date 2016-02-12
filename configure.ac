@@ -22,7 +22,6 @@ AC_CONFIG_MACRO_DIR([m4])
 dnl Checks for programs.
 AC_PROG_CXX(clang++ g++)
 AC_PROG_CC
-AC_PROG_RANLIB
 AC_CHECK_TOOL(AR, ar, :)
 LT_INIT()
 
