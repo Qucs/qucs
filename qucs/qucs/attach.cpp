@@ -43,7 +43,7 @@ class plugins{
       int check = RTLD_NOW;
       void* handle;
 
-      handle = dlopen(what.c_str(), check | dl_scope);
+      handle = dlopen((what + SOEXT).c_str(), check | dl_scope);
       if (handle) {
 	attach_list[what] = handle;
       }else{

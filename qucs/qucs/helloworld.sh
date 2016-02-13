@@ -4,7 +4,7 @@
 newline='
 '
 
-text=$(./qucs -a ./helloworld.so -q)
+text=$(./qucs -a ./helloworld -q)
 
 if [ "$text" = "hello${newline}goodbye" ]; then
 	echo "test pass"

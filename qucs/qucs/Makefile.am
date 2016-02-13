@@ -121,11 +121,19 @@ SUFFIXES = .h .moc.cpp
 
 check_LTLIBRARIES = helloworld.la
 helloworld_la_LDFLAGS = -shared -no-undefined -module -avoid-version -rpath /dev/null
+
+if COND_WIN32
+helloworld.dll: %.dll: %.la
+	[ -f $@ ] || $(LN_S) .libs/$$(. .libs/$<; echo $$dlname) .
+helloworld.log: helloworld.dll
+else
 helloworld.so: %.so: %.la
-	[ -f $@ ] || $(LN_S) .libs/$@ .
+	[ -f $@ ] || $(LN_S) .libs/$$(. .libs/$<; echo $$dlname) .
+helloworld.log: helloworld.so
+endif
+
 TEST_EXTENSIONS = .sh
 TESTS = helloworld.sh
-helloworld.log: helloworld.so
 
 CLEANFILES = *~ *.rej *.orig
 MAINTAINERCLEANFILES = Makefile.in *.moc.cpp *.qm

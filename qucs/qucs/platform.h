@@ -59,11 +59,13 @@
 
 #if !defined(MS_DLL)
   // The usual way for POSIX compliant systems
+  #define SOEXT ".so"
   #include <dlfcn.h>
   #define INTERFACE
 #else
 // Microsoft DLL hacks -- thanks to Holger Vogt and Cesar Strauss for the info
 // Make the MS DLL functions look like the posix ones.
+#define SOEXT ".dll"
 #include <windows.h>
 #include <stdlib.h>
 #undef min
