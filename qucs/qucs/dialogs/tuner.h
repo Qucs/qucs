@@ -99,6 +99,7 @@ private:
     QList<Property*> *currentProps;
     QLabel *info;
 
+    bool valuesUpated;
     Schematic* doc;
 
     void blockInput(bool enabled);
