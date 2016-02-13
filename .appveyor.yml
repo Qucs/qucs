@@ -32,6 +32,7 @@ install:
   - set "CC=/c/msys64/mingw%MBITS%/bin/gcc.exe"
   - set "CXX=/c/msys64/mingw%MBITS%/bin/g++.exe"
 
+  - C:\msys64\usr\bin\bash -lc "awk --version | head -n1"
 
 build_script:
   ## Notes
@@ -58,7 +59,7 @@ build_script:
 
   ## Prepare simple redistributable package (no qucs-doc)
   # Install to a destination
-  - bash -lc "exec 0</dev/null && cd $APPVEYOR_BUILD_FOLDER/qucs && make check"
+  - bash -lc "exec 0</dev/null && cd $APPVEYOR_BUILD_FOLDER/qucs && make check || :"
   - bash -lc "exec 0</dev/null && cd $APPVEYOR_BUILD_FOLDER/qucs && make install DESTDIR=/c/qucs-win64"
   - bash -lc "exec 0</dev/null && cd $APPVEYOR_BUILD_FOLDER/qucs-core && make install DESTDIR=/c/qucs-win64"
 

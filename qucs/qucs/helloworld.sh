@@ -1,21 +1,16 @@
 #!/bin/sh
 # testing basic module loading and unloading.
 
-newline='
-'
+text=$(./qucs -a ./helloworld -q | \
+       tr '\n' '|' | tr '\r' '|' | \
+       awk -F"|" '{print $1 $2 $3;}' )
 
-text=$(./qucs -a ./helloworld -q)
-
-if [ "$text" = "hello${newline}goodbye" ]; then
-	echo "test pass"
+if [ "$text" = "hellogoodbye" ]; then
+	echo hellogoodbye passed; >&2
+	echo hellogoodbye passed; >&9
 else
-	echo wrong $text
+	echo "unexpected: ->$text<-" >&2
+	echo "unexpected: ->$text<-" >&9
 	exit 1
 fi
 
-./qucs -a ./does_n_otexist
-
-if [ $? -eq 0 ]; then
-	echo did not notice. really bad;
-	exit 1;
-fi
