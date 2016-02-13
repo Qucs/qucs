@@ -54,7 +54,7 @@ tunerElement::tunerElement(QWidget *parent, Component *component, int selectedPr
     QLabel *Label1 = new QLabel(tr("Value"));
     gbox->addWidget(Label1);
     value = new QLineEdit();
-    originalValue = prop->Value;
+    originalValue = prop->Value.copy();
     gbox->addWidget(value);
 
     QLabel *Label2 = new QLabel(tr("Minimum"));
@@ -301,7 +301,7 @@ TunerDialog::TunerDialog(QWidget *parent) :
     info->setAlignment(Qt::AlignmentFlag::AlignBottom);
 
     info->setText("Please select a component to tune");
-
+    valuesUpated = false;
     connect(closeButton, SIGNAL(released()), this, SLOT(close()));
     connect(resetValues, SIGNAL(released()),this, SLOT(slotResetValues()));
     connect(updateValues, SIGNAL(released()), this, SLOT(slotUpdateValues()));
@@ -388,6 +388,7 @@ void TunerDialog::slotUpdateValues()
         currentElements->at(i)->updateProperty();
     }
     this->infoMsg("Updated Schematic values");
+    valuesUpated = true;
 }
 
 void TunerDialog::slotResetTunerDialog()
@@ -407,6 +408,8 @@ void TunerDialog::slotResetTunerDialog()
 void TunerDialog::closeEvent(QCloseEvent *event)
 {
     QMessageBox::StandardButton msg;
+    if (!valuesUpated)
+    {
     msg = QMessageBox::question(this, "Update values before closing?",
                                 "Do you want to update the component values before closing?",
                                QMessageBox::Yes | QMessageBox::No );
@@ -418,7 +421,8 @@ void TunerDialog::closeEvent(QCloseEvent *event)
     }
     else
         slotResetValues();
-
+    }
+    this->valuesUpated = false;
     //Undo changes to mouse actions when closing tuner window
     QucsMain->MousePressAction = &MouseActions::MPressSelect;
     QucsMain->MouseReleaseAction = &MouseActions::MReleaseSelect;
@@ -433,6 +437,7 @@ void TunerDialog::showEvent(QShowEvent *e)
         if (currentElements->at(i)->getElementProperty() == nullptr)
             currentElements->removeAt(i);
     }
+
 }
 
 TunerDialog::~TunerDialog()
