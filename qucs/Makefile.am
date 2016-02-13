@@ -99,7 +99,7 @@ desktop_DATA = qucs.desktop
 
 
 EXTRA_DIST = \
-   helloworld.sh \
+   $(TESTS) \
 	qucsdigi qucsdigilib qucsdigi.bat qucsdigilib.bat qucsveri qucsveri.bat \
 	$(hicolor16_DATA) $(hicolor22_DATA) $(hicolor32_DATA) $(hicolor48_DATA) \
 	$(hicolor64_DATA) $(hicolor128_DATA) $(hicolor256_DATA) $(hicolor512_DATA) \
@@ -132,8 +132,16 @@ helloworld.so: %.so: %.la
 helloworld.log: helloworld.so
 endif
 
+SH_LOG_COMPILER = $(SHELL)
+SH_LOG_FLAGS =
 TEST_EXTENSIONS = .sh
-TESTS = helloworld.sh
+AM_TESTS_FD_REDIRECT = 9>&2
+
+TESTS = helloworld.sh doesnotexist.sh
+if COND_WIN32
+# it does not work on windoze
+doesnotexist.log: SH_LOG_FLAGS=-c 'exit 77'
+endif
 
 CLEANFILES = *~ *.rej *.orig
 MAINTAINERCLEANFILES = Makefile.in *.moc.cpp *.qm
