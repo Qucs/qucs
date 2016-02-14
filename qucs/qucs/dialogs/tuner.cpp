@@ -15,6 +15,7 @@
  *                                                                         *
  ***************************************************************************/
 #include "tuner.h"
+#include <cmath>
 
 #include "qucs.h"
 #include "mouseactions.h"
