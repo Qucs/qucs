@@ -23,44 +23,46 @@
 # Boston, MA 02110-1301, USA.
 #
 
+AUTOMAKE=${AUTOMAKE:-automake}
+AUTOMAKE_VERSION_CHECK=${AUTOMAKE_VERSION_CHECK:-yes}
+
+if [ "$AUTOMAKE_VERSION_CHECK" = yes ]; then
+	AUTOMAKE_VERSION=$($AUTOMAKE --version | head -1 | cut -d' ' -f4)
+	case ${AUTOMAKE_VERSION} in
+		1.11*)
+			cat >&2 <<__EOF__
+We experience trouble with your automake (version $AUTOMAKE_VERSION).
+Giving up.
+
+If you feel adventurous, please set AUTOMAKE_VERSION_CHECK=no in your
+environment and try again.
+__EOF__
+			exit 1
+			;;
+	esac
+fi
+
 here=`pwd`
 cd `dirname $0`
-
-if [ -e "./deps/adms/bootstrap.sh" ]; then
-  echo "running ADMS bootstrap.sh ..."
-  ./deps/adms/bootstrap.sh "$@"
-else
-  echo "+------------------------------------------------------------+"
-  echo "| Warning: Could not bootstrap ADMS git submodule.           |"
-  echo "|          Script not found: ./deps/adms/bootstrap.sh        |"
-  echo "|                                                            |"
-  echo "| To download the ADMS git submodule you may use:            |"
-  echo "|   $ git submodule init                                     |"
-  echo "|   $ git submodule update                                   |"
-  echo "|                                                            |"
-  echo "| To use an already installed version of ADMS (> 2.3.0)      |"
-  echo "| use the configure option '--with-mkadms=[path/to/]admsXml' |"
-  echo "+------------------------------------------------------------+"
-fi
 
 echo "bootstrapping the qucs-core sources..."
 echo -n "Creating aclocal.m4... "
 ${ACLOCAL:-aclocal} -I m4
 echo "done."
 echo -n "Creating config.h.in... "
-autoheader
+${AUTOHEADER:-autoheader}
 echo "done."
 echo -n "Libtoolizing... "
+LIBTOOLIZE=${LIBTOOLIZE:-libtoolize}
 case `uname` in
   *Darwin*) LIBTOOLIZE=glibtoolize ;;
-  *)        LIBTOOLIZE=libtoolize ;;
 esac
 $LIBTOOLIZE
 echo "done."
 echo -n "Creating Makefile.in(s)... "
-${AUTOMAKE:-automake} -a -f -c
+$AUTOMAKE -a -f -c
 echo "done."
 echo -n "Creating configure... "
-autoconf
+${AUTOCONF:-autoconf}
 echo "done"
 

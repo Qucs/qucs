@@ -51,8 +51,7 @@ va2cpp: $(MODEL).cpp
 
 # Run admsXml, create C++ out of Verilog-A
 # admsXml will take almost any `-[CHAR] command`, each script has to handle the argument parsing
-# Include the search path to use constants.vams disciplines.vams distributed by qucs
-# wich are known to work.
+# Include the search path to user vams readers or pick from adms.
 
 .SUFFIXES: .cpp .va
 

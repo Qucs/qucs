@@ -41,7 +41,7 @@ subdirs:
 
 .PHONY: subdirs
 
-EXTRA_DIST = bootstrap depcomp PLATFORMS RELEASE Info.plist
+EXTRA_DIST = ar-lib bootstrap depcomp PLATFORMS RELEASE Info.plist
 
 # MacOSX specific installation of applications
 # FIXME: don't install twice.

@@ -22,7 +22,12 @@
  *
  */
 
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#else
+// BUG
 #include "qucs_typedefs.h"
+#endif
 
 #include <assert.h>
 #include <stdio.h>

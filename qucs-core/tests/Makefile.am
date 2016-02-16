@@ -22,33 +22,39 @@
 # Boston, MA 02110-1301, USA.
 #
 
-AM_CPPFLAGS =  \
+# FIXME: different paths used in configure.ac
+AM_CPPFLAGS = \
     -I$(top_srcdir)/libs/gtest/include \
     -I$(top_srcdir)/libs/gtest/ \
     -I$(top_srcdir)/src \
     -I$(top_srcdir)/src/math \
+    -I$(top_builddir)/src/components \
     -I$(top_srcdir)/src/components
 
-AM_CXXFLAGS = $(AM_CPPFLAGS)
+AM_CXXFLAGS =
 
-AM_LDFLAGS = \
-	 $(top_srcdir)/src/libqucs.la
+GTEST_TESTS = libqucsUnitTest
 
-
-# TESTS -- Programs run automatically by "make check"
-TESTS =
-check_PROGRAMS =
-
-# Test libqucs
-TESTS += libqucsUnitTest
-check_PROGRAMS += libqucsUnitTest
+if USE_GTEST
+GTEST_LIBQUCS = libqucsUnitTest
+check_PROGRAMS = $(GTEST_LIBQUCS)
+libqucsUnitTest_LDADD = $(top_builddir)/src/libqucs.la
+libqucsUnitTest_CPPFLAGS = $(AM_CPPFLAGS) @GTEST_CPPFLAGS@ \
+                           -DGTEST_HAS_PTHREAD=0
 libqucsUnitTest_SOURCES = testMain.cpp \
   test_libqucs.cpp \
 	Fourier.cpp \
 	Math.cpp \
 	Matrix.cpp \
 	Vector.cpp
+else
+libqucsUnitTest:
+	echo "!#/bin/sh" > $@
+	echo exit 77 >> $@
+	chmod +x $@
+endif
 
-libqucsUnitTest_CXXFLAGS = "-DGTEST_HAS_PTHREAD=0"
-
-EXTRA_DIST = runqucsator.sh
+# TESTS -- Programs run automatically by "make check"
+TESTS = $(GTEST_TESTS)
+EXTRA_DIST = runqucsator.sh testDefine.h
+CLEANFILES = $(GTEST_TESTS)

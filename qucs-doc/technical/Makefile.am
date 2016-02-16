@@ -25,6 +25,8 @@
 EXTRA_DIST = technical.tex l2h-init.cfg $(FIGURES) $(BIBFILE) \
   $(PSFILES) $(MATHFILES) $(MATHHELPS) $(CHAPTERS)
 
+LATEX_ARGS = -interaction=nonstopmode
+
 MATHFILES = mszl.m mscomparezl.m radius.m stabgear.m stabmoulton.m \
   stabbashford.m stabgearex.m coplanarzl.m
 MATHHELPS = zpoly.m econst.m Kapprox.m
@@ -49,7 +51,7 @@ FIGURES = differential.fig biast.fig \
   mscross.fig bondwire.fig tline4p.fig
 PSFILES = MNAexample.eps NLexample.eps CYexample.eps MNAnoise1.eps \
   MNAnoise2.eps Unoise.eps MNAsingular.eps Real_c.eps Real_ec.eps  \
-  Real_r.eps TLpiece.eps
+  Real_r.eps TLpiece.eps QuarterWavelengthFilter.eps
 EPSFILES = $(FIGURES:.fig=.eps)
 PSFRAGTEXS = $(FIGURES:.fig=.tex) $(MATHFILES:.m=.tex)
 PDFFILES = $(FIGURES:.fig=.pdf)
@@ -74,10 +76,10 @@ technical.dvi: $(EPSFILES) $(PSFILES) $(MPSFILES)
 SUFFIXES = .dvi .tex .pdf .ps .eps .fig .frg .m
 
 .tex.dvi: $(CHAPTERS) $(BIBFILE)
-	$(LATEX) $<
+	$(LATEX) $(LATEX_ARGS) $<
 	$(BIBTEX) $*
-	$(LATEX) $<
-	$(LATEX) -interaction=batchmode $<
+	$(LATEX) $(LATEX_ARGS) $<
+	$(LATEX) $(LATEX_ARGS) $<
 
 .tex.pdf: $(CHAPTERS) $(BIBFILE) $(PDFFILES) $(PDFFIGURES)
 	$(PDFLATEX) $<
@@ -97,8 +99,20 @@ SUFFIXES = .dvi .tex .pdf .ps .eps .fig .frg .m
 .eps.pdf:
 	$(EPSTOPDF) $< -o=$@
 
+if USE_OCTAVE
 .m.eps:
 	$(OCTAVE) $<
+else
+.m.eps:
+	@echo -n not using octave to update "$@".
+	@if [ ! -f $@ ]; then \
+	  echo \ creating dummy.; \
+	  echo "%%BoundingBox: 0 0 138 174" > $@; \
+	else \
+	  echo \ leaving as is.; \
+	  touch $@; \
+	fi
+endif
 
 .dvi.ps:
 	$(DVIPS) $< -o $@

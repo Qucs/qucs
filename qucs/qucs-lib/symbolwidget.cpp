@@ -44,6 +44,12 @@ SymbolWidget::SymbolWidget(QWidget *parent) : QWidget(parent)
 {
 
   Text_x = Text_y = 0;
+  cx = 0;
+  cy = 0;
+  x1 = 0;
+  x2 = 0;
+  y1 = 0;
+  y2 = 0;
   PaintText = tr("Symbol:");
   QFontMetrics  metrics(QucsSettings.font, 0); // use the the screen-compatible metric
   TextWidth = metrics.width(PaintText) + 4;    // get size of text
@@ -98,6 +104,9 @@ void SymbolWidget::paintEvent(QPaintEvent*)
 {
   QPainter Painter(this);
   Painter.drawText(2, 2, 0, 0, Qt::AlignLeft | Qt::TextDontClip, PaintText);
+
+  QFontMetrics metrics(QucsSettings.font, 0);
+  Painter.drawText(2, metrics.height(), 0, 0, Qt::AlignLeft | Qt::TextDontClip, Warning);
 
   int dx = (x2-x1)/2 + TextWidth - DragNDropWidth/2;
   if(dx < 2)  dx = 2;
@@ -161,6 +170,8 @@ int SymbolWidget::createSymbol(const QString& Lib_, const QString& Comp_)
   Texts.clear();
   LibraryName = Lib_;
   ComponentName = Comp_;
+
+  Warning.clear();
 
   int PortNo = 0;
   QString Comp = ModelString.section(' ', 0,0);
@@ -282,72 +293,6 @@ int SymbolWidget::createSymbol(const QString& Lib_, const QString& Comp_)
     x1 = -34; y1 = -9;
     x2 =  34; y2 =  9;
   }
-  else if(Comp == "hicumL2V2p1" || Comp == "hic2_full" ||
-	  Comp == "hic0_full" || Comp == "hicumL0V1p2" ||
-	  Comp == "hicumL2V2p23" || Comp == "hicumL2V2p24" ||
-	  Comp == "hicumL0V1p2g" || Comp == "hicumL0V1p3") {
-    // normal bipolar
-    Lines.append(new Line(-10,-15,-10, 15,QPen(Qt::darkBlue,3)));
-    Lines.append(new Line(-30,  0,-10,  0,QPen(Qt::darkBlue,2)));
-    Lines.append(new Line(-10, -5,  0,-15,QPen(Qt::darkBlue,2)));
-    Lines.append(new Line(  0,-15,  0,-30,QPen(Qt::darkBlue,2)));
-    Lines.append(new Line(-10,  5,  0, 15,QPen(Qt::darkBlue,2)));
-    Lines.append(new Line(  0, 15,  0, 30,QPen(Qt::darkBlue,2)));
-
-    // substrate node
-    Lines.append(new Line(  9,  0, 30,  0,QPen(Qt::darkBlue,2)));
-    Lines.append(new Line(  9, -7,  9,  7,QPen(Qt::darkBlue,3)));
-
-    // thermal node
-    Lines.append(new Line(-30, 20,-20, 20,QPen(Qt::darkBlue,2)));
-    Lines.append(new Line(-20, 17,-20, 23,QPen(Qt::darkBlue,2)));
-
-    // arrow
-    if(FirstProp == "npn" || Comp == "hic2_full" || Comp == "hicumL2V2p23" ||
-       Comp == "hicumL2V2p1") {
-      Lines.append(new Line( -6, 15,  0, 15,QPen(Qt::darkBlue,2)));
-      Lines.append(new Line(  0,  9,  0, 15,QPen(Qt::darkBlue,2)));
-    } else {
-      Lines.append(new Line( -5, 10, -5, 16,QPen(Qt::darkBlue,2)));
-      Lines.append(new Line( -5, 10,  1, 10,QPen(Qt::darkBlue,2)));
-    }
-
-    // H
-    Lines.append(new Line(-30,-30,-30,-24,QPen(Qt::darkBlue,1)));
-    Lines.append(new Line(-30,-27,-26,-27,QPen(Qt::darkBlue,1)));
-    Lines.append(new Line(-26,-30,-26,-24,QPen(Qt::darkBlue,1)));
-    // I
-    Lines.append(new Line(-24,-30,-24,-24,QPen(Qt::darkBlue,1)));
-    // C
-    Lines.append(new Line(-22,-30,-22,-24,QPen(Qt::darkBlue,1)));
-    Lines.append(new Line(-22,-30,-19,-30,QPen(Qt::darkBlue,1)));
-    Lines.append(new Line(-22,-24,-19,-24,QPen(Qt::darkBlue,1)));
-    // U
-    Lines.append(new Line(-17,-30,-17,-24,QPen(Qt::darkBlue,1)));
-    Lines.append(new Line(-14,-30,-14,-24,QPen(Qt::darkBlue,1)));
-    Lines.append(new Line(-17,-24,-14,-24,QPen(Qt::darkBlue,1)));
-    // M
-    Lines.append(new Line(-12,-30,-12,-24,QPen(Qt::darkBlue,1)));
-    Lines.append(new Line( -8,-30, -8,-24,QPen(Qt::darkBlue,1)));
-    Lines.append(new Line(-12,-30,-10,-28,QPen(Qt::darkBlue,1)));
-    Lines.append(new Line( -8,-30,-10,-28,QPen(Qt::darkBlue,1)));
-
-    // terminal definitions
-    Arcs.append(new struct Arc( -4, -34, 8, 8, 0, 16*360,
-                               QPen(Qt::red,1))); // collector
-    Arcs.append(new struct Arc(-34, -4, 8, 8, 0, 16*360,
-                               QPen(Qt::red,1))); // base
-    Arcs.append(new struct Arc( -4, 26, 8, 8, 0, 16*360,
-                               QPen(Qt::red,1))); // emitter
-    Arcs.append(new struct Arc( 26, -4, 8, 8, 0, 16*360,
-                               QPen(Qt::red,1))); // substrate
-    Arcs.append(new struct Arc(-34, 16, 8, 8, 0, 16*360,
-                               QPen(Qt::red,1))); // thermal node
-
-    // relative boundings
-    x1 = -34; y1 = -34;
-    x2 =  34; y2 =  34;
-  }
   else if(Comp == "SUBST") {
     Lines.append(new Line(-30,-16, 30,-16,QPen(Qt::darkBlue,2)));
     Lines.append(new Line(-30,-12, 30,-12,QPen(Qt::darkBlue,2)));
@@ -377,6 +322,13 @@ int SymbolWidget::createSymbol(const QString& Lib_, const QString& Comp_)
     PortNo = 0;
     x1 = -34; y1 =-44;
     x2 =  84; y2 = 20;
+  }
+  else {
+    // Warn in case a default component symbol is not
+    // mapped or implemented.
+    Warning = tr("Warning: Symbol '%1' missing in Qucs Library.\n"
+                 "Drag and Drop may still work.\n"
+                 "Please contact the developers.").arg(Comp);
   }
 
   x1 -= 4;   // enlarge component boundings a little

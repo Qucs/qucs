@@ -22,7 +22,7 @@
 # Boston, MA 02110-1301, USA.  
 #
 
-EXTRA_DIST = $(PNGS)
+EXTRA_DIST = $(PNGS) $(PDFS)
 
 PNGS = mainwindow.png manual-trfunc.png qucs-sk2kHz.png sk-2kHz.png
 

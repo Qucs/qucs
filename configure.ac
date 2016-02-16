@@ -9,7 +9,8 @@ dnl Read version from file
 m4_define([QUCS_VERSION], m4_esyscmd([tr -d '\n' < VERSION]))
 
 AC_INIT([qucs], [QUCS_VERSION], [qucs-bugs@lists.sourceforge.net])
-AC_CONFIG_SRCDIR([examples/external_interface/cpp-interface/main.cpp])
+AC_CONFIG_SRCDIR([examples/resonance.sch])
+AC_CANONICAL_HOST
 # AC_CONFIG_HEADERS([config.h])
 AM_INIT_AUTOMAKE([foreign])
 
@@ -23,6 +24,13 @@ AC_ARG_ENABLE([doc],
   AS_HELP_STRING([--disable-doc], [Disable doc subpackage]))
 AM_CONDITIONAL([ENABLE_DOC], [test "$enable_doc" != no])
 
+dnl Check for MacOSX.
+case $host_os in
+  *darwin*) MACOSX=yes ;;
+  *)        MACOSX=no  ;;
+esac
+AM_CONDITIONAL(COND_MACOSX, test x$MACOSX = xyes)
+
 # Checks for libraries.
 
 # Checks for header files.
@@ -33,10 +41,9 @@ AM_CONDITIONAL([ENABLE_DOC], [test "$enable_doc" != no])
 
 # Create Output
 
-AS_IF([test "x$enable_doc" != "xno"], [
-  AC_CONFIG_SUBDIRS([qucs-doc])
-])
 AC_CONFIG_SUBDIRS([qucs
-                   qucs-core])
-AC_CONFIG_FILES([Makefile])
+                   qucs-core
+                   qucs-doc])
+AC_CONFIG_FILES([Makefile
+                 examples/Makefile])
 AC_OUTPUT

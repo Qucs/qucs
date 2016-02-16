@@ -195,7 +195,7 @@ ENDIF()
 #
 FIND_PROGRAM(GPERF_TOOL NAMES gperf)
 IF (NOT GPERF_TOOL)
-	MESSAGE(FATAL_ERROR "Unable to find gperf")
+	MESSAGE(FATAL_ERROR "gperf required in PATH")
 ELSE()
   MESSAGE(STATUS "Found gperf: " ${GPERF_TOOL})
 ENDIF()
@@ -205,28 +205,14 @@ ENDIF()
 #  * Use -DADMSXML_DIR=[path] to give the path containing admsXml
 #  * Try a few othe locations
 #
-
-# If USE_MAINTAINER_MODE it will build the Git submodule
-# Else, try to use available ADMS (system or used provided), else build included ADMS
-IF(USE_MAINTAINER_MODE)
-  ADD_SUBDIRECTORY( deps/adms )
-  SET(ADMSXML ${CMAKE_BINARY_DIR}/deps/adms/admsXml/admsXml)
+FIND_PROGRAM( ADMSXML admsXml
+  HINTS ${ADMSXML_DIR}
+  PATHS /usr/local/bin/ /opt/local/bin/ /usr/bin
+  DOC "admsXml application" )
+IF(NOT ADMSXML)
+  MESSAGE(FATAL_ERROR "admsXml required in PATH")
 ELSE()
-  # TODO check for min version
-  # search for external version of admsXML
-  FIND_PROGRAM( ADMSXML admsXml
-    HINTS ${ADMSXML_DIR}
-    PATHS /usr/local/bin/ /opt/local/bin/ /usr/bin
-    DOC "admsXml application" )
-  IF(ADMSXML)
-    # use external admsXml
-    MESSAGE(STATUS "Found admsXml: " ${ADMSXML})
-  ELSE()
-    MESSAGE(WARNING "admsXml was not found! Using distributed submodule in deps/adms.")
-    # build internal preconfigured admsXml (release mode)
-    ADD_SUBDIRECTORY( deps/adms )
-    SET(ADMSXML ${qucs-core_BINARY_DIR}/deps/adms/admsXml/admsXml)
-  ENDIF()
+  MESSAGE(STATUS "Found admsXml: " ${ADMSXML})
 ENDIF()
 
 

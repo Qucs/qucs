@@ -118,9 +118,6 @@ install:
       hdiutil unmount /Volumes/Qt\ 4.8.7 ;
     fi
 
-  # Grab tip of Qucs-Test
-  - git clone --depth=1 --branch=master git://github.com/Qucs/qucs-test.git qucs-test
-
 script:
   - uname -a
   - $CXX --version
@@ -136,6 +133,12 @@ script:
   - pwd
   - ls
 
+  # fetch gtest...
+  - wget https://github.com/google/googletest/archive/release-1.7.0.tar.gz -O /tmp/gtest.tar.gz
+  - mkdir /tmp/gtest
+  - tar --strip-components=1 -C /tmp/gtest -xvf /tmp/gtest.tar.gz
+
+
   # Build ADMS from release (avoid need of Perl and its modules)
   #   Workaround sourceforge shortage, use personal Dropbox.
   #   wget http://sourceforge.net/projects/mot-adms/files/adms-source/2.3/adms-2.3.4.tar.gz -O /tmp/adms-2.3.4.tar.gz;
@@ -145,96 +148,17 @@ script:
       cd adms-2.3.4 && ./configure --prefix=/usr && make && sudo make install && cd ..;
     fi
 
-  # Check ADMS
+  # Check available tools
   - which admsXml && admsXml --version
 
-  # bootstrap
+  # run all checks
   - ./bootstrap
+  - ./configure --disable-dependency-tracking --with-gtest=/tmp/gtest
+  - make distcheck DISTCHECK_CONFIGURE_FLAGS=--with-gtest=/tmp/gtest
+  - echo $TRAVIS_BRANCH
 
-  # Build Qucs GUI components
-  - cd qucs
-  - ./configure --enable-maintainer-mode --prefix=/usr --disable-dependency-tracking
-  - make && sudo make install
-  - cd ..
-
-  # Test qucs installation
-  - qucs -v
-
-  # Build Qucs-core
-  - cd qucs-core
-
-  # Only collect coverage for GCC (LINUX)
-  # `make check-code-coverage` is failing due to old lcov
-  - if [[ $GCC ]]; then
-      ./configure --enable-maintainer-mode --prefix=/usr --with-mkadms=`which admsXml` --disable-dependency-tracking --enable-debug --enable-code-coverage  --with-gcov=gcov-4.8 --with-gtest;
-      make && sudo make install && make check;
-    fi
-
-  - if [[ $CLANG ]]; then
-      ./configure --enable-maintainer-mode --prefix=/usr --with-mkadms=`which admsXml` --disable-dependency-tracking --with-gtest;
-      make && sudo make install && make check;
-    fi
-  - cd ..
-
-  # Test qucsator installation
-  - qucsator -v
-
-  # Run Qucs-Test suite and collect coverage
-  # Need to be on `script` section to raise error as failure
-  # Use qucsator in-tree to generate gcov coverage for GCC (LINUX)
-  
-  # Run tests for Qucs (GUI) 
-  # Schematic to Netlist conversion require QucsConv and Qucs component library, so use the prefix of the installed package.
-  - cd qucs-test && python run.py --prefix /usr/bin/ --qucs && cd -;
-  
-  # Run test on qucsator
-  - if [[ $LINUX ]]; then
-      cd qucs-test && python run.py --prefix $HOME/build/Qucs/qucs/qucs-core/src/ --qucsator --exclude skip.txt && cd -;
-    fi
-  - if [[ $OSX ]]; then
-      cd qucs-test && python run.py --prefix $HOME/build/Qucs/qucs/qucs-core/src/ --qucsator --exclude skip_OSX.txt && cd -;
-    fi
-  
-  # Run tests on Qucsator equation system
-  - cd qucs-test && python run_equations.py --prefix $HOME/build/Qucs/qucs/qucs-core/src/ && cd -
-
-  # Run Doxygen for qucs-GUI and qucs-core
-  - if [[ $LINUX && $CLANG && $MASTER ]]; then
-      TOP=`pwd`;
-
-      cd qucs/contrib/doxygen/;
-      VERSION=$(cat ../../VERSION);
-      sed "s/0\.\0\.18/${VERSION}/g" doxygen.cfg  > temp;
-      mv temp doxygen.cfg;
-      doxygen doxygen.cfg;
-      cd ${TOP};
-
-      cd qucs-doc;
-      cd doxygen;
-      make doxygen;
-      cd ${TOP};
-    fi
-
-after_success:
-  # Send coverage data to Coveralls
-  - if [[ $GCC ]]; then
-      coveralls --exclude qucs-core/src/components/verilog --exclude examples --exclude qucs --exclude qucs-doc --exclude adms-2.3.4 --gcov-options '\-lp' --gcov gcov-4.8;
-    fi
-
-  # Publish HTML into Qucs/qucs-doxygen repo
-  # See: http://awestruct.org/auto-deploy-to-github-pages/
-  # Clone repo, put the html pages on its gh_pages branch
-  # Credentials taken from the secure environment variables GIT_NAME, GIT_EMAIL and GH_TOKEN
-  - if [[ $LINUX && $CLANG && $MASTER ]]; then
-      git config --global user.name ${GIT_NAME} ;
-      git config --global user.email ${GIT_EMAIL} ;
-      git clone https://github.com/Qucs/qucs-doxygen.git qucs-doxygen ;
-      cd qucs-doxygen ;
-      git checkout gh-pages ;
-      git rm -r * ;
-      mv ../qucs/contrib/doxygen/html/ qucs/ ;
-      mv ../qucs-doc/doxygen/html/ qucs-core/ ;
-      git add --all . ;
-      git commit -m "Auto-updating Doxygen developer documentation" ;
-      git push https://${GH_TOKEN}@github.com/Qucs/qucs-doxygen gh-pages ;
+  # incomplete
+  - echo $TRAVIS_BRANCH
+  - if [[ $TRAVIS_BRANCH == develop ]] ; then
+      echo developmentstuff...;
     fi
