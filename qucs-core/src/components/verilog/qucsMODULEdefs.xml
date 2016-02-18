@@ -167,9 +167,46 @@
 <admst:variable name="nbr_nodes" select="%s"/>
 </admst:for-each>
 
-<admst:open file="$module.defs.h">
+<!-- output filename is 1st argument in -o flag in command line-->
+<admst:variable name="filename" select="%(/module/name)_common"/>
+<admst:variable name="filename_state" select="0"/>
+<admst:for-each select="/argv">
+  <admst:variable name="arg" select="%(.)"/>
+
+  <admst:if test="[position(.)=2]">
+    <admst:variable name="filename" select="$arg"/>
+  </admst:if>
+  <admst:if test="[$(filename_state)='1']">
+    <admst:variable name="filename" select="$arg"/>
+    <admst:variable name="filename_state" select="2"/>
+  </admst:if>
+  <admst:if test="[$(filename_state)='0' and $(arg)='-o']">
+    <admst:variable name="filename_state" select="1"/>
+  </admst:if>
+</admst:for-each>
+
+<admst:open file="$(filename).cpp">/*
+ * $(filename).cpp - device implementations for $(filename) modules
+ *
+ * This is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2, or (at your option)
+ * any later version.
+ *
+ */
+
+<admst:for-each select="/module">
+// namespace { // %(.), BUG: not yet, possible name clashes
+#include "$(filename).$(module).core.cpp"
+#include "$(filename).$(module).analogfunction.cpp"
+// }
+</admst:for-each>
+
+</admst:open>
+
+<admst:open file="$(filename).defs.h">
 <admst:for-each select="/module">/*
- * $(module).defs.h - device definition header
+ * $(filename).defs.h - device definition header
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by

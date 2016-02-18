@@ -28,20 +28,13 @@ CODE_COVERAGE_LCOV_OPTIONS ?= --no-external --rc lcov_branch_coverage=1 $(CODE_C
 CODE_COVERAGE_GENHTML_OPTIONS ?= --rc lcov_branch_coverage=1
 @CODE_COVERAGE_RULES@
 
-## Add the subdirectories, including a '.' which forces adms
-## to be build first, followed by src, then doc
-SUBDIRS = $(ADMS_SUBDIR) src doc
-
-# include subdirs to build gtest and run unit tests
-if USE_GTEST
-SUBDIRS += tests
-endif
+SUBDIRS = src doc tests
 
 ACLOCAL_AMFLAGS = -I m4
 
 nodist_pkginclude_HEADERS = qucs_typedefs.h
 
-EXTRA_DIST = BUGS bootstrap.sh RELEASE
+EXTRA_DIST = BUGS bootstrap RELEASE
 
 pkginclude_HEADERS = config.h
 

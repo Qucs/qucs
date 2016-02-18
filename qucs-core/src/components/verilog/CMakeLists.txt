@@ -6,64 +6,47 @@ INCLUDE_DIRECTORIES( ${qucs-core_SOURCE_DIR}
                      ${qucs-core_SOURCE_DIR}/src/components/devices )   # devices.h
 
 
-# TODO does constants / disciplines need to be generated, or adms creates them as needed?
 # TODO, test if VA files change, should recompile
 
 SET( VA_FILES
-#  constants.vams   #--> created by admsXml if not found
-#  disciplines.vams #--> created by admsXml
-  andor4x2.va
-  andor4x3.va
-  andor4x4.va
-  binarytogrey4bit.va
-  bsim3v34nMOS.va
-  bsim3v34pMOS.va
-  bsim4v30nMOS.va
-  bsim4v30pMOS.va
-  comp_1bit.va
-  comp_2bit.va
-  comp_4bit.va
-  dff_SR.va
-  DLS_1ton.va
-  DLS_nto1.va
-  dmux2to4.va
-  dmux3to8.va
-  dmux4to16.va
-  EKV26MOS.va
-  fa1b.va
-  fa2b.va
-  fbh_hbt-2_2a.va  #--> module HBT_X
-  gatedDlatch.va
-  greytobinary4bit.va
-  ha1b.va
-  hicumL0V1p12.va  #--> module hic0_full
-  hicumL0V1p2.va
-  hicumL0V1p2g.va
-  hicumL0V1p3.va
-  hicumL2V2p11.va  #--> module hicumL2V2p1
-  hicumL2V2p22.va  #--> module hic2_full
-  hicumL2V2p23.va
-  hicumL2V2p24.va
-  hicumL2V2p31n.va
-  hpribin4bit.va
-  jkff_SR.va
-  log_amp.va
-  logic_0.va
-  logic_1.va
-  MESFET.va
-  mod_amp.va
-  mux2to1.va
-  mux4to1.va
-  mux8to1.va
-  nigbt.va
-  pad2bit.va
-  pad3bit.va
-  pad4bit.va
-  photodiode.va
-  phototransistor.va
-  potentiometer.va
-  tff_SR.va
-  vcresistor.va
+  andor4x2
+  andor4x3
+  andor4x4
+  binarytogrey4bit
+  comp_1bit
+  comp_2bit
+  comp_4bit
+  dff_SR
+  DLS_1ton
+  DLS_nto1
+  dmux2to4
+  dmux3to8
+  dmux4to16
+  EKV26MOS
+  fa1b
+  fa2b
+  gatedDlatch
+  greytobinary4bit
+  ha1b
+  hpribin4bit
+  jkff_SR
+  log_amp
+  logic_0
+  logic_1
+  MESFET
+  mod_amp
+  mux2to1
+  mux4to1
+  mux8to1
+  nigbt
+  pad2bit
+  pad3bit
+  pad4bit
+  photodiode
+  phototransistor
+  potentiometer
+  tff_SR
+  vcresistor
 )
 
 
@@ -88,26 +71,8 @@ SET(generated_SRC)
 # Process each Verilog-A file.
 #  * generated files get added to lists (analogfunc, core)
 FOREACH( filename ${VA_FILES} )
-
-    # Ugly hack to handle .va files on which the filename differs from module name.
-    # The generated files are named after the Verilog-A module's name.
-
     # Default
-    SET(fileout ${filename})
-
-    # Special cases
-    IF(${filename} STREQUAL fbh_hbt-2_2a.va)
-      SET(fileout HBT_X)
-    ENDIF()
-    IF(${filename} STREQUAL hicumL2V2p11.va)
-      SET(fileout hicumL2V2p1)
-    ENDIF()
-    IF(${filename} STREQUAL hicumL2V2p22.va)
-      SET(fileout hic2_full)
-    ENDIF()
-    IF(${filename} STREQUAL hicumL0V1p12.va)
-      SET(fileout hic0_full)
-    ENDIF()
+    SET(fileout ${filename}.va)
 
     # Verilog-A file basename, strip suffix
     GET_FILENAME_COMPONENT(base ${fileout} NAME_WE)
@@ -116,6 +81,7 @@ FOREACH( filename ${VA_FILES} )
     # set outputs for each Verilog-A input
     SET(output ${base_abs}.analogfunction.cpp
                ${base_abs}.analogfunction.h
+               ${base_abs}.cpp
                ${base_abs}.core.cpp
                ${base_abs}.core.h
                ${base_abs}.defs.h)
@@ -123,17 +89,13 @@ FOREACH( filename ${VA_FILES} )
     # custom command/rule to generate outputs with admsXml
     ADD_CUSTOM_COMMAND(
         OUTPUT ${output}
-        COMMAND ${ADMSXML} ${CMAKE_CURRENT_SOURCE_DIR}/${filename} ${XML_CMD}
-        DEPENDS ${filename} ${XML_BUILD}
+        COMMAND ${ADMSXML} ${CMAKE_CURRENT_SOURCE_DIR}/${filename}.va ${XML_CMD} -o ${filename}
+        DEPENDS ${filename}.va ${XML_BUILD}
         )
     SET_SOURCE_FILES_PROPERTIES(${output} PROPERTIES GENERATED TRUE)
 
     # append outputs list of generated sources
-    SET(generated_SRC ${generated_SRC} ${output} )
-
-    # no need to generate GUI code? Integrated manually already?
-    #set(output ${base_abs}.gui.cpp ${base_abs}.gui.h)
-        #COMMAND ${ADMSXML} ${filename} -e qucsVersion.xml -e qucsMODULEgui.xml )
+    SET(generated_SRC ${generated_SRC} ${base_abs}.cpp )
 ENDFOREACH()
 
 #MESSAGE(STATUS " ==> generated\n " ${generated_SRC})
@@ -153,13 +115,7 @@ SET(MAKE_FILES
   va2cpp.makefile
 )
 
-SET(VA_INCLUDES
-  constants.vams
-  disciplines.vams
-)
-
 INSTALL(FILES ${XML_DIST}    DESTINATION include/qucs-core)
 INSTALL(FILES ${MAKE_FILES}  DESTINATION include/qucs-core)
-INSTALL(FILES ${VA_INCLUDES} DESTINATION include/qucs-core)
 
 

@@ -125,35 +125,30 @@ Documentation License".
 \setlength{\parindent}{0pt}
 \newpage
 
-\include{sparameter}
+\newcommand{\safeinclude}[1]{%
+  \IfFileExists{#1.tex}{%
+    \include{#1}%
+  }{%
+ 	\PackageError{technical}{#1: it's not there}{go find it}%
+	\stop%
+  }%
+}
 
-\include{noisewaves}
-
-\include{dcanalysis}
-
-\include{acanalysis}
-
-\include{acnoise}
-
-\include{transient}
-
-\include{hbanalysis}
-
-\include{hbnoise}
-
-\include{lineardevices}
-
-\include{devices}
-
-\include{microstrip}
-
-\include{coplanar}
-
-\include{transline}
-
-\include{synthesis}
-
-\include{maths}
+\safeinclude{sparameter}
+\safeinclude{noisewaves}
+\safeinclude{dcanalysis}
+\safeinclude{acanalysis}
+\safeinclude{acnoise}
+\safeinclude{transient}
+\safeinclude{hbanalysis}
+\safeinclude{hbnoise}
+\safeinclude{lineardevices}
+\safeinclude{devices}
+\safeinclude{microstrip}
+\safeinclude{coplanar}
+\safeinclude{transline}
+\safeinclude{synthesis}
+\safeinclude{maths}
 
 \begin{appendix}
 

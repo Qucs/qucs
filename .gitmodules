@@ -1,6 +1,3 @@
-[submodule "qucs-core/deps/adms"]
-	path = qucs-core/deps/adms
-	url = https://github.com/Qucs/ADMS.git
-[submodule "qucs-core/tests/qucs-test"]
-	path = qucs-core/tests/qucs-test
-	url = https://github.com/Qucs/qucs-test
+[submodule "qucs-test"]
+	path = qucs-test
+	url = https://github.com/Qucs/qucs-test.git

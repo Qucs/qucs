@@ -30,7 +30,7 @@ Distribution process:
   - Make sure INSTALL, THANKS and README files are up to date.
 
 * Test build and packaging.
-  - Run `make distclean', `sh autogen.sh' and `make all'.
+  - Run `make distclean', `sh bootstrap' and `make all'.
   - Run `make distcheck'.
   - Check this status into SVN and tag it.
 

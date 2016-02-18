@@ -220,4 +220,27 @@ n = \dfrac{\textrm{sech}\left(\dfrac{10^{-0.1\cdot \alpha_{stop}} - 1}{10^{-0.1\
 
 \subsubsection{Chebyshev II}
 
-Because of the nature of the derivation of the inverse Chebychev approxiation function from the standard Chebychev approximation the calculation of the order \eqref{eq:ChebOrder} is the same.
+Because of the nature of the derivation of the inverse Chebychev approximation function from the standard Chebychev approximation the calculation of the order \eqref{eq:ChebOrder} is the same.
+
+\subsection{Quarter wavelength filters}
+
+Quarter wavelength filters are based on the fact that short and open $\lambda/4$ stubs are equivalent to series and paralell resonant tanks, respectively. Once given the normalized $g_i$ coefficients of the filter prototype, it is quite straighforward to obtain the impedance of the short/open stubs, depending on the desired filter mask (bandpass/notch). Figure \ref{eq:QWfilter} illustrates the topology of a quarter wavelength filter.\\
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=100mm]{QuarterWavelengthFilter.eps}
+\caption{Quarter wavelength filters topology. a) Notch filter b) Bandpass filter \cite{Pozar}}
+\label{eq:QWfilter}
+\end{figure}
+
+\noindent The impedance of the $i$-th stub, $Z_i$, is given by:
+
+\begin{itemize}
+\item{Bandpass (short circuit)} $Z_i = \frac{\pi Z_0 \Delta}{4g_i}$
+\item{Notch (open circuit)} $Z_i = \frac{4 Z_0 }{g_i\pi \Delta}$
+\end{itemize} 
+
+\noindent where $Z_0$ is the characteristic impedance of the filter (typically, 50$\Omega$) and $\Delta$ is the relative bandwidth defined as $\Delta = \frac{f_2 - f_1}{f_c}$. The demonstration \cite{Pozar} is not included in this document in favour of greater simplicity. 
+
+\noindent It has to be said that quarter wavelength filters are narrowband by nature. Besides this, these kind of filters may not be feasible because of the stubs may require unpractical widths (i.e. impedances) for proper operation.
+
