@@ -90,7 +90,7 @@ bool loadSettings()
     if(settings.contains("Type"))QucsSettings.Type.setNamedColor(settings.value("Type").toString());
     if(settings.contains("Attribute"))QucsSettings.Attribute.setNamedColor(settings.value("Attribute").toString());
     if(settings.contains("Directive"))QucsSettings.Directive.setNamedColor(settings.value("Directive").toString());
-    if(settings.contains("Task"))QucsSettings.Comment.setNamedColor(settings.value("Task").toString());
+    if(settings.contains("Task"))QucsSettings.Task.setNamedColor(settings.value("Task").toString());
 
     if(settings.contains("Qucsator"))QucsSettings.Qucsator = settings.value("Qucsator").toString();
     //if(settings.contains("BinDir"))QucsSettings.BinDir = settings.value("BinDir").toString();
@@ -167,7 +167,7 @@ bool saveApplSettings()
     settings.setValue("Type", QucsSettings.Type.name());
     settings.setValue("Attribute", QucsSettings.Attribute.name());
     settings.setValue("Directive", QucsSettings.Directive.name());
-    settings.setValue("Task", QucsSettings.Comment.name());
+    settings.setValue("Task", QucsSettings.Task.name());
     //settings.setValue("Qucsator", QucsSettings.Qucsator);
     //settings.setValue("BinDir", QucsSettings.BinDir);
     //settings.setValue("LangDir", QucsSettings.LangDir);
@@ -289,7 +289,8 @@ int doNetlist(QString schematic, QString netlist)
 
   if(SimPorts < -5) {
     NetlistFile.close();
-    fprintf(stderr, "Error: Could not prepare the netlist...\n");
+    QByteArray ba = netlist.toLatin1();
+    fprintf(stderr, "Error: Could not prepare netlist %s\n", ba.data());
     /// \todo better handling for error/warnings
     qCritical() << ErrText->toPlainText();
     return 1;
@@ -674,7 +675,12 @@ int main(int argc, char *argv[])
 
   QucsSettings.BinDir =      QucsDir.absolutePath() + "/bin/";
   QucsSettings.LangDir =     QucsDir.canonicalPath() + "/share/qucs/lang/";
-  QucsSettings.LibDir =      QucsDir.canonicalPath() + "/share/qucs/library/";
+  var = getenv("QUCS_LIBDIR");
+  if(var != NULL) {
+	  QucsSettings.LibDir = QString(var);
+  }else{
+	  QucsSettings.LibDir =      QucsDir.canonicalPath() + "/share/qucs/library/";
+  }
   QucsSettings.OctaveDir =   QucsDir.canonicalPath() + "/share/qucs/octave/";
   QucsSettings.ExamplesDir = QucsDir.canonicalPath() + "/share/qucs/docs/examples/";
   QucsSettings.DocDir =      QucsDir.canonicalPath() + "/share/qucs/docs/";

@@ -18,12 +18,7 @@ SET(CMAKE_BUILD_TYPE Debug)
 ADD_DEFINITIONS( -DHAVE_CONFIG_H )
 
 # define variables
-SET(BINARYDIR "${CMAKE_INSTALL_PREFIX}/bin/")
-SET(BITMAPDIR "${CMAKE_INSTALL_PREFIX}/share/qucs/bitmaps/")
-SET(DOCDIR "${CMAKE_INSTALL_PREFIX}/share/qucs/docs/")
 SET(LANGUAGEDIR "${CMAKE_INSTALL_PREFIX}/share/qucs/lang/")
-SET(LIBRARYDIR "${CMAKE_INSTALL_PREFIX}/share/qucs/library/")
-SET(OCTAVEDIR "${CMAKE_INSTALL_PREFIX}/share/qucs/octave/")
 
 # configure the header config.h
 CONFIGURE_FILE (
@@ -62,6 +57,7 @@ SET(QUCS-FILTER_SRCS
   qucsfilter.cpp
   stepz_filter.cpp
   tl_filter.cpp
+  quarterwave_filter.cpp
 )
 
 SET(QUCS-FILTER_HDRS
@@ -77,6 +73,7 @@ SET(QUCS-FILTER_HDRS
   qf_poly.h
   stepz_filter.h
   tl_filter.h
+  quarterwave_filter.h
 )
 
 SET(QUCS-FILTER_MOC_HDRS
