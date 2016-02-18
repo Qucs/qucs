@@ -11,6 +11,8 @@ Port
 
  * Ported Component member variables Lines, Arcs, Rects, Ellips, Texts from Qt3PtrList to QList
 
+ * Now using Qt to draw plots
+
 
 Miscelaneous
 ------------
@@ -19,11 +21,19 @@ Miscelaneous
 
  * new: add tag with the latest Git commit hash: Qucs (About and -v), Qucsator, Qucsconv
 
+ * new: QUCSATOR environment variable for backend selection.
+
 
 Bugfixes
 --------
 
  * [#29]: https://github.com/Qucs/qucs/pull/29
+
+ * [#436]: https://github.com/Qucs/qucs/pull/436
+
+ * [#472]: https://github.com/Qucs/qucs/pull/472
+
+ * [#473]: https://github.com/Qucs/qucs/pull/473
 
 
 ---
