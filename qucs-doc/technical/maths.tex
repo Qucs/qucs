@@ -69,7 +69,7 @@ in a circuit normalized to the same impedance. But calculations can only
 be performed with all ports being normalized to the same impedance. In
 the field of high frequency techniques this is usually $50\ohm$. In order
 to transform to different port impedances, the following computation must
-be applied to the resulting S-parameter matrix.
+be applied to the resulting S-parameter matrix (valid only for real reference impedances).
 
 \begin{equation}
 \left[\underline{S'}\right] = \left[\underline{A}\right]^{-1} \cdot
@@ -108,7 +108,7 @@ A_1 & 0 & \ldots & 0\\
 0 & 0 & \ldots & A_N\\
 \end{pmatrix}$\\& &\\
 $A_n$ & = &
-$\sqrt{\dfrac{Z_n}{Z_{n,before}}}\cdot\dfrac{1}{Z_{n} + Z_{n,before}}$\\& &\\
+$\sqrt{\dfrac{Z_n}{Z_{n,before}}}\cdot\dfrac{2 Z_{n,before}}{Z_{n} + Z_{n,before}}$\\& &\\
 \end{tabular}
 
 \subsection{Transformations of n-Port matrices}
