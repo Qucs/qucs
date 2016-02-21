@@ -51,7 +51,8 @@
       Impedance Environment"
       in Scropion Application note
       Anritsu
-      online(2007/07/30) http://www.eu.anritsu.com/files/11410-00284B.pdf
+      online (2016-02-21)
+      https://dl.cdn-anritsu.com/en-us/test-measurement/files/Application-Notes/Application-Note/11410-00284B.pdf
 
   [5] Conversions between S, Z, Y, H, ABCD, and T parameters
       which are valid for complex source and load impedances
@@ -857,31 +858,32 @@ matrix inverse (matrix a) {
   Convert scattering parameters with the reference impedance 'zref'
   to scattering parameters with the reference impedance 'z0'.
 
-  Detail are given in [1], under equation (32)
+  Details are given in [1], under equation (32). Brief summary:
 
-  New scatering matrix \f$S'\f$ is:
+  The new scattering matrix \f$S'\f$ is:
   \f[
   S'=A^{-1}(S-\Gamma^+)(I-\Gamma S)^{-1}A^+
   \f]
-  Where x^+ is the adjoint (or complex tranposate) of x,
-  I the identity matrix and \f$A\f$ is diagonal the matrix such as:
-  \f$   \Gamma_i= r_i \f$ and \f$A\f$ the diagonal matrix such
-  as:
+  where \f$I\f$ is the identity matrix, \f$\Gamma\f$ a diagonal matrix with
+  diagonal components \f$\Gamma_i=r_i\f$ and \f$A\f$ a diagonal matrix with
+  diagonal components
   \f[
   A_i =  \frac{(1-r_i^*)\sqrt{|1-r_ir_i^*|}}{|1-r_i|}
   \f]
-  Where \f$x*\f$ is the complex conjugate of \f$x\f$
-  and \f$r_i\f$ is wave reflexion coefficient of \f$Z_i'\f$ with respect
-  to \f$Z_i^*\f$ (where \f$Z_i'\f$ is the new impedance and
-  \f$Z_i\f$ is the old impedance), ie:
+  and \f$r_i\f$ is the power wave reflexion coefficient of \f$Z_i'\f$ with
+  respect to \f$Z_i^*\f$ (where \f$Z_i'\f$ is the new impedance and
+  \f$Z_i\f$ is the old impedance), i.e.:
   \f[
-  r_i = \frac{Z_i'-Z_i}{Z_i'-Z_i^*}
+  r_i = \frac{Z_i'-Z_i}{Z_i'+Z_i^*}
   \f]
+
+  (\f$x^*\f$ denotes the complex conjugate of \f$x\f$ and
+   \f$A^+\f$ the complex conjugate transpose (Hermitian adjoint) of \f$A\f$)
 
   \param[in] s original S matrix
   \param[in] zref original reference impedance
   \param[in] z0 new reference impedance
-  \bug This formula is valid only for real z!
+  \bug The function implements only the real zref and z0 case!
   \todo Correct documentation about standing waves [1-4]
   \todo Implement Speciale implementation [2-3] if applicable
   \return Renormalized scattering matrix
@@ -889,14 +891,15 @@ matrix inverse (matrix a) {
 */
 matrix stos (matrix s, qucs::vector zref, qucs::vector z0) {
   int d = s.getRows ();
-  matrix e, r, a;
+  matrix e, r;
+  qucs::vector a;
 
   assert (d == s.getCols () && d == z0.getSize () && d == zref.getSize ());
 
   e = eye (d);
   r = diagonal ((z0 - zref) / (z0 + zref));
-  a = diagonal (sqrt (z0 / zref) / (z0 + zref));
-  return inverse (a) * (s - r) * inverse (e - r * s) * a;
+  a = sqrt (z0 / zref) * 2 * zref / (z0 + zref);
+  return diagonal (1 / a) * (s - r) * inverse (e - r * s) * diagonal (a);
 }
 
 /*!\brief S renormalization with all part identic
