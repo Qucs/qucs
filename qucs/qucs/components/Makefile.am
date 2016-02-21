@@ -74,6 +74,7 @@ libcomponents_la_LIBADD = ../libqucsschematic.la
 endif
 
 noinst_HEADERS = $(MOCHEADERS) resistor.h components.h capacitor.h vccs.h     \
+  command.h \
   inductor.h biast.h dcblock.h dcfeed.h ground.h subcirport.h symtrafo.h      \
   transformer.h ampere_dc.h attenuator.h circulator.h equation.h isolator.h   \
   source_ac.h spembed.h subcircuit.h volt_ac.h volt_dc.h ac_sim.h cccs.h      \

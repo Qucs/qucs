@@ -23,6 +23,7 @@
 #
 
 pkglib_LTLIBRARIES = qucsator.la verilog.la
+noinst_HEADERS = sim.h
 AM_DEFAULT_SOURCE_EXT = .cpp
 AM_CPPFLAGS = $(X11_INCLUDES) $(QT_CFLAGS) -I$(top_srcdir)/qucs
 
