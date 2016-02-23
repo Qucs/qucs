@@ -240,6 +240,7 @@ public slots:
   void printCursorPosition(int, int);
   void slotUpdateUndo(bool);  // update undo available state
   void slotUpdateRedo(bool);  // update redo available state
+  void slotWhatsNew();  // shows a What's new dialog
 
 private slots:
   void slotViewToolBar(bool toggle);    // toggle the toolbar
@@ -256,8 +257,8 @@ private:
   void initToolBar();    // creates the toolbars
   void initStatusBar();  // setup the statusbar
 
-  QAction *helpAboutApp, *helpAboutQt, *viewToolBar, *viewStatusBar,
-          *viewBrowseDock, *viewOctaveDock;
+  QAction *helpAboutApp, *helpAboutQt, *helpWhatsNew, *viewToolBar, 
+    *viewStatusBar, *viewBrowseDock, *viewOctaveDock;
 
   // menus contain the items of their menubar
   enum { MaxRecentFiles = 8 };

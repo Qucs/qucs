@@ -1,0 +1,107 @@
+<h1>Qucs 0.0.19 Release Notes</h1>
+
+<p>This release brings improvements on many parts of Qucs.
+The port from Qt3 to Qt4 is still ongoing and many bugs and usability issues have been fixed in the process.
+A few new features were added and others are in development.
+See below a short summary of the enhancements.</p>
+
+<h2>Qucs</h2>
+
+<ul>
+<li>Fix diagram color picker button (<a href="https://github.com/Qucs/qucs/issues/30">#30</a>)</li>
+<li>Fix zoom in a box (<a href="https://github.com/Qucs/qucs/issues/31">#31</a>)</li>
+<li>[NEW] Command line to save schematic as image (png, svg, pdf) (<a href="https://github.com/Qucs/qucs/issues/32">#32</a>)</li>
+<li>[NEW] Add component MutualX (<a href="https://github.com/Qucs/qucs/issues/54">#54</a>)</li>
+<li>[NEW] Enable anti-aliasing, provide it as option (<a href="https://github.com/Qucs/qucs/issues/73">#73</a>)</li>
+<li>[NEW] Add search file on component dock (<a href="https://github.com/Qucs/qucs/pull/86">PR#86</a>)</li>
+<li>Fix rendering of component text properties (<a href="https://github.com/Qucs/qucs/pull/87">PR#87</a>, <a href="https://github.com/Qucs/qucs/pull/98">PR#98</a>)</li>
+<li>[NEW] Add recently opened menu (<a href="https://github.com/Qucs/qucs/pull/95">PR#95</a>, <a href="https://github.com/Qucs/qucs/pull/207">PR#207</a>)</li>
+<li>Fix crash on loaiding timingdiagram (<a href="https://github.com/Qucs/qucs/issues/112">#112</a>)</li>
+<li>Refactor text search dialog (<a href="https://github.com/Qucs/qucs/pull/124">PR#124</a>)</li>
+<li>Correct simulator process exit check (<a href="https://github.com/Qucs/qucs/issues/132">#132</a>)</li>
+<li>Refactor project manager (<a href="https://github.com/Qucs/qucs/pull/153">PR#153</a>)</li>
+<li>Deprecated use of <code>HOME</code> environment variable (<a href="https://github.com/Qucs/qucs/issues/204">#204</a>)</li>
+<li>[NEW] Enable use of <code>QUCSATOR</code> environment variable to overide <code>qucsator</code> (<a href="https://github.com/Qucs/qucs/pull/209">PR#209</a>) </li>
+<li>Fix bug on deactivation (short-circuiting) a component (<a href="https://github.com/Qucs/qucs/issues/216">#216</a>)</li>
+<li>Various usability enhancements (<a href="https://github.com/Qucs/qucs/pull/232">PR#232</a>)
+<ul><li>Adjust various dialogs for a better table sizing</li>
+<li>Results of Optimization dialog can be copied to clipboard and pasted as an Equation </li>
+<li>Fix usage of font metrics in the schematic</li>
+<li>Fix handling of simulation messages in case a simulation is aborted</li>
+<li>Add <code>QT3_WARNINGS</code> to serve as a reminder of which Qt3 stuff still needs removal.</li></ul></li>
+<li>[NEW] Redesigned About dialog (<a href="https://github.com/Qucs/qucs/pull/252">PR#252</a>)</li>
+<li>Fix context menu texts when pressed over toolbar (<a href="https://github.com/Qucs/qucs/issues/253">#253</a>)</li>
+<li>Fix crash when using DC bias annotation with a simulation sweep (<a href="https://github.com/Qucs/qucs/issues/272">#272</a>)</li>
+</ul>
+
+<h2>Qucsator</h2>
+
+<ul>
+<li>Fix segmentation fault during noise enabled S-parameter simulaton (<a href="https://github.com/Qucs/qucs/issues/133">#133</a>)</li>
+<li>Fix regression on tswitch component (<a href="https://github.com/Qucs/qucs/issues/34">#34</a>, <a href="https://github.com/Qucs/qucs/pull/203">PR#203</a>)</li>
+<li>Fix coplanar waveguide formulae (<a href="https://sourceforge.net/p/qucs/bugs/183">SF#183</a>, <a href="https://github.com/Qucs/qucs/pull/306">PR#306</a>)</li>
+<li>Fix several segfaults during fuzzed input (<a href="https://github.com/Qucs/qucs/pull/274">PR#274</a>) </li>
+<li>Remove null and free checks (<a href="https://github.com/Qucs/qucs/pull/267">PR#267</a>)</li>
+<li>Adopt to standard library in several classes.</li>
+<li>Enable gcov for coverage</li>
+</ul>
+
+<h2>Qucs-transcalc</h2>
+
+<ul>
+<li>Fix issues with coupled microstrips (<a href="https://sourceforge.net/p/qucs/bugs/171">SF#171</a>,<a href="https://github.com/Qucs/qucs/pull/85">PR#85</a>)</li>
+<li>Fix coplanar waveguide formulae (<a href="https://sourceforge.net/p/qucs/bugs/183">SF#183</a>, <a href="https://github.com/Qucs/qucs/pull/306">PR#306</a>)</li>
+</ul>
+
+<h2>[New] Qucs-ActiveFilter</h2>
+
+<ul>
+<li>Merge new qucs-activefilter tool (<a href="https://github.com/Qucs/qucs/issues/43">#43</a>)</li>
+</ul>
+
+<h2>Qucs-Filter</h2>
+
+<ul>
+<li>Port QucsStudio Filter synthesis (<a href="https://github.com/Qucs/qucs/issues/15">#15</a>)</li>
+</ul>
+
+<h2>Qucs-lib</h2>
+
+<ul>
+<li>Fix issue that corrupt netlist for item dragged from the library dock (<a href="https://github.com/Qucs/qucs/issues/39">#39</a>)</li>
+<li>Fixed library paths for user library components (<a href="https://github.com/Qucs/qucs/pull/292">PR#292</a>)</li>
+</ul>
+
+<h2>Qucs-rescodes</h2>
+
+<ul>
+<li>Ported to Qt4 (<a href="https://github.com/Qucs/qucs/issues/38">#38</a>)</li>
+</ul>
+
+<h2>Qucsconv</h2>
+
+<ul>
+<li>Add further command line help documentation, <code>qucsconv -h</code> (<a href="https://github.com/Qucs/qucs/issues/57">#57</a>)</li>
+</ul>
+
+<h2>Documentation</h2>
+
+<ul>
+<li>Fix table of contents on Technical.pdf (<a href="https://github.com/Qucs/qucs/issues/55">#55</a>)</li>
+<li>Documentation for qucs-active filter (<a href="https://github.com/Qucs/qucs/pull/156">PR#156</a>)</li>
+</ul>
+
+<h2>Translations</h2>
+
+<ul>
+<li>Updated DE (<a href="https://github.com/Qucs/qucs/pull/128">PR#128</a>)</li>
+</ul>
+
+<h2>Miscelaneous</h2>
+
+<ul>
+<li>Move from math.h to cmath.h (<a href="https://github.com/Qucs/qucs/pull/168">PR#168</a>)</li>
+</ul>
+
+<!-- Cross reference generated with NEWS_crossref.py -->
+
