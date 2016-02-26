@@ -641,7 +641,11 @@ static void spice_adjust_device (struct definition_t * def,
       def->pairs = netlist_append_pairs (def->pairs, p);
       // adjust type of device
       free (def->type);
-
+      def->type = strdup (tran->trans_type);
+      // append "Type" property
+      if (tran->trans_type_prop != NULL) {
+        spice_set_property_string (def, "Type", tran->trans_type_prop);
+      }
       break;
     }
   }
@@ -752,6 +756,15 @@ node_translations[] = {
     { 1, 2, -1 }
   },
   { "Iac", 0,
+    { 2, 1, -1 },
+    { 1, 2, -1 }
+  },
+  { "Idc", 0,
+    { 2, 1, -1 },
+    { 1, 2, -1 }
+  },
+  { "VCCS", 0,
+    { 3, 1, 2, 4, -1 },
     { 1, 2, 3, 4, -1 }
   },
   { "VCVS", 0,
