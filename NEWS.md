@@ -93,7 +93,7 @@ Qucsator
 
 * Enable gcov for coverage
 
-* Fix S-parameters renormalization formula ([PR#481)
+* Fix S-parameters renormalization formula ([PR#481])
 
 * Remove non-GPL Verilog-AMS models ([#421])
 
@@ -410,6 +410,7 @@ Bug fixes
 [PR#267]: https://github.com/Qucs/qucs/pull/267
 [PR#95]: https://github.com/Qucs/qucs/pull/95
 [PR#493]: https://github.com/Qucs/qucs/pull/493
+[PR#481]: https://github.com/Qucs/qucs/pull/481
 [PR#128]: https://github.com/Qucs/qucs/pull/128
 [PR#87]: https://github.com/Qucs/qucs/pull/87
 [PR#85]: https://github.com/Qucs/qucs/pull/85
