@@ -22,7 +22,7 @@
 #include <QVBoxLayout>
 #include <QGroupBox>
 #include <QLabel>
-#include <math.h>
+#include<QDebug>
 
 class Element;
 class QLabel;
@@ -76,32 +76,31 @@ public:
   static void p2c(double&, double&);
   static void r2z(double&, double&, double);
   static void z2r(double&, double&, double);
-  static QString calcMatchingLC(double, double, double, double);
-  bool calcMatchingCircuitLC(double, double, double, double, bool);
+
   bool calcMatchingCircuit(double, double,double, double, bool, bool, bool, tSubstrate, int, double, bool);
 
+  QString calcMatchingLC(double, double, double, double);
+  bool calcMatchingCircuitLC(double, double, double, double, bool);
+
+  QString calcMatchingCascadedLCSections(double, double, double, double, int);
+  bool calcMatchingCircuitCascadedLCSections(double, double, double, double, bool, int);
 
   bool calcMatchingCircuitSingleStub(double, double, double, double, bool, bool, bool, tSubstrate, bool);
-  QString calcSingleStub(double, double, double, double, bool);
+  QString calcSingleStub(double, double, double, double, bool, bool);
 
   bool calcMatchingCircuitDoubleStub(double RL, double XL, double, double, bool, bool, bool, tSubstrate, bool);
-  QString calcDoubleStub(double, double, double, double, bool);
+  QString calcDoubleStub(double, double, double, double, bool, bool);
 
 
   bool calcMatchingCircuitCascadedLambda4(double, double, double, double, bool, bool, tSubstrate, double, int);
 
-  QString calcBinomialLines(double, double, double, int);
-  QString calcChebyLines(double, double, double, double, int);
+  QString calcBinomialLines(double, double, double, int, double);
+  QString calcChebyLines(double, double, double, double, int, double);
 
-  QString calcBiMatch(double, double, double, double, double, double, double, double, bool, double, int);
+  QString calcBiMatch(double, double, double, double, double, double, double, double, bool, double, int, bool);
   bool calc2PortMatch(double, double, double, double, double, double, double, double, double, bool, bool, bool, tSubstrate, int, double, bool);
 
-
-  //Schematic creation for two-port devices
-  bool Create2Port_LC_matching_Schematic(QString, QString, double, double, double, bool);
-  bool Create2Port_SingleStub_matching_Schematic(QString, QString, double, double, double, bool, bool, bool, tSubstrate, bool);
-  bool Create2Port_DoubleStub_matching_Schematic(QString, QString, double, double, double, bool, bool, bool, tSubstrate, bool);
-  bool Create2Port_Cascaded_lambda4_matching_Schematic(QString, QString, double, double, double, bool, bool, tSubstrate, int);
+  int SchematicParser(QString, int &, QString &, QString &, QString & ,int, double, double, double, double, tSubstrate, bool);
 
   void getMicrostrip(double, double, tSubstrate *, double &, double &);
 

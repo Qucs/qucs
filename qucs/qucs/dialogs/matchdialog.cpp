@@ -45,8 +45,6 @@
 #include "../../qucs-filter/material_props.h"
 
 
-
-
 MatchDialog::MatchDialog(QWidget *parent)
     : QDialog(parent)
 {
@@ -155,6 +153,7 @@ MatchDialog::MatchDialog(QWidget *parent)
     TopoCombo->addItem(tr("Double stub"));
     QString str = tr("Multistage ") + QString(QChar(0xBB, 0x03)) + "/4";
     TopoCombo->addItem((str));
+    TopoCombo->addItem("Cascaded LC sections");
 
     h4->addWidget(TopoCombo);
     connect(TopoCombo, SIGNAL(activated(int)), SLOT(slotChangeMode_TopoCombo()));
@@ -509,7 +508,7 @@ void MatchDialog::slotChangeMode_TopoCombo()
         OpenRadioButton->setVisible(false);
         BalancedCheck->setVisible(false);
     }
-    if (TopoCombo->currentIndex() != 0)//Obviously, the microstrip implementation panel cannot be used when LC is selected
+    if ((TopoCombo->currentIndex() != 0) && (TopoCombo->currentIndex() != 4))//Obviously, the microstrip implementation panel cannot be used when LC is selected
     {
         MicrostripCheck->setVisible(true);
     }
@@ -525,6 +524,11 @@ void MatchDialog::slotChangeMode_TopoCombo()
         BinRadio->setVisible(true);
         ChebyRadio->setVisible(true);
         WeightingLabel->setVisible(true);
+    }
+    if (TopoCombo->currentIndex() == 4)//Cascaded LC sections selected
+    {
+        OrderLabel->setVisible(true);
+        OrderEdit->setVisible(true);
     }
     else
     {// Then it makes no sense to show these items
@@ -747,11 +751,9 @@ void MatchDialog::z2r(double& Real, double& Imag, double Z0)
 }
 
 // -----------------------------------------------------------------------
-// Calculate matching circuit. Returns string like "sp:1nH:5pF"
-QString MatchDialog::calcMatchingLC(double r_real, double r_imag,
-                                    double Z0, double Freq)
+// This function calculates a LC matching section
+QString MatchDialog::calcMatchingLC(double r_real, double r_imag, double Z0, double Freq)
 {
-
     double Zreal = r_real, Zimag = r_imag;
     r2z(Zreal, Zimag, Z0);
 
@@ -794,20 +796,13 @@ QString MatchDialog::calcMatchingLC(double r_real, double r_imag,
         X2 = Zimag / (Zreal*Zreal + Zimag*Zimag) + X1 / (Z0*Z0 + X1*X1);
     }
 
-
-    // serial component
-    if (X1 < 0.0)   // capacitance ?
-        Str += ':' + misc::num2str(-1.0 / Omega / X1) + 'F';
-    else   // inductance
-        Str += ':' + misc::num2str(X1 / Omega) + 'H';
-
-    // parallel component
-    if (X2 < 0.0)   // inductance ?
-        Str += ':' + misc::num2str(-1.0 / Omega / X2) + 'H';
-    else   // capacitance
-        Str += ':' + misc::num2str(X2 / Omega) + 'F';
-
-    return Str;
+    // Circuit topology and values
+    QString laddercode;
+    if ((Str == "ps") && (X2 < 0.0))   laddercode = QString("CS%2;LP%1;").arg(-1.0 / Omega / X2).arg(-1.0 / Omega / X1);
+    if ((Str == "ps") && (X2 >= 0.0)) laddercode = QString("LS%2;CP%1;").arg(X2 / Omega).arg(X1 / Omega);
+    if ((Str == "sp") && (X2 <0.0)) laddercode = QString("CP%2;LS%1;").arg(X1 / Omega).arg(-1.0 / Omega / X2);
+    if ((Str == "sp") && (X2 >=0.0)) laddercode = QString("LP%2;CS%1;").arg(-1.0 / Omega / X1).arg(X2 / Omega);
+    return laddercode;
 }
 
 
@@ -815,162 +810,37 @@ QString MatchDialog::calcMatchingLC(double r_real, double r_imag,
 // This function calculates a matching network for a single port using a transmission line and
 // a stub (short or open). It can also convert the transmission lines microstrip lines
 // See Microwave Engineering. David Pozar. John Wiley and Sons. 4th Edition. Pg 234-240
-bool MatchDialog::calcMatchingCircuitSingleStub(double r_real, double r_imag, double Z0, double Freq, bool micro_syn, bool SP_block, bool open_short, tSubstrate Substrate, bool BalancedStubs)
+bool MatchDialog::calcMatchingCircuitSingleStub(double r_real, double r_imag, double Z0, double Freq, bool microsyn, bool SP_Block, bool open_short, tSubstrate Substrate, bool BalancedStubs)
 {
-    QString str = calcSingleStub(r_real, r_imag, Z0, Freq, open_short);
+    QString laddercode = calcSingleStub(r_real, r_imag, Z0, Freq, open_short, BalancedStubs);
     double RL=r_real, XL=r_imag;
+    int schcode=-1;
     r2z(RL, XL, Z0);
-    double d = str.section(';', 0, 0).toDouble();
-    double lstub = str.section(';', 1, 1).toDouble();
-    double er, width;//Dielectric coefficient and width of the microstrip line. They are used when synthesizing the microstrip lines
+    QString Schematic = "<Qucs Schematic " PACKAGE_VERSION ">\n";
 
+    if (SP_Block) schcode = 3;
 
-    // Creation of the schematic
+    int x_pos = 0;
+    QString wirestr = "";
+    QString componentstr = "";
+    QString paintingstr = "";
+    SchematicParser(laddercode, x_pos, componentstr, wirestr, paintingstr, schcode, Freq, Z0, RL, XL, Substrate, microsyn);
 
-    QString s = "<Qucs Schematic " PACKAGE_VERSION ">\n";
-    int x = 60;
-    s += "<Components>\n";
+    //Add components
+    Schematic += "<Components>\n";
+    Schematic+=componentstr;
+    Schematic += "</Components>\n";
 
-    if (SP_block)//Source
-    {
-        s += QString("<Pac P1 1 %1 330 18 -26 0 1 \"1\" 1 \"%2 Ohm\" 1 \"0 dBm\" 0 \"1 GHz\" 0>\n").arg(x).arg(Z0);
-        s += QString("<GND * 1 %1 360 0 0 0 0>\n").arg(x);
-    }
-    x += 60;
+    //Add wires
+    Schematic+= "<Wires>\n";
+    Schematic += wirestr;
+    Schematic+= "</Wires>\n";
 
-    if (BalancedStubs)
-    {//Balanced stub implementation
-        double lsb, K, lambda=SPEED_OF_LIGHT/Freq;
-        (open_short) ? K=0.5 : K=2;
-        (micro_syn) ? lambda=SPEED_OF_LIGHT/(sqrt(Substrate.er)*Freq) : lambda=SPEED_OF_LIGHT/Freq;
-        lsb = (lambda/(2*pi))*atan(K*tan((2*pi*lstub)/lambda));
-        if (lsb < 0) lsb+=0.5*lambda;
-        if (micro_syn)//Stub
-        {
-            er = Substrate.er;
-            getMicrostrip(Z0, Freq, &Substrate, width, er);
-            s += QString("<MLIN MS1 1 %1 120 -26 20 0 -1 \"Sub1\" 1 \"%2\" 1 \"%3\" 1 \"Hammerstad\" 0 \"Kirschning\" 0 \"26.85\" 0>\n").arg(x).arg(width).arg(lsb/sqrt(er));
-            s += QString("<MLIN MS1 1 %1 230 -26 20 0 -1 \"Sub1\" 1 \"%2\" 1 \"%3\" 1 \"Hammerstad\" 0 \"Kirschning\" 0 \"26.85\" 0>\n").arg(x).arg(width).arg(lsb/sqrt(er));
-        }
-        else
-        {
-            s += QString("<TLIN Line1 1 %1 120 -26 20 0 -1 \"%2\" 1 \"%3\" 1 \"0 dB\" 0 \"26.85\" 0>\n").arg(x).arg(Z0).arg(lsb);
-            s += QString("<TLIN Line1 1 %1 230 -26 20 0 -1 \"%2\" 1 \"%3\" 1 \"0 dB\" 0 \"26.85\" 0>\n").arg(x).arg(Z0).arg(lsb);
-        }
-        if (!open_short)
-        {
-            s += QString("<GND * 1 %1 90 0 0 -1 1>\n").arg(x);//It adds a ground component if short stub configuration is selected
-            s += QString("<GND * 1 %1 260 0 0 -1 1>\n").arg(x);
-        }
-    }
-    else
-    {//Unbalanced stub implementation
-        if (micro_syn)//Stub
-        {
-            er = Substrate.er;
-            getMicrostrip(Z0, Freq, &Substrate, width, er);
-            s += QString("<MLIN MS1 1 %1 120 -26 20 0 -1 \"Sub1\" 1 \"%2\" 1 \"%3\" 1 \"Hammerstad\" 0 \"Kirschning\" 0 \"26.85\" 0>\n").arg(x).arg(width).arg(lstub/sqrt(er));
-        }
-        else
-        {
-            s += QString("<TLIN Line1 1 %1 120 -26 20 0 -1 \"%2\" 1 \"%3\" 1 \"0 dB\" 0 \"26.85\" 0>\n").arg(x).arg(Z0).arg(lstub);
-        }
-        if (!open_short)s += QString("<GND * 1 %1 90 0 0 -1 1>\n").arg(x);//It adds a ground component if short stub configuration is selected
-    }
-
-    x+=40;
-
-    if (micro_syn)//Line
-    {
-        er = Substrate.er;
-        getMicrostrip(Z0, Freq, &Substrate, width, er);
-        s += QString("<MLIN MS1 1 %1 180 -26 20 0 0 \"Sub1\" 1 \"%2\" 1 \"%3\" 1 \"Hammerstad\" 0 \"Kirschning\" 0 \"26.85\" 0>\n").arg(x).arg(width).arg(d/sqrt(er));
-    }
-    else
-    {
-        s += QString("<TLIN Line1 1 %1 180 -26 20 0 0 \"%2\" 1 \"%3\" 1 \"0 dB\" 0 \"26.85\" 0>\n").arg(x).arg(Z0).arg(d);
-    }
-    x += 80;
-
-    if (SP_block) //Load
-    {// The load impedance is synthesized using lumped components.
-        if ((RL > 1e-4)&&(XL < 0))// R + C
-        {
-            s += QString("<R R1 1 %1 270 15 -26 0 -1 \"%2 Ohm\" 1 \"26.85\" 0 \"US\" 0>\n").arg(x).arg(RL);
-            s += QString("<C C1 1 %1 330 15 -26 0 -1 \"%2 F\" 1 0>\n").arg(x).arg(1/(fabs(XL)*2*pi*Freq));
-        }
-        if ((RL > 1e-4)&&(XL > 0))//R + L
-        {
-            s += QString("<R R1 1 %1 270 15 -26 0 -1 \"%2 Ohm\" 1 \"26.85\" 0 \"US\" 0>\n").arg(x).arg(RL);
-            s += QString("<L L1 1 %1 330 15 -26 0 -1 \"%2 H\" 1 0>\n").arg(x).arg(XL/(2*pi*Freq));
-        }
-        if ((RL > 1e-4)&&(XL == 0))//R
-        {
-            s += QString("<R R1 1 %1 270 15 -26 0 -1 \"%2 Ohm\" 1 \"26.85\" 0 \"US\" 0>\n").arg(x).arg(RL);
-        }
-        if ((RL < 1e-4)&&(XL > 0))//L
-        {
-            s += QString("<L L1 1 %1 270 15 -26 0 -1 \"%2 H\" 1 \"26.85\" 0 \"US\" 0>\n").arg(x).arg(RL);
-        }
-        if ((RL < 1e-4)&&(XL < 0))//C
-        {
-            s += QString("<C C1 1 %1 270 15 -26 0 -1 \"%2 F\" 1 \"26.85\" 0 \"US\" 0>\n").arg(x).arg(RL);
-        }
-
-        s += QString("<GND * 1 %1 360 0 0 0 0>\n").arg(x);
-
-        double freq_start = std::max(0., Freq-1e9);
-        double freq_stop = Freq+1e9;
-        s += QString("<.SP SP1 1 70 460 0 67 0 0 \"lin\" 1 \"%2Hz\" 1 \"%3Hz\" 1 \"300\" 1 \"no\" 0 \"1\" 0 \"2\" 0>\n").arg((freq_start)).arg((freq_stop));
-        s += QString("<Eqn Eqn1 1 450 560 -28 15 0 0 \"S11_dB=dB(S[1,1])\" 1 \"yes\" 0>\n");
-    }
-
-    //Substrate
-    if (micro_syn)s += QString("<SUBST Sub1 1 300 500 -30 24 0 0 \"%1\" 1 \"%2mm\" 1 \"%3um\" 1 \"%4\" 1 \"%5\" 1 \"%6\" 1>\n").arg(Substrate.er).arg(Substrate.height*1e3).arg(Substrate.thickness*1e6).arg(Substrate.tand).arg(Substrate.resistivity).arg(Substrate.roughness);
-
-    s += "</Components>\n";
-    s += "<Wires>\n";
-
-    s += QString("<60 180 130 180 \"\" 0 0 0>\n");
-    s += QString("<120 150 120 180 \"\" 0 0 0>\n");
-    if (BalancedStubs)s += QString("<120 180 120 200 \"\" 0 0 0>\n");
-    if (SP_block)
-    {
-        // connect left source
-        s += QString("<60 180 60 300 \"\" 0 0 0>\n");
-
-        // connect the load
-        if ((RL > 1e-4)&&(XL != 0))
-        {
-            s += QString("<%1 180 %2 240 \"\" 0 0 0>\n").arg(x).arg(x);
-        }
-        if ((RL < 1e-4)||(XL == 0))
-        {
-            s += QString("<%1 180 %2 240 \"\" 0 0 0>\n").arg(x).arg(x);
-            s += QString("<%1 300 %2 360 \"\" 0 0 0>\n").arg(x).arg(x);
-        }
-        s += QString("<%1 180 %2 180 \"\" 0 0 0>\n").arg(x-50).arg(x);
-    }
-    s += "</Wires>\n";
-
-    if (SP_block)
-    {
-        s+= "<Paintings>\n";
-        s+= QString("<Rectangle %1 200 60 150 #000000 0 1 #c0c0c0 1 0>\n").arg(x-30);
-        if (XL == 0)
-        {
-            s+= QString("<Text %1 200 12 #000000 0 \"%2 %3 @ %4 GHz\">\n").arg(x+30).arg(RL).arg(QChar (0x2126)).arg(Freq*1e-9);
-        }
-        else
-        {(XL > 0) ? s+= QString("<Text %1 200 12 #000000 0 \"Load: %2+j%3 %4 @ %5 GHz\">\n").arg(x+30).arg(RL).arg(XL).arg(QChar (0x2126)).arg(Freq*1e-9):
-                    s+= QString("<Text %1 200 12 #000000 0 \"Load: %2-j%3 %4 @ %5 GHz\">\n").arg(x+30).arg(RL).arg(abs(XL)).arg(QChar (0x2126)).arg(Freq*1e-9);
-        }
-        s+="</Paintings>\n";
-    }
-    s += "<Diagrams>\n";
-    s += "</Diagrams>\n";
-
-    QApplication::clipboard()->setText(s, QClipboard::Clipboard);
+    //Add paintings
+    Schematic += "<Paintings>\n";
+    Schematic += paintingstr;
+    Schematic += "</Paintings>\n";
+    QApplication::clipboard()->setText(Schematic, QClipboard::Clipboard);
     return true;
 }
 
@@ -978,344 +848,85 @@ bool MatchDialog::calcMatchingCircuitSingleStub(double r_real, double r_imag, do
 // This function calculates a matching network for a single port using a transmission line and
 // two stubs (short or open). It can also convert the transmission lines microstrip lines
 // See Microwave Engineering. David Pozar. John Wiley and Sons. 4th Edition. Pg 241-245
-bool MatchDialog::calcMatchingCircuitDoubleStub(double r_real, double r_imag, double Z0, double Freq, bool micro_syn, bool SP_block, bool open_short, tSubstrate Substrate, bool BalancedStubs)
+bool MatchDialog::calcMatchingCircuitDoubleStub(double r_real, double r_imag, double Z0, double Freq, bool microsyn, bool SP_Block, bool open_short, tSubstrate Substrate, bool BalancedStubs)
 {
-    QString str = calcDoubleStub(r_real, r_imag, Z0, Freq, open_short);
+    QString laddercode = calcDoubleStub(r_real, r_imag, Z0, Freq, open_short, BalancedStubs);
     double RL=r_real, XL=r_imag;
+    int schcode = -1;
     r2z(RL, XL, Z0);
-    if(str.isEmpty())return false;//In case matching is not possible to achieve, the function must stop
+    QString Schematic = "<Qucs Schematic " PACKAGE_VERSION ">\n";
 
-    // The lengths of the two stubs and the line are stored in 'QString str'
-    double d = str.section(';', 0, 0).toDouble();
-    double lstub1 = str.section(';', 1, 1).toDouble();
-    double lstub2  = str.section(';', 2, 2).toDouble();
+    if (SP_Block) schcode = 3;
 
-    double er, width;//Dielectric coefficient and width of the microstrip line. They are used when synthesizing the microstrip lines
+    int x_pos = 0;
+    QString wirestr = "";
+    QString componentstr = "";
+    QString paintingstr = "";
+    SchematicParser(laddercode, x_pos, componentstr, wirestr, paintingstr, schcode, Freq, Z0, RL, XL, Substrate, microsyn);
 
+    //Add components
+    Schematic += "<Components>\n";
+    Schematic+=componentstr;
+    Schematic += "</Components>\n";
 
+    //Add wires
+    Schematic+= "<Wires>\n";
+    Schematic += wirestr;
+    Schematic+= "</Wires>\n";
 
-    //Schematic
-
-    QString s = "<Qucs Schematic " PACKAGE_VERSION ">\n";
-    int x = 60;
-    s += "<Components>\n";
-
-    if (SP_block)// Source
-    {
-        s += QString("<Pac P1 1 %1 330 18 -26 0 1 \"1\" 1 \"%2 Ohm\" 1 \"0 dBm\" 0 \"1 GHz\" 0>\n").arg(x).arg(Z0);
-        s += QString("<GND * 1 %1 360 0 0 0 0>\n").arg(x);
-    }
-
-    x += 60;
-
-
-    // First stub
-    if (BalancedStubs)
-    {//Balanced stub implementation
-        //Balanced stub calculations
-        double lsb, K, lambda=SPEED_OF_LIGHT/Freq;
-        (open_short) ? K=0.5 : K=2;
-        (micro_syn) ? lambda=SPEED_OF_LIGHT/(sqrt(Substrate.er)*Freq) : lambda=SPEED_OF_LIGHT/Freq;
-        lsb = (lambda/(2*pi))*atan(K*tan((2*pi*lstub2)/lambda));
-        if (lsb < 0) lsb+=0.5*lambda;//If the length of the stub is less than 0, it adds 0.5*lambda
-
-        if (micro_syn)//Microstrip implementation
-        {
-            er = Substrate.er;
-            getMicrostrip(Z0, Freq, &Substrate, width, er);
-            s += QString("<MLIN MS1 1 %1 120 -26 20 0 1 \"Sub1\" 1 \"%2\" 1 \"%3\" 1 \"Hammerstad\" 0 \"Kirschning\" 0 \"26.85\" 0>\n").arg(x-20).arg(width).arg(lsb/sqrt(er));
-            s += QString("<MLIN MS1 1 %1 240 -26 20 0 1 \"Sub1\" 1 \"%2\" 1 \"%3\" 1 \"Hammerstad\" 0 \"Kirschning\" 0 \"26.85\" 0>\n").arg(x-20).arg(width).arg(lsb/sqrt(er));
-        }
-        else
-        {
-            s += QString("<TLIN Line1 1 %1 120 -26 20 0 1 \"%2\" 1 \"%3\" 1 \"0 dB\" 0 \"26.85\" 0>\n").arg(x-20).arg(Z0).arg(lsb);
-            s += QString("<TLIN Line1 1 %1 240 -26 20 0 1 \"%2\" 1 \"%3\" 1 \"0 dB\" 0 \"26.85\" 0>\n").arg(x-20).arg(Z0).arg(lsb);
-        }
-        if (!open_short)//It adds ground components if short stub configuration is selected
-        {
-            s += QString("<GND * 1 %1 90 0 0 -1 1>\n").arg(x-20);
-            s += QString("<GND * 1 %1 270 0 0 -1 1>\n").arg(x-20);
-        }
-    }
-    else
-    {//Unbalanced stub implementation
-        if (micro_syn)//Microstrip implementation
-        {
-            er = Substrate.er;
-            getMicrostrip(Z0, Freq, &Substrate, width, er);
-            s += QString("<MLIN MS1 1 %1 120 -26 20 0 1 \"Sub1\" 1 \"%2\" 1 \"%3\" 1 \"Hammerstad\" 0 \"Kirschning\" 0 \"26.85\" 0>\n").arg(x-20).arg(width).arg(lstub2/sqrt(er));
-        }
-        else//Ideal transmission line implementation
-        {
-            s += QString("<TLIN Line1 1 %1 120 -26 20 0 1 \"%2\" 1 \"%3\" 1 \"0 dB\" 0 \"26.85\" 0>\n").arg(x-20).arg(Z0).arg(lstub2);
-        }
-        if (!open_short)s += QString("<GND * 1 %1 90 0 0 -1 1>\n").arg(x-20);//It adds a ground component if short stub configuration is selected
-    }
-
-    x+=40;
-
-
-    if (micro_syn)//Line
-    {
-        er = Substrate.er;
-        getMicrostrip(Z0, Freq, &Substrate, width, er);
-        s += QString("<MLIN MS1 1 %1 180 -26 20 0 0 \"Sub1\" 1 \"%2\" 1 \"%3\" 1 \"Hammerstad\" 0 \"Kirschning\" 0 \"26.85\" 0>\n").arg(x).arg(width).arg(d/sqrt(er));
-    }
-    else
-    {
-        s += QString("<TLIN Line1 1 %1 180 -26 20 0 0 \"%2\" 1 \"%3\" 1 \"0 dB\" 0 \"26.85\" 0>\n").arg(x).arg(Z0).arg(d);
-    }
-
-    x += 80;
-
-
-    if (BalancedStubs)//Second stub
-    {//Balanced stub implementation
-        //Balanced stub calculations
-        double lsb, K, lambda=SPEED_OF_LIGHT/Freq;
-        (open_short) ? K=0.5 : K=2;
-        (micro_syn) ? lambda=SPEED_OF_LIGHT/(sqrt(Substrate.er)*Freq) : lambda=SPEED_OF_LIGHT/Freq;
-        lsb = (lambda/(2*pi))*atan(K*tan((2*pi*lstub1)/lambda));
-        if (lsb < 0) lsb+=0.5*lambda;//If the length of the stub is less than 0, it adds 0.5*lambda
-
-        if (micro_syn)//Microstrip implementation
-        {
-            er = Substrate.er;
-            getMicrostrip(Z0, Freq, &Substrate, width, er);
-            s += QString("<MLIN MS1 1 %1 120 -26 20 0 1 \"Sub1\" 1 \"%2\" 1 \"%3\" 1 \"Hammerstad\" 0 \"Kirschning\" 0 \"26.85\" 0>\n").arg(x-10).arg(width).arg(lsb/sqrt(er));
-            s += QString("<MLIN MS1 1 %1 240 -26 20 0 1 \"Sub1\" 1 \"%2\" 1 \"%3\" 1 \"Hammerstad\" 0 \"Kirschning\" 0 \"26.85\" 0>\n").arg(x-10).arg(width).arg(lsb/sqrt(er));
-        }
-        else//Ideal transmission line implementation
-        {
-            s += QString("<TLIN Line1 1 %1 120 -26 20 0 1 \"%2\" 1 \"%3\" 1 \"0 dB\" 0 \"26.85\" 0>\n").arg(x-10).arg(Z0).arg(lsb);
-            s += QString("<TLIN Line1 1 %1 240 -26 20 0 1 \"%2\" 1 \"%3\" 1 \"0 dB\" 0 \"26.85\" 0>\n").arg(x-10).arg(Z0).arg(lsb);
-        }
-        if (!open_short)//It adds ground components if short stub configuration is selected
-        {
-            s += QString("<GND * 1 %1 90 0 0 -1 1>\n").arg(x-10);
-            s += QString("<GND * 1 %1 270 0 0 -1 1>\n").arg(x-10);
-        }
-    }
-    else
-    {//Unbalanced stub implementation
-        if (micro_syn)// Microstrip implementation
-        {
-            er = Substrate.er;
-            getMicrostrip(Z0, Freq, &Substrate, width, er);
-            s += QString("<MLIN MS1 1 %1 120 -26 20 0 1 \"Sub1\" 1 \"%2\" 1 \"%3\" 1 \"Hammerstad\" 0 \"Kirschning\" 0 \"26.85\" 0>\n").arg(x-10).arg(width).arg(lstub1/sqrt(er));
-        }
-        else//Ideal transmission line implementation
-        {
-            s += QString("<TLIN Line1 1 %1 120 -26 20 0 1 \"%2\" 1 \"%3\" 1 \"0 dB\" 0 \"26.85\" 0>\n").arg(x-10).arg(Z0).arg(lstub1);
-        }
-
-        if (!open_short)s += QString("<GND * 1 %1 90 0 0 -1 1>\n").arg(x-10);
-    }
-
-    x += 80;
-
-    if (SP_block)//Load
-    {// The load impedance is synthesized using lumped components.
-        if ((RL > 1e-4)&&(XL< 0)) // R + C
-        {
-            s += QString("<R R1 1 %1 270 15 -26 0 -1 \"%2 Ohm\" 1 \"26.85\" 0 \"US\" 0>\n").arg(x).arg(RL);
-            s += QString("<C C1 1 %1 330 15 -26 0 -1 \"%2 F\" 1 0>\n").arg(x).arg(1/(fabs(XL)*2*pi*Freq));
-        }
-        if ((RL > 1e-4)&&(XL > 0))// R + L
-        {
-            s += QString("<R R1 1 %1 270 15 -26 0 -1 \"%2 Ohm\" 1 \"26.85\" 0 \"US\" 0>\n").arg(x).arg(RL);
-            s += QString("<L L1 1 %1 330 15 -26 0 -1 \"%2 H\" 1 0>\n").arg(x).arg(XL/(2*pi*Freq));
-        }
-        if ((RL > 1e-4)&&(XL == 0))// R
-        {
-            s += QString("<R R1 1 %1 270 15 -26 0 -1 \"%2 Ohm\" 1 \"26.85\" 0 \"US\" 0>\n").arg(x).arg(RL);
-        }
-        if ((RL < 1e-4)&&(XL > 0))// L
-        {
-            s += QString("<L L1 1 %1 270 15 -26 0 -1 \"%2 H\" 1 \"26.85\" 0 \"US\" 0>\n").arg(x).arg(RL);
-        }
-        if ((RL < 1e-4)&&(XL< 0))// C
-        {
-            s += QString("<C C1 1 %1 270 15 -26 0 -1 \"%2 F\" 1 \"26.85\" 0 \"US\" 0>\n").arg(x).arg(RL);
-        }
-
-        s += QString("<GND * 1 %1 360 0 0 0 0>\n").arg(x);
-
-        double freq_start = std::max(0., Freq-1e9);
-        double freq_stop = Freq+1e9;
-        s += QString("<.SP SP1 1 70 460 0 67 0 0 \"lin\" 1 \"%2Hz\" 1 \"%3Hz\" 1 \"300\" 1 \"no\" 0 \"1\" 0 \"2\" 0>\n").arg((freq_start)).arg((freq_stop));
-        s += QString("<Eqn Eqn1 1 450 560 -28 15 0 0 \"S11_dB=dB(S[1,1])\" 1 \"yes\" 0>\n");
-    }
-    if (micro_syn)s += QString("<SUBST Sub1 1 300 500 -30 24 0 0 \"%1\" 1 \"%2mm\" 1 \"%3um\" 1 \"%4\" 1 \"%5\" 1 \"%6\" 1>\n").arg(Substrate.er).arg(Substrate.height*1e3).arg(Substrate.thickness*1e6).arg(Substrate.tand).arg(Substrate.resistivity).arg(Substrate.roughness);
-
-    s += "</Components>\n";
-    s += "<Wires>\n";
-
-
-    s += QString("<60 180 130 180 \"\" 0 0 0>\n");
-
-    if (SP_block)
-    {
-        // connect left source
-        s += QString("<60 180 60 300 \"\" 0 0 0>\n");
-        // connect right source
-        if ((RL > 1e-4)&&(XL != 0))
-        {
-            s += QString("<%1 180 %2 240 \"\" 0 0 0>\n").arg(x).arg(x);
-        }
-        if ((RL < 1e-4)||(XL == 0))
-        {
-            s += QString("<%1 180 %2 240 \"\" 0 0 0>\n").arg(x).arg(x);
-            s += QString("<%1 300 %2 360 \"\" 0 0 0>\n").arg(x).arg(x);
-        }
-    }
-    s += QString("<%1 180 %2 180 \"\" 0 0 0>\n").arg(x-130).arg(x);
-
-    //Stub wiring
-    s += QString("<100 150 100 180 \"\" 0 0 0>\n");//Stub 1
-    s += QString("<%1 180 %2 150 \"\" 0 0 0>\n").arg(x-90).arg(x-90);//Stub 2
-    if (BalancedStubs)
-    {
-        s += QString("<100 180 100 210 \"\" 0 0 0>\n");//Stub 1
-        s += QString("<%1 180 %2 210 \"\" 0 0 0>\n").arg(x-90).arg(x-90);//Stub 2
-    }
-
-    s += "</Wires>\n";
-
-    if (SP_block)
-    {
-        s+= "<Paintings>\n";
-        s+= QString("<Rectangle %1 200 60 150 #000000 0 1 #c0c0c0 1 0>\n").arg(x-30);
-        if (XL == 0)
-        {
-            s+= QString("<Text %1 200 12 #000000 0 \"Load: %2 %3 @ %4 GHz\">\n").arg(x+30).arg(RL).arg(QChar (0x2126)).arg(Freq*1e-9);
-        }
-        else
-        {(XL > 0) ? s+= QString("<Text %1 200 12 #000000 0 \"Load: %2+j%3 %4 @ %5 GHz\">\n").arg(x+30).arg(RL).arg(XL).arg(QChar (0x2126)).arg(Freq*1e-9):
-                    s+= QString("<Text %1 200 12 #000000 0 \"Load: %2-j%3 %4 @ %5 GHz\">\n").arg(x+30).arg(RL).arg(abs(XL)).arg(QChar (0x2126)).arg(Freq*1e-9);
-        }
-        s+="</Paintings>\n";
-    }
-    s += "<Diagrams>\n";
-    s += "</Diagrams>\n";
-
-    QApplication::clipboard()->setText(s, QClipboard::Clipboard);
+    //Add paintings
+    Schematic += "<Paintings>\n";
+    Schematic += paintingstr;
+    Schematic += "</Paintings>\n";
+    QApplication::clipboard()->setText(Schematic, QClipboard::Clipboard);
     return true;
-
 }
-
 
 
 // ----------------------------------------------------------------------------------
 // This function calculates a matching network for a single port using cascaded sections
 // of lambda/4 lines. It can also convert these lines microstrip lines
 // See Microwave Engineering. David Pozar. John Wiley and Sons. 4th Edition. Pg 252-256
-bool MatchDialog::calcMatchingCircuitCascadedLambda4(double r_real, double r_imag, double Z0, double Freq, bool micro_syn, bool SP_block, tSubstrate Substrate, double gamma, int order)
+bool MatchDialog::calcMatchingCircuitCascadedLambda4(double r_real, double r_imag, double Z0, double Freq, bool microsyn, bool SP_Block, tSubstrate Substrate, double gamma, int order)
 {
-    QString str;
-    (BinRadio->isChecked()) ? str = calcBinomialLines(r_real, r_imag, Z0, order) : str = calcChebyLines(r_real, r_imag, Z0, gamma, order);
+    QString laddercode;
+    (BinRadio->isChecked()) ? laddercode = calcBinomialLines(r_real, r_imag, Z0, order, Freq) : laddercode = calcChebyLines(r_real, r_imag, Z0, gamma, order, Freq);
     double RL = r_real, XL=r_imag;
+    int schcode = -1;
     r2z(RL, XL, Z0);
-    double er, width, Zi;
-    double lambda = SPEED_OF_LIGHT/Freq;
-    double lambda4 = lambda/4;
 
+    QString Schematic = "<Qucs Schematic " PACKAGE_VERSION ">\n";
 
-    // Schematic synthesis
+    if (SP_Block) schcode = 3;
 
-    QString s = "<Qucs Schematic " PACKAGE_VERSION ">\n";
-    int x = 60;
-    s += "<Components>\n";
+    int x_pos = 0;
+    QString wirestr = "";
+    QString componentstr = "";
+    QString paintingstr = "";
+    SchematicParser(laddercode, x_pos, componentstr, wirestr, paintingstr, schcode, Freq, Z0, RL, XL, Substrate, microsyn);
 
-    if(SP_block)//Source
-    {
-        s += QString("<Pac P1 1 %1 330 18 -26 0 1 \"1\" 1 \"%2 Ohm\" 1 \"0 dBm\" 0 \"1 GHz\" 0>\n").arg(x).arg(Z0);
-        s += QString("<GND * 1 %1 360 0 0 0 0>\n").arg(x);
-    }
+    //Add components
+    Schematic += "<Components>\n";
+    Schematic+=componentstr;
+    Schematic += "</Components>\n";
 
-    for (int i = 1; i <order; i++)
-    {
-        x += 90;
-        Zi = str.section(';', i-1, i-1).toDouble();
-        if (micro_syn)//Line
-        {
-            er = Substrate.er;
-            getMicrostrip(Zi, Freq, &Substrate, width, er);
-            s += QString("<MLIN MS1 1 %1 180 -26 20 0 0 \"Sub1\" 1 \"%2\" 1 \"%3\" 1 \"Hammerstad\" 0 \"Kirschning\" 0 \"26.85\" 0>\n").arg(x+30).arg(width).arg(lambda4/sqrt(er));
-        }
-        else
-        {
-            s += QString("<TLIN Line1 1 %1 180 -26 20 0 0 \"%2\" 1 \"%3\" 1 \"0 dB\" 0 \"26.85\" 0>\n").arg(x+30).arg(Zi).arg(lambda4);
-        }
-    }
-    x += 90;
+    //Add wires
+    Schematic+= "<Wires>\n";
+    Schematic += wirestr;
+    Schematic+= "</Wires>\n";
 
-    if (SP_block)//Another source. Since quarter wave method can only deal with real impedances, a regular source is used.
-    {
-        s += QString("<Pac P1 1 %1 270 15 -26 0 1 \"1\" 1 \"%2 Ohm\" 1 \"0 dBm\" 0 \"1 GHz\" 0>\n").arg(x+20).arg(RL);
-        s += QString("<GND * 1 %1 360 0 0 0 0>\n").arg(x+20);
-    }
+    //Add paintings
+    Schematic += "<Paintings>\n";
+    Schematic += paintingstr;
+    Schematic += "</Paintings>\n";
 
-    if (SP_block)//S-parameter simulation block
-    {
-        double freq_start = std::max(0., Freq-2e9);
-        double freq_stop = Freq+2e9;
-        s += QString("<.SP SP1 1 70 460 0 67 0 0 \"lin\" 1 \"%2Hz\" 1 \"%3Hz\" 1 \"300\" 1 \"no\" 0 \"1\" 0 \"2\" 0>\n").arg((freq_start)).arg((freq_stop));
-        s += QString("<Eqn Eqn1 1 450 560 -28 15 0 0 \"S21_dB=dB(S[2,1])\" 1 \"S11_dB=dB(S[1,1])\" 1 \"yes\" 0>\n");
-    }
-
-    // Substrate
-    if (micro_syn)s += QString("<SUBST Sub1 1 300 500 -30 24 0 0 \"%1\" 1 \"%2mm\" 1 \"%3um\" 1 \"%4\" 1 \"%5\" 1 \"%6\" 1>\n").arg(Substrate.er).arg(Substrate.height*1e3).arg(Substrate.thickness*1e6).arg(Substrate.tand).arg(Substrate.resistivity).arg(Substrate.roughness);
-
-    s += "</Components>\n";
-    s += "<Wires>\n";
-
-    // connect left source
-    if (SP_block) s += QString("<60 180 60 300 \"\" 0 0 0>\n");
-    s += QString("<60 180 150 180 \"\" 0 0 0>\n");
-
-    x=210;
-    for (int i = 1; i<order-1; i++)
-    {
-        s += QString("<%1 180 %2 180 \"\" 0 0 0>\n").arg(x).arg(x+30);
-        x+=90;
-    }
-
-    x+=50;
-    s += QString("<%1 180 %2 180 \"\" 0 0 0>\n").arg(x-50).arg(x);
-    if (SP_block)
-    {// connect right source
-        s += QString("<%1 180 %2 240 \"\" 0 0 0>\n").arg(x).arg(x);
-        s += QString("<%1 300 %2 360 \"\" 0 0 0>\n").arg(x).arg(x);
-    }
-
-    s += "</Wires>\n";
-
-    if (SP_block)
-    {
-        s+= "<Paintings>\n";
-        s+= QString("<Rectangle %1 200 60 150 #000000 0 1 #c0c0c0 1 0>\n").arg(x-30);
-        if (XL == 0)
-        {
-            s+= QString("<Text %1 200 12 #000000 0 \"Load: %2 %3 @ %4 GHz\">\n").arg(x+30).arg(RL).arg(QChar (0x2126)).arg(Freq*1e-9);
-        }
-        else
-        {(XL > 0) ? s+= QString("<Text %1 200 12 #000000 0 \"Load: %2+j%3 %4 @ %5 GHz\">\n").arg(x+30).arg(RL).arg(XL).arg(QChar (0x2126)).arg(Freq*1e-9):
-                    s+= QString("<Text %1 200 12 #000000 0 \"Load: %2-j%3 %4 @ %5 GHz\">\n").arg(x+30).arg(RL).arg(abs(XL)).arg(QChar (0x2126)).arg(Freq*1e-9);
-        }
-        s+="</Paintings>\n";
-    }
-
-    s += "<Diagrams>\n";
-    s += "</Diagrams>\n";
-
-    QApplication::clipboard()->setText(s, QClipboard::Clipboard);
+    QApplication::clipboard()->setText(Schematic, QClipboard::Clipboard);
     return true;
 }
 
 
 // -----------------------------------------------------------------------
-// This function calculates one port matching according to the selected technique
+// This function calls the specific matching network function so as to get the desired matching topology
 bool MatchDialog::calcMatchingCircuit(double S11real, double S11imag,double Z0, double Freq, bool micro_syn, bool SP_block, bool open_short, tSubstrate Substrate, int order, double gamma_MAX, bool BalancedStubs)
 {
     switch(TopoCombo->currentIndex())
@@ -1332,6 +943,9 @@ bool MatchDialog::calcMatchingCircuit(double S11real, double S11imag,double Z0, 
     case 3: // Quarter wave cascaded sections
         if(!calcMatchingCircuitCascadedLambda4(S11real, S11imag, Z0, Freq, micro_syn, SP_block, Substrate, gamma_MAX, order))return false;
         break;
+    case 4: //Cascaded LC sections
+        if(!calcMatchingCircuitCascadedLCSections(S11real, S11imag, Z0, Freq, SP_block, order))return false;
+        break;
     }
     return true;
 }
@@ -1339,177 +953,95 @@ bool MatchDialog::calcMatchingCircuit(double S11real, double S11imag,double Z0, 
 
 // -----------------------------------------------------------------------
 // This function calculates one port LC matching
-bool MatchDialog::calcMatchingCircuitLC(double r_real, double r_imag,
-                                        double Z0, double Freq, bool SP_block)
+bool MatchDialog::calcMatchingCircuitLC(double r_real, double r_imag, double Z0, double Freq, bool SP_Block)
 {
+    QString laddercode = calcMatchingLC(r_real, r_imag, Z0, Freq);//It calculates the LC matching circuit.
     double RL=r_real, XL=r_imag;
+    int schcode=-1;
     r2z(RL, XL, Z0);
-    QString Schematic =
-            "<Qucs Schematic " PACKAGE_VERSION ">\n"
-            "<Components>\n";
 
-    if (SP_block)
-    {
-        // Source
-        Schematic += QString("<Pac P1 1 -150 70 18 -26 0 1 \"1\" 1 \"%1 Ohm\" 1 \"0 dBm\" 0 \"1 GHz\" 0>\n").arg(Z0);
-        Schematic += QString("<GND * 1 -150 100 0 0 0 0>\n");
+    //Header
+    QString Schematic = "<Qucs Schematic " PACKAGE_VERSION ">\n";
 
-        // Load
-        // The load impedance is synthesized using lumped components.
-        int x=200;
-        if ((RL > 1e-4)&&(XL < 0))//R + C
-        {
-            Schematic += QString("<R R1 1 %1 40 15 -26 0 -1 \"%2 Ohm\" 1 \"26.85\" 0 \"US\" 0>\n").arg(x).arg(RL);
-            Schematic += QString("<C C1 1 %1 100 15 -26 0 -1 \"%2 F\" 1 0>\n").arg(x).arg(1/(fabs(XL)*2*pi*Freq));
-            Schematic += QString("<GND * 1 %1 130 0 0 0 0>\n").arg(x);
-        }
-        if ((RL > 1e-4)&&(XL > 0))//R + L
-        {
-            Schematic += QString("<R R1 1 %1 40 15 -26 0 -1 \"%2 Ohm\" 1 \"26.85\" 0 \"US\" 0>\n").arg(x).arg(RL);
-            Schematic += QString("<L L1 1 %1 100 15 -26 0 -1 \"%2 H\" 1 0>\n").arg(x).arg(XL/(2*pi*Freq));
-            Schematic += QString("<GND * 1 %1 130 0 0 0 0>\n").arg(x);
-        }
-        if ((RL > 1e-4)&&(XL == 0))//R
-        {
-            Schematic += QString("<R R1 1 %1 40 15 -26 0 -1 \"%2 Ohm\" 1 \"26.85\" 0 \"US\" 0>\n").arg(x).arg(RL);
-            Schematic += QString("<GND * 1 %1 110 0 0 0 0>\n").arg(x);
-        }
-        if ((RL < 1e-4)&&(XL > 0))//L
-        {
-            Schematic += QString("<L L1 1 %1 40 15 -26 0 -1 \"%2 H\" 1 0>\n").arg(x).arg(XL/(2*pi*Freq));
-            Schematic += QString("<GND * 1 %1 110 0 0 0 0>\n").arg(x);
-        }
-        if ((RL < 1e-4)&&(XL < 0))//C
-        {
-            Schematic += QString("<C C1 1 %1 40 15 -26 0 -1 \"%2 F\" 1 0>\n").arg(x).arg(XL/(2*pi*Freq));
-            Schematic += QString("<GND * 1 %1 110 0 0 0 0>\n").arg(x);
-        }
+    if (SP_Block) schcode = 3;
 
+    int x_pos = 0;
+    QString wirestr = "";
+    QString componentstr = "";
+    QString paintingstr = "";
+    tSubstrate Subs;
 
-        //Add the frequency range for the S-param simulation
-        double freq_start = std::max(0., Freq-1e9);
-        double freq_stop = Freq+1e9;
-        Schematic += QString("<.SP SP1 1 -70 300 0 67 0 0 \"lin\" 1 \"%2Hz\" 1 \"%3Hz\" 1 \"300\" 1 \"no\" 0 \"1\" 0 \"2\" 0>\n").arg((freq_start)).arg((freq_stop));
-        Schematic += QString("<Eqn Eqn1 1 100 300 -28 15 0 0 \"S11_dB=dB(S[1,1])\" 1 \"yes\" 0>\n");
-    }
+    SchematicParser(laddercode, x_pos, componentstr, wirestr, paintingstr, schcode, Freq, Z0, RL, XL, Subs, false);
 
+    //Add components
+    Schematic += "<Components>\n";
+    Schematic+=componentstr;
+    Schematic += "</Components>\n";
 
+    //Add wires
+    Schematic+= "<Wires>\n";
+    Schematic += wirestr;
+    Schematic+= "</Wires>\n";
 
-    QString Str = calcMatchingLC(r_real, r_imag, Z0, Freq);//It calculates the LC matching circuit.
-    if(Str.isEmpty())  return false;
+    //Add paintings
+    Schematic += "<Paintings>\n";
+    Schematic += paintingstr;
+    Schematic += "</Paintings>\n";
 
-    if(Str.section(':', 0,0) == "sp") {
-        // ...................................................
-        // first serial than parallel component
-
-        if(Str.section(':', 1,1).right(1) == "F")
-            Schematic += "<C C1";
-        else
-            Schematic += "<L L1";
-        Schematic += " 1 100 10 -26 10 0 0 \"" + Str.section(':', 1,1) + "\" 1>\n";
-
-        if(Str.section(':', 2,2).right(1) == "F")
-            Schematic += "<C C2";
-        else
-            Schematic += "<L L2";
-        Schematic += " 1 30 80 17 -26 0 1 \"" + Str.section(':', 2,2) + "\" 1>\n";
-
-        Schematic +=
-                "<GND * 1 30 110 0 0 0 0>\n"
-                "</Components>\n"
-                "<Wires>\n"
-                "<10 10 30 10 \"\" 0 0 0 \"\">\n"
-                "<30 10 70 10 \"\" 0 0 0 \"\">\n"
-                "<30 10 30 50 \"\" 0 0 0 \"\">\n";
-        if (SP_block)
-        {//Generator
-            Schematic += "<-150 10 10 10 \"\" 0 0 0 \"\">\n"
-                    "<-150 10 -150 40 \"\" 0 0 0 \"\">\n";
-
-            // Load
-            if ((XL != 0)&&(RL > 1e-4))
-            {
-                Schematic += "<200 10 130 10 \"\" 0 0 0 \"\">\n";
-            }
-            if ((XL == 0)||(RL < 1e-4))
-            {
-                Schematic += "<200 10 130 10 \"\" 0 0 0 \"\">\n"
-                        "<200 70 200 110 \"\" 0 0 0 \"\">\n";
-            }
-        }
-    }
-    else {
-        // ...................................................
-        // first parallel than serial component
-
-        if(Str.section(':', 1,1).right(1) == "F")
-            Schematic += "<C C1";
-        else
-            Schematic += "<L L1";
-        Schematic += " 1 50 10 -26 10 0 0 \"" + Str.section(':', 1,1) + "\" 1>\n";
-
-        if(Str.section(':', 2,2).right(1) == "F")
-            Schematic += "<C C2";
-        else
-            Schematic += "<L L2";
-        Schematic += " 1 130 70 17 -26 0 1 \"" + Str.section(':', 2,2) + "\" 1>\n";
-
-        Schematic +=
-                "<GND * 1 130 100 0 0 0 0>\n"
-                "</Components>\n"
-                "<Wires>\n"
-                "<130 10 130 40 \"\" 0 0 0 \"\">\n"
-                "<130 10 150 10 \"\" 0 0 0 \"\">\n"
-                "<80 10 130 10 \"\" 0 0 0 \"\">\n";
-        if (SP_block)
-        {
-            // Generator
-            Schematic += "<-150 10 20 10 \"\" 0 0 0 \"\">\n"
-                    "<-150 10 -150 40 \"\" 0 0 0 \"\">\n";
-
-            // Load
-            if ((XL != 0)&&(RL > 1e-4))
-            {
-                Schematic += "<200 10 130 10 \"\" 0 0 0 \"\">\n";
-            }
-            if ((XL == 0)||(RL < 1e-4))
-            {
-                Schematic += "<200 10 130 10 \"\" 0 0 0 \"\">\n"
-                        "<200 70 200 110 \"\" 0 0 0 \"\">\n";
-            }
-        }
-
-    }
-
-    Schematic += QString(
-                "</Wires>\n"
-                "<Diagrams>\n"
-                "</Diagrams>\n"
-                "<Paintings>\n"
-                "  <Text -20 -10 12 #000000 0 \"%1 Ohm\">\n"
-                "  <Text 120 -10 12 #000000 0 \"device\">\n").arg(Z0);
-
-
-    if (SP_block)
-    {
-        if (XL >0)Schematic +=   QString("<Line 180 -50 0 290 #000000 0 1>\n" "<Text 200 220 12 #000000 0 \"Load: %1 +j%2 %3 @ %4 GHz\">\n" "</Paintings>\n").arg(RL).arg(XL).arg(QChar (0x2126)).arg(Freq*1e-9);
-        if (XL < 0)Schematic +=   QString("<Line 180 -50 0 290 #000000 0 1>\n" "<Text 200 220 12 #000000 0 \"Load: %1 -j%2 %3 @ %4 GHz\">\n" "</Paintings>\n").arg(RL).arg(XL).arg(QChar (0x2126)).arg(Freq*1e-9);
-        if (XL == 0)Schematic +=   QString("<Line 180 -50 0 290 #000000 0 1>\n" "<Text 200 220 12 #000000 0 \"Load: %1  %2 @ %3 GHz\">\n" "</Paintings>\n").arg(RL).arg(QChar (0x2126)).arg(Freq*1e-9);
-    }
-    else
-    {
-        Schematic+="</Paintings>\n";
-    }
     QApplication::clipboard()->setText(Schematic, QClipboard::Clipboard);
     return true;
-
 }
+
+
+
+//------------------------------------------------------------------------
+//This function generates the Qucs schematic of a cascaded LC matching network
+// Reference: Inder J. Bahl. "Fundamentals of RF and microwave transistor amplifiers". John Wiley and Sons. 2009. Pages 169 - 170
+bool MatchDialog::calcMatchingCircuitCascadedLCSections(double r_real, double r_imag, double Z0, double Freq, bool SP_Block, int N)
+{
+    QString laddercode = calcMatchingCascadedLCSections(r_real, r_imag, Z0, Freq, N-1);
+    double RL=r_real, XL=r_imag;
+    int schcode = -1;
+    r2z(RL, XL, Z0);
+
+    //Header
+    QString Schematic = "<Qucs Schematic " PACKAGE_VERSION ">\n";
+
+    if (SP_Block) schcode = 3;
+
+    int x_pos = 0;
+    QString wirestr = "";
+    QString componentstr = "";
+    QString paintingstr = "";
+    tSubstrate Subs;
+    SchematicParser(laddercode, x_pos, componentstr, wirestr, paintingstr, schcode, Freq, Z0, RL, XL, Subs, false);
+
+    //Add components
+    Schematic += "<Components>\n";
+    Schematic+=componentstr;
+    Schematic += "</Components>\n";
+
+    //Add wires
+    Schematic+= "<Wires>\n";
+    Schematic += wirestr;
+    Schematic+= "</Wires>\n";
+
+    //Add paintings
+    Schematic += "<Paintings>\n";
+    Schematic += paintingstr;
+    Schematic += "</Paintings>\n";
+
+    QApplication::clipboard()->setText(Schematic, QClipboard::Clipboard);
+    return true;
+}
+
 
 // -----------------------------------------------------------------------
 // Fundamental calculations for concurrent 2-port matching.
 QString MatchDialog::calcBiMatch(double S11real, double S11imag,
                                  double S22real, double S22imag, double DetReal, double DetImag,
-                                 double Z0, double Freq, bool open_short, double gamma_MAX, int order)
+                                 double Z0, double Freq, bool open_short, double gamma_MAX, int order,
+                                 bool BalancedStubs)
 {
     double B = 1.0 + S11real*S11real + S11imag*S11imag
             - S22real*S22real - S22imag*S22imag
@@ -1532,25 +1064,28 @@ QString MatchDialog::calcBiMatch(double S11real, double S11imag,
         Rreal *= Creal;
     }
 
-    QString str;
+    QString laddercode;
 
     switch(TopoCombo->currentIndex()) //Matches both the input and the output port to external sources (typically, 50 Ohms)
     {
     case 0: // LC
-        str = calcMatchingLC(Rreal, -Rimag, Z0, Freq);
+        laddercode = calcMatchingLC(Rreal, -Rimag, Z0, Freq);
         break;
     case 1: // Single stub
-        str = calcSingleStub(Rreal, -Rimag, Z0, Freq, open_short);
+        laddercode = calcSingleStub(Rreal, -Rimag, Z0, Freq, open_short, BalancedStubs);
         break;
     case 2: // Double stub
-        str = calcDoubleStub(Rreal,-Rimag, Z0, Freq, open_short);
+        laddercode = calcDoubleStub(Rreal,-Rimag, Z0, Freq, open_short, BalancedStubs);
         break;
     case 3: // Quarter wave cascaded sections
-        (BinRadio->isChecked()) ? str = calcBinomialLines(Rreal, -Rimag, Z0, order) : str = calcChebyLines(Rreal, -Rimag, Z0, gamma_MAX, order);
+        (BinRadio->isChecked()) ? laddercode = calcBinomialLines(Rreal, -Rimag, Z0, order, Freq) : laddercode = calcChebyLines(Rreal, -Rimag, Z0, gamma_MAX, order, Freq);
+        break;
+    case 4: // Cascaded LC sections
+        laddercode = calcMatchingCascadedLCSections(Rreal, -Rimag, Z0, Freq, order);
         break;
     }
 
-    return str;
+    return laddercode;
 }
 
 // -----------------------------------------------------------------------
@@ -1559,801 +1094,52 @@ QString MatchDialog::calcBiMatch(double S11real, double S11imag,
 // according to the user choice
 bool MatchDialog::calc2PortMatch(double S11real, double S11imag,
                                  double S22real, double S22imag, double DetReal, double DetImag,
-                                 double Z1, double Z2, double Freq, bool micro_syn, bool SP_block, bool open_short, tSubstrate Substrate, int order, double gamma_MAX, bool BalancedStubs)
+                                 double Z1, double Z2, double Freq, bool microsyn, bool SP_Block, bool open_short,
+                                 tSubstrate Substrate, int order, double gamma_MAX, bool BalancedStubs)
 {
+    QString InputNetworkComponents, OutputNetworkComponents;
+    QString InputNewtworkWires, OutputNetworkWires;
     // Input port network
-    QString Input = calcBiMatch(S11real, S11imag, S22real, S22imag,
-                                DetReal, DetImag, Z1, Freq, open_short, gamma_MAX, order);
-    if(Input.isEmpty()) return false;
+    // The result is a string which gives the structure of the matching network
+    QString InputLadderCode = calcBiMatch(S11real, S11imag, S22real, S22imag,
+                                DetReal, DetImag, Z1, Freq, open_short, gamma_MAX, order, BalancedStubs);
+    if(InputLadderCode.isEmpty()) return false;
 
     // Output port network
-    QString Output = calcBiMatch(S22real, S22imag, S11real, S11imag,
-                                 DetReal, DetImag, Z2, Freq, open_short, gamma_MAX, order);
-    if(Output.isEmpty()) return false;
-
-    switch(TopoCombo->currentIndex())//Given the matching technique, it synthesizes both the input and the output network.
-    {
-    case 0: //LC
-        Create2Port_LC_matching_Schematic(Input, Output, Z1, Z2, Freq, SP_block);
-        break;
-    case 1: //Single stub
-        Create2Port_SingleStub_matching_Schematic(Input, Output, Z1, Z2, Freq, micro_syn, SP_block, open_short, Substrate, BalancedStubs);
-        break;
-    case 2: //Double stub
-        Create2Port_DoubleStub_matching_Schematic(Input, Output, Z1, Z2, Freq, micro_syn, SP_block, open_short, Substrate, BalancedStubs);
-        break;
-    case 3: // Cascaded quarter wave lines
-        Create2Port_Cascaded_lambda4_matching_Schematic(Input, Output, Z1, Z2, Freq, micro_syn, SP_block, Substrate, order);
-        break;
-
-    }
-    return true;
-}
-
-//---------------------------------------------------------------------
-// Generates the LC network for matching a two-port device
-bool MatchDialog::Create2Port_LC_matching_Schematic(QString Input, QString Output, double Z1, double Z2, double Freq, bool SP_block)
-{
-    QString Schematic =
-            "<Qucs Schematic " PACKAGE_VERSION ">\n"
-            "<Components>\n";
+    QString OutputLadderCode = calcBiMatch(S22real, S22imag, S11real, S11imag,
+                                 DetReal, DetImag, Z2, Freq, open_short, gamma_MAX, order, BalancedStubs);
+    if(OutputLadderCode.isEmpty()) return false;
 
 
-    // ...................................................
-    // create input circuit
+    int schcode = -1;
+    QString Schematic = "<Qucs Schematic " PACKAGE_VERSION ">\n";
 
-    if (SP_block)
-    {
-        Schematic += QString("<Pac P1 1 -250 70 18 -26 0 1 \"1\" 1 \"%1 Ohm\" 1 \"0 dBm\" 0 \"1 GHz\" 0>\n").arg(Z1);
-        Schematic += QString("<GND * 1 -250 100 0 0 0 0>\n");
-    }
+    if (SP_Block) schcode = 0;
+    int x_pos = 0;
+    QString input_wirestr = "", output_wirestr = "";
+    QString input_componentstr = "", output_componentstr = "";
+    QString paintingstr = "";
+    SchematicParser(InputLadderCode, x_pos, input_componentstr, input_wirestr, paintingstr, schcode, Freq, Z1, 0, 0, Substrate, microsyn);
+    if (SP_Block) schcode = 2;
+    x_pos += 200;
+    SchematicParser(OutputLadderCode, x_pos, output_componentstr, output_wirestr, paintingstr, schcode, Freq, 0, Z2, 0, Substrate, microsyn);
 
-    if(Input.section(':', 0,0) == "sp") {
-        // first serial than parallel component
+    //Add components
+    Schematic += "<Components>\n";
+    Schematic +=input_componentstr;
+    Schematic += QString("");
+    Schematic+=output_componentstr;
+    Schematic += "</Components>\n";
 
-        if(Input.section(':', 1,1).right(1) == "F")
-            Schematic += "<C C1";
-        else
-            Schematic += "<L L1";
-        Schematic += " 1 -50 10 -26 10 0 0 \"" + Input.section(':', 1,1) + "\" 1>\n";
-
-        if(Input.section(':', 2,2).right(1) == "F")
-            Schematic += "<C C2";
-        else
-            Schematic += "<L L2";
-        Schematic += " 1 -120 80 17 -26 0 1 \"" + Input.section(':', 2,2) + "\" 1>\n";
-
-        Schematic += "<GND * 1 -120 110 0 0 0 0>\n";
-    }
-    else {
-        // first parallel than serial component
-
-        if(Input.section(':', 1,1).right(1) == "F")
-            Schematic += "<C C1";
-        else
-            Schematic += "<L L1";
-        Schematic += " 1 -140 10 -26 10 0 0 \"" + Input.section(':', 1,1) + "\" 1>\n";
-
-        if(Input.section(':', 2,2).right(1) == "F")
-            Schematic += "<C C2";
-        else
-            Schematic += "<L L2";
-        Schematic += " 1 -60 70 17 -26 0 1 \"" + Input.section(':', 2,2) + "\" 1>\n";
-
-        Schematic += "<GND * 1 -60 100 0 0 0 0>\n";
-    }
-
-
-    // ...................................................
-    // create output circuit
-    if(Output.section(':', 0,0) == "sp") {
-        // first serial than parallel component
-
-        if(Output.section(':', 1,1).right(1) == "F")
-            Schematic += "<C C1";
-        else
-            Schematic += "<L L1";
-        Schematic += " 1 50 10 -26 10 0 0 \"" + Output.section(':', 1,1) + "\" 1>\n";
-
-        if(Output.section(':', 2,2).right(1) == "F")
-            Schematic += "<C C2";
-        else
-            Schematic += "<L L2";
-        Schematic += " 1 120 80 17 -26 0 1 \"" + Output.section(':', 2,2) + "\" 1>\n";
-
-        Schematic += "<GND * 1 120 110 0 0 0 0>\n";
-    }
-    else {
-        // ...................................................
-        // first parallel than serial component
-
-        if(Output.section(':', 1,1).right(1) == "F")
-            Schematic += "<C C1";
-        else
-            Schematic += "<L L1";
-        Schematic += " 1 140 10 -26 10 0 0 \"" + Output.section(':', 1,1) + "\" 1>\n";
-
-        if(Output.section(':', 2,2).right(1) == "F")
-            Schematic += "<C C2";
-        else
-            Schematic += "<L L2";
-        Schematic += " 1 60 70 17 -26 0 1 \"" + Output.section(':', 2,2) + "\" 1>\n";
-
-        Schematic += "<GND * 1 60 100 0 0 0 0>\n";
-    }
-
-    if (SP_block)
-    {
-        Schematic += QString("<Pac P1 1 250 70 18 -26 0 1 \"1\" 1 \"%1 Ohm\" 1 \"0 dBm\" 0 \"1 GHz\" 0>\n").arg(Z2);
-        Schematic += QString("<GND * 1 250 100 0 0 0 0>\n");
-        double freq_start = std::max(0., Freq-1e9);
-        double freq_stop = Freq+1e9;
-        Schematic += QString("<.SP SP1 1 -20 200 0 67 0 0 \"lin\" 1 \"%2Hz\" 1 \"%3Hz\" 1 \"300\" 1 \"no\" 0 \"1\" 0 \"2\" 0>\n").arg((freq_start)).arg((freq_stop));
-        Schematic += QString("<Eqn Eqn1 1 200 200 -28 15 0 0 \"S11_dB=dB(S[1,1])\" 1 \"yes\" 0>\n");
-    }
-
-    Schematic += "</Components>\n"
-            "<Wires>\n";
-
-
-    // ...................................................
-    // create wires for input circuit
-    if(Input.section(':', 0,0) == "sp") // first serial than parallel component
-    { Schematic +=
-                "<-140 10 -120 10 \"\" 0 0 0 \"\">\n"
-                "<-120 10 -80 10 \"\" 0 0 0 \"\">\n"
-                "<-120 10 -120 50 \"\" 0 0 0 \"\">\n";
-        if (SP_block)
-        {
-            Schematic += "<-250 10 -120 10 \"\" 0 0 0 \"\">\n"
-                    "<-250 10 -250 40 \"\" 0 0 0 \"\">\n";
-        }
-    }
-    else    // first parallel than serial component
-    {  Schematic +=
-                "<-60 10 -60 40 \"\" 0 0 0 \"\">\n"
-                "<-60 10 -40 10 \"\" 0 0 0 \"\">\n"
-                "<-110 10 -60 10 \"\" 0 0 0 \"\">\n";
-        if (SP_block)
-        {
-            Schematic += "<-250 10 -170 10 \"\" 0 0 0 \"\">\n"
-                    "<-250 10 -250 40 \"\" 0 0 0 \"\">\n";
-        }
-    }
-
-
-
-    // ...................................................
-    // create wires for output circuit
-    if(Output.section(':', 0,0) == "sp") // first serial than parallel component
-    {  Schematic +=
-                "<140 10 120 10 \"\" 0 0 0 \"\">\n"
-                "<120 10 80 10 \"\" 0 0 0 \"\">\n"
-                "<120 10 120 50 \"\" 0 0 0 \"\">\n";
-        if (SP_block)
-        {
-            Schematic += "<250 10 120 10 \"\" 0 0 0 \"\">\n"
-                    "<250 10 250 40 \"\" 0 0 0 \"\">\n";
-        }
-    }
-    else    // first parallel than serial component
-    {
-        Schematic +=
-                "<60 10 60 40 \"\" 0 0 0 \"\">\n"
-                "<60 10 40 10 \"\" 0 0 0 \"\">\n"
-                "<110 10 60 10 \"\" 0 0 0 \"\">\n";
-        if (SP_block)
-        {
-            Schematic +=  "<250 10 170 10 \"\" 0 0 0 \"\">\n"
-                    "<250 10 250 40 \"\" 0 0 0 \"\">\n";
-        }
-    }
-    Schematic +=
-            "</Wires>\n"
-            "<Diagrams>\n"
-            "</Diagrams>\n"
-            "<Paintings>\n"
-            "  <Text -200 -10 12 #000000 0 \"Port 1\">\n"
-            "  <Text -20 -10 12 #000000 0 \"device\">\n"
-            "  <Text 160 -10 12 #000000 0 \"Port 2\">\n"
-            "</Paintings>\n";
-
+    //Add wires
+    Schematic+= "<Wires>\n";
+    Schematic += input_wirestr;
+    Schematic += output_wirestr;
+    Schematic+= "</Wires>\n";
     QApplication::clipboard()->setText(Schematic, QClipboard::Clipboard);
     return true;
 }
 
-//---------------------------------------------------------------------------------------------
-// It creates a single stub matching network at the input and the output port so as to match a two-port device
-bool MatchDialog::Create2Port_SingleStub_matching_Schematic(QString Input, QString Output, double Z1, double Z2, double Freq, bool micro_syn, bool SP_block, bool open_short, tSubstrate Substrate, bool BalancedStubs)
-{
-    double er, width;//Dielectric coefficient and width of the microstrip line. They are used when synthesizing the microstrip lines
-
-    QString s = "<Qucs Schematic " PACKAGE_VERSION ">\n";
-
-    s += "<Components>\n";
-    // Getting the dimmensions of the lines/stubs
-    double D_port1 = Input.section(';', 0, 0).toDouble();
-    double L_port1 = Input.section(';', 1, 1).toDouble();
-    double D_port2 = Output.section(';', 0, 0).toDouble();
-    double L_port2 = Output.section(';', 1, 1).toDouble();
-
-    if (SP_block)//Source
-    {
-        s += QString("<Pac P1 1 0 330 18 -26 0 1 \"1\" 1 \"%1 Ohm\" 1 \"0 dBm\" 0 \"1 GHz\" 0>\n").arg(Z1);
-        s += QString("<GND * 1 0 360 0 0 0 0>\n");
-    }
-
-    //INPUT matching network
-    //Stub
-    if (BalancedStubs)
-    {//Balanced stub implementation
-        //Balanced stub equations
-        double lsb, K, lambda=SPEED_OF_LIGHT/Freq;
-        (open_short) ? K=0.5 : K=2;
-        (micro_syn) ? lambda=SPEED_OF_LIGHT/(sqrt(Substrate.er)*Freq) : lambda=SPEED_OF_LIGHT/Freq;
-        lsb = (lambda/(2*pi))*atan(K*tan((2*pi*L_port1)/lambda));
-        if (lsb < 0) lsb+=0.5*lambda;
-        if (micro_syn)//Microstrip synthesis
-        {
-            er = Substrate.er;
-            getMicrostrip(Z1, Freq, &Substrate, width, er);
-            s += QString("<MLIN MS1 1 60 120 -26 20 0 -1 \"Sub1\" 1 \"%1\" 1 \"%2\" 1 \"Hammerstad\" 0 \"Kirschning\" 0 \"26.85\" 0>\n").arg(width).arg(lsb/sqrt(er));
-            s += QString("<MLIN MS1 1 60 230 -26 20 0 -1 \"Sub1\" 1 \"%1\" 1 \"%2\" 1 \"Hammerstad\" 0 \"Kirschning\" 0 \"26.85\" 0>\n").arg(width).arg(lsb/sqrt(er));
-        }
-        else//Ideal transmission lines
-        {
-            s += QString("<TLIN Line1 1 60 120 -26 20 0 -1 \"%1\" 1 \"%2\" 1 \"0 dB\" 0 \"26.85\" 0>\n").arg(Z1).arg(lsb);
-            s += QString("<TLIN Line1 1 60 230 -26 20 0 -1 \"%1\" 1 \"%2\" 1 \"0 dB\" 0 \"26.85\" 0>\n").arg(Z1).arg(lsb);
-        }
-        if (!open_short)//It adds a ground component if short stub configuration is selected
-        {
-            s += QString("<GND * 1 60 90 0 0 -1 1>\n");
-            s += QString("<GND * 1 60 260 0 0 -1 1>\n");
-        }
-    }
-    else
-    {//Unbalanced stub implementation
-        if (micro_syn)//Microstrip implementation
-        {
-            er = Substrate.er;
-            getMicrostrip(Z1, Freq, &Substrate, width, er);
-            s += QString("<MLIN MS1 1 60 120 -26 20 0 -1 \"Sub1\" 1 \"%1\" 1 \"%2\" 1 \"Hammerstad\" 0 \"Kirschning\" 0 \"26.85\" 0>\n").arg(width).arg(L_port1/sqrt(er));
-        }
-        else//Ideal transmission line
-        {
-            s += QString("<TLIN Line1 1 60 120 -26 20 0 -1 \"%1\" 1 \"%2\" 1 \"0 dB\" 0 \"26.85\" 0>\n").arg(Z1).arg(L_port1);
-        }
-        if (!open_short)s += QString("<GND * 1 60 90 0 0 -1 1>\n");//It adds a ground component if short stub configuration is selected
-    }
-
-    //Line
-    if (micro_syn)//Microstrip implementation
-    {
-        er = Substrate.er;
-        getMicrostrip(Z1, Freq, &Substrate, width, er);
-        s += QString("<MLIN MS1 1 100 180 -26 20 0 0 \"Sub1\" 1 \"%1\" 1 \"%2\" 1 \"Hammerstad\" 0 \"Kirschning\" 0 \"26.85\" 0>\n").arg(width).arg(D_port1/sqrt(er));
-    }
-    else//Ideal transmission lines
-    {
-        s += QString("<TLIN Line1 1 100 180 -26 20 0 0 \"%1\" 1 \"%2\" 1 \"0 dB\" 0 \"26.85\" 0>\n").arg(Z1).arg(D_port1);
-    }
-
-
-    // OUTPUT matching network
-
-    //Line
-    if (micro_syn)//Microstrip implementation
-    {
-        er = Substrate.er;
-        getMicrostrip(Z2, Freq, &Substrate, width, er);
-        s += QString("<MLIN MS1 1 320 180 -26 20 0 0 \"Sub1\" 1 \"%1\" 1 \"%2\" 1 \"Hammerstad\" 0 \"Kirschning\" 0 \"26.85\" 0>\n").arg(width).arg(D_port2/sqrt(er));
-    }
-    else//Ideal transmission lines
-    {
-        s += QString("<TLIN Line1 1 320 180 -26 20 0 0 \"%1\" 1 \"%2\" 1 \"0 dB\" 0 \"26.85\" 0>\n").arg(Z2).arg(D_port2);
-    }
-
-    //Stub
-    if (BalancedStubs)
-    {//Balanced stub implementation
-        // Balanced lines equations
-        double lsb, K, lambda=SPEED_OF_LIGHT/Freq;
-        (open_short) ? K=0.5 : K=2;
-        (micro_syn) ? lambda=SPEED_OF_LIGHT/(sqrt(Substrate.er)*Freq) : lambda=SPEED_OF_LIGHT/Freq;
-        lsb = (lambda/(2*pi))*atan(K*tan((2*pi*L_port1)/lambda));
-        if (lsb < 0) lsb+=0.5*lambda;//If the length is less than 0, it adds +0.5/lambda
-
-        if (micro_syn)//Microstrip implementation
-        {
-            er = Substrate.er;
-            getMicrostrip(Z2, Freq, &Substrate, width, er);
-            s += QString("<MLIN MS1 1 380 120 -26 20 0 -1 \"Sub1\" 1 \"%1\" 1 \"%2\" 1 \"Hammerstad\" 0 \"Kirschning\" 0 \"26.85\" 0>\n").arg(width).arg(lsb/sqrt(er));
-            s += QString("<MLIN MS1 1 380 230 -26 20 0 -1 \"Sub1\" 1 \"%1\" 1 \"%2\" 1 \"Hammerstad\" 0 \"Kirschning\" 0 \"26.85\" 0>\n").arg(width).arg(lsb/sqrt(er));
-        }
-        else// Ideal transmission lines
-        {
-            s += QString("<TLIN Line1 1 380 120 -26 20 0 -1 \"%1\" 1 \"%2\" 1 \"0 dB\" 0 \"26.85\" 0>\n").arg(Z2).arg(lsb);
-            s += QString("<TLIN Line1 1 380 230 -26 20 0 -1 \"%1\" 1 \"%2\" 1 \"0 dB\" 0 \"26.85\" 0>\n").arg(Z2).arg(lsb);
-        }
-        if (!open_short)//It adds a ground component if short stub configuration is selected
-        {
-            s += QString("<GND * 1 380 90 0 0 -1 1>\n");
-            s += QString("<GND * 1 380 260 0 0 -1 1>\n");
-        }
-    }
-    else
-    {//Unbalanced stub implementation
-        if (micro_syn)//Microstrip implementation
-        {
-            er = Substrate.er;
-            getMicrostrip(Z2, Freq, &Substrate, width, er);
-            s += QString("<MLIN MS1 1 380 120 -26 20 0 -1 \"Sub1\" 1 \"%1\" 1 \"%2\" 1 \"Hammerstad\" 0 \"Kirschning\" 0 \"26.85\" 0>\n").arg(width).arg(L_port2/sqrt(er));
-        }
-        else// Ideal transmission line
-        {
-            s += QString("<TLIN Line1 1 380 120 -26 20 0 -1 \"%1\" 1 \"%2\" 1 \"0 dB\" 0 \"26.85\" 0>\n").arg(Z2).arg(L_port2);
-        }
-        if (!open_short)s += QString("<GND * 1 380 90 0 0 -1 1>\n");//It adds a ground component if short stub configuration is selected
-    }
-
-    if (micro_syn)s += QString("<SUBST Sub1 1 300 500 -30 24 0 0 \"%1\" 1 \"%2mm\" 1 \"%3um\" 1 \"%4\" 1 \"%5\" 1 \"%6\" 1>\n").arg(Substrate.er).arg(Substrate.height*1e3).arg(Substrate.thickness*1e6).arg(Substrate.tand).arg(Substrate.resistivity).arg(Substrate.roughness);
-
-    if (SP_block)
-    {
-        s += QString("<Pac P1 1 450 330 18 -26 0 1 \"1\" 1 \"%1 Ohm\" 1 \"0 dBm\" 0 \"1 GHz\" 0>\n").arg(Z1);
-        s += QString("<GND * 1 450 360 0 0 0 0>\n");
-        double freq_start = std::max(0., Freq-1e9);
-        double freq_stop = Freq+1e9;
-        s += QString("<.SP SP1 1 70 460 0 67 0 0 \"lin\" 1 \"%2Hz\" 1 \"%3Hz\" 1 \"300\" 1 \"no\" 0 \"1\" 0 \"2\" 0>\n").arg((freq_start)).arg((freq_stop));
-        s += QString("<Eqn Eqn1 1 450 560 -28 15 0 0 \"S11_dB=dB(S[1,1])\" 1 \"yes\" 0>\n");
-    }
-
-    s += "</Components>\n";
-    s += "<Wires>\n";
-
-
-    // Connecting lines
-    s += QString("<30 180 70 180 \"\" 0 0 0>\n");
-    s += QString("<350 180 400 180 \"\" 0 0 0>\n");
-
-    if (SP_block)//Wiring the generators
-    {
-        // Left source
-        s += QString("<0 300 0 180 \"\" 0 0 0>\n");//Vertical wire
-        s += QString("<0 180 60 180 \"\" 0 0 0>\n");//Horizontal wire
-
-        // Right source
-        s += QString("<450 300 450 180 \"\" 0 0 0>\n");//Vertical wire
-        s += QString("<450 180 400 180 \"\" 0 0 0>\n");//Horizontal wire
-    }
-
-
-    // Connecting Stubs
-    s += QString("<60 150 60 180 \"\" 0 0 0>\n");//First stub (Upper)
-    s += QString("<380 150 380 180 \"\" 0 0 0>\n");//Second stub (Lower)
-    if (BalancedStubs)
-    {//Balanced stub configuration
-        s += QString("<60 180 60 200 \"\" 0 0 0>\n");//First stub (Upper)
-        s += QString("<380 180 380 200 \"\" 0 0 0>\n");//First stub (Lower)
-    }
-
-    s += "</Wires>\n";
-
-    s += "<Diagrams>\n";
-    s += "</Diagrams>\n";
-
-    s+="<Paintings>\n<Text 240 170 12 #000000 0 \"Device\">\n</Paintings>\n";
-
-    QApplication::clipboard()->setText(s, QClipboard::Clipboard);
-    return true;
-
-
-}
-
-//---------------------------------------------------------------------------------------------
-// It creates a double stub matching network at the input and the output port so as to match a two-port device
-bool MatchDialog::Create2Port_DoubleStub_matching_Schematic(QString Input, QString Output, double Z1, double Z2, double Freq, bool micro_syn, bool SP_block, bool open_short, tSubstrate Substrate, bool BalancedStubs)
-{
-    double er, width;//Dielectric coefficient and width of the microstrip line. They are used when synthesizing the microstrip lines
-
-    // QUCS SCHEMATIC
-    QString s = "<Qucs Schematic " PACKAGE_VERSION ">\n";
-    s += "<Components>\n";
-
-    // Getting the dimmensions of the lines/stubs
-    double d = Input.section(';', 0, 0).toDouble();
-    double lstub1_in = Input.section(';', 1, 1).toDouble();
-    double lstub2_in = Input.section(';', 2, 2).toDouble();
-    double lstub1_out = Output.section(';', 1, 1).toDouble();
-    double lstub2_out = Output.section(';', 2, 2).toDouble();
-
-    if (SP_block)//Source
-    {
-        s += QString("<Pac P1 1 0 330 18 -26 0 1 \"1\" 1 \"%1 Ohm\" 1 \"0 dBm\" 0 \"1 GHz\" 0>\n").arg(Z1);
-        s += QString("<GND * 1 0 360 0 0 0 0>\n");
-    }
-
-    //INPUT matching network
-
-    //First stub
-    if (BalancedStubs)
-    {//Balanced stub implementation
-        //Balanced stub equations
-        double lsb, K, lambda=SPEED_OF_LIGHT/Freq;
-        (open_short) ? K=0.5 : K=2;
-        (micro_syn) ? lambda=SPEED_OF_LIGHT/(sqrt(Substrate.er)*Freq) : lambda=SPEED_OF_LIGHT/Freq;
-        lsb = (lambda/(2*pi))*atan(K*tan((2*pi*lstub2_in)/lambda));
-        if (lsb < 0) lsb+=0.5*lambda;//It adds +0.5lambda in case the length < 0
-
-        if (micro_syn)//Microstrip implementation
-        {
-            er = Substrate.er;
-            getMicrostrip(Z1, Freq, &Substrate, width, er);
-            s += QString("<MLIN MS1 1 60 120 -26 20 0 -1 \"Sub1\" 1 \"%1\" 1 \"%2\" 1 \"Hammerstad\" 0 \"Kirschning\" 0 \"26.85\" 0>\n").arg(width).arg(lsb/sqrt(er));
-            s += QString("<MLIN MS1 1 60 240 -26 20 0 -1 \"Sub1\" 1 \"%1\" 1 \"%2\" 1 \"Hammerstad\" 0 \"Kirschning\" 0 \"26.85\" 0>\n").arg(width).arg(lsb/sqrt(er));
-        }
-        else//Ideal transmission lines
-        {
-            s += QString("<TLIN Line1 1 60 120 -26 20 0 -1 \"%1\" 1 \"%2\" 1 \"0 dB\" 0 \"26.85\" 0>\n").arg(Z1).arg(lsb);
-            s += QString("<TLIN Line1 1 60 240 -26 20 0 -1 \"%1\" 1 \"%2\" 1 \"0 dB\" 0 \"26.85\" 0>\n").arg(Z1).arg(lsb);
-        }
-        if (!open_short)//It adds a ground component if short stub configuration is selected
-        {
-            s += QString("<GND * 1 60 90 0 0 -1 1>\n");
-            s += QString("<GND * 1 60 270 0 0 -1 1>\n");
-        }
-    }
-    else
-    {//Unbalanced stub implementation
-        if (micro_syn)//Microstrip implementation
-        {
-            er = Substrate.er;
-            getMicrostrip(Z1, Freq, &Substrate, width, er);
-            s += QString("<MLIN MS1 1 60 120 -26 20 0 -1 \"Sub1\" 1 \"%1\" 1 \"%2\" 1 \"Hammerstad\" 0 \"Kirschning\" 0 \"26.85\" 0>\n").arg(width).arg(lstub2_in/sqrt(er));
-        }
-        else//Ideal transmission lines
-        {
-            s += QString("<TLIN Line1 1 60 120 -26 20 0 -1 \"%1\" 1 \"%2\" 1 \"0 dB\" 0 \"26.85\" 0>\n").arg(Z1).arg(lstub2_in);
-        }
-        if (!open_short)s += QString("<GND * 1 60 90 0 0 -1 1>\n");//It adds a ground component if short stub configuration is selected
-    }
-
-    //Line between the two stubs
-    if (micro_syn)//Microstrip implementation
-    {
-        er = Substrate.er;
-        getMicrostrip(Z1, Freq, &Substrate, width, er);
-        s += QString("<MLIN MS1 1 100 180 -26 20 0 0 \"Sub1\" 1 \"%1\" 1 \"%2\" 1 \"Hammerstad\" 0 \"Kirschning\" 0 \"26.85\" 0>\n").arg(width).arg(d/sqrt(er));
-    }
-    else//Ideal transmission line
-    {
-        s += QString("<TLIN Line1 1 100 180 -26 20 0 0 \"%1\" 1 \"%2\" 1 \"0 dB\" 0 \"26.85\" 0>\n").arg(Z1).arg(d);
-    }
-
-    // Second stub
-    if (BalancedStubs)
-    {//Balanced stub implementation
-        //Balanced stub equations
-        double lsb, K, lambda=SPEED_OF_LIGHT/Freq;
-        (open_short) ? K=0.5 : K=2;
-        (micro_syn) ? lambda=SPEED_OF_LIGHT/(sqrt(Substrate.er)*Freq) : lambda=SPEED_OF_LIGHT/Freq;
-        lsb = (lambda/(2*pi))*atan(K*tan((2*pi*lstub1_in)/lambda));
-        if (lsb < 0) lsb+=0.5*lambda;//It adds +0.5lambda if the length is less than 0
-        if (micro_syn)//Microstrip implementation
-        {
-            er = Substrate.er;
-            getMicrostrip(Z1, Freq, &Substrate, width, er);
-            s += QString("<MLIN MS1 1 160 120 -26 20 0 -1 \"Sub1\" 1 \"%1\" 1 \"%2\" 1 \"Hammerstad\" 0 \"Kirschning\" 0 \"26.85\" 0>\n").arg(width).arg(lsb/sqrt(er));
-            s += QString("<MLIN MS1 1 160 240 -26 20 0 -1 \"Sub1\" 1 \"%1\" 1 \"%2\" 1 \"Hammerstad\" 0 \"Kirschning\" 0 \"26.85\" 0>\n").arg(width).arg(lsb/sqrt(er));
-        }
-        else//Ideal transmission lines
-        {
-            s += QString("<TLIN Line1 1 160 120 -26 20 0 -1 \"%1\" 1 \"%2\" 1 \"0 dB\" 0 \"26.85\" 0>\n").arg(Z1).arg(lsb);
-            s += QString("<TLIN Line1 1 160 240 -26 20 0 -1 \"%1\" 1 \"%2\" 1 \"0 dB\" 0 \"26.85\" 0>\n").arg(Z1).arg(lsb);
-        }
-        if (!open_short)//It adds a ground component if short stub configuration is selected
-        {
-            s += QString("<GND * 1 160 90 0 0 -1 1>\n");
-            s += QString("<GND * 1 160 270 0 0 -1 1>\n");
-        }
-    }
-    else
-    {//Unbalanced stub implementation
-        if (micro_syn)//Microstrip implementation
-        {
-            er = Substrate.er;
-            getMicrostrip(Z1, Freq, &Substrate, width, er);
-            s += QString("<MLIN MS1 1 160 120 -26 20 0 -1 \"Sub1\" 1 \"%1\" 1 \"%2\" 1 \"Hammerstad\" 0 \"Kirschning\" 0 \"26.85\" 0>\n").arg(width).arg(lstub1_in/sqrt(er));
-        }
-        else//Ideal transmission lines
-        {
-            s += QString("<TLIN Line1 1 160 120 -26 20 0 -1 \"%1\" 1 \"%2\" 1 \"0 dB\" 0 \"26.85\" 0>\n").arg(Z1).arg(lstub1_in);
-        }
-
-        if (!open_short)s += QString("<GND * 1 160 90 0 0 -1 1>\n");//It adds a ground component if short stub configuration is selected
-    }
-
-    // OUTPUT matching network
-
-    if (BalancedStubs)
-    {//Balanced stub implementation
-        //Balanced stub equations
-        double lsb, K, lambda=SPEED_OF_LIGHT/Freq;
-        (open_short) ? K=0.5 : K=2;
-        (micro_syn) ? lambda=SPEED_OF_LIGHT/(sqrt(Substrate.er)*Freq) : lambda=SPEED_OF_LIGHT/Freq;
-        lsb = (lambda/(2*pi))*atan(K*tan((2*pi*lstub2_out)/lambda));
-        if (lsb < 0) lsb+=0.5*lambda;
-
-        if (micro_syn)//Microstrip implementation
-        {
-            er = Substrate.er;
-            getMicrostrip(Z2, Freq, &Substrate, width, er);
-            s += QString("<MLIN MS1 1 360 120 -26 20 0 -1 \"Sub1\" 1 \"%1\" 1 \"%2\" 1 \"Hammerstad\" 0 \"Kirschning\" 0 \"26.85\" 0>\n").arg(width).arg(lsb/sqrt(er));
-            s += QString("<MLIN MS1 1 360 240 -26 20 0 -1 \"Sub1\" 1 \"%1\" 1 \"%2\" 1 \"Hammerstad\" 0 \"Kirschning\" 0 \"26.85\" 0>\n").arg(width).arg(lsb/sqrt(er));
-        }
-        else//Ideal transmission lines
-        {
-            s += QString("<TLIN Line1 1 360 120 -26 20 0 -1 \"%1\" 1 \"%2\" 1 \"0 dB\" 0 \"26.85\" 0>\n").arg(Z2).arg(lsb);
-            s += QString("<TLIN Line1 1 360 240 -26 20 0 -1 \"%1\" 1 \"%2\" 1 \"0 dB\" 0 \"26.85\" 0>\n").arg(Z2).arg(lsb);
-        }
-        if (!open_short)//It adds a ground component if short stub configuration is selected
-        {
-            s += QString("<GND * 1 360 90 0 0 -1 1>\n");
-            s += QString("<GND * 1 360 270 0 0 -1 1>\n");
-        }
-    }
-    else
-    {//Unbalanced stub implementation
-        if (micro_syn)//Microstrip implementation
-        {
-            er = Substrate.er;
-            getMicrostrip(Z2, Freq, &Substrate, width, er);
-            s += QString("<MLIN MS1 1 360 120 -26 20 0 -1 \"Sub1\" 1 \"%2\" 1 \"%3\" 1 \"Hammerstad\" 0 \"Kirschning\" 0 \"26.85\" 0>\n").arg(width).arg(lstub2_out/sqrt(er));
-        }
-        else//Ideal transmission line
-        {
-            s += QString("<TLIN Line1 1 360 120 -26 20 0 -1 \"%1\" 1 \"%2\" 1 \"0 dB\" 0 \"26.85\" 0>\n").arg(Z2).arg(lstub2_out);
-        }
-        if (!open_short)s += QString("<GND * 1 360 90 0 0 -1 1>\n");//It adds a ground component if short stub configuration is selected
-    }
-
-    //Line between the two stubs
-    if (micro_syn)//Microstrip implementation
-    {
-        er = Substrate.er;
-        getMicrostrip(Z2, Freq, &Substrate, width, er);
-        s += QString("<MLIN MS1 1 400 180 -26 20 0 0 \"Sub1\" 1 \"%1\" 1 \"%2\" 1 \"Hammerstad\" 0 \"Kirschning\" 0 \"26.85\" 0>\n").arg(width).arg(d/sqrt(er));
-    }
-    else//Ideal transmission line
-    {
-        s += QString("<TLIN Line1 1 400 180 -26 20 0 0 \"%1\" 1 \"%2\" 1 \"0 dB\" 0 \"26.85\" 0>\n").arg(Z2).arg(d);
-    }
-
-
-    // Second stub
-    if (BalancedStubs)
-    {//Balanced stub implementation
-        //Balanced stub equations
-        double lsb, K, lambda=SPEED_OF_LIGHT/Freq;
-        (open_short) ? K=0.5 : K=2;
-        (micro_syn) ? lambda=SPEED_OF_LIGHT/(sqrt(Substrate.er)*Freq) : lambda=SPEED_OF_LIGHT/Freq;
-        lsb = (lambda/(2*pi))*atan(K*tan((2*pi*lstub1_out)/lambda));
-        if (lsb < 0) lsb+=0.5*lambda;//It adds 0.5lambda when length < 0
-        if (micro_syn)//Microstrip implementation
-        {
-            er = Substrate.er;
-            getMicrostrip(Z2, Freq, &Substrate, width, er);
-            s += QString("<MLIN MS1 1 460 120 -26 20 0 -1 \"Sub1\" 1 \"%1\" 1 \"%2\" 1 \"Hammerstad\" 0 \"Kirschning\" 0 \"26.85\" 0>\n").arg(width).arg(lsb/sqrt(er));
-            s += QString("<MLIN MS1 1 460 240 -26 20 0 -1 \"Sub1\" 1 \"%1\" 1 \"%2\" 1 \"Hammerstad\" 0 \"Kirschning\" 0 \"26.85\" 0>\n").arg(width).arg(lsb/sqrt(er));
-        }
-        else//Ideal transmission lines
-        {
-            s += QString("<TLIN Line1 1 460 120 -26 20 0 -1 \"%1\" 1 \"%2\" 1 \"0 dB\" 0 \"26.85\" 0>\n").arg(Z2).arg(lsb);
-            s += QString("<TLIN Line1 1 460 240 -26 20 0 -1 \"%1\" 1 \"%2\" 1 \"0 dB\" 0 \"26.85\" 0>\n").arg(Z2).arg(lsb);
-        }
-        if (!open_short)//It adds a ground component if short stub configuration is selected
-        {
-            s += QString("<GND * 1 460 90 0 0 -1 1>\n");
-            s += QString("<GND * 1 460 270 0 0 -1 1>\n");
-        }
-    }
-    else
-    {//Unbalanced stub implementation
-        if (micro_syn)//Microstrip implementation
-        {
-            er = Substrate.er;
-            getMicrostrip(Z2, Freq, &Substrate, width, er);
-            s += QString("<MLIN MS1 1 460 120 -26 20 0 -1 \"Sub1\" 1 \"%1\" 1 \"%2\" 1 \"Hammerstad\" 0 \"Kirschning\" 0 \"26.85\" 0>\n").arg(width).arg(lstub1_out/sqrt(er));
-        }
-        else//Ideal transmission line
-        {
-            s += QString("<TLIN Line1 1 460 120 -26 20 0 -1 \"%1\" 1 \"%2\" 1 \"0 dB\" 0 \"26.85\" 0>\n").arg(Z2).arg(lstub1_out);
-        }
-        if (!open_short)s += QString("<GND * 1 460 90 0 0 -1 1>\n");//It adds a ground component if short stub configuration is selected
-    }
-    // Substrate. Added only for the microstrip implementation
-    if (micro_syn)s += QString("<SUBST Sub1 1 300 520 -30 24 0 0 \"%1\" 1 \"%2mm\" 1 \"%3um\" 1 \"%4\" 1 \"%5\" 1 \"%6\" 1>\n").arg(Substrate.er).arg(Substrate.height*1e3).arg(Substrate.thickness*1e6).arg(Substrate.tand).arg(Substrate.resistivity).arg(Substrate.roughness);
-
-    if (SP_block)
-    {
-        //Adds the output term for S-param analysis
-        s += QString("<Pac P1 1 520 330 18 -26 0 1 \"1\" 1 \"%1 Ohm\" 1 \"0 dBm\" 0 \"1 GHz\" 0>\n").arg(Z1);
-        s += QString("<GND * 1 520 360 0 0 0 0>\n");
-
-        double freq_start = std::max(0., Freq-1e9);//S-param component
-        double freq_stop = Freq+1e9;
-        s += QString("<.SP SP1 1 70 460 0 67 0 0 \"lin\" 1 \"%2Hz\" 1 \"%3Hz\" 1 \"300\" 1 \"no\" 0 \"1\" 0 \"2\" 0>\n").arg((freq_start)).arg((freq_stop));
-        s += QString("<Eqn Eqn1 1 450 560 -28 15 0 0 \"S11_dB=dB(S[1,1])\" 1 \"yes\" 0>\n");
-    }
-
-    s += "</Components>\n";
-    s += "<Wires>\n";
-
-
-    // Connecting lines
-    s += QString("<20 180 70 180 \"\" 0 0 0>\n");
-    s += QString("<130 180 190 180 \"\" 0 0 0>\n");
-    s += QString("<320 180 370 180 \"\" 0 0 0>\n");
-    s += QString("<430 180 460 180 \"\" 0 0 0>\n");
-
-
-
-    if (SP_block)//Wiring generators
-    {
-        s += QString("<0 180 0 300 \"\" 0 0 0>\n");
-        s += QString("<0 180 60 180 \"\" 0 0 0>\n");
-        s += QString("<520 180 520 300 \"\" 0 0 0>\n");
-        s += QString("<520 180 450 180 \"\" 0 0 0>\n");
-
-    }
-
-    // Connecting Stubs
-    s += QString("<60 150 60 180 \"\" 0 0 0>\n");
-    s += QString("<160 150 160 180 \"\" 0 0 0>\n");
-    s += QString("<360 150 360 180 \"\" 0 0 0>\n");
-    s += QString("<460 150 460 180 \"\" 0 0 0>\n");
-
-    if (BalancedStubs)
-    {
-        s += QString("<60 180 60 210 \"\" 0 0 0>\n");
-        s += QString("<160 180 160 210 \"\" 0 0 0>\n");
-        s += QString("<360 180 360 210 \"\" 0 0 0>\n");
-        s += QString("<460 180 460 210 \"\" 0 0 0>\n");
-    }
-
-
-    s += "</Wires>\n";
-
-    s += "<Diagrams>\n";
-    s += "</Diagrams>\n";
-
-    s+="<Paintings>\n<Text 240 170 12 #000000 0 \"Device\">\n</Paintings>\n";
-
-    QApplication::clipboard()->setText(s, QClipboard::Clipboard);
-    return true;
-
-}
-//---------------------------------------------------------------------------------------------
-// It creates a multisection lambda/4 matching network at the input and the output port so as to match a two-port device
-bool MatchDialog::Create2Port_Cascaded_lambda4_matching_Schematic(QString Input, QString Output, double Z1, double Z2, double Freq, bool micro_syn, bool SP_block, tSubstrate Substrate, int order)
-{
-    double er, width;//Dielectric coefficient and width of the microstrip line. They are used when synthesizing the microstrip lines
-
-    int spacing = 50;//Blank space between the input and the output port
-    double Zi;//Auxiliar variable for creating the cascaded lines.
-    double lambda4 = SPEED_OF_LIGHT/(Freq*4.0);
-
-    QString s = "<Qucs Schematic " PACKAGE_VERSION ">\n";
-    int x = 0;
-    s += "<Components>\n";
-
-    if (SP_block)//Source
-    {
-        s += QString("<Pac P1 1 %1 330 18 -26 0 1 \"1\" 1 \"%2 Ohm\" 1 \"0 dBm\" 0 \"1 GHz\" 0>\n").arg(x).arg(Z1);
-        s += QString("<GND * 1 %1 360 0 0 0 0>\n").arg(x);
-    }
-    x += 60;
-
-    for (int i = 0; i <order; i++)// It generates the quarter wave lines of the input matching network according to the impedances given at QString Input
-    {
-
-        Zi = Input.section(';', i, i).toDouble();
-        if (micro_syn)//Microstrip implementation
-        {
-            er = Substrate.er;
-            getMicrostrip(Zi, Freq, &Substrate, width, er);
-            s += QString("<MLIN MS1 1 %1 180 -26 20 0 0 \"Sub1\" 1 \"%1\" 1 \"%2\" 1 \"Hammerstad\" 0 \"Kirschning\" 0 \"26.85\" 0>\n").arg(x+30).arg(width).arg(lambda4/sqrt(er));
-        }
-        else//Ideal transmission line implementation
-        {
-            s += QString("<TLIN Line1 1 %1 180 -26 20 0 0 \"%2\" 1 \"%3\" 1 \"0 dB\" 0 \"26.85\" 0>\n").arg(x+30).arg(Zi).arg(lambda4);
-        }
-        x+=90;
-    }
-
-
-    // OUTPUT PORT
-    x+=spacing;
-
-    x+=(order)*90;
-
-    if (SP_block)//Output term
-    {
-        s += QString("<Pac P1 1 %1 330 18 -26 0 1 \"1\" 1 \"%2 Ohm\" 1 \"0 dBm\" 0 \"1 GHz\" 0>\n").arg(x+120).arg(Z2);
-        s += QString("<GND * 1 %1 360 0 0 0 0>\n").arg(x+120);
-    }
-
-    for (int i = 0; i <order; i++)// It generates the quarter wave lines of the output matching network according to the impedances given at QString Output
-    {
-        Zi = Output.section(';', i, i).toDouble();
-        if (micro_syn)//Microstrip implementation
-        {
-            er = Substrate.er;
-            getMicrostrip(Zi, Freq, &Substrate, width, er);
-            s += QString("<MLIN MS1 1 %1 180 -26 20 0 0 \"Sub1\" 1 \"%1\" 1 \"%2\" 1 \"Hammerstad\" 0 \"Kirschning\" 0 \"26.85\" 0>\n").arg(x+30).arg(width).arg(lambda4/sqrt(er));
-        }
-        else//Ideal transmission line implementation
-        {
-            s += QString("<TLIN Line1 1 %1 180 -26 20 0 0 \"%2\" 1 \"%3\" 1 \"0 dB\" 0 \"26.85\" 0>\n").arg(x+30).arg(Zi).arg(lambda4);
-        }
-        x -= 90;
-    }
-
-    //Substrate component for the microstrip implementation
-    if (micro_syn)s += QString("<SUBST Sub1 1 300 500 -30 24 0 0 \"%1\" 1 \"%2mm\" 1 \"%3um\" 1 \"%4\" 1 \"%5\" 1 \"%6\" 1>\n").arg(Substrate.er).arg(Substrate.height*1e3).arg(Substrate.thickness*1e6).arg(Substrate.tand).arg(Substrate.resistivity).arg(Substrate.roughness);
-
-
-    if (SP_block)
-    {   // S-param simulation component
-        double freq_start = std::max(0., Freq-1e9);
-        double freq_stop = Freq+1e9;
-        s += QString("<.SP SP1 1 70 460 0 67 0 0 \"lin\" 1 \"%2Hz\" 1 \"%3Hz\" 1 \"300\" 1 \"no\" 0 \"1\" 0 \"2\" 0>\n").arg((freq_start)).arg((freq_stop));
-        s += QString("<Eqn Eqn1 1 450 560 -28 15 0 0 \"S11_dB=dB(S[1,1])\" 1 \"yes\" 0>\n");
-    }
-
-    s += "</Components>\n";
-    s += "<Wires>\n";
-
-
-    if (SP_block)//Add wires to the sources
-    {
-        s += QString("<0 300 0 180 \"\" 0 0 0>\n");//Left source. Vertical wire
-        s += QString("<0 180 60 180 \"\" 0 0 0>\n");//Left source. Horizontal wire
-
-        s += QString("<%1 300 %2 180 \"\" 0 0 0>\n").arg(2*(order)*90+180+spacing).arg(2*(order)*90+180+spacing);//Right source. Vertical wire
-        s += QString("<%1 180 %2 180 \"\" 0 0 0>\n").arg(2*(order)*90+180+spacing).arg(2*(order)*90+180+spacing-60);//Right source. Horizontal wire
-
-    }
-
-
-    // Input wiring
-    x=120;
-    for (int i = 1; i<order; i++)
-    {
-        s += QString("<%1 180 %2 180 \"\" 0 0 0>\n").arg(x).arg(x+30);
-        x+=90;
-    }
-
-
-    x+=spacing+180;
-    for (int i = 1; i<order; i++)
-    {
-        s += QString("<%1 180 %2 180 \"\" 0 0 0>\n").arg(x).arg(x+30);
-        x+=90;
-    }
-
-
-
-    s += "</Wires>\n";
-
-    s += "<Diagrams>\n";
-    s += "</Diagrams>\n";
-
-    QApplication::clipboard()->setText(s, QClipboard::Clipboard);
-    return true;
-
-
-}
 
 // FUNCTIONS FOR THE MICROSTRIP LINE SYNTHESIS. JUST COPIED FROM THE QUCS-FILTER TOOL
 /////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2483,7 +1269,7 @@ void MatchDialog::getMicrostrip(double Z0, double freq, tSubstrate *substrate,
 //--------------------------------------------------------------------------------
 // Calculates a matching network according to the stub+line method
 // See Microwave Engineering. David Pozar. John Wiley and Sons. 4th Edition. Pg 234-241
-QString MatchDialog::calcSingleStub(double r_real, double r_imag, double Z0, double Freq, bool open_short)
+QString MatchDialog::calcSingleStub(double r_real, double r_imag, double Z0, double Freq, bool open_short, bool BalancedStubs)
 {
     double t=0, t1 = 0, t2 = 0;
     double dl, dl1, dl2, B;
@@ -2539,15 +1325,30 @@ QString MatchDialog::calcSingleStub(double r_real, double r_imag, double Z0, dou
         }
     }
 
+    if (BalancedStubs)
+    {   //Balanced stub implementation
+        double K;
+        (open_short) ? K=0.5 : K=2;
+        lstub = (lambda/(2*pi))*atan(K*tan((2*pi*lstub)/lambda));
+        if (lstub < 0) lstub+=0.5*lambda;
+    }
 
-    return QString("%1;%2;").arg(d).arg(lstub);// It returns the length of the stub and the line
+    //String code
+    QString laddercode;
+    if ((open_short) && (!BalancedStubs)) laddercode = QString("OL%1#%2;TL%1#%3;").arg(Z0).arg(lstub).arg(d);//Line + Open stub
+    if ((open_short) && (BalancedStubs)) laddercode = QString("OU%1#%2;OL%1#%2;TL%1#%3;").arg(Z0).arg(lstub).arg(d);//Open circuit balanced stubs
+    if ((!open_short) && (!BalancedStubs)) laddercode = QString("SL%1#%2;TL%1#%3;").arg(Z0).arg(lstub).arg(d);//Line + Short circuited stub
+    if ((!open_short) && (BalancedStubs)) laddercode = QString("SU%1#%2;SL%1#%2;TL%1#%3;").arg(Z0).arg(lstub).arg(d);//Short circuited balanced stubs
+
+
+    return laddercode;
 }
 
 
 //--------------------------------------------------------------------------------
 // Calculates a matching network according to the stub+line+stub method
 // See Microwave Engineering. David Pozar. John Wiley and Sons. 4th Edition. Pg 241-245
-QString MatchDialog::calcDoubleStub(double r_real, double r_imag, double Z0, double Freq, bool open_short)
+QString MatchDialog::calcDoubleStub(double r_real, double r_imag, double Z0, double Freq, bool open_short, bool BalancedStubs)
 {
     double RL=r_real, XL=r_imag;
     r2z(RL, XL, Z0);
@@ -2591,7 +1392,24 @@ QString MatchDialog::calcDoubleStub(double r_real, double r_imag, double Z0, dou
 
     double lstub1 = ll1*lambda, lstub2=ll2*lambda;
 
-    return QString("%1;%2;%3").arg(d).arg(lstub1).arg(lstub2);//It returns the length of the two lines and the stub
+    if (BalancedStubs)
+    {   //Balanced stub implementation
+        double K;
+        (open_short) ? K=0.5 : K=2;
+        lstub1 = (lambda/(2*pi))*atan(K*tan((2*pi*lstub1)/lambda));
+        lstub2 = (lambda/(2*pi))*atan(K*tan((2*pi*lstub2)/lambda));
+        if (lstub1 < 0) lstub1+=0.5*lambda;
+        if (lstub2 < 0) lstub2+=0.5*lambda;
+    }
+
+    QString laddercode;
+    if ((open_short)&&(BalancedStubs))laddercode = QString("OU%1#%2;OL%1#%2;TL%1#%3;OL%1#%4;OU%1#%4;").arg(Z0).arg(lstub2).arg(d).arg(lstub1);
+    if ((open_short)&&(!BalancedStubs))laddercode = QString("OL%1#%2;TL%1#%3;OL%1#%4").arg(Z0).arg(lstub2).arg(d).arg(lstub1);
+    if ((!open_short)&&(BalancedStubs))laddercode = QString("SU%1#%2;SL%1#%2;TL%1#%3;SL%1#%4;SU%1#%4;").arg(Z0).arg(lstub2).arg(d).arg(lstub1);
+    if ((!open_short)&&(!BalancedStubs))laddercode = QString("SL%1#%2;TL%1#%3;SL%1#%4").arg(Z0).arg(lstub2).arg(d).arg(lstub1);
+
+
+    return laddercode;
 }
 
 
@@ -2610,7 +1428,7 @@ int BinomialCoeffs(int n, int k)
 //-----------------------------------------------------------------------------------
 // This function calculates a multistage lambda/4 matching using binomial weigthing
 // See Microwave Engineering. David Pozar. John Wiley and Sons. 4th Edition. Pg 252-256
-QString MatchDialog::calcBinomialLines(double r_real, double r_imag, double Z0, int order)
+QString MatchDialog::calcBinomialLines(double r_real, double r_imag, double Z0, int order, double Freq)
 {
     double RL = r_real, XL = r_imag;
     r2z(RL, XL, Z0);
@@ -2625,23 +1443,23 @@ QString MatchDialog::calcBinomialLines(double r_real, double r_imag, double Z0, 
         QMessageBox::warning(0, QObject::tr("Warning"),
                              QObject::tr("Reactive loads cannot be matched. Only the real part will be matched"));
     }
-
+    double l4 = SPEED_OF_LIGHT/(4.*Freq);
     double Ci, Zi, Zaux=Z0;
-    QString s;
+    QString laddercode;
     for (int i = 1; i <order; i++)
     {
         Ci = BinomialCoeffs(order-1, i-1);
         Zi = exp(log(Zaux) + (Ci/pow(2,order-1))*log(RL/Z0));
         Zaux=Zi;
-        s+=QString("%1;").arg(Zi);
+        laddercode+=QString("TL%1#%2;").arg(Zi).arg(l4);
     }
-    return s;
+    return laddercode;
 }
 
 //-----------------------------------------------------------------------------------
 // This function calculates a multistage lambda/4 matching using the Chebyshev weigthing.
 // See Microwave Engineering. David Pozar. John Wiley and Sons. 4th Edition. Pg 256-261
-QString MatchDialog::calcChebyLines(double r_real, double r_imag, double Z0, double gamma, int order)
+QString MatchDialog::calcChebyLines(double r_real, double r_imag, double Z0, double gamma, int order, double Freq)
 {
     int N = order-1;// Number of sections
     if (N > 7)// So far, it is only available Chebyshev weighting up to 7 sections.
@@ -2651,7 +1469,7 @@ QString MatchDialog::calcChebyLines(double r_real, double r_imag, double Z0, dou
                              QObject::tr("Chebyshev weighting for N>7 is not available"));
         return QString("");
     }
-    QString s;
+    QString laddercode;
     double RL = r_real, XL = r_imag;
     r2z(RL, XL, Z0);// Calculation of the load impedance given the reflection coeffient
     double sec_theta_m;// = cosh((1/(1.*N))*acosh((1/gamma)*fabs((RL-Z0)/(Z0+RL))) );
@@ -2705,14 +1523,306 @@ QString MatchDialog::calcChebyLines(double r_real, double r_imag, double Z0, dou
         w[6] = w[1];
         break;
     }
-
+    double l4 = SPEED_OF_LIGHT/(4.*Freq);
     double Zaux=Z0, Zi;
     for (int i = 0; i < N; i++)
     {
         (RL<Z0) ? Zi = exp(log(Zaux) - gamma*w[i]):Zi = exp(log(Zaux) + gamma*w[i]); // When RL<Z0, Z_{i}<Z_{i-1}
         Zaux=Zi;
-        s+=QString("%1;").arg(Zi);
-
+        laddercode+=QString("TL%1#%2;").arg(Zi).arg(l4);
     }
-    return s;
+    return laddercode;
+}
+
+
+//--------------------------------------------------------------------------
+//It calculates a cascaded LC matching network (only real impedances)
+QString MatchDialog::calcMatchingCascadedLCSections(double r_real, double r_imag, double Z0, double Freq, int N)
+{
+    double RL = r_real, XL = r_imag, RS = Z0;
+    double w = 2*pi*Freq, Q, C, L;
+    r2z(RL, XL, Z0);
+    double Raux, R, R1, R2;
+    QString s="";
+
+    if (RL ==0)
+    {
+        QMessageBox::warning(0, QObject::tr("Error"),
+                             QObject::tr("The load has not resistive part. It cannot be matched using the quarter wavelength method"));
+        return NULL;
+    }
+    if (XL !=0)
+    {
+        QMessageBox::warning(0, QObject::tr("Warning"),
+                             QObject::tr("Reactive loads cannot be matched. Only the real part will be matched"));
+    }
+
+
+    if (RL > RS) R1 = RL, R2 = RS;
+    else R1 = RS, R2 = RL;
+
+    Raux = R1;
+    for (int i = 0; i<N-1;i++)
+    {
+         R = pow(R1, 1.*(N-(i+1))/N)*pow(R2,1.*(i+1)/N);
+         Q = sqrt(Raux/R - 1);
+         C = Q/(w*Raux);
+         L = Q*R/w;
+         s += QString("CP%1;LS%2;").arg(C).arg(L);
+         Raux = R;
+    }
+
+   Q = sqrt(R/R2 - 1);
+   C = Q/(w*R);
+   L = Q*R2/w;
+   s += QString("CP%1;LS%2;").arg(C).arg(L);
+
+   if (RL > RS)//Flip string
+   {
+     QString temp ="";
+     QStringList strlist = s.split(";");
+     for (int i = strlist.count()-1; i >= 0  ; i--) temp += strlist.at(i) + ";";
+     s = temp;
+   }
+
+   return s;
+}
+
+// Given a string code of inductors, capacitors and transmission lines, it generates the Qucs network. Notice that the schematic is split into
+// three part: components, wires and paintings, all of them are passed by reference.
+int MatchDialog::SchematicParser(QString laddercode, int & x_pos, QString & componentstr, QString & wirestr, QString & paintingstr, int schcode, double Freq, double Z0, double RL, double XL, tSubstrate Substrate, bool microsyn)
+{
+   QStringList strlist = laddercode.split(";");
+   QString component;
+   double value, value2, er, width;
+   int x_series = 120, x_shunt = 20;//x-axis spacing depending on whether the component is placed in a series or shunt configuration
+   //Clear input strings (just in case)
+   componentstr = "";
+   wirestr = "";
+   paintingstr = "";
+
+   // Schematic code
+   // 0: Port 1 + S parameter simulation
+   // 1: Port 1
+   // 2: Port 2
+   // 3: Port 1, Port 2 and S parameter simulation
+
+   if ((schcode == 0) || (schcode == 3))//Add port 1 + S parameter simulation
+   {
+       componentstr += QString("<Pac P1 1 %2 -30 18 -26 0 1 \"1\" 1 \"%1 Ohm\" 1 \"0 dBm\" 0 \"1 GHz\" 0>\n").arg(Z0).arg(x_pos);
+       componentstr += QString("<GND * 1 %1 0 0 0 0 0>\n").arg(x_pos);
+       wirestr += QString("<%1 -60 %1 -120>\n").arg(x_pos);
+       wirestr += QString("<%1 -120 %2 -120>\n").arg(x_pos).arg(x_pos+60);
+       x_pos +=60;
+       //Add the frequency range for the S-param simulation
+       double freq_start = std::max(0., Freq-1e9);
+       double freq_stop = Freq+1e9;
+       componentstr += QString("<.SP SP1 1 0 100 0 67 0 0 \"lin\" 1 \"%2Hz\" 1 \"%3Hz\" 1 \"300\" 1 \"no\" 0 \"1\" 0 \"2\" 0>\n").arg((freq_start)).arg((freq_stop));
+       componentstr += QString("<Eqn Eqn1 1 200 100 -28 15 0 0 \"S11_dB=dB(S[1,1])\" 1 \"yes\" 0>\n");
+   }
+
+   if (schcode == 1)//Only port 1
+   {
+     componentstr += QString("<Pac P1 1 %2 -30 18 -26 0 1 \"1\" 1 \"%1 Ohm\" 1 \"0 dBm\" 0 \"1 GHz\" 0>\n").arg(Z0).arg(x_pos);
+     componentstr += QString("<GND * 1 %1 0 0 0 0 0>\n").arg(x_pos);
+     wirestr += QString("<%1 -60 %1 -120>\n").arg(x_pos);
+     wirestr += QString("<%1 -120 %2 -120>\n").arg(x_pos).arg(x_pos+60);
+     x_pos +=60;
+   }
+
+// The string format is as follows: "XX<value>;XX<value2>;...XX<valueN>;"
+// where XX, YY, ZZ define the type of component and its configuration.
+//    LS: Series inductance
+//    CS: Series capacitor
+//    LP: Shunt inductance
+//    CP: Shunt capacitor
+//    TL: Series transmission line
+//    OU: Open stub (facing up)
+//    OL: Open stub (facing down)
+//    SU: Short circuited stub (facing up)
+//    SL: Short circuited stub (facing down)
+
+   for (int i = 0; i < strlist.count(); i++)
+   {
+      component = strlist.at(i);
+      int index = component.indexOf("#");
+      //Transmission lines are characterised by its impedance and its length whereas capacitors and inductors only depend on
+      // its capacitance and inductance, respectively. So, the code below is aimed to handle such difference
+      if (index != -1)//The component has two values
+      {
+          value = component.mid(2, index-2).toDouble();
+          value2 = component.mid(index+1).toDouble();
+      }
+      else   value = component.mid(2).toDouble();
+      component = component.mid(0, 2);
+
+      if (!component.compare("LS"))//Series inductor
+      {
+         componentstr += QString("<L L1 1 %1 -120 -26 10 0 0 \"%2\" 1 "" 0>\n").arg(x_pos+60).arg(value);
+         wirestr += QString("<%1 -120 %2 -120 "" 0 0 0 "">\n").arg(x_pos).arg(x_pos+30);
+         wirestr += QString("<%1 -120 %2 -120 "" 0 0 0 "">\n").arg(x_pos+90).arg(x_pos+x_series);
+         x_pos += x_series;
+      }
+      else if (!component.compare("CS"))//Series capacitor
+      {
+         componentstr += QString("<C C1 1 %1 -120 -26 17 0 0 \"%2\" 1 "" 0>\n").arg(x_pos+60).arg(value);
+         wirestr += QString("<%1 -120 %2 -120 "" 0 0 0 "">\n").arg(x_pos).arg(x_pos+30);
+         wirestr += QString("<%1 -120 %2 -120 "" 0 0 0 "">\n").arg(x_pos+90).arg(x_pos+x_series);
+         x_pos += x_series;
+      }
+      else if (!component.compare("LP"))//Shunt inductor
+      {
+         componentstr += QString("<GND * 1 %1 0 0 0 0 0>\n").arg(x_pos);
+         componentstr += QString("<L L1 1 %1 -30 -26 2 0 1 \"%2\" 1 "" 0>\n").arg(x_pos).arg(value);
+         wirestr += QString("<%1 -60 %1 -120 "" 0 0 0 "">\n").arg(x_pos);
+         wirestr += QString("<%1 -120 %2 -120 "" 0 0 0 "">\n").arg(x_pos).arg(x_pos+x_shunt);
+         x_pos += x_shunt;
+      }
+      else if (!component.compare("CP"))//Shunt capacitor
+      {
+         componentstr += QString("<GND * 1 %1 0 0 0 0 0>\n").arg(x_pos);
+         componentstr += QString("<C C1 1 %1 -30 -26 17 0 1 \"%2\" 1 "" 0>\n").arg(x_pos).arg(value);
+         wirestr += QString("<%1 -60 %1 -120 "" 0 0 0 "">\n").arg(x_pos);
+         wirestr += QString("<%1 -120 %2 -120 "" 0 0 0 "">\n").arg(x_pos).arg(x_pos+x_shunt);
+         x_pos += x_shunt;
+      }
+      else if (!component.compare("TL"))//Transmission line
+      {
+        if (microsyn)//Microstrip implementation
+        {
+          er = Substrate.er;
+          getMicrostrip(value, Freq, &Substrate, width, er);
+          componentstr += QString("<MLIN MS1 1 %3 -120 -26 20 0 0 \"Sub1\" 1 \"%1\" 1 \"%2\" 1 \"Hammerstad\" 0 \"Kirschning\" 0 \"26.85\" 0>\n").arg(width).arg(value2/sqrt(er)).arg(x_pos+60);
+        }
+        else
+        {
+          componentstr += QString("<TLIN Line1 1 %3 -120 -26 20 0 0 \"%1\" 1 \"%2\" 1 \"0 dB\" 0 \"26.85\" 0>\n").arg(value).arg(value2).arg(x_pos+60);
+        }
+        wirestr += QString("<%1 -120 %2 -120 "" 0 0 0 "">\n").arg(x_pos).arg(x_pos+30);
+        wirestr += QString("<%1 -120 %2 -120 "" 0 0 0 "">\n").arg(x_pos+90).arg(x_pos+x_series);
+        x_pos += x_series;
+      }
+      else if (!component.compare("OU"))//Open stub (upper)
+      {
+        if (microsyn)//Microstrip implementation
+        {
+          er = Substrate.er;
+          getMicrostrip(value, Freq, &Substrate, width, er);
+          componentstr += QString("<MLIN MS1 1 %3 -180 -26 20 0 1 \"Sub1\" 1 \"%1\" 1 \"%2\" 1 \"Hammerstad\" 0 \"Kirschning\" 0 \"26.85\" 0>\n").arg(width).arg(value2/sqrt(er)).arg(x_pos);
+        }
+        else
+        {
+          componentstr += QString("<TLIN Line1 1 %3 -180 -26 20 0 1 \"%1\" 1 \"%2\" 1 \"0 dB\" 0 \"26.85\" 0>\n").arg(value).arg(value2).arg(x_pos);
+        }
+        wirestr += QString("<%1 -150 %1 -120 "" 0 0 0 "">\n").arg(x_pos);
+        wirestr += QString("<%1 -120 %2 -120 "" 0 0 0 "">\n").arg(x_pos).arg(x_pos+x_shunt);
+        //Here x_pos is not incremented since upper stubs does not overlap any other component
+      }
+      else if (!component.compare("OL"))//Open stub (lower)
+      {
+        if (microsyn)//Microstrip implementation
+        {
+          er = Substrate.er;
+          getMicrostrip(value, Freq, &Substrate, width, er);
+          componentstr += QString("<MLIN MS1 1 %3 -60 -26 20 0 1 \"Sub1\" 1 \"%1\" 1 \"%2\" 1 \"Hammerstad\" 0 \"Kirschning\" 0 \"26.85\" 0>\n").arg(width).arg(value2/sqrt(er)).arg(x_pos);
+        }
+        else
+        {
+          componentstr += QString("<TLIN Line1 1 %3 -60 -26 20 0 1 \"%1\" 1 \"%2\" 1 \"0 dB\" 0 \"26.85\" 0>\n").arg(value).arg(value2).arg(x_pos);
+        }
+        wirestr += QString("<%1 -90 %1 -120 "" 0 0 0 "">\n").arg(x_pos);
+        wirestr += QString("<%1 -120 %2 -120 "" 0 0 0 "">\n").arg(x_pos).arg(x_pos+x_shunt);
+        x_pos += x_shunt;
+      }
+      else if (!component.compare("SU"))//Short circuited stub (upper)
+      {
+        if (microsyn)//Microstrip implementation
+        {
+          er = Substrate.er;
+          getMicrostrip(value, Freq, &Substrate, width, er);
+          componentstr += QString("<MLIN MS1 1 %3 -180 -26 20 0 1 \"Sub1\" 1 \"%1\" 1 \"%2\" 1 \"Hammerstad\" 0 \"Kirschning\" 0 \"26.85\" 0>\n").arg(width).arg(value2/sqrt(er)).arg(x_pos);
+        }
+        else
+        {
+          componentstr += QString("<TLIN Line1 1 %3 -180 -26 20 0 1 \"%1\" 1 \"%2\" 1 \"0 dB\" 0 \"26.85\" 0>\n").arg(value).arg(value2).arg(x_pos);
+        }
+        componentstr += QString("<GND * 1 %1 -210 0 -1 0 0>\n").arg(x_pos);
+        wirestr += QString("<%1 -150 %1 -120 "" 0 0 0 "">\n").arg(x_pos);
+        wirestr += QString("<%1 -120 %2 -120 "" 0 0 0 "">\n").arg(x_pos).arg(x_pos+x_shunt);
+        //Here x_pos is not incremented since upper stubs does not overlap any other component
+      }
+      else if (!component.compare("SL"))//Short circuited stub (lower)
+      {
+        if (microsyn)//Microstrip implementation
+        {
+          er = Substrate.er;
+          getMicrostrip(value, Freq, &Substrate, width, er);
+          componentstr += QString("<MLIN MS1 1 %3 -60 -26 20 0 1 \"Sub1\" 1 \"%1\" 1 \"%2\" 1 \"Hammerstad\" 0 \"Kirschning\" 0 \"26.85\" 0>\n").arg(width).arg(value2/sqrt(er)).arg(x_pos);
+        }
+        else
+        {
+          componentstr += QString("<TLIN Line1 1 %3 -60 -26 20 0 1 \"%1\" 1 \"%2\" 1 \"0 dB\" 0 \"26.85\" 0>\n").arg(value).arg(value2).arg(x_pos);
+        }
+        componentstr += QString("<GND * 1 %1 -30 0 0 0 0>\n").arg(x_pos);
+        wirestr += QString("<%1 -90 %1 -120 "" 0 0 0 "">\n").arg(x_pos);
+        wirestr += QString("<%1 -120 %2 -120 "" 0 0 0 "">\n").arg(x_pos).arg(x_pos+x_shunt);
+        x_pos += x_shunt;
+      }
+
+   }
+
+   if ((schcode == 2)|| (schcode == 3))//Port 2
+   {
+     x_pos += 100;
+     if (abs(XL) < 1e-3)//The load is real so we can use a conventional port
+     {
+     componentstr += QString("<Pac P2 1 %2 -30 18 -26 0 1 \"1\" 1 \"%1 Ohm\" 1 \"0 dBm\" 0 \"1 GHz\" 0>\n").arg(RL).arg(x_pos);
+     componentstr += QString("<GND * 1 %1 0 0 0 0 0>\n").arg(x_pos);
+     wirestr += QString("<%1 -60 %1 -120>\n").arg(x_pos);//Vertical wire
+     wirestr += QString("<%1 -120 %2 -120>\n").arg(x_pos-100).arg(x_pos);//Horizontal wire
+     }
+     else//The load has a reactive part... Since Qucs cannot handle complex ports we can use a tuned load, valid for narrowband
+     {
+           if ((RL > 1e-3)&&(XL < 1e-3))// R + C
+           {
+               componentstr += QString("<R R1 1 %1 -30 15 -26 0 -1 \"%2 Ohm\" 1 \"26.85\" 0 \"US\" 0>\n").arg(x_pos).arg(RL);
+               componentstr += QString("<C C1 1 %1 -90 15 -26 0 -1 \"%2 F\" 1 0>\n").arg(x_pos).arg(1/(fabs(XL)*2*pi*Freq));
+               paintingstr += QString("<Text %1 50 12 #000000 0 \"%4-j%5 %2 @ %3 GHz\">\n").arg(x_pos).arg(QChar (0x2126)).arg(Freq*1e-9).arg(RL).arg(abs(XL));
+           }
+           if ((RL > 1e-3)&&(XL > 1e-3))//R + L
+           {
+               componentstr += QString("<R R1 1 %1 -30 15 -26 0 -1 \"%2 Ohm\" 1 \"26.85\" 0 \"US\" 0>\n").arg(x_pos).arg(RL);
+               componentstr += QString("<L L1 1 %1 -90 15 -26 0 -1 \"%2 H\" 1 0>\n").arg(x_pos).arg(XL/(2*pi*Freq));
+               paintingstr += QString("<Text %1 50 12 #000000 0 \"%4+j%5 %2 @ %3 GHz\">\n").arg(x_pos).arg(QChar (0x2126)).arg(Freq*1e-9).arg(RL).arg(XL);
+           }
+           if ((RL > 1e-3)&&(abs(XL) < 1e-3))//R
+           {
+               componentstr += QString("<R R1 1 %1 -30 15 -26 0 -1 \"%2 Ohm\" 1 \"26.85\" 0 \"US\" 0>\n").arg(x_pos).arg(RL);
+               wirestr += QString("<%1 -60 %1 -120>\n").arg(x_pos);//Vertical wire
+               paintingstr += QString("<Text %1 50 12 #000000 0 \"%4 %2 @ %3 GHz\">\n").arg(x_pos).arg(QChar (0x2126)).arg(Freq*1e-9).arg(RL);
+           }
+           if ((RL < 1e-3)&&(XL > 1e-3))//L
+           {
+               componentstr += QString("<L L1 1 %1 -30 15 -26 0 -1 \"%2 H\" 1 \"26.85\" 0 \"US\" 0>\n").arg(x_pos).arg(RL);
+               wirestr += QString("<%1 -60 %1 -120>\n").arg(x_pos);//Vertical wire
+               paintingstr += QString("<Text %1 50 12 #000000 0 \"j%4 %2 @ %3 GHz\">\n").arg(x_pos).arg(QChar (0x2126)).arg(Freq*1e-9).arg(XL);
+           }
+           if ((RL < 1e-3)&&(XL < 1e-3))//C
+           {
+               componentstr += QString("<C C1 1 %1 -30 15 -26 0 -1 \"%2 F\" 1 \"26.85\" 0 \"US\" 0>\n").arg(x_pos).arg(RL);
+               wirestr += QString("<%1 -60 %1 -120>\n").arg(x_pos);//Vertical wire
+               paintingstr += QString("<Text %1 50 12 #000000 0 \"-j%4 %2 @ %3 GHz\">\n").arg(x_pos).arg(QChar (0x2126)).arg(Freq*1e-9).arg(abs(XL));
+           }
+           wirestr += QString("<%1 -120 %2 -120>\n").arg(x_pos-100).arg(x_pos);//Horizontal wire
+           componentstr += QString("<GND * 1 %1 0 0 -1 0 0>\n").arg(x_pos);
+
+           //Box surrounding the load
+           paintingstr += QString("<Rectangle %1 -150 200 200 #000000 0 1 #c0c0c0 1 0>\n").arg(x_pos-30);
+     }
+   }
+
+  // Substrate
+  if (microsyn)componentstr += QString("<SUBST Sub1 1 400 200 -30 24 0 0 \"%1\" 1 \"%2mm\" 1 \"%3um\" 1 \"%4\" 1 \"%5\" 1 \"%6\" 1>\n").arg(Substrate.er).arg(Substrate.height*1e3).arg(Substrate.thickness*1e6).arg(Substrate.tand).arg(Substrate.resistivity).arg(Substrate.roughness);
+
+ return 0;
 }
