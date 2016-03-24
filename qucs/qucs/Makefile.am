@@ -32,7 +32,14 @@ endif
 
 bin_PROGRAMS = qucs
 
-MOCHEADERS = qucs.h schematic.h textdoc.h octave_window.h messagedock.h
+MOCHEADERS = \
+  messagedock.h \
+  octave_window.h \
+  projectView.h \
+  schematic.h \
+  textdoc.h \
+  qucs.h
+
 MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
 
 qucs_SOURCES = node.cpp element.cpp qucsdoc.cpp wire.cpp mouseactions.cpp   \
@@ -54,7 +61,8 @@ qucs_LDADD = components/libcomponents.a diagrams/libdiagrams.a \
   $(X11_LIBS) $(QT_LIBS)
 
 noinst_HEADERS = $(MOCHEADERS) main.h wire.h qucsdoc.h element.h node.h \
-  wirelabel.h viewpainter.h mnemo.h mouseactions.h syntax.h module.h misc.h
+  wirelabel.h viewpainter.h mnemo.h mouseactions.h syntax.h module.h misc.h \
+  projectView.h printerwriter.h imagewriter.h
 
 hicolor16dir = ${prefix}/share/icons/hicolor/16x16/apps
 hicolor16_DATA =  bitmaps/hicolor/16x16/apps/qucs.png
@@ -84,8 +92,18 @@ EXTRA_DIST = \
 	qucsdigi qucsdigilib qucsdigi.bat qucsdigilib.bat qucsveri qucsveri.bat \
 	$(hicolor16_DATA) $(hicolor22_DATA) $(hicolor32_DATA) $(hicolor48_DATA) \
 	$(hicolor64_DATA) $(hicolor128_DATA) $(hicolor256_DATA) $(hicolor512_DATA) \
-	$(hicolorsc_DATA) $(desktop_DATA)
+	$(hicolorsc_DATA) $(desktop_DATA) qucs.qrc \
+	bitmaps/qucs.icns \
+	bitmaps/qucsattenuator.icns \
+	bitmaps/qucsfilter.icns \
+	bitmaps/qucsactivefilter.icns \
+	bitmaps/qucshelp.icns \
+	bitmaps/qucslib.icns \
+	bitmaps/qucsedit.icns \
+	bitmaps/qucsrescodes.icns \
+	bitmaps/qucstrans.icns
 
+SUFFIXES = .h .moc.cpp
 
 .h.moc.cpp:
 	$(MOC) -o $@ $<

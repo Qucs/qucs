@@ -90,7 +90,7 @@ bool loadSettings()
     if(settings.contains("Type"))QucsSettings.Type.setNamedColor(settings.value("Type").toString());
     if(settings.contains("Attribute"))QucsSettings.Attribute.setNamedColor(settings.value("Attribute").toString());
     if(settings.contains("Directive"))QucsSettings.Directive.setNamedColor(settings.value("Directive").toString());
-    if(settings.contains("Task"))QucsSettings.Comment.setNamedColor(settings.value("Task").toString());
+    if(settings.contains("Task"))QucsSettings.Task.setNamedColor(settings.value("Task").toString());
 
     if(settings.contains("Qucsator"))QucsSettings.Qucsator = settings.value("Qucsator").toString();
     //if(settings.contains("BinDir"))QucsSettings.BinDir = settings.value("BinDir").toString();
@@ -121,6 +121,8 @@ bool loadSettings()
     QucsSettings.RecentDocs = settings.value("RecentDocs").toString().split("*",QString::SkipEmptyParts);
     QucsSettings.numRecentDocs = QucsSettings.RecentDocs.count();
 
+
+    QucsSettings.spiceExtensions << "*.sp" << "*.cir" << "*.spc" << "*.spi";
 
     // If present read in the list of directory paths in which Qucs should
     // search for subcircuit schematics
@@ -165,7 +167,7 @@ bool saveApplSettings()
     settings.setValue("Type", QucsSettings.Type.name());
     settings.setValue("Attribute", QucsSettings.Attribute.name());
     settings.setValue("Directive", QucsSettings.Directive.name());
-    settings.setValue("Task", QucsSettings.Comment.name());
+    settings.setValue("Task", QucsSettings.Task.name());
     //settings.setValue("Qucsator", QucsSettings.Qucsator);
     //settings.setValue("BinDir", QucsSettings.BinDir);
     //settings.setValue("LangDir", QucsSettings.LangDir);
@@ -287,7 +289,10 @@ int doNetlist(QString schematic, QString netlist)
 
   if(SimPorts < -5) {
     NetlistFile.close();
-    fprintf(stderr, "Error: Could not prepare the netlist...\n");
+    QByteArray ba = netlist.toLatin1();
+    fprintf(stderr, "Error: Could not prepare netlist %s\n", ba.data());
+    /// \todo better handling for error/warnings
+    qCritical() << ErrText->toPlainText();
     return 1;
   }
 
@@ -666,7 +671,12 @@ int main(int argc, char *argv[])
 
   QucsSettings.BinDir =      QucsDir.absolutePath() + "/bin/";
   QucsSettings.LangDir =     QucsDir.canonicalPath() + "/share/qucs/lang/";
-  QucsSettings.LibDir =      QucsDir.canonicalPath() + "/share/qucs/library/";
+  var = getenv("QUCS_LIBDIR");
+  if(var != NULL) {
+	  QucsSettings.LibDir = QString(var);
+  }else{
+	  QucsSettings.LibDir =      QucsDir.canonicalPath() + "/share/qucs/library/";
+  }
   QucsSettings.OctaveDir =   QucsDir.canonicalPath() + "/share/qucs/octave/";
   QucsSettings.ExamplesDir = QucsDir.canonicalPath() + "/share/qucs/docs/examples/";
   QucsSettings.DocDir =      QucsDir.canonicalPath() + "/share/qucs/docs/";
@@ -675,13 +685,26 @@ int main(int argc, char *argv[])
   QucsSettings.QucsHomeDir.setPath(QDir::homeDirPath()+QDir::convertSeparators ("/.qucs"));
   QucsSettings.QucsWorkDir.setPath(QucsSettings.QucsHomeDir.canonicalPath());
 
+  /// \todo Make the setting up of all executables below more consistent
   var = getenv("QUCSATOR");
   if(var != NULL) {
-	  QucsSettings.Qucsator = QString(var);
+      QucsSettings.Qucsator = QString(var);
   }
   else {
-	  QucsSettings.Qucsator = QucsSettings.BinDir + "qucsator" + executableSuffix;
+      QucsSettings.Qucsator = QucsSettings.BinDir + "qucsator" + executableSuffix;
   }
+
+  var = getenv("QUCSCONV");
+  if(var != NULL) {
+      QucsSettings.Qucsconv = QString(var);
+  }
+  else {
+      QucsSettings.Qucsconv = QucsSettings.BinDir + "qucsconv" + executableSuffix;
+  }
+  QFile file(QucsSettings.Qucsconv);
+  if(!file.exists())
+      qWarning() << "QucsConv not found: " << QucsSettings.Qucsconv;
+
 
   var = getenv("ADMSXMLBINDIR");
   if(var != NULL) {

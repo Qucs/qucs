@@ -120,8 +120,6 @@ QucsApp::QucsApp()
 {
   setWindowTitle("Qucs " PACKAGE_VERSION);
 
-  spiceExtensions << "*.sp" << "*.cir" << "*.spc" << "*.spi";
-
   QucsFileFilter =
     tr("Schematic") + " (*.sch);;" +
     tr("Data Display") + " (*.dpl);;" +
@@ -130,7 +128,7 @@ QucsApp::QucsApp()
     tr("Verilog Sources") + " (*.v);;" +
     tr("Verilog-A Sources") + " (*.va);;" +
     tr("Octave Scripts") + " (*.m *.oct);;" +
-    tr("Spice Files") + QString(" (") + spiceExtensions.join(" ") + QString(");;") +
+    tr("Spice Files") + QString(" (") + QucsSettings.spiceExtensions.join(" ") + QString(");;") +
     tr("Any File")+" (*)";
 
   updateSchNameHash();
@@ -610,15 +608,26 @@ void QucsApp::fillComboBox (bool setAll)
 // Component IconView with the appropriate components.
 void QucsApp::slotSetCompView (int index)
 {
-//  qDebug() << "QucsApp::slotSetCompView (int index)";
+  //qDebug() << "QucsApp::slotSetCompView(" << index << ")";
 
   editText->setHidden (true); // disable text edit of component property
-  CompSearch->clear();
 
   QList<Module *> Comps;
   CompComps->clear ();   // clear the IconView
   if (CompChoose->count () <= 0) return;
 
+  // was in "search mode" ?
+  if (CompChoose->itemText(0) == tr("Search results")) {
+    if (index == 0) // user selected "Search results" item
+      return;
+    CompChoose->removeItem(0);
+    CompSearch->clear();
+    --index; // adjust requested index since item 0 was removed
+  }
+
+  // make sure the right index is selected
+  //  (might have been called by a cleared search and not by user action)
+  CompChoose->setCurrentIndex(index);
   QString item = CompChoose->itemText (index);
 
   Comps = Category::getModules(item);
@@ -689,6 +698,15 @@ void QucsApp::slotSearchComponent(const QString &searchText)
 {
   qDebug() << "User search: " << searchText;
   CompComps->clear ();   // clear the IconView
+
+  // not already in "search mode"
+  if (CompChoose->itemText(0) != tr("Search results")) {
+    ccCurIdx = CompChoose->currentIndex(); // remember current panel
+    // insert "Search results" at the beginning, so that it is visible
+    CompChoose->insertItem(-1, tr("Search results"));
+    CompChoose->setCurrentIndex(0);
+  }
+
   if (searchText.isEmpty()) {
     slotSetCompView(CompChoose->currentIndex());
   } else {
@@ -747,7 +765,7 @@ void QucsApp::slotSearchComponent(const QString &searchText)
 
         // Add icon an name tag to dock
         QListWidgetItem *icon = new QListWidgetItem(vaIcon, Name);
-        icon->setToolTip("verilog-a user devices: " + Name);
+        icon->setToolTip(tr("verilog-a user devices") + ": " + Name);
         CompComps->addItem(icon);
       }
     }
@@ -757,8 +775,14 @@ void QucsApp::slotSearchComponent(const QString &searchText)
 // ------------------------------------------------------------------
 void QucsApp::slotSearchClear()
 {
-  CompSearch->clear();
-  slotSetCompView(CompChoose->currentIndex());
+  // was in "search mode" ?
+  if (CompChoose->itemText(0) == tr("Search results")) {
+    CompChoose->removeItem(0); // remove the added "Search results" item
+    CompSearch->clear();
+    // go back to the panel selected before search started
+    slotSetCompView(ccCurIdx);
+    // the added "Search results" panel text will be removed by slotSetCompView()
+  }
 }
 
 // ------------------------------------------------------------------
@@ -820,8 +844,14 @@ void QucsApp::slotSelectComponent(QListWidgetItem *item)
         if (mod->info) {
           (*mod->info)(CompName, CompFile_cptr, false);
           if (CompName == name) {
-            CompChoose->setCurrentIndex(i);
+	    // change currently selected category, so the user will 
+	    //   learn where the component comes from
+            CompChoose->setCurrentIndex(i+1); // +1 due to the added "Search Results" item
+	    ccCurIdx = i; // remember the category to select when exiting search
+	    //!! comment out the above two lines if you would like that the search
+	    //!!   returns back to the last selected category instead
             view->selElem = (*mod->info) (CompName, CompFile_cptr, true);
+	    // TODO: component found, exit the loops now...
           }
         }
       }
@@ -1530,13 +1560,13 @@ bool QucsApp::saveAs()
   Doc->setName(s);
   DocumentTab->setTabText(DocumentTab->indexOf(w), misc::properFileName(s));
   lastDirOpenSave = Info.absolutePath();  // remember last directory and file
-  updateRecentFilesList(s);
 
   n = Doc->save();   // SAVE
   if(n < 0)  return false;
 
   updatePortNumber(Doc, n);
   slotUpdateTreeview();
+  updateRecentFilesList(s);
   return true;
 }
 
@@ -1577,7 +1607,9 @@ void QucsApp::slotFileSaveAll()
   while((Doc=getDoc(No++)) != 0) {
     if(Doc->DocName.isEmpty())  // make document the current ?
       DocumentTab->setCurrentIndex(No-1);
-    saveFile(Doc);
+    if (saveFile(Doc)) { // Hack! TODO: Maybe it's better to let slotFileChanged()
+        DocumentTab->setTabIcon(No-1,QPixmap(empty_xpm)); // know about Tab number?
+    }
   }
 
   DocumentTab->blockSignals(false);
@@ -2716,7 +2748,7 @@ void QucsApp::updateSpiceNameHash(void)
     foreach (QString qucspath, qucsPathList) {
         QDir thispath(qucspath);
         // get all the schematic files in the directory
-        QFileInfoList spicefilesList = thispath.entryInfoList( spiceExtensions, QDir::Files );
+        QFileInfoList spicefilesList = thispath.entryInfoList( QucsSettings.spiceExtensions, QDir::Files );
         // put each one in the hash table with the unique key the base name of
         // the file, note this will overwrite the value if the key already exists
         foreach (QFileInfo spicefile, spicefilesList) {
@@ -2727,7 +2759,7 @@ void QucsApp::updateSpiceNameHash(void)
 
     // finally check the home/working directory
     QDir thispath(QucsSettings.QucsWorkDir);
-    QFileInfoList spicefilesList = thispath.entryInfoList( spiceExtensions, QDir::Files );
+    QFileInfoList spicefilesList = thispath.entryInfoList( QucsSettings.spiceExtensions, QDir::Files );
     // put each one in the hash table with the unique key the base name of
     // the file, note this will overwrite the value if the key already exists
     foreach (QFileInfo spicefile, spicefilesList) {

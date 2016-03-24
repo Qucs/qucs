@@ -67,7 +67,7 @@ SimMessage::SimMessage(QWidget *w, QWidget *parent)
   setWindowTitle(tr("Qucs Simulation Messages"));
   QucsDoc *Doc;
   DocWidget = w;
-  if(DocWidget->inherits("QTextEdit"))
+  if(QucsApp::isTextDocument(DocWidget))
     Doc = (QucsDoc*) ((TextDoc*)DocWidget);
   else
     Doc = (QucsDoc*) ((Schematic*)DocWidget);
@@ -179,7 +179,7 @@ bool SimMessage::startProcess()
 
   Stream.setDevice(&NetlistFile);
 
-  if(!DocWidget->inherits("QTextEdit")) {
+  if(!QucsApp::isTextDocument(DocWidget)) {
     SimPorts =
        ((Schematic*)DocWidget)->prepareNetlist(Stream, Collect, ErrText);
     if(SimPorts < -5) {
@@ -236,7 +236,7 @@ void SimMessage::nextSPICE()
 
   QString prog;
   QStringList com;
-  prog = QucsSettings.BinDir + "qucsconv" + executableSuffix;
+  prog = QucsSettings.Qucsconv;
   if(makeSubcircuit)
     com << "-g" << "_ref";
   com << "-if" << "spice" << "-of" << "qucs";
@@ -365,7 +365,7 @@ void SimMessage::startSimulator()
   QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
 
   // Simulate text window.
-  if(DocWidget->inherits("QTextEdit")) {
+  if(QucsApp::isTextDocument(DocWidget)) {
 
     TextDoc * Doc = (TextDoc*)DocWidget;
 

@@ -25,6 +25,9 @@
 #ifndef __COMPONENTS_H__
 #define __COMPONENTS_H__
 
+// BUG: include all component headers.
+// components should add to the kernel, not the other way around.
+
 #include "complex.h"
 #include "object.h"
 #include "node.h"
@@ -139,28 +142,14 @@
 #include "digital/digisource.h"
 #include "digital/buffer.h"
 
-#include "verilog/hicumL2V2p1.core.h"
-#include "verilog/HBT_X.core.h"
-#include "verilog/mod_amp.core.h"
-#include "verilog/hic2_full.core.h"
-#include "verilog/log_amp.core.h"
-#include "verilog/hic0_full.core.h"
-#include "verilog/potentiometer.core.h"
-#include "verilog/MESFET.core.h"
 #include "verilog/EKV26MOS.core.h"
-#include "verilog/bsim3v34nMOS.core.h"
-#include "verilog/bsim3v34pMOS.core.h"
-#include "verilog/bsim4v30nMOS.core.h"
-#include "verilog/bsim4v30pMOS.core.h"
-#include "verilog/hicumL0V1p2.core.h"
-#include "verilog/hicumL0V1p2g.core.h"
-#include "verilog/hicumL0V1p3.core.h"
-#include "verilog/hicumL2V2p23.core.h"
-#include "verilog/hicumL2V2p24.core.h"
-#include "verilog/hicumL2V2p31n.core.h"
+#include "verilog/log_amp.core.h"
+#include "verilog/MESFET.core.h"
+#include "verilog/mod_amp.core.h"
+#include "verilog/nigbt.core.h"
 #include "verilog/photodiode.core.h"
 #include "verilog/phototransistor.core.h"
-#include "verilog/nigbt.core.h"
+#include "verilog/potentiometer.core.h"
 
 #include "verilog/dff_SR.core.h"
 #include "verilog/tff_SR.core.h"

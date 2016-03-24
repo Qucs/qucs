@@ -26,7 +26,7 @@ SUBDIRS = technical tutorial report doxygen
 
 DOCPDF = tutorial report technical
 
-EXTRA_DIST = autogen.sh RELEASE
+EXTRA_DIST = bootstrap RELEASE
 
 # default to build all PDF files
 all-recursive: pdf

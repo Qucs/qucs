@@ -823,15 +823,26 @@ bool Schematic::loadPaintings(QTextStream *stream, Q3PtrList<Painting> *List)
   return false;
 }
 
-// -------------------------------------------------------------
+/*!
+ * \brief Schematic::loadDocument tries to load a schematic document.
+ * \return true/false in case of success/failure
+ */
 bool Schematic::loadDocument()
 {
   QFile file(DocName);
   if(!file.open(QIODevice::ReadOnly)) {
-    QMessageBox::critical(0, QObject::tr("Error"),
+    /// \todo implement unified error/warning handling GUI and CLI
+    if (QucsMain)
+      QMessageBox::critical(0, QObject::tr("Error"),
                  QObject::tr("Cannot load document: ")+DocName);
+    else
+      qCritical() << "Schematic::loadDocument:"
+                  << QObject::tr("Cannot load document: ")+DocName;
     return false;
   }
+
+  // Keep reference to source file (the schematic file)
+  setFileInfo(DocName);
 
   QString Line;
   QTextStream stream(&file);
@@ -1180,9 +1191,18 @@ void Schematic::propagateNode(QStringList& Collect,
 }
 
 #include <iostream>
-// ---------------------------------------------------
-// Goes through all schematic components and allows special component
-// handling, e.g. like subcircuit netlisting.
+
+/*!
+ * \brief Schematic::throughAllComps
+ * Goes through all schematic components and allows special component
+ * handling, e.g. like subcircuit netlisting.
+ * \param stream is a pointer to the text stream used to collect the netlist
+ * \param countInit is the reference to a counter for nodesets (initial conditions)
+ * \param Collect is the reference to a list of collected nodesets
+ * \param ErrText is pointer to the QPlainTextEdit used for error messages
+ * \param NumPorts counter for the number of ports
+ * \return true in case of success (false otherwise)
+ */
 bool Schematic::throughAllComps(QTextStream *stream, int& countInit,
                    QStringList& Collect, QPlainTextEdit *ErrText, int NumPorts)
 {
@@ -1250,7 +1270,12 @@ bool Schematic::throughAllComps(QTextStream *stream, int& countInit,
       if(!d->loadDocument())      // load document if possible
       {
           delete d;
-          ErrText->appendPlainText(QObject::tr("ERROR: Cannot load subcircuit \"%1\".").arg(s));
+          /// \todo implement error/warning message dispatcher for GUI and CLI modes.
+          QString message = QObject::tr("ERROR: Cannot load subcircuit \"%1\".").arg(s);
+          if (QucsMain) // GUI is running
+            ErrText->appendPlainText(message);
+          else // command line
+            qCritical() << "Schematic::throughAllComps" << message;
           return false;
       }
       d->DocName = s;
@@ -1280,32 +1305,28 @@ bool Schematic::throughAllComps(QTextStream *stream, int& countInit,
       continue;
     } // if(pc->Model == "Sub")
 
-    // handle library symbols
-    if(pc->Model == "Lib") {
+    if(LibComp* lib = dynamic_cast</*const*/LibComp*>(pc)) {
       if(creatingLib) {
 	ErrText->appendPlainText(
 	    QObject::tr("WARNING: Skipping library component \"%1\".").
 	    arg(pc->Name));
 	continue;
       }
-      s = pc->getSubcircuitFile() + "/" + pc->Props.at(1)->Value;
+      QString scfile = pc->getSubcircuitFile();
+      s = scfile + "/" + pc->Props.at(1)->Value;
       SubMap::Iterator it = FileList.find(s);
       if(it != FileList.end())
         continue;   // insert each library subcircuit just one time
       FileList.insert(s, SubFile("LIB", s));
 
-      if(isAnalog)
-	r = ((LibComp*)pc)->createSubNetlist(stream, Collect, 1);
-      else {
-	if(isVerilog)
-	  r = ((LibComp*)pc)->createSubNetlist(stream, Collect, 4);
-	else
-	  r = ((LibComp*)pc)->createSubNetlist(stream, Collect, 2);
-      }
+
+      //FIXME: use different netlister for different purposes
+      unsigned whatisit = isAnalog?1:(isVerilog?4:2);
+      r = lib->createSubNetlist(stream, Collect, whatisit);
       if(!r) {
 	ErrText->appendPlainText(
-	    QObject::tr("ERROR: Cannot load library component \"%1\".").
-	    arg(pc->Name));
+	    QObject::tr("ERROR: \"%1\": Cannot load library component \"%2\" from \"%3\"").
+	    arg(pc->Name, pc->Props.at(1)->Value, scfile));
 	return false;
       }
       continue;
@@ -1330,7 +1351,9 @@ bool Schematic::throughAllComps(QTextStream *stream, int& countInit,
       SpiceFile *sf = (SpiceFile*)pc;
       r = sf->createSubNetlist(stream);
       ErrText->appendPlainText(sf->getErrorText());
-      if(!r) return false;
+      if(!r){
+        return false;
+      }
       continue;
     }
 
@@ -1358,13 +1381,17 @@ bool Schematic::throughAllComps(QTextStream *stream, int& countInit,
 	VHDL_File *vf = (VHDL_File*)pc;
 	r = vf->createSubNetlist(stream);
 	ErrText->appendPlainText(vf->getErrorText());
-	if(!r) return false;
+	if(!r) {
+	  return false;
+	}
       }
       if(pc->Model == "Verilog") {
 	Verilog_File *vf = (Verilog_File*)pc;
 	r = vf->createSubNetlist(stream);
 	ErrText->appendPlainText(vf->getErrorText());
-	if(!r) return false;
+	if(!r) {
+	  return false;
+	}
       }
       continue;
     }
@@ -1401,8 +1428,10 @@ bool Schematic::giveNodeNames(QTextStream *stream, int& countInit,
     }
 
   // go through components
-  if(!throughAllComps(stream, countInit, Collect, ErrText, NumPorts))
+  if(!throughAllComps(stream, countInit, Collect, ErrText, NumPorts)){
+    fprintf(stderr, "Error: Could not go throughAllComps\n");
     return false;
+  }
 
   // work on named nodes first in order to preserve the user given names
   throughAllNodes(true, Collect, countInit);
@@ -1731,8 +1760,10 @@ bool Schematic::createSubNetlist(QTextStream *stream, int& countInit,
 //  int Collect_count = Collect.count();   // position for this subcircuit
 
   // TODO: NodeSets have to be put into the subcircuit block.
-  if(!giveNodeNames(stream, countInit, Collect, ErrText, NumPorts))
+  if(!giveNodeNames(stream, countInit, Collect, ErrText, NumPorts)){
+    fprintf(stderr, "Error giving NodeNames in createSubNetlist\n");
     return false;
+  }
 
 /*  Example for TODO
       for(it = Collect.at(Collect_count); it != Collect.end(); )
@@ -1826,11 +1857,14 @@ int Schematic::prepareNetlist(QTextStream& stream, QStringList& Collect,
   }
 
   int countInit = 0;  // counts the nodesets to give them unique names
-  if(!giveNodeNames(&stream, countInit, Collect, ErrText, NumPorts))
+  if(!giveNodeNames(&stream, countInit, Collect, ErrText, NumPorts)){
+    fprintf(stderr, "Error giving NodeNames\n");
     return -10;
+  }
 
-  if(allTypes & isAnalogComponent)
+  if(allTypes & isAnalogComponent){
     return NumPorts;
+  }
 
   if (!isVerilog) {
     stream << VHDL_LIBRARIES;
@@ -1934,3 +1968,5 @@ QString Schematic::createNetlist(QTextStream& stream, int NumPorts)
 
   return Time;
 }
+
+// vim:ts=8:sw=2:noet

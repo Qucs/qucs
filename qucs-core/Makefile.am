@@ -28,32 +28,13 @@ CODE_COVERAGE_LCOV_OPTIONS ?= --no-external --rc lcov_branch_coverage=1 $(CODE_C
 CODE_COVERAGE_GENHTML_OPTIONS ?= --rc lcov_branch_coverage=1
 @CODE_COVERAGE_RULES@
 
-## if maintainer mode we may build adms
-if MAINTAINER_MODE
-## Test if an internal adms has been requested
-if USE_INTERNAL_ADMS
-SUBDIRS = deps/adms
-else
-SUBDIRS =
-endif
-else
-SUBDIRS =
-endif
-
-## Add the subdirectories, including a '.' which forces adms
-## to be build first, followed by src, then doc
-SUBDIRS += src doc .
-
-# include subdirs to build gtest and run unit tests
-if USE_GTEST
-SUBDIRS += tests
-endif
+SUBDIRS = src doc tests
 
 ACLOCAL_AMFLAGS = -I m4
 
 nodist_pkginclude_HEADERS = qucs_typedefs.h
 
-EXTRA_DIST = BUGS bootstrap.sh depcomp RELEASE
+EXTRA_DIST = BUGS bootstrap RELEASE
 
 pkginclude_HEADERS = config.h
 
@@ -75,7 +56,7 @@ MOSTLYCLEANFILES = \
 # https://github.com/Qucs/qucs-test.
 TEST_EXTENSIONS = .net .txt
 NET_LOG_COMPILER = $(top_srcdir)/tests/runqucsator.sh
-AM_NET_LOG_FLAGS = $(abs_top_srcdir)/src/qucsator
+AM_NET_LOG_FLAGS = $(abs_top_builddir)/src/qucsator
 
 TESTS =
 
@@ -111,3 +92,8 @@ if USE_QUCS_TEST
               tests/qucs-test/testsuite/DC_SW_diff1_prj/netlist.txt \
               tests/qucs-test/testsuite/DC_TR_SW_spice_BFR520_prj/netlist.txt
 endif
+
+# this is a VILE HACK
+# (but better than nothing, for now)
+dist-hook:
+	cp -r $(top_srcdir)/tests/basic $(distdir)/tests

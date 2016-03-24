@@ -88,8 +88,8 @@ Name & Property \\
 \hline
 Bessel filter (Thomson filter) & as constant group delay as possible \\
 Butterworth filter (power-term filter) & as constant amplitude transfer function as possible \\
-Chebychev filter type I & constant ripple in pass band \\
-Chebychev filter type II & constant ripple in stop band \\
+Chebyshev filter type I & constant ripple in pass band \\
+Chebyshev filter type II & constant ripple in stop band \\
 Cauer filter (elliptical filter) & constant ripple in pass and stop band \\
 \end{tabular} 
 
@@ -208,7 +208,7 @@ element of an $n$ order low-pass ladder filter is:
  & & X_k & = \dfrac{2}{\omega_B}\cdot g_k
 \end{alignat}
 
-The order of the Chebychev filter is dependent on the specifications
+The order of the Chebyshev filter is dependent on the specifications
 provided by the user.  The general form of the calculation for the
 order is the same as for the Butterworth, except that the inverse
 hyperbolic cosine function is used in place of the common logarithm
@@ -220,7 +220,7 @@ n = \dfrac{\textrm{sech}\left(\dfrac{10^{-0.1\cdot \alpha_{stop}} - 1}{10^{-0.1\
 
 \subsubsection{Chebyshev II}
 
-Because of the nature of the derivation of the inverse Chebychev approxiation function from the standard Chebychev approximation the calculation of the order \eqref{eq:ChebOrder} is the same.
+Because of the nature of the derivation of the inverse Chebyshev approxiation function from the standard Chebyshev approximation the calculation of the order \eqref{eq:ChebOrder} is the same.
 
 
 \section{Matching newtworks}
@@ -408,7 +408,4 @@ T_0(x) = 1
 \end{equation}
 
 \noindent $T_N(sec(\theta_m)cos(\theta))$ involves terms such as $cos^N(x)$, $cos^{N-1}(x)$,... In order to equate this terms to the $\Gamma_n$ terms in \ref{eq:CascadeReflection}, it is necessary to expand $cos^N(x)$ terms into sums of terms such as $cos((n-2m)\theta)$
-
-
-
 
