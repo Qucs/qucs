@@ -116,6 +116,8 @@ public:
 
   int SchematicParser(QString, int &, QString &, QString &, QString & ,int, double, double, double, double, tSubstrate, bool);
 
+  bool CreateSchematic(QString, QString, QString);
+
   void getMicrostrip(double, double, tSubstrate *, double &, double &);
 
 

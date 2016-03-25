@@ -810,22 +810,7 @@ bool MatchDialog::calcMatchingCircuitSingleStub(double r_real, double r_imag, do
     QString paintingstr = "";
     SchematicParser(laddercode, x_pos, componentstr, wirestr, paintingstr, schcode, Freq, Z0, RL, XL, Substrate, microsyn);
 
-    //Add components
-    Schematic += "<Components>\n";
-    Schematic+=componentstr;
-    Schematic += "</Components>\n";
-
-    //Add wires
-    Schematic+= "<Wires>\n";
-    Schematic += wirestr;
-    Schematic+= "</Wires>\n";
-
-    //Add paintings
-    Schematic += "<Paintings>\n";
-    Schematic += paintingstr;
-    Schematic += "</Paintings>\n";
-    QApplication::clipboard()->setText(Schematic, QClipboard::Clipboard);
-    return true;
+    return CreateSchematic(componentstr, wirestr, paintingstr);
 }
 
 // ----------------------------------------------------------------------------------
@@ -848,22 +833,7 @@ bool MatchDialog::calcMatchingCircuitDoubleStub(double r_real, double r_imag, do
     QString paintingstr = "";
     SchematicParser(laddercode, x_pos, componentstr, wirestr, paintingstr, schcode, Freq, Z0, RL, XL, Substrate, microsyn);
 
-    //Add components
-    Schematic += "<Components>\n";
-    Schematic+=componentstr;
-    Schematic += "</Components>\n";
-
-    //Add wires
-    Schematic+= "<Wires>\n";
-    Schematic += wirestr;
-    Schematic+= "</Wires>\n";
-
-    //Add paintings
-    Schematic += "<Paintings>\n";
-    Schematic += paintingstr;
-    Schematic += "</Paintings>\n";
-    QApplication::clipboard()->setText(Schematic, QClipboard::Clipboard);
-    return true;
+    return CreateSchematic(componentstr, wirestr, paintingstr);
 }
 
 
@@ -889,23 +859,7 @@ bool MatchDialog::calcMatchingCircuitCascadedLambda4(double r_real, double r_ima
     QString paintingstr = "";
     SchematicParser(laddercode, x_pos, componentstr, wirestr, paintingstr, schcode, Freq, Z0, RL, XL, Substrate, microsyn);
 
-    //Add components
-    Schematic += "<Components>\n";
-    Schematic+=componentstr;
-    Schematic += "</Components>\n";
-
-    //Add wires
-    Schematic+= "<Wires>\n";
-    Schematic += wirestr;
-    Schematic+= "</Wires>\n";
-
-    //Add paintings
-    Schematic += "<Paintings>\n";
-    Schematic += paintingstr;
-    Schematic += "</Paintings>\n";
-
-    QApplication::clipboard()->setText(Schematic, QClipboard::Clipboard);
-    return true;
+    return CreateSchematic(componentstr, wirestr, paintingstr);
 }
 
 
@@ -960,23 +914,7 @@ bool MatchDialog::calcMatchingCircuitLC(double r_real, double r_imag, double Z0,
 
     SchematicParser(laddercode, x_pos, componentstr, wirestr, paintingstr, schcode, Freq, Z0, RL, XL, Subs, false);
 
-    //Add components
-    Schematic += "<Components>\n";
-    Schematic+=componentstr;
-    Schematic += "</Components>\n";
-
-    //Add wires
-    Schematic+= "<Wires>\n";
-    Schematic += wirestr;
-    Schematic+= "</Wires>\n";
-
-    //Add paintings
-    Schematic += "<Paintings>\n";
-    Schematic += paintingstr;
-    Schematic += "</Paintings>\n";
-
-    QApplication::clipboard()->setText(Schematic, QClipboard::Clipboard);
-    return true;
+    return CreateSchematic(componentstr, wirestr, paintingstr);
 }
 
 
@@ -1003,23 +941,7 @@ bool MatchDialog::calcMatchingCircuitCascadedLCSections(double r_real, double r_
     tSubstrate Subs;
     SchematicParser(laddercode, x_pos, componentstr, wirestr, paintingstr, schcode, Freq, Z0, RL, XL, Subs, false);
 
-    //Add components
-    Schematic += "<Components>\n";
-    Schematic+=componentstr;
-    Schematic += "</Components>\n";
-
-    //Add wires
-    Schematic+= "<Wires>\n";
-    Schematic += wirestr;
-    Schematic+= "</Wires>\n";
-
-    //Add paintings
-    Schematic += "<Paintings>\n";
-    Schematic += paintingstr;
-    Schematic += "</Paintings>\n";
-
-    QApplication::clipboard()->setText(Schematic, QClipboard::Clipboard);
-    return true;
+    return CreateSchematic(componentstr, wirestr, paintingstr);
 }
 
 //------------------------------------------------------------------------
@@ -1032,9 +954,6 @@ bool MatchDialog::calcMatchingCircuitLambda8Lambda4(double r_real, double r_imag
     int schcode = -1;
     r2z(RL, XL, Z0);
 
-    //Header
-    QString Schematic = "<Qucs Schematic " PACKAGE_VERSION ">\n";
-
     if (SP_Block) schcode = 3;
 
     int x_pos = 0;
@@ -1044,23 +963,7 @@ bool MatchDialog::calcMatchingCircuitLambda8Lambda4(double r_real, double r_imag
     tSubstrate Subs;
     SchematicParser(laddercode, x_pos, componentstr, wirestr, paintingstr, schcode, Freq, Z0, RL, XL, Subs, false);
 
-    //Add components
-    Schematic += "<Components>\n";
-    Schematic+=componentstr;
-    Schematic += "</Components>\n";
-
-    //Add wires
-    Schematic+= "<Wires>\n";
-    Schematic += wirestr;
-    Schematic+= "</Wires>\n";
-
-    //Add paintings
-    Schematic += "<Paintings>\n";
-    Schematic += paintingstr;
-    Schematic += "</Paintings>\n";
-
-    QApplication::clipboard()->setText(Schematic, QClipboard::Clipboard);
-    return true;
+    return CreateSchematic(componentstr, wirestr, paintingstr);
 }
 
 // -----------------------------------------------------------------------
@@ -1153,21 +1056,8 @@ bool MatchDialog::calc2PortMatch(double S11real, double S11imag,
     if (SP_Block) schcode = 2;
     x_pos += 200;
     SchematicParser(OutputLadderCode, x_pos, output_componentstr, output_wirestr, paintingstr, schcode, Freq, 0, Z2, 0, Substrate, microsyn);
+    return CreateSchematic(input_componentstr + output_componentstr, input_wirestr+output_wirestr, paintingstr);
 
-    //Add components
-    Schematic += "<Components>\n";
-    Schematic +=input_componentstr;
-    Schematic += QString("");
-    Schematic+=output_componentstr;
-    Schematic += "</Components>\n";
-
-    //Add wires
-    Schematic+= "<Wires>\n";
-    Schematic += input_wirestr;
-    Schematic += output_wirestr;
-    Schematic+= "</Wires>\n";
-    QApplication::clipboard()->setText(Schematic, QClipboard::Clipboard);
-    return true;
 }
 
 
@@ -1631,6 +1521,32 @@ QString MatchDialog::calcMatchingLambda8Lambda4(double r_real, double r_imag, do
     return QString("TL%1#%2;TL%3#%4").arg(Zm).arg(l4).arg(Zmm).arg(l8);
 }
 
+
+//-----------------------------------------------------------------------------
+// Given the components, wires and paintings, it creates the schematic and copies on the clipboard
+bool MatchDialog::CreateSchematic(QString components, QString wires, QString paintings)
+{
+  //Header
+  QString Schematic = "<Qucs Schematic " PACKAGE_VERSION ">\n";
+
+  //Add components
+  Schematic += "<Components>\n";
+  Schematic+=components;
+  Schematic += "</Components>\n";
+
+  //Add wires
+  Schematic+= "<Wires>\n";
+  Schematic += wires;
+  Schematic+= "</Wires>\n";
+
+  //Add paintings
+  Schematic += "<Paintings>\n";
+  Schematic += paintings;
+  Schematic += "</Paintings>\n";
+
+  QApplication::clipboard()->setText(Schematic, QClipboard::Clipboard);
+  return true;
+}
 
 // Given a string code of inductors, capacitors and transmission lines, it generates the Qucs network. Notice that the schematic is split into
 // three part: components, wires and paintings, all of them are passed by reference.
