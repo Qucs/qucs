@@ -4,6 +4,8 @@
     begin                : Fri Jul 22 2005
     copyright            : (C) 2005 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
+
+    Upgrade (2016)        : Andres Martinez-Mera <andresmartinezmera@gmail.com>
  ***************************************************************************/
 
 /***************************************************************************
@@ -22,26 +24,6 @@
 #include "matchdialog.h"
 #include "main.h"
 #include "qucs.h"
-#include "element.h"
-#include "../components/capacitor.h"
-#include "../components/inductor.h"
-#include "../components/ground.h"
-#include "misc.h"
-
-#include <QLabel>
-#include <QHBoxLayout>
-#include <QVBoxLayout>
-#include <QLineEdit>
-#include <QComboBox>
-#include <QCheckBox>
-#include <QRadioButton>
-#include <QValidator>
-#include <QPushButton>
-#include <QMessageBox>
-#include <QApplication>
-#include <QClipboard>
-#include <QGroupBox>
-#include <cmath>
 #include "../../qucs-filter/material_props.h"
 
 

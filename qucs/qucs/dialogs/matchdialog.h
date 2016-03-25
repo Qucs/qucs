@@ -22,7 +22,18 @@
 #include <QVBoxLayout>
 #include <QGroupBox>
 #include <QLabel>
-#include<QDebug>
+#include <QHBoxLayout>
+#include <QLineEdit>
+#include <QComboBox>
+#include <QCheckBox>
+#include <QRadioButton>
+#include <QValidator>
+#include <QPushButton>
+#include <QMessageBox>
+#include <QApplication>
+#include <QClipboard>
+#include <cmath>
+
 
 class Element;
 class QLabel;
