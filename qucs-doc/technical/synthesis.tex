@@ -88,8 +88,8 @@ Name & Property \\
 \hline
 Bessel filter (Thomson filter) & as constant group delay as possible \\
 Butterworth filter (power-term filter) & as constant amplitude transfer function as possible \\
-Chebychev filter type I & constant ripple in pass band \\
-Chebychev filter type II & constant ripple in stop band \\
+Chebyshev filter type I & constant ripple in pass band \\
+Chebyshev filter type II & constant ripple in stop band \\
 Cauer filter (elliptical filter) & constant ripple in pass and stop band \\
 \end{tabular} 
 
@@ -208,7 +208,7 @@ element of an $n$ order low-pass ladder filter is:
  & & X_k & = \dfrac{2}{\omega_B}\cdot g_k
 \end{alignat}
 
-The order of the Chebychev filter is dependent on the specifications
+The order of the Chebyshev filter is dependent on the specifications
 provided by the user.  The general form of the calculation for the
 order is the same as for the Butterworth, except that the inverse
 hyperbolic cosine function is used in place of the common logarithm
@@ -220,27 +220,192 @@ n = \dfrac{\textrm{sech}\left(\dfrac{10^{-0.1\cdot \alpha_{stop}} - 1}{10^{-0.1\
 
 \subsubsection{Chebyshev II}
 
-Because of the nature of the derivation of the inverse Chebychev approximation function from the standard Chebychev approximation the calculation of the order \eqref{eq:ChebOrder} is the same.
+Because of the nature of the derivation of the inverse Chebyshev approxiation function from the standard Chebyshev approximation the calculation of the order \eqref{eq:ChebOrder} is the same.
 
-\subsection{Quarter wavelength filters}
 
-Quarter wavelength filters are based on the fact that short and open $\lambda/4$ stubs are equivalent to series and paralell resonant tanks, respectively. Once given the normalized $g_i$ coefficients of the filter prototype, it is quite straighforward to obtain the impedance of the short/open stubs, depending on the desired filter mask (bandpass/notch). Figure \ref{eq:QWfilter} illustrates the topology of a quarter wavelength filter.\\
+\section{Matching newtworks}
+The matching networks are essential in RF circuit design since they are aimed to maximize the power transfer (i.e. $S_{11} \rightarrow$ 0). They can be implemented using lumped components (more common in RF applications), but also using transmission lines (more common in the microwave band and higher). In what follows, it will be depicted the design equations for the methods included in the matching network tool.
+\subsection{LC}
+\subsection{Single stub}
+Any complex load can be matched using the single stub implementation. The variables are the distance between the stub and the load, and the length of the stub. Let be $Z_L = R_L +jX_L$ the load impedance, then the impedance at the stub is:
 
-\begin{figure}[h!]
+\begin{figure}
 \centering
-\includegraphics[width=100mm]{QuarterWavelengthFilter.eps}
-\caption{Quarter wavelength filters topology. a) Notch filter b) Bandpass filter \cite{Pozar}}
-\label{eq:QWfilter}
+\includegraphics[width=50mm]{SingleStubOpen.eps}
+\caption{Single stub matching network. Open circuit configuration}
 \end{figure}
 
-\noindent The impedance of the $i$-th stub, $Z_i$, is given by:
 
-\begin{itemize}
-\item{Bandpass (short circuit)} $Z_i = \frac{\pi Z_0 \Delta}{4g_i}$
-\item{Notch (open circuit)} $Z_i = \frac{4 Z_0 }{g_i\pi \Delta}$
-\end{itemize} 
+\begin{figure}
+\centering
+\includegraphics[width=50mm]{SingleStubShort.eps}
+\caption{Single stub matching network. Short circuit configuration}
+\end{figure}
 
-\noindent where $Z_0$ is the characteristic impedance of the filter (typically, 50$\Omega$) and $\Delta$ is the relative bandwidth defined as $\Delta = \frac{f_2 - f_1}{f_c}$. The demonstration \cite{Pozar} is not included in this document in favour of greater simplicity. 
+\begin{equation}
+Z(d) = Z_0 \frac{Z_L + j\cdot Z_0\cdot tan(\beta \cdot d)}{Z_0 + j\cdot Z_L \cdot tan(\beta \cdot d)}
+\end{equation}
 
-\noindent It has to be said that quarter wavelength filters are narrowband by nature. Besides this, these kind of filters may not be feasible because of the stubs may require unpractical widths (i.e. impedances) for proper operation.
+\noindent where $\beta = \frac{2\pi}{\lambda}$ is the wave number and $d$ the distance between the load and the stub. The admitance at the stub is: $Y(d) = G(d)+j \cdot B(d)$, where G(d) is the conductance and B(d) the susceptance at d. It can be shown that:
+
+\begin{equation}
+G(d) = \frac{R_L \cdot (1 + tan^2(\beta \cdot d))}{R_L^2 + (X_L + Z_0\cdot tan(\beta \dot d))^2}
+\end{equation}
+
+\noindent and, 
+
+\begin{equation}
+B(d) = \frac{R_L^2\cdot tan(\beta \cdot d) - (Z_0 - X_L\cdot tan(\beta \cdot d))\cdot (X_L + Z_0\cdot tan(\beta \cdot d))}{Z_0 \cdot (R_L^2 + (X_L + Z_0\cdot tan(\beta \cdot d))^2)}
+\end{equation}
+
+The conductance at the stub should be $G(d) = 1/Z_0$ so as to match the real part of the load to $Z_0$. Then, applying this condition and solving the previous equation for $t = tan(\beta \cdot d)$, it gives:
+
+\begin{equation}
+t = \frac{X_L \pm \sqrt{(R_L/Z_0) \cdot ((Z_0 - R_L)^2 + X_L^2)}}{R_L - Z_0} \;\;\;\;\; R_L \neq Z_0
+\end{equation}
+
+\begin{equation}
+t = -X_L/(2\cdot Z_0) \;\;\;\;\; R_L == Z_0
+\end{equation}
+
+\noindent Now, the susceptance of the stub should be calculated to cancel the reactive part of the load impedance, so $B_{stub} = -B(d)$.
+
+\noindent Since $t=tan(\beta \cdot d)$, $d$ can be calculated as:
+
+\begin{equation}
+d = \frac{\lambda}{2\pi} atan(t) \;\;\;\;\;\;\;\; \text{if t $\geq$ 0}
+\end{equation}
+
+\begin{equation}
+d = \frac{\lambda}{2\pi} (\pi + atan(t)) \;\;\;\;\;\;\;\; \text{if t $<$ 0}
+\end{equation}
+
+\noindent The length of the stub is given by:
+
+\begin{equation}
+l_{open} = \frac{-\lambda}{2\pi} atan\left(Z_0\cdot B(d)\right)   \;\;\;\;\;\;\;\; \text{Open stub}
+\end{equation}
+
+\begin{equation}
+l_{short} = \frac{\lambda}{2\pi} atan\left(\frac{1}{Z_0\cdot B(d)}\right) \;\;\;\;\;\;\;\; \text{Short circuited stub}
+\end{equation}
+
+\subsection{Double stub}
+The single stub method is really useful since it can match any load. However, the distance between the load and the stub depends on $Z_L$ and this might be a problem for some applications. To overcome this problem, the double stub technique may be used.\\
+
+\begin{figure}
+\centering
+\includegraphics[width=50mm]{DoubleStubOpen.eps}
+\caption{Double stub matching network. Open circuit configuration}
+\end{figure}
+
+
+\begin{figure}
+\centering
+\includegraphics[width=50mm]{DoubleStubShort.eps}
+\caption{Double stub matching network. Short circuit configuration}
+\end{figure}
+
+The admitance at the first stub is $Y_1 = G_L + j(B_L + B_{stub_1})$, where $Y_L$, $B_L$ and $G_L$ have the same meaning as in the previous section. $B_{stub1}$ is the susceptance of the first stub.
+
+The distance between the stubs, $d$, is typically set to $\lambda/8$ and it is fixed beforehand. Under this condition, the admitance at the second stub is given by:
+
+\begin{equation}
+Y_2 = Y_0 \frac{G_L + j(B_L + B_{stub1} + Y_0 \cdot tan(\beta \cdot d))}{Y_0 + j (G_L + j(B_L + B_{stub1})) \cdot tan(\beta \cdot d)}
+\end{equation}
+
+Since, the impedance at the second stub must be $Z_0$, so equating $Real\lbrace Y_2 \rbrace = 1/Z_0$ it gives:
+
+\begin{equation} 
+G_L = Y_0\frac{1 + tan^2(\beta \cdot d)}{2tan^2(\beta \cdot d)} \lbrace 1 \pm \sqrt{1 - \frac{4tan^2(\beta \cdot d)(Y_0 - (B_L+B_{stub1})\cdot tan(\beta \cdot d))^2}{Y_0^2(1+tan^2(\beta \cdot d))^2}} \rbrace
+\end{equation}
+
+Notice that when the factor inside the square root becomes negative, the double stub cannot match the load conductance. Therefore, it can be match load conductances such that:
+
+\begin{equation}
+G_L \leq \frac{Y_0}{sin^2(\beta \cdot d)}
+\end{equation}
+
+If it is possible to match the conductance of the load, the susceptance of the first stub can be calculated as:
+\begin{equation}
+B_{stub_1} = - B_L + \frac{Y_0 \pm \sqrt{(1 + tan^2(\beta \cdot d))G_L\cdot Y_0 - (G_L \cdot tan(\beta \cdot d))^2}}{tan(\beta \cdot d)}
+\end{equation}
+
+
+\noindent Similarly, the susceptance of the second stub is:
+\begin{equation}
+B_{stub_2} = \frac{\pm\sqrt{Y_0\cdot G_L(1 + tan^2(\beta \cdot d)) - (G_L\cdot tan(\beta \cdot d))^2} + G_L \cdot Y_0}{G_L \cdot tan(\beta \cdot d)}
+\end{equation}
+
+\noindent Finally, the length of the stubs can be calculated as:
+
+\begin{equation}
+l_{open} = \frac{\lambda}{2\pi} atan\left(Z_0\cdot B_{stub_i}\right)   \;\;\;\;\;\;\;\; \text{Open stub}
+\end{equation}
+
+\begin{equation}
+l_{short} = \frac{-\lambda}{2\pi} atan\left(\frac{1}{Z_0\cdot B_{stub_i}}\right) \;\;\;\;\;\;\;\; \text{Short circuited stub}
+\end{equation}
+
+\noindent where $i$ denotes the number of the stub. 
+
+\subsection{Multistage $\lambda$/4 sections}
+The overall reflection coefficient of N cascaded transmission lines of the same length can be approximated as:
+
+\begin{equation}
+\Gamma(\theta) = \sum \limits_{n=0}^{N} \Gamma_n \cdot e^{-j\cdot 2n \theta}
+\label{eq:CascadeReflection}
+\end{equation}
+
+\noindent where $\theta$ is the electrical length of a single transmission line (typically $\lambda/4$). The ${\Gamma_n}$ weigths define the shape of $\Gamma(\theta)$ and they are taylored so as to get a binomial or a Chebyshev overall response.
+
+\noindent Once given $\Gamma_n \;\; \forall n \in [0, N]$, it is possible to calculate the impedance of each transmission line:
+
+\begin{equation}
+Z_{n+1} \sim Z_n \cdot e^{2\cdot\Gamma_n}
+\end{equation}
+
+\noindent where n indicates the section number.
+
+\subsubsection{Binomial weighting}
+\noindent $\Gamma_n$ is defined as:
+
+\begin{equation}
+\Gamma_n = A\cdot C^{N}_{n} \;\; \forall n \in [0, N]
+\end{equation}	
+
+\noindent where $A = 2^{-N}\frac{Z_L - Z_0}{Z_L + Z_0}$ and $C^N_n = \frac{N!}{(N-n)!n!}$
+
+\subsubsection{Chebyshev weighting}
+
+The overall reflection coeffient is set to:
+
+\begin{equation}
+\Gamma(\theta) = A \cdot e^{-jN\theta} \cdot T_{\theta}(sec(\theta_m)cos(\theta))
+\end{equation}
+
+\noindent where:
+
+\begin{equation}
+ A = \frac{Z_L - Z_0}{Z_L + Z_0} \cdot \frac{1}{T_N(sec(\theta_m))}
+\end{equation}
+
+\begin{equation}
+  sec(\theta_m) = cosh(\frac{1}{N} acosh\left( \frac{1}{\Gamma_m} \lvert \frac{Z_L - Z_0}{Z_L + Z_0} \rvert \right))
+\end{equation}
+
+\noindent and $T_N(x)$ is the Chebyshev polynomial of order N. The Chebyshev polinomials are defined such that:
+\begin{equation}
+ T_n(x) = 2xT_{n-1}(x) - T_{n-1}(x) 
+\end{equation}
+
+\begin{equation}
+T_1(x) = x
+\end{equation}
+
+\begin{equation}
+T_0(x) = 1
+\end{equation}
+
+\noindent $T_N(sec(\theta_m)cos(\theta))$ involves terms such as $cos^N(x)$, $cos^{N-1}(x)$,... In order to equate this terms to the $\Gamma_n$ terms in \ref{eq:CascadeReflection}, it is necessary to expand $cos^N(x)$ terms into sums of terms such as $cos((n-2m)\theta)$
 
