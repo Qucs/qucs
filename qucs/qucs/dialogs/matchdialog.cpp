@@ -134,8 +134,10 @@ MatchDialog::MatchDialog(QWidget *parent)
     TopoCombo->addItem(tr("Single stub"));
     TopoCombo->addItem(tr("Double stub"));
     QString str = tr("Multistage ") + QString(QChar(0xBB, 0x03)) + "/4";
-    TopoCombo->addItem((str));
+    TopoCombo->addItem(str);
     TopoCombo->addItem("Cascaded LC sections");
+    str =  QString(QChar(0xBB, 0x03)) + "/8 +" +  QString(QChar(0xBB, 0x03)) + "/4 transformer";
+    TopoCombo->addItem(str);
 
     h4->addWidget(TopoCombo);
     connect(TopoCombo, SIGNAL(activated(int)), SLOT(slotChangeMode_TopoCombo()));
@@ -925,8 +927,11 @@ bool MatchDialog::calcMatchingCircuit(double S11real, double S11imag,double Z0, 
     case 3: // Quarter wave cascaded sections
         if(!calcMatchingCircuitCascadedLambda4(S11real, S11imag, Z0, Freq, micro_syn, SP_block, Substrate, gamma_MAX, order))return false;
         break;
-    case 4: //Cascaded LC sections
+    case 4: // Cascaded LC sections
         if(!calcMatchingCircuitCascadedLCSections(S11real, S11imag, Z0, Freq, SP_block, order))return false;
+        break;
+    case 5: // Lambda/8 + Lambda/4 impedance transformer
+        if(!calcMatchingCircuitLambda8Lambda4(S11real, S11imag, Z0, Freq, SP_block))return false;
         break;
     }
     return true;
@@ -1017,6 +1022,46 @@ bool MatchDialog::calcMatchingCircuitCascadedLCSections(double r_real, double r_
     return true;
 }
 
+//------------------------------------------------------------------------
+// This function generates the Qucs schematic of a lambda/4 + lambda/8 transformer
+// Reference: Inder J. Bahl. "Fundamentals of RF and microwave transistor amplifiers". John Wiley and Sons. 2009. Pages 159-160
+bool MatchDialog::calcMatchingCircuitLambda8Lambda4(double r_real, double r_imag, double Z0, double Freq, bool SP_Block)
+{
+    QString laddercode = calcMatchingLambda8Lambda4(r_real, r_imag, Z0, Freq);
+    double RL=r_real, XL=r_imag;
+    int schcode = -1;
+    r2z(RL, XL, Z0);
+
+    //Header
+    QString Schematic = "<Qucs Schematic " PACKAGE_VERSION ">\n";
+
+    if (SP_Block) schcode = 3;
+
+    int x_pos = 0;
+    QString wirestr = "";
+    QString componentstr = "";
+    QString paintingstr = "";
+    tSubstrate Subs;
+    SchematicParser(laddercode, x_pos, componentstr, wirestr, paintingstr, schcode, Freq, Z0, RL, XL, Subs, false);
+
+    //Add components
+    Schematic += "<Components>\n";
+    Schematic+=componentstr;
+    Schematic += "</Components>\n";
+
+    //Add wires
+    Schematic+= "<Wires>\n";
+    Schematic += wirestr;
+    Schematic+= "</Wires>\n";
+
+    //Add paintings
+    Schematic += "<Paintings>\n";
+    Schematic += paintingstr;
+    Schematic += "</Paintings>\n";
+
+    QApplication::clipboard()->setText(Schematic, QClipboard::Clipboard);
+    return true;
+}
 
 // -----------------------------------------------------------------------
 // Fundamental calculations for concurrent 2-port matching.
@@ -1065,6 +1110,9 @@ QString MatchDialog::calcBiMatch(double S11real, double S11imag,
     case 4: // Cascaded LC sections
         laddercode = calcMatchingCascadedLCSections(Rreal, -Rimag, Z0, Freq, order);
         break;
+    case 5: // Lambda/8 + Lambda/4 transformer
+       laddercode = calcMatchingLambda8Lambda4(Rreal, -Rimag, Z0, Freq);
+       break;
     }
 
     return laddercode;
@@ -1569,6 +1617,20 @@ QString MatchDialog::calcMatchingCascadedLCSections(double r_real, double r_imag
 
    return s;
 }
+
+//--------------------------------------------------------------------------
+//It calculates a lambda/8 + lambda/4 transformer to match a complex load to a real source
+QString MatchDialog::calcMatchingLambda8Lambda4(double r_real, double r_imag, double Z0, double Freq)
+{
+    double RL = r_real, XL = r_imag, RS = Z0;
+    double l4 = SPEED_OF_LIGHT/(4.*Freq);
+    double l8 = .5*l4;
+    r2z(RL, XL, Z0);
+    double Zmm = sqrt(RL*RL+XL*XL);
+    double Zm = sqrt((Z0*RL*Zmm)/(Zmm-XL));
+    return QString("TL%1#%2;TL%3#%4").arg(Zm).arg(l4).arg(Zmm).arg(l8);
+}
+
 
 // Given a string code of inductors, capacitors and transmission lines, it generates the Qucs network. Notice that the schematic is split into
 // three part: components, wires and paintings, all of them are passed by reference.

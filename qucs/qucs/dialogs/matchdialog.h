@@ -102,6 +102,9 @@ public:
   bool calcMatchingCircuitDoubleStub(double RL, double XL, double, double, bool, bool, bool, tSubstrate, bool);
   QString calcDoubleStub(double, double, double, double, bool, bool);
 
+  bool calcMatchingCircuitLambda8Lambda4(double, double, double, double, bool);
+  QString calcMatchingLambda8Lambda4(double, double, double, double);
+
 
   bool calcMatchingCircuitCascadedLambda4(double, double, double, double, bool, bool, tSubstrate, double, int);
 
