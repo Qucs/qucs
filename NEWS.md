@@ -35,9 +35,9 @@ Qucs
 
 * Deprecated use of `HOME` environment variable ([#204])
 
-* [NEW] Enable use of `QUCSATOR` environment variable to overide `qucsator` ([PR#209])
+* [NEW] Enable use of `QUCSATOR` environment variable to override `qucsator` ([PR#209])
 
-* Fix bug on deactivation (shor-circuiting) a component ([#216])
+* Fix bug on deactivation (short-circuiting) a component ([#216])
 
 * Various usability enhancements ([PR#232])
   - Adjust various dialogs for a better table sizing
@@ -56,9 +56,9 @@ Qucs
 
 * Fix crash when changing background color ([PR#456])
 
-* Changing in Qucs Home no longuer requires a restart ([PR#456])
+* Changing in Qucs Home no longer requires a restart ([PR#456])
 
-* Fix the "Open recent Files" which was not uptaded after save-as ([PR#444])
+* Fix the "Open recent Files" which was not updated after save-as ([PR#444])
 
 * Fix issue that allowed to create projects with an empty name ([#311])
 
@@ -70,7 +70,7 @@ Qucs
 
 * Fix keypad up/down on component dialog ([#319])
 
-* Fix crash when reloading Verilo-A symbols ([#478])
+* Fix crash when reloading Verilog-A symbols ([#478])
 
 * Fix matching circuit tool number conversion ([PR#482])
 
@@ -79,13 +79,13 @@ Qucs
 Qucsator
 --------
 
-* Fix segmentation fault during noise enabled S-parameter simulaton ([#133])
+* Fix segmentation fault during noise enabled S-parameter simulation ([#133])
 
 * Fix regression on tswitch component ([#34], [PR#203])
 
 * Fix coplanar waveguide formulae ([SF#183], [PR#306])
 
-* Fix several segfaults during fuzzed input ([PR#274])
+* Fix several segmentation faults during fuzzed input ([PR#274])
 
 * Remove null and free checks ([PR#267])
 
@@ -199,7 +199,7 @@ Port
 * Ported Component member variables Lines, Arcs, Rects, Ellips, Texts from Qt3PtrList to QList
 
 
-Miscelaneous
+Miscellaneous
 ------------
 
 * new: top VERSION files shall be used for versioning (Autotools, CMake). TODO, package versioning.
@@ -218,9 +218,9 @@ Miscelaneous
 
 * Integrate qucs-test into qucs package ([PR#389])
 
-* New toplevel make, make check, make distcheck
+* New top-level make, make check, make distcheck
 
-* Simplify Verilo-A compilation rules
+* Simplify Verilog-A compilation rules
 
 
 ---
@@ -309,10 +309,10 @@ Interfaces
 ----------
 
  * Improved Qucs/Octave interface for GUI and Qucssator netlist entry (including a start
-   on a Octave library of plotting functions for Qucs post simulation data visualisation)
+   on a Octave library of plotting functions for Qucs post simulation data visualization)
 
  * First steps in developing a combined Qucs/Python Qucs simulation capability with
-   high quality date visualisation using matplolib. Applications include basic sensitivity analysis
+   high quality date visualization using matplolib. Applications include basic sensitivity analysis
    and circuit performance optimisation.
 
  * Preliminary version of Qucs/Octave linked transient simulation capability.
@@ -338,7 +338,7 @@ Included packages
  * ADMS 2.3.4
 
 
-Miscelaneous
+Miscellaneous
 ------------
 
  * Project website is now under version control.
