@@ -1,0 +1,15 @@
+<RCC>
+    <qresource prefix="/">
+        <file>bitmaps/Wilkinson.svg</file>
+        <file>bitmaps/WilkinsonLC.svg</file>
+        <file>bitmaps/MultistageWilkinson.svg</file>
+        <file>bitmaps/MultistageWilkinsonLC.svg</file>
+        <file>bitmaps/Tree.svg</file>
+        <file>bitmaps/TravellingWave.svg</file>
+        <file>bitmaps/Branchline.svg</file>
+        <file>bitmaps/DoubleBoxBranchline.svg</file>
+        <file>bitmaps/Bagley.svg</file>
+        <file>bitmaps/Gysel.svg</file>
+        <file>bitmaps/Tee.svg</file>
+    </qresource>
+</RCC>

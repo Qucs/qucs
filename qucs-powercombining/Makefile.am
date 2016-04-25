@@ -27,8 +27,10 @@ bin_PROGRAMS = qucspowercombining
 MOCHEADERS = qucspowercombiningtool.h
 MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
 
-qucspowercombining_SOURCES = main.cpp qucspowercombiningtool.cpp
+qucspowercombining_SOURCES = main.cpp qucspowercombiningtool.cpp qrc_qucspowercombining.cpp
 
+qrc_qucspowercombining.cpp: qucspowercombining.qrc
+	$(RCC) -o $@ $<
 
 nodist_qucspowercombining_SOURCES = $(MOCFILES)
 
