@@ -45,6 +45,7 @@
 #include <QWidget>
 #include <QtGui>
 #include <complex>
+#include <QtSvg>
 
 struct tSubstrate {
   double er;
@@ -86,11 +87,14 @@ public:
      QLineEdit *RefImplineEdit, *FreqlineEdit, *K1lineEdit, *SubstrateHeightlineEdit, *ThicknesslineEdit, *MinWidthlineEdit,
                  *MaxWidthlineEdit, *tanDlineEdit, *ResistivitylineEdit, *RoughnesslineEdit, *AlphalineEdit;
 
-     QCheckBox *AddSparcheckBox,*MicrostripcheckBox;
+     QCheckBox *AddSparcheckBox,*MicrostripcheckBox, *LumpedcheckBox;
      QPushButton *GenerateButton;
-     QGroupBox *ImplementationgroupBox,*MicrostripgroupBox;
+     QGroupBox *ImplementationgroupBox,*MicrostripgroupBox, *ImagegroupBox;
      QWidget *centralWidget;
      QStatusBar *statusBar;
+     QGridLayout *gboxImage;
+     QSvgWidget *imgWidget;
+
 
      private slots:
          void on_TopoCombo_currentIndexChanged(int index);
@@ -99,8 +103,8 @@ public:
 
          void on_GenerateButton_clicked();
          QString CalculateWilkinson(double Z0, double K);
-         int Wilkinson(double Z0, double Freq, double K, bool SP_block, bool microcheck, tSubstrate Substrate, double Alpha);
-         int MultistageWilkinson(double Z0, double Freq, int NStages, bool SP_block, bool microcheck, tSubstrate Substrate, double Alpha);
+         int Wilkinson(double Z0, double Freq, double K, bool SP_block, bool microcheck, tSubstrate Substrate, double Alpha, bool LumpedElements);
+         int MultistageWilkinson(double Z0, double Freq, int NStages, bool SP_block, bool microcheck, tSubstrate Substrate, double Alpha, bool LumpedElements);
          int Tee(double Z0, double Freq, double K, bool SP_block, bool microcheck, tSubstrate Substrate, double Alpha);
          int Branchline(double Z0, double Freq, double K, bool SP_block, bool microcheck, tSubstrate Substrate, double Alpha);
          int DoubleBoxBranchline(double Z0, double Freq, double K, bool SP_block, bool microcheck, tSubstrate Substrate, double Alpha);
@@ -111,6 +115,6 @@ public:
          QString calcChebyLines(double RL, double Z0, double gamma, int NStages);
          QString calcMultistageWilkinsonIsolators(double Freq, QString Zlines, double L, std::complex<double> gamma, int NStages, double Z0);
          void on_MicrostripcheckBox_clicked();
-
+         void on_LCcheckBox_clicked();
 
 };
