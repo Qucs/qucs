@@ -311,6 +311,7 @@ double QucsPowerCombiningTool::getScaleFreq()
 // This function changes the window according to the selected topology
 void QucsPowerCombiningTool::on_TopoCombo_currentIndexChanged(int index)
 {
+//Update image
     if (index == 0)//Wilkinson
     {
         (LumpedcheckBox->isChecked()) ? imgWidget->load(QString(":/bitmaps/WilkinsonLC.svg")) : 
@@ -321,7 +322,6 @@ void QucsPowerCombiningTool::on_TopoCombo_currentIndexChanged(int index)
         (LumpedcheckBox->isChecked()) ? imgWidget->load(QString(":/bitmaps/MultistageWilkinsonLC.svg")) : 
                                         imgWidget->load(QString(":/bitmaps/MultistageWilkinson.svg")); 
     }
- 
     if (index == 2) imgWidget->load(QString(":/bitmaps/Tee.svg"));
     if (index == 3) imgWidget->load(QString(":/bitmaps/Branchline.svg"));
     if (index == 4) imgWidget->load(QString(":/bitmaps/DoubleBoxBranchline.svg"));
@@ -330,6 +330,8 @@ void QucsPowerCombiningTool::on_TopoCombo_currentIndexChanged(int index)
     if (index == 7) imgWidget->load(QString(":/bitmaps/TravellingWave.svg"));
     if (index == 8) imgWidget->load(QString(":/bitmaps/Tree.svg"));
 
+
+// Change settings
     if ((index==0)|(index==2)||(index==3))//Wilkinson, Tee, Branchline
     {
         BranchesCombo->clear();
@@ -421,8 +423,9 @@ void QucsPowerCombiningTool::on_GenerateButton_clicked()
     tSubstrate Substrate;
     double alpha = AlphalineEdit->text().toDouble();//Attenuation coefficient in dB/m
     bool microcheck = MicrostripcheckBox->isChecked();
-    bool LumpedElements = LumpedcheckBox->isChecked();
-    if (microcheck)
+    bool LumpedElements = LumpedcheckBox->isChecked();//Lumped element implementation?
+
+    if (microcheck)//Substrate
     {
         Substrate.er=RelPermcomboBox->currentText().section("  ", 0, 0).toDouble();
         Substrate.height=SubstrateHeightlineEdit->text().toDouble()*1e-3;
@@ -434,7 +437,7 @@ void QucsPowerCombiningTool::on_GenerateButton_clicked()
         Substrate.roughness=RoughnesslineEdit->text().toDouble();
     }
 
-    switch (TopoCombo->currentIndex())
+    switch (TopoCombo->currentIndex())//Topology selection
     {
     case 0: // Wilkinson
         err = Wilkinson(Z0, Freq, K, SP_block, microcheck, Substrate, alpha, LumpedElements);
@@ -550,7 +553,7 @@ int QucsPowerCombiningTool::Wilkinson(double Z0, double Freq, double K, bool SP_
         if (microcheck)s += QString("<SUBST Sub1 1 400 200 -30 24 0 0 \"%1\" 1 \"%2mm\" 1 \"%3um\" 1 \"%4\" 1 \"%5\" 1 \"%6\" 1>\n").arg(Substrate.er).arg(Substrate.height*1e3).arg(Substrate.thickness*1e6).arg(Substrate.tand).arg(Substrate.resistivity).arg(Substrate.roughness);
     }
 
-    if (microcheck)
+    if (microcheck)//Microstrip implementation
     {
         er = Substrate.er;
         getMicrostrip(Z0, Freq, &Substrate, width, er);
@@ -564,7 +567,7 @@ int QucsPowerCombiningTool::Wilkinson(double Z0, double Freq, double K, bool SP_
     }
     else
     {
-        if (LumpedElements)
+        if (LumpedElements)// CLC equivalent
         {
         //First capacitor
         s += QString("<C C1 1 90 0 -60 -90 0 3 \"%1\" 1 \"\" 0 \"neutral\" 0>\n").arg(CC);
@@ -589,7 +592,7 @@ int QucsPowerCombiningTool::Wilkinson(double Z0, double Freq, double K, bool SP_
     s += QString("<R R1 1 300 -20 30 -26 0 -1 \"%1 Ohm\" 1 \"26.85\" 0 \"US\" 0>\n").arg(R);//Isolation resistor
     if (K!=1)
     {// An unequal power ratio implies that the load impedance != 50, so it requires matching
-        if (microcheck)
+        if (microcheck)//Microstrip
         {
             er = Substrate.er;
             getMicrostrip(sqrt(Z0*R2), Freq, &Substrate, width, er);
@@ -601,7 +604,7 @@ int QucsPowerCombiningTool::Wilkinson(double Z0, double Freq, double K, bool SP_
         }
         else
         {
-           if (LumpedElements)
+           if (LumpedElements)//CLC equivalent
            {
              // Upper branch
              s += QString("<L L2 1 350 -90 -60 -26 0 0 \"%1\" 1 \"\" 0 \"neutral\" 0>\n").arg(L2_);
@@ -640,7 +643,7 @@ int QucsPowerCombiningTool::Wilkinson(double Z0, double Freq, double K, bool SP_
        s += QString("<250 30 250 60 \"\" 0 0 0>\n");//Lower branch
     }
 
-    if (K!=1)
+    if (K!=1)//Unequal power split ratio => need additional matching
     {
          s += QString("<300 30 320 30 \"\" 0 0 0>\n");//Branch 2 to Port 2
          s += QString("<300 -90 320 -90 \"\" 0 0 0>\n");//Branch 2 to Port 3
@@ -650,13 +653,13 @@ int QucsPowerCombiningTool::Wilkinson(double Z0, double Freq, double K, bool SP_
          s += QString("<380 30 380 60 \"\" 0 0 0>\n");//Lower branch
         }
     }
-    else
+    else//Equal power split ratio
     {
         s += QString("<300 30 400 30 \"\" 0 0 0>\n");//Branch 2 to Port 2
         s += QString("<300 -90 400 -90 \"\" 0 0 0>\n");//Branch 2 to Port 3
     }
 
-    if(SP_block)
+    if(SP_block)//Add S-param block
     {
         s += QString("<380 30 400 30 \"\" 0 0 0>\n");//Branch 2 to Port 2
         s += QString("<380 -90 400 -90 \"\" 0 0 0>\n");//Branch 2 to Port 3
@@ -664,7 +667,7 @@ int QucsPowerCombiningTool::Wilkinson(double Z0, double Freq, double K, bool SP_
 
     s += "</Wires>\n";
 
-    QApplication::clipboard()->setText(s, QClipboard::Clipboard);
+    QApplication::clipboard()->setText(s, QClipboard::Clipboard);//Copy into clipboard
     return 0;
 
 }
@@ -745,7 +748,7 @@ QString QucsPowerCombiningTool::calcChebyLines(double RL, double Z0, double gamm
     return s;
 }
 
-
+// This function calculates the isolation resistors given the impedance of the quarter wave lines
 QString QucsPowerCombiningTool::calcMultistageWilkinsonIsolators(double Freq, QString Zlines, double L, std::complex<double> gamma, int NStages, double Z0)
 {
   double Z_, R, Zaux = Zlines.section(';', NStages-1, NStages-1).toDouble();
@@ -793,7 +796,7 @@ int QucsPowerCombiningTool::MultistageWilkinson(double Z0, double Freq, int NSta
 
 
 
-    if (microcheck)
+    if (microcheck)//Microstrip implementation
     {
     double Rs = sqrt((2*pi*Freq*4*pi*1e-7)/Substrate.resistivity);
     getMicrostrip(Z0, Freq, &Substrate, W, er);
@@ -810,7 +813,7 @@ int QucsPowerCombiningTool::MultistageWilkinson(double Z0, double Freq, int NSta
     QString wirestr = "<Wires>\n", str;
     QString s = "<Qucs Schematic " PACKAGE_VERSION ">\n";
     s += "<Components>\n";
-    if (SP_block)
+    if (SP_block)//Add S-param simulation
     {
         //Source
         s += QString("<Pac P1 1 0 30 18 -26 0 1 \"1\" 1 \"%1 Ohm\" 1 \"0 dBm\" 0 \"1 GHz\" 0>\n").arg(Z0);
@@ -830,9 +833,9 @@ int QucsPowerCombiningTool::MultistageWilkinson(double Z0, double Freq, int NSta
     }
 
     int x=100;
-    int spacing = 150;
+    int spacing = 150;//Spacing between sections
     double Zi, Ri;
-    if (microcheck)
+    if (microcheck)//Microstrip
     {
         er = Substrate.er;
         getMicrostrip(Z0, Freq, &Substrate, width, er);
@@ -881,7 +884,7 @@ int QucsPowerCombiningTool::MultistageWilkinson(double Z0, double Freq, int NSta
         }
         else
         {
-            if (LumpedElements)
+            if (LumpedElements)//Lumped equivalent
             {
                if (i == 0)//Last element
                {

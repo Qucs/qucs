@@ -1,7 +1,7 @@
 /*
  * main.cpp - Power combining tool main
  *
- * copyright (C) 2015 Andres Martinez-Mera <andresmartinezmera@gmail.com>
+ * copyright (C) 2016 Andres Martinez-Mera <andresmartinezmera@gmail.com>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,8 +20,9 @@
  *
  *
  */
-#include "qucspowercombiningtool.h"
+
 #include <QApplication>
+#include "qucspowercombiningtool.h"
 
 int main(int argc, char *argv[])
 {

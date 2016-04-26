@@ -23,27 +23,6 @@
 #ifdef HAVE_CONFIG_H
 # include <config.h>
 #endif
-#include <QMainWindow>
-#include <QLabel>
-#include <math.h>
-#include <QGridLayout>
-#include <QPixmap>
-#include <QVBoxLayout>
-#include <QHBoxLayout>
-#include <QGroupBox>
-#include <QMenu>
-#include <QMenuBar>
-#include <QMessageBox>
-#include <QLabel>
-#include <QPushButton>
-#include <QLineEdit>
-#include <QComboBox>
-#include <QValidator>
-#include <QClipboard>
-#include <QApplication>
-#include <QDebug>
-#include <QWidget>
-#include <QtGui>
 #include <complex>
 #include <QtSvg>
 
