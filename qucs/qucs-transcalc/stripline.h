@@ -29,7 +29,6 @@ Reference:
 Cam Nguyen. John Wiley and Sons Inc., 2001, Pages 76 - 78
 */
 
-
 class stripline : public transline {
  public:
   stripline();

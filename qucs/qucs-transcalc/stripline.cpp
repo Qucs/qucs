@@ -119,8 +119,10 @@ void stripline::analyze ()
   /* Get and assign physical parameters */
   get_stripline_phys();
 
-  calculateZ0();
-  getStriplineLength();
+  calculateZ0(); // Z0
+  getStriplineLength();// Line length
+  alphac_stripline();// alpha_c and skin depth
+  alphad_stripline();// alpha_d
   setProperty ("Z0", Z0, UNIT_RES, RES_OHM);
   setProperty ("Ang_l", ang_l, UNIT_ANG, ANG_RAD);
   show_results();
@@ -149,6 +151,12 @@ void stripline::getStriplineLength()
  */
 int stripline::synthesize ()
 {
+  get_stripline_sub();//Substrate
+  get_stripline_elec();//Z0 and electrical length
+  get_stripline_phys();//Line size
+  alphac_stripline();// alpha_c and skin depth
+  alphad_stripline();// alpha_d
+
   double B = exp(Z0*sqrt(er)/30)-1;
   double C = sqrt(4*B+6.27);
   double A = 2*B/C;
@@ -166,6 +174,8 @@ int stripline::synthesize ()
   /* calculate physical length */
   l = (lambda_g * ang_l)/(2.0 * pi);    /* in m */
   setProperty ("L", l, UNIT_LENGTH, LENGTH_M);
+
+  show_results();
   return 0;
 }
 

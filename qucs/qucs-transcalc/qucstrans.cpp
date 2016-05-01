@@ -242,9 +242,9 @@ struct TransType TransLineTypes[] = {
     { { {
       { "Er",    4.5,   NULL, TRANS_NONES, 0, TRANS_QOBJS },
       { "Mur",   1,     NULL, TRANS_NONES, 0, TRANS_QOBJS },
-      { "h", 27, NULL, TRANS_LENGTHS, 0, TRANS_QOBJS },
+      { "h", 27.56, NULL, TRANS_LENGTHS, 0, TRANS_QOBJS },
       { "Tand",  0.018, NULL, TRANS_NONES, 0, TRANS_QOBJS },
-      { "T", 1.4, NULL, TRANS_LENGTHS, 0, TRANS_QOBJS },
+      { "T", 1.42, NULL, TRANS_LENGTHS, 0, TRANS_QOBJS },
       { "Sigma", 5.8e7, NULL, TRANS_NONES, 0, TRANS_QOBJS },
 
       TRANS_END
@@ -254,8 +254,8 @@ struct TransType TransLineTypes[] = {
       TRANS_END
     } },
     { {
-      { "W",     1000, NULL, TRANS_LENGTHS, 0, TRANS_QOBJS },
-      { "L",     1000, NULL, TRANS_LENGTHS, 0, TRANS_QOBJS },
+      { "W",     19.69, NULL, TRANS_LENGTHS, 0, TRANS_QOBJS },
+      { "L",     100, NULL, TRANS_LENGTHS, 0, TRANS_QOBJS },
       TRANS_END
     } },
     { {
@@ -278,7 +278,6 @@ struct TransUnit TransUnits[] = {
 
 /* Constructor setups the GUI. */
 QucsTranscalc::QucsTranscalc() {
-    
   QWidget *centralWidget = new QWidget(this);  
   setCentralWidget(centralWidget);
   
@@ -388,15 +387,12 @@ QucsTranscalc::QucsTranscalc() {
   // substrate parameter box
   QGroupBox * substrate = new QGroupBox (tr("Substrate Parameters"));
   vm->addWidget(substrate);
-
   // Pass the GroupBox > create Grid layout > Add widgets > set layout
   createPropItems (substrate, TRANS_SUBSTRATE);
-
   // component parameter box
   QGroupBox * component = new QGroupBox (tr("Component Parameters"));
   vm->addWidget(component);
   createPropItems (component, TRANS_COMPONENT);
-
 
   // === right
   QVBoxLayout *vr = new QVBoxLayout();
@@ -450,7 +446,6 @@ QucsTranscalc::QucsTranscalc() {
   // setup calculated result bix
   createResultItems (calculated);
   updateSelection ();
-
   // instantiate transmission lines
   TransLineTypes[0].line = new microstrip ();
   TransLineTypes[0].line->setApplication (this);
@@ -466,6 +461,7 @@ QucsTranscalc::QucsTranscalc() {
   TransLineTypes[5].line->setApplication (this);
   TransLineTypes[6].line = new stripline ();
   TransLineTypes[6].line->setApplication (this);
+
 }
 
 /* Destructor destroys the application. */
@@ -524,7 +520,7 @@ void QucsTranscalc::setupTranslations () {
   i++;//Stripline
   TransLineTypes[i].result[0].name = new QString(tr("Conductor Losses"));
   TransLineTypes[i].result[1].name = new QString(tr("Dielectric Losses"));
-  TransLineTypes[i].result[3].name = new QString(tr("Skin Depth"));
+  TransLineTypes[i].result[2].name = new QString(tr("Skin Depth"));
 
   // extra tool tips
   struct TransType * t = TransLineTypes;
@@ -630,7 +626,6 @@ void QucsTranscalc::setupTranslations () {
 void QucsTranscalc::createPropItem (QGridLayout * parentGrid, TransValue * val,
                     int box, QButtonGroup * group) {
   Q_UNUSED(group);
-
   QRadioButton * r = NULL;
   QLabel * l;
   QLineEdit * e;
@@ -693,6 +688,7 @@ void QucsTranscalc::updatePropItem (TransValue * val) {
   // update editable value text
   val->lineedit->setText (QString::number (val->value));
   val->lineedit->setDisabled (!val->name);
+
   // update unit choice
   val->combobox->clear();
   if (!val->units[0]) {
@@ -747,7 +743,6 @@ void QucsTranscalc::updateMode (void) {
       val++;
     }
   }
-
 }
 
 /* Updates the current choice of physical property selection. */
@@ -785,9 +780,7 @@ void QucsTranscalc::createPropItems (QGroupBox *parent, int box) {
   struct TransValue * val, * dup;
   int last = 0, idx = getTypeIndex ();
   val = TransLineTypes[idx].array[box].item;
-
   QGridLayout *boxGrid = new QGridLayout();
-
   QButtonGroup * group = new QButtonGroup();
   connect(group, SIGNAL(buttonPressed(int)), SLOT(slotRadioChecked(int)));
 
@@ -797,6 +790,7 @@ void QucsTranscalc::createPropItems (QGroupBox *parent, int box) {
   // go through each parameter category
   for (int i = 0; i < TransMaxBox[box]; i++) {
     // fix uninitialized memory
+
     if (val->name == NULL) last++;
     if (last) {
       val->name = NULL;
@@ -815,7 +809,7 @@ void QucsTranscalc::createPropItems (QGroupBox *parent, int box) {
     dup->lineedit = val->lineedit;
     dup->combobox = val->combobox;
     dup->radio = val->radio;
-    dup->value = val->value;//modified
+  //  dup->value = val->value;
       }
     }
     val++;
