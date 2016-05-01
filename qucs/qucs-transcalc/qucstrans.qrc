@@ -5,6 +5,7 @@
         <file>bitmaps/cpw_back.png</file>
         <file>bitmaps/cpw.png</file>
         <file>bitmaps/microstrip.png</file>
+        <file>bitmaps/stripline.png</file>
         <file>bitmaps/rectwaveguide.png</file>
         <file>bitmaps/big.qucs.xpm</file>
     </qresource>
