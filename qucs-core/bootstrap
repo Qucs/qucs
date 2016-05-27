@@ -29,7 +29,7 @@ AUTOMAKE_VERSION_CHECK=${AUTOMAKE_VERSION_CHECK:-yes}
 if [ "$AUTOMAKE_VERSION_CHECK" = yes ]; then
 	AUTOMAKE_VERSION=$($AUTOMAKE --version | head -1 | cut -d' ' -f4)
 	case ${AUTOMAKE_VERSION} in
-		1.11*)
+		1.1[01]*)
 			cat >&2 <<__EOF__
 We experience trouble with your automake (version $AUTOMAKE_VERSION).
 Giving up.
