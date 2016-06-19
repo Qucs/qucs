@@ -57,6 +57,7 @@ OctaveWindow::OctaveWindow(QDockWidget *parent_): QWidget()
   histPosition = 0;
 
   input->installEventFilter(this);
+  output->installEventFilter(this);
 }
 
 // -----------------------------------------------------------------
@@ -175,8 +176,18 @@ void OctaveWindow::slotSendCommand()
 
 
 bool OctaveWindow::eventFilter(QObject *obj, QEvent *event) {
-    Q_UNUSED(obj);
-
+  if (obj == output) {
+    // handle Ctrl-C (copy) for the output TextEdit as it seems
+    // not to be handled when it is set ReadOnly and a global
+    // action for Ctrl-C is set
+    if (event->type() == QEvent::KeyRelease) {
+      QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
+      if (keyEvent->matches(QKeySequence::Copy)) {
+        output->copy();
+        return true; // no need to pass this event to the target
+      }
+    }
+  }
     if (event->type() == QEvent::KeyPress) {
         QKeyEvent* keyEvent = static_cast<QKeyEvent*>(event);
             if (keyEvent->key() == Qt::Key_PageUp) {
