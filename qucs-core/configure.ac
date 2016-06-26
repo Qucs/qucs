@@ -577,9 +577,9 @@ fi
 unset osversion
 
 dnl Check for additional programs in PATH
-AC_PATH_PROG([GPERF],[gperf],[gperf])
+AC_PATH_PROG([GPERF],[gperf],[])
 AS_IF([test -z "$GPERF"],
-      [AC_MSG_ERROR([gperf required in the PATH])])
+      [AC_MSG_ERROR([please install gperf])])
 
 dnl check for adms (queued for removal)
 dnl The default behaviour is "check for adms, if it's not there,
