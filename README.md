@@ -62,6 +62,7 @@ First make sure you have all dependencies installed:
     sudo apt-get install build-essential
     sudo apt-get install libqt4-dev libqt4-qt3support
     sudo apt-get install automake libtool gperf flex bison
+    sudo apt-get install texlive-font-utils octave-epstk
 
 The ADMS package is necessary. Please [download](https://sourceforge.net/projects/mot-adms/files/adms-source/) the latest tarball and follow the [install](https://github.com/Qucs/ADMS#users-install-from-tarball) instructions. Having`admsXml` on the path should be sufficient.
 
