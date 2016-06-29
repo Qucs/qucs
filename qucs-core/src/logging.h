@@ -28,6 +28,8 @@
 #define LOG_ERROR  0
 #define LOG_STATUS 1
 
+#include <stdio.h>
+
 __BEGIN_DECLS
 
 void logprint (int, const char *, ...);
