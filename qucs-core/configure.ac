@@ -916,7 +916,7 @@ AC_CONFIG_FILES([Makefile
 
 dnl Check for Git short SHA to tag version
 dnl The release package should also keep it on the config.h
-AC_PATH_PROG([GIT],[git],[git])
+AC_PATH_PROG([GIT],[git],[])
 AS_IF([test -d "../.git"],
       [AS_IF([test X"$GIT" != "X"],
              [AC_MSG_CHECKING([for git tree revision])
