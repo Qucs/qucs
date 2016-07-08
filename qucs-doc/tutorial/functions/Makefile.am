@@ -48,6 +48,12 @@ SUFFIXES = .dvi .tex .pdf .ps .idx .ind
 
 	$(MAKEINDEX) functions.idx -o functions.ind -s appendix.ist
 
+.tex.pdf:
+	$(PDFLATEX) $<
+	$(MAKEINDEX) functions.idx -o functions.ind -s $(srcdir)/appendix.ist
+	$(PDFLATEX) $<
+	$(PDFLATEX) -interaction=batchmode $<
+
 .dvi.ps:
 	$(DVIPS) $< -o $@
 

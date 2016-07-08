@@ -31,8 +31,6 @@ EXTRA_DIST = $(SOURCES)
 SOURCES = textmode.tex content.tex
 TARGETS = textmode.pdf
 
-tutorial: $(TARGETS)
-
 SUFFIXES = .dvi .tex .pdf .ps
 
 .tex.dvi:

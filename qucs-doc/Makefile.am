@@ -33,7 +33,7 @@ all-recursive: pdf
 
 pdf:
 	@for d in $(DOCPDF); do \
-	  (cd $$d && $(MAKE) $(AM_MAKEFLAGS) $$d); \
+	  (cd $$d && $(MAKE) $(AM_MAKEFLAGS) $$d) || exit $$?; \
 	done
 	cd tutorial && $(MAKE) $(AM_MAKEFLAGS) book
 

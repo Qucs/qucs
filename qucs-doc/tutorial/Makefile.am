@@ -32,16 +32,18 @@ EXTRA_DIST = $(SOURCES) $(TEXFILES)
 TEXFILES = titlepage.tex basics.tex workbook.tex intro.tex general.tex \
   datasheet.tex
 TARGETS = workbook.pdf
-PICDIRS = coupler functions
+PICDIRS = coupler functions textmode
+
+workbook.pdf: $(TEXFILES)
 
 tutorial:
 	@for d in $(SUBDIRS); do \
-	  (cd $$d && $(MAKE) $(AM_MAKEFLAGS) tutorial); \
+	  (cd $$d && $(MAKE) $(AM_MAKEFLAGS) tutorial) || exit $$?; \
 	done
 
 pics-book:
 	@for d in $(PICDIRS); do \
-	  (cd $$d && $(MAKE) $(AM_MAKEFLAGS) book); \
+	  (cd $$d && $(MAKE) $(AM_MAKEFLAGS) book) || exit $$?; \
 	done
 
 book: pics-book $(TARGETS)
