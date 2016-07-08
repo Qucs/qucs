@@ -31,7 +31,14 @@ TARGETS = textmode.pdf
 
 export TEXINPUTS=$(srcdir):$(srcdir)/..:
 
-tutorial: $(TARGETS)
+textmode.pdf: $(SOURCES)
+
+pics-tutorial:
+	cd pics && $(MAKE) $(AM_MAKEFLAGS) tutorial
+
+tutorial: pics-tutorial $(TARGETS)
+
+book: pics-tutorial
 
 SUFFIXES = .dvi .tex .pdf .ps
 
