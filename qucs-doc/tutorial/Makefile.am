@@ -34,12 +34,12 @@ PICDIRS = coupler functions
 
 tutorial:
 	@for d in $(SUBDIRS); do \
-	  (cd $$d && $(MAKE) $(AM_MAKEFLAGS) tutorial); \
+	  (cd $$d && $(MAKE) $(AM_MAKEFLAGS) tutorial) || exit $$?; \
 	done
 
 pics-book:
 	@for d in $(PICDIRS); do \
-	  (cd $$d && $(MAKE) $(AM_MAKEFLAGS) book); \
+	  (cd $$d && $(MAKE) $(AM_MAKEFLAGS) book) || exit $$?; \
 	done
 
 book: pics-book $(TARGETS)

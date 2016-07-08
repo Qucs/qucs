@@ -33,14 +33,14 @@ PICDIRS = verilog
 
 pics-book:
 	@for d in $(PICDIRS); do \
-	  (cd $$d && $(MAKE) $(AM_MAKEFLAGS) book); \
+	  (cd $$d && $(MAKE) $(AM_MAKEFLAGS) book) || exit $$?; \
 	done
 
 book: pics-book $(TARGETS)
 
 report:
 	@for d in $(SUBDIRS); do \
-	  (cd $$d && $(MAKE) $(AM_MAKEFLAGS) report); \
+	  (cd $$d && $(MAKE) $(AM_MAKEFLAGS) report) || exit $$?; \
 	done
 
 SUFFIXES = .dvi .tex .pdf .ps .eps .fig
