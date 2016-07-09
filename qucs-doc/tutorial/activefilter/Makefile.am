@@ -34,12 +34,7 @@ export TEXINPUTS=$(srcdir):$(srcdir)/..:
 
 activefilter.pdf: $(SOURCES)
 
-pics-tutorial:
-	cd pics && $(MAKE) $(AM_MAKEFLAGS) tutorial
-
-tutorial: pics-tutorial $(TARGETS)
-
-book: pics-tutorial
+tutorial: $(TARGETS)
 
 SUFFIXES = .dvi .tex .pdf .ps
 
