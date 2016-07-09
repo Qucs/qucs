@@ -34,6 +34,8 @@ PICDIRS = coupler functions textmode
 
 export TEXINPUTS=$(srcdir):
 
+workbook.pdf: $(TEXFILES)
+
 tutorial:
 	@for d in $(SUBDIRS); do \
 	  (cd $$d && $(MAKE) $(AM_MAKEFLAGS) tutorial) || exit $$?; \
