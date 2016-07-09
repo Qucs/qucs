@@ -30,6 +30,8 @@ SOURCES = appendix.ist math.tex use.tex electronics.tex intro.tex syntaxoverview
 
 TARGETS = functions.pdf
 
+export TEXINPUTS=$(srcdir):$(srcdir)/..:
+
 pics-tutorial:
 	cd pics && $(MAKE) $(AM_MAKEFLAGS) tutorial
 
@@ -45,10 +47,10 @@ SUFFIXES = .dvi .tex .pdf .ps .idx .ind
 	$(LATEX) -interaction=batchmode $<
 
 .tex.pdf:
-	TEXINPUTS=$$TEXINPUTS:.. $(PDFLATEX) $<
+	$(PDFLATEX) $<
 	$(MAKEINDEX) functions.idx -o functions.ind -s appendix.ist
-	TEXINPUTS=$$TEXINPUTS:.. $(PDFLATEX) $<
-	TEXINPUTS=$$TEXINPUTS:.. $(PDFLATEX) -interaction=batchmode $<
+	$(PDFLATEX) $<
+	$(PDFLATEX) -interaction=batchmode $<
 
 .dvi.ps:
 	$(DVIPS) $< -o $@

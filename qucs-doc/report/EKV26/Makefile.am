@@ -29,6 +29,8 @@ EXTRA_DIST = $(SOURCES)
 SOURCES = EKV26.tex content.tex
 TARGETS = EKV26.pdf
 
+export TEXINPUTS=$(srcdir):$(srcdir)/..:
+
 pics-report:
 	cd pics && $(MAKE) $(AM_MAKEFLAGS) report
 
@@ -44,9 +46,9 @@ SUFFIXES = .dvi .tex .pdf .ps
 	$(LATEX) -interaction=batchmode $<
 
 .tex.pdf:
-	TEXINPUTS=$$TEXINPUTS:.. $(PDFLATEX) $<
-	TEXINPUTS=$$TEXINPUTS:.. $(PDFLATEX) $<
-	TEXINPUTS=$$TEXINPUTS:.. $(PDFLATEX) -interaction=batchmode $<
+	$(PDFLATEX) $<
+	$(PDFLATEX) $<
+	$(PDFLATEX) -interaction=batchmode $<
 
 .dvi.ps:
 	$(DVIPS) $< -o $@

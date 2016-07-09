@@ -29,6 +29,9 @@ EXTRA_DIST = $(SOURCES)
 SOURCES = activefilter.tex content.tex
 TARGETS = activefilter.pdf
 
+export TEXINPUTS=$(srcdir):$(srcdir)/..:
+export BIBINPUTS=$(srcdir):
+
 activefilter.pdf: $(SOURCES)
 
 pics-report:
@@ -46,10 +49,10 @@ SUFFIXES = .tex .dvi .ps
 	$(LATEX) -interaction=batchmode --shell-escape $<
 
 .tex.pdf:
-	TEXINPUTS=$$TEXINPUTS:.. $(PDFLATEX) --shell-escape $<
+	$(PDFLATEX) --shell-escape $<
 	bibtex $*
-	TEXINPUTS=$$TEXINPUTS:.. $(PDFLATEX) --shell-escape $<
-	TEXINPUTS=$$TEXINPUTS:.. $(PDFLATEX) -interaction=batchmode --shell-escape $<
+	$(PDFLATEX) --shell-escape $<
+	$(PDFLATEX) -interaction=batchmode --shell-escape $<
 
 .dvi.ps:
 	$(DVIPS) $< -o $@

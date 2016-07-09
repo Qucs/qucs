@@ -29,6 +29,8 @@ EXTRA_DIST = $(SOURCES)
 SOURCES = coupler.tex content.tex
 TARGETS = coupler.pdf
 
+export TEXINPUTS=$(srcdir):$(srcdir)/..:
+
 pics-tutorial:
 	cd pics && $(MAKE) $(AM_MAKEFLAGS) tutorial
 
@@ -44,9 +46,9 @@ SUFFIXES = .dvi .tex .pdf
 	$(LATEX) -interaction=batchmode $<
 
 .tex.pdf:
-	TEXINPUTS=$$TEXINPUTS:.. $(PDFLATEX) $<
-	TEXINPUTS=$$TEXINPUTS:.. $(PDFLATEX) $<
-	TEXINPUTS=$$TEXINPUTS:.. $(PDFLATEX) -interaction=batchmode $<
+	$(PDFLATEX) $<
+	$(PDFLATEX) $<
+	$(PDFLATEX) -interaction=batchmode $<
 
 .dvi.ps:
 	$(DVIPS) $< -o $@

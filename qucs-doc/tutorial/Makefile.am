@@ -32,6 +32,8 @@ TEXFILES = titlepage.tex basics.tex workbook.tex intro.tex general.tex \
 TARGETS = workbook.pdf
 PICDIRS = coupler functions
 
+export TEXINPUTS=$(srcdir):
+
 tutorial:
 	@for d in $(SUBDIRS); do \
 	  (cd $$d && $(MAKE) $(AM_MAKEFLAGS) tutorial) || exit $$?; \

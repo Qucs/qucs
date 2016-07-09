@@ -30,6 +30,8 @@ EXTRA_DIST = $(SOURCES)
 SOURCES = RFResModels.tex content.tex
 TARGETS = RFResModels.pdf
 
+export TEXINPUTS=$(srcdir):$(srcdir)/..:
+
 tutorial: $(TARGETS)
 
 SUFFIXES = .dvi .tex .pdf .ps
@@ -40,9 +42,9 @@ SUFFIXES = .dvi .tex .pdf .ps
 	$(LATEX) -interaction=batchmode $<
 
 .tex.pdf:
-	TEXINPUTS=$$TEXINPUTS:.. $(PDFLATEX) $<
-	TEXINPUTS=$$TEXINPUTS:.. $(PDFLATEX) $<
-	TEXINPUTS=$$TEXINPUTS:.. $(PDFLATEX) -interaction=batchmode $<
+	$(PDFLATEX) $<
+	$(PDFLATEX) $<
+	$(PDFLATEX) -interaction=batchmode $<
 
 .dvi.ps:
 	$(DVIPS) $< -o $@

@@ -29,6 +29,8 @@ EXTRA_DIST = $(SOURCES)
 SOURCES = MESFET.tex content.tex
 TARGETS = MESFET.pdf
 
+export TEXINPUTS=$(srcdir):$(srcdir)/..:
+
 pics-report:
 	cd pics && $(MAKE) $(AM_MAKEFLAGS) report
 
@@ -44,9 +46,9 @@ SUFFIXES = .tex .dvi .ps
 	$(LATEX) -interaction=batchmode $<
 
 .tex.pdf:
-	TEXINPUTS=$$TEXINPUTS:.. $(PDFLATEX) $<
-	TEXINPUTS=$$TEXINPUTS:.. $(PDFLATEX) $<
-	TEXINPUTS=$$TEXINPUTS:.. $(PDFLATEX) -interaction=batchmode $<
+	$(PDFLATEX) $<
+	$(PDFLATEX) $<
+	$(PDFLATEX) -interaction=batchmode $<
 
 .dvi.ps:
 	$(DVIPS) $< -o $@
