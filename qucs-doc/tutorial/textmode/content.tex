@@ -1053,11 +1053,100 @@ saveAll & save subcircuit characteristic values into dataset [yes,no] & no & tod
 \hline
 \end{tabular}
 
-%% \subsection{xxx}
+\subsection{xxx}
 
-%% \begin{verbatim}
-%% xxx:Name Node1 Node2 [Parameters]
-%% \end{verbatim}
+\begin{verbatim}
+xxx:Name Node1 Node2 [Parameters]
+\end{verbatim}
+
+
+\begin{tabular}{|l|p{0.5\linewidth}|l|l|}
+\hline
+Parameter & Name & Default Value & Mandatory \\
+\hline
+L & inductance in Henry & n/a & yes \\
+\hline
+\end{tabular}
+
+
+
+
+\subsection{Silicon Controlled Rectifier (SCR)}
+
+\begin{verbatim}
+xxx:Name Node1 Node2 [Parameters]
+\end{verbatim}
+
+
+\begin{tabular}{|l|p{0.5\linewidth}|l|l|}
+\hline
+Parameter & Name & Default Value & Mandatory \\
+\hline
+Vbo & breakover voltage & 400 V & todo \\
+Igt & gate trigger current & 50 uA & todo \\
+Cj0 & parasitic capacitance & 10 pF & todo \\
+Is & saturation current & 1e-10 A & todo \\
+N & emission coefficient & 2 & todo \\
+Ri & intrinsic junction resistance & 10 Ohm & todo \\
+Rg & gate resistance & 5 Ohm & todo \\
+Temp & simulation temperature & 26.85 & todo \\
+\hline
+\end{tabular}
+
+
+\subsection{Triac (Bidirectional Thyristor)}
+
+\begin{verbatim}
+xxx:Name Node1 Node2 [Parameters]
+\end{verbatim}
+
+
+\begin{tabular}{|l|p{0.5\linewidth}|l|l|}
+\hline
+Parameter & Name & Default Value & Mandatory \\
+\hline
+Vbo & (bidirectional) breakover voltage & 400 V & todo \\
+Igt & (bidirectional) gate trigger current & 50 uA & todo \\
+Cj0 & parasitic capacitance & 10 pF & todo \\
+Is & saturation current & 1e-10 A & todo \\
+N & emission coefficient & 2 & todo \\
+Ri & intrinsic junction resistance & 10 Ohm & todo \\
+Rg & gate resistance & 5 Ohm & todo \\
+Temp & simulation temperature & 26.85 & todo \\
+\hline
+\end{tabular}
+
+
+
+\subsection{Resonance Tunnel Diode}
+
+\begin{verbatim}
+xxx:Name Node1 Node2 [Parameters]
+\end{verbatim}
+
+
+\begin{tabular}{|l|p{0.5\linewidth}|l|l|}
+\hline
+Parameter & Name & Default Value & Mandatory \\
+\hline
+Ip & peak current & 4 mA & todo \\
+Iv & valley current & 0.6 mA & todo \\
+Vv & valley voltage & 0.8 V & todo \\
+Wr & resonance energy in Ws & 2.7e-20 & todo \\
+eta & Fermi energy in Ws & 1e-20 & todo \\
+dW & resonance width in Ws & 4.5e-21 & todo \\
+Tmax & maximum of transmission & 0.95 & todo \\
+de & fitting factor for electron density & 0.9 & todo \\
+dv & fitting factor for voltage drop & 2.0 & todo \\
+nv & fitting factor for diode current & 16 & todo \\
+Cj0 & zero-bias depletion capacitance & 80 fF & todo \\
+M & grading coefficient & 0.5 & todo \\
+Vj & junction potential & 0.5 V & todo \\
+te & life-time of electrons & 0.6 ps & todo \\
+Temp & simulation temperature in degree Celsius & 26.85 & todo \\
+Area & default area for diode & 1.0 & todo \\
+\hline
+\end{tabular}
 
 
 %% \begin{tabular}{|l|p{0.5\linewidth}|l|l|}
