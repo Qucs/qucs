@@ -103,7 +103,7 @@ SUFFIXES = .dvi .tex .pdf .ps .eps .fig .frg .m
 
 if USE_OCTAVE
 .m.eps:
-	$(OCTAVE) $<
+	$(OCTAVE) --path $(srcdir) $<
 else
 .m.eps:
 	@echo -n not using octave to update "$@".
