@@ -24,15 +24,16 @@
 
 SUBDIRS = pics
 
-EXTRA_DIST = $(SOURCES)
+EXTRA_DIST = $(SOURCES) $(BIBFILE)
 
 SOURCES = activefilter.tex content.tex
+BIBFILE = activefilter.bib
 TARGETS = activefilter.pdf
 
 export TEXINPUTS=$(srcdir):$(srcdir)/..:
 export BIBINPUTS=$(srcdir):
 
-activefilter.pdf: $(SOURCES)
+activefilter.pdf: $(SOURCES) $(BIBFILE)
 
 pics-report:
 	cd pics && $(MAKE) $(AM_MAKEFLAGS) report
