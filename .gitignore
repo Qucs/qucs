@@ -182,8 +182,8 @@ qucsactivefilter
 *.pro.user
 Makefile
 moc_*.cpp
-*.sch
-*.sch~
+#*.sch
+#*.sch~
 *.dat
 *.dat.ngspice
 *.dat.xyce
