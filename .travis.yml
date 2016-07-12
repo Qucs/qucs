@@ -84,7 +84,7 @@ install:
 
   # Set up for Doxygen and qucs-doc PDF build
   - if [[ $LINUX && $CLANG ]]; then
-      sudo apt-get install -qq doxygen texlive texlive-math-extra texlive-science transfig graphviz ;
+      sudo apt-get install -qq doxygen texlive texlive-math-extra texlive-science transfig gnuplot texlive-publishers graphviz ;
     fi
 
   # Qucs-Test uses Numpy to compare results
