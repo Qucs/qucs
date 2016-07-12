@@ -22,8 +22,8 @@
 # Boston, MA 02110-1301, USA.
 #
 
-pkgdocsdir= ${docdir}
-dist_pkgdocs_DATA= \
+examplesdir = ${pkgdatadir}/examples
+dist_examples_DATA = \
     active_bp.sch\
     active_lp.sch\
     active_mixer.sch\
