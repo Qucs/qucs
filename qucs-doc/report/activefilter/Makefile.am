@@ -63,6 +63,6 @@ docdatadir = ${prefix}/share/qucs/docs/report
 docdata_DATA = ${TARGETS}
 
 
-CLEANFILES = *~ *.bak *.aux *.log *.toc *.pdf *.bbl *.blg *.dvi *.brf *.out *.idx
+CLEANFILES = *~ *.bak *.aux *.log *.toc *.pdf *.bbl *.blg *.dvi *.brf *.out *.idx *.pgf-plot.table *.pgf-plot.gnuplot
 MAINTAINERCLEANFILES = Makefile.in
 DISTCLEANFILES = *.ps *.pdf
