@@ -1,0 +1,62 @@
+source = "./GRABIM.dat"
+
+# S11 [dB]
+set term x11 0
+set title "S21"
+set xlabel "Frequency (GHz)"
+set ylabel "S21 (dB)"
+set grid ytics lt 0 lw 1 lc rgb "#bbbbbb"
+set grid xtics lt 0 lw 1 lc rgb "#bbbbbb"
+plot source using 1:3 with lines title "Grid search" linecolor rgb "red", source using 1:5 with lines title "Local optimiser" linecolor rgb "blue";
+
+
+# S21 [dB]
+set term x11 1 
+set title "S11"
+set xlabel "Frequency (GHz)"
+set ylabel "S11 (dB)"
+set grid ytics lt 0 lw 1 lc rgb "#bbbbbb"
+set grid xtics lt 0 lw 1 lc rgb "#bbbbbb"
+plot source using 1:2 with lines title "Grid search" linecolor rgb "red", source using 1:4 with lines title "Local optimiser" linecolor rgb "blue";
+
+
+#Smith chart plot
+#Source: http://swigerco.com/gnuradio/phase/vna_comp/
+set term x11 2
+set size square
+set clip
+set xtics axis nomirror
+set ytics axis nomirror
+unset grid
+unset polar
+unset key
+set para
+set rrange [-0 : 10]
+set trange [-pi : pi]
+set xrange [-1:1]
+set yrange [-1:1]
+set label "-10dB" at 0.22,0.22
+set label "-15dB" at 0.1,0.1
+tv(t,r) = sin(t)/(1+r)
+tu(t,r) = (cos(t) +r)/(1+r)
+cu(t,x) = 1 + cos(t)/x
+cv(t,x) = (1+ sin(t))/x
+plot cu(t,.1) linecolor rgb "black" linewidth 0.2 ,cv(t,.1) linecolor rgb "black" linewidth 0.2 ,cu(t,.1) linecolor rgb "black" linewidth 0.2 ,-cv(t,.1) linecolor rgb "black" linewidth 0.2 ,\
+cu(t,1) linecolor rgb "black" linewidth 0.2 ,cv(t,1) linecolor rgb "black" linewidth 0.2 ,cu(t,1) linecolor rgb "black" linewidth 0.2 ,-cv(t,1) linecolor rgb "black" linewidth 0.2 ,\
+cu(t,10) linecolor rgb "black" linewidth 0.2 ,cv(t,10) linecolor rgb "black" linewidth 0.2 ,cu(t,10) linecolor rgb "black" linewidth 0.2 ,-cv(t,10) linecolor rgb "black" linewidth 0.2 ,\
+tu(t,.1) linecolor rgb "black" linewidth 0.2, tv(t,.1) linecolor rgb "black" linewidth 0.2 ,\
+tu(t,.2) linecolor rgb "black" linewidth 0.2 ,tv(t,.2) linecolor rgb "black" linewidth 0.2 ,\
+tu(t,.3) linecolor rgb "black" linewidth 0.2 ,tv(t,.3) linecolor rgb "black" linewidth 0.2 ,\
+tu(t,.4) linecolor rgb "black" linewidth 0.2 ,tv(t,.4) linecolor rgb "black" linewidth 0.2 ,\
+tu(t,.5) linecolor rgb "black" linewidth 0.2 ,tv(t,.5) linecolor rgb "black" linewidth 0.2 ,\
+tu(t,.6) linecolor rgb "black" linewidth 0.2 ,tv(t,.6) linecolor rgb "black" linewidth 0.2 ,\
+tu(t,.7) linecolor rgb "black" linewidth 0.2 ,tv(t,.7) linecolor rgb "black" linewidth 0.2 ,\
+tu(t,.8) linecolor rgb "black" linewidth 0.2 ,tv(t,.8) linecolor rgb "black" linewidth 0.2 ,\
+tu(t,.9) linecolor rgb "black" linewidth 0.2 ,tv(t,.9) linecolor rgb "black" linewidth 0.2 ,\
+tu(t,1) linecolor rgb "black" linewidth 0.2 ,tv(t,1) linecolor rgb "black" linewidth 0.2 ,\
+tu(t,2) linecolor rgb "black" linewidth 0.2 ,tv(t,2) linecolor rgb "black" linewidth 0.2 ,\
+tu(t,5) linecolor rgb "black" linewidth 0.2 ,tv(t,5) linecolor rgb "black" linewidth 0.2 ,\
+tu(t,10) linecolor rgb "black" linewidth 0.2 ,tv(t,10) linecolor rgb "black" linewidth 0.2 ,\
+cu(t,.5) linecolor rgb "black" linewidth 0.2 ,cv(t,.5) linecolor rgb "black" linewidth 0.2 ,cu(t,.5) linecolor rgb "black" linewidth 0.2 ,-cv(t,.5) linecolor rgb "black" linewidth 0.2 ,\
+tu(t,0) linecolor rgb "black" linewidth 0.6 ,tv(t,0) linecolor rgb "black" linewidth 0.6 , source using 6:7 linecolor rgb "red" with lines,0.335*sin(t),0.335*cos(t) linecolor rgb "green",0.175*sin(t),0.175*cos(t) linecolor rgb "green"
+pause -1

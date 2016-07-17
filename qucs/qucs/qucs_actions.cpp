@@ -796,9 +796,9 @@ void QucsApp::slotCallRes()
 
 //-------------------------------------------------------------------
 // It starts the power combining synthesis tool
-void QucsApp::slotCallPowerComb()
+void QucsApp::slotCallWB_Matching()
 {
-  launchTool("qucspowercombining", "Power combiner synthesis");
+  launchTool("QucsWidebandMatching", "Wideband matching network synthesis");
 }
 
 /*!

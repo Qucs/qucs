@@ -828,7 +828,7 @@ AC_CONFIG_FILES([Makefile
     qucs-lib/library/Makefile
     qucs-attenuator/Makefile
     qucs-rescodes/Makefile
-    qucs-powercombining/Makefile
+    qucs-wideband-matching/Makefile
     qucs/Makefile
     qucs/octave/Makefile
     qucs/components/Makefile

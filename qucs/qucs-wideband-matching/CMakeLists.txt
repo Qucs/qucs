@@ -1,4 +1,4 @@
-PROJECT(qucspowercombining CXX C)
+PROJECT(QucsWidebandMatching CXX C)
 CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
 cmake_policy(VERSION 2.6)
 
@@ -9,7 +9,7 @@ message(STATUS "Configuring ${PROJECT_NAME} (GUI): VERSION ${QUCS_VERSION}")
 set(PROJECT_VERSION "${QUCS_VERSION}")
 
 set(PROJECT_VENDOR "Qucs team. This program is licensed under the GNU GPL")
-set(PROJECT_COPYRIGHT_YEAR "2014")
+set(PROJECT_COPYRIGHT_YEAR "2016")
 set(PROJECT_DOMAIN_FIRST "qucs")
 set(PROJECT_DOMAIN_SECOND "org")
 
@@ -50,13 +50,13 @@ ADD_DEFINITIONS(${QT_DEFINITIONS})
 
 #ADD_SUBDIRECTORY( bitmaps ) -> added as resources
 
-SET( powercombining_sources main.cpp qucspowercombiningtool.cpp  )
+SET( wb_matching_sources main.cpp ui.cpp io.cpp MathOperations.cpp mat.cpp sparengine.cpp GRABIM.cpp)
 
-SET( powercombining_moc_headers qucspowercombiningtool.h )
+SET( wb_matching_moc_headers ui.h io.h MathOperations.h mat.h sparengine.h GRABIM.h)
 
-QT4_WRAP_CPP( powercombining_moc_sources ${powercombining_moc_headers} )
+QT4_WRAP_CPP( wb_matching_moc_sources ${wb_matching_moc_headers} )
 
-#SET(RESOURCES qucspowercombining.qrc)
+SET(RESOURCES QucsWidebandMatching.qrc)
 
 QT4_ADD_RESOURCES(RESOURCES_SRCS ${RESOURCES})
 
@@ -69,23 +69,23 @@ IF(APPLE)
   SET(MACOSX_BUNDLE_COPYRIGHT "${PROJECT_COPYRIGHT_YEAR} ${PROJECT_VENDOR}")
   SET(MACOSX_BUNDLE_GUI_IDENTIFIER "${PROJECT_DOMAIN_SECOND}.${PROJECT_DOMAIN_FIRST}")
   SET(MACOSX_BUNDLE_BUNDLE_NAME "${PROJECT_NAME}")
-  SET(MACOSX_BUNDLE_ICON_FILE qucsattenuator.icns)
+  SET(MACOSX_BUNDLE_ICON_FILE QucsWidebandMatching.icns)
 
   # set where in the bundle to put the icns file
-  SET_SOURCE_FILES_PROPERTIES(${CMAKE_CURRENT_SOURCE_DIR}/../qucs/bitmaps/qucspowercombining.icns PROPERTIES MACOSX_PACKAGE_LOCATION Resources)
+  SET_SOURCE_FILES_PROPERTIES(${CMAKE_CURRENT_SOURCE_DIR}/../qucs/bitmaps/QucsWidebandMatching.icns PROPERTIES MACOSX_PACKAGE_LOCATION Resources)
   # include the icns file in the target
-  SET(powercombining_sources ${powercombining_sources} ${CMAKE_CURRENT_SOURCE_DIR}/../qucs/bitmaps/qucsattenuator.icns)
+  SET(attenuator_sources ${attenuator_sources} ${CMAKE_CURRENT_SOURCE_DIR}/../qucs/bitmaps/QucsWidebandMatching.icns)
 
 ENDIF(APPLE)
 
-ADD_EXECUTABLE( qucspowercombining MACOSX_BUNDLE WIN32
-  ${powercombining_sources}
-  ${powercombining_moc_sources}
+ADD_EXECUTABLE( QucsWidebandMatching MACOSX_BUNDLE WIN32
+  ${attenuator_sources}
+  ${attenuator_moc_sources}
   ${RESOURCES_SRCS} )
 
-TARGET_LINK_LIBRARIES( qucspowercombining ${QT_LIBRARIES} )
+TARGET_LINK_LIBRARIES( QucsWidebandMatching ${QT_LIBRARIES} )
 
-INSTALL (TARGETS qucspowercombining DESTINATION bin)
+#INSTALL (TARGETS qucsattenuator DESTINATION bin)
 #
 # Prepare the installation
 #
@@ -112,7 +112,7 @@ INSTALL(TARGETS ${PROJECT_NAME}
     )
 
 # man pages
-#INSTALL( FILES qucspowercombining.1 DESTINATION share/man/man1 )
+INSTALL( FILES QucsWidebandMatching.1 DESTINATION share/man/man1 )
 
 
 #
@@ -155,3 +155,5 @@ INSTALL(CODE "
     fixup_bundle(\"${APPS}\" \"\${QTPLUGINS}\" \"${DIRS}\")
     " COMPONENT Runtime)
 ENDIF()
+
+

@@ -1,6 +1,6 @@
 ## Process this file with automake to produce Makefile.in
 #
-# qucs-powercombining/Makefile.am
+# qucs-widebandmatching/Makefile.am
 #
 # Automake input file.
 #
@@ -22,19 +22,22 @@
 # Boston, MA 02110-1301, USA.
 #
 
-bin_PROGRAMS = qucspowercombining
+bin_PROGRAMS = QucsWidebandMatching
 
-MOCHEADERS = qucspowercombiningtool.h
+MOCHEADERS = ui.h io.h MathOperations.h mat.h sparengine.h GRABIM.h
 MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
 
-qucspowercombining_SOURCES = main.cpp qucspowercombiningtool.cpp
+QucsWidebandMatching_SOURCES = main.cpp ui.cpp io.cpp MathOperations.cpp mat.cpp sparengine.cpp GRABIM.cpp qrc_QucsWidebandMatching.cpp
+
+qrc_QucsWidebandMatching.cpp: QucsWidebandMatching.qrc
+	$(RCC) -o $@ $<
 
 
-nodist_qucspowercombining_SOURCES = $(MOCFILES)
+nodist_QucsWidebandMatching_SOURCES = $(MOCFILES)
 
 AM_CPPFLAGS = $(X11_INCLUDES) $(QT_INCLUDES)
-qucspowercombining_LDFLAGS = $(X11_LDFLAGS) $(QT_LDFLAGS)
-qucspowercombining_LDADD = $(X11_LIBS) $(QT_LIBS)
+QucsWidebandMatching_LDFLAGS = $(X11_LDFLAGS) $(QT_LDFLAGS)
+QucsWidebandMatching_LDADD = $(X11_LIBS) $(QT_LIBS)
 
 SUFFIXES = .moc.cpp
 

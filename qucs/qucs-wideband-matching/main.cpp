@@ -1,7 +1,7 @@
 /*
- * main.cpp - Power combining tool main
+ * main.cpp - Wideband matching network synthesis tool
  *
- * copyright (C) 2015 Andres Martinez-Mera <andresmartinezmera@gmail.com>
+ * copyright (C) 2016 Andres Martinez-Mera <andresmartinezmera@gmail.com>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,15 +20,17 @@
  *
  *
  */
-#include "qucspowercombiningtool.h"
+#include "ui.h"
 #include <QApplication>
+#include "mat.h"
+#include "MathOperations.h"
 
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
-    QucsPowerCombiningTool *PowerCombiningTool = new QucsPowerCombiningTool();
-    PowerCombiningTool->raise();
-    PowerCombiningTool->resize(350, 350);
-    PowerCombiningTool->show();
+    ui *WB_MatchingTool = new ui();
+    WB_MatchingTool->raise();
+    WB_MatchingTool->resize(350, 350);
+    WB_MatchingTool->show();
     return app.exec();
 }

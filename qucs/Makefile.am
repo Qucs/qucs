@@ -32,7 +32,7 @@ SUBDIRS = \
 	qucs-lib \
 	qucs-rescodes \
 	qucs-transcalc \
-        qucs-powercombining \
+        qucs-wideband-matching \
 	translations \
 	contrib \
 	$(RELEASEDIRS)
@@ -49,7 +49,7 @@ app_PROGS = $(top_builddir)/qucs/qucs \
   $(top_builddir)/qucs-lib/qucslib \
   $(top_builddir)/qucs-edit/qucsedit \
   $(top_builddir)/qucs-rescodes/qucsrescodes \
-  $(top_builddir)/qucs-powercombining/qucspowercombining \
+  $(top_builddir)/qucs-wideband-matching/QucsWidebandMatching \
   $(top_builddir)/qucs-transcalc/qucstrans
 
 install-exec-hook: mac-install-apps mac-deploy-framework
