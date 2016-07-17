@@ -60,7 +60,7 @@ ui::ui()
 
       // Image
        QSize sz;
-       QString s1 = "bitmaps/MatchingNetwork.svg";
+       QString s1 = ":/bitmaps/MatchingNetwork.svg";
        imgWidget = new QSvgWidget(s1);
        sz = imgWidget->size();
        imgWidget->setFixedSize(.2*sz);
@@ -105,10 +105,12 @@ ui::ui()
        groupBox->setLayout(vbox);
 
        //Topology selection
+       QGroupBox *groupBoxTopology = new QGroupBox(tr("Topology"));
        ArbitraryTopology = new QRadioButton("User-defined topology");
        ArbitraryTopology->setChecked(false);
        SearchBestTopology = new QRadioButton("Search best topology");
        SearchBestTopology->setChecked(true);
+
 
        QHBoxLayout *helpbox = new QHBoxLayout;
        CodeLabel = new QLabel("0: Series inductance\n1: Series capacitor\n2: Paralell inductance\n3: Parallel capacitor\n4: Transmission line\n5: Open stub\n6: Short circuited stub");
@@ -129,11 +131,11 @@ ui::ui()
        TopoLayout->addWidget(ArbitraryTopologyLineEdit, 0, 1);
        TopoLayout->addWidget(SearchBestTopology, 1, 0);
        TopoLayout->addWidget(SearchModeCombo, 1, 1);
-
+       groupBoxTopology->setLayout(TopoLayout);
 
        connect(ArbitraryTopology, SIGNAL(clicked()), this, SLOT(ArbitraryTopology_clicked()));
        connect(SearchBestTopology, SIGNAL(clicked()), this, SLOT(SearchBestTopology_clicked()));
-
+       connect(SearchModeCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(TopoCombo_clicked(int)));
 
        //Local optimizer settings
        LocalOptLabel = new QLabel("Local optimiser");
@@ -148,21 +150,21 @@ ui::ui()
 
        // GNUPLOT
        QGridLayout *GNUplotLayout = new QGridLayout;
-       QGroupBox *groupBoxGNUplot = new QGroupBox(tr("GNUplot settings"));
        GNUplotButton = new QPushButton("Browse");
        connect(GNUplotButton, SIGNAL(clicked()), this, SLOT(GNUplotOutput_clicked()));
 
        GNUplotLayout->addWidget(new QLabel("GNUplot output path:"), 0, 0);
        GNUplotLayout->addWidget(GNUplotButton, 0, 1);
 
-       groupBoxGNUplot->setLayout(GNUplotLayout);
 
 
        QHBoxLayout * TopoScriptLayout =  new QHBoxLayout();
        TopoScriptButton =  new QPushButton("Browse");
-       TopoScriptLayout->addWidget(new QLabel("Topology script:"));
+       TopoScriptLabel = new QLabel("Topology script:");
+       TopoScriptLayout->addWidget(TopoScriptLabel);
        TopoScriptLayout->addWidget(TopoScriptButton);
        connect(TopoScriptButton, SIGNAL(clicked()), this, SLOT(TopoScriptButton_clicked()));
+
        TopoScript_path = "predefined_topologies";
 
       //Create go/cancel buttons
@@ -180,9 +182,9 @@ ui::ui()
       mainLayout->addLayout(Impedancelayout);
       mainLayout->addWidget(groupBox);
       mainLayout->addLayout(helpbox);
-      mainLayout->addLayout(TopoLayout);
+      mainLayout->addWidget(groupBoxTopology);
       mainLayout->addLayout(LocalOptLayout);
-      mainLayout->addWidget(groupBoxGNUplot);
+      mainLayout->addLayout(GNUplotLayout);
       mainLayout->addLayout(TopoScriptLayout);
       mainLayout->addLayout(ButtonsLayout);
 
@@ -200,6 +202,9 @@ void ui::ArbitraryTopology_clicked()
         ArbitraryTopologyLineEdit->setEnabled(true);
         CodeLabel->setVisible(true);
         setFixedSize(400, 600);
+        TopoScriptLabel->setVisible(false);
+        TopoScriptButton->setVisible(false);
+        
     }
     else
     {
@@ -216,6 +221,11 @@ void ui::SearchBestTopology_clicked()
             ArbitraryTopologyLineEdit->setEnabled(false);
             CodeLabel->setVisible(false);
             setFixedSize(400, 500);
+            if (SearchModeCombo->currentIndex()==0)
+            {
+              TopoScriptLabel->setVisible(true);
+              TopoScriptButton->setVisible(true);
+            }
         }
         else
         {
@@ -502,3 +512,16 @@ QString ui::getTopoScriptPath()
     return TopoScript_path;
 }
 
+void ui::TopoCombo_clicked(int index)
+{
+   if ((index==0) && (SearchBestTopology->isChecked()))
+   {
+     TopoScriptLabel->setVisible(true);
+     TopoScriptButton->setVisible(true);
+   }
+   else
+   {
+     TopoScriptLabel->setVisible(false);
+     TopoScriptButton->setVisible(false);
+   }
+}

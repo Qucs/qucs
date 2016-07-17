@@ -45,7 +45,7 @@ private:
 
     QRadioButton *ArbitraryTopology, *SearchBestTopology;
     QComboBox * LocalOptCombo, *minFUnitsCombo, * maxFUnitsCombo;
-    QLabel * LocalOptLabel, *minFLabel, *maxFLabel, *CodeLabel;
+    QLabel * LocalOptLabel, *minFLabel, *maxFLabel, *CodeLabel, *TopoScriptLabel;
     QString  SourceFile, LoadFile;
     QString GNUplot_path, TopoScript_path;
     QLineEdit * minFEdit, * maxFEdit, *ArbitraryTopologyLineEdit;
@@ -69,6 +69,7 @@ private:
     void FixedZSCheckbox_clicked();
     void FixedZLCheckbox_clicked();
     void TopoScriptButton_clicked();
+    void TopoCombo_clicked(int);
 
     complex<double> getComplexImpedanceFromText(char *);
 
