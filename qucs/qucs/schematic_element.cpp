@@ -1177,7 +1177,7 @@ Element* Schematic::selectElement(float fX, float fY, bool flag, int *index)
                 }
             }
         }
-
+	
         if(pd->getSelected(x, y))
         {
             if(pd->Name[0] == 'T')     // tabular, timing diagram or truth table ?
@@ -1200,11 +1200,34 @@ Element* Schematic::selectElement(float fX, float fY, bool flag, int *index)
                     }
                 }
             }
-
+	    
             // test graphs of diagram
             foreach(Graph *pg, pd->Graphs)
             {
-                if(pg->getSelected(x-pd->cx, pd->cy-y) >= 0)
+                if(pg->getSelected(x-pd->cx, pd->cy-y) >= 0 && pd->Name != "Phasor")
+                {
+                    if(flag)
+                    {
+                        // The element can be deselected
+                        pg->isSelected ^= flag;
+                        return pg;
+                    }
+                    if(pe_sel)
+                    {
+                        pe_sel->isSelected = false;
+                        return pg;
+                    }
+                    if(pe_1st == 0)
+                    {
+                        pe_1st = pg;   // access to elements lying beneath
+                    }
+                    if(pg->isSelected)
+                    {
+                        pe_sel = pg;
+                    }
+                }
+		
+		if(pg->getSelectedP(x-pd->cx, pd->cy-y) >= 0 && pd->Name == "Phasor")
                 {
                     if(flag)
                     {

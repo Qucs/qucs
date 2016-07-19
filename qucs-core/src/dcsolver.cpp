@@ -36,6 +36,7 @@
 #include "analysis.h"
 #include "nasolver.h"
 #include "dcsolver.h"
+#include "component_id.h"
 
 namespace qucs {
 
@@ -73,12 +74,12 @@ int dcsolver::solve (void) {
 
   // initialize node voltages, first guess for non-linear circuits and
   // generate extra circuits if necessary
+  ohm=0;
   init ();
   setCalculation ((calculate_func_t) &calc);
 
   // start the iterative solver
   solve_pre ();
-
   // choose a solver
   if (!strcmp (solver, "CroutLU"))
     eqnAlgo = ALGO_LU_DECOMPOSITION_CROUT;
@@ -116,7 +117,9 @@ int dcsolver::solve (void) {
     convHelper = CONV_SourceStepping;
   }
   preferred = convHelper;
-
+back:
+  retry = -1;
+  fallback = 0;
   if (!subnet->isNonLinear ()) {
     // Start the linear solver.
     convHelper = CONV_None;
@@ -161,6 +164,21 @@ int dcsolver::solve (void) {
     }
   } while (retry != -1);
 
+   if(ohm == 1)//only act if there is a ohmmeter in the circuit and is the first run of analysis
+    {
+      circuit * root = subnet->getRoot ();
+        for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ()) {
+	   if(c->getType() == CIR_OHMMETER )
+           {
+             c->calcOperatingPoints ();
+             if(c->getOperatingPoint ("R") != 0) c->setstate(0);/*if detect some kind of 											voltage the ohmmeter will not work	*/
+             else c->initDC2();/*if the circuit is finish analysing and the ohmmeter didn't detect any 								voltage will start the internal corrent source*/
+           }
+        }
+        ohm=0;
+	goto back;//will start again all the analysis
+    }
+  
   // save results and cleanup the solver
   saveOperatingPoints ();
   saveResults ("V", "I", saveOPs);
@@ -183,6 +201,7 @@ void dcsolver::calc (dcsolver * self) {
 void dcsolver::init (void) {
   circuit * root = subnet->getRoot ();
   for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ()) {
+    if(c->getType() == CIR_OHMMETER ) ohm=1;//only to tell the solver if there is a ohmmeter in the circuit
     c->initDC ();
   }
 }

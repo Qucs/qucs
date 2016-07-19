@@ -38,6 +38,7 @@
 #include "analysis.h"
 #include "nasolver.h"
 #include "acsolver.h"
+#include "component_id.h"
 
 namespace qucs {
 
@@ -77,7 +78,6 @@ acsolver::acsolver (acsolver & o) : nasolver<nr_complex_t> (o) {
    each requested frequency and solves it then. */
 int acsolver::solve (void) {
   runs++;
-
   // run additional noise analysis ?
   noise = !strcmp (getPropertyString ("Noise"), "yes") ? 1 : 0;
 
@@ -88,12 +88,14 @@ int acsolver::solve (void) {
 
   // initialize node voltages, first guess for non-linear circuits and
   // generate extra circuits if necessary
+  ohm=0;
   init ();
   setCalculation ((calculate_func_t) &calc);
   solve_pre ();
-
+back:
   swp->reset ();
   for (int i = 0; i < swp->getSize (); i++) {
+
     freq = swp->next ();
     if (progress) logprogressbar (i, swp->getSize (), 40);
 
@@ -108,9 +110,35 @@ int acsolver::solve (void) {
 
     // compute noise if requested
     if (noise) solve_noise ();
-
+    
+    if(ohm == 1)//only act if there is a ohmmeter in the circuit and is the first run of analysis
+    {
+      if(freq==0) continue;//if frequency is 0 don't exist valid values
+      circuit * root = subnet->getRoot ();
+        for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ()) {
+	   if(c->getType() == CIR_OHMMETER )
+           {
+	     if(c->getstate()>0)//in the begining the ohmmeter only act as a voltmeter
+	     {
+             	c->calcOperatingPoints ();
+             	if((c->getOperatingPoint ("R") != 0 || c->getOperatingPoint ("Z") != 0)) c->setstate(0);/*if detect some kind of 											voltage the ohmmeter will not work	*/
+             }
+	     if(i==swp->getSize()-1 && c->getstate()>0) c->initAC2();/*if the circuit is finish analysing and the ohmmeter didn't detect any 								voltage will start the internal corrent source*/
+           }
+        }
+        if(i==swp->getSize()-1)
+	{
+       	  ohm=0;	  
+	  goto back;//will start again all the analysis
+        }
+        continue;
+    }    
+      
+    
     // save results
     saveAllResults (freq);
+//back2:
+
   }
   solve_post ();
   if (progress) logprogressclear (40);
@@ -133,6 +161,7 @@ void acsolver::init (void) {
   circuit * root = subnet->getRoot ();
   for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ()) {
     if (c->isNonLinear ()) c->calcOperatingPoints ();
+    if(c->getType() == CIR_OHMMETER ) ohm=1;//only to tell the solver if there is a ohmmeter in the circuit
     c->initAC ();
     if (noise) c->initNoiseAC ();
   }

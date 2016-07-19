@@ -280,6 +280,8 @@ void Module::registerModules (void) {
   // probes
   REGISTER_PROBE_1 (iProbe);
   REGISTER_PROBE_1 (vProbe);
+  REGISTER_PROBE_1 (Ohmmeter);
+  REGISTER_PROBE_1 (wProbe);
 
   // transmission lines
   REGISTER_TRANS_1 (TLine);
@@ -405,7 +407,8 @@ void Module::registerModules (void) {
   REGISTER_DIAGRAM_1 (CurveDiagram);
   REGISTER_DIAGRAM_1 (TimingDiagram);
   REGISTER_DIAGRAM_1 (TruthDiagram);
-
+  REGISTER_DIAGRAM_1 (PhasorDiagram);
+  REGISTER_DIAGRAM_1 (Waveac);
   // external simulation
   REGISTER_EXTERNAL_1 (ETR_Sim);
   REGISTER_EXTERNAL_1 (ecvs);

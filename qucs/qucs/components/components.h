@@ -98,6 +98,8 @@
 #include "param_sweep.h"
 #include "iprobe.h"
 #include "vprobe.h"
+#include "ohmmeter.h"
+#include "wprobe.h"
 #include "volt_noise.h"
 #include "ampere_noise.h"
 #include "noise_ii.h"

@@ -1,0 +1,165 @@
+changed
+
+location qucs/qucs-core/scr
+
+files changed
+
+acsolver.cpp
+	changed
+	int acsolver::solve (void)
+	void acsolver::init (void)
+dcsolver.cpp
+	change
+	int dcsolver::solve (void) 
+	void dcsolver::init (void)
+module.cpp
+	change
+	REGISTER_CIRCUIT (ohmmeter);
+	REGISTER_CIRCUIT (wprobe);
+nasolver.cpp
+	change
+	void nasolver<nr_type_t>::saveResults (const std::string &volts, const std::string &amps,
+                                       int saveOPs, qucs::vector * f)
+trsolver.cpp
+	change
+	int trsolver::solve (void)
+	void trsolver::initCircuitTR (circuit * c)
+circuit.h
+	new
+	virtual void initDC2 (void)
+	virtual void initAC2 (void)
+
+
+location qucs/qucs-core/scr/components
+
+new files
+
+wprobe.cpp
+wprobe.h
+ohmmeter.cpp
+ohmmeter.h
+
+files changed
+
+component_id.h
+	new
+	CIR_OHMMETER
+	CIR_WPROBE
+
+components.h
+	new
+	#include "wprobe.h"
+	#include "ohmmeter.h"
+
+
+location qucs/qucs/qucs
+
+files changed
+
+module.cpp
+	add
+	REGISTER_DIAGRAM_1 (PhasorDiagram);
+  	REGISTER_DIAGRAM_1 (Waveac);
+	REGISTER_PROBE_1 (Ohmmeter);
+  	REGISTER_PROBE_1 (wProbe);
+	
+qucs.qrc
+	add
+	<file>bitmaps/phasor.png</file>
+	<file>bitmaps/ohm.png</file>
+	<file>bitmaps/wprobe.png</file>
+	<file>bitmaps/wave.png</file>
+
+schematic_element.cpp
+	change
+	Element* Schematic::selectElement(float fX, float fY, bool flag, int *index)
+
+viewpainter.cpp
+	new
+	void Graph::drawvect(int x0, int y0, ViewPainter *p) const
+
+location qucs/qucs/qucs/components
+
+new files
+
+wprobe.cpp
+wprobe.h
+ohmmeter.cpp
+ohmmeter.h
+	
+files changed
+
+components.h
+	add
+	#include "ohmmeter.h"
+	#include "wprobe.h"
+
+location qucs/qucs/qucs/diagrams
+
+new files
+
+phasordiagram.cpp
+phasordiagram.h
+waveac.cpp
+waveac.h
+
+files changed
+
+diagrams.h
+
+diagram.cpp
+	new
+	bool Diagram::insideDiagramPh(Graph::iterator const& p ,float* xn, float* yn) const
+	bool Diagram::newcoordinate(Graph::iterator const& p,float* xn, float* yn) const
+	void Diagram::phasorscale()
+	void Diagram::findaxisA(Graph *g)
+	bool Diagram::findmatch(Graph *g , int m)
+	void Diagram::findfreq()
+	void Diagram::setlimitsphasor(Axis *x ,Axis *y)
+	double Diagram::wavevalX(int i) const
+	
+	change
+	Diagram::Diagram(int _cx, int _cy)
+	void Diagram::paint(ViewPainter *p)
+	void Diagram::createAxisLabels()
+	Marker* Diagram::setMarker(int x, int y)
+	void Diagram::getAxisLimits(Graph *pg)
+	void Diagram::loadGraphData(const QString& defaultDataSet)
+	void Diagram::recalcGraphData()
+	QString Diagram::save() -save sfreq
+	bool Diagram::load(const QString& Line, QTextStream *stream)
+	bool Diagram::calcAxisScale(Axis *Axis, double& GridNum, double& zD,
+				double& zDstep, double& GridStep, double Dist)
+	bool Diagram::calcYAxis(Axis *Axis, int x0)
+
+diagramdialog.cpp
+	new
+	void DiagramDialog::PhasorvalV(int state)
+	void DiagramDialog::PhasorvalI(int state)
+	void DiagramDialog::PhasorvalP(int state)
+	void DiagramDialog::PhasorvalZ(int state)
+	void DiagramDialog::addvar(QString a)
+	void DiagramDialog::remvar(QString a)
+	bool DiagramDialog::testvar (QString a)
+	change
+	DiagramDialog::DiagramDialog(Diagram *d, QWidget *parent, Graph *currentGraph)
+                    : QDialog(parent, 0, TRUE, Qt::WDestructiveClose)
+	void DiagramDialog::slotTakeVar(QTableWidgetItem* Item)
+	void DiagramDialog::slotDeleteGraph()
+	void DiagramDialog::slotApply()
+	void DiagramDialog::slotManualX(int state)
+	void DiagramDialog::slotManualY(int state)
+	void DiagramDialog::slotManualZ(int state)
+	void DiagramDialog::slotReadVars(int)
+
+graph.cpp
+	new 
+	void Graph::paintvect(ViewPainter *p, int x0, int y0)
+	int Graph::getSelectedP(int x, int y)
+
+marker.cpp
+	new
+	void Marker::fix()
+	double Marker::wavevalY(double xn,std::vector<double>& VarPos)
+	QString Marker::unit(double n)
+

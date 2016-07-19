@@ -1356,10 +1356,36 @@ void nasolver<nr_type_t>::saveResults (const std::string &volts, const std::stri
             if (!c->isProbe ()) continue;
             if (!c->getSubcircuit().empty() && !(saveOPs & SAVE_ALL)) continue;
             if (volts != "vn")
-                c->saveOperatingPoints ();	    
-	    std::string n = createOP (c->getName (), volts);
-            saveVariable (n, nr_complex_t (c->getOperatingPoint ("Vr"),
+                c->saveOperatingPoints ();
+	    c->calcOperatingPoints ();
+	    for (auto ops: c->getOperatingPoints ())
+            {
+                operatingpoint &p = ops.second;
+	        if (strcmp(p.getName(), "Vi") == 0) continue;
+                if (strcmp(p.getName(), "VAi") == 0) continue;
+	        if (strcmp(p.getName(), "Vr") == 0) {
+	           std::string n = createOP (c->getName (), volts);
+                   saveVariable (n, nr_complex_t (c->getOperatingPoint ("Vr"),
                                    c->getOperatingPoint ("Vi")), f);
+		   continue;
+		}
+           	if (strcmp(p.getName(), "Z") == 0)  continue;
+           	if (strcmp(p.getName(), "R") == 0) {//create values for ohmmeter
+	      	    std::string n = createOP (c->getName (), "Ohm");
+              	    saveVariable (n, nr_complex_t (c->getOperatingPoint ("R"),c->getOperatingPoint ("Z")), f);
+		    continue;
+	   	}
+           	if (strcmp(p.getName(), "VAr") == 0) {
+              	    std::string n = createOP(c->getName(), "VA");
+              	    saveVariable (n, nr_complex_t (c->getOperatingPoint ("VAr"),
+                                     c->getOperatingPoint ("VAi")), f);
+	      	    continue;
+           	}
+
+	   	std::string n = createOP(c->getName(), p.getName());
+           	saveVariable(n, p.getValue(), f);
+       	    }	    
+	    	    
         }
     }
 
@@ -1380,6 +1406,7 @@ void nasolver<nr_type_t>::saveResults (const std::string &volts, const std::stri
             }
         }
     }
+
 }
 
 /* Create an appropriate variable name for operating points.  The
@@ -1403,6 +1430,8 @@ std::string nasolver<nr_type_t>::createV (int n, const std::string &volts, int s
     std::string ret = node+"."+volts;
     return ret;
 }
+
+
 
 /* Create an appropriate variable name for currents.  The caller is
    responsible to free() the returned string. */
