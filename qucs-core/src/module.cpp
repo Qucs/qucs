@@ -190,6 +190,7 @@ void module::registerModules (void) {
   REGISTER_CIRCUIT (vpm);
   REGISTER_CIRCUIT (vpulse);
   REGISTER_CIRCUIT (ipulse);
+  REGISTER_CIRCUIT (ohmmeter);
   REGISTER_CIRCUIT (vrect);
   REGISTER_CIRCUIT (irect);
   REGISTER_CIRCUIT (gyrator);
@@ -232,6 +233,7 @@ void module::registerModules (void) {
   REGISTER_CIRCUIT (cpwstep);
   REGISTER_CIRCUIT (iprobe);
   REGISTER_CIRCUIT (vprobe);
+  REGISTER_CIRCUIT (wprobe);
   REGISTER_CIRCUIT (jfet);
   REGISTER_CIRCUIT (bjt);
   REGISTER_CIRCUIT (spfile);

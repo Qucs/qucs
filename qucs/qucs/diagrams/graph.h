@@ -91,7 +91,6 @@ public:
   class ScrPt{
     float ScrX;
     float ScrY;
-
     double indep; // top level indep value (sweep)
     double dep; // top level dep value // FIXME: type?!
   public:
@@ -130,7 +129,9 @@ public:
   QString save();
   bool    load(const QString&);
   int     getSelected(int, int);
+  int     getSelectedP(int, int);//aqui
   Graph*  sameNewOne();
+  void    paintvect(ViewPainter*, int, int);//aqui
   
 private: // tmp hack
   DataX* mutable_axis(uint i) { if(i<(uint)cPointsX.size()) return cPointsX.at(i); return NULL;}
@@ -158,6 +159,7 @@ public:
   int     Thick;
   graphstyle_t Style;
   QList<Marker *> Markers;
+  double *gy;//aqui
 
   // for tabular diagram
   int  Precision;   // number of digits to show
@@ -168,6 +170,7 @@ private: // painting
   void drawStarSymbols(int, int, ViewPainter*) const;
   void drawCircleSymbols(int, int, ViewPainter*) const;
   void drawArrowSymbols(int, int, ViewPainter*) const;
+  void drawvect(int, int, ViewPainter*) const;//aqui
 public: // marker related
   void createMarkerText() const;
   std::pair<double,double> findSample(std::vector<double>&) const;

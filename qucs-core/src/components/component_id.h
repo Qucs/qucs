@@ -91,6 +91,7 @@ enum circuit_type {
   CIR_COUPLER,
   CIR_HYBRID,
   CIR_RFEDD,
+  CIR_OHMMETER,
 
   // noise sources
   CIR_VNOISE,
@@ -187,6 +188,7 @@ enum circuit_type {
 
   // external interface components
   CIR_ECVS,
+  CIR_WPROBE,
 
 };
 

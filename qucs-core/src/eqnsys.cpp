@@ -1245,7 +1245,7 @@ void eqnsys<nr_type_t>::chop_svd (void) {
   nr_double_t Max, Min;
   Max = 0.0;
   for (c = 0; c < N; c++) if (fabs (S_(c)) > Max) Max = fabs (S_(c));
-  Min = Max * std::numeric_limits<nr_double_t>::max();
+  Min = Max * std::numeric_limits<nr_double_t>::epsilon();
   for (c = 0; c < N; c++) if (fabs (S_(c)) < Min) S_(c) = 0.0;
 }
 
