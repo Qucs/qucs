@@ -32,10 +32,9 @@ __BEGIN_DECLS
 
 void logprint (int, const char *, ...);
 void loginit (void);
+void redirect_status_to_stdout();
 void logprogressbar (nr_double_t, nr_double_t, int);
 void logprogressclear (int);
-extern FILE * file_status;
-extern FILE * file_error;
 extern int progressbar_enable;
 extern int progressbar_gui;
 
