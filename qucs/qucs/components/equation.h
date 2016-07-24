@@ -32,6 +32,8 @@ public:
 protected:
   QString vhdlCode(int);
   QString verilogCode(int);
+
+  void dialgButtStuff(ComponentDialog& d)const;
 };
 
 #endif

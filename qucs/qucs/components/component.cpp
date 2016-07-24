@@ -17,6 +17,7 @@
 #include <stdlib.h>
 #include <cmath>
 
+#include "componentdialog.h"
 #include "components.h"
 #include "node.h"
 #include "main.h"
@@ -1638,6 +1639,12 @@ Component* getComponentFromName(QString& Line, Schematic* p)
   c->Name = cstr;
   c->tx = x;  c->ty = y;
   return c;
+}
+
+// do something with Dialog Buttons
+void Component::dialgButtStuff(ComponentDialog& d)const
+{
+  d.disableButtons();
 }
 
 // vim:ts=8:sw=2:noet
