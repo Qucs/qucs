@@ -26,7 +26,7 @@ class Schematic;
 class ViewPainter;
 class QString;
 class QPen;
-
+class ComponentDialog;
 
 class Component : public Element {
 public:
@@ -61,6 +61,8 @@ public:
   // set the pointer scematic associated with the component
   virtual void setSchematic (Schematic* p) { containingSchematic = p; }
   virtual Schematic* getSchematic () {return containingSchematic; }
+  // do somehting with buttons. can sb think of a more descriptive name?
+  virtual void dialgButtStuff(ComponentDialog&)const;
 
   QList<Line *>     Lines;
   QList<struct Arc *>      Arcs;

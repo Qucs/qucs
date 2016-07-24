@@ -602,14 +602,7 @@ void ComponentDialog::slotSelectProperty(QTableWidgetItem *item)
     ButtAdd->setEnabled(true);
     ButtRem->setEnabled(true);
 
-    if (Comp->Description == "equation") {
-      ButtUp->setEnabled(true);
-      ButtDown->setEnabled(true);
-    }
-    else {
-      ButtUp->setEnabled(false);
-      ButtDown->setEnabled(false);
-    }
+    Comp->dialgButtStuff(*this);
     Name->setText("");
     NameEdit->setText(name);
     edit->setText(value);
@@ -1481,4 +1474,16 @@ void ComponentDialog::slotHHeaderClicked(int headerIdx)
     cell->setText(s);
   }
   setAllVisible = not setAllVisible; // toggle visibility for the next double-click
+}
+
+void ComponentDialog::disableButtons()
+{
+  ButtUp->setEnabled(false);
+  ButtDown->setEnabled(false);
+}
+
+void ComponentDialog::enableButtons()
+{
+  ButtUp->setEnabled(true);
+  ButtDown->setEnabled(true);
 }
