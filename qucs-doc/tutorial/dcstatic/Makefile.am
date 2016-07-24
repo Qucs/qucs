@@ -22,14 +22,14 @@
 # Boston, MA 02110-1301, USA.  
 #
 
+include $(top_srcdir)/qucstex.mk
+
 SUBDIRS = pics
 
 EXTRA_DIST = $(SOURCES)
 
 SOURCES = dcstatic.tex content.tex
 TARGETS = dcstatic.pdf
-
-TEX_ENV = export TEXINPUTS=$(srcdir):$(srcdir)/..:./..:
 
 tutorial: $(TARGETS)
 
@@ -39,11 +39,6 @@ SUFFIXES = .dvi .tex .pdf
 	$(LATEX) $<
 	$(LATEX) $<
 	$(LATEX) -interaction=batchmode $<
-
-.tex.pdf:
-	$(TEX_ENV); $(PDFLATEX) $<
-	$(TEX_ENV); $(PDFLATEX) $<
-	$(TEX_ENV); $(PDFLATEX) -interaction=batchmode $<
 
 .dvi.ps:
 	$(DVIPS) $< -o $@
