@@ -29,6 +29,7 @@ public:
    // nlopt::algorithm getLocalOptimiser();
     int ExportQucsSchematic(GRABIM_Result);
     void PrintNetwork_StandardOutput(GRABIM_Result);
+    void UseClipboard(bool);
 
 
 private:
@@ -55,7 +56,7 @@ private:
 
     int Nsamples;//Impedance samples within matching band
 
-
+    bool CopyToClipboard;
     string Num2String(int x);
     string Num2String(double x);
 

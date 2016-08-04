@@ -5,6 +5,7 @@ IO::IO()
     Nsamples = 30;
     fmatching_min = -1;
     fmatching_max = -1;
+    CopyToClipboard=true;
 }
 
 double string_to_double( const std::string& s )
@@ -33,24 +34,6 @@ int IO::exportGNUplot(GRABIM_Result Res, string filepath)
                       << " " << imag(Res.S11_nlopt.at(i)) <<endl;
     }
     GNUplotExport.close();
-
-    //Update plotscript
-    string plotscript_path = QCoreApplication::applicationDirPath().toStdString() + "/GRABIM.dat";
-    ifstream plotscriptfile(plotscript_path.c_str());
-    if (!plotscriptfile.is_open())
-    {
-        cout << "Something went wrong with file export..." << endl;
-        return -1;
-    }
-    string s = "source = \"" + filepath + "\"\n", line;//Path to the data dile
-    getline(plotscriptfile, line);
-    while (getline(plotscriptfile, line))s+=line+"\n";
-    plotscriptfile.close();
-
-    ofstream plotscript_write(plotscript_path.c_str());//Updates the name of the source data
-    plotscript_write << s;
-    plotscript_write.flush();
-    plotscript_write.close();
 
     return 0;
 }
@@ -501,7 +484,7 @@ int IO::SchematicParser(GRABIM_Result R, int & x_pos, string & componentstr, str
 
         if (!component.compare("0"))//Series inductor
         {
-            componentstr += "<L L1 1 " + Num2String(x_pos+60) + " -120 -26 10 0 0 \"" + Num2String(R.x_nlopt.at(value_index)) + "\" 1 \"\" 0>\n";
+            componentstr += "<L L1 1 " + Num2String(x_pos+60) + " -120 -26 10 0 0 \"" + Num2String(R.x_local_opt.at(value_index)) + "\" 1 \"\" 0>\n";
             wirestr +=  "<" + Num2String(x_pos) + " -120 " +  Num2String(x_pos+30) + " -120 \"\" 0 0 0 \"\">\n";
             wirestr += "<" + Num2String(x_pos+90) + " -120 " + Num2String(x_pos+x_series) + " -120 \"\" 0 0 0 \"\">\n";
             x_pos += x_series;
@@ -509,7 +492,7 @@ int IO::SchematicParser(GRABIM_Result R, int & x_pos, string & componentstr, str
         }
         else if (!component.compare("1"))//Series capacitor
         {
-            componentstr += "<C C1 1 " + Num2String(x_pos+60) + " -120 -26 17 0 0 \"" + Num2String(R.x_nlopt.at(value_index)) + "\" 1 "" 0>\n";
+            componentstr += "<C C1 1 " + Num2String(x_pos+60) + " -120 -26 17 0 0 \"" + Num2String(R.x_local_opt.at(value_index)) + "\" 1 "" 0>\n";
             wirestr += "<" + Num2String(x_pos) + " -120 " + Num2String(x_pos+30) + " -120 \"\" 0 0 0 \"\">\n";
             wirestr += "<"+ Num2String(x_pos+90) +" -120 " + Num2String(x_pos+x_series) + " -120 \"\" 0 0 0 \"\">\n";
             x_pos += x_series;
@@ -518,7 +501,7 @@ int IO::SchematicParser(GRABIM_Result R, int & x_pos, string & componentstr, str
         else if (!component.compare("2"))//Shunt inductor
         {
             componentstr += "<GND * 1 " + Num2String(x_pos) + " 0 0 0 0 0>\n";
-            componentstr += "<L L1 1 " + Num2String(x_pos) + " -30 -26 2 0 1 \"" + Num2String(R.x_nlopt.at(value_index)) + "\" 1 \"\" 0>\n";
+            componentstr += "<L L1 1 " + Num2String(x_pos) + " -30 -26 2 0 1 \"" + Num2String(R.x_local_opt.at(value_index)) + "\" 1 \"\" 0>\n";
             wirestr += "<" + Num2String(x_pos) + " -60 " + Num2String(x_pos) +" -120 \"\" 0 0 0 \"\">\n";
             wirestr += "<" + Num2String(x_pos) + " -120 " + Num2String(x_pos+x_shunt) + " -120 \"\" 0 0 0 "">\n";
             x_pos += x_shunt;
@@ -527,7 +510,7 @@ int IO::SchematicParser(GRABIM_Result R, int & x_pos, string & componentstr, str
         else if (!component.compare("3"))//Shunt capacitor
         {
             componentstr += "<GND * 1 " + Num2String(x_pos) + " 0 0 0 0 0>\n";
-            componentstr += "<C C1 1 " + Num2String(x_pos) + " -30 -26 17 0 1 \"" + Num2String(R.x_nlopt.at(value_index)) + "\" 1 \"\" 0>\n";
+            componentstr += "<C C1 1 " + Num2String(x_pos) + " -30 -26 17 0 1 \"" + Num2String(R.x_local_opt.at(value_index)) + "\" 1 \"\" 0>\n";
             wirestr += "<" + Num2String(x_pos) +" -60 " + Num2String(x_pos) + " -120 \"\" 0 0 0 \"\">\n";
             wirestr += "<" + Num2String(x_pos) + " -120 " + Num2String(x_pos+x_shunt) + " -120 \"\" 0 0 0 "">\n";
             x_pos += x_shunt;
@@ -535,7 +518,7 @@ int IO::SchematicParser(GRABIM_Result R, int & x_pos, string & componentstr, str
         }
         else if (!component.compare("4"))//Transmission line
         {
-            componentstr += "<TLIN Line1 1 " + Num2String(x_pos+60) + " -120 -26 20 0 0 \"" + Num2String(R.x_nlopt.at(value_index)) + "\" 1 \"" + Num2String(R.x_nlopt.at(value_index+1)) + "\" 1 \"0 dB\" 0 \"26.85\" 0>\n";
+            componentstr += "<TLIN Line1 1 " + Num2String(x_pos+60) + " -120 -26 20 0 0 \"" + Num2String(R.x_local_opt.at(value_index)) + "\" 1 \"" + Num2String(R.x_local_opt.at(value_index+1)) + "\" 1 \"0 dB\" 0 \"26.85\" 0>\n";
             wirestr += "<" + Num2String(x_pos) + " -120 " + Num2String(x_pos+30) + " -120 \"\" 0 0 0 \"\">\n";
             wirestr += "<" + Num2String(x_pos+90) + " -120 " + Num2String(x_pos+x_series) + " -120 \"\" 0 0 0 \"\">\n";
             x_pos += x_series;
@@ -543,7 +526,7 @@ int IO::SchematicParser(GRABIM_Result R, int & x_pos, string & componentstr, str
         }
         else if (!component.compare("5"))//Open stub
         {
-            componentstr += "<TLIN Line1 1 " + Num2String(x_pos) + " -60 -26 20 0 1 \"" + Num2String(R.x_nlopt.at(value_index)) + "\" 1 \"" + Num2String(R.x_nlopt.at(value_index+1)) + "\" 1 \"0 dB\" 0 \"26.85\" 0>\n";
+            componentstr += "<TLIN Line1 1 " + Num2String(x_pos) + " -60 -26 20 0 1 \"" + Num2String(R.x_local_opt.at(value_index)) + "\" 1 \"" + Num2String(R.x_local_opt.at(value_index+1)) + "\" 1 \"0 dB\" 0 \"26.85\" 0>\n";
             wirestr += "<" + Num2String(x_pos) + "-90 " + Num2String(x_pos) + " -120 \"\" 0 0 0 \"\">\n";
             wirestr += "<" + Num2String(x_pos) + " -120 "+ Num2String(x_pos+x_shunt) + " -120 \"\" 0 0 0 \"\">\n";
             x_pos += x_shunt;
@@ -551,7 +534,7 @@ int IO::SchematicParser(GRABIM_Result R, int & x_pos, string & componentstr, str
         }
         else if (!component.compare("6"))//Short circuited stub
         {
-            componentstr += "<TLIN Line1 1 " + Num2String(x_pos) + " -60 -26 20 0 1 \"" + Num2String(R.x_nlopt.at(value_index)) + "\" 1 \""+Num2String(R.x_nlopt.at(value_index+1))+"\" 1 \"0 dB\" 0 \"26.85\" 0>\n";
+            componentstr += "<TLIN Line1 1 " + Num2String(x_pos) + " -60 -26 20 0 1 \"" + Num2String(R.x_local_opt.at(value_index)) + "\" 1 \""+Num2String(R.x_local_opt.at(value_index+1))+"\" 1 \"0 dB\" 0 \"26.85\" 0>\n";
             componentstr += "<GND * 1 " + Num2String(x_pos) + " -30 0 0 0 0>\n";
             wirestr += "<" + Num2String(x_pos) +" -90 " + Num2String(x_pos) + " -120 \"\" 0 0 0 \"\">\n";
             wirestr += "<" + Num2String(x_pos) + "-120 " + Num2String(x_pos+x_shunt) + "-120 \"\" 0 0 0 \"\">\n";
@@ -603,7 +586,16 @@ bool IO::CreateSchematic(string components, string wires, string paintings, stri
     Schematic += paintings;
     Schematic += "</Paintings>\n";
 
-    QApplication::clipboard()->setText(QString(Schematic.c_str()	), QClipboard::Clipboard);//Copy into clipboard
+    if (CopyToClipboard)
+    {
+       QApplication::clipboard()->setText(QString(Schematic.c_str()), QClipboard::Clipboard);//Copy into clipboard
+    }
+    else//Dump content into a file
+    {
+       std::ofstream QucsFile("MatchingNetwork.sch", ios_base::out);
+       QucsFile << Schematic;
+       QucsFile.close();
+    }
 
     return true;
 }
@@ -625,7 +617,7 @@ string IO::Num2String(int x)
 
 
 
-/*
+
 void IO::PrintNetwork_StandardOutput(GRABIM_Result Res)
 {
     printf("\n+----SRC-----+");
@@ -633,41 +625,35 @@ void IO::PrintNetwork_StandardOutput(GRABIM_Result Res)
     for(unsigned int i=0;i<Res.topology.size();i++, index++)
         {
                                           cout<<"\n|            |  ";
-    if(!Res.topology.substr(i,1).compare("0"))cout<<"\n|            L  "<<Res.x_nlopt[index]*1E9 << "nH";
-    if(!Res.topology.substr(i,1).compare("1"))cout<<"\n|            C  "<<Res.x_nlopt[index]*1E12<< "pF";
-    if(!Res.topology.substr(i,1).compare("2"))cout<<"\n+-----L------+  "<<Res.x_nlopt[index]*1E9 << "nH";
-    if(!Res.topology.substr(i,1).compare("3"))cout<<"\n+-----C------+  "<<Res.x_nlopt[index]*1E12<< "pF";
+    if(!Res.topology.substr(i,1).compare("0"))cout<<"\n|            L  "<<Res.x_local_opt[index]*1E9 << "nH";
+    if(!Res.topology.substr(i,1).compare("1"))cout<<"\n|            C  "<<Res.x_local_opt[index]*1E12<< "pF";
+    if(!Res.topology.substr(i,1).compare("2"))cout<<"\n+-----L------+  "<<Res.x_local_opt[index]*1E9 << "nH";
+    if(!Res.topology.substr(i,1).compare("3"))cout<<"\n+-----C------+  "<<Res.x_local_opt[index]*1E12<< "pF";
     if(!Res.topology.substr(i,1).compare("4"))cout<<"\n|            T  "<<
-                                                "\n|            l  "<<Res.x_nlopt[index] << " " << Res.x_nlopt[index+1], index++;
-    if(!Res.topology.substr(i,1).compare("5"))cout<<"\n|      oc+stub  "<<Res.x_nlopt[index] << " " << Res.x_nlopt[index+1], index++;
-    if(!Res.topology.substr(i,1).compare("6"))cout<<"\n|      sc+stub  "<<Res.x_nlopt[index] << " " << Res.x_nlopt[index+1], index++;
+                                                "\n|            l  "<<Res.x_local_opt[index] << " " << Res.x_local_opt[index+1], index++;
+    if(!Res.topology.substr(i,1).compare("5"))cout<<"\n|      oc+stub  "<<Res.x_local_opt[index] << " " << Res.x_local_opt[index+1], index++;
+    if(!Res.topology.substr(i,1).compare("6"))cout<<"\n|      sc+stub  "<<Res.x_local_opt[index] << " " << Res.x_local_opt[index+1], index++;
                                           cout<<"\n|            |  ";
         }
     printf("\n+----LOAD----+\n\n");
 
     cout << "min(S11) = " << Res.nlopt_val << "dB" << endl;
 
-    //This is a log of successful results, every time the algorithm reaches a good matching
-    //condition, the both the problem and the best topology are save in order to gather
-    //information for future purposes.
-    if (Res.nlopt_val < -12)//Good matching
-    {
-    std::ofstream TrainingFile("training", ios_base::app);
-    TrainingFile << Res.ZS.at(0) << " " << Res.ZS.at(round(2*Nsamples/5)-1) << " " << Res.ZS.at(round(3*Nsamples/5)-1) << " " << Res.ZS.at(round(4*Nsamples/5)-1) << " " << Res.ZS.at(Nsamples-1) << endl;
-    TrainingFile << Res.ZL.at(0) << " " << Res.ZL.at(round(2*Nsamples/5)-1) << " " << Res.ZL.at(round(3*Nsamples/5)-1) << " " << Res.ZL.at(round(4*Nsamples/5)-1) << " " << Res.ZL.at(Nsamples-1) << endl;
-    TrainingFile << Res.freq.min() << endl;
-    TrainingFile << Res.freq.max() << endl;
-    TrainingFile << Res.topology << endl;
-    TrainingFile << "###" << endl;
-    TrainingFile.close();
-    }
+
+    //LOG
     std::ofstream LogFile("log", ios_base::app);
     LogFile << Res.ZS.at(0) << " " << Res.ZS.at(round(2*Nsamples/5)-1) << " " << Res.ZS.at(round(3*Nsamples/5)-1) << " " << Res.ZS.at(round(4*Nsamples/5)-1) << " " << Res.ZS.at(Nsamples-1) << endl;
     LogFile << Res.ZL.at(0) << " " << Res.ZL.at(round(2*Nsamples/5)-1) << " " << Res.ZL.at(round(3*Nsamples/5)-1) << " " << Res.ZL.at(round(4*Nsamples/5)-1) << " " << Res.ZL.at(Nsamples-1) << endl;
-    LogFile << Res.freq.min() << endl;
-    LogFile << Res.freq.max() << endl;
+    LogFile << min(Res.freq) << endl;
+    LogFile << max(Res.freq) << endl;
     LogFile << Res.topology << endl;
-    LogFile << Res.S11_gridsearch << endl;
+    for (unsigned int i=0; i < Res.S11_gridsearch.size(); i++) LogFile << "(" << Res.S11_gridsearch.at(i).real() << "," <<  Res.S11_gridsearch.at(i).imag() << ") "<< endl;
     LogFile << "###" << endl;
     LogFile.close();
-}*/
+}
+
+
+void IO::UseClipboard(bool B)
+{
+  CopyToClipboard=B;
+}

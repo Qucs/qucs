@@ -13,7 +13,7 @@ enum ObjectiveFunction {NINF_S11dB, NINF_POWERTRANS};
 typedef struct GRABIM_Result {
     vector<double> x_grid_search;
     double grid_val;
-    vector<double> x_nlopt;
+    vector<double> x_local_opt;
     double nlopt_val;
     vector<complex<double>> ZS, ZL;
     vector<double> freq;

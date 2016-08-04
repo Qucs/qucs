@@ -55,7 +55,6 @@ private:
 
     QLabel *ZLOhmLabel, *ZSOhmLabel;
 
-    QString QucsSchematicPath;
 
  private slots:
 

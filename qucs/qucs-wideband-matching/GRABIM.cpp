@@ -103,7 +103,7 @@ GRABIM_Result GRABIM::RunGRABIM()
             best_index = i;
             best = aux_flocal;
             Res.x_grid_search = Vopt[i];
-            Res.x_nlopt = aux_local;
+            Res.x_local_opt = aux_local;
             Res.grid_val = CandidateEval(Vopt[i]);
             Res.nlopt_val = aux_flocal;
         }
@@ -143,7 +143,7 @@ GRABIM_Result GRABIM::RunGRABIM()
         Res.S22_gridsearch[i] = S_gridsearch(1,1);
 
         // NLopt
-        S_nlopt = S2PEngine.getSparams(Res.x_nlopt, ZS[i], ZL[i], freq[i], topology);
+        S_nlopt = S2PEngine.getSparams(Res.x_local_opt, ZS[i], ZL[i], freq[i], topology);
         Res.S11_nlopt[i] = S_nlopt(0,0);
         Res.S21_nlopt[i] = S_nlopt(1,0);
         Res.S12_nlopt[i] = S_nlopt(0,1);
@@ -205,7 +205,7 @@ vector<double> GRABIM::GridSearch()
 
     for (int i = 0; i<4; i++, niter++)
     {
-        if ((min(best) < MatchingThreshold)&&(niter > Grid_MaxIter))//Stop condition
+        if ((min(best) < MatchingThreshold)||(niter > Grid_MaxIter))//Stop condition
         {
             return xk;
         }
@@ -975,4 +975,6 @@ vector<double> GRABIM::NelderMead(vector<double> x)
  cout << "STOP CONDITION: fmin=" << fx[0] << " gradient=" << grad_aux << " Niter=" << iter << endl;
  return getRow(X, 0);
 }
+
+
 

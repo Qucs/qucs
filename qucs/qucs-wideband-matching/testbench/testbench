@@ -6,13 +6,15 @@
 rm -rf log
 
 #Run testbench
-./../GRABIM 50 BFG310-input.s1p 0.5e9 1.2e9 --set-seed 31039102
-./../GRABIM BFG310-output.s1p 50 0.5e9 1.2e9 --set-seed 31039102
-./../GRABIM 75 BFR520-input.s1p 1e9 1.5e9 --set-seed 31039102
-./../GRABIM 50 TQP7M9101-input.s1p 2e9 2.5e9 --set-seed 31039102
-./../GRABIM TQP7M9101-output.s1p 50 2e9 2.5e9 --set-seed 31039102
-./../GRABIM 25+j78 65-j100 5e8 9e8 --set-seed 31039102
-./../GRABIM 50 500 2e9 3e9 --set-topo 444 --set-seed 31039102
+./../QucsWidebandMatching 50 BFG310-input.s1p 0.5e9 1.2e9 --set-seed 31039102
+./../QucsWidebandMatching BFG310-output.s1p 50 0.5e9 1.2e9 --set-seed 31039102
+./../QucsWidebandMatching 75 BFR520-input.s1p 1e9 1.5e9 --set-seed 31039102
+./../QucsWidebandMatching 50 TQP7M9101-input.s1p 2e9 2.5e9 --set-seed 31039102
+./../QucsWidebandMatching TQP7M9101-output.s1p 50 2e9 2.5e9 --set-seed 31039102
+./../QucsWidebandMatching 25+j78 65-j100 5e8 9e8 --set-seed 31039102
+./../QucsWidebandMatching 50 500 2e9 3e9 --set-topo 444 --set-seed 31039102
+./../QucsWidebandMatching 75 6+j10 950e6 2.15e9 --set-seed 31039102
+./../QucsWidebandMatching RC.s1p 50 30e6 35e6 --set-seed 31039102
 
 
 #Compare simulation results with standard
