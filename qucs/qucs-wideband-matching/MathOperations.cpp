@@ -324,5 +324,12 @@ vector<double> centroid(vector<vector<double>> X)
  return c;
 }
 
+// Calculates the logarithm of a vector
+vector<double> log(vector<double> V)
+{
+   for (unsigned int i = 0; i < V.size(); i++) V[i] = log10(V[i]);
+   return V;
+}
+
 
 

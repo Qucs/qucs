@@ -21,12 +21,12 @@
  *
  */
 
-
-﻿#include "GRABIM.h"
+#include "GRABIM.h"
 
 /* References:
   [1] Broadband direct-coupled and RF matching networks. Thomas R. Cuthbert, 1999 
   [2] Broadband impedance matching - Fast and simple. Thomas R. Cuthbert. RF design. 1994
+  [3] Convergence properties of the Nelder-Mead simplex method in low dimensions. J.F. Lagarias, J.A. Reeds. SIAM J. OPTIM, Vol 9, No. 1, pp. 112-147
 */
 
 // Constructor
@@ -912,7 +912,7 @@ return AUX_X;
 
 
 //Reference:
-// [1] Convergence properties of the Nelder-Mead simplex method in low dimensions. J.F. Lagarias, J.A. Reeds. SIAM J. OPTIM, Vol 9, No. 1, pp. 112-147
+// [3] Convergence properties of the Nelder-Mead simplex method in low dimensions. J.F. Lagarias, J.A. Reeds. SIAM J. OPTIM, Vol 9, No. 1, pp. 112-147
 vector<double> GRABIM::NelderMead(vector<double> x)
 {
   unsigned int n = x.size();

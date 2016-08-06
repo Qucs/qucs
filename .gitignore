@@ -260,3 +260,10 @@ shadow
 /qucs-test/
 /qucs/build-qucs-wideband-matching-Desktop-Default/QucsWidebandMatching.cbp
 /qucs/qucs-wideband-matching/testbench/plotscript
+/qucs-core/src/converter/parse_vcd.hpp
+/qucs-core/src/converter/parse_spice.hpp
+/qucs-core/src/logging.c
+/qucs-core/src/logging.h
+/qucs/ar-lib
+/qucs/qucs-wideband-matching/testbench/.~lock.test6.csv#
+/qucs/qucs-wideband-matching/testbench/log

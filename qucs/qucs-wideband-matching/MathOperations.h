@@ -64,5 +64,6 @@ using namespace std;
  vector<complex<double>> SubVector(vector<complex<double>>, unsigned int, unsigned int);
  vector<double> SubVector(vector<double>, unsigned int, unsigned int);
  vector<double> centroid(vector<vector<double>>);
+ vector<double> log(vector<double>);
 
 #endif

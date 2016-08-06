@@ -31,19 +31,21 @@ Mat::Mat(unsigned int r, unsigned int c)
   data = (r > 0 && c > 0) ? new complex<double>[r * c] : NULL;
 }
 
-
+//Fills a matrix with 1
 void Mat::ones()
 {
   for (unsigned int r = 0; r < rows; r++)
      for (unsigned int c = 0; c < cols; c++) data[r * cols + c] = 1;
 }
 
+//Turns the matrix into the identity
 void Mat::eye()
 {
   for (unsigned int r = 0; r < rows; r++)
      for (unsigned int c = 0; c < cols; c++) (r==c) ? data[r * cols + c] = 1 : data[r * cols + c] = 0;
 }
 
+// mat * complex operation
 Mat operator * (complex<double> z, Mat a) {
   Mat A(a.rows, a.cols);
   for (unsigned int r = 0; r < a.rows; r++)
@@ -51,6 +53,7 @@ Mat operator * (complex<double> z, Mat a) {
   return A;
 }
 
+// Scalar vectorial product
 complex<double> ScalarProduct(vec U, vec V)
 {
  if (V.size() != U.size()) return -1e30;
@@ -60,6 +63,7 @@ complex<double> ScalarProduct(vec U, vec V)
 }
 
 
+// Inner matrix product
 Mat operator * (Mat a, Mat b) {
 //Check dimmensions
   if (a.cols != b.rows) return Mat(1,1);
@@ -71,6 +75,7 @@ Mat operator * (Mat a, Mat b) {
   return Res;
 }
 
+// Gets row r
 vec Mat::getRow(unsigned int r)
 {
    vec V(cols);
@@ -78,13 +83,15 @@ vec Mat::getRow(unsigned int r)
    return V;
 }
 
+//Gets the real part of a row
 vector<double> Mat::getRowReal(unsigned int r)
 {
    vector<double> V(cols);
    for (unsigned int i = 0; i < cols; i++) V[i] = real(data[r * cols + i]);
    return V;
 }
- 
+
+//Gets the imaginary part of a row
 vector<double> Mat::getRowImag(unsigned int r)
 {
    vector<double> V(cols);
@@ -92,6 +99,7 @@ vector<double> Mat::getRowImag(unsigned int r)
    return V;
 }
 
+// Gets row c
 vec Mat::getCol(unsigned int c)
 {
    vec V(rows);
@@ -99,6 +107,7 @@ vec Mat::getCol(unsigned int c)
    return V;
 }
 
+//Gets the real part of a column
 vector<double> Mat::getColReal(unsigned int c)
 {
    vector<double> V(rows);
@@ -106,6 +115,7 @@ vector<double> Mat::getColReal(unsigned int c)
    return V;
 }
 
+//Gets the imaginary part of a columns
 vector<double> Mat::getColImag(unsigned int c)
 {
    vector<double> V(rows);
@@ -113,6 +123,7 @@ vector<double> Mat::getColImag(unsigned int c)
    return V;
 }
 
+// Prints the matrix content in the standard output
 void Mat::print ()
 {
   for (unsigned int r = 0; r < rows; r++)
