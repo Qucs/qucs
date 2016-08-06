@@ -20,8 +20,14 @@
  *
  *
  */
-#include "ui.h"
-#include <QApplication>
+
+#ifdef QT_NO_DEBUG //Qt libraries
+     #include "ui.h"
+     #include <QApplication>
+#else //Only command line operation
+    #include "GRABIM.h"
+    #include "io.h"
+#endif
 
 #include "mat.h"
 #include "MathOperations.h"
@@ -64,44 +70,73 @@ complex<double> getComplexImpedanceFromText(char *arg)
 
 int main(int argc, char *argv[])
 {
-    if (argc < 5)//User interface
+  bool help=false;
+  if (argc == 2)//Need help?
+  {
+     if (!strcmp(argv[1], "--help")) help = true;
+  }
+
+
+    if ((argc < 5) && (help == false))//User interface
     {
+     #ifdef QT_NO_DEBUG
     QApplication app(argc, argv);
     ui *WB_MatchingTool = new ui();
     WB_MatchingTool->raise();
     WB_MatchingTool->resize(350, 350);
     WB_MatchingTool->show();
     return app.exec();
+     #endif
     }
-    else //User interface command line
+    else //Command line
     {
-          string topo = "-1";
-          unsigned int search_mode = 0;
-          bool no_simplify = false;
-          srand (time(NULL));//Random seed
+          string GNUplot_path = "GRABIM.dat";//Path to the GNUplot output data
+          string TopoScript_path = "predefined_topologies";//Topology list
+          string QucsSchPath = "./Schematic.sch";//Qucs schematic
+          string topo = "-1";//Circuit topology
+          unsigned int search_mode = 0;//Search mode.
+          bool no_simplify = false;//This option allows simplifying the circuit topology when possible
+
+          srand (time(NULL));//Random seed. If the user provides a specific seed, this property is modified below
 
           //Parse arguments
           for (unsigned int i = 1; i < argc; i++)
           {
-              if (!strcmp(argv[i], "--set-topo") && (argc -1 >= (i+1)))
+              if (!strcmp(argv[i], "--set-topo") && (argc -1 >= (i+1)))//User-defined topology
               {
                     topo = argv[i+1];
+                    search_mode = -1;
               }
-              if (!strcmp(argv[i], "--set-seed") && (argc -1 >= (i+1)))
+              if (!strcmp(argv[i], "--set-seed") && (argc -1 >= (i+1)))//Custom seed
               {
                     srand(atof(argv[i+1]));//Set user-defined seed
               }
 
-              if (!strcmp(argv[i], "--set-search-mode") && (argc -1 >= (i+1)))
+              if (!strcmp(argv[i], "--set-search-mode") && (argc -1 >= (i+1)))//Search mode. The same as in the UI
               {
                    search_mode = atoi(argv[i+1]);
               }
 
-              if (!strcmp(argv[i], "--no-simplify"))
+              if (!strcmp(argv[i], "--set-topology-script") && (argc -1 >= (i+1)))//Path to the topology list
+              {
+                   TopoScript_path = argv[i+1];
+              }
+
+              if (!strcmp(argv[i], "--set-Qucs-Schematic-Path") && (argc -1 >= (i+1)))//Path to export the Qucs schematic
+              {
+                   QucsSchPath = argv[i+1];
+              }
+
+              if (!strcmp(argv[i], "--set-GNUplot-data") && (argc -1 >= (i+1)))//Path to output GNUplot data
+              {
+                   GNUplot_path = argv[i+1];
+              }
+
+              if (!strcmp(argv[i], "--no-simplify"))//This option avoids simplifying the circuit topology
               {
                    no_simplify = true;
               }
-              if (!strcmp(argv[i], "--help"))
+              if (!strcmp(argv[i], "--help"))//Display command line help
               {
                   cout << "This program implements GRABIM, a grid-search based" << endl;
                   cout << "wideband matching network synthesis algorithm." << endl;
@@ -118,8 +153,8 @@ int main(int argc, char *argv[])
                   cout << "   of the current pivot." << endl;
                   cout << "* --set-search-mode  xxx" << endl;
                   cout << "   The topology search is accomplished using the following code:" << endl;
-                  cout << "   0: Script" << endl;
-                  cout << "   1: Predefined set" << endl;
+                  cout << "   0: Predefined set" << endl;
+                  cout << "   1: Script" << endl;
                   cout << "   2: Combinations of LC (4 elements)" << endl;
                   cout << "   3: Combinations of LC and TL (6 elements)" << endl;
                   cout << "   4: Combinations of LC, TL and open/shorted stubs (6 elements). Not recommended" << endl;
@@ -141,20 +176,20 @@ int main(int argc, char *argv[])
 
           }
 
-        string SourceFile = argv[1];
-        string LoadFile = argv[2];
+        string SourceFile = argv[1];//Path to the s1p which contains the source impedance data
+        string LoadFile = argv[2];//Path to the s1p which contains the load impedance data
 
+        //Detects if the user entered a constant impedance vs freq or, otherwise, he/she entered the path of a s1p file
         bool ZSisConstant = SourceFile.find(".s1p") == std::string::npos;
         bool ZLisConstant = LoadFile.find(".s1p") == std::string::npos;
 
         //Impedance data paths were already specified, let's proceed to bring the S-par data into memory
         IO inout_operations;
-        inout_operations.UseClipboard(false);
-        int ret;
+        inout_operations.UseClipboard(false);//Command line mode does not allow using the clipboard, so the Qucs schematic will be dumped into a file
+
         if (!ZSisConstant)//Read source impedance from file
         {
-            ret = inout_operations.loadS1Pdata(SourceFile, SOURCE);//s1p
-            if (ret == -1)
+            if (inout_operations.loadS1Pdata(SourceFile, SOURCE))
             {
                 cout << "ERROR: File not found" << endl;
                 return -1;
@@ -173,16 +208,15 @@ int main(int argc, char *argv[])
            inout_operations.set_constant_ZS_vs_freq(zs_temp);
         }
 
-        if (!ZLisConstant)
+        if (!ZLisConstant)//Read load impedance from file
         {
-           ret = inout_operations.loadS1Pdata(LoadFile, LOAD);//s1p
-           if (ret == -1)
+           if (inout_operations.loadS1Pdata(LoadFile, LOAD))
            {
                cout << "ERROR: File not found" << endl;
                return -1;
            }
         }
-        else
+        else//Set constant load impedance
         {
             complex<double> zl_temp;
             char * text = argv[2];
@@ -201,7 +235,7 @@ int main(int argc, char *argv[])
         double fmatching_min = atof(argv[3]);
         double fmatching_max = atof(argv[4]);
 
-
+ 
         if (fmatching_max <= fmatching_min)
         {
             cout << "The lowest frequency must be lower than the highest" << endl;
@@ -217,23 +251,20 @@ int main(int argc, char *argv[])
         {
             inout_operations.set_matching_band(fmatching_min, fmatching_max);
 
-            //Check if the specified frequencies lie with the s1p/s2p data
+            // In general, the load and source impedance data may be taken at different frequencies. For this reason, it is performed
+            // a linear interpolation before running GRABIM
             inout_operations.ResampleImpedances();//Force data update
-            if (fmatching_min*1.05 < min(inout_operations.getFrequency()))//The lower freq is not present at s1p/s2p
+            if (fmatching_min*1.05 < min(inout_operations.getFrequency()))//The s1p does not contains the lowest freq
             {
                 cerr <<"One of the impedance data files does not contain the specified lower frequency" << endl;
                 return 0;
             }
-            if (fmatching_max*0.95 > max(inout_operations.getFrequency()))//The maximum freq is not present at s1p/s2p
+            if (fmatching_max*0.95 > max(inout_operations.getFrequency()))//The s1p does not contains the highest freq
             {
                 cerr <<"One of the impedance data files does not contain the specified upper frequency" << endl;
                 return 0;
             }
         }
-
-
-        string TopoScript_path = "predefined_topologies";
-        string QucsSchPath = "GRABIM_result.sch";
 
         GRABIM MatchingObject;
         // Impedance and frequency settings
@@ -246,32 +277,32 @@ int main(int argc, char *argv[])
         MatchingObject.SimplifyNetwork(!no_simplify);
 
 
-        GRABIM_Result R = MatchingObject.RunGRABIM();//Runs GRABIM. Well, this is not exactly the algorithm
-        // detailed at [1] but from my point of view is functional and easier to code...
-        //Notes:
-        // 1) The candidate vector is not in log units. I do not see a good reason for doing so. Maybe I am missing something important
-        // 2) Frequency is not in rad/s.
-        // 3) The objective function is the magnitude of S11 expressed in dB. log(x) functions usually have strong
-        // gradients so it seem to suggest that this is good for derivative free opt algorithms
-        // 4) This code takes advantage from NLopt derivative-free local optimisers. NLopt is easy to link and it works
-        // fine. Despite the fact that the Nelder-Mead algorithm does not guarantee convergence (among other problems), it leads to achieve a good local
-        // (probably, global) optimum. This is caused by the fact that the matching network should be as simple as possible => few elements => xk \in R^N, where
-        // N is typically < 6. Even N=6 is a big number, please consider that matching networks are tight to physical constraints in practice, so, the larger the
-        // network, the harder the 'tuning'.
+        GRABIM_Result R = MatchingObject.RunGRABIM();//Runs GRABIM. Please bear in mind that this is not a rigorous implementation of [1] 
+        // Biggest differences between this code and [1]:
+        // 1) The candidate vector is always defined in natural units rather than logarithmic units.
+        // 2) Frequency is not normalized.
+        // 3) The objective function is the magnitude of S11 expressed in dB. log(x) functions have bigger
+        // gradients than x so using S11 in dB may help to find the optimum faster
+        // 4) The local optimizer is the standard Nelder-Mead algorithm [2]. Observation seems to suggest that NM is enough for dealing
+        // with the usual wideband matching network topologies.
 
-         inout_operations.PrintNetwork_StandardOutput(R);
+        // References:
+        // [1] Broadband direct-coupled and RF matching networks. Thomas R. Cuthbert, 1999
+        // [2] Convergence properties of the Nelder-Mead simplex method in low dimensions. J.F. Lagarias, J.A. Reeds. SIAM J. OPTIM, Vol 9, No. 1, pp. 112-147
+
+        inout_operations.PrintNetwork_StandardOutput(R);//Prints the matching network in the terminal
 
         (ZSisConstant) ? R.source_path = "" : R.source_path = SourceFile;
         (ZLisConstant) ? R.load_path = "": R.load_path = LoadFile;
 
 
-        string GNUplot_path = "GRABIM.dat";
-
         cout << "Finished: GRABIM has successfully finished." << endl;
-        cout << "Please execute: 'gnuplot plotscript' to take a look to the results." << endl;
-        cout << "A new Qucs schematic has been copied into the clipboard." << endl;
+        cout << "The matching network was written using the Qucs schematic format at " << QucsSchPath << endl << endl;
+        cout << "Alternatively, you can check the performance of the network using gnuplot" << endl;
+        cout << "The GNUplot data was written at " << GNUplot_path << endl;
+        cout << "You can find a sample GNUplot script to plot S11 in a Smith Chart as well as rectangular plots" << endl;
 
         inout_operations.exportGNUplot(R, GNUplot_path);
-        inout_operations.ExportQucsSchematic(R);
+        inout_operations.ExportQucsSchematic(R, QucsSchPath);
     }
 }

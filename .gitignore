@@ -259,3 +259,4 @@ shadow
 /compile
 /qucs-test/
 /qucs/build-qucs-wideband-matching-Desktop-Default/QucsWidebandMatching.cbp
+/qucs/qucs-wideband-matching/testbench/plotscript

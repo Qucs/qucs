@@ -3,12 +3,11 @@
 ui::ui()
 {
       GNUplot_path = QCoreApplication::applicationDirPath() + "/GRABIM.dat";
-      setFixedSize(400, 500);
+      setFixedSize(400, 300);
       centralWidget =  new QWidget();
       QHBoxLayout *Impedancelayout = new QHBoxLayout();
       QHBoxLayout * ButtonsLayout = new QHBoxLayout();
       QGridLayout * TopoLayout = new QGridLayout();
-      QHBoxLayout * LocalOptLayout = new QHBoxLayout();
 
       //Create source load impedance buttons
       SourceFileButton = new QPushButton("Source impedance");
@@ -72,7 +71,7 @@ ui::ui()
 
 
        // Matching band
-       QGroupBox *groupBox = new QGroupBox(tr("Matching band"));
+       QGroupBox *FreqgroupBox = new QGroupBox(tr("Matching band"));
        minFLabel = new QLabel("Min:");
        minFEdit = new QLineEdit("1");
        minFUnitsCombo =  new QComboBox();
@@ -102,58 +101,27 @@ ui::ui()
        vbox->addWidget(maxFLabel);
        vbox->addWidget(maxFEdit);
        vbox->addWidget(maxFUnitsCombo);
-       groupBox->setLayout(vbox);
+       FreqgroupBox->setLayout(vbox);
 
        //Topology selection
-       QGroupBox *groupBoxTopology = new QGroupBox(tr("Topology"));
-       ArbitraryTopology = new QRadioButton("User-defined topology");
-       ArbitraryTopology->setChecked(false);
-       SearchBestTopology = new QRadioButton("Search best topology");
-       SearchBestTopology->setChecked(true);
-
-
-       QHBoxLayout *helpbox = new QHBoxLayout;
-       CodeLabel = new QLabel("0: Series inductance\n1: Series capacitor\n2: Paralell inductance\n3: Parallel capacitor\n4: Transmission line\n5: Open stub\n6: Short circuited stub");
-       CodeLabel->setWordWrap(true);
-       CodeLabel->setVisible(false);
-       helpbox->addWidget(CodeLabel);
-
-       ArbitraryTopologyLineEdit =  new QLineEdit();
-       ArbitraryTopologyLineEdit->setEnabled(false);
+       SearchModeLabel = new QLabel("Search Mode");
 
        SearchModeCombo = new QComboBox();
-       SearchModeCombo->insertItem(0,"Script");
-       SearchModeCombo->insertItem(1,"Precomputed set");
+       SearchModeCombo->insertItem(0,"Precomputed set");
+       SearchModeCombo->insertItem(1,"Script");
        SearchModeCombo->insertItem(2,"LC order 4");
        SearchModeCombo->insertItem(3,"LC + TL order 6");
        SearchModeCombo->insertItem(4,"LC + TL + Stubs order 6");
-       TopoLayout->addWidget(ArbitraryTopology, 0, 0);
-       TopoLayout->addWidget(ArbitraryTopologyLineEdit, 0, 1);
-       TopoLayout->addWidget(SearchBestTopology, 1, 0);
-       TopoLayout->addWidget(SearchModeCombo, 1, 1);
-       groupBoxTopology->setLayout(TopoLayout);
 
-       connect(ArbitraryTopology, SIGNAL(clicked()), this, SLOT(ArbitraryTopology_clicked()));
-       connect(SearchBestTopology, SIGNAL(clicked()), this, SLOT(SearchBestTopology_clicked()));
-       connect(SearchModeCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(TopoCombo_clicked(int)));
+       TopoLayout->addWidget(SearchModeLabel, 0, 0);
+       TopoLayout->addWidget(SearchModeCombo, 0, 1);
 
-       //Local optimizer settings
-       LocalOptLabel = new QLabel("Local optimiser");
-       LocalOptCombo =  new QComboBox();
-       LocalOptCombo->addItem("Nelder-Mead");
-       LocalOptCombo->addItem("PRAXIS");
-       LocalOptCombo->addItem("Suplex");
-
-
-       LocalOptLayout->addWidget(LocalOptLabel);
-       LocalOptLayout->addWidget(LocalOptCombo);
-
-       // GNUPLOT
+        // GNUPLOT
        QGridLayout *GNUplotLayout = new QGridLayout;
        GNUplotButton = new QPushButton("Browse");
        connect(GNUplotButton, SIGNAL(clicked()), this, SLOT(GNUplotOutput_clicked()));
 
-       GNUplotLayout->addWidget(new QLabel("GNUplot output path:"), 0, 0);
+       GNUplotLayout->addWidget(new QLabel("Save GNUplot data:"), 0, 0);
        GNUplotLayout->addWidget(GNUplotButton, 0, 1);
 
 
@@ -164,6 +132,8 @@ ui::ui()
        TopoScriptLayout->addWidget(TopoScriptLabel);
        TopoScriptLayout->addWidget(TopoScriptButton);
        connect(TopoScriptButton, SIGNAL(clicked()), this, SLOT(TopoScriptButton_clicked()));
+       TopoScriptLabel->setVisible(false);
+       TopoScriptButton->setVisible(false);
 
        TopoScript_path = "predefined_topologies";
 
@@ -180,10 +150,8 @@ ui::ui()
       //Create main layout and add individual layouts
       QVBoxLayout * mainLayout = new QVBoxLayout();
       mainLayout->addLayout(Impedancelayout);
-      mainLayout->addWidget(groupBox);
-      mainLayout->addLayout(helpbox);
-      mainLayout->addWidget(groupBoxTopology);
-      mainLayout->addLayout(LocalOptLayout);
+      mainLayout->addWidget(FreqgroupBox);
+      mainLayout->addLayout(TopoLayout);
       mainLayout->addLayout(GNUplotLayout);
       mainLayout->addLayout(TopoScriptLayout);
       mainLayout->addLayout(ButtonsLayout);
@@ -195,46 +163,6 @@ ui::ui()
       statusBar()->showMessage(tr("Ready"));
 }
 
-void ui::ArbitraryTopology_clicked()
-{
-    if (ArbitraryTopology->isChecked())
-    {
-        ArbitraryTopologyLineEdit->setEnabled(true);
-        CodeLabel->setVisible(true);
-        setFixedSize(400, 600);
-        TopoScriptLabel->setVisible(false);
-        TopoScriptButton->setVisible(false);
-        
-    }
-    else
-    {
-        ArbitraryTopologyLineEdit->setEnabled(false);
-        CodeLabel->setVisible(false);
-        setFixedSize(400, 500);
-    }
-}
-
-void ui::SearchBestTopology_clicked()
-{
-        if (SearchBestTopology->isChecked())
-        {
-            ArbitraryTopologyLineEdit->setEnabled(false);
-            CodeLabel->setVisible(false);
-            setFixedSize(400, 500);
-            if (SearchModeCombo->currentIndex()==0)
-            {
-              TopoScriptLabel->setVisible(true);
-              TopoScriptButton->setVisible(true);
-            }
-        }
-        else
-        {
-            ArbitraryTopologyLineEdit->setEnabled(true);
-            CodeLabel->setVisible(true);
-            setFixedSize(400, 600);
-        }
-
-}
 
 void ui::go_clicked()
 {
@@ -357,25 +285,7 @@ void ui::go_clicked()
     MatchingObject->SetFrequency(inout_operations->getFrequency());
     MatchingObject->setTopoScript(TopoScript_path.toStdString());
 
-    //Topology
-    if (ArbitraryTopology->isChecked())//Use custom topology
-    {
-        MatchingObject->SetTopology(ArbitraryTopologyLineEdit->text().toStdString());
-    }
-    else
-    {//Search over the predefined circuit set
-       MatchingObject->SetTopology("-1");
-    }
-
     MatchingObject->setSearchMode(SearchModeCombo->currentIndex());
-
-    // Set local optimiser
-   /* switch(LocalOptCombo->currentIndex())
-    {
-       case 0: inout_operations.setLocalOptimiser(nlopt::LN_NELDERMEAD);break;
-       case 1: inout_operations.setLocalOptimiser(nlopt::LN_PRAXIS);break;
-       case 2: inout_operations.setLocalOptimiser(nlopt::LN_SBPLX);break;
-    }*/
 
 
     GRABIM_Result R = MatchingObject->RunGRABIM();//Runs GRABIM. Well, this is not exactly the algorithm
@@ -387,48 +297,53 @@ void ui::go_clicked()
     // 3) The objective function is the magnitude of S11 expressed in dB. log(x) functions usually have strong
     // gradients so it seem to suggest that this is good for derivative free opt algorithms
     // 4) This code takes advantage from NLopt derivative-free local optimisers. NLopt is easy to link and it works
-    // fine. Despite the fact that the Nelder-Mead algorithm does not guarantee convergence (among other problems), it leads to achieve a good local
-    // (probably, global) optimum. This is caused by the fact that the matching network should be as simple as possible => few elements => xk \in R^N, where
-    // N is typically < 6. Even N=6 is a big number, please consider that matching networks are tight to physical constraints in practice, so, the larger the
-    // network, the harder the 'tuning'.
+    // fine. Despite the fact that the Nelder-Mead algorithm does not guarantee convergence (among other problems), it leads to achieve a good local (probably, global) optimum. NM is known to fail when the dimmension of the problem is above 14-15. However, as far as matching networks are concerned, the lower order, the simpler the tuning. In practice it is not usual to find matching networks with more than 6 elements
 
     (FixedZSCheckbox->isChecked()) ? R.source_path = "" : R.source_path = SourceFile.toStdString();
     (FixedZLCheckbox->isChecked()) ? R.load_path = "": R.load_path = LoadFile.toStdString();
     R.QucsVersion = PACKAGE_VERSION;
 
+//Final mesage
+
     QMessageBox::information(0, QObject::tr("Finished"),
-                         QObject::tr("GRABIM has successfully finished. \nPlease execute: 'gnuplot plotscript' to take a look to the results.\nA new Qucs schematic has been generated"));
+                         QObject::tr("GRABIM has successfully finished. \nA schematic has been copied to the clipboard so you can paste it into Qucs\nAlternatively, you can check the performance of the network using GNUplot"));
 
     inout_operations->exportGNUplot(R, GNUplot_path.toStdString());
-    inout_operations->ExportQucsSchematic(R);
+    inout_operations->ExportQucsSchematic(R, "");
     delete MatchingObject;
     delete inout_operations;
 }
 
+// Exits app
 void ui::cancel_clicked()
 {
    this->close();
 }
 
+// Opens a file dialog to select the s1p file which contains source impedance data
 void ui::SourceImpedance_clicked()
 {
     SourceFile = QFileDialog::getOpenFileName(this,
         tr("Open S-parameter file"), QCoreApplication::applicationDirPath());
 }
+
+// Opens a file dialog to select the s1p file which contains load impedance data
 void ui::LoadImpedance_clicked()
 {
     LoadFile = QFileDialog::getOpenFileName(this,
         tr("Open S-parameter file"), QCoreApplication::applicationDirPath());
 }
 
-// GNUplot output path
+// Apart from generating a Qucs schematic, the S parameters of the network are stored in GNUplot format
+// so the user can check the performance of the network without running Qucs
 void ui::GNUplotOutput_clicked()
 {
     GNUplot_path = QFileDialog::getSaveFileName(this,
         tr("Save GNUplot script"), QCoreApplication::applicationDirPath());
 }
 
-
+// The user can feed the engine with custom topologies. In this sense, this function opens a file dialog for setting the path to
+// a list of user-defined topologies
 void ui::TopoScriptButton_clicked()
 {
     TopoScript_path = QFileDialog::getOpenFileName(this,
@@ -477,18 +392,18 @@ complex<double> ui::getComplexImpedanceFromText(char *arg)
     int index = arg_str.find_first_of("j");
     int sign = 1;
     double zreal, zimag;
-    if (index != -1)//Then it is a single impedance
+    if (index != -1)//Then it is a complex impedance
     {
         zreal = atof(arg_str.substr(0, index-1).c_str());
         if (!arg_str.substr(index-1, 1).compare("-")) sign = -1;
         zimag = sign*atof(arg_str.substr(index+1).c_str());
         return complex<double>(zreal, zimag);
     }
-    else
+    else//Real impedance
     {
         zreal = atof(arg);
         if (zreal > 0)return complex<double>(zreal, 0);
-        else
+        else//Wrong input...
             return complex<double>(-1, -1);
     }
 }
@@ -506,15 +421,16 @@ double ui::getFreqScale(int index)
    return 1e6;
 }
 
-
+// Returns the path to the user-defined topologies list
 QString ui::getTopoScriptPath()
 {
     return TopoScript_path;
 }
 
+// Search mode changed
 void ui::TopoCombo_clicked(int index)
 {
-   if ((index==0) && (SearchBestTopology->isChecked()))
+   if (index==0)
    {
      TopoScriptLabel->setVisible(true);
      TopoScriptButton->setVisible(true);

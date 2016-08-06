@@ -66,31 +66,31 @@ Mat SparEngine::getABCDmatrix(vector<double> x, double f, std::string topology)
         element = atoi(topology.substr(i,1).c_str());
         switch(element)
         {
-        case 0: 
+        case 0: //Series inductance
                 ABCD_t(0,0) = 1.;
                 ABCD_t(0,1) = complex<double>(0,w*x.at(k));
                 ABCD_t(1,0) = 0;
                 ABCD_t(1,1) = 1.;  
             break;
-        case 1: 
+        case 1: //Series capacitor
                 ABCD_t(0,0) = 1.;
                 ABCD_t(0,1) = complex<double>(0,-1/(w*x.at(k)));
                 ABCD_t(1,0) = 0;
                 ABCD_t(1,1) = 1.;  
             break;
-        case 2: 
+        case 2: //Parallel inductance
                 ABCD_t(0,0) = 1.;
                 ABCD_t(0,1) = 0;
                 ABCD_t(1,0) = complex<double>(0,-1./(w*x.at(k)));
                 ABCD_t(1,1) = 1.;
             break;
-        case 3:
+        case 3://Parallel capacitor
                 ABCD_t(0,0) = 1.;
                 ABCD_t(0,1) = 0;
                 ABCD_t(1,0) = complex<double>(0, w*x.at(k));
                 ABCD_t(1,1) = 1.;
             break;
-        case 4:
+        case 4://Transmission line
                 ABCD_t(0,0) = cosh(gamma*x.at(k+1));
                 ABCD_t(0,1) = x.at(k)*sinh(gamma*x.at(k+1));
                 ABCD_t(1,0) = sinh(gamma*x.at(k+1))/x.at(k);
@@ -117,7 +117,6 @@ Mat SparEngine::getABCDmatrix(vector<double> x, double f, std::string topology)
 
         ABCD = ABCD*ABCD_t;
     }
-  //  cout << ABCD << endl;
         return ABCD;
 }
 
@@ -133,11 +132,11 @@ Mat SparEngine::PreComputedABCD(vector<double> x, double w, std::string topology
     ABCD(1,0) = -1;
     ABCD(1,1) = -1;
 
-    if (!topology.compare("444"))// Lowpass TL-C ladder
+    if (!topology.compare("444"))// Three cascaded transmission lines
     {
         ABCD(0,0) = -(x.at(0)*x.at(2)*cos(x.at(3)*w/c0)*sin(x.at(1)*w/c0)*sin(x.at(5)*w/c0) + x.at(2)*x.at(2)*cos(x.at(1)*w/c0)*sin(x.at(3)*w/c0)*sin(x.at(5)*w/c0) - (x.at(2)*cos(x.at(1)*w/c0)*cos(x.at(3)*w/c0)*cos(x.at(5)*w/c0) - x.at(0)*cos(x.at(5)*w/c0)*sin(x.at(1)*w/c0)*sin(x.at(3)*w/c0))*x.at(4))/(x.at(2)*x.at(4));
-        ABCD(0,1) = (-I*x.at(0)*x.at(2)*cos(x.at(3)*w/c0)*cos(x.at(5)*w/c0)*sin(x.at(1)*w/c0) - I*x.at(2)*x.at(2)*cos(x.at(1)*w/c0)*cos(x.at(5)*w/c0)*sin(x.at(3)*w/c0) + (-I*x.at(2)*cos(x.at(1)*w/c0)*cos(x.at(3)*w/c0)*sin(x.at(5)*w/c0) + I*x.at(0)*sin(x.at(1)*w/c0)*sin(x.at(3)*w/c0)*sin(x.at(5)*w/c0))*x.at(4))/x.at(2);
-        ABCD(1,0) = (-I*x.at(0)*x.at(2)*cos(x.at(1)*w/c0)*cos(x.at(3)*w/c0)*sin(x.at(5)*w/c0) + I*x.at(2)*x.at(2)*sin(x.at(1)*w/c0)*sin(x.at(3)*w/c0)*sin(x.at(5)*w/c0) + (-I*x.at(2)*cos(x.at(3)*w/c0)*cos(x.at(5)*w/c0)*sin(x.at(1)*w/c0) - I*x.at(0)*cos(x.at(1)*w/c0)*cos(x.at(5)*w/c0)*sin(x.at(3)*w/c0))*x.at(4))/(x.at(0)*x.at(2)*x.at(4));
+        ABCD(0,1) = (I*x.at(0)*x.at(2)*cos(x.at(3)*w/c0)*cos(x.at(5)*w/c0)*sin(x.at(1)*w/c0) + I*x.at(2)*x.at(2)*cos(x.at(1)*w/c0)*cos(x.at(5)*w/c0)*sin(x.at(3)*w/c0) + (I*x.at(2)*cos(x.at(1)*w/c0)*cos(x.at(3)*w/c0)*sin(x.at(5)*w/c0) - I*x.at(0)*sin(x.at(1)*w/c0)*sin(x.at(3)*w/c0)*sin(x.at(5)*w/c0))*x.at(4))/x.at(2);
+        ABCD(1,0) = (I*x.at(0)*x.at(2)*cos(x.at(1)*w/c0)*cos(x.at(3)*w/c0)*sin(x.at(5)*w/c0) - I*x.at(2)*x.at(2)*sin(x.at(1)*w/c0)*sin(x.at(3)*w/c0)*sin(x.at(5)*w/c0) + (I*x.at(2)*cos(x.at(3)*w/c0)*cos(x.at(5)*w/c0)*sin(x.at(1)*w/c0) + I*x.at(0)*cos(x.at(1)*w/c0)*cos(x.at(5)*w/c0)*sin(x.at(3)*w/c0))*x.at(4))/(x.at(0)*x.at(2)*x.at(4));
         ABCD(1,1) = (x.at(0)*x.at(2)*cos(x.at(1)*w/c0)*cos(x.at(3)*w/c0)*cos(x.at(5)*w/c0) - x.at(2)*x.at(2)*cos(x.at(5)*w/c0)*sin(x.at(1)*w/c0)*sin(x.at(3)*w/c0) - (x.at(2)*cos(x.at(3)*w/c0)*sin(x.at(1)*w/c0)*sin(x.at(5)*w/c0) + x.at(0)*cos(x.at(1)*w/c0)*sin(x.at(3)*w/c0)*sin(x.at(5)*w/c0))*x.at(4))/(x.at(0)*x.at(2));
         return ABCD;
     }

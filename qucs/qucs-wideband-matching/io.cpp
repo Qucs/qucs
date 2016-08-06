@@ -8,6 +8,7 @@ IO::IO()
     CopyToClipboard=true;
 }
 
+// Converts std::string to double
 double string_to_double( const std::string& s )
 {
     std::istringstream i(s);
@@ -18,7 +19,7 @@ double string_to_double( const std::string& s )
 }
 
 
-//Export data to display results with GNUplot
+//Export data according to the GNUplot data file format
 int IO::exportGNUplot(GRABIM_Result Res, string filepath)
 {
     ofstream GNUplotExport;
@@ -77,6 +78,8 @@ string RemoveBlankSpaces(string line)
 }
 
 
+
+// Loads impedance data from a s1p file
 int IO::loadS1Pdata(std::string filepath, terminal Port)
 {
     std::ifstream s2pfile(filepath.c_str());//Tries to open the data file.
@@ -417,14 +420,15 @@ double IO::getS2PfreqScale(string line)
 
 
 // This function exports the best topology found to a Qucs schematic
-int IO::ExportQucsSchematic(GRABIM_Result R)
+int IO::ExportQucsSchematic(GRABIM_Result R, string QucsFile)
 {
     std::string wirestr = "";
     std::string componentstr = "";
     std::string paintingstr = "";
     int x_pos = 0;
     SchematicParser(R, x_pos, componentstr, wirestr, paintingstr);
-    CreateSchematic(componentstr, wirestr, paintingstr, R.QucsVersion);
+    if (R.QucsVersion.empty()) R.QucsVersion = "0.0.19";
+    CreateSchematic(componentstr, wirestr, paintingstr, R.QucsVersion, QucsFile);
     return 0;
 }
 
@@ -566,7 +570,7 @@ int IO::SchematicParser(GRABIM_Result R, int & x_pos, string & componentstr, str
 
 //-----------------------------------------------------------------------------
 // Given the components, wires and paintings, it creates the schematic and copies on the clipboard
-bool IO::CreateSchematic(string components, string wires, string paintings, string QucsVersion)
+bool IO::CreateSchematic(string components, string wires, string paintings, string QucsVersion, string QucsFilePath)
 {
     //Header
     std::string Schematic = "<Qucs Schematic " + QucsVersion + ">\n";
@@ -587,12 +591,14 @@ bool IO::CreateSchematic(string components, string wires, string paintings, stri
     Schematic += "</Paintings>\n";
 
     if (CopyToClipboard)
-    {
+    {  
+       #ifdef QT_NO_DEBUG
        QApplication::clipboard()->setText(QString(Schematic.c_str()), QClipboard::Clipboard);//Copy into clipboard
+       #endif
     }
     else//Dump content into a file
     {
-       std::ofstream QucsFile("MatchingNetwork.sch", ios_base::out);
+       std::ofstream QucsFile(QucsFilePath.c_str(), ios_base::out);
        QucsFile << Schematic;
        QucsFile.close();
     }

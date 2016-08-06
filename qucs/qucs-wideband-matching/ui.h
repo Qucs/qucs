@@ -17,7 +17,6 @@
 #include <QObject>
 #include <QFileDialog>
 #include "io.h"
-//#include "GRABIM.h"
 #include <sstream>
 #include <complex>
 
@@ -43,12 +42,11 @@ private:
     QSvgWidget *imgWidget;
     QComboBox *Topology, *SearchModeCombo;
 
-    QRadioButton *ArbitraryTopology, *SearchBestTopology;
-    QComboBox * LocalOptCombo, *minFUnitsCombo, * maxFUnitsCombo;
-    QLabel * LocalOptLabel, *minFLabel, *maxFLabel, *CodeLabel, *TopoScriptLabel;
+    QComboBox *minFUnitsCombo, * maxFUnitsCombo;
+    QLabel *minFLabel, *maxFLabel, *TopoScriptLabel, *SearchModeLabel;
     QString  SourceFile, LoadFile;
     QString GNUplot_path, TopoScript_path;
-    QLineEdit * minFEdit, * maxFEdit, *ArbitraryTopologyLineEdit;
+    QLineEdit * minFEdit, * maxFEdit;
 
     QCheckBox * FixedZLCheckbox, * FixedZSCheckbox;
     QLineEdit * FixedZSLineedit, *FixedZLLineedit;
@@ -58,8 +56,6 @@ private:
 
  private slots:
 
-    void ArbitraryTopology_clicked();
-    void SearchBestTopology_clicked();
     void go_clicked();
     void cancel_clicked();
     void SourceImpedance_clicked();

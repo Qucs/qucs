@@ -6,8 +6,11 @@
 #include <complex>
 #include <queue>
 #include <fstream>
-#include <QApplication>
-#include <QClipboard>
+
+#ifdef QT_NO_DEBUG
+  #include <QApplication>
+  #include <QClipboard>
+#endif
 
 using namespace std;
 enum terminal {SOURCE, LOAD};
@@ -25,9 +28,7 @@ public:
     void set_constant_ZS_vs_freq(complex<double>);
     void set_constant_ZL_vs_freq(complex<double>);
     void set_matching_band(double, double);
-  //  void setLocalOptimiser(nlopt::algorithm);
-   // nlopt::algorithm getLocalOptimiser();
-    int ExportQucsSchematic(GRABIM_Result);
+    int ExportQucsSchematic(GRABIM_Result, string);
     void PrintNetwork_StandardOutput(GRABIM_Result);
     void UseClipboard(bool);
 
@@ -52,7 +53,7 @@ private:
    // nlopt::algorithm LocalOptAlgo;
 
     int SchematicParser(GRABIM_Result, int &, string &, string &, string &);
-    bool CreateSchematic(string, string, string, string);
+    bool CreateSchematic(string, string, string, string, string);
 
     int Nsamples;//Impedance samples within matching band
 

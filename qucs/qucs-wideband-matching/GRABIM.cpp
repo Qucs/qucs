@@ -1,16 +1,20 @@
 ﻿#include "GRABIM.h"
 
+/* References:
+  [1] Broadband direct-coupled and RF matching networks. Thomas R. Cuthbert, 1999 
+  [2] Broadband impedance matching - Fast and simple. Thomas R. Cuthbert. RF design. 1994
+*/
+
+// Constructor
 GRABIM::GRABIM()
 {
-    Grid_MaxIter = 1000;
-    MatchingThreshold = -30;//It specifies the mininum S11 [dB] required, typically,
-    //S11 < 10 dB is considered as valid for common applications
-    simplify_network = true;
+    Grid_MaxIter = 1000;//Maximum number of grid iterations
+    MatchingThreshold = -30;//It specifies the mininum S11 [dB] required. In general, S11 < 10 dB is considered a good matching condition for common applications
+    simplify_network = true;//Enables circuit simplification when possible
 
-    ObjFun = ObjectiveFunction::NINF_S11dB;//Sets the kind of objective functions. Everything seems to
+    ObjFun = ObjectiveFunction::NINF_S11dB;//Sets the kind of objective function. Everything seems to
     //suggest that NINF_S11dB gives the best results
     topology = "-1";//By default, the engine will search the optimum topology from the predefined set of circuit
-   // NLoptAlgo = nlopt::LN_NELDERMEAD;//By default, the local optimiser was chosen to be the Nelder-Mead algorithm
 }
 
 // It sets the source impedance vs frequency
@@ -28,7 +32,6 @@ int GRABIM::SetLoadImpedance(vector<complex<double>> zl)
 }
 
 // It sets the load impedance vs frequency
-
 int GRABIM::SetFrequency(vector<double> f)
 {
     freq = f;
@@ -78,20 +81,21 @@ double GRABIM::GetThreshold()
     return MatchingThreshold;
 }
 
-
+// Starts the engine
 GRABIM_Result GRABIM::RunGRABIM()
 {
     GRABIM_Result Res;
 
-    vector<vector<double>> Vopt;
-    vector<string> candidates;
-    GridSearch_DifferentTopologies(Vopt, candidates);
+    vector<vector<double>> Vopt;//This data structure which contains the optimum vector for each circuit topology.
+    vector<string> candidates;//List of topologies. The grid search will be done for each one of them
+    GridSearch_DifferentTopologies(Vopt, candidates);//Runs the grid search for each topology
     vector<double> aux_grid(Vopt[0]), aux_local(Vopt[0]);
     double  aux_flocal, best=1e8;
     unsigned int best_index=0;
+
+
+    // The local optimizer is used for those topologies with good matching condition. Observation seems to suggest that acting so improves the chance of finding a good result
     cout << "Local candidates:" << endl;
-
-
     for (unsigned int i = 0; i < candidates.size(); i++)
     {
         topology = candidates[i];
@@ -108,6 +112,8 @@ GRABIM_Result GRABIM::RunGRABIM()
             Res.nlopt_val = aux_flocal;
         }
     }
+
+    //At this point, it was found the best candidate so the code below arranges data so as to produce the output data
     topology = candidates[best_index];
 
     Res.ZS = ZS;
@@ -156,7 +162,7 @@ GRABIM_Result GRABIM::RunGRABIM()
 }
 
 
-
+// This function is the core of the grid search. It follows the guidelines given in [1]
 vector<double> GRABIM::GridSearch()
 {
     unsigned int dim = x_ini.size();
@@ -239,14 +245,13 @@ vector<double> GRABIM::GridSearch()
             best[i] = best_candidate;
             best_pivot[i] = xk;
         }
-/*
+
         if (i > 0)//Checks if the i-th cycle improved the result with regard to the (i-1)-th cycle
         {
             if ((best[i]-best[i-1]<-0.01))//The current cycle did not improve the result
             {
-                //Suggestion for improvement. When GRABIM gets stuck, sometimes it helps to try some
-                //random vectors near the current pivot. The distribution was chosen to be U(-0.5, 0.5)
-                unsigned int Ncatchup  = 1000;
+                //When GRABIM gets stuck, this seems to help finding better results. The distribution was chosen to be U(-0.5, 0.5)
+                unsigned int Ncatchup  = 200;
                 unsigned int dim = best_pivot[i].size();
                 vector<vector<double>> XKQ(Ncatchup, vector<double>(dim));
                 vector<double> FXK (Ncatchup);
@@ -255,7 +260,7 @@ vector<double> GRABIM::GridSearch()
                 {
                     for (unsigned int c = 0; c < dim; c++)
                     {
-                       XKQ[r][c] = ((rand() % 1000)/2000.)*best_pivot[i][c];
+                       XKQ[r][c] = ((rand() % 3000)/2000.)*best_pivot[i][c];
                     }
                     FXK[r] =CandidateEval(XKQ[r]);
                 }
@@ -268,7 +273,7 @@ vector<double> GRABIM::GridSearch()
                 
             }
 
-        }*/
+        }
     }
     //Destroy variables
     xkq.clear();
@@ -494,7 +499,7 @@ vector<double> GRABIM::InspectCandidate(vector<double> xk)
     return xk;
 }
 
-
+// This function creates the generating matrix
 vector<vector<double>> GRABIM::GeneratingMatrix(unsigned int dim)
 {
     vector<vector<double>> C(dim, vector<double>(pow(2, dim)+1));
@@ -508,6 +513,8 @@ vector<vector<double>> GRABIM::GeneratingMatrix(unsigned int dim)
     return C;
 }
 
+
+// Evaluates the objective function
 double GRABIM::CandidateEval(vector<double> x)
 {
     double fobj = -1e3;
@@ -561,9 +568,7 @@ double GRABIM::CalcInvPowerTransfer(Mat ABCD, complex<double> ZS, complex<double
 }
 
 
-
-
-
+// This function tries to give a good initial point for the grid search depending on the frequency.
 void GRABIM::AutoSetInitialPivot()
 {
     double meanf = .5*(min(freq)+max(freq));
@@ -602,7 +607,7 @@ void GRABIM::AutoSetInitialPivot()
 
 }
 
-
+//Sets the path to the user-defined topology list
 void GRABIM::setTopoScript(std::string path)
 {
     TopoScript_path = path;
@@ -627,7 +632,12 @@ void GRABIM::CheckDim(vector<vector<double>> & C, vector<vector<double>> & xkq, 
 }
 
 
-
+// This function sets the search mode:
+// 0: Predefined circuit topologies. The ABCD response of these circuit topologies was calculated analitically, so the evaluation of the objective function is faster
+// 1: User-defined topology list (plain text file).
+// 2: LC networks up to 4 elements
+// 3: LC + TL networks up to 6 elements
+// 4: LC + TL + stubs networks up to 6 elements
 void GRABIM::setSearchMode(int mode)
 {
     string str;
@@ -638,35 +648,12 @@ void GRABIM::setSearchMode(int mode)
     it_tag = TagList.begin();
     switch (mode)
     {
-    case 0:
+    case -1://Unique network (Only quick command line checks)
     {
-        if (topology.compare("-1"))
-        {
-            TopoList.insert(it_topo, topology);
-            TagList.insert(it_tag, "");
-            return;//Command input
-        }
-        std::ifstream TopologiesFile(TopoScript_path);//Tries to open the file.
-        std::string tag, aux;
-        if(TopologiesFile.is_open())//The data file cannot be opened => error
-        {
-            while (std::getline(TopologiesFile, aux))
-            {
-                if (aux.empty())continue;
-                if (aux.substr(0,1).compare("#")==0)
-                {
-                    tag = aux;
-                    continue;
-                }
-                TopoList.insert(it_topo, aux);
-                TagList.insert(it_tag, tag);
-                it_topo++;
-                it_tag++;
-            }
-            return;
-        }//If either topology == -1 or the input file cannot be opened, it tries the prefined networks
+      TopoList.insert(it_topo, topology), TagList.insert(it_tag, "User-defined network");
+      return;
     }
-    case 1://Preprogrammed networks
+    case 0://Preprogrammed networks
     {
         TopoList.insert(it_topo, "444"), TagList.insert(it_tag, "Cascaded transmission lines");
         it_topo++, it_tag++;
@@ -705,6 +692,34 @@ void GRABIM::setSearchMode(int mode)
         TopoList.insert(it_topo,"21212121"), TagList.insert(it_tag,"21212121");
         it_topo++, it_tag++;
         return;
+    }
+    case 1://User-defined list
+    {
+        if (topology.compare("-1"))
+        {
+            TopoList.insert(it_topo, topology);
+            TagList.insert(it_tag, "");
+            return;//Command input
+        }
+        std::ifstream TopologiesFile(TopoScript_path);//Tries to open the file.
+        std::string tag, aux;
+        if(TopologiesFile.is_open())//The data file cannot be opened => error
+        {
+            while (std::getline(TopologiesFile, aux))
+            {
+                if (aux.empty())continue;
+                if (aux.substr(0,1).compare("#")==0)
+                {
+                    tag = aux;
+                    continue;
+                }
+                TopoList.insert(it_topo, aux);
+                TagList.insert(it_tag, tag);
+                it_topo++;
+                it_tag++;
+            }
+            return;
+        }//If either topology == -1 or the input file cannot be opened, it tries the prefined networks
     }
     case 2://LC networks up to 4 elements
     {
@@ -785,12 +800,13 @@ void GRABIM::setSearchMode(int mode)
     }
 }
 
-
+// Allows simplifying circuit topology
 void GRABIM::SimplifyNetwork(bool simplify_mode)
 {
     simplify_network = simplify_mode;
 }
 
+// This function is intended for debugging purposes. It prints the simplex of the Nelder-Mead algorithm
 void printSimplex(vector<vector<double>>X, vector<double>fx)
 {
 cout << "SIMPLEX" << endl;
@@ -872,14 +888,13 @@ return AUX_X;
 
 
 //Reference:
-//Implementing the Nelder-Mead simplex algorithm with adaptive parameters. Fuchang Gao. Lixing Han
+// [1] Convergence properties of the Nelder-Mead simplex method in low dimensions. J.F. Lagarias, J.A. Reeds. SIAM J. OPTIM, Vol 9, No. 1, pp. 112-147
 vector<double> GRABIM::NelderMead(vector<double> x)
 {
   unsigned int n = x.size();
   unsigned int iter = 0, max_iter = 500;
   double grad = 1e-8;//Step gradient threshold
   double grad_aux;
-//  double alpha = 1, beta = 1 + 2/n, gamma = 0.75-(1/(2*n)), delta = 1 - 1/n;
   double alpha = 1., beta = 2., gamma = 1/2., delta = 1/2.;//Classic coefficients
   double fr, fe, foc, fic, f1, fn, fn_1;
   double f_pre, f_curr;
