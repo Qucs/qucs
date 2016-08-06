@@ -32,7 +32,7 @@ libmicrostrip_la_SOURCES = substrate.cpp msline.cpp mscorner.cpp msmbend.cpp   \
 	bondwire.cpp msrstub.cpp
 
 noinst_HEADERS = substrate.h msline.h mscorner.h msmbend.h msstep.h msopen.h \
-	msgap.h mscoupled.h mslange.cpp mstee.h mscross.h msvia.h cpwline.h cpwopen.h    \
+	msgap.h mscoupled.h mslange.h mstee.h mscross.h msvia.h cpwline.h cpwopen.h    \
 	cpwshort.h cpwgap.h cpwstep.h bondwire.h msrstub.h
 
 AM_CPPFLAGS = -I$(top_srcdir)/src -I$(top_srcdir)/src/math \

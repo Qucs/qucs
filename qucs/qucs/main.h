@@ -50,6 +50,7 @@ struct tQucsSettings {
   unsigned int maxUndo;    // size of undo stack
   QString Editor;
   QString Qucsator;
+  QString Qucsconv;
   QString BinDir;
   QString LangDir;
   QString LibDir;
@@ -66,6 +67,9 @@ struct tQucsSettings {
 
   // registered filename extensions with program to open the file
   QStringList FileTypes;
+
+  // List of extensions used for spice files
+  QStringList spiceExtensions;
 
   unsigned int numRecentDocs;
   QStringList RecentDocs;

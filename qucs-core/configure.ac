@@ -23,7 +23,6 @@ AC_CANONICAL_TARGET
 
 dnl AM_INIT_AUTOMAKE does several things, including defining VERSION and PACKAGE
 AM_INIT_AUTOMAKE([no-define])
-AM_MAINTAINER_MODE
 
 AC_PREFIX_DEFAULT([/usr/local])
 test "x$prefix" = xNONE && prefix="/usr/local"
@@ -40,6 +39,13 @@ AX_COMPILER_VENDOR
 AC_LANG_PUSH(C++)
 AX_COMPILER_VENDOR
 AC_LANG_POP(C++)
+
+dnl Check for Win32.
+case $host_os in
+  *mingw* | *msys* ) WIN32=yes ;;
+  *)       WIN32=no  ;;
+esac
+AM_CONDITIONAL(COND_WIN32, test x$WIN32 = xyes)
 
 dnl check for compiler problem
 # see http://llvm.org/bugs/show_bug.cgi?id=13530
@@ -83,19 +89,19 @@ dnl Check for parser and lexer generators.
 AC_PROG_YACC
 AC_PROG_LEX
 
+lexver_req="2.5.9";
+
 if test "x$LEX" != "x:"; then
-  if test $USE_MAINTAINER_MODE = yes; then
-    AC_MSG_CHECKING([for $LEX version])
+  if test yes = yes; then
+    AC_MSG_CHECKING([for $LEX >= $lexver_req])
     [lexver=`eval $LEX --version 2>/dev/null | head -1 | sed 's/[^0-9\.]//g'`]
     if test -n "$lexver"; then
-      case "$lexver" in
-	[2.5.9 | [2-9].[5-9].[1-9][0-9])]
-	  AC_MSG_RESULT([$lexver >= 2.5.9])
-	;;
-	  [*)]
-	  AC_MSG_ERROR([$lexver < 2.5.9])
-	;;
-      esac
+      AS_VERSION_COMPARE(${lexver},${lexver_req},
+	    [cmp=-1],[cmp=0],[cmp=1])
+      AS_IF([test "${cmp}" != "-1"],
+	    [AC_MSG_RESULT([yes])],
+	    [AC_MSG_RESULT([no])
+	     AC_MSG_ERROR([need $LEX >= $lexver_req])])
     else
       AC_MSG_RESULT([not identified])
     fi
@@ -127,9 +133,6 @@ AC_ARG_ENABLE([debug],
    *)   enable_debug="no"  ;;
    esac],
   [enable_debug="no"])
-if test $USE_MAINTAINER_MODE = yes; then
-  enable_debug="yes"
-fi
 if test "$enable_debug" = yes; then
   AC_DEFINE(DEBUG, 1, [Define if debug output should be supported.])
 else
@@ -258,7 +261,7 @@ case $host_os in
 	[CFLAGS="$CFLAGS -pipe"
 	 CXXFLAGS="$CXXFLAGS -pipe -fno-exceptions -fno-check-new -ldl -rdynamic"],[])
 
-  if test $USE_MAINTAINER_MODE = yes; then
+  if test "$enable_debug" = yes; then
     CFLAGS="$CFLAGS -W -Wall -Wmissing-prototypes"
     CXXFLAGS="$CXXFLAGS -W -Wall"
   fi
@@ -539,7 +542,7 @@ case $host_os in
   AC_MSG_NOTICE([MAC_OS_X_VERSION_MAX_ALLOWED=$MAC_OS_X_VERSION_MAX_ALLOWED])
 
 
-  if test $USE_MAINTAINER_MODE = yes; then
+  if test "$enable_debug" = yes; then
     CFLAGS="$CFLAGS -W -Wall -Wmissing-prototypes"
     CXXFLAGS="$CXXFLAGS -W -Wall"
   fi
@@ -553,7 +556,7 @@ case $host_os in
   if test "x$GCC" = xyes; then
     CFLAGS="$CFLAGS -pipe"
     CXXFLAGS="$CXXFLAGS -pipe -fno-exceptions -fno-check-new"
-    if test $USE_MAINTAINER_MODE = yes; then
+    if test "$enable_debug" = yes; then
       CFLAGS="$CFLAGS -W -Wall -Wmissing-prototypes"
       CXXFLAGS="$CXXFLAGS -W -Wall"
     fi
@@ -573,57 +576,30 @@ if test "x$osversion" = "x"; then
 fi
 unset osversion
 
-dnl Check for additional programs.
-AC_PATH_PROG(GPERF, gperf, :)
-if test $USE_MAINTAINER_MODE = yes; then
-  if test "$GPERF" = ":"; then
-    AC_MSG_ERROR([The $PACKAGE package requires an installed gperf.])
-  fi
-fi
+dnl Check for additional programs in PATH
+AC_PATH_PROG([GPERF],[gperf],[gperf])
+AS_IF([test -z "$GPERF"],
+      [AC_MSG_ERROR([gperf required in the PATH])])
 
-dnl check for adms
-if test $USE_MAINTAINER_MODE = yes; then
-  dnl now, to build or not to build the adms subproject. The adms
-  dnl subproject is required to generate code during the maintainer
-  dnl build process. It is not required for distributions. It is
-  dnl only required if MAINTAINER_MODE is true in the Makefile.am's
-  dnl
-  dnl The default behaviour is "check for adms, if it's not there,
-  dnl build and use the bundled copy". Note also that it supports
-  dnl --with-mkadms=PATH (user may have a copy installed in an odd
-  dnl place), --with-mkadms=internal (needed for distcheck, where
-  dnl we want to test everything) and --with-mkadms=external (for
-  dnl package maintainers, who don't like bundled subprojects).
-  AC_ARG_WITH([mkadms],
-    [AS_HELP_STRING([--with-mkadms],
-      [Either the full path to adms, or "external", "internal", or "check" @<:@check@:>@])],
-    [ADMSXML=$withval],
-    [with_mkadms=check])
-  AS_IF([test "$with_mkadms" = check -o "$with_mkadms" = external],
-    [AC_PATH_PROG([ADMSXML], [mkadms], [no])
-     AC_MSG_NOTICE([Using host external admsXml rather than bundled version.])],
-    [AC_MSG_NOTICE([Using bundled admsXml.])])
-  AS_IF([test "$with_mkadms" = external -a "$ADMSXML" = no],
-    [AC_MSG_ERROR([External adms demanded, but not found.])])
-  dnl We conditionally set ADMSXML in the top level Makefile.am in
-  dnl qucs-core. AM_SUBST_NOTMAKE([ADMSXML]) stops automake from
-  dnl generating a line of the form ADMSXML = @ADMSXML@ in Makefile.in.
-  dnl We need to do that assignment conditionally.
-  AM_SUBST_NOTMAKE([ADMSXML])
-else
-  dnl not maintainer mode, set with_mkadms to external which will prevent it
-  dnl being built
-  with_mkadms = external
-fi
+dnl check for adms (queued for removal)
+dnl The default behaviour is "check for adms, if it's not there,
+dnl error out.
+dnl override with --with-mkadms=alternative_executable
+ADMSXML=admsXml
+AC_ARG_WITH([mkadms],
+  [AS_HELP_STRING([--with-mkadms], [specify alternative admsXml])],
+  [ADMSXML=$withval],)
 
-dnl We set up an automake conditional because we need to do
-dnl different stuff for internal/external adms inside Makefile.am
-AM_CONDITIONAL([USE_INTERNAL_ADMS],
-  [test "$with_mkadms" = internal -o "$ADMSXML" = no])
-dnl if we are using internal adms we need to add it to the
-dnl subdirectories autoconf will recurse into as it has its
-dnl own configure.ac and Makefile.am
-AM_COND_IF([USE_INTERNAL_ADMS], [AC_CONFIG_SUBDIRS([deps/adms/])])
+AC_MSG_CHECKING([Checking if ${ADMSXML} is working])
+AS_IF([${ADMSXML} --version > /dev/null 2>&1], , ADMSXML="")
+AS_IF([test -z $ADMSXML],
+  [ AC_MSG_RESULT([ no ])
+    ADMSXML=no],
+  [ AC_MSG_RESULT([ yes ])])
+
+AS_IF([test "$ADMSXML" = no],
+  [AC_MSG_ERROR([need admsXml, but not found. consider --with-mkadms=<alternative admsXml>])])
+AC_SUBST([ADMSXML])
 
 dnl Checks for libraries.
 AC_CHECK_LIB(m, sin)
@@ -631,6 +607,42 @@ AC_CHECK_LIB(m, sin)
 dnl Checks for header files.
 AC_HEADER_STDC
 AC_CHECK_HEADERS([stddef.h stdlib.h string.h unistd.h ieeefp.h])
+
+dnl gtest.h, Google Test support
+AC_LANG_PUSH(C++)
+GTEST_CPPFLAGS=
+
+dnl use if available, don't use otherwise.
+AC_ARG_WITH([gtest], AS_HELP_STRING(
+    [--with-gtest=DIR], [Run tests that are implemented for gtest.]
+   ),
+ [
+ AS_IF([test "x$with_gtest" != "xno"], [
+  GTEST_CPPFLAGS="-I$withval/include -I$withval"
+  with_gtest=manual
+  ])
+ ],
+[
+  AC_CHECK_HEADER([gtest/gtest.h],
+		  [ with_gtest=yes ],
+		  [ with_gtest=no ])
+ ]
+)
+
+# don't know how to check. fix later.
+# GTEST_VERSION="1.7.0"
+
+AM_CONDITIONAL(USE_GTEST, test "x$with_gtest" != "xno")
+
+AS_IF([test "x$with_gtest" == "xmanual"], [
+  OLD_CPPFLAGS="$CPPFLAGS"
+  CPPFLAGS+=" $GTEST_CPPFLAGS"
+  AC_CHECK_HEADER([gtest/gtest.h],,[AC_MSG_ERROR([cannot find gtest headers])])
+  CPPFLAGS="$OLD_CPPFLAGS"
+])
+AC_LANG_POP()
+
+AC_SUBST(GTEST_CPPFLAGS)
 
 dnl Checks for typedefs, structures, and compiler characteristics.
 AC_C_CONST
@@ -848,61 +860,10 @@ AC_MSG_NOTICE([Check for functions in std:: namespace])
   done
 
 
-dnl Setup Google Test support
-dnl See: https://github.com/broune/mathicgb/blob/master/configure.ac
-AC_ARG_WITH([gtest], AS_HELP_STRING(
-    [--with-gtest], [use gtest, which is required for running the unit tests
-      with make check. The value download, which is the default, downloads
-      gtest if a gtest source directory cannot be found. Per the recommendation
-      of the gtest documentation, gtest is compiled with the tests, so an
-      installed gtest is not usable - you need the gtest source. GTEST_PATH
-      indicates where to look for gtest and it is also where gtest
-      will be downloaded to if not found. The default path is srcdir/libs so
-      that gtest needs to be at srcdir/libs/gtest/ where srcdir is the
-      base of the directory being configured from.]
-))
-
-AC_MSG_CHECKING([for gtest])
-AS_IF([test "x$GTEST_PATH" == "x"], [GTEST_PATH="$srcdir/libs"])
-AS_IF([test "x$GTEST_VERSION" == "x"], [GTEST_VERSION="1.7.0"])
-AS_IF([test "x$with_gtest" == "xyes"], [with_gtest="download"])
-
-AS_IF([test "x$with_gtest" == "xdownload"],
-  [with_gtest="yes"; AC_CHECK_FILE([$GTEST_PATH/gtest/src/gtest-all.cc], [], [
-    mkdir -p "$GTEST_PATH";
-    (
-      cd $GTEST_PATH;
-      rm -rf gtest-$GTEST_VERSION.zip
-      wget https://googletest.googlecode.com/files/gtest-$GTEST_VERSION.zip;
-      unzip gtest-$GTEST_VERSION.zip;
-      rm gtest-$GTEST_VERSION.zip
-      rm -rf gtest/
-      mv gtest-$GTEST_VERSION/ gtest/
-    );
-    if test ! -e "$GTEST_PATH/gtest/src/gtest-all.cc"; then
-      AC_MSG_WARN([Failed to download or extract gtest.]);
-      with_gtest="no";
-    else
-      with_gtest="yes";
-    fi
-  ])],
-  [test "x$with_gtest" == "xyes"], [
-    AC_CHECK_FILE([$GTEST_PATH/gtest/src/gtest-all.cc], [], [
-      AC_MSG_ERROR([could not find gtest source at path $GTEST_PATH.])
-    ])
-  ],
-  [test "x$with_gtest" == "xno"], [],
-  [AC_MSG_NOTICE([gtest disabled])]
-)
-AS_IF([test "x$with_gtest" == "xyes"],
-  [GTEST_CFLAGS="-I`cd $GTEST_PATH/gtest/include; echo $PWD` -I`cd $GTEST_PATH/gtest/; echo $PWD`"]);
-AM_CONDITIONAL(USE_GTEST, test "x$with_gtest" == "xyes")
-
-# enable extra test
+dnl BUG. remove option. always run tests
+dnl FIXME: skip tests that are not applicable (and be verbose about that).
 AC_ARG_ENABLE([qucs-test],
   AS_HELP_STRING([--enable-qucs-test], [Enable running qucs test project]))
-
-dnl variable to steer ./Makefile.am to enable qucs_test
 AM_CONDITIONAL([USE_QUCS_TEST], [test "$enable_qucs_test" = yes])
 
 # enable gcov
@@ -970,6 +931,8 @@ AC_MSG_RESULT([])
 AC_MSG_RESULT([ $PACKAGE version $VERSION ($GIT_REVISION) configured successfully.])
 AC_MSG_RESULT([
 Configure Information:
+  AdmsXml           : $ADMSXML
+
   C Compiler        : $CC
     DEFS            :   $DEFS
     CPPFLAGS        :   $CPPFLAGS
@@ -984,5 +947,10 @@ Configure Information:
     LDFLAGS         :   $LDFLAGS
     LIBS            :   $LIBS
 
+  gtest             : $with_gtest
+    CPPFLAGS        :   $GTEST_CPPFLAGS
+
     Prefix          : $prefix
 ])
+
+# vim:ts=8:sw=2:noet

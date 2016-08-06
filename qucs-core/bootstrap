@@ -1,0 +1,68 @@
+#! /bin/sh
+#
+# bootstrap.sh
+#
+# Run this script in preparation for running configure and make.
+#
+# Copyright (C) 2013 Richard Crozier <richard.crozier@yahoo.co.uk.org>
+# Copyright (C) 2015 Guilherme Brondani Torri <guitorri@gmail.com>
+#
+# This is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2, or (at your option)
+# any later version.
+#
+# This software is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this package; see the file COPYING.  If not, write to
+# the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
+# Boston, MA 02110-1301, USA.
+#
+
+AUTOMAKE=${AUTOMAKE:-automake}
+AUTOMAKE_VERSION_CHECK=${AUTOMAKE_VERSION_CHECK:-yes}
+
+if [ "$AUTOMAKE_VERSION_CHECK" = yes ]; then
+	AUTOMAKE_VERSION=$($AUTOMAKE --version | head -1 | cut -d' ' -f4)
+	case ${AUTOMAKE_VERSION} in
+		1.11*)
+			cat >&2 <<__EOF__
+We experience trouble with your automake (version $AUTOMAKE_VERSION).
+Giving up.
+
+If you feel adventurous, please set AUTOMAKE_VERSION_CHECK=no in your
+environment and try again.
+__EOF__
+			exit 1
+			;;
+	esac
+fi
+
+here=`pwd`
+cd `dirname $0`
+
+echo "bootstrapping the qucs-core sources..."
+echo -n "Creating aclocal.m4... "
+${ACLOCAL:-aclocal} -I m4
+echo "done."
+echo -n "Creating config.h.in... "
+${AUTOHEADER:-autoheader}
+echo "done."
+echo -n "Libtoolizing... "
+LIBTOOLIZE=${LIBTOOLIZE:-libtoolize}
+case `uname` in
+  *Darwin*) LIBTOOLIZE=glibtoolize ;;
+esac
+$LIBTOOLIZE
+echo "done."
+echo -n "Creating Makefile.in(s)... "
+$AUTOMAKE -a -f -c
+echo "done."
+echo -n "Creating configure... "
+${AUTOCONF:-autoconf}
+echo "done"
+

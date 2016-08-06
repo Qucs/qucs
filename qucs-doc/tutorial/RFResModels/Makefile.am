@@ -23,6 +23,8 @@
 # Boston, MA 02110-1301, USA.  
 #
 
+SUBDIRS = pics
+
 EXTRA_DIST = $(SOURCES)
 
 SOURCES = RFResModels.tex content.tex

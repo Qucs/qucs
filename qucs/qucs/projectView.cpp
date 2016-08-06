@@ -51,21 +51,12 @@ ProjectView::~ProjectView()
 void
 ProjectView::setProjPath(const QString &path)
 {
+  // check if path exist
   m_valid = !path.isEmpty() && QDir(path).exists();
 
   if (m_valid) {
-    //test path exist
-    m_projPath = path;
-    m_projName = path;
-
-    // cut off trailing '/'
-    if (m_projName.endsWith(QDir::separator())) {
-      m_projName.chop(1);
-    }
-    int i = m_projName.lastIndexOf(QDir::separator());
-    if(i > 0) {
-      m_projName = m_projName.mid(i+1);   // cut out the last subdirectory
-    }
+    m_projPath = path; // full path
+    m_projName = QDir(m_projPath).dirName(); // only project directory name
     m_projName.remove("_prj");
   }
   refresh();
@@ -81,14 +72,14 @@ ProjectView::refresh()
   header << tr("Content of %1").arg(m_projName) << tr("Note");
   m_model->setHorizontalHeaderLabels(header);
 
-  APPEND_ROW(m_model, FILETYPE1);
-  APPEND_ROW(m_model, FILETYPE2);
-  APPEND_ROW(m_model, FILETYPE3);
-  APPEND_ROW(m_model, FILETYPE4);
-  APPEND_ROW(m_model, FILETYPE5);
-  APPEND_ROW(m_model, FILETYPE6);
-  APPEND_ROW(m_model, FILETYPE7);
-  APPEND_ROW(m_model, FILETYPE8);
+  APPEND_ROW(m_model, tr("Datasets")     );
+  APPEND_ROW(m_model, tr("Data Displays"));
+  APPEND_ROW(m_model, tr("Verilog")      );
+  APPEND_ROW(m_model, tr("Verilog-A")    );
+  APPEND_ROW(m_model, tr("VHDL")         );
+  APPEND_ROW(m_model, tr("Octave")       );
+  APPEND_ROW(m_model, tr("Schematics")   );
+  APPEND_ROW(m_model, tr("Others")       );
 
   setExpanded(m_model->index(6, 0), true);
 

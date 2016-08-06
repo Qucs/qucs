@@ -18,6 +18,24 @@
 <!DOCTYPE admst SYSTEM "admst.dtd">
 <admst version="2.3.0" xmlns:admst="http://mot-adms.sourceforge.net/xml-files/admst">
 
+<!-- output filename is 1st argument in -o flag in command line-->
+<admst:variable name="filename" select="%(/module/name)_common"/>
+<admst:variable name="filename_state" select="0"/>
+<admst:for-each select="/argv">
+  <admst:variable name="arg" select="%(.)"/>
+
+  <admst:if test="[position(.)=2]">
+    <admst:variable name="filename" select="$arg"/>
+  </admst:if>
+  <admst:if test="[$(filename_state)='1']">
+    <admst:variable name="filename" select="$arg"/>
+    <admst:variable name="filename_state" select="2"/>
+  </admst:if>
+  <admst:if test="[$(filename_state)='0' and $(arg)='-o']">
+    <admst:variable name="filename_state" select="1"/>
+  </admst:if>
+</admst:for-each>
+
 <admst:for-each select="/module">
 <!-- definition of variables -->
 <admst:value-of select="name"/>
@@ -1072,8 +1090,8 @@ double $(module)_d_$(function) (<admst:join select="variable[input='yes']" separ
 
 <admst:variable name="globalanalogfunction"/>
 
-<admst:open file="$(module).analogfunction.h">/*
- * $(module).analogfunction.h - analog function header
+<admst:open file="$(filename).$(module).analogfunction.h">/*
+ * $(filename).$(module).analogfunction.h - analog function header
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -1090,10 +1108,10 @@ double $(module)_d_$(function) (<admst:join select="variable[input='yes']" separ
 #endif /* __$(module)_ANALOGFUNCTION_H__ */
 <admst:text format="\n"/>
 </admst:open>
-<admst:message format="$(module).analogfunction.h created\n"/>
+<admst:message format="$(filename).$(module).analogfunction.h created\n"/>
 
-<admst:open file="$(module).analogfunction.cpp">/*
- * $(module).analogfunction.cpp - analog function implementations
+<admst:open file="$(filename).$(module).analogfunction.cpp">/*
+ * $(filename).$(module).analogfunction.cpp - analog function implementations
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -1107,7 +1125,7 @@ double $(module)_d_$(function) (<admst:join select="variable[input='yes']" separ
 #endif
 
 #include &lt;stdio.h&gt;
-#include &quot;$(module).analogfunction.h&quot;
+#include "$(filename).$(module).analogfunction.h"
 #include &lt;cmath&gt;
 
 <admst:text format="\n"/>
@@ -1115,5 +1133,5 @@ double $(module)_d_$(function) (<admst:join select="variable[input='yes']" separ
   <admst:apply-templates select="/module" match="analogfunctionC"/>
 <admst:text format="\n"/>
 </admst:open>
-<admst:message format="$(module).analogfunction.cpp created\n"/>
+<admst:message format="$(filename).$(module).analogfunction.cpp created\n"/>
 </admst>
