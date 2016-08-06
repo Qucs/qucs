@@ -1,5 +1,29 @@
+/*
+ * MathOperations.cpp - Math operations class implementation
+ *
+ * copyright (C) 2016 Andres Martinez-Mera <andresmartinezmera@gmail.com>
+ *
+ * This is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2, or (at your option)
+ * any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this package; see the file COPYING.  If not, write to
+ * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
+ * Boston, MA 02110-1301, USA.
+ *
+ *
+ */
+
 #include "MathOperations.h"
 
+// Given two double parameters, it generates a N-dim vector whose values are equally spaced
 vector<double> linspace(double y_ini, double y_end, unsigned int N) {
     double step = (y_end - y_ini) / (N-1);
     vector<double> result(N);
@@ -12,7 +36,7 @@ vector<double> linspace(double y_ini, double y_end, unsigned int N) {
     return result;
 }
 
-
+// Fills a complex vector with 1
 vector<complex<double>> ones (vector<complex<double>> X)
 {
  vector<complex<double>>x(X.size());
@@ -20,7 +44,7 @@ vector<complex<double>> ones (vector<complex<double>> X)
  return x;
 }
 
-
+// Dot vector product
 vector<complex<double>> Product(vector<complex<double>> A, complex<double>B)
 { 
   vector<complex<double>>result(A.size());
@@ -30,17 +54,19 @@ vector<complex<double>> Product(vector<complex<double>> A, complex<double>B)
   return result;
 }
 
+// Finds the minimum of a real vector
 double min(vector<double> A)
 {
    return *min_element(A.begin(), A.end());
 }
 
+// Finds the maximum of a real vector
 double max(vector<double> A)
 {
    return *max_element(A.begin(), A.end());
 }
 
-
+// Interpolates a complex vector using linear interpolation
 vector<complex<double>>  interp(vector<double> f1, vector<complex<double>> Z, vector<double> f2)
 {
    vector<double> realpart = getRealPart(Z);
@@ -80,7 +106,7 @@ return Z_;
 
 }
 
-
+// Finds the closest vector component to a given value
 unsigned int closestIndex(std::vector<double> vec, double value)
 {
  vector<double>::iterator it;
@@ -92,6 +118,7 @@ unsigned int closestIndex(std::vector<double> vec, double value)
  return index;
 }
 
+// Returns the real part of a complex vector
 vector<double> getRealPart(vector<complex<double> > Z)
 {
   vector<double> realpart(Z.size());
@@ -100,6 +127,7 @@ vector<double> getRealPart(vector<complex<double> > Z)
   return realpart;
 }
 
+// Returns the imaginary part of a complex vector
 vector<double> getImagPart(vector<complex<double> > Z)
 {
   vector<double> imagpart(Z.size());
@@ -108,12 +136,14 @@ vector<double> getImagPart(vector<complex<double> > Z)
   return imagpart;
 }
 
+// Conjugates a complex vector
 complex<double> conj(complex<double> Z)
 {
   return complex<double>(real(Z), -imag(Z));
 }
 
 
+// Creates a N-dim ones vector
 vector<double> ones(unsigned int N)
 {
   vector<double> V(N);
@@ -121,6 +151,7 @@ vector<double> ones(unsigned int N)
   return V;
 }
 
+// double * vector operation
 vector<double> operator * (double d, vector<double> Z)
 {
   vector<double> V(Z.size());
@@ -128,6 +159,7 @@ vector<double> operator * (double d, vector<double> Z)
   return V;
 }
 
+// double + vector operation
 vector<double> operator + (double u, vector<double> V)
 {
   vector<double> V_(V.size());
@@ -135,6 +167,7 @@ vector<double> operator + (double u, vector<double> V)
   return V_;
 }
 
+// double - vector operation
 vector<double> operator - (double u, vector<double> V)
 {
   vector<double> V_(V.size());
@@ -142,6 +175,7 @@ vector<double> operator - (double u, vector<double> V)
   return V_;
 }
 
+// vector + vector operation
 vector<double> operator + (vector<double> U, vector<double> V)
 {
   vector<double> V_(U.size());
@@ -149,6 +183,7 @@ vector<double> operator + (vector<double> U, vector<double> V)
   return V_;
 }
 
+// vector - vector operation
 vector<double> operator - (vector<double> U, vector<double> V)
 {
   vector<double> V_(U.size());
@@ -156,6 +191,7 @@ vector<double> operator - (vector<double> U, vector<double> V)
   return V_;
 }
 
+// vector * vector dot operation
 vector<double> operator * (vector<double> U, vector<double> V)
 {
   vector<double> V_(U.size());
@@ -163,17 +199,20 @@ vector<double> operator * (vector<double> U, vector<double> V)
   return V_;
 }
 
+// Prints the content of a real vector in the standard output
 void print(vector<double> V)
 {
   for (unsigned int i = 0; i < V.size(); i++) cout << V[i] << " ";
   cout << endl;
 }
 
+// Prints the content of a complex vector in the standard output
 void print(vector<complex<double>> V)
 {
   for (unsigned int i = 0; i < V.size(); i++) cout << real(V[i]) << "+j" << imag(V[i]) << endl;
 }
 
+// Creates a real vector by concatenating the input vector, V, N times 
 vector<double> repvec(vector<double> V, unsigned int N)
 {
   unsigned int aux=0;
@@ -183,11 +222,13 @@ vector<double> repvec(vector<double> V, unsigned int N)
   return V_;
 }
 
+// Replace the content of the r-th row of C with V
 void setRow(vector<vector<double>> & C, unsigned int r, vector<double> V)
 {
    for (unsigned int i = 0; i < C[0].size(); i++) C[r][i] = V[i];
 }
 
+// Calculates the magnitude of a complex vector
 vector<double> abs(vector<complex<double>> Z)
 {
   vector<double> A(Z.size());
@@ -195,6 +236,7 @@ vector<double> abs(vector<complex<double>> Z)
   return A;
 }
 
+// Calculates the mean value of a vector
 double mean(vector<double> V)
 {
   double acc=0;
@@ -202,6 +244,7 @@ double mean(vector<double> V)
   return acc/V.size();
 }
 
+// complex vector + complex vector operation
 vector<complex<double>> operator + (vector<complex<double>> U, vector<complex<double>> V)
 {
   vector<complex<double>> Z(U.size());
@@ -209,6 +252,7 @@ vector<complex<double>> operator + (vector<complex<double>> U, vector<complex<do
   return Z;
 }
 
+// Gets the real part of a complex vector
 vector<double> real (vector<complex<double>> Z)
 {
   vector<double> V(Z.size());
@@ -216,6 +260,7 @@ vector<double> real (vector<complex<double>> Z)
   return V;
 }
 
+// Gets the c-th column from C
 vector<double> getCol(vector<vector<double>> C, unsigned int c)
 {
   unsigned int nrows = C.size();
@@ -224,6 +269,7 @@ vector<double> getCol(vector<vector<double>> C, unsigned int c)
   return V;
 }
 
+// Gets the c-th row from C
 vector<double> getRow(vector<vector<double>> C, unsigned int c)
 {
   unsigned int ncols = C[0].size();
@@ -232,6 +278,7 @@ vector<double> getRow(vector<vector<double>> C, unsigned int c)
   return V;
 }
 
+// Find the minumu value in V
 unsigned int findMin(std::vector<double> V)
 {
     unsigned int index=0;
@@ -263,6 +310,7 @@ vector<double> SubVector(vector<double> Z, unsigned int i1, unsigned int i2)
   return Z_;
 }
 
+// Calculates the centroid of an array of real vectors
 vector<double> centroid(vector<vector<double>> X)
 {
  vector<double> c(X[0].size());
