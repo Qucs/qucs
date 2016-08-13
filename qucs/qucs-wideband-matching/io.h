@@ -46,6 +46,7 @@ class IO
 {
 public:
     IO();
+    ~IO();
     int exportGNUplot(GRABIM_Result, string);
     int loadS1Pdata(std::string, terminal);
     int ResampleImpedances();

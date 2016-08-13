@@ -50,14 +50,14 @@ SparEngine::SparEngine()
 Mat SparEngine::getSparams(vector<double> x, complex<double> zs, complex<double> zl, double f, std::string topology)
 {
     Mat ABCD = getABCDmatrix(x, f, topology);
-    Mat S(2,2);
-
+    Mat S;
     //Convert ABCD to S parameters
     S(0,0) = (ABCD(0,0)*zl+ABCD(0,1)-ABCD(1,0)*conj(zs)*zl-ABCD(1,1)*conj(zs))/(ABCD(0,0)*zl+ABCD(0,1)+ABCD(1,0)*zs*zl+ABCD(1,1)*zs);
     S(0,1) = (2.*(ABCD(0,0)*ABCD(1,1)-ABCD(0,1)*ABCD(1,0))*sqrt(real(zs)*real(zl)))/(ABCD(0,0)*zl+ABCD(0,1)+ABCD(1,0)*zs*zl+ABCD(1,1)*zs);
     S(1,0) = (2.*sqrt(real(zs)*real(zl)))/(ABCD(0,0)*zl+ABCD(0,1)+ABCD(1,0)*zs*zl+ABCD(1,1)*zs);
     S(1,1) = (-ABCD(0,0)*conj(zl)+ABCD(0,1)-ABCD(1,0)*conj(zl)*zs+ABCD(1,1)*zs)/(ABCD(0,0)*zl+ABCD(0,1)+ABCD(1,0)*zs*zl+ABCD(1,1)*zs);
-    return S;
+
+   return S;
 }
 
 
@@ -68,10 +68,9 @@ Mat SparEngine::getABCDmatrix(vector<double> x, double f, std::string topology)
     double w = 2*pi*f;
     double beta = w/c0;
     complex<double> gamma = complex<double>(0, beta);
-    Mat ABCD(2,2), ABCD_t(2,2);
+    Mat ABCD, ABCD_t;
 
     unsigned int i, k;
-
 
 
      ABCD = PreComputedABCD(x, w, topology);
@@ -147,7 +146,7 @@ Mat SparEngine::getABCDmatrix(vector<double> x, double f, std::string topology)
 // compute the overall ABCD matrix as a matrix product of single ABCD matrices and consequently speeds up execution
 Mat SparEngine::PreComputedABCD(vector<double> x, double w, std::string topology)
 {
-    Mat ABCD(2,2);
+    Mat ABCD;
     complex<double> I = complex<double>(0,1);
 
     ABCD(0,0) = -1;

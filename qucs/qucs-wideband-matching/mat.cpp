@@ -24,11 +24,15 @@
 
 
 #include <mat.h>
-Mat::Mat(unsigned int r, unsigned int c)
+Mat::Mat()
 { 
-  rows = r;
-  cols = c;
-  data = (r > 0 && c > 0) ? new complex<double>[r * c] : NULL;
+  rows = cols = 2;
+  data = vec(4);
+}
+
+
+Mat::~Mat()
+{
 }
 
 //Fills a matrix with 1
@@ -47,7 +51,7 @@ void Mat::eye()
 
 // mat * complex operation
 Mat operator * (complex<double> z, Mat a) {
-  Mat A(a.rows, a.cols);
+  Mat A;
   for (unsigned int r = 0; r < a.rows; r++)
       for (unsigned int c = 0; c<a.cols; c++) A(r, c) = z*a(r, c);
   return A;
@@ -65,10 +69,8 @@ complex<double> ScalarProduct(vec U, vec V)
 
 // Inner matrix product
 Mat operator * (Mat a, Mat b) {
-//Check dimmensions
-  if (a.cols != b.rows) return Mat(1,1);
-  Mat Res(a.rows, b.cols);
 
+  Mat Res;
   for (unsigned int r = 0; r < Res.rows; r++)
      for (unsigned int c = 0; c < Res.cols; c++) Res(r, c) = ScalarProduct(a.getRow(r), b.getCol(c));
 

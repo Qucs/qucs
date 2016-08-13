@@ -29,9 +29,9 @@ ui::ui()
       GNUplot_path = QCoreApplication::applicationDirPath() + "/GRABIM.dat";
       setFixedSize(400, 300);
       centralWidget =  new QWidget();
-      QHBoxLayout *Impedancelayout = new QHBoxLayout();
-      QHBoxLayout * ButtonsLayout = new QHBoxLayout();
-      QGridLayout * TopoLayout = new QGridLayout();
+      Impedancelayout = new QHBoxLayout();
+      ButtonsLayout = new QHBoxLayout();
+      TopoLayout = new QGridLayout();
 
       //Create source load impedance buttons
       SourceFileButton = new QPushButton("Source impedance");
@@ -40,11 +40,11 @@ ui::ui()
       connect(LoadFileButton, SIGNAL(clicked()), this, SLOT(LoadImpedance_clicked()));
 
 
-      QVBoxLayout * SourceLayout = new QVBoxLayout();
-      QVBoxLayout * LoadLayout = new QVBoxLayout();
+      SourceLayout = new QVBoxLayout();
+      LoadLayout = new QVBoxLayout();
 
-      QHBoxLayout * ConstantZSLayout = new QHBoxLayout();
-      QHBoxLayout * ConstantZLLayout = new QHBoxLayout();
+      ConstantZSLayout = new QHBoxLayout();
+      ConstantZLLayout = new QHBoxLayout();
 
       FixedZSLineedit = new QLineEdit("50");
       FixedZLLineedit = new QLineEdit("50");
@@ -95,7 +95,7 @@ ui::ui()
 
 
        // Matching band
-       QGroupBox *FreqgroupBox = new QGroupBox(tr("Matching band"));
+       FreqgroupBox = new QGroupBox(tr("Matching band"));
        minFLabel = new QLabel("Min:");
        minFEdit = new QLineEdit("1");
        minFUnitsCombo =  new QComboBox();
@@ -117,7 +117,7 @@ ui::ui()
        maxFUnitsCombo->setCurrentIndex(2);
        maxFUnitsCombo->setMinimumContentsLength(5);
 
-       QHBoxLayout *vbox = new QHBoxLayout;
+       vbox = new QHBoxLayout;
        vbox->addWidget(minFLabel);
        vbox->addWidget(minFEdit);
        vbox->addWidget(minFUnitsCombo);
@@ -131,17 +131,19 @@ ui::ui()
        SearchModeLabel = new QLabel("Search Mode");
 
        SearchModeCombo = new QComboBox();
-       SearchModeCombo->insertItem(0,"Precomputed set");
-       SearchModeCombo->insertItem(1,"Script");
+       SearchModeCombo->insertItem(0,"Default set");
+       SearchModeCombo->insertItem(1,"User list");
        SearchModeCombo->insertItem(2,"LC order 4");
        SearchModeCombo->insertItem(3,"LC + TL order 6");
        SearchModeCombo->insertItem(4,"LC + TL + Stubs order 6");
+       connect(SearchModeCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(TopoCombo_clicked(int)));
 
        TopoLayout->addWidget(SearchModeLabel, 0, 0);
        TopoLayout->addWidget(SearchModeCombo, 0, 1);
 
+
         // GNUPLOT
-       QGridLayout *GNUplotLayout = new QGridLayout;
+       GNUplotLayout = new QGridLayout();
        GNUplotButton = new QPushButton("Browse");
        connect(GNUplotButton, SIGNAL(clicked()), this, SLOT(GNUplotOutput_clicked()));
 
@@ -150,16 +152,16 @@ ui::ui()
 
 
 
-       QHBoxLayout * TopoScriptLayout =  new QHBoxLayout();
+       TopoScriptLayout =  new QHBoxLayout();
        TopoScriptButton =  new QPushButton("Browse");
-       TopoScriptLabel = new QLabel("Topology script:");
+       TopoScriptLabel = new QLabel("User list:");
        TopoScriptLayout->addWidget(TopoScriptLabel);
        TopoScriptLayout->addWidget(TopoScriptButton);
        connect(TopoScriptButton, SIGNAL(clicked()), this, SLOT(TopoScriptButton_clicked()));
        TopoScriptLabel->setVisible(false);
        TopoScriptButton->setVisible(false);
 
-       TopoScript_path = "predefined_topologies";
+       TopoScript_path = "USER_TOPOLOGY_SCRIPT";
 
       //Create go/cancel buttons
       RunButton = new QPushButton("Go");
@@ -172,7 +174,7 @@ ui::ui()
 
 
       //Create main layout and add individual layouts
-      QVBoxLayout * mainLayout = new QVBoxLayout();
+      mainLayout = new QVBoxLayout();
       mainLayout->addLayout(Impedancelayout);
       mainLayout->addWidget(FreqgroupBox);
       mainLayout->addLayout(TopoLayout);
@@ -185,9 +187,49 @@ ui::ui()
       setWindowTitle("Qucs wideband matching tool " PACKAGE_VERSION);
 
       statusBar()->showMessage(tr("Ready"));
+  
 }
 
+ui::~ui()
+{
+//Free memory. Prevent memory leaks
+      delete Impedancelayout;
+      delete RunButton;
+      delete CancelButton;
+      delete TopoScriptLabel;
+      delete TopoScriptButton;
+      delete TopoScriptLayout;
+      delete GNUplotButton;
+      delete SearchModeCombo;
+      delete SearchModeLabel;
+      delete minFLabel;
+      delete minFEdit;
+      delete minFUnitsCombo;
+      delete maxFLabel;
+      delete maxFEdit;
+      delete maxFUnitsCombo;
+      delete imgWidget;
+      delete FixedZSCheckbox;
+      delete FixedZLCheckbox;
+      delete SourceFileButton;
+      delete LoadFileButton;
+      delete FixedZSLineedit;
+      delete FixedZLLineedit;
+      delete ZSOhmLabel;
+      delete ZLOhmLabel;
+      delete centralWidget;
+      delete GNUplotLayout;
+      delete mainLayout;
+      delete vbox;
+      delete FreqgroupBox;
+      delete ConstantZSLayout;
+      delete ConstantZLLayout;
+      delete ButtonsLayout;
+      delete TopoLayout;
+      delete SourceLayout;
+      delete LoadLayout;
 
+}
 void ui::go_clicked()
 {
 
@@ -321,13 +363,13 @@ void ui::go_clicked()
     // 3) The objective function is the magnitude of S11 expressed in dB. log(x) functions usually have strong
     // gradients so it seem to suggest that this is good for derivative free opt algorithms
     // 4) This code takes advantage from NLopt derivative-free local optimisers. NLopt is easy to link and it works
-    // fine. Despite the fact that the Nelder-Mead algorithm does not guarantee convergence (among other problems), it leads to achieve a good local (probably, global) optimum. NM is known to fail when the dimmension of the problem is above 14-15. However, as far as matching networks are concerned, the lower order, the simpler the tuning. In practice it is not usual to find matching networks with more than 6 elements
+    // fine. Despite the fact that the Nelder-Mead algorithm does not guarantee convergence (among other problems), it leads to achieve a good local (probably, global) optimum. NM is known to fail when the dimension of the problem is above 14-15. However, as far as matching networks are concerned, the lower order, the simpler the tuning. In practice it is not usual to find matching networks with more than 6 elements
 
     (FixedZSCheckbox->isChecked()) ? R.source_path = "" : R.source_path = SourceFile.toStdString();
     (FixedZLCheckbox->isChecked()) ? R.load_path = "": R.load_path = LoadFile.toStdString();
     R.QucsVersion = PACKAGE_VERSION;
 
-//Final mesage
+//Final message
 
     QMessageBox::information(0, QObject::tr("Finished"),
                          QObject::tr("GRABIM has successfully finished. \nA schematic has been copied to the clipboard so you can paste it into Qucs\nAlternatively, you can check the performance of the network using GNUplot"));
@@ -454,8 +496,9 @@ QString ui::getTopoScriptPath()
 // Search mode changed
 void ui::TopoCombo_clicked(int index)
 {
-   if (index==0)
+   if (index==1)
    {
+     setFixedSize(400, 350);
      TopoScriptLabel->setVisible(true);
      TopoScriptButton->setVisible(true);
    }
@@ -463,5 +506,6 @@ void ui::TopoCombo_clicked(int index)
    {
      TopoScriptLabel->setVisible(false);
      TopoScriptButton->setVisible(false);
+     setFixedSize(400, 300);
    }
 }

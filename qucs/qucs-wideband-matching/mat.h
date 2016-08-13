@@ -1,5 +1,5 @@
 /*
- * mat.h - Matrix class definition
+ * mat.h - 2x2 Matrix class definition
  *
  * copyright (C) 2016 Andres Martinez-Mera <andresmartinezmera@gmail.com>
  *
@@ -28,6 +28,7 @@
 #include <complex>
 #include <vector>
 #include <iostream>
+#include <cstring>
 using namespace std;
 
 typedef vector<complex<double>> vec;
@@ -35,13 +36,14 @@ typedef vector<complex<double>> vec;
 class Mat
 {
 private:
-    complex<double> * data;
+    vec data;
 
 public:
-    Mat(unsigned int, unsigned int);
+    Mat();
+    ~Mat();
 
-    int rows;
-    int cols;
+    unsigned int rows;
+    unsigned int cols;
 
     complex<double>  operator () (unsigned int r, unsigned int c) const { return data[r * cols + c]; }
     complex<double> & operator () (unsigned int r, unsigned int c) { return data[r * cols + c]; }

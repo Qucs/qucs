@@ -91,7 +91,7 @@ int main(int argc, char *argv[])
     else //Command line
     {
           string GNUplot_path = "GRABIM.dat";//Path to the GNUplot output data
-          string TopoScript_path = "predefined_topologies";//Topology list
+          string TopoScript_path = "USER_TOPOLOGY_SCRIPT";//Topology list
           string QucsSchPath = "./Schematic.sch";//Qucs schematic
           string topo = "-1";//Circuit topology
           unsigned int search_mode = 0;//Search mode.
@@ -184,12 +184,12 @@ int main(int argc, char *argv[])
         bool ZLisConstant = LoadFile.find(".s1p") == std::string::npos;
 
         //Impedance data paths were already specified, let's proceed to bring the S-par data into memory
-        IO inout_operations;
-        inout_operations.UseClipboard(false);//Command line mode does not allow using the clipboard, so the Qucs schematic will be dumped into a file
+        IO * inout_operations = new IO();
+        inout_operations->UseClipboard(false);//Command line mode does not allow using the clipboard, so the Qucs schematic will be dumped into a file
 
         if (!ZSisConstant)//Read source impedance from file
         {
-            if (inout_operations.loadS1Pdata(SourceFile, SOURCE))
+            if (inout_operations->loadS1Pdata(SourceFile, SOURCE))
             {
                 cout << "ERROR: File not found" << endl;
                 return -1;
@@ -205,12 +205,12 @@ int main(int argc, char *argv[])
                cerr << "The input given for the source impedance is not valid" << endl;
                return 0;
            }
-           inout_operations.set_constant_ZS_vs_freq(zs_temp);
+           inout_operations->set_constant_ZS_vs_freq(zs_temp);
         }
 
         if (!ZLisConstant)//Read load impedance from file
         {
-           if (inout_operations.loadS1Pdata(LoadFile, LOAD))
+           if (inout_operations->loadS1Pdata(LoadFile, LOAD))
            {
                cout << "ERROR: File not found" << endl;
                return -1;
@@ -227,7 +227,7 @@ int main(int argc, char *argv[])
                 cerr << "The input given for the load impedance is not valid" << endl;
                 return 0;
             }
-            inout_operations.set_constant_ZL_vs_freq(zl_temp);
+            inout_operations->set_constant_ZL_vs_freq(zl_temp);
 
         }
 
@@ -249,35 +249,35 @@ int main(int argc, char *argv[])
         }
         else//Everything correct... lets set frequency
         {
-            inout_operations.set_matching_band(fmatching_min, fmatching_max);
+            inout_operations->set_matching_band(fmatching_min, fmatching_max);
 
             // In general, the load and source impedance data may be taken at different frequencies. For this reason, it is performed
             // a linear interpolation before running GRABIM
-            inout_operations.ResampleImpedances();//Force data update
-            if (fmatching_min*1.05 < min(inout_operations.getFrequency()))//The s1p does not contains the lowest freq
+            inout_operations->ResampleImpedances();//Force data update
+            if (fmatching_min*1.05 < min(inout_operations->getFrequency()))//The s1p does not contains the lowest freq
             {
                 cerr <<"One of the impedance data files does not contain the specified lower frequency" << endl;
                 return 0;
             }
-            if (fmatching_max*0.95 > max(inout_operations.getFrequency()))//The s1p does not contains the highest freq
+            if (fmatching_max*0.95 > max(inout_operations->getFrequency()))//The s1p does not contains the highest freq
             {
                 cerr <<"One of the impedance data files does not contain the specified upper frequency" << endl;
                 return 0;
             }
         }
 
-        GRABIM MatchingObject;
+        GRABIM * MatchingObject = new GRABIM();
         // Impedance and frequency settings
-        MatchingObject.SetSourceImpedance(inout_operations.getSourceImpedance());
-        MatchingObject.SetLoadImpedance(inout_operations.getLoadImpedance());
-        MatchingObject.SetFrequency(inout_operations.getFrequency());
-        MatchingObject.setTopoScript(TopoScript_path);
-        MatchingObject.SetTopology(topo);
-        MatchingObject.setSearchMode(search_mode);
-        MatchingObject.SimplifyNetwork(!no_simplify);
+        MatchingObject->SetSourceImpedance(inout_operations->getSourceImpedance());
+        MatchingObject->SetLoadImpedance(inout_operations->getLoadImpedance());
+        MatchingObject->SetFrequency(inout_operations->getFrequency());
+        MatchingObject->setTopoScript(TopoScript_path);
+        MatchingObject->SetTopology(topo);
+        MatchingObject->setSearchMode(search_mode);
+        MatchingObject->SimplifyNetwork(!no_simplify);
 
 
-        GRABIM_Result R = MatchingObject.RunGRABIM();//Runs GRABIM. Please bear in mind that this is not a rigorous implementation of [1] 
+        GRABIM_Result R = MatchingObject->RunGRABIM();//Runs GRABIM. Please bear in mind that this is not a rigorous implementation of [1] 
         // Biggest differences between this code and [1]:
         // 1) The candidate vector is always defined in natural units rather than logarithmic units.
         // 2) Frequency is not normalized.
@@ -290,19 +290,25 @@ int main(int argc, char *argv[])
         // [1] Broadband direct-coupled and RF matching networks. Thomas R. Cuthbert, 1999
         // [2] Convergence properties of the Nelder-Mead simplex method in low dimensions. J.F. Lagarias, J.A. Reeds. SIAM J. OPTIM, Vol 9, No. 1, pp. 112-147
 
-        inout_operations.PrintNetwork_StandardOutput(R);//Prints the matching network in the terminal
+        inout_operations->PrintNetwork_StandardOutput(R);//Prints the matching network in the terminal
 
         (ZSisConstant) ? R.source_path = "" : R.source_path = SourceFile;
         (ZLisConstant) ? R.load_path = "": R.load_path = LoadFile;
 
 
         cout << "Finished: GRABIM has successfully finished." << endl;
-        cout << "The matching network was written using the Qucs schematic format at " << QucsSchPath << endl << endl;
-        cout << "Alternatively, you can check the performance of the network using gnuplot" << endl;
+        cout << "The matching network saved in a Qucs schematic format at " << QucsSchPath << endl << endl;
+        cout << "Moreover, you can check the performance of the network using GNUplot" << endl;
         cout << "The GNUplot data was written at " << GNUplot_path << endl;
-        cout << "You can find a sample GNUplot script to plot S11 in a Smith Chart as well as rectangular plots" << endl;
+        cout << "You can find a sample script to plot S11 in the same folder as the source code" << endl;
 
-        inout_operations.exportGNUplot(R, GNUplot_path);
-        inout_operations.ExportQucsSchematic(R, QucsSchPath);
+        inout_operations->exportGNUplot(R, GNUplot_path);
+        inout_operations->ExportQucsSchematic(R, QucsSchPath);
+        delete inout_operations;
+        delete MatchingObject;
     }
+
+   fclose(stdin);
+   fclose(stdout);
+   fclose(stderr); 
 }

@@ -34,6 +34,9 @@ IO::IO()
     CopyToClipboard=true;
 }
 
+IO::~IO()
+{}
+
 // Converts std::string to double
 double string_to_double( const std::string& s )
 {
@@ -181,7 +184,7 @@ int IO::loadS1Pdata(std::string filepath, terminal Port)
 
         qsize++;
     }while (std::getline(s2pfile, line));
-
+    s2pfile.close();
     vector<double> freq(qsize);
     vector<complex<double>> S(qsize);
     vector<complex<double>> Z(qsize);

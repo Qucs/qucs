@@ -59,6 +59,7 @@ class GRABIM
 
 public:
     GRABIM();
+    ~GRABIM();
 
     int SetSourceImpedance(vector<complex<double>>);
     int SetLoadImpedance(vector<complex<double>>);

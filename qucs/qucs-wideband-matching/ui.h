@@ -55,6 +55,7 @@ class ui :public QMainWindow
      Q_OBJECT
 public:
     ui();
+    ~ui();
 
 private:
     QPushButton * SourceFileButton, * LoadFileButton;
@@ -75,6 +76,12 @@ private:
     QLineEdit * FixedZSLineedit, *FixedZLLineedit;
 
     QLabel *ZLOhmLabel, *ZSOhmLabel;
+
+    QVBoxLayout * mainLayout, * SourceLayout, * LoadLayout;
+    QHBoxLayout * TopoScriptLayout, *vbox, * ConstantZSLayout, * ConstantZLLayout, *Impedancelayout, *ButtonsLayout;
+    QGridLayout *GNUplotLayout, *TopoLayout;
+    QGroupBox *FreqgroupBox;
+
 
 
  private slots:

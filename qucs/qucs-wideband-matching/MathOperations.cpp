@@ -179,7 +179,7 @@ vector<double> operator - (double u, vector<double> V)
 vector<double> operator + (vector<double> U, vector<double> V)
 {
   vector<double> V_(U.size());
-  for (unsigned int i=0; i< U.size(); i++) V_[i] = U[i]+V[i];
+  for (auto a = U.begin(), b=V.begin(), c = V_.begin(); a != U.begin()+(U.size()-1); ++a, ++b, ++c) *c = *a + *b;
   return V_;
 }
 
@@ -187,7 +187,7 @@ vector<double> operator + (vector<double> U, vector<double> V)
 vector<double> operator - (vector<double> U, vector<double> V)
 {
   vector<double> V_(U.size());
-  for (unsigned int i=0; i< U.size(); i++) V_[i] = U[i]-V[i];
+  for (auto a = U.begin(), b=V.begin(), c = V_.begin(); a != U.begin()+(U.size()-1); ++a, ++b, ++c) *c = *a - *b;
   return V_;
 }
 
@@ -225,7 +225,9 @@ vector<double> repvec(vector<double> V, unsigned int N)
 // Replace the content of the r-th row of C with V
 void setRow(vector<vector<double>> & C, unsigned int r, vector<double> V)
 {
-   for (unsigned int i = 0; i < C[0].size(); i++) C[r][i] = V[i];
+  vector<double>::iterator a, b;
+  vector<vector<double>>::iterator IT = C.begin()+r;
+  for (a = V.begin(), b=IT->begin(); a != V.begin()+(V.size()-1); ++a, ++b) *b = *a;
 }
 
 // Calculates the magnitude of a complex vector

@@ -41,6 +41,10 @@ GRABIM::GRABIM()
     topology = "-1";//By default, the engine will search the optimum topology from the predefined set of circuit
 }
 
+GRABIM::~GRABIM()
+{}
+
+
 // It sets the source impedance vs frequency
 int GRABIM::SetSourceImpedance(vector<complex<double>> zs)
 {
@@ -157,7 +161,7 @@ GRABIM_Result GRABIM::RunGRABIM()
 
 
     //Generate S parameter results
-    Mat S_gridsearch(2,2), S_nlopt(2,2);
+    Mat S_gridsearch, S_nlopt;
     S_gridsearch.eye();
     S_nlopt.eye();
 
@@ -205,7 +209,6 @@ vector<double> GRABIM::GridSearch()
     best[0] = fxk;
     vector<vector<double>> C = GeneratingMatrix(dim);
 
-
     unsigned int niter = 0;
     f_xkq = 1e6*ones(f_xkq.size());
     //Initial guess. Sometimes, the initial point may be far away from the optimum, so it
@@ -232,7 +235,6 @@ vector<double> GRABIM::GridSearch()
     }
 
     // Factorial search
-
     for (int i = 0; i<4; i++, niter++)
     {
         if ((min(best) < MatchingThreshold)||(niter > Grid_MaxIter))//Stop condition
@@ -244,19 +246,18 @@ vector<double> GRABIM::GridSearch()
         CheckDim(C, xkq, best_pivot, dim);//InspectCandidate() may have shrunk the network, so it is needed to update the settings
 
         for (int q = 0; q<=pow(2, dim);q++)//Calculates the vertices of the searching hypercube
-        {
+        {   
             step = delta_k[i]*getCol(C,q);
             xkq[q] = xk * (1. + .99*step);
             f_xkq[q] = CandidateEval(xkq[q]);
         }
         best_candidate = min(f_xkq);
 
-
         if (best_candidate < min(best) - 0.1)
         {
             best[0] = best_candidate;
             best[1] = 0;
-            best[4] = 0;
+            best[2] = 0;
             best[3] = 0;
 
             xk = xkq[findMin(f_xkq)];//Set new pivot
@@ -323,10 +324,9 @@ int GRABIM::GridSearch_DifferentTopologies(vector<vector<double>> & Vopt, vector
         tag = TagList.front();
         TopoList.pop_front();
         TagList.pop_front();
-        AutoSetInitialPivot();
-
-        Vaux = GridSearch();
-        gridtest = CandidateEval(Vaux);
+        AutoSetInitialPivot();;
+        Vaux = GridSearch(); 
+        gridtest = CandidateEval(Vaux);  
         cout << 100.*(i+1)/n_topo<< "% completed. " << tag << ": S11_min = " <<  gridtest << " dB" << endl;
 
         if (gridtest < -8.)
@@ -542,22 +542,22 @@ vector<vector<double>> GRABIM::GeneratingMatrix(unsigned int dim)
 double GRABIM::CandidateEval(vector<double> x)
 {
     double fobj = -1e3;
-    Mat S(2,2), ABCD(2,2);
+    Mat S, ABCD;
     SparEngine S2PEngine;
     vector<complex<double>> s11 (freq.size());
     for (unsigned int i = 0; i < freq.size(); i++)
     {
         if (ObjFun == ObjectiveFunction::NINF_S11dB)
         {
-            S = S2PEngine.getSparams(x, ZS.at(i), ZL.at(i), freq.at(i), topology);
+            S = S2PEngine.getSparams(x, ZS[i], ZL[i], freq[i], topology);
             if (abs(S(0,0)) > fobj) fobj = abs(S(0,0));//N inf
+  
         }
         if (ObjFun == ObjectiveFunction::NINF_POWERTRANS)
         {
             ABCD = S2PEngine.getABCDmatrix(x, freq.at(i), topology);
             fobj = CalcInvPowerTransfer(ABCD, ZS.at(i), ZL.at(i));
         }
-
     }
     if (ObjFun == ObjectiveFunction::NINF_S11dB)fobj = 20*log10(fobj);//|grad{log(x)}| > |grad{x}| when x < 1;
     return fobj;
@@ -895,18 +895,37 @@ void NM_sortSimplex(vector<vector<double>> & X, vector<double> & fx)
 
 }
 
-
+//Gets the N best vertices of X, that is the first N rows	
 vector<vector<double>> getBestVertices(vector<vector<double>> X)
 {
-   unsigned int N = X.size();
+  unsigned int N = X.size();
   vector<vector<double>> AUX_X(N, vector<double>(N));
-   for (unsigned int i = 0; i < N; i++)
+ /*  for (unsigned i = 0; i < N; i++)
    {
-      for (unsigned int j=0; j < N; j++)
+      for (unsigned j=0; j < N; j++)
       {
         AUX_X[i][j] = X[i][j];
       }
    }
+*/
+
+vector< vector<double> >::iterator row1, row2;
+vector<double>::iterator col1, col2;
+for (row1 = AUX_X.begin(), row2 = X.begin(); row1 != AUX_X.end(); ++row1, ++row2) {
+    for (col1 = row1->begin(), col2 = row2->begin(); col1 != row1->end(), col2 != row2->end(); ++col1, ++col2) {
+        *col1=*col2;
+    }
+}
+
+/*
+  vector<double>::iterator a, b;
+  vector<vector<double>>::iterator IT = C.begin()+r;
+  for (a = V.begin(), b=IT->begin(); a != V.begin()+(V.size()-1); ++a, ++b) *b = *a;
+*/
+
+
+
+
 return AUX_X;
 }
 
@@ -920,8 +939,8 @@ vector<double> GRABIM::NelderMead(vector<double> x)
   double grad = 1e-8;//Step gradient threshold
   double grad_aux;
   double alpha = 1., beta = 2., gamma = 1/2., delta = 1/2.;//Classic coefficients
-  double fr, fe, foc, fic, f1, fn, fn_1;
-  double f_pre, f_curr;
+  double fr=0, fe=0, foc=0, fic=0, f1=0, fn=0, fn_1=0;
+  double f_pre=0, f_curr=0;
   bool shrink = false, stopcondition=false;
   vector<vector<double>> X(n+1, vector<double>(n));//Simplex
   vector<double> fx(n+1);
