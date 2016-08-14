@@ -21,7 +21,7 @@ rm -rf log
 ./../QucsWidebandMatching RC.s1p 50 30e6 35e6 --set-seed 31039102
 ./../QucsWidebandMatching 50 MMG3005NT1.s1p 470e6 1000e6 --set-seed 31039102
 ./../QucsWidebandMatching 50 BFG325W.s1p 500e6 1400e6 --set-seed 31039102
-
+./../QucsWidebandMatching 50 cly5.s1p 900e6 1600e6 --set-seed 31039102
 
 
 #Compare simulation results with standard
