@@ -51,6 +51,7 @@ ADD_SUBDIRECTORY( qucs-rescodes )
 #ADD_SUBDIRECTORY( examples )
 ADD_SUBDIRECTORY( translations )
 ADD_SUBDIRECTORY( contrib )
+ADD_SUBDIRECTORY(qucs-wideband-matching)
 
 
 #

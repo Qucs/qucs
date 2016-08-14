@@ -567,6 +567,13 @@ void QucsApp::initActions()
   tr("Resistor color codes\n\nStarts standard resistor color code computation program"));
   connect(callRes, SIGNAL(triggered()), SLOT(slotCallRes()));
 
+  callWB_Matching = new QAction(tr("Wideband matching"), this);
+  callWB_Matching->setShortcut(Qt::CTRL+Qt::Key_9);
+  callWB_Matching->setStatusTip(tr("Starts Qucs wideband matching tool"));
+  callWB_Matching->setWhatsThis(
+  tr("Wideband matching network synthesis\n\nStarts wideband matching network synthesis tool"));
+  connect(callWB_Matching, SIGNAL(triggered()), SLOT(slotCallWB_Matching()));
+
   simulate = new QAction(QIcon((":/bitmaps/gear.png")), tr("Simulate"), this);
   simulate->setShortcut(Qt::Key_F2);
   simulate->setStatusTip(tr("Simulates the current schematic"));
@@ -773,6 +780,7 @@ void QucsApp::initMenuBar()
   toolMenu->addAction(callMatch);
   toolMenu->addAction(callAtt);
   toolMenu->addAction(callRes);
+  toolMenu->addAction(callWB_Matching);
 
 
 
