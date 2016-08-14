@@ -683,6 +683,7 @@ void IO::PrintNetwork_StandardOutput(GRABIM_Result Res)
     LogFile << max(Res.freq) << endl;
     LogFile << Res.topology << endl;
     for (unsigned int i=0; i < Res.S11_gridsearch.size(); i++) LogFile << "(" << Res.S11_gridsearch.at(i).real() << "," <<  Res.S11_gridsearch.at(i).imag() << ") "<< endl;
+    LogFile << Res.nlopt_val << endl;
     LogFile << "###" << endl;
     LogFile.close();
 }
