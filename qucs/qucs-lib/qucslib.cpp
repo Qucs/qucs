@@ -48,7 +48,6 @@
 #include "displaydialog.h"
 #include "symbolwidget.h"
 
-
 /* Constructor setups the GUI. */
 QucsLib::QucsLib()
 {
@@ -112,6 +111,7 @@ QucsLib::QucsLib()
     CompList = new QListWidget();
     connect(CompList, SIGNAL(itemActivated(QListWidgetItem*)), SLOT(slotShowComponent(QListWidgetItem*)));
     connect(CompList,SIGNAL(currentItemChanged(QListWidgetItem*,QListWidgetItem*)),SLOT(slotShowComponent(QListWidgetItem*)));
+    connect(CompList, SIGNAL(itemClicked(QListWidgetItem*)), SLOT(slotShowComponent(QListWidgetItem*)));
 
     CompSearch = new QLineEdit(this);
     CompSearch->setPlaceholderText(tr("Search Lib Components"));
@@ -455,10 +455,32 @@ void QucsLib::slotSearchClear()
 }
 
 
+void QucsLib::LoadDefaultSymbol(QString libpath)
+{
+    ComponentLibrary parsedlib;
+
+    int result = parseComponentLibrary (libpath, parsedlib);
+
+    switch (result)
+    {
+        case QUCS_COMP_LIB_IO_ERROR:
+            QMessageBox::critical(0, tr ("Error"), tr("Cannot open \"%1\".").arg (libpath));
+            return;
+        case QUCS_COMP_LIB_CORRUPT:
+            QMessageBox::critical(0, tr("Error"), tr("Library is corrupt."));
+            return;
+        default:
+            break;
+    }
+
+    // copy the contents of default symbol section to a string
+    DefaultSymbol = parsedlib.defaultSymbol;
+
+}
+
 // ----------------------------------------------------
 void QucsLib::slotShowComponent(QListWidgetItem *Item)
 {
-
     if(!Item) return;
 
     //QString CompString = LibraryComps.at(CompList->index(Item));
@@ -467,6 +489,9 @@ void QucsLib::slotShowComponent(QListWidgetItem *Item)
     CompDescr->setText("Name: " + Item->text());
     CompDescr->append("Library: " + LibName);
     CompDescr->append("----------------------------");
+
+    //Load the default symbol for the current Qucs library
+    LoadDefaultSymbol(QucsSettings.LibDir + LibName + ".lib");
 
     // FIXME: here we assume that LibName is the same as the actual filename...
     int i = Library->findText(LibName);
@@ -510,10 +535,16 @@ void QucsLib::slotShowComponent(QListWidgetItem *Item)
         QMessageBox::critical(this, tr("Error"), tr("Library is corrupt."));
         return;
     }
+
     if(!content.isEmpty())
         Symbol->setSymbol(content, LibName, Item->text());
     else if(!DefaultSymbol.isEmpty())   // has library a default symbol ?
         Symbol->setSymbol(DefaultSymbol, LibName, Item->text());
+
+
+   // Update component's name and library
+   Symbol->LibraryName = LibName;
+   Symbol->ComponentName = Item->text();
 
     // change currently selected category, so the user will 
     //   learn where the component comes from
