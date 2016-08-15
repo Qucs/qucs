@@ -68,6 +68,7 @@ private slots:
   void slotSearchClear();
   void slotShowComponent(QListWidgetItem*);
   void slotManageLib();
+  void LoadDefaultSymbol(QString);
 
 private:
   void closeEvent(QCloseEvent*);
