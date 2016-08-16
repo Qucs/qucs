@@ -490,8 +490,6 @@ void QucsLib::slotShowComponent(QListWidgetItem *Item)
     CompDescr->append("Library: " + LibName);
     CompDescr->append("----------------------------");
 
-    //Load the default symbol for the current Qucs library
-    LoadDefaultSymbol(QucsSettings.LibDir + LibName + ".lib");
 
     // FIXME: here we assume that LibName is the same as the actual filename...
     int i = Library->findText(LibName);
@@ -538,9 +536,13 @@ void QucsLib::slotShowComponent(QListWidgetItem *Item)
 
     if(!content.isEmpty())
         Symbol->setSymbol(content, LibName, Item->text());
-    else if(!DefaultSymbol.isEmpty())   // has library a default symbol ?
+    else
+    {
+        //Load the default symbol for the current Qucs library
+    LoadDefaultSymbol(QucsSettings.LibDir + LibName + ".lib");
+    if(!DefaultSymbol.isEmpty())   // has library a default symbol ?
         Symbol->setSymbol(DefaultSymbol, LibName, Item->text());
-
+    }
 
    // Update component's name and library
    Symbol->LibraryName = LibName;
