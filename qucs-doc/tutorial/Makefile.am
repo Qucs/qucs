@@ -22,6 +22,8 @@
 # Boston, MA 02110-1301, USA.  
 #
 
+include $(top_srcdir)/qucstex.mk
+
 SUBDIRS = dcstatic coupler bjtbias modelbjt poweramp lna digital ffmodels \
   functions opamp timer555 spicetoqucs getstarted equations textmode RFResModels activefilter
 
@@ -50,11 +52,6 @@ SUFFIXES = .dvi .tex .pdf .ps
 	$(LATEX) $<
 	$(LATEX) $<
 	$(LATEX) -interaction=batchmode $<
-
-.tex.pdf:
-	$(PDFLATEX) $<
-	$(PDFLATEX) $<
-	$(PDFLATEX) -interaction=batchmode $<
 
 .fig.eps:
 	$(FIG2DEV) -L eps $< > $@
