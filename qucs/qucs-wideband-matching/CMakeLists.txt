@@ -74,18 +74,18 @@ IF(APPLE)
   # set where in the bundle to put the icns file
   SET_SOURCE_FILES_PROPERTIES(${CMAKE_CURRENT_SOURCE_DIR}/../qucs/bitmaps/QucsWidebandMatching.icns PROPERTIES MACOSX_PACKAGE_LOCATION Resources)
   # include the icns file in the target
-  SET(attenuator_sources ${attenuator_sources} ${CMAKE_CURRENT_SOURCE_DIR}/../qucs/bitmaps/QucsWidebandMatching.icns)
+  SET(wb_matching_sources ${wb_matching_sources} ${CMAKE_CURRENT_SOURCE_DIR}/../qucs/bitmaps/QucsWidebandMatching.icns)
 
 ENDIF(APPLE)
 
 ADD_EXECUTABLE( QucsWidebandMatching MACOSX_BUNDLE WIN32
-  ${attenuator_sources}
-  ${attenuator_moc_sources}
+  ${wb_matching_sources}
+  ${wb_matching_moc_sources}
   ${RESOURCES_SRCS} )
 
 TARGET_LINK_LIBRARIES( QucsWidebandMatching ${QT_LIBRARIES} )
 
-#INSTALL (TARGETS qucsattenuator DESTINATION bin)
+
 #
 # Prepare the installation
 #
