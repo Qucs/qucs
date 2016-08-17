@@ -796,6 +796,11 @@ void QucsApp::slotCallPowerComb()
   launchTool("qucspowercombining", "Power combiner synthesis");
 }
 
+// It starts the wideband matching tool
+void QucsApp::slotCallWB_Matching()
+{
+  launchTool("QucsWidebandMatching", "Wideband matching network synthesis");
+}
 
 /*!
  * \brief launch an external application passing arguments

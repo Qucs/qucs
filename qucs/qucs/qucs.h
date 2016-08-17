@@ -379,7 +379,7 @@ public:
           *helpOnline, *callEditor, *callFilter, *callLine, *callActiveFilter,
           *showMsg, *showNet, *alignTop, *alignBottom, *alignLeft, *alignRight,
           *distrHor, *distrVert, *selectAll, *callLib, *callMatch, *changeProps,
-          *addToProj, *editFind, *insEntity, *selectMarker, *callPowerComb,
+          *addToProj, *editFind, *insEntity, *selectMarker, *callPowerComb, *callWB_Matching,
           *createLib, *importData, *graph2csv, *createPkg, *extractPkg,
           *callAtt, *callRes, *centerHor, *centerVert, *loadModule, *buildModule;
 
@@ -429,6 +429,7 @@ public slots:
   void slotCallRes();
   void slotHelpOnline();
   void slotCallPowerComb();
+  void slotCallWB_Matching();
   void slotChangeProps();
   void slotAddToProject();
   void slotApplyCompText();

@@ -602,6 +602,13 @@ void QucsApp::initActions()
   tr("Power combining synthesis\n\nStarts power combining synthesis tool"));
   connect(callPowerComb, SIGNAL(triggered()), SLOT(slotCallPowerComb()));
 
+  callWB_Matching = new QAction(tr("Wideband matching"), this);
+  callWB_Matching->setShortcut(Qt::CTRL+Qt::Key_9);
+  callWB_Matching->setStatusTip(tr("Starts Qucs wideband matching tool"));
+  callWB_Matching->setWhatsThis(
+  tr("Wideband matching network synthesis\n\nStarts wideband matching network synthesis tool"));
+  connect(callWB_Matching, SIGNAL(triggered()), SLOT(slotCallWB_Matching()));
+
 
   simulate = new QAction(QIcon((":/bitmaps/gear.png")), tr("Simulate"), this);
   simulate->setShortcut(Qt::Key_F2);
@@ -816,6 +823,7 @@ void QucsApp::initMenuBar()
   toolMenu->addAction(callAtt);
   toolMenu->addAction(callRes);
   toolMenu->addAction(callPowerComb);
+  toolMenu->addAction(callWB_Matching);
 
 
   simMenu = new QMenu(tr("&Simulation"));  // menuBar entry simMenu

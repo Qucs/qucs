@@ -52,6 +52,7 @@ ADD_SUBDIRECTORY( qucs-rescodes )
 ADD_SUBDIRECTORY( translations )
 ADD_SUBDIRECTORY( contrib )
 ADD_SUBDIRECTORY(qucs-powercombining)
+ADD_SUBDIRECTORY(qucs-wideband-matching)
 
 #
 # Custom uninstall target

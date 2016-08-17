@@ -808,6 +808,7 @@ AC_CONFIG_FILES([Makefile
     qucs-attenuator/bitmaps/Makefile
     qucs-rescodes/Makefile
     qucs-powercombining/Makefile
+    qucs-wideband-matching/Makefile
     qucs/Makefile
     qucs/bitmaps/Makefile
     qucs/octave/Makefile
