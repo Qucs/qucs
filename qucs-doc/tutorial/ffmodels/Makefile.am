@@ -45,10 +45,6 @@ SUFFIXES = .dvi .tex .pdf
 	$(LATEX) $<
 	$(LATEX) -interaction=batchmode $<
 
-.tex.pdf:
-	TEXINPUTS=$$TEXINPUTS:.. $(PDFLATEX) $<
-	TEXINPUTS=$$TEXINPUTS:.. $(PDFLATEX) $<
-	TEXINPUTS=$$TEXINPUTS:.. $(PDFLATEX) -interaction=batchmode $<
 
 .dvi.ps:
 	$(DVIPS) $< -o $@
