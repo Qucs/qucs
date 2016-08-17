@@ -455,29 +455,6 @@ void QucsLib::slotSearchClear()
 }
 
 
-void QucsLib::LoadDefaultSymbol(QString libpath)
-{
-    ComponentLibrary parsedlib;
-
-    int result = parseComponentLibrary (libpath, parsedlib);
-
-    switch (result)
-    {
-        case QUCS_COMP_LIB_IO_ERROR:
-            QMessageBox::critical(0, tr ("Error"), tr("Cannot open \"%1\".").arg (libpath));
-            return;
-        case QUCS_COMP_LIB_CORRUPT:
-            QMessageBox::critical(0, tr("Error"), tr("Library is corrupt."));
-            return;
-        default:
-            break;
-    }
-
-    // copy the contents of default symbol section to a string
-    DefaultSymbol = parsedlib.defaultSymbol;
-
-}
-
 // ----------------------------------------------------
 void QucsLib::slotShowComponent(QListWidgetItem *Item)
 {
@@ -538,15 +515,29 @@ void QucsLib::slotShowComponent(QListWidgetItem *Item)
         Symbol->setSymbol(content, LibName, Item->text());
     else
     {
-        //Load the default symbol for the current Qucs library
-    LoadDefaultSymbol(QucsSettings.LibDir + LibName + ".lib");
+      //Load the default symbol for the current Qucs library
+      ComponentLibrary parsedlib;
+      QString libpath = QucsSettings.LibDir + LibName + ".lib";
+      int result = parseComponentLibrary (libpath, parsedlib);
+
+      switch (result)//Check if the library was properly loaded
+      {
+        case QUCS_COMP_LIB_IO_ERROR:
+            QMessageBox::critical(0, tr ("Error"), tr("Cannot open \"%1\".").arg (libpath));
+            return;
+        case QUCS_COMP_LIB_CORRUPT:
+            QMessageBox::critical(0, tr("Error"), tr("Library is corrupt."));
+            return;
+        default:
+            break;
+      }
+
+    // copy the contents of default symbol section to a string
+    DefaultSymbol = parsedlib.defaultSymbol;
     if(!DefaultSymbol.isEmpty())   // has library a default symbol ?
         Symbol->setSymbol(DefaultSymbol, LibName, Item->text());
     }
 
-   // Update component's name and library
-   Symbol->LibraryName = LibName;
-   Symbol->ComponentName = Item->text();
 
     // change currently selected category, so the user will 
     //   learn where the component comes from
