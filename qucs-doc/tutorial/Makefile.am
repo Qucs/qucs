@@ -58,9 +58,6 @@ SUFFIXES = .dvi .tex .pdf .ps
 .fig.eps:
 	$(FIG2DEV) -L eps $< > $@
 
-.eps.pdf:
-	$(EPSTOPDF) $< -o=$@
-
 .dvi.ps:
 	$(DVIPS) $< -o $@
 

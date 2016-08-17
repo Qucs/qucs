@@ -21,24 +21,22 @@
 # the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
 # Boston, MA 02110-1301, USA.
 #
+include $(top_srcdir)/qucstex.mk
 
-EXTRA_DIST = $(EPSFILES)
+# TODO: these are not source files
+# (source code is embedded in content.tex)
+EXTRA_DIST = $(EPSS)
 
-EPSFILES = \
+EPSS = \
   rc_ac.eps \
   rc_ac_circuit.eps \
   rc_ac_python.eps \
   rc_ac_sweep_python.eps \
   rc_ac_tr.eps
 
-XPDF = $(EPSFILES:.eps=.pdf)
+all: $(EPSS:%.eps=%.pdf)
 
-tutorial: $(XPDF)
-
-.eps.pdf:
-	$(EPSTOPDF) $< -o=$@
-
-CLEANFILES = $(XPDF) *~ *.orig *.rej
+CLEANFILES = *~ *.orig *.rej *.pdf
 MAINTAINERCLEANFILES = Makefile.in
 
 
