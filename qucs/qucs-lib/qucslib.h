@@ -78,7 +78,7 @@ private:
 
   int UserLibCount;
   int libCurIdx;
-  SymbolWidget *Symbol;
+  SymbolWidget *symWidget;
   QTextEdit    *CompDescr;
   QVBoxLayout  *all;
   QLineEdit *CompSearch;

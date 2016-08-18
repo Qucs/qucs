@@ -136,7 +136,7 @@ QucsLib::QucsLib()
     CompDescr->setWordWrapMode(QTextOption::NoWrap);
 
 
-    Symbol = new SymbolWidget();
+    symWidget = new SymbolWidget();
 
     QGroupBox *ButtonGroup = new QGroupBox();
     QHBoxLayout *ButtonGroupLayout = new QHBoxLayout();
@@ -152,7 +152,7 @@ QucsLib::QucsLib()
 
 
     CompGroupLayout->addWidget(CompDescr);
-    CompGroupLayout->addWidget(Symbol);
+    CompGroupLayout->addWidget(symWidget);
     CompGroupLayout->addWidget(ButtonGroup);
     CompGroup->setLayout(CompGroupLayout);
 
@@ -283,7 +283,7 @@ void QucsLib::slotCopyToClipBoard()
 {
     QString s = "<Qucs Schematic " PACKAGE_VERSION ">\n";
     s += "<Components>\n  " +
-         Symbol->theModel() +
+         symWidget->theModel() +
          "\n</Components>\n";
 
     // put resulting schematic into clipboard
@@ -294,7 +294,7 @@ void QucsLib::slotCopyToClipBoard()
 // ----------------------------------------------------
 void QucsLib::slotShowModel()
 {
-    DisplayDialog *d = new DisplayDialog(this, Symbol->ModelString, Symbol->VHDLModelString, Symbol->VerilogModelString);
+    DisplayDialog *d = new DisplayDialog(this, symWidget->ModelString, symWidget->VHDLModelString, symWidget->VerilogModelString);
     d->setWindowTitle(tr("Model"));
     d->resize(500, 150);
     d->show();
@@ -487,23 +487,23 @@ void QucsLib::slotShowComponent(QListWidgetItem *Item)
         QMessageBox::critical(this, tr("Error"), tr("Library is corrupt."));
         return;
     }
-    Symbol->ModelString = content;
-    if(Symbol->ModelString.count('\n') < 2)
-        Symbol->createSymbol(LibName, Item->text());
+    symWidget->ModelString = content;
+    if(symWidget->ModelString.count('\n') < 2)
+        symWidget->createSymbol(LibName, Item->text());
 
     if(!getSection("VHDLModel", CompString, content))
     {
         QMessageBox::critical(this, tr("Error"), tr("Library is corrupt."));
         return;
     }
-    Symbol->VHDLModelString = content;
+    symWidget->VHDLModelString = content;
 
     if(!getSection("VerilogModel", CompString, content))
     {
         QMessageBox::critical(this, tr("Error"), tr("Library is corrupt."));
         return;
     }
-    Symbol->VerilogModelString = content;
+    symWidget->VerilogModelString = content;
 
     if(!getSection("Symbol", CompString, content))
     {
@@ -511,10 +511,11 @@ void QucsLib::slotShowComponent(QListWidgetItem *Item)
         return;
     }
 
+	 // it's a bit late, but without a symbol we cannot draw a symbol to the
+	 // widget... lets create a symbol!
+	 Symbol compSym(content, LibName, Item->text());
+    compSym.draw(symWidget);
 
-    Symbol->setSymbol(content, LibName, Item->text());
-
-      
     // change currently selected category, so the user will 
     //   learn where the component comes from
     Library->setCurrentIndex(i);
