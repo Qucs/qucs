@@ -328,7 +328,7 @@ void QucsLib::slotSelectLibrary(int Index)
     }
     else
     {
-        filename = QucsSettings.LibDir + Library->itemText(Index) + ".lib";
+        filename = QucsSettings.LibDir + QDir::separator() + Library->itemText(Index) + ".lib";
     }
 
     ComponentLibrary parsedlib;

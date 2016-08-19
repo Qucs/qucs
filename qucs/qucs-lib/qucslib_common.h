@@ -210,6 +210,7 @@ inline int parseComponentLibrary (QString filename, ComponentLibrary &library)
     int Start, End, NameStart, NameEnd;
 
     QFile file (filename);
+    qDebug() << "trying to read" << filename;
 
     if(!file.open(QIODevice::ReadOnly))
     {
