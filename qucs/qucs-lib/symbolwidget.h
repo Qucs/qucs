@@ -29,6 +29,8 @@
 #include <QPaintEvent>
 #include <QMessageBox>
 
+#include "qucslib_common.h"
+
 /*!
  * \file symbolwidget.h
  * \brief Definition of the SymbolWidget class.

@@ -29,8 +29,11 @@
 #include <QVBoxLayout>
 #include <QComboBox>
 
-#include "symbolwidget.h"
+
 #include "libcomp.h"
+#include "librarydialog.h"
+#include "displaydialog.h"
+
 
 
 

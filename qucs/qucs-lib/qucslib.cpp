@@ -43,10 +43,7 @@
 #include <QLineEdit>
 
 #include "qucslib.h"
-#include "qucslib_common.h"
-#include "librarydialog.h"
-#include "displaydialog.h"
-#include "symbolwidget.h"
+
 
 /* Constructor setups the GUI. */
 QucsLib::QucsLib()

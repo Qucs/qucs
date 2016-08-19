@@ -33,6 +33,7 @@
 #include <QSettings>
 #include "qucslib.h"
 
+
 tQucsSettings QucsSettings;
 QDir UserLibDir;
 

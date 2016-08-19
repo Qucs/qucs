@@ -15,6 +15,7 @@
  *                                                                         *
  ***************************************************************************/
 
+
 #include <cmath>
 #include <limits.h>
 
@@ -28,8 +29,6 @@
 #include <QTextStream>
 
 #include "symbolwidget.h"
-#include "qucslib.h"
-#include "qucslib_common.h"
 
 /*!
  * \file symbolwidget.cpp
