@@ -343,7 +343,7 @@ int SymbolWidget::createSymbol(const QString& Lib_, const QString& Comp_)
     dx = (x2-x1 + DragNDropWidth)/2 + TextWidth;
   if(dx < DragNDropWidth)
     dx = DragNDropWidth;
-  setMinimumSize(dx, y2-y1 + TextHeight+4);
+  w.setMinimumSize(dx, y2-y1 + TextHeight+4);
   if(width() > dx)  dx = width();
   resize(dx, y2-y1 + TextHeight+4);
   update();

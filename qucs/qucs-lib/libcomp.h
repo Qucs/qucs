@@ -93,15 +93,19 @@ int QucsLibComponent::draw(QWidget& w)
   cx  = -x1 + TextWidth;
   cy  = -y1;
 
+  // what is this? figure out soon
+  int DragNDropWidth=0;
+  int TextHeight=0;
+
   int dx = x2-x1 + TextWidth;
-  if((x2-x1) < w.DragNDropWidth)
-    dx = (w.x2-w.x1 + w.DragNDropWidth)/2 + w.TextWidth;
-  if(dx < w.DragNDropWidth)
-    dx = w.DragNDropWidth;
-  w.setMinimumSize(dx, w.y2-w.y1 + w.TextHeight+4);
-  if(w.width() > dx)  dx = w.width();
-  w.resize(dx, w.y2-w.y1 + w.TextHeight+4);
-  w.update();
+  if((x2-x1) < DragNDropWidth)
+    dx = (x2-x1 + DragNDropWidth)/2 + TextWidth;
+  if(dx < DragNDropWidth)
+    dx = DragNDropWidth;
+  setMinimumSize(dx, y2-y1 + TextHeight+4);
+  if(width() > dx)  dx = width();
+  resize(dx, y2-y1 + TextHeight+4);
+  update(); //?
   return z;      // return number of ports
 }
 
