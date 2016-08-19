@@ -64,17 +64,22 @@ void SymbolWidget::attachSymbol(Symbol* s) // bug, must be const* symbol!
 {
   if(symbol){
     delete symbol;
-  }else if(QucsLibComponent* c=dynamic_cast<QucsLibComponent*>(s)){
+  }
+
+  if(QucsLibComponent* c=dynamic_cast<QucsLibComponent*>(s)){
     symbol = c;
+    c->doSomething(*this);
   }else{
     // incomplete. the code does not yet work for all kinds of symbols.
-    assert(false);
   }
+
 }
 
 SymbolWidget::~SymbolWidget()
 {
-  attachSymbol(NULL);
+  if(symbol){
+    delete symbol;
+  }
 }
 
 // ************************************************************
@@ -129,8 +134,8 @@ void SymbolWidget::paintEvent(QPaintEvent*)
   if(symbol){
     symbol->draw(*this);
   }else{
-	  // cannot draw anything
-	  // this might not hurt anybody.
+    // cannot draw anything
+    // this might not hurt anybody.
   }
 }
 // ---------------------------------------------------------------------

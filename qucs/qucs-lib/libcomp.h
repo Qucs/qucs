@@ -22,12 +22,11 @@ private:
 public:
   QucsLibComponent( QString& , const QString&, const QString& );
   QucsLibComponent(const QString& Lib_, const QString& Comp_); // incomplete constructor?
-  int draw(QWidget&);
+  void draw(QWidget&) const;
 public: // symbol interface overloads
   Symbol* newOne() const { return new QucsLibComponent(*this); }
   unsigned portNumber() const{return PortNumber;}
 private: // implementation
-  void doSomething();
   int  analyseLine(const QString&);
   bool getPen  (const QString&, QPen&, int);
   bool getBrush(const QString&, QBrush&, int);
@@ -60,6 +59,8 @@ public: // bogus obsolete XML creation.
          QString::number(Text_y) + " 0 0 \"" +
          LibraryName + "\" 0 \"" + ComponentName + "\" 0>";
   }
+public: // something
+  void doSomething(QWidget& w) const;
 public:  // more random access to private members (transitional?)
   QString modelString() const{ return ModelString;}
   QString verilogModelString() const{ return VerilogModelString;}
@@ -148,8 +149,7 @@ inline QucsLibComponent::QucsLibComponent( QString& SymbolString_,
 }
 
 
-#if 0 // what does it do?
-int QucsLibComponent::doSomething()
+inline void QucsLibComponent::doSomething(QWidget& w) const
 {
 
   // what is this? figure out soon
@@ -159,20 +159,18 @@ int QucsLibComponent::doSomething()
   int dx = x2-x1 + TextWidth;
   if((x2-x1) < DragNDropWidth)
     dx = (x2-x1 + DragNDropWidth)/2 + TextWidth;
-  if(dx < DragNDropWidth)
+  if(dx < DragNDropWidth){
     dx = DragNDropWidth;
+  }
   w.setMinimumSize(dx, y2-y1 + TextHeight+4);
   if(width() > dx){
 	  dx = width();
   }
   w.resize(dx, y2-y1 + TextHeight+4);
   w.update(); // what does it do?
-  return z;      // return number of ports
-
+//   return z;      // return number of ports
 
 }
-#endif
-
 
 
 #endif

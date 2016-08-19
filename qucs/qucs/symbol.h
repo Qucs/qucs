@@ -45,9 +45,9 @@ public: // interface
 public: // graphics
         // hmm, maybe just dispatch a gfx object.
 		  // leave it like that, for now.
-  virtual unsigned height(){ return 0; }
-  virtual unsigned width(){ return 0; }
-  virtual int draw(QWidget&) = 0;
+  virtual unsigned height() const{ return 0; }
+  virtual unsigned width() const{ return 0; }
+  virtual void draw(QWidget&) const = 0;
   //...  more to come
 };
 

@@ -18,7 +18,7 @@
 #include "libcomp.h"
 #include <QPainter>
 
-int QucsLibComponent::draw(QWidget& w)
+void QucsLibComponent::draw(QWidget& w) const
 {
   QPainter Painter(&w);
   Painter.drawText(2, 2, 0, 0, Qt::AlignLeft | Qt::TextDontClip, "PaintText");
@@ -74,7 +74,6 @@ int QucsLibComponent::draw(QWidget& w)
     Painter.setPen(pt->Color);
     Painter.drawText(cx+pt->x, cy+pt->y, 0, 0, Qt::TextDontClip, pt->s);
   }
-  return 17; // yes, we painted.
 }
 
 // this creates a strange pseudo-symbol. it can't be used. but hey, it's there!
