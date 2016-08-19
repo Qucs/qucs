@@ -77,11 +77,9 @@ void QucsLibComponent::draw(QWidget& w) const
   }
 }
 
-// this creates a strange pseudo-symbol. it can't be used. but hey, it's there!
+// use a proper dictionary. don't construct at run time.
 // what is needed to clean this up?!
-QucsLibComponent::QucsLibComponent(const QString& Lib_, const QString& Comp_)
-	: LibraryName(Lib_), ComponentName(Comp_),
-  cx(0), cy(0), x1(0), x2(0), y1(0), y2(0)
+void QucsLibComponent::init(const QString& Lib_, const QString& Comp_)
 {
   // Warning.clear();
 

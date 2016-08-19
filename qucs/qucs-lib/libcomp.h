@@ -10,10 +10,10 @@
  */
 
 
-class Line;
-class Arc;
-class Area;
-class Text;
+struct Line;
+struct Arc;
+struct Area;
+struct Text;
 
 
 class QucsLibComponent : public Symbol{
@@ -21,8 +21,9 @@ private:
   QString SymbolString, LibraryName, ComponentName;
 public:
   QucsLibComponent( QString& , const QString&, const QString& );
-  QucsLibComponent(const QString& Lib_, const QString& Comp_); // incomplete constructor?
   void draw(QWidget&) const;
+public:
+  void init(const QString& Lib_, const QString& Comp_); // help construction
 public: // symbol interface overloads
   Symbol* newOne() const { return new QucsLibComponent(*this); }
   unsigned portNumber() const{return PortNumber;}
@@ -74,6 +75,7 @@ inline QucsLibComponent::QucsLibComponent( QString& SymbolString_,
 	: SymbolString(SymbolString_), LibraryName(Lib_), ComponentName(Comp_),
   cx(0), cy(0), x1(0), x2(0), y1(0), y2(0)
 {
+  init(Lib_, Comp_);
   if (SymbolString.isEmpty())//Whenever SymbolString is empty, it tries to load the default symbol
   {
       //Load the default symbol for the current Qucs library

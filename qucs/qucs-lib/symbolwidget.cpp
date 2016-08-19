@@ -59,16 +59,17 @@ SymbolWidget::SymbolWidget(QWidget *parent)
   setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
 }
 
-void SymbolWidget::attachSymbol(Symbol* s) // bug, must be const* symbol!
+void SymbolWidget::attachSymbol(Symbol const* s)
 {
   if(symbol){
     delete symbol;
   }
 
-  if(QucsLibComponent* c=dynamic_cast<QucsLibComponent*>(s)){
+  if(QucsLibComponent const* c=dynamic_cast<QucsLibComponent const*>(s)){
     symbol = c;
     c->doSomething(*this);
   }else{
+    assert(false && "this is not a QucsLibComponent");
     // incomplete. the code does not yet work for all kinds of symbols.
   }
 

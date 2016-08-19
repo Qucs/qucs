@@ -108,7 +108,7 @@ public:
   // "attach" means "transfer ownership"
   // we could do more stuff here, such as check bounding boxes
   // (maybe we should)
-  void attachSymbol(Symbol* s); // bug. must be Symbol const*
+  void attachSymbol(Symbol const* s); // bug. must be Symbol const*
 
 public: // symbol-thru-access. slightly hackish
         // obsolete, maybe (after cleanup).
@@ -128,8 +128,8 @@ private:
   QString DragNDropText;
   QString Warning;
 
-  // this is actually Symbol, but with some headache.
-  QucsLibComponent* symbol;
+  // this is actually a Symbol, but with some headache.
+  QucsLibComponent const* symbol;
 };
 
 #endif // SYMBOLWIDGET_H
