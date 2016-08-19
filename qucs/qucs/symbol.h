@@ -33,12 +33,20 @@
   */
 
 
-class Symbol {
+class Symbol{
 public: // construct
-  Symbol();
+  Symbol() {}
   virtual ~Symbol(){}
+  virtual Symbol* newOne() const{return NULL;} // pure?
 
 public: // interface
+  virtual unsigned portNumber()const {return 0;}
+
+public: // graphics
+        // hmm, maybe just dispatch a gfx object.
+		  // leave it like that, for now.
+  virtual unsigned height(){ return 0; }
+  virtual unsigned width(){ return 0; }
   virtual int draw(QWidget&) = 0;
   //...  more to come
 };

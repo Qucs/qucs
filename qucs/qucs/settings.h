@@ -1,6 +1,8 @@
 #ifndef QUCS_SETTINGS_H
 #define QUCS_SETTINGS_H
 
+#include <QDir>
+
 struct tQucsSettings {
   int x, y, dx, dy;    // position and size of main window
   QFont font;
