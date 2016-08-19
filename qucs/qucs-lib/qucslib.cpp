@@ -513,7 +513,7 @@ void QucsLib::slotShowComponent(QListWidgetItem *Item)
 
 	 // it's a bit late, but without a symbol we cannot draw a symbol to the
 	 // widget... lets create a symbol!
-	 Symbol compSym(content, LibName, Item->text());
+    QucsLibComponent compSym(content, LibName, Item->text());
     compSym.draw(symWidget);
 
     // change currently selected category, so the user will 

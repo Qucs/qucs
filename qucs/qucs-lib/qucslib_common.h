@@ -23,6 +23,18 @@
 #include <QTextStream>
 #include <QDebug>
 
+// Application settings.
+struct tQucsSettings {
+  int x, y, dx, dy;    // position and size of main window
+  QFont font;          // font
+  QString LangDir;     // translation directory
+  QString LibDir;      // library directory
+  QString Language;
+  QDir QucsWorkDir;  // Qucs user directory where user works (usually same as QucsWorkDir
+  QDir QucsHomeDir;  // Qucs user directory where all projects are located
+};
+
+
 // global functions and data structures for the processing of
 // qucs library files
 
@@ -46,6 +58,8 @@ struct ComponentLibrary
     QList<ComponentLibraryItem> components;
 } ;
 
+
+extern tQucsSettings QucsSettings;
 
 // gets the contents of a section from a coponent description
 //

@@ -22,7 +22,7 @@
   * (this is under construction)
   *
   */
-
+#include <QWidget>
 #ifndef SYMBOL_H
 #define SYMBOL_H
 
@@ -31,13 +31,15 @@
   *
   *
   */
+
+
 class Symbol {
 public: // construct
   Symbol();
   virtual ~Symbol(){}
 
 public: // interface
-  virtual void draw(Widget&) = 0;
+  virtual int draw(QWidget&) = 0;
   //...  more to come
 };
 

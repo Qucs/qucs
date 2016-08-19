@@ -30,18 +30,10 @@
 #include <QComboBox>
 
 #include "symbolwidget.h"
+#include "libcomp.h"
 
 
-// Application settings.
-struct tQucsSettings {
-  int x, y, dx, dy;    // position and size of main window
-  QFont font;          // font
-  QString LangDir;     // translation directory
-  QString LibDir;      // library directory
-  QString Language;
-  QDir QucsWorkDir;  // Qucs user directory where user works (usually same as QucsWorkDir
-  QDir QucsHomeDir;  // Qucs user directory where all projects are located
-};
+
 
 extern tQucsSettings QucsSettings;
 extern QDir UserLibDir;
@@ -79,6 +71,7 @@ private:
   int UserLibCount;
   int libCurIdx;
   SymbolWidget *symWidget;
+  QucsLibComponent *SelectedComponent;
   QTextEdit    *CompDescr;
   QVBoxLayout  *all;
   QLineEdit *CompSearch;
