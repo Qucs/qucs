@@ -12,6 +12,7 @@
 #***************************************************************************
 dir=`dirname $0`
 top="@abs_top_builddir@"
+top_src="@abs_top_srcdir@"
 
 if [ -z "$QUCSATOR" ]; then
 	# this will work within the current git layout,
@@ -33,8 +34,8 @@ if [ -z "$QUCSHELP" ]; then
 	QUCSTRANS="$top/qucs-help/qucshelp";
 fi
 
-if [ -z "$QUCS_LIBDIR" ]; then
-	QUCS_LIBDIR="$top/qucs/qucs-lib/library";
+if [ -z "$QUCS_LIBRARY" ]; then
+	QUCS_LIBRARY="$top_src/qucs-lib/library";
 fi
 
 for i in $( make subdirs ); do
@@ -45,7 +46,7 @@ if [ -z "$QUCSDIR" ]; then
 	# use these (part of qucs-core)
 	export QUCSATOR
 	export QUCSCONV
-	export QUCS_LIBDIR
+	export QUCS_LIBRARY
 	# rely on path, forget about QUCSDIR
 	# this is *not* a user variable. don't touch.
 	export QUCS_USE_PATH=yes
