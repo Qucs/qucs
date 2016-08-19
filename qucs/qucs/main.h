@@ -30,6 +30,7 @@
 #include "wire.h"
 #include "node.h"
 #include "diagrams/diagram.h"
+#include "settings.h"
 
 class QucsApp;
 class Component;
