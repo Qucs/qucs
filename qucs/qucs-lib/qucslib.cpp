@@ -323,13 +323,11 @@ void QucsLib::slotSelectLibrary(int Index)
 
     QString filename;
 
-    if(Index < UserLibCount)  // Is it user library ?
-    {
-        filename = UserLibDir.absolutePath() + QDir::separator() + Library->itemText(Index) + ".lib";
-    }
-    else
-    {
-        filename = QucsSettings.LibDir + Library->itemText(Index) + ".lib";
+    if(Index < UserLibCount){  // Is it user library ?
+      filename = UserLibDir.absolutePath() + QDir::separator() + Library->itemText(Index) + ".lib";
+    }else{
+      filename = QucsSettings.LibDir + QDir::separator() + Library->itemText(Index) + ".lib";
+      qDebug() << "lib file there?" << filename;
     }
 
     ComponentLibrary parsedlib;
@@ -529,4 +527,4 @@ void QucsLib::slotShowComponent(QListWidgetItem *Item)
     //!!   returns back to the last selected category instead
 }
 
-
+// vim:ts=8:sw=2:noet

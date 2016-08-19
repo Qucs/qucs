@@ -114,6 +114,12 @@ int main(int argc, char *argv[])
     QucsSettings.LibDir  = QucsDir.canonicalPath() + "/share/qucs/library/";
   }
 
+  if(char* qucslibdir=getenv("QUCS_LIBRARY")){
+    qDebug() << "setting library" << qucslibdir;
+    QucsSettings.LibDir = QDir(QString(qucslibdir)).canonicalPath();
+  }else{
+  }
+
   loadSettings();
 
   UserLibDir.setPath(QucsSettings.QucsHomeDir.canonicalPath() + "/user_lib/");

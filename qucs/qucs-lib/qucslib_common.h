@@ -225,6 +225,7 @@ inline int parseComponentLibrary (QString filename, ComponentLibrary &library)
 
     int Start, End, NameStart, NameEnd;
 
+    qDebug() << filename;
     QFile file (filename);
 
     if(!file.open(QIODevice::ReadOnly))
@@ -237,8 +238,9 @@ inline int parseComponentLibrary (QString filename, ComponentLibrary &library)
     QString LibraryString = ReadWhole.readAll();
     file.close();
 
-	LibraryString.replace(QRegExp("\\r\\n"), "\n");
-	
+    // BUG: this is certainly the wrong place..
+    LibraryString.replace(QRegExp("\\r\\n"), "\n");
+
     // The libraries have a header statement like the following:
     //
     // <Qucs Library 0.0.18 "libname">
@@ -324,3 +326,4 @@ inline int parseComponentLibrary (QString filename, ComponentLibrary &library)
 }
 
 #endif // _QUCSLIB_COMMON_H_
+// vim:ts=8:sw=2:noet

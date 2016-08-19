@@ -78,7 +78,7 @@ inline QucsLibComponent::QucsLibComponent( QString& SymbolString_,
   {
       //Load the default symbol for the current Qucs library
       ComponentLibrary parsedlib;
-      QString libpath = QucsSettings.LibDir + Lib_ + ".lib";
+      QString libpath = QucsSettings.LibDir + "/" + Lib_ + ".lib";
       int result = parseComponentLibrary (libpath, parsedlib);
 
 		// BUG: throw if there is an error. don't randomly spawn Messageboxes
