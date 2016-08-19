@@ -22,8 +22,9 @@
 #include <QFileInfo>
 #include <QTextStream>
 #include <QDebug>
+#include "settings.h"
 
-// Application settings.
+#if 0 // already defined. but not included here?
 struct tQucsSettings {
   int x, y, dx, dy;    // position and size of main window
   QFont font;          // font
@@ -33,6 +34,7 @@ struct tQucsSettings {
   QDir QucsWorkDir;  // Qucs user directory where user works (usually same as QucsWorkDir
   QDir QucsHomeDir;  // Qucs user directory where all projects are located
 };
+#endif
 
 
 // global functions and data structures for the processing of

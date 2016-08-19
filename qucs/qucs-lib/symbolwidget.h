@@ -102,13 +102,7 @@ public:
   QString Prefix, LibraryName, ComponentName;
   QString ModelString, VerilogModelString, VHDLModelString;
 
-  QList<Line *> Lines;
-  QList<Arc *> Arcs;
-  QList<Area *> Rects, Ellips;
-  QList<Text *>  Texts;
-  int cx, cy, x1, x2, y1, y2;
-  int TextWidth, DragNDropWidth, TextHeight;
-  int  analyseLine(const QString&);
+  int DragNDropWidth, TextHeight;
 
 protected:
   void mouseMoveEvent(QMouseEvent*);

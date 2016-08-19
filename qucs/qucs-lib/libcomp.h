@@ -7,11 +7,20 @@
 
 
 class QucsLibComponent : public Symbol{
-        private:
-        QString SymbolString, LibraryName, ComponentName;
-	public:
+private:
+	QString SymbolString, LibraryName, ComponentName;
+public:
 	QucsLibComponent( QString& , const QString&, const QString& );
         int draw(QWidget&);
+private: // implementation
+  int  analyseLine(const QString&);
+private: // gfx data
+  int TextWidth;
+  int cx, cy, x1, x2, y1, y2;
+  QList<Line *> Lines;
+  QList<Arc *> Arcs;
+  QList<Area *> Rects, Ellips;
+  QList<Text *>  Texts;
 };
 
 extern tQucsSettings QucsSettings;
@@ -50,18 +59,18 @@ QucsLibComponent::QucsLibComponent( QString& SymbolString_,
 
 int QucsLibComponent::draw(QWidget& w)
 {
-  w.Arcs.clear();
-  w.Lines.clear();
-  w.Rects.clear();
-  w.Ellips.clear();
-  w.Texts.clear();
+  Arcs.clear();
+  Lines.clear();
+  Rects.clear();
+  Ellips.clear();
+  Texts.clear();
 
   QString Line;
   ///QString foo = SymbolString;
   QTextStream stream(&SymbolString, QIODevice::ReadOnly);
 
-  w.x1 = w.y1 = INT_MAX;
-  w.x2 = w.y2 = INT_MIN;
+  x1 = y1 = INT_MAX;
+  x2 = y2 = INT_MIN;
 
   int z=0, Result;
   while(!stream.atEnd()) {
@@ -72,20 +81,20 @@ int QucsLibComponent::draw(QWidget& w)
     if(Line.at(0) != '<') return -1; // check for start char
     if(Line.at(Line.length()-1) != '>') return -1; // check for end char
     Line = Line.mid(1, Line.length()-2); // cut off start and end character
-    Result = w.analyseLine(Line);
+    Result = analyseLine(Line);
     if(Result < 0) return -6;   // line format error
     z += Result;
   }
 
-  w.x1 -= 4;   // enlarge component boundings a little
-  w.x2 += 4;
-  w.y1 -= 4;
-  w.y2 += 4;
-  w.cx  = -w.x1 + w.TextWidth;
-  w.cy  = -w.y1;
+  x1 -= 4;   // enlarge component boundings a little
+  x2 += 4;
+  y1 -= 4;
+  y2 += 4;
+  cx  = -x1 + TextWidth;
+  cy  = -y1;
 
-  int dx = w.x2-w.x1 + w.TextWidth;
-  if((w.x2-w.x1) < w.DragNDropWidth)
+  int dx = x2-x1 + TextWidth;
+  if((x2-x1) < w.DragNDropWidth)
     dx = (w.x2-w.x1 + w.DragNDropWidth)/2 + w.TextWidth;
   if(dx < w.DragNDropWidth)
     dx = w.DragNDropWidth;
