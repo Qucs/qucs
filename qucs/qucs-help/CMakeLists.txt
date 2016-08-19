@@ -17,10 +17,6 @@ SET(CMAKE_BUILD_TYPE Debug)
 
 ADD_DEFINITIONS( -DHAVE_CONFIG_H )
 
-# define variables
-SET(DOCDIR "${CMAKE_INSTALL_PREFIX}/share/qucs/docs/")
-SET(LANGUAGEDIR "${CMAKE_INSTALL_PREFIX}/share/qucs/lang/")
-
 # configure the header config.h
 CONFIGURE_FILE (
     "${PROJECT_SOURCE_DIR}/../config.h.cmake"

@@ -764,20 +764,6 @@ mingw* | *msys* | cygwin*)
 esac
 AC_SUBST(PATHXFORM)
 
-dnl Create path info.
-LANG_PATH="$prefix/share/qucs/lang/"
-AC_DEFINE_UNQUOTED([LANGUAGEDIR], ["$LANG_PATH"],
-  [Where the language files go.])
-unset LANG_PATH
-LIBRARY_PATH="$prefix/share/qucs/library/"
-AC_DEFINE_UNQUOTED([LIBRARYDIR], ["$LIBRARY_PATH"],
-  [Where the component library files go.])
-unset LIBRARY_PATH
-DOC_PATH="$prefix/share/qucs/docs/"
-AC_DEFINE_UNQUOTED([DOCDIR], ["$DOC_PATH"],
-  [Where the documentation files go.])
-unset DOC_PATH
-
 dnl Definitions at top of <config.h>.
 AH_TOP([
 /* __BEGIN_DECLS should be used at the beginning of your declarations,

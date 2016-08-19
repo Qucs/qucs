@@ -33,7 +33,7 @@ endif
 
 SUBDIRS = examples qucs qucs-core $(DOC_SUBDIR)
 
-EXTRA_DIST = bootstrap
+EXTRA_DIST = bootstrap VERSION README.md NEWS.md CONTRIBUTING.md
 
 # this is insane. the qucs testsuite needs to be
 #  - either moved into qucs
