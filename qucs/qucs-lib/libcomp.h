@@ -4,14 +4,13 @@
 #include "symbol.h"
 #include "qucslib_common.h"
 #include <QFontMetrics>//Compute text size
+#include <QDebug>
 
 #include "symbolwidget.h" // Line etc.
 /*!
  * \brief this library provides symbols. these.
  */
 
-#include <iostream>
-using namespace std;
 struct Line;
 struct Arc;
 struct Area;
@@ -160,8 +159,8 @@ inline QucsLibComponent::QucsLibComponent( QString& SymbolString_,
   y2 += 4;
   cx  = -x1 + TextWidth;
   cy  = -y1;
-cout << "x1: " << x1 << "  Textw:" << TextWidth << endl;
-cout << cx << "   " << cy << endl;
+  qDebug() << "x1: " << x1 << "  Textw:" << TextWidth;
+  qDebug() << cx << "   " << cy;
   }
 }
 
@@ -169,20 +168,19 @@ cout << cx << "   " << cy << endl;
 inline void QucsLibComponent::AdjustWidgetSize(QWidget& w) const
 {
   int dx = x2-x1 + TextWidth;
-  if((x2-x1) < DragNDropWidth)
-   { 
-   dx = (x2-x1 + DragNDropWidth)/2 + TextWidth;}
+  if((x2-x1) < DragNDropWidth){
+    dx = (x2-x1 + DragNDropWidth)/2 + TextWidth;}
   if(dx < DragNDropWidth){
     dx = DragNDropWidth;
   }
   w.setMinimumSize(dx, y2-y1 + TextHeight+4);
   if(w.width() > dx){
-	  dx = w.width();
+    dx = w.width();
   }
   w.resize(dx, y2-y1 + TextHeight+4);
   w.update(); // what does it do?
-
 }
 
 
 #endif
+// vim:ts=8:sw=2:noet

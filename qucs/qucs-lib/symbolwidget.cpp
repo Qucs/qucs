@@ -67,7 +67,8 @@ void SymbolWidget::attachSymbol(Symbol const* s)
 
   if(QucsLibComponent const* c=dynamic_cast<QucsLibComponent const*>(s)){
     symbol = c;
-    c->doSomething(*this);
+    qDebug() << c->width() << c->height();
+    c->AdjustWidgetSize(*this);
   }else{
     assert(false && "this is not a QucsLibComponent");
     // incomplete. the code does not yet work for all kinds of symbols.
