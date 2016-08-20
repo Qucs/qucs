@@ -3,13 +3,15 @@
 
 #include "symbol.h"
 #include "qucslib_common.h"
+#include <QFontMetrics>//Compute text size
 
 #include "symbolwidget.h" // Line etc.
 /*!
  * \brief this library provides symbols. these.
  */
 
-
+#include <iostream>
+using namespace std;
 struct Line;
 struct Arc;
 struct Area;
@@ -37,9 +39,12 @@ private: // component specifics.
   QString VHDLModelString;
   QString Prefix;
   int Text_x, Text_y;
-private: // gfx data
+private://Text dimensions
   int TextWidth;
   int TextHeight;
+  int DragNDropWidth;
+
+private: // gfx data
   int cx, cy, x1, x2, y1, y2;
   QList<Line *> Lines;
   QList<Arc *> Arcs;
@@ -61,7 +66,7 @@ public: // bogus obsolete XML creation.
          LibraryName + "\" 0 \"" + ComponentName + "\" 0>";
   }
 public: // something
-  void doSomething(QWidget& w) const;
+  void AdjustWidgetSize(QWidget& w) const;
 public:  // more random access to private members (transitional?)
   QString modelString() const{ return ModelString;}
   QString verilogModelString() const{ return VerilogModelString;}
@@ -107,6 +112,15 @@ inline QucsLibComponent::QucsLibComponent( QString& SymbolString_,
   x1 = y1 = INT_MAX;
   x2 = y2 = INT_MIN;
 
+  QString PaintText = "Symbol:";//Redundant, but...
+  QString DragNDropText = "! Drag n'Drop me !";
+
+
+  QFontMetrics  metrics(QucsSettings.font, 0); // use the the screen-compatible metric
+  TextWidth = metrics.width(PaintText) + 4;
+  TextHeight = metrics.lineSpacing();
+  DragNDropWidth = metrics.width(DragNDropText);    // get size of text
+
   int z=0, Result;
 
   int error=0; // BUG: that's what enums are for
@@ -146,31 +160,27 @@ inline QucsLibComponent::QucsLibComponent( QString& SymbolString_,
   y2 += 4;
   cx  = -x1 + TextWidth;
   cy  = -y1;
-
+cout << "x1: " << x1 << "  Textw:" << TextWidth << endl;
+cout << cx << "   " << cy << endl;
   }
 }
 
 
-inline void QucsLibComponent::doSomething(QWidget& w) const
+inline void QucsLibComponent::AdjustWidgetSize(QWidget& w) const
 {
-
-  // what is this? figure out soon
-  int DragNDropWidth=0;
-  int TextHeight=0;
-
   int dx = x2-x1 + TextWidth;
   if((x2-x1) < DragNDropWidth)
-    dx = (x2-x1 + DragNDropWidth)/2 + TextWidth;
+   { 
+   dx = (x2-x1 + DragNDropWidth)/2 + TextWidth;}
   if(dx < DragNDropWidth){
     dx = DragNDropWidth;
   }
   w.setMinimumSize(dx, y2-y1 + TextHeight+4);
-  if(width() > dx){
-	  dx = width();
+  if(w.width() > dx){
+	  dx = w.width();
   }
   w.resize(dx, y2-y1 + TextHeight+4);
   w.update(); // what does it do?
-//   return z;      // return number of ports
 
 }
 
