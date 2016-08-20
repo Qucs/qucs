@@ -29,7 +29,16 @@ EXTRA_DIST = $(SOURCES)
 SOURCES = textmode.tex content.tex
 TARGETS = textmode.pdf
 
-tutorial: $(TARGETS)
+export TEXINPUTS=$(srcdir):$(srcdir)/..:
+
+textmode.pdf: $(SOURCES)
+
+pics-tutorial:
+	cd pics && $(MAKE) $(AM_MAKEFLAGS) tutorial
+
+tutorial: pics-tutorial $(TARGETS)
+
+book: pics-tutorial
 
 SUFFIXES = .dvi .tex .pdf .ps
 
@@ -39,9 +48,9 @@ SUFFIXES = .dvi .tex .pdf .ps
 	$(LATEX) -interaction=batchmode $<
 
 .tex.pdf:
-	TEXINPUTS=$$TEXINPUTS:.. $(PDFLATEX) $<
-	TEXINPUTS=$$TEXINPUTS:.. $(PDFLATEX) $<
-	TEXINPUTS=$$TEXINPUTS:.. $(PDFLATEX) -interaction=batchmode $<
+	$(PDFLATEX) $<
+	$(PDFLATEX) $<
+	$(PDFLATEX) -interaction=batchmode $<
 
 .dvi.ps:
 	$(DVIPS) $< -o $@

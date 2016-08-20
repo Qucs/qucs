@@ -27,6 +27,8 @@ EXTRA_DIST = $(SOURCES)
 SOURCES = lna.tex content.tex bfg403.tex
 TARGETS = lna.pdf
 
+export TEXINPUTS=$(srcdir):$(srcdir)/..:
+
 tutorial: $(TARGETS)
 
 SUFFIXES = .dvi .tex .pdf .ps
@@ -37,9 +39,9 @@ SUFFIXES = .dvi .tex .pdf .ps
 	$(LATEX) -interaction=batchmode $<
 
 .tex.pdf:
-	TEXINPUTS=$$TEXINPUTS:.. $(PDFLATEX) $<
-	TEXINPUTS=$$TEXINPUTS:.. $(PDFLATEX) $<
-	TEXINPUTS=$$TEXINPUTS:.. $(PDFLATEX) -interaction=batchmode $<
+	$(PDFLATEX) $<
+	$(PDFLATEX) $<
+	$(PDFLATEX) -interaction=batchmode $<
 
 .dvi.ps:
 	$(DVIPS) $< -o $@

@@ -29,6 +29,8 @@ EXTRA_DIST = $(SOURCES)
 SOURCES = modelbjt.tex content.tex bfg425s2p.tex bfg425.tex
 TARGETS = modelbjt.pdf
 
+export TEXINPUTS=$(srcdir):$(srcdir)/..:
+
 tutorial: $(TARGETS)
 
 SUFFIXES = .dvi .tex .pdf .ps
@@ -39,9 +41,9 @@ SUFFIXES = .dvi .tex .pdf .ps
 	$(LATEX) -interaction=batchmode $<
 
 .tex.pdf:
-	TEXINPUTS=$$TEXINPUTS:.. $(PDFLATEX) $<
-	TEXINPUTS=$$TEXINPUTS:.. $(PDFLATEX) $<
-	TEXINPUTS=$$TEXINPUTS:.. $(PDFLATEX) -interaction=batchmode $<
+	$(PDFLATEX) $<
+	$(PDFLATEX) $<
+	$(PDFLATEX) -interaction=batchmode $<
 
 .dvi.ps:
 	$(DVIPS) $< -o $@

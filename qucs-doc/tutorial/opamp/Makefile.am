@@ -29,6 +29,8 @@ EXTRA_DIST = $(SOURCES)
 SOURCES = opamp.tex content.tex
 TARGETS = opamp.pdf
 
+export TEXINPUTS=$(srcdir):$(srcdir)/..:
+
 opamp.pdf: $(SOURCES)
 
 pics-tutorial:
@@ -46,9 +48,9 @@ SUFFIXES = .dvi .tex .pdf .ps
 	$(LATEX) -interaction=batchmode $<
 
 .tex.pdf:
-	TEXINPUTS=$$TEXINPUTS:.. $(PDFLATEX) $<
-	TEXINPUTS=$$TEXINPUTS:.. $(PDFLATEX) $<
-	TEXINPUTS=$$TEXINPUTS:.. $(PDFLATEX) -interaction=batchmode $<
+	$(PDFLATEX) $<
+	$(PDFLATEX) $<
+	$(PDFLATEX) -interaction=batchmode $<
 
 .dvi.ps:
 	$(DVIPS) $< -o $@

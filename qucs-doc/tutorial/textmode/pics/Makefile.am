@@ -22,16 +22,23 @@
 # Boston, MA 02110-1301, USA.
 #
 
-EXTRA_DIST = $(PDFS)
+EXTRA_DIST = $(EPSFILES)
 
-PDFS = \
+EPSFILES = \
   rc_ac.eps \
   rc_ac_circuit.eps \
   rc_ac_python.eps \
   rc_ac_sweep_python.eps \
   rc_ac_tr.eps
 
-CLEANFILES = *~ *.orig *.rej
+XPDF = $(EPSFILES:.eps=.pdf)
+
+tutorial: $(XPDF)
+
+.eps.pdf:
+	$(EPSTOPDF) $< -o=$@
+
+CLEANFILES = $(XPDF) *~ *.orig *.rej
 MAINTAINERCLEANFILES = Makefile.in
 
 

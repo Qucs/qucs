@@ -31,16 +31,18 @@ TEXFILES = titlepage.tex basics.tex reportbook.tex
 TARGETS = reportbook.pdf
 PICDIRS = verilog
 
+export TEXINPUTS=$(srcdir):
+
 pics-book:
 	@for d in $(PICDIRS); do \
-	  (cd $$d && $(MAKE) $(AM_MAKEFLAGS) book); \
+	  (cd $$d && $(MAKE) $(AM_MAKEFLAGS) book) || exit $$?; \
 	done
 
 book: pics-book $(TARGETS)
 
 report:
 	@for d in $(SUBDIRS); do \
-	  (cd $$d && $(MAKE) $(AM_MAKEFLAGS) report); \
+	  (cd $$d && $(MAKE) $(AM_MAKEFLAGS) report) || exit $$?; \
 	done
 
 SUFFIXES = .dvi .tex .pdf .ps .eps .fig

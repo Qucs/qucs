@@ -29,6 +29,8 @@ EXTRA_DIST = $(SOURCES)
 SOURCES = timer555.tex content.tex
 TARGETS = timer555.pdf
 
+export TEXINPUTS=$(srcdir):$(srcdir)/..:
+
 timer555.pdf: $(SOURCES)
 
 pics-tutorial:
@@ -46,9 +48,9 @@ SUFFIXES = .dvi .tex .pdf .ps
 	$(LATEX) -interaction=batchmode $<
 
 .tex.pdf:
-	TEXINPUTS=$$TEXINPUTS:.. $(PDFLATEX) $<
-	TEXINPUTS=$$TEXINPUTS:.. $(PDFLATEX) $<
-	TEXINPUTS=$$TEXINPUTS:.. $(PDFLATEX) -interaction=batchmode $<
+	$(PDFLATEX) $<
+	$(PDFLATEX) $<
+	$(PDFLATEX) -interaction=batchmode $<
 
 .dvi.ps:
 	$(DVIPS) $< -o $@

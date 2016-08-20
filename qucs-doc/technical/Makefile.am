@@ -57,12 +57,14 @@ PSFRAGTEXS = $(FIGURES:.fig=.tex) $(MATHFILES:.m=.tex)
 PDFFILES = $(FIGURES:.fig=.pdf)
 FRGFILES = $(FIGURES:.fig=.frg)
 PDFFIGURES = $(PSFILES:.eps=.pdf) $(MPSFILES:.eps=.pdf)
-BIBFILE = $(srcdir)/literature.bib
+BIBFILE = literature.bib
 CHAPTERS = sparameter.tex noisewaves.tex dcanalysis.tex acanalysis.tex \
   transient.tex devices.tex microstrip.tex coplanar.tex acnoise.tex    \
   hbanalysis.tex grammar-common.tex grammar-qucs.tex grammar-data.tex  \
   hbnoise.tex synthesis.tex transline.tex maths.tex lineardevices.tex
 
+export TEXINPUTS=$(srcdir):
+export BIBINPUTS=$(srcdir):
 
 technical: technical.dvi technical.ps technical.pdf
 	$(TEX2PDF) technical
@@ -101,7 +103,7 @@ SUFFIXES = .dvi .tex .pdf .ps .eps .fig .frg .m
 
 if USE_OCTAVE
 .m.eps:
-	$(OCTAVE) $<
+	$(OCTAVE) --path $(srcdir) $<
 else
 .m.eps:
 	@echo -n not using octave to update "$@".

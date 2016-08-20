@@ -24,12 +24,16 @@
 
 SUBDIRS = pics
 
-EXTRA_DIST = $(SOURCES)
+EXTRA_DIST = $(SOURCES) $(BIBFILE)
 
 SOURCES = activefilter.tex content.tex
+BIBFILE = activefilter.bib
 TARGETS = activefilter.pdf
 
-activefilter.pdf: $(SOURCES)
+export TEXINPUTS=$(srcdir):$(srcdir)/..:
+export BIBINPUTS=$(srcdir):
+
+activefilter.pdf: $(SOURCES) $(BIBFILE)
 
 pics-report:
 	cd pics && $(MAKE) $(AM_MAKEFLAGS) report
@@ -46,10 +50,10 @@ SUFFIXES = .tex .dvi .ps
 	$(LATEX) -interaction=batchmode --shell-escape $<
 
 .tex.pdf:
-	TEXINPUTS=$$TEXINPUTS:.. $(PDFLATEX) --shell-escape $<
+	$(PDFLATEX) --shell-escape $<
 	bibtex $*
-	TEXINPUTS=$$TEXINPUTS:.. $(PDFLATEX) --shell-escape $<
-	TEXINPUTS=$$TEXINPUTS:.. $(PDFLATEX) -interaction=batchmode --shell-escape $<
+	$(PDFLATEX) --shell-escape $<
+	$(PDFLATEX) -interaction=batchmode --shell-escape $<
 
 .dvi.ps:
 	$(DVIPS) $< -o $@
@@ -59,6 +63,6 @@ docdatadir = ${prefix}/share/qucs/docs/report
 docdata_DATA = ${TARGETS}
 
 
-CLEANFILES = *~ *.bak *.aux *.log *.toc *.pdf *.bbl *.blg *.dvi *.brf *.out *.idx
+CLEANFILES = *~ *.bak *.aux *.log *.toc *.pdf *.bbl *.blg *.dvi *.brf *.out *.idx *.pgf-plot.table *.pgf-plot.gnuplot
 MAINTAINERCLEANFILES = Makefile.in
 DISTCLEANFILES = *.ps *.pdf
