@@ -22,17 +22,16 @@
 void QucsLibComponent::draw(QWidget& w) const
 {
   QPainter Painter(&w);
-  Painter.drawText(2, 2, 0, 0, Qt::AlignLeft | Qt::TextDontClip, "PaintText");
+//  Painter.drawText(2, 2, 0, 0, Qt::AlignLeft | Qt::TextDontClip, "PaintText");
 
   QFontMetrics metrics(QucsSettings.font, 0);
 
   // BUG: this is no a warning. just a symbol.
-  Painter.drawText(2, metrics.height(), 0, 0, Qt::AlignLeft | Qt::TextDontClip, "Warning");
+ // Painter.drawText(2, metrics.height(), 0, 0, Qt::AlignLeft | Qt::TextDontClip, "Warning");
 
-  int DragNDropWidth=0; // BUG: a symbol does not have a DragNdropWidth
-  int dx = (x2-x1)/2 + TextWidth - DragNDropWidth/2;
+  int dx = (x2-x1)/2; //  + TextWidth - DragNDropWidth/2;
   if(dx < 2)  dx = 2;
-  Painter.drawText(dx, y2-y1+2, 0, 0, Qt::AlignLeft | Qt::TextDontClip, "DragNDropText");
+ // Painter.drawText(dx, y2-y1+2, 0, 0, Qt::AlignLeft | Qt::TextDontClip, "DragNDropText");
 
   // paint all lines
   for(int i=0; i<Lines.size(); i++) {
@@ -247,21 +246,9 @@ void QucsLibComponent::init(const QString& Lib_, const QString& Comp_)
   x2 += 4;
   y1 -= 4;
   y2 += 4;
-  cx  = -x1 + TextWidth;
+  cx  = -x1; //  + TextWidth;
   cy  = -y1;
 
-  int DragNDropWidth=0; // what does this do?
-                        // does not seem to be a symbol property...
-
-  int dx = x2-x1 + TextWidth;
-  if((x2-x1) < DragNDropWidth)
-    dx = (x2-x1 + DragNDropWidth)/2 + TextWidth;
-  if(dx < DragNDropWidth)
-    dx = DragNDropWidth;
-  // FIXME: w.setMinimumSize(dx, y2-y1 + TextHeight+4);
-  if(width() > dx)  dx = width();
-  // resize(dx, y2-y1 + TextHeight+4); FIXME: resize what?!
-  // update(); fixme: update who?
   PortNumber = PortNo;
 }
 

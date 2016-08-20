@@ -67,9 +67,9 @@ private: // component specifics.
   QString Prefix;
   int Text_x, Text_y;
 private://Text dimensions
-  int TextWidth;
-  int TextHeight;
-  int DragNDropWidth;
+  // int TextWidth;
+  // int TextHeight;
+  // int DragNDropWidth;
 
 private: // gfx data
   int cx, cy, x1, x2, y1, y2;
@@ -131,6 +131,8 @@ inline QucsLibComponent::QucsLibComponent( QString& SymbolString_,
 
     // copy the contents of default symbol section to a string
     SymbolString = parsedlib.defaultSymbol;
+  }
+  {
 
   QString Line;
   ///QString foo = SymbolString;
@@ -139,14 +141,6 @@ inline QucsLibComponent::QucsLibComponent( QString& SymbolString_,
 //  x1 = y1 = INT_MAX; ?!
 //  x2 = y2 = INT_MIN; ?!
 
-  QString PaintText = "Symbol:";//Redundant, but...
-  QString DragNDropText = "! Drag n'Drop me !";
-
-
-  QFontMetrics  metrics(QucsSettings.font, 0); // use the the screen-compatible metric
-  TextWidth = metrics.width(PaintText) + 4;
-  TextHeight = metrics.lineSpacing();
-  DragNDropWidth = metrics.width(DragNDropText);    // get size of text
 
   int z=0, Result;
 
@@ -185,9 +179,9 @@ inline QucsLibComponent::QucsLibComponent( QString& SymbolString_,
   x2 += 4;
   y1 -= 4;
   y2 += 4;
-  cx  = -x1 + TextWidth;
+  cx  = -x1; //  + TextWidth;
   cy  = -y1;
-  qDebug() << "created symbol x1: " << x1 << "x2 " << x2 << "  Textw:" << TextWidth;
+//  qDebug() << "created symbol x1: " << x1 << "x2 " << x2 << "  Textw:" << TextWidth;
   qDebug() << "c" << cx << "   " << cy;
   }
 }
