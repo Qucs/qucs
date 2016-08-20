@@ -102,13 +102,16 @@ public:
 
   // component properties
 
-  int DragNDropWidth, TextHeight, TextWidth;
+  unsigned DragNDropWidth, TextHeight, TextWidth;
 
 public:
   // "attach" means "transfer ownership"
   // we could do more stuff here, such as check bounding boxes
   // (maybe we should)
-  void attachSymbol(Symbol const* s); // bug. must be Symbol const*
+  void attachSymbol(Symbol const* s);
+
+private: // implementation
+  void AdjustWidgetSize(Symbol const& s);
 
 public: // symbol-thru-access. slightly hackish
         // obsolete, maybe (after cleanup).

@@ -65,10 +65,11 @@ void SymbolWidget::attachSymbol(Symbol const* s)
     delete symbol;
   }
 
+  AdjustWidgetSize(*s);
+  qDebug() << "attaching" << s->width() << s->height();
+
   if(QucsLibComponent const* c=dynamic_cast<QucsLibComponent const*>(s)){
     symbol = c;
-    qDebug() << c->width() << c->height();
-    c->AdjustWidgetSize(*this);
   }else{
     assert(false && "this is not a QucsLibComponent");
     // incomplete. the code does not yet work for all kinds of symbols.
@@ -76,9 +77,29 @@ void SymbolWidget::attachSymbol(Symbol const* s)
 
 }
 
+inline void SymbolWidget::AdjustWidgetSize(Symbol const& s)
+{
+  SymbolWidget& w(*this);
+  unsigned dx = s.width() + TextWidth;
+  if(s.width() < w.DragNDropWidth){
+    dx = (s.width() + w.DragNDropWidth)/2 + TextWidth;
+  }
+  if(dx < w.DragNDropWidth){
+    dx = w.DragNDropWidth;
+  }
+  setMinimumSize(dx, s.height() + TextHeight+4);
+  if(unsigned(w.width()) > dx){
+    dx = w.width();
+  }
+  resize(dx, s.height() + TextHeight+4);
+  update(); // what does it do?
+}
+// ************************************************************
+
 SymbolWidget::~SymbolWidget()
 {
   if(symbol){
+    // incomplete: detach/check attach count first
     delete symbol;
   }
 }

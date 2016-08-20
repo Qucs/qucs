@@ -1,3 +1,20 @@
+/***************************************************************************
+                               libcomp.h
+                              ------------------
+    begin                : yes
+    copyright            : Qucs Developers
+    authors              : Andres Martinez, Felix Salfelder
+    email                : yes, feel free
+ ***************************************************************************/
+
+/***************************************************************************
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 2 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ ***************************************************************************/
 #ifndef LIBCOMP_H
 #define LIBCOMP_H
 
@@ -5,6 +22,7 @@
 #include "qucslib_common.h"
 #include <QFontMetrics>//Compute text size
 #include <QDebug>
+#include <assert.h>
 
 #include "symbolwidget.h" // Line etc.
 /*!
@@ -28,6 +46,16 @@ public:
 public: // symbol interface overloads
   Symbol* newOne() const { return new QucsLibComponent(*this); }
   unsigned portNumber() const{return PortNumber;}
+  unsigned width() const
+  {
+    assert(x2>=x1);
+    return x2-x1;
+  }
+  unsigned height() const
+  {
+    assert(y2>=y1);
+    return y2-y1;
+  }
 private: // implementation
   int  analyseLine(const QString&);
   bool getPen  (const QString&, QPen&, int);
@@ -108,8 +136,8 @@ inline QucsLibComponent::QucsLibComponent( QString& SymbolString_,
   ///QString foo = SymbolString;
   QTextStream stream(&SymbolString, QIODevice::ReadOnly);
 
-  x1 = y1 = INT_MAX;
-  x2 = y2 = INT_MIN;
+//  x1 = y1 = INT_MAX; ?!
+//  x2 = y2 = INT_MIN; ?!
 
   QString PaintText = "Symbol:";//Redundant, but...
   QString DragNDropText = "! Drag n'Drop me !";
@@ -159,27 +187,12 @@ inline QucsLibComponent::QucsLibComponent( QString& SymbolString_,
   y2 += 4;
   cx  = -x1 + TextWidth;
   cy  = -y1;
-  qDebug() << "x1: " << x1 << "  Textw:" << TextWidth;
-  qDebug() << cx << "   " << cy;
+  qDebug() << "created symbol x1: " << x1 << "x2 " << x2 << "  Textw:" << TextWidth;
+  qDebug() << "c" << cx << "   " << cy;
   }
 }
 
 
-inline void QucsLibComponent::AdjustWidgetSize(QWidget& w) const
-{
-  int dx = x2-x1 + TextWidth;
-  if((x2-x1) < DragNDropWidth){
-    dx = (x2-x1 + DragNDropWidth)/2 + TextWidth;}
-  if(dx < DragNDropWidth){
-    dx = DragNDropWidth;
-  }
-  w.setMinimumSize(dx, y2-y1 + TextHeight+4);
-  if(w.width() > dx){
-    dx = w.width();
-  }
-  w.resize(dx, y2-y1 + TextHeight+4);
-  w.update(); // what does it do?
-}
 
 
 #endif
