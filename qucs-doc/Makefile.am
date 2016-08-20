@@ -31,6 +31,9 @@ EXTRA_DIST = bootstrap RELEASE
 # default to build all PDF files
 all-recursive: pdf
 
+# make sure PDFs are built before installing
+install-recursive: pdf
+
 pdf:
 	@for d in $(DOCPDF); do \
 	  (cd $$d && $(MAKE) $(AM_MAKEFLAGS) $$d) || exit $$?; \
