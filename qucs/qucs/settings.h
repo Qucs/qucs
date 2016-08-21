@@ -2,6 +2,8 @@
 #define QUCS_SETTINGS_H
 
 #include <QDir>
+#include <QFont>
+#include <QColor>
 
 struct tQucsSettings {
   int x, y, dx, dy;    // position and size of main window

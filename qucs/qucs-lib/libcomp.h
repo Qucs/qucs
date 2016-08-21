@@ -40,7 +40,7 @@ private:
   QString SymbolString, LibraryName, ComponentName;
 public:
   QucsLibComponent( QString& , const QString&, const QString& );
-  void draw(QWidget&) const;
+  void draw(QPainter&) const;
 public:
   void init(const QString& Lib_, const QString& Comp_); // help construction
 public: // symbol interface overloads

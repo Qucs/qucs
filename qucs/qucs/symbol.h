@@ -22,9 +22,10 @@
   * (this is under construction)
   *
   */
-#include <QWidget>
 #ifndef SYMBOL_H
 #define SYMBOL_H
+
+#include <cstddef>
 
 /** \class Symbol
   * \brief Superclass of all circuit components (except wires).
@@ -32,12 +33,13 @@
   *
   */
 
+class QPainter;
 
 class Symbol{
 public: // construct
   Symbol() {}
   virtual ~Symbol(){}
-  virtual Symbol* newOne() const{return NULL;} // pure?
+  virtual Symbol* newOne()const {return NULL;} // pure?
 
 public: // interface
   virtual unsigned portNumber()const {return 0;}
@@ -45,9 +47,9 @@ public: // interface
 public: // graphics
         // hmm, maybe just dispatch a gfx object.
 		  // leave it like that, for now.
-  virtual unsigned height() const{ return 0; }
-  virtual unsigned width() const{ return 0; }
-  virtual void draw(QWidget&) const = 0;
+  virtual unsigned height()const {return 0;}
+  virtual unsigned width()const {return 0;}
+  virtual void draw(QPainter&)const=0;
   //...  more to come
 };
 

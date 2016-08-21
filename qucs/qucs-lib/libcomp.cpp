@@ -19,9 +19,8 @@
 #include <cmath>
 #include <QPainter>
 
-void QucsLibComponent::draw(QWidget& w) const
+void QucsLibComponent::draw(QPainter& Painter) const
 {
-  QPainter Painter(&w);
 //  Painter.drawText(2, 2, 0, 0, Qt::AlignLeft | Qt::TextDontClip, "PaintText");
 
   QFontMetrics metrics(QucsSettings.font, 0);

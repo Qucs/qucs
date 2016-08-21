@@ -153,8 +153,10 @@ void SymbolWidget::mouseMoveEvent(QMouseEvent*)
 // ************************************************************
 void SymbolWidget::paintEvent(QPaintEvent*)
 {
+  QPainter Painter(this);
+  Painter.drawText(2, 2, 0, 0, Qt::AlignLeft | Qt::TextDontClip, PaintText);
   if(symbol){
-    symbol->draw(*this);
+    symbol->draw(Painter);
   }else{
     // cannot draw anything
     // this might not hurt anybody.
