@@ -25,8 +25,6 @@
 #ifndef SYMBOL_H
 #define SYMBOL_H
 
-#include <cstddef>
-
 /** \class Symbol
   * \brief Superclass of all circuit components (except wires).
   *
@@ -39,7 +37,7 @@ class Symbol{
 public: // construct
   Symbol() {}
   virtual ~Symbol(){}
-  virtual Symbol* newOne()const {return NULL;} // pure?
+  virtual Symbol* newOne()const {return 0 /*NULL, actually*/;} // pure?
 
 public: // interface
   virtual unsigned portNumber()const {return 0;}
