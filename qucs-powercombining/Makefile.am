@@ -28,6 +28,7 @@ MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
 
 qucspowercombining_SOURCES = main.cpp qucspowercombiningtool.cpp qrc_qucspowercombining.cpp
 
+EXTRA_DIST = qucspowercombining.qrc
 qrc_qucspowercombining.cpp: qucspowercombining.qrc
 	$(RCC) -o $@ $<
 
@@ -36,6 +37,8 @@ nodist_qucspowercombining_SOURCES = $(MOCFILES)
 AM_CPPFLAGS = $(X11_INCLUDES) $(QT_INCLUDES)
 qucspowercombining_LDFLAGS = $(X11_LDFLAGS) $(QT_LDFLAGS)
 qucspowercombining_LDADD = $(X11_LIBS) $(QT_LIBS)
+
+noinst_HEADERS = $(MOCHEADERS)
 
 SUFFIXES = .moc.cpp
 
