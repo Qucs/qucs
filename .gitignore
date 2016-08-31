@@ -267,3 +267,6 @@ CMakeFiles
 CMakeCache.txt
 *.cmake
 *.depends
+/qucs-core/src/components/verilog/constants.vams
+/qucs-core/src/components/verilog/disciplines.vams
+/qucs-doc/technical/octave-workspace
