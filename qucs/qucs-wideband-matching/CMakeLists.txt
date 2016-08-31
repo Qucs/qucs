@@ -2,6 +2,8 @@ PROJECT(QucsWidebandMatching CXX C)
 CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
 cmake_policy(VERSION 2.6)
 
+FIND_PACKAGE(Qt4 COMPONENTS QtSvg QtGui QtCore)
+INCLUDE(${QT_USE_FILE})
 # use top VERSION file
 file (STRINGS ${PROJECT_SOURCE_DIR}/../VERSION QUCS_VERSION)
 message(STATUS "Configuring ${PROJECT_NAME} (GUI): VERSION ${QUCS_VERSION}")
@@ -79,7 +81,7 @@ IF(APPLE)
 ENDIF(APPLE)
 
 ADD_EXECUTABLE( QucsWidebandMatching MACOSX_BUNDLE WIN32
-  ${wb_matching_sources}
+  ${}
   ${wb_matching_moc_sources}
   ${RESOURCES_SRCS} )
 
