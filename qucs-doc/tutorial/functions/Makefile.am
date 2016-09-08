@@ -46,13 +46,7 @@ SUFFIXES = .dvi .tex .pdf .ps .idx .ind
 	$(LATEX) $<
 	$(LATEX) -interaction=batchmode $<
 
-	$(MAKEINDEX) functions.idx -o functions.ind -s appendix.ist
-
-.tex.pdf:
-	$(PDFLATEX) $<
-	$(MAKEINDEX) functions.idx -o functions.ind -s $(srcdir)/appendix.ist
-	$(PDFLATEX) $<
-	$(PDFLATEX) -interaction=batchmode $<
+texpdfHACK = $(MAKEINDEX) functions.idx -o functions.ind -s $(srcdir)/appendix.ist
 
 .dvi.ps:
 	$(DVIPS) $< -o $@

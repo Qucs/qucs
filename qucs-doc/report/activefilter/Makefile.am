@@ -34,29 +34,30 @@ TARGETS = activefilter.pdf
 
 activefilter.pdf: $(SOURCES) $(BIBFILE)
 
-pics-report:
-	cd pics && $(MAKE) $(AM_MAKEFLAGS) report
-
-report: pics-report $(TARGETS)
-
-book: pics-report
-
 SUFFIXES = .tex .dvi .ps
 
-.tex.dvi:
-	$(LATEX) --shell-escape $<
-	$(LATEX) --shell-escape $<
-	$(LATEX) -interaction=batchmode --shell-escape $<
+# this is not required, as we are using pdflatex now.
+# .tex.dvi:
+# 	$(LATEX) --shell-escape $<
+# 	$(LATEX) --shell-escape $<
+# 	$(LATEX) -interaction=batchmode --shell-escape $<
+# 
+# 	bibtex $*
+# 
+# .dvi.ps:
+# 	$(DVIPS) $< -o $@
 
-	bibtex $*
+activefilter.pdf: texpdfHACK = export BIBINPUTS=$(srcdir):; bibtex activefilter
 
-.dvi.ps:
-	$(DVIPS) $< -o $@
 
 # installation of documentation
 docdatadir = ${prefix}/share/qucs/docs/report
 docdata_DATA = ${TARGETS}
 
+# insane hack. allows latex to execute arbitrary code
+# (used to render some plots)
+# TODO: specify all commands within Makefile
+activefilter.pdf: PDFLATEX_FLAGS=--shell-escape
 
 CLEANFILES = *~ *.bak *.aux *.log *.toc *.pdf *.bbl *.blg *.dvi *.brf *.out *.idx *.pgf-plot.table *.pgf-plot.gnuplot
 MAINTAINERCLEANFILES = Makefile.in

@@ -32,7 +32,7 @@ XFIG = qucs_formula1.fig
 
 XPDF = $(XFIG:.fig=.pdf)
 
-tutorial: $(XPDF)
+all: $(XPDF)
 
 SUFFIXES = .fig .pdf
 

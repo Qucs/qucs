@@ -36,9 +36,8 @@ AM_CONDITIONAL(USE_OCTAVE, test x$OCTAVE_EPSTK != xno)
 
 # FIXME: don't use colons
 AC_PATH_PROG(LATEX2HTML, latex2html, no)
-AS_IF([test "x$LATEX2HTML" = xno],
-		AC_MSG_ERROR([please install latex2html])
-		)
+AM_CONDITIONAL(USE_LATEX2HTML, test x$LATEX2HTML != xno)
+
 AC_PATH_PROG(TEX2PDF, tex2pdf, :)
 AC_PATH_PROG(MAKEINDEX, makeindex, :)
 
@@ -168,9 +167,11 @@ AC_CONFIG_FILES([Makefile
 AC_OUTPUT
 
 # Print results.
+AC_MSG_RESULT([])
 AC_MSG_RESULT([ $PACKAGE version $VERSION configured successfully.])
 AC_MSG_RESULT([
 Configure Information:
         OCTAVE    : $OCTAVE
     OCTAVE_EPSTK  : $OCTAVE_EPSTK
 	 ])
+AC_MSG_RESULT([])

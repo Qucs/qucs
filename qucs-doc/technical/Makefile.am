@@ -65,9 +65,18 @@ CHAPTERS = sparameter.tex noisewaves.tex dcanalysis.tex acanalysis.tex \
   hbanalysis.tex grammar-common.tex grammar-qucs.tex grammar-data.tex  \
   hbnoise.tex synthesis.tex transline.tex maths.tex lineardevices.tex
 
+#if USE_LATEX2HTML
 html:
 	@tdir="tech/"; rm -rf $$tdir && mkdir $$tdir
 	L2HINIT_NAME='l2h-init.cfg' $(LATEX2HTML) -dir tech technical.tex
+
+# BUG, does not work (on travis)
+#all: html
+
+# TODO: install the html stuff, anyone?!
+# docdata_DATA+=$(LIST_OF_HTMLFILES)
+# install-local: # maybe use this?
+#endif
 
 technical.dvi: $(EPSFILES) $(PSFILES) $(MPSFILES)
 

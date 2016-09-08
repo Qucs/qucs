@@ -34,15 +34,12 @@ TARGETS = activefilter.pdf
 
 activefilter.pdf: $(SOURCES)
 
-tutorial: $(TARGETS)
-
 SUFFIXES = .dvi .tex .pdf .ps
 
 .tex.dvi:
 	$(LATEX) $<
 	$(LATEX) $<
 	$(LATEX) -interaction=batchmode $<
-
 
 .dvi.ps:
 	$(DVIPS) $< -o $@
