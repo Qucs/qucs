@@ -577,9 +577,9 @@ fi
 unset osversion
 
 dnl Check for additional programs in PATH
-AC_PATH_PROG([GPERF],[gperf],[gperf])
+AC_PATH_PROG([GPERF],[gperf],[])
 AS_IF([test -z "$GPERF"],
-      [AC_MSG_ERROR([gperf required in the PATH])])
+      [AC_MSG_ERROR([please install gperf])])
 
 dnl check for adms (queued for removal)
 dnl The default behaviour is "check for adms, if it's not there,
@@ -916,7 +916,7 @@ AC_CONFIG_FILES([Makefile
 
 dnl Check for Git short SHA to tag version
 dnl The release package should also keep it on the config.h
-AC_PATH_PROG([GIT],[git],[git])
+AC_PATH_PROG([GIT],[git],[])
 AS_IF([test -d "../.git"],
       [AS_IF([test X"$GIT" != "X"],
              [AC_MSG_CHECKING([for git tree revision])
