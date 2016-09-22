@@ -24,23 +24,6 @@
 #
 
 AUTOMAKE=${AUTOMAKE:-automake}
-AUTOMAKE_VERSION_CHECK=${AUTOMAKE_VERSION_CHECK:-yes}
-
-if [ "$AUTOMAKE_VERSION_CHECK" = yes ]; then
-	AUTOMAKE_VERSION=$($AUTOMAKE --version | head -1 | cut -d' ' -f4)
-	case ${AUTOMAKE_VERSION} in
-		1.1[01]*)
-			cat >&2 <<__EOF__
-We experience trouble with your automake (version $AUTOMAKE_VERSION).
-Giving up.
-
-If you feel adventurous, please set AUTOMAKE_VERSION_CHECK=no in your
-environment and try again.
-__EOF__
-			exit 1
-			;;
-	esac
-fi
 
 here=`pwd`
 cd `dirname $0`
