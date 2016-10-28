@@ -102,6 +102,7 @@ install:
       brew link --force flex;
       brew install bison;
       brew link --force bison;
+      brew install python;
       pip install matplotlib;
     fi
 
