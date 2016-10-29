@@ -51,7 +51,10 @@ all-local:
   #
 MORE_PATH=$(abs_top_builddir)/qucs/qucs:$(abs_top_builddir)/qucs-core/src:$(abs_top_builddir)/qucs-core/src/converter
 
+if QUCS_TEST
 check-local: qucsatorcheck eqncheck qucscheck
+endif
+
 QUCSTEST_ENV = export PATH=$(MORE_PATH):$(PATH); \
                export QUCSCONV=qucsconv; \
                export QUCS_LIBDIR=$(abs_top_srcdir)/qucs/qucs-lib/library; \

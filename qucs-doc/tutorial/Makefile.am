@@ -22,6 +22,8 @@
 # Boston, MA 02110-1301, USA.  
 #
 
+include $(top_srcdir)/qucstex.mk
+
 SUBDIRS = dcstatic coupler bjtbias modelbjt poweramp lna digital ffmodels \
   functions opamp timer555 spicetoqucs getstarted equations textmode RFResModels activefilter
 
@@ -30,19 +32,9 @@ EXTRA_DIST = $(SOURCES) $(TEXFILES)
 TEXFILES = titlepage.tex basics.tex workbook.tex intro.tex general.tex \
   datasheet.tex
 TARGETS = workbook.pdf
-PICDIRS = coupler functions
+PICDIRS = coupler functions textmode
 
-tutorial:
-	@for d in $(SUBDIRS); do \
-	  (cd $$d && $(MAKE) $(AM_MAKEFLAGS) tutorial); \
-	done
-
-pics-book:
-	@for d in $(PICDIRS); do \
-	  (cd $$d && $(MAKE) $(AM_MAKEFLAGS) book); \
-	done
-
-book: pics-book $(TARGETS)
+workbook.pdf: $(TEXFILES)
 
 SUFFIXES = .dvi .tex .pdf .ps
 
@@ -51,16 +43,8 @@ SUFFIXES = .dvi .tex .pdf .ps
 	$(LATEX) $<
 	$(LATEX) -interaction=batchmode $<
 
-.tex.pdf:
-	$(PDFLATEX) $<
-	$(PDFLATEX) $<
-	$(PDFLATEX) -interaction=batchmode $<
-
 .fig.eps:
 	$(FIG2DEV) -L eps $< > $@
-
-.eps.pdf:
-	$(EPSTOPDF) $< -o=$@
 
 .dvi.ps:
 	$(DVIPS) $< -o $@

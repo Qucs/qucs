@@ -80,7 +80,9 @@ The documetation can be found in qucs/qucs-doc
 Package maintainance
 ====================
 
-Maintainance currently requires the following software packages:
+Some checks are missing in configure.ac.
+please implement them. here's a list.
+
   + Autoconf version 2.57 (at least)
   + GNU automake 1.7.0 (at least)
   + a LaTeX installation including
@@ -92,33 +94,3 @@ Maintainance currently requires the following software packages:
   + doxygen 1.4.5
   + dot 2.21 (graphviz 1.7)
   + transfig (fig2dev)
-
-In order to produce the standalone tutorial:
-
-	$ cd tutorial && make tutorial
-
-To compile the work book:
-
-	$ cd tutorial && make book
-
-To compile the standalone reports:
-
-	$ cd report && make report
-
-To compile the report book
-
-	$ cd tutorial && make book
-
-The technical documentation is going to be release in PS, PDF and HTML.
-Both PS and PDF are produced by:
-
-	$ cd technical && make technical
-
-For a successful HTML creation using Latex2HTML it is necessary to
-comment the grammar files in the main 'technical.tex' file.  Then
-
-	$ cd technical
-	$ make technical.dvi && make html
-
-should be run to get the complete HTML tree.  Some minor handish
-modifications are still necessary, e.g. for the main title page.
