@@ -30,22 +30,22 @@ cd `dirname $0`
 
 echo "bootstrapping the qucs-core sources..."
 echo -n "Creating aclocal.m4... "
-${ACLOCAL:-aclocal} -I m4
+${ACLOCAL:-aclocal} -I m4 || exit 1
 echo "done."
 echo -n "Creating config.h.in... "
-${AUTOHEADER:-autoheader}
+${AUTOHEADER:-autoheader} || exit 1
 echo "done."
 echo -n "Libtoolizing... "
 LIBTOOLIZE=${LIBTOOLIZE:-libtoolize}
 case `uname` in
   *Darwin*) LIBTOOLIZE=glibtoolize ;;
 esac
-$LIBTOOLIZE
+$LIBTOOLIZE || exit 1
 echo "done."
 echo -n "Creating Makefile.in(s)... "
-$AUTOMAKE -a -f -c
+$AUTOMAKE -a -f -c || exit 1
 echo "done."
 echo -n "Creating configure... "
-${AUTOCONF:-autoconf}
+${AUTOCONF:-autoconf} || exit 1
 echo "done"
 
