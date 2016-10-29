@@ -51,7 +51,7 @@
       Impedance Environment"
       in Scropion Application note
       Anritsu
-      online (2016-02-21) 
+      online (2016-02-21)
       https://dl.cdn-anritsu.com/en-us/test-measurement/files/Application-Notes/Application-Note/11410-00284B.pdf
 
   [5] Conversions between S, Z, Y, H, ABCD, and T parameters
