@@ -33,6 +33,10 @@ XML_BUILD = \
   $(srcdir)/qucsMODULEcore.xml \
   $(srcdir)/qucsMODULEdefs.xml
 
+# Parallel runs of admsXml can create a race to write the header files
+# See: https://github.com/Qucs/qucs/issues/545
+.NOTPARALLEL:
+
 .va.cpp: $(XML_BUILD)
 	@for i in $(XML_BUILD); do \
 	  echo "$$i"; \
