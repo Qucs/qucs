@@ -1,28 +1,36 @@
+environment:
+  matrix:
+    - MSYSTEM : MINGW64
+      MBITS: 64
+      MARCH: x86_64
+    - MSYSTEM : MINGW32
+      MBITS: 32
+      MARCH: i686
 
 platform:
   - x64
 
-cache:
-  - C:\msys64\var\cache\pacman\pkg\mingw-w64-x86_64-qt4* -> .appveyor.yml
+#cache:
+#  - C:\msys64\var\cache\pacman\pkg\mingw-w64-x86_64-qt4* -> .appveyor.yml
 
 install:
 
   # Take a look at the environment
   - set
 
-  - set "PATH=C:\msys64\usr\bin;C:\msys64\mingw64\bin;%PATH%"
+  - set "PATH=C:\msys64\usr\bin;C:\msys64\mingw%MBITS%\bin;%PATH%"
 
-  - C:\msys64\usr\bin\bash -lc ""
-  - C:\msys64\usr\bin\bash -lc "pacman --version"
-  - C:\msys64\usr\bin\bash -lc "pacman -Q"
+  - bash -lc ""
+  - bash -lc "pacman --version"
+  - bash -lc "pacman -Q"
   # Switch from SF to msys2.org (default, much faster)
-  - C:\msys64\usr\bin\bash -lc "pacman --noconfirm --sync pacman-mirrors"
-  - C:\msys64\usr\bin\bash -lc "pacman --noconfirm -S autoconf automake bison flex"
-  - C:\msys64\usr\bin\bash -lc "pacman --noconfirm -S mingw-w64-x86_64-qt4"
-
+  - bash -lc "pacman --noconfirm --sync pacman-mirrors"
+  - bash -lc "pacman --noconfirm -S autoconf automake bison flex"
+  - bash -lc "pacman --noconfirm -S mingw-w64-%MARCH%-qt4"
+  
   # Set compiler (64bit)
-  - set "CC=/c/msys64/mingw64/bin/gcc.exe"
-  - set "CXX=/c/msys64/mingw64/bin/g++.exe"
+  - set "CC=/c/msys64/mingw%MBITS%/bin/gcc.exe"
+  - set "CXX=/c/msys64/mingw%MBITS%/bin/g++.exe"
 
 
 build_script:
@@ -33,29 +41,25 @@ build_script:
   # Download, build and install ADMS
   - bash -lc "exec 0</dev/null && wget.exe http://sourceforge.net/projects/mot-adms/files/adms-source/2.3/adms-2.3.4.tar.gz"
   - bash -lc "exec 0</dev/null && tar xvfz adms-2.3.4.tar.gz"
-  - bash -lc "exec 0</dev/null && cd adms-2.3.4/ && ./configure --build=x86_64-w64-mingw32 && make install && cd -"
+  - bash -lc "exec 0</dev/null && cd adms-2.3.4/ && ./configure && make install && cd -"
   - bash -lc "exec 0</dev/null && admsXml -h"
 
-  ## Build Qucs-GUI applications
+  ## Build Qucs-GUI applications and install
   - bash -lc "exec 0</dev/null && cd $APPVEYOR_BUILD_FOLDER/qucs && ./bootstrap"
-  - bash -lc "exec 0</dev/null && cd $APPVEYOR_BUILD_FOLDER/qucs && export QTDIR=/c/msys64/mingw64/ && ./configure"
+  - bash -lc "exec 0</dev/null && cd $APPVEYOR_BUILD_FOLDER/qucs && export QTDIR=/c/msys64/mingw%MBITS%/ && ./configure --prefix=/c/qucs-win%MBITS%"
   - bash -lc "exec 0</dev/null && cd $APPVEYOR_BUILD_FOLDER/qucs && make install"
-  - bash -lc "exec 0</dev/null && qucs -v"
+  - bash -lc "exec 0</dev/null && cd /c/qucs-win%MBITS%/bin  && ./qucs -v"
 
-  ## Build Qucs-core
+  ## Build Qucs-core and install
   - bash -lc "exec 0</dev/null && cd $APPVEYOR_BUILD_FOLDER/qucs-core && ./bootstrap"
-  - bash -lc "exec 0</dev/null && cd $APPVEYOR_BUILD_FOLDER/qucs-core && ./configure --disable-dependency-tracking --with-mkadms=`which admsXml`"
+  - bash -lc "exec 0</dev/null && cd $APPVEYOR_BUILD_FOLDER/qucs-core && ./configure --prefix=/c/qucs-win%MBITS% --with-mkadms=`which admsXml` --disable-dependency-tracking"
   - bash -lc "exec 0</dev/null && cd $APPVEYOR_BUILD_FOLDER/qucs-core && make install"
-  - bash -lc "exec 0</dev/null && qucsator -v"
+  - bash -lc "exec 0</dev/null && cd /c/qucs-win%MBITS%/bin && ./qucsator -v"
 
   ## Prepare simple redistributable package (no qucs-doc)
-  # Install to a destination
-  - bash -lc "exec 0</dev/null && cd $APPVEYOR_BUILD_FOLDER/qucs && make install DESTDIR=/c/qucs-win64"
-  - bash -lc "exec 0</dev/null && cd $APPVEYOR_BUILD_FOLDER/qucs-core && make install DESTDIR=/c/qucs-win64"
-
   # Copy required libraries, make binaries usable from command line, Windows Explorer
-  - set QTDIR=c:\msys64\mingw64\
-  - set QUCSDIR=c:\qucs-win64\usr\local\
+  - set QTDIR=c:\msys64\mingw%MBITS%\
+  - set QUCSDIR=c:\qucs-win%MBITS%\
   - cp %QTDIR%\bin\Qt3Support4.dll %QUCSDIR%\bin
   - cp %QTDIR%\bin\QtCore4.dll     %QUCSDIR%\bin
   - cp %QTDIR%\bin\QtGui4.dll      %QUCSDIR%\bin
@@ -68,7 +72,10 @@ build_script:
   - cp %QTDIR%\bin\libstdc++-6.dll     %QUCSDIR%\bin
   - cp %QTDIR%\bin\libwinpthread-1.dll %QUCSDIR%\bin
   - cp %QTDIR%\bin\libpng16-16.dll     %QUCSDIR%\bin
+  - cp %QTDIR%\bin\zlib1.dll %QUCSDIR%\bin
 
+  - if "%MSYSTEM%" == "MINGW32" (cp %QTDIR%\bin\libgcc_s_dw2-1.dll %QUCSDIR%\bin) else (cp %QTDIR%\bin\libgcc_s_seh-1.dll %QUCSDIR%\bin)
+  
   # Run from windows cmd
   - cd %QUCSDIR%\bin
   - qucs.exe -v
@@ -78,3 +85,17 @@ build_script:
   # * one could zip the %QUCSDIR% and use it for testing
   # * perhaps it is best we finish the top level 'make dist',
   #   doing so it is easier to create tarballs, build the binaries from it and distribute both.
+  
+after_build:
+  #  artifacts path is always relative to build folder, so put the zip there
+  - 7z a %APPVEYOR_BUILD_FOLDER%\qucs-win%MBITS%.zip %QUCSDIR%
+
+artifacts:
+  # variables here must use the PowerShell syntax
+  - path: qucs-win$(MBITS).zip
+    name: qucs-win$(MBITS).zip
+
+#on_failure:
+#  - bash -lc "exec 0</dev/null && cat $APPVEYOR_BUILD_FOLDER/qucs/config.log"
+#  - ps: Get-ChildItem .\*.log -Recurse | % { Push-AppveyorArtifact $_.FullName -FileName $_.Name }
+
