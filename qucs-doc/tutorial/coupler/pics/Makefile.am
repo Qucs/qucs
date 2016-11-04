@@ -22,6 +22,8 @@
 # Boston, MA 02110-1301, USA.  
 #
 
+all: mcoupled.pdf
+
 EXTRA_DIST = $(PNGS) $(PDFS) $(XFIG)
 
 PNGS = coupledtrcalc.png coupledsch.png eqnbutton.png eqndialog.png \

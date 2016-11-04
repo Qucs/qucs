@@ -1,10 +1,11 @@
 ## Process this file with automake to produce Makefile.in
 # 
-# tutorial/opamp/Makefile.am
+# tutorial/activefilter/Makefile.am
 #
 # Automake input file.
 #
 # Copyright (C) 2006 Stefan Jahn <stefan@lkcc.org>
+# Copyright (C) 2014 Vadim Kuznetsov <ra3xdh@gmail.com>
 #
 # This is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -22,6 +23,8 @@
 # Boston, MA 02110-1301, USA.  
 #
 
+include $(top_srcdir)/qucstex.mk
+
 SUBDIRS = pics
 
 EXTRA_DIST = $(SOURCES)
@@ -31,24 +34,12 @@ TARGETS = activefilter.pdf
 
 activefilter.pdf: $(SOURCES)
 
-pics-tutorial:
-	cd pics && $(MAKE) $(AM_MAKEFLAGS) tutorial
-
-tutorial: pics-tutorial $(TARGETS)
-
-book: pics-tutorial
-
 SUFFIXES = .dvi .tex .pdf .ps
 
 .tex.dvi:
 	$(LATEX) $<
 	$(LATEX) $<
 	$(LATEX) -interaction=batchmode $<
-
-.tex.pdf:
-	TEXINPUTS=$$TEXINPUTS:.. $(PDFLATEX) $<
-	TEXINPUTS=$$TEXINPUTS:.. $(PDFLATEX) $<
-	TEXINPUTS=$$TEXINPUTS:.. $(PDFLATEX) -interaction=batchmode $<
 
 .dvi.ps:
 	$(DVIPS) $< -o $@

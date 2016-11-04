@@ -29,10 +29,18 @@ python:
 virtualenv:
   system_site_packages: true
 
+# Force OSX 10.10 as Qt 4.8.7 installer does not work with OSX 10.11
+osx_image: xcode7.1
+
 matrix:
   exclude:
     - os: osx
       compiler: gcc
+
+addons:
+  apt:
+    packages:
+      - octave
 
 # Set secure environment with encrypted string containing GIT_NAME, GIT_EMAIL and GH_TOKEN
 env:
@@ -67,6 +75,7 @@ install:
       sudo apt-get install build-essential;
       sudo apt-get install libqt4-dev libqt4-qt3support;
       sudo apt-get install automake libtool gperf flex bison;
+      sudo apt-get install latex2html;
     fi
 
   # We want to compile with g++ 4.8 when rather than the default g++
@@ -82,9 +91,9 @@ install:
       sudo pip install cpp-coveralls ;
     fi
 
-  # Set up for Doxygen
+  # Set up for Doxygen and qucs-doc PDF build
   - if [[ $LINUX && $CLANG ]]; then
-      sudo apt-get install -qq doxygen texlive graphviz ;
+      sudo apt-get install -qq doxygen texlive texlive-math-extra texlive-science transfig gnuplot texlive-publishers graphviz ;
     fi
 
   # Qucs-Test uses Numpy to compare results
@@ -99,6 +108,7 @@ install:
       brew link --force flex;
       brew install bison;
       brew link --force bison;
+      brew install python;
       pip install matplotlib;
     fi
 
@@ -153,8 +163,22 @@ script:
 
   # run all checks
   - ./bootstrap
-  - ./configure --disable-dependency-tracking --with-gtest=/tmp/gtest
-  - make distcheck DISTCHECK_CONFIGURE_FLAGS=--with-gtest=/tmp/gtest
+  - CONFIGURE_FLAGS=--disable-doc
+  - if [[ $LINUX && $CLANG ]]; then
+       CONFIGURE_FLAGS="";
+    fi
+  - DISTCHECK_CONFIGURE_FLAGS="--with-gtest=/tmp/gtest --disable-dependency-tracking --disable-doc"
+  - if [[ $LINUX && $CLANG ]]; then
+       DISTCHECK_CONFIGURE_FLAGS="--with-gtest=/tmp/gtest --enable-doc";
+    fi
+  - echo ${CONFIGURE_FLAGS}
+  - echo ${DISTCHECK_CONFIGURE_FLAGS}
+  - ./configure --disable-dependency-tracking --with-gtest=/tmp/gtest ${CONFIGURE_FLAGS}
+  - if [ "$OSX" = true ]; then
+      make check;
+    else
+      make distcheck DISTCHECK_CONFIGURE_FLAGS="${DISTCHECK_CONFIGURE_FLAGS}";
+    fi
   - echo $TRAVIS_BRANCH
 
   # incomplete

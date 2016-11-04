@@ -22,6 +22,8 @@
 # Boston, MA 02110-1301, USA.  
 #
 
+include $(top_srcdir)/qucstex.mk
+
 EXTRA_DIST = technical.tex l2h-init.cfg $(FIGURES) $(BIBFILE) \
   $(PSFILES) $(MATHFILES) $(MATHHELPS) $(CHAPTERS)
 
@@ -63,29 +65,22 @@ CHAPTERS = sparameter.tex noisewaves.tex dcanalysis.tex acanalysis.tex \
   hbanalysis.tex grammar-common.tex grammar-qucs.tex grammar-data.tex  \
   hbnoise.tex synthesis.tex transline.tex maths.tex lineardevices.tex
 
-
-technical: technical.dvi technical.ps technical.pdf
-	$(TEX2PDF) technical
-
+#if USE_LATEX2HTML
 html:
 	@tdir="tech/"; rm -rf $$tdir && mkdir $$tdir
 	L2HINIT_NAME='l2h-init.cfg' $(LATEX2HTML) -dir tech technical.tex
 
+# BUG, does not work (on travis)
+#all: html
+
+# TODO: install the html stuff, anyone?!
+# docdata_DATA+=$(LIST_OF_HTMLFILES)
+# install-local: # maybe use this?
+#endif
+
 technical.dvi: $(EPSFILES) $(PSFILES) $(MPSFILES)
 
 SUFFIXES = .dvi .tex .pdf .ps .eps .fig .frg .m
-
-.tex.dvi: $(CHAPTERS) $(BIBFILE)
-	$(LATEX) $(LATEX_ARGS) $<
-	$(BIBTEX) $*
-	$(LATEX) $(LATEX_ARGS) $<
-	$(LATEX) $(LATEX_ARGS) $<
-
-.tex.pdf: $(CHAPTERS) $(BIBFILE) $(PDFFILES) $(PDFFIGURES)
-	$(PDFLATEX) $<
-	$(BIBTEX) $*
-	$(PDFLATEX) $<
-	$(PDFLATEX) -interaction=batchmode $<
 
 .fig.eps:
 	$(FIG2DEV) -L eps $< > $@
@@ -96,12 +91,10 @@ SUFFIXES = .dvi .tex .pdf .ps .eps .fig .frg .m
 .fig.frg:
 	$(FIG2DEV) -L frg $< > $@
 
-.eps.pdf:
-	$(EPSTOPDF) $< -o=$@
-
 if USE_OCTAVE
+OCTAVE_PATH = --path $(srcdir)
 .m.eps:
-	$(OCTAVE) $<
+	$(OCTAVE) $(OCTAVE_PATH) $<
 else
 .m.eps:
 	@echo -n not using octave to update "$@".
