@@ -407,7 +407,8 @@ void MouseActions::MMoveWire1(Schematic *Doc, QMouseEvent *Event)
  */
 void MouseActions::MMoveSelect(Schematic *Doc, QMouseEvent *Event)
 {
-  //qDebug() << "MMoveSelect " << "select area";
+  qDebug() << "MMoveSelect: select area: " << "MAx1:" << MAx1 << "MAy1:" << MAy1 << "MAx2:" << MAx2 << "MAy2:" << MAy2;
+
   MAx2 = DOC_X_POS(Event->pos().x()) - MAx1;
   MAy2 = DOC_Y_POS(Event->pos().y()) - MAy1;
   if(isMoveEqual) {    // x and y size must be equal ?
@@ -418,6 +419,7 @@ void MouseActions::MMoveSelect(Schematic *Doc, QMouseEvent *Event)
   }
 
   Doc->PostPaintEvent (_Rect, MAx1, MAy1, MAx2, MAy2);
+  Doc->viewport()->repaint();
 }
 
 // -----------------------------------------------------------
@@ -1066,7 +1068,6 @@ void MouseActions::MPressSelect(Schematic *Doc, QMouseEvent *Event, float fX, fl
       // Update matching wire label highlighting
       Doc->highlightWireLabels ();
       Doc->viewport()->update();
-      drawn = false;
       return;
 
     case isComponentText:  // property text of component ?
@@ -1109,11 +1110,10 @@ void MouseActions::MPressSelect(Schematic *Doc, QMouseEvent *Event, float fX, fl
   QucsMain->MouseDoubleClickAction = 0;
   Doc->grabKeyboard();  // no keyboard inputs during move actions
   Doc->viewport()->update();
-  drawn = false;
 
-  if(focusElement == 0) {
-    MAx2 = 0;  // if not clicking on an element => open a rectangle
-    MAy2 = 0;
+  if(focusElement == 0) { // If not clicking on an element => open a rectangle
+	MAx1 = DOC_X_POS(Event->pos().x());
+	MAy1 = DOC_Y_POS(Event->pos().y());
     QucsMain->MouseReleaseAction = &MouseActions::MReleaseSelect2;
     QucsMain->MouseMoveAction = &MouseActions::MMoveSelect;
   }
@@ -1148,7 +1148,6 @@ void MouseActions::MPressDelete(Schematic *Doc, QMouseEvent*, float fX, float fY
 
     Doc->sizeOfAll(Doc->UsedX1, Doc->UsedY1, Doc->UsedX2, Doc->UsedY2);
     Doc->viewport()->update();
-    //drawn = false;
   }
 }
 
@@ -1634,8 +1633,6 @@ void MouseActions::MReleaseSelect2(Schematic *Doc, QMouseEvent *Event)
 
   qDebug() << "MReleaseSelect2";
 
-  Doc->releaseKeyboard(); // allow keyboard inputs again
-
   if(Event->button() != Qt::LeftButton) return;
 
   bool Ctrl;
@@ -1651,7 +1648,6 @@ void MouseActions::MReleaseSelect2(Schematic *Doc, QMouseEvent *Event)
   QucsMain->MouseReleaseAction = &MouseActions::MReleaseSelect;
   QucsMain->MouseDoubleClickAction = &MouseActions::MDoubleClickSelect;
   Doc->highlightWireLabels ();
-  //drawn = false;
   Doc->viewport()->update();
 }
 
