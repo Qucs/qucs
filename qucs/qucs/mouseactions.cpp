@@ -454,7 +454,6 @@ void MouseActions::MMoveMoving(Schematic *Doc, QMouseEvent *Event)
 
   movingElements.clear();
   Doc->copySelectedElements(&movingElements);
-  //Doc->viewport()->repaint();
 
   Wire *pw;
   // Changes the position of all moving elements by dx/dy
@@ -478,18 +477,16 @@ void MouseActions::MMoveMoving(Schematic *Doc, QMouseEvent *Event)
       }
 
     } else {
-      // nvdl: Align a component to the grid if off-grid
+      // nvdl: Align a component to the grid if off-grid (wires are yet to be handled)
       pe->getCenter(centerX, centerY);
       Doc->setOnGrid(centerX, centerY);
       pe->setCenter(centerX, centerY, false);
-      //pe->setCenter(MAx1, MAy1, true);
     }
 
     pe->paintScheme(Doc);
-    qDebug() << "MMoveMoving: paintScheme";
+    //qDebug() << "MMoveMoving: paintScheme";
   }
 
-  drawn = true;
   MAx1 = MAx2;
   MAy1 = MAy2;
   QucsMain->MouseMoveAction = &MouseActions::MMoveMoving2;
@@ -509,11 +506,6 @@ void MouseActions::MMoveMoving2(Schematic *Doc, QMouseEvent *Event)
   MAx2 = DOC_X_POS(Event->pos().x());
   MAy2 = DOC_Y_POS(Event->pos().y());
 
-  /*Element *pe;
-  if(drawn) // erase old scheme
-    for(pe = movingElements.first(); pe != 0; pe = movingElements.next())
-      pe->paintScheme(Doc);*/
-
   // Use grid when CTRL key is not pressed
   if ((Event->state() & Qt::ControlModifier) == 0) {
     Doc->setOnGrid(MAx2, MAy2);
@@ -525,10 +517,6 @@ void MouseActions::MMoveMoving2(Schematic *Doc, QMouseEvent *Event)
 
   moveElements(&movingElements, MAx1, MAy1);  // moves elements by MAx1/MAy1
   paintElementsScheme(Doc);
-
-  // paint afterwards to avoid conflict between wire and label painting
-  /*for(pe = movingElements.first(); pe != 0; pe = movingElements.next())
-    pe->paintScheme(Doc);*/
 
   MAx1 = MAx2;
   MAy1 = MAy2;
@@ -1112,8 +1100,8 @@ void MouseActions::MPressSelect(Schematic *Doc, QMouseEvent *Event, float fX, fl
   Doc->viewport()->update();
 
   if(focusElement == 0) { // If not clicking on an element => open a rectangle
-	MAx1 = DOC_X_POS(Event->pos().x());
-	MAy1 = DOC_Y_POS(Event->pos().y());
+    MAx1 = DOC_X_POS(Event->pos().x());
+    MAy1 = DOC_Y_POS(Event->pos().y());
     QucsMain->MouseReleaseAction = &MouseActions::MReleaseSelect2;
     QucsMain->MouseMoveAction = &MouseActions::MMoveSelect;
   }
@@ -1639,8 +1627,28 @@ void MouseActions::MReleaseSelect2(Schematic *Doc, QMouseEvent *Event)
   if(Event->state() & Qt::ControlModifier) Ctrl = true;
   else Ctrl = false;
 
+  MAx2 = DOC_X_POS(Event->pos().x());
+  MAy2 = DOC_Y_POS(Event->pos().y());
+
+  int x1, x2, y1, y2;
+
+  if (MAx1 < MAx2) {
+    x1 = MAx1;
+    x2 = MAx2;
+  } else {
+    x1 = MAx2;
+    x2 = MAx1;
+  }
+
+  if (MAy1 < MAy2) {
+    y1 = MAy1;
+    y2 = MAy2;
+  } else {
+    y1 = MAy2;
+    y2 = MAy1;
+  }
   // selects all elements within the rectangle
-  Doc->selectElements(MAx1, MAy1, MAx1+MAx2, MAy1+MAy2, Ctrl);
+  Doc->selectElements(x1, y1, x1 + x2, y1 + y2, Ctrl);
 
   Doc->releaseKeyboard();  // allow keyboard inputs again
   QucsMain->MouseMoveAction = 0;
@@ -1775,11 +1783,13 @@ void MouseActions::paintElementsScheme(Schematic *p)
 // -----------------------------------------------------------
 void MouseActions::moveElements(Schematic *Doc, int& x1, int& y1)
 {
+  qDebug() << "moveElements";
+
   Element *pe;
   Doc->setOnGrid(x1, y1);
 
   for(pe=movingElements.first(); pe!=0; pe=movingElements.next()) {
-    if(pe->Type & isLabel) {
+    if((pe->Type & isLabel) && (pe->Type & isWire) == 0) {
       pe->cx += x1;  pe->x1 += x1;
       pe->cy += y1;  pe->y1 += y1;
     }
