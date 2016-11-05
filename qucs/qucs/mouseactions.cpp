@@ -280,10 +280,6 @@ void MouseActions::MMoveElement(Schematic *Doc, QMouseEvent *Event)
 
   if (selElem == 0) return;
 
-  Doc->grabKeyboard(); // nvdl: For space key rotation
-
-//  qDebug() << "MMoveElement got selElem";
-
   int x  = Event->pos().x();
   int y  = Event->pos().y();
   int fx = DOC_X_POS(x);
@@ -2123,7 +2119,7 @@ void MouseActions::MDoubleClickSelect(Schematic *Doc, QMouseEvent *Event)
 
   qDebug() << "MDoubleClickSelect";
 
-  //Doc->releaseKeyboard();  // allow keyboard inputs again
+  Doc->releaseKeyboard();  // allow keyboard inputs again
   QucsMain->editText->setHidden(true);
   editElement(Doc, Event);
 }
