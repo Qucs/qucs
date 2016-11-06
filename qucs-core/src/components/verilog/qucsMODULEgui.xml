@@ -64,7 +64,9 @@
 </admst:template>
 
 <admst:template match=":variable">
-  <admst:value-of select="name"/>%s
+  <!--admst:value-of select="name"/>%s-->
+  <!-- recurse, return final value -->
+  <admst:apply-templates select="default" match=":expression"/>
 </admst:template>
 
 <!-- handling of device: starting point -->

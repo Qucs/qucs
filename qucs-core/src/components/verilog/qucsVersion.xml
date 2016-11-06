@@ -92,8 +92,11 @@
     <admst:when test="[name='shiftl']">
       <admst:return name="bname" string="&lt;&lt;"/>
     </admst:when>
+    <admst:when test="[name='multmod']">
+      <admst:return name="bname" value="%"/>
+    </admst:when>
     <admst:otherwise>
-      <admst:fatal format="variable type unknown\n"/>
+      <admst:fatal format="variable type unknown %(name)\n"/>
     </admst:otherwise>
   </admst:choose>
 </admst:template>
@@ -947,7 +950,13 @@
       <admst:assert test="arguments[count(.)=2]" format="%(name): should have two arguments exactly\n"/>
       <admst:assert test="arguments[2]/adms[datatypename='probe']" format="%(name): second argument is not a probe\n"/>
       <admst:apply-templates select="arguments[1]" match="ddx"/>
+      <!--
+      FIXME what does  not-used is suposed do mean??,
+       partial derivative of a independent variable? if so, return zero...
+
       <admst:variable name="e" select="not-used"/>
+      -->
+      <admst:variable name="e" select="0."/>
     </admst:when>
     <admst:when test="[name='floor']">
       <admst:assert test="arguments[count(.)=1]" format="%(name): should have one argument exactly\n"/>
@@ -1255,7 +1264,17 @@
       </admst:choose>
     </admst:when>
     <admst:otherwise>
-      <admst:variable name="eq" select="d_$(fname)($args,$dargs)"/>
+      <!--
+      handle derivatives of builtin or provide analog function
+      -->
+      <admst:choose>
+        <admst:when test="[class='builtin']">
+          <admst:variable name="ep" select="d_$(fname)($args,$dargs)"/>
+        </admst:when>
+        <admst:otherwise>
+          <admst:variable name="ep" select="$(module)_d_$(fname)($args,$dargs)"/>
+        </admst:otherwise>
+      </admst:choose>
     </admst:otherwise>
   </admst:choose>
 
@@ -1313,7 +1332,8 @@
         </admst:otherwise>
       </admst:choose>
     </admst:when>
-    <admst:when test="[name='div' or name='pow' or name='hypot' or name='min' or name='max']">
+    <!-- warn of missing feature -->
+    <admst:when test="[name='div' or name='hypot' or name='min' or name='max']">
       <admst:variable name="epq" string="fixme"/>
       <admst:warning format="%(name): ddx dependency not implemented %(arguments[1]|' '|arguments[2])\n"/>
     </admst:when>
@@ -1330,7 +1350,7 @@
 
 <!-- analog//blockvariable -->
 <admst:template match="blockvariable">
-  <admst:text select="variable" format="%(vtype(.)) %(name);\n"/>
+  <admst:text select="variable" format="%(vtype(.)) %(name) = 0; (void) %(name);\n"/> <!-- void silence unused warnings -->
   <admst:if test="variable[insource='yes']/probe">
 
     <admst:for-each select="variable">
@@ -1343,7 +1363,8 @@
           </admst:if>
           <admst:text test="[$ddxinsidethisprobe='yes']" format="#if defined(_DERIVATEFORDDX)\n"/>
           <admst:text test="[$ddxinsidethisprobe='no']" format="#if defined(_DERIVATE)\n"/>
-          <admst:text format="double %($myvariable/name)_%(nature/access)%(branch/pnode/name)_%(branch/nnode/name);\n"/>
+          <admst:text format="double %($myvariable/name)_%(nature/access)%(branch/pnode/name)_%(branch/nnode/name) = 0;  "/>
+          <admst:text format="(void) %($myvariable/name)_%(nature/access)%(branch/pnode/name)_%(branch/nnode/name);\n"/> <!-- void silence unused warnings --> 
           <admst:text format="#endif\n"/>
       </admst:for-each>
     </admst:for-each>
@@ -1362,7 +1383,8 @@
         <admst:variable name="pprobe" path="."/>
         <admst:for-each select="$myvariable/probe">
           <admst:variable name="qprobe" path="."/>
-          <admst:text format="  double %(ddxname($myvariable)/[name='ddxname']/value);\n"/>
+          <admst:text format="  double %(ddxname($myvariable)/[name='ddxname']/value) = 0; "/>
+          <admst:text format=" (void) %(ddxname($myvariable)/[name='ddxname']/value);\n"/> <!-- void silence unused warnings -->
         </admst:for-each>
       </admst:for-each>
       <admst:text test="$ddxprobes/item" format="#endif\n"/>
@@ -1824,7 +1846,7 @@
   </admst:new>
   <admst:if test="block/adms[datatypename='module']">
     <admst:text test="[static='no' and dynamic='yes']" format="#if defined(_DYNAMIC)\n"/>
-    <admst:text test="[scope='local']" format="%(vtype(.)) %(name);\n"/>
+    <admst:text test="[scope='local']" format="%(vtype(.)) %(name) = 0; (void) %(name);\n"/> <!-- void silence unused warnings --> 
     <admst:if test="[insource='yes']/probe">
       <admst:variable name="ddxinsidederivate" string="no"/>
       <admst:for-each select="probe">
@@ -1841,13 +1863,14 @@
           <admst:text format="#if defined(_DERIVATE)\n"/>
         </admst:otherwise>
       </admst:choose>
-      <admst:text select="probe" format="double %(../name)_%(nature/access)%(branch/pnode/name)_%(branch/nnode/name);\n"/>
+      <admst:text select="probe" format="double %(../name)_%(nature/access)%(branch/pnode/name)_%(branch/nnode/name) = 0; (void) %(../name)_%(nature/access)%(branch/pnode/name)_%(branch/nnode/name);\n"/> <!-- void silence unused warnings --> 
       <admst:text test="[$ddxinsidederivate='yes']" format="#if defined(_DERIVATE)\n"/>
       <admst:for-each select="$ddxprobes/item">
         <admst:variable name="pprobe" path="."/>
         <admst:for-each select="$myvariable/probe">
           <admst:variable name="qprobe" path="."/>
-          <admst:text format="  double %(ddxname($myvariable)/[name='ddxname']/value);\n"/>
+          <admst:text format="  double %(ddxname($myvariable)/[name='ddxname']/value) = 0; "/>
+          <admst:text format="(void) %(ddxname($myvariable)/[name='ddxname']/value);\n"/> <!-- void silence unused warnings -->
         </admst:for-each>
       </admst:for-each>
       <admst:text test="[$ddxinsidederivate='yes']" format="#endif\n"/>
@@ -2124,6 +2147,8 @@
 #define m20_abs(v00)           0.0
 #define m20_pow(x,y)            ((y)*((y)-1.0)*pow(x,y)/(x)/(x))
 
+#define m20_tanh(x)   -8*sinh(2*x)*pow(cosh(x),2)/(pow(cosh(2*x)+1,3))
+#define m20_asinh(x)  -(x/pow((1 + pow(x,2)),1.5))
 </admst:template>
 
 <!-- simulator settings -->
