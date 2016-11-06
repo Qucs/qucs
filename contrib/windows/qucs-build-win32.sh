@@ -109,16 +109,14 @@ cd $DIRNAME
 # Mixing gperf from host and target (wine, Windows) does now work due to line ending problems, see issue #295.
 # Doing GPERF="wine gperf" is not recornized by configure.
 # Doing GPERF="~/.wine/mingw/bin/gperf" let it be recognized but the execution will lack the wine prefix.
-mkdir ${HOME}/local/bin
-cat >${HOME}/local/bin/gperf << 'EOF'
+cat > /tmp/gperf << 'EOF'
 #!/bin/sh
 wine gperf.exe $@
 EOF
-chmod u+x ${HOME}/local/bin/gperf
+chmod u+x /tmp/gperf
 
 # Create environment wrapper for mingw
-mkdir ${HOME}/local/bin
-cat >${HOME}/local/bin/mingw << 'EOF'
+cat > /tmp/mingw << 'EOF'
 # Set QTDIR
 export QTDIR=${HOME}/.wine/drive_c/Qt/4.8.6
 export AR="wine ar.exe"
@@ -133,10 +131,10 @@ export RANLIB="wine ranlib.exe"
 export STRIP="wine strip.exe"
 export WINDRES="wine windres.exe"
 # point to wrapper
-export GPERF="$HOME/local/bin/gperf"
+export GPERF="/tmp/gperf"
 exec "$@"
 EOF
-chmod u+x ${HOME}/local/bin/mingw
+chmod u+x /tmp/mingw
 
 
 # Hack #2: Patch Makefile.am to run executables via wine.
@@ -158,7 +156,7 @@ fi
 
 
 # Configure and cross-compile
-${HOME}/local/bin/mingw ./configure --disable-doc --prefix=${WINDIR}  --target=i386-mingw32 --host=i386-mingw32 --build=i586-linux --program-prefix="" --disable-dependency-tracking
+/tmp/mingw ./configure --disable-doc --prefix=${WINDIR}  --target=i386-mingw32 --host=i386-mingw32 --build=i586-linux --program-prefix="" --disable-dependency-tracking
 make install
 
 # TODO install qucs-doc
