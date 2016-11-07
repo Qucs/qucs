@@ -15,7 +15,7 @@
  *                                                                         *
  ***************************************************************************/
 #include "wire.h"
-
+#include "schematic.h"
 #include <QPainter>
 
 Wire::Wire(int _x1, int _y1, int _x2, int _y2, Node *n1, Node *n2)
@@ -95,15 +95,14 @@ bool Wire::getSelected(int x_, int y_)
 }
 
 // ----------------------------------------------------------------
-void Wire::paintScheme(QPainter *p)
+void Wire::paintScheme(Schematic *p)
 {
-  p->drawLine(x1, y1, x2, y2);
+  p->PostPaintEvent(_Line, x1, y1, x2, y2, 0, 0, false);
 //  if(Label)
 //    if((Label->Type == isHWireLabel) || (Label->Type == isHWireLabel))
 //    if(Label->Type == isHWireLabel)
 //      Label->paintScheme(p);
 }
-
 // ----------------------------------------------------------------
 void Wire::paint(ViewPainter *p)
 {

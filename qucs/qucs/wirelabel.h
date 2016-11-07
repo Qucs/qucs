@@ -26,6 +26,7 @@
 class QPainter;
 class Wire;
 class Node;
+class Schematic;
 
 
 class WireLabel : public Element {
@@ -34,7 +35,7 @@ public:
             int _x1=0, int _y1=0, int _Type=isNodeLabel);
   ~WireLabel();
 
-  void paintScheme(QPainter *p);
+  void paintScheme(Schematic *p);
   void setCenter(int x, int y, bool relative=false);
   bool getSelected(int, int);
   void setName(const QString& Name_);

@@ -432,7 +432,6 @@ void MouseActions::MMoveResizePainting(Schematic *Doc, QMouseEvent *Event)
 // Moves components by keeping the mouse button pressed.
 void MouseActions::MMoveMoving(Schematic *Doc, QMouseEvent *Event)
 {
-
   qDebug() << "MMoveMoving";
 
   int centerX, centerY;
@@ -453,33 +452,15 @@ void MouseActions::MMoveMoving(Schematic *Doc, QMouseEvent *Event)
   Wire *pw;
   // Changes the position of all moving elements by dx/dy
   for(Element *pe=movingElements.first(); pe!=0; pe=movingElements.next()) {
-    if(pe->Type == isWire) {
-      /*
-      pw = (Wire*)pe;   // connecting wires are not moved completely
 
-      if(((uintptr_t)pw->Port1) > 3) { pw->x1 += MAx1;  pw->y1 += MAy1; }
-      else {  if((uintptr_t)(pw->Port1) & 1) { pw->x1 += MAx1; }
-              if((uintptr_t)(pw->Port1) & 2) { pw->y1 += MAy1; } }
+    pe->paintScheme(Doc);
 
-      if(((uintptr_t)pw->Port2) > 3) { pw->x2 += MAx1;  pw->y2 += MAy1; }
-      else {  if((uintptr_t)(pw->Port2) & 1) pw->x2 += MAx1;
-              if((uintptr_t)(pw->Port2) & 2) pw->y2 += MAy1; }
-
-      if(pw->Label) {      // root of node label must lie on wire
-        if(pw->Label->cx < pw->x1) pw->Label->cx = pw->x1;
-        if(pw->Label->cy < pw->y1) pw->Label->cy = pw->y1;
-        if(pw->Label->cx > pw->x2) pw->Label->cx = pw->x2;
-        if(pw->Label->cy > pw->y2) pw->Label->cy = pw->y2;
-      }*/
-
-    } else {
+    if(pe->Type != isWire) {
       // nvdl: Align a component to the grid if off-grid (wires are yet to be handled)
       pe->getCenter(centerX, centerY);
       Doc->setOnGrid(centerX, centerY);
       pe->setCenter(centerX, centerY, false);
     }
-
-    pe->paintScheme(Doc);
     //qDebug() << "MMoveMoving: paintScheme";
   }
 
@@ -1755,12 +1736,7 @@ void MouseActions::moveElements(Schematic *Doc, int& x1, int& y1)
   Doc->setOnGrid(x1, y1);
 
   for(pe=movingElements.first(); pe!=0; pe=movingElements.next()) {
-    if((pe->Type & isLabel)) {
-      pe->cx += x1;  pe->x1 += x1;
-      pe->cy += y1;  pe->y1 += y1;
-    }
-    else
-      pe->setCenter(x1, y1, true);
+    pe->setCenter(x1, y1, true);
   }
 }
 

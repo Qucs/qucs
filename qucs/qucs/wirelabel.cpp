@@ -17,6 +17,7 @@
 #include "wirelabel.h"
 #include "viewpainter.h"
 #include "wire.h"
+#include "schematic.h"
 #include "main.h"
 
 #include <QString>
@@ -42,22 +43,23 @@ WireLabel::~WireLabel()
 }
 
 // ----------------------------------------------------------------
-void WireLabel::paintScheme(QPainter *p)
+void WireLabel::paintScheme(Schematic *p)
 {
-  p->drawRect(x1, y1, x2, y2);
+
+  p->PostPaintEvent(_Rect, x1, y1, x2, y2, 0, 0, false);
 
   // which corner of rectangle should be connected to line ?
   if(cx < x1+(x2>>1)) {
     if(cy < y1+(y2>>1))
-      p->drawLine(cx, cy, x1, y1);
+      p->PostPaintEvent(_Line, cx, cy, x1, y1, 0, 0, false);
     else
-      p->drawLine(cx, cy, x1, y1+y2);
+      p->PostPaintEvent(_Line, cx, cy, x1, y1 + y2, 0, 0, false);
   }
   else {
     if(cy < y1+(y2>>1))
-      p->drawLine(cx, cy, x1+x2, y1);
+      p->PostPaintEvent(_Line, cx, cy, x1 + x2, y1, 0, 0, false);
     else
-      p->drawLine(cx, cy, x1+x2, y1+y2);
+      p->PostPaintEvent(_Line, cx, cy, x1 + x2, y1 + y2, 0, 0, false);
   }
 }
 
