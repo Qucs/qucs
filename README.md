@@ -20,12 +20,24 @@ Qucs is an integrated circuit simulator which means you are able to setup a circ
     - <http://qucs.github.io/qucs-doxygen/qucs/index.html>
     - <http://qucs.github.io/qucs-doxygen/qucs-core/index.html>
   - Downloads: <http://sourceforge.net/projects/qucs/files/>
+  - Translation platform: <https://www.transifex.com/qucs/public/>
 
 ## Currently Supported Platforms
   - GNU/Linux
   - Darwin/OS X
   - FreeBSD
   - Windows
+
+## Branching strategy for the Git repository
+
+After release 0.0.18 the project started to use the Git flow strategy for branching <http://nvie.com/posts/a-successful-git-branching-model/>.
+
+Under this strategy the following branches can be found in the repository:
+
+  - `master`: contains the latest stable release.
+  - `develop`: contains the latest developments or unstable. This should be the base branch of Pull-Requests or contributions.
+  - `release-x.y.z`: are temporary branches being stabilized for a release. To be merged into `master` and removed.
+  - `[other branches]`: are branches with a good reason to be in the main repository (ease collaboration, use CI facilities).
 
 ## Source Download and Compilation
 
@@ -39,7 +51,7 @@ Compilation and install from tarball is expected to work as follows (see depende
     ./configure
     make install
 
-For the lates code in development, clone from one of the Git repositories (the first is updated more frequently):
+For the latest code in development, clone from one of the Git repositories (the first is updated more frequently):
 
     git clone git://github.com/Qucs/qucs.git
     git clone git://git.code.sf.net/p/qucs/git
