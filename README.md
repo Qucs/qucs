@@ -41,9 +41,9 @@ Under this strategy the following branches can be found in the repository:
 
 ## Source Download and Compilation
 
-The source code is available as a tarball for stable releases and Git repository clone for development.
+The source code is available as distribution tarballs and clones of the Git repository.
 
-The release tarball can be downloaded from: <http://sourceforge.net/projects/qucs/files/qucs/>.
+The distributed tarballs can be downloaded from: <http://sourceforge.net/projects/qucs/files/qucs/>.
 Compilation and install from tarball is expected to work as follows (see dependencies below):
 
     tar xvfz qucs[version].tar.gz
@@ -51,7 +51,7 @@ Compilation and install from tarball is expected to work as follows (see depende
     ./configure
     make install
 
-For the latest code in development, clone from one of the Git repositories (the first is updated more frequently):
+All versions of the code may be accessed by cloning one of the Git repositories (the first is updated more frequently):
 
     git clone git://github.com/Qucs/qucs.git
     git clone git://git.code.sf.net/p/qucs/git
@@ -65,7 +65,17 @@ To download the submodule either:
      * `git submodule init`
      * `git submodule update`
 
+After an initial clone operation, the local copy is set by the default as the `master` branch.
+Branches can be listed and selected with the following commands:
+
+    git branch
+    git checkout [branch name]
+
 Compilation and installation depends on the operation system. See below for an example.
+
+## Contributing to QUCS
+
+Some general contribution guidelines can be found on our Wiki <https://github.com/Qucs/qucs/wiki/Contribution>.
 
 ## Compile instructions Linux (Debian/Ubuntu)
 
@@ -76,10 +86,10 @@ First make sure you have all dependencies installed:
     sudo apt-get install automake libtool gperf flex bison
     sudo apt-get install texlive-font-utils octave-epstk
 
-The ADMS package is necessary. Please [download](https://sourceforge.net/projects/mot-adms/files/adms-source/) the latest tarball and follow the [install](https://github.com/Qucs/ADMS#users-install-from-tarball) instructions. Having`admsXml` on the path should be sufficient.
+The ADMS package is necessary. Please [download](https://sourceforge.net/projects/mot-adms/files/adms-source/) the latest tarball and follow the [install](https://github.com/Qucs/ADMS#users-install-from-tarball) instructions. Having `admsXml` on the path should be sufficient.
 
 
-To build the manuals and user documentation further dependencies are needed. Please check the qucs-doc/README file.
+To build the manuals and user documentation further dependencies are needed. Please check the `qucs-doc/README` file.
 
 
 Bootstrap and build everything (after cloning):
@@ -125,7 +135,7 @@ Note:
 
  * ADMS should be installed e.g. from a released tarball (>= 2.3.0).
    To use a different `admsXml` pass the option `--with-admsxml=[path/to/]anotherAdmsXml`
-   to `./configure'.
+   to `./configure`.
 
  * The LaTex documentation compilation in qucs-doc can be skipped passing `--disable-doc` to the top level `configure` script.
 
