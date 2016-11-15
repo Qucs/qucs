@@ -2,6 +2,7 @@
 // TODO: connect to qucs error console
 //
 #include <iostream>
+#include <stdarg.h>
 
 void error(int, const char* fmt, ...)
 {
