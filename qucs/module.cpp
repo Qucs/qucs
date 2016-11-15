@@ -28,6 +28,9 @@
 #include "io_trace.h"
 #include "globals.h"
 
+// TODO: still entangled with components
+#include "components/noncomponents.h"
+
 // Global category and component lists.
 QHash<QString, Module *> Module::Modules;
 QList<Category *> Category::Categories;
@@ -189,15 +192,20 @@ void Module::intoCategory (Module * m) {
 
 static void REGISTER_COMP_1(QString const& cat, std::string name)
 {
-  auto sym = symbol_dispatcher[name];
 // transitional bu^H^Hhack.
-  Component const* legacy_component = prechecked_cast<Component const*>(sym);
-  registerComponent (cat, &legacy_component)
+  incomplete();
+//  auto sym = symbol_dispatcher[name];
+//  Component const* legacy_component = prechecked_cast<Component const*>(sym);
+//  registerComponent (cat, &legacy_component)
 }
+
+#define REGISTER_SIM_1(cat,val) \
+  registerComponent (cat, &val::info)
+
 
 
 #define REGISTER_LUMPED_1(val) \
-  REGISTER_COMP_1 (QObject::tr("lumped components"),val)
+  REGISTER_COMP_1 (QObject::tr("lumped components"),#val)
 #define REGISTER_LUMPED_2(val,inf1,inf2) \
   REGISTER_COMP_2 (QObject::tr("lumped components"),val,inf1,inf2)
 #define REGISTER_SOURCE_1(val) \
@@ -225,7 +233,7 @@ static void REGISTER_COMP_1(QString const& cat, std::string name)
 #define REGISTER_FILE_3(val,inf1,inf2,inf3) \
   REGISTER_COMP_3 (QObject::tr("file components"),val,inf1,inf2,inf3)
 #define REGISTER_SIMULATION_1(val) \
-  REGISTER_COMP_1 (QObject::tr("simulations"),val)
+  REGISTER_SIM_1 (QObject::tr("simulations"),val)
 #define REGISTER_DIAGRAM_1(val) \
   REGISTER_MOD_1 (QObject::tr("diagrams"),val)
 #define REGISTER_DIAGRAM_2(val,inf1,inf2) \
@@ -241,8 +249,8 @@ static void REGISTER_COMP_1(QString const& cat, std::string name)
 void Module::registerModules (void) {
 
   // lumped components
-  REGISTER_LUMPED_1 (Resistor)
-  REGISTER_LUMPED_1 (Rus)
+  REGISTER_LUMPED_1 (Resistor);
+  REGISTER_LUMPED_1 (Rus);
 #if 0 // this does not work
   REGISTER_LUMPED_1 (Capacitor);
   REGISTER_LUMPED_1 (Inductor);
@@ -415,6 +423,10 @@ void Module::registerModules (void) {
   REGISTER_FILE_3 (SPDeEmbed, info2, info4, info);
   REGISTER_FILE_1 (Subcircuit);
 
+#endif
+
+  // try not to touch the non-components, for now
+
   // simulations
   REGISTER_SIMULATION_1 (DC_Sim);
   REGISTER_SIMULATION_1 (TR_Sim);
@@ -438,6 +450,7 @@ void Module::registerModules (void) {
 //  REGISTER_DIAGRAM_1 (PhasorDiagram);
 //  REGISTER_DIAGRAM_1 (Waveac);
 
+#if 0 // TODO
   // external simulation
   REGISTER_EXTERNAL_1 (ETR_Sim);
   REGISTER_EXTERNAL_1 (ecvs);
@@ -449,7 +462,6 @@ void Module::registerModules (void) {
   REGISTER_PAINT_2 (Ellipse, info, info_filled);
   REGISTER_PAINT_2 (Rectangle, info, info_filled);
   REGISTER_PAINT_1 (EllipseArc);
-
 #endif
 }
 
