@@ -9,7 +9,6 @@ dnl Read version from file
 m4_define([QUCS_VERSION], m4_esyscmd([tr -d '\n' < VERSION]))
 
 AC_INIT([qucs], [QUCS_VERSION], [qucs-bugs@lists.sourceforge.net])
-AC_CONFIG_SRCDIR([examples/resonance.sch])
 AC_CANONICAL_HOST
 # AC_CONFIG_HEADERS([config.h])
 AM_INIT_AUTOMAKE([foreign])
@@ -50,6 +49,5 @@ AC_CONFIG_SUBDIRS([qucs
 AS_IF([test -d "$srcdir/qucs-doc"],
 	AC_CONFIG_SUBDIRS([qucs-doc])
 )
-AC_CONFIG_FILES([Makefile
-                 examples/Makefile])
+AC_CONFIG_FILES([Makefile])
 AC_OUTPUT
