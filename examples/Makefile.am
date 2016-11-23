@@ -41,16 +41,17 @@ dist_examples_DATA = \
     chargepump.sch\
     chebyshev1_5th.sch\
     classic_osci.sch\
-    colpitts_base.sch\
     colpitts.sch\
+    colpitts_base.sch\
     Comb_Gen.sch\
     diff1.sch\
     diode_hb.sch\
     elliptic_5th.sch\
-    fet_noise.sch\
     fet.sch\
+    fet_noise.sch\
     fgummel.sch\
     fhr01fh.sch\
+    filter_optimization.sch\
     flicker.sch\
     fullwaverectifier_1.sch\
     fullwaverectifier_2.sch\
@@ -63,11 +64,11 @@ dist_examples_DATA = \
     IdealBalun.sch\
     lc_osc.sch\
     lf_osci.sch\
+    LPF-Balun2.sch\
+    LPF-Balun3.sch\
     LPF_1000_Coplanar.sch\
     LPF_1000_Radial-Stub.sch\
     LPF_1250_Elliptical.sch\
-    LPF-Balun2.sch\
-    LPF-Balun3.sch\
     microstrip.sch\
     mixer.sch\
     mscoupler.sch\
@@ -87,8 +88,8 @@ dist_examples_DATA = \
     schmitt.sch\
     selective_amp.sch\
     shot.sch\
-    single_balanced.sch\
     singleOPV.sch\
+    single_balanced.sch\
     SmithChartTest.sch\
     stab.sch\
     supply.sch\
@@ -100,3 +101,4 @@ dist_examples_DATA = \
     wilkinson.sch\
     X2_100_Bipolar.sch\
     X5_500.sch
+
