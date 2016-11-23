@@ -49,6 +49,10 @@ before_install:
 
   - if [[ $TRAVIS_BRANCH == master ]] ; then MASTER=true; fi
 
+  - which $CC
+  # workaround clang not system wide, fail on sudo make install for adms
+  - export CC=`which $CC`
+
   # Set xvfb for headless qucs GUI test
   - "export DISPLAY=:99.0"
   -  if [[ $LINUX ]]; then sh -e /etc/init.d/xvfb start; fi
