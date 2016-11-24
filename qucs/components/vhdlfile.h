@@ -28,7 +28,7 @@ class VHDL_File : public MultiViewComponent  {
 public:
   VHDL_File();
  ~VHDL_File() {};
-  Symbol* newOne() const {return new VHDL_File(*this);}
+  Symbol* newOne() const;// BUG {return new VHDL_File(*this);}
   static Element* info(QString&, char* &, bool getNewOne=false);
 
   bool createSubNetlist(QTextStream *);

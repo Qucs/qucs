@@ -40,7 +40,8 @@ VHDL_File::VHDL_File()
 }
 
 // -------------------------------------------------------
-Component* VHDL_File::newOne()
+// BUG: call constructor instead.
+Symbol* VHDL_File::newOne() const
 {
   VHDL_File *p = new VHDL_File();
   p->Props.getFirst()->Value = Props.getFirst()->Value;
