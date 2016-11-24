@@ -53,12 +53,12 @@ qucs_default_components_la_SOURCES = \
 	volt_dc.cpp
 # TODO: move the others
 LATER= \
-  ac_sim.cpp volt_ac.cpp subcircuit.cpp sparamfile.cpp            \
+  volt_ac.cpp subcircuit.cpp sparamfile.cpp            \
   source_ac.cpp isolator.cpp equation.cpp circulator.cpp attenuator.cpp       \
   ampere_dc.cpp transformer.cpp symtrafo.cpp \
   mutual2.cpp noise_ii.cpp noise_iv.cpp noise_vv.cpp logical_or.cpp           \
   logical_nor.cpp logical_and.cpp logical_nand.cpp logical_xor.cpp            \
-  logical_xnor.cpp logical_inv.cpp digi_sim.cpp digi_source.cpp coupler.cpp   \
+  logical_xnor.cpp logical_inv.cpp digi_source.cpp coupler.cpp   \
   rs_flipflop.cpp d_flipflop.cpp jk_flipflop.cpp coaxialline.cpp vprobe.cpp   \
   switch.cpp relais.cpp am_modulator.cpp pm_modulator.cpp        \
   optimizedialog.cpp tline_4port.cpp twistedpair.cpp bondwire.cpp rlcg.cpp    \
@@ -71,14 +71,18 @@ LATER= \
   DLS_nto1.cpp DLS_1ton.cpp andor4x2.cpp andor4x3.cpp andor4x4.cpp            \
   dmux2to4.cpp dmux3to8.cpp dmux4to16.cpp ha1b.cpp fa1b.cpp fa2b.cpp         
 
-SIM_THINGS = dc_sim.cpp tr_sim.cpp sp_sim.cpp hb_sim.cpp opt_sim.cpp
+# simulation commands.
+# these are not pluggable. compile them in.
+SIM_THINGS = \
+	dc_sim.cpp tr_sim.cpp sp_sim.cpp hb_sim.cpp opt_sim.cpp \
+	ac_sim.cpp digi_sim.cpp
 
 MORE_LATER = phaseshifter.cpp gyrator.cpp componentdialog.cpp    \
   vcvs.cpp vccs.cpp tline.cpp substrate.cpp \
   param_sweep.cpp mstee.cpp msstep.cpp msline.cpp mscross.cpp mscoupled.cpp mslange.cpp   \
   mscorner.cpp diode.cpp coplanar.cpp ccvs.cpp cccs.cpp \
 subcirport.cpp ground.cpp        \
-  dcfeed.cpp dcblock.cpp biast.cpp inductor.cpp capacitor.cpp vhdlfile.cpp    \
+  dcfeed.cpp dcblock.cpp biast.cpp inductor.cpp capacitor.cpp \
   iprobe.cpp volt_noise.cpp ampere_noise.cpp       \
   msmbend.cpp msopen.cpp ampere_ac.cpp bjt.cpp jfet.cpp mosfet.cpp            \
   msgap.cpp bjtsub.cpp mosfet_sub.cpp vpulse.cpp ipulse.cpp vrect.cpp         \
@@ -94,8 +98,12 @@ subcirport.cpp ground.cpp        \
 #   hybrid.cpp ctline.cpp tunneldiode.cpp \
 #   etr_sim.cpp ecvs.cpp vcresistor.cpp vacomponent.cpp        \
 #   mutualx.cpp
+#
+RANDOM_LEGACY_STUFF = \
+	vhdlfile.cpp
 
 nodist_libcomponents_a_SOURCES = $(MOCFILES) $(SIM_THINGS) \
+	$(RANDOM_LEGACY_STUFF) \
 	command.cpp \
 	component.cpp
 
