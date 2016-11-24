@@ -44,11 +44,13 @@ LibComp::LibComp()
 }
 
 // ---------------------------------------------------------------------
-Component* LibComp::newOne()
+Symbol* LibComp::newOne() const
 {
   LibComp *p = new LibComp();
-  p->Props.first()->Value = Props.first()->Value;
-  p->Props.next()->Value = Props.next()->Value;
+  p->Props.first()->Value =
+	  const_cast<Q3PtrList<Property>& >(Props).first()->Value;
+  p->Props.next()->Value =
+	  const_cast<Q3PtrList<Property>& >(Props).next()->Value;
   p->recreate(0);
   return p;
 }

@@ -41,7 +41,7 @@ Verilog_File::Verilog_File()
 }
 
 // -------------------------------------------------------
-Component* Verilog_File::newOne()
+Symbol* Verilog_File::newOne() const
 {
   Verilog_File *p = new Verilog_File();
   p->Props.getFirst()->Value = Props.getFirst()->Value;

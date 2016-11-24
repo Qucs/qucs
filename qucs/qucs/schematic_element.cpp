@@ -2599,6 +2599,19 @@ void Schematic::recreateComponent(Component *Comp)
         free(plMem);
     }
 }
+// ---------------------------------------------------
+void Schematic::insertElement(Element *c)
+{
+  if(Component* x=dynamic_cast<Component*>(c)){
+    // legacy code
+    insertComponent(x);
+  }else if(Command* x=dynamic_cast<Command*>(c)){
+    incomplete();
+//    insertSymbol(x);
+  }else if(Symbol* x=dynamic_cast<Symbol*>(c)){
+//    insertSymbol(x);
+  }
+}
 
 // ---------------------------------------------------
 void Schematic::insertComponent(Component *c)

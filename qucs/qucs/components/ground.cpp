@@ -45,11 +45,6 @@ Ground::~Ground()
 {
 }
 
-Component* Ground::newOne()
-{
-  return new Ground();
-}
-
 // -------------------------------------------------------
 Element* Ground::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
