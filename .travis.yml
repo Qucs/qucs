@@ -57,6 +57,10 @@ before_install:
 
   - if [[ $TRAVIS_BRANCH == master ]] ; then MASTER=true; fi
 
+  - which $CC
+  # workaround clang not system wide, fail on sudo make install for adms
+  - export CC=`which $CC`
+
   # Set xvfb for headless qucs GUI test
   - "export DISPLAY=:99.0"
   -  if [[ $LINUX ]]; then sh -e /etc/init.d/xvfb start; fi
@@ -150,12 +154,10 @@ script:
 
 
   # Build ADMS from release (avoid need of Perl and its modules)
-  #   Workaround sourceforge shortage, use personal Dropbox.
-  #   wget http://sourceforge.net/projects/mot-adms/files/adms-source/2.3/adms-2.3.4.tar.gz -O /tmp/adms-2.3.4.tar.gz;
   - if [[ $LINUX ]]; then
-      wget https://www.dropbox.com/s/0d0hbsopb1xdg5y/adms-2.3.4.tar.gz -O /tmp/adms-2.3.4.tar.gz;
-      tar -xzvf /tmp/adms-2.3.4.tar.gz;
-      cd adms-2.3.4 && ./configure --prefix=/usr && make && sudo make install && cd ..;
+      wget http://sourceforge.net/projects/mot-adms/files/adms-source/2.3/adms-2.3.6.tar.gz -O /tmp/adms-2.3.6.tar.gz;
+      tar -xzvf /tmp/adms-2.3.6.tar.gz;
+      cd adms-2.3.6 && ./configure --prefix=/usr && make && sudo make install && cd ..;
     fi
 
   # Check available tools
