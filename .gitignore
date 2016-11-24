@@ -181,6 +181,11 @@ CMakeLists.txt.user
 # dot hash files (write locks)
 .\#*
 
+# Eclipse CDT #
+###########
+.cproject
+.project
+
 # Qucs user files #
 ###################
 # ignore schematics, data display and data

@@ -24,22 +24,11 @@ AC_PROG_CC
 AC_PROG_RANLIB
 AC_CHECK_TOOL(AR, ar, :)
 
-dnl Check for debugging option.
-AC_ARG_ENABLE([debug],
-  AC_HELP_STRING([--enable-debug],
-                 [include debug output @<:@default=no@:>@]),
-  [case "$enableval" in
-   yes) enable_qucs_gui_debug="yes" ;;
-   no)  enable_qucs_gui_debug="no"  ;;
-   *)   enable_qucs_gui_debug="no"  ;;
-   esac],
-  [enable_qucs_gui_debug="no"])
-if test "$enable_qucs_gui_debug" = yes; then
+dnl Check for the debug mode decision.
+if test "$enable_debug" = yes; then
   AC_DEFINE(DEBUG, 1, [Define if debug output should be supported.])
-  QT_DEF="-DQT_DEBUG"
 else
   AC_DEFINE(NDEBUG, 1, [Define if debug code should be suppressed.])
-  QT_DEF="-DQT_NO_DEBUG -DQT_NO_DEBUG_OUTPUT"
   if test "x$GCC" = xyes; then
     CFLAGS="`echo $CFLAGS | sed -e 's/\-g //g'`"
     CXXFLAGS="`echo $CXXFLAGS | sed -e 's/\-g //g'`"
@@ -49,6 +38,16 @@ else
 #      *)        LDFLAGS="$LDFLAGS -s" ;;
 #    esac
   fi
+fi
+
+dnl Check for the Qt debug mode decision.
+if test "$enable_qt_debug" = yes; then
+  AC_DEFINE(QT_DEBUG, 1, [Define if Qt debug messages should be supported.])
+  QT_DEF="-DQT_DEBUG"
+else
+  AC_DEFINE(QT_NO_DEBUG, 1, [Define if Qt debug messages should be suppressed.])
+  AC_DEFINE(QT_NO_DEBUG_OUTPUT, 1, [Define if Qt debug messages should be suppressed.])
+  QT_DEF="-DQT_NO_DEBUG -DQT_NO_DEBUG_OUTPUT"
 fi
 
 dnl Check for Linux
@@ -241,7 +240,7 @@ case $host_os in
       fi
     fi
 
-    if test "$enable_qucs_gui_debug" = yes; then
+    if test "$enable_debug" = yes; then
       CFLAGS="$CFLAGS -W -Wall -Wmissing-prototypes"
       CXXFLAGS="$CXXFLAGS -W -Wall"
     fi
@@ -288,7 +287,7 @@ case $host_os in
 
     dnl Check for multi-threaded option.
     AC_ARG_ENABLE([mt],
-      AC_HELP_STRING([--disable-mt],
+      AS_HELP_STRING([--disable-mt],
                      [link to non-threaded Qt (deprecated)]),
       enable_mt="$enableval",
       [if test $QT_VER = 4; then
@@ -415,7 +414,7 @@ case $host_os in
     CPPFLAGS="$CPPFLAGS $QT_DEF"
     QT_LDFLAGS="-headerpad_max_install_names"
 
-    if test "$enable_qucs_gui_debug" = yes; then
+    if test "$enable_debug" = yes; then
       CPPFLAGS="$CPPFLAGS -W -Wall"
     fi
 
@@ -726,16 +725,20 @@ if test "$UIC" = ":"; then
 fi
 
 dnl check for Qt moveable tabwidgets (introduced in Qt 4.5)
+AC_MSG_NOTICE([==================================================])
 QUCS_CHECK_FUNC_QTABWIDGET_SETMOVABLE
+AC_MSG_NOTICE([==================================================])
 
 dnl append -O0 to CXXFLAGS if in debug mode and using gcc
 dnl to assist with debugging by preventing optimisation.
 dnl gcc will use the final invocation of -OX and ignore earlier
 dnl values
-if test "$enable_qucs_gui_debug" = yes; then
+if test "$enable_debug" = yes; then
  if test "x$GCC" = xyes; then
     CXXFLAGS="$CXXFLAGS -O0"
-    AC_MSG_NOTICE([Appending gcc optimisation flag -O0 due to --enable-debug setting.])
+    AC_MSG_NOTICE([==================================================])
+    AC_MSG_NOTICE([Appending gcc optimization flag -O0 due to --enable-debug setting])
+    AC_MSG_NOTICE([==================================================])
  fi
 fi
 
@@ -821,14 +824,16 @@ if test -d "../.git"; then
   m4_define([GIT_REVISION], m4_esyscmd([git log --pretty=format:'%h' -n 1u]))
   AC_DEFINE([GIT], ["GIT_REVISION"], [Git short revision hash.])
   GIT=GIT_REVISION
-  echo "\nFound Git clone... $GIT"
+  AC_MSG_NOTICE([==================================================])
+  AC_MSG_NOTICE([Found Git clone revision: $GIT])
+  AC_MSG_NOTICE([==================================================])
 fi
 
 
 AC_OUTPUT
 
-dnl delete the unset enable_qucs_gui_debug variable
-unset enable_qucs_gui_debug
+dnl delete the unset enable_debug variable
+unset enable_debug
 
 dnl Print results.
 AC_MSG_RESULT([])

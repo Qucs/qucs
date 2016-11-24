@@ -18,12 +18,61 @@ AM_INIT_AUTOMAKE([foreign])
 AC_PROG_CXX
 AC_PROG_CC
 
-# Options
+dnl Debug mode, default: disabled.
+AC_ARG_ENABLE([debug],
+  AS_HELP_STRING([--enable-debug], [Debug mode (disabled by default)]),
+  [enable_debug="yes"],
+  [enable_debug="no"]
+)
+         
+dnl Show the debug mode decision.
+if test "$enable_debug" = yes; then
+  AC_MSG_NOTICE([==================================================])
+  AC_MSG_NOTICE([Debug mode: Enabled])
+  AC_MSG_NOTICE([==================================================])
+else
+  AC_MSG_NOTICE([==================================================])
+  AC_MSG_NOTICE([Debug mode: Disabled])
+  AC_MSG_NOTICE([==================================================])
+fi
 
-# hmm maybe the default should be --disable-doc
+dnl Qt debug mode, default: disabled.
+AC_ARG_ENABLE([qt-debug],
+  AS_HELP_STRING([--enable-qt-debug], [Qt debug (disabled by default)]),
+  [enable_qt_debug="yes"],
+  [enable_qt_debug="no"]
+)
+
+dnl Show the Qt debug mode decision.
+if test "$enable_qt_debug" = yes; then
+  AC_MSG_NOTICE([==================================================])
+  AC_MSG_NOTICE([Qt debug mode: Enabled])
+  AC_MSG_NOTICE([==================================================])
+else
+  AC_MSG_NOTICE([==================================================])
+  AC_MSG_NOTICE([Qt debug mode: Disabled])
+  AC_MSG_NOTICE([==================================================])
+fi
+
+dnl Documentation build, default: enabled.
 AC_ARG_ENABLE([doc],
-  AS_HELP_STRING([--disable-doc], [Disable doc subpackage]))
-AM_CONDITIONAL([ENABLE_DOC], [test "$enable_doc" != no])
+  AS_HELP_STRING([--disable-doc], [Documentation generation (enabled by default)]),
+  [enable_doc="no"],
+  [enable_doc="yes"]
+)
+
+dnl Show the documentation build decision.
+if test "$enable_doc" = yes; then
+  AC_MSG_NOTICE([==================================================])
+  AC_MSG_NOTICE([Documentation generation: Enabled])
+  AC_MSG_NOTICE([==================================================])
+else
+  AC_MSG_NOTICE([==================================================])
+  AC_MSG_NOTICE([Documentation generation: Disabled])
+  AC_MSG_NOTICE([==================================================])
+fi
+
+AM_CONDITIONAL([ENABLE_DOC], [test "$enable_doc" = "yes"])
 
 AM_CONDITIONAL([QUCS_TEST], [test -f "$srcdir/qucs-test/run.py"])
 

@@ -45,17 +45,17 @@ dnl Define the check for doxygen.
 AC_DEFUN([CHECK_DOXYGEN],
 [
 AC_ARG_ENABLE([doxygen],
-  AC_HELP_STRING([--enable-doxygen],
+  AS_HELP_STRING([--enable-doxygen],
                  [enable documentation generation with doxygen @<:@auto@:>@]))
 AC_ARG_ENABLE([dot],
-  AC_HELP_STRING([--enable-dot],
+  AS_HELP_STRING([--enable-dot],
                  [use 'dot' to generate graphs in doxygen @<:@auto@:>@]))
 AC_ARG_ENABLE([html-docs],
-  AC_HELP_STRING([--enable-html-docs],
+  AS_HELP_STRING([--enable-html-docs],
                  [enable HTML generation with doxygen @<:@yes@:>@]),
   [], [enable_html_docs=yes])
 AC_ARG_ENABLE([latex-docs],
-  AC_HELP_STRING([--enable-latex-docs],
+  AS_HELP_STRING([--enable-latex-docs],
                  [enable LaTeX generation with doxygen @<:@no@:>@]),
   [], [enable_latex_docs=no])
 if test "x$enable_doxygen" = xno; then
