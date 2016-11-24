@@ -54,12 +54,6 @@ Digi_Sim::~Digi_Sim()
 }
 
 // -------------------------------------------------------
-Component* Digi_Sim::newOne()
-{
-  return new Digi_Sim();
-}
-
-// -------------------------------------------------------
 Element* Digi_Sim::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("digital simulation");
