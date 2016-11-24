@@ -75,11 +75,11 @@ LATER= \
 # these are not pluggable. compile them in.
 SIM_THINGS = \
 	dc_sim.cpp tr_sim.cpp sp_sim.cpp hb_sim.cpp opt_sim.cpp \
-	ac_sim.cpp digi_sim.cpp
+	ac_sim.cpp digi_sim.cpp param_sweep.cpp
 
 MORE_LATER = phaseshifter.cpp gyrator.cpp \
   vcvs.cpp vccs.cpp tline.cpp substrate.cpp \
-  param_sweep.cpp mstee.cpp msstep.cpp msline.cpp mscross.cpp mscoupled.cpp mslange.cpp   \
+  mstee.cpp msstep.cpp msline.cpp mscross.cpp mscoupled.cpp mslange.cpp   \
   mscorner.cpp diode.cpp coplanar.cpp ccvs.cpp cccs.cpp \
   dcfeed.cpp dcblock.cpp biast.cpp inductor.cpp capacitor.cpp \
   iprobe.cpp volt_noise.cpp ampere_noise.cpp       \
@@ -95,7 +95,7 @@ MORE_LATER = phaseshifter.cpp gyrator.cpp \
 #   greytobinary4bit.cpp comp_1bit.cpp comp_2bit.cpp comp_4bit.cpp              \
 #   hpribin4bit.cpp msrstub.cpp phototransistor.cpp nigbt.cpp \
 #   hybrid.cpp ctline.cpp tunneldiode.cpp \
-#   etr_sim.cpp ecvs.cpp vcresistor.cpp vacomponent.cpp        \
+#   etr_sim.cpp ecvs.cpp vcresistor.cpp       \
 #   mutualx.cpp
 
 # dialogs related to components
@@ -106,6 +106,7 @@ DIALG_SRC = \
 
 # some stuff mostly related to legacy components
 RANDOM_LEGACY_STUFF = \
+	vacomponent.cpp \
 	vhdlfile.cpp libcomp.cpp ground.cpp \
 	verilogfile.cpp \
   	subcirport.cpp \
