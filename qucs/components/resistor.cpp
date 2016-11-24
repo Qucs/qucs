@@ -36,7 +36,8 @@ protected:
   void createSymbol();
 }R;
 
-static Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "resistor|Rus", &R);
+// this is the schematic name, not the name in the toolbox
+static Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "R", &R);
 
 Resistor::Resistor(bool european)
 {
