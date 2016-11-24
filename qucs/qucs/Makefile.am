@@ -79,6 +79,7 @@ libqucs_la_SOURCES = \
 libqucsschematic_la_SOURCES = \
   attach.cpp \
   viewpainter.cpp \
+  globals.cpp \
   node.cpp element.cpp qucsdoc.cpp wire.cpp mouseactions.cpp   \
   qucs.cpp wirelabel.cpp qucs_init.cpp qucs_actions.cpp            \
   mnemo.cpp schematic.cpp schematic_element.cpp textdoc.cpp \
