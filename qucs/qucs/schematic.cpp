@@ -1381,6 +1381,8 @@ int Schematic::save()
 // ---------------------------------------------------
 // If the port number of the schematic and of the symbol are not
 // equal add or remove some in the symbol.
+// BUG: this is far to complex.
+// (not even sure, what it is trying to do...)
 int Schematic::adjustPortNumbers()
 {
   int x1, x2, y1, y2;

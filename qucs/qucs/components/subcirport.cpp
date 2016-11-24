@@ -82,12 +82,6 @@ void SubCirPort::createSymbol()
 }
 
 // -------------------------------------------------------
-Component* SubCirPort::newOne()
-{
-  return new SubCirPort();
-}
-
-// -------------------------------------------------------
 Element* SubCirPort::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Subcircuit Port");

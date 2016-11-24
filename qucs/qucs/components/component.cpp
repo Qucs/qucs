@@ -1404,7 +1404,8 @@ Component* getComponentFromName(QString& Line, Schematic* p)
 // do something with Dialog Buttons
 void Component::dialgButtStuff(ComponentDialog& d)const
 {
-  d.disableButtons();
+  incomplete();
+  // d.disableButtons();
 }
 
 // vim:ts=8:sw=2:noet
