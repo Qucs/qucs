@@ -77,11 +77,6 @@ QString Equation::vhdlCode(int)
   return s;
 }
 
-Component* Equation::newOne()
-{
-  return new Equation();
-}
-
 Element* Equation::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Equation");

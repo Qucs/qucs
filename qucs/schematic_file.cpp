@@ -1381,7 +1381,8 @@ bool Schematic::throughAllComps(QTextStream *stream, int& countInit,
       FileList.insert(f, SubFile("CIR", f));
 
       SpiceFile *sf = (SpiceFile*)pc;
-      r = sf->createSubNetlist(stream);
+      incomplete();
+      // r = sf->createSubNetlist(stream);
       ErrText->appendPlainText(sf->getErrorText());
       if(!r){
         return false;

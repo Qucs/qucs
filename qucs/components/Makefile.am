@@ -54,15 +54,15 @@ qucs_default_components_la_SOURCES = \
 # TODO: move the others
 LATER= \
   volt_ac.cpp subcircuit.cpp sparamfile.cpp            \
-  source_ac.cpp isolator.cpp equation.cpp circulator.cpp attenuator.cpp       \
+  source_ac.cpp isolator.cpp circulator.cpp attenuator.cpp       \
   ampere_dc.cpp transformer.cpp symtrafo.cpp \
   mutual2.cpp noise_ii.cpp noise_iv.cpp noise_vv.cpp logical_or.cpp           \
   logical_nor.cpp logical_and.cpp logical_nand.cpp logical_xor.cpp            \
   logical_xnor.cpp logical_inv.cpp digi_source.cpp coupler.cpp   \
   rs_flipflop.cpp d_flipflop.cpp jk_flipflop.cpp coaxialline.cpp vprobe.cpp   \
   switch.cpp relais.cpp am_modulator.cpp pm_modulator.cpp        \
-  optimizedialog.cpp tline_4port.cpp twistedpair.cpp bondwire.cpp rlcg.cpp    \
-  verilogfile.cpp vexp.cpp iexp.cpp eqndefined.cpp  \
+  tline_4port.cpp twistedpair.cpp bondwire.cpp rlcg.cpp    \
+  vexp.cpp iexp.cpp eqndefined.cpp  \
   vfile.cpp ifile.cpp mod_amp.cpp thyristor.cpp triac.cpp       \
   diac.cpp log_amp.cpp potentiometer.cpp rfedd.cpp rfedd2p.cpp  \
   MESFET.cpp rectline.cpp photodiode.cpp     \
@@ -77,33 +77,44 @@ SIM_THINGS = \
 	dc_sim.cpp tr_sim.cpp sp_sim.cpp hb_sim.cpp opt_sim.cpp \
 	ac_sim.cpp digi_sim.cpp
 
-MORE_LATER = phaseshifter.cpp gyrator.cpp componentdialog.cpp    \
+MORE_LATER = phaseshifter.cpp gyrator.cpp \
   vcvs.cpp vccs.cpp tline.cpp substrate.cpp \
   param_sweep.cpp mstee.cpp msstep.cpp msline.cpp mscross.cpp mscoupled.cpp mslange.cpp   \
   mscorner.cpp diode.cpp coplanar.cpp ccvs.cpp cccs.cpp \
-subcirport.cpp ground.cpp        \
   dcfeed.cpp dcblock.cpp biast.cpp inductor.cpp capacitor.cpp \
   iprobe.cpp volt_noise.cpp ampere_noise.cpp       \
   msmbend.cpp msopen.cpp ampere_ac.cpp bjt.cpp jfet.cpp mosfet.cpp            \
   msgap.cpp bjtsub.cpp mosfet_sub.cpp vpulse.cpp ipulse.cpp vrect.cpp         \
   irect.cpp msvia.cpp amplifier.cpp opamp.cpp spicefile.cpp cpwopen.cpp       \
-  cpwshort.cpp spicedialog.cpp cpwgap.cpp cpwstep.cpp libcomp.cpp mutual.cpp  
+  cpwshort.cpp cpwgap.cpp cpwstep.cpp mutual.cpp  
 
 # are these really *source* files?!
 # verilogstuff =
-# binarytogrey4bit.cpp vafile.cpp         \
+# binarytogrey4bit.cpp        \
 #  pad2bit.cpp pad3bit.cpp pad4bit.cpp
 #   greytobinary4bit.cpp comp_1bit.cpp comp_2bit.cpp comp_4bit.cpp              \
 #   hpribin4bit.cpp msrstub.cpp phototransistor.cpp nigbt.cpp \
 #   hybrid.cpp ctline.cpp tunneldiode.cpp \
 #   etr_sim.cpp ecvs.cpp vcresistor.cpp vacomponent.cpp        \
 #   mutualx.cpp
-#
+
+# dialogs related to components
+DIALG_SRC = \
+	spicedialog.cpp \
+	componentdialog.cpp \
+	optimizedialog.cpp
+
+# some stuff mostly related to legacy components
 RANDOM_LEGACY_STUFF = \
-	vhdlfile.cpp
+	vhdlfile.cpp libcomp.cpp ground.cpp \
+	verilogfile.cpp \
+  	subcirport.cpp \
+	equation.cpp \
+	vafile.cpp
 
 nodist_libcomponents_a_SOURCES = $(MOCFILES) $(SIM_THINGS) \
 	$(RANDOM_LEGACY_STUFF) \
+	$(DIALG_SRC) \
 	command.cpp \
 	component.cpp
 
