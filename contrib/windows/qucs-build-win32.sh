@@ -159,7 +159,12 @@ fi
 /tmp/mingw ./configure --disable-doc --prefix=${WINDIR}  --target=i386-mingw32 --host=i386-mingw32 --build=i586-linux --program-prefix="" --disable-dependency-tracking
 make install
 
-# TODO install qucs-doc
+
+# Use host to build and install qucs-doc
+cd qucs-doc
+./configure  --prefix=${WINDIR}
+make
+make install
 
 
 # Installed files into ~/.wine/drive_c/qucs-win32-bin/
