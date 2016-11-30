@@ -1,0 +1,48 @@
+<Qucs Schematic 0.0.18>
+<Properties>
+  <View=-47,-240,800,1803,1,131,0>
+  <Grid=10,10,0>
+  <DataSet=dual_1.dat>
+  <DataDisplay=dual_1.sch>
+  <OpenDisplay=1>
+  <Script=dual_1.m>
+  <RunScript=0>
+  <showFrame=0>
+  <FrameText0=Title>
+  <FrameText1=Drawn By:>
+  <FrameText2=Date:>
+  <FrameText3=Revision:>
+</Properties>
+<Symbol>
+</Symbol>
+<Components>
+</Components>
+<Wires>
+</Wires>
+<Diagrams>
+  <Smith 60 448 428 428 3 #c0c0c0 1 00 1 0 1 1 0 0 5 1.5 1 0 1 1 315 0 225 "" "" "">
+	<"S[2,2]" #0000ff 0 3 0 0 0>
+	  <Mkr 1.09565e+10 157 -414 3 0 0>
+	<"SL" #ff0000 0 3 0 0 0>
+	<"GP" #ff00ff 0 3 0 0 0>
+	  <Mkr 200/294.895/1.1e+10 288 -259 3 0 0>
+  </Smith>
+  <Smith 80 1743 563 563 3 #c0c0c0 1 00 1 0 1 1 0 0 5 1.5 1 0 1 1 315 0 225 "" "" "">
+	<"S[1,1]" #0000ff 0 3 0 0 0>
+	  <Mkr 1.8e+10 442 -398 3 0 0>
+  </Smith>
+  <Rect 130 1017 561 487 3 #c0c0c0 1 00 1 1e+10 2e+08 1.1e+10 0 -20 5 30 0 0 1 5 315 0 225 "" "" "">
+	<"S11db" #0000ff 0 3 0 0 0>
+	  <Mkr 1.09565e+10 404 -317 3 0 0>
+	<"S21db" #ff0000 0 3 0 0 0>
+	  <Mkr 1.09565e+10 416 -475 3 0 0>
+	<"S22db" #ff00ff 0 3 0 0 0>
+	  <Mkr 1.10468e+10 396 -63 3 0 0>
+	<"Fdb" #00ff00 0 3 0 0 1>
+	  <Mkr 1.09565e+10 417 -144 3 0 0>
+	<"K" #000000 2 3 0 0 1>
+	  <Mkr 1.10468e+10 70 -300 3 0 0>
+  </Rect>
+</Diagrams>
+<Paintings>
+</Paintings>
