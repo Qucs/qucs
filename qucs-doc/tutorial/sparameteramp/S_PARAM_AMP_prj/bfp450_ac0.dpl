@@ -1,0 +1,41 @@
+<Qucs Schematic 0.0.18>
+<Properties>
+  <View=-58,0,800,1042,1,58,0>
+  <Grid=10,10,0>
+  <DataSet=bfp450_ac0.dat>
+  <DataDisplay=bfp450_ac0.sch>
+  <OpenDisplay=1>
+  <Script=bfp450_ac0.m>
+  <RunScript=0>
+  <showFrame=0>
+  <FrameText0=Title>
+  <FrameText1=Drawn By:>
+  <FrameText2=Date:>
+  <FrameText3=Revision:>
+</Properties>
+<Symbol>
+</Symbol>
+<Components>
+</Components>
+<Wires>
+</Wires>
+<Diagrams>
+  <Tab 22 153 455 69 3 #c0c0c0 1 00 1 0 1 1 1 0 1 1 1 0 1 1 315 0 225 "" "" "">
+	<"V1.I" #0000ff 0 3 1 0 0>
+	<"Pr2.I" #0000ff 0 3 1 0 0>
+	<"VCE.V" #0000ff 0 3 1 0 0>
+	<"VBE.V" #0000ff 0 3 1 0 0>
+	<"Pr1.I" #0000ff 0 3 1 0 0>
+  </Tab>
+  <Tab 40 372 434 212 3 #c0c0c0 1 00 1 0 1 1 1 0 1 1 1 0 1 200 315 0 225 "" "" "">
+	<"S11Z" #0000ff 0 3 1 0 0>
+  </Tab>
+  <Smith 20 822 422 422 3 #c0c0c0 1 00 1 0 1 1 1 0 4 1 1 0 1 1 315 0 225 "" "" "">
+	<"S11Z" #0000ff 0 3 0 0 0>
+	  <Mkr 9.0201e+08 6 -350 3 0 0>
+	<"bfp450_1:S[1,1]" #ff0000 0 3 0 0 0>
+	  <Mkr 9.0201e+08 139 -222 3 0 0>
+  </Smith>
+</Diagrams>
+<Paintings>
+</Paintings>
