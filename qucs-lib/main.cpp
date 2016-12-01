@@ -35,6 +35,7 @@
 
 tQucsSettings QucsSettings;
 QDir UserLibDir;
+QDir SysLibDir;
 
 
 // #########################################################################
@@ -84,6 +85,8 @@ bool saveApplSettings(QucsLib *qucs)
 
 int main(int argc, char *argv[])
 {
+  QApplication a(argc, argv);
+
   // apply default settings
   QucsSettings.x = 100;
   QucsSettings.y = 50;
@@ -113,9 +116,9 @@ int main(int argc, char *argv[])
 
   loadSettings();
 
+  SysLibDir.setPath(QucsSettings.LibDir);
   UserLibDir.setPath(QucsSettings.QucsHomeDir.canonicalPath() + "/user_lib/");
 
-  QApplication a(argc, argv);
   a.setFont(QucsSettings.font);
 
   QTranslator tor( 0 );
