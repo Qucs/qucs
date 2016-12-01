@@ -31,10 +31,8 @@
 #define APPVERNAME "Quite Universal Circuit Simulator 0.0.19 binary package for Win32"
 #define URL "http://qucs.sourceforge.net"
 #define TREE "c:\qucs-win32-bin\"
-#define octaveversion "3.6.4"
 
 #define freehdl  "freehdl-0.0.8-1-setup.exe"
-#define iverilog "iverilog-20130827_setup.exe"
 #define mingw    "mingw-w64-i686-4.8.2-release-posix-dwarf-rt_v3-rev3-setup.exe"
 
 
@@ -53,7 +51,6 @@ OutputBaseFilename={# BASENAME}-{# RELEASE}-setup
 Compression=lzma
 SolidCompression=yes
 ChangesEnvironment=yes
-;InfoBeforeFile={# TREE}\infobefore.rtf
 UsePreviousAppDir=yes
 
 ; no admin right required http://www.kinook.com/blog/?p=53
@@ -62,15 +59,7 @@ UsePreviousAppDir=yes
 
 [Registry]
 Root: HKLM; Subkey: SYSTEM\CurrentControlSet\Control\Session Manager\Environment; ValueType: string; ValueName: QUCSDIR; ValueData: "{app}"; Flags: deletevalue createvalueifdoesntexist noerror; MinVersion: 0,4.00.1381
-;Root: HKLM; Subkey: SYSTEM\CurrentControlSet\Control\Session Manager\Environment; ValueType: string; ValueName: HOME; ValueData: "{code:HomeDir}"; Flags: createvalueifdoesntexist noerror; MinVersion: 0,4.00.1381
-Root: HKLM; Subkey: SYSTEM\CurrentControlSet\Control\Session Manager\Environment; ValueType: string; ValueName: ADMSXMLBINDIR; ValueData: "{app}\bin"; Flags: deletevalue createvalueifdoesntexist noerror; MinVersion: 0,4.00.1381
-Root: HKLM; Subkey: SYSTEM\CurrentControlSet\Control\Session Manager\Environment; ValueType: string; ValueName: ASCOBINDIR; ValueData: "{app}\bin"; Flags: createvalueifdoesntexist noerror ; MinVersion: 0,4.00.1381
-
-Root: HKLM; Subkey: SYSTEM\CurrentControlSet\Control\Session Manager\Environment; ValueType: string; ValueName: OCTAVEDIR; ValueData: {app}\share\qucs\octave; Flags: deletevalue createvalueifdoesntexist noerror uninsclearvalue; MinVersion: 0,4.00.1381
 Root: HKLM; Subkey: SYSTEM\CurrentControlSet\Control\Session Manager\Environment; ValueName: "Path"; ValueType: "string"; ValueData: "{app}\bin;{olddata}"; Check: NotOnPathAlready(); Flags: preservestringtype noerror;
-Root: HKLM; Subkey: SYSTEM\CurrentControlSet\Control\Session Manager\Environment; ValueName: "Path"; ValueType: "string"; ValueData: "{code:OctaveDir};{olddata}"; Tasks: octave; Check: OctaveNotOnPathAlready(); Flags: preservestringtype noerror;
-
-Root: HKLM; Subkey: SYSTEM\CurrentControlSet\Control\Session Manager\Environment; ValueType: string; ValueName: OCTAVEBINDIR; ValueData: "{code:GetOctaveBinDir}"; Flags: createvalueifdoesntexist noerror ; MinVersion: 0,4.00.1381
 
 ; handle Current User install
 ;Root: HKCU; Subkey: Environment; ValueType: string; ValueName: QUCSDIR; ValueData: {app}; Flags: deletevalue createvalueifdoesntexist noerror uninsdeletekey; MinVersion: 0,4.00.1381
@@ -78,13 +67,12 @@ Root: HKLM; Subkey: SYSTEM\CurrentControlSet\Control\Session Manager\Environment
 ;Root: HKCU; Subkey: Environment; ValueType: string; ValueName: ADMSXMLBINDIR; ValueData: {app}\bin; Flags: deletevalue createvalueifdoesntexist noerror uninsdeletekey; MinVersion: 0,4.00.1381
 ;Root: HKCU; Subkey: Environment; ValueType: string; ValueName: ASCOBINDIR; ValueData: {app}\bin; Flags: deletevalue createvalueifdoesntexist noerror uninsdeletekey; MinVersion: 0,4.00.1381
 
-
 [Tasks]
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 Name: "mingw32"; Description: "Install Mingw-w64 4.8.2 (Required for FreeHDL, Verilog-A)"; GroupDescription: "Install bundled software"; Flags: checkedonce
 Name: "freehdl"; Description: "Install FreeHDL 0.0.8"; GroupDescription: "Install bundled software"; Flags: checkedonce
-Name: "iverilog"; Description: "Install iverilog dev-130827"; GroupDescription: "Install bundled software"; Flags: checkedonce
-Name: "octave"; Description: "Download Octave"; GroupDescription: "Install bundled software"; Flags: checkedonce
+Name: "iverilog"; Description: "Download Icarus Verilog"; GroupDescription: "Download installer"; Flags: unchecked
+Name: "octave"; Description: "Download Octave"; GroupDescription: "Download installer"; Flags: unchecked
 
 
 [Files]
@@ -94,7 +82,6 @@ Source: "{# TREE}\lib\*"; DestDir: "{app}\lib"; Flags: ignoreversion recursesubd
 Source: "{# TREE}\misc\*"; DestDir: "{app}\misc"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "{# TREE}\share\*"; DestDir: "{app}\share"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
-Source: "{# TREE}\{# iverilog}"; DestDir: "{tmp}"
 Source: "{# TREE}\{# freehdl}"; DestDir: "{tmp}"
 Source: "{# TREE}\{# mingw}"; DestDir: "{tmp}"
 
@@ -108,19 +95,9 @@ Name: "{userdesktop}\Qucs"; Filename: "{app}\bin\qucs.exe"; IconFilename: "{app}
 [Run]
 Filename: "{tmp}\{# mingw}"; Parameters: ""; Tasks: mingw32
 Filename: "{tmp}\{# freehdl}"; Parameters: ""; Tasks: freehdl
-Filename: "{tmp}\{# iverilog}"; Parameters: ""; Tasks: iverilog
 
 
 [Code]
-// globar var, set by Octavedir, used to create OCTAVEBINDIR used by Qucs
-var
-  OctaveBinDir: String;
-
-// get Octave bin dir
-function GetOctaveBinDir(Param: String): String;
-begin
-  Result := OctaveBinDir;
-end;
 
 function HomeDir(Param: String): String;
 var Dir : String;
@@ -154,7 +131,6 @@ begin
 end;
 
 
-
 function NotOnPathAlready(): Boolean;
 var
   BinDir, Path: String;
@@ -184,35 +160,6 @@ begin
 end;
 
 
-function OctaveNotOnPathAlready(): Boolean;
-var
-  BinDir, Path: String;
-begin
-  Log('Checking if octave-{# octaveversion}\bin dir is already on the %PATH%');
-  if RegQueryStringValue(HKEY_LOCAL_MACHINE, 'SYSTEM\CurrentControlSet\Control\Session Manager\Environment', 'Path', Path) then
-  begin // Successfully read the value
-    Log('HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Environment\PATH = ' + Path);
-    BinDir := ExpandConstant('{pf}\octave-{# octaveversion}\bin');
-    Log('Looking for octave-{# octaveversion}\bin dir in %PATH%: ' + BinDir + ' in ' + Path);
-    if Pos(LowerCase(BinDir), Lowercase(Path)) = 0 then
-    begin
-      Log('Did not find octave-{# octaveversion}\bin dir in %PATH% so will add it');
-      Result := True;
-    end
-    else
-    begin
-      Log('Found octave-{# octaveversion} bin dir in %PATH% so will not add it again');
-      Result := False;
-    end
-  end
-  else // The key probably doesn't exist
-  begin
-    Log('Could not access HKCU\Environment\PATH so assume it is ok to add it');
-    Result := True;
-  end;
-end;
-
-
 procedure CurUninstallStepChanged(CurUninstallStep: TUninstallStep);
 var
   BinDir, Path: String;
@@ -229,57 +176,43 @@ begin
   end;
 end;
 
-function DownloadOctave: Boolean;
+
+function DownloadIcarus: Boolean;
 var
   ErrCode: Integer;
 begin
-  if MsgBox('A browser will be opened to download octave-{# octaveversion} Setup', mbConfirmation, MB_YESNO) = IDYES then
+  if MsgBox('A browser will be opened with download instructions for Icarus Verilog.', mbConfirmation, MB_YESNO) = IDYES then
   begin
-  ShellExec('open', 'http://sourceforge.net/projects/octave/files/Octave%20Windows%20binaries/Octave%203.6.4%20for%20Windows%20Microsoft%20Visual%20Studio/octave-3.6.4-vs2010-setup.exe/download',
+  ShellExec('open', 'http://bleyer.org/icarus/',
       '', '', SW_SHOW, ewNoWait, ErrCode);
   end;
 end;
 
+function DownloadOctave: Boolean;
+var
+  ErrCode: Integer;
+begin
+  if MsgBox('A browser will be opened with download instructions for Octave. After installation the path to octave-cli might need to be set in Qucs settings.', mbConfirmation, MB_YESNO) = IDYES then
+  begin
+  ShellExec('open', 'https://www.gnu.org/software/octave/download.html',
+      '', '', SW_SHOW, ewNoWait, ErrCode);
+  end;
+end;
 
+// List start in 0, group also counts
+// http://stackoverflow.com/questions/10490046/how-do-read-and-set-the-value-of-a-checkbox-in-an-innosetup-wizard-page
 function NextButtonClick(CurPageID: Integer): Boolean;
 begin
   Result := True;
   if CurPageID = wpSelectTasks then
   begin
-    // why is this the position 6??
     if WizardForm.TasksList.Checked[6] then
+      DownloadIcarus;
+    if WizardForm.TasksList.Checked[7] then
       DownloadOctave;
   end;
 end;
 
-function OctaveDir(Param: String): String;
-var Dir : String;
-var Found : Boolean;
-begin
-  Found := False;
-
-    BrowseForFolder('Please select a directory where octave ' +
-                    'is installed, then click OK.', Dir, False);
-    if DirExists (Dir) then
-    begin
-      if FileExists(Dir + '\bin\octave.exe') then
-      begin
-        Found := True;
-      end;
-    end;
-  if Found = False then
-  begin
-    Dir := 'c:\Software\octave{# octaveversion}\bin';
-  end
-  else
-  begin
-    Dir := Dir + '\bin';
-  end;
-
-  // push to global var
-  OctaveBinDir := Dir;
-  Result := Dir;
-end;
 
 function IsRegularUser(): Boolean;
   begin
