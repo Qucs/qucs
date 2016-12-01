@@ -30,7 +30,7 @@ virtualenv:
   system_site_packages: true
 
 # Force OSX 10.10 as Qt 4.8.7 installer does not work with OSX 10.11
-osx_image: xcode7.1
+osx_image: xcode6.4
 
 matrix:
   exclude:
