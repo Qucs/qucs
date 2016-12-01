@@ -1027,14 +1027,17 @@ inline double _d0_vt(double)               { return 1.3806503e-23/1.602176462e-1
     <admst:apply-templates select="." match="v2c:converttype"/><admst:text format=" %s"/>
   </admst:join>)
 <admst:text format="\n{\n"/>
-<admst:text format="double $function=0.0;\n"/>
+<admst:text format="double $function=0.0; (void) $function;\n"/> <!-- silence unused warning -->
   <admst:for-each select="variable[input='no' and output='no']">
     <admst:value-of select="name"/>
     <admst:apply-templates select="." match="v2c:converttype"/>
     <admst:text format=" %s"/>
     <admst:if test="[type='integer']">=0</admst:if>
     <admst:if test="[type='real']">=0.0</admst:if>
-    <admst:text format=";\n"/>
+    <admst:text format="; "/>
+    <!-- silence unused warning -->
+    <admst:value-of select="name"/>
+    <admst:text format=" (void) %s;\n"/>
   </admst:for-each>
   <admst:apply-templates select="tree" match="af:print">
     <admst:value-of select="returned('x')/value"/>
@@ -1049,7 +1052,7 @@ double $(module)_d_$(function) (<admst:join select="variable[input='yes']" separ
     <admst:apply-templates select="." match="v2c:converttype"/><admst:text format=" d_%s"/>
   </admst:join>)
 <admst:text format="\n{\n"/>
-<admst:text format="double $function=0.0;\n"/>
+<admst:text format="double $function=0.0; (void) $function;\n"/> <!-- silence unused warning -->
   <admst:for-each select="$globalanalogfunction/variable[input='yes']">
     <admst:value-of select="name"/>
     <admst:variable name="ddx" select="%s"/>
@@ -1062,7 +1065,8 @@ double $(module)_d_$(function) (<admst:join select="variable[input='yes']" separ
     <admst:text format=" $(name)"/>
     <admst:if test="[type='integer']">=0</admst:if>
     <admst:if test="[type='real']">=0.0</admst:if>
-    <admst:text format=";\n"/>
+    <admst:text format=";"/>
+    <admst:text format=" (void) $(name);\n"/>  <!-- silence unused warning -->
     <admst:for-each select="$globalanalogfunction/variable[input='yes']">
       <admst:value-of select="name"/>
       <admst:variable name="ddx" select="%s"/>
@@ -1070,7 +1074,8 @@ double $(module)_d_$(function) (<admst:join select="variable[input='yes']" separ
       <admst:text format=" $(name)_$(ddx)"/>
       <admst:if test="[type='integer']">=0</admst:if>
       <admst:if test="[type='real']">=0.0</admst:if>
-      <admst:text format=";\n"/>
+      <admst:text format=";"/>
+      <admst:text format=" (void) $(name)_$(ddx);\n"/>  <!-- silence unused warning -->
     </admst:for-each>
   </admst:for-each>
   <admst:apply-templates select="tree" match="af:print:derivate">

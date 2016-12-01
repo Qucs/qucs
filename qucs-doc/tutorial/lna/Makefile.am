@@ -22,6 +22,8 @@
 # Boston, MA 02110-1301, USA.  
 #
 
+include $(top_srcdir)/qucstex.mk
+
 EXTRA_DIST = $(SOURCES)
 
 SOURCES = lna.tex content.tex bfg403.tex
@@ -36,10 +38,6 @@ SUFFIXES = .dvi .tex .pdf .ps
 	$(LATEX) $<
 	$(LATEX) -interaction=batchmode $<
 
-.tex.pdf:
-	TEXINPUTS=$$TEXINPUTS:.. $(PDFLATEX) $<
-	TEXINPUTS=$$TEXINPUTS:.. $(PDFLATEX) $<
-	TEXINPUTS=$$TEXINPUTS:.. $(PDFLATEX) -interaction=batchmode $<
 
 .dvi.ps:
 	$(DVIPS) $< -o $@

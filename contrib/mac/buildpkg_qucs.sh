@@ -72,7 +72,7 @@ fi
 
 
 # build
-make
+make -j8
 
 # might need to install with sudo, to set correct permissions (?)
 # Install to a separate directory for capture.

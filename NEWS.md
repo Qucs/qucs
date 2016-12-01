@@ -9,6 +9,8 @@ See below a short summary of the enhancements.
 Qucs
 ----
 
+* Update translations for various languages
+
 * Fix diagram color picker button ([#30])
 
 * Fix zoom in a box ([#31])
@@ -76,6 +78,22 @@ Qucs
 
 * Fix the handling of project names containing `_prj` in them ([PR#486])
 
+* Remove usage of LANGUAGEDIR, LIBRARYDIR variables ([PR#501], [PR#508])
+
+* Enable loading unknown components, add sub-circuit place hoder ([PR#507])
+
+* Fix "Export as image" behavior that was clipping markers on selected diagrams ([PR#523])
+
+* Improve handling of Octave ([PR#530])
+  - removal of hardcoded path
+  - override environment variable renamed from OCTAVEBINDIR to QUCS_OCTAVE
+
+* Fix "Move Up/Down" buttons greyed out in the equation property window ([PR#548])
+
+* Fix Component search selecting wrong component ([#543])
+
+* Fix cross-hair behavior of insert wire mode, related to zoom/scrool and RMB click ([PR#504])
+
 Qucsator
 --------
 
@@ -111,6 +129,9 @@ Qucsator
 
 * Fix turn off behavior of thyristor device when reversed biased ([PR#493])
 
+* Require automake 1.12 for .ypp->.hpp rules ([PR#515])
+
+* Disable parallel build of Verilo-A modules, temporary fix to avoid race condition ([PR#575])
 
 Qucs-Transcalc
 -------------
@@ -136,7 +157,6 @@ Qucs-Filter
 * Added quarter wavelength bandpass and notch filters ([#310])
   Transmission line and the microstrip are available.
 
-
 Qucs-Lib
 -------------
 
@@ -151,6 +171,8 @@ Qucs-Lib
 * Fix ideal OpAmp model ([PR#371])
 
 * Add search box to search components in libraries ([PR#303])
+
+* Fix erroneous preview of symbols when using the searchbox ([#550])
 
 Qucs-Rescodes
 -------------
@@ -180,6 +202,8 @@ Documentation
 * Fix table of contents on Technical.pdf ([#55])
 
 * Documentation for qucs-active filter ([PR#156])
+
+* Fix out-of-tree and parallel build for LaTeX documentation in qucs-doc directory ([PR#524])
 
 Translations
 ----------
@@ -221,6 +245,8 @@ Miscellaneous
 * New top-level make, make check, make distcheck
 
 * Simplify Verilog-A compilation rules
+
+* Enable continuous automated builds (AppVeyor) of Windows binary packages, for test purposes ([PR#561])
 
 
 ---
@@ -370,6 +396,7 @@ Bug fixes
 [#43]: https://github.com/Qucs/qucs/issues/43
 [#73]: https://github.com/Qucs/qucs/issues/73
 [#272]: https://github.com/Qucs/qucs/issues/272
+[#550]: https://github.com/Qucs/qucs/issues/550
 [#133]: https://github.com/Qucs/qucs/issues/133
 [#421]: https://github.com/Qucs/qucs/issues/421
 [#296]: https://github.com/Qucs/qucs/issues/296
@@ -382,16 +409,21 @@ Bug fixes
 [#204]: https://github.com/Qucs/qucs/issues/204
 [#319]: https://github.com/Qucs/qucs/issues/319
 [#253]: https://github.com/Qucs/qucs/issues/253
+[#543]: https://github.com/Qucs/qucs/issues/543
 [#216]: https://github.com/Qucs/qucs/issues/216
 [#478]: https://github.com/Qucs/qucs/issues/478
 [#132]: https://github.com/Qucs/qucs/issues/132
 [PR#306]: https://github.com/Qucs/qucs/pull/306
 [PR#375]: https://github.com/Qucs/qucs/pull/375
 [PR#209]: https://github.com/Qucs/qucs/pull/209
+[PR#507]: https://github.com/Qucs/qucs/pull/507
+[PR#575]: https://github.com/Qucs/qucs/pull/575
 [PR#86]: https://github.com/Qucs/qucs/pull/86
 [PR#232]: https://github.com/Qucs/qucs/pull/232
 [PR#406]: https://github.com/Qucs/qucs/pull/406
 [PR#252]: https://github.com/Qucs/qucs/pull/252
+[PR#292]: https://github.com/Qucs/qucs/pull/292
+[PR#523]: https://github.com/Qucs/qucs/pull/523
 [PR#412]: https://github.com/Qucs/qucs/pull/412
 [PR#357]: https://github.com/Qucs/qucs/pull/357
 [PR#482]: https://github.com/Qucs/qucs/pull/482
@@ -400,19 +432,26 @@ Bug fixes
 [PR#414]: https://github.com/Qucs/qucs/pull/414
 [PR#389]: https://github.com/Qucs/qucs/pull/389
 [PR#303]: https://github.com/Qucs/qucs/pull/303
+[PR#501]: https://github.com/Qucs/qucs/pull/501
 [PR#371]: https://github.com/Qucs/qucs/pull/371
-[PR#292]: https://github.com/Qucs/qucs/pull/292
+[PR#515]: https://github.com/Qucs/qucs/pull/515
 [PR#436]: https://github.com/Qucs/qucs/pull/436
 [PR#168]: https://github.com/Qucs/qucs/pull/168
 [PR#349]: https://github.com/Qucs/qucs/pull/349
 [PR#444]: https://github.com/Qucs/qucs/pull/444
 [PR#456]: https://github.com/Qucs/qucs/pull/456
+[PR#548]: https://github.com/Qucs/qucs/pull/548
 [PR#267]: https://github.com/Qucs/qucs/pull/267
 [PR#95]: https://github.com/Qucs/qucs/pull/95
 [PR#493]: https://github.com/Qucs/qucs/pull/493
 [PR#481]: https://github.com/Qucs/qucs/pull/481
 [PR#128]: https://github.com/Qucs/qucs/pull/128
+[PR#504]: https://github.com/Qucs/qucs/pull/504
 [PR#87]: https://github.com/Qucs/qucs/pull/87
+[PR#530]: https://github.com/Qucs/qucs/pull/530
+[PR#508]: https://github.com/Qucs/qucs/pull/508
+[PR#561]: https://github.com/Qucs/qucs/pull/561
+[PR#524]: https://github.com/Qucs/qucs/pull/524
 [PR#85]: https://github.com/Qucs/qucs/pull/85
 [PR#274]: https://github.com/Qucs/qucs/pull/274
 [PR#203]: https://github.com/Qucs/qucs/pull/203

@@ -22,7 +22,7 @@ AC_CANONICAL_HOST
 AC_CANONICAL_TARGET
 
 dnl AM_INIT_AUTOMAKE does several things, including defining VERSION and PACKAGE
-AM_INIT_AUTOMAKE([no-define])
+AM_INIT_AUTOMAKE([1.12 no-define])
 
 AC_PREFIX_DEFAULT([/usr/local])
 test "x$prefix" = xNONE && prefix="/usr/local"

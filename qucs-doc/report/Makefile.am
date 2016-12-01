@@ -22,6 +22,8 @@
 # Boston, MA 02110-1301, USA.  
 #
 
+include $(top_srcdir)/qucstex.mk
+
 SUBDIRS = verilog StoQ_test1 StoQ_test2 StoQ_test3 StoQ_test4 StoQ_test5 \
   curtice mod_amp log_amp potentiometer mesfet EKV26 photodiode activefilter
 
@@ -33,14 +35,14 @@ PICDIRS = verilog
 
 pics-book:
 	@for d in $(PICDIRS); do \
-	  (cd $$d && $(MAKE) $(AM_MAKEFLAGS) book); \
+	  (cd $$d && $(MAKE) $(AM_MAKEFLAGS) book) || exit $$?; \
 	done
 
 book: pics-book $(TARGETS)
 
 report:
 	@for d in $(SUBDIRS); do \
-	  (cd $$d && $(MAKE) $(AM_MAKEFLAGS) report); \
+	  (cd $$d && $(MAKE) $(AM_MAKEFLAGS) report) || exit $$?; \
 	done
 
 SUFFIXES = .dvi .tex .pdf .ps .eps .fig
@@ -49,11 +51,6 @@ SUFFIXES = .dvi .tex .pdf .ps .eps .fig
 	$(LATEX) $<
 	$(LATEX) $<
 	$(LATEX) -interaction=batchmode $<
-
-.tex.pdf:
-	$(PDFLATEX) $<
-	$(PDFLATEX) $<
-	$(PDFLATEX) -interaction=batchmode $<
 
 .fig.eps:
 	$(FIG2DEV) -L eps $< > $@

@@ -22,6 +22,8 @@
 # Boston, MA 02110-1301, USA.  
 #
 
+include $(top_srcdir)/qucstex.mk
+
 SUBDIRS = pics
 
 EXTRA_DIST = $(SOURCES)
@@ -42,11 +44,6 @@ SUFFIXES = .tex .dvi .ps
 	$(LATEX) $<
 	$(LATEX) $<
 	$(LATEX) -interaction=batchmode $<
-
-.tex.pdf:
-	TEXINPUTS=$$TEXINPUTS:.. $(PDFLATEX) $<
-	TEXINPUTS=$$TEXINPUTS:.. $(PDFLATEX) $<
-	TEXINPUTS=$$TEXINPUTS:.. $(PDFLATEX) -interaction=batchmode $<
 
 .dvi.ps:
 	$(DVIPS) $< -o $@
