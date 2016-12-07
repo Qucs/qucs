@@ -56,7 +56,7 @@ void Module::registerElement (QString category, Element const* e)
   qDebug() << "regElt" << category << e->name();
   Module * m = new Module (e);
   // m->category = category; // OUCH, incomplete?
-  intoCategory (m);
+  intoCategory(category.toStdString(), m);
 }
 
 // Component registration using a category name and the appropriate
@@ -163,15 +163,16 @@ incomplete();
 
 // The function appends the given module to the appropriate category.
 // If there is no such category yet, then the category gets created.
-// BUG: retrieves the category from the element.
-void Module::intoCategory (Module * m) {
+void Module::intoCategory(std::string const& cat, Module * m)
+{
+  QString category=QString::fromStdString(cat);
 
   // look through existing categories
   // // BUG linear search
   QList<Category *>::const_iterator it;
   for (it = Category::Categories.constBegin();
        it != Category::Categories.constEnd(); it++) {
-    if ((*it)->name() == m->category) {
+    if ((*it)->name() == category) {
       (*it)->push_back(m);
       break;
     }
@@ -179,7 +180,7 @@ void Module::intoCategory (Module * m) {
 
   // if there is no such category, then create it
   if (it == Category::Categories.constEnd()) {
-    Category *cat = new Category (m->category);
+    Category *cat = new Category (category);
     Category::Categories.append (cat);
     cat->push_back(m);
   }
@@ -566,3 +567,5 @@ int Category::getModulesNr (QString category) {
   }
   return -1;
 }
+
+// vim:ts=8:sw=2:noet
