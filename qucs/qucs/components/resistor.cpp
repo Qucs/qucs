@@ -18,6 +18,7 @@
 #include "node.h"
 #include "schematic.h"
 #include "component.h"
+#include "module.h"
 
 namespace{
 
@@ -38,6 +39,8 @@ protected:
 
 // this is the schematic name, not the name in the toolbox
 static Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "R", &R);
+// the name in the toolbox...
+static Module::INSTALL pp("lumped", &R);
 
 Resistor::Resistor(bool european)
 {

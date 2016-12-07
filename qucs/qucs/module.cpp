@@ -51,7 +51,9 @@ Module::~Module () {
 
 // Module registration using a category name and the appropriate
 // function returning a modules instance object.
-void Module::registerElement (QString category, Element const* e) {
+void Module::registerElement (QString category, Element const* e)
+{
+  qDebug() << "regElt" << category << e->name();
   Module * m = new Module (e);
   // m->category = category; // OUCH, incomplete?
   intoCategory (m);
