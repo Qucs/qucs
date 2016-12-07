@@ -29,6 +29,8 @@ typedef Element * (* pInfoFunc) (QString&, char * &, bool);
 typedef Element * (* pInfoVAFunc) (QString&, QString&, bool, QString);
 typedef Component * (* pCreatorFunc) ();
 
+// sort of element wrapper for stuff displayed in the select menu.
+// each module is part of a Category. see below.
 class Module
 {
  public:
@@ -53,6 +55,8 @@ class Module
   QString category;
 };
 
+// a category. something like "lumped" or "simulations"
+// will show up in the dropdown thing.
 class Category
 {
  public:
@@ -69,6 +73,15 @@ class Category
   static int getModulesNr (QString);
 
  public:
+  virtual QString const& name(){return Name;}
+  Module* operator[](unsigned x) const{
+	  return Content.at(x);
+  }
+  void push_back(Module* x){
+	  incomplete(); // must refresh gui.
+	  Content.append(x);
+  }
+ private: // internal
   QString Name;
   QList<Module *> Content;
 };

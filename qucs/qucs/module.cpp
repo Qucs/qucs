@@ -4,6 +4,7 @@
     begin                : Thu Nov 5 2009
     copyright            : (C) 2009 by Stefan Jahn
     email                : stefan@lkcc.org
+    refactored           : (C) 2016 Felix Salfelder
  ***************************************************************************/
 
 /***************************************************************************
@@ -61,7 +62,7 @@ void Module::registerModule (QString category, pInfoFunc info) {
 void Module::registerComponent (QString category, pInfoFunc info) {
   Module * m = new Module ();
   m->info = info;
-  m->category = category;
+  m->category = category; // OUCH
 
   // instantiation of the component once in order to obtain "Model"
   // property of the component
@@ -165,11 +166,12 @@ incomplete();
 void Module::intoCategory (Module * m) {
 
   // look through existing categories
+  // // BUG linear search
   QList<Category *>::const_iterator it;
   for (it = Category::Categories.constBegin();
        it != Category::Categories.constEnd(); it++) {
-    if ((*it)->Name == m->category) {
-      (*it)->Content.append (m);
+    if ((*it)->name() == m->category) {
+      (*it)->push_back(m);
       break;
     }
   }
@@ -178,7 +180,7 @@ void Module::intoCategory (Module * m) {
   if (it == Category::Categories.constEnd()) {
     Category *cat = new Category (m->category);
     Category::Categories.append (cat);
-    cat->Content.append (m);
+    cat->push_back(m);
   }
 }
 
@@ -197,7 +199,7 @@ void Module::intoCategory (Module * m) {
 // find component. find category. pass it on.
 static void REGISTER_COMP_1(std::string const& cat, std::string name)
 {
-	qDebug() << "reg" << cat << QString::fromStdString(name);
+	qDebug() << "reg" << QString::fromStdString(cat) << QString::fromStdString(name);
 
 // transitional bu^H^Hhack.
   incomplete();
