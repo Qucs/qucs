@@ -38,7 +38,6 @@ class Module
   static void registerComponent (QString, pInfoFunc);
   static void intoCategory (Module *);
   static Component * getComponent (QString);
-  static void registerDynamicComponents(void);
 
  public:
   static QHash<QString, Module *> Modules;
