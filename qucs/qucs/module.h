@@ -43,9 +43,11 @@ class Module
   Module (Element const* e) : myElement(e) { }
 
   ~Module ();
+
+ public: // BUG: this is not part of Module
   static void registerComponent (QString, pInfoFunc);
   static void registerElement (QString, Element const*);
-  static void intoCategory (Module *);
+  static void intoCategory( std::string const& cat, Module *);
 
   // static Component * getComponent (QString);
 
