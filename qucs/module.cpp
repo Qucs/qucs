@@ -193,10 +193,16 @@ void Module::intoCategory (Module * m) {
   registerModule (cat, &val::inf2); \
   registerModule (cat, &val::inf3)
 
-static void REGISTER_COMP_1(QString const& cat, std::string name)
+
+// find component. find category. pass it on.
+static void REGISTER_COMP_1(std::string const& cat, std::string name)
 {
+	qDebug() << "reg" << cat << QString::fromStdString(name);
+
 // transitional bu^H^Hhack.
   incomplete();
+  // this will only work, if symbols were already loaded.
+  // FIXME: do this upon module loading!
 //  auto sym = symbol_dispatcher[name];
 //  Component const* legacy_component = prechecked_cast<Component const*>(sym);
 //  registerComponent (cat, &legacy_component)
@@ -208,9 +214,12 @@ static void REGISTER_COMP_1(QString const& cat, std::string name)
 
 
 #define REGISTER_LUMPED_1(val) \
-  REGISTER_COMP_1 (QObject::tr("lumped components"),#val)
+  REGISTER_COMP_1 ("lumped", #val)
 #define REGISTER_LUMPED_2(val,inf1,inf2) \
-  REGISTER_COMP_2 (QObject::tr("lumped components"),val,inf1,inf2)
+  REGISTER_COMP_2 ("lumped",val,inf1,inf2)
+
+// BUG. do not translate identifiers.
+// (identifiers are meant to identify categories...)
 #define REGISTER_SOURCE_1(val) \
   REGISTER_COMP_1 (QObject::tr("sources"),val)
 #define REGISTER_PROBE_1(val) \
