@@ -61,6 +61,27 @@ class Module
  private:
   Element const* myElement;
   QString category; // why this?!
+
+ public:
+  // TODO: this is somewhat redundant...
+  class INSTALL {
+  private:
+    const std::string _cat;
+    Element const* _p;
+  public:
+    INSTALL(const std::string& cat, Element const* p) :
+      _cat(cat),
+      _p(p)
+    {
+      assert(p);
+		registerElement(QString::fromStdString(cat), p);
+    }
+    
+    ~INSTALL() {
+		 // remove stuff from GUI display
+		 incomplete();
+    }
+  };
 };
 
 // a category. something like "lumped" or "simulations"
