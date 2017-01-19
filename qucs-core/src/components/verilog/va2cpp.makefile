@@ -25,6 +25,7 @@ VA=.va
 # handle deletion if Windows cmd.exe or MinGW MSYS terminal
 ifeq ($(OS),Windows_NT)
   RM=del
+  SHELL=cmd.exe
   ifeq ($(MSYSTEM),MINGW32)
 	RM=rm -f
   endif
