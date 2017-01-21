@@ -179,7 +179,6 @@ script:
   - if [ "$OSX" = true ]; then
       make;
       make qucscheck;
-      make eqncheck;
     else
       make distcheck DISTCHECK_CONFIGURE_FLAGS="${DISTCHECK_CONFIGURE_FLAGS}";
     fi
