@@ -1,0 +1,33 @@
+<Qucs Schematic 0.0.19>
+<Properties>
+  <View=0,0,800,889,1.42656,0,156>
+  <Grid=10,10,0>
+  <DataSet=bfp450_1a_match.dat>
+  <DataDisplay=bfp450_1a_match.sch>
+  <OpenDisplay=1>
+  <Script=bfp450_1a_match.m>
+  <RunScript=0>
+  <showFrame=0>
+  <FrameText0=Title>
+  <FrameText1=Drawn By:>
+  <FrameText2=Date:>
+  <FrameText3=Revision:>
+</Properties>
+<Symbol>
+</Symbol>
+<Components>
+</Components>
+<Wires>
+</Wires>
+<Diagrams>
+  <Smith 110 544 454 454 3 #c0c0c0 1 00 1 0 1 1 0 0 5 1.5 1 0 1 1 315 0 225 "" "" "">
+	<"S[1,1]" #0000ff 0 3 0 4 0>
+	<"SG" #ff0000 0 3 0 0 0>
+	<"GA" #ff00ff 0 3 0 0 0>
+	  <Mkr 68.5714/160/9e+08 289 -313 3 1 0>
+	<"NF" #00ff00 0 3 0 0 0>
+	  <Mkr 154.286/1.4/9e+08 265 -199 3 1 0>
+  </Smith>
+</Diagrams>
+<Paintings>
+</Paintings>

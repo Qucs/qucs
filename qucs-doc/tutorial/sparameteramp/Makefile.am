@@ -1,10 +1,11 @@
 ## Process this file with automake to produce Makefile.in
 # 
-# tutorial/Makefile.am
+# tutorial/sparameteramp/Makefile.am
 #
 # Automake input file.
 #
-# Copyright (C) 2005, 2006, 2007 Stefan Jahn <stefan@lkcc.org>
+# Copyright (C) 2006 Stefan Jahn <stefan@lkcc.org>
+# Copyright (C) 2016 Qucs team
 #
 # This is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -24,18 +25,14 @@
 
 include $(top_srcdir)/qucstex.mk
 
-SUBDIRS = dcstatic coupler bjtbias modelbjt poweramp lna digital ffmodels \
-  functions opamp timer555 spicetoqucs getstarted equations textmode \
-  RFResModels activefilter sparameteramp
+SUBDIRS = pics
 
-EXTRA_DIST = $(SOURCES) $(TEXFILES)
+EXTRA_DIST = $(SOURCES)
 
-TEXFILES = titlepage.tex basics.tex workbook.tex intro.tex general.tex \
-  datasheet.tex
-TARGETS = workbook.pdf
-PICDIRS = coupler functions textmode
+SOURCES = sparameteramp.tex content.tex
+TARGETS = sparameteramp.pdf
 
-workbook.pdf: $(TEXFILES)
+sparameteramp.pdf: $(SOURCES)
 
 SUFFIXES = .dvi .tex .pdf .ps
 
@@ -44,15 +41,13 @@ SUFFIXES = .dvi .tex .pdf .ps
 	$(LATEX) $<
 	$(LATEX) -interaction=batchmode $<
 
-.fig.eps:
-	$(FIG2DEV) -L eps $< > $@
 
 .dvi.ps:
 	$(DVIPS) $< -o $@
 
 # installation of documentation
 docdatadir = ${prefix}/share/qucs/docs/tutorial
-docdata_DATA = workbook.pdf
+docdata_DATA = ${TARGETS}
 
 CLEANFILES = *~ *.bak *.aux *.log *.toc *.pdf *.bbl *.blg *.dvi *.brf *.out *.idx
 MAINTAINERCLEANFILES = Makefile.in

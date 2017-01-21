@@ -1,0 +1,45 @@
+<Qucs Schematic 0.0.18>
+<Properties>
+  <View=-42,0,1210,1657,1,150,0>
+  <Grid=10,10,0>
+  <DataSet=vmmk1218_1.dat>
+  <DataDisplay=vmmk1218_1.sch>
+  <OpenDisplay=1>
+  <Script=vmmk1218_1.m>
+  <RunScript=0>
+  <showFrame=0>
+  <FrameText0=Title>
+  <FrameText1=Drawn By:>
+  <FrameText2=Date:>
+  <FrameText3=Revision:>
+</Properties>
+<Symbol>
+</Symbol>
+<Components>
+</Components>
+<Wires>
+</Wires>
+<Diagrams>
+  <Smith 110 640 630 630 3 #c0c0c0 1 00 1 0 1 1 0 0 5 1.5 1 0 1 1 315 0 225 "" "" "">
+	<"S[1,1]" #0000ff 0 3 0 4 0>
+	<"Sopt" #55007f 0 3 0 0 0>
+	<"GA" #ff00ff 0 3 0 0 0>
+	  <Mkr 45.7143/14/1.1e+10 443 -496 3 1 0>
+	<"SG" #ff0000 0 3 0 0 0>
+	<"NF" #00ff00 0 3 0 5 0>
+	  <Mkr 222.857/1.2/1.1e+10 387 -295 4 1 0>
+  </Smith>
+  <Rect 70 1523 752 453 3 #c0c0c0 1 00 1 0 5e+09 3e+10 1 -2.41257 10 20 1 -1 1 1 315 0 225 "" "" "">
+	<"Fmindb" #0000ff 0 3 0 0 1>
+	<"K" #ff0000 0 3 0 0 1>
+	<"S[2,1]" #ff00ff 0 3 0 0 0>
+  </Rect>
+  <Tab 240 980 300 200 3 #c0c0c0 1 00 1 0 1 1 1 0 1 1 1 0 1 1 315 0 225 "" "" "">
+	<"Sopt" #0000ff 0 3 1 0 0>
+	<"Fmin" #0000ff 0 3 1 0 0>
+  </Tab>
+</Diagrams>
+<Paintings>
+  <Arrow 170 280 -20 70 20 8 #000000 0 1 0>
+  <Text 130 240 12 #000000 0 "Source stability circle\noutside SD">
+</Paintings>
